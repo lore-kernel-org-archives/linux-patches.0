@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25B8343D9E;
-	Mon, 20 Apr 2026 16:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1B033F8AA;
+	Mon, 20 Apr 2026 16:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701192; cv=none; b=Q7TV0kuPgRJGBlhLNtrWNOeAeglBTugtV4U77rUf1EBstP1fiT9unaHu+2LA2J4Go4WLhkdrsoyc3C969bfzIp7fZrtvWiKtObirVO/87Bf2SVaY5qhjrILduw2pVLBGJ5SXo888A6g2MYkHS3dn7Z93GU7bJcChiHQX/uH8nAM=
+	t=1776701195; cv=none; b=ZaB5J50tjCs3gs1hcHFNATpCEUr1L6gnM+IvkADPMw3Rs6j546DzY9XE31erforYXhIiFqZ/LtV+yiMW3kyHw7W7B1lmaWp0yGwne9xUw2c51cs+yh5cPeQhyrOWxDopAqIJ/VHlNd1pYcJsXy6i5cmTVCSESdyrce6LSKWzOgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701192; c=relaxed/simple;
-	bh=uhwmqbadA4mYxavaX+orjiBoJey9ibMJfXG0WNFG0Rc=;
+	s=arc-20240116; t=1776701195; c=relaxed/simple;
+	bh=Q1iSAtKYqSl3xEuiS+I1QY4w4FurT36i1vb6W6v0glg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y90QcqDYU9gBvtPbQEMDpyFWK59q6oHxITGlc2QXwvelsfC1THCE+UAIeN5mSErC4kW5gryMaQ60szsgH8OvT0aFaYE8tsX5TKqj/SEoXL0BfiU4QK0FFwNmesUGDcYapN2oXHRJVXN+bvX3alTMHAqrjIVxS8H6mCf+mzbTcz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5qRgEQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZfMAsy1DxpjQYEGN4LhZhCiTnc2GdYbW+tgAjlQTFloTRwBXtANy2SXYgQlYFDwae0q0Y1T0o0pFvlZQu+00fDcAZRPeibOtPp+41hVu0XO/lH2fiacqp5HRAOiW9iCLXevyqIryUvzJ2/6V8jmuwNCpTK5BIuVw7WLjJ6lZkBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTFY4nmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5qRgEQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A368C19425;
-	Mon, 20 Apr 2026 16:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTFY4nmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E78C19425;
+	Mon, 20 Apr 2026 16:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701192;
-	bh=uhwmqbadA4mYxavaX+orjiBoJey9ibMJfXG0WNFG0Rc=;
+	s=korg; t=1776701195;
+	bh=Q1iSAtKYqSl3xEuiS+I1QY4w4FurT36i1vb6W6v0glg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5qRgEQsEcHCgUQjNacOFq8SqW+I9nCVFd9m4NABLJ+ywy27CcNStd7RanMnAKwiO
-	 cwa08vdtS/sfkcNLi7R6nvluabtszNZMjWrcao4wWdP48k+bApktj0mPS8pkldghjE
-	 t4ETRJ4Qg/rsPoK1omNrR2JKdIDZqB8EpCDvUniU=
+	b=RTFY4nmPW0vBaAFdDlYUvwOcfuNVHsRzAyNGk/dcIBOs7PAa8cv42n245i44fbnyi
+	 9vN1fJOTLRoLkFKcvD12OR78xHw3fBoZfs49SCSoKUWWprb5knf7Ox1K3wT41hnVh4
+	 lFIvWflhUHcZzYZCCEEZqLOblIhn3ISDoM5safRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Denis Benato <denis.benato@linux.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Throw <zakkabj@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/162] platform/x86: asus-nb-wmi: add DMI quirk for ASUS ROG Flow Z13-KJP GZ302EAC
-Date: Mon, 20 Apr 2026 17:40:43 +0200
-Message-ID: <20260420153927.426347730@linuxfoundation.org>
+Subject: [PATCH 6.12 020/162] ALSA: hda/realtek: Add quirk for Samsung Book2 Pro 360 (NP950QED)
+Date: Mon, 20 Apr 2026 17:40:52 +0200
+Message-ID: <20260420153927.752320229@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -47,46 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 0198d2743207d67f995cd6df89e267e1b9f5e1f1 ]
+[ Upstream commit ea31be8a2c8c99eac198f3b7f2dc770111f2b182 ]
 
-The ASUS ROG Flow Z13-KJP GZ302EAC model uses sys_vendor name ASUS
-rather than ASUSTeK COMPUTER INC., but it needs the same folio quirk as
-the other ROG Flow Z13. To keep things simple, just match on sys_vendor
-ASUS since it covers both.
+There is another Book2 Pro model (NP950QED) that seems equipped with
+the same speaker module as the non-360 model, which requires
+ALC298_FIXUP_SAMSUNG_AMP_V2_2_AMPS quirk.
 
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Link: https://patch.msgid.link/20260312212246.1608080-1-matthew.schwartz@linux.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: Throw <zakkabj@gmail.com>
+Link: https://patch.msgid.link/20260330162249.147665-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index 1955495ea95f4..10bdb1a431819 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -547,7 +547,7 @@ static const struct dmi_system_id asus_quirks[] = {
- 		.callback = dmi_matched,
- 		.ident = "ASUS ROG Z13",
- 		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow Z13"),
- 		},
- 		.driver_data = &quirk_asus_z13,
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 2a32e1ead5e86..04e10da997b53 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11335,6 +11335,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x144d, 0xc176, "Samsung Notebook 9 Pro (NP930MBE-K04US)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Flex Book (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
++	SND_PCI_QUIRK(0x144d, 0xc1ac, "Samsung Galaxy Book2 Pro 360 (NP950QED)", ALC298_FIXUP_SAMSUNG_AMP_V2_2_AMPS),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a4, "Samsung Galaxy Book Pro 360 (NT935QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
 -- 
 2.53.0
 
