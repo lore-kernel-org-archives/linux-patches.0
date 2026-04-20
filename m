@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88093D9DA6;
-	Mon, 20 Apr 2026 13:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F91E3DA5BB;
+	Mon, 20 Apr 2026 13:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691439; cv=none; b=l96HWn/+yf0PWIXHgQkuibc5akWpB+YnTOfN/IrU6zJsiPxjeeb1skZE4f1MHqaGYJ3PFmqA5jEnRm99LA8Ay07bddNFJ96byTAVhTR0pl+PKHtTCES0+QOEdMegAOhfE10AjbQ1lypc4mGtOU66rk1XyTKLgdyZqGfpAEefOTs=
+	t=1776691441; cv=none; b=cfaGGsR1wUhkR8cEplIqEBeX7UA1vnd/m0nCUil12au4xOtVw30jyESkYaOmF9zXjFczzAwxC16J5TrXCKG6Q8VUjGtYyAAvgSM0t4xAS9rzatN/zDZJeCx19X9hXIw2ECWLpwajs7i1ZZS7h6gN9BuQ3kFpTrt3mTSwtycYScc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691439; c=relaxed/simple;
-	bh=1igANYwOjFPNj7Lw7WtB+Ul5mELciDGyTlwt3dskh0I=;
+	s=arc-20240116; t=1776691441; c=relaxed/simple;
+	bh=7zvufrhHYV6ds7spDOco84VdhgcOR1nJgg0J/89FE9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=feCpSaw+JrMFwUNPtCN/2cBod/uN/trrTJ/eWlITDc+4wlnp7qbMxah7wWc0NOgUx8DKMS3OilLiEDElp7EQnRG6bM9UyFwmkW4hOS6cDdRGmKiY0C5LvwHzRb3r+PgyjpO4Uft0/qQE8BW/M63CQLSI8gu1PwnwG70yhl+m2bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ii6xnI4d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nD0DHLMGOE2d5e3gm8Z/GX/GM2YUqi2H106jTBVhLJCJUvzqCbP/4dtx2NupeOHp5jVqTHWJg50yvo71Zql8ALxXV/ppSkMkMlRD1Xr2n6uC6s1D98JjIvv1uvD6eu/f6+nu1f9BcDCp3KNsmlp82zC5k14s/w6n89joZJvverw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WxmVUNc9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ii6xnI4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDCEC2BCB4;
-	Mon, 20 Apr 2026 13:23:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WxmVUNc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A44C19425;
+	Mon, 20 Apr 2026 13:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691439;
-	bh=1igANYwOjFPNj7Lw7WtB+Ul5mELciDGyTlwt3dskh0I=;
+	s=k20201202; t=1776691440;
+	bh=7zvufrhHYV6ds7spDOco84VdhgcOR1nJgg0J/89FE9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ii6xnI4dUwpL0UH1Jk3q0RR32zalfacsLGnq+1hurN3G8Uoa91iYIY63Os2c2dbv0
-	 Z3letXlQviS4+Zj8Vx0nwCZeiN9Xh/sN4fZcI8OVdo8Zj3kuLZP3j9x5MN5WjXKO01
-	 Fz8PJIboy9s9xdoWmYvaYkPiQo0WLAjyQ0UaP/PjtNQgNxYSopkRD3j0y/01tN1q9H
-	 m4F/QHQxJFU/kmG83FBzTUYDvlFKcnu8w+OHlb961V5LUwHwLMATLgZiUUBZowNivw
-	 YqAi3w5+CTcqg1o+YEqiz9TLpYWquRUtnaDun8dbH+6er1xdm1bFmEG+Ag3ir5R7Vq
-	 7B9Jt96t7W2TA==
+	b=WxmVUNc9LMDXO1yjAnv5Rxur/S/4YXAAQzQwFvikOWL/T3b6GsjYY8Zb6Jqn5M2Wk
+	 7m35jwp8sfJ2Ux7Yojjadq+sUH50oQMZdZvUDv0aSHejJrblVydLOWNOhFDMkTdpnp
+	 n7Ry3Zf9tE7cOZJG6H9Z9T7JM+aJMzuCJrU8b0yDRUXAXImsZHX+nNjLe9VjImfIKq
+	 7YYFce6NZIACCOJykul7oTpzx2axiCg8D+OLUd6nZ2BxwwbXUTFCQ3kvDnoo92fD4Z
+	 E/tLXrrh/OCFe14RT4GG4goNJpz8+UnPGGMVY8mE/cgCzpBa4hiWUuKXDdHg3k5w8O
+	 2RFk0ffOfwM9Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+Cc: Suraj P Kizhakkethil <suraj.kizhakkethil@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	joro@8bytes.org,
-	will@kernel.org,
-	iommu@lists.linux.dev,
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] iommu/amd: Fix illegal device-id access in IOMMU debugfs
-Date: Mon, 20 Apr 2026 09:17:02 -0400
-Message-ID: <20260420132314.1023554-28-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] wifi: mac80211: set band information only for non-MLD when probing stations using NULL frame
+Date: Mon, 20 Apr 2026 09:17:03 -0400
+Message-ID: <20260420132314.1023554-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -51,428 +50,388 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Suraj P Kizhakkethil <suraj.kizhakkethil@oss.qualcomm.com>
 
-[ Upstream commit e4172c5b53fba04fa48b13bc3afde809d0087a7f ]
+[ Upstream commit 73e7df69edb6f1271ea0fa876794761e6c73e76a ]
 
-In the current AMD IOMMU debugFS, when multiple processes use the IOMMU
-debugFS process simultaneously, illegal access issues can occur in the
-following execution flow:
+Currently, when sending a NULL frame to probe a station, the band
+information is derived from the chanctx_conf in the mac80211 vif's
+bss_conf. However, for AP MLD, chanctx_conf is not assigned to the
+vif's bss_conf; instead it is assigned on a per-link basis. As a result,
+for AP MLD, sending a NULL packet to probe will trigger a warning.
 
-1. CPU1: Sets a valid sbdf via devid_write, then checks the sbdf's
-validity in execution flows such as devid_show, iommu_devtbl_show,
-and iommu_irqtbl_show.
+WARNING: net/mac80211/cfg.c:4635 at ieee80211_probe_client+0x1a8/0x1d8 [mac80211], CPU#2: hostapd/244
+Call trace:
+ ieee80211_probe_client+0x1a8/0x1d8 [mac80211] (P)
+ nl80211_probe_client+0xac/0x170 [cfg80211]
+ genl_family_rcv_msg_doit+0xc8/0x134
+ genl_rcv_msg+0x200/0x280
+ netlink_rcv_skb+0x38/0xf0
+ genl_rcv+0x34/0x48
+ netlink_unicast+0x314/0x3a0
+ netlink_sendmsg+0x150/0x390
+ ____sys_sendmsg+0x1f4/0x21c
+ ___sys_sendmsg+0x98/0xc0
+ __sys_sendmsg+0x74/0xcc
+ __arm64_sys_sendmsg+0x20/0x34
+ invoke_syscall.constprop.0+0x4c/0xd0
+ do_el0_svc+0x3c/0xd0
+ el0_svc+0x28/0xc0
+ el0t_64_sync_handler+0x98/0xdc
+ el0t_64_sync+0x154/0x158
+---[ end trace 0000000000000000 ]---
 
-2. CPU2: Sets an invalid sbdf via devid_write, at which point the sbdf
-value is -1.
+For NULL packets sent to probe stations, set the band information only
+for non-MLD, since MLD transmissions does not rely on band.
 
-3. CPU1: accesses the IOMMU device table, IRQ table, based on the
-invalid SBDF value of -1, resulting in illegal access.
-
-This is especially problematic in monitoring scripts, where multiple
-scripts may access debugFS simultaneously, and some scripts may
-unexpectedly set invalid values, which triggers illegal access in
-debugfs.
-
-This patch modifies the execution flow of devid_show,
-iommu_devtbl_show, and iommu_irqtbl_show to ensure that these
-processes determine the validity and access based on the
-same device-id, thus guaranteeing correctness and robustness.
-
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Suraj P Kizhakkethil <suraj.kizhakkethil@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260213100126.1414398-2-suraj.kizhakkethil@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile the findings.
+I now have all the information needed for a complete analysis. Let me
+compile the full report.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem:** iommu/amd
-- **Action verb:** "Fix" (explicit bug fix)
-- **Summary:** Fixes illegal device-id access in IOMMU debugfs caused by
-  a race condition on the global `sbdf` variable
+**Step 1.1: Subject Line**
+- Subsystem: `wifi: mac80211`
+- Action verb: "set" (conditionalize behavior)
+- Summary: Set band information only for non-MLD interfaces when probing
+  stations using NULL frames.
 
-### Step 1.2: Tags
-- **Signed-off-by:** Guanghui Feng <guanghuifeng@linux.alibaba.com>
-  (author)
-- **Signed-off-by:** Joerg Roedel <joerg.roedel@amd.com> (AMD IOMMU
-  maintainer, applied the patch)
-- No Fixes: tag, no Reported-by, no Cc: stable -- all expected for
-  candidate review
-- No syzbot involvement
+Record: [wifi: mac80211] [set/conditionalize] [Fix probe_client to
+handle AP MLD correctly by skipping band derivation from vif bss_conf
+chanctx_conf]
 
-### Step 1.3: Commit Body Analysis
-The commit message clearly describes a TOCTOU race condition:
-1. CPU1 checks `sbdf >= 0` (valid), then proceeds to use `sbdf` as an
-   index
-2. CPU2 concurrently calls `devid_write()` which sets `sbdf = -1`
-3. CPU1 reads `sbdf` again to extract `devid`, now gets -1, causing
-   illegal access
+**Step 1.2: Tags**
+- `Signed-off-by: Suraj P Kizhakkethil
+  <suraj.kizhakkethil@oss.qualcomm.com>` — author from Qualcomm
+- `Link: https://patch.msgid.link/20260213100126.1414398-2-
+  suraj.kizhakkethil@oss.qualcomm.com` — mailing list patch link
+- `Signed-off-by: Johannes Berg <johannes.berg@intel.com>` — mac80211
+  subsystem maintainer merged this
+- No Fixes: tag, no Cc: stable (expected for manual review candidates)
+- No Reported-by: tag (author likely discovered it internally)
 
-The commit mentions this is triggered by monitoring scripts accessing
-debugfs simultaneously. The failure mode is **illegal memory access**
-(out-of-bounds array indexing).
+Record: Merged by Johannes Berg (mac80211 maintainer). No explicit
+Fixes: tag. Qualcomm contributor.
 
-Record: Race condition on global `sbdf` variable. TOCTOU bug. Illegal
-access when `sbdf` changes between validity check and use. Triggered by
-concurrent debugfs access.
+**Step 1.3: Commit Body**
+- Bug: For AP MLD, `chanctx_conf` is not assigned to the vif's
+  `bss_conf` but per-link. Accessing it from
+  `sdata->vif.bss_conf.chanctx_conf` returns NULL.
+- Symptom: WARN_ON fires at `cfg.c:4635`, function returns -EINVAL,
+  probe client functionality is completely broken for AP MLD.
+- Stack trace provided: triggered via `nl80211_probe_client` ->
+  `ieee80211_probe_client`, reachable from userspace hostapd.
+- Root cause: The chanctx_conf architecture changed for MLD (per-link
+  instead of per-vif), but this function was never updated.
 
-### Step 1.4: Hidden Bug Fix Detection
-This is explicitly labeled as a fix and clearly IS a fix. No hiding.
+Record: [WARN_ON trigger + -EINVAL return breaking probe_client for AP
+MLD] [Stack trace confirms userspace reachability] [Root cause: MLD per-
+link chanctx_conf not assigned at vif level]
 
----
+**Step 1.4: Hidden Bug Fix Detection**
+This is NOT hidden — the commit message clearly describes a warning
+trigger and broken functionality. The subject says "set band information
+only for non-MLD" which is effectively "fix broken AP MLD probe_client."
+
+Record: [Direct bug fix, not disguised]
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files changed:** 1 (`drivers/iommu/amd/debugfs.c`)
-- **Lines:** +12/-9 (net +3 lines)
-- **Functions modified:** `devid_show`, `iommu_devtbl_show`,
-  `iommu_irqtbl_show`
-- **Scope:** Single-file surgical fix
+**Step 2.1: Inventory**
+- 1 file modified: `net/mac80211/cfg.c`
+- Lines changed: +10/-5 (net +5 lines)
+- Function modified: `ieee80211_probe_client()`
+- Scope: single-function surgical fix
 
-### Step 2.2: Code Flow Change
-In each of the three functions, the pattern is identical:
+**Step 2.2: Code Flow Change**
+BEFORE: Unconditionally dereferences `sdata->vif.bss_conf.chanctx_conf`
+to get band. For AP MLD, chanctx_conf is NULL, triggers WARN_ON, returns
+-EINVAL.
 
-**Before:** The global `sbdf` is read multiple times -- once for
-validity check, then again for extracting segment and device ID. Between
-reads, another thread can change the value.
+AFTER: Checks `ieee80211_vif_is_mld()` first. If MLD, sets `band = 0`
+(MLD transmissions don't rely on band). If not MLD, uses the original
+chanctx_conf path unchanged.
 
-**After:** A local `sbdf_shadow = sbdf` snapshot is taken at function
-entry. All subsequent operations use `sbdf_shadow`, ensuring the
-validity check and the actual access operate on the same value.
+**Step 2.3: Bug Mechanism**
+Category: Logic/correctness fix — missing MLD case handling.
+Mechanism: The function assumed chanctx_conf is always assigned at the
+vif's bss_conf level. After MLD introduction, this is only true for non-
+MLD interfaces. For MLD, chanctx_conf lives per-link.
 
-### Step 2.3: Bug Mechanism
-**Category:** Race condition / TOCTOU (Time-of-Check-Time-of-Use)
+**Step 2.4: Fix Quality**
+- Obviously correct: the conditional is clean and the MLD path avoids
+  the NULL dereference.
+- Minimal: only touches the necessary code path.
+- Regression risk: Very low. Non-MLD path is completely unchanged. MLD
+  path now gets `band = 0` instead of crashing.
+- Merged by Johannes Berg (mac80211 maintainer), who deeply understands
+  MLD architecture.
 
-When `sbdf` becomes -1 between check and use:
-- `PCI_SBDF_TO_DEVID(-1)` = `(-1) & 0xffff` = `0xFFFF` = 65535
-- This value is then used to index into `rlookup_table[devid]`,
-  `dev_table[devid]`, and `irq_lookup_table[devid]`
-- These arrays are allocated with `last_bdf + 1` entries. If `last_bdf <
-  0xFFFF`, this is an **out-of-bounds access**
-
-### Step 2.4: Fix Quality
-- **Obviously correct:** Yes -- standard pattern of snapshotting a
-  shared variable into a local
-- **Minimal/surgical:** Yes -- only adds 3 local variables and
-  substitutes references
-- **Regression risk:** Essentially zero. Local variable shadowing does
-  not change any semantics when there is no concurrent modification
-- **No red flags**
-
----
+Record: [High quality, surgical fix] [Very low regression risk]
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The buggy code was introduced by three commits, all by Dheeraj Kumar
-Srivastava on July 2, 2025:
-- `2e98940f123d9` - "Add support for device id user input" (introduced
-  `devid_show` and the global `sbdf`)
-- `b484577824452` - "Add debugfs support to dump device table"
-  (introduced `iommu_devtbl_show`)
-- `349ad6d5263a6` - "Add debugfs support to dump IRT Table" (introduced
-  `iommu_irqtbl_show`)
+**Step 3.1: Blame**
+- `chanctx_conf = rcu_dereference(sdata->vif.bss_conf.chanctx_conf)`
+  introduced by commit `d0a9123ef548de` (2022-05-10) — "wifi: mac80211:
+  move some future per-link data to bss_conf"
+- This was a mechanical rename moving `chanctx_conf` from `vif` to
+  `vif.bss_conf` as prep for MLD
+- The probe_client function itself dates back to `06500736c5d26b`
+  (2011-11-04) by Johannes Berg
 
-All three commits exist in the 7.0 stable tree.
+Record: [chanctx_conf access moved to bss_conf in d0a9123ef548de (2022)]
+[Function dates to 2011]
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present (expected for candidate review).
+**Step 3.2: Fixes Tag**
+No Fixes: tag present. The bug was introduced when MLD AP support was
+completed, making chanctx_conf per-link but not updating this function.
 
-### Step 3.3: File History
-The file has had 9 total commits, with the most recent being
-`a0c7005333f9a` (a separate OOB fix for the mmio_show function -- same
-class of bug). The file is relatively new and the buggy code has been
-present since its introduction.
+**Step 3.3: File History**
+Recent changes to `net/mac80211/cfg.c` are mostly unrelated (key
+handling, UHR support, kmalloc changes). No related prerequisite
+refactoring needed.
 
-### Step 3.4: Author Context
-Guanghui Feng has 4 commits in this tree, all fixing real bugs (UAF,
-softlockup, incorrect checks, and this race). They are not the subsystem
-maintainer but the fix was reviewed by Vasant Hegde (AMD IOMMU co-
-maintainer).
+Record: [Standalone fix, no dependencies]
 
-### Step 3.5: Dependencies
-This is patch 1/2 of a series but is fully standalone. Patch 2/2 fixes
-the same class of bug in `iommu_mmio_show` and `iommu_capability_show`
-(different functions). Each patch is independent.
+**Step 3.4: Author**
+- Author: Suraj P Kizhakkethil (Qualcomm) — first commit to
+  net/mac80211/
+- Merged by: Johannes Berg — mac80211 maintainer/creator
 
----
+Record: [Author is Qualcomm WiFi engineer; maintainer reviewed and
+merged]
+
+**Step 3.5: Prerequisites**
+- Requires `ieee80211_vif_is_mld()` which exists since v6.5 (commit
+  `f1871abd27641`, June 2023)
+- Verified present in v6.6 and v6.12
+
+Record: [Self-contained fix; prerequisite function exists in 6.5+]
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1: Original Discussion
-Found at: https://yhbt.net/lore/lkml/20260319073754.651998-1-
-guanghuifeng@linux.alibaba.com/T/
+**Step 4.1-4.2: Patch Discussion**
+- Lore was not directly accessible (anti-bot protection)
+- b4 dig could not match the message-id directly
+- The patch was merged by Johannes Berg, indicating it passed his review
+- The Link tag confirms it went through the standard wireless review
+  process
 
-Key findings:
-- **Joerg Roedel** (AMD IOMMU maintainer) applied it and explicitly
-  said: **"this patch-set fixes pretty serious issues"**
-- He asked Vasant Hegde to further review AMD IOMMU debugfs for
-  robustness/security
-- Only v1 was submitted; no revisions needed
+Record: [Maintainer-reviewed and merged; lore inaccessible for detailed
+discussion]
 
-### Step 4.2: Reviewers
-- **Vasant Hegde** (AMD, IOMMU co-maintainer): Reviewed-by: for both
-  patches
-- **Joerg Roedel** (AMD, IOMMU maintainer): Applied the series
-- Appropriate maintainers and mailing lists (iommu, linux-kernel) were
-  CC'd
+**Step 4.3: Bug Report**
+No explicit Reported-by. The stack trace with hostapd suggests the
+author encountered this in Qualcomm AP MLD testing.
 
-### Step 4.3: Bug Report
-No external bug report linked; the author discovered this through
-analysis of monitoring scripts accessing debugfs concurrently.
-
-### Step 4.4: Series Context
-2-patch series. Patch 1/2 is self-contained. Patch 2/2 fixes same
-pattern in mmio/capability functions (would also be beneficial but is
-independent).
-
-### Step 4.5: Stable Discussion
-No explicit stable nomination found on the mailing list. No known reason
-it was excluded.
-
----
+**Step 4.4-4.5: Related Patches/Stable Discussion**
+The patch message-id suggests this is patch 2 of a series, but it is
+self-contained — the fix only touches `ieee80211_probe_client()` and has
+no code dependencies on other patches in the series.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions Modified
-- `devid_show()` -- called when reading
-  `/sys/kernel/debug/iommu/amd/devid`
-- `iommu_devtbl_show()` -- called when reading
-  `/sys/kernel/debug/iommu/amd/devtbl`
-- `iommu_irqtbl_show()` -- called when reading
-  `/sys/kernel/debug/iommu/amd/irqtbl`
+**Step 5.1: Functions Modified**
+- `ieee80211_probe_client()` — the only function modified
 
-### Step 5.2: Callers
-All three are seq_file show functions, invoked via the VFS `read` path
-when userspace reads the debugfs files. They are reachable from any
-root-level process (debugfs default permissions).
+**Step 5.2: Callers**
+- Called via `.probe_client` in `cfg80211_ops` (line 5632 of cfg.c)
+- Called from `nl80211_probe_client()` in `net/wireless/nl80211.c`
+- Triggered from userspace via netlink (hostapd uses this for station
+  monitoring)
 
-### Step 5.3-5.4: Call Chain
-`open(debugfs_file)` -> `seq_open` -> `read()` -> `seq_read_iter()` ->
-`devid_show()` / `iommu_devtbl_show()` / `iommu_irqtbl_show()` ->
-accesses `rlookup_table[devid]`, `dev_table[devid]`,
-`irq_lookup_table[devid]`
+Record: [Reachable from userspace via netlink; called during normal AP
+operation]
 
-The buggy path is reachable from userspace (root or debugfs-accessible
-user).
+**Step 5.3-5.4: Call Chain**
+Userspace (hostapd) -> netlink -> `genl_rcv_msg` ->
+`nl80211_probe_client` -> `ieee80211_probe_client` -> WARN_ON + return
+-EINVAL
 
-### Step 5.5: Similar Patterns
-The same TOCTOU pattern exists in `iommu_mmio_show` and
-`iommu_capability_show` (fixed by patch 2/2 of the series, not this
-commit).
+This is a HOT path for AP MLD operation — hostapd regularly probes
+stations to check if they're still connected.
 
----
+**Step 5.5: Similar Patterns**
+Other places in mac80211 access `sdata->vif.bss_conf.chanctx_conf` (28
+occurrences across mac80211). This fix addresses only the probe_client
+path.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Does the Buggy Code Exist?
-Yes. Verified via `git blame`: the three buggy functions were all
-introduced in commits from July 2025, well before the 7.0 release. The
-code is identical in HEAD and v7.0-rc7 with no diff.
+**Step 6.1: Buggy Code in Stable Trees**
+- v6.6: YES — verified. The exact same buggy code exists at line 4150 in
+  v6.6's cfg.c. `ieee80211_vif_is_mld()` also exists in v6.6's
+  mac80211.h.
+- v6.12: YES — verified. Same buggy code at line 4226. Same
+  `ieee80211_vif_is_mld()`.
+- v6.1: NO — `ieee80211_vif_is_mld()` does not exist in v6.1 (not an
+  ancestor of v6.1). MLD was not mature enough in 6.1 to have this
+  issue.
 
-### Step 6.2: Backport Complications
-The fix should apply **cleanly** to the 7.0 stable tree. The file
-content at HEAD matches exactly what the patch expects to modify.
+Record: [Bug affects v6.5+ stable trees, including v6.6.y and v6.12.y]
 
-### Step 6.3: Related Fixes Already in Stable
-Only `a0c7005333f9a` (mmio OOB fix) is in the tree, which fixes a
-different function. No fix for this specific race has been applied.
+**Step 6.2: Backport Complications**
+- v6.6: Minor conflict — uses `mutex_lock(&local->mtx)` instead of
+  `lockdep_assert_wiphy()`. Fix code itself applies cleanly since it
+  only touches the chanctx_conf logic.
+- v6.12: Should apply cleanly — uses the same `lockdep_assert_wiphy()`.
 
----
+Record: [v6.12: clean apply; v6.6: minor context difference in locking,
+fix itself applies]
+
+**Step 6.3: Related Fixes**
+No related fixes for this specific bug already in stable.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem and Criticality
-- **Subsystem:** IOMMU (drivers/iommu/amd/) -- IMPORTANT
-- AMD IOMMU is used on all AMD server and desktop platforms
-- debugfs is a debugging interface, but an OOB access can crash the
-  kernel regardless of the interface
+**Step 7.1: Subsystem Criticality**
+- Subsystem: WiFi/mac80211 — IMPORTANT
+- Used by AP/router deployments (hostapd), all WiFi-enabled devices
+- AP MLD (WiFi 7) is increasingly deployed
 
-### Step 7.2: Activity
-Moderately active -- 9 commits total to this file, all relatively recent
-(2025-2026).
-
----
+**Step 7.2: Subsystem Activity**
+Actively developed subsystem with continuous changes. MLD support is
+actively being improved.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is Affected
-Users with AMD IOMMU hardware who access the IOMMU debugfs. This
-includes monitoring scripts and debugging tools running on AMD
-platforms.
+**Step 8.1: Affected Users**
+Anyone running an AP MLD (WiFi 7 multi-link) configuration using
+hostapd.
 
-### Step 8.2: Trigger Conditions
-- Two or more processes concurrently accessing IOMMU debugfs files
-- One process writes an invalid device ID while another reads
-  devtbl/irqtbl
-- **Realistic trigger:** Monitoring scripts that poll debugfs, or
-  simultaneous debugging sessions
-- Requires root access (debugfs), so not directly a privilege escalation
-  vector
+**Step 8.2: Trigger Conditions**
+- Triggered during normal operation when hostapd probes client stations
+- Happens automatically via hostapd's station monitoring
+- Any AP MLD with connected stations will trigger this repeatedly
+- Reachable from userspace (hostapd)
 
-### Step 8.3: Failure Mode Severity
-- **Out-of-bounds array access:** Using index 0xFFFF on arrays sized to
-  `last_bdf + 1`
-- Result: **kernel crash (oops/panic)** or potential **information
-  disclosure** from reading arbitrary kernel memory
-- Severity: **HIGH** (kernel crash from root-triggerable path)
+**Step 8.3: Failure Mode Severity**
+- WARN_ON fires every time a station is probed — spams kernel log
+- Function returns -EINVAL — station probing is completely non-
+  functional for AP MLD
+- Without probe_client, hostapd cannot determine if stations are still
+  alive
+- Severity: HIGH (functionality completely broken + WARN_ON spam)
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit:** HIGH -- prevents kernel crash from a realistic concurrent
-  access pattern; maintainer called it "pretty serious"
-- **Risk:** VERY LOW -- 12 lines added, 9 removed; trivially correct
-  local variable shadowing; zero regression risk
-- **Ratio:** Strongly favorable for backport
-
----
+**Step 8.4: Risk-Benefit Ratio**
+- BENEFIT: HIGH — fixes broken AP MLD functionality, eliminates WARN_ON
+  spam
+- RISK: VERY LOW — 5-line net change, self-contained, maintainer-
+  reviewed, non-MLD path completely unchanged
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence
-**FOR backporting:**
-- Fixes a real TOCTOU race leading to out-of-bounds array access
-  (potential kernel crash)
-- AMD IOMMU maintainer (Joerg Roedel) called it "pretty serious"
-- Reviewed-by from Vasant Hegde (AMD IOMMU co-maintainer)
-- Tiny, surgical fix (12 insertions, 9 deletions, single file)
-- Obviously correct -- standard local variable snapshot pattern
-- Buggy code exists in 7.0 stable tree
-- Applies cleanly with no modifications needed
-- Self-contained (no dependencies on other patches)
+**Step 9.1: Evidence Summary**
 
-**AGAINST backporting:**
-- debugfs is root-only, limiting exposure
-- No syzbot/reproducer report
-- No Fixes: tag (expected for candidates)
+FOR backporting:
+- Fixes a clear, reproducible WARN_ON trigger during normal AP MLD
+  operation
+- Fixes broken probe_client functionality for AP MLD (returns -EINVAL)
+- Small, surgical fix (+10/-5 lines)
+- Merged by Johannes Berg (mac80211 maintainer/creator)
+- Affects v6.6 and v6.12 stable trees (verified)
+- Stack trace in commit message proves real-world trigger
+- Reachable from userspace (hostapd normal operation)
+- No dependencies on other patches
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES -- reviewed by AMD maintainer,
-   applied by subsystem maintainer
-2. **Fixes a real bug?** YES -- race condition leading to out-of-bounds
-   access
-3. **Important issue?** YES -- kernel crash (HIGH severity per
-   maintainer assessment)
-4. **Small and contained?** YES -- 3 lines of logic change across 3
-   functions in 1 file
-5. **No new features or APIs?** Correct -- no new features
-6. **Can apply to stable trees?** YES -- applies cleanly
+AGAINST backporting:
+- No explicit Fixes: tag (expected for review candidates)
+- No explicit Cc: stable (expected)
+- Author's first mac80211 commit (but maintainer-reviewed)
 
-### Step 9.3: Exception Categories
-Not applicable -- this is a standard bug fix, not an exception category.
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? YES — clear conditional check, stack
+   trace shows testing
+2. Fixes a real bug? YES — WARN_ON + broken functionality
+3. Important issue? YES — breaks AP MLD station probing entirely
+4. Small and contained? YES — 5 net lines, single function
+5. No new features? CORRECT — only fixes existing broken path
+6. Can apply to stable? YES — verified code exists in v6.6 and v6.12
 
-### Step 9.4: Decision
-The fix is small, surgical, obviously correct, reviewed and approved by
-the subsystem maintainers, and fixes a real race condition that can
-cause out-of-bounds memory access (kernel crash). It meets all stable
-kernel criteria.
+**Step 9.3: Exception Categories**
+Not an exception category — this is a straightforward bug fix.
 
----
+**Step 9.4: Decision**
+Clear YES. This fixes a real, reproducible bug that completely breaks AP
+MLD probe_client functionality. The fix is small, obvious, self-
+contained, and maintainer-reviewed.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from author (Guanghui Feng) and
-  maintainer (Joerg Roedel). No Fixes: or Cc: stable (expected).
-- [Phase 2] Diff analysis: 3 functions each get `int sbdf_shadow =
-  sbdf;` local snapshot. All subsequent sbdf uses replaced with
-  sbdf_shadow. +12/-9 lines.
-- [Phase 2] Verified `PCI_SBDF_TO_DEVID(-1)` = `0xFFFF` via macro
-  definition in `amd_iommu_types.h:443`
-- [Phase 2] Verified arrays are sized to `last_bdf + 1`
-  (init.c:662-663), so devid=0xFFFF can be OOB
-- [Phase 3] git blame: buggy code introduced by `2e98940f123d9`,
-  `b484577824452`, `349ad6d5263a6` (all July 2025)
-- [Phase 3] git show for all three introducing commits confirmed they
-  are in the 7.0 tree
-- [Phase 3] git log confirms no prior fix for this specific race in the
-  tree
-- [Phase 4] Lore thread found at yhbt.net mirror. Joerg Roedel said
-  "fixes pretty serious issues". Vasant Hegde gave Reviewed-by.
-- [Phase 4] Only v1 submitted, no revisions needed. Series is 2 patches,
-  this is patch 1 (standalone).
-- [Phase 5] Functions are debugfs seq_file show callbacks, reachable
-  from userspace read() on debugfs files
-- [Phase 6] `git diff v7.0-rc7 HEAD -- drivers/iommu/amd/debugfs.c` is
-  empty -- file is identical to current HEAD, patch applies cleanly
-- [Phase 8] OOB array access -> kernel oops/crash, severity HIGH.
-  Maintainer confirmed seriousness.
+- [Phase 1] Parsed tags: Link to patch.msgid.link, merged by Johannes
+  Berg (mac80211 maintainer)
+- [Phase 2] Diff analysis: +10/-5 lines in single function
+  `ieee80211_probe_client()`, adds MLD conditional check
+- [Phase 3] git blame: chanctx_conf access introduced by d0a9123ef548de
+  (2022-05-10)
+- [Phase 3] git show b4487c2d0edaf: unrelated older fix (2011) for
+  different warning in same function
+- [Phase 3] git log --author="Suraj": no prior mac80211 commits (first
+  contribution, but maintainer-reviewed)
+- [Phase 4] b4 dig: unable to match exact message-id, but patch link
+  confirms standard review process
+- [Phase 5] Grep: `ieee80211_probe_client` called via cfg80211_ops
+  `.probe_client` callback from nl80211
+- [Phase 5] Stack trace: confirms userspace reachability via
+  nl80211_probe_client -> hostapd
+- [Phase 6] git show v6.6:net/mac80211/cfg.c: confirmed same buggy code
+  at line 4150
+- [Phase 6] git show v6.12:net/mac80211/cfg.c: confirmed same buggy code
+  at line 4226
+- [Phase 6] git show v6.6:include/net/mac80211.h: confirmed
+  `ieee80211_vif_is_mld()` exists
+- [Phase 6] git merge-base --is-ancestor: `ieee80211_vif_is_mld` in v6.5
+  and v6.6, NOT in v6.1
+- [Phase 8] Failure mode: WARN_ON trigger + -EINVAL return = broken
+  functionality, severity HIGH
+- UNVERIFIED: Exact mailing list discussion content (lore blocked by
+  anti-bot protection)
 
 **YES**
 
- drivers/iommu/amd/debugfs.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ net/mac80211/cfg.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iommu/amd/debugfs.c b/drivers/iommu/amd/debugfs.c
-index 20b04996441d6..0b03e0622f67e 100644
---- a/drivers/iommu/amd/debugfs.c
-+++ b/drivers/iommu/amd/debugfs.c
-@@ -197,10 +197,11 @@ static ssize_t devid_write(struct file *filp, const char __user *ubuf,
- static int devid_show(struct seq_file *m, void *unused)
- {
- 	u16 devid;
-+	int sbdf_shadow = sbdf;
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index b85375ceb575d..85b18f59a7821 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -4629,12 +4629,17 @@ static int ieee80211_probe_client(struct wiphy *wiphy, struct net_device *dev,
  
--	if (sbdf >= 0) {
--		devid = PCI_SBDF_TO_DEVID(sbdf);
--		seq_printf(m, "%04x:%02x:%02x.%x\n", PCI_SBDF_TO_SEGID(sbdf),
-+	if (sbdf_shadow >= 0) {
-+		devid = PCI_SBDF_TO_DEVID(sbdf_shadow);
-+		seq_printf(m, "%04x:%02x:%02x.%x\n", PCI_SBDF_TO_SEGID(sbdf_shadow),
- 			   PCI_BUS_NUM(devid), PCI_SLOT(devid), PCI_FUNC(devid));
- 	} else
- 		seq_puts(m, "No or Invalid input provided\n");
-@@ -237,13 +238,14 @@ static int iommu_devtbl_show(struct seq_file *m, void *unused)
- {
- 	struct amd_iommu_pci_seg *pci_seg;
- 	u16 seg, devid;
-+	int sbdf_shadow = sbdf;
+ 	qos = sta->sta.wme;
  
--	if (sbdf < 0) {
-+	if (sbdf_shadow < 0) {
- 		seq_puts(m, "Enter a valid device ID to 'devid' file\n");
- 		return 0;
+-	chanctx_conf = rcu_dereference(sdata->vif.bss_conf.chanctx_conf);
+-	if (WARN_ON(!chanctx_conf)) {
+-		ret = -EINVAL;
+-		goto unlock;
++	if (ieee80211_vif_is_mld(&sdata->vif)) {
++		/* MLD transmissions must not rely on the band */
++		band = 0;
++	} else {
++		chanctx_conf = rcu_dereference(sdata->vif.bss_conf.chanctx_conf);
++		if (WARN_ON(!chanctx_conf)) {
++			ret = -EINVAL;
++			goto unlock;
++		}
++		band = chanctx_conf->def.chan->band;
  	}
--	seg = PCI_SBDF_TO_SEGID(sbdf);
--	devid = PCI_SBDF_TO_DEVID(sbdf);
-+	seg = PCI_SBDF_TO_SEGID(sbdf_shadow);
-+	devid = PCI_SBDF_TO_DEVID(sbdf_shadow);
+-	band = chanctx_conf->def.chan->band;
  
- 	for_each_pci_segment(pci_seg) {
- 		if (pci_seg->id != seg)
-@@ -336,19 +338,20 @@ static int iommu_irqtbl_show(struct seq_file *m, void *unused)
- {
- 	struct amd_iommu_pci_seg *pci_seg;
- 	u16 devid, seg;
-+	int sbdf_shadow = sbdf;
- 
- 	if (!irq_remapping_enabled) {
- 		seq_puts(m, "Interrupt remapping is disabled\n");
- 		return 0;
- 	}
- 
--	if (sbdf < 0) {
-+	if (sbdf_shadow < 0) {
- 		seq_puts(m, "Enter a valid device ID to 'devid' file\n");
- 		return 0;
- 	}
- 
--	seg = PCI_SBDF_TO_SEGID(sbdf);
--	devid = PCI_SBDF_TO_DEVID(sbdf);
-+	seg = PCI_SBDF_TO_SEGID(sbdf_shadow);
-+	devid = PCI_SBDF_TO_DEVID(sbdf_shadow);
- 
- 	for_each_pci_segment(pci_seg) {
- 		if (pci_seg->id != seg)
+ 	if (qos) {
+ 		fc = cpu_to_le16(IEEE80211_FTYPE_DATA |
 -- 
 2.53.0
 
