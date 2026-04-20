@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5212E093A;
-	Mon, 20 Apr 2026 15:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5872E093A;
+	Mon, 20 Apr 2026 15:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700489; cv=none; b=EmOUOrT2RVeom4otTKnZzI5CK5L0uynX19g5v5YK28+LsfSXGS8HAVJ8isLggpBoUQaI1pNMPssdKLmqQ/BkqgD0DDMY00KvMAR3zw9mKpQ5TEPoxx1zWEqKgAk4VmGehe3iFyEnoU6T3kqYn0Wfi/ZPuLiz4c6iKtBsOh9Mh0g=
+	t=1776700491; cv=none; b=WQgzuiTvb8GCPjHdFBW2BBwCkV5pzq/4xrxsv77/wuKUHyv3LE4MgxEJKBU3bOJL98iV6mztgiKVJR1vD8qRKgdc9dy7mUpfL+KYpBwlGgnmeJRLqtfZ18aRkCnayqPQtcZe5e45sSHkjsa0YMIP/9QWCXvt878BY+3SmrbPGCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700489; c=relaxed/simple;
-	bh=4eiApwrGy2kebTZLivE8/XCMGj36g/ItG8DXkJIiqvQ=;
+	s=arc-20240116; t=1776700491; c=relaxed/simple;
+	bh=KrqGuZvpib+by2f/VfJs7CcPn8E6ZtB7+BFlqWpUqSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qbu3JgKo1jNoe2A2JVPRoO6T+H8koTkaW/rxzt2HTHEAi1bOGdDuR79GbF6Ko/kDK3jEnCVq5d+aLdXjR7JFo5jvKEqyA5u0W+NavavsAU6CH9cknNyCWrVDdEr9W9SunuPGI+vBWpUEo5JpwT3Vb7BL1jesCb92iygQ7WcLFLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcaFd6uO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yh0NCF4CxzIbBr+2+lY4cXBlZyt5aux3xqKuTm57uhYQ4I3ZSLcP5c1OlmktA2V6SIYiu59v5rB0WA0q7CKJxooiAxkr9JrcuVrI+0/t2vYLpYJDSbaupIPrDZHQ1r698hTffDu3yspb9mrcq/j23+fMKgGtcEDC61SylWKOuc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7cz8C9Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcaFd6uO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B616CC19425;
-	Mon, 20 Apr 2026 15:54:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7cz8C9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A3AC19425;
+	Mon, 20 Apr 2026 15:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700489;
-	bh=4eiApwrGy2kebTZLivE8/XCMGj36g/ItG8DXkJIiqvQ=;
+	s=korg; t=1776700491;
+	bh=KrqGuZvpib+by2f/VfJs7CcPn8E6ZtB7+BFlqWpUqSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gcaFd6uOfJd6gNTvLYqmmyS0Ywpkck6+BtIvcLjrY/R9/4XOe4hbD6NHZAHJ/Vx+N
-	 oBMbILIBthBLoYWypa73PDRAvmgYDJH2no6jXC8WVWm/2wCUu1MmcaqPrzNpADMFqO
-	 VjwprrVvAO0R4hNoN5dgKvHV9m01J/wDLXsE8pgQ=
+	b=N7cz8C9Y+d2LxIEiHor7Y0CffSWh8JqLkx5dtyu0uAepj8Fn9FYFiAqmnR0GqNMe/
+	 P81uGLp9hkwswklp2wuCxzzaBLzt1ePBxa/AM5IvdP4TQm2MP54KiWDT5dCN7wWJlc
+	 ygUDteQZRTbXcZqziIh2fCWtoBZAa2kjITQkCSdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Google Big Sleep <big-sleep-vuln-reports+bigsleep-501448199@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Jan Kara <jack@suse.cz>,
+	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 193/220] mm: call ->free_folio() directly in folio_unmap_invalidate()
-Date: Mon, 20 Apr 2026 17:42:14 +0200
-Message-ID: <20260420153940.974540985@linuxfoundation.org>
+Subject: [PATCH 6.19 176/220] Docs/admin-guide/mm/damon/reclaim: warn commit_inputs vs param updates race
+Date: Mon, 20 Apr 2026 17:41:57 +0200
+Message-ID: <20260420153940.363696909@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -53,80 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: SeongJae Park <sj@kernel.org>
 
-commit 615d9bb2ccad42f9e21d837431e401db2e471195 upstream.
+commit 0beba407d4585a15b0dc09f2064b5b3ddcb0e857 upstream.
 
-We can only call filemap_free_folio() if we have a reference to (or hold a
-lock on) the mapping.  Otherwise, we've already removed the folio from the
-mapping so it no longer pins the mapping and the mapping can be removed,
-causing a use-after-free when accessing mapping->a_ops.
+Patch series "Docs/admin-guide/mm/damon: warn commit_inputs vs other
+params race".
 
-Follow the same pattern as __remove_mapping() and load the free_folio
-function pointer before dropping the lock on the mapping.  That lets us
-make filemap_free_folio() static as this was the only caller outside
-filemap.c.
+Writing 'Y' to the commit_inputs parameter of DAMON_RECLAIM and
+DAMON_LRU_SORT, and writing other parameters before the commit_inputs
+request is completely processed can cause race conditions.  While the
+consequence can be bad, the documentation is not clearly describing that.
+Add clear warnings.
 
-Link: https://lore.kernel.org/20260413184314.3419945-1-willy@infradead.org
-Fixes: fb7d3bc41493 ("mm/filemap: drop streaming/uncached pages when writeback completes")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reported-by: Google Big Sleep <big-sleep-vuln-reports+bigsleep-501448199@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Jan Kara <jack@suse.cz>
-Cc: <stable@vger.kernel.org>
+The issue was discovered [1,2] by sashiko.
+
+
+This patch (of 2):
+
+DAMON_RECLAIM handles commit_inputs request inside kdamond thread,
+reading the module parameters.  If the user updates the module
+parameters while the kdamond thread is reading those, races can happen.
+To avoid this, the commit_inputs parameter shows whether it is still in
+the progress, assuming users wouldn't update parameters in the middle of
+the work.  Some users might ignore that.  Add a warning about the
+behavior.
+
+The issue was discovered in [1] by sashiko.
+
+Link: https://lore.kernel.org/20260329153052.46657-2-sj@kernel.org
+Link: https://lore.kernel.org/20260319161620.189392-3-objecting@objecting.org [1]
+Link: https://lore.kernel.org/20260319161620.189392-2-objecting@objecting.org [3]
+Fixes: 81a84182c343 ("Docs/admin-guide/mm/damon/reclaim: document 'commit_inputs' parameter")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.19.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c  |    3 ++-
- mm/internal.h |    1 -
- mm/truncate.c |    6 +++++-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ Documentation/admin-guide/mm/damon/reclaim.rst |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -228,7 +228,8 @@ void __filemap_remove_folio(struct folio
- 	page_cache_delete(mapping, folio, shadow);
- }
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -71,6 +71,10 @@ of parametrs except ``enabled`` again.
+ parameter is set as ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_RECLAIM will be disabled.
  
--void filemap_free_folio(struct address_space *mapping, struct folio *folio)
-+static void filemap_free_folio(const struct address_space *mapping,
-+		struct folio *folio)
- {
- 	void (*free_folio)(struct folio *);
++Once ``Y`` is written to this parameter, the user must not write to any
++parameters until reading ``commit_inputs`` again returns ``N``.  If users
++violate this rule, the kernel may exhibit undefined behavior.
++
+ min_age
+ -------
  
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -471,7 +471,6 @@ unsigned find_lock_entries(struct addres
- 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
- unsigned find_get_entries(struct address_space *mapping, pgoff_t *start,
- 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
--void filemap_free_folio(struct address_space *mapping, struct folio *folio);
- int truncate_inode_folio(struct address_space *mapping, struct folio *folio);
- bool truncate_inode_partial_folio(struct folio *folio, loff_t start,
- 		loff_t end);
---- a/mm/truncate.c
-+++ b/mm/truncate.c
-@@ -622,6 +622,7 @@ static int folio_launder(struct address_
- int folio_unmap_invalidate(struct address_space *mapping, struct folio *folio,
- 			   gfp_t gfp)
- {
-+	void (*free_folio)(struct folio *);
- 	int ret;
- 
- 	VM_BUG_ON_FOLIO(!folio_test_locked(folio), folio);
-@@ -648,9 +649,12 @@ int folio_unmap_invalidate(struct addres
- 	xa_unlock_irq(&mapping->i_pages);
- 	if (mapping_shrinkable(mapping))
- 		inode_lru_list_add(mapping->host);
-+	free_folio = mapping->a_ops->free_folio;
- 	spin_unlock(&mapping->host->i_lock);
- 
--	filemap_free_folio(mapping, folio);
-+	if (free_folio)
-+		free_folio(folio);
-+	folio_put_refs(folio, folio_nr_pages(folio));
- 	return 1;
- failed:
- 	xa_unlock_irq(&mapping->i_pages);
 
 
