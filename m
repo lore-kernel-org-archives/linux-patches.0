@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B5341C2EA;
-	Mon, 20 Apr 2026 13:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E822341C307;
+	Mon, 20 Apr 2026 13:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691652; cv=none; b=ZUP8joZrTG4b5CAi2o3eYtt4yd5VPtj//Dqsgclgh4OoKTUy6ioOAkhUqrc1wkSDHsC3xHNofTNrM5HETku/maFodoojKfVl0tYwbGcOVguPA//rAxg23a4ZhHFVkIre/nzorZs9+jREZZnQhQUobjdx0i9rn6xIVlIHQHtwoaU=
+	t=1776691654; cv=none; b=TVwk/wTKvbT2zDGPz8cT/oz8xVM/6O198TmPoM6BACX2BCsFHSJdzzjJSF3K/kpvO7izmcQZfKd7AZOPkc73MrUMi26Y7ueaedFQ4WJbOLjanX04U9nNdfyNAD0VdmtCi7FRqB/aesJW2r0vq3le0lyAdZUoACJbBCrD6wezIWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691652; c=relaxed/simple;
-	bh=kWHvlumYuARspLhTbn3pLUQ8CZS38EoDirgo6FEmhoQ=;
+	s=arc-20240116; t=1776691654; c=relaxed/simple;
+	bh=buwyR++9CurJdz+jiz3qwQE0qZO4hCUjznEc2NetFsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L1kJRPTSRn8kYXVDBBryfsnNWmeymN1k5RvSwuHn/Ywu9rB6uh3XJzFTkWbovobD3w1mXrgL9fI0XosdgK6DLEp7oWhJR92QnGgR2yVVd0fjEPOAKXnDtDmGryflwgSiCf6Vw7bJ3j5SqFK9Oqy65Qo4pSsEFcbyJRBZ4Lj07hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AEePd5Tr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9PXfHex6ziQtTcdk/0+vVSdumVIEGWBaEv1TeicxbI20isGfTm2aQxaucasTHer8/0ndqXRC41gFei0+181Q/cmQawAx0mLr45L7CSR+ZXlBAiE9l3Kpn3p0wKUHoccLSM72pXRwnruYEGsw9qVwvKHAweckJXQcCqX9dmMa+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XEwo+Lh6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AEePd5Tr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF868C19425;
-	Mon, 20 Apr 2026 13:27:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XEwo+Lh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E81C2BCB7;
+	Mon, 20 Apr 2026 13:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691652;
-	bh=kWHvlumYuARspLhTbn3pLUQ8CZS38EoDirgo6FEmhoQ=;
+	s=k20201202; t=1776691653;
+	bh=buwyR++9CurJdz+jiz3qwQE0qZO4hCUjznEc2NetFsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEePd5Tre0nN1nBHBFGB17ir16NJ53Kx0mY8oJcLeSx4lWoZG/FhDRo8UPHIf/MNP
-	 MNy2NiiXXYcDXOxp8hulwpITR+ROEpUVgQNnY4uCJzojuElLRLiQxwL0q8dMKjH/AX
-	 1bbxHnFZ39mLEy4ydXJ9Sl53i2mGrmRLRQL1GWTi3qnrg0qemF/JvQxhi8kxUqZSAu
-	 +G2oaj1scZCxPcHGFqBocpKmXSPENH7vkk0Br2Ctgweboqfk84KTQjJWoHOp0EzUy2
-	 v+zleizAJPl4hgZMoZ0A+bYLD4ZkcXjyer1Zx2PMNcdgnf8Dz0LIZCeqcr6Dw2z9s5
-	 SaJqDHTfbcJag==
+	b=XEwo+Lh6PIdZgfdg4i15+C9sdnfJRpfHr6wmtdqk1M3kIQCEO2D12tsxi8U0Lk+fW
+	 stMtU8PwdzJGH/ZQobU+vyLE5mTbipwJHQthZKWrzjzaFBE6+B8wp3NrEF96tpo/4k
+	 WjdhYiYis3l3xkc+DDOVJC7TBV7BE2eI4C6J3XFdFfeQ05s/otaYKXF7XmyoxVMrHA
+	 b0g6UZvzvg9SQnp3YTTng9npGexNv8fAt28sw3HaU7wO6n7zAfBxwRjjBHoZqenFbO
+	 6xlLNKfcNhskWakr9p5DBiny/ys1Ej966FvHhEDmRzhEI/to66nJuODTLsqzKMMnLb
+	 Rq+Udbcgob2bA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Golle <daniel@makrotopia.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Wander Lairson Costa <wander@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew@lunn.ch,
-	olteanv@gmail.com,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	rostedt@goodmis.org,
+	linux-trace-kernel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] dsa: tag_mxl862xx: set dsa_default_offload_fwd_mark()
-Date: Mon, 20 Apr 2026 09:19:07 -0400
-Message-ID: <20260420132314.1023554-153-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] rtla: Handle pthread_create() failure properly
+Date: Mon, 20 Apr 2026 09:19:08 -0400
+Message-ID: <20260420132314.1023554-154-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,274 +50,325 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit 4250ff1640ea1ede99bfe02ca949acbcc6c0927f ]
+[ Upstream commit d847188bb92b14518a04d7542e44928a22060847 ]
 
-The MxL862xx offloads bridge forwarding in hardware, so set
-dsa_default_offload_fwd_mark() to avoid duplicate forwarding of
-packets of (eg. flooded) frames arriving at the CPU port.
+Add proper error handling when pthread_create() fails to create the
+timerlat user-space dispatcher thread. Previously, the code only logged
+an error message but continued execution, which could lead to undefined
+behavior when the tool later expects the thread to be running.
 
-Link-local frames are directly trapped to the CPU port only, so don't
-set dsa_default_offload_fwd_mark() on those.
+When pthread_create() returns an error, the function now jumps to the
+out_trace error path to properly clean up resources and exit. This
+ensures consistent error handling and prevents the tool from running
+in an invalid state without the required user-space thread.
 
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://patch.msgid.link/e1161c90894ddc519c57dc0224b3a0f6bfa1d2d6.1775049897.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20260309195040.1019085-10-wander@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis.
+Now let me compile the full analysis.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit Message Forensics
 
 **Step 1.1: Subject Line**
-- Subsystem: `dsa: tag_mxl862xx`
-- Action: "set" (adding a missing call)
-- Summary: Set `dsa_default_offload_fwd_mark()` in the MxL862xx DSA tag
-  RCV path to prevent duplicate forwarding.
+- Subsystem: `rtla` (Real-Time Linux Analysis tool, under
+  `tools/tracing/rtla`)
+- Action verb: "Handle" (strongly suggests fixing incorrect handling - a
+  bug fix pattern)
+- Summary: Add proper error handling when pthread_create() fails for the
+  timerlat user-space dispatcher thread.
+
+Record: [rtla] [Handle] [Add missing error path when pthread_create
+fails]
 
 **Step 1.2: Tags**
-- `Signed-off-by: Daniel Golle` - author and original driver creator
-- `Link:` - patch.msgid.link URL (standard for netdev)
-- `Signed-off-by: Jakub Kicinski` - net maintainer applied the patch
-- No Fixes: tag, no Reported-by:, no Cc: stable (expected for this
-  review)
+- `Signed-off-by: Wander Lairson Costa <wander@redhat.com>` - author,
+  Red Hat engineer
+- `Link:
+  https://lore.kernel.org/r/20260309195040.1019085-10-wander@redhat.com`
+  - part of a larger series (patch 10 of a series)
+- `Signed-off-by: Tomas Glozar <tglozar@redhat.com>` - maintainer sign-
+  off
+- No Fixes: tag (expected for autosel candidates)
+- No Reported-by: (found by code review, not user report)
+- No Cc: stable (expected)
 
-**Step 1.3: Commit Body**
-The message explains: MxL862xx offloads bridge forwarding in hardware.
-Without `dsa_default_offload_fwd_mark()`, the software bridge doesn't
-know the hardware already forwarded the packet, so it forwards again,
-creating duplicate frames (especially flooded frames). Link-local frames
-are trapped directly to the CPU and should NOT have the mark set.
+Record: Author is Wander (Red Hat, active rtla contributor). Part of a
+larger series (patch 10). Accepted by Tomas Glozar (rtla maintainer).
 
-**Step 1.4: Hidden Bug Fix**
-This IS a real bug fix disguised as a "set" action. The missing offload
-forward mark causes concrete packet duplication on the network.
+**Step 1.3: Body Text**
+The commit message clearly describes: when `pthread_create()` fails, the
+code only logged an error but continued execution. This leads to the
+tool running in an invalid state where it expects user-space threads
+that don't exist.
 
-## PHASE 2: DIFF ANALYSIS
+Record: Bug = missing error exit on pthread_create failure. Symptom =
+tool runs without required user-space thread. Root cause = missing `goto
+out_trace` on error path.
 
-**Step 2.1: Inventory**
-- Files changed: 1 (`net/dsa/tag_mxl862xx.c`)
-- Lines: +3 added, 0 removed
-- Function modified: `mxl862_tag_rcv()`
+**Step 1.4: Hidden Bug Fix Detection**
+"Handle ... properly" is a classic bug-fix pattern. This IS a bug fix -
+it adds a missing error exit path.
+
+Record: Yes, this is a clear bug fix despite not using the word "fix" in
+the subject.
+
+## Phase 2: Diff Analysis
+
+**Step 2.1: Changes Inventory**
+- 1 file modified: `tools/tracing/rtla/src/common.c`
+- Net change: +3 lines / -1 line (added braces + `goto out_trace;`)
+- Function modified: `run_tool()`
+- Scope: Single-file, surgical fix
 
 **Step 2.2: Code Flow Change**
-Before: `mxl862_tag_rcv()` identifies the source port, sets `skb->dev`,
-strips the tag, returns. `skb->offload_fwd_mark` is never set (defaults
-to 0/false).
-
-After: Before stripping the tag, if the destination is NOT a link-local
-address, `dsa_default_offload_fwd_mark(skb)` is called, which sets
-`skb->offload_fwd_mark = !!(dp->bridge)`. This tells the software bridge
-that hardware already forwarded this packet.
+Before: `pthread_create()` failure logged an error message but execution
+continued to `ops->enable(tool)`, `ops->main(tool)`, etc.
+After: `pthread_create()` failure logs error and jumps to `out_trace`
+for proper cleanup and exit.
 
 **Step 2.3: Bug Mechanism**
-Category: Logic/correctness fix. The missing
-`dsa_default_offload_fwd_mark()` call means
-`nbp_switchdev_allowed_egress()` (in `net/bridge/br_switchdev.c` line
-67-74) sees `offload_fwd_mark == 0` and allows the software bridge to
-forward the packet AGAIN, even though the hardware switch already
-forwarded it. This causes duplicate frames on bridged interfaces.
+Category: (a) Error path fix. The code was missing a `goto` to the error
+cleanup path when `pthread_create()` failed. Without it, the tool runs
+without the user-space timerlat threads, producing incorrect/misleading
+measurements.
 
 **Step 2.4: Fix Quality**
-- Obviously correct: YES - this is the identical pattern used by ~15
-  other DSA tag drivers
-- Minimal/surgical: YES - 3 lines
-- Regression risk: Extremely low - the same pattern is well-tested
-  across all other DSA tag drivers
-- The `is_link_local_ether_addr` guard is used identically by
-  `tag_brcm.c` (lines 179-180, 254-255)
+- Obviously correct: follows the identical pattern used by all other
+  error checks in the same function (lines 247, 253, 280, 287)
+- Minimal/surgical: only adds braces and a `goto`
+- Regression risk: extremely low - only changes behavior when
+  `pthread_create()` fails (which is already an error condition)
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+Record: Fix is obviously correct, minimal, and consistent with
+surrounding code patterns. No regression risk.
+
+## Phase 3: Git History Investigation
 
 **Step 3.1: Blame**
-All lines in `tag_mxl862xx.c` trace to commit `85ee987429027` ("net:
-dsa: add tag format for MxL862xx switches"), which was in v7.0-rc1. The
-bug has been present since the file was created.
+The buggy code (lines 257-276) was introduced by commit `2f3172f9dd58cc`
+("tools/rtla: Consolidate code between osnoise/timerlat and hist/top")
+by Crystal Wood, September 2025. However, tracing further back, the
+original missing error handling existed since commit `cdca4f4e5e8ea`
+("rtla/timerlat_top: Add timerlat user-space support") by Daniel Bristot
+de Oliveira, June 2023 (v6.5-rc1).
 
-**Step 3.2: No Fixes: tag** - N/A. The implicit target is
-`85ee987429027`.
+Record: Bug introduced in v6.5-rc1, present in all stable trees from
+6.6.y onward. The consolidation commit just carried the bug forward into
+`common.c`.
+
+**Step 3.2: Fixes Tag**
+No Fixes: tag present (expected for autosel candidates). The bug
+logically traces to `cdca4f4e5e8ea` (v6.5-rc1).
 
 **Step 3.3: File History**
-Only one commit touches this file: `85ee987429027` (the initial
-creation). No intermediate fixes or refactoring.
+The file has been actively developed. Recent commits include
+consolidations of option parsing, volatile fix for stop_tracing, and
+other improvements. The author (Wander Lairson Costa) is a prolific
+contributor to rtla.
 
 **Step 3.4: Author**
-Daniel Golle is the original author of the MxL862xx tag driver and the
-MxL862xx DSA driver. He created the driver and is clearly the maintainer
-of this code.
+Wander has at least 17 commits in rtla (including multiple fixes like
+NULL pointer dereference fix, parse return value doc fix, volatile fix).
+He is a regular contributor and maintainer-level contributor for rtla.
+
+Record: Author is a regular, trusted contributor to this subsystem.
 
 **Step 3.5: Dependencies**
-No dependencies. The fix is standalone; `dsa_default_offload_fwd_mark()`
-and `is_link_local_ether_addr()` both already exist in the tree. The
-file hasn't changed since its introduction.
+The `run_tool()` function and the `out_trace` label already exist in the
+7.0 tree. No dependencies needed. However, the `run_tool()` function
+only exists since the consolidation commit `2f3172f9dd58cc` (~v6.18
+cycle). In older stable trees (6.6.y, 6.12.y), the same fix would need
+to target `timerlat_top.c` and `timerlat_hist.c` instead.
 
-## PHASE 4: MAILING LIST
+Record: For 7.0.y, applies standalone with no dependencies. For older
+trees, would need different patches.
 
-Lore.kernel.org was blocked by bot protection. However:
-- b4 dig found the original driver submission at `https://patch.msgid.li
-  nk/c64e6ddb6c93a4fac39f9ab9b2d8bf551a2b118d.1770433307.git.daniel@makr
-  otopia.org` (v14 of the series, meaning extensive review)
-- The fix was signed off by Jakub Kicinski, the net maintainer
-- The original driver was Reviewed-by Vladimir Oltean (DSA maintainer) -
-  the missing `dsa_default_offload_fwd_mark()` was an oversight in the
-  original v14 series
+## Phase 4: Mailing List and External Research
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.1-4.2: Patch Discussion**
+The commit's Link tag shows it's patch 10 of a series (Message-ID
+`20260309195040.1019085-10-wander@redhat.com`). Lore.kernel.org was
+blocked by anti-bot protection, but b4 dig confirmed the author's other
+patches in the same series (e.g., `20260106133655.249887-16` for the
+volatile fix). The patch was accepted and signed off by maintainer Tomas
+Glozar.
 
-**Step 5.1:** Function modified: `mxl862_tag_rcv()`
+Record: Part of a larger cleanup/fix series. Accepted by rtla
+maintainer.
+
+**Step 4.3-4.5: Bug Report / Stable Discussion**
+No explicit bug report found. This appears to be found by code
+review/audit, not by a user hitting it in practice.
+
+Record: No user reports. Found by code inspection.
+
+## Phase 5: Code Semantic Analysis
+
+**Step 5.1: Functions Modified**
+Only `run_tool()` in `common.c`.
 
 **Step 5.2: Callers**
-`mxl862_tag_rcv` is registered as `.rcv` callback in
-`mxl862_netdev_ops`. It's called by the DSA core on every packet
-received from the switch. This is a HOT PATH for every single network
-packet.
+`run_tool()` is the unified entry point for all rtla tool modes (osnoise
+top/hist, timerlat top/hist). It's called from each tool's main
+function.
 
-**Step 5.3/5.4:** `dsa_default_offload_fwd_mark()` sets
-`skb->offload_fwd_mark` based on `dp->bridge` being non-NULL. This is
-checked by `nbp_switchdev_allowed_egress()` in the bridge forwarding
-path, which prevents duplicate forwarding.
+**Step 5.3-5.4: Call Chain**
+When `pthread_create()` fails and execution continues:
+1. `ops->enable(tool)` - enables tracing infrastructure
+2. `ops->main(tool)` - runs main measurement loop (top_main_loop or
+   hist_main_loop)
+3. Both main loops check `params->user.stopped_running` to detect if
+   user threads died
+4. Since threads were never created, `stopped_running` stays at 0, so
+   the tool thinks threads are still running
+5. The tool produces measurements and statistics without user-space
+   thread contributions
 
-**Step 5.5: Similar patterns**
-The exact same pattern (`is_link_local` check +
-`dsa_default_offload_fwd_mark`) is used in `tag_brcm.c`. The simpler
-form (unconditional `dsa_default_offload_fwd_mark`) is used in 12+ other
-tag drivers (`tag_ksz.c`, `tag_mtk.c`, `tag_ocelot.c`,
-`tag_hellcreek.c`, `tag_rtl4_a.c`, `tag_rtl8_4.c`, `tag_rzn1_a5psw.c`,
-`tag_xrs700x.c`, `tag_vsc73xx_8021q.c`, `tag_yt921x.c`, etc.).
+**Step 5.5: Similar Patterns**
+The original code in `timerlat_top.c` and `timerlat_hist.c` (pre-
+consolidation) had the identical missing error handling pattern,
+confirming this is a systematic bug.
 
-## PHASE 6: STABLE TREE ANALYSIS
+## Phase 6: Cross-Referencing and Stable Tree Analysis
 
-**Step 6.1: File existence in stable trees**
-- `net/dsa/tag_mxl862xx.c` does NOT exist in v6.19 or any earlier kernel
-- It was introduced in v7.0-rc1
-- The fix is ONLY relevant for 7.0.y stable
+**Step 6.1: Buggy Code in Stable**
+The `run_tool()` function in `common.c` only exists since ~v6.18 cycle.
+In 7.0.y, the code exists as-is and the patch applies cleanly. For older
+stable trees, different patches targeting `timerlat_top.c` and
+`timerlat_hist.c` would be needed.
 
 **Step 6.2: Backport Complications**
-The file in 7.0.y is identical to the v7.0-rc1/v7.0 version. The patch
-will apply cleanly with no conflicts.
+For 7.0.y: clean apply expected - no conflicts.
 
-**Step 6.3: No related fixes already in stable.**
+**Step 6.3: Related Fixes**
+No other fix for this specific issue found in stable.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## Phase 7: Subsystem and Maintainer Context
 
-**Step 7.1:** Subsystem: Networking / DSA (Distributed Switch
-Architecture). Criticality: IMPORTANT - affects users of MxL862xx
-hardware switches.
+**Step 7.1: Subsystem**
+`tools/tracing/rtla` - userspace real-time latency analysis tool.
+Criticality: PERIPHERAL (userspace tool, not kernel code), but important
+for real-time system validation.
 
-**Step 7.2:** The MxL862xx driver is very new (added in 7.0-rc1), but
-DSA as a subsystem is mature and actively developed.
+**Step 7.2: Activity**
+Very actively developed - 14+ commits since the consolidation.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 8: Impact and Risk Assessment
 
-**Step 8.1: Who is affected**
-All users of MxL862xx switches with bridged ports. This is
-embedded/networking hardware.
+**Step 8.1: Who Is Affected**
+Users of the rtla timerlat tool with `--user-threads` option,
+specifically when `pthread_create()` fails.
 
-**Step 8.2: Trigger conditions**
-Every bridged packet received from the switch triggers this bug. Flooded
-frames (broadcast, unknown unicast, multicast) are explicitly mentioned.
-This is extremely common - essentially all normal network traffic when
-using bridging.
+**Step 8.2: Trigger Conditions**
+Rare - requires `--user-threads` mode AND `pthread_create()` failure
+(typically due to resource exhaustion or system limits).
 
-**Step 8.3: Failure mode**
-- Duplicate frames on the network for every bridged packet
-- Potential broadcast storms (flooded frames duplicated endlessly)
-- Network instability and degraded performance
-- Severity: HIGH (network malfunction, not a crash, but makes bridging
-  essentially broken)
+**Step 8.3: Failure Mode Severity**
+When triggered: tool continues running in invalid state, producing
+measurements without user-space thread contributions. For a real-time
+analysis tool, this means **silently incorrect results** (the error
+message is printed but could be missed). Severity: MEDIUM (incorrect
+tool output, not kernel crash/corruption).
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Very high - fixes completely broken bridge forwarding for
-  this hardware
-- RISK: Very low - 3 lines, well-established pattern used by 15+ other
-  drivers, zero chance of regression
-- Ratio: Strongly favorable
+**Step 8.4: Risk-Benefit Ratio**
+- BENEFIT: Moderate - prevents misleading latency measurements
+- RISK: Very low - 2-line change to an error path only triggered on
+  failure
+- Ratio: Favorable
 
-## PHASE 9: FINAL SYNTHESIS
+## Phase 9: Final Synthesis
 
-**Evidence FOR backporting:**
-1. Fixes a real, significant bug: duplicate forwarding of all bridged
-   packets
-2. Tiny fix: 3 lines
-3. Follows the exact same pattern as 15+ other DSA tag drivers (well-
-   tested)
-4. Written by the original driver author
-5. Applied by net maintainer Jakub Kicinski
-6. Applies cleanly to 7.0.y
-7. Zero regression risk
+**Step 9.1: Evidence**
+FOR backporting:
+- Fixes a real bug (missing error exit leads to invalid tool state)
+- Small and surgical (3 lines changed)
+- Obviously correct (follows identical pattern in same function)
+- Very low regression risk
+- Author is trusted contributor; accepted by maintainer
+- Bug existed since v6.5
 
-**Evidence AGAINST backporting:**
-1. Only affects 7.0.y stable (file doesn't exist in earlier kernels)
-2. No explicit Fixes: tag or Cc: stable (expected for reviewed commits)
-3. MxL862xx is relatively new hardware (niche user base)
+AGAINST backporting:
+- Userspace tool, not kernel code
+- Trigger condition is rare (pthread_create failure)
+- No user reports of actually hitting this bug
+- MEDIUM severity (incorrect tool output, not crash/corruption)
 
-**Stable Rules Checklist:**
-1. Obviously correct? YES - identical pattern to 15+ other tag drivers
-2. Fixes a real bug? YES - duplicate forwarding of bridged packets
-3. Important issue? YES - makes bridging non-functional (duplicate
-   frames, potential storms)
-4. Small and contained? YES - 3 lines, one file
-5. No new features? CORRECT - no new features
-6. Applies to stable? YES - clean apply to 7.0.y
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** - trivially correct
+2. Fixes a real bug? **YES** - tool runs without required threads
+3. Important issue? **MEDIUM** - incorrect measurements, not crash
+4. Small and contained? **YES** - 3 lines in 1 file
+5. No new features? **YES** - pure error handling fix
+6. Can apply to stable? **YES** for 7.0.y
+
+**Step 9.3: Exception Categories**
+Not an exception category - standard bug fix.
+
+**Step 9.4: Decision**
+The fix is small, obviously correct, and prevents the rtla tool from
+operating in an invalid state. While it's a userspace tool and the
+trigger is rare, the fix has essentially zero regression risk and
+improves correctness. The pattern of missing error handling on
+`pthread_create()` failure is a clear bug.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by Daniel Golle (author) and Jakub
-  Kicinski (net maintainer). No Fixes/Reported-by tags.
-- [Phase 2] Diff analysis: 3 lines added in `mxl862_tag_rcv()`, adds
-  missing `dsa_default_offload_fwd_mark()` call with
-  `is_link_local_ether_addr` guard.
-- [Phase 3] git blame: all code from `85ee987429027` (v7.0-rc1). Bug
-  present since file creation.
-- [Phase 3] git log: only 1 commit touches `tag_mxl862xx.c`, no
-  intermediate changes.
-- [Phase 3] Author is original driver creator (verified via blame + git
-  log --author).
-- [Phase 4] b4 dig found original series: v14 of MxL862xx driver
-  submission. Reviewed by Vladimir Oltean.
-- [Phase 4] Lore fetch blocked by bot protection; relied on b4 dig
-  results.
-- [Phase 5] grep confirmed `dsa_default_offload_fwd_mark()` used by 15+
-  other DSA tag drivers with identical pattern.
-- [Phase 5] `tag_brcm.c` uses exact same `is_link_local_ether_addr`
-  guard (lines 179-180, 254-255).
-- [Phase 5] `nbp_switchdev_allowed_egress()` in `br_switchdev.c:67-74`
-  confirmed: uses `offload_fwd_mark` to suppress duplicate forwarding.
-- [Phase 6] `git show v6.19.12:net/dsa/tag_mxl862xx.c` → "does not
-  exist". File only in 7.0+.
-- [Phase 6] `git show v7.0:net/dsa/tag_mxl862xx.c` → file identical to
-  current HEAD, patch applies cleanly.
-- [Phase 8] Failure mode: duplicate forwarding of all bridged frames,
-  severity HIGH.
+- [Phase 1] Parsed tags: Link to patch 10 of a series, SOBs from author
+  and maintainer
+- [Phase 2] Diff analysis: +3/-1 lines, adds `goto out_trace` to error
+  path in `run_tool()`
+- [Phase 3] git blame: buggy code carried from `cdca4f4e5e8ea`
+  (v6.5-rc1) through consolidation `2f3172f9dd58cc`
+- [Phase 3] git show 2f3172f9dd58cc: confirmed consolidation commit
+  created `run_tool()` carrying the bug
+- [Phase 3] Checked pre-consolidation files: both `timerlat_top.c` and
+  `timerlat_hist.c` had identical missing error handling
+- [Phase 4] b4 dig: confirmed author's series via `af2962d68b970` match
+- [Phase 4] Lore blocked by anti-bot; could not read full thread
+  discussion
+- [Phase 5] Traced `run_tool()` flow: after failed pthread_create, tool
+  continues to enable/main/stats without user threads
+- [Phase 5] Verified `out_trace` cleanup path exists and is used by
+  other error checks in same function
+- [Phase 6] Code exists in 7.0.y (run_tool in common.c); older trees
+  have equivalent code in different files
+- [Phase 8] Failure mode: tool produces results without user-space
+  threads, severity MEDIUM
+- UNVERIFIED: Could not read full mailing list thread due to lore anti-
+  bot protection
 
 **YES**
 
- net/dsa/tag_mxl862xx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/tracing/rtla/src/common.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/dsa/tag_mxl862xx.c b/net/dsa/tag_mxl862xx.c
-index 01f2158682718..8daefeb8d49df 100644
---- a/net/dsa/tag_mxl862xx.c
-+++ b/net/dsa/tag_mxl862xx.c
-@@ -86,6 +86,9 @@ static struct sk_buff *mxl862_tag_rcv(struct sk_buff *skb,
- 		return NULL;
+diff --git a/tools/tracing/rtla/src/common.c b/tools/tracing/rtla/src/common.c
+index ceff76a62a30b..68426ce6f9971 100644
+--- a/tools/tracing/rtla/src/common.c
++++ b/tools/tracing/rtla/src/common.c
+@@ -271,8 +271,10 @@ int run_tool(struct tool_ops *ops, int argc, char *argv[])
+ 		params->user.cgroup_name = params->cgroup_name;
+ 
+ 		retval = pthread_create(&user_thread, NULL, timerlat_u_dispatcher, &params->user);
+-		if (retval)
++		if (retval) {
+ 			err_msg("Error creating timerlat user-space threads\n");
++			goto out_trace;
++		}
  	}
  
-+	if (likely(!is_link_local_ether_addr(eth_hdr(skb)->h_dest)))
-+		dsa_default_offload_fwd_mark(skb);
-+
- 	/* remove the MxL862xx special tag between the MAC addresses and the
- 	 * current ethertype field.
- 	 */
+ 	retval = ops->enable(tool);
 -- 
 2.53.0
 
