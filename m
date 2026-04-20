@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52E83358B0;
-	Mon, 20 Apr 2026 15:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F0333BBA7;
+	Mon, 20 Apr 2026 15:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700264; cv=none; b=Gh1MwFKMPsLlfgypCHAjkDN5xtcV9c/Fmzc09oSs37ElduM1fk87IvCYWfGwEkXO8sQ8xTrCGZ2Cg1R7Uog1mc+kwCa5YdlWkeu2I9Y58WK1IG6vjXNJPDZnf5zOvPaN9oGCK8PqlL3iCnycb44G5Cy/6bawG7TKAgp2TYdz+eM=
+	t=1776700266; cv=none; b=W84X1hN/sqfDgDyztY+J+2rS0AzhYWQwQ0cS9gjYodOpk/SQWRtQfxEb++7q7Cvib4LdHmp9qFHfVHy03L1LfhWPp1/zwQfsTKuLUjes7vqgLoDgABzERRRe6q6OFOXchg6w+0Upjmst0yMNik+1frsJvbK7HMvB6GRcJk0PEHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700264; c=relaxed/simple;
-	bh=G4jfACR5TN8FevEQP/JDpuAIsupxGqUBq0CPXbo0FC0=;
+	s=arc-20240116; t=1776700266; c=relaxed/simple;
+	bh=ERC0qNIvvo1KgYZkIWsRJd3/1KC/0N4t0/ry/UaIfrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tf2i8y874ENu5KMfBBqngVd0g++Q3TZASdSy5aiRAxvutluhZ1pnA9tX4I0frNwWrOlMbqzKMTmj7ibqWosDtWu7myYYuc6tSL5UZSMbtIdysoLFsDG/CVC4qrKf4hu0PLsIZdGm790s9O059TFi5+OESeelka3eytAZ9B3Hz3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bn0foGH7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Zz1rDzL4BwZDovbmteriiph2kBzaL3tKVuGZr0LSp4m1bWN4Z37KLozNC2y72mXFJopv+8DTdejdNbYLaNSsF8U/MOvIkcYu56FB5YLL9s7wuU5DokpKdSaKIwxSGQaw6HOAw0YOgonpxAc0F8cSlzvKhITkUXh3GCgo4j0jQI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BueaQSXz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bn0foGH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9CBC19425;
-	Mon, 20 Apr 2026 15:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BueaQSXz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380BEC19425;
+	Mon, 20 Apr 2026 15:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700263;
-	bh=G4jfACR5TN8FevEQP/JDpuAIsupxGqUBq0CPXbo0FC0=;
+	s=korg; t=1776700266;
+	bh=ERC0qNIvvo1KgYZkIWsRJd3/1KC/0N4t0/ry/UaIfrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bn0foGH7VrtxXT5MNnc1TTO6XarkBwCbed+B/xv1J3QEZjlY01uq9gvwFyr3qPN7G
-	 VWMSBrpQhgloBdIVqE+wfQKbB7GEqi2DxFozyv2Xs05m2Lak1Z+DgAYxEurKz9LeSc
-	 /xf85mYeIhrKSkaP2xxKtpJM3EMIErgMX5bXW93I=
+	b=BueaQSXzyrslh0xdgLd8CFqi1z6x36AxqVx92VbNe02DKiKAuguN/4TzHQZgpUTSV
+	 ExTv3cJY/xKVd23+rCJkp+156pZyMiwaH17EdEW4fFakHIuTtSrGqByNxvJrqboHZa
+	 nAKBbwry0e+Koe+2wQEbWnOG5M1gZ1tMtbS9rRPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Melissa Wen <mwen@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 103/220] xsk: respect tailroom for ZC setups
-Date: Mon, 20 Apr 2026 17:40:44 +0200
-Message-ID: <20260420153937.743798496@linuxfoundation.org>
+Subject: [PATCH 6.19 073/220] drm/vc4: Fix memory leak of BO array in hang state
+Date: Mon, 20 Apr 2026 17:40:14 +0200
+Message-ID: <20260420153936.666780594@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -54,118 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 1ee1605138fc94cc8f8f273321dd2471c64977f9 ]
+[ Upstream commit f4dfd6847b3e5d24e336bca6057485116d17aea4 ]
 
-Multi-buffer XDP stores information about frags in skb_shared_info that
-sits at the tailroom of a packet. The storage space is reserved via
-xdp_data_hard_end():
+The hang state's BO array is allocated separately with kzalloc() in
+vc4_save_hang_state() but never freed in vc4_free_hang_state(). Add the
+missing kfree() for the BO array before freeing the hang state struct.
 
-	((xdp)->data_hard_start + (xdp)->frame_sz -	\
-	 SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
-
-and then we refer to it via macro below:
-
-static inline struct skb_shared_info *
-xdp_get_shared_info_from_buff(const struct xdp_buff *xdp)
-{
-        return (struct skb_shared_info *)xdp_data_hard_end(xdp);
-}
-
-Currently we do not respect this tailroom space in multi-buffer AF_XDP
-ZC scenario. To address this, introduce xsk_pool_get_tailroom() and use
-it within xsk_pool_get_rx_frame_size() which is used in ZC drivers to
-configure length of HW Rx buffer.
-
-Typically drivers on Rx Hw buffers side work on 128 byte alignment so
-let us align the value returned by xsk_pool_get_rx_frame_size() in order
-to avoid addressing this on driver's side. This addresses the fact that
-idpf uses mentioned function *before* pool->dev being set so we were at
-risk that after subtracting tailroom we would not provide 128-byte
-aligned value to HW.
-
-Since xsk_pool_get_rx_frame_size() is actively used in xsk_rcv_check()
-and __xsk_rcv(), add a variant of this routine that will not include 128
-byte alignment and therefore old behavior is preserved.
-
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://patch.msgid.link/20260402154958.562179-3-maciej.fijalkowski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 214613656b51 ("drm/vc4: Add an interface for capturing the GPU state after a hang.")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-2-92defc940a29@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock_drv.h | 23 ++++++++++++++++++++++-
- net/xdp/xsk.c              |  4 ++--
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/vc4/vc4_gem.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
-index 6b9ebae2dc952..46797645a0c24 100644
---- a/include/net/xdp_sock_drv.h
-+++ b/include/net/xdp_sock_drv.h
-@@ -41,16 +41,37 @@ static inline u32 xsk_pool_get_headroom(struct xsk_buff_pool *pool)
- 	return XDP_PACKET_HEADROOM + pool->headroom;
+diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
+index ab16164b5edaf..0562f78e28357 100644
+--- a/drivers/gpu/drm/vc4/vc4_gem.c
++++ b/drivers/gpu/drm/vc4/vc4_gem.c
+@@ -62,6 +62,7 @@ vc4_free_hang_state(struct drm_device *dev, struct vc4_hang_state *state)
+ 	for (i = 0; i < state->user_state.bo_count; i++)
+ 		drm_gem_object_put(state->bo[i]);
+ 
++	kfree(state->bo);
+ 	kfree(state);
  }
  
-+static inline u32 xsk_pool_get_tailroom(bool mbuf)
-+{
-+	return mbuf ? SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) : 0;
-+}
-+
- static inline u32 xsk_pool_get_chunk_size(struct xsk_buff_pool *pool)
- {
- 	return pool->chunk_size;
- }
- 
--static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
-+static inline u32 __xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
- {
- 	return xsk_pool_get_chunk_size(pool) - xsk_pool_get_headroom(pool);
- }
- 
-+static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
-+{
-+	u32 frame_size =  __xsk_pool_get_rx_frame_size(pool);
-+	struct xdp_umem *umem = pool->umem;
-+	bool mbuf;
-+
-+	/* Reserve tailroom only for zero-copy pools that opted into
-+	 * multi-buffer. The reserved area is used for skb_shared_info,
-+	 * matching the XDP core's xdp_data_hard_end() layout.
-+	 */
-+	mbuf = pool->dev && (umem->flags & XDP_UMEM_SG_FLAG);
-+	frame_size -= xsk_pool_get_tailroom(mbuf);
-+
-+	return ALIGN_DOWN(frame_size, 128);
-+}
-+
- static inline u32 xsk_pool_get_rx_frag_step(struct xsk_buff_pool *pool)
- {
- 	return pool->unaligned ? 0 : xsk_pool_get_chunk_size(pool);
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index a6d3938154f21..4a1cc44ab305a 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -239,7 +239,7 @@ static u32 xsk_copy_xdp(void *to, void **from, u32 to_len,
- 
- static int __xsk_rcv(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
- {
--	u32 frame_size = xsk_pool_get_rx_frame_size(xs->pool);
-+	u32 frame_size = __xsk_pool_get_rx_frame_size(xs->pool);
- 	void *copy_from = xsk_copy_xdp_start(xdp), *copy_to;
- 	u32 from_len, meta_len, rem, num_desc;
- 	struct xdp_buff_xsk *xskb;
-@@ -338,7 +338,7 @@ static int xsk_rcv_check(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
- 	if (xs->dev != xdp->rxq->dev || xs->queue_id != xdp->rxq->queue_index)
- 		return -EINVAL;
- 
--	if (len > xsk_pool_get_rx_frame_size(xs->pool) && !xs->sg) {
-+	if (len > __xsk_pool_get_rx_frame_size(xs->pool) && !xs->sg) {
- 		xs->rx_dropped++;
- 		return -ENOSPC;
- 	}
 -- 
 2.53.0
 
