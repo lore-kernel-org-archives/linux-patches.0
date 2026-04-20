@@ -1,52 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704A83AB287;
-	Mon, 20 Apr 2026 13:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39993AB28C;
+	Mon, 20 Apr 2026 13:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691952; cv=none; b=szt7dyzV4YYRRCsAkADGjKS56Q8tfALvygLuBBXPiD3Z/hUYncEjH+FqD2Ob38VcnhoWKbC9mLx0CQkJpJF8RHA8qYiQDbn6ELqXtlPG0svx91j16CWsLvLp+H9a1Akte+5thgfEjqeWqHpD37tkgoB2trU0f+pItC0JEV1G/8c=
+	t=1776691953; cv=none; b=nFmAETtKMSxPe1bUErA99EC/ygzDb42MxTViIkJatQeIoI8tNGsLXGhZ8gL82x5tLb1pl6dmhZzKVHW7kCYaEIXST0f0d/C+CD/Y+hIn5axrQ+vlA61qPcBlVg2Hue97BFR3rMQDxcXIVFIwoE3Os2/ohKTY6pz5OwW/5IFjNTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691952; c=relaxed/simple;
-	bh=FMA63my38RNW107IWuRQRdh0Q1DqYFOwak1lRGCvc3s=;
+	s=arc-20240116; t=1776691953; c=relaxed/simple;
+	bh=SxAhPlJl50t6Cqe24P0zzjs1/5e1F/Oz+usuCupB2zE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4HGh/bEmZiKeADy/4J4OxpMYz8F3otqUgRv52V0f2b/lIWRSOyfLhHCm8YNIaT2vZteKE/2eOAQQb5XQTZXKlsp3FNq9fBNoM5C5iTIvi3A7CAarro5u14DRvcBNlz8nPqizuNkYFNRUuo9TdDeGJurlgBg01D2SlKSz7gcfic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P8TefFk7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VPvW8zjpU6vmP8GlFxnx6V7sohMGNrwYsnc2lVDdZtd2oKiWCcm8wLZP/5+p9327OY0GmsgyQ00FpLaOU2XERMipReDUI72KBeq767dHQfRvsXHwchimE3hlmJGnZr127K0TH2XsVMJVujg4HqohAcpxsbQopX+Th3DDOEVOY8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mCWqNubd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P8TefFk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC5BC19425;
-	Mon, 20 Apr 2026 13:32:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mCWqNubd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F21C2BCB4;
+	Mon, 20 Apr 2026 13:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691952;
-	bh=FMA63my38RNW107IWuRQRdh0Q1DqYFOwak1lRGCvc3s=;
+	s=k20201202; t=1776691953;
+	bh=SxAhPlJl50t6Cqe24P0zzjs1/5e1F/Oz+usuCupB2zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P8TefFk7FybC5UQQ7qZQb+Ij12KzLnwPq9penp0r3gAB+dTTN91p2V6oLEBSd63Rg
-	 R5yJ5BAVT7BQVEvtHoUHyI+piV6KVDDFpLR7axnFFM41FHyBAFM5ERTIiNxkoEvXmd
-	 MjNs7jyia8YgYlQeq1Sse3U735QycT9Lro75ZtRoTxj716FxD8+EciR8epsMOrH/M0
-	 FYqs24LM58f+0EqQjZRMAJfeqqXeu1wbx+6PGE0bMJ/uTluDq/RgDmxSOIXbBGCKcA
-	 oMPdxT7QH+u+xyLXxa62PYdqdQSilMMeWhbyGj+vnvo+iz0m+Wk5nmygC956NbifWg
-	 OQ4xiP3Y9aSKw==
+	b=mCWqNubdWzV7xF9T4sSaAF8VkewQKmPxKa1yVGgWufijYFU+fz4bk9uHueUd8O+WL
+	 rhfB8wxCTP1eOilG/qSEX2Ocs7RX3A3CDzNBei2xdevOLxnhbi/gvVDENgOibsY2Vb
+	 xna0hGIFP7kH+Bq9VxXd/8NQskro35ex/oN+F69d8MN9zc2+AHCUn6MnWlG+C9PX/I
+	 Zm9ym8N10H4ZOYvb/bbhtmS5C3OEoCefva0pOnf5pHmrHmiwDBTD4OM1ujBwNCb+Jy
+	 oKzvjIsixsYU+XM0hMdNbULwrecJc8b4+d0t8DLPz0iEU1vaRZVRrnpVE+NSbVKrrD
+	 IAUyfyTrOw7xQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhengchuan Liang <zcliangcn@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+Cc: =?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	pablo@netfilter.org,
-	davem@davemloft.net,
-	dsahern@kernel.org,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
-	netdev@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] netfilter: require Ethernet MAC header before using eth_hdr()
-Date: Mon, 20 Apr 2026 09:21:21 -0400
-Message-ID: <20260420132314.1023554-287-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] ALSA: pcm: Use pcm_lib_apply_appl_ptr() in x32 sync_ptr
+Date: Mon, 20 Apr 2026 09:21:22 -0400
+Message-ID: <20260420132314.1023554-288-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -56,497 +48,410 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 62443dc21114c0bbc476fa62973db89743f2f137 ]
+[ Upstream commit 1e512ac1254c8e370dd18efe9da4dfc92492cdc5 ]
 
-`ip6t_eui64`, `xt_mac`, the `bitmap:ip,mac`, `hash:ip,mac`, and
-`hash:mac` ipset types, and `nf_log_syslog` access `eth_hdr(skb)`
-after either assuming that the skb is associated with an Ethernet
-device or checking only that the `ETH_HLEN` bytes at
-`skb_mac_header(skb)` lie between `skb->head` and `skb->data`.
+snd_pcm_ioctl_sync_ptr_x32() still handles incoming appl_ptr updates
+differently from the other SYNC_PTR paths. The native handler and the
+32-bit compat handler both pass appl_ptr through pcm_lib_apply_appl_ptr(),
+but the x32 handler still writes control->appl_ptr directly.
 
-Make these paths first verify that the skb is associated with an
-Ethernet device, that the MAC header was set, and that it spans at
-least a full Ethernet header before accessing `eth_hdr(skb)`.
+That direct assignment skips the common appl_ptr validation against
+runtime->boundary and also bypasses the substream ack() callback.
+This makes the x32 ioctl path behave differently from the native and
+compat32 cases, and it can miss the driver notification that explicit
+appl_ptr synchronization relies on.
 
-Suggested-by: Florian Westphal <fw@strlen.de>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Use pcm_lib_apply_appl_ptr() for x32 too, so appl_ptr updates are
+validated consistently and drivers relying on ack() notifications
+see the same behavior.
+
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260321-alsa-pcm-x32-sync-ptr-v1-1-02ce655657c6@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-`skb_mac_header_was_set` has been available since 2013, so it's
-available in all currently supported stable trees. `skb_mac_header_len`
-was introduced in 2017, also available in all supported stable trees
-(5.4+).
-
-Now I have all the information needed for the full analysis. Let me
-compile it.
+Now I have all the information I need. Let me compile my complete
+analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: netfilter (multiple files: ip6t_eui64, xt_mac, ipset
-  types, nf_log_syslog)
-- **Action verb**: "require" (ensuring precondition is met before use)
-- **Summary**: Require Ethernet MAC header validation before calling
-  `eth_hdr(skb)` across multiple netfilter modules
+**Step 1.1: Subject Line**
+- Subsystem: `ALSA: pcm` (sound/core PCM subsystem)
+- Action verb: "Use" — indicates replacing incorrect implementation with
+  the correct one
+- Summary: Make x32 sync_ptr use `pcm_lib_apply_appl_ptr()` instead of
+  direct assignment
+Record: [ALSA: pcm] [Use] [Apply correct appl_ptr update function in x32
+ioctl path]
 
-Record: [netfilter] [require] [validate MAC header is Ethernet and
-properly set before accessing eth_hdr(skb)]
+**Step 1.2: Tags**
+- `Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>` —
+  author
+- `Link: https://patch.msgid.link/20260321-alsa-pcm-x32-sync-
+  ptr-v1-1-02ce655657c6@gmail.com` — v1, patch 1/1 (standalone)
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA subsystem
+  maintainer accepted the patch
+- No Fixes: tag (expected for review candidates)
+- No Reported-by: (found by code inspection)
+Record: Patch accepted by subsystem maintainer (Takashi Iwai). Single
+standalone patch.
 
-### Step 1.2: Tags
-- **Suggested-by: Florian Westphal** - the netfilter subsystem co-
-  maintainer suggested this broader fix
-- **Tested-by: Ren Wei** - fix was tested
-- **Signed-off-by: Florian Westphal** - the netfilter maintainer signed
-  off and merged it
-- No Fixes: tag (expected - this is a broader hardening patch)
-- No Cc: stable tag (expected)
+**Step 1.3: Commit Body Analysis**
+- Bug described: x32 sync_ptr handler directly writes
+  `control->appl_ptr` instead of using `pcm_lib_apply_appl_ptr()`
+- Consequence 1: Skips appl_ptr validation against `runtime->boundary`
+- Consequence 2: Bypasses the `substream->ops->ack()` callback
+- Symptom: Inconsistent behavior between x32 and native/compat32 paths;
+  drivers relying on ack() won't get notifications
+- The commit explicitly notes the FIXME comment that previously flagged
+  this issue
+Record: Missing boundary validation + missing ack() callback in x32
+path. Drivers using explicit appl_ptr sync see wrong behavior.
 
-Record: Florian Westphal (netfilter maintainer) suggested and signed off
-on this patch. Tested.
-
-### Step 1.3: Commit Body
-The commit explains that multiple netfilter modules access
-`eth_hdr(skb)` after either:
-1. Assuming the skb is associated with an Ethernet device, OR
-2. Only checking that ETH_HLEN bytes at `skb_mac_header(skb)` lie
-   between `skb->head` and `skb->data` (raw pointer arithmetic)
-
-The fix adds three-part validation: (1) device is Ethernet
-(`ARPHRD_ETHER`), (2) MAC header was set (`skb_mac_header_was_set`), (3)
-MAC header spans a full Ethernet header (`skb_mac_header_len >=
-ETH_HLEN`).
-
-Record: Bug: `eth_hdr(skb)` accessed without proper validation that skb
-has a valid Ethernet MAC header. Can lead to out-of-bounds reads. Root
-cause: inadequate validation before dereferencing the MAC header.
-
-### Step 1.4: Hidden Bug Fix Detection
-This IS a memory safety fix. The commit message says "require...before
-using" which means the existing code accesses `eth_hdr()` without proper
-guards. Confirmed by KASAN report mentioned in the v2 changelog of patch
-1/2. Florian Westphal explicitly identified the other files as
-"suspicious spots."
-
-Record: Yes, this is a genuine memory safety bug fix - prevents out-of-
-bounds access on the MAC header.
+**Step 1.4: Hidden Bug Fix Detection**
+This IS a bug fix despite not using "fix" in the subject. "Use
+pcm_lib_apply_appl_ptr()" means "stop skipping validation and driver
+callbacks." The existing FIXME comment in the old code explicitly
+acknowledged missing boundary handling.
+Record: Yes, this is a real bug fix — restores missing validation and
+driver notification.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **net/ipv6/netfilter/ip6t_eui64.c**: +5/-2 lines (adds ARPHRD_ETHER
-  check, uses `skb_mac_header_was_set`/`skb_mac_header_len`)
-- **net/netfilter/ipset/ip_set_bitmap_ipmac.c**: +3/-2 lines
-- **net/netfilter/ipset/ip_set_hash_ipmac.c**: +5/-4 lines (two
-  functions)
-- **net/netfilter/ipset/ip_set_hash_mac.c**: +3/-2 lines
-- **net/netfilter/nf_log_syslog.c**: +6/-1 lines (two functions)
-- **net/netfilter/xt_mac.c**: +1/-3 lines
+**Step 2.1: Inventory**
+- Files: `sound/core/pcm_compat.c` (+4, -3 net change)
+- Function modified: `snd_pcm_ioctl_sync_ptr_x32()`
+- Scope: Single-file, single-function surgical fix
+Record: 1 file, ~7 lines changed, single function, minimal scope.
 
-Total: ~23 lines added, ~14 removed. Six files, all in netfilter
-subsystem.
+**Step 2.2: Code Flow Change**
+Before: Inside `scoped_guard(pcm_stream_lock_irq)`:
+```c
+/* FIXME: we should consider the boundary for the sync from app */
+if (!(sflags & SNDRV_PCM_SYNC_PTR_APPL))
+    control->appl_ptr = scontrol.appl_ptr;
+else
+    scontrol.appl_ptr = control->appl_ptr % boundary;
+```
 
-Record: Multi-file but mechanical/repetitive change. Each file gets the
-same validation pattern. Scope: contained to netfilter MAC header
-access.
+After:
+```c
+if (!(sflags & SNDRV_PCM_SYNC_PTR_APPL)) {
+    err = pcm_lib_apply_appl_ptr(substream, scontrol.appl_ptr);
+    if (err < 0)
+        return err;
+} else {
+    scontrol.appl_ptr = control->appl_ptr % boundary;
+}
+```
 
-### Step 2.2: Code Flow Changes
-Each hunk follows the same pattern:
-- **Before**: Raw pointer arithmetic `skb_mac_header(skb) < skb->head ||
-  skb_mac_header(skb) + ETH_HLEN > skb->data`, or NO check at all
-- **After**: Proper three-part check: `!skb->dev || skb->dev->type !=
-  ARPHRD_ETHER || !skb_mac_header_was_set(skb) ||
-  skb_mac_header_len(skb) < ETH_HLEN`
+The direct assignment is replaced with `pcm_lib_apply_appl_ptr()` which:
+1. Validates `appl_ptr >= runtime->boundary` → returns `-EINVAL`
+2. Checks NO_REWINDS constraint
+3. Assigns `runtime->control->appl_ptr = appl_ptr`
+4. Calls `substream->ops->ack()` and rolls back on failure
+5. Emits `trace_applptr()` tracepoint
+Record: Before = raw assignment without validation. After = validated,
+with ack callback and error handling.
 
-### Step 2.3: Bug Mechanism
-**Category**: Memory safety (out-of-bounds read / invalid memory access)
+**Step 2.3: Bug Mechanism**
+Category: Logic/correctness fix — missing validation and missing
+callback invocation.
+- Boundary validation bypass could allow setting appl_ptr to invalid
+  value
+- Missing ack() means audio drivers relying on explicit sync won't
+  receive DMA buffer notifications
+Record: Correctness bug — missing validation + missing driver
+notification on x32 ioctl path.
 
-The old checks were insufficient:
-1. **ip6t_eui64.c**: Only checked pointer bounds, not device type
-2. **ipset files**: Only checked pointer bounds, not device type or
-   `skb_mac_header_was_set`
-3. **nf_log_syslog.c dump_arp_packet**: NO check at all before
-   `eth_hdr(skb)`
-4. **nf_log_syslog.c dump_mac_header**: Checked device type via switch
-   but not MAC header validity
-5. **xt_mac.c**: Already had ARPHRD_ETHER check but used raw pointer
-   comparison instead of proper API
+**Step 2.4: Fix Quality**
+- Obviously correct: makes x32 match the native handler
+  (pcm_native.c:3140), compat32 handler (pcm_native.c:3242), and buggy
+  compat handler (pcm_compat.c:504) — all already use
+  `pcm_lib_apply_appl_ptr()`
+- Minimal and surgical: replaces 2 lines with 4 lines in one function
+- Regression risk: Very low — the error return path is new but is the
+  same pattern used by all other sync_ptr paths
+Record: Fix is obviously correct by comparison with 3 other identical
+code paths. Minimal. Very low regression risk.
 
-Without proper validation, if the MAC header isn't set or isn't
-Ethernet, `eth_hdr(skb)` returns a pointer to potentially uninitialized
-or out-of-bounds memory.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes. The pattern is simple and repeated
-  mechanically.
-- **Minimal/surgical**: Yes. Only replaces old check with new one; no
-  logic changes.
-- **Regression risk**: Very low. Adding validation before access can
-  only make the code safer. If device isn't Ethernet, these functions
-  should return early anyway.
+**Step 3.1: Blame**
+- The x32 handler was introduced by commit `513ace79b657e2` (Takashi
+  Iwai, 2016-02-28): "ALSA: pcm: Fix ioctls for X32 ABI"
+- The `scoped_guard` refactor was applied in `650224fe8d5f6d` (Takashi
+  Iwai, 2024-02-27)
+- The buggy direct assignment has been present since 2016
+Record: Buggy code introduced in 2016 (v4.6 era). Present in all active
+stable trees.
 
-Record: High quality fix. Uses proper kernel APIs instead of raw pointer
-arithmetic.
+**Step 3.2: Related Fixes**
+Commit `9027c4639ef1` (2017-05-25): "ALSA: pcm: Call ack() whenever
+appl_ptr is updated" — introduced `pcm_lib_apply_appl_ptr()` and added
+it to the native sync_ptr handler, but did NOT update the x32 handler.
 
-## PHASE 3: GIT HISTORY
+Commit `2e2832562c877` (2021-07-12): "ALSA: pcm: Call substream ack()
+method upon compat mmap commit" — fixed the same bug for the compat32
+path. **This commit had `Fixes: 9027c4639ef1` and `Cc:
+<stable@vger.kernel.org>`**, establishing precedent that this class of
+bug is stable-worthy.
+Record: Identical bug in compat32 was fixed (2e2832562c877) with
+explicit stable nomination. x32 was missed.
 
-### Step 3.1: Blame
-- The buggy code in ipset files dates from their initial introduction
-- `xt_mac.c` buggy check from 2010 (Jan Engelhardt, commit
-  1d1c397db95f1c)
-- `ip6t_eui64.c` dates back to Linux 2.6.12 (2005)
-- `nf_log_syslog.c` `dump_arp_packet` and `dump_mac_header` from the
-  nf_log consolidation era
+**Step 3.3: File History**
+Recent changes to pcm_compat.c are mostly refactoring (scoped_guard,
+sync_ptr_get_user macros, kfree cleanup). No other pending fixes.
+Record: Standalone fix, no dependencies on uncommitted work.
 
-Record: Bugs present since the code was written. Affects all stable
-trees.
+**Step 3.4: Author**
+Author (Cássio Gabriel) has one other commit in the sound subsystem (SOF
+topology parser). Patch was accepted by Takashi Iwai, the ALSA subsystem
+maintainer.
+Record: Patch reviewed and accepted by subsystem maintainer.
 
-### Step 3.2: Fixes tag
-No Fixes: tag on this commit. Patch 1/2 has `Fixes: 1da177e4c3f41`
-("Linux-2.6.12-rc2").
-
-### Step 3.3: Prerequisites
-This commit (2/2) depends on commit fdce0b3590f72 (1/2) for the
-`ip6t_eui64.c` changes only. The other 5 files are independent.
-
-Record: `ip6t_eui64.c` hunk requires patch 1/2 first. Other files:
-standalone.
-
-### Step 3.4: Author
-Written by Zhengchuan Liang, **suggested by and signed off by Florian
-Westphal** (netfilter maintainer). Very high confidence in the fix.
-
-### Step 3.5: Dependencies
-`skb_mac_header_was_set()` available since 2013. `skb_mac_header_len()`
-available since 2017. Both available in all supported stable trees.
+**Step 3.5: Dependencies**
+This patch depends on the `scoped_guard` refactor (`650224fe8d5f6`, in
+v6.12+) and the `snd_pcm_sync_ptr_get_user` macro refactor
+(`2acd83beb4d3f`, not in any current stable). For older stable trees,
+context adaptation would be needed but the core change is the same.
+Record: Clean apply on v7.0. Minor context adaptation needed for older
+stable trees due to locking and macro differences.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.4: Patch Discussion
-- **v1** (March 31, 2026): Single-patch fixing only `ip6t_eui64.c`
-- Florian Westphal (netfilter maintainer) reviewed v1 and:
-  - Asked "why is net/netfilter/xt_mac.c safe?" - implying it isn't
-  - Suggested using `skb_mac_header_len()` instead of raw pointer checks
-  - Suggested adding `ARPHRD_ETHER` device type check
-  - Identified "other suspicious spots" in `nf_log_syslog.c` and ipset
-  - Asked the author to make a patch covering all of them
-- **v2** (April 4, 2026): Split into 2 patches. Patch 1/2 is the focused
-  eui64 fix, patch 2/2 (this commit) is the broader hardening suggested
-  by Florian.
+**Step 4.1: Patch Discussion**
+- `b4 dig` could not find the patch by commit hash (this is a 7.0
+  autosel candidate). The patch link uses msgid `20260321-alsa-
+  pcm-x32-sync-ptr-v1-1-02ce655657c6@gmail.com`.
+- lore.kernel.org was blocked by anti-bot protection.
+- The patch is v1, patch 1/1 — a single standalone fix.
+Record: Single standalone patch, v1. Could not access lore due to anti-
+bot protection.
 
-Record: This patch was directly suggested and shaped by the netfilter
-subsystem maintainer. Strong endorsement.
+**Step 4.2: Reviewers**
+- Signed-off-by Takashi Iwai (ALSA maintainer) — the most authoritative
+  reviewer for this code.
+Record: Subsystem maintainer reviewed and merged.
 
-### Step 4.5: Stable Discussion
-The v2 changelog mentions "KASAN report" with a PoC, indicating this is
-a confirmed memory safety issue, not theoretical.
+**Step 4.3: Bug Report**
+No explicit bug report — found by code inspection (comparing x32 path to
+native/compat32).
+Record: Found by code audit comparing inconsistent ioctl paths.
+
+**Step 4.4: Related Patches**
+The earlier compat32 fix (`2e2832562c877`) explicitly requested stable
+backport. This x32 fix addresses the exact same gap.
+Record: Prior compat32 fix was explicitly Cc: stable.
+
+**Step 4.5: Stable History**
+The compat32 variant of this fix was backported to stable. The x32
+variant was not previously submitted.
+Record: Identical bug class was previously deemed stable-worthy.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Function Analysis
-- `eui64_mt6()`: Called from netfilter match evaluation (PRE_ROUTING,
-  LOCAL_IN, FORWARD hooks)
-- `bitmap_ipmac_kadt()`, `hash_ipmac4_kadt()`, `hash_ipmac6_kadt()`,
-  `hash_mac4_kadt()`: Called from ipset kernel-side operations
-- `dump_arp_packet()`, `dump_mac_header()`: Called from nf_log_syslog
-  packet logging
-- All are reachable from packet processing paths triggered by network
-  traffic
+**Step 5.1: Functions Modified**
+- `snd_pcm_ioctl_sync_ptr_x32()` — the only function changed
+Record: Single function modified.
 
-Record: All affected functions are on hot packet processing paths,
-triggered by normal network traffic with appropriate netfilter rules
-configured.
+**Step 5.2: Callers**
+`snd_pcm_ioctl_sync_ptr_x32()` is called from `snd_pcm_ioctl_compat()`
+(line 594) when `in_x32_syscall()` is true and the ioctl is
+`__SNDRV_PCM_IOCTL_SYNC_PTR64`. This is reachable from userspace via the
+compat ioctl syscall from any x32 process using PCM.
+Record: Reachable from userspace ioctl on x32 ABI.
+
+**Step 5.3-5.4: Call Chain**
+Userspace → compat_ioctl syscall → `snd_pcm_ioctl_compat()` →
+`snd_pcm_ioctl_sync_ptr_x32()` → (now) `pcm_lib_apply_appl_ptr()` →
+`substream->ops->ack()`.
+Record: Directly reachable from userspace syscalls.
+
+**Step 5.5: Similar Patterns**
+All 3 other sync_ptr paths (native, compat32, buggy-compat) already use
+`pcm_lib_apply_appl_ptr()`. The x32 path was the only outlier.
+Record: 3 out of 4 sync_ptr paths already correct; this fixes the 4th.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Code Existence
-- `xt_mac.c`: Unchanged since v5.4+ (will apply cleanly)
-- ipset files: Unchanged since v5.15+ (will apply cleanly)
-- `nf_log_syslog.c`: Has some churn but the relevant functions exist in
-  v5.15+
-- `ip6t_eui64.c`: Needs patch 1/2 as prerequisite
+**Step 6.1: Buggy Code in Stable Trees**
+- `9027c4639ef1` (introduced pcm_lib_apply_appl_ptr) is in v5.10, v5.15,
+  v6.1, v6.6, and all newer trees
+- `513ace79b657e2` (x32 handler) is in all stable trees since v4.6
+- Therefore the bug exists in ALL active stable trees
+Record: Bug present in v5.10, v5.15, v6.1, v6.6, v6.12, v6.14.
 
-### Step 6.2: Backport Complications
-For `ip6t_eui64.c`, patch 1/2 (fdce0b3590f72) must also be backported.
-Other files: clean apply expected.
+**Step 6.2: Backport Complications**
+- v6.12+: `scoped_guard` present, but `snd_pcm_sync_ptr_get_user` macro
+  absent → minor context conflict
+- v6.6 and older: neither `scoped_guard` nor the get_user macro present
+  → needs adaptation of surrounding context, but core fix is identical
+Record: Minor context adaptation needed. Core semantic change is
+version-independent.
+
+**Step 6.3: Related Fixes in Stable**
+The compat32 fix (`2e2832562c877`) is already in stable trees. The x32
+fix is not.
+Record: Compat32 variant already in stable. X32 variant missing.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem
-- **Subsystem**: Netfilter (net/netfilter/, net/ipv6/netfilter/)
-- **Criticality**: IMPORTANT - netfilter is the Linux firewall
-  subsystem, used by nearly all networked systems
+**Step 7.1: Subsystem Criticality**
+- ALSA PCM core — IMPORTANT. Audio is widely used; PCM is the
+  fundamental audio interface.
+- X32 ABI narrows the affected users but is still a supported kernel
+  feature.
+Record: IMPORTANT subsystem, platform-specific (x86_64 with X32 ABI).
 
-### Step 7.2: Activity
-Active subsystem with regular maintenance.
+**Step 7.2: Activity**
+The sound/core/pcm_compat.c file has moderate activity with refactoring
+and bug fixes.
+Record: Active, maintained subsystem.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Anyone using netfilter with MAC-address matching rules (iptables -m mac,
-ip6tables eui64 match, ipset with mac types) or logging with MACDECODE
-flag.
+**Step 8.1: Who Is Affected**
+X32 ABI users on x86-64 who use PCM audio with drivers that implement
+the ack() callback. While X32 is niche, the bug causes real misbehavior.
+Record: Platform-specific (X86_X32_ABI), affects audio applications
+using mmap/sync_ptr.
 
-### Step 8.2: Trigger Conditions
-- KASAN-confirmed: a PoC exists
-- Triggered by network traffic matching rules that use MAC header access
-- Could be triggered by non-Ethernet packets reaching netfilter rules
-  that assume Ethernet
+**Step 8.2: Trigger Conditions**
+Any x32 application calling `SNDRV_PCM_IOCTL_SYNC_PTR` with
+`!SNDRV_PCM_SYNC_PTR_APPL` (i.e., updating appl_ptr). This is a normal
+PCM operation.
+Record: Normal PCM operation on x32 applications. Common trigger.
 
-### Step 8.3: Severity
-- **Out-of-bounds read on MAC header**: Can cause kernel crash (oops),
-  potential info leak
-- **KASAN-confirmed**: Severity HIGH
+**Step 8.3: Failure Mode Severity**
+- Missing ack() → audio driver doesn't know about pointer update →
+  potentially incorrect DMA behavior, audio glitches, or silent audio
+  failure. MEDIUM-HIGH.
+- Missing boundary validation → appl_ptr could be set to invalid value →
+  potential for incorrect pointer arithmetic. MEDIUM.
+Record: Severity MEDIUM-HIGH — audio misbehavior/corruption for x32
+users.
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH - prevents memory safety bugs across 6 netfilter
-  modules
-- **Risk**: VERY LOW - mechanical replacement of validation checks, each
-  change is 1-3 lines, obviously correct
-- **Ratio**: Strongly favorable
+**Step 8.4: Risk-Benefit**
+- Benefit: Makes x32 path correct and consistent. Prevents real audio
+  issues for x32 users. Precedent: compat32 fix was Cc: stable.
+- Risk: Very low. 4 net lines changed. Replaces direct assignment with a
+  well-tested function used by all other code paths. Same pattern as 3
+  existing call sites.
+Record: HIGH benefit (correctness fix with stable precedent), VERY LOW
+risk.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence
-**FOR backporting:**
-- KASAN-confirmed memory safety bug with PoC
-- Suggested and signed off by netfilter maintainer Florian Westphal
-- Tested
-- Small, mechanical, obviously correct changes
-- Uses proper kernel APIs
-- Affects widely-used netfilter modules
-- Buggy code present in all stable trees
-- Functions available since kernel 4.x/5.x
+**Step 9.1: Evidence Compilation**
 
-**AGAINST backporting:**
-- Part of a 2-patch series (ip6t_eui64.c hunk depends on patch 1/2)
-- No explicit Cc: stable (expected)
-- Touches 6 files (but all changes are identical pattern)
+FOR backporting:
+- Fixes a real consistency bug: x32 path skips validation and ack()
+  callback
+- Identical bug in compat32 was fixed with explicit `Cc:
+  stable@vger.kernel.org` (commit `2e2832562c877`)
+- Small, surgical fix: ~7 lines in one function
+- Obviously correct: makes x32 match 3 other sync_ptr paths
+- Accepted by ALSA maintainer (Takashi Iwai)
+- Bug has existed since 2017 (when ack was introduced) — all stable
+  trees affected
+- Removes a FIXME comment that explicitly flagged the issue
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct? **YES** - mechanical pattern replacement,
-   maintainer-suggested
-2. Fixes real bug? **YES** - KASAN-confirmed out-of-bounds access
-3. Important issue? **YES** - memory safety / potential crash / info
-   leak
-4. Small and contained? **YES** - ~37 lines total across 6 files, all
-   same pattern
-5. No new features? **YES** - only tightens validation
-6. Can apply to stable? **YES** (with patch 1/2 for ip6t_eui64.c)
+AGAINST backporting:
+- X32 ABI is niche (smaller user base)
+- Needs minor context adaptation for older stable trees
+- No explicit user report of the bug being triggered
 
-### Step 9.3: Exception Categories
-Not an exception category - this is a straightforward bug fix.
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct? **YES** — identical pattern to 3 existing call
+   sites
+2. Fixes a real bug? **YES** — missing validation + missing driver
+   callback
+3. Important issue? **YES** — audio misbehavior, potential data
+   corruption
+4. Small and contained? **YES** — 7 lines in one function
+5. No new features? **YES** — correctness fix only
+6. Can apply to stable? **YES** with minor context adaptation
 
-### Step 9.4: Decision
-This is a clear YES. Memory safety fix in the netfilter subsystem,
-KASAN-confirmed, suggested by the maintainer, obviously correct, small
-scope.
+**Step 9.3: Exception Categories**
+Not applicable — this is a standard correctness bug fix.
+
+**Step 9.4: Decision**
+The evidence strongly supports backporting. The identical bug class was
+previously backported for compat32 with explicit stable nomination. The
+fix is small, obviously correct, and makes the x32 path consistent with
+all other sync_ptr paths.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Suggested-by and Signed-off-by Florian Westphal
-  (netfilter maintainer), Tested-by Ren Wei
-- [Phase 2] Diff analysis: 6 files modified, each replacing inadequate
-  MAC header validation with proper 3-part check (device type + header
-  set + header length)
-- [Phase 2] Confirmed `nf_log_syslog.c:dump_arp_packet()` had NO
-  validation before `eth_hdr(skb)` access (line 81-83 in current tree)
-- [Phase 2] Confirmed `nf_log_syslog.c:dump_mac_header()` entered
-  ARPHRD_ETHER case without MAC header validity check (line 791-793)
-- [Phase 3] git blame: buggy code in ip6t_eui64.c from Linux 2.6.12
-  (2005), xt_mac.c from 2010, ipset from initial introduction
-- [Phase 3] Confirmed patch 2/2 depends on patch 1/2 (fdce0b3590f72) for
-  ip6t_eui64.c hunk only
-- [Phase 3] Confirmed `skb_mac_header_was_set` available since 2013,
-  `skb_mac_header_len` since 2017 - both in all supported stable trees
-- [Phase 4] b4 dig found series at lore: v1->v2 evolution, v2 is [PATCH
-  nf v2 2/2]
-- [Phase 4] Mailing list: Florian Westphal explicitly asked for broader
-  fix covering nf_log_syslog.c and ipset
-- [Phase 4] v2 changelog mentions "KASAN report" with PoC confirming
-  real vulnerability
-- [Phase 5] All affected functions on packet processing paths (netfilter
-  hooks, ipset kadt, nf_log)
-- [Phase 6] xt_mac.c unchanged since v5.4, ipset files unchanged since
-  v5.15 - clean apply expected
-- [Phase 6] nf_log_syslog.c has more churn but relevant code sections
-  exist in v5.15+
-- [Phase 8] Failure mode: out-of-bounds memory read -> kernel oops or
-  info leak, severity HIGH
-- UNVERIFIED: Exact applicability to v5.10.y and v5.4.y for
-  nf_log_syslog.c (nf_log consolidation happened around v5.12) - does
-  not affect decision since most files apply cleanly
+- [Phase 1] Parsed tags: Link with v1-1 confirms standalone patch. SOB
+  from Takashi Iwai confirms maintainer acceptance.
+- [Phase 2] Diff analysis: Replaces `control->appl_ptr =
+  scontrol.appl_ptr` with `pcm_lib_apply_appl_ptr(substream,
+  scontrol.appl_ptr)` + error check. Net +4/-3 lines.
+- [Phase 3] git blame: Buggy code introduced in 513ace79b657e2 (2016).
+  pcm_lib_apply_appl_ptr introduced in 9027c4639ef1 (2017).
+- [Phase 3] git show 2e2832562c877: Confirmed identical compat32 fix
+  with Fixes: 9027c4639ef1 and Cc: stable@vger.kernel.org.
+- [Phase 3] git merge-base: 9027c4639ef1 is in v5.10, v5.15, v6.6.
+  513ace79b657e2 is in v6.6. Bug exists in all active stable trees.
+- [Phase 4] b4 dig -c 2e2832562c877: Found compat32 fix thread
+  confirming stable intent.
+- [Phase 4] Could not fetch lore for this patch (anti-bot protection).
+  UNVERIFIED: specific reviewer comments.
+- [Phase 5] Grep: snd_pcm_ioctl_sync_ptr_x32() called from
+  snd_pcm_ioctl_compat() at line 594, reachable via compat ioctl
+  syscall.
+- [Phase 5] Confirmed 3 other sync_ptr paths already use
+  pcm_lib_apply_appl_ptr: pcm_native.c:3140, pcm_native.c:3242,
+  pcm_compat.c:504.
+- [Phase 6] scoped_guard in v6.12+. sync_ptr_get_user not in any stable.
+  Minor adaptation needed for backport.
+- [Phase 6] Read pcm_lib_apply_appl_ptr (pcm_lib.c:2227-2268): validates
+  boundary, checks NO_REWINDS, calls ack(), rolls back on failure.
+- [Phase 8] Failure mode: missing ack() → audio driver not notified of
+  pointer update → MEDIUM-HIGH severity.
 
 **YES**
 
- net/ipv6/netfilter/ip6t_eui64.c           | 7 +++++--
- net/netfilter/ipset/ip_set_bitmap_ipmac.c | 5 +++--
- net/netfilter/ipset/ip_set_hash_ipmac.c   | 9 +++++----
- net/netfilter/ipset/ip_set_hash_mac.c     | 5 +++--
- net/netfilter/nf_log_syslog.c             | 8 +++++++-
- net/netfilter/xt_mac.c                    | 4 +---
- 6 files changed, 24 insertions(+), 14 deletions(-)
+ sound/core/pcm_compat.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/netfilter/ip6t_eui64.c b/net/ipv6/netfilter/ip6t_eui64.c
-index da69a27e8332c..bbb684f9964c0 100644
---- a/net/ipv6/netfilter/ip6t_eui64.c
-+++ b/net/ipv6/netfilter/ip6t_eui64.c
-@@ -7,6 +7,7 @@
- #include <linux/module.h>
- #include <linux/skbuff.h>
- #include <linux/ipv6.h>
-+#include <linux/if_arp.h>
- #include <linux/if_ether.h>
- 
- #include <linux/netfilter/x_tables.h>
-@@ -21,8 +22,10 @@ eui64_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	unsigned char eui64[8];
- 
--	if (!(skb_mac_header(skb) >= skb->head &&
--	      skb_mac_header(skb) + ETH_HLEN <= skb->data)) {
-+	if (!skb->dev || skb->dev->type != ARPHRD_ETHER)
-+		return false;
-+
-+	if (!skb_mac_header_was_set(skb) || skb_mac_header_len(skb) < ETH_HLEN) {
- 		par->hotdrop = true;
- 		return false;
- 	}
-diff --git a/net/netfilter/ipset/ip_set_bitmap_ipmac.c b/net/netfilter/ipset/ip_set_bitmap_ipmac.c
-index 2c625e0f49ec0..752f59ef87442 100644
---- a/net/netfilter/ipset/ip_set_bitmap_ipmac.c
-+++ b/net/netfilter/ipset/ip_set_bitmap_ipmac.c
-@@ -11,6 +11,7 @@
- #include <linux/etherdevice.h>
- #include <linux/skbuff.h>
- #include <linux/errno.h>
-+#include <linux/if_arp.h>
- #include <linux/if_ether.h>
- #include <linux/netlink.h>
- #include <linux/jiffies.h>
-@@ -220,8 +221,8 @@ bitmap_ipmac_kadt(struct ip_set *set, const struct sk_buff *skb,
- 		return -IPSET_ERR_BITMAP_RANGE;
- 
- 	/* Backward compatibility: we don't check the second flag */
--	if (skb_mac_header(skb) < skb->head ||
--	    (skb_mac_header(skb) + ETH_HLEN) > skb->data)
-+	if (!skb->dev || skb->dev->type != ARPHRD_ETHER ||
-+	    !skb_mac_header_was_set(skb) || skb_mac_header_len(skb) < ETH_HLEN)
- 		return -EINVAL;
- 
- 	e.id = ip_to_id(map, ip);
-diff --git a/net/netfilter/ipset/ip_set_hash_ipmac.c b/net/netfilter/ipset/ip_set_hash_ipmac.c
-index 467c59a83c0ab..b9a2681e24888 100644
---- a/net/netfilter/ipset/ip_set_hash_ipmac.c
-+++ b/net/netfilter/ipset/ip_set_hash_ipmac.c
-@@ -11,6 +11,7 @@
- #include <linux/skbuff.h>
- #include <linux/errno.h>
- #include <linux/random.h>
-+#include <linux/if_arp.h>
- #include <linux/if_ether.h>
- #include <net/ip.h>
- #include <net/ipv6.h>
-@@ -89,8 +90,8 @@ hash_ipmac4_kadt(struct ip_set *set, const struct sk_buff *skb,
- 	struct hash_ipmac4_elem e = { .ip = 0, { .foo[0] = 0, .foo[1] = 0 } };
- 	struct ip_set_ext ext = IP_SET_INIT_KEXT(skb, opt, set);
- 
--	if (skb_mac_header(skb) < skb->head ||
--	    (skb_mac_header(skb) + ETH_HLEN) > skb->data)
-+	if (!skb->dev || skb->dev->type != ARPHRD_ETHER ||
-+	    !skb_mac_header_was_set(skb) || skb_mac_header_len(skb) < ETH_HLEN)
- 		return -EINVAL;
- 
- 	if (opt->flags & IPSET_DIM_TWO_SRC)
-@@ -205,8 +206,8 @@ hash_ipmac6_kadt(struct ip_set *set, const struct sk_buff *skb,
- 	};
- 	struct ip_set_ext ext = IP_SET_INIT_KEXT(skb, opt, set);
- 
--	if (skb_mac_header(skb) < skb->head ||
--	    (skb_mac_header(skb) + ETH_HLEN) > skb->data)
-+	if (!skb->dev || skb->dev->type != ARPHRD_ETHER ||
-+	    !skb_mac_header_was_set(skb) || skb_mac_header_len(skb) < ETH_HLEN)
- 		return -EINVAL;
- 
- 	if (opt->flags & IPSET_DIM_TWO_SRC)
-diff --git a/net/netfilter/ipset/ip_set_hash_mac.c b/net/netfilter/ipset/ip_set_hash_mac.c
-index 718814730acf6..41a122591fe24 100644
---- a/net/netfilter/ipset/ip_set_hash_mac.c
-+++ b/net/netfilter/ipset/ip_set_hash_mac.c
-@@ -8,6 +8,7 @@
- #include <linux/etherdevice.h>
- #include <linux/skbuff.h>
- #include <linux/errno.h>
-+#include <linux/if_arp.h>
- #include <linux/if_ether.h>
- #include <net/netlink.h>
- 
-@@ -77,8 +78,8 @@ hash_mac4_kadt(struct ip_set *set, const struct sk_buff *skb,
- 	struct hash_mac4_elem e = { { .foo[0] = 0, .foo[1] = 0 } };
- 	struct ip_set_ext ext = IP_SET_INIT_KEXT(skb, opt, set);
- 
--	if (skb_mac_header(skb) < skb->head ||
--	    (skb_mac_header(skb) + ETH_HLEN) > skb->data)
-+	if (!skb->dev || skb->dev->type != ARPHRD_ETHER ||
-+	    !skb_mac_header_was_set(skb) || skb_mac_header_len(skb) < ETH_HLEN)
- 		return -EINVAL;
- 
- 	if (opt->flags & IPSET_DIM_ONE_SRC)
-diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
-index 41503847d9d7f..98d2b9db16efe 100644
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -78,7 +78,10 @@ dump_arp_packet(struct nf_log_buf *m,
- 	else
- 		logflags = NF_LOG_DEFAULT_MASK;
- 
--	if (logflags & NF_LOG_MACDECODE) {
-+	if ((logflags & NF_LOG_MACDECODE) &&
-+	    skb->dev && skb->dev->type == ARPHRD_ETHER &&
-+	    skb_mac_header_was_set(skb) &&
-+	    skb_mac_header_len(skb) >= ETH_HLEN) {
- 		nf_log_buf_add(m, "MACSRC=%pM MACDST=%pM ",
- 			       eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest);
- 		nf_log_dump_vlan(m, skb);
-@@ -789,6 +792,9 @@ static void dump_mac_header(struct nf_log_buf *m,
- 
- 	switch (dev->type) {
- 	case ARPHRD_ETHER:
-+		if (!skb_mac_header_was_set(skb) || skb_mac_header_len(skb) < ETH_HLEN)
-+			return;
-+
- 		nf_log_buf_add(m, "MACSRC=%pM MACDST=%pM ",
- 			       eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest);
- 		nf_log_dump_vlan(m, skb);
-diff --git a/net/netfilter/xt_mac.c b/net/netfilter/xt_mac.c
-index 81649da57ba5d..4798cd2ca26ed 100644
---- a/net/netfilter/xt_mac.c
-+++ b/net/netfilter/xt_mac.c
-@@ -29,9 +29,7 @@ static bool mac_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 
- 	if (skb->dev == NULL || skb->dev->type != ARPHRD_ETHER)
- 		return false;
--	if (skb_mac_header(skb) < skb->head)
--		return false;
--	if (skb_mac_header(skb) + ETH_HLEN > skb->data)
-+	if (!skb_mac_header_was_set(skb) || skb_mac_header_len(skb) < ETH_HLEN)
- 		return false;
- 	ret  = ether_addr_equal(eth_hdr(skb)->h_source, info->srcaddr);
- 	ret ^= info->invert;
+diff --git a/sound/core/pcm_compat.c b/sound/core/pcm_compat.c
+index e71f393d3b018..5313f50f17da5 100644
+--- a/sound/core/pcm_compat.c
++++ b/sound/core/pcm_compat.c
+@@ -430,11 +430,13 @@ static int snd_pcm_ioctl_sync_ptr_x32(struct snd_pcm_substream *substream,
+ 	if (!boundary)
+ 		boundary = 0x7fffffff;
+ 	scoped_guard(pcm_stream_lock_irq, substream) {
+-		/* FIXME: we should consider the boundary for the sync from app */
+-		if (!(sflags & SNDRV_PCM_SYNC_PTR_APPL))
+-			control->appl_ptr = scontrol.appl_ptr;
+-		else
++		if (!(sflags & SNDRV_PCM_SYNC_PTR_APPL)) {
++			err = pcm_lib_apply_appl_ptr(substream, scontrol.appl_ptr);
++			if (err < 0)
++				return err;
++		} else {
+ 			scontrol.appl_ptr = control->appl_ptr % boundary;
++		}
+ 		if (!(sflags & SNDRV_PCM_SYNC_PTR_AVAIL_MIN))
+ 			control->avail_min = scontrol.avail_min;
+ 		else
 -- 
 2.53.0
 
