@@ -1,52 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916893EBF24;
-	Mon, 20 Apr 2026 13:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E244A3ECBC7;
+	Mon, 20 Apr 2026 13:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691508; cv=none; b=kpYlHzh7sESowi/BPjXSuwF+Y4cpTZO2Sk8t/RXrCWMG69ZFdTbLwRqWojqAYdK/ZnfDeYEJrf1+btrOF8mwDkma2I94pRfKM7vTMkLSG12Qa5HaNGHK0MlYKg12IPdwskk9xLkUH/WytvzfJOa2LnbJeTnEVt9qSQij91jyER4=
+	t=1776691510; cv=none; b=NDHaqC0x3SrwjpVqDxzfqzg8fuCNxcgMr0ipS9ROSFDTnH3AuIs5Uk3S+D+lNQySL/0Jjt5eOte652eSa45g04KBmYzwGYPHfGdaddS9g2eYSUaf8msCeLF3OwyFZY+G+BqTeZN+TKWp0SahFo5wC/nq7DMtwNZNpNeRWIkM8w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691508; c=relaxed/simple;
-	bh=Tm2TK+2FNVWxTTlWKNIQ+aQP0xbWrywECEF+yY3Ixt4=;
+	s=arc-20240116; t=1776691510; c=relaxed/simple;
+	bh=TtjqapD4oLdZvZtt7JXD1IjiuGQVAMI3ln2GNqVTAu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aiiofg/iqybEmkFTwFArRsL95L8y0QvqEVK7NFE8T0hFHtMb703AxHynLG4zeakSDpaF9k/ZiLCc4uE9yHcD8safDaOfdm9Y5oY85LRs7aslhHhQITCChliSqEfCSEuc5MeVeiCHlaeEXtfhzsBY1XngtwuuVd8uvcM5FUFKBeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCE1YcQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fiyTZWhwfAj2QWLtuPIGKQY4WcR3iI6Yq3HoQOOSWz6bZu3JdxZe/rakEPK8kJzChNq0R3M6jFRiqV5F+aiNTjPR5h61bl9nhLxPohH3MnhOY3k67ktNCxx/bvtH6iuuOEVgLG2RLpsgRUImoKrZpJFZ99gB2d+HQlwPuL7YCzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vB45pR47; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DCE1YcQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCBDC2BCB4;
-	Mon, 20 Apr 2026 13:25:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vB45pR47"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC89C2BCC4;
+	Mon, 20 Apr 2026 13:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691508;
-	bh=Tm2TK+2FNVWxTTlWKNIQ+aQP0xbWrywECEF+yY3Ixt4=;
+	s=k20201202; t=1776691509;
+	bh=TtjqapD4oLdZvZtt7JXD1IjiuGQVAMI3ln2GNqVTAu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCE1YcQWOQ0+XgQKAf/KtQTijLPwf4g++MahK6HCi1mM/vM3+4yjuP/DGJujMKr0F
-	 IHAxNfsoyDU/Za6F1E2vVVSWLdONlz3kTAbgESbUF3w74xn+jSsEudrf+DwPWk82Cd
-	 FemvZFCXcdzXz2FXzm2YDPnKWl1w1szUsUPJ6NdPejZeZQgAkeizbR33F3MNt5u+KO
-	 O+VsUmzMNyLI7eCG7cS//wwDZHtIBjeXiuOovMYCi3otKaeNyTSABRhSVvSseMVHJf
-	 EdMHP05rNty1Srzbl4Qhk57whTtlvz5EeZ2a8N8nUXbnq7L/xsCG1aZzC89I1pE2N5
-	 eZ4dZ9I9Q6TUA==
+	b=vB45pR47ah6OYi1s6GixYGJEWZqyTkmANBFu71lOLYwQQgB2s/BJVkX1mi+c93dfu
+	 Sy9CxeM0dFAntvXQmTIE7CLuewrGdPsp5TST9gydfqfyU6O+h5oDUOxJDrz55+xZUJ
+	 ylzv0X+zSsCOnkrDHywMkmiaE9WxhKBZ7sQb+B0A7Q9X8tzEwSB3XesqPcR73i9wWW
+	 QT/m0Ch3TTR+kxWvfoRREsgManUBMWEGgHs2cUDkYCfpgWJPGRRNR/ctGcQty8g35c
+	 bZ5TRrSqCX70D764pVlG6RKrBITPze9hmktKPjcb09eLDIPbJRERs3tTUMvVWrbwVt
+	 1gkg9+RPjrbSA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+Cc: Chris J Arges <carges@cloudflare.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	pablo@netfilter.org,
 	davem@davemloft.net,
+	dsahern@kernel.org,
 	edumazet@google.com,
-	kuba@kernel.org,
 	pabeni@redhat.com,
-	kaber@trash.net,
-	eric@inl.fr,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
+	bestswngs@gmail.com,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] netfilter: nfnetlink_log: initialize nfgenmsg in NLMSG_DONE terminator
-Date: Mon, 20 Apr 2026 09:17:45 -0400
-Message-ID: <20260420132314.1023554-71-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] net: increase IP_TUNNEL_RECURSION_LIMIT to 5
+Date: Mon, 20 Apr 2026 09:17:46 -0400
+Message-ID: <20260420132314.1023554-72-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -61,25 +56,22 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Chris J Arges <carges@cloudflare.com>
 
-[ Upstream commit 1f3083aec8836213da441270cdb1ab612dd82cf4 ]
+[ Upstream commit 77facb35227c421467cdb49268de433168c2dcef ]
 
-When batching multiple NFLOG messages (inst->qlen > 1), __nfulnl_send()
-appends an NLMSG_DONE terminator with sizeof(struct nfgenmsg) payload via
-nlmsg_put(), but never initializes the nfgenmsg bytes. The nlmsg_put()
-helper only zeroes alignment padding after the payload, not the payload
-itself, so four bytes of stale kernel heap data are leaked to userspace
-in the NLMSG_DONE message body.
+In configurations with multiple tunnel layers and MPLS lwtunnel routing, a
+single tunnel hop can increment the counter beyond this limit. This causes
+packets to be dropped with the "Dead loop on virtual device" message even
+when a routing loop doesn't exist.
 
-Use nfnl_msg_put() to build the NLMSG_DONE terminator, which initializes
-the nfgenmsg payload via nfnl_fill_hdr(), consistent with how
-__build_packet_message() already constructs NFULNL_MSG_PACKET headers.
+Increase IP_TUNNEL_RECURSION_LIMIT from 4 to 5 to handle this use-case.
 
-Fixes: 29c5d4afba51 ("[NETFILTER]: nfnetlink_log: fix sending of multipart messages")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
+Link: https://lore.kernel.org/netdev/88deb91b-ef1b-403c-8eeb-0f971f27e34f@redhat.com/
+Signed-off-by: Chris J Arges <carges@cloudflare.com>
+Link: https://patch.msgid.link/20260402222401.3408368-1-carges@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -87,28 +79,22 @@ LLM Generated explanations, may be completely bogus:
 
 Error: Failed to generate final synthesis
 
- net/netfilter/nfnetlink_log.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/ip_tunnels.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index dcd2493a9a404..b1f3eda85989c 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -361,10 +361,10 @@ static void
- __nfulnl_send(struct nfulnl_instance *inst)
- {
- 	if (inst->qlen > 1) {
--		struct nlmsghdr *nlh = nlmsg_put(inst->skb, 0, 0,
--						 NLMSG_DONE,
--						 sizeof(struct nfgenmsg),
--						 0);
-+		struct nlmsghdr *nlh = nfnl_msg_put(inst->skb, 0, 0,
-+						    NLMSG_DONE, 0,
-+						    AF_UNSPEC, NFNETLINK_V0,
-+						    htons(inst->group_num));
- 		if (WARN_ONCE(!nlh, "bad nlskb size: %u, tailroom %d\n",
- 			      inst->skb->len, skb_tailroom(inst->skb))) {
- 			kfree_skb(inst->skb);
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 80662f8120803..253ed3930f6ef 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -32,7 +32,7 @@
+  * recursion involves route lookups and full IP output, consuming much
+  * more stack per level, so a lower limit is needed.
+  */
+-#define IP_TUNNEL_RECURSION_LIMIT	4
++#define IP_TUNNEL_RECURSION_LIMIT	5
+ 
+ /* Keep error state on tunnel for 30 sec */
+ #define IPTUNNEL_ERR_TIMEO	(30*HZ)
 -- 
 2.53.0
 
