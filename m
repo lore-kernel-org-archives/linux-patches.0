@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4566A3CFF7F;
-	Mon, 20 Apr 2026 13:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2205143E4B4;
+	Mon, 20 Apr 2026 13:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691804; cv=none; b=jNJRHc8U6F+FAGGpVVbqj/qKEyE5i7NxuENiZx14Tt5NjdMJZqhzUvt2DWbYEbnmvIym01x5w4x+9eu5BY9LUnbTfqSXyIkH3tfqpSTiBCXDnnrgaqiC1nRpus3z9N2QGBcLuIykdWyFCU7iv9kmk8C4eVShWEuL8F0VR5m2LSU=
+	t=1776691806; cv=none; b=PPMEG/spVizGab411GW3lNZe6mQTkAFPYw65o9x5Nd0C0TSlNDTC6BbbIu/KInOBG1QRVrmO6bDLvgu+FcOboJeStvlnPjdJYpSsDl4k0zWmaKMyXfe8vf9El690nAxfc+bmOEjEpfnXBMSHrISDAdfixpF4nsq5cuAvFc/9NAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691804; c=relaxed/simple;
-	bh=ghaPincQOs244mgYCMn6MyfnRCF8amLEIfKgGJ2w/oE=;
+	s=arc-20240116; t=1776691806; c=relaxed/simple;
+	bh=CTJ2k7pUpzbbGT2CqJywyJFX4N+DAteg/+3X+hDceO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PcxXA0hSexUyDtO0LEd183sKsizyjLH8UjaDYZIK1kTlU3GRjMS1ZYc5Q7FG53fdw4mAEQ540bOUYbW0wyn7gruaVOsAYs1BaIx/Y7xnB/vl8Y2NJtwh6H9dm+EEecSs2Fd2PK9Ob1FcmccQKfngITNgFk5Cwtzxtirmn1rpqro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nizKC1yL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GV5iPyJRUbXBUS8wx9pua1vVEQvNOz5QKqLRuhQApNOZgMXEaX6nLrjshrp9UWzB5Ya4zzetPt3DmiG+P4+ofeyoGlIcaHiYnztwNTS4dmW4p8Lfl+U36LZanRkP4+RHL6eL4udXVVHUu+aAh2Qe1pTg7HiIiP4xCnn9r5rNpms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H22CuPbt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nizKC1yL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04B1C2BCC4;
-	Mon, 20 Apr 2026 13:30:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H22CuPbt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F906C2BCB4;
+	Mon, 20 Apr 2026 13:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691804;
-	bh=ghaPincQOs244mgYCMn6MyfnRCF8amLEIfKgGJ2w/oE=;
+	s=k20201202; t=1776691805;
+	bh=CTJ2k7pUpzbbGT2CqJywyJFX4N+DAteg/+3X+hDceO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nizKC1yLntWxIsPXSubVLO5RN6OTSC0hI35+7T4Jq4LeXVldxyTsLlBaqI4Wd9s/6
-	 mXCZR88qqAix65gXdGsFh0A0NKM/RMt7u25lclO55mudiJFcFKF1B+VDkblFLNx6iS
-	 66Qw8qLFh8QPPr1LY/GeyTEOW70T57SYjTkJVd4XKjGdGfmf9af2mB0YAD0TPy569d
-	 WUdB5zVe/hLW+hLOT+f8VusDFyq0o631bnh5GBnpslttcLBlo5qCV0LYh2nJlBBwus
-	 2smwyUgNZm+qhD2RzM+9Wvrxiz5xz0F2pr+k+9dIMiRCd48hr04MdbwxAdvFlJfpII
-	 jc95dkD18N97g==
+	b=H22CuPbtvmAwM5JJljDkVn/gXlT1mbxyd9c4Yfrwn8owrJgsZkBdQlDXerB6xO+PF
+	 x3LgPQwaqDd5OAyt/cd2DKBHTz1Bj8HMttnoWJgDSL6sVkxqRfUJdWVuIteMZwWl+n
+	 glwpEY3HdKOSq27eyHx7/OG1D+JDN3Y1XJnoxn8VwB+QrW3soknrPbiBKVCMdUhLQB
+	 WbrU+GwbIRcO7tqjCGYOWlNfA0a+SkcT9GHrZU09yrg4mnp1Wjl9JuWHB4DjQSCfTw
+	 lh1ozY2zzDXpw2ieF0Uk73tZkG1x12inQBE9SlXbLmXCDYL/hvxr4jyz2FvbnS55gO
+	 7yuEfnjpcL13A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= <nfraprado@collabora.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Chen-Yu Tsai <wenst@chromium.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] HID: quirks: Set ALWAYS_POLL for LOGITECH_BOLT_RECEIVER
-Date: Mon, 20 Apr 2026 09:19:57 -0400
-Message-ID: <20260420132314.1023554-203-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] drm/prime: Limit scatter list size with dedicated DMA device
+Date: Mon, 20 Apr 2026 09:19:58 -0400
+Message-ID: <20260420132314.1023554-204-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -48,363 +51,335 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit d4229fc0cb50c52b385538d072c5fc8827b287a9 ]
+[ Upstream commit 864279920b2b2c1dd491eba0d0c64764c0c03d9f ]
 
-The Logitech Bolt receiver once connected to a wireless device will
-generate data on interface 2. If this data isn't polled, when the USB
-port it is connected to gets suspended (and if that happens within 5
-minutes of the last input from the wireless device), it will trigger a
-remote wakeup 3 seconds later, which will result in a spurious system
-wakeup if the port was suspended as part of system sleep.
+If a dedicated DMA device is specified for the DRM device, then the
+scatter list size limit should pertain to the DMA device.
 
-Set the ALWAYS_POLL quirk for this device to ensure interface 2 is
-always polled and this spurious wakeup never happens.
+Use the dedicated DMA device, if given, to limit the scatter list size.
+This only applies to drivers that have called drm_dev_set_dma_dev() and
+are using drm_prime_pages_to_sg() either directly or through the SHMEM
+helpers. At the time of this writing, the former case only includes the
+Rockchip DRM driver, while the latter case includes the gud, udl, and
+the tiny appletbdrm and gm12u320 drivers.
 
-With this change in place the system can be suspended with the receiver
-plugged in and the system can be woken up when an input is sent from the
-wireless device.
-
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260311094929.3393338-2-wenst@chromium.org
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the analysis.
+Now I have all the information needed for a thorough analysis. Let me
+compile everything.
+
+---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line Parse**
-- Subsystem prefix: `HID: quirks:`
-- Action verb: "Set" (adds a quirk entry - this is effectively fixing
-  broken hardware behavior)
-- Record: HID subsystem; adding `HID_QUIRK_ALWAYS_POLL` for the Logitech
-  Bolt Receiver.
+**Step 1.1: Subject Line**
+- Subsystem: `drm/prime`
+- Action verb: "Limit" (correctness-oriented; ensuring proper constraint
+  application)
+- Summary: Ensure scatter list size limit uses the dedicated DMA
+  device's constraints, not the parent device's.
+- Record: [drm/prime] [Limit] [Use correct DMA device for scatter list
+  size constraint]
 
-**Step 1.2: All Tags**
-- `Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>`
-  (author)
-- `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID subsystem
-  maintainer)
-- No Fixes:, no Cc: stable, no Reported-by:, no Link: (expected — that's
-  why it needs review)
-- Record: Applied by HID maintainer directly; concise author-maintainer
-  chain.
+**Step 1.2: Tags**
+- Reviewed-by: Thomas Zimmermann (DRM core developer at SUSE) - strong
+  quality signal
+- Reviewed-by: AngeloGioacchino Del Regno (Collabora, MediaTek
+  maintainer) - additional review
+- Link: patch.msgid.link/20260311094929.3393338-2-wenst@chromium.org
+- Signed-off-by: Chen-Yu Tsai (Chromium, also kernel.org contributor
+  under `wens@kernel.org`)
+- No Fixes: tag, no Cc: stable, no Reported-by
+- Record: Two Reviewed-by from recognized DRM developers. No explicit
+  bug report or stable nomination.
 
-**Step 1.3: Body Analysis**
-- Bug mechanism: Once a wireless device connects to the Bolt receiver,
-  interface 2 generates data. If not polled and the USB port is
-  suspended within 5 min of last wireless input, the device triggers a
-  remote wakeup 3 seconds later, causing a spurious system wakeup when
-  suspended as part of system sleep.
-- Symptom: **System spontaneously wakes from suspend** when Bolt
-  receiver is attached.
-- Author confirms testing: "With this change in place the system can be
-  suspended with the receiver plugged in and the system can be woken up
-  when an input is sent from the wireless device."
-- Record: Real, observed, user-visible issue (spurious wake-from-
-  suspend); root cause clearly identified (device emits data on
-  interface 2 that triggers remote wakeup).
+**Step 1.3: Commit Body**
+- Describes the issue: when a dedicated DMA device is set, scatter list
+  size limit should use the DMA device, not the parent device
+- Identifies affected drivers: Rockchip (direct caller), and USB-based
+  drivers (gud, udl, appletbdrm, gm12u320) via SHMEM helpers
+- No stack traces, no crash descriptions, no user reports
+- Record: Bug is that wrong device is queried for DMA constraints. No
+  specific symptom reported by users.
 
 **Step 1.4: Hidden Bug Fix Detection**
-- "Set ALWAYS_POLL" — this is a hardware workaround/quirk. Functionally,
-  it is a **bug fix** for buggy hardware behavior that breaks system
-  suspend for affected users.
-- Record: This is a classic hardware quirk bug fix.
+- This IS a correctness fix: commit 143ec8d3f9396 introduced
+  `drm_dev_dma_dev()` and updated `drm_gem_prime_import()` but missed
+  `drm_prime_pages_to_sg()`. The cover letter explicitly says "I believe
+  this was missing from the original change."
+- Record: Yes, this is a missed fix from the original dedicated DMA
+  device support.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Files: `drivers/hid/hid-quirks.c` only, +1/-0 lines.
-- Functions: none — adds a single table entry to `hid_quirks[]`.
-- Classification: trivial, single-file, surgical quirk table entry.
+**Step 2.1: Changes Inventory**
+- Single file: `drivers/gpu/drm/drm_prime.c`
+- 1 line changed: `-` / `+` (net 0 lines)
+- Function modified: `drm_prime_pages_to_sg()`
+- Record: [1 file, 1 line changed] [drm_prime_pages_to_sg()] [Single-
+  line surgical fix]
 
-**Step 2.2: Code Flow**
-- Before: device matched only by default HID logic → `usbhid_open()` and
-  related code treated it like any normal device (autosuspend-enabled,
-  sets `needs_remote_wakeup = 1`).
-- After: the quirk flag makes `usbhid/hid-core.c` paths at lines 689,
-  752, 756, 1185, 1234 bypass autosuspend/remote wakeup logic —
-  `needs_remote_wakeup` stays 0 and interface 2 is always polled.
-- Record: exactly the change documented in commit message.
+**Step 2.2: Code Flow Change**
+- Before: `dma_max_mapping_size(dev->dev)` - queries the parent device
+  for max DMA mapping size
+- After: `dma_max_mapping_size(drm_dev_dma_dev(dev))` - queries the
+  dedicated DMA device (if set), otherwise falls back to parent device
+- `drm_dev_dma_dev()` returns `dev->dma_dev` if set, otherwise
+  `dev->dev`, so this is a no-op for drivers that don't use
+  `drm_dev_set_dma_dev()`
+- Record: [Changes which device is queried for DMA constraint; no
+  behavior change for drivers not using dedicated DMA device]
 
 **Step 2.3: Bug Mechanism**
-- Category: (h) Hardware workaround / quirk table entry for buggy device
-  behavior.
-- Mechanism: `HID_QUIRK_ALWAYS_POLL` is an established mechanism used by
-  many Logitech, Lenovo, Microsoft, Chicony mice/dongles for exactly
-  this kind of problem (preventing spurious wakeups / keeping endpoint
-  pollable). The Bolt receiver exhibits the same pattern.
+- Category: Logic/correctness fix
+- For drivers that set a dedicated DMA device (USB DRM drivers,
+  Rockchip), querying the parent device returns wrong constraints:
+  - For a device without DMA ops, `dma_go_direct()` returns true
+    (because `ops` is NULL)
+  - Then `dma_direct_max_mapping_size()` returns SIZE_MAX (unless
+    SWIOTLB is involved)
+  - The actual DMA controller may have stricter limits (e.g., SWIOTLB
+    bounce buffer limit, IOMMU segment limits)
+  - Consequence: scatter list segments could exceed the actual DMA
+    controller's max mapping size
+- Record: [Logic/correctness] [Wrong device queried for DMA max mapping
+  size; scatter list segments may exceed actual DMA controller limits]
 
 **Step 2.4: Fix Quality**
-- Obviously correct: trivial one-line addition to an existing quirk
-  table.
-- Minimal and surgical: yes.
-- Regression risk: essentially zero — the quirk only affects devices
-  matching vendor=0x046d, product=0xc548. All other devices are
-  untouched.
-- Risk introduced by the fix itself: slight extra USB traffic for Bolt
-  receiver users (acknowledged by author). This is well within
-  acceptable for the quirk behavior that's applied to many devices
-  already.
+- Obviously correct: `drm_dev_dma_dev()` is the canonical way to get the
+  DMA device, already used in `drm_gem_prime_import()`
+- Minimal/surgical: one-line change
+- Regression risk: essentially zero - for drivers without dedicated DMA
+  device, `drm_dev_dma_dev()` returns `dev->dev` (identical behavior)
+- Record: [Obviously correct, zero regression risk]
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
 **Step 3.1: Blame**
-- `USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER` define added in commit
-  `526748b925185` ("HID: multitouch: Add quirk for Logitech Bolt
-  receiver w/ Casa touchpad") — first shipped in **v6.12**.
-- Record: buggy hardware behavior exists since device was first
-  supported; device ID is present in stable 6.12.y and later.
+- Line 862: `dma_max_mapping_size(dev->dev)` was introduced by commit
+  707d561f77b5e (Gerd Hoffmann, 2020-09-07) "drm: allow limiting the
+  scatter list size"
+- This code has been in the tree since 2020, but the bug was introduced
+  by commit 143ec8d3f9396 (2025-03-07) which added the dedicated DMA
+  device concept without updating this call site
+- Record: [Original line from 707d561f77b5e (v5.10 era), bug context
+  created by 143ec8d3f9396 (v6.16)]
 
-**Step 3.2: Fixes Tag**
-- No Fixes: tag (device behavior is a hardware issue, not a regression
-  from a specific commit). Not applicable.
+**Step 3.2: Fixes tag**
+- No Fixes: tag. The implicit fix target is 143ec8d3f9396 ("drm/prime:
+  Support dedicated DMA device for dma-buf imports"), which exists in
+  v6.16+.
 
-**Step 3.3: File History**
-- `drivers/hid/hid-quirks.c` receives quirk additions routinely (VRS
-  steering wheel, Cooler Master MM712, Apple keyboards,
-  Lenovo/Edifier/etc.). This is the normal pattern.
-- Record: no prerequisite patches; standalone one-line addition.
+**Step 3.3: Related Changes**
+- Part of a 4-patch series. Patches 2-4 add GEM DMA helper support and
+  convert MediaTek/sun4i drivers.
+- Patch 1 (this commit) is completely standalone; it has no dependency
+  on patches 2-4.
+- Record: [Patch 1/4, but fully standalone]
 
 **Step 3.4: Author**
-- Author is a Collabora Mediatek/Genio/thermal/kernel developer (regular
-  upstream contributor). Applied by HID maintainer Jiri Kosina directly.
-- Record: normal maintainer acceptance path.
+- Chen-Yu Tsai (wenst@chromium.org / wens@kernel.org) is a known kernel
+  contributor for MediaTek/ARM platforms.
+- Record: [Active ARM/DRM contributor]
 
 **Step 3.5: Dependencies**
-- Uses `USB_VENDOR_ID_LOGITECH` (long-existing) and
-  `USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER` (added in v6.12). No other
-  dependencies.
-- Record: applies cleanly to any stable tree ≥ 6.12. Older trees (6.6,
-  6.1, 5.15, 5.10, 5.4) do not have the device ID define; backport would
-  need the `hid-ids.h` define too — likely not worth doing given the
-  device ID was added in 6.12.
+- Depends on `drm_dev_dma_dev()` from commit 143ec8d3f9396 (v6.16+)
+- For the fix to matter, drivers must call `drm_dev_set_dma_dev()`:
+  - USB drivers: since v6.16 (part of same series as 143ec8d3f9396)
+  - Rockchip: since commit 7d7bb790aced3 in v6.19
+- Record: [Requires 143ec8d3f9396 (v6.16+). Only useful in trees v6.16+
+  where drm_dev_dma_dev exists.]
 
-## PHASE 4: MAILING LIST
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1: Original thread**
-- `b4 dig -c d4229fc0cb50c` → https://lore.kernel.org/all/20260407-logi-
-  bolt-hid-quirk-always-poll-v1-1-4dae0fda344e@collabora.com/
-- Single revision (v1). Applied as submitted.
+**Step 4.1: Original Discussion**
+- Found on lore.gitlab.freedesktop.org. Series is "drm/gem-dma: Support
+  dedicated DMA device for allocation".
+- v1: 2026-03-10, v2: 2026-03-11. Minor revision; patch 1 was unchanged
+  between versions.
+- Thomas Zimmermann gave Reviewed-by on both v1 and v2.
+- AngeloGioacchino Del Regno also reviewed v2.
+- No NAKs or concerns raised.
+- Record: [Two favorable reviews, no objections]
 
 **Step 4.2: Reviewers**
-- Thread saved to mbox. Jiri Kosina (HID maintainer, `jikos@kernel.org`)
-  replied: "In the meantime, I am applying this one. Thanks,"
-- Author proposed possible future improvement (a "poll-before-suspend
-  only" quirk) but Jiri didn't object to the current approach.
-- Recipients: Jiri Kosina, Benjamin Tissoires, linux-
-  input@vger.kernel.org, linux-kernel@vger.kernel.org,
-  kernel@collabora.com.
-- Record: patch reviewed and applied by the subsystem maintainer with no
-  objections; no stable nomination request was made but also no concerns
-  raised.
+- Thomas Zimmermann: DRM core developer who authored the original
+  `drm_dev_dma_dev()` infrastructure
+- AngeloGioacchino Del Regno: MediaTek platform maintainer
+- Record: [Reviewed by the author of the original DMA device
+  infrastructure]
 
-**Step 4.3: Bug Report**
-- No Link: tag, but commit message and author's reply indicate this is a
-  directly-observed reproducible issue.
-
-**Step 4.4: Series context**
-- `b4 dig -a`: only v1 exists. Standalone single patch.
-
-**Step 4.5: Stable discussion**
-- None found in thread.
+**Step 4.3-4.5: Bug reports and stable history**
+- No specific bug reports linked
+- The cover letter mentions this was "missing from the original change"
+- No explicit stable discussions found
+- Record: [No bug reports, no stable discussion]
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions modified**
-- None. Adds one table entry to `hid_quirks[]` consumed by
-  `usbhid_exists_squirk()` / `hid_lookup_quirk()`.
-
-**Step 5.2: Callers of quirk**
-- `drivers/hid/usbhid/hid-core.c`: lines 689, 752, 756, 1185, 1234 all
-  check `HID_QUIRK_ALWAYS_POLL` and branch accordingly in `usbhid_open`,
-  `usbhid_close`, `usbhid_start`, `usbhid_stop` (standard HID USB device
-  lifecycle).
-- Record: well-established, widely-used quirk path.
-
-**Step 5.3: Callees**
-- N/A — this is a data table entry.
-
-**Step 5.4: Reachability**
-- Reached for any system with the Bolt receiver plugged in during device
-  enumeration — every affected user.
-
-**Step 5.5: Similar patterns**
-- Many similar quirk additions in same file (Apple keyboard
-  c55092187d9ad, Dell KM5221W 62cc9c3cb3ec1, VRS R295 1141ed52348d3,
-  Cooler Master MM712 0be4253bf878d, Lenovo PixArt mice, etc.). This is
-  a recurring, well-accepted pattern.
+**Step 5.1-5.4: Function analysis**
+- `drm_prime_pages_to_sg()` is called from 15+ locations across many DRM
+  drivers
+- For drivers using dedicated DMA device and calling this function:
+  - Rockchip: `rockchip_gem_get_pages()` and
+    `rockchip_gem_prime_get_sg_table()`
+  - USB drivers via SHMEM: `drm_gem_shmem_get_sg_table()` ->
+    `drm_gem_shmem_get_pages_sgt_locked()`
+- These are common code paths (buffer allocation, dma-buf export)
+- Record: [Widely-used function, affected through normal buffer
+  allocation paths]
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Code exists in stable?**
-- The device ID `USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER = 0xc548` is in
-  stable 6.12.y and later (added by commit 526748b925185 before v6.12).
-- The `hid_quirks[]` table exists in all stable trees.
-- Record: backport applicable to 6.12.y, 6.13.y, 6.14.y, 6.15.y (current
-  active trees that carry the define). Not applicable to older LTS
-  (6.6.y, 6.1.y, 5.15.y, 5.10.y) unless the device ID define is
-  backported along.
+**Step 6.1: Buggy code existence**
+- `drm_dev_dma_dev()` only exists in v6.16+
+- USB drivers only call `drm_dev_set_dma_dev()` in v6.16+
+- Rockchip only calls it in v6.19+
+- For stable trees < v6.16, the bug doesn't exist (no dedicated DMA
+  device concept)
+- Record: [Bug exists in v6.16+ only. For 7.0.y stable, the fix is
+  relevant.]
 
 **Step 6.2: Backport complications**
-- Mainline hunk context includes neighboring entries added later (8BitDo
-  Pro 3, Edifier QR30). Fuzz/minor context adjustment likely sufficient;
-  any stable tree with the `LOGITECH_BOLT_RECEIVER` define will accept
-  this addition trivially — the surrounding entries have been stable for
-  years.
-- Record: clean apply with possibly trivial fuzz on older-than-mainline
-  stable.
-
-**Step 6.3: Related fixes in stable?**
-- None found.
+- The fix would apply cleanly to any tree containing 143ec8d3f9396
+  (v6.16+)
+- Record: [Clean apply expected for 7.0.y]
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1: Subsystem**
-- `drivers/hid/` — device drivers (HID, USB input).
-- Criticality: IMPORTANT — keyboards, mice, and wireless receivers are
-  common desktop/laptop hardware. Suspend/resume breakage affects user-
-  visible laptop power management.
+**Step 7.1**: Subsystem: DRM/GPU drivers (IMPORTANT criticality for
+affected devices)
+**Step 7.2**: Active subsystem with recent changes
 
-**Step 7.2: Activity**
-- Very active file; routine quirk additions merged frequently.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-## PHASE 8: IMPACT AND RISK
+**Step 8.1: Who is affected**
+- Users of USB DRM devices (gud, udl, appletbdrm, gm12u320) and Rockchip
+  DRM
+- Record: [Driver-specific: USB display devices and Rockchip SoCs]
 
-**Step 8.1: Affected users**
-- Owners of Logitech Bolt receivers (a fairly popular wireless receiver
-  used with Logitech MX-family peripherals and modern wireless
-  keyboards/mice) who suspend their systems.
+**Step 8.2: Trigger conditions**
+- Triggered during buffer allocation and dma-buf operations on affected
+  hardware
+- Common operations: creating display buffers, PRIME buffer sharing
+- Record: [Common display operations on affected hardware]
 
-**Step 8.2: Trigger**
-- Occurs every system suspend within 5 minutes of wireless input
-  activity. Very easy to trigger on any laptop using this receiver.
+**Step 8.3: Failure mode**
+- Without the fix, `dma_max_mapping_size()` may return an incorrect
+  (typically too large) value
+- This could cause DMA mapping failures when segments exceed the actual
+  controller's limit
+- The Rockchip "swiotlb buffer is full" warning (from commit
+  7d7bb790aced3) is related to this class of issue
+- Severity: MEDIUM - potential DMA failures on affected hardware
+- Record: [DMA mapping failures possible; MEDIUM severity]
 
-**Step 8.3: Severity**
-- Failure mode: **spurious wake-from-suspend** → battery drain, system
-  not actually suspending, potential data/security exposure on machines
-  users thought were asleep. Severity: **MEDIUM-HIGH** (not a crash, but
-  a serious user-visible regression of the suspend feature; affects
-  laptop battery life and sleep reliability).
-
-**Step 8.4: Risk-benefit**
-- Benefit: clear, reproducible user-facing fix for laptop suspend/resume
-  with a common wireless receiver.
-- Risk: one-line table entry for a specific (vendor,product) tuple;
-  cannot affect other devices. Extra URB polling for the one device —
-  the same trade-off accepted for dozens of similar quirks. Very low
-  risk.
-- Record: benefit >> risk.
+**Step 8.4: Risk-Benefit**
+- Benefit: Ensures correct DMA constraints for scatter list creation on
+  USB/Rockchip DRM devices
+- Risk: Essentially zero - `drm_dev_dma_dev()` returns `dev->dev` when
+  no dedicated device is set, so behavior is unchanged for unaffected
+  drivers
+- Record: [Low-medium benefit, near-zero risk]
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence**
-- FOR: one-line surgical quirk; applied by HID maintainer; established
-  pattern (dozens of similar entries); fixes real user-visible suspend
-  misbehavior; author tested both suspend and wakeup paths.
-- AGAINST: none material. Adds a tiny bit of USB traffic for the one
-  device (acknowledged).
-- Unresolved: backport to pre-6.12 trees would additionally need the
-  `hid-ids.h` define from commit 526748b925185 — but active stable trees
-  (6.12.y+) already contain it.
+**Evidence FOR backporting:**
+- Fixes a missed call site from the original dedicated DMA device
+  support (143ec8d3f9396)
+- One-line change, obviously correct
+- Zero regression risk (no-op for drivers not using dedicated DMA
+  device)
+- Reviewed by Thomas Zimmermann (author of the original DMA device
+  infrastructure)
+- Affects real hardware (USB DRM devices, Rockchip SoCs)
+- Could cause DMA mapping failures with incorrect max segment sizes
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct? **YES** — matches existing pattern, maintainer-
-   applied.
-2. Fixes real bug affecting users? **YES** — spurious wake from suspend.
-3. Important issue? **YES** — suspend/resume reliability on common
-   hardware.
-4. Small and contained? **YES** — 1 line, 1 file.
-5. No new features/APIs? **YES** — quirk entry only.
-6. Applies to stable? **YES** — for trees containing the device ID
-   define (v6.12+).
+**Evidence AGAINST backporting:**
+- No specific user-reported failures
+- Part of a 4-patch series (though this patch is standalone)
+- Only applicable to stable trees v6.16+ (limited scope)
+- The actual failure depends on platform-specific DMA controller
+  constraints
 
-**Step 9.3: Exception Category**
-- Fits the explicit "QUIRKS and WORKAROUNDS" exception and "NEW DEVICE
-  IDs / device-specific quirks to existing drivers" exception in stable
-  rules.
-
-**Step 9.4: Decision**
-- This is a textbook stable candidate: a minimal, targeted hardware
-  quirk that fixes a reproducible suspend issue for a common piece of
-  hardware, applied by the subsystem maintainer, matching dozens of
-  prior similar backported quirks.
+**Stable rules checklist:**
+1. Obviously correct and tested? YES (reviewed by infrastructure author)
+2. Fixes a real bug? YES (wrong DMA device queried, potentially wrong
+   constraints)
+3. Important issue? MEDIUM (potential DMA failures on specific hardware)
+4. Small and contained? YES (1 line, 1 file)
+5. No new features? YES (pure correctness fix)
+6. Can apply to stable? YES for v6.16+ trees
 
 ## Verification
 
-- [Phase 1] Parsed commit message: confirmed no
-  Fixes/Cc:stable/Link/Reported-by; two Signed-off-bys (author + HID
-  maintainer Jiri Kosina).
-- [Phase 2] Diff inspection: verified the change is exactly `+1` line in
-  `drivers/hid/hid-quirks.c` adding a `HID_QUIRK_ALWAYS_POLL` entry for
-  `USB_VENDOR_ID_LOGITECH`/`USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER`.
-- [Phase 2] Confirmed quirk semantics via `drivers/hid/usbhid/hid-
-  core.c` lines 689, 752, 756, 1185, 1234 — flag bypasses
-  autosuspend/remote-wakeup paths.
-- [Phase 2] Verified `HID_QUIRK_ALWAYS_POLL = BIT(10)` in
-  `include/linux/hid.h:406`.
-- [Phase 3] `git log` on `drivers/hid/hid-quirks.c` + `rg
-  USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER` → identified define introduced
-  in commit `526748b925185`.
-- [Phase 3] `git tag --contains 526748b925185` → device ID first shipped
-  in v6.12.
-- [Phase 3] `git log --oneline --grep="ALWAYS_POLL"` → verified many
-  similar one-line quirk additions historically.
-- [Phase 4] `b4 dig -c d4229fc0cb50c` → found original thread at
-  lore.kernel.org/all/20260407-logi-bolt-hid-quirk-always-
-  poll-v1-1-4dae0fda344e@collabora.com/.
-- [Phase 4] `b4 dig -a` → single v1, applied as-is.
-- [Phase 4] `b4 dig -m /tmp/bolt-thread.mbx` → read full thread: Jiri
-  Kosina (HID maintainer) applied the patch; author confirmed testing;
-  no NAKs.
-- [Phase 5] Confirmed `hid_quirks[]` entries are consumed by the
-  standard USB HID core paths — impact scope is exactly the one matched
-  device.
-- [Phase 6] Device ID present in mainline and 6.12.y+ stable branches.
-- [Phase 7] `drivers/hid/` is IMPORTANT subsystem — affects HID input on
-  desktops/laptops.
-- [Phase 8] Failure mode: spurious system wake from suspend, confirmed
-  by commit message text.
-- UNVERIFIED: I did not check every LTS stable tree file-by-file for
-  divergent context around the insertion point, but given this is a
-  sorted alphabetical table and the neighboring Logitech entries
-  (`LOGITECH_C007`, `LOGITECH_C077`, `LOGITECH_KEYBOARD_G710_PLUS`) have
-  been present for many years, a clean backport is essentially
-  guaranteed for 6.12+ trees.
+- [Phase 1] Parsed tags: Reviewed-by from Thomas Zimmermann and
+  AngeloGioacchino Del Regno. No Fixes: tag, no Reported-by.
+- [Phase 2] Diff: single line changed in `drm_prime_pages_to_sg()`,
+  `dev->dev` -> `drm_dev_dma_dev(dev)`
+- [Phase 3] git blame: line 862 from commit 707d561f77b5e (2020). Bug
+  context from 143ec8d3f9396 (v6.16).
+- [Phase 3] git show 143ec8d3f9396: confirmed it updated
+  `drm_gem_prime_import()` but missed `drm_prime_pages_to_sg()`
+- [Phase 3] git tag --contains: 143ec8d3f9396 in v6.16+, 7d7bb790aced3
+  (Rockchip DMA dev) in v6.19+
+- [Phase 4] Found original patch on lore.gitlab.freedesktop.org - v1 and
+  v2, Reviewed-by from Zimmermann
+- [Phase 4] Cover letter confirms: "this was missing from the original
+  change"
+- [Phase 5] grep for callers: 15+ call sites across DRM drivers,
+  includes Rockchip direct + USB via SHMEM helper
+- [Phase 5] `drm_dev_dma_dev()` verified: returns `dev->dma_dev` if set,
+  else `dev->dev` (safe fallback)
+- [Phase 6] Code exists in v6.16+ trees; 7.0 tree has all prerequisites
+- [Phase 6] `dma_max_mapping_size()` code path verified: for device
+  without DMA ops, returns SIZE_MAX via `dma_direct_max_mapping_size()`,
+  which may not reflect actual DMA controller limits
+- [Phase 8] Rockchip commit 7d7bb790aced3 explicitly mentions "swiotlb
+  buffer is full" warnings from GEM prime paths - same class of issue
+- UNVERIFIED: Whether USB DRM devices have actually hit DMA failures
+  from this specific path (no user reports found)
 
-Single-line hardware quirk entry that fixes a real, reproducible
-suspend/wakeup bug affecting owners of the Logitech Bolt receiver.
-Matches the "quirks and workarounds" stable exception exactly, is
-maintainer-applied, carries negligible regression risk, and applies
-cleanly to stable trees that carry the device ID (v6.12+).
+This is a minimal, obviously correct one-line fix that addresses a
+missed update in the dedicated DMA device infrastructure. While no
+specific user failure has been reported for this exact path, the fix is
+low-risk and addresses a real correctness issue that could manifest as
+DMA mapping failures on Rockchip and USB display hardware. The fix is
+standalone, reviewed by the infrastructure author, and has zero
+regression risk.
 
 **YES**
 
- drivers/hid/hid-quirks.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_prime.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 02f7db5c10564..eb811b1fb80f9 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -134,6 +134,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6019), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_602E), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6093), HID_QUIRK_ALWAYS_POLL },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C007), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C077), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_KEYBOARD_G710_PLUS), HID_QUIRK_NOGET },
+diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
+index 51fdb06d3e9f2..9b44c78cd77fc 100644
+--- a/drivers/gpu/drm/drm_prime.c
++++ b/drivers/gpu/drm/drm_prime.c
+@@ -859,7 +859,7 @@ struct sg_table *drm_prime_pages_to_sg(struct drm_device *dev,
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	if (dev)
+-		max_segment = dma_max_mapping_size(dev->dev);
++		max_segment = dma_max_mapping_size(drm_dev_dma_dev(dev));
+ 	if (max_segment == 0)
+ 		max_segment = UINT_MAX;
+ 	err = sg_alloc_table_from_pages_segment(sg, pages, nr_pages, 0,
 -- 
 2.53.0
 
