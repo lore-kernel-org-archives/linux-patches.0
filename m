@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52272E2665;
-	Mon, 20 Apr 2026 16:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361EA3358B0;
+	Mon, 20 Apr 2026 16:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700982; cv=none; b=lLnP9vnGLFyxn4raTp5l0oCpyyfJjOyVjtsmHpCANBaP/FPmfbyMIVMMFUYZcJIZ+zeqkWVJ4zs09cMdIeE+NGGT/UygexJNKdOIDna1Iry0iU+KcnrOSG89I3q28IlsQ2hsEhuVhPvqqjRV9V8boAi+bgkqISuEU+in2y4nPaE=
+	t=1776700985; cv=none; b=okWCWxwCfTt8g7LSJk5cmav3tuatTu75m5pfnOovJrs/c2ZdqSegzsQxfK25QGUYK95+vsPbAy2+UfbYnieSKElyZ9sYZpUbOFm+VhA8/YxKsT5Dg+VilfHX/cqoSByXC0lQ3lp3drXNULiLzzKHJWmzEf4/QfYZMCPhuxoYTkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700982; c=relaxed/simple;
-	bh=+9YZ2gGSkubi0OBXxCyh9ZbJeiVYmeab2V+RA0x2cWA=;
+	s=arc-20240116; t=1776700985; c=relaxed/simple;
+	bh=SAqpIsiRi2LCDB3XX+ahzdsxXK7Yefb0T944neXfPrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1DRX4iad+Z0IOXZUlV8URDmIMwgMJdqgwiQcEm2k/mRhxilIIeqGIucWBn90CQnxgkP9VzQH4r1bukNubprPZJdopYFHWdKZb7uZ2osN0h9Q7XZ64T0JxSxqs5BOCfvt5RiRs3TpejG3IKEizkYTP4lm2aB3AofI7XNxGDgRp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwmtAXiX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nQIWHSwDAJf4Jf5z/7U1lI45JaFI7bBKKM4tkofd+BKkDZYMDZv1YpbD4xOfMaLmUuBBK3YrlAAM5r+8ZFpr8KJGk7K5UeyyYMjythWKqmuYmduJxepk5JYvQouVH02HbT0whxsTL25E10KNNjwl8YXGFNp/zbM0ICJBlWAEZc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpTWh2S4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwmtAXiX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE0EC19425;
-	Mon, 20 Apr 2026 16:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpTWh2S4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1758C19425;
+	Mon, 20 Apr 2026 16:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700982;
-	bh=+9YZ2gGSkubi0OBXxCyh9ZbJeiVYmeab2V+RA0x2cWA=;
+	s=korg; t=1776700985;
+	bh=SAqpIsiRi2LCDB3XX+ahzdsxXK7Yefb0T944neXfPrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwmtAXiXsyhIKPKRpJ6XEn+CqeCaHin/upO/j0PQYUYANCniJIeEfeiixhuCVxULh
-	 uTPnAZeWOfrLliv/8RTLb3JWkHFUF1wEfNyYgYB2U6bjSSRD+fVK5Ti3WaIRvFxUSh
-	 MRAcwZZC1us9A3CL96F6PfjzCBhNOWYF6MGDUtBk=
+	b=rpTWh2S4GgeaN5d+l6ETxemO+yjMDujgAH0ifUM4VIC1EI+32l6Bndb3GbJN8FLqr
+	 dlRktJGTWztJIkXS1sq2XvHDCikb6oDLNj+oXDZmBozaM84F9qX0hR4h2Fr1FJaWyi
+	 loPEFH4k42uHJgcrFIWu7o6UfUvi/b7B0J4izt5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Baltieri <fabio.baltieri@gmail.com>,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 108/198] net: txgbe: leave space for null terminators on property_entry
-Date: Mon, 20 Apr 2026 17:41:27 +0200
-Message-ID: <20260420153939.491203296@linuxfoundation.org>
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 135/198] usb: gadget: f_phonet: fix skb frags[] overflow in pn_rx_complete()
+Date: Mon, 20 Apr 2026 17:41:54 +0200
+Message-ID: <20260420153940.468549747@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,48 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Baltieri <fabio.baltieri@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 5a37d228799b0ec2c277459c83c814a59d310bc3 ]
+commit c088d5dd2fffb4de1fb8e7f57751c8b82942180a upstream.
 
-Lists of struct property_entry are supposed to be terminated with an
-empty property, this driver currently seems to be allocating exactly the
-amount of entry used.
+A broken/bored/mean USB host can overflow the skb_shared_info->frags[]
+array on a Linux gadget exposing a Phonet function by sending an
+unbounded sequence of full-page OUT transfers.
 
-Change the struct definition to leave an extra element for all
-property_entry.
+pn_rx_complete() finalizes the skb only when req->actual < req->length,
+where req->length is set to PAGE_SIZE by the gadget.  If the host always
+sends exactly PAGE_SIZE bytes per transfer, fp->rx.skb will never be
+reset and each completion will add another fragment via
+skb_add_rx_frag().  Once nr_frags exceeds MAX_SKB_FRAGS (default 17),
+subsequent frag stores overwrite memory adjacent to the shinfo on the
+heap.
 
-Fixes: c3e382ad6d15 ("net: txgbe: Add software nodes to support phylink")
-Signed-off-by: Fabio Baltieri <fabio.baltieri@gmail.com>
-Tested-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/20260405222013.5347-1-fabio.baltieri@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Drop the skb and account a length error when the frag limit is reached,
+matching the fix applied in t7xx by commit f0813bcd2d9d ("net: wwan:
+t7xx: fix potential skb->frags overflow in RX path").
+
+Cc: stable <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Link: https://patch.msgid.link/2026040705-fruit-unloved-0701@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_type.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_phonet.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-index 41915d7dd372a..be78f8f61a795 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-@@ -399,10 +399,10 @@ struct txgbe_nodes {
- 	char i2c_name[32];
- 	char sfp_name[32];
- 	char phylink_name[32];
--	struct property_entry gpio_props[1];
--	struct property_entry i2c_props[3];
--	struct property_entry sfp_props[8];
--	struct property_entry phylink_props[2];
-+	struct property_entry gpio_props[2];
-+	struct property_entry i2c_props[4];
-+	struct property_entry sfp_props[9];
-+	struct property_entry phylink_props[3];
- 	struct software_node_ref_args i2c_ref[1];
- 	struct software_node_ref_args gpio0_ref[1];
- 	struct software_node_ref_args gpio1_ref[1];
--- 
-2.53.0
-
+--- a/drivers/usb/gadget/function/f_phonet.c
++++ b/drivers/usb/gadget/function/f_phonet.c
+@@ -333,6 +333,15 @@ static void pn_rx_complete(struct usb_ep
+ 		if (unlikely(!skb))
+ 			break;
+ 
++		if (unlikely(skb_shinfo(skb)->nr_frags >= MAX_SKB_FRAGS)) {
++			/* Frame count from host exceeds frags[] capacity */
++			dev_kfree_skb_any(skb);
++			if (fp->rx.skb == skb)
++				fp->rx.skb = NULL;
++			dev->stats.rx_length_errors++;
++			break;
++		}
++
+ 		if (skb->len == 0) { /* First fragment */
+ 			skb->protocol = htons(ETH_P_PHONET);
+ 			skb_reset_mac_header(skb);
 
 
