@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5EE2D77E5;
-	Mon, 20 Apr 2026 15:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804983358B0;
+	Mon, 20 Apr 2026 15:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700346; cv=none; b=E8EdUJs4SDJcX/VaDyvjE0JBR/sGHlNMpc2W6X0J4PO+enZz6Nz+8hs9hzGWOWwrSWRvnPl13hxg1JxKJmu/OIxGRMA5Z+8vmkIK9u3ynY6QG4BremvkzZXTbxHwMsPdqaACbI9cLMOP8rluXCYMR6lmdUxMEk196jboXUSWu/g=
+	t=1776700348; cv=none; b=dsCD1ndcwHpDUtH8hTpfvbCs7+6QfO+Yzvc4nFuA3hOYA9xweFmtYmQOoz5UY5dNoMJLt1fOfAffPHr+Tu+XXQdDDM3XicAt8U/cvWhVmOPGY6A6q627JwdoDonR8+55X4YlmMXNvh7190CD1j+/JupljZLgh+QN19ucSTRMpOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700346; c=relaxed/simple;
-	bh=hSQZxJgYvvptUDcTgABs0wkIG9ZjhbLQ5CYeGEHJ+ME=;
+	s=arc-20240116; t=1776700348; c=relaxed/simple;
+	bh=MPJo0ojCOlizG9KlHr5P9TkczhZniLzPHwkTy74qyAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vgb6Q04nIYpt6DP7ib6yGIdDl5tw5mE1rm9heDq3epLy3RAZAqAV1j9A9NEq8bD+Pv4dBf+/A/hVWGw7xYLsSLombDGv4g+0fl7JSxzBvniZP8nr11vE5RaNWvbEjtiPRsLL20T/sghGyIeKX+gWhpPH3TnNStq1NiZVx62SLKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2rViGee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RBtSc5NCZyUvRa4+m3xM6zv5FWmf4kzU5xVOLm8TpFBJabGg+YyhUeYenAb114MB0yRRJ36uOb0TsWl0Te6usF9zPoHfLjd82UkX9uw9R7M6nPYPECBg8HHKSGMNihtzW9QZ7fEoBPNn9i7Va4+XMYtOTx+aVaM+L1PHVJuvwkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3eM/xtx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2rViGee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A79C19425;
-	Mon, 20 Apr 2026 15:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3eM/xtx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180E8C19425;
+	Mon, 20 Apr 2026 15:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700345;
-	bh=hSQZxJgYvvptUDcTgABs0wkIG9ZjhbLQ5CYeGEHJ+ME=;
+	s=korg; t=1776700348;
+	bh=MPJo0ojCOlizG9KlHr5P9TkczhZniLzPHwkTy74qyAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2rViGeetGvarsTB8bcIEPDAgx7bnRhhk6/rSS+sg+g0U2zZDEHjaUlou07YHmuh0
-	 BYOMzVm4Z4SeQ86P+YIwGballH6eJPw6TT+Fbh6zyhb7b6TJZTJuHPlkqtsZWUZ8RE
-	 CLSd7smd2JeEyLdsHd282CnDGmV7v2MOmfHffkwI=
+	b=a3eM/xtxMM4E/AjH1OYkCR2q/ZL0W2+7j3t0NsnWvh8KsjLjOw87Y9dZjmcmIEojp
+	 GyqwnUPa25CG1Czv2i4Q9fZs2U71fWbo0BK0nHziRkME1Nc4xdzSa6Q4SXeSrL3CsD
+	 PdYj4JTHfYdc0e+Cxwl0FlYAIG/J/iwtKBt8zcsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
+	John Stultz <jstultz@google.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Steve Wahl <steve.wahl@hpe.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 135/220] perf/x86/intel/uncore: Fix die ID init and look up bugs
-Date: Mon, 20 Apr 2026 17:41:16 +0200
-Message-ID: <20260420153938.887775203@linuxfoundation.org>
+Subject: [PATCH 6.19 136/220] sched/deadline: Use revised wakeup rule for dl_server
+Date: Mon, 20 Apr 2026 17:41:17 +0200
+Message-ID: <20260420153938.922892964@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -53,101 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit a16d1ec4dd0cdcf689f324adde6067083bce9099 ]
+[ Upstream commit 14a857056466be9d3d907a94e92a704ac1be149b ]
 
-In snbep_pci2phy_map_init(), in the nr_node_ids > 8 path,
-uncore_device_to_die() may return -1 when all CPUs associated
-with the UBOX device are offline.
+John noted that commit 115135422562 ("sched/deadline: Fix 'stuck' dl_server")
+unfixed the issue from commit a3a70caf7906 ("sched/deadline: Fix dl_server
+behaviour").
 
-Remove the WARN_ON_ONCE(die_id == -1) check for two reasons:
+The issue in commit 115135422562 was for wakeups of the server after the
+deadline; in which case you *have* to start a new period. The case for
+a3a70caf7906 is wakeups before the deadline.
 
-- The current code breaks out of the loop. This is incorrect because
-  pci_get_device() does not guarantee iteration in domain or bus order,
-  so additional UBOX devices may be skipped during the scan.
+Now, because the server is effectively running a least-laxity policy, it means
+that any wakeup during the runnable phase means dl_entity_overflow() will be
+true. This means we need to adjust the runtime to allow it to still run until
+the existing deadline expires.
 
-- Returning -EINVAL is incorrect, since marking offline buses with
-  die_id == -1 is expected and should not be treated as an error.
+Use the revised wakeup rule for dl_defer entities.
 
-Separately, when NUMA is disabled on a NUMA-capable platform,
-pcibus_to_node() returns NUMA_NO_NODE, causing uncore_device_to_die()
-to return -1 for all PCI devices.  As a result,
-spr_update_device_location(), used on Intel SPR and EMR, ignores the
-corresponding PMON units and does not add them to the RB tree.
-
-Fix this by using uncore_pcibus_to_dieid(), which retrieves topology
-from the UBOX GIDNIDMAP register and works regardless of whether NUMA
-is enabled in Linux.  This requires snbep_pci2phy_map_init() to be
-added in spr_uncore_pci_init().
-
-Keep uncore_device_to_die() only for the nr_node_ids > 8 case, where
-NUMA is expected to be enabled.
-
-Fixes: 9a7832ce3d92 ("perf/x86/intel/uncore: With > 8 nodes, get pci bus die id from NUMA info")
-Fixes: 65248a9a9ee1 ("perf/x86/uncore: Add a quirk for UPI on SPR")
-Signed-off-by: Zide Chen <zide.chen@intel.com>
+Fixes: 115135422562 ("sched/deadline: Fix 'stuck' dl_server")
+Reported-by: John Stultz <jstultz@google.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Tested-by: Steve Wahl <steve.wahl@hpe.com>
-Link: https://patch.msgid.link/20260313174050.171704-4-zide.chen@intel.com
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Tested-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/20260404102244.GB22575@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore.c       |  1 +
- arch/x86/events/intel/uncore_snbep.c | 13 ++++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ kernel/sched/deadline.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
-index e228e564b15ea..8301a589d9a61 100644
---- a/arch/x86/events/intel/uncore.c
-+++ b/arch/x86/events/intel/uncore.c
-@@ -67,6 +67,7 @@ int uncore_die_to_segment(int die)
- 	return bus ? pci_domain_nr(bus) : -EINVAL;
- }
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index e3a6b8ed1d6db..3f80411972067 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1027,7 +1027,7 @@ static void update_dl_entity(struct sched_dl_entity *dl_se)
+ 	if (dl_time_before(dl_se->deadline, rq_clock(rq)) ||
+ 	    dl_entity_overflow(dl_se, rq_clock(rq))) {
  
-+/* Note: This API can only be used when NUMA information is available. */
- int uncore_device_to_die(struct pci_dev *dev)
- {
- 	int node = pcibus_to_node(dev->bus);
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index a338ee01bb242..0182785cad1fe 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -1475,13 +1475,7 @@ static int snbep_pci2phy_map_init(int devid, int nodeid_loc, int idmap_loc, bool
- 			}
- 
- 			map->pbus_to_dieid[bus] = die_id = uncore_device_to_die(ubox_dev);
--
- 			raw_spin_unlock(&pci2phy_map_lock);
--
--			if (WARN_ON_ONCE(die_id == -1)) {
--				err = -EINVAL;
--				break;
--			}
- 		}
- 	}
- 
-@@ -6533,7 +6527,7 @@ static void spr_update_device_location(int type_id)
- 
- 	while ((dev = pci_get_device(PCI_VENDOR_ID_INTEL, device, dev)) != NULL) {
- 
--		die = uncore_device_to_die(dev);
-+		die = uncore_pcibus_to_dieid(dev->bus);
- 		if (die < 0)
- 			continue;
- 
-@@ -6557,6 +6551,11 @@ static void spr_update_device_location(int type_id)
- 
- int spr_uncore_pci_init(void)
- {
-+	int ret = snbep_pci2phy_map_init(0x3250, SKX_CPUNODEID, SKX_GIDNIDMAP, true);
-+
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * The discovery table of UPI on some SPR variant is broken,
- 	 * which impacts the detection of both UPI and M3UPI uncore PMON.
+-		if (unlikely(!dl_is_implicit(dl_se) &&
++		if (unlikely((!dl_is_implicit(dl_se) || dl_se->dl_defer) &&
+ 			     !dl_time_before(dl_se->deadline, rq_clock(rq)) &&
+ 			     !is_dl_boosted(dl_se))) {
+ 			update_dl_revised_wakeup(dl_se, rq);
 -- 
 2.53.0
 
