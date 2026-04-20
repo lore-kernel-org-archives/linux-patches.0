@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68BA344D99;
-	Mon, 20 Apr 2026 15:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF593385B2;
+	Mon, 20 Apr 2026 15:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700070; cv=none; b=cXbQtYjQgYOivGd6IQn+PDrfEiXpIkiIc38qoXpNUPcjkNlliZRrxf/FbYVpwrcaCwwog+VN4TopHHJOudWfqAfOUdQlwg3m28aAINevEp93FDj9XWBZfq+lNk2w68pOShO9jFNOlRdP71H/amHQ4D9BwFX1hgDyTs5mOrEmQ/8=
+	t=1776700073; cv=none; b=c2bu5SU1U6xzy8yZ5yd3/fzFi3Ba6Mzl1xA98pjIIVfTDoT9uGH87ozVwRNVaWmcEgi2d1F4URHAAl/78rB8PdP7bsoRe59JYZX0J8JfSq2uU+6IhEkP7lPYffCXR1WmPneQnEy4C+AqSy+ULhqS/0TYLREpdOEYxX7eqiRSVMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700070; c=relaxed/simple;
-	bh=pb3vpJ5AVOyXFUaaeMv7rDyK8IA2h2D+vSznXtUo1jU=;
+	s=arc-20240116; t=1776700073; c=relaxed/simple;
+	bh=MaSvAEVewNROnxN9my3Mai6TXeEQtB22mEPBwmyTNNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWQONzGqPKF+UKY6c4l/HIUbBjBY/uM6zlLiL3q3tBUXm7uil95wrO5e5ZGpMiuxRcpG+ZgirTf0wQ+MjWm2ouigWz/bJxBlRpDns0YkwtEGjFzgnpVsBdywR+y/Fs1utviTALQV1jvtHlaxIIxJTkGS87oT3587YNp7qFqUUzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0LBT2ly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTihKukiF+cDdepWzonjMZmW2mpBlut/9GEZaUwttE11WiA7k1RLaLx8U6hYeDidF3M3Y8hruj3LyJ5s2h5YtRke6nWOq5mxI0+vau1OIUGkXH96kMFU5uAXjBZEXPCZoOXDqSUB0mwGcilROvcvBajnWEHGk+TafwCtz8Vv6XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=brYtEna1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0LBT2ly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA18C19425;
-	Mon, 20 Apr 2026 15:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brYtEna1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BE0C19425;
+	Mon, 20 Apr 2026 15:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700070;
-	bh=pb3vpJ5AVOyXFUaaeMv7rDyK8IA2h2D+vSznXtUo1jU=;
+	s=korg; t=1776700073;
+	bh=MaSvAEVewNROnxN9my3Mai6TXeEQtB22mEPBwmyTNNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0LBT2ly1mffw3KgFfX2OFsIiatR7ZNbFh0wuL2+JF50bgymjNc4HISaAVBuBcgSI
-	 JvcSUuJpnrDtX3Dn5Mlk5XUUjUYYfyiUO0sC1/bOQC+qjuC/dhbh1m36GVOWi5rA9G
-	 7nP3DuDFLBaGsT279T8v/O5RyiiqVsLgSIAzPtk0=
+	b=brYtEna1q5spKwlc5Jh5DuTLyjCLRaQyAQtXn81RORclPUxGppkMGMJ7odcMPEw7j
+	 cJFVuo+WHP+okNHagh7u4OyY0h+GkWwCpwe+svWkTioEBgf8Jl9dsnC78jPDDaqzFi
+	 xJ8U/DGD85OjtqrmoG8eUO8kGvsT0ceB4HTHupvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Wang <yuleopen@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Phil Willoughby <willerz@gmail.com>,
+	Andrii Kovalchuk <coderpy4@proton.me>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 030/220] ALSA: usb-audio: Fix quirk flags for NeuralDSP Quad Cortex
-Date: Mon, 20 Apr 2026 17:39:31 +0200
-Message-ID: <20260420153935.115672567@linuxfoundation.org>
+Subject: [PATCH 6.19 004/220] ALSA: hda/realtek: Add HP ENVY Laptop 13-ba0xxx quirk
+Date: Mon, 20 Apr 2026 17:39:05 +0200
+Message-ID: <20260420153934.178997392@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -54,39 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Willoughby <willerz@gmail.com>
+From: Andrii Kovalchuk <coderpy4@proton.me>
 
-[ Upstream commit bc5b4e5ae1a67700a618328217b6a3bd0f296e97 ]
+[ Upstream commit 793b008cd39516385791a1d1d223d817e947a471 ]
 
-The NeuralDSP Quad Cortex does not support DSD playback. We need
-this product-specific entry with zero quirks because otherwise it
-falls through to the vendor-specific entry which marks it as
-supporting DSD playback.
+Add a PCI quirk for HP ENVY Laptop 13-ba0xxx (PCI device ID 0x8756)
+to enable proper mute LED and mic mute behavior using the
+ALC245_FIXUP_HP_X360_MUTE_LEDS fixup.
 
-Cc: Yue Wang <yuleopen@gmail.com>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Phil Willoughby <willerz@gmail.com>
-Link: https://patch.msgid.link/20260328080921.3310-1-willerz@gmail.com
+Signed-off-by: Andrii Kovalchuk <coderpy4@proton.me>
+Link: https://patch.msgid.link/u0s-uRVegF9BN0t-4JnOUwsIAR-mVc4U4FJfJHdEHX7ro_laErHD9y35NebWybcN16gVaVHPJo1ap3AoJ1a2gqJImPvThgeNt_SYVY1KaDw=@proton.me
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index a56fb8ef987ea..1686022db0adf 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2299,6 +2299,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x13e5, 0x0001, /* Serato Phono */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x152a, 0x880a, /* NeuralDSP Quad Cortex */
-+		   0), /* Doesn't have the vendor quirk which would otherwise apply */
- 	DEVICE_FLG(0x154e, 0x1002, /* Denon DCD-1500RE */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x154e, 0x1003, /* Denon DA-300USB */
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index cb39054bfe79c..cbe4bbf9b1171 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6888,6 +6888,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8730, "HP ProBook 445 G7", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8735, "HP ProBook 435 G7", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8736, "HP", ALC285_FIXUP_HP_GPIO_AMP_INIT),
++	SND_PCI_QUIRK(0x103c, 0x8756, "HP ENVY Laptop 13-ba0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8760, "HP EliteBook 8{4,5}5 G7", ALC285_FIXUP_HP_BEEP_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x876e, "HP ENVY x360 Convertible 13-ay0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x877a, "HP", ALC285_FIXUP_HP_MUTE_LED),
 -- 
 2.53.0
 
