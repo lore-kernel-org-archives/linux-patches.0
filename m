@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E1A3AB267;
-	Mon, 20 Apr 2026 13:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78694963A5;
+	Mon, 20 Apr 2026 13:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691948; cv=none; b=NY53uXi7FmuAdWUGFeFRZuWl459MO3Ce+VfiHcYGTQxWKONMGUJ9pgvaIcQ8NzC7OCkTtBodI3IQr4w0lXdzemXRv7xnK4bSWSjS0pOEOi3ha4u4ygT75Ry4IJh77APvye2OO9hJkKEUYa5RP+p+kZnqOtS1FLTnCYBaHdzEelQ=
+	t=1776691949; cv=none; b=eX9X7d8DHhoOvo6LM5Z/CC+eXXYm4V2ha2LZXkRa6wu45AgiJQyPUQ4rDDQAXKaAkX2cBYdeArlQf8GgdLFZRduuW4uk5C00JGXhTN8ajMBChCM6w3voSuU3xsqOEamWWwr4Hr3GqasOhy5Y0TuivIe9iJe8+TrCcOSGZbxyeLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691948; c=relaxed/simple;
-	bh=WGDO/x2qdSRGX74Iuaaqm3ElnV5H04bi2briiBh3Teo=;
+	s=arc-20240116; t=1776691949; c=relaxed/simple;
+	bh=a0pkypsJl7lPY/XyUA4DFMkvgpRFDLmDdUR/nSsu2lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TqKJi/hIozS/EWYaRgglpYMVqU68geNxSRqL0QwP/eVIIMs7Q+JP8m8d7WmDoD/BdY1izGfgQxraYuryFjzuA1frbmHnqoHEll/P5dkDdURVes5z5oJXWzVmmO592KPhvwWktYHojrJ2PEQXCDzvasi+AqP4JzXnRLv2tKt5fNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pJWjJOLn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pKtHR3oHA+seFV5uyus2DKUQTqXPqxaguuySaRqckKS2vSAwXoyUQeOXZMvO0sx0mjKfMj6iDwaQcENdhIF+LLR5G908VE6H7rcc3nH5DOGh5ge4KaC4BY7vyCjNnFoGVrPshf5BkZw5DZ1XENoDANisMq797wg4mo1X8hpoiz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mmk7KUvx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pJWjJOLn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D58C19425;
-	Mon, 20 Apr 2026 13:32:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mmk7KUvx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4149CC2BCB4;
+	Mon, 20 Apr 2026 13:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691947;
-	bh=WGDO/x2qdSRGX74Iuaaqm3ElnV5H04bi2briiBh3Teo=;
+	s=k20201202; t=1776691949;
+	bh=a0pkypsJl7lPY/XyUA4DFMkvgpRFDLmDdUR/nSsu2lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJWjJOLn7a7GkW8BJGYcaN22ekjsV19EzFe+BbtgbG2NtJhGp7Np2o6xNzY0Fbmab
-	 Kal4s35nB7z5JD1iPfH8TRcv+h3VUCla9jzDLVlIsNer0qJ0UITI+5KAEBBvr+dhKN
-	 YDl6l4ucDBC5KhJaXglKCi4+8Pmq6vPpOz+5NQydFTOxfEJeMV5xVQjvT+k1Rwybm+
-	 nfOHoYVzW0bMx8GVhGxhOP8yK4/JXA66/LCbgLNtwBsCFvex2ceqrSl+FzNHo9ZjDb
-	 K0COsqpapSqPVqU1txVN/24McF8jXQtQh24HnekL8Zs8D0qqgYCMs6MmDCTaYpHdgO
-	 x7WUqACzH0eOQ==
+	b=Mmk7KUvx4xnRXPWvGxmU1lIPiYSAlzJ7hztGH83MtZXZf2HYPvYCHgwvBJ+27N2j9
+	 wWnk34SrsgdWMo3y9V/BqHRWcjgDnD0kOgJfKlAPfKto83ouaHV2IoAGpgaIE/92OZ
+	 nb+e09rTyZtmQ0Fk6JTt1fXkC6PGacF/7FMtS2AN6yjlVnJYqo0RZEVVW4cTpkwISU
+	 3UJmAFo4KqqPwYtUapCFieZ8TDhlKJ5j/+l7M81kWXBtSSEaer+Ne6nicOb1nYgNwW
+	 4zYbKtHf4q6F6C78ukLWk9CO/etXw0a1DLRjiHuhu4VccpynMtfFH9nkHanm51HMSy
+	 zrRE2rvmn9tHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Sergio Lopez <slp@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	laurent.pinchart@ideasonboard.com,
-	kieran.bingham+renesas@ideasonboard.com,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
+	miklos@szeredi.hu,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] media: renesas: vsp1: brx: Fix format propagation
-Date: Mon, 20 Apr 2026 09:21:19 -0400
-Message-ID: <20260420132314.1023554-285-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] fuse: mark DAX inode releases as blocking
+Date: Mon, 20 Apr 2026 09:21:20 -0400
+Message-ID: <20260420132314.1023554-286-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,345 +48,453 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Sergio Lopez <slp@redhat.com>
 
-[ Upstream commit 937f3e6b51f1cea079be9ba642665f2bf8bcc31f ]
+[ Upstream commit 42fbb31310b2c145308d3cdcb32d8f05998cfd6c ]
 
-The format width and height is never propagated to the BRX source pad,
-leaving its initial configuration invalid. Propagate the whole format
-from the first sink pad to the source pad instead of only propagating
-the media bus code. This fixes compliance with the subdev format
-propagation rules.
+Commit 26e5c67deb2e ("fuse: fix livelock in synchronous file put from
+fuseblk workers") made fputs on closing files always asynchronous.
 
-Reviewed-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
-Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com> # HiHope RZ/G2M
-Link: https://patch.msgid.link/20260318235907.831556-8-laurent.pinchart+renesas@ideasonboard.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+As cleaning up DAX inodes may require issuing a number of synchronous
+request for releasing the mappings, completing the release request from
+the worker thread may lead to it hanging like this:
+
+[   21.386751] Workqueue: events virtio_fs_requests_done_work
+[   21.386769] Call trace:
+[   21.386770]  __switch_to+0xe4/0x140
+[   21.386780]  __schedule+0x294/0x72c
+[   21.386787]  schedule+0x24/0x90
+[   21.386794]  request_wait_answer+0x184/0x298
+[   21.386799]  __fuse_simple_request+0x1f4/0x320
+[   21.386805]  fuse_send_removemapping+0x80/0xa0
+[   21.386810]  dmap_removemapping_list+0xac/0xfc
+[   21.386814]  inode_reclaim_dmap_range.constprop.0+0xd0/0x204
+[   21.386820]  fuse_dax_inode_cleanup+0x28/0x5c
+[   21.386825]  fuse_evict_inode+0x120/0x190
+[   21.386834]  evict+0x188/0x320
+[   21.386847]  iput_final+0xb0/0x20c
+[   21.386854]  iput+0xa0/0xbc
+[   21.386862]  fuse_release_end+0x18/0x2c
+[   21.386868]  fuse_request_end+0x9c/0x2c0
+[   21.386872]  virtio_fs_request_complete+0x150/0x384
+[   21.386879]  virtio_fs_requests_done_work+0x18c/0x37c
+[   21.386885]  process_one_work+0x15c/0x2e8
+[   21.386891]  worker_thread+0x278/0x480
+[   21.386898]  kthread+0xd0/0xdc
+[   21.386902]  ret_from_fork+0x10/0x20
+
+Here, the virtio-fs worker_thread is waiting on request_wait_answer()
+for a reply from the virtio-fs server that is already in the virtqueue
+but will never be processed since it's that same worker thread the one
+in charge of consuming the elements from the virtqueue.
+
+To address this issue, when relesing a DAX inode mark the operation as
+potentially blocking. Doing this will ensure these release requests are
+processed on a different worker thread.
+
+Signed-off-by: Sergio Lopez <slp@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile the findings.
+Now I have all the information needed for a thorough analysis. Let me
+compile my findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject line**
-- Subsystem: `media: renesas: vsp1: brx`
-- Action verb: "Fix"
-- Summary: Fix format propagation from sink pad 0 to source pad
+### Step 1.1: Subject Line
+- **Subsystem**: `fuse` (FUSE filesystem)
+- **Action verb**: "mark" (but this is fixing a hang/deadlock - a hidden
+  bug fix)
+- **Summary**: Mark DAX inode releases as potentially blocking so they
+  are processed on a separate worker thread
 
-**Step 1.2: Tags**
-- Reviewed-by: Jacopo Mondi (x2, different email addresses)
-- Tested-by: Niklas Soderlund (Renesas contributor)
-- Tested-by: Lad Prabhakar (on HiHope RZ/G2M)
-- Link: to patch.msgid.link
-- Signed-off-by: Laurent Pinchart (author, VSP1 maintainer)
-- Signed-off-by: Hans Verkuil (media subsystem co-maintainer)
-- No Fixes: tag (expected for commits under review)
-- No Cc: stable (expected)
+Record: [fuse] [mark/fix] [Prevent worker thread self-deadlock during
+DAX inode release]
 
-**Step 1.3: Commit body**
-- Bug: width and height are never propagated to the BRX source pad,
-  leaving initial configuration invalid
-- Fix: propagate the whole format from sink pad 0 to the source pad
-  instead of only the media bus code
-- Fixes compliance with V4L2 subdev format propagation rules
+### Step 1.2: Tags
+- **Fixes-like reference**: Commit 26e5c67deb2e ("fuse: fix livelock in
+  synchronous file put from fuseblk workers") - this is the commit that
+  introduced the regression, though not in a formal `Fixes:` tag
+- **Signed-off-by**: Sergio Lopez <slp@redhat.com> (author)
+- **Reviewed-by**: Darrick J. Wong <djwong@kernel.org> (the author of
+  the commit that introduced the regression)
+- **Signed-off-by**: Miklos Szeredi <mszeredi@redhat.com> (FUSE
+  subsystem maintainer)
+- No explicit `Cc: stable@vger.kernel.org` tag (expected for autosel
+  candidates)
+- No formal `Fixes:` tag, but commit body clearly identifies the
+  regressing commit
 
-**Step 1.4: Hidden bug fix?**
-This is an explicit bug fix, clearly labeled as "Fix format
-propagation."
+Record: Reviewed by the author of the regression (Darrick Wong) AND
+merged by the FUSE subsystem maintainer (Miklos Szeredi). Strong quality
+signals.
+
+### Step 1.3: Commit Body Analysis
+The commit describes:
+- **Bug**: After commit 26e5c67deb2e made file releases always async,
+  DAX inode cleanup can cause worker thread hang
+- **Symptom**: System hang (worker thread blocked in
+  `request_wait_answer`)
+- **Root cause**: The virtio-fs worker thread
+  (`virtio_fs_requests_done_work`) processes async release completion,
+  which triggers DAX inode cleanup, which issues synchronous FUSE
+  requests (FUSE_REMOVEMAPPING), which blocks waiting for a response
+  from the virtqueue — but it's the same worker thread that processes
+  virtqueue responses
+- **Failure mode**: Self-deadlock/hang with clear stack trace provided
+- **Fix approach**: Set `args->may_block = true` for DAX inodes, causing
+  the completion to be scheduled on a separate worker
+
+Record: Bug is a worker thread self-deadlock/hang. Stack trace is
+provided. Root cause is clearly explained. This is a CRITICAL hang bug.
+
+### Step 1.4: Hidden Bug Fix Detection
+This IS a bug fix. The subject says "mark ... as blocking" but the
+actual effect is preventing a self-deadlock. The commit describes a
+system hang scenario with a reproducible stack trace.
+
+Record: YES, this is a bug fix - prevents a self-deadlock in virtio-fs
+DAX inode release.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Single file modified: `drivers/media/platform/renesas/vsp1/vsp1_brx.c`
-- +8 lines, -2 lines (net +6)
-- Single function modified: `brx_set_format()`
+### Step 2.1: Inventory
+- **Files changed**: 1 file (`fs/fuse/file.c`)
+- **Lines added**: 5 (comment + conditional check)
+- **Lines removed**: 0
+- **Functions modified**: `fuse_file_put()`
+- **Scope**: Single-file, surgical fix in one function
 
-**Step 2.2: Code flow change**
-- BEFORE: Loop `for (i = 0; i <= brx->entity.source_pad; ++i)` iterates
-  all pads (sinks + source), sets ONLY `format->code` on each
-- AFTER: Loop `for (i = 0; i < brx->entity.source_pad; ++i)` iterates
-  only sink pads, sets `format->code`. Then, for the source pad
-  separately, copies the ENTIRE format struct (`*format = fmt->format`)
+Record: Extremely small, single-file, single-function fix. 5 lines
+added, 0 removed.
 
-**Step 2.3: Bug mechanism**
-Category: Logic/correctness fix. The source pad's width and height
-fields were never set. The `vsp1_entity_init_state()` function (line
-389) only calls `set_fmt` on pads 0..`num_pads-2` (sink pads). The
-format propagation from sink pad 0 was supposed to set the source pad's
-format, but only propagated the media bus code, leaving width=0,
-height=0.
+### Step 2.2: Code Flow Change
+In `fuse_file_put()`, the `else` branch (async release path):
+- **Before**: Directly sets `args->end` and calls
+  `fuse_simple_background()`
+- **After**: First checks if the inode is a DAX inode
+  (`FUSE_IS_DAX(ra->inode)`) and sets `args->may_block = true` if so,
+  then proceeds as before
 
-This has real consequences:
-1. `brx_configure_stream()` (line 292-316) reads source pad format and
-   writes width/height to hardware register `VI6_BRU_VIRRPF_SIZE` - with
-   values of 0, hardware is misconfigured
-2. `brx_set_selection()` (line 244-246) uses source pad format to
-   constrain compose rectangles - wrong values give wrong constraints
-3. v4l2-compliance fails with `fmt.width == 0`
+The `may_block` flag is checked in `virtio_fs_requests_done_work()` —
+when true, the completion is scheduled via `schedule_work()` on a
+separate worker instead of being processed inline. This prevents the
+self-deadlock.
 
-**Step 2.4: Fix quality**
-- Obviously correct: the pattern `*format = fmt->format` is already used
-  in the same function at line 154
-- Minimal/surgical: only changes the format propagation logic
-- No regression risk: sink pad propagation is unchanged; source pad now
-  gets the full format instead of just the code
+Record: [else branch: added DAX check setting may_block -> completion
+goes to separate worker -> no self-deadlock]
+
+### Step 2.3: Bug Mechanism
+This is a **deadlock** fix. The bug mechanism:
+1. Commit 26e5c67deb2e made ALL file releases async (sync=false)
+2. For DAX inodes, async release completes in the virtio-fs worker
+   thread
+3. DAX inode cleanup (`fuse_dax_inode_cleanup`) issues synchronous FUSE
+   requests via `fuse_simple_request()`
+4. These synchronous requests block waiting for a response via
+   `request_wait_answer()`
+5. The response is in the virtqueue but will never be processed because
+   the worker thread is the one blocked
+
+Record: [Bug category: DEADLOCK/HANG] [Self-deadlock in virtio-fs worker
+when DAX inode cleanup issues synchronous requests]
+
+### Step 2.4: Fix Quality
+- The fix is **obviously correct**: it uses an existing, well-tested
+  mechanism (`may_block`) that was designed for exactly this kind of
+  problem (bb737bbe48bea9, introduced in v5.10)
+- The fix is **minimal**: 5 lines, single function
+- **Regression risk**: Very low. Setting `may_block` for DAX inodes
+  simply routes the completion to a separate worker. This is exactly
+  what already happens for async I/O operations that set `should_dirty`
+- **No new features or APIs**: Uses existing `may_block` field and
+  existing worker scheduling
+
+Record: Obviously correct, minimal, low regression risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-The buggy code originates from commit `629bb6d4b38fe6` ("v4l: vsp1: Add
-BRU support", 2013-07-10). The format-code-only propagation has been
-there since the very beginning of BRU support (v3.12).
+### Step 3.1: Blame
+- The buggy code (async release without `may_block`) was introduced by
+  26e5c67deb2e (v6.18)
+- The `may_block` mechanism was introduced by bb737bbe48bea9 (v5.10)
+- DAX support in fuse has been present since v5.10
 
-**Step 3.2: Fixes tag**
-No Fixes: tag present (expected for candidates under review).
+Record: Bug introduced in v6.18. Prerequisite `may_block` mechanism
+present since v5.10.
 
-**Step 3.3: File history**
-Recent changes to `vsp1_brx.c` are mostly refactoring (pad state APIs,
-wrappers removal). No related format propagation fixes exist.
+### Step 3.2: Fixes Tag Follow-up
+The commit references 26e5c67deb2e ("fuse: fix livelock in synchronous
+file put from fuseblk workers") which:
+- Was first in v6.18-rc1
+- Has CVE-2025-40220
+- Was backported to stable trees: 6.12.y (at least 6.12.56/57), 6.6.y
+  (at least 6.6.115/116)
+- Had `Cc: stable@vger.kernel.org # v2.6.38`
+- The backport to 6.1-stable failed initially
 
-**Step 3.4: Author**
-Laurent Pinchart is the original author of the entire VSP1 driver (since
-2013) and the subsystem maintainer. This carries significant weight.
+Record: The regression-introducing commit IS in stable trees. Any stable
+tree that has 26e5c67deb2e NEEDS this follow-up fix.
 
-**Step 3.5: Dependencies**
-This is patch 7/13 in a series titled "Fix v4l2-compliance failures."
-Patches 1-2 modify `vsp1_brx.c` but only in the `brx_create()` and
-`brx_enum_mbus_code()` areas - NOT in `brx_set_format()`. The code in
-the target area of patch 7 is identical with or without patches 1-6. The
-patch would apply with a minor line offset on the current stable tree.
+### Step 3.3: File History
+- `fs/fuse/file.c` has had significant changes between 6.12 and 7.0
+  (iomap rework, etc.)
+- But the specific code path (fuse_file_put else branch) has been stable
+
+Record: File has churn but the specific function is stable. Standalone
+fix.
+
+### Step 3.4: Author
+- Sergio Lopez <slp@redhat.com> — Red Hat engineer, appears to be a
+  virtio-fs contributor
+- Reviewed by Darrick J. Wong (the original regression author) and
+  merged by Miklos Szeredi (FUSE maintainer)
+
+Record: Fix authored by virtio-fs contributor, reviewed by regression
+author, merged by subsystem maintainer.
+
+### Step 3.5: Dependencies
+- This fix depends on commit 26e5c67deb2e being present (the one that
+  made releases async)
+- This fix depends on the `may_block` mechanism (bb737bbe48bea9, v5.10)
+- Both prerequisites exist in all active stable trees where 26e5c67deb2e
+  was backported
+- The `FUSE_IS_DAX` macro has been present since v5.10
+
+Record: Dependencies are: 26e5c67deb2e (which is in stable) and
+may_block mechanism (v5.10+). Both present.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1: Original discussion**
-Found in the mbox file. Series: "[PATCH v4 00/13] media: renesas: vsp1:
-Fix v4l2-compliance failures". This is version 4, indicating careful
-review iteration. The cover letter shows concrete v4l2-compliance output
-demonstrating the failures (`fmt.width == 0 || fmt.width > 65536`). The
-series was also tested with the vsp-tests suite (no regression).
+### Step 4.1-4.5
+- b4 dig could not find the exact patch submission URL (lore.kernel.org
+  is behind Anubis protection)
+- Web search could not locate the specific patch discussion
+- The commit was reviewed by Darrick J. Wong and merged by Miklos
+  Szeredi
+- The referenced commit 26e5c67deb2e has CVE-2025-40220 and was already
+  backported to stable trees
 
-**Step 4.2: Reviewers**
-Jacopo Mondi (media/Renesas reviewer), Niklas Soderlund (Renesas
-contributor), Lad Prabhakar (tested on real hardware). Hans Verkuil
-(media subsystem co-maintainer) applied the series.
-
-**Step 4.3: Bug report**
-The bug is demonstrated by v4l2-compliance test output in the cover
-letter.
-
-**Step 4.4: Related patches**
-Patch 13/13 ("Initialize format on all pads") may provide an additional
-layer of fix, but patch 7 is self-contained - it fixes the propagation
-path that is the root cause.
-
-**Step 4.5: Stable discussion**
-Lore was not accessible due to anti-scraping protection. No stable-
-specific discussion found in available data.
+Record: Could not access lore due to bot protection. But the commit is
+reviewed by subsystem experts and fixes a regression from a CVE fix
+already in stable.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Key functions**
-- `brx_set_format()` - the function modified by the patch
+### Step 5.1: Functions Modified
+- `fuse_file_put()` - the only function modified
 
-**Step 5.2: Callers**
-`brx_set_format` is the `.set_fmt` callback in `brx_pad_ops`, called
-from:
-- `vsp1_entity_init_state()` for initial pad format setup
-- V4L2 subdev ioctl `VIDIOC_SUBDEV_S_FMT` from userspace
-- Any internal pipeline configuration
+### Step 5.2: Callers
+- `fuse_file_put()` is called from:
+  - `fuse_file_release()` (line 378 with sync=false — the path that
+    triggers the bug)
+  - `fuse_sync_release()` (line 409 with sync=true — not affected)
+  - Other callers via `fuse_release_common()` and `fuse_release()`
 
-**Step 5.3: Callees**
-The source pad format (with wrong width/height) is consumed by:
-- `brx_configure_stream()` -> writes to hardware registers (lines
-  314-316)
-- `brx_set_selection()` -> constrains compose rectangle (lines 245-246)
+### Step 5.3-5.4: Call Chain
+The confirmed deadlock path (from stack trace):
+`virtio_fs_requests_done_work` → `virtio_fs_request_complete` →
+`fuse_request_end` → `fuse_release_end` → `iput` → `evict` →
+`fuse_evict_inode` → `fuse_dax_inode_cleanup` →
+`inode_reclaim_dmap_range` → `dmap_removemapping_list` →
+`fuse_send_removemapping` → `fuse_simple_request` →
+`request_wait_answer` (BLOCKS)
 
-**Step 5.4: Call chain**
-Userspace -> VIDIOC_SUBDEV_S_FMT -> brx_set_format (buggy propagation)
--> brx_configure_stream reads source pad format -> writes to hardware.
-The buggy path is reachable from userspace.
+This path is reachable whenever a DAX inode file is released
+asynchronously on virtio-fs.
 
-**Step 5.5: Similar patterns**
-No similar bugs found in adjacent code.
+Record: Deadlock path is confirmed via code tracing and matches the
+provided stack trace.
+
+### Step 5.5: Similar Patterns
+The `may_block` mechanism is already used in `fs/fuse/file.c` line 752
+for async I/O (`ia->ap.args.may_block = io->should_dirty`). The fix
+follows the same proven pattern.
+
+Record: Fix uses an existing, well-tested pattern.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy code in stable**
-The buggy code (`629bb6d4b38fe6`) was introduced in v3.12 (2013). It
-exists in ALL stable trees that have VSP1 support.
+### Step 6.1: Buggy Code in Stable
+- The bug only exists where commit 26e5c67deb2e has been applied
+- That commit was backported to 6.12.y and 6.6.y (confirmed via web
+  search)
+- FUSE DAX support exists since v5.10
+- The `may_block` mechanism exists since v5.10
 
-**Step 6.2: Backport complications**
-The patch would apply with a minor line offset (~6-10 lines) because
-patches 1-6 in the series shift line numbers in the same file. The
-actual code content is identical. Expected difficulty: clean apply with
-fuzz or trivial manual adjustment.
+Record: Bug exists in all stable trees where 26e5c67deb2e was backported
+(6.12.y, 6.6.y minimum).
 
-**Step 6.3: Related fixes in stable**
-No related fixes found in stable trees.
+### Step 6.2: Backport Complications
+- The diff is 5 lines in a single function
+- The surrounding code context (`fuse_file_put` else branch) is stable
+  across trees
+- Should apply cleanly to any tree that has 26e5c67deb2e
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+Record: Clean apply expected.
 
-**Step 7.1: Subsystem**
-- Path: `drivers/media/platform/renesas/vsp1/`
-- Criticality: PERIPHERAL (Renesas R-Car SoC video processing, used for
-  display compositing and video processing on ARM/embedded platforms)
-- Users: Renesas R-Car automotive/industrial platforms, development
-  boards (RZ/G2M, etc.)
+### Step 6.3: Related Fixes Already in Stable
+- No other fix for this specific DAX deadlock has been identified
 
-**Step 7.2: Activity**
-The VSP1 subsystem is actively maintained by Laurent Pinchart, with
-regular fixes and improvements.
+Record: No alternative fix exists.
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: FUSE (fs/fuse) — filesystem layer
+- **Criticality**: IMPORTANT — FUSE is used by many systems (virtiofs in
+  VMs/containers, sshfs, user-space filesystems)
+- DAX support is specifically important for virtio-fs in VM environments
+
+Record: [fs/fuse] [IMPORTANT - widely used in VM/container environments]
+
+### Step 7.2: Subsystem Activity
+- Active development (iomap rework, DAX improvements, etc.)
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected users**
-Driver-specific: affects users of Renesas R-Car SoCs using the VSP1
-video processing pipeline (automotive, embedded).
+### Step 8.1: Affected Users
+- Users running virtio-fs with DAX enabled (common in VM/container
+  environments)
+- The bug causes a complete system hang for these users
 
-**Step 8.2: Trigger conditions**
-The bug triggers whenever:
-- The BRX entity's format is configured through format propagation from
-  sink pad 0 (normal operation)
-- Any application relying on V4L2 subdev format propagation rules
-- v4l2-compliance testing
+Record: VM/container users with virtio-fs DAX. Significant user
+population.
 
-**Step 8.3: Failure mode severity**
-- Hardware misconfiguration (wrong background size register) ->
-  incorrect video output: MEDIUM-HIGH
-- v4l2-compliance failure (width=0): MEDIUM
-- Wrong compose rectangle constraints: MEDIUM
+### Step 8.2: Trigger Conditions
+- Any file close on a DAX-enabled virtio-fs mount where the inode is
+  evicted
+- This is a COMMON operation — closing files is basic filesystem
+  activity
+- DAX inode eviction happens naturally during normal operation
 
-**Step 8.4: Risk-benefit ratio**
-- BENEFIT: Fixes real hardware misconfiguration and API compliance for
-  Renesas R-Car users
-- RISK: Very low. 6-line change in one function, obviously correct,
-  well-tested
-- Ratio: FAVORABLE
+Record: Common trigger. Normal file operations on DAX virtio-fs.
+
+### Step 8.3: Failure Mode Severity
+- **System hang**: The worker thread deadlocks, preventing all further
+  virtio-fs operations
+- No automatic recovery — the system becomes effectively unusable for
+  that filesystem
+- **Severity: CRITICAL** — hang/deadlock
+
+Record: [CRITICAL] System hang/deadlock with no recovery.
+
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: VERY HIGH — prevents a deterministic system hang on DAX
+  virtio-fs
+- **Risk**: VERY LOW — 5 lines, uses existing well-tested mechanism,
+  single-file, reviewed by experts
+- **Ratio**: Overwhelming benefit, minimal risk
+
+Record: Very high benefit, very low risk.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence**
+### Step 9.1: Evidence Compilation
 
-FOR backporting:
-- Fixes a real bug: source pad width/height never propagated, causing
-  hardware misconfiguration
-- Small and surgical: +8/-2 lines in a single function
-- Author is subsystem maintainer (since 2013)
-- Two reviewers, two testers on real hardware
-- v4 of the series (well-iterated)
-- Bug present since driver creation (v3.12, 2013)
-- v4l2-compliance concrete failure evidence in cover letter
-- No regression in vsp-tests suite
+**FOR backporting:**
+- Fixes a CRITICAL deadlock/hang bug (worker thread self-deadlock)
+- Reproducible with clear stack trace provided
+- Extremely small fix: 5 lines added, 0 removed, single file
+- Uses existing, proven `may_block` mechanism (present since v5.10)
+- Fixes a regression from CVE-2025-40220 fix (26e5c67deb2e) which IS in
+  stable trees
+- Reviewed by the regression author (Darrick J. Wong)
+- Merged by FUSE subsystem maintainer (Miklos Szeredi)
+- All prerequisites exist in stable trees
+- Should apply cleanly
 
-AGAINST backporting:
-- Part of a 13-patch series, but this specific patch is self-contained
-- Primarily a compliance/correctness fix rather than a crash fix
-- May need minor line offset adjustment for clean application
+**AGAINST backporting:**
+- (Nothing significant)
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? YES - pattern already used in same
-   function, 2 reviewers, 2 testers
-2. Fixes a real bug? YES - source pad gets invalid width/height (0),
-   hardware misconfiguration
-3. Important issue? MEDIUM - incorrect hardware register values, invalid
-   format state
-4. Small and contained? YES - 6 net lines, single function, single file
-5. No new features or APIs? YES - only fixes existing behavior
-6. Can apply to stable trees? YES - with minor fuzz/offset
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** — uses existing `may_block`
+   mechanism, reviewed by experts
+2. Fixes a real bug? **YES** — worker thread deadlock on DAX virtio-fs
+3. Important issue? **YES** — system hang (CRITICAL)
+4. Small and contained? **YES** — 5 lines, single file, single function
+5. No new features or APIs? **YES** — uses existing mechanism
+6. Can apply to stable trees? **YES** — should apply cleanly to any tree
+   with 26e5c67deb2e
 
-**Step 9.3: Exception categories**
-Not an exception category - standard bug fix.
+### Step 9.3: Exception Categories
+Not needed — this is a clear bug fix.
 
-**Step 9.4: Decision**
-The fix is small, correct, well-reviewed, well-tested, and fixes a real
-format propagation bug that causes hardware misconfiguration (wrong
-register values) and invalid API state. The bug has existed since 2013.
-While not a crash-level severity, it causes incorrect hardware behavior
-that could result in wrong video output on Renesas R-Car platforms.
+### Step 9.4: Decision
+This is a clear YES. It fixes a deterministic system hang caused by a
+regression from a CVE fix that has already been backported to stable
+trees. The fix is tiny, uses an existing mechanism, and was reviewed by
+the subsystem maintainer and the author of the regression.
 
 ## Verification
 
-- [Phase 1] Parsed subject: "media: renesas: vsp1: brx: Fix format
-  propagation" - explicit "Fix" verb
-- [Phase 1] Parsed tags: 2x Reviewed-by (Jacopo Mondi), 2x Tested-by
-  (Niklas Soderlund, Lad Prabhakar), SOBs from Laurent Pinchart and Hans
-  Verkuil
-- [Phase 2] Diff analysis: +8/-2 lines in `brx_set_format()`, changes
-  loop from `<=` to `<` and adds full format copy to source pad
-- [Phase 2] Verified source pad format consumption:
-  `brx_configure_stream()` at line 292 reads source pad format, writes
-  width/height to VI6_BRU_VIRRPF_SIZE at lines 314-316
-- [Phase 2] Verified `brx_set_selection()` at line 244 reads source pad
-  format for compose clamping
-- [Phase 3] git blame: buggy code from commit 629bb6d4b38fe6
-  (2013-07-10, v3.12)
-- [Phase 3] git log author: Laurent Pinchart authored the entire VSP1
-  driver
-- [Phase 3] Verified patches 1-6 modify vsp1_brx.c only in
-  `brx_create()` and `brx_enum_mbus_code()`, not in `brx_set_format()`
-- [Phase 4] Found cover letter in mbox: series v4, tested with
-  v4l2-compliance and vsp-tests, no regression
-- [Phase 4] Cover letter shows concrete failure: `fmt.width == 0 ||
-  fmt.width > 65536`
-- [Phase 5] Traced `vsp1_entity_init_state()` at line 383-399: only
-  iterates pads 0..num_pads-2, confirming source pad is never directly
-  initialized
-- [Phase 5] Confirmed `brx_try_format()` clamps width to [1, 8190] for
-  sink pads, but this is never propagated to source
-- [Phase 6] Buggy code present in all stable trees with VSP1 support
-  (since v3.12)
-- [Phase 6] Patch applies with minor line offset due to earlier patches
-  in series
-- UNVERIFIED: Could not access lore.kernel.org for additional discussion
-  (anti-scraping protection)
+- [Phase 1] Parsed tags: Signed-off-by: Sergio Lopez, Reviewed-by:
+  Darrick J. Wong, Signed-off-by: Miklos Szeredi
+- [Phase 1] Commit references 26e5c67deb2e as the regression source
+- [Phase 2] Diff analysis: 5 lines added in else branch of
+  `fuse_file_put()`, sets `args->may_block = true` for DAX inodes
+- [Phase 3] git blame: buggy code path from 26e5c67deb2e (v6.18),
+  `may_block` from bb737bbe48bea9 (v5.10)
+- [Phase 3] git show 26e5c67deb2e: confirmed it changed
+  `fuse_file_put(ff, ff->fm->fc->destroy)` to `fuse_file_put(ff, false)`
+  — making ALL releases async
+- [Phase 3] Verified 26e5c67deb2e had `Cc: stable@vger.kernel.org #
+  v2.6.38`
+- [Phase 3] git log: confirmed this is a standalone fix, no other
+  patches in a series
+- [Phase 4] Web search confirmed 26e5c67deb2e has CVE-2025-40220 and was
+  backported to 6.12.y and 6.6.y
+- [Phase 5] Traced full deadlock call chain:
+  `virtio_fs_requests_done_work` → ... → `fuse_dax_inode_cleanup` →
+  `fuse_send_removemapping` → `fuse_simple_request` →
+  `request_wait_answer` (blocks) — confirmed via code reading
+- [Phase 5] Verified `may_block` check in `virtio_fs.c:839` routes to
+  separate worker via `schedule_work()`
+- [Phase 5] Verified same `may_block` pattern already used at
+  `file.c:752` for async I/O
+- [Phase 6] FUSE DAX and `may_block` mechanism present in all active
+  stable trees (since v5.10)
+- [Phase 6] Bug only manifests where 26e5c67deb2e was backported
+  (6.12.y, 6.6.y confirmed)
+- [Phase 8] Failure mode: deterministic worker thread self-
+  deadlock/hang, severity CRITICAL
+- UNVERIFIED: Could not access lore.kernel.org discussion thread due to
+  Anubis protection
 
 **YES**
 
- drivers/media/platform/renesas/vsp1/vsp1_brx.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/fuse/file.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/platform/renesas/vsp1/vsp1_brx.c b/drivers/media/platform/renesas/vsp1/vsp1_brx.c
-index 5fc2e5a3bb30f..fecd71abb2e95 100644
---- a/drivers/media/platform/renesas/vsp1/vsp1_brx.c
-+++ b/drivers/media/platform/renesas/vsp1/vsp1_brx.c
-@@ -164,14 +164,20 @@ static int brx_set_format(struct v4l2_subdev *subdev,
- 		compose->height = format->height;
- 	}
- 
--	/* Propagate the format code to all pads. */
-+	/*
-+	 * Propagate the format code to all pads, and the whole format to the
-+	 * source pad.
-+	 */
- 	if (fmt->pad == BRX_PAD_SINK(0)) {
- 		unsigned int i;
- 
--		for (i = 0; i <= brx->entity.source_pad; ++i) {
-+		for (i = 0; i < brx->entity.source_pad; ++i) {
- 			format = v4l2_subdev_state_get_format(state, i);
- 			format->code = fmt->format.code;
- 		}
-+
-+		format = v4l2_subdev_state_get_format(state, i);
-+		*format = fmt->format;
- 	}
- 
- done:
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index 676fd9856bfbf..14740134faff7 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -117,6 +117,12 @@ static void fuse_file_put(struct fuse_file *ff, bool sync)
+ 			fuse_simple_request(ff->fm, args);
+ 			fuse_release_end(ff->fm, args, 0);
+ 		} else {
++			/*
++			 * DAX inodes may need to issue a number of synchronous
++			 * request for clearing the mappings.
++			 */
++			if (ra && ra->inode && FUSE_IS_DAX(ra->inode))
++				args->may_block = true;
+ 			args->end = fuse_release_end;
+ 			if (fuse_simple_background(ff->fm, args,
+ 						   GFP_KERNEL | __GFP_NOFAIL))
 -- 
 2.53.0
 
