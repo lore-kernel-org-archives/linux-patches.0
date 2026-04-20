@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6662E11C7;
-	Mon, 20 Apr 2026 15:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4693368AE;
+	Mon, 20 Apr 2026 15:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700144; cv=none; b=X+496hqhKyroDQBoyQ05qmJ2aq1UHawnjnQxmDp1fankSuP8Q6OQElErLY6ru/RVm5jG1DGUiwUir8ZS+ecLNkzFt/f7XB/FW30AtIJlzPPnVq1T62eZff+8X+ystPC+jSvArVxaFNjfrrVRhsvw8pvFRqsz741uz6uIY4buxug=
+	t=1776700147; cv=none; b=t3Fv/9dSxAXTIiAlS93y6Yj72eir2w73oy3ePBQtM0oYTRWizQphiGU+ZVkfs1ge3xzBGdlLEy6E2eI/N51zlgqKcuCjm+zii6sxBPHTRAox8ADu6ibI6KdtG2RDZ9H2L4p7hTqRpA8L1dsXLClFCg+/WDPDAkh+5wZxpRYxP18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700144; c=relaxed/simple;
-	bh=AEJgazPvLUyMsw9N+k2HHbEvN72OevGmW4N5JZruWxQ=;
+	s=arc-20240116; t=1776700147; c=relaxed/simple;
+	bh=aXWJREE7yDC4mI+KVhfeAo7VQwFsUaK4GNbKjWT6wzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CCnCMasbNRlfUIPWO41j+2ZPUOutLa2M4Xe5b8yT7PlPl+h2+wjWCoGkyhMBI9Njfm5X1JARtpntCKWETCwgWS2ZLkz08nDoQtKmZw3lmHFQs4oEQgKzgiHPWJWD9J6sx+AO0l/r9Kzuo0hHbrZdOvMVBRc/DOIDqHn1LDPuMbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMKgRcNy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=obGcdrkwoDZnUiwUaxKFe7eB/j3acziQpNeU9mi+CMQqrXm2pTRadG8bie2jevSvFT/Ti6oEwq2gd7tRh8KIWhN2TBzHRjHvjZQey76JsD5ml2yIak3A8FQAJCL3xHHvvJqaQ5M+dSaBZijZ1v1jmKeJvmTY1OdT8lXzj2QZjAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyKGwlc/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMKgRcNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C44C19425;
-	Mon, 20 Apr 2026 15:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyKGwlc/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0566AC19425;
+	Mon, 20 Apr 2026 15:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700144;
-	bh=AEJgazPvLUyMsw9N+k2HHbEvN72OevGmW4N5JZruWxQ=;
+	s=korg; t=1776700147;
+	bh=aXWJREE7yDC4mI+KVhfeAo7VQwFsUaK4GNbKjWT6wzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AMKgRcNyV9KDrEo80+yRdzqQGqnrKQAzUIlqq/rOCAfPVJcPGN9LX5WCLPPsOv5vX
-	 G7uSfNtM1yLWgwo/93FSCN2X4gJ1l+pYTDdylG5YuyGjQWRXJl8cOs4l+9FL8nE+Mn
-	 2EkpdA4HGuiR25v2hA6NY5poil3l4EQMsQkFiDgo=
+	b=YyKGwlc/ql6xphSnw6TYCDDNatIPyep4ilBq7fdUE5JCVFkXX+z5SHqY8qV16x27X
+	 zTCLtytJrYTu8z6NINljH2luUF6nyN8BjFBBhGNe6ZlHmOPjSeYZLvO+OleWsRDUBh
+	 K46k1o8mMqTaHK+kcN1VfGSlQtQuUQIekBFtWvAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 059/220] tools/power turbostat: Fix --show/--hide for individual cpuidle counters
-Date: Mon, 20 Apr 2026 17:40:00 +0200
-Message-ID: <20260420153936.167113385@linuxfoundation.org>
+Subject: [PATCH 6.19 060/220] arm64: dts: qcom: monaco: Reserve full Gunyah metadata region
+Date: Mon, 20 Apr 2026 17:40:01 +0200
+Message-ID: <20260420153936.202866293@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -45,121 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit b6398bc2ef3a78f1be37ba01ae0a5eedaee47803 ]
+[ Upstream commit 85d98669fa7f1d3041d962515e45ee6e392db6f8 ]
 
-Problem: individual swidle counter names (C1, C1+, C1-, etc.) cannot be
-selected via --show/--hide due to two bugs in probe_cpuidle_counts():
-1. The function returns immediately when BIC_cpuidle is not enabled,
-   without checking deferred_add_index.
-2. The deferred name check runs against name_buf before the trailing
-   newline is stripped, so is_deferred_add("C1\n") never matches "C1".
+We observe spurious "Synchronous External Abort" exceptions
+(ESR=0x96000010) and kernel crashes on Monaco-based platforms.
+These faults are caused by the kernel inadvertently accessing
+hypervisor-owned memory that is not properly marked as reserved.
 
-Fix:
-1. Relax the early return to pass through when deferred names are
-   queued.
-2. Strip the trailing newline from name_buf before performing deferred
-   name checks.
-3. Check each suffixed variant (C1+, C1, C1-) individually so that
-   e.g. "--show C1+" enables only the requested metric.
+>From boot log, The Qualcomm hypervisor reports the memory range
+at 0x91a80000 of size 0x80000 (512 KiB) as hypervisor-owned:
+qhee_hyp_assign_remove_memory: 0x91a80000/0x80000 -> ret 0
 
-In addition, introduce a helper function to avoid repeating the
-condition (readability cleanup).
+However, the EFI memory map provided by firmware only reserves the
+subrange 0x91a40000–0x91a87fff (288 KiB). The remaining portion
+(0x91a88000–0x91afffff) is incorrectly reported as conventional
+memory (from efi debug):
+efi:   0x000091a40000-0x000091a87fff [Reserved...]
+efi:   0x000091a88000-0x0000938fffff [Conventional...]
 
-Fixes: ec4acd3166d8 ("tools/power turbostat: disable "cpuidle" invocation counters, by default")
-Signed-off-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+As a result, the allocator may hand out PFNs inside the hypervisor
+owned region, causing fatal aborts when the kernel accesses those
+addresses.
+
+Add a reserved-memory carveout for the Gunyah hypervisor metadata
+at 0x91a80000 (512 KiB) and mark it as no-map so Linux does not
+map or allocate from this area.
+
+For the record:
+Hyp version: gunyah-e78adb36e debug (2025-11-17 05:38:05 UTC)
+UEFI Ver: 6.0.260122.BOOT.MXF.1.0.c1-00449-KODIAKLA-1
+
+Fixes: 7be190e4bdd2 ("arm64: dts: qcom: add QCS8300 platform")
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260302142603.1113355-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 35 ++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/qcom/monaco.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 603651e74dacf..b01a905bd24a7 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -10908,6 +10908,14 @@ void probe_cpuidle_residency(void)
- 	}
- }
+diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
+index f74045be62420..a407f80bc5e1f 100644
+--- a/arch/arm64/boot/dts/qcom/monaco.dtsi
++++ b/arch/arm64/boot/dts/qcom/monaco.dtsi
+@@ -757,6 +757,11 @@ smem_mem: smem@90900000 {
+ 			hwlocks = <&tcsr_mutex 3>;
+ 		};
  
-+static bool cpuidle_counter_wanted(char *name)
-+{
-+	if (is_deferred_skip(name))
-+		return false;
++		gunyah_md_mem: gunyah-md-region@91a80000 {
++			reg = <0x0 0x91a80000 0x0 0x80000>;
++			no-map;
++		};
 +
-+	return DO_BIC(BIC_cpuidle) || is_deferred_add(name);
-+}
-+
- void probe_cpuidle_counts(void)
- {
- 	char path[64];
-@@ -10917,7 +10925,7 @@ void probe_cpuidle_counts(void)
- 	int min_state = 1024, max_state = 0;
- 	char *sp;
- 
--	if (!DO_BIC(BIC_cpuidle))
-+	if (!DO_BIC(BIC_cpuidle) && !deferred_add_index)
- 		return;
- 
- 	for (state = 10; state >= 0; --state) {
-@@ -10932,12 +10940,6 @@ void probe_cpuidle_counts(void)
- 
- 		remove_underbar(name_buf);
- 
--		if (!DO_BIC(BIC_cpuidle) && !is_deferred_add(name_buf))
--			continue;
--
--		if (is_deferred_skip(name_buf))
--			continue;
--
- 		/* truncate "C1-HSW\n" to "C1", or truncate "C1\n" to "C1" */
- 		sp = strchr(name_buf, '-');
- 		if (!sp)
-@@ -10952,16 +10954,19 @@ void probe_cpuidle_counts(void)
- 			 * Add 'C1+' for C1, and so on. The 'below' sysfs file always contains 0 for
- 			 * the last state, so do not add it.
- 			 */
--
- 			*sp = '+';
- 			*(sp + 1) = '\0';
--			sprintf(path, "cpuidle/state%d/below", state);
--			add_counter(0, path, name_buf, 64, SCOPE_CPU, COUNTER_ITEMS, FORMAT_DELTA, SYSFS_PERCPU, 0);
-+			if (cpuidle_counter_wanted(name_buf)) {
-+				sprintf(path, "cpuidle/state%d/below", state);
-+				add_counter(0, path, name_buf, 64, SCOPE_CPU, COUNTER_ITEMS, FORMAT_DELTA, SYSFS_PERCPU, 0);
-+			}
- 		}
- 
- 		*sp = '\0';
--		sprintf(path, "cpuidle/state%d/usage", state);
--		add_counter(0, path, name_buf, 64, SCOPE_CPU, COUNTER_ITEMS, FORMAT_DELTA, SYSFS_PERCPU, 0);
-+		if (cpuidle_counter_wanted(name_buf)) {
-+			sprintf(path, "cpuidle/state%d/usage", state);
-+			add_counter(0, path, name_buf, 64, SCOPE_CPU, COUNTER_ITEMS, FORMAT_DELTA, SYSFS_PERCPU, 0);
-+		}
- 
- 		/*
- 		 * The 'above' sysfs file always contains 0 for the shallowest state (smallest
-@@ -10970,8 +10975,10 @@ void probe_cpuidle_counts(void)
- 		if (state != min_state) {
- 			*sp = '-';
- 			*(sp + 1) = '\0';
--			sprintf(path, "cpuidle/state%d/above", state);
--			add_counter(0, path, name_buf, 64, SCOPE_CPU, COUNTER_ITEMS, FORMAT_DELTA, SYSFS_PERCPU, 0);
-+			if (cpuidle_counter_wanted(name_buf)) {
-+				sprintf(path, "cpuidle/state%d/above", state);
-+				add_counter(0, path, name_buf, 64, SCOPE_CPU, COUNTER_ITEMS, FORMAT_DELTA, SYSFS_PERCPU, 0);
-+			}
- 		}
- 	}
- }
+ 		lpass_machine_learning_mem: lpass-machine-learning-region@93b00000 {
+ 			reg = <0x0 0x93b00000 0x0 0xf00000>;
+ 			no-map;
 -- 
 2.53.0
 
