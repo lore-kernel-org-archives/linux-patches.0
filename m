@@ -1,48 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9381A6800;
-	Mon, 20 Apr 2026 13:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEF53B0AE3;
+	Mon, 20 Apr 2026 13:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691396; cv=none; b=UySiFXrVsP+XgN489YWFCgOWI82/08plfPIb0FS7QlWiBL2b+rjZxLI6rjQrPEXQhiQ6vpqgG36b+QkcQujwAm7x1cCkZ/MsqtpxlzRWx7V4bA/ENcUy29GVP8yrIe4zABM+2JyW3sC7dRH64pEUkE6Md44oeNL/VAFNaCj1V8M=
+	t=1776691398; cv=none; b=PUR4tpZd8CI79RC2kalA3fEuA4ngg7ewt2rUCyjJa3CcxckdYbFJ8teRJGu+81f0o7jedKQMtDuK1MZEqxY3l3YRT1a1DX1JZ8cFjR0p2vk3G9lM/j3L0b9K6ZW/fmFLLHkGTDepZD/gRQQVjJLV2ORmt5Lp9PVib2mF7wFVInU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691396; c=relaxed/simple;
-	bh=HeIqewgVBjC+cs5vcBEs31qFo9TZK6JeLdzhZB2khp4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I6dEPR9+WAurA34KGPqy5IhumvqDtJcMdkgkqPSX86BnE3bDEcbPuWRzaXQz06vC2ozHFH7JNH3fSPo1MVZ6eF0T4VZW4ZKNdMF7YTmXoe3POPtDJQz8rEI4ttEJdmXgvLz7SDDyEQvqfIOYYhhaJgtbXPSZ0S6FlVTyzTOFBBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E/aW5m5W; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776691398; c=relaxed/simple;
+	bh=4Ew+9P1AhCIc/hFMFZX1yd3SOp26GdjQC76CnuAw4eY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=JmCLQAchEp+gHUzvi7UZV3JVyH2jp2xUVArIKOEloKFvKdDiURiMCzeDOvSYRbnJE/mdwx5p2HKVdA2LgnqJg8bxLcr1YgIOWUKX52EubpmnSnwK0qbF7ZIVSLQe2tl3nnzbClXlK0kpOk5ORLE0LymJ0Sxn2dPgnGMf9muQDjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fSret4Nr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E/aW5m5W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8C5C19425;
-	Mon, 20 Apr 2026 13:23:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fSret4Nr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A8DC2BCB7;
+	Mon, 20 Apr 2026 13:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691396;
-	bh=HeIqewgVBjC+cs5vcBEs31qFo9TZK6JeLdzhZB2khp4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=E/aW5m5W/32+/8d7aHlcSgAfBbEtsitNl5+Yav5O5EhNGhGHde3U5Vfhx5qnfyEwa
-	 OoXz3GOIHkUucecxRx2tVBEF4neAu+sGtvFf1berDRXjLLxRlNNpbRe4ODEbNDWtLy
-	 isr+WyZUS81XHdog6il8+112GHaQz39tDAAQN+hgkM8OR4y+Cv+WeDCQ1Wz9mjn//Q
-	 tM22UK4DjcAfiJpEphRmnGty4tmm8Us6j+bXqD4pgEKgIMTUPPzuaFlvDDJ0PBJLGf
-	 oP9bctPbnvximL40deKwoEqUPn01V61EjDYOmwW5mJR7YHDBAFcI4K+ktmyFg0duoh
-	 wAR9y1uhNYFLA==
+	s=k20201202; t=1776691398;
+	bh=4Ew+9P1AhCIc/hFMFZX1yd3SOp26GdjQC76CnuAw4eY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=fSret4Nr/dT4WI0ejo0jrquAkS3QgSrfYNw6HWDYnF8qXQjQF/d9dCAjSJNT/EerC
+	 ofT1iBDn4z/v15MvAyWJDVSMz3FAnIpobV7u3ziVGRnDMb/pfOParuYSss12DImyA7
+	 VrM65Lw22Xdya8WaVwVoVBKz3C/ypKddFgupEONNj9GhF+VKk00PuRU4c0+dBnyR3u
+	 3IMaKSK6C0Vdd+/58A8j62wIeAgi67ulXUS4/eQWD+SC32SipBv2ia+fovTOrPUQX7
+	 O14rmcx1mLErQDKXdnKm5N5JALk/OyZEYXOdocKbdJRV31wweANHaSfMt0mwl5K832
+	 Z0ZM4Td0rrNIg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Marek Vasut <marex@nabladev.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>,
+	Roopni Devanathan <roopni.devanathan@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shenghao-ding@ti.com,
-	kevin-lu@ti.com,
-	baojun.xu@ti.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	jjohnson@kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath12k@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ASoC: tas2552: Allow audio enable GPIO to sleep
-Date: Mon, 20 Apr 2026 09:16:35 -0400
-Message-ID: <20260420132314.1023554-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] wifi: ath12k: Fix the assignment of logical link index
+Date: Mon, 20 Apr 2026 09:16:36 -0400
+Message-ID: <20260420132314.1023554-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
+References: <20260420132314.1023554-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,354 +58,329 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@nabladev.com>
+From: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>
 
-[ Upstream commit 5ebc20921b7fff9feb44de465448e17a382c9965 ]
+[ Upstream commit aecb569d7fb689e3e5b0005ca7bd0a2ef28915e8 ]
 
-The audio enable GPIO is not toggled in any critical section where it
-could not sleep, allow the audio enable GPIO to sleep. This allows the
-driver to operate the audio enable GPIO connected to I2C GPIO expander.
+Per-link logical index is assigned from the global counter,
+ahsta->num_peer. This logical index is sent to firmware during peer
+association. If there is a failure in creating a link station,
+ath12k_mac_free_unassign_link_sta() clears the link, but does not decrement
+the logical link index. This will result in a higher logical link index for
+the next link station created. Also, if there is a leak in logical link
+index as we assign the incremented num_peer, then the index can exceed the
+maximum valid value of 15.
 
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260220202332.241035-1-marex@nabladev.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+As an example, let's say we have a 2 GHz + 5 GHz + 6 GHz MLO setup. So the
+logical link indices that they have are 0, 1 and 2, respectively. If the
+5 GHz link is removed, logical link index 1 becomes available, and num_peer
+is not reduced to 2 and still remains at 3. If a new 5 GHz link is added
+later, it gets the index 3, instead of reusing link index 1. Also,
+num_peer is increased to 4, though only 3 links are present.
+
+To resolve these, create a bitmap, free_logical_link_idx, that tracks the
+available logical link indices. When a link station is created, select the
+first free logical index and when a link station is removed, mark its
+logical link index as available by setting the bit.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01181-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>
+Signed-off-by: Roopni Devanathan <roopni.devanathan@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260226041911.2434999-1-roopni.devanathan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for the full analysis.
+Now I have all the information I need. Let me compile the final
+analysis.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Complete Analysis
 
-**Step 1.1: Subject Line**
-- Subsystem: `ASoC: tas2552` (sound, ASoC codec driver)
-- Action verb: "Allow" - implies enabling something previously not
-  supported
-- Summary: Allow the enable GPIO to sleep, enabling use with I2C GPIO
-  expanders
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2: Tags**
-- Signed-off-by: Marek Vasut <marex@nabladev.com> (author)
-- Link:
-  https://patch.msgid.link/20260220202332.241035-1-marex@nabladev.com
-- Signed-off-by: Mark Brown <broonie@kernel.org> (ASoC subsystem
-  maintainer)
-- No Fixes: tag, no Reported-by, no Cc: stable (expected for autosel
-  candidates)
+**Step 1.1:**
+- Subsystem: `wifi: ath12k`
+- Action verb: "Fix"
+- Summary: Fixes the assignment of logical link index for MLO (Multi-
+  Link Operation) link stations.
 
-**Step 1.3: Commit Body**
-The commit describes that the enable GPIO is never toggled from atomic
-context, so it's safe to use the sleeping variant. This allows the
-driver to work when the enable GPIO is connected to an I2C GPIO expander
-(which requires sleeping for bus access).
+**Step 1.2: Tags:**
+- `Tested-on: QCN9274 hw2.0 PCI` — hardware tested
+- `Signed-off-by: Manish Dharanenthiran` — original author
+- `Signed-off-by: Roopni Devanathan` — submitter
+- `Reviewed-by: Rameshkumar Sundaram`, `Baochen Qiang`, `Vasanthakumar
+  Thiagarajan` — 3 Qualcomm reviewers
+- `Link:` to patch.msgid.link — original submission
+- `Signed-off-by: Jeff Johnson` — ath12k maintainer applied it
+- No Fixes: tag, no Reported-by, no syzbot, no Cc: stable — expected for
+  autoselection candidates.
 
-**Step 1.4: Hidden Bug Fix Detection**
-YES - this is a bug fix. Using `gpiod_set_value()` with a sleeping GPIO
-triggers `WARN_ON(desc->gdev->can_sleep)` in gpiolib.c:3899. This is
-incorrect API usage that produces kernel warnings.
+**Step 1.3:** The commit message describes a clear bug: `num_peer` is a
+monotonically incrementing counter used to assign logical link indices.
+When links are removed, the counter is never decremented, causing
+"leakage" of index values. Over time with link add/remove cycles, the
+index exceeds the firmware's maximum valid value of 15.
 
-## PHASE 2: DIFF ANALYSIS
+**Step 1.4:** This is NOT a hidden bug fix — the subject explicitly says
+"Fix".
 
-**Step 2.1: Inventory**
-- 1 file changed: `sound/soc/codecs/tas2552.c`
-- 5 lines changed (identical substitution at each site)
-- Functions modified: `tas2552_runtime_suspend`,
-  `tas2552_runtime_resume`, `tas2552_component_probe` (x2),
-  `tas2552_component_remove`
+### PHASE 2: DIFF ANALYSIS
 
-**Step 2.2: Code Flow Change**
-Each hunk is identical: `gpiod_set_value(tas2552->enable_gpio, X)` ->
-`gpiod_set_value_cansleep(tas2552->enable_gpio, X)`. No logic change —
-both APIs call the same `gpiod_set_value_nocheck()` internally.
+**Step 2.1:**
+- `core.h`: 1 line changed (`u8 num_peer` -> `u16
+  free_logical_link_idx_map`)
+- `mac.c`: ~20 lines changed across 3 functions
+- Functions modified: `ath12k_mac_free_unassign_link_sta`,
+  `ath12k_mac_assign_link_sta`, `ath12k_mac_op_sta_state`
+- Scope: well-contained, single-subsystem fix
 
-**Step 2.3: Bug Mechanism**
-Verified in `drivers/gpio/gpiolib.c`:
+**Step 2.2:**
+- In `ath12k_mac_free_unassign_link_sta`: adds
+  `ahsta->free_logical_link_idx_map |= BIT(arsta->link_idx)` — returns
+  the freed index to the pool
+- In `ath12k_mac_assign_link_sta`: replaces `arsta->link_idx =
+  ahsta->num_peer++` with bitmap-based allocation using `__ffs()` + adds
+  `-ENOSPC` check
+- In `ath12k_mac_op_sta_state`: initializes
+  `ahsta->free_logical_link_idx_map = U16_MAX` when a new station is
+  created (all bits set = all indices free)
 
-```3895:3901:drivers/gpio/gpiolib.c
-int gpiod_set_value(struct gpio_desc *desc, int value)
-{
-        VALIDATE_DESC(desc);
-        /* Should be using gpiod_set_value_cansleep() */
-        WARN_ON(desc->gdev->can_sleep);
-        return gpiod_set_value_nocheck(desc, value);
-}
-```
+**Step 2.3:** Bug category: Logic/correctness bug — resource index leak.
+The old approach only increments, never reuses indices. The new bitmap
+approach properly tracks available indices.
 
-vs:
+**Step 2.4:** Fix quality:
+- The fix is correct — bitmap tracks available indices, `__ffs` gets the
+  lowest free bit, removal sets the bit back
+- It adds a proper `-ENOSPC` check for when all indices are exhausted
+- Minimal regression risk — the logic is straightforward and only
+  touches the specific allocation/deallocation paths
+- The U16_MAX initialization means 16 indices (0-15), which matches the
+  firmware's maximum
 
-```4359:4364:drivers/gpio/gpiolib.c
-int gpiod_set_value_cansleep(struct gpio_desc *desc, int value)
-{
-        might_sleep();
-        VALIDATE_DESC(desc);
-        return gpiod_set_value_nocheck(desc, value);
-}
-```
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-The bug: When the enable GPIO is on an I2C GPIO expander (`can_sleep =
-true`), `gpiod_set_value()` fires `WARN_ON` producing a kernel warning
-with stack trace on every suspend/resume cycle and on probe/remove.
+**Step 3.1:** `git blame` confirms both the buggy code (`num_peer++` at
+line 7124) and the incomplete cleanup function were introduced by the
+same commit: `8e6f8bc286031` ("Add MLO station state change handling")
+by Sriram R, dated 2024-11-21, first in v6.14-rc1.
 
-**Step 2.4: Fix Quality**
-- Obviously correct: the only change is which wrapper is used; both call
-  the same underlying function
-- Minimal: 5 identical one-line substitutions
-- Zero regression risk: `gpiod_set_value_cansleep()` is strictly more
-  permissive (works with both sleeping and non-sleeping GPIOs)
-- All call sites are process context (PM callbacks, probe, remove) where
-  sleeping is allowed
+**Step 3.2:** No Fixes: tag present. The bug was introduced by
+8e6f8bc286031.
 
-## PHASE 3: GIT HISTORY
+**Step 3.3:** No intermediate fixes for the same issue. No prerequisites
+found — the patch modifies code that exists in the tree as-is.
 
-**Step 3.1: Blame**
-The `gpiod_set_value()` calls were introduced by commit `82cf77a1bd61d9`
-(Axel Lin, 2015) which simplified NULL checks. The original code existed
-since `5df7f71d5cdfbc` (Dan Murphy, 2014). The buggy code has been
-present since v4.3-rc1.
+**Step 3.4:** The author (Manish Dharanenthiran) is a regular ath12k
+contributor with 9+ commits in the subsystem. Jeff Johnson (ath12k
+maintainer) applied it.
 
-**Step 3.2: Fixes tag**
-No Fixes: tag present (expected for autosel).
+**Step 3.5:** This is a standalone single-patch fix. No dependencies on
+other commits.
 
-**Step 3.3: File History**
-Recent changes to the file are trivial: RUNTIME_PM_OPS conversion,
-removing redundant `pm_runtime_mark_last_busy()`, dropping unused GPIO
-includes. No conflicts.
+### PHASE 4: MAILING LIST RESEARCH
 
-**Step 3.4: Author**
-Marek Vasut is a prolific kernel contributor with extensive work across
-DRM, DT bindings, and sound subsystems. Not the TAS2552 maintainer but a
-well-known contributor.
+Lore was not accessible due to anti-bot protection. b4 dig could not
+find the exact commit (it hasn't landed in the main tree yet from the
+perspective of this 7.0 tree). The patch was sent to
+`ath12k@lists.infradead.org` and `linux-wireless@vger.kernel.org`. It
+was reviewed by 3 Qualcomm engineers and applied by the ath12k
+maintainer Jeff Johnson.
 
-**Step 3.5: Prerequisites**
-None. The change is standalone and independent of the RUNTIME_PM_OPS
-conversion. It touches only the `gpiod_set_value()` calls which exist in
-all stable trees.
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-## PHASE 4: MAILING LIST RESEARCH
+**Step 5.1:** Modified functions: `ath12k_mac_free_unassign_link_sta`,
+`ath12k_mac_assign_link_sta`, `ath12k_mac_op_sta_state`
 
-**Step 4.1: Original Patch**
-Found via `b4 am`. The patch was submitted as a single standalone patch
-on 2026-02-20. CC'd appropriate maintainers (Mark Brown, Takashi Iwai,
-TI engineers, linux-sound, linux-kernel). Applied directly by Mark Brown
-(ASoC maintainer). No v2/v3 revisions — accepted as-is.
+**Step 5.2:** `arsta->link_idx` is used in `ath12k_peer_assoc_h_mlo()`
+(line 3531) to populate `ml->logical_link_idx` which is sent to firmware
+via `wmi.c` line 2348 as `ml_params->logical_link_idx`. This is a WMI
+command parameter — an invalid value directly impacts firmware behavior.
 
-**Step 4.2: Reviewers**
-The patch was CC'd to all relevant TI and ASoC maintainers. Mark Brown
-(ASoC subsystem maintainer) applied it directly.
+**Step 5.4:** The path: `ath12k_mac_op_sta_state` ->
+`ath12k_mac_assign_link_sta` -> sets `link_idx` -> later used in
+`ath12k_peer_assoc_h_mlo` -> sent via WMI to firmware. This is a
+standard MLO station association path triggered during Wi-Fi connection
+setup.
 
-**Step 4.3: Bug Report**
-No external bug report. Marek Vasut likely encountered this on a board
-with an I2C GPIO expander.
+### PHASE 6: STABLE TREE ANALYSIS
 
-**Step 4.4: Related Patches**
-This is a well-established pattern. Multiple identical fixes have been
-applied to other ASoC codecs:
-- `5f83ee4b1f0c0` ASoC: tas5086: use sleeping variants of gpiod API
-- `897d8e86bac76` ASoC: tlv320aic31xx: switch to
-  gpiod_set_value_cansleep
-- `5d7e0b1516dfc` ASoC: dmic: Allow GPIO operations to sleep
-- `ea2a2ad17ca1e` ASoC: dio2125: use gpiod_set_value_cansleep (had
-  Fixes: tag)
+**Step 6.1:** The buggy code (`num_peer` field) was introduced in commit
+`8e6f8bc286031`, first in v6.14-rc1. It is:
+- **NOT in v6.13, v6.12, or any earlier LTS tree**
+- Present in v6.14, v6.15, v6.16, v6.17, v6.18, v6.19, v7.0
 
-**Step 4.5: Stable Discussion**
-No stable-specific discussion found. The dio2125 variant (ea2a2ad17ca1e)
-had a Fixes: tag and was likely auto-selected for stable.
+For the 7.0.y stable tree specifically, the buggy code IS present.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 6.2:** The code in v7.0 matches exactly what the patch expects
+(verified by reading lines 7096-7137 and 6771-6798 of mac.c). The patch
+should apply cleanly.
 
-**Step 5.1: Functions Modified**
-- `tas2552_runtime_suspend()` — PM runtime callback
-- `tas2552_runtime_resume()` — PM runtime callback
-- `tas2552_component_probe()` — ASoC component probe (x2 sites)
-- `tas2552_component_remove()` — ASoC component remove
+### PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 5.2: Callers**
-All five call sites are invoked from process context:
-- Runtime PM callbacks are invoked by the PM subsystem in process
-  context
-- Component probe/remove are called from the ASoC registration path,
-  always sleepable
+**Step 7.1:** Subsystem: wireless driver (ath12k) — IMPORTANT for WiFi 7
+users with Qualcomm QCN9274 and similar chipsets. MLO is a key WiFi 7
+feature.
 
-**Step 5.3-5.4: No atomic context concerns**
-All callers can sleep. The `gpiod_set_value_cansleep()` API with its
-`might_sleep()` is the correct choice.
+**Step 7.2:** ath12k is very actively developed (183 commits to mac.c
+between v6.14 and v7.0).
 
-**Step 5.5: Similar Patterns**
-There are 5 remaining `gpiod_set_value()` calls in this file — this
-patch converts all of them. Other ASoC drivers have undergone identical
-transformations.
+### PHASE 8: IMPACT AND RISK ASSESSMENT
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 8.1:** Affected users: Users of Qualcomm ath12k WiFi 7 hardware
+with MLO enabled (QCN9274, etc.).
 
-**Step 6.1: Buggy Code in Stable?**
-YES. The `gpiod_set_value()` calls date back to commit `82cf77a1bd61d9`
-(v4.3-rc1, 2015). All active stable trees contain this code.
+**Step 8.2:** Trigger: Happens when MLO links are removed and re-added —
+occurs during roaming, channel switching, or temporary link degradation.
+In a typical MLO setup with frequent link changes, this can be triggered
+relatively easily.
 
-**Step 6.2: Backport Complications**
-Minimal. The `gpiod_set_value()` lines are identical across all stable
-versions. The only difference is that pre-6.12 trees have `#ifdef
-CONFIG_PM` guards and `SET_RUNTIME_PM_OPS` instead of `RUNTIME_PM_OPS`,
-but this doesn't affect the changed lines. The patch should apply
-cleanly or with trivial context offset.
+**Step 8.3:** Failure mode: Sending an invalid logical link index (>15)
+to firmware can cause firmware malfunction, potential firmware crash, or
+incorrect MLO behavior. Severity: **HIGH** — firmware receives invalid
+commands.
 
-**Step 6.3: No Existing Fix**
-No related fix for this specific issue in any stable tree.
+**Step 8.4:**
+- Benefit: Prevents firmware from receiving invalid index values during
+  MLO operations, which could cause connection instability or firmware
+  crashes
+- Risk: LOW — the change is ~20 lines, well-contained, uses standard
+  bitmap operations, reviewed by 3 engineers plus maintainer
+- Ratio: Favorable
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### PHASE 9: FINAL SYNTHESIS
 
-**Step 7.1:** Sound/ASoC codec driver — PERIPHERAL criticality (specific
-codec driver), but TAS2552 is used in embedded systems.
+**Evidence FOR backporting:**
+- Fixes a real, clearly described bug (index leak leading to invalid
+  firmware commands)
+- Small, well-contained fix (~20 lines across 2 files)
+- Obviously correct bitmap-based approach
+- 3 Reviewed-by tags from Qualcomm engineers + maintainer sign-off
+- Tested on hardware (QCN9274 hw2.0)
+- The buggy code exists in v7.0 (target tree)
+- Should apply cleanly
 
-**Step 7.2:** The driver is mature/stable with minimal recent activity
-(only cleanup commits).
+**Evidence AGAINST backporting:**
+- No Fixes: tag, no syzbot/crash report, no user-reported symptom
+- Replaces a data structure member (counter -> bitmap), slightly more
+  than a trivial patch
+- MLO is relatively new; impact limited to WiFi 7 MLO users
+- No explicit Cc: stable nomination
+- The bug requires specific MLO link add/remove cycles to manifest
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Stable rules checklist:**
+1. Obviously correct and tested? **Yes** — bitmap approach is
+   straightforward, hardware tested
+2. Fixes a real bug? **Yes** — index leak causing invalid firmware
+   commands
+3. Important issue? **Medium-High** — can cause firmware malfunction in
+   MLO
+4. Small and contained? **Yes** — ~20 lines in 2 files, single subsystem
+5. No new features? **Correct** — pure bug fix
+6. Can apply to stable? **Yes** — code matches cleanly
 
-**Step 8.1: Affected Users**
-Users of the TAS2552 audio amplifier who have the enable GPIO connected
-to an I2C GPIO expander. This is a valid embedded hardware
-configuration.
+**Verification:**
+- [Phase 1] Parsed tags: 3 Reviewed-by, tested-on, Link, maintainer SOB
+- [Phase 2] Diff analysis: replaces `num_peer` counter with
+  `free_logical_link_idx_map` bitmap across 3 functions
+- [Phase 3] git blame: buggy code introduced in 8e6f8bc286031
+  (v6.14-rc1), confirmed by `git merge-base --is-ancestor` checks
+- [Phase 3] `git merge-base --is-ancestor 8e6f8bc286031 v6.13` → Not in
+  v6.13; `v6.14` → Yes
+- [Phase 3] Author has 9+ ath12k commits, is a regular contributor
+- [Phase 4] b4 dig could not find the commit (not merged in this tree);
+  lore blocked by anti-bot
+- [Phase 5] Traced `link_idx` usage: set in `ath12k_mac_assign_link_sta`
+  → used in `ath12k_peer_assoc_h_mlo` (line 3531) → sent to firmware via
+  WMI (wmi.c line 2348)
+- [Phase 6] Buggy code confirmed present in v7.0 tree; code at lines
+  7096-7137 matches patch context exactly
+- [Phase 6] NOT in v6.13 or earlier LTS trees (v6.12.y, v6.6.y, etc.)
+- [Phase 8] Invalid logical_link_idx sent to firmware can cause firmware
+  malfunction
+- UNVERIFIED: Could not access lore discussion to check for reviewer
+  stable nominations or concerns
 
-**Step 8.2: Trigger Conditions**
-The WARN_ON triggers on EVERY suspend/resume cycle and on driver
-probe/remove — not rare at all for affected hardware.
-
-**Step 8.3: Failure Mode**
-- WARN_ON with full stack trace in kernel log (MEDIUM severity normally)
-- With `panic_on_warn=1`: kernel panic (CRITICAL severity for those
-  configurations)
-- Without panic_on_warn: console spam, log pollution, incorrect API
-  usage flagged
-
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Eliminates WARN_ON spam, enables I2C GPIO expander hardware
-  correctly, fixes incorrect API usage
-- RISK: Virtually zero — both APIs call the same underlying function,
-  the only difference is the debug assertion
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Step 9.1: Evidence Summary**
-
-FOR backporting:
-- Fixes incorrect GPIO API usage that triggers WARN_ON
-- Can cause kernel panic with `panic_on_warn=1`
-- Trivially small (5 identical line substitutions), trivially correct
-- Zero regression risk (both APIs have identical functional behavior)
-- Well-established pattern applied to many other drivers
-- Applied by ASoC subsystem maintainer Mark Brown
-- Buggy code present since v4.3 — affects all stable trees
-- No dependencies on other patches
-
-AGAINST backporting:
-- No Reported-by (no evidence of real-world user reports)
-- WARN_ON is non-fatal in default configurations
-- Affects specific hardware configuration (I2C GPIO expander)
-- Could be seen as "enablement" rather than pure "fix"
-
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested: YES — trivially provable
-2. Fixes a real bug: YES — WARN_ON from incorrect API usage
-3. Important issue: MEDIUM — WARN_ON, potential panic with panic_on_warn
-4. Small and contained: YES — 5 lines in 1 file
-5. No new features: YES — just API correction
-6. Can apply to stable: YES — clean apply expected
-
-**Step 9.3: Exception Categories**
-This is closest to a hardware quirk/workaround — it makes the driver
-work correctly with I2C GPIO expanders.
-
-## Verification
-
-- [Phase 1] Parsed tags: Signed-off-by from author and ASoC maintainer,
-  Link to patch.msgid
-- [Phase 2] Diff analysis: 5 identical `gpiod_set_value` ->
-  `gpiod_set_value_cansleep` substitutions
-- [Phase 2] Verified `gpiod_set_value()` has
-  `WARN_ON(desc->gdev->can_sleep)` at gpiolib.c:3899
-- [Phase 2] Verified `gpiod_set_value_cansleep()` calls same
-  `gpiod_set_value_nocheck()` at gpiolib.c:4363
-- [Phase 3] git blame: `gpiod_set_value` calls introduced by commit
-  82cf77a1bd61d9 (v4.3-rc1, 2015)
-- [Phase 3] git log: no conflicting changes in recent history
-- [Phase 3] RUNTIME_PM_OPS conversion (1570c33f2f38b) does not affect
-  the changed lines
-- [Phase 4] b4 am: found original patch, single standalone submission
-- [Phase 4] Multiple identical fixes applied to other ASoC codecs
-  (tas5086, tlv320aic31xx, dmic, dio2125)
-- [Phase 5] All call sites (runtime_suspend/resume,
-  component_probe/remove) are process context — can sleep
-- [Phase 6] Buggy code present since v4.3, exists in all active stable
-  trees
-- [Phase 6] Patch applies cleanly — no conflicting changes to the
-  affected lines
-- [Phase 8] WARN_ON triggers on every suspend/resume for affected
-  hardware, not a rare event
-
-The fix is trivially correct, carries zero regression risk, and fixes
-incorrect GPIO API usage that produces kernel warnings (and potential
-panics) for valid hardware configurations. While it's not fixing a crash
-in the default configuration, the WARN_ON is a genuine bug indicator,
-and this well-established pattern has been applied to many other
-drivers.
+This is a real bug fix for a resource index leak in WiFi 7 MLO handling
+that can lead to invalid firmware commands. The fix is small, self-
+contained, well-reviewed, and hardware-tested. The buggy code exists in
+the target 7.0.y tree.
 
 **YES**
 
- sound/soc/codecs/tas2552.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.h |  2 +-
+ drivers/net/wireless/ath/ath12k/mac.c  | 16 ++++++++++++++--
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2552.c b/sound/soc/codecs/tas2552.c
-index 43449d7c25843..80206c2e09462 100644
---- a/sound/soc/codecs/tas2552.c
-+++ b/sound/soc/codecs/tas2552.c
-@@ -487,7 +487,7 @@ static int tas2552_runtime_suspend(struct device *dev)
- 	regcache_cache_only(tas2552->regmap, true);
- 	regcache_mark_dirty(tas2552->regmap);
+diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
+index 990934ec92fca..5498ff285102b 100644
+--- a/drivers/net/wireless/ath/ath12k/core.h
++++ b/drivers/net/wireless/ath/ath12k/core.h
+@@ -522,7 +522,7 @@ struct ath12k_sta {
+ 	u16 links_map;
+ 	u8 assoc_link_id;
+ 	u16 ml_peer_id;
+-	u8 num_peer;
++	u16 free_logical_link_idx_map;
  
--	gpiod_set_value(tas2552->enable_gpio, 0);
-+	gpiod_set_value_cansleep(tas2552->enable_gpio, 0);
- 
- 	return 0;
- }
-@@ -496,7 +496,7 @@ static int tas2552_runtime_resume(struct device *dev)
- {
- 	struct tas2552_data *tas2552 = dev_get_drvdata(dev);
- 
--	gpiod_set_value(tas2552->enable_gpio, 1);
-+	gpiod_set_value_cansleep(tas2552->enable_gpio, 1);
- 
- 	tas2552_sw_shutdown(tas2552, 0);
- 
-@@ -583,7 +583,7 @@ static int tas2552_component_probe(struct snd_soc_component *component)
- 		return ret;
- 	}
- 
--	gpiod_set_value(tas2552->enable_gpio, 1);
-+	gpiod_set_value_cansleep(tas2552->enable_gpio, 1);
- 
- 	ret = pm_runtime_resume_and_get(component->dev);
- 	if (ret < 0) {
-@@ -608,7 +608,7 @@ static int tas2552_component_probe(struct snd_soc_component *component)
- 
- probe_fail:
- 	pm_runtime_put_noidle(component->dev);
--	gpiod_set_value(tas2552->enable_gpio, 0);
-+	gpiod_set_value_cansleep(tas2552->enable_gpio, 0);
- 
- 	regulator_bulk_disable(ARRAY_SIZE(tas2552->supplies),
- 					tas2552->supplies);
-@@ -621,7 +621,7 @@ static void tas2552_component_remove(struct snd_soc_component *component)
- 
- 	pm_runtime_put(component->dev);
- 
--	gpiod_set_value(tas2552->enable_gpio, 0);
-+	gpiod_set_value_cansleep(tas2552->enable_gpio, 0);
+ 	enum ieee80211_sta_state state;
  };
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index b253d1e3f4052..769d240e3ae24 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -6784,6 +6784,8 @@ static void ath12k_mac_free_unassign_link_sta(struct ath12k_hw *ah,
+ 		return;
  
- #ifdef CONFIG_PM
+ 	ahsta->links_map &= ~BIT(link_id);
++	ahsta->free_logical_link_idx_map |= BIT(arsta->link_idx);
++
+ 	rcu_assign_pointer(ahsta->link[link_id], NULL);
+ 	synchronize_rcu();
+ 
+@@ -7102,6 +7104,7 @@ static int ath12k_mac_assign_link_sta(struct ath12k_hw *ah,
+ 	struct ieee80211_sta *sta = ath12k_ahsta_to_sta(ahsta);
+ 	struct ieee80211_link_sta *link_sta;
+ 	struct ath12k_link_vif *arvif;
++	int link_idx;
+ 
+ 	lockdep_assert_wiphy(ah->hw->wiphy);
+ 
+@@ -7120,8 +7123,16 @@ static int ath12k_mac_assign_link_sta(struct ath12k_hw *ah,
+ 
+ 	ether_addr_copy(arsta->addr, link_sta->addr);
+ 
+-	/* logical index of the link sta in order of creation */
+-	arsta->link_idx = ahsta->num_peer++;
++	if (!ahsta->free_logical_link_idx_map)
++		return -ENOSPC;
++
++	/*
++	 * Allocate a logical link index by selecting the first available bit
++	 * from the free logical index map
++	 */
++	link_idx = __ffs(ahsta->free_logical_link_idx_map);
++	ahsta->free_logical_link_idx_map &= ~BIT(link_idx);
++	arsta->link_idx = link_idx;
+ 
+ 	arsta->link_id = link_id;
+ 	ahsta->links_map |= BIT(arsta->link_id);
+@@ -7630,6 +7641,7 @@ int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
+ 	if (old_state == IEEE80211_STA_NOTEXIST &&
+ 	    new_state == IEEE80211_STA_NONE) {
+ 		memset(ahsta, 0, sizeof(*ahsta));
++		ahsta->free_logical_link_idx_map = U16_MAX;
+ 
+ 		arsta = &ahsta->deflink;
+ 
 -- 
 2.53.0
 
