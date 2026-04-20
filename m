@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C86A2C236B;
-	Mon, 20 Apr 2026 15:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64312D9EE4;
+	Mon, 20 Apr 2026 15:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700045; cv=none; b=fWX+o7qQJCjBL293LGYKypKvMQhS8QOLsmkhEnHYvF5doDUwhrjBBm123YWZr7+fPtjlOiVatoZs7TT/qBntu4AulhukkN4JkPEJIs5PLFV2okk33IfrGCrGbiTYoeQiU/3u366hcCwOebjVnFUS9mg0J4TEaP8U28o+kTr6tUU=
+	t=1776700047; cv=none; b=tmNpKGt4g6IzAbQMykRxSjo0Nji5tTW+o/YSjQVefziqyv7+vFZvS0gGCYEPv2RQszClEmoyn8T3vLkNqhBNBLAvXm9vWHdJ0tQv4R3se8+cTJjpQhX/4RIl6fWCTo28hNpuXoW8IEdIdrsDVl0pBUdkIa0ZkCv+3YV+clPgoZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700045; c=relaxed/simple;
-	bh=DJIijbvMiF/A8nsgC5CbJFqpgr7s2ysTLG9Wv7AV/0s=;
+	s=arc-20240116; t=1776700047; c=relaxed/simple;
+	bh=pNfs8l8dydI2Qbo9B7Ez3wY7n+nzLGnvPG5OVK+zmLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=leoZosjMqZtYXhFqIjCuGhEFRMyULRdsnEZnp/QABtW75fmMUMfrhCWmiILmsz/l/vT8r/rSznJ/FA30HngAjWdBtHzKKDZaLkjAXLgRkSyPUGW0g8uECocdzusSP2RbR9sWXVgdFzHG15Bc+HdOR/PcALuJXCEisXFmnPp9rpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlkC6nK5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VSPCuVJCy3KzbdydP5uDFqsyhGY3UNepmLDO8Muhsni/kBiP1mhOX9X7s4x4lhZQp1rjYv3OFKuLlwM5L4sSoojRYog1qWYZqDFjauDVIJ4GVWBHz6VGLBgUxyps/y2FrNSmIxNdMm7/Ywm0JHIP1yRmYOKB091FGBzTod7/LEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awPNKp8L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlkC6nK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3716C19425;
-	Mon, 20 Apr 2026 15:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awPNKp8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF06C2BCB4;
+	Mon, 20 Apr 2026 15:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700045;
-	bh=DJIijbvMiF/A8nsgC5CbJFqpgr7s2ysTLG9Wv7AV/0s=;
+	s=korg; t=1776700047;
+	bh=pNfs8l8dydI2Qbo9B7Ez3wY7n+nzLGnvPG5OVK+zmLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlkC6nK5vFMza7QIXcHAgsKsLw6gERA/GRqjynPBU9zOdaaXw+uEI9ZTP8mLGi/aZ
-	 IJHMt7XgleYWW8Gn0RutQTOHA4SsE70ok1+LR/5iBfdO1V+njviaXyRjiG1UL1N2Zk
-	 AzCIRMJsPMpYBqiqI2TzuM55n2CCBmkyiadj9cRw=
+	b=awPNKp8LtuNMGFXwokPuse0s+QT31OJGx0zGGWAA9uxmKixxQM05U9pZi7D0JpEp+
+	 kUqtnCYCpuBDJjv+xsYtzEHPm88EAzMIZbsNwrnweRp515TiM3VoGpZBtEcqBjdSnV
+	 h8m/ZWPpqt1F8uvNok4v4OmiwvV3T5e0tCHbqFS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vee Satayamas <vsatayamas@gmail.com>,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 003/220] ASoC: amd: yc: Add DMI quirk for ASUS EXPERTBOOK BM1403CDA
-Date: Mon, 20 Apr 2026 17:39:04 +0200
-Message-ID: <20260420153934.143214895@linuxfoundation.org>
+Subject: [PATCH 6.19 021/220] drm/amdgpu: Handle GPU page faults correctly on non-4K page systems
+Date: Mon, 20 Apr 2026 17:39:22 +0200
+Message-ID: <20260420153934.792352521@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -46,47 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vee Satayamas <vsatayamas@gmail.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-[ Upstream commit f200b2f9a810c440c6750b56fc647b73337749a1 ]
+[ Upstream commit 4e9597f22a3cb8600c72fc266eaac57981d834c8 ]
 
-Add a DMI quirk for the Asus Expertbook BM1403CDA to resolve the issue of the
-internal microphone not being detected.
+During a GPU page fault, the driver restores the SVM range and then maps it
+into the GPU page tables. The current implementation passes a GPU-page-size
+(4K-based) PFN to svm_range_restore_pages() to restore the range.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221236
-Signed-off-by: Vee Satayamas <vsatayamas@gmail.com>
-Reviewed-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260315142511.66029-2-vsatayamas@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+SVM ranges are tracked using system-page-size PFNs. On systems where the
+system page size is larger than 4K, using GPU-page-size PFNs to restore the
+range causes two problems:
+
+Range lookup fails:
+Because the restore function receives PFNs in GPU (4K) units, the SVM
+range lookup does not find the existing range. This will result in a
+duplicate SVM range being created.
+
+VMA lookup failure:
+The restore function also tries to locate the VMA for the faulting address.
+It converts the GPU-page-size PFN into an address using the system page
+size, which results in an incorrect address on non-4K page-size systems.
+As a result, the VMA lookup fails with the message: "address 0xxxx VMA is
+removed".
+
+This patch passes the system-page-size PFN to svm_range_restore_pages() so
+that the SVM range is restored correctly on non-4K page systems.
+
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 074fe395fb13247b057f60004c7ebcca9f38ef46)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 1324543b42d72..c536de1bb94ad 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -717,6 +717,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "PM1503CDA"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "BM1403CDA"),
-+		}
-+	},
- 	{}
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index 7df6e75bd7014..636a0cbbb1447 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2974,14 +2974,14 @@ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
+ 	if (!root)
+ 		return false;
  
+-	addr /= AMDGPU_GPU_PAGE_SIZE;
+-
+ 	if (is_compute_context && !svm_range_restore_pages(adev, pasid, vmid,
+-	    node_id, addr, ts, write_fault)) {
++	    node_id, addr >> PAGE_SHIFT, ts, write_fault)) {
+ 		amdgpu_bo_unref(&root);
+ 		return true;
+ 	}
+ 
++	addr /= AMDGPU_GPU_PAGE_SIZE;
++
+ 	r = amdgpu_bo_reserve(root, true);
+ 	if (r)
+ 		goto error_unref;
 -- 
 2.53.0
 
