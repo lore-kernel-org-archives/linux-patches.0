@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA0422259F;
-	Mon, 20 Apr 2026 15:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707BE322749;
+	Mon, 20 Apr 2026 15:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700596; cv=none; b=rAdklCfvj0fWS+kBR6FJTg3/1HmlOKKFAKgONYRgPEYr3u50CRagB0OhEjY3qEbirk4jNuW11nJSbKnmqV15u1n95hZnTOMHTDEhWqDQh4DzcYjd7y7XeIBkaWAzBQWgeEFuAi/ysloa/hHuIkFWlbYfgHDf67eiTjTa9sIVa+U=
+	t=1776700599; cv=none; b=ltT100e3nCEkIO3BMvj8Y57uVPbg9+ID8Tbxvxo1+iJrISqEas3K34EoCWztTMw5rBL6DdhD9yz7nA3fxwW7JsxFAW+0Vogcru4XYQz5nBK9KyrQoaJIGLT5XdFHnnb2PNRhBtSKbslIoRlmZRnNWEIYZe69J8w2falx8FJDUno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700596; c=relaxed/simple;
-	bh=JwTW8QWniyW4HKTH7yHB/1C2tC8NQr9PN19EZyKmnrQ=;
+	s=arc-20240116; t=1776700599; c=relaxed/simple;
+	bh=XPRRB5yWtMSGu39NxauxbWtVa4n45Lvl4ImRoh3tRE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGkY1OKiFrEXl7C6BIGd97dyUvMsXwTfdbmG0PGWwLjc7wzUlcAHNSjBx/08d1AkMnOYTZnWH4dZ57+0v2VYfl6o/JYpvGHN17w/mmKuEXTOd7qfIMzDtGlTmMGWS1FmSVFb6LaXIsNhqvyf7YPlioQo7s95qz+24zwj+K3o/Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7u0Zk/+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rtxJSHip/usTnnU2BS8TjkDPxEglr+APixTNJ3Yf9sMS+VZx58VNkYzEsTTx8uFk1ndUxUZrsYYfW3fBQ/y9kktlzr60Kxiyu3rgMjB1aze0ua9IGC9nhFYfOxijdolLqi5l4NIenDsXkBNNI4PQEF7jYC+tCEf2uBSFRJyNHdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBpn1gkn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7u0Zk/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744B9C19425;
-	Mon, 20 Apr 2026 15:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBpn1gkn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071B8C19425;
+	Mon, 20 Apr 2026 15:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700596;
-	bh=JwTW8QWniyW4HKTH7yHB/1C2tC8NQr9PN19EZyKmnrQ=;
+	s=korg; t=1776700599;
+	bh=XPRRB5yWtMSGu39NxauxbWtVa4n45Lvl4ImRoh3tRE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7u0Zk/+mqnmCYPliFWjd3qn47VcFuuuqBtBmBibHhDfV9tBJQvwv1W6ocRr4tkTU
-	 v31Y3gSrcrcOhroSFBiCWe3/Xk67x8C2TMwEBdJFXdc1Ube7Xqkq8mF5yMo/PRgj+M
-	 nfRbhaKXCkvCLFn4R2j7+tzIPB/pm5E7oGtZQadY=
+	b=YBpn1gknYLaw6AO+vsT1ns8CKuoZSQQ+98uv72pKuMQDoNZZTMRBVD/6EUwuarJ/t
+	 AcfscLpF0cSsh4vxR5pBgN3bhvhV1hcuAI8iwff29bYjG26IIO6t2RLzllb2qeO6NR
+	 8cqVz9qFFq8BB4ghzT9eWqHbOLlHi3yB4KZkJOSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Zhang <rmxpzlb@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Denis Benato <denis.benato@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/198] ALSA:usb:qcom: add AUXILIARY_BUS to Kconfig dependencies
-Date: Mon, 20 Apr 2026 17:39:53 +0200
-Message-ID: <20260420153936.129574450@linuxfoundation.org>
+Subject: [PATCH 6.18 015/198] platform/x86: asus-nb-wmi: add DMI quirk for ASUS ROG Flow Z13-KJP GZ302EAC
+Date: Mon, 20 Apr 2026 17:39:54 +0200
+Message-ID: <20260420153936.165615305@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -45,45 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Zhang <rmxpzlb@gmail.com>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit b8bee48e38f2ddbdba5e58bc54ef54bb7d8d341b ]
+[ Upstream commit 0198d2743207d67f995cd6df89e267e1b9f5e1f1 ]
 
-The build can fail with:
+The ASUS ROG Flow Z13-KJP GZ302EAC model uses sys_vendor name ASUS
+rather than ASUSTeK COMPUTER INC., but it needs the same folio quirk as
+the other ROG Flow Z13. To keep things simple, just match on sys_vendor
+ASUS since it covers both.
 
-ERROR: modpost: "__auxiliary_driver_register"
-[sound/usb/qcom/snd-usb-audio-qmi.ko] undefined!
-ERROR: modpost: "auxiliary_driver_unregister"
-[sound/usb/qcom/snd-usb-audio-qmi.ko] undefined!
-
-Select AUXILIARY_BUS when SND_USB_AUDIO_QMI is enabled.
-
-Signed-off-by: Frank Zhang <rmxpzlb@gmail.com>
-Link: https://patch.msgid.link/20260317102527.556248-1-rmxpzlb@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Denis Benato <denis.benato@linux.dev>
+Link: https://patch.msgid.link/20260312212246.1608080-1-matthew.schwartz@linux.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/asus-nb-wmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/Kconfig b/sound/usb/Kconfig
-index 9b890abd96d34..b4588915efa11 100644
---- a/sound/usb/Kconfig
-+++ b/sound/usb/Kconfig
-@@ -192,6 +192,7 @@ config SND_USB_AUDIO_QMI
- 	tristate "Qualcomm Audio Offload driver"
- 	depends on QCOM_QMI_HELPERS && SND_USB_AUDIO && SND_SOC_USB
- 	depends on USB_XHCI_HCD && USB_XHCI_SIDEBAND
-+	select AUXILIARY_BUS
- 	help
- 	  Say Y here to enable the Qualcomm USB audio offloading feature.
- 
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index 6a62bc5b02fda..8dad7bdb8f612 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -548,7 +548,7 @@ static const struct dmi_system_id asus_quirks[] = {
+ 		.callback = dmi_matched,
+ 		.ident = "ASUS ROG Z13",
+ 		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow Z13"),
+ 		},
+ 		.driver_data = &quirk_asus_z13,
 -- 
 2.53.0
 
