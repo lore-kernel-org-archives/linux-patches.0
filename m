@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FD9280CD2;
-	Mon, 20 Apr 2026 16:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C3C2C11C6;
+	Mon, 20 Apr 2026 16:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701134; cv=none; b=FM1O+gVJ9yPK9Km4TR+A3/97BWfqo3Iao6dY64ZJAhFwqq+T4tj1lzlq1kHNZUWEYznetF8rZ98jds9XDey90DpEViwIj+IFL2uzcygxNpoRiyNuICIgnEysFQGl0gQ6LlNmmNoGSS/TtCP6Df0UsK1Ah+HBqP5sjjXxeNbQk2c=
+	t=1776701136; cv=none; b=ummWEGkZrF9INuKVe5b7JQCEQ74VZn2idoHth4jtkWWoMx5lD6wwkfaRCQquWpiwifQRT71jD15xUQVh9NSdF2ZP42QwJjipSpLIrfXTcgX+gwwWHOoolabM8HJ2mWk4D72h66EtQrJn7+ryVHeW9HLOs56mcsNfeF5hlTE8zkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701134; c=relaxed/simple;
-	bh=lSzmAM+EIS48JrsafSFoUqDMJkAHMs/xX9DNpUbAezM=;
+	s=arc-20240116; t=1776701136; c=relaxed/simple;
+	bh=jRSrpdESyShBuKo9MwAnVNKKiM+BQPlAwyhtLcBmr5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MbYVDYoY1lBzaaPZI1rxgUZ99dfFM8W39Sn41qilYj5Fd7+WMjf/TNrfY6RAq0LUTLpjTBQg2Pwz8LDusjIpM2ZNaprysQ7O+0P38xVDTyryJaM+aOxRO8tFOHQMa1oR1g/Pn1o9xmaEare2heYrkc2oj6bO/J7vCBEy/kk2Fzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtQUasZJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FD1/sbZVP/3mtGfSa+o3z4kCc3cDGzY83cNrbHF+P82zJuWp9N/jdJOdeFN0tU/s3v3skR41weEc5CSLfhMykwJyrfLfrPIEBvRmblzrq69tsEMcOclN4jByV2LcIrdWIK+vmun3P+tgBg4WbnjRVWVx0VIofmT8xs2+Lngs+Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVxBqBpP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtQUasZJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945ECC19425;
-	Mon, 20 Apr 2026 16:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVxBqBpP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2763AC19425;
+	Mon, 20 Apr 2026 16:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701133;
-	bh=lSzmAM+EIS48JrsafSFoUqDMJkAHMs/xX9DNpUbAezM=;
+	s=korg; t=1776701136;
+	bh=jRSrpdESyShBuKo9MwAnVNKKiM+BQPlAwyhtLcBmr5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mtQUasZJkkitT0AcvDAutCXIcjp9N00nbkroiQwBlnAGQElQtnUrc+gKQmkX8yOwY
-	 usCHAQ6mm3yYXNbWamHWy7EmnhyS5icd8xpzco+djSvmPmUkevVxc1xshElzAnHwft
-	 RWfkEUA5zf4/JvlKwTtBOROHR0Wy+fR+Z9kKsSHQ=
+	b=UVxBqBpPuXBNjeyhJQq3DjlI/L/2vsWkNVvijte7md920jFPYMI9FykEuoKjpsQ3O
+	 SXmyAuKvxiZRqqPuFfXdGygNIiIMw3Ynn82FL0UndRBPjAApucEKt5y40ikFno9Asq
+	 3sfb5IvHJImWjSr3rBQJ402MZpiixfZJ10ZJMXhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com,
-	syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 195/198] media: hackrf: fix to not free memory after the device is registered in hackrf_probe()
-Date: Mon, 20 Apr 2026 17:42:54 +0200
-Message-ID: <20260420153942.638531468@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.18 178/198] x86-64: rename misleadingly named __copy_user_nocache() function
+Date: Mon, 20 Apr 2026 17:42:37 +0200
+Message-ID: <20260420153942.025975773@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,87 +49,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 3b7da2b4d0fe014eff181ed37e3bf832eb8ed258 upstream.
+commit d187a86de793f84766ea40b9ade7ac60aabbb4fe upstream.
 
-In hackrf driver, the following race condition occurs:
-```
-		CPU0						CPU1
-hackrf_probe()
-  kzalloc(); // alloc hackrf_dev
-  ....
-  v4l2_device_register();
-  ....
-						fd = sys_open("/path/to/dev"); // open hackrf fd
-						....
-  v4l2_device_unregister();
-  ....
-  kfree(); // free hackrf_dev
-  ....
-						sys_ioctl(fd, ...);
-						  v4l2_ioctl();
-						    video_is_registered() // UAF!!
-						....
-						sys_close(fd);
-						  v4l2_release() // UAF!!
-						    hackrf_video_release()
-						      kfree(); // DFB!!
-```
+This function was a masterclass in bad naming, for various historical
+reasons.
 
-When a V4L2 or video device is unregistered, the device node is removed so
-new open() calls are blocked.
+It claimed to be a non-cached user copy.  It is literally _neither_ of
+those things.  It's a specialty memory copy routine that uses
+non-temporal stores for the destination (but not the source), and that
+does exception handling for both source and destination accesses.
 
-However, file descriptors that are already open-and any in-flight I/O-do
-not terminate immediately; they remain valid until the last reference is
-dropped and the driver's release() is invoked.
+Also note that while it works for unaligned targets, any unaligned parts
+(whether at beginning or end) will not use non-temporal stores, since
+only words and quadwords can be non-temporal on x86.
 
-Therefore, freeing device memory on the error path after hackrf_probe()
-has registered dev it will lead to a race to use-after-free vuln, since
-those already-open handles haven't been released yet.
+The exception handling means that it _can_ be used for user space
+accesses, but not on its own - it needs all the normal "start user space
+access" logic around it.
 
-And since release() free memory too, race to use-after-free and
-double-free vuln occur.
+But typically the user space access would be the source, not the
+non-temporal destination.  That was the original intention of this,
+where the destination was some fragile persistent memory target that
+needed non-temporal stores in order to catch machine check exceptions
+synchronously and deal with them gracefully.
 
-To prevent this, if device is registered from probe(), it should be
-modified to free memory only through release() rather than calling
-kfree() directly.
+Thus that non-descriptive name: one use case was to copy from user space
+into a non-cached kernel buffer.  However, the existing users are a mix
+of that intended use-case, and a couple of random drivers that just did
+this as a performance tweak.
 
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6ffd76b5405c006a46b7
-Reported-by: syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1b20958f93d2d250727
-Fixes: 8bc4a9ed8504 ("[media] hackrf: add support for transmitter")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Some of those random drivers then actively misused the user copying
+version (with STAC/CLAC and all) to do kernel copies without ever even
+caring about the exception handling, _just_ for the non-temporal
+destination.
+
+Rename it as a first small step to actually make it halfway sane, and
+change the prototype to be more normal: it doesn't take a user pointer
+unless the caller has done the proper conversion, and the argument size
+is the full size_t (it still won't actually copy more than 4GB in one
+go, but there's also no reason to silently truncate the size argument in
+the caller).
+
+Finally, use this now sanely named function in the NTB code, which
+mis-used a user copy version (with STAC/CLAC and all) of this interface
+despite it not actually being a user copy at all.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/hackrf/hackrf.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/uaccess_64.h    |    5 +++--
+ arch/x86/lib/copy_user_uncached_64.S |    6 +++---
+ arch/x86/lib/usercopy_64.c           |    4 ++--
+ drivers/infiniband/sw/rdmavt/qp.c    |    8 +++-----
+ drivers/ntb/ntb_transport.c          |    7 ++++---
+ tools/objtool/check.c                |    2 +-
+ 6 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/drivers/media/usb/hackrf/hackrf.c
-+++ b/drivers/media/usb/hackrf/hackrf.c
-@@ -1485,7 +1485,7 @@ static int hackrf_probe(struct usb_inter
- 	if (ret) {
- 		dev_err(dev->dev,
- 			"Failed to register as video device (%d)\n", ret);
--		goto err_v4l2_device_unregister;
-+		goto err_v4l2_device_put;
- 	}
- 	dev_info(dev->dev, "Registered as %s\n",
- 		 video_device_node_name(&dev->rx_vdev));
-@@ -1513,8 +1513,9 @@ static int hackrf_probe(struct usb_inter
- 	return 0;
- err_video_unregister_device_rx:
- 	video_unregister_device(&dev->rx_vdev);
--err_v4l2_device_unregister:
--	v4l2_device_unregister(&dev->v4l2_dev);
-+err_v4l2_device_put:
-+	v4l2_device_put(&dev->v4l2_dev);
-+	return ret;
- err_v4l2_ctrl_handler_free_tx:
- 	v4l2_ctrl_handler_free(&dev->tx_ctrl_handler);
- err_v4l2_ctrl_handler_free_rx:
+--- a/arch/x86/include/asm/uaccess_64.h
++++ b/arch/x86/include/asm/uaccess_64.h
+@@ -147,7 +147,8 @@ raw_copy_to_user(void __user *dst, const
+ 	return copy_user_generic((__force void *)dst, src, size);
+ }
+ 
+-extern long __copy_user_nocache(void *dst, const void __user *src, unsigned size);
++#define copy_to_nontemporal copy_to_nontemporal
++extern size_t copy_to_nontemporal(void *dst, const void *src, size_t size);
+ extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
+ 
+ static inline int
+@@ -157,7 +158,7 @@ __copy_from_user_inatomic_nocache(void *
+ 	long ret;
+ 	kasan_check_write(dst, size);
+ 	stac();
+-	ret = __copy_user_nocache(dst, src, size);
++	ret = copy_to_nontemporal(dst, (__force const void *)src, size);
+ 	clac();
+ 	return ret;
+ }
+--- a/arch/x86/lib/copy_user_uncached_64.S
++++ b/arch/x86/lib/copy_user_uncached_64.S
+@@ -27,7 +27,7 @@
+  * Output:
+  * rax uncopied bytes or 0 if successful.
+  */
+-SYM_FUNC_START(__copy_user_nocache)
++SYM_FUNC_START(copy_to_nontemporal)
+ 	ANNOTATE_NOENDBR
+ 	/* If destination is not 7-byte aligned, we'll have to align it */
+ 	testb $7,%dil
+@@ -240,5 +240,5 @@ _ASM_EXTABLE_UA(95b, .Ldone)
+ _ASM_EXTABLE_UA(52b, .Ldone0)
+ _ASM_EXTABLE_UA(53b, .Ldone0)
+ 
+-SYM_FUNC_END(__copy_user_nocache)
+-EXPORT_SYMBOL(__copy_user_nocache)
++SYM_FUNC_END(copy_to_nontemporal)
++EXPORT_SYMBOL(copy_to_nontemporal)
+--- a/arch/x86/lib/usercopy_64.c
++++ b/arch/x86/lib/usercopy_64.c
+@@ -49,11 +49,11 @@ long __copy_user_flushcache(void *dst, c
+ 	long rc;
+ 
+ 	stac();
+-	rc = __copy_user_nocache(dst, src, size);
++	rc = copy_to_nontemporal(dst, (__force const void *)src, size);
+ 	clac();
+ 
+ 	/*
+-	 * __copy_user_nocache() uses non-temporal stores for the bulk
++	 * copy_to_nontemporal() uses non-temporal stores for the bulk
+ 	 * of the transfer, but we need to manually flush if the
+ 	 * transfer is unaligned. A cached memory copy is used when
+ 	 * destination or size is not naturally aligned. That is:
+--- a/drivers/infiniband/sw/rdmavt/qp.c
++++ b/drivers/infiniband/sw/rdmavt/qp.c
+@@ -92,12 +92,10 @@ static int rvt_wss_llc_size(void)
+ static void cacheless_memcpy(void *dst, void *src, size_t n)
+ {
+ 	/*
+-	 * Use the only available X64 cacheless copy.  Add a __user cast
+-	 * to quiet sparse.  The src agument is already in the kernel so
+-	 * there are no security issues.  The extra fault recovery machinery
+-	 * is not invoked.
++	 * Use the only available X64 cacheless copy.
++	 * The extra fault recovery machinery is not invoked.
+ 	 */
+-	__copy_user_nocache(dst, (void __user *)src, n);
++	copy_to_nontemporal(dst, src, n);
+ }
+ 
+ void rvt_wss_exit(struct rvt_dev_info *rdi)
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1810,12 +1810,13 @@ static void ntb_tx_copy_callback(void *d
+ 
+ static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
+ {
+-#ifdef ARCH_HAS_NOCACHE_UACCESS
++#ifdef copy_to_nontemporal
+ 	/*
+ 	 * Using non-temporal mov to improve performance on non-cached
+-	 * writes, even though we aren't actually copying from user space.
++	 * writes. This only works if __iomem is strictly memory-like,
++	 * but that is the case on x86-64
+ 	 */
+-	__copy_from_user_inatomic_nocache(offset, entry->buf, entry->len);
++	copy_to_nontemporal(offset, entry->buf, entry->len);
+ #else
+ 	memcpy_toio(offset, entry->buf, entry->len);
+ #endif
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -1207,7 +1207,7 @@ static const char *uaccess_safe_builtin[
+ 	"copy_mc_enhanced_fast_string",
+ 	"rep_stos_alternative",
+ 	"rep_movs_alternative",
+-	"__copy_user_nocache",
++	"copy_to_nontemporal",
+ 	NULL
+ };
+ 
 
 
