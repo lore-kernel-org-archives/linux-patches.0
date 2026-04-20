@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5873CF04C;
-	Mon, 20 Apr 2026 13:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E6E426D30;
+	Mon, 20 Apr 2026 13:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691757; cv=none; b=XUU53gNK7lClGDeOknjXIs6TyDQEjIh/R7rgVyY0+mUuZ7Sb/qdkV0DrZwwYt1HxoTiHPCuUFHhgubtoyKHwLEhnZTQflL44xqK4VebOmwjucWemSwViwlf+GAPegT3AqXSLOgeJ/UKksGd6+bWSdDGX0ZES2t3Z31ygaKBqTR0=
+	t=1776691758; cv=none; b=j18qrJqOm6iUlrIT+Rp4/qJxqkm+SEZY2vUDbXHItVfrspAGbLoXhsbPMiOLzXtUawxZzWYzAL/HQK0SSxHERBzej4JAyxHUUD9c+0DsOIPMqwbyRihCan1T1WF4OKBfX4H7FGDI81BpqhEG2CjB9eC1/M0ogED3l5wi9o9PC9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691757; c=relaxed/simple;
-	bh=D18Cc9bFYdsUDjJ2iA1Kqm9LlIHVtcmPLlo+/TRBsTc=;
+	s=arc-20240116; t=1776691758; c=relaxed/simple;
+	bh=QhsY025C2nNu4jEGyaVOaI6kxyIQawcmKacAriMzsIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sC+x+XoYZlruOAZdb0yYWYuNIejv+bfNiKE94H6Rc6S5czCzqjlFTKXlE8plMk3oCbPLIpBt+OyIUhlcuIGbky6OE33PVZo3D5ZPgvAhjMOh5N8v16aa7Qt0DQzFOW0ZxeWuPa+5QXtkNodC7kO1k/3ug5QwsYJOIxI/e8NUOiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DlbWDuZk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fdp9t8o45Sdh1/tmtKogUjj6wFieoQlNkbt61K8s/GCvFMbfINYI4ev+uB4POBMUQ7/KvBQXmRpvIaCWsbO4QnLfJ9SoF0g8QgacoZ4pjdh5z12rEZFtFqqn8k3d/T09wGVNXyoZKrCYeTtRdQE9ZCCF2ZDqETbpVoArFVx1vEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dvuZ197X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DlbWDuZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C68C2BCB7;
-	Mon, 20 Apr 2026 13:29:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dvuZ197X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B37AC2BCB4;
+	Mon, 20 Apr 2026 13:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691756;
-	bh=D18Cc9bFYdsUDjJ2iA1Kqm9LlIHVtcmPLlo+/TRBsTc=;
+	s=k20201202; t=1776691758;
+	bh=QhsY025C2nNu4jEGyaVOaI6kxyIQawcmKacAriMzsIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DlbWDuZkQNmZQ/sbeKedcbklpcDnSJG4y6V5wISVAMw5KU6Z6u9yVORJt9dgmu+hg
-	 pVLVt757d0CdiETG1o1j7bgUr5HxoMExFGWZqersD5gk7O9exvFwWbMghiLq/L4M3v
-	 wo8aDGhQc2vxrSq/y/4zvZBP2EDlv2j8a2g+i3Yg7kRf6oNxamN30LPs3RMF3r2E/+
-	 Ab0RSpvkhdAkc7rzD8CUKUNwOer+0Shi293HMRSVnCT/Kb/EGHFVS5fSNCAC8eIoVw
-	 +VoYqjicWVYTGwYAwSwmj367JJpbPxONFBbJpCt04oDgnOgSsZ+f3sk7roPMWle5ho
-	 zC244Qvsdk7oQ==
+	b=dvuZ197X89M5hwPGOAu3qZMhTmY4bewucP12GR9NtRS7h2B6hYRVy+NYJYf/wKnn4
+	 GEUl20jLgz/W3dg0SWnkfjG3c6/POa4ecKmf3rYbVs2Je0l8wtP0PXgTcbKm87Js8h
+	 MWzBF+KHVFgWnHPG/gj4pNn1s1+aLMQTaTgrRVsGhsTiXe7m8GtAMI+UUs2QuTJL0p
+	 O6dyW24ZtL3ZlhpPUMsmUjBnA2xfbh96Kt9OjfRsOciCfsILv9uY7wb2xzCjfcSTzt
+	 oLCV0JKLXfZpaqwSL3xDlL+Gy+qcWYu65q05gc7naNo1a0T04yvdNjcwkWBQaZiibe
+	 3eFVoAKj/zzBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+Cc: Helen Koike <koike@igalia.com>,
+	syzbot+e14b1036481911ae4d77@syzkaller.appspotmail.com,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	catalin.marinas@arm.com,
-	linux-arm-kernel@lists.infradead.org,
+	shaggy@kernel.org,
+	jfs-discussion@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] drivers/virt: pkvm: Add Kconfig dependency on DMA_RESTRICTED_POOL
-Date: Mon, 20 Apr 2026 09:19:29 -0400
-Message-ID: <20260420132314.1023554-175-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] jfs: hold LOG_LOCK on umount to avoid null-ptr-deref
+Date: Mon, 20 Apr 2026 09:19:30 -0400
+Message-ID: <20260420132314.1023554-176-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -50,290 +51,413 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Will Deacon <will@kernel.org>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit 61135967fa76d37883d90ccccc5a1cb73e90b94d ]
+[ Upstream commit ca5848ae87d24886a7886f5a22278bd4045c15f8 ]
 
-pKVM guests practically rely on CONFIG_DMA_RESTRICTED_POOL=y in order
-to establish shared memory regions with the host for virtio buffers.
+write_special_inodes() function iterate through the log->sb_list and
+access the sbi fields, which can be set to NULL concurrently by umount.
 
-Make CONFIG_ARM_PKVM_GUEST depend on CONFIG_DMA_RESTRICTED_POOL to avoid
-the inevitable segmentation faults experience if you have the former but
-not the latter.
+Fix concurrency issue by holding LOG_LOCK and checking for NULL.
 
-Reported-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
-Link: https://patch.msgid.link/20260330144841.26181-39-will@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reported-by: syzbot+e14b1036481911ae4d77@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e14b1036481911ae4d77
+Signed-off-by: Helen Koike <koike@igalia.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, let me now write up the comprehensive assessment.
+---
 
-## Phase 1: Commit Message Forensics
+## Full Analysis
 
-**Step 1.1 - Subject Parse:**
-- Record: [drivers/virt: pkvm] [Add] Adds Kconfig dependency on
-  DMA_RESTRICTED_POOL to prevent misconfiguration.
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2 - Tags:**
-- Record: `Reported-by: Marc Zyngier <maz@kernel.org>` (subsystem
-  maintainer hit this); `Signed-off-by: Will Deacon`; `Link:` to lore;
-  `Signed-off-by: Marc Zyngier` as maintainer. No Fixes: tag, no Cc:
-  stable tag.
+**Step 1.1: Subject Line**
+- Subsystem: `jfs` (JFS filesystem)
+- Action verb: "hold" (LOG_LOCK) + "avoid" (null-ptr-deref)
+- Summary: Hold LOG_LOCK during umount to prevent null pointer
+  dereference in `write_special_inodes`
 
-**Step 1.3 - Body:**
-- Record: Bug description is that pKVM guests use
-  `CONFIG_DMA_RESTRICTED_POOL=y` to establish shared memory regions with
-  host for virtio buffers. Without it, users experience "inevitable
-  segmentation faults". Symptom = segfaults. No version info given.
+Record: [jfs] [hold/avoid] [prevent null-ptr-deref by holding LOG_LOCK
+during umount teardown]
 
-**Step 1.4 - Hidden Bug Fix?:**
-- Record: Yes, this is a clear build-time protection against a real
-  runtime failure. The verb "Add" masks what is effectively a fix to
-  prevent crashes from broken configurations.
+**Step 1.2: Tags**
+- `Reported-by: syzbot+e14b1036481911ae4d77@syzkaller.appspotmail.com` -
+  syzbot fuzzer found this (strong YES signal)
+- `Closes: https://syzkaller.appspot.com/bug?extid=e14b1036481911ae4d77`
+  - syzbot bug tracker link
+- `Signed-off-by: Helen Koike <koike@igalia.com>` - patch author
+- `Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>` - JFS
+  maintainer signed off (strong quality signal)
 
-## Phase 2: Diff Analysis
+Record: syzbot-reported, JFS maintainer signed-off. No Fixes: tag
+(expected for review candidates).
 
-**Step 2.1 - Inventory:**
-- Record: 1 file (`drivers/virt/coco/pkvm-guest/Kconfig`), 1 line
-  changed (`depends on ARM64` -> `depends on ARM64 &&
-  DMA_RESTRICTED_POOL`). Scope: minimal / surgical.
+**Step 1.3: Commit Body**
+- Bug: `write_special_inodes()` iterates `log->sb_list` and accesses
+  `sbi` fields (`ipbmap`, `ipimap`, `direct_inode`) that can be
+  concurrently set to NULL by `jfs_umount()`.
+- Symptom: general protection fault / null-ptr-deref (kernel crash)
+- Fix: Hold LOG_LOCK during teardown in umount + add NULL checks in
+  `write_special_inodes()`
 
-**Step 2.2 - Code Flow:**
-- Record: Before: ARM_PKVM_GUEST can be built with only ARM64. After:
-  requires DMA_RESTRICTED_POOL too. Compile-time constraint only; no
-  runtime code changes.
+Record: Race condition between log sync and filesystem unmount, causing
+a null pointer dereference in `write_special_inodes`. Root cause is
+unsynchronized access to `sbi` fields during concurrent umount.
 
-**Step 2.3 - Bug Mechanism:**
-- Record: Category (h) Hardware workaround / build-time config fix
-  (Kconfig dependency). Before fix, user could build a pKVM guest kernel
-  lacking `DMA_RESTRICTED_POOL`; virtio buffer sharing via mem_encrypt
-  ops (SHARE/UNSHARE) would then fail at runtime → segfaults described
-  by Marc Zyngier.
+**Step 1.4: Hidden Bug Fix Detection**
+This is explicitly a bug fix, not disguised.
 
-**Step 2.4 - Fix Quality:**
-- Record: Trivially correct. One-line Kconfig dependency. Zero
-  regression risk: it can only prevent a misconfiguration; existing
-  correct configs (with both enabled) are unaffected.
+---
 
-## Phase 3: Git History Investigation
+### PHASE 2: DIFF ANALYSIS
 
-**Step 3.1 - Blame:**
-- Record: File touched only twice: original commit `a06c3fad49a50`
-  (drivers/virt: pkvm: Add initial support..., Aug 2024, v6.12) and this
-  fix. Driver has been stable for ~18 months.
+**Step 2.1: Inventory**
+- `fs/jfs/jfs_logmgr.c`: -9 lines (removes LOG_LOCK macros, adds NULL
+  checks in `write_special_inodes`)
+- `fs/jfs/jfs_logmgr.h`: +7 lines (moves LOG_LOCK macros here so
+  `jfs_umount.c` can use them)
+- `fs/jfs/jfs_umount.c`: +10 lines (adds `#include "jfs_logmgr.h"`,
+  wraps teardown section with LOG_LOCK/LOG_UNLOCK)
 
-**Step 3.2 - Fixes: Tag:**
-- Record: None present. Bug is a design omission from `a06c3fad49a50`
-  (v6.12), not a regression.
+Total: +24/-9, 3 files. Small, well-contained fix.
 
-**Step 3.3 - File History:**
-- Record: Only 4 commits touch pkvm-guest/ in total. Kconfig file only
-  has 2 commits. Not part of a multi-patch prerequisite chain — this is
-  patch 38/38 of a v5 series but the Kconfig change is self-contained.
+**Step 2.2: Code Flow Changes**
 
-**Step 3.4 - Author Context:**
-- Record: Will Deacon is a core arm64 / kernel maintainer. Reported by
-  Marc Zyngier (KVM/arm64 maintainer). Both are top-level subsystem
-  authorities for this code.
+Hunk 1 (jfs_logmgr.c): Moves `LOG_LOCK_INIT`/`LOG_LOCK`/`LOG_UNLOCK`
+macro definitions from `.c` to `.h` file. No behavior change.
 
-**Step 3.5 - Dependencies:**
-- Record: The Kconfig change is entirely self-contained. It does not
-  require any other patch from the 38-patch series to apply or function.
+Hunk 2 (jfs_logmgr.c, `write_special_inodes`):
+- Before: Unconditionally dereferences `sbi->ipbmap->i_mapping`,
+  `sbi->ipimap->i_mapping`, `sbi->direct_inode->i_mapping`
+- After: Adds NULL checks before each dereference
 
-## Phase 4: Mailing List / External Research
+Hunk 3 (jfs_logmgr.h): Adds the moved LOG_LOCK macros.
 
-**Step 4.1 - Original Submission:**
-- Record: `b4 dig -c 61135967fa76d` found the thread at
-  `https://patch.msgid.link/20260330144841.26181-39-will@kernel.org`.
-  Part of v5 series "KVM: arm64: Add support for protected guest memory
-  with pKVM" (38 patches).
+Hunk 4 (jfs_umount.c):
+- Before: `jfs_umount()` tears down sbi fields (sets to NULL) without
+  holding LOG_LOCK
+- After: Acquires LOG_LOCK before teardown, releases after
+  `filemap_write_and_wait()`, before `updateSuper()`
 
-**Step 4.2 - Reviewers:**
-- Record: Patch applied with `Signed-off-by: Marc Zyngier` as the
-  KVM/arm64 maintainer taking it through his tree. Maintainer was the
-  Reporter — strong trust signal.
+**Step 2.3: Bug Mechanism**
+Category: Race condition / NULL pointer dereference
 
-**Step 4.3 - Bug Report:**
-- Record: Marc Zyngier hit this directly while testing; no external
-  syzbot/bugzilla URL.
+The race window:
+1. Thread A: `jfs_sync_fs()` -> `jfs_syncpt()` -> `lmLogSync()` ->
+   `write_special_inodes()` iterates `log->sb_list`
+2. Thread B: `jfs_umount()` sets `sbi->ipimap = NULL`, `sbi->ipbmap =
+   NULL` etc.
+3. The `list_del(&sbi->log_list)` (which removes sbi from sb_list) only
+   happens later in `lmLogClose()` (line 1445)
+4. Window: sbi is still on `sb_list` but its fields are NULL
 
-**Step 4.4 - Series Context:**
-- Record: Series revisions v1→v5. Committed version matches v5/final.
-  The Kconfig patch (38/38) is a standalone cleanup tail of the series;
-  not dependent on other patches.
+Fix mechanism: Hold LOG_LOCK in umount during teardown. Since
+`jfs_syncpt()` also holds LOG_LOCK before calling `lmLogSync()`, the two
+paths are now serialized. Additionally, NULL checks in
+`write_special_inodes` provide belt-and-suspenders safety.
 
-**Step 4.5 - Stable Discussion:**
-- Record: Not explicitly nominated for stable in the thread (confirmed
-  no `Cc: stable` anywhere in mbox thread for this patch).
+**Step 2.4: Fix Quality**
+- Obviously correct: LOG_LOCK is the existing per-log serialization
+  mechanism, and `jfs_syncpt` already uses it
+- Minimal and surgical: only adds synchronization around existing
+  teardown code
+- Regression risk: Very low. The LOG_LOCK is a mutex. `jfs_umount`
+  already calls `jfs_flush_journal(log, 2)` before this code which does
+  `write_special_inodes` itself, so the lock ordering is safe (no
+  deadlock risk since `jfs_flush_journal` doesn't hold LOG_LOCK during
+  its `write_special_inodes` calls)
 
-## Phase 5: Code Semantic Analysis
+---
 
-**Step 5.1 - Key Functions:**
-- Record: No function-level changes. Kconfig-only diff.
+### PHASE 3: GIT HISTORY
 
-**Step 5.2 - Callers:**
-- Record: `CONFIG_ARM_PKVM_GUEST` controls build of
-  `drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c` which registers
-  `pkvm_crypt_ops` via `arm64_mem_crypt_ops_register()` (mem_encrypt
-  SHARE/UNSHARE). These operations are invoked when DMA bounce-buffer
-  infrastructure from `DMA_RESTRICTED_POOL` performs shared-memory setup
-  for virtio.
+**Step 3.1: Blame**
+- `write_special_inodes` introduced by commit `67e6682f18b3bf` (Dave
+  Kleikamp, 2007-10-10) - present since v2.6.24
+- The umount code setting sbi fields to NULL goes back to
+  `1da177e4c3f41` (Linus Torvalds, 2005-04-16) - the initial Linux tree
+  import
+- The `sbi->ipbmap = NULL` was fixed in `d0e482c45c501` (2022) - before
+  that it was a typo (`sbi->ipimap = NULL` was set twice)
 
-**Step 5.3 - Callees:**
-- Record: `pkvm_init_hyp_services()` hooks
-  `arm64_mem_crypt_ops_register()` and
-  `arm64_ioremap_prot_hook_register()`. Without `DMA_RESTRICTED_POOL`,
-  SWIOTLB restricted pool isn't available so buffers for virtio never
-  get properly set up as shared → faults.
+Record: Bug has existed since `write_special_inodes` was introduced in
+2007, affecting ALL stable trees.
 
-**Step 5.4 - Reachability:**
-- Record: Any pKVM-protected guest doing virtio I/O is affected —
-  entirely userspace-reachable (network, block, console virtio devices).
+**Step 3.2: No Fixes: tag** - expected for review candidates.
 
-**Step 5.5 - Similar Patterns:**
-- Record: Similar explicit `depends on` patterns exist for many "coco"
-  guest drivers (TDX, SEV) which have their own DMA infrastructure
-  requirements.
+**Step 3.3: File History** - None of the recent changes to these files
+affect the buggy code paths. The race condition code is untouched
+ancient code.
 
-## Phase 6: Cross-referencing and Stable Tree Analysis
+**Step 3.4: Author** - Helen Koike is a kernel contributor (drm/ci
+primarily), not the JFS maintainer. But the commit was signed off by
+Dave Kleikamp, the JFS maintainer (`shaggy@kernel.org`).
 
-**Step 6.1 - Does buggy code exist in stable?:**
-- Record: `ARM_PKVM_GUEST` driver and its Kconfig entry exist in every
-  stable tree from v6.12 onwards (confirmed `git tag --contains
-  a06c3fad49a50` returns v6.12+). The broken config scenario exists in
-  6.12.y, 6.13+ rolling and 7.0.y.
+**Step 3.5: Dependencies** - The only "dependency" is moving LOG_LOCK
+macros to the header, which is done in the same commit. Fully self-
+contained.
 
-**Step 6.2 - Backport Complications:**
-- Record: The stable tree (`stable/linux-7.0.y`, HEAD) currently has
-  `depends on ARM64` only (confirmed by reading the file). Patch will
-  apply with no modifications. Same applies to 6.12.y–6.x.y.
+---
 
-**Step 6.3 - Related fixes in stable:**
-- Record: No earlier or alternate fix; this is the first and only fix
-  for this dependency issue.
+### PHASE 4: MAILING LIST RESEARCH
 
-## Phase 7: Subsystem Context
+**b4 dig**: Found the original submission at
+`https://patch.msgid.link/20260227181150.736848-1-koike@igalia.com`.
+Single version (v1), no revisions needed.
 
-**Step 7.1 - Criticality:**
-- Record: drivers/virt/coco (confidential computing) = PERIPHERAL
-  driver-specific, but failure mode is crash.
+**Syzbot report**: The bug page confirms:
+- Crash type: "general protection fault in lmLogSync" - KASAN: null-ptr-
+  deref
+- First reported: ~1295 days ago (September 2022)
+- Still actively crashing as recently as 9h45m before page load
+- Fix commit identified as `ca5848ae87d2`
+- **Similar bugs exist on linux-5.15, linux-6.1, and linux-6.6** stable
+  trees (all marked 0/N patched)
+- The bug has been in syzbot monthly reports for 36+ months
 
-**Step 7.2 - Activity:**
-- Record: Low activity (only 4 commits total in pkvm-guest/). The driver
-  is relatively new (v6.12+) but stable in terms of scope.
+**Recipients**: Sent to JFS maintainer (shaggy@kernel.org), jfs-
+discussion list, linux-kernel, linux-fsdevel.
 
-## Phase 8: Impact / Risk Assessment
+---
 
-**Step 8.1 - Affected:**
-- Record: arm64 users building a kernel with `ARM_PKVM_GUEST=y` and
-  running as a pKVM protected guest, lacking `DMA_RESTRICTED_POOL=y`.
-  arm64 defconfig already sets it since 6.3, so defconfig users are not
-  impacted; the victims are custom-kernel builders (research, vendor
-  builds, embedded).
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 8.2 - Trigger:**
-- Record: Trigger = any virtio I/O in a pKVM guest with the broken
-  config. Happens early at boot for most virtio-equipped guests.
+**Callers of `write_special_inodes`:**
+1. `lmLogSync()` (line 935/937) - called with LOG_LOCK held from
+   `lmLog()` (line 321) and `jfs_syncpt()` (line 1038)
+2. `jfs_flush_journal()` (lines 1572/1581) - called WITHOUT LOG_LOCK
 
-**Step 8.3 - Severity:**
-- Record: Failure mode = segmentation faults (crashes). Severity = HIGH
-  (system unusable / crash). Upstream maintainer (Marc Zyngier) was
-  personally affected.
+**Call chain for crash:**
+`jfs_sync_fs()` -> `jfs_syncpt()` -> LOG_LOCK -> `lmLogSync()` ->
+`write_special_inodes()` -> dereference `sbi->ipbmap` (NULL) -> CRASH
 
-**Step 8.4 - Risk vs Benefit:**
-- Record: BENEFIT: prevents crashes for misconfigured pKVM guest builds,
-  and documents the implicit dependency. RISK: near-zero — it's a one-
-  line Kconfig constraint that can only REFUSE previously broken
-  configs; existing working builds (including defconfig) are not
-  affected.
+`sync_filesystem()` in VFS -> `jfs_sync_fs()` -> same path
 
-## Phase 9: Synthesis
+**Race counterpart:**
+`generic_shutdown_super()` -> `kill_block_super()` -> ... ->
+`jfs_umount()` -> sets sbi fields to NULL -> `lmLogClose()` does
+`list_del`
 
-**Step 9.1 - Evidence:**
-- FOR: One-line Kconfig dependency; reported by subsystem maintainer;
-  signed off by maintainer; prevents segfaults; obviously correct;
-  applies cleanly; no runtime changes; falls into the documented "Build
-  fixes / Kconfig dependency fixes" stable exception category.
-- AGAINST: Not tagged for stable; part of a large new-feature series
-  (though the patch itself is standalone); niche effect (only
-  misconfigured builds); defconfig users already unaffected.
+The crash trace from syzbot confirms exactly this path:
+```
+write_special_inodes fs/jfs/jfs_logmgr.c:208
+lmLogSync+0x244/0x9f0 fs/jfs/jfs_logmgr.c:937
+jfs_syncpt+0x7b/0x90 fs/jfs/jfs_logmgr.c:1041
+jfs_sync_fs+0x87/0xa0 fs/jfs/super.c:650
+sync_filesystem+0x1ce/0x250 fs/sync.c:66
+generic_shutdown_super+0x77/0x2d0 fs/super.c:625
+```
 
-**Step 9.2 - Rules Checklist:**
-1. Obviously correct: YES (trivial Kconfig edit).
-2. Fixes a real bug: YES (crashes reported).
-3. Important (crashes): YES (segfaults = HIGH severity).
-4. Small / contained: YES (1 line).
-5. No new features: YES (purely a constraint).
-6. Applies cleanly: YES.
+---
 
-**Step 9.3 - Exception Category:**
-- Record: Fits "Build fixes / Kconfig dependency fixes" documented
-  exception.
+### PHASE 6: STABLE TREE ANALYSIS
 
-**Step 9.4 - Decision:**
-- YES: it's a safe, obvious, Kconfig-only crash-prevention fix that
-  applies cleanly to v6.12+ stable trees.
+- The buggy code (`write_special_inodes` from 2007, umount NULL
+  assignments from 2005) exists in ALL active stable trees
+- Syzbot confirms active crashing on linux-5.15, linux-6.1, linux-6.6
+- None of these stable trees have been patched (0/N patched status on
+  syzbot)
+- No intermediate changes to the affected code in stable trees
+- Backport should be clean: the affected code is ancient and unchanged
 
-## Verification
+---
 
-- [Phase 1] Parsed commit: `Reported-by: Marc Zyngier`, `Link:` to lore,
-  no `Cc: stable`, no `Fixes:`.
-- [Phase 2] Diff confirmed via `git show 61135967fa76d` — single line
-  `depends on ARM64` → `depends on ARM64 && DMA_RESTRICTED_POOL`.
-- [Phase 3] `git log --oneline -- drivers/virt/coco/pkvm-guest/Kconfig`:
-  only 2 commits (origin + this fix).
-- [Phase 3] `git show a06c3fad49a50` + `git tag --contains
-  a06c3fad49a50`: original driver introduced in v6.12.
-- [Phase 4] `b4 dig -c 61135967fa76d`: matched to v5 38/38 at
-  `https://patch.msgid.link/20260330144841.26181-39-will@kernel.org`.
-- [Phase 4] `b4 dig -a`: patch evolved v1→v5; applied version matches
-  latest.
-- [Phase 4] Inspected mbox thread `/tmp/pkvm-dma-restricted.mbx` for
-  `Cc: stable`/`Fixes:` referencing this patch: none found for 38/38.
-- [Phase 5] Read `drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c` to
-  confirm mem_encrypt SHARE/UNSHARE ops registration explains why
-  DMA_RESTRICTED_POOL is needed for virtio.
-- [Phase 6] `git show HEAD:drivers/virt/coco/pkvm-guest/Kconfig` on
-  `stable/linux-7.0.y` shows `depends on ARM64` only — patch applies
-  cleanly.
-- [Phase 6] `git log --oneline -- drivers/virt/coco/pkvm-guest/` in the
-  current checkout confirms only 4 total commits, no conflicting
-  refactors.
-- [Phase 7] `git log -S"CONFIG_DMA_RESTRICTED_POOL" --
-  arch/arm64/configs/defconfig`: commit `09ea26f1bf31c` added it to
-  defconfig in Jan 2023 (predates the driver).
-- [Phase 8] Failure mode "segmentation faults" taken directly from
-  commit message authored by Will Deacon and reporter Marc Zyngier;
-  severity classification is mine based on described symptom.
-- UNVERIFIED: I did not reproduce the segfault; I rely on the
-  maintainer's description. I did not enumerate every downstream stable
-  tree policy on Kconfig-only fixes — but this change is self-contained
-  and independent.
+### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+- Subsystem: JFS filesystem (fs/jfs/)
+- Criticality: IMPORTANT - JFS is a real filesystem used in production
+- Maintainer: Dave Kleikamp signed off, confirming this fix
+- JFS is mature/stable - minimal recent development, making this
+  longstanding bug more important
+
+---
+
+### PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Who is affected:** All JFS users
+**Trigger conditions:** Concurrent `sync` and `umount` operations on JFS
+filesystems. The syzbot reproducer triggers this from userspace (umount
+syscall racing with sync). Triggerable by unprivileged users if they can
+unmount.
+**Failure mode:** Kernel oops / general protection fault (NULL pointer
+dereference). Severity: **CRITICAL** (system crash)
+**Frequency:** Syzbot has been hitting this continuously for 3.5+ years
+
+**Benefit:** Prevents a real kernel crash on all JFS systems. HIGH
+benefit.
+**Risk:** Very LOW. The fix is 24 lines net, adds synchronization using
+existing infrastructure (LOG_LOCK mutex), and adds defensive NULL
+checks. No new APIs, no behavior change, no regression risk.
+
+---
+
+### PHASE 9: FINAL SYNTHESIS
+
+**Evidence FOR backporting:**
+1. Fixes a confirmed, reproducible kernel crash (null-ptr-deref / GPF)
+2. Syzbot-reported with C reproducer, crashing continuously for 3.5+
+   years
+3. Bug exists in ALL active stable trees (5.15, 6.1, 6.6) - syzbot
+   confirms
+4. Small, surgical fix: +24/-9 lines across 3 files
+5. Obviously correct: uses existing LOG_LOCK mechanism + NULL checks
+6. JFS maintainer (Dave Kleikamp) signed off
+7. Standalone, self-contained fix with no dependencies
+8. Triggerable from userspace (sync + umount race)
+
+**Evidence AGAINST backporting:**
+- None identified
+
+**Stable Rules Checklist:**
+1. Obviously correct and tested? YES - uses existing locking, syzbot
+   confirms fix
+2. Fixes a real bug? YES - null-ptr-deref / kernel crash
+3. Important issue? YES - CRITICAL severity (system crash)
+4. Small and contained? YES - 3 files, +24/-9 lines
+5. No new features/APIs? YES - only adds synchronization and safety
+   checks
+6. Can apply to stable? YES - code is unchanged in stable trees
+
+---
+
+### Verification
+
+- [Phase 1] Parsed tags: Reported-by syzbot, Closes syzkaller link, SOB
+  from JFS maintainer Dave Kleikamp
+- [Phase 2] Diff analysis: NULL checks added to
+  `write_special_inodes()`, LOG_LOCK held in `jfs_umount()` during
+  teardown
+- [Phase 3] git blame: `write_special_inodes` introduced in commit
+  `67e6682f18b3bf` (2007), umount NULL assignments from `1da177e4c3f41`
+  (2005) - present in all stable trees
+- [Phase 3] git log: no intermediate fixes for this race condition
+- [Phase 3] Verified `list_del(&sbi->log_list)` happens in
+  `lmLogClose()` (line 1445), AFTER umount sets fields to NULL,
+  confirming the race window
+- [Phase 4] b4 dig: found original submission at
+  `https://patch.msgid.link/20260227181150.736848-1-koike@igalia.com`,
+  single version (v1)
+- [Phase 4] b4 dig -w: sent to JFS maintainer and relevant lists
+- [Phase 4] Syzbot page: confirms crash "general protection fault in
+  lmLogSync (2)", first crash ~1295 days ago, still actively
+  reproducing, similar bugs on linux-5.15/6.1/6.6 (all unpatched)
+- [Phase 5] Traced call chain: `jfs_sync_fs -> jfs_syncpt -> LOG_LOCK ->
+  lmLogSync -> write_special_inodes` races with `jfs_umount` setting sbi
+  fields to NULL
+- [Phase 5] Verified `lmLogSync` is normally called under LOG_LOCK (from
+  `lmLog()` line 321, `jfs_syncpt` line 1039)
+- [Phase 5] Verified `jfs_flush_journal` calls `write_special_inodes`
+  WITHOUT LOG_LOCK (lines 1572/1581), but fix in umount still protects
+  the window
+- [Phase 6] No changes to affected code in stable trees since 6.1; patch
+  should apply cleanly
+- [Phase 6] Syzbot confirms active crashing on 5.15, 6.1, 6.6 stable
+  trees (0/N patched)
+- [Phase 8] Failure mode: kernel oops (null-ptr-deref), severity
+  CRITICAL
+- [Phase 8] Risk: very low (24 lines, uses existing LOG_LOCK, adds NULL
+  checks)
 
 **YES**
 
- drivers/virt/coco/pkvm-guest/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_logmgr.c | 16 +++++++---------
+ fs/jfs/jfs_logmgr.h |  7 +++++++
+ fs/jfs/jfs_umount.c | 10 ++++++++++
+ 3 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/virt/coco/pkvm-guest/Kconfig b/drivers/virt/coco/pkvm-guest/Kconfig
-index d2f344f1f98f7..928b8e1668ccc 100644
---- a/drivers/virt/coco/pkvm-guest/Kconfig
-+++ b/drivers/virt/coco/pkvm-guest/Kconfig
-@@ -1,6 +1,6 @@
- config ARM_PKVM_GUEST
- 	bool "Arm pKVM protected guest driver"
--	depends on ARM64
-+	depends on ARM64 && DMA_RESTRICTED_POOL
- 	help
- 	  Protected guests running under the pKVM hypervisor on arm64
- 	  are isolated from the host and must issue hypercalls to enable
+diff --git a/fs/jfs/jfs_logmgr.c b/fs/jfs/jfs_logmgr.c
+index ada00d5bc2146..d8266220776e8 100644
+--- a/fs/jfs/jfs_logmgr.c
++++ b/fs/jfs/jfs_logmgr.c
+@@ -74,12 +74,6 @@ static struct lbuf *log_redrive_list;
+ static DEFINE_SPINLOCK(log_redrive_lock);
+ 
+ 
+-/*
+- *	log read/write serialization (per log)
+- */
+-#define LOG_LOCK_INIT(log)	mutex_init(&(log)->loglock)
+-#define LOG_LOCK(log)		mutex_lock(&((log)->loglock))
+-#define LOG_UNLOCK(log)		mutex_unlock(&((log)->loglock))
+ 
+ 
+ /*
+@@ -204,9 +198,13 @@ static void write_special_inodes(struct jfs_log *log,
+ 	struct jfs_sb_info *sbi;
+ 
+ 	list_for_each_entry(sbi, &log->sb_list, log_list) {
+-		writer(sbi->ipbmap->i_mapping);
+-		writer(sbi->ipimap->i_mapping);
+-		writer(sbi->direct_inode->i_mapping);
++		/* These pointers can be NULL before list_del during umount */
++		if (sbi->ipbmap)
++			writer(sbi->ipbmap->i_mapping);
++		if (sbi->ipimap)
++			writer(sbi->ipimap->i_mapping);
++		if (sbi->direct_inode)
++			writer(sbi->direct_inode->i_mapping);
+ 	}
+ }
+ 
+diff --git a/fs/jfs/jfs_logmgr.h b/fs/jfs/jfs_logmgr.h
+index 8b8994e48cd08..09e0ef6aeccef 100644
+--- a/fs/jfs/jfs_logmgr.h
++++ b/fs/jfs/jfs_logmgr.h
+@@ -402,6 +402,13 @@ struct jfs_log {
+ 	int no_integrity;	/* 3: flag to disable journaling to disk */
+ };
+ 
++/*
++ * log read/write serialization (per log)
++ */
++#define LOG_LOCK_INIT(log)	mutex_init(&(log)->loglock)
++#define LOG_LOCK(log)		mutex_lock(&((log)->loglock))
++#define LOG_UNLOCK(log)		mutex_unlock(&((log)->loglock))
++
+ /*
+  * Log flag
+  */
+diff --git a/fs/jfs/jfs_umount.c b/fs/jfs/jfs_umount.c
+index 8ec43f53f6865..18569f1eaabdb 100644
+--- a/fs/jfs/jfs_umount.c
++++ b/fs/jfs/jfs_umount.c
+@@ -20,6 +20,7 @@
+ #include "jfs_superblock.h"
+ #include "jfs_dmap.h"
+ #include "jfs_imap.h"
++#include "jfs_logmgr.h"
+ #include "jfs_metapage.h"
+ #include "jfs_debug.h"
+ 
+@@ -57,6 +58,12 @@ int jfs_umount(struct super_block *sb)
+ 		 */
+ 		jfs_flush_journal(log, 2);
+ 
++	/*
++	 * Hold log lock so write_special_inodes (lmLogSync) cannot see
++	 * this sbi with a NULL inode pointer while iterating log->sb_list.
++	 */
++	if (log)
++		LOG_LOCK(log);
+ 	/*
+ 	 * close fileset inode allocation map (aka fileset inode)
+ 	 */
+@@ -95,6 +102,9 @@ int jfs_umount(struct super_block *sb)
+ 	 */
+ 	filemap_write_and_wait(sbi->direct_inode->i_mapping);
+ 
++	if (log)
++		LOG_UNLOCK(log);
++
+ 	/*
+ 	 * ensure all file system file pages are propagated to their
+ 	 * home blocks on disk (and their in-memory buffer pages are
 -- 
 2.53.0
 
