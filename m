@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53102E093A;
-	Mon, 20 Apr 2026 15:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396102E093A;
+	Mon, 20 Apr 2026 15:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700440; cv=none; b=HL85u1z1lTe65NOZS2hlBscQ86c4NqiCaJgGtAAUph5N4pZ3OdlD7BOtU6dhey2cXGkUALmXKn006SEAh8kJ8qJdKeMraaruyiKYeB2KO8q4bZUc2yr0yScEzRmYMohdYfKGVJKCWi6yWfOSJJhYjwrRoqHPjuAeuw7rjnOSSNs=
+	t=1776700443; cv=none; b=sab1a2+OUJJZa7UrqEDgahDlXhsxqeGf/I0CMGGl2nPONHOUvF3gvwjE/SZBTzOwkmBkXDb0qoFewOGKVmGCicflup5BMER6rbiIWHrg6jREwuGpUjpYavTftfQHd6Ns7w2IXV6EY/8rBATw7Eq48yHVPKWoohWebxPEEJCbbHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700440; c=relaxed/simple;
-	bh=FibjBoyV1YOQ1m4XXWUQleJglFJnvkWH36jWPITBCNs=;
+	s=arc-20240116; t=1776700443; c=relaxed/simple;
+	bh=6DUR/xdYLl5+m1L1FZk1aGUs4f9grH2err0zOOBTW+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=REjm5iv6pYG7b3cWqscsawRwWM5IJarQ/YcDbFCS6WsWFBidDQKrTOGa3x+LPaZbCTXr6YkE+TRIHQF9sTB/7cqIDLGpcdMGY+fZbqbABoVWdbyfdhZog3FtbMs6rA0Cz4qWW8bx//d9pMFjIhtkgz3oK8GYw9bLdUrtMl3BKSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6dWBoq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mwoMPHCuA+SRJ+JKBYGdDjOhR5B+3PR07swvos8gcHdFWLu4TScGh5NDUGlr0QmhBQ25lJwn983UGjhzpH0M06yvna+Wa7W+kP0B4hWfwc6/GPv4eKjuaUscYtof5dguJgktCfrK12l1S/jFjAq6pPVM4snm5j0XxvQKW8Lcq5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1UIDX2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6dWBoq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA48C19425;
-	Mon, 20 Apr 2026 15:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1UIDX2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C493DC19425;
+	Mon, 20 Apr 2026 15:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700440;
-	bh=FibjBoyV1YOQ1m4XXWUQleJglFJnvkWH36jWPITBCNs=;
+	s=korg; t=1776700443;
+	bh=6DUR/xdYLl5+m1L1FZk1aGUs4f9grH2err0zOOBTW+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6dWBoq3CI3RlKwDK/LZFfe8aU1jNbdubVeh0XrXW26vsnpxOsdIRh4XNFGO+stBT
-	 7y/XFW/C2oJMHgorKUUiGEM5s+uDg7489NFIQL0V35d4kG8y9j3rAFp2lKMx1Eja8F
-	 WKjo0g3mQP5P5uNqk/V8GLHO2ojfpsEpSrlXiDwY=
+	b=H1UIDX2CsuWcPnBbA5XMAomsEq/lKFse/5Kzrvx46VHXjzrASWBu5etQiBcpd02Nq
+	 zsVu9r6xDiAhKcMjkezH1nAC9VPEZA5IsEPqf37qWDO0GCChVAC/uL7uc8XzJa1B9+
+	 H+5Jy5xv9lWUlU5izt3L8DGyZNjdJwXV+9jKzLXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Johan Hovold <johan@kernel.org>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.19 172/220] wifi: rtw88: fix device leak on probe failure
-Date: Mon, 20 Apr 2026 17:41:53 +0200
-Message-ID: <20260420153940.218713303@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>
+Subject: [PATCH 6.19 173/220] staging: sm750fb: fix division by zero in ps_to_hz()
+Date: Mon, 20 Apr 2026 17:41:54 +0200
+Message-ID: <20260420153940.255103126@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,54 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit bbb15e71156cd9f5e1869eee7207a06ea8e96c39 upstream.
+commit 75a1621e4f91310673c9acbcbb25c2a7ff821cd3 upstream.
 
-Driver core holds a reference to the USB interface and its parent USB
-device while the interface is bound to a driver and there is no need to
-take additional references unless the structures are needed after
-disconnect.
+ps_to_hz() is called from hw_sm750_crtc_set_mode() without validating
+that pixclock is non-zero. A zero pixclock passed via FBIOPUT_VSCREENINFO
+causes a division by zero.
 
-This driver takes a reference to the USB device during probe but does
-not to release it on all probe errors (e.g. when descriptor parsing
-fails).
+Fix by rejecting zero pixclock in lynxfb_ops_check_var(), consistent
+with other framebuffer drivers.
 
-Drop the redundant device reference to fix the leak, reduce cargo
-culting, make it easier to spot drivers where an extra reference is
-needed, and reduce the risk of further memory leaks.
-
-Fixes: a82dfd33d123 ("wifi: rtw88: Add common USB chip support")
-Reported-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/netdev/2026022319-turbofan-darkened-206d@gregkh/
-Cc: stable@vger.kernel.org	# 6.2
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260306085144.12064-19-johan@kernel.org
+Fixes: 81dee67e215b ("staging: sm750fb: add sm750 to staging")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881AFBFCE28CCF528B35D0CAF4BA@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/staging/sm750fb/sm750.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -1040,7 +1040,7 @@ static int rtw_usb_intf_init(struct rtw_
- 			     struct usb_interface *intf)
- {
- 	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
--	struct usb_device *udev = usb_get_dev(interface_to_usbdev(intf));
-+	struct usb_device *udev = interface_to_usbdev(intf);
- 	int ret;
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -481,6 +481,9 @@ static int lynxfb_ops_check_var(struct f
+ 	struct lynxfb_crtc *crtc;
+ 	resource_size_t request;
  
- 	rtwusb->udev = udev;
-@@ -1066,7 +1066,6 @@ static void rtw_usb_intf_deinit(struct r
- {
- 	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
- 
--	usb_put_dev(rtwusb->udev);
- 	kfree(rtwusb->usb_data);
- 	usb_set_intfdata(intf, NULL);
- }
++	if (!var->pixclock)
++		return -EINVAL;
++
+ 	ret = 0;
+ 	par = info->par;
+ 	crtc = &par->crtc;
 
 
