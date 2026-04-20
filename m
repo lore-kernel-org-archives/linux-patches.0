@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604DB2D77E5;
-	Mon, 20 Apr 2026 15:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212912D77E5;
+	Mon, 20 Apr 2026 15:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700210; cv=none; b=ZjJK19tF2alH3yVDe6wZ+x9JZimDI7vInXM4fyJ2pBlrawxRCPa24uv39OYM6Bhs0M+H2ATJavbSGm02rZKAiuWM8iDu8EZ+3bd9w41+wt+tMotD5eY4e8uRnJZ59P81l1YMnslAm2WAP7IDnqzoTMa/ILKrctW7rqlcn4qQwxY=
+	t=1776700215; cv=none; b=EnH6IN03SJQYAfGuJMMrD7qnVVvhrHlajN4WdS6wsMh9no2fo3rXKtG5eZqOXkKjdcPDvZHdEdh0Qw/WijSZMpTK0xWBtPa+3YqLcquAJqohsBJBp57WBo1EMMTD4GseruoAEnph/NysHMxRUiIEFFht0VEHiKQz6OUpMe95u+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700210; c=relaxed/simple;
-	bh=cNf22argBLd+/oKaXFfwNxCYcGQivy7JFjvlUFGKoqM=;
+	s=arc-20240116; t=1776700215; c=relaxed/simple;
+	bh=Va19E4axzrKAiaYD1Elbi6redGQUpmC3Gfv+vMN3gg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p1FFRx1b6WTv1XKW9hfR7nwdP9vNNT2sTPGXFwmx1akTZmONYHgYDcuIozhtOytnR9F8cXoHnL/D1ySV+1vxiBJ5qtOYtB1pjXXYI8sPbZ3HmBWLlqbqcJLl6MECirmvSOUBy21sFkTMfgwsbQqpeeYfjsHgQbzQ1Zuv31aNLCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPvFc0WP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U4qzubU0zooAzL2g30UP7CPNkyVCpkXTTk8jYm/zucAopKSQ2hNuIMNVNWTU5aklTU8Br477/wuJhBMSMN4VfQm0zabTu+kLnZO26WsykySVPzxgxGbxGsYfqqgwQHhCDPMhdKyY/u6be+OXLY8GagBD5HE/H+YHmNidlsFXbes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApIIffSb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPvFc0WP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4128C19425;
-	Mon, 20 Apr 2026 15:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApIIffSb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA887C2BCB6;
+	Mon, 20 Apr 2026 15:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700210;
-	bh=cNf22argBLd+/oKaXFfwNxCYcGQivy7JFjvlUFGKoqM=;
+	s=korg; t=1776700215;
+	bh=Va19E4axzrKAiaYD1Elbi6redGQUpmC3Gfv+vMN3gg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bPvFc0WPy9L7nSYMbamT/quofw3T+UaCXW2hM8HJus6uSBowT2VbxRilxdNfcmhgb
-	 WdK0tvKwXeT8cyzZbbgOsa5bxng0N2bryllcaFLXpFoN/edVsfDHHUIe05miayH3b9
-	 9VYSxZCN6CqXkwvLnW9Pt7Yy9WhTTK006EKalKzc=
+	b=ApIIffSbCfkIaJ2YIXt1YlQZjElekhMLotKkaRGIdOX99IhAij6KKcDfwXNdb0MkY
+	 s0S0xxL6yGeRiHeaKXHu6VIOq2i6rHBhT9U/y0N2EeeUOmCq7KWvfw1Qe+GRCdNWO6
+	 a6gr0ebYDJkMlkKrL7TCsKsokDcUU3/P60F2TpRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Yiqi Sun <sunyiqixm@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 085/220] ipv4: nexthop: allocate skb dynamically in rtm_get_nexthop()
-Date: Mon, 20 Apr 2026 17:40:26 +0200
-Message-ID: <20260420153937.097920649@linuxfoundation.org>
+Subject: [PATCH 6.19 086/220] ipv4: icmp: fix null-ptr-deref in icmp_build_probe()
+Date: Mon, 20 Apr 2026 17:40:27 +0200
+Message-ID: <20260420153937.133762105@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -54,145 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Yiqi Sun <sunyiqixm@gmail.com>
 
-[ Upstream commit 14cf0cd35361f4e94824bf8a42f72713d7702a73 ]
+[ Upstream commit fde29fd9349327acc50d19a0b5f3d5a6c964dfd8 ]
 
-When querying a nexthop object via RTM_GETNEXTHOP, the kernel currently
-allocates a fixed-size skb using NLMSG_GOODSIZE. While sufficient for
-single nexthops and small Equal-Cost Multi-Path groups, this fixed
-allocation fails for large nexthop groups like 512 nexthops.
+ipv6_stub->ipv6_dev_find() may return ERR_PTR(-EAFNOSUPPORT) when the
+IPv6 stack is not active (CONFIG_IPV6=m and not loaded), and passing
+this error pointer to dev_hold() will cause a kernel crash with
+null-ptr-deref.
 
-This results in the following warning splat:
+Instead, silently discard the request. RFC 8335 does not appear to
+define a specific response for the case where an IPv6 interface
+identifier is syntactically valid but the implementation cannot perform
+the lookup at runtime, and silently dropping the request may safer than
+misreporting "No Such Interface".
 
- WARNING: net/ipv4/nexthop.c:3395 at rtm_get_nexthop+0x176/0x1c0, CPU#20: rep/4608
- [...]
- RIP: 0010:rtm_get_nexthop (net/ipv4/nexthop.c:3395)
- [...]
- Call Trace:
-  <TASK>
-  rtnetlink_rcv_msg (net/core/rtnetlink.c:6989)
-  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
-  netlink_unicast (net/netlink/af_netlink.c:1319 net/netlink/af_netlink.c:1344)
-  netlink_sendmsg (net/netlink/af_netlink.c:1894)
-  ____sys_sendmsg (net/socket.c:721 net/socket.c:736 net/socket.c:2585)
-  ___sys_sendmsg (net/socket.c:2641)
-  __sys_sendmsg (net/socket.c:2671)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-  </TASK>
-
-Fix this by allocating the size dynamically using nh_nlmsg_size() and
-using nlmsg_new(), this is consistent with nexthop_notify() behavior. In
-addition, adjust nh_nlmsg_size_grp() so it calculates the size needed
-based on flags passed. While at it, also add the size of NHA_FDB for
-nexthop group size calculation as it was missing too.
-
-This cannot be reproduced via iproute2 as the group size is currently
-limited and the command fails as follows:
-
-addattr_l ERROR: message exceeded bound of 1048
-
-Fixes: 430a049190de ("nexthop: Add support for nexthop groups")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAL_bE8Li2h4KO+AQFXW4S6Yb_u5X4oSKnkywW+LPFjuErhqELA@mail.gmail.com/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260402072613.25262-2-fmancera@suse.de
+Fixes: d329ea5bd884 ("icmp: add response to RFC 8335 PROBE messages")
+Signed-off-by: Yiqi Sun <sunyiqixm@gmail.com>
+Link: https://patch.msgid.link/20260402070419.2291578-1-sunyiqixm@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 38 +++++++++++++++++++++++++++-----------
- 1 file changed, 27 insertions(+), 11 deletions(-)
+ net/ipv4/icmp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index aa53a74ac2389..c958b8edfe540 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -1006,16 +1006,32 @@ static size_t nh_nlmsg_size_grp_res(struct nh_group *nhg)
- 		nla_total_size_64bit(8);/* NHA_RES_GROUP_UNBALANCED_TIME */
- }
- 
--static size_t nh_nlmsg_size_grp(struct nexthop *nh)
-+static size_t nh_nlmsg_size_grp(struct nexthop *nh, u32 op_flags)
- {
- 	struct nh_group *nhg = rtnl_dereference(nh->nh_grp);
- 	size_t sz = sizeof(struct nexthop_grp) * nhg->num_nh;
- 	size_t tot = nla_total_size(sz) +
--		nla_total_size(2); /* NHA_GROUP_TYPE */
-+		nla_total_size(2) +	/* NHA_GROUP_TYPE */
-+		nla_total_size(0);	/* NHA_FDB */
- 
- 	if (nhg->resilient)
- 		tot += nh_nlmsg_size_grp_res(nhg);
- 
-+	if (op_flags & NHA_OP_FLAG_DUMP_STATS) {
-+		tot += nla_total_size(0) +	  /* NHA_GROUP_STATS */
-+		       nla_total_size(4);	  /* NHA_HW_STATS_ENABLE */
-+		tot += nhg->num_nh *
-+		       (nla_total_size(0) +	  /* NHA_GROUP_STATS_ENTRY */
-+			nla_total_size(4) +	  /* NHA_GROUP_STATS_ENTRY_ID */
-+			nla_total_size_64bit(8)); /* NHA_GROUP_STATS_ENTRY_PACKETS */
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index e619b73f5063e..11bda6c9eaa44 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -1333,6 +1333,13 @@ bool icmp_build_probe(struct sk_buff *skb, struct icmphdr *icmphdr)
+ 			if (iio->ident.addr.ctype3_hdr.addrlen != sizeof(struct in6_addr))
+ 				goto send_mal_query;
+ 			dev = ipv6_stub->ipv6_dev_find(net, &iio->ident.addr.ip_addr.ipv6_addr, dev);
++			/*
++			 * If IPv6 identifier lookup is unavailable, silently
++			 * discard the request instead of misreporting NO_IF.
++			 */
++			if (IS_ERR(dev))
++				return false;
 +
-+		if (op_flags & NHA_OP_FLAG_DUMP_HW_STATS) {
-+			tot += nhg->num_nh *
-+			       nla_total_size_64bit(8); /* NHA_GROUP_STATS_ENTRY_PACKETS_HW */
-+			tot += nla_total_size(4);	/* NHA_HW_STATS_USED */
-+		}
-+	}
-+
- 	return tot;
- }
- 
-@@ -1050,14 +1066,14 @@ static size_t nh_nlmsg_size_single(struct nexthop *nh)
- 	return sz;
- }
- 
--static size_t nh_nlmsg_size(struct nexthop *nh)
-+static size_t nh_nlmsg_size(struct nexthop *nh, u32 op_flags)
- {
- 	size_t sz = NLMSG_ALIGN(sizeof(struct nhmsg));
- 
- 	sz += nla_total_size(4); /* NHA_ID */
- 
- 	if (nh->is_group)
--		sz += nh_nlmsg_size_grp(nh) +
-+		sz += nh_nlmsg_size_grp(nh, op_flags) +
- 		      nla_total_size(4) +	/* NHA_OP_FLAGS */
- 		      0;
- 	else
-@@ -1073,7 +1089,7 @@ static void nexthop_notify(int event, struct nexthop *nh, struct nl_info *info)
- 	struct sk_buff *skb;
- 	int err = -ENOBUFS;
- 
--	skb = nlmsg_new(nh_nlmsg_size(nh), gfp_any());
-+	skb = nlmsg_new(nh_nlmsg_size(nh, 0), gfp_any());
- 	if (!skb)
- 		goto errout;
- 
-@@ -3379,15 +3395,15 @@ static int rtm_get_nexthop(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 	if (err)
- 		return err;
- 
--	err = -ENOBUFS;
--	skb = alloc_skb(NLMSG_GOODSIZE, GFP_KERNEL);
--	if (!skb)
--		goto out;
--
- 	err = -ENOENT;
- 	nh = nexthop_find_by_id(net, id);
- 	if (!nh)
--		goto errout_free;
-+		goto out;
-+
-+	err = -ENOBUFS;
-+	skb = nlmsg_new(nh_nlmsg_size(nh, op_flags), GFP_KERNEL);
-+	if (!skb)
-+		goto out;
- 
- 	err = nh_fill_node(skb, nh, RTM_NEWNEXTHOP, NETLINK_CB(in_skb).portid,
- 			   nlh->nlmsg_seq, 0, op_flags);
+ 			dev_hold(dev);
+ 			break;
+ #endif
 -- 
 2.53.0
 
