@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08203382CD;
-	Mon, 20 Apr 2026 15:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668F633B6D3;
+	Mon, 20 Apr 2026 15:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699885; cv=none; b=epsuDmCc44C2J+q3Zx2ZfPkDWKnES7jLAt/2lFmotT2woqzmeyJrse7ei3F4sh/nSblYa7zsGyuLGQDBm3HyKvQybOEGkE+CEsdX7qTybviVAPY+ma89nX6ancz511pXM9xd38AaRVZqDF+7z18Gsy77Fs+VuJ2vkyfU03dFZEQ=
+	t=1776699888; cv=none; b=DoaDHwBqDQ6BYtNRfqEzfPwEvGUFhcLNFzAFUNsvHALiUI3LY5rGrok/hsIhqJd1FdCtLWZYkg26xeEMUPMCOibTrukdRLGcnqs7kuJkyfk8tuf1cZt/Zy49OANYuXx2Cr9QZP6D5pRb9W8Gr0C32p8U7aKAJ/w+TDhmGE4lVhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699885; c=relaxed/simple;
-	bh=ZzD0kl+NLWMETVZi3wfi0PvIxvWEpWAWpcWYA8uRky8=;
+	s=arc-20240116; t=1776699888; c=relaxed/simple;
+	bh=GO6VVItUC3vAlojph73BYWJd4Ns8OmfAWG2P4Q6dcw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRi1Ob+Uhk92wgiUaRNx7JQx9HWMrNT2MEI/AHhfJzuvUgwoqS+acj6K+Q80p1r2JPUkixwKFMUYuVqIUxTp07MvAQhYXcyZs+LBdOTXjrEF3fs7QNewKXa73E1OoLAD0OAuX2yIPjtutet4Etdvl6LQ7iNfEokWPvjUVmyAy24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1E0ZT3O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxExeNFqERabCP0aQxYdI7+/KHybZ/xjTOIECflqxvHEWRnSVRu5VoOIBJli9iwG24aHZWNm1+N1GgoGh5C6L6/OECkdvmm6UAgoCOto5mfyR1P2JpNMp8qe3fJ7ODlJxgwT5HigSqS2fQg9DYWMst7X0atVxs5PpUGDXkdTkRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqaozXqo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1E0ZT3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66773C19425;
-	Mon, 20 Apr 2026 15:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqaozXqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04F4C19425;
+	Mon, 20 Apr 2026 15:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699885;
-	bh=ZzD0kl+NLWMETVZi3wfi0PvIxvWEpWAWpcWYA8uRky8=;
+	s=korg; t=1776699888;
+	bh=GO6VVItUC3vAlojph73BYWJd4Ns8OmfAWG2P4Q6dcw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1E0ZT3OuGzQhwn1Tr1OYMHJxcQ1s3thxqLVkBjrEAys2J1Xv3mb8pUZp6i0bikjN
-	 7uY+5CyNbM3y8oA+YB6dxzYb1bzTWLEdp/sd3lHKDy9lGv3r5ByLhHlU/7dkTJYf9b
-	 oRPTzCL/GdqfxydL4W1WJZoSqsX2fhvNo+Aq/JGc=
+	b=vqaozXqoLozUSb5ndpCr3vSnACw1FYfb55tc9K1KmJ97pNRTQOWwiB0eUyFrOLKEC
+	 CZJHK8pRU74XCwArV5jcLCE/2hAV7YfSmtNWpKX0vcwXiobrK5tkTe3FH7gbvBMWC9
+	 Ar3JFqGS3OGA9BNhB6ZjvmnWE5+f+gESFVGzIcds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	linux-input@vger.kernel.org,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.0 07/76] HID: core: clamp report_size in s32ton() to avoid undefined shift
-Date: Mon, 20 Apr 2026 17:41:18 +0200
-Message-ID: <20260420153911.085588561@linuxfoundation.org>
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 7.0 08/76] net: usb: cdc-phonet: fix skb frags[] overflow in rx_complete()
+Date: Mon, 20 Apr 2026 17:41:19 +0200
+Message-ID: <20260420153911.121719136@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -55,46 +56,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 69c02ffde6ed4d535fa4e693a9e572729cad3d0d upstream.
+commit 600dc40554dc5ad1e6f3af51f700228033f43ea7 upstream.
 
-s32ton() shifts by n-1 where n is the field's report_size, a value that
-comes directly from a HID device.  The HID parser bounds report_size
-only to <= 256, so a broken HID device can supply a report descriptor
-with a wide field that triggers shift exponents up to 256 on a 32-bit
-type when an output report is built via hid_output_field() or
-hid_set_field().
+A malicious USB device claiming to be a CDC Phonet modem can overflow
+the skb_shared_info->frags[] array by sending an unbounded sequence of
+full-page bulk transfers.
 
-Commit ec61b41918587 ("HID: core: fix shift-out-of-bounds in
-hid_report_raw_event") added the same n > 32 clamp to the function
-snto32(), but s32ton() was never given the same fix as I guess syzbot
-hadn't figured out how to fuzz a device the same way.
+Drop the skb and increment the length error when the frag limit is
+reached.  This matches the same fix that commit f0813bcd2d9d ("net:
+wwan: t7xx: fix potential skb->frags overflow in RX path") did for the
+t7xx driver.
 
-Fix this up by just clamping the max value of n, just like snto32()
-does.
-
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
 Cc: stable <stable@kernel.org>
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: Benjamin Tissoires <bentiss@kernel.org>
-Cc: linux-input@vger.kernel.org
 Assisted-by: gregkh_clanker_t1000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Link: https://patch.msgid.link/2026041134-dreamboat-buddhism-d1ec@gregkh
+Fixes: 87cf65601e17 ("USB host CDC Phonet network interface driver")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/usb/cdc-phonet.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -71,6 +71,9 @@ static u32 s32ton(__s32 value, unsigned
- 	if (!value || !n)
- 		return 0;
- 
-+	if (n > 32)
-+		n = 32;
-+
- 	a = value >> (n - 1);
- 	if (a && a != -1)
- 		return value < 0 ? 1 << (n - 1) : (1 << (n - 1)) - 1;
+--- a/drivers/net/usb/cdc-phonet.c
++++ b/drivers/net/usb/cdc-phonet.c
+@@ -157,11 +157,16 @@ static void rx_complete(struct urb *req)
+ 						PAGE_SIZE);
+ 				page = NULL;
+ 			}
+-		} else {
++		} else if (skb_shinfo(skb)->nr_frags < MAX_SKB_FRAGS) {
+ 			skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
+ 					page, 0, req->actual_length,
+ 					PAGE_SIZE);
+ 			page = NULL;
++		} else {
++			dev_kfree_skb_any(skb);
++			pnd->rx_skb = NULL;
++			skb = NULL;
++			dev->stats.rx_length_errors++;
+ 		}
+ 		if (req->actual_length < PAGE_SIZE)
+ 			pnd->rx_skb = NULL; /* Last fragment */
 
 
