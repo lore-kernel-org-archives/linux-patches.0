@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0863317A31C;
-	Mon, 20 Apr 2026 15:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C7717A31C;
+	Mon, 20 Apr 2026 15:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700762; cv=none; b=WWHQhr2T03aim9kVBtLR7kKNBvzKBAZZ5E6Pn4pES+8bJGerhs5+ef26qB9fD/sVQZKjUT/IwAKrJeDAp1rb4VeuPOBrxQsK+g4DxHt6bQcJx/nRefZCxufIYQWkLDOmMNKBNUMNq8UdTb/0AptDrrzTl+75r+XsiambK4rkc3E=
+	t=1776700764; cv=none; b=dWphIuZkVnSHg2gG/MWas0wqd0qN24oJVE1I9/c62CPJV95qZvu3dmIycHI1m3DVGFYa4aa6KK0Mw0RSuZmZIrPwRfYcGDPplOwcnJl0izMcQuvC85ITfscVadOAFD/6w2HylAtLnW1OzFY7cLDabHN+OlAtW8MlNhIgWNDkckA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700762; c=relaxed/simple;
-	bh=b4l9aRbw7HUPciQkPg7H9TYP0D5G4tPDIEqexEbPTZw=;
+	s=arc-20240116; t=1776700764; c=relaxed/simple;
+	bh=MD6JnO4tNTiC8t62FNVGk9PLMImIXtPzGDxwtH0aP70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVg12GBrLRBJ7uSu9Zs0QdHvaRSPkFvBB06T+OHHP1CvdYa5kBN7hiGnOLSoUfQF3WQK6xt7ou8G0Zu9RCAMrmj6IJYIc0xz0sMxueCFL4kXeNbI5viR6ZEnmF/iJhIbBnczJLsqxzC4tGcFYzsX5FuJ1TzpmgnD+eZp2r6CorE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/87WmLA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qT5r1Yf9mFJPtb8i3JVcOdplSr9Y1EkOeYK+OdbBi3QopgwWlTl20Fq4KKOSJw9uzf4TkJPCiNUYl4HkfX8Z/CNzT7uEKysYcEc2MHPKK5RI4qHMOKRksXY1HDB+ZzprYR2IkmY5nQYPXGHaDDIEdNHoRIB8nB8ZU6stUR/uUWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M25LJIj8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/87WmLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E5CC19425;
-	Mon, 20 Apr 2026 15:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M25LJIj8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203B9C19425;
+	Mon, 20 Apr 2026 15:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700761;
-	bh=b4l9aRbw7HUPciQkPg7H9TYP0D5G4tPDIEqexEbPTZw=;
+	s=korg; t=1776700764;
+	bh=MD6JnO4tNTiC8t62FNVGk9PLMImIXtPzGDxwtH0aP70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/87WmLAigGv/AxHR8DEFz4JlPoxQzoAHUP2OU+71IAotpyWX0VMM6edfbxfrBcFt
-	 /SF6lCZmy1FLBBtGvQdrW+FgIEM6NwZKT37RO+6tLDy1gK6Dnez37c6JAqKgVfnbjd
-	 60YbE08kL3kwcqjU1K8ieJmS890rgGL7dpc9vTK8=
+	b=M25LJIj8thAWaIzIdh+tTbYnWpwl//Hon9ZvMJpMzPLYswy/NN6RFf9kZBOu8Rdd9
+	 tmts9emykQfPS5/fJ3S+5uYZCDzyyi8FJwtCsNdccYxmDQzZ8qS8cKl+doOXQJ3aIJ
+	 zvTjffdSDzqrbB/8QmMIz34rjfz7vKXj7RomwaNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Savenko <alex.sav4387@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+d8c285748fa7292580a9@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Martin Schiller <ms@dev.tdt.de>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 034/198] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14IMH9
-Date: Mon, 20 Apr 2026 17:40:13 +0200
-Message-ID: <20260420153936.846824243@linuxfoundation.org>
+Subject: [PATCH 6.18 071/198] net: lapbether: handle NETDEV_PRE_TYPE_CHANGE
+Date: Mon, 20 Apr 2026 17:40:50 +0200
+Message-ID: <20260420153938.167500779@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,56 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Savenko <alex.sav4387@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 217d5bc9f96272316ac5a3215c7cc32a5127bbf3 ]
+[ Upstream commit b120e4432f9f56c7103133d6a11245e617695adb ]
 
-The Lenovo Yoga Pro 7 14IMH9 (DMI: 83E2) shares PCI SSID 17aa:3847
-with the Legion 7 16ACHG6, but has a different codec subsystem ID
-(17aa:38cf). The existing SND_PCI_QUIRK for 17aa:3847 applies
-ALC287_FIXUP_LEGION_16ACHG6, which attempts to initialize an external
-I2C amplifier (CLSA0100) that is not present on the Yoga Pro 7 14IMH9.
+lapbeth_data_transmit() expects the underlying device type
+to be ARPHRD_ETHER.
 
-As a result, pin 0x17 (bass speakers) is connected to DAC 0x06 which
-has no volume control, making hardware volume adjustment completely
-non-functional. Audio is either silent or at maximum volume regardless
-of the slider position.
+Returning NOTIFY_BAD from lapbeth_device_event() makes sure
+bonding driver can not break this expectation.
 
-Add a HDA_CODEC_QUIRK entry using the codec subsystem ID (17aa:38cf)
-to correctly identify the Yoga Pro 7 14IMH9 and apply
-ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN, which redirects pin 0x17 to
-DAC 0x02 and restores proper volume control. The existing Legion entry
-is preserved unchanged.
-
-This follows the same pattern used for 17aa:386e, where Legion Y9000X
-and Yoga Pro 7 14ARP8 share a PCI SSID but are distinguished via
-HDA_CODEC_QUIRK.
-
-Link: https://github.com/nomad4tech/lenovo-yoga-pro-7-linux
-Tested-by: Alexander Savenko <alex.sav4387@gmail.com>
-Signed-off-by: Alexander Savenko <alex.sav4387@gmail.com>
-Link: https://patch.msgid.link/20260331082929.44890-1-alex.sav4387@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Reported-by: syzbot+d8c285748fa7292580a9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69cd22a1.050a0220.70c3a.0002.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Martin Schiller <ms@dev.tdt.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260402103519.1201565-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wan/lapbether.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 1c8ee8263ab3a..2e89528e5cec1 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7402,6 +7402,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
-+	/* Yoga Pro 7 14IMH9 shares PCI SSID 17aa:3847 with Legion 7 16ACHG6;
-+	 * use codec SSID to distinguish them
-+	 */
-+	HDA_CODEC_QUIRK(0x17aa, 0x38cf, "Lenovo Yoga Pro 7 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3847, "Legion 7 16ACHG6", ALC287_FIXUP_LEGION_16ACHG6),
- 	SND_PCI_QUIRK(0x17aa, 0x384a, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
+index f357a7ac70ac4..9861c99ea56c4 100644
+--- a/drivers/net/wan/lapbether.c
++++ b/drivers/net/wan/lapbether.c
+@@ -446,33 +446,36 @@ static void lapbeth_free_device(struct lapbethdev *lapbeth)
+ static int lapbeth_device_event(struct notifier_block *this,
+ 				unsigned long event, void *ptr)
+ {
+-	struct lapbethdev *lapbeth;
+ 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
++	struct lapbethdev *lapbeth;
+ 
+ 	if (dev_net(dev) != &init_net)
+ 		return NOTIFY_DONE;
+ 
+-	if (!dev_is_ethdev(dev) && !lapbeth_get_x25_dev(dev))
++	lapbeth = lapbeth_get_x25_dev(dev);
++	if (!dev_is_ethdev(dev) && !lapbeth)
+ 		return NOTIFY_DONE;
+ 
+ 	switch (event) {
+ 	case NETDEV_UP:
+ 		/* New ethernet device -> new LAPB interface	 */
+-		if (!lapbeth_get_x25_dev(dev))
++		if (!lapbeth)
+ 			lapbeth_new_device(dev);
+ 		break;
+ 	case NETDEV_GOING_DOWN:
+ 		/* ethernet device closes -> close LAPB interface */
+-		lapbeth = lapbeth_get_x25_dev(dev);
+ 		if (lapbeth)
+ 			dev_close(lapbeth->axdev);
+ 		break;
+ 	case NETDEV_UNREGISTER:
+ 		/* ethernet device disappears -> remove LAPB interface */
+-		lapbeth = lapbeth_get_x25_dev(dev);
+ 		if (lapbeth)
+ 			lapbeth_free_device(lapbeth);
+ 		break;
++	case NETDEV_PRE_TYPE_CHANGE:
++		/* Our underlying device type must not change. */
++		if (lapbeth)
++			return NOTIFY_BAD;
+ 	}
+ 
+ 	return NOTIFY_DONE;
 -- 
 2.53.0
 
