@@ -1,48 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434393EC2FC;
-	Mon, 20 Apr 2026 13:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AC53BD222;
+	Mon, 20 Apr 2026 13:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691512; cv=none; b=KT4ZxXhcwdLyrD+//4PtXME0k3dgRG/gBfiHJVHb6D5kgL3AX7ywH8CW3eikZBoN9CYCRQ/Xtd1ixT0Qj/vSqzF7ddPVo7OeyNMkZLQ8tex+fiHebYqUanKxFeVbxXFWXBklzXJpyEyykMUTIUMbhqOxye84PyLBVb7oKAa5R5w=
+	t=1776691513; cv=none; b=nmVlOhqXwrxrQuplhks/C+8d4tmWxG3YD8Xxxblhq7VodkKV1/Yh6GkilqIzI4tve61Jga3+8p+ph8tiQ7HTf+hnxw4/g95LjUzyq5rPxmj7iDHqhC6yH+0SsvNCUPMfJApaUa8mUfGGJKP/venhRngOoqotsKLMH7bGKDQu2oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691512; c=relaxed/simple;
-	bh=RJBmDKkGRFqbpmS57CnARzcMy+oYZRfEn69JCVkwEW4=;
+	s=arc-20240116; t=1776691513; c=relaxed/simple;
+	bh=lxK8mzMpPAy8qmTHJCf6vQTdOIk5p9rqZwYog5ZsSSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szKlLwhWCp5YiewaWtakd7mMV6udHdjawx9gwK0sSz+jFb39aTWU6/8qLv06wmTeGCVmJLF4dqTRP5TwDdUtnKVTvO6Is9DdfCzBDlvpaFdpPI7kPOVXsxHmNYIbU+7vRA7uPXt/pjS+fItMmDoqK2oLMe0RxKW64DA4fNxLLJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CrtWnGtH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q3NGE7JdAFfsDpzLe+G2HUhjzE2tpR2uNMXMF9Cmi/IAf8z/grPftsUU7QLaRDXY0wXbmR/6jH/c6Nv3ZcCoSZbYD7TVN1FDtUhqL3VKwkiF7ETNmz5TR2jx5guJ5X3dN32O3NTvzTPpOktg1CFQ0JMe6G29cjmr9/XIT/e2v8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qudr/Zds; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CrtWnGtH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3805EC2BCB6;
-	Mon, 20 Apr 2026 13:25:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qudr/Zds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F967C2BCB4;
+	Mon, 20 Apr 2026 13:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691512;
-	bh=RJBmDKkGRFqbpmS57CnARzcMy+oYZRfEn69JCVkwEW4=;
+	s=k20201202; t=1776691513;
+	bh=lxK8mzMpPAy8qmTHJCf6vQTdOIk5p9rqZwYog5ZsSSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CrtWnGtHK1GRlYckLjCylmkrBoGpBeMwk/fa0SjYqGAua2BLg+E8owI6V5ykFAl6L
-	 qtaw7aociuEpi2ZLjlGNxvvOe2ZGSFc4ZmUGL7W7R7oJqvNLO6RUOUVC8v4XcZVBp6
-	 11j4HgS/PbXj6NptVmdlMC8Rl2bCX3ln5Bx+oRJcD40PeTAONobp3GuBX1bTnr2O9t
-	 1weTkF97Lqe50JH64QRoqYhJJxl1b8heBibBZzBVauAtik5qZ2SOzALXPBwPzgAkCb
-	 9zR8VqH9aho2y1taHYuo87BCK6QsTYjWuaMI03nN3iduGbSrflksVY8LwvENCC+O20
-	 jRUL8Eo4IbDUQ==
+	b=qudr/Zds1sfzyFWF8NnKa9jtzk9qx9nUxcjfaV3vuQ7/ucJMq6rbMTXy/STS4BmHE
+	 TG2Qf/M1voGNIUcSALgo5WSOJg7Er/eBX0b9/+UNxzef6ZdYM4qft0Yqcc9r8mp4gi
+	 B2HMU5TNnCvgf1MVjWOGO2cvJaA2w5PCfniabzKKI2jMatM6VPdacFiFIOOx2VA8i3
+	 0X71Wil+fk+snGXjyrrq8oUkx5KnBr1aqJICD8VVyvcE2LAYE2uo+5gf6WODkmmaR6
+	 gU8dT3aMqGG3zzcMRRRfeQoRkxnCG+8NbWVnvlQGZCdjDKohjRa5LFThJC7P5PG/rA
+	 DaV4QI1bklpoQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thangaraj Samynathan <thangaraj.s@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	bryan.whitehead@microchip.com,
-	UNGLinuxDriver@microchip.com,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	chunfeng.yun@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-phy@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] net: lan743x: fix SGMII detection on PCI1xxxx B0+ during warm reset
-Date: Mon, 20 Apr 2026 09:17:47 -0400
-Message-ID: <20260420132314.1023554-73-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] phy: phy-mtk-tphy: Update names and format of kernel-doc comments
+Date: Mon, 20 Apr 2026 09:17:48 -0400
+Message-ID: <20260420132314.1023554-74-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -57,344 +55,254 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Thangaraj Samynathan <thangaraj.s@microchip.com>
+From: Vinod Koul <vkoul@kernel.org>
 
-[ Upstream commit e783e40fb689381caca31e03d28c39e10c82e722 ]
+[ Upstream commit 8d869bc943cfe5db08f5aff355b1d8d3abeda865 ]
 
-A warm reset on boards using an EEPROM-only strap configuration (where
-no MAC address is set in the image) can cause the driver to incorrectly
-revert to RGMII mode. This occurs because the ENET_CONFIG_LOAD_STARTED
-bit may not persist or behave as expected.
+mtk_phy_pdata documentation does not use correct tag for struct, while at
+it fix one of member wrongly documented.
 
-Update pci11x1x_strap_get_status() to use revision-specific validation:
+Warning: drivers/phy/mediatek/phy-mtk-tphy.c:289 cannot understand function prototype: 'struct mtk_phy_pdata'
+Warning: drivers/phy/mediatek/phy-mtk-tphy.c:296 struct member 'slew_ref_clock_mhz' not described in 'mtk_phy_pdata'
 
-- For PCI11x1x A0: Continue using the legacy check (config load started
-  or reset protection) to validate the SGMII strap.
-- For PCI11x1x B0 and later: Use the newly available
-  STRAP_READ_USE_SGMII_EN_ bit in the upper strap register to validate
-  the lower SGMII_EN bit.
-
-This ensures the SGMII interface is correctly identified even after a
-warm reboot.
-
-Signed-off-by: Thangaraj Samynathan <thangaraj.s@microchip.com>
-Link: https://patch.msgid.link/20260318063228.17110-1-thangaraj.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260223071032.408425-1-vkoul@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the full analysis.
+Based on my investigation, I have enough context to provide a thorough
+analysis.
 
----
+## Analysis
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-Record: [net: lan743x] [fix] SGMII detection on PCI1xxxx B0+ during warm
-reset. The verb "fix" directly indicates a bug fix.
+**Step 1.1** - Subject Line Parse:
+- Record: [phy/phy-mtk-tphy] [Update] [kernel-doc comment formatting and
+  member name correction]
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by**: Thangaraj Samynathan (Microchip employee - device
-  vendor)
-- **Link**: https://patch.msgid.link/20260318063228.17110-1-
-  thangaraj.s@microchip.com
-- **Signed-off-by**: Jakub Kicinski (netdev maintainer - accepted the
-  patch)
-- No Fixes: tag (expected for candidates under review)
-- No Cc: stable tag (expected)
-- No Reported-by tag
+**Step 1.2** - Tags:
+- Link:
+  https://patch.msgid.link/20260223071032.408425-1-vkoul@kernel.org
+- Signed-off-by: Vinod Koul <vkoul@kernel.org> (phy subsystem
+  maintainer)
+- No Fixes: tag, no Cc: stable, no Reported-by, no Tested-by, no
+  Reviewed-by
 
-Record: Patch from the device vendor (Microchip), accepted by the netdev
-maintainer. No explicit stable nomination.
+**Step 1.3** - Commit Body:
+- Bug described: Two kernel-doc warnings:
+  1. `cannot understand function prototype: 'struct mtk_phy_pdata'`
+     (missing "struct" tag)
+  2. `struct member 'slew_ref_clock_mhz' not described` (doc says
+     `slew_ref_clk_mhz` but the actual struct member is
+     `slew_ref_clock_mhz`)
+- Failure mode: doc generation warnings; no runtime impact
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The commit describes a concrete bug: warm reset on boards with EEPROM-
-only strap config (no MAC in image) causes incorrect revert to RGMII
-mode. The root cause is that the `ENET_CONFIG_LOAD_STARTED` bit may not
-persist. The fix uses revision-specific validation: A0 keeps legacy
-check, B0+ uses `STRAP_READ_USE_SGMII_EN_` bit.
+**Step 1.4** - Hidden bug fix detection:
+- Record: This is NOT a hidden bug fix. It is a pure kernel-
+  doc/documentation correctness fix. No runtime behavior changes.
 
-Record: Bug = SGMII interface misdetected as RGMII after warm reset.
-Symptom = network interface uses wrong PHY mode. Root cause = config
-load register bit doesn't persist across warm reset on B0+ with specific
-strap configuration.
+### PHASE 2: DIFF ANALYSIS
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-This is an explicit bug fix, not disguised.
+**Step 2.1** - Inventory:
+- Files: `drivers/phy/mediatek/phy-mtk-tphy.c` (1 file)
+- Lines changed: 2 lines modified (comment only)
+- Functions: None (only a struct's kernel-doc block)
+- Scope: single-file, surgical, comments only
 
----
+**Step 2.2** - Flow change:
+- Before: `mtk_phy_pdata - SoC...` and `@slew_ref_clk_mhz:` in comments
+- After: `struct mtk_phy_pdata - SoC...` and `@slew_ref_clock_mhz:` in
+  comments
+- No executable code changed
 
-## PHASE 2: DIFF ANALYSIS
+**Step 2.3** - Bug mechanism:
+- Category: Documentation correctness. The kernel-doc parser rejects the
+  struct doc block because it lacks the `struct` keyword, and then flags
+  the unmatched member name.
 
-### Step 2.1: INVENTORY THE CHANGES
-- `lan743x_main.c`: +13/-4 lines
-- `lan743x_main.h`: +1/-0 lines
-- New helper function: `pci11x1x_is_a0()` (4 lines)
-- Modified function: `pci11x1x_strap_get_status()`
-- New define: `ID_REV_CHIP_REV_PCI11X1X_A0_`
-- Scope: single-file surgical fix in a single driver
+**Step 2.4** - Fix quality:
+- Obviously correct (just comment text)
+- Zero regression risk (no runtime code)
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-**Before**: The condition checked `cfg_load &
-GEN_SYS_LOAD_STARTED_REG_ETH_ || hw_cfg & HW_CFG_RST_PROTECT_`. If
-either was set, it read the strap register and checked
-`STRAP_READ_SGMII_EN_`. Otherwise, it fell through to FPGA check, which
-for non-FPGA boards would set `is_sgmii_en = false`.
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-**After**: The condition now branches by revision:
-- A0: Same legacy check (config load or reset protect)
-- B0+: Checks `STRAP_READ_USE_SGMII_EN_` bit directly (the upper strap
-  register bit)
-- Also, `strap = lan743x_csr_read()` is moved outside the conditional
-  (unconditionally read)
+**Step 3.1** - Blame:
+- `9cc82c2498b4f` ("phy: mediatek: tphy: Clarify and add kerneldoc to
+  mtk_phy_pdata"): first added the kerneldoc without the `struct`
+  prefix. Landed in v6.17-rc1.
+- `d6306fc5d77b7` ("phy: mediatek: tphy: Cleanup and document slew
+  calibration"): introduced the `slew_ref_clk_mhz` doc line while naming
+  the actual member `slew_ref_clock_mhz`. Landed in v6.17-rc1.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-Category: Logic/correctness fix. The hardware register
-(`ENET_CONFIG_LOAD_STARTED`) doesn't reliably persist on B0+ after warm
-reset in EEPROM-only configurations. This causes the conditional to
-fail, and the code falls through to the FPGA path which sets
-`is_sgmii_en = false`, making the driver use RGMII mode incorrectly.
+**Step 3.2** - No Fixes: tag. Effectively the fix addresses both commits
+above.
 
-### Step 2.4: ASSESS THE FIX QUALITY
-The fix is obviously correct: it restores the original check method
-(`STRAP_READ_USE_SGMII_EN_`) for B0+ hardware while preserving legacy
-behavior for A0. The new `pci11x1x_is_a0()` helper is trivial. Very low
-regression risk - A0 behavior unchanged, B0+ gets a more reliable
-detection method.
+**Step 3.3** - Related changes: None relevant; no dependency or series.
 
----
+**Step 3.4** - Author: Vinod Koul is the phy subsystem maintainer. High
+trust.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.5** - Dependencies: None. Standalone 2-line comment change.
 
-### Step 3.1: BLAME THE CHANGED LINES
-Verified via `git blame`: The buggy conditional (lines 51-52) was
-introduced by `46b777ad9a8c26` ("net: lan743x: Add support to SGMII 1G
-and 2.5G", Jun 2022). The original code in `a46d9d37c4f4fa` (Feb 2022)
-checked `STRAP_READ_USE_SGMII_EN_` directly, which was the correct
-approach for B0+.
+### PHASE 4: MAILING LIST RESEARCH
 
-Record: Bug introduced by `46b777ad9a8c26` (v5.19/v6.0). Original
-working code was in `a46d9d37c4f4fa` (v5.18).
+- Lore fetch attempted but blocked by Anubis. The Link: tag points to
+  vkoul@kernel.org posting.
+- Record: Patch was posted on Feb 23 2026 by the subsystem maintainer.
+  No evidence of controversy.
 
-### Step 3.2: FOLLOW THE FIXES TAG
-No Fixes: tag, but the bug was clearly introduced by `46b777ad9a8c26`.
-This commit exists in stable trees v6.0+.
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 3.3: CHECK FILE HISTORY
-The file has active development. The author (Thangaraj Samynathan) is a
-Microchip employee and a regular contributor to the lan743x driver with
-10+ commits.
+- Only a comment block is changed; the struct itself and all callers are
+  unaffected. No reachability change.
 
-### Step 3.4: AUTHOR CONTEXT
-The author works at Microchip (the hardware vendor). They have deep
-knowledge of this hardware.
+### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 3.5: DEPENDENCIES
-The fix adds `ID_REV_CHIP_REV_PCI11X1X_A0_` define. The only nearby
-dependency is `ID_REV_CHIP_REV_PCI11X1X_B0_` (added in `e4a58989f5c839`,
-v6.10). For stable trees 6.1-6.9, the patch context would differ
-slightly and need minor adaptation. For 6.12+, it should apply cleanly.
+**Step 6.1** - Buggy code presence:
+- Verified present in stable/linux-6.17.y, 6.18.y, 6.19.y (checked files
+  directly; same problematic kerneldoc block exists in all three).
+- Not present in 6.12.y and older (the kerneldoc block wasn't added
+  there).
 
----
+**Step 6.2** - Backport complications:
+- The diff applies against the exact same surrounding context in 6.17.y,
+  6.18.y, 6.19.y. Trivial clean apply.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 6.3** - No prior fix found in stable branches.
 
-### Step 4.1: ORIGINAL PATCH DISCUSSION
-Found via `b4 am`: The patch was submitted as "[PATCH v1]" and had 2
-messages in the thread. The v0->v1 changelog shows: "Added helpers to
-check if the device revision is a0". This was a single-patch submission
-(not part of a series).
+### PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 4.2: REVIEWER CONTEXT
-The patch was accepted by Jakub Kicinski (netdev maintainer) directly.
+- Subsystem: drivers/phy/mediatek (PERIPHERAL - MediaTek SoC-specific
+  T-PHY)
+- Author is the subsystem maintainer
 
-### Step 4.3-4.5: BUG REPORT / STABLE DISCUSSION
-No public bug report linked. The fix comes directly from the hardware
-vendor, suggesting it was found during internal testing.
+### PHASE 8: IMPACT AND RISK ASSESSMENT
 
----
+**Step 8.1** - Affected: Only developers generating kernel docs. No end-
+user runtime impact whatsoever.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 8.2** - Trigger: Running `make htmldocs` or similar against the
+file.
 
-### Step 5.1-5.2: FUNCTION ANALYSIS
-`pci11x1x_strap_get_status()` is called from `lan743x_hardware_init()`
-(line 3506), which is the main hardware initialization path. It's called
-once during device probe and determines whether SGMII or RGMII mode is
-used.
+**Step 8.3** - Severity: LOW. Pure cosmetic/doc-build warnings. The
+struct's `slew_ref_clock_mhz` member appears as "undocumented" in
+generated docs, but no functional issue.
 
-### Step 5.3-5.4: IMPACT CHAIN
-`is_sgmii_en` controls:
-1. SGMII_CTL register configuration (lines 3511-3518) - enables/disables
-   SGMII
-2. PHY interface mode selection (line 1357-1358) -
-   `PHY_INTERFACE_MODE_SGMII` vs `RGMII`
-3. MDIO bus configuration (lines 3576-3595) - C45 vs C22 access
+**Step 8.4** - Benefit vs Risk:
+- Benefit: Silences two kernel-doc warnings; correct generated
+  documentation.
+- Risk: Essentially zero (comment text change).
 
-If `is_sgmii_en` is incorrectly set to `false` on SGMII hardware, the
-network interface will not work.
+### PHASE 9: FINAL SYNTHESIS
 
----
+**Evidence FOR:**
+- Precedent: recent kernel-doc-only warning fixes have been AUTOSEL'd to
+  stable (e.g., `45285d357287b` backlight lp855x, `a1bf8ea50cbc4`
+  kfence, `18b6574d4c647` net/bridge, `c2277e285923b` scatterlist,
+  `1cce5a5ecafeb` mtd/docg3) with similar "struct member X not
+  described" style warnings
+- Stable kernel rules explicitly list documentation/comment fixes as
+  allowed (zero runtime regression risk)
+- Small and surgical (2 line comment diff)
+- Buggy doc exists in active stable trees (6.17+)
+- Author is the subsystem maintainer
+- Patch applies cleanly to 6.17.y / 6.18.y / 6.19.y
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+**Evidence AGAINST:**
+- No Fixes: tag, no Cc: stable
+- Pure cosmetic - no user-visible impact
+- Does not fix a crash, leak, race, security issue, or data corruption
+- Fails the "important issue" criterion strictly
 
-### Step 6.1: BUGGY CODE IN STABLE TREES
-The buggy code from `46b777ad9a8c26` exists in all stable trees from
-v6.1+. The `ID_REV_CHIP_REV_PCI11X1X_B0_` prerequisite is in v6.10+, so
-for 6.12+ the patch applies cleanly.
+**Stable rules check:**
+1. Obviously correct: YES (trivial comment fix)
+2. Fixes a real bug: Marginal (kerneldoc warning only)
+3. Important issue: NO by strict reading, but in the recognized
+   exception category (documentation fix)
+4. Small and contained: YES (2 lines)
+5. No new features: YES
+6. Applies to stable: YES
 
-### Step 6.2: BACKPORT COMPLICATIONS
-For 6.12+: should apply cleanly. For 6.1-6.9: minor context adjustment
-needed (the `B0_` define line won't be present).
+**Exception category:** Falls under "Documentation and comment fixes" -
+explicitly allowed by stable rules as zero-risk.
 
----
+### Verification:
+- [Phase 1] Parsed tags: Link tag only; no Fixes, Reported-by, Cc
+  stable, Reviewed-by/Acked-by in this particular submission.
+- [Phase 2] Read the diff: verified only 2 comment lines change (adds
+  "struct " and renames `slew_ref_clk_mhz` -> `slew_ref_clock_mhz` in
+  kerneldoc).
+- [Phase 3] `git log -- drivers/phy/mediatek/phy-mtk-tphy.c`: confirmed
+  `9cc82c2498b4f` added the kerneldoc without "struct" prefix;
+  `d6306fc5d77b7` added the member-name mismatch.
+- [Phase 3] `git describe --contains` for `9cc82c2498b4f` and
+  `d6306fc5d77b7`: both resolve to v6.17-rc1.
+- [Phase 3] `git branch -r --contains d6306fc5d77b7`: present in
+  stable/linux-6.17.y, 6.18.y, 6.19.y; not in older stable.
+- [Phase 4] WebFetch of lore URL blocked by Anubis (UNVERIFIED); could
+  not examine review thread directly.
+- [Phase 6] `git show stable/linux-6.17.y:drivers/phy/mediatek/phy-mtk-
+  tphy.c` and the 6.18.y / 6.19.y equivalents: confirmed the same broken
+  kerneldoc block is present in all three active stable branches; the
+  struct member is `slew_ref_clock_mhz` in all of them; diff will apply
+  cleanly.
+- [Phase 6] Searched for prior fix in stable branches (`git log
+  --grep="slew_ref"`): none found.
+- [Phase 6] Verified similar AUTOSEL precedent: `git show
+  45285d357287b`, `a1bf8ea50cbc4`, `18b6574d4c647`, `c2277e285923b`,
+  `1cce5a5ecafeb` - all are kernel-doc-only warning fixes that were
+  AUTOSEL'd by Sasha Levin into stable.
+- [Phase 7] Author identity: Vinod Koul is the phy subsystem maintainer
+  (confirmed via MAINTAINERS history).
+- [Phase 8] Failure mode: kernel-doc build warnings only; no runtime
+  effect - verified by reading the diff (no executable code changed).
+- UNVERIFIED: Could not read mailing list thread (Anubis block); did not
+  verify reviewer feedback or stable nominations directly.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### Decision
 
-### Step 7.1: SUBSYSTEM CRITICALITY
-Subsystem: Network driver (Ethernet) - IMPORTANT. The lan743x driver
-supports Microchip PCI11010/PCI11414 Ethernet controllers used in
-embedded and desktop systems.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: AFFECTED USERS
-Users with PCI1xxxx B0+ hardware using EEPROM-only strap configuration
-(no MAC in image) who perform warm resets.
-
-### Step 8.2: TRIGGER CONDITIONS
-Warm reset on affected hardware. This is a normal, common operation.
-
-### Step 8.3: FAILURE MODE SEVERITY
-Network interface uses wrong PHY mode -> network doesn't work after warm
-reboot. Severity: HIGH (complete loss of network connectivity).
-
-### Step 8.4: RISK-BENEFIT RATIO
-- **Benefit**: HIGH - fixes complete network failure on warm reset for
-  affected hardware
-- **Risk**: VERY LOW - 13 lines added, surgical fix, chip revision-based
-  branching, no behavioral change for A0
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: EVIDENCE COMPILATION
-
-**FOR backporting**:
-- Fixes a real hardware bug: network failure after warm reset
-- From the device vendor (Microchip) with deep hardware knowledge
-- Small and surgical: ~16 lines total change
-- Accepted by netdev maintainer
-- Very low regression risk: preserves A0 behavior, fixes B0+ detection
-- Buggy code exists in stable trees 6.1+
-- Restores original proven detection method for B0+
-
-**AGAINST backporting**:
-- No Fixes: tag (expected)
-- No explicit stable nomination
-- Adds new defines (but these are trivial hardware register constants)
-- Minor context conflict possible in older stable trees
-
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **YES** - from hardware vendor,
-   accepted by maintainer
-2. Fixes a real bug? **YES** - SGMII misdetection causes network failure
-3. Important issue? **YES** - complete loss of network connectivity
-4. Small and contained? **YES** - ~16 lines, 2 files, single function
-5. No new features or APIs? **YES** - this is a bug fix, no new
-   functionality
-6. Can apply to stable trees? **YES** for 6.12+; needs minor adaptation
-   for 6.1-6.9
-
-### Step 9.3: EXCEPTION CATEGORIES
-This is a hardware workaround (chip revision-specific fix) which is an
-accepted stable category.
-
----
-
-## Verification
-
-- [Phase 1] Parsed tags: Signed-off-by from Microchip (vendor), accepted
-  by Jakub Kicinski (netdev maintainer)
-- [Phase 2] Diff analysis: +13/-4 in .c, +1 in .h; adds
-  `pci11x1x_is_a0()` helper and revision-based conditional branching
-- [Phase 3] git blame: buggy conditional introduced by `46b777ad9a8c26`
-  (v5.19/v6.0, Jun 2022)
-- [Phase 3] git show `a46d9d37c4f4fa`: confirmed original code checked
-  `STRAP_READ_USE_SGMII_EN_` directly (the correct method for B0+)
-- [Phase 3] git show `46b777ad9a8c26`: confirmed this commit replaced
-  the direct check with `cfg_load`/`hw_cfg` check, introducing the
-  regression
-- [Phase 3] git tag: buggy code exists in v6.0+; prerequisite
-  `PCI11X1X_B0_` define exists in v6.10+
-- [Phase 4] b4 am: found original submission, v1 single patch, 2
-  messages in thread
-- [Phase 4] mbox read: changelog shows v0->v1 added the is_a0 helper
-  (review feedback addressed)
-- [Phase 5] Grep callers: `pci11x1x_strap_get_status()` called from
-  `lan743x_hardware_init()` (line 3506)
-- [Phase 5] Grep `is_sgmii_en`: controls PHY interface mode (line 1357),
-  SGMII_CTL register (line 3511), MDIO bus setup (line 3576)
-- [Phase 6] Code exists in stable trees v6.1+; clean apply expected for
-  v6.12+
-- [Phase 8] Failure mode: wrong PHY mode -> network failure; severity
-  HIGH
+The change is a pure kernel-doc warning fix: it adds the missing
+`struct` keyword and corrects a member-name typo so the kernel-doc
+parser emits the correct docs for `struct mtk_phy_pdata`. The broken
+kerneldoc exists in 6.17.y, 6.18.y and 6.19.y stable trees, the patch
+applies trivially, and the risk of regression is effectively zero (no
+executable code is touched). This falls squarely in the
+"Documentation/comment fixes" exception category explicitly allowed by
+stable kernel rules, and there is recent AUTOSEL precedent for
+backporting similar kerneldoc-only warning fixes (lp855x, kfence,
+bridge, scatterlist, docg3). The strongest argument against is that it
+fails the strict "important issue" test, but the risk/benefit and
+precedent tip it to YES.
 
 **YES**
 
- drivers/net/ethernet/microchip/lan743x_main.c | 15 +++++++++++----
- drivers/net/ethernet/microchip/lan743x_main.h |  1 +
- 2 files changed, 12 insertions(+), 4 deletions(-)
+ drivers/phy/mediatek/phy-mtk-tphy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index f0b5dd752f084..b4cabde6625a2 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -28,6 +28,12 @@
+diff --git a/drivers/phy/mediatek/phy-mtk-tphy.c b/drivers/phy/mediatek/phy-mtk-tphy.c
+index f6504e0ecd1a7..acf5065295072 100644
+--- a/drivers/phy/mediatek/phy-mtk-tphy.c
++++ b/drivers/phy/mediatek/phy-mtk-tphy.c
+@@ -276,14 +276,14 @@ enum mtk_phy_version {
+ };
  
- #define RFE_RD_FIFO_TH_3_DWORDS	0x3
- 
-+static bool pci11x1x_is_a0(struct lan743x_adapter *adapter)
-+{
-+	u32 dev_rev = adapter->csr.id_rev & ID_REV_CHIP_REV_MASK_;
-+	return dev_rev == ID_REV_CHIP_REV_PCI11X1X_A0_;
-+}
-+
- static void pci11x1x_strap_get_status(struct lan743x_adapter *adapter)
- {
- 	u32 chip_rev;
-@@ -47,10 +53,11 @@ static void pci11x1x_strap_get_status(struct lan743x_adapter *adapter)
- 	cfg_load = lan743x_csr_read(adapter, ETH_SYS_CONFIG_LOAD_STARTED_REG);
- 	lan743x_hs_syslock_release(adapter);
- 	hw_cfg = lan743x_csr_read(adapter, HW_CFG);
--
--	if (cfg_load & GEN_SYS_LOAD_STARTED_REG_ETH_ ||
--	    hw_cfg & HW_CFG_RST_PROTECT_) {
--		strap = lan743x_csr_read(adapter, STRAP_READ);
-+	strap = lan743x_csr_read(adapter, STRAP_READ);
-+	if ((pci11x1x_is_a0(adapter) &&
-+	     (cfg_load & GEN_SYS_LOAD_STARTED_REG_ETH_ ||
-+	      hw_cfg & HW_CFG_RST_PROTECT_)) ||
-+	    (strap & STRAP_READ_USE_SGMII_EN_)) {
- 		if (strap & STRAP_READ_SGMII_EN_)
- 			adapter->is_sgmii_en = true;
- 		else
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
-index 02a28b7091630..160d94a7cee66 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.h
-+++ b/drivers/net/ethernet/microchip/lan743x_main.h
-@@ -27,6 +27,7 @@
- #define ID_REV_CHIP_REV_MASK_		(0x0000FFFF)
- #define ID_REV_CHIP_REV_A0_		(0x00000000)
- #define ID_REV_CHIP_REV_B0_		(0x00000010)
-+#define ID_REV_CHIP_REV_PCI11X1X_A0_	(0x000000A0)
- #define ID_REV_CHIP_REV_PCI11X1X_B0_	(0x000000B0)
- 
- #define FPGA_REV			(0x04)
+ /**
+- * mtk_phy_pdata - SoC specific platform data
++ * struct mtk_phy_pdata - SoC specific platform data
+  * @avoid_rx_sen_degradation: Avoid TX Sensitivity level degradation (MT6795/8173 only)
+  * @sw_pll_48m_to_26m:        Workaround for V3 IP (MT8195) - switch the 48MHz PLL from
+  *                            fractional mode to integer to output 26MHz for U2PHY
+  * @sw_efuse_supported:       Switches off eFuse auto-load from PHY and applies values
+  *                            read from different nvmem (usually different eFuse array)
+  *                            that is pointed at in the device tree node for this PHY
+- * @slew_ref_clk_mhz:         Default reference clock (in MHz) for slew rate calibration
++ * @slew_ref_clock_mhz:         Default reference clock (in MHz) for slew rate calibration
+  * @slew_rate_coefficient:    Coefficient for slew rate calibration
+  * @version:                  PHY IP Version
+  */
 -- 
 2.53.0
 
