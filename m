@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8820617A31C;
-	Mon, 20 Apr 2026 15:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCDB17A31C;
+	Mon, 20 Apr 2026 15:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700604; cv=none; b=laGXtZiPh5TuJ1Rh4sB48iJvn2i17d3UlGXRzuKDbnaQRGawWwuoNMSORiGjYvujiJqqkhH6kEGf8VHMKcRSPMjQJNE6IeZZM8UvWv9GWDZ8y0+nLBlA1SNqb16OTKiEoT7IoV2e52DzYqs4iUUSnWe+sarIF6RpB7PsswASQvw=
+	t=1776700607; cv=none; b=uJqmgDeHBLMl6SnKnHrg5lJxSyYvXzOnvyxRc8Gglg3OENvGo1IsBmj1dKvdqjHYID7YIfc1TRMlnFF08CsfrvpNueYQkwm9u/cKL7mS8SPGpJXvFbtJovT630xNyVmn/2iVDdAN436GUb6LiprXY6W4wlvrkNPocXQrt0s8AS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700604; c=relaxed/simple;
-	bh=HInMtfAbYsHcx7hSxGG92bx4gL/KGXaKGM5rJRVsLFM=;
+	s=arc-20240116; t=1776700607; c=relaxed/simple;
+	bh=DkQaVGV6/3o1WjjdI1c7RO2U752NPzdO4g5KB7UeIhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=glnaheuT58AQejQfs3mwkUxl0UY0S8hcfY4c/ECWYPF8S2iSafqkS2WXMhXMEj7D4Q1FrtfpKr8CmyOXChOgfTgDc0EZaqTlUwpHpI7B1oZpeOJ9PDvonMkRjrpeUnoJnNa7fr5EObYceDhdBBTKVy5MFjKwJD4f/NlhqTgedAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPCy0drK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tf9AJJydE+eIKCf4UfE7axXB2LuPixRn9isViRi14qdx+ncTAg4IcpGnDyWmepWv8Fe7n/Myh1cp765nAhm/7uCeeJ1CvaAM0UcP1+y4z9/9ylkRRPRo8ZXzhteByB55p6y4LbkvJRQladg8hl07qAJBqNJZiEFG5AGFm2osGak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQIWwkhD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPCy0drK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E955C19425;
-	Mon, 20 Apr 2026 15:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQIWwkhD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ECCC19425;
+	Mon, 20 Apr 2026 15:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700604;
-	bh=HInMtfAbYsHcx7hSxGG92bx4gL/KGXaKGM5rJRVsLFM=;
+	s=korg; t=1776700607;
+	bh=DkQaVGV6/3o1WjjdI1c7RO2U752NPzdO4g5KB7UeIhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MPCy0drKcgF9EBptvHuMspkamuUfjIMGqzh2nja+0oIFaYCal1Z9/2zq7auVMhZ7r
-	 3YewMKPp0CJQdcJUx9qNf305U9eXDsRCEwaN+b6MgZOwmHyv/OLYpRImMj73uKGyxu
-	 yW41S9VSe85QGBA27Wr6s11ZX49WVELHPDHCZYss=
+	b=UQIWwkhDVfWA2+SX3F2CSkOTG4e1hbmhOvoGH73xi1YfFwPBaBhuxMHkDHbx9Ixn+
+	 VEGRok0xWdZgdel8r4wXvShhcYc7ofKQvpPD/B5/9Zt56C3l5V95p95UitjwxtjxX6
+	 Lx6agSgjDFfLCJd+zSUOZRAMDWcaNJiDSZSuAmlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WJ Enderlava <jie7172585@gmail.com>,
-	Krishna Chomal <krishna.chomal108@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Boris Burkov <boris@bur.io>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 017/198] platform/x86: hp-wmi: Add support for Omen 16-wf1xxx (8C76)
-Date: Mon, 20 Apr 2026 17:39:56 +0200
-Message-ID: <20260420153936.237012031@linuxfoundation.org>
+Subject: [PATCH 6.18 018/198] btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()
+Date: Mon, 20 Apr 2026 17:39:57 +0200
+Message-ID: <20260420153936.272688019@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -46,54 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Chomal <krishna.chomal108@gmail.com>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit 84d29bfd1929d08f092851162a3d055a2134d043 ]
+[ Upstream commit a85b46db143fda5869e7d8df8f258ccef5fa1719 ]
 
-The HP Omen 16-wf1xxx (board ID: 8C76) has the same WMI interface as
-other Victus S boards, but requires quirks for correctly switching
-thermal profile (similar to board 8C78).
+If overlay is used on top of btrfs, dentry->d_sb translates to overlay's
+super block and fsid assignment will lead to a crash.
 
-Add the DMI board name to victus_s_thermal_profile_boards[] table and
-map it to omen_v1_thermal_params.
+Use file_inode(file)->i_sb to always get btrfs_sb.
 
-Testing on board 8C76 confirmed that platform profile is registered
-successfully and fan RPMs are readable and controllable.
-
-Tested-by: WJ Enderlava <jie7172585@gmail.com>
-Reported-by: WJ Enderlava <jie7172585@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221149
-Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
-Link: https://patch.msgid.link/20260227154106.226809-1-krishna.chomal108@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/trace/events/btrfs.h | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 008f3364230e2..31d099bd8db43 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -174,6 +174,10 @@ static const struct dmi_system_id victus_s_thermal_profile_boards[] __initconst
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BD5") },
- 		.driver_data = (void *)&victus_s_thermal_params,
- 	},
-+	{
-+		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8C76") },
-+		.driver_data = (void *)&omen_v1_thermal_params,
-+	},
- 	{
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8C78") },
- 		.driver_data = (void *)&omen_v1_thermal_params,
+diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
+index 125bdc166bfed..0864700f76e0a 100644
+--- a/include/trace/events/btrfs.h
++++ b/include/trace/events/btrfs.h
+@@ -769,12 +769,15 @@ TRACE_EVENT(btrfs_sync_file,
+ 	),
+ 
+ 	TP_fast_assign(
+-		const struct dentry *dentry = file->f_path.dentry;
+-		const struct inode *inode = d_inode(dentry);
++		struct dentry *dentry = file_dentry(file);
++		struct inode *inode = file_inode(file);
++		struct dentry *parent = dget_parent(dentry);
++		struct inode *parent_inode = d_inode(parent);
+ 
+-		TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
++		dput(parent);
++		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
+ 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
+-		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
++		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
+ 		__entry->datasync	= datasync;
+ 		__entry->root_objectid	= btrfs_root_id(BTRFS_I(inode)->root);
+ 	),
 -- 
 2.53.0
 
