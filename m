@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FD33BAD98;
-	Mon, 20 Apr 2026 13:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768F43E4C68;
+	Mon, 20 Apr 2026 13:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691486; cv=none; b=BUMy1NnvGo4X86VlyohfktCUdlWKJNrlycQOU703GG/tOOlPwJkxwOKbntZe57z9AG9zJeBm8oZ0EwWq2pwLgr3J1vlk48jLOq1qP09H2XwYEfvIoXobrkvFy0MViWTU7GHxajs0tRkFJ4Z1TBJfhd4Fa4Jz0bZHE1KBnSRPWkM=
+	t=1776691487; cv=none; b=V+mq9JpksigVtuFOc9GEne9nuY0nT5R3zlF+my8bkK8FBg41oUIX5Opv79AzvfzTLe1qE4QD03sZUgdni2HnRT1ubCw9+TPlOOPTCIYyR5paqu+ArqDFey2oK4UIqSmDnVyd6ihno0rd5myEZcwkWB68Q5Bdk/SH4qD34RTnkY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691486; c=relaxed/simple;
-	bh=3v6n7MmXkBR3OU97DEK37P+G6pgUa7wJFCvw8MF306A=;
+	s=arc-20240116; t=1776691487; c=relaxed/simple;
+	bh=mto+6jsYIVpuVH9PM596mhw/jjt5JOFdKFLGWGOxB3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BnaVm3fPAsAc1kWNZUqKuvBeHjqvm5rePzUNTzveN2NSCNsiqC16O89nCoqBBL2gy4HdJXZB6CiwJeWOaZt55T/N37+HOU6VE7pNlB7cf+1ydNAZSG8xN0xi7UN3oTo5JvxGZgVkMph4+rgWurrGHbUs345gDwJ9bjVAAjdsnlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FT7Xk2tm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sziT7hgXy+heaoZ/S82yKPpp4QCpi7JQZjmWi1gUljb3FsXbCkCLsbcxZUupCB24L300hZk8o8XW/h6I0Vf6M0yiVwEk0BnvT8M87PyJMvaVa9SKFzcWvh29YhDaWsES20UcRPyjYti3iQvzAvLzSdmlnaBlL29GUp4aYbax4HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q61Gqwhv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FT7Xk2tm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEEEC2BCB4;
-	Mon, 20 Apr 2026 13:24:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q61Gqwhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF5BC19425;
+	Mon, 20 Apr 2026 13:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691485;
-	bh=3v6n7MmXkBR3OU97DEK37P+G6pgUa7wJFCvw8MF306A=;
+	s=k20201202; t=1776691487;
+	bh=mto+6jsYIVpuVH9PM596mhw/jjt5JOFdKFLGWGOxB3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FT7Xk2tmpw2DUJeMBsWOU6Ivg8qifodr3ITye2djwnqPtnKXcPlyGQrFzgwcSmFAf
-	 eIqw1BwMHU/Ghmi0rFM+TkYA7I3/OOPY5vKJHvkDvSTvYa6zcZIXwiN70J0JOAbbyL
-	 1SWnYt2rhfSOrq4mE1HlGZDLADL9bO/d3N0RJ+6IIycV6NZnCvTekg39U2TSQ1kw6v
-	 Xkjaexiidnaf3BrcR3S1usB3Sm/FEd8cFA9/SuaRM8I8JdnwB8E8fAf4vEmKI9KXql
-	 J9geCgov0KhjCtk/r66bopjNaHTlHYA415pJm7sB8m0h4xYf3cwopA6fjLQlmunwn8
-	 Cl7Z/ElOQcfGQ==
+	b=Q61GqwhvRUDqYBCXHVQ7D+Kll2X58Hi6tu4fdYx+QfkbDimQTmHFj1YDhXBv125vh
+	 ERRVLS/o75NnQdZpHaA7qVdLeLN3lrGzAL3fK/Ey5NmyhqLo6/+ED98okOVGxRX1cd
+	 mLuk89ulJ3nbKecIW6rfEOxe0x+qiquSFMXyFmBrtdU3NIA04oQ5vNY3aFSRIop4hG
+	 wKXj0Rzs4/vP6RqBBRkntP4XM20SgFmVMnXqAClJWJEmqXKqiI13xL/Eir9XCAvpl5
+	 NX6a6Ehc3fZqk7Qxmh5DWXhRNzn+w0l/0bLnlh00D3Dmyx1r33VkgLnLWjsb+xUOYZ
+	 e5CMaNmcq38Ow==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jingkai Tan <contact@jingk.ai>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Dylan Eray <dylan.eray6@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ACPI: processor: idle: Add missing bounds check in flatten_lpi_states()
-Date: Mon, 20 Apr 2026 09:17:31 -0400
-Message-ID: <20260420132314.1023554-57-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] Bluetooth: btusb: Add Lite-On 04ca:3807 for MediaTek MT7921
+Date: Mon, 20 Apr 2026 09:17:32 -0400
+Message-ID: <20260420132314.1023554-58-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,389 +55,287 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingkai Tan <contact@jingk.ai>
+From: Dylan Eray <dylan.eray6@gmail.com>
 
-[ Upstream commit 638a95168fd53a911201681cd5e55c7965b20733 ]
+[ Upstream commit 67377cd38b89ce782ccdb83bda3f65a2def843cd ]
 
-The inner loop in flatten_lpi_states() that combines composite LPI
-states can increment flat_state_cnt multiple times within the loop.
+Add USB device ID (04ca:3807) for a Lite-On Wireless_Device containing
+a MediaTek MT7921 (MT7920) Bluetooth chipset found in Acer laptops.
 
-The condition that guards this (checks bounds against ACPI_PROCESSOR
-_MAX_POWER) occurs at the top of the outer loop. flat_state_cnt might
-exceed ACPI_PROCESSOR_MAX_POWER if it is incremented multiple times
-within the inner loop between outer loop iterations.
+Without this entry, btusb binds via the generic USB class-based wildcard
+match but never sets the BTUSB_MEDIATEK flag. This means btmtk never
+triggers firmware loading, and the driver sends a raw HCI Reset that
+the uninitialized chip cannot respond to, resulting in:
 
-Add a bounds check after the increment inside the inner loop so that
-it breaks out when flat_state_cnt reaches ACPI_PROCESSOR_MAX_POWER.
-The existing check in the outer loop will then handle the warning.
+  Bluetooth: hci0: Opcode 0x0c03 failed: -110
 
-Signed-off-by: Jingkai Tan <contact@jingk.ai>
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Link: https://patch.msgid.link/20260305213831.53985-1-contact@jingk.ai
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below:
+
+T:  Bus=03 Lev=01 Prnt=01 Port=09 Cnt=01 Dev#=5 Spd=480 MxCh=0
+P:  Vendor=04ca ProdID=3807 Rev=1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:  #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Dylan Eray <dylan.eray6@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-compile the full assessment.
+Now I have all the information needed for a complete analysis. Let me
+compile the findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: ACPI: processor: idle
-- **Action verb**: "Add missing" — clearly indicates a bug fix (missing
-  safety check)
-- **Summary**: Adds a bounds check in `flatten_lpi_states()` to prevent
-  array overflow
+**Step 1.1: Subject Line**
+- Subsystem: `Bluetooth: btusb:`
+- Action verb: "Add" (adding a USB device ID)
+- Summary: Adding USB device ID 04ca:3807 for Lite-On/MediaTek MT7921
+  Bluetooth adapter
 
-### Step 1.2: Tags
-- **Signed-off-by**: Jingkai Tan (author), Rafael J. Wysocki (ACPI
-  maintainer)
-- **Reviewed-by**: Sudeep Holla — the **original author of the LPI
-  code** (a36a7fecfe6071)
-- **Link**: patch.msgid.link/20260305213831.53985-1-contact@jingk.ai
-- No Fixes: tag (expected for commits under review)
-- No Cc: stable (expected)
+Record: [Bluetooth: btusb] [Add] [New USB device ID for existing
+MediaTek BT chipset]
 
-### Step 1.3: Commit Body
-The commit describes a clear out-of-bounds bug: the inner loop
-increments `flat_state_cnt` multiple times, but the bounds check only
-exists at the top of the outer loop. Between outer loop iterations, the
-counter can exceed `ACPI_PROCESSOR_MAX_POWER` (8), causing writes past
-the end of the `lpi_states[]` array.
+**Step 1.2: Tags**
+- Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de> (confirmed from
+  mailing list review)
+- Signed-off-by: Dylan Eray <dylan.eray6@gmail.com> (author)
+- Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  (Bluetooth maintainer)
+- No Fixes: tag, no Cc: stable — expected for the commits under review
 
-### Step 1.4: Hidden Bug Fix Detection
-Not hidden — this is explicitly labeled as a missing bounds check, which
-is a classic array overflow fix.
+Record: Reviewed by Paul Menzel, applied by Bluetooth subsystem
+maintainer Luiz Augusto von Dentz.
 
-**Record**: Clear bug fix adding missing bounds check to prevent out-of-
-bounds array write.
+**Step 1.3: Commit Body**
+The commit describes a clear, concrete bug: without this device ID
+entry, btusb binds via the generic USB class wildcard but never sets
+`BTUSB_MEDIATEK`, preventing firmware loading. The chip receives a raw
+HCI Reset it cannot handle, producing:
+`Bluetooth: hci0: Opcode 0x0c03 failed: -110`
+This means Bluetooth is completely non-functional on Acer laptops with
+this Lite-On adapter.
 
----
+Record: [Bug: Bluetooth completely broken on affected Acer laptops]
+[Symptom: HCI Reset fails with -110 timeout] [Root cause: missing
+device-specific flag prevents firmware loading]
+
+**Step 1.4: Hidden Bug Fix Detection**
+This is not disguised — it's a straightforward device ID addition that
+fixes a real hardware enablement issue.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files changed**: 1 (`drivers/acpi/processor_idle.c`)
-- **Lines added**: 2, removed: 0
-- **Function modified**: `flatten_lpi_states()`
-- **Scope**: Single-file, surgical 2-line fix
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/bluetooth/btusb.c`
+- +2 lines added, 0 lines removed
+- Only change is adding a new entry to the `quirks_table[]` array
 
-### Step 2.2: Code Flow Change
-The fix adds inside the inner `for` loop, immediately after
-`flat_state_cnt++` and `flpi++`:
+Record: [1 file, +2 lines] [quirks_table[] in btusb.c] [Trivial single-
+table addition]
 
-```c
-if (flat_state_cnt >= ACPI_PROCESSOR_MAX_POWER)
-    break;
-```
+**Step 2.2: Code Flow Change**
+Before: Device 04ca:3807 matches the generic USB class wildcard, btusb
+loads without `BTUSB_MEDIATEK` flag, firmware not loaded, chip cannot
+respond to HCI commands.
+After: Device 04ca:3807 matches the specific USB_DEVICE entry with
+`BTUSB_MEDIATEK | BTUSB_WIDEBAND_SPEECH` flags, btmtk firmware loading
+is triggered, Bluetooth works.
 
-**Before**: Inner loop could increment `flat_state_cnt` past
-`ACPI_PROCESSOR_MAX_POWER`, causing `flpi` to point past
-`pr->power.lpi_states[8]`, and subsequent calls to
-`combine_lpi_states()` and `stash_composite_state()` would write out-of-
-bounds.
+**Step 2.3: Bug Mechanism**
+Category: Hardware workaround / Device ID addition. The format is
+identical to dozens of surrounding entries in the same table.
 
-**After**: Inner loop breaks immediately when the limit is reached. The
-outer loop's existing check then handles the warning message.
-
-### Step 2.3: Bug Mechanism
-**Category**: Buffer overflow / out-of-bounds write
-
-The `lpi_states` array is declared as:
-
-```94:96:include/acpi/processor.h
-                struct acpi_processor_cx
-states[ACPI_PROCESSOR_MAX_POWER];
-                struct acpi_lpi_state
-lpi_states[ACPI_PROCESSOR_MAX_POWER];
-```
-
-Where `ACPI_PROCESSOR_MAX_POWER = 8`. The `composite_states` array in
-`acpi_lpi_states_array` is also bounded at 8 entries. Both arrays can be
-overflowed when the inner loop runs more times than expected.
-
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes. Mirrors the existing outer-loop bounds
-  check. Reviewed by the original code author.
-- **Minimal**: 2 lines, no unrelated changes.
-- **Regression risk**: Effectively zero. This only adds an early exit
-  when the array is full.
-
-**Record**: 2-line bounds check fix preventing out-of-bounds write into
-`lpi_states[]` and `composite_states[]` arrays. Severity: HIGH (memory
-corruption).
-
----
+**Step 2.4: Fix Quality**
+The fix is a 2-line addition to a static table, following the exact same
+pattern as all neighboring entries (e.g., 04ca:3804, 04ca:38e4).
+Obviously correct. Zero regression risk — only affects the specific USB
+VID/PID.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-From blame output, the buggy inner loop code was introduced by commit
-`a36a7fecfe6071` (Sudeep Holla, 2016-07-21), "ACPI / processor_idle: Add
-support for Low Power Idle(LPI) states". This is in the v4.8-rc1 era.
-The bug has existed since the code was first written — **present in all
-stable trees**.
+**Step 3.1: Blame**
+The neighboring entry `04ca:3804` was added in commit 59be4be82bd363
+"Bluetooth: btusb: Add new VID/PID 04ca/3804 for MT7922" by Chris Lu
+(2023-07-07). The MediaTek device ID section has been present and
+actively extended since at least 2023.
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present (expected).
+**Step 3.2: Fixes tag** — No Fixes: tag (expected). Not applicable.
 
-### Step 3.3: File History
-Recent refactoring by `e4c628e91c6ab` (Rafael, Aug 2025) changed
-`flat_state_cnt` from a static variable to a function parameter. The
-inner loop code itself is unchanged since 2016. The fix applies to the
-identical inner loop code in both old and new versions.
+**Step 3.3: File History**
+Recent btusb.c changes show a pattern of frequent device ID additions,
+which are standard for this file. The device ID 04ca:3807 is confirmed
+NOT yet in the 7.0 tree.
 
-### Step 3.4: Author
-Jingkai Tan is a new contributor. However, the fix was reviewed by
-Sudeep Holla (original code author, ARM maintainer) and applied by
-Rafael J. Wysocki (ACPI subsystem maintainer).
+**Step 3.4: Author**
+Dylan Eray appears to be an external contributor (Acer laptop user who
+encountered the bug). The patch was reviewed and applied by the
+Bluetooth subsystem maintainer Luiz Augusto von Dentz.
 
-### Step 3.5: Dependencies
-The fix references only `ACPI_PROCESSOR_MAX_POWER` and the existing loop
-variable `flat_state_cnt`, both of which exist in all kernel versions
-since v4.8. The only difference is:
-- **Mainline**: `flat_state_cnt` is a function parameter (after
-  e4c628e91c6ab)
-- **Stable trees**: `flat_state_cnt` is a static variable (same name,
-  same inner loop code)
+**Step 3.5: Dependencies**
+None. This is a standalone 2-line addition to a static array. The
+MediaTek MT7921/MT7922 support infrastructure (`btmtk.c`, `btmtk.h`,
+`BTUSB_MEDIATEK` flag) has been present in the kernel since well before
+v6.1.
 
-The patch will need a trivial context adjustment for the function
-signature in the hunk header, but the actual changed lines apply
-identically.
+## PHASE 4: MAILING LIST RESEARCH
 
-**Record**: Bug exists since v4.8 (2016). Fix is standalone, no
-prerequisites. Minor context adaptation needed for stable backport.
+**Step 4.1: Original Patch Discussion**
+Found via web search. The patch went through v1 -> v2. The v1 was
+submitted 2026-02-19 and reviewer Paul Menzel suggested adding USB
+device info output to the commit message. The v2 incorporated that
+feedback and received Paul Menzel's Reviewed-by. It was applied to
+bluetooth/bluetooth-next as commit 79e029818394.
 
----
+**Step 4.2: Reviewers**
+- Paul Menzel (reviewer) — confirmed reviewed the diff and said "The
+  diff looks good."
+- Luiz Augusto von Dentz (Bluetooth maintainer) — applied the patch
+- Sean Wang (MediaTek) was CC'd on the submission
 
-## PHASE 4: MAILING LIST INVESTIGATION
+**Step 4.3: Bug Report**
+The author IS the bug reporter — they discovered the issue on their Acer
+laptop. No syzbot or bugzilla, but a clear real-world user who can't use
+Bluetooth.
 
-### Step 4.1: Patch Discussion
-From the full mbox thread (7 messages):
-
-1. **v1** (Feb 15, 2026): Added 6 lines — bounds check BEFORE the
-   increment at the top of the inner loop, with duplicate warning
-   messages.
-2. **Rafael's review** (Mar 5): Confirmed "the issue addressed by this
-   patch appears to be genuine" but suggested checking after increment
-   and letting the outer loop handle warnings.
-3. **v2** (Mar 5): Simplified to 2 lines per Rafael's guidance.
-4. **Sudeep Holla** (Mar 6): Gave `Reviewed-by` — the original code
-   author endorsed the fix.
-5. **lihuisong** (Mar 9): Asked if the `!prev_level` (leaf) path also
-   needs the check.
-6. **Rafael** (Mar 9): Clarified the leaf path is covered by the
-   existing outer loop check (only one increment per iteration via
-   `continue`).
-7. **Rafael** (Mar 9): "Applied as 7.1 material, thanks!"
-
-### Step 4.2: Reviewers
-- Rafael J. Wysocki (ACPI maintainer) — reviewed both versions, applied
-  the patch
-- Sudeep Holla (original LPI code author) — gave Reviewed-by
-
-### Step 4.3: No syzbot or bug report — found by code inspection.
-
-### Step 4.4: Standalone single patch, not part of a series.
-
-### Step 4.5: No stable-specific discussion found.
-
-**Record**: Both the subsystem maintainer and original code author
-confirmed the bug is genuine and reviewed the fix. Patch went through
-v1->v2 with review refinements.
-
----
+**Step 4.4-4.5: Related Patches / Stable Discussion**
+No explicit stable nomination found. This is typical for device ID
+additions that are manually selected.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions Modified
-Only `flatten_lpi_states()`.
+**Step 5.1-5.4:** The change only affects the `quirks_table[]` static
+initializer in btusb.c. It adds a new USB device match entry. When USB
+enumeration encounters this VID/PID, it will now set `BTUSB_MEDIATEK |
+BTUSB_WIDEBAND_SPEECH` flags, causing the btmtk firmware loading path to
+be used. The MT7921 support code is confirmed present in `btmtk.c`,
+`btmtk.h`.
 
-### Step 5.2: Callers
-`flatten_lpi_states()` is called from `acpi_processor_get_lpi_info()`
-which processes ACPI LPI states during processor initialization. This
-runs during boot on ARM systems with ACPI LPI support.
-
-### Step 5.3: Impact
-The bug triggers when ACPI firmware defines composite LPI states whose
-combinations exceed 8 total. The `combine_lpi_states()` function is
-called for each combination of parent/child states. On systems with
-hierarchical power domains (common on ARM servers), the combinatorial
-explosion can exceed the array bounds.
-
-### Step 5.4: Reachability
-The code path is: boot → ACPI processor driver init →
-`acpi_processor_get_lpi_info()` → `flatten_lpi_states()`. This is
-reached on every ARM server with ACPI LPI support.
-
-**Record**: Called during boot on ARM ACPI systems. Trigger depends on
-firmware-defined LPI state counts.
-
----
+**Step 5.5:** There are ~70 existing `BTUSB_MEDIATEK` entries in this
+file. This follows an identical pattern.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable
-The buggy code from `a36a7fecfe6071` exists in ALL stable trees (v4.8+).
-Verified that stable trees 6.1.y and 6.6.y have changes to this file but
-the inner loop code is unchanged.
+**Step 6.1:** The MediaTek Bluetooth support (BTUSB_MEDIATEK, btmtk
+firmware loading) exists in all active stable trees. The
+`quirks_table[]` structure exists in all versions. The neighboring entry
+04ca:3804 was added in 2023 and is in older stable trees.
 
-### Step 6.2: Backport Complications
-Minor context conflict expected: the function signature in the hunk
-header differs between mainline (`unsigned int` return + parameter) and
-stable (`int` return + static variable). The actual lines changed
-(inside the inner loop) are identical. Trivial adaptation.
+**Step 6.2:** The patch will apply cleanly or with trivial context
+adjustment. The table area may have slightly different surrounding
+entries in older stable trees, but the insertion point (between
+04ca:3804 and 04ca:38e4) should be present.
 
-### Step 6.3: No related fixes already in stable for this bug.
+**Step 6.3:** No related fix already in stable for this specific device
+ID.
 
-**Record**: Bug present in all stable trees since v4.8. Trivial backport
-adaptation needed.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
----
+**Step 7.1:** Bluetooth is an IMPORTANT subsystem — widely used on
+laptops, IoT, and mobile devices. btusb.c is the primary USB Bluetooth
+driver.
 
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem
-ACPI processor idle — **IMPORTANT** criticality. Affects all ARM-based
-systems using ACPI LPI idle states (servers, embedded platforms).
-
-### Step 7.2: Activity
-Active subsystem with recent refactoring by Rafael.
-
----
+**Step 7.2:** btusb.c is actively maintained with frequent device ID
+additions.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-ARM ACPI systems with hierarchical LPI states (ARM servers, some
-embedded platforms). The bug is firmware-dependent — systems need enough
-LPI states to overflow the array.
+**Step 8.1:** Affected: Users of Acer laptops with the Lite-On 04ca:3807
+Bluetooth adapter.
 
-### Step 8.2: Trigger Conditions
-Triggered during boot when ACPI firmware defines composite LPI states
-exceeding `ACPI_PROCESSOR_MAX_POWER` (8) in combination. Cannot be
-triggered by unprivileged users, but affects boot stability.
+**Step 8.2:** Trigger: Every boot. Bluetooth is completely non-
+functional without this fix.
 
-### Step 8.3: Failure Mode Severity
-When triggered: **out-of-bounds write** to kernel memory beyond
-`lpi_states[8]` and `composite_states[8]`. This corrupts adjacent memory
-in `struct acpi_processor_power` and `struct acpi_lpi_states_array`.
-Consequences:
-- Memory corruption → undefined behavior
-- Potential kernel crash/oops
-- Silent data corruption of adjacent data structures
-- **Severity: HIGH**
+**Step 8.3:** Severity: HIGH — complete loss of Bluetooth functionality
+on affected hardware. Not a crash, but total feature loss.
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: Prevents memory corruption on ARM ACPI systems. Long-
-  standing bug since v4.8.
-- **Risk**: 2-line addition of a bounds check — effectively zero
-  regression risk.
-- **Ratio**: Very favorable for backporting.
-
----
+**Step 8.4:**
+- **Benefit:** HIGH — makes Bluetooth work on Acer laptops with this
+  chipset
+- **Risk:** VERY LOW — 2-line addition to a static table, only affects
+  devices with this specific VID/PID. Zero chance of regression to
+  existing devices.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
-**FOR backporting**:
-- Fixes a real out-of-bounds array write (memory corruption)
-- Bug exists since v4.8 (2016) — affects all stable trees
-- 2-line fix — minimal scope, zero regression risk
-- Reviewed by original code author (Sudeep Holla) and subsystem
-  maintainer (Rafael)
-- Both confirmed the bug is genuine
-- Obviously correct — mirrors the existing outer loop check
-
-**AGAINST backporting**:
-- No known user report of actually triggering this (found by code
-  inspection)
-- Needs trivial context adaptation for the function signature in stable
+**Evidence FOR:**
+- Classic device ID addition — explicitly listed as an exception that is
+  "almost always YES" for stable
+- 2-line change, zero regression risk
+- Fixes complete Bluetooth failure on real hardware (Acer laptops)
+- Reviewed by Paul Menzel, applied by Bluetooth maintainer
+- MediaTek MT7921 support infrastructure exists in all active stable
   trees
+- Follows identical pattern of dozens of existing entries
+- Standalone — no dependencies whatsoever
 
-**Unresolved**:
-- No way to know exact firmware configurations that trigger it, but the
-  code path is clearly reachable
+**Evidence AGAINST:**
+- None
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — reviewed by original author
-   and maintainer
-2. Fixes a real bug? **YES** — array out-of-bounds write
-3. Important issue? **YES** — memory corruption
-4. Small and contained? **YES** — 2 lines in one file
-5. No new features? **YES** — pure bounds check
-6. Can apply to stable? **YES** — with trivial context adaptation
+**Stable Rules Checklist:**
+1. Obviously correct? YES — identical to surrounding entries
+2. Fixes a real bug? YES — Bluetooth completely broken without it
+3. Important issue? YES — total hardware feature loss
+4. Small and contained? YES — 2 lines in 1 file
+5. No new features/APIs? CORRECT — just a device ID to an existing
+   driver
+6. Can apply to stable? YES — clean apply expected
 
-### Step 9.3: Exception Categories
-Not an exception category — this is a straightforward bug fix.
-
-### Step 9.4: Decision
-This is a textbook stable backport candidate: a small, obviously correct
-bounds check that prevents memory corruption, reviewed by the original
-code author.
-
----
+**Exception Category:** This is a USB device ID addition to an existing
+driver — an explicitly recognized exception for stable backporting.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Sudeep Holla, Signed-off-by Rafael
-  J. Wysocki, Link to lore
-- [Phase 2] Diff analysis: 2 lines added inside inner loop of
-  `flatten_lpi_states()`, adds bounds check after `flat_state_cnt++`
-- [Phase 2] Verified `ACPI_PROCESSOR_MAX_POWER = 8` at
-  `include/acpi/processor.h:24`, `lpi_states[ACPI_PROCESSOR_MAX_POWER]`
-  at line 96, `composite_states[ACPI_PROCESSOR_MAX_POWER]` at
-  `processor_idle.c:866`
-- [Phase 3] git blame: all inner loop lines from `a36a7fecfe6071`
-  (Sudeep Holla, 2016-07-21, v4.8-rc1 era)
-- [Phase 3] git describe --contains: confirmed commit is pre-v4.8-rc1
-- [Phase 3] e4c628e91c6ab refactored function signature (Aug 2025) but
-  inner loop code is unchanged
-- [Phase 3] Verified stable trees 6.1.y and 6.6.y have changes to file
-  but not to the inner loop
-- [Phase 4] b4 am retrieved full thread (7 messages), confirmed v1->v2
-  evolution
-- [Phase 4] Rafael's review of v1: "The issue addressed by this patch
-  appears to be genuine"
-- [Phase 4] Sudeep Holla (original code author): gave Reviewed-by on v2
-- [Phase 4] Rafael's response to lihuisong: confirmed leaf path is
-  already covered
-- [Phase 4] Rafael: "Applied as 7.1 material"
-- [Phase 5] `flatten_lpi_states()` called from
-  `acpi_processor_get_lpi_info()` during boot
-- [Phase 6] Bug present since v4.8 — all active stable trees affected
-- [Phase 6] Backport needs trivial context adaptation for function
-  signature
-- [Phase 8] Failure mode: out-of-bounds write past `lpi_states[8]` array
-  — memory corruption, severity HIGH
-- UNVERIFIED: Cannot confirm whether any specific ARM server firmware
-  actually produces enough composite states to trigger this; however,
-  the code path is clearly reachable and the bug mechanism is confirmed
-  by the original code author
+- [Phase 1] Parsed tags: Reviewed-by Paul Menzel, SOB by author and
+  maintainer
+- [Phase 2] Diff analysis: 2-line addition to `quirks_table[]`, adds
+  `USB_DEVICE(0x04ca, 0x3807)` with `BTUSB_MEDIATEK |
+  BTUSB_WIDEBAND_SPEECH`
+- [Phase 3] git blame: neighboring 04ca:3804 added in commit
+  59be4be82bd363 (2023-07-07), MediaTek support long-standing
+- [Phase 3] grep confirmed 04ca:3807 NOT yet in the 7.0 tree
+- [Phase 3] Confirmed MT7921/MT7922 firmware support present in btmtk.h
+  and btmtk.c
+- [Phase 4] Found v1 and v2 submissions on spinics.net mirror; v1
+  reviewed by Paul Menzel who requested USB device info, v2 incorporated
+  feedback
+- [Phase 4] Patch applied to bluetooth-next as commit 79e029818394 by
+  Luiz Augusto von Dentz
+- [Phase 5] BTUSB_MEDIATEK appears ~70 times in btusb.c — this is a
+  well-established pattern
+- [Phase 6] MediaTek support infrastructure confirmed present in all
+  stable trees
+- [Phase 8] Impact: Bluetooth completely non-functional without this fix
+  on affected Acer laptops
 
 **YES**
 
- drivers/acpi/processor_idle.c | 2 ++
+ drivers/bluetooth/btusb.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index f6c72e3a2be1b..d4753420ae0b7 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1068,6 +1068,8 @@ static unsigned int flatten_lpi_states(struct acpi_processor *pr,
- 				stash_composite_state(curr_level, flpi);
- 				flat_state_cnt++;
- 				flpi++;
-+				if (flat_state_cnt >= ACPI_PROCESSOR_MAX_POWER)
-+					break;
- 			}
- 		}
- 	}
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index aeba026bdb427..d07db8e3a79d5 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -707,6 +707,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x04ca, 0x3807), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.53.0
 
