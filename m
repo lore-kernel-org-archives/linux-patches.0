@@ -1,48 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E31C3A6B82;
-	Mon, 20 Apr 2026 13:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BEB3CE48F;
+	Mon, 20 Apr 2026 13:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691069; cv=none; b=apQiPQ0/BC0BlliiMY0YzkTXudUFe6CXAelD7PYc/4JcONIqWvjlqEucBktM79Bb/S86vNV+MZ5/63CyPELI3eUhgCNJ/tiKlbZ26WpfPD9ZEjwF/xqH+3vVfK3zC7mfvWW3AGzNyVfO1jNXaHCZf8A27TRQ8VXC9v3ExS+Ywpk=
+	t=1776691071; cv=none; b=ouszW+IXexEYePNVi2i62uU6nNzhJMhSjQMzPpz8P+FfEYBX2BiPTdNkNhsEG1rsvPQ/fMHT6L5p+fwSfOHI1ST8Mda2ni9i74DbFGIIdw0IETU8dv3+uxQoUdP5g9a4T0xGmfJbc+l+xt/xKa95OsztsXQwkLJeXONC4JD+n/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691069; c=relaxed/simple;
-	bh=f3xsyAIWxI4nn00HNYNNjBmimSPNBuKH8vBU5p8iJLA=;
+	s=arc-20240116; t=1776691071; c=relaxed/simple;
+	bh=D4gzbApaCmFCoqZH8AOrVXrd+GNGxB6eS1Wa4nuDa5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DV6xw5E4oyf1QGafEr8s1drVpaBb/tv9W2aOX2ABCYyGICsYiA6iq9/1QY0+UzzHXng1ocQjv9RE5urp8P3jJYcO0SyLmynRy/0zUMAc5AbA00oZJwa2AUA5Nl6POvyO1x4OuET7Fx6hxceffBSpu9mblHuMfFOb5xF9e+7FNa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HdAG88Nm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X2BrTp+vQI5LEn0GwxXncUeAieoYfarw8S9fMhqGPgj9mhxR/+YDukc7SCROb1rs1V2Pz3Na/akPgQzfXk/MvRme2Ba9P6upI2Iwm9NA09x7PnH/Um1VQgbQ19iQBUV22LggapE1Frp62GI8DNM1VbyaK7jwYLaUHf1to4jTpYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DpH8x8/q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HdAG88Nm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C7FC2BCB4;
-	Mon, 20 Apr 2026 13:17:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DpH8x8/q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EFCC2BCB4;
+	Mon, 20 Apr 2026 13:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691069;
-	bh=f3xsyAIWxI4nn00HNYNNjBmimSPNBuKH8vBU5p8iJLA=;
+	s=k20201202; t=1776691070;
+	bh=D4gzbApaCmFCoqZH8AOrVXrd+GNGxB6eS1Wa4nuDa5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HdAG88NmYH6GuyXj6dySNYWssxcVNOdzdhVyR+KpfwJc259LU5t5tWjs204yFJvRh
-	 y8rk/wdANibgQDkz4JRqA1NPX3WsDv6fHqsyMGpP+g/6wbL4b/YMQFihstQub8Ykyb
-	 DXO1FJFB4vfg+e45cBgqGddS9vXeMC1fG22Px0KppXDSRvK1vl7+GGkRxwqBE6N1ss
-	 tX4cgGVgC2VhT2a+oLBY971QEXvWJqpSUopzF1A/P8Yhoh4viDKkAE1FoQgBfBeBEB
-	 HKgGO0k49LpRap3DySWaPNHbpDDf5shFFtg47o5sRqXZQ0zDhuV9XG9JWbL//9OmLi
-	 eKUfzB4QNahhg==
+	b=DpH8x8/qgyZjDOfv3yPtBigz4IsvUJuLL4s1If0D2jG2FTMmLGP6CIdPdd6aRvLWB
+	 rnFo3jwOYmuWhhD/WjFUD1w/Hbs9wGOXk2XtFjyDfZoQvQWrYMg/WIoPGZX6YpR9wk
+	 WG/9QZcxxXh4MlBZOiz3UIHWh5kd5b7hFBeCp4tAuCCbf/zeOFKTWPuxAclxneCVOM
+	 iFt7hvcRDNX/lSDQ2+ZXFLE4hwr5AGZt1AJHAwb3VB0Q83PX8AEQqqdgSZHD1t/Ge1
+	 sf0IukJY+AjKD8SLlphOVOna8MuxUeInRdmbAfOjK/lnaEJp4v26Tb+C0bjoMsSP46
+	 A+JUnEKEZeLag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Felix Fietkau <nbd@nbd.name>,
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	kvalo@kernel.org,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 7.0-6.18] wifi: mt76: abort ROC on chanctx changes
-Date: Mon, 20 Apr 2026 09:09:01 -0400
-Message-ID: <20260420131539.986432-75-sashal@kernel.org>
+	mingo@redhat.com,
+	acme@kernel.org,
+	tglx@linutronix.de,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-6.18] perf/amd/ibs: Limit ldlat->l3missonly dependency to Zen5
+Date: Mon, 20 Apr 2026 09:09:02 -0400
+Message-ID: <20260420131539.986432-76-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -55,348 +56,318 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit de62b24224ac1533c17b3d5bae77164a82ae2e49 ]
+[ Upstream commit 898138efc99096c3ee836fea439ba6da3cfafa4d ]
 
-mt76_change_chanctx() calls mt76_phy_update_channel() which switches
-the hardware channel. If ROC is active on the same phy, this switches
-away from the ROC channel and clears offchannel, but leaves ROC state
-intact. Mac80211 still thinks the phy is on the ROC channel.
+The ldlat dependency on l3missonly is specific to Zen 5; newer generations
+are not affected. This quirk is documented as an erratum in the following
+Revision Guide.
 
-Abort any active ROC before proceeding, matching the pattern already
-used in add, remove, assign, unassign, and switch chanctx functions.
+  Erratum: 1606 IBS (Instruction Based Sampling) OP Load Latency Filtering
+           May Capture Unwanted Samples When L3Miss Filtering is Disabled
 
-Link: https://patch.msgid.link/20260309060730.87840-5-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  Revision Guide for AMD Family 1Ah Models 00h-0Fh Processors,
+  Pub. 58251 Rev. 1.30 July 2025
+  https://bugzilla.kernel.org/attachment.cgi?id=309193
+
+Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://patch.msgid.link/20260216042216.1440-3-ravi.bangoria@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have all the information needed for a complete analysis. Let me
-compile the findings.
+Now I have all the information needed. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `wifi: mt76:` (MediaTek MT76 wireless driver)
-- Action: "abort" - stopping an ongoing operation to prevent state
-  inconsistency
-- Summary: Abort ROC (Remain on Channel) on channel context changes
-- Record: [wifi: mt76] [abort] [Abort active ROC when channel context
-  changes to prevent state desync]
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: [perf/amd/ibs] [Limit] Constrains the ldlat->l3missonly hardware
+workaround to only apply on Zen5 CPUs, per AMD Erratum 1606.
 
-**Step 1.2: Tags**
-- Link: `https://patch.msgid.link/20260309060730.87840-5-nbd@nbd.name`
-  (patch 5 in a series)
-- Signed-off-by: Felix Fietkau `<nbd@nbd.name>` (mt76 subsystem
-  maintainer/author)
-- No Fixes: tag (expected for autosel candidates)
-- No Reported-by (no external report; author found the issue)
-- Record: Author is the mt76 subsystem creator. Patch 5 of a series.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- Signed-off-by: Ravi Bangoria (author, AMD IBS expert at AMD)
+- Signed-off-by: Peter Zijlstra (Intel) (perf subsystem maintainer)
+- Acked-by: Namhyung Kim (perf co-maintainer)
+- Link: patch.msgid.link URL to lore thread
+- No Fixes: tag (expected for candidates)
+- No Cc: stable (expected for candidates)
 
-**Step 1.3: Commit Body Analysis**
-The commit describes a concrete bug mechanism:
-1. `mt76_change_chanctx()` calls `mt76_phy_update_channel()` which
-   switches the hardware channel
-2. If ROC is active on the same phy, the hardware switches away from ROC
-   channel
-3. `offchannel` is cleared (set to false), but ROC state (`roc_vif`,
-   `roc_link`, `roc_work` timer) remains intact
-4. Mac80211 still believes the phy is on the ROC channel
+Record: Strong reviewer credentials. The patch was authored by the AMD
+IBS subsystem expert, merged by the perf maintainer, and acked by the
+perf co-maintainer.
 
-Record: [State inconsistency between driver and mac80211 when chanctx
-changes during active ROC] [Symptom: mac80211 and hardware out of sync
-on channel state] [Bug introduced with channel.c in v6.14]
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+The commit describes AMD Erratum 1606: "IBS OP Load Latency Filtering
+May Capture Unwanted Samples When L3Miss Filtering is Disabled." This
+erratum is specific to AMD Family 1Ah Models 00h-0Fh (Zen5). The
+original ldlat code unconditionally forced `IBS_OP_L3MISSONLY` alongside
+`IBS_OP_LDLAT_EN`, but this workaround should only apply to Zen5.
 
-**Step 1.4: Hidden Bug Fix Detection**
-This is clearly a bug fix, not cleanup. The commit explicitly describes
-a state desynchronization between the hardware and the mac80211 layer.
+Record: Bug = erratum workaround applied too broadly. Symptom = on non-
+Zen5 hardware, ldlat filtering incorrectly forces L3-miss-only sampling.
+Root cause = original ldlat feature lacked CPU generation check.
 
----
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: This IS a bug fix. It corrects incorrect hardware configuration
+on non-Zen5 processors. The word "Limit" indicates constraining overly
+broad behavior to only the affected hardware.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- 1 file changed: `drivers/net/wireless/mediatek/mt76/channel.c`
-- +3 lines added (including blank line), 0 removed
-- Function modified: `mt76_change_chanctx()`
-- Scope: Single-function surgical fix
-- Record: [channel.c +3/-0] [mt76_change_chanctx modified] [Single-file
-  surgical fix]
+**Step 2.1: INVENTORY**
+- 1 file: `arch/x86/events/amd/ibs.c` (+4/-1, net +3 lines)
+- Function modified: `perf_ibs_init()`
+- Scope: single-file surgical fix
 
-**Step 2.2: Code Flow Change**
-Before: `mt76_change_chanctx()` directly proceeds to cancel mac_work and
-update channel.
-After: Before canceling mac_work, checks if ROC is active
-(`phy->roc_vif`) and aborts it via `mt76_abort_roc(phy)`.
+**Step 2.2: CODE FLOW CHANGE**
+Before: When ldlat event is configured, ALWAYS sets both
+`IBS_OP_L3MISSONLY | IBS_OP_LDLAT_EN`.
+After: Always sets `IBS_OP_LDLAT_EN`, but only sets `IBS_OP_L3MISSONLY`
+when `cpu_feature_enabled(X86_FEATURE_ZEN5)` is true.
 
-**Step 2.3: Bug Mechanism**
-Verified by reading `__mt76_set_channel()` at mac80211.c:1045:
-`phy->offchannel = offchannel;`. When called from
-`mt76_phy_update_channel()` with `offchannel = false`, it clears the
-offchannel flag. But the ROC state (`roc_vif`, `roc_link`, `roc_work`)
-remains set, causing a desynchronization.
+**Step 2.3: BUG MECHANISM**
+Category: Hardware workaround refinement. The Zen5 erratum 1606 required
+forcing l3missonly alongside ldlat, but this constraint was applied to
+all CPUs unconditionally. On post-Zen5 hardware, this forces unwanted
+filtering that limits the utility of ldlat profiling.
 
-Classification: **Logic/correctness fix** - missing cleanup of related
-state when switching channels.
-
-**Step 2.4: Fix Quality**
-- Obviously correct: follows the exact pattern established by all other
-  chanctx functions which abort scans
-- Minimal: 2 lines of actual logic
-- `mt76_abort_roc()` handles its own locking (takes `dev->mutex`
-  internally), so calling it before the existing `mutex_lock` is correct
-- Regression risk: extremely low - if ROC is not active (`roc_vif ==
-  NULL`), the check is a no-op
-
----
+**Step 2.4: FIX QUALITY**
+- Obviously correct: constrains documented erratum workaround to the
+  affected CPU generation
+- Minimal (3 actual lines of change)
+- Zero regression risk on Zen5 (behavior unchanged); corrects behavior
+  on all other generations
+- No red flags
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-From git blame, the buggy `mt76_change_chanctx()` was introduced by
-commit `82334623af0cd` ("wifi: mt76: add chanctx functions for multi-
-channel phy support") by Felix Fietkau on 2025-01-02. This commit is in
-v6.14.
+**Step 3.1: BLAME**
+The buggy line (`config |= IBS_OP_L3MISSONLY | IBS_OP_LDLAT_EN`) was
+introduced by commit d20610c19b4a22 ("perf/amd/ibs: Add support for OP
+Load Latency Filtering") by Ravi Bangoria on 2025-02-05. This was the
+initial ldlat feature addition, first appearing in v6.15-rc1.
 
-**Step 3.2: Fixes Tag**
-No Fixes: tag present. The implicit target is `82334623af0cd` which
-introduced `mt76_change_chanctx` without ROC abort handling.
+**Step 3.2: FIXES TAG**
+No explicit Fixes: tag. The implicit fix target is d20610c19b4a22. That
+commit appeared in v6.15-rc1, confirmed by `git tag --contains`.
 
-**Step 3.3: File History**
-The file has 7 commits since creation: the original, scanning code, ROC
-functions, offchannel link, a deref fix, abort scan/roc on hw restart,
-and relicensing. No conflicting changes near the modified area.
+**Step 3.3: FILE HISTORY**
+The file has active development from Ravi Bangoria. This is patch 2/5 in
+a series "[PATCH v2 0/5] perf/amd/ibs: Assorted fixes" but it is
+completely self-contained — it modifies a single line with no dependency
+on the other patches.
 
-**Step 3.4: Author**
-Felix Fietkau (nbd@nbd.name) is the creator and maintainer of the mt76
-driver. He wrote the original `channel.c` file and all major chanctx
-functions.
+**Step 3.4: AUTHOR**
+Ravi Bangoria is the primary AMD IBS developer with 10+ commits to this
+file. He works at AMD and is the domain expert for this code.
 
-**Step 3.5: Dependencies**
-The commit is patch 5 of a series (msgid `-5-`). However, the fix is
-**self-contained**:
-- `mt76_abort_roc()` already exists in the tree (since `a8f424c1287cc`,
-  in v6.14)
-- `phy->roc_vif` already exists in `mt76.h`
-- `mt76_abort_roc` is declared in `mt76.h` and accessible from
-  `channel.c`
-- No other patch from the series is needed for this fix to work
-  correctly.
+**Step 3.5: DEPENDENCIES**
+None. The patch only changes the conditional expression around setting
+`IBS_OP_L3MISSONLY`. The check `cpu_feature_enabled(X86_FEATURE_ZEN5)`
+already exists in the tree (used in `drivers/cpufreq/amd-pstate.c` and
+`drivers/platform/x86/amd/pmc/mp1_stb.c`). `X86_FEATURE_ZEN5` is defined
+in `arch/x86/include/asm/cpufeatures.h`.
 
----
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-## PHASE 4: MAILING LIST RESEARCH
+**Step 4.1: PATCH DISCUSSION**
+Found the original submission at spinics.net. The patch was v2 of a
+series. Namhyung Kim acked the entire series. No NAKs or concerns. Peter
+Zijlstra merged it on Feb 27, 2026 as commit
+898138efc99096c3ee836fea439ba6da3cfafa4d in tip/perf/core.
 
-**Step 4.1-4.5**: Lore.kernel.org is behind Anubis anti-bot protection
-and could not be accessed. The `b4 dig` also did not find a match for
-the message-id (possibly a future date issue). However, the patch URL is
-well-formed and the commit is by the subsystem maintainer, providing
-strong quality assurance.
+**Step 4.2: REVIEWERS**
+Peter Zijlstra (perf maintainer) committed it. Namhyung Kim (perf co-
+maintainer) acked it. Both appropriate reviewers for this subsystem.
 
-Record: [UNVERIFIED: Could not access lore/b4 due to anti-bot
-protection] [Author is mt76 maintainer which provides confidence in
-quality]
+**Step 4.3: BUG REPORT**
+The bug is based on AMD's published erratum 1606 in the Revision Guide
+for Family 1Ah processors. This is vendor-documented hardware behavior,
+not a user-reported crash.
 
----
+**Step 4.4: RELATED PATCHES**
+This is patch 2/5. The other patches fix unrelated issues (interrupt
+accounting, PhyAddrVal bit, NMI safety, race condition). None of the
+other patches are in the 7.0 tree. This patch is fully standalone.
+
+**Step 4.5: STABLE DISCUSSION**
+No specific stable discussion found. The series was labeled "Assorted
+fixes" and contains patches with "fix" characteristics.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions Modified**
-- `mt76_change_chanctx()` - modified to add ROC abort call
+**Step 5.1: KEY FUNCTIONS**
+Modified function: `perf_ibs_init()` — the event initialization function
+for IBS PMU events.
 
-**Step 5.2: Callers**
-`mt76_change_chanctx` is a mac80211 callback assigned via
-`ieee80211_ops`. It is called by mac80211 whenever the channel context
-configuration changes (width changes, radar detection changes). This is
-a normal operation path triggered by AP configuration, DFS, or
-regulatory changes.
+**Step 5.2: CALLERS**
+`perf_ibs_init()` is registered as the `.event_init` callback for both
+`perf_ibs_fetch` and `perf_ibs_op` PMU structures. It's called during
+perf event creation via the perf_event_open() syscall path.
 
-**Step 5.3: Callees**
-`mt76_abort_roc()` calls:
-1. `cancel_delayed_work_sync(&phy->roc_work)` - cancels the ROC timeout
-2. `mt76_roc_complete(phy)` under mutex - restores main channel, frees
-   offchannel link, notifies mac80211
+**Step 5.3-5.4: CALL CHAIN**
+The ldlat path is gated by `perf_ibs_ldlat_event()`, which checks
+`perf_ibs == &perf_ibs_op && (ibs_caps & IBS_CAPS_OPLDLAT)`. This means
+the code only runs on CPUs that advertise the ldlat capability. The path
+is reachable from userspace via perf_event_open().
 
-**Step 5.4: Call Chain**
-Userspace/regulatory -> mac80211 -> `mt76_change_chanctx` -> bug
-triggers if ROC active. This is reachable from normal WiFi operation
-(e.g., DFS, bandwidth changes during P2P).
-
-**Step 5.5: Similar Patterns**
-All 5 other chanctx functions (`add`, `remove`, `assign`, `unassign`,
-`switch`) already call `mt76_abort_scan()`. The fix adds the equivalent
-`mt76_abort_roc()` to the one function that was missing it.
-
----
+**Step 5.5: SIMILAR PATTERNS**
+`cpu_feature_enabled(X86_FEATURE_ZEN5)` is used in 2 other places in the
+kernel for Zen5-specific behavior, confirming this is an established
+pattern.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy Code in Stable Trees**
-- `channel.c` with `mt76_change_chanctx` was introduced in v6.14 (commit
-  `82334623af0cd`)
-- `mt76_abort_roc` function exists since v6.14 (commit `a8f424c1287cc`)
-- `mt76_abort_roc` is declared in `mt76.h` even in v6.14 (confirmed at
-  line 1586)
-- Bug affects: v6.14.y and later stable trees
+**Step 6.1: CODE EXISTS IN STABLE?**
+The ldlat feature (d20610c19b4a22) was introduced in v6.15-rc1. Only
+stable trees >= 6.15 contain this code. The 7.0 tree does contain the
+buggy code at line 359. Older stable trees (6.12.y, 6.6.y, 6.1.y, etc.)
+do NOT have this code.
 
-**Step 6.2: Backport Complications**
-The code in v6.14 matches exactly: `mt76_change_chanctx()` is identical
-to the pre-patch state in v7.0. The patch would apply cleanly. No
-forward-declaration issues since `mt76_abort_roc` is declared in
-`mt76.h`.
+**Step 6.2: BACKPORT COMPLICATIONS**
+The diff context matches the 7.0 tree exactly (verified by reading line
+359). Clean application expected.
 
-**Step 6.3: Related Fixes**
-No alternative fix for this specific bug exists in stable trees.
+**Step 6.3: RELATED FIXES IN STABLE**
+No related fixes found for this issue in any stable tree.
 
----
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-## PHASE 7: SUBSYSTEM CONTEXT
+**Step 7.1: SUBSYSTEM**
+Subsystem: perf/x86/amd (performance monitoring for AMD CPUs).
+Criticality: PERIPHERAL — affects AMD users who use IBS profiling.
+However, IBS is the primary hardware profiling mechanism on AMD, so it's
+important for AMD users who do performance analysis.
 
-**Step 7.1: Subsystem**
-- Subsystem: WiFi/wireless drivers (drivers/net/wireless/mediatek/mt76)
-- Criticality: IMPORTANT - mt76 is one of the most widely used WiFi
-  chipset drivers (MT7921, MT7922, MT7925, MT7996, etc.), found in many
-  laptops and routers
-
-**Step 7.2: Activity**
-Actively maintained by Felix Fietkau with recent commits in the channel
-management area. The multi-radio/chanctx support is relatively new
-(v6.14).
-
----
+**Step 7.2: ACTIVITY**
+Actively developed, with many recent commits from the author.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-All users of MediaTek mt76 WiFi chipsets who use P2P, scanning, or any
-ROC functionality while channel context changes occur.
+**Step 8.1: AFFECTED USERS**
+AMD CPU users on post-Zen5 hardware who use IBS ldlat profiling (`perf
+record -e ibs_op/ldlat=N/`). This is a specialized but real use case.
 
-**Step 8.2: Trigger Conditions**
-- Trigger: Channel context change (width change or radar detection)
-  while ROC is active
-- Likelihood: Moderate - occurs during DFS, bandwidth negotiation, or
-  regulatory changes that happen to coincide with P2P discovery or off-
-  channel management frames
-- Not directly triggered by unprivileged users (requires wireless state
-  machine interaction)
+**Step 8.2: TRIGGER CONDITIONS**
+Any use of ldlat filtering on non-Zen5 AMD hardware that supports the
+ldlat capability (IBS_CAPS_OPLDLAT). Easily triggered when the feature
+is used.
 
-**Step 8.3: Failure Mode**
-- Driver/mac80211 state desynchronization
-- ROC operations fail silently or behave unpredictably
-- P2P connection failures
-- Dangling ROC state may cause subsequent operations to fail or produce
-  unexpected behavior
-- Severity: **MEDIUM-HIGH** (functional failure, not crash, but can
-  break WiFi connectivity features)
+**Step 8.3: FAILURE MODE SEVERITY**
+Wrong profiling results — forces L3-miss-only sampling when user didn't
+request it, causing ldlat to only capture L3 cache misses instead of all
+loads meeting the latency threshold. Not a crash, security issue, or
+data corruption. Severity: LOW-MEDIUM.
 
-**Step 8.4: Risk-Benefit**
-- Benefit: Fixes real state inconsistency in a widely-used WiFi driver
-- Risk: Extremely low - 2 lines, guarded by `if (phy->roc_vif)` check,
-  calls well-tested existing function
-- Ratio: Very favorable
-
----
+**Step 8.4: RISK-BENEFIT RATIO**
+- Benefit: MEDIUM — corrects hardware configuration for ldlat profiling
+  on post-Zen5 hardware
+- Risk: VERY LOW — 3-line change, zero behavior change on Zen5,
+  obviously correct
+- Ratio: Favorable
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Compilation**
+**Evidence FOR backporting:**
+- Fixes a real bug: incorrect hardware configuration on non-Zen5
+  processors
+- Small and surgical: 3 lines, single file
+- Obviously correct: constrains documented erratum workaround to
+  affected hardware
+- Strong review: authored by subsystem expert, merged by perf
+  maintainer, acked by co-maintainer
+- Standalone: no dependencies on other patches
+- Hardware erratum workaround (exception category)
+- Clean application to 7.0 tree
 
-FOR backporting:
-- Fixes a real state desynchronization bug between driver and mac80211
-- 2-line fix, obviously correct, minimal risk
-- Written by the mt76 subsystem maintainer/author (Felix Fietkau)
-- Follows the established pattern used by all other chanctx functions
-- Self-contained, no dependencies on other patches
-- Applies cleanly to v6.14+ stable trees
-- mt76 is a widely-used WiFi driver
+**Evidence AGAINST backporting:**
+- Failure mode is not severe (wrong perf results, not
+  crash/corruption/security)
+- Post-Zen5 hardware with ldlat capability may not be widely available
+  yet
+- Specialized debugging tool (perf IBS profiling)
+- Only relevant for stable trees >= 6.15
 
-AGAINST backporting:
-- No crash/panic, no data corruption - the bug causes functional issues
-  (ROC state desync)
-- No user reports (no Reported-by tag)
-- Part of a larger series (other patches in series not evaluated)
+**Stable Rules Checklist:**
+1. Obviously correct? YES — constrains erratum to documented affected
+   hardware
+2. Fixes a real bug? YES — wrong hardware configuration on non-Zen5
+3. Important issue? MEDIUM — wrong profiling results for hardware users
+4. Small and contained? YES — 3 lines, 1 file
+5. No new features or APIs? YES — only constrains existing behavior
+6. Can apply to stable? YES — clean application to 7.0
 
-UNRESOLVED:
-- Could not access mailing list discussion due to anti-bot protection
-- Could not verify if other patches in the series are also being
-  considered
-
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** - trivial 2-line check, follows
-   existing pattern, by subsystem maintainer
-2. Fixes a real bug? **YES** - state desync between driver and mac80211
-   during ROC
-3. Important issue? **MEDIUM-HIGH** - WiFi functionality failure, not
-   crash
-4. Small and contained? **YES** - 2 lines in 1 file
-5. No new features? **YES** - purely a bug fix
-6. Can apply to stable? **YES** - clean apply to v6.14+
-
-**Step 9.3: Exception Categories**
-Not an exception category; this is a standard bug fix.
-
-**Step 9.4: Decision**
-The fix is small, surgical, obviously correct, written by the subsystem
-maintainer, and fixes a real state inconsistency bug in a widely-used
-WiFi driver. The risk is minimal and the benefit is clear.
-
----
+**Exception category:** Hardware quirk/workaround refinement
 
 ## Verification
 
-- [Phase 1] Parsed tags: Link to patch.msgid.link, SOB by Felix Fietkau
-  (mt76 maintainer)
-- [Phase 2] Diff analysis: +3 lines (2 logic + 1 blank) in
-  `mt76_change_chanctx()`, adds ROC abort guard
-- [Phase 2] Verified `__mt76_set_channel()` at mac80211.c:1045 sets
-  `phy->offchannel = offchannel`, confirming the bug mechanism
-- [Phase 3] git blame: `mt76_change_chanctx` introduced by commit
-  `82334623af0cd` (v6.14) by Felix Fietkau
-- [Phase 3] `mt76_abort_roc` introduced by `a8f424c1287cc` (v6.14),
-  declared in mt76.h line 1586
-- [Phase 3] Confirmed `b36d55610215a` (EXPORT_SYMBOL_GPL for abort_roc)
-  is NOT in v6.14 but not needed since abort_roc is declared in mt76.h
-- [Phase 3] Confirmed patch is self-contained: all referenced
-  functions/fields exist in v6.14
-- [Phase 4] UNVERIFIED: Could not access lore.kernel.org or b4 dig
-  results due to anti-bot protection
-- [Phase 5] Verified all 5 other chanctx functions call
-  `mt76_abort_scan()` - this fix adds the analogous ROC abort
-- [Phase 5] Verified `mt76_abort_roc` cancels work, locks mutex, calls
-  `mt76_roc_complete`, unlocks - proper cleanup
-- [Phase 6] `82334623af0cd` is in v6.14 (confirmed via `git merge-base
-  --is-ancestor`)
-- [Phase 6] v6.14 `mt76_change_chanctx` code is identical to pre-patch
-  v7.0 - clean apply
-- [Phase 8] Failure mode: state desynchronization causing ROC/P2P
-  failures, severity MEDIUM-HIGH
+- [Phase 1] Parsed tags: Signed-off-by from AMD author, perf maintainer;
+  Acked-by from perf co-maintainer
+- [Phase 2] Diff analysis: 3 lines changed in perf_ibs_init(), adds
+  cpu_feature_enabled(X86_FEATURE_ZEN5) guard around IBS_OP_L3MISSONLY
+- [Phase 3] git blame: buggy code introduced in d20610c19b4a22
+  (v6.15-rc1), Ravi Bangoria
+- [Phase 3] git tag --contains d20610c19b4a22: confirmed first in
+  v6.15-rc1, present in 7.0
+- [Phase 3] Author has 10+ commits to this file, is the AMD IBS domain
+  expert
+- [Phase 4] spinics.net: found original submission [PATCH v2 2/5],
+  Namhyung Kim acked entire series
+- [Phase 4] tip-bot2: merged as 898138efc99096c3ee836fea439ba6da3cfafa4d
+  on Feb 27 2026
+- [Phase 5] perf_ibs_init() is .event_init callback, reachable from
+  perf_event_open() syscall
+- [Phase 5] X86_FEATURE_ZEN5 defined in cpufeatures.h,
+  cpu_feature_enabled() used elsewhere for Zen5
+- [Phase 6] Verified line 359 in 7.0 tree matches pre-fix code; patch
+  applies cleanly
+- [Phase 6] ldlat code does NOT exist in stable trees < 6.15
+- [Phase 8] Failure mode: wrong perf sampling results (not
+  crash/security), severity LOW-MEDIUM
+- UNVERIFIED: Could not access lore.kernel.org or bugzilla.kernel.org
+  due to anti-bot measures; relied on spinics.net mirrors
+
+## Decision
+
+This is a small, obviously correct hardware erratum workaround fix from
+the subsystem expert. It constrains the Zen5-specific Erratum 1606
+workaround to only apply on Zen5 hardware, preventing incorrect IBS
+configuration on newer AMD generations. While the failure mode (wrong
+profiling results) is not severe, the fix carries essentially zero
+regression risk and falls into the "hardware quirk/workaround" exception
+category. It is standalone, applies cleanly, and was reviewed by the
+appropriate maintainers.
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/channel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/events/amd/ibs.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
-index 2b705bdb7993c..a6e45b8d63d6b 100644
---- a/drivers/net/wireless/mediatek/mt76/channel.c
-+++ b/drivers/net/wireless/mediatek/mt76/channel.c
-@@ -88,6 +88,9 @@ void mt76_change_chanctx(struct ieee80211_hw *hw,
- 			 IEEE80211_CHANCTX_CHANGE_RADAR)))
- 		return;
+diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
+index aca89f23d2e00..e35132c5448dd 100644
+--- a/arch/x86/events/amd/ibs.c
++++ b/arch/x86/events/amd/ibs.c
+@@ -356,7 +356,10 @@ static int perf_ibs_init(struct perf_event *event)
+ 		ldlat >>= 7;
  
-+	if (phy->roc_vif)
-+		mt76_abort_roc(phy);
+ 		config |= (ldlat - 1) << 59;
+-		config |= IBS_OP_L3MISSONLY | IBS_OP_LDLAT_EN;
 +
- 	cancel_delayed_work_sync(&phy->mac_work);
++		config |= IBS_OP_LDLAT_EN;
++		if (cpu_feature_enabled(X86_FEATURE_ZEN5))
++			config |= IBS_OP_L3MISSONLY;
+ 	}
  
- 	mutex_lock(&dev->mutex);
+ 	/*
 -- 
 2.53.0
 
