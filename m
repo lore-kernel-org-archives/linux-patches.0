@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82C22C11C6;
-	Mon, 20 Apr 2026 16:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39695330B14;
+	Mon, 20 Apr 2026 16:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701141; cv=none; b=CgTdu+uyg7HS5Rp9N2pOxhKhFr3JNY2/KOiEhWUQ8G4Cuz+XiwCG+ljNjjO1L254fAyPL/+06C5StBuEJrHnrICOYYpxSKt2rVg9msfx83HZJEYNSj4sU3XCNtNjifhqliD2U2+8Wzjs4ZgGXjpwsK+co8rXyLtd2WGzlOWJAmY=
+	t=1776701144; cv=none; b=dvwMsEo8oVa4fE2prpH2Cew/U0ug2/AiB3Tw0kPgmbFyEJM4NvH2a9qMTzumEEVw5tf2CIRoEDpqpQ61Fy8tAUSWqw2nMLOxrO6/5HkkJVtYdNWP/x7a9ktNY3WXEkpeqnbHctVzL8GHSes6Dr5og0YT9+2SinhcuuOD0LuKGx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701141; c=relaxed/simple;
-	bh=jg3Mfz/AptWgWELkvMqLzeSewOxB7RiLv3vC/oCNwjI=;
+	s=arc-20240116; t=1776701144; c=relaxed/simple;
+	bh=FXOJPDU0g5+tMs52Y8u+OgU7PoL92FliyQlBwXwH0XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K04XC9zZotp4Y/q8aFt+6SqfO39ULtsiuapP8VqJQLit2NrILnyojxOwIsn8gLILlunwp8b6mCS6YFEO2DV+Jh+T/CR9I5Kw8yKppnBmGVC893tdhlVuWGmetZW0waB6Qn3Cs3eqx0pkVqslB2ip9wPjJPbpxoCR3QzIgtKEmsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LogmWJNL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cY/1+h2uUeBGsatKbgl8SuSebc+j3mG+gDoJrnQRXHF1tBxNf7ReHHzACbmtpL2Y7pAIEF2dF1k9cs53YHFR1wNUhBlBvonWw3SACr2Wk1XvhZhgdeyEM+I4FafG1UrZqfkQ9SYfMxw66zDOeIBCNCGxHD7tyUC8Tnr2HEnjkYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4e/NnFn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LogmWJNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41341C19425;
-	Mon, 20 Apr 2026 16:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4e/NnFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58F1C19425;
+	Mon, 20 Apr 2026 16:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701141;
-	bh=jg3Mfz/AptWgWELkvMqLzeSewOxB7RiLv3vC/oCNwjI=;
+	s=korg; t=1776701144;
+	bh=FXOJPDU0g5+tMs52Y8u+OgU7PoL92FliyQlBwXwH0XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LogmWJNL54B2btEthUoDWecWRvy/Z+3ZgYOoPxkahJC/qDmHwBtIlBHJwX4oDJ8s/
-	 LPcZwSDPVezEO7PGdrstYV0imMtAAicvSzNgZw8yfPJqxzpAQQ41YpofC/GFQ3dA4Z
-	 oCenRECmBi1nvVADz2rYD54wZ2F+bd512j2OhTGo=
+	b=i4e/NnFnWmLsR5wxjRvC4pJEA/hdgdWE7uioOoR0eOWKkbMkoTdYkinWDuZSYj+w4
+	 abLQvvxHZY0uc2BoG4RV9hT8HiuT68pQdlckaLaLFpEmz1/sFlfBZOuB1eIhM7YESt
+	 ukH5oWWQZsqN+21fRxLW2FpyTy5aNcHxLRNdv/iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 6.18 197/198] dma-debug: Allow multiple invocations of overlapping entries
-Date: Mon, 20 Apr 2026 17:42:56 +0200
-Message-ID: <20260420153942.709649035@linuxfoundation.org>
+Subject: [PATCH 6.18 198/198] dma-mapping: handle DMA_ATTR_CPU_CACHE_CLEAN in trace output
+Date: Mon, 20 Apr 2026 17:42:57 +0200
+Message-ID: <20260420153942.744563698@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,95 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-commit eca58535b154e6951327319afda94ac80eae7dc3 upstream.
+commit 6f45b1604cf43945ef472ae4ef30354025307c19 upstream.
 
-Repeated DMA mappings with DMA_ATTR_CPU_CACHE_CLEAN trigger the
-following splat. This prevents using the attribute in cases where a DMA
-region is shared and reused more than seven times.
-
- ------------[ cut here ]------------
- DMA-API: exceeded 7 overlapping mappings of cacheline 0x000000000438c440
- WARNING: kernel/dma/debug.c:467 at add_dma_entry+0x219/0x280, CPU#4: ibv_rc_pingpong/1644
- Modules linked in: xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat nf_nat xt_addrtype br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay mlx5_fwctl zram zsmalloc mlx5_ib fuse rpcrdma rdma_ucm ib_uverbs ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_core ib_core
- CPU: 4 UID: 2733 PID: 1644 Comm: ibv_rc_pingpong Not tainted 6.19.0+ #129 PREEMPT
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
- RIP: 0010:add_dma_entry+0x221/0x280
- Code: c0 0f 84 f2 fe ff ff 83 e8 01 89 05 6d 99 11 01 e9 e4 fe ff ff 0f 8e 1f ff ff ff 48 8d 3d 07 ef 2d 01 be 07 00 00 00 48 89 e2 <67> 48 0f b9 3a e9 06 ff ff ff 48 c7 c7 98 05 2b 82 c6 05 72 92 28
- RSP: 0018:ff1100010e657970 EFLAGS: 00010002
- RAX: 0000000000000007 RBX: ff1100010234eb00 RCX: 0000000000000000
- RDX: ff1100010e657970 RSI: 0000000000000007 RDI: ffffffff82678660
- RBP: 000000000438c440 R08: 0000000000000228 R09: 0000000000000000
- R10: 00000000000001be R11: 000000000000089d R12: 0000000000000800
- R13: 00000000ffffffef R14: 0000000000000202 R15: ff1100010234eb00
- FS:  00007fb15f3f6740(0000) GS:ff110008dcc19000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fb15f32d3a0 CR3: 0000000116f59001 CR4: 0000000000373eb0
- Call Trace:
-  <TASK>
-  debug_dma_map_sg+0x1b4/0x390
-  __dma_map_sg_attrs+0x6d/0x1a0
-  dma_map_sgtable+0x19/0x30
-  ib_umem_get+0x284/0x3b0 [ib_uverbs]
-  mlx5_ib_reg_user_mr+0x68/0x2a0 [mlx5_ib]
-  ib_uverbs_reg_mr+0x17f/0x2a0 [ib_uverbs]
-  ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0xc2/0x130 [ib_uverbs]
-  ib_uverbs_cmd_verbs+0xa0b/0xae0 [ib_uverbs]
-  ? ib_uverbs_handler_UVERBS_METHOD_QUERY_PORT_SPEED+0xe0/0xe0 [ib_uverbs]
-  ? mmap_region+0x7a/0xb0
-  ? do_mmap+0x3b8/0x5c0
-  ib_uverbs_ioctl+0xa7/0x110 [ib_uverbs]
-  __x64_sys_ioctl+0x14f/0x8b0
-  ? ksys_mmap_pgoff+0xc5/0x190
-  do_syscall_64+0x8c/0xbf0
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
- RIP: 0033:0x7fb15f5e4eed
- Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
- RSP: 002b:00007ffe09a5c540 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
- RAX: ffffffffffffffda RBX: 00007ffe09a5c5d0 RCX: 00007fb15f5e4eed
- RDX: 00007ffe09a5c5f0 RSI: 00000000c0181b01 RDI: 0000000000000003
- RBP: 00007ffe09a5c590 R08: 0000000000000028 R09: 00007ffe09a5c794
- R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffe09a5c794
- R13: 000000000000000c R14: 0000000025a49170 R15: 000000000000000c
-  </TASK>
- ---[ end trace 0000000000000000 ]---
+Tracing prints decoded DMA attribute flags, but it does not yet
+include the recently added DMA_ATTR_CPU_CACHE_CLEAN. Add support
+for decoding and displaying this attribute in the trace output.
 
 Fixes: 61868dc55a11 ("dma-mapping: add DMA_ATTR_CPU_CACHE_CLEAN")
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260316-dma-debug-overlap-v3-1-1dde90a7f08b@nvidia.com
+Link: https://lore.kernel.org/r/20260316-dma-debug-overlap-v3-2-1dde90a7f08b@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/debug.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/trace/events/dma.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -453,7 +453,7 @@ static int active_cacheline_set_overlap(
- 	return overlap;
- }
+--- a/include/trace/events/dma.h
++++ b/include/trace/events/dma.h
+@@ -32,7 +32,8 @@ TRACE_DEFINE_ENUM(DMA_NONE);
+ 		{ DMA_ATTR_ALLOC_SINGLE_PAGES, "ALLOC_SINGLE_PAGES" }, \
+ 		{ DMA_ATTR_NO_WARN, "NO_WARN" }, \
+ 		{ DMA_ATTR_PRIVILEGED, "PRIVILEGED" }, \
+-		{ DMA_ATTR_MMIO, "MMIO" })
++		{ DMA_ATTR_MMIO, "MMIO" }, \
++		{ DMA_ATTR_CPU_CACHE_CLEAN, "CACHE_CLEAN" })
  
--static void active_cacheline_inc_overlap(phys_addr_t cln)
-+static void active_cacheline_inc_overlap(phys_addr_t cln, bool is_cache_clean)
- {
- 	int overlap = active_cacheline_read_overlap(cln);
- 
-@@ -462,7 +462,7 @@ static void active_cacheline_inc_overlap
- 	/* If we overflowed the overlap counter then we're potentially
- 	 * leaking dma-mappings.
- 	 */
--	WARN_ONCE(overlap > ACTIVE_CACHELINE_MAX_OVERLAP,
-+	WARN_ONCE(!is_cache_clean && overlap > ACTIVE_CACHELINE_MAX_OVERLAP,
- 		  pr_fmt("exceeded %d overlapping mappings of cacheline %pa\n"),
- 		  ACTIVE_CACHELINE_MAX_OVERLAP, &cln);
- }
-@@ -495,7 +495,7 @@ static int active_cacheline_insert(struc
- 	if (rc == -EEXIST) {
- 		struct dma_debug_entry *existing;
- 
--		active_cacheline_inc_overlap(cln);
-+		active_cacheline_inc_overlap(cln, entry->is_cache_clean);
- 		existing = radix_tree_lookup(&dma_active_cacheline, cln);
- 		/* A lookup failure here after we got -EEXIST is unexpected. */
- 		WARN_ON(!existing);
+ DECLARE_EVENT_CLASS(dma_map,
+ 	TP_PROTO(struct device *dev, phys_addr_t phys_addr, dma_addr_t dma_addr,
 
 
