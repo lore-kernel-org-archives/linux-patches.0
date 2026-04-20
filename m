@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140BD3264F1;
-	Mon, 20 Apr 2026 16:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952FB3264F1;
+	Mon, 20 Apr 2026 16:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701284; cv=none; b=o3ikZ1oDIhKDUHdBV5ar5B8lFMrY1o4AgGh2oV74M3eTq24XyfE62P7gqX14DtREnGOFLiM5SSsMUu/QwYO058JrMd81dI8Uy90sgW643rNtswjvk7mEZoEnN3GmRGXKldVVqdWk1/BDzavL02LPR7LWFLqOLDz25yXdNd5xUy4=
+	t=1776701286; cv=none; b=QlsRmqcbiNGmKGUmFbI1IlDnrZiGy+XjEZgk5IuZl0nkIkmKfsGZygDLHmVw7TAtSY2oh8MNWjhYQX4tEl8v7IvIdo6rjWrboHFtfm3SA22VfGSTWYIEGTqEBuLhBrNQf/j7JFsRvbZgfB+zM/MmhNRsA0MIwVK1asvFV1txRG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701284; c=relaxed/simple;
-	bh=tjlqBejakTbcgR4B5gF5n6QX0KmlmaI1A+52sLQQYv4=;
+	s=arc-20240116; t=1776701286; c=relaxed/simple;
+	bh=+zhpmhlkNpZzKX7+o6qoYP7DOQw3L74YBTt+RWyWmmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qzh7mpE8QA9CwM6rTagE/p2oGvxB1OeetWabKkO6z82xyuLSNMvfY02TmyC4GalRRUoPYoyTKxJg3A0e7uSzOy8Sydc8y0E78AcLOiutqa4xKnxP7VM9jfC154LiA64TCxyooyzKJHVyBWbt23pXCDxR5h984Bmni/mqHuYZlDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9UH4nX3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhdNAkmFi8yUsPdqSACbaa0uSwzvJYa8LB+RLHOjN/hmHnhgN4wbgFj2UpvYyvcWfmFari69raxCPEdhYoWB3fOMJl0zgAtayow9o0l3iZYaMODRae5bSHEvcO+lDh4d1ekhUj0p86C8EKpZkwSvKLvbbLP1H9C4QnvVoqmtY1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qio5/IGI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9UH4nX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBC6C19425;
-	Mon, 20 Apr 2026 16:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qio5/IGI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF55C19425;
+	Mon, 20 Apr 2026 16:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701284;
-	bh=tjlqBejakTbcgR4B5gF5n6QX0KmlmaI1A+52sLQQYv4=;
+	s=korg; t=1776701286;
+	bh=+zhpmhlkNpZzKX7+o6qoYP7DOQw3L74YBTt+RWyWmmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9UH4nX3d9AoZauy4MOHBjEFaes6ZMRUpJgmc5r/31lgX0aBNULhdszVlF9Okj6JT
-	 xmzYgURcl5LQe4fI1Ql66oQ52RHREdjV/1Z6ZGCrXZl2/tGDf5KJ4FackQx2PC6Ct2
-	 o+6RQ7uoFepaz/7ez66Nb2FM28qC3D4f+/VhjXr8=
+	b=qio5/IGIaGcxLggj0T0k9CTRSS79qqM6d3Ovy1Rl5ULvRBL2ACC3QtimFFfNQ7Bwe
+	 C+Tv2h7GWW+u/KM+mi2hF0tDGst0aFhfwW5NN1KC49He4sFHc8GXBWGY2ZsZaBSsSV
+	 QUY2L5L0lOurFrEPLLfglXR+uD22CdGG+euTIhrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/162] drm/vc4: Fix a memory leak in hang state error path
-Date: Mon, 20 Apr 2026 17:41:18 +0200
-Message-ID: <20260420153928.695375033@linuxfoundation.org>
+Subject: [PATCH 6.12 055/162] nfc: s3fwrn5: allocate rx skb before consuming bytes
+Date: Mon, 20 Apr 2026 17:41:27 +0200
+Message-ID: <20260420153929.028875853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -45,76 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 9525d169e5fd481538cf8c663cc5839e54f2e481 ]
+[ Upstream commit 5c14a19d5b1645cce1cb1252833d70b23635b632 ]
 
-When vc4_save_hang_state() encounters an early return condition, it
-returns without freeing the previously allocated `kernel_state`,
-leaking memory.
+s3fwrn82_uart_read() reports the number of accepted bytes to the serdev
+core. The current code consumes bytes into recv_skb and may already
+deliver a complete frame before allocating a fresh receive buffer.
 
-Add the missing kfree() calls by consolidating the early return paths
-into a single place.
+If that alloc_skb() fails, the callback returns 0 even though it has
+already consumed bytes, and it leaves recv_skb as NULL for the next
+receive callback. That breaks the receive_buf() accounting contract and
+can also lead to a NULL dereference on the next skb_put_u8().
 
-Fixes: 214613656b51 ("drm/vc4: Add an interface for capturing the GPU state after a hang.")
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-3-92defc940a29@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Allocate the receive skb lazily before consuming the next byte instead.
+If allocation fails, return the number of bytes already accepted.
+
+Fixes: 3f52c2cb7e3a ("nfc: s3fwrn5: Support a UART interface")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260402042148.65236-1-pengpeng@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_gem.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/nfc/s3fwrn5/uart.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index 373d310c7b6a5..62d19601ef356 100644
---- a/drivers/gpu/drm/vc4/vc4_gem.c
-+++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -169,10 +169,8 @@ vc4_save_hang_state(struct drm_device *dev)
- 	spin_lock_irqsave(&vc4->job_lock, irqflags);
- 	exec[0] = vc4_first_bin_job(vc4);
- 	exec[1] = vc4_first_render_job(vc4);
--	if (!exec[0] && !exec[1]) {
--		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
--		return;
--	}
-+	if (!exec[0] && !exec[1])
-+		goto err_free_state;
+diff --git a/drivers/nfc/s3fwrn5/uart.c b/drivers/nfc/s3fwrn5/uart.c
+index 9c09c10c2a464..4ee481bd7e965 100644
+--- a/drivers/nfc/s3fwrn5/uart.c
++++ b/drivers/nfc/s3fwrn5/uart.c
+@@ -58,6 +58,12 @@ static size_t s3fwrn82_uart_read(struct serdev_device *serdev,
+ 	size_t i;
  
- 	/* Get the bos from both binner and renderer into hang state. */
- 	state->bo_count = 0;
-@@ -189,10 +187,8 @@ vc4_save_hang_state(struct drm_device *dev)
- 	kernel_state->bo = kcalloc(state->bo_count,
- 				   sizeof(*kernel_state->bo), GFP_ATOMIC);
+ 	for (i = 0; i < count; i++) {
++		if (!phy->recv_skb) {
++			phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
++			if (!phy->recv_skb)
++				return i;
++		}
++
+ 		skb_put_u8(phy->recv_skb, *data++);
  
--	if (!kernel_state->bo) {
--		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
--		return;
--	}
-+	if (!kernel_state->bo)
-+		goto err_free_state;
+ 		if (phy->recv_skb->len < S3FWRN82_NCI_HEADER)
+@@ -69,9 +75,7 @@ static size_t s3fwrn82_uart_read(struct serdev_device *serdev,
  
- 	k = 0;
- 	for (i = 0; i < 2; i++) {
-@@ -284,6 +280,12 @@ vc4_save_hang_state(struct drm_device *dev)
- 		vc4->hang_state = kernel_state;
- 		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+ 		s3fwrn5_recv_frame(phy->common.ndev, phy->recv_skb,
+ 				   phy->common.mode);
+-		phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
+-		if (!phy->recv_skb)
+-			return 0;
++		phy->recv_skb = NULL;
  	}
-+
-+	return;
-+
-+err_free_state:
-+	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
-+	kfree(kernel_state);
- }
  
- static void
+ 	return i;
 -- 
 2.53.0
 
