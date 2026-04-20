@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEDB33F5A9;
-	Mon, 20 Apr 2026 16:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150C93431F2;
+	Mon, 20 Apr 2026 16:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701442; cv=none; b=mAh+SaiGkMUUcV4L9EalrKpRcF9E9D2idtONymxF9Vkp7hjRd9HtPGlWRoMj4he1bCAQoHwakIj7YmpiPU43qUyhKT64BGDU75kX1F34B/Yasm+lBw90GrH/AP4vGpLiAJ+s7S8Muz1Lmvw+XWEapWVUyLc63gSCQdu8nkVYG/U=
+	t=1776701445; cv=none; b=MWwHHWraQfrkg1uZi0tW+DBxiq4ZjbZKlcwDlo/yEiCwjZqsGTfmwHiWiYmNencT0hTUApD93Ck61IWUKLzQZ4uwC8g7+rGrUQyayj8xxRUquM2gCe8VBDW/uXpZLHgq4QBt16JgsYkwzAdPg4JSTOME3lX0hB6ZZztWET2P5rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701442; c=relaxed/simple;
-	bh=FC3AlroZ5/YLgQ2iDi2VSauq8PzTH7U3OR3OwVcIzfM=;
+	s=arc-20240116; t=1776701445; c=relaxed/simple;
+	bh=FH8vNfkR1jt5bZzVwac9b32Ak2gu2xJZhIN4VcPP79Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zd+/FaWzahlWt3hEUcKh1ciYYY0nO+OdWoqIVigEFELVSwK4NgghTrio3XU9+v7BJPZ0JKjIiAe+ds0PlH37j0haIV3QLcmMtvv5F84nuo+mC3bxp2QXBrRq/JG/NgS+VeHgMu5b5zTvw0oXe281eQN26bp04xAFagWi+lHMywQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9V22zVl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LxrchVm1LJX9A8ywKAjNbc1C2UHyNSwYey7LZZKVtk+KEQR4PDkjKtzisB9qvVnkgJaa7XhDTWO4ynEah718O2Xeab362CGkuV7iDJmILjK2QgrdhgiBq0L2eviiZVe1XX/OS3WFIpyeK3f6OaD9LkupCLxIsv0CqNTSEoZfuIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogUPinOS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9V22zVl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077F4C19425;
-	Mon, 20 Apr 2026 16:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogUPinOS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A38C19425;
+	Mon, 20 Apr 2026 16:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701442;
-	bh=FC3AlroZ5/YLgQ2iDi2VSauq8PzTH7U3OR3OwVcIzfM=;
+	s=korg; t=1776701444;
+	bh=FH8vNfkR1jt5bZzVwac9b32Ak2gu2xJZhIN4VcPP79Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m9V22zVlGr06SFI6vKlWYMHf+DGUaTRguVWp0kT0JWLWOA0YgjdNaV2zT5w5G2ewg
-	 8xjRo2ekf1UT6tl2cvapsteMfty9CrLxXKUjN32SSIpjXi4tMUeccu/lrsewkVAXeB
-	 LwwpUOprWSCkZUco1ZMITBcA/LkQTFJ9aIUZgl0A=
+	b=ogUPinOSfBsGr5l1/hP0DmX8cMbrEZiwPit1xKntkHbAI/pQZ9MSX1+aH6/D+W8N3
+	 0AC/GXVvwQyHkmK7V+2Fh4O+gWl4ysH8Eo1zm+NcH+qbP8OFRhDoY5Yc+SOWUihQWg
+	 X+gqUm+rsW7gfQ6tcsCT6GdVZEe9gGx5ZPznav4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Michael Zimmermann <sigmaepsilon92@gmail.com>
-Subject: [PATCH 6.12 114/162] usb: gadget: f_hid: dont call cdev_init while cdev in use
-Date: Mon, 20 Apr 2026 17:42:26 +0200
-Message-ID: <20260420153931.170140100@linuxfoundation.org>
+	stable@kernel.org,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.12 115/162] usb: port: add delay after usb_hub_set_port_power()
+Date: Mon, 20 Apr 2026 17:42:27 +0200
+Message-ID: <20260420153931.207632186@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -50,72 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Zimmermann <sigmaepsilon92@gmail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 81ebd43cc0d6d106ce7b6ccbf7b5e40ca7f5503d upstream.
+commit b84cc80610a8ce036deb987f056ce3196ead7f1e upstream.
 
-When calling unbind, then bind again, cdev_init reinitialized the cdev,
-even though there may still be references to it. That's the case when
-the /dev/hidg* device is still opened. This obviously unsafe behavior
-like oopes.
+When a port is disabled, an attached device will be disconnected.  This
+causes a port-status-change event, which will race with hub autosuspend
+(if the disabled port was the only connected port on its hub), causing
+an immediate resume and a second autosuspend.  Both of these can be
+avoided by adding a short delay after the call to
+usb_hub_set_port_power().
 
-This fixes this by using cdev_alloc to put the cdev on the heap. That
-way, we can simply allocate a new one in hidg_bind.
+Below log shows what is happening:
 
-Closes: https://lore.kernel.org/linux-usb/CAN9vWDKZn0Ts5JyV2_xcAmbnBEi0znMLg_USMFrShRryXrgWGQ@mail.gmail.com/T/#m2cb0dba3633b67b2a679c98499508267d1508881
-Cc: stable <stable@kernel.org>
-Signed-off-by: Michael Zimmermann <sigmaepsilon92@gmail.com>
-Link: https://patch.msgid.link/20260327192209.59945-1-sigmaepsilon92@gmail.com
+$ echo 1 > usb1-port1/disable
+[   37.958239] usb 1-1: USB disconnect, device number 2
+[   37.964101] usb 1-1: unregistering device
+[   37.970070] hub 1-0:1.0: hub_suspend
+[   37.971305] hub 1-0:1.0: state 7 ports 1 chg 0000 evt 0002
+[   37.974412] usb usb1: bus auto-suspend, wakeup 1
+[   37.988175] usb usb1: suspend raced with wakeup event         <---
+[   37.993947] usb usb1: usb auto-resume
+[   37.998401] hub 1-0:1.0: hub_resume
+[   38.105688] usb usb1-port1: status 0000, change 0000, 12 Mb/s
+[   38.112399] hub 1-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   38.118645] hub 1-0:1.0: hub_suspend
+[   38.122963] usb usb1: bus auto-suspend, wakeup 1
+[   38.200368] usb usb1: usb wakeup-resume
+[   38.204982] usb usb1: usb auto-resume
+[   38.209376] hub 1-0:1.0: hub_resume
+[   38.213676] usb usb1-port1: status 0101 change 0001
+[   38.321552] hub 1-0:1.0: state 7 ports 1 chg 0002 evt 0000
+[   38.327978] usb usb1-port1: status 0101, change 0000, 12 Mb/s
+[   38.457429] usb 1-1: new high-speed USB device number 3 using ci_hdrc
+
+Then, port change bit will be fixed to the final state and
+usb_clear_port_feature() can correctly clear it after this period. This
+will also avoid usb runtime suspend routine to run because
+usb_autopm_put_interface() not run yet.
+
+Fixes: f061f43d7418 ("usb: hub: port: add sysfs entry to switch port power")
+Cc: stable@kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260316095042.1559882-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/usb/core/port.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -103,7 +103,7 @@ struct f_hidg {
- 	struct list_head		report_list;
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -139,6 +139,7 @@ static ssize_t disable_store(struct devi
+ 		usb_disconnect(&port_dev->child);
  
- 	struct device			dev;
--	struct cdev			cdev;
-+	struct cdev			*cdev;
- 	struct usb_function		func;
+ 	rc = usb_hub_set_port_power(hdev, hub, port1, !disabled);
++	msleep(2 * hub_power_on_good_delay(hub));
  
- 	struct usb_ep			*in_ep;
-@@ -764,8 +764,9 @@ static int f_hidg_release(struct inode *
- 
- static int f_hidg_open(struct inode *inode, struct file *fd)
- {
-+	struct kobject *parent = inode->i_cdev->kobj.parent;
- 	struct f_hidg *hidg =
--		container_of(inode->i_cdev, struct f_hidg, cdev);
-+		container_of(parent, struct f_hidg, dev.kobj);
- 
- 	fd->private_data = hidg;
- 
-@@ -1270,8 +1271,12 @@ static int hidg_bind(struct usb_configur
- 	}
- 
- 	/* create char device */
--	cdev_init(&hidg->cdev, &f_hidg_fops);
--	status = cdev_device_add(&hidg->cdev, &hidg->dev);
-+	hidg->cdev = cdev_alloc();
-+	if (!hidg->cdev)
-+		goto fail_free_all;
-+	hidg->cdev->ops = &f_hidg_fops;
-+
-+	status = cdev_device_add(hidg->cdev, &hidg->dev);
- 	if (status)
- 		goto fail_free_all;
- 
-@@ -1521,7 +1526,7 @@ static void hidg_unbind(struct usb_confi
- {
- 	struct f_hidg *hidg = func_to_hidg(f);
- 
--	cdev_device_del(&hidg->cdev, &hidg->dev);
-+	cdev_device_del(hidg->cdev, &hidg->dev);
- 	destroy_workqueue(hidg->workqueue);
- 	usb_free_all_descriptors(f);
- }
+ 	if (disabled) {
+ 		usb_clear_port_feature(hdev, port1, USB_PORT_FEAT_C_CONNECTION);
 
 
