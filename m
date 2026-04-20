@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C13333C192;
-	Mon, 20 Apr 2026 15:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5638322749;
+	Mon, 20 Apr 2026 15:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700584; cv=none; b=I3g/88hniKKMGBYrPb7M0HJxKNX+Z+CuvF10dOC3gcXL2NkEHztKfiNPnJ/zwL7bPxogSGH4D9HynWw1UG/VbLHKCsgoCyB1FfnbuSo7El5IseU9wfs0acC+n6F7O4jWYKG9lne+4NbVZj5JKhjJWrqwRb1M/aayLxSi+izmPCs=
+	t=1776700586; cv=none; b=FiWQYAM81z/zbW0ZPOPaVyeOnk3V063tc/KLnB8cwPcSn2VI240ndQl6wBwTWaech+ZE5gkq0V2JzXYqvdx79X3qvsrsmJWcDLyNlOmrVi7WJm29ddkibMopO/1WbA+Fam+icWpi1N07rz/oqgQHyyIFWw8KMQcj0EhR1YBne0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700584; c=relaxed/simple;
-	bh=jf3tv/9wh+GoOdwv3Lm8MFqBGHIFlWR4aWU1pG4PEao=;
+	s=arc-20240116; t=1776700586; c=relaxed/simple;
+	bh=9mxVMI3Oa2urib/uaYj+CgL/6SSxDNoY5ZP1CyZmuPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LMPtyMs2s4hqPNJdOmpnDGsGGbp14qmD9XtRm4lIk+RIPQKlNFpq2+6/ZXtM/LOnm0GTx4bahOiCI74B/TWaAvKaeAkBEEAdNHYeJaxMb9N7Xtj79WtCTEIL09KaxStqPRNnE87oRtUkF5tgrbLGg/Qp5WCxQKDCihpncNuZQ5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chHOFxgS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FoJ0KD+N4zaANgo1ZDaI8Vt7nGob9pDL7a1Ake5/RcQ5IgjFH6b1AOxRilYzTX37+i9Art0ivQyddNd38ADsKsEZVYAB4//0BNhkwm6F24Uu34aLzHe/YAqgLU894jAHweuNuZ98rh84ILyr7moYNvo4W30wNT5JnuJ7vM2rq0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJaPAJ22; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chHOFxgS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6254C2BCB6;
-	Mon, 20 Apr 2026 15:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJaPAJ22"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E78DC19425;
+	Mon, 20 Apr 2026 15:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700584;
-	bh=jf3tv/9wh+GoOdwv3Lm8MFqBGHIFlWR4aWU1pG4PEao=;
+	s=korg; t=1776700586;
+	bh=9mxVMI3Oa2urib/uaYj+CgL/6SSxDNoY5ZP1CyZmuPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=chHOFxgS0UlYkwTEE1OjX6G/3wGrU85ZHZOpwBwi/5nC8EtAUA9IuE7PPzsLvFAvH
-	 MadzXo7KdYggATaE91es9lUWhDIgNPvXY8o4/WNLf3Y6+wA5sZVr408RJZeKrK7bMD
-	 WNC8L7FSonvcy0wVkFQ6FpgGtt3RlHDbEXLsUBi0=
+	b=OJaPAJ22uKbOS27aMNditYH0bcrm2DWp3ZbgfkS0cl+hOdeSkJKzfzeT3C5eccin1
+	 7bNoxoFim6nZ8wkgMHHQW9pctkOKZf42/ici0ctfezdZamrr/9FFNIfTcuIYIJ0MZx
+	 Jz00M4QEcQ8hvaaBtjGT5pXSDHlJseYl/TbOTSD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/198] dmaengine: idxd: Fix lockdep warnings when calling idxd_device_config()
-Date: Mon, 20 Apr 2026 17:39:40 +0200
-Message-ID: <20260420153935.663364533@linuxfoundation.org>
+Subject: [PATCH 6.18 010/198] ASoC: amd: yc: Add DMI quirk for Thin A15 B7VF
+Date: Mon, 20 Apr 2026 17:39:49 +0200
+Message-ID: <20260420153935.984892601@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,89 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit caf91cdf2de8b7134749d32cd4ae5520b108abb7 ]
+[ Upstream commit 1f182ec9d7084db7dfdb2372d453c28f0e5c3f0a ]
 
-Move the check for IDXD_FLAG_CONFIGURABLE and the locking to "inside"
-idxd_device_config(), as this is common to all callers, and the one
-that wasn't holding the lock was an error (that was causing the
-lockdep warning).
+Add a DMI quirk for the Thin A15 B7VF fixing the issue where
+the internal microphone was not detected.
 
-Suggested-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-1-7ed70658a9d1@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220833
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260316080218.2931304-1-zhangheng@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/device.c | 17 +++++++----------
- drivers/dma/idxd/init.c   | 10 ++++------
- 2 files changed, 11 insertions(+), 16 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 646d7f767afa3..746d9edbba164 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -1106,7 +1106,11 @@ int idxd_device_config(struct idxd_device *idxd)
- {
- 	int rc;
- 
--	lockdep_assert_held(&idxd->dev_lock);
-+	guard(spinlock)(&idxd->dev_lock);
-+
-+	if (!test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
-+		return 0;
-+
- 	rc = idxd_wqs_setup(idxd);
- 	if (rc < 0)
- 		return rc;
-@@ -1433,11 +1437,7 @@ int idxd_drv_enable_wq(struct idxd_wq *wq)
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index c536de1bb94ad..6f1c105ca77e3 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -724,6 +724,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "BM1403CDA"),
  		}
- 	}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Thin A15 B7VE"),
++		}
++	},
+ 	{}
+ };
  
--	rc = 0;
--	spin_lock(&idxd->dev_lock);
--	if (test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
--		rc = idxd_device_config(idxd);
--	spin_unlock(&idxd->dev_lock);
-+	rc = idxd_device_config(idxd);
- 	if (rc < 0) {
- 		dev_dbg(dev, "Writing wq %d config failed: %d\n", wq->id, rc);
- 		goto err;
-@@ -1532,10 +1532,7 @@ int idxd_device_drv_probe(struct idxd_dev *idxd_dev)
- 	}
- 
- 	/* Device configuration */
--	spin_lock(&idxd->dev_lock);
--	if (test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
--		rc = idxd_device_config(idxd);
--	spin_unlock(&idxd->dev_lock);
-+	rc = idxd_device_config(idxd);
- 	if (rc < 0)
- 		return -ENXIO;
- 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index f2b37c63a964c..afba88f9c3e43 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -1094,12 +1094,10 @@ static void idxd_reset_done(struct pci_dev *pdev)
- 	idxd_device_config_restore(idxd, idxd->idxd_saved);
- 
- 	/* Re-configure IDXD device if allowed. */
--	if (test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags)) {
--		rc = idxd_device_config(idxd);
--		if (rc < 0) {
--			dev_err(dev, "HALT: %s config fails\n", idxd_name);
--			goto out;
--		}
-+	rc = idxd_device_config(idxd);
-+	if (rc < 0) {
-+		dev_err(dev, "HALT: %s config fails\n", idxd_name);
-+		goto out;
- 	}
- 
- 	/* Bind IDXD device to driver. */
 -- 
 2.53.0
 
