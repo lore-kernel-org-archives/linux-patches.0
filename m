@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811983FB7E3;
-	Mon, 20 Apr 2026 13:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455ED3FB7DF;
+	Mon, 20 Apr 2026 13:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691581; cv=none; b=JeaNvwym5FNVDU0zfiZPZeWO3Wsm3u8eMtdhiMlc2S95E9DUYaNr2KKLtYclEsRhrq4kRSdOod3hz6tykP0zcNJEv22maLlBXG5FTAY8F7wpccn4I+iCv0akT7J28aBbOpTIpxJVWEBl5BMnnL1cHzFmWCbIsTBEr22NW6KNLW4=
+	t=1776691583; cv=none; b=PCImIEWDJg77g4NfVejdCCrANr7Nv1wG9m6lYTO1As7fdAGR/s/nTMccjC7CyO1lhT0ATGSIWmARWfo5KRYRnxHyh37e2hWj03AjjN/ZT+acQTcdcxxiy6009FpBJjL4oppIooQhusgvsA3VwYDspU2+n9+0mXrpPQ/3kx/AK74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691581; c=relaxed/simple;
-	bh=fzKma1MMTkr/gNiJd5XPapfupPdsDWu34VNqy1vzaPU=;
+	s=arc-20240116; t=1776691583; c=relaxed/simple;
+	bh=4COp8xb5iO+Kg0G+zZIjHdRsnR2gbF62l8JK/WOAnOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjG3I5/ZcFFPm1Q3v7tKy40JQsOObdCeDetvWcAblAKKlzxEeyniR7ycwALqrTDWM4u5cNYDdd9NLk4cEYFgfoFrjHsqt78QENOuRgs06eSisEq4oF1nQIhsRxiW2fid8LlHfBngsd7Qea5TVIhe7khtR7FjbIJZ/aWKSSPMLdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H3vGsSYo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aLvV5uvXjcA2vvUivQUlzL2Wh4KjugdM2FlP7H4DelBEm9euZ+zKyYE9NNtCbR09PyIB7hTZnJdQFfGUHC/l0NeD5dQ81s9L8dFWGOL9qnsh6uyWQy5cPKiGVosBU79uS1jy9o7V41ya4mf7PYxYnd7TXYH4bPDn2sgu1+2gFJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kXw2ap40; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H3vGsSYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46866C2BCB7;
-	Mon, 20 Apr 2026 13:26:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kXw2ap40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA3DC19425;
+	Mon, 20 Apr 2026 13:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691581;
-	bh=fzKma1MMTkr/gNiJd5XPapfupPdsDWu34VNqy1vzaPU=;
+	s=k20201202; t=1776691582;
+	bh=4COp8xb5iO+Kg0G+zZIjHdRsnR2gbF62l8JK/WOAnOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3vGsSYonB+0YrN/SotOgeWvNW+x91MYnXCzo1rEXnbZHNjkrP3NnEn4FmswlSU25
-	 Olhtqz4U0Hlw/UddIPRgHdYenHoUlPsRiScnzMtWvB2sBOTQzI544mTp456nWQUbn0
-	 flxtQ5VOohLnMXs5gceBsb3vEN3Vr7XVMsTEcLJXjlLzPzf+Qv6eDAFmagIlyQ/amq
-	 r2kX4JG/6LbkQWIynmU9ueyN6Faffvc6O2AcoZ4KTykEeihx4prEFQemFbFO/lJNam
-	 jC4aX6knCelehOmyHyRL31FyX9/CAW2uhz1Bto9hRp0Z5hKWbXAuLYt7K5CfGGxjr9
-	 ESzg0mypHg0xQ==
+	b=kXw2ap40PnjZqEJahn5cJxSR/zIjKNgmwOOYohhpHgTZ86goJs30oDDyeMqWFZI8B
+	 ECJXVmhf+hTdaAXPI2ks0TvZPn4VYuTZTbix+Z/kjpTCP4Wo3fwpPbTl+WPVbwm4MT
+	 8vhuQI35WSPQFRsq1m70S64Vv/1wkKuBP4G0RlPfPpvXNE0Qtos39ya6vqgPTpsEz4
+	 PT2upwfwdVf9WbAgj/0ZGY+oMzXw7Ji27PSFB6Xa+i+wFS5PCYnWnv8gEHEZyNmGx8
+	 HVnZEpFSPqZ4AXy0XCnQr4E0m8QKw752ccQ/S6HVC34vOn0UktJM9z1QMSAZzoxEqd
+	 jINg/tOzucfOA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bradford Love <brad@nextdimension.cc>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sunil Khatri <sunil.khatri@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] media: em28xx: remove tuner type from Hauppauge DVB DualHD
-Date: Mon, 20 Apr 2026 09:18:27 -0400
-Message-ID: <20260420132314.1023554-113-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] drm/amdgpu: fix amdgpu_userq_evict
+Date: Mon, 20 Apr 2026 09:18:28 -0400
+Message-ID: <20260420132314.1023554-114-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -47,359 +50,367 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Bradford Love <brad@nextdimension.cc>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit a5dcbff7d50a89bf0376e7f2fb1ba3163a6dac0a ]
+[ Upstream commit 98dc529a27c57e184ab47453993ba9cfcfcec0ca ]
 
-This reverts a patch which was perhaps inadvertently added.
+Canceling the resume worker synchonized can deadlock because it can in
+turn wait for the eviction worker through the userq_mutex.
 
-This was changed during the 5.15-rc4 merge. The faulty commit appears
-lost in the pull request somehow, I cannot find it to check the
-explanation.
-
-commit c52e7b855b33 ("Merge tag 'v5.15-rc4' into media_tree")
-
-There was nothing wrong with this device and no reason to moodify the
-board profile. The DVB capabilities are added via dvb_module_probe.
-Additionally, the device contains *zero* analog inputs, so I'm not
-sure why one was added.
-
-Signed-off-by: Bradford Love <brad@nextdimension.cc>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Sunil Khatri <sunil.khatri@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the complete
-analysis.
+Now I have all the information needed for a complete analysis. Let me
+compile the findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: `media: em28xx`
-- **Action verb**: "remove" (reverting an inadvertent change)
-- **Summary**: Remove incorrect tuner type and input from Hauppauge
-  WinTV-dualHD DVB board profile
-- Record: [media: em28xx] [remove/revert] [Restores correct board
-  profile for DVB-only device]
+**Step 1.1: Subject Line**
+- Subsystem: `drm/amdgpu` (AMD GPU DRM driver)
+- Action verb: "fix"
+- Summary: Fix deadlock in `amdgpu_userq_evict` function
+- Record: [drm/amdgpu] [fix] [deadlock in userqueue eviction path]
 
-### Step 1.2: Tags
-- **Signed-off-by**: Bradford Love (brad@nextdimension.cc) - author,
-  original Hauppauge em28xx developer
-- **Signed-off-by**: Hans Verkuil (hverkuil+cisco@kernel.org) - media
-  subsystem co-maintainer
-- No Fixes: tag (expected for candidates)
-- No Reported-by: tag
-- No Cc: stable
-- Record: Signed off by the subsystem expert (Brad Love is the original
-  author of multiple Hauppauge em28xx board entries) and the media
-  subsystem maintainer.
+**Step 1.2: Tags**
+- Signed-off-by: Christian König (author, AMD's senior DRM/GPU
+  maintainer)
+- Reviewed-by: Alex Deucher (AMD's kernel graphics lead maintainer)
+- Reviewed-by: Sunil Khatri
+- Signed-off-by: Alex Deucher (committer)
+- No Fixes: tag (expected - that's why manual review is needed)
+- No Cc: stable (expected)
+- Record: Author is subsystem maintainer. Two Reviewed-by tags from AMD
+  developers. Strong quality signal.
 
-### Step 1.3: Commit Body
-The commit message explains:
-- This reverts a change that was "perhaps inadvertently added" during
-  the 5.15-rc4 merge into the media tree
-- References `c52e7b855b33` ("Merge tag 'v5.15-rc4' into media_tree") as
-  the source
-- The author says "There was nothing wrong with this device" and "no
-  reason to modify the board profile"
-- DVB capabilities are handled via `dvb_module_probe` (not via analog
-  tuner infrastructure)
-- The device has "zero analog inputs" so the added composite input was
-  bogus
-- Record: Bug is a merge-introduced corruption of a board profile.
-  Symptom is incorrect device configuration.
+**Step 1.3: Commit Body**
+- Bug: Canceling the resume worker synchronously
+  (`cancel_delayed_work_sync`) can deadlock because the resume worker
+  waits for the eviction worker via `userq_mutex`.
+- Record: Classic AB-BA deadlock between suspend_worker and
+  resume_worker via `userq_mutex`.
 
-### Step 1.4: Hidden Bug Fix Detection
-This is a clear bug fix disguised as "remove" - it reverts an
-inadvertent merge artifact that broke a device's board profile. The
-commit restores the original known-correct configuration.
-- Record: YES, this is a real bug fix - restoring a corrupted board
-  profile.
+**Step 1.4: Hidden Bug Fix Detection**
+- This is explicitly labeled "fix" and describes a deadlock. Not hidden
+  at all.
+- Record: Obvious deadlock fix.
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files changed**: 1 (`drivers/media/usb/em28xx/em28xx-cards.c`)
-- **Lines**: +1/-6 (net -5 lines)
-- **Functions modified**: None (data structure change only)
-- **Scope**: Single-file, single board entry modification
-- Record: Minimal change to one board profile entry in one file.
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c`
+- Lines removed: ~6, lines added: ~2 (net -4 lines)
+- Function modified: `amdgpu_userq_evict()`
+- Scope: single-file surgical fix in one function
+- Record: Very small, contained change.
 
-### Step 2.2: Code Flow Change
-**Hunk 1**: Changes `.tuner_type` from `TUNER_SI2157` back to
-`TUNER_ABSENT` and removes the bogus `.input` block.
+**Step 2.2: Code Flow Change**
 
-Before: Board profile claims an Si2157 analog tuner and a composite
-video input
-After: Board profile correctly declares no analog tuner and no analog
-inputs
+BEFORE:
+```c
+if (evf_mgr->fd_closing) {
+    cancel_delayed_work_sync(&uq_mgr->resume_work);
+    return;
+}
+schedule_delayed_work(&uq_mgr->resume_work, 0);
+```
 
-### Step 2.3: Bug Mechanism
-This is a **hardware profile/data corruption fix** (category h -
-hardware workaround/device profile).
+AFTER:
+```c
+if (!evf_mgr->fd_closing)
+    schedule_delayed_work(&uq_mgr->resume_work, 0);
+```
 
-The incorrect `TUNER_SI2157` value causes:
-1. **Unnecessary I2C bus probing**: `em28xx_v4l2_init()` (line
-   2589-2622) attempts to discover and configure an analog tuner via
-   I2C, potentially conflicting with the DVB tuner probe
-2. **Spurious error message**: The check at line 4057-4058 (`has_dual_ts
-   && tuner_type != TUNER_ABSENT`) triggers "We currently don't support
-   analog TV or stream capture on dual tuners"
-3. **Incorrect capability advertisement**: V4L2_CAP_TUNER would be
-   advertised (line 2758)
-4. **Bogus input listing**: A non-existent composite video input
-   referencing TVP5150 decoder
+Before: When `fd_closing`, synchronously cancel any pending resume work
+and return. Otherwise, schedule resume work.
+After: Simply don't schedule resume work when `fd_closing`. No
+synchronous cancel.
 
-Record: Incorrect board profile data causing unnecessary I2C probing,
-spurious errors, and incorrect capability reporting.
+**Step 2.3: Bug Mechanism**
 
-### Step 2.4: Fix Quality
-- Obviously correct: Restores the original correct state (matches pre-
-  merge value and sibling board profile)
-- Minimal/surgical: Only changes the one affected board entry
-- Regression risk: Virtually zero - restoring known-good configuration
-- Record: Fix is trivially correct. Zero regression risk.
+This is a **deadlock** fix. The verified call chain:
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+1. `amdgpu_eviction_fence_suspend_worker()` acquires
+   `uq_mgr->userq_mutex` (line 110 in `amdgpu_eviction_fence.c`), then
+   calls `amdgpu_userq_evict()` (line 119)
+2. `amdgpu_userq_evict()` calls
+   `cancel_delayed_work_sync(&uq_mgr->resume_work)` when `fd_closing` -
+   this waits for resume_work to finish
+3. `amdgpu_userq_restore_worker()` (the resume_work callback) first
+   calls `flush_delayed_work(&fpriv->evf_mgr.suspend_work)` (line 1277),
+   which waits for the suspend_worker, then tries to acquire
+   `userq_mutex` (line 1279)
 
-### Step 3.1: Blame
-The original correct board entry (`TUNER_ABSENT`) was introduced by Olli
-Salonen in commit `11a2a949d05e9d` (2016). The incorrect change was
-introduced by merge commit `c52e7b855b33f` during the 5.15-rc4 merge
-into media_tree, attributed to Mauro Carvalho Chehab's merge resolution.
+Result: suspend_worker holds `userq_mutex` and waits for resume_worker;
+resume_worker either flushes suspend_worker (direct circular wait) or
+waits for `userq_mutex` (held by suspend_worker). Classic deadlock.
 
-Record: Buggy code introduced by merge artifact c52e7b855b33f (Oct
-2021), first appearing in v5.16. Correct code existed since 2016 (v4.7
-era).
+Record: [Deadlock] [suspend_worker holds userq_mutex ->
+cancel_delayed_work_sync waits for resume_worker -> resume_worker
+flushes suspend_worker or waits for userq_mutex = DEADLOCK]
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The commit references `c52e7b855b33` as the
-source of the bug.
+**Step 2.4: Fix Quality**
+- Obviously correct: Removing the `cancel_delayed_work_sync` eliminates
+  the deadlock
+- Minimal/surgical: Only removes the dangerous synchronous cancel, keeps
+  the logic of not resuming when fd is closing
+- Regression risk: Very low. The only concern would be if a stale
+  resume_work runs after fd_closing, but other cleanup paths
+  (`amdgpu_userq_destroy` at line 632 does `cancel_delayed_work_sync`
+  safely before taking mutex) handle this properly.
+- Record: High quality fix. No regression risk.
 
-Verified: `git diff v5.15..v5.16 -- drivers/media/usb/em28xx/em28xx-
-cards.c` confirms the TUNER_SI2157 and input changes were introduced
-between v5.15 and v5.16 via that merge.
+---
 
-### Step 3.3: File History
-Recent commits to em28xx-cards.c are unrelated (MyGica UTV3 support,
-build system changes). No conflicting changes found.
-Record: Standalone fix, no prerequisites needed.
+## PHASE 3: GIT HISTORY
 
-### Step 3.4: Author
-Bradford Love (brad@nextdimension.cc) is the original Hauppauge em28xx
-developer who authored multiple board entries including `em28xx: Add pid
-for bulk revision of Hauppauge 461eV2`, `em28xx: Add pid for bulk
-revision of Hauppauge 461e`, `em28xx: Add support for Hauppauge USB
-QuadHD`, etc.
-Record: Author is the domain expert for Hauppauge em28xx devices.
+**Step 3.1: Blame**
+- The buggy `cancel_delayed_work_sync` in `amdgpu_userq_evict` was
+  introduced by commit `f10eb185ad0552` (Arvind Yadav, 2025-05-07, "Fix
+  NULL dereference in amdgpu_userq_restore_worker"), though the original
+  `fd_closing` branch was from `44cfdf368fb72c` (Shashank Sharma,
+  2024-11-20, "resume gfx userqueues").
+- Record: Buggy code introduced in the v6.16 development cycle.
 
-### Step 3.5: Dependencies
-None. This is a standalone data change to a board profile. No code
-dependencies.
+**Step 3.2:** No Fixes: tag to follow.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 3.3: Related Changes**
+- Commit `648a0dc0d78c3` fixed a different deadlock in the same file
+  (mutex ordering between `adev->userq_mutex` and `uqm->userq_mutex`)
+- Record: There have been multiple deadlock fixes in this subsystem,
+  indicating active locking issues being resolved.
 
-### Step 4.1-4.5
-Lore.kernel.org was unavailable due to bot protection. B4 dig could not
-be used on the merge commit (it's a merge). The commit was signed off by
-Hans Verkuil (media maintainer), confirming proper review.
+**Step 3.4: Author**
+- Christian König is one of the most senior AMD DRM kernel developers
+  and a core maintainer of the AMDGPU driver.
+- Record: Author is THE subsystem expert. Very high trust signal.
 
-Record: Could not access lore discussion. Fix reviewed and accepted by
-media subsystem maintainer.
+**Step 3.5: Dependencies**
+- The fix is self-contained and standalone. It modifies one conditional
+  block in one function.
+- Record: No dependencies. Clean standalone fix.
+
+---
+
+## PHASE 4: MAILING LIST
+
+- b4 dig could not find the fix commit directly (it appears to be very
+  recent, possibly not yet indexed)
+- lore.kernel.org search was blocked by anti-scraping protection
+- Record: Could not verify mailing list discussion, but the commit has
+  two Reviewed-by tags confirming peer review.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Key Code Paths Affected
-Verified the following code paths are affected by the incorrect
-`TUNER_SI2157`:
+**Step 5.1: Functions modified**
+- Only `amdgpu_userq_evict()` is modified.
 
-1. **`em28xx_v4l2_init()`** (em28xx-video.c:2589): When `tuner_type !=
-   TUNER_ABSENT`, probes I2C bus for analog tuner. The Si2157 DVB tuner
-   lives at I2C addresses 0x60/0x63 (from em28xx-dvb.c:1412). The analog
-   probe at line 2604-2612 uses `v4l2_i2c_tuner_addrs()` which could
-   overlap with these addresses.
+**Step 5.2: Callers**
+- `amdgpu_userq_evict()` is called from
+  `amdgpu_eviction_fence_suspend_worker()` in `amdgpu_eviction_fence.c`
+  (line 119). This is a workqueue callback triggered by
+  `amdgpu_eviction_fence_enable_signaling()` (line 141), which is a
+  dma_fence_ops callback. This means eviction happens automatically when
+  BO resources need to be moved, making this a common code path during
+  normal GPU operation.
 
-2. **`em28xx_usb_probe()`** (em28xx-cards.c:4057-4066): Dual-TS check
-   with `tuner_type != TUNER_ABSENT` triggers error message and disables
-   video.
+**Step 5.3-5.4: Call chains**
+- The eviction path is triggered when dma_fence signaling is enabled on
+  eviction fences attached to BOs. This happens during VM page table
+  operations, memory allocation, etc. - very common GPU operations.
+- Record: The buggy path is reachable during normal GPU usage by any
+  userspace GPU application.
 
-3. **`em28xx_tuner_setup()`** (em28xx-video.c:2469): Attempts to
-   configure tuner type TUNER_SI2157 via V4L2 tuner subsystem.
-
-4. The sibling board `EM28174_BOARD_HAUPPAUGE_WINTV_DUALHD_01595`
-   correctly uses `TUNER_ABSENT` and has no input entry, confirming the
-   fix is correct.
-
-Record: Bug affects I2C probing, capability reporting, and error message
-generation. DVB tuner is handled separately via `dvb_module_probe`, not
-the analog tuner infrastructure.
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Bug Exists in Stable Trees
-Verified: The buggy change entered mainline in v5.16 via merge
-`c52e7b855b33f`. All active stable trees (6.1.y, 6.6.y, 6.12.y) contain
-this bug. The v5.15.y LTS tree does NOT (bug was introduced after 5.15).
+**Step 6.1: Does the buggy code exist in stable trees?**
+- Verified `amdgpu_userq.c` does NOT exist in v6.12, v6.13, v6.14, or
+  v6.15
+- File first appears in v6.16
+- The buggy `cancel_delayed_work_sync` in `amdgpu_userq_evict` exists in
+  v6.16, v6.17, v6.18, v6.19, and v7.0
+- This workspace is `linux-autosel-7.0`, evaluating for the 7.0.y stable
+  tree
+- Record: Bug exists in v7.0 (the target tree) and v6.19.y (current
+  active stable).
 
-### Step 6.2: Backport Complications
-The change is to a data structure entry. It should apply cleanly to all
-affected stable trees as the board profile has not been modified since
-the merge.
+**Step 6.2: Backport difficulty**
+- The v7.0 version of the function is identical to the current HEAD -
+  the patch should apply cleanly.
+- Record: Clean apply expected.
 
-### Step 6.3: No related fixes already in stable.
+---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1
-- **Subsystem**: drivers/media/usb (USB media capture device driver)
-- **Criticality**: PERIPHERAL (affects users of specific Hauppauge
-  WinTV-dualHD DVB USB device)
-- The Hauppauge WinTV-dualHD is a consumer DVB USB stick, commonly used
-  for DVB-T/T2 reception
+**Step 7.1: Subsystem**
+- `drivers/gpu/drm/amd/amdgpu` - AMD GPU driver, one of the most widely
+  used GPU drivers
+- Criticality: IMPORTANT - affects all AMD GPU users
+- Record: [drm/amdgpu] [IMPORTANT]
 
-### Step 7.2
-The em28xx subsystem is mature and stable. The bug has been present
-since v5.16 (~4 years).
+**Step 7.2: Activity**
+- Very active subsystem with frequent commits
+- Multiple deadlock fixes in the userqueue code recently, indicating
+  this is a new subsystem under active development and bug fixing
+- Record: Very active, new code with multiple recent fixes.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users of the Hauppauge WinTV-dualHD DVB (USB IDs 2040:0265 and
-2040:8265).
+**Step 8.1: Who is affected**
+- All users of AMD GPUs with userqueue support (modern AMD hardware)
+- Record: Driver-specific but large user population (all AMD GPU users
+  with newer hardware)
 
-### Step 8.2: Trigger Conditions
-Every time the device is plugged in or the driver loads. 100%
-reproducible for affected hardware.
+**Step 8.2: Trigger conditions**
+- The deadlock triggers when: (1) an eviction fence signals while (2)
+  `fd_closing` is true and (3) a resume_work is pending or running
+- This can happen during normal application shutdown/close while GPU
+  operations are in progress
+- Record: Triggered during fd close with concurrent GPU eviction -
+  realistic scenario during application exit.
 
-### Step 8.3: Failure Mode
-- Spurious error message in dmesg: "We currently don't support analog TV
-  or stream capture on dual tuners" (MEDIUM)
-- Unnecessary I2C bus probing that could conflict with DVB tuner
-  (MEDIUM)
-- Incorrect V4L2 capability advertising (LOW)
-- Non-existent composite input exposed to userspace (LOW)
-- Overall severity: MEDIUM
+**Step 8.3: Failure mode severity**
+- DEADLOCK = system hang (at minimum the GPU tasks hang, potentially
+  wider if other kernel threads wait on the locked mutex)
+- Severity: CRITICAL
+- Record: [Deadlock -> system hang] [CRITICAL]
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: Fixes incorrect device behavior for all users of this
-  hardware, eliminates spurious errors, prevents potential I2C conflicts
-- **Risk**: Extremely low - 5-line change to a data structure, restoring
-  known-good values that existed for 5 years before the merge artifact
-- **Ratio**: HIGH benefit / VERY LOW risk
+**Step 8.4: Risk-Benefit Ratio**
+- BENEFIT: Very high - prevents deadlocks during normal GPU operation
+- RISK: Very low - 2 lines added, 6 removed, obviously correct, written
+  and reviewed by subsystem maintainers
+- Record: [Very high benefit] [Very low risk] [Strongly favorable]
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence
-**FOR backporting**:
-- Fixes an incorrect board profile caused by a merge artifact
-- Small (5 lines net), obviously correct, data-only change
-- Restores original known-good configuration (verified by blame)
-- Matches sibling device's correct profile
-- Author is the domain expert for this hardware
-- Reviewed by media subsystem maintainer (Hans Verkuil)
-- Bug affects all stable trees from 6.1.y through 6.12.y
-- Prevents spurious error messages and potential I2C bus conflicts
-- Clean apply expected (no conflicting changes to this entry)
+**Step 9.1: Evidence Compilation**
 
-**AGAINST backporting**:
-- Bug has been present ~4 years without widespread reports (limited user
-  impact)
-- DVB functionality likely still works despite the incorrect profile
-- No syzbot/crash reports associated with this
+FOR backporting:
+- Fixes a real deadlock (CRITICAL severity)
+- Very small, surgical fix (net -4 lines)
+- Written by Christian König (senior AMD DRM maintainer)
+- Reviewed by Alex Deucher (AMD's kernel graphics lead) and Sunil Khatri
+- Bug exists in v7.0 (the target stable tree)
+- Deadlock is triggered during normal operations (fd close with GPU
+  activity)
+- Obviously correct - removes the synchronous cancel that causes the
+  deadlock
+- Self-contained, no dependencies
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - restores pre-merge state,
-   signed off by domain expert and maintainer
-2. Fixes a real bug? **YES** - incorrect device profile from merge
-   artifact
-3. Important issue? **MEDIUM** - spurious errors, potential I2C
-   conflicts, incorrect capabilities
-4. Small and contained? **YES** - 5 lines in one file, one board entry
-5. No new features or APIs? **YES** - purely corrective
-6. Can apply to stable? **YES** - clean apply expected
+AGAINST backporting:
+- No items identified
 
-### Step 9.3: Exception Categories
-This falls into the **hardware quirk/device profile fix** category -
-correcting incorrect device data in an existing driver.
+Unresolved:
+- Could not verify mailing list discussion (lore blocked)
 
-### Step 9.4: Decision
-This is a small, obviously correct fix to a board profile that was
-corrupted by a merge artifact. It restores the original known-good
-configuration for a specific USB device, matching the sibling board's
-correct profile. It was written by the domain expert and reviewed by the
-media maintainer. The risk is minimal and the fix prevents incorrect
-driver behavior for users of this hardware.
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** - The deadlock mechanism is
+   clear and verifiable from code. Fix is minimal. Two Reviewed-by tags.
+2. Fixes a real bug? **YES** - Deadlock during GPU eviction with
+   fd_closing.
+3. Important issue? **YES** - Deadlock = system hang (CRITICAL).
+4. Small and contained? **YES** - Net -4 lines in a single function.
+5. No new features or APIs? **YES** - Pure bug fix.
+6. Can apply to stable trees? **YES** - Code in v7.0 is identical; clean
+   apply expected.
+
+**Step 9.3: Exception Categories**
+- Not applicable - this is a standard bug fix, not an exception
+  category.
+
+**Step 9.4: Decision**
+All evidence strongly supports backporting. This is a textbook deadlock
+fix: small, surgical, obviously correct, fixes a critical issue, written
+and reviewed by the subsystem maintainers.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed commit message: author explains merge-introduced
-  incorrect board profile
-- [Phase 2] Diff analysis: +1/-6 lines, changes `.tuner_type` from
-  TUNER_SI2157 to TUNER_ABSENT, removes 5-line bogus `.input` block
-- [Phase 3] git blame: Correct TUNER_ABSENT value existed since commit
-  11a2a949d05e9d (2016, Olli Salonen). Bug introduced by merge
-  c52e7b855b33f (Oct 2021)
-- [Phase 3] git diff v5.15..v5.16: Confirmed the TUNER_SI2157 and input
-  changes were introduced between v5.15 and v5.16 via the merge
-- [Phase 3] git blame tuner-types.c: TUNER_SI2157 entry was also added
-  by same merge c52e7b855b33f (stub entry with no parameters)
-- [Phase 3] git log --author: Brad Love is the Hauppauge em28xx expert
-  with multiple device contributions
-- [Phase 5] Grep for TUNER_SI2157 in em28xx: Only used in the one
-  incorrect board entry
-- [Phase 5] Code analysis em28xx-video.c:2589-2622: tuner_type !=
-  TUNER_ABSENT triggers I2C analog tuner probe
-- [Phase 5] Code analysis em28xx-cards.c:4057-4066: dual_ts + tuner !=
-  ABSENT triggers error message
-- [Phase 5] Code analysis em28xx-dvb.c:1384-1422: Si2157 tuner handled
-  via dvb_module_probe at fixed I2C addresses, not analog tuner
-  infrastructure
-- [Phase 5] Verified sibling board
-  EM28174_BOARD_HAUPPAUGE_WINTV_DUALHD_01595 correctly uses TUNER_ABSENT
-  with no input
-- [Phase 6] Bug introduced in v5.16, affects all active stable trees
-  (6.1.y, 6.6.y, 6.12.y)
-- [Phase 6] No conflicting changes to this board entry since v5.16
-- UNVERIFIED: Could not access lore.kernel.org discussion due to bot
-  protection
+- [Phase 1] Parsed tags: Signed-off-by Christian König (author),
+  Reviewed-by Alex Deucher, Reviewed-by Sunil Khatri, Signed-off-by Alex
+  Deucher (committer)
+- [Phase 2] Diff analysis: Removes `cancel_delayed_work_sync()` call in
+  `amdgpu_userq_evict()` (which is called under `userq_mutex`), replaces
+  6-line if/cancel/return/else/schedule block with 2-line if-not-
+  closing/schedule
+- [Phase 3] git blame: `cancel_delayed_work_sync` at line 1391 was
+  introduced by commit `f10eb185ad0552` (2025-05-07), fd_closing branch
+  by `44cfdf368fb72c` (2024-11-20)
+- [Phase 3] git log: Found related deadlock fix `648a0dc0d78c3` in same
+  file, confirming pattern of locking issues
+- [Phase 3] Author check: Christian König is a senior AMD DRM maintainer
+  with extensive commit history
+- [Phase 4] b4 dig: Could not find the specific fix commit (likely too
+  recent); found original buggy series at lore
+- [Phase 4] UNVERIFIED: Could not access lore.kernel.org due to anti-
+  scraping protection
+- [Phase 5] Caller analysis: `amdgpu_userq_evict()` called from
+  `amdgpu_eviction_fence_suspend_worker()` which holds `userq_mutex`
+  (verified in amdgpu_eviction_fence.c lines 110-119)
+- [Phase 5] Deadlock chain verified: suspend_worker(holds userq_mutex)
+  -> cancel_delayed_work_sync(resume_work) -> resume_worker calls
+  flush_delayed_work(suspend_work) at line 1277 AND
+  mutex_lock(userq_mutex) at line 1279 = DEADLOCK
+- [Phase 6] File existence check: `amdgpu_userq.c` does NOT exist in
+  v6.12, v6.13, v6.14, v6.15; EXISTS in v6.16, v6.17, v6.18, v6.19, v7.0
+- [Phase 6] Verified buggy `cancel_delayed_work_sync` in
+  `amdgpu_userq_evict` exists in v6.16 through v7.0 (all versions
+  checked)
+- [Phase 6] Verified v7.0 code is identical to current HEAD - clean
+  apply expected
+- [Phase 8] Failure mode: Deadlock -> system hang during GPU fd close,
+  severity CRITICAL
 
 **YES**
 
- drivers/media/usb/em28xx/em28xx-cards.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
-index 2d19f8ecd6857..d7075ebabceb8 100644
---- a/drivers/media/usb/em28xx/em28xx-cards.c
-+++ b/drivers/media/usb/em28xx/em28xx-cards.c
-@@ -2522,17 +2522,12 @@ const struct em28xx_board em28xx_boards[] = {
- 		.def_i2c_bus   = 1,
- 		.i2c_speed     = EM28XX_I2C_CLK_WAIT_ENABLE |
- 				 EM28XX_I2C_FREQ_400_KHZ,
--		.tuner_type    = TUNER_SI2157,
-+		.tuner_type    = TUNER_ABSENT,
- 		.tuner_gpio    = hauppauge_dualhd_dvb,
- 		.has_dvb       = 1,
- 		.has_dual_ts   = 1,
- 		.ir_codes      = RC_MAP_HAUPPAUGE,
- 		.leds          = hauppauge_dualhd_leds,
--		.input         = { {
--			.type     = EM28XX_VMUX_COMPOSITE,
--			.vmux     = TVP5150_COMPOSITE1,
--			.amux     = EM28XX_AMUX_LINE_IN,
--		} },
- 	},
- 	/*
- 	 * 2040:026d Hauppauge WinTV-dualHD (model 01595 - ATSC/QAM) Isoc.
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index 09f1d05328897..e8d12556d690a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -1389,13 +1389,8 @@ amdgpu_userq_evict(struct amdgpu_userq_mgr *uq_mgr,
+ 	/* Signal current eviction fence */
+ 	amdgpu_eviction_fence_signal(evf_mgr, ev_fence);
+ 
+-	if (evf_mgr->fd_closing) {
+-		cancel_delayed_work_sync(&uq_mgr->resume_work);
+-		return;
+-	}
+-
+-	/* Schedule a resume work */
+-	schedule_delayed_work(&uq_mgr->resume_work, 0);
++	if (!evf_mgr->fd_closing)
++		schedule_delayed_work(&uq_mgr->resume_work, 0);
+ }
+ 
+ int amdgpu_userq_mgr_init(struct amdgpu_userq_mgr *userq_mgr, struct drm_file *file_priv,
 -- 
 2.53.0
 
