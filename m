@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6043B2E093A;
-	Mon, 20 Apr 2026 16:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F014333F5A9;
+	Mon, 20 Apr 2026 16:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700967; cv=none; b=YNWdFu4ahb0PL91c+Dxmuykl9yQV4b+g1axtf2HdIdKp592aaUVICIGJ0ohfacBTlaNzAa5Ttz0MI5slst1EBoEftpNY7kQks8uEEofRquNUJAQbIuJPbENlO1AWJMCO9Pv4sr4//CZWIi9J8gXx08Eja1l0T1OyY3mZqjlzbZQ=
+	t=1776700970; cv=none; b=I1g/R2A2lQvqDSqtzNpaHhd9vF8kidRREyM5n3Ig/vJs5pNwt5r2ttZ471PjuRcNNOZ9Ql/fHFn+kclrTErkvTVo7VLP+u8F0L7AY9saVH0l3XHOdqakgxAkMQaJo4G95swNQgMOJFhzxdNIvzIRvswUsJCu1Nu9eqPPX8vF2VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700967; c=relaxed/simple;
-	bh=rwiqXnk6vQc9FS8SSH55E3u0t/+xTbDPEciknjZCcnw=;
+	s=arc-20240116; t=1776700970; c=relaxed/simple;
+	bh=G9JWN02bVzKbzC2GPIBBuOg/DODh+hh3n8+hUFm1kU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5WAU0dEw6P61cUlpz+so0fgdfTTxEvjfrC/SHS92V5UkhFZRw/BSNXcO+mBi6U+AbYh0wofOQW/JCUZ4XouXdVgOYxzqNLVYVh+pArTrDrtJERKaTVt0VeINNMk957fyMHUL3TPkbmoSzakIMaoe+MSdLRPmJRV7GbuEP7z/x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0J42BFOd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GuPMuJ3NLpjgN0GVZN9+rlAzUpFqKSJvFlC31eM2y18002bg3OFvWD3GbNO9lnhulBFKbR2RNXVEjaDxAcZ/0qB3a/GT1YgZgPmwBHOkFGwWZaiJTzK7VWe5OTNRW+y4A8xLa8vLsw63KifkTS6i1SrMfQPlmJNNAaHpcs9cJgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O02e3vi0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0J42BFOd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A56C2BCB4;
-	Mon, 20 Apr 2026 16:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O02e3vi0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805CDC2BCB4;
+	Mon, 20 Apr 2026 16:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700967;
-	bh=rwiqXnk6vQc9FS8SSH55E3u0t/+xTbDPEciknjZCcnw=;
+	s=korg; t=1776700969;
+	bh=G9JWN02bVzKbzC2GPIBBuOg/DODh+hh3n8+hUFm1kU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0J42BFOdJaK24n+AFXxC0/XntZWtQiryGSGqqtwyEdWWiqw89gPKaiu3uCGR0HHHv
-	 XLB8s6NwqIGZ3MqmsNnl3T2hrWyZ/rvO7s7/5cphafqJ884m44mQHl33GZ9HVes9MH
-	 aay1LgDzI8XHH4d8FhV7gLY3Lq1t2G7DoGZfSs0U=
+	b=O02e3vi0690Uzb+qtIEx9aPBIpVaySdq3xZGraJwFNSDLbxkMN3h1WYKeLAOVDca7
+	 6eHqfp/4+IYE+/kuCfrUZD7Zmkr34ClKctrJTbZIvkxqiTrGaZ8+kQUWqCIwEb8KT6
+	 xdyUvYkpHEdGFaWiUkBd/zaTcj3R6Y+/gvICCZCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Thierry Escande <thierry.escande@linux.intel.com>,
-	Samuel Ortiz <sameo@linux.intel.com>,
-	stable <stable@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 129/198] NFC: digital: Bounds check NFC-A cascade depth in SDD response handler
-Date: Mon, 20 Apr 2026 17:41:48 +0200
-Message-ID: <20260420153940.253151918@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 130/198] drm/vc4: platform_get_irq_byname() returns an int
+Date: Mon, 20 Apr 2026 17:41:49 +0200
+Message-ID: <20260420153940.289000895@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -48,6 +51,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -56,56 +60,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 46ce8be2ced389bccd84bcc04a12cf2f4d0c22d1 upstream.
+commit e597a809a2b97e927060ba182f58eb3e6101bc70 upstream.
 
-The NFC-A anti-collision cascade in digital_in_recv_sdd_res() appends 3
-or 4 bytes to target->nfcid1 on each round, but the number of cascade
-rounds is controlled entirely by the peer device.  The peer sets the
-cascade tag in the SDD_RES (deciding 3 vs 4 bytes) and the
-cascade-incomplete bit in the SEL_RES (deciding whether another round
-follows).
+platform_get_irq_byname() will return a negative value if an error
+happens, so it should be checked and not just passed directly into
+devm_request_threaded_irq() hoping all will be ok.
 
-ISO 14443-3 limits NFC-A to three cascade levels and target->nfcid1 is
-sized accordingly (NFC_NFCID1_MAXSIZE = 10), but nothing in the driver
-actually enforces this.  This means a malicious peer can keep the
-cascade running, writing past the heap-allocated nfc_target with each
-round.
-
-Fix this by rejecting the response when the accumulated UID would exceed
-the buffer.
-
-Commit e329e71013c9 ("NFC: nci: Bounds check struct nfc_target arrays")
-fixed similar missing checks against the same field on the NCI path.
-
-Cc: Simon Horman <horms@kernel.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Thierry Escande <thierry.escande@linux.intel.com>
-Cc: Samuel Ortiz <sameo@linux.intel.com>
-Fixes: 2c66daecc409 ("NFC Digital: Add NFC-A technology support")
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Cc: Maíra Canal <mcanal@igalia.com>
+Cc: Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
 Cc: stable <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
+Assisted-by: gkh_clanker_2000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026040913-figure-seducing-bd3f@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/2026022339-cornflake-t-shirt-2471@gregkh
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/digital_technology.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/vc4/vc4_hdmi.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/net/nfc/digital_technology.c
-+++ b/net/nfc/digital_technology.c
-@@ -424,6 +424,12 @@ static void digital_in_recv_sdd_res(stru
- 		size = 4;
- 	}
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2355,17 +2355,23 @@ static int vc4_hdmi_hotplug_init(struct
+ 	int ret;
  
-+	if (target->nfcid1_len + size > NFC_NFCID1_MAXSIZE) {
-+		PROTOCOL_ERR("4.7.2.1");
-+		rc = -EPROTO;
-+		goto exit;
-+	}
+ 	if (vc4_hdmi->variant->external_irq_controller) {
+-		unsigned int hpd_con = platform_get_irq_byname(pdev, "hpd-connected");
+-		unsigned int hpd_rm = platform_get_irq_byname(pdev, "hpd-removed");
++		int hpd = platform_get_irq_byname(pdev, "hpd-connected");
+ 
+-		ret = devm_request_threaded_irq(&pdev->dev, hpd_con,
++		if (hpd < 0)
++			return hpd;
 +
- 	memcpy(target->nfcid1 + target->nfcid1_len, sdd_res->nfcid1 + offset,
- 	       size);
- 	target->nfcid1_len += size;
++		ret = devm_request_threaded_irq(&pdev->dev, hpd,
+ 						NULL,
+ 						vc4_hdmi_hpd_irq_thread, IRQF_ONESHOT,
+ 						"vc4 hdmi hpd connected", vc4_hdmi);
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = devm_request_threaded_irq(&pdev->dev, hpd_rm,
++		hpd = platform_get_irq_byname(pdev, "hpd-removed");
++		if (hpd < 0)
++			return hpd;
++
++		ret = devm_request_threaded_irq(&pdev->dev, hpd,
+ 						NULL,
+ 						vc4_hdmi_hpd_irq_thread, IRQF_ONESHOT,
+ 						"vc4 hdmi hpd disconnected", vc4_hdmi);
 
 
