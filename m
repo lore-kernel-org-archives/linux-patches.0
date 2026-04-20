@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB0832ED54;
-	Mon, 20 Apr 2026 15:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F288E3368AE;
+	Mon, 20 Apr 2026 15:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699819; cv=none; b=TxMF0hBmt357Lr4FsineQU5UZwOl0jXDPRicqR7y5wBArFOWEbGhS0+fNb3/6KdKFVn2wGfRL0ssnbe7+Iyot4HxjI9754G5SXvAR8vFsEhOaJBgZZ9LOm/EbjgQDkB323OdT4SHBIrg1FQi4Aj90rwZjHWmWNsGgW+5eBusi2k=
+	t=1776699822; cv=none; b=XQlIZUXFSSsJPURgdIfaR8Lq5SqI8fTxRNXEOyxQkksQQ2aE/iVUS/YYQ/3wt110NgVH/j+NlgmwxoWbZEotu7BY1kuCxd2tYMNvvhFmO46UPu5cJH39DFvOS9twoyQTRCrc0YoQU+QHDAFuztR6HakhKiwWwX22cMUvmlce8CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699819; c=relaxed/simple;
-	bh=Eeq4Oa6e/ysivuJJmvmW4mxYB6xlGXs2SWNQ/g9f76s=;
+	s=arc-20240116; t=1776699822; c=relaxed/simple;
+	bh=A8CIbig6OpoJgF81nlcDGMydIdku2f9hw9vJct0fpTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eTZWllfaGjxv3vfq6r6b8BskJLhgc+4Dfgm9skjBUsvwWOK3Qfiiq2DACXLTJGX5PpbSfGTkynR9y5mDKJyzJFJSdm9X6tli/cdG0ixYjIjd43QIfdv/Z2g/zuQInsrRSrCw/ClAv/mxxrqlxZoQeF5ZEJ0SZfn2RXIrwMtkCQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQn3YwFW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rg43U+L4j3YPCtgBI2vpH3pqji9SZwTYavo1JlxLjFhGNNLGNEF/GEmfcv0yG2YbeF65Jg9iuPpv35+aNL81n7myE2eMgA5EzJtgKgcDSKo1z5Y2xBzMYomeId5ajEtojSYiPUoPG/FP4sWoVY6j9o4wNCpYkoe6C188IgF8RtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDpDgoLe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQn3YwFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A53C19425;
-	Mon, 20 Apr 2026 15:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDpDgoLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4192EC2BCB4;
+	Mon, 20 Apr 2026 15:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699819;
-	bh=Eeq4Oa6e/ysivuJJmvmW4mxYB6xlGXs2SWNQ/g9f76s=;
+	s=korg; t=1776699821;
+	bh=A8CIbig6OpoJgF81nlcDGMydIdku2f9hw9vJct0fpTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQn3YwFWUTD/CoKC8vnKdBNcCxM150VvR0W2DoOy1+i3RCGysyKuyc13vZdBIJlov
-	 H8ks4WIidXYrkmuzhTsgjrLEAM2laNnbTnsVdk3WMbbdc9TyZr9EJJ9XU5173vmrTR
-	 86WbNnypM0pVg9WRyrbl6xrYZcdY54xmDzR45j28=
+	b=cDpDgoLe+dDxcg3QsCWmdu9Mc5vx/lmOkAplRla5EunbAr8tdANovFEsh2OWiEloj
+	 fukKLukV6KiZC3FH2eqgrH2eTwvQqxOAUBrw4MIXcjmHpiZyPyneo4lfPusnxkW5vU
+	 uYxkPXj6j7jiuHCOIiHalP2YLxewpRHpK+2orhz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.0 10/76] drm/vc4: platform_get_irq_byname() returns an int
-Date: Mon, 20 Apr 2026 17:41:21 +0200
-Message-ID: <20260420153911.194114055@linuxfoundation.org>
+	Vikas Gupta <vikas.gupta@broadcom.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	stable <stable@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 11/76] bnge: return after auxiliary_device_uninit() in error path
+Date: Mon, 20 Apr 2026 17:41:22 +0200
+Message-ID: <20260420153911.231245432@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -51,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
@@ -60,59 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit e597a809a2b97e927060ba182f58eb3e6101bc70 upstream.
+commit 8b0c25528cb64f71a73b5c0d49cbbcb68540a4ce upstream.
 
-platform_get_irq_byname() will return a negative value if an error
-happens, so it should be checked and not just passed directly into
-devm_request_threaded_irq() hoping all will be ok.
+When auxiliary_device_add() fails, the error block calls
+auxiliary_device_uninit() but does not return.  The uninit drops the
+last reference and synchronously runs bnge_aux_dev_release(), which sets
+bd->auxr_dev = NULL and frees the underlying object.  The subsequent
+bd->auxr_dev->net = bd->netdev then dereferences NULL, which is not a
+good thing to have happen when trying to clean up from an error.
 
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Cc: Maíra Canal <mcanal@igalia.com>
-Cc: Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
+Add the missing return, as the auxiliary bus documentation states is a
+requirement (seems that LLM tools read documentation better than humans
+do...)
+
+Cc: Vikas Gupta <vikas.gupta@broadcom.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Fixes: 8ac050ec3b1c ("bng_en: Add RoCE aux device support")
 Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_2000
+Assisted-by: gregkh_clanker_t1000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026022339-cornflake-t-shirt-2471@gregkh
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patch.msgid.link/2026041124-banshee-molecular-0f70@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnge/bnge_auxr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -2449,17 +2449,23 @@ static int vc4_hdmi_hotplug_init(struct
- 	int ret;
+--- a/drivers/net/ethernet/broadcom/bnge/bnge_auxr.c
++++ b/drivers/net/ethernet/broadcom/bnge/bnge_auxr.c
+@@ -194,6 +194,7 @@ void bnge_rdma_aux_device_add(struct bng
+ 		dev_warn(bd->dev, "Failed to add auxiliary device for ROCE\n");
+ 		auxiliary_device_uninit(aux_dev);
+ 		bd->flags &= ~BNGE_EN_ROCE;
++		return;
+ 	}
  
- 	if (vc4_hdmi->variant->external_irq_controller) {
--		unsigned int hpd_con = platform_get_irq_byname(pdev, "hpd-connected");
--		unsigned int hpd_rm = platform_get_irq_byname(pdev, "hpd-removed");
-+		int hpd = platform_get_irq_byname(pdev, "hpd-connected");
- 
--		ret = devm_request_threaded_irq(&pdev->dev, hpd_con,
-+		if (hpd < 0)
-+			return hpd;
-+
-+		ret = devm_request_threaded_irq(&pdev->dev, hpd,
- 						NULL,
- 						vc4_hdmi_hpd_irq_thread, IRQF_ONESHOT,
- 						"vc4 hdmi hpd connected", vc4_hdmi);
- 		if (ret)
- 			return ret;
- 
--		ret = devm_request_threaded_irq(&pdev->dev, hpd_rm,
-+		hpd = platform_get_irq_byname(pdev, "hpd-removed");
-+		if (hpd < 0)
-+			return hpd;
-+
-+		ret = devm_request_threaded_irq(&pdev->dev, hpd,
- 						NULL,
- 						vc4_hdmi_hpd_irq_thread, IRQF_ONESHOT,
- 						"vc4 hdmi hpd disconnected", vc4_hdmi);
+ 	bd->auxr_dev->net = bd->netdev;
 
 
