@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FFD1FB1;
-	Mon, 20 Apr 2026 16:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E25634107F;
+	Mon, 20 Apr 2026 16:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701537; cv=none; b=FBU5Di+vZ/49qabBjzESRYpKAuxGP/VlzQvKNcIiFcD4ysOKkDUMObJBYSriB5fYiWxWbd4l4z8xIX5P1fstyUblRKAAEYZKlawVLdTSITRS26DYTmObuomkbElrCWHjHjXxSsreRuEsQ7zRNzx7prL0OMAW/D5Ns7gsIyPBJGg=
+	t=1776701539; cv=none; b=u4jYVOYn9X3cH5jUFjOc+umgOzw18CR9sPPpFMZtRTOyS9kaViZp3xspI8W7ciVoi6IfHCc7s5NyrgrWuIXbBRwN2m4S0Pux9fr5OLT8xtwVn6Nlyu7qZATBymmdAElUzt9Ol+Lok+XXoFO+Z5p7IC8WLWW1RS3TJbTouQpktkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701537; c=relaxed/simple;
-	bh=O7t8f/nHFfX20XKnwy6TORonLO1rqZTXotZ96ZZMo+4=;
+	s=arc-20240116; t=1776701539; c=relaxed/simple;
+	bh=K0SfNqdC417fOCvOAFHP7WBtqcbZ3BkbcV+cgD7pyIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJECC/nJrpzavJA++g1t8gM4K4LNUE7NEdFfvUJzfQRlp8N+ta7ky/5HA3X6NTMmn+kAyP1zHYgZYLfnyo8RlXKxrM7IllM3g8gYQvC3gOL3tP6Ty9eiIf4dmsYRoU9q8L6Jk7dlearIXil87uDwgE1uSh4jAqpdZZXrMkGrp2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1PN983p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p6Do7FmKWxtanZWndkNkwswUsiVViUsr0RyB1m4rLve5m+7d81pg1rCzJCGROcWt+xuw6bNtxHYkUbmdUIxlQMk9DsJZQqx4+NM5jZdSBig93grxp7o/Tt6NuIAkZ4z2An7rjkbhenmn6HRHMzUr/QbWAT2lsIUiBxZV+UQ+9DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7QpkuU4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1PN983p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E8FC19425;
-	Mon, 20 Apr 2026 16:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7QpkuU4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FE2C19425;
+	Mon, 20 Apr 2026 16:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701537;
-	bh=O7t8f/nHFfX20XKnwy6TORonLO1rqZTXotZ96ZZMo+4=;
+	s=korg; t=1776701539;
+	bh=K0SfNqdC417fOCvOAFHP7WBtqcbZ3BkbcV+cgD7pyIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1PN983p12eQqp6zGfgSNQeOnrApU0jpE4ttqX3zNRKukL07zokjibvzUzZJTw9Uv
-	 zHHaQ0eHTYspf9zLhU6BUXG3hf8BafNZCUmAq3bQFzrQ4CmvD+Qc0pT8EWyiI62ZmO
-	 CdZVH/XoqbJj1HS4bZi3kyp9BHCTExzb45p5NgyM=
+	b=x7QpkuU4oOajAx6Lvwa4UhNf6IK7klwTJ0APDPx78IQ8iOQcs+TfazEwiUMmoFZ5G
+	 nLEfSwtfaY1KX3I/W/s86hUc+gPkpIjviRJAj4HJGIXKFJMOS150pgxMorJpAw+X9l
+	 aDxmKHoPCHNdqQRmRZatgN0yScVFmVRCyv+6u4pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 151/162] bcache: fix cached_dev.sb_bio use-after-free and crash
-Date: Mon, 20 Apr 2026 17:43:03 +0200
-Message-ID: <20260420153932.518950873@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 121/162] Docs/admin-guide/mm/damon/reclaim: warn commit_inputs vs param updates race
+Date: Mon, 20 Apr 2026 17:42:33 +0200
+Message-ID: <20260420153931.424556955@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,67 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: SeongJae Park <sj@kernel.org>
 
-commit fec114a98b8735ee89c75216c45a78e28be0f128 upstream.
+commit 0beba407d4585a15b0dc09f2064b5b3ddcb0e857 upstream.
 
-In our production environment, we have received multiple crash reports
-regarding libceph, which have caught our attention:
+Patch series "Docs/admin-guide/mm/damon: warn commit_inputs vs other
+params race".
 
-```
-[6888366.280350] Call Trace:
-[6888366.280452]  blk_update_request+0x14e/0x370
-[6888366.280561]  blk_mq_end_request+0x1a/0x130
-[6888366.280671]  rbd_img_handle_request+0x1a0/0x1b0 [rbd]
-[6888366.280792]  rbd_obj_handle_request+0x32/0x40 [rbd]
-[6888366.280903]  __complete_request+0x22/0x70 [libceph]
-[6888366.281032]  osd_dispatch+0x15e/0xb40 [libceph]
-[6888366.281164]  ? inet_recvmsg+0x5b/0xd0
-[6888366.281272]  ? ceph_tcp_recvmsg+0x6f/0xa0 [libceph]
-[6888366.281405]  ceph_con_process_message+0x79/0x140 [libceph]
-[6888366.281534]  ceph_con_v1_try_read+0x5d7/0xf30 [libceph]
-[6888366.281661]  ceph_con_workfn+0x329/0x680 [libceph]
-```
+Writing 'Y' to the commit_inputs parameter of DAMON_RECLAIM and
+DAMON_LRU_SORT, and writing other parameters before the commit_inputs
+request is completely processed can cause race conditions.  While the
+consequence can be bad, the documentation is not clearly describing that.
+Add clear warnings.
 
-After analyzing the coredump file, we found that the address of
-dc->sb_bio has been freed. We know that cached_dev is only freed when it
-is stopped.
+The issue was discovered [1,2] by sashiko.
 
-Since sb_bio is a part of struct cached_dev, rather than an alloc every
-time.  If the device is stopped while writing to the superblock, the
-released address will be accessed at endio.
 
-This patch hopes to wait for sb_write to complete in cached_dev_free.
+This patch (of 2):
 
-It should be noted that we analyzed the cause of the problem, then tell
-all details to the QWEN and adopted the modifications it made.
+DAMON_RECLAIM handles commit_inputs request inside kdamond thread,
+reading the module parameters.  If the user updates the module
+parameters while the kdamond thread is reading those, races can happen.
+To avoid this, the commit_inputs parameter shows whether it is still in
+the progress, assuming users wouldn't update parameters in the middle of
+the work.  Some users might ignore that.  Add a warning about the
+behavior.
 
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Fixes: cafe563591446 ("bcache: A block layer cache")
-Cc: stable@vger.kernel.org # 3.10+
-Signed-off-by: Coly Li <colyli@fnnas.com>
-Link: https://patch.msgid.link/20260322134102.480107-1-colyli@fnnas.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The issue was discovered in [1] by sashiko.
+
+Link: https://lore.kernel.org/20260329153052.46657-2-sj@kernel.org
+Link: https://lore.kernel.org/20260319161620.189392-3-objecting@objecting.org [1]
+Link: https://lore.kernel.org/20260319161620.189392-2-objecting@objecting.org [3]
+Fixes: 81a84182c343 ("Docs/admin-guide/mm/damon/reclaim: document 'commit_inputs' parameter")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.19.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/super.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/admin-guide/mm/damon/reclaim.rst |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1373,6 +1373,13 @@ static CLOSURE_CALLBACK(cached_dev_free)
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -71,6 +71,10 @@ of parametrs except ``enabled`` again.
+ parameter is set as ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_RECLAIM will be disabled.
  
- 	mutex_unlock(&bch_register_lock);
- 
-+	/*
-+	 * Wait for any pending sb_write to complete before free.
-+	 * The sb_bio is embedded in struct cached_dev, so we must
-+	 * ensure no I/O is in progress.
-+	 */
-+	closure_sync(&dc->sb_write);
++Once ``Y`` is written to this parameter, the user must not write to any
++parameters until reading ``commit_inputs`` again returns ``N``.  If users
++violate this rule, the kernel may exhibit undefined behavior.
 +
- 	if (dc->sb_disk)
- 		put_page(virt_to_page(dc->sb_disk));
+ min_age
+ -------
  
 
 
