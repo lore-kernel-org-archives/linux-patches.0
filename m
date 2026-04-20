@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEF53B0AE3;
-	Mon, 20 Apr 2026 13:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB203B19CA;
+	Mon, 20 Apr 2026 13:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691398; cv=none; b=PUR4tpZd8CI79RC2kalA3fEuA4ngg7ewt2rUCyjJa3CcxckdYbFJ8teRJGu+81f0o7jedKQMtDuK1MZEqxY3l3YRT1a1DX1JZ8cFjR0p2vk3G9lM/j3L0b9K6ZW/fmFLLHkGTDepZD/gRQQVjJLV2ORmt5Lp9PVib2mF7wFVInU=
+	t=1776691400; cv=none; b=Ie3GW0HRsNJAN/w7/YxpBP+Gd77rPzpCCAwPVYLbX6zjqjpLoqYyiDiCuLsPlBiaQk8MbrcXAyPAdR42Hu+vZ4b+38UIV4uYvSDFw+KTKui82v/Tu3U6iNPQVNL3v6O6DeCxDwy2PUCzWbvJzkmel/xKUy5g35r/cS6TiWCS5gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691398; c=relaxed/simple;
-	bh=4Ew+9P1AhCIc/hFMFZX1yd3SOp26GdjQC76CnuAw4eY=;
+	s=arc-20240116; t=1776691400; c=relaxed/simple;
+	bh=ilHKaWdBK9xAIgteGoH8Gkqxmn+NqMVwZI2GHoTdqIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JmCLQAchEp+gHUzvi7UZV3JVyH2jp2xUVArIKOEloKFvKdDiURiMCzeDOvSYRbnJE/mdwx5p2HKVdA2LgnqJg8bxLcr1YgIOWUKX52EubpmnSnwK0qbF7ZIVSLQe2tl3nnzbClXlK0kpOk5ORLE0LymJ0Sxn2dPgnGMf9muQDjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fSret4Nr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Mp/rqSi25lXrlnFz1yWrVMtY0i+sMmOr/bzA20nJgR+YMq3Lof/F1enIM1/rgtl+f7iAJmh/ZDsvSE2CYY0GrDtwk4frX5ZMQTcyCg1JoYRlDByyB8tw4Rz6lAqrkAYoPcuwsiPoctlpoB7V2ndopLeAagdScO/HmBgAh2YZtvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bd9SDOXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fSret4Nr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A8DC2BCB7;
-	Mon, 20 Apr 2026 13:23:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bd9SDOXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00E7C2BCB4;
+	Mon, 20 Apr 2026 13:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691398;
-	bh=4Ew+9P1AhCIc/hFMFZX1yd3SOp26GdjQC76CnuAw4eY=;
+	s=k20201202; t=1776691400;
+	bh=ilHKaWdBK9xAIgteGoH8Gkqxmn+NqMVwZI2GHoTdqIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fSret4Nr/dT4WI0ejo0jrquAkS3QgSrfYNw6HWDYnF8qXQjQF/d9dCAjSJNT/EerC
-	 ofT1iBDn4z/v15MvAyWJDVSMz3FAnIpobV7u3ziVGRnDMb/pfOParuYSss12DImyA7
-	 VrM65Lw22Xdya8WaVwVoVBKz3C/ypKddFgupEONNj9GhF+VKk00PuRU4c0+dBnyR3u
-	 3IMaKSK6C0Vdd+/58A8j62wIeAgi67ulXUS4/eQWD+SC32SipBv2ia+fovTOrPUQX7
-	 O14rmcx1mLErQDKXdnKm5N5JALk/OyZEYXOdocKbdJRV31wweANHaSfMt0mwl5K832
-	 Z0ZM4Td0rrNIg==
+	b=Bd9SDOXHWs2S0ECF3LnSmz1dpo5hqs0mAWu+oJbfVkIy6qAXPEqgVRFdPjs2xsPKS
+	 0vFHCaPr5UY38wyEi/nd2zcIUV0NNCf4FkRxbaTJxrJ/BgqnYVgpSwbJYRPj86jO0f
+	 4WQTVbzITeeXEg5ZIQUih20r6w/9Ozs9DRWJybNdZ6nUGlYxSVBcRXX3iAppQ0TfNS
+	 tjzrUhAYbBL6cVbhsQa5+UX4gKElMUfhLtFjzBLVC2HRtryZFgNk3y2Oos8WelU8cF
+	 ruMryhFDZplHMUmpXpdm1VQmOTBgc1riB6Ic5QIe65rJej2ZH7/Zch1n//1ft8rQOO
+	 j1K0yk+Zi9Tzw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>,
-	Roopni Devanathan <roopni.devanathan@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+Cc: Likun Gao <Likun.Gao@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jjohnson@kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath12k@lists.infradead.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] wifi: ath12k: Fix the assignment of logical link index
-Date: Mon, 20 Apr 2026 09:16:36 -0400
-Message-ID: <20260420132314.1023554-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] drm/amdgpu: fix DF NULL pointer issue for soc24
+Date: Mon, 20 Apr 2026 09:16:37 -0400
+Message-ID: <20260420132314.1023554-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -58,329 +57,355 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>
+From: Likun Gao <Likun.Gao@amd.com>
 
-[ Upstream commit aecb569d7fb689e3e5b0005ca7bd0a2ef28915e8 ]
+[ Upstream commit 50808826a64b4957b7088c789e539dd0a75a1560 ]
 
-Per-link logical index is assigned from the global counter,
-ahsta->num_peer. This logical index is sent to firmware during peer
-association. If there is a failure in creating a link station,
-ath12k_mac_free_unassign_link_sta() clears the link, but does not decrement
-the logical link index. This will result in a higher logical link index for
-the next link station created. Also, if there is a leak in logical link
-index as we assign the incremented num_peer, then the index can exceed the
-maximum valid value of 15.
+If DF function not initialized, NULL pointer issue
+will happen on soc24.
 
-As an example, let's say we have a 2 GHz + 5 GHz + 6 GHz MLO setup. So the
-logical link indices that they have are 0, 1 and 2, respectively. If the
-5 GHz link is removed, logical link index 1 becomes available, and num_peer
-is not reduced to 2 and still remains at 3. If a new 5 GHz link is added
-later, it gets the index 3, instead of reusing link index 1. Also,
-num_peer is increased to 4, though only 3 links are present.
-
-To resolve these, create a bitmap, free_logical_link_idx, that tracks the
-available logical link indices. When a link station is created, select the
-first free logical index and when a link station is removed, mark its
-logical link index as available by setting the bit.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01181-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>
-Signed-off-by: Roopni Devanathan <roopni.devanathan@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260226041911.2434999-1-roopni.devanathan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Likun Gao <Likun.Gao@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need. Let me compile the final
-analysis.
+Now I have all the information I need. Let me compile the full analysis.
 
 ---
 
-## Complete Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+### Step 1.1: PARSE THE SUBJECT LINE
+- **Subsystem:** `drm/amdgpu` (AMD GPU driver)
+- **Action verb:** "fix" - explicitly a bug fix
+- **Summary:** Fix NULL pointer dereference when DF functions are not
+  initialized on soc24
 
-**Step 1.1:**
-- Subsystem: `wifi: ath12k`
-- Action verb: "Fix"
-- Summary: Fixes the assignment of logical link index for MLO (Multi-
-  Link Operation) link stations.
+Record: [drm/amdgpu] [fix] [NULL pointer dereference when df.funcs is
+NULL in soc24_common_hw_init]
 
-**Step 1.2: Tags:**
-- `Tested-on: QCN9274 hw2.0 PCI` — hardware tested
-- `Signed-off-by: Manish Dharanenthiran` — original author
-- `Signed-off-by: Roopni Devanathan` — submitter
-- `Reviewed-by: Rameshkumar Sundaram`, `Baochen Qiang`, `Vasanthakumar
-  Thiagarajan` — 3 Qualcomm reviewers
-- `Link:` to patch.msgid.link — original submission
-- `Signed-off-by: Jeff Johnson` — ath12k maintainer applied it
-- No Fixes: tag, no Reported-by, no syzbot, no Cc: stable — expected for
-  autoselection candidates.
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Signed-off-by:** Likun Gao (author)
+- **Reviewed-by:** Hawking Zhang (AMD architect/maintainer for amdgpu)
+- **Signed-off-by:** Alex Deucher (amdgpu subsystem maintainer)
+- No Fixes: tag, no Cc: stable tag, no Reported-by (expected for manual
+  review)
 
-**Step 1.3:** The commit message describes a clear bug: `num_peer` is a
-monotonically incrementing counter used to assign logical link indices.
-When links are removed, the counter is never decremented, causing
-"leakage" of index values. Over time with link add/remove cycles, the
-index exceeds the firmware's maximum valid value of 15.
+Record: Reviewed by Hawking Zhang (AMD subsystem architect) and merged
+by Alex Deucher (amdgpu maintainer). Strong trust signal.
 
-**Step 1.4:** This is NOT a hidden bug fix — the subject explicitly says
-"Fix".
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The body says: "If DF function not initialized, NULL pointer issue will
+happen on soc24." This describes a concrete crash scenario: when
+`adev->df.funcs` is NULL and code dereferences it to check `->hw_init`.
 
-### PHASE 2: DIFF ANALYSIS
+Record: [Bug: NULL pointer dereference] [Symptom: kernel oops/crash
+during GPU hw_init or resume] [Root cause: missing NULL check before
+dereferencing df.funcs pointer]
 
-**Step 2.1:**
-- `core.h`: 1 line changed (`u8 num_peer` -> `u16
-  free_logical_link_idx_map`)
-- `mac.c`: ~20 lines changed across 3 functions
-- Functions modified: `ath12k_mac_free_unassign_link_sta`,
-  `ath12k_mac_assign_link_sta`, `ath12k_mac_op_sta_state`
-- Scope: well-contained, single-subsystem fix
+### Step 1.4: DETECT HIDDEN BUG FIXES
+Not hidden - this is an explicit "fix" for a NULL pointer dereference.
 
-**Step 2.2:**
-- In `ath12k_mac_free_unassign_link_sta`: adds
-  `ahsta->free_logical_link_idx_map |= BIT(arsta->link_idx)` — returns
-  the freed index to the pool
-- In `ath12k_mac_assign_link_sta`: replaces `arsta->link_idx =
-  ahsta->num_peer++` with bitmap-based allocation using `__ffs()` + adds
-  `-ENOSPC` check
-- In `ath12k_mac_op_sta_state`: initializes
-  `ahsta->free_logical_link_idx_map = U16_MAX` when a new station is
-  created (all bits set = all indices free)
+Record: Not a hidden fix, explicitly labeled as a fix.
 
-**Step 2.3:** Bug category: Logic/correctness bug — resource index leak.
-The old approach only increments, never reuses indices. The new bitmap
-approach properly tracks available indices.
+---
 
-**Step 2.4:** Fix quality:
-- The fix is correct — bitmap tracks available indices, `__ffs` gets the
-  lowest free bit, removal sets the bit back
-- It adds a proper `-ENOSPC` check for when all indices are exhausted
-- Minimal regression risk — the logic is straightforward and only
-  touches the specific allocation/deallocation paths
-- The U16_MAX initialization means 16 indices (0-15), which matches the
-  firmware's maximum
+## PHASE 2: DIFF ANALYSIS
 
-### PHASE 3: GIT HISTORY INVESTIGATION
+### Step 2.1: INVENTORY THE CHANGES
+- **Files:** 1 file changed (`drivers/gpu/drm/amd/amdgpu/soc24.c`)
+- **Lines:** 1 line modified (replacing one condition with a guarded
+  condition)
+- **Function:** `soc24_common_hw_init()`
+- **Scope:** Single-line surgical fix
 
-**Step 3.1:** `git blame` confirms both the buggy code (`num_peer++` at
-line 7124) and the incomplete cleanup function were introduced by the
-same commit: `8e6f8bc286031` ("Add MLO station state change handling")
-by Sriram R, dated 2024-11-21, first in v6.14-rc1.
+Record: [soc24.c: 1 line changed in soc24_common_hw_init()] [Scope:
+single-line surgical fix]
 
-**Step 3.2:** No Fixes: tag present. The bug was introduced by
-8e6f8bc286031.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Before:
 
-**Step 3.3:** No intermediate fixes for the same issue. No prerequisites
-found — the patch modifies code that exists in the tree as-is.
+```481:481:drivers/gpu/drm/amd/amdgpu/soc24.c
+        if (adev->df.funcs->hw_init)
+```
 
-**Step 3.4:** The author (Manish Dharanenthiran) is a regular ath12k
-contributor with 9+ commits in the subsystem. Jeff Johnson (ath12k
-maintainer) applied it.
+After:
+```c
+        if (adev->df.funcs && adev->df.funcs->hw_init)
+```
 
-**Step 3.5:** This is a standalone single-patch fix. No dependencies on
-other commits.
+The code was dereferencing `adev->df.funcs` (which can be NULL) to check
+`hw_init`. The fix adds a NULL guard.
 
-### PHASE 4: MAILING LIST RESEARCH
+Record: [Before: unconditional dereference of df.funcs -> After: guarded
+dereference with NULL check first]
 
-Lore was not accessible due to anti-bot protection. b4 dig could not
-find the exact commit (it hasn't landed in the main tree yet from the
-perspective of this 7.0 tree). The patch was sent to
-`ath12k@lists.infradead.org` and `linux-wireless@vger.kernel.org`. It
-was reviewed by 3 Qualcomm engineers and applied by the ath12k
-maintainer Jeff Johnson.
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Category: NULL pointer dereference (d)**
+- `adev->df.funcs` can be NULL if the DF IP version doesn't match any
+  known version in `amdgpu_discovery.c`
+- The code dereferences this NULL pointer to check `->hw_init`
+- This causes a kernel oops
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+Record: [NULL pointer dereference] [df.funcs can be NULL when DF IP
+version is unrecognized; the fix adds a standard guard consistent with
+soc15.c patterns]
 
-**Step 5.1:** Modified functions: `ath12k_mac_free_unassign_link_sta`,
-`ath12k_mac_assign_link_sta`, `ath12k_mac_op_sta_state`
+### Step 2.4: ASSESS THE FIX QUALITY
+- Obviously correct: the pattern `if (ptr && ptr->member)` is idiomatic
+  C null-guard
+- Consistent: `soc15.c` already uses `if (adev->df.funcs &&
+  adev->df.funcs->hw_init)` and `if (adev->df.funcs &&
+  adev->df.funcs->sw_init)` - the exact same pattern
+- Minimal: single condition addition, no behavior change when df.funcs
+  is non-NULL
+- Regression risk: zero - the only change is skipping the call when
+  funcs is NULL (which would crash otherwise)
 
-**Step 5.2:** `arsta->link_idx` is used in `ath12k_peer_assoc_h_mlo()`
-(line 3531) to populate `ml->logical_link_idx` which is sent to firmware
-via `wmi.c` line 2348 as `ml_params->logical_link_idx`. This is a WMI
-command parameter — an invalid value directly impacts firmware behavior.
+Record: [Obviously correct, minimal, zero regression risk. Matches
+existing patterns in soc15.c]
 
-**Step 5.4:** The path: `ath12k_mac_op_sta_state` ->
-`ath12k_mac_assign_link_sta` -> sets `link_idx` -> later used in
-`ath12k_peer_assoc_h_mlo` -> sent via WMI to firmware. This is a
-standard MLO station association path triggered during Wi-Fi connection
-setup.
+---
 
-### PHASE 6: STABLE TREE ANALYSIS
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 6.1:** The buggy code (`num_peer` field) was introduced in commit
-`8e6f8bc286031`, first in v6.14-rc1. It is:
-- **NOT in v6.13, v6.12, or any earlier LTS tree**
-- Present in v6.14, v6.15, v6.16, v6.17, v6.18, v6.19, v7.0
+### Step 3.1: BLAME THE CHANGED LINES
+The buggy line was introduced by commit `73048bda46c308` ("drm/amdgpu:
+Fix atomics on GFX12") by David Belanger on 2024-06-10. This commit
+added the DF hw_init call to soc24_common_hw_init but omitted the NULL
+check for `adev->df.funcs`, unlike how soc15.c handles it.
 
-For the 7.0.y stable tree specifically, the buggy code IS present.
+Record: [Buggy code introduced by 73048bda46c308, present in v6.11+]
 
-**Step 6.2:** The code in v7.0 matches exactly what the patch expects
-(verified by reading lines 7096-7137 and 6771-6798 of mac.c). The patch
-should apply cleanly.
+### Step 3.2: FOLLOW THE FIXES TAG
+No Fixes: tag present (expected for review candidates).
 
-### PHASE 7: SUBSYSTEM CONTEXT
+Record: [No Fixes: tag, but the implicit fix target is 73048bda46c308]
 
-**Step 7.1:** Subsystem: wireless driver (ath12k) — IMPORTANT for WiFi 7
-users with Qualcomm QCN9274 and similar chipsets. MLO is a key WiFi 7
-feature.
+### Step 3.3: CHECK FILE HISTORY
+soc24.c was created by `98b912c50e449` (first in v6.11). The buggy
+commit `73048bda46c308` was also added in v6.11. The file has had ~20
+subsequent commits (refactoring handle pointers, etc.), but none touched
+this specific df.funcs line.
 
-**Step 7.2:** ath12k is very actively developed (183 commits to mac.c
-between v6.14 and v7.0).
+Record: [Standalone fix, no prerequisites beyond the original buggy
+commit]
 
-### PHASE 8: IMPACT AND RISK ASSESSMENT
+### Step 3.4: CHECK THE AUTHOR
+Likun Gao is a regular AMD GPU contributor with multiple recent commits
+to the amdgpu subsystem. The reviewer (Hawking Zhang) is the original
+soc24.c creator and AMD architect.
 
-**Step 8.1:** Affected users: Users of Qualcomm ath12k WiFi 7 hardware
-with MLO enabled (QCN9274, etc.).
+Record: [Author is a regular AMD contributor; reviewer is the subsystem
+architect]
 
-**Step 8.2:** Trigger: Happens when MLO links are removed and re-added —
-occurs during roaming, channel switching, or temporary link degradation.
-In a typical MLO setup with frequent link changes, this can be triggered
-relatively easily.
+### Step 3.5: DEPENDENCIES
+This fix has no dependencies. It simply adds a NULL check guard to an
+existing conditional. It will apply to any tree that contains commit
+`73048bda46c308`.
 
-**Step 8.3:** Failure mode: Sending an invalid logical link index (>15)
-to firmware can cause firmware malfunction, potential firmware crash, or
-incorrect MLO behavior. Severity: **HIGH** — firmware receives invalid
-commands.
+Record: [No dependencies, standalone fix]
 
-**Step 8.4:**
-- Benefit: Prevents firmware from receiving invalid index values during
-  MLO operations, which could cause connection instability or firmware
-  crashes
-- Risk: LOW — the change is ~20 lines, well-contained, uses standard
-  bitmap operations, reviewed by 3 engineers plus maintainer
-- Ratio: Favorable
+---
 
-### PHASE 9: FINAL SYNTHESIS
+## PHASE 4: MAILING LIST RESEARCH
 
-**Evidence FOR backporting:**
-- Fixes a real, clearly described bug (index leak leading to invalid
-  firmware commands)
-- Small, well-contained fix (~20 lines across 2 files)
-- Obviously correct bitmap-based approach
-- 3 Reviewed-by tags from Qualcomm engineers + maintainer sign-off
-- Tested on hardware (QCN9274 hw2.0)
-- The buggy code exists in v7.0 (target tree)
-- Should apply cleanly
+### Step 4.1: PATCH DISCUSSION
+Found the original submission at
+[spinics](https://www.spinics.net/lists/amd-gfx/msg138858.html).
+Submitted by Alex Deucher on March 6, 2026. No objections or NAKs
+visible. It was part of a batch of AMD GPU fixes.
 
-**Evidence AGAINST backporting:**
-- No Fixes: tag, no syzbot/crash report, no user-reported symptom
-- Replaces a data structure member (counter -> bitmap), slightly more
-  than a trivial patch
-- MLO is relatively new; impact limited to WiFi 7 MLO users
-- No explicit Cc: stable nomination
-- The bug requires specific MLO link add/remove cycles to manifest
+Record: [Found submission on amd-gfx list, no objections, submitted in a
+batch of fixes by the maintainer]
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **Yes** — bitmap approach is
-   straightforward, hardware tested
-2. Fixes a real bug? **Yes** — index leak causing invalid firmware
-   commands
-3. Important issue? **Medium-High** — can cause firmware malfunction in
-   MLO
-4. Small and contained? **Yes** — ~20 lines in 2 files, single subsystem
-5. No new features? **Correct** — pure bug fix
-6. Can apply to stable? **Yes** — code matches cleanly
+### Step 4.2: REVIEWERS
+Reviewed by Hawking Zhang (AMD architect), signed off by Alex Deucher
+(subsystem maintainer). Both are the top-level amdgpu maintainers.
 
-**Verification:**
-- [Phase 1] Parsed tags: 3 Reviewed-by, tested-on, Link, maintainer SOB
-- [Phase 2] Diff analysis: replaces `num_peer` counter with
-  `free_logical_link_idx_map` bitmap across 3 functions
-- [Phase 3] git blame: buggy code introduced in 8e6f8bc286031
-  (v6.14-rc1), confirmed by `git merge-base --is-ancestor` checks
-- [Phase 3] `git merge-base --is-ancestor 8e6f8bc286031 v6.13` → Not in
-  v6.13; `v6.14` → Yes
-- [Phase 3] Author has 9+ ath12k commits, is a regular contributor
-- [Phase 4] b4 dig could not find the commit (not merged in this tree);
-  lore blocked by anti-bot
-- [Phase 5] Traced `link_idx` usage: set in `ath12k_mac_assign_link_sta`
-  → used in `ath12k_peer_assoc_h_mlo` (line 3531) → sent to firmware via
-  WMI (wmi.c line 2348)
-- [Phase 6] Buggy code confirmed present in v7.0 tree; code at lines
-  7096-7137 matches patch context exactly
-- [Phase 6] NOT in v6.13 or earlier LTS trees (v6.12.y, v6.6.y, etc.)
-- [Phase 8] Invalid logical_link_idx sent to firmware can cause firmware
-  malfunction
-- UNVERIFIED: Could not access lore discussion to check for reviewer
-  stable nominations or concerns
+Record: [Reviewed and merged by subsystem maintainers]
 
-This is a real bug fix for a resource index leak in WiFi 7 MLO handling
-that can lead to invalid firmware commands. The fix is small, self-
-contained, well-reviewed, and hardware-tested. The buggy code exists in
-the target 7.0.y tree.
+### Step 4.3-4.5: BUG REPORT / RELATED PATCHES / STABLE HISTORY
+No syzbot report, no explicit bug report URL. This appears to be an
+internally-discovered issue at AMD.
+
+Record: [Internal AMD finding, no external bug report]
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1-5.2: KEY FUNCTIONS AND CALLERS
+`soc24_common_hw_init()` is called:
+1. During GPU initialization via the `amd_ip_funcs` table (line 588:
+   `.hw_init = soc24_common_hw_init`)
+2. During resume via `soc24_common_resume()` (line 524-527)
+
+Both are common execution paths for any system with soc24 hardware.
+
+### Step 5.3-5.4: WHY df.funcs CAN BE NULL
+In `amdgpu_discovery.c`, `adev->df.funcs` is set in a switch on
+`DF_HWIP` version. The default case is `break` (no assignment). If a
+soc24 device has a DF IP version not in the list, `df.funcs` remains
+NULL. This is the exact trigger.
+
+### Step 5.5: SIMILAR PATTERNS
+Verified: `soc15.c` consistently uses the guarded pattern:
+- Line 1253: `if (adev->df.funcs && adev->df.funcs->sw_init)`
+- Line 1264: `if (adev->df.funcs && adev->df.funcs->sw_fini)`
+- Line 1498: `if (adev->df.funcs &&
+  adev->df.funcs->get_clockgating_state)`
+- `gmc_v9_0.c` also guards with `if (adev->df.funcs && ...)`
+
+soc24.c is the ONLY file missing this guard.
+
+Record: [All other callers guard df.funcs with NULL check; soc24.c is
+the sole exception]
+
+---
+
+## PHASE 6: STABLE TREE ANALYSIS
+
+### Step 6.1: BUGGY CODE IN STABLE TREES
+- `soc24.c` first appeared in v6.11
+- The buggy commit `73048bda46c308` is in v6.11+
+- Therefore the bug exists in stable trees: **6.11.y, 6.12.y, 7.0.y**
+- Not present in 6.6.y or earlier (soc24.c doesn't exist there)
+
+Record: [Bug exists in 6.11.y, 6.12.y, 7.0.y]
+
+### Step 6.2: BACKPORT COMPLICATIONS
+The fix is a single-line change. No conflicting refactoring has touched
+this specific line. Clean apply expected.
+
+Record: [Expected clean apply to all affected stable trees]
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem:** GPU driver (drm/amdgpu) - IMPORTANT
+- AMD GPUs are extremely common in desktop and laptop systems
+- soc24 corresponds to RDNA4 generation (GC 12.0.x) - recent and
+  actively shipping hardware
+
+Record: [drm/amdgpu] [IMPORTANT - affects users of recent AMD GPUs]
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: WHO IS AFFECTED
+All users with soc24 (RDNA4) AMD GPU hardware where the DF IP version
+doesn't match a listed version in discovery.
+
+### Step 8.2: TRIGGER CONDITIONS
+The crash triggers during:
+- GPU hardware initialization (every boot)
+- GPU resume from suspend (every suspend/resume cycle)
+These are unavoidable common paths.
+
+### Step 8.3: FAILURE MODE SEVERITY
+**CRITICAL** - NULL pointer dereference causes a kernel oops, crashing
+the system during boot or resume. The GPU driver is essential for
+display output.
+
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit:** Prevents kernel oops on boot/resume for soc24 users -
+  VERY HIGH
+- **Risk:** 1-line addition of a NULL check, zero chance of regression -
+  VERY LOW
+- **Ratio:** Extremely favorable
+
+Record: [Benefit: VERY HIGH (prevents crash), Risk: VERY LOW (1-line
+NULL guard)]
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: EVIDENCE COMPILATION
+
+**FOR backporting:**
+- Fixes a NULL pointer dereference (kernel oops/crash)
+- Affects GPU init and resume paths (common, unavoidable paths)
+- Single-line fix, obviously correct
+- Matches existing defensive patterns in soc15.c, gmc_v9_0.c,
+  amdgpu_ras.c
+- Reviewed by AMD architect (Hawking Zhang), merged by subsystem
+  maintainer (Alex Deucher)
+- Zero regression risk
+- Affects actively-shipping hardware (RDNA4)
+
+**AGAINST backporting:**
+- None identified
+
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** - standard NULL guard, matches
+   existing patterns, reviewed by maintainers
+2. Fixes a real bug? **YES** - NULL pointer dereference → kernel oops
+3. Important issue? **YES** - system crash during GPU init/resume
+   (CRITICAL)
+4. Small and contained? **YES** - 1 line changed in 1 file
+5. No new features or APIs? **YES** - purely defensive check
+6. Can apply to stable? **YES** - clean apply expected for 6.11.y+
+
+### Step 9.3: EXCEPTION CATEGORIES
+Not an exception case; this is a standard bug fix that meets all normal
+criteria.
+
+### Step 9.4: DECISION
+This is a textbook stable backport candidate: a one-line NULL pointer
+check that prevents a kernel oops during GPU initialization and resume
+on recent AMD hardware.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed tags: Reviewed-by: Hawking Zhang, SOB: Likun Gao,
+  Alex Deucher
+- [Phase 2] Diff analysis: 1 line changed in soc24_common_hw_init(),
+  adds `adev->df.funcs &&` guard
+- [Phase 3] git blame: buggy code introduced in commit 73048bda46c308
+  (v6.11), "Fix atomics on GFX12"
+- [Phase 3] git merge-base: confirmed 73048bda46c308 is in v6.11+,
+  soc24.c first added in v6.11
+- [Phase 4] Found original submission at spinics amd-gfx list, no NAKs
+  or concerns
+- [Phase 5] Grep for `adev->df.funcs`: soc15.c, gmc_v9_0.c, amdgpu_ras.c
+  all use NULL guard; soc24.c is the only exception
+- [Phase 5] amdgpu_discovery.c: df.funcs assignment has a `default:
+  break` that leaves funcs NULL for unrecognized DF versions
+- [Phase 5] soc24_common_resume() calls soc24_common_hw_init(),
+  confirming crash on both init and resume
+- [Phase 6] Bug exists in 6.11.y, 6.12.y, 7.0.y; not in 6.6.y or earlier
+  (soc24.c not present)
+- [Phase 8] Failure mode: NULL deref -> kernel oops during GPU
+  init/resume, severity CRITICAL
 
 **YES**
 
- drivers/net/wireless/ath/ath12k/core.h |  2 +-
- drivers/net/wireless/ath/ath12k/mac.c  | 16 ++++++++++++++--
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc24.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
-index 990934ec92fca..5498ff285102b 100644
---- a/drivers/net/wireless/ath/ath12k/core.h
-+++ b/drivers/net/wireless/ath/ath12k/core.h
-@@ -522,7 +522,7 @@ struct ath12k_sta {
- 	u16 links_map;
- 	u8 assoc_link_id;
- 	u16 ml_peer_id;
--	u8 num_peer;
-+	u16 free_logical_link_idx_map;
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc24.c b/drivers/gpu/drm/amd/amdgpu/soc24.c
+index ecb6c3fcfbd15..984262936545f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc24.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc24.c
+@@ -484,7 +484,7 @@ static int soc24_common_hw_init(struct amdgpu_ip_block *ip_block)
+ 	if (adev->nbio.funcs->remap_hdp_registers)
+ 		adev->nbio.funcs->remap_hdp_registers(adev);
  
- 	enum ieee80211_sta_state state;
- };
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index b253d1e3f4052..769d240e3ae24 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -6784,6 +6784,8 @@ static void ath12k_mac_free_unassign_link_sta(struct ath12k_hw *ah,
- 		return;
+-	if (adev->df.funcs->hw_init)
++	if (adev->df.funcs && adev->df.funcs->hw_init)
+ 		adev->df.funcs->hw_init(adev);
  
- 	ahsta->links_map &= ~BIT(link_id);
-+	ahsta->free_logical_link_idx_map |= BIT(arsta->link_idx);
-+
- 	rcu_assign_pointer(ahsta->link[link_id], NULL);
- 	synchronize_rcu();
- 
-@@ -7102,6 +7104,7 @@ static int ath12k_mac_assign_link_sta(struct ath12k_hw *ah,
- 	struct ieee80211_sta *sta = ath12k_ahsta_to_sta(ahsta);
- 	struct ieee80211_link_sta *link_sta;
- 	struct ath12k_link_vif *arvif;
-+	int link_idx;
- 
- 	lockdep_assert_wiphy(ah->hw->wiphy);
- 
-@@ -7120,8 +7123,16 @@ static int ath12k_mac_assign_link_sta(struct ath12k_hw *ah,
- 
- 	ether_addr_copy(arsta->addr, link_sta->addr);
- 
--	/* logical index of the link sta in order of creation */
--	arsta->link_idx = ahsta->num_peer++;
-+	if (!ahsta->free_logical_link_idx_map)
-+		return -ENOSPC;
-+
-+	/*
-+	 * Allocate a logical link index by selecting the first available bit
-+	 * from the free logical index map
-+	 */
-+	link_idx = __ffs(ahsta->free_logical_link_idx_map);
-+	ahsta->free_logical_link_idx_map &= ~BIT(link_idx);
-+	arsta->link_idx = link_idx;
- 
- 	arsta->link_id = link_id;
- 	ahsta->links_map |= BIT(arsta->link_id);
-@@ -7630,6 +7641,7 @@ int ath12k_mac_op_sta_state(struct ieee80211_hw *hw,
- 	if (old_state == IEEE80211_STA_NOTEXIST &&
- 	    new_state == IEEE80211_STA_NONE) {
- 		memset(ahsta, 0, sizeof(*ahsta));
-+		ahsta->free_logical_link_idx_map = U16_MAX;
- 
- 		arsta = &ahsta->deflink;
- 
+ 	/* enable the doorbell aperture */
 -- 
 2.53.0
 
