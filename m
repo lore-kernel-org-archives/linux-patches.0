@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41EB3382DE;
-	Mon, 20 Apr 2026 15:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF8D329C6D;
+	Mon, 20 Apr 2026 15:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700029; cv=none; b=UXMxrXAe4FDL7AkwAVL5H6hTjoDINoallWtxZptrtKDLpMMx6BrySKmbg/oChklDdLuE3Yyz/WnWFMAboJUXuXFXvj5u8QRxWpcOE/5/tfMINQp9vcKmBWZQEHNqbvtkwjjyvw2/zd+ZuLZZ4Gf/1rqtIgFihjDyGs9dd/62m4g=
+	t=1776700032; cv=none; b=V0mXTh+sGrxsu6xX3wJKRApS0wnAntEw5S0arg/nxj7BPL7C8MGLxC6WlNRwILest1R3WuOISzGvOqe5OPxNK4r9fLPfzFC1of6htR4LdMyYtY4i1leuZECH8BKFQPyMfzv1l8IpApxMUPgmmI5U+w/0/43GgVyWlATX6oYUdGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700029; c=relaxed/simple;
-	bh=OiJklIshNJjfLer4r4mcEhWbsXV6bEs+GanoY9VXjmU=;
+	s=arc-20240116; t=1776700032; c=relaxed/simple;
+	bh=Ko/N8nl94QdCgFfHOILKk0pQ8ul0kWPmdiK16sI1Rec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kQ6VsbNs7PIYDQT9uO3orHjIGNW/7f/QeyVDYPsUj+/86WC/IYQR4CZof/g2a74T5EJxsfCC+YFsRX5DiUFMRlLqxa+lkLugUZBQDzddtZ7JfJuwSzYHpTQme5Qg0HjLhPwBv3B+Emk4WPUk5IKLZNsbNsI5cX2vFiMnbPGmxwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Owp8Uavc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dTrmR1a9M5ahin/0Yn7J8q5Cbgd51wrBPFmdxeVvo1HTWdFSjiHA8uT4tN3TLradJwp96jePAuTuOGHJZrrs5w9HlhrQmj3vuMafzsOcmSnSzY8XFAV9WKc531SBIaiu+DNxWyhhA5lBJvuqzun20x+4sFoYPah6c1VfrDpGeAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssfKU/eK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Owp8Uavc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5848EC19425;
-	Mon, 20 Apr 2026 15:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssfKU/eK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A38C19425;
+	Mon, 20 Apr 2026 15:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700029;
-	bh=OiJklIshNJjfLer4r4mcEhWbsXV6bEs+GanoY9VXjmU=;
+	s=korg; t=1776700032;
+	bh=Ko/N8nl94QdCgFfHOILKk0pQ8ul0kWPmdiK16sI1Rec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Owp8Uavc7Dgdw2lEg3chGfNA/nyJFxOPS55FUTon5ws3u8pO1w6ex6U/+bNu5I6tI
-	 4ZY9kO5MIHOb53b1OLmza0ryccLPBa3GWtHCHj2d0Y3Ur89/g/R2/5biTvdCTtJSWj
-	 fPCotOd1LbZ6YltbjMylXrokhgytrY5Z8W7n+s0g=
+	b=ssfKU/eKgXajYyJvLfoC8aYveyQzzZKYBE8BJ8NrRHAFY8mBfLls8ClrZJkNNwFG0
+	 qzVLbuzpmJtxLkNQjDvBQjxJmBj8rm9yhWDiAX1zmWE6Nu9UtxMeOC8fTpY8kERc4C
+	 cLVe6qXmgkREV7pFy3qHvRGWpEvNWPRdrENTX3GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Denis Benato <denis.benato@linux.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 015/220] platform/x86: asus-nb-wmi: add DMI quirk for ASUS ROG Flow Z13-KJP GZ302EAC
-Date: Mon, 20 Apr 2026 17:39:16 +0200
-Message-ID: <20260420153934.575573792@linuxfoundation.org>
+Subject: [PATCH 6.19 016/220] btrfs: fix zero size inode with non-zero size after log replay
+Date: Mon, 20 Apr 2026 17:39:17 +0200
+Message-ID: <20260420153934.611314759@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -47,46 +46,222 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 0198d2743207d67f995cd6df89e267e1b9f5e1f1 ]
+[ Upstream commit 5254d4181add9dfaa5e3519edd71cc8f752b2f85 ]
 
-The ASUS ROG Flow Z13-KJP GZ302EAC model uses sys_vendor name ASUS
-rather than ASUSTeK COMPUTER INC., but it needs the same folio quirk as
-the other ROG Flow Z13. To keep things simple, just match on sys_vendor
-ASUS since it covers both.
+When logging that an inode exists, as part of logging a new name or
+logging new dir entries for a directory, we always set the generation of
+the logged inode item to 0. This is to signal during log replay (in
+overwrite_item()), that we should not set the i_size since we only logged
+that an inode exists, so the i_size of the inode in the subvolume tree
+must be preserved (as when we log new names or that an inode exists, we
+don't log extents).
 
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Link: https://patch.msgid.link/20260312212246.1608080-1-matthew.schwartz@linux.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+This works fine except when we have already logged an inode in full mode
+or it's the first time we are logging an inode created in a past
+transaction, that inode has a new i_size of 0 and then we log a new name
+for the inode (due to a new hardlink or a rename), in which case we log
+an i_size of 0 for the inode and a generation of 0, which causes the log
+replay code to not update the inode's i_size to 0 (in overwrite_item()).
+
+An example scenario:
+
+  mkdir /mnt/dir
+  xfs_io -f -c "pwrite 0 64K" /mnt/dir/foo
+
+  sync
+
+  xfs_io -c "truncate 0" -c "fsync" /mnt/dir/foo
+
+  ln /mnt/dir/foo /mnt/dir/bar
+
+  xfs_io -c "fsync" /mnt/dir
+
+  <power fail>
+
+After log replay the file remains with a size of 64K. This is because when
+we first log the inode, when we fsync file foo, we log its current i_size
+of 0, and then when we create a hard link we log again the inode in exists
+mode (LOG_INODE_EXISTS) but we set a generation of 0 for the inode item we
+add to the log tree, so during log replay overwrite_item() sees that the
+generation is 0 and i_size is 0 so we skip updating the inode's i_size
+from 64K to 0.
+
+Fix this by making sure at fill_inode_item() we always log the real
+generation of the inode if it was logged in the current transaction with
+the i_size we logged before. Also if an inode created in a previous
+transaction is logged in exists mode only, make sure we log the i_size
+stored in the inode item located from the commit root, so that if we log
+multiple times that the inode exists we get the correct i_size.
+
+A test case for fstests will follow soon.
+
+Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/af8c15fa-4e41-4bb2-885c-0bc4e97532a6@gmail.com/
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/tree-log.c | 98 ++++++++++++++++++++++++++++++---------------
+ 1 file changed, 65 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index a38a65f5c550d..b4677c5bba5b4 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -548,7 +548,7 @@ static const struct dmi_system_id asus_quirks[] = {
- 		.callback = dmi_matched,
- 		.ident = "ASUS ROG Z13",
- 		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow Z13"),
- 		},
- 		.driver_data = &quirk_asus_z13,
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 6c40f48cc194d..4cea0489f121c 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -4609,21 +4609,32 @@ static void fill_inode_item(struct btrfs_trans_handle *trans,
+ 			    struct inode *inode, bool log_inode_only,
+ 			    u64 logged_isize)
+ {
++	u64 gen = BTRFS_I(inode)->generation;
+ 	u64 flags;
+ 
+ 	if (log_inode_only) {
+-		/* set the generation to zero so the recover code
+-		 * can tell the difference between an logging
+-		 * just to say 'this inode exists' and a logging
+-		 * to say 'update this inode with these values'
++		/*
++		 * Set the generation to zero so the recover code can tell the
++		 * difference between a logging just to say 'this inode exists'
++		 * and a logging to say 'update this inode with these values'.
++		 * But only if the inode was not already logged before.
++		 * We access ->logged_trans directly since it was already set
++		 * up in the call chain by btrfs_log_inode(), and data_race()
++		 * to avoid false alerts from KCSAN and since it was set already
++		 * and one can set it to 0 since that only happens on eviction
++		 * and we are holding a ref on the inode.
+ 		 */
+-		btrfs_set_inode_generation(leaf, item, 0);
++		ASSERT(data_race(BTRFS_I(inode)->logged_trans) > 0);
++		if (data_race(BTRFS_I(inode)->logged_trans) < trans->transid)
++			gen = 0;
++
+ 		btrfs_set_inode_size(leaf, item, logged_isize);
+ 	} else {
+-		btrfs_set_inode_generation(leaf, item, BTRFS_I(inode)->generation);
+ 		btrfs_set_inode_size(leaf, item, inode->i_size);
+ 	}
+ 
++	btrfs_set_inode_generation(leaf, item, gen);
++
+ 	btrfs_set_inode_uid(leaf, item, i_uid_read(inode));
+ 	btrfs_set_inode_gid(leaf, item, i_gid_read(inode));
+ 	btrfs_set_inode_mode(leaf, item, inode->i_mode);
+@@ -5427,42 +5438,63 @@ static int btrfs_log_changed_extents(struct btrfs_trans_handle *trans,
+ 	return 0;
+ }
+ 
+-static int logged_inode_size(struct btrfs_root *log, struct btrfs_inode *inode,
+-			     struct btrfs_path *path, u64 *size_ret)
++static int get_inode_size_to_log(struct btrfs_trans_handle *trans,
++				 struct btrfs_inode *inode,
++				 struct btrfs_path *path, u64 *size_ret)
+ {
+ 	struct btrfs_key key;
++	struct btrfs_inode_item *item;
+ 	int ret;
+ 
+ 	key.objectid = btrfs_ino(inode);
+ 	key.type = BTRFS_INODE_ITEM_KEY;
+ 	key.offset = 0;
+ 
+-	ret = btrfs_search_slot(NULL, log, &key, path, 0, 0);
+-	if (ret < 0) {
+-		return ret;
+-	} else if (ret > 0) {
+-		*size_ret = 0;
+-	} else {
+-		struct btrfs_inode_item *item;
++	/*
++	 * Our caller called inode_logged(), so logged_trans is up to date.
++	 * Use data_race() to silence any warning from KCSAN. Once logged_trans
++	 * is set, it can only be reset to 0 after inode eviction.
++	 */
++	if (data_race(inode->logged_trans) == trans->transid) {
++		ret = btrfs_search_slot(NULL, inode->root->log_root, &key, path, 0, 0);
++	} else if (inode->generation < trans->transid) {
++		path->search_commit_root = true;
++		path->skip_locking = true;
++		ret = btrfs_search_slot(NULL, inode->root, &key, path, 0, 0);
++		path->search_commit_root = false;
++		path->skip_locking = false;
+ 
+-		item = btrfs_item_ptr(path->nodes[0], path->slots[0],
+-				      struct btrfs_inode_item);
+-		*size_ret = btrfs_inode_size(path->nodes[0], item);
+-		/*
+-		 * If the in-memory inode's i_size is smaller then the inode
+-		 * size stored in the btree, return the inode's i_size, so
+-		 * that we get a correct inode size after replaying the log
+-		 * when before a power failure we had a shrinking truncate
+-		 * followed by addition of a new name (rename / new hard link).
+-		 * Otherwise return the inode size from the btree, to avoid
+-		 * data loss when replaying a log due to previously doing a
+-		 * write that expands the inode's size and logging a new name
+-		 * immediately after.
+-		 */
+-		if (*size_ret > inode->vfs_inode.i_size)
+-			*size_ret = inode->vfs_inode.i_size;
++	} else {
++		*size_ret = 0;
++		return 0;
+ 	}
+ 
++	/*
++	 * If the inode was logged before or is from a past transaction, then
++	 * its inode item must exist in the log root or in the commit root.
++	 */
++	ASSERT(ret <= 0);
++	if (WARN_ON_ONCE(ret > 0))
++		ret = -ENOENT;
++
++	if (ret < 0)
++		return ret;
++
++	item = btrfs_item_ptr(path->nodes[0], path->slots[0],
++			      struct btrfs_inode_item);
++	*size_ret = btrfs_inode_size(path->nodes[0], item);
++	/*
++	 * If the in-memory inode's i_size is smaller then the inode size stored
++	 * in the btree, return the inode's i_size, so that we get a correct
++	 * inode size after replaying the log when before a power failure we had
++	 * a shrinking truncate followed by addition of a new name (rename / new
++	 * hard link). Otherwise return the inode size from the btree, to avoid
++	 * data loss when replaying a log due to previously doing a write that
++	 * expands the inode's size and logging a new name immediately after.
++	 */
++	if (*size_ret > inode->vfs_inode.i_size)
++		*size_ret = inode->vfs_inode.i_size;
++
+ 	btrfs_release_path(path);
+ 	return 0;
+ }
+@@ -6975,7 +7007,7 @@ static int btrfs_log_inode(struct btrfs_trans_handle *trans,
+ 			ret = drop_inode_items(trans, log, path, inode,
+ 					       BTRFS_XATTR_ITEM_KEY);
+ 	} else {
+-		if (inode_only == LOG_INODE_EXISTS && ctx->logged_before) {
++		if (inode_only == LOG_INODE_EXISTS) {
+ 			/*
+ 			 * Make sure the new inode item we write to the log has
+ 			 * the same isize as the current one (if it exists).
+@@ -6989,7 +7021,7 @@ static int btrfs_log_inode(struct btrfs_trans_handle *trans,
+ 			 * (zeroes), as if an expanding truncate happened,
+ 			 * instead of getting a file of 4Kb only.
+ 			 */
+-			ret = logged_inode_size(log, inode, path, &logged_isize);
++			ret = get_inode_size_to_log(trans, inode, path, &logged_isize);
+ 			if (ret)
+ 				goto out_unlock;
+ 		}
 -- 
 2.53.0
 
