@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D940331A78;
-	Mon, 20 Apr 2026 15:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A160E33B970;
+	Mon, 20 Apr 2026 15:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700698; cv=none; b=tFi679ZLwtgYf4/NSnnaSGBBm5+uNTOL8DmRsXumIQF5idpROHmUx90maN7rVeQ845fv9rmKh1fY2qr6xv4MEkGxN1B68qK1xyhl0nC+pMK6ARnBLhvjwEOWunmOfqydQCGwh4Ko5hr96E2pXPLBd+31UBGuDrvoQCdrVf9VVeA=
+	t=1776700700; cv=none; b=WUn6ELT+Tf50JC6AwHuXgJszZ63eBig+IIr/3kQL5nYfS+zHIKhEXf/tu5LRQp6FKUY+D+fK1zP72PXVWOF+F7pe3Bfublf5AsH21KLnMRrF7F7jpTYcHDtyWrfEn8JK+mFC1QZHTdAmtshiWdlgR+7hRB3mEsOJFZ0wxC3T5NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700698; c=relaxed/simple;
-	bh=T2iQfYM4fHqQDWauMj5SnSLenOX5u1Pi2+VQOns34Bk=;
+	s=arc-20240116; t=1776700700; c=relaxed/simple;
+	bh=PpMkceW8RuSsFJI0WlVijzvOiCZN8abI5Dd7bZiyq1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGIA2ZZUh0EMJaLNQB8Xh4VO4336jBj5CUNP+b9rQKPSdcC47Ac2rq6001m8PrfF0Udynat0Fk550rxtvCQ9IPK1pqRQs1a1498JlZdmAEEgcQ3f8Xeb9rh0kfjfCRu+2md6RN08YFQtVlX9Dc6QNNJqOPEGdFi5CiSJCAOzWUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPSRWAab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jKEeLUa5UrchV1/U+gfLnpDFSPuXnhExngNmMaDqE4YX+pGI8cm7i9v8i2DuQ4cV7IuFnjCU3n+G3zt2mS5HVXKNOzApDhZvjYUbtINn8Hw1aSSCKO1w8U8xIbHbP9wV9c1o+YSDDdAzIWOvfgRV8xiOnNVPLMzD9WgaR9lDbhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDZSVYRO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPSRWAab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36C4C2BCB6;
-	Mon, 20 Apr 2026 15:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDZSVYRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4ACC2BCB6;
+	Mon, 20 Apr 2026 15:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700698;
-	bh=T2iQfYM4fHqQDWauMj5SnSLenOX5u1Pi2+VQOns34Bk=;
+	s=korg; t=1776700700;
+	bh=PpMkceW8RuSsFJI0WlVijzvOiCZN8abI5Dd7bZiyq1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPSRWAabk3pb2W4yYJjDxHsR9O2MGCLAB6snvw9bVDu51rnpbYCAVw0Mdi8PUusaZ
-	 Cw+UmhI1btDO2BbSgBdjVDsWybso62Ss7700f2zldD8+D+nCmUR4AiQ4T+6lzzal6Y
-	 YiQzB9h0Bzau51tLj7fVgE1BftF9pgPRcg8Ua580=
+	b=YDZSVYRObDk/k28LmUKth7MCvUJfRu96bZ7aSLTbvciAdXhXyBUC5PwoQY/Uu5LIN
+	 DW3ob0A3HtMI6QCDhwPbqulwAQ+Adok/5cwIEhlmXUXgA4uVJ2OowlDHGllRi/aA65
+	 ZeT7emqRx3PyM4WbFuVdvyIUb9kHvcPabekCKc8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Imrane <ihalim.me@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 053/198] arm64: dts: qcom: monaco: Fix UART10 pinconf
-Date: Mon, 20 Apr 2026 17:40:32 +0200
-Message-ID: <20260420153937.525240578@linuxfoundation.org>
+Subject: [PATCH 6.18 036/198] platform/x86/amd: pmc: Add Thinkpad L14 Gen3 to quirk_s2idle_bug
+Date: Mon, 20 Apr 2026 17:40:15 +0200
+Message-ID: <20260420153936.918255178@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -47,50 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 5b2a16ab0dbd090dc545c05ee79a077cc7a9c1e0 ]
+[ Upstream commit 1a9452c428a6b76f0b797bae21daa454fccef1a2 ]
 
-UART10 RTS and TX pins were incorrectly mapped to gpio84 and gpio85.
-Correct them to gpio85 (RTS) and gpio86 (TX) to match the hardware
-I/O mapping.
+This platform is a similar vintage of platforms that had a BIOS bug
+leading to a 10s delay at resume from s0i3.
 
-Fixes: 467284a3097f ("arm64: dts: qcom: qcs8300: Add QUPv3 configuration")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260202155611.1568-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Add a quirk for it.
+
+Reported-by: Imrane <ihalim.me@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221273
+Tested-by: Imrane <ihalim.me@gmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260324211647.357924-1-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs8300.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-index 8d78ccac411e4..b8d4a75baee22 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-@@ -5430,12 +5430,12 @@ qup_uart10_cts: qup-uart10-cts-state {
- 			};
- 
- 			qup_uart10_rts: qup-uart10-rts-state {
--				pins = "gpio84";
-+				pins = "gpio85";
- 				function = "qup1_se2";
- 			};
- 
- 			qup_uart10_tx: qup-uart10-tx-state {
--				pins = "gpio85";
-+				pins = "gpio86";
- 				function = "qup1_se2";
- 			};
- 
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index ed285afaf9b0d..24506e3429430 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -203,6 +203,15 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
+ 		}
+ 	},
++	/* https://bugzilla.kernel.org/show_bug.cgi?id=221273 */
++	{
++		.ident = "Thinkpad L14 Gen3",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21C6"),
++		}
++	},
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
+ 	{
+ 		.ident = "Lenovo Yoga 6 13ALC6",
 -- 
 2.53.0
 
