@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F29C33AD9A;
-	Mon, 20 Apr 2026 15:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60E933AD9A;
+	Mon, 20 Apr 2026 15:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700657; cv=none; b=d8KPfmtMXPR4m+K9uzQYfm5k8jMBW629mR6FTLh6M3T7Au7RHb2A8woee0WDKyisqx9vwoxXGq7uY/2bGZQKI3Xhx4jWHi5vgJQhbTKsPSVn8GJ8rbRteEEbmIJ+DzSRarh92kgpvW3qQpP1+GESKGRqpF+Z26Oq/akuKgoeakQ=
+	t=1776700659; cv=none; b=k2aWy7pL3i9J59BllrVXNAMYN+8g37aLbazxD2zYuT4cSRcEkQ0nTBimAokaInJoOLDddVB4cDMd4pCreblGwBi8TitccPSwz4XJ2w3SRixWXoHH9uKN+nNbm+6gO/UkysdrqMe6OT4jlA8MS/mYerrBi80n/KOHs8DJlfed80M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700657; c=relaxed/simple;
-	bh=j9YH13FvaPsJUGpEUWwgRO49jUXjqo1Kb0l/RTIgEqo=;
+	s=arc-20240116; t=1776700659; c=relaxed/simple;
+	bh=tBCppNsrOW4RJrNE8Q/IGw4wPN7yJ+F7rerW7Wf7mgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9Q6sq5mPPp2FY9HVVqQD7xs99aVIZkz3TNQK03q8smgSPCwtrNvYolLb+pxHWTMxSOgNSOS45LznlYSUJbUNyoiol0zFhJ+3wTcoDWCkyytvZdqM5HKUrQS/G3d53pQvHow733FBRgaIjuYYc7QvkuHanWpGJOQ9ORkinhtHE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/L8uEKK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WuC95BP8FX6fHCH8//vOEbbxU/+eysXX+eW4FynvX1rLGzV+Yh0PNL4GbT3HrxX6ckMz0xUTptdxO9XiKYongAIqZyPTvIXYkGwOdhhciDdQjhrisdHKig9w+H/0rBa8VI3LHe3M3k+mvtf+cTy7fnCZCAnUA/c1CqAW8puD4RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4I1v0zD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/L8uEKK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6632C19425;
-	Mon, 20 Apr 2026 15:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4I1v0zD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D052C19425;
+	Mon, 20 Apr 2026 15:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700657;
-	bh=j9YH13FvaPsJUGpEUWwgRO49jUXjqo1Kb0l/RTIgEqo=;
+	s=korg; t=1776700659;
+	bh=tBCppNsrOW4RJrNE8Q/IGw4wPN7yJ+F7rerW7Wf7mgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/L8uEKKBzp3aKlDWmUF4Y4BXHbEr0E6TXWYFQvR3/qjIw5MthpQfJaoi6wPiR0RW
-	 734zIzOrCQkDFB5wNAZHA6gEKUc9tgNy1km5jBIOAPZUZ6S1JeOLqaMf+wKJ3wHHrc
-	 4kzgIrZJkv/6NmDmXphDBeEWurgEQre4OO4GehmE=
+	b=C4I1v0zDL5ykAbCgtzaSQsvKxM4lHdtMmARDHxEE2jY1rFNJHgOrluxcOIbIWe4yA
+	 DquhgLmHlE3uG+bVl8878NLufREbO8cyPrZKdp9xdByW+HoOvBhuMdDmY7+OsXl4JV
+	 5pHyo/rDtmdt7XPjmBKC8J2njpex3fQ73NUHfuBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/198] ALSA: hda/realtek: add quirk for Lenovo Yoga 7 2-in-1 16AKP10
-Date: Mon, 20 Apr 2026 17:39:44 +0200
-Message-ID: <20260420153935.805495978@linuxfoundation.org>
+Subject: [PATCH 6.18 006/198] ALSA: hda/realtek: Add quirk for ASUS ROG Flow Z13-KJP GZ302EAC
+Date: Mon, 20 Apr 2026 17:39:45 +0200
+Message-ID: <20260420153935.841852522@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,18 +51,15 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit 7bae956cac0433c4d41aac9f1d04e42694e0b706 ]
+[ Upstream commit 59f68dc1d8df3142cb58fd2568966a9bb7b0ed8a ]
 
-This machine is equipped with ALC287 and requires the quirk
-ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN to fix the issue
-where the bass speakers are not configured and the speaker
-volume cannot be controlled.
+Fixes lack of audio output on the ASUS ROG Flow Z13-KJP GZ302EAC model,
+similar to the ASUS ROG Flow Z13 GZ302EA.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221210
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260313080624.1395362-1-zhangheng@kylinos.cn
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Link: https://patch.msgid.link/20260313172503.285846-1-matthew.schwartz@linux.dev
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -70,17 +67,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 1b64292220ac8..4b06cb48252e2 100644
+index 4b06cb48252e2..1959adb6c5189 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7429,6 +7429,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	HDA_CODEC_QUIRK(0x17aa, 0x391c, "Lenovo Yoga 7 2-in-1 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-+	HDA_CODEC_QUIRK(0x17aa, 0x391d, "Lenovo Yoga 7 2-in-1 16AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b7, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
+@@ -7065,6 +7065,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x14e3, "ASUS G513PI/PU/PV", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x14f2, "ASUS VivoBook X515JA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1503, "ASUS G733PY/PZ/PZV/PYV", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x1043, 0x1514, "ASUS ROG Flow Z13 GZ302EAC", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
+ 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301VV/VQ/VU/VJ/VA/VC/VE/VVC/VQC/VUC/VJC/VEC/VCC", ALC285_FIXUP_ASUS_HEADSET_MIC),
 -- 
 2.53.0
 
