@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C1532E696;
-	Mon, 20 Apr 2026 15:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EEE2C236B;
+	Mon, 20 Apr 2026 15:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700200; cv=none; b=KadNo8+zTwHYnDUyIF9T98Sot4YqP0R5w/zx5tWWD0kWqe8SPsikQb1azJgMFbQEBfKhwkPBRVLcisKxTVPIsqyuGz3MFrCyo1c5uvTxHtbwLgmBBT25bgALUl3QGMeBhPNXlAgawgHyick2Ip5erzdscCNBw0wyX2DIpmgd1sA=
+	t=1776700202; cv=none; b=lqfuSYEIcnoFfv0Xewia/uppgsduMstETYjVJ5zMDxvI6kN4f2L/wHLCC35nKzldSx0d2cc4KChFTfnABnby3D3Ze8NUm6eDIjFiis/5Y6N2JXA0zQMUNEvzNvb6J1QuxImmeUQwIvKPbef7yJAQ0G9lWer/nQfp39fBNJotbXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700200; c=relaxed/simple;
-	bh=i/2RTa5pmmIcQZfwo5t6y/MyllIujMydOrg8NbiDYeU=;
+	s=arc-20240116; t=1776700202; c=relaxed/simple;
+	bh=xig00gPz+tStHx4gxE43Q4+uw5QD3rt3YA14Yp+xoZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocQ7QwvaPB9BMWzr9uKbdZwyajax0B5+CRRoMngncs0vRXHFb4OnhcK/79plePpKQQigOpWDb2CaXIRBdXsmK3HiuI6SYqT7TptpJ4sumjOc3eGjvrdYGm/haCXCtvyxyUy9v+mhcxxyK3zd/JLSa/pgnJlD+O/59T8c1HQSVxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2J9b8FbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4YfsGDbhVWSI6/XCL1fKRihUHGMR1GVYqvDLE3qUO+O4GKV6DvpDIxEX+HUMRcVTw0PfZj7avLP2dpIJ8b2kZOs6AL8qsmenvIjikgjOJ/K5bTeHOEfkiFLdM8gcl1vHYqPAlagjPNKyJlnEfdeiCtKFotIwkyerBqBtBm+7Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCNWLhqn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2J9b8FbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15ECC19425;
-	Mon, 20 Apr 2026 15:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCNWLhqn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49710C19425;
+	Mon, 20 Apr 2026 15:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700200;
-	bh=i/2RTa5pmmIcQZfwo5t6y/MyllIujMydOrg8NbiDYeU=;
+	s=korg; t=1776700202;
+	bh=xig00gPz+tStHx4gxE43Q4+uw5QD3rt3YA14Yp+xoZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2J9b8FbLrCKsqKzJApS1nQb9mXU3R+XIshC35j0wouNjdtMgeA7D4VtXfsa+WFgBB
-	 yUJWPJMSN5r03AG8EarunupcSJNGnqYH7z5siOxUMwGUAcd1/evlZbcP/Z9Asp9Egd
-	 bDImeDQFIdSqE4Jk0wUTRj353MaYSp7lQPQgEVo4=
+	b=UCNWLhqnF09Mj1AQfm4mz4q1pDk+fvvhlqauaszbJ6ugw363cldSy9i3N07iu5N3A
+	 Sy4GZJJAw/GLj1S8i8Mj9aNOb0Iv7UVJ2FB1UT8VPTmGc7rbSAGClX6JlhOH0R1m5g
+	 WHRs++1sqQBMxIHX8FahblhANTAQ2g3QvRHy8//s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
+	Zijing Yin <yzjaurora@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 081/220] ipv6: ioam: fix potential NULL dereferences in __ioam6_fill_trace_data()
-Date: Mon, 20 Apr 2026 17:40:22 +0200
-Message-ID: <20260420153936.954187934@linuxfoundation.org>
+Subject: [PATCH 6.19 082/220] bridge: guard local VLAN-0 FDB helpers against NULL vlan group
+Date: Mon, 20 Apr 2026 17:40:23 +0200
+Message-ID: <20260420153936.989741643@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -53,117 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zijing Yin <yzjaurora@gmail.com>
 
-[ Upstream commit 4e65a8b8daa18d63255ec58964dd192c7fdd9f8b ]
+[ Upstream commit 1979645e1842cb7017525a61a0e0e0beb924d02a ]
 
-We need to check __in6_dev_get() for possible NULL value, as
-suggested by Yiming Qian.
+When CONFIG_BRIDGE_VLAN_FILTERING is not set, br_vlan_group() and
+nbp_vlan_group() return NULL (br_private.h stub definitions). The
+BR_BOOLOPT_FDB_LOCAL_VLAN_0 toggle code is compiled unconditionally and
+reaches br_fdb_delete_locals_per_vlan_port() and
+br_fdb_insert_locals_per_vlan_port(), where the NULL vlan group pointer
+is dereferenced via list_for_each_entry(v, &vg->vlan_list, vlist).
 
-Also add skb_dst_dev_rcu() instead of skb_dst_dev(),
-and two missing READ_ONCE().
+The observed crash is in the delete path, triggered when creating a
+bridge with IFLA_BR_MULTI_BOOLOPT containing BR_BOOLOPT_FDB_LOCAL_VLAN_0
+via RTM_NEWLINK. The insert helper has the same bug pattern.
 
-Note that @dev can't be NULL.
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000056: 0000 [#1] KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x00000000000002b0-0x00000000000002b7]
+  RIP: 0010:br_fdb_delete_locals_per_vlan+0x2b9/0x310
+  Call Trace:
+   br_fdb_toggle_local_vlan_0+0x452/0x4c0
+   br_toggle_fdb_local_vlan_0+0x31/0x80 net/bridge/br.c:276
+   br_boolopt_toggle net/bridge/br.c:313
+   br_boolopt_multi_toggle net/bridge/br.c:364
+   br_changelink net/bridge/br_netlink.c:1542
+   br_dev_newlink net/bridge/br_netlink.c:1575
 
-Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260402101732.1188059-1-edumazet@google.com
+Add NULL checks for the vlan group pointer in both helpers, returning
+early when there are no VLANs to iterate. This matches the existing
+pattern used by other bridge FDB functions such as br_fdb_add() and
+br_fdb_delete().
+
+Fixes: 21446c06b441 ("net: bridge: Introduce UAPI for BR_BOOLOPT_FDB_LOCAL_VLAN_0")
+Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260402140153.3925663-1-yzjaurora@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ioam6.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ net/bridge/br_fdb.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
-index 8db7f965696aa..12350e1e18bde 100644
---- a/net/ipv6/ioam6.c
-+++ b/net/ipv6/ioam6.c
-@@ -710,7 +710,9 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 				    struct ioam6_schema *sc,
- 				    unsigned int sclen, bool is_input)
- {
--	struct net_device *dev = skb_dst_dev(skb);
-+	/* Note: skb_dst_dev_rcu() can't be NULL at this point. */
-+	struct net_device *dev = skb_dst_dev_rcu(skb);
-+	struct inet6_dev *i_skb_dev, *idev;
- 	struct timespec64 ts;
- 	ktime_t tstamp;
- 	u64 raw64;
-@@ -721,13 +723,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+diff --git a/net/bridge/br_fdb.c b/net/bridge/br_fdb.c
+index 0501ffcb8a3dd..e2c17f620f009 100644
+--- a/net/bridge/br_fdb.c
++++ b/net/bridge/br_fdb.c
+@@ -597,6 +597,9 @@ static void br_fdb_delete_locals_per_vlan_port(struct net_bridge *br,
+ 		dev = br->dev;
+ 	}
  
- 	data = trace->data + trace->remlen * 4 - trace->nodelen * 4 - sclen * 4;
- 
-+	i_skb_dev = skb->dev ? __in6_dev_get(skb->dev) : NULL;
-+	idev = __in6_dev_get(dev);
++	if (!vg)
++		return;
 +
- 	/* hop_lim and node_id */
- 	if (trace->type.bit0) {
- 		byte = ipv6_hdr(skb)->hop_limit;
- 		if (is_input)
- 			byte--;
+ 	list_for_each_entry(v, &vg->vlan_list, vlist)
+ 		br_fdb_find_delete_local(br, p, dev->dev_addr, v->vid);
+ }
+@@ -630,6 +633,9 @@ static int br_fdb_insert_locals_per_vlan_port(struct net_bridge *br,
+ 		dev = br->dev;
+ 	}
  
--		raw32 = dev_net(dev)->ipv6.sysctl.ioam6_id;
-+		raw32 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id);
- 
- 		*(__be32 *)data = cpu_to_be32((byte << 24) | raw32);
- 		data += sizeof(__be32);
-@@ -735,18 +740,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 
- 	/* ingress_if_id and egress_if_id */
- 	if (trace->type.bit1) {
--		if (!skb->dev)
-+		if (!i_skb_dev)
- 			raw16 = IOAM6_U16_UNAVAILABLE;
- 		else
--			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id);
-+			raw16 = (__force u16)READ_ONCE(i_skb_dev->cnf.ioam6_id);
- 
- 		*(__be16 *)data = cpu_to_be16(raw16);
- 		data += sizeof(__be16);
- 
--		if (dev->flags & IFF_LOOPBACK)
-+		if ((dev->flags & IFF_LOOPBACK) || !idev)
- 			raw16 = IOAM6_U16_UNAVAILABLE;
- 		else
--			raw16 = (__force u16)READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id);
-+			raw16 = (__force u16)READ_ONCE(idev->cnf.ioam6_id);
- 
- 		*(__be16 *)data = cpu_to_be16(raw16);
- 		data += sizeof(__be16);
-@@ -822,7 +827,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 		if (is_input)
- 			byte--;
- 
--		raw64 = dev_net(dev)->ipv6.sysctl.ioam6_id_wide;
-+		raw64 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id_wide);
- 
- 		*(__be64 *)data = cpu_to_be64(((u64)byte << 56) | raw64);
- 		data += sizeof(__be64);
-@@ -830,18 +835,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 
- 	/* ingress_if_id and egress_if_id (wide) */
- 	if (trace->type.bit9) {
--		if (!skb->dev)
-+		if (!i_skb_dev)
- 			raw32 = IOAM6_U32_UNAVAILABLE;
- 		else
--			raw32 = READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id_wide);
-+			raw32 = READ_ONCE(i_skb_dev->cnf.ioam6_id_wide);
- 
- 		*(__be32 *)data = cpu_to_be32(raw32);
- 		data += sizeof(__be32);
- 
--		if (dev->flags & IFF_LOOPBACK)
-+		if ((dev->flags & IFF_LOOPBACK) || !idev)
- 			raw32 = IOAM6_U32_UNAVAILABLE;
- 		else
--			raw32 = READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id_wide);
-+			raw32 = READ_ONCE(idev->cnf.ioam6_id_wide);
- 
- 		*(__be32 *)data = cpu_to_be32(raw32);
- 		data += sizeof(__be32);
++	if (!vg)
++		return 0;
++
+ 	list_for_each_entry(v, &vg->vlan_list, vlist) {
+ 		if (!br_vlan_should_use(v))
+ 			continue;
 -- 
 2.53.0
 
