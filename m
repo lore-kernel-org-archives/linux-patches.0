@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E822341C307;
-	Mon, 20 Apr 2026 13:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602B7421884;
+	Mon, 20 Apr 2026 13:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691654; cv=none; b=TVwk/wTKvbT2zDGPz8cT/oz8xVM/6O198TmPoM6BACX2BCsFHSJdzzjJSF3K/kpvO7izmcQZfKd7AZOPkc73MrUMi26Y7ueaedFQ4WJbOLjanX04U9nNdfyNAD0VdmtCi7FRqB/aesJW2r0vq3le0lyAdZUoACJbBCrD6wezIWk=
+	t=1776691655; cv=none; b=mSAkM8d70zyR1HkJPDF95cmNTpA8wUmX20tMfqdCC5PVV3Hrp34nJCUqJk0uDwE1jK+jPoNRqMUdeaEmVXm4I+Bd6YxihpJwP5lSQHFDZBlFm1vz/bpoeo4T1o8E9coazAYN88SzztT1azCc5n+x3F2pBx1xUJdgGRp4EwgQukk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691654; c=relaxed/simple;
-	bh=buwyR++9CurJdz+jiz3qwQE0qZO4hCUjznEc2NetFsA=;
+	s=arc-20240116; t=1776691655; c=relaxed/simple;
+	bh=G7VJJaTaxr7b3XLIoxE7vwkM/LSUFkg0fMzL9nJqDP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9PXfHex6ziQtTcdk/0+vVSdumVIEGWBaEv1TeicxbI20isGfTm2aQxaucasTHer8/0ndqXRC41gFei0+181Q/cmQawAx0mLr45L7CSR+ZXlBAiE9l3Kpn3p0wKUHoccLSM72pXRwnruYEGsw9qVwvKHAweckJXQcCqX9dmMa+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XEwo+Lh6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BT/2sX+dGZTJAwvCyX22/DiqJXB+6kF5CkvFSWytn1Ws68JL+Y0vAEWnl50WcQi30YOzI3HO1lfmXw/H+WEN+b8gPwQVdPb3RgK0BYnhT7orJlZDobwXkpXdanEbY8iNdTZsiFBi9+L7OI6m5wnaqaQFWstD7V/Xz3D5e4ijjIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JvQDJmOL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XEwo+Lh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E81C2BCB7;
-	Mon, 20 Apr 2026 13:27:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JvQDJmOL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15766C19425;
+	Mon, 20 Apr 2026 13:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691653;
-	bh=buwyR++9CurJdz+jiz3qwQE0qZO4hCUjznEc2NetFsA=;
+	s=k20201202; t=1776691655;
+	bh=G7VJJaTaxr7b3XLIoxE7vwkM/LSUFkg0fMzL9nJqDP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XEwo+Lh6PIdZgfdg4i15+C9sdnfJRpfHr6wmtdqk1M3kIQCEO2D12tsxi8U0Lk+fW
-	 stMtU8PwdzJGH/ZQobU+vyLE5mTbipwJHQthZKWrzjzaFBE6+B8wp3NrEF96tpo/4k
-	 WjdhYiYis3l3xkc+DDOVJC7TBV7BE2eI4C6J3XFdFfeQ05s/otaYKXF7XmyoxVMrHA
-	 b0g6UZvzvg9SQnp3YTTng9npGexNv8fAt28sw3HaU7wO6n7zAfBxwRjjBHoZqenFbO
-	 6xlLNKfcNhskWakr9p5DBiny/ys1Ej966FvHhEDmRzhEI/to66nJuODTLsqzKMMnLb
-	 Rq+Udbcgob2bA==
+	b=JvQDJmOLvqamjunl7T5oerd2KkiFPgpxsDvZC9Y4qCQyWfacx99BVhrG8XC0is3k2
+	 9yCHzf8l6WteltrHp2aIr8w+o+arXNMc3/GhSebeoMiPuCSz+CiudIVQuHkgYJalTY
+	 x8q/GaS3FUBJF+Xgn6we9m+Qqf8t7Kgzo0QalMGwqEx7S7WVWSsJOzYRC8YcvNbIk8
+	 ij77Q0ePXnbD+w1s+6rUy+LAWwxZkJV9h6vfKl2tU+jwZKhiPLA3UEMVDiQnXzhHnT
+	 2XAjDZMBjBM13caFB+IYIylB3xzMvrJepvQWh6egrXrmmGp+AY0qR2lHDMGcsm6d/N
+	 KDSrqwTa6VWxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Wander Lairson Costa <wander@redhat.com>,
-	Tomas Glozar <tglozar@redhat.com>,
+Cc: Teng Liu <27rabbitlt@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rostedt@goodmis.org,
-	linux-trace-kernel@vger.kernel.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] rtla: Handle pthread_create() failure properly
-Date: Mon, 20 Apr 2026 09:19:08 -0400
-Message-ID: <20260420132314.1023554-154-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] btrfs: replace BUG_ON() with error return in cache_save_setup()
+Date: Mon, 20 Apr 2026 09:19:09 -0400
+Message-ID: <20260420132314.1023554-155-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -50,325 +51,307 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Teng Liu <27rabbitlt@gmail.com>
 
-[ Upstream commit d847188bb92b14518a04d7542e44928a22060847 ]
+[ Upstream commit 30d537f723d6f37a8ddfb17fe668bb9808f5b49f ]
 
-Add proper error handling when pthread_create() fails to create the
-timerlat user-space dispatcher thread. Previously, the code only logged
-an error message but continued execution, which could lead to undefined
-behavior when the tool later expects the thread to be running.
+In cache_save_setup(), if create_free_space_inode() succeeds but the
+subsequent lookup_free_space_inode() still fails on retry, the
+BUG_ON(retries) will crash the kernel. This can happen due to I/O
+errors or transient failures, not just programming bugs.
 
-When pthread_create() returns an error, the function now jumps to the
-out_trace error path to properly clean up resources and exit. This
-ensures consistent error handling and prevents the tool from running
-in an invalid state without the required user-space thread.
+Replace the BUG_ON with proper error handling that returns the original
+error code through the existing cleanup path. The callers already handle
+this gracefully: disk_cache_state defaults to BTRFS_DC_ERROR, so the
+space cache simply won't be written for that block group.
 
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Link: https://lore.kernel.org/r/20260309195040.1019085-10-wander@redhat.com
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Teng Liu <27rabbitlt@gmail.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me compile the full analysis.
+Now I have all the information I need. Let me compile the final
+analysis.
 
 ---
 
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `rtla` (Real-Time Linux Analysis tool, under
-  `tools/tracing/rtla`)
-- Action verb: "Handle" (strongly suggests fixing incorrect handling - a
-  bug fix pattern)
-- Summary: Add proper error handling when pthread_create() fails for the
-  timerlat user-space dispatcher thread.
+### Step 1.1: Subject Line
+- **Subsystem**: btrfs
+- **Action verb**: "replace" (BUG_ON with error return)
+- **Summary**: Replaces a kernel-crashing BUG_ON() with graceful error
+  handling in cache_save_setup()
 
-Record: [rtla] [Handle] [Add missing error path when pthread_create
-fails]
+Record: [btrfs] [replace] [Remove BUG_ON(retries) in cache_save_setup(),
+replace with error return]
 
-**Step 1.2: Tags**
-- `Signed-off-by: Wander Lairson Costa <wander@redhat.com>` - author,
-  Red Hat engineer
-- `Link:
-  https://lore.kernel.org/r/20260309195040.1019085-10-wander@redhat.com`
-  - part of a larger series (patch 10 of a series)
-- `Signed-off-by: Tomas Glozar <tglozar@redhat.com>` - maintainer sign-
-  off
-- No Fixes: tag (expected for autosel candidates)
-- No Reported-by: (found by code review, not user report)
+### Step 1.2: Tags
+- **Reviewed-by**: Qu Wenruo <wqu@suse.com> - prominent btrfs
+  maintainer/reviewer
+- **Signed-off-by**: Teng Liu <27rabbitlt@gmail.com> (author)
+- **Signed-off-by**: David Sterba <dsterba@suse.com> (btrfs maintainer
+  who merged it)
+- No Fixes: tag (expected for candidates)
 - No Cc: stable (expected)
 
-Record: Author is Wander (Red Hat, active rtla contributor). Part of a
-larger series (patch 10). Accepted by Tomas Glozar (rtla maintainer).
+Record: Reviewed by key btrfs developer Qu Wenruo. Merged by David
+Sterba, the btrfs maintainer.
 
-**Step 1.3: Body Text**
-The commit message clearly describes: when `pthread_create()` fails, the
-code only logged an error but continued execution. This leads to the
-tool running in an invalid state where it expects user-space threads
-that don't exist.
+### Step 1.3: Commit Body
+The bug: If `create_free_space_inode()` succeeds but the subsequent
+`lookup_free_space_inode()` still fails on retry (due to I/O errors or
+transient failures), `BUG_ON(retries)` crashes the kernel. The callers
+already handle errors gracefully - `disk_cache_state` defaults to
+`BTRFS_DC_ERROR`, so the space cache simply won't be written for that
+block group.
 
-Record: Bug = missing error exit on pthread_create failure. Symptom =
-tool runs without required user-space thread. Root cause = missing `goto
-out_trace` on error path.
+Record: Bug = kernel crash (BUG_ON) on transient I/O failures. Symptom =
+kernel panic. Root cause = BUG_ON used for a condition that can happen
+due to I/O errors, not just programming bugs.
 
-**Step 1.4: Hidden Bug Fix Detection**
-"Handle ... properly" is a classic bug-fix pattern. This IS a bug fix -
-it adds a missing error exit path.
+### Step 1.4: Hidden Bug Fix Detection
+This IS a bug fix - it prevents a kernel crash (BUG_ON → panic) from a
+reachable error condition.
 
-Record: Yes, this is a clear bug fix despite not using the word "fix" in
-the subject.
+## PHASE 2: DIFF ANALYSIS
 
-## Phase 2: Diff Analysis
+### Step 2.1: Inventory
+- **Files changed**: 1 (fs/btrfs/block-group.c)
+- **Lines**: +6 added, -1 removed (net +5 lines)
+- **Function modified**: `cache_save_setup()`
+- **Scope**: Single-file, surgical fix
 
-**Step 2.1: Changes Inventory**
-- 1 file modified: `tools/tracing/rtla/src/common.c`
-- Net change: +3 lines / -1 line (added braces + `goto out_trace;`)
-- Function modified: `run_tool()`
-- Scope: Single-file, surgical fix
+### Step 2.2: Code Flow Change
+**Before**: `BUG_ON(retries)` — if retries is non-zero (i.e., we already
+tried once to create the inode and look it up again), the kernel
+crashes.
 
-**Step 2.2: Code Flow Change**
-Before: `pthread_create()` failure logged an error message but execution
-continued to `ops->enable(tool)`, `ops->main(tool)`, etc.
-After: `pthread_create()` failure logs error and jumps to `out_trace`
-for proper cleanup and exit.
+**After**: If retries is non-zero, set `ret = PTR_ERR(inode)`, log an
+error message, and `goto out_free` which flows through the existing
+cleanup path. `dcs` remains `BTRFS_DC_ERROR` (its initial value), so
+`block_group->disk_cache_state` will be set to `BTRFS_DC_ERROR`, and the
+space cache simply won't be written for this block group.
 
-**Step 2.3: Bug Mechanism**
-Category: (a) Error path fix. The code was missing a `goto` to the error
-cleanup path when `pthread_create()` failed. Without it, the tool runs
-without the user-space timerlat threads, producing incorrect/misleading
-measurements.
+### Step 2.3: Bug Mechanism
+Category: **Logic/correctness fix** - replacing a crash assertion with
+proper error handling. The BUG_ON asserts that a condition "cannot
+happen," but it can happen due to I/O errors.
 
-**Step 2.4: Fix Quality**
-- Obviously correct: follows the identical pattern used by all other
-  error checks in the same function (lines 247, 253, 280, 287)
-- Minimal/surgical: only adds braces and a `goto`
-- Regression risk: extremely low - only changes behavior when
-  `pthread_create()` fails (which is already an error condition)
+### Step 2.4: Fix Quality
+- **Obviously correct**: Yes. The `out_free` path already exists and
+  handles exactly this case. The `dcs` variable defaults to
+  `BTRFS_DC_ERROR`.
+- **Minimal/surgical**: Yes, only 6 lines added replacing 1 line.
+- **Regression risk**: Very low. The error path is well-established and
+  callers check `disk_cache_state == BTRFS_DC_SETUP` before proceeding.
 
-Record: Fix is obviously correct, minimal, and consistent with
-surrounding code patterns. No regression risk.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-## Phase 3: Git History Investigation
+### Step 3.1: Blame
+The BUG_ON(retries) line was in commit `77745c05115fc` (2019), which was
+a code migration. The actual BUG_ON was introduced in commit
+`0af3d00bad38d` ("Btrfs: create special free space cache inode") from
+2010, present since **v2.6.37**. This bug has been in the kernel for ~16
+years.
 
-**Step 3.1: Blame**
-The buggy code (lines 257-276) was introduced by commit `2f3172f9dd58cc`
-("tools/rtla: Consolidate code between osnoise/timerlat and hist/top")
-by Crystal Wood, September 2025. However, tracing further back, the
-original missing error handling existed since commit `cdca4f4e5e8ea`
-("rtla/timerlat_top: Add timerlat user-space support") by Daniel Bristot
-de Oliveira, June 2023 (v6.5-rc1).
+### Step 3.2: No Fixes: tag to follow (expected).
 
-Record: Bug introduced in v6.5-rc1, present in all stable trees from
-6.6.y onward. The consolidation commit just carried the bug forward into
-`common.c`.
+### Step 3.3: Related Changes
+- `8ac7fad32b930` (Feb 2026): Removed a pointless WARN_ON() in the same
+  function - shows the btrfs team is actively cleaning up this function.
+- `719dc4b75561f`: Similar BUG_ON removal in
+  `btrfs_remove_block_group()`
+- Many other BUG_ON removal commits in btrfs history
 
-**Step 3.2: Fixes Tag**
-No Fixes: tag present (expected for autosel candidates). The bug
-logically traces to `cdca4f4e5e8ea` (v6.5-rc1).
+### Step 3.4: Author
+Teng Liu (27rabbitlt) appears to be a relatively new contributor.
+However, the patch was **Reviewed-by Qu Wenruo** and **Signed-off-by
+David Sterba** (the btrfs maintainer), giving it strong credibility.
 
-**Step 3.3: File History**
-The file has been actively developed. Recent commits include
-consolidations of option parsing, volatile fix for stop_tracing, and
-other improvements. The author (Wander Lairson Costa) is a prolific
-contributor to rtla.
+### Step 3.5: Dependencies
+None. This is a completely standalone fix - it only changes one
+conditional in one function, using existing error paths.
 
-**Step 3.4: Author**
-Wander has at least 17 commits in rtla (including multiple fixes like
-NULL pointer dereference fix, parse return value doc fix, volatile fix).
-He is a regular contributor and maintainer-level contributor for rtla.
+## PHASE 4: MAILING LIST RESEARCH
 
-Record: Author is a regular, trusted contributor to this subsystem.
+The patch was submitted as v1 and v2 on 2026-03-28, found in the
+lore/LKML archive mirror. The v2 was the applied version. Reviewed-by Qu
+Wenruo confirms it was peer-reviewed by a senior btrfs developer.
 
-**Step 3.5: Dependencies**
-The `run_tool()` function and the `out_trace` label already exist in the
-7.0 tree. No dependencies needed. However, the `run_tool()` function
-only exists since the consolidation commit `2f3172f9dd58cc` (~v6.18
-cycle). In older stable trees (6.6.y, 6.12.y), the same fix would need
-to target `timerlat_top.c` and `timerlat_hist.c` instead.
+Record: Patch went through v1 → v2 revision. Reviewed by senior btrfs
+developer.
 
-Record: For 7.0.y, applies standalone with no dependencies. For older
-trees, would need different patches.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-## Phase 4: Mailing List and External Research
+### Step 5.1: Function Modified
+`cache_save_setup()` - a static function in `fs/btrfs/block-group.c`.
 
-**Step 4.1-4.2: Patch Discussion**
-The commit's Link tag shows it's patch 10 of a series (Message-ID
-`20260309195040.1019085-10-wander@redhat.com`). Lore.kernel.org was
-blocked by anti-bot protection, but b4 dig confirmed the author's other
-patches in the same series (e.g., `20260106133655.249887-16` for the
-volatile fix). The patch was accepted and signed off by maintainer Tomas
-Glozar.
+### Step 5.2: Callers
+Three callers, all in the same file:
+1. `btrfs_setup_space_cache()` (line 3490) - ignores return value
+2. `btrfs_start_dirty_block_groups()` (line 3577) - ignores return
+   value, checks `disk_cache_state`
+3. `btrfs_write_dirty_block_groups()` (line 3729) - ignores return
+   value, checks `disk_cache_state`
 
-Record: Part of a larger cleanup/fix series. Accepted by rtla
-maintainer.
+All callers check `cache->disk_cache_state == BTRFS_DC_SETUP` before
+proceeding with cache write. When `cache_save_setup()` fails, `dcs`
+stays at `BTRFS_DC_ERROR`, so the callers gracefully skip the cache
+write.
 
-**Step 4.3-4.5: Bug Report / Stable Discussion**
-No explicit bug report found. This appears to be found by code
-review/audit, not by a user hitting it in practice.
+### Step 5.3-5.4: Call Chain
+These functions are called during **transaction commit**
+(`btrfs_commit_transaction`), a core kernel path that runs frequently
+during normal btrfs filesystem operations.
 
-Record: No user reports. Found by code inspection.
+## PHASE 6: STABLE TREE ANALYSIS
 
-## Phase 5: Code Semantic Analysis
+### Step 6.1: Buggy Code in Stable Trees
+The BUG_ON(retries) was introduced in v2.6.37 (2010) and exists in **ALL
+active stable trees** (5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y, etc.). The
+code hasn't changed around this specific line since it was written.
 
-**Step 5.1: Functions Modified**
-Only `run_tool()` in `common.c`.
+### Step 6.2: Backport Complications
+The patch should apply cleanly to all stable trees. The surrounding code
+is unchanged since 2019 (when it was migrated from extent-tree.c to
+block-group.c). For trees older than 5.3 (before migration), the file
+would be `extent-tree.c` instead.
 
-**Step 5.2: Callers**
-`run_tool()` is the unified entry point for all rtla tool modes (osnoise
-top/hist, timerlat top/hist). It's called from each tool's main
-function.
+### Step 6.3: No related fixes already in stable.
 
-**Step 5.3-5.4: Call Chain**
-When `pthread_create()` fails and execution continues:
-1. `ops->enable(tool)` - enables tracing infrastructure
-2. `ops->main(tool)` - runs main measurement loop (top_main_loop or
-   hist_main_loop)
-3. Both main loops check `params->user.stopped_running` to detect if
-   user threads died
-4. Since threads were never created, `stopped_running` stays at 0, so
-   the tool thinks threads are still running
-5. The tool produces measurements and statistics without user-space
-   thread contributions
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 5.5: Similar Patterns**
-The original code in `timerlat_top.c` and `timerlat_hist.c` (pre-
-consolidation) had the identical missing error handling pattern,
-confirming this is a systematic bug.
+- **Subsystem**: btrfs (filesystem)
+- **Criticality**: IMPORTANT - btrfs is a widely used filesystem
+  (default in openSUSE, Fedora)
+- **Path**: Space cache management during transaction commit - a **core
+  btrfs operation**
 
-## Phase 6: Cross-Referencing and Stable Tree Analysis
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 6.1: Buggy Code in Stable**
-The `run_tool()` function in `common.c` only exists since ~v6.18 cycle.
-In 7.0.y, the code exists as-is and the patch applies cleanly. For older
-stable trees, different patches targeting `timerlat_top.c` and
-`timerlat_hist.c` would be needed.
+### Step 8.1: Affected Users
+All btrfs users with space_cache v1 enabled (the default for many
+configs) are affected.
 
-**Step 6.2: Backport Complications**
-For 7.0.y: clean apply expected - no conflicts.
+### Step 8.2: Trigger Conditions
+The BUG_ON triggers when:
+1. A block group's free space cache needs to be written
+2. The free space inode doesn't exist, so btrfs creates one
+3. On retry lookup, the inode still can't be found (I/O error, transient
+   failure)
 
-**Step 6.3: Related Fixes**
-No other fix for this specific issue found in stable.
+This can be triggered by I/O errors on the disk, which are real-world
+events, especially on aging or failing hardware.
 
-## Phase 7: Subsystem and Maintainer Context
+### Step 8.3: Failure Mode
+**CRITICAL** - BUG_ON causes a kernel panic, crashing the system.
+Without this fix, a transient I/O error during space cache setup causes
+a full system crash instead of gracefully skipping the cache write.
 
-**Step 7.1: Subsystem**
-`tools/tracing/rtla` - userspace real-time latency analysis tool.
-Criticality: PERIPHERAL (userspace tool, not kernel code), but important
-for real-time system validation.
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: VERY HIGH - prevents kernel panic on I/O errors during
+  normal filesystem operation
+- **Risk**: VERY LOW - 6-line change using existing error paths,
+  reviewed by btrfs maintainers
+- **Ratio**: Strongly favorable for backporting
 
-**Step 7.2: Activity**
-Very actively developed - 14+ commits since the consolidation.
+## PHASE 9: FINAL SYNTHESIS
 
-## Phase 8: Impact and Risk Assessment
+### Step 9.1: Evidence
+**FOR backporting:**
+- Prevents kernel panic (BUG_ON → crash) on a reachable error condition
+- Tiny, surgical fix (+6/-1 lines) in a single file
+- Uses existing, well-tested error handling paths
+- Bug present since v2.6.37 (2010) — affects ALL stable trees
+- Reviewed by Qu Wenruo (senior btrfs developer), merged by David Sterba
+  (btrfs maintainer)
+- No dependencies on other patches
+- Callers already handle the error gracefully
+- btrfs is a widely-used filesystem
+- Pattern consistent with other BUG_ON removals in btrfs that have gone
+  to stable
 
-**Step 8.1: Who Is Affected**
-Users of the rtla timerlat tool with `--user-threads` option,
-specifically when `pthread_create()` fails.
+**AGAINST backporting:**
+- No reported syzbot trigger or specific user crash report cited
+- The trigger condition (I/O error between create and lookup) may be
+  uncommon
 
-**Step 8.2: Trigger Conditions**
-Rare - requires `--user-threads` mode AND `pthread_create()` failure
-(typically due to resource exhaustion or system limits).
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** - trivial change, reviewed by
+   maintainer
+2. Fixes a real bug? **YES** - kernel panic on I/O error
+3. Important issue? **YES** - kernel crash (CRITICAL severity)
+4. Small and contained? **YES** - 6 lines, single file
+5. No new features or APIs? **YES** - purely error handling
+6. Can apply to stable? **YES** - code unchanged since 2010
 
-**Step 8.3: Failure Mode Severity**
-When triggered: tool continues running in invalid state, producing
-measurements without user-space thread contributions. For a real-time
-analysis tool, this means **silently incorrect results** (the error
-message is printed but could be missed). Severity: MEDIUM (incorrect
-tool output, not kernel crash/corruption).
-
-**Step 8.4: Risk-Benefit Ratio**
-- BENEFIT: Moderate - prevents misleading latency measurements
-- RISK: Very low - 2-line change to an error path only triggered on
-  failure
-- Ratio: Favorable
-
-## Phase 9: Final Synthesis
-
-**Step 9.1: Evidence**
-FOR backporting:
-- Fixes a real bug (missing error exit leads to invalid tool state)
-- Small and surgical (3 lines changed)
-- Obviously correct (follows identical pattern in same function)
-- Very low regression risk
-- Author is trusted contributor; accepted by maintainer
-- Bug existed since v6.5
-
-AGAINST backporting:
-- Userspace tool, not kernel code
-- Trigger condition is rare (pthread_create failure)
-- No user reports of actually hitting this bug
-- MEDIUM severity (incorrect tool output, not crash/corruption)
-
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** - trivially correct
-2. Fixes a real bug? **YES** - tool runs without required threads
-3. Important issue? **MEDIUM** - incorrect measurements, not crash
-4. Small and contained? **YES** - 3 lines in 1 file
-5. No new features? **YES** - pure error handling fix
-6. Can apply to stable? **YES** for 7.0.y
-
-**Step 9.3: Exception Categories**
-Not an exception category - standard bug fix.
-
-**Step 9.4: Decision**
-The fix is small, obviously correct, and prevents the rtla tool from
-operating in an invalid state. While it's a userspace tool and the
-trigger is rare, the fix has essentially zero regression risk and
-improves correctness. The pattern of missing error handling on
-`pthread_create()` failure is a clear bug.
+### Step 9.3: Exception Categories
+Not needed - this qualifies as a straightforward bug fix.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Link to patch 10 of a series, SOBs from author
-  and maintainer
-- [Phase 2] Diff analysis: +3/-1 lines, adds `goto out_trace` to error
-  path in `run_tool()`
-- [Phase 3] git blame: buggy code carried from `cdca4f4e5e8ea`
-  (v6.5-rc1) through consolidation `2f3172f9dd58cc`
-- [Phase 3] git show 2f3172f9dd58cc: confirmed consolidation commit
-  created `run_tool()` carrying the bug
-- [Phase 3] Checked pre-consolidation files: both `timerlat_top.c` and
-  `timerlat_hist.c` had identical missing error handling
-- [Phase 4] b4 dig: confirmed author's series via `af2962d68b970` match
-- [Phase 4] Lore blocked by anti-bot; could not read full thread
-  discussion
-- [Phase 5] Traced `run_tool()` flow: after failed pthread_create, tool
-  continues to enable/main/stats without user threads
-- [Phase 5] Verified `out_trace` cleanup path exists and is used by
-  other error checks in same function
-- [Phase 6] Code exists in 7.0.y (run_tool in common.c); older trees
-  have equivalent code in different files
-- [Phase 8] Failure mode: tool produces results without user-space
-  threads, severity MEDIUM
-- UNVERIFIED: Could not read full mailing list thread due to lore anti-
-  bot protection
+- [Phase 1] Parsed tags: Reviewed-by Qu Wenruo, SOB David Sterba (btrfs
+  maintainer)
+- [Phase 2] Diff analysis: +6/-1 lines replacing BUG_ON(retries) with
+  error return + log message, uses existing `out_free` cleanup path
+- [Phase 3] git blame: BUG_ON(retries) introduced in commit
+  `0af3d00bad38d` (v2.6.37-rc1, 2010), migrated in `77745c05115fc`
+  (2019)
+- [Phase 3] git describe: confirmed original commit is in v2.6.37-rc1,
+  present in all stable trees
+- [Phase 3] Related commits: `8ac7fad32b930` removed WARN_ON in same
+  function (Feb 2026), `719dc4b75561f` similar BUG_ON removal in btrfs
+- [Phase 4] Found v1 and v2 patch submissions on lore mirror
+  (2026-03-28), v2 is the applied version
+- [Phase 5] Verified callers: 3 call sites in same file, all ignore
+  return value and check `disk_cache_state == BTRFS_DC_SETUP` — error
+  case is handled gracefully
+- [Phase 5] Verified `dcs` defaults to `BTRFS_DC_ERROR` (line 3316),
+  confirmed `out_free` path preserves this default
+- [Phase 6] Code exists unchanged in all active stable trees (verified
+  via git log v6.6.. and git log v6.1..)
+- [Phase 6] Patch should apply cleanly (code hasn't changed since 2019
+  migration)
+- [Phase 8] Failure mode: BUG_ON → kernel panic during transaction
+  commit, severity CRITICAL
+- UNVERIFIED: Could not fetch full lore.kernel.org discussion due to bot
+  protection; relied on web search confirmation of review
+
+The fix is small, surgical, obviously correct, prevents a kernel crash,
+uses existing error paths, and was reviewed and merged by the btrfs
+maintainers. It meets all stable kernel criteria.
 
 **YES**
 
- tools/tracing/rtla/src/common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/block-group.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/tracing/rtla/src/common.c b/tools/tracing/rtla/src/common.c
-index ceff76a62a30b..68426ce6f9971 100644
---- a/tools/tracing/rtla/src/common.c
-+++ b/tools/tracing/rtla/src/common.c
-@@ -271,8 +271,10 @@ int run_tool(struct tool_ops *ops, int argc, char *argv[])
- 		params->user.cgroup_name = params->cgroup_name;
- 
- 		retval = pthread_create(&user_thread, NULL, timerlat_u_dispatcher, &params->user);
--		if (retval)
-+		if (retval) {
- 			err_msg("Error creating timerlat user-space threads\n");
-+			goto out_trace;
-+		}
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index c0d17a369bda5..ccabcad1a3fc3 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -3343,7 +3343,13 @@ static int cache_save_setup(struct btrfs_block_group *block_group,
  	}
  
- 	retval = ops->enable(tool);
+ 	if (IS_ERR(inode)) {
+-		BUG_ON(retries);
++		if (retries) {
++			ret = PTR_ERR(inode);
++			btrfs_err(fs_info,
++				  "failed to lookup free space inode after creation for block group %llu: %d",
++				  block_group->start, ret);
++			goto out_free;
++		}
+ 		retries++;
+ 
+ 		if (block_group->ro)
 -- 
 2.53.0
 
