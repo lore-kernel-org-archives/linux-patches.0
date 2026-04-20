@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73585329C6D;
-	Mon, 20 Apr 2026 16:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43ED92BD11;
+	Mon, 20 Apr 2026 16:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701294; cv=none; b=DNyHYDVtUxLzueNAmHld9GXm1oWG2+DssVIzi3TizFf0tVv2A19rKNyvEPEQuizh5jagDjc+ln14UGxOToiRLD7LFYAZ5HXOXO6oh9divKh4MORMI1+W0XpsAgthhTfV73FckZButnXAb29223T1qUNQ6qADTFYOqhLH6ayHXrw=
+	t=1776701297; cv=none; b=YydeG53ZeE9fgq89y3JjTal4neUuLCUr79dqXqXqhugq8CtwkNaYI5Uy8bMbG6O/UmxXjU/28wEE7mJQdVuMKoFdBedBHQvWkACqADuXSunn3++wM4dC2XKI/WJJTbQ19/dKO2ZwlOeyYal2xfaISYxkeXZJ9zeNM6AmJwCK40Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701294; c=relaxed/simple;
-	bh=WL0tIXE3pGMTXRBAAkTTse8fxV4h5u6KD/SFO/LNGBk=;
+	s=arc-20240116; t=1776701297; c=relaxed/simple;
+	bh=FyfQukFLVaBnByb5doIgFxOUSWiISTJM6hgwnuqPQG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNYjv/SGnMFoowWOJQgLto3vx9P61OAb67cUSR5c8zOFeoB1R+iRdVIn2+uWwg2vWqHi0wIngHMaYWSlF85A0FE9HzYxJkJHFkp4m/RoFH7ZUTkZ7p6W8bUpY3rb+mjckXRtLsW3olvQDJ7ppaau2kZJ3OpZctTL3mazlP6o408=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0GbdKdI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccxrPOcKtAtw2wbH1CCZ6noiGszLxo17peD70PfC9Zxl0Xp1uKPw9ckRmntfbJeIQEVzFZrxspxnDk+PQgE79rfHC7En2pop0Vg/EOTeDRv5e/T2qqhgiXbgFZI4932IOE9jU2keddzilpo1Ly7gvZxrhJ0dnn5yzuuqKgVraDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLSXDH4+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0GbdKdI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A39AC19425;
-	Mon, 20 Apr 2026 16:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLSXDH4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9287BC19425;
+	Mon, 20 Apr 2026 16:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701294;
-	bh=WL0tIXE3pGMTXRBAAkTTse8fxV4h5u6KD/SFO/LNGBk=;
+	s=korg; t=1776701296;
+	bh=FyfQukFLVaBnByb5doIgFxOUSWiISTJM6hgwnuqPQG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0GbdKdIiJpLMjKUExR0lxGOnreOz86S4T8M9DitiGjUOth02xomuH4HlrfKvx6R8
-	 x8Cc/xTUBiXa2Mk/THlo+iTjcrUffbox7LV4TIlC4i1itnFVeq0QLInhvdDWgqSglu
-	 WUlOLtKWoDQgCg5qj+l+B1ANJzQ8+eUbOMMJWk5k=
+	b=MLSXDH4+T7+e/lzzZ5HvaoDVZLnP8vXPpwASRvhiDopj4vFTBlv/SZc7ELNing5zL
+	 ZnxGWePfzWq6A3C8tC15HzOFGJpXaE2xyukmxsxZi/rzKIKGRGBwXp2C0QAV0PR176
+	 EICN60l4omWqf8wHBEY36qXPokcm7Mogc3MeGgFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Xiaoqiang Xiong <xxiong@redhat.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/162] tracing/probe: reject non-closed empty immediate strings
-Date: Mon, 20 Apr 2026 17:41:30 +0200
-Message-ID: <20260420153929.138212951@linuxfoundation.org>
+Subject: [PATCH 6.12 059/162] ixgbevf: add missing negotiate_features op to Hyper-V ops table
+Date: Mon, 20 Apr 2026 17:41:31 +0200
+Message-ID: <20260420153929.175492189@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -52,41 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 4346be6577aaa04586167402ae87bbdbe32484a4 ]
+[ Upstream commit 4821d563cd7f251ae728be1a6d04af82a294a5b9 ]
 
-parse_probe_arg() accepts quoted immediate strings and passes the body
-after the opening quote to __parse_imm_string(). That helper currently
-computes strlen(str) and immediately dereferences str[len - 1], which
-underflows when the body is empty and not closed with double-quotation.
+Commit a7075f501bd3 ("ixgbevf: fix mailbox API compatibility by
+negotiating supported features") added the .negotiate_features callback
+to ixgbe_mac_operations and populated it in ixgbevf_mac_ops, but forgot
+to add it to ixgbevf_hv_mac_ops. This leaves the function pointer NULL
+on Hyper-V VMs.
 
-Reject empty non-closed immediate strings before checking for the closing quote.
+During probe, ixgbevf_negotiate_api() calls ixgbevf_set_features(),
+which unconditionally dereferences hw->mac.ops.negotiate_features().
+On Hyper-V this results in a NULL pointer dereference:
 
-Link: https://lore.kernel.org/all/20260401160315.88518-1-pengpeng@iscas.ac.cn/
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  [...]
+  Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine [...]
+  Workqueue: events work_for_cpu_fn
+  RIP: 0010:0x0
+  [...]
+  Call Trace:
+   ixgbevf_negotiate_api+0x66/0x160 [ixgbevf]
+   ixgbevf_sw_init+0xe4/0x1f0 [ixgbevf]
+   ixgbevf_probe+0x20f/0x4a0 [ixgbevf]
+   local_pci_probe+0x50/0xa0
+   work_for_cpu_fn+0x1a/0x30
+   [...]
 
-Fixes: a42e3c4de964 ("tracing/probe: Add immediate string parameter support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Add ixgbevf_hv_negotiate_features_vf() that returns -EOPNOTSUPP and
+wire it into ixgbevf_hv_mac_ops. The caller already handles -EOPNOTSUPP
+gracefully.
+
+Fixes: a7075f501bd3 ("ixgbevf: fix mailbox API compatibility by negotiating supported features")
+Reported-by: Xiaoqiang Xiong <xxiong@redhat.com>
+Closes: https://issues.redhat.com/browse/RHEL-155455
+Assisted-by: Claude:claude-4.6-opus-high Cursor
+Tested-by: Xiaoqiang Xiong <xxiong@redhat.com>
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ixgbevf/vf.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index 055f5164bd96f..1b937923d118b 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1040,7 +1040,7 @@ static int __parse_imm_string(char *str, char **pbuf, int offs)
- {
- 	size_t len = strlen(str);
+diff --git a/drivers/net/ethernet/intel/ixgbevf/vf.c b/drivers/net/ethernet/intel/ixgbevf/vf.c
+index 708d5dd921acc..70dfda13b7885 100644
+--- a/drivers/net/ethernet/intel/ixgbevf/vf.c
++++ b/drivers/net/ethernet/intel/ixgbevf/vf.c
+@@ -709,6 +709,12 @@ static int ixgbevf_negotiate_features_vf(struct ixgbe_hw *hw, u32 *pf_features)
+ 	return err;
+ }
  
--	if (str[len - 1] != '"') {
-+	if (!len || str[len - 1] != '"') {
- 		trace_probe_log_err(offs + len, IMMSTR_NO_CLOSE);
- 		return -EINVAL;
- 	}
++static int ixgbevf_hv_negotiate_features_vf(struct ixgbe_hw *hw,
++					    u32 *pf_features)
++{
++	return -EOPNOTSUPP;
++}
++
+ /**
+  *  ixgbevf_set_vfta_vf - Set/Unset VLAN filter table address
+  *  @hw: pointer to the HW structure
+@@ -1142,6 +1148,7 @@ static const struct ixgbe_mac_operations ixgbevf_hv_mac_ops = {
+ 	.setup_link		= ixgbevf_setup_mac_link_vf,
+ 	.check_link		= ixgbevf_hv_check_mac_link_vf,
+ 	.negotiate_api_version	= ixgbevf_hv_negotiate_api_version_vf,
++	.negotiate_features	= ixgbevf_hv_negotiate_features_vf,
+ 	.set_rar		= ixgbevf_hv_set_rar_vf,
+ 	.update_mc_addr_list	= ixgbevf_hv_update_mc_addr_list_vf,
+ 	.update_xcast_mode	= ixgbevf_hv_update_xcast_mode,
 -- 
 2.53.0
 
