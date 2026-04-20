@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0C02D77E5;
-	Mon, 20 Apr 2026 15:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EAA2D77E5;
+	Mon, 20 Apr 2026 15:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700428; cv=none; b=G3r7ompZt2YIl5HA/CzjZRLVOYvkNzRztx1GwfwdriIj+8kVcWQ2BeRBrpmWfhJDdvjX14ARD0GBnqC7bD3pPYd25s3N0Wti4CsyoHqgr7zsCfuRq1LdKwrJOCquENkBW6R/pq1uFW3nrcGTKBq+avWhl844wmOM1/+OWWERvjk=
+	t=1776700430; cv=none; b=YfCXICOcdIFJhXNi8wC3FLD4bdUE0IPnndJtiR+EM1WxCZUayep/vylcHtQfkmtD0QrgYYKX/4UeNB02PwZxO/4iPamMoOHYdqBN1IouM2IOD3pIPIHX7Z57G80BUnRxJ6zMnJWLzM+jmecaldI8FkVJNOQW/WsviVB0pZlqVso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700428; c=relaxed/simple;
-	bh=OiRWUVvI/t7S2UerChIavVeeua2pfb3BgMKwMdFz+ZU=;
+	s=arc-20240116; t=1776700430; c=relaxed/simple;
+	bh=yoJqo52KZjh3bhnidofb7s7oSzNqOyTAeB1s8qTa/Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=byzpheLJsOlSPCSPdlY07XJC3j4XGlUjWI5yhZbILjQOLl/Knu9/BGs6ETpG9t3a+zDUNGUHYs2OD/fUSjPDfswzbwRvIxzFzzofCN8+BE8RioegnpF2FaOLWut63w8UoSh8I23Ji5SQ0ilRrNm9/b06VE/5cE+t3BOARf62SMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPdAlXxz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iDNPQHj8mhuiP8zU/C6/NJrJrqR0QEx8ObIAVds7ua8norxHH0B0nV7DnR8ehK+Ubhcwjl2SHZp5lVocOPg9C/K7a/C97GRN5tTNR7r9MVZBM0aJcO79Tn/KSkBjjFyxfeQhFq79W4BX6pebqL6+PHgPRovN+am77sREOom/RMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSLQqqh0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPdAlXxz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85853C19425;
-	Mon, 20 Apr 2026 15:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSLQqqh0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A946C19425;
+	Mon, 20 Apr 2026 15:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700427;
-	bh=OiRWUVvI/t7S2UerChIavVeeua2pfb3BgMKwMdFz+ZU=;
+	s=korg; t=1776700430;
+	bh=yoJqo52KZjh3bhnidofb7s7oSzNqOyTAeB1s8qTa/Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPdAlXxzAildlUiR04gf4qH3K826uj9Frvf0+o7ZSn1zgQu4KQkob8UMuhgWeqt3D
-	 lr4PjzIRwDYX6l64Kuyrd7jEKc7goL55N/W/ZyavoSCGy948Zgl5t4qEkin27d8zf+
-	 LzcdjfEsaSHGJ9Y70FOXksCBlYNq9AbIGKsc3Ah8=
+	b=cSLQqqh0xwUMoQLqsxS0Po4gPHOc9k2gMv9EAhOd61ssidP30L9ZX1YFBAbLzUY3D
+	 X0yNCQf+a/yrPB2+ckD9k1mVyk6LTlRmm9su0vWgX8yUpJY1Tq1Si85y8iihBthtw/
+	 wVo//II+a+QPuTd9RzcHLD7QcNoAMYbT/rjxKpvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.19 168/220] usb: port: add delay after usb_hub_set_port_power()
-Date: Mon, 20 Apr 2026 17:41:49 +0200
-Message-ID: <20260420153940.076873836@linuxfoundation.org>
+	Bernie Thompson <bernie@plugable.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.19 169/220] fbdev: udlfb: avoid divide-by-zero on FBIOPUT_VSCREENINFO
+Date: Mon, 20 Apr 2026 17:41:50 +0200
+Message-ID: <20260420153940.111792709@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -50,63 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit b84cc80610a8ce036deb987f056ce3196ead7f1e upstream.
+commit a31e4518bec70333a0a98f2946a12b53b45fe5b9 upstream.
 
-When a port is disabled, an attached device will be disconnected.  This
-causes a port-status-change event, which will race with hub autosuspend
-(if the disabled port was the only connected port on its hub), causing
-an immediate resume and a second autosuspend.  Both of these can be
-avoided by adding a short delay after the call to
-usb_hub_set_port_power().
+Much like commit 19f953e74356 ("fbdev: fb_pm2fb: Avoid potential divide
+by zero error"), we also need to prevent that same crash from happening
+in the udlfb driver as it uses pixclock directly when dividing, which
+will crash.
 
-Below log shows what is happening:
-
-$ echo 1 > usb1-port1/disable
-[   37.958239] usb 1-1: USB disconnect, device number 2
-[   37.964101] usb 1-1: unregistering device
-[   37.970070] hub 1-0:1.0: hub_suspend
-[   37.971305] hub 1-0:1.0: state 7 ports 1 chg 0000 evt 0002
-[   37.974412] usb usb1: bus auto-suspend, wakeup 1
-[   37.988175] usb usb1: suspend raced with wakeup event         <---
-[   37.993947] usb usb1: usb auto-resume
-[   37.998401] hub 1-0:1.0: hub_resume
-[   38.105688] usb usb1-port1: status 0000, change 0000, 12 Mb/s
-[   38.112399] hub 1-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   38.118645] hub 1-0:1.0: hub_suspend
-[   38.122963] usb usb1: bus auto-suspend, wakeup 1
-[   38.200368] usb usb1: usb wakeup-resume
-[   38.204982] usb usb1: usb auto-resume
-[   38.209376] hub 1-0:1.0: hub_resume
-[   38.213676] usb usb1-port1: status 0101 change 0001
-[   38.321552] hub 1-0:1.0: state 7 ports 1 chg 0002 evt 0000
-[   38.327978] usb usb1-port1: status 0101, change 0000, 12 Mb/s
-[   38.457429] usb 1-1: new high-speed USB device number 3 using ci_hdrc
-
-Then, port change bit will be fixed to the final state and
-usb_clear_port_feature() can correctly clear it after this period. This
-will also avoid usb runtime suspend routine to run because
-usb_autopm_put_interface() not run yet.
-
-Fixes: f061f43d7418 ("usb: hub: port: add sysfs entry to switch port power")
-Cc: stable@kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260316095042.1559882-1-xu.yang_2@nxp.com
+Cc: Bernie Thompson <bernie@plugable.com>
+Cc: Helge Deller <deller@gmx.de>
+Fixes: 59277b679f8b ("Staging: udlfb: add dynamic modeset support")
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/port.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/udlfb.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/core/port.c
-+++ b/drivers/usb/core/port.c
-@@ -141,6 +141,7 @@ static ssize_t disable_store(struct devi
- 		usb_disconnect(&port_dev->child);
+--- a/drivers/video/fbdev/udlfb.c
++++ b/drivers/video/fbdev/udlfb.c
+@@ -1018,6 +1018,9 @@ static int dlfb_ops_check_var(struct fb_
+ 	struct fb_videomode mode;
+ 	struct dlfb_data *dlfb = info->par;
  
- 	rc = usb_hub_set_port_power(hdev, hub, port1, !disabled);
-+	msleep(2 * hub_power_on_good_delay(hub));
++	if (!var->pixclock)
++		return -EINVAL;
++
+ 	/* set device-specific elements of var unrelated to mode */
+ 	dlfb_var_color_format(var);
  
- 	if (disabled) {
- 		usb_clear_port_feature(hdev, port1, USB_PORT_FEAT_C_CONNECTION);
 
 
