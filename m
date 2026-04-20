@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC9D44B683;
-	Mon, 20 Apr 2026 13:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F355D44103F;
+	Mon, 20 Apr 2026 13:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691812; cv=none; b=r+IwmZSC2fiNQgicgWd/Wvd8Q0g2uZjHQG5A/L9WOPyPH4C1fXroT+C08PsTHIhEnQlb9MwEtUn5RbQtkJDpp6WME9po/KBwiPtiMv0PAk/96GFUigOgM1tikE5uQVMnQEBlMcwre8TT+Y10rrAsvyiI00hi1AArBfzKOsseXsU=
+	t=1776691814; cv=none; b=BuJoyPsmfKZZKKY70FQpJmH42/icXyYy6xm6SCKp65Zib8a/1h4WKul8MzCN1nms7wPU0eo+HDQHsmRnCBXDVjQZSeMLARUl1a3CkglR6Ljxe1mmx7voWoUIhiBzmM8qrgNEVCtY764psuxcxC/Yl+oaWZ3P+VjKUARs9aMuMG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691812; c=relaxed/simple;
-	bh=YiA0Fxr6zIQMlNB4F93jq52OlcC6xrj3s5JwzMSri9k=;
+	s=arc-20240116; t=1776691814; c=relaxed/simple;
+	bh=0w01zXikFo9Re00qyVxbzAZST/JtC6BUtf0eukMyG74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=alUzWD4bAB1IMqC3LYno7JtbKyDdDtDS6edsy+Sj9uQOUMGQfWn27lAIlG9QOY3mVOUc5boSva4pz8KgXlx60G8dacsnQ5jJhfPKs3oEkfrHLUoSx17Jd/MtZ6/q7WKNhL9TfyMuYCMsdQS9AlBehMYRMld8ZH6KC6+d956iocU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M2iKRqSY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H2lJcdk15rLIV9dBaU2fJ3M6VuL0dF82ZYj+pZWyoEn3NoyWKq/3BSvapTGArh/V1WKDYKzRxeMKOPq7Q5kN5bwflEm3xMR5E/4UFJ8cGe6p4DRCp1tYNveHLeBZbMzuXUrlEqwqZm4IPMENwQ+qjIQTab7NPmDeJ3eMLpjcN+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eTxCdp3F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M2iKRqSY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3940FC2BCC4;
-	Mon, 20 Apr 2026 13:30:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eTxCdp3F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82C5C19425;
+	Mon, 20 Apr 2026 13:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691812;
-	bh=YiA0Fxr6zIQMlNB4F93jq52OlcC6xrj3s5JwzMSri9k=;
+	s=k20201202; t=1776691813;
+	bh=0w01zXikFo9Re00qyVxbzAZST/JtC6BUtf0eukMyG74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M2iKRqSYFvIsc7Z3glR04GW/eTqxYPUlOaqfs11C3ipfv2NlaCVFf5vimTHQJqFRm
-	 GkZwO0eNJwYF9A6EdEx8zfB1Ygo2JOY3SeqXzgnICim8wsVF2NH1+aHYnUGnd2TkSU
-	 0MdqNc/mGlx0l5R0zBV6GrBSpFaC2+U8zq11kSbPMa62ztiqbLeJcMJedtex1mmesR
-	 gAdAS/EAQxoYFQ1418tk8EUcDjEGLYxxBBUdfBOKrYSzX2txSKD7xw7GEdwTUmq0HR
-	 B6Gifp6Ne9GF+e6d9P/dzQdzwoPVP3OopgNtrND7SLme0wsNm12FRUr4IVTM1+6ehU
-	 7E0NlVPkoNNcw==
+	b=eTxCdp3F6Ww0wM43U7g7u5mw7796ka59jLKh55D6Lz9VzgcR5pEizULx+GlJflXzZ
+	 G+2Zmjs26UwbfWdikcFZ5MX9O/kkpnjR+VyCRyxv7qS2z+tOs6h1BT/Yk33w0GqXc8
+	 Kggo/1R7Z0+i07aw72/d3CrS182RnYkc5AYi9VuItCfbOBxvrhDAFSkkegIFAGExwW
+	 rwTTDb2gWN9kr5mUNjSWUCVJliwStD/6D74lRBKwLZka4+UujZJTdR6gG0vs1g7YdZ
+	 efK1JAKIl8hxCh5zOC4l9b2klDTU30+oFAE+Bk5VYY2p8igFLOTAMR5txwM8PelaWh
+	 4hsNS61qH2cwg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yang Wen <anmuxixixi@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Zenm Chen <zenmchen@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sj1557.seo@samsung.com,
-	linux-fsdevel@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] exfat: use truncate_inode_pages_final() at evict_inode()
-Date: Mon, 20 Apr 2026 09:20:03 -0400
-Message-ID: <20260420132314.1023554-209-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.19] wifi: rtw89: Add support for Elecom WDC-XE2402TU3-B
+Date: Mon, 20 Apr 2026 09:20:04 -0400
+Message-ID: <20260420132314.1023554-210-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -50,320 +49,320 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Wen <anmuxixixi@gmail.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-[ Upstream commit 4637b4cdd7aebfa2e38fa39f4db91fa089b809c5 ]
+[ Upstream commit 4e4fc2149b0a983670fd99bbd549012839bda79e ]
 
-Currently, exfat uses truncate_inode_pages() in exfat_evict_inode().
-However, truncate_inode_pages() does not mark the mapping as exiting,
-so reclaim may still install shadow entries for the mapping until
-the inode teardown completes.
+Add the ID 056e:4024 to the table to support an additional RTL8832CU
+adapter: Elecom WDC-XE2402TU3-B.
 
-In older kernels like Linux 5.10, if shadow entries are present
-at that point,clear_inode() can hit
-
-    BUG_ON(inode->i_data.nrexceptional);
-
-To align with VFS eviction semantics and prevent this situation,
-switch to truncate_inode_pages_final() in ->evict_inode().
-
-Other filesystems were updated to use truncate_inode_pages_final()
-in ->evict_inode() by commit 91b0abe36a7b ("mm + fs: store shadow
-entries in page cache")'.
-
-Signed-off-by: Yang Wen <anmuxixixi@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Link: https://github.com/morrownr/rtw89/commit/55c059e2bd49acd5cf93edbc8eda7b9e042f4efd
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260330093440.3615-1-zenmchen@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information for a comprehensive analysis. Let me
-compile the full assessment.
+Now I have enough information to complete the full analysis. Let me
+document all phases.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `exfat` (filesystem)
-- Action verb: "use" — implies correcting an incorrect API usage
-- Summary: Switch from `truncate_inode_pages()` to
-  `truncate_inode_pages_final()` in `evict_inode()`
-- Record: [exfat] [use/correct] [Switch to correct VFS eviction API]
+- Subsystem: `wifi: rtw89`
+- Action verb: "Add support for"
+- Summary: Adds USB device ID for Elecom WDC-XE2402TU3-B WiFi adapter
+  (RTL8832CU-based)
+- Record: [wifi: rtw89] [Add] [USB device ID for new RTL8832CU adapter]
 
 **Step 1.2: Tags**
-- Signed-off-by: Yang Wen <anmuxixixi@gmail.com> (author)
-- Signed-off-by: Namjae Jeon <linkinjeon@kernel.org> (exfat maintainer —
-  approval)
-- No Fixes: tag, no Cc: stable — expected for this review pipeline
-- No Reported-by, Link, or Tested-by tags
-- Record: Maintainer (Namjae Jeon) signed off — strong quality signal.
+- No Fixes: tag (expected for candidate commits)
+- No Reported-by: tag
+- No Cc: stable tag
+- Link: to GitHub morrownr/rtw89 commit (out-of-tree driver reference)
+- Signed-off-by: Zenm Chen (author/contributor)
+- Signed-off-by: Ping-Ke Shih (rtw89 subsystem maintainer, accepted the
+  patch)
+- Link: patch.msgid.link (mainline submission)
+- Record: Author is a community contributor (Zenm Chen), maintainer
+  (Ping-Ke Shih) accepted the patch.
 
-**Step 1.3: Commit Body**
-The commit explains:
-1. exfat uses `truncate_inode_pages()` in `evict_inode()`, which doesn't
-   set `AS_EXITING`
-2. Without `AS_EXITING`, reclaim can install shadow entries into the
-   page cache after truncation
-3. On Linux 5.10, leftover shadow entries trigger
-   `BUG_ON(inode->i_data.nrexceptional)` in `clear_inode()` — a kernel
-   crash
-4. Other filesystems were already converted by commit 91b0abe36a7b
-   (2014), but exfat was added later (2020) and missed this
-- Record: Bug = incorrect VFS API usage allowing race with reclaim;
-  Symptom = BUG_ON crash on 5.10, semantic incorrectness on all
-  versions; Root cause = exfat added after the 91b0abe36a7b mass
-  conversion and missed the pattern.
+**Step 1.3: Body Text**
+- Clear and concise: "Add the ID 056e:4024 to the table to support an
+  additional RTL8832CU adapter: Elecom WDC-XE2402TU3-B."
+- Vendor 0x056e = Elecom Co., Ltd.
+- Product 0x4024 = WDC-XE2402TU3-B
+- The adapter uses the RTL8832CU chip, which the rtw89_8852cu driver
+  already fully supports.
+- Record: [Device ID addition] [No bug described - hardware enablement]
+  [RTL8832CU chip already supported]
 
-**Step 1.4: Hidden Bug Fix?**
-This is an explicit bug fix, not hidden. The commit clearly describes
-incorrect VFS semantics that can cause a kernel crash.
+**Step 1.4: Hidden Bug Fix Detection**
+- This is NOT a hidden bug fix. It's a straightforward USB device ID
+  addition.
+- However, it falls into the **explicit exception category** for stable:
+  NEW DEVICE IDs to existing drivers.
+- Record: Not a bug fix. Exception category: device ID addition.
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- Single file: `fs/exfat/inode.c`
-- Single line changed: `-1 / +1`
-- Function modified: `exfat_evict_inode()`
-- Scope: Minimal surgical fix — a single API call replacement
-- Record: [fs/exfat/inode.c: +1/-1] [exfat_evict_inode] [single-file
-  surgical fix]
+- Files changed: 1 (`drivers/net/wireless/realtek/rtw89/rtw8852cu.c`)
+- Lines added: 2 (one `USB_DEVICE_AND_INTERFACE_INFO` entry +
+  `.driver_info` line)
+- Lines removed: 0
+- Functions modified: None. Only the static `rtw_8852cu_id_table[]`
+  array gains an entry.
+- Scope: single-file, surgical, 2-line addition to a const data table.
+- Record: [1 file, +2 lines, 0 functions modified, trivial scope]
 
 **Step 2.2: Code Flow Change**
-- BEFORE: `truncate_inode_pages(&inode->i_data, 0)` — truncates pages
-  but does NOT set `AS_EXITING` flag
-- AFTER: `truncate_inode_pages_final(&inode->i_data)` — sets
-  `AS_EXITING` flag, cycles the xarray lock, then truncates pages
-
-Looking at the implementation of `truncate_inode_pages_final()`:
-
-```495:521:mm/truncate.c
- - Filesystems have to use this in the .evict_inode path to inform the
- - VM that this is the final truncate and the inode is going away.
- */
-void truncate_inode_pages_final(struct address_space *mapping)
-{
-        mapping_set_exiting(mapping);
-        // ... lock cycling for memory ordering ...
-        truncate_inode_pages(mapping, 0);
-}
-```
-
-The function literally just adds `mapping_set_exiting()` + a lock cycle,
-then calls `truncate_inode_pages(mapping, 0)` — the exact same call
-being replaced.
+- Before: The USB ID table does not include 0x056e:0x4024. The Elecom
+  WDC-XE2402TU3-B adapter is not recognized by the driver.
+- After: The USB ID table includes 0x056e:0x4024 pointing to the
+  existing `rtw89_8852cu_info` driver data. The adapter will be
+  automatically bound to the rtw89_8852cu driver on plug-in.
+- No code logic changes; only static data table modification.
+- Record: [Before: device not recognized] [After: device bound to
+  existing driver]
 
 **Step 2.3: Bug Mechanism**
-- Category: Race condition / incorrect VFS API usage
-- Without `AS_EXITING`, page reclaim can race with inode teardown and
-  install shadow entries into the address space mapping after truncation
-  but before `clear_inode()`. On 5.10 kernels, `clear_inode()` had
-  `BUG_ON(inode->i_data.nrexceptional)` which would fire.
-- Record: [Race condition] [Reclaim installs shadow entries during inode
-  teardown; BUG_ON crash on 5.10]
+- Category: Hardware enablement / device ID addition (category h from
+  the analysis framework)
+- The new entry uses `USB_DEVICE_AND_INTERFACE_INFO` with the same
+  interface class/subclass/protocol (0xff, 0xff, 0xff) and the same
+  `rtw89_8852cu_info` as all other entries in the table.
+- Record: [Device ID addition, identical pattern to existing entries]
 
 **Step 2.4: Fix Quality**
-- Obviously correct — `truncate_inode_pages_final()` is the documented
-  mandatory API for `.evict_inode` paths
-- The VFS default path already uses it (line 848 of `fs/inode.c`)
-- All 40+ other filesystems use it
-- FAT (exfat's closest relative) uses it
-- Zero regression risk — `truncate_inode_pages_final()` is a strict
-  superset of `truncate_inode_pages(mapping, 0)`
+- Obviously correct: follows the exact same pattern as every other entry
+  in the table.
+- Minimal/surgical: 2 lines, purely additive to a const data array.
+- Regression risk: effectively zero. The new entry only matches USB
+  device 056e:4024; it cannot affect any other device.
 - Record: [Obviously correct, zero regression risk]
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
 **Step 3.1: Blame**
-The buggy line was introduced in commit `5f2aa075070cf5` ("exfat: add
-inode operations") by Namjae Jeon, dated 2020-03-02, merged for v5.7.
-The `truncate_inode_pages()` call has been present since the first
-commit of exfat.
+- The file was created by Bitterblue Smith in commit `406849000df41`
+  (Nov 2025), first appearing in v6.19.
+- One subsequent ID addition (0x28de:0x2432) by Shin-Yi Lin in
+  `5f65ebf9aaf00` (Jan 2026).
+- Record: [File created in v6.19, present in v7.0]
 
 **Step 3.2: Fixes Tag**
-No Fixes: tag present. The bug was introduced when exfat was added
-(5f2aa075070cf5). The referenced commit 91b0abe36a7b from 2014 converted
-most filesystems but exfat didn't exist yet.
+- No Fixes: tag present (expected, as this is a device ID addition, not
+  a bug fix).
 
 **Step 3.3: File History**
-Recent changes to `fs/exfat/inode.c` are mostly cleanups and multi-
-cluster support — none touching `evict_inode()`. This fix is standalone
-with no dependencies.
+- Only 2 commits to this file in the v7.0 tree: creation and one prior
+  ID addition.
+- The author (Zenm Chen) has contributed multiple similar USB ID
+  additions to the rtw89 driver family (D-Link DWA-F18 for rtw8852au,
+  MSI AX1800 Nano, etc.).
+- Record: [Standalone commit, no dependencies on other patches]
 
 **Step 3.4: Author**
-Yang Wen (anmuxixixi@gmail.com) appears to be a contributor to exfat.
-The fix is signed off by Namjae Jeon, the exfat maintainer.
+- Zenm Chen is a community contributor who specializes in adding device
+  IDs to rtw89/rtw88 drivers.
+- Patches accepted by Ping-Ke Shih, the Realtek rtw89 subsystem
+  maintainer.
+- Record: [Community contributor, maintainer-accepted]
 
 **Step 3.5: Dependencies**
-None. The fix uses `truncate_inode_pages_final()` which has existed
-since 2014 (v3.15+). It's available in every stable tree.
+- The diff context shows IDs 0x0411:0x03a6 and 0x37ad:0x0103 which are
+  NOT present in the v7.0 tree. These were added by other commits
+  post-v7.0.
+- However, the actual change (adding 0x056e:0x4024) is completely
+  independent of those entries. It just needs to be placed anywhere in
+  the table.
+- Minor context adjustment needed for clean application, but trivially
+  resolvable.
+- Record: [No functional dependencies. Trivial context conflict
+  expected.]
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-Could not access lore.kernel.org directly due to Anubis protection. Web
-search found other patches by Yang Wen for exfat but not this specific
-patch. The commit is likely very recent and may not be fully indexed
-yet. The maintainer sign-off by Namjae Jeon indicates proper review.
+**Step 4.1-4.5:**
+- b4 dig could not find the commit (the commit is post-v7.0 mainline,
+  not yet in this tree).
+- Lore.kernel.org was blocked by anti-scraping protection.
+- The patch link is
+  `https://patch.msgid.link/20260330093440.3615-1-zenmchen@gmail.com`,
+  indicating it was a single-patch submission (not part of a series).
+- The GitHub link references the out-of-tree morrownr/rtw89 driver repo,
+  where this ID was already tested.
+- Ping-Ke Shih (maintainer) signed off, indicating acceptance.
+- Record: [Single-patch submission, maintainer-accepted, no series
+  dependencies]
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Key Function**
-Modified function: `exfat_evict_inode()`
-
-**Step 5.2: Callers**
-`exfat_evict_inode` is the `.evict_inode` callback in exfat's
-super_operations. It's called by the VFS `evict()` function in
-`fs/inode.c` (line 846) during inode teardown — a very common operation
-triggered by:
-- File deletion (`unlink` -> last `iput`)
-- Cache eviction (memory pressure)
-- Unmounting filesystems
-
-**Step 5.3-5.4: Call chain**
-The VFS default itself uses `truncate_inode_pages_final()` when no
-`.evict_inode` is defined (line 848). This confirms exfat MUST use it
-too.
-
-**Step 5.5: Similar Patterns**
-Only exfat still uses `truncate_inode_pages()` in an evict_inode
-context. All other filesystems (fat, ext4, btrfs, xfs, f2fs, ntfs3,
-etc.) already use `truncate_inode_pages_final()`. The gfs2 commits
-`a9dd945ccef07` and `ee1e2c773e4f4` fixed similar missing calls and were
-considered important bug fixes.
+**Step 5.1-5.5:**
+- No functions modified. The change is purely to a static const data
+  table (`rtw_8852cu_id_table[]`).
+- The USB core uses this table for device/driver matching via
+  `MODULE_DEVICE_TABLE(usb, ...)`.
+- No new code paths, no logic changes, no callee/caller analysis needed.
+- Record: [No code flow impact, static data table only]
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy Code in Stable?**
-The buggy code exists in ALL active stable trees since v5.7. exfat was
-added in v5.7 (commit 5f2aa075070cf5). Active LTS trees affected:
-5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y.
+**Step 6.1:**
+- The file `rtw8852cu.c` was created in v6.19 (commit `406849000df41`).
+- It exists in v7.0.
+- For stable trees older than v6.19, this file does not exist, so the
+  commit is irrelevant there.
+- Record: [File exists in v6.19+, applicable to 6.19.y and 7.0.y stable
+  trees]
 
-Critical: On **5.10.y**, `clear_inode()` still contains
-`BUG_ON(inode->i_data.nrexceptional)` — the nrexceptional BUG_ON removal
-(commit 786b31121a2ce) was merged in v5.13. So on 5.10 LTS, this bug can
-cause a kernel crash.
+**Step 6.2:**
+- Minor context conflict: the diff assumes IDs 0x0411:0x03a6 and
+  0x37ad:0x0103 are present, but they aren't in v7.0.
+- Trivial to resolve: just insert the new 2-line entry into the existing
+  table.
+- Record: [Minor context adjustment needed, trivially resolvable]
 
-**Step 6.2: Backport Complications**
-None. The fix is a single-line change to a function that hasn't been
-modified since its creation. Will apply cleanly to all stable trees.
-
-**Step 6.3: Related Fixes Already in Stable?**
-No. No other fix for this issue exists.
+**Step 6.3:**
+- No related fixes for this specific device ID in stable.
+- Record: [No prior related fixes]
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: Subsystem Criticality**
-exfat is an IMPORTANT filesystem — widely used for USB flash drives, SD
-cards, and Windows/Linux interoperability. It's the default filesystem
-for SDXC cards (64GB+) and is used on Android devices.
+**Step 7.1:**
+- Subsystem: `drivers/net/wireless/realtek/rtw89` - WiFi driver
+- Criticality: IMPORTANT - WiFi connectivity is essential for many
+  users, especially USB WiFi adapters on Linux.
+- Record: [WiFi driver, IMPORTANT criticality]
 
-**Step 7.2: Activity**
-exfat is actively maintained by Namjae Jeon. Regular bug fixes and
-improvements flow through.
+**Step 7.2:**
+- The rtw89 USB support is actively developed (new file in v6.19,
+  multiple ID additions since).
+- Record: [Active development]
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-All exfat users on all stable kernel versions.
+**Step 8.1: Who is affected**
+- Users who own an Elecom WDC-XE2402TU3-B USB WiFi adapter.
+- Without this ID, the adapter is completely non-functional under Linux.
+- Record: [Device-specific: owners of Elecom WDC-XE2402TU3-B]
 
-**Step 8.2: Trigger Conditions**
-Inode eviction — extremely common operation. Triggered by: deleting
-files, dropping caches, memory pressure, unmounting. The race with
-reclaim requires memory pressure during inode eviction, which is
-realistic on systems with limited memory (embedded, mobile).
+**Step 8.2: Trigger**
+- Plugging in the USB adapter. The USB subsystem matches the device ID
+  to bind the driver.
+- Record: [Triggered on device plug-in, extremely common operation]
 
-**Step 8.3: Failure Mode Severity**
-- On 5.10.y: `BUG_ON` -> kernel crash -> **CRITICAL**
-- On 5.13+: Semantic incorrectness, potential for reclaim to interact
-  incorrectly with dying inodes -> **MEDIUM-HIGH**
+**Step 8.3: Failure Mode**
+- Without the fix: the WiFi adapter is simply not recognized. No driver
+  binds.
+- With the fix: adapter works using the existing, fully-functional
+  RTL8832CU driver.
+- Severity: MEDIUM (hardware non-functional without it, but no
+  crash/corruption).
+- Record: [Device not functional without fix, MEDIUM severity]
 
-**Step 8.4: Risk-Benefit Ratio**
-- BENEFIT: Prevents kernel crashes on 5.10.y; fixes incorrect VFS
-  semantics on all versions; aligns with all other filesystems
-- RISK: Effectively ZERO — `truncate_inode_pages_final()` is a strict
-  superset that adds `AS_EXITING` before doing exactly the same thing
-- Ratio: Extremely favorable
+**Step 8.4: Risk-Benefit**
+- BENEFIT: HIGH - enables hardware for real users who purchased this
+  adapter.
+- RISK: VERY LOW - 2-line addition to a const data table, follows
+  identical pattern to all other entries, only affects the specific
+  device.
+- Ratio: Overwhelmingly favorable.
+- Record: [High benefit, very low risk]
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-1. Fixes a real bug: race between reclaim and inode teardown
-2. On 5.10 LTS: can trigger `BUG_ON` crash (CRITICAL severity)
-3. Single-line change — absolute minimum risk
-4. Obviously correct — documented VFS requirement ("Filesystems have to
-   use this in the .evict_inode path")
-5. All other filesystems already use the correct API
-6. FAT filesystem (exfat's closest relative) already uses it
-7. Approved by exfat maintainer (Namjae Jeon)
-8. Applies cleanly to all stable trees
-9. No dependencies — uses an API available since v3.15
-10. exfat is a widely-used filesystem (USB, SD cards, cross-platform)
+**Step 9.1: Evidence**
 
-**Evidence AGAINST backporting:**
-- None identified
+FOR backporting:
+- Classic USB device ID addition to existing driver (explicit exception
+  category)
+- 2-line change, zero logic change, only static data
+- Follows identical pattern to all existing entries
+- Zero regression risk (only matches specific USB device)
+- Maintainer (Ping-Ke Shih) accepted the patch
+- Enables real hardware for real users
+- The driver infrastructure fully exists in stable
 
-**Stable Rules Checklist:**
-1. Obviously correct and tested? **YES** — trivial API replacement,
-   maintainer-approved
-2. Fixes a real bug? **YES** — crash on 5.10, incorrect semantics on all
-   versions
-3. Important issue? **YES** — kernel crash (CRITICAL)
-4. Small and contained? **YES** — single line change, one file
-5. No new features or APIs? **YES** — uses existing API
-6. Can apply to stable? **YES** — no dependencies, clean apply expected
+AGAINST backporting:
+- Minor context conflict (trivially resolvable)
+- Affects only users with this specific adapter (niche audience)
+
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** - identical pattern to all
+   other entries in the table.
+2. Fixes a real bug? **YES (exception)** - device ID addition enables
+   hardware support.
+3. Important issue? **YES** - hardware doesn't work at all without it.
+4. Small and contained? **YES** - 2 lines in 1 file.
+5. No new features or APIs? **YES** - no new functionality, just an ID
+   entry for existing driver.
+6. Can apply to stable trees? **YES** - with trivial context adjustment
+   for v7.0.y; file exists since v6.19.
+
+**Step 9.3: Exception Category**
+- **Device ID addition to existing driver** - this is explicitly listed
+  as an automatic YES for stable.
+
+**Step 9.4: Decision**
+This is a textbook device ID addition. 2 lines, zero risk, enables real
+hardware. Automatic YES per stable exception rules.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from author (Yang Wen) and
-  maintainer (Namjae Jeon)
-- [Phase 2] Diff analysis: 1 line changed in `exfat_evict_inode()`,
-  replaces `truncate_inode_pages()` with `truncate_inode_pages_final()`
-- [Phase 3] git blame: buggy code from commit `5f2aa075070cf5` (v5.7,
-  2020-03-02), present in all stable trees since v5.7
-- [Phase 3] git show `91b0abe36a7b`: confirmed this 2014 commit
-  converted other filesystems but predates exfat
-- [Phase 3] git show `786b31121a2ce`: confirmed BUG_ON(nrexceptional)
-  was removed in v5.13 — still present in 5.10.y
-- [Phase 5] Read `mm/truncate.c:489-522`: Confirmed documentation says
-  "Filesystems have to use this in the .evict_inode path"
-- [Phase 5] Read `fs/inode.c:845-850`: VFS default uses
-  `truncate_inode_pages_final()`, confirming it's mandatory
-- [Phase 5] Grep: Confirmed all other filesystems (fat, ext4, btrfs,
-  xfs, etc.) use `truncate_inode_pages_final()`; only exfat still uses
-  the wrong function in evict_inode
-- [Phase 6] git log v5.7 -- fs/exfat/inode.c: Confirmed exfat exists
-  since v5.7, present in 5.10.y+
-- [Phase 6] No conflicting changes to `exfat_evict_inode()` — function
-  unchanged since creation
-- [Phase 7] Namjae Jeon confirmed as exfat maintainer via git log
-- [Phase 8] Risk: zero — `truncate_inode_pages_final()` is a strict
-  superset of `truncate_inode_pages(mapping, 0)`
-- UNVERIFIED: Could not access lore.kernel.org discussion thread due to
-  Anubis protection (does not affect decision — the technical merit is
-  clear)
+- [Phase 1] Parsed commit message: USB device ID addition 056e:4024 for
+  Elecom WDC-XE2402TU3-B (RTL8832CU)
+- [Phase 1] Parsed tags: Signed-off-by from author (Zenm Chen) and
+  maintainer (Ping-Ke Shih), Link to patch.msgid.link
+- [Phase 2] Diff analysis: +2 lines to `rtw_8852cu_id_table[]`, no logic
+  changes, identical pattern to existing entries
+- [Phase 2] Verified new entry uses same `rtw89_8852cu_info` struct as
+  all other entries
+- [Phase 3] git blame: file created by 406849000df41 (v6.19), only 1
+  prior ID addition (5f65ebf9aaf00)
+- [Phase 3] git tag --contains 406849000df41: confirmed file exists
+  since v6.19
+- [Phase 3] git log author: Zenm Chen contributes USB ID additions
+  regularly to rtw89/rtw88
+- [Phase 3] Verified IDs 0x0411:0x03a6 and 0x37ad:0x0103 from diff
+  context do NOT exist in current tree (grep returned no matches) -
+  minor context conflict for backport
+- [Phase 4] b4 dig failed (commit not in this tree); lore blocked by
+  anti-scraping
+- [Phase 5] No code logic changes; only static const data table modified
+- [Phase 6] File exists in v7.0 (and v6.19+); applicable to those stable
+  trees
+- [Phase 8] Risk: VERY LOW (2 lines, const data); Benefit: HIGH (enables
+  hardware)
+- UNVERIFIED: Could not read original mailing list discussion due to
+  lore anti-bot protection. This does not affect the decision since the
+  change is a trivially verifiable device ID addition.
 
 **YES**
 
- fs/exfat/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/rtw8852cu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/exfat/inode.c b/fs/exfat/inode.c
-index 2fb2d2d5d503a..567308aff726a 100644
---- a/fs/exfat/inode.c
-+++ b/fs/exfat/inode.c
-@@ -686,7 +686,7 @@ struct inode *exfat_build_inode(struct super_block *sb,
- 
- void exfat_evict_inode(struct inode *inode)
- {
--	truncate_inode_pages(&inode->i_data, 0);
-+	truncate_inode_pages_final(&inode->i_data);
- 
- 	if (!inode->i_nlink) {
- 		i_size_write(inode, 0);
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852cu.c b/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
+index 314ea7f0ba72d..d0795da154594 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852cu.c
+@@ -40,6 +40,8 @@ static const struct rtw89_driver_info rtw89_8852cu_info = {
+ static const struct usb_device_id rtw_8852cu_id_table[] = {
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0411, 0x03a6, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852cu_info },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x056e, 0x4024, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&rtw89_8852cu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0bda, 0xc832, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852cu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0bda, 0xc85a, 0xff, 0xff, 0xff),
 -- 
 2.53.0
 
