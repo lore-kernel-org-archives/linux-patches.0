@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E711E633C;
-	Mon, 20 Apr 2026 15:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0112D2E093A;
+	Mon, 20 Apr 2026 15:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700384; cv=none; b=V5YKg2i8OKNqZK0grpkS9tlKcSZvlV3VJ+HzbEvufFkGR4PfRpTswwSOiEaxI3QThXyHZiAUstDnnqHUhpkxVEDLgvWieUIsxH231BplYHVmH0mZPMYpqUI9t7e0Qveg4zhJfqthDTrP2WyZJH6f4XOO6pgvdykzH/OmWDMA3z4=
+	t=1776700387; cv=none; b=g1vQS4XlmSp0SbF4H3ubm66vuERwsI2WitQ7qreArQ9XXFrNHGJey69WqSi4hJZvyK/Yo5isS5RGnorLigRO54nROGAdQ4sUd/PloPCvHGPXKWcmwBnLem85a1qqpX/GqzSc3H+HB0YWjb17GP0wJRQpEpJy6437AiwkL5K3Tis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700384; c=relaxed/simple;
-	bh=EF9nupvaIMpfhQlmXcfwtBgXLLLU3jquxRYQDErNUA8=;
+	s=arc-20240116; t=1776700387; c=relaxed/simple;
+	bh=rQXyCmG0OC+DTY4TqWf2h6vqFkgdnyCHPTHqZO+kLsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQdqk7fetUgRF35kxjE8q6EI+i1iex+GpXPqsQxKC0lxy1DGzvhozOkLruiRYsHg/xu1QjCZNBr32aUAf8wWsdWBEtc01THbyU+yy+vOwFuuofJsj5XZarNr/TFqkGKfpLb7op7lqvUfjwDT3LsfRG7rO64NZtB0zpGvN6qUqVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNQ7mVLk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRePt8fymXN7MWix5ciDrym6dqODNES2qhTSEIOoIek9vLFYUyai4hZACbZw5YKAQlw7gV4dNwo3ub7UHnw93pPcfwbFoW9ca8xIDogppYjibe2DvTNIYwQl6OiDcij8rqi91fBxm8ishs+AR6d8ktEAiFOYh1nQXJr2EiWv7Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnZF6mUP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNQ7mVLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFF5C19425;
-	Mon, 20 Apr 2026 15:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnZF6mUP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDC5C19425;
+	Mon, 20 Apr 2026 15:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700384;
-	bh=EF9nupvaIMpfhQlmXcfwtBgXLLLU3jquxRYQDErNUA8=;
+	s=korg; t=1776700386;
+	bh=rQXyCmG0OC+DTY4TqWf2h6vqFkgdnyCHPTHqZO+kLsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNQ7mVLkg58XF3EVmy3dA3Ny4gXlffQTuq3jbjYOE2rjJ/RBcYD1Q3c6w9qLcXe9Q
-	 h7jB+dwQdH1M0mVNvuMifIA6YhSIcMf8WeSX5EtCzsmN3GN1ylyhJAe1LhCulWxwIy
-	 YcZfVHPp7b/h81wRN8SEsL3SqphoBXBqfv3yiIWs=
+	b=OnZF6mUPzKNuWe/whZJuDS2wNVP2/KZcJD+g4x4lpNvj6kA2ySA1yJGd363UWrkjT
+	 770VZ8yvn9gTmAGWz9stzY0rruMVcFngyvJbBspStWf0Svr5N27heC0tGEaH7+FiC4
+	 o43TAaauzOfK/c3lsDehHPjkYmF95wN/3KoVoX4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.19 152/220] fbdev: tdfxfb: avoid divide-by-zero on FBIOPUT_VSCREENINFO
-Date: Mon, 20 Apr 2026 17:41:33 +0200
-Message-ID: <20260420153939.502103296@linuxfoundation.org>
+Subject: [PATCH 6.19 153/220] usb: gadget: f_ncm: validate minimum block_len in ncm_unwrap_ntb()
+Date: Mon, 20 Apr 2026 17:41:34 +0200
+Message-ID: <20260420153939.537195508@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,34 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 8f98b81fe011e1879e6a7b1247e69e06a5e17af2 upstream.
+commit 8f993d30b95dc9557a8a96ceca11abed674c8acb upstream.
 
-Much like commit 19f953e74356 ("fbdev: fb_pm2fb: Avoid potential divide
-by zero error"), we also need to prevent that same crash from happening
-in the udlfb driver as it uses pixclock directly when dividing, which
-will crash.
+The block_len read from the host-supplied NTB header is checked against
+ntb_max but has no lower bound. When block_len is smaller than
+opts->ndp_size, the bounds check of:
+	ndp_index > (block_len - opts->ndp_size)
+will underflow producing a huge unsigned value that ndp_index can never
+exceed, defeating the check entirely.
 
-Cc: Helge Deller <deller@gmx.de>
-Assisted-by: gregkh_clanker_t1000
+The same underflow occurs in the datagram index checks against block_len
+- opts->dpe_size.  With those checks neutered, a malicious USB host can
+choose ndp_index and datagram offsets that point past the actual
+transfer, and the skb_put_data() copies adjacent kernel memory into the
+network skb.
+
+Fix this by rejecting block lengths that cannot hold at least the NTB
+header plus one NDP.  This will make block_len - opts->ndp_size and
+block_len - opts->dpe_size both well-defined.
+
+Commit 8d2b1a1ec9f5 ("CDC-NCM: avoid overflow in sanity checking") fixed
+a related class of issues on the host side of NCM.
+
+Fixes: 2b74b0a04d3e ("USB: gadget: f_ncm: add bounds checks to ncm_unwrap_ntb()")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Assisted-by: gregkh_clanker_t1000
+Link: https://patch.msgid.link/2026040753-baffle-handheld-624d@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/tdfxfb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/gadget/function/f_ncm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/tdfxfb.c
-+++ b/drivers/video/fbdev/tdfxfb.c
-@@ -496,6 +496,9 @@ static int tdfxfb_check_var(struct fb_va
- 		}
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1210,8 +1210,8 @@ parse_ntb:
+ 
+ 	block_len = get_ncm(&tmp, opts->block_length);
+ 	/* (d)wBlockLength */
+-	if (block_len > ntb_max) {
+-		INFO(port->func.config->cdev, "OUT size exceeded\n");
++	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max)) {
++		INFO(port->func.config->cdev, "Bad block length: %#X\n", block_len);
+ 		goto err;
  	}
  
-+	if (!var->pixclock)
-+		return -EINVAL;
-+
- 	if (PICOS2KHZ(var->pixclock) > par->max_pixclock) {
- 		DPRINTK("pixclock too high (%ldKHz)\n",
- 			PICOS2KHZ(var->pixclock));
 
 
