@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE65C3C2774;
-	Mon, 20 Apr 2026 13:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B59A3C278F;
+	Mon, 20 Apr 2026 13:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691608; cv=none; b=sQ2PVBsqhxgV0OGIAT2mq7j/oTFgl+q71dCqfYubYcwAnjAgcXZWYqlpI+EXaoV94nYCIYbCPnTXqeqbPU0jFVVP2hxrzWQQOShRF1MuFczsYLNchKD+r5qmlj2+W75kDk8xhgNDsyJO7bFJIhoxZ25XQN/SdgQeMWw+aLGpkQU=
+	t=1776691610; cv=none; b=TEmTBjoXzb5HCYwzO/nC01c8f+cWMjGbNusxHNOCMK5v1eaNzFnfDGkjljWQ8J9QTzYtMWPCbDOQ347sxeOceMo3/VZ04oCNuqkB0wjvaSu/z5V2eRekva2P7+RJOiIe7XKn8JPNsQxPqprr9phSuvJguwpZkYSOcy8hWUNukLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691608; c=relaxed/simple;
-	bh=zNaoH0AUU3IETA0aOc1dRkhTGox/YjeGvMQCoQ0m/1Y=;
+	s=arc-20240116; t=1776691610; c=relaxed/simple;
+	bh=blz79eM+HzuInKiBdmMx4WcrvDUFD3imPLGMZOzoJY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y7Wrb+u4bOHofBGU3M+EAG9ZW4CrAwJGcj5RNsgiLZhYh5+dIoB3QIwRcIwhTaA+1t9Hocex0WiUHyNv9ydBwMhq7jUugE0sYI/LxgZE9awxiq5rHWJ9cA5AOSGFzOGru84K/2vq2lI1cM2pNAnig02qgReT4VM4JBPLHnAlbJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tYB/7ThB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=THIxsod6RNmQA/l8OGI9JCvTOAqaFFP8m3xkkhXcLb86oqtInm+cSzL8d5dtUz0uGhkeIHUqtw2D17zYMS3flOR8ByGqVmq3qmv7voc6aKOUP8E0tBdwd45Mf+LhUV8sXd+IqwWdDK9bbyTmJ8k9Vam1vTPMedhqjXyhnkMCjdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cwg2DygU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tYB/7ThB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611AAC2BCB7;
-	Mon, 20 Apr 2026 13:26:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cwg2DygU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B73C2BCB6;
+	Mon, 20 Apr 2026 13:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691608;
-	bh=zNaoH0AUU3IETA0aOc1dRkhTGox/YjeGvMQCoQ0m/1Y=;
+	s=k20201202; t=1776691610;
+	bh=blz79eM+HzuInKiBdmMx4WcrvDUFD3imPLGMZOzoJY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYB/7ThBZW/htnFAEUMb0jnbtJpS4ONCEXDmPBFRljT9fCeqUFhuKAGzvsWZfTY1w
-	 oP72y1mtwOVNS+aGCUEAxRY2LnZ5+Ewq1t9sk0yolXS4a+mKjIKlV+ZBqVYQsWATIE
-	 CurSep4jThujYv74g/WzQfMJwwS6mUvGppTf9Rm9kIC4Hr/PIaarXeQHCtAgFXznV6
-	 AjDS2uNh7xryvoaSGrxff2udhB/DG8MDkAY7VVDAlD8TWpEi0BXLkMOPjoklCxou5w
-	 +/MrkQ89vgDFka2v4wZGdDHLoPAbCwqPOLj1318Ezw/S91Wu3hd01j5pfgljVc17ob
-	 bQWDR3+P8FlBw==
+	b=cwg2DygUh68/yPQrvZ9OcK9Ua2dK3ZxUOIzX6QW0f87eihtJMavfFwa3G+E0+LNZA
+	 JDo9lnzcdKSbIUQomD4GCbXAq7ziGc0OxEJURyw5Uezqfp8eXQPlEpgnl2nPbw8Jwj
+	 hCkthAW/RasbqiygYQEv+kMGKLMyuvAMiy7k6zOnbKqAX/Gdq9Ic0Rh3eMg2ItrQs7
+	 YrZDpkP8eM3Vx/7FNX/4RNEw0xhBKXaLFy4LaAYsGnzpSZziMlx84InsDv20YHl34c
+	 jCZKt4l5zyC23eo3AVSVwy/qyn7f3GrDx5iq72Ecz+nguKgLVxFvWUVZDnPm7Gs32B
+	 z5mYibSqo3ycg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+Cc: Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	agk@redhat.com,
-	snitzer@kernel.org,
-	bmarzins@redhat.com,
-	dm-devel@lists.linux.dev,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] dm cache: prevent entering passthrough mode after unclean shutdown
-Date: Mon, 20 Apr 2026 09:18:43 -0400
-Message-ID: <20260420132314.1023554-129-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] drm/amdgpu/userq: remove queue from doorbell xa during clean up
+Date: Mon, 20 Apr 2026 09:18:44 -0400
+Message-ID: <20260420132314.1023554-130-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -49,483 +50,410 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-[ Upstream commit a373b3d5289e50ab26d4cf776bf5891436ff3658 ]
+[ Upstream commit a978ed3d6454e4aa1a2ac74051ffd77b7d263e44 ]
 
-dm-cache assumes all cache blocks are dirty when it recovers from an
-unclean shutdown. Given that the passthrough mode doesn't handle dirty
-blocks, we should not load a cache in passthrough mode if it was not
-cleanly shut down; or we'll risk data loss while updating an actually
-dirty block.
+If function amdgpu_userq_map_helper fails we do need to clean
+up and remove the queue from the userq_doorbell_xa.
 
-Also bump the target version to 2.4.0 to mark completion of passthrough
-mode fixes.
-
-Reproduce steps:
-
-1. Create a writeback cache with zero migration_threshold to produce
-   dirty blocks.
-
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
-dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writeback smq \
-2 migration_threshold 0"
-
-2. Write the first cache block dirty
-
-fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
---direct=1 --size=64k
-
-3. Ensure the number of dirty blocks is 1. This status query triggers
-   metadata commit without flushing the dirty bitset, setting up the
-   unclean shutdown state.
-
-dmsetup status cache | awk '{print $14}'
-
-4. Force reboot, leaving the cache uncleanly shutdown.
-
-echo b > /proc/sysrq-trigger
-
-5. Activate the above cache components, and verify the first data block
-   remains dirty.
-
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
-dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
-dd if=/dev/mapper/cdata of=/tmp/cb0.bin bs=64k count=1
-dd if=/dev/mapper/corig of=/tmp/ob0.bin bs=64k count=1
-md5sum /tmp/cb0.bin /tmp/ob0.bin # expected to be different
-
-6. Try bringing up the cache in passthrough mode. It succeeds, while the
-   first cache block was loaded dirty due to unclean shutdown, violates
-   the passthrough mode's constraints.
-
-dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-dmsetup status cache | awk '{print $14}'
-
-7. (Optional) Demonstrate the integrity issue: invalidating the dirty
-   block in passthrough mode doesn't write back the dirty data, causing
-   data loss.
-
-fio --filename=/dev/mapper/cache --name=invalidate --rw=write --bs=4k \
---direct=1 --size=4k  # overwrite the first 4k to trigger invalidation
-dmsetup remove cache
-dd if=/dev/mapper/corig of=/tmp/ob0new.bin bs=64k count=1
-cb0sum=$(dd if=/tmp/cb0.bin bs=4k count=15 skip=1 | md5sum | \
-awk '{print $1}')
-ob0newsum=$(dd if=/tmp/ob0new.bin bs=4k count=15 skip=1 | md5sum | \
-awk '{print $1}')
-echo "$cb0sum, $ob0newsum"  # remaining 60k should differ (data loss)
-
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile my findings.
+Now I have all the information needed. Here's my complete analysis:
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: dm cache (device-mapper cache target)
-- **Action verb**: "prevent" — indicates fixing a dangerous condition
-- **Summary**: Prevents entering passthrough mode after unclean
-  shutdown, which would cause data loss
+### Step 1.1: PARSE THE SUBJECT LINE
+- **Subsystem**: `drm/amdgpu/userq` (AMD GPU userqueue subsystem)
+- **Action verb**: "remove" (cleanup action - removing stale entry)
+- **Summary**: Remove queue from doorbell XArray during error path
+  cleanup when `amdgpu_userq_map_helper` fails.
 
-### Step 1.2: Tags
-- **Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>** — author, active
-  dm-cache contributor
-- **Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>** — dm
-  subsystem maintainer
-- No Fixes: tag, no Reported-by:, no Cc: stable (as expected for
-  candidates)
+Record: [drm/amdgpu/userq] [remove/clean up] [Fix missing doorbell
+XArray cleanup on map_helper failure path]
 
-### Step 1.3: Commit Body Analysis
-The bug is clearly described: dm-cache assumes all cache blocks are
-dirty after unclean shutdown. Passthrough mode doesn't handle dirty
-blocks (reads from origin, writes go to origin + invalidate cache hits).
-If a cache with potentially dirty blocks is loaded in passthrough mode
-after an unclean shutdown, invalidating a dirty cache block discards
-data that was never written back to the origin — causing **data loss**.
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Signed-off-by: Sunil Khatri** - Author of the fix
+- **Reviewed-by: Christian König** - Prominent AMD GPU kernel developer
+  and subsystem maintainer
+- **Signed-off-by: Alex Deucher** - AMD GPU subsystem maintainer (commit
+  path)
+- No Fixes: tag, no Cc: stable, no Reported-by, no Link: tags
 
-Detailed 7-step reproduction steps are provided with concrete commands.
+Record: Reviewed by Christian König (key AMD GPU developer). Signed off
+by Alex Deucher (subsystem maintainer). No Fixes tag - expected for
+manual review.
 
-### Step 1.4: Hidden Bug Fix Detection
-This is explicitly a data integrity protection fix. The word "prevent"
-combined with the description of data loss makes the intent unambiguous.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit message is brief but clear: "If function
+amdgpu_userq_map_helper fails we do need to clean up and remove the
+queue from the userq_doorbell_xa."
 
-**Record**: Bug fix preventing data loss in dm-cache passthrough mode
-after unclean shutdown.
+This explicitly states a missing cleanup on an error path. The failure
+mode is a stale entry left in the doorbell XArray after the queue memory
+has been freed.
+
+Record: Bug = missing resource cleanup on error path. Symptom =
+stale/dangling pointer in `userq_doorbell_xa` after kfree.
+
+### Step 1.4: DETECT HIDDEN BUG FIXES
+This IS a bug fix, not hidden at all. The commit explicitly adds missing
+error path cleanup. Without this fix, a use-after-free occurs because
+the kfree'd queue remains in the doorbell XArray.
+
+Record: Yes - this is a genuine error path resource cleanup fix (UAF
+prevention).
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-### Step 2.1: Inventory
-- **dm-cache-metadata.c**: +9 lines (new
-  `dm_cache_metadata_clean_when_opened()` function)
-- **dm-cache-metadata.h**: +5 lines (function declaration + comment)
-- **dm-cache-target.c**: +17 lines changed (passthrough check in
-  `can_resume()` + version bump)
-- **Total**: ~31 lines added, 1 line modified
-- **Functions modified**: `can_resume()` (body extended), new function
-  `dm_cache_metadata_clean_when_opened()`
-- **Scope**: single-subsystem surgical fix
+### Step 2.1: INVENTORY THE CHANGES
+- **Files changed**: 1 (`drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c`)
+- **Lines added**: 1 line
+- **Functions modified**: `amdgpu_userq_create`
+- **Scope**: Single-file, single-line surgical fix in an error path.
 
-### Step 2.2: Code Flow Change
-1. **dm-cache-metadata.c**: New accessor function reads
-   `cmd->clean_when_opened` under READ_LOCK. Trivial, obviously correct.
-2. **dm-cache-target.c `can_resume()`**: Before the change,
-   `can_resume()` only checked for failed resume retries. After, it also
-   checks if we're in passthrough mode with an unclean shutdown.
-3. **Version bump**: 2.3.0 → 2.4.0 — cosmetic marker for the behavioral
-   change.
+Record: +1 line in 1 file, modifying error handling in
+`amdgpu_userq_create`. Minimal surgical fix.
 
-### Step 2.3: Bug Mechanism
-This is a **data corruption / data loss** bug:
-- The constructor (`cache_ctr` at line 2470) checks
-  `dm_cache_metadata_all_clean()` which reads the **on-disk dirty
-  bitset** — stale after an unclean shutdown
-- The runtime (`__load_mapping_v1`/`__load_mapping_v2`) checks
-  `clean_when_opened` and treats all blocks as dirty when false
-- The gap: constructor says "all clean" (stale bitset), but runtime
-  later marks everything dirty — passthrough mode then incorrectly
-  invalidates blocks without writeback
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+In `amdgpu_userq_create`:
+1. Line 863: `xa_store_irq(&adev->userq_doorbell_xa, index, queue, ...)`
+   stores the queue in the doorbell XArray
+2. Line 870-871: `xa_alloc(&uq_mgr->userq_xa, &qid, queue, ...)`
+   allocates a queue ID
+3. Line 891: `amdgpu_userq_map_helper(queue)` tries to map the queue
 
-### Step 2.4: Fix Quality
-- **Obviously correct**: The check is a simple boolean read of an
-  existing, well-tested field
-- **Minimal**: Only adds essential check code
-- **Regression risk**: Very low — worst case, a cache that should be
-  refused in passthrough mode is correctly refused (fail-safe)
+**Before fix**: When `amdgpu_userq_map_helper` fails (line 892-899), the
+error path does: `xa_erase(userq_xa)`, `fence_driver_free`,
+`mqd_destroy`, `kfree(queue)` — but does NOT erase from
+`userq_doorbell_xa`.
 
-**Record**: Small, surgical fix. ~31 lines total. Three files, one
-subsystem. Fix is fail-safe (blocks dangerous mode, doesn't change data
-paths).
+**After fix**: Adds `xa_erase_irq(&adev->userq_doorbell_xa, index)`
+before the other cleanup calls, properly removing the stale entry.
+
+Record: The fix adds the missing doorbell XArray cleanup so that after
+kfree(queue), no dangling pointer remains in userq_doorbell_xa.
+
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Category**: Memory safety / Use-after-free
+
+The queue is stored in `userq_doorbell_xa` at line 863. When
+`amdgpu_userq_map_helper` fails, the queue is kfree'd at line 897. But
+the doorbell XArray still holds the pointer to freed memory. This
+pointer is accessed in 6 different
+`xa_for_each(&adev->userq_doorbell_xa, ...)` loops:
+- `amdgpu_userq_suspend` (line 1445): accesses `queue->userq_mgr`
+- `amdgpu_userq_resume` (line 1471): accesses `queue->userq_mgr`
+- `amdgpu_userq_stop_sched_for_enforce_isolation` (line 1501): accesses
+  `queue->userq_mgr`, `queue->queue_type`
+- `amdgpu_userq_start_sched_for_enforce_isolation` (line 1535): same
+- `amdgpu_userq_pre_reset` (line 1589): accesses `queue->userq_mgr`,
+  `queue->state`
+- `amdgpu_userq_post_reset` (line 1617): accesses `queue->state`
+
+Record: UAF - freed queue memory accessed via stale doorbell XArray
+entry during suspend/resume/reset/enforce-isolation operations.
+
+### Step 2.4: ASSESS THE FIX QUALITY
+- The fix is obviously correct: `xa_erase_irq` is the right API (matches
+  the cleanup function at line 463)
+- It's minimal: single line
+- No regression risk: it only affects the error path
+- The cleanup function `amdgpu_userq_cleanup` at line 463 does the same
+  `xa_erase_irq` call
+
+Record: Obviously correct, minimal, no regression risk. Uses same
+pattern as the normal cleanup path.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The `can_resume()` function was introduced by `5da692e2262b8` (Ming-Hung
-Tsai, 2025-03-06), first in v6.15-rc1.
+### Step 3.1: BLAME THE CHANGED LINES
+- Line 863 (xa_store_irq): introduced by `f18719ef4bb7b0` (Jesse Zhang,
+  Oct 2025) - "Convert amdgpu userqueue management from IDR to XArray"
+- Lines 891-899 (map_helper error path): originally from
+  `94976e7e5ede65` (Alex Deucher, Apr 2025), with refactoring by
+  `dc21e39fd20c77` (Lijo Lazar, Nov 2025)
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The underlying bug has existed since
-`2ee57d587357f` ("dm cache: add passthrough mode", 2013-10-24, v3.13),
-which never validated `clean_when_opened` before allowing passthrough
-mode activation after a crash.
+The bug was introduced by the IDR-to-XArray conversion
+(`f18719ef4bb7b0`). When replacing `idr_remove` with `xa_erase`, the
+author forgot to add `xa_erase_irq` for the new `userq_doorbell_xa` in
+the `amdgpu_userq_map_helper` error path.
 
-### Step 3.3: File History
-The author (Ming-Hung Tsai) has contributed 10+ dm-cache fixes,
-including out-of-bounds access fixes, BUG_ON prevention, and other
-critical corrections. All accepted by the dm maintainer tree.
+Record: Bug introduced by f18719ef4bb7b0 (Oct 2025 XArray conversion).
+Present in 7.0 tree.
 
-### Step 3.4: Author Assessment
-Ming-Hung Tsai is a Red Hat engineer who has been a prolific dm-cache
-bug fixer. Their patches go through Mikulas Patocka (dm maintainer) who
-co-signs them.
+### Step 3.2: FOLLOW THE FIXES: TAG
+No Fixes: tag present. The logical Fixes: target would be
+`f18719ef4bb7b0` which IS in this 7.0 tree.
 
-### Step 3.5: Dependencies
-This commit depends on `5da692e2262b8` which introduced `can_resume()`.
-That commit is in v6.15+. For the 7.0.y tree, this dependency is
-satisfied.
+Record: The buggy commit f18719ef4bb7b0 exists in the stable tree.
 
-**Record**: Bug has existed since v3.13 (2013). Fix depends on
-`can_resume()` from v6.15+.
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Recent history shows heavy refactoring of this file, including the
+refcount commit (`65b5c326ce4103`, Mar 2026), XArray conversion, and
+multiple error handling fixes. The userqueue code is under active
+development.
+
+Record: Actively developed file. Standalone fix - no series dependency
+in subject.
+
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Sunil Khatri is a regular AMD GPU contributor with extensive commit
+history (30+ commits in `drivers/gpu/drm/amd/`). He is familiar with the
+codebase and has authored multiple cleanup/fix patches.
+
+Record: Regular AMD GPU contributor with subsystem knowledge.
+
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+**CRITICAL FINDING**: The diff context shows that in mainline, the
+`xa_alloc` error path (line 872-879 in stable) already contains
+`xa_erase_irq(&adev->userq_doorbell_xa, index)`. However, in the current
+stable tree, this line is MISSING from the `xa_alloc` error path. This
+means there is a prerequisite commit that fixed the `xa_alloc` error
+path, and this commit only fixes the `amdgpu_userq_map_helper` error
+path.
+
+Record: Prerequisite exists - the xa_alloc error path fix must be
+applied first for this patch to apply cleanly. The patch context won't
+match the stable tree without it.
 
 ---
 
-## PHASE 4: MAILING LIST RESEARCH
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1-4.5
-Could not access lore.kernel.org directly (Anubis protection). However,
-b4 dig confirms the related series (v3 of 2 patches by Ming-Hung Tsai,
-submitted to dm-devel, CC'd dm maintainers Joe Thornber, Heinz
-Mauelshagen, Mike Snitzer, and Mikulas Patocka). The series went through
-3 revisions, indicating active review. The commit analyzed is a follow-
-up fix likely from a later submission.
+### Step 4.1-4.5: PATCH DISCUSSION
+I was unable to find the exact lore discussion for this commit via b4
+dig or web search. The commit is too new to have been indexed. However,
+the review chain is clear: Reviewed-by Christian König, Signed-off-by
+Alex Deucher — both are the primary AMD GPU kernel maintainers.
 
-**Record**: Author is well-known to dm maintainers. Prior patches in the
-same series were reviewed and merged. Could not verify specific lore
-discussion for this exact commit.
+Record: Could not find lore URL. Reviewed by top AMD GPU maintainers.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Key Functions
-- `can_resume()` is called from `cache_preresume()` which is the DM
-  target's `.preresume` callback — called during device activation
-- `passthrough_mode()` checks `cache->features.io_mode ==
-  CM_IO_PASSTHROUGH`
-- `dm_cache_metadata_clean_when_opened()` reads `cmd->clean_when_opened`
-  which is set from the CLEAN_SHUTDOWN superblock flag during metadata
-  open
+### Step 5.1-5.2: FUNCTION AND CALLER ANALYSIS
+- `amdgpu_userq_create` is called from `amdgpu_userq_ioctl` (line 1024),
+  which is a DRM IOCTL handler — **reachable from userspace**.
+- The buggy path (map_helper failure) is exercised when GPU hardware
+  mapping fails, which can happen during resource contention, hardware
+  errors, or device issues.
+- The stale entry is then accessed by suspend/resume/reset paths which
+  iterate `userq_doorbell_xa`.
 
-The constructor check at line 2470 (`dm_cache_metadata_all_clean`) reads
-the on-disk dirty bitset, which is **stale after an unclean shutdown** —
-the dirty bitset is not flushed on every dirty block write, only on
-clean shutdown. The CLEAN_SHUTDOWN flag is the authoritative indicator.
+Record: Bug is reachable from userspace IOCTL. UAF is triggered during
+subsequent suspend/resume/reset operations.
 
-### Step 5.5: Similar Patterns
-Commit `5b1fe7bec8a8d` ("dm cache metadata: set dirty on all cache
-blocks after a crash", 2018) fixed the same root issue for the normal
-(non-passthrough) code path — it was Cc'd to stable. This commit fixes
-the passthrough-specific gap.
+### Step 5.3-5.5: CALL CHAIN
+Userspace → `amdgpu_userq_ioctl` → `amdgpu_userq_create` →
+`amdgpu_userq_map_helper` fails → stale doorbell_xa entry → any
+`xa_for_each(&adev->userq_doorbell_xa)` → UAF
 
-**Record**: Bug is reachable from userspace (dmsetup commands). The
-constructor check is insufficient because it reads stale on-disk data.
+Record: Clear call chain from userspace to bug trigger to UAF
+exploitation.
 
 ---
 
-## PHASE 6: STABLE TREE ANALYSIS
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 6.1: Code Existence
-- Passthrough mode exists since v3.13 (all stable trees)
-- `can_resume()` exists since v6.15 (7.0.y, 6.15.y+)
-- `clean_when_opened` field exists since the beginning of dm-cache
+### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE?
+Yes. The `userq_doorbell_xa` was introduced by `f18719ef4bb7b0` which is
+in the 7.0 tree. The `amdgpu_userq_map_helper` error path at line
+891-899 exists and is missing the cleanup.
 
-### Step 6.2: Backport Complications
-For 7.0.y: should apply cleanly (all prerequisites present, version is
-2.3.0).
-For trees < 6.15: would need adaptation (no `can_resume()`, check would
-go directly in `cache_preresume()`).
+Record: Buggy code exists in 7.0 stable tree.
 
-**Record**: Clean apply expected for 7.0.y. Older trees need adaptation.
+### Step 6.2: BACKPORT COMPLICATIONS
+The diff context doesn't match the stable tree exactly. The `xa_alloc`
+error path in mainline already has `xa_erase_irq`, but the stable tree
+doesn't. This means the patch needs either a prerequisite commit or
+manual rework to apply cleanly.
+
+Record: Won't apply cleanly — needs prerequisite fix for xa_alloc error
+path or minor rework.
+
+### Step 6.3: RELATED FIXES ALREADY IN STABLE
+No related fix for this specific issue exists in the stable tree.
+
+Record: No prior fix exists.
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Criticality
-- **Subsystem**: dm-cache (device-mapper caching layer)
-- **Criticality**: IMPORTANT — used by LVM's lvmcache, enterprise
-  storage stacks, and production workloads
-- Data loss in a caching layer is especially severe as users expect
-  transparent, reliable behavior
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem**: `drivers/gpu/drm/amd/amdgpu` — AMD GPU driver
+- **Criticality**: IMPORTANT — widely used GPU driver on desktop/laptop
+  systems
+- Userqueue is a newer feature but actively used
 
-### Step 7.2: Activity
-dm-cache has received numerous bug fixes recently, with Ming-Hung Tsai
-being the most active contributor.
+Record: IMPORTANT subsystem - AMD GPU is widely deployed.
+
+### Step 7.2: SUBSYSTEM ACTIVITY
+Extremely active — 10+ changes per month to this specific file. The
+userqueue code is under heavy development.
+
+Record: Very active, rapidly evolving code.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users of dm-cache in passthrough mode after an unclean shutdown (power
-failure, crash, sysrq-b). This includes LVM cache users (lvmcache) on
-enterprise systems.
+### Step 8.1: AFFECTED USERS
+Users of AMD GPUs with userqueue support enabled. This includes modern
+AMD Radeon hardware.
 
-### Step 8.2: Trigger Conditions
-1. Have a dm-cache with dirty blocks in writeback mode
-2. Experience an unclean shutdown (crash, power loss)
-3. Resume the cache in passthrough mode
-4. Write to the cached region (triggers invalidation of dirty blocks)
-5. Data loss occurs silently
+Record: Driver-specific but for widely-used AMD GPUs.
 
-### Step 8.3: Failure Mode
-**DATA LOSS** — dirty data in the cache is silently discarded without
-writeback to the origin device. Severity: **CRITICAL**.
+### Step 8.2: TRIGGER CONDITIONS
+Triggered when `amdgpu_userq_map_helper` fails during queue creation
+(e.g., hardware map failure, resource exhaustion). The UAF manifests
+when subsequent suspend/resume/reset operations iterate the doorbell
+XArray.
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: Very high — prevents silent data loss in production
-  storage
-- **Risk**: Very low — the fix only adds a fail-safe check that blocks a
-  dangerous operation
-- **Ratio**: Strongly favorable for backporting
+Record: Triggered by queue creation failure followed by system operation
+(suspend/resume/reset). Not extremely rare.
+
+### Step 8.3: FAILURE MODE SEVERITY
+**Use-after-free** — the doorbell XArray holds a dangling pointer to
+freed memory. When the 6 `xa_for_each` loops iterate, they dereference
+`queue->userq_mgr`, `queue->state`, `queue->queue_type`. This can cause:
+- Kernel oops/panic (most likely)
+- Data corruption (if freed memory is reallocated)
+- Potential security vulnerability (UAF with userspace-controlled
+  trigger)
+
+Record: UAF → CRITICAL (kernel crash, potential security issue).
+
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit**: HIGH — prevents UAF in a userspace-reachable GPU code
+  path
+- **Risk**: VERY LOW — single line addition to error path, using
+  established API pattern
+- **Ratio**: Very favorable
+
+Record: High benefit, very low risk.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: COMPILE THE EVIDENCE
 
 **FOR backporting:**
-- Fixes silent data loss (CRITICAL severity)
-- Small, contained fix (~31 lines, 3 files, 1 subsystem)
-- Obviously correct — reads an existing, well-tested flag
-- Fail-safe behavior (refuses dangerous operation rather than modifying
-  data paths)
-- Author is an established dm-cache contributor
-- Co-signed by dm maintainer Mikulas Patocka
-- Detailed reproduction steps demonstrate the bug is real and
-  triggerable
-- Related fix (`5b1fe7bec8a8d` from 2018) for non-passthrough path was
-  Cc: stable
+- Fixes a real UAF bug (stale pointer in doorbell XArray after kfree)
+- Single-line fix — minimal scope
+- Obviously correct — mirrors the cleanup function at line 463
+- Reviewed by Christian König (AMD GPU subsystem expert)
+- Signed off by Alex Deucher (AMD GPU maintainer)
+- Bug is reachable from userspace IOCTL
+- UAF can be triggered during common operations (suspend/resume/reset)
+- Buggy code exists in stable tree (introduced by f18719ef4bb7b0)
 
 **AGAINST backporting:**
-- Version bump from 2.3.0 to 2.4.0 (cosmetic, could be dropped for
-  stable)
-- Adds a new accessor function (trivial, just reads existing field)
-- Dependency on `can_resume()` from v6.15+ (present in 7.0.y)
+- No Fixes: tag (expected for manual review candidates)
+- Prerequisite commit needed for clean application (xa_alloc error path
+  fix)
+- Userqueue is a newer, rapidly evolving feature
+- May need rework to apply to stable
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — trivial accessor + simple
-   conditional, with detailed repro steps
-2. **Fixes a real bug?** YES — silent data loss on unclean shutdown with
-   passthrough mode
-3. **Important issue?** YES — data corruption/loss, CRITICAL severity
-4. **Small and contained?** YES — ~31 lines, single subsystem
-5. **No new features or APIs?** Correct — the new function is a private
-   internal accessor, not user-facing
-6. **Can apply to stable?** YES for 7.0.y (all prerequisites present)
+### Step 9.2: STABLE RULES CHECKLIST
+1. **Obviously correct and tested?** YES — single line, matches existing
+   cleanup pattern, reviewed by maintainer
+2. **Fixes a real bug?** YES — UAF in error path
+3. **Important issue?** YES — UAF → potential crash or security issue
+4. **Small and contained?** YES — 1 line in 1 file
+5. **No new features or APIs?** Correct — pure bugfix
+6. **Can apply to stable?** Needs prerequisite or minor rework
 
-### Step 9.3: Exception Categories
-Not applicable — this is a straightforward critical bug fix.
+### Step 9.3: EXCEPTION CATEGORIES
+Not an exception category — this is a standard bug fix.
 
-### Step 9.4: Decision
-This is a clear YES. It prevents silent data loss in dm-cache, is small
-and surgical, obviously correct, and meets all stable kernel criteria.
+### Step 9.4: DECISION
+The fix addresses a genuine use-after-free vulnerability in the AMD GPU
+userqueue error handling path. The bug is reachable from userspace via
+DRM IOCTL, and the UAF can be triggered during suspend/resume/reset
+operations. The fix is a single-line, obviously correct addition that
+mirrors the existing cleanup function pattern. It was reviewed by the
+subsystem's top maintainers.
+
+The only concern is that the patch may need a prerequisite commit
+(xa_alloc error path fix) to apply cleanly. However, this is a practical
+application concern, not a question of whether the fix should be
+backported.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from Ming-Hung Tsai (author) and
-  Mikulas Patocka (dm maintainer). No Fixes/Cc:stable tags (expected).
-- [Phase 2] Diff analysis: ~31 lines added across 3 files. New trivial
-  accessor `dm_cache_metadata_clean_when_opened()`, passthrough check in
-  `can_resume()`, version bump.
-- [Phase 2] Verified constructor check at line 2470-2486 calls
-  `dm_cache_metadata_all_clean()` which reads stale on-disk dirty bitset
-  — insufficient after crash.
-- [Phase 2] Verified `blocks_are_clean_separate_dirty()` reads on-disk
-  bitset (dm_bitset_cursor), not the `clean_when_opened` flag.
-- [Phase 2] Verified `__load_mapping_v1` (line 1343) and
-  `__load_mapping_v2` (line 1385) check `cmd->clean_when_opened` and
-  treat all blocks as dirty when false.
-- [Phase 3] git blame: `can_resume()` introduced by `5da692e2262b8`
-  (2025-03-06, v6.15-rc1).
-- [Phase 3] Passthrough mode introduced by `2ee57d587357f` (2013-10-24,
-  v3.13) — bug has existed since then.
-- [Phase 3] `git tag --contains 5da692e2262b8`: first appears in
-  v6.15-rc1, present in 7.0.
-- [Phase 3] `git tag --contains 2ee57d587357f`: present since v3.13, in
-  all stable trees.
-- [Phase 3] Version was 2.2.0 → 2.3.0 by `c2662b1544cbd` (same
-  author/series), now 2.3.0 → 2.4.0.
-- [Phase 4] b4 dig: found the related series (v3, 2 patches) on dm-
-  devel. CC'd Joe Thornber, Heinz Mauelshagen, Mike Snitzer, Mikulas
-  Patocka.
-- [Phase 4] lore.kernel.org blocked by Anubis. Could not fetch specific
-  discussion for this commit.
-- [Phase 5] `clean_when_opened` is set at line 508 from CLEAN_SHUTDOWN
-  flag in superblock, well-established mechanism.
-- [Phase 5] `5b1fe7bec8a8d` (2018) fixed same root issue for non-
-  passthrough path, was Cc: stable.
-- [Phase 6] All prerequisites present in 7.0.y tree. Clean apply
-  expected.
-- [Phase 7] dm-cache is IMPORTANT subsystem used by LVM, enterprise
-  storage.
-- [Phase 8] Failure mode: silent data loss (CRITICAL). Trigger: unclean
-  shutdown + passthrough mode resume + write.
-- UNVERIFIED: Could not verify specific mailing list discussion or
-  reviewer feedback for this exact commit due to lore.kernel.org access
-  restrictions.
+- [Phase 1] Parsed tags: Reviewed-by Christian König, Signed-off-by Alex
+  Deucher (both AMD GPU maintainers)
+- [Phase 2] Diff analysis: 1 line added to amdgpu_userq_map_helper error
+  path in amdgpu_userq_create(); adds missing xa_erase_irq for
+  userq_doorbell_xa
+- [Phase 3] git blame: Buggy code introduced by f18719ef4bb7b0 (Jesse
+  Zhang, Oct 2025, XArray conversion), confirmed present in stable tree
+- [Phase 3] git show f18719ef4bb7b0: Confirmed the XArray conversion
+  failed to add xa_erase_irq in both xa_alloc and map_helper error paths
+- [Phase 3] Checked xa_alloc error path (line 872-879): CONFIRMED
+  missing xa_erase_irq in stable tree, indicating a prerequisite commit
+  exists
+- [Phase 4] b4 dig: Failed to find match (commit likely too recent); web
+  search also unsuccessful
+- [Phase 4] Web search: Found related refcount commit discussion on
+  lists.freedesktop.org
+- [Phase 5] Grep for amdgpu_userq_create callers: Called from
+  amdgpu_userq_ioctl (DRM IOCTL handler), reachable from userspace
+- [Phase 5] Grep for xa_for_each userq_doorbell_xa: Found 6 iteration
+  sites (suspend/resume/reset/enforce-isolation) — all access freed
+  queue members
+- [Phase 5] Read amdgpu_userq_cleanup (line 450-469): CONFIRMED correct
+  cleanup uses xa_erase_irq, validating the fix pattern
+- [Phase 6] Buggy code (f18719ef4bb7b0) confirmed in stable tree via git
+  log
+- [Phase 6] Context mismatch identified: mainline xa_alloc error path
+  has xa_erase_irq but stable doesn't — prerequisite needed
+- [Phase 8] Failure mode: UAF → kernel oops/potential security
+  vulnerability, severity CRITICAL
+- UNVERIFIED: Could not find the exact mainline commit hash or lore
+  discussion thread
 
 **YES**
 
- drivers/md/dm-cache-metadata.c |  9 +++++++++
- drivers/md/dm-cache-metadata.h |  5 +++++
- drivers/md/dm-cache-target.c   | 19 ++++++++++++++++++-
- 3 files changed, 32 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/dm-cache-metadata.c b/drivers/md/dm-cache-metadata.c
-index 57158c02d096e..70e0c6c064082 100644
---- a/drivers/md/dm-cache-metadata.c
-+++ b/drivers/md/dm-cache-metadata.c
-@@ -1824,3 +1824,12 @@ int dm_cache_metadata_abort(struct dm_cache_metadata *cmd)
- 
- 	return r;
- }
-+
-+int dm_cache_metadata_clean_when_opened(struct dm_cache_metadata *cmd, bool *result)
-+{
-+	READ_LOCK(cmd);
-+	*result = cmd->clean_when_opened;
-+	READ_UNLOCK(cmd);
-+
-+	return 0;
-+}
-diff --git a/drivers/md/dm-cache-metadata.h b/drivers/md/dm-cache-metadata.h
-index 5f77890207fed..dca423522da6c 100644
---- a/drivers/md/dm-cache-metadata.h
-+++ b/drivers/md/dm-cache-metadata.h
-@@ -146,6 +146,11 @@ void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd);
- void dm_cache_metadata_set_read_write(struct dm_cache_metadata *cmd);
- int dm_cache_metadata_abort(struct dm_cache_metadata *cmd);
- 
-+/*
-+ * Query method.  Was the metadata cleanly shut down when opened?
-+ */
-+int dm_cache_metadata_clean_when_opened(struct dm_cache_metadata *cmd, bool *result);
-+
- /*----------------------------------------------------------------*/
- 
- #endif /* DM_CACHE_METADATA_H */
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 935ab79b1d0cd..962ac5ee081c2 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2929,6 +2929,9 @@ static dm_cblock_t get_cache_dev_size(struct cache *cache)
- 
- static bool can_resume(struct cache *cache)
- {
-+	bool clean_when_opened;
-+	int r;
-+
- 	/*
- 	 * Disallow retrying the resume operation for devices that failed the
- 	 * first resume attempt, as the failure leaves the policy object partially
-@@ -2945,6 +2948,20 @@ static bool can_resume(struct cache *cache)
- 		return false;
- 	}
- 
-+	if (passthrough_mode(cache)) {
-+		r = dm_cache_metadata_clean_when_opened(cache->cmd, &clean_when_opened);
-+		if (r) {
-+			DMERR("%s: failed to query metadata flags", cache_device_name(cache));
-+			return false;
-+		}
-+
-+		if (!clean_when_opened) {
-+			DMERR("%s: unable to resume into passthrough mode after unclean shutdown",
-+			      cache_device_name(cache));
-+			return false;
-+		}
-+	}
-+
- 	return true;
- }
- 
-@@ -3510,7 +3527,7 @@ static void cache_io_hints(struct dm_target *ti, struct queue_limits *limits)
- 
- static struct target_type cache_target = {
- 	.name = "cache",
--	.version = {2, 3, 0},
-+	.version = {2, 4, 0},
- 	.module = THIS_MODULE,
- 	.ctr = cache_ctr,
- 	.dtr = cache_dtr,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index 819c4c26416c3..1849894d2837b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -892,6 +892,7 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
+ 		r = amdgpu_userq_map_helper(queue);
+ 		if (r) {
+ 			drm_file_err(uq_mgr->file, "Failed to map Queue\n");
++			xa_erase_irq(&adev->userq_doorbell_xa, index);
+ 			xa_erase(&uq_mgr->userq_xa, qid);
+ 			amdgpu_userq_fence_driver_free(queue);
+ 			uq_funcs->mqd_destroy(queue);
 -- 
 2.53.0
 
