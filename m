@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CBB3385B6;
-	Mon, 20 Apr 2026 15:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734EF331A78;
+	Mon, 20 Apr 2026 15:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700519; cv=none; b=lrNk+xXDbiepnjLhFDpBdGRwCURcRU7hdlYmvFobI9GcnQzXOPsWmZpbFr19ASQPQDQroe3QLd0X1JJaA0HxUNzy8zokE1Ecg4npQVTkUsXc8Id7HATFKfWfQuXCApE7Vo9QPqZkpySXT59N8zSGoREjWbMkDPFZBxVhOD3sOlc=
+	t=1776700522; cv=none; b=D45FmunOkz5vg/9g/ftS100g5sG30x+MymO7x+4cCrQkxyxzfFIWkR9DnM6iAaVYw7yumJFUC8ZayNNigWbBeJM1XgvD3GdKu0ufjt5+H+EpXYDtHaAgfLAtL+v65GBSz4PL8ccT9Gs82G5EQ4BQApoIZFlaUIoBwjhF7dvlJtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700519; c=relaxed/simple;
-	bh=nsVoiw2CaHThiSDItu9J8Wt7uwMcz6IhjQD+Sfua+Vo=;
+	s=arc-20240116; t=1776700522; c=relaxed/simple;
+	bh=y5K61jE5XtJBksA0ZSdvisVqQPkwLgMz2iBsfBuT0ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plBNZpAJnplX94VmIkFu3FQphUPquy3vKpRb0raC0YYMVrzJq496TOSbXVtnM3BR22ZH3GDKtpfiPmstGwt5LMs4VAZhnVTT+shWRhhWiWX0HQnpH1khAt4Gn+yIAo/KpgwQtRxxJ7H76HW6oloyxccronGATOSOsMhMQhpLSL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUcUWBeH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQ3qSgirPQwq6ym62ZpoZj+FE7f8zJh6D5qXeGTvv1W2ZT4+x82E6Ai/xb53SJZBN+Gk0Gvm8hjXy857z2++WngsgoNglTr4an3e+u9NWraP2UxCqy1ryumt4/U7xasa6ZGqh0HhPyfzH8P0sAiNkKFJ31k4l6KoUJocRNoUYJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQzWgamS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUcUWBeH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2AEC19425;
-	Mon, 20 Apr 2026 15:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQzWgamS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001FDC19425;
+	Mon, 20 Apr 2026 15:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700519;
-	bh=nsVoiw2CaHThiSDItu9J8Wt7uwMcz6IhjQD+Sfua+Vo=;
+	s=korg; t=1776700522;
+	bh=y5K61jE5XtJBksA0ZSdvisVqQPkwLgMz2iBsfBuT0ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUcUWBeH7si02ljOVcLEsz0+VDKgM2RU8WpbwZyEn9lD898ke573klMne7sU7dnrc
-	 /ITYTEOmT0tLspyUtV/QJCTN8VNTrJW2A4m5ysGx4Mt59xfddugBSdn507xjtmejkb
-	 lm6djjRhC9bIqUkt+ennKuCBHJgrYbwlVxId1f7E=
+	b=sQzWgamSKHN4rru6f8E1ua88ZobK72HpmWpsj/kpLiuwpdccFoWsS2pxkGuqOaYOp
+	 oXQYwFWuP6+SrpaUA0Qa3Q0jj6aIdv/OTSKwz8UEbsu1GN1J3xaEIgJn2tR99c+tkL
+	 VNHBH1gj52LgDim6v86ej2yH3degmpglMQLRtPo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harin Lee <me@harin.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.19 177/220] ALSA: ctxfi: Limit PTP to a single page
-Date: Mon, 20 Apr 2026 17:41:58 +0200
-Message-ID: <20260420153940.400642719@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.19 204/220] ASoC: qcom: q6apm: move component registration to unmanaged version
+Date: Mon, 20 Apr 2026 17:42:25 +0200
+Message-ID: <20260420153941.373231901@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -50,58 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harin Lee <me@harin.net>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit e9418da50d9e5c496c22fe392e4ad74c038a94eb upstream.
+commit 6ec1235fc941dac6c011b30ee01d9220ff87e0cd upstream.
 
-Commit 391e69143d0a increased CT_PTP_NUM from 1 to 4 to support 256
-playback streams, but the additional pages are not used by the card
-correctly. The CT20K2 hardware already has multiple VMEM_PTPAL
-registers, but using them separately would require refactoring the
-entire virtual memory allocation logic.
+q6apm component registers dais dynamically from ASoC toplology, which
+are allocated using device managed version apis. Allocating both
+component and dynamic dais using managed version could lead to incorrect
+free ordering, dai will be freed while component still holding references
+to it.
 
-ct_vm_map() always uses PTEs in vm->ptp[0].area regardless of
-CT_PTP_NUM. On AMD64 systems, a single PTP covers 512 PTEs (2M). When
-aggregate memory allocations exceed this limit, ct_vm_map() tries to
-access beyond the allocated space and causes a page fault:
+Fix this issue by moving component to unmanged version so
+that the dai pointers are only freeded after the component is removed.
 
-  BUG: unable to handle page fault for address: ffffd4ae8a10a000
-  Oops: Oops: 0002 [#1] SMP PTI
-  RIP: 0010:ct_vm_map+0x17c/0x280 [snd_ctxfi]
-  Call Trace:
-  atc_pcm_playback_prepare+0x225/0x3b0
-  ct_pcm_playback_prepare+0x38/0x60
-  snd_pcm_do_prepare+0x2f/0x50
-  snd_pcm_action_single+0x36/0x90
-  snd_pcm_action_nonatomic+0xbf/0xd0
-  snd_pcm_ioctl+0x28/0x40
-  __x64_sys_ioctl+0x97/0xe0
-  do_syscall_64+0x81/0x610
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+==================================================================
+BUG: KASAN: slab-use-after-free in snd_soc_del_component_unlocked+0x3d4/0x400 [snd_soc_core]
+Read of size 8 at addr ffff00084493a6e8 by task kworker/u48:0/3426
+Tainted: [W]=WARN
+Hardware name: LENOVO 21N2ZC5PUS/21N2ZC5PUS, BIOS N42ET57W (1.31 ) 08/08/2024
+Workqueue: pdr_notifier_wq pdr_notifier_work [pdr_interface]
+Call trace:
+ show_stack+0x28/0x7c (C)
+ dump_stack_lvl+0x60/0x80
+ print_report+0x160/0x4b4
+ kasan_report+0xac/0xfc
+ __asan_report_load8_noabort+0x20/0x34
+ snd_soc_del_component_unlocked+0x3d4/0x400 [snd_soc_core]
+ snd_soc_unregister_component_by_driver+0x50/0x88 [snd_soc_core]
+ devm_component_release+0x30/0x5c [snd_soc_core]
+ devres_release_all+0x13c/0x210
+ device_unbind_cleanup+0x20/0x190
+ device_release_driver_internal+0x350/0x468
+ device_release_driver+0x18/0x30
+ bus_remove_device+0x1a0/0x35c
+ device_del+0x314/0x7f0
+ device_unregister+0x20/0xbc
+ apr_remove_device+0x5c/0x7c [apr]
+ device_for_each_child+0xd8/0x160
+ apr_pd_status+0x7c/0xa8 [apr]
+ pdr_notifier_work+0x114/0x240 [pdr_interface]
+ process_one_work+0x500/0xb70
+ worker_thread+0x630/0xfb0
+ kthread+0x370/0x6c0
+ ret_from_fork+0x10/0x20
 
-Revert CT_PTP_NUM to 1. The 256 SRC_RESOURCE_NUM and playback_count
-remain unchanged.
+Allocated by task 77:
+ kasan_save_stack+0x40/0x68
+ kasan_save_track+0x20/0x40
+ kasan_save_alloc_info+0x44/0x58
+ __kasan_kmalloc+0xbc/0xdc
+ __kmalloc_node_track_caller_noprof+0x1f4/0x620
+ devm_kmalloc+0x7c/0x1c8
+ snd_soc_register_dai+0x50/0x4f0 [snd_soc_core]
+ soc_tplg_pcm_elems_load+0x55c/0x1eb8 [snd_soc_core]
+ snd_soc_tplg_component_load+0x4f8/0xb60 [snd_soc_core]
+ audioreach_tplg_init+0x124/0x1fc [snd_q6apm]
+ q6apm_audio_probe+0x10/0x1c [snd_q6apm]
+ snd_soc_component_probe+0x5c/0x118 [snd_soc_core]
+ soc_probe_component+0x44c/0xaf0 [snd_soc_core]
+ snd_soc_bind_card+0xad0/0x2370 [snd_soc_core]
+ snd_soc_register_card+0x3b0/0x4c0 [snd_soc_core]
+ devm_snd_soc_register_card+0x50/0xc8 [snd_soc_core]
+ x1e80100_platform_probe+0x208/0x368 [snd_soc_x1e80100]
+ platform_probe+0xc0/0x188
+ really_probe+0x188/0x804
+ __driver_probe_device+0x158/0x358
+ driver_probe_device+0x60/0x190
+ __device_attach_driver+0x16c/0x2a8
+ bus_for_each_drv+0x100/0x194
+ __device_attach+0x174/0x380
+ device_initial_probe+0x14/0x20
+ bus_probe_device+0x124/0x154
+ deferred_probe_work_func+0x140/0x220
+ process_one_work+0x500/0xb70
+ worker_thread+0x630/0xfb0
+ kthread+0x370/0x6c0
+ ret_from_fork+0x10/0x20
 
-Fixes: 391e69143d0a ("ALSA: ctxfi: Bump playback substreams to 256")
-Cc: stable@vger.kernel.org
-Signed-off-by: Harin Lee <me@harin.net>
-Link: https://patch.msgid.link/20260406074857.216034-1-me@harin.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Freed by task 3426:
+ kasan_save_stack+0x40/0x68
+ kasan_save_track+0x20/0x40
+ __kasan_save_free_info+0x4c/0x80
+ __kasan_slab_free+0x78/0xa0
+ kfree+0x100/0x4a4
+ devres_release_all+0x144/0x210
+ device_unbind_cleanup+0x20/0x190
+ device_release_driver_internal+0x350/0x468
+ device_release_driver+0x18/0x30
+ bus_remove_device+0x1a0/0x35c
+ device_del+0x314/0x7f0
+ device_unregister+0x20/0xbc
+ apr_remove_device+0x5c/0x7c [apr]
+ device_for_each_child+0xd8/0x160
+ apr_pd_status+0x7c/0xa8 [apr]
+ pdr_notifier_work+0x114/0x240 [pdr_interface]
+ process_one_work+0x500/0xb70
+ worker_thread+0x630/0xfb0
+ kthread+0x370/0x6c0
+ ret_from_fork+0x10/0x20
+
+Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260402081118.348071-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctvmem.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6apm.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/sound/pci/ctxfi/ctvmem.h
-+++ b/sound/pci/ctxfi/ctvmem.h
-@@ -15,7 +15,7 @@
- #ifndef CTVMEM_H
- #define CTVMEM_H
+--- a/sound/soc/qcom/qdsp6/q6apm.c
++++ b/sound/soc/qcom/qdsp6/q6apm.c
+@@ -744,13 +744,22 @@ static int apm_probe(gpr_device_t *gdev)
  
--#define CT_PTP_NUM	4	/* num of device page table pages */
-+#define CT_PTP_NUM	1	/* num of device page table pages */
+ 	q6apm_get_apm_state(apm);
  
- #include <linux/mutex.h>
- #include <linux/list.h>
+-	ret = devm_snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
++	ret = snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to register q6apm: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	return of_platform_populate(dev->of_node, NULL, NULL, dev);
++	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
++	if (ret)
++		snd_soc_unregister_component(dev);
++
++	return ret;
++}
++
++static void apm_remove(gpr_device_t *gdev)
++{
++	snd_soc_unregister_component(&gdev->dev);
+ }
+ 
+ struct audioreach_module *q6apm_find_module_by_mid(struct q6apm_graph *graph, uint32_t mid)
+@@ -817,6 +826,7 @@ MODULE_DEVICE_TABLE(of, apm_device_id);
+ 
+ static gpr_driver_t apm_driver = {
+ 	.probe = apm_probe,
++	.remove = apm_remove,
+ 	.gpr_callback = apm_callback,
+ 	.driver = {
+ 		.name = "qcom-apm",
 
 
