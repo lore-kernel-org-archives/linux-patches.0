@@ -1,51 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8367C47F2EA;
-	Mon, 20 Apr 2026 13:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A73480329;
+	Mon, 20 Apr 2026 13:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691880; cv=none; b=X/6WYVOfmSmftgAyG4Tkj9UBkaSWAHtS03YuD8D7AHJWjM9x5T7U9fMrQjaX8GTYdAt7MbaB1KdPlz+wIlkbdugBICHyBgW3Kc6/jQFBU541jac7U2VPsmGNysbswhXdwS5t/IibSTPuWrERKfUSpU8y6jIirYAymVqPywtu52o=
+	t=1776691882; cv=none; b=rRhea6IF5gJ4daxcBP0vURzCU6Bi8aL1BpBU2ktU9zUHEMFFoLsLAvR7c1p3hRs3aTLW/RaxyaGSHXExPJ2fuUGfAytCtiJQPF7U/W8PNdncbGMmlW9UrP7EiG7kn2UB8MJGe97/xHMcCXlJMql7G34KEYOosnSqEgdYfXJpyeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691880; c=relaxed/simple;
-	bh=dsaQHQrVlJQr4tmA2idLn2ZOrKmGp++3PWz7AjvgeEk=;
+	s=arc-20240116; t=1776691882; c=relaxed/simple;
+	bh=Sh6nHMW1lqcujGl74gmy3RQhs0M329c5k/19w5sLhmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qy95tKIY2w3qQMfrR8StrulXHOPhHtrMMfU8ZuclqunH/tq50sICnRkvNqbkr/U7GIy32FemZTHAYQdhMUzCNVqJnUlwtphWy3IRmtL8cxK/YOSdnFZ1lL+dSYM9kNG3UBPH21Kg/6tgSsna515eLoRDD8pa2KZJ/RuPYFfrqP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qhEfndbm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MJUbzJE7r6bRGA67yKrvYUH4Zd1jn6YjB6kAPhAG+a2BJ+cr53XDBfNso4+XiMTVoeDkinX2Tszo8yfKqzeRBawCn3A18HHxgJML1y1Fk+OF2dlAGAPv9J0o4BSE6qxKY8OAlPdiRmQqORAj10aCqAquLBFDOJ7wDx173T+uD0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gIB87Hh9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qhEfndbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D75C2BCB7;
-	Mon, 20 Apr 2026 13:31:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gIB87Hh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89284C2BCB8;
+	Mon, 20 Apr 2026 13:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691880;
-	bh=dsaQHQrVlJQr4tmA2idLn2ZOrKmGp++3PWz7AjvgeEk=;
+	s=k20201202; t=1776691881;
+	bh=Sh6nHMW1lqcujGl74gmy3RQhs0M329c5k/19w5sLhmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qhEfndbmI9nV1Sh3Tqna/f5Tiznoj4wWVRGU6q6HTC4SqM9lndyIgdwLC9joyarcx
-	 q/REi2PbKGUMP0PUKeKVljwni8Hk2D2CrQ243yF+nhSgUr4SeagS6wWIeSwMShKbxr
-	 oRIYYe56wkJnxvpflzBY0HZt/FNfes7B6TsvP+CTAfRz8wH8M1d3FL2sRsbDtoEpub
-	 CsRVn6ARozefjhXGmfjZfHJi98RFLX9Cv9hDG428BPnZVVfmML9ROBhcYm0/OnQaA+
-	 Xz33N9URQwX1axPHZFFBTLNV3zYnazal3Cuq/GOEjjhk9ggtJ/nOJsZ2I/71BeUXLZ
-	 t7coh5ZhfY6OQ==
+	b=gIB87Hh9yNQublZNwi9NtQFl4tw60RI4phUIpHY+eU5NhW9DB8RtxTlAhUwWPIBrd
+	 q4bEYJdERykBVLt42h97Jo4C07eY+oe3PYXm8Aqi6thU4I98mFiF6G583K8t0n+EIg
+	 QWtiHImxuONhN9rUtPPQFJ5CA57RgKTWUTMzeS7jgHYtkxH15aAUaTxO02c6iYRDEn
+	 rEvTi5GYZV9NeVWKlUaau+utJdJ7XAE2E6Kq40uT/BzS0J61Xk5ecwnTdHHt96alB8
+	 S6PajvIlihjpLZrZftf+WiW6R1cFJw8XPWzy31Lwfjc0MjTKQi/2GGQe1qZinMnJos
+	 6OR3U2ttzQscw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	eddyz87@gmail.com,
-	memxor@gmail.com,
-	hca@linux.ibm.com,
-	gor@linux.ibm.com,
-	agordeev@linux.ibm.com,
-	bpf@vger.kernel.org,
-	linux-s390@vger.kernel.org,
+	kch@nvidia.com,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] s390/bpf: Do not increment tailcall count when prog is NULL
-Date: Mon, 20 Apr 2026 09:20:42 -0400
-Message-ID: <20260420132314.1023554-248-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] nvmet-tcp: Don't free SQ on authentication success
+Date: Mon, 20 Apr 2026 09:20:43 -0400
+Message-ID: <20260420132314.1023554-249-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -58,401 +54,345 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-[ Upstream commit e4094d56c5592dd90aa619f9480265b0689ed3d9 ]
+[ Upstream commit 2e6eb6b277f593b98f151ea8eff1beb558bbea3b ]
 
-Currently tail calling a non-existent prog results in tailcall count
-increment. This is what the interpreter is doing, but this is clearly
-wrong, so replace load-and-increment and compare-and-jump with load
-and compare-and-jump, conditionally followed by increment and store.
+Curently after the host sends a REPLACETLSPSK we free the TLS keys as
+part of calling nvmet_auth_sq_free() on success. This means when the
+host sends a follow up REPLACETLSPSK we return CONCAT_MISMATCH as the
+check for !nvmet_queue_tls_keyid(req->sq) fails.
 
-Reported-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Link: https://lore.kernel.org/r/20260217161058.101346-1-iii@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+This patch ensures we don't free the TLS key on success as we might need
+it again in the future.
+
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need. Let me compile my comprehensive
-analysis.
+Now I have all the information needed for a comprehensive analysis. Let
+me compile the full assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: s390/bpf (s390 architecture BPF JIT compiler)
-- **Action verb**: "Do not increment" (correction of incorrect behavior)
-- **Summary**: Stop incrementing the tail call counter when the target
-  program is NULL (non-existent)
+**Step 1.1: Subject Line**
+- Subsystem: `nvmet-tcp` (NVMe target, TCP transport)
+- Action verb: "Don't free" (preventing incorrect cleanup = bug fix)
+- Summary: Prevent freeing SQ authentication state on success to
+  preserve TLS key for future REPLACETLSPSK
 
-Record: [s390/bpf] [Do not / correct] [Stop incorrect tail call counter
-increment for NULL programs]
+**Step 1.2: Tags**
+- Reviewed-by: Christoph Hellwig, Hannes Reinecke (original auth
+  author), Wilfred Mallawa, Sagi Grimberg (NVMe-oF maintainer)
+- Signed-off-by: Keith Busch (NVMe maintainer, committer)
+- No Fixes: tag, no Cc: stable (expected for autosel candidates)
+- No Reported-by (discovered during development/testing rather than user
+  report)
 
-### Step 1.2: Tags
-- **Reported-by**: Hari Bathini <hbathini@linux.ibm.com> - this is the
-  same person who wrote the powerpc equivalent fix with `Cc: stable` and
-  `Fixes:` tags
-- **Signed-off-by**: Ilya Leoshkevich <iii@linux.ibm.com> (author, s390
-  BPF JIT maintainer)
-- **Link**:
-  https://lore.kernel.org/r/20260217161058.101346-1-iii@linux.ibm.com
-- **Signed-off-by**: Alexei Starovoitov <ast@kernel.org> (BPF maintainer
-  applied the patch)
-- No `Fixes:` tag or `Cc: stable` tag on this s390 variant (expected -
-  that's why it needs review)
-- The **powerpc equivalent** (521bd39d9d28c) has both `Fixes:
-  ce0761419fae` and `Cc: stable@vger.kernel.org`
+**Step 1.3: Commit Body**
+The bug: after a successful NEWTLSPSK authentication,
+`nvmet_auth_sq_free()` is called which sets `sq->tls_key = NULL`. When
+the host sends a follow-up REPLACETLSPSK, the check
+`!nvmet_queue_tls_keyid(req->sq)` fails (returns 0 because key is NULL),
+and the target returns CONCAT_MISMATCH.
 
-Record: Reported by Hari Bathini, authored by s390 BPF maintainer,
-applied by BPF maintainer. Powerpc equivalent explicitly tagged for
-stable.
-
-### Step 1.3: Commit Body Analysis
-- **Bug described**: Tail calling a non-existent program results in tail
-  call count increment
-- **Symptom**: Failed tail calls (target NULL) consume the tail call
-  budget (MAX_TAIL_CALL_CNT=33), potentially preventing legitimate tail
-  calls from succeeding
-- **Root cause**: The `laal` (atomic load-and-add) instruction
-  increments the counter before the NULL program check; the counter is
-  incremented even when the tail call path branches out due to NULL prog
-- **Author's explanation**: "replace load-and-increment and compare-and-
-  jump with load and compare-and-jump, conditionally followed by
-  increment and store"
-
-Record: The bug causes incorrect accounting of tail calls - failed
-attempts count against the limit.
-
-### Step 1.4: Hidden Bug Fix Detection
-This is NOT hidden - it's an explicit correctness fix. The commit
-message says "this is clearly wrong."
-
-Record: Explicit correctness bug fix, not disguised.
+**Step 1.4: Hidden Bug Fix Detection**
+This is explicitly a bug fix - the "Don't free" phrasing indicates
+fixing incorrect behavior.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files changed**: 1 file (`arch/s390/net/bpf_jit_comp.c`)
-- **Lines changed**: ~20 lines modified (net delta: +7 lines)
-- **Functions modified**: `bpf_jit_insn()` in the `BPF_JMP |
-  BPF_TAIL_CALL` case
-- **Scope**: Single-file surgical fix in one function, one case label
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/nvme/target/fabrics-cmd-auth.c`
+- Approx +5/-5 lines (very small)
+- Functions modified: `nvmet_execute_auth_send()`,
+  `nvmet_execute_auth_receive()`
 
-Record: [1 file, ~20 lines, single function, surgical scope]
+**Step 2.2: Code Flow Changes**
 
-### Step 2.2: Code Flow Change
+Hunk 1 (`nvmet_execute_auth_send`, lines ~398-401):
+- Before: `nvmet_auth_sq_free()` was called for BOTH SUCCESS2 and
+  FAILURE2 final states
+- After: `nvmet_auth_sq_free()` is called ONLY for FAILURE2
 
-**Before**:
-1. Load 1 into %w0
-2. `laal %w1,%w0,off(%r15)` — atomically loads the counter into %w1 and
-   adds 1 (counter is now incremented)
-3. Compare %w1 (old value) against `MAX_TAIL_CALL_CNT-1`, jump out if
-   exceeded
-4. Load program pointer from array
-5. Check if prog is NULL, branch out if so
-6. (Counter is already incremented, even if prog was NULL and we
-   branched out)
+Hunk 2 (`nvmet_execute_auth_receive`, lines ~577-582):
+- Before: `nvmet_auth_sq_free()` was called for BOTH SUCCESS2 and
+  FAILURE1
+- After: `nvmet_auth_sq_free()` is called ONLY for FAILURE1
 
-**After**:
-1. `ly %w0,off(%r15)` — load the counter (non-atomic, no increment)
-2. `clij %w0,MAX_TAIL_CALL_CNT,0xa,out` — compare against
-   MAX_TAIL_CALL_CNT, jump out if >=
-3. Load program pointer from array
-4. Check if prog is NULL, branch out if so
-5. `ahi %w0,1` — increment counter
-6. `sty %w0,off(%r15)` — store incremented counter back
+**Step 2.3: Bug Mechanism**
+This is a **logic/correctness bug**. The `nvmet_auth_sq_free()` function
+(in `auth.c:239-251`) performs:
 
-The increment now happens ONLY after confirming the program is non-NULL.
+```239:251:drivers/nvme/target/auth.c
+void nvmet_auth_sq_free(struct nvmet_sq *sq)
+{
+        cancel_delayed_work(&sq->auth_expired_work);
+#ifdef CONFIG_NVME_TARGET_TCP_TLS
+        sq->tls_key = NULL;
+#endif
+        kfree(sq->dhchap_c1);
+        sq->dhchap_c1 = NULL;
+        kfree(sq->dhchap_c2);
+        sq->dhchap_c2 = NULL;
+        kfree(sq->dhchap_skey);
+        sq->dhchap_skey = NULL;
+}
+```
 
-### Step 2.3: Bug Mechanism
-**Category**: Logic/correctness fix
-**Mechanism**: The counter was incremented unconditionally before
-checking if the tail call target exists. This matches what x86 JIT
-already does correctly (confirmed: x86 `emit_bpf_tail_call_indirect()`
-line 775-776 increments after NULL check with comment "Inc tail_call_cnt
-if the slot is populated").
+The critical line `sq->tls_key = NULL` discards the TLS key on success.
+The `nvmet_queue_tls_keyid()` function checks this:
 
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes - it matches x86 behavior and the comment
-  in the code explains the intent
-- **Minimal/surgical**: Yes - only reorders the JIT emissions for the
-  tail call sequence
-- **Regression risk**: Very low. The change from atomic `laal` to non-
-  atomic `ly`/`ahi`/`sty` is safe because `tail_call_cnt` is on the
-  stack frame, which is per-CPU/per-thread
-- **Red flags**: None
+```876:879:drivers/nvme/target/nvmet.h
+static inline key_serial_t nvmet_queue_tls_keyid(struct nvmet_sq *sq)
+{
+        return sq->tls_key ? key_serial(sq->tls_key) : 0;
+}
+```
 
-Record: High quality fix, obviously correct, minimal regression risk.
+And the REPLACETLSPSK negotiation code at line 58-60 requires the key to
+exist:
+
+```58:60:drivers/nvme/target/fabrics-cmd-auth.c
+                case NVME_AUTH_SECP_REPLACETLSPSK:
+                        if (!nvmet_queue_tls_keyid(req->sq))
+                                return
+NVME_AUTH_DHCHAP_FAILURE_CONCAT_MISMATCH;
+```
+
+So after a successful auth that clears the key, REPLACETLSPSK always
+fails.
+
+**Step 2.4: Fix Quality**
+- Obviously correct: the fix simply restricts `nvmet_auth_sq_free` to
+  failure-only paths
+- Minimal/surgical: ~10 lines changed, single file
+- Regression risk: Very low. The SQ will still be properly freed during
+  SQ destruction (`core.c:972` calls `nvmet_auth_sq_free`)
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-- The buggy atomic-increment-before-NULL-check pattern was introduced in
-  6651ee070b3124 ("s390/bpf: implement bpf_tail_call() helper",
-  2015-06-08, v4.2)
-- The code has been present for ~11 years across all stable trees
-- The `struct prog_frame` refactoring (e26d523edf2a6) changed how
-  offsets are computed but didn't change the logic
+**Step 3.1: Blame**
+- The buggy code in auth_send (line 399) was introduced by
+  `db1312dd95488b` (Hannes Reinecke, 2022-06-27) - the original auth
+  implementation
+- The `sq->tls_key = NULL` line in `nvmet_auth_sq_free` was added by
+  `fa2e0f8bbc689` (Hannes Reinecke, 2025-02-24) - the secure channel
+  concatenation feature
+- The bug: calling `nvmet_auth_sq_free` on success was harmless before
+  `fa2e0f8bbc689` (no TLS key existed), but became a bug after TLS key
+  handling was added to the function
 
-Record: Bug introduced in v4.2 (2015), present in ALL stable trees.
+**Step 3.2: Fixes Target**
+No explicit Fixes: tag, but the bug was introduced by `fa2e0f8bbc689`
+"nvmet-tcp: support secure channel concatenation", which first appeared
+in **v6.15-rc1** (`v6.15-rc1~166^2^2~13`).
 
-### Step 3.2: Fixes Tag
-No Fixes tag on this commit. The powerpc equivalent fixes ce0761419fae.
+**Step 3.3: File History**
+Only one commit has touched this file since v6.15: `159de7a825aea`
+("nvmet-auth: update sc_c in target host hash calculation") by the same
+author, which is a different fix.
 
-### Step 3.3: Related Changes
-Key related commits, all in v7.0:
-- eada40e057fc1: "Do not write tail call counter into helper/kfunc
-  frames" (Fixes: dd691e847d28)
-- c861a6b147137: "Write back tail call counter for BPF_PSEUDO_CALL"
-  (Fixes: dd691e847d28)
-- bc3905a71f025: "Write back tail call counter for
-  BPF_TRAMP_F_CALL_ORIG" (Fixes: 528eb2cb87bc)
-- e26d523edf2a6: "Describe the frame using a struct instead of
-  constants"
+**Step 3.4: Author**
+Alistair Francis (WDC) has authored 3 NVMe auth fixes in this subsystem.
+He's a contributor focused on NVMe-TCP/TLS.
 
-These show active work on s390 tail call counter correctness.
+**Step 3.5: Dependencies**
+The patch is standalone. It only modifies the conditions under which
+`nvmet_auth_sq_free()` is called, with no new functions or structural
+changes.
 
-Record: This is standalone - no other patches needed.
+## PHASE 4: MAILING LIST RESEARCH
 
-### Step 3.4: Author
-Ilya Leoshkevich is the primary s390 BPF JIT developer/maintainer with
-20+ commits to `arch/s390/net/`.
+**Step 4.1-4.2:** Lore search was blocked by Anubis anti-bot protection.
+However, `b4 dig` found the related commit `159de7a825aea` at `https://p
+atch.msgid.link/20251106231711.3189836-1-alistair.francis@wdc.com`. The
+4 reviewer tags (Christoph Hellwig, Hannes Reinecke, Wilfred Mallawa,
+Sagi Grimberg) demonstrate thorough review by the NVMe subsystem's key
+developers.
 
-Record: Author is the subsystem maintainer.
-
-### Step 3.5: Dependencies
-- Requires `struct prog_frame` from e26d523edf2a6 (IN v7.0)
-- For older trees (6.6 and earlier), the patch would need adaptation to
-  use `STK_OFF_TCCNT` offsets instead
-
-Record: Applies cleanly to v7.0; needs rework for 6.6 and older.
-
-## PHASE 4: MAILING LIST
-
-Lore was inaccessible due to bot protection. However, key facts
-established:
-- The powerpc equivalent (521bd39d9d28c) by the same reporter has `Cc:
-  stable@vger.kernel.org`
-- b4 dig found the related series at
-  https://patch.msgid.link/20250813121016.163375-2-iii@linux.ibm.com
-
-Record: Could not fetch lore discussion. Powerpc equivalent explicitly
-CC'd stable.
+**Step 4.3-4.5:** Could not access lore due to bot protection. The
+commit's review coverage is excellent though.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-- `bpf_jit_insn()` - the main JIT emission function, `BPF_JMP |
-  BPF_TAIL_CALL` case
+**Step 5.1-5.2: Callers**
+`nvmet_execute_auth_send` and `nvmet_execute_auth_receive` are assigned
+as `req->execute` handlers in `fabrics-cmd.c` for
+`nvme_fabrics_type_auth_send` and `nvme_fabrics_type_auth_receive`
+commands (when `CONFIG_NVME_TARGET_AUTH` is enabled). These are called
+during the NVMe-oF authentication flow on both admin and I/O queue
+setup.
 
-### Step 5.2-5.4: Impact Surface
-- Every BPF program that uses tail calls on s390 is affected
-- The tail call mechanism is a core BPF feature used in XDP, networking,
-  and tracing
-- s390 is used in enterprise environments (mainframes) where BPF is
-  increasingly deployed
+**Step 5.3-5.4: Call Chain**
+The auth commands are triggered by the NVMe host during connection
+setup. This is a standard NVMe-oF protocol path, reachable whenever a
+host connects to a target with authentication enabled.
 
-Record: Affects all BPF tail call users on s390.
-
-### Step 5.5: Similar Patterns
-- The **same bug** was fixed on powerpc in 521bd39d9d28c
-- x86 already has the correct ordering (verified in
-  `emit_bpf_tail_call_indirect()`)
-- The BPF interpreter in `kernel/bpf/core.c` lines 2087-2094 actually
-  has the same ordering issue (increments before NULL check), but the
-  commit message acknowledges this and calls it "clearly wrong"
-
-Record: Cross-architecture issue, x86 already fixed, powerpc fix
-explicitly for stable.
+**Step 5.5: Similar Patterns**
+`nvmet_auth_sq_free` is also called from `core.c:972` during SQ
+destruction, which is the correct final cleanup point and is unaffected
+by this change.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code Existence
-- Bug exists since v4.2 (6651ee070b3124) - present in ALL active stable
-  trees
-- However, the patch as-is only applies cleanly to trees with `struct
-  prog_frame` (v7.0)
+**Step 6.1: Buggy Code Existence**
+The buggy code (`sq->tls_key = NULL` in `nvmet_auth_sq_free` plus
+calling it on success) was introduced by `fa2e0f8bbc689` in
+**v6.15-rc1**. It exists in stable trees: **6.15.y, 6.16.y, 6.17.y,
+6.18.y, 6.19.y** (and 7.0).
 
-### Step 6.2: Backport Complications
-- v7.0: Should apply cleanly (confirmed code matches the "before" side
-  of diff)
-- v6.6 and older: Would need rework due to different frame offset
-  calculations (`STK_OFF_TCCNT` vs `struct prog_frame`)
+**Step 6.2: Backport Complications**
+Since v6.15, only `159de7a825aea` has touched this file (adding 1 line
+to a different function). The patch should apply cleanly to all affected
+stable trees.
 
-Record: Clean apply for v7.0. Older trees need rework.
-
-### Step 6.3: Related Fixes in Stable
-No equivalent fix found in stable trees for s390.
+**Step 6.3: Related Fixes**
+Two related fixes to `fa2e0f8bbc689` already exist: `b1efcc470eb30`
+(sparse warning fix) and `8edb86b2ed1d6` (memory leak fix). Neither
+addresses the REPLACETLSPSK issue.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem
-- **Subsystem**: BPF JIT compiler (arch-specific, s390)
-- **Criticality**: IMPORTANT - s390 is used in enterprise mainframe
-  environments; BPF is critical for networking, security, and
-  observability
+**Step 7.1:** NVMe target, TCP transport. Criticality: **IMPORTANT** -
+NVMe-oF/TCP is widely used in storage infrastructure. The auth subsystem
+is critical for security.
 
-### Step 7.2: Activity
-The s390/bpf JIT has been actively developed with 20+ commits in v7.0.
+**Step 7.2:** Actively developed - secure channel concatenation was
+added in v6.15 with ongoing fixes.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is Affected
-- s390 users running BPF programs with tail calls
-- Enterprise mainframe users using eBPF for networking, tracing, or
-  security
+**Step 8.1: Affected Users**
+Users of NVMe-TCP with DH-HMAC-CHAP authentication and secure channel
+concatenation (TLS PSK replacement).
 
-### Step 8.2: Trigger Conditions
-- Triggered when a BPF program does a tail call to an array index that
-  has no program (NULL)
-- This is a common scenario: BPF prog arrays are often sparse with some
-  NULL slots
-- Can be triggered from userspace (BPF programs are loaded by
-  unprivileged users in some configs)
+**Step 8.2: Trigger Conditions**
+Triggered whenever a host sends a REPLACETLSPSK request after a
+successful initial NEWTLSPSK authentication. This is a standard protocol
+flow per NVMe Base Spec 2.1 section 8.3.4.3. The trigger is
+deterministic, not timing-dependent.
 
-### Step 8.3: Failure Mode Severity
-- **Functional failure**: Legitimate tail calls fail prematurely because
-  the counter hits MAX_TAIL_CALL_CNT sooner than expected
-- **Result**: BPF program behavior is incorrect; tail call chains are
-  cut short
-- **Severity**: MEDIUM-HIGH (incorrect behavior, program logic failure,
-  potential security implications if BPF programs relied on tail call
-  guarantees)
+**Step 8.3: Failure Mode**
+Authentication fails with CONCAT_MISMATCH error. Severity: **MEDIUM-
+HIGH** - the REPLACETLSPSK feature is completely broken, rendering the
+secure channel concatenation TLS key rotation inoperable. This is a
+functionality regression, not a crash.
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: HIGH - fixes incorrect BPF behavior affecting tail call
-  chains
-- **Risk**: LOW - ~20 lines, single function, obviously correct, matches
-  x86 behavior, from subsystem maintainer
-- **Ratio**: Favorable for backporting
+**Step 8.4: Risk-Benefit**
+- **Benefit:** HIGH - fixes a completely broken protocol feature
+  (REPLACETLSPSK)
+- **Risk:** VERY LOW - 10-line change, restricts cleanup to failure
+  paths only, SQ destruction still properly cleans up
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Step 9.1: Evidence Summary**
 
-**FOR backporting:**
-- Fixes a real correctness bug (tail call counter incorrectly
-  incremented for NULL programs)
-- Bug has existed since v4.2 (2015) - all stable trees affected
-- Powerpc equivalent (521bd39d9d28c) has `Cc: stable@vger.kernel.org`
-  and `Fixes:` tag
-- x86 JIT already has the correct behavior
-- Small, surgical, single-file fix (~20 lines)
-- Author is the s390 BPF maintainer; applied by BPF maintainer
-- Reported by someone who also fixed it on powerpc and tagged for stable
+FOR backporting:
+- Fixes a real, deterministic bug making REPLACETLSPSK unusable
+- Small, surgical, obviously correct fix (10 lines, 1 file)
+- 4 expert reviewers including NVMe-oF maintainer (Sagi Grimberg)
+- Standalone patch, no dependencies
+- Clean application expected on all affected stable trees
 
-**AGAINST backporting:**
-- No explicit `Fixes:` or `Cc: stable` on the s390 variant itself
-- Needs rework for older stable trees (6.6 and earlier)
+AGAINST backporting:
+- Affects a relatively new feature (v6.15+), limiting the number of
+  stable trees
+- No explicit Fixes: or Cc: stable tag (expected for autosel candidates)
+- No user bug reports (Reported-by)
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES - matches x86 behavior, from
-   subsystem maintainer, applied by BPF maintainer
-2. **Fixes a real bug?** YES - incorrect tail call counting causing
-   premature tail call limit
-3. **Important issue?** YES - program correctness (can make BPF programs
-   fail)
-4. **Small and contained?** YES - ~20 lines in one function in one file
-5. **No new features/APIs?** CORRECT - pure bugfix
-6. **Can apply to stable?** YES for v7.0 (verified code matches)
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** - 4 reviewers, straightforward
+   logic change
+2. Fixes a real bug? **YES** - REPLACETLSPSK is completely broken
+3. Important issue? **YES** - broken protocol feature, though not
+   crash/security/corruption
+4. Small and contained? **YES** - 10 lines, single file
+5. No new features? **YES** - purely fixes existing behavior
+6. Applies to stable? **YES** - for 6.15.y and later
 
-### Step 9.3: Exception Categories
-Not an exception category - this is a standard bug fix.
+**Step 9.3: Exceptions** - N/A
 
-### Step 9.4: Decision
-This is a clear correctness fix for a long-standing bug in the s390 BPF
-JIT. The equivalent powerpc fix was explicitly tagged for stable. The
-fix is small, from the maintainer, and brings s390 in line with x86's
-already-correct behavior.
+**Step 9.4: Decision**
+This is a clear, well-reviewed bug fix for a broken NVMe-TCP protocol
+feature. The fix is minimal, obviously correct, and standalone.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reported-by: Hari Bathini (also powerpc fix
-  author), SOBs from s390/bpf and BPF maintainers
-- [Phase 2] Diff analysis: ~20 lines changed, reorders JIT emissions to
-  increment after NULL check
-- [Phase 2] Verified x86 JIT (`emit_bpf_tail_call_indirect()` lines
-  775-776) already increments after NULL check
-- [Phase 2] Verified BPF interpreter (`kernel/bpf/core.c` lines
-  2087-2094) has same buggy ordering
-- [Phase 3] git blame: buggy code from 6651ee070b3124 (v4.2, 2015),
-  present in all stable trees
-- [Phase 3] git show 521bd39d9d28c: powerpc equivalent has `Fixes:` and
-  `Cc: stable@vger.kernel.org`
-- [Phase 3] git merge-base: all dependencies (e26d523edf2a6,
-  eada40e057fc1, bc3905a71f025, c861a6b147137) are in v7.0
-- [Phase 3] Author (Ilya Leoshkevich) confirmed as s390 BPF JIT
-  maintainer via 20+ commits
-- [Phase 4] Lore inaccessible (bot protection); b4 dig found related
-  series URL
-- [Phase 5] Verified callers: `bpf_jit_insn()` handles all BPF JIT
-  emission, core function
-- [Phase 6] Verified current v7.0 code (lines 1864-1895) matches
-  "before" side of diff exactly
-- [Phase 6] v6.6 confirmed to have same bug pattern but uses different
-  frame offset calculations
-- [Phase 8] Impact: all s390 BPF tail call users; trigger: tail call to
-  sparse array; severity: MEDIUM-HIGH
+- [Phase 1] Parsed tags: 4 Reviewed-by (Christoph Hellwig, Hannes
+  Reinecke, Wilfred Mallawa, Sagi Grimberg), SOB by Keith Busch
+  (maintainer)
+- [Phase 2] Diff analysis: ~10 lines changed in 2 functions, restricts
+  `nvmet_auth_sq_free()` to failure paths only
+- [Phase 2] Verified `nvmet_auth_sq_free()` clears `sq->tls_key = NULL`
+  (auth.c:243)
+- [Phase 2] Verified `nvmet_queue_tls_keyid()` returns 0 when `tls_key`
+  is NULL (nvmet.h:876-879)
+- [Phase 2] Verified REPLACETLSPSK check requires non-zero key (fabrics-
+  cmd-auth.c:59-60)
+- [Phase 3] git blame: buggy cleanup code from db1312dd95488b (2022),
+  TLS key clearing added by fa2e0f8bbc689 (2025)
+- [Phase 3] git describe: fa2e0f8bbc689 first appears at
+  v6.15-rc1~166^2^2~13
+- [Phase 3] git log v6.15..v7.0: only 1 other commit touched this file
+  (159de7a825aea)
+- [Phase 3] Confirmed SQ destruction at core.c:972 still calls
+  nvmet_auth_sq_free for final cleanup
+- [Phase 4] b4 dig: found related author thread. Lore blocked by Anubis.
+- [Phase 5] Callers: both functions registered as req->execute handlers
+  for auth commands in fabrics-cmd.c
+- [Phase 6] Bug exists in stable trees 6.15.y through 6.19.y
+- [Phase 6] Clean apply expected - minimal churn since v6.15
+- [Phase 8] Deterministic trigger: every REPLACETLSPSK after successful
+  NEWTLSPSK fails
+- UNVERIFIED: Could not access lore discussion for stable nomination
+  signals or NAKs
 
 **YES**
 
- arch/s390/net/bpf_jit_comp.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/nvme/target/fabrics-cmd-auth.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index bf92964246eb1..2112267486623 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -1862,20 +1862,21 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 				 jit->prg);
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index 5946681cb0e32..96c85579150dd 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -396,9 +396,10 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 		goto complete;
+ 	}
+ 	/* Final states, clear up variables */
+-	nvmet_auth_sq_free(req->sq);
+-	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE2)
++	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
++		nvmet_auth_sq_free(req->sq);
+ 		nvmet_ctrl_fatal_error(ctrl);
++	}
  
- 		/*
--		 * if (tail_call_cnt++ >= MAX_TAIL_CALL_CNT)
-+		 * if (tail_call_cnt >= MAX_TAIL_CALL_CNT)
- 		 *         goto out;
-+		 *
-+		 * tail_call_cnt is read into %w0, which needs to be preserved
-+		 * until it's incremented and flushed.
- 		 */
- 
- 		off = jit->frame_off +
- 		      offsetof(struct prog_frame, tail_call_cnt);
--		/* lhi %w0,1 */
--		EMIT4_IMM(0xa7080000, REG_W0, 1);
--		/* laal %w1,%w0,off(%r15) */
--		EMIT6_DISP_LH(0xeb000000, 0x00fa, REG_W1, REG_W0, REG_15, off);
--		/* clij %w1,MAX_TAIL_CALL_CNT-1,0x2,out */
-+		/* ly %w0,off(%r15) */
-+		EMIT6_DISP_LH(0xe3000000, 0x0058, REG_W0, REG_0, REG_15, off);
-+		/* clij %w0,MAX_TAIL_CALL_CNT,0xa,out */
- 		patch_2_clij = jit->prg;
--		EMIT6_PCREL_RIEC(0xec000000, 0x007f, REG_W1, MAX_TAIL_CALL_CNT - 1,
--				 2, jit->prg);
-+		EMIT6_PCREL_RIEC(0xec000000, 0x007f, REG_W0, MAX_TAIL_CALL_CNT,
-+				 0xa, jit->prg);
- 
- 		/*
- 		 * prog = array->ptrs[index];
-@@ -1894,6 +1895,12 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 		patch_3_brc = jit->prg;
- 		EMIT4_PCREL_RIC(0xa7040000, 8, jit->prg);
- 
-+		/* tail_call_cnt++; */
-+		/* ahi %w0,1 */
-+		EMIT4_IMM(0xa70a0000, REG_W0, 1);
-+		/* sty %w0,off(%r15) */
-+		EMIT6_DISP_LH(0xe3000000, 0x0050, REG_W0, REG_0, REG_15, off);
-+
- 		/*
- 		 * Restore registers before calling function
- 		 */
+ complete:
+ 	nvmet_req_complete(req, status);
+@@ -574,9 +575,7 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
+ 	status = nvmet_copy_to_sgl(req, 0, d, al);
+ 	kfree(d);
+ done:
+-	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2)
+-		nvmet_auth_sq_free(req->sq);
+-	else if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE1) {
++	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE1) {
+ 		nvmet_auth_sq_free(req->sq);
+ 		nvmet_ctrl_fatal_error(ctrl);
+ 	}
 -- 
 2.53.0
 
