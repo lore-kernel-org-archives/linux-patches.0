@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872AC33F597;
-	Mon, 20 Apr 2026 15:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C9C33B975;
+	Mon, 20 Apr 2026 15:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700550; cv=none; b=ob9B6wOVwLnHv0hum609FaTpr/mSEMUkHbMvyzNoU0s8lIjY6QIEOQCtWKer7DVMhemtjoUcUd2oxgBy7Qpw8HN/l6jmg/2Z+wUZYe8RGzmlDJ6yyvGjfMfCdq8stjIxEXKx3Zzl/0KhbXkeZzG8iyyGH95IzcHkUGZgulwPpjk=
+	t=1776700553; cv=none; b=c/35nS01/Ui5nA8ZJ+AmWUgn5YvJtntWxgqwNm5ANI51f2qT03Y/u3lsHdXJSbnIWibdMvRSFPStOQbKe2Xxq5TlpKQBM19j+hBWKPhiPFGHl9IyqWrI87T99n4W1ikTW+mmSF88RzX9TibxgFqtUJMcrEPbJAYwtZ14NRydWCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700550; c=relaxed/simple;
-	bh=ekwJ5z3eMG0TqtDXU+d8sVrMS4+I4sZ8LodJZdRmor4=;
+	s=arc-20240116; t=1776700553; c=relaxed/simple;
+	bh=Wu2Fei/OFM7ZAayv3k1uD25m/KngVs4HP7aBlBdkqcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4XIJXZN2bSeNmxeIPCd9J/DwYNOoM+8pbHcwNa+2cE3fudXLLtvoqkJA6GVQB3NT/+FqLssLPNFv3zL7rA0rwP2vNw6K/+dRzZ+f/XwcplIU0vfvG6+uj4AiFztc32xJjMHFyxgNWB3pNDIFjNrz5BvKZrun7K7yUtjFBDFQNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYrw/lDT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hYMtLzMDSLaYB80DOO3vyknrKZ4vOFZ2s/O/dQLKfmx3D0pcJmsMf542383ZiLZiphnPjpoxHRBfX6eUAW+2OcffD38irwOuhLI4711nX4dM9utLXwQXI3uxPZpTf62P+0hfGJ2km0Xovl5mWwriwVOzo/mXyYb8foDc+XfCRZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fb7mMowv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYrw/lDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9F9C19425;
-	Mon, 20 Apr 2026 15:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb7mMowv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836A5C19425;
+	Mon, 20 Apr 2026 15:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700550;
-	bh=ekwJ5z3eMG0TqtDXU+d8sVrMS4+I4sZ8LodJZdRmor4=;
+	s=korg; t=1776700553;
+	bh=Wu2Fei/OFM7ZAayv3k1uD25m/KngVs4HP7aBlBdkqcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYrw/lDTA4bCjNP/Itm7DtTwoLLcOBx5KTF2dGKsUB8jo+/ID75nc4BImjMVQykro
-	 vprjpzMeOWSXB9U53nj2Riuh81nrB9oM58Xg+80wnji8a0JvlCGzB6DdQIgJAEsK70
-	 p3LZb8DIoEbU+jLu8YH4OpV+uz5xXJxA1MrBihHg=
+	b=Fb7mMowv+UhvCf5FP9ZKrpQFrRujg1dzdEmtd6EjZb5kxJaYRvNOOxBMYZa1pGp9k
+	 0JWrXjxX0rLwDLgYwJ6AsQ0brxjPcNpt4cPttAA91xQYY15ohDSPFcEEK2wn+Sca4q
+	 9y5b0+b8CZUkCVHzNisY336cSQvKkvnsIIXHcnmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejas Bharambe <tejas.bharambe@outlook.com>,
-	syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Leon Romanovsky <leon@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 183/220] ocfs2: fix use-after-free in ocfs2_fault() when VM_FAULT_RETRY
-Date: Mon, 20 Apr 2026 17:42:04 +0200
-Message-ID: <20260420153940.616316696@linuxfoundation.org>
+Subject: [PATCH 6.19 174/220] selftests/mm: hmm-tests: dont hardcode THP size to 2MB
+Date: Mon, 20 Apr 2026 17:41:55 +0200
+Message-ID: <20260420153940.291178781@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -58,101 +61,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejas Bharambe <tejas.bharambe@outlook.com>
+From: Alistair Popple <apopple@nvidia.com>
 
-commit 7de554cabf160e331e4442e2a9ad874ca9875921 upstream.
+commit f9d7975c52c00b3685cf9a90a81023d17817d991 upstream.
 
-filemap_fault() may drop the mmap_lock before returning VM_FAULT_RETRY,
-as documented in mm/filemap.c:
+Several HMM tests hardcode TWOMEG as the THP size. This is wrong on
+architectures where the PMD size is not 2MB such as arm64 with 64K base
+pages where THP is 512MB. Fix this by using read_pmd_pagesize() from
+vm_util instead.
 
-  "If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
-  may be dropped before doing I/O or by lock_folio_maybe_drop_mmap()."
+While here also replace the custom file_read_ulong() helper used to
+parse the default hugetlbfs page size from /proc/meminfo with the
+existing default_huge_page_size() from vm_util.
 
-When this happens, a concurrent munmap() can call remove_vma() and free
-the vm_area_struct via RCU. The saved 'vma' pointer in ocfs2_fault() then
-becomes a dangling pointer, and the subsequent trace_ocfs2_fault() call
-dereferences it -- a use-after-free.
-
-Fix this by saving ip_blkno as a plain integer before calling
-filemap_fault(), and removing vma from the trace event. Since
-ip_blkno is copied by value before the lock can be dropped, it
-remains valid regardless of what happens to the vma or inode
-afterward.
-
-Link: https://lkml.kernel.org/r/20260410083816.34951-1-tejas.bharambe@outlook.com
-Fixes: 614a9e849ca6 ("ocfs2: Remove FILE_IO from masklog.")
-Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
-Reported-by: syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a49010a0e8fcdeea075f
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Link: https://lore.kernel.org/20260331063445.3551404-3-apopple@nvidia.com
+Link: https://lore.kernel.org/linux-mm/8bd0396a-8997-4d2e-a13f-5aac033083d7@linux.dev/
+Fixes: fee9f6d1b8df ("mm/hmm/test: add selftests for HMM")
+Fixes: 519071529d2a ("selftests/mm/hmm-tests: new tests for zone device THP migration")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
+Closes: https://lore.kernel.org/linux-mm/8bd0396a-8997-4d2e-a13f-5aac033083d7@linux.dev/
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/mmap.c        |    7 +++----
- fs/ocfs2/ocfs2_trace.h |   10 ++++------
- 2 files changed, 7 insertions(+), 10 deletions(-)
+ tools/testing/selftests/mm/hmm-tests.c |   83 ++++++---------------------------
+ 1 file changed, 16 insertions(+), 67 deletions(-)
 
---- a/fs/ocfs2/mmap.c
-+++ b/fs/ocfs2/mmap.c
-@@ -30,7 +30,8 @@
+--- a/tools/testing/selftests/mm/hmm-tests.c
++++ b/tools/testing/selftests/mm/hmm-tests.c
+@@ -34,6 +34,7 @@
+  */
+ #include <lib/test_hmm_uapi.h>
+ #include <mm/gup_test.h>
++#include <mm/vm_util.h>
  
- static vm_fault_t ocfs2_fault(struct vm_fault *vmf)
- {
--	struct vm_area_struct *vma = vmf->vma;
-+	unsigned long long ip_blkno =
-+		OCFS2_I(file_inode(vmf->vma->vm_file))->ip_blkno;
- 	sigset_t oldset;
- 	vm_fault_t ret;
+ struct hmm_buffer {
+ 	void		*ptr;
+@@ -548,7 +549,7 @@ TEST_F(hmm, anon_write_child)
  
-@@ -38,11 +39,9 @@ static vm_fault_t ocfs2_fault(struct vm_
- 	ret = filemap_fault(vmf);
- 	ocfs2_unblock_signals(&oldset);
+ 	for (migrate = 0; migrate < 2; ++migrate) {
+ 		for (use_thp = 0; use_thp < 2; ++use_thp) {
+-			npages = ALIGN(use_thp ? TWOMEG : HMM_BUFFER_SIZE,
++			npages = ALIGN(use_thp ? read_pmd_pagesize() : HMM_BUFFER_SIZE,
+ 				       self->page_size) >> self->page_shift;
+ 			ASSERT_NE(npages, 0);
+ 			size = npages << self->page_shift;
+@@ -728,7 +729,7 @@ TEST_F(hmm, anon_write_huge)
+ 	int *ptr;
+ 	int ret;
  
--	trace_ocfs2_fault(OCFS2_I(vma->vm_file->f_mapping->host)->ip_blkno,
--			  vma, vmf->page, vmf->pgoff);
-+	trace_ocfs2_fault(ip_blkno, vmf->page, vmf->pgoff);
- 	return ret;
+-	size = 2 * TWOMEG;
++	size = 2 * read_pmd_pagesize();
+ 
+ 	buffer = malloc(sizeof(*buffer));
+ 	ASSERT_NE(buffer, NULL);
+@@ -744,7 +745,7 @@ TEST_F(hmm, anon_write_huge)
+ 			   buffer->fd, 0);
+ 	ASSERT_NE(buffer->ptr, MAP_FAILED);
+ 
+-	size = TWOMEG;
++	size /= 2;
+ 	npages = size >> self->page_shift;
+ 	map = (void *)ALIGN((uintptr_t)buffer->ptr, size);
+ 	ret = madvise(map, size, MADV_HUGEPAGE);
+@@ -771,54 +772,6 @@ TEST_F(hmm, anon_write_huge)
  }
+ 
+ /*
+- * Read numeric data from raw and tagged kernel status files.  Used to read
+- * /proc and /sys data (without a tag) and from /proc/meminfo (with a tag).
+- */
+-static long file_read_ulong(char *file, const char *tag)
+-{
+-	int fd;
+-	char buf[2048];
+-	int len;
+-	char *p, *q;
+-	long val;
 -
- static vm_fault_t __ocfs2_page_mkwrite(struct file *file,
- 			struct buffer_head *di_bh, struct folio *folio)
+-	fd = open(file, O_RDONLY);
+-	if (fd < 0) {
+-		/* Error opening the file */
+-		return -1;
+-	}
+-
+-	len = read(fd, buf, sizeof(buf));
+-	close(fd);
+-	if (len < 0) {
+-		/* Error in reading the file */
+-		return -1;
+-	}
+-	if (len == sizeof(buf)) {
+-		/* Error file is too large */
+-		return -1;
+-	}
+-	buf[len] = '\0';
+-
+-	/* Search for a tag if provided */
+-	if (tag) {
+-		p = strstr(buf, tag);
+-		if (!p)
+-			return -1; /* looks like the line we want isn't there */
+-		p += strlen(tag);
+-	} else
+-		p = buf;
+-
+-	val = strtol(p, &q, 0);
+-	if (*q != ' ') {
+-		/* Error parsing the file */
+-		return -1;
+-	}
+-
+-	return val;
+-}
+-
+-/*
+  * Write huge TLBFS page.
+  */
+ TEST_F(hmm, anon_write_hugetlbfs)
+@@ -826,15 +779,13 @@ TEST_F(hmm, anon_write_hugetlbfs)
+ 	struct hmm_buffer *buffer;
+ 	unsigned long npages;
+ 	unsigned long size;
+-	unsigned long default_hsize;
++	unsigned long default_hsize = default_huge_page_size();
+ 	unsigned long i;
+ 	int *ptr;
+ 	int ret;
+ 
+-	default_hsize = file_read_ulong("/proc/meminfo", "Hugepagesize:");
+-	if (default_hsize < 0 || default_hsize*1024 < default_hsize)
++	if (!default_hsize)
+ 		SKIP(return, "Huge page size could not be determined");
+-	default_hsize = default_hsize*1024; /* KB to B */
+ 
+ 	size = ALIGN(TWOMEG, default_hsize);
+ 	npages = size >> self->page_shift;
+@@ -1606,7 +1557,7 @@ TEST_F(hmm, compound)
+ 	struct hmm_buffer *buffer;
+ 	unsigned long npages;
+ 	unsigned long size;
+-	unsigned long default_hsize;
++	unsigned long default_hsize = default_huge_page_size();
+ 	int *ptr;
+ 	unsigned char *m;
+ 	int ret;
+@@ -1614,10 +1565,8 @@ TEST_F(hmm, compound)
+ 
+ 	/* Skip test if we can't allocate a hugetlbfs page. */
+ 
+-	default_hsize = file_read_ulong("/proc/meminfo", "Hugepagesize:");
+-	if (default_hsize < 0 || default_hsize*1024 < default_hsize)
++	if (!default_hsize)
+ 		SKIP(return, "Huge page size could not be determined");
+-	default_hsize = default_hsize*1024; /* KB to B */
+ 
+ 	size = ALIGN(TWOMEG, default_hsize);
+ 	npages = size >> self->page_shift;
+@@ -2106,7 +2055,7 @@ TEST_F(hmm, migrate_anon_huge_empty)
+ 	int *ptr;
+ 	int ret;
+ 
+-	size = TWOMEG;
++	size = read_pmd_pagesize();
+ 
+ 	buffer = malloc(sizeof(*buffer));
+ 	ASSERT_NE(buffer, NULL);
+@@ -2158,7 +2107,7 @@ TEST_F(hmm, migrate_anon_huge_zero)
+ 	int ret;
+ 	int val;
+ 
+-	size = TWOMEG;
++	size = read_pmd_pagesize();
+ 
+ 	buffer = malloc(sizeof(*buffer));
+ 	ASSERT_NE(buffer, NULL);
+@@ -2221,7 +2170,7 @@ TEST_F(hmm, migrate_anon_huge_free)
+ 	int *ptr;
+ 	int ret;
+ 
+-	size = TWOMEG;
++	size = read_pmd_pagesize();
+ 
+ 	buffer = malloc(sizeof(*buffer));
+ 	ASSERT_NE(buffer, NULL);
+@@ -2280,7 +2229,7 @@ TEST_F(hmm, migrate_anon_huge_fault)
+ 	int *ptr;
+ 	int ret;
+ 
+-	size = TWOMEG;
++	size = read_pmd_pagesize();
+ 
+ 	buffer = malloc(sizeof(*buffer));
+ 	ASSERT_NE(buffer, NULL);
+@@ -2332,7 +2281,7 @@ TEST_F(hmm, migrate_partial_unmap_fault)
  {
---- a/fs/ocfs2/ocfs2_trace.h
-+++ b/fs/ocfs2/ocfs2_trace.h
-@@ -1246,22 +1246,20 @@ TRACE_EVENT(ocfs2_write_end_inline,
+ 	struct hmm_buffer *buffer;
+ 	unsigned long npages;
+-	unsigned long size = TWOMEG;
++	unsigned long size = read_pmd_pagesize();
+ 	unsigned long i;
+ 	void *old_ptr;
+ 	void *map;
+@@ -2398,7 +2347,7 @@ TEST_F(hmm, migrate_remap_fault)
+ {
+ 	struct hmm_buffer *buffer;
+ 	unsigned long npages;
+-	unsigned long size = TWOMEG;
++	unsigned long size = read_pmd_pagesize();
+ 	unsigned long i;
+ 	void *old_ptr, *new_ptr = NULL;
+ 	void *map;
+@@ -2498,7 +2447,7 @@ TEST_F(hmm, migrate_anon_huge_err)
+ 	int *ptr;
+ 	int ret;
  
- TRACE_EVENT(ocfs2_fault,
- 	TP_PROTO(unsigned long long ino,
--		 void *area, void *page, unsigned long pgoff),
--	TP_ARGS(ino, area, page, pgoff),
-+		 void *page, unsigned long pgoff),
-+	TP_ARGS(ino, page, pgoff),
- 	TP_STRUCT__entry(
- 		__field(unsigned long long, ino)
--		__field(void *, area)
- 		__field(void *, page)
- 		__field(unsigned long, pgoff)
- 	),
- 	TP_fast_assign(
- 		__entry->ino = ino;
--		__entry->area = area;
- 		__entry->page = page;
- 		__entry->pgoff = pgoff;
- 	),
--	TP_printk("%llu %p %p %lu",
--		  __entry->ino, __entry->area, __entry->page, __entry->pgoff)
-+	TP_printk("%llu %p %lu",
-+		  __entry->ino, __entry->page, __entry->pgoff)
- );
+-	size = TWOMEG;
++	size = read_pmd_pagesize();
  
- /* End of trace events for fs/ocfs2/mmap.c. */
+ 	buffer = malloc(sizeof(*buffer));
+ 	ASSERT_NE(buffer, NULL);
+@@ -2593,7 +2542,7 @@ TEST_F(hmm, migrate_anon_huge_zero_err)
+ 	int *ptr;
+ 	int ret;
+ 
+-	size = TWOMEG;
++	size = read_pmd_pagesize();
+ 
+ 	buffer = malloc(sizeof(*buffer));
+ 	ASSERT_NE(buffer, NULL);
 
 
