@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF2533F586;
-	Mon, 20 Apr 2026 16:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19004343D9E;
+	Mon, 20 Apr 2026 16:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701414; cv=none; b=l/wxCYgdgktawvxtDlwEFppJvcgBjp6Y/M4rIcr9IHZinpkc5TsAe2v0wjs2S12ZtryeG3UVapMDa3jVruwj1YKXM8FegMn5h5lbO4DPZIO2uMrIF57mUNcudZW6G4Ypm82Izjf9lriNaWAaJ5/rGedlrhVhI0DRzkt7u2SpGNU=
+	t=1776701417; cv=none; b=cIslYpg2M33IxNa14M4SbLE/K6jYSwJlgQWT5u/65lIxsHHpYlVx7MewDF3X1WOoFk/YMhbIkU/rsyfLQdwMxnN9dJtmy40qWqtWLUD99SfTGaGwX790m/9qzwV/6lB0g07B8FfpV/Pz16DUFmmbvGp2hoqgmMFFWk40TmN0++I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701414; c=relaxed/simple;
-	bh=Er64kUKQw5Eoy96PC19VHuuOiI5wpLgsYgojeQs6g/4=;
+	s=arc-20240116; t=1776701417; c=relaxed/simple;
+	bh=LfSQKObVPp1UQdRyr9ug0gV9j1LM7vstCSrmnpCZAWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NgQ1W5ecsrG/e8e2WrctYspTnA8WyNPw9qFVjyDVcBUzvGTIfddLwiIu4ms9Gf3sze6EEbe1PWw80N1yzbgewDYjoD2cmqyYhLCX8Osl5dh1xNp7ZaHaRt342UzmfbqMeGz2QiG9Y+OTSowQelw2zHKs3AijjLMx8yFOVOPhpyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyNRaF5p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iXlXM2V2dIqYX3v1kQhpNMWeYVfVDnZDPjcEiK4expzJQ3I/cNwvX9tRdEwlGaOneyMLO++OC/irtzAJv4IcteiUasaaltjbmJlBJFBzfYei6iV20IUvxS67Lx3/fs1MZfbM2F7fFJv7EEfVGTGz0nB8c38/nzHQ3usZMcDwN7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xinIYNRM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyNRaF5p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7228C2BCB7;
-	Mon, 20 Apr 2026 16:10:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xinIYNRM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7880FC19425;
+	Mon, 20 Apr 2026 16:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701414;
-	bh=Er64kUKQw5Eoy96PC19VHuuOiI5wpLgsYgojeQs6g/4=;
+	s=korg; t=1776701416;
+	bh=LfSQKObVPp1UQdRyr9ug0gV9j1LM7vstCSrmnpCZAWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyNRaF5pdMQT+xrNZnFuN6bKeMGJWiBN1YZfyoYdAedPB1jrxaqBxfhp5t48yDXJx
-	 SjnZbJBOJBrjd/VcZTUax7Epo6fJzjPx2h2/f04XGwGIgetgd3x2GT9wkkdJBLv5Rf
-	 3ZumXiJu+iY/PDnguIgl3wWVZDTGUlMTmRdh7tao=
+	b=xinIYNRMzPhHdHkcKemJ66rGMZYk8hEqbifTot3wpqi1fufSZ8rv12ADgpZdjpA5Y
+	 OE4OuG/tDyG1AHNzpNbIDEOM2j0ifhS1evUML8lFRKAadk8ZxuCjSuTyD0ACD2Jiku
+	 YZatkYxYLyw0XC8qIn0nH2X55CyMkG//BsaDnsmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.12 104/162] usb: gadget: f_ncm: validate minimum block_len in ncm_unwrap_ntb()
-Date: Mon, 20 Apr 2026 17:42:16 +0200
-Message-ID: <20260420153930.807453800@linuxfoundation.org>
+Subject: [PATCH 6.12 105/162] usb: gadget: f_phonet: fix skb frags[] overflow in pn_rx_complete()
+Date: Mon, 20 Apr 2026 17:42:17 +0200
+Message-ID: <20260420153930.843957972@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,49 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 8f993d30b95dc9557a8a96ceca11abed674c8acb upstream.
+commit c088d5dd2fffb4de1fb8e7f57751c8b82942180a upstream.
 
-The block_len read from the host-supplied NTB header is checked against
-ntb_max but has no lower bound. When block_len is smaller than
-opts->ndp_size, the bounds check of:
-	ndp_index > (block_len - opts->ndp_size)
-will underflow producing a huge unsigned value that ndp_index can never
-exceed, defeating the check entirely.
+A broken/bored/mean USB host can overflow the skb_shared_info->frags[]
+array on a Linux gadget exposing a Phonet function by sending an
+unbounded sequence of full-page OUT transfers.
 
-The same underflow occurs in the datagram index checks against block_len
-- opts->dpe_size.  With those checks neutered, a malicious USB host can
-choose ndp_index and datagram offsets that point past the actual
-transfer, and the skb_put_data() copies adjacent kernel memory into the
-network skb.
+pn_rx_complete() finalizes the skb only when req->actual < req->length,
+where req->length is set to PAGE_SIZE by the gadget.  If the host always
+sends exactly PAGE_SIZE bytes per transfer, fp->rx.skb will never be
+reset and each completion will add another fragment via
+skb_add_rx_frag().  Once nr_frags exceeds MAX_SKB_FRAGS (default 17),
+subsequent frag stores overwrite memory adjacent to the shinfo on the
+heap.
 
-Fix this by rejecting block lengths that cannot hold at least the NTB
-header plus one NDP.  This will make block_len - opts->ndp_size and
-block_len - opts->dpe_size both well-defined.
+Drop the skb and account a length error when the frag limit is reached,
+matching the fix applied in t7xx by commit f0813bcd2d9d ("net: wwan:
+t7xx: fix potential skb->frags overflow in RX path").
 
-Commit 8d2b1a1ec9f5 ("CDC-NCM: avoid overflow in sanity checking") fixed
-a related class of issues on the host side of NCM.
-
-Fixes: 2b74b0a04d3e ("USB: gadget: f_ncm: add bounds checks to ncm_unwrap_ntb()")
 Cc: stable <stable@kernel.org>
 Assisted-by: gregkh_clanker_t1000
-Link: https://patch.msgid.link/2026040753-baffle-handheld-624d@gregkh
+Link: https://patch.msgid.link/2026040705-fruit-unloved-0701@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_phonet.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1209,8 +1209,8 @@ parse_ntb:
+--- a/drivers/usb/gadget/function/f_phonet.c
++++ b/drivers/usb/gadget/function/f_phonet.c
+@@ -333,6 +333,15 @@ static void pn_rx_complete(struct usb_ep
+ 		if (unlikely(!skb))
+ 			break;
  
- 	block_len = get_ncm(&tmp, opts->block_length);
- 	/* (d)wBlockLength */
--	if (block_len > ntb_max) {
--		INFO(port->func.config->cdev, "OUT size exceeded\n");
-+	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max)) {
-+		INFO(port->func.config->cdev, "Bad block length: %#X\n", block_len);
- 		goto err;
- 	}
- 
++		if (unlikely(skb_shinfo(skb)->nr_frags >= MAX_SKB_FRAGS)) {
++			/* Frame count from host exceeds frags[] capacity */
++			dev_kfree_skb_any(skb);
++			if (fp->rx.skb == skb)
++				fp->rx.skb = NULL;
++			dev->stats.rx_length_errors++;
++			break;
++		}
++
+ 		if (skb->len == 0) { /* First fragment */
+ 			skb->protocol = htons(ETH_P_PHONET);
+ 			skb_reset_mac_header(skb);
 
 
