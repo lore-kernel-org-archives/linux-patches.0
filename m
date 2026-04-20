@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F6A3D47DD;
-	Mon, 20 Apr 2026 13:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3768B3B4EA0;
+	Mon, 20 Apr 2026 13:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691420; cv=none; b=JUAHylv5Ub+6aPj1xnTegcuz/x8Z69pe6U7CFPOk8y9RiW82UKP2qNMKbr7P+Lm0rrUaiUuZ3ueAwwNMtmGxoZ1G3PIu3WPpUjKfpVf152chMltghXAvvSsEXDPtvOWjKJgYBnIsuvjEWf49xkWy+7lkAUrLBr++bmsKQ2ulIVU=
+	t=1776691422; cv=none; b=osqSP/sdrsClvkwMpdvCoqti9H1aMiVXHUfAyeZU7dVCODfumr+jgnM9B9S9NOCNiZllisu8ATlVO6bWcR5LYZ+tu1vmrD/gRrJ+grbxGMsUVuLkz/EFU0wu39VLt2i6WG0JLFrpWftyIvV8qA8yxH7ckeWf55bP0atNT4mEaNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691420; c=relaxed/simple;
-	bh=cNGyNEfbHOaX+mqn2fFZRBv+MY/EX7TyQpYcmO5pWaM=;
+	s=arc-20240116; t=1776691422; c=relaxed/simple;
+	bh=Qx5BWE5JKdzh50v31WfXTYccvFO/EIWCcAxnDRZsVg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oA5kanHIAjGFiy3mpQMk+ZdaherTNzoSDbkogYZ93X5sYR+sRdMAgL6weWgLvgUapBYxUwueDB7xTXezHGt2V5L7V5kg0VsE3vXSjXeUAoo2ymS70BvquTg0dHOaBn6/xukhtht5LXYpXwjqHMRPD9mzJJhz0hKUnRb5/BcP+j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E0TGapmy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c4gSCBGx/zmP9nbR1hidslxlPZUw/CH36uJoLyi474eKzxxfoyKilOmOCIIainrfKMYaOF4QFzshIEYCxftbzHhNeZXBrdPEVz0RkhKfnhZx8Xy8B2dA3/251ACCMUvxA6YHuGNpM60meQvxsF/bCwuANcUFsq5sNL7sxKn3p9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uliTc7Mw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E0TGapmy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE21C19425;
-	Mon, 20 Apr 2026 13:23:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uliTc7Mw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCA0C2BCB7;
+	Mon, 20 Apr 2026 13:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691420;
-	bh=cNGyNEfbHOaX+mqn2fFZRBv+MY/EX7TyQpYcmO5pWaM=;
+	s=k20201202; t=1776691422;
+	bh=Qx5BWE5JKdzh50v31WfXTYccvFO/EIWCcAxnDRZsVg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0TGapmyJu5rKwtzUDu2xfzDwNEn7XlNrHLPcVW6D/JjEqtr83gWkWLqTzaJvBn/a
-	 8yfV0z/rWinHEGmrrLlibp8mar0bjp8JynQ1gO2wmJmT/vbeshlGbcG7ha9B128VdA
-	 makdrGxMBlfPIw4UbQnw1UvkULcPNx+DnN6dUgYYhtSyRBJkQTYCNkeDam+A1lWp2q
-	 7dgVo6PC+kkPN8snQPo9pR+ZpPWZ/5ANTKQNymDA7JFLzmmnmGBIh4OCr43U+Jtkha
-	 dGYPPJMbG2g0DkAvTXQz8GXggqCiXBDOzCexWixqGMFsfNR9PWBk+o+FND7c8yIbag
-	 5Ax0VDI6C/UEg==
+	b=uliTc7Mwhg6ir8I3JWjpDOa47avXLxap9LYKlmDvU5dYimum7XZml9iL1V0YLj8/a
+	 PgA6ySUaPXflaxO8XVUeynqLCg+dfHksh8CMBAuiMOc/UWgKMYbi/qhQ+yNywuWtAx
+	 m9/Rc0xa1ZCQx3ROw0sPS9DaKLIaUzyyOGxhYqlHfb6dCdEsvE87EJ57KATqBalbtG
+	 AstClvkzkQHu2KO0jZCX9Wexoi9ADesBht4LUu4MRjys0tnuCfc00+bY6CDdeGdK4p
+	 NW/Bh5/rCYipiL0jBARwbJFy9bizmmsE+5412RqUbjjVgSetkgBcanExqAuHF/VDzf
+	 Z/u9UmBk0mtlA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ping-Ke Shih <pkshih@realtek.com>,
-	Oleksandr Havrylov <goainwo@gmail.com>,
+Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	mathieu.poirier@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] wifi: rtw88: add quirks to disable PCI ASPM and deep LPS for HP P3S95EA#ACB
-Date: Mon, 20 Apr 2026 09:16:50 -0400
-Message-ID: <20260420132314.1023554-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] remoteproc: qcom: Fix minidump out-of-bounds access on subsystems array
+Date: Mon, 20 Apr 2026 09:16:51 -0400
+Message-ID: <20260420132314.1023554-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,431 +55,408 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit b2bf9d61e14af4129362aeb9c10034229a6d8f08 ]
+[ Upstream commit 743cfae79d2458e241b06ed523c28a09f1449b75 ]
 
-On an HP laptop (P3S95EA#ACB) equipped with a Realtek RTL8821CE 802.11ac
-PCIe adapter (PCI ID: 10ec:c821), the system experiences a hard lockup
-(complete freeze of the UI and kernel, sysrq doesn't work, requires
-holding the power button) when the WiFi adapter enters the power
-saving state. Disable PCI ASPM to avoid system freeze.
+MAX_NUM_OF_SS was hardcoded to 10 in the minidump_global_toc struct,
+which is a direct overlay on an SMEM item allocated by the firmware.
+Newer Qualcomm SoC firmware allocates space for more subsystems, while
+older firmware only allocates space for 10. Bumping the constant would
+cause Linux to read/write beyond the SMEM item boundary on older
+platforms.
 
-In addition, driver throws messages periodically. Though this doesn't
-always cause unstable connection, missing H2C commands might cause
-unpredictable results. Disable deep LPS to avoid this as well.
+Fix this by converting subsystems[] to a flexible array member and
+deriving the actual number of subsystems at runtime from the size
+returned by qcom_smem_get(). Add a bounds check on minidump_id against
+the derived count before indexing into the array.
 
- rtw88_8821ce 0000:13:00.0: firmware failed to leave lps state
- rtw88_8821ce 0000:13:00.0: failed to send h2c command
- rtw88_8821ce 0000:13:00.0: failed to send h2c command
-
-Tested on HP Notebook P3S95EA#ACB (kernel 6.19.7-1-cachyos):
-
-  - No hard freeze observed during idle or active usage.
-  - Zero h2c or lps errors in dmesg across idle (10 min),
-    load stress (100MB download), and suspend/resume cycle.
-  - Both quirk flags confirmed active via sysfs without any
-    manual modprobe parameters.
-
-Reported-by: Oleksandr Havrylov <goainwo@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/CALdGYqSQ1Ko2TTBhUizMu_FvLMUAuQfFrVwS10n_C-LSQJQQkQ@mail.gmail.com/
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Tested-by: Oleksandr Havrylov <goainwo@gmail.com>
-Link: https://patch.msgid.link/20260316035635.16550-1-pkshih@realtek.com
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260331171243.1962067-1-mukesh.ojha@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need. Let me compile my analysis.
-
----
+Now I have enough information to complete my analysis.
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-**Record:** [wifi: rtw88] [add quirks] [Adds DMI-based quirks to disable
-PCI ASPM and deep LPS for a specific HP laptop model]
+**Step 1.1 - Subject Line Parse:**
+Record: Subsystem `remoteproc: qcom:`; action verb `Fix`; summary: fix
+out-of-bounds access on minidump subsystems array.
 
-### Step 1.2: Tags
-- **Reported-by:** Oleksandr Havrylov <goainwo@gmail.com> — a real user
-  reporting the bug
-- **Closes:** lore.kernel.org link to original bug report
-- **Signed-off-by:** Ping-Ke Shih <pkshih@realtek.com> — Realtek's rtw88
-  maintainer
-- **Tested-by:** Oleksandr Havrylov <goainwo@gmail.com> — reporter
-  confirmed the fix works
-- **Link:** patch.msgid.link for the submission
+**Step 1.2 - Tags:**
+Record:
+- `Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>` (author,
+  Qualcomm/remoteproc contributor)
+- `Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>` (subsystem
+  contributor)
+- `Link: https://lore.kernel.org/r/20260331171243.1962067-1-
+  mukesh.ojha@oss.qualcomm.com`
+- `Signed-off-by: Bjorn Andersson <andersson@kernel.org>` (remoteproc
+  co-maintainer)
+- No `Cc: stable@vger.kernel.org`, no `Fixes:` tag (expected for review
+  candidates)
 
-No Fixes: tag (expected for this type of quirk addition). No Cc: stable
-(expected). Author is the rtw88 subsystem maintainer.
+**Step 1.3 - Commit Body:**
+Record: Bug description: `MAX_NUM_OF_SS` hardcoded to 10 but
+`minidump_global_toc` overlays SMEM item allocated by firmware; newer
+firmware allocates more subsystems; bumping constant would overflow SMEM
+on older platforms. Fix: convert to flexible array, derive count at
+runtime from `qcom_smem_get()` size, add bounds check.
 
-### Step 1.3: Commit Body Analysis
-- **Bug:** HP laptop (P3S95EA#ACB) with RTL8821CE WiFi experiences
-  **hard lockup** (complete system freeze, SysRq unresponsive, requires
-  power button) when WiFi adapter enters power saving state
-- **Secondary issue:** Firmware error messages ("failed to leave lps
-  state", "failed to send h2c command") suggesting broken power
-  management communication
-- **Testing evidence:** Detailed test plan with idle, load, and
-  suspend/resume validation on 6.19.7 kernel
-- **Failure mode:** CRITICAL — hard lockup requiring power cycle
-
-### Step 1.4: Hidden Bug Fix Detection
-**Record:** This is NOT a hidden bug fix — it's an explicit hardware
-quirk/workaround for a specific device that causes system-wide hard
-lockups. This falls squarely into the "hardware quirk" exception
-category for stable.
-
----
+**Step 1.4 - Hidden Fix:**
+Record: Explicit bug fix ("Fix ... out-of-bounds access") - not hidden.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- `main.h`: +5 lines — new enum `rtw_quirk_dis_caps` with 2 values
-- `pci.c`: +31 lines — DMI include, callback function, quirk table,
-  `dmi_check_system()` call
-- Total: **+36 lines, 0 removed**
-- Functions modified: `rtw_pci_probe()` (1 line added). New:
-  `rtw_pci_disable_caps()` callback
-- Scope: Single-driver, self-contained
+**Step 2.1 - Inventory:**
+Record: Single file `drivers/remoteproc/qcom_common.c`; +14/-3 lines;
+modifies `qcom_minidump()` function and `struct minidump_global_toc`;
+surgical, single-file fix.
 
-### Step 2.2: Code Flow Change
-1. New enum provides named constants for quirk capability bits
-2. `rtw_pci_disable_caps()`: DMI callback that sets
-   `rtw_pci_disable_aspm` and/or `rtw_disable_lps_deep_mode` global
-   bools to true based on bitmask in driver_data
-3. `rtw_pci_quirks[]`: DMI table matching HP vendor + "HP Notebook"
-   product + "P3S95EA#ACB" SKU
-4. `dmi_check_system()` call added in `rtw_pci_probe()` before
-   `rtw_core_init()`, so quirks are set before driver initialization
-   uses those globals
+**Step 2.2 - Code Flow:**
+Record: Before: `qcom_smem_get(...,NULL)` ignores size; directly indexes
+`toc->subsystems[minidump_id]` which is declared `[MAX_NUM_OF_SS=10]`.
+After: requests actual SMEM size via `&toc_size`; computes `num_ss` from
+`(toc_size - offsetof(...,subsystems))/sizeof(subsystem)`; returns early
+with error if `minidump_id >= num_ss`.
 
-### Step 2.3: Bug Mechanism
-**Category: Hardware workaround (DMI quirk)**
-- The quirk sets the same module-level bools (`rtw_pci_disable_aspm`,
-  `rtw_disable_lps_deep_mode`) that existing module parameters expose
-- These bools are already checked in `rtw_pci_clkreq_set()`,
-  `rtw_pci_aspm_set()`, and `rtw_update_lps_deep_mode()`
-- The mechanism simply automates what a user would do with `modprobe
-  rtw88_pci disable_aspm=Y` + `rtw88_core disable_lps_deep=Y`
+**Step 2.3 - Bug Mechanism:**
+Record: Category: **memory safety / out-of-bounds access**. With
+`MAX_NUM_OF_SS=10`, accessing `toc->subsystems[20]` (as done for SA8775p
+CDSP1) is out-of-bounds per the C array type. Fix converts to flexible
+array member and validates index at runtime.
 
-### Step 2.4: Fix Quality
-- **Obviously correct:** Uses standard DMI matching infrastructure. Sets
-  existing, well-tested booleans. The same mechanism already works via
-  module parameters.
-- **Minimal and surgical:** Only affects the specific HP laptop model
-  with the matching DMI strings. No behavioral change for any other
-  system.
-- **Regression risk:** Essentially zero — only changes behavior on one
-  specific laptop, and only disables power saving features that cause
-  lockups on that device.
-
----
+**Step 2.4 - Fix Quality:**
+Record: Obviously correct; minimal/surgical; preserves behavior for
+valid indexes (< actual count); no regression risk for existing devices
+using minidump_id 3/4/5/7; depends on `qcom_smem_get()` reporting
+accurate size which is its contract.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-- `rtw_pci_disable_aspm` introduced by commit `68aa716b7dd36f`
-  (2020-07-15) — present since ~v5.9
-- `rtw_disable_lps_deep_mode` introduced by commit `fc3ac64a3a2868`
-  (2020-10-30) — present since ~v5.10
-- Both variables are available in ALL active stable trees
+**Step 3.1 - Blame:**
+Record: `MAX_NUM_OF_SS=10` was introduced by `8ed8485c4f056
+("remoteproc: qcom: Add capability to collect minidumps")` in Nov 2020
+(v5.11). The buggy code has been present since v5.11.
 
-### Step 3.2: No Fixes tag — N/A
+**Step 3.2 - Fixes Tag:**
+Record: No `Fixes:` tag present. The bug was technically present since
+minidump was added in v5.11, but only becomes an observable OOB when a
+device's `minidump_id` exceeds 9.
 
-### Step 3.3: File History
-The pci.c file is moderately active. The eb101d2abdccc commit (upstream
-bridge check) touches a different part of the file and does NOT conflict
-with this patch. The quirk insertion point (after `rtw_pci_err_handler`
-export and before `rtw_pci_probe`) and the `dmi_check_system()`
-insertion point (in `rtw_pci_probe` before `rtw_core_init`) are both
-clean in the current v7.0 tree.
+**Step 3.3 - File History:**
+Record: The file has been minimally modified. Key related commits:
+- `9091225ba28c0` ("remoteproc: qcom: pas: Add support for SA8775p ADSP,
+  CDSP and GPDSP") in v6.12-rc1 added `minidump_id = 20, 21, 22` for
+  sa8775p CDSP1, GPDSP0, GPDSP1 → this is when the bug becomes
+  triggerable.
+- `318da1371246f` ("remoteproc: qcom: Expand MD_* as MINIDUMP_*") - same
+  author, minidump cleanup
+- Standalone fix, not part of a series.
 
-### Step 3.4: Author
-Ping-Ke Shih (pkshih@realtek.com) is the **rtw88 subsystem maintainer**
-at Realtek. He maintains the rtw tree and has many commits across the
-rtw88 codebase.
+**Step 3.4 - Author Context:**
+Record: Mukesh Ojha is a regular Qualcomm remoteproc contributor and the
+primary author of minidump-related work (multiple minidump cleanup
+commits). Fix from a knowledgeable author.
 
-### Step 3.5: Dependencies
-- The patch is **fully standalone** — no prerequisites needed
-- It only references existing global variables and standard kernel DMI
-  infrastructure
-- The enum addition in main.h is self-contained
-
----
+**Step 3.5 - Dependencies:**
+Record: Only dependency is that `qcom_smem_get()` supports returning
+size via pointer, which it has done since inception (verified in all
+stable trees).
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1: Original Discussion
-- b4 dig found the submission at
-  `20260316035635.16550-1-pkshih@realtek.com`
-- Only v1 — no revisions needed. Clean acceptance.
-- Thread from mbox: The reporter (Oleksandr Havrylov) provided detailed
-  Tested-by with positive results.
-- Maintainer (Ping-Ke Shih) acknowledged the test and added Tested-by to
-  the commit message.
+**Step 4.1 - b4 dig:**
+Record: Found at `https://lore.kernel.org/all/20260331171243.1962067-1-
+mukesh.ojha@oss.qualcomm.com/`. Only v2 was applied.
 
-### Step 4.2: Reviewers
-- linux-wireless@vger.kernel.org was CC'd
-- Reporter provided Tested-by — direct confirmation the fix works
+**Step 4.2 - Reviewers:**
+Record: Sent to Bjorn Andersson (co-maintainer), Mathieu Poirier (co-
+maintainer), linux-arm-msm, linux-remoteproc. Reviewed/Acked by Konrad
+Dybcio.
 
-### Step 4.3: Bug Report
-- Closes link points to the original bug report email from the user
-- Single reporter but the issue is deterministic: hard lockup when WiFi
-  enters power saving
+**Step 4.3 - History - v1 Discussion:**
+Record: Fetched v1 thread
+(`20250808164417.4105659-1-mukesh.ojha@oss.qualcomm.com`). V1 was a
+naïve fix bumping `MAX_NUM_OF_SS` from 10 to 30. Bjorn Andersson
+objected: "this number is used to size the minidump_global_toc struct...
+Doesn't this imply that on older platforms you've now told Linux (and
+your debugger) that it's fine to write beyond the smem item?" and
+suggested "check the returned size of the qcom_smem_get() call." Author
+Mukesh specifically asked **"do you think it should a fix (cc
+stable)?"**. V2 implemented exactly Bjorn's suggestion, received Ack,
+and was applied.
 
-### Step 4.4: Series Context
-- Single standalone patch, not part of a series
+**Step 4.4 - Series:**
+Record: Standalone single-patch submission.
 
-### Step 4.5: Stable Discussion
-- No specific stable discussion found. No Cc: stable on the original
-  patch.
-
----
+**Step 4.5 - Stable Mailing List:**
+Record: No separate stable discussion visible; author explicitly
+considered it a stable fix but final v2 lacks Cc:stable tag.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions
-- `rtw_pci_disable_caps()` — new callback, only called by
-  `dmi_check_system()`
-- `rtw_pci_probe()` — modified to call `dmi_check_system()`
+**Step 5.1 - Key Functions:**
+Record: `qcom_minidump()` is the modified function; `struct
+minidump_global_toc` is the modified type.
 
-### Step 5.2: Callers
-- `rtw_pci_probe()` is the PCI probe function called for every rtw88
-  PCIe device during driver loading — common path
-- `rtw_pci_disable_aspm` is checked in `rtw_pci_clkreq_set()` and
-  `rtw_pci_aspm_set()` — called during power state transitions
-- `rtw_disable_lps_deep_mode` is checked in `rtw_update_lps_deep_mode()`
-  — called during firmware init
+**Step 5.2 - Callers:**
+Record: `qcom_minidump()` is called from exactly one place -
+`qcom_pas_minidump()` in `drivers/remoteproc/qcom_q6v5_pas.c:151`. This
+is registered as `.coredump` callback in `qcom_pas_minidump_ops` (line
+531), which is invoked by `rproc_boot_recovery()` in
+`remoteproc_core.c:1798` when a crashed remoteproc is being recovered.
 
-### Step 5.3-5.5: Call Chain
-The quirk only sets global booleans that are already checked in existing
-code paths. No new logic branches introduced.
+**Step 5.3 - Callees:**
+Record: Calls `qcom_smem_get()` (SMEM item retrieval), `dev_err()`, and
+then `rproc_coredump()` or `qcom_add_minidump_segments()` +
+`rproc_coredump_using_sections()`.
 
----
+**Step 5.4 - Call Chain / Reachability:**
+Record: Reachable from remoteproc crash recovery: remoteproc crash →
+`rproc_boot_recovery()` → `rproc->ops->coredump()` →
+`qcom_pas_minidump()` → `qcom_minidump(rproc, pas->minidump_id, ...)`.
+With `pas->minidump_id = 20/21/22`, this triggers OOB on
+`toc->subsystems[20]` indexing. This path is triggered automatically
+when the remoteproc crashes (real-world trigger, not obscure).
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 5.5 - Similar Patterns:**
+Record: Verified the file contains only this one use of the
+`subsystems[]` array. Checked `minidump_id` values in `qcom_q6v5_pas.c`:
+values 3, 4, 5, 7, 20, 21, 22 are used. The 20/21/22 are all for
+`sa8775p` CDSP1/GPDSP0/GPDSP1 resources.
 
-### Step 6.1: Code Exists in Stable
-- `rtw_pci_disable_aspm` exists since v5.9 (commit 68aa716b7dd36f)
-- `rtw_disable_lps_deep_mode` exists since v5.10 (commit fc3ac64a3a2868)
-- The RTL8821CE driver exists in all active stable trees
-- **The buggy behavior exists in all stable trees supporting this
-  hardware**
+## PHASE 6: CROSS-REFERENCING STABLE TREES
 
-### Step 6.2: Backport Complications
-- The patch should apply cleanly or with minimal offset to all active
-  stable trees
-- The insertion points (after EXPORT_SYMBOL, before probe function,
-  inside probe) are stable
-- No conflicting structural changes in this area
+**Step 6.1 - Does Buggy Code Exist?**
+Record: Verified by inspecting each stable branch:
 
-### Step 6.3: No related fixes already in stable for this specific
-laptop
+| Stable | MAX_NUM_OF_SS=10 | minidump_id 20/21/22 | Bug triggers? |
+|--------|------------------|----------------------|---------------|
+| p-6.1  | Yes              | No                   | No (harmless) |
+| p-6.6  | Yes              | Yes (3 entries)      | **Yes**       |
+| p-6.12 | Yes              | Yes (3 entries)      | **Yes**       |
+| p-6.15 | Yes              | Yes (3 entries)      | **Yes**       |
+| p-6.16 | Yes              | Yes (3 entries)      | **Yes**       |
+| p-6.17 | Yes              | Yes (3 entries)      | **Yes**       |
 
----
+Stable 6.6.y through 6.17.y all have the buggy configuration. 6.1.y has
+the limit but no triggering minidump_ids, so safe.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 6.2 - Backport Complications:**
+Record: Diffed `qcom_common.c` across p-6.12, p-6.15, p-6.17 - file is
+identical across these stable trees. Fix should apply cleanly. For p-6.6
+the surrounding code is functionally identical. `qcom_smem_get()`
+signature with `size_t *size` parameter is unchanged across all trees
+(verified in p-6.6).
 
-### Step 7.1: Subsystem
-- **drivers/net/wireless/realtek/rtw88** — WiFi driver for Realtek
-  chipsets
-- **Criticality: IMPORTANT** — RTL8821CE is a widely-used WiFi adapter
-  in consumer laptops
-- RTW88 is an active, well-maintained in-tree driver
+**Step 6.3 - Related Fixes in Stable:**
+Record: No prior fix for this specific issue exists in stable trees; the
+MAX_NUM_OF_SS limit has been 10 since minidump was added.
 
-### Step 7.2: Activity
-- Actively maintained by Realtek engineers (Ping-Ke Shih is the
-  maintainer)
+## PHASE 7: SUBSYSTEM CONTEXT
 
----
+**Step 7.1 - Subsystem:**
+Record: `drivers/remoteproc/qcom_common.c` - PERIPHERAL (Qualcomm-
+specific remoteproc common helpers, affects only Qualcomm SoC users,
+primarily SA8775p automotive).
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 7.2 - Activity:**
+Record: Actively maintained subsystem with recent activity.
 
-### Step 8.1: Affected Users
-- Users of the specific HP laptop model (P3S95EA#ACB) with RTL8821CE
-  WiFi adapter
-- DMI matching is narrowly scoped (vendor + product + SKU)
+## PHASE 8: IMPACT AND RISK
 
-### Step 8.2: Trigger Conditions
-- **Trigger:** WiFi adapter enters power saving state — this happens
-  automatically during normal idle usage
-- **Frequency:** Very common — happens during any period of idle WiFi
-  usage
-- **Deterministic:** The lockup is reproducible
+**Step 8.1 - Affected Users:**
+Record: Driver-specific - SA8775p SoC users (Qualcomm automotive
+platform) using remoteproc/minidump for CDSP1, GPDSP0, or GPDSP1
+subsystems.
 
-### Step 8.3: Failure Mode Severity
-- **Hard lockup** — system completely freezes, SysRq unresponsive,
-  requires holding power button
-- **Severity: CRITICAL** — total system unavailability, potential data
-  loss from unclean shutdown
+**Step 8.2 - Trigger:**
+Record: Triggered when a SA8775p CDSP1/GPDSP0/GPDSP1 remoteproc crashes
+and `rproc_boot_recovery()` invokes the coredump callback. Cannot be
+triggered by unprivileged users directly; occurs on hardware/firmware-
+induced remoteproc crashes.
 
-### Step 8.4: Risk-Benefit
-- **Benefit: HIGH** — prevents deterministic hard lockups on affected
-  hardware
-- **Risk: VERY LOW** — only affects one specific laptop model; uses
-  existing, well-tested disable mechanisms; is functionally identical to
-  module parameters that already exist
-- **Ratio: Excellent** — high benefit, near-zero regression risk
+**Step 8.3 - Failure Severity:**
+Record: With `MAX_NUM_OF_SS=10` and `minidump_id=20`,
+`&toc->subsystems[20]` reads past the declared struct end. On SA8775p
+the firmware's SMEM item is sized for 23+ entries, so reads land within
+SMEM but access memory not described by the Linux struct (UBSAN would
+flag this). With a UBSAN-enabled kernel → WARN/report. Without UBSAN →
+reads memory bytes 320+ from struct start, potentially interprets them
+as `status`/`enabled`/`regions_baseptr`. If `regions_baseptr` has non-
+zero bits from surrounding SMEM, the code proceeds to
+`qcom_add_minidump_segments()` which calls `ioremap()` with attacker-
+uncontrolled but wrong values, and `rproc_coredump_add_custom_segment`
+with garbage `da`/`size`. Severity: **MEDIUM-HIGH** - not a routine
+crash but a real OOB in crash-recovery path that can cause incorrect
+behavior, broken minidump collection, and potentially ioremap of wrong
+addresses.
 
----
+**Step 8.4 - Risk-Benefit:**
+Record:
+- Benefit: Fixes real OOB on SA8775p automotive SoC users; enables
+  correct minidump collection on these subsystems.
+- Risk: Very low - fix is +14/-3 lines, surgical, only affects the path
+  that was broken; does not change behavior for valid minidump_ids (<
+  real count); doesn't alter the SMEM overlay layout (flexible array
+  occupies the same offset as the previous fixed array).
+- Assessment: Positive risk-benefit.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
+**Step 9.1 - Evidence:**
+For:
+- Real OOB bug reachable from remoteproc crash path on SA8775p
+- Verified triggering config (minidump_id 20/21/22) is present in stable
+  trees 6.6.y–6.17.y
+- Small, contained fix (single file, single function, ~17 lines)
+- Reviewed and Acked by subsystem contributor
+- Author explicitly considered it stable-worthy
+- Applied cleanly across stable trees (file identical across
+  6.12/6.15/6.17)
+- Fix doesn't change behavior for existing working configurations
+- Addresses exact concern raised by maintainer Bjorn in v1 review
 
-**FOR backporting:**
-- Fixes deterministic hard lockups (CRITICAL severity)
-- Small, self-contained change (+36 lines, single driver)
-- Written by the subsystem maintainer (Ping-Ke Shih at Realtek)
-- Tested and confirmed working by the reporter
-- Uses standard DMI quirk pattern already used in other drivers (ath9k,
-  etc.)
-- Only automates existing module parameter functionality
-- Zero regression risk for non-affected systems (narrow DMI match)
-- The underlying infrastructure (module params) exists in all stable
-  trees since v5.10
-- Hardware quirk = explicitly allowed exception for stable
+Against:
+- No `Cc: stable` tag on final patch
+- No explicit `Fixes:` tag
+- Only affects SA8775p users (peripheral driver)
+- Crash-recovery path, not hot path
 
-**AGAINST backporting:**
-- No explicit Cc: stable (expected — that's why we're reviewing it)
-- Adds new code rather than modifying existing code (but this is
-  inherent to quirk additions)
+Unresolved: None material.
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — uses standard DMI matching,
-   confirmed by Tested-by
-2. **Fixes a real bug?** YES — hard lockup reported and reproduced by a
-   user
-3. **Important issue?** YES — CRITICAL: hard lockup requiring power
-   cycle
-4. **Small and contained?** YES — 36 lines, 2 files, single driver
-5. **No new features?** YES — disables power features that cause
-   lockups; no new user-visible behavior
-6. **Can apply to stable?** YES — clean, standalone, no dependencies
+**Step 9.2 - Stable Rules Checklist:**
+1. Obviously correct? Yes - proper size-derivation from SMEM + bounds
+   check.
+2. Fixes real bug? Yes - OOB access verified via source inspection.
+3. Important issue? Medium - OOB with potential for misbehavior in crash
+   recovery.
+4. Small/contained? Yes - +14/-3 in one file.
+5. No new features? Correct - pure bug fix.
+6. Applies to stable? Yes - verified file identical in 6.12/6.15/6.17;
+   p-6.6 is compatible.
 
-### Step 9.3: Exception Category
-**Hardware quirk/workaround** — DMI-based quirk to disable broken power
-management on specific hardware. This is an explicitly allowed exception
-for stable trees.
+**Step 9.3 - Exceptions:**
+Not a device ID/quirk/DT/build/doc exception; a standard bug fix.
 
----
+**Step 9.4 - Decision:**
+YES - this fixes a real, verifiable out-of-bounds memory access
+reachable in a realistic path (remoteproc crash recovery on SA8775p). It
+satisfies all stable kernel rules.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reported-by from real user, Tested-by from same
-  user, author is rtw88 maintainer
-- [Phase 2] Diff: +36 lines across 2 files (main.h enum + pci.c DMI
-  table + probe call), no code removed
-- [Phase 3] git blame: `rtw_pci_disable_aspm` from 68aa716b7dd36f
-  (2020-07-15), `rtw_disable_lps_deep_mode` from fc3ac64a3a2868
-  (2020-10-30) — both present in all active stable trees
-- [Phase 3] git log: no dependencies identified; eb101d2abdccc touches
-  different code area
-- [Phase 4] b4 dig -c b2bf9d61e14af: found at
-  https://patch.msgid.link/20260316035635.16550-1-pkshih@realtek.com
-- [Phase 4] b4 dig -a: only v1, clean acceptance with no revisions
-- [Phase 4] b4 dig -w: linux-wireless list and reporter CC'd
-- [Phase 4] mbox: reporter confirmed fix with detailed test (idle, load,
-  suspend/resume)
-- [Phase 5] `rtw_pci_disable_aspm` checked in `rtw_pci_clkreq_set()` and
-  `rtw_pci_aspm_set()`; `rtw_disable_lps_deep_mode` checked in
-  `rtw_update_lps_deep_mode()` — all existing code paths
-- [Phase 6] Code infrastructure exists in all active stable trees
-  (v5.10+), patch is standalone
-- [Phase 6] Diff against v7.0 shows clean insertion points with no
-  conflicts
-- [Phase 7] ath9k uses identical `dmi_check_system` quirk pattern,
-  establishing precedent
-- [Phase 8] Failure mode: hard lockup (CRITICAL), triggers during normal
-  idle WiFi usage
-
-**YES** — This is a textbook hardware quirk that prevents deterministic
-hard lockups on specific hardware. It uses standard DMI matching
-infrastructure, is written by the subsystem maintainer, tested by the
-reporter, adds only 36 lines, has zero regression risk for unaffected
-systems, and the underlying mechanism already exists in all stable
-trees.
+- [Phase 1] Parsed commit message: confirmed Acked-by Konrad, SoB from
+  Bjorn Andersson, Link to lore; no stable/Fixes tag (expected).
+- [Phase 2] Read the diff: verified `MAX_NUM_OF_SS` removed,
+  `subsystems[]` changed to flexible array, `qcom_smem_get()` now
+  requests `toc_size`, `num_ss` derived via `offsetof`, and bounds check
+  added.
+- [Phase 3.1] Ran `git blame` on lines 30-35 of
+  `drivers/remoteproc/qcom_common.c`: confirmed `MAX_NUM_OF_SS`
+  originated from `8ed8485c4f056` (Siddharth Gupta, 2020-11-19).
+- [Phase 3.1] `git describe --contains 8ed8485c4f056` →
+  `v5.11-rc1~148^2~10`: minidump feature introduced in v5.11.
+- [Phase 3.3] `git log -S "minidump_id = 20"` → `9091225ba28c0` (SA8775p
+  support) in v6.12-rc1 (`git describe --contains`).
+- [Phase 3.3] `git show 9091225ba28c0` confirmed minidump_id = 20, 21,
+  22 added for sa8775p CDSP1/GPDSP0/GPDSP1.
+- [Phase 4.1] `b4 dig -c 743cfae79d245` → found at lore v2 URL; `-a`
+  shows only v2 in this series.
+- [Phase 4.3] `b4 mbox` on v1 URL `20250808164417.4105659-1-...`:
+  retrieved v1 discussion; confirmed Bjorn objected to v1's naïve
+  constant bump and suggested the exact approach used in v2; author
+  asked about Cc: stable.
+- [Phase 5.2] `grep "qcom_minidump"` in drivers/remoteproc: confirmed
+  single caller in `qcom_q6v5_pas.c:151` via
+  `qcom_pas_minidump_ops.coredump`.
+- [Phase 5.2] `grep "coredump"` in remoteproc_core.c: confirmed
+  invocation from `rproc_boot_recovery()` line 1798.
+- [Phase 5.5] `grep "minidump_id = "` in `qcom_q6v5_pas.c`: confirmed
+  values 3, 4, 5, 7, 20, 21, 22 - three are out-of-bounds for
+  MAX_NUM_OF_SS=10.
+- [Phase 6.1] `git show p-6.X:drivers/remoteproc/qcom_common.c | grep
+  MAX_NUM_OF_SS`: all stable branches (6.1, 6.6, 6.12, 6.15, 6.16, 6.17)
+  have `MAX_NUM_OF_SS=10`.
+- [Phase 6.1] `git show p-6.X:drivers/remoteproc/qcom_q6v5_pas.c | grep
+  -c "minidump_id = 2[012]"`: p-6.1=0, p-6.6=3, p-6.12=3, p-6.15=3,
+  p-6.16=3, p-6.17=3. So bug triggers in 6.6.y through 6.17.y.
+- [Phase 6.2] Diffed `qcom_common.c` between p-6.12, p-6.15, p-6.17 -
+  files identical, fix should apply cleanly.
+- [Phase 6.2] `git show p-6.6:drivers/soc/qcom/smem.c | grep
+  qcom_smem_get`: `qcom_smem_get(unsigned host, unsigned item, size_t
+  *size)` signature present.
+- [Phase 6.2] Verified p-6.6 qcom_minidump function structure matches
+  mainline pre-fix version.
+- [Phase 8.3] Confirmed callers of `qcom_minidump`: only
+  `qcom_pas_minidump`, invoked on remoteproc recovery - real reachable
+  path.
+- UNVERIFIED: Could not empirically reproduce UBSAN output or observe a
+  crash; severity assessment based on code reading and standard C
+  semantics.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw88/main.h |  5 ++++
- drivers/net/wireless/realtek/rtw88/pci.c  | 31 +++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
+ drivers/remoteproc/qcom_common.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.h b/drivers/net/wireless/realtek/rtw88/main.h
-index 1ab70214ce36e..55b794d4584c4 100644
---- a/drivers/net/wireless/realtek/rtw88/main.h
-+++ b/drivers/net/wireless/realtek/rtw88/main.h
-@@ -432,6 +432,11 @@ enum rtw_wow_flags {
- 	RTW_WOW_FLAG_MAX,
+diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+index 6c31140268acb..fd2b6824ad265 100644
+--- a/drivers/remoteproc/qcom_common.c
++++ b/drivers/remoteproc/qcom_common.c
+@@ -28,7 +28,6 @@
+ #define to_ssr_subdev(d) container_of(d, struct qcom_rproc_ssr, subdev)
+ #define to_pdm_subdev(d) container_of(d, struct qcom_rproc_pdm, subdev)
+ 
+-#define MAX_NUM_OF_SS           10
+ #define MAX_REGION_NAME_LENGTH  16
+ #define SBL_MINIDUMP_SMEM_ID	602
+ #define MINIDUMP_REGION_VALID		('V' << 24 | 'A' << 16 | 'L' << 8 | 'I' << 0)
+@@ -80,7 +79,7 @@ struct minidump_global_toc {
+ 	__le32				status;
+ 	__le32				md_revision;
+ 	__le32				enabled;
+-	struct minidump_subsystem	subsystems[MAX_NUM_OF_SS];
++	struct minidump_subsystem	subsystems[];
  };
  
-+enum rtw_quirk_dis_caps {
-+	QUIRK_DIS_CAP_PCI_ASPM,
-+	QUIRK_DIS_CAP_LPS_DEEP,
-+};
-+
- /* the power index is represented by differences, which cck-1s & ht40-1s are
-  * the base values, so for 1s's differences, there are only ht20 & ofdm
-  */
-diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
-index 56b16186d3aa4..ca26e0a7f538f 100644
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -2,6 +2,7 @@
- /* Copyright(c) 2018-2019  Realtek Corporation
-  */
+ struct qcom_ssr_subsystem {
+@@ -151,9 +150,11 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
+ 	int ret;
+ 	struct minidump_subsystem *subsystem;
+ 	struct minidump_global_toc *toc;
++	unsigned int num_ss;
++	size_t toc_size;
  
-+#include <linux/dmi.h>
- #include <linux/module.h>
- #include <linux/pci.h>
- #include "main.h"
-@@ -1744,6 +1745,34 @@ const struct pci_error_handlers rtw_pci_err_handler = {
- };
- EXPORT_SYMBOL(rtw_pci_err_handler);
+ 	/* Get Global minidump ToC*/
+-	toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, NULL);
++	toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, &toc_size);
  
-+static int rtw_pci_disable_caps(const struct dmi_system_id *dmi)
-+{
-+	uintptr_t dis_caps = (uintptr_t)dmi->driver_data;
-+
-+	if (dis_caps & BIT(QUIRK_DIS_CAP_PCI_ASPM))
-+		rtw_pci_disable_aspm = true;
-+
-+	if (dis_caps & BIT(QUIRK_DIS_CAP_LPS_DEEP))
-+		rtw_disable_lps_deep_mode = true;
-+
-+	return 1;
-+}
-+
-+static const struct dmi_system_id rtw_pci_quirks[] = {
-+	{
-+		.callback = rtw_pci_disable_caps,
-+		.ident = "HP Notebook - P3S95EA#ACB",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP Notebook"),
-+			DMI_MATCH(DMI_PRODUCT_SKU, "P3S95EA#ACB"),
-+		},
-+		.driver_data = (void *)(BIT(QUIRK_DIS_CAP_PCI_ASPM) |
-+					BIT(QUIRK_DIS_CAP_LPS_DEEP)),
-+	},
-+	{}
-+};
-+
- int rtw_pci_probe(struct pci_dev *pdev,
- 		  const struct pci_device_id *id)
- {
-@@ -1771,6 +1800,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
- 	rtwpci = (struct rtw_pci *)rtwdev->priv;
- 	atomic_set(&rtwpci->link_usage, 1);
+ 	/* check if global table pointer exists and init is set */
+ 	if (IS_ERR(toc) || !toc->status) {
+@@ -161,6 +162,16 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
+ 		return;
+ 	}
  
-+	dmi_check_system(rtw_pci_quirks);
++	/* Derive the number of subsystems from the actual SMEM item size */
++	num_ss = (toc_size - offsetof(struct minidump_global_toc, subsystems)) /
++		 sizeof(struct minidump_subsystem);
 +
- 	ret = rtw_core_init(rtwdev);
- 	if (ret)
- 		goto err_release_hw;
++	if (minidump_id >= num_ss) {
++		dev_err(&rproc->dev, "Minidump id %d is out of range: %d\n",
++			minidump_id, num_ss);
++		return;
++	}
++
+ 	/* Get subsystem table of contents using the minidump id */
+ 	subsystem = &toc->subsystems[minidump_id];
+ 
 -- 
 2.53.0
 
