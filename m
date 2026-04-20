@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398C42E2665;
-	Mon, 20 Apr 2026 16:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF38C2E36F8;
+	Mon, 20 Apr 2026 16:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700898; cv=none; b=SkZr9Ec8dcUpciSieFejBZPGbbxenDljZ/ttSI+BB9sfukSpXRx2usL3Bn+pRt1AsvN+520YTac04CG0pGDJ8fD5mhXtwPwwkEXq836RrYhTSZK3AcroaynSAtATHydYuwgH/M7xzCQwgnn9I7oILBzxexcSpQ2U2DeFgWsgSsk=
+	t=1776700900; cv=none; b=AwBcTk9uBdi+iopRtlOZ/Yk1TXhN/V/TfN1INJYYag/8dWwnafWKsWxy1YTj8OH4ZgVW8q8TBUQzOI55An/b4n3RLBfdmOKD8dMQlQxkqRAujBWESLk5JoqUWheecLY9NroT8TTeIm9XBDCyeQWqXXHgKpLCtvY3qXpXuakfrmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700898; c=relaxed/simple;
-	bh=8c19x629VirKLS5kfJZ+M3LepCR3jmlApGAFH0vxaGU=;
+	s=arc-20240116; t=1776700900; c=relaxed/simple;
+	bh=98oTM9UyWbL4A2KwChdyD+l6O4dZ1K55tjrFA1NSl8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L59ovLGV0Y/crlfBsmMe16T09WQZ6F+NHLk3+yzFPNKpRHriZbOWixz3/APMQWYoL5SHwo/yAqsJwxCg81VJr4n6e5eApM169B03HbXatvABAFpPbauKo6VMpDC0Q3potMiRGgHzzK9bIYVo2E3vsq8E418lNxqstx4UWE/htkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cD9QF2QF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=paZJaCipbbuOCrc7l1JRPTICm/h1zPA2t03Q/4bXvAmlcVahntyIDtQvf8y7hyVfwN83a0YJPgjU44VAS9iL5qDNbXcfFq5Zum8s7lDXtyPHuTG4bq5LIrZ+zaI5IbAu77yPQHaf0drhAr4JgakpMxPitt2edowCmcHGvFSNJKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaKkn0yQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cD9QF2QF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BC1C19425;
-	Mon, 20 Apr 2026 16:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaKkn0yQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550A4C19425;
+	Mon, 20 Apr 2026 16:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700898;
-	bh=8c19x629VirKLS5kfJZ+M3LepCR3jmlApGAFH0vxaGU=;
+	s=korg; t=1776700900;
+	bh=98oTM9UyWbL4A2KwChdyD+l6O4dZ1K55tjrFA1NSl8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cD9QF2QF0wR3gIgDEkhWpcDC9GHLX04UYV8VIbuR9JR9tU0IkJ+5I7iwNILVlOLly
-	 0PO1FJJmqew+ReH4PmNTd5Z/WtjJg6AaKfGOKqtvbAe+pZA4l7tLFtVv4XGZzEXZnE
-	 xP2Ua9kFPAjDdAM+ZwH+5jiQtHONno5RzgP0wD/A=
+	b=TaKkn0yQDb3RhYI54Om3M1IUVI6CenzTG+XS3hbFqzykHFBXP6MyuLe8XPM0KFmIL
+	 G8mp5rp5/TKxWQurtc3xG5th2glUyJ1Z+9NDDXSt/JavJ53hVjskc+rlENiixDjYzz
+	 U/zrdrA3BpGK3TlsCSkHXKzla6RrNtSF0usoKJK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
 	Florian Westphal <fw@strlen.de>,
+	Scott Mitchell <scott.k.mitch1@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 101/198] netfilter: ip6t_eui64: reject invalid MAC header for all packets
-Date: Mon, 20 Apr 2026 17:41:20 +0200
-Message-ID: <20260420153939.239110717@linuxfoundation.org>
+Subject: [PATCH 6.18 102/198] netfilter: nfnetlink_queue: nfqnl_instance GFP_ATOMIC -> GFP_KERNEL_ACCOUNT allocation
+Date: Mon, 20 Apr 2026 17:41:21 +0200
+Message-ID: <20260420153939.274653935@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -57,49 +51,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Scott Mitchell <scott.k.mitch1@gmail.com>
 
-[ Upstream commit fdce0b3590f724540795b874b4c8850c90e6b0a8 ]
+[ Upstream commit a4400a5b343d1bc4aa8f685608515413238e7ee2 ]
 
-`eui64_mt6()` derives a modified EUI-64 from the Ethernet source address
-and compares it with the low 64 bits of the IPv6 source address.
+Currently, instance_create() uses GFP_ATOMIC because it's called while
+holding instances_lock spinlock. This makes allocation more likely to
+fail under memory pressure.
 
-The existing guard only rejects an invalid MAC header when
-`par->fragoff != 0`. For packets with `par->fragoff == 0`, `eui64_mt6()`
-can still reach `eth_hdr(skb)` even when the MAC header is not valid.
+Refactor nfqnl_recv_config() to drop RCU lock after instance_lookup()
+and peer_portid verification. A socket cannot simultaneously send a
+message and close, so the queue owned by the sending socket cannot be
+destroyed while processing its CONFIG message. This allows
+instance_create() to allocate with GFP_KERNEL_ACCOUNT before taking
+the spinlock.
 
-Fix this by removing the `par->fragoff != 0` condition so that packets
-with an invalid MAC header are rejected before accessing `eth_hdr(skb)`.
-
-Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Scott Mitchell <scott.k.mitch1@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 936206e3f6ff ("netfilter: nfnetlink_queue: make hash table per queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6t_eui64.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/netfilter/nfnetlink_queue.c | 75 +++++++++++++++------------------
+ 1 file changed, 34 insertions(+), 41 deletions(-)
 
-diff --git a/net/ipv6/netfilter/ip6t_eui64.c b/net/ipv6/netfilter/ip6t_eui64.c
-index d704f7ed300c2..da69a27e8332c 100644
---- a/net/ipv6/netfilter/ip6t_eui64.c
-+++ b/net/ipv6/netfilter/ip6t_eui64.c
-@@ -22,8 +22,7 @@ eui64_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 	unsigned char eui64[8];
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index 0b96d20bacb73..a39d3b989063c 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -178,17 +178,9 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
+ 	unsigned int h;
+ 	int err;
  
- 	if (!(skb_mac_header(skb) >= skb->head &&
--	      skb_mac_header(skb) + ETH_HLEN <= skb->data) &&
--	    par->fragoff != 0) {
-+	      skb_mac_header(skb) + ETH_HLEN <= skb->data)) {
- 		par->hotdrop = true;
- 		return false;
+-	spin_lock(&q->instances_lock);
+-	if (instance_lookup(q, queue_num)) {
+-		err = -EEXIST;
+-		goto out_unlock;
+-	}
+-
+-	inst = kzalloc(sizeof(*inst), GFP_ATOMIC);
+-	if (!inst) {
+-		err = -ENOMEM;
+-		goto out_unlock;
+-	}
++	inst = kzalloc(sizeof(*inst), GFP_KERNEL_ACCOUNT);
++	if (!inst)
++		return ERR_PTR(-ENOMEM);
+ 
+ 	inst->queue_num = queue_num;
+ 	inst->peer_portid = portid;
+@@ -198,9 +190,15 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
+ 	spin_lock_init(&inst->lock);
+ 	INIT_LIST_HEAD(&inst->queue_list);
+ 
++	spin_lock(&q->instances_lock);
++	if (instance_lookup(q, queue_num)) {
++		err = -EEXIST;
++		goto out_unlock;
++	}
++
+ 	if (!try_module_get(THIS_MODULE)) {
+ 		err = -EAGAIN;
+-		goto out_free;
++		goto out_unlock;
  	}
+ 
+ 	h = instance_hashfn(queue_num);
+@@ -210,10 +208,9 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
+ 
+ 	return inst;
+ 
+-out_free:
+-	kfree(inst);
+ out_unlock:
+ 	spin_unlock(&q->instances_lock);
++	kfree(inst);
+ 	return ERR_PTR(err);
+ }
+ 
+@@ -1604,7 +1601,8 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
+ 	struct nfqnl_msg_config_cmd *cmd = NULL;
+ 	struct nfqnl_instance *queue;
+ 	__u32 flags = 0, mask = 0;
+-	int ret = 0;
++
++	WARN_ON_ONCE(!lockdep_nfnl_is_held(NFNL_SUBSYS_QUEUE));
+ 
+ 	if (nfqa[NFQA_CFG_CMD]) {
+ 		cmd = nla_data(nfqa[NFQA_CFG_CMD]);
+@@ -1650,47 +1648,44 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
+ 		}
+ 	}
+ 
++	/* Lookup queue under RCU. After peer_portid check (or for new queue
++	 * in BIND case), the queue is owned by the socket sending this message.
++	 * A socket cannot simultaneously send a message and close, so while
++	 * processing this CONFIG message, nfqnl_rcv_nl_event() (triggered by
++	 * socket close) cannot destroy this queue. Safe to use without RCU.
++	 */
+ 	rcu_read_lock();
+ 	queue = instance_lookup(q, queue_num);
+ 	if (queue && queue->peer_portid != NETLINK_CB(skb).portid) {
+-		ret = -EPERM;
+-		goto err_out_unlock;
++		rcu_read_unlock();
++		return -EPERM;
+ 	}
++	rcu_read_unlock();
+ 
+ 	if (cmd != NULL) {
+ 		switch (cmd->command) {
+ 		case NFQNL_CFG_CMD_BIND:
+-			if (queue) {
+-				ret = -EBUSY;
+-				goto err_out_unlock;
+-			}
+-			queue = instance_create(q, queue_num,
+-						NETLINK_CB(skb).portid);
+-			if (IS_ERR(queue)) {
+-				ret = PTR_ERR(queue);
+-				goto err_out_unlock;
+-			}
++			if (queue)
++				return -EBUSY;
++			queue = instance_create(q, queue_num, NETLINK_CB(skb).portid);
++			if (IS_ERR(queue))
++				return PTR_ERR(queue);
+ 			break;
+ 		case NFQNL_CFG_CMD_UNBIND:
+-			if (!queue) {
+-				ret = -ENODEV;
+-				goto err_out_unlock;
+-			}
++			if (!queue)
++				return -ENODEV;
+ 			instance_destroy(q, queue);
+-			goto err_out_unlock;
++			return 0;
+ 		case NFQNL_CFG_CMD_PF_BIND:
+ 		case NFQNL_CFG_CMD_PF_UNBIND:
+ 			break;
+ 		default:
+-			ret = -ENOTSUPP;
+-			goto err_out_unlock;
++			return -EOPNOTSUPP;
+ 		}
+ 	}
+ 
+-	if (!queue) {
+-		ret = -ENODEV;
+-		goto err_out_unlock;
+-	}
++	if (!queue)
++		return -ENODEV;
+ 
+ 	if (nfqa[NFQA_CFG_PARAMS]) {
+ 		struct nfqnl_msg_config_params *params =
+@@ -1715,9 +1710,7 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
+ 		spin_unlock_bh(&queue->lock);
+ 	}
+ 
+-err_out_unlock:
+-	rcu_read_unlock();
+-	return ret;
++	return 0;
+ }
+ 
+ static const struct nfnl_callback nfqnl_cb[NFQNL_MSG_MAX] = {
 -- 
 2.53.0
 
