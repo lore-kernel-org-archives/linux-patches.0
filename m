@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B780D42883F;
-	Mon, 20 Apr 2026 13:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEF03CF678;
+	Mon, 20 Apr 2026 13:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691770; cv=none; b=Otz/1UuA6mxlHwJ6DiuudfbGVS6CMn/uwigN5sbkGiPgmbua58rAQsDxoGWWd97n6/uqPhzjz+pkfc5ACRCZEoiP2WaVjKq77RoZOmGcrA92pFogcanz4uzRaYN10UJ0/g5lVsUkTNCsAQ0cEMsQagwLvtCsBd7TMrYBLZCj59Q=
+	t=1776691772; cv=none; b=FLFYkYlZRvc7huyylXy9Rh5QCEVUBZ+qoaq/LwqFxdBvin0PdTyB38TonYTJH0BApQ+9oTX5c0yKnFhakTLwlqb/FM5Eu7lsASw4+nG7YxOFBYYTdtyxthWu7sAw1TRhRpZcspnScjfkYVP3oqoGFAoR1HrLnYFYNR3qxOyLCow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691770; c=relaxed/simple;
-	bh=Z9CLPjPQmW71WT9UUYJtgYvMhTbrEDzc4hwt1KPPJN8=;
+	s=arc-20240116; t=1776691772; c=relaxed/simple;
+	bh=2tbCt5PKW497EPg5cqoGISqq56tyKFCjtX16J8VVbYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UT8lNjSXtNHjeE45tL4MpuEspXSBW2cHs3EBnAvqJTzNNBJGnTIWFlsFyCubpsNStOrnnxHv5zkCN9ZP8Fw0P6NLfvSQHz8rYuyL+K4tFi48abzwH5JpJNojeX2EHFnV2TFKljvgcB3gwdgxb8sJMxsr3k97vuFEJYOzLuWQw8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mV6FZlWB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YR1RoQBg11TYGE5KFq9Powqwrux1PhiNzQAIyS4Lxpwz9An/S6AeKByRspelc6FJAq8Nf4xWIrzgVpomZmNP5qlv8TKJyuutxCd7j2XsizaxiWlsy5ljjJHWTXcPsD5PCh93Fr8vJbA554lO82j0mTt2T6FYg3pTFm+0CHtNFTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=upFpAI+A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mV6FZlWB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15C2C2BCB4;
-	Mon, 20 Apr 2026 13:29:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="upFpAI+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B1BC19425;
+	Mon, 20 Apr 2026 13:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691770;
-	bh=Z9CLPjPQmW71WT9UUYJtgYvMhTbrEDzc4hwt1KPPJN8=;
+	s=k20201202; t=1776691771;
+	bh=2tbCt5PKW497EPg5cqoGISqq56tyKFCjtX16J8VVbYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mV6FZlWBfyby0uJfZgUXY/Cq+G7KqCttVLBhshuHYuywarcOv6aNyl7/8ZWrVflMd
-	 d/EEJpvr9BLnTosUR+WCnEono7/IJ5qtDKL0qMhlcqA3NJyZxX2jqkjvBeoBtkd7Lh
-	 hQRy/iWmUjc3HiQsOHz3sDgWtYmxz4TzWzJeqBKTNaTd8Ogvjs6Eksb4O0ejfpMOBV
-	 Y4pER8O0pYvoKGJW8hJfcB5RQo+e6vepIXQRYtbQNW2+e0UNhur3lf/ErZOFroBsLb
-	 xn8bfGwvH1e3EzDMJ08JaSaSy+Wm9NZIb7h/sKEgmricr6neyxpuxFcEvweXGwBtSS
-	 Qdtelu+K5JFPA==
+	b=upFpAI+ApYkbuEaTXVS6OHdPUOc9BLsDFlB1laeyomBqEY36t4UOOxW8ttw8TZBy0
+	 fGDiTuvSKJNzK2WUfRifQ6tFo7rm+YoujeiwIgbKaftrSEmQRzCkJzgVSEfR5AtMMC
+	 QHZ5ggDPEZUALOB0QI9uwwmMWX6PViI8QD3+IUF6gQzxoh5cWo+Lult+E2OlcdZLOA
+	 tQlraxL5v50aCeKGhorqlU36qBcORHX1cMPU8kg9cKKPk9zRwPzz4/MIR110Gmiv58
+	 RKBrbKi27L1EKl2C9dZ0h+zEvX0bBIWIX7qmrFNuH5vCsal2PyEhIrK5WuOrGoVWvR
+	 eK1HkIT2uTAFg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Simon Richter <Simon.Richter@hogyros.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
+	miklos@szeredi.hu,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] PCI/VGA: Pass vga_get_uninterruptible() errors to userspace
-Date: Mon, 20 Apr 2026 09:19:37 -0400
-Message-ID: <20260420132314.1023554-183-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] fuse: validate outarg offset and size in notify store/retrieve
+Date: Mon, 20 Apr 2026 09:19:38 -0400
+Message-ID: <20260420132314.1023554-184-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -49,345 +50,447 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Richter <Simon.Richter@hogyros.de>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 2a93c9851b2bb38614fadd84aa674b7a5c8181c6 ]
+[ Upstream commit 65161470f95bb579a72673bf303ecf0800b9054b ]
 
-If VGA routing cannot be established, vga_get_uninterruptible() returns an
-error and does not increment the lock count. Return the error to the
-caller.
+Add validation checking for outarg offset and outarg size values passed
+in by the server. MAX_LFS_FILESIZE is the maximum file size supported.
+The fuse_notify_store_out and fuse_notify_retrieve_out structs take in
+a uint64_t offset.
 
-Return before incrementing uc->io_cnt/mem_cnt so vga_arb_release() won't
-call vga_put() when userspace closes the handle.
+Add logic to ensure:
+* outarg.offset is less than MAX_LFS_FILESIZE
+* outarg.offset + outarg.size cannot exceed MAX_LFS_FILESIZE
+* potential uint64_t overflow is fixed when adding outarg.offset and
+  outarg.size.
 
-Signed-off-by: Simon Richter <Simon.Richter@hogyros.de>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260307173538.763188-2-Simon.Richter@hogyros.de
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-compile the findings.
+Now I have all the information needed for a comprehensive analysis. Let
+me compile my findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: PCI/VGA
-- **Action verb**: "Pass" (implies a fix for missing error propagation)
-- **Summary**: Pass error return from `vga_get_uninterruptible()` back
-  to userspace instead of silently ignoring it.
-- Record: [PCI/VGA] [pass/fix] [Propagate vga_get_uninterruptible()
-  error to userspace callers]
+### Step 1.1: PARSE THE SUBJECT LINE
+- **Subsystem**: fuse (filesystem in userspace)
+- **Action verb**: "validate" - indicates adding missing input
+  validation (a bug fix pattern)
+- **Summary**: Adds bounds checking for `outarg.offset` and
+  `outarg.size` in FUSE notify store/retrieve paths
 
-### Step 1.2: Tags
-- `Signed-off-by: Simon Richter <Simon.Richter@hogyros.de>` — patch
-  author
-- `[bhelgaas: commit log]` — Bjorn Helgaas (PCI subsystem maintainer)
-  edited the log
-- `Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>` — committed by
-  the PCI subsystem maintainer
-- `Link: https://patch.msgid.link/20260307173538.763188-2-
-  Simon.Richter@hogyros.de`
-- No Fixes: tag, no Cc: stable, no Reported-by. This is expected.
-- Record: Maintainer-committed. Message-id `-2-` suggests this may be
-  part of a series.
+Record: [fuse] [validate] [Add missing bounds/overflow checks on server-
+supplied offset and size]
 
-### Step 1.3: Body Text
-The message clearly states two bugs:
-1. When `vga_get_uninterruptible()` fails, the error is silently dropped
-   — userspace isn't told the lock failed.
-2. Even on failure, `uc->io_cnt/mem_cnt` are incremented, causing
-   spurious `vga_put()` calls in `vga_arb_release()`.
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Signed-off-by: Joanne Koong** - Author, active FUSE contributor (12+
+  fuse commits in tree)
+- **Signed-off-by: Miklos Szeredi** - FUSE subsystem maintainer (commits
+  the patch)
+- No Fixes: tag (expected for manual review candidates)
+- No Reported-by, no Link, no Cc: stable
 
-Record: Bug = ignored error return leads to false success report to
-userspace AND unbalanced lock counters. Failure mode = userspace
-believes it holds VGA locks it doesn't actually hold.
+Record: No bug reporter or explicit stable nomination, but authored by a
+known contributor and committed by the subsystem maintainer.
 
-### Step 1.4: Hidden Bug Fix?
-This is an explicit bug fix — the commit describes two concrete problems
-and the fix for each.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit explicitly describes three bugs:
+1. `outarg.offset` can exceed `MAX_LFS_FILESIZE` (the maximum file size)
+2. `outarg.offset + outarg.size` can overflow `uint64_t` (integer
+   overflow)
+3. Both structs use `uint64_t offset` and values come from the FUSE
+   server (userspace)
+
+The failure mode is integer overflow on server-controlled data leading
+to incorrect computation, potentially corrupting inode metadata or
+causing out-of-bounds page cache access.
+
+Record: [Bug: Integer overflow and missing bounds checks on userspace-
+supplied values] [Failure mode: incorrect computation leading to
+potential data corruption or OOB access] [All kernel versions since
+v2.6.36 affected] [Root cause: untrusted uint64_t values not validated
+before arithmetic]
+
+### Step 1.4: DETECT HIDDEN BUG FIXES
+This is explicitly a validation/input sanitization fix. The word
+"validate" directly indicates a missing safety check. This is clearly a
+bug fix.
+
+Record: [Clearly a bug fix - adds missing input validation on untrusted
+data from userspace FUSE server]
 
 ---
 
-## PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-### Step 2.1: Inventory
-- **Files changed**: 1 (`drivers/pci/vgaarb.c`)
-- **Lines added**: ~5 (new `int err;` variable, error check, and early
-  return)
-- **Functions modified**: `vga_arb_write()` (the "lock" command handler)
-- **Scope**: Single-file, single-function surgical fix.
+### Step 2.1: INVENTORY THE CHANGES
+- **File**: `fs/fuse/dev.c` - 1 file changed
+- **Functions modified**: `fuse_notify_store()`, `fuse_retrieve()`,
+  `fuse_notify_retrieve()`
+- **Scope**: ~15 lines changed (very small, surgical fix)
 
-### Step 2.2: Code Flow Change
-**Before**: `vga_get_uninterruptible()` is called, return value
-discarded, code unconditionally increments user counters and returns
-`count` (success).
+Record: [1 file, 3 functions, ~15 lines changed - single-file surgical
+fix]
 
-**After**: Return value is captured in `err`. If non-zero, the function
-returns the error code to userspace via `goto done`, skipping the
-counter increments.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 
-### Step 2.3: Bug Mechanism
-This is a **logic/correctness fix** combined with a **reference counting
-fix**:
-- `vga_get()` returns `-ENODEV` when the VGA device is removed from the
-  list (e.g., hot-unplug between target check and lock attempt)
-- Ignoring this error means userspace thinks it holds a VGA lock when it
-  doesn't
-- The unbalanced counters cause `vga_arb_release()` (lines 1424-1427) to
-  call `vga_put()` for locks never acquired (though `__vga_put()`'s `>0`
-  guards prevent underflow)
+**Hunk 1 - `fuse_notify_store()`**:
+- BEFORE: `end = outarg.offset + outarg.size` with no overflow
+  protection; `num = outarg.size` with no cap
+- AFTER: Adds `outarg.offset >= MAX_LFS_FILESIZE` check, caps `num =
+  min(outarg.size, MAX_LFS_FILESIZE - outarg.offset)`, uses `num`
+  instead of `outarg.size` for `end` and `fuse_write_update_attr()`
 
-### Step 2.4: Fix Quality
-- Obviously correct: standard error-checking pattern
-- Minimal/surgical: 5 lines, single hunk in the "lock" handler
-- No regression risk: the only change is to return error early rather
-  than continuing
-- No API or behavior change: callers of `vga_arb_write()` already handle
-  error returns
+**Hunk 2 - `fuse_retrieve()`**:
+- BEFORE: `else if (outarg->offset + num > file_size)` - addition can
+  overflow
+- AFTER: `else if (num > file_size - outarg->offset)` - safe since
+  `outarg->offset <= file_size` at this point
+
+**Hunk 3 - `fuse_notify_retrieve()`**:
+- BEFORE: No offset validation before passing to `fuse_retrieve()`
+- AFTER: Adds `outarg.offset >= MAX_LFS_FILESIZE` check, returns -EINVAL
+
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+Category: **Memory safety / Logic correctness** - specifically:
+1. **Integer overflow**: `outarg.offset + outarg.size` wraps around
+   uint64_t when offset is near UINT64_MAX, causing `end` to be a small
+   value. This leads to incorrect file size update via
+   `fuse_write_update_attr()`.
+2. **Missing bounds check**: Without MAX_LFS_FILESIZE validation,
+   `outarg.offset >> PAGE_SHIFT` produces an enormous page index,
+   causing potentially dangerous page cache operations.
+3. **Integer overflow in retrieve**: `outarg->offset + num` can
+   overflow, skipping the cap on `num`, potentially reading beyond file
+   bounds.
+
+### Step 2.4: ASSESS THE FIX QUALITY
+- **Obviously correct**: Standard overflow prevention patterns (check
+  before add, rearrange subtraction)
+- **Minimal/surgical**: Only adds validation checks, no behavioral
+  changes for valid inputs
+- **Regression risk**: Extremely low - only rejects previously-invalid
+  inputs (offset >= MAX_LFS_FILESIZE) or changes arithmetic to prevent
+  overflow
+- **No red flags**: Single file, well-contained
+
+Record: [Fix is obviously correct, minimal, and cannot cause regression
+for valid FUSE operations]
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The buggy line (`vga_get_uninterruptible(pdev, io_state);` at line 1168)
-was introduced in commit `deb2d2ecd43dfc` by Benjamin Herrenschmidt on
-2009-08-11, the original VGA arbitration implementation. This is kernel
-v2.6.32-rc1 era code, present in **all** active stable trees.
+### Step 3.1: BLAME THE CHANGED LINES
+- `fuse_notify_store()` core code from commit `a1d75f258230b7` (Miklos
+  Szeredi, 2010-07-12) - "fuse: add store request" - first appeared in
+  **v2.6.36**
+- `fuse_retrieve()` overflow-prone line from commit `4d53dc99baf139`
+  (Maxim Patlasov, 2012-10-26) - "fuse: rework fuse_retrieve()" - first
+  appeared in **v3.9**
+- `fuse_notify_retrieve()` from `2d45ba381a74a7` (Miklos Szeredi,
+  2010-07-12) - "fuse: add retrieve request" - first appeared in
+  **v2.6.36**
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present (expected for a manually reviewed candidate).
+Record: [Buggy code introduced in v2.6.36 (2010) and v3.9 (2013).
+Present in ALL active stable trees.]
 
-### Step 3.3: File History
-Recent changes to `vgaarb.c` are mostly refactoring/cleanup (VGA device
-selection, typo fixes, simplifications). None touch the "lock" command
-handler in `vga_arb_write()`.
+### Step 3.2: FOLLOW THE FIXES TAG
+No Fixes: tag present (expected).
 
-### Step 3.4: Author
-Simon Richter has other PCI-related commits (BAR resize fixes). Bjorn
-Helgaas (PCI maintainer) committed this, which indicates it was reviewed
-and accepted through the proper PCI maintainer tree.
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Recent changes to `fs/fuse/dev.c` include folio conversions, io-uring
+support, and the related `9d81ba6d49a74` "fuse: Block access to folio
+overlimit" syzbot fix. The file has 78+ changes since v6.6. The fix is
+independent of all of these.
 
-### Step 3.5: Dependencies
-The message-id `-2-` suggests this is patch 2 in a series, but the fix
-is entirely self-contained. It only adds error checking to an existing
-call. No structural dependencies on other patches.
+Record: [Standalone fix, no prerequisites needed]
+
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Joanne Koong has 12+ commits to `fs/fuse/dev.c`, including the large
+folio support series. She is a regular and significant FUSE contributor.
+The fix was reviewed and committed by Miklos Szeredi, the FUSE
+maintainer.
+
+Record: [Author is a major FUSE contributor; patch committed by
+subsystem maintainer]
+
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+The fix only adds new validation checks and rearranges arithmetic. It
+does not depend on any other commits. The context differs slightly in
+stable trees (pages vs folios, different error handling style), but the
+core logic is identical.
+
+Record: [No dependencies. Will need minor context adjustments for
+backport to stable trees using pages instead of folios]
 
 ---
 
-## PHASE 4: MAILING LIST RESEARCH
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1-4.2: Original Patch
-b4 dig could not find a match by the message-id directly. Lore was
-inaccessible. However, the commit was signed off by Bjorn Helgaas (PCI
-maintainer), indicating proper review.
+### Step 4.1-4.5: MAILING LIST
+I was unable to find the specific mailing list thread for this commit on
+lore.kernel.org (the site is protected by anti-bot measures and the
+commit may be very recent/not yet indexed). However:
+- The commit is signed-off by the FUSE maintainer Miklos Szeredi
+- Joanne Koong is a well-known FUSE contributor
+- The fix is technically straightforward and self-explanatory
 
-### Step 4.3-4.5: Bug Report / Stable Discussion
-No bug report links. No syzbot reference. This appears to be a code-
-review-discovered issue.
+Record: [Unable to verify lore discussion due to anti-bot protection.
+Commit signed by maintainer Miklos Szeredi.]
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions Modified
-`vga_arb_write()` — the write handler for `/dev/vga_arbiter`.
+### Step 5.1-5.4: CALL CHAIN ANALYSIS
+The call chain is:
+```
+fuse_dev_write() / fuse_dev_splice_write()  [userspace writes to
+/dev/fuse]
+  -> fuse_dev_do_write()
+    -> fuse_notify()  [when oh.unique == 0, notification message]
+      -> fuse_notify_store()   [FUSE_NOTIFY_STORE]
+      -> fuse_notify_retrieve()  [FUSE_NOTIFY_RETRIEVE]
+        -> fuse_retrieve()
+```
 
-### Step 5.2: Callers
-`vga_arb_write()` is registered as the `.write` callback in
-`vga_arb_device_fops` (line 1498). It's called when userspace writes to
-`/dev/vga_arbiter`. This is the main userspace interface for the VGA
-arbiter, used by X servers and display managers on multi-GPU systems.
+The path is **directly reachable from userspace** - the FUSE server
+writes to `/dev/fuse` with crafted notification messages. The `outarg`
+values (offset, size) come directly from this userspace write.
 
-### Step 5.3-5.4: Call Chain
-Userspace → `write(fd, "lock io+mem", ...)` → `vga_arb_write()` →
-`vga_get_uninterruptible()` → `vga_get()`. The error path is directly
-reachable from userspace.
+### Step 5.5: SIMILAR PATTERNS
+Verified that the same three overflow patterns exist in v5.15, v6.1, and
+v6.6 stable trees at the exact same lines.
 
-### Step 5.5: Similar Patterns
-The i915 driver also ignores `vga_get_uninterruptible()` return values
-(lines 68, 93 in `intel_vga.c`), but those are kernel-internal callers
-where the consequences differ.
-
----
-
-## PHASE 6: STABLE TREE ANALYSIS
-
-### Step 6.1: Buggy Code Existence
-The buggy code has been present since v2.6.32 (2009). It exists in
-**all** active stable trees (5.4.y, 5.10.y, 5.15.y, 6.1.y, 6.6.y,
-6.12.y).
-
-### Step 6.2: Backport Complications
-The surrounding code in the "lock" handler has not changed significantly
-since the original commit. The patch should apply cleanly. The only
-nearby changes are comment fixes (`cc64ca4b62f50` in 2023).
-
-### Step 6.3: Related Fixes
-No other fix for this issue exists in any stable tree.
+Record: [Bug is reachable from userspace via /dev/fuse writes. All
+active stable trees contain the vulnerable code.]
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 7.1: Subsystem Criticality
-PCI/VGA arbiter — **IMPORTANT** level. Used by all systems with VGA
-devices and userspace display servers (X11, Wayland compositors). Multi-
-GPU systems (common in desktop/workstation use) depend on correct VGA
-arbitration.
+### Step 6.1: BUGGY CODE IN STABLE TREES
+Confirmed the exact buggy patterns exist in:
+- **v6.6**: lines 1602, 1608, 1684
+- **v6.1**: lines 1599, 1605, 1681
+- **v5.15**: lines 1591, 1597, 1673
 
-### Step 7.2: Subsystem Activity
-Moderately active — periodic cleanups and improvements, but core logic
-is mature.
+Record: [Bug exists in ALL active stable trees going back to v2.6.36]
+
+### Step 6.2: BACKPORT COMPLICATIONS
+The file has undergone significant changes (78+ commits since v6.6),
+primarily folio conversions. The stable trees still use pages. However:
+- The validation checks (MAX_LFS_FILESIZE) are context-independent
+- The `num` capping logic is purely arithmetic
+- The overflow rearrangement in `fuse_retrieve()` is a one-line change
+
+The patch will need minor context adjustments (different error handling
+style with `goto copy_finish` vs `return` in v6.6, and `outarg.size`
+instead of `num` for the `while` loop). But the core logic applies
+cleanly.
+
+Record: [Minor context conflicts expected. Core fix logic applies
+unchanged.]
+
+### Step 6.3: RELATED FIXES IN STABLE
+No prior fixes for this specific integer overflow/bounds checking issue
+were found.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem**: fs/fuse - filesystems (IMPORTANT)
+- FUSE is widely used: Docker/containers, virtiofs, SSHFS, Android,
+  embedded systems
+- Bugs in FUSE notification paths affect all FUSE users
+
+### Step 7.2: SUBSYSTEM ACTIVITY
+Very active subsystem - 78+ changes since v6.6. The fix addresses bugs
+present since initial implementation.
+
+Record: [FUSE is IMPORTANT subsystem, widely used across containers,
+VMs, and embedded systems]
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users with multi-GPU systems or systems where VGA device hot-unplug can
-occur. Includes desktop/workstation users running X servers or other VGA
-arbitration clients.
+### Step 8.1: WHO IS AFFECTED
+All systems using FUSE with notify_store or notify_retrieve
+functionality. This includes virtiofs (QEMU/KVM VMs), container
+filesystems, and any FUSE server using cache management notifications.
 
-### Step 8.2: Trigger Conditions
-- VGA device hot-unplug while userspace holds a reference via
-  `/dev/vga_arbiter`
-- The window is a race between target check and `vga_get()`, so it's
-  timing-dependent
-- Unprivileged user with access to `/dev/vga_arbiter` can trigger this
+### Step 8.2: TRIGGER CONDITIONS
+- Triggered when a FUSE server sends a NOTIFY_STORE or NOTIFY_RETRIEVE
+  with large offset values
+- Can be triggered by a buggy FUSE server, or a malicious/compromised
+  one
+- In virtiofs scenarios, the host-side FUSE server could send crafted
+  values
 
-### Step 8.3: Failure Mode Severity
-- **Userspace is told lock succeeded when it didn't**: MEDIUM — could
-  lead to concurrent VGA resource access, potentially causing display
-  corruption or GPU conflicts
-- **Unbalanced counters**: LOW — `__vga_put()` has `>0` guards
-  preventing counter underflow, though spurious wake-ups may occur
-- Overall severity: **MEDIUM**
+### Step 8.3: FAILURE MODE SEVERITY
+- **Integer overflow in store**: `end = outarg.offset + outarg.size`
+  wraps to small value -> `fuse_write_update_attr()` called with wrong
+  file_size -> **inode metadata corruption (CRITICAL)**
+- **Missing MAX_LFS_FILESIZE check**: Enormous page index in
+  `filemap_grab_folio()` -> potential page cache corruption or kernel
+  crash -> **CRITICAL**
+- **Overflow in retrieve**: `outarg->offset + num` wraps -> num not
+  capped correctly -> potential OOB read -> **HIGH**
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: Correct error propagation to userspace; prevents VGA
-  resource conflicts on multi-GPU systems
-- **Risk**: Very low — 5-line change adding standard error checking
-- **Ratio**: Favorable for backport
+Record: [Failure modes: data corruption, potential crash. Severity:
+CRITICAL]
+
+### Step 8.4: RISK-BENEFIT RATIO
+- **BENEFIT**: HIGH - prevents integer overflow leading to data
+  corruption and potential crashes in a widely-used filesystem subsystem
+- **RISK**: VERY LOW - adds simple validation checks, ~15 lines,
+  obviously correct, cannot affect valid operations
+- **Ratio**: Strongly favorable for backporting
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence
+### Step 9.1: EVIDENCE COMPILATION
+
 **FOR backporting:**
-- Fixes a real correctness bug: userspace is lied to about VGA lock
-  acquisition
-- Fixes unbalanced reference counting on the cleanup path
-- Small, surgical fix (5 lines, single function)
-- Obviously correct: standard error-checking pattern
-- Committed by PCI subsystem maintainer (Bjorn Helgaas)
-- Bug present since v2.6.32 — affects all stable trees
-- Self-contained, no dependencies on other patches
-- Should apply cleanly to all stable trees
+- Fixes real integer overflow bugs reachable from userspace
+- Prevents potential data corruption (inode metadata) and OOB access
+- Bug exists since v2.6.36 (2010) - affects ALL stable trees
+- Fix is small (~15 lines), surgical, obviously correct
+- Authored by major FUSE contributor, committed by FUSE maintainer
+- FUSE is widely deployed (containers, VMs, embedded)
+- Zero risk of regression for valid operations
 
 **AGAINST backporting:**
-- The trigger window is a race condition (timing-dependent)
-- No reported real-world incidents (code-review-found issue)
-- The consequences are somewhat mitigated by `__vga_put()`'s `>0` guards
+- No explicit Cc: stable or Fixes: tag (expected - that's why we're
+  reviewing)
+- Minor context adjustments needed for backport (folio vs page)
+- No syzbot report or explicit bug report mentioned
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — trivial error-checking
-   pattern, committed by maintainer
-2. Fixes a real bug? **YES** — incorrect error reporting to userspace +
-   unbalanced counters
-3. Important issue? **MEDIUM** — resource conflict possible but
-   mitigated in practice
-4. Small and contained? **YES** — 5 lines in one function
-5. No new features/APIs? **YES** — no new features
-6. Can apply to stable? **YES** — code unchanged since 2009
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** - standard overflow prevention
+   patterns
+2. Fixes a real bug? **YES** - integer overflow on user-controlled data
+3. Important issue? **YES** - potential data corruption and OOB access
+4. Small and contained? **YES** - ~15 lines in 1 file, 3 functions
+5. No new features or APIs? **YES** - pure validation
+6. Can apply to stable? **YES** - with minor context adjustments
 
-### Step 9.3: Exception Categories
-Not an exception category; evaluated on its own merit as a bug fix.
-
-### Step 9.4: Decision
-This is a clear correctness fix: error values from
-`vga_get_uninterruptible()` must be propagated to userspace rather than
-silently swallowed. The fix is minimal, obviously correct, committed by
-the subsystem maintainer, and applies to all stable trees. Despite the
-trigger being race-dependent, the fix prevents both misleading userspace
-and unbalanced lock accounting.
+### Step 9.3: EXCEPTION CATEGORIES
+Not an exception category - this is a straightforward bug fix.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from author and PCI maintainer,
-  Link to lore, no Fixes/Reported-by/Cc:stable (expected)
-- [Phase 2] Diff analysis: 5 lines added in the "lock" handler of
-  `vga_arb_write()` — captures return value of
-  `vga_get_uninterruptible()`, returns error before incrementing
-  counters
-- [Phase 3] git blame: buggy code introduced in commit deb2d2ecd43dfc
-  (v2.6.32-rc1, 2009), present in all stable trees
-- [Phase 3] git describe: `v2.6.32-rc1~670^2~52` confirms the original
-  commit is in all active stable trees
-- [Phase 3] git log: no recent changes to the "lock" handler code path,
-  ensuring clean backport
-- [Phase 4] b4 dig -c deb2d2ecd43dfc: found original VGA arbitration
-  patch from 2009
-- [Phase 4] lore inaccessible due to anti-scraping protection
-- [Phase 5] `vga_get_uninterruptible` returns `int` (verified in
-  include/linux/vgaarb.h lines 92-96), wrapping `vga_get()` which
-  returns -ENODEV on failure
-- [Phase 5] `vga_arb_release()` (lines 1418-1428): confirms `vga_put()`
-  is called for each `io_cnt`/`mem_cnt`, creating unbalanced puts if
-  counters were wrongly incremented
-- [Phase 5] `__vga_put()` (lines 378-381): confirmed `>0` guards exist,
-  preventing counter underflow
-- [Phase 5] `vga_get()` (lines 434-483): confirmed `-ENODEV` is the only
-  error possible for uninterruptible calls
-- [Phase 6] Code unchanged in the "lock" handler since v2.6.32; should
-  apply cleanly to all stable trees
-- [Phase 7] PCI/VGA arbiter is used by display servers on multi-GPU
-  systems
-- UNVERIFIED: Could not access lore to check full patch series context
-  or reviewer feedback
+- [Phase 1] Parsed tags: SOB from Joanne Koong (author) and Miklos
+  Szeredi (maintainer)
+- [Phase 2] Diff analysis: 3 hunks adding MAX_LFS_FILESIZE bounds checks
+  and overflow prevention
+- [Phase 2] Confirmed struct types: `fuse_notify_store_out.offset` is
+  uint64_t, `.size` is uint32_t
+- [Phase 3] git blame: buggy code introduced in a1d75f258230b7 (v2.6.36,
+  2010) and 4d53dc99baf139 (v3.9, 2013)
+- [Phase 3] git log --author: Joanne Koong has 12+ commits to
+  fs/fuse/dev.c
+- [Phase 4] b4 dig: could not match exact commit (not yet in tree). Web
+  search unable to find lore thread.
+- [Phase 5] Call chain traced: fuse_dev_write() -> fuse_dev_do_write()
+  -> fuse_notify() -> fuse_notify_store()/fuse_notify_retrieve() -
+  directly reachable from userspace /dev/fuse writes
+- [Phase 6] Confirmed buggy patterns in v5.15 (lines 1591,1597,1673),
+  v6.1 (lines 1599,1605,1681), v6.6 (lines 1602,1608,1684)
+- [Phase 6] Confirmed MAX_LFS_FILESIZE defined in include/linux/fs.h,
+  used in fs/fuse/inode.c for s_maxbytes
+- [Phase 7] FUSE is important subsystem, very active (78+ changes since
+  v6.6)
+- [Phase 8] Failure mode: integer overflow -> data corruption (inode
+  metadata) and potential OOB page cache access; severity CRITICAL
+- [Phase 8] fuse_write_update_attr() confirmed: sets inode->i_size based
+  on computed `pos` value - overflow leads to wrong i_size
+- UNVERIFIED: Exact lore.kernel.org discussion thread for this commit
+  (anti-bot protection blocked access)
+
+---
+
+The fix addresses real integer overflow and missing bounds checking bugs
+in FUSE notification store/retrieve paths. The bugs have existed since
+2010, affect all stable trees, are reachable from userspace, and can
+lead to data corruption or out-of-bounds access. The fix is small (~15
+lines), obviously correct, authored by a regular contributor, and
+committed by the subsystem maintainer. The risk-benefit ratio strongly
+favors backporting.
 
 **YES**
 
- drivers/pci/vgaarb.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/fuse/dev.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/vgaarb.c b/drivers/pci/vgaarb.c
-index d9383bf541e7c..22b2b6ebdefdb 100644
---- a/drivers/pci/vgaarb.c
-+++ b/drivers/pci/vgaarb.c
-@@ -1134,6 +1134,7 @@ static ssize_t vga_arb_write(struct file *file, const char __user *buf,
- 	char kbuf[64], *curr_pos;
- 	size_t remaining = count;
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index 0b0241f47170d..4a791ff12d009 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1780,7 +1780,11 @@ static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
+ 	if (size - sizeof(outarg) != outarg.size)
+ 		return -EINVAL;
  
-+	int err;
- 	int ret_val;
- 	int i;
++	if (outarg.offset >= MAX_LFS_FILESIZE)
++		return -EINVAL;
++
+ 	nodeid = outarg.nodeid;
++	num = min(outarg.size, MAX_LFS_FILESIZE - outarg.offset);
  
-@@ -1165,7 +1166,11 @@ static ssize_t vga_arb_write(struct file *file, const char __user *buf,
- 			goto done;
- 		}
+ 	down_read(&fc->killsb);
  
--		vga_get_uninterruptible(pdev, io_state);
-+		err = vga_get_uninterruptible(pdev, io_state);
-+		if (err) {
-+			ret_val = err;
-+			goto done;
-+		}
+@@ -1793,13 +1797,12 @@ static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
+ 	index = outarg.offset >> PAGE_SHIFT;
+ 	offset = outarg.offset & ~PAGE_MASK;
+ 	file_size = i_size_read(inode);
+-	end = outarg.offset + outarg.size;
++	end = outarg.offset + num;
+ 	if (end > file_size) {
+ 		file_size = end;
+-		fuse_write_update_attr(inode, file_size, outarg.size);
++		fuse_write_update_attr(inode, file_size, num);
+ 	}
  
- 		/* Update the client's locks lists */
- 		for (i = 0; i < MAX_USER_CARDS; i++) {
+-	num = outarg.size;
+ 	while (num) {
+ 		struct folio *folio;
+ 		unsigned int folio_offset;
+@@ -1879,7 +1882,7 @@ static int fuse_retrieve(struct fuse_mount *fm, struct inode *inode,
+ 	num = min(outarg->size, fc->max_write);
+ 	if (outarg->offset > file_size)
+ 		num = 0;
+-	else if (outarg->offset + num > file_size)
++	else if (num > file_size - outarg->offset)
+ 		num = file_size - outarg->offset;
+ 
+ 	num_pages = (num + offset + PAGE_SIZE - 1) >> PAGE_SHIFT;
+@@ -1961,6 +1964,9 @@ static int fuse_notify_retrieve(struct fuse_conn *fc, unsigned int size,
+ 
+ 	fuse_copy_finish(cs);
+ 
++	if (outarg.offset >= MAX_LFS_FILESIZE)
++		return -EINVAL;
++
+ 	down_read(&fc->killsb);
+ 	err = -ENOENT;
+ 	nodeid = outarg.nodeid;
 -- 
 2.53.0
 
