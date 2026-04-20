@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E21333445;
-	Mon, 20 Apr 2026 16:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7615034252C;
+	Mon, 20 Apr 2026 16:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701549; cv=none; b=D/Goit/SYpK0buWYKu+EcR56A5UZ4xY4E3iCuS6w+8WxmiypcSOLDvjpIBhNcf6Pwe/uNkAQKIAmsh8RtOJTyZmJU9G2/qIx39Nt2sfM76iQgWNszsMCxhNYwTdwnD01spb9knN4E7oHSD0vnsKWQ7XnQ6U06+4NcMg6BQpcV6A=
+	t=1776701552; cv=none; b=tqMGCzsbIULh8eQ3aTCfR5OGSTC2ZBwVvwE1WVBv148cd+zdeIjF/FsGVoQ/BN6Hex//0Q8W7iU0ajqlYFAiOW8t1AD7OS9xYHSp+YsHl04tt/nhk1ODoylKLGKia021WG3uRoRPENTuwhVc3qMeI8djjCJoJyNinBwwIo34hs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701549; c=relaxed/simple;
-	bh=umL5Lj7892/jaVfQl5NnwD8Nc1Xd2IItkhgfHCbEpDk=;
+	s=arc-20240116; t=1776701552; c=relaxed/simple;
+	bh=pbx1Lu2n6SZQ/JeH6goPTe0vySwepCBgMpcS9Fn69AQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTWkw3NDTTYgryWbPJ06IlzWQ+Le2DGYPkhJge2SvuUkyShcFVvO+9fnWPSR5Bp+t/m5gWntzdsuSy+wJscFbuBhntBfG9rNkFpbn8DUrqF6yM6bBNncuGofjUKieQKYn44VhBt2uk1+dhwFvNaHcYC5Ph63ePX0tiwegKQeOiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5ro1eDx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOXo4A6nEJN18lmuXOuZ1uCGaVVBbJNCFQBsqXzURWx8tZGdqpByp5ceo3VUCNCjTxki8JGW/ZtIBcW3bhVGTKjB7AlHb3HIDXsQSidPnJbKvAdaYErCrfrfnAmyCle9vlIUQ6zuimefdf+V7A6IJFFNnDiHEMOJNTL1FBG9kIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuM4ZP3Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5ro1eDx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EA4C19425;
-	Mon, 20 Apr 2026 16:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuM4ZP3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05C1C19425;
+	Mon, 20 Apr 2026 16:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701549;
-	bh=umL5Lj7892/jaVfQl5NnwD8Nc1Xd2IItkhgfHCbEpDk=;
+	s=korg; t=1776701552;
+	bh=pbx1Lu2n6SZQ/JeH6goPTe0vySwepCBgMpcS9Fn69AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5ro1eDx5Bnvc2aF1KGOWZJK94z5kRy/iwM6Kc+M5qh1PyNJnC6+KXOEB873V9lcJ
-	 H7NLf7P8i/dB2SdtOcjmteiOaas/b/MbpwNKbaRwiHe0OR+JBNc9AeRn56JkSitVUh
-	 LuSjvUNoBGPg+PDbRG4/ZzQv0SfqdQZbABi8XIOk=
+	b=JuM4ZP3Y1d+5elDfT4iQHVRK/LhpQ3+YRGnyN7V9hPT4Kc4uXWQiVHUvOe9fu69PF
+	 CMB3/WbIXEHWDc2436+bKhQBTecOo9Nity1YGqtB77t25IdVBfNCXUd3U3uE9cDPrr
+	 jwpBDSvqOYlSKtIuGa/cZiWfm1hsn9cwB0Hd4uEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+67b90111784a3eac8c04@syzkaller.appspotmail.com,
+	Tejas Bharambe <tejas.bharambe@outlook.com>,
+	syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Heming Zhao <heming.zhao@suse.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Junxiao Bi <junxiao.bi@oracle.com>,
-	Joseph Qi <jiangqi903@gmail.com>,
 	Changwei Ge <gechangwei@live.cn>,
 	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 125/162] ocfs2: fix possible deadlock between unlink and dio_end_io_write
-Date: Mon, 20 Apr 2026 17:42:37 +0200
-Message-ID: <20260420153931.568940704@linuxfoundation.org>
+Subject: [PATCH 6.12 126/162] ocfs2: fix use-after-free in ocfs2_fault() when VM_FAULT_RETRY
+Date: Mon, 20 Apr 2026 17:42:38 +0200
+Message-ID: <20260420153931.605400708@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -58,82 +58,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Tejas Bharambe <tejas.bharambe@outlook.com>
 
-commit b02da26a992db0c0e2559acbda0fc48d4a2fd337 upstream.
+commit 7de554cabf160e331e4442e2a9ad874ca9875921 upstream.
 
-ocfs2_unlink takes orphan dir inode_lock first and then ip_alloc_sem,
-while in ocfs2_dio_end_io_write, it acquires these locks in reverse order.
-This creates an ABBA lock ordering violation on lock classes
-ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE] and
-ocfs2_file_ip_alloc_sem_key.
+filemap_fault() may drop the mmap_lock before returning VM_FAULT_RETRY,
+as documented in mm/filemap.c:
 
-Lock Chain #0 (orphan dir inode_lock -> ip_alloc_sem):
-ocfs2_unlink
-  ocfs2_prepare_orphan_dir
-    ocfs2_lookup_lock_orphan_dir
-      inode_lock(orphan_dir_inode) <- lock A
-    __ocfs2_prepare_orphan_dir
-      ocfs2_prepare_dir_for_insert
-        ocfs2_extend_dir
-	  ocfs2_expand_inline_dir
-	    down_write(&oi->ip_alloc_sem) <- Lock B
+  "If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
+  may be dropped before doing I/O or by lock_folio_maybe_drop_mmap()."
 
-Lock Chain #1 (ip_alloc_sem -> orphan dir inode_lock):
-ocfs2_dio_end_io_write
-  down_write(&oi->ip_alloc_sem) <- Lock B
-  ocfs2_del_inode_from_orphan()
-    inode_lock(orphan_dir_inode) <- Lock A
+When this happens, a concurrent munmap() can call remove_vma() and free
+the vm_area_struct via RCU. The saved 'vma' pointer in ocfs2_fault() then
+becomes a dangling pointer, and the subsequent trace_ocfs2_fault() call
+dereferences it -- a use-after-free.
 
-Deadlock Scenario:
-  CPU0 (unlink)                     CPU1 (dio_end_io_write)
-  ------                            ------
-  inode_lock(orphan_dir_inode)
-                                    down_write(ip_alloc_sem)
-  down_write(ip_alloc_sem)
-                                    inode_lock(orphan_dir_inode)
+Fix this by saving ip_blkno as a plain integer before calling
+filemap_fault(), and removing vma from the trace event. Since
+ip_blkno is copied by value before the lock can be dropped, it
+remains valid regardless of what happens to the vma or inode
+afterward.
 
-Since ip_alloc_sem is to protect allocation changes, which is unrelated
-with operations in ocfs2_del_inode_from_orphan.  So move
-ocfs2_del_inode_from_orphan out of ip_alloc_sem to fix the deadlock.
-
-Link: https://lkml.kernel.org/r/20260306032211.1016452-1-joseph.qi@linux.alibaba.com
-Reported-by: syzbot+67b90111784a3eac8c04@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=67b90111784a3eac8c04
-Fixes: a86a72a4a4e0 ("ocfs2: take ip_alloc_sem in ocfs2_dio_get_block & ocfs2_dio_end_io_write")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Link: https://lkml.kernel.org/r/20260410083816.34951-1-tejas.bharambe@outlook.com
+Fixes: 614a9e849ca6 ("ocfs2: Remove FILE_IO from masklog.")
+Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
+Reported-by: syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a49010a0e8fcdeea075f
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Joseph Qi <jiangqi903@gmail.com>
 Cc: Changwei Ge <gechangwei@live.cn>
 Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/ocfs2/mmap.c        |    7 +++----
+ fs/ocfs2/ocfs2_trace.h |   10 ++++------
+ 2 files changed, 7 insertions(+), 10 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -2318,8 +2318,6 @@ static int ocfs2_dio_end_io_write(struct
- 		goto out;
- 	}
+--- a/fs/ocfs2/mmap.c
++++ b/fs/ocfs2/mmap.c
+@@ -30,7 +30,8 @@
  
--	down_write(&oi->ip_alloc_sem);
+ static vm_fault_t ocfs2_fault(struct vm_fault *vmf)
+ {
+-	struct vm_area_struct *vma = vmf->vma;
++	unsigned long long ip_blkno =
++		OCFS2_I(file_inode(vmf->vma->vm_file))->ip_blkno;
+ 	sigset_t oldset;
+ 	vm_fault_t ret;
+ 
+@@ -38,11 +39,9 @@ static vm_fault_t ocfs2_fault(struct vm_
+ 	ret = filemap_fault(vmf);
+ 	ocfs2_unblock_signals(&oldset);
+ 
+-	trace_ocfs2_fault(OCFS2_I(vma->vm_file->f_mapping->host)->ip_blkno,
+-			  vma, vmf->page, vmf->pgoff);
++	trace_ocfs2_fault(ip_blkno, vmf->page, vmf->pgoff);
+ 	return ret;
+ }
 -
- 	/* Delete orphan before acquire i_rwsem. */
- 	if (dwc->dw_orphaned) {
- 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
-@@ -2332,6 +2330,7 @@ static int ocfs2_dio_end_io_write(struct
- 			mlog_errno(ret);
- 	}
+ static vm_fault_t __ocfs2_page_mkwrite(struct file *file,
+ 			struct buffer_head *di_bh, struct page *page)
+ {
+--- a/fs/ocfs2/ocfs2_trace.h
++++ b/fs/ocfs2/ocfs2_trace.h
+@@ -1246,22 +1246,20 @@ TRACE_EVENT(ocfs2_write_end_inline,
  
-+	down_write(&oi->ip_alloc_sem);
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
+ TRACE_EVENT(ocfs2_fault,
+ 	TP_PROTO(unsigned long long ino,
+-		 void *area, void *page, unsigned long pgoff),
+-	TP_ARGS(ino, area, page, pgoff),
++		 void *page, unsigned long pgoff),
++	TP_ARGS(ino, page, pgoff),
+ 	TP_STRUCT__entry(
+ 		__field(unsigned long long, ino)
+-		__field(void *, area)
+ 		__field(void *, page)
+ 		__field(unsigned long, pgoff)
+ 	),
+ 	TP_fast_assign(
+ 		__entry->ino = ino;
+-		__entry->area = area;
+ 		__entry->page = page;
+ 		__entry->pgoff = pgoff;
+ 	),
+-	TP_printk("%llu %p %p %lu",
+-		  __entry->ino, __entry->area, __entry->page, __entry->pgoff)
++	TP_printk("%llu %p %lu",
++		  __entry->ino, __entry->page, __entry->pgoff)
+ );
  
- 	ocfs2_init_dinode_extent_tree(&et, INODE_CACHE(inode), di_bh);
+ /* End of trace events for fs/ocfs2/mmap.c. */
 
 
