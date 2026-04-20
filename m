@@ -1,51 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FEB425CDF;
-	Mon, 20 Apr 2026 13:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB65425CEA;
+	Mon, 20 Apr 2026 13:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691673; cv=none; b=ul3Q5enYXzGt2XW8OrH+jkrPWoIGA9iqsDrEKwWOGwinWp7877FgKnIdqgq9SZYolNxW6OPWOScu3I8IXCr/TZecdQ23dMRpOuVpDV7tJRvLFRIUvkN+a0XqnSzmS/aWZqFEC3dY/DlH2sCix6DWfSjvUpCNEOBsJJ2JsC5Ua+k=
+	t=1776691674; cv=none; b=ks7Zk4ubLjVm3CzFMBtPggY65W0v+MgsPOOgbRvNocchQQXzEyCM0SBnmhwry0W3v0sYto7xffH2/ycBrQzEYRiqXSTQE+hAv5tk1mI+xAjIvqBFlJowBpvXesIaAARV6sRCMP3QJlav0Jy9IjZVLwkCcgIFnCnb5/5IVALsUZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691673; c=relaxed/simple;
-	bh=NttIuWqxHGq9CKGWgmyzDa57N7vXJe/0ISLp7pi9UwE=;
+	s=arc-20240116; t=1776691674; c=relaxed/simple;
+	bh=ToJ7ExQdL7HGWIM0YNB8YbaFQr4RMeEJEHcofk681Ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SzkjaxsZxRqBajPxyffNO+JqlYYGsae+203ullh4+CHhr/n+P5z0rlPDHoSRnIrRTTdkbZLorjRIAOgs4DabBboHi/ZbGfwo/JWYMfwOhpZx+bDwFUZM4DIQhXzFS8z/Ea3YElUYIyW6nvNz2klqnE0h6RmLF4yr/adO2ULZ2B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZpOGeVpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UtIbUsrNWNjiHUE26+PoLc6DVZkWqfKZF/WNAIlee42XkLVJRvpz+fa+6854vy9KX2LJqgQn78kj/DZHlb8bHTzBflPrFp6qX7WdPSo3jKDSFBbzZmqWMlgwT2FwNVB9wunyNsKY6wlAbTjuLkTefEEPN7IazA43JVJZ724N61E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u4p/m19+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZpOGeVpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF7EC19425;
-	Mon, 20 Apr 2026 13:27:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u4p/m19+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E1AC2BCB6;
+	Mon, 20 Apr 2026 13:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691672;
-	bh=NttIuWqxHGq9CKGWgmyzDa57N7vXJe/0ISLp7pi9UwE=;
+	s=k20201202; t=1776691674;
+	bh=ToJ7ExQdL7HGWIM0YNB8YbaFQr4RMeEJEHcofk681Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZpOGeVpaOVjwXC089UH29B2iC1syp/kHlZTsGflMIn0XezsIVErtwQHwve9r8nNcc
-	 T4KpvWI4NReBzS1fGvpUmi6vXi12WLom18pGZUga77x0/FR8fq2QtUafG0SYsDc66B
-	 f9fHvonMVpiPqBY/foZHzxiflHV1+CdkbN4tHoZ4rZWZ+knyavpxwGqyzd9rmPLaFa
-	 Vx1q1pwHtP7naxbTTEr0WJ/lu87uutqB1b8LWz+N3xPvyPDiDTofB+/SREcH++TM3k
-	 WwL1c+twyyijjkNGTMpHqt10fsGHS6fd6dc/ITJfl8MipsoP0HsOCg3091XgT62Bnp
-	 JFjXO/xELsYtg==
+	b=u4p/m19+KdhrsW6n9CU0qLU2k/kq3NHpIZov1Oun133SaRRB577xARhp6i/pwUFG8
+	 5TvK9P5V1iMxhxHumH6+LVnCRHKSrVdhvDpyvFAmngY+SDNddbPn8ygwrbphKWsKVW
+	 EebPCLZD69BqDcgMrJHhnP+0nk/jBCOnRqMbzwy6p4g4UOiu2uDraYhjz7/q8g/ofD
+	 /OR89YZkB08oNZmw24vNrJZuF/UCyBasRO4i5PHqbEMG1XBMXGsjtiR3r19aKYIkrA
+	 swzTpQKdBZ0XXUDFs5NOwdyNcvASMPGqK61y7OulR06c+jdBc0g6VaejeDDx+aW1+X
+	 ecs4XuBI2Ax+g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Joshua Aberback <joshua.aberback@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Aric Cyr <aric.cyr@amd.com>,
-	Chuanyu Tseng <chuanyu.tseng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] drm/amd/display: Restore full update for tiling change to linear
-Date: Mon, 20 Apr 2026 09:19:19 -0400
-Message-ID: <20260420132314.1023554-165-sashal@kernel.org>
+	lorenzo@kernel.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 7.0-6.18] wifi: mt76: mt7996: Disable Rx hdr_trans in monitor mode
+Date: Mon, 20 Apr 2026 09:19:20 -0400
+Message-ID: <20260420132314.1023554-166-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -61,369 +57,368 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joshua Aberback <joshua.aberback@amd.com>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 3967ab83a5075c05be3c614f1dc8460f66ee77ad ]
+[ Upstream commit 947d63d8cd3b03c7be16875ca90273edbdbe7ce5 ]
 
-[Why]
-There was previously a dc debug flag to indicate that tiling
-changes should only be a medium update instead of full. The
-function get_plane_info_type was refactored to not rely on dc
-state, but in the process the logic was unintentionally changed,
-which leads to screen corruption in some cases.
+Ensure raw frames are captured without header modification.
 
-[How]
- - add flag to tiling struct to avoid full update when necessary
-
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Reviewed-by: Aric Cyr <aric.cyr@amd.com>
-Signed-off-by: Joshua Aberback <joshua.aberback@amd.com>
-Signed-off-by: Chuanyu Tseng <chuanyu.tseng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Link: https://patch.msgid.link/04008426d6cd5de3995beefb98f9d13f35526c25.1770969275.git.ryder.lee@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have a comprehensive understanding of this commit. Let me compile
-the full analysis.
+Good. Now I have all the information needed. Let me compile my analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `drm/amd/display`
-- Action verb: "Restore" (indicating a regression fix — restoring
-  previous correct behavior)
-- Summary: Restoring full update for tiling change to linear to fix
-  screen corruption
-- Record: [drm/amd/display] [Restore] [Fix screen corruption by
-  restoring full update for tiling changes to linear]
+- Subsystem: `wifi: mt76: mt7996:` (MediaTek MT7996 WiFi driver)
+- Action verb: "Disable" — implies correcting a misconfiguration
+- Summary: Disable Rx header translation when monitor mode is active
+
+Record: [wifi: mt76: mt7996] [Disable] [Disable Rx header translation in
+monitor mode to ensure raw frames]
 
 **Step 1.2: Tags**
-- Reviewed-by: Nicholas Kazlauskas (AMD display core team) and Aric Cyr
-  (AMD display team lead)
-- Signed-off-by: Joshua Aberback (author), Chuanyu Tseng, Alex Deucher
-  (AMD GPU maintainer)
-- No Fixes: tag (expected for autosel candidates)
-- No Reported-by: tag
-- Record: Two reviews from AMD display engineers, signed off by GPU
-  maintainer
+- `Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>` — MediaTek
+  employee, regular mt76 contributor
+- `Link:` to patch.msgid.link (submission URL)
+- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` — mt76 subsystem
+  maintainer who merged it
+- No Fixes: tag, no Reported-by:, no Cc: stable
+
+Record: Author is a MediaTek contributor. Maintainer Felix Fietkau
+merged it.
 
 **Step 1.3: Commit Body**
-- Bug: Refactoring of `get_plane_info_type` unintentionally changed
-  logic, leading to **screen corruption** in some cases
-- Root cause: When tiling changes were refactored to not rely on dc
-  state, the default behavior was changed from "always full update" to
-  "conditional full update (only for non-linear)"
-- Fix: Add a flag to the tiling struct to explicitly control when to
-  avoid full update
-- Record: Screen corruption caused by accidental logic change during
-  refactoring. Failure mode is visual corruption.
+"Ensure raw frames are captured without header modification." This is
+terse but clearly states: without this fix, monitor mode frames are
+modified (translated from 802.11 to Ethernet format), which makes
+captured frames incorrect/useless.
+
+Record: [Bug: monitor mode captures frames with modified (translated)
+headers instead of raw 802.11 frames] [Symptom: packet capture tools see
+Ethernet headers instead of 802.11 headers] [Root cause: RX header
+translation not disabled when entering monitor mode]
 
 **Step 1.4: Hidden Bug Fix Detection**
-- This is explicitly described as fixing screen corruption. Not hidden
-  at all — it's a clear regression fix.
-- Record: Explicit bug fix for visual corruption regression.
+This IS a bug fix. "Ensure raw frames are captured" means they currently
+are NOT captured correctly. Monitor mode is broken without this fix — it
+produces unusable output.
+
+Record: [Yes, this is a clear bug fix. Monitor mode produces incorrectly
+formatted frames.]
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- `dc/core/dc.c`: ~20 lines removed (switch/case), ~6 lines added (flag-
-  based logic). Net -16 lines.
-- `dc/dc_hw_types.h`: 4 lines added (new `flags` sub-struct in
-  `dc_tiling_info`)
-- Functions modified: `get_plane_info_update_type()` in dc.c
-- Record: 2 files, ~24 lines changed, single-function surgical fix plus
-  struct addition
+- `mt7996/regs.h`: +3 lines (register and bit definitions)
+- `mt7996/main.c`: +2 lines (register write to disable/enable hdr_trans)
+- Total: +5 lines, 0 removed
+- Functions modified: `mt7996_set_monitor()` only
+- Scope: Single-file surgical fix (+ supporting register defines)
 
-**Step 2.2: Code Flow Change**
-- Before: Switch on `tiling->gfxversion`, only FULL update when swizzle
-  is non-linear. Linear tiling changes get MED only.
-- After: Check `tiling->flags.avoid_full_update_on_tiling_change`. If
-  false (default), always FULL update. If true, MED update.
-- Effect: Default is now always FULL update on tiling change (safe,
-  conservative behavior), matching the pre-refactoring default.
+Record: [2 files, +5 lines, 0 removed] [mt7996_set_monitor()] [Single-
+function surgical fix]
+
+**Step 2.2: Code Flow**
+Before: `mt7996_set_monitor()` sets `MT_DMA_DCR0_RXD_G5_EN`, updates rx
+filter, and sets sniffer mode — but does NOT disable hardware header
+translation.
+After: Additionally toggles `MT_MDP_DCR0_RX_HDR_TRANS_EN` — disabling it
+when monitor=enabled, enabling it when monitor=disabled.
+
+Record: [Before: hdr_trans stays enabled in monitor mode → corrupted
+captures. After: hdr_trans properly toggled with monitor mode]
 
 **Step 2.3: Bug Mechanism**
-- Category: Logic/correctness fix (restoring accidentally changed
-  behavior)
-- Original code (pre-03a593b1acbaf5): Always FULL unless
-  `dc->debug.skip_full_updated_if_possible`
-- Buggy code (03a593b1acbaf5): Only FULL for non-linear swizzle changes
-- Fix: Restore always-FULL as default
+Category: (g) Logic/correctness fix — missing hardware configuration
+step.
+The hardware's RX header translation converts 802.11 frame headers to
+Ethernet headers. In monitor mode, raw 802.11 frames must be captured
+unmodified. Not disabling this translation makes monitor mode output
+incorrect.
+
+Record: [Missing hardware configuration] [hdr_trans not toggled →
+monitor mode frames have wrong headers]
 
 **Step 2.4: Fix Quality**
-- Obviously correct: yes, the default-to-FULL is the safe/conservative
-  path
-- Minimal/surgical: yes, tightly scoped to one function + one struct
-- Regression risk: Potential for more FULL updates than necessary
-  (performance cost, not correctness)
-- Record: High quality fix, reviewed by two display engineers
+- Obviously correct: The mt7915 sibling driver does the exact same thing
+  (verified at `mt7915/main.c:496`)
+- Minimal/surgical: 2 lines of functional code + 3 register defs
+- Regression risk: Very low — only affects monitor mode path, standard
+  register toggle
+- No red flags
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+Record: [Obviously correct, mirrors mt7915. Minimal. Very low regression
+risk.]
+
+## PHASE 3: GIT HISTORY
 
 **Step 3.1: Blame**
-- Buggy switch/case logic introduced by `03a593b1acbaf5` (Dominik
-  Kaszewski, 2025-07-15) "Remove dc state from check_update"
-- This commit is present in 7.0 (confirmed via `git merge-base --is-
-  ancestor`)
-- First appeared in v6.19
+The `mt7996_set_monitor()` function was introduced by commit
+`69d54ce7491d04` ("wifi: mt76: mt7996: switch to single multi-radio
+wiphy") by Felix Fietkau, first appearing in v6.14-rc1. Before v6.14,
+monitor mode was handled inline in `mt7996_config()` — also missing
+hdr_trans disable.
 
-**Step 3.2: Fixes Tag**
-- No Fixes: tag present (expected for autosel candidate)
-- Manually identified: `03a593b1acbaf5` is the commit that introduced
-  the regression
+Record: [Buggy code introduced in 69d54ce7491d04, v6.14. Older code
+(v6.12 and before) also lacked this but had different code structure.]
+
+**Step 3.2: Fixes tag**
+No Fixes: tag present (expected).
 
 **Step 3.3: File History**
-- Related: `d637dd7288814` reverted `08a01ec306dbd` (another tiling fix
-  that caused blank screens)
-- Related: `bf95cf7f7a068` "Fix performance regression from full
-  updates" by same refactoring author
-- The display tiling update logic has been an active area of changes and
-  fixes
+Recent changes to main.c show numerous MLO/MLD fixes. The
+`cb423ddad0f6e` commit fixed a NULL deref in the same
+`mt7996_set_monitor()` function (moved `dev = phy->dev` after the NULL
+check). This prerequisite is already in the current tree.
+
+Record: [cb423ddad0f6e is a prerequisite that's already applied. No
+other dependencies found.]
 
 **Step 3.4: Author**
-- Joshua Aberback is a regular AMD display contributor (15+ commits to
-  display subsystem)
-- Previously authored `ce5057885ff70` "Clip rect size changes should be
-  full updates" — a very similar type of fix
-- Also reviewed the revert `d637dd7288814`
+Ryder Lee is a regular MediaTek contributor to mt76 with multiple
+accepted patches.
+
+Record: [Regular MediaTek contributor to the subsystem]
 
 **Step 3.5: Dependencies**
-- The commit requires `03a593b1acbaf5` to be present (it is — verified
-  as ancestor of HEAD)
-- The commit requires `45de10d2d9366` for the `LOCK_DESCRIPTOR_*` enum
-  values (also present)
-- No other dependencies found. The commit is standalone.
+The patch adds `MT_MDP_DCR0` and `MT_MDP_DCR0_RX_HDR_TRANS_EN` register
+definitions and uses them. Self-contained — no external dependencies
+beyond the function already existing.
+
+The function `mt7996_set_monitor()` only exists from v6.14+. For v6.14.y
+backport, the NULL deref fix `cb423ddad0f6e` would need to be present
+first (or the patch adapted to the pre-fix code).
+
+Record: [Self-contained. Applies to v6.14+ where mt7996_set_monitor()
+exists.]
 
 ## PHASE 4: MAILING LIST RESEARCH
 
 **Step 4.1-4.5:**
-- b4 dig could not find the patch on lore.kernel.org (AMD display
-  patches often go through internal drm-misc/amd trees)
-- lore.kernel.org blocked by Anubis anti-scraping
-- Given the AMD display team's internal review process (two Reviewed-by
-  tags from senior engineers + GPU maintainer sign-off), the patch went
-  through proper review
+Lore was not accessible due to anti-bot protection. The Link: in the
+commit points to `patch.msgid.link/04008426d6cd5de3995beefb98f9d13f35526
+c25.1770969275.git.ryder.lee@mediatek.com`. B4 dig did not find the
+commit (likely not in the local repo under that hash).
+
+Record: [UNVERIFIED: Could not access lore or b4 dig results. However,
+Felix Fietkau (mt76 maintainer) signed off on the merge, confirming
+maintainer review.]
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions Modified**
-- `get_plane_info_update_type()` — the only function modified in the
-  logic
+**Step 5.1: Functions modified**
+`mt7996_set_monitor()` — a static function in main.c.
 
 **Step 5.2: Callers**
-- Called from `det_surface_update()` →
-  `check_update_surfaces_for_stream()` →
-  `dc_check_update_surfaces_for_stream()`
-- This is the core display update path — called for every plane update
-  on AMD GPUs
+`mt7996_set_monitor()` is called from:
+- `mt7996_add_interface()` when `vif->type == NL80211_IFTYPE_MONITOR`
+  (line 501)
+- `mt7996_remove_interface()` when monitor mask changes (line 547)
 
-**Step 5.3-5.4: Call Chain**
-- Reachable from: DRM atomic commit → amdgpu_dm →
-  dc_check_update_surfaces_for_stream
-- This is a HOT PATH — triggered on every display update for AMD GPU
-  users
+These are standard mac80211 callbacks triggered when a user adds/removes
+a monitor interface (e.g., `iw dev wlan0 set type monitor`).
 
-**Step 5.5: Similar Patterns**
-- The `bundle` structs containing `dc_plane_info` are allocated with
-  `kzalloc`, ensuring the new `flags` field is zero-initialized on the
-  update path
+Record: [Called from mac80211 interface add/remove — standard user-
+triggered path]
+
+**Step 5.3: What it calls**
+`mt76_rmw_field()` — standard register read-modify-write. This is a
+well-tested primitive.
+
+**Step 5.4: Reachability**
+User creates a monitor interface → mac80211 → `mt7996_add_interface()` →
+`mt7996_set_monitor()`. Fully reachable from userspace.
+
+Record: [Reachable via standard WiFi monitor mode interface creation]
+
+**Step 5.5: Similar patterns**
+The mt7915 driver has the exact same pattern at `mt7915/main.c:496`:
+
+```494:495:drivers/net/wireless/mediatek/mt76/mt7915/main.c
+                mt76_rmw_field(dev, MT_DMA_DCR0(band),
+MT_MDP_DCR0_RX_HDR_TRANS_EN,
+                               !dev->monitor_mask);
+```
+
+This confirms the fix is correct and needed — the mt7996 was simply
+missing this step.
+
+Record: [mt7915 already has this exact pattern. mt7996 was missing it.]
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy Code in Stable**
-- Introduced in `03a593b1acbaf5` (v6.19)
-- Present in 7.0 tree (verified)
-- NOT present in 6.6.y or earlier stable trees (pre-dates the
-  regression)
+**Step 6.1: Does buggy code exist in stable trees?**
+- `mt7996_set_monitor()` was introduced in v6.14 (commit
+  `69d54ce7491d04`)
+- Does NOT exist in v6.12 or v6.13 (confirmed via `git show v6.12:...`
+  and `git show v6.13:...`)
+- The older monitor code path (in `mt7996_config()`) also lacked
+  hdr_trans disable, but has different structure
+- Applicable stable trees: v6.14.y and later (v6.14 has active stable
+  releases through v6.14.11)
 
-**Step 6.2: Backport Complications**
-- The diff context lines match the current 7.0 code exactly — clean
-  apply expected
-- The `elevate_update_type` 3-argument signature matches (introduced by
-  `45de10d2d9366`)
-- The `dc_tiling_info` struct matches (revert `d637dd7288814` already
-  applied)
+Record: [Buggy code exists in 6.14.y. Older trees have different code
+structure with same bug.]
 
-**Step 6.3: Related Fixes in Stable**
-- No related fix for this specific issue found in stable
+**Step 6.2: Backport complications**
+- For 6.14.y: The `dev` initialization is before the NULL check
+  (pre-`cb423ddad0f6e`), but the patch insertion point is identical.
+  Minor context difference but patch should apply or need trivial
+  adjustment.
+- `MT_MDP_DCR0` register definitions don't exist in 6.14.y's regs.h
+  (confirmed), so the register defs must come with the patch (they do).
 
-## PHASE 7: SUBSYSTEM CONTEXT
+Record: [6.14.y: Near-clean apply, minor context difference from NULL
+deref fix]
 
-**Step 7.1:**
-- Subsystem: GPU/Display (drm/amd/display)
-- Criticality: IMPORTANT — affects all AMD GPU users
-- Record: AMD GPU display driver, widely used on desktops and laptops
+**Step 6.3: Related fixes already in stable**
+No evidence of a different fix for this same issue in any stable tree.
 
-**Step 7.2:**
-- Very active subsystem with frequent changes
-- The tiling update logic area has seen multiple fixes recently
+Record: [No prior fix found]
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1:** WiFi driver (mt76/mt7996) — IMPORTANT subsystem. MT7996 is
+MediaTek's WiFi 7 chipset used in access points and routers.
+
+**Step 7.2:** Very active subsystem — 73 changes between v6.14 and v7.0
+in this single file.
+
+Record: [IMPORTANT subsystem, very active development]
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-- All AMD GPU users (Radeon RX, integrated APUs) using this kernel
-  version
-- Particularly affects GFX9+ hardware where tiling transitions occur
+**Step 8.1: Affected users**
+All users of MT7996/MT7992 WiFi hardware who use monitor mode for packet
+capture or WiFi analysis.
 
-**Step 8.2: Trigger Conditions**
-- Tiling mode changes to linear (e.g., during mode switches, overlay
-  plane changes)
-- Can be triggered during normal desktop usage
+**Step 8.2: Trigger conditions**
+Trigger: Enable monitor mode on an mt7996 device. Every user of monitor
+mode is affected. Common operation for network administrators, WiFi
+developers, and security researchers.
 
-**Step 8.3: Failure Mode**
-- **Screen corruption** — CRITICAL visual artifact
-- Severity: HIGH (screen corruption is visible and disruptive, though
-  not data-corrupting)
+**Step 8.3: Failure mode severity**
+Not a crash — but monitor mode produces incorrect/corrupted frame
+captures. The feature is essentially non-functional. Severity: MEDIUM-
+HIGH (complete functional failure of a core WiFi feature).
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Fixes screen corruption for AMD GPU users — HIGH
-- RISK: ~24 lines changed, adds a struct field (low risk), default is
-  conservative FULL update path. May cause minor performance overhead
-  from extra FULL updates — LOW
-- Ratio: HIGH benefit / LOW risk = FAVORABLE
+**Step 8.4: Risk-benefit**
+- BENEFIT: HIGH — fixes completely broken monitor mode on mt7996
+  hardware
+- RISK: VERY LOW — 2 lines toggling a hardware register bit, same
+  pattern as mt7915, only affects monitor mode code path
+- Ratio: Very favorable
 
-## PHASE 9: SYNTHESIS
+Record: [Benefit HIGH, Risk VERY LOW. 5-line patch fixing broken monitor
+mode.]
 
-**Step 9.1: Evidence**
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: Evidence compilation**
+
 FOR backporting:
-- Fixes screen corruption (serious visual bug)
-- Root cause clearly identified: logic change during refactoring
-  (03a593b1acbaf5)
-- Small, surgical fix (~24 lines across 2 files)
-- Reviewed by two AMD display engineers (Kazlauskas, Cyr)
-- Signed off by AMD GPU maintainer (Deucher)
-- Standalone fix (no dependencies beyond what's in tree)
-- Would apply cleanly to 7.0
-- Default behavior is conservative (always FULL update)
-- Author has track record of similar valid fixes (ce5057885ff70)
+- Fixes a real functional bug: monitor mode captures are corrupted
+- Small, surgical fix: +5 lines total (2 functional + 3 register defs)
+- Obviously correct: mirrors mt7915 sibling driver behavior
+- Maintainer-reviewed: Felix Fietkau signed off
+- Author is a MediaTek contributor who knows the hardware
+- Low regression risk: only affects monitor mode path
+- Reachable from userspace via standard WiFi operations
 
 AGAINST backporting:
-- Adds a new struct field (flags.avoid_full_update_on_tiling_change) —
-  minor struct extension
-- The flag is never set to true in this tree, making it effectively dead
-  code
-- A simpler fix (just always elevate to FULL without adding the flag)
-  could have been used
-- Potential (minor) performance regression from more FULL updates
+- No crash/security/data corruption — "just" broken monitor mode output
+- No Fixes: tag, no Reported-by: (no evidence of user complaints)
+- Only applies to v6.14+ (limited stable tree scope)
+- Terse commit message doesn't call this a "fix"
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? YES — two reviews, conservative default
-2. Fixes a real bug? YES — screen corruption
-3. Important issue? YES — screen corruption on AMD GPUs
-4. Small and contained? YES — ~24 lines, 2 files, 1 function
-5. No new features or APIs? The flag is new but internal-only and serves
-   the fix
-6. Can apply to stable? YES — context matches exactly
+**Step 9.2: Stable rules checklist**
+1. Obviously correct and tested? YES — mirrors mt7915, accepted by
+   maintainer
+2. Fixes a real bug? YES — monitor mode doesn't work correctly
+3. Important issue? MEDIUM-HIGH — complete functional failure of monitor
+   mode
+4. Small and contained? YES — 5 lines, 1 function
+5. No new features/APIs? CORRECT — no new features
+6. Can apply to stable? YES for v6.14.y (with possible minor context
+   adaptation)
 
-**Step 9.3: Exception Categories**
-- Not an exception category; this is a standard bug fix
+**Step 9.3: Exception categories**
+This is a hardware configuration bug fix, not an exception category.
 
 **Step 9.4: Decision**
-This is a clear regression fix for screen corruption caused by
-accidental logic change during refactoring. The fix is small, well-
-reviewed, standalone, and defaults to the safe conservative behavior.
-The struct field addition is internal-only and zero-initialized.
+This is a small, obviously correct bug fix that restores monitor mode
+functionality on MT7996 hardware. The fix mirrors what the mt7915 driver
+already does, is reviewed by the subsystem maintainer, and has very low
+regression risk. While it doesn't fix a crash, it fixes complete
+functional breakage of a core WiFi feature (monitor mode).
 
-## Verification
-
-- [Phase 1] Parsed tags: Reviewed-by: Nicholas Kazlauskas, Reviewed-by:
-  Aric Cyr, three SOBs including Alex Deucher
-- [Phase 2] Diff analysis: switch/case (20 lines) replaced with flag-
-  check (6 lines) in `get_plane_info_update_type()`, plus 4-line struct
-  addition
-- [Phase 3] git blame: Buggy code introduced by `03a593b1acbaf5`
-  (2025-07-15, v6.19), confirmed in 7.0 tree via `git merge-base --is-
-  ancestor`
-- [Phase 3] git show 03a593b1acbaf5: Confirmed refactoring replaced
-  `dc->debug.skip_full_updated_if_possible` check with per-gfxversion
-  switch, changing default from FULL to conditional
-- [Phase 3] Related commits: `d637dd7288814` (revert of another tiling
-  fix), `bf95cf7f7a068` (performance regression fix in same area)
-- [Phase 3] Author check: Joshua Aberback has 15+ commits to AMD
-  display, authored similar fix `ce5057885ff70`
-- [Phase 4] b4 dig: Could not find original submission (AMD patches
-  often go through internal trees)
-- [Phase 4] lore.kernel.org: Blocked by Anubis protection
-- [Phase 5] Callers traced: `get_plane_info_update_type()` →
-  `det_surface_update()` → `dc_check_update_surfaces_for_stream()` — hot
-  path for all AMD display updates
-- [Phase 5] Bundle allocations at lines 3364 and 9949 both use kzalloc,
-  ensuring flags field is zero-initialized
-- [Phase 6] `git tag --contains 03a593b1acbaf5`: buggy code in v6.19 and
-  7.0 only
-- [Phase 6] Current tree code at lines 2748-2775 matches diff "before"
-  context exactly — clean apply
-- [Phase 6] `elevate_update_type` signature (3 args) matches at line 151
-- [Phase 8] Failure mode: screen corruption on tiling change to linear,
-  severity HIGH
-- UNVERIFIED: Exact user reproduction scenario (commit message says
-  "some cases" without specifics)
-- UNVERIFIED: Whether any downstream code eventually sets the flag to
-  true (but irrelevant — default false is the safe path)
+**Verification:**
+- [Phase 1] Parsed tags: Signed-off-by from MediaTek employee and mt76
+  maintainer. No Fixes/Reported-by.
+- [Phase 2] Diff analysis: +2 lines in mt7996_set_monitor() toggling
+  MT_MDP_DCR0_RX_HDR_TRANS_EN, +3 lines register definitions in regs.h
+- [Phase 3] git blame: mt7996_set_monitor() introduced in 69d54ce7491d04
+  (v6.14-rc1)
+- [Phase 3] Verified mt7996_set_monitor() does NOT exist in v6.12 or
+  v6.13 (git show confirmed)
+- [Phase 3] cb423ddad0f6e is a prerequisite NULL deref fix already in
+  tree
+- [Phase 4] UNVERIFIED: Lore/b4 not accessible due to anti-bot
+  protection
+- [Phase 5] grep confirmed mt7915/main.c:496 has identical hdr_trans
+  disable pattern
+- [Phase 5] Callers: mt7996_add_interface() and
+  mt7996_remove_interface() — standard mac80211 callbacks
+- [Phase 6] v6.14 regs.h confirmed: MT_MDP_DCR0 not defined, MT_MDP_DCR2
+  exists at line 136
+- [Phase 6] v6.14.y is the earliest applicable stable tree
+- [Phase 7] Active subsystem: 73 commits between v6.14 and v7.0 in
+  main.c
+- [Phase 8] Failure mode: monitor mode captures have translated (wrong)
+  headers — feature non-functional
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/core/dc.c     | 26 ++++----------------
- drivers/gpu/drm/amd/display/dc/dc_hw_types.h |  4 +++
- 2 files changed, 9 insertions(+), 21 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 2 ++
+ drivers/net/wireless/mediatek/mt76/mt7996/regs.h | 3 +++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 47064e9bc08ad..7107529e90295 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -2749,28 +2749,12 @@ static struct surface_update_descriptor get_plane_info_update_type(const struct
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index f16135f0b7f94..110b9a32e5ec8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -472,6 +472,8 @@ static void mt7996_set_monitor(struct mt7996_phy *phy, bool enabled)
  
- 	if (memcmp(tiling, &u->surface->tiling_info, sizeof(*tiling)) != 0) {
- 		update_flags->bits.swizzle_change = 1;
--		elevate_update_type(&update_type, UPDATE_TYPE_MED, LOCK_DESCRIPTOR_STREAM);
+ 	mt76_rmw_field(dev, MT_DMA_DCR0(phy->mt76->band_idx),
+ 		       MT_DMA_DCR0_RXD_G5_EN, enabled);
++	mt76_rmw_field(dev, MT_MDP_DCR0,
++		       MT_MDP_DCR0_RX_HDR_TRANS_EN, !enabled);
+ 	mt7996_phy_set_rxfilter(phy);
+ 	mt7996_mcu_set_sniffer_mode(phy, enabled);
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
+index e48e0e575b646..393faae2d52b6 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
+@@ -159,6 +159,9 @@ enum offs_rev {
+ #define MT_MDP_BASE				0x820cc000
+ #define MT_MDP(ofs)				(MT_MDP_BASE + (ofs))
  
--		switch (tiling->gfxversion) {
--		case DcGfxVersion9:
--		case DcGfxVersion10:
--		case DcGfxVersion11:
--			if (tiling->gfx9.swizzle != DC_SW_LINEAR) {
--				update_flags->bits.bandwidth_change = 1;
--				elevate_update_type(&update_type, UPDATE_TYPE_FULL, LOCK_DESCRIPTOR_GLOBAL);
--			}
--			break;
--		case DcGfxAddr3:
--			if (tiling->gfx_addr3.swizzle != DC_ADDR3_SW_LINEAR) {
--				update_flags->bits.bandwidth_change = 1;
--				elevate_update_type(&update_type, UPDATE_TYPE_FULL, LOCK_DESCRIPTOR_GLOBAL);
--			}
--			break;
--		case DcGfxVersion7:
--		case DcGfxVersion8:
--		case DcGfxVersionUnknown:
--		default:
--			break;
-+		if (tiling->flags.avoid_full_update_on_tiling_change) {
-+			elevate_update_type(&update_type, UPDATE_TYPE_MED, LOCK_DESCRIPTOR_STREAM);
-+		} else {
-+			update_flags->bits.bandwidth_change = 1;
-+			elevate_update_type(&update_type, UPDATE_TYPE_FULL, LOCK_DESCRIPTOR_GLOBAL);
- 		}
- 	}
- 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
-index cfa569a7bff1b..face23e0559d5 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
-@@ -436,6 +436,10 @@ enum dc_gfxversion {
- 			enum swizzle_mode_addr3_values swizzle;
- 		} gfx_addr3;/*gfx with addr3 and above*/
- 	};
++#define MT_MDP_DCR0				MT_MDP(0x800)
++#define MT_MDP_DCR0_RX_HDR_TRANS_EN		BIT(19)
 +
-+	struct {
-+		bool avoid_full_update_on_tiling_change;
-+	} flags;
- };
+ #define MT_MDP_DCR2				MT_MDP(0x8e8)
+ #define MT_MDP_DCR2_RX_TRANS_SHORT		BIT(2)
  
- /* Rotation angle */
 -- 
 2.53.0
 
