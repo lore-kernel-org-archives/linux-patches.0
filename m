@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB0D3C13E9;
-	Mon, 20 Apr 2026 13:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D223A63E8;
+	Mon, 20 Apr 2026 13:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691592; cv=none; b=Y2qd6MI/eWkoAyYAZofXTrjAo/RSLgN4c9aqCB7siNsjrPcygz8pCPBMc1oNokL5uBCJ9d7QU7kB0/iWhU1kCUfXsHV6xNGpvRlE2hataM1/HdD2bdmWCa7MlVv0KsFJonE2sOI93eadNvLrvKUSRKZG7CLJ9yCxmiEAc3goPUI=
+	t=1776691594; cv=none; b=W+q/TrH1Ng5ZyxMJ/YTNC4Y+kVdu3tRdtJ8ffMPtOWZfVDX/Q8EW9tYkb9sDSmne/L1dnejWR76Kxaryv89nvUSc4bmT0e8pdqDtTbK2ASIVJrPJtYhr02j0YT2KJyZSnC9XeAM7BK3D36PD3f89mF9hNAUGKzwtQlgK6jak+uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691592; c=relaxed/simple;
-	bh=8W9KPgsSAYJmRhFtq/1x0/cV+rNs9gHlmHkDL8Wy/x0=;
+	s=arc-20240116; t=1776691594; c=relaxed/simple;
+	bh=wLTZhSqR6+iIGqqUoKmdfZoxBhEtjG1NaYbhHbNN0a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVe5KxBDiVAFsQ7LJ1U83seslDtmEMe6tasg1/ffpee4w54RE9s8M8fv/BR2aB4jg7ZSyXISAgqzWTHkhsgN2zHljv8N2BFccMj2YGeOVkpQcCJUux32NLG9V37im93aQ3hJcuUK7V7okLK9gzqxNyUqbcF6TrEO1v43W3uLHVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jng+qS7c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bYvBj2Z0blq6EEM1kh+wkmTewT56gfJoZtAgqVDycTJi7MUsuRQrHYF85Ih4rwEg97yZxezt6F0H6g3og/ElDSEAHgiYbvxcB+BAmTfAcOt8EKLjXH1IjVVPuDzM8a1wyIN004y6vpZ+o/35TRU4UBt0MbA16BmLvlymaxQDN/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dn9QGgbW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jng+qS7c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B64BC2BCB4;
-	Mon, 20 Apr 2026 13:26:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dn9QGgbW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0876C19425;
+	Mon, 20 Apr 2026 13:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691592;
-	bh=8W9KPgsSAYJmRhFtq/1x0/cV+rNs9gHlmHkDL8Wy/x0=;
+	s=k20201202; t=1776691594;
+	bh=wLTZhSqR6+iIGqqUoKmdfZoxBhEtjG1NaYbhHbNN0a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jng+qS7c5Bvf3iHdlas6DToCfPgQbMgqM2yUpgDVsiAcftzeaaYQQnFMRsjCw6ZLr
-	 M/POHwxPyJfIGoaixAzx4AcKvMd9m1wMD1PUvWGMX8t49A/eJklp0YpRcoyQubS559
-	 41wCWxKdNDTfSm/jL3snLZ4q0muVzCb7S4AUyriA5xRctetUsxHWVoI4fduSeS1Iyx
-	 NDjSlY2Zo6UrfaqrUdokLdf5B9CVt7AKDbR/2XEhsij+9LFvtiyqk83vpJR2UY0aAc
-	 bLPa7EAH5jFSMZ7HqW5Dl2SnWpTZhSzt16LRFG7I5JiRehIbjYGL6flrU4ne7mvUco
-	 SLVjsvwfhiuMg==
+	b=dn9QGgbWkI27tbZ0droPAldajP8QNGjCS1mVi8nJmAqveOIcLjQRTC8yInb2d1t8i
+	 FZK8LVvssVDD92HJEHk3nmTVhaTmwq338jerKaxfGokkqCUby45RVHZatW/shA8Q3R
+	 ySqxcr9pzBzkYChEQhJPey3Y5HZAz1w+QKzRULTZIvx7pZnQpQmA3FE+w4a2E1QQfe
+	 dov/YNnluz+ywMEtqSO+ARjUYcHyMzql07ujydFkk9U3SS86++EPyRcj5gSip+c+oo
+	 5uEOQEbrDf5nNijI77kVLK5OSanKBoUhtIh4I8ruFaxZVViZv0UHAn5SMmvzPbq7z3
+	 B+Rdb4ku65kwA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sean Wang <sean.wang@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Hawking Zhang <Hawking.Zhang@amd.com>,
+	Likun Gao <Likun.Gao@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 7.0-6.12] Bluetooth: btmtk: add MT7902 MCU support
-Date: Mon, 20 Apr 2026 09:18:34 -0400
-Message-ID: <20260420132314.1023554-120-sashal@kernel.org>
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-6.6] drm/amdgpu: fix shift-out-of-bounds when updating umc active mask
+Date: Mon, 20 Apr 2026 09:18:35 -0400
+Message-ID: <20260420132314.1023554-121-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -55,370 +54,327 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Wang <sean.wang@mediatek.com>
+From: Hawking Zhang <Hawking.Zhang@amd.com>
 
-[ Upstream commit aab25984e55972e53f3e58821cb85a7101876056 ]
+[ Upstream commit 1394a4926f4bcff0dc6ac6deea5beeb2844297f0 ]
 
-Add MT7902 device ID and firmware filename to enable MCU firmware
-loading.
+UMC node_inst_num can exceed 32, causing
+(1 << node_inst_num) to shift a 32-bit int
+out of bounds
 
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Likun Gao <Likun.Gao@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information for a thorough analysis. Let me compile my
-findings.
+Now I have all the information needed for a comprehensive analysis. Let
+me compile the findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: [Bluetooth: btmtk] [add] [MT7902 MCU support - adds device ID
-and firmware filename for MT7902 chip]
+**Step 1.1: Subject Line**
+- Subsystem: `drm/amdgpu`
+- Action verb: "fix"
+- Summary: Fixes shift-out-of-bounds when computing UMC active mask
+Record: [drm/amdgpu] [fix] [shift-out-of-bounds in UMC active mask
+calculation]
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Signed-off-by: Sean Wang <sean.wang@mediatek.com> - Author, MediaTek
-  employee, regular Bluetooth/WiFi contributor
-- Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com> -
-  Bluetooth subsystem maintainer, applied the patch
-- No Fixes: tag (expected for this type of commit)
-- No Reported-by: (this is hardware enablement, not a bug report)
-- No Cc: stable (expected)
+**Step 1.2: Tags**
+- Signed-off-by: Hawking Zhang (author), Alex Deucher (maintainer)
+- Reviewed-by: Likun Gao
+- No Fixes: tag, no Reported-by:, no Cc: stable (expected for a
+  candidate commit)
+Record: Patch reviewed by AMD colleague, signed off by amdgpu maintainer
+Alex Deucher. No bug reporter or explicit stable nomination.
 
-Record: Author is MediaTek developer. Applied by Bluetooth subsystem
-maintainer.
+**Step 1.3: Commit Body**
+The commit message is concise: `node_inst_num` can exceed 32, causing
+`(1 << node_inst_num)` to shift a 32-bit int out of bounds. This is
+undefined behavior in C.
+Record: Bug = shift of a 32-bit `1` by >= 32 positions. Symptom =
+undefined behavior, incorrect computation of `umc.active_mask`. Root
+cause = using `int` literal `1` instead of `1ULL` for a shift that can
+reach 32 or more.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-The commit message is straightforward: "Add MT7902 device ID and
-firmware filename to enable MCU firmware loading." This is new hardware
-enablement for the MT7902 Bluetooth chip.
-
-Record: No bug description - this is a device ID addition for hardware
-enablement.
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Without this patch, MT7902 devices that are matched by the vendor
-wildcard USB entry `USB_VENDOR_AND_INTERFACE_INFO(0x0e8d, 0xe0, 0x01,
-0x01)` will hit the `default:` case in `btmtk_usb_setup()` and return
--ENODEV with "Unsupported hardware variant". This effectively makes the
-hardware non-functional.
-
-Record: This is a hardware enablement commit, not a hidden bug fix. But
-it prevents -ENODEV for real hardware.
+**Step 1.4: Hidden Bug Fix Detection**
+Not hidden at all - the subject says "fix" and the bug mechanism is
+clearly stated.
+Record: This is a straightforward bug fix for UB.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: INVENTORY THE CHANGES**
-- `drivers/bluetooth/btmtk.h`: +1 line (FIRMWARE_MT7902 define)
-- `drivers/bluetooth/btmtk.c`: +1 line (case 0x7902: in switch)
-- Total: 2 lines added, 0 removed
-- Functions modified: `btmtk_usb_setup()` (new case label in switch)
-- Scope: single-file surgical addition
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c`
+- 2 lines changed: `uint32_t` -> `u64` (variable type) and `1` -> `1ULL`
+  (shift operand)
+- Function modified: `amdgpu_discovery_read_from_harvest_table()`
+Record: Single-file, 2-line surgical fix. Scope is minimal.
 
-Record: 2 files, 2 lines added, scope is minimal.
+**Step 2.2: Code Flow Change**
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- Before: `btmtk_usb_setup()` switch on dev_id has cases for 0x7663,
-  0x7668, 0x7922, 0x7925, 0x7961. Device ID 0x7902 falls to `default:`
-  -> returns -ENODEV.
-- After: 0x7902 falls through to the same path as 0x7922/0x7925/0x7961,
-  which calls `btmtk_fw_get_filename()` to generate firmware name and
-  `btmtk_setup_firmware_79xx()` to load it.
+Hunk 1 (line 777 equivalent):
+- Before: `uint32_t umc_harvest_config = 0;` (32-bit variable)
+- After: `u64 umc_harvest_config = 0;` (64-bit variable)
+- Purpose: Allow storing harvest config bits for node instances >= 32
 
-Record: Adds a case label to fall through to existing firmware loading
-code. No new execution paths.
+Hunk 2 (line 833):
+- Before: `((1 << adev->umc.node_inst_num) - 1)` — `1` is `int` (32
+  bits); shifting by >= 32 is UB
+- After: `((1ULL << adev->umc.node_inst_num) - 1ULL)` — `1ULL` is
+  `unsigned long long` (64 bits); safe for node_inst_num up to 63
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Category: Hardware workaround / Device ID addition.
-The change adds chip ID 0x7902 to a switch statement and a firmware
-filename define. The firmware name generation function
-`btmtk_fw_get_filename()` already handles 0x7902 correctly via its
-`else` branch, producing `"mediatek/BT_RAM_CODE_MT7902_1_%x_hdr.bin"`.
+Record: The fix widens both the intermediate shift result and the
+accumulation variable to 64 bits, eliminating the UB.
 
-Record: Device ID addition pattern. Existing code infrastructure handles
-0x7902 without changes.
+**Step 2.3: Bug Mechanism**
+This is category (f) **type/correctness fix** — specifically, a shift-
+out-of-bounds / undefined behavior fix. In C, shifting an `int` by >=
+its bit width (32) is undefined behavior per the standard. The result is
+unpredictable and could yield an incorrect `active_mask`, which is used
+to track which UMC (memory controller) instances are active.
+Record: [Type/UB bug] [32-bit shift by >= 32 causes UB; fix uses 64-bit
+types]
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Obviously correct: new case label falls through to identical handling
-  as 0x7922/0x7925/0x7961
-- Minimal and surgical: 2 lines
-- Regression risk: essentially zero - this code path was unreachable
-  before (would hit default case)
-- No red flags
-
-Record: Trivially correct, zero regression risk.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: BLAME THE CHANGED LINES**
-- `case 0x7922:` introduced by Chris Lu in 5c5e8c52e3cafa (2024-07-04) -
-  the btmtk refactoring commit
-- `case 0x7961:` introduced by Hao Qin in a7208610761ae9 (2025-01-10) -
-  same pattern of adding device ID
-- The switch statement and firmware loading infrastructure have been in
-  the tree since mid-2024
-
-Record: Code infrastructure stable since mid-2024. Existing device IDs
-added via same pattern.
-
-**Step 3.2: FOLLOW THE FIXES TAG**
-No Fixes: tag present (expected for device ID additions).
-
-**Step 3.3: CHECK FILE HISTORY**
-Recent changes to btmtk.c are mostly refactoring (btusb -> btmtk moves)
-and bug fixes (UAF, shutdown timeout). The device ID infrastructure is
-stable.
-
-Record: Standalone commit, no prerequisites needed.
-
-**Step 3.4: CHECK AUTHOR**
-Sean Wang is a MediaTek developer, regular contributor to both Bluetooth
-and WiFi subsystems. Multiple recent commits in drivers/bluetooth/.
-
-Record: Author is domain expert from the hardware vendor.
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-This is patch 2/4 in a series, but it is standalone for USB devices. The
-other patches add SDIO device ID (1/4), USB VID/PID for third-party
-module (3/4), and SDIO support code (4/4). This patch is sufficient for
-USB devices matched by the vendor wildcard
-`USB_VENDOR_AND_INTERFACE_INFO(0x0e8d, ...)`.
-
-Record: Standalone for USB devices via vendor wildcard matching.
+**Step 2.4: Fix Quality**
+- Obviously correct: widening types to match the range of possible
+  values is textbook UB fix
+- Minimal/surgical: 2 lines
+- Regression risk: extremely low — only changes type widths;
+  `active_mask` is already `unsigned long` (64 bits on 64-bit systems)
+Record: Fix is obviously correct, minimal, with near-zero regression
+risk.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 3: GIT HISTORY
 
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Found via spinics.net. This is [PATCH 2/4] in Sean Wang's MT7902 series
-posted 2026-02-19. The series includes:
-1. mmc: sdio: add MediaTek MT7902 SDIO device ID
-2. Bluetooth: btmtk: add MT7902 MCU support (THIS commit)
-3. Bluetooth: btusb: Add new VID/PID 13d3/3579 for MT7902
-4. Bluetooth: btmtk: add MT7902 SDIO support
+**Step 3.1: Blame**
+From git blame, the buggy code at lines 777 and 833 was introduced by
+commit `2b595659d5aec7` (Candice Li, Feb 2023) — "drm/amdgpu: Support
+umc node harvest config on umc v8_10". This commit was first included in
+v6.4.
+Record: Bug introduced in v6.4, present in all stable trees since
+(6.6.y, 6.12.y, etc.).
 
-Record: Part of 4-patch series. This specific patch is standalone for
-USB via vendor wildcard.
+**Step 3.2: Original Buggy Commit**
+Verified via `git merge-base --is-ancestor`: commit 2b595659d5aec7 is
+NOT in v6.1 or v6.3, but IS in v6.4 and v6.6.
+Record: Bug exists in stable trees 6.4+, 6.6+. NOT in 6.1.y.
 
-**Step 4.2: CHECK WHO REVIEWED**
-Applied by Luiz Augusto von Dentz, the Bluetooth subsystem maintainer.
-Sent to linux-bluetooth and linux-mediatek mailing lists.
+**Step 3.3: File History**
+Recent changes to the file are mostly kmalloc refactoring (tree-wide
+changes) and an IP block addition. No conflicting fixes for this
+specific issue.
+Record: Standalone fix, no prerequisites needed.
 
-Record: Applied by subsystem maintainer.
+**Step 3.4: Author**
+Hawking Zhang is a prolific AMD GPU contributor with 10+ recent commits
+to the amdgpu subsystem, working on IP blocks, initialization, and RAS
+features. He is an AMD engineer and a core contributor to this
+subsystem.
+Record: Author is a core amdgpu developer at AMD.
 
-**Step 4.3: SEARCH FOR BUG REPORT**
-No specific bug report - this is proactive hardware enablement by the
-chip vendor.
+**Step 3.5: Dependencies**
+The diff context shows `amdgpu_discovery_get_table_info()` and `struct
+table_info *info`, which are NOT present in the 7.0 tree (which uses
+`struct binary_header *bhdr` and direct access). The actual fix lines
+(`uint32_t` -> `u64` and `1` -> `1ULL`) are present in both versions.
+Record: Minor context differences for backport, but the fix itself is
+trivially adaptable.
 
-**Step 4.4: RELATED PATCHES**
-A separate patch from OnlineLearningTutorials also attempted to add
-MT7902 USB IDs (with the same case 0x7902 addition). This confirms real
-user demand for MT7902 support.
+---
 
-Record: Multiple independent submissions for MT7902 support indicate
-real hardware availability.
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.5: STABLE MAILING LIST**
-No specific stable discussion found.
+**Step 4.1-4.2:** b4 dig could not find the original buggy commit on
+lore (AMD GPU patches often go through freedesktop.org/amd-gfx list
+rather than lore). Web search found related shift-out-of-bounds fixes in
+the amdgpu subsystem but not the exact commit being analyzed — it may be
+very recent (2026).
+Record: Could not find the exact patch thread. This is common for AMD
+GPU patches which flow through the amd-gfx list.
+
+**Step 4.3-4.5:** No bug reports or stable-specific discussions found
+for this exact issue.
+Record: No external bug reports found.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: KEY FUNCTIONS**
-Modified: `btmtk_usb_setup()` - only a new case label added.
+**Step 5.1: Key Functions**
+Modified function: `amdgpu_discovery_read_from_harvest_table()`
 
-**Step 5.2: TRACE CALLERS**
-`btmtk_usb_setup()` <- `btusb_mtk_setup()` <- assigned to `hdev->setup`
-for all BTUSB_MEDIATEK devices. Called during device initialization for
-every MediaTek Bluetooth USB device.
+**Step 5.2-5.3: Impact Surface**
+`adev->umc.active_mask` is used by:
+1. `LOOP_UMC_NODE_INST()` macro — iterates over active UMC nodes for RAS
+   error counting
+2. `amdgpu_umc_loop_all_aid()` — iterates over UMC instances for RAS
+   queries
+3. `amdgpu_psp.c` — passed to PSP firmware as `active_umc_mask`
 
-**Step 5.3-5.4: CALL CHAIN**
-USB device probes -> btusb_probe() -> sets hdev->setup = btusb_mtk_setup
--> HCI core calls hdev->setup() -> btusb_mtk_setup() ->
-btmtk_usb_setup() -> switch(dev_id). This is a standard device
-initialization path, triggered on every device connection.
+An incorrect `active_mask` could cause:
+- Missing or incorrect RAS error reporting
+- Wrong UMC instances being queried for errors
+- Incorrect firmware configuration
+Record: active_mask affects RAS error handling and firmware
+configuration.
 
-**Step 5.5: SIMILAR PATTERNS**
-The same pattern is used for MT7922, MT7925, MT7961 - all case labels in
-the same switch with identical fall-through behavior.
-
----
-
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE?**
-The switch statement and all 79xx case labels exist in the 7.0 tree. The
-firmware loading infrastructure is present. Only the 0x7902 case is
-missing.
-
-Record: Infrastructure exists in stable. Only the device ID is missing.
-
-**Step 6.2: BACKPORT COMPLICATIONS**
-The diff context shows a retry mechanism (`BTMTK_FIRMWARE_DL_RETRY`)
-that doesn't exist in the 7.0 tree. The patch will need minor context
-adjustment for the btmtk.c hunk. The btmtk.h hunk applies cleanly.
-
-Record: Minor context conflict expected; trivial manual resolution
-needed.
-
-**Step 6.3: RELATED FIXES IN STABLE**
-No MT7902 support exists in stable at all.
+**Step 5.4: Call Chain**
+`amdgpu_discovery_read_from_harvest_table()` is called during GPU
+initialization (probe path). This is a one-time setup function, but its
+result persists for the lifetime of the driver.
+Record: Called during init, result affects ongoing UMC/RAS operations.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 7.1: SUBSYSTEM CRITICALITY**
-Bluetooth (drivers/bluetooth/) - IMPORTANT subsystem. Bluetooth is
-widely used in laptops, phones, and IoT devices.
+**Step 6.1:** The buggy code was introduced in v6.4 (commit
+2b595659d5aec7). It exists in stable trees 6.6.y and later.
+Record: Bug exists in 6.6.y, 6.12.y, and 7.0.y.
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
-Actively developed with regular commits. Device ID additions are a
-common pattern.
+**Step 6.2:** The patch context differs slightly between the diff and
+the 7.0 tree (helper function refactoring). The actual fix lines apply
+conceptually with minor context adjustment.
+Record: May need minor context adaptation for clean apply.
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1:** drm/amdgpu is an IMPORTANT subsystem (widely used GPU
+driver on AMD hardware).
+**Step 7.2:** Very actively developed.
+Record: [IMPORTANT] [Very active subsystem]
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: WHO IS AFFECTED**
-Users with MT7902 Bluetooth hardware. The MT7902 is a MediaTek wireless
-chip used in laptops and embedded devices. It appears to be a
-recent/current-generation chip.
+**Step 8.1:** Affects users of AMD GPUs with >= 32 UMC node instances
+(large server/datacenter GPUs like MI300 series, where `node_inst_num`
+can reach 32+).
+Record: Driver-specific, primarily affects large AMD datacenter GPUs.
 
-**Step 8.2: TRIGGER CONDITIONS**
-Triggered when a user has MT7902 hardware and the device is enumerated
-via USB. The vendor wildcard USB entry matches MediaTek devices, so the
-driver binds but fails at firmware loading without this patch.
+**Step 8.2:** Triggers during GPU initialization when the hardware has
+>= 32 UMC instances. Deterministic, not a race condition.
+Record: Deterministic trigger on specific hardware configurations.
 
-**Step 8.3: FAILURE MODE**
-Without this patch: `bt_dev_err(hdev, "Unsupported hardware variant
-(%08x)")` and return -ENODEV. Bluetooth is completely non-functional for
-these devices.
+**Step 8.3:** The undefined behavior from the shift can produce an
+incorrect `active_mask`, leading to wrong RAS error reporting and
+potentially incorrect firmware configuration. While not a crash, UB can
+cause any result including crashes on some compilers/architectures.
+Record: Severity = MEDIUM-HIGH (UB, incorrect hardware config, potential
+RAS malfunction).
 
-Record: Severity: MEDIUM-HIGH (complete loss of Bluetooth functionality
-for affected hardware).
-
-**Step 8.4: RISK-BENEFIT RATIO**
-- BENEFIT: Enables Bluetooth for MT7902 hardware users on stable
-  kernels. High benefit.
-- RISK: 2 lines, falls through to well-tested existing code path.
-  Essentially zero risk.
-
-Record: Very high benefit-to-risk ratio.
+**Step 8.4:**
+- BENEFIT: Fixes real UB on production hardware (large AMD GPUs),
+  ensures correct memory controller tracking
+- RISK: 2-line type widening change, extremely low risk of regression
+Record: High benefit, very low risk.
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: EVIDENCE**
+**Evidence FOR backporting:**
+- Fixes undefined behavior (shift-out-of-bounds) that is a clear
+  violation of the C standard
+- Affects real hardware (AMD GPUs with >= 32 UMC instances, e.g., MI300
+  series)
+- Minimal, 2-line fix that is obviously correct
+- Reviewed by AMD engineer, signed off by amdgpu maintainer
+- `active_mask` is used in RAS (reliability) error handling — getting
+  this wrong affects hardware reliability monitoring
+- Bug has existed since v6.4, present in all current stable trees except
+  6.1.y
+- Pattern matches other accepted stable fixes (shift-type fixes in
+  amdgpu, e.g., `BIT()` -> `BIT_ULL()`)
 
-FOR backporting:
-- Classic device ID addition to existing driver (explicit exception
-  category)
-- Only 2 lines changed
-- Falls through to well-tested code path (same as MT7922/MT7925/MT7961)
-- Author is the chip vendor's engineer
-- Applied by Bluetooth subsystem maintainer
-- Enables real hardware that would otherwise be completely non-
-  functional
-- Multiple independent submissions for MT7902 confirm real user demand
-- Zero regression risk (new case label, previously unreachable code
-  path)
+**Evidence AGAINST backporting:**
+- No Fixes: tag (expected)
+- No explicit bug report or syzbot report
+- Impact is limited to specific large GPU configurations
+- Context differs slightly from stable trees (may need minor adaptation)
 
-AGAINST backporting:
-- Part of a 4-patch series (but this patch is standalone for USB via
-  vendor wildcard)
-- Minor context conflict may need resolution for btmtk.c hunk
-- No Fixes: tag or Cc: stable (expected for device ID additions)
-
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? YES - trivial fall-through case label
-2. Fixes a real bug? YES - enables hardware that returns -ENODEV
-3. Important issue? YES - complete Bluetooth non-functionality for
-   affected hardware
-4. Small and contained? YES - 2 lines across 2 files
-5. No new features or APIs? YES - just enables existing infrastructure
-   for new chip ID
-6. Can apply to stable? YES - with minor context adjustment
-
-**Step 9.3: EXCEPTION CATEGORY**
-YES - Device ID addition to existing driver. This is an explicitly
-allowed exception.
+**Stable Rules Checklist:**
+1. Obviously correct and tested? **YES** — type widening is trivially
+   correct
+2. Fixes a real bug? **YES** — undefined behavior per C standard
+3. Important issue? **YES** — UB can cause incorrect hardware
+   configuration
+4. Small and contained? **YES** — 2 lines in 1 file
+5. No new features/APIs? **YES** — pure fix
+6. Can apply to stable? **YES** — with minor context adaptation
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Sean Wang (MediaTek) authored, Luiz von Dentz
-  (BT maintainer) applied
-- [Phase 2] Diff analysis: +1 case label in switch, +1 firmware define.
-  2 lines total.
-- [Phase 3] git blame: switch infrastructure from 5c5e8c52e3cafa
-  (2024-07-04), present in stable
-- [Phase 3] git log: confirmed 0x7902 does not exist anywhere in the
-  current tree
-- [Phase 4] Found original submission on spinics.net: [PATCH 2/4] in
-  MT7902 series dated 2026-02-19
-- [Phase 4] Multiple submissions: both Sean Wang (MediaTek) and an
-  independent user submitted MT7902 support
-- [Phase 5] Traced call chain: USB probe -> btusb_probe ->
-  btusb_mtk_setup -> btmtk_usb_setup -> switch(dev_id)
-- [Phase 5] Verified `btmtk_fw_get_filename()` handles 0x7902 via
-  existing `else` branch
-- [Phase 5] Verified vendor wildcard USB entry
-  `USB_VENDOR_AND_INTERFACE_INFO(0x0e8d, ...)` matches MT7902
-- [Phase 6] Confirmed switch statement and firmware loading
-  infrastructure exist in 7.0 tree
-- [Phase 6] Identified minor context conflict: retry mechanism in diff
-  not present in stable
-- [Phase 8] Without patch: "Unsupported hardware variant" error, -ENODEV
-  returned, Bluetooth non-functional
-
-This is a textbook device ID addition - minimal, obviously correct,
-enabling real hardware for real users on stable kernels, with
-essentially zero regression risk.
+- [Phase 1] Parsed subject: "drm/amdgpu: fix shift-out-of-bounds" —
+  clear fix commit
+- [Phase 2] Diff analysis: 2 lines changed — `uint32_t` -> `u64` and `1`
+  -> `1ULL` in `amdgpu_discovery_read_from_harvest_table()`
+- [Phase 3] git blame: buggy code introduced by commit 2b595659d5aec7
+  (Candice Li, Feb 2023, v6.4)
+- [Phase 3] git merge-base: confirmed commit 2b595659d5aec7 is in v6.4
+  and v6.6, NOT in v6.1
+- [Phase 3] git log --author: Hawking Zhang is a prolific AMD GPU
+  contributor
+- [Phase 4] b4 dig: could not find original submission on lore (AMD GPU
+  patches go through freedesktop.org)
+- [Phase 4] Web search: found related shift fixes in amdgpu but not
+  exact patch thread
+- [Phase 5] Grep: `active_mask` is `unsigned long` (64-bit), used by
+  LOOP_UMC_NODE_INST macro, PSP firmware init, and RAS error queries
+- [Phase 5] Grep: `node_inst_num` is `uint32_t`, incremented per
+  UMC_HWID found; on gmc_v9_0, divided by 4 (can be 32+ on large GPUs)
+- [Phase 6] Code exists in stable trees 6.6.y+; context differs slightly
+  (bhdr vs table_info helper)
+- [Phase 8] Failure mode: UB from shift, potentially incorrect
+  active_mask affecting RAS operations
+- UNVERIFIED: Exact patch discussion on amd-gfx mailing list (not found
+  via search)
+- UNVERIFIED: Whether UBSAN has actually fired on this in practice (no
+  syzbot report)
 
 **YES**
 
- drivers/bluetooth/btmtk.c | 1 +
- drivers/bluetooth/btmtk.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index 0ada5a12130dc..c56c9e077040d 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -1332,6 +1332,7 @@ int btmtk_usb_setup(struct hci_dev *hdev)
- 	case 0x7922:
- 	case 0x7925:
- 	case 0x7961:
-+	case 0x7902:
- 		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
- 				      fw_version, fw_flavor);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+index af3d2fd61cf3f..32455b01bceb1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -774,7 +774,7 @@ static void amdgpu_discovery_read_from_harvest_table(struct amdgpu_device *adev,
+ 	struct harvest_table *harvest_info;
+ 	u16 offset;
+ 	int i;
+-	uint32_t umc_harvest_config = 0;
++	u64 umc_harvest_config = 0;
  
-diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
-index 5df7c32966247..b4506186b2f70 100644
---- a/drivers/bluetooth/btmtk.h
-+++ b/drivers/bluetooth/btmtk.h
-@@ -5,6 +5,7 @@
- #define FIRMWARE_MT7663		"mediatek/mt7663pr2h.bin"
- #define FIRMWARE_MT7668		"mediatek/mt7668pr2h.bin"
- #define FIRMWARE_MT7922		"mediatek/BT_RAM_CODE_MT7922_1_1_hdr.bin"
-+#define FIRMWARE_MT7902		"mediatek/BT_RAM_CODE_MT7902_1_1_hdr.bin"
- #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
- #define FIRMWARE_MT7925		"mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin"
+ 	bhdr = (struct binary_header *)discovery_bin;
+ 	offset = le16_to_cpu(bhdr->table_list[HARVEST_INFO].offset);
+@@ -830,7 +830,7 @@ static void amdgpu_discovery_read_from_harvest_table(struct amdgpu_device *adev,
+ 		}
+ 	}
+ 
+-	adev->umc.active_mask = ((1 << adev->umc.node_inst_num) - 1) &
++	adev->umc.active_mask = ((1ULL << adev->umc.node_inst_num) - 1ULL) &
+ 				~umc_harvest_config;
+ }
  
 -- 
 2.53.0
