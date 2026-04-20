@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200664DBD8E;
-	Mon, 20 Apr 2026 13:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942524DC527;
+	Mon, 20 Apr 2026 13:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776692028; cv=none; b=WK1EU2t19Q2hmKX8CaMW0frQ1n35o3TGv7xfq/pdUvwBiN6y+xjetKLhJTrnk4Xsre6dQS5r887izd+29p+5OOTu5miLON5IKKr3nlsGQaNqh+WVZdVmYkRRkUVh0aEwV/+J8ARsgWwY1WkZzjv7LcQMjX2OyBilxnovnqqdLqM=
+	t=1776692029; cv=none; b=TWzYXvTLAA52V59/dqY2rWrYkfD3voaUZGb39ph+rgK+QIJDwS65FcOHkuwjGqeQZQWYY2X8fD2cmeEnPbI9nibmX83twvW9TJ3GZpMbASBQytaMjRhRVcXkn0bIZCi/EJLYfwFm20x5qaRvRxWAnkjqBv/7RwV6xcZL1SwPfk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776692028; c=relaxed/simple;
-	bh=qslmiTzZOBj/SolG5cNMhI4bQRpwy/2XAYcuaJXcV4I=;
+	s=arc-20240116; t=1776692029; c=relaxed/simple;
+	bh=kI5JVNp9MVMlPRc6VYu1r9vjEcn5Otqd4Y7FJptMpFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o/JlSdvmGxR391Q6Yl559g+8RuIuTfYW/bCYKNOxAA+rnBw03Y+j3VQ2wR3nR/qWCLdZL/qeiD8K37XVCWwvsb/HvFEXDG1vDoebYjMZaN04+3BcS47cMXqRNk/eoQ8OCL2HrSZzTi9SrhG2N1TkYoaHMvcmYMUq9VAnkvwHX/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YzldhYrO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rKMHSODVD2yJcKZ3e7CZ7sxy5mn/bVm+2EWPl3z4MI6w+n6X1BdWYgoRRX7IfwbnxGusa5pbRrcZM/Snno78OAF0DlWP+kWhGR9tJu9jPiHrhzGZtGwUiDAEmw42kfXPe4XtQJn3AKCeBrA6R9n4clw7R9Oa3Ay6N+Rpyc0+1cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bH6xSMxn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YzldhYrO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6538C2BCB4;
-	Mon, 20 Apr 2026 13:33:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bH6xSMxn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638E3C19425;
+	Mon, 20 Apr 2026 13:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776692028;
-	bh=qslmiTzZOBj/SolG5cNMhI4bQRpwy/2XAYcuaJXcV4I=;
+	s=k20201202; t=1776692029;
+	bh=kI5JVNp9MVMlPRc6VYu1r9vjEcn5Otqd4Y7FJptMpFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzldhYrOcTb4A7uifVMJPcw0tOXwcJxcxjrtKuo8qusw6PtwOqRRSw+ilCsKR+Rli
-	 eDwASStbl4+I3KPde1CIY1B+CNPpDv38thPx2rMecnpnjDeey4U1F8tKqB97UtrsBJ
-	 342USxY+km12dFhZuMX8PbAJkqANrneSBPa/jIt+04b1ttSES87aeOcYR3XD5DCRK4
-	 sUX5/osnXaUyZ72Lz82KPFipHO/15htAJk+CHHs56Bd9PGX1C8+nHhq7fMRkz9x1ld
-	 l7U/ezkWFMeop90lCjGP36Q4/V3FbkwwwIL59LLRHCo06pS28MHMvaD0MfVfkMmvMG
-	 44GOHReTAjplg==
+	b=bH6xSMxnSA5Qp0t1tQWsjfvCO0qG2JB34cvrr+0ZXPdi1gpbuIAtvkqTd9Num1tMD
+	 0EM6CQtIGgvWkhnCQxFayq+axmA9eOyPvwHmcOEj76Dp1dnCX9pTv3fEzxzselp/Q5
+	 1JihPZXUIvJ2dDzGAC80c5B3+SELYjPqgRkcdJ58lszkGZf4Ugg2m0Ry9s3SQvrOVg
+	 gRF4pWHS9EqU4z8iy4kaR/At6vQV0w4CVllLV3DzzEH0zJp9Q0juki0WXRzq7l5lRd
+	 WKVP4Wq9XtQ11HjDJILB1r3vjUZy9wvSvjZiIkqaEHWQoFWkZ6Pc3wI0ApeBhwvpQw
+	 7mSkUVi1codkg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: =?UTF-8?q?Jo=C3=A3o=20Paredes?= <joaommp@yahoo.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	io-uring@vger.kernel.org,
+	shaggy@kernel.org,
+	jfs-discussion@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] io_uring/cancel: validate opcode for IORING_ASYNC_CANCEL_OP
-Date: Mon, 20 Apr 2026 09:22:06 -0400
-Message-ID: <20260420132314.1023554-332-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] JFS: always load filesystem UUID during mount
+Date: Mon, 20 Apr 2026 09:22:07 -0400
+Message-ID: <20260420132314.1023554-333-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -46,357 +47,334 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+From: João Paredes <joaommp@yahoo.com>
 
-[ Upstream commit 85a58309c0d5b5f5a4b65658312ceaf2c34c9bbf ]
+[ Upstream commit 679330e4a7af1d102d035b13b2b9d41bc1dfbbf7 ]
 
-io_async_cancel_prep() reads the opcode selector from sqe->len and
-stores it in cancel->opcode, which is an 8-bit field. Since sqe->len
-is a 32-bit value, values larger than U8_MAX are implicitly truncated.
+The filesystem UUID was only being loaded into super_block sb when an
+external journal device was in use. When mounting without an external
+journal, the UUID remained unset, which prevented the computation of
+a filesystem ID (fsid), which could be confirmed via `stat -f -c "%i"`
+and thus user space could not use fanotify correctly.
 
-This can cause unintended opcode matches when the truncated value
-corresponds to a valid io_uring opcode. For example, submitting a value
-such as 0x10b will be truncated to 0x0b (IORING_OP_TIMEOUT), allowing a
-cancel request to match operations it did not intend to target.
-Validate the opcode value before assigning it to the 8-bit field and
-reject values outside the valid io_uring opcode range.
+A missing filesystem ID causes fanotify to return ENODEV when marking
+the filesystem for events like FAN_CREATE, FAN_DELETE, FAN_MOVED_TO,
+and FAN_MOVED_FROM. As a result, applications relying on fanotify
+could not monitor these events on JFS filesystems without an external
+journal.
 
-Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Link: https://patch.msgid.link/20260331232113.615972-1-a.jahangirzad@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Moved the UUID initialization so it is always performed during mount,
+ensuring the superblock UUID is consistently available.
+
+Signed-off-by: João Paredes <joaommp@yahoo.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile the findings.
+Now I have all the information needed for a thorough analysis. Let me
+compile it.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: io_uring/cancel
-- **Action verb**: "validate" — this implies adding a missing validation
-  check, strongly indicating a bug fix
-- **Summary**: Validates the opcode value before storing it in a
-  narrower type field to prevent silent truncation
+### Step 1.1: PARSE THE SUBJECT LINE
+- **Subsystem:** JFS (Journaled File System)
+- **Action verb:** "always load" (correcting behavior that should have
+  been unconditional)
+- **Summary:** Ensures the filesystem UUID is always loaded during
+  mount, not just when external journal is configured
+- Record: [JFS] [always load / ensure] [Fix UUID not being loaded for
+  inline-log configurations, breaking fsid and fanotify]
 
-### Step 1.2: Tags
-- **Signed-off-by**: Amir Mohammad Jahangirzad (author), Jens Axboe
-  (io_uring maintainer accepted it)
-- **Link**: `https://patch.msgid.link/20260331232113.615972-1-
-  a.jahangirzad@gmail.com`
-- No Fixes: tag, no Reported-by, no Cc: stable — all expected for
-  autosel review
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Signed-off-by: João Paredes <joaommp@yahoo.com>** - Author of the
+  fix (no prior JFS commits found)
+- **Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>** - JFS
+  maintainer, signed off = reviewed and accepted
+- No Fixes: tag, no Reported-by, no Cc: stable (expected for this
+  pipeline)
+- Record: Fix accepted by JFS subsystem maintainer. No explicit stable
+  nomination.
 
-### Step 1.3: Commit Body Analysis
-The commit body clearly explains:
-- **Bug mechanism**: `sqe->len` is `__u32` (32-bit), `cancel->opcode` is
-  `u8` (8-bit). Without validation, values >255 are silently truncated.
-- **Symptom**: Passing 0x10b is truncated to 0x0b (IORING_OP_TIMEOUT),
-  causing a cancel request to match timeout operations the user never
-  intended to cancel.
-- **Root cause**: Missing input validation before narrowing type
-  conversion.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit clearly describes the bug:
+- **Bug:** UUID only loaded when external journal used (`!JFS_INLINELOG`
+  path); inline log (the default) left `sbi->uuid` unset (all zeros)
+- **Symptom:** `stat -f -c "%i"` returns 0 (no filesystem ID); fanotify
+  returns `ENODEV` for `FAN_CREATE`, `FAN_DELETE`, `FAN_MOVED_TO`,
+  `FAN_MOVED_FROM`
+- **Root cause:** `uuid_copy` was inside the else branch of the inline-
+  log conditional
+- **Impact:** Applications relying on fanotify cannot monitor filesystem
+  events on JFS
+- Record: Real functional bug with clear user-visible symptoms. Fanotify
+  breaks for the default JFS configuration.
 
-### Step 1.4: Hidden Bug Fix Detection
-This is an explicit input validation bug fix. The word "validate" makes
-it clear, and the commit directly prevents incorrect behavior caused by
-integer truncation.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+Not hidden at all. The commit message is direct about the bug mechanism
+and user-visible impact.
 
----
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-## PHASE 2: DIFF ANALYSIS
+### Step 2.1: INVENTORY THE CHANGES
+- **File:** `fs/jfs/jfs_mount.c` only
+- **Lines added:** 2 (uuid_copy + blank line before if/else)
+- **Lines removed:** 1 (uuid_copy from else block)
+- **Net change:** +1 line
+- **Function modified:** `chkSuper()`
+- **Scope:** Single-file, surgical one-line fix
+- Record: [fs/jfs/jfs_mount.c: +2/-1] [chkSuper()] [Single-file surgical
+  fix]
 
-### Step 2.1: Inventory
-- **Files changed**: 1 (`io_uring/cancel.c`)
-- **Lines**: +7/-1 (net +6 lines, but only 4 meaningful lines added)
-- **Function modified**: `io_async_cancel_prep()`
-- **Scope**: Single-file surgical fix in a single function
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 
-### Step 2.2: Code Flow Change
-Before: `cancel->opcode = READ_ONCE(sqe->len);` — directly assigns
-32-bit value to 8-bit field, implicit truncation.
+**Before:**
 
-After:
-```c
-u32 op;
-op = READ_ONCE(sqe->len);
-if (op >= IORING_OP_LAST)
-    return -EINVAL;
-cancel->opcode = op;
+```381:387:fs/jfs/jfs_mount.c
+        if (sbi->mntflag & JFS_INLINELOG)
+                sbi->logpxd = j_sb->s_logpxd;
+        else {
+                sbi->logdev =
+new_decode_dev(le32_to_cpu(j_sb->s_logdev));
+                uuid_copy(&sbi->uuid, &j_sb->s_uuid);
+                uuid_copy(&sbi->loguuid, &j_sb->s_loguuid);
+        }
 ```
-Now validates the value is within the valid opcode range before
-assigning.
 
-### Step 2.3: Bug Mechanism
-This is a **type/correctness bug** — narrowing conversion without bounds
-checking. Category: input validation / logic correctness fix.
+**After:** `uuid_copy(&sbi->uuid, &j_sb->s_uuid)` is moved BEFORE the
+if/else block, making it unconditional. `uuid_copy(&sbi->loguuid, ...)`
+stays in else (correct - only needed for external log).
 
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes — validates `op >= IORING_OP_LAST` before
-  narrowing to u8
-- **Minimal/surgical**: Yes — 4 effective lines, single function
-- **Regression risk**: Extremely low — the only new behavior is
-  rejecting previously-accepted invalid values (which would have caused
-  incorrect matching). Existing valid uses are unaffected since all
-  valid opcodes are < IORING_OP_LAST and < 256.
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+- **Category:** Logic/correctness fix - conditional initialization that
+  should be unconditional
+- **What was broken:** UUID needed unconditionally (for fsid computation
+  in `jfs_statfs()`), but was only loaded in the external-log path
+- **How the fix works:** Moves the uuid_copy call outside the
+  conditional
 
----
+### Step 2.4: ASSESS THE FIX QUALITY
+- **Obviously correct:** Yes - the UUID is a filesystem property, not a
+  journal-specific property
+- **Minimal:** Yes - moving one line
+- **Regression risk:** Essentially zero. For the inline-log case, UUID
+  is now properly populated (was zeros before). For the external-log
+  case, behavior is identical.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The buggy line `cancel->opcode = READ_ONCE(sqe->len);` was introduced in
-commit `d7b8b079a8f6bc` by Jens Axboe (2023-06-23), "io_uring/cancel:
-support opcode based lookup and cancelation".
+### Step 3.1: BLAME THE CHANGED LINES
+- The if/else structure dates to `^1da177e4c3f41` (Linux 2.6.12-rc2,
+  2005-04-16, Linus Torvalds) - present since initial git history
+- The `uuid_copy` line was updated by `2e3bc6125154c6` (Andy Shevchenko,
+  2019-01-10) - UUID API conversion only, didn't change the placement
+- The original code ALWAYS had the UUID copy inside the else branch
+- Record: Buggy placement dates to the initial Linux git import
+  (v2.6.12). Present in ALL stable trees.
 
-### Step 3.2: Fixes Target
-No Fixes: tag, but the bug was clearly introduced by `d7b8b079a8f6bc`.
-That commit added the `IORING_ASYNC_CANCEL_OP` feature and the opcode
-field but neglected to validate the input value.
+### Step 3.2: THE REAL FIXES TARGET
+The fsid computation using `sbi->uuid` was added by `b5c816a4f1776`
+(Coly Li, 2009-01-21, "jfs: return f_fsid for statfs(2)"). This commit
+added the CRC32-based fsid computation but didn't realize the UUID was
+only loaded for external-log configurations. So the actual bug was
+introduced in 2009 when the UUID became functionally significant beyond
+just external log tracking.
 
-`d7b8b079a8f6bc` was first released in v6.6-rc1 (verified: not in v6.5,
-present in v6.6).
+### Step 3.3-3.5: RELATED CHANGES
+- No recent JFS changes to jfs_mount.c affect this area
+- This is a standalone fix with no dependencies
+- Author João Paredes has no other JFS commits (first-time contributor),
+  but the fix was accepted by JFS maintainer Dave Kleikamp
 
-### Step 3.3: Related Changes
-Between the buggy commit and HEAD, `io_uring/cancel.c` had ~20 non-merge
-changes, mostly structural reorganization (moving code to cancel.c from
-io_uring.c). None fix this specific truncation issue.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 3.4: Author
-The author (Amir Mohammad Jahangirzad) is not the subsystem maintainer
-but has submitted other kernel fixes. The patch was accepted and signed
-by Jens Axboe, the io_uring subsystem maintainer.
-
-### Step 3.5: Dependencies
-None. This is a standalone, self-contained fix. The `IORING_OP_LAST`
-sentinel has existed since the io_uring opdef array was created and is
-present in all relevant stable trees.
-
----
-
-## PHASE 4: MAILING LIST RESEARCH
-
-### Step 4.1: Original Patch
-Lore.kernel.org is behind an anti-bot wall; b4 dig could not find the
-commit by message-id (commit too recent for the local index). The Link
-tag in the commit confirms the patch was submitted and reviewed on the
-mailing list.
-
-### Step 4.2: Reviewer
-Jens Axboe (io_uring maintainer) signed off and merged the patch, which
-is strong validation.
-
-### Step 4.3–4.5
-No bug report references found. No explicit stable nomination found. The
-bug was apparently discovered by code inspection rather than a runtime
-report.
-
----
+### Step 4.1-4.5
+- Could not find the original patch submission on lore.kernel.org due to
+  bot protection
+- The fix was accepted by Dave Kleikamp (JFS maintainer) which provides
+  strong quality signal
+- No CVE was found for this specific issue
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Modified Function
-`io_async_cancel_prep()` — the SQE preparation function for
-`IORING_OP_ASYNC_CANCEL`.
+### Step 5.1-5.2: KEY FUNCTIONS AND CALLERS
+The impacted code path:
+1. `chkSuper()` is called during `jfs_mount()` (line 83) and during
+   `jfs_mount_rw()` remount (line 232)
+2. `sbi->uuid` is consumed by:
+   - `jfs_statfs()` in `fs/jfs/super.c` (lines 146-150) - computes
+     `f_fsid` via CRC32 of UUID
+   - `lmLogFileSystem()` in `fs/jfs/jfs_logmgr.c` (line 1713) - tracks
+     active filesystems in log
+3. `jfs_statfs()` is the VFS `.statfs` operation, called via
+   `vfs_statfs()` and `vfs_get_fsid()`
+4. `fanotify_test_fsid()` calls `vfs_get_fsid()` which calls
+   `jfs_statfs()` - confirmed in `fs/notify/fanotify/fanotify_user.c`
+   line 1771
 
-### Step 5.2: Callers
-`io_async_cancel_prep` is called from the opdef table
-(`io_uring/opdef.c` line 196) as the `.prep` handler for
-`IORING_OP_ASYNC_CANCEL`. This is triggered every time a user submits an
-async cancel request through the io_uring interface.
+### Step 5.3-5.4: FANOTIFY ENODEV MECHANISM CONFIRMED
+In `fanotify_test_fsid()` (line 1776):
 
-### Step 5.3: Impact Path
-The opcode stored here flows into `io_cancel_data.opcode`, which is
-compared against `req->opcode` in `io_cancel_req_match()`. A truncated
-opcode would match the wrong operations.
+```1776:1779:fs/notify/fanotify/fanotify_user.c
+        if (!fsid->id.val[0] && !fsid->id.val[1]) {
+                err = -ENODEV;
+                goto weak;
+        }
+```
 
-### Step 5.4: Reachability
-This is directly reachable from userspace via `io_uring_enter()` → SQE
-processing → `io_async_cancel_prep()`. Any unprivileged user with access
-to io_uring can trigger this.
+When `sbi->uuid` is all zeros (kzalloc'd), `crc32_le(0, zeros, N) = 0`
+(CRC is linear, zero input with zero init = zero output). So `f_fsid =
+{0, 0}`, triggering the ENODEV path. The `weak` label returns `-ENODEV`
+for non-inode marks (FAN_MARK_FILESYSTEM, FAN_MARK_MOUNT).
 
-### Step 5.5: io_sync_cancel path
-The `io_sync_cancel` path reads from `struct io_uring_sync_cancel_reg`
-where `opcode` is already `__u8`, so truncation cannot occur there.
-However, that path also lacks a `>= IORING_OP_LAST` check, which is a
-separate (less critical) issue since values 0-255 that exceed
-IORING_OP_LAST would simply not match any operation.
+### Step 5.5: SIMILAR PATTERNS
+The comment at line 1769 explicitly says: "Make sure dentry is not of a
+filesystem with zero fsid (e.g. fuse)." JFS was silently in this same
+broken category for inline-log configs.
 
----
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-## PHASE 6: STABLE TREE ANALYSIS
+### Step 6.1: BUGGY CODE EXISTS IN ALL STABLE TREES
+Confirmed via `git show v7.0-rc7:fs/jfs/jfs_mount.c` - the buggy
+conditional UUID loading is present. The code has been this way since
+the initial Linux git import and exists in ALL active stable trees.
 
-### Step 6.1: Affected Stable Trees
-The buggy code (`d7b8b079a8f6bc`) was introduced in v6.6-rc1 (confirmed:
-present in v6.6, not in v6.5). All stable trees from 6.6.y onward
-contain the bug: 6.6.y, 6.12.y.
+### Step 6.2: BACKPORT COMPLICATIONS
+None. The patch will apply cleanly - the surrounding code in
+`chkSuper()` has been unchanged for years.
 
-### Step 6.2: Backport Complications
-The fix modifies a simple code block that has not changed since the
-original introduction. It should apply cleanly to any stable tree that
-has the IORING_ASYNC_CANCEL_OP feature (6.6+). `IORING_OP_LAST` exists
-in all these trees.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 6.3: No prior fix
-No other fix for this same issue was found in the commit history.
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem:** JFS filesystem (fs/jfs/)
+- **Criticality:** IMPORTANT - filesystem correctness affects data and
+  application behavior
+- JFS is a mature filesystem used particularly in enterprise
+  environments
 
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem
-**io_uring** — a high-performance async I/O interface. Criticality:
-**IMPORTANT**. Widely used in modern Linux applications, database
-systems, and high-performance servers.
-
-### Step 7.2: Activity
-io_uring is very actively developed with frequent changes. Jens Axboe is
-the sole maintainer.
-
----
+### Step 7.2: SUBSYSTEM ACTIVITY
+JFS receives minimal but ongoing maintenance, mostly bug fixes.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-All users of io_uring who use the `IORING_ASYNC_CANCEL_OP` feature
-(cancel by opcode). This includes both applications and libraries like
-liburing.
+### Step 8.1: WHO IS AFFECTED
+All JFS users mounting without an external journal (the default
+configuration). This is the vast majority of JFS users.
 
-### Step 8.2: Trigger
-- A user submits an `IORING_OP_ASYNC_CANCEL` SQE with
-  `IORING_ASYNC_CANCEL_OP` flag and `sqe->len` value > 255
-- The value silently truncates, potentially matching a valid opcode
-- Example: 0x10b → 0x0b (IORING_OP_TIMEOUT)
-- **Unprivileged users can trigger this**
+### Step 8.2: TRIGGER CONDITIONS
+- **How common:** Every single mount of a JFS filesystem with inline log
+- **User trigger:** Any application using fanotify with
+  `FAN_MARK_FILESYSTEM` or `FAN_MARK_MOUNT` on JFS
+- **No special privileges needed** beyond normal fanotify access
 
-### Step 8.3: Severity
-- **Failure mode**: Wrong operations get cancelled unexpectedly
-- **Impact**: Application-level data loss or incorrect behavior (e.g.,
-  timeouts cancelled that shouldn't be, leading to stuck operations or
-  missed deadlines)
-- **Severity**: MEDIUM — not a kernel crash, but causes incorrect
-  kernel-userspace contract behavior
+### Step 8.3: FAILURE MODE SEVERITY
+- **Failure:** Applications using fanotify (file monitoring, security
+  tools, backup software) get ENODEV and cannot monitor JFS filesystems
+- **Severity:** HIGH - functional breakage of a standard kernel
+  interface for a standard filesystem configuration
+- Not a crash or security issue, but a clear functional bug affecting
+  userspace applications
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: Prevents incorrect operation cancellation due to integer
-  truncation. Clear correctness fix.
-- **Risk**: Very low — the only behavioral change is rejecting invalid
-  opcodes (>= IORING_OP_LAST) that previously caused silent truncation.
-  Valid applications are completely unaffected.
-- **Ratio**: High benefit / very low risk
-
----
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit:** HIGH - fixes fanotify for all JFS users with inline log
+  (the common case)
+- **Risk:** VERY LOW - 1 line moved, obviously correct, no possible
+  regression
+- **Ratio:** Excellent
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence
+### Step 9.1: EVIDENCE COMPILATION
+
 **FOR backporting:**
-- Fixes a real input validation bug (u32→u8 truncation without bounds
-  check)
-- Can cause incorrect operation matching (wrong cancellations)
-- Reachable from unprivileged userspace
-- Fix is minimal (4 effective lines), obviously correct, zero regression
-  risk
-- Accepted by io_uring maintainer Jens Axboe
-- Bug present in active stable trees (6.6.y, 6.12.y)
-- Standalone fix, no dependencies
+- Fixes a real, user-visible bug: fanotify returns ENODEV for default
+  JFS configurations
+- Extremely small and surgical fix: 1 line moved
+- Obviously correct: UUID is a filesystem property, not journal-specific
+- Accepted by JFS maintainer (Dave Kleikamp)
+- Bug affects ALL stable trees (code unchanged since initial git import)
+- Patch applies cleanly
+- Zero regression risk
+- Bug has existed since 2009 (fsid computation added)
 
 **AGAINST backporting:**
-- Not a crash, security vulnerability, or data corruption at the kernel
-  level
-- Requires passing an invalid opcode value (>255) to trigger
-- No user reports of this bug being hit in practice
+- No Fixes: tag or Cc: stable (expected - that's why it needs review)
+- No syzbot/KASAN/crash - it's a functional bug, not a memory safety
+  issue
+- Author is a first-time contributor (but fix accepted by maintainer)
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — trivial bounds check
-2. **Fixes a real bug?** YES — integer truncation causes wrong operation
-   matching
-3. **Important issue?** MEDIUM — incorrect io_uring behavior, not a
-   crash
-4. **Small and contained?** YES — 4 lines in one function
-5. **No new features/APIs?** CORRECT — only adds validation
-6. **Can apply to stable?** YES — clean apply expected for 6.6+
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** - trivially verifiable,
+   accepted by maintainer
+2. Fixes a real bug? **YES** - fanotify ENODEV for default JFS
+   configuration
+3. Important issue? **YES** - breaks standard kernel interface for
+   application monitoring
+4. Small and contained? **YES** - 1 line moved in 1 file
+5. No new features or APIs? **YES** - just fixes existing behavior
+6. Can apply to stable? **YES** - will apply cleanly to all stable trees
 
-### Step 9.3: Exception Categories
-Not an exception category; standard bug fix.
-
-### Step 9.4: Decision
-This is a clear input validation bug with a trivial, risk-free fix.
-While not a crash-level severity, it causes the kernel to violate the
-io_uring API contract — an opcode value of 0x10b should either be
-rejected or never match opcode 0x0b. Silently doing the wrong thing is a
-real bug. The fix is obviously correct, tiny, and cannot regress
-anything.
-
----
+### Step 9.3: EXCEPTION CATEGORIES
+Not an exception category - this is a standard bug fix.
 
 ## Verification
 
-- [Phase 1] Parsed subject: "validate opcode for IORING_ASYNC_CANCEL_OP"
-  — clear input validation fix
-- [Phase 1] Tags: Signed-off-by Jens Axboe (maintainer), Link to lore
-- [Phase 2] Diff: +7/-1 in io_async_cancel_prep(), adds u32 temp + range
-  check before u8 assignment
-- [Phase 2] Verified sqe->len is `__u32` (include/uapi/linux/io_uring.h
-  line 51), cancel->opcode is `u8` (cancel.c line 29)
-- [Phase 3] git blame: buggy line introduced by d7b8b079a8f6bc (Jens
-  Axboe, 2023-06-23)
-- [Phase 3] git merge-base: d7b8b079a8f6bc is in v6.6 but NOT in v6.5
-  (confirmed with --is-ancestor)
-- [Phase 3] git describe: first in v6.6-rc1~152^2~40
-- [Phase 4] b4 dig on d7b8b079a8f6bc: original series at
-  lore.kernel.org/all/20230623164804.610910-8-axboe@kernel.dk/
-- [Phase 4] Lore anti-bot blocked direct web access
-- [Phase 5] io_async_cancel_prep called from opdef.c line 196, reachable
-  from userspace io_uring_enter
-- [Phase 5] Verified io_sync_cancel uses __u8 opcode in struct
-  io_uring_sync_cancel_reg — no truncation there
-- [Phase 5] Verified IORING_OP_LAST exists in
-  include/uapi/linux/io_uring.h line 321
-- [Phase 6] Buggy code present in 6.6.y+ stable trees (verified)
-- [Phase 6] No conflicting changes found — clean apply expected
-- [Phase 8] Unprivileged userspace trigger confirmed — io_uring
-  accessible without privileges
-- UNVERIFIED: Could not access lore discussion for the specific fix
-  commit due to anti-bot protection
+- [Phase 1] Parsed tags: Signed-off-by from author and JFS maintainer
+  Dave Kleikamp
+- [Phase 2] Diff analysis: 1 line moved from else block to unconditional
+  execution in `chkSuper()`
+- [Phase 3] git blame: buggy conditional structure present since
+  `^1da177e4c3f41` (v2.6.12, 2005); fsid computation added in
+  `b5c816a4f1776` (2009) made it functionally significant
+- [Phase 3] git show v7.0-rc7: confirmed buggy code exists unchanged in
+  v7.0 stable tree
+- [Phase 5] Traced call chain: `fanotify_test_fsid()` ->
+  `vfs_get_fsid()` -> `jfs_statfs()` -> CRC32 of `sbi->uuid`; confirmed
+  zero-UUID produces zero fsid which triggers ENODEV at
+  fanotify_user.c:1776-1777
+- [Phase 5] Confirmed `sbi` allocated via `kzalloc_obj` in super.c:452,
+  so uuid is zero-initialized
+- [Phase 5] Confirmed `JFS_INLINELOG` (0x00000800) is the default/common
+  JFS configuration
+- [Phase 6] Code is identical across all stable trees - patch applies
+  cleanly
+- [Phase 8] Failure mode: fanotify returns -ENODEV for
+  FAN_MARK_FILESYSTEM/MOUNT on default JFS, severity HIGH
+- UNVERIFIED: Could not access lore.kernel.org for original patch
+  discussion (bot protection blocked access)
 
 **YES**
 
- io_uring/cancel.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/jfs/jfs_mount.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/cancel.c b/io_uring/cancel.c
-index 65e04063e343b..5e5eb9cfc7cd6 100644
---- a/io_uring/cancel.c
-+++ b/io_uring/cancel.c
-@@ -156,9 +156,16 @@ int io_async_cancel_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 		cancel->fd = READ_ONCE(sqe->fd);
+diff --git a/fs/jfs/jfs_mount.c b/fs/jfs/jfs_mount.c
+index 52e6b58c5dbd2..dac822f150701 100644
+--- a/fs/jfs/jfs_mount.c
++++ b/fs/jfs/jfs_mount.c
+@@ -378,11 +378,12 @@ static int chkSuper(struct super_block *sb)
+ 	sbi->nbperpage = PSIZE >> sbi->l2bsize;
+ 	sbi->l2nbperpage = L2PSIZE - sbi->l2bsize;
+ 	sbi->l2niperblk = sbi->l2bsize - L2DISIZE;
++	uuid_copy(&sbi->uuid, &j_sb->s_uuid);
++
+ 	if (sbi->mntflag & JFS_INLINELOG)
+ 		sbi->logpxd = j_sb->s_logpxd;
+ 	else {
+ 		sbi->logdev = new_decode_dev(le32_to_cpu(j_sb->s_logdev));
+-		uuid_copy(&sbi->uuid, &j_sb->s_uuid);
+ 		uuid_copy(&sbi->loguuid, &j_sb->s_loguuid);
  	}
- 	if (cancel->flags & IORING_ASYNC_CANCEL_OP) {
-+		u32 op;
-+
- 		if (cancel->flags & IORING_ASYNC_CANCEL_ANY)
- 			return -EINVAL;
--		cancel->opcode = READ_ONCE(sqe->len);
-+
-+		op = READ_ONCE(sqe->len);
-+		if (op >= IORING_OP_LAST)
-+			return -EINVAL;
-+
-+		cancel->opcode = op;
- 	}
- 
- 	return 0;
+ 	sbi->fsckpxd = j_sb->s_fsckpxd;
 -- 
 2.53.0
 
