@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6D62E2665;
-	Mon, 20 Apr 2026 16:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2D633B975;
+	Mon, 20 Apr 2026 16:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700893; cv=none; b=WcN4oPJ4Nx9yAoc70d7YNffE6opj8ZYybaalVpNskLDLp1NPOTKQOowxNMpGOI70xOEhLcf6hGpAU2WrfcGz0ImlFcett20P98T+CDZyGyt433YmLcFbSA6xC5fhC+9C3bAxm5clYaQjK8xg+JPiW7Qk+vVYFoApESCJUUIDcHs=
+	t=1776700895; cv=none; b=F64saVDlGjJtU6OPCiGsYDRTXERglO0KfwHp8q4HcweC/UlPEnYAnzl9FZfOnVRG5BqWWfyehJZFrZSrGzuEhDBKo6TTG5KVqI7Xa+10DsqjBIV6ComXC+Vg9XEwiSzIPXNhqOF8MlvawLxgknEjqv/LMO+AVK/wcQMNbddJZgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700893; c=relaxed/simple;
-	bh=NziIoVr6CJT6SiabbZdsyWZCZ2Y6Y/3+505Vf4IJ0D8=;
+	s=arc-20240116; t=1776700895; c=relaxed/simple;
+	bh=WVe1iC+2pH0TUnBNnHtyZgljkzB6aZ15MbU65AWXvNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCPSZ2+w3ii119xRwdJLjPAfy3ZZu7edzTQs+jq7e8ux9MQ6qgNHZP/43HH5soPMWzR7gCYjaILsP/VGDXrYANAYLDFDj+YZihup1dfHwydNR3d42f6DYNUe073RLvG+TMhg8/P+F6C8xLfkpFQESpLhziK2aQo+YEk045Cal7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQjwu/u4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bj5c4w4A36bzSJR1wp1aLypt83thNfv+QUIw/JkXLiGfgBqXOGyKL/RG+NCJrOLV4Srf8uwPK2K/I/jbG4ASuRp8eOtQkxc0YxszDtgZPTJ6NHZJh0cvFHD8I6L4jocjXzJGLvdL9dIs+45CxAwP6dUeptU2aNsHeZzblB88ilc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rb6EvSM8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQjwu/u4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6542C19425;
-	Mon, 20 Apr 2026 16:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rb6EvSM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE23C19425;
+	Mon, 20 Apr 2026 16:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700893;
-	bh=NziIoVr6CJT6SiabbZdsyWZCZ2Y6Y/3+505Vf4IJ0D8=;
+	s=korg; t=1776700895;
+	bh=WVe1iC+2pH0TUnBNnHtyZgljkzB6aZ15MbU65AWXvNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQjwu/u4hSP7D8iVDoLmQQlHUCPXPlNqiURLpsOdTjRkch8UQEb/5n1DJ32pQGYOa
-	 euhZ8YrqgFTJmqTSpTrD/3n1ikwCFfSpo1rHkqKSwqIXMFQrDRnKMOyC2sPtsCozIN
-	 +OJOz4tsTTwKVg4ErGF/uxLkJhCrQdHuqLVWTr68=
+	b=rb6EvSM8m+i0/6EaEVH7gCYiPaDwmBtNyjbbHEnaACrwVNyXaTh7SHvliY7O3ykxr
+	 +hZtD3zpdstqIvMnv6y2ZQoMAT8jfABp59AkzrCeM0kiXg7u8g+AyAnXaB2xUzDJyK
+	 qXBDz75c1AJDm+9qdbg89HIzn4LTVGDwzS+4ugS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuhang Zheng <z1652074432@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 073/198] ipv6: ioam: fix potential NULL dereferences in __ioam6_fill_trace_data()
-Date: Mon, 20 Apr 2026 17:40:52 +0200
-Message-ID: <20260420153938.238420878@linuxfoundation.org>
+Subject: [PATCH 6.18 100/198] netfilter: xt_multiport: validate range encoding in checkentry
+Date: Mon, 20 Apr 2026 17:41:19 +0200
+Message-ID: <20260420153939.203293120@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -53,117 +56,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ren Wei <n05ec@lzu.edu.cn>
 
-[ Upstream commit 4e65a8b8daa18d63255ec58964dd192c7fdd9f8b ]
+[ Upstream commit ff64c5bfef12461df8450e0f50bb693b5269c720 ]
 
-We need to check __in6_dev_get() for possible NULL value, as
-suggested by Yiming Qian.
+ports_match_v1() treats any non-zero pflags entry as the start of a
+port range and unconditionally consumes the next ports[] element as
+the range end.
 
-Also add skb_dst_dev_rcu() instead of skb_dst_dev(),
-and two missing READ_ONCE().
+The checkentry path currently validates protocol, flags and count, but
+it does not validate the range encoding itself. As a result, malformed
+rules can mark the last slot as a range start or place two range starts
+back to back, leaving ports_match_v1() to step past the last valid
+ports[] element while interpreting the rule.
 
-Note that @dev can't be NULL.
+Reject malformed multiport v1 rules in checkentry by validating that
+each range start has a following element and that the following element
+is not itself marked as another range start.
 
-Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260402101732.1188059-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a89ecb6a2ef7 ("[NETFILTER]: x_tables: unify IPv4/IPv6 multiport match")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Yuhang Zheng <z1652074432@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ioam6.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ net/netfilter/xt_multiport.c | 34 ++++++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
-index 8db7f965696aa..12350e1e18bde 100644
---- a/net/ipv6/ioam6.c
-+++ b/net/ipv6/ioam6.c
-@@ -710,7 +710,9 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 				    struct ioam6_schema *sc,
- 				    unsigned int sclen, bool is_input)
- {
--	struct net_device *dev = skb_dst_dev(skb);
-+	/* Note: skb_dst_dev_rcu() can't be NULL at this point. */
-+	struct net_device *dev = skb_dst_dev_rcu(skb);
-+	struct inet6_dev *i_skb_dev, *idev;
- 	struct timespec64 ts;
- 	ktime_t tstamp;
- 	u64 raw64;
-@@ -721,13 +723,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+diff --git a/net/netfilter/xt_multiport.c b/net/netfilter/xt_multiport.c
+index 44a00f5acde8a..a1691ff405d3c 100644
+--- a/net/netfilter/xt_multiport.c
++++ b/net/netfilter/xt_multiport.c
+@@ -105,6 +105,28 @@ multiport_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return ports_match_v1(multiinfo, ntohs(pptr[0]), ntohs(pptr[1]));
+ }
  
- 	data = trace->data + trace->remlen * 4 - trace->nodelen * 4 - sclen * 4;
- 
-+	i_skb_dev = skb->dev ? __in6_dev_get(skb->dev) : NULL;
-+	idev = __in6_dev_get(dev);
++static bool
++multiport_valid_ranges(const struct xt_multiport_v1 *multiinfo)
++{
++	unsigned int i;
 +
- 	/* hop_lim and node_id */
- 	if (trace->type.bit0) {
- 		byte = ipv6_hdr(skb)->hop_limit;
- 		if (is_input)
- 			byte--;
++	for (i = 0; i < multiinfo->count; i++) {
++		if (!multiinfo->pflags[i])
++			continue;
++
++		if (++i >= multiinfo->count)
++			return false;
++
++		if (multiinfo->pflags[i])
++			return false;
++
++		if (multiinfo->ports[i - 1] > multiinfo->ports[i])
++			return false;
++	}
++
++	return true;
++}
++
+ static inline bool
+ check(u_int16_t proto,
+       u_int8_t ip_invflags,
+@@ -127,8 +149,10 @@ static int multiport_mt_check(const struct xt_mtchk_param *par)
+ 	const struct ipt_ip *ip = par->entryinfo;
+ 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
  
--		raw32 = dev_net(dev)->ipv6.sysctl.ioam6_id;
-+		raw32 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id);
+-	return check(ip->proto, ip->invflags, multiinfo->flags,
+-		     multiinfo->count) ? 0 : -EINVAL;
++	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
++		return -EINVAL;
++
++	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
+ }
  
- 		*(__be32 *)data = cpu_to_be32((byte << 24) | raw32);
- 		data += sizeof(__be32);
-@@ -735,18 +740,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ static int multiport_mt6_check(const struct xt_mtchk_param *par)
+@@ -136,8 +160,10 @@ static int multiport_mt6_check(const struct xt_mtchk_param *par)
+ 	const struct ip6t_ip6 *ip = par->entryinfo;
+ 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
  
- 	/* ingress_if_id and egress_if_id */
- 	if (trace->type.bit1) {
--		if (!skb->dev)
-+		if (!i_skb_dev)
- 			raw16 = IOAM6_U16_UNAVAILABLE;
- 		else
--			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id);
-+			raw16 = (__force u16)READ_ONCE(i_skb_dev->cnf.ioam6_id);
+-	return check(ip->proto, ip->invflags, multiinfo->flags,
+-		     multiinfo->count) ? 0 : -EINVAL;
++	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
++		return -EINVAL;
++
++	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
+ }
  
- 		*(__be16 *)data = cpu_to_be16(raw16);
- 		data += sizeof(__be16);
- 
--		if (dev->flags & IFF_LOOPBACK)
-+		if ((dev->flags & IFF_LOOPBACK) || !idev)
- 			raw16 = IOAM6_U16_UNAVAILABLE;
- 		else
--			raw16 = (__force u16)READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id);
-+			raw16 = (__force u16)READ_ONCE(idev->cnf.ioam6_id);
- 
- 		*(__be16 *)data = cpu_to_be16(raw16);
- 		data += sizeof(__be16);
-@@ -822,7 +827,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 		if (is_input)
- 			byte--;
- 
--		raw64 = dev_net(dev)->ipv6.sysctl.ioam6_id_wide;
-+		raw64 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id_wide);
- 
- 		*(__be64 *)data = cpu_to_be64(((u64)byte << 56) | raw64);
- 		data += sizeof(__be64);
-@@ -830,18 +835,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 
- 	/* ingress_if_id and egress_if_id (wide) */
- 	if (trace->type.bit9) {
--		if (!skb->dev)
-+		if (!i_skb_dev)
- 			raw32 = IOAM6_U32_UNAVAILABLE;
- 		else
--			raw32 = READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id_wide);
-+			raw32 = READ_ONCE(i_skb_dev->cnf.ioam6_id_wide);
- 
- 		*(__be32 *)data = cpu_to_be32(raw32);
- 		data += sizeof(__be32);
- 
--		if (dev->flags & IFF_LOOPBACK)
-+		if ((dev->flags & IFF_LOOPBACK) || !idev)
- 			raw32 = IOAM6_U32_UNAVAILABLE;
- 		else
--			raw32 = READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id_wide);
-+			raw32 = READ_ONCE(idev->cnf.ioam6_id_wide);
- 
- 		*(__be32 *)data = cpu_to_be32(raw32);
- 		data += sizeof(__be32);
+ static struct xt_match multiport_mt_reg[] __read_mostly = {
 -- 
 2.53.0
 
