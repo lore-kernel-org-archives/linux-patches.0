@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F86B33C19E;
-	Mon, 20 Apr 2026 15:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E660133C187;
+	Mon, 20 Apr 2026 15:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700055; cv=none; b=QCGQHoQGctbCiN90ckMtUz9/orTv+RBOB0nD6egjvfCK1xbC5xbP1mP5BEXSDkTslPYZo97U2Z7pyehSiIMWGVgiJwag/9UtFNPZLvsdNCifj4MjMaulwz2KF+MXbmhEdG+Gu6D0G485TX7j4SJk5DadEjwxgrMiCBDLmSn7Enk=
+	t=1776700058; cv=none; b=ECQzOzXpnhJI9sYJUKVlmlihn4K0myfrcXVD0mUdnrsoyrZMIxjKeieG/KRwYZXXIC6PkPb/wKZuEXkPiuYDEn0B7knHXtgrpqdkXsBW8jJI5r5hOTxDVds4BRer3wn2yDMyTukjJvLT5pa6q54457Nfakdvlwe9wOwSQP+j1Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700055; c=relaxed/simple;
-	bh=JCHbk9JTBzPFFdMANTn8NiXNOfx6SKzK/XxJFWR40W4=;
+	s=arc-20240116; t=1776700058; c=relaxed/simple;
+	bh=nK80jKlIcTndJArCYB/FwNIqfC6TM2ZL0utBv1ESBWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkYW2tJhIy39bx5Ic35LhVwVgquiSm7GLxn9cxgW5ON3Mh5EcPzO4kUUo7DImdC51zuR9adJAiOno5nQ5GlA1wS0DwLjgNtJUp4XC82rvUYXDzgzfQjM9gWS8ehLtnxrwzvd0tbl+5tN6Qq1TVKTqN2vIFdhjsXETZRT6kO0gMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxu/Wl4d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DmG16jI0t4bNKsn813mhGYKPL/eSxDNy3XPE1JjBCgQdZReZTplhsq1qg9ZNBX8zaFbqfc2n9/qilR8LMGzM8W8qQ+ihNq7L/+jVzZooIeXeorL954Mb3rMvN0OMUeBtpZfUIAJwmuhSHTb+iDwPQrrnIu5xl1HXAlrc6nigMjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxmjxSi6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxu/Wl4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB145C19425;
-	Mon, 20 Apr 2026 15:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxmjxSi6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E510C2BCB4;
+	Mon, 20 Apr 2026 15:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700055;
-	bh=JCHbk9JTBzPFFdMANTn8NiXNOfx6SKzK/XxJFWR40W4=;
+	s=korg; t=1776700057;
+	bh=nK80jKlIcTndJArCYB/FwNIqfC6TM2ZL0utBv1ESBWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxu/Wl4dxGT5NrWsGmYpqs+wqOov0a5COY1CkBNATFMVv4UTCYFDoPQ5i7gLEEqtg
-	 Kk2ktMZexl8zOKSZnkc8gV/qTFK05eLbYoKuDy79yyq/BreRQ5z5Lu02GefcDtS66f
-	 NAuyB0dwR6GZXkvGXUB8d1oWwGMoiWyNTYs63MRQ=
+	b=mxmjxSi65AwlhdhsB/Hks9DoJ/ju7/jnKrCJE8uI1ohQijzwxMfRY7FECpsn/yVOf
+	 /rDAQ036h1RzhzE3G1Bd9JEnjohx6+wJrwtorP2egIH3xN9m8oFvMhcBQZHlshqiZr
+	 6HVFva72XVfG0mvIXv4aaA/BsavOVO8V6hv3n64s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 024/220] netfilter: nft_set_pipapo_avx2: dont return non-matching entry on expiry
-Date: Mon, 20 Apr 2026 17:39:25 +0200
-Message-ID: <20260420153934.900044200@linuxfoundation.org>
+Subject: [PATCH 6.19 025/220] ALSA: hda/realtek - Fixed Speaker Mute LED for HP EliteBoard G1a platform
+Date: Mon, 20 Apr 2026 17:39:26 +0200
+Message-ID: <20260420153934.935917746@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,158 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit d3c0037ffe1273fa1961e779ff6906234d6cf53c ]
+[ Upstream commit d3be95efc6a1e03230ef646b498050152efe2888 ]
 
-New test case fails unexpectedly when avx2 matching functions are used.
+On the HP EliteBoard G1a platform (models without a headphone jack).
+the speaker mute LED failed to function. The Sysfs ctl-led info showed
+empty values because the standard LED registration couldn't correctly
+bind to the master switch.
+Adding this patch will fix and enable the speaker mute LED feature.
 
-The test first loads a ranomly generated pipapo set
-with 'ipv4 . port' key, i.e.  nft -f foo.
-
-This works.  Then, it reloads the set after a flush:
-(echo flush set t s; cat foo) | nft -f -
-
-This is expected to work, because its the same set after all and it was
-already loaded once.
-
-But with avx2, this fails: nft reports a clashing element.
-
-The reported clash is of following form:
-
-    We successfully re-inserted
-      a . b
-      c . d
-
-Then we try to insert a . d
-
-avx2 finds the already existing a . d, which (due to 'flush set') is marked
-as invalid in the new generation.  It skips the element and moves to next.
-
-Due to incorrect masking, the skip-step finds the next matching
-element *only considering the first field*,
-
-i.e. we return the already reinserted "a . b", even though the
-last field is different and the entry should not have been matched.
-
-No such error is reported for the generic c implementation (no avx2) or when
-the last field has to use the 'nft_pipapo_avx2_lookup_slow' fallback.
-
-Bisection points to
-7711f4bb4b36 ("netfilter: nft_set_pipapo: fix range overlap detection")
-but that fix merely uncovers this bug.
-
-Before this commit, the wrong element is returned, but erronously
-reported as a full, identical duplicate.
-
-The root-cause is too early return in the avx2 match functions.
-When we process the last field, we should continue to process data
-until the entire input size has been consumed to make sure no stale
-bits remain in the map.
-
-Link: https://lore.kernel.org/netfilter-devel/20260321152506.037f68c0@elisabeth/
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Tested-by: Chris Chiu <chris.chiu@canonical.com>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/279e929e884849df84687dbd67f20037@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo_avx2.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
-index 7ff90325c97fa..6395982e4d95c 100644
---- a/net/netfilter/nft_set_pipapo_avx2.c
-+++ b/net/netfilter/nft_set_pipapo_avx2.c
-@@ -242,7 +242,7 @@ static int nft_pipapo_avx2_lookup_4b_2(unsigned long *map, unsigned long *fill,
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 8733f57c4aafe..1791ed0f3b4df 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3725,22 +3725,42 @@ static void alc245_tas2781_spi_hp_fixup_muteled(struct hda_codec *codec,
+ 	alc_fixup_hp_gpio_led(codec, action, 0x04, 0x0);
+ 	alc285_fixup_hp_coef_micmute_led(codec, fix, action);
+ }
++
++static void alc245_hp_spk_mute_led_update(void *private_data, int enabled)
++{
++	struct hda_codec *codec = private_data;
++	unsigned int val;
++
++	val = enabled ? 0x08 : 0x04; /* 0x08 led on, 0x04 led off */
++	alc_update_coef_idx(codec, 0x0b, 0x0c, val);
++}
++
+ /* JD2: mute led GPIO3: micmute led */
+ static void alc245_tas2781_i2c_hp_fixup_muteled(struct hda_codec *codec,
+ 					  const struct hda_fixup *fix, int action)
+ {
+ 	struct alc_spec *spec = codec->spec;
++	hda_nid_t hp_pin = alc_get_hp_pin(spec);
+ 	static const hda_nid_t conn[] = { 0x02 };
  
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
+ 	switch (action) {
+ 	case HDA_FIXUP_ACT_PRE_PROBE:
++		if (!hp_pin) {
++			spec->gen.vmaster_mute.hook = alc245_hp_spk_mute_led_update;
++			spec->gen.vmaster_mute_led = 1;
++		}
+ 		spec->gen.auto_mute_via_amp = 1;
+ 		snd_hda_override_conn_list(codec, 0x17, ARRAY_SIZE(conn), conn);
+ 		break;
++	case HDA_FIXUP_ACT_INIT:
++		if (!hp_pin)
++			alc245_hp_spk_mute_led_update(codec, !spec->gen.master_mute);
++		break;
+ 	}
  
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -319,7 +319,7 @@ static int nft_pipapo_avx2_lookup_4b_4(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -414,7 +414,7 @@ static int nft_pipapo_avx2_lookup_4b_8(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -505,7 +505,7 @@ static int nft_pipapo_avx2_lookup_4b_12(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -641,7 +641,7 @@ static int nft_pipapo_avx2_lookup_4b_32(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -699,7 +699,7 @@ static int nft_pipapo_avx2_lookup_8b_1(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -764,7 +764,7 @@ static int nft_pipapo_avx2_lookup_8b_2(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -839,7 +839,7 @@ static int nft_pipapo_avx2_lookup_8b_4(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -925,7 +925,7 @@ static int nft_pipapo_avx2_lookup_8b_6(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
-@@ -1019,7 +1019,7 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
- 
- 		b = nft_pipapo_avx2_refill(i_ul, &map[i_ul], fill, f->mt, last);
- 		if (last)
--			return b;
-+			ret = b;
- 
- 		if (unlikely(ret == -1))
- 			ret = b / XSAVE_YMM_SIZE;
+ 	tas2781_fixup_txnw_i2c(codec, fix, action);
+-	alc245_fixup_hp_mute_led_coefbit(codec, fix, action);
++	if (hp_pin)
++		alc245_fixup_hp_mute_led_coefbit(codec, fix, action);
+ 	alc285_fixup_hp_coef_micmute_led(codec, fix, action);
+ }
+ /*
 -- 
 2.53.0
 
