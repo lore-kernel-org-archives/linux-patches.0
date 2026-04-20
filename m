@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF7F3DA7E4;
-	Mon, 20 Apr 2026 13:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDB63DB63E;
+	Mon, 20 Apr 2026 13:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691444; cv=none; b=Epv75XlBfx9wIWe1RoHPi0C1jAmFbGDIY+Wn2wblmpOThr7wYNLIIBKOo1XTeoLwspzdlJiwYiYfvX1Ww+u6z+6c1DUZdQ6VYqmAkwmk3VaMhxiFw3M0dJuhVqvSWv93p02eLgWmXeyP0TvP8BU60qQeEnkUO0nWr2YLKVgs3ao=
+	t=1776691445; cv=none; b=TvKRdIiWmydoDGXWv5jsrBzRFFyADWo8zBCXJg10fJHT3B42vGtzb51rGMF1Jo22o0TKhgoLfSZQewvmCzBZ/7ZPGj2Sjix2ZmliPw+5+9TU+9t34WOebVZlR0GCWNFE//+1R6vR4gELE04ZAhfmST3Yp5u9kByS74A6LvCbHck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691444; c=relaxed/simple;
-	bh=AVw5mg88bSgQp4g6+0kb881zHx4zkaRGuN4cEpWXJ+E=;
+	s=arc-20240116; t=1776691445; c=relaxed/simple;
+	bh=IBuL87kg7wpsT412K8NRk4YOtFTrf5NwlI/iUmu+Et8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kmRDB86I12lx2KD1SYkg38AslJAnB2fTwqz2G6nMJNP+VtKXbK3RI045wNoVbB6iIRHcMCKReAa7j9arU+PvYrgUymP37U1fTh+EyI2OHcUq1y9f2YPsIOeGaIyxYXEpoTTPMdkfa48td4rQr0Lo3hwHdIDgBrwQqpAJBmZkMEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kUCoZJqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GMhf04qJ4m1K8XdWdL+3tbfzpyyNJhG7LJ3RSvAq2wGoWr4+6pxGodOL9JwD52QtvciPMDVJ0gg8eV8WLf/CeVFVMkjjQxnp1HaiDqlz95ZVqIEW4yqwpoMehr0nHVmM7mryHXSXPnzVC8E8338YkrylDo7rN8TENxpov9pjvpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mKw2ubrL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kUCoZJqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA08C2BCB4;
-	Mon, 20 Apr 2026 13:24:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mKw2ubrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570CAC2BCB8;
+	Mon, 20 Apr 2026 13:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691444;
-	bh=AVw5mg88bSgQp4g6+0kb881zHx4zkaRGuN4cEpWXJ+E=;
+	s=k20201202; t=1776691445;
+	bh=IBuL87kg7wpsT412K8NRk4YOtFTrf5NwlI/iUmu+Et8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUCoZJqpCwY4sZ+HgPDMBjGYBjkEpY/Ng4DFYeEpBQLh76F1HXWsn2FCyxB6nMLYu
-	 cHqgOpu/XLCe9N70VQm2s8FRnNZeA7fG1QZ67XJtMGZ/O1L9LJj+ZW4chtbZ06vX8C
-	 twruYrmoa/d9qgMkRZszewsuruI4ktsJac9uuPYiMOAVZowkGj+V/Ba+QyuY9CKuRu
-	 F16WO1gKnmErZYZx+w5BqFSnP+aVGshWzipTTfD69BFe1Pihq8c1tMpfuLjVgWIfYz
-	 T2ee1AJ5ESiWgCJ17fdrJQFGtCnXqGQRShemSyoRfRHCKgqQae9Ee4aizXnxoOz0X8
-	 iheYqb7SS4e4w==
+	b=mKw2ubrLr5QqdOp6FOQL+oZJE0zvdTlfQuYvQgDMbSfJ39PHj2UucaUAunYPYYom0
+	 WFKsJkeRpPXUQNf856Swl8E6/r+dRUKeFbLhOCgsZppPgu7+krv5Uo/DTp/7dpXECK
+	 raM/qHWLKvNYyyKZAZtTr5Ll5TtyZ/K4Qw3VOZCP5ExR2X34aMdV2jsf4rbHso2cmh
+	 ccU/rUocMUKJI3oPz65J8hQM0Ti7wGVKDAikKapG/ec1SrhZAfsMsXkjYsLsYjHgi1
+	 6vZ0rOPJkyVwbxLujfzkhIvjEkOj2p4rMjErofmxQXNGujq0D/w3FPWH2Ig5Xsyi44
+	 xy31pEgH9uCKw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mashiro Chen <mashiro.chen@mailbox.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	linux-hams@vger.kernel.org,
-	netdev@vger.kernel.org,
+	vireshk@kernel.org,
+	mturquette@baylibre.com,
+	sboyd@kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	soc@lists.linux.dev,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] net: rose: reject truncated CLEAR_REQUEST frames in state machines
-Date: Mon, 20 Apr 2026 09:17:05 -0400
-Message-ID: <20260420132314.1023554-31-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] clk: spear: fix resource leak in clk_register_vco_pll()
+Date: Mon, 20 Apr 2026 09:17:06 -0400
+Message-ID: <20260420132314.1023554-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -56,441 +58,253 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mashiro Chen <mashiro.chen@mailbox.org>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit 2835750dd6475a5ddc116be0b4c81fee8ce1a902 ]
+[ Upstream commit a0ac82cbed1007afd89e30940fe2335b61666783 ]
 
-All five ROSE state machines (states 1-5) handle ROSE_CLEAR_REQUEST
-by reading the cause and diagnostic bytes directly from skb->data[3]
-and skb->data[4] without verifying that the frame is long enough:
+Add a goto label in clk_register_vco_pll(), unregister vco_clk
+if tpll_clk is failed to be registered.
 
-  rose_disconnect(sk, ..., skb->data[3], skb->data[4]);
-
-The entry-point check in rose_route_frame() only enforces
-ROSE_MIN_LEN (3 bytes), so a remote peer on a ROSE network can
-send a syntactically valid but truncated CLEAR_REQUEST (3 or 4
-bytes) while a connection is open in any state.  Processing such a
-frame causes a one- or two-byte out-of-bounds read past the skb
-data, leaking uninitialized heap content as the cause/diagnostic
-values returned to user space via getsockopt(ROSE_GETCAUSE).
-
-Add a single length check at the rose_process_rx_frame() dispatch
-point, before any state machine is entered, to drop frames that
-carry the CLEAR_REQUEST type code but are too short to contain the
-required cause and diagnostic fields.
-
-Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
-Link: https://patch.msgid.link/20260408172551.281486-1-mashiro.chen@mailbox.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://lore.kernel.org/r/20260325062204.169648-1-lihaoxiang@isrc.iscas.ac.cn
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have all the information needed for a complete analysis.
+Now I have enough information to complete the analysis. Let me
+synthesize my findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-- Subsystem: `net: rose:`
-- Action verb: "reject" (implies adding a safety check / validation — a
-  bug fix)
-- Summary: Reject truncated CLEAR_REQUEST frames to prevent out-of-
-  bounds read
+**Step 1.1: Subject Line**
+- Subsystem: `clk: spear` (SPEAr SoC clock driver)
+- Action verb: "fix" (explicitly a bug fix)
+- Summary: Fixes a resource leak where `vco_clk` is not unregistered on
+  error path
 
-Record: [net: rose] [reject] [Add length validation for CLEAR_REQUEST
-frames to prevent OOB read]
+**Step 1.2: Tags**
+- Signed-off-by: Haoxiang Li (author)
+- Acked-by: Viresh Kumar (original author of the file and subsystem
+  maintainer)
+- Link: to lore submission
+- Signed-off-by: Arnd Bergmann (ARM SoC maintainer who merged it)
+- No Fixes: tag, no Reported-by:, no Cc: stable (expected for review
+  candidates)
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- `Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>` — author
-- `Link: https://patch.msgid.link/20260408172551.281486-1-
-  mashiro.chen@mailbox.org` — original patch submission
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` — network maintainer
-  (committed the patch)
-- No Fixes: tag (expected for this review pipeline)
-- No Reported-by: tag
-- No Cc: stable tag
+**Step 1.3: Commit Body**
+The body explains: when `tpll_clk` (PLL clock) registration fails, the
+already-registered `vco_clk` is leaked because the error path goes to
+`free_pll` which only frees the structs but doesn't unregister the
+clock.
 
-Record: Patch accepted by Jakub Kicinski (net maintainer). Single
-standalone patch (not part of a series).
-
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-The commit body clearly describes:
-- **Bug**: All five ROSE state machines (states 1-5) handle
-  ROSE_CLEAR_REQUEST by reading `skb->data[3]` and `skb->data[4]`
-  without verifying the frame is long enough.
-- **Root cause**: `rose_route_frame()` only enforces `ROSE_MIN_LEN` (3
-  bytes), but `data[3]` and `data[4]` need at least 5 bytes.
-- **Trigger**: A remote peer on a ROSE network can send a 3- or 4-byte
-  CLEAR_REQUEST.
-- **Consequence**: 1-2 byte out-of-bounds read past skb data, leaking
-  uninitialized heap content as cause/diagnostic values returned to
-  userspace via `getsockopt(ROSE_GETCAUSE)`.
-
-Record: OOB read vulnerability. Remote trigger. Info leak to userspace.
-Clear mechanism explained.
-
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-This is not hidden — it's an explicit security/memory safety bug fix.
-The word "reject" means "add missing input validation."
-
-Record: Explicit bug fix, not disguised.
-
----
+**Step 1.4: Hidden Bug Fix?**
+No, this is explicitly labeled as a "fix resource leak" — not hidden.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: INVENTORY THE CHANGES**
-- 1 file changed: `net/rose/rose_in.c`
-- +7 lines added (5 lines comment + 2 lines of code)
-- Function modified: `rose_process_rx_frame()`
-- Scope: Single-file surgical fix
+**Step 2.1: Inventory**
+- Single file: `drivers/clk/spear/clk-vco-pll.c`
+- +3 lines (new label + `clk_unregister` + blank line), 1 line changed
+  (`goto free_pll` -> `goto unregister_clk`)
+- Function modified: `clk_register_vco_pll()`
+- Scope: Single-file surgical fix, error path only
 
-Record: [net/rose/rose_in.c +7/-0] [rose_process_rx_frame] [Single-file
-surgical fix]
+**Step 2.2: Code Flow Change**
+- BEFORE: When `tpll_clk = clk_register(NULL, &pll->hw)` fails, code
+  jumps to `free_pll`, which only does `kfree(pll)` + `kfree(vco)`. The
+  already-registered `vco_clk` is leaked.
+- AFTER: Code jumps to new label `unregister_clk`, which calls
+  `clk_unregister(vco_clk)` before falling through to `free_pll`.
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- **Before**: After `rose_decode()` returns the frametype, the code
-  dispatches directly to state machines. If `frametype ==
-  ROSE_CLEAR_REQUEST` and `skb->len < 5`, the state machines would read
-  `skb->data[3]` and `skb->data[4]` beyond the buffer.
-- **After**: A length check drops CLEAR_REQUEST frames shorter than 5
-  bytes before any state machine is entered. This prevents the OOB
-  access in all 5 state machines with one check.
+**Step 2.3: Bug Mechanism**
+Resource leak in error path — specifically, a registered clock object
+(`vco_clk`) that is never unregistered when the subsequent PLL clock
+registration fails.
 
-Record: [Before: no length validation for CLEAR_REQUEST → OOB read |
-After: reject truncated frames early]
-
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Category: **Memory safety fix — out-of-bounds read**
-- The frame minimum is 3 bytes (`ROSE_MIN_LEN = 3`)
-- `ROSE_CLEAR_REQUEST` needs bytes at offsets 3 and 4 (requiring 5
-  bytes)
-- All five state machines access `skb->data[3]` and `skb->data[4]` when
-  handling CLEAR_REQUEST
-- The OOB-read values are stored in `rose->cause` and
-  `rose->diagnostic`, which are exposed to userspace via `SIOCRSGCAUSE`
-  ioctl
-
-Record: [OOB read, 1-2 bytes past skb data] [Remote trigger via
-malformed ROSE frame] [Info leak to userspace via ioctl]
-
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Obviously correct: The check is trivially verifiable — CLEAR_REQUEST
-  needs bytes at index 3 and 4, so minimum length must be 5.
-- Minimal/surgical: 2 lines of actual code + comment, at a single
-  dispatch point that covers all 5 state machines.
-- Regression risk: Near zero. It only drops malformed frames that would
-  cause OOB access anyway.
-- No side effects: Returns 0 (drops the frame silently), which is the
-  standard behavior for invalid frames.
-
-Record: [Obviously correct, minimal, near-zero regression risk]
-
----
+**Step 2.4: Fix Quality**
+- Obviously correct: Yes. The ordering is correct (`clk_unregister`
+  before `kfree`), and it only applies when `vco_clk` was successfully
+  registered.
+- Minimal/surgical: Yes, 4 lines total.
+- Regression risk: Essentially zero — only affects an error path that
+  was previously buggy.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Git blame shows the vulnerable `skb->data[3]` / `skb->data[4]` accesses
-originate from commit `1da177e4c3f41` — **Linux 2.6.12-rc2 (April
-2005)**. This is the initial import of the Linux kernel into git. The
-bug has existed since the very beginning of the ROSE protocol
-implementation.
+**Step 3.1: Blame**
+From `git blame`, the buggy code (line 346: `goto free_pll;`) was
+introduced in commit `55b8fd4f42850` by Viresh Kumar on 2012-04-10,
+which is the original "SPEAr: clk: Add VCO-PLL Synthesizer clock"
+commit. This bug has been present since v3.5 (2012).
 
-Record: [Buggy code from Linux 2.6.12-rc2 (2005)] [Present in ALL stable
-trees]
+**Step 3.2: Fixes: tag**
+No explicit Fixes: tag. Implicitly the fix is for `55b8fd4f428501`
+("SPEAr: clk: Add VCO-PLL Synthesizer clock").
 
-**Step 3.2: FOLLOW THE FIXES TAG**
-No Fixes: tag present (expected). Based on blame, the theoretical Fixes:
-target would be `1da177e4c3f41 ("Linux-2.6.12-rc2")`.
+**Step 3.3: File History**
+The file has had very few changes: mostly treewide cleanups (SPDX,
+kzalloc_obj, determine_rate API conversion). No recent bug fixes or
+active development.
 
-Record: [Bug exists since initial kernel git import, affects all stable
-trees]
+**Step 3.4: Author**
+Haoxiang Li is a prolific contributor of resource-leak fixes across the
+kernel (10+ similar commits found). Their related clk tegra fix
+explicitly CC'd stable.
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Recent changes to `rose_in.c` are minimal: `d860d1faa6b2c` (refcount
-conversion), `a6f190630d070` (drop reason tracking), `b6459415b384c`
-(include fix). None conflict with this fix. The fix applies cleanly with
-no dependencies.
+**Step 3.5: Dependencies**
+None. The fix is self-contained. `clk_unregister()` has been available
+since the clk framework was introduced.
 
-Record: [No conflicting changes, standalone fix, no dependencies]
+## PHASE 4: MAILING LIST
 
-**Step 3.4: CHECK THE AUTHOR**
-Mashiro Chen has other ROSE/hamradio-related patches (visible in the
-.mbx files in the workspace: `v2_20260409_mashiro_chen_net_hamradio_fix_
-missing_input_validation_in_bpqether_and_scc.mbx`). The patch was
-accepted by Jakub Kicinski, the network subsystem maintainer.
-
-Record: [Author contributes to amateur radio subsystem, patch accepted
-by net maintainer]
-
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-The fix only uses `frametype`, `ROSE_CLEAR_REQUEST`, and `skb->len` —
-all of which have existed since the file's creation. No dependencies.
-
-Record: [No dependencies. Applies standalone to any kernel version.]
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1-4.2: FIND ORIGINAL PATCH DISCUSSION**
-b4 dig could not find the exact match (possibly too recent or the commit
-hash `028ef9c96e961` is the Linux 7.0 tag, not the fix commit). However,
-the Link tag points to
-`patch.msgid.link/20260408172551.281486-1-mashiro.chen@mailbox.org`, and
-the patch was signed off by Jakub Kicinski, confirming acceptance by the
-net maintainer.
-
-Record: [b4 dig could not match (HEAD is Linux 7.0 tag)] [Patch accepted
-by Jakub Kicinski (net maintainer)]
-
-**Step 4.3-4.5**: Lore is behind Anubis protection, preventing direct
-fetching. But the commit message is detailed enough to fully understand
-the bug.
-
-Record: [Lore inaccessible due to bot protection] [Commit message
-provides complete technical detail]
-
----
+Lore is behind anti-bot protection. However, the commit has Acked-by
+from Viresh Kumar (the original author and subsystem co-maintainer) and
+was merged by Arnd Bergmann (ARM SoC maintainer), indicating proper
+review.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: KEY FUNCTIONS**
-Modified function: `rose_process_rx_frame()`
+**Step 5.1-5.4: Callers**
+`clk_register_vco_pll()` is called from:
+- `spear3xx_clock.c` (2 calls: vco1, vco2)
+- `spear6xx_clock.c` (2 calls: vco1, vco2)
+- `spear1310_clock.c` (4 calls: vco1-vco4)
+- `spear1340_clock.c` (4 calls: vco1-vco4)
 
-**Step 5.2: CALLERS**
-`rose_process_rx_frame()` is called from:
-1. `rose_route_frame()` in `rose_route.c:944` — the main frame routing
-   entry point from AX.25
-2. `rose_loopback_dequeue()` in `rose_loopback.c:93` — the loopback
-   queue processor
+These are all boot-time clock initialization paths. The error path would
+only trigger if `clk_register()` fails during boot.
 
-Both callers only enforce `ROSE_MIN_LEN` (3 bytes) before calling,
-confirming the vulnerability.
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 5.3: CALLEES**
-The state machine functions (`rose_state1_machine` through
-`rose_state5_machine`) are callees. All five access `skb->data[3]` and
-`skb->data[4]` for CLEAR_REQUEST, making the single check at the
-dispatch point the optimal fix location.
+**Step 6.1: Buggy code in stable**
+The file was introduced in v3.5 (2012). It exists in ALL stable trees.
+The buggy code has not changed since the original commit.
 
-**Step 5.4: CALL CHAIN / REACHABILITY**
-- `rose_route_frame()` is the AX.25 protocol handler for ROSE
-  (`rose_pid.func = rose_route_frame`), registered at module load via
-  `ax25_protocol_register()`. This is directly reachable from network
-  input — a remote peer on a ROSE network can send malformed frames.
-- `rose_loopback_dequeue()` processes locally-queued frames. Also
-  reachable.
+**Step 6.2: Backport Complications**
+The only potential issue: `kzalloc_obj` (from commit `bf4afc53b77ae`,
+v7.0 era) replaced `kzalloc`. But the fix only touches error handling
+labels, not the allocation code. The fix should apply cleanly with
+minimal or no conflict to all stable trees.
 
-Record: [Remotely triggerable via ROSE network frames. Both entry paths
-affected.]
-
-**Step 5.5: USER DATA LEAK PATH**
-Verified: `rose_disconnect()` stores the OOB-read values in
-`rose->cause` and `rose->diagnostic`. The `SIOCRSGCAUSE` ioctl in
-`af_rose.c:1389-1393` copies these to userspace via `copy_to_user()`.
-This completes the info leak chain from OOB kernel heap read to
-userspace.
-
-Record: [Complete info leak chain verified: OOB read →
-rose->cause/diagnostic → ioctl → userspace]
-
----
-
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
-
-**Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?**
-The buggy code dates from Linux 2.6.12-rc2 (2005). Very few changes have
-been made to `rose_in.c` across kernel versions. Since v5.15, only 3
-unrelated commits touched this file (include changes, pfmemalloc
-tracking, refcount conversion). The vulnerable
-`skb->data[3]`/`skb->data[4]` accesses are present in ALL active stable
-trees.
-
-Record: [Bug present in all stable trees: 5.4.y, 5.10.y, 5.15.y, 6.1.y,
-6.6.y, 6.12.y]
-
-**Step 6.2: BACKPORT COMPLICATIONS**
-The fix patches the `rose_process_rx_frame()` function which has been
-nearly unchanged since 2005. The recent `d860d1faa6b2c` (refcount_t
-conversion) doesn't affect the patch point. This will apply cleanly to
-all stable trees.
-
-Record: [Clean apply expected for all stable trees]
-
-**Step 6.3: RELATED FIXES IN STABLE**
-No related fix for this specific OOB read issue exists in any stable
-tree.
-
-Record: [No prior fix for this bug]
-
----
+**Step 6.3: Related fixes**
+No other fix for this issue exists in stable.
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: SUBSYSTEM CRITICALITY**
-- Subsystem: `net/rose/` — ROSE (Radio Over Serial Ethernet) amateur
-  radio protocol
-- Criticality: PERIPHERAL (niche protocol used by amateur radio
-  operators)
-- However: This is a network protocol reachable from external input,
-  making it security-relevant despite limited user base.
-
-Record: [net/rose — peripheral subsystem but remotely triggerable,
-security-relevant]
-
-**Step 7.2: SUBSYSTEM ACTIVITY**
-The ROSE subsystem is mature/stable — minimal development activity. The
-file has only had trivial/treewide changes since 2005. This means the
-bug has been present for ~21 years.
-
-Record: [Very mature code, minimal activity, bug present for 21 years]
-
----
+- Subsystem: `drivers/clk/spear` — clock driver for SPEAr SoC (ARM, ST
+  Microelectronics)
+- Criticality: PERIPHERAL — niche ARM embedded platform
+- Activity: Very low (mostly treewide cleanups)
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: WHO IS AFFECTED**
-Users with `CONFIG_ROSE` enabled who have ROSE sockets open. This is
-primarily amateur radio operators using AX.25/ROSE networking.
+**Step 8.1: Who is affected**
+Users of SPEAr SoC platforms (SPEAr3xx, SPEAr6xx, SPEAr13xx).
 
-Record: [Affected: systems with CONFIG_ROSE enabled and active ROSE
-connections]
+**Step 8.2: Trigger conditions**
+Only triggered if `clk_register()` fails for the PLL clock after VCO
+clock was successfully registered. This is an error-path-only scenario
+during boot.
 
-**Step 8.2: TRIGGER CONDITIONS**
-- **Remote trigger**: A peer on a ROSE network sends a 3- or 4-byte
-  frame with frametype byte 0x13 (CLEAR_REQUEST)
-- **No authentication needed**: Any ROSE peer can send this
-- **Deterministic**: Not a race condition — always triggers on receipt
-  of truncated frame
-- **Any connection state**: All 5 state machines are vulnerable
+**Step 8.3: Failure mode severity**
+Resource leak (registered clock not freed) — LOW severity. The clock
+remains registered but orphaned. Not a crash, not corruption, not
+security-relevant.
 
-Record: [Remotely triggerable, no authentication, deterministic, any
-connection state]
-
-**Step 8.3: FAILURE MODE SEVERITY**
-- **OOB read**: 1-2 bytes read past allocated skb data — reads
-  uninitialized heap memory
-- **Info leak to userspace**: The leaked bytes are stored in
-  `rose->cause`/`rose->diagnostic` and returned via `SIOCRSGCAUSE` ioctl
-- Severity: **HIGH** — kernel heap info leak reachable from network
-  input
-
-Record: [Severity: HIGH — remotely-triggered kernel heap info leak]
-
-**Step 8.4: RISK-BENEFIT RATIO**
-- **Benefit**: Fixes a remotely-triggered OOB read / kernel info leak in
-  a 21-year-old bug
-- **Risk**: 2 lines of code, obviously correct bounds check, zero
-  regression potential
-- **Ratio**: Extremely favorable — maximum benefit, minimum risk
-
-Record: [Benefit: HIGH (security fix) | Risk: VERY LOW (2 lines,
-trivially correct) | Ratio: Strongly favorable]
-
----
+**Step 8.4: Risk-Benefit**
+- Benefit: LOW — fixes a leak in a rarely-hit error path on a niche
+  platform
+- Risk: VERY LOW — 4 lines, obviously correct, error path only
+- Ratio: Acceptable but marginal
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: COMPILE THE EVIDENCE**
+**Evidence FOR backporting:**
+- Fixes a real resource leak bug (missing `clk_unregister`)
+- Extremely small and obviously correct (4 lines)
+- Acked by the subsystem maintainer (Viresh Kumar)
+- Zero regression risk (error path only)
+- Bug present since v3.5 (exists in all stable trees)
+- Applies cleanly
 
-Evidence FOR backporting:
-- Fixes a remotely-triggerable out-of-bounds read (security
-  vulnerability)
-- Kernel heap info leak to userspace via ioctl (complete exploit chain
-  verified)
-- Bug present since Linux 2.6.12 (2005) — affects ALL stable trees
-- Fix is 2 lines of code, obviously correct
-- No dependencies, applies cleanly to all stable trees
-- Accepted by net maintainer Jakub Kicinski
-- Single centralized check covers all 5 vulnerable state machines
+**Evidence AGAINST backporting:**
+- Very low real-world impact: only triggered on error path during boot-
+  time clock init
+- SPEAr is a niche, largely unmaintained ARM platform
+- The error condition (second `clk_register()` failing) is extremely
+  unlikely in practice
+- No Reported-by: tag — nobody actually hit this bug
+- Not a crash, corruption, or security issue — just a resource leak on
+  error path
+- Does not meet the "important issue" criterion of stable rules (not a
+  crash, security bug, data corruption, deadlock, etc.)
 
-Evidence AGAINST backporting:
-- ROSE is a niche protocol (limited user base)
-- No Fixes: tag (expected)
-
-Unresolved:
-- Could not access lore discussion (Anubis protection)
-
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **YES** — trivial bounds check,
-   accepted by net maintainer
-2. Fixes a real bug? **YES** — OOB read with info leak to userspace
-3. Important issue? **YES** — security vulnerability (remotely-triggered
-   kernel info leak)
-4. Small and contained? **YES** — 7 lines added (2 code + 5 comment),
-   single file
-5. No new features or APIs? **YES** — only adds validation
-6. Can apply to stable trees? **YES** — no conflicting changes, code
-   unchanged since 2005
-
-**Step 9.3: EXCEPTION CATEGORIES**
-Not an exception category — this is a standard security bug fix, which
-is core stable material.
-
-**Step 9.4: DECISION**
-This is a textbook stable backport candidate: a small, obvious security
-fix for a remotely-triggerable OOB read that has been present for 21
-years in all kernel versions.
-
----
+**Stable Rules Checklist:**
+1. Obviously correct and tested? YES
+2. Fixes a real bug? YES (resource leak)
+3. Important issue? NO — minor error-path leak on niche platform
+4. Small and contained? YES
+5. No new features? YES
+6. Can apply to stable? YES (likely clean apply or trivial conflict)
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by Jakub Kicinski (net maintainer),
-  Link to original patch
-- [Phase 2] Diff analysis: +7 lines (2 code + 5 comment) in
-  rose_process_rx_frame(), adds `skb->len < 5` check for CLEAR_REQUEST
-- [Phase 2] Verified all 5 state machines access `skb->data[3]` and
-  `skb->data[4]` for CLEAR_REQUEST (lines 58, 81, 123, 236, 256 of
-  rose_in.c)
-- [Phase 3] git blame: buggy code from `1da177e4c3f41` (Linux
-  2.6.12-rc2, April 2005), present in all stable trees
-- [Phase 3] git log: only 3 unrelated changes to rose_in.c since v5.15,
-  fix applies cleanly
-- [Phase 4] b4 dig: could not match (HEAD is Linux 7.0 tag, not the fix
-  commit)
-- [Phase 4] UNVERIFIED: Full lore discussion (Anubis protection blocked
-  access)
-- [Phase 5] Verified callers: rose_route_frame() and
-  rose_loopback_dequeue() both only check ROSE_MIN_LEN (3 bytes)
-- [Phase 5] Verified info leak chain: OOB values →
-  rose->cause/diagnostic → SIOCRSGCAUSE ioctl → copy_to_user
-- [Phase 5] Verified ROSE_MIN_LEN = 3 and ROSE_CLEAR_REQUEST = 0x13 in
-  include/net/rose.h
-- [Phase 6] Code exists unchanged in all active stable trees (v5.4+)
-- [Phase 7] net/rose is peripheral but network-reachable (security-
-  relevant)
-- [Phase 8] Failure mode: remotely-triggered kernel heap OOB read with
-  info leak to userspace, severity HIGH
+- [Phase 1] Parsed tags: Acked-by Viresh Kumar, SOB Arnd Bergmann, Link
+  to lore
+- [Phase 2] Diff analysis: 4 lines changed in error path of
+  `clk_register_vco_pll()`, adds `clk_unregister(vco_clk)` before kfree
+- [Phase 3] git blame: buggy code introduced in 55b8fd4f42850 (v3.5,
+  2012), present in all stable trees
+- [Phase 3] File history: 13 changes total since introduction, none fix
+  this bug
+- [Phase 3] Author history: Haoxiang Li submits many resource-leak
+  fixes, similar tegra fix CC'd stable
+- [Phase 4] Lore blocked by anti-bot; confirmed Acked-by from subsystem
+  maintainer from commit tags
+- [Phase 5] Callers: 12 call sites across 4 SPEAr clock init files, all
+  boot-time init
+- [Phase 6] Code exists in all active stable trees
+- [Phase 8] Failure mode: resource leak on error path, severity LOW
+
+While this is a legitimate bug fix that is small and obviously correct,
+it fixes a resource leak that only occurs in an extremely unlikely error
+path during boot on a niche embedded platform. Nobody has reported
+hitting this bug. The stable kernel rules require that a fix addresses
+an "important" issue — this is a minor error-path cleanup, not a crash,
+security issue, data corruption, or deadlock. The risk is very low but
+so is the benefit.
 
 **YES**
 
- net/rose/rose_in.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/clk/spear/clk-vco-pll.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
-index 0276b393f0e53..e268005819627 100644
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -271,6 +271,13 @@ int rose_process_rx_frame(struct sock *sk, struct sk_buff *skb)
+diff --git a/drivers/clk/spear/clk-vco-pll.c b/drivers/clk/spear/clk-vco-pll.c
+index 601e123f5c4b5..faba727e2f843 100644
+--- a/drivers/clk/spear/clk-vco-pll.c
++++ b/drivers/clk/spear/clk-vco-pll.c
+@@ -343,13 +343,15 @@ struct clk *clk_register_vco_pll(const char *vco_name, const char *pll_name,
  
- 	frametype = rose_decode(skb, &ns, &nr, &q, &d, &m);
+ 	tpll_clk = clk_register(NULL, &pll->hw);
+ 	if (IS_ERR_OR_NULL(tpll_clk))
+-		goto free_pll;
++		goto unregister_clk;
  
-+	/*
-+	 * ROSE_CLEAR_REQUEST carries cause and diagnostic in bytes 3..4.
-+	 * Reject a malformed frame that is too short to contain them.
-+	 */
-+	if (frametype == ROSE_CLEAR_REQUEST && skb->len < 5)
-+		return 0;
-+
- 	switch (rose->state) {
- 	case ROSE_STATE_1:
- 		queued = rose_state1_machine(sk, skb, frametype);
+ 	if (pll_clk)
+ 		*pll_clk = tpll_clk;
+ 
+ 	return vco_clk;
+ 
++unregister_clk:
++	clk_unregister(vco_clk);
+ free_pll:
+ 	kfree(pll);
+ free_vco:
 -- 
 2.53.0
 
