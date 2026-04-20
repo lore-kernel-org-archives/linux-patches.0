@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C237A33F5A9;
-	Mon, 20 Apr 2026 16:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5788F344D99;
+	Mon, 20 Apr 2026 16:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701508; cv=none; b=HpOs5ernk0bACg3fe+7hrk7X3RO/+saik/axkcFHciYAbacsUB6rAigxK7v+loeGFimkTHFbenZGooDFfUtdxfeJrrvNbv4byoCzD9QALmmD5x3Nj07kTuVPVTJT4CaGIUtrsAnNjtIpfrzk2ylg2GzYfuxzDXhBu4ZxytFE45A=
+	t=1776701511; cv=none; b=aKRtQ3jRMzQTgZfxD2PNIQy2v1wXo1jVhWqRudcBZYMitdRqusJM4NvC8HkRxpAgvVB7gva3/RsdV5afgSuqCvCvmEsMxvzasFqxwJCv4HgedNAStc6e/UzyXAik0aE21VF3TuF137upydOIK7ehhxSupoi3JhU8MoHNOat7DnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701508; c=relaxed/simple;
-	bh=JLPym1bzU5BHh1TAAJo7cLMWqCCV8yO4TiBDeQz72gM=;
+	s=arc-20240116; t=1776701511; c=relaxed/simple;
+	bh=tC88ZbFxlOKyMXqH2bsQuGhapoyDf1hgmzmjbKmP35E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mz1N1NhpIG7l/wPKPB2FOowaK2GqJrS/RyQHPd3V/S5GPydSzUst28xRw4c7fkfRsu1n3uSyqLFa/CealQ6aSE2DuS1/WStMBoranOfgMqqYyT9mVYZDnW03V8wRYpHsTIMnNK8hS2/GKVqN244srqdjl4aNuLmueafHl0sglrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HptBi4LP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F7EeBJgCV2jl5akra7Ggp01gqe+CTeDIqlOeEqDwc1rdQpsOgNrrCUNJqM34o/rWQP6gbckJq1zeFIGXkUQWQN1ccDc2qz3hsIe2YMCYhdxBOQWLahMopiKedpd2O4T3zMNeGhI9tyqgY4MEKjy6dH7A6GTIW24wTpu8dykbYCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szqNs6QJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HptBi4LP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B9EC19425;
-	Mon, 20 Apr 2026 16:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szqNs6QJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AA7C19425;
+	Mon, 20 Apr 2026 16:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701508;
-	bh=JLPym1bzU5BHh1TAAJo7cLMWqCCV8yO4TiBDeQz72gM=;
+	s=korg; t=1776701511;
+	bh=tC88ZbFxlOKyMXqH2bsQuGhapoyDf1hgmzmjbKmP35E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HptBi4LPQ9niOPSYs6nyb5E2HBXhEdM+8r+t4ggTa+4qgz9H1r8mqFRYfP2kGlgL3
-	 f/f7nBqZAvhQgGDHc9yaFoO3zNaIjpKA/e5UrdW0mOPhfDb2sno+zziHzGKrKTYfDI
-	 /j75tzCVcJOSa2qNy7FiHjEzLSV8obmIpL88ZKcU=
+	b=szqNs6QJasEraR/z3TrlvnSWvGBbbbHE/i/kss8bHtiHUJyh+o6wet57pROtUeLsj
+	 mf+Rsn9ofIkpVpIEBZMHxKie4VdHqhMvzzV1eCoFE7nIXlneplAOGifNYTlWGOyfeD
+	 exjJzfdGwkkAc+FhBa6Mqdf4z7EHFfm+aDRlwhJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.12 141/162] x86-64/arm64/powerpc: clean up and rename __copy_from_user_flushcache
-Date: Mon, 20 Apr 2026 17:42:53 +0200
-Message-ID: <20260420153932.153499501@linuxfoundation.org>
+	Yashu Zhang <zhangjiaji1@huawei.com>,
+	Tom Lendacky <thomas.lendacky@gmail.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 142/162] KVM: x86: Use scratch field in MMIO fragment to hold small write values
+Date: Mon, 20 Apr 2026 17:42:54 +0200
+Message-ID: <20260420153932.189795756@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -49,141 +52,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 809b997a5ce945ab470f70c187048fe4f5df20bf upstream.
+commit 0b16e69d17d8c35c5c9d5918bf596c75a44655d3 upstream.
 
-This finishes the work on these odd functions that were only implemented
-by a handful of architectures.
+When exiting to userspace to service an emulated MMIO write, copy the
+to-be-written value to a scratch field in the MMIO fragment if the size
+of the data payload is 8 bytes or less, i.e. can fit in a single chunk,
+instead of pointing the fragment directly at the source value.
 
-The 'flushcache' function was only used from the iterator code, and
-let's make it do the same thing that the nontemporal version does:
-remove the two underscores and add the user address checking.
+This fixes a class of use-after-free bugs that occur when the emulator
+initiates a write using an on-stack, local variable as the source, the
+write splits a page boundary, *and* both pages are MMIO pages.  Because
+KVM's ABI only allows for physically contiguous MMIO requests, accesses
+that split MMIO pages are separated into two fragments, and are sent to
+userspace one at a time.  When KVM attempts to complete userspace MMIO in
+response to KVM_RUN after the first fragment, KVM will detect the second
+fragment and generate a second userspace exit, and reference the on-stack
+variable.
 
-Yes, yes, the user address checking is also done at iovec import time,
-but we have long since walked away from the old double-underscore thing
-where we try to avoid address checking overhead at access time, and
-these functions shouldn't be so special and old-fashioned.
+The issue is most visible if the second KVM_RUN is performed by a separate
+task, in which case the stack of the initiating task can show up as truly
+freed data.
 
-The arm64 version already did the address check, in fact, so there it's
-just a matter of renaming it.  For powerpc and x86-64 we now do the
-proper user access boilerplate.
+  ==================================================================
+  BUG: KASAN: use-after-free in complete_emulated_mmio+0x305/0x420
+  Read of size 1 at addr ffff888009c378d1 by task syz-executor417/984
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+  CPU: 1 PID: 984 Comm: syz-executor417 Not tainted 5.10.0-182.0.0.95.h2627.eulerosv2r13.x86_64 #3
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014 Call Trace:
+  dump_stack+0xbe/0xfd
+  print_address_description.constprop.0+0x19/0x170
+  __kasan_report.cold+0x6c/0x84
+  kasan_report+0x3a/0x50
+  check_memory_region+0xfd/0x1f0
+  memcpy+0x20/0x60
+  complete_emulated_mmio+0x305/0x420
+  kvm_arch_vcpu_ioctl_run+0x63f/0x6d0
+  kvm_vcpu_ioctl+0x413/0xb20
+  __se_sys_ioctl+0x111/0x160
+  do_syscall_64+0x30/0x40
+  entry_SYSCALL_64_after_hwframe+0x67/0xd1
+  RIP: 0033:0x42477d
+  Code: <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007faa8e6890e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00000000004d7338 RCX: 000000000042477d
+  RDX: 0000000000000000 RSI: 000000000000ae80 RDI: 0000000000000005
+  RBP: 00000000004d7330 R08: 00007fff28d546df R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004d733c
+  R13: 0000000000000000 R14: 000000000040a200 R15: 00007fff28d54720
+
+  The buggy address belongs to the page:
+  page:0000000029f6a428 refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9c37
+  flags: 0xfffffc0000000(node=0|zone=1|lastcpupid=0x1fffff)
+  raw: 000fffffc0000000 0000000000000000 ffffea0000270dc8 0000000000000000
+  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000 page dumped because: kasan: bad access detected
+
+  Memory state around the buggy address:
+  ffff888009c37780: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ffff888009c37800: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  >ffff888009c37880: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                                                   ^
+  ffff888009c37900: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ffff888009c37980: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ==================================================================
+
+The bug can also be reproduced with a targeted KVM-Unit-Test by hacking
+KVM to fill a large on-stack variable in complete_emulated_mmio(), i.e. by
+overwrite the data value with garbage.
+
+Limit the use of the scratch fields to 8-byte or smaller accesses, and to
+just writes, as larger accesses and reads are not affected thanks to
+implementation details in the emulator, but add a sanity check to ensure
+those details don't change in the future.  Specifically, KVM never uses
+on-stack variables for accesses larger that 8 bytes, e.g. uses an operand
+in the emulator context, and *all* reads are buffered through the mem_read
+cache.
+
+Note!  Using the scratch field for reads is not only unnecessary, it's
+also extremely difficult to handle correctly.  As above, KVM buffers all
+reads through the mem_read cache, and heavily relies on that behavior when
+re-emulating the instruction after a userspace MMIO read exit.  If a read
+splits a page, the first page is NOT an MMIO page, and the second page IS
+an MMIO page, then the MMIO fragment needs to point at _just_ the second
+chunk of the destination, i.e. its position in the mem_read cache.  Taking
+the "obvious" approach of copying the fragment value into the destination
+when re-emulating the instruction would clobber the first chunk of the
+destination, i.e. would clobber the data that was read from guest memory.
+
+Fixes: f78146b0f923 ("KVM: Fix page-crossing MMIO")
+Suggested-by: Yashu Zhang <zhangjiaji1@huawei.com>
+Reported-by: Yashu Zhang <zhangjiaji1@huawei.com>
+Closes: https://lore.kernel.org/all/369eaaa2b3c1425c85e8477066391bc7@huawei.com
+Cc: stable@vger.kernel.org
+Tested-by: Tom Lendacky <thomas.lendacky@gmail.com>
+Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Link: https://patch.msgid.link/20260225012049.920665-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/uaccess.h   |    2 +-
- arch/powerpc/include/asm/uaccess.h |    3 +--
- arch/powerpc/lib/pmem.c            |   11 ++++++-----
- arch/x86/include/asm/uaccess_64.h  |    8 ++++----
- arch/x86/lib/usercopy_64.c         |    8 ++++----
- lib/iov_iter.c                     |    2 +-
- 6 files changed, 17 insertions(+), 17 deletions(-)
+ arch/x86/kvm/x86.c       |   14 +++++++++++++-
+ include/linux/kvm_host.h |    3 ++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/uaccess.h
-+++ b/arch/arm64/include/asm/uaccess.h
-@@ -480,7 +480,7 @@ extern __must_check long strnlen_user(co
- #ifdef CONFIG_ARCH_HAS_UACCESS_FLUSHCACHE
- extern unsigned long __must_check __copy_user_flushcache(void *to, const void __user *from, unsigned long n);
- 
--static inline int __copy_from_user_flushcache(void *dst, const void __user *src, unsigned size)
-+static inline size_t copy_from_user_flushcache(void *dst, const void __user *src, size_t size)
- {
- 	kasan_check_write(dst, size);
- 	return __copy_user_flushcache(dst, __uaccess_mask_ptr(src), size);
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -407,8 +407,7 @@ copy_mc_to_user(void __user *to, const v
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -7976,7 +7976,13 @@ static int emulator_read_write_onepage(u
+ 	WARN_ON(vcpu->mmio_nr_fragments >= KVM_MAX_MMIO_FRAGMENTS);
+ 	frag = &vcpu->mmio_fragments[vcpu->mmio_nr_fragments++];
+ 	frag->gpa = gpa;
+-	frag->data = val;
++	if (write && bytes <= 8u) {
++		frag->val = 0;
++		frag->data = &frag->val;
++		memcpy(&frag->val, val, bytes);
++	} else {
++		frag->data = val;
++	}
+ 	frag->len = bytes;
+ 	return X86EMUL_CONTINUE;
  }
- #endif
+@@ -7991,6 +7997,9 @@ static int emulator_read_write(struct x8
+ 	gpa_t gpa;
+ 	int rc;
  
--extern long __copy_from_user_flushcache(void *dst, const void __user *src,
--		unsigned size);
-+extern size_t copy_from_user_flushcache(void *dst, const void __user *src, size_t size);
++	if (WARN_ON_ONCE((bytes > 8u || !ops->write) && object_is_on_stack(val)))
++		return X86EMUL_UNHANDLEABLE;
++
+ 	if (ops->read_write_prepare &&
+ 		  ops->read_write_prepare(vcpu, val, bytes))
+ 		return X86EMUL_CONTINUE;
+@@ -11508,6 +11517,9 @@ static int complete_emulated_mmio(struct
+ 		frag++;
+ 		vcpu->mmio_cur_fragment++;
+ 	} else {
++		if (WARN_ON_ONCE(frag->data == &frag->val))
++			return -EIO;
++
+ 		/* Go forward to the next mmio piece. */
+ 		frag->data += len;
+ 		frag->gpa += len;
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -323,7 +323,8 @@ static inline bool kvm_vcpu_can_poll(kti
+ struct kvm_mmio_fragment {
+ 	gpa_t gpa;
+ 	void *data;
+-	unsigned len;
++	u64 val;
++	unsigned int len;
+ };
  
- static __must_check __always_inline bool user_access_begin(const void __user *ptr, size_t len)
- {
---- a/arch/powerpc/lib/pmem.c
-+++ b/arch/powerpc/lib/pmem.c
-@@ -66,15 +66,16 @@ EXPORT_SYMBOL_GPL(arch_invalidate_pmem);
- /*
-  * CONFIG_ARCH_HAS_UACCESS_FLUSHCACHE symbols
-  */
--long __copy_from_user_flushcache(void *dest, const void __user *src,
--		unsigned size)
-+size_t copy_from_user_flushcache(void *dest, const void __user *src,
-+				 size_t size)
- {
--	unsigned long copied, start = (unsigned long) dest;
-+	unsigned long not_copied, start = (unsigned long) dest;
- 
--	copied = __copy_from_user(dest, src, size);
-+	src = mask_user_address(src);
-+	not_copied = __copy_from_user(dest, src, size);
- 	clean_pmem_range(start, start + size);
- 
--	return copied;
-+	return not_copied;
- }
- 
- void memcpy_flushcache(void *dest, const void *src, size_t size)
---- a/arch/x86/include/asm/uaccess_64.h
-+++ b/arch/x86/include/asm/uaccess_64.h
-@@ -149,7 +149,7 @@ raw_copy_to_user(void __user *dst, const
- 
- #define copy_to_nontemporal copy_to_nontemporal
- extern size_t copy_to_nontemporal(void *dst, const void *src, size_t size);
--extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
-+extern size_t copy_user_flushcache(void *dst, const void __user *src, size_t size);
- 
- static inline int
- copy_from_user_inatomic_nontemporal(void *dst, const void __user *src,
-@@ -164,11 +164,11 @@ copy_from_user_inatomic_nontemporal(void
- 	return ret;
- }
- 
--static inline int
--__copy_from_user_flushcache(void *dst, const void __user *src, unsigned size)
-+static inline size_t
-+copy_from_user_flushcache(void *dst, const void __user *src, size_t size)
- {
- 	kasan_check_write(dst, size);
--	return __copy_user_flushcache(dst, src, size);
-+	return copy_user_flushcache(dst, src, size);
- }
- 
- /*
---- a/arch/x86/lib/usercopy_64.c
-+++ b/arch/x86/lib/usercopy_64.c
-@@ -43,14 +43,14 @@ void arch_wb_cache_pmem(void *addr, size
- }
- EXPORT_SYMBOL_GPL(arch_wb_cache_pmem);
- 
--long __copy_user_flushcache(void *dst, const void __user *src, unsigned size)
-+size_t copy_user_flushcache(void *dst, const void __user *src, size_t size)
- {
- 	unsigned long flushed, dest = (unsigned long) dst;
--	long rc;
-+	unsigned long rc;
- 
--	stac();
-+	src = masked_user_access_begin(src);
- 	rc = copy_to_nontemporal(dst, (__force const void *)src, size);
--	clac();
-+	user_access_end();
- 
- 	/*
- 	 * copy_to_nontemporal() uses non-temporal stores for the bulk
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -284,7 +284,7 @@ static __always_inline
- size_t copy_from_user_iter_flushcache(void __user *iter_from, size_t progress,
- 				      size_t len, void *to, void *priv2)
- {
--	return __copy_from_user_flushcache(to + progress, iter_from, len);
-+	return copy_from_user_flushcache(to + progress, iter_from, len);
- }
- 
- static __always_inline
+ struct kvm_vcpu {
 
 
