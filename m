@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9930C3382DE;
-	Mon, 20 Apr 2026 15:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02CD3382DE;
+	Mon, 20 Apr 2026 15:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700274; cv=none; b=teXaAJZ0pHb0rs848NmZ6izYkgvBY+KXHPY0j2+MmwCWvi+m+A7WVw6ZyG4NWn7Ai3RYS8H6L5KGPMfz3Bi5G/kdBAunuGqtyofvTUb7XVQypbfgyBafSBOK0zPnVyVcwlWG5/Sbipf+kib8HLGnv+e+8w401WLER/i0T2TBJFE=
+	t=1776700276; cv=none; b=Vmm9eXQkQ7KI5mFptATKDFDXV2ol4jUeGVoHD3ypSopbtdtuvE9fuOtHP/Box/tFju1FOGjujg5bNRfl/l5kUMELnofYcNTGzdJ2Zyp0ZtgDMpTS1B4HOsJmcuRKXVmxu9WDjxQnsuAhRVIHB7IABJoH6z6VsQ3XqAe4zd37EJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700274; c=relaxed/simple;
-	bh=Z1oHvWK4r+zzSfkprcw8wVE7P7ge9UFx82SYRTKj4UU=;
+	s=arc-20240116; t=1776700276; c=relaxed/simple;
+	bh=J/9En7zE5lMJ3EPur59idZn7mtDGMMaZDEpVR2RjNJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKty604MYE3yE79UiIP0VI7X6hiWAhWqy/ASv+vs+SFT5KFeLXELZxZLZ8zELKGCZmKqtH8hFU719ocfK8VBAJkULOk6+biFOY8vLXTBB+PGZd5zkkldbSfB93NYqAK2QfpStxZoPmMZpVn91J8Qz0dXR48Jpdl4voMJk9wlAgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhexiCQ8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXz/y9luwyKpStXFVK3UcsVZXgLdPhjt+KfNb05wHQasYw4upLDnrs4iUKz0opksfY+j+RwMaCngF/sYVJC/VHOUx1WSbAbypewe42ZY19Aw2EwcmTPc5jL3EhTAAeynvJ8pa3VG+4BS46iXnohDSaLwzKtgKkKxFJv/6Yry7TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdnY+UP1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhexiCQ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE67C19425;
-	Mon, 20 Apr 2026 15:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdnY+UP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6718EC19425;
+	Mon, 20 Apr 2026 15:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700274;
-	bh=Z1oHvWK4r+zzSfkprcw8wVE7P7ge9UFx82SYRTKj4UU=;
+	s=korg; t=1776700276;
+	bh=J/9En7zE5lMJ3EPur59idZn7mtDGMMaZDEpVR2RjNJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fhexiCQ8EmtpjOIHoklc2KkNZAltqTV9rvd7EzxW+XZLJ8JZkbfLnGMEfsKbpBm7Q
-	 Kdq/buuzBDUL2+q/rkUum2XaX9Ndwclx0LbzC8964nyukKMivQwWXxDn9cHcC0PWem
-	 QtGS2o0ihkctc3JtGuOWa9YJiOf94b3ANYLvRY1k=
+	b=SdnY+UP1XwqYbEJ6FaxfgHSiMGKul0jOCa/LBSl7sn0L/vHh64rO22tv2rbdLjmgy
+	 baCC+Dm5NW2EDl5MszWtTzraB73DBQjB7BF7Vem+7kxAj31RRppU7L2b9cEap/wpMS
+	 nx5QWAKN2DLG3Qc5hPPuiG33tQXwhtHdMWCKLEG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ruide Cao <caoruide123@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 076/220] eventpoll: defer struct eventpoll free to RCU grace period
-Date: Mon, 20 Apr 2026 17:40:17 +0200
-Message-ID: <20260420153936.774715282@linuxfoundation.org>
+Subject: [PATCH 6.19 077/220] net: sched: act_csum: validate nested VLAN headers
+Date: Mon, 20 Apr 2026 17:40:18 +0200
+Message-ID: <20260420153936.810430649@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,46 +58,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Ruide Cao <caoruide123@gmail.com>
 
-[ Upstream commit 07712db80857d5d09ae08f3df85a708ecfc3b61f ]
+[ Upstream commit c842743d073bdd683606cb414eb0ca84465dd834 ]
 
-In certain situations, ep_free() in eventpoll.c will kfree the epi->ep
-eventpoll struct while it still being used by another concurrent thread.
-Defer the kfree() to an RCU callback to prevent UAF.
+tcf_csum_act() walks nested VLAN headers directly from skb->data when an
+skb still carries in-payload VLAN tags. The current code reads
+vlan->h_vlan_encapsulated_proto and then pulls VLAN_HLEN bytes without
+first ensuring that the full VLAN header is present in the linear area.
 
-Fixes: f2e467a48287 ("eventpoll: Fix semi-unbounded recursion")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+If only part of an inner VLAN header is linearized, accessing
+h_vlan_encapsulated_proto reads past the linear area, and the following
+skb_pull(VLAN_HLEN) may violate skb invariants.
+
+Fix this by requiring pskb_may_pull(skb, VLAN_HLEN) before accessing and
+pulling each nested VLAN header. If the header still is not fully
+available, drop the packet through the existing error path.
+
+Fixes: 2ecba2d1e45b ("net: sched: act_csum: Fix csum calc for tagged packets")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Ruide Cao <caoruide123@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/22df2fcb49f410203eafa5d97963dd36089f4ecf.1774892775.git.caoruide123@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 6 +++++-
+ net/sched/act_csum.c | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index d20917b03161b..3bdbaf202d4db 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -226,6 +226,9 @@ struct eventpoll {
- 	 */
- 	refcount_t refcount;
+diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
+index 0939e6b2ba4d1..3a377604ad343 100644
+--- a/net/sched/act_csum.c
++++ b/net/sched/act_csum.c
+@@ -604,8 +604,12 @@ TC_INDIRECT_SCOPE int tcf_csum_act(struct sk_buff *skb,
+ 			protocol = skb->protocol;
+ 			orig_vlan_tag_present = true;
+ 		} else {
+-			struct vlan_hdr *vlan = (struct vlan_hdr *)skb->data;
++			struct vlan_hdr *vlan;
  
-+	/* used to defer freeing past ep_get_upwards_depth_proc() RCU walk */
-+	struct rcu_head rcu;
++			if (!pskb_may_pull(skb, VLAN_HLEN))
++				goto drop;
 +
- #ifdef CONFIG_NET_RX_BUSY_POLL
- 	/* used to track busy poll napi_id */
- 	unsigned int napi_id;
-@@ -819,7 +822,8 @@ static void ep_free(struct eventpoll *ep)
- 	mutex_destroy(&ep->mtx);
- 	free_uid(ep->user);
- 	wakeup_source_unregister(ep->ws);
--	kfree(ep);
-+	/* ep_get_upwards_depth_proc() may still hold epi->ep under RCU */
-+	kfree_rcu(ep, rcu);
- }
- 
- /*
++			vlan = (struct vlan_hdr *)skb->data;
+ 			protocol = vlan->h_vlan_encapsulated_proto;
+ 			skb_pull(skb, VLAN_HLEN);
+ 			skb_reset_network_header(skb);
 -- 
 2.53.0
 
