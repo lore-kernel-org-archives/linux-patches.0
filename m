@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DF833B6FC;
-	Mon, 20 Apr 2026 15:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB6A33D6F9;
+	Mon, 20 Apr 2026 15:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699844; cv=none; b=Q4ST6puM2FUTNsqSnDolX9eI4HgN6L0Wm9Uc0rJVMrNf1xMjim1oDih63HpzkCv9fSl/kIZpr0d20tOJdZeU9LIvwU3eVqDLMX5NXDjcvpuqpN/szYoTk6MWALB45ZBHFsXjCGM+LMx6F6abXZUnngNEFc3GdGX0jL4SBNgClMk=
+	t=1776699847; cv=none; b=HWXMbPL9mdzJGf54FFPmKkVcfNy72UKYcKj55fYNZCiTw0HmKzgo5vg/AwMzbmoXbRS7K2x9sgWZImvshcuDVYZkhz22MLf2uuR21DQ6JS/Vjg2WtNyckPP5n+62WKnEB1HbrnEyxp3XSG3B5Wi4vOps8NBi7PEqxNx2Es/dLww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699844; c=relaxed/simple;
-	bh=jLCs7Jkv1A1epTMqBUAGPEXP+2MJwIlcZGehOXBYUo0=;
+	s=arc-20240116; t=1776699847; c=relaxed/simple;
+	bh=NsF4Las+Qylg6pE5DafJw9uyqEYAuiWve74xlp8ldKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxU8zQ9fOYvxb9/sVRarApJYaLDyt29nnkrHVaDxkTOVo+E7irtFUt3DHxMR1t+n2Mb8nf5pCeJOkO41TAXFfqYEapvRVuKTqdpO5F7n8bY1aAqePCil0tr3El9BMRN7U3cQ9d8TvGSf/XhY98S5xybMMOC9MKItP1L6+LWLGJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgOHq1Y+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uXvleuw7UhWBtj0auE04seY+e10eh6QdlHwLYTSZKohPqTvOe/ic2JzMtDDbfzVxlnNvIsszNQGAnn/CstVS89527WR62GiniIr8qLY6UwAX1BrFlWReK/MKOWkqZoBmMvUqQuP+4Yh9DUq+3+WRWwfQ7zRVIaPRfIMbRROxj6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3TLhwyu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgOHq1Y+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD72C19425;
-	Mon, 20 Apr 2026 15:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3TLhwyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA87DC2BCB6;
+	Mon, 20 Apr 2026 15:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699844;
-	bh=jLCs7Jkv1A1epTMqBUAGPEXP+2MJwIlcZGehOXBYUo0=;
+	s=korg; t=1776699847;
+	bh=NsF4Las+Qylg6pE5DafJw9uyqEYAuiWve74xlp8ldKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgOHq1Y+w51y3LqgYeuZTRPttA857ESHu2VadFGUL6klFLXKZKQz1wHTTcu49fwgX
-	 1ULgQ0iEKBD5T4N1skPOqsvZ7o75E5ffqLOepGJssma7EGqkIC+KXbVT04GqqIm1I5
-	 8u46VbVVc3nHRHseD7CGfR3Ko5bKD+eT5nJpX3TQ=
+	b=O3TLhwyuXuxRGVoXuw51G79/zbddgC4XBRA45cofYDu8EC6rlaeTOuTba4fDwcGg4
+	 lDmzFmpXGgBJB3EKmwjLSkWtPL3dYPF7WUC/t+A62OE/nAOGmxEdXadua/aY7fOxD4
+	 MgKmVP7KS6FxJuR8kJDC8C1wwUSFjIaLfT9cn+Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 7.0 02/76] x86/CPU: Fix FPDSS on Zen1
-Date: Mon, 20 Apr 2026 17:41:13 +0200
-Message-ID: <20260420153910.903780184@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	stable@kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.0 20/76] ksmbd: validate EaNameLength in smb2_get_ea()
+Date: Mon, 20 Apr 2026 17:41:31 +0200
+Message-ID: <20260420153911.560094913@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -50,47 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit e55d98e7756135f32150b9b8f75d580d0d4b2dd3 upstream.
+commit 66751841212c2cc196577453c37f7774ff363f02 upstream.
 
-Zen1's hardware divider can leave, under certain circumstances, partial
-results from previous operations.  Those results can be leaked by
-another, attacker thread.
+smb2_get_ea() reads ea_req->EaNameLength from the client request and
+passes it directly to strncmp() as the comparison length without
+verifying that the length of the name really is the size of the input
+buffer received.
 
-Fix that with a chicken bit.
+Fix this up by properly checking the size of the name based on the value
+received and the overall size of the request, to prevent a later
+strncmp() call to use the length as a "trusted" size of the buffer.
+Without this check, uninitialized heap values might be slowly leaked to
+the client.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/msr-index.h |    3 +++
- arch/x86/kernel/cpu/amd.c        |    3 +++
- 2 files changed, 6 insertions(+)
+ fs/smb/server/smb2pdu.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -674,6 +674,9 @@
- #define MSR_AMD64_DC_CFG		0xc0011022
- #define MSR_AMD64_TW_CFG		0xc0011023
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4716,6 +4716,11 @@ static int smb2_get_ea(struct ksmbd_work
  
-+#define MSR_AMD64_FP_CFG		0xc0011028
-+#define MSR_AMD64_FP_CFG_ZEN1_DENORM_FIX_BIT	9
+ 		ea_req = (struct smb2_ea_info_req *)((char *)req +
+ 						     le16_to_cpu(req->InputBufferOffset));
 +
- #define MSR_AMD64_DE_CFG		0xc0011029
- #define MSR_AMD64_DE_CFG_LFENCE_SERIALIZE_BIT	 1
- #define MSR_AMD64_DE_CFG_LFENCE_SERIALIZE	BIT_ULL(MSR_AMD64_DE_CFG_LFENCE_SERIALIZE_BIT)
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -943,6 +943,9 @@ static void init_amd_zen1(struct cpuinfo
- 		msr_clear_bit(MSR_K7_HWCR, MSR_K7_HWCR_IRPERF_EN_BIT);
- 		clear_cpu_cap(c, X86_FEATURE_IRPERF);
- 	}
-+
-+	pr_notice_once("AMD Zen1 FPDSS bug detected, enabling mitigation.\n");
-+	msr_set_bit(MSR_AMD64_FP_CFG, MSR_AMD64_FP_CFG_ZEN1_DENORM_FIX_BIT);
- }
- 
- static const struct x86_cpu_id amd_zenbleed_microcode[] = {
++		if (le32_to_cpu(req->InputBufferLength) <
++		    offsetof(struct smb2_ea_info_req, name) +
++		    ea_req->EaNameLength)
++			return -EINVAL;
+ 	} else {
+ 		/* need to send all EAs, if no specific EA is requested*/
+ 		if (le32_to_cpu(req->Flags) & SL_RETURN_SINGLE_ENTRY)
 
 
