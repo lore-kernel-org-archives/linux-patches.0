@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C4F330B14;
-	Mon, 20 Apr 2026 16:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B262DE6E3;
+	Mon, 20 Apr 2026 16:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701147; cv=none; b=YMi7bUuW/hjPTroL6N67lfHg7vzlAOTbObf5ZjJ0AgyczVwTns78Sev88u63mJ9QcUxZj5SE6DFUBDBcCU4tgVjBbVX3rexGjpbECG0j0VcYuRL8hX/6XzeIBsuvHfLdugm42Evmn5uxej/Ap5pIY5OD9TLd2VcAW1sZAUf0X9o=
+	t=1776701149; cv=none; b=uhYVCWel/ppTweqAw1ZboLWWjefLp7el65rGPVy655bXKUL15SqD8Okt6Acv5Ze3tKU/8XbYj+Sf4BNKdbEI3oR80zVwgih6JfAoIxcuQC7cPs3Yu7sjcxhLKQ7BAizyr2nGbiiusWKBl7hSof24wmZqsQiOcQx2X+uwkJ8p8fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701147; c=relaxed/simple;
-	bh=qoG6AH3B83A2kSZadwwIn5t4/Gc362iJ5rEFk8Be0+g=;
+	s=arc-20240116; t=1776701149; c=relaxed/simple;
+	bh=xlhuKGNeql3vLoG4zSsLwx7DJFuGahMkJXalooCOsok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KzvpbTlnyWB9QS6IOKhFE5y3dE0fBBn81wAQH6wEWCGT6jlFG+4eO0g8Q/1l6JZHEEXqQ2KrP04SNeYN9Mn7f5Zbag74dzHo5tidxwU4Ol86HnZm89CyFq3JU+Le9WWArM+89nrXW7ZvpIchW5CHI6JnQbHWhTWIQYdIl9AJWNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEWy9L/h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oHXrXGdvQ1C4g050aziC0rbB7tSxUDVCg9gJj+3KocyoPSTWize34PBnEMQ/yhjkHTLtSOjvjvVHuS5OTCccamM+etKZbKB5CI7M/G6J5l1MWMt0xPVBFEGufF//mCET6MCs5FfTPsxwVIFMa0NrQet5i7KU2pdqD9DkbaYo/Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWC6BwSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEWy9L/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56962C19425;
-	Mon, 20 Apr 2026 16:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWC6BwSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E008DC19425;
+	Mon, 20 Apr 2026 16:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701146;
-	bh=qoG6AH3B83A2kSZadwwIn5t4/Gc362iJ5rEFk8Be0+g=;
+	s=korg; t=1776701149;
+	bh=xlhuKGNeql3vLoG4zSsLwx7DJFuGahMkJXalooCOsok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEWy9L/hGu/jbDOO1PyIy0xwZjGlS3RhulxaKxng/gW61KsJCsfo316LcEqETgw/l
-	 3XnmPmqrEB26Luk4b1Qpi7vsWVqHl5+E4jAWhQWhUJTxCtaasXToz75x3m2w+0o0Q5
-	 15T9PIqfnFQjVTgMIL5r2rRCVyCnHHUNOpAjxzDA=
+	b=iWC6BwSArlpf4BFXcBAaNGNX8RRWMF5+P/qT1nhI3mZH8PsZOf4bE0a2IsR5AEShw
+	 d8hjTvDomvssRMjWgkYLMOuxEaZOCvEt5In8MY97T4csN1IGpUfOgCXk3IJypfs4ZF
+	 XDveLnWCBMSBG4LLtEZbHnu58jYEenMnMQMCpzlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.18 179/198] x86: rename and clean up __copy_from_user_inatomic_nocache()
-Date: Mon, 20 Apr 2026 17:42:38 +0200
-Message-ID: <20260420153942.061513802@linuxfoundation.org>
+Subject: [PATCH 6.18 180/198] x86-64/arm64/powerpc: clean up and rename __copy_from_user_flushcache
+Date: Mon, 20 Apr 2026 17:42:39 +0200
+Message-ID: <20260420153942.097481618@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,172 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 5de7bcaadf160c1716b20a263cf8f5b06f658959 upstream.
+commit 809b997a5ce945ab470f70c187048fe4f5df20bf upstream.
 
-Similarly to the previous commit, this renames the somewhat confusingly
-named function.  But in this case, it was at least less confusing: the
-__copy_from_user_inatomic_nocache is indeed copying from user memory,
-and it is indeed ok to be used in an atomic context, so it will not warn
-about it.
+This finishes the work on these odd functions that were only implemented
+by a handful of architectures.
 
-But the previous commit also removed the NTB mis-use of the
-__copy_from_user_inatomic_nocache() function, and as a result every
-call-site is now _actually_ doing a real user copy.  That means that we
-can now do the proper user pointer verification too.
+The 'flushcache' function was only used from the iterator code, and
+let's make it do the same thing that the nontemporal version does:
+remove the two underscores and add the user address checking.
 
-End result: add proper address checking, remove the double underscores,
-and change the "nocache" to "nontemporal" to more accurately describe
-what this x86-only function actually does.  It might be worth noting
-that only the target is non-temporal: the actual user accesses are
-normal memory accesses.
+Yes, yes, the user address checking is also done at iovec import time,
+but we have long since walked away from the old double-underscore thing
+where we try to avoid address checking overhead at access time, and
+these functions shouldn't be so special and old-fashioned.
 
-Also worth noting is that non-x86 targets (and on older 32-bit x86 CPU's
-before XMM2 in the Pentium III) we end up just falling back on a regular
-user copy, so nothing can actually depend on the non-temporal semantics,
-but that has always been true.
+The arm64 version already did the address check, in fact, so there it's
+just a matter of renaming it.  For powerpc and x86-64 we now do the
+proper user access boilerplate.
 
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/uaccess.h    |    2 +-
- arch/x86/include/asm/uaccess_32.h |    8 +-------
- arch/x86/include/asm/uaccess_64.h |    3 ++-
- arch/x86/lib/usercopy_32.c        |    9 +++++----
- drivers/gpu/drm/i915/i915_gem.c   |    2 +-
- drivers/gpu/drm/qxl/qxl_ioctl.c   |    2 +-
- include/linux/uaccess.h           |   11 ++++++++---
- lib/iov_iter.c                    |    2 +-
- 8 files changed, 20 insertions(+), 19 deletions(-)
+ arch/arm64/include/asm/uaccess.h   |    2 +-
+ arch/powerpc/include/asm/uaccess.h |    3 +--
+ arch/powerpc/lib/pmem.c            |   11 ++++++-----
+ arch/x86/include/asm/uaccess_64.h  |    8 ++++----
+ arch/x86/lib/usercopy_64.c         |    8 ++++----
+ lib/iov_iter.c                     |    2 +-
+ 6 files changed, 17 insertions(+), 17 deletions(-)
 
---- a/arch/x86/include/asm/uaccess.h
-+++ b/arch/x86/include/asm/uaccess.h
-@@ -507,7 +507,7 @@ extern struct movsl_mask {
- } ____cacheline_aligned_in_smp movsl_mask;
+--- a/arch/arm64/include/asm/uaccess.h
++++ b/arch/arm64/include/asm/uaccess.h
+@@ -480,7 +480,7 @@ extern __must_check long strnlen_user(co
+ #ifdef CONFIG_ARCH_HAS_UACCESS_FLUSHCACHE
+ extern unsigned long __must_check __copy_user_flushcache(void *to, const void __user *from, unsigned long n);
+ 
+-static inline int __copy_from_user_flushcache(void *dst, const void __user *src, unsigned size)
++static inline size_t copy_from_user_flushcache(void *dst, const void __user *src, size_t size)
+ {
+ 	kasan_check_write(dst, size);
+ 	return __copy_user_flushcache(dst, __uaccess_mask_ptr(src), size);
+--- a/arch/powerpc/include/asm/uaccess.h
++++ b/arch/powerpc/include/asm/uaccess.h
+@@ -407,8 +407,7 @@ copy_mc_to_user(void __user *to, const v
+ }
  #endif
  
--#define ARCH_HAS_NOCACHE_UACCESS 1
-+#define ARCH_HAS_NONTEMPORAL_UACCESS 1
+-extern long __copy_from_user_flushcache(void *dst, const void __user *src,
+-		unsigned size);
++extern size_t copy_from_user_flushcache(void *dst, const void __user *src, size_t size);
  
+ static __must_check __always_inline bool user_access_begin(const void __user *ptr, size_t len)
+ {
+--- a/arch/powerpc/lib/pmem.c
++++ b/arch/powerpc/lib/pmem.c
+@@ -66,15 +66,16 @@ EXPORT_SYMBOL_GPL(arch_invalidate_pmem);
  /*
-  * The "unsafe" user accesses aren't really "unsafe", but the naming
---- a/arch/x86/include/asm/uaccess_32.h
-+++ b/arch/x86/include/asm/uaccess_32.h
-@@ -26,13 +26,7 @@ raw_copy_from_user(void *to, const void
- 	return __copy_user_ll(to, (__force const void *)from, n);
+  * CONFIG_ARCH_HAS_UACCESS_FLUSHCACHE symbols
+  */
+-long __copy_from_user_flushcache(void *dest, const void __user *src,
+-		unsigned size)
++size_t copy_from_user_flushcache(void *dest, const void __user *src,
++				 size_t size)
+ {
+-	unsigned long copied, start = (unsigned long) dest;
++	unsigned long not_copied, start = (unsigned long) dest;
+ 
+-	copied = __copy_from_user(dest, src, size);
++	src = mask_user_address(src);
++	not_copied = __copy_from_user(dest, src, size);
+ 	clean_pmem_range(start, start + size);
+ 
+-	return copied;
++	return not_copied;
  }
  
--static __always_inline unsigned long
--__copy_from_user_inatomic_nocache(void *to, const void __user *from,
--				  unsigned long n)
--{
--       return __copy_from_user_ll_nocache_nozero(to, from, n);
--}
--
-+unsigned long __must_check copy_from_user_inatomic_nontemporal(void *, const void __user *, unsigned long n);
- unsigned long __must_check clear_user(void __user *mem, unsigned long len);
- unsigned long __must_check __clear_user(void __user *mem, unsigned long len);
- 
+ void memcpy_flushcache(void *dest, const void *src, size_t size)
 --- a/arch/x86/include/asm/uaccess_64.h
 +++ b/arch/x86/include/asm/uaccess_64.h
-@@ -152,11 +152,12 @@ extern size_t copy_to_nontemporal(void *
- extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
+@@ -149,7 +149,7 @@ raw_copy_to_user(void __user *dst, const
+ 
+ #define copy_to_nontemporal copy_to_nontemporal
+ extern size_t copy_to_nontemporal(void *dst, const void *src, size_t size);
+-extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
++extern size_t copy_user_flushcache(void *dst, const void __user *src, size_t size);
  
  static inline int
--__copy_from_user_inatomic_nocache(void *dst, const void __user *src,
-+copy_from_user_inatomic_nontemporal(void *dst, const void __user *src,
- 				  unsigned size)
+ copy_from_user_inatomic_nontemporal(void *dst, const void __user *src,
+@@ -164,11 +164,11 @@ copy_from_user_inatomic_nontemporal(void
+ 	return ret;
+ }
+ 
+-static inline int
+-__copy_from_user_flushcache(void *dst, const void __user *src, unsigned size)
++static inline size_t
++copy_from_user_flushcache(void *dst, const void __user *src, size_t size)
  {
- 	long ret;
  	kasan_check_write(dst, size);
-+	src = mask_user_address(src);
- 	stac();
- 	ret = copy_to_nontemporal(dst, (__force const void *)src, size);
- 	clac();
---- a/arch/x86/lib/usercopy_32.c
-+++ b/arch/x86/lib/usercopy_32.c
-@@ -322,10 +322,11 @@ unsigned long __copy_user_ll(void *to, c
+-	return __copy_user_flushcache(dst, src, size);
++	return copy_user_flushcache(dst, src, size);
  }
- EXPORT_SYMBOL(__copy_user_ll);
  
--unsigned long __copy_from_user_ll_nocache_nozero(void *to, const void __user *from,
-+unsigned long copy_from_user_inatomic_nontemporal(void *to, const void __user *from,
- 					unsigned long n)
+ /*
+--- a/arch/x86/lib/usercopy_64.c
++++ b/arch/x86/lib/usercopy_64.c
+@@ -43,14 +43,14 @@ void arch_wb_cache_pmem(void *addr, size
+ }
+ EXPORT_SYMBOL_GPL(arch_wb_cache_pmem);
+ 
+-long __copy_user_flushcache(void *dst, const void __user *src, unsigned size)
++size_t copy_user_flushcache(void *dst, const void __user *src, size_t size)
  {
--	__uaccess_begin_nospec();
-+	if (!user_access_begin(from, n))
-+		return n;
- #ifdef CONFIG_X86_INTEL_USERCOPY
- 	if (n > 64 && static_cpu_has(X86_FEATURE_XMM2))
- 		n = __copy_user_intel_nocache(to, from, n);
-@@ -334,7 +335,7 @@ unsigned long __copy_from_user_ll_nocach
- #else
- 	__copy_user(to, from, n);
- #endif
--	__uaccess_end();
+ 	unsigned long flushed, dest = (unsigned long) dst;
+-	long rc;
++	unsigned long rc;
+ 
+-	stac();
++	src = masked_user_access_begin(src);
+ 	rc = copy_to_nontemporal(dst, (__force const void *)src, size);
+-	clac();
 +	user_access_end();
- 	return n;
- }
--EXPORT_SYMBOL(__copy_from_user_ll_nocache_nozero);
-+EXPORT_SYMBOL(copy_from_user_inatomic_nontemporal);
---- a/drivers/gpu/drm/i915/i915_gem.c
-+++ b/drivers/gpu/drm/i915/i915_gem.c
-@@ -519,7 +519,7 @@ ggtt_write(struct io_mapping *mapping,
  
- 	/* We can use the cpu mem copy function because this is X86. */
- 	vaddr = io_mapping_map_atomic_wc(mapping, base);
--	unwritten = __copy_from_user_inatomic_nocache((void __force *)vaddr + offset,
-+	unwritten = copy_from_user_inatomic_nontemporal((void __force *)vaddr + offset,
- 						      user_data, length);
- 	io_mapping_unmap_atomic(vaddr);
- 	if (unwritten) {
---- a/drivers/gpu/drm/qxl/qxl_ioctl.c
-+++ b/drivers/gpu/drm/qxl/qxl_ioctl.c
-@@ -182,7 +182,7 @@ static int qxl_process_single_command(st
- 
- 	/* TODO copy slow path code from i915 */
- 	fb_cmd = qxl_bo_kmap_atomic_page(qdev, cmd_bo, (release->release_offset & PAGE_MASK));
--	unwritten = __copy_from_user_inatomic_nocache
-+	unwritten = copy_from_user_inatomic_nontemporal
- 		(fb_cmd + sizeof(union qxl_release_info) + (release->release_offset & ~PAGE_MASK),
- 		 u64_to_user_ptr(cmd->command), cmd->command_size);
- 
---- a/include/linux/uaccess.h
-+++ b/include/linux/uaccess.h
-@@ -320,16 +320,21 @@ static inline size_t probe_subpage_write
- 
- #endif /* CONFIG_ARCH_HAS_SUBPAGE_FAULTS */
- 
--#ifndef ARCH_HAS_NOCACHE_UACCESS
-+#ifndef ARCH_HAS_NONTEMPORAL_UACCESS
- 
- static inline __must_check unsigned long
--__copy_from_user_inatomic_nocache(void *to, const void __user *from,
-+copy_from_user_inatomic_nontemporal(void *to, const void __user *from,
- 				  unsigned long n)
- {
-+	if (can_do_masked_user_access())
-+		from = mask_user_address(from);
-+	else
-+		if (!access_ok(from, n))
-+			return n;
- 	return __copy_from_user_inatomic(to, from, n);
- }
- 
--#endif		/* ARCH_HAS_NOCACHE_UACCESS */
-+#endif		/* ARCH_HAS_NONTEMPORAL_UACCESS */
- 
- extern __must_check int check_zeroed_user(const void __user *from, size_t size);
- 
+ 	/*
+ 	 * copy_to_nontemporal() uses non-temporal stores for the bulk
 --- a/lib/iov_iter.c
 +++ b/lib/iov_iter.c
-@@ -265,7 +265,7 @@ static __always_inline
- size_t copy_from_user_iter_nocache(void __user *iter_from, size_t progress,
- 				   size_t len, void *to, void *priv2)
+@@ -284,7 +284,7 @@ static __always_inline
+ size_t copy_from_user_iter_flushcache(void __user *iter_from, size_t progress,
+ 				      size_t len, void *to, void *priv2)
  {
--	return __copy_from_user_inatomic_nocache(to + progress, iter_from, len);
-+	return copy_from_user_inatomic_nontemporal(to + progress, iter_from, len);
+-	return __copy_from_user_flushcache(to + progress, iter_from, len);
++	return copy_from_user_flushcache(to + progress, iter_from, len);
  }
  
- size_t _copy_from_iter_nocache(void *addr, size_t bytes, struct iov_iter *i)
+ static __always_inline
 
 
