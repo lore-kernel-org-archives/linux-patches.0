@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A312833B945;
-	Mon, 20 Apr 2026 15:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C9E3368B2;
+	Mon, 20 Apr 2026 15:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700217; cv=none; b=iJsyMWgiPZsJp4LgInv+EmvWOjwOwF7JlRaXw7Tc7Mo+B+yf8CESpjo9mUzzkSriCc9Jzlo5bJK3EmVav7Rt0+IcJQH/YHE4wOWxJF1RFcavkvq86arI4fPBd+S3cPpcEDCOq01mWfpaqLjqM6e154YeDWkV07QaamVrHvejlm0=
+	t=1776700220; cv=none; b=hv13RK5digjVd1+gBqW9t75+LSAGD5klgwA7m5frNzq/Tqq2G5m5FGlFoojAdsb+VlfVI1RpuyH1j45P1x9RkkxuAvFFjByFe8+rIqCBjBobF7cgFoz6vA8pV9u+QRa6nfrU0rBBSXNVNib2vwDmUE1mkE82X97jcIsiYzyscGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700217; c=relaxed/simple;
-	bh=S+VacZNsUveTlql97uPJwuS93ldpcVF/EvLSgLl2Pns=;
+	s=arc-20240116; t=1776700220; c=relaxed/simple;
+	bh=mVC28yFonY9C1Ph3uylMW+p80j0wsn1lgnmwKO5ULo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=savl1B265MbPHeffIgrU2sLaBj0Cz3lDKRygBncBaRZfDYd+KxK7CabZ0rPLqGNaA/pViqqmKdJhPDQ44qus3Q9cL2h0esa8j0k3j3313IefGTsflOhvrTwdSSImaWT7UiGHvSoZNFviDzKS5ORSgk0juPtoZTCpgJoBvjUNvnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMlHugu2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyFbbeYyNob7Yn5Y58LzjDPCXXDuxXP2PeO+mit/tBlBRvNgP2YwvRPWtj9IvQoDoh3PmzDahmagt4HENLpzIY/I8vEgA5IZgCqQUH1vs8/BGKaNoyNjw3QemxRqIAhkvojKWqNIBPpiIoGgHqqVf4tqMbETnL+W61MF1e7ypww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPbgnUpd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMlHugu2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3888FC19425;
-	Mon, 20 Apr 2026 15:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPbgnUpd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF785C19425;
+	Mon, 20 Apr 2026 15:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700217;
-	bh=S+VacZNsUveTlql97uPJwuS93ldpcVF/EvLSgLl2Pns=;
+	s=korg; t=1776700220;
+	bh=mVC28yFonY9C1Ph3uylMW+p80j0wsn1lgnmwKO5ULo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMlHugu2u3LGg70yIwR4bbLtXwc5HpgMOki8Ov3ltoCJitrM8W6epRaSan9khGF8N
-	 cDYFO1GgXDxlnmUstMSUmmg0E9WVJoxFSnxWXyOnXiLQa49rE3RDuge7YNhh6LsLJ8
-	 Wk8cNFov2BdRh8uyAPalgW1/K+lLGiRlP//7xPTw=
+	b=hPbgnUpdHANB78U9xRAo/hizJ0dOqwJD4I5MVy+edAXIALlHimDt6OHF1WklB1flA
+	 l2oBpbat0XKebLTPIduJwwxJPVVQeDimRFCtgh02Pj66IphXiM0hAEMhCw+aPycoe3
+	 aW/YUXMpxHxBDCUTdtDCragq/KLJ0ENU09Hm3qFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris J Arges <carges@cloudflare.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 087/220] net: increase IP_TUNNEL_RECURSION_LIMIT to 5
-Date: Mon, 20 Apr 2026 17:40:28 +0200
-Message-ID: <20260420153937.169458273@linuxfoundation.org>
+Subject: [PATCH 6.19 088/220] nfc: s3fwrn5: allocate rx skb before consuming bytes
+Date: Mon, 20 Apr 2026 17:40:29 +0200
+Message-ID: <20260420153937.204583665@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,40 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris J Arges <carges@cloudflare.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 77facb35227c421467cdb49268de433168c2dcef ]
+[ Upstream commit 5c14a19d5b1645cce1cb1252833d70b23635b632 ]
 
-In configurations with multiple tunnel layers and MPLS lwtunnel routing, a
-single tunnel hop can increment the counter beyond this limit. This causes
-packets to be dropped with the "Dead loop on virtual device" message even
-when a routing loop doesn't exist.
+s3fwrn82_uart_read() reports the number of accepted bytes to the serdev
+core. The current code consumes bytes into recv_skb and may already
+deliver a complete frame before allocating a fresh receive buffer.
 
-Increase IP_TUNNEL_RECURSION_LIMIT from 4 to 5 to handle this use-case.
+If that alloc_skb() fails, the callback returns 0 even though it has
+already consumed bytes, and it leaves recv_skb as NULL for the next
+receive callback. That breaks the receive_buf() accounting contract and
+can also lead to a NULL dereference on the next skb_put_u8().
 
-Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
-Link: https://lore.kernel.org/netdev/88deb91b-ef1b-403c-8eeb-0f971f27e34f@redhat.com/
-Signed-off-by: Chris J Arges <carges@cloudflare.com>
-Link: https://patch.msgid.link/20260402222401.3408368-1-carges@cloudflare.com
+Allocate the receive skb lazily before consuming the next byte instead.
+If allocation fails, return the number of bytes already accepted.
+
+Fixes: 3f52c2cb7e3a ("nfc: s3fwrn5: Support a UART interface")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260402042148.65236-1-pengpeng@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_tunnels.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nfc/s3fwrn5/uart.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 1f577a4f8ce9b..d708b66e55cda 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -32,7 +32,7 @@
-  * recursion involves route lookups and full IP output, consuming much
-  * more stack per level, so a lower limit is needed.
-  */
--#define IP_TUNNEL_RECURSION_LIMIT	4
-+#define IP_TUNNEL_RECURSION_LIMIT	5
+diff --git a/drivers/nfc/s3fwrn5/uart.c b/drivers/nfc/s3fwrn5/uart.c
+index 9c09c10c2a464..4ee481bd7e965 100644
+--- a/drivers/nfc/s3fwrn5/uart.c
++++ b/drivers/nfc/s3fwrn5/uart.c
+@@ -58,6 +58,12 @@ static size_t s3fwrn82_uart_read(struct serdev_device *serdev,
+ 	size_t i;
  
- /* Keep error state on tunnel for 30 sec */
- #define IPTUNNEL_ERR_TIMEO	(30*HZ)
+ 	for (i = 0; i < count; i++) {
++		if (!phy->recv_skb) {
++			phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
++			if (!phy->recv_skb)
++				return i;
++		}
++
+ 		skb_put_u8(phy->recv_skb, *data++);
+ 
+ 		if (phy->recv_skb->len < S3FWRN82_NCI_HEADER)
+@@ -69,9 +75,7 @@ static size_t s3fwrn82_uart_read(struct serdev_device *serdev,
+ 
+ 		s3fwrn5_recv_frame(phy->common.ndev, phy->recv_skb,
+ 				   phy->common.mode);
+-		phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
+-		if (!phy->recv_skb)
+-			return 0;
++		phy->recv_skb = NULL;
+ 	}
+ 
+ 	return i;
 -- 
 2.53.0
 
