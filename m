@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69603B8BB1;
-	Mon, 20 Apr 2026 13:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9B23B9619;
+	Mon, 20 Apr 2026 13:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691018; cv=none; b=r9D8+oNmU0v83tcF+9CF8aFSYxtUwjbVFZTxYunJbY1XrKuG/ONyrZiKtE9eAeCvyfjjTnFMreav+VMQuFh/uOyfy8UJlDFfyn5PkS6pcpuD6mEWwspYjrHC7A8vF6puf9uQL9ReN/8TAAxqFA1SypoWW/Ruq8JqnIVTuzv8Mnw=
+	t=1776691020; cv=none; b=tcDTFgTjeDjrn9JwTXcf5FVPmi3gM9IEMwL0NBD4NXhudacnk67hcHD1S1VvTa+saXkJToycMlsYqk5XR/T+YfglIjv3eAJLPWdqaZUjPwgwu+k53SAu8SJEJesU6Qq4GpzvcZwcSuijjY0dP0/EmU2dNVwiHC3y8VA+asB+9bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691018; c=relaxed/simple;
-	bh=JstqvWirDuryhuf3EyWzGevVPhCeYRiqem/EiC9fIsQ=;
+	s=arc-20240116; t=1776691020; c=relaxed/simple;
+	bh=OnsGnteCarh1gQtreDao9QGu3/yn+Lit1C3JX10wa18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fs7zIkzNzbCy5mIFfcUfJxv1R8ODgVUdc2oxo+jQGqMPo1wxM/tQAXmygOJiyXxHj5fMQV+cULrRdfMdDDPqgxaDolLQByubvzh+pV6XzGNPRIxGSyJE4G2lUkaC8AJ8u0T1rO1KFG2uHHIFH7jXlPfZzZh5Nh57k4SRoxCJ2xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CruUGDRI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FCChTqP05HqkSMjt1hYE3R7u0ukKifgyt5yS4bsefvk+GAlP7q3rVzMKId0bYlozQBcMzxTGdg6MjKumqbfQRBnzn/9iUP5Fvo+IsM3VOo75axTzL4UBJ2jdqQ2tONjzU1om4JnqYcKcyziJu9B48cWqet56q2pXoXTVzvoqxR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=knc30TDx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CruUGDRI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B123BC19425;
-	Mon, 20 Apr 2026 13:16:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="knc30TDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4EEC19425;
+	Mon, 20 Apr 2026 13:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691018;
-	bh=JstqvWirDuryhuf3EyWzGevVPhCeYRiqem/EiC9fIsQ=;
+	s=k20201202; t=1776691020;
+	bh=OnsGnteCarh1gQtreDao9QGu3/yn+Lit1C3JX10wa18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CruUGDRIBrWZg8J/vLYVrvj+eQBp07rhLPfCamJ8Hc6qN2Ye+qzm4sGsr0Tsqd4fl
-	 apI2t+HFeuc8k2w/kBQujE0fY3bBk56lGSD1U/5AqPn2DZnFFotNLZIS/R40SUsEof
-	 1i/DrAN20Ia1AjzXw/YTcexV08q/gw+dWsMKBkF3A7Wa4u56MRYJJgLcusiFB2Fi7n
-	 3tQ0y7eqjheCzNofVbjpCV6WLiuvxSUcJUKXBIZDnf9HG4rgrjGQjrcNvgiELQuzHJ
-	 jypgd3Ir+PgFvxZ4Y8OxHXEd3v5/kTcgsoHQ+NKDb4Ip4VpUUeU/KUch9q5V0K4ANW
-	 0mDRCryF50QVA==
+	b=knc30TDxGu8LXit/WLYB8sN28CsNic0L4SoV1TKQP+N5pWZGVUTvlUV4rrd3DElz0
+	 6hFe7ls/34KKfnxkTjLjA3qt1yxdZm+lurVs30P9P3akRw+Qf7YVCClT7ZzfUZsXmh
+	 /KU7VtMqp459V9KLG1YeggnhjQYayWY0HyMI2ArVHNXNTh1ZcGemGAeIGABFBwAR2N
+	 Ik3GwXy4nidKaE/4gozjllC4mg3kBfZtNaeP9xtxXvoD9DzEC8nAJ0hyl81MSoimXc
+	 vclAek+IzHbVVXD6juhGPlspsrsrDyFeze9D94i1b7WDBuyjru4Lve+rdIcLW9E93d
+	 hV84QI0S60yew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	linux-sound@vger.kernel.org,
+	brgl@kernel.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] ALSA: pcm: Serialize snd_pcm_suspend_all() with open_mutex
-Date: Mon, 20 Apr 2026 09:08:32 -0400
-Message-ID: <20260420131539.986432-46-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] Bluetooth: hci_qca: disable power control for WCN7850 when bt_en is not defined
+Date: Mon, 20 Apr 2026 09:08:33 -0400
+Message-ID: <20260420131539.986432-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -48,370 +51,239 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 
-[ Upstream commit 1a56641b7ae4f19216774a59d68024be3e6197d0 ]
+[ Upstream commit 7b75867803a8712bdf7683c31d71d3d5e28ce821 ]
 
-snd_pcm_suspend_all() walks all PCM substreams and uses a lockless
-runtime check to skip closed streams. It then calls snd_pcm_suspend()
-for each remaining substream and finally runs snd_pcm_sync_stop() in a
-second pass.
+On platforms using an M.2 slot with both UART and USB support, bt_en is
+pulled high by hardware. In this case, software-based power control
+should be disabled. The current platforms are Lemans-EVK and Monaco-EVK.
 
-The runtime lifetime is still controlled by pcm->open_mutex in the
-open/release path. That means a concurrent close can clear or free
-substream->runtime after the initial check in snd_pcm_suspend_all(),
-leaving the later suspend or sync-stop path to dereference a stale or
-NULL runtime pointer.
+Add QCA_WCN7850 to the existing condition so that power_ctrl_enabled is
+cleared when bt_en is not software-controlled (or absent), aligning its
+behavior with WCN6750 and WCN6855
 
-Serialize snd_pcm_suspend_all() with pcm->open_mutex so the runtime
-pointer stays stable across both loops. This matches the existing PCM
-runtime lifetime rule already used by other core paths that access
-substream->runtime outside the stream lock.
-
-Suggested-by: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260327-alsa-pcm-suspend-open-close-lock-v2-1-cc4baca4dcd6@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Here is my complete analysis:
+Now I have all the information needed for a complete analysis. Let me
+compile the results.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: `ALSA: pcm:` (ALSA PCM core)
-- **Action verb**: "Serialize" — implies fixing a synchronization issue
-  (race condition)
-- **Summary**: Serialize `snd_pcm_suspend_all()` with `open_mutex` to
-  prevent concurrent access
+**Step 1.1:** [Subsystem: Bluetooth/hci_qca] [Action: "disable" / "add"]
+[Summary: Disable software power control for WCN7850 when bt_en GPIO is
+not defined (HW-managed)]
 
-Record: [ALSA PCM core] [Serialize] [Add mutex to prevent race between
-suspend and open/close]
+**Step 1.2:** Tags found:
+- `Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>` - Author,
+  Qualcomm BT developer
+- `Reviewed-by: Bartosz Golaszewski
+  <bartosz.golaszewski@oss.qualcomm.com>` - This is the author of the
+  prerequisite commit `0fb410c914eb03` that introduced the
+  WCN6750/WCN6855-only check. His review is highly significant.
+- `Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>` -
+  BT subsystem maintainer applied it
+- No Fixes: tag, no Cc: stable, no Reported-by (expected for candidates)
 
-### Step 1.2: Tags
-- **Suggested-by: Takashi Iwai `<tiwai@suse.com>`** — Takashi Iwai is
-  the ALSA subsystem maintainer. He suggested this fix, which carries
-  enormous weight.
-- **Signed-off-by: Takashi Iwai `<tiwai@suse.de>`** — Maintainer also
-  signed off (committed it).
-- **Signed-off-by: Cássio Gabriel** — Author of the patch.
-- **Link:** to patch.msgid.link (v2 of the patch).
-- No Fixes: tag, no Reported-by, no Cc: stable — expected for autosel
-  candidates.
+**Step 1.3:** The commit body explains: On Lemans-EVK and Monaco-EVK
+platforms (M.2 slot with UART+USB), bt_en is pulled high by hardware.
+Software power control must be disabled. Without this,
+`power_ctrl_enabled` remains true for WCN7850, causing
+`HCI_QUIRK_NON_PERSISTENT_SETUP` and `qca_power_off` shutdown handler to
+be set incorrectly.
 
-Record: Fix suggested and committed by the subsystem maintainer (Takashi
-Iwai). This is the highest trust signal possible.
-
-### Step 1.3: Commit Body Analysis
-The commit describes:
-- **Bug**: `snd_pcm_suspend_all()` walks PCM substreams with a lockless
-  runtime check, then calls `snd_pcm_suspend()` and
-  `snd_pcm_sync_stop()`. A concurrent close can clear/free
-  `substream->runtime` via the open/close path (which uses
-  `pcm->open_mutex`).
-- **Failure mode**: Stale or NULL runtime pointer dereference —
-  crash/UAF.
-- **Fix approach**: Take `pcm->open_mutex` in `snd_pcm_suspend_all()`,
-  matching the existing PCM runtime lifetime rule.
-
-Record: UAF/NULL deref race during system suspend. Author explains clear
-mechanism.
-
-### Step 1.4: Hidden Bug Fix Detection
-This is NOT hidden — it's an explicit race condition fix. The code
-itself had a `/* FIXME: the open/close code should lock this as well */`
-comment acknowledging the bug.
-
----
+**Step 1.4:** This IS a bug fix disguised as "aligning behavior." The
+commit adds WCN7850 to a condition that was already handling the same
+scenario for WCN6750/WCN6855, making WCN7850 broken on affected
+platforms.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files changed**: 1 (`sound/core/pcm_native.c`)
-- **Lines**: +5 (including comment update), -1 (removing FIXME comment).
-  Net functional change: +1 line (`guard(mutex)(&pcm->open_mutex)`)
-- **Functions modified**: `snd_pcm_suspend_all()`
-- **Scope**: Single-file, single-function, surgical fix.
+**Step 2.1:** Single file changed: `drivers/bluetooth/hci_qca.c`, +2/-1
+lines. Function modified: `qca_serdev_probe()`. Scope: single-file,
+single-hunk surgical fix.
 
-### Step 2.2: Code Flow Change
-**Before**: `snd_pcm_suspend_all()` iterates substreams without any
-lock, checking `substream->runtime` and calling `snd_pcm_suspend()` /
-`snd_pcm_sync_stop()` unsynchronized with the open/close path.
+**Step 2.2:** Before: When `bt_en` is NULL, only WCN6750 and WCN6855 got
+`power_ctrl_enabled=false`. After: WCN7850 also gets
+`power_ctrl_enabled=false`. This affects the probe path where the power
+control strategy is decided.
 
-**After**: `guard(mutex)(&pcm->open_mutex)` is taken at function entry,
-serializing the entire function with the release path
-(`snd_pcm_release()` at line 2941 holds `open_mutex` around
-`snd_pcm_release_substream()`).
+**Step 2.3:** Bug category: Logic/correctness fix - missing SoC type in
+a condition. When `power_ctrl_enabled` remains incorrectly true:
+- `HCI_QUIRK_NON_PERSISTENT_SETUP` is set (line 2532)
+- `hdev->shutdown = qca_power_off` is set (line 2533)
+- The SSR recovery in `fce1a9244a0f8` checks this quirk and takes the
+  wrong path
 
-### Step 2.3: Bug Mechanism
-**Category**: Race condition / Use-After-Free / NULL pointer dereference
-
-The race:
-1. Thread A (`snd_pcm_suspend_all`): checks `!substream->runtime` → sees
-   non-NULL
-2. Thread B (`snd_pcm_release`): under `open_mutex`, calls
-   `snd_pcm_detach_substream()` → sets `substream->runtime = NULL` →
-   `kfree(runtime)` (confirmed in `sound/core/pcm.c` lines 980-1003)
-3. Thread A: calls `snd_pcm_suspend(substream)` → dereferences
-   freed/NULL runtime → **CRASH**
-
-Second race window: the second loop calls `snd_pcm_sync_stop()` on ALL
-substreams, which accesses `substream->runtime` (line 641).
-
-### Step 2.4: Fix Quality
-- Obviously correct: takes the same mutex already used by open/close
-  paths.
-- Minimal: one functional line added.
-- Regression risk: Very low. The `open_mutex` is not taken in interrupt
-  context; `snd_pcm_suspend()` internally uses
-  `guard(pcm_stream_lock_irqsave)` which is a different lock, so no
-  deadlock risk. The mutex merely serializes with open/close.
-
----
+**Step 2.4:** Fix is obviously correct - follows established pattern.
+Zero regression risk (only adds a SoC type to an OR chain). Reviewed by
+the author of the prerequisite code.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The FIXME comment (`/* FIXME: the open/close code should lock this as
-well */`) was introduced in commit `8d19b4e0b377e2` (2021-02-06, "ALSA:
-pcm: Use for_each_pcm_substream() macro") by Takashi Iwai himself. The
-core `snd_pcm_suspend_all` function dates back to `1da177e4c3f41` (Linus
-Torvalds, 2005-04-16, the initial Linux tree).
+**Step 3.1:** `git blame` shows the condition was introduced by
+`0fb410c914eb03` (Bartosz Golaszewski, 2025-05-27), which restructured
+the code to restrict the `power_ctrl_enabled=false` check to
+WCN6750/WCN6855 only. WCN7850 was inadvertently omitted.
 
-Record: The race has existed since v2.6.12 (original tree). It was made
-worse in v5.12 when `snd_pcm_sync_stop` loop was added (commit
-`2c87c1a49c9d`). The FIXME was planted by the maintainer acknowledging
-the bug.
+**Step 3.2:** No Fixes: tag. The root cause is `0fb410c914eb03` which
+has its own `Fixes: 3d05fc82237a` and `Cc: stable@vger.kernel.org`.
+WCN7850 was missed when `0fb410c914eb03` restricted the condition.
 
-### Step 3.2: Fixes tag
-No Fixes: tag present. The race effectively has existed since the
-beginning.
+**Step 3.3:** Related commits by same author: `fce1a9244a0f8` "Fix SSR
+fail when BT_EN is pulled up by hw" - this is the companion fix that
+depends on `HCI_QUIRK_NON_PERSISTENT_SETUP` being correctly set. This
+commit is standalone but paired with `0fb410c914eb03`.
 
-### Step 3.3: File History
-Recent changes to `pcm_native.c` include `guard()`-based locking
-conversions and race fixes (e.g., `93a81ca065775` "Fix race of buffer
-access at PCM OSS layer"). This shows the subsystem is actively being
-hardened for concurrency.
+**Step 3.4:** Shuai Zhang is a regular Qualcomm BT contributor. Bartosz
+Golaszewski (reviewer) wrote the prerequisite code.
 
-### Step 3.4: Author
-Cássio Gabriel has one other commit in the sound subsystem. However, the
-fix was **suggested by Takashi Iwai** (ALSA maintainer) and **committed
-by Takashi Iwai**, giving it the highest credibility.
-
-### Step 3.5: Dependencies
-The fix uses `guard(mutex)` which requires the cleanup.h infrastructure
-(available since v6.5) and the guard conversions in pcm_native.c
-(`dd0da75b9a276`, available since v6.12). For older stable trees, a
-trivial adaptation to `mutex_lock`/`mutex_unlock` would be needed.
-
----
+**Step 3.5:** This commit depends on `0fb410c914eb03` being present.
+That commit is in mainline (first tagged in v6.16/v6.17) but NOT yet in
+any stable tree (not in v6.6, v6.12, or v6.14). In stable trees without
+`0fb410c914eb03`, the code has an unconditional check (`if
+(!qcadev->bt_en) power_ctrl_enabled = false;`) that covers ALL SoC types
+including WCN7850. The bug only manifests after `0fb410c914eb03` is
+applied.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.2: Patch Discussion
-b4 dig did not find the patch by commit hash (likely because this is on
-a v7.0 tree). The Link: tag points to `patch.msgid.link`, which
-redirected to lore.kernel.org but was blocked by anti-bot protection.
-However, the commit subject says "v2", indicating the patch went through
-at least two revisions. The maintainer (Takashi Iwai) suggested and
-committed the fix — the highest form of endorsement.
-
-### Step 4.3-4.5: Bug Report and Stable History
-No explicit bug report (no Reported-by:). This is a proactive fix based
-on code analysis (the FIXME comment). No prior stable discussion found.
-
----
+The patch went through v1 -> v2 -> v3. v1 had review feedback from
+Dmitry Baryshkov requesting more context about affected platforms. v2/v3
+added platform details (Lemans-EVK, Monaco-EVK). Bartosz Golaszewski
+(who wrote the prerequisite commit) gave Reviewed-by on v3. Luiz von
+Dentz (BT maintainer) applied it to bluetooth-next. No NAKs, no concerns
+about the code change itself.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.2: Callers of `snd_pcm_suspend_all`
-- `sound/core/pcm.c:do_pcm_suspend()` — PM callback, called during
-  **system suspend**
-- `sound/soc/soc-core.c` — ASoC suspend
-- `sound/hda/common/codec.c` — HDA codec suspend
-- `sound/usb/usx2y/us144mkii.c` — USB audio suspend
+`power_ctrl_enabled` controls two behaviors in `qca_serdev_probe()`:
+1. Setting `HCI_QUIRK_NON_PERSISTENT_SETUP` quirk
+2. Registering `qca_power_off` as shutdown handler
 
-This is called on **every system suspend** for every PCM device. This
-means every laptop, desktop, or embedded system with audio is affected.
-
-### Step 5.3-5.4: Call Chain
-System suspend → `do_pcm_suspend()` → `snd_pcm_suspend_all()` → race
-with user-space closing audio fd → `snd_pcm_release()` → UAF/NULL deref.
-
-Trigger: Closing a laptop lid while an audio application is running.
-This is an extremely common scenario.
-
----
+When `power_ctrl_enabled` is incorrectly true for WCN7850 with HW-
+managed bt_en:
+- `qca_power_off` -> `qca_power_shutdown()` falls to default case:
+  `gpiod_set_value_cansleep(NULL, 0)` which is a no-op (safe)
+- But the quirk `HCI_QUIRK_NON_PERSISTENT_SETUP` being set causes the
+  SSR recovery code (`fce1a9244a0f8`) to skip critical recovery steps,
+  leading to SSR failure (HCI reset timeout)
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable
-The buggy code (unsynchronized runtime access in `snd_pcm_suspend_all`)
-has existed since v2.6.12. The `snd_pcm_sync_stop` second loop was added
-around v5.12. All active stable trees contain the buggy code.
+- **v6.6**: WCN7850 exists (12 references). Code structure is completely
+  different (`IS_ERR_OR_NULL` pattern). Bug exists differently but this
+  patch wouldn't apply without significant rework.
+- **v6.12/v6.14**: `3d05fc82237aa9` is present but `0fb410c914eb03` is
+  NOT. The check is unconditional (`if (!qcadev->bt_en)
+  power_ctrl_enabled = false;`), so the bug does NOT exist yet. However,
+  when `0fb410c914eb03` (tagged `Cc: stable`) is backported, it WILL
+  introduce this bug by restricting the check to WCN6750/WCN6855 only.
+- This patch must be paired with `0fb410c914eb03` when backporting.
 
-### Step 6.2: Backport Complications
-For v7.0 and v6.12+: should apply cleanly (same `guard()`
-infrastructure).
-For v6.6 and older: would need trivial adaptation from `guard(mutex)` to
-`mutex_lock`/`mutex_unlock`.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem Criticality
-- **Subsystem**: ALSA PCM core (`sound/core/`)
-- **Criticality**: IMPORTANT — affects every system with audio hardware
-  (virtually all Linux systems)
-
-### Step 7.2: Activity
-Very actively maintained by Takashi Iwai. Recent commits show ongoing
-concurrency hardening.
-
----
+- Subsystem: Bluetooth driver (IMPORTANT, affects Qualcomm BT hardware
+  users)
+- Criticality: Driver-specific, but WCN7850 is a widely-used Qualcomm BT
+  chip (SM8550 platforms and others)
+- Active subsystem with regular contributions
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-Every Linux system with audio hardware (virtually universal).
-
-### Step 8.2: Trigger Conditions
-System suspend while an audio stream is being closed. This is a common
-scenario on laptops (lid close while music playing). The race window is
-between checking `substream->runtime` and using it — a narrow but real
-window.
-
-### Step 8.3: Failure Mode Severity
-NULL pointer dereference or use-after-free → **kernel oops/crash during
-suspend**. Severity: **CRITICAL**.
-
-### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH — prevents kernel crash during suspend for all
-  audio-capable systems
-- **Risk**: VERY LOW — one functional line, uses existing mutex already
-  employed by the open/close paths, no deadlock risk, suggested and
-  committed by the subsystem maintainer
-- **Ratio**: Strongly favorable
-
----
+- **Who is affected**: WCN7850 users on platforms where bt_en is HW-
+  controlled (Lemans-EVK, Monaco-EVK with M.2 slot)
+- **Trigger**: Always, during probe on affected hardware. Not timing-
+  dependent.
+- **Failure mode**: SSR failure - BT controller cannot recover from
+  firmware crash. HCI reset times out. MEDIUM-HIGH severity (Bluetooth
+  becomes non-functional after FW crash until reboot)
+- **Benefit**: High for affected hardware users
+- **Risk**: Very low - 1 line addition to an OR condition, obviously
+  correct pattern
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Evidence FOR:**
+- Fixes real hardware issue on WCN7850 platforms with HW-managed bt_en
+- Trivially small (1 line), obviously correct
+- Reviewed by the author of the prerequisite code
+- Applied by BT subsystem maintainer
+- Follows established pattern (WCN6750/WCN6855 already handled)
+- Without this fix, SSR recovery fails on affected platforms
+- Falls under "hardware quirk/workaround" exception category
 
-**FOR backporting:**
-- Fixes a real race condition (UAF / NULL deref) acknowledged by a FIXME
-  comment from the subsystem maintainer
-- Fix was suggested and committed by Takashi Iwai (ALSA maintainer)
-- Minimal change: 1 functional line added
-- Affects every system with audio during system suspend
-- Failure mode is kernel crash (CRITICAL severity)
-- Uses existing locking infrastructure already in use by the same code
-  paths
-- Second revision (v2), showing review iteration
+**Evidence AGAINST:**
+- Depends on `0fb410c914eb03` (not yet in stable trees)
+- Limited platform scope (Lemans-EVK, Monaco-EVK)
+- In current stable trees, the bug doesn't exist yet (unconditional
+  check)
 
-**AGAINST backporting:**
-- No user-reported crash (proactive fix based on code analysis)
-- May need minor adaptation for older stable trees (guard →
-  mutex_lock/unlock)
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — suggested by maintainer, uses
-   existing mutex pattern
-2. Fixes a real bug? **YES** — race between suspend and release, FIXME
-   acknowledged the issue
-3. Important issue? **YES** — UAF/NULL deref → kernel crash during
-   suspend
-4. Small and contained? **YES** — 1 functional line in 1 function in 1
-   file
-5. No new features or APIs? **YES** — pure synchronization fix
-6. Can apply to stable? **YES** — clean for 6.12+, trivial adaptation
-   for older
-
-### Step 9.3: Exception Categories
-Not an exception — this is a standard race condition fix, a core stable
-candidate.
-
-### Step 9.4: Decision
-This is a textbook stable fix: a single-line mutex acquisition that
-prevents a UAF/NULL deref race during system suspend, suggested and
-committed by the subsystem maintainer, fixing a longstanding FIXME.
-
----
+**Stable rules checklist:**
+1. Obviously correct and tested? YES (trivial 1-line addition, reviewed)
+2. Fixes a real bug? YES (SSR failure on affected hardware)
+3. Important issue? YES (BT becomes non-functional after FW crash)
+4. Small and contained? YES (1 line change)
+5. No new features? YES (just extends existing condition)
+6. Can apply to stable? YES, when paired with `0fb410c914eb03`
 
 ## Verification
 
-- [Phase 1] Parsed tags: Suggested-by and Signed-off-by from Takashi
-  Iwai (ALSA maintainer)
-- [Phase 2] Diff analysis: +1 functional line
-  (`guard(mutex)(&pcm->open_mutex)`), removes 1-line FIXME comment
-- [Phase 2] Verified `snd_pcm_sync_stop()` accesses `substream->runtime`
-  at line 641 without lock
-- [Phase 2] Verified `snd_pcm_detach_substream()` sets
-  `substream->runtime = NULL` and `kfree(runtime)` at lines 997-1003 of
-  `sound/core/pcm.c`
-- [Phase 2] Verified `snd_pcm_release()` holds `open_mutex` around
-  `snd_pcm_release_substream()` at line 2941
-- [Phase 3] git blame: FIXME comment introduced by Takashi Iwai in
-  `8d19b4e0b377e2` (2021-02-06), core function from `1da177e4c3f41`
-  (2005)
-- [Phase 3] `snd_pcm_sync_stop` loop added in `2c87c1a49c9d11` ("Assure
-  sync with pending stop operation at suspend", 2021)
-- [Phase 3] `guard()` infrastructure for pcm_native.c in `dd0da75b9a276`
-  (v6.12+)
-- [Phase 4] b4 dig: did not find match (this is a v7.0 tree). Link: in
-  commit points to v2 of the patch.
-- [Phase 5] Callers: `do_pcm_suspend()` (PM callback), soc-core, HDA
-  codec, USB audio — called on every system suspend
-- [Phase 6] Buggy code present in all active stable trees (since
-  v2.6.12)
-- [Phase 7] ALSA PCM core — affects virtually all Linux systems with
-  audio
-- [Phase 8] Failure mode: NULL deref or UAF during system suspend →
-  kernel crash (CRITICAL)
+- [Phase 1] Parsed tags: Reviewed-by from Bartosz Golaszewski
+  (prerequisite commit author), applied by BT maintainer Luiz von Dentz
+- [Phase 2] Diff: 1 line added to OR condition in `qca_serdev_probe()`,
+  adding `QCA_WCN7850`
+- [Phase 3] `git blame`: condition introduced by `0fb410c914eb03`
+  (2025-05-27), which restricted check to WCN6750/WCN6855
+- [Phase 3] `0fb410c914eb03` has `Cc: stable`, `Fixes: 3d05fc82237a` -
+  will be backported
+- [Phase 3] `0fb410c914eb03` NOT in v6.6, v6.12, v6.14 (verified with
+  `git merge-base`)
+- [Phase 3] WCN7850 support (`e0c1278ac89b0`) is in v6.6 (2023-08-24)
+- [Phase 4] Patchew: v3 reviewed by Bartosz Golaszewski, applied by Luiz
+  von Dentz. No NAKs.
+- [Phase 5] `power_ctrl_enabled=true` causes incorrect
+  `HCI_QUIRK_NON_PERSISTENT_SETUP` and SSR recovery failure
+- [Phase 5] Verified `qca_power_shutdown()` default case:
+  `gpiod_set_value_cansleep(NULL, 0)` is safe (no-op)
+- [Phase 6] v6.12/v6.14: unconditional check exists, bug not present.
+  Bug will appear when `0fb410c914eb03` is backported
+- [Phase 6] v6.6: different code structure, would need rework
+- [Phase 8] Failure mode: SSR failure (HCI reset timeout, BT non-
+  functional until reboot), MEDIUM-HIGH severity
 
 **YES**
 
- sound/core/pcm_native.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_qca.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 5a64453da7283..1ccc482a8dfd3 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -1761,6 +1761,9 @@ static int snd_pcm_suspend(struct snd_pcm_substream *substream)
-  * snd_pcm_suspend_all - trigger SUSPEND to all substreams in the given pcm
-  * @pcm: the PCM instance
-  *
-+ * Takes and releases pcm->open_mutex to serialize against
-+ * concurrent open/close while walking the substreams.
-+ *
-  * After this call, all streams are changed to SUSPENDED state.
-  *
-  * Return: Zero if successful (or @pcm is %NULL), or a negative error code.
-@@ -1773,8 +1776,9 @@ int snd_pcm_suspend_all(struct snd_pcm *pcm)
- 	if (! pcm)
- 		return 0;
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index bb9f002aa85e9..edc907c4e870a 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -2471,7 +2471,8 @@ static int qca_serdev_probe(struct serdev_device *serdev)
  
-+	guard(mutex)(&pcm->open_mutex);
-+
- 	for_each_pcm_substream(pcm, stream, substream) {
--		/* FIXME: the open/close code should lock this as well */
- 		if (!substream->runtime)
- 			continue;
+ 		if (!qcadev->bt_en &&
+ 		    (data->soc_type == QCA_WCN6750 ||
+-		     data->soc_type == QCA_WCN6855))
++		     data->soc_type == QCA_WCN6855 ||
++		     data->soc_type == QCA_WCN7850))
+ 			power_ctrl_enabled = false;
  
+ 		qcadev->sw_ctrl = devm_gpiod_get_optional(&serdev->dev, "swctrl",
 -- 
 2.53.0
 
