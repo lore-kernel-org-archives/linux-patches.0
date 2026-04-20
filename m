@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D321FB1;
-	Mon, 20 Apr 2026 16:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9EA344057;
+	Mon, 20 Apr 2026 16:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701498; cv=none; b=LSUYE8CxZp0MwOwJs92E56TrCa9ViGIpcPbL3pibAz7eyndRroDLQ2PO60Cl8zHGoAaEGj5tjOuiy5mIApkZTS1s3OPWmtvebIqFQiD7qR1WbmF3Bd5X2nnJvunRXloxEYLXLp6moFELzAtUlAxtdc49RXQNyzfqVflAhh0ksEg=
+	t=1776701501; cv=none; b=u3OLumB1fKN4YbjJM8gklHQwyj+gfPUQOmA11uy903o4DcPCyOk11W5XyXU/eFfKXO5Uc5xjaYYnGVokdh/sZ2TFJHEbFpz+0mX8Y6sVruWEsiCkT76m8TPF/+FahmBlLwGM3XdpbZ2p5+esNDYYy5qkesj0W3WQtMwsSiTiUO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701498; c=relaxed/simple;
-	bh=6TNeMGu0Qr/wwjmVOXVMT3+fLgx+Ib+ScXa5i1Rwmw8=;
+	s=arc-20240116; t=1776701501; c=relaxed/simple;
+	bh=VWGiMmcmL5+tiLXsq6ZqN9D+3zPvhNP5ZJ3yMvbASqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iuYbIDUxA9oW1QucfQpqxcLc17Ssa3bsJVRmB2Yd61DyTNtPJAM3bHE/JpdZXoFNnKlEyzaoNnZtB1vdtDR+nIanenAGMBoxUm5BHq5gUoVfZGpA+ILqW8Eblg5jrA8dioDoHAXekhkVSfyvmsGUtrmxg+7bdqkwuXIU1wwShuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFa02M61; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nTjbvR53+x3R1+5snwhuG6taZTyYieao7BBH0dmcA/5td+pxvxVHuE04UHhly6TKlUrrDIqXxXFElQDJ5Y32HgTG7ObsXuTxAgepBukRBalD9THLtQyLXLBQ3OaFt109dFJgaRy0dgcJmd4nxN29BwyLInbzwse+CQG3d/nsiSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahcaBMI2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFa02M61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E3FC19425;
-	Mon, 20 Apr 2026 16:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahcaBMI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83B8C19425;
+	Mon, 20 Apr 2026 16:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701498;
-	bh=6TNeMGu0Qr/wwjmVOXVMT3+fLgx+Ib+ScXa5i1Rwmw8=;
+	s=korg; t=1776701501;
+	bh=VWGiMmcmL5+tiLXsq6ZqN9D+3zPvhNP5ZJ3yMvbASqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFa02M61vUucTGLHUDoMRMFrJnQSU4tSBoK1ZuKBuRMSB46dSgoDjcjDB7mQfJ2Mi
-	 8Ls+/YgOsiPCSfa+q2L7dG9AhMbE5zmlLzUyIFPdpzKrs4j0P6WAgtmG9lc27uAUGd
-	 C9Wq4WHP1D+NpAbnViR+0j1A+h2yeRAHDtDg5Rmk=
+	b=ahcaBMI2xKLnUpy5MW1+L2LvI2aG4NZ1FgIRIz4u0O7GcBlveusn485CK1vgXssLB
+	 N1lhoqOJ6JzaTbUGZ+QPzghWlyV3THyxwVQL8FYdDEfGt8dgaoVIg696WZbM94Xy1A
+	 FJZQQso99mO4ZehLQ7CMIlD8e0pB3xyJjWWX2FS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 137/162] KVM: x86: Use __DECLARE_FLEX_ARRAY() for UAPI structures with VLAs
-Date: Mon, 20 Apr 2026 17:42:49 +0200
-Message-ID: <20260420153932.009343669@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Joe Perches <joe@perches.com>,
+	Andy Whitcroft <apw@canonical.com>,
+	Dwaipayan Ray <dwaipayanray1@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 138/162] checkpatch: add support for Assisted-by tag
+Date: Mon, 20 Apr 2026 17:42:50 +0200
+Message-ID: <20260420153932.045455554@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,149 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Sasha Levin <sashal@kernel.org>
 
-[ Upstream commit 2619da73bb2f10d88f7e1087125c40144fdf0987 ]
+commit d1db4118489fffd2b2f612140b7acbb477880839 upstream.
 
-Commit 94dfc73e7cf4 ("treewide: uapi: Replace zero-length arrays with
-flexible-array members") broke the userspace API for C++.
+The Assisted-by tag was introduced in
+Documentation/process/coding-assistants.rst for attributing AI tool
+contributions to kernel patches.  However, checkpatch.pl did not recognize
+this tag, causing two issues:
 
-These structures ending in VLAs are typically a *header*, which can be
-followed by an arbitrary number of entries. Userspace typically creates
-a larger structure with some non-zero number of entries, for example in
-QEMU's kvm_arch_get_supported_msr_feature():
+  WARNING: Non-standard signature: Assisted-by:
+  ERROR: Unrecognized email address: 'AGENT_NAME:MODEL_VERSION'
 
-    struct {
-        struct kvm_msrs info;
-        struct kvm_msr_entry entries[1];
-    } msr_data = {};
+Fix this by:
+1. Adding Assisted-by to the recognized $signature_tags list
+2. Skipping email validation for Assisted-by lines since they use the
+   AGENT_NAME:MODEL_VERSION format instead of an email address
+3. Warning when the Assisted-by value doesn't match the expected format
 
-While that works in C, it fails in C++ with an error like:
- flexible array member 'kvm_msrs::entries' not at end of 'struct msr_data'
-
-Fix this by using __DECLARE_FLEX_ARRAY() for the VLA, which uses [0]
-for C++ compilation.
-
-Fixes: 94dfc73e7cf4 ("treewide: uapi: Replace zero-length arrays with flexible-array members")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Link: https://patch.msgid.link/3abaf6aefd6e5efeff3b860ac38421d9dec908db.camel@infradead.org
-[sean: tag for stable@]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lkml.kernel.org/r/20260311215818.518930-1-sashal@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Bart Van Assche <bvanassche@acm.org>
+Acked-by: Joe Perches <joe@perches.com>
+Cc: Andy Whitcroft <apw@canonical.com>
+Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/uapi/asm/kvm.h |   12 ++++++------
- include/uapi/linux/kvm.h        |   11 ++++++-----
- 2 files changed, 12 insertions(+), 11 deletions(-)
+ scripts/checkpatch.pl |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/arch/x86/include/uapi/asm/kvm.h
-+++ b/arch/x86/include/uapi/asm/kvm.h
-@@ -192,13 +192,13 @@ struct kvm_msrs {
- 	__u32 nmsrs; /* number of msrs in entries */
- 	__u32 pad;
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -622,6 +622,7 @@ our $signature_tags = qr{(?xi:
+ 	Reviewed-by:|
+ 	Reported-by:|
+ 	Suggested-by:|
++	Assisted-by:|
+ 	To:|
+ 	Cc:
+ )};
+@@ -3070,6 +3071,15 @@ sub process {
+ 				}
+ 			}
  
--	struct kvm_msr_entry entries[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_msr_entry, entries);
- };
- 
- /* for KVM_GET_MSR_INDEX_LIST */
- struct kvm_msr_list {
- 	__u32 nmsrs; /* number of msrs in entries */
--	__u32 indices[];
-+	__DECLARE_FLEX_ARRAY(__u32, indices);
- };
- 
- /* Maximum size of any access bitmap in bytes */
-@@ -240,7 +240,7 @@ struct kvm_cpuid_entry {
- struct kvm_cpuid {
- 	__u32 nent;
- 	__u32 padding;
--	struct kvm_cpuid_entry entries[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_cpuid_entry, entries);
- };
- 
- struct kvm_cpuid_entry2 {
-@@ -262,7 +262,7 @@ struct kvm_cpuid_entry2 {
- struct kvm_cpuid2 {
- 	__u32 nent;
- 	__u32 padding;
--	struct kvm_cpuid_entry2 entries[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_cpuid_entry2, entries);
- };
- 
- /* for KVM_GET_PIT and KVM_SET_PIT */
-@@ -393,7 +393,7 @@ struct kvm_xsave {
- 	 * the contents of CPUID leaf 0xD on the host.
- 	 */
- 	__u32 region[1024];
--	__u32 extra[];
-+	__DECLARE_FLEX_ARRAY(__u32, extra);
- };
- 
- #define KVM_MAX_XCRS	16
-@@ -530,7 +530,7 @@ struct kvm_pmu_event_filter {
- 	__u32 fixed_counter_bitmap;
- 	__u32 flags;
- 	__u32 pad[4];
--	__u64 events[];
-+	__DECLARE_FLEX_ARRAY(__u64, events);
- };
- 
- #define KVM_PMU_EVENT_ALLOW 0
---- a/include/uapi/linux/kvm.h
-+++ b/include/uapi/linux/kvm.h
-@@ -11,6 +11,7 @@
- #include <linux/const.h>
- #include <linux/types.h>
- #include <linux/compiler.h>
-+#include <linux/stddef.h>
- #include <linux/ioctl.h>
- #include <asm/kvm.h>
- 
-@@ -496,7 +497,7 @@ struct kvm_coalesced_mmio {
- 
- struct kvm_coalesced_mmio_ring {
- 	__u32 first, last;
--	struct kvm_coalesced_mmio coalesced_mmio[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_coalesced_mmio, coalesced_mmio);
- };
- 
- #define KVM_COALESCED_MMIO_MAX \
-@@ -546,7 +547,7 @@ struct kvm_clear_dirty_log {
- /* for KVM_SET_SIGNAL_MASK */
- struct kvm_signal_mask {
- 	__u32 len;
--	__u8  sigset[];
-+	__DECLARE_FLEX_ARRAY(__u8, sigset);
- };
- 
- /* for KVM_TPR_ACCESS_REPORTING */
-@@ -999,7 +1000,7 @@ struct kvm_irq_routing_entry {
- struct kvm_irq_routing {
- 	__u32 nr;
- 	__u32 flags;
--	struct kvm_irq_routing_entry entries[];
-+	__DECLARE_FLEX_ARRAY(struct kvm_irq_routing_entry, entries);
- };
- 
- #define KVM_IRQFD_FLAG_DEASSIGN (1 << 0)
-@@ -1086,7 +1087,7 @@ struct kvm_dirty_tlb {
- 
- struct kvm_reg_list {
- 	__u64 n; /* number of regs */
--	__u64 reg[];
-+	__DECLARE_FLEX_ARRAY(__u64, reg);
- };
- 
- struct kvm_one_reg {
-@@ -1533,7 +1534,7 @@ struct kvm_stats_desc {
- #ifdef __KERNEL__
- 	char name[KVM_STATS_NAME_SIZE];
- #else
--	char name[];
-+	__DECLARE_FLEX_ARRAY(char, name);
- #endif
- };
- 
++			# Assisted-by uses AGENT_NAME:MODEL_VERSION format, not email
++			if ($sign_off =~ /^Assisted-by:/i) {
++				if ($email !~ /^\S+:\S+/) {
++					WARN("BAD_SIGN_OFF",
++					     "Assisted-by expects 'AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]' format\n" . $herecurr);
++				}
++				next;
++			}
++
+ 			my ($email_name, $name_comment, $email_address, $comment) = parse_email($email);
+ 			my $suggested_email = format_email(($email_name, $name_comment, $email_address, $comment));
+ 			if ($suggested_email eq "") {
 
 
