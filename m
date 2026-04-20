@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8C0329C6D;
-	Mon, 20 Apr 2026 15:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167302E093A;
+	Mon, 20 Apr 2026 15:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700230; cv=none; b=cUifVGk981AY3Itll88bBWa3cWoexuUbI1cJF4rySJkDd6ZhA5Oo4PNVl75EF8pQEtNCQ9ifybiYpOnw78lZKSN/MRMcnLOePqv96rliqFy5cjI4SZchXpGB1OibimTnXSmOLdC+KZyd21o5HJ+J0RWOBa6nnj+jqRNkZKq1Yr0=
+	t=1776700233; cv=none; b=MLNO4yACJdh5otCoKS9Re407WX+5w9P2tMu8PMDZyAjEDIYtXhzx5J0oprJFNBn4m42Z13Ox8rDa4d2uglFgxEpTHLR6cIPeGSKLcENc1weD1pXjvGqbENOhpi/ks1TCZ7mhwXlSqc6Jbi6MprPdSdx8cbsjonB3ASeihJlC25s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700230; c=relaxed/simple;
-	bh=1xrJ8VjEWmkKt8hu0Os6JbOCtbDbCHgiwLIR6A/6VjU=;
+	s=arc-20240116; t=1776700233; c=relaxed/simple;
+	bh=SulAoS3p2GV4JUrHVditBDoQwVQmS67YH9AwOnVIP68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7oGiUIlE5HMvsszH+ddB/vWkJz/eCLNIE8aoCEhSXHICc/Xuj0TxyRJzCCXaVwruB4owrGA3X/u6KE/rXLn4NYVWLIKQQcnNjlbyV/EmeHFd0qwcRxs3ksriuDWONVIZqlii7S3Elzfe9HrswTPPSNTK1RA/QOVMkpn/NIVTJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJyFKqa9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m+i21ktQdGvD5R//dkAyouvjxW3txrDmE0GoyP6yTI9CW+BKdHWWSHQu/UZYx6RDsLPL1xR3YFPxE0UiIKLYDgh2nxCrHXYiL3IUTsqOkomalL2VzdVSsyfAZHJLpezG3RJPdCTS9TH8tcLDClH4n+u1UrVfJDqrHWTy6QZf0VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FNSnR8n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJyFKqa9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D83C2BCB4;
-	Mon, 20 Apr 2026 15:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FNSnR8n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F882C19425;
+	Mon, 20 Apr 2026 15:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700230;
-	bh=1xrJ8VjEWmkKt8hu0Os6JbOCtbDbCHgiwLIR6A/6VjU=;
+	s=korg; t=1776700233;
+	bh=SulAoS3p2GV4JUrHVditBDoQwVQmS67YH9AwOnVIP68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJyFKqa9pSGvJblM3cPP8CifJF1tvRbNvZi4IkZ9p13P2x/wA3wnzQiOlmVUsKFx3
-	 N2fVXMJNtoJk6DGw7GV3m1+u3p76j7NHRTIDwtSoiLecnc720xtebcvse6G7t1Y+IK
-	 Niey9EppVML7xkRv+C7onT5itauXMVfKHKQwdjSU=
+	b=0FNSnR8nv2IT0bLwU9FhBr/6g28bT4p6don67/IDuDKYx42DOptS/5T36c1jwpwbC
+	 x1rYjEuadocXK4zlSfE/sJL/MCFKbQPrwfKvGN2d+IEztUOQX82zGZmGUR6HhT3Yip
+	 wTMqBQ4Nvn47o9a1kRXCmugeQFz9Iw9U5KHnCvPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahil Chandna <sahilchandna@linux.microsoft.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
+	"Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 091/220] PCI: hv: Fix double ida_free in hv_pci_probe error path
-Date: Mon, 20 Apr 2026 17:40:32 +0200
-Message-ID: <20260420153937.311549929@linuxfoundation.org>
+Subject: [PATCH 6.19 092/220] mshv: Fix infinite fault loop on permission-denied GPA intercepts
+Date: Mon, 20 Apr 2026 17:40:33 +0200
+Message-ID: <20260420153937.347380356@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -53,65 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahil Chandna <sahilchandna@linux.microsoft.com>
+From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
 
-[ Upstream commit b6422dff0e518245019233432b6bccfc30b73e2f ]
+[ Upstream commit 16cbec24897624051b324aa3a85859c38ca65fde ]
 
-If hv_pci_probe() fails after storing the domain number in
-hbus->bridge->domain_nr, there is a call to free this domain_nr via
-pci_bus_release_emul_domain_nr(), however, during cleanup, the bridge
-release callback pci_release_host_bridge_dev() also frees the domain_nr
-causing ida_free to be called on same ID twice and triggering following
-warning:
+Prevent infinite fault loops when guests access memory regions without
+proper permissions. Currently, mshv_handle_gpa_intercept() attempts to
+remap pages for all faults on movable memory regions, regardless of
+whether the access type is permitted. When a guest writes to a read-only
+region, the remap succeeds but the region remains read-only, causing
+immediate re-fault and spinning the vCPU indefinitely.
 
-  ida_free called for id=28971 which is not allocated.
-  WARNING: lib/idr.c:594 at ida_free+0xdf/0x160, CPU#0: kworker/0:2/198
-  Call Trace:
-   pci_bus_release_emul_domain_nr+0x17/0x20
-   pci_release_host_bridge_dev+0x4b/0x60
-   device_release+0x3b/0xa0
-   kobject_put+0x8e/0x220
-   devm_pci_alloc_host_bridge_release+0xe/0x20
-   devres_release_all+0x9a/0xd0
-   device_unbind_cleanup+0x12/0xa0
-   really_probe+0x1c5/0x3f0
-   vmbus_add_channel_work+0x135/0x1a0
+Validate intercept access type against region permissions before
+attempting remaps. Reject writes to non-writable regions and executes to
+non-executable regions early, returning false to let the VMM handle the
+intercept appropriately.
 
-Fix this by letting pci core handle the free domain_nr and remove
-the explicit free called in pci-hyperv driver.
+This also closes a potential DoS vector where malicious guests could
+intentionally trigger these fault loops to consume host resources.
 
-Fixes: bcce8c74f1ce ("PCI: Enable host bridge emulation for PCI_DOMAINS_GENERIC platforms")
-Signed-off-by: Sahil Chandna <sahilchandna@linux.microsoft.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Fixes: b9a66cd5ccbb ("mshv: Add support for movable memory regions")
+Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-hyperv.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/hv/mshv_root_main.c | 15 ++++++++++++---
+ include/hyperv/hvgdk_mini.h |  6 ++++++
+ include/hyperv/hvhdk.h      |  4 ++--
+ 3 files changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
-index 85631c9794db6..7f1c1a2e5c69d 100644
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -3789,7 +3789,7 @@ static int hv_pci_probe(struct hv_device *hdev,
- 					   hbus->bridge->domain_nr);
- 	if (!hbus->wq) {
- 		ret = -ENOMEM;
--		goto free_dom;
-+		goto free_bus;
- 	}
+diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
+index 45cf086ad430d..5611be36f6a8e 100644
+--- a/drivers/hv/mshv_root_main.c
++++ b/drivers/hv/mshv_root_main.c
+@@ -642,7 +642,7 @@ static bool mshv_handle_gpa_intercept(struct mshv_vp *vp)
+ {
+ 	struct mshv_partition *p = vp->vp_partition;
+ 	struct mshv_mem_region *region;
+-	bool ret;
++	bool ret = false;
+ 	u64 gfn;
+ #if defined(CONFIG_X86_64)
+ 	struct hv_x64_memory_intercept_message *msg =
+@@ -653,6 +653,8 @@ static bool mshv_handle_gpa_intercept(struct mshv_vp *vp)
+ 		(struct hv_arm64_memory_intercept_message *)
+ 		vp->vp_intercept_msg_page->u.payload;
+ #endif
++	enum hv_intercept_access_type access_type =
++		msg->header.intercept_access_type;
  
- 	hdev->channel->next_request_id_callback = vmbus_next_request_id;
-@@ -3885,8 +3885,6 @@ static int hv_pci_probe(struct hv_device *hdev,
- 	vmbus_close(hdev->channel);
- destroy_wq:
- 	destroy_workqueue(hbus->wq);
--free_dom:
--	pci_bus_release_emul_domain_nr(hbus->bridge->domain_nr);
- free_bus:
- 	kfree(hbus);
+ 	gfn = HVPFN_DOWN(msg->guest_physical_address);
+ 
+@@ -660,12 +662,19 @@ static bool mshv_handle_gpa_intercept(struct mshv_vp *vp)
+ 	if (!region)
+ 		return false;
+ 
++	if (access_type == HV_INTERCEPT_ACCESS_WRITE &&
++	    !(region->hv_map_flags & HV_MAP_GPA_WRITABLE))
++		goto put_region;
++
++	if (access_type == HV_INTERCEPT_ACCESS_EXECUTE &&
++	    !(region->hv_map_flags & HV_MAP_GPA_EXECUTABLE))
++		goto put_region;
++
+ 	/* Only movable memory ranges are supported for GPA intercepts */
+ 	if (region->type == MSHV_REGION_TYPE_MEM_MOVABLE)
+ 		ret = mshv_region_handle_gfn_fault(region, gfn);
+-	else
+-		ret = false;
+ 
++put_region:
+ 	mshv_region_put(region);
+ 
  	return ret;
+diff --git a/include/hyperv/hvgdk_mini.h b/include/hyperv/hvgdk_mini.h
+index 30fbbde81c5c4..9c523ee57a358 100644
+--- a/include/hyperv/hvgdk_mini.h
++++ b/include/hyperv/hvgdk_mini.h
+@@ -1528,4 +1528,10 @@ struct hv_mmio_write_input {
+ 	u8 data[HV_HYPERCALL_MMIO_MAX_DATA_LENGTH];
+ } __packed;
+ 
++enum hv_intercept_access_type {
++	HV_INTERCEPT_ACCESS_READ	= 0,
++	HV_INTERCEPT_ACCESS_WRITE	= 1,
++	HV_INTERCEPT_ACCESS_EXECUTE	= 2
++};
++
+ #endif /* _HV_HVGDK_MINI_H */
+diff --git a/include/hyperv/hvhdk.h b/include/hyperv/hvhdk.h
+index 08965970c17df..84ebe56f1f8db 100644
+--- a/include/hyperv/hvhdk.h
++++ b/include/hyperv/hvhdk.h
+@@ -770,7 +770,7 @@ struct hv_x64_intercept_message_header {
+ 	u32 vp_index;
+ 	u8 instruction_length:4;
+ 	u8 cr8:4; /* Only set for exo partitions */
+-	u8 intercept_access_type;
++	u8 intercept_access_type; /* enum hv_intercept_access_type */
+ 	union hv_x64_vp_execution_state execution_state;
+ 	struct hv_x64_segment_register cs_segment;
+ 	u64 rip;
+@@ -816,7 +816,7 @@ union hv_arm64_vp_execution_state {
+ struct hv_arm64_intercept_message_header {
+ 	u32 vp_index;
+ 	u8 instruction_length;
+-	u8 intercept_access_type;
++	u8 intercept_access_type; /* enum hv_intercept_access_type */
+ 	union hv_arm64_vp_execution_state execution_state;
+ 	u64 pc;
+ 	u64 cpsr;
 -- 
 2.53.0
 
