@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704E82DF719;
-	Mon, 20 Apr 2026 16:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A1934252C;
+	Mon, 20 Apr 2026 16:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701368; cv=none; b=jMy1AcBqqi6E4/VwDkGdtMPplRzNypkFe4Doj0A6x/A9TrePZghb0qTUin1BFC6EzwnyLvYx8pvRwbuoC90IbQEmQCqi0NZF3P+IOO2aL6EOpvPpDs3x2N8MBgPwarWLQJRTGQKkHrGVRXsxQ6a4oRZZIEU0L+KX7ifF6x2KDac=
+	t=1776701371; cv=none; b=AT99gM9py0AqYe+xO86YGA3tGHmnuu98uL99Dno9h2+KsudENbggdG5FOAO/ykv/IAukc5UG18OSda9B8o9tB0a2qC8W6ZcaLD5Pp46aL707DxDfT9hEDRbuIIs6GJxbQa6CZcfN2ByYiSNW2Jqsw0emcW1TmWYaCQ4muiC+k9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701368; c=relaxed/simple;
-	bh=AibONKTOmVV/QBezUEFFNstfaxlzYvz5fagDlj19kmQ=;
+	s=arc-20240116; t=1776701371; c=relaxed/simple;
+	bh=GN6SI/3JCVjEIAiipZzFCaewLs5EwQJSVgcj5yQltfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lh4NzKKZnxkIBMA0sHCiPaC/v0+lHwN2lLmQ8YRqkPhtiYdFy15t47Me/EIw1PD4ZOC9uT8FXo1NW5aca+dXB0NE6ymBUxLCr1C4C4JXZZz8S74zFZFSIoZY2Bgurv668uUCb4f9/bs+MKvES9zpMg8oCo3TZFKqJc7qOBYBLs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmIy9Lt2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVAMAKjaVVuFWXMJPn7BVHFnEcQH/O3mmdRu/mThK+YTblKA5xG5dr/CLjpVZIu/B1dFRVQCV93P/BqwBbmp3OqHA8/sULq6pJjcIHYqUHYdlOR7pQFb61K8KgX2hqVt6UoLnNodXzKUihm2VA/8mWxt2Qk9Cd1xM4FltkCIHCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3CiVx9l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmIy9Lt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0746EC2BCB4;
-	Mon, 20 Apr 2026 16:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3CiVx9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6F5C19425;
+	Mon, 20 Apr 2026 16:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701368;
-	bh=AibONKTOmVV/QBezUEFFNstfaxlzYvz5fagDlj19kmQ=;
+	s=korg; t=1776701370;
+	bh=GN6SI/3JCVjEIAiipZzFCaewLs5EwQJSVgcj5yQltfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bmIy9Lt2NuYjAY9SHhSnrREmIsLLYXBYRhb7W1sq/FOOhGwN75UX1dGWfHwYEQ1AA
-	 +mwAcQDUV97Xqrk7vsNllICCybKRM8zjL0gyTxwljO3E5X4PVpGH7oWw9dd/xQnMN+
-	 k/klMH7cQ28+re/oJv2+Ff+FocKwHpyETzLQDCjU=
+	b=z3CiVx9ltsUWlhDLdX0HNKtFHKaPesqae2FQSvh/1GHErx3UwikmiqUeVypxEGD2i
+	 Biu4llaZgd/lleWpeku9+LGWdHlEVu64zEYEskCiiNskagrPbNQJQZdTT6JGBMv1Jz
+	 VrQvsqIs6TYOHXaGVhPd8qRIzF7ozQTQummyBM2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiqi Sun <sunyiqixm@gmail.com>,
+	Chris J Arges <carges@cloudflare.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/162] ipv4: icmp: fix null-ptr-deref in icmp_build_probe()
-Date: Mon, 20 Apr 2026 17:41:25 +0200
-Message-ID: <20260420153928.957415237@linuxfoundation.org>
+Subject: [PATCH 6.12 054/162] net: increase IP_TUNNEL_RECURSION_LIMIT to 5
+Date: Mon, 20 Apr 2026 17:41:26 +0200
+Message-ID: <20260420153928.992818317@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,48 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiqi Sun <sunyiqixm@gmail.com>
+From: Chris J Arges <carges@cloudflare.com>
 
-[ Upstream commit fde29fd9349327acc50d19a0b5f3d5a6c964dfd8 ]
+[ Upstream commit 77facb35227c421467cdb49268de433168c2dcef ]
 
-ipv6_stub->ipv6_dev_find() may return ERR_PTR(-EAFNOSUPPORT) when the
-IPv6 stack is not active (CONFIG_IPV6=m and not loaded), and passing
-this error pointer to dev_hold() will cause a kernel crash with
-null-ptr-deref.
+In configurations with multiple tunnel layers and MPLS lwtunnel routing, a
+single tunnel hop can increment the counter beyond this limit. This causes
+packets to be dropped with the "Dead loop on virtual device" message even
+when a routing loop doesn't exist.
 
-Instead, silently discard the request. RFC 8335 does not appear to
-define a specific response for the case where an IPv6 interface
-identifier is syntactically valid but the implementation cannot perform
-the lookup at runtime, and silently dropping the request may safer than
-misreporting "No Such Interface".
+Increase IP_TUNNEL_RECURSION_LIMIT from 4 to 5 to handle this use-case.
 
-Fixes: d329ea5bd884 ("icmp: add response to RFC 8335 PROBE messages")
-Signed-off-by: Yiqi Sun <sunyiqixm@gmail.com>
-Link: https://patch.msgid.link/20260402070419.2291578-1-sunyiqixm@gmail.com
+Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
+Link: https://lore.kernel.org/netdev/88deb91b-ef1b-403c-8eeb-0f971f27e34f@redhat.com/
+Signed-off-by: Chris J Arges <carges@cloudflare.com>
+Link: https://patch.msgid.link/20260402222401.3408368-1-carges@cloudflare.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/net/ip_tunnels.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 58feb21ff967d..8e53b595a4194 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -1143,6 +1143,13 @@ bool icmp_build_probe(struct sk_buff *skb, struct icmphdr *icmphdr)
- 			if (iio->ident.addr.ctype3_hdr.addrlen != sizeof(struct in6_addr))
- 				goto send_mal_query;
- 			dev = ipv6_stub->ipv6_dev_find(net, &iio->ident.addr.ip_addr.ipv6_addr, dev);
-+			/*
-+			 * If IPv6 identifier lookup is unavailable, silently
-+			 * discard the request instead of misreporting NO_IF.
-+			 */
-+			if (IS_ERR(dev))
-+				return false;
-+
- 			dev_hold(dev);
- 			break;
- #endif
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 0a5556ef16729..583fd1afd2387 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -29,7 +29,7 @@
+  * recursion involves route lookups and full IP output, consuming much
+  * more stack per level, so a lower limit is needed.
+  */
+-#define IP_TUNNEL_RECURSION_LIMIT	4
++#define IP_TUNNEL_RECURSION_LIMIT	5
+ 
+ /* Keep error state on tunnel for 30 sec */
+ #define IPTUNNEL_ERR_TIMEO	(30*HZ)
 -- 
 2.53.0
 
