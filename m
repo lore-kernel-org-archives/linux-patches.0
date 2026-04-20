@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1205A2FE56A;
-	Mon, 20 Apr 2026 15:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EE43382DE;
+	Mon, 20 Apr 2026 15:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700433; cv=none; b=ukbL9sCO2G+NA4HDDXTRFPlXJ31CoeVl8SS/jv7i/HLamw8p3Z7+stLLeCHOGf0wxSvFYv7j6eUOJfFO/3Gg2QeuiY0SBIrDH9dt7G5kJxeY3PvluOrU/J/8e3p0i/lIXxCrxrqmWbNxM3e/LrdBhDYlZg/CwzNDYwWnfLR+gjc=
+	t=1776700435; cv=none; b=fQdkK9g1zkJXKQOBf/cHgGxCanuZJRyUuczqncYSroBzlsxkUhlgsTG0xQYQdB6AhU0Cwy9tz6IBNM4U2mIAgIFXvRkthVK6IObBeQxT0M/lDXQ2xcdogx0FJ7NeKpv16Sn8OB4SgDZsXm0xreGmK6cxH28ppX9btpQYHXC0Bc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700433; c=relaxed/simple;
-	bh=WorR7y9zKs1+jOH/LoixRz6BGuvaURLWFGmM4LP64Qk=;
+	s=arc-20240116; t=1776700435; c=relaxed/simple;
+	bh=Wi9dAfd14ExG8jHx8ij/IyNBypmv8JAMqqssnYI/4hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mb+VTHDft16iBlcbqvbwvMAgdIPJ20ruDHJnfaW/tkwTZ3h2GpbMNRMmb/80k99w5eZA4SdNvGCfCXjh1YiD0IPUyrtVxPT+GKwRiyZuT7GPYRbXaftksNkU4JanrOKz6ZODAafaa55vCKbyP9LIkrmjbu3DWSJGvIKB32ZZsvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwEPd3ED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTa4Sp9R3ctBlxjga4IZ3urnp6Q2+7aDhGZaIBo3H0sBFqa/b342JbRMFL9I32+lovOD1yTCLQAjttJr/yq94UFvZnuH+YiuAHSNNBAc9XaQdvI53kdbGaEJrmxKIM/k93y0YgEGGwkIa3vDE+yFZWy9nf9v5tHh1PUiWGni4Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjekE2y8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwEPd3ED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA30C19425;
-	Mon, 20 Apr 2026 15:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjekE2y8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2E0C19425;
+	Mon, 20 Apr 2026 15:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700433;
-	bh=WorR7y9zKs1+jOH/LoixRz6BGuvaURLWFGmM4LP64Qk=;
+	s=korg; t=1776700435;
+	bh=Wi9dAfd14ExG8jHx8ij/IyNBypmv8JAMqqssnYI/4hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VwEPd3EDjxk1YuJcQ2QdMDNLYRCZympaSn2KYB1cW85vToSZGW4i6BVOGg6uExHPa
-	 J+bUPUpNZDFeZmIZUsPnsfqfm/LtI5G0cn0U8clL0oA+fNKWOFF3IGBq2kO/dRQ+z3
-	 48c/tpp5aLn64/h4JMjpCjgVEWvv/e52BgnZB5Ec=
+	b=bjekE2y8wInz5P93p9QCXNO8vf2PRqqEyYfngcgmEM3vUfslI4FOObl2Nk58xYjo/
+	 QXKxLFeBB88/2+GtQiCcBYuK5/Y3e0l3xnM5PTvbKBLNrAT3ylLYF3GgfmBP2l78oe
+	 PUrtcCoyFtZiK19ZdYOnopV/JffpWM6vSUXrOepY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Lin YuChen <starpt.official@gmail.com>
-Subject: [PATCH 6.19 143/220] staging: rtl8723bs: initialize le_tmp64 in rtw_BIP_verify()
-Date: Mon, 20 Apr 2026 17:41:24 +0200
-Message-ID: <20260420153939.177014551@linuxfoundation.org>
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.19 170/220] scripts/gdb/symbols: handle module path parameters
+Date: Mon, 20 Apr 2026 17:41:51 +0200
+Message-ID: <20260420153940.147714985@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,44 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin YuChen <starpt.official@gmail.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-commit 8c964b82a4e97ec7f25e17b803ee196009b38a57 upstream.
+commit 8e4513303b8726e4434f718ab39749cbb4c142b1 upstream.
 
-Initialize le_tmp64 to zero in rtw_BIP_verify() to prevent using
-uninitialized data.
+commit 581ee79a2547 ("scripts/gdb/symbols: make BPF debug info available
+to GDB") added support to make BPF debug information available to GDB.
+However, the argument handling loop was slightly broken, causing it to
+fail if further modules were passed.  Fix it to append these passed
+modules to the instance variable after expansion.
 
-Smatch warns that only 6 bytes are copied to this 8-byte (u64)
-variable, leaving the last two bytes uninitialized:
-
-drivers/staging/rtl8723bs/core/rtw_security.c:1308 rtw_BIP_verify()
-warn: not copying enough bytes for '&le_tmp64' (8 vs 6 bytes)
-
-Initializing the variable at the start of the function fixes this
-warning and ensures predictable behavior.
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-staging/abvwIQh0CHTp4wNJ@stanley.mountain/
-Signed-off-by: Lin YuChen <starpt.official@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20260320172502.167332-1-starpt.official@gmail.com
+Link: https://lkml.kernel.org/r/20260304110642.2020614-2-benjamin@sipsolutions.net
+Fixes: 581ee79a2547 ("scripts/gdb/symbols: make BPF debug info available to GDB")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_security.c |    2 +-
+ scripts/gdb/linux/symbols.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_security.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_security.c
-@@ -1313,7 +1313,7 @@ u32 rtw_BIP_verify(struct adapter *padap
- 	u8 mic[16];
- 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
- 	__le16 le_tmp;
--	__le64 le_tmp64;
-+	__le64 le_tmp64 = 0;
+diff --git a/scripts/gdb/linux/symbols.py b/scripts/gdb/linux/symbols.py
+index d4308b726183..943ff1228b48 100644
+--- a/scripts/gdb/linux/symbols.py
++++ b/scripts/gdb/linux/symbols.py
+@@ -298,7 +298,7 @@ are loaded as well."""
+             if p == "-bpf":
+                 monitor_bpf = True
+             else:
+-                p.append(os.path.abspath(os.path.expanduser(p)))
++                self.module_paths.append(os.path.abspath(os.path.expanduser(p)))
+         self.module_paths.append(os.getcwd())
  
- 	ori_len = pattrib->pkt_len - WLAN_HDR_A3_LEN + BIP_AAD_SIZE;
- 	BIP_AAD = rtw_zmalloc(ori_len);
+         if self.breakpoint is not None:
+-- 
+2.53.0
+
 
 
