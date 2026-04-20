@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532EB3368AF;
-	Mon, 20 Apr 2026 15:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D540D2FFDCB;
+	Mon, 20 Apr 2026 15:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699937; cv=none; b=ZH1xKqyiQs4eLdHUGQgAoJ/DzfhQMQNkNXYLMDZnjT5n70ynPnEvC+2R8CO08bTYljneVX2QeuIxhn0Y8k4Tf5s+V5h+NUV8E0PiLjAbjZvU22V4APgKHrXcOH5SQscUdNAMM5/MOihK9oSSJc2bj6mR7PJVTER7b7tw791hoC8=
+	t=1776699939; cv=none; b=FaWGBv4HeHjpNx1xHR4jYVBGhuDeUFWExeaYnYyqeTOOlHrYTbo5lWkVCWe2azWqaOj0jEOnxuyCkgnXacIAQcD2HZYb01+CjGCgvbk9P5WgwVJQKN4/bDG0NTaNUX3F6xg/pZa9Wls1NrUREwWTxDteIyg70Lko035raVgild4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699937; c=relaxed/simple;
-	bh=QkmhePAHIoMoDDnOu7zeuONONxe48Zi5n2x1872zhHM=;
+	s=arc-20240116; t=1776699939; c=relaxed/simple;
+	bh=lhHCMtm3lr22fuqCyYCfQfHRTCiEiO2J176qMUD/trQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oR+Rbg1vu46ZEUjYhbWroFDFxSfE6HOULW4kmtC1hU2Zjg/AEP+QCS562BiQutpseLCX1tYiiEwX+yyj+5uKF4B0rXGfwfMfpJAQHV7CFfZCV1A7LvcQWpRj1mDsBE/x8300jewjtAAKGEmzktHDxYacSUem7xcvug9Alb52T8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeUSf/cz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ovg0+Q1NpZTBedpzHosPNS9DDHrECjOUiDVV/qA2SSEwPYRroEwL43JsjXRYjt3XaQiahwDbb4hXw3JQM2WCMkRZRMB2O2AGNbo/4wcqZ9wLGrAETJtMh57BFRj0zDNDBCJOhb2xoDwYjkHdKvWDRE2DCXpCevL1r0ZHNO/T+y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYYFrk2+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeUSf/cz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF7DC19425;
-	Mon, 20 Apr 2026 15:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYYFrk2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C77EC2BCB4;
+	Mon, 20 Apr 2026 15:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699937;
-	bh=QkmhePAHIoMoDDnOu7zeuONONxe48Zi5n2x1872zhHM=;
+	s=korg; t=1776699939;
+	bh=lhHCMtm3lr22fuqCyYCfQfHRTCiEiO2J176qMUD/trQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UeUSf/czrS/QsHV/d+h5UMgVivO120f+/fP4Jr03EXrLiVTsa89UQwDBTGdkL6xGO
-	 bbAsqoKVLtOevvcfZkGhRC5TRJDzlEWpqlGHB1zdKLZJyKGk1f7caMLNRqXyDT5R/u
-	 xnjRMMHjVRDWs0kPcvqIoSdtwZIwY7vp/e6fDvic=
+	b=YYYFrk2+STprWi6oIZzudwpWA7gjJ2oMq8oBB4pwR+nqN4oWg3zpxO2xMu3MFrhk4
+	 KillikxSJilAiCl0nZ/pFpjEg/m6JGeu43iB0VaLkBNDTC7rsUepcAfvJo77VPkKOi
+	 0dLoc3qNdxZE8wnKUPU5EEfDDX8OFJcJdaZBss3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Merwick <liam.merwick@oracle.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.0 55/76] KVM: SEV: Drop WARN on large size for KVM_MEMORY_ENCRYPT_REG_REGION
-Date: Mon, 20 Apr 2026 17:42:06 +0200
-Message-ID: <20260420153912.824465975@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Google Big Sleep <big-sleep-vuln-reports+bigsleep-501448199@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jan Kara <jack@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 56/76] mm: call ->free_folio() directly in folio_unmap_invalidate()
+Date: Mon, 20 Apr 2026 17:42:07 +0200
+Message-ID: <20260420153912.859943434@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -50,71 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 8acffeef5ef720c35e513e322ab08e32683f32f2 upstream.
+commit 615d9bb2ccad42f9e21d837431e401db2e471195 upstream.
 
-Drop the WARN in sev_pin_memory() on npages overflowing an int, as the
-WARN is comically trivially to trigger from userspace, e.g. by doing:
+We can only call filemap_free_folio() if we have a reference to (or hold a
+lock on) the mapping.  Otherwise, we've already removed the folio from the
+mapping so it no longer pins the mapping and the mapping can be removed,
+causing a use-after-free when accessing mapping->a_ops.
 
-  struct kvm_enc_region range = {
-          .addr = 0,
-          .size = -1ul,
-  };
+Follow the same pattern as __remove_mapping() and load the free_folio
+function pointer before dropping the lock on the mapping.  That lets us
+make filemap_free_folio() static as this was the only caller outside
+filemap.c.
 
-  __vm_ioctl(vm, KVM_MEMORY_ENCRYPT_REG_REGION, &range);
-
-Note, the checks in sev_mem_enc_register_region() that presumably exist to
-verify the incoming address+size are completely worthless, as both "addr"
-and "size" are u64s and SEV is 64-bit only, i.e. they _can't_ be greater
-than ULONG_MAX.  That wart will be cleaned up in the near future.
-
-	if (range->addr > ULONG_MAX || range->size > ULONG_MAX)
-		return -EINVAL;
-
-Opportunistically add a comment to explain why the code calculates the
-number of pages the "hard" way, e.g. instead of just shifting @ulen.
-
-Fixes: 78824fabc72e ("KVM: SVM: fix svn_pin_memory()'s use of get_user_pages_fast()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
-Tested-by: Liam Merwick <liam.merwick@oracle.com>
-Link: https://patch.msgid.link/20260313003302.3136111-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/20260413184314.3419945-1-willy@infradead.org
+Fixes: fb7d3bc41493 ("mm/filemap: drop streaming/uncached pages when writeback completes")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reported-by: Google Big Sleep <big-sleep-vuln-reports+bigsleep-501448199@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Jan Kara <jack@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ mm/filemap.c  |    3 ++-
+ mm/internal.h |    1 -
+ mm/truncate.c |    6 +++++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -690,10 +690,16 @@ static struct page **sev_pin_memory(stru
- 	if (ulen == 0 || uaddr + ulen < uaddr)
- 		return ERR_PTR(-EINVAL);
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -228,7 +228,8 @@ void __filemap_remove_folio(struct folio
+ 	page_cache_delete(mapping, folio, shadow);
+ }
  
--	/* Calculate number of pages. */
-+	/*
-+	 * Calculate the number of pages that need to be pinned to cover the
-+	 * entire range.  Note!  This isn't simply ulen >> PAGE_SHIFT, as KVM
-+	 * doesn't require the incoming address+size to be page aligned!
-+	 */
- 	first = (uaddr & PAGE_MASK) >> PAGE_SHIFT;
- 	last = ((uaddr + ulen - 1) & PAGE_MASK) >> PAGE_SHIFT;
- 	npages = (last - first + 1);
-+	if (npages > INT_MAX)
-+		return ERR_PTR(-EINVAL);
+-void filemap_free_folio(struct address_space *mapping, struct folio *folio)
++static void filemap_free_folio(const struct address_space *mapping,
++		struct folio *folio)
+ {
+ 	void (*free_folio)(struct folio *);
  
- 	locked = sev->pages_locked + npages;
- 	lock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
-@@ -702,9 +708,6 @@ static struct page **sev_pin_memory(stru
- 		return ERR_PTR(-ENOMEM);
- 	}
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -540,7 +540,6 @@ unsigned find_lock_entries(struct addres
+ 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
+ unsigned find_get_entries(struct address_space *mapping, pgoff_t *start,
+ 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
+-void filemap_free_folio(struct address_space *mapping, struct folio *folio);
+ int truncate_inode_folio(struct address_space *mapping, struct folio *folio);
+ bool truncate_inode_partial_folio(struct folio *folio, loff_t start,
+ 		loff_t end);
+--- a/mm/truncate.c
++++ b/mm/truncate.c
+@@ -622,6 +622,7 @@ static int folio_launder(struct address_
+ int folio_unmap_invalidate(struct address_space *mapping, struct folio *folio,
+ 			   gfp_t gfp)
+ {
++	void (*free_folio)(struct folio *);
+ 	int ret;
  
--	if (WARN_ON_ONCE(npages > INT_MAX))
--		return ERR_PTR(-EINVAL);
--
- 	/* Avoid using vmalloc for smaller buffers. */
- 	size = npages * sizeof(struct page *);
- 	if (size > PAGE_SIZE)
+ 	VM_BUG_ON_FOLIO(!folio_test_locked(folio), folio);
+@@ -648,9 +649,12 @@ int folio_unmap_invalidate(struct addres
+ 	xa_unlock_irq(&mapping->i_pages);
+ 	if (mapping_shrinkable(mapping))
+ 		inode_lru_list_add(mapping->host);
++	free_folio = mapping->a_ops->free_folio;
+ 	spin_unlock(&mapping->host->i_lock);
+ 
+-	filemap_free_folio(mapping, folio);
++	if (free_folio)
++		free_folio(folio);
++	folio_put_refs(folio, folio_nr_pages(folio));
+ 	return 1;
+ failed:
+ 	xa_unlock_irq(&mapping->i_pages);
 
 
