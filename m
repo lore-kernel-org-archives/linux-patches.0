@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4053375C5;
-	Mon, 20 Apr 2026 16:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D090E329C6D;
+	Mon, 20 Apr 2026 16:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701312; cv=none; b=pLyI/7wdjDcP+b/HYHm/4mr1KMMISghsfA3CrYMWgI2axVIUFn8YkZmWJ2hnLEyo0AoS1vG/gpotYN7eaRkeDBBNJz32TJqY7/evuCuaFlUpns5694FZa7kSzi8LWq6ORizYvPxPc3EUaepsGMzNxhM17DppdFalXqEOD7nkVZs=
+	t=1776701314; cv=none; b=tKkDI2J8Za0qA9zzzhoBQUyfiQ1wg9HM+0S2zeieofLL0Q9AYj2fJambMdoa/z0E06u5Vdo6nEccOySvYubm+/ai5vM2iBk68M44wOAvU7Ph0hEozvnSoRsyoq4zMllFhQPVMY39y68bfSY68t5AVNIcWK16xskKxeymd5fcVzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701312; c=relaxed/simple;
-	bh=qsoWE3we/b03OvBjcAIzUWwupf4SF/xg6Ny6AT1hu2c=;
+	s=arc-20240116; t=1776701314; c=relaxed/simple;
+	bh=UcUI5vxq4XlPTvJXrLaVFBZKmJWHWoXMrKgKqONvLRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZD4B85DC7ti+igMCbvBggjKKvd1thqI6lRkw4WqakUKX8dORpON6PPYChxhS2wLH2YbqOBsR9NKdoEV5WuBFgg5WHv/KKHvzi87R4xdiGOzogqeb23HXX5Lfzq94lMojuriJWjNTODG26v1aG3dqRdg72Fj+XrRsd0lnh3KdDqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCthERnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=czxC2A+Sf9dhanrP0MgOqv6Cn/aYLQ0eiEg0PI121rh93QfhT32m7KskM140cxe4DaXD21wx5Tt0Yhj2kW/yJkUVtnIKx3rHMM21HLM07vFzUf7HeaI+kzjdp3NoiNvy22nacWlUG9e5/CqHAwqvEmJrbnjGJbdemKpejRQa0JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTgzBxJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCthERnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D18C19425;
-	Mon, 20 Apr 2026 16:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTgzBxJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67210C19425;
+	Mon, 20 Apr 2026 16:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701312;
-	bh=qsoWE3we/b03OvBjcAIzUWwupf4SF/xg6Ny6AT1hu2c=;
+	s=korg; t=1776701314;
+	bh=UcUI5vxq4XlPTvJXrLaVFBZKmJWHWoXMrKgKqONvLRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCthERnlsABVazTKtrnkZ6tON0RpE3ctZgXuygJ5uQbY9JZ9DPrmwbENjMZ11Oln8
-	 NToavnF48qCJ4Jxp1T/cdC4nF+jF6QzXynUVCTWsmwtr9Jw0QqE4aQuY3xKkNHcZlQ
-	 BZCBDUfGFlLrybifyXzNr+3Zud0/X3MX8hlq21xs=
+	b=oTgzBxJg9FMyN5zISvWJzTLemJ16Cenc9oG1KQaEu3520z+WiUql4J5lIJejPTkKI
+	 qzNolCB6uFn5OCgEmY/5IUrCCkGqgyQt35OxvipJTXroG+tut7MrFU5WGvIkIrHDo8
+	 aDp0unkg2cLy8aZOgQZmH+rXFSHTI+ws82dy3beo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 047/162] drm/vc4: Protect madv read in vc4_gem_object_mmap() with madv_lock
-Date: Mon, 20 Apr 2026 17:41:19 +0200
-Message-ID: <20260420153928.730801483@linuxfoundation.org>
+Subject: [PATCH 6.12 065/162] xfrm: Wait for RCU readers during policy netns exit
+Date: Mon, 20 Apr 2026 17:41:37 +0200
+Message-ID: <20260420153929.391498793@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -45,50 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-[ Upstream commit 338c56050d8e892604da97f67bfa8cc4015a955f ]
+[ Upstream commit 069daad4f2ae9c5c108131995529d5f02392c446 ]
 
-The mmap callback reads bo->madv without holding madv_lock, racing with
-concurrent DRM_IOCTL_VC4_GEM_MADVISE calls that modify the field under
-the same lock. Add the missing locking to prevent the data race.
+xfrm_policy_fini() frees the policy_bydst hash tables after flushing the
+policy work items and deleting all policies, but it does not wait for
+concurrent RCU readers to leave their read-side critical sections first.
 
-Fixes: b9f19259b84d ("drm/vc4: Add the DRM_IOCTL_VC4_GEM_MADVISE ioctl")
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-4-92defc940a29@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+The policy_bydst tables are published via rcu_assign_pointer() and are
+looked up through rcu_dereference_check(), so netns teardown must also
+wait for an RCU grace period before freeing the table memory.
+
+Fix this by adding synchronize_rcu() before freeing the policy hash tables.
+
+Fixes: e1e551bc5630 ("xfrm: policy: prepare policy_bydst hash for rcu lookups")
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_bo.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/xfrm/xfrm_policy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
-index 2a85d08b19852..3740e0552960d 100644
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -738,12 +738,15 @@ static int vc4_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
- 		return -EINVAL;
- 	}
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index f4713ab7996f2..5fa648a5abe96 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -4278,6 +4278,8 @@ static void xfrm_policy_fini(struct net *net)
+ #endif
+ 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_MAIN, false);
  
-+	mutex_lock(&bo->madv_lock);
- 	if (bo->madv != VC4_MADV_WILLNEED) {
- 		DRM_DEBUG("mmapping of %s BO not allowed\n",
- 			  bo->madv == VC4_MADV_DONTNEED ?
- 			  "purgeable" : "purged");
-+		mutex_unlock(&bo->madv_lock);
- 		return -EINVAL;
- 	}
-+	mutex_unlock(&bo->madv_lock);
++	synchronize_rcu();
++
+ 	WARN_ON(!list_empty(&net->xfrm.policy_all));
  
- 	return drm_gem_dma_mmap(&bo->base, vma);
- }
+ 	for (dir = 0; dir < XFRM_POLICY_MAX; dir++) {
 -- 
 2.53.0
 
