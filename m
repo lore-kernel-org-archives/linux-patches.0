@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FB52E093A;
-	Mon, 20 Apr 2026 15:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598A233262B;
+	Mon, 20 Apr 2026 15:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700294; cv=none; b=XFs2D2dYIGo2S5+o5Cww34tL0ZgrHB1aZ2glM1rk7rxNjJNEF8gLgPsVIJ4KaUyfRCCu986Cc2X9M2CYINEEXen580gNCSIe+xCB/IRbcmwVQNQni2V5PDCFrgDUZP8ziRffP5BaQ2KiNzL1FL8gDUWH7IXVLMFpKh2EYD2osG4=
+	t=1776700297; cv=none; b=o59GWL67OD6RlyMoLLGO2JLr5VW87yyquFM8c+Q4vAfivlY6KrXDxDQsh9IVvIe9dAPUusgTXPxujVHBb6gdXQuyr6kXeAH7INhhrmg95tOcTlVvYAwok3qOokZAXPrl6eSFmsmBZbYgTLYUCJm8lunVf/cJx+hPdDkF0hnflPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700294; c=relaxed/simple;
-	bh=39ScJ38cQign3vzbbxdbY8IhGDseC9Gf1HObF99S8WY=;
+	s=arc-20240116; t=1776700297; c=relaxed/simple;
+	bh=OCyrYU11j39nQ7EzJygEEmM9C+8Pv8dLPSyB98YvHIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SAydb0EoabzLLWhjR5MDRe+T4cUZXjZOnyf6XdRpDDJ1gfXL9zoq9nCZktwycvvhsJJEQ2yQaAy74qM7dXGsj2bhod1C6ndhbOivJcd9sK3weZNzojLWDG7TUOAs8y6d8UJICYRIHj1C2hcUwk/ULNKhV2H/ndQXcgDdMcPcMYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xw2seCCF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bue0f4Hzvulm1FwcN5+q1b0EZ4W9BtgmGBAH9EVXG6xnnfXxi0eTvVBI2YCji1q5PVDxQg3N5AQnLhTRx0T4Eq0r9FalLLvlZ9eTxlmNaD+Oi32Mwui4ZLJ2NY71qcH5JpmlBTzCdA0DKuuLhi8prS7J1lEVGZAk3lOZCCLwtH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPknwzyb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xw2seCCF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5781BC19425;
-	Mon, 20 Apr 2026 15:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPknwzyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2668C19425;
+	Mon, 20 Apr 2026 15:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700294;
-	bh=39ScJ38cQign3vzbbxdbY8IhGDseC9Gf1HObF99S8WY=;
+	s=korg; t=1776700297;
+	bh=OCyrYU11j39nQ7EzJygEEmM9C+8Pv8dLPSyB98YvHIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xw2seCCFh0hZg/Pz7Xgs+iXVIt2WKOQ0GChjr4qerWXyRJegfiQWwfHNRN94aj+Th
-	 Xec2W+E8uBdVZrMRSWYfwln4OA9k2KJQMERVo0kkYWXZkHsv9+cj6WUnvood7iirhl
-	 QttYWqAVwbe+jdFy54otDk44T5QXbTBP22KxdRbM=
+	b=aPknwzybuLpZYcVsohPittYXb88Qc8liFKX+SaUOTsdS0drNFVyUfapxEDCtyAGk9
+	 M+IT0N8TmyW+wK7w5wRS6tyb6fuL51OFplstG/uayVtz81FTjHxRZEX4E0qU0+fCDx
+	 Eh9Lag4CiuQmTf48oh4LESIVV9BFgNzPS+L/KS88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,13 +31,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Yuan Tan <yuantan098@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Yuhang Zheng <z1652074432@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 117/220] netfilter: xt_multiport: validate range encoding in checkentry
-Date: Mon, 20 Apr 2026 17:40:58 +0200
-Message-ID: <20260420153938.241997675@linuxfoundation.org>
+Subject: [PATCH 6.19 118/220] netfilter: ip6t_eui64: reject invalid MAC header for all packets
+Date: Mon, 20 Apr 2026 17:40:59 +0200
+Message-ID: <20260420153938.277572443@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -56,97 +57,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ren Wei <n05ec@lzu.edu.cn>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-[ Upstream commit ff64c5bfef12461df8450e0f50bb693b5269c720 ]
+[ Upstream commit fdce0b3590f724540795b874b4c8850c90e6b0a8 ]
 
-ports_match_v1() treats any non-zero pflags entry as the start of a
-port range and unconditionally consumes the next ports[] element as
-the range end.
+`eui64_mt6()` derives a modified EUI-64 from the Ethernet source address
+and compares it with the low 64 bits of the IPv6 source address.
 
-The checkentry path currently validates protocol, flags and count, but
-it does not validate the range encoding itself. As a result, malformed
-rules can mark the last slot as a range start or place two range starts
-back to back, leaving ports_match_v1() to step past the last valid
-ports[] element while interpreting the rule.
+The existing guard only rejects an invalid MAC header when
+`par->fragoff != 0`. For packets with `par->fragoff == 0`, `eui64_mt6()`
+can still reach `eth_hdr(skb)` even when the MAC header is not valid.
 
-Reject malformed multiport v1 rules in checkentry by validating that
-each range start has a following element and that the following element
-is not itself marked as another range start.
+Fix this by removing the `par->fragoff != 0` condition so that packets
+with an invalid MAC header are rejected before accessing `eth_hdr(skb)`.
 
-Fixes: a89ecb6a2ef7 ("[NETFILTER]: x_tables: unify IPv4/IPv6 multiport match")
+Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Co-developed-by: Yuan Tan <yuantan098@gmail.com>
 Signed-off-by: Yuan Tan <yuantan098@gmail.com>
 Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yuhang Zheng <z1652074432@gmail.com>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_multiport.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ net/ipv6/netfilter/ip6t_eui64.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/netfilter/xt_multiport.c b/net/netfilter/xt_multiport.c
-index 44a00f5acde8a..a1691ff405d3c 100644
---- a/net/netfilter/xt_multiport.c
-+++ b/net/netfilter/xt_multiport.c
-@@ -105,6 +105,28 @@ multiport_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 	return ports_match_v1(multiinfo, ntohs(pptr[0]), ntohs(pptr[1]));
- }
+diff --git a/net/ipv6/netfilter/ip6t_eui64.c b/net/ipv6/netfilter/ip6t_eui64.c
+index d704f7ed300c2..da69a27e8332c 100644
+--- a/net/ipv6/netfilter/ip6t_eui64.c
++++ b/net/ipv6/netfilter/ip6t_eui64.c
+@@ -22,8 +22,7 @@ eui64_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ 	unsigned char eui64[8];
  
-+static bool
-+multiport_valid_ranges(const struct xt_multiport_v1 *multiinfo)
-+{
-+	unsigned int i;
-+
-+	for (i = 0; i < multiinfo->count; i++) {
-+		if (!multiinfo->pflags[i])
-+			continue;
-+
-+		if (++i >= multiinfo->count)
-+			return false;
-+
-+		if (multiinfo->pflags[i])
-+			return false;
-+
-+		if (multiinfo->ports[i - 1] > multiinfo->ports[i])
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
- static inline bool
- check(u_int16_t proto,
-       u_int8_t ip_invflags,
-@@ -127,8 +149,10 @@ static int multiport_mt_check(const struct xt_mtchk_param *par)
- 	const struct ipt_ip *ip = par->entryinfo;
- 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
- 
--	return check(ip->proto, ip->invflags, multiinfo->flags,
--		     multiinfo->count) ? 0 : -EINVAL;
-+	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
-+		return -EINVAL;
-+
-+	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
- }
- 
- static int multiport_mt6_check(const struct xt_mtchk_param *par)
-@@ -136,8 +160,10 @@ static int multiport_mt6_check(const struct xt_mtchk_param *par)
- 	const struct ip6t_ip6 *ip = par->entryinfo;
- 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
- 
--	return check(ip->proto, ip->invflags, multiinfo->flags,
--		     multiinfo->count) ? 0 : -EINVAL;
-+	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
-+		return -EINVAL;
-+
-+	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
- }
- 
- static struct xt_match multiport_mt_reg[] __read_mostly = {
+ 	if (!(skb_mac_header(skb) >= skb->head &&
+-	      skb_mac_header(skb) + ETH_HLEN <= skb->data) &&
+-	    par->fragoff != 0) {
++	      skb_mac_header(skb) + ETH_HLEN <= skb->data)) {
+ 		par->hotdrop = true;
+ 		return false;
+ 	}
 -- 
 2.53.0
 
