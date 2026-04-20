@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65053FCB3F;
-	Mon, 20 Apr 2026 13:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225973C061F;
+	Mon, 20 Apr 2026 13:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691587; cv=none; b=qBx/fGXffBpA0prR/iLvS0qyUXsUW1DzqrcABqeoOMcf8BchwazkKjRSO+Vwwj8TlMgv4Pu84IFR/tfetodT3dBwAIC48GL5DKzcvt9NAkRZhUj3kc+CpBH9rMDgOAqBCuEtv6THIUiu+px9MvrWaFZrSiH2KWgjVHaHA9wbVbo=
+	t=1776691589; cv=none; b=ZHQW2kdpmomho6owITTKBbYE6CHuZIbCyqcB9xf/xmiGb6zj8a+U+xZQhyftbdp/NSwlQ7e0YYhrWIsFDiRHQCKZnTfDchGuVNEfUElTFR/yz0uTO7m3+orZ7o4Eahn5OlbAHLAdUcQIri5GGbsNvqkGaFwd+spt1qI+Wev1JlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691587; c=relaxed/simple;
-	bh=KA9zXBhWuGhCX1Bk2eIy/h8nhJSg+lrpozaPxXRjTgQ=;
+	s=arc-20240116; t=1776691589; c=relaxed/simple;
+	bh=sPJMW+s3Rw8NpLqbkTOQEfA5njLVPWmC6JhJ/4UxirM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eB5aLcQAuvuN/Ln0M63vEd53sqcBpJ8IuDgNE7r0K6EIy9nwgGoflhSk/ISvqKeQnZScF5LT35PvHr7hnwg+zHTPp92cr2px1kJ/fIAVXo1Pf1VQlnvmU39gtz3x6SZ2T423ZwRl4/wrLgkeLV6LahjneB2x+XGSM4sEDEXkmKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b2L3vTmF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hnsa5+ifmUbu/MS8ll4XQNPQtdwTgt5GJGMW1bGS9CCxni8RQzFzclTmkYiJ9/ZUXRZ02FsXw4Gh6bdLlma8joGFhMN46ScSjO/d9coH/KH0ZPR52xGJQlajrhfQZdZYQdjwD5J6M3GhIDICjV/AZPYfzysHuIVOc8j8Ow/lWUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qljNbAxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b2L3vTmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2280EC2BCB8;
-	Mon, 20 Apr 2026 13:26:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qljNbAxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10603C2BCB8;
+	Mon, 20 Apr 2026 13:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691587;
-	bh=KA9zXBhWuGhCX1Bk2eIy/h8nhJSg+lrpozaPxXRjTgQ=;
+	s=k20201202; t=1776691589;
+	bh=sPJMW+s3Rw8NpLqbkTOQEfA5njLVPWmC6JhJ/4UxirM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2L3vTmFW3d/hmyI8yCQqqcVfny2sL+4tfDdwoSWcqxm75GMwONIllFusloZMuMYB
-	 IePbvZDRtg/7yiqWpNg4pTuBQaxM+z/Ey8q5LpgWjHeMjfcSTvn0IuPBBQ+uMBF4rA
-	 Q0BfIbs5NKm5ZFw1+MFqnOFEoIf6DYYKmhOeRReEt+esJJSemj/SuVUy4XW2gAv+qY
-	 BtMPK6yQNFT6YpExz0uB/KN5MGsuPLiLqidNuNmCOxpoMCgL7tavt0+6zDv6ydA1EO
-	 qTsMtC66U435Fl32cykxATZF+MlZxF7jPD8GuAyy0J3X3SVW+sc4QlS8su7Fcpc5Tr
-	 JwqFE66Ku1zxw==
+	b=qljNbAxGr/VTDUgrDSMGNJBj1ICapNSt65y1Wkqum+ul6oaYKPLw6pxsTk8rD5gYR
+	 2pZhq5XZJi4lM0krL8mT5e/u/1+wEKXzdnFhqisGoyW4Gs1kpGb+MUzGe6AGYa97fn
+	 SZy2p3g8ouWeszqkHtwhvlFaB6JOSu8UqeuWtL/MuUmrQtIy5k+IibObuSpnglSpaZ
+	 oL/BcYvMSUD3vrx8M4L6fBx8HP8WDOaL1hWV3Tk3QF0ySbI/g7tL5lpCWV7KUGnvNy
+	 uzdNhrrj0f+ZUdz0WS0b3PC/LfStcfLke5bgDW9lF0CohM4u2Cs6kPHnAzHqW3pewp
+	 4hz2C51xzvmPg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Jesse.Zhang" <Jesse.Zhang@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Milos Nikic <nikic.milos@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	jack@suse.com,
+	linux-ext4@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] drm/amdgpu: validate fence_count in wait_fences ioctl
-Date: Mon, 20 Apr 2026 09:18:31 -0400
-Message-ID: <20260420132314.1023554-117-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ext2: replace BUG_ON with WARN_ON_ONCE in ext2_get_blocks
+Date: Mon, 20 Apr 2026 09:18:32 -0400
+Message-ID: <20260420132314.1023554-118-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,398 +47,337 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Jesse.Zhang" <Jesse.Zhang@amd.com>
+From: Milos Nikic <nikic.milos@gmail.com>
 
-[ Upstream commit 2cef848812a071991c20090cbe051a0a96c50a0c ]
+[ Upstream commit 0cf9c58bf654d0f27abe18005281dbf9890de401 ]
 
-Add an early parameter check in amdgpu_cs_wait_fences_ioctl() to reject
-a zero fence_count with -EINVAL.
+If ext2_get_blocks() is called with maxblocks == 0, it currently triggers
+a BUG_ON(), causing a kernel panic.
 
-dma_fence_wait_any_timeout() requires count > 0. When userspace passes
-fence_count == 0, the call propagates down to dma_fence core which does
-not expect a zero-length array and triggers a WARN_ON.
+While this condition implies a logic error in the caller, a filesystem
+should not crash the system due to invalid arguments.
 
-Return -EINVAL immediately so the caller gets a clear error instead of
-hitting an unexpected warning in the DMA fence subsystem.
+Replace the BUG_ON() with a WARN_ON_ONCE() to provide a stack trace for
+debugging, and return -EINVAL to handle the error gracefully.
 
-No functional change for well-formed userspace callers.
-
-v2:
-- Reworked commit message to clarify the parameter validation rationale
-- Removed verbose crash log from commit description
-- Simplified inline code comment
-
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Milos Nikic <nikic.milos@gmail.com>
+Link: https://patch.msgid.link/20260207010617.216675-1-nikic.milos@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have comprehensive information to complete the full analysis. Let
-me compile the findings.
+Now I have all the information needed for my analysis. Let me compile
+the complete assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `drm/amdgpu`
-- Action verb: "validate" (adding missing input validation = bug fix)
-- Summary: Validates `fence_count` parameter in `wait_fences` ioctl to
-  reject zero.
-Record: [drm/amdgpu] [validate] [Adding missing input validation for
-fence_count in wait_fences ioctl]
+### Step 1.1: Subject Line
+- **Subsystem:** ext2
+- **Action verb:** "replace" (BUG_ON with WARN_ON_ONCE)
+- **Summary:** Converts a crash-inducing assertion into a graceful error
+  return in ext2 block allocation
 
-**Step 1.2: Tags**
-- Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com> (AMD developer)
-- Reviewed-by: Christian König <christian.koenig@amd.com> (DMA-fence
-  subsystem maintainer)
-- Signed-off-by: Jesse Zhang <jesse.zhang@amd.com> (author)
-- Signed-off-by: Alex Deucher <alexander.deucher@amd.com> (AMD DRM
-  maintainer, committer)
-- No Fixes: tag (expected for autosel review)
-- No Cc: stable (expected)
-Record: Strong review signal — Christian König is the DRM scheduler /
-DMA-fence maintainer. Alex Deucher is the AMD GPU maintainer.
+Record: [ext2] [replace] [Convert BUG_ON to WARN_ON_ONCE + return
+-EINVAL for maxblocks==0 assertion]
 
-**Step 1.3: Commit Body**
-Bug: Userspace passes `fence_count == 0` to `AMDGPU_WAIT_FENCES` ioctl.
-This propagates to `dma_fence_wait_any_timeout()`, which has
-`WARN_ON(!count)`. The WARN_ON fires in the DMA fence subsystem.
-Symptom: Kernel WARN_ON triggered from userspace input. On
-`panic_on_warn` systems, this causes a kernel crash.
-Fix: Return `-EINVAL` early when `fence_count == 0`.
-Record: [Bug: WARN_ON trigger from userspace-controlled input] [Symptom:
-kernel warning/crash] [Author's root cause: dma_fence_wait_any_timeout
-requires count > 0]
+### Step 1.2: Tags
+- **Signed-off-by:** Milos Nikic (author) and Jan Kara (ext2 maintainer,
+  merged)
+- **Link:** `https://patch.msgid.link/20260207010617.216675-1-
+  nikic.milos@gmail.com`
+- No Fixes: tag (expected for AUTOSEL candidate)
+- No Reported-by: tag
+- No Cc: stable tag
 
-**Step 1.4: Hidden Bug Fix Detection**
-"Validate" = adding missing parameter check. This IS a bug fix: it
-prevents a WARN_ON (and potential crash) from userspace-controlled
-input.
-Record: [Yes, this is a bug fix — adds missing input validation to
-prevent WARN_ON from ioctl with zero count]
+Record: Signed-off by ext2 maintainer Jan Kara. No Fixes, no Reported-
+by, no syzbot. No explicit stable nomination.
 
----
+### Step 1.3: Commit Body
+The commit explains that when `ext2_get_blocks()` is called with
+`maxblocks == 0`, it triggers a `BUG_ON()` causing a kernel panic. The
+author argues a filesystem should not crash the system due to invalid
+arguments.
+
+Record: [Bug: BUG_ON causes kernel panic on invalid argument] [Symptom:
+kernel panic/crash] [Root cause: overly aggressive assertion for a
+condition that should be handled gracefully]
+
+### Step 1.4: Hidden Bug Fix Detection
+This is a defensive hardening change. BUG_ON() is itself a bug when a
+graceful recovery is possible. The kernel community has been
+systematically converting such assertions.
+
+Record: This is a fix for "BUG_ON is a bug" - the assertion behavior is
+itself the problem.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Single file modified: `drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c`
-- +7 lines (4-line comment + 2 lines of code + 1 blank line)
-- Function modified: `amdgpu_cs_wait_fences_ioctl()`
-Record: [1 file, +7 lines, single function, surgical fix]
+### Step 2.1: Inventory
+- **Files:** `fs/ext2/inode.c` only
+- **Lines changed:** -1 / +2 (net +1 line)
+- **Function modified:** `ext2_get_blocks()`
+- **Scope:** Single-file, single-function, surgical fix
 
-**Step 2.2: Code Flow Change**
-BEFORE: `fence_count == 0` passes through to `memdup_array_user`
-(returns ZERO_SIZE_PTR), then reaches `dma_fence_wait_any_timeout()`
-which fires `WARN_ON(!count)`.
-AFTER: `fence_count == 0` is caught at ioctl entry, returns `-EINVAL`
-immediately.
-Record: [Before: WARN_ON triggered. After: clean EINVAL return]
+### Step 2.2: Code Flow Change
+**Before:** `BUG_ON(maxblocks == 0)` — triggers kernel panic, system
+crashes
+**After:** `if (WARN_ON_ONCE(maxblocks == 0)) return -EINVAL;` — prints
+stack trace once, returns error code gracefully
 
-**Step 2.3: Bug Mechanism**
-Category: Missing input validation / parameter check.
-Mechanism: The ioctl fails to validate a user-controlled parameter
-before passing it to a core kernel API that has a `WARN_ON`
-precondition. Verified at line 894 of `dma-fence.c`:
+The change affects the entry validation of `ext2_get_blocks()`, before
+any actual work is done.
 
-```894:894:drivers/dma-buf/dma-fence.c
-        if (WARN_ON(!fences || !count || timeout < 0))
-```
+### Step 2.3: Bug Mechanism
+Category: **Logic/correctness fix** (defensive assertion improvement).
+The BUG_ON() unconditionally panics the system for a condition that can
+be handled by returning an error.
 
-Record: [Missing input validation] [User-controlled count==0 triggers
-WARN_ON in dma_fence_wait_any_timeout]
-
-**Step 2.4: Fix Quality**
-- Obviously correct: a simple zero-check before further processing.
-- Minimal/surgical: 7 lines total including comments.
-- Regression risk: None. `fence_count == 0` is meaningless ("wait for
-  zero fences"), and the ioctl already failed (with WARN) in this case.
-  Returning `-EINVAL` is the correct behavior.
-- No API change for well-formed callers (as stated in the commit
-  message).
-Record: [Fix is obviously correct, minimal, no regression risk]
-
----
+### Step 2.4: Fix Quality
+- Obviously correct: YES. This is a standard, well-understood pattern.
+- Minimal: YES. 2 lines.
+- Regression risk: Extremely low. The only behavior change is: if
+  `maxblocks == 0`, instead of crashing, return -EINVAL. Both callers
+  (`ext2_get_block` and `ext2_iomap_begin`) check return values
+  properly.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-`amdgpu_cs_wait_fences_ioctl` was introduced by commit `eef18a827a9ec5`
-(Junwei Zhang, 2016-11-04, "drm/amdgpu: add the interface of waiting
-multiple fences (v4)"). This is v4.10-era code, present in ALL active
-stable trees.
-Record: [Bug introduced in eef18a827a9ec5, v4.10 timeframe, present in
-all stable trees]
+### Step 3.1: Blame
+The `BUG_ON(maxblocks == 0)` was introduced by commit `7ba3ec5749ddb6`
+(Jan Kara, 2013-11-05, "ext2: Fix fs corruption in ext2_get_xip_mem()").
+This commit first appeared in v3.13-rc1, meaning the buggy BUG_ON has
+been present in **every stable tree** since v3.13 (~11 years).
 
-**Step 3.2: Fixes Tag**
-No Fixes: tag present. The implicit target is `eef18a827a9ec5` which
-introduced the ioctl without the validation.
-Record: [No Fixes: tag. Original code from 2016.]
+### Step 3.2: Original Commit Context
+The original commit `7ba3ec5749ddb6` fixed a real bug in
+`ext2_get_xip_mem()` where 0 blocks were being requested. The BUG_ON was
+added as a defensive assertion to catch similar bugs. The actual XIP bug
+was also fixed in the same commit. The BUG_ON was always a "shouldn't
+happen" assertion.
 
-**Step 3.3: File History**
-Recent changes to `amdgpu_cs.c` include `dea75df7afe14`
-(memdup_array_user conversion) and `69050f8d6d075` (kzalloc_objs
-treewide change). These are cosmetic/API modernizations that don't
-affect the bug or fix logic.
-Record: [Recent changes are cosmetic. Fix is standalone.]
+### Step 3.3: File History
+`fs/ext2/inode.c` has had moderate churn (~44 changes since v5.15, ~65
+since v5.4), but the specific BUG_ON line has been untouched since 2013.
+No related fixes in this area.
 
-**Step 3.4: Author**
-Jesse Zhang is a regular AMD GPU contributor with multiple fix commits
-in the subsystem (SDMA fixes, out-of-bounds fixes, etc.).
-Record: [Active AMD subsystem contributor]
+### Step 3.4: Author
+Milos Nikic is not the subsystem maintainer, but the patch was accepted
+and signed-off by Jan Kara, who is the ext2 maintainer and who
+originally added the BUG_ON.
 
-**Step 3.5: Dependencies**
-The fix adds a simple `if` check at the start of the function, before
-any recently-changed code. It does NOT depend on patches 2/3 in the
-series (which touch different files/functions entirely). The series
-patches are independent input validation improvements.
-Record: [Standalone fix, no dependencies on other patches]
-
----
+### Step 3.5: Dependencies
+None. This is a standalone 2-line change with no dependencies.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1: Original Submission**
-Found at https://lists.freedesktop.org/archives/amd-
-gfx/2026-March/140748.html. This is v2 of the patch with reworked commit
-message. No NAKs found.
-Record: [Patch submitted March 2026. v2 incorporated review feedback on
-commit message clarity.]
+From the mbox thread:
+1. **v1 submitted:** Feb 6, 2026
+2. **Author ping:** Feb 26, 2026 — "Just a friendly ping on this patch"
+3. **Jan Kara reply:** Feb 27, 2026 — "Thanks merged now."
 
-**Step 4.2: Reviewers**
-Reviewed by Vitaly Prosyak (AMD) and Christian König (DMA-fence/DRM
-scheduler maintainer). Committed by Alex Deucher (AMD DRM maintainer).
-Record: [Subsystem maintainer reviewed and approved]
+No NAKs, no objections, no explicit stable nomination. Minimal
+discussion — the maintainer accepted it without requesting changes. No
+one mentioned stable.
 
-**Step 4.3: Bug Report**
-No separate bug report link. The bug was found by code inspection (the
-WARN_ON contract in `dma_fence_wait_any_timeout` is explicit).
-Record: [Found by code review, not user report]
-
-**Step 4.4: Series Context**
-3-patch series, all independent input validation improvements. Patch 2/3
-changes WARN to DRM_ERROR in `amdgpu_sched_ioctl` (separate
-file/function). Each is standalone.
-Record: [Independent patches in the series. This one is self-contained.]
-
-**Step 4.5: Stable Discussion**
-No explicit stable nomination found in the thread.
-Record: [No explicit stable discussion, which is expected for autosel
-candidates.]
-
----
+Record: Single-version patch, accepted without changes by ext2
+maintainer.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions Modified**
-Only `amdgpu_cs_wait_fences_ioctl()`.
+### Step 5.1: Functions Modified
+Only `ext2_get_blocks()` is modified (static function in
+`fs/ext2/inode.c`).
 
-**Step 5.2: Callers**
-This is a DRM ioctl handler registered via
-`DRM_IOCTL_DEF_DRV(AMDGPU_WAIT_FENCES, ...)` with
-`DRM_AUTH|DRM_RENDER_ALLOW`. It is reachable by any process with access
-to `/dev/dri/renderDNN` — no special privileges required beyond
-DRM_AUTH.
-Record: [Ioctl handler, reachable from unprivileged userspace via render
-node]
+### Step 5.2: Callers
+`ext2_get_blocks()` is called from:
+1. `ext2_get_block()` (line 791) — where `max_blocks = bh_result->b_size
+   >> inode->i_blkbits`
+2. `ext2_iomap_begin()` (line 835) — where `max_blocks = (length + (1 <<
+   blkbits) - 1) >> blkbits`
 
-**Step 5.3-5.4: Call Chain**
-Userspace ioctl -> `drm_ioctl` -> `amdgpu_cs_wait_fences_ioctl` -> (if
-!wait_all) `amdgpu_cs_wait_any_fence` -> `dma_fence_wait_any_timeout` ->
-`WARN_ON(!count)`.
-Record: [Direct ioctl path, user-controlled trigger, WARN_ON reached
-with fence_count=0]
+`ext2_get_block()` is called from numerous VFS paths:
+`mpage_read_folio`, `mpage_readahead`, `block_write_begin`,
+`generic_block_bmap`, `mpage_writepages`, `block_truncate_page`, and
+`__block_write_begin`.
 
-**Step 5.5: Similar Patterns**
-The `amdgpu_cs_wait_all_fences` path with count==0 doesn't hit a WARN_ON
-(the for loop simply doesn't execute), but returns success for a
-meaningless request. The fix correctly catches both paths by validating
-at the ioctl entry point.
-Record: [Fix covers both wait_all and wait_any paths]
+### Step 5.3-5.4: Reachability
+The code is reachable from common filesystem operations (read, write,
+truncate, bmap). In `ext2_get_block()`, `max_blocks` could theoretically
+be 0 if `bh_result->b_size` is less than `(1 << i_blkbits)`. In
+`ext2_iomap_begin()`, `max_blocks` would be 0 only if `length == 0`.
+Both should be prevented by callers, but are not explicitly validated in
+the callee.
 
----
+### Step 5.5: Similar Patterns
+There are other BUG_ON instances in ext2 (`balloc.c`, `dir.c`, `acl.c`).
+The kernel has been systematically converting such assertions across
+filesystems (e.g., `ext4: convert some BUG_ON's in mballoc`, `nilfs2:
+convert BUG_ON in nilfs_finish_roll_forward`, `quota: Remove BUG_ON from
+dqget()`).
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy Code in Stable**
-The `amdgpu_cs_wait_fences_ioctl` function has existed since
-`eef18a827a9ec5` (v4.10, November 2016). It exists in ALL active stable
-trees.
-Record: [Bug exists in all stable trees (v5.4, v5.10, v5.15, v6.1, v6.6,
-v6.12)]
+### Step 6.1: Code Existence in Stable
+The BUG_ON line exists in ALL active stable trees (introduced in v3.13).
+The line `BUG_ON(maxblocks == 0)` at the same location is unchanged
+since 2013.
 
-**Step 6.2: Backport Complications**
-The fix adds a check at the very start of the function body, before any
-code that has been recently modified. In older stable trees, the
-`memdup_array_user` line would be `memdup_user` with a manual size
-calculation instead, but the added check comes BEFORE that line. Minor
-context adjustment may be needed for the surrounding `memdup` call, but
-the fix itself is trivially applicable.
-Record: [Clean or near-clean apply expected. Minor context difference in
-older trees.]
+### Step 6.2: Backport Complications
+The patch should apply cleanly to all stable trees — the surrounding
+code is identical across all branches (verified via blame: the context
+lines are from 2005/2007).
 
-**Step 6.3: Related Fixes in Stable**
-No prior fix for this zero-count issue was found.
-Record: [No prior fix exists in stable.]
+### Step 6.3: No related fixes already in stable for this issue.
 
----
+## PHASE 7: SUBSYSTEM CONTEXT
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### Step 7.1: Subsystem Criticality
+- **Subsystem:** ext2 filesystem
+- **Criticality:** IMPORTANT — ext2 is still used in embedded systems,
+  older systems, and as a simple/reliable FS choice
+- A panic in filesystem code can cause data loss and is especially
+  disruptive
 
-**Step 7.1: Subsystem**
-DRM/AMDGPU — a widely used GPU driver (AMD is one of two major discrete
-GPU vendors on Linux). Criticality: IMPORTANT.
-Record: [drm/amdgpu, IMPORTANT — widely used GPU driver]
-
-**Step 7.2: Activity**
-Actively developed (many recent commits). The file has had multiple
-changes since v6.6.
-Record: [Very active subsystem]
-
----
+### Step 7.2: Activity
+ext2 is a mature, low-activity subsystem. The code being fixed has been
+stable for 11 years.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-All users with AMD GPUs (a very large population). Any process with DRM
-render node access.
-Record: [All AMD GPU users, unprivileged trigger]
+### Step 8.1: Affected Users
+All ext2 users across all kernel versions since v3.13. Ext2 is still
+used in embedded, IoT, and some server configurations.
 
-**Step 8.2: Trigger Conditions**
-Any process that opens `/dev/dri/renderDNN` and issues the
-`AMDGPU_WAIT_FENCES` ioctl with `fence_count == 0`. This is trivially
-triggerable — no special timing, no race, no specific hardware needed. A
-single malformed ioctl call from any render-node-capable process
-triggers it.
-Record: [Trivially triggerable from unprivileged userspace.
-Deterministic, no race needed.]
+### Step 8.2: Trigger Conditions
+Currently, no known caller passes maxblocks == 0. However:
+- A corrupted filesystem image could potentially lead to invalid
+  parameters
+- A future kernel bug (like the XIP bug that motivated the BUG_ON) could
+  trigger it
+- The condition is a "shouldn't happen" scenario, but if it does, the
+  system panics
 
-**Step 8.3: Failure Mode**
-- `WARN_ON` fires in `dma_fence_wait_any_timeout()`: produces stack
-  trace in kernel log.
-- On systems with `panic_on_warn=1` (common in syzbot testing, some
-  hardened deployments): full kernel panic.
-- Even without `panic_on_warn`, repeated triggering can flood kernel
-  logs and potentially be used for denial of service.
-- Severity: **MEDIUM-HIGH** (WARN from unprivileged userspace, potential
-  crash with panic_on_warn)
-Record: [WARN_ON from userspace, CRITICAL with panic_on_warn, MEDIUM
-otherwise]
+### Step 8.3: Failure Mode Severity
+- **Without fix:** Kernel panic (BUG_ON) → CRITICAL (system crash,
+  potential data loss)
+- **With fix:** WARN_ON_ONCE + -EINVAL → LOW (warning message, graceful
+  error handling)
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: High — prevents kernel warning/crash from trivial
-  unprivileged userspace input on all AMD GPU systems.
-- RISK: Very low — 2 lines of actual code (a simple zero-check),
-  obviously correct, no functional change for valid callers, reviewed by
-  subsystem maintainer.
-Record: [High benefit, very low risk]
-
----
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit:** Prevents kernel panic if condition ever triggers.
+  Converts crash to graceful error.
+- **Risk:** Essentially zero. 2 lines, obviously correct, well-
+  understood pattern. The -EINVAL return is properly handled by both
+  callers.
+- **Ratio:** Extremely favorable.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence**
-FOR backporting:
-- Fixes a WARN_ON triggerable from unprivileged userspace via ioctl
-- Trivial to trigger (deterministic, single ioctl call)
-- Crash on `panic_on_warn` systems
-- Reviewed by DMA-fence subsystem maintainer (Christian König) and AMD
-  maintainer
-- 7 lines total, 2 lines of logic — minimal and obviously correct
-- Bug exists since v4.10 (2016), affects all stable trees
-- Standalone fix with no dependencies
-- No functional change for well-formed callers
+### Step 9.1: Evidence Compilation
 
-AGAINST backporting:
-- Not a crash for default kernel configuration (WARN, not BUG)
-- No user report (found by code inspection)
-- Minor context may differ in older stable trees
+**FOR backporting:**
+- Prevents kernel panic (BUG_ON → WARN_ON_ONCE)
+- 2-line change, minimal regression risk
+- Obviously correct pattern
+- Accepted by ext2 maintainer Jan Kara (who wrote the original BUG_ON)
+- Code exists in ALL stable trees since v3.13
+- Will apply cleanly to all stable trees
+- Filesystem code should never crash the system on input validation
+- No dependencies, completely standalone
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — trivial zero-check, reviewed
-   by maintainer
-2. Fixes a real bug? **YES** — WARN_ON from userspace input
-3. Important issue? **YES** — userspace-triggerable warning, crash with
-   panic_on_warn
-4. Small and contained? **YES** — 7 lines in one function
-5. No new features or APIs? **YES** — purely input validation
-6. Can apply to stable? **YES** — should apply cleanly or near-cleanly
+**AGAINST backporting:**
+- No known trigger in current code — the condition is theoretical
+- No syzbot report, no user reports of the BUG_ON firing
+- Could be considered defensive hardening rather than fixing a real bug
+- No explicit stable nomination by anyone
 
-**Step 9.3: Exception Categories**
-N/A — this is a straightforward bug fix, no exception needed.
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** — trivial, well-understood
+   pattern, merged by maintainer
+2. Fixes a real bug? **YES** — BUG_ON causing unnecessary kernel panic
+   IS a bug in filesystem code
+3. Important issue? **YES if triggered** — kernel panic is CRITICAL
+   severity
+4. Small and contained? **YES** — 2 lines in 1 file
+5. No new features or APIs? **YES** — purely defensive improvement
+6. Can apply to stable? **YES** — code is unchanged since v3.13
 
-**Step 9.4: Decision**
-The fix is small, surgical, obviously correct, reviewed by the subsystem
-maintainer, and prevents a WARN_ON (potential crash) triggerable from
-unprivileged userspace. It has existed in all stable trees since 2016.
-The risk is negligible and the benefit is clear.
+### Step 9.3: Exception Categories
+Not strictly an exception category, but "BUG_ON to WARN_ON_ONCE
+conversion in filesystem code" is a well-accepted pattern that has been
+backported before.
 
----
+### Step 9.4: Decision
+The change is a tiny (2-line), obviously correct fix that prevents a
+kernel panic in a filesystem. While the trigger condition is currently
+theoretical, the risk of the backport is essentially zero, and the
+benefit if triggered (preventing a crash vs. graceful error) is
+significant. The ext2 maintainer accepted it. The BUG_ON has existed in
+all stable trees for 11+ years.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Christian König (DMA-fence
-  maintainer), Reviewed-by Vitaly Prosyak, Signed-off Alex Deucher (AMD
-  DRM maintainer)
-- [Phase 2] Diff analysis: +7 lines in `amdgpu_cs_wait_fences_ioctl()`,
-  adds `if (!wait->in.fence_count) return -EINVAL` before allocation
-- [Phase 2] Confirmed WARN_ON at dma-fence.c:894: `WARN_ON(!fences ||
-  !count || timeout < 0)` — verified by reading the source
-- [Phase 2] Confirmed `memdup_array_user(ptr, 0, size)` returns
-  ZERO_SIZE_PTR (not error), so zero count passes through to
-  `dma_fence_wait_any_timeout`
-- [Phase 3] git blame: `amdgpu_cs_wait_fences_ioctl` introduced in
-  eef18a827a9ec5 (2016-11-04), confirmed present in p-5.10, p-5.15 tags
-- [Phase 3] git log: no prior fix for this zero-count issue in file
-  history
-- [Phase 4] Found original submission at lists.freedesktop.org amd-gfx
-  March 2026. v2 with reworked commit message. No NAKs.
-- [Phase 4] Series is 3 independent patches; patch 2/3 touches different
-  file (amdgpu_sched.c). This patch is standalone.
-- [Phase 5] Ioctl registered with DRM_AUTH|DRM_RENDER_ALLOW — confirmed
-  reachable from unprivileged userspace
-- [Phase 5] Traced call chain: ioctl -> wait_any_fence ->
-  dma_fence_wait_any_timeout -> WARN_ON(!count)
-- [Phase 6] Bug exists in all active stable trees (code from 2016)
-- [Phase 6] Fix applies before any recently-changed code; near-clean
-  apply expected
-- [Phase 8] Severity: WARN_ON from unprivileged userspace, crash with
-  panic_on_warn; benefit high, risk very low
+- [Phase 1] Parsed tags: Signed-off-by Milos Nikic and Jan Kara. Link to
+  lore. No Fixes/Reported-by/Cc:stable.
+- [Phase 2] Diff analysis: 1 line removed (`BUG_ON`), 2 lines added (`if
+  (WARN_ON_ONCE(...)) return -EINVAL`), in `ext2_get_blocks()`.
+- [Phase 3] git blame: `BUG_ON(maxblocks == 0)` introduced by commit
+  `7ba3ec5749ddb6` (Jan Kara, 2013-11-05), first in v3.13-rc1. Present
+  in ALL stable trees.
+- [Phase 3] git show `7ba3ec5749ddb6`: Original commit was "ext2: Fix fs
+  corruption in ext2_get_xip_mem()" — BUG_ON added as defensive
+  assertion alongside actual XIP fix.
+- [Phase 3] git log -20 on file: No related fixes or prerequisites for
+  this change.
+- [Phase 3] Author check: Milos Nikic also authored `bac3190a8e79b`
+  (jbd2 hardening). Jan Kara is ext2 maintainer.
+- [Phase 4] b4 mbox retrieved thread: 3 messages — original patch,
+  author ping, Jan Kara "Thanks merged now." No review comments, no
+  NAKs, no stable nomination.
+- [Phase 5] Callers: `ext2_get_block()` (VFS callback, many callers) and
+  `ext2_iomap_begin()` (iomap path). Both handle negative return values
+  properly.
+- [Phase 5] Trigger analysis: `max_blocks` computed from `b_size >>
+  i_blkbits` or ceiling division of `length`. Currently prevented by
+  callers but not validated in callee.
+- [Phase 6] BUG_ON line unchanged since 2013, applies cleanly to all
+  stable trees.
+- [Phase 6] ext2/inode.c: 44 changes since v5.15 but none near the
+  BUG_ON line.
+- [Phase 8] Risk: essentially zero (2 lines, pattern is standard).
+  Benefit: prevents panic if triggered.
+- UNVERIFIED: Could not access lore.kernel.org web UI due to Anubis bot
+  protection, but successfully retrieved full thread via b4 mbox.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ext2/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 24e4b4fc91564..142022295fe15 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1747,6 +1747,13 @@ int amdgpu_cs_wait_fences_ioctl(struct drm_device *dev, void *data,
- 	struct drm_amdgpu_fence *fences;
- 	int r;
+diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
+index dbfe9098a1245..18bf1a91dbc24 100644
+--- a/fs/ext2/inode.c
++++ b/fs/ext2/inode.c
+@@ -638,7 +638,8 @@ static int ext2_get_blocks(struct inode *inode,
+ 	int count = 0;
+ 	ext2_fsblk_t first_block = 0;
  
-+	/*
-+	 * fence_count must be non-zero; dma_fence_wait_any_timeout()
-+	 * does not accept an empty fence array.
-+	 */
-+	if (!wait->in.fence_count)
+-	BUG_ON(maxblocks == 0);
++	if (WARN_ON_ONCE(maxblocks == 0))
 +		return -EINVAL;
-+
- 	/* Get the fences from userspace */
- 	fences = memdup_array_user(u64_to_user_ptr(wait->in.fences),
- 				   wait->in.fence_count,
+ 
+ 	depth = ext2_block_to_path(inode,iblock,offsets,&blocks_to_boundary);
+ 
 -- 
 2.53.0
 
