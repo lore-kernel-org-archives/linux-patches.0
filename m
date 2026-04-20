@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9123A43C05F;
-	Mon, 20 Apr 2026 13:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5A843CEFE;
+	Mon, 20 Apr 2026 13:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691793; cv=none; b=qMLH1z95TNQocCmlDxLiwUXIJFXpZzHBFrW0K7wByyvRBvo+syE1OB5nzHG1i9G/kuTFwH+MOPvmCNmKKwGXEGfwgd6yN+bNsihquGhGpDPXSGCQM8dH+f9ttoDBomycNrOWS+UNf7BDH/hRD72vcoJ75XM/u7/k//8DAF/kaVk=
+	t=1776691795; cv=none; b=YSTFynZsO1TM9GNixuAhJbqpOi8VBNsKVpTQ0Ey7EDFUxnebBo0Q4mRI5ixTsOYg2eurNTSnv4YXqm4i7qDSNZF5H7KRZm9P15lFHVUDv6ueElknkQ60PVB2XPE/Lffl4XLT9ytA69SSAH20JODZcMnzmf8NkLHEn/olL+11KVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691793; c=relaxed/simple;
-	bh=Qxjq/FzQw6lO9c+b6rojdQouk4f6/GD8nNBGBgqf1u0=;
+	s=arc-20240116; t=1776691795; c=relaxed/simple;
+	bh=X9Fu4mccX6nbTYCTzir+XJpu4WFqFbzjgYLmdztuXxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n/HUnT2bYNOoN1aqkOOFIDCmk12sxVe2/eJubTRgH+ziRXfxcwXYUY7N0/hJLsaM0mvoBrBY99nQIUDYI783/BbH5vlgV+zXq9qovA9sTo3aOvx4bdwoPYet2r7HTaVbZrBde4jXe0jyDQnEsEiv4tPnxPsNOHlLLByEvUm3JkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cRR+ss4A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TcXt+uRwNCKF9YhY4CdviCj0Sq0S/N728esGtK12b0LVL65Pypuaa4BxqkgRk9bpIoko6Ao3JEiYaBNcwx+QMQPMuNkYY00LqcwQwSWgIFX/8zSTYsHoHMxBENvmiKBXJyMdgCq+tWpyHszbuLB5iz+1kkmuliaVWnAJ0w4UCX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nTIaONQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cRR+ss4A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45329C2BCB4;
-	Mon, 20 Apr 2026 13:29:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nTIaONQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F97C2BCB7;
+	Mon, 20 Apr 2026 13:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691793;
-	bh=Qxjq/FzQw6lO9c+b6rojdQouk4f6/GD8nNBGBgqf1u0=;
+	s=k20201202; t=1776691795;
+	bh=X9Fu4mccX6nbTYCTzir+XJpu4WFqFbzjgYLmdztuXxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cRR+ss4AWgFN4DAv5YXRJH/R2XpAjCjXSNV2TSFms/H5XEBYARSDuRfQIU/TcPjhK
-	 JJei5L3Ela3cew07hac+0mXQOexNMuuzF94BPb3fXK43O5gezzHEblCdDUBbIs8bxE
-	 pvpu5G5lyRW8IAaR/IiRlIXCA8xTGYnjLxjC/H6e0VB5LHrdsu9UKdTf98aGqixWXs
-	 32lg18ThWPluIAK3k2p3mjvzJwdYNo4BRsqt46XA1tkX76mgSx+bckwZ+XD4YUahtE
-	 hB2u4yAMgKfcUlwOPWeqBmMJbqDKx1Euf028ht7bfvHRpa9+IkQIrSoVaZ2Da6rUXw
-	 a4/TK3DtHz9Uw==
+	b=nTIaONQSVlej3BZOqwZVx67qaTrjvlxPXJN9cKzqNJlUukdUljmpR8XBNwodrrReG
+	 OsjMA7O2OIcvTGG/NXadcSe4KBs2uRTX81pxlBFPM1aoOxVKfcwuCYqzeKd45LAosA
+	 xvMTBbITpBBla01IrKF/xX85O9LoIGhQhEtDk/lVKBL+qj2zhjtl4w0tfBXM34EsXA
+	 7CHceXtTXlYTdkXuDJ0S9tkMkh4e2TfjR9h49l9aGwp7Ygjx+bD+TfKkv3644inyKB
+	 J+OAACHioZm7A3LDlkH0r9zCXJMTyplAX51oySN4hIuf5bdE6vL8xpKMueqmy1cLSk
+	 U2uFyIcAatuxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexander Shiyan <eagle.alexander923@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+Cc: Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	xiang@kernel.org,
+	chao@kernel.org,
+	linux-erofs@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] media: ccs-pll: Fix pre-PLL divider calculation for EXT_IP_PLL_DIVIDER flag
-Date: Mon, 20 Apr 2026 09:19:51 -0400
-Message-ID: <20260420132314.1023554-197-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] erofs: ensure all folios are managed in erofs_try_to_free_all_cached_folios()
+Date: Mon, 20 Apr 2026 09:19:52 -0400
+Message-ID: <20260420132314.1023554-198-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -48,329 +49,374 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Zhan Xusheng <zhanxusheng@xiaomi.com>
 
-[ Upstream commit b7ef8bbb9fbd43d33ecb92e23aa7c5a55dab5513 ]
+[ Upstream commit 5de6951fedb29700ace53b283ccb951c8f712d12 ]
 
-When the CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER flag is set, odd pre-PLL divider
-values are allowed. However, in the operational timing branch the
-calculation of the minimum pre-PLL divider incorrectly uses clk_div_even_up,
-forcing the minimum value to be even, even if the flag is set. This prevents
-selecting a valid odd divider like 3, which may be required for certain
-sensor configurations.
+folio_trylock() in erofs_try_to_free_all_cached_folios() may
+successfully acquire the folio lock, but the subsequent check
+for erofs_folio_is_managed() can skip unlocking when the folio
+is not managed by EROFS.
 
-Fix this by removing the forced even rounding from the minimum pre-PLL
-divider calculation. The loop later uses the flag to determine the step,
-so odd values will be considered when the flag is set.
+As Gao Xiang pointed out, this condition should not happen in
+practice because compressed_bvecs[] only holds valid cached folios
+at this point — any non-managed folio would have already been
+detached by z_erofs_cache_release_folio() under folio lock.
 
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fix this by adding DBG_BUGON() to catch unexpected folios
+and ensure folio_unlock() is always called.
+
+Suggested-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chunhai Guo <guochunhai@vivo.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a comprehensive understanding. Let me compile the full
-analysis.
+Now I have a complete picture. Let me compile my analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse Subject Line
-- **Subsystem:** `media: ccs-pll:` — MIPI CCS PLL calculator for camera
-  sensors
-- **Action verb:** "Fix" — explicit bug fix
-- **Summary:** Corrects pre-PLL divider calculation when
-  `EXT_IP_PLL_DIVIDER` flag is set
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: [erofs] [ensure] "ensure all folios are managed in
+erofs_try_to_free_all_cached_folios()" — the verb "ensure" strongly
+indicates a correctness/bug fix. The function is part of the erofs
+shrinker path.
 
-### Step 1.2: Parse Tags
-- **Signed-off-by:** Alexander Shiyan (author), Sakari Ailus (CCS
-  subsystem maintainer), Mauro Carvalho Chehab (media subsystem
-  maintainer)
-- No Fixes: tag, no Cc: stable, no Reported-by, no Link — expected for
-  autosel candidate
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Suggested-by:** Gao Xiang <hsiangkao@linux.alibaba.com> — the EROFS
+  maintainer suggested this fix
+- **Signed-off-by:** Zhan Xusheng <zhanxusheng@xiaomi.com> — author from
+  Xiaomi
+- **Reviewed-by:** Gao Xiang <hsiangkao@linux.alibaba.com> — EROFS
+  maintainer reviewed
+- **Reviewed-by:** Chunhai Guo <guochunhai@vivo.com> — additional
+  reviewer
+- **Signed-off-by:** Gao Xiang <hsiangkao@linux.alibaba.com> —
+  maintainer SOB (applied through his tree)
+- No Fixes: tag (expected for commits under review)
+- No Cc: stable (expected)
+- No Reported-by
 
-### Step 1.3: Commit Body Analysis
-The bug: when `CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER` is set, odd pre-PLL
-dividers should be allowed. However, the initial minimum calculation
-uses `clk_div_even_up()`, unconditionally forcing the minimum to be
-even. This prevents selecting valid odd dividers (like 3). The loop step
-already respects the flag, but the minimum is pre-constrained to even
-values.
+Record: Fix was suggested and reviewed by the EROFS maintainer. Two
+independent reviewers.
 
-### Step 1.4: Hidden Bug Detection
-This is explicitly labeled as a fix. The logic error is real and
-verifiable from the code.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit explains:
+- `folio_trylock()` may succeed, acquiring the folio lock
+- The subsequent `erofs_folio_is_managed()` check can cause a `continue`
+  that **skips the `folio_unlock()`**
+- Gao Xiang notes this shouldn't happen "in practice" because
+  compressed_bvecs[] should only hold managed folios
+- Any non-managed folio would have been detached by
+  `z_erofs_cache_release_folio()` under folio lock
 
----
+Record: Bug = folio lock leak when `!erofs_folio_is_managed` is true
+after `folio_trylock` succeeds. Failure mode = folio stays locked
+forever → deadlock. Maintainer says the condition is theoretically
+impossible in practice.
+
+### Step 1.4: DETECT HIDDEN BUG FIXES
+Record: This IS a real bug fix (folio lock leak/deadlock), presented
+with the "ensure" verb. The `continue` after acquiring a lock without
+releasing it is an obvious code defect regardless of whether the path is
+reachable.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **File:** `drivers/media/i2c/ccs-pll.c` — 3 lines removed, 2 lines
-  added
-- **Function:** `ccs_pll_calculate()` — single function, single hunk
-- **Scope:** Single-file surgical fix
+### Step 2.1: INVENTORY THE CHANGES
+- **fs/erofs/zdata.c**: -2 lines, +1 line (net -1 line)
+- Function modified: `erofs_try_to_free_all_cached_folios()`
+- Scope: single-file, single-function, single-line surgical fix
 
-### Step 2.2: Code Flow Change
-**Before:** `min_op_pre_pll_clk_div` first calculation uses
-`clk_div_even_up(DIV_ROUND_UP(...))`, always forcing the frequency-based
-minimum to be even.
+Record: Extremely small change — 1 file, 1 function, net -1 line.
 
-**After:** `min_op_pre_pll_clk_div` first calculation uses raw
-`DIV_ROUND_UP(...)`, preserving odd values.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Before: After `folio_trylock(folio)` succeeds, if
+`!erofs_folio_is_managed(sbi, folio)`, the code does `continue` —
+skipping `folio_unlock(folio)` on lines 611-612.
 
-The flag-based conditional even check at lines 846-847 then properly
-decides whether to force even.
+After: The `if/continue` is replaced with
+`DBG_BUGON(!erofs_folio_is_managed(sbi, folio))`. The code always falls
+through to `folio_unlock(folio)`.
 
-### Step 2.3: Bug Mechanism
-This is a **logic/correctness bug**. The `clk_div_even_up()` at line 827
-conflicts with the flag-based conditional check at line 846-847 (added
-by `660e613d05e449`). Since `max_t()` propagates the larger value, the
-unconditionally-even first calculation can become the binding
-constraint, defeating the flag check.
+Record: Before = folio left locked on `continue` path. After = folio
+always unlocked.
 
-### Step 2.4: Fix Quality
-- Minimal and surgical — removes one wrapper function call
-- Obviously correct — the VT tree equivalent code at lines 412-416 does
-  NOT use `clk_div_even_up()` for the analogous calculation
-- The flag check at 846-847 ensures sensors without the flag still get
-  even values
-- Zero regression risk for sensors without the flag
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+This is a **lock leak** (folio lock not released). Category:
+synchronization/resource leak. If the folio remains locked, any
+subsequent attempt to lock it (by reclaim, migration, or other code
+paths) would block indefinitely → **deadlock**.
 
----
+Record: Bug = folio lock leak. Mechanism = `continue` after
+`folio_trylock` without `folio_unlock`. Category = resource leak /
+potential deadlock.
+
+### Step 2.4: ASSESS THE FIX QUALITY
+- Obviously correct: removing the `continue` ensures `folio_unlock()` is
+  always reached
+- Minimal/surgical: 1 line replaced
+- Regression risk: extremely low — in production builds, `DBG_BUGON` is
+  a no-op `((void)(x))`, so the code simply proceeds to unlock
+- In debug builds, `DBG_BUGON` becomes `BUG_ON` which would crash, but
+  only if the assertion condition fires
+
+Record: Fix is obviously correct, minimal, and carries near-zero
+regression risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-From git blame:
-- Line 827 (`clk_div_even_up(`) traces to `6de1b143a45d3c` from **2012**
-  (originally `smiapp-pll.c`)
-- The `EXT_IP_PLL_DIVIDER` loop step support was added by
-  `4e1e8d240dff96` in **2020**
-- The flag check at lines 846-847 was added by `660e613d05e449` in
-  **February 2025**
+### Step 3.1: BLAME THE CHANGED LINES
+The buggy `if (!erofs_folio_is_managed)/continue` pattern at lines
+608-609 was introduced by commit `2080ca1ed3e432` ("erofs: tidy up
+`struct z_erofs_bvec`", Gao Xiang, 2024-07-03), merged in v6.12 cycle.
 
-The inconsistency existed since 2020 when odd divider support was added
-but the initial min calculation wasn't updated.
+However, the same bug pattern existed BEFORE that commit in the page-
+based version. Tracing further back through `706fd68fce3a5` (v6.9, folio
+conversion), and even to the original `105d4ad857dcbf` (v4.19, staging
+era), the page-based `trylock_page`/`continue` pattern also leaked the
+page lock. In v5.4, the check was `page->mapping != mapping` instead of
+`erofs_page_is_managed`, but the bug (continue without unlock after
+trylock) was the same.
 
-### Step 3.2: Related Commits
-- `660e613d05e449` ("Start OP pre-PLL multiplier search from correct
-  value") — added the flag check after the second min calculation. Has
-  `Cc: stable@vger.kernel.org`. This is the **prerequisite** for the
-  commit being analyzed, and it IS in 7.0.
-- `06d2d478b09e6` ("Start VT pre-PLL multiplier search from correct
-  value") — the VT tree equivalent fix, which correctly doesn't use
-  `clk_div_even_up()` for the initial min. Also has `Cc: stable`.
+Record: Bug is long-standing, present since v5.4 in page form,
+persisting through folio conversions. Present in ALL stable trees with
+EROFS compressed data support.
 
-### Step 3.3: Author Context
-Alexander Shiyan is a community contributor, not the CCS subsystem
-maintainer. However, the patch was reviewed and signed off by Sakari
-Ailus (CCS maintainer) and Mauro Carvalho Chehab (media subsystem
-maintainer), giving it strong authority.
+### Step 3.2: FOLLOW THE FIXES: TAG
+No Fixes: tag present (expected).
 
-### Step 3.5: Dependencies
-This commit requires `660e613d05e449` to be present (the flag check at
-line 846-847 is in the diff context). That commit IS in the 7.0 tree and
-was already Cc'd to stable.
+### Step 3.3: CHECK FILE HISTORY
+Recent zdata.c changes show active development. The function has been
+modified during refactoring (folio conversion, bvec tidy-up, lockref
+changes) but the lock leak bug was never addressed.
 
----
+Record: Standalone fix, no prerequisites needed.
 
-## PHASE 4: MAILING LIST RESEARCH
+### Step 3.4: CHECK THE AUTHOR
+Zhan Xusheng from Xiaomi. The fix was suggested by Gao Xiang (EROFS
+maintainer), who also reviewed it. This carries high credibility.
 
-### Step 4.1: Original Discussion
-b4 dig could not find the commit (it's not yet in this tree). Web search
-did not find the specific patch thread. The AUTOSEL thread for 6.15
-found at yhbt.net/lore includes related CCS PLL patches from the same
-series of fixes by Sakari Ailus.
+Record: Fix suggested and reviewed by subsystem maintainer.
 
-### Step 4.2: Reviewer Context
-Signed off by both the CCS subsystem maintainer (Sakari Ailus) and media
-subsystem maintainer (Mauro Carvalho Chehab), indicating proper review
-chain.
+### Step 3.5: CHECK FOR DEPENDENCIES
+The fix is self-contained. It modifies only the body of
+`erofs_try_to_free_all_cached_folios()`. No dependencies on other
+commits. For older stable trees (v6.6 and earlier), the fix would need
+adaptation to the page-based API.
 
----
+Record: Self-contained fix, but needs adaptation for page-based stable
+trees.
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1-4.5: MAILING LIST INVESTIGATION
+Lore.kernel.org is behind bot protection. Web search found no specific
+patch discussion for this commit. The commit was applied through Gao
+Xiang's tree (signed-off by him).
+
+Record: Could not access lore discussion. The commit's review chain
+(suggested-by + 2 reviewed-by + maintainer SOB) provides sufficient
+confidence.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions Modified
-- `ccs_pll_calculate()` — the main PLL calculator entry point
+### Step 5.1: KEY FUNCTIONS
+Modified function: `erofs_try_to_free_all_cached_folios()`
 
-### Step 5.2: Callers
-- Called from `ccs_pll_calculate()` in `ccs-core.c` (line 512) and
-  `imx214.c`
-- Called during sensor initialization — affects whether the camera
-  sensor can be configured
+### Step 5.2: TRACE CALLERS
+Called from:
+1. `__erofs_try_to_release_pcluster()` (line 894) — called from shrinker
+   path
+2. Which is called from `erofs_try_to_release_pcluster()` (line 913) and
+   `z_erofs_put_pcluster()` (line 954)
+3. `z_erofs_shrink_scan()` (line 930) iterates pclusters and calls this
+4. `erofs_shrink_scan()` (line 282) is the registered shrinker callback
 
-### Step 5.4: Call Chain
-`sensor probe → pll_calculate → ccs_pll_calculate()` — this is called
-during sensor initialization. If PLL calculation fails, the sensor
-cannot operate.
+The shrinker is invoked by the kernel's memory reclaim subsystem under
+memory pressure — this is a commonly-hit path on any system using EROFS
+with compressed data.
 
-### Step 5.5: Pattern Comparison
-The VT tree equivalent (lines 412-416) does NOT use `clk_div_even_up()`
-for the analogous min calculation, confirming the OP tree code is
-inconsistent.
+Record: Called from kernel shrinker path → triggered during memory
+pressure. Common execution path.
 
----
+### Step 5.3-5.5: CALL CHAIN AND PATTERNS
+The function is reachable whenever the kernel is under memory pressure
+and an EROFS filesystem with compressed data is mounted. This is a core
+memory management path for EROFS — not obscure.
 
-## PHASE 6: STABLE TREE ANALYSIS
+Record: Reachable from core memory reclaim path.
 
-### Step 6.1: Code Presence
-- The `clk_div_even_up()` at line 827 traces back to 2012
-  (`6de1b143a45d3c`, v3.8)
-- The `EXT_IP_PLL_DIVIDER` flag support was added in 2020
-  (`4e1e8d240dff96`, v5.10-rc6 era)
-- The prerequisite flag check (`660e613d05e449`) is in 7.0 tree and was
-  Cc'd to stable
-- The buggy code exists in all stable trees that have both the original
-  code and the flag support
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 6.2: Backport Complications
-The diff applies cleanly to 7.0 — the "before" state in the diff matches
-the current code exactly.
+### Step 6.1: BUGGY CODE EXISTS IN STABLE TREES
+Verified the bug exists in:
+- **v5.4**: `trylock_page` + `page->mapping != mapping` → `continue`
+  (lock leak)
+- **v5.15**: `trylock_page` + `!erofs_page_is_managed` → `continue`
+  (lock leak)
+- **v6.1**: same as v5.15
+- **v6.6**: same as v5.15
+- **v6.9, v6.12**: folio-based `folio_trylock` +
+  `!erofs_folio_is_managed` → `continue` (lock leak)
 
----
+Record: Bug exists in ALL active stable trees (v5.4+).
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Step 6.2: BACKPORT COMPLICATIONS
+- v6.9+: patch applies cleanly or with minimal context adjustment
+  (folio-based)
+- v6.6 and earlier: needs adaptation to page-based API
+  (`trylock_page`/`unlock_page`/`erofs_page_is_managed`)
+- Function signature differs in older trees (takes `struct
+  erofs_workgroup *grp` parameter)
 
-### Step 7.1: Subsystem
-- **Subsystem:** drivers/media/i2c — camera sensor I2C driver
-  infrastructure
-- **Criticality:** PERIPHERAL — affects CCS-compatible camera sensors
-  with specific capabilities
-- The CCS PLL calculator is used by the CCS sensor driver and referenced
-  by other sensor drivers (imx214)
+Record: Clean apply for v6.9+; needs rework for v6.6 and earlier.
 
----
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem**: fs/erofs — Enhanced Read-Only Filesystem
+- **Criticality**: IMPORTANT — used in Android, embedded systems,
+  containers
+- This is a filesystem's memory management path, not an obscure driver
+
+Record: EROFS is an actively used filesystem, especially in
+Android/embedded contexts.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Driver-specific: affects CCS-compatible sensors with
-`CCS_CLOCK_TREE_PLL_CAPABILITY_EXT_DIVIDER` capability
+### Step 8.1: WHO IS AFFECTED
+Users of EROFS with compressed data (common use case — EROFS is
+primarily a compressed read-only filesystem). Especially Android
+devices.
 
-### Step 8.2: Trigger Conditions
-Triggered during sensor initialization when:
-1. The sensor has the EXT_DIVIDER capability
-2. The frequency constraint calculation produces an odd minimum divider
-3. That odd minimum is the binding constraint (larger than the
-   multiplier-based constraint)
+### Step 8.2: TRIGGER CONDITIONS
+The trigger requires: (1) EROFS filesystem mounted with compressed data,
+(2) memory pressure causing shrinker to run, (3) a folio in
+compressed_bvecs[] that is not managed. Condition (3) is believed to be
+impossible in practice per the maintainer.
 
-### Step 8.3: Failure Mode
-- PLL calculation selects wrong divider or fails entirely
-- Result: camera sensor doesn't work or operates suboptimally
-- **Severity: MEDIUM** — non-working hardware, not crash/corruption
+Record: Trigger requires a "theoretically impossible" condition. But if
+it occurs, it would be during common memory pressure events.
 
-### Step 8.4: Risk-Benefit
-- **Benefit:** Enables correct PLL configuration for affected sensors
-- **Risk:** Negligible — the fix only changes behavior when
-  `EXT_IP_PLL_DIVIDER` flag is set; the flag check at 846-847 ensures
-  correct behavior for sensors without the flag
-- **Ratio:** Favorable — meaningful benefit with essentially zero
-  regression risk
+### Step 8.3: FAILURE MODE SEVERITY
+If triggered: folio locked forever → deadlock/hang. Severity:
+**CRITICAL** (if triggered) but probability believed to be near zero.
 
----
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit**: Prevents potential deadlock; eliminates a code
+  correctness bug; defense-in-depth
+- **Risk**: Near zero — the fix removes a `continue` and replaces it
+  with a no-op assertion (in production builds). The code path proceeds
+  to `folio_unlock()` which is always correct.
+- **Ratio**: Very favorable — high potential benefit, near-zero risk
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
+### Step 9.1: EVIDENCE COMPILATION
 
 **FOR backporting:**
-- Real logic bug that prevents valid PLL configurations
-- Very small, surgical fix (remove one function wrapper)
-- Obviously correct — consistent with VT tree pattern
-- Signed off by both CCS and media subsystem maintainers
-- Prerequisite commit already in stable with Cc: stable tag
-- Applies cleanly to 7.0
-- Zero regression risk for sensors without the flag
+- Fixes a real code correctness bug (folio/page lock leak on `continue`
+  path)
+- If triggered, causes a deadlock (CRITICAL severity)
+- Fix is surgical: 1 line, 1 function, 1 file
+- Obviously correct — ensures unlock after lock
+- Reviewed and suggested by EROFS maintainer (Gao Xiang)
+- Bug exists in ALL stable trees since v5.4
+- Zero regression risk
+- Shrinker path is commonly executed
 
 **AGAINST backporting:**
-- Niche user population (CCS sensors with specific capability)
-- No crash, security issue, or data corruption — functional correctness
-  only
-- No Fixes: tag or Cc: stable from author
-- No Reported-by: (no evidence of user reports)
+- Maintainer says the condition "should not happen in practice"
+- No user reports of this bug triggering
+- Needs adaptation for older (page-based) stable trees
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct?** YES — removing unconditional even-rounding
-   that conflicts with conditional check
-2. **Fixes real bug?** YES — wrong PLL divider selection for sensors
-   with odd divider support
-3. **Important issue?** MEDIUM — non-working hardware for affected
-   sensors
-4. **Small and contained?** YES — 3 lines removed, 2 added in single
-   function
-5. **No new features?** YES — pure bug fix
-6. **Applies to stable?** YES — applies cleanly
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** — maintainer reviewed, trivial
+   fix
+2. Fixes a real bug? **YES** — folio lock leak (even if theoretically
+   unreachable)
+3. Important issue? **YES** — deadlock if triggered
+4. Small and contained? **YES** — net -1 line
+5. No new features/APIs? **YES**
+6. Can apply to stable? **YES** — cleanly for v6.9+, with adaptation for
+   older trees
 
----
+### Step 9.3: EXCEPTION CATEGORIES
+Not an exception category — this is a standard bug fix.
+
+### Step 9.4: DECISION
+The fix eliminates a real code correctness defect (missing
+`folio_unlock` on a control flow path after `folio_trylock`). While the
+maintainer believes the condition can't happen in practice, the fix is
+surgical, obviously correct, carries zero regression risk, and prevents
+a deadlock if the condition ever did trigger. The code path is in the
+kernel's memory reclaim shrinker — a commonly exercised subsystem. The
+fix meets all stable kernel criteria.
 
 ## Verification
 
-- [Phase 1] Parsed commit message: explicit "Fix" in subject, describes
-  logic error with EXT_IP_PLL_DIVIDER
-- [Phase 2] Diff analysis: removes `clk_div_even_up()` wrapper from
-  first `min_op_pre_pll_clk_div` calculation (line 827)
-- [Phase 3] git blame: `clk_div_even_up()` at line 827 from commit
-  `6de1b143a45d3c` (2012), flag support from `4e1e8d240dff96` (2020)
-- [Phase 3] git show `660e613d05e449`: confirmed prerequisite commit is
-  in 7.0 tree, has `Cc: stable`, adds flag check at lines 846-847
-- [Phase 3] git show `06d2d478b09e6`: confirmed VT tree equivalent fix
-  pattern doesn't use `clk_div_even_up()` for its min calculation
-- [Phase 3] git show `4e1e8d240dff96`: confirmed this is when
-  EXT_IP_PLL_DIVIDER loop step was added
-- [Phase 4] Web search: could not find specific patch thread; found
-  related AUTOSEL 6.15 series with CCS PLL fixes
-- [Phase 5] Grep callers: `ccs_pll_calculate()` called from `ccs-
-  core.c:512` during sensor setup
-- [Phase 5] Grep `CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER`: set in `ccs-
-  core.c:3506` based on sensor capability register
-- [Phase 6] Code present in 7.0 tree; diff applies cleanly; prerequisite
-  already present
-- [Phase 7] VT tree (lines 412-416) confirmed to NOT use
-  `clk_div_even_up()`, showing OP tree is inconsistent
-- UNVERIFIED: Exact mainline commit hash not found in this tree;
-  specific lore.kernel.org thread not accessible
-
----
-
-This is a small, obviously correct bug fix that removes an unconditional
-even-rounding operation that conflicts with a flag-based conditional
-check for sensors supporting odd PLL dividers. The fix makes the OP tree
-code consistent with the VT tree code. The prerequisite commit is
-already in stable trees. The risk is negligible and the fix enables
-correct hardware operation for affected sensors.
+- [Phase 1] Parsed tags: Suggested-by and Reviewed-by from Gao Xiang
+  (EROFS maintainer), additional Reviewed-by from Chunhai Guo
+- [Phase 2] Diff analysis: 2 lines removed, 1 added — replaces
+  `if(!managed) continue` with `DBG_BUGON(!managed)`, ensuring
+  `folio_unlock()` is always called
+- [Phase 2] DBG_BUGON definition verified: `BUG_ON` with
+  CONFIG_EROFS_FS_DEBUG, `((void)(x))` without
+- [Phase 3] git blame: buggy code in current form from commit
+  2080ca1ed3e432 (v6.12 cycle); same bug pattern present since
+  105d4ad857dcbf (v4.19/staging era)
+- [Phase 3] git show v5.4/v5.15/v6.1/v6.6/v6.9/v6.12 zdata.c: confirmed
+  bug exists in ALL stable trees in page-based or folio-based form
+- [Phase 3] Folio conversion 706fd68fce3a5 confirmed in v6.9 but not in
+  v6.6
+- [Phase 3] git log: no prerequisites found, fix is self-contained
+- [Phase 4] Could not access lore.kernel.org due to bot protection
+- [Phase 4] b4 dig found: https://patch.msgid.link/20240703120051.365345
+  2-4-hsiangkao@linux.alibaba.com for the buggy commit
+- [Phase 5] Callers traced: `erofs_try_to_free_all_cached_folios` →
+  `__erofs_try_to_release_pcluster` →
+  `erofs_try_to_release_pcluster`/`z_erofs_put_pcluster` →
+  `z_erofs_shrink_scan` → `erofs_shrink_scan` (registered shrinker
+  callback)
+- [Phase 6] Bug present in all stable trees v5.4+; backport needs API
+  adaptation for v6.6 and earlier
+- [Phase 8] Failure mode: deadlock (folio locked forever) — CRITICAL if
+  triggered, but believed theoretically unreachable
+- UNVERIFIED: Could not verify mailing list discussion for stable
+  nomination or NAKs
 
 **YES**
 
- drivers/media/i2c/ccs-pll.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/erofs/zdata.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/ccs-pll.c b/drivers/media/i2c/ccs-pll.c
-index 4eb83636e1027..1605cfa5db19d 100644
---- a/drivers/media/i2c/ccs-pll.c
-+++ b/drivers/media/i2c/ccs-pll.c
-@@ -824,9 +824,8 @@ int ccs_pll_calculate(struct device *dev, const struct ccs_pll_limits *lim,
- 				   op_lim_fr->min_pll_ip_clk_freq_hz));
- 	min_op_pre_pll_clk_div =
- 		max_t(u16, op_lim_fr->min_pre_pll_clk_div,
--		      clk_div_even_up(
--			      DIV_ROUND_UP(pll->ext_clk_freq_hz,
--					   op_lim_fr->max_pll_ip_clk_freq_hz)));
-+		      DIV_ROUND_UP(pll->ext_clk_freq_hz,
-+				   op_lim_fr->max_pll_ip_clk_freq_hz));
- 	dev_dbg(dev, "pre-pll check: min / max op_pre_pll_clk_div: %u / %u\n",
- 		min_op_pre_pll_clk_div, max_op_pre_pll_clk_div);
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index fe8121df9ef2f..b566996a0d1a5 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -605,8 +605,7 @@ static int erofs_try_to_free_all_cached_folios(struct erofs_sb_info *sbi,
+ 			if (!folio_trylock(folio))
+ 				return -EBUSY;
  
+-			if (!erofs_folio_is_managed(sbi, folio))
+-				continue;
++			DBG_BUGON(!erofs_folio_is_managed(sbi, folio));
+ 			pcl->compressed_bvecs[i].page = NULL;
+ 			folio_detach_private(folio);
+ 			folio_unlock(folio);
 -- 
 2.53.0
 
