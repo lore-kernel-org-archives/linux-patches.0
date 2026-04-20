@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86F433F586;
-	Mon, 20 Apr 2026 16:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F53534107F;
+	Mon, 20 Apr 2026 16:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701562; cv=none; b=Fo3s1eGcPLGRD2xkrop37okl5rTFGCA9GJgBv51rZMf4CFPtRiXFQP+9+0WITPCvw59DIOUOhBrCmVprpStY5FJPCjU9aEWgb49Px6S/OPfBCdpp1n3kKGIGa9Yt9qJRntinwr4oGAygz57ViZcrpjnDMJQmq2iULAktp85O62U=
+	t=1776701565; cv=none; b=cSaZPSeLddKaEwCmyRS+uBB/Hj+EEDVzwOk4lKhWMPXSJ1jyW5gUOQlccuh00dBLjOaAP8Oj9iYS1l7jeBNyVW5IwBiuFF/p0qS7JFzgX52P46VD2rT2G21WQozLTXfdZcnrHdtevwyzUKmjFRTFMnQQVUQdh0+TSqrMR/MstDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701562; c=relaxed/simple;
-	bh=FRCL86M1cGrxHV4MmIJurhzq4ZUQsl3g/Ht/56tDeHs=;
+	s=arc-20240116; t=1776701565; c=relaxed/simple;
+	bh=Ao6p2bksbJxN0X8Otx3vvrBs+x7N09eKMN/YEM6cZQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rEKCtGphZygXcOdYoZYoc5W+qOepS9q/6fQBLqlBSavyRYKd4LJhjAj7Y1yOlVWYQRlN3ZTMe6UUlmJSrDh466gWdl84ZGEGuWUp8SciZ7GJJUO0JWi1BItsYWwVMQ8VIG/lo48xpUGI9a8szGKmhHFX8K0bTudmFtY1tNDyWqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuWhDigx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h++deFL2J+Bde9x/tDUiW8uqI5SIVHHlJb6WavyaD/2cM/MTZ8jtlL+tm08n+b6zDyf62xpSPTMSihldiSDIxPD/Cqn5I2/2zjGeVW8IDM3oiONLWLCNdIJ3WW59AJJC9jNSPxjiYhduSiP2He4BR9r9K1nUb7XzDxr8gbCrLQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYynj9IH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuWhDigx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A34C19425;
-	Mon, 20 Apr 2026 16:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYynj9IH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E1EC19425;
+	Mon, 20 Apr 2026 16:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701562;
-	bh=FRCL86M1cGrxHV4MmIJurhzq4ZUQsl3g/Ht/56tDeHs=;
+	s=korg; t=1776701565;
+	bh=Ao6p2bksbJxN0X8Otx3vvrBs+x7N09eKMN/YEM6cZQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuWhDigx02zoOj1nOOIDZfxqC1yEDGg/eyIdN0WVWQNiKwfmI1m++ZTU+8+yjYnIM
-	 7Bftfpr9VKS7RY/OnRkBWc9p7TJ1sTv0gGWFppeC8thB/BiH6T7wDghXIobvTqi9j0
-	 bzOyqn8jHwFkHRxOwhIgmH94Qfp0sKWn/1FbNzeg=
+	b=tYynj9IHAeDnTUBkUHEMFbeLGo8KAn9vc7+OP5jnlMTjVwfLb5qgdmTGaqNwpOwmV
+	 FcKOWoFWKlIds9ROSIRVaEacz5R8pMiZJZO1ejDVwsQQSGnQcB2dL9OAN52x9pdpYH
+	 kCXy/2W55GsfTiMTUOtL/pijz8fqswpS0RabKivk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+96f901260a0b2d29cd1a@syzkaller.appspotmail.com,
-	Yihan Ding <dingyihan@uniontech.com>,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com,
+	syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 154/162] media: vidtv: fix pass-by-value structs causing MSAN warnings
-Date: Mon, 20 Apr 2026 17:43:06 +0200
-Message-ID: <20260420153932.628830479@linuxfoundation.org>
+Subject: [PATCH 6.12 155/162] media: hackrf: fix to not free memory after the device is registered in hackrf_probe()
+Date: Mon, 20 Apr 2026 17:43:07 +0200
+Message-ID: <20260420153932.665429950@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -52,176 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 5f8e73bde67e931468bc2a1860d78d72f0c6ba41 upstream.
+commit 3b7da2b4d0fe014eff181ed37e3bf832eb8ed258 upstream.
 
-vidtv_ts_null_write_into() and vidtv_ts_pcr_write_into() take their
-argument structs by value, causing MSAN to report uninit-value warnings.
-While only vidtv_ts_null_write_into() has triggered a report so far,
-both functions share the same issue.
+In hackrf driver, the following race condition occurs:
+```
+		CPU0						CPU1
+hackrf_probe()
+  kzalloc(); // alloc hackrf_dev
+  ....
+  v4l2_device_register();
+  ....
+						fd = sys_open("/path/to/dev"); // open hackrf fd
+						....
+  v4l2_device_unregister();
+  ....
+  kfree(); // free hackrf_dev
+  ....
+						sys_ioctl(fd, ...);
+						  v4l2_ioctl();
+						    video_is_registered() // UAF!!
+						....
+						sys_close(fd);
+						  v4l2_release() // UAF!!
+						    hackrf_video_release()
+						      kfree(); // DFB!!
+```
 
-Fix by passing both structs by const pointer instead, avoiding the
-stack copy of the struct along with its MSAN shadow and origin metadata.
-The functions do not modify the structs, which is enforced by the const
-qualifier.
+When a V4L2 or video device is unregistered, the device node is removed so
+new open() calls are blocked.
 
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+96f901260a0b2d29cd1a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=96f901260a0b2d29cd1a
-Tested-by: syzbot+96f901260a0b2d29cd1a@syzkaller.appspotmail.com
-Suggested-by: Yihan Ding <dingyihan@uniontech.com>
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+However, file descriptors that are already open-and any in-flight I/O-do
+not terminate immediately; they remain valid until the last reference is
+dropped and the driver's release() is invoked.
+
+Therefore, freeing device memory on the error path after hackrf_probe()
+has registered dev it will lead to a race to use-after-free vuln, since
+those already-open handles haven't been released yet.
+
+And since release() free memory too, race to use-after-free and
+double-free vuln occur.
+
+To prevent this, if device is registered from probe(), it should be
+modified to free memory only through release() rather than calling
+kfree() directly.
+
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6ffd76b5405c006a46b7
+Reported-by: syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f1b20958f93d2d250727
+Fixes: 8bc4a9ed8504 ("[media] hackrf: add support for transmitter")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_mux.c |    4 +-
- drivers/media/test-drivers/vidtv/vidtv_ts.c  |   50 +++++++++++++--------------
- drivers/media/test-drivers/vidtv/vidtv_ts.h  |    4 +-
- 3 files changed, 29 insertions(+), 29 deletions(-)
+ drivers/media/usb/hackrf/hackrf.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
-@@ -233,7 +233,7 @@ static u32 vidtv_mux_push_pcr(struct vid
- 	/* the 27Mhz clock will feed both parts of the PCR bitfield */
- 	args.pcr = m->timing.clk;
- 
--	nbytes += vidtv_ts_pcr_write_into(args);
-+	nbytes += vidtv_ts_pcr_write_into(&args);
- 	m->mux_buf_offset += nbytes;
- 
- 	m->num_streamed_pcr++;
-@@ -363,7 +363,7 @@ static u32 vidtv_mux_pad_with_nulls(stru
- 	args.continuity_counter = &ctx->cc;
- 
- 	for (i = 0; i < npkts; ++i) {
--		m->mux_buf_offset += vidtv_ts_null_write_into(args);
-+		m->mux_buf_offset += vidtv_ts_null_write_into(&args);
- 		args.dest_offset  = m->mux_buf_offset;
+--- a/drivers/media/usb/hackrf/hackrf.c
++++ b/drivers/media/usb/hackrf/hackrf.c
+@@ -1486,7 +1486,7 @@ static int hackrf_probe(struct usb_inter
+ 	if (ret) {
+ 		dev_err(dev->dev,
+ 			"Failed to register as video device (%d)\n", ret);
+-		goto err_v4l2_device_unregister;
++		goto err_v4l2_device_put;
  	}
- 
---- a/drivers/media/test-drivers/vidtv/vidtv_ts.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_ts.c
-@@ -48,7 +48,7 @@ void vidtv_ts_inc_cc(u8 *continuity_coun
- 		*continuity_counter = 0;
- }
- 
--u32 vidtv_ts_null_write_into(struct null_packet_write_args args)
-+u32 vidtv_ts_null_write_into(const struct null_packet_write_args *args)
- {
- 	u32 nbytes = 0;
- 	struct vidtv_mpeg_ts ts_header = {};
-@@ -56,21 +56,21 @@ u32 vidtv_ts_null_write_into(struct null
- 	ts_header.sync_byte          = TS_SYNC_BYTE;
- 	ts_header.bitfield           = cpu_to_be16(TS_NULL_PACKET_PID);
- 	ts_header.payload            = 1;
--	ts_header.continuity_counter = *args.continuity_counter;
-+	ts_header.continuity_counter = *args->continuity_counter;
- 
- 	/* copy TS header */
--	nbytes += vidtv_memcpy(args.dest_buf,
--			       args.dest_offset + nbytes,
--			       args.buf_sz,
-+	nbytes += vidtv_memcpy(args->dest_buf,
-+			       args->dest_offset + nbytes,
-+			       args->buf_sz,
- 			       &ts_header,
- 			       sizeof(ts_header));
- 
--	vidtv_ts_inc_cc(args.continuity_counter);
-+	vidtv_ts_inc_cc(args->continuity_counter);
- 
- 	/* fill the rest with empty data */
--	nbytes += vidtv_memset(args.dest_buf,
--			       args.dest_offset + nbytes,
--			       args.buf_sz,
-+	nbytes += vidtv_memset(args->dest_buf,
-+			       args->dest_offset + nbytes,
-+			       args->buf_sz,
- 			       TS_FILL_BYTE,
- 			       TS_PACKET_LEN - nbytes);
- 
-@@ -83,17 +83,17 @@ u32 vidtv_ts_null_write_into(struct null
- 	return nbytes;
- }
- 
--u32 vidtv_ts_pcr_write_into(struct pcr_write_args args)
-+u32 vidtv_ts_pcr_write_into(const struct pcr_write_args *args)
- {
- 	u32 nbytes = 0;
- 	struct vidtv_mpeg_ts ts_header = {};
- 	struct vidtv_mpeg_ts_adaption ts_adap = {};
- 
- 	ts_header.sync_byte     = TS_SYNC_BYTE;
--	ts_header.bitfield      = cpu_to_be16(args.pid);
-+	ts_header.bitfield      = cpu_to_be16(args->pid);
- 	ts_header.scrambling    = 0;
- 	/* cc is not incremented, but it is needed. see 13818-1 clause 2.4.3.3 */
--	ts_header.continuity_counter = *args.continuity_counter;
-+	ts_header.continuity_counter = *args->continuity_counter;
- 	ts_header.payload            = 0;
- 	ts_header.adaptation_field   = 1;
- 
-@@ -102,27 +102,27 @@ u32 vidtv_ts_pcr_write_into(struct pcr_w
- 	ts_adap.PCR    = 1;
- 
- 	/* copy TS header */
--	nbytes += vidtv_memcpy(args.dest_buf,
--			       args.dest_offset + nbytes,
--			       args.buf_sz,
-+	nbytes += vidtv_memcpy(args->dest_buf,
-+			       args->dest_offset + nbytes,
-+			       args->buf_sz,
- 			       &ts_header,
- 			       sizeof(ts_header));
- 
- 	/* write the adap after the TS header */
--	nbytes += vidtv_memcpy(args.dest_buf,
--			       args.dest_offset + nbytes,
--			       args.buf_sz,
-+	nbytes += vidtv_memcpy(args->dest_buf,
-+			       args->dest_offset + nbytes,
-+			       args->buf_sz,
- 			       &ts_adap,
- 			       sizeof(ts_adap));
- 
- 	/* write the PCR optional */
--	nbytes += vidtv_ts_write_pcr_bits(args.dest_buf,
--					  args.dest_offset + nbytes,
--					  args.pcr);
--
--	nbytes += vidtv_memset(args.dest_buf,
--			       args.dest_offset + nbytes,
--			       args.buf_sz,
-+	nbytes += vidtv_ts_write_pcr_bits(args->dest_buf,
-+					  args->dest_offset + nbytes,
-+					  args->pcr);
-+
-+	nbytes += vidtv_memset(args->dest_buf,
-+			       args->dest_offset + nbytes,
-+			       args->buf_sz,
- 			       TS_FILL_BYTE,
- 			       TS_PACKET_LEN - nbytes);
- 
---- a/drivers/media/test-drivers/vidtv/vidtv_ts.h
-+++ b/drivers/media/test-drivers/vidtv/vidtv_ts.h
-@@ -90,7 +90,7 @@ void vidtv_ts_inc_cc(u8 *continuity_coun
-  *
-  * Return: The number of bytes written into the buffer.
-  */
--u32 vidtv_ts_null_write_into(struct null_packet_write_args args);
-+u32 vidtv_ts_null_write_into(const struct null_packet_write_args *args);
- 
- /**
-  * vidtv_ts_pcr_write_into - Write a PCR  packet into a buffer.
-@@ -101,6 +101,6 @@ u32 vidtv_ts_null_write_into(struct null
-  *
-  * Return: The number of bytes written into the buffer.
-  */
--u32 vidtv_ts_pcr_write_into(struct pcr_write_args args);
-+u32 vidtv_ts_pcr_write_into(const struct pcr_write_args *args);
- 
- #endif //VIDTV_TS_H
+ 	dev_info(dev->dev, "Registered as %s\n",
+ 		 video_device_node_name(&dev->rx_vdev));
+@@ -1515,8 +1515,9 @@ static int hackrf_probe(struct usb_inter
+ 	return 0;
+ err_video_unregister_device_rx:
+ 	video_unregister_device(&dev->rx_vdev);
+-err_v4l2_device_unregister:
+-	v4l2_device_unregister(&dev->v4l2_dev);
++err_v4l2_device_put:
++	v4l2_device_put(&dev->v4l2_dev);
++	return ret;
+ err_v4l2_ctrl_handler_free_tx:
+ 	v4l2_ctrl_handler_free(&dev->tx_ctrl_handler);
+ err_v4l2_ctrl_handler_free_rx:
 
 
