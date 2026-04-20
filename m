@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4004822259F;
-	Mon, 20 Apr 2026 15:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4D93314C4;
+	Mon, 20 Apr 2026 15:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700479; cv=none; b=QtXRTnmQtrAQuETWQWsMAT79bieSmdP0Ga9K+Nlbk8Jv7oPj96+IJ70Bx5N3Q4BqZKSuN0Hbm5Z09HoFvGMOPlKcHwC3JWI4NkGNNyN2BIR7GRlp0fwfSxHU5vSR7tMz6OzHYDcQHpjVxthN0N0RZTvbxWim892zZpaDcpf8kQE=
+	t=1776700481; cv=none; b=RpGz2fI9EKoKooPwLLh1vG+PpR3pMZMw8sNBN1snwjEN0wzMT7zSKmgJLT82yZN0eT+Pi4KlnykmNbEkvc3p7NxgIqsl6e1w/ZFyTPieaBkRtaPCY3e6Q/SZ3QLXaZ8od4zwYJ1R1jui58LVrboCOs8NYcN9NcPPcNpsuEHOr/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700479; c=relaxed/simple;
-	bh=GedDnRnRybRj/OsK/LXfB0uFo0VJUNMAtOvZNnrHgOU=;
+	s=arc-20240116; t=1776700481; c=relaxed/simple;
+	bh=YvatBB+poIG+GJ1pbkyBxRBjA0thngF6pWhphiChDF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OnOhG4JyQllaa2E6e00SsRLmm5/qJ1/kUSSfyAW42vmd2f2fkGSSLCbaBk+k+QQv8H7CveuGwQVTvwF+TKDEJqiJif2bm4mH0Ue6RtlhJRsQ3D76sS0NTGdlSXLhAbftnemXv3KME4OkDfNHgZHvNH6SQ1MGwgz1Vjn1HlSzEXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moA5WmUC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aqMTPb5sjz56aTyDJ7Gy7/NwFk86B0TArKQhJomGU5puAtGrkyPgBKpakHh0XWaRY5TZ9sHOIpN3Q/3rgI+dw8IstiFGeCRQdjmo0NJuxjXiJ3iud7oNBrp1v7hlA07yw1/Q1yBXCIRZ9G1iVNYcYmouQ4tJoMXdioUiDA6TQe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoQo8v1S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moA5WmUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F300C19425;
-	Mon, 20 Apr 2026 15:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoQo8v1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13457C19425;
+	Mon, 20 Apr 2026 15:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700478;
-	bh=GedDnRnRybRj/OsK/LXfB0uFo0VJUNMAtOvZNnrHgOU=;
+	s=korg; t=1776700481;
+	bh=YvatBB+poIG+GJ1pbkyBxRBjA0thngF6pWhphiChDF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moA5WmUC1ve42oqA/91COQC++rhyQ9q2DIy/zImi6YFTa9eybhLZgy+6fu4+/y40Z
-	 PuI0VzwrxM8D/cmNn6RAIzJWEO3haekAsniIp3zRpW/VxZVHiMpQb0ymC0byIaw3J8
-	 6MioQhNAUwkN2U8YVZDhakFL0DLRdLgL+pIPTsw8=
+	b=FoQo8v1SMgKG7lfUi9aO0QE3hflmdWnf7OArVhks17FjvfJeDr5cd9i+3Mc0v1qJF
+	 nUmR7Ux7TCq4VZ3CpUG6t7ZtMSfWAeYGRaBvKKkeQKBj7Zr0N2EY14Af3cZAg2UJUZ
+	 1fp+L8VWLajS8Yn6k7O8DiY6UcStb8yuMwgLkp10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
+	Jethro Beekman <jethro@fortanix.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.19 189/220] KVM: SEV: Protect *all* of sev_mem_enc_register_region() with kvm->lock
-Date: Mon, 20 Apr 2026 17:42:10 +0200
-Message-ID: <20260420153940.831199737@linuxfoundation.org>
+Subject: [PATCH 6.19 190/220] KVM: SEV: Disallow LAUNCH_FINISH if vCPUs are actively being created
+Date: Mon, 20 Apr 2026 17:42:11 +0200
+Message-ID: <20260420153940.866825876@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,114 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit b6408b6cec5df76a165575777800ef2aba12b109 upstream.
+commit 624bf3440d7214b62c22d698a0a294323f331d5d upstream.
 
-Take and hold kvm->lock for before checking sev_guest() in
-sev_mem_enc_register_region(), as sev_guest() isn't stable unless kvm->lock
-is held (or KVM can guarantee KVM_SEV_INIT{2} has completed and can't
-rollack state).  If KVM_SEV_INIT{2} fails, KVM can end up trying to add to
-a not-yet-initialized sev->regions_list, e.g. triggering a #GP
+Reject LAUNCH_FINISH for SEV-ES and SNP VMs if KVM is actively creating
+one or more vCPUs, as KVM needs to process and encrypt each vCPU's VMSA.
+Letting userspace create vCPUs while LAUNCH_FINISH is in-progress is
+"fine", at least in the current code base, as kvm_for_each_vcpu() operates
+on online_vcpus, LAUNCH_FINISH (all SEV+ sub-ioctls) holds kvm->mutex, and
+fully onlining a vCPU in kvm_vm_ioctl_create_vcpu() is done under
+kvm->mutex.  I.e. there's no difference between an in-progress vCPU and a
+vCPU that is created entirely after LAUNCH_FINISH.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  CPU: 110 UID: 0 PID: 72717 Comm: syz.15.11462 Tainted: G     U  W  O        6.16.0-smp-DEV #1 NONE
-  Tainted: [U]=USER, [W]=WARN, [O]=OOT_MODULE
-  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.52.0-0 10/28/2024
-  RIP: 0010:sev_mem_enc_register_region+0x3f0/0x4f0 ../include/linux/list.h:83
-  Code: <41> 80 3c 04 00 74 08 4c 89 ff e8 f1 c7 a2 00 49 39 ed 0f 84 c6 00
-  RSP: 0018:ffff88838647fbb8 EFLAGS: 00010256
-  RAX: dffffc0000000000 RBX: 1ffff92015cf1e0b RCX: dffffc0000000000
-  RDX: 0000000000000000 RSI: 0000000000001000 RDI: ffff888367870000
-  RBP: ffffc900ae78f050 R08: ffffea000d9e0007 R09: 1ffffd4001b3c000
-  R10: dffffc0000000000 R11: fffff94001b3c001 R12: 0000000000000000
-  R13: ffff8982ab0bde00 R14: ffffc900ae78f058 R15: 0000000000000000
-  FS:  00007f34e9dc66c0(0000) GS:ffff89ee64d33000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007fe180adef98 CR3: 000000047210e000 CR4: 0000000000350ef0
-  Call Trace:
-   <TASK>
-   kvm_arch_vm_ioctl+0xa72/0x1240 ../arch/x86/kvm/x86.c:7371
-   kvm_vm_ioctl+0x649/0x990 ../virt/kvm/kvm_main.c:5363
-   __se_sys_ioctl+0x101/0x170 ../fs/ioctl.c:51
-   do_syscall_x64 ../arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x6f/0x1f0 ../arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  RIP: 0033:0x7f34e9f7e9a9
-  Code: <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-  RSP: 002b:00007f34e9dc6038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 00007f34ea1a6080 RCX: 00007f34e9f7e9a9
-  RDX: 0000200000000280 RSI: 000000008010aebb RDI: 0000000000000007
-  RBP: 00007f34ea000d69 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 0000000000000000 R14: 00007f34ea1a6080 R15: 00007ffce77197a8
-   </TASK>
+However, given that concurrent LAUNCH_FINISH and vCPU creation can't
+possibly work (for any reasonable definition of "work"), since userspace
+can't guarantee whether a particular vCPU will be encrypted or not,
+disallow the combination as a hardening measure, to reduce the probability
+of introducing bugs in the future, and to avoid having to reason about the
+safety of future changes related to LAUNCH_FINISH.
 
-with a syzlang reproducer that looks like:
-
-  syz_kvm_add_vcpu$x86(0x0, &(0x7f0000000040)={0x0, &(0x7f0000000180)=ANY=[], 0x70}) (async)
-  syz_kvm_add_vcpu$x86(0x0, &(0x7f0000000080)={0x0, &(0x7f0000000180)=ANY=[@ANYBLOB="..."], 0x4f}) (async)
-  r0 = openat$kvm(0xffffffffffffff9c, &(0x7f0000000200), 0x0, 0x0)
-  r1 = ioctl$KVM_CREATE_VM(r0, 0xae01, 0x0)
-  r2 = openat$kvm(0xffffffffffffff9c, &(0x7f0000000240), 0x0, 0x0)
-  r3 = ioctl$KVM_CREATE_VM(r2, 0xae01, 0x0)
-  ioctl$KVM_SET_CLOCK(r3, 0xc008aeba, &(0x7f0000000040)={0x1, 0x8, 0x0, 0x5625e9b0}) (async)
-  ioctl$KVM_SET_PIT2(r3, 0x8010aebb, &(0x7f0000000280)={[...], 0x5}) (async)
-  ioctl$KVM_SET_PIT2(r1, 0x4070aea0, 0x0) (async)
-  r4 = ioctl$KVM_CREATE_VM(0xffffffffffffffff, 0xae01, 0x0)
-  openat$kvm(0xffffffffffffff9c, 0x0, 0x0, 0x0) (async)
-  ioctl$KVM_SET_USER_MEMORY_REGION(r4, 0x4020ae46, &(0x7f0000000400)={0x0, 0x0, 0x0, 0x2000, &(0x7f0000001000/0x2000)=nil}) (async)
-  r5 = ioctl$KVM_CREATE_VCPU(r4, 0xae41, 0x2)
-  close(r0) (async)
-  openat$kvm(0xffffffffffffff9c, &(0x7f0000000000), 0x8000, 0x0) (async)
-  ioctl$KVM_SET_GUEST_DEBUG(r5, 0x4048ae9b, &(0x7f0000000300)={0x4376ea830d46549b, 0x0, [0x46, 0x0, 0x0, 0x0, 0x0, 0x1000]}) (async)
-  ioctl$KVM_RUN(r5, 0xae80, 0x0)
-
-Opportunistically use guard() to avoid having to define a new error label
-and goto usage.
-
-Fixes: 1e80fdc09d12 ("KVM: SVM: Pin guest memory when SEV is active")
+Cc: Jethro Beekman <jethro@fortanix.com>
+Closes: https://lore.kernel.org/all/b31f7c6e-2807-4662-bcdd-eea2c1e132fa@fortanix.com
 Cc: stable@vger.kernel.org
-Reported-by: Alexander Potapenko <glider@google.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Link: https://patch.msgid.link/20260310234829.2608037-4-seanjc@google.com
+Link: https://patch.msgid.link/20260310234829.2608037-5-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/sev.c   |   10 ++++++++--
+ include/linux/kvm_host.h |    7 +++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
-@@ -2695,6 +2695,8 @@ int sev_mem_enc_register_region(struct k
- 	struct enc_region *region;
- 	int ret = 0;
- 
-+	guard(mutex)(&kvm->lock);
-+
- 	if (!sev_guest(kvm))
+@@ -1023,6 +1023,9 @@ static int sev_launch_update_vmsa(struct
+ 	if (!sev_es_guest(kvm))
  		return -ENOTTY;
  
-@@ -2709,12 +2711,10 @@ int sev_mem_enc_register_region(struct k
- 	if (!region)
- 		return -ENOMEM;
++	if (kvm_is_vcpu_creation_in_progress(kvm))
++		return -EBUSY;
++
+ 	kvm_for_each_vcpu(i, vcpu, kvm) {
+ 		ret = mutex_lock_killable(&vcpu->mutex);
+ 		if (ret)
+@@ -2043,8 +2046,8 @@ static int sev_check_source_vcpus(struct
+ 	struct kvm_vcpu *src_vcpu;
+ 	unsigned long i;
  
--	mutex_lock(&kvm->lock);
- 	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages,
- 				       FOLL_WRITE | FOLL_LONGTERM);
- 	if (IS_ERR(region->pages)) {
- 		ret = PTR_ERR(region->pages);
--		mutex_unlock(&kvm->lock);
- 		goto e_free;
- 	}
+-	if (src->created_vcpus != atomic_read(&src->online_vcpus) ||
+-	    dst->created_vcpus != atomic_read(&dst->online_vcpus))
++	if (kvm_is_vcpu_creation_in_progress(src) ||
++	    kvm_is_vcpu_creation_in_progress(dst))
+ 		return -EBUSY;
  
-@@ -2732,8 +2732,6 @@ int sev_mem_enc_register_region(struct k
- 	region->size = range->size;
+ 	if (!sev_es_guest(src))
+@@ -2454,6 +2457,9 @@ static int snp_launch_update_vmsa(struct
+ 	unsigned long i;
+ 	int ret;
  
- 	list_add_tail(&region->list, &sev->regions_list);
--	mutex_unlock(&kvm->lock);
--
- 	return ret;
++	if (kvm_is_vcpu_creation_in_progress(kvm))
++		return -EBUSY;
++
+ 	data.gctx_paddr = __psp_pa(sev->snp_context);
+ 	data.page_type = SNP_PAGE_TYPE_VMSA;
  
- e_free:
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -1030,6 +1030,13 @@ static inline struct kvm_vcpu *kvm_get_v
+ 	return NULL;
+ }
+ 
++static inline bool kvm_is_vcpu_creation_in_progress(struct kvm *kvm)
++{
++	lockdep_assert_held(&kvm->lock);
++
++	return kvm->created_vcpus != atomic_read(&kvm->online_vcpus);
++}
++
+ void kvm_destroy_vcpus(struct kvm *kvm);
+ 
+ int kvm_trylock_all_vcpus(struct kvm *kvm);
 
 
