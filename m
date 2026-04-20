@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF62134252C;
-	Mon, 20 Apr 2026 16:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447CA34216C;
+	Mon, 20 Apr 2026 16:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701480; cv=none; b=Z3EkR/BSHW7d3nXCl8gfOWQSD7uj9G2awNJ3OSl0VD/ojbunER5NXQ9NaMP4HRSv1rDXSesQerSZLCdizFLTIfIWr6cvfODB9oqbZIwPDxJiHDaWUMebuNulSLxs2oHF0HBVavGPqiXUf/cxPBXUQIRveW3l5AdMzdgTIDKnDFQ=
+	t=1776701483; cv=none; b=mQ8Vcjy4BFqar7+RvO5g5EJPhTuYNQIeSprCMgHrwvMLrIkzxuWSe/ZRksAiK03xQrugkIsinKjtO11dEyV4gyTZnMtu2Nz33QsHlh+sQkVA8EaV6iAnutFhKAWrwtXlsAqKlB75uBxIlzcK6MRVFCM5h7r6IKrOEuqwLn+4T0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701480; c=relaxed/simple;
-	bh=+w/8z6A/KXCvGdYfW3dLehmCdarhfCutYEby6reuwmU=;
+	s=arc-20240116; t=1776701483; c=relaxed/simple;
+	bh=+O+t0HWDAOtCa9jWuqvKWsXAzPJRJ7T7LaO15dX5Oi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7wsCnc5aO9cDq4zBpSZOk5hN2+SjRftniYUSghJov6aB2EUa9DUMpzI6wq+7lBRKypxVce0CospS/qjCmLZobI6iaNAssDmEl0Cwum5E9w62rETb2DtzhOim/Of8dskBvm9gUFInXCs6hZ13uuvpdfZbNfrBqOmGiV0u9MhIbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBN1tLWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDmTcW/M4ihMMpN28YNTCFjbYm9Lehq4c5RIYKsM5opKT5syDZEuN66C5D6LJG/iYYdrRrH+LMBBfr9bgj3/LY6LRHhw0/iC3IliRixwYjrsQqLcpsEMD1yORJvgv6RuSMbaqKxcLYCWR+XSezjm/AWgn+Z3AQlTwAQWiO1jCyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJI/WUnr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBN1tLWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B699C19425;
-	Mon, 20 Apr 2026 16:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJI/WUnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA4CC19425;
+	Mon, 20 Apr 2026 16:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701480;
-	bh=+w/8z6A/KXCvGdYfW3dLehmCdarhfCutYEby6reuwmU=;
+	s=korg; t=1776701483;
+	bh=+O+t0HWDAOtCa9jWuqvKWsXAzPJRJ7T7LaO15dX5Oi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aBN1tLWWcCpBKo2+eJnP/mLGrg2qfhEPYcU0vYF2wJJGBwlwZ6KR/OnpZxLOY+NB5
-	 lkNg4HJ4ZuZuBZ82PflDo7mlFUcY2z+H2XHzTvxh21J/QYjPw7AGpzuFjVHKbVKuIM
-	 QMfA2oRnU/GnyU9cCeD8b2xX51peMYiJkXUa4/Hw=
+	b=iJI/WUnrc4ELiKyn9AOwqit3we9tiLp3mxcp7ADaiPxjtVCkaCydYoSEoNtnIRquS
+	 Nhvs+w9voz8hAMGxdbofGTJzacEyHfCgC/HWex0NMh2AglZpwI+fo3X5BjnjNQfgGA
+	 Af/BXVGvBCfdherODXxmUgYC2GgezdWa+pSp+HZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Merwick <liam.merwick@oracle.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 131/162] KVM: SEV: Drop WARN on large size for KVM_MEMORY_ENCRYPT_REG_REGION
-Date: Mon, 20 Apr 2026 17:42:43 +0200
-Message-ID: <20260420153931.789236872@linuxfoundation.org>
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 132/162] gpiolib: unify two loops initializing GPIO descriptors
+Date: Mon, 20 Apr 2026 17:42:44 +0200
+Message-ID: <20260420153931.825774754@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -50,71 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 8acffeef5ef720c35e513e322ab08e32683f32f2 upstream.
+[ Upstream commit fa17f749ee5bc6afdaa9e0ddbe6a816b490dad7d ]
 
-Drop the WARN in sev_pin_memory() on npages overflowing an int, as the
-WARN is comically trivially to trigger from userspace, e.g. by doing:
+We currently iterate over the descriptors owned by the GPIO device we're
+adding twice with the first loop just setting the gdev pointer. It's not
+used anywhere between this and the second loop so just drop the first
+one and move the assignment to the second.
 
-  struct kvm_enc_region range = {
-          .addr = 0,
-          .size = -1ul,
-  };
-
-  __vm_ioctl(vm, KVM_MEMORY_ENCRYPT_REG_REGION, &range);
-
-Note, the checks in sev_mem_enc_register_region() that presumably exist to
-verify the incoming address+size are completely worthless, as both "addr"
-and "size" are u64s and SEV is 64-bit only, i.e. they _can't_ be greater
-than ULONG_MAX.  That wart will be cleaned up in the near future.
-
-	if (range->addr > ULONG_MAX || range->size > ULONG_MAX)
-		return -EINVAL;
-
-Opportunistically add a comment to explain why the code calculates the
-number of pages the "hard" way, e.g. instead of just shifting @ulen.
-
-Fixes: 78824fabc72e ("KVM: SVM: fix svn_pin_memory()'s use of get_user_pages_fast()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
-Tested-by: Liam Merwick <liam.merwick@oracle.com>
-Link: https://patch.msgid.link/20260313003302.3136111-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Link: https://lore.kernel.org/r/20241004-gpio-notify-in-kernel-events-v1-2-8ac29e1df4fe@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: stable@vger.kernel.org # 6.12
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -642,10 +642,16 @@ static struct page **sev_pin_memory(stru
- 	if (ulen == 0 || uaddr + ulen < uaddr)
- 		return ERR_PTR(-EINVAL);
- 
--	/* Calculate number of pages. */
-+	/*
-+	 * Calculate the number of pages that need to be pinned to cover the
-+	 * entire range.  Note!  This isn't simply ulen >> PAGE_SHIFT, as KVM
-+	 * doesn't require the incoming address+size to be page aligned!
-+	 */
- 	first = (uaddr & PAGE_MASK) >> PAGE_SHIFT;
- 	last = ((uaddr + ulen - 1) & PAGE_MASK) >> PAGE_SHIFT;
- 	npages = (last - first + 1);
-+	if (npages > INT_MAX)
-+		return ERR_PTR(-EINVAL);
- 
- 	locked = sev->pages_locked + npages;
- 	lock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
-@@ -654,9 +660,6 @@ static struct page **sev_pin_memory(stru
- 		return ERR_PTR(-ENOMEM);
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 967ff661e4c96..3f9019cc832ac 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -1026,9 +1026,6 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 		}
  	}
  
--	if (WARN_ON_ONCE(npages > INT_MAX))
--		return ERR_PTR(-EINVAL);
+-	for (desc_index = 0; desc_index < gc->ngpio; desc_index++)
+-		gdev->descs[desc_index].gdev = gdev;
 -
- 	/* Avoid using vmalloc for smaller buffers. */
- 	size = npages * sizeof(struct page *);
- 	if (size > PAGE_SIZE)
+ 	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
+ 	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
+ 
+@@ -1058,6 +1055,8 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 	for (desc_index = 0; desc_index < gc->ngpio; desc_index++) {
+ 		struct gpio_desc *desc = &gdev->descs[desc_index];
+ 
++		desc->gdev = gdev;
++
+ 		if (gc->get_direction && gpiochip_line_is_valid(gc, desc_index)) {
+ 			assign_bit(FLAG_IS_OUT,
+ 				   &desc->flags, !gc->get_direction(gc, desc_index));
+-- 
+2.53.0
+
 
 
