@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927782E093A;
-	Mon, 20 Apr 2026 16:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1DE33E373;
+	Mon, 20 Apr 2026 16:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701113; cv=none; b=Zdiqkum662g0FHi6HI+Suw28YN6ue8XlW022CS0UI1aNzAQ96h609kI7lAe/WvikoYpfJSSj5jGVyPr45s0hf1B5Ih83A3yYCdgmCUKkit96lS0G5SRTysM0E/wCNFaeC7OS8Dp183SKwTD7Ep7cOZbjCNdNe4SIcwRcpPVdmJs=
+	t=1776701116; cv=none; b=fSvdGiA9lEpbul8QlfKLmL83gC9dOifKZnl+vPETP4SGC1tusHiEXRB24XMxv0e3JaXVS+2ZspD6Su4RO43fXILTdxpmO6ioOtoZNPpT+sQHAfHjVOlGYiRkv/v518GTu0a09pigbG1uBda4ZFt/wP0RZR7xuV2T9eLGKEuBUpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701113; c=relaxed/simple;
-	bh=dMIeDf4UTbjBx9P4BhnI/cc7eG2PMapWz4S5mQZ1aY8=;
+	s=arc-20240116; t=1776701116; c=relaxed/simple;
+	bh=zQqftcedO08THD06Li0rp4WXAV22JG/GzpVUlyFLxc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mpr44MQ3pG/xTzLwz+cLVl/SVmREEo04uVclGbykiMKHl/D7+5W+TggyuMVWG7APAjVxj0PmUeAUE/6gGNuJdv7ZWYmIb7Wc2qFUDt5wRKD2F8HwFFhfwUvaZM9dj650ORoNN6BfApEoXD9uIsqSqe02A35+PUZuxgwYK+a7Gaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdd0Ih3b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C6FzPhTSDhZ5wZG2deXKd2i0WZYJxE+0+J5THNFuH8sfWOd+STjdmZnidEo1e4/WBiE7+FXm+qfhraURr2/jnG6UxGeNONqy5bFunxZgXJ4r+767GBnrfZUtuLXYVu++uh3Xox6chQzI4AEJ0KmN15mfOqi5T4p7cnA0AJbLsW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUZ3Cpaq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdd0Ih3b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABAFC19425;
-	Mon, 20 Apr 2026 16:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUZ3Cpaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDC6C19425;
+	Mon, 20 Apr 2026 16:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701113;
-	bh=dMIeDf4UTbjBx9P4BhnI/cc7eG2PMapWz4S5mQZ1aY8=;
+	s=korg; t=1776701116;
+	bh=zQqftcedO08THD06Li0rp4WXAV22JG/GzpVUlyFLxc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdd0Ih3bRr2lKF0pCMENEvkeZVaPlea4F3jGIhmhmGpEe8u3NYOjDPQ94wEmn+IAd
-	 +A2qn5r/34GQfarcMdOLweZqyv0WaMcT7sImCcZxr8nxIyn80cZoKlztUqrJOrJv7t
-	 1BgcFaShxUurzMS0Uak/lztXHFLvtHgTQH55Wgjw=
+	b=HUZ3Cpaqtds50gUwhnqQGu3NzsMGtrR05wxfdfvS0/tkqSHXWRJ+u56Yi3Uw046Q3
+	 W5DvrE6kCoYLyiLC7P7lSh284NAdVZj/xp1pTXn2xY9L9uhJqit05hM4SB+w/cV9yH
+	 pi2IR/gc51uoquYsAJVUaOHHX+vitpoYgO9ySS9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com,
-	Abhishek Kumar <abhishek_sts8@yahoo.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 187/198] media: em28xx: fix use-after-free in em28xx_v4l2_open()
-Date: Mon, 20 Apr 2026 17:42:46 +0200
-Message-ID: <20260420153942.351603845@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 188/198] hwmon: (powerz) Fix use-after-free on USB disconnect
+Date: Mon, 20 Apr 2026 17:42:47 +0200
+Message-ID: <20260420153942.388463495@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,68 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Kumar <abhishek_sts8@yahoo.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit a66485a934c7187ae8e36517d40615fa2e961cff upstream.
+commit 08e57f5e1a9067d5fbf33993aa7f51d60b3d13a4 upstream.
 
-em28xx_v4l2_open() reads dev->v4l2 without holding dev->lock,
-creating a race with em28xx_v4l2_init()'s error path and
-em28xx_v4l2_fini(), both of which free the em28xx_v4l2 struct
-and set dev->v4l2 to NULL under dev->lock.
+After powerz_disconnect() frees the URB and releases the mutex, a
+subsequent powerz_read() call can acquire the mutex and call
+powerz_read_data(), which dereferences the freed URB pointer.
 
-This race leads to two issues:
- - use-after-free in v4l2_fh_init() when accessing vdev->ctrl_handler,
-   since the video_device is embedded in the freed em28xx_v4l2 struct.
- - NULL pointer dereference in em28xx_resolution_set() when accessing
-   v4l2->norm, since dev->v4l2 has been set to NULL.
+Fix by:
+ - Setting priv->urb to NULL in powerz_disconnect() so that
+   powerz_read_data() can detect the disconnected state.
+ - Adding a !priv->urb check at the start of powerz_read_data()
+   to return -ENODEV on a disconnected device.
+ - Moving usb_set_intfdata() before hwmon registration so the
+   disconnect handler can always find the priv pointer.
 
-Fix this by moving the mutex_lock() before the dev->v4l2 read and
-adding a NULL check for dev->v4l2 under the lock.
-
-Reported-by: syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c025d34b8eaa54c571b8
-Fixes: 8139a4d583ab ("[media] em28xx: move v4l2 user counting fields from struct em28xx to struct v4l2")
+Fixes: 4381a36abdf1c ("hwmon: add POWER-Z driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abhishek Kumar <abhishek_sts8@yahoo.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260410002521.422645-2-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/em28xx/em28xx-video.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/hwmon/powerz.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/em28xx/em28xx-video.c
-+++ b/drivers/media/usb/em28xx/em28xx-video.c
-@@ -2126,7 +2126,7 @@ static int em28xx_v4l2_open(struct file
+--- a/drivers/hwmon/powerz.c
++++ b/drivers/hwmon/powerz.c
+@@ -108,6 +108,9 @@ static int powerz_read_data(struct usb_d
  {
- 	struct video_device *vdev = video_devdata(filp);
- 	struct em28xx *dev = video_drvdata(filp);
--	struct em28xx_v4l2 *v4l2 = dev->v4l2;
-+	struct em28xx_v4l2 *v4l2;
- 	enum v4l2_buf_type fh_type = 0;
  	int ret;
  
-@@ -2143,13 +2143,19 @@ static int em28xx_v4l2_open(struct file
- 		return -EINVAL;
++	if (!priv->urb)
++		return -ENODEV;
++
+ 	priv->status = -ETIMEDOUT;
+ 	reinit_completion(&priv->completion);
+ 
+@@ -224,6 +227,8 @@ static int powerz_probe(struct usb_inter
+ 	mutex_init(&priv->mutex);
+ 	init_completion(&priv->completion);
+ 
++	usb_set_intfdata(intf, priv);
++
+ 	hwmon_dev =
+ 	    devm_hwmon_device_register_with_info(parent, DRIVER_NAME, priv,
+ 						 &powerz_chip_info, NULL);
+@@ -232,8 +237,6 @@ static int powerz_probe(struct usb_inter
+ 		return PTR_ERR(hwmon_dev);
  	}
  
-+	if (mutex_lock_interruptible(&dev->lock))
-+		return -ERESTARTSYS;
-+
-+	v4l2 = dev->v4l2;
-+	if (!v4l2) {
-+		mutex_unlock(&dev->lock);
-+		return -ENODEV;
-+	}
-+
- 	em28xx_videodbg("open dev=%s type=%s users=%d\n",
- 			video_device_node_name(vdev), v4l2_type_names[fh_type],
- 			v4l2->users);
- 
--	if (mutex_lock_interruptible(&dev->lock))
--		return -ERESTARTSYS;
+-	usb_set_intfdata(intf, priv);
 -
- 	ret = v4l2_fh_open(filp);
- 	if (ret) {
- 		dev_err(&dev->intf->dev,
+ 	return 0;
+ }
+ 
+@@ -244,6 +247,7 @@ static void powerz_disconnect(struct usb
+ 	mutex_lock(&priv->mutex);
+ 	usb_kill_urb(priv->urb);
+ 	usb_free_urb(priv->urb);
++	priv->urb = NULL;
+ 	mutex_unlock(&priv->mutex);
+ }
+ 
 
 
