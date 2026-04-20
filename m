@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE80626F2A0;
-	Mon, 20 Apr 2026 15:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C1A2D77E5;
+	Mon, 20 Apr 2026 15:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700186; cv=none; b=cVLYyGdAOFfkKhn78OkCIEvSfzEry7gMBjyfjPmXMx9MH8OL20gPczD+C0jdSuhpr+850z3RQr+4yF8AlI6CP7J0BfcAWPJqDqLvuyNuZvfFIogGzVYNUHWl2QdR/6TpQcnxcjKB6sM452/Lq/FLIOGaXevZ+8BlgrhIFVAHKlQ=
+	t=1776700192; cv=none; b=bvLbnVfoXesBfa6DcJkeLO2nehscJbPVpzPZs84sXbribANEU0+bxZ96ut0FFUCDsCcHNqXDBk2Q7QD/I7P18l2cuIR5HelscaTN81FTwM57gsxZwCBJand6wBZYW1Baq6ToGrqTaT3hZOSR80gLAANnF9RlOouRJYShsL4i2Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700186; c=relaxed/simple;
-	bh=fQNQMx/B+ySwRbpnGpjzT7g/RH0GiekwDL9kzoVDTqs=;
+	s=arc-20240116; t=1776700192; c=relaxed/simple;
+	bh=cICuRzUeIHw2VM3PQC/3M0cpRR+QWOQQsaTTGYAZW4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vDCJvZkbi7uBhKgd2W729Gbt3TCmHTFqlSeVU8E8J/9EpWUKfuKWGK9ntL37BR43Ie+8trIkEc0D00lRfN+LtP6KVsYRUv/OeQz3oB64j2MewdeCpbfg2YwdpzfmmbVSznJ32eGnZBWetxytEkV5cNTmZvNyT+fC+M8wZrBoOWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXJRX6Vx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O/1yAYdiYs5HP2UUWfspqio/R+bMszY/N/HL5UyOQd+H9Kc7hruPS7RWnUxd0rXgq/ZSR2l2Gfn24S0t1nP0qUyVQJwO4ypMcZz3jHboJ85aWZFNz54A6e3GZ4REq+RuZPegueb+ZNVmYcqC2MLu0SpddkzbMrCVE0dxA81cooo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tA+8r0Cu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXJRX6Vx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AACBC19425;
-	Mon, 20 Apr 2026 15:49:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tA+8r0Cu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE10C19425;
+	Mon, 20 Apr 2026 15:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700185;
-	bh=fQNQMx/B+ySwRbpnGpjzT7g/RH0GiekwDL9kzoVDTqs=;
+	s=korg; t=1776700192;
+	bh=cICuRzUeIHw2VM3PQC/3M0cpRR+QWOQQsaTTGYAZW4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXJRX6VxZ/HWIp8Z4uhXm1KrmjFcVWsbBi/N1wL7RBgVHyTBEpujQNgJHYVXy7mYr
-	 uA6MPHmQuqK5+uZkY2I4PGn7Ev32PevRatYKsNNIqmv4nNxHzLC2NtbHShPG8XbKYX
-	 oCxwJcC7kVzOG2OEfOJJMQ0blHlh6/0LWb5NQbGc=
+	b=tA+8r0CuWJrG5Pe51EMC1aMOZUGmr6odRwfrrcKVBxW4ApUg0yy+xbqaMHxdp+4ds
+	 vrI7GPlaQBde3tgwXfWnK6Z57rm6nlO1WRmjaxSouwwjjpFh0ggTN83lgQ0Dy3Iyx/
+	 y+lVdd5mfQtkhteA8rKjXuHx0jXjPg5JaYRlggL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Husband <artmoty@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 042/220] ata: ahci: force 32-bit DMA for JMicron JMB582/JMB585
-Date: Mon, 20 Apr 2026 17:39:43 +0200
-Message-ID: <20260420153935.551834619@linuxfoundation.org>
+Subject: [PATCH 6.19 070/220] dma-debug: suppress cacheline overlap warning when arch has no DMA alignment requirement
+Date: Mon, 20 Apr 2026 17:40:11 +0200
+Message-ID: <20260420153936.559686851@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,81 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arthur Husband <artmoty@gmail.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-[ Upstream commit 105c42566a550e2d05fc14f763216a8765ee5d0e ]
+[ Upstream commit 3d48c9fd78dd0b1809669ec49c4d0997b8127512 ]
 
-The JMicron JMB585 (and JMB582) SATA controllers advertise 64-bit DMA
-support via the S64A bit in the AHCI CAP register, but their 64-bit DMA
-implementation is defective. Under sustained I/O, DMA transfers targeting
-addresses above 4GB silently corrupt data -- writes land at incorrect
-memory addresses with no errors logged.
+When CONFIG_DMA_API_DEBUG is enabled, the DMA debug infrastructure
+tracks active mappings per cacheline and warns if two different DMA
+mappings share the same cacheline ("cacheline tracking EEXIST,
+overlapping mappings aren't supported").
 
-The failure pattern is similar to the ASMedia ASM1061
-(commit 20730e9b2778 ("ahci: add 43-bit DMA address quirk for ASMedia
-ASM1061 controllers")), which also falsely advertised full 64-bit DMA
-support. However, the JMB585 requires a stricter 32-bit DMA mask rather
-than 43-bit, as corruption occurs with any address above 4GB.
+On x86_64, ARCH_KMALLOC_MINALIGN defaults to 8, so small kmalloc
+allocations (e.g. the 8-byte hub->buffer and hub->status in the USB
+hub driver) frequently land in the same 64-byte cacheline.  When both
+are DMA-mapped, this triggers a false positive warning.
 
-On the Minisforum N5 Pro specifically, the combination of the JMB585's
-broken 64-bit DMA with the AMD Family 1Ah (Strix Point) IOMMU causes
-silent data corruption that is only detectable via checksumming
-filesystems (BTRFS/ZFS scrub). The corruption occurs when 32-bit IOVA
-space is exhausted and the kernel transparently switches to 64-bit DMA
-addresses.
+This has been reported repeatedly since v5.14 (when the EEXIST check
+was added) across various USB host controllers and devices including
+xhci_hcd with USB hubs, USB audio devices, and USB ethernet adapters.
 
-Add device-specific PCI ID entries for the JMB582 (0x0582) and JMB585
-(0x0585) before the generic JMicron class match, using a new board type
-that combines AHCI_HFLAG_IGN_IRQ_IF_ERR (preserving existing behavior)
-with AHCI_HFLAG_32BIT_ONLY to force 32-bit DMA masks.
+The cacheline overlap is only a real concern on architectures that
+require DMA buffer alignment to cacheline boundaries (i.e. where
+ARCH_DMA_MINALIGN >= L1_CACHE_BYTES).  On architectures like x86_64
+where dma_get_cache_alignment() returns 1, the hardware is
+cache-coherent and overlapping cacheline mappings are harmless.
 
-Signed-off-by: Arthur Husband <artmoty@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Suppress the EEXIST warning when dma_get_cache_alignment() is less
+than L1_CACHE_BYTES, indicating the architecture does not require
+cacheline-aligned DMA buffers.
+
+Verified with a kernel module reproducer that performs two kmalloc(8)
+allocations back-to-back and DMA-maps both:
+
+  Before: allocations share a cacheline, EEXIST fires within ~50 pairs
+  After:  same cacheline pair found, but no warning emitted
+
+Fixes: 2b4bbc6231d7 ("dma-debug: report -EEXIST errors in add_dma_entry")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215740
+Suggested-by: Harry Yoo <harry@kernel.org>
+Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260327124156.24820-1-mikhail.v.gavrilov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ kernel/dma/debug.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 931d0081169b9..1d73a53370cf3 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -68,6 +68,7 @@ enum board_ids {
- 	/* board IDs for specific chipsets in alphabetical order */
- 	board_ahci_al,
- 	board_ahci_avn,
-+	board_ahci_jmb585,
- 	board_ahci_mcp65,
- 	board_ahci_mcp77,
- 	board_ahci_mcp89,
-@@ -212,6 +213,15 @@ static const struct ata_port_info ahci_port_info[] = {
- 		.udma_mask	= ATA_UDMA6,
- 		.port_ops	= &ahci_avn_ops,
- 	},
-+	/* JMicron JMB582/585: 64-bit DMA is broken, force 32-bit */
-+	[board_ahci_jmb585] = {
-+		AHCI_HFLAGS	(AHCI_HFLAG_IGN_IRQ_IF_ERR |
-+				 AHCI_HFLAG_32BIT_ONLY),
-+		.flags		= AHCI_FLAG_COMMON,
-+		.pio_mask	= ATA_PIO4,
-+		.udma_mask	= ATA_UDMA6,
-+		.port_ops	= &ahci_ops,
-+	},
- 	[board_ahci_mcp65] = {
- 		AHCI_HFLAGS	(AHCI_HFLAG_NO_FPDMA_AA | AHCI_HFLAG_NO_PMP |
- 				 AHCI_HFLAG_YES_NCQ),
-@@ -439,6 +449,10 @@ static const struct pci_device_id ahci_pci_tbl[] = {
- 	/* Elkhart Lake IDs 0x4b60 & 0x4b62 https://sata-io.org/product/8803 not tested yet */
- 	{ PCI_VDEVICE(INTEL, 0x4b63), board_ahci_pcs_quirk }, /* Elkhart Lake AHCI */
- 
-+	/* JMicron JMB582/585: force 32-bit DMA (broken 64-bit implementation) */
-+	{ PCI_VDEVICE(JMICRON, 0x0582), board_ahci_jmb585 },
-+	{ PCI_VDEVICE(JMICRON, 0x0585), board_ahci_jmb585 },
-+
- 	/* JMicron 360/1/3/5/6, match class to avoid IDE function */
- 	{ PCI_VENDOR_ID_JMICRON, PCI_ANY_ID, PCI_ANY_ID, PCI_ANY_ID,
- 	  PCI_CLASS_STORAGE_SATA_AHCI, 0xffffff, board_ahci_ign_iferr },
+diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
+index 43d6a996d7a78..596ea7abbda15 100644
+--- a/kernel/dma/debug.c
++++ b/kernel/dma/debug.c
+@@ -614,6 +614,7 @@ static void add_dma_entry(struct dma_debug_entry *entry, unsigned long attrs)
+ 	} else if (rc == -EEXIST &&
+ 		   !(attrs & DMA_ATTR_SKIP_CPU_SYNC) &&
+ 		   !(entry->is_cache_clean && overlap_cache_clean) &&
++		   dma_get_cache_alignment() >= L1_CACHE_BYTES &&
+ 		   !(IS_ENABLED(CONFIG_DMA_BOUNCE_UNALIGNED_KMALLOC) &&
+ 		     is_swiotlb_active(entry->dev))) {
+ 		err_printk(entry->dev, entry,
 -- 
 2.53.0
 
