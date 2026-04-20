@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B351D33F5BC;
-	Mon, 20 Apr 2026 16:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B12280CD2;
+	Mon, 20 Apr 2026 16:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701077; cv=none; b=ds0zhxE8bjLvh3qeOmkxWsZYfM9O7KN0XkhYmRlhnnoPmQjnZoNsF5nELuKkU8KrBTSepZTDVVIWRNygIgRRPfs+CqghlDZasFseUJFgtjJ9OK6lv2HllCdA9n1TAcLKByDlZbbkJCbmHDbgrrylM2UzIVOsKsEWdKzKDiBixl4=
+	t=1776701080; cv=none; b=l4JJq7XjVRGuZwDqO5lg0BWA3IRvYGx7SUayfmeR2UT5Gx0bcp+XDGJCCpZVk4YJqO2U2m4j218wi4O122ZsZZUbejADqgdErjOVaBMfo2PkYFif9twcRVYIBiu8rRBuyI4PZUmTeTuspGMSX+8Z51WSSrmgfU/4rnjK3l2b8/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701077; c=relaxed/simple;
-	bh=+++Jn+DS2ZhmvhSQR6WO7HEJ30mqYRxtXKSo8+yNWJQ=;
+	s=arc-20240116; t=1776701080; c=relaxed/simple;
+	bh=po109+xQ7P5RWC8167fY9RaF/X+9Q+ylbqeNFFpsQVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADoqaVpCOiaMBHO8vvh+fYi9m3JzpBaBGcjM8wFv5ZaJWS6vLyHILsmFcL6Uuh05CHdoF8x1yy78o68fp8qWNIA0sBKehkpdgqrdX6B7G8gq77CJmWGQCRjQbgHjbrazlW8OBX7jheVq6O4QxZmayIU0IctlVmUskd9psfZO/WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gj9pLhHS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PWNf9RIigMWkuO480zg/pc8qPuuObGGPaxue+XJr626DFzsjAgZi1mT1sm/JWKGJj9zZC9ME8vqfBjPTnr5jI2a+MpneCnu+f/nbNS5T/8JgOAAdmHw31w0XRpU0UNSwy3cPOYD+pERDT5fWwj5kGZkppn7y3PRgxnIwgG+FX/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSkswS5K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gj9pLhHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB9DC19425;
-	Mon, 20 Apr 2026 16:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSkswS5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A86C19425;
+	Mon, 20 Apr 2026 16:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701077;
-	bh=+++Jn+DS2ZhmvhSQR6WO7HEJ30mqYRxtXKSo8+yNWJQ=;
+	s=korg; t=1776701079;
+	bh=po109+xQ7P5RWC8167fY9RaF/X+9Q+ylbqeNFFpsQVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gj9pLhHSc3NGeUOEU2Hgkd6Q36J81NsgWcZn7QCDHXREY76w4fJcd8OOoaRiuYV0T
-	 D7yoldXkHjOhK6yMoy0B52jz+j8Zje3hGTwsjNCp1KT04f/XCBWCHbTAAm3hoLBN40
-	 fZRXkxSs+rXaLwjjEoNFNbWpuOfxY2cx2S8HQ45g=
+	b=CSkswS5KAqojJjusnckRq/gbjWkCYozt6iCUqFnBJGSnRQeShAwM3aioFRPa3bPo3
+	 mm6MIdW4Ytiwzi3cvDYNu0fili4LabCdGrxxsJRIQPPqZ7uWJLDupWNWPUKvrMTeLb
+	 293ygonDqCSE+fEw2YH3qzRFNdIxUUd7X/zdnHzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.18 171/198] selftests/bpf: Test refinement of single-value tnum
-Date: Mon, 20 Apr 2026 17:42:30 +0200
-Message-ID: <20260420153941.767053199@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Anup Patel <anup@brainfault.org>,
+	Bibo Mao <maobibo@loongson.cn>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 172/198] KVM: Remove subtle "struct kvm_stats_desc" pseudo-overlay
+Date: Mon, 20 Apr 2026 17:42:31 +0200
+Message-ID: <20260420153941.803073484@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,175 +55,441 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit e6ad477d1bf8829973cddd9accbafa9d1a6cd15a upstream.
+[ Upstream commit da142f3d373a6ddaca0119615a8db2175ddc4121 ]
 
-This patch introduces selftests to cover the new bounds refinement
-logic introduced in the previous patch. Without the previous patch,
-the first two tests fail because of the invariant violation they
-trigger. The last test fails because the R10 access is not detected as
-dead code. In addition, all three tests fail because of R0 having a
-non-constant value in the verifier logs.
+Remove KVM's internal pseudo-overlay of kvm_stats_desc, which subtly
+aliases the flexible name[] in the uAPI definition with a fixed-size array
+of the same name.  The unusual embedded structure results in compiler
+warnings due to -Wflex-array-member-not-at-end, and also necessitates an
+extra level of dereferencing in KVM.  To avoid the "overlay", define the
+uAPI structure to have a fixed-size name when building for the kernel.
 
-In addition, the last two cases are covering the negative cases: when we
-shouldn't refine the bounds because the u64 and tnum overlap in at least
-two values.
+Opportunistically clean up the indentation for the stats macros, and
+replace spaces with tabs.
 
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/90d880c8cf587b9f7dc715d8961cd1b8111d01a8.1772225741.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[shung-hsi.yu: test for backported upstream commit efc11a667878 ("bpf: Improve
-bounds when tnum has a single possible value")]
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+No functional change intended.
+
+Reported-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Closes: https://lore.kernel.org/all/aPfNKRpLfhmhYqfP@kspp
+Acked-by: Marc Zyngier <maz@kernel.org>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+[..]
+Acked-by: Anup Patel <anup@brainfault.org>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Acked-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/20251205232655.445294-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: 2619da73bb2f ("KVM: x86: Use __DECLARE_FLEX_ARRAY() for UAPI structures with VLAs")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/progs/verifier_bounds.c |  137 ++++++++++++++++++++
- 1 file changed, 137 insertions(+)
+ arch/arm64/kvm/guest.c    |    4 +-
+ arch/loongarch/kvm/vcpu.c |    2 -
+ arch/loongarch/kvm/vm.c   |    2 -
+ arch/mips/kvm/mips.c      |    4 +-
+ arch/powerpc/kvm/book3s.c |    4 +-
+ arch/powerpc/kvm/booke.c  |    4 +-
+ arch/riscv/kvm/vcpu.c     |    2 -
+ arch/riscv/kvm/vm.c       |    2 -
+ arch/s390/kvm/kvm-s390.c  |    4 +-
+ arch/x86/kvm/x86.c        |    4 +-
+ include/linux/kvm_host.h  |   83 +++++++++++++++++++---------------------------
+ include/uapi/linux/kvm.h  |    8 ++++
+ virt/kvm/binary_stats.c   |    2 -
+ virt/kvm/kvm_main.c       |   20 +++++------
+ 14 files changed, 70 insertions(+), 75 deletions(-)
 
---- a/tools/testing/selftests/bpf/progs/verifier_bounds.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_bounds.c
-@@ -1709,4 +1709,141 @@ __naked void jeq_disagreeing_tnums(void
- 	: __clobber_all);
+--- a/arch/arm64/kvm/guest.c
++++ b/arch/arm64/kvm/guest.c
+@@ -29,7 +29,7 @@
+ 
+ #include "trace.h"
+ 
+-const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++const struct kvm_stats_desc kvm_vm_stats_desc[] = {
+ 	KVM_GENERIC_VM_STATS()
+ };
+ 
+@@ -42,7 +42,7 @@ const struct kvm_stats_header kvm_vm_sta
+ 		       sizeof(kvm_vm_stats_desc),
+ };
+ 
+-const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++const struct kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	KVM_GENERIC_VCPU_STATS(),
+ 	STATS_DESC_COUNTER(VCPU, hvc_exit_stat),
+ 	STATS_DESC_COUNTER(VCPU, wfe_exit_stat),
+--- a/arch/loongarch/kvm/vcpu.c
++++ b/arch/loongarch/kvm/vcpu.c
+@@ -13,7 +13,7 @@
+ #define CREATE_TRACE_POINTS
+ #include "trace.h"
+ 
+-const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++const struct kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	KVM_GENERIC_VCPU_STATS(),
+ 	STATS_DESC_COUNTER(VCPU, int_exits),
+ 	STATS_DESC_COUNTER(VCPU, idle_exits),
+--- a/arch/loongarch/kvm/vm.c
++++ b/arch/loongarch/kvm/vm.c
+@@ -9,7 +9,7 @@
+ #include <asm/kvm_eiointc.h>
+ #include <asm/kvm_pch_pic.h>
+ 
+-const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++const struct kvm_stats_desc kvm_vm_stats_desc[] = {
+ 	KVM_GENERIC_VM_STATS(),
+ 	STATS_DESC_ICOUNTER(VM, pages),
+ 	STATS_DESC_ICOUNTER(VM, hugepages),
+--- a/arch/mips/kvm/mips.c
++++ b/arch/mips/kvm/mips.c
+@@ -38,7 +38,7 @@
+ #define VECTORSPACING 0x100	/* for EI/VI mode */
+ #endif
+ 
+-const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++const struct kvm_stats_desc kvm_vm_stats_desc[] = {
+ 	KVM_GENERIC_VM_STATS()
+ };
+ 
+@@ -51,7 +51,7 @@ const struct kvm_stats_header kvm_vm_sta
+ 		       sizeof(kvm_vm_stats_desc),
+ };
+ 
+-const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++const struct kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	KVM_GENERIC_VCPU_STATS(),
+ 	STATS_DESC_COUNTER(VCPU, wait_exits),
+ 	STATS_DESC_COUNTER(VCPU, cache_exits),
+--- a/arch/powerpc/kvm/book3s.c
++++ b/arch/powerpc/kvm/book3s.c
+@@ -38,7 +38,7 @@
+ 
+ /* #define EXIT_DEBUG */
+ 
+-const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++const struct kvm_stats_desc kvm_vm_stats_desc[] = {
+ 	KVM_GENERIC_VM_STATS(),
+ 	STATS_DESC_ICOUNTER(VM, num_2M_pages),
+ 	STATS_DESC_ICOUNTER(VM, num_1G_pages)
+@@ -53,7 +53,7 @@ const struct kvm_stats_header kvm_vm_sta
+ 		       sizeof(kvm_vm_stats_desc),
+ };
+ 
+-const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++const struct kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	KVM_GENERIC_VCPU_STATS(),
+ 	STATS_DESC_COUNTER(VCPU, sum_exits),
+ 	STATS_DESC_COUNTER(VCPU, mmio_exits),
+--- a/arch/powerpc/kvm/booke.c
++++ b/arch/powerpc/kvm/booke.c
+@@ -36,7 +36,7 @@
+ 
+ unsigned long kvmppc_booke_handlers;
+ 
+-const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++const struct kvm_stats_desc kvm_vm_stats_desc[] = {
+ 	KVM_GENERIC_VM_STATS(),
+ 	STATS_DESC_ICOUNTER(VM, num_2M_pages),
+ 	STATS_DESC_ICOUNTER(VM, num_1G_pages)
+@@ -51,7 +51,7 @@ const struct kvm_stats_header kvm_vm_sta
+ 		       sizeof(kvm_vm_stats_desc),
+ };
+ 
+-const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++const struct kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	KVM_GENERIC_VCPU_STATS(),
+ 	STATS_DESC_COUNTER(VCPU, sum_exits),
+ 	STATS_DESC_COUNTER(VCPU, mmio_exits),
+--- a/arch/riscv/kvm/vcpu.c
++++ b/arch/riscv/kvm/vcpu.c
+@@ -24,7 +24,7 @@
+ #define CREATE_TRACE_POINTS
+ #include "trace.h"
+ 
+-const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++const struct kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	KVM_GENERIC_VCPU_STATS(),
+ 	STATS_DESC_COUNTER(VCPU, ecall_exit_stat),
+ 	STATS_DESC_COUNTER(VCPU, wfi_exit_stat),
+--- a/arch/riscv/kvm/vm.c
++++ b/arch/riscv/kvm/vm.c
+@@ -13,7 +13,7 @@
+ #include <linux/kvm_host.h>
+ #include <asm/kvm_mmu.h>
+ 
+-const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++const struct kvm_stats_desc kvm_vm_stats_desc[] = {
+ 	KVM_GENERIC_VM_STATS()
+ };
+ static_assert(ARRAY_SIZE(kvm_vm_stats_desc) ==
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -64,7 +64,7 @@
+ #define VCPU_IRQS_MAX_BUF (sizeof(struct kvm_s390_irq) * \
+ 			   (KVM_MAX_VCPUS + LOCAL_IRQS))
+ 
+-const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++const struct kvm_stats_desc kvm_vm_stats_desc[] = {
+ 	KVM_GENERIC_VM_STATS(),
+ 	STATS_DESC_COUNTER(VM, inject_io),
+ 	STATS_DESC_COUNTER(VM, inject_float_mchk),
+@@ -90,7 +90,7 @@ const struct kvm_stats_header kvm_vm_sta
+ 		       sizeof(kvm_vm_stats_desc),
+ };
+ 
+-const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++const struct kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	KVM_GENERIC_VCPU_STATS(),
+ 	STATS_DESC_COUNTER(VCPU, exit_userspace),
+ 	STATS_DESC_COUNTER(VCPU, exit_null),
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -242,7 +242,7 @@ EXPORT_SYMBOL_FOR_KVM_INTERNAL(enable_ip
+ bool __read_mostly enable_device_posted_irqs = true;
+ EXPORT_SYMBOL_FOR_KVM_INTERNAL(enable_device_posted_irqs);
+ 
+-const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
++const struct kvm_stats_desc kvm_vm_stats_desc[] = {
+ 	KVM_GENERIC_VM_STATS(),
+ 	STATS_DESC_COUNTER(VM, mmu_shadow_zapped),
+ 	STATS_DESC_COUNTER(VM, mmu_pte_write),
+@@ -268,7 +268,7 @@ const struct kvm_stats_header kvm_vm_sta
+ 		       sizeof(kvm_vm_stats_desc),
+ };
+ 
+-const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
++const struct kvm_stats_desc kvm_vcpu_stats_desc[] = {
+ 	KVM_GENERIC_VCPU_STATS(),
+ 	STATS_DESC_COUNTER(VCPU, pf_taken),
+ 	STATS_DESC_COUNTER(VCPU, pf_fixed),
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -1932,56 +1932,43 @@ enum kvm_stat_kind {
+ 
+ struct kvm_stat_data {
+ 	struct kvm *kvm;
+-	const struct _kvm_stats_desc *desc;
++	const struct kvm_stats_desc *desc;
+ 	enum kvm_stat_kind kind;
+ };
+ 
+-struct _kvm_stats_desc {
+-	struct kvm_stats_desc desc;
+-	char name[KVM_STATS_NAME_SIZE];
+-};
+-
+-#define STATS_DESC_COMMON(type, unit, base, exp, sz, bsz)		       \
+-	.flags = type | unit | base |					       \
+-		 BUILD_BUG_ON_ZERO(type & ~KVM_STATS_TYPE_MASK) |	       \
+-		 BUILD_BUG_ON_ZERO(unit & ~KVM_STATS_UNIT_MASK) |	       \
+-		 BUILD_BUG_ON_ZERO(base & ~KVM_STATS_BASE_MASK),	       \
+-	.exponent = exp,						       \
+-	.size = sz,							       \
++#define STATS_DESC_COMMON(type, unit, base, exp, sz, bsz)		\
++	.flags = type | unit | base |					\
++		 BUILD_BUG_ON_ZERO(type & ~KVM_STATS_TYPE_MASK) |       \
++		 BUILD_BUG_ON_ZERO(unit & ~KVM_STATS_UNIT_MASK) |	\
++		 BUILD_BUG_ON_ZERO(base & ~KVM_STATS_BASE_MASK),	\
++	.exponent = exp,						\
++	.size = sz,							\
+ 	.bucket_size = bsz
+ 
+-#define VM_GENERIC_STATS_DESC(stat, type, unit, base, exp, sz, bsz)	       \
+-	{								       \
+-		{							       \
+-			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
+-			.offset = offsetof(struct kvm_vm_stat, generic.stat)   \
+-		},							       \
+-		.name = #stat,						       \
+-	}
+-#define VCPU_GENERIC_STATS_DESC(stat, type, unit, base, exp, sz, bsz)	       \
+-	{								       \
+-		{							       \
+-			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
+-			.offset = offsetof(struct kvm_vcpu_stat, generic.stat) \
+-		},							       \
+-		.name = #stat,						       \
+-	}
+-#define VM_STATS_DESC(stat, type, unit, base, exp, sz, bsz)		       \
+-	{								       \
+-		{							       \
+-			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
+-			.offset = offsetof(struct kvm_vm_stat, stat)	       \
+-		},							       \
+-		.name = #stat,						       \
+-	}
+-#define VCPU_STATS_DESC(stat, type, unit, base, exp, sz, bsz)		       \
+-	{								       \
+-		{							       \
+-			STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),     \
+-			.offset = offsetof(struct kvm_vcpu_stat, stat)	       \
+-		},							       \
+-		.name = #stat,						       \
+-	}
++#define VM_GENERIC_STATS_DESC(stat, type, unit, base, exp, sz, bsz)	\
++{									\
++	STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),		\
++	.offset = offsetof(struct kvm_vm_stat, generic.stat),		\
++	.name = #stat,							\
++}
++#define VCPU_GENERIC_STATS_DESC(stat, type, unit, base, exp, sz, bsz)	\
++{									\
++	STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),		\
++	.offset = offsetof(struct kvm_vcpu_stat, generic.stat),		\
++	.name = #stat,							\
++}
++#define VM_STATS_DESC(stat, type, unit, base, exp, sz, bsz)		\
++{									\
++	STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),		\
++	.offset = offsetof(struct kvm_vm_stat, stat),			\
++	.name = #stat,							\
++}
++#define VCPU_STATS_DESC(stat, type, unit, base, exp, sz, bsz)		\
++{									\
++	STATS_DESC_COMMON(type, unit, base, exp, sz, bsz),		\
++	.offset = offsetof(struct kvm_vcpu_stat, stat),			\
++	.name = #stat,							\
++}
+ /* SCOPE: VM, VM_GENERIC, VCPU, VCPU_GENERIC */
+ #define STATS_DESC(SCOPE, stat, type, unit, base, exp, sz, bsz)		       \
+ 	SCOPE##_STATS_DESC(stat, type, unit, base, exp, sz, bsz)
+@@ -2058,7 +2045,7 @@ struct _kvm_stats_desc {
+ 	STATS_DESC_IBOOLEAN(VCPU_GENERIC, blocking)
+ 
+ ssize_t kvm_stats_read(char *id, const struct kvm_stats_header *header,
+-		       const struct _kvm_stats_desc *desc,
++		       const struct kvm_stats_desc *desc,
+ 		       void *stats, size_t size_stats,
+ 		       char __user *user_buffer, size_t size, loff_t *offset);
+ 
+@@ -2103,9 +2090,9 @@ static inline void kvm_stats_log_hist_up
+ 
+ 
+ extern const struct kvm_stats_header kvm_vm_stats_header;
+-extern const struct _kvm_stats_desc kvm_vm_stats_desc[];
++extern const struct kvm_stats_desc kvm_vm_stats_desc[];
+ extern const struct kvm_stats_header kvm_vcpu_stats_header;
+-extern const struct _kvm_stats_desc kvm_vcpu_stats_desc[];
++extern const struct kvm_stats_desc kvm_vcpu_stats_desc[];
+ 
+ #ifdef CONFIG_KVM_GENERIC_MMU_NOTIFIER
+ static inline int mmu_invalidate_retry(struct kvm *kvm, unsigned long mmu_seq)
+--- a/include/uapi/linux/kvm.h
++++ b/include/uapi/linux/kvm.h
+@@ -14,6 +14,10 @@
+ #include <linux/ioctl.h>
+ #include <asm/kvm.h>
+ 
++#ifdef __KERNEL__
++#include <linux/kvm_types.h>
++#endif
++
+ #define KVM_API_VERSION 12
+ 
+ /*
+@@ -1568,7 +1572,11 @@ struct kvm_stats_desc {
+ 	__u16 size;
+ 	__u32 offset;
+ 	__u32 bucket_size;
++#ifdef __KERNEL__
++	char name[KVM_STATS_NAME_SIZE];
++#else
+ 	char name[];
++#endif
+ };
+ 
+ #define KVM_GET_STATS_FD  _IO(KVMIO,  0xce)
+--- a/virt/kvm/binary_stats.c
++++ b/virt/kvm/binary_stats.c
+@@ -50,7 +50,7 @@
+  * Return: the number of bytes that has been successfully read
+  */
+ ssize_t kvm_stats_read(char *id, const struct kvm_stats_header *header,
+-		       const struct _kvm_stats_desc *desc,
++		       const struct kvm_stats_desc *desc,
+ 		       void *stats, size_t size_stats,
+ 		       char __user *user_buffer, size_t size, loff_t *offset)
+ {
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -982,9 +982,9 @@ static void kvm_free_memslots(struct kvm
+ 		kvm_free_memslot(kvm, memslot);
  }
  
-+/* This test covers the bounds deduction when the u64 range and the tnum
-+ * overlap only at umax. After instruction 3, the ranges look as follows:
-+ *
-+ * 0    umin=0xe01     umax=0xf00                              U64_MAX
-+ * |    [xxxxxxxxxxxxxx]                                       |
-+ * |----------------------------|------------------------------|
-+ * |   x               x                                       | tnum values
-+ *
-+ * The verifier can therefore deduce that the R0=0xf0=240.
-+ */
-+SEC("socket")
-+__description("bounds refinement with single-value tnum on umax")
-+__msg("3: (15) if r0 == 0xe0 {{.*}} R0=240")
-+__success __log_level(2)
-+__flag(BPF_F_TEST_REG_INVARIANTS)
-+__naked void bounds_refinement_tnum_umax(void *ctx)
-+{
-+	asm volatile("			\
-+	call %[bpf_get_prandom_u32];	\
-+	r0 |= 0xe0;			\
-+	r0 &= 0xf0;			\
-+	if r0 == 0xe0 goto +2;		\
-+	if r0 == 0xf0 goto +1;		\
-+	r10 = 0;			\
-+	exit;				\
-+"	:
-+	: __imm(bpf_get_prandom_u32)
-+	: __clobber_all);
-+}
-+
-+/* This test covers the bounds deduction when the u64 range and the tnum
-+ * overlap only at umin. After instruction 3, the ranges look as follows:
-+ *
-+ * 0    umin=0xe00     umax=0xeff                              U64_MAX
-+ * |    [xxxxxxxxxxxxxx]                                       |
-+ * |----------------------------|------------------------------|
-+ * |    x               x                                      | tnum values
-+ *
-+ * The verifier can therefore deduce that the R0=0xe0=224.
-+ */
-+SEC("socket")
-+__description("bounds refinement with single-value tnum on umin")
-+__msg("3: (15) if r0 == 0xf0 {{.*}} R0=224")
-+__success __log_level(2)
-+__flag(BPF_F_TEST_REG_INVARIANTS)
-+__naked void bounds_refinement_tnum_umin(void *ctx)
-+{
-+	asm volatile("			\
-+	call %[bpf_get_prandom_u32];	\
-+	r0 |= 0xe0;			\
-+	r0 &= 0xf0;			\
-+	if r0 == 0xf0 goto +2;		\
-+	if r0 == 0xe0 goto +1;		\
-+	r10 = 0;			\
-+	exit;				\
-+"	:
-+	: __imm(bpf_get_prandom_u32)
-+	: __clobber_all);
-+}
-+
-+/* This test covers the bounds deduction when the only possible tnum value is
-+ * in the middle of the u64 range. After instruction 3, the ranges look as
-+ * follows:
-+ *
-+ * 0    umin=0x7cf   umax=0x7df                                U64_MAX
-+ * |    [xxxxxxxxxxxx]                                         |
-+ * |----------------------------|------------------------------|
-+ * |     x            x            x            x            x | tnum values
-+ *       |            +--- 0x7e0
-+ *       +--- 0x7d0
-+ *
-+ * Since the lower four bits are zero, the tnum and the u64 range only overlap
-+ * in R0=0x7d0=2000. Instruction 5 is therefore dead code.
-+ */
-+SEC("socket")
-+__description("bounds refinement with single-value tnum in middle of range")
-+__msg("3: (a5) if r0 < 0x7cf {{.*}} R0=2000")
-+__success __log_level(2)
-+__naked void bounds_refinement_tnum_middle(void *ctx)
-+{
-+	asm volatile("			\
-+	call %[bpf_get_prandom_u32];	\
-+	if r0 & 0x0f goto +4;		\
-+	if r0 > 0x7df goto +3;		\
-+	if r0 < 0x7cf goto +2;		\
-+	if r0 == 0x7d0 goto +1;		\
-+	r10 = 0;			\
-+	exit;				\
-+"	:
-+	: __imm(bpf_get_prandom_u32)
-+	: __clobber_all);
-+}
-+
-+/* This test cover the negative case for the tnum/u64 overlap. Since
-+ * they contain the same two values (i.e., {0, 1}), we can't deduce
-+ * anything more.
-+ */
-+SEC("socket")
-+__description("bounds refinement: several overlaps between tnum and u64")
-+__msg("2: (25) if r0 > 0x1 {{.*}} R0=scalar(smin=smin32=0,smax=umax=smax32=umax32=1,var_off=(0x0; 0x1))")
-+__failure __log_level(2)
-+__naked void bounds_refinement_several_overlaps(void *ctx)
-+{
-+	asm volatile("			\
-+	call %[bpf_get_prandom_u32];	\
-+	if r0 < 0 goto +3;		\
-+	if r0 > 1 goto +2;		\
-+	if r0 == 1 goto +1;		\
-+	r10 = 0;			\
-+	exit;				\
-+"	:
-+	: __imm(bpf_get_prandom_u32)
-+	: __clobber_all);
-+}
-+
-+/* This test cover the negative case for the tnum/u64 overlap. Since
-+ * they overlap in the two values contained by the u64 range (i.e.,
-+ * {0xf, 0x10}), we can't deduce anything more.
-+ */
-+SEC("socket")
-+__description("bounds refinement: multiple overlaps between tnum and u64")
-+__msg("2: (25) if r0 > 0x10 {{.*}} R0=scalar(smin=umin=smin32=umin32=15,smax=umax=smax32=umax32=16,var_off=(0x0; 0x1f))")
-+__failure __log_level(2)
-+__naked void bounds_refinement_multiple_overlaps(void *ctx)
-+{
-+	asm volatile("			\
-+	call %[bpf_get_prandom_u32];	\
-+	if r0 < 0xf goto +3;		\
-+	if r0 > 0x10 goto +2;		\
-+	if r0 == 0x10 goto +1;		\
-+	r10 = 0;			\
-+	exit;				\
-+"	:
-+	: __imm(bpf_get_prandom_u32)
-+	: __clobber_all);
-+}
-+
- char _license[] SEC("license") = "GPL";
+-static umode_t kvm_stats_debugfs_mode(const struct _kvm_stats_desc *pdesc)
++static umode_t kvm_stats_debugfs_mode(const struct kvm_stats_desc *desc)
+ {
+-	switch (pdesc->desc.flags & KVM_STATS_TYPE_MASK) {
++	switch (desc->flags & KVM_STATS_TYPE_MASK) {
+ 	case KVM_STATS_TYPE_INSTANT:
+ 		return 0444;
+ 	case KVM_STATS_TYPE_CUMULATIVE:
+@@ -1019,7 +1019,7 @@ static int kvm_create_vm_debugfs(struct
+ 	struct dentry *dent;
+ 	char dir_name[ITOA_MAX_LEN * 2];
+ 	struct kvm_stat_data *stat_data;
+-	const struct _kvm_stats_desc *pdesc;
++	const struct kvm_stats_desc *pdesc;
+ 	int i, ret = -ENOMEM;
+ 	int kvm_debugfs_num_entries = kvm_vm_stats_header.num_desc +
+ 				      kvm_vcpu_stats_header.num_desc;
+@@ -6160,11 +6160,11 @@ static int kvm_stat_data_get(void *data,
+ 	switch (stat_data->kind) {
+ 	case KVM_STAT_VM:
+ 		r = kvm_get_stat_per_vm(stat_data->kvm,
+-					stat_data->desc->desc.offset, val);
++					stat_data->desc->offset, val);
+ 		break;
+ 	case KVM_STAT_VCPU:
+ 		r = kvm_get_stat_per_vcpu(stat_data->kvm,
+-					  stat_data->desc->desc.offset, val);
++					  stat_data->desc->offset, val);
+ 		break;
+ 	}
+ 
+@@ -6182,11 +6182,11 @@ static int kvm_stat_data_clear(void *dat
+ 	switch (stat_data->kind) {
+ 	case KVM_STAT_VM:
+ 		r = kvm_clear_stat_per_vm(stat_data->kvm,
+-					  stat_data->desc->desc.offset);
++					  stat_data->desc->offset);
+ 		break;
+ 	case KVM_STAT_VCPU:
+ 		r = kvm_clear_stat_per_vcpu(stat_data->kvm,
+-					    stat_data->desc->desc.offset);
++					    stat_data->desc->offset);
+ 		break;
+ 	}
+ 
+@@ -6334,7 +6334,7 @@ static void kvm_uevent_notify_change(uns
+ static void kvm_init_debug(void)
+ {
+ 	const struct file_operations *fops;
+-	const struct _kvm_stats_desc *pdesc;
++	const struct kvm_stats_desc *pdesc;
+ 	int i;
+ 
+ 	kvm_debugfs_dir = debugfs_create_dir("kvm", NULL);
+@@ -6347,7 +6347,7 @@ static void kvm_init_debug(void)
+ 			fops = &vm_stat_readonly_fops;
+ 		debugfs_create_file(pdesc->name, kvm_stats_debugfs_mode(pdesc),
+ 				kvm_debugfs_dir,
+-				(void *)(long)pdesc->desc.offset, fops);
++				(void *)(long)pdesc->offset, fops);
+ 	}
+ 
+ 	for (i = 0; i < kvm_vcpu_stats_header.num_desc; ++i) {
+@@ -6358,7 +6358,7 @@ static void kvm_init_debug(void)
+ 			fops = &vcpu_stat_readonly_fops;
+ 		debugfs_create_file(pdesc->name, kvm_stats_debugfs_mode(pdesc),
+ 				kvm_debugfs_dir,
+-				(void *)(long)pdesc->desc.offset, fops);
++				(void *)(long)pdesc->offset, fops);
+ 	}
+ }
+ 
 
 
