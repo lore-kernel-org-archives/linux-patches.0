@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6273A34107F;
-	Mon, 20 Apr 2026 16:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2FF33858B;
+	Mon, 20 Apr 2026 16:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701473; cv=none; b=Xa/cMM2oKv1j531BqsXmWqQc/wFltwTxgiAx9sS6LZNvKpvJw3BkZpQKEErpupa16VPNeQmGF96l7CiVkMjynaB/ExzDwFE0U/LP/A0dcgaMRIYAhTZw9TpSNDGGa35x1ZNYu6xhYZUpLEKLplJn55K80L1YIDU6rANWH7mZ8zk=
+	t=1776701475; cv=none; b=lZW+so+BITz//PTw66hvslLo6zvaGyHHR/+sLdaBD/m14Zhj+aU8hLzBJoWLUxXbXoQeskMVMfAwSJ09paOwhbDmEcq1kPtoXR0gg59M+h32tvROIXvPPxgbne+7lv0EPY5PquSfXiNsnmfs5yapjvXFG11um+S35gp7I2Sg9as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701473; c=relaxed/simple;
-	bh=n07AGA4e7G6iRNgCIwmHmxiUrpj/MKWLjJvVH1JJ/8U=;
+	s=arc-20240116; t=1776701475; c=relaxed/simple;
+	bh=ZoafX4QfFFyujP+273gPOt77mALZipPOhuWKm/Z2bZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NOr+ZnjqpjnkwKWha5Ju0tcL1TM56OFuuaczT1QFVb5759VyZPEwdYAcRxK+rJNjP+zICG9cF96cX8+4Z2Aoo456wKr3uksO3OeZ8gjin65QiiE30JrLHIyg4/NmU2wWva37kxqTHWq4YpNrULZJCOINhxVN09fRRUu64V9tSKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/kOdq4f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDmYhuMEkKbiON1lvu0jFEp/iXeYNy6FOWBp+/s59+rEcbl6nbHnJOpDqIBlIyKXdcYapn/nTIm3s9lmm9/pk20f3O8RWNe/Q4BJr/tyP/iXJDZKioSqqOa2OAEyTVDLFc/vaCPlRYvq1PrbIXgLWgV4nFNFle7/wK2K05bi12U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chbM4tq2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/kOdq4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78D6C19425;
-	Mon, 20 Apr 2026 16:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chbM4tq2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352C8C2BCB6;
+	Mon, 20 Apr 2026 16:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701473;
-	bh=n07AGA4e7G6iRNgCIwmHmxiUrpj/MKWLjJvVH1JJ/8U=;
+	s=korg; t=1776701475;
+	bh=ZoafX4QfFFyujP+273gPOt77mALZipPOhuWKm/Z2bZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G/kOdq4fK4NbW4m2TO8m2fQQ47B/JG7HHGk9SeplH8hg9X2WwMiqPlpP4Qm0BlNux
-	 m3vIT1FmeQopxF9/hlImyhB+4DNGUwM8eYqgFjKQXS6GRQzbMk/k6FKkS3BlFs0N59
-	 6lVcdcN3LZFuH+UWRt4JOfiOToWCbSqM8S6qsJVA=
+	b=chbM4tq2ymmYRqL786YrYBTIUKcbatyEBCDFrXeJpRnW3OPZfxLcL0d6pw0xq/xkH
+	 7i2oaQtpIsxYAcY0u1EvSXiDN+5Mj/+jd1IOsJdwtdjyk/hHae1B2JWfyziRJd2pj7
+	 RhzfttatjRY0omvofeO7pehKOuWnAZ6/cQEwoQlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.12 128/162] PCI: endpoint: pci-epf-vntb: Stop cmd_handler work in epf_ntb_epc_cleanup
-Date: Mon, 20 Apr 2026 17:42:40 +0200
-Message-ID: <20260420153931.677955645@linuxfoundation.org>
+	Jethro Beekman <jethro@fortanix.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 129/162] KVM: SEV: Reject attempts to sync VMSA of an already-launched/encrypted vCPU
+Date: Mon, 20 Apr 2026 17:42:41 +0200
+Message-ID: <20260420153931.714396079@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,44 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Sean Christopherson <seanjc@google.com>
 
-commit d799984233a50abd2667a7d17a9a710a3f10ebe2 upstream.
+commit 9b9f7962e3e879d12da2bf47e02a24ec51690e3d upstream.
 
-Disable the delayed work before clearing BAR mappings and doorbells to
-avoid running the handler after resources have been torn down.
+Reject synchronizing vCPU state to its associated VMSA if the vCPU has
+already been launched, i.e. if the VMSA has already been encrypted.  On a
+host with SNP enabled, accessing guest-private memory generates an RMP #PF
+and panics the host.
 
-  Unable to handle kernel paging request at virtual address ffff800083f46004
-  [...]
-  Internal error: Oops: 0000000096000007 [#1]  SMP
-  [...]
-  Call trace:
-   epf_ntb_cmd_handler+0x54/0x200 [pci_epf_vntb] (P)
-   process_one_work+0x154/0x3b0
-   worker_thread+0x2c8/0x400
-   kthread+0x148/0x210
-   ret_from_fork+0x10/0x20
+  BUG: unable to handle page fault for address: ff1276cbfdf36000
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x80000003) - RMP violation
+  PGD 5a31801067 P4D 5a31802067 PUD 40ccfb5063 PMD 40e5954063 PTE 80000040fdf36163
+  SEV-SNP: PFN 0x40fdf36, RMP entry: [0x6010fffffffff001 - 0x000000000000001f]
+  Oops: Oops: 0003 [#1] SMP NOPTI
+  CPU: 33 UID: 0 PID: 996180 Comm: qemu-system-x86 Tainted: G           OE
+  Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+  Hardware name: Dell Inc. PowerEdge R7625/0H1TJT, BIOS 1.5.8 07/21/2023
+  RIP: 0010:sev_es_sync_vmsa+0x54/0x4c0 [kvm_amd]
+  Call Trace:
+   <TASK>
+   snp_launch_update_vmsa+0x19d/0x290 [kvm_amd]
+   snp_launch_finish+0xb6/0x380 [kvm_amd]
+   sev_mem_enc_ioctl+0x14e/0x720 [kvm_amd]
+   kvm_arch_vm_ioctl+0x837/0xcf0 [kvm]
+   kvm_vm_ioctl+0x3fd/0xcc0 [kvm]
+   __x64_sys_ioctl+0xa3/0x100
+   x64_sys_call+0xfe0/0x2350
+   do_syscall_64+0x81/0x10f0
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  RIP: 0033:0x7ffff673287d
+   </TASK>
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Note, the KVM flaw has been present since commit ad73109ae7ec ("KVM: SVM:
+Provide support to launch and run an SEV-ES guest"), but has only been
+actively dangerous for the host since SNP support was added.  With SEV-ES,
+KVM would "just" clobber guest state, which is totally fine from a host
+kernel perspective since userspace can clobber guest state any time before
+sev_launch_update_vmsa().
+
+Fixes: ad27ce155566 ("KVM: SEV: Add KVM_SEV_SNP_LAUNCH_FINISH command")
+Reported-by: Jethro Beekman <jethro@fortanix.com>
+Closes: https://lore.kernel.org/all/d98692e2-d96b-4c36-8089-4bc1e5cc3d57@fortanix.com
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260226084142.2226875-4-den@valinux.co.jp
+Link: https://patch.msgid.link/20260310234829.2608037-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/svm/sev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -799,6 +799,7 @@ err_config_interrupt:
-  */
- static void epf_ntb_epc_cleanup(struct epf_ntb *ntb)
- {
-+	disable_delayed_work_sync(&ntb->cmd_handler);
- 	epf_ntb_mw_bar_clear(ntb, ntb->num_mws);
- 	epf_ntb_db_bar_clear(ntb);
- 	epf_ntb_config_sspad_bar_clear(ntb);
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -814,6 +814,9 @@ static int sev_es_sync_vmsa(struct vcpu_
+ 	u8 *d;
+ 	int i;
+ 
++	if (vcpu->arch.guest_state_protected)
++		return -EINVAL;
++
+ 	/* Check some debug related fields before encrypting the VMSA */
+ 	if (svm->vcpu.guest_debug || (svm->vmcb->save.dr7 & ~DR7_FIXED_1))
+ 		return -EINVAL;
 
 
