@@ -1,599 +1,345 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA2840F8D0
-	for <patches@lists.linux.dev>; Mon, 20 Apr 2026 13:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691639; cv=pass; b=AvL96AdVgc/a0WWoiuZsPvvshIGYFKy5XjQbB51BPqpJtuU1pIMNrXYrBUuejbHBgwKw1rEzu8bZVo3Ozn7gT5lne9fbdEajiuioT741Evm+haQn33asZR/pumGFGQD0b432tYRT58GK8bw7avWgOK4oCUesTrKfuGBSye/H004=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691639; c=relaxed/simple;
-	bh=z72OJu1ICGO20+7SVQkQsmhZzsXcp+zcmuvQmlkkVD4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EQs56ayq+Te0khMpBzwu2dkKm0CYyEl6gmmCi4RVQ8mQm1WNMy+Qnqzl2GsO4Nz/j6f0bPB+zev9NAhAApGcM69j/98C3SIjAWQNg9GT0p52/Qw6DS1Oo8c71aJxkbk1X+ukj5fX93Uqrk9gekbLt5aPlco/n88tNPv498kqcpY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KtLsWnU0; arc=pass smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C78E40F8E4;
+	Mon, 20 Apr 2026 13:27:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776691640; cv=none; b=W7xKS8NqnVQ9gFCJDjItaKrQnvt8Wbg1Sx9hMf8W26rTn8AkpY7QyfJjCSg+zrtR35aaP9E+y3iV/FMfD9NdETAk5TyinU7q14kxdTiUt0yaJ88SmC+Y+7JrJcHCxcPjXwX3DqqxA75tdJnH+0Sb5tEueG3/zz7HozeaDou49JM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776691640; c=relaxed/simple;
+	bh=CPsXeg1Q9d1VEn2dQOJBxmAMy/iazXITNvkbYYEgFNU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GLnIzPiJfYUKdHbPfc53mpf08YOUH8o/9TNONqK7TScGajGasQjvMHe7ulMIJ73EP3TQNWRYCxikm6VRWgBf7lf8kazyXdSD9kMRoRFOj9T90O8+U+S2hVpg+ZMUcbvwS2O4ROPcjRHomyFghocRcM25elePYVor1/x3yA2rT1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tsnPCARC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KtLsWnU0"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-488a14c31eeso23266415e9.0
-        for <patches@lists.linux.dev>; Mon, 20 Apr 2026 06:27:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776691635; cv=none;
-        d=google.com; s=arc-20240605;
-        b=c+f1EfOZi6RNZWn8Wf6v0KEwUJomxI0xYrLLKZ2zeAZfXzgcLBtlNhdfyKgDPfjRX+
-         kzwLSYOE8q0KmlbatXHwbzXUVuSkQzydM7lh2POXOOnfcuHQU+R32DrsKQhobkhwEhhm
-         /amja2Zo9G0rY+QQGp44t/GUd2IZt32AX8iDBehl2AbnkNLpI4dVYp5kGEJ6Mgnk9Kch
-         HfdcM1YDQZ/XM1BIglBiGc45HdTqZPZDz4IYNhMUA0a1bJ/UVwAqzkHyswsyLAjYJ3rz
-         Wu/EHWQCHpR8K/6b5PfnmgPbngksc4D2X83hEoZRBPn8jY0mU+i1fASRKN6uP2b+Jd7u
-         qgXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=bxr9mZ0JI6dmfr+6wmPRSmMMTv04eC8IEspfaLUSB6U=;
-        fh=GCairC/MC5Bfnr3uAxR/8MXcVxCaVDgWObJc/7QibHg=;
-        b=LXk7whvdexegtSvdAS8QzohfNR6M0frPaBrLZM4CuEE20OHiApEREs7haMT7BflTMw
-         56sz0PjYQNuUYdb7ojvmcUKm3byZOa8vBTYvyiQcUixMZ9fKjcz8t3dJ4svnNw8iRhlS
-         fXzQ5zEH0TiOJibW1c2wUl+UBuE7msDY2J9jEvSdd2IbW9Z2ziMMx39DDUuuMP6deubs
-         oZaWSrSrD4n9BNBH4i0Ek9Q4j7uxpWVC7pj1NDi6Mm1EjRuDxZChKdScL+tZAWG8+xzH
-         0JjkS1h88bWW5zUTw9v5L4zYNUN5/PYLBj3ZYwEDrhjTKyYm/a+8Y4H0wOeqMSJ04noF
-         ulXw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776691635; x=1777296435; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bxr9mZ0JI6dmfr+6wmPRSmMMTv04eC8IEspfaLUSB6U=;
-        b=KtLsWnU0I1oRNrsFBomrDfggEJgydCC0ZDdzKh+Qa8pLTJ8tBeis/Spl/gP2gQ/vFw
-         5DbnmvZcxkJneVw9NajNIydxpLDa0VmYa22t2uSTO+g6jWHJ9SaurY3ew2oA1NyTrUun
-         7ZFpt8pnmubr1E9G+6oMDVx9Mnkuw8Z9DJ8nsIBRho8+Sx2NG1Bmra+hBCdvKdNpnQmf
-         CRjou6OkRHODl4Tvc4nrqZekiWv01jB6wox4jkg9wdtfA20dXqU7aCc5V4BjUXSVzZWK
-         vj81QWyNf+W7eGGE546FAfndMUNorJDNxDypJ4rE/0gt8oJviLxhD+mC951oudOo6Ieb
-         PYnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776691635; x=1777296435;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=bxr9mZ0JI6dmfr+6wmPRSmMMTv04eC8IEspfaLUSB6U=;
-        b=QRD6e02R1t71u6DeTz37dT3QNTeyOkJ+whHVIIV22fdNpTZxTd+ToQvdzCmmH/ZCO5
-         2wPorCvS+ssX6oTbCWYN9ZCnasyOhcydc9u4sF9IDrFxPvpv0Slg0zcrTNnbPpegL/4e
-         KZRqC1sk/5DyN9E+Ka8opCCKuIqtCh9rEXz/nKltrKuugcVbJZDFeOCZSpctosXNpinW
-         J6/lqQ83VrUY1vXPwFHL+DI85A3I2nl1GL0az84kLL0ELbu/o8KA5RjiPEGQRu1OEonf
-         kbmS88a79Rd8j3eat6Uizd2rlaZgoekPUg3bi/wEa5M5nYvE3Zm/iCPPTlnZ6iidIqmR
-         MtQg==
-X-Gm-Message-State: AOJu0YypmhM+df2FpCulDIcEH9gP7puoepMp8RABVNi+yw1Lwa8hGjOe
-	ijjI3KdkDLhQsOgJwN9iGOC4kCn/7on/BSQ1mm7acqJUIczy3/h45r+qsF1ntYJL6bQRk7e+Jxp
-	bcjbf2lTVnvG0isHQouP2wONJ1GUt5tE=
-X-Gm-Gg: AeBDiesAyTnPkl3rbe0B7yWnFzwT9isnzXGc9uGBgcmv/Ru9yrFrXvilCzu0uL9IzhP
-	hm3Ii1sQ7uAzB34Or1XMuAEeLE0xAjfarxGgkmZ2V8IQCkynrWABYro2Vy4mySESA+N/S7vJIZV
-	iMuQWEB24xnW+k38xiRis7+AiguLuh0EctqOXBfwCjdXigoMVOpVaT7g80/zOUd9PBC+ihyUKpC
-	BvUCTmch6y+/ubaochQjfp8CZmhgXbpP8msr872g2mYsJIGmW+z/HYmXs5cyjLLy6V9q0sIfy1D
-	t4kOsPFcOXcPmiQ=
-X-Received: by 2002:a05:600c:8284:b0:489:1f3e:5f69 with SMTP id
- 5b1f17b1804b1-4891f3e629bmr39042745e9.18.1776691635116; Mon, 20 Apr 2026
- 06:27:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tsnPCARC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0426C2BCB7;
+	Mon, 20 Apr 2026 13:27:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776691640;
+	bh=CPsXeg1Q9d1VEn2dQOJBxmAMy/iazXITNvkbYYEgFNU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=tsnPCARC8cTuaHvuBPF2iPI1wbog/CTYqmazZmfbiCqejzTjJKFq0aMpxEFIq39iw
+	 srrBpqatOAYSmjwwz+cQv/Doxozw5TQ2ugOeBvwlwT6+ukFNIEzKOuFVc304vSLr+H
+	 5YqMEYZejAjcDQ3tJWfw3Xi/ziSdIRtz01ga5LBjS0FH+SYRZQCkRNAyXxG4dIJtWw
+	 YfFS4JAT5EN/IP9ODzQP4NLbP7kCWBuiJsiT0QsZgVNqjo6Zv9pfmLC4XBVg+Fn5ms
+	 aTea+Y9vo4/u1IErVcL2oC7IgUPJrTlARblMk5ds7t3PuD7Q9iH1ZvkRfCRfMESwee
+	 Y5/ZOyOwoNxTQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Shyam-sundar.S-k@amd.com,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-5.10] pinctrl: amd: Support new ACPI ID AMDI0033
+Date: Mon, 20 Apr 2026 09:19:01 -0400
+Message-ID: <20260420132314.1023554-147-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
+References: <20260420132314.1023554-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260420131539.986432-1-sashal@kernel.org> <20260420131539.986432-23-sashal@kernel.org>
-In-Reply-To: <20260420131539.986432-23-sashal@kernel.org>
-From: Philip Willoughby <willerz@gmail.com>
-Date: Mon, 20 Apr 2026 14:27:03 +0100
-X-Gm-Features: AQROBzCbFJ8mLSEdWqOwYQ1sOcejeNsW6LB3kLwFv1_SVAsvuVwAPFaLadRF4nM
-Message-ID: <CAKSkzpuG8p37a56gB57Khw7hgXmRrgXR6A5Y6ynDy_F5CA=v1g@mail.gmail.com>
-Subject: Re: [PATCH AUTOSEL 7.0-6.19] ALSA: usb-audio: Add quirks for Arturia AF16Rig
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Takashi Iwai <tiwai@suse.de>, 
-	alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-AF16Rig support also needs the patch to increase the channel limit in
-https://lore.kernel.org/linux-sound/87v7fjbsxm.wl-tiwai@suse.de/ I
-have not tested what happens without that change also being present
-but I suspect it would mean that the AF16Rig still would not function.
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-On Mon, 20 Apr 2026 at 14:16, Sasha Levin <sashal@kernel.org> wrote:
->
-> From: Phil Willoughby <willerz@gmail.com>
->
-> [ Upstream commit 0da18c2dd1cc2a026416222ed206e2f269edf055 ]
->
-> The AF16Rig supports 34 channels at 44.1k/48k, 18 channels at 88.2k/96k
-> and 10 channels at 176.4k/192k.
->
-> This quirks is necessary because the automatic probing process we would
-> otherwise use fails. The root cause of that is that the AF16Rig clock is
-> not readable (its descriptor says that it is but the reads fail).
->
-> Except as described below, the values in the audio format quirks were
-> copied from the USB descriptors of the device. The rate information is
-> from the datasheet of the device. The clock is the internal clock of the
-> AF16Rig.
->
-> Tested-By: Phil Willoughby <willerz@gmail.com>
-> I have tested all the configurations enabled by this patch.
->
-> Cc: Jaroslav Kysela <perex@perex.cz>
-> Cc: Takashi Iwai <tiwai@suse.com>
-> Signed-off-by: Phil Willoughby <willerz@gmail.com>
-> Link: https://patch.msgid.link/20260328112426.14816-1-willerz@gmail.com
-> Signed-off-by: Takashi Iwai <tiwai@suse.de>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->
-> LLM Generated explanations, may be completely bogus:
->
-> Now I have all the information needed for a thorough analysis. Let me
-> compile the findings.
->
-> ---
->
-> ## PHASE 1: COMMIT MESSAGE FORENSICS
->
-> ### Step 1.1: Subject Line
-> - **Subsystem:** ALSA: usb-audio
-> - **Action verb:** "Add" (quirks)
-> - **Summary:** Adds USB audio quirks for the Arturia AF16Rig device
->
-> ### Step 1.2: Tags
-> - **Tested-By:** Phil Willoughby <willerz@gmail.com> =E2=80=94 the author=
- tested
->   all configurations
-> - **Cc:** Jaroslav Kysela (ALSA maintainer), Takashi Iwai (ALSA/USB-
->   audio maintainer)
-> - **Signed-off-by:** Phil Willoughby (author), Takashi Iwai (maintainer,
->   applied the patch)
-> - **Link:**
->   https://patch.msgid.link/20260328112426.14816-1-willerz@gmail.com
-> - No Fixes: tag (expected for quirk additions)
-> - No Cc: stable (expected =E2=80=94 that's why we're reviewing)
->
-> ### Step 1.3: Commit Body
-> The commit explains that the AF16Rig supports multiple channel/rate
-> configurations (34ch@44.1k/48k, 18ch@88.2k/96k, 10ch@176.4k/192k). The
-> **root cause is that the AF16Rig clock is broken** =E2=80=94 its USB desc=
-riptor
-> claims the clock is readable but reads fail, which causes the automatic
-> probing process to fail entirely. Without this quirk, the device simply
-> does not work.
->
-> ### Step 1.4: Hidden Bug Fix Detection
-> This IS a hardware workaround for a broken device. The device's USB
-> descriptors are incorrect (clock readability is falsely advertised),
-> causing the standard enumeration path to fail. This is the textbook
-> definition of a USB audio device quirk.
->
-> ## PHASE 2: DIFF ANALYSIS
->
-> ### Step 2.1: Inventory
-> - **Files changed:** 1 file (`sound/usb/quirks-table.h`)
-> - **Lines added:** ~165 lines (purely data =E2=80=94 struct initializers =
-in the
->   quirk table)
-> - **Lines removed:** 0
-> - **Scope:** Single-file, data-only addition to an existing quirk table
->
-> ### Step 2.2: Code Flow Change
-> The patch adds a new entry to the USB audio quirks table for USB VID:PID
-> `0x1c75:0xaf20`. It defines:
-> - 1 standard mixer interface (interface 0)
-> - 3 playback audio format configurations (interface 1) for different
->   sample rates
-> - 3 capture audio format configurations (interface 2) for the same rates
-> - 1 ignored interface (interface 3, firmware update)
->
-> The entry is inserted between the last `QUIRK_RME_DIGIFACE` entry and
-> the `#undef` lines at the end of the file.
->
-> ### Step 2.3: Bug Mechanism
-> Category: **Hardware workaround (h)**. The device has a broken clock
-> descriptor =E2=80=94 it claims the clock is readable but reads fail. This
-> prevents the standard UAC2 enumeration from working. The quirk bypasses
-> automatic probing by providing the correct audio format information
-> directly.
->
-> ### Step 2.4: Fix Quality
-> - All macros used (`QUIRK_DATA_AUDIOFORMAT`, `QUIRK_DATA_COMPOSITE`,
->   `QUIRK_DRIVER_INFO`, `QUIRK_DATA_STANDARD_MIXER`, `QUIRK_DATA_IGNORE`,
->   `QUIRK_COMPOSITE_END`) are already defined in the same file (verified
->   at lines 41, 49, 58, 72, 78, 87)
-> - Pure data =E2=80=94 no logic changes, no control flow changes
-> - Only affects the specific USB device `0x1c75:0xaf20`
-> - Zero regression risk for any other device or code path
-> - Author tested all configurations enabled by the patch
->
-> ## PHASE 3: GIT HISTORY INVESTIGATION
->
-> ### Step 3.1: Blame
-> The insertion point is at the end of the quirks table after the RME
-> Digiface entries. The macros were introduced by `0c3ad39b791c2` ("Define
-> macros for quirk table entries") and `d79e13f8e8abb` ("Replace complex
-> quirk lines with macros"), both of which are present in this tree.
->
-> ### Step 3.2: Fixes Tag
-> No Fixes: tag =E2=80=94 this is a new device quirk, not a fix for a speci=
-fic
-> regression.
->
-> ### Step 3.3: File History
-> The file has a long history of similar quirk additions: Pioneer DJ
-> DJM-V10, RME Digiface USB, Pioneer DDJ-800, Mythware XA001AU, Mbox3,
-> etc. This is a well-established pattern.
->
-> ### Step 3.4: Author
-> Phil Willoughby also contributed `bc5b4e5ae1a67` ("Fix quirk flags for
-> NeuralDSP Quad Cortex") around the same date, showing familiarity with
-> the USB audio quirk system.
->
-> ### Step 3.5: Dependencies
-> The patch uses macros already present in the stable tree. No
-> prerequisite commits are needed. The insertion point
-> (`QUIRK_RME_DIGIFACE(0x3fa0)` followed by `#undef`) exists at lines
-> 3901-3903, confirming clean applicability.
->
-> ## PHASE 4: MAILING LIST RESEARCH
->
-> ### Step 4.1-4.5
-> b4 dig could not find the commit (it's not yet in the tree we're on).
-> Lore was blocked by anti-bot protection. However, the commit message
-> includes a Link to the patch submission, and Takashi Iwai (the USB audio
-> maintainer) signed off on it, confirming maintainer review and
-> acceptance.
->
-> ## PHASE 5: CODE SEMANTIC ANALYSIS
->
-> ### Step 5.1-5.5
-> This is purely a data table addition. There are no new functions, no
-> logic changes, no callers/callees to trace. The quirk table is consumed
-> by the existing USB audio driver infrastructure which already handles
-> all the macros and format types used.
->
-> ## PHASE 6: STABLE TREE ANALYSIS
->
-> ### Step 6.1: Code Existence in Stable
-> The quirks table and all macros used exist in this 7.0 stable tree.
-> Verified: `QUIRK_DATA_AUDIOFORMAT` at line 87, `QUIRK_DATA_COMPOSITE` at
-> line 78, `QUIRK_DRIVER_INFO` at line 41, etc.
->
-> ### Step 6.2: Backport Complications
-> The patch should apply cleanly. The insertion point (between
-> `QUIRK_RME_DIGIFACE(0x3fa0),` at line 3901 and `#undef
-> USB_DEVICE_VENDOR_SPEC` at line 3903) is present and matches the diff
-> context exactly.
->
-> ### Step 6.3: Related Fixes
-> No prior fixes for AF16Rig exist =E2=80=94 this is the first support entr=
-y.
->
-> ## PHASE 7: SUBSYSTEM CONTEXT
->
-> ### Step 7.1
-> - **Subsystem:** sound/usb (USB audio drivers)
-> - **Criticality:** IMPORTANT =E2=80=94 USB audio is used by musicians, co=
-ntent
->   creators, and professionals who rely on specific hardware
->
-> ### Step 7.2
-> Active subsystem with regular quirk additions (verified: 10+ recent
-> commits adding device quirks).
->
-> ## PHASE 8: IMPACT AND RISK ASSESSMENT
->
-> ### Step 8.1: Who is Affected
-> Users of the Arturia AF16Rig USB audio interface. Without this quirk,
-> the device is **completely non-functional** under Linux.
->
-> ### Step 8.2: Trigger Conditions
-> Every time the device is plugged in. The broken clock descriptor causes
-> enumeration failure immediately.
->
-> ### Step 8.3: Failure Mode
-> Without quirk: Device probing fails, no audio functionality at all.
-> **Severity: HIGH** (total device failure).
->
-> ### Step 8.4: Risk-Benefit
-> - **Benefit:** HIGH =E2=80=94 enables a professional audio device that is
->   otherwise non-functional
-> - **Risk:** VERY LOW =E2=80=94 pure data addition to a quirk table, devic=
-e-
->   specific, affects no other hardware, uses existing macros, tested by
->   the author
-> - **Ratio:** Strongly favorable
->
-> ## PHASE 9: FINAL SYNTHESIS
->
-> ### Step 9.1: Evidence Summary
-> **FOR backporting:**
-> - Hardware quirk/workaround for a broken device (clock descriptor lie)
-> - Pure data addition, no logic changes
-> - Zero regression risk for any other device
-> - Uses macros already present in stable
-> - Tested by the author on all configurations
-> - Accepted by subsystem maintainer (Takashi Iwai)
-> - Well-established pattern (dozens of similar entries in the same file)
-> - Falls squarely into the "QUIRKS and WORKAROUNDS" exception category
->
-> **AGAINST backporting:**
-> - Large (~165 lines), though entirely data
-> - New device support rather than fixing a regression in existing support
->
-> ### Step 9.2: Stable Rules Checklist
-> 1. Obviously correct and tested? **YES** =E2=80=94 data copied from USB
->    descriptors, tested by author
-> 2. Fixes a real bug? **YES** =E2=80=94 device completely non-functional w=
-ithout
->    it (broken clock descriptor)
-> 3. Important issue? **YES** =E2=80=94 total hardware failure for users of=
- this
->    device
-> 4. Small and contained? **YES** =E2=80=94 single file, data-only, device-
->    specific
-> 5. No new features or APIs? **YES** =E2=80=94 no new APIs, just quirk dat=
-a
-> 6. Can apply to stable? **YES** =E2=80=94 insertion point and all macros =
-exist
->
-> ### Step 9.3: Exception Category
-> **Hardware quirk/workaround** =E2=80=94 this is explicitly listed as a YE=
-S-by-
-> default category in the stable kernel rules analysis.
->
-> ## Verification
->
-> - [Phase 1] Parsed tags: Tested-by from author, Signed-off-by from
->   maintainer Takashi Iwai
-> - [Phase 2] Diff analysis: ~165 lines of struct initializer data added
->   to quirks-table.h; zero logic changes
-> - [Phase 2] Verified all macros used: QUIRK_DATA_AUDIOFORMAT (line 87),
->   QUIRK_DATA_COMPOSITE (line 78), QUIRK_DRIVER_INFO (line 41),
->   QUIRK_DATA_STANDARD_MIXER (line 58), QUIRK_DATA_IGNORE (line 49),
->   QUIRK_COMPOSITE_END (line 72)
-> - [Phase 3] git log --oneline -20 -- sound/usb/quirks-table.h: confirmed
->   long history of similar quirk additions
-> - [Phase 3] git show bc5b4e5ae1a67: confirmed author has other USB audio
->   work (NeuralDSP fix)
-> - [Phase 4] b4 dig failed to find match (commit not in tree); lore
->   blocked by anti-bot; maintainer sign-off confirmed from commit
->   metadata
-> - [Phase 5] No functions to trace =E2=80=94 pure data table entry
-> - [Phase 6] Verified insertion point exists at lines 3901-3903
->   (QUIRK_RME_DIGIFACE followed by #undef); patch should apply cleanly
-> - [Phase 6] Verified Arturia VID 0x1c75 has no existing entries (grep
->   returned no matches)
-> - [Phase 7] Subsystem is actively maintained with regular quirk
->   additions
-> - [Phase 8] Failure mode: complete device non-functionality; severity
->   HIGH; risk VERY LOW (data-only, device-specific)
-> - UNVERIFIED: Could not access mailing list discussion due to anti-bot
->   protection; relying on maintainer sign-off as evidence of review
->
-> This is a textbook USB audio device quirk addition. The Arturia AF16Rig
-> has a broken clock descriptor that prevents standard enumeration, making
-> the device completely non-functional without this quirk. The patch is
-> pure data, uses existing macros, and affects only the specific device.
-> It carries essentially zero regression risk.
->
-> **YES**
->
->  sound/usb/quirks-table.h | 165 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 165 insertions(+)
->
-> diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-> index eafc0d73cca1f..8f79a15055a6a 100644
-> --- a/sound/usb/quirks-table.h
-> +++ b/sound/usb/quirks-table.h
-> @@ -3900,5 +3900,170 @@ YAMAHA_DEVICE(0x7010, "UB99"),
->  QUIRK_RME_DIGIFACE(0x3f8c),
->  QUIRK_RME_DIGIFACE(0x3fa0),
->
-> +/* Arturia AudioFuse 16Rig Audio */
-> +/* AF16Rig MIDI has USB PID 0xaf21 and appears to work OK without quirks=
- */
-> +{
-> +       USB_DEVICE(0x1c75, 0xaf20),
-> +       QUIRK_DRIVER_INFO {
-> +               .vendor_name =3D "Arturia",
-> +               .product_name =3D "AF16Rig",
-> +               QUIRK_DATA_COMPOSITE {
-> +                       { QUIRK_DATA_STANDARD_MIXER(0) },
-> +                       {
-> +                               QUIRK_DATA_AUDIOFORMAT(1) { /* Playback *=
-/
-> +                                       .formats =3D SNDRV_PCM_FMTBIT_S32=
-_LE,
-> +                                       .channels =3D 34,
-> +                                       .fmt_type =3D UAC_FORMAT_TYPE_I_P=
-CM,
-> +                                       .fmt_bits =3D 24,
-> +                                       .fmt_sz =3D 4,
-> +                                       .iface =3D 1,
-> +                                       .altsetting =3D 1,
-> +                                       .altset_idx =3D 1,
-> +                                       .endpoint =3D 0x01,
-> +                                       .ep_attr =3D USB_ENDPOINT_XFER_IS=
-OC|
-> +                                                  USB_ENDPOINT_SYNC_ASYN=
-C,
-> +                                       .datainterval =3D 1,
-> +                                       .protocol =3D UAC_VERSION_2,
-> +                                       .maxpacksize =3D 0x03b8,
-> +                                       .rates =3D SNDRV_PCM_RATE_44100|
-> +                                                SNDRV_PCM_RATE_48000,
-> +                                       .rate_min =3D 44100,
-> +                                       .rate_max =3D 48000,
-> +                                       .nr_rates =3D 2,
-> +                                       .rate_table =3D (unsigned int[]) =
-{ 44100, 48000 },
-> +                                       .clock =3D 41,
-> +                               }
-> +                       },
-> +                       {
-> +                               QUIRK_DATA_AUDIOFORMAT(1) { /* Playback *=
-/
-> +                                       .formats =3D SNDRV_PCM_FMTBIT_S32=
-_LE,
-> +                                       .channels =3D 18,
-> +                                       .fmt_type =3D UAC_FORMAT_TYPE_I_P=
-CM,
-> +                                       .fmt_bits =3D 24,
-> +                                       .fmt_sz =3D 4,
-> +                                       .iface =3D 1,
-> +                                       .altsetting =3D 1,
-> +                                       .altset_idx =3D 1,
-> +                                       .endpoint =3D 0x01,
-> +                                       .ep_attr =3D USB_ENDPOINT_XFER_IS=
-OC|
-> +                                                  USB_ENDPOINT_SYNC_ASYN=
-C,
-> +                                       .datainterval =3D 1,
-> +                                       .protocol =3D UAC_VERSION_2,
-> +                                       .maxpacksize =3D 0x03a8,
-> +                                       .rates =3D SNDRV_PCM_RATE_88200|
-> +                                                SNDRV_PCM_RATE_96000,
-> +                                       .rate_min =3D 88200,
-> +                                       .rate_max =3D 96000,
-> +                                       .nr_rates =3D 2,
-> +                                       .rate_table =3D (unsigned int[]) =
-{ 88200, 96000 },
-> +                                       .clock =3D 41,
-> +                               }
-> +                       },
-> +                       {
-> +                               QUIRK_DATA_AUDIOFORMAT(1) { /* Playback *=
-/
-> +                                       .formats =3D SNDRV_PCM_FMTBIT_S32=
-_LE,
-> +                                       .channels =3D 10,
-> +                                       .fmt_type =3D UAC_FORMAT_TYPE_I_P=
-CM,
-> +                                       .fmt_bits =3D 24,
-> +                                       .fmt_sz =3D 4,
-> +                                       .iface =3D 1,
-> +                                       .altsetting =3D 3,
-> +                                       .altset_idx =3D 3,
-> +                                       .endpoint =3D 0x01,
-> +                                       .ep_attr =3D USB_ENDPOINT_XFER_IS=
-OC|
-> +                                                  USB_ENDPOINT_SYNC_ASYN=
-C,
-> +                                       .datainterval =3D 1,
-> +                                       .protocol =3D UAC_VERSION_2,
-> +                                       .maxpacksize =3D 0x03e8,
-> +                                       .rates =3D SNDRV_PCM_RATE_176400|
-> +                                                SNDRV_PCM_RATE_192000,
-> +                                       .rate_min =3D 176400,
-> +                                       .rate_max =3D 192000,
-> +                                       .nr_rates =3D 2,
-> +                                       .rate_table =3D (unsigned int[]) =
-{ 176400, 192000 },
-> +                                       .clock =3D 41,
-> +                               }
-> +                       },
-> +                       {
-> +                               QUIRK_DATA_AUDIOFORMAT(2) { /* Capture */
-> +                                       .formats =3D SNDRV_PCM_FMTBIT_S32=
-_LE,
-> +                                       .channels =3D 34,
-> +                                       .fmt_type =3D UAC_FORMAT_TYPE_I_P=
-CM,
-> +                                       .fmt_bits =3D 24,
-> +                                       .fmt_sz =3D 4,
-> +                                       .iface =3D 2,
-> +                                       .altsetting =3D 1,
-> +                                       .altset_idx =3D 1,
-> +                                       .endpoint =3D 0x81,
-> +                                       .ep_attr =3D USB_ENDPOINT_XFER_IS=
-OC|
-> +                                                  USB_ENDPOINT_SYNC_ASYN=
-C,
-> +                                       .datainterval =3D 1,
-> +                                       .protocol =3D UAC_VERSION_2,
-> +                                       .maxpacksize =3D 0x03b8,
-> +                                       .rates =3D SNDRV_PCM_RATE_44100|
-> +                                                SNDRV_PCM_RATE_48000,
-> +                                       .rate_min =3D 44100,
-> +                                       .rate_max =3D 48000,
-> +                                       .nr_rates =3D 2,
-> +                                       .rate_table =3D (unsigned int[]) =
-{ 44100, 48000 },
-> +                                       .clock =3D 41,
-> +                               }
-> +                       },
-> +                       {
-> +                               QUIRK_DATA_AUDIOFORMAT(2) { /* Capture */
-> +                                       .formats =3D SNDRV_PCM_FMTBIT_S32=
-_LE,
-> +                                       .channels =3D 18,
-> +                                       .fmt_type =3D UAC_FORMAT_TYPE_I_P=
-CM,
-> +                                       .fmt_bits =3D 24,
-> +                                       .fmt_sz =3D 4,
-> +                                       .iface =3D 2,
-> +                                       .altsetting =3D 2,
-> +                                       .altset_idx =3D 2,
-> +                                       .endpoint =3D 0x81,
-> +                                       .ep_attr =3D USB_ENDPOINT_XFER_IS=
-OC|
-> +                                                  USB_ENDPOINT_SYNC_ASYN=
-C,
-> +                                       .datainterval =3D 1,
-> +                                       .protocol =3D UAC_VERSION_2,
-> +                                       .maxpacksize =3D 0x03a8,
-> +                                       .rates =3D SNDRV_PCM_RATE_88200|
-> +                                                SNDRV_PCM_RATE_96000,
-> +                                       .rate_min =3D 88200,
-> +                                       .rate_max =3D 96000,
-> +                                       .nr_rates =3D 2,
-> +                                       .rate_table =3D (unsigned int[]) =
-{ 88200, 96000 },
-> +                                       .clock =3D 41,
-> +                               }
-> +                       },
-> +                       {
-> +                               QUIRK_DATA_AUDIOFORMAT(2) { /* Capture */
-> +                                       .formats =3D SNDRV_PCM_FMTBIT_S32=
-_LE,
-> +                                       .channels =3D 10,
-> +                                       .fmt_type =3D UAC_FORMAT_TYPE_I_P=
-CM,
-> +                                       .fmt_bits =3D 24,
-> +                                       .fmt_sz =3D 4,
-> +                                       .iface =3D 2,
-> +                                       .altsetting =3D 3,
-> +                                       .altset_idx =3D 3,
-> +                                       .endpoint =3D 0x81,
-> +                                       .ep_attr =3D USB_ENDPOINT_XFER_IS=
-OC|
-> +                                                  USB_ENDPOINT_SYNC_ASYN=
-C,
-> +                                       .datainterval =3D 1,
-> +                                       .protocol =3D UAC_VERSION_2,
-> +                                       .maxpacksize =3D 0x03e8,
-> +                                       .rates =3D SNDRV_PCM_RATE_176400|
-> +                                                SNDRV_PCM_RATE_192000,
-> +                                       .rate_min =3D 176400,
-> +                                       .rate_max =3D 192000,
-> +                                       .nr_rates =3D 2,
-> +                                       .rate_table =3D (unsigned int[]) =
-{ 176400, 192000 },
-> +                                       .clock =3D 41,
-> +                               }
-> +                       },
-> +                       { QUIRK_DATA_IGNORE(3) }, /* Firmware update */
-> +                       QUIRK_COMPOSITE_END
-> +               }
-> +       }
-> +},
-> +
->  #undef USB_DEVICE_VENDOR_SPEC
->  #undef USB_AUDIO_DEVICE
-> --
-> 2.53.0
->
+[ Upstream commit 127e98c05c46654867faf5f578cb56d375b89092 ]
+
+Add AMDI0033 to the AMD GPIO ACPI match table.
+This lets the driver bind on new AMD platforms that expose this HID.
+
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+## Analysis Walkthrough
+
+### PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: Subject Line Parse**
+Record: Subsystem `pinctrl: amd:`; action verb `Support` (effectively
+"add"); summary: adds new ACPI HID `AMDI0033` to the AMD GPIO ACPI match
+table.
+
+**Step 1.2: Commit Message Tags**
+Record: Tags present:
+- `Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>` (AMD
+  vendor author)
+- `Signed-off-by: Linus Walleij <linusw@kernel.org>` (pinctrl subsystem
+  maintainer)
+- No `Fixes:`, no `Cc: stable`, no `Reported-by:`, no `Link:` — absence
+  is expected for a review candidate.
+
+**Step 1.3: Commit Body**
+Record: Body states `Add AMDI0033 to the AMD GPIO ACPI match table. This
+lets the driver bind on new AMD platforms that expose this HID.` No
+stack traces, no crash symptoms — this is a hardware enablement patch,
+not a crash fix.
+
+**Step 1.4: Hidden Bug Fix?**
+Record: Not a hidden bug fix. It is an explicit hardware-enablement (new
+device ID) addition. Falls into the stable exception "NEW DEVICE IDs".
+
+### PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: Inventory**
+Record: 1 file modified, `drivers/pinctrl/pinctrl-amd.c`, +1/-0. Scope:
+single-line addition inside `amd_gpio_acpi_match[]`. No functions
+modified.
+
+**Step 2.2: Code Flow Change**
+Record: Before, the `acpi_device_id` table had `AMD0030`, `AMDI0030`,
+`AMDI0031`. After, `AMDI0033` is an additional entry. With this change
+the `amd_gpio` platform driver will match/bind on ACPI devices whose
+`_HID` is `AMDI0033`.
+
+**Step 2.3: Bug Mechanism Category**
+Record: Category (h) — Hardware workaround / device ID addition. No
+locking, no refcount, no error path, no memory safety change.
+
+**Step 2.4: Fix Quality**
+Record: Obviously correct. Identical in pattern to the 2021 `AMDI0031`
+addition (commit `1ca46d3e43569`) and 2016 `AMDI0030` addition (commit
+`42a44402ecb78`). Cannot regress existing platforms because adding an
+entry to an ACPI match table only expands which devices bind; it does
+not change behavior for existing IDs. Zero regression risk for systems
+lacking `AMDI0033`.
+
+### PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: Blame**
+Record: `git blame` on lines 1273–1280 shows the table was introduced in
+`dbad75dd1f25e0` (Ken Xue, 2015). Prior ID additions:
+- `AMDI0030` in `42a44402ecb78` (2016)
+- `AMDI0031` in `1ca46d3e43569` (2021)
+Both precedents for the same kind of change, and both the driver and its
+ACPI table have existed since v4.1-era.
+
+**Step 3.2: Fixes: tag**
+Record: No `Fixes:` tag — N/A. This is not a bug fix commit.
+
+**Step 3.3: Related Recent Changes**
+Record: `git log --oneline -5 -- drivers/pinctrl/pinctrl-amd.c` shows
+benign recent churn (header cleanup, IRQ hwirq access, PM debug
+messages, treewide rename). No prerequisite refactor touches
+`amd_gpio_acpi_match[]`.
+
+**Step 3.4: Author**
+Record: Basavaraj Natikar is an AMD engineer with a long history of AMD
+pinctrl/platform fixes (`git log --author=Basavaraj` shows many prior
+AMD pinctrl commits). The co-SoB is Linus Walleij, the pinctrl
+maintainer. Both strong credibility signals.
+
+**Step 3.5: Prerequisites**
+Record: None. The match array already exists; only adds one entry.
+Stands alone. Patch applies literally to the file's existing structure.
+
+### PHASE 4: MAILING LIST RESEARCH
+
+**Step 4.1 / 4.2: b4 dig results**
+Record: `b4 dig -c 127e98c05c466` located the submission at `https://lor
+e.kernel.org/all/20260327050616.3816318-1-Basavaraj.Natikar@amd.com/` (a
+RESEND of the initial post). `b4 dig -a` shows only a single series
+version (v1 / RESEND). `b4 dig -w` shows recipients: Basavaraj Natikar,
+Shyam-sundar.S-k@amd.com (AMD), Linus Walleij (maintainer), `linux-
+gpio@vger.kernel.org`. All appropriate people were included; the pinctrl
+maintainer signed it off.
+
+Note: Lore requires interactive JS (Anubis); direct WebFetch was blocked
+so I could not read thread replies. Based on the patch having only a
+RESEND (no revisions) and being applied by the maintainer via his own
+SoB, there is no evidence of objections. UNVERIFIED: exact thread reply
+content.
+
+**Step 4.3 / 4.4 / 4.5**
+Record: No Reported-by/Link tags; no bug report to follow. Not part of a
+larger dependent series (single-patch submission). No prior stable
+discussion — N/A for a trivial ID add.
+
+### PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1–5.5**
+Record: The modified entity is a data table, not a function. Impact
+surface: the ACPI subsystem's platform-bus matcher reads this table at
+driver registration to decide which ACPI devices the `amd_gpio` platform
+driver probes. Adding an entry makes exactly one additional HID
+(`AMDI0033`) bind to `amd_gpio_probe()`. Existing ID behavior is
+unchanged. No other code needs updating; no quirks table search turned
+up `AMDI0033` (Grep found the new ID only in `pinctrl-amd.c`).
+
+### PHASE 6: STABLE TREE CROSS-REFERENCING
+
+**Step 6.1: Does the code exist in stable?**
+Record: The AMD pinctrl driver and its ACPI match table have existed
+since 2015. Every active stable tree (5.4, 5.10, 5.15, 6.1, 6.6, 6.12,
+6.17) contains `amd_gpio_acpi_match[]`. Adding one more entry applies
+trivially.
+
+**Step 6.2: Backport Complications**
+Record: Clean apply expected across all active stable trees. The context
+lines (`AMD0030`, `AMDI0030`, `AMDI0031` entries) are present in every
+stable tree that contains the driver.
+
+**Step 6.3: Related fixes already in stable?**
+Record: No — this ID is genuinely new. Not a duplicate of anything.
+
+### PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1: Subsystem**
+Record: `drivers/pinctrl/pinctrl-amd.c` — AMD GPIO/pinctrl driver used
+on essentially all modern AMD client platforms (laptops/desktops).
+Criticality: IMPORTANT — without this binding, GPIO-driven devices
+(trackpads, PM controls, power buttons, wake sources) on affected AMD
+systems may not work, and wake-from-suspend can regress.
+
+**Step 7.2: Activity**
+Record: Actively maintained; regular but modest activity. New ACPI HIDs
+appear every few years as AMD rolls out new platform silicon.
+
+### PHASE 8: IMPACT AND RISK
+
+**Step 8.1: Who's affected**
+Record: Users of new AMD platforms (SoCs/APUs) whose firmware exposes
+GPIO with `_HID "AMDI0033"`. Without this patch, the `amd_gpio` driver
+never binds → no pinctrl/GPIO, and anything depending on it (e.g., I2C
+HID trackpads routed through AMD GPIO interrupts, wake-on-GPIO) fails.
+
+**Step 8.2: Trigger**
+Record: Triggered at every boot on affected hardware. Extremely
+deterministic — it's simply whether the driver binds or not.
+
+**Step 8.3: Failure Mode Severity**
+Record: Without the patch: non-functional input/power/wake peripherals
+on new AMD platforms. Not a crash, but a severe hardware-enablement
+functional regression (no keyboard/trackpad/wake). Severity HIGH for
+affected users.
+
+**Step 8.4: Risk-Benefit**
+Record: BENEFIT: high for owners of new AMD hardware that lands on
+stable kernels. RISK: near-zero — adding an ACPI match entry cannot
+break existing hardware, cannot introduce UAF/locking/corruption, and
+the driver's probe path is unchanged. This is the textbook safe stable
+exception.
+
+### PHASE 9: SYNTHESIS
+
+**Step 9.1: Evidence**
+For: Exactly matches the explicit stable exception "NEW DEVICE IDs —
+trivial one-line additions to existing drivers that enable hardware
+support." One-line addition. Maintainer SoB. Vendor author. Long-
+established driver. Prior precedent `AMDI0031` was added the same way.
+Clean apply.
+Against: None of substance. No Fixes:/Cc: stable (expected for review
+candidates, not a negative signal per the criteria).
+Unresolved: Could not read lore thread replies directly due to Anubis.
+
+**Step 9.2: Stable Rules**
+1. Obviously correct and tested? Yes — trivial table entry, in mainline
+   under the maintainer.
+2. Fixes real issue? Yes — enables hardware that otherwise won't work.
+3. Important? Yes — GPIO/pinctrl is foundational for input/power/wake on
+   affected AMD systems.
+4. Small and contained? Yes — +1 line in one file.
+5. New feature or API? No — no new API, no new uapi.
+6. Applies to stable? Yes — context is ancient and unchanged.
+
+**Step 9.3: Exception Category**
+Hits the "NEW DEVICE IDs" exception explicitly.
+
+**Step 9.4: Decision**
+Classic stable-worthy one-line ACPI ID add to an existing, mature
+driver. Risk is near zero; benefit is real hardware enablement on new
+AMD platforms.
+
+## Verification
+
+- [Phase 1] Read commit subject, body, and tags; confirmed no Fixes:/Cc:
+  stable/Reported-by/Link tags; two SoBs (AMD author + pinctrl
+  maintainer Linus Walleij).
+- [Phase 2] Read the diff: single entry `{ "AMDI0033", 0},` appended
+  between `AMDI0031` and terminator in `amd_gpio_acpi_match[]` in
+  `drivers/pinctrl/pinctrl-amd.c` (lines ~1273–1278). Confirmed no
+  function body changes.
+- [Phase 2] Read `drivers/pinctrl/pinctrl-amd.c` lines 1270–1298 to
+  confirm context and that `MODULE_DEVICE_TABLE(acpi, ...)` is
+  unchanged.
+- [Phase 3] `git blame drivers/pinctrl/pinctrl-amd.c -L 1273,1280`:
+  table introduced by `dbad75dd1f25e0` (Ken Xue, 2015); `AMDI0030` added
+  by `42a44402ecb78` (2016); `AMDI0031` added by `1ca46d3e43569` (2021).
+  Confirms long-standing driver and precedent for the same kind of
+  change.
+- [Phase 3] `git log --oneline -5 -- drivers/pinctrl/pinctrl-amd.c`:
+  recent churn is benign and unrelated to the match table.
+- [Phase 3] `git log --oneline --author="Basavaraj" -10 --
+  drivers/pinctrl/pinctrl-amd.c`: author has a substantive history of
+  AMD pinctrl commits — established AMD platform engineer.
+- [Phase 4] `b4 dig -c 127e98c05c466`: matched by patch-id; URL `https:/
+  /lore.kernel.org/all/20260327050616.3816318-1-
+  Basavaraj.Natikar@amd.com/`.
+- [Phase 4] `b4 dig -c 127e98c05c466 -a`: only a single revision (v1 /
+  RESEND); no evolution from reviewer feedback.
+- [Phase 4] `b4 dig -c 127e98c05c466 -w`: original recipients included
+  Linus Walleij (maintainer), linux-gpio list, and AMD reviewers —
+  appropriate coverage.
+- [Phase 5] Grep for `AMDI003[0-9]` across the tree: new ID occurs only
+  in `drivers/pinctrl/pinctrl-amd.c`; existing `AMDI0030` references in
+  `drivers/gpio/gpiolib-acpi-quirks.c` are quirk entries not dependent
+  on this patch.
+- [Phase 6] Confirmed by blame that the `amd_gpio_acpi_match[]` array
+  structure has existed since 2015, so context applies cleanly to all
+  active stable trees.
+- [Phase 8] Impact reasoning is based on how ACPI platform driver
+  binding works generically (match table controls probe); no user-bug-
+  report was needed because the change is a pure hardware-enablement
+  addition.
+- UNVERIFIED: I could not directly read replies on the lore thread
+  because lore.kernel.org is currently gated by Anubis anti-bot; however
+  `b4 dig -a` showed no later revisions, and the maintainer's SoB on the
+  committed patch indicates no unresolved objections.
+- UNVERIFIED: I did not enumerate every stable branch's exact file state
+  because this is a workspace-only checkout; however, since all
+  preceding IDs (`AMDI0030`, `AMDI0031`) have been present since 2016
+  and 2021 respectively and the match-table block has not been
+  restructured, clean apply is expected on 5.4+.
+
+This commit is a textbook stable exception: a trivial one-line ACPI
+device ID addition to an existing, widely-used driver, authored by the
+hardware vendor and signed off by the subsystem maintainer. Risk is
+effectively zero; benefit is enabling GPIO/pinctrl on new AMD platforms
+that would otherwise be non-functional.
+
+**YES**
+
+ drivers/pinctrl/pinctrl-amd.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index 2af94ef564342..e3128b0045d22 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -1274,6 +1274,7 @@ static const struct acpi_device_id amd_gpio_acpi_match[] = {
+ 	{ "AMD0030", 0 },
+ 	{ "AMDI0030", 0},
+ 	{ "AMDI0031", 0},
++	{ "AMDI0033", 0},
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(acpi, amd_gpio_acpi_match);
+-- 
+2.53.0
+
