@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0485533B6EF;
-	Mon, 20 Apr 2026 16:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC9133D6FC;
+	Mon, 20 Apr 2026 16:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700888; cv=none; b=scx91+ivwATOOekiq6fSObVZ6IQOWRCBAUedhS4EiZSk2t8h4vrYI/9eOvVOvZeamR3Fj7FilKR+os2OmwrKb85tlhHhEo5KIC+dWEo1ZaRgn5iv8EN5TPkA56CRYfW33hM0eNhhUpIzI4vKaVSYU0X2I+QbFg9y/LoRF17EIxk=
+	t=1776700890; cv=none; b=AyQH9uV7FxqWzWJFUxnpGLiZg+O2iSlepsPrzjRMsYEPw55B+dc0G2i9yn2PFODHvYa2gJmdxNS2u+/vzMKgKSVhxqYUWMFlwnOiigPTsqt3R6ufklH6UVBuicGskv72IqDYBOdqxybZntJbxHTqvZQDcHFgCXU2ij1Wp6XfYpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700888; c=relaxed/simple;
-	bh=dXB+WLvXUWI+FLC7uwBiRJoZxyJ7MOdRgSKygcxDLTs=;
+	s=arc-20240116; t=1776700890; c=relaxed/simple;
+	bh=ilP4v7Rm5U1Gwuh1tzhCs3u9iA44TT4QYuu8bGy1YNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZqv76q4MAEP/32/lKhoXSi3fcATCyk2mjb0qejTBYPXbRmIi4s1jEsTnrfLhfUyKgxIQgUw7E48xXyuZdwVd+Jp3C8p+bsD75Aa73bB2jzTTRO/EvGVxtf6SijJrK4UQc/9odv05az+THhM0yAlCUEKgU0lwRhYXAC9a5qZHEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xN//TEhm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rrLcLIAsJ1tXIKNMgxVhHqHcKoy4mkraY0Q8f69FgBrYCTQxG3WTlgmDTcs/2w90XdRDJ3wtrCNQzP7vNs94mPimapeUf2CflERxkGvH0RxP8Un+72WntK0FWTSJZCFhRjpaYXuJR2C1ZBtViMOdUzPK0Qebv0vrahtVj+xmA30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RSQ1Q/3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xN//TEhm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F450C19425;
-	Mon, 20 Apr 2026 16:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RSQ1Q/3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260BAC2BCB6;
+	Mon, 20 Apr 2026 16:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700887;
-	bh=dXB+WLvXUWI+FLC7uwBiRJoZxyJ7MOdRgSKygcxDLTs=;
+	s=korg; t=1776700890;
+	bh=ilP4v7Rm5U1Gwuh1tzhCs3u9iA44TT4QYuu8bGy1YNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xN//TEhmOMEF7ThJ3iE0yhtT70WZk6OAu4jOoE3cWQ2MLEE5LlDdmV8lbxKanVOzV
-	 qa2zd5F7NsMg+SinXXr3J2hFjTSr2vo4kRnO/bFyjxGhqitffKH7ySWvmOWwJFJ2np
-	 MZ41TtejKaSsi75Tnp9RDnpr8IOuW9NzFyefAuBI=
+	b=1RSQ1Q/3IB3wzNzkXZh0gYlj8KV9ou16LaZo5oAfgPamyBLIZhJ7yAvny1aYWvuCU
+	 od9SjaWJ7soS/CYZYCKGanPYvott8l+1yC2agLuD9dAj2RwaRBgD/TPhYQBxmlCpQI
+	 GfM3aCmZmoLXo5KPnB08FYsyiPw1DAoAUpyLKyek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
 	Weiming Shi <bestswngs@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Julian Anastasov <ja@ssi.bg>,
+	Xiang Mei <xmei5@asu.edu>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 098/198] ipvs: fix NULL deref in ip_vs_add_service error path
-Date: Mon, 20 Apr 2026 17:41:17 +0200
-Message-ID: <20260420153939.132485830@linuxfoundation.org>
+Subject: [PATCH 6.18 099/198] netfilter: nfnetlink_log: initialize nfgenmsg in NLMSG_DONE terminator
+Date: Mon, 20 Apr 2026 17:41:18 +0200
+Message-ID: <20260420153939.167616132@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -54,60 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 9a91797e61d286805ae10a92cc48959c30800556 ]
+[ Upstream commit 1f3083aec8836213da441270cdb1ab612dd82cf4 ]
 
-When ip_vs_bind_scheduler() succeeds in ip_vs_add_service(), the local
-variable sched is set to NULL.  If ip_vs_start_estimator() subsequently
-fails, the out_err cleanup calls ip_vs_unbind_scheduler(svc, sched)
-with sched == NULL.  ip_vs_unbind_scheduler() passes the cur_sched NULL
-check (because svc->scheduler was set by the successful bind) but then
-dereferences the NULL sched parameter at sched->done_service, causing a
-kernel panic at offset 0x30 from NULL.
+When batching multiple NFLOG messages (inst->qlen > 1), __nfulnl_send()
+appends an NLMSG_DONE terminator with sizeof(struct nfgenmsg) payload via
+nlmsg_put(), but never initializes the nfgenmsg bytes. The nlmsg_put()
+helper only zeroes alignment padding after the payload, not the payload
+itself, so four bytes of stale kernel heap data are leaked to userspace
+in the NLMSG_DONE message body.
 
- Oops: general protection fault, [..] [#1] PREEMPT SMP KASAN NOPTI
- KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
- RIP: 0010:ip_vs_unbind_scheduler (net/netfilter/ipvs/ip_vs_sched.c:69)
- Call Trace:
-  <TASK>
-  ip_vs_add_service.isra.0 (net/netfilter/ipvs/ip_vs_ctl.c:1500)
-  do_ip_vs_set_ctl (net/netfilter/ipvs/ip_vs_ctl.c:2809)
-  nf_setsockopt (net/netfilter/nf_sockopt.c:102)
-  [..]
+Use nfnl_msg_put() to build the NLMSG_DONE terminator, which initializes
+the nfgenmsg payload via nfnl_fill_hdr(), consistent with how
+__build_packet_message() already constructs NFULNL_MSG_PACKET headers.
 
-Fix by simply not clearing the local sched variable after a successful
-bind.  ip_vs_unbind_scheduler() already detects whether a scheduler is
-installed via svc->scheduler, and keeping sched non-NULL ensures the
-error path passes the correct pointer to both ip_vs_unbind_scheduler()
-and ip_vs_scheduler_put().
-
-While the bug is older, the problem popups in more recent kernels (6.2),
-when the new error path is taken after the ip_vs_start_estimator() call.
-
-Fixes: 705dd3444081 ("ipvs: use kthreads for stats estimation")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Acked-by: Simon Horman <horms@kernel.org>
-Acked-by: Julian Anastasov <ja@ssi.bg>
+Fixes: 29c5d4afba51 ("[NETFILTER]: nfnetlink_log: fix sending of multipart messages")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_ctl.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/netfilter/nfnetlink_log.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 4c8fa22be88ad..e442ba6033d5f 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -1453,7 +1453,6 @@ ip_vs_add_service(struct netns_ipvs *ipvs, struct ip_vs_service_user_kern *u,
- 		ret = ip_vs_bind_scheduler(svc, sched);
- 		if (ret)
- 			goto out_err;
--		sched = NULL;
- 	}
- 
- 	ret = ip_vs_start_estimator(ipvs, &svc->stats);
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index dcd2493a9a404..b1f3eda85989c 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -361,10 +361,10 @@ static void
+ __nfulnl_send(struct nfulnl_instance *inst)
+ {
+ 	if (inst->qlen > 1) {
+-		struct nlmsghdr *nlh = nlmsg_put(inst->skb, 0, 0,
+-						 NLMSG_DONE,
+-						 sizeof(struct nfgenmsg),
+-						 0);
++		struct nlmsghdr *nlh = nfnl_msg_put(inst->skb, 0, 0,
++						    NLMSG_DONE, 0,
++						    AF_UNSPEC, NFNETLINK_V0,
++						    htons(inst->group_num));
+ 		if (WARN_ONCE(!nlh, "bad nlskb size: %u, tailroom %d\n",
+ 			      inst->skb->len, skb_tailroom(inst->skb))) {
+ 			kfree_skb(inst->skb);
 -- 
 2.53.0
 
