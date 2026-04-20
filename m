@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3823264F1;
-	Mon, 20 Apr 2026 16:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5DA244661;
+	Mon, 20 Apr 2026 16:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701250; cv=none; b=JZh4RlkRpFLR73GUWQQqS+V6sgEtyW0msqLs50qRajfXSbYhRfxKaArUtwhxO6jp0lKrH99tBUBNehj1PTokclcQvp2B2kA4umYmMPi78djuLIlHvz2ZfEa7pM/OEIond8TUoPcXJTMymND88+xwrERgP4Gagxt5JXYF5VisDTw=
+	t=1776701253; cv=none; b=lgmlcKVdpujE9lIFFa1AEEr8WEupF3DwOSACYvpmPCXw4mI9OkzYi/4aU2+tdRAJh2kWJFSQOA1N+v02V0PDHUgQPdG8VdNzvV8T9s3vh3+5vLaWs/zR9xhaQwmADnsHE1zkIH7xN+R/chAhCuqGmq+fMl2mRwGe/MaAj3JcnJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701250; c=relaxed/simple;
-	bh=YCRE6IUokoAOQOnSZ9jksCVJgdXIYqvYCxjE0cpV/qQ=;
+	s=arc-20240116; t=1776701253; c=relaxed/simple;
+	bh=hwYL9DyzhG1Q18u+5N9XnPwfQXt575Q0L2yeMqfXvjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EcRLqw5MJJHvBHMWNhpqpeNE9Jjg4IyQJG5QfNZVSyP3sJp0ZJJ85t3xaBP1r8ZCM4uxUhrEGfLlh9gVtNasnWPowe/neYvs3xyrpahS5bT0lW0x1azeTvl3bsEvBd+uzKMjc+tlLkiWUUsnb4QPdGFX9N+wfvyahoigUz8FrPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7FbLi/o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FowztASwDVpkj2A/ZqJnyem8MA6uaELyeMXXhB2dTPmnhmXQ/n9rcnyzgVfXTtZcpQGocEO2etSoYX8gANQCjF3+i7gcPFBh1zXQBfsyQiFG5LYFF9l0U31VI5NGKa/sj9QgZ2+SP6jjAVBOkR0UsMomR0btkEr+62BgIBp8vmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c45uzj4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7FbLi/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC0EC2BCB4;
-	Mon, 20 Apr 2026 16:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c45uzj4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05747C19425;
+	Mon, 20 Apr 2026 16:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701250;
-	bh=YCRE6IUokoAOQOnSZ9jksCVJgdXIYqvYCxjE0cpV/qQ=;
+	s=korg; t=1776701253;
+	bh=hwYL9DyzhG1Q18u+5N9XnPwfQXt575Q0L2yeMqfXvjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7FbLi/olyycSvJMXxhNVTpbflinfhRC5eebNCThDyvMyA0yIh1uBiN2N2CYzMW86
-	 gam20IRGIAcpoxzDKMzkZV4nuxftBEImMR8M89AKLKmrPbwOVGE1jtcNKP7l7zO/6c
-	 9B8tHYYoJkhtnl6pgK/ScBLgZHhM3Kr1WGt2Df3g=
+	b=c45uzj4xT34h9Ibto1yeZIOJM61xO80WU1Fe5wrTY1GRk5H0VeNKdgL74P/71p6ZR
+	 uHCSsfMo0mb3OCcxw4IfiNi9jlXyUSqRm/HY+lm/VhKm07EAZ5xL1kSIxnnoYWRE7v
+	 f8vQycVvUjCjUb0BqhSFUeQxr8Q0K2HR+vRAAzuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A9sar=20Montoya?= <sprit152009@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Serhii Pievniev <spevnev16@gmail.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/162] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 15-eg0xxx
-Date: Mon, 20 Apr 2026 17:40:45 +0200
-Message-ID: <20260420153927.497898065@linuxfoundation.org>
+Subject: [PATCH 6.12 040/162] tools/power/turbostat: Fix microcode patch level output for AMD/Hygon
+Date: Mon, 20 Apr 2026 17:41:12 +0200
+Message-ID: <20260420153928.479879415@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -45,47 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: César Montoya <sprit152009@gmail.com>
+From: Serhii Pievniev <spevnev16@gmail.com>
 
-[ Upstream commit 2f388b4e8fdd6b0f27cafd281658daacfd85807e ]
+[ Upstream commit a444083286434ec1fd127c5da11a3091e6013008 ]
 
-The HP Pavilion 15-eg0xxx with subsystem ID 0x103c87cb uses a Realtek
-ALC287 codec with a mute LED wired to GPIO pin 4 (mask 0x10). The
-existing ALC287_FIXUP_HP_GPIO_LED fixup already handles this correctly,
-but the subsystem ID was missing from the quirk table.
+turbostat always used the same logic to read the microcode patch level,
+which is correct for Intel but not for AMD/Hygon.
+While Intel stores the patch level in the upper 32 bits of MSR, AMD
+stores it in the lower 32 bits, which causes turbostat to report the
+microcode version as 0x0 on AMD/Hygon.
 
-GPIO pin confirmed via manual hda-verb testing:
-  hda-verb SET_GPIO_MASK 0x10
-  hda-verb SET_GPIO_DIRECTION 0x10
-  hda-verb SET_GPIO_DATA 0x10
+Fix by shifting right by 32 for non-AMD/Hygon, preserving the existing
+behavior for Intel and unknown vendors.
 
-Signed-off-by: César Montoya <sprit152009@gmail.com>
-Link: https://patch.msgid.link/20260321153603.12771-1-sprit152009@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3e4048466c39 ("tools/power turbostat: Add --no-msr option")
+Signed-off-by: Serhii Pievniev <spevnev16@gmail.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/power/x86/turbostat/turbostat.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 96df0d12b68dc..440ec4e1528ae 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10909,6 +10909,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x87cb, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 86ffe7e06a146..fb1c65f6ff9de 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -8058,10 +8058,13 @@ void process_cpuid()
+ 	edx_flags = edx;
+ 
+ 	if (!no_msr) {
+-		if (get_msr(sched_getcpu(), MSR_IA32_UCODE_REV, &ucode_patch))
++		if (get_msr(sched_getcpu(), MSR_IA32_UCODE_REV, &ucode_patch)) {
+ 			warnx("get_msr(UCODE)");
+-		else
++		} else {
+ 			ucode_patch_valid = true;
++			if (!authentic_amd && !hygon_genuine)
++				ucode_patch >>= 32;
++		}
+ 	}
+ 
+ 	/*
+@@ -8076,7 +8079,7 @@ void process_cpuid()
+ 		fprintf(outf, "CPUID(1): family:model:stepping 0x%x:%x:%x (%d:%d:%d)",
+ 			family, model, stepping, family, model, stepping);
+ 		if (ucode_patch_valid)
+-			fprintf(outf, " microcode 0x%x", (unsigned int)((ucode_patch >> 32) & 0xFFFFFFFF));
++			fprintf(outf, " microcode 0x%x", (unsigned int)ucode_patch);
+ 		fputc('\n', outf);
+ 
+ 		fprintf(outf, "CPUID(0x80000000): max_extended_levels: 0x%x\n", max_extended_level);
 -- 
 2.53.0
 
