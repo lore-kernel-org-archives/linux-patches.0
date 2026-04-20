@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510B74DB562;
-	Mon, 20 Apr 2026 13:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91F64DBD68;
+	Mon, 20 Apr 2026 13:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776692025; cv=none; b=RocmT6BaVbJK4vVeOdqTok5XxtHuNM7Y8vGrq3UpccQcAce6zOcGEAhEbPWMsxlE+eqfo9LtyNW5oVPePVfI0jbLpExVvOUVTROV53b/0NXiKxdwQz4efOc6OfVY8Gdk18h6Oas1+G+yMvfvoGN96YVAkjKBrO1ygwwsvi9Yog8=
+	t=1776692026; cv=none; b=VdkzRCQiBJ08D5dIW5VtSl6ZH3gsXOXahiEqvvYZAPI6vtWwUS90ODibzCwWfcUc446WDyjSKcQCDStOiKLuDCYWNkjAdgOGEVmoLPgB7n9LezvASEF5jRL+Y7uP9j3fjUSZ/qmYk8YTaGYlwIjUg+If4aEHjpKijU2Fr1KSP3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776692025; c=relaxed/simple;
-	bh=1TOoOAnXei0T+EsPZPKTL55zG+7iN/BKSA/T5ksncro=;
+	s=arc-20240116; t=1776692026; c=relaxed/simple;
+	bh=/hLH7lpWN0NxK/1B7vq7ArtZfe/mwA07wt2k72L8ang=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vFq29dQso1LgKJYhKALolbKGkIJ0OfL5lhKxnemkM5BIGjbFZrVpVQM4QWx7UeIk6D95lh1LTyBdQrAWVu/47OK11xDkmnwkTLj9D6UiuzpNSUses7ipohhIea/nsQ+dZvZzDuUREClnKS4+elIBH/Yd3oHyFLwUwT69L00E4LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DoRh2a/H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7sKWuP7hXg3LDU4aTr684Qm7HQ3BvlK8l2uc8P4Eobkt/BlTI+bjHb6qjqkjIaqBooAGjPp2SPus/K5xyJET0FPUrOI5Sw9pFEg4uyXnMGZ4ydEebqmg90TLYX2QUMsM29+dY1iF3/nlGKulTb5k7HFNNideHnPznDTdT8AkXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WpheV8Op; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DoRh2a/H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3591EC19425;
-	Mon, 20 Apr 2026 13:33:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WpheV8Op"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906C3C19425;
+	Mon, 20 Apr 2026 13:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776692025;
-	bh=1TOoOAnXei0T+EsPZPKTL55zG+7iN/BKSA/T5ksncro=;
+	s=k20201202; t=1776692026;
+	bh=/hLH7lpWN0NxK/1B7vq7ArtZfe/mwA07wt2k72L8ang=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoRh2a/Hse/uEx+7ZRtCRGoBA6u8okDZKUxOAcVtrgTMngRPI7YxdjNWa+XGpaJNN
-	 W+YwZwkp3thKUnSO8EvDChWiyygubXrRuUSzRL/pfYhp0s/OGfgzSJmifOFE+7ugoA
-	 jSj8fmYF9LX7fVZlKgW3957rAAIHgmvDCK5uDccnuafiX/D4u+SpGrSGKwF9xF7FS6
-	 quhbKTW5BNP+zAJWR13H/KZxuL4qTjpqQBHNOkYf14f95nmZbErVj+tKNBLix2+g0k
-	 x67Q7mDVhMds3hQuGQBRJGYVQOHNIozZvs1UaMal8ZUnEqPQ86f3Ik+tANYHCqJ/78
-	 xDLegmdjPhTQw==
+	b=WpheV8OpSpj1HJ3GrZBKn0XCNCiSo1V/C6tUwDItcyuLl+WFIOpVKn0z0FlvFXIxy
+	 Ue4g4h/lMWYjQ2XXQO4o9XWPXary2Jjv/QzylYVn/5VV9LQug9yApfSkj7as63HxM0
+	 KeX20bb/mhfDPDzK9iUpBVhEr5o0AneAY4//7PoD2xBekWkhbAFfxn63t6G+Y60gmx
+	 ol9nSGctXUJbLQaZmyRX1trYi0WLwYLjLC8EiMyrCCW7/JNOPatPzvQorNjBjT6kFs
+	 /iuOYa314CKcdPz3PcoHpaTHDJq7kLdnu8cRigKyMQFKXJ27vhvuSBv2Ps9pahb/FG
+	 hHpXmdJxO4N/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: leo vriska <leo@60228.dev>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+	Petr Tesarik <ptesarik@suse.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	iommu@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] HID: quirks: add HID_QUIRK_ALWAYS_POLL for 8BitDo Pro 3
-Date: Mon, 20 Apr 2026 09:22:04 -0400
-Message-ID: <20260420132314.1023554-330-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] dma-mapping: add DMA_ATTR_CPU_CACHE_CLEAN
+Date: Mon, 20 Apr 2026 09:22:05 -0400
+Message-ID: <20260420132314.1023554-331-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -53,18 +52,25 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: leo vriska <leo@60228.dev>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-[ Upstream commit 532743944324a873bbaf8620fcabcd0e69e30c36 ]
+[ Upstream commit 61868dc55a119a5e4b912d458fc2c48ba80a35fe ]
 
-According to a mailing list report [1], this controller's predecessor
-has the same issue. However, it uses the xpad driver instead of HID, so
-this quirk wouldn't apply.
+When multiple small DMA_FROM_DEVICE or DMA_BIDIRECTIONAL buffers share a
+cacheline, and DMA_API_DEBUG is enabled, we get this warning:
+	cacheline tracking EEXIST, overlapping mappings aren't supported.
 
-[1]: https://lore.kernel.org/linux-input/unufo3$det$1@ciao.gmane.io/
+This is because when one of the mappings is removed, while another one
+is active, CPU might write into the buffer.
 
-Signed-off-by: leo vriska <leo@60228.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Add an attribute for the driver to promise not to do this, making the
+overlapping safe, and suppressing the warning.
+
+Message-ID: <2d5d091f9d84b68ea96abd545b365dd1d00bbf48.1767601130.git.mst@redhat.com>
+Reviewed-by: Petr Tesarik <ptesarik@suse.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: 3d48c9fd78dd ("dma-debug: suppress cacheline overlap warning when arch has no DMA alignment requirement")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -72,36 +78,42 @@ LLM Generated explanations, may be completely bogus:
 
 Error: Failed to generate final synthesis
 
- drivers/hid/hid-ids.h    | 3 +++
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 4 insertions(+)
+ include/linux/dma-mapping.h | 7 +++++++
+ kernel/dma/debug.c          | 3 ++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index d9d354f1b8847..a245928933454 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -22,6 +22,9 @@
- #define USB_DEVICE_ID_3M2256		0x0502
- #define USB_DEVICE_ID_3M3266		0x0506
- 
-+#define USB_VENDOR_ID_8BITDO		0x2dc8
-+#define USB_DEVICE_ID_8BITDO_PRO_3	0x6009
-+
- #define USB_VENDOR_ID_A4TECH		0x09da
- #define USB_DEVICE_ID_A4TECH_WCP32PU	0x0006
- #define USB_DEVICE_ID_A4TECH_X5_005D	0x000a
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 3217e436c052c..f6be3ffee0232 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -25,6 +25,7 @@
+diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
+index 190eab9f5e8c2..3e63046b899bc 100644
+--- a/include/linux/dma-mapping.h
++++ b/include/linux/dma-mapping.h
+@@ -78,6 +78,13 @@
   */
+ #define DMA_ATTR_MMIO		(1UL << 10)
  
- static const struct hid_device_id hid_quirks[] = {
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_8BITDO, USB_DEVICE_ID_8BITDO_PRO_3), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_GAMEPAD), HID_QUIRK_BADPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_PREDATOR), HID_QUIRK_BADPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE), HID_QUIRK_ALWAYS_POLL },
++/*
++ * DMA_ATTR_CPU_CACHE_CLEAN: Indicates the CPU will not dirty any cacheline
++ * overlapping this buffer while it is mapped for DMA. All mappings sharing
++ * a cacheline must have this attribute for this to be considered safe.
++ */
++#define DMA_ATTR_CPU_CACHE_CLEAN	(1UL << 11)
++
+ /*
+  * A dma_addr_t can hold any valid DMA or bus address for the platform.  It can
+  * be given to a device to use as a DMA source or target.  It is specific to a
+diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
+index 138ede653de40..7e66d863d573f 100644
+--- a/kernel/dma/debug.c
++++ b/kernel/dma/debug.c
+@@ -595,7 +595,8 @@ static void add_dma_entry(struct dma_debug_entry *entry, unsigned long attrs)
+ 	if (rc == -ENOMEM) {
+ 		pr_err_once("cacheline tracking ENOMEM, dma-debug disabled\n");
+ 		global_disable = true;
+-	} else if (rc == -EEXIST && !(attrs & DMA_ATTR_SKIP_CPU_SYNC) &&
++	} else if (rc == -EEXIST &&
++		   !(attrs & (DMA_ATTR_SKIP_CPU_SYNC | DMA_ATTR_CPU_CACHE_CLEAN)) &&
+ 		   !(IS_ENABLED(CONFIG_DMA_BOUNCE_UNALIGNED_KMALLOC) &&
+ 		     is_swiotlb_active(entry->dev))) {
+ 		err_printk(entry->dev, entry,
 -- 
 2.53.0
 
