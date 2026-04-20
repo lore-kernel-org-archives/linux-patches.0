@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2CC33F8B7;
-	Mon, 20 Apr 2026 15:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52E83358B0;
+	Mon, 20 Apr 2026 15:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700261; cv=none; b=fl+C2gLF7hKKxWErAinQklYOrTk/Ngj8I7+/LpcOLfwqHQCkaqki/E1ZMbGl+7SKgUxmqcrTb1sZCSU4jKYag/AIRhOQMfeRRk+TaIL4X99seXvnTtaPqnRm1Corplc0k6yas0O+lNbzYOxq+L9PFLA91/5erBLBvSMD6VoxiZA=
+	t=1776700264; cv=none; b=Gh1MwFKMPsLlfgypCHAjkDN5xtcV9c/Fmzc09oSs37ElduM1fk87IvCYWfGwEkXO8sQ8xTrCGZ2Cg1R7Uog1mc+kwCa5YdlWkeu2I9Y58WK1IG6vjXNJPDZnf5zOvPaN9oGCK8PqlL3iCnycb44G5Cy/6bawG7TKAgp2TYdz+eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700261; c=relaxed/simple;
-	bh=824ZXpxRoSENmZqkv2Wg2lYCuCDIDA7IQTUhrWfJIGs=;
+	s=arc-20240116; t=1776700264; c=relaxed/simple;
+	bh=G4jfACR5TN8FevEQP/JDpuAIsupxGqUBq0CPXbo0FC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mtw1YSUMmTbCAnSQe98R8Qa5MDTUYKlgYDKQCliCxXik+1n+BZ8JMMO+O8bWMLkFY29YSiTOWhAvu1YWvKKnvR3Xuz8bFeQNJpW69u4Ti15mHEtUMIt/bWRzlvzI07NV8+qo0wUhtBaGWnOUSXukF3i2V79l5H2Cp1GYvN7Lae4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBfhu8I8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Tf2i8y874ENu5KMfBBqngVd0g++Q3TZASdSy5aiRAxvutluhZ1pnA9tX4I0frNwWrOlMbqzKMTmj7ibqWosDtWu7myYYuc6tSL5UZSMbtIdysoLFsDG/CVC4qrKf4hu0PLsIZdGm790s9O059TFi5+OESeelka3eytAZ9B3Hz3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bn0foGH7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBfhu8I8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA37C19425;
-	Mon, 20 Apr 2026 15:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bn0foGH7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9CBC19425;
+	Mon, 20 Apr 2026 15:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700261;
-	bh=824ZXpxRoSENmZqkv2Wg2lYCuCDIDA7IQTUhrWfJIGs=;
+	s=korg; t=1776700263;
+	bh=G4jfACR5TN8FevEQP/JDpuAIsupxGqUBq0CPXbo0FC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XBfhu8I8Rs21f3FuXObM5cvMKjGvFfSu18z3WNBfpNrW1FZ29wI3VaNyFjjTWAZus
-	 dZksH9uM/VdjrOmUL/eSE8yZDA4eRmLB8qgukoKTaq4mM3KSLj7zphiSVG16LxfGHw
-	 R6oYcHic+2UDY0HFYb4Mb1EwhPqUwwSYS5Q+dOE0=
+	b=bn0foGH7VrtxXT5MNnc1TTO6XarkBwCbed+B/xv1J3QEZjlY01uq9gvwFyr3qPN7G
+	 VWMSBrpQhgloBdIVqE+wfQKbB7GEqi2DxFozyv2Xs05m2Lak1Z+DgAYxEurKz9LeSc
+	 /xf85mYeIhrKSkaP2xxKtpJM3EMIErgMX5bXW93I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 102/220] xsk: tighten UMEM headroom validation to account for tailroom and min frame
-Date: Mon, 20 Apr 2026 17:40:43 +0200
-Message-ID: <20260420153937.708508266@linuxfoundation.org>
+Subject: [PATCH 6.19 103/220] xsk: respect tailroom for ZC setups
+Date: Mon, 20 Apr 2026 17:40:44 +0200
+Message-ID: <20260420153937.743798496@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -56,45 +56,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit a315e022a72d95ef5f1d4e58e903cb492b0ad931 ]
+[ Upstream commit 1ee1605138fc94cc8f8f273321dd2471c64977f9 ]
 
-The current headroom validation in xdp_umem_reg() could leave us with
-insufficient space dedicated to even receive minimum-sized ethernet
-frame. Furthermore if multi-buffer would come to play then
-skb_shared_info stored at the end of XSK frame would be corrupted.
+Multi-buffer XDP stores information about frags in skb_shared_info that
+sits at the tailroom of a packet. The storage space is reserved via
+xdp_data_hard_end():
 
-HW typically works with 128-aligned sizes so let us provide this value
-as bare minimum.
+	((xdp)->data_hard_start + (xdp)->frame_sz -	\
+	 SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
 
-Multi-buffer setting is known later in the configuration process so
-besides accounting for 128 bytes, let us also take care of tailroom space
-upfront.
+and then we refer to it via macro below:
+
+static inline struct skb_shared_info *
+xdp_get_shared_info_from_buff(const struct xdp_buff *xdp)
+{
+        return (struct skb_shared_info *)xdp_data_hard_end(xdp);
+}
+
+Currently we do not respect this tailroom space in multi-buffer AF_XDP
+ZC scenario. To address this, introduce xsk_pool_get_tailroom() and use
+it within xsk_pool_get_rx_frame_size() which is used in ZC drivers to
+configure length of HW Rx buffer.
+
+Typically drivers on Rx Hw buffers side work on 128 byte alignment so
+let us align the value returned by xsk_pool_get_rx_frame_size() in order
+to avoid addressing this on driver's side. This addresses the fact that
+idpf uses mentioned function *before* pool->dev being set so we were at
+risk that after subtracting tailroom we would not provide 128-byte
+aligned value to HW.
+
+Since xsk_pool_get_rx_frame_size() is actively used in xsk_rcv_check()
+and __xsk_rcv(), add a variant of this routine that will not include 128
+byte alignment and therefore old behavior is preserved.
 
 Reviewed-by: Björn Töpel <bjorn@kernel.org>
 Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Fixes: 99e3a236dd43 ("xsk: Add missing check on user supplied headroom size")
+Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://patch.msgid.link/20260402154958.562179-2-maciej.fijalkowski@intel.com
+Link: https://patch.msgid.link/20260402154958.562179-3-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xdp_umem.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/xdp_sock_drv.h | 23 ++++++++++++++++++++++-
+ net/xdp/xsk.c              |  4 ++--
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
-index 9f76ca591d54f..9ec7bd948acc7 100644
---- a/net/xdp/xdp_umem.c
-+++ b/net/xdp/xdp_umem.c
-@@ -202,7 +202,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
- 	if (!unaligned_chunks && chunks_rem)
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index 6b9ebae2dc952..46797645a0c24 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -41,16 +41,37 @@ static inline u32 xsk_pool_get_headroom(struct xsk_buff_pool *pool)
+ 	return XDP_PACKET_HEADROOM + pool->headroom;
+ }
+ 
++static inline u32 xsk_pool_get_tailroom(bool mbuf)
++{
++	return mbuf ? SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) : 0;
++}
++
+ static inline u32 xsk_pool_get_chunk_size(struct xsk_buff_pool *pool)
+ {
+ 	return pool->chunk_size;
+ }
+ 
+-static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
++static inline u32 __xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
+ {
+ 	return xsk_pool_get_chunk_size(pool) - xsk_pool_get_headroom(pool);
+ }
+ 
++static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
++{
++	u32 frame_size =  __xsk_pool_get_rx_frame_size(pool);
++	struct xdp_umem *umem = pool->umem;
++	bool mbuf;
++
++	/* Reserve tailroom only for zero-copy pools that opted into
++	 * multi-buffer. The reserved area is used for skb_shared_info,
++	 * matching the XDP core's xdp_data_hard_end() layout.
++	 */
++	mbuf = pool->dev && (umem->flags & XDP_UMEM_SG_FLAG);
++	frame_size -= xsk_pool_get_tailroom(mbuf);
++
++	return ALIGN_DOWN(frame_size, 128);
++}
++
+ static inline u32 xsk_pool_get_rx_frag_step(struct xsk_buff_pool *pool)
+ {
+ 	return pool->unaligned ? 0 : xsk_pool_get_chunk_size(pool);
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index a6d3938154f21..4a1cc44ab305a 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -239,7 +239,7 @@ static u32 xsk_copy_xdp(void *to, void **from, u32 to_len,
+ 
+ static int __xsk_rcv(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
+ {
+-	u32 frame_size = xsk_pool_get_rx_frame_size(xs->pool);
++	u32 frame_size = __xsk_pool_get_rx_frame_size(xs->pool);
+ 	void *copy_from = xsk_copy_xdp_start(xdp), *copy_to;
+ 	u32 from_len, meta_len, rem, num_desc;
+ 	struct xdp_buff_xsk *xskb;
+@@ -338,7 +338,7 @@ static int xsk_rcv_check(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
+ 	if (xs->dev != xdp->rxq->dev || xs->queue_id != xdp->rxq->queue_index)
  		return -EINVAL;
  
--	if (headroom >= chunk_size - XDP_PACKET_HEADROOM)
-+	if (headroom > chunk_size - XDP_PACKET_HEADROOM -
-+		       SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) - 128)
- 		return -EINVAL;
- 
- 	if (mr->flags & XDP_UMEM_TX_METADATA_LEN) {
+-	if (len > xsk_pool_get_rx_frame_size(xs->pool) && !xs->sg) {
++	if (len > __xsk_pool_get_rx_frame_size(xs->pool) && !xs->sg) {
+ 		xs->rx_dropped++;
+ 		return -ENOSPC;
+ 	}
 -- 
 2.53.0
 
