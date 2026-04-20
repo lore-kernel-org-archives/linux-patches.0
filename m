@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306133FB05C;
-	Mon, 20 Apr 2026 13:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089873FB04E;
+	Mon, 20 Apr 2026 13:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691578; cv=none; b=uYKch381sm7p325bM1jtJYKvXirg7UqokQODwYW9ZknaOSo5EpIQhdkLUQCmznvI+vN8mMu4m4fk3ghtQtn4IDwLUJRn2ZCXXHM5rcTGBAaT1Wk+j/m1DBwHEvctKhspJy31Z6PbYt7pttgoBAByfG8oX1Ailqc0t2JpBEntmaU=
+	t=1776691580; cv=none; b=W/nXqkyKQ0jrAm/kFUajhRO1PMtkFWa9SPHHbrNbC3PDhXZ6kBQMOPcZdOBqdElTHedBeJhTts9lXRoAtjt57fJqvAUB+oDAkAJjj/s5c9puJnmMrN3FUKWP/MrSk13v+sA1fjLSsQWSGK0iIod0HqSrTW+wjxBjdepAVPxtt6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691578; c=relaxed/simple;
-	bh=oOmee+wIhKh6TyIF5+Mcfap836l1ShgVtk6iNOcZlmY=;
+	s=arc-20240116; t=1776691580; c=relaxed/simple;
+	bh=y22peYpMlpSzuER+C2gLxScD6Jxm+fW4HrEpcE8vri8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SHmbdf8eJPI+5bJpOJNNFFc9dTOn6qry18ulT8SnMRxmR5LKV8temFxOF4kTjqmzFtRwMMhM4tzIpDa7qL30uLGBnsOZTZv+BfRchLO86+m4yexVN3ZIVOm4xQfwzFRaHkTcwKTfc2DFLGsogYC1TYzrmUdrk+ZnxoJz1nfdkwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b/dphhiM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TEUWisG3vLYjdZEEaUpgV6lIVucKU5MqS11vYm61qw7SoWxAZx8FIDo1fNk2yz3l/XnZcf1SknQ2bsWpG4g7JTbHEDAW2Gr4i22DlvU+9I8YBJTgkfjmEF3JduxdMdLO8zlpgznaErgSew09e+qyOlMXg8xhVhQoKMxE/0OX224=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YqyCHUeE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b/dphhiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8453FC2BCB4;
-	Mon, 20 Apr 2026 13:26:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YqyCHUeE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FED0C2BCC6;
+	Mon, 20 Apr 2026 13:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691577;
-	bh=oOmee+wIhKh6TyIF5+Mcfap836l1ShgVtk6iNOcZlmY=;
+	s=k20201202; t=1776691579;
+	bh=y22peYpMlpSzuER+C2gLxScD6Jxm+fW4HrEpcE8vri8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/dphhiMbQrLObYh/wZv12CVXkeVTwGykQQJD9ndEJ4pweDeTuSI/g35E1z1S6hq7
-	 D4ZbdCrJfgWG8bxy76KG/fGj/AyGRj8WnbjYhlti8rabXEvNn14K0tNifQ0X71BswU
-	 DyB2/KLlzT9gisgUTLilFVzpUx0hD5it9r37HzoveD2UKRJBbmWGzdbEVDiyy6jpqX
-	 kHm2SI/i0fiWi3J1i5bQjopCgizjXCsqnbGFtkcLgLdteEwxiItEbGGFH6MapoLFpd
-	 tdoXP0iDByZDee+izQkpc4fiVwa67vE29gB6L4kY7PYZ1OSriaUPQybpSZmwhiwwje
-	 vmhgLa805saww==
+	b=YqyCHUeEC/t0W4qRTRY+/yUqP4l4oQeahUL4R8HwMqiSJuS4xhMs7BhZVY12Ptu0T
+	 GktHsOFVxiU9wb0U3f8H75deCBAVli4idmM9l8faX+BmXbwvpkSaYPILASzNf2BlWk
+	 rz7fIpMW55de5ScZP6+7gk6AP8Ak+1ARztP6+t571HgZ5cv27Z2x6urdHlk/3edPSX
+	 vq2pb77p+A1NmwrwfWl+QMYugwVoNiUuO7/H38T78tqnNOihy7rVNiYm5WeytlDOkB
+	 BX9ykWWvXMy/Hh9miTqVv5JKOIQ4e7KmgAxch6qtE95f6nk+snkDQ/hwm/sREOiyHd
+	 raUjMhuO4/eXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lizhi Hou <lizhi.hou@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Martin Kepplinger-Novakovic <martin.kepplinger-novakovic@ginzinger.com>,
+	kernel test robot <lkp@intel.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	Frank.Li@nxp.com,
+	dri-devel@lists.freedesktop.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] PCI: Avoid FLR for AMD NPU device
-Date: Mon, 20 Apr 2026 09:18:25 -0400
-Message-ID: <20260420132314.1023554-111-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] drm/imx: parallel-display: add DRM_DISPLAY_HELPER for DRM_IMX_PARALLEL_DISPLAY
+Date: Mon, 20 Apr 2026 09:18:26 -0400
+Message-ID: <20260420132314.1023554-112-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,366 +61,317 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Martin Kepplinger-Novakovic <martin.kepplinger-novakovic@ginzinger.com>
 
-[ Upstream commit 806140e9a33218f22188fe5019c7874aa78d81f8 ]
+[ Upstream commit 02df94d98ff837074788ce921edf67707dbad404 ]
 
-The AMD NPU device (PCI Device IDs 0x1502 and 0x17f0) advertises FLR
-support. However, triggering an FLR causes the device to hang.
+When I build for an old imx53 platform I see the same as the test robot
+saw before:
 
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260226182545.3057330-1-lizhi.hou@amd.com
+arm-buildroot-linux-gnueabihf-ld: drivers/gpu/drm/imx/ipuv3/parallel-display.o: in function `imx_pd_bind':
+parallel-display.c:(.text+0xb8): undefined reference to `drm_bridge_connector_init'
+
+Selecting DRM_DISPLAY_HELPER for DRM_IMX_PARALLEL_DISPLAY fixes the build.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512241721.jZgcwRfr-lkp@intel.com/
+
+Signed-off-by: Martin Kepplinger-Novakovic <martin.kepplinger-novakovic@ginzinger.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patch.msgid.link/20260121102607.4087362-1-martin.kepplinger-novakovic@ginzinger.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Here is the complete analysis:
+Now I have all the information needed for a thorough analysis. Let me
+compile the full assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `PCI`
-- Action verb: "Avoid" (indicating a workaround for broken hardware
-  behavior)
-- Summary: Prevent FLR (Function Level Reset) on AMD NPU device IDs
-  0x1502 and 0x17f0 because it causes device hang.
+### Step 1.1: Subject Line
+- **Subsystem:** drm/imx: parallel-display
+- **Action verb:** "add" (Kconfig dependency)
+- **Summary:** Add missing `DRM_DISPLAY_HELPER` Kconfig select for
+  `DRM_IMX_PARALLEL_DISPLAY`
+- Record: [drm/imx subsystem] [add missing dependency] [fixes link error
+  for drm_bridge_connector_init]
 
-Record: [PCI] [Avoid] [Disable FLR on AMD NPU that hangs when FLR
-triggered]
+### Step 1.2: Tags
+- **Reported-by:** kernel test robot `<lkp@intel.com>` — automated build
+  testing found this
+- **Closes:** lore link to kbuild error report
+- **Signed-off-by:** Martin Kepplinger-Novakovic (author), Philipp Zabel
+  (maintainer)
+- **Reviewed-by:** Philipp Zabel (subsystem maintainer)
+- **Link:** patch.msgid.link to original submission
+- No Fixes: tag, no Cc: stable (expected for manual review candidates)
+- Record: Kernel test robot reported build failure. Subsystem maintainer
+  reviewed AND committed.
 
-**Step 1.2: Tags**
-- `Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>` — author, AMD developer
-  working on AMD XDNA/NPU accelerator driver
-- `Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>` — PCI subsystem
-  maintainer applied the patch
-- `Link:
-  https://patch.msgid.link/20260226182545.3057330-1-lizhi.hou@amd.com` —
-  original submission
-- No Fixes: tag (expected — this is a new quirk addition, not a code
-  fix)
-- No Cc: stable tag (expected — that's why we're reviewing)
+### Step 1.3: Body Text
+The commit message includes the exact linker error:
+```
+arm-buildroot-linux-gnueabihf-ld: ... undefined reference to
+`drm_bridge_connector_init'
+```
+The author confirms reproducing this on a real imx53 platform build. The
+fix is explicitly stated: "Selecting DRM_DISPLAY_HELPER for
+DRM_IMX_PARALLEL_DISPLAY fixes the build."
 
-Record: Author is AMD NPU developer. PCI subsystem maintainer (Bjorn
-Helgaas) applied it personally. No syzbot involvement (this is a
-hardware bug, not a software bug).
+Record: [Build failure — linker error for undefined
+`drm_bridge_connector_init`] [Symptom: build fails for imx53 parallel
+display] [Confirmed by both author and test robot]
 
-**Step 1.3: Commit Body**
-The message is concise: AMD NPU devices with PCI Device IDs 0x1502 and
-0x17f0 advertise FLR support, but triggering FLR causes the device to
-hang. This is a hardware defect — the device's FLR capability
-advertisement is incorrect.
-
-Record: Bug = device hang on FLR. Symptom = device becomes unresponsive.
-Root cause = hardware defect in AMD NPU silicon.
-
-**Step 1.4: Hidden Bug Fix Detection**
-This is not a "hidden" fix — it's an explicit hardware workaround. The
-commit clearly states the problem (device hang) and the solution (avoid
-FLR).
-
-Record: Not a hidden bug fix; explicit hardware quirk/workaround.
+### Step 1.4: Hidden Bug Fix Detection
+This is explicitly a build fix, not disguised. No hidden complexity.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Single file modified: `drivers/pci/quirks.c`
-- 3 lines added:
-  1. Comment line in the block comment listing affected devices: `* AMD
-     Neural Processing Unit 0x1502 0x17f0`
-  2. `DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x1502, quirk_no_flr);`
-  3. `DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x17f0, quirk_no_flr);`
-- 0 lines removed
-- Function affected: none modified; new entries use existing
-  `quirk_no_flr()` function
+### Step 2.1: Inventory
+- **Files changed:** 1 (`drivers/gpu/drm/imx/ipuv3/Kconfig`)
+- **Lines added:** 1 (`select DRM_DISPLAY_HELPER`)
+- **Lines removed:** 0
+- **Scope:** Single-file, single-line Kconfig change
+- Record: [1 file, +1 line, single Kconfig select statement]
 
-Record: +3 lines, 0 removals, 1 file. Scope: trivial device ID addition
-to existing quirk table.
+### Step 2.2: Code Flow
+- **Before:** `DRM_IMX_PARALLEL_DISPLAY` selects `DRM_BRIDGE_CONNECTOR`
+  but not `DRM_DISPLAY_HELPER`
+- **After:** Also selects `DRM_DISPLAY_HELPER`
 
-**Step 2.2: Code Flow Change**
-Before: AMD NPU devices (0x1502, 0x17f0) are not in the quirk table, so
-`quirk_no_flr` is not called for them. When FLR is attempted via
-`pcie_reset_flr()` or `pci_af_flr()`, the `PCI_DEV_FLAGS_NO_FLR_RESET`
-flag is not set, and FLR proceeds — causing device hang.
+The root cause: `DRM_BRIDGE_CONNECTOR` is defined inside `if
+DRM_DISPLAY_HELPER` in `drivers/gpu/drm/display/Kconfig` (line 15-17).
+The `drm_bridge_connector.o` object is compiled as part of the
+`drm_display_helper` module. Without `DRM_DISPLAY_HELPER` enabled,
+`drm_bridge_connector_init()` is never compiled, causing the linker
+error.
 
-After: During PCI early fixups, `quirk_no_flr()` sets the
-`PCI_DEV_FLAGS_NO_FLR_RESET` flag on these devices. When FLR is later
-attempted, `pcie_reset_flr()` (line 4375) and `pci_af_flr()` (line 4398)
-check this flag and return `-ENOTTY` instead, preventing the hang.
+### Step 2.3: Bug Mechanism
+Category: **Build fix** — missing Kconfig dependency causes link
+failure.
 
-Record: [Before: FLR triggers and hangs device] → [After: FLR is
-blocked, device remains functional]
-
-**Step 2.3: Bug Mechanism**
-Category: Hardware workaround (PCI quirk).
-The `DECLARE_PCI_FIXUP_EARLY` macro registers a callback that runs
-during PCI enumeration for the specific vendor/device ID pair. The
-callback sets a flag that is checked in the FLR code paths. This is an
-extremely well-established pattern used for many other devices.
-
-Record: [Hardware workaround] [Device advertises broken FLR capability;
-quirk prevents FLR from being used]
-
-**Step 2.4: Fix Quality**
-- Obviously correct: follows identical pattern of 7+ existing entries in
-  the same quirk table
-- Minimal/surgical: 3 lines, no logic changes
-- Regression risk: essentially zero — the flag only affects these
-  specific PCI device IDs; no impact on any other devices
-- No red flags
-
-Record: Fix quality: excellent. Regression risk: near-zero.
+### Step 2.4: Fix Quality
+- Obviously correct: the function is in the `drm_display_helper` module,
+  so the module must be selected
+- Minimal: 1 line
+- Zero runtime regression risk: only affects build-time dependency
+  resolution
+- Record: [Perfect quality, zero regression risk]
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-The `quirk_no_flr` function was introduced in commit `f65fd1aa4f9881`
-(2017-04-03, v4.12-rc1) for Intel 82579 NICs. It has been stable
-infrastructure since v4.12. Additional device entries were added over
-the years (AMD Matisse in 2020, AMD FCH AHCI in 2023, SolidRun SNET DPU,
-Mediatek MT7922 in 2025).
+### Step 3.1: Blame
+From `git blame`, `DRM_BRIDGE_CONNECTOR` was added to this Kconfig by
+commit f673055a46784 ("drm/imx: Add missing DRM_BRIDGE_CONNECTOR
+dependency") in the v6.13 cycle. That commit itself was a partial fix —
+it added the `DRM_BRIDGE_CONNECTOR` select but missed adding
+`DRM_DISPLAY_HELPER`.
 
-Record: `quirk_no_flr` infrastructure exists since v4.12 (2017). Present
-in ALL active stable kernel trees.
+### Step 3.2: Root Cause Chain
+- Commit 9da7ec9b19d8 ("drm/bridge-connector: move to DRM_DISPLAY_HELPER
+  module") moved `drm_bridge_connector` under `DRM_DISPLAY_HELPER` —
+  root cause
+- Commit 5f6e56d3319d2 ("drm/imx: parallel-display: switch to
+  drm_panel_bridge") introduced bridge usage
+- Commit f673055a46784 added `select DRM_BRIDGE_CONNECTOR` but missed
+  `DRM_DISPLAY_HELPER`
+- The bug is that several commits were applied to bring bridge_connector
+  to imx but the Kconfig dependency chain was incomplete
 
-**Step 3.2: Fixes Tag**
-No Fixes: tag — not applicable (this is a new device ID addition, not a
-code fix).
+### Step 3.3: Prerequisite Check
+All prerequisite commits (5f6e56d3319d2, f673055a46784, ef214002e6b38)
+are already in v7.0. This fix applies standalone.
 
-**Step 3.3: File History**
-`drivers/pci/quirks.c` is an actively maintained file with frequent
-device-specific additions. The pattern of adding
-`DECLARE_PCI_FIXUP_EARLY` entries for broken FLR is well-established
-with many precedents.
+### Step 3.4: Author Context
+Martin Kepplinger-Novakovic is a recognized contributor (has
+MAINTAINERS/CREDITS changes). The fix was reviewed by Philipp Zabel, the
+actual subsystem maintainer for drm/imx.
 
-Record: File is active. Pattern is established. This is standalone — no
-prerequisites.
-
-**Step 3.4: Author**
-Lizhi Hou is an AMD developer who works on the `accel/amdxdna` (AMD NPU)
-driver. Their commits show deep familiarity with the AMD NPU hardware.
-They are the right person to identify this hardware defect.
-
-Record: Author is the AMD NPU subsystem developer — credible source for
-this hardware bug report.
-
-**Step 3.5: Dependencies**
-None. The `quirk_no_flr` function, `DECLARE_PCI_FIXUP_EARLY` macro, and
-`PCI_VENDOR_ID_AMD` constant all exist in every stable tree back to
-v4.12. This patch is completely self-contained.
-
-Record: No dependencies. Will apply cleanly to any stable tree with the
-quirk infrastructure (all of them).
+### Step 3.5: Stable Tree Applicability
+- **v6.12:** Bug does NOT exist — `parallel-display.c` doesn't call
+  `drm_bridge_connector_init()` (verified: 0 occurrences)
+- **v6.13:** Bug EXISTS — Kconfig has `select DRM_BRIDGE_CONNECTOR` but
+  not `select DRM_DISPLAY_HELPER`
+- **v6.14:** Bug EXISTS — same Kconfig state as v6.13
+- **v7.0:** Bug EXISTS — confirmed identical Kconfig state, fix applies
+  cleanly
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1-4.5:** Lore and patch.msgid.link are currently returning
-anti-bot challenges. However, the commit was applied by Bjorn Helgaas
-(PCI subsystem maintainer), which is the strongest possible endorsement
-for a PCI patch. The Link: tag confirms it was submitted and reviewed
-through the standard kernel mailing list process.
+### Step 4.1-4.2: Original Discussion
+- b4 dig for the prior commit (f673055a46784) found the thread at lore.
+  It was a single-patch fix
+- The current fix was submitted by the author after hitting the build
+  failure on real hardware
+- Reviewed-by from Philipp Zabel (the drm/imx maintainer who also
+  committed it)
 
-Record: Could not access lore discussion due to anti-bot protection.
-However, maintainer (Bjorn Helgaas) applied the patch directly, which is
-strong validation.
+### Step 4.3: Bug Report
+The kernel test robot (kbuild) reported the linker error, referenced in
+the Closes: tag.
+
+### Step 4.4-4.5: Series Context
+Standalone single-patch fix, no dependencies on other uncommitted
+patches.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions**
-No functions modified. Two new `DECLARE_PCI_FIXUP_EARLY` entries added
-that call existing `quirk_no_flr()`.
+### Step 5.1-5.4: Function Analysis
+`drm_bridge_connector_init()` is called at line 206 of `parallel-
+display.c` in `imx_pd_bind()`. This is the driver probe/bind path —
+critical for anyone using the i.MX parallel display interface. Without
+this fix, the driver simply cannot be built (link error).
 
-**Step 5.2: Callers of quirk_no_flr**
-Called by the PCI subsystem during device enumeration (early fixup
-phase). This runs for every PCI device matching the vendor/device ID
-pair.
-
-**Step 5.3-5.4: Impact path**
-`quirk_no_flr()` → sets `PCI_DEV_FLAGS_NO_FLR_RESET` → checked by
-`pcie_reset_flr()` and `pci_af_flr()` in `drivers/pci/pci.c`. FLR is
-triggered during VFIO device passthrough, device reset operations, and
-error recovery. The flag causes these functions to return `-ENOTTY`,
-which makes the PCI reset machinery use an alternative reset method.
-
-Record: FLR is triggered in VFIO passthrough and device reset. The quirk
-prevents hang in these common operations.
-
-**Step 5.5: Similar patterns**
-7 existing entries in the same quirk table for AMD, Intel, Mediatek, and
-SolidRun devices. This is a very common pattern.
+### Step 5.5: Similar Patterns
+Many other DRM drivers already `select DRM_DISPLAY_HELPER` alongside
+`DRM_BRIDGE_CONNECTOR` (verified via grep: bridge/Kconfig,
+panel/Kconfig, rockchip/Kconfig all have it). The IMX parallel display
+was simply missed.
 
 ---
 
-## PHASE 6: STABLE TREE ANALYSIS
+## PHASE 6: CROSS-REFERENCING
 
-**Step 6.1: Buggy code in stable?**
-The "buggy code" is the PCI FLR path itself which doesn't know about
-these AMD NPU devices. The `quirk_no_flr` infrastructure has existed
-since v4.12. However, the AMD NPU hardware itself may only appear in
-relatively recent systems.
+### Step 6.1: Bug Exists in Stable
+Confirmed the bug exists in v7.0. The Kconfig file in v7.0 exactly
+matches the "before" state of the diff.
 
-Record: The quirk infrastructure exists in all stable trees. The fix
-will apply cleanly.
+### Step 6.2: Backport Complexity
+**Clean apply** — the diff applies directly to v7.0 without any
+modifications.
 
-**Step 6.2: Backport complications**
-None expected. The patch adds entries at the end of an existing table.
-The exact ordering might differ slightly across stable trees, but the
-macro entries are independent and the patch should apply with at most
-trivial context adjustments.
-
-Record: Expected backport difficulty: clean apply or trivial context
-adjustment.
-
-**Step 6.3: Related fixes in stable**
-No related fixes for AMD NPU FLR already in stable.
+### Step 6.3: No Existing Fix
+No alternative fix exists in v7.0 for this issue.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1:** PCI subsystem (`drivers/pci/`) — CORE infrastructure,
-affects all PCI device users.
+### Step 7.1: Subsystem
+- **Path:** drivers/gpu/drm/imx/ipuv3
+- **Criticality:** PERIPHERAL (embedded i.MX ARM platform, but has real
+  users building kernels for imx53 boards)
 
-**Step 7.2:** PCI quirks.c is actively maintained with frequent device
-additions.
-
-Record: [PCI subsystem] [CORE criticality] [Active development]
+### Step 7.2: Activity
+The subsystem has moderate activity with several recent Kconfig fixes
+for the same dependency chain.
 
 ---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 8: IMPACT AND RISK
 
-**Step 8.1: Who is affected**
-Users with AMD NPU hardware (PCI IDs 0x1502, 0x17f0). This includes
-users doing VFIO passthrough to VMs, users experiencing error recovery
-that triggers FLR, and potentially users of the amdxdna accelerator
-driver.
+### Step 8.1: Affected Users
+Anyone building a kernel with `CONFIG_DRM_IMX_PARALLEL_DISPLAY=y/m`
+where `DRM_DISPLAY_HELPER` is not otherwise selected. This affects
+embedded Linux developers targeting i.MX53 platforms.
 
-Record: Affected users: AMD NPU hardware users.
+### Step 8.2: Trigger
+100% reproducible — any build with the right config fails. Not a timing
+issue.
 
-**Step 8.2: Trigger conditions**
-FLR is triggered during: VFIO device attach/detach, device error
-recovery, and explicit reset operations. For VFIO users, this is
-triggered during normal VM operations.
+### Step 8.3: Severity
+**Build failure** — the kernel cannot be compiled with this driver
+enabled. Severity: HIGH for affected users.
 
-Record: Trigger is FLR attempt — common in VFIO and device reset
-scenarios.
-
-**Step 8.3: Failure mode**
-Device hang — the NPU becomes unresponsive and cannot be used. This is a
-HIGH severity issue.
-
-Record: Severity: HIGH (device hang, device becomes unusable)
-
-**Step 8.4: Risk-Benefit**
-- Benefit: HIGH — prevents device hang on real hardware for real users
-- Risk: VERY LOW — 3 lines, uses existing well-tested infrastructure,
-  affects only the specific device IDs, no logic changes
-- Ratio: Excellent benefit-to-risk ratio
+### Step 8.4: Risk-Benefit
+- **Benefit:** HIGH — fixes a hard build failure, enables compilation of
+  i.MX parallel display driver
+- **Risk:** NEAR-ZERO — 1-line Kconfig `select` addition, no runtime
+  code change whatsoever
+- **Ratio:** Excellent
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Summary**
+### Step 9.1: Evidence Summary
+**FOR backporting:**
+- Fixes a real, reproducible build failure (linker error)
+- Single-line Kconfig change — minimal scope
+- Zero runtime regression risk
+- Reported by kernel test robot AND reproduced by author on real
+  hardware
+- Reviewed and committed by subsystem maintainer
+- Bug exists in v7.0 (verified)
+- Clean apply to v7.0
 
-FOR backporting:
-- Classic PCI quirk addition — explicitly listed as an exception
-  category for stable
-- Only 3 lines added, using existing infrastructure unchanged since
-  v4.12
-- Prevents device hang (HIGH severity)
-- Applied by PCI subsystem maintainer (Bjorn Helgaas)
-- Author is the AMD NPU hardware developer (credible bug report)
-- Zero regression risk — only affects specific PCI device IDs
-- Pattern has 7+ precedents in the same file
-- Will apply cleanly to all stable trees
-
-AGAINST backporting:
+**AGAINST backporting:**
 - None identified
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — identical pattern to 7 other
-   entries, applied by subsystem maintainer
-2. Fixes a real bug? **YES** — device hang on FLR
-3. Important issue? **YES** — device hang is HIGH severity
-4. Small and contained? **YES** — 3 lines, single file
-5. No new features or APIs? **YES** — just device IDs for existing quirk
-6. Can apply to stable trees? **YES** — infrastructure exists since
-   v4.12
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** — Kconfig dependency is
+   unambiguously needed
+2. Fixes a real bug? **YES** — hard build failure
+3. Important issue? **YES** — prevents building the driver entirely
+4. Small and contained? **YES** — 1 line in 1 file
+5. No new features or APIs? **YES** — purely a build dependency fix
+6. Can apply to stable? **YES** — clean apply verified
 
-**Step 9.3: Exception Category**
-This is a **hardware quirk/workaround** — explicitly called out as
-automatic YES for stable.
+### Step 9.3: Exception Category
+This is a **BUILD FIX** — one of the explicitly allowed exception
+categories for stable.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from AMD developer (Lizhi Hou)
-  and PCI maintainer (Bjorn Helgaas)
-- [Phase 2] Diff analysis: +3 lines (1 comment, 2
-  DECLARE_PCI_FIXUP_EARLY macros) in `drivers/pci/quirks.c`
-- [Phase 3] git blame: `quirk_no_flr` introduced in commit
-  `f65fd1aa4f9881` (v4.12-rc1, 2017), present in all stable trees
-- [Phase 3] git show `0d14f06cd6657`: confirmed AMD Matisse FLR quirk
-  precedent from 2020
-- [Phase 3] git log --author: Lizhi Hou confirmed as AMD XDNA/NPU
-  accelerator developer
-- [Phase 4] Lore/patch.msgid.link blocked by anti-bot; maintainer SOB
-  confirms standard review process
-- [Phase 5] Grep for `PCI_DEV_FLAGS_NO_FLR_RESET`: checked in
-  `pcie_reset_flr()` (line 4375) and `pci_af_flr()` (line 4398) in
-  `pci.c`
-- [Phase 6] `quirk_no_flr` infrastructure exists since v4.12 — present
-  in ALL active stable trees
-- [Phase 6] No backport complications: trivial table additions
-- [Phase 8] Failure mode: device hang on FLR, severity HIGH
-- UNVERIFIED: Could not access lore discussion to check for reviewer
-  feedback or stable nominations (anti-bot protection)
+- [Phase 1] Parsed tags: Reported-by kernel test robot, Reviewed-by
+  Philipp Zabel (maintainer), Closes link to kbuild report
+- [Phase 2] Diff analysis: +1 line `select DRM_DISPLAY_HELPER` in
+  Kconfig
+- [Phase 3] git blame: `DRM_BRIDGE_CONNECTOR` added by f673055a46784 in
+  v6.13 cycle without matching `DRM_DISPLAY_HELPER`
+- [Phase 3] git show v7.0:Kconfig: confirmed bug exists (missing select
+  DRM_DISPLAY_HELPER)
+- [Phase 3] git show v6.12:parallel-display.c: confirmed 0 calls to
+  `drm_bridge_connector_init`, bug doesn't exist pre-6.13
+- [Phase 3] git show v6.13/v6.14:Kconfig: confirmed bug present in both
+- [Phase 4] b4 dig -c f673055a46784: found original thread for the
+  incomplete fix
+- [Phase 5] Grep: `drm_bridge_connector_init` called at line 206 in
+  `imx_pd_bind()`
+- [Phase 5] Grep: `DRM_BRIDGE_CONNECTOR` inside `if DRM_DISPLAY_HELPER`
+  at display/Kconfig:15-17
+- [Phase 5] Grep: `drm_display_helper-$(CONFIG_DRM_BRIDGE_CONNECTOR)` in
+  display/Makefile confirms build dependency
+- [Phase 6] v7.0 Kconfig state matches diff's "before" — clean apply
+  guaranteed
+- [Phase 8] Failure mode: 100% reproducible link error, severity HIGH
+  for affected configs
 
-This is a textbook hardware quirk addition: minimal (3 lines), using
-long-established infrastructure, preventing a device hang on real AMD
-NPU hardware, applied by the PCI subsystem maintainer, with zero
-regression risk.
+This is a textbook build fix: one-line Kconfig dependency addition, zero
+runtime risk, fixes a hard build failure for i.MX parallel display
+users. It meets every stable kernel criterion.
 
 **YES**
 
- drivers/pci/quirks.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/imx/ipuv3/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 48946cca4be72..757a296eae411 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5603,6 +5603,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x443, quirk_intel_qat_vf_cap);
-  * AMD Starship/Matisse HD Audio Controller 0x1487
-  * AMD Starship USB 3.0 Host Controller 0x148c
-  * AMD Matisse USB 3.0 Host Controller 0x149c
-+ * AMD Neural Processing Unit 0x1502 0x17f0
-  * Intel 82579LM Gigabit Ethernet Controller 0x1502
-  * Intel 82579V Gigabit Ethernet Controller 0x1503
-  * Mediatek MT7922 802.11ax PCI Express Wireless Network Adapter
-@@ -5615,6 +5616,8 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x1487, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x148c, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x149c, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x1502, quirk_no_flr);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x17f0, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_MEDIATEK, 0x0616, quirk_no_flr);
+diff --git a/drivers/gpu/drm/imx/ipuv3/Kconfig b/drivers/gpu/drm/imx/ipuv3/Kconfig
+index acaf250890019..b2240998df4f1 100644
+--- a/drivers/gpu/drm/imx/ipuv3/Kconfig
++++ b/drivers/gpu/drm/imx/ipuv3/Kconfig
+@@ -15,6 +15,7 @@ config DRM_IMX_PARALLEL_DISPLAY
+ 	depends on DRM_IMX
+ 	select DRM_BRIDGE
+ 	select DRM_BRIDGE_CONNECTOR
++	select DRM_DISPLAY_HELPER
+ 	select DRM_IMX_LEGACY_BRIDGE
+ 	select DRM_PANEL_BRIDGE
+ 	select VIDEOMODE_HELPERS
 -- 
 2.53.0
 
