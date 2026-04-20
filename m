@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89343B583D;
-	Mon, 20 Apr 2026 13:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8535A3B776E;
+	Mon, 20 Apr 2026 13:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691016; cv=none; b=eaALLex/4ZG1W08Yub2rDaK813MrCAbGKWioV2y5WOZFrwYCG6evLRZQtT7kLNgcJWY6x8r1rxgDg5DnmBIMJaF/JkgUsb+ReoPEJIyiROsLk1o+nkpiKtY3ouq9XXUEh/S+ACflqCJC/FOGyQYxGj3Klhz341azLkSJ/43R4+M=
+	t=1776691017; cv=none; b=UEk3utK0iuQcjLqU4hQJOplWcl/ACcJL7WYJYs7Sax7O6cgP931LWI4nKmQaQ2pgNPUTXSJUXQVeek1kqBft8bpQrbXzulRdlaRy+XjnRTBMiISQvCrGCzeUhLa5HxWyZImuwRDs1rS/OPrzGn5HNmS4sxdEYN5TxN9NgjluTI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691016; c=relaxed/simple;
-	bh=ZwMWE+j/Jpj1EWtkg4A1r8lGLJtnijJkTwl2FFZm2WY=;
+	s=arc-20240116; t=1776691017; c=relaxed/simple;
+	bh=sq/AHL5XJEXcLjE6SfDsH3BFsBbp39abJbIoOQPCmXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lvqtDF/yjWFKCX3W9lgRoEkGQ8eCdNe02rJMKnQCS6n4DYARGMS68B56a9/AWtC3JnA9yxKqov091YAHgkhaLQvoRHSdEK5btxFvzTYkB7YGtrmFn+AmHjFcSHLvxNcpHUR19rLaXnx4POj7n8EyuStqi9CdmZQRxm2ImUfAiTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fRdXlrNH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UNlCZ0HW6rdFuPV7Id81OHEhgayFv7jWM7HqI8fIy78urgItnN3P3KLTBDxnKhHrQkC5lsrtJVonqkotcmNA615mfIQKFgApMKH8oqFEuYjyLjb4K9CuNDccmLw25x2slMDqBWx3zb9ejC90cZOxpiJB6pRMi8urnLyL1GLBe3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lP00IDrf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fRdXlrNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1527C19425;
-	Mon, 20 Apr 2026 13:16:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lP00IDrf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BB3C19425;
+	Mon, 20 Apr 2026 13:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691015;
-	bh=ZwMWE+j/Jpj1EWtkg4A1r8lGLJtnijJkTwl2FFZm2WY=;
+	s=k20201202; t=1776691017;
+	bh=sq/AHL5XJEXcLjE6SfDsH3BFsBbp39abJbIoOQPCmXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRdXlrNHjfYIbgl03pTbi2A5jVSbcAmn5K5noXBypMcXBp1OdQTUDHjv/dzEcYH7E
-	 qHjGjnh3796R1VYx38YRBkKMEMpKCW7Fvo9pCfldzjYNOz2PM0b2iLJtqkxA1SYfvn
-	 meQsUvZauCW59PNOyRbQLL4nRe8WFRAIyBqBhB9D3f2/oRT0dnKniNEJUZslsKk+By
-	 GpzfRdu1DYbzOJLNHqyv553fvOHYsjnROQQy071xgk5obmZjlmRVncpgWteuZGFAFY
-	 FbwHsgtQJZ0JwAOFe/NLcACsdk9fbsrEf9hXHzRTG2eZIDE5wP2LGxIniyAE8NUJQp
-	 pe6APUuAh5prg==
+	b=lP00IDrfuIreh2zLiz7FuSfr3SHabDLd+/SCS9B9JyOD3ZZrdXBzeWDi02IwkVY8f
+	 Xh6zLgqUcKXxSNenMFqx1xBtQIRaDSaAlFHHPDwNGOlQBNSn3+imWqXKD+BMJSyZRt
+	 U4MaSJbbYM97c+YC0L+ZHPWHHluCpLN2tJVLTzScVOsEZJZK1C4nOyZyObQbCP82FY
+	 KDQX/uHOQo9mbk/dGJlUegK05KqLud+bCMiHKknkLXFq5yl/+lyCg1wT2BaTGR+XmT
+	 vmgfGp7Lg9kVAx5lIr3XhNfDr/GIM1sI+mFpUVcGSNoCRLW8ZSuB0n+gk79nhE33mw
+	 rInT1nnxdCEPg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qingfang Deng <dqfext@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	linux-ppp@vger.kernel.org,
-	netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ppp: disconnect channel before nullifying pch->chan
-Date: Mon, 20 Apr 2026 09:08:30 -0400
-Message-ID: <20260420131539.986432-44-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] wifi: iwlwifi: mvm: zero iwl_geo_tx_power_profiles_cmd before sending
+Date: Mon, 20 Apr 2026 09:08:31 -0400
+Message-ID: <20260420131539.986432-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -54,366 +50,332 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 6a196e83a1a7e50be93482d1cd4305641f1a9fb1 ]
+[ Upstream commit 5562b3bbeede8be25092064720e4a942e9fd3e3e ]
 
-In ppp_unregister_channel(), pch->chan is set to NULL before calling
-ppp_disconnect_channel(), which removes the channel from ppp->channels
-list using list_del_rcu() + synchronize_net(). This creates an
-intermediate state where the channel is still connected (on the list)
-but already unregistered (pch->chan == NULL).
+Otherwise we may send garbage.
 
-Call ppp_disconnect_channel() before setting pch->chan to NULL. After
-the synchronize_net(), no new reader on the transmit path will hold a
-reference to the channel from the list.
-
-This eliminates the problematic state, and prepares for removing the
-pch->chan NULL checks from the transmit path in a subsequent patch.
-
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Link: https://patch.msgid.link/20260312093732.277254-1-dqfext@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260319204647.2d494b0f4692.I9afd0fa6b2ea5a27118144ac4e3bbbedc2089c10@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the complete
-analysis.
+Now I have all the information needed for a thorough analysis. Let me
+compile it.
 
 ---
 
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-- **Subsystem**: `ppp` (PPP networking subsystem)
-- **Action verb**: "disconnect" / implied "fix" - reorder operations to
-  eliminate a race
-- **Summary**: Reorder `ppp_disconnect_channel()` and `pch->chan = NULL`
-  to eliminate a problematic intermediate state
+- **Subsystem**: wifi: iwlwifi: mvm
+- **Action verb**: "zero" (initialization fix)
+- **Summary**: Zero-initialize `iwl_geo_tx_power_profiles_cmd` union
+  before sending to firmware
 
 ### Step 1.2: Tags
-- **Signed-off-by**: Qingfang Deng (author, active PPP contributor with
-  9+ commits to the subsystem)
-- **Link**:
-  `https://patch.msgid.link/20260312093732.277254-1-dqfext@gmail.com`
-  (the `-1-` suggests a single patch, not a series)
-- **Signed-off-by**: Paolo Abeni (netdev co-maintainer, merge authority)
-- No Fixes: tag (expected - that's why it's under review)
-- No Reported-by (no explicit crash report)
+- **Signed-off-by**: Emmanuel Grumbach (author, Intel iwlwifi core
+  developer)
+- **Reviewed-by**: Johannes Berg (iwlwifi/mac80211 subsystem maintainer
+  - strong trust signal)
+- **Signed-off-by**: Miri Korenblit (Intel wireless maintainer,
+  committer)
+- **Link**: patch.msgid.link for the original submission
+- No Fixes: tag (expected for AUTOSEL candidates)
+- No Cc: stable (expected)
 
-### Step 1.3: Body Analysis
-The commit describes a concrete race condition: `pch->chan` is set to
-NULL before `ppp_disconnect_channel()` removes the channel from
-`ppp->channels`. This creates an intermediate state where the channel is
-still on the list but already has `pch->chan == NULL`. The fix reorders
-the operations: disconnect first (remove from list), then NULL-ify.
+### Step 1.3: Commit Body
+- "Otherwise we may send garbage." - Clear and direct. The union is
+  stack-allocated and not zero-initialized, so whatever stack data
+  happens to be there gets sent to the firmware.
 
-### Step 1.4: Hidden Bug Fix Detection
-The phrase "This eliminates the problematic state" clearly describes
-fixing a race condition. The mention of "prepares for removing the
-pch->chan NULL checks from the transmit path in a subsequent patch"
-suggests a follow-up cleanup, but the reordering itself has standalone
-correctness value.
-
-**Record**: This IS a race condition fix, disguised slightly by the
-preparatory framing.
+### Step 1.4: Hidden Bug Fix?
+- YES. The word "zero" and "= {}" pattern is a classic **uninitialized
+  data fix**. Sending uninitialized stack data to firmware hardware is a
+  real bug: potential information leak and potential firmware
+  misbehavior.
 
 ---
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **1 file changed**: `drivers/net/ppp/ppp_generic.c`
-- **Net change**: 0 lines added, 0 removed - purely a reorder of one
-  line
-- **Function modified**: `ppp_unregister_channel()`
-- **Scope**: single-file, single-function, surgical
+- **1 file changed**: `drivers/net/wireless/intel/iwlwifi/mvm/fw.c`
+- **2 lines changed** (2 additions, 2 removals)
+- **Functions modified**: `iwl_mvm_get_sar_geo_profile()`,
+  `iwl_mvm_sar_geo_init()`
+- **Scope**: Extremely minimal, single-file surgical fix
 
-### Step 2.2: Code Flow Change
-**Before**: In `ppp_unregister_channel()`:
-1. `down_write(&pch->chan_sem)` + `spin_lock_bh(&pch->downl)` +
-   `WRITE_ONCE(pch->chan, NULL)` + unlock
-2. `ppp_disconnect_channel(pch)` - removes from `ppp->channels` via
-   `list_del_rcu()` + `synchronize_net()`
+### Step 2.2: Code Flow
+Two identical changes:
+- Line 910: `union iwl_geo_tx_power_profiles_cmd geo_tx_cmd;` → `...
+  geo_tx_cmd = {};`
+- Line 962: `union iwl_geo_tx_power_profiles_cmd cmd;` → `... cmd = {};`
 
-**After**:
-1. `ppp_disconnect_channel(pch)` - removes from list first
-2. `down_write(&pch->chan_sem)` + `spin_lock_bh(&pch->downl)` +
-   `WRITE_ONCE(pch->chan, NULL)` + unlock
+Both change stack-allocated union variables from uninitialized to zero-
+initialized.
 
-### Step 2.3: Bug Mechanism - RACE CONDITION / NULL POINTER DEREFERENCE
+### Step 2.3: Bug Mechanism
+This is an **uninitialized data** bug (category e: initialization
+fixes).
 
-The race occurs in `ppp_mp_explode()` (multilink transmit path):
+The union `iwl_geo_tx_power_profiles_cmd` contains 5 struct variants
+(v1-v5) of different sizes. The union is the size of the largest (v5),
+which contains `table[8][3]` of `iwl_per_chain_offset` structs plus ops
+and table_revision. This is a substantial structure.
 
-```1977:2001:drivers/net/ppp/ppp_generic.c
-list_for_each_entry(pch, &ppp->channels, clist) {
-    if (pch->chan) {          // Read #1 - no downl lock held
-        pch->avail = 1;
-        navail++;
-        pch->speed = pch->chan->speed;  // Read #2 - TOCTOU: pch->chan
-can be NULL here!
-    }
-```
+In `iwl_mvm_get_sar_geo_profile()`:
+- Only `geo_tx_cmd.v1.ops` is explicitly set
+- Then `len` bytes (up to `sizeof(geo_tx_cmd.v5)`) are sent to firmware
+- All table and table_revision fields are **uninitialized stack
+  garbage** being sent to firmware
 
-**Race scenario**:
-1. CPU A (`ppp_mp_explode`, under `ppp_xmit_lock`): reads `pch->chan !=
-   NULL` at line 1978
-2. CPU B (`ppp_unregister_channel`): does `WRITE_ONCE(pch->chan, NULL)`
-   under `downl` (NOT under `ppp_xmit_lock`)
-3. CPU A: dereferences `pch->chan->speed` at line 1981 - **NULL pointer
-   dereference / kernel oops**
-
-The channel is still on `ppp->channels` (hasn't been disconnected yet),
-so `ppp_mp_explode` finds it while iterating.
-
-With the fix, `ppp_disconnect_channel()` removes the channel from the
-list (under `ppp_lock`, which includes `ppp_xmit_lock`) FIRST. After it
-returns, no transmit code iterating `ppp->channels` will see this
-channel. Then setting `pch->chan = NULL` is safe.
+In `iwl_mvm_sar_geo_init()`:
+- `ops`, `table_revision`, and table contents are filled, but any
+  padding within the structure or unused bytes remain uninitialized
 
 ### Step 2.4: Fix Quality
-- Obviously correct - eliminates the problematic state entirely
-- Minimal/surgical - one line moved
-- No regression risk - the semantic operations are the same, just
-  reordered
-- No API changes, no locking changes, no new features
+- **Obviously correct**: `= {}` is the standard C idiom for zero-
+  initialization
+- **Minimal/surgical**: 2 lines changed, only adding initialization
+- **Regression risk**: Zero. Zero-initializing before populating fields
+  cannot break anything.
+- The newer `mld/regulatory.c` code already uses `= {}` initialization
+  (line 76), confirming this is the correct pattern.
 
 ---
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-From git blame, the buggy code ordering dates back to `^1da177e4c3f41`
-(Linus Torvalds, 2005-04-16) - the initial kernel tree import. The
-`WRITE_ONCE` was added by `0417adf367a0af` (August 2025), but the
-fundamental ordering issue exists since v2.6.12.
+The uninitialized declarations were introduced in commit
+`dd2a1256e6a8d8` ("iwlwifi: acpi: rename geo structs to contain
+versioning") from **2020-09-28**, which restructured these commands into
+a union. The bug has existed since then.
 
-### Step 3.2: No Fixes: tag (expected)
+### Step 3.2: Fixes Tag
+No Fixes: tag present (expected for AUTOSEL). The bug was introduced by
+`dd2a1256e6a8d8` which is present in v5.10, v5.15, v6.1, v6.6, and all
+later stable trees.
 
-### Step 3.3: Related Changes
-The same author (Qingfang Deng) previously fixed a related race in
-`0417adf367a0af` ("ppp: fix race conditions in ppp_fill_forward_path"),
-which explicitly documented: "pch->chan can be NULL. When
-ppp_unregister_channel() is called, pch->chan is set to NULL before pch
-is removed from ppp->channels." That commit added workarounds (NULL
-checks, RCU). This commit fixes the **root cause**.
+### Step 3.3: File History
+The file has significant recent activity (196 commits since the buggy
+commit). The newer `mld/regulatory.c` equivalent already uses zero-
+initialization, confirming the pattern was eventually corrected in newer
+code but the `mvm/fw.c` path was missed.
 
-### Step 3.4: Author
-Qingfang Deng has 9+ PPP commits, including critical race fixes and
-performance improvements. They are a de facto domain expert for this
-code.
+### Step 3.4: Author Context
+Emmanuel Grumbach is a core Intel iwlwifi developer with many recent
+commits. Johannes Berg (who reviewed this) is the iwlwifi/mac80211
+maintainer. This is a fix from the subsystem's core team.
 
 ### Step 3.5: Dependencies
-The diff references `WRITE_ONCE(pch->chan, NULL)` which was introduced
-by `0417adf367a0af`. That commit has `Fixes: f6efc675c9dd` and was
-likely already auto-selected for stable. For trees without that commit,
-a trivial context adjustment (`pch->chan = NULL` instead of
-`WRITE_ONCE`) would be needed. The reordering logic works correctly
-regardless.
+This patch is **fully standalone**. It only adds `= {}` to existing
+variable declarations. No prerequisite commits needed.
 
 ---
 
-## Phase 4: Mailing List Research
+## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.2
-Lore is currently blocked by Anubis anti-bot protection. b4 dig could
-not find this specific commit by message-id (the commit doesn't exist in
-this tree). However, the patch was accepted and merged by Paolo Abeni,
-netdev co-maintainer, which provides strong confidence in correctness.
+### Step 4.1: Original Submission
+b4 dig found the patch at: `https://patch.msgid.link/20260319204647.2d49
+4b0f4692.I9afd0fa6b2ea5a27118144ac4e3bbbedc2089c10@changeid`
 
-### Step 4.3-4.5
-The earlier commit `0417adf367a0af` explicitly documents the bug that
-this commit fixes at the root: "pch->chan can be NULL. When
-ppp_unregister_channel() is called, pch->chan is set to NULL before pch
-is removed from ppp->channels." This was a known problem.
+It was submitted as **[PATCH iwlwifi-next 03/15]** as part of a 15-patch
+series. However, this patch is **completely independent** - it's just a
+variable initialization change.
 
----
+### Step 4.2: Reviewers
+- Johannes Berg (iwlwifi maintainer) gave **Reviewed-by**
+- linux-wireless@vger.kernel.org was CC'd
 
-## Phase 5: Code Semantic Analysis
-
-### Step 5.1-5.4: Call Path Tracing
-The vulnerable function `ppp_mp_explode()` is called from:
-- `ppp_push()` -> `ppp_send_frame()` -> `__ppp_xmit_process()` ->
-  `ppp_xmit_process()`
-
-This is the **hot transmit path** for PPP multilink, triggered every
-time a packet is sent on a multilink PPP connection. The race triggers
-when a channel is unregistered while multilink transmission is active -
-a common scenario during PPP session teardown or link failure.
-
-`ppp_fill_forward_path()` (already patched with NULL checks by
-`0417adf367a0af`) is also affected but has workarounds. This commit
-fixes the root cause for all paths.
-
-### Step 5.5: Similar Patterns
-The same TOCTOU pattern (check `pch->chan`, then dereference) also
-appears at:
-- Line 1978/1981: `ppp_mp_explode()` - **vulnerable** (no `downl` lock)
-- Line 1912-1914: `ppp_push()` - **safe** (holds `pch->downl`)
-- Line 2059-2060: `ppp_mp_explode()` phase 2 - **safe** (holds
-  `pch->downl`)
-- Line 2185-2189: `__ppp_channel_push()` - **safe** (holds `pch->downl`)
+### Step 4.3-4.5: Bug Report / Related Patches / Stable Discussion
+No explicit bug report or stable discussion found. The bug was found by
+code inspection by an Intel developer.
 
 ---
 
-## Phase 6: Stable Tree Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1-5.2: Function Callers
+- `iwl_mvm_get_sar_geo_profile()`: Called from `debugfs.c` (debugfs
+  handler) and `nvm.c` (NVM/regulatory init)
+- `iwl_mvm_sar_geo_init()`: Called from main firmware init path at line
+  1735 during `iwl_mvm_up()` - this runs on **every iwlwifi device
+  initialization**
+
+### Step 5.4: Reachability
+`iwl_mvm_sar_geo_init` runs during driver initialization for every Intel
+WiFi device using the MVM firmware path. This is a **hot, commonly-
+executed path** affecting every Intel WiFi user.
+
+---
+
+## PHASE 6: STABLE TREE ANALYSIS
 
 ### Step 6.1: Buggy Code in Stable
-The buggy ordering exists since v2.6.12 (the very first git commit). It
-is present in ALL active stable trees.
+The buggy commit `dd2a1256e6a8d8` is confirmed present in:
+- v5.10 ✓
+- v5.15 ✓
+- v6.1 ✓
+- v6.6 ✓
+
+The bug affects **all active stable trees**.
 
 ### Step 6.2: Backport Complications
-For 7.0.y: applies cleanly (code matches exactly).
-For older trees without `0417adf367a0af`: trivial context change needed
-(`pch->chan = NULL` vs `WRITE_ONCE(pch->chan, NULL)`), and
-`list_del_rcu`/`synchronize_net()` may not be present in
-`ppp_disconnect_channel()`. However, the reordering is still correct for
-the transmit path because `ppp_disconnect_channel()` takes `ppp_lock()`
-(which includes `ppp_xmit_lock`), ensuring mutual exclusion with
-transmit path iteration.
-
-### Step 6.3: Related Fixes
-`0417adf367a0af` added workarounds (NULL checks) for the same underlying
-issue. This commit fixes the root cause.
+The fix is trivial (adding `= {}` to declarations). The only concern is
+whether the variable declarations exist identically in stable trees.
+Since these are the same variable names in the same functions and the
+union type hasn't changed names, this should apply cleanly or with
+trivial adjustment.
 
 ---
 
-## Phase 7: Subsystem Context
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: PPP networking - **IMPORTANT** subsystem
-PPP is used by DSL/dial-up connections, VPN tunnels, and
-embedded/routing devices. Multilink PPP aggregates multiple physical
-links, common in WAN/enterprise networking.
+### Step 7.1: Subsystem
+- **Subsystem**: Wireless networking driver (iwlwifi) - Intel WiFi
+- **Criticality**: IMPORTANT - iwlwifi is one of the most widely used
+  WiFi drivers, found in most Intel-based laptops
 
-### Step 7.2: Actively maintained by the author (9+ commits), merged by
-netdev maintainers.
+### Step 7.2: Activity
+Very actively developed (20+ recent commits shown in file history).
 
 ---
 
-## Phase 8: Impact and Risk Assessment
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users running PPP with multilink (`SC_MULTILINK` flag set). This
-includes enterprise WAN, embedded networking, and PPPoE configurations.
+### Step 8.1: Who Is Affected
+All users with Intel WiFi hardware using iwlwifi MVM firmware (millions
+of laptops and desktops).
 
 ### Step 8.2: Trigger Conditions
-- Multilink PPP transmitting while a channel is being unregistered
-- Happens during link failure, session teardown, or module unload
-- A timing-dependent race, but the window exists every time a channel is
-  unregistered during active multilink transmission
+- `iwl_mvm_sar_geo_init`: Triggered on **every driver initialization**
+  (boot, resume, WiFi toggle)
+- `iwl_mvm_get_sar_geo_profile`: Triggered from debugfs and NVM init
 
-### Step 8.3: Failure Mode
-**NULL pointer dereference** at `pch->chan->speed` -> kernel oops/crash.
-Severity: **HIGH** (kernel crash, potential data loss from interrupted
-operations).
+### Step 8.3: Failure Mode Severity
+- **Uninitialized kernel stack data sent to firmware**: This is a
+  potential kernel info leak to firmware
+- **Firmware misbehavior**: If firmware interprets garbage values in the
+  table/revision fields, it could misapply TX power settings (regulatory
+  compliance issue) or behave unpredictably
+- **Severity**: MEDIUM-HIGH (info leak + potential incorrect radio
+  behavior)
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: HIGH - prevents kernel crash in PPP multilink transmit
-  path
-- **Risk**: VERY LOW - moving one line, no semantic change, obviously
-  correct
-- **Ratio**: Strongly favorable
+### Step 8.4: Risk-Benefit
+- **Benefit**: HIGH - fixes uninitialized data being sent to firmware on
+  every Intel WiFi init
+- **Risk**: VERY LOW - 2 lines, `= {}` is the safest possible change
+- **Ratio**: Strongly favorable for backport
 
 ---
 
-## Phase 9: Final Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence
-**FOR backporting**:
-- Fixes a real NULL pointer dereference race condition
-- The race exists since v2.6.12 (all stable trees affected)
-- Extremely small change (1 line moved)
-- Obviously correct - eliminates invalid intermediate state
-- Author is a domain expert (9+ PPP commits)
-- Accepted by netdev co-maintainer
-- The same root cause was already documented by the earlier fix
-  (0417adf367a0af)
-- PPP multilink is a commonly used feature
+### Step 9.1: Evidence Compilation
 
-**AGAINST backporting**:
-- No crash report or syzbot reproduction (theoretical race, but
-  realistic trigger)
-- Commit message mentions "prepares for" a subsequent patch (partially
-  preparatory)
-- No Fixes: tag (expected)
+**FOR backporting:**
+- Fixes a real bug: uninitialized kernel stack data sent to WiFi
+  firmware
+- Extremely minimal fix (2 lines, `= {}` only)
+- Obviously correct - zero-initialization is the standard pattern
+- Reviewed by iwlwifi maintainer (Johannes Berg)
+- Written by core Intel iwlwifi developer
+- Bug present in all active stable trees (since v5.10)
+- Affects all Intel WiFi users (common hardware)
+- Triggered on every driver initialization
+- No regression risk whatsoever
+- Standalone fix with zero dependencies
+- The newer MLD code path already uses this pattern
+
+**AGAINST backporting:**
+- No user-visible crash or panic reported (the firmware likely tolerates
+  the garbage in many cases)
+- No Fixes: tag, no syzbot report
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - merged by Paolo Abeni
-2. Fixes a real bug? **YES** - NULL deref race in multilink transmit
-3. Important issue? **YES** - kernel crash (NULL pointer deref)
-4. Small and contained? **YES** - 1 line moved in 1 function
-5. No new features/APIs? **YES** - pure reorder
-6. Applies to stable? **YES** - cleanly to 7.0.y
+1. Obviously correct and tested? **YES** - `= {}` is trivially correct,
+   reviewed by maintainer
+2. Fixes a real bug? **YES** - uninitialized data sent to firmware
+   hardware
+3. Important issue? **YES** - info leak + potential firmware misbehavior
+   on common hardware
+4. Small and contained? **YES** - 2 lines in 1 file
+5. No new features or APIs? **YES** - no new functionality
+6. Can apply to stable? **YES** - trivial change to variable
+   declarations
 
 ### Step 9.3: Exception Categories
-Not an exception category - this is a standard race condition fix.
+Not an exception category; this is a standard initialization bug fix.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by author (Qingfang Deng) +
-  maintainer (Paolo Abeni), Link to patch
-- [Phase 2] Diff analysis: 1 line moved in `ppp_unregister_channel()`,
-  reordering `ppp_disconnect_channel()` before `WRITE_ONCE(pch->chan,
-  NULL)`
-- [Phase 2] Verified TOCTOU in `ppp_mp_explode()` lines 1978/1981: reads
-  `pch->chan` without `downl` lock
-- [Phase 3] git blame: buggy ordering from `^1da177e4c3f41` (Linus
-  Torvalds, 2005) - present in all stable trees
-- [Phase 3] Related commit `0417adf367a0af` explicitly documents this
-  same race condition as known bug
-- [Phase 3] Author has 9 commits to drivers/net/ppp/ - domain expert
-- [Phase 4] Lore blocked by Anubis; could not verify mailing list
-  discussion directly
-- [Phase 5] Traced call chain: `ppp_xmit_process` ->
-  `__ppp_xmit_process` -> `ppp_push` -> `ppp_mp_explode` - hot transmit
-  path under `ppp_xmit_lock`
-- [Phase 5] Verified `ppp_disconnect_channel()` takes `ppp_lock()`
-  (includes `ppp_xmit_lock`) - mutual exclusion with transmit path
-- [Phase 5] Verified `WRITE_ONCE(pch->chan, NULL)` is under
-  `chan_sem+downl` only, NOT `ppp_xmit_lock` - confirms race window
-- [Phase 6] Code exists in all active stable trees since v2.6.12
-- [Phase 6] Patch applies cleanly to 7.0.y; older trees need trivial
-  context adjustment
-- [Phase 8] Failure mode: NULL pointer dereference -> kernel oops,
-  severity HIGH
-- UNVERIFIED: Could not access lore.kernel.org to verify if stable was
-  requested by a reviewer
+- [Phase 1] Parsed all tags: Reviewed-by Johannes Berg (iwlwifi
+  maintainer), author is Emmanuel Grumbach (Intel iwlwifi developer)
+- [Phase 2] Diff analysis: exactly 2 lines changed - both add `= {}` to
+  union variable declarations in `iwl_mvm_get_sar_geo_profile()` and
+  `iwl_mvm_sar_geo_init()`
+- [Phase 3] git blame: buggy code introduced in commit dd2a1256e6a8d8
+  (2020-09-28), present since v5.10
+- [Phase 3] git merge-base: confirmed dd2a1256e6a8d8 is in v5.10, v5.15,
+  v6.1, v6.6
+- [Phase 3] No prerequisite commits needed - fix is standalone
+- [Phase 4] b4 dig -c: found original submission at lore, patch 3/15 of
+  iwlwifi-next series
+- [Phase 4] b4 dig -w: reviewed by Johannes Berg, CC'd to linux-wireless
+- [Phase 5] Callers traced: `iwl_mvm_sar_geo_init` called from main init
+  path (`iwl_mvm_up`); `iwl_mvm_get_sar_geo_profile` called from debugfs
+  and NVM init
+- [Phase 5] Confirmed newer `mld/regulatory.c` line 76 already uses `=
+  {}` pattern for same union type
+- [Phase 6] Buggy code exists in all active stable trees (v5.10+)
+- [Phase 6] Fix should apply cleanly or with trivial adjustment
+- [Phase 8] Impact: all Intel WiFi users; triggered on every driver
+  init; severity MEDIUM-HIGH (info leak + potential firmware
+  misbehavior)
 
-The fix is a minimal, obviously correct reordering that eliminates a
-real NULL pointer dereference race condition in the PPP multilink
-transmit path. The bug has existed since the original kernel tree and
-affects all stable trees. The risk is negligible (one line moved) and
-the benefit is preventing a kernel crash.
+The fix is a textbook example of an uninitialized data bug fix: minimal,
+obviously correct, zero regression risk, affects widely-used hardware,
+and has been reviewed by the subsystem maintainer.
 
 **YES**
 
- drivers/net/ppp/ppp_generic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index e9b41777be809..7cd936bc6a7ea 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -3023,12 +3023,12 @@ ppp_unregister_channel(struct ppp_channel *chan)
- 	 * This ensures that we have returned from any calls into
- 	 * the channel's start_xmit or ioctl routine before we proceed.
- 	 */
-+	ppp_disconnect_channel(pch);
- 	down_write(&pch->chan_sem);
- 	spin_lock_bh(&pch->downl);
- 	WRITE_ONCE(pch->chan, NULL);
- 	spin_unlock_bh(&pch->downl);
- 	up_write(&pch->chan_sem);
--	ppp_disconnect_channel(pch);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+index 6cc78661116e5..cfe2bb6c1d90a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+@@ -907,7 +907,7 @@ int iwl_mvm_sar_select_profile(struct iwl_mvm *mvm, int prof_a, int prof_b)
  
- 	pn = ppp_pernet(pch->chan_net);
- 	spin_lock_bh(&pn->all_channels_lock);
+ int iwl_mvm_get_sar_geo_profile(struct iwl_mvm *mvm)
+ {
+-	union iwl_geo_tx_power_profiles_cmd geo_tx_cmd;
++	union iwl_geo_tx_power_profiles_cmd geo_tx_cmd = {};
+ 	struct iwl_geo_tx_power_profiles_resp *resp;
+ 	u16 len;
+ 	int ret;
+@@ -959,7 +959,7 @@ int iwl_mvm_get_sar_geo_profile(struct iwl_mvm *mvm)
+ static int iwl_mvm_sar_geo_init(struct iwl_mvm *mvm)
+ {
+ 	u32 cmd_id = WIDE_ID(PHY_OPS_GROUP, PER_CHAIN_LIMIT_OFFSET_CMD);
+-	union iwl_geo_tx_power_profiles_cmd cmd;
++	union iwl_geo_tx_power_profiles_cmd cmd = {};
+ 	u16 len;
+ 	u32 n_bands;
+ 	u32 n_profiles;
 -- 
 2.53.0
 
