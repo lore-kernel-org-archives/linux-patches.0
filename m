@@ -1,52 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CF143D4E3;
-	Mon, 20 Apr 2026 13:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BD143DA26;
+	Mon, 20 Apr 2026 13:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691797; cv=none; b=j52rI1q63vm+oi8Ckt41z/QZuQCp+y4PqZyEm1DMzfIxx91spU1Rw1f4gYbsHiuZ0kzXY8B9oeAGIHXNdxUtrtzg41rtB+SdJxRlNFjocZu/EtEO6dmemlmIDHqs09AdoOY9Wy3oMZxZSzyzcFEaqrNvQ0sW3bWC7SWMBUlSDKg=
+	t=1776691799; cv=none; b=abPZVGn3/RtA5vCo/OiS7I54ynb3fwudSHLf+YD5IrC+wMF0h6T7/7F7prdooKRr2Dcxc2yHm5nyNJvoaksZRZVg82Gs7rqrY+Y4nDZ4p59i2E/laEM8Jf8zGq9EKZS/d3e2iOOEZWyybaMmTX0e1MZW2niNie/me8yyzL/Tstg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691797; c=relaxed/simple;
-	bh=bayKu25Lw6g0OLNSh41kpkBBpdp1Kk40gGr80cFvE40=;
+	s=arc-20240116; t=1776691799; c=relaxed/simple;
+	bh=JDWJGiM6aOLHlB0Z5OiIY/34rqLyGSQTW/tZJy53How=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dU5JEFWO7eutm8OlVqnsqGwoS7PD67wEDeQd3T0NneeGlEKU6jPONFxFGRIvZe5v1HHVfABF8ywixMoqIXaIdgZRUFl5O9yNEOdfNKaswkwpgAYZLAaVbXvYFcUgkZKl2Bl40GCRioFSjDYHelz2BR6UFtVYCxjShF1ZGgY07os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i1ymmVcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H0wgudoz/up7+SVsMeZIwyDg26W/Ul43iwnPo5tUbPK3GmmQl4zifFJ2ZamLDpHxPKTkpudN3Oycnck3fqEjNW0dBVd4Iki1diNYohWZh90CXKyOvOxp1ltYCg/Kw9xp3WTc6uzCEKWSMG4rcwX+CrKxCzwlXdOVf6rJqUwZTCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lHogR+Bs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i1ymmVcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734D6C19425;
-	Mon, 20 Apr 2026 13:29:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lHogR+Bs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B77C19425;
+	Mon, 20 Apr 2026 13:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691797;
-	bh=bayKu25Lw6g0OLNSh41kpkBBpdp1Kk40gGr80cFvE40=;
+	s=k20201202; t=1776691798;
+	bh=JDWJGiM6aOLHlB0Z5OiIY/34rqLyGSQTW/tZJy53How=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1ymmVcfK6DsJyd2NT2eaJmaUgeOCxJEp9TnJBFLdJsKhBqOcghcUl90aDDUAaZUx
-	 Ba2VaNU3VYKuH5V79a6gMLtH5Ev3QZ5VYzNywkJR+j8J6Z22J+4/9HztE6gSxPLIQ1
-	 8+x/0d110G85DBZR6nNpQKC193Cg7QkCbw036NyMluxQSSmTUnzGNY7GX073Yg0KZH
-	 399HFKzMBBbrDGzBWh1dHocgx2q4ABT8E83k0xzUYCfmT81+8PwQcuxUnrp6lucD7n
-	 btdjdH/9hSenVzp1ntDvWqleU5Xn3luRJZOsWaLDFOOOw+5u2GTzGl/ILk+7WGG8KO
-	 ZAPOt94XusK8g==
+	b=lHogR+Bs5q1KG/kPhyvh4juNcsgGnNFC9wkWSFvqS/mK61kbG5QSbPThabS/LBkNS
+	 Ts3H5alfhX9x65YKG4m7alNocJEEGzNa6Ks67TitmoswewiSnfFNUvnrDUtuywDeai
+	 KuP/fd9wsjMZnGF/oLF6FONUYAUxTNCN//mjozgpRUZIUK0vOHTgztmG++Jc7MQ7GY
+	 a5zSaC6KPWGTrP4wRDu+FH5hgrxrC5HVo6NRWhd4LUyOB3Vk8CGkenHfSFgpnda6CQ
+	 7a0FyF5q0G75awdbbGJ/HDRYWN30fpfSZi+dFDyTIXpWxdI1Bk/RCHA3AK86vZ7tSL
+	 Ka74IP3IKIPAQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tomasz Merta <tomasz.merta@arrow.com>,
-	Tomasz Merta <tommerta@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	"Colin K. Williams" <colin@li-nk.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	olivier.moysan@foss.st.com,
-	arnaud.pouliquen@foss.st.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com,
-	linux-sound@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
+	konradybcio@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ASoC: stm32_sai: fix incorrect BCLK polarity for DSP_A/B, LEFT_J
-Date: Mon, 20 Apr 2026 09:19:53 -0400
-Message-ID: <20260420132314.1023554-199-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] firmware: qcom: scm: allow QSEECOM on ASUS Vivobook X1P42100 variant
+Date: Mon, 20 Apr 2026 09:19:54 -0400
+Message-ID: <20260420132314.1023554-200-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -58,70 +51,235 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.23
+X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomasz Merta <tomasz.merta@arrow.com>
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-[ Upstream commit 0669631dbccd41cf3ca7aa70213fcd8bb41c4b38 ]
+[ Upstream commit 26b86610650eaac17bf6574f34d9119151b95483 ]
 
-The STM32 SAI driver do not set the clock strobing bit (CKSTR) for DSP_A,
-DSP_B and LEFT_J formats, causing data to be sampled on the wrong BCLK
-edge when SND_SOC_DAIFMT_NB_NF is used.
+Enables access to EFI variables on this machine.
 
-Per ALSA convention, NB_NF requires sampling on the rising BCLK edge.
-The STM32MP25 SAI reference manual states that CKSTR=1 is required for
-signals received by the SAI to be sampled on the SCK rising edge.
-Without setting CKSTR=1, the SAI samples on the falling edge, violating
-the NB_NF convention. For comparison, the NXP FSL SAI driver correctly
-sets FSL_SAI_CR2_BCP for DSP_A, DSP_B and LEFT_J, consistent with its
-I2S handling.
-
-This patch adds SAI_XCR1_CKSTR for DSP_A, DSP_B and LEFT_J in
-stm32_sai_set_dai_fmt which was verified empirically with a cs47l35 codec.
-RIGHT_J (LSB) is not investigated and addressed by this patch.
-
-Note: the STM32 I2S driver (stm32_i2s_set_dai_fmt) may have the same issue
-for DSP_A mode, as I2S_CGFR_CKPOL is not set. This has not been verified
-and is left for a separate investigation.
-
-Signed-off-by: Tomasz Merta <tommerta@gmail.com>
-Link: https://patch.msgid.link/20260408084056.20588-1-tommerta@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Tested-by: Colin K. Williams <colin@li-nk.org>
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Link: https://lore.kernel.org/r/20260214-b4-vivobook-v3-2-3c88065bbf77@oldschoolsolutions.biz
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Error: Failed to generate final synthesis
+Here is my complete analysis:
 
- sound/soc/stm/stm32_sai_sub.c | 3 +++
- 1 file changed, 3 insertions(+)
+---
 
-diff --git a/sound/soc/stm/stm32_sai_sub.c b/sound/soc/stm/stm32_sai_sub.c
-index 5ae4d2577f28b..c2540383ab86f 100644
---- a/sound/soc/stm/stm32_sai_sub.c
-+++ b/sound/soc/stm/stm32_sai_sub.c
-@@ -802,6 +802,7 @@ static int stm32_sai_set_dai_fmt(struct snd_soc_dai *cpu_dai, unsigned int fmt)
- 		break;
- 	/* Left justified */
- 	case SND_SOC_DAIFMT_MSB:
-+		cr1 |= SAI_XCR1_CKSTR;
- 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSDEF;
- 		break;
- 	/* Right justified */
-@@ -809,9 +810,11 @@ static int stm32_sai_set_dai_fmt(struct snd_soc_dai *cpu_dai, unsigned int fmt)
- 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSDEF;
- 		break;
- 	case SND_SOC_DAIFMT_DSP_A:
-+		cr1 |= SAI_XCR1_CKSTR;
- 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSOFF;
- 		break;
- 	case SND_SOC_DAIFMT_DSP_B:
-+		cr1 |= SAI_XCR1_CKSTR;
- 		frcr |= SAI_XFRCR_FSPOL;
- 		break;
- 	default:
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: Subject Line**
+- Subsystem: `firmware: qcom: scm`
+- Action verb: "allow" — enabling a device on an existing allowlist
+- Summary: Add ASUS Vivobook X1P42100 variant to the QSEECOM allowlist
+
+**Step 1.2: Tags**
+- `Reviewed-by: Dmitry Baryshkov` — a well-known Qualcomm subsystem
+  reviewer
+- `Tested-by: Colin K. Williams` — independently tested by another
+  person
+- `Signed-off-by: Jens Glathe` — author, also contributed multiple other
+  QSEECOM allowlist entries (HP Omnibook X14, Lenovo Thinkbook 16,
+  Windows Dev Kit 2023)
+- `Signed-off-by: Bjorn Andersson` — subsystem maintainer who accepted
+  the patch
+- `Link:` to lore.kernel.org (v3 of the patch series)
+- No syzbot, no Fixes: tag (expected)
+
+**Step 1.3: Body**
+- "Enables access to EFI variables on this machine."
+- Without this entry, the ASUS Vivobook X1P42100 variant cannot access
+  EFI variables, which is a fundamental firmware interface needed for
+  boot configuration and UEFI operations.
+
+**Step 1.4: Hidden Bug Fix?**
+This is not a disguised bug fix — it's an explicit hardware allowlist
+addition.
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/firmware/qcom/qcom_scm.c`
+- 1 line added: `{ .compatible = "asus,vivobook-s15-x1p4" },`
+- Function: static data table `qcom_scm_qseecom_allowlist[]`
+
+**Step 2.2: Code Flow**
+- Before: The allowlist does not include the X1P42100 variant;
+  `qcom_scm_qseecom_init()` skips QSEECOM initialization on this
+  machine, printing "untested machine, skipping"
+- After: The allowlist includes the variant; QSEECOM is initialized,
+  enabling EFI variable access
+
+**Step 2.3: Bug Mechanism**
+Category: Hardware enablement — adding a device compatible string to an
+existing allowlist table. This is functionally identical to adding a
+PCI/USB device ID.
+
+**Step 2.4: Fix Quality**
+- Obviously correct: a single compatible string added to a static array
+- Minimal/surgical: 1 line
+- Regression risk: effectively zero — only affects the specific ASUS
+  Vivobook X1P42100 variant
+- Pattern is well-established: the allowlist has had dozens of similar
+  additions
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: Blame**
+The allowlist was created in commit `00b1248606ba39` (2023-08-27) and
+first appeared in v6.7. The table structure has been unchanged; only new
+entries have been added over time.
+
+**Step 3.2: No Fixes: tag** — expected.
+
+**Step 3.3: File History**
+Many identical one-line QSEECOM allowlist additions have been made:
+Dell, HP, Lenovo, Microsoft Surface, Huawei, Medion, etc. This is a
+well-trodden pattern.
+
+**Step 3.4: Author**
+Jens Glathe has contributed 3 other QSEECOM allowlist entries (HP
+Omnibook X14, Lenovo Thinkbook 16, Windows Dev Kit 2023). They are a
+regular contributor to this subsystem.
+
+**Step 3.5: Dependencies**
+None. This is a self-contained one-line table addition with no code
+dependencies.
+
+## PHASE 4: MAILING LIST RESEARCH
+
+The Link tag shows this is v3 of the series
+(`20260214-b4-vivobook-v3-2-...`), meaning it went through review
+iterations. The patch was reviewed by Dmitry Baryshkov (prominent
+Qualcomm maintainer) and tested by an independent tester (Colin K.
+Williams). The subsystem maintainer Bjorn Andersson applied it.
+
+Lore was unreachable via WebFetch (Anubis protection), but b4 dig
+confirmed the pattern matches other QSEECOM allowlist additions.
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1-5.4:** The `qcom_scm_qseecom_allowlist` is used in
+`qcom_scm_qseecom_init()` which calls
+`of_machine_device_match(qcom_scm_qseecom_allowlist)` (v6.19+) or the
+open-coded equivalent in earlier kernels. If the machine's compatible
+string isn't in the list, QSEECOM is not initialized, and EFI variable
+access is unavailable.
+
+## PHASE 6: STABLE TREE ANALYSIS
+
+**Step 6.1:** The allowlist was introduced in v6.7. It exists in stable
+trees v6.12.y and later. It does NOT exist in v6.6.y or earlier.
+
+**Step 6.2:** Backport should be clean for v6.12.y+ since the table
+format is identical. The only difference is that v6.19 introduced
+`of_machine_device_match()` instead of the open-coded function, but that
+doesn't affect the table entries.
+
+**Step 6.3:** No related fixes already in stable.
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+- Subsystem: `firmware/qcom` — Qualcomm firmware interface, used by
+  Qualcomm Snapdragon ARM64 laptops
+- Criticality: IMPORTANT — these are real consumer laptops (ASUS
+  Vivobook line)
+- The subsystem is active with regular QSEECOM allowlist additions
+
+## PHASE 8: IMPACT AND RISK
+
+**Step 8.1:** Affected users: owners of ASUS Vivobook X1P42100 variant
+laptops running Linux
+**Step 8.2:** Trigger: every boot — without this entry, EFI variables
+are inaccessible on this hardware
+**Step 8.3:** Failure mode: no EFI variable access = unable to manage
+boot entries, firmware settings. Severity: MEDIUM-HIGH for affected
+users
+**Step 8.4:**
+- Benefit: HIGH — enables core firmware functionality on real consumer
+  hardware
+- Risk: VERY LOW — 1 line, only affects the specific machine
+- Ratio: Excellent
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Evidence FOR:**
+- Classic device ID / allowlist addition — explicitly listed as an
+  exception in stable rules
+- 1-line change, zero regression risk to any other machine
+- Reviewed by Qualcomm subsystem reviewer, tested independently,
+  accepted by maintainer
+- Well-established pattern with dozens of identical precedents
+- Enables fundamental functionality (EFI variable access) on real
+  consumer hardware
+- Author is a known contributor to this exact subsystem
+
+**Evidence AGAINST:**
+- None significant. The only caveat is it doesn't apply to v6.6.y or
+  earlier (the allowlist didn't exist then)
+
+**Stable Rules Checklist:**
+1. Obviously correct? YES — single compatible string in a static table
+2. Fixes real issue? YES — enables EFI access on real hardware
+3. Important? YES — EFI variables are fundamental for boot management
+4. Small and contained? YES — 1 line
+5. No new features? CORRECT — enables existing feature on additional
+   hardware
+6. Applies to stable? YES — clean for v6.12.y+
+
+**Exception Category: Device ID / hardware allowlist addition** —
+explicitly allowed.
+
+## Verification
+
+- [Phase 1] Parsed tags: Reviewed-by Dmitry Baryshkov, Tested-by Colin
+  K. Williams, maintainer SOB Bjorn Andersson
+- [Phase 2] Diff analysis: 1 line added to static
+  `qcom_scm_qseecom_allowlist[]` table
+- [Phase 3] git blame: allowlist created in `00b1248606ba39` (v6.7,
+  2023-08-27), table structure unchanged
+- [Phase 3] git log --grep="QSEECOM": confirmed ~18 similar allowlist
+  additions over time
+- [Phase 3] git log --author="Jens Glathe": author has 3 prior QSEECOM
+  allowlist contributions
+- [Phase 4] b4 dig: lore thread found for similar commits confirming
+  review pattern
+- [Phase 4] Link tag shows v3 — patch went through review iterations
+- [Phase 5] Grep: `qcom_scm_qseecom_allowlist` used in
+  `qcom_scm_qseecom_init()` at line 2352
+- [Phase 6] `git tag --contains 00b1248606ba39`: first in v6.7, exists
+  in v6.12.y+ stable trees
+- [Phase 6] `f83b42705782c` (Simplify with of_machine_device_match) is
+  v6.19+, does not affect table format
+- [Phase 8] 1-line change with zero cross-machine risk, enables EFI on
+  specific hardware
+
+**YES**
+
+ drivers/firmware/qcom/qcom_scm.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 8fbc96693a55f..2fe1632f06e90 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -2290,6 +2290,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
+  */
+ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+ 	{ .compatible = "asus,vivobook-s15" },
++	{ .compatible = "asus,vivobook-s15-x1p4" },
+ 	{ .compatible = "asus,zenbook-a14-ux3407qa" },
+ 	{ .compatible = "asus,zenbook-a14-ux3407ra" },
+ 	{ .compatible = "dell,inspiron-14-plus-7441" },
 -- 
 2.53.0
 
