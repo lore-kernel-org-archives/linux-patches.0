@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C192FE56A;
-	Mon, 20 Apr 2026 15:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3015A22259F;
+	Mon, 20 Apr 2026 15:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700632; cv=none; b=a4fm4PhO2jJYqLd0kMI/VHUzoqFGNi7CP6NXDwr8wtEjX3Gk2KUaHIgd9utLlDRWxr6jO3ok/R0m6cP9G8t8yBtvARwXE00zjM0QXA2isHXro4PVTw5Wp3JkPeGfaV456P1VQubcyXszDeOKh8tYCDB5dO8RRiYNWt6TjszmfhA=
+	t=1776700635; cv=none; b=lqweqX8akI3z0F1i9DmwBtfPKshBg+96a7KDOxMExklnnFHN9gm/mWzh8/xNNTQ1B9oAu8V9llv398XrcTFnUEp5zbvX2hNPKkYWJ14nRYuLuoiuYGbD61kMPfyqELQ94g0IJX3MEL6KPOckMuJ/kL5+4PYgNpmDV2FRnp4LLYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700632; c=relaxed/simple;
-	bh=VWx00AEf15tBac2/9DvhtYbbtU/B+Zwlaq9OnMTyz1k=;
+	s=arc-20240116; t=1776700635; c=relaxed/simple;
+	bh=zOT+N96sVZO16sqXCbUTeujD8WegxaCYXZ15yIx0Isk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYXqwoCCcnRCTVw608Xc2X37d/cIuwKcTKa6n5EPqVlw+oyS39CA8sGn/9GG1g886+fdUYCLTCBOORzcJ70QcAqFn97MtxzpM2OC5JeP7N3DofA/AKy8QwbqSRVga9N7DorwYEfovU4Oo5BhlxipS3b83KW4uCn+1N3nBHbc2i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGiK1f6P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rpYhFM77SKQy97kW7ezG61oAlfiQ+Gy/6SgV+znnStQ348SX30BjJig9kxMfOUrlKW3lzxMbZNbEJ5mKcwctA3dhxbdUyxUqIWY9NvuKcG/xrsAh1qbFpKpbYVt3Fhz7pGDiSeiCB9RoYT2RuJL2smlYSRmymMJpLTEPFtuwabE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLFJ2K28; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGiK1f6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CDEC19425;
-	Mon, 20 Apr 2026 15:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLFJ2K28"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF368C19425;
+	Mon, 20 Apr 2026 15:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700632;
-	bh=VWx00AEf15tBac2/9DvhtYbbtU/B+Zwlaq9OnMTyz1k=;
+	s=korg; t=1776700635;
+	bh=zOT+N96sVZO16sqXCbUTeujD8WegxaCYXZ15yIx0Isk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGiK1f6PFPvUO5Sc8qDHdLqBRTuiKerLs5nxXGLXu4EgIl1vPOuAlR1xehEKs92Ck
-	 vPgAt4iTondU3YExarUuWDvqhRzRO6adX3o7VoLSc8rmQTyuTlVPbq579sw0jZxNp2
-	 zEuvPW9js3sy2qckm+hp7gHwxv5gVg0CkiCHbVk4=
+	b=WLFJ2K28Wd4aFE05jONqkYPBmdGLM2O5xj+ASjGD17TY81hZJC3juQCqYdQAes2hF
+	 Tl+05CpJewXlxdzcbieAOGI5rPwEvIur5FeUZ++Q+sWKiGm71RBi7QNhIUqKEz/uwR
+	 n8yIqyhzKXTPxdf/OY+LQ3dbcM3vbw1+ECy+UUQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Throw <zakkabj@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/198] ASoC: soc-core: call missing INIT_LIST_HEAD() for card_aux_list
-Date: Mon, 20 Apr 2026 17:40:06 +0200
-Message-ID: <20260420153936.594589354@linuxfoundation.org>
+Subject: [PATCH 6.18 028/198] ALSA: hda/realtek: Add quirk for Samsung Book2 Pro 360 (NP950QED)
+Date: Mon, 20 Apr 2026 17:40:07 +0200
+Message-ID: <20260420153936.630416871@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,64 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b9eff9732cb0f86a68c9d1592a98ceab47c01e95 ]
+[ Upstream commit ea31be8a2c8c99eac198f3b7f2dc770111f2b182 ]
 
-Component has "card_aux_list" which is added/deled in bind/unbind aux dev
-function (A), and used in for_each_card_auxs() loop (B).
+There is another Book2 Pro model (NP950QED) that seems equipped with
+the same speaker module as the non-360 model, which requires
+ALC298_FIXUP_SAMSUNG_AMP_V2_2_AMPS quirk.
 
-	static void soc_unbind_aux_dev(...)
-	{
-		...
-		for_each_card_auxs_safe(...) {
-			...
-(A)			list_del(&component->card_aux_list);
-		}			     ^^^^^^^^^^^^^
-	}
-
-	static int soc_bind_aux_dev(...)
-	{
-		...
-		for_each_card_pre_auxs(...) {
-			...
-(A)			list_add(&component->card_aux_list, ...);
-		}			     ^^^^^^^^^^^^^
-		...
-	}
-
-	#define for_each_card_auxs(card, component)	\
-(B)		list_for_each_entry(component, ..., card_aux_list)
-						    ^^^^^^^^^^^^^
-
-But it has been used without calling INIT_LIST_HEAD().
-
-	> git grep card_aux_list sound/soc
-	sound/soc/soc-core.c:           list_del(&component->card_aux_list);
-	sound/soc/soc-core.c:           list_add(&component->card_aux_list, ...);
-
-call missing INIT_LIST_HEAD() for it.
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87341mxa8l.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Throw <zakkabj@gmail.com>
+Link: https://patch.msgid.link/20260330162249.147665-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 1 +
+ sound/hda/codecs/realtek/alc269.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 7a6b4ec3a6990..feecf3e4e38b4 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -2845,6 +2845,7 @@ int snd_soc_component_initialize(struct snd_soc_component *component,
- 	INIT_LIST_HEAD(&component->dobj_list);
- 	INIT_LIST_HEAD(&component->card_list);
- 	INIT_LIST_HEAD(&component->list);
-+	INIT_LIST_HEAD(&component->card_aux_list);
- 	mutex_init(&component->io_mutex);
- 
- 	if (!component->name) {
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index e7f7b148b40e5..c76d339009a9b 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7211,6 +7211,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x144d, 0xc188, "Samsung Galaxy Book Flex (NT950QCT-A38A)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Book Flex (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
++	SND_PCI_QUIRK(0x144d, 0xc1ac, "Samsung Galaxy Book2 Pro 360 (NP950QED)", ALC298_FIXUP_SAMSUNG_AMP_V2_2_AMPS),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a4, "Samsung Galaxy Book Pro 360 (NT935QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
 -- 
 2.53.0
 
