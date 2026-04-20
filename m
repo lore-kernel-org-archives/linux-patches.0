@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5E83358B0;
-	Mon, 20 Apr 2026 15:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FC02D978C;
+	Mon, 20 Apr 2026 15:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700369; cv=none; b=cjPRXCJWGSMUKwjFatn58Ub1zhnIWqMZrneyrtBzo2U6fcfUUF6ft8pqZpGrWBMmF5BkHgHad4Y/eDejXAdn56nh1POfhiihgGlp2IoB9A9NB40IKwcvKJk868PJ0OuzbipshkjBILXGhX2eSBvRhjdLxvgKnUiesM43WNxt/bI=
+	t=1776700371; cv=none; b=Tn4gz5Hj1LRW+zLNv5WIy9lUn7E/QkbB4MaHnhzRyxRlixbk3+yCTacEK82dKhh9G9nsodDobx2tAKaH8eJ6iJgtrIT2AF2+oMhUp400YMkgIOZ2L8UIpMUIhctTNp9QyaUmT43MFgOMUL7dbiwMmBLD36Pe4uWjithEsr9JtFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700369; c=relaxed/simple;
-	bh=KMIOioqPwWJ48wNt6+t5jRxPNKaAdaGXSyE5yLv+7uA=;
+	s=arc-20240116; t=1776700371; c=relaxed/simple;
+	bh=yzHdlgyLCA/xYM7K3zysFazgPx3spysWO34ZhVbZcrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m9pAtvbpNMTj5E8LD/rdlhMO+roaNtsSFh3ALLFBoUT8Q47byqJmz2W7VDZeO9a2XL5xMU4tmKaA20h6m3mgJkeAng6ApJjTM9UInihrcKr9+m/ONcz76OrKPOu9N7iAIyR6YpkrgM2rZIsgfvfTRWHXh/g4AQrgUA4Xo9ErmRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsKRYThh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CPJtIJjB4PZEJe2AgMBeAbeHroY4IBC+FEdRsBvHVnFAwUS7/sIEtMsMXnUOIORCTQtTF/tHeBwe5pjBdS+1skYpK77sciqGkUABcqhmbkVHHsjXyT5U6iLCHS945TOsT5liMuHebF5GtmE2RDjlaPzee1ZcVeM3Z8sUMkSd8BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MB83Q4f1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsKRYThh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DA1C19425;
-	Mon, 20 Apr 2026 15:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB83Q4f1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE39C19425;
+	Mon, 20 Apr 2026 15:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700368;
-	bh=KMIOioqPwWJ48wNt6+t5jRxPNKaAdaGXSyE5yLv+7uA=;
+	s=korg; t=1776700371;
+	bh=yzHdlgyLCA/xYM7K3zysFazgPx3spysWO34ZhVbZcrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rsKRYThhctX7OLgE+Din2sDhmkuTdEzf7oa9EvGmMrUj3RwOXWkhswzRXcq+tiyLJ
-	 /eTLbGLVeTnXZ3oqVRkWCEG7pD9QvV4jT7g2dkDIqZle+hMKqisgQra+siFpI3ndZV
-	 n2BklH5Gr0l5dZQZNp0qGTwh15VNbn6f/KKTjjFQ=
+	b=MB83Q4f16WVx8lyqosQcxw5ufl2cnlL3uYi8P2XuUgtAlHGep7W4Lh2fAHK8Csbsn
+	 xaqdy04APf0n3I3vHjNun9fy7nDVeQmpZ/9hOIF1pg5Xf0kADuUm23FoGFeoA7quMb
+	 4wzLlga5YE4iuipvv41MldLjsQ/14ThIws0qGDX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 112/220] ASoC: Intel: avs: Fix memory leak in avs_register_i2s_test_boards()
-Date: Mon, 20 Apr 2026 17:40:53 +0200
-Message-ID: <20260420153938.064002504@linuxfoundation.org>
+Subject: [PATCH 6.19 113/220] drm/xe: Fix bug in idledly unit conversion
+Date: Mon, 20 Apr 2026 17:40:54 +0200
+Message-ID: <20260420153938.099683591@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit c5408d818316061d6063c11a4f47f1ba25a3a708 ]
+[ Upstream commit 7596459f3c93d8d45a1bf12d4d7526b50c15baa2 ]
 
-Caller is responsible for freeing array allocated with
-parse_int_array().
+We only need to convert to picosecond units before writing to RING_IDLEDLY.
 
-Found out by Coverity.
-
-Fixes: 7d859189de13 ("ASoC: Intel: avs: Allow to specify custom configurations with i2s_test")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260407085459.400628-1-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7c53ff050ba8 ("drm/xe: Apply Wa_16023105232")
+Cc: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+Acked-by: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Link: https://patch.msgid.link/20260401012710.4165547-1-vinay.belgaumkar@intel.com
+(cherry picked from commit 13743bd628bc9d9a0e2fe53488b2891aedf7cc74)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/board_selection.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_hw_engine.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/avs/board_selection.c b/sound/soc/intel/avs/board_selection.c
-index 52e6266a7cb86..96dc637ccb20c 100644
---- a/sound/soc/intel/avs/board_selection.c
-+++ b/sound/soc/intel/avs/board_selection.c
-@@ -520,7 +520,8 @@ static int avs_register_i2s_test_boards(struct avs_dev *adev)
- 	if (num_elems > max_ssps) {
- 		dev_err(adev->dev, "board supports only %d SSP, %d specified\n",
- 			max_ssps, num_elems);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto exit;
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_hw_engine.c b/drivers/gpu/drm/xe/xe_hw_engine.c
+index 6a9e2a4272dde..3e928b6c098f2 100644
+--- a/drivers/gpu/drm/xe/xe_hw_engine.c
++++ b/drivers/gpu/drm/xe/xe_hw_engine.c
+@@ -596,9 +596,8 @@ static void adjust_idledly(struct xe_hw_engine *hwe)
+ 		maxcnt *= maxcnt_units_ns;
  
- 	for (ssp_port = 0; ssp_port < num_elems; ssp_port++) {
-@@ -528,11 +529,13 @@ static int avs_register_i2s_test_boards(struct avs_dev *adev)
- 		for_each_set_bit(tdm_slot, &tdm_slots, 16) {
- 			ret = avs_register_i2s_test_board(adev, ssp_port, tdm_slot);
- 			if (ret)
--				return ret;
-+				goto exit;
+ 		if (xe_gt_WARN_ON(gt, idledly >= maxcnt || inhibit_switch)) {
+-			idledly = DIV_ROUND_CLOSEST(((maxcnt - 1) * maxcnt_units_ns),
++			idledly = DIV_ROUND_CLOSEST(((maxcnt - 1) * 1000),
+ 						    idledly_units_ps);
+-			idledly = DIV_ROUND_CLOSEST(idledly, 1000);
+ 			xe_mmio_write32(&gt->mmio, RING_IDLEDLY(hwe->mmio_base), idledly);
  		}
  	}
- 
--	return 0;
-+exit:
-+	kfree(array);
-+	return ret;
- }
- 
- static int avs_register_i2s_board(struct avs_dev *adev, struct snd_soc_acpi_mach *mach)
 -- 
 2.53.0
 
