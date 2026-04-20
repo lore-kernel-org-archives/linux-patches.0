@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F288E3368AE;
-	Mon, 20 Apr 2026 15:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EED3368AF;
+	Mon, 20 Apr 2026 15:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699822; cv=none; b=XQlIZUXFSSsJPURgdIfaR8Lq5SqI8fTxRNXEOyxQkksQQ2aE/iVUS/YYQ/3wt110NgVH/j+NlgmwxoWbZEotu7BY1kuCxd2tYMNvvhFmO46UPu5cJH39DFvOS9twoyQTRCrc0YoQU+QHDAFuztR6HakhKiwWwX22cMUvmlce8CI=
+	t=1776699824; cv=none; b=mmYWqFlnEOhC2K1NE0xP54KlhwYcPLJgGHCEL6qAQq63VjdjAfwosoppb67rMe+29+uLHuc6EUyvjVloaw0llECQI4l+uGaidYHiixwYaiZveAlFEBH+CfVQglNS2okQ70ZB08NrpilimW0zWPVBQ1yyeI6OG65qgRxN6CnCh9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699822; c=relaxed/simple;
-	bh=A8CIbig6OpoJgF81nlcDGMydIdku2f9hw9vJct0fpTg=;
+	s=arc-20240116; t=1776699824; c=relaxed/simple;
+	bh=dScFOOfi3cKQxP/HVxXcM8eAxE8FM0SPa5PIxUFOl2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rg43U+L4j3YPCtgBI2vpH3pqji9SZwTYavo1JlxLjFhGNNLGNEF/GEmfcv0yG2YbeF65Jg9iuPpv35+aNL81n7myE2eMgA5EzJtgKgcDSKo1z5Y2xBzMYomeId5ajEtojSYiPUoPG/FP4sWoVY6j9o4wNCpYkoe6C188IgF8RtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDpDgoLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UogmKv14unOkJheDuPTCf7l6HPtifdH0vrlLlWFBpTl+Wh8FUJS3u/dbuwjHRvjpkMqbdDdO1PEnXWJplMdGpINMfpe2gFj5VZTUeXkzu/YOWexhawKXnPuiHTPwqea5v82tSLJH+DPBgZfOO9VItj2YPNbSPxd+ji0+C/nxv0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDgogSN9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDpDgoLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4192EC2BCB4;
-	Mon, 20 Apr 2026 15:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDgogSN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60C0C2BCB4;
+	Mon, 20 Apr 2026 15:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699821;
-	bh=A8CIbig6OpoJgF81nlcDGMydIdku2f9hw9vJct0fpTg=;
+	s=korg; t=1776699824;
+	bh=dScFOOfi3cKQxP/HVxXcM8eAxE8FM0SPa5PIxUFOl2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDpDgoLe+dDxcg3QsCWmdu9Mc5vx/lmOkAplRla5EunbAr8tdANovFEsh2OWiEloj
-	 fukKLukV6KiZC3FH2eqgrH2eTwvQqxOAUBrw4MIXcjmHpiZyPyneo4lfPusnxkW5vU
-	 uYxkPXj6j7jiuHCOIiHalP2YLxewpRHpK+2orhz8=
+	b=GDgogSN9eDG/Zk9a15NWS7SzsdzvRRagWso2SWMzokRVVQUPEKB5KF91U9afjuf/w
+	 xTy731k5TpFzRY5acf4TKfYDD76EaLfLY6v5NCGQg6Z9rHV2JEf3BEhMxPizbrh6Aa
+	 yBjuvPkpPPoZrApnYY9Fet1k9AWaqhHBxmmI3uRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikas Gupta <vikas.gupta@broadcom.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
 	stable <stable@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 11/76] bnge: return after auxiliary_device_uninit() in error path
-Date: Mon, 20 Apr 2026 17:41:22 +0200
-Message-ID: <20260420153911.231245432@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.0 12/76] ALSA: usx2y: us144mkii: fix NULL deref on missing interface 0
+Date: Mon, 20 Apr 2026 17:41:23 +0200
+Message-ID: <20260420153911.267426087@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -54,41 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 8b0c25528cb64f71a73b5c0d49cbbcb68540a4ce upstream.
+commit 48bd344e1040b9f2eb512be73c13f5db83efc191 upstream.
 
-When auxiliary_device_add() fails, the error block calls
-auxiliary_device_uninit() but does not return.  The uninit drops the
-last reference and synchronously runs bnge_aux_dev_release(), which sets
-bd->auxr_dev = NULL and frees the underlying object.  The subsequent
-bd->auxr_dev->net = bd->netdev then dereferences NULL, which is not a
-good thing to have happen when trying to clean up from an error.
+A malicious USB device with the TASCAM US-144MKII device id can have a
+configuration containing bInterfaceNumber=1 but no interface 0.  USB
+configuration descriptors are not required to assign interface numbers
+sequentially, so usb_ifnum_to_if(dev, 0) returns will NULL, which will
+then be dereferenced directly.
 
-Add the missing return, as the auxiliary bus documentation states is a
-requirement (seems that LLM tools read documentation better than humans
-do...)
+Fix this up by checking the return value properly.
 
-Cc: Vikas Gupta <vikas.gupta@broadcom.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Fixes: 8ac050ec3b1c ("bng_en: Add RoCE aux device support")
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Fixes: dee1bcf28a3d ("ALSA: usb-audio: Add initial driver for TASCAM US-144MKII")
 Cc: stable <stable@kernel.org>
 Assisted-by: gregkh_clanker_t1000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026041124-banshee-molecular-0f70@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/2026040955-fall-gaining-e338@gregkh
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnge/bnge_auxr.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/usx2y/us144mkii.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnge/bnge_auxr.c
-+++ b/drivers/net/ethernet/broadcom/bnge/bnge_auxr.c
-@@ -194,6 +194,7 @@ void bnge_rdma_aux_device_add(struct bng
- 		dev_warn(bd->dev, "Failed to add auxiliary device for ROCE\n");
- 		auxiliary_device_uninit(aux_dev);
- 		bd->flags &= ~BNGE_EN_ROCE;
-+		return;
- 	}
+--- a/sound/usb/usx2y/us144mkii.c
++++ b/sound/usb/usx2y/us144mkii.c
+@@ -420,7 +420,11 @@ static int tascam_probe(struct usb_inter
  
- 	bd->auxr_dev->net = bd->netdev;
+ 	/* The device has two interfaces; we drive both from this driver. */
+ 	if (intf->cur_altsetting->desc.bInterfaceNumber == 1) {
+-		tascam = usb_get_intfdata(usb_ifnum_to_if(dev, 0));
++		struct usb_interface *intf_zero = usb_ifnum_to_if(dev, 0);
++
++		if (!intf_zero)
++			return -ENODEV;
++		tascam = usb_get_intfdata(intf_zero);
+ 		if (tascam) {
+ 			usb_set_intfdata(intf, tascam);
+ 			tascam->iface1 = intf;
 
 
