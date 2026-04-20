@@ -1,42 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6F43C1415;
-	Mon, 20 Apr 2026 13:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7643C2769;
+	Mon, 20 Apr 2026 13:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691048; cv=none; b=gYR5s/A6GBvSoYw+TSbB7pD1sReDfJEfxeQsmMQA9MEtvQ1qb/Q7rtvxnrfF4do3gDecne+pUNzH/7U0iy1+dj0g73icKjS9VQrqncm6z8FfoMchv9r8dZqoRAvbnCNpIb+k1Uoa9W7ih+9jDACvuoxec6wQph+ZpI2vNeATsVE=
+	t=1776691049; cv=none; b=GQhLg5K5pDE2Trnf5kFMCsPTXSc7Nq7LRuMTrRLD2zwVr1ObB7bElqlscEARSsAMreh6oMyhFSwSPZz9xISIDAbfTaxDHLkOK7M1wUFz8obD9EtTwiuaIb0GH4N2tlJUaBLen6eBrJxxOPNW6BLA1BuLtIHAtn7Wxl5u0ED00jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691048; c=relaxed/simple;
-	bh=2uxAMq/plTcDTGuk0sfBjxKUs2/3TSlDaTNK2qRM9K0=;
+	s=arc-20240116; t=1776691049; c=relaxed/simple;
+	bh=9aPVkcRuTSgqcTqdXSJQNUbhuhgr30ISjyLMfNdWJGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GL7l/0F/8mV7gN5sp9tGSMmz/kmkEz5DWYfk3MZI58WRBGpat+3MbdoZD3XvcVNtSubuhSYjvn7m1Vk+UofE+ptIT/hvDcDnT36orC3HQTgndRaDFq00kGMO6ekBrB3HZvElA07/YtliRecAj3mt9htyk3AVAiH9LR/+zP7PBIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SW8Xzyua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J4B8wZqkuR69hkJhPsZYI84X953c7tnLidjhezkoNdq3UPMblAVVlxrgm0OttQJObYs2GRGTU0vWVsUfhMwFnWytBave+fDI5Gf5qq2vLsX1S4Ny2FEVXonicZd5N68xfhU3FQQqy0OA0s0zg0CpEYZjBhXjcw/vWY0xeDZ0SV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LTqLF4vV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SW8Xzyua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25201C2BCB4;
-	Mon, 20 Apr 2026 13:17:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LTqLF4vV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD75C2BCB6;
+	Mon, 20 Apr 2026 13:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691048;
-	bh=2uxAMq/plTcDTGuk0sfBjxKUs2/3TSlDaTNK2qRM9K0=;
+	s=k20201202; t=1776691049;
+	bh=9aPVkcRuTSgqcTqdXSJQNUbhuhgr30ISjyLMfNdWJGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SW8XzyuauKeFDPEggm3+rER0DXZ7a8s0YnJrZZ0ab2Nypx/M4uOyH40o5vUsdqLHS
-	 j5JXEnPUqEmK7yYG51jezUun6A1YVBvK+6hLMRByCcthYbzgEO8TsjIrB8dffBgddo
-	 BqBhTPAw3dkX0p/p95uJJTW9R+IlT9u9Oco8ZlgvQomXxHnSilQmFRxhWKAR0s83TM
-	 O3asUjDJm/oLU701lEZ9kpvfppHyxNgNCU0dnGeS7GTwDOjUyxHXqChTetn16HG16f
-	 x2OdzwkUnBsBgP/TdSXdVA38lDMwzStvypr7JReCg7iEwVfWVnq7bydO1qmbk0LziN
-	 onX015bOnxriA==
+	b=LTqLF4vV3/Sne7oYCJWMEG6rfbDUDxx81+X7XczzK5acB16PJOxXj7KI3ngX/2Eqh
+	 PRlTlsRQppYZzv4o0UNC/9ugIwe3oloIiiuOzSOjm87MFgs78B0Oxxaw5snTcEoPvt
+	 8LRL+AYNOO3vql9B3PVZ6cXAubt0atv2VaNgRqUBFcB7dUylrEOXRsgTKFhzGbv4VW
+	 k6sN2hMZ7biEERBwEmj66cFkcb8nVUgnGuQ3miH5wdaCGF8xNSoZNtKtD8G+geT6WK
+	 yReR2BER6bKHaHTkGIxg0HD0Hqyf3gIRgQ0MEkj4Ook+oVAEOfUgYHpSL3pM7WLEta
+	 nmMYUUgFGiZTw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christian Hewitt <christianshewitt@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Florian Westphal <fw@strlen.de>,
+	Scott Mitchell <scott.k.mitch1@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	pablo@netfilter.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] wifi: rtw89: retry efuse physical map dump on transient failure
-Date: Mon, 20 Apr 2026 09:08:49 -0400
-Message-ID: <20260420131539.986432-63-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] netfilter: nfnetlink_queue: make hash table per queue
+Date: Mon, 20 Apr 2026 09:08:50 -0400
+Message-ID: <20260420131539.986432-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -48,389 +55,320 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
+X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d92f6ad6483e6d430c8273eeb7be97ce85244bd5 ]
+[ Upstream commit 936206e3f6ff411581e615e930263d6f8b78df9d ]
 
-On Radxa Rock 5B with a RTL8852BE combo WiFi/BT card, the efuse
-physical map dump intermittently fails with -EBUSY during probe.
-The failure occurs in rtw89_dump_physical_efuse_map_ddv() where
-read_poll_timeout_atomic() times out waiting for the B_AX_EF_RDY
-bit after 1 second.
+Sharing a global hash table among all queues is tempting, but
+it can cause crash:
 
-The root cause is a timing race during boot: the WiFi driver's
-chip initialization (firmware download via PCIe) overlaps with
-Bluetooth firmware download to the same combo chip via USB. This
-can leave the efuse controller temporarily unavailable when the
-WiFi driver attempts to read the efuse map.
+BUG: KASAN: slab-use-after-free in nfqnl_recv_verdict+0x11ac/0x15e0 [nfnetlink_queue]
+[..]
+ nfqnl_recv_verdict+0x11ac/0x15e0 [nfnetlink_queue]
+ nfnetlink_rcv_msg+0x46a/0x930
+ kmem_cache_alloc_node_noprof+0x11e/0x450
 
-The firmware download path retries up to 5 times, but the efuse
-read that follows has no similar logic. Address this by adding
-retry loop logic (also up to 5 attempts) around physical efuse
-map dump.
+struct nf_queue_entry is freed via kfree, but parallel cpu can still
+encounter such an nf_queue_entry when walking the list.
 
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260317112155.1939569-1-christianshewitt@gmail.com
+Alternative fix is to free the nf_queue_entry via kfree_rcu() instead,
+but as we have to alloc/free for each skb this will cause more mem
+pressure.
+
+Cc: Scott Mitchell <scott.k.mitch1@gmail.com>
+Fixes: e19079adcd26 ("netfilter: nfnetlink_queue: optimize verdict lookup with hash table")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Here is
-the complete walkthrough:
+Error: Failed to generate final synthesis
 
----
+ include/net/netfilter/nf_queue.h |   1 -
+ net/netfilter/nfnetlink_queue.c  | 139 +++++++++++--------------------
+ 2 files changed, 49 insertions(+), 91 deletions(-)
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject Line
-- **Subsystem**: wifi: rtw89 (Realtek 802.11ax wireless driver)
-- **Action verb**: "retry" — indicates adding resilience to a failure
-  path
-- **Summary**: Adds retry logic for efuse physical map dump to handle
-  transient -EBUSY failures
-
-### Step 1.2: Tags
-- **Signed-off-by**: Christian Hewitt (author), Ping-Ke Shih (rtw89
-  maintainer who applied it)
-- **Link**: `https://patch.msgid.link/20260317112155.1939569-1-
-  christianshewitt@gmail.com` — original submission
-- No `Fixes:` tag (expected for autosel candidate)
-- No `Cc: stable` (expected)
-- No `Reported-by:` — the author is the reporter/user himself
-
-### Step 1.3: Commit Body Analysis
-- **Bug description**: On Radxa Rock 5B with RTL8852BE combo WiFi/BT,
-  efuse physical map dump intermittently fails with -EBUSY during probe.
-- **Symptom**: `read_poll_timeout_atomic()` times out (1 second) waiting
-  for `B_AX_EF_RDY` bit in `rtw89_dump_physical_efuse_map_ddv()`.
-- **Root cause**: Timing race during boot — WiFi chip initialization
-  (firmware download via PCIe) overlaps with Bluetooth firmware download
-  via USB to the same combo chip. The efuse controller becomes
-  temporarily unavailable.
-- **Fix approach**: Add retry loop (up to 5 attempts), matching the
-  firmware download retry pattern already in the driver.
-
-### Step 1.4: Hidden Bug Fix Detection
-This is explicitly described as a real bug fix — probe fails
-intermittently, WiFi doesn't work. The commit message is clear about the
-failure mechanism.
-
-Record: Real probe-time failure on real hardware. Not a hidden fix.
-
----
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-- **Files changed**: 1 (`drivers/net/wireless/realtek/rtw89/efuse.c`)
-- **Lines**: +19 added (new retry wrapper), minimal structural change
-- **Functions modified**: `rtw89_dump_physical_efuse_map()` renamed to
-  `__rtw89_dump_physical_efuse_map()`, new wrapper
-  `rtw89_dump_physical_efuse_map()` with retry logic
-- **Scope**: Single-file, surgical fix
-
-### Step 2.2: Code Flow Change
-**Before**: `rtw89_dump_physical_efuse_map()` calls DDV or DAV path
-once. If the efuse controller is busy (-EBUSY), it fails immediately and
-the caller propagates the error up, causing probe to fail.
-
-**After**: The original function is renamed to
-`__rtw89_dump_physical_efuse_map()`. A new wrapper calls it in a loop
-(up to 5 times). On success, returns immediately. On failure, logs a
-warning and retries.
-
-### Step 2.3: Bug Mechanism
-**Category**: Hardware timing/resource contention during probe.
-- The efuse controller is shared between WiFi and BT on combo chips
-- BT firmware download via USB can hold the controller busy
-- The DDV read path polls for B_AX_EF_RDY for up to 1 second, then fails
-- Without retry, a transient busy state becomes a permanent probe
-  failure
-
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes — retry on transient error is a well-
-  established pattern
-- **Minimal**: Yes — 19 lines, pure wrapper function
-- **Regression risk**: Very low — only adds retries on an already-
-  failing path; success path is unchanged (returns immediately on first
-  `!ret`)
-- **Pattern consistency**: Exactly matches `rtw89_fw_download()` at
-  fw.c:1980 which already does `for (retry = 0; retry < 5; retry++)`
-  around `__rtw89_fw_download()`
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame
-- The DDV efuse read code (`rtw89_dump_physical_efuse_map_ddv`) was
-  introduced in commit `e3ec7017f6a20d` (v5.16-rc4, Oct 2021 — initial
-  rtw89 driver)
-- The wrapper `rtw89_dump_physical_efuse_map()` with DAV split came from
-  `bdfbf06c2c286d` (v5.18 era, Mar 2022)
-- The buggy code has been present since the driver was introduced
-
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The bug is effectively a design limitation from
-the original driver — no retry logic was ever added for efuse reads,
-while firmware download had retry from the beginning.
-
-### Step 3.3: File History
-Recent changes to `efuse.c` are all WiFi 7 feature additions (efuse
-version reading, secure boot info). The core
-`rtw89_dump_physical_efuse_map()` function has been unchanged since
-v5.18. No prerequisites needed.
-
-### Step 3.4: Author Check
-- Christian Hewitt is the patch author (user who hit the bug on Radxa
-  Rock 5B)
-- Ping-Ke Shih is the rtw89 maintainer who signed off and applied the
-  patch
-- Maintainer sign-off provides strong confidence in the fix
-
-### Step 3.5: Dependencies
-- **No dependencies**: The patch modifies only the wrapper function and
-  introduces no new structures, types, or dependencies
-- The function signature matches all stable trees v6.1+
-- In v5.16-5.17, the function signature differs (no `dav` parameter),
-  requiring minor adaptation
-
----
-
-## PHASE 4: MAILING LIST RESEARCH
-
-b4 dig could not find the commit (it's a single-patch submission, not in
-the local tree). Lore is blocking automated access. However:
-- The patch was submitted from `christianshewitt@gmail.com` on
-  2026-03-17
-- Applied by Ping-Ke Shih (rtw89 maintainer)
-- The Link: tag confirms it was submitted through normal mailing list
-  flow
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Functions Modified
-- `rtw89_dump_physical_efuse_map()` (renamed to `__` prefix, wrapped)
-
-### Step 5.2: Callers
-The wrapper `rtw89_dump_physical_efuse_map()` is called from 5
-locations, all during probe:
-1. `rtw89_parse_efuse_map_ax()` — twice (physical + DAV map)
-2. `rtw89_parse_phycap_map_ax()` — once
-3. `rtw89_read_efuse_ver()` — once
-4. `rtw89_efuse_read_fw_secure_ax()` — once
-
-All are invoked through `chip->ops->parse_efuse_map` and
-`chip->ops->parse_phycap_map` during device initialization.
-
-### Step 5.3/5.4: Impact
-If any of these callers fail, the WiFi device fails to probe — it
-becomes completely non-functional. The function is on the critical path
-for device initialization.
-
-### Step 5.5: Similar Patterns
-The exact same retry pattern already exists at `fw.c:1980` for
-`rtw89_fw_download()`. This establishes precedent within the driver.
-
----
-
-## PHASE 6: STABLE TREE ANALYSIS
-
-### Step 6.1: Code Exists in Stable Trees
-- **v5.16+**: The efuse DDV code exists (the core buggy path)
-- **v5.18+**: The DDV/DAV split wrapper exists (matching the patch
-  context)
-- **v6.1, v6.6, v6.12**: The exact function
-  `rtw89_dump_physical_efuse_map()` exists with identical signature and
-  body
-- RTL8852BE support has been present since v6.1
-
-### Step 6.2: Backport Complications
-The `rtw89_dump_physical_efuse_map()` function is **byte-for-byte
-identical** across v6.1, v6.6, v6.12, and mainline. The patch will apply
-cleanly to all active stable trees.
-
-### Step 6.3: No Existing Fix
-No related fix for this same issue exists in any stable tree.
-
----
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem
-- **Subsystem**: Network drivers (wireless) — Realtek rtw89
-- **Criticality**: IMPORTANT — WiFi connectivity affects many users,
-  especially on SBCs and laptops
-
-### Step 7.2: Activity
-- rtw89 is actively developed with regular updates
-- Ping-Ke Shih (Realtek) is the active maintainer
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Affected Users
-Users with RTL8852BE and other Realtek combo WiFi/BT cards on any
-platform where WiFi and BT firmware download can overlap during boot.
-The Radxa Rock 5B is specifically mentioned but any combo card could be
-affected.
-
-### Step 8.2: Trigger Conditions
-- **Trigger**: Boot with both WiFi and BT enabled on a combo Realtek
-  chip
-- **Frequency**: "Intermittently" — depends on boot timing
-- **Unprivileged**: N/A — this is a probe-time issue, not user-triggered
-
-### Step 8.3: Severity
-- **Failure mode**: Complete WiFi probe failure — device doesn't work at
-  all
-- **Severity**: HIGH — total loss of WiFi functionality
-- No crash or data corruption, but complete feature loss
-
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: HIGH — prevents intermittent probe failures on real
-  hardware
-- **Risk**: VERY LOW — 19 lines, pure retry wrapper, success path
-  unchanged, follows existing driver pattern
-- **Ratio**: Strongly favorable for backport
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Evidence Summary
-
-**FOR backporting**:
-- Fixes a real probe failure on real hardware (Radxa Rock 5B, RTL8852BE)
-- Small, self-contained, obviously correct (19 lines, single file)
-- Follows an existing pattern in the same driver (`rtw89_fw_download`
-  retry loop)
-- Applied with maintainer sign-off (Ping-Ke Shih)
-- No dependencies — standalone fix
-- Applies cleanly to all active stable trees (v6.1+)
-- When the bug triggers, WiFi is completely non-functional
-- Combo WiFi/BT timing race is a generic issue affecting multiple boards
-
-**AGAINST backporting**:
-- No Fixes: tag or Cc: stable (expected, not a negative signal)
-- Could be seen as adding "new logic" rather than fixing existing logic
-- The failure is intermittent, not 100% reproducible
-
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — retry pattern is well-
-   established, maintainer-approved
-2. **Fixes a real bug?** YES — intermittent probe failure causes total
-   WiFi loss
-3. **Important issue?** YES — complete loss of WiFi connectivity during
-   probe
-4. **Small and contained?** YES — 19 lines, 1 file, pure wrapper
-5. **No new features or APIs?** Correct — no new features, only
-   resilience
-6. **Can apply to stable?** YES — verified identical function across
-   v6.1, v6.6, v6.12
-
-### Step 9.3: Exception Category
-Not an exception category — this is a standard bug fix.
-
-### Step 9.4: Decision
-The fix is small, surgical, obviously correct, follows an existing
-pattern, fixes a real hardware issue causing complete WiFi loss, and was
-approved by the subsystem maintainer. The risk-benefit ratio strongly
-favors backporting.
-
----
-
-## Verification
-
-- [Phase 1] Parsed tags: Signed-off-by from Christian Hewitt (author)
-  and Ping-Ke Shih (maintainer). Link to patch.msgid.link.
-- [Phase 2] Diff analysis: 19 lines added — renames existing function
-  with `__` prefix, wraps it in retry loop (up to 5 attempts). No
-  behavioral change on success path.
-- [Phase 3] git blame: Buggy code (no retry) introduced in
-  e3ec7017f6a20d (v5.16-rc4, initial rtw89 driver, Oct 2021). Present in
-  all stable trees since v5.16.
-- [Phase 3] git blame: Wrapper function with DAV split introduced in
-  bdfbf06c2c286d (v5.18 era). Present in v6.1+.
-- [Phase 3] git log: No related fixes to this issue exist in history.
-- [Phase 3] Author: Christian Hewitt is an external contributor; Ping-Ke
-  Shih (Realtek, rtw89 maintainer) signed off.
-- [Phase 4] b4 dig: Could not find commit in local tree. Lore blocked by
-  anti-bot measures. Confirmed patch was submitted via normal mailing
-  list flow (Link: tag present).
-- [Phase 5] Grep callers: `rtw89_dump_physical_efuse_map()` called from
-  5 locations, all in probe path (parse_efuse_map, parse_phycap_map,
-  read_efuse_ver, read_fw_secure). Failure = total probe failure.
-- [Phase 5] Pattern match: Identical retry pattern exists at fw.c:1980
-  (`rtw89_fw_download()` wrapping `__rtw89_fw_download()` with `for
-  (retry = 0; retry < 5; retry++)`).
-- [Phase 6] Verified function exists identically in v6.1, v6.6, v6.12 by
-  `git show` of each tag. Patch applies cleanly.
-- [Phase 6] RTL8852BE PCI entry (9695dc2e4be90) present since v6.1.
-- [Phase 6] efuse.c in v5.16 has different signature (no `dav` param);
-  backport to 5.x would need rework.
-- [Phase 8] Failure mode: Complete WiFi probe failure — device non-
-  functional. Severity: HIGH.
-- UNVERIFIED: Could not access lore.kernel.org discussion for reviewer
-  feedback or stable nominations (anti-bot blocking). This does not
-  change the decision — the fix is technically sound independent of
-  reviewer commentary.
-
-**YES**
-
- drivers/net/wireless/realtek/rtw89/efuse.c | 23 ++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/wireless/realtek/rtw89/efuse.c b/drivers/net/wireless/realtek/rtw89/efuse.c
-index a2757a88d55da..89d4b1b865f8f 100644
---- a/drivers/net/wireless/realtek/rtw89/efuse.c
-+++ b/drivers/net/wireless/realtek/rtw89/efuse.c
-@@ -185,8 +185,8 @@ static int rtw89_dump_physical_efuse_map_dav(struct rtw89_dev *rtwdev, u8 *map,
- 	return 0;
+diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
+index 45eb26b2e95b3..d17035d14d96c 100644
+--- a/include/net/netfilter/nf_queue.h
++++ b/include/net/netfilter/nf_queue.h
+@@ -23,7 +23,6 @@ struct nf_queue_entry {
+ 	struct nf_hook_state	state;
+ 	bool			nf_ct_is_unconfirmed;
+ 	u16			size; /* sizeof(entry) + saved route keys */
+-	u16			queue_num;
+ 
+ 	/* extra space to store route keys */
+ };
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index a39d3b989063c..fe5942535245d 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -49,8 +49,8 @@
+ #endif
+ 
+ #define NFQNL_QMAX_DEFAULT 1024
+-#define NFQNL_HASH_MIN     1024
+-#define NFQNL_HASH_MAX     1048576
++#define NFQNL_HASH_MIN     8
++#define NFQNL_HASH_MAX     32768
+ 
+ /* We're using struct nlattr which has 16bit nla_len. Note that nla_len
+  * includes the header length. Thus, the maximum packet length that we
+@@ -60,29 +60,10 @@
+  */
+ #define NFQNL_MAX_COPY_RANGE (0xffff - NLA_HDRLEN)
+ 
+-/* Composite key for packet lookup: (net, queue_num, packet_id) */
+-struct nfqnl_packet_key {
+-	possible_net_t net;
+-	u32 packet_id;
+-	u16 queue_num;
+-} __aligned(sizeof(u32));  /* jhash2 requires 32-bit alignment */
+-
+-/* Global rhashtable - one for entire system, all netns */
+-static struct rhashtable nfqnl_packet_map __read_mostly;
+-
+-/* Helper to initialize composite key */
+-static inline void nfqnl_init_key(struct nfqnl_packet_key *key,
+-				  struct net *net, u32 packet_id, u16 queue_num)
+-{
+-	memset(key, 0, sizeof(*key));
+-	write_pnet(&key->net, net);
+-	key->packet_id = packet_id;
+-	key->queue_num = queue_num;
+-}
+-
+ struct nfqnl_instance {
+ 	struct hlist_node hlist;		/* global list of queues */
+-	struct rcu_head rcu;
++	struct rhashtable nfqnl_packet_map;
++	struct rcu_work	rwork;
+ 
+ 	u32 peer_portid;
+ 	unsigned int queue_maxlen;
+@@ -106,6 +87,7 @@ struct nfqnl_instance {
+ 
+ typedef int (*nfqnl_cmpfn)(struct nf_queue_entry *, unsigned long);
+ 
++static struct workqueue_struct *nfq_cleanup_wq __read_mostly;
+ static unsigned int nfnl_queue_net_id __read_mostly;
+ 
+ #define INSTANCE_BUCKETS	16
+@@ -124,34 +106,10 @@ static inline u_int8_t instance_hashfn(u_int16_t queue_num)
+ 	return ((queue_num >> 8) ^ queue_num) % INSTANCE_BUCKETS;
  }
  
--static int rtw89_dump_physical_efuse_map(struct rtw89_dev *rtwdev, u8 *map,
--					 u32 dump_addr, u32 dump_size, bool dav)
-+static int __rtw89_dump_physical_efuse_map(struct rtw89_dev *rtwdev, u8 *map,
-+					   u32 dump_addr, u32 dump_size, bool dav)
+-/* Extract composite key from nf_queue_entry for hashing */
+-static u32 nfqnl_packet_obj_hashfn(const void *data, u32 len, u32 seed)
+-{
+-	const struct nf_queue_entry *entry = data;
+-	struct nfqnl_packet_key key;
+-
+-	nfqnl_init_key(&key, entry->state.net, entry->id, entry->queue_num);
+-
+-	return jhash2((u32 *)&key, sizeof(key) / sizeof(u32), seed);
+-}
+-
+-/* Compare stack-allocated key against entry */
+-static int nfqnl_packet_obj_cmpfn(struct rhashtable_compare_arg *arg,
+-				  const void *obj)
+-{
+-	const struct nfqnl_packet_key *key = arg->key;
+-	const struct nf_queue_entry *entry = obj;
+-
+-	return !net_eq(entry->state.net, read_pnet(&key->net)) ||
+-	       entry->queue_num != key->queue_num ||
+-	       entry->id != key->packet_id;
+-}
+-
+ static const struct rhashtable_params nfqnl_rhashtable_params = {
+ 	.head_offset = offsetof(struct nf_queue_entry, hash_node),
+-	.key_len = sizeof(struct nfqnl_packet_key),
+-	.obj_hashfn = nfqnl_packet_obj_hashfn,
+-	.obj_cmpfn = nfqnl_packet_obj_cmpfn,
++	.key_offset = offsetof(struct nf_queue_entry, id),
++	.key_len = sizeof(u32),
+ 	.automatic_shrinking = true,
+ 	.min_size = NFQNL_HASH_MIN,
+ 	.max_size = NFQNL_HASH_MAX,
+@@ -190,6 +148,10 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
+ 	spin_lock_init(&inst->lock);
+ 	INIT_LIST_HEAD(&inst->queue_list);
+ 
++	err = rhashtable_init(&inst->nfqnl_packet_map, &nfqnl_rhashtable_params);
++	if (err < 0)
++		goto out_free;
++
+ 	spin_lock(&q->instances_lock);
+ 	if (instance_lookup(q, queue_num)) {
+ 		err = -EEXIST;
+@@ -210,6 +172,8 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
+ 
+ out_unlock:
+ 	spin_unlock(&q->instances_lock);
++	rhashtable_destroy(&inst->nfqnl_packet_map);
++out_free:
+ 	kfree(inst);
+ 	return ERR_PTR(err);
+ }
+@@ -217,15 +181,18 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
+ static void nfqnl_flush(struct nfqnl_instance *queue, nfqnl_cmpfn cmpfn,
+ 			unsigned long data);
+ 
+-static void
+-instance_destroy_rcu(struct rcu_head *head)
++static void instance_destroy_work(struct work_struct *work)
  {
- 	int ret;
+-	struct nfqnl_instance *inst = container_of(head, struct nfqnl_instance,
+-						   rcu);
++	struct nfqnl_instance *inst;
  
-@@ -208,6 +208,25 @@ static int rtw89_dump_physical_efuse_map(struct rtw89_dev *rtwdev, u8 *map,
- 	return 0;
++	inst = container_of(to_rcu_work(work), struct nfqnl_instance,
++			    rwork);
+ 	rcu_read_lock();
+ 	nfqnl_flush(inst, NULL, 0);
+ 	rcu_read_unlock();
++
++	rhashtable_destroy(&inst->nfqnl_packet_map);
++
+ 	kfree(inst);
+ 	module_put(THIS_MODULE);
+ }
+@@ -234,7 +201,9 @@ static void
+ __instance_destroy(struct nfqnl_instance *inst)
+ {
+ 	hlist_del_rcu(&inst->hlist);
+-	call_rcu(&inst->rcu, instance_destroy_rcu);
++
++	INIT_RCU_WORK(&inst->rwork, instance_destroy_work);
++	queue_rcu_work(nfq_cleanup_wq, &inst->rwork);
  }
  
-+static int rtw89_dump_physical_efuse_map(struct rtw89_dev *rtwdev, u8 *map,
-+					 u32 dump_addr, u32 dump_size, bool dav)
-+{
-+	int retry;
-+	int ret;
+ static void
+@@ -250,9 +219,7 @@ __enqueue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
+ {
+ 	int err;
+ 
+-	entry->queue_num = queue->queue_num;
+-
+-	err = rhashtable_insert_fast(&nfqnl_packet_map, &entry->hash_node,
++	err = rhashtable_insert_fast(&queue->nfqnl_packet_map, &entry->hash_node,
+ 				     nfqnl_rhashtable_params);
+ 	if (unlikely(err))
+ 		return err;
+@@ -266,23 +233,19 @@ __enqueue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
+ static void
+ __dequeue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
+ {
+-	rhashtable_remove_fast(&nfqnl_packet_map, &entry->hash_node,
++	rhashtable_remove_fast(&queue->nfqnl_packet_map, &entry->hash_node,
+ 			       nfqnl_rhashtable_params);
+ 	list_del(&entry->list);
+ 	queue->queue_total--;
+ }
+ 
+ static struct nf_queue_entry *
+-find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id,
+-		   struct net *net)
++find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id)
+ {
+-	struct nfqnl_packet_key key;
+ 	struct nf_queue_entry *entry;
+ 
+-	nfqnl_init_key(&key, net, id, queue->queue_num);
+-
+ 	spin_lock_bh(&queue->lock);
+-	entry = rhashtable_lookup_fast(&nfqnl_packet_map, &key,
++	entry = rhashtable_lookup_fast(&queue->nfqnl_packet_map, &id,
+ 				       nfqnl_rhashtable_params);
+ 
+ 	if (entry)
+@@ -1531,7 +1494,7 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
+ 
+ 	verdict = ntohl(vhdr->verdict);
+ 
+-	entry = find_dequeue_entry(queue, ntohl(vhdr->id), info->net);
++	entry = find_dequeue_entry(queue, ntohl(vhdr->id));
+ 	if (entry == NULL)
+ 		return -ENOENT;
+ 
+@@ -1880,40 +1843,38 @@ static int __init nfnetlink_queue_init(void)
+ {
+ 	int status;
+ 
+-	status = rhashtable_init(&nfqnl_packet_map, &nfqnl_rhashtable_params);
+-	if (status < 0)
+-		return status;
++	nfq_cleanup_wq = alloc_ordered_workqueue("nfq_workqueue", 0);
++	if (!nfq_cleanup_wq)
++		return -ENOMEM;
+ 
+ 	status = register_pernet_subsys(&nfnl_queue_net_ops);
+-	if (status < 0) {
+-		pr_err("failed to register pernet ops\n");
+-		goto cleanup_rhashtable;
+-	}
++	if (status < 0)
++		goto cleanup_pernet_subsys;
+ 
+-	netlink_register_notifier(&nfqnl_rtnl_notifier);
+-	status = nfnetlink_subsys_register(&nfqnl_subsys);
+-	if (status < 0) {
+-		pr_err("failed to create netlink socket\n");
+-		goto cleanup_netlink_notifier;
+-	}
++	status = netlink_register_notifier(&nfqnl_rtnl_notifier);
++	if (status < 0)
++	       goto cleanup_rtnl_notifier;
+ 
+ 	status = register_netdevice_notifier(&nfqnl_dev_notifier);
+-	if (status < 0) {
+-		pr_err("failed to register netdevice notifier\n");
+-		goto cleanup_netlink_subsys;
+-	}
++	if (status < 0)
++		goto cleanup_dev_notifier;
 +
-+	for (retry = 0; retry < 5; retry++) {
-+		ret = __rtw89_dump_physical_efuse_map(rtwdev, map, dump_addr,
-+						      dump_size, dav);
-+		if (!ret)
-+			return 0;
-+
-+		rtw89_warn(rtwdev, "efuse dump (dav=%d) failed, retrying (%d)\n",
-+			   dav, retry);
-+	}
-+
-+	return ret;
-+}
-+
- #define invalid_efuse_header(hdr1, hdr2) \
- 	((hdr1) == 0xff || (hdr2) == 0xff)
- #define invalid_efuse_content(word_en, i) \
++	status = nfnetlink_subsys_register(&nfqnl_subsys);
++	if (status < 0)
++		goto cleanup_nfqnl_subsys;
+ 
+ 	nf_register_queue_handler(&nfqh);
+ 
+ 	return status;
+ 
+-cleanup_netlink_subsys:
+-	nfnetlink_subsys_unregister(&nfqnl_subsys);
+-cleanup_netlink_notifier:
++cleanup_nfqnl_subsys:
++	unregister_netdevice_notifier(&nfqnl_dev_notifier);
++cleanup_dev_notifier:
+ 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
++cleanup_rtnl_notifier:
+ 	unregister_pernet_subsys(&nfnl_queue_net_ops);
+-cleanup_rhashtable:
+-	rhashtable_destroy(&nfqnl_packet_map);
++cleanup_pernet_subsys:
++	destroy_workqueue(nfq_cleanup_wq);
+ 	return status;
+ }
+ 
+@@ -1924,9 +1885,7 @@ static void __exit nfnetlink_queue_fini(void)
+ 	nfnetlink_subsys_unregister(&nfqnl_subsys);
+ 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
+ 	unregister_pernet_subsys(&nfnl_queue_net_ops);
+-
+-	rhashtable_destroy(&nfqnl_packet_map);
+-
++	destroy_workqueue(nfq_cleanup_wq);
+ 	rcu_barrier(); /* Wait for completion of call_rcu()'s */
+ }
+ 
 -- 
 2.53.0
 
