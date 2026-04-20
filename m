@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B92A3FA5C7;
-	Mon, 20 Apr 2026 13:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE763FA5E0;
+	Mon, 20 Apr 2026 13:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691570; cv=none; b=LbZiQlLZqeDJQnvEUIP1dm0RhSZLOLZKAGBN5aEm/DbDE0/ltrgs8t0/lOJ/vD558/WR5KO36Jtwvddahh6+Ivc6idrivK39bMRrZUVUPJEy7sIQ+EfxJUUOVexXhjxytda6u65J8FD7RrrgEXo9O0ojBACWYfAs/t27HqnTRho=
+	t=1776691571; cv=none; b=HAvFmJoAA13/1nPzOwmJBx+XxWPNZh8/dMjQLQis0k6b92reWMx9mMcNxxmzLAlL089gL6aBZHQEzq11dm01EHKyg1wGQbHVn0G8jbDLr0k0L3y+XBwFFWMJeOVOdPzGpf8WOXrWollh2US+C2Pc8JFxYH5XCKQNgWla9vL/bJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691570; c=relaxed/simple;
-	bh=aePsErvzFJloIxrrjSbTedTghx+HOM3zzVUhqil3lD0=;
+	s=arc-20240116; t=1776691571; c=relaxed/simple;
+	bh=WLQgOMFtCDW3oXcYgQSCIpO+YNH9wFtx5GdhAlLdSrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ED8sKLh04VuB+YLgHrQFZSHfOX8cTyhNIVwpR3uThBGql0pgrCrtsxZtdgN7y8qmfLjlUQVzjz1JaIAYxKvXbWFiB9yl1K44/Jd5D/f5ySuc5hAXgN44w1fYnzb0T+kDVxzmZ84Ga3ijs/3sf/JvL04N/XpM8d43Vsbcwt55ACc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=icqTMtZn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cfafx9d7QFWMBkZTQAQV367gaCid9z/IR3aq1oJfrRcQ0N15A4IuQM32xpbEzo/cNuQPejei5S8RstTcJpcOlpT3A0hxlNJLD7UKL9mSxjNFxiTbEqkQOgX2KzLNxCXyL3dpRiRwumH5K0Jxyypf1KWbv9YL8HIjvZ017MQQW/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GRqgWJpg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="icqTMtZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E743C2BCC4;
-	Mon, 20 Apr 2026 13:26:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GRqgWJpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBAE6C2BCB4;
+	Mon, 20 Apr 2026 13:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691570;
-	bh=aePsErvzFJloIxrrjSbTedTghx+HOM3zzVUhqil3lD0=;
+	s=k20201202; t=1776691571;
+	bh=WLQgOMFtCDW3oXcYgQSCIpO+YNH9wFtx5GdhAlLdSrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icqTMtZn6xf2oHTfaBb5BaWJZUyBlO551NidNUQWHtDfrTTzS1roNwU80vGf3DhVK
-	 BjMUxyEXlto0ugs3cF5YdTMUhWe6i0SxrauxsRTBxpJQqvPdry6Z5Nu2NZsqwSNin4
-	 8QOMLemH/14BzzIEsc0nQbZRYSRZuB4nrHFbC74MJ763hKSXBkjxmXes7GnN6RPlBK
-	 q9zq7y1MbwbNDWjfrMCrb7sbn+aZqTe+viJVX0xML5RdugpMxFVDP2do48Wbegta/P
-	 mUgpsMfkW8e45vS5mUM31TlGgjZeDxMqQv7OAozxfq2iHnqqauXXgg8vSrOwwGd+3W
-	 Qc/QBRGtFDtKg==
+	b=GRqgWJpgUzrZVoJ4J/DhJAyMewOVlcS5P6F+Ya383N7PnqM2JvA3u9B1ydfjLouY0
+	 QsSqR8Wsa6luLGugLLOpgtBOHERV70MU9G2qa1Jx8Zx/jbjRXXIKXiGpQx4F2nVUN/
+	 WVOfufLmxdbvEqQt9bHMpoPvDxEnz5igyBt/jhl5lm571y0I97+hes2RKFDrMh9sL3
+	 CtkmmArGT9vk9SJrmlgb/2GaKfj02VeHhV8Xbuq2WEVExxSogDdnDTujas5GyXqciL
+	 kLRM5z3OkF7BfQxRMqcHd3/xIQPoG3ze/XbBUk8wy7WTiI/a/yM57AG0ItzuBnG1VS
+	 7ByWB13BkYigA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hawking Zhang <Hawking.Zhang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/amdgpu: Handle IH v7_1 reg offset differences
-Date: Mon, 20 Apr 2026 09:18:20 -0400
-Message-ID: <20260420132314.1023554-106-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] wifi: iwlwifi: mld: always assign a fw id to a vif
+Date: Mon, 20 Apr 2026 09:18:21 -0400
+Message-ID: <20260420132314.1023554-107-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -56,372 +51,308 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Hawking Zhang <Hawking.Zhang@amd.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 41c61e60f82d55e9a3a3f3f04d192d732230a91c ]
+[ Upstream commit 4f1da5cf31cf6345f145e914a0158c2e114bbe27 ]
 
-IH v7_1 changes the offsets of some registers relative to
-IH v7_0. Introduce IH v7_1-specific register access
+We used to have a fw id assignment in iwl_mld_init_vif since all interface
+types that were added to the driver was immediately added to the FW as
+well.
+Since NAN was introduced, this is no longer the case - the NAN interface
+is not added to the fw until a local schedule is configured.
 
-Signed-off-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+For this vif we don't assign a fw id so it is 0 by default.
+But later, when the vif is removed from the driver, we think that it has
+a valid fw id (0) and we point fw_id_to_vif[0] to NULL.
+fw_id_to_vif[0] might actually point to another vif with a valid fw id
+0. In this case, we end up messing fw_id_to_vif.
+
+Fix this by initializing a vif with a special invalid fw id, and by
+exiting iwl_mld_rm_vif early for NAN interfaces.
+
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260321192637.f3b5cc59098f.I3d1dbe66bd224cbb786c2b0ab3d1c9f7ec9003e4@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Connection lost, reconnecting (attempt 1)...
-Retry attempt 1...
-Now let me compile the final analysis.
+Good. Now I have a complete picture. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: `drm/amdgpu` (AMD GPU driver, IH = Interrupt Handler)
-- **Action verb**: "Handle" - implies addressing a functional issue
-- **Summary**: Addresses register offset differences between IH v7.0 and
-  IH v7.1 hardware IP versions
+**Step 1.1: Subject Line**
+- Subsystem: `wifi: iwlwifi: mld:` (Intel wireless driver, MLD sub-
+  driver)
+- Action verb: "always assign" - implies fixing missing initialization
+- Summary: Ensure every vif gets a proper fw_id (even NAN interfaces
+  that don't get a real one)
 
-Record: [drm/amdgpu] [Handle] [Fix wrong register offsets for IH v7.1
-hardware]
+Record: [wifi: iwlwifi: mld] [fix/ensure] [Initialize fw_id for NAN vifs
+to prevent fw_id_to_vif table corruption]
 
-### Step 1.2: Tags
-- Signed-off-by: Hawking Zhang (AMD GPU architect/contributor)
-- Reviewed-by: Lijo Lazar (AMD GPU developer)
-- Signed-off-by: Alex Deucher (AMD GPU subsystem maintainer)
-- No Fixes: tag, no Reported-by, no Cc: stable - all expected for
-  candidate evaluation.
+**Step 1.2: Tags**
+- Reviewed-by: Emmanuel Grumbach (Intel wifi subsystem co-maintainer)
+- Signed-off-by: Miri Korenblit (Intel wifi maintainer)
+- Link: patch.msgid.link URL
+- No Fixes: tag (expected for candidates)
+- No Cc: stable (expected for candidates)
 
-Record: Standard AMD GPU driver patch flow. Reviewed by subsystem
-contributor, signed off by maintainer.
+Record: Reviewed by a subsystem co-maintainer. No syzbot, no external
+reporters.
 
-### Step 1.3: Commit Body
-The body explains: "IH v7_1 changes the offsets of some registers
-relative to IH v7_0." This states factually that register offsets differ
-between hardware versions. "Introduce IH v7_1-specific register access"
-means the fix adds conditional paths.
+**Step 1.3: Commit Body Analysis**
+The message clearly describes:
+- The bug: NAN interfaces don't get a fw_id, so fw_id defaults to 0
+- The symptom: On NAN vif removal, `fw_id_to_vif[0]` is set to NULL,
+  which may belong to a *different* valid vif with fw_id 0
+- The consequence: Corrupts the fw_id_to_vif mapping table
+- The fix: Initialize fw_id to `IWL_MLD_INVALID_FW_ID` and skip rm_vif
+  for NAN
 
-Record: The bug is that IH v7.1 hardware has different register offsets
-for certain registers, but the driver uses v7.0 offsets for all
-versions, leading to wrong register accesses.
+Record: This is a data corruption bug in the vif-to-firmware-id mapping
+table.
 
-### Step 1.4: Hidden Bug Fix Detection
-This IS a hidden bug fix. The phrase "Handle... differences" understates
-the issue: without this change, the driver reads/writes WRONG register
-offsets on IH v7.1 hardware. This is a functional correctness bug.
-
-Record: Yes, this is a hidden bug fix disguised as enablement.
+**Step 1.4: Hidden Bug Fix?**
+This is clearly described as a bug fix. The commit message explains the
+exact corruption mechanism.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files**: `drivers/gpu/drm/amd/amdgpu/ih_v7_0.c` (+22 lines net)
-- **Functions modified**: `ih_v7_0_irq_init()`
-- **Scope**: Single-file, single-function, surgical fix
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/net/wireless/intel/iwlwifi/mld/iface.c`
+- 2 hunks: one in `iwl_mld_init_vif()` (+1 line), one in
+  `iwl_mld_rm_vif()` (+3 lines)
+- Net: +4 lines. Extremely small, surgical fix.
 
-### Step 2.2: Code Flow Change
-The diff modifies `ih_v7_0_irq_init()` in three places:
+**Step 2.2: Code Flow Change**
 
-1. **IH_CHICKEN register** (lines 321-324): Before: always uses
-   `regIH_CHICKEN` (0x018a from v7.0 header). After: checks IP version;
-   uses 0x0129 for v7.1, 0x018a for v7.0.
+Hunk 1 (`iwl_mld_init_vif`): Adds `mld_vif->fw_id =
+IWL_MLD_INVALID_FW_ID;` (0xff). Before: fw_id is 0 (zeroed struct).
+After: fw_id is 0xff (invalid sentinel).
 
-2. **IH_RING1_CLIENT_CFG_INDEX** (lines 361-363): Before: always uses
-   `regIH_RING1_CLIENT_CFG_INDEX` (0x0183). After: uses 0x0122 for v7.1.
+Hunk 2 (`iwl_mld_rm_vif`): Adds early return for NAN interfaces. Before:
+NAN vif removal proceeds to NULL out `fw_id_to_vif[0]`. After: NAN
+removal returns immediately without touching the table.
 
-3. **IH_RING1_CLIENT_CFG_DATA** (lines 365-371): Before: always uses
-   `regIH_RING1_CLIENT_CFG_DATA` (0x0184). After: uses 0x0123 for v7.1.
+**Step 2.3: Bug Mechanism**
+This is a **logic/correctness bug** leading to **data corruption** in
+the fw_id_to_vif mapping:
+1. NAN vif is created - fw_id stays at default 0 (no allocation)
+2. NAN vif is removed - `fw_id_to_vif[0]` is set to NULL
+3. If another vif legitimately holds fw_id 0, its mapping is destroyed
 
-Six local `#define` constants are added for the v7.1 offsets.
+The existing WARN_ON check (`mld_vif->fw_id >=
+ARRAY_SIZE(mld->fw_id_to_vif)`) doesn't catch this because 0 is a valid
+index. But with the fix, IWL_MLD_INVALID_FW_ID (0xff) would trigger the
+WARN_ON as a safety net.
 
-### Step 2.3: Bug Mechanism
-**Category**: Hardware register access correctness bug
+**Step 2.4: Fix Quality**
+- Obviously correct: IWL_MLD_INVALID_FW_ID already exists and is used
+  elsewhere in the codebase (scan.c)
+- Minimal: only 4 lines added
+- No regression risk: NAN interfaces should never touch fw_id_to_vif,
+  and the early return prevents any interaction
+- Double defense: Both the sentinel value AND the early return prevent
+  the corruption
 
-I verified the register offsets from the actual header files:
+## PHASE 3: GIT HISTORY
 
-**osssys_7_0_0_offset.h**:
-- `regIH_CHICKEN` = 0x018a
-- `regIH_RING1_CLIENT_CFG_INDEX` = 0x0183
-- `regIH_RING1_CLIENT_CFG_DATA` = 0x0184
+**Step 3.1: Blame Results**
+- `iwl_mld_init_vif` was introduced by `d1e879ec600f9` (add iwlmld sub-
+  driver, 2025-02-16), first in v6.15
+- The NAN support that introduced the bug was `9e978d8ebbe96`
+  (2025-11-10), first in v7.0
+- The `iwl_mld_rm_vif` function has been unchanged since the mld driver
+  introduction, with only the void return refactor in `0755db9f2605e`
 
-**osssys_7_1_0_offset.h**:
-- `regIH_CHICKEN` = 0x0129
-- `regIH_RING1_CLIENT_CFG_INDEX` = 0x0122
-- `regIH_RING1_CLIENT_CFG_DATA` = 0x0123
+Record: Bug introduced by commit 9e978d8ebbe96 in v7.0-rc1. Only v7.0+
+stable trees are affected.
 
-The offsets differ significantly (e.g., IH_CHICKEN is 0x61 dwords
-apart). Since `ih_v7_0.c` only includes the v7.0 header, on v7.1
-hardware it reads/writes completely wrong registers.
+**Step 3.2: Fixes tag** - No Fixes: tag present (expected).
 
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes - version check + correct v7.1 offsets
-  verified against official header
-- **Minimal/surgical**: Yes - only the three affected registers are
-  touched
-- **Regression risk**: Very low - only changes behavior for
-  IP_VERSION(7,1,0); v7.0 paths unchanged
-- **Red flags**: None
+**Step 3.3: File History**
+Post-v7.0 commits touching iface.c are only recent tree-wide changes and
+the wifi generation fix. The file is stable.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.4: Author**
+Miri Korenblit is the primary maintainer of iwlwifi. Emmanuel Grumbach
+reviewed the patch.
 
-### Step 3.1: Blame
-The buggy `RREG32_SOC15(OSSSYS, 0, regIH_CHICKEN)` at line 321 was
-introduced by `12443fc53e7d7` (Likun Gao, 2023 - initial ih_v7_0
-support). The IH_RING1 client config lines (359-371) were added by
-`f0c6b79bfc921` (Sunil Khatri, July 2024).
-
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The underlying issue is that `692c70f4d8024`
-("drm/amdgpu: Use ih v7_0 ip block for ih v7_1") claimed v7.1 could
-share the v7.0 implementation, but didn't account for register offset
-differences. This commit IS in the stable tree.
-
-### Step 3.3: File History
-20+ commits to ih_v7_0.c, mostly API refactoring. The v7.1-specific code
-(retry CAM) was added by `e06d194201189` which IS in this tree.
-
-### Step 3.4: Author
-Hawking Zhang is a principal AMD GPU architect and frequent contributor,
-also added the osssys v7.1 headers.
-
-### Step 3.5: Dependencies
-No dependencies. The commit is self-contained - it adds local #defines
-rather than including the v7.1 header (avoiding symbol clashes).
+**Step 3.5: Dependencies**
+- `IWL_MLD_INVALID_FW_ID` (0xff) already exists in v7.0 at `mld.h:530`
+- NAN support already exists in v7.0
+- No other prerequisites needed. This is standalone.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-Could not find the specific patch thread on lore.kernel.org (Anubis
-anti-scraping protection blocked search). Web search also did not find
-the exact patch. The "Consolidate register access methods" series by
-Lijo Lazar (Jan 2026) appears to be a follow-up refactoring.
+Lore was inaccessible due to anti-bot protection. b4 dig found the
+submission URL: `https://patch.msgid.link/20260324093333.2953495-1-
+miriam.rachel.korenblit@intel.com`. This was part of a batch submission
+by Miri Korenblit. The patch was reviewed by Emmanuel Grumbach, the
+iwlwifi co-maintainer.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-`ih_v7_0_irq_init()` is the only function modified.
+**Step 5.1-5.4: Key Functions**
+- `iwl_mld_init_vif()`: Called from `iwl_mld_add_vif()` during interface
+  creation - standard mac80211 callback path
+- `iwl_mld_rm_vif()`: Called during interface removal
+- `fw_id_to_vif[]` is accessed from many places: notification handlers,
+  low_latency, scan code - corruption of this table has wide-reaching
+  effects
 
-### Step 5.2: Callers
-`ih_v7_0_irq_init()` is called from:
-- `ih_v7_0_hw_init()` -> called during device load
-- `ih_v7_0_resume()` -> called during system resume
+**Step 5.5: Similar Patterns**
+`IWL_MLD_INVALID_FW_ID` is already used as a sentinel value for
+`fw_link_id` in scan.c, so this pattern is established in the codebase.
 
-These are critical initialization paths that run every time the GPU is
-initialized or resumed.
+## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 5.4: Reachability
-Absolutely reachable - runs on every device init and resume for any GPU
-using IH v7.x.
+**Step 6.1: Buggy Code in Stable**
+- NAN support (`9e978d8ebbe96`) first appeared in v7.0-rc1
+- Not present in v6.19, v6.16, or v6.15
+- Bug exists ONLY in v7.0 stable tree
+- Current HEAD is v7.0, and we confirmed the v7.0 code has the bug
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+**Step 6.2: Backport Complications**
+The diff between v7.0 and HEAD for this file is empty (HEAD IS v7.0).
+The patch applies cleanly with no conflicts whatsoever.
 
-### Step 6.1: Buggy Code in Stable
-YES - both the code and the IH v7.1 hardware recognition
-(`amdgpu_discovery.c` line 2110: `case IP_VERSION(7, 1, 0)`) exist in
-this 7.0 tree. The v7.1-specific retry CAM code (commit `e06d194201189`)
-is also present.
-
-### Step 6.2: Backport Complications
-The patch should apply cleanly - the file in the stable tree matches the
-pre-image of the diff exactly. The current code at lines 303-402 matches
-what the diff expects.
-
-### Step 6.3: Related Fixes
-No related fix for the same issue already in stable.
+**Step 6.3: No related fixes already in stable.**
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-`drm/amdgpu` - IMPORTANT. AMD GPUs are very widely used. IH (Interrupt
-Handler) is critical for GPU interrupt delivery.
+**Step 7.1:** wifi: iwlwifi is an IMPORTANT subsystem - Intel WiFi is
+among the most widely used WiFi hardware on Linux (laptops, desktops).
+Criticality: IMPORTANT.
 
-### Step 7.2: Activity
-Very active subsystem with frequent changes.
+**Step 7.2:** The iwlwifi mld driver is actively developed with NAN and
+EMLSR features being added in the v7.0 cycle.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users with IH v7.1 GPUs (specific AMD GPU generation). These GPUs are
-detected and loaded by the driver in the 7.0 stable tree.
+**Step 8.1: Affected Users**
+Users of Intel WiFi hardware using the iwlmld driver with NAN
+functionality. As NAN is a new feature in v7.0, this primarily affects
+users of newer WiFi 7 hardware.
 
-### Step 8.2: Trigger Conditions
-Every GPU initialization and every system resume. 100% reproducible on
-affected hardware.
+**Step 8.2: Trigger Conditions**
+- Create a NAN interface, then remove it. This will corrupt
+  fw_id_to_vif[0].
+- If another vif with fw_id 0 exists, it becomes invisible to the
+  driver.
+- Trigger: normal NAN usage lifecycle (create/destroy NAN interface)
 
-### Step 8.3: Failure Mode Severity
-Without this fix on IH v7.1 hardware:
-- **IH_CHICKEN wrong**: Bus address mode for IH not configured ->
-  potential firmware load path issues
-- **IH_RING1_CLIENT_CFG wrong**: Interrupt redirection to ring 1 broken
-  for dGPUs -> interrupt handling incomplete
-- **Wrong register writes**: Writing to offset 0x018a instead of 0x0129
-  corrupts whatever register is actually at 0x018a
-- Severity: **HIGH** - broken interrupt initialization on affected GPUs
+**Step 8.3: Failure Mode**
+- The fw_id_to_vif table corruption means the driver loses track of
+  active interfaces
+- This can cause: wrong vif returned from firmware notifications, NULL
+  pointer dereferences when accessing the corrupted entry, incorrect
+  driver behavior
+- Severity: HIGH (data corruption of internal mapping, potential for
+  subsequent crashes)
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: HIGH - makes IH v7.1 GPUs work correctly with proper
-  interrupt handling
-- **Risk**: VERY LOW - only changes behavior for IP_VERSION(7,1,0), all
-  v7.0 paths unchanged
-- **Ratio**: Strongly favorable
+**Step 8.4: Risk-Benefit**
+- BENEFIT: High - prevents corruption of critical internal data
+  structure
+- RISK: Very low - 4 lines, obviously correct, uses existing sentinel
+  value, reviewed by co-maintainer
+- Ratio: Strongly favorable
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Step 9.1: Evidence Summary**
 
-**FOR backporting**:
-- Fixes wrong register access on hardware already supported in stable
-  (v7.1 IP recognized, block loaded)
-- Three registers accessed at completely wrong offsets (0x018a vs
-  0x0129, etc.)
-- Wrong register writes can corrupt hardware state and break interrupt
-  handling
-- Every GPU init/resume triggers the bug on affected hardware
-- Self-contained single-file fix
-- Reviewed by AMD developer, signed off by AMD maintainer
-- Low regression risk (v7.0 hardware unaffected)
-- Fix quality is high: correct offsets verified against official header
-  file
+FOR backporting:
+- Fixes real data corruption bug in fw_id_to_vif mapping table
+- Extremely small (4 lines), surgical, obviously correct
+- Uses existing infrastructure (IWL_MLD_INVALID_FW_ID)
+- Reviewed by subsystem co-maintainer Emmanuel Grumbach
+- Applies cleanly to v7.0 (zero diff between HEAD and v7.0)
+- No dependencies needed
+- Bug is triggered by normal NAN usage lifecycle
 
-**AGAINST backporting**:
-- Moderate size (~22 lines, 6 #defines + conditional logic)
-- Commit message reads more like enablement than a bug fix
-- No Reported-by or syzbot (hardware may not yet be widely deployed)
-- Could be considered part of ongoing hardware bring-up
+AGAINST backporting:
+- NAN is a new feature, so the user population is still growing
+- No Fixes: tag or explicit stable nomination (but this is expected for
+  all candidates)
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - offsets verified against v7.1
-   header
-2. Fixes a real bug? **YES** - wrong register addresses on v7.1 hardware
-3. Important issue? **YES** - broken interrupt initialization, potential
-   register corruption
-4. Small and contained? **YES** - single file, single function, ~22
-   lines
-5. No new features? **YES** - fixes existing hardware support
-6. Can apply to stable? **YES** - file matches pre-image exactly
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? YES - trivial fix, reviewed by co-
+   maintainer
+2. Fixes a real bug? YES - fw_id_to_vif corruption on NAN vif removal
+3. Important issue? YES - data corruption of internal driver state
+4. Small and contained? YES - 4 lines in 1 file
+5. No new features? Correct - pure bug fix
+6. Can apply to stable? YES - applies cleanly to v7.0
 
-### Step 9.3: Exception Categories
-This is a **hardware workaround/quirk** for register offset differences
-- this exception category applies.
+**Step 9.3: Exception Categories** - Not applicable; this is a
+straightforward bug fix.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by: Lijo Lazar, Signed-off-by: Hawking
-  Zhang + Alex Deucher
-- [Phase 2] Diff analysis: adds #defines for 3 v7.1 register offsets +
-  conditional selection in ih_v7_0_irq_init()
-- [Phase 2] Verified v7.0 offsets: IH_CHICKEN=0x018a, CFG_INDEX=0x0183,
-  CFG_DATA=0x0184 (from osssys_7_0_0_offset.h)
-- [Phase 2] Verified v7.1 offsets: IH_CHICKEN=0x0129, CFG_INDEX=0x0122,
-  CFG_DATA=0x0123 (from osssys_7_1_0_offset.h)
-- [Phase 2] Confirmed #defines in patch match v7.1 header values exactly
-- [Phase 2] Confirmed all other IH registers (RB_BASE, RB_CNTL, etc.)
-  have SAME offsets in v7.0 and v7.1 - only these three differ
-- [Phase 3] git blame: regIH_CHICKEN usage introduced by 12443fc53e7d7
-  (initial ih_v7_0, 2023); client CFG added by f0c6b79bfc921 (2024)
-- [Phase 3] git show 692c70f4d8024: confirmed this commit added
-  IP_VERSION(7,1,0) mapping to ih_v7_0_ip_block in discovery
-- [Phase 3] git show e06d194201189: confirmed v7.1-specific CAM code
-  exists in stable tree
-- [Phase 5] ih_v7_0_irq_init() called from hw_init (device load) and
-  resume - critical paths
-- [Phase 6] Confirmed IP_VERSION(7,1,0) recognized in amdgpu_discovery.c
-  line 2110 of this tree
-- [Phase 6] Confirmed osssys_7_1_0_offset.h exists in this tree (commit
-  755b5591739cc)
-- [Phase 6] File matches pre-image of diff exactly - clean apply
-  expected
-- [Phase 6] RREG32_SOC15 macro verified: uses
-  `adev->reg_offset[ip_HWIP][inst][reg_BASE_IDX] + reg` - the `reg`
-  value comes from the included header (7_0_0)
-- UNVERIFIED: Could not access lore.kernel.org to read patch discussion
-  (Anubis protection)
-- UNVERIFIED: Which specific GPU models use IH v7.1 (but confirmed it IS
-  recognized in this tree)
+- [Phase 1] Parsed tags: Reviewed-by Emmanuel Grumbach (Intel co-
+  maintainer), Signed-off-by Miri Korenblit (maintainer)
+- [Phase 2] Diff: +1 line in iwl_mld_init_vif (sentinel init), +3 lines
+  in iwl_mld_rm_vif (NAN early return)
+- [Phase 3] git blame: NAN support introduced in 9e978d8ebbe96
+  (v7.0-rc1), confirmed via `git tag --contains`
+- [Phase 3] git show 9e978d8ebbe96: confirmed it moved fw_id allocation
+  out of init_vif without initializing to invalid for NAN
+- [Phase 3] Verified `d1e879ec600f9b` (mld driver) first appeared in
+  v6.15, NAN support only in v7.0
+- [Phase 4] b4 dig found submission URL; lore inaccessible due to bot
+  protection
+- [Phase 5] IWL_MLD_INVALID_FW_ID (0xff) already exists in v7.0
+  mld.h:530 and is used in scan.c
+- [Phase 5] fw_id_to_vif[] accessed from iface.c, low_latency.c,
+  notification handlers - wide impact surface
+- [Phase 6] NAN not in v6.19, v6.16, or v6.15 (confirmed via `git show
+  v6.19:...nan.c`). Bug only in v7.0
+- [Phase 6] git diff v7.0..HEAD is empty for iface.c - patch applies
+  cleanly
+- [Phase 6] v7.0 code verified: iwl_mld_init_vif lacks fw_id init,
+  iwl_mld_rm_vif lacks NAN check
+- [Phase 7] fw_id is u8 inside zeroed_on_hw_restart struct_group,
+  confirmed default is 0 (valid index)
+- [Phase 8] Corruption path verified: NAN vif removed -> fw_id=0 ->
+  fw_id_to_vif[0]=NULL -> corrupts valid mapping
+
+This is a small, surgical, obviously correct fix for a real data
+corruption bug in the iwlwifi mld driver's NAN handling. It meets all
+stable kernel criteria and applies cleanly to v7.0.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/ih_v7_0.c | 36 ++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 7 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mld/iface.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/ih_v7_0.c b/drivers/gpu/drm/amd/amdgpu/ih_v7_0.c
-index 451828bf583e4..1fbe904f4223b 100644
---- a/drivers/gpu/drm/amd/amdgpu/ih_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/ih_v7_0.c
-@@ -289,6 +289,13 @@ static uint32_t ih_v7_0_setup_retry_doorbell(u32 doorbell_index)
- 	return val;
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/iface.c b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
+index 9215fc7e2eca7..fb56e59894726 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/iface.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
+@@ -434,6 +434,7 @@ iwl_mld_init_vif(struct iwl_mld *mld, struct ieee80211_vif *vif)
+ 	lockdep_assert_wiphy(mld->wiphy);
  
-+#define regIH_RING1_CLIENT_CFG_INDEX_V7_1             0x122
-+#define regIH_RING1_CLIENT_CFG_INDEX_V7_1_BASE_IDX    0
-+#define regIH_RING1_CLIENT_CFG_DATA_V7_1              0x123
-+#define regIH_RING1_CLIENT_CFG_DATA_V7_1_BASE_IDX     0
-+#define regIH_CHICKEN_V7_1                            0x129
-+#define regIH_CHICKEN_V7_1_BASE_IDX                   0
+ 	mld_vif->mld = mld;
++	mld_vif->fw_id = IWL_MLD_INVALID_FW_ID;
+ 	mld_vif->roc_activity = ROC_NUM_ACTIVITIES;
+ 
+ 	if (!mld->fw_status.in_hw_restart) {
+@@ -481,6 +482,10 @@ void iwl_mld_rm_vif(struct iwl_mld *mld, struct ieee80211_vif *vif)
+ 
+ 	lockdep_assert_wiphy(mld->wiphy);
+ 
++	/* NAN interface type is not known to FW */
++	if (vif->type == NL80211_IFTYPE_NAN)
++		return;
 +
- /**
-  * ih_v7_0_irq_init - init and enable the interrupt ring
-  *
-@@ -307,6 +314,7 @@ static int ih_v7_0_irq_init(struct amdgpu_device *adev)
- 	u32 tmp;
- 	int ret;
- 	int i;
-+	u32 reg_addr;
+ 	iwl_mld_mac_fw_action(mld, vif, FW_CTXT_ACTION_REMOVE);
  
- 	/* disable irqs */
- 	ret = ih_v7_0_toggle_interrupts(adev, false);
-@@ -318,10 +326,15 @@ static int ih_v7_0_irq_init(struct amdgpu_device *adev)
- 	if (unlikely((adev->firmware.load_type == AMDGPU_FW_LOAD_DIRECT) ||
- 		     (adev->firmware.load_type == AMDGPU_FW_LOAD_RLC_BACKDOOR_AUTO))) {
- 		if (ih[0]->use_bus_addr) {
--			ih_chicken = RREG32_SOC15(OSSSYS, 0, regIH_CHICKEN);
-+			if (amdgpu_ip_version(adev, OSSSYS_HWIP, 0) == IP_VERSION(7, 1, 0))
-+				reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_CHICKEN_V7_1);
-+			else
-+				reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_CHICKEN);
-+			ih_chicken = RREG32(reg_addr);
-+			/* The reg fields definitions are identical in ih v7_0 and ih v7_1 */
- 			ih_chicken = REG_SET_FIELD(ih_chicken,
- 					IH_CHICKEN, MC_SPACE_GPA_ENABLE, 1);
--			WREG32_SOC15(OSSSYS, 0, regIH_CHICKEN, ih_chicken);
-+			WREG32(reg_addr, ih_chicken);
- 		}
- 	}
- 
-@@ -358,17 +371,26 @@ static int ih_v7_0_irq_init(struct amdgpu_device *adev)
- 
- 	/* Redirect the interrupts to IH RB1 for dGPU */
- 	if (adev->irq.ih1.ring_size) {
--		tmp = RREG32_SOC15(OSSSYS, 0, regIH_RING1_CLIENT_CFG_INDEX);
-+		if (amdgpu_ip_version(adev, OSSSYS_HWIP, 0) == IP_VERSION(7, 1, 0))
-+			reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_RING1_CLIENT_CFG_INDEX_V7_1);
-+		else
-+			reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_RING1_CLIENT_CFG_INDEX);
-+		tmp = RREG32(reg_addr);
-+		/* The reg fields definitions are identical in ih v7_0 and ih v7_1 */
- 		tmp = REG_SET_FIELD(tmp, IH_RING1_CLIENT_CFG_INDEX, INDEX, 0);
--		WREG32_SOC15(OSSSYS, 0, regIH_RING1_CLIENT_CFG_INDEX, tmp);
-+		WREG32(reg_addr, tmp);
- 
--		tmp = RREG32_SOC15(OSSSYS, 0, regIH_RING1_CLIENT_CFG_DATA);
-+		if (amdgpu_ip_version(adev, OSSSYS_HWIP, 0) == IP_VERSION(7, 1, 0))
-+			reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_RING1_CLIENT_CFG_DATA_V7_1);
-+		else
-+			reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_RING1_CLIENT_CFG_DATA);
-+		tmp = RREG32(reg_addr);
-+		/* The reg fields definitions are identical in ih v7_0 and ih v7_1 */
- 		tmp = REG_SET_FIELD(tmp, IH_RING1_CLIENT_CFG_DATA, CLIENT_ID, 0xa);
- 		tmp = REG_SET_FIELD(tmp, IH_RING1_CLIENT_CFG_DATA, SOURCE_ID, 0x0);
- 		tmp = REG_SET_FIELD(tmp, IH_RING1_CLIENT_CFG_DATA,
- 				    SOURCE_ID_MATCH_ENABLE, 0x1);
--
--		WREG32_SOC15(OSSSYS, 0, regIH_RING1_CLIENT_CFG_DATA, tmp);
-+		WREG32(reg_addr, tmp);
- 	}
- 
- 	pci_set_master(adev->pdev);
+ 	if (WARN_ON(mld_vif->fw_id >= ARRAY_SIZE(mld->fw_id_to_vif)))
 -- 
 2.53.0
 
