@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209B42DE6E3;
-	Mon, 20 Apr 2026 16:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC96933B6EF;
+	Mon, 20 Apr 2026 16:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700870; cv=none; b=K1yr+TImh0UlYg0jNnx6xVH7bh/+FcjLRHJ6zmXu1rawupWocwKH14eriI7O7diClBBLuHKKikGict62sRymYgt3Javg3SP/l3safhZgGOOUNyp4Ve7f/lzaNOhXolc++thullLOx5zt8e+nnvpp3WFwx+bXQlBK2psDO2C/uTY=
+	t=1776700872; cv=none; b=J7nn0Vtpom4/aFaJbPbvUQzZvd7Dk/K9BvXXdbSWD+rHGNWre18UdI9sSwrwGlfoXmTAFQeZB5/vR9xBWK0HuizTT4ZwrIuyk9bPkPqU8PoY41eIGifJaQa1E+TmoyvreLr3mA3DzZL3+2hkEiM2M3qZ0bJinbrBitIQKFKNQZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700870; c=relaxed/simple;
-	bh=Q590OYleU/QcdzB8s15VkuTsvPeLbD+Fs0RxU5djNOg=;
+	s=arc-20240116; t=1776700872; c=relaxed/simple;
+	bh=XoXCgMtO1TYDpNiwvO8XI8E9iLWjTOghVOlQM17O/1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ipCzEeTKfh/E4jgMhIC5LOwS5iydPGgsfP4uHO+GFrS8mmRZDz148lCokQ88hASR4MTT0jkBwus4Tbtzxffk4yCfF0XmTCJ2/SA+ahey5nfPRzsbz/2GFwwTzijs0BsypHmWhyck9jvdkx1y2z6Sp0RGYcu8ecb4WXmCsxbNt38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMHX0C50; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JijZ1UAlLp9pfjRSA5+UkXlg/XeIl8j4u6VoM4ZJdoxg70/tNycEjj+H5chxYgDv/ioZ70VwnKOCU0ppLE3Q+ywINydQ8H0lIMXvMElWRxv6ACq66he6RpKMu+ezY8WxoosvrGUrkBDrz8UkF2GpeZy5anxXBQnMrumTdAfy4ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynyMZgvZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMHX0C50"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6ABC19425;
-	Mon, 20 Apr 2026 16:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynyMZgvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40470C19425;
+	Mon, 20 Apr 2026 16:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700870;
-	bh=Q590OYleU/QcdzB8s15VkuTsvPeLbD+Fs0RxU5djNOg=;
+	s=korg; t=1776700872;
+	bh=XoXCgMtO1TYDpNiwvO8XI8E9iLWjTOghVOlQM17O/1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMHX0C50KSAy9fb2vVj778ccQKXXDSTZjbgoPN+w0UOb+ouvS5aQLgXI+9gMjVG+J
-	 TpjcR94/qZ07zWpb+AD/FFZ6j3PmiPhKw9vwbrD2w6TVQnT7DR2F6rJZcGANEyWUzt
-	 /1PJgJB4c49Xyk9oMu05X1RVX/LvtIjg9rsd5iNc=
+	b=ynyMZgvZ747NajyVmiuINBmqXjiVP9nUnrKEjIHvd68eLNDNOg0isfwua+4I+BZYM
+	 Nit6Hu2A1cm4OMQ7puXJk7aMHF9L9EF4L05Y3TiJ2QD0Eo72c4/d8rLXoz/l7NwmhN
+	 CQ5i1y1bczWyVWw/bvWxux7HVbLP5Ym6sKa1C/Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 091/198] xsk: validate MTU against usable frame size on bind
-Date: Mon, 20 Apr 2026 17:41:10 +0200
-Message-ID: <20260420153938.883198072@linuxfoundation.org>
+Subject: [PATCH 6.18 092/198] xfrm: Wait for RCU readers during policy netns exit
+Date: Mon, 20 Apr 2026 17:41:11 +0200
+Message-ID: <20260420153938.919032120@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -46,101 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-[ Upstream commit 36ee60b569ba0dfb6f961333b90d19ab5b323fa9 ]
+[ Upstream commit 069daad4f2ae9c5c108131995529d5f02392c446 ]
 
-AF_XDP bind currently accepts zero-copy pool configurations without
-verifying that the device MTU fits into the usable frame space provided
-by the UMEM chunk.
+xfrm_policy_fini() frees the policy_bydst hash tables after flushing the
+policy work items and deleting all policies, but it does not wait for
+concurrent RCU readers to leave their read-side critical sections first.
 
-This becomes a problem since we started to respect tailroom which is
-subtracted from chunk_size (among with headroom). 2k chunk size might
-not provide enough space for standard 1500 MTU, so let us catch such
-settings at bind time. Furthermore, validate whether underlying HW will
-be able to satisfy configured MTU wrt XSK's frame size multiplied by
-supported Rx buffer chain length (that is exposed via
-net_device::xdp_zc_max_segs).
+The policy_bydst tables are published via rcu_assign_pointer() and are
+looked up through rcu_dereference_check(), so netns teardown must also
+wait for an RCU grace period before freeing the table memory.
 
-Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://patch.msgid.link/20260402154958.562179-5-maciej.fijalkowski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by adding synchronize_rcu() before freeing the policy hash tables.
+
+Fixes: e1e551bc5630 ("xfrm: policy: prepare policy_bydst hash for rcu lookups")
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk_buff_pool.c | 28 +++++++++++++++++++++++++---
- 1 file changed, 25 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_policy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index 677c7d00f8c32..a129ce6f1c25f 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -10,6 +10,8 @@
- #include "xdp_umem.h"
- #include "xsk.h"
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index c32d34c441ee0..4526c9078b136 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -4290,6 +4290,8 @@ static void xfrm_policy_fini(struct net *net)
+ #endif
+ 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_MAIN, false);
  
-+#define ETH_PAD_LEN (ETH_HLEN + 2 * VLAN_HLEN  + ETH_FCS_LEN)
++	synchronize_rcu();
 +
- void xp_add_xsk(struct xsk_buff_pool *pool, struct xdp_sock *xs)
- {
- 	unsigned long flags;
-@@ -165,8 +167,12 @@ static void xp_disable_drv_zc(struct xsk_buff_pool *pool)
- int xp_assign_dev(struct xsk_buff_pool *pool,
- 		  struct net_device *netdev, u16 queue_id, u16 flags)
- {
-+	u32 needed = netdev->mtu + ETH_PAD_LEN;
-+	u32 segs = netdev->xdp_zc_max_segs;
-+	bool mbuf = flags & XDP_USE_SG;
- 	bool force_zc, force_copy;
- 	struct netdev_bpf bpf;
-+	u32 frame_size;
- 	int err = 0;
+ 	WARN_ON(!list_empty(&net->xfrm.policy_all));
  
- 	ASSERT_RTNL();
-@@ -186,7 +192,7 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- 	if (err)
- 		return err;
- 
--	if (flags & XDP_USE_SG)
-+	if (mbuf)
- 		pool->umem->flags |= XDP_UMEM_SG_FLAG;
- 
- 	if (flags & XDP_USE_NEED_WAKEUP)
-@@ -208,8 +214,24 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- 		goto err_unreg_pool;
- 	}
- 
--	if (netdev->xdp_zc_max_segs == 1 && (flags & XDP_USE_SG)) {
--		err = -EOPNOTSUPP;
-+	if (mbuf) {
-+		if (segs == 1) {
-+			err = -EOPNOTSUPP;
-+			goto err_unreg_pool;
-+		}
-+	} else {
-+		segs = 1;
-+	}
-+
-+	/* open-code xsk_pool_get_rx_frame_size() as pool->dev is not
-+	 * set yet at this point; we are before getting down to driver
-+	 */
-+	frame_size = __xsk_pool_get_rx_frame_size(pool) -
-+		     xsk_pool_get_tailroom(mbuf);
-+	frame_size = ALIGN_DOWN(frame_size, 128);
-+
-+	if (needed > frame_size * segs) {
-+		err = -EINVAL;
- 		goto err_unreg_pool;
- 	}
- 
+ 	for (dir = 0; dir < XFRM_POLICY_MAX; dir++) {
 -- 
 2.53.0
 
