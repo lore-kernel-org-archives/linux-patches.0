@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4450D3B5832;
-	Mon, 20 Apr 2026 13:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89343B583D;
+	Mon, 20 Apr 2026 13:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691014; cv=none; b=FrilQ6AgqI1Qb91fT7RS/qLw9f0bLVFMDImymaGA13oVwrhoAaFXF653PbzXeMGDR5RcG5pGHU/hxHA2NnzUL8hKGGn5zeL6mJpnDDbfx6PWdDKjcJ14GGJ1XQmLKhtirtezR3fdDkf8zQEHRWfhe9r7EegiGEBUhzV01Nk3KiA=
+	t=1776691016; cv=none; b=eaALLex/4ZG1W08Yub2rDaK813MrCAbGKWioV2y5WOZFrwYCG6evLRZQtT7kLNgcJWY6x8r1rxgDg5DnmBIMJaF/JkgUsb+ReoPEJIyiROsLk1o+nkpiKtY3ouq9XXUEh/S+ACflqCJC/FOGyQYxGj3Klhz341azLkSJ/43R4+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691014; c=relaxed/simple;
-	bh=NOoahQgDNyfghUyUAMgyKDJl+Dm7UfdzwD1WI2hXVT0=;
+	s=arc-20240116; t=1776691016; c=relaxed/simple;
+	bh=ZwMWE+j/Jpj1EWtkg4A1r8lGLJtnijJkTwl2FFZm2WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m8rEIPToK6cynLOQ9vVK7epZmuxJlTwQZ6IKAPkpFarP7nzBhtNVKCMjp3etRDZ0SYpcCx2v0xNvLoFTilj9FdnsIjz1F206cX7asW3FzNBAh3M/CygfxraPMWLgKrVOdnjkY5SSS9M/BIQaIcTNJtweHMXmDkSrC1koF+OO7Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k3aZtpo7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lvqtDF/yjWFKCX3W9lgRoEkGQ8eCdNe02rJMKnQCS6n4DYARGMS68B56a9/AWtC3JnA9yxKqov091YAHgkhaLQvoRHSdEK5btxFvzTYkB7YGtrmFn+AmHjFcSHLvxNcpHUR19rLaXnx4POj7n8EyuStqi9CdmZQRxm2ImUfAiTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fRdXlrNH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k3aZtpo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE90C2BCB4;
-	Mon, 20 Apr 2026 13:16:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fRdXlrNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1527C19425;
+	Mon, 20 Apr 2026 13:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691014;
-	bh=NOoahQgDNyfghUyUAMgyKDJl+Dm7UfdzwD1WI2hXVT0=;
+	s=k20201202; t=1776691015;
+	bh=ZwMWE+j/Jpj1EWtkg4A1r8lGLJtnijJkTwl2FFZm2WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3aZtpo7p/LTjynoy/7mw3x6ilAg0KBI9n+tnx3PbosSFFhlILHsT2UltqGKhPGQ7
-	 eFHCPd3v9cDRxg4/mnF8V2A8HwCbW3RevxsSKVHbms64zm7mhv059E6E7ap0RSCGgN
-	 Q34Iy+OkuWW3a2C6nqNf8ku03tOHNhLnQgEHjatwKubAYL2L7unaq0rfD/12wbY/5h
-	 e2TWldxre5CFqrS8xl/QFH/jUEzEHgHdvmiikv+xLkxxmLICn9qIDdGfiMVF3N211G
-	 3MALaG0oVHk2S1ZOh8LwBXcGhffzxpqRFgjbUBlb8zANLipWgyKBMRUX1+nweYsK8+
-	 D6UAefQQ2Xamg==
+	b=fRdXlrNHjfYIbgl03pTbi2A5jVSbcAmn5K5noXBypMcXBp1OdQTUDHjv/dzEcYH7E
+	 qHjGjnh3796R1VYx38YRBkKMEMpKCW7Fvo9pCfldzjYNOz2PM0b2iLJtqkxA1SYfvn
+	 meQsUvZauCW59PNOyRbQLL4nRe8WFRAIyBqBhB9D3f2/oRT0dnKniNEJUZslsKk+By
+	 GpzfRdu1DYbzOJLNHqyv553fvOHYsjnROQQy071xgk5obmZjlmRVncpgWteuZGFAFY
+	 FbwHsgtQJZ0JwAOFe/NLcACsdk9fbsrEf9hXHzRTG2eZIDE5wP2LGxIniyAE8NUJQp
+	 pe6APUuAh5prg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Huisong Li <lihuisong@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Qingfang Deng <dqfext@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	linux-ppp@vger.kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ACPI: processor: idle: Fix NULL pointer dereference in hotplug path
-Date: Mon, 20 Apr 2026 09:08:29 -0400
-Message-ID: <20260420131539.986432-43-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ppp: disconnect channel before nullifying pch->chan
+Date: Mon, 20 Apr 2026 09:08:30 -0400
+Message-ID: <20260420131539.986432-44-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -50,23 +54,28 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huisong Li <lihuisong@huawei.com>
+From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 47e6a863a88034be102bde11197f2ca1bc18cbaf ]
+[ Upstream commit 6a196e83a1a7e50be93482d1cd4305641f1a9fb1 ]
 
-A cpuidle_device might fail to register during boot, but the system can
-continue to run. In such cases, acpi_processor_hotplug() can trigger
-a NULL pointer dereference when accessing the per-cpu acpi_cpuidle_device.
+In ppp_unregister_channel(), pch->chan is set to NULL before calling
+ppp_disconnect_channel(), which removes the channel from ppp->channels
+list using list_del_rcu() + synchronize_net(). This creates an
+intermediate state where the channel is still connected (on the list)
+but already unregistered (pch->chan == NULL).
 
-So add NULL pointer check for the per-cpu acpi_cpuidle_device in
-acpi_processor_hotplug.
+Call ppp_disconnect_channel() before setting pch->chan to NULL. After
+the synchronize_net(), no new reader on the transmit path will hold a
+reference to the channel from the list.
 
-Signed-off-by: Huisong Li <lihuisong@huawei.com>
-Link: https://patch.msgid.link/20260403090253.998322-1-lihuisong@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This eliminates the problematic state, and prepares for removing the
+pch->chan NULL checks from the transmit path in a subsequent patch.
+
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Link: https://patch.msgid.link/20260312093732.277254-1-dqfext@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,302 +86,334 @@ analysis.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit Message Forensics
 
-**Step 1.1: Subject Line**
-- Subsystem: `ACPI: processor: idle`
-- Action verb: "Fix"
-- Summary: Fix NULL pointer dereference in hotplug path
-- Record: [ACPI/processor/idle] [Fix] [NULL pointer dereference in CPU
-  hotplug when cpuidle_device failed to register]
+### Step 1.1: Subject Line
+- **Subsystem**: `ppp` (PPP networking subsystem)
+- **Action verb**: "disconnect" / implied "fix" - reorder operations to
+  eliminate a race
+- **Summary**: Reorder `ppp_disconnect_channel()` and `pch->chan = NULL`
+  to eliminate a problematic intermediate state
 
-**Step 1.2: Tags**
-- `Signed-off-by: Huisong Li <lihuisong@huawei.com>` — author
-- `Link:
-  https://patch.msgid.link/20260403090253.998322-1-lihuisong@huawei.com`
-  — lore reference
-- `Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>` — ACPI
-  maintainer applied it
-- No Fixes: tag, no Reported-by, no Tested-by, no Cc: stable
-- Record: Single patch, accepted by subsystem maintainer Rafael J.
-  Wysocki. No Fixes: tag (expected for review candidates).
+### Step 1.2: Tags
+- **Signed-off-by**: Qingfang Deng (author, active PPP contributor with
+  9+ commits to the subsystem)
+- **Link**:
+  `https://patch.msgid.link/20260312093732.277254-1-dqfext@gmail.com`
+  (the `-1-` suggests a single patch, not a series)
+- **Signed-off-by**: Paolo Abeni (netdev co-maintainer, merge authority)
+- No Fixes: tag (expected - that's why it's under review)
+- No Reported-by (no explicit crash report)
 
-**Step 1.3: Commit Body**
-- Bug: cpuidle_device registration can fail during boot, but the system
-  continues running. When `acpi_processor_hotplug()` is later invoked
-  (CPU soft online), it accesses the per-cpu `acpi_cpuidle_device` which
-  may be NULL.
-- Symptom: NULL pointer dereference.
-- Root cause: Missing NULL check for per-cpu device before use.
+### Step 1.3: Body Analysis
+The commit describes a concrete race condition: `pch->chan` is set to
+NULL before `ppp_disconnect_channel()` removes the channel from
+`ppp->channels`. This creates an intermediate state where the channel is
+still on the list but already has `pch->chan == NULL`. The fix reorders
+the operations: disconnect first (remove from list), then NULL-ify.
 
-**Step 1.4: Hidden Bug Fix?**
-- Commit uses explicit "Fix" in subject — straightforward.
+### Step 1.4: Hidden Bug Fix Detection
+The phrase "This eliminates the problematic state" clearly describes
+fixing a race condition. The mention of "prepares for removing the
+pch->chan NULL checks from the transmit path in a subsequent patch"
+suggests a follow-up cleanup, but the reordering itself has standalone
+correctness value.
 
-## PHASE 2: DIFF ANALYSIS
+**Record**: This IS a race condition fix, disguised slightly by the
+preparatory framing.
 
-**Step 2.1: Inventory**
-- 1 file modified: `drivers/acpi/processor_idle.c`
-- Net: 1 line added, 3 removed (minor restructuring)
-- Function modified: `acpi_processor_hotplug()`
-- Scope: Single-function surgical fix.
+---
 
-**Step 2.2: Code Flow Change**
+## Phase 2: Diff Analysis
 
-BEFORE:
-```c
-int ret = 0;
-struct cpuidle_device *dev;
-...
-if (!pr->flags.power_setup_done)
-    return -ENODEV;
-dev = per_cpu(acpi_cpuidle_device, pr->id);
-cpuidle_pause_and_lock();
-cpuidle_disable_device(dev);   // dev could be NULL
+### Step 2.1: Inventory
+- **1 file changed**: `drivers/net/ppp/ppp_generic.c`
+- **Net change**: 0 lines added, 0 removed - purely a reorder of one
+  line
+- **Function modified**: `ppp_unregister_channel()`
+- **Scope**: single-file, single-function, surgical
+
+### Step 2.2: Code Flow Change
+**Before**: In `ppp_unregister_channel()`:
+1. `down_write(&pch->chan_sem)` + `spin_lock_bh(&pch->downl)` +
+   `WRITE_ONCE(pch->chan, NULL)` + unlock
+2. `ppp_disconnect_channel(pch)` - removes from `ppp->channels` via
+   `list_del_rcu()` + `synchronize_net()`
+
+**After**:
+1. `ppp_disconnect_channel(pch)` - removes from list first
+2. `down_write(&pch->chan_sem)` + `spin_lock_bh(&pch->downl)` +
+   `WRITE_ONCE(pch->chan, NULL)` + unlock
+
+### Step 2.3: Bug Mechanism - RACE CONDITION / NULL POINTER DEREFERENCE
+
+The race occurs in `ppp_mp_explode()` (multilink transmit path):
+
+```1977:2001:drivers/net/ppp/ppp_generic.c
+list_for_each_entry(pch, &ppp->channels, clist) {
+    if (pch->chan) {          // Read #1 - no downl lock held
+        pch->avail = 1;
+        navail++;
+        pch->speed = pch->chan->speed;  // Read #2 - TOCTOU: pch->chan
+can be NULL here!
+    }
 ```
 
-AFTER:
-```c
-struct cpuidle_device *dev = per_cpu(acpi_cpuidle_device, pr->id);
-int ret = 0;
-...
-if (!pr->flags.power_setup_done || !dev)
-    return -ENODEV;
-cpuidle_pause_and_lock();
-cpuidle_disable_device(dev);   // dev guaranteed non-NULL
-```
+**Race scenario**:
+1. CPU A (`ppp_mp_explode`, under `ppp_xmit_lock`): reads `pch->chan !=
+   NULL` at line 1978
+2. CPU B (`ppp_unregister_channel`): does `WRITE_ONCE(pch->chan, NULL)`
+   under `downl` (NOT under `ppp_xmit_lock`)
+3. CPU A: dereferences `pch->chan->speed` at line 1981 - **NULL pointer
+   dereference / kernel oops**
 
-The fix moves the `dev` assignment before the check and adds `|| !dev`
-to the early return.
+The channel is still on `ppp->channels` (hasn't been disconnected yet),
+so `ppp_mp_explode` finds it while iterating.
 
-**Step 2.3: Bug Mechanism**
+With the fix, `ppp_disconnect_channel()` removes the channel from the
+list (under `ppp_lock`, which includes `ppp_xmit_lock`) FIRST. After it
+returns, no transmit code iterating `ppp->channels` will see this
+channel. Then setting `pch->chan = NULL` is safe.
 
-This is a **NULL pointer dereference fix** (defensive). The per-cpu
-`acpi_cpuidle_device` can be NULL when:
-1. `acpi_processor_power_init()` sets `power_setup_done = 1`
-2. `cpuidle_register_device()` then fails
-3. The memory leak fix (`11b3de1c03fa9`, Jul 2025) sets
-   `per_cpu(acpi_cpuidle_device, pr->id) = NULL`
+### Step 2.4: Fix Quality
+- Obviously correct - eliminates the problematic state entirely
+- Minimal/surgical - one line moved
+- No regression risk - the semantic operations are the same, just
+  reordered
+- No API changes, no locking changes, no new features
 
-**Step 2.4: Fix Quality**
+---
 
-Important nuance discovered through deep analysis: The three callee
-functions currently DO handle NULL dev:
-- `cpuidle_disable_device(NULL)` → returns via `if (!dev ||
-  !dev->enabled)` (since 2012)
-- `acpi_processor_setup_cpuidle_dev(pr, NULL)` → returns via `if (!dev)`
-  (since 2016)
-- `cpuidle_enable_device(NULL)` → returns `-EINVAL` via `if (!dev)`
-  (since 2012)
+## Phase 3: Git History Investigation
 
-So there is no actual kernel crash in practice. However, the fix:
-- Prevents unnecessary `cpuidle_pause_and_lock()` /
-  `cpuidle_resume_and_unlock()` (global mutex)
-- Prevents `acpi_processor_get_power_info()` from needlessly modifying
-  processor flags
-- Makes the code correct at the right abstraction level rather than
-  relying on callee guards
-- Zero regression risk
+### Step 3.1: Blame
+From git blame, the buggy code ordering dates back to `^1da177e4c3f41`
+(Linus Torvalds, 2005-04-16) - the initial kernel tree import. The
+`WRITE_ONCE` was added by `0417adf367a0af` (August 2025), but the
+fundamental ordering issue exists since v2.6.12.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+### Step 3.2: No Fixes: tag (expected)
 
-**Step 3.1: Blame**
-- `acpi_processor_hotplug()` core structure: Len Brown, 2007
-  (`4f86d3a8e29720`)
-- Per-cpu device usage: Wei Yongjun, 2012 (`e8b1b59dc8e42a`)
-- Per-cpu variable introduced: Daniel Lezcano, 2012 (`3d339dcbb56d`)
-- The code exists in ALL stable trees.
+### Step 3.3: Related Changes
+The same author (Qingfang Deng) previously fixed a related race in
+`0417adf367a0af` ("ppp: fix race conditions in ppp_fill_forward_path"),
+which explicitly documented: "pch->chan can be NULL. When
+ppp_unregister_channel() is called, pch->chan is set to NULL before pch
+is removed from ppp->channels." That commit added workarounds (NULL
+checks, RCU). This commit fixes the **root cause**.
 
-**Step 3.2: Fixes Tag**
-No Fixes: tag present. However, the root cause path was created by
-`11b3de1c03fa9` ("Fix memory leak when register cpuidle device failed",
-Jul 2025) by the SAME author (Huisong Li). That commit has `Fixes:
-3d339dcbb56d` (2012), so it likely went to all active stable trees. This
-fix is a necessary companion to the memory leak fix.
+### Step 3.4: Author
+Qingfang Deng has 9+ PPP commits, including critical race fixes and
+performance improvements. They are a de facto domain expert for this
+code.
 
-**Step 3.3: File History**
-The file has had significant recent activity from Huisong Li (a series
-of cleanups/refactors accepted into 6.19/7.0). The hotplug function
-itself has been stable since 2012.
+### Step 3.5: Dependencies
+The diff references `WRITE_ONCE(pch->chan, NULL)` which was introduced
+by `0417adf367a0af`. That commit has `Fixes: f6efc675c9dd` and was
+likely already auto-selected for stable. For trees without that commit,
+a trivial context adjustment (`pch->chan = NULL` instead of
+`WRITE_ONCE`) would be needed. The reordering logic works correctly
+regardless.
 
-**Step 3.4: Author**
-Huisong Li is an active contributor to ACPI processor idle code, having
-submitted 10+ patches to this file. He is the same author who introduced
-the memory leak fix that created the condition for this bug.
+---
 
-**Step 3.5: Dependencies**
-No dependencies. The fix is self-contained and touches only the
-`acpi_processor_hotplug()` function, which is identical in stable trees.
+## Phase 4: Mailing List Research
 
-## PHASE 4: MAILING LIST RESEARCH
+### Step 4.1-4.2
+Lore is currently blocked by Anubis anti-bot protection. b4 dig could
+not find this specific commit by message-id (the commit doesn't exist in
+this tree). However, the patch was accepted and merged by Paolo Abeni,
+netdev co-maintainer, which provides strong confidence in correctness.
 
-**Step 4.1-4.5:** Lore was not accessible due to anti-scraping
-protection. b4 dig did not find a match. The commit's Link: tag
-references `20260403090253.998322-1-lihuisong@huawei.com`. The patch was
-accepted directly by Rafael J. Wysocki (ACPI maintainer). No NAKs or
-concerns are evident from the acceptance.
+### Step 4.3-4.5
+The earlier commit `0417adf367a0af` explicitly documents the bug that
+this commit fixes at the root: "pch->chan can be NULL. When
+ppp_unregister_channel() is called, pch->chan is set to NULL before pch
+is removed from ppp->channels." This was a known problem.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+---
 
-**Step 5.1:** Function modified: `acpi_processor_hotplug()`
+## Phase 5: Code Semantic Analysis
 
-**Step 5.2: Callers**
-- `acpi_processor_soft_online()` in `drivers/acpi/processor_driver.c`
-  line 124
-- Called during CPU soft online events (hotplug path)
-- Return value is IGNORED by the caller
+### Step 5.1-5.4: Call Path Tracing
+The vulnerable function `ppp_mp_explode()` is called from:
+- `ppp_push()` -> `ppp_send_frame()` -> `__ppp_xmit_process()` ->
+  `ppp_xmit_process()`
 
-**Step 5.3-5.4: Call Chain**
-CPU hotplug → `acpi_processor_soft_online()` →
-`acpi_processor_hotplug()` → cpuidle lock/disable/enable
-This is a system-level path triggered during CPU online/offline
-operations on ACPI systems.
+This is the **hot transmit path** for PPP multilink, triggered every
+time a packet is sent on a multilink PPP connection. The race triggers
+when a channel is unregistered while multilink transmission is active -
+a common scenario during PPP session teardown or link failure.
 
-**Step 5.5: Similar Patterns**
-`acpi_processor_power_state_has_changed()` (lines 1322-1344) has the
-same pattern — uses `per_cpu(acpi_cpuidle_device, cpu)` without NULL
-check. The fix does NOT address this function, but it has an additional
-`!_pr->flags.power_setup_done` guard that may be sufficient.
+`ppp_fill_forward_path()` (already patched with NULL checks by
+`0417adf367a0af`) is also affected but has workarounds. This commit
+fixes the root cause for all paths.
 
-## PHASE 6: STABLE TREE ANALYSIS
+### Step 5.5: Similar Patterns
+The same TOCTOU pattern (check `pch->chan`, then dereference) also
+appears at:
+- Line 1978/1981: `ppp_mp_explode()` - **vulnerable** (no `downl` lock)
+- Line 1912-1914: `ppp_push()` - **safe** (holds `pch->downl`)
+- Line 2059-2060: `ppp_mp_explode()` phase 2 - **safe** (holds
+  `pch->downl`)
+- Line 2185-2189: `__ppp_channel_push()` - **safe** (holds `pch->downl`)
 
-**Step 6.1:** The buggy code (the `acpi_processor_hotplug()` function
-with per-cpu device) exists in ALL active stable trees since 2012
-(`3d339dcbb56d`). The NULL condition was introduced by `11b3de1c03fa9`
-(Jul 2025), which has a Fixes: tag targeting 2012, so it was very likely
-backported to stable.
+---
 
-**Step 6.2:** The patch should apply cleanly to stable trees — the
-function has been stable since 2012.
+## Phase 6: Stable Tree Analysis
 
-**Step 6.3:** No other fix for this specific issue found.
+### Step 6.1: Buggy Code in Stable
+The buggy ordering exists since v2.6.12 (the very first git commit). It
+is present in ALL active stable trees.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### Step 6.2: Backport Complications
+For 7.0.y: applies cleanly (code matches exactly).
+For older trees without `0417adf367a0af`: trivial context change needed
+(`pch->chan = NULL` vs `WRITE_ONCE(pch->chan, NULL)`), and
+`list_del_rcu`/`synchronize_net()` may not be present in
+`ppp_disconnect_channel()`. However, the reordering is still correct for
+the transmit path because `ppp_disconnect_channel()` takes `ppp_lock()`
+(which includes `ppp_xmit_lock`), ensuring mutual exclusion with
+transmit path iteration.
 
-**Step 7.1:** Subsystem: ACPI processor idle (drivers/acpi/).
-Criticality: IMPORTANT — affects all x86/ARM ACPI systems.
+### Step 6.3: Related Fixes
+`0417adf367a0af` added workarounds (NULL checks) for the same underlying
+issue. This commit fixes the root cause.
 
-**Step 7.2:** Active subsystem with recent refactoring by the same
-author.
+---
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## Phase 7: Subsystem Context
 
-**Step 8.1:** Affected: All ACPI systems where cpuidle device
-registration fails during boot.
+### Step 7.1: PPP networking - **IMPORTANT** subsystem
+PPP is used by DSL/dial-up connections, VPN tunnels, and
+embedded/routing devices. Multilink PPP aggregates multiple physical
+links, common in WAN/enterprise networking.
 
-**Step 8.2:** Trigger: CPU hotplug (online/offline) after boot failure
-of cpuidle device registration. This is not common but can happen on
-real hardware.
+### Step 7.2: Actively maintained by the author (9+ commits), merged by
+netdev maintainers.
 
-**Step 8.3:** Severity: The callee functions currently handle NULL, so
-no actual crash. However, the fix prevents unnecessary mutex
-acquisition, state flag modifications, and returns a clean error.
-Severity: **LOW-MEDIUM** (defensive fix preventing potential issues).
+---
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Prevents unnecessary lock operations, incorrect state
-  modifications, and makes code robust against future changes. If callee
-  NULL guards are ever removed, this prevents a kernel crash.
-- RISK: Essentially zero — adds a NULL check to an early return path.
-- Ratio: Favorable for backport.
+## Phase 8: Impact and Risk Assessment
 
-## PHASE 9: FINAL SYNTHESIS
+### Step 8.1: Affected Users
+Users running PPP with multilink (`SC_MULTILINK` flag set). This
+includes enterprise WAN, embedded networking, and PPPoE configurations.
 
-**Evidence FOR backporting:**
-- Small, surgical fix (3 lines, single function)
-- Obviously correct — adds a NULL check
-- Zero regression risk
-- Accepted by ACPI subsystem maintainer (Rafael J. Wysocki)
-- Companion fix to `11b3de1c03fa9` (memory leak fix) which likely went
-  to stable
-- Prevents unnecessary global mutex lock/unlock on error path
-- Prevents incorrect state modifications via
-  `acpi_processor_get_power_info()`
-- Makes code robust against future callee changes
-- Affects ACPI systems (wide user base)
-- Applies cleanly to stable trees
+### Step 8.2: Trigger Conditions
+- Multilink PPP transmitting while a channel is being unregistered
+- Happens during link failure, session teardown, or module unload
+- A timing-dependent race, but the window exists every time a channel is
+  unregistered during active multilink transmission
 
-**Evidence AGAINST backporting:**
-- No actual NULL pointer dereference crash in current code (callee
-  functions handle NULL)
-- The commit message overstates the issue ("NULL pointer dereference")
-- No Reported-by indicating anyone hit this in practice
-- No Fixes: tag
+### Step 8.3: Failure Mode
+**NULL pointer dereference** at `pch->chan->speed` -> kernel oops/crash.
+Severity: **HIGH** (kernel crash, potential data loss from interrupted
+operations).
 
-**Stable Rules Checklist:**
-1. Obviously correct and tested? **YES**
-2. Fixes a real bug? **BORDERLINE** — prevents unnecessary/incorrect
-   operations when dev is NULL; defensive against future callee changes
-3. Important issue? **LOW-MEDIUM** — no crash, but prevents incorrect
-   behavior
-4. Small and contained? **YES** (3 lines, 1 function)
-5. No new features? **Correct**
-6. Can apply to stable? **YES** — function is identical in stable trees
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: HIGH - prevents kernel crash in PPP multilink transmit
+  path
+- **Risk**: VERY LOW - moving one line, no semantic change, obviously
+  correct
+- **Ratio**: Strongly favorable
+
+---
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence
+**FOR backporting**:
+- Fixes a real NULL pointer dereference race condition
+- The race exists since v2.6.12 (all stable trees affected)
+- Extremely small change (1 line moved)
+- Obviously correct - eliminates invalid intermediate state
+- Author is a domain expert (9+ PPP commits)
+- Accepted by netdev co-maintainer
+- The same root cause was already documented by the earlier fix
+  (0417adf367a0af)
+- PPP multilink is a commonly used feature
+
+**AGAINST backporting**:
+- No crash report or syzbot reproduction (theoretical race, but
+  realistic trigger)
+- Commit message mentions "prepares for" a subsequent patch (partially
+  preparatory)
+- No Fixes: tag (expected)
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** - merged by Paolo Abeni
+2. Fixes a real bug? **YES** - NULL deref race in multilink transmit
+3. Important issue? **YES** - kernel crash (NULL pointer deref)
+4. Small and contained? **YES** - 1 line moved in 1 function
+5. No new features/APIs? **YES** - pure reorder
+6. Applies to stable? **YES** - cleanly to 7.0.y
+
+### Step 9.3: Exception Categories
+Not an exception category - this is a standard race condition fix.
+
+---
 
 ## Verification
 
-- [Phase 2] Diff analysis: moves `dev` assignment before checks, adds
-  `|| !dev` to early return — 3 net line changes in single function
-- [Phase 2] Verified all three callee functions handle NULL:
-  `cpuidle_disable_device` (cf31cd1a0c, 2012), `cpuidle_enable_device`
-  (1b0a0e9a15b9, 2012), `cpuidle_get_cpu_driver` (bf4d1b5ddb78, 2012),
-  `acpi_processor_setup_cpuidle_dev` (a36a7fecfe60, 2016)
-- [Phase 3] git blame: `acpi_processor_hotplug()` from Len Brown 2007,
-  per-cpu dev from Wei Yongjun 2012
-- [Phase 3] Found `11b3de1c03fa9` (Jul 2025, same author) — memory leak
-  fix that introduced the NULL condition; has `Fixes: 3d339dcbb56d`
-  targeting 2012
-- [Phase 3] Original 2016 function (`a36a7fecfe6071`) already had `!dev`
-  guard in `acpi_processor_setup_cpuidle_dev`
-- [Phase 3] Caller `acpi_processor_soft_online()` ignores return value
-  (line 124 of processor_driver.c)
-- [Phase 4] b4 dig: no match found; lore blocked by anti-scraping
-- [Phase 5] grep callers: single caller in `processor_driver.c` during
-  CPU soft online
-- [Phase 6] The `acpi_processor_hotplug()` function is identical in
-  stable trees (unchanged since 2012)
-- UNVERIFIED: Whether `11b3de1c03fa9` was actually backported to stable
-  (but likely, given its Fixes: tag)
-- UNVERIFIED: Full mailing list discussion (lore inaccessible)
+- [Phase 1] Parsed tags: Signed-off-by author (Qingfang Deng) +
+  maintainer (Paolo Abeni), Link to patch
+- [Phase 2] Diff analysis: 1 line moved in `ppp_unregister_channel()`,
+  reordering `ppp_disconnect_channel()` before `WRITE_ONCE(pch->chan,
+  NULL)`
+- [Phase 2] Verified TOCTOU in `ppp_mp_explode()` lines 1978/1981: reads
+  `pch->chan` without `downl` lock
+- [Phase 3] git blame: buggy ordering from `^1da177e4c3f41` (Linus
+  Torvalds, 2005) - present in all stable trees
+- [Phase 3] Related commit `0417adf367a0af` explicitly documents this
+  same race condition as known bug
+- [Phase 3] Author has 9 commits to drivers/net/ppp/ - domain expert
+- [Phase 4] Lore blocked by Anubis; could not verify mailing list
+  discussion directly
+- [Phase 5] Traced call chain: `ppp_xmit_process` ->
+  `__ppp_xmit_process` -> `ppp_push` -> `ppp_mp_explode` - hot transmit
+  path under `ppp_xmit_lock`
+- [Phase 5] Verified `ppp_disconnect_channel()` takes `ppp_lock()`
+  (includes `ppp_xmit_lock`) - mutual exclusion with transmit path
+- [Phase 5] Verified `WRITE_ONCE(pch->chan, NULL)` is under
+  `chan_sem+downl` only, NOT `ppp_xmit_lock` - confirms race window
+- [Phase 6] Code exists in all active stable trees since v2.6.12
+- [Phase 6] Patch applies cleanly to 7.0.y; older trees need trivial
+  context adjustment
+- [Phase 8] Failure mode: NULL pointer dereference -> kernel oops,
+  severity HIGH
+- UNVERIFIED: Could not access lore.kernel.org to verify if stable was
+  requested by a reviewer
 
-## Decision
-
-The fix is small (3 lines), obviously correct, has zero regression risk,
-and was accepted by the ACPI maintainer. While the actual NULL pointer
-dereference doesn't manifest as a crash due to existing callee guards,
-the fix properly handles the error condition at the right level —
-preventing unnecessary global mutex operations and incorrect state
-modifications when `dev` is NULL. It is a necessary companion to the
-memory leak fix `11b3de1c03fa9` which likely went to stable. The fix
-applies cleanly to all stable trees.
+The fix is a minimal, obviously correct reordering that eliminates a
+real NULL pointer dereference race condition in the PPP multilink
+transmit path. The bug has existed since the original kernel tree and
+affects all stable trees. The risk is negligible (one line moved) and
+the benefit is preventing a kernel crash.
 
 **YES**
 
- drivers/acpi/processor_idle.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index d4753420ae0b7..74ea25091923f 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1275,16 +1275,15 @@ static int acpi_processor_get_power_info(struct acpi_processor *pr)
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index e9b41777be809..7cd936bc6a7ea 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -3023,12 +3023,12 @@ ppp_unregister_channel(struct ppp_channel *chan)
+ 	 * This ensures that we have returned from any calls into
+ 	 * the channel's start_xmit or ioctl routine before we proceed.
+ 	 */
++	ppp_disconnect_channel(pch);
+ 	down_write(&pch->chan_sem);
+ 	spin_lock_bh(&pch->downl);
+ 	WRITE_ONCE(pch->chan, NULL);
+ 	spin_unlock_bh(&pch->downl);
+ 	up_write(&pch->chan_sem);
+-	ppp_disconnect_channel(pch);
  
- int acpi_processor_hotplug(struct acpi_processor *pr)
- {
-+	struct cpuidle_device *dev = per_cpu(acpi_cpuidle_device, pr->id);
- 	int ret = 0;
--	struct cpuidle_device *dev;
- 
- 	if (disabled_by_idle_boot_param())
- 		return 0;
- 
--	if (!pr->flags.power_setup_done)
-+	if (!pr->flags.power_setup_done || !dev)
- 		return -ENODEV;
- 
--	dev = per_cpu(acpi_cpuidle_device, pr->id);
- 	cpuidle_pause_and_lock();
- 	cpuidle_disable_device(dev);
- 	ret = acpi_processor_get_power_info(pr);
+ 	pn = ppp_pernet(pch->chan_net);
+ 	spin_lock_bh(&pn->all_channels_lock);
 -- 
 2.53.0
 
