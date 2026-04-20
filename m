@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAB83DFC90;
-	Mon, 20 Apr 2026 13:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5583E024E;
+	Mon, 20 Apr 2026 13:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691467; cv=none; b=G+ZawHwHH+MF4uiJdmRTN3G+YCo5yUluqEaqLtcCB7Ozmx2UPy7C2zSy4+NxHtdRgPFl3kiLEHiNW+pU/FkYnSahMuUQEPR8Zki9mg5cGqlBYNEJqWtsB61FJe6Rfbu+FmCVQ8RMpcGed/g7E4ACoktgAWhXmei7hjS45nrbr3A=
+	t=1776691469; cv=none; b=dbaOGSigiiqEyRFOH63+SmuLEjzC7ofP7FCJ0gFC9OWO6N4nUce6PjaCGnSQvERLOnsXQ0S4zzMa962In8D9GOPxE9uuZdsCXPc/KPFpmwyr9qDh6f0eV4DxLNeHPjPIQawAcOWoO4JBIG+MiBYHRBAWLpUf/LZ2dsn5+fqYSy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691467; c=relaxed/simple;
-	bh=IgJq5V+26na4YOff+t5F2K2k2dIbRenoNEI6CsdwQDg=;
+	s=arc-20240116; t=1776691469; c=relaxed/simple;
+	bh=mdTTLFFRGSvS9pVXxreZEr6WIIMFyUkAMBZmnwnFgGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nbGu4vp1ZzPOuR4CdUi1Ye38f9NnAeaf3LWOauMakFc70rS2yjHsWF2HdclmIknetZjYWK/LeQtuAZ3CH/hcUmucv+J6TiB/EWdfPiW0as46Tr/6lS3iMgp7bcTaHUqzby/oRdGgdwx5cVby7TjGwGD5b8Bhsfg2iXVVwg3PTkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ArZxFb7y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qmPPLdyYxtmOrWzJ1g2VVJVSJhrVSU8KKuwvm32ErYVKZL4KjjgY+n7hn4auO4C7Ml9mLrjxlg5sqWM+lLtF25CEHQgmzx154fC1haTgNdgh/VtTKeLfXKErGTK4cafvoUkZJ9RTDliC7wo4o+gkAmf27bgBcwwd7koIOVvBuLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ht8SJa56; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ArZxFb7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C242C2BCB4;
-	Mon, 20 Apr 2026 13:24:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ht8SJa56"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1D4C2BCB4;
+	Mon, 20 Apr 2026 13:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691467;
-	bh=IgJq5V+26na4YOff+t5F2K2k2dIbRenoNEI6CsdwQDg=;
+	s=k20201202; t=1776691468;
+	bh=mdTTLFFRGSvS9pVXxreZEr6WIIMFyUkAMBZmnwnFgGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArZxFb7yELXdlHK7VlJH6374RAr4zEGMun3wmK0dk1mkIF+/mJIevA4nlx6uYwAaa
-	 smY5tmIv792ABvhefE3lTBS7Gz0oOn2pjtS4e41UEYiaUrjoEqHbaxUlssYpd1ttut
-	 JQVdEVoi3MfrzOdWnKV8nOPnL2+IYzjsR9BnOzfell/FOeEFgnqXDml9NVaxVQrbu7
-	 zjC02K+mr/fDCc/9Qh5vmzyassi9x3RpBSqcZV2+uJp9PYHxjQDF0PZuDnoAYIlszY
-	 e+x1+VVYbzvI5ycV9+Zbj0F4aGLiDkcpZPAYa5gElpr/8Jr4Igj26f1w4jW6+Lzx7S
-	 hqdb/NQ5sLEnQ==
+	b=Ht8SJa563vBIdvtheNgt9tiBYHMZoa9Hz+7rjpLyO/o+rrpCqTbPDaOLEth6zt5Wu
+	 lWbMnNLYecz90pKu1r5cMtc6Qtf5QqV9nlJl/IclZ/4tZP+/96T97y5H1c8KXTHSR3
+	 6hSq3MuqMlXI8jHcCWrfL6TWY2YzVxrZ7g8+4QqUhZFv6u/Ce9ZydFGnu8Or2W2Hxe
+	 RCMbMB7hHuZI7oq7kx0/txJ8ssEffALSXNvspojoXxnvv8alroxYRtYLD5qTchu44N
+	 fES+MmgaXSc9A2pwlfp9A4sX5lv5kN1yU0OOAZCQNHo/T6JYzLHYJ6tQ+sm+31PZIg
+	 cU1TcKJHqqBaQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qu Wenruo <wqu@suse.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	thierry.reding@kernel.org,
+	jonathanh@nvidia.com,
+	devicetree@vger.kernel.org,
+	linux-tegra@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] block: reject zero length in bio_add_page()
-Date: Mon, 20 Apr 2026 09:17:20 -0400
-Message-ID: <20260420132314.1023554-46-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] arm64: tegra: Fix snps,blen properties
+Date: Mon, 20 Apr 2026 09:17:21 -0400
+Message-ID: <20260420132314.1023554-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,318 +57,313 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit 643893647cac7317bafca4040dd0cfb815b510d4 ]
+[ Upstream commit 51f10c527a63dc4a71bce4b40fc53eee78bbbd52 ]
 
-The function bio_add_page() returns the number of bytes added to the
-bio, and if that failed it should return 0.
+The snps,blen property of stmmac-axi-config nodes needs to have 7
+entries in total, with unsupported burst lengths listed as 0.
 
-However there is a special quirk, if a caller is passing a page with
-length 0, that function will always return 0 but with different results:
-
-- The page is added to the bio
-  If there is enough bvec slot or the folio can be merged with the last
-  bvec.
-
-  The return value 0 is just the length passed in, which is also 0.
-
-- The page is not added to the bio
-  If the page is not mergeable with the last bvec, or there is no bvec
-  slot available.
-
-  The return value 0 means page is not added into the bio.
-
-Unfortunately the caller is not able to distinguish the above two cases,
-and will treat the 0 return value as page addition failure.
-
-In that case, this can lead to the double releasing of the last page:
-
-- By the bio cleanup
-  Which normally goes through every page of the bio, including the last
-  page which is added into the bio.
-
-- By the caller
-  Which believes the page is not added into the bio, thus would manually
-  release the page.
-
-I do not think anyone should call bio_add_folio()/bio_add_page() with zero
-length, but idiots like me can still show up.
-
-So add an extra WARN_ON_ONCE() check for zero length and rejects it
-early to avoid double freeing.
-
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Link: https://patch.msgid.link/bc2223c080f38d0b63f968f605c918181c840f40.1773734749.git.wqu@suse.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information for a comprehensive analysis. Let me
-compile my findings.
+Now I have all the information needed for my analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `block` (core block layer)
-- Action verb: `reject` (defensive fix/hardening)
-- Summary: Reject zero-length pages in `bio_add_page()` to prevent
-  double-free
+- Subsystem: `arm64: tegra` (ARM64 device tree, Tegra SoC)
+- Action verb: "Fix" — direct bug fix language
+- Summary: Fix the `snps,blen` DT properties for MGBE Ethernet
+  controllers
+- Record: [arm64: tegra] [fix] [correcting snps,blen DT property to have
+  required 7 entries]
 
 **Step 1.2: Tags**
-- `Signed-off-by: Qu Wenruo <wqu@suse.com>` - Author, btrfs developer
-- `Link:` patch.msgid.link URL (lore blocked by anti-scraping)
-- `Signed-off-by: Jens Axboe <axboe@kernel.dk>` - Block layer maintainer
-  committed it
-- No `Fixes:` tag (expected for candidates), no `Cc: stable`, no
-  `Reported-by`
+- `Signed-off-by: Thierry Reding <treding@nvidia.com>` — Author is the
+  Tegra platform maintainer at NVIDIA.
+- No Fixes: tag, no Cc: stable, no Reported-by (expected for auto-
+  selection candidates).
+- Record: No notable tags beyond authorship. Author is the subsystem
+  maintainer.
 
-**Step 1.3: Commit Body Analysis**
-The commit describes a clear bug mechanism:
-- When `len=0` is passed to `bio_add_page()`, return value is always 0
-- But 0 can mean "success with zero bytes" (page added) OR "failure"
-  (page not added)
-- Caller cannot distinguish these two cases, treats return 0 as failure
-- If the page WAS added, the caller releases the page manually (thinking
-  it wasn't added), AND the bio cleanup also releases it → **double-
-  free**
-
-The author says: "I do not think anyone should call
-bio_add_folio()/bio_add_page() with zero length, but idiots like me can
-still show up" — referencing his own btrfs zlib bug.
+**Step 1.3: Commit Body**
+- States: "The snps,blen property of stmmac-axi-config nodes needs to
+  have 7 entries in total, with unsupported burst lengths listed as 0."
+- This describes a DT schema violation — the property had 4 entries but
+  the driver requires 7.
+- Record: Bug is a malformed DT property that doesn't match the driver's
+  expectation.
 
 **Step 1.4: Hidden Bug Fix Detection**
-This IS a bug fix. While framed as adding a defensive check, it prevents
-a concrete double-free scenario that was actually triggered in btrfs
-(commit `0dcabcb920a5c`).
-
-Record: [block] [reject] [Adds WARN_ON_ONCE check for zero-length to
-prevent double-free from API ambiguity]
+- This is NOT a hidden fix — it's explicitly labeled "Fix." The
+  underlying bug is that `of_property_read_u32_array(np, "snps,blen",
+  axi_blen, 7)` fails silently when the property only has 4 entries,
+  leaving the stack buffer uninitialized.
+- Record: Direct bug fix, not disguised.
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- 1 file changed: `block/bio.c`
-- +2 lines added (only)
-- Function modified: `bio_add_page()`
-- Scope: Single-file, single-function, surgical fix
+- 1 file changed: `arch/arm64/boot/dts/nvidia/tegra234.dtsi`
+- 3 lines changed (each identical):
+  - `snps,blen = <256 128 64 32>;` → `snps,blen = <256 128 64 32 0 0
+    0>;`
+- Affects MGBE0, MGBE1, MGBE2 stmmac-axi-config nodes.
+- Record: Single DT file, 3 identical one-line changes. Scope:
+  minimal/surgical.
 
-**Step 2.2: Code Flow Change**
-Single hunk: After the BIO_CLONED check, adds:
-```c
-if (WARN_ON_ONCE(len == 0))
-    return 0;
-```
-Before: zero-length pages could be silently added, causing return value
-ambiguity.
-After: zero-length is rejected early with a WARN, returning 0
-unambiguously meaning failure.
+**Step 2.2: Code Flow**
+- Before: DT property has 4 u32 entries.
+- After: DT property has 7 u32 entries (3 trailing zeros for unsupported
+  burst lengths).
+- The stmmac driver calls `of_property_read_u32_array(np, "snps,blen",
+  axi_blen, AXI_BLEN)` where `AXI_BLEN = 7`. With only 4 entries,
+  `of_find_property_value_of_size()` checks `prop->length (16) < min
+  (28)` and returns `-EOVERFLOW`. The stack array `axi_blen[7]` is never
+  written. Then `stmmac_axi_blen_to_mask()` processes uninitialized
+  stack data.
 
 **Step 2.3: Bug Mechanism**
-Category: Double-free prevention (memory safety fix). The zero-length
-case creates an ambiguous return path where the page can be freed by
-both the bio cleanup and the caller.
+- Category: **Uninitialized data** / **incorrect DT specification**
+- Mechanism: The DT property is too short, causing
+  `of_property_read_u32_array()` to fail, leaving a stack buffer
+  uninitialized. The uninitialized data is then used to configure the
+  AXI DMA burst length register for network hardware.
+- Record: Uninitialized stack data used for hardware DMA configuration.
+  The fix ensures the property has the correct count.
 
 **Step 2.4: Fix Quality**
-- Obviously correct — nobody should add zero bytes to a bio
-- Minimal — 2 lines
-- No regression risk — no valid caller should pass len=0
-- WARN_ON_ONCE is low-overhead, fires once per boot maximum
+- Obviously correct: all other DT files using `snps,blen` have exactly 7
+  entries (verified by grep across all arm64 DT files).
+- Minimal/surgical: 3 identical one-line changes.
+- Zero regression risk: adding trailing zeros only enables the driver to
+  read the property successfully, and zero entries are explicitly
+  skipped by `stmmac_axi_blen_to_mask()`.
+- Record: Fix is obviously correct, minimal, zero regression risk.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
 **Step 3.1: Blame**
-`bio_add_page()` was refactored by Christoph Hellwig in commit
-`0aa69fd32a5f76` (2018-06-01), but the fundamental function dates back
-to Linus's original `1da177e4c3f41` (2005). The zero-length ambiguity
-has existed since the function's creation.
+- The buggy `snps,blen = <256 128 64 32>` was introduced by commit
+  `81695da63b977` ("arm64: tegra: Add AXI configuration for Tegra234
+  MGBE") by Thierry Reding, dated 2024-02-21, merged in v6.9.
+- Record: Bug introduced in v6.9 by the same author who is now fixing
+  it.
 
-**Step 3.2: Fixes tag** — No Fixes: tag present. The bug is in the API
-design of `bio_add_page()` itself, not introduced by a specific commit.
+**Step 3.2: Fixes tag**
+- No Fixes: tag present. The implicit fix target is `81695da63b977`.
 
 **Step 3.3: File History**
-`block/bio.c` has been actively modified — 159 commits since v6.6.
-Recent refactoring by Christoph Hellwig (`38446014648c9`,
-`12da89e8844ae`) changed the merge logic but didn't address zero-length.
+- Recent changes to `tegra234.dtsi` are mostly DT cleanup/additions. No
+  related fixes.
+- Record: Standalone fix, no prerequisites.
 
 **Step 3.4: Author**
-Qu Wenruo is a prolific btrfs developer. He discovered this issue while
-debugging the btrfs zlib crash (`0dcabcb920a5c`), which was reported by
-David Sterba and syzbot. He fixed both the btrfs caller AND added this
-block-level defense.
+- Thierry Reding is the Tegra platform maintainer at NVIDIA. He wrote
+  the original buggy commit and is now fixing it.
+- Record: Subsystem maintainer self-fix.
 
 **Step 3.5: Dependencies**
-None. The 2-line check has no prerequisites. It uses only existing
-macros (`WARN_ON_ONCE`).
+- None. The fix is a pure DT property value change that applies
+  independently.
+- Record: No dependencies, applies cleanly standalone.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1-4.5:** Lore.kernel.org was blocked by anti-scraping
-protection. However, from examining the related btrfs fix commit
-(`0dcabcb920a5c`), I can confirm:
-- The bug was reported by David Sterba (btrfs maintainer), Jean-
-  Christophe Guillain (user), and syzbot
-- A bugzilla was filed:
-  https://bugzilla.kernel.org/show_bug.cgi?id=221176
-- The root cause was bio_add_folio/bio_add_page accepting zero-length
-- The fix was signed off by Jens Axboe (block maintainer)
+**Step 4.1: Original Submission**
+- Found via web search: patch is `[PATCH 09/10]` in a series "dt-
+  bindings: Various cleanups for Tegra-related bindings" posted
+  2026-02-23.
+- Part of a v3 cleanup series. While most patches in the series are DT
+  binding cleanups, this specific patch (09/10) is a genuine bug fix.
+- Record: Part of a larger DT cleanup series, but this patch is an
+  independent bug fix.
+
+**Step 4.2: Reviewers**
+- b4 dig found the original commit (81695da63b977) was reviewed and
+  tested by Jon Hunter (NVIDIA Tegra co-maintainer). The fix itself is
+  straightforward enough that formal review was likely implicit.
+- Record: Original buggy code was reviewed by Jon Hunter.
+
+**Step 4.3-4.5: Bug Reports / Stable History**
+- No specific bug report found. Likely discovered by the author during
+  code review / DT validation.
+- No prior stable discussion found.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1:** Modified function: `bio_add_page()`
+**Step 5.1-5.4: Key Functions**
+- `stmmac_axi_setup()` in `stmmac_platform.c` parses the DT property.
+- Called during stmmac platform driver probe for any device using
+  `snps,axi-config` DT phandle.
+- `stmmac_axi_blen_to_mask()` converts the burst length array to
+  register value.
+- The register value is written to hardware in `dwxgmac2_dma_init()` /
+  `dwmac4_dma_init()` / `dwmac1000_dma_init()`.
+- Impact: Affects AXI DMA configuration for MGBE Ethernet on Tegra234.
 
-**Step 5.2: Callers**
-`bio_add_page()` is called from 44+ files across the kernel: filesystems
-(btrfs, gfs2, ocfs2, ntfs3, f2fs, squashfs, nfs, erofs, direct-io),
-block layer (blk-map, blk-crypto), device mapper (dm-crypt, dm-io, dm-
-writecache, dm-log-writes, dm-flakey, dm-zoned), RAID (raid1, raid5,
-raid10), NVMe target, SCSI target, drbd, zram, xen-blkback, floppy. This
-is a CORE API.
-
-**Step 5.3:** `bio_add_page` calls `bvec_try_merge_page` and
-`__bio_add_page`, manipulating bio vectors.
-
-**Step 5.4:** Any filesystem or block driver issuing I/O can reach this
-function. It's on the hot path for ALL block I/O.
-
-**Step 5.5:** The same zero-length ambiguity exists in `bio_add_folio()`
-which wraps `bio_add_page()`, so this fix protects both paths.
+**Step 5.5: Similar Patterns**
+- All other arm64 DT files consistently use 7 entries for `snps,blen`.
+  Tegra234 was the ONLY outlier with 4 entries.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1:** `bio_add_page()` exists in ALL stable trees (present since
-2005). The zero-length ambiguity has existed since the beginning.
+**Step 6.1: Buggy Code in Stable**
+- Commit `81695da63b977` was introduced in v6.9. It exists in stable
+  trees v6.12.y and any newer LTS branches.
+- It does NOT exist in v6.6.y (confirmed via `git merge-base --is-
+  ancestor`).
+- Record: Bug affects v6.9+ stable trees (v6.12.y at minimum).
 
-**Step 6.2: Backport Compatibility**
-- v6.6/v6.12: Function has slightly different structure (uses
-  `same_page` variable, `bvec_try_merge_page` has different signature),
-  but the fix location (after the BIO_CLONED check, before the size
-  check) is identical. Patch should apply cleanly or with trivial
-  context adjustment.
-- v6.1: Function uses `__bio_try_merge_page()` instead. Fix still
-  applies at the top of the function.
-- v5.15: Same as v6.1.
+**Step 6.2: Backport Complications**
+- Pure DT change with no code dependencies. Should apply cleanly.
+- Record: Clean apply expected.
 
-**Step 6.3:** No related zero-length fix exists in any stable tree.
+**Step 6.3: Related Fixes**
+- No prior fix for this issue found in any tree.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1:** Block layer (`block/`) — **CORE** criticality. Affects all
-users who do any I/O.
-
-**Step 7.2:** Actively developed subsystem (20+ recent commits).
+**Step 7.1: Subsystem**
+- ARM64 Device Tree for Tegra234 MGBE (Multi-Gigabit Ethernet).
+- Criticality: IMPORTANT — affects Tegra234 network hardware users
+  (NVIDIA Jetson AGX Orin, etc.).
+- Record: [arm64/tegra DT] [IMPORTANT — Jetson platform network
+  hardware]
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1:** Universal — every kernel user performs block I/O through
-`bio_add_page()`.
+**Step 8.1: Affected Users**
+- Users of NVIDIA Tegra234 platforms (Jetson AGX Orin) using MGBE
+  Ethernet controllers.
+- Platform-specific but widely deployed in industrial/embedded
+  applications.
 
 **Step 8.2: Trigger Conditions**
-Currently, the btrfs zlib path (`3d74a7556fba`, only in 7.0+) was the
-known trigger. In stable trees, no known caller currently passes zero-
-length. However, any future backported fix or existing edge case that
-accidentally computes zero-length would trigger the double-free.
+- Triggered on every boot when the MGBE driver probes. No special
+  configuration needed.
+- The AXI burst length read fails silently, so uninitialized data
+  configures DMA hardware.
 
 **Step 8.3: Failure Mode**
-Double-free of a page → memory corruption, crash, or security
-vulnerability. Severity: **CRITICAL** when triggered.
+- Uninitialized stack data used for DMA hardware configuration.
+- Could result in suboptimal network performance, potential DMA errors,
+  or undefined hardware behavior depending on what stack values happen
+  to be.
+- Severity: **HIGH** (hardware misconfiguration from uninitialized data,
+  affecting network DMA)
 
-**Step 8.4: Risk-Benefit Ratio**
-- BENEFIT: Prevents double-free from API misuse; hardens a core API used
-  by 44+ files
-- RISK: Effectively zero — 2 lines, adds a check for an invalid input
-  that should never occur
-- Ratio: Very favorable
+**Step 8.4: Risk-Benefit**
+- BENEFIT: High — fixes broken AXI DMA configuration for 3 MGBE Ethernet
+  controllers on Tegra234.
+- RISK: Very low — 3 identical one-line DT property changes, adding
+  trailing zeros, no code change.
+- Record: Very favorable risk-benefit ratio.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Compilation**
+**Step 9.1: Evidence Summary**
 
 FOR backporting:
-- Prevents double-free (memory safety, potential security issue)
-- 2-line fix, obviously correct, zero regression risk
-- Core block layer API used by 44+ files
-- Real bug was triggered (btrfs zlib crash with syzbot report + user
-  reports)
-- Block maintainer (Jens Axboe) signed off
-- The API ambiguity exists in all stable kernels
-- No caller should ever pass zero-length; this enforces a correct
-  invariant
+- Fixes real bug: `of_property_read_u32_array()` fails with only 4/7
+  entries, leading to uninitialized stack data being used for hardware
+  DMA configuration
+- Minimal, surgical fix: 3 identical one-line DT changes
+- Obviously correct: all other DT files use 7 entries
+- Written by subsystem maintainer (Thierry Reding, NVIDIA Tegra
+  maintainer)
+- Zero regression risk: trailing zeros are explicitly handled ("Burst
+  values of zero must be skipped")
+- Applies to v6.12.y+ stable trees
 
 AGAINST backporting:
-- The specific known trigger (btrfs zlib) only exists in 7.0+ code
-- No known caller in stable trees currently passes zero-length
-- Somewhat defensive/hardening in nature for older stable trees
+- No explicit user report of symptoms (could mean it works by luck with
+  stack data)
+- Part of a larger series (but this patch is independent)
 
 **Step 9.2: Stable Rules Checklist**
-1. Obviously correct? **YES** — trivially verifiable
-2. Fixes a real bug? **YES** — double-free is real, demonstrated in
-   btrfs
-3. Important issue? **YES** — double-free = memory corruption/crash
-4. Small and contained? **YES** — 2 lines in 1 file
-5. No new features? **YES** — purely defensive check
-6. Applies to stable? **YES** — with minor context adjustments
+1. Obviously correct? **YES** — all other DT files have 7 entries
+2. Fixes a real bug? **YES** — uninitialized data used for HW
+   configuration
+3. Important issue? **YES** — hardware DMA misconfiguration
+4. Small and contained? **YES** — 3 one-line changes in 1 DT file
+5. No new features? **YES** — pure DT fix
+6. Can apply to stable? **YES** — clean DT-only change
 
-**Step 9.3: Exception Categories** — N/A
-
-**Step 9.4: Decision**
-The fix is tiny, obviously correct, and addresses a genuine API-level
-design flaw that leads to double-free when any caller passes zero-
-length. While the known trigger exists only in 7.0+, the underlying API
-ambiguity has existed since 2005 and could be triggered by any of the
-44+ callers if they ever compute a zero-length. The defensive hardening
-of such a critical, widely-used API is appropriate for stable.
+**Step 9.3: Exception Category**
+- DT update fixing existing hardware description — automatic YES
+  category
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by Qu Wenruo (author), Jens Axboe
-  (block maintainer), Link: tag present
-- [Phase 2] Diff analysis: 2 lines added to `bio_add_page()` —
-  WARN_ON_ONCE(len == 0) + return 0
-- [Phase 3] git blame: bio_add_page refactored in 0aa69fd32a5f76 (2018),
-  original from 1da177e (2005); zero-length bug exists since origin
-- [Phase 3] Author check: Qu Wenruo is prolific btrfs developer,
-  discovered bug while fixing btrfs zlib crash (0dcabcb920a5c)
-- [Phase 3] Related commit 0dcabcb920a5c confirmed: btrfs zlib double-
-  free from zero-length bio_add_folio, reported by David Sterba, syzbot,
-  and user
-- [Phase 4] Lore blocked by anti-scraping; patch link confirmed via
-  commit message
-- [Phase 5] grep found 44+ files calling bio_add_page() across fs/,
-  drivers/, block/ — CORE API
-- [Phase 6] bio_add_page in v6.6, v6.1, v5.15 confirmed via git show —
-  function exists in all stable trees; fix applies at same location (top
-  of function)
-- [Phase 6] No existing zero-length check in any stable tree version
-  confirmed
-- [Phase 7] Block layer — CORE subsystem, affects all users
-- [Phase 8] Double-free → memory corruption → CRITICAL severity when
-  triggered; 2-line fix → zero regression risk
-- UNVERIFIED: Could not access lore.kernel.org to read full review
-  discussion due to anti-scraping protection
+- [Phase 1] Parsed subject: "Fix" verb, arm64 tegra subsystem, snps,blen
+  property
+- [Phase 2] Diff: 3 lines changed in tegra234.dtsi, each adds `0 0 0` to
+  snps,blen property
+- [Phase 2] Verified AXI_BLEN=7 in `include/linux/stmmac.h` line 109
+- [Phase 2] Verified `of_property_read_u32_array()` calls
+  `of_find_property_value_of_size()` with min=28 bytes; property has 16
+  bytes (4 entries), so it returns -EOVERFLOW
+- [Phase 2] Verified `stmmac_axi_blen_to_mask()` skips zero entries
+  ("Burst values of zero must be skipped")
+- [Phase 3] git blame: buggy code from 81695da63b977 (v6.9), author:
+  Thierry Reding
+- [Phase 3] git merge-base: confirmed 81695da63b977 is in v6.12 but not
+  v6.6
+- [Phase 4] b4 dig: found original commit submission at lore (patch-id
+  match)
+- [Phase 4] Web search: fix is PATCH 09/10 of "dt-bindings: Various
+  cleanups for Tegra-related bindings"
+- [Phase 5] Verified all other arm64 DT snps,blen entries have exactly 7
+  values (grep across arch/arm64/boot/dts)
+- [Phase 5] Traced call chain: stmmac_axi_setup →
+  of_property_read_u32_array → of_find_property_value_of_size
+- [Phase 6] Bug exists in v6.9+ stable trees
+- [Phase 8] Failure mode: uninitialized stack data used for AXI DMA
+  register, severity HIGH
 
 **YES**
 
- block/bio.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block/bio.c b/block/bio.c
-index d80d5d26804e3..6048d9382fecf 100644
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1064,6 +1064,8 @@ int bio_add_page(struct bio *bio, struct page *page,
- {
- 	if (WARN_ON_ONCE(bio_flagged(bio, BIO_CLONED)))
- 		return 0;
-+	if (WARN_ON_ONCE(len == 0))
-+		return 0;
- 	if (bio->bi_iter.bi_size > BIO_MAX_SIZE - len)
- 		return 0;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index 850c473235e36..04a95b6658caa 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -3621,7 +3621,7 @@ ethernet@6800000 {
+ 			snps,axi-config = <&mgbe0_axi_setup>;
  
+ 			mgbe0_axi_setup: stmmac-axi-config {
+-				snps,blen = <256 128 64 32>;
++				snps,blen = <256 128 64 32 0 0 0>;
+ 				snps,rd_osr_lmt = <63>;
+ 				snps,wr_osr_lmt = <63>;
+ 			};
+@@ -3663,7 +3663,7 @@ ethernet@6900000 {
+ 			snps,axi-config = <&mgbe1_axi_setup>;
+ 
+ 			mgbe1_axi_setup: stmmac-axi-config {
+-				snps,blen = <256 128 64 32>;
++				snps,blen = <256 128 64 32 0 0 0>;
+ 				snps,rd_osr_lmt = <63>;
+ 				snps,wr_osr_lmt = <63>;
+ 			};
+@@ -3705,7 +3705,7 @@ ethernet@6a00000 {
+ 			snps,axi-config = <&mgbe2_axi_setup>;
+ 
+ 			mgbe2_axi_setup: stmmac-axi-config {
+-				snps,blen = <256 128 64 32>;
++				snps,blen = <256 128 64 32 0 0 0>;
+ 				snps,rd_osr_lmt = <63>;
+ 				snps,wr_osr_lmt = <63>;
+ 			};
 -- 
 2.53.0
 
