@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666E533E377;
-	Mon, 20 Apr 2026 16:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FD52DE6E3;
+	Mon, 20 Apr 2026 16:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700949; cv=none; b=Sc43CEzXpLGsZi48DreInBKUxfjEDXLFxMsWfbluB3Ct8mFEIX8W2S0iOOQNOznpYeXfAV2lgvL+LaKKDPtI29+0q1G8ks+PonSLXDOzkc4zKV4Y0cUbLqexP6a+qvoMFy+68azQPNQrCOU5snCm1NfUaUQQ6Ywo8pt7aBNLefI=
+	t=1776700952; cv=none; b=O6G4qGSEqDm6OuTpPSdgNIAmcS1KtkevwLj5LtD5cQ+CTpnt/BEOfCqwQNjoB8Hx3wU5jn7BxoDLdMX+vKcVIwCw8d9tMDYHA36kVFZt2yzAUuBNeKmDVnA3J+AaaUR8Zv8ZRSCJCYrNCIWzJx1Gl/M6f9/59BlM76fvOYY6HdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700949; c=relaxed/simple;
-	bh=zK3Tz81udVBlxWtppuBf2LgK7VWROEKFfG6vdjBN2oo=;
+	s=arc-20240116; t=1776700952; c=relaxed/simple;
+	bh=y9JQ5LL/JUPNCgmgbrtXGP8id9fZWubCBCtNwfXw7D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evRnbhIDYY0HOk2D24MbUpAfH3nfdTnJEp2k3dfcKb+tth45fYlajSX/8/ewT15xjZFb3sWyoSWM2LNpC0Gbl4LvkdvLeDV/R2H8FvPfBFiLYxV1AWMEIfP+wl8NX8BC2lvDDITfX40YXf/rKGa3+hRQiF+DECFhomRuYwwzsoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wP0040SJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E6MBND+aV9MaCkfwIFQSMfrMTjI4hfE+NbVguRkn/9tNtrkWGh33VkdDB6O1ro2Q/wo715OQTCfKlb1y6raBCbp4fMiakg4vYpWXc5RRo0OQgyUWUVuVy8l8CZ0fSd3JE4hXeWf4Yh+KXB/sBxt2g6nJ4ilU6JtsNzRSmLEQiq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxnRUT2R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wP0040SJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED2AC19425;
-	Mon, 20 Apr 2026 16:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxnRUT2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F4EC19425;
+	Mon, 20 Apr 2026 16:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700949;
-	bh=zK3Tz81udVBlxWtppuBf2LgK7VWROEKFfG6vdjBN2oo=;
+	s=korg; t=1776700951;
+	bh=y9JQ5LL/JUPNCgmgbrtXGP8id9fZWubCBCtNwfXw7D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wP0040SJ9MhbZFDFzjywJv8VmcnKCf8Rd7q0kaeLtXSC4s2wmSRVNX2uD/PljC2ed
-	 hoMh66TWrIb2WU4WH+KQ0Un+dn+LjW0SwIbVkeJdOw6bDMU5BJvpTXwVRSbTSi5ZAY
-	 sra9qSyP4EDdVtUuCsgW0PZeeL1Gg4PH8fMWotrI=
+	b=zxnRUT2R6nnfFaGqE/LqCLr685ZjXl8EUDCEGSErYjFbG/LpCkylKRxtmaLKUC06h
+	 QUMX8uaIU5hutiRJGmniggvnFmQue63UFmGqiKPS7WLUZg6Aku9R4d7DrNLZ71fahh
+	 ZD6kHqbT1AoDjNjga/TDXE9QnjAIo7dVZZ9InIb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 123/198] can: raw: fix ro->uniq use-after-free in raw_rcv()
-Date: Mon, 20 Apr 2026 17:41:42 +0200
-Message-ID: <20260420153940.033979995@linuxfoundation.org>
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 124/198] i2c: s3c24xx: check the size of the SMBUS message before using it
+Date: Mon, 20 Apr 2026 17:41:43 +0200
+Message-ID: <20260420153940.071708569@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,68 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit a535a9217ca3f2fccedaafb2fddb4c48f27d36dc upstream.
+commit c0128c7157d639a931353ea344fb44aad6d6e17a upstream.
 
-raw_release() unregisters raw CAN receive filters via can_rx_unregister(),
-but receiver deletion is deferred with call_rcu(). This leaves a window
-where raw_rcv() may still be running in an RCU read-side critical section
-after raw_release() frees ro->uniq, leading to a use-after-free of the
-percpu uniq storage.
+The first byte of an i2c SMBUS message is the size, and it should be
+verified to ensure that it is in the range of 0..I2C_SMBUS_BLOCK_MAX
+before processing it.
 
-Move free_percpu(ro->uniq) out of raw_release() and into a raw-specific
-socket destructor. can_rx_unregister() takes an extra reference to the
-socket and only drops it from the RCU callback, so freeing uniq from
-sk_destruct ensures the percpu area is not released until the relevant
-callbacks have drained.
+This is the same logic that was added in commit a6e04f05ce0b ("i2c:
+tegra: check msg length in SMBUS block read") to the i2c tegra driver.
 
-Fixes: 514ac99c64b2 ("can: fix multiple delivery of a single CAN frame for overlapping CAN filters")
-Cc: stable@vger.kernel.org # v4.1+
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
-Link: https://patch.msgid.link/26ec626d-cae7-4418-9782-7198864d070c@bynar.io
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-[mkl: applied manually]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>
+Cc: stable <stable@kernel.org>
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/2026022314-rely-scrubbed-4839@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/raw.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-s3c2410.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -360,6 +360,14 @@ static int raw_notifier(struct notifier_
- 	return NOTIFY_DONE;
- }
+--- a/drivers/i2c/busses/i2c-s3c2410.c
++++ b/drivers/i2c/busses/i2c-s3c2410.c
+@@ -503,8 +503,13 @@ static void i2c_s3c_irq_nextbyte(struct
+ 		i2c->msg->buf[i2c->msg_ptr++] = byte;
  
-+static void raw_sock_destruct(struct sock *sk)
-+{
-+	struct raw_sock *ro = raw_sk(sk);
-+
-+	free_percpu(ro->uniq);
-+	can_sock_destruct(sk);
-+}
-+
- static int raw_init(struct sock *sk)
- {
- 	struct raw_sock *ro = raw_sk(sk);
-@@ -386,6 +394,8 @@ static int raw_init(struct sock *sk)
- 	if (unlikely(!ro->uniq))
- 		return -ENOMEM;
- 
-+	sk->sk_destruct = raw_sock_destruct;
-+
- 	/* set notifier */
- 	spin_lock(&raw_notifier_lock);
- 	list_add_tail(&ro->notifier, &raw_notifier_list);
-@@ -435,7 +445,6 @@ static int raw_release(struct socket *so
- 	ro->bound = 0;
- 	ro->dev = NULL;
- 	ro->count = 0;
--	free_percpu(ro->uniq);
- 
- 	sock_orphan(sk);
- 	sock->sk = NULL;
+ 		/* Add actual length to read for smbus block read */
+-		if (i2c->msg->flags & I2C_M_RECV_LEN && i2c->msg->len == 1)
++		if (i2c->msg->flags & I2C_M_RECV_LEN && i2c->msg->len == 1) {
++			if (byte == 0 || byte > I2C_SMBUS_BLOCK_MAX) {
++				s3c24xx_i2c_stop(i2c, -EPROTO);
++				break;
++			}
+ 			i2c->msg->len += byte;
++		}
+  prepare_read:
+ 		if (is_msglast(i2c)) {
+ 			/* last byte of buffer */
 
 
