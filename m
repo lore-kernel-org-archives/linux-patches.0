@@ -1,36 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C3C2C11C6;
-	Mon, 20 Apr 2026 16:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BCF2DE6E3;
+	Mon, 20 Apr 2026 16:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701136; cv=none; b=ummWEGkZrF9INuKVe5b7JQCEQ74VZn2idoHth4jtkWWoMx5lD6wwkfaRCQquWpiwifQRT71jD15xUQVh9NSdF2ZP42QwJjipSpLIrfXTcgX+gwwWHOoolabM8HJ2mWk4D72h66EtQrJn7+ryVHeW9HLOs56mcsNfeF5hlTE8zkU=
+	t=1776701139; cv=none; b=NW8YAt+LBaCBZ1pViXgLBqP7PjP/Iwefx4Inpar6f1Zj/vzTSrOACgL5uiwwkQKgy0GZ8jW9j9Hmhp4tWUp6NM60p0uXWL27NzK5zvmCFhV5RiKLlUt4rOZyE08SxvUEBKfLIOMxfOenZWZ5AQKIhVo9w07VDvvhrimlHaI1GsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701136; c=relaxed/simple;
-	bh=jRSrpdESyShBuKo9MwAnVNKKiM+BQPlAwyhtLcBmr5c=;
+	s=arc-20240116; t=1776701139; c=relaxed/simple;
+	bh=5kPyz8O3xTKsND1RTtJqOd1XvWnYVj3f3WVSGldaPfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FD1/sbZVP/3mtGfSa+o3z4kCc3cDGzY83cNrbHF+P82zJuWp9N/jdJOdeFN0tU/s3v3skR41weEc5CSLfhMykwJyrfLfrPIEBvRmblzrq69tsEMcOclN4jByV2LcIrdWIK+vmun3P+tgBg4WbnjRVWVx0VIofmT8xs2+Lngs+Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVxBqBpP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ewqcsZiiaQDRwD2DyCdsLQdFgp7IJem8M1FgBNMPKl6ZALeEBUvSvzHGfFau1+n+FzcehmxLmCs92rmRR8nvhsIZYMW2za3a17kPcQT1KCko/Q9FdpzwwB7z1GotYjluaEmJrrCHnMi+BeGQF70+jBNN4oOgZklnamsmpNXlGpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwOku7cT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVxBqBpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2763AC19425;
-	Mon, 20 Apr 2026 16:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwOku7cT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87683C19425;
+	Mon, 20 Apr 2026 16:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701136;
-	bh=jRSrpdESyShBuKo9MwAnVNKKiM+BQPlAwyhtLcBmr5c=;
+	s=korg; t=1776701139;
+	bh=5kPyz8O3xTKsND1RTtJqOd1XvWnYVj3f3WVSGldaPfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UVxBqBpPuXBNjeyhJQq3DjlI/L/2vsWkNVvijte7md920jFPYMI9FykEuoKjpsQ3O
-	 SXmyAuKvxiZRqqPuFfXdGygNIiIMw3Ynn82FL0UndRBPjAApucEKt5y40ikFno9Asq
-	 3sfb5IvHJImWjSr3rBQJ402MZpiixfZJ10ZJMXhU=
+	b=HwOku7cTIb75VDefs6jW+CAKIwh8fpEKv1hjJJtdHc34hMwp9FGGFzq+BqOL7O8Yw
+	 V4Z1Fc9LhZv5ylqtW2MM227nRush2L6SSYJhFyLbFsOzTqhaXou/DlbotuzMrTGzBF
+	 qdNjfhP8JNbaIMcJP8ntdrD6tw5htutrHKFFkybs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.18 178/198] x86-64: rename misleadingly named __copy_user_nocache() function
-Date: Mon, 20 Apr 2026 17:42:37 +0200
-Message-ID: <20260420153942.025975773@linuxfoundation.org>
+	Jianhui Zhou <jianhuizzzzz@gmail.com>,
+	syzbot+f525fd79634858f478e7@syzkaller.appspotmail.com,
+	SeongJae Park <sj@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Jane Chu <jane.chu@oracle.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	JonasZhou <JonasZhou@zhaoxin.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 196/198] mm/userfaultfd: fix hugetlb fault mutex hash calculation
+Date: Mon, 20 Apr 2026 17:42:55 +0200
+Message-ID: <20260420153942.673952978@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -49,167 +62,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Jianhui Zhou <jianhuizzzzz@gmail.com>
 
-commit d187a86de793f84766ea40b9ade7ac60aabbb4fe upstream.
+commit 0217c7fb4de4a40cee667eb21901f3204effe5ac upstream.
 
-This function was a masterclass in bad naming, for various historical
-reasons.
+In mfill_atomic_hugetlb(), linear_page_index() is used to calculate the
+page index for hugetlb_fault_mutex_hash().  However, linear_page_index()
+returns the index in PAGE_SIZE units, while hugetlb_fault_mutex_hash()
+expects the index in huge page units.  This mismatch means that different
+addresses within the same huge page can produce different hash values,
+leading to the use of different mutexes for the same huge page.  This can
+cause races between faulting threads, which can corrupt the reservation
+map and trigger the BUG_ON in resv_map_release().
 
-It claimed to be a non-cached user copy.  It is literally _neither_ of
-those things.  It's a specialty memory copy routine that uses
-non-temporal stores for the destination (but not the source), and that
-does exception handling for both source and destination accesses.
+Fix this by introducing hugetlb_linear_page_index(), which returns the
+page index in huge page granularity, and using it in place of
+linear_page_index().
 
-Also note that while it works for unaligned targets, any unaligned parts
-(whether at beginning or end) will not use non-temporal stores, since
-only words and quadwords can be non-temporal on x86.
-
-The exception handling means that it _can_ be used for user space
-accesses, but not on its own - it needs all the normal "start user space
-access" logic around it.
-
-But typically the user space access would be the source, not the
-non-temporal destination.  That was the original intention of this,
-where the destination was some fragile persistent memory target that
-needed non-temporal stores in order to catch machine check exceptions
-synchronously and deal with them gracefully.
-
-Thus that non-descriptive name: one use case was to copy from user space
-into a non-cached kernel buffer.  However, the existing users are a mix
-of that intended use-case, and a couple of random drivers that just did
-this as a performance tweak.
-
-Some of those random drivers then actively misused the user copying
-version (with STAC/CLAC and all) to do kernel copies without ever even
-caring about the exception handling, _just_ for the non-temporal
-destination.
-
-Rename it as a first small step to actually make it halfway sane, and
-change the prototype to be more normal: it doesn't take a user pointer
-unless the caller has done the proper conversion, and the argument size
-is the full size_t (it still won't actually copy more than 4GB in one
-go, but there's also no reason to silently truncate the size argument in
-the caller).
-
-Finally, use this now sanely named function in the NTB code, which
-mis-used a user copy version (with STAC/CLAC and all) of this interface
-despite it not actually being a user copy at all.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lkml.kernel.org/r/20260310110526.335749-1-jianhuizzzzz@gmail.com
+Fixes: a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in filemap.c")
+Signed-off-by: Jianhui Zhou <jianhuizzzzz@gmail.com>
+Reported-by: syzbot+f525fd79634858f478e7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f525fd79634858f478e7
+Acked-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: JonasZhou <JonasZhou@zhaoxin.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/uaccess_64.h    |    5 +++--
- arch/x86/lib/copy_user_uncached_64.S |    6 +++---
- arch/x86/lib/usercopy_64.c           |    4 ++--
- drivers/infiniband/sw/rdmavt/qp.c    |    8 +++-----
- drivers/ntb/ntb_transport.c          |    7 ++++---
- tools/objtool/check.c                |    2 +-
- 6 files changed, 16 insertions(+), 16 deletions(-)
+ include/linux/hugetlb.h |   17 +++++++++++++++++
+ mm/userfaultfd.c        |    2 +-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/uaccess_64.h
-+++ b/arch/x86/include/asm/uaccess_64.h
-@@ -147,7 +147,8 @@ raw_copy_to_user(void __user *dst, const
- 	return copy_user_generic((__force void *)dst, src, size);
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -793,6 +793,23 @@ static inline unsigned huge_page_shift(s
+ 	return h->order + PAGE_SHIFT;
  }
  
--extern long __copy_user_nocache(void *dst, const void __user *src, unsigned size);
-+#define copy_to_nontemporal copy_to_nontemporal
-+extern size_t copy_to_nontemporal(void *dst, const void *src, size_t size);
- extern long __copy_user_flushcache(void *dst, const void __user *src, unsigned size);
- 
- static inline int
-@@ -157,7 +158,7 @@ __copy_from_user_inatomic_nocache(void *
- 	long ret;
- 	kasan_check_write(dst, size);
- 	stac();
--	ret = __copy_user_nocache(dst, src, size);
-+	ret = copy_to_nontemporal(dst, (__force const void *)src, size);
- 	clac();
- 	return ret;
- }
---- a/arch/x86/lib/copy_user_uncached_64.S
-+++ b/arch/x86/lib/copy_user_uncached_64.S
-@@ -27,7 +27,7 @@
-  * Output:
-  * rax uncopied bytes or 0 if successful.
-  */
--SYM_FUNC_START(__copy_user_nocache)
-+SYM_FUNC_START(copy_to_nontemporal)
- 	ANNOTATE_NOENDBR
- 	/* If destination is not 7-byte aligned, we'll have to align it */
- 	testb $7,%dil
-@@ -240,5 +240,5 @@ _ASM_EXTABLE_UA(95b, .Ldone)
- _ASM_EXTABLE_UA(52b, .Ldone0)
- _ASM_EXTABLE_UA(53b, .Ldone0)
- 
--SYM_FUNC_END(__copy_user_nocache)
--EXPORT_SYMBOL(__copy_user_nocache)
-+SYM_FUNC_END(copy_to_nontemporal)
-+EXPORT_SYMBOL(copy_to_nontemporal)
---- a/arch/x86/lib/usercopy_64.c
-+++ b/arch/x86/lib/usercopy_64.c
-@@ -49,11 +49,11 @@ long __copy_user_flushcache(void *dst, c
- 	long rc;
- 
- 	stac();
--	rc = __copy_user_nocache(dst, src, size);
-+	rc = copy_to_nontemporal(dst, (__force const void *)src, size);
- 	clac();
- 
- 	/*
--	 * __copy_user_nocache() uses non-temporal stores for the bulk
-+	 * copy_to_nontemporal() uses non-temporal stores for the bulk
- 	 * of the transfer, but we need to manually flush if the
- 	 * transfer is unaligned. A cached memory copy is used when
- 	 * destination or size is not naturally aligned. That is:
---- a/drivers/infiniband/sw/rdmavt/qp.c
-+++ b/drivers/infiniband/sw/rdmavt/qp.c
-@@ -92,12 +92,10 @@ static int rvt_wss_llc_size(void)
- static void cacheless_memcpy(void *dst, void *src, size_t n)
++/**
++ * hugetlb_linear_page_index() - linear_page_index() but in hugetlb
++ *				 page size granularity.
++ * @vma: the hugetlb VMA
++ * @address: the virtual address within the VMA
++ *
++ * Return: the page offset within the mapping in huge page units.
++ */
++static inline pgoff_t hugetlb_linear_page_index(struct vm_area_struct *vma,
++		unsigned long address)
++{
++	struct hstate *h = hstate_vma(vma);
++
++	return ((address - vma->vm_start) >> huge_page_shift(h)) +
++		(vma->vm_pgoff >> huge_page_order(h));
++}
++
+ static inline bool order_is_gigantic(unsigned int order)
  {
- 	/*
--	 * Use the only available X64 cacheless copy.  Add a __user cast
--	 * to quiet sparse.  The src agument is already in the kernel so
--	 * there are no security issues.  The extra fault recovery machinery
--	 * is not invoked.
-+	 * Use the only available X64 cacheless copy.
-+	 * The extra fault recovery machinery is not invoked.
- 	 */
--	__copy_user_nocache(dst, (void __user *)src, n);
-+	copy_to_nontemporal(dst, src, n);
- }
- 
- void rvt_wss_exit(struct rvt_dev_info *rdi)
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1810,12 +1810,13 @@ static void ntb_tx_copy_callback(void *d
- 
- static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
- {
--#ifdef ARCH_HAS_NOCACHE_UACCESS
-+#ifdef copy_to_nontemporal
- 	/*
- 	 * Using non-temporal mov to improve performance on non-cached
--	 * writes, even though we aren't actually copying from user space.
-+	 * writes. This only works if __iomem is strictly memory-like,
-+	 * but that is the case on x86-64
- 	 */
--	__copy_from_user_inatomic_nocache(offset, entry->buf, entry->len);
-+	copy_to_nontemporal(offset, entry->buf, entry->len);
- #else
- 	memcpy_toio(offset, entry->buf, entry->len);
- #endif
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -1207,7 +1207,7 @@ static const char *uaccess_safe_builtin[
- 	"copy_mc_enhanced_fast_string",
- 	"rep_stos_alternative",
- 	"rep_movs_alternative",
--	"__copy_user_nocache",
-+	"copy_to_nontemporal",
- 	NULL
- };
- 
+ 	return order > MAX_PAGE_ORDER;
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -569,7 +569,7 @@ retry:
+ 		 * in the case of shared pmds.  fault mutex prevents
+ 		 * races with other faulting threads.
+ 		 */
+-		idx = linear_page_index(dst_vma, dst_addr);
++		idx = hugetlb_linear_page_index(dst_vma, dst_addr);
+ 		mapping = dst_vma->vm_file->f_mapping;
+ 		hash = hugetlb_fault_mutex_hash(mapping, idx);
+ 		mutex_lock(&hugetlb_fault_mutex_table[hash]);
 
 
