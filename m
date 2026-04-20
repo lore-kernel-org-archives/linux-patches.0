@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFBF244661;
-	Mon, 20 Apr 2026 16:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984AE244661;
+	Mon, 20 Apr 2026 16:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701238; cv=none; b=GYk/2gx1cWwul21fUtw/r52bIlKfyhyKL9183CgmpcGCvlyW0WNi973JbZUYzqVp7yuD+4MI4Btzkb/o3akJj3cGjx0C/UddfnPabFjVspZk4zQuKKCFgP/x/iI00VIcFEnWM5xMC7E9juakObRwb89bdbt2dy9i7u294TJtAgM=
+	t=1776701240; cv=none; b=YUQCCP07fsN6NyZ37KNnjBAxq9uBItNv08QiUnzKRUDtIlfU1n+u+PqkZfSC2pTq+8uFAp8oy8CRiN6uy+Pi5F0QKO42LgGfkJRQ8QgW6nczi+UR7xkADuSHFk2TFs/2yZzLRA8yFOvIFvwXiAzuFK/QviLHnQziExst2fd5AGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701238; c=relaxed/simple;
-	bh=0PK6Ho8H3Pu/KpwVwHCWVgy1SSYIBT5v6qa8RWe3kfY=;
+	s=arc-20240116; t=1776701240; c=relaxed/simple;
+	bh=JQyOvcqQGIVrHWBCMT4nFEa4AHsNR1jr6MOaVZeey/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sqqApvLFtuj1zW94pHophlsZDxjy5yUcriNX3Gx3hxWd6mhocBG/W5aE7M6SO8rmv6viMhkFEZu+1qjs1E4koGGHmLnh7hsYCvdoXdwtVWzpaflZL0cJKR+OD6U1ehzIoSeY7okQ/qV7KeqbWkusbvLFT7xcj2+YZfPSMP2Rw9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0Y8+oLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJtg+vm41gACG2kns2FI9VncFoK+2mlpzQ8EeVxkopMka7pzhQc5G5RZxkeIck50Qty+/lWYAvGjiyXR4hhCRZ6RbE/qx40KabfWlANVAhFLJTDaJbrJZjrXy7ibFISxW3cZ0wfiLMJU8tIsD4lSG3x9nK7TaKRY4hO3F0H7ppA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kR/wvGf1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0Y8+oLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95591C19425;
-	Mon, 20 Apr 2026 16:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kR/wvGf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEBBC19425;
+	Mon, 20 Apr 2026 16:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701237;
-	bh=0PK6Ho8H3Pu/KpwVwHCWVgy1SSYIBT5v6qa8RWe3kfY=;
+	s=korg; t=1776701240;
+	bh=JQyOvcqQGIVrHWBCMT4nFEa4AHsNR1jr6MOaVZeey/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0Y8+oLC1MTl90IemPPOGFpiVAoGNvynPFYP7BU0KQcx/I1Ftvtm/5MlJ7aJKvHoR
-	 Ciye8ekHy5z+q7DwE41BBuEIJc63tWLvAKiwNWH9DQt3HrIQSuVCWrO2oFHM0fhPEc
-	 KtKWZaVUhUoDqdgOJcfoyxS3AqWVtpUh/sACszj8=
+	b=kR/wvGf1M0jCanJFjtsHJC2uOk5KBtabbL+phl6nBigVqgr75cAYMI998/eg1n9jG
+	 wa/I7rU+akl/HC2qbw8aXz57EU5m7FyhajFr7dfCOcUXRix4gZoAE6sDKc8saNv+bh
+	 f+bceePFU+kRae8bSBnQkF3wNXfMeg0hf9T39Y4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel J Blueman <daniel@quora.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Peng Fan <peng.fan@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/162] arm64: dts: qcom: hamoa/x1: fix idle exit latency
-Date: Mon, 20 Apr 2026 17:41:07 +0200
-Message-ID: <20260420153928.298812763@linuxfoundation.org>
+Subject: [PATCH 6.12 036/162] arm64: dts: imx8mq: Set the correct gpu_ahb clock frequency
+Date: Mon, 20 Apr 2026 17:41:08 +0200
+Message-ID: <20260420153928.335036387@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -52,47 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel J Blueman <daniel@quora.org>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit 3ecea84d2b90bbf934d5ca75514fa902fd71e03f ]
+[ Upstream commit 1f99b5d93d99ca17d50b386a674d0ce1f20932d8 ]
 
-Designs based on the Qualcomm X1 Hamoa reference platform report:
-driver: Idle state 1 target residency too low
+According to i.MX 8M Quad Reference Manual, GPU_AHB_CLK_ROOT's maximum
+frequency is 400MHz.
 
-This is because the declared X1 idle entry plus exit latency of 680us
-exceeds the declared minimum 600us residency time:
-  entry-latency-us = <180>;
-  exit-latency-us = <500>;
-  min-residency-us = <600>;
-
-Fix this to be 320us so the sum of the entry and exit latencies matches
-the downstream 500us exit latency, as directed by Maulik.
-
-Tested on a Lenovo Yoga Slim 7x with Qualcomm X1E-80-100.
-
-Fixes: 2e65616ef07f ("arm64: dts: qcom: x1e80100: Update C4/C5 residency/exit numbers")
-Signed-off-by: Daniel J Blueman <daniel@quora.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260220124626.8611-1-daniel@quora.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 45d2c84eb3a2 ("arm64: dts: imx8mq: add GPU node")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mq.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 6eef89ccdd121..8843dac449000 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -280,7 +280,7 @@ CLUSTER_C4: cpu-sleep-0 {
- 				idle-state-name = "ret";
- 				arm,psci-suspend-param = <0x00000004>;
- 				entry-latency-us = <180>;
--				exit-latency-us = <500>;
-+				exit-latency-us = <320>;
- 				min-residency-us = <600>;
- 			};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+index e03186bbc4152..c4395de0df762 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+@@ -1636,7 +1636,7 @@ gpu: gpu@38000000 {
+ 			                         <&clk IMX8MQ_GPU_PLL_OUT>,
+ 			                         <&clk IMX8MQ_GPU_PLL>;
+ 			assigned-clock-rates = <800000000>, <800000000>,
+-			                       <800000000>, <800000000>, <0>;
++			                       <800000000>, <400000000>, <0>;
+ 			power-domains = <&pgc_gpu>;
  		};
+ 
 -- 
 2.53.0
 
