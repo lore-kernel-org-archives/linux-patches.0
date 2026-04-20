@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6A03BED47;
-	Mon, 20 Apr 2026 13:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D82E3F9F2D;
+	Mon, 20 Apr 2026 13:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691566; cv=none; b=jAA/CI7Q6An5zlLNo8DHGEsnLhgeX5SX+/asfJMF/AOowQTtErwkMvq/8VIl3r41kQFVMXh4xAkaQqExceDQ3Vd4bdE7Ez6JKwnGxVVYKe3dwxQb7KCOJKJM64L5vpo7gLHSuVMTD1+0Uyn0SKqmmIox8XkZfI3qoQHn5mFef88=
+	t=1776691567; cv=none; b=DvgthLeICA9GnSvckCMtaqrobXfUuaT68Q3mABlSdeKyIMqHDZiC7ciM4tawmyRtnqbyHXx+Ywp8pHUlXObexCzb6lByE5xAZurZ61h+i00bY3UM1UBSQHPmzAZZVPIswWtjf7BTtmpCoGxGPN6vEj2fTLupLN04oceAx7ZAhZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691566; c=relaxed/simple;
-	bh=4Ga1upTE+h2lKXQLCbrH0FFq3Xz88WZba2LyyUfe4Ao=;
+	s=arc-20240116; t=1776691567; c=relaxed/simple;
+	bh=Aqq2CoKAYC0JIFkME59G9i6dMfRAUh3bvKNHV0ky5ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r6bx8GSVxGROVElnGCuEJ+fXiaqNKUVpLlGCLKK/oR/fkf1hUIsrUq/7mz94UrED7cC1jPBWLA1VZQuPvefprWahAAeInDQVN6reaGeJv/whiyWx77kR/GR3DvCzedIcFFrXG0J23a05egAu5YEwDZKf/4bm/QhpiebXQlX+onM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VJvp/yYx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PYr/+fwijnobUMIF5czt68k1CQqIEoKrMNomUCcK3kOJWdFJbvgu6LuBwx1GWlXH1q9wonkiHBuJXai2wSsUm4foopqwDC5YDVweGV4pbmtfxFkQKImSoNcANLvPJG+yOYbMy7joLEItFfheTLdZwYhBbGu/tdT1UV5tACclQU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gYaGNvCc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VJvp/yYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E53CC2BCB6;
-	Mon, 20 Apr 2026 13:26:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gYaGNvCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5CDC2BCB4;
+	Mon, 20 Apr 2026 13:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691566;
-	bh=4Ga1upTE+h2lKXQLCbrH0FFq3Xz88WZba2LyyUfe4Ao=;
+	s=k20201202; t=1776691567;
+	bh=Aqq2CoKAYC0JIFkME59G9i6dMfRAUh3bvKNHV0ky5ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VJvp/yYxX4rcd3+ldPRuRoJXhh+yi8tfaoQf0+aP111CB0g4R8ebRdLTXO37hbQ9Q
-	 Gdx3v4Yp2jZPhPcPLhQcebxIgd1J7sshE3bZlZJWocba0FLyAWQEJ2oDDW4Q/IGobG
-	 CsD7/o6PJ2fYenSSuEIr9FLMDzh+6nOOZagcgKK6jGYC5BDWtkl1w+Rjmzrm2GZoI5
-	 8FIylW+6GQnN+ZIUn7HtyVAZZmdJo5jOZZYGKh4lu+qADUlIWJ2B+Yn53Kjt0VED2U
-	 fttzoB4p9A64Ak4/mkG9K91D4Esmywq63jAWWaPcaa8qbEdg95qFEBoIw4YRTSu45E
-	 LkJoXXUycARFg==
+	b=gYaGNvCcrckgUIDnwR+tMKICYrFTEACe/gJcFWzuHEAmmdzEZEO8wnQogfgFxMylF
+	 /Smo0ntLl0Cb6y57bJTOJsnB6CDMgvCrDDmbqK2ya04bVjT6xh1WGNGcAGKcsqlV/x
+	 zlN1X8Q4/I+wB+9OpiWrMhakd3uyzwVQmRgzhATAkNEP6tF9PCmcrXF1lmm0X8/ieZ
+	 GdwKtJ9q6UDTYx+bmSwlZ8zvYSkK8ny7SWqdJRnHIdZS7a0QqDfhLNXz87ikGtWDRN
+	 ABd94IR/VBMAh5rxAlIZJBfI+9+t5j7cTqB2fXpAmOJM/RdHEBxlJQlfukwhDkhaC8
+	 wYkWEp6AbL90A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Val Packett <val@packett.cool>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	konradybcio@kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] drm/amd/display: bios_parser: fix GPIO I2C line off-by-one
-Date: Mon, 20 Apr 2026 09:18:17 -0400
-Message-ID: <20260420132314.1023554-103-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] firmware: qcom: scm: Allow QSEECOM on ECS LIVA QC710
+Date: Mon, 20 Apr 2026 09:18:18 -0400
+Message-ID: <20260420132314.1023554-104-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -58,354 +54,234 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 12fa1fd6dffff4eed15f1414eb7474127b2c5a24 ]
+[ Upstream commit 34a49e8508b5d00816d25fe3758b474471e7e051 ]
 
-get_gpio_i2c_info() computes the number of GPIO I2C assignment records
-present in the BIOS table and then uses bfI2C_LineMux as an array index
-into header->asGPIO_Info[]. The current check only rejects values
-strictly larger than the record count, so an index equal to count still
-falls through and reaches the fixed table one element past the end.
+Allow this machine to access efivars through qseecom/uefisecapp.
 
-Reject indices at or above the number of available records before using
-them as an array index.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Val Packett <val@packett.cool>
+Link: https://lore.kernel.org/r/20260120234029.419825-11-val@packett.cool
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the full analysis.
+Now I have a clear picture. Let me finalize my analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: drm/amd/display (AMD display driver, BIOS parser)
-- **Action verb**: "fix" — explicitly a bug fix
-- **Summary**: Fixes an off-by-one error in GPIO I2C line bounds
-  checking in the BIOS parser
+**Step 1.1: Subject Line**
+- Subsystem: `firmware: qcom: scm`
+- Action: "Allow" — enabling hardware functionality
+- Summary: Add ECS LIVA QC710 to the QSEECOM allowlist for EFI variable
+  access.
 
-### Step 1.2: Tags
-- **Signed-off-by**: Pengpeng Hou <pengpeng@iscas.ac.cn> — the author
-- **Signed-off-by**: Alex Deucher <alexander.deucher@amd.com> — AMD DRM
-  subsystem maintainer, merged the patch
-- No Fixes: tag (expected for AUTOSEL candidates)
-- No Reported-by, no Tested-by, no Reviewed-by
-- No Cc: stable (expected)
+**Step 1.2: Tags**
+- `Reviewed-by: Dmitry Baryshkov` — Qualcomm subsystem reviewer
+- `Signed-off-by: Val Packett` — patch author
+- `Link:` to lore (message-id:
+  `20260120234029.419825-11-val@packett.cool`) — patch 11 of a series
+- `Signed-off-by: Bjorn Andersson` — subsystem maintainer who merged it
+- No Fixes: tag (expected for an allowlist addition)
+- No Cc: stable (expected for this review)
 
-### Step 1.3: Commit Body Analysis
-The commit message clearly explains the bug mechanism:
-- `get_gpio_i2c_info()` computes the number of GPIO I2C records in the
-  BIOS table
-- `bfI2C_LineMux` is used as an array index into `header->asGPIO_Info[]`
-- Current check rejects values **strictly larger** than record count,
-  but allows index **equal** to count
-- Index equal to count accesses one element past the end (classic off-
-  by-one)
-- **Symptom**: Out-of-bounds array read accessing uninitialized BIOS
-  data
+**Step 1.3: Commit Body**
+The body is a single sentence: "Allow this machine to access efivars
+through qseecom/uefisecapp." Without this entry, the ECS LIVA QC710
+cannot access UEFI EFI variables, which are needed for firmware settings
+and boot configuration.
 
-### Step 1.4: Hidden Bug Fix?
-No — this is explicitly labeled as a bug fix. The commit message clearly
-describes the off-by-one mechanism.
+**Step 1.4: Hidden Bug Fix Detection**
+This is not a hidden bug fix. It is a straightforward hardware
+enablement / device ID addition.
 
-Record: This is an explicitly stated off-by-one out-of-bounds array
-access fix.
-
----
+Record: This is a device allowlist addition, enabling EFI variable
+access on a specific Qualcomm-based machine.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Change Inventory
-- **Files changed**: 1
-  (`drivers/gpu/drm/amd/display/dc/bios/bios_parser.c`)
-- **Lines changed**: 1 line modified (single character: `<` → `<=`)
-- **Function modified**: `get_gpio_i2c_info()`
-- **Scope**: Single-file, single-character surgical fix
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/firmware/qcom/qcom_scm.c`
+- 1 line added: `{ .compatible = "ecs,liva-qc710" },`
+- Function: N/A — it's a static data table entry
+- Scope: Trivially small, single-line addition to an allowlist array
 
-### Step 2.2: Code Flow Change
+**Step 2.2: Code Flow Change**
+Before: ECS LIVA QC710 is not in the allowlist, so
+`qcom_scm_qseecom_init()` prints "untested machine, skipping" and
+QSEECOM/uefisecapp is not initialized.
+After: The machine is matched, QSEECOM is initialized, and EFI variables
+become accessible.
 
-```1957:1957:drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-        if (count < record->sucI2cId.bfI2C_LineMux)
-```
+**Step 2.3: Bug Mechanism**
+Category: Hardware enablement / device ID addition. Not a bug fix per
+se, but enables critical firmware functionality (EFI variable access) on
+a specific machine.
 
-**Before**: `count < bfI2C_LineMux` — rejects only when index > count.
-When index == count, the check passes but the access at
-`header->asGPIO_Info[count]` is one past the last valid entry (valid
-indices are 0..count-1).
+**Step 2.4: Fix Quality**
+- Obviously correct — adding one compatible string to a sorted allowlist
+- Minimal / surgical — one line
+- Zero regression risk — only affects the specific machine by compatible
+  string match
+- Reviewed by Qualcomm reviewer, merged by subsystem maintainer
 
-**After**: `count <= bfI2C_LineMux` — rejects when index >= count,
-correctly limiting access to indices 0..count-1.
+## PHASE 3: GIT HISTORY
 
-### Step 2.3: Bug Mechanism
-**Category**: Buffer overflow / out-of-bounds read (off-by-one)
+**Step 3.1: Blame**
+The allowlist was introduced in commit `00b1248606ba39` ("Add support
+for Qualcomm Secure Execution Environment SCM interface"), tagged
+`v6.6-rc1-2`, which means it appeared in v6.7. Multiple similar entries
+have been added since.
 
-The `asGPIO_Info` array has `ATOM_MAX_SUPPORTED_DEVICE` (16) elements in
-the struct definition, but `count` is computed from the BIOS table's
-reported structure size and represents how many entries the BIOS
-actually initialized. Reading at index `count` accesses either:
-- Uninitialized BIOS data within the struct, OR
-- Beyond the actual BIOS table data (if the table is exactly sized)
+**Step 3.3: File History**
+There are 17+ similar "Allow QSEECOM on <machine>" commits — this is a
+well-established pattern.
 
-The result is used to populate `info->gpio_info.*` fields including
-register indices and shift values, which are then used for actual
-hardware register access. Reading garbage values could lead to incorrect
-register reads/writes.
+**Step 3.5: Dependencies**
+The diff also shows `asus,vivobook-s15-x1p4` and `qcom,purwa-iot-evk`
+entries that don't exist in the current tree. These come from other
+patches in the same series (patch 11 of a multi-patch series). However,
+the `ecs,liva-qc710` line itself is independent — it's just an addition
+to an alphabetically-sorted list with no dependencies on other entries.
 
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes — textbook off-by-one fix. Array of `count`
-  elements, valid indices 0..count-1, must reject index >= count.
-- **Minimal**: Maximally minimal — single character change.
-- **Regression risk**: Essentially zero — the fix only tightens a bounds
-  check. The only behavioral change is rejecting the boundary case that
-  was previously allowed (and was incorrect).
+## PHASE 4: MAILING LIST
 
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame
-All lines in the affected function trace back to commit `4562236b3bc0a2`
-("drm/amd/dc: Add dc display driver (v2)") by Harry Wentland, dated
-2017-09-12. This is the **initial import** of the AMD DC display driver.
-The bug has been present since **v4.15** — it exists in ALL stable trees
-that contain this driver.
-
-### Step 3.2: No Fixes: tag present (expected)
-The implicit Fixes: target is `4562236b3bc0a2` — the initial driver
-import.
-
-### Step 3.3: File History
-Recent file changes are mostly feature additions (DAC/encoder support,
-logging changes) and treewide cleanups. None touch the
-`get_gpio_i2c_info()` function — this code has been stable/unchanged
-since 2017.
-
-### Step 3.4: Author
-Pengpeng Hou has multiple commits in the tree, all small bounds-checking
-fixes (NFC, networking, Bluetooth, tracing). This is consistent — the
-author appears to systematically audit bounds checking across the
-kernel.
-
-### Step 3.5: Dependencies
-None. This is a completely standalone one-character fix with no
-prerequisites.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1-4.2: Patch Discussion
-b4 dig could not find the original submission (likely too recent or
-submitted through AMD's drm tree). The patch was signed off by Alex
-Deucher, the AMD DRM subsystem maintainer, indicating it passed review
-through the normal AMD DRM merge path.
-
-### Step 4.3: Related Fixes
-Web search found historical AUTOSEL patches for BIOS parser OOB issues
-(`4fc1ba4aa589` by Aurabindo Pillai, `d116db180decec1b` by Mario
-Limonciello), but those addressed a **different** issue — `gpio_pin`
-array hardcoded to size 8 in bios_parser2.c/atomfirmware.h. The current
-fix is for bios_parser.c (v1 parser) and a different bounds check.
-
-### Step 4.4-4.5: No stable-specific discussion found for this exact
-fix.
-
----
+The Link header references `20260120234029.419825-11-val@packett.cool`,
+indicating this is patch 11 of a larger series. The patch was reviewed
+by Dmitry Baryshkov (Qualcomm reviewer) and merged by Bjorn Andersson
+(the subsystem maintainer).
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.2: Call Chain
-- `get_gpio_i2c_info()` is called from `bios_parser_get_i2c_info()`
-- This is registered as the `.get_i2c_info` callback in the BIOS parser
-  vtable
-- Callers:
-  1. `dce_i2c.c` line 45: `dcb->funcs->get_i2c_info(dcb, id, &i2c_info)`
-     — OEM I2C setup
-  2. `link_ddc.c` line 123: `dcb->funcs->get_i2c_info(dcb,
-     init_data->id, &i2c_info)` — DDC (Display Data Channel)
-     initialization for monitor connections
-
-### Step 5.3-5.4: Impact Surface
-Both callers are in the display initialization path:
-- `link_ddc.c` is called during DDC service creation, which happens for
-  **every display output** during driver initialization
-- `dce_i2c.c` is called for OEM I2C device setup
-- These paths are triggered during boot/display setup on ALL AMD GPU
-  systems using the older BIOS parser (pre-ATOM v2 firmware)
-
-### Step 5.5: Similar Patterns
-The parallel `bios_parser2.c` (for newer GPUs) uses a different approach
-— iterating with `for (table_index = 0; table_index < count;
-table_index++)` — which correctly bounds the access. Only bios_parser.c
-(v1) has this off-by-one bug.
-
----
+The allowlist is used in `qcom_scm_qseecom_init()` which checks
+`of_machine_device_match(qcom_scm_qseecom_allowlist)` (in mainline) or
+`qcom_scm_qseecom_machine_is_allowed()` (in older stable trees). If the
+machine isn't in the list, QSEECOM is skipped entirely. The change only
+affects the specific ECS LIVA QC710 machine.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Code Exists in Stable Trees
-The buggy code was introduced in `4562236b3bc0a2` ("drm/amd/dc: Add dc
-display driver (v2)") merged in v4.15 (2017). This code exists in
-**ALL** active stable trees (5.4, 5.10, 5.15, 6.1, 6.6, 6.12, 7.0,
-etc.).
+**Step 6.1: Code Existence in Stable Trees**
+- v6.6: Does NOT have the allowlist (code doesn't exist) — not
+  applicable
+- v6.7 through v6.13+: DO have the allowlist
+- Active stable trees with this code: 6.12.y and any other LTS ≥ 6.7
 
-### Step 6.2: Backport Complications
-The function has been **unchanged since 2017**. The fix will apply
-cleanly to all stable trees without modification.
+**Step 6.2: Backport Complications**
+The one-line addition should apply cleanly. In older stable trees, the
+surrounding list entries may differ slightly (fewer entries), but the
+addition of a new compatible string to the sorted list is trivial to
+resolve if there's a minor context conflict. The function mechanism (old
+`qcom_scm_qseecom_machine_is_allowed` vs new `of_machine_device_match`)
+doesn't matter — only the data table is modified.
 
-### Step 6.3: No related fixes already in stable for this specific
-issue.
+## PHASE 7: SUBSYSTEM CONTEXT
 
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem
-- **Path**: drivers/gpu/drm/amd/display — AMD GPU display driver
-- **Criticality**: IMPORTANT — AMD GPUs are extremely common in
-  desktops, laptops, and servers
-- Signed off by subsystem maintainer (Alex Deucher)
-
-### Step 7.2: Subsystem Activity
-Actively developed with regular changes. The bios_parser.c file itself
-is relatively stable since it handles older BIOS formats.
-
----
+- Subsystem: Qualcomm SCM firmware interface
+- Criticality: PERIPHERAL — affects users of specific Qualcomm ARM
+  platforms
+- This is an actively developed subsystem with many contributors adding
+  machine support
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-All users with AMD GPUs that use the older ATOM v1 BIOS format (pre-Vega
-GPUs: Polaris, older GCN). This includes a significant installed base.
+**Step 8.1: Who is Affected**
+Only users of the ECS LIVA QC710 (Qualcomm-based mini PC).
 
-### Step 8.2: Trigger Conditions
-The bug triggers when the BIOS table has a `bfI2C_LineMux` value equal
-to the computed record count. This depends on the specific GPU's
-BIOS/VBIOS contents. While not every GPU will trigger this (it requires
-a specific boundary condition in the BIOS table), it's entirely
-firmware-determined and can't be worked around by users.
+**Step 8.2: Trigger**
+Every boot — without this entry, EFI variables are completely
+inaccessible on this machine.
 
-### Step 8.3: Failure Mode
-When triggered: reads uninitialized/garbage BIOS data for register
-indices and shift values, which are then used for hardware register
-access. This could cause:
-- Incorrect GPIO/I2C configuration → display initialization failure
-- Reads of wrong hardware registers → unpredictable behavior
-- **Severity**: HIGH (incorrect hardware register access from garbage
-  data)
+**Step 8.3: Failure Mode**
+Without the fix: EFI variables are inaccessible, which means users
+cannot manage boot configuration, firmware settings, or Secure Boot
+through the standard Linux efivars interface. Severity: MEDIUM-HIGH for
+users of this specific hardware.
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH — prevents out-of-bounds access in display
-  initialization path used by all AMD GPUs with older BIOS format
-- **Risk**: VERY LOW — single character change that only tightens a
-  bounds check. Cannot introduce regressions.
-- **Ratio**: Overwhelmingly favorable
-
----
+**Step 8.4: Risk-Benefit Ratio**
+- BENEFIT: Enables critical firmware functionality for a specific
+  machine
+- RISK: Essentially zero — only a data table entry, only affects the
+  specific machine by exact compatible string match
+- Assessment: Very favorable ratio
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Evidence FOR backporting:**
+- Classic device ID / allowlist addition pattern — exception category
+  that is routinely backported
+- One-line change with zero regression risk
+- Enables critical firmware functionality (EFI variable access)
+- Well-reviewed by subsystem reviewer and maintainer
+- Established pattern with 17+ identical precedent commits
 
-**FOR backporting:**
-- Classic off-by-one out-of-bounds array access — a real bug
-- Single character change (`<` → `<=`) — maximally minimal
-- Obviously correct — trivially verifiable by reading the code
-- Bug exists since v4.15 (2017) — affects all stable trees
-- Code is completely unchanged since introduction — will apply cleanly
-  everywhere
-- Signed off by subsystem maintainer (Alex Deucher)
-- Prevents access to uninitialized data used for hardware register
-  operations
-- No dependencies, completely standalone
+**Evidence AGAINST backporting:**
+- This is hardware enablement, not a bug fix in the traditional sense
+- Only affects a single specific machine
+- The allowlist doesn't exist in v6.6.y (oldest active LTS)
 
-**AGAINST backporting:**
-- No reported user incidents (but the bug depends on specific BIOS table
-  values)
-- No Fixes: tag or syzbot report (expected for AUTOSEL candidates)
+**Stable Rules Checklist:**
+1. Obviously correct? YES — single allowlist entry
+2. Fixes a real bug? It enables required functionality — comparable to a
+   device ID addition
+3. Important issue? Medium-important for affected hardware users
+4. Small and contained? YES — 1 line
+5. No new features? Correct — just enables existing feature on
+   additional hardware
+6. Can apply to stable? YES for 6.12.y and later stable trees
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — trivially verifiable, signed
-   off by maintainer
-2. **Fixes a real bug?** YES — out-of-bounds array access
-3. **Important issue?** YES — OOB access leading to incorrect hardware
-   register operations
-4. **Small and contained?** YES — 1 character change in 1 file
-5. **No new features/APIs?** Correct — pure bug fix
-6. **Can apply to stable?** YES — code unchanged since v4.15, will apply
-   cleanly
-
-### Step 9.3: Exception Categories
-Not needed — this clearly meets standard stable criteria as a bug fix.
-
----
+**Exception Category:** Device ID / hardware allowlist addition to
+existing driver — this is an explicitly allowed exception for stable
+trees.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by Alex Deucher (AMD DRM
-  maintainer), author Pengpeng Hou
-- [Phase 2] Diff analysis: Single character change `<` to `<=` in bounds
-  check at line 1957 of bios_parser.c
-- [Phase 2] Verified the OOB: `count` = number of valid records
-  (0-indexed), old check passes when index == count, which is one past
-  last valid entry
-- [Phase 3] git blame: All code in affected function from commit
-  4562236b3bc0a2 (Harry Wentland, 2017-09-12, v4.15 initial driver
-  import)
-- [Phase 3] git log: Function unchanged since 2017, no intermediate
-  fixes for same issue
-- [Phase 3] Author: Pengpeng Hou has 10+ similar bounds-checking fixes
-  in tree (NFC, net, BT, tracing)
-- [Phase 5] Callers: `get_gpio_i2c_info()` called via `.get_i2c_info`
-  vtable from link_ddc.c (DDC init) and dce_i2c.c (OEM I2C) — display
-  initialization paths
-- [Phase 5] Verified bios_parser2.c uses `for (table_index = 0;
-  table_index < count; ...)` — different approach, not affected
-- [Phase 5] Verified ATOM_GPIO_I2C_INFO struct:
-  `asGPIO_Info[ATOM_MAX_SUPPORTED_DEVICE]` with
-  ATOM_MAX_SUPPORTED_DEVICE=16
-- [Phase 6] Code exists unchanged in all stable trees since v4.15 —
-  clean apply guaranteed
-- [Phase 7] AMD GPU display driver — IMPORTANT subsystem, widely used
-  hardware
-- [Phase 8] Failure mode: garbage register indices/shifts used for
-  hardware access — HIGH severity
-- UNVERIFIED: Could not find original mailing list discussion (lore
-  blocked by bot protection, b4 dig found nothing). This does not affect
-  the decision — the fix is technically obvious.
+- [Phase 1] Parsed tags: Reviewed-by Dmitry Baryshkov, Link to lore,
+  Signed-off-by Bjorn Andersson (maintainer)
+- [Phase 2] Diff: Single line `{ .compatible = "ecs,liva-qc710" }` added
+  to allowlist table
+- [Phase 3] git blame: allowlist introduced in 00b1248606ba39 at
+  v6.6-rc1-2, present from v6.7+
+- [Phase 3] git log: 17+ identical "Allow QSEECOM on <machine>" commits
+  exist as precedent
+- [Phase 4] b4 dig for similar commit (30ee285f1e3cd): confirmed review
+  and merge pattern
+- [Phase 5] Allowlist controls access in qcom_scm_qseecom_init(), only
+  matched machine is affected
+- [Phase 6] Allowlist exists in v6.7+ (verified via git show for v6.6
+  through v6.13); not in v6.6
+- [Phase 6] v6.12 uses `qcom_scm_qseecom_machine_is_allowed()` — data
+  table change applies regardless
+- [Phase 8] Risk: zero — one-line data table entry, only affects
+  specific machine by exact compatible match
 
----
-
-This is a textbook stable backport candidate: a single-character fix for
-an off-by-one out-of-bounds array access that has existed since the
-driver was introduced in v4.15. The fix is maximally minimal, obviously
-correct, signed off by the subsystem maintainer, applies cleanly to all
-stable trees, and has zero regression risk.
+This is a textbook device ID / allowlist addition. It's a single line,
+zero-risk, enables important firmware functionality for a specific
+machine, and follows a long-established pattern of identical commits
+that are routinely backported.
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/bios/bios_parser.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/qcom/qcom_scm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-index 73e3c45eeeba6..2c9cf00b22745 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-@@ -1954,7 +1954,7 @@ static enum bp_result get_gpio_i2c_info(struct bios_parser *bp,
- 	count = (le16_to_cpu(header->sHeader.usStructureSize)
- 			- sizeof(ATOM_COMMON_TABLE_HEADER))
- 				/ sizeof(ATOM_GPIO_I2C_ASSIGMENT);
--	if (count < record->sucI2cId.bfI2C_LineMux)
-+	if (count <= record->sucI2cId.bfI2C_LineMux)
- 		return BP_RESULT_BADBIOSTABLE;
- 
- 	/* get the GPIO_I2C_INFO */
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 2fe1632f06e90..f06bed79666b9 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -2296,6 +2296,7 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+ 	{ .compatible = "dell,inspiron-14-plus-7441" },
+ 	{ .compatible = "dell,latitude-7455" },
+ 	{ .compatible = "dell,xps13-9345" },
++	{ .compatible = "ecs,liva-qc710" },
+ 	{ .compatible = "hp,elitebook-ultra-g1q" },
+ 	{ .compatible = "hp,omnibook-x14" },
+ 	{ .compatible = "huawei,gaokun3" },
 -- 
 2.53.0
 
