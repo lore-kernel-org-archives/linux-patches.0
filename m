@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AA117A31C;
-	Mon, 20 Apr 2026 15:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CAC33AD9A;
+	Mon, 20 Apr 2026 15:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700757; cv=none; b=b+ZZuqLa8D3AViJwItpRx4dE24az7xW1ZvR5wzHxMQw+QY8iuZXTktEJGxDDMB7g+wmfcd6U7YHYLJ63lv6mf3XO4aZ9ujtC1b52tTioiOYQSrpDIjzEZ+LFeWWPjWs0D2IPhZcSioPc0qQH4SDs2FHNBNnditaEq1tODr/7avs=
+	t=1776700759; cv=none; b=fBR0u8kfJC7GJDsgq0wmQEKg2rbtnK3v6dqB0GVnjcRZCNsVEAygOybZByUy2Cb9XKH3lLFJ3kkX5znlO5WRQn6m6UXzdVE7zuINkejD1JfDbW/gEYVQEQsgHcIefCLlvTS3ruztlYJwBNC48f2QNrW4WFl9HeC16S2ZV/HCOXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700757; c=relaxed/simple;
-	bh=Fu+O70sG49NzNVCtGynls38FJEDdbILwzpOwCDik/io=;
+	s=arc-20240116; t=1776700759; c=relaxed/simple;
+	bh=MYHS91XmdEuY4W4IjnevEDO01YrDhEiRMc0t4p8g5hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJRpCQGUrRnLZoSopJkmELpR4RkgzSe5UlmhCNit7+JhMmqO7hSC3oNOiJOfMFSosf5SpVPddvB+W6G2x47K7FqKNI6CHmHw/eX+KHAZ6GNF3uA9aVdbcJHon4U1+lmwg25NeVAwBnX48K/iFpvkDgrIOTtTQniRrCJjgL/Qbh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2mCSZ1E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i/1//LFFt9EnkFSYdlNeu7TeDyCLX+Q2Vrpe30RSuBThQ0LGEV8AjkCDWvoxDgV9HT0rVNkBGHLEa7oCxLqnI0yCNqxXFaG3Dqu1IMomkHYuZcQbeyX4ZMAlz+LYbl+ez1qiJTqIVRIb4fsv35p/7l3iHZpMRe0r1LUaQkpb3QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojaK33zM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2mCSZ1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFEEC19425;
-	Mon, 20 Apr 2026 15:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojaK33zM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3C0C19425;
+	Mon, 20 Apr 2026 15:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700756;
-	bh=Fu+O70sG49NzNVCtGynls38FJEDdbILwzpOwCDik/io=;
+	s=korg; t=1776700759;
+	bh=MYHS91XmdEuY4W4IjnevEDO01YrDhEiRMc0t4p8g5hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2mCSZ1EFE4CHtRb9eRlQY9MbYk9KQ4KYp9IogpHSUD8e7UxPT1aIi2TBusDyrmUb
-	 r9xMPxpGMK5Z4AbJu+2c9DdgfF8ZuaJX2vjh1FJwSdUdO3B7r6D+C/+JCcaxQxKQZX
-	 v18UulqNOZd++iy2C49modYfWWjDcuL+Qwg8WnsE=
+	b=ojaK33zMqLGGeZ5e/i5JBBbt57kabJBobX0FJMbOQIPbwjaUjJX8D0Xnsj/Oc1eFW
+	 w/uHidESPte2ZZF8A7ccJWn8MQgX7Xqc1i64dVm2kwIcnF0jiMUadh+N7Fu1DnwGrA
+	 u9hGeXmaZUOKwnX1+XcMue8EjYsdI4KSCEJVfAw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Marcin Nita <marcin.nita@leolabs.pl>,
+	John Pavlick <jspavlick@posteo.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/198] wifi: brcmfmac: validate bsscfg indices in IF events
-Date: Mon, 20 Apr 2026 17:40:21 +0200
-Message-ID: <20260420153937.133224509@linuxfoundation.org>
+Subject: [PATCH 6.18 043/198] net: sfp: add quirks for Hisense and HSGQ GPON ONT SFP modules
+Date: Mon, 20 Apr 2026 17:40:22 +0200
+Message-ID: <20260420153937.168542679@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,43 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: John Pavlick <jspavlick@posteo.net>
 
-[ Upstream commit 304950a467d83678bd0b0f46331882e2ac23b12d ]
+[ Upstream commit 95aca8602ef70ffd3d971675751c81826e124f90 ]
 
-brcmf_fweh_handle_if_event() validates the firmware-provided interface
-index before it touches drvr->iflist[], but it still uses the raw
-bsscfgidx field as an array index without a matching range check.
+Several GPON ONT SFP sticks based on Realtek RTL960x report
+1000BASE-LX at 1300MBd in their EEPROM but can operate at 2500base-X.
+On hosts capable of 2500base-X (e.g. Banana Pi R3 / MT7986), the
+kernel negotiates only 1G because it trusts the incorrect EEPROM data.
 
-Reject IF events whose bsscfg index does not fit in drvr->iflist[]
-before indexing the interface array.
+Add quirks for:
+- Hisense-Leox LXT-010S-H
+- Hisense ZNID-GPON-2311NA
+- HSGQ HSGQ-XPON-Stick
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260323074551.93530-1-pengpeng@iscas.ac.cn
-[add missing wifi prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Each quirk advertises 2500base-X and ignores TX_FAULT during the
+module's ~40s Linux boot time.
+
+Tested on Banana Pi R3 (MT7986) with OpenWrt 25.12.1, confirmed
+2.5Gbps link and full throughput with flow offloading.
+
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Suggested-by: Marcin Nita <marcin.nita@leolabs.pl>
+Signed-off-by: John Pavlick <jspavlick@posteo.net>
+Link: https://patch.msgid.link/20260406132321.72563-1-jspavlick@posteo.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/phy/sfp.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-index c2d98ee6652f3..1d25dc9ebca8b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fweh.c
-@@ -153,6 +153,11 @@ static void brcmf_fweh_handle_if_event(struct brcmf_pub *drvr,
- 		bphy_err(drvr, "invalid interface index: %u\n", ifevent->ifidx);
- 		return;
- 	}
-+	if (ifevent->bsscfgidx >= BRCMF_MAX_IFS) {
-+		bphy_err(drvr, "invalid bsscfg index: %u\n",
-+			 ifevent->bsscfgidx);
-+		return;
-+	}
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 7a85b758fb1e6..c62e3f364ea73 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -543,6 +543,22 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
+ 		  sfp_fixup_ignore_tx_fault_and_los),
  
- 	ifp = drvr->iflist[ifevent->bsscfgidx];
- 
++	// Hisense LXT-010S-H is a GPON ONT SFP (sold as LEOX LXT-010S-H) that
++	// can operate at 2500base-X, but reports 1000BASE-LX / 1300MBd in its
++	// EEPROM
++	SFP_QUIRK("Hisense-Leox", "LXT-010S-H", sfp_quirk_2500basex,
++		  sfp_fixup_ignore_tx_fault),
++
++	// Hisense ZNID-GPON-2311NA can operate at 2500base-X, but reports
++	// 1000BASE-LX / 1300MBd in its EEPROM
++	SFP_QUIRK("Hisense", "ZNID-GPON-2311NA", sfp_quirk_2500basex,
++		  sfp_fixup_ignore_tx_fault),
++
++	// HSGQ HSGQ-XPON-Stick can operate at 2500base-X, but reports
++	// 1000BASE-LX / 1300MBd in its EEPROM
++	SFP_QUIRK("HSGQ", "HSGQ-XPON-Stick", sfp_quirk_2500basex,
++		  sfp_fixup_ignore_tx_fault),
++
+ 	// Lantech 8330-262D-E and 8330-265D can operate at 2500base-X, but
+ 	// incorrectly report 2500MBd NRZ in their EEPROM.
+ 	// Some 8330-265D modules have inverted LOS, while all of them report
 -- 
 2.53.0
 
