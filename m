@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175DF402BA3;
-	Mon, 20 Apr 2026 13:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746553C343C;
+	Mon, 20 Apr 2026 13:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691626; cv=none; b=T2KiZhda+POh6wpaXJZfdb2bj/MGbVQse9by3uJsWY7DsdarriwEYAP8HHaD5jDHy1gCSv8eFO/JBY4FecZsQETvnwU0/e+KFmvYQgZA0CzPqGzSj++I6ZBBjLYQm8vr4mNTQx//GwEOv34r/cXOmaTjwXf4y8qfO7s3ZZRX8Zg=
+	t=1776691627; cv=none; b=Z2nuWesGliBPEa90ZwxWfgy/StbCu6aRRtTyMRApsdiy4nWV61dYXqIDJs96Od8qN5eY2we3EFCoASGP7yB3ZSmdFycAmyFAj+4KZgH7L5pbpS323wcMKo95IvVxsG6758MX4zjGjBFH+f9Kbd0z6IKi/mhuylEMCw0ev5EYHHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691626; c=relaxed/simple;
-	bh=xyq8tdZQxla3QOWMCrFM2dP1pwFBccph/GPCkj5ObDE=;
+	s=arc-20240116; t=1776691627; c=relaxed/simple;
+	bh=4cbhVVzDeDh7Z5gnWAvpYG0zlvbBS6V8GhRanOaIW5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEuyWd3jdDYtC5Syb2duqDhNVzBTl8AgA4fAUiM9fPhap8LxhOEDLTM7TsF/WSl3w06JG8TtqBi6RiwKIXCGF/z5v4AZ+CKMGKpVACMcSmJCqqh87pxP/z9kMrkQsvTdPO7lifSeWrIHCWCCEfok/0dc2Dba3UTJEEhq8ds3xIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EgVRsRlr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Xdf1CO1goEh7SIBJvwE8zbmGWn6oHbXAtILje59pMYo/wraK9dU3fipWWLuAkQWrm2uS6AtkvlmN7YJtAnPJAX5IuDEB93PmWMBkYn5VBfILk+21GIJ1bhohVQiE/wNmvIieFvkLhWqRJmWQE0oZxpL2i1v7eXGdjU9ArEgvSgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kEh7axjc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EgVRsRlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8177C2BCB7;
-	Mon, 20 Apr 2026 13:27:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kEh7axjc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F06C19425;
+	Mon, 20 Apr 2026 13:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691626;
-	bh=xyq8tdZQxla3QOWMCrFM2dP1pwFBccph/GPCkj5ObDE=;
+	s=k20201202; t=1776691627;
+	bh=4cbhVVzDeDh7Z5gnWAvpYG0zlvbBS6V8GhRanOaIW5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EgVRsRlriIEH/iA5sLx/fpKhm19Hjb2vk4+H9pGLWJyi1GxoRrtjVsGS3Jd+YYJ31
-	 MzNEU+VUqy58ruKv+lMXdzHn6XmGE+kngmddAzU8n8L1mJ95stYvKzZXW8VNssv7Ej
-	 1+aLHedaCExr34KiwHXvmIgti6s3PRY7O5A07P3JoBkVyv50UKGYKCYwMymTDTPi8K
-	 3kujgvrx0Xk+MKNRCvckOse2OO0xnQRP2z+zJ0gXlpLx4HhDQnOy3upWMdaNAQjdCs
-	 BvAux0bCkaT4XeK/AiV0XAsRe2UKRwbWaym/SmReUkcU+nMLg5jwLpsZwFr7Ll4/4X
-	 Yu0z1f4x+DYcQ==
+	b=kEh7axjcQ5NtMR3keAeD9Y/snzoSM3Mfw4hwcut8I4ZGZHf8i2GxJNAICCcXrwC03
+	 /a0SrA6tBgWIwBgvW0lYuIYMvCp4vKRltuAg1FOtI7gnhsKqSXelwWVbIVYQK4HKgU
+	 hCsbwl5gN/UZT0vEj3CqND15bm6eV6xs1jIlQnpkzeHAlQjnTUH36yic3xVPtwtMaD
+	 xMaL5pIPRW9X3qO6iHX9mS1omSEAcdBEFibQsqBoqwENYKsgr369ljpLfjTxOPvinq
+	 jFu0geOcLJXTxP34sxYKwBP6942+a5mukAvp0lbF2gLafYh4NCFwb7kz7NULyhR7i0
+	 nwL6lKgYXc/mQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Devang Vyas <devangnayanbhai.vyas@amd.com>,
-	Ramesh Garidapuri <ramesh.garidapuri@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
+Cc: Bradford Love <brad@nextdimension.cc>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-edac@vger.kernel.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] EDAC/amd64: Add support for family 19h, models 40h-4fh
-Date: Mon, 20 Apr 2026 09:18:53 -0400
-Message-ID: <20260420132314.1023554-139-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] media: si2168: Fix i2c command timeout on embedded platforms
+Date: Mon, 20 Apr 2026 09:18:54 -0400
+Message-ID: <20260420132314.1023554-140-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -51,314 +50,454 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Devang Vyas <devangnayanbhai.vyas@amd.com>
+From: Bradford Love <brad@nextdimension.cc>
 
-[ Upstream commit fbe230a9a79b62be3c6ac55b24d53ce5dd9202d5 ]
+[ Upstream commit 3c414622fe4bcedc48305bfe2170ae13119fc331 ]
 
-Add support for Ryzen 6000 Zen3-based CPUs in the V3000 AMD Embedded SoC
-platform which uses ECC memory and would need RAS handling of hardware errors.
+On many embedded platforms i2c responses through USB are not returned
+as quickly, plus constantly banging on the i2c master receive essentially
+deadlocks the driver. Inserting a 3ms delay between i2c receive calls
+and extending the timeout fixes all tested platforms.
 
-Co-developed-by: Ramesh Garidapuri <ramesh.garidapuri@amd.com>
-Signed-off-by: Ramesh Garidapuri <ramesh.garidapuri@amd.com>
-Signed-off-by: Devang Vyas <devangnayanbhai.vyas@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Link: https://patch.msgid.link/20260317183453.3556588-1-devangnayanbhai.vyas@amd.com
+Signed-off-by: Bradford Love <brad@nextdimension.cc>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the key information. Here's the complete analysis:
+Now I have all the information needed for a thorough analysis. Let me
+compile the full assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `EDAC/amd64`
-- Action verb: "Add support for" - this is adding **new hardware
-  support**, not fixing a bug
-- Summary: Adds model 40h-4fh support for family 19h (Ryzen 6000 Zen3,
-  V3000 AMD Embedded SoC)
-- Record: [EDAC/amd64] [Add support] [New CPU model ID range for
-  existing driver]
+### Step 1.1: Parse Subject Line
+- **Subsystem**: `media: si2168:` (DVB frontend demodulator driver)
+- **Action verb**: "Fix" - explicitly a bug fix
+- **Summary**: Fixes i2c command timeout and driver deadlock on embedded
+  platforms
 
-**Step 1.2: Tags**
-- Co-developed-by: Ramesh Garidapuri (AMD employee)
-- Signed-off-by: Ramesh Garidapuri, Devang Vyas, Borislav Petkov (AMD,
-  EDAC maintainer)
-- Reviewed-by: Yazen Ghannam (AMD, regular EDAC contributor)
-- Link: patch.msgid.link URL
-- No Fixes: tag, no Reported-by:, no Cc: stable
-- Record: Reviewed by key EDAC/AMD developers, signed off by subsystem
-  maintainer (Borislav Petkov)
+Record: [media/dvb-frontends/si2168] [Fix] [i2c command timeout causing
+driver deadlock on embedded platforms]
 
-**Step 1.3: Commit Body**
-- Claims to add support for Ryzen 6000 Zen3-based CPUs in V3000 AMD
-  Embedded SoC platform
-- These CPUs use ECC memory and need RAS (Reliability, Availability,
-  Serviceability) handling
-- No bug description, no crash, no error report
-- Record: This is a hardware enablement commit, not a bug fix
+### Step 1.2: Parse Tags
+- **Signed-off-by**: Bradford Love `<brad@nextdimension.cc>` (author)
+- **Signed-off-by**: Hans Verkuil `<hverkuil+cisco@kernel.org>` (media
+  subsystem maintainer)
+- No Fixes: tag (expected for autosel candidates)
+- No Reported-by: tag
+- No Cc: stable tag
 
-**Step 1.4: Hidden Bug Fix Detection**
-- This is not a disguised bug fix. It's straightforwardly adding a new
-  CPU model range to an existing switch statement.
-- Record: Not a hidden bug fix.
+Record: Signed by the author and by the media subsystem maintainer. No
+other tags.
+
+### Step 1.3: Analyze Body Text
+The commit describes two problems:
+1. On many embedded platforms, i2c responses through USB are **not
+   returned quickly**
+2. **Constantly banging on the i2c master receive essentially deadlocks
+   the driver**
+
+The fix has two parts: insert a 3ms delay between i2c receive calls, and
+extend the timeout from 70ms to 140ms.
+
+Record: Bug = tight polling loop without sleep deadlocks i2c bus on slow
+USB-connected embedded platforms. Symptom = driver deadlock and command
+timeouts. Root cause = no delay between i2c_master_recv calls in polling
+loop.
+
+### Step 1.4: Detect Hidden Bug Fixes
+This is an explicit bug fix ("Fix" in subject). Not disguised.
+
+Record: Explicit bug fix, not hidden.
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Files changed: 1 (`drivers/edac/amd64_edac.c`)
-- Lines added: 3 lines (`case 0x40 ... 0x4f:`, `pvt->max_mcs = 4;`,
-  `break;`)
-- Lines removed: 0
-- Function modified: `per_family_init()`
-- Record: Extremely small, single-file, 3-line addition inside existing
-  switch block
+### Step 2.1: Inventory Changes
+- **1 file changed**: `drivers/media/dvb-frontends/si2168.c`
+- **3 lines added, 1 line removed** (net +2 lines)
+- **Function modified**: `si2168_cmd_execute()`
+- **Scope**: Single-file, surgical fix within one function
 
-**Step 2.2: Code Flow Change**
-- Before: Family 19h models 40h-4fh would fall through the inner switch
-  without matching, using defaults (`max_mcs = 2`, no special flags)
-- After: Family 19h models 40h-4fh set `max_mcs = 4`
-- The default `max_mcs = 2` is set at line 3771 before the switch;
-  without this case, the V3000 SoC would get a wrong max_mcs value
+Record: [si2168.c: +3/-1] [si2168_cmd_execute] [Single-file surgical
+fix]
 
-**Step 2.3: Bug Mechanism**
-- Category: Hardware ID / model addition to existing driver
-- Without this patch, the EDAC driver will still load for these CPUs
-  (family 19h is already matched at the outer switch), but it will use
-  `max_mcs = 2` instead of the correct `max_mcs = 4`
-- This means 2 of the 4 memory controllers would not be monitored for
-  ECC errors
-- Record: This is a device model addition to an existing driver, setting
-  the correct number of memory controllers
+### Step 2.2: Understand Code Flow Change
+- **Before**: Tight busy-wait loop polling `i2c_master_recv()` with no
+  delay between calls, 70ms timeout
+- **After**: Same loop but with 2.5-3.5ms `usleep_range()` between
+  polls, 140ms timeout
 
-**Step 2.4: Fix Quality**
-- The fix is trivially correct - identical pattern to other model ranges
-  in the same switch
-- Extremely minimal - 3 lines, no risk of regression
-- The pattern mirrors `case 0x70 ... 0x7f` which also sets `max_mcs = 4`
-- Record: Obviously correct, zero regression risk
+The change affects the command execution wait path, which is used for
+every firmware command sent to the si2168 demodulator chip.
 
-## PHASE 3: GIT HISTORY
+### Step 2.3: Bug Mechanism
+This is a **hardware workaround / timing fix**:
+- The tight loop without sleep hammers the i2c bus continuously, which
+  on slow USB-connected platforms effectively deadlocks the driver
+- The 70ms timeout was insufficient for some commands (user reports show
+  commands taking up to 150ms)
+- Adding `usleep_range(2500, 3500)` is standard practice in kernel i2c
+  polling loops (confirmed by examining dozens of other DVB frontend
+  drivers doing exactly this)
 
-**Step 3.1: Blame**
-- Family 19h case block added in commit `2eb61c91c3e273` (Yazen Ghannam,
-  2020-01-10) - present since ~v5.6
-- Various model ranges were added over time (models 10-1f, 30-3f, 60-7f,
-  90-9f, a0-af)
-- Record: Family 19h support has been in the tree since v5.6; model
-  additions are routine
+Record: [Hardware timing fix] [Tight polling loop without sleep
+deadlocks i2c on USB-connected embedded platforms; timeout too short for
+some commands]
 
-**Step 3.2: No Fixes: tag** - expected for hardware enablement
+### Step 2.4: Fix Quality
+- **Obviously correct**: Adding a sleep to a busy-wait polling loop is
+  textbook kernel practice
+- **Minimal**: Only 3 lines changed
+- **Pattern is standard**: Multiple other DVB frontend drivers
+  (zd1301_demod.c, stv0367.c, etc.) use `usleep_range()` in identical
+  polling patterns
+- **Regression risk**: Very low. The usleep_range adds 2.5-3.5ms per
+  poll iteration, and the doubled timeout (140ms) provides ample margin.
+  No risk of breaking fast platforms.
 
-**Step 3.3: File History**
-- Recent commits show routine EDAC changes (format cleanup, macro
-  removal, etc.)
-- Similar prior commits: "Add support for family 19h, models 50h-5fh"
-  (commit `0b8bf9cb142da`), "Add support for ECC on family 19h model
-  60h-7Fh" (commit `6c79e42169fe1`)
-- This is a standalone commit, not part of a series
-- Record: Standalone, follows established pattern of model additions
+Record: [Fix is textbook correct, minimal, follows established patterns,
+very low regression risk]
 
-**Step 3.4: Author**
-- Devang Vyas appears to be an AMD engineer. The commit was reviewed by
-  Yazen Ghannam (AMD EDAC regular) and signed off by Borislav Petkov
-  (EDAC maintainer).
+---
 
-**Step 3.5: Dependencies**
-- No dependencies. The family 19h framework already exists. This just
-  adds a new case.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-## PHASE 4: MAILING LIST
+### Step 3.1: Blame Changed Lines
+From git blame:
+- The timeout constant `#define TIMEOUT 70` was set by commit
+  `551c33e729f654` (Jurgen Kramer, 2014-12-08) which increased from 50ms
+  to 70ms for firmware loading
+- The polling loop without sleep has existed since the original driver
+  commit `845f35052ea946` (Antti Palosaari, 2014-04-10) when the driver
+  was introduced
 
-**Step 4.1-4.5:**
-- Lore is behind Anubis protection; could not fetch discussion
-- b4 dig could not find this specific commit (likely too new for cached
-  index)
-- No indication of stable nomination in the commit tags
-- Record: Could not verify mailing list discussion due to lore
-  protection
+Record: Buggy code (no-sleep polling loop) has existed since the driver
+was introduced in 2014 (kernel ~3.16). Present in ALL stable trees.
+
+### Step 3.2: Follow Fixes Tag
+No Fixes: tag present (expected for autosel).
+
+### Step 3.3: File History
+The file has 85 total commits. The last several were treewide changes
+(alloc_obj, Drop i2c_device_id::driver_data, mux changes, probe API
+conversion). The core `si2168_cmd_execute()` polling loop has been
+unchanged since 2014.
+
+Record: The polling loop code is ancient and stable. No prerequisites
+needed. Standalone fix.
+
+### Step 3.4: Author Context
+Bradford Love (`brad@nextdimension.cc`) is a known media driver
+contributor with 10+ commits in the media subsystem. Their work includes
+em28xx, cx23885, and other DVB-related fixes. They are a Hauppauge
+contributor familiar with USB DVB devices.
+
+Record: Author is a known media subsystem contributor, especially USB
+DVB devices.
+
+### Step 3.5: Dependencies
+No dependencies. The patch changes a constant and adds one function
+call. The `usleep_range` function and `<linux/delay.h>` header are
+already included in the file. This applies cleanly to any kernel
+version.
+
+Record: Completely standalone, no dependencies. `<linux/delay.h>`
+already included.
+
+---
+
+## PHASE 4: MAILING LIST RESEARCH
+
+### Step 4.1: Original Patch Discussion
+Found the commit notification at mail-archive.com for linuxtv-commits,
+showing it was applied to media.git/next by Hans Verkuil in March 2026.
+
+A related patch by Christian Hewitt (v3, September 2025) also addresses
+timeout issues, increasing to 200ms but without adding the sleep.
+Christian's patch included actual log output showing 80ms commands
+failing with -ETIMEDOUT, and noted "The largest value observed from user
+reports/logs is 150ms."
+
+Record: [mail-archive linuxtv-commits: msg48547] [Christian Hewitt's v3
+also addresses same issue with different approach] [User reports confirm
+timeouts are real]
+
+### Step 4.2: Reviewers
+Applied by Hans Verkuil, the media subsystem maintainer.
+
+Record: Applied by subsystem maintainer.
+
+### Step 4.3: Bug Reports
+Christian Hewitt's related submission provides concrete bug evidence:
+logs showing `cmd execution took 80 ms` followed by `failed=-110`
+(ETIMEDOUT), causing Tvheadend DVB services to fail completely.
+
+Record: Real-world bug reports with logs from LibreELEC/Kodi users
+showing complete service failure.
+
+### Step 4.4: Related Patches
+This is a standalone fix, not part of a series.
+
+Record: Standalone patch.
+
+### Step 4.5: Stable Discussion
+No specific stable discussion found. The patch does not have Cc: stable.
+
+Record: No stable-specific discussion found.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.4:**
-- `per_family_init()` is called from the module's probe path at line
-  4016
-- Called once per detected AMD CPU node during EDAC initialization
-- The function sets up per-family and per-model parameters for the EDAC
-  memory controller
-- Without correct `max_mcs`, the driver will only see 2 of 4 memory
-  controllers, meaning ECC errors on controllers 3 and 4 would not be
-  detected/reported
+### Step 5.1: Key Functions
+`si2168_cmd_execute()` - the sole function modified.
+
+### Step 5.2: Callers
+`si2168_cmd_execute()` is called **36 times** throughout the driver
+from:
+- `si2168_ts_bus_ctrl()` - TS bus control
+- `si2168_read_status()` - reading demod status (called periodically)
+- `si2168_set_frontend()` - setting tuning parameters (~15 calls in
+  sequence)
+- `si2168_init()` - driver initialization and firmware download (many
+  calls)
+- `si2168_sleep()` - entering sleep mode
+- `si2168_select()`/`si2168_deselect()` - i2c mux operations
+- `si2168_probe()` - device probe
+
+Record: This is the central communication function for the entire
+driver. Every operation goes through it.
+
+### Step 5.3: Callees
+`si2168_cmd_execute()` calls `i2c_master_send()`, `i2c_master_recv()`,
+`mutex_lock()`/`mutex_unlock()`.
+
+### Step 5.4: Call Chain
+The driver is used as a DVB frontend demodulator, attached via USB
+(em28xx, cx231xx, rtl28xxu, dvbsky, af9035) and PCI (cx23885, smipcie,
+saa7164). All DVB operations (init, tune, status read, sleep) flow
+through `si2168_cmd_execute()`.
+
+Record: Reachable from all DVB userspace operations
+(opening/tuning/reading DVB device nodes).
+
+### Step 5.5: Similar Patterns
+Examined other DVB frontend drivers - many use `usleep_range()` or
+`msleep()` in their i2c polling loops. Examples:
+- `zd1301_demod.c`: `usleep_range(500, 800)` in i2c transfer polling
+- `stv0367.c`: `usleep_range(2000, 3000)` in polling loops
+- The si2168 driver's lack of sleep was an outlier
+
+Record: Adding sleep to polling loop follows established patterns in
+sibling drivers.
+
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1:**
-- Family 19h support exists since v5.6, so the outer `case 0x19:` exists
-  in all active stable trees (6.1.y, 6.6.y, etc.)
-- The patch would apply cleanly to any stable tree that has the family
-  19h switch block
-- Record: Code exists in all active stable trees
+### Step 6.1: Buggy Code in Stable Trees
+The si2168 driver was introduced in 2014 (~kernel 3.16). The polling
+loop without sleep has been present since then. The code exists in
+**ALL** active stable trees. The TIMEOUT constant was last changed from
+50 to 70 in 2014 and hasn't changed since.
 
-**Step 6.2:**
-- The file has had some refactoring (e.g., `e9abd990aefd7` for
-  `ctl_name` generation), so minor conflicts are possible in older
-  stable trees, but the specific hunk (adding a case between 0x3f and
-  0x60) should apply cleanly.
+Record: Buggy code exists in all stable trees (5.4.y, 5.10.y, 5.15.y,
+6.1.y, 6.6.y, 6.12.y, etc.)
 
-**Step 6.3:** No related fixes already in stable for this model range.
+### Step 6.2: Backport Complications
+The patch is trivially backportable. The `si2168_cmd_execute()`
+function's polling loop has been identical since 2014. Only the function
+signature changed slightly in older versions (used `struct si2168 *s`
+instead of `struct i2c_client *client`), but the polling loop itself is
+the same.
+
+Record: Clean apply expected for recent stable trees (5.15+). Minor
+adaptation needed for very old trees.
+
+### Step 6.3: Related Fixes Already in Stable
+No related fixes for this issue are in stable trees.
+
+Record: No related fixes in stable.
+
+---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1:**
-- Subsystem: EDAC (Error Detection and Correction) - memory error
-  handling
-- Criticality: IMPORTANT - affects users of specific AMD embedded
-  hardware (V3000 platform with Ryzen 6000)
-- Record: [EDAC/AMD driver] [IMPORTANT for V3000 users]
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: Media/DVB frontends - driver for Silicon Labs Si2168
+  demodulator
+- **Criticality**: PERIPHERAL (specific driver), but widely used (13+
+  parent drivers in USB and PCI subsystems)
+- **Users**: LibreELEC, Kodi, Tvheadend, MythTV users with USB and PCI
+  DVB tuners
 
-**Step 7.2:** Active subsystem with regular model additions.
+Record: [media/dvb-frontends] [PERIPHERAL but widely used across many
+USB/PCI TV tuner cards]
+
+### Step 7.2: Subsystem Activity
+The file has 85 total commits over 10+ years. Mostly stable, with recent
+changes being treewide API updates rather than driver-specific changes.
+
+Record: Mature/stable subsystem. Bug has been present since driver
+introduction.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Who is affected?**
-- Users of AMD V3000 embedded SoC platform (Ryzen 6000 Zen3, family 19h
-  models 40h-4fh)
-- This is an embedded platform - likely used in industrial/commercial
-  applications where ECC matters
-- Record: Platform-specific - V3000 embedded users only
+### Step 8.1: Who is Affected
+Users of si2168-based DVB tuner devices on embedded platforms (ARM
+boards, SBCs, etc.) connected via USB. This includes popular devices
+from Hauppauge, MyGica, and others.
 
-**Step 8.2: Trigger conditions**
-- The driver loads on any AMD system with family 19h. Without this
-  patch, models 40h-4fh get incorrect `max_mcs` (2 instead of 4), so
-  half the memory controllers go unmonitored.
-- Record: Triggered automatically on boot for affected hardware
+Record: [driver-specific] Users of si2168 DVB tuners, particularly on
+embedded/ARM platforms with USB-connected tuners.
 
-**Step 8.3: Failure severity**
-- Without this: EDAC doesn't properly monitor all memory controllers.
-  ECC errors on 2 of 4 controllers would go undetected/unreported.
-- This is NOT a crash - the system still works, but RAS monitoring is
-  incomplete.
-- Severity: MEDIUM - missing error reporting rather than
-  crash/corruption
-- Record: [Incomplete ECC monitoring] [MEDIUM severity]
+### Step 8.2: Trigger Conditions
+Every i2c command triggers the polling loop. On slow USB-connected
+platforms, the tight polling loop causes deadlock and timeouts.
+Triggered during normal device operation (tuning, status reading,
+firmware loading).
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Enables proper ECC monitoring on V3000 platform (important
-  for embedded/industrial users relying on stable kernels)
-- RISK: Extremely low - 3-line addition to existing pattern in a switch
-  statement, zero chance of regression for any other hardware
-- Record: [Medium benefit for niche audience] [Very low risk]
+Record: Triggered during normal device usage on affected platforms.
+Common trigger.
+
+### Step 8.3: Failure Mode Severity
+- **Driver deadlock**: The tight polling effectively deadlocks the
+  driver on embedded platforms
+- **ETIMEDOUT**: Commands fail with timeout errors, causing DVB services
+  (Tvheadend, etc.) to fail completely
+- **Severity**: HIGH - complete loss of DVB functionality on affected
+  platforms
+
+Record: [Driver deadlock + command timeout] [Severity: HIGH - complete
+device failure on embedded platforms]
+
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: HIGH - fixes complete driver failure on embedded
+  platforms
+- **Risk**: VERY LOW - 3-line change, adds standard sleep to polling
+  loop, follows established patterns, cannot break fast platforms (only
+  adds a small delay per poll iteration)
+- **Ratio**: Strongly favorable
+
+Record: [HIGH benefit] [VERY LOW risk] [Strongly favorable ratio]
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Compilation**
+### Step 9.1: Evidence Summary
 
-FOR backporting:
-- Trivially small change (3 lines), obviously correct
-- Follows well-established pattern (identical to other model additions)
-- Falls into the "device ID / model addition to existing driver"
-  exception category
-- Enables hardware monitoring for real embedded platform users
-- Zero regression risk - only affects models 40h-4fh within family 19h
-- Reviewed by subsystem experts (Yazen Ghannam) and merged by maintainer
-  (Borislav Petkov)
+**FOR backporting:**
+- Fixes real driver deadlock and timeout failure on embedded platforms
+- Only 3 lines changed (+3/-1), extremely contained
+- Obviously correct: adding sleep to busy-wait loop is textbook
+- Follows established patterns in dozens of sibling DVB drivers
+- Central function called 36+ times - affects all driver operations
+- Code is unchanged since 2014 - present in ALL stable trees
+- No dependencies - completely standalone
+- Applied by media subsystem maintainer (Hans Verkuil)
+- Real user reports exist (Christian Hewitt's related patch includes
+  actual failure logs)
+- `<linux/delay.h>` already included, no new includes needed
 
-AGAINST backporting:
-- This is new hardware enablement, not a bug fix
-- No crash, no data corruption, no security issue
-- The system still functions without it - just incomplete ECC monitoring
-- Niche audience (AMD V3000 embedded platform)
-- No Fixes: tag (expected, but also reflects that there's no bug being
-  fixed)
+**AGAINST backporting:**
+- No Fixes: tag (expected for autosel candidates)
+- No Reported-by: tag
+- The timeout increase from 70 to 140 could be considered arbitrary
+  (though user reports support even 200ms)
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? YES - trivial 3-line pattern addition
-2. Fixes a real bug? BORDERLINE - it's hardware enablement; without it,
-   max_mcs defaults to 2 instead of 4, which means incomplete monitoring
-3. Important issue? NO - no crash, security, or corruption. Missing ECC
-   monitoring is concerning for embedded users but not critical
-4. Small and contained? YES - 3 lines, single file
-5. No new features or APIs? This IS arguably a new feature (new hardware
-   support)
-6. Can apply to stable? YES - should apply cleanly
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** YES - standard pattern, applied by
+   maintainer
+2. **Fixes a real bug?** YES - driver deadlock and timeout on embedded
+   platforms
+3. **Important issue?** YES - complete device failure (deadlock +
+   timeout)
+4. **Small and contained?** YES - 3 lines in 1 file, 1 function
+5. **No new features or APIs?** CORRECT - no new features
+6. **Can apply to stable trees?** YES - code is identical since 2014
 
-**Step 9.3: Exception Categories**
-- This falls under "New Device IDs" exception: adding a CPU model range
-  to an existing driver. The driver already exists; only the model-
-  specific configuration is new. This is analogous to adding a PCI/USB
-  device ID.
+### Step 9.3: Exception Categories
+This qualifies as a **hardware workaround** for embedded platforms where
+USB i2c is slower.
+
+### Step 9.4: Decision
+This is a clear YES. The fix is tiny, obviously correct, follows
+established patterns, fixes a real driver deadlock on embedded
+platforms, and has no regression risk.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by Borislav Petkov (maintainer),
-  Reviewed-by Yazen Ghannam
-- [Phase 2] Diff analysis: 3 lines added, new `case 0x40 ... 0x4f` in
-  per_family_init() switch, sets max_mcs=4
-- [Phase 2] Verified default max_mcs=2 at line 3771, so without this
-  patch models 40h-4fh get wrong value
-- [Phase 3] git blame: family 19h support since commit 2eb61c91c3e273
-  (v5.6 era, 2020-01-10)
-- [Phase 3] git log: confirmed similar prior model additions (50h-5fh,
-  60h-7fh)
-- [Phase 4] b4 dig: could not find this specific commit; lore blocked by
-  Anubis
-- [Phase 5] per_family_init() called at line 4016 during driver probe
-- [Phase 6] Family 19h case exists in all active stable trees (v5.6+)
-- [Phase 8] Failure mode: incomplete ECC monitoring (2/4 controllers),
-  severity MEDIUM
-- UNVERIFIED: Mailing list discussion content (lore blocked)
-
-## Decision
-
-This commit adds a new CPU model range (40h-4fh) to an existing EDAC
-driver. While it's technically a "new hardware support" addition, it
-fits squarely into the **device ID / model addition exception** for
-stable trees. The change is:
-- 3 lines, trivially correct, zero regression risk
-- Follows an identical pattern to dozens of prior model additions in
-  this switch
-- Enables ECC error detection for a real embedded platform (V3000)
-- Users of stable kernels on this platform would have incomplete memory
-  error monitoring without it
-
-However, this is ultimately **new hardware enablement** rather than a
-bug fix. The system doesn't crash, corrupt data, or have a security
-issue without it. The V3000 platform is a relatively niche embedded SoC.
-While device ID additions are generally acceptable for stable, the
-stable kernel rules primarily target fixes for real bugs. This is
-enabling hardware that was never supported before - not fixing broken
-support for already-supported hardware.
-
-The balance tips toward YES given the device ID exception, the trivial
-size, and zero risk, but this is a borderline case. Given the extremely
-low risk and that it enables proper RAS functionality for embedded users
-who rely on stable kernels, this merits inclusion.
+- [Phase 1] Parsed tags: Signed-off-by from Bradford Love (author) and
+  Hans Verkuil (media maintainer)
+- [Phase 2] Diff analysis: 3 lines changed in si2168_cmd_execute():
+  TIMEOUT 70→140, added usleep_range(2500,3500)
+- [Phase 3] git blame: Polling loop without sleep since original driver
+  commit 845f35052ea946 (2014, kernel 3.16)
+- [Phase 3] git show 551c33e729f654: Confirmed previous TIMEOUT change
+  from 50→70 in 2014
+- [Phase 3] git log --oneline -20 -- si2168.c: Recent changes are all
+  treewide API updates, core polling loop unchanged
+- [Phase 3] git log --author="brad@nextdimension.cc": Author is known
+  media contributor (em28xx, cx23885, etc.)
+- [Phase 4] mail-archive linuxtv-commits msg48547: Confirmed patch was
+  applied by Hans Verkuil
+- [Phase 4] Christian Hewitt v3 patch: Real user logs showing 80ms cmd
+  execution causing ETIMEDOUT failure
+- [Phase 4] Wolfram Sang reviewed related Christian Hewitt patch,
+  confirming the issue is real
+- [Phase 5] grep si2168_cmd_execute: Called 36 times throughout the
+  driver - central communication function
+- [Phase 5] grep si2168 in USB/PCI drivers: Used by 13+ parent drivers
+  (em28xx, cx231xx, dvb-usb-v2, cx23885, etc.)
+- [Phase 5] grep usleep_range in dvb-frontends: Dozens of sibling
+  drivers use sleep in polling loops (zd1301_demod, stv0367, etc.)
+- [Phase 6] git log v6.6.. and v6.1.. show only treewide changes -
+  polling loop code identical in all stable trees
+- [Phase 6] delay.h already included in file (line 8), no new
+  dependencies needed
+- [Phase 8] Failure mode: driver deadlock + ETIMEDOUT → complete DVB
+  service failure (confirmed by user logs)
 
 **YES**
 
- drivers/edac/amd64_edac.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/dvb-frontends/si2168.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/edac/amd64_edac.c b/drivers/edac/amd64_edac.c
-index 8908ab881c855..c6aa69dbd9fb1 100644
---- a/drivers/edac/amd64_edac.c
-+++ b/drivers/edac/amd64_edac.c
-@@ -3863,6 +3863,9 @@ static int per_family_init(struct amd64_pvt *pvt)
- 				pvt->max_mcs		= 8;
- 			}
- 			break;
-+		case 0x40 ... 0x4f:
-+			pvt->max_mcs			= 4;
-+			break;
- 		case 0x60 ... 0x6f:
- 			pvt->flags.zn_regs_v2		= 1;
- 			break;
+diff --git a/drivers/media/dvb-frontends/si2168.c b/drivers/media/dvb-frontends/si2168.c
+index 6647e17611734..9c5bac8cda477 100644
+--- a/drivers/media/dvb-frontends/si2168.c
++++ b/drivers/media/dvb-frontends/si2168.c
+@@ -40,7 +40,7 @@ static int si2168_cmd_execute(struct i2c_client *client, struct si2168_cmd *cmd)
+ 
+ 	if (cmd->rlen) {
+ 		/* wait cmd execution terminate */
+-		#define TIMEOUT 70
++		#define TIMEOUT 140
+ 		timeout = jiffies + msecs_to_jiffies(TIMEOUT);
+ 		while (!time_after(jiffies, timeout)) {
+ 			ret = i2c_master_recv(client, cmd->args, cmd->rlen);
+@@ -54,6 +54,8 @@ static int si2168_cmd_execute(struct i2c_client *client, struct si2168_cmd *cmd)
+ 			/* firmware ready? */
+ 			if ((cmd->args[0] >> 7) & 0x01)
+ 				break;
++
++			usleep_range(2500, 3500);
+ 		}
+ 
+ 		dev_dbg(&client->dev, "cmd execution took %d ms\n",
 -- 
 2.53.0
 
