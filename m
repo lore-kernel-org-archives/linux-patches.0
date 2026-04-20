@@ -1,50 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9753EE1CB;
-	Mon, 20 Apr 2026 13:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86103EF0C2;
+	Mon, 20 Apr 2026 13:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691521; cv=none; b=UJcSZvLTKNBr1qDf409ejdrTcV6/voLHVfBSkcVVwOKastKWyx/cjSnzJaGcAas+yoGEsjIVWG0QGLHN6ylCsmoaNB8ruqC98IOB7PH0YU4+l293CYz052Hx0MaJWpzOI5rEuCeL4dUV1wFPtm6cFc0YAbLA5oM3VEHU5DOWb+o=
+	t=1776691523; cv=none; b=L5Ghpm0RZwXHjdSoxSCwS6mebvqTqCSX2OaQAuXKzv29PZ7PK7bOahwMKb8GiFKc06p+zNOeBtzevXu0WcqZedIjfzPWPD66p9GpAP3p/5Eq6/WJbPR9fsyktsK2ntxp2g0GL7C/g4dGpr04D3zZmpdw+gfDbKL+DbpvL88ZMhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691521; c=relaxed/simple;
-	bh=NrkqdAASRuKR/pQPHHV8xtbXGNEIJNzvqOYq17VQT84=;
+	s=arc-20240116; t=1776691523; c=relaxed/simple;
+	bh=y71kcRYQpao/17pO/wcWPCws9upPBl1PHmX/t/RFhHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K54Zy+yn93pb0wH8+t4FrpkSGh7OXif+dX9JQcgxpahbD1KultLGDbrKN77nvBS0PagNzt3j48jRDmUjhbQ31ZTBCOWfFpE0tJ/kkebq1Y3eKQLNVSHhOzfVwE+t6LiHPuoMq0GiEBPM1qy6pXDiWjqL7pq41FlGOKyif00aDXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3vZioMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ewcGFGQH0O49w0T7B+fVwQg10eUhoDqJYK42CcW7b0WRoo2xW5Q83CYtK76np+grMFDSMxzj34d8l6zKQIkirmo9ty93CMbERGqEzIJBqxLOm2OnmrDB5ywErQrCxno2YKiYC71vlVmnk0JAUsSnK3L57TY9xU847F3kVMx4wwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZG4eQ2ZF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3vZioMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30156C19425;
-	Mon, 20 Apr 2026 13:25:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZG4eQ2ZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2C4C19425;
+	Mon, 20 Apr 2026 13:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691521;
-	bh=NrkqdAASRuKR/pQPHHV8xtbXGNEIJNzvqOYq17VQT84=;
+	s=k20201202; t=1776691523;
+	bh=y71kcRYQpao/17pO/wcWPCws9upPBl1PHmX/t/RFhHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L3vZioMsoCKga1j2gWMgHm5ExP1gwbbmvG1Axv8kmCCczq4z1ZGuYexfpUKD/O2FB
-	 g8iE3FfQpzkXEXybQ1RqwcA798ABJP11pY4cokT3zR/71UJEFS3FNP2yiuWJ9NLigp
-	 CtIoYIRC0E4BezjTSVwTFmyUwZWlA3z1yug88yk66HxwG/d2B8H7X6hpgKlH70dd7B
-	 rbJ/4lMo7j1dkWv8aADfpnYCtIuBJudHm6xGZ97dK/GHOJYBIwegTPwjUXIm/G92wS
-	 k3vzDJZkWEa/9VaNoy0v2OiO+MHnOP6KoWJX3lpvOz49nfeUGnPHI6bNzDRwmVRhUC
-	 sHOU2b3zvpnWA==
+	b=ZG4eQ2ZFrYCB+xyUSv+QOrQjX5A34SgK0qtnr+5mwXUnVxv0tlLelpy/cIIvw1Ko/
+	 XqB4F/3oXX3VqKFKMYhEbzNllZUGvez+Lqa4eKu6+WbY9YIIOsbB3RD7kiPVJrJOox
+	 OBOLoZnvmoLKEoXIZ4LXtGWwPz+dUow4T6OisZeMbEb7bndx2KS2z5uSM6Z8h2cYDu
+	 L1V9eM61GdTllroPMG0yM549FXxSVdCDDu3en8UEYQMrRsoMy8FSipTtZpTUGGa0cR
+	 k6PwYWLt4glu6wCz+PImIEWRL006wgdjfewoD1JG8egIhzKdT1tQ3BIG5Tzs3ttbMH
+	 oe+hCzbtSxLrA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ivan Lipski <ivan.lipski@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Aaron Tomlin <atomlin@atomlin.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	ronak.doshi@broadcom.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] drm/amd/display: Fix cursor pos at overlay plane edges on DCN4
-Date: Mon, 20 Apr 2026 09:17:52 -0400
-Message-ID: <20260420132314.1023554-78-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] vmxnet3: Suppress page allocation warning for massive Rx Data ring
+Date: Mon, 20 Apr 2026 09:17:53 -0400
+Message-ID: <20260420132314.1023554-79-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -57,345 +55,391 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Lipski <ivan.lipski@amd.com>
+From: Aaron Tomlin <atomlin@atomlin.com>
 
-[ Upstream commit d8f6c978fd3d12ae129879dd1c514cec2e8cf2f8 ]
+[ Upstream commit c31770c49348fb019167fa95119f330597c99193 ]
 
-[Why&How]
-On DCN4, when cursor straddles the left/top edge of an overlay plane, the
-recout-relative position becomes negative. These negative values wrap
-to large positive numbers when cast to uint32_t, causing the cursor on the
-the overlay plane to disappear.
+The vmxnet3 driver supports an Rx Data ring (rx-mini) to optimise the
+processing of small packets. The size of this ring's DMA-coherent memory
+allocation is determined by the product of the primary Rx ring size and
+the data ring descriptor size:
 
-Fix by adding hotspot adjustment and position clamping after the
-recout-relative calculation, matching the existing ODM/MPC slice
-boundary handling.
+    sz = rq->rx_ring[0].size * rq->data_ring.desc_size;
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+When a user configures the maximum supported parameters via ethtool
+(rx_ring[0].size = 4096, data_ring.desc_size = 2048), the required
+contiguous memory allocation reaches 8 MB (8,388,608 bytes).
+
+In environments lacking Contiguous Memory Allocator (CMA),
+dma_alloc_coherent() falls back to the standard zone buddy allocator. An
+8 MB allocation translates to a page order of 11, which strictly exceeds
+the default MAX_PAGE_ORDER (10) on most architectures.
+
+Consequently, __alloc_pages_noprof() catches the oversize request and
+triggers a loud kernel warning stack trace:
+
+    WARN_ON_ONCE_GFP(order > MAX_PAGE_ORDER, gfp)
+
+This warning is unnecessary and alarming to system administrators because
+the vmxnet3 driver already handles this allocation failure gracefully.
+If dma_alloc_coherent() returns NULL, the driver safely disables the
+Rx Data ring (adapter->rxdataring_enabled = false) and falls back to
+standard, streaming DMA packet processing.
+
+To resolve this, append the __GFP_NOWARN flag to the dma_alloc_coherent()
+gfp_mask. This instructs the page allocator to silently fail the
+allocation if it exceeds order limits or memory is too fragmented,
+preventing the spurious warning stack trace.
+
+Furthermore, enhance the subsequent netdev_err() fallback message to
+include the requested allocation size. This provides critical debugging
+context to the administrator (e.g., revealing that an 8 MB allocation
+was attempted and failed) without making hardcoded assumptions about
+the state of the system's configurations.
+
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
+Link: https://patch.msgid.link/20260226163121.4045808-1-atomlin@atomlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile everything.
+Now I have all the evidence needed for a comprehensive analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: drm/amd/display (AMD display controller, DCN4
-  specifically)
-- **Action verb**: "Fix" - explicit bug fix
-- **Summary**: Fixes cursor position bug at overlay plane edges on DCN4
-  hardware
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: [vmxnet3] [Suppress] Suppress page allocation warning for
+massive Rx Data ring allocation that exceeds MAX_PAGE_ORDER. The verb
+"Suppress" indicates removing a spurious warning, not adding a new
+feature.
 
-### Step 1.2: Tags
-- **Reviewed-by**: Nicholas Kazlauskas (AMD display driver maintainer) -
-  strong quality signal
-- **Signed-off-by**: Ivan Lipski (author), Alex Deucher (AMD GPU
-  maintainer)
-- **Tested-by**: Dan Wheeler (AMD QA)
-- No Fixes: tag, no Cc: stable, no Reported-by - expected for manual
-  review candidates
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Reviewed-by:** Jijie Shao <shaojijie@huawei.com> - a networking
+  contributor (hns3 driver)
+- **Signed-off-by:** Aaron Tomlin <atomlin@atomlin.com> - the author, a
+  kernel contributor (modules, tracing subsystems)
+- **Link:**
+  https://patch.msgid.link/20260226163121.4045808-1-atomlin@atomlin.com
+- **Signed-off-by:** Jakub Kicinski <kuba@kernel.org> - the net tree
+  maintainer, committed it
+- No Fixes: tag (expected for candidates)
+- No Reported-by: tag
+- No Cc: stable tag
 
-### Step 1.3: Body Text
-The bug mechanism is clearly explained: On DCN4, when the cursor
-straddles the left/top edge of an overlay plane, the recout-relative
-position calculation produces negative values. These negative values
-wrap to large positive numbers when cast to uint32_t, causing the cursor
-to disappear. The fix adds hotspot adjustment and position clamping,
-matching the existing ODM/MPC slice boundary handling pattern.
+Record: Committed by the net maintainer (Jakub Kicinski). Reviewed by a
+networking contributor.
 
-### Step 1.4: Hidden Bug Fix Detection
-Not hidden at all - this is explicitly labeled as a bug fix with a clear
-mechanism described.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit explains in detail:
+- When max ethtool parameters are set (rx_ring[0].size=4096,
+  data_ring.desc_size=2048), the DMA allocation is 8 MB
+- 8 MB requires page order 11, which exceeds MAX_PAGE_ORDER (10)
+- This triggers `WARN_ON_ONCE_GFP(order > MAX_PAGE_ORDER, gfp)` in
+  page_alloc.c
+- The driver already gracefully handles the failure (disables data ring
+  and falls back)
+- The warning is "unnecessary and alarming to system administrators"
 
----
+Record: Bug is a spurious WARN_ON_ONCE kernel stack trace when VMware
+users configure max ring parameters. Symptom is an alarming stack trace
+in dmesg. Driver handles the failure fine. Root cause: missing
+`__GFP_NOWARN` flag.
+
+### Step 1.4: DETECT HIDDEN BUG FIXES
+This is a real bug fix disguised with "suppress" language. The
+`WARN_ON_ONCE_GFP` macro at line 5226 of `mm/page_alloc.c` was
+specifically designed to be suppressed by `__GFP_NOWARN`. The vmxnet3
+driver was missing this flag, causing the allocator to emit a warning
+the driver was designed to tolerate. This is a legitimate fix for an
+incorrect warning.
+
+Record: Yes, this is a real bug fix. The warning is spurious because the
+driver handles the failure gracefully.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **1 file changed**:
-  `drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c`
-- **+19 lines**, 0 lines removed
-- **Function modified**: `dcn401_set_cursor_position()`
-- **Scope**: Single-file, single-function surgical fix
+### Step 2.1: INVENTORY THE CHANGES
+- **File:** `drivers/net/vmxnet3/vmxnet3_drv.c`
+- **Lines changed:** 2 lines modified (net change: 0 added, 0 removed -
+  just modifications)
+- **Function modified:** `vmxnet3_rq_create()`
+- **Scope:** Single-file, surgical fix
 
-### Step 2.2: Code Flow Change
-**Before**: After `x_pos = pos_cpy.x - param.recout.x` (line 1211),
-negative x_pos values flow directly to `pos_cpy.x = x_pos` (line 1229),
-wrapping the uint32_t to a huge positive number.
+Record: 1 file, 2 lines changed, in `vmxnet3_rq_create()`. Extremely
+small scope.
 
-**After**: Negative x_pos/y_pos values are clamped to 0 with
-corresponding hotspot adjustment, preventing the uint32_t wrapping.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+- **Line 2271:** `GFP_KERNEL` → `GFP_KERNEL | __GFP_NOWARN` for the data
+  ring DMA allocation
+- **Line 2274:** `"rx data ring will be disabled\n"` → `"failed to
+  allocate %zu bytes, rx data ring will be disabled\n", sz` to include
+  the allocation size in the error message
 
-### Step 2.3: Bug Mechanism
-This is a **type/casting bug** (integer underflow). Negative int values
-wrap when assigned to uint32_t, causing the cursor to be positioned far
-offscreen and effectively disappear.
+Before: allocation failure triggers WARN_ON_ONCE + generic log message.
+After: allocation failure is silent (no WARN) + informative log message
+with size.
 
-### Step 2.4: Fix Quality
-- Obviously correct: matches the existing ODM/MPC boundary handling
-  already in the same function (lines 1177-1187)
-- Minimal/surgical: 19 lines added, all in one block
-- Low regression risk: only affects cursor rendering when cursor is at
-  overlay plane edges, does not affect normal cursor positioning
-- No API or behavioral changes for other paths
+Record: Two hunks: (1) Add __GFP_NOWARN to suppress spurious warning;
+(2) Improve error message with allocation size.
 
----
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+Category: **Logic/correctness fix** - The allocator's `WARN_ON_ONCE_GFP`
+macro at `mm/page_alloc.c:5226` is designed to suppress warnings when
+`__GFP_NOWARN` is passed. The vmxnet3 driver was missing this flag for
+an allocation that is expected to fail on systems without CMA, producing
+a scary but meaningless kernel warning.
+
+Record: Missing __GFP_NOWARN flag on an allocation expected to fail. The
+WARN_ON_ONCE_GFP macro specifically checks for this flag (verified in
+mm/internal.h:92-96).
+
+### Step 2.4: ASSESS THE FIX QUALITY
+- Obviously correct: `__GFP_NOWARN` is the standard kernel mechanism for
+  this exact purpose
+- Minimal: 2 lines changed
+- Regression risk: Zero - `__GFP_NOWARN` only affects the warning, not
+  allocation behavior
+- Pattern precedent: Same fix applied to r8152 (5cc33f139e11b), gtp
+  (bd5cd35b782ab), netdevsim (83cf4213bafc4)
+
+Record: Fix is trivially correct, minimal, and follows well-established
+kernel patterns. No regression risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The recout-relative code was introduced by commit `ee8287e068a399` ("Fix
-cursor issues with ODMs and HW rotations") by Nevenko Stupar, which
-landed in v6.11-rc1. However, the specific bug was **exposed** by commit
-`c02288724b98c` ("Fix wrong x_pos and y_pos for cursor offload") by
-Nicholas Kazlauskas, which added the `pos_cpy.x = x_pos; pos_cpy.y =
-y_pos;` lines that store the recout-relative position into the uint32_t
-pos_cpy struct. This commit only exists in **v7.0-rc1 onwards**.
+### Step 3.1: BLAME THE CHANGED LINES
+The affected code was introduced in commit `50a5ce3e7116a7` by
+Shrikrishna Khare on 2016-06-16 ("vmxnet3: add receive data ring
+support"). This was first included in v4.8-rc1, meaning the buggy code
+has been present since kernel 4.8 (~2016).
 
-### Step 3.2: Prerequisite Analysis
-Commit c02288724b98c is critical. It moved cursor position storage from
-the HUBP layer to the HWSS layer. Before this commit (in v6.12, v6.14,
-v6.19), pos_cpy.x was NOT updated with recout-relative values, so the
-negative wrapping didn't occur in the HWSS path. In older trees, HUBP
-did its own translation separately.
+Record: Buggy code from commit 50a5ce3e7116a7 (v4.8-rc1, June 2016).
+Present in ALL active stable trees.
 
-### Step 3.3: Related Changes
-Many cursor-related fixes have been applied to this file (cursor
-offload, ODM issues, MPC slices). This fix is standalone and doesn't
-depend on other patches in the series.
+### Step 3.2: FOLLOW THE FIXES TAG
+No Fixes: tag present (expected).
 
-### Step 3.4: Author
-Ivan Lipski is an AMD display driver contributor. The reviewer Nicholas
-Kazlauskas is a key AMD display maintainer who also authored the
-prerequisite commit c02288724b98c.
+### Step 3.3: CHECK FILE HISTORY
+84 commits to vmxnet3_drv.c since the buggy code was introduced. The
+file is actively maintained. A closely related commit is `ffbe335b8d471`
+("vmxnet3: disable rx data ring on dma allocation failure") which fixed
+a BUG crash when the same allocation fails. This shows the allocation
+failure path is a known problem area.
 
-### Step 3.5: Dependencies
-- **Depends on c02288724b98c** being present (adds `pos_cpy.x = x_pos;`
-  lines). This commit exists in v7.0 but NOT in v6.19 or earlier.
-- The fix is standalone within v7.0 - doesn't need any other patches
-  from its series.
+Record: Active file. The data ring allocation failure path has had real
+bugs before (ffbe335b8d471 fixed a BUG/crash).
 
----
+### Step 3.4: CHECK AUTHOR
+Aaron Tomlin is a kernel contributor (primarily in modules, tracing
+subsystems). Jakub Kicinski (net maintainer) committed this.
+
+Record: Not a vmxnet3 maintainer, but committed by the net tree
+maintainer.
+
+### Step 3.5: DEPENDENCIES
+No dependencies. This is a standalone 2-line change that only adds a GFP
+flag and improves a log message. The code context exists in all stable
+trees since v4.8.
+
+Record: Fully standalone, no prerequisites.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1: Original Submission
-Found via web search. The patch was submitted February 18, 2026 as
-[PATCH 2/9] in "DC Patches February 18, 2026" series. No objections or
-NAKs were raised in the thread. Only one version (no v2/v3).
+### Step 4.1-4.5
+Lore.kernel.org was unavailable (Anubis protection). However:
+- The Link: tag confirms submission via netdev mailing list
+- Jakub Kicinski (net maintainer) accepted and committed it
+- Jijie Shao provided a Reviewed-by
 
-### Step 4.2: Reviewers
-CC list includes all major AMD display maintainers: Harry Wentland, Leo
-Li, Aurabindo Pillai, Roman Li, Wayne Lin, Tom Chung, Nicholas
-Kazlauskas, Alex Hung, Dan Wheeler. Review-by from Nicholas Kazlauskas
-confirms subsystem maintainer review.
-
-### Step 4.3-4.5: No specific bug report referenced, no stable-specific
-discussion found.
-
----
+Record: Unable to fetch lore discussion due to anti-bot protection.
+UNVERIFIED: detailed mailing list discussion content. However, the
+commit was accepted by the net maintainer.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.2: Function Context
-`dcn401_set_cursor_position()` is called from the hardware sequencer
-path for all cursor position updates on DCN4 hardware. It's a commonly-
-triggered path - every cursor movement goes through it.
+### Step 5.1-5.4: FUNCTION ANALYSIS
+`vmxnet3_rq_create()` is called from:
+1. `vmxnet3_rq_create_all()` - called during adapter initialization
+2. Directly at line 3472 during queue reset/resize
+3. `vmxnet3_rq_create_all()` also called at line 3655 during MTU change
 
-### Step 5.3: Fix Pattern
-The fix exactly mirrors the existing ODM slice boundary handling at
-lines 1177-1187 of the same function:
+The affected allocation is on the normal path (not error-only),
+triggered during device initialization and MTU changes. VMware vmxnet3
+is ubiquitous in VMware virtual machines.
 
-```1177:1187:drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-        if (x_pos < 0) {
-                pos_cpy.x_hotspot -= x_pos;
-                if
-(hubp->curs_attr.attribute_flags.bits.ENABLE_MAGNIFICATION)
-adjust_hotspot_between_slices_for_2x_magnify(hubp->curs_attr.width,
-&pos_cpy);
-                x_pos = 0;
-        }
+Record: The function is called during normal device initialization and
+reconfiguration. Very common code path for VMware users.
 
-        if (y_pos < 0) {
-                pos_cpy.y_hotspot -= y_pos;
-                y_pos = 0;
-        }
-```
+### Step 5.5: SIMILAR PATTERNS
+The vmxnet3 driver already uses `__GFP_NOWARN` in
+`vmxnet3_pp_get_buff()` at line 1425 for page pool allocations. Multiple
+other network drivers have applied the same fix pattern (r8152, gtp,
+netdevsim).
 
-The new code reuses the same pattern at a different point in the
-function.
-
----
+Record: Pattern is already used elsewhere in vmxnet3 itself, and widely
+across network drivers.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable Trees
-- **v6.12, v6.14, v6.19**: The recout-relative calculation exists, but
-  `pos_cpy.x = x_pos;` (c02288724b98c) does NOT. The bug doesn't
-  manifest in these trees.
-- **v7.0**: Both the recout calculation AND `pos_cpy.x = x_pos;` exist.
-  The bug is present.
+### Step 6.1: BUGGY CODE IN STABLE
+The buggy code (commit 50a5ce3e7116a7) has been present since v4.8. It
+exists in ALL active stable trees (5.10, 5.15, 6.1, 6.6, 6.12, etc.).
 
-### Step 6.2: Backport Complications
-For v7.0.y: The patch should apply cleanly. The context lines match
-exactly.
-For 6.19.y and earlier: The fix would be irrelevant as the prerequisite
-c02288724b98c doesn't exist.
+Record: Code exists in all active stable trees.
 
----
+### Step 6.2: BACKPORT COMPLICATIONS
+The code at line 2271 in the current tree is still `GFP_KERNEL` (no
+__GFP_NOWARN), and the context looks clean. The `%zu` format specifier
+for size_t is standard. Should apply cleanly to all stable trees.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+Record: Expected clean apply.
 
-### Step 7.1: Subsystem
-- **drivers/gpu/drm/amd/display** - AMD display controller driver
-- **Criticality**: IMPORTANT - affects all users of AMD DCN4 (RDNA 4)
-  GPUs using overlay planes
+### Step 6.3: RELATED FIXES IN STABLE
+No prior fix for this specific warning exists.
 
-### Step 7.2: Activity
-Very actively developed subsystem with dozens of commits per release
-cycle.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
----
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem:** drivers/net/vmxnet3 - VMware virtual network driver
+- **Criticality:** IMPORTANT - vmxnet3 is the standard NIC in VMware
+  environments, which powers a vast number of enterprise servers
+
+### Step 7.2: ACTIVITY
+The subsystem is actively developed (v9 protocol support recently
+added). 84 commits since the data ring feature.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users of AMD RDNA 4 (DCN4) GPUs who use overlay planes with cursor
-visible near the plane edges. This includes desktop users with
-compositors using overlay planes.
+### Step 8.1: WHO IS AFFECTED
+All VMware users running vmxnet3 who configure maximum ethtool ring
+parameters. VMware is extremely widespread in enterprise.
 
-### Step 8.2: Trigger Conditions
-Moving the mouse cursor near the left/top edge of an overlay plane.
-Common in multi-window scenarios and video playback with overlay. Can be
-triggered by any user.
+### Step 8.2: TRIGGER CONDITIONS
+Triggered when: (a) user sets ethtool `rx_ring[0].size=4096` and
+`data_ring.desc_size=2048` (both maximum values), and (b) system lacks
+CMA for large contiguous allocations. This is a realistic configuration
+for performance-tuned VMs.
 
-### Step 8.3: Failure Mode
-Cursor disappears when near overlay plane edges. **Severity: MEDIUM-
-HIGH** - not a crash or data corruption, but a visible rendering glitch
-that makes the system harder to use.
+### Step 8.3: FAILURE MODE SEVERITY
+The `WARN_ON_ONCE` produces a full kernel stack trace in dmesg that
+looks like a kernel bug. While not a crash, it:
+- Alarms system administrators
+- Can trigger automated monitoring/alerting systems
+- May generate unnecessary bug reports
+- Severity: MEDIUM (no functional impact, but user-visible alarm)
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH - fixes cursor disappearing for all DCN4 users with
-  overlay planes
-- **Risk**: VERY LOW - 19 lines, mirrors existing pattern, only affects
-  cursor rendering, reviewed by subsystem maintainer
-- **Ratio**: Very favorable
-
----
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit:** Eliminates spurious kernel warning in VMware
+  environments, improves log message quality
+- **Risk:** Essentially zero - `__GFP_NOWARN` only suppresses the
+  warning, doesn't change allocation behavior
+- **Size:** 2 lines, obviously correct
+- **Ratio:** HIGH benefit / ZERO risk
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: EVIDENCE COMPILATION
 
 **FOR backporting:**
-- Fixes a real, user-visible bug (cursor disappearing)
-- Small, surgical fix (19 lines added, single function)
-- Pattern is well-established in the same function
-- Reviewed by AMD display maintainer (Nicholas Kazlauskas)
-- Tested by AMD QA (Dan Wheeler)
-- No objections during review
-- Cleanly applies to v7.0
+- Fixes a real user-visible issue (spurious WARN_ON_ONCE stack trace)
+- Extremely small and obviously correct (2 lines)
+- Zero regression risk
+- Well-established pattern (r8152, gtp, netdevsim all did the same)
+- vmxnet3 already uses `__GFP_NOWARN` elsewhere in the driver
+- Buggy code has been present since v4.8, affects all stable trees
+- VMware vmxnet3 is widely used in enterprise
+- Accepted by net maintainer Jakub Kicinski
+- Improved error message provides better diagnostic information
+- Prior crash (ffbe335b8d471) shows this allocation failure path is a
+  real concern
 
 **AGAINST backporting:**
-- Only affects DCN4 (newer AMD GPUs) - narrower user base than core
-  kernel
-- Symptom is cosmetic (cursor disappears), not a crash or security issue
-- Bug only exists in v7.0+ (due to prerequisite c02288724b98c)
-- Cannot apply to 6.19.y or earlier stable trees without also
-  backporting c02288724b98c
+- Not a crash/security/corruption fix (it's a warning suppression)
+- No Fixes: tag or explicit stable nomination
+- WARN_ON_ONCE only fires once per boot (limited repeated impact)
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - mirrors existing pattern,
-   Tested-by AMD QA
-2. Fixes a real bug? **YES** - cursor disappears at overlay plane edges
-3. Important issue? **YES** - user-visible rendering bug affecting
-   usability
-4. Small and contained? **YES** - 19 lines, single function, single file
-5. No new features? **YES** - pure bug fix
-6. Can apply to stable? **YES** for 7.0.y; **NO** for older trees
-   (missing prerequisite)
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** - trivial `__GFP_NOWARN`
+   addition, standard pattern
+2. Fixes a real bug? **YES** - spurious kernel warning that alarms
+   admins
+3. Important issue? **MEDIUM** - not a crash, but affects many VMware
+   users
+4. Small and contained? **YES** - 2 lines in 1 file
+5. No new features? **YES** - no new features
+6. Can apply to stable? **YES** - clean apply expected
 
-### Step 9.3: Exception Categories
-Not an exception category - this is a standard bug fix.
+### Step 9.3: EXCEPTION CATEGORIES
+Not a standard exception category, but analogous to prior stable-
+backported `__GFP_NOWARN` fixes.
 
----
+### Step 9.4: DECISION
+The fix is tiny, obviously correct, zero-risk, follows well-established
+patterns, and eliminates a spurious kernel warning that can alarm VMware
+administrators. While not a crash fix, the WARN_ON_ONCE stack trace is
+user-visible and can trigger automated alerting systems. The bar is very
+low for risk vs. benefit here.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Nicholas Kazlauskas, Tested-by Dan
-  Wheeler, SOBs from Ivan Lipski and Alex Deucher
-- [Phase 2] Diff analysis: +19 lines in `dcn401_set_cursor_position()`,
-  adds negative position clamping with hotspot adjustment
-- [Phase 3] git blame: recout-relative code from ee8287e068a399 (v6.11),
-  bug exposed by c02288724b98c (v7.0-rc1)
-- [Phase 3] git show c02288724b98c: confirmed it adds `pos_cpy.x =
-  x_pos;` lines, only in v7.0+
-- [Phase 3] Verified v6.12 code does NOT have `pos_cpy.x = x_pos;` - bug
-  doesn't manifest there
-- [Phase 3] Verified v6.14 and v6.19 code also lacks `pos_cpy.x =
-  x_pos;` - same conclusion
-- [Phase 4] Found original submission on freedesktop.org mailing list
-  (Feb 18, 2026): patch 2/9 in DC Patches series
-- [Phase 4] No NAKs or objections; reviewed by subsystem maintainer
-- [Phase 5] Confirmed pattern matches existing ODM boundary handling at
-  lines 1177-1187 of same function
-- [Phase 6] Verified buggy code exists in v7.0 (confirmed `pos_cpy.x =
-  x_pos` present and no clamping)
-- [Phase 6] Verified patch context lines match v7.0 tree - will apply
-  cleanly
-- [Phase 8] Failure mode: cursor disappears at overlay edges, severity
-  MEDIUM-HIGH (usability impact)
-
-The fix is small, surgical, obviously correct, fixes a real user-visible
-bug on DCN4 hardware, follows established code patterns, and was
-properly reviewed and tested by AMD's display team. It applies cleanly
-to the 7.0.y stable tree where the bug exists.
+- [Phase 1] Parsed tags: Reviewed-by Jijie Shao, committed by Jakub
+  Kicinski (net maintainer)
+- [Phase 2] Diff analysis: 2 lines changed in vmxnet3_rq_create(): adds
+  __GFP_NOWARN, improves log message
+- [Phase 2] Verified WARN_ON_ONCE_GFP at mm/internal.h:92-96
+  specifically checks __GFP_NOWARN flag
+- [Phase 2] Verified WARN_ON_ONCE_GFP at mm/page_alloc.c:5226 is
+  triggered when order > MAX_PAGE_ORDER
+- [Phase 3] git blame: buggy code introduced in commit 50a5ce3e7116a7
+  (v4.8-rc1, 2016), present in all stable trees
+- [Phase 3] git log: 84 commits to file since buggy code introduced;
+  active file
+- [Phase 3] Related fix ffbe335b8d471 confirms the data ring allocation
+  failure path has had real bugs
+- [Phase 4] UNVERIFIED: Full mailing list discussion (lore unavailable
+  due to anti-bot)
+- [Phase 5] Traced callers: vmxnet3_rq_create() called from
+  vmxnet3_rq_create_all() during init, MTU change, and queue reset
+- [Phase 5] Confirmed vmxnet3 already uses __GFP_NOWARN at line 1425
+  (vmxnet3_pp_get_buff)
+- [Phase 5] Similar pattern in r8152 (5cc33f139e11b), gtp
+  (bd5cd35b782ab), netdevsim (83cf4213bafc4)
+- [Phase 6] Code exists in all active stable trees (since v4.8)
+- [Phase 6] Current tree still has GFP_KERNEL at line 2271 - clean apply
+  expected
+- [Phase 8] Failure mode: spurious WARN_ON_ONCE stack trace, severity
+  MEDIUM
 
 **YES**
 
- .../amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/vmxnet3/vmxnet3_drv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 4dfb6c8658312..4973d36aadc5d 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -1211,6 +1211,25 @@ void dcn401_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	x_pos = pos_cpy.x - param.recout.x;
- 	y_pos = pos_cpy.y - param.recout.y;
- 
-+	/**
-+	 * If the cursor position is negative after recout adjustment, we need
-+	 * to shift the hotspot to compensate and clamp position to 0. This
-+	 * handles the case where cursor straddles the left/top edge of an
-+	 * overlay plane - the cursor is partially visible and needs correct
-+	 * hotspot adjustment to render the visible portion.
-+	 */
-+	if (x_pos < 0) {
-+		pos_cpy.x_hotspot -= x_pos;
-+		if (hubp->curs_attr.attribute_flags.bits.ENABLE_MAGNIFICATION)
-+			adjust_hotspot_between_slices_for_2x_magnify(hubp->curs_attr.width, &pos_cpy);
-+		x_pos = 0;
-+	}
-+
-+	if (y_pos < 0) {
-+		pos_cpy.y_hotspot -= y_pos;
-+		y_pos = 0;
-+	}
-+
- 	recout_x_pos = x_pos - pos_cpy.x_hotspot;
- 	recout_y_pos = y_pos - pos_cpy.y_hotspot;
- 
+diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
+index 0572f6a9bdb62..40522afc05320 100644
+--- a/drivers/net/vmxnet3/vmxnet3_drv.c
++++ b/drivers/net/vmxnet3/vmxnet3_drv.c
+@@ -2268,10 +2268,10 @@ vmxnet3_rq_create(struct vmxnet3_rx_queue *rq, struct vmxnet3_adapter *adapter)
+ 		rq->data_ring.base =
+ 			dma_alloc_coherent(&adapter->pdev->dev, sz,
+ 					   &rq->data_ring.basePA,
+-					   GFP_KERNEL);
++					   GFP_KERNEL | __GFP_NOWARN);
+ 		if (!rq->data_ring.base) {
+ 			netdev_err(adapter->netdev,
+-				   "rx data ring will be disabled\n");
++				   "failed to allocate %zu bytes, rx data ring will be disabled\n", sz);
+ 			adapter->rxdataring_enabled = false;
+ 		}
+ 	} else {
 -- 
 2.53.0
 
