@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5158481FC5;
-	Mon, 20 Apr 2026 13:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E43481FD3;
+	Mon, 20 Apr 2026 13:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691910; cv=none; b=U3PAPGwOC/kHybJIKnLeig5pOttf2hAHiml+/Nq1umIvXkZTPwEYz9T5O9aGpgzRcuzWikplkQjKCr172upECBatGGdqDTZUhyoaXw2TRdUJoEcAwJRpLR7z6vwI73id80Y1thNLmu11/5re97UiUTu/7VNLVQVVPfebRlcwYSM=
+	t=1776691912; cv=none; b=rA5egFc2o1mVECndk3pgqPS4Q9Xg84vnw2eDGo2L2Jbl2Ps1BB4JFYfrDLO1b4fPkozyjwRD2qSHQnnDF7NM0DufX9l0Gq9z/v/2igdQ/VLiJ9um7L5TyKQvFPm4WC/q/I8l3NCVGmCYVO5gftXkV3FcxBluAh0kZx7E6xzms30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691910; c=relaxed/simple;
-	bh=mA7U/R/o4PFajNO17IAo08Ol59rFT9blZeVBaB5gODI=;
+	s=arc-20240116; t=1776691912; c=relaxed/simple;
+	bh=Urre9Ioh1Z8JaWFbwarUsfl2pNj0uaGl38E3xjK4jwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D/6/TVD03mnnfNjzAQZ5rCLcCsnpiMVS+jbPQRWxvHunB4RfyBh1ayH01GtSW09oPJpf/W6z+svcwWzERUp+HzICggrp0KPAsVLdRgDvxiirVf+ic69Yq9v8KH8YzIWzRbj4LeoZvuZP3VQm2VKu8CeZ3ppvTzAezWfl9v1zsfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lXpVwyGi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p4CVoNXNgqYnWC1fp7LfK5OssE90AgAWJSogsccPgJY823YPZwOIjmDRTnl21QS49SgZjETnsRRU7roBds54xBrhQV55vvw5L6RlBxR9x+mhQnMIrPMOyFRdlytjpCD6Brul8BmIkTyjzmpoNVOs6SnFbBbUzbADvACKrlq6po8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HQCGd5Xp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lXpVwyGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367FAC2BCB7;
-	Mon, 20 Apr 2026 13:31:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HQCGd5Xp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E198DC19425;
+	Mon, 20 Apr 2026 13:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691910;
-	bh=mA7U/R/o4PFajNO17IAo08Ol59rFT9blZeVBaB5gODI=;
+	s=k20201202; t=1776691911;
+	bh=Urre9Ioh1Z8JaWFbwarUsfl2pNj0uaGl38E3xjK4jwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXpVwyGiONC6V1zFbppD9uTaLmRi8OdpKi+IpaK76fwAU6CEGaXKI7IC4nsXvwhfn
-	 sxnvqkaY2wEnY4mWcjz2qUVlRSp/jsRcj+19L9SUANt3Sj397SxUjHA3LILZpyJ/LX
-	 u6Tp7b2nEDT2AqWsgwlYvFxJn6P/3xuLKVS6uv1ZFhxsvK4Xh4H5OPMnIRpE45xfW1
-	 ghnKollgjvx/uGoG6xWW0coHEnQe9reOasWGydnI8Mam0jx7HhyuE212ivbHB4PfmH
-	 6g6Zv6KP7RNCqK1iYzFkFCVkb7sttjzxhZKb1S9EZYK1NTTEBvbwgYPKV8VvRJe7Vb
-	 jwR2heP77LvVw==
+	b=HQCGd5XpUgy+9zHGxYgglbsd4NhWebHnKOoypsJw9iI87BT1Sb94vEjcNolLQINSR
+	 duiVxkJELOWh2RvLK+wiZ6Tpt6AvooaOBbwUObCuotamxHOKP+UZ2qi5nIJ4F7HIsc
+	 0TCh9X44/wF4/exrYq1lNsOmGMILF9WPw1+rP1YiKbaf5+D2nwu52jbrNFW3H17Kyr
+	 aDWykSV8prsuHqU1JjdSdRF2vJpQqeIqaBKyi11DSJYR1J3P7rQo82/0ELRs1s5qPz
+	 QIt5E6wtbsBnidNUwBXQ4njTzLHtVW3eFalpTZVIQQj6qFZEzOltvQSFDJ8qd/2lDK
+	 zoOGYbnMp7KYw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+Cc: Serhii Pievniev <spevnev16@gmail.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marek.vasut+renesas@gmail.com,
-	linusw@kernel.org,
-	brgl@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] gpio: bd9571mwv: normalize return value of gpio_get
-Date: Mon, 20 Apr 2026 09:20:58 -0400
-Message-ID: <20260420132314.1023554-264-sashal@kernel.org>
+	lenb@kernel.org,
+	patryk.wlazlyn@linux.intel.com,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] tools/power/turbostat: Fix microcode patch level output for AMD/Hygon
+Date: Mon, 20 Apr 2026 09:20:59 -0400
+Message-ID: <20260420132314.1023554-265-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,270 +50,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
+X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Serhii Pievniev <spevnev16@gmail.com>
 
-[ Upstream commit c43778680546dd379b3d8219c177b1a34ba87002 ]
+[ Upstream commit a444083286434ec1fd127c5da11a3091e6013008 ]
 
-The GPIO get callback is expected to return 0 or 1 (or a negative error
-code). Ensure that the value returned by bd9571mwv_gpio_get() is
-normalized to the [0, 1] range.
+turbostat always used the same logic to read the microcode patch level,
+which is correct for Intel but not for AMD/Hygon.
+While Intel stores the patch level in the upper 32 bits of MSR, AMD
+stores it in the lower 32 bits, which causes turbostat to report the
+microcode version as 0x0 on AMD/Hygon.
 
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://patch.msgid.link/20260218190657.2974723-1-dmitry.torokhov@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fix by shifting right by 32 for non-AMD/Hygon, preserving the existing
+behavior for Intel and unknown vendors.
+
+Fixes: 3e4048466c39 ("tools/power turbostat: Add --no-msr option")
+Signed-off-by: Serhii Pievniev <spevnev16@gmail.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have the full picture. Let me compile the complete analysis.
+Error: Failed to generate final synthesis
 
----
+ tools/power/x86/turbostat/turbostat.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1**: Subsystem: `gpio/bd9571mwv`. Action verb: "normalize"
-(ensure correctness). Summary: Normalize the return value of the GPIO
-get callback to comply with the API contract (0 or 1).
-
-**Step 1.2**: Tags:
-- `Signed-off-by: Dmitry Torokhov` - author, well-known kernel
-  maintainer (input subsystem lead)
-- `Link:` to patch.msgid.link for the original submission
-- `Signed-off-by: Bartosz Golaszewski` - GPIO subsystem maintainer who
-  applied it
-- No `Fixes:` tag, no `Cc: stable`, no `Reported-by:` in this specific
-  commit
-
-**Step 1.3**: The commit message states the GPIO `get()` callback API
-contract requires return values of 0 or 1 (or negative error). The
-driver was returning `val & BIT(offset)` which can return values like 2
-for offset 1.
-
-**Step 1.4**: This IS a bug fix despite neutral "normalize" language. It
-fixes an API contract violation that became a functional bug after
-gpiolib changes.
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1**: Single file changed (`drivers/gpio/gpio-bd9571mwv.c`),
-single line modified. Function: `bd9571mwv_gpio_get()`.
-
-**Step 2.2**: Before: `return val & BIT(offset)` returns 0, 1, 2, 4,
-etc. depending on offset. After: `return !!(val & BIT(offset))` returns
-0 or 1.
-
-**Step 2.3**: Bug category: **Logic/correctness fix + API contract
-violation**. The driver has `.ngpio = 2` (offsets 0 and 1). For offset
-0, `BIT(0) = 1`, so the return was 0 or 1 (fine). For offset 1, `BIT(1)
-= 2`, so the return was 0 or 2 (broken).
-
-The critical context is commit `86ef402d805d` ("gpiolib: sanitize the
-return value of gpio_chip::get()"), merged in v6.15-rc1, which made
-gpiolib return `-EBADE` when `get()` returns > 1. This turned the API
-violation into a **functional failure** for GPIO offset 1.
-
-Subsequently, `ec2cceadfae72` ("gpiolib: normalize the return value of
-gc->get() on behalf of buggy drivers"), merged in v7.0-rc2, softened
-this to normalize the value with a warning instead of returning -EBADE.
-
-**Step 2.4**: Fix quality: Trivially correct. `!!` is a well-established
-C pattern for boolean normalization. Zero regression risk.
-
-## PHASE 3: GIT HISTORY
-
-**Step 3.1**: The buggy `return val & BIT(offset)` line was introduced
-in `9384793036afb7` (2017-04-25) - the original driver addition by Marek
-Vasut. This code has been present since ~v4.13.
-
-**Step 3.2**: The commit under review has no Fixes: tag. However, the
-identical fix in related drivers (`2bb995e6155cb` for qca807x,
-`e2fa075d5ce19` for ti-ads7950) both have `Fixes: 86ef402d805d`. From
-the mailing list discussion, Andrew Lunn asked Dmitry to add a Fixes:
-tag on the qca807x version, and it was agreed to reference
-`86ef402d805d`.
-
-**Step 3.3**: `86ef402d805d` was introduced in v6.15-rc1. It is NOT in
-v6.12 or v6.6 stable trees (confirmed by `git merge-base --is-
-ancestor`). The safety-net `ec2cceadfae72` has `Cc: stable` and `Fixes:
-86ef402d805d`, so it will be backported to v6.15.y.
-
-**Step 3.4**: Dmitry Torokhov is a well-known kernel maintainer (Linux
-input subsystem lead). He submitted multiple "normalize return value of
-gpio_get" patches across different drivers simultaneously, all fixing
-the same class of bug. He was also the reporter of the issue that led to
-`ec2cceadfae72`.
-
-**Step 3.5**: No prerequisites needed. The `!!` change is standalone.
-
-## PHASE 4: MAILING LIST RESEARCH
-
-From the mailing list discussion of the qca807x patch (same author, same
-pattern):
-- Andrew Lunn asked for a Fixes: tag and suggested `86ef402d805d`
-- Linus Walleij gave Reviewed-by
-- Bartosz Golaszewski (GPIO maintainer) gave Reviewed-by
-- The author confirmed this is a fix for the gpiolib tightening
-- The bd9571mwv patch was sent separately and routed through GPIO
-  maintainer directly
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1**: Only `bd9571mwv_gpio_get()` is modified.
-
-**Step 5.2**: This is called by gpiolib core (`gpiochip_get()` wrapper
-at line 3259 of gpiolib.c), which validates the return value:
-
-```3259:3275:/home/sasha/linux-autosel-7.0/drivers/gpio/gpiolib.c
-static int gpiochip_get(struct gpio_chip *gc, unsigned int offset)
-{
-        int ret;
-
-        lockdep_assert_held(&gc->gpiodev->srcu);
-
-        /* Make sure this is called after checking for gc->get(). */
-        ret = gc->get(gc, offset);
-        if (ret > 1) {
-                gpiochip_warn(gc,
-                        "invalid return value from gc->get(): %d,
-consider fixing the driver\n",
-                        ret);
-                ret = !!ret;
-        }
-
-        return ret;
-}
-```
-
-**Step 5.4**: The call chain is: userspace GPIO access ->
-gpiod_get_value() -> gpio_chip_get_value() -> gpiochip_get() ->
-gc->get() (= bd9571mwv_gpio_get). This is reachable from userspace via
-the GPIO chardev interface.
-
-## PHASE 6: STABLE TREE ANALYSIS
-
-**Step 6.1**: The *original* bug (returning > 1) has existed since
-v4.13, but it was harmless until `86ef402d805d` (v6.15-rc1). The code
-that makes this a *real* bug only exists in v6.15+.
-
-**Step 6.2**: Clean apply expected - the file has barely changed. Only
-the one line being fixed.
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-**Step 7.1**: GPIO driver for ROHM BD9571MWV/BD9574MWF PMIC (Renesas
-R-Car platforms). Criticality: PERIPHERAL (specific embedded hardware).
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1**: Affects users of Renesas R-Car platforms with ROHM
-BD9571MWV PMIC GPIO.
-
-**Step 8.2**: Triggered any time GPIO offset 1 is read. Common operation
-for users of this hardware.
-
-**Step 8.3**:
-- Without `ec2cceadfae72`: GPIO reads on offset 1 return -EBADE
-  (functional failure, severity HIGH)
-- With `ec2cceadfae72`: GPIO reads on offset 1 trigger a kernel warning
-  (severity MEDIUM)
-
-**Step 8.4**:
-- BENEFIT: Fixes functional correctness for this driver; eliminates
-  kernel warnings
-- RISK: Essentially zero - one-character change (`!!` addition),
-  obviously correct, same pattern applied to 5+ other drivers
-- Ratio: Highly favorable
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Evidence FOR backporting:**
-- One-line, obviously correct fix (!! normalization)
-- Fixes a real API contract violation that causes functional failure or
-  warnings
-- Same fix pattern applied to multiple drivers by the same author
-- Related patches have `Fixes: 86ef402d805d` tag (omission in this patch
-  appears accidental)
-- Reviewed and applied by GPIO subsystem maintainer Bartosz Golaszewski
-- Reviewed by Linus Walleij (on related patches)
-- Zero regression risk
-- The gpiolib wrapper `ec2cceadfae72` explicitly says "consider fixing
-  the driver" in its warning message - this IS that fix
-
-**Evidence AGAINST backporting:**
-- No explicit `Fixes:` tag or `Cc: stable` on this specific commit
-- The safety net `ec2cceadfae72` already prevents functional failure
-  (converts to warning)
-- Affects niche hardware (ROHM PMIC on Renesas platforms)
-- The underlying issue (`86ef402d805d`) only exists in v6.15+, limiting
-  stable tree applicability
-
-**Stable rules checklist:**
-1. Obviously correct? YES - `!!` is a trivial, standard normalization
-2. Fixes a real bug? YES - API violation causing -EBADE or warnings
-3. Important issue? MEDIUM - functional failure without safety net;
-   warnings with it
-4. Small and contained? YES - one line, one file
-5. No new features? Correct
-6. Can apply to stable? YES - clean apply expected
-
-## Verification
-
-- [Phase 1] Parsed tags: No Fixes: or Cc: stable on this commit
-  (expected for AUTOSEL candidate)
-- [Phase 2] Diff: single line `return val & BIT(offset)` → `return
-  !!(val & BIT(offset))` in bd9571mwv_gpio_get()
-- [Phase 3] git blame: buggy code from commit 9384793036afb7 (v4.13,
-  2017), present since driver creation
-- [Phase 3] git show 86ef402d805d: confirmed gpiolib sanitize commit in
-  v6.15-rc1, returns -EBADE for get() > 1
-- [Phase 3] git show ec2cceadfae72: confirmed safety net commit in
-  v7.0-rc2, normalizes with warning
-- [Phase 3] merge-base: 86ef402d805d IS in v6.15 (exit=0), NOT in v6.12
-  (exit=1) or v6.6 (exit=1)
-- [Phase 3] Related patches 2bb995e6155cb (qca807x) and e2fa075d5ce19
-  (ti-ads7950) both have `Fixes: 86ef402d805d`
-- [Phase 4] Mailing list (via b4 dig on related qca807x patch): Andrew
-  Lunn confirmed Fixes: 86ef402d805d is appropriate; Linus Walleij and
-  Bartosz Golaszewski provided Reviewed-by
-- [Phase 5] Call chain verified: userspace → gpiod_get_value →
-  gpio_chip_get_value → gpiochip_get → bd9571mwv_gpio_get
-- [Phase 5] gpiolib.c line 3267-3272: confirmed validation wrapper
-  checks for ret > 1 and emits warning
-- [Phase 6] Driver file unchanged since 2021; clean apply expected
-- [Phase 8] .ngpio = 2 confirmed at line 93; offset 1 returns BIT(1) =
-  2, triggering the bug
-
-The fix is a trivially correct one-line change that addresses a real API
-contract violation. It eliminates either -EBADE errors (v6.15 without
-safety net) or kernel warnings (v7.0 with safety net) when reading GPIO
-offset 1. The fix carries essentially zero regression risk and is part
-of a coordinated effort by the author to fix this class of bug across
-multiple drivers, with identical patches in other drivers having
-explicit `Fixes:` tags.
-
-**YES**
-
- drivers/gpio/gpio-bd9571mwv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpio/gpio-bd9571mwv.c b/drivers/gpio/gpio-bd9571mwv.c
-index 7c95bb36511e1..cc5b1746f2fe8 100644
---- a/drivers/gpio/gpio-bd9571mwv.c
-+++ b/drivers/gpio/gpio-bd9571mwv.c
-@@ -69,7 +69,7 @@ static int bd9571mwv_gpio_get(struct gpio_chip *chip, unsigned int offset)
- 	if (ret < 0)
- 		return ret;
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 1b5ca2f4e92ff..67dfd3eaad014 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -8842,10 +8842,13 @@ void process_cpuid()
+ 	edx_flags = edx;
  
--	return val & BIT(offset);
-+	return !!(val & BIT(offset));
- }
+ 	if (!no_msr) {
+-		if (get_msr(sched_getcpu(), MSR_IA32_UCODE_REV, &ucode_patch))
++		if (get_msr(sched_getcpu(), MSR_IA32_UCODE_REV, &ucode_patch)) {
+ 			warnx("get_msr(UCODE)");
+-		else
++		} else {
+ 			ucode_patch_valid = true;
++			if (!authentic_amd && !hygon_genuine)
++				ucode_patch >>= 32;
++		}
+ 	}
  
- static int bd9571mwv_gpio_set(struct gpio_chip *chip, unsigned int offset,
+ 	/*
+@@ -8860,7 +8863,7 @@ void process_cpuid()
+ 		fprintf(outf, "CPUID(1): family:model:stepping 0x%x:%x:%x (%d:%d:%d)",
+ 			family, model, stepping, family, model, stepping);
+ 		if (ucode_patch_valid)
+-			fprintf(outf, " microcode 0x%x", (unsigned int)((ucode_patch >> 32) & 0xFFFFFFFF));
++			fprintf(outf, " microcode 0x%x", (unsigned int)ucode_patch);
+ 		fputc('\n', outf);
+ 
+ 		fprintf(outf, "CPUID(0x80000000): max_extended_levels: 0x%x\n", max_extended_level);
 -- 
 2.53.0
 
