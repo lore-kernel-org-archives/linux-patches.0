@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2301B3FAE18;
-	Mon, 20 Apr 2026 13:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADA83C2798;
+	Mon, 20 Apr 2026 13:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691612; cv=none; b=DwWPv+dOFk4nNpsKJhyaM8sgez3eLGHPkuMaPHfs7WNu7T+78zkYTPJzrKo1oRpR/czc3KrgOV6mSwbQNujIfhrlP/fTuppL0WnQIrIi31SC2GEAVaH4YlQm/ITpi2RhkN3JdVKgCTRlQH9Rdoz/bo95QDYeek2ii3sw7Y7KFiU=
+	t=1776691613; cv=none; b=Bp33B5aiOtZ4OjHFhcq8I++HkRcUdbgcxYLhFdACQEW7+8nNxIL6q1hB+iXH+OK6jfsp7+HVtIpZHsjkWlT4XoJknmQLwJZPxvIAxwV4V9q6gbziFOlkK82g6RbrjWBg5WcU6GCM08bwhJ//VlmC4IcqF+9qBs1SgvumMbOlUC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691612; c=relaxed/simple;
-	bh=dMLXMb9lsZEBL3IJdlXARDHwyhBPf2JT329tfRAuZfM=;
+	s=arc-20240116; t=1776691613; c=relaxed/simple;
+	bh=PPUIx66EefomAExyC7+f52diEldPURBFAue1OxHTY50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iyHPr5xBbODaQNxUeVxvpRAXv1afmfnmk0A5b6f1GRcxGcIUwAItMi1f4AyfTxbyZZe0y1Ur/ZOFDnOiJgmIquLUTAvcldix3npNbP9NBVJWEmvYsjRGCJszDG0zBTfWcqeB2ku5jl6W4yv3ip86UmNn0soOZdlmyhuXpPIn7R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gN542SxU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d0O2vPJqeP0gqqItLXj6QAof2n/zC8I5IALAW8et5M2HbhXmAVJSvIO65mJAQUbu998uEZ/U6fJ+gqrcXU4ct9p5FpErm0HbaL6gK1CxoOs20IPmA475/kgaagwTFhbcPF+1upyqIeeS6eEx+wAahT5NxcSUgLtFmYnpIf4rvOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gLaVJudb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gN542SxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB69CC2BCB6;
-	Mon, 20 Apr 2026 13:26:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gLaVJudb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735F8C19425;
+	Mon, 20 Apr 2026 13:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691612;
-	bh=dMLXMb9lsZEBL3IJdlXARDHwyhBPf2JT329tfRAuZfM=;
+	s=k20201202; t=1776691613;
+	bh=PPUIx66EefomAExyC7+f52diEldPURBFAue1OxHTY50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gN542SxUBgiUl/tGb0yEuLmylnpeZh7f6yoD7IMD85SbFtTtcXWqdbgcMSQFuVSLZ
-	 dPzU/ei6k6Cj107/Cgn0uyOO4n/c7Msq62vxZz+tvWhW5B6/JmW0ocWJRH4+ujTOKX
-	 rLCXMXzT7Wn4bVy6ZTdTdD/6C6hRfEJ7Nga4Z3OYs6e9xdLcKQ8cfDimaRxPvwxd0M
-	 g4vk3fp9dUvKvFMVBnpL40W+3duYtY2A0bbyLtTmW3Iap8lxgRiD9OEzgWh9C0Jnx1
-	 pvltodxW0rxEtgNagVlGuvxMPYjY3yk5DJTXdooi7jD85yRPc/RgLZ2V/x0Kh02tX7
-	 S5amFCQU1YQcA==
+	b=gLaVJudbL3QP1gyJn1YUmrvDpFRg8xzQRT5e22+sixQCyZSkXSayP1BQTlbT/4QWY
+	 20PDfisxNxypFdvEFh7lqFpvDAMuu1QDYAelAj6BNEES71mBFcx2I9CFpPFo4K3BaW
+	 IyMYm2pfkDqNBSiHPRoN+M8TWlt3KJwasAbiiBTuXNaNe/muLUZPLUCQO9ybnSMkXI
+	 BppOSwDyB2rayqaJ7E4hQzo0eOr9HCjR+J7gaNgrKKxcyvVss6/B4tp9ocV4k3PBsi
+	 rYh4S+n0TYcvssOdxYWIULbZqHsVaOzMiFVHHE9c8d96y94kpFACxtQ9FIEyHq5f94
+	 xpic9HESs9Mpg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Huang <jinhuieric.huang@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/amdkfd: fix kernel crash on releasing NULL sysfs entry
-Date: Mon, 20 Apr 2026 09:18:45 -0400
-Message-ID: <20260420132314.1023554-131-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 7.0-6.18] wifi: mt76: flush pending TX before channel switch
+Date: Mon, 20 Apr 2026 09:18:46 -0400
+Message-ID: <20260420132314.1023554-132-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -58,337 +57,451 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Huang <jinhuieric.huang@amd.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 4ea64d482fc2cc85009fce5abdf4780ece00c31c ]
+[ Upstream commit 0dcef1cbae27d806cd29c296cc03ad6e8ece771d ]
 
-there is an abnormal case that When a process re-opens kfd
-with different mm_struct(execve() called by user), the
-allocated p->kobj will be freed, but missed setting it to NULL,
-that will cause sysfs/kernel crash with NULL pointers in p->kobj
-on kfd_process_remove_sysfs() when releasing process, and the
-similar error on kfd_procfs_del_queue() as well.
+mt76_tx() queues frames on wcid->tx_pending for async processing by
+tx_worker. In __mt76_set_channel(), the worker gets disabled before it
+may have run, and the subsequent wait only checks DMA ring queues, not
+the software pending list. This means frames like nullfunc PS frames
+from mt76_offchannel_notify() may never be transmitted on the correct
+channel.
 
-Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix this by running mt76_txq_schedule_pending() synchronously after
+disabling the tx_worker but before setting MT76_RESET, which would
+otherwise cause mt76_txq_schedule_pending_wcid() to bail out.
+
+Link: https://patch.msgid.link/20260309060730.87840-8-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile the full report.
+Good. I now have a complete picture. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-- **Subsystem**: drm/amdkfd
-- **Action verb**: "fix" - explicitly a bug fix
-- **Summary**: Fixes a kernel crash when releasing a NULL (dangling)
-  sysfs entry
+- **Subsystem**: wifi: mt76 (MediaTek WiFi driver)
+- **Action verb**: "flush" — implies fixing missing work that should
+  have been done
+- **Summary**: Flush pending TX frames before channel switch to ensure
+  they're sent on the correct channel
+
+Record: [wifi: mt76] [flush] [Ensure pending TX frames are transmitted
+before channel switch]
 
 ### Step 1.2: Tags
-- **Signed-off-by**: Eric Huang <jinhuieric.huang@amd.com> (author)
-- **Reviewed-by**: Kent Russell <kent.russell@amd.com> (AMD KFD team
-  member)
-- **Signed-off-by**: Alex Deucher <alexander.deucher@amd.com> (AMD DRM
-  maintainer)
-- No Fixes: tag, no Cc: stable, no Reported-by, no Link - absence
-  expected
+- **Link**:
+  `https://patch.msgid.link/20260309060730.87840-8-nbd@nbd.name` — part
+  of a series (patch 8)
+- **Signed-off-by**: Felix Fietkau `<nbd@nbd.name>` — the mt76
+  maintainer and original author
 
-### Step 1.3: Commit Body
-The commit message describes: when a process re-opens KFD with a
-different `mm_struct` (after `execve()`), the allocated `p->kobj` is
-freed via `kobject_put()` but not set to NULL. Later,
-`kfd_process_remove_sysfs()` checks `if (!p->kobj)` - but since the
-pointer is dangling (not NULL), the check passes and causes a kernel
-crash. The same issue affects `kfd_procfs_del_queue()`.
+Record: No Fixes: tag (expected for autosel candidates). No Reported-by.
+No Cc: stable. Author is subsystem maintainer. Part number "8" in msgid
+suggests this is part of a series.
 
-**Failure mode**: kernel crash (NULL pointer dereference / use-after-
-free on stale kobj pointer)
+### Step 1.3: Commit Body Analysis
+The commit clearly explains the bug:
+- `mt76_tx()` queues frames on `wcid->tx_pending` for async processing
+  by `tx_worker`
+- In `__mt76_set_channel()`, the worker gets disabled *after*
+  `MT76_RESET` is set
+- `mt76_txq_schedule_pending_wcid()` bails out when `MT76_RESET` is set
+  (line 626 of tx.c)
+- The `wait_event_timeout` only checks DMA ring queues via
+  `mt76_has_tx_pending()`, NOT the software pending list
+- Result: Frames like nullfunc PS frames may never be transmitted on the
+  correct channel
 
-### Step 1.4: Hidden Bug Fix?
-No hiding here - the subject and body explicitly say "fix kernel crash."
+Record: Bug = TX frames lost during channel switch due to ordering issue
+between MT76_RESET flag and tx_worker disable. Symptom = nullfunc power-
+save frames not transmitted. Root cause = MT76_RESET set before
+schedule_pending runs, causing bail-out.
+
+### Step 1.4: Hidden Bug Fix Detection
+This is an explicit bug fix, not disguised. The commit clearly describes
+lost TX frames.
+
+Record: Explicit bug fix — not a hidden fix.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **Files**: 1 file changed: `drivers/gpu/drm/amd/amdkfd/kfd_process.c`
-- **Lines**: +2, -1 (net 1 line added)
-- **Functions modified**: `kfd_procfs_del_queue()`,
-  `kfd_create_process_sysfs()`
-- **Scope**: Single-file, surgical fix
+- **mac80211.c**: 3 lines reordered (moved `mt76_worker_disable` before
+  `set_bit(MT76_RESET)`, added `mt76_txq_schedule_pending()` call)
+- **mt76.h**: 1 line added (function declaration)
+- **tx.c**: 1 line changed (`static void` → `void`)
+- **Total**: ~5 lines of meaningful change
+- **Functions modified**: `__mt76_set_channel()`,
+  `mt76_txq_schedule_pending()` (visibility only)
 
-### Step 2.2: Code Flow Changes
+Record: [3 files, ~5 lines changed] [__mt76_set_channel reordering,
+mt76_txq_schedule_pending visibility] [Single-subsystem surgical fix]
 
-**Hunk 1** (`kfd_procfs_del_queue`):
-- Before: only checks `if (!q)` then proceeds to `kobject_del(&q->kobj)`
-  and `kobject_put(&q->kobj)`
-- After: checks `if (!q || !q->process->kobj)` - if the process's kobj
-  was freed, skip queue cleanup since parent sysfs is gone
+### Step 2.2: Code Flow Change
 
-**Hunk 2** (`kfd_create_process_sysfs`):
-- Before: on `kobject_init_and_add()` failure, calls
-  `kobject_put(process->kobj)` and returns, leaving `process->kobj` as a
-  dangling pointer
-- After: adds `process->kobj = NULL` after `kobject_put()`, preventing
-  dangling pointer
+**Before** (`__mt76_set_channel()`):
+1. `set_bit(MT76_RESET, &phy->state)` — blocks
+   `mt76_txq_schedule_pending_wcid`
+2. `mt76_worker_disable(&dev->tx_worker)` — stops worker
+3. `wait_event_timeout(... !mt76_has_tx_pending ...)` — only checks DMA
+   queues
+
+**After**:
+1. `mt76_worker_disable(&dev->tx_worker)` — stops worker first
+2. `mt76_txq_schedule_pending(phy)` — synchronously flush software
+   pending list to DMA
+3. `set_bit(MT76_RESET, &phy->state)` — now safe to set
+4. `wait_event_timeout(... !mt76_has_tx_pending ...)` — DMA queues now
+   include flushed frames
+
+Record: Fix reorders operations so pending frames get flushed to DMA
+rings before MT76_RESET blocks further processing.
 
 ### Step 2.3: Bug Mechanism
-This is a **dangling pointer / use-after-free** bug. After
-`kobject_put()` frees the kobj, the pointer is not NULLed, so
-`kfd_process_remove_sysfs()` later passes the `!p->kobj` guard and
-dereferences the freed pointer.
+This is a **logic/ordering bug** leading to **TX frame loss**. The
+`MT76_RESET` flag acts as a gate in `mt76_txq_schedule_pending_wcid()`
+(line 626), and it was being set too early, preventing software-queued
+frames from ever reaching the hardware.
+
+Record: [Logic/ordering bug] [MT76_RESET set too early prevents software
+TX queue flushing → frame loss]
 
 ### Step 2.4: Fix Quality
-- Obviously correct: setting pointer to NULL after free is a textbook
-  fix
-- Minimal: 2 lines changed
-- No regression risk: the NULL check prevents use of an already-freed
-  object
-- No locking changes, no API changes
+- Obviously correct: The reordering is logically sound — disable worker,
+  flush pending, then set reset flag
+- Minimal and surgical: ~5 lines changed
+- Regression risk: Very low — the only new code path is calling
+  `mt76_txq_schedule_pending()` synchronously, which already runs as
+  part of `mt76_txq_schedule_all()` via the tx_worker. The worker is
+  already disabled at this point, so no concurrency concern.
+
+Record: [High quality fix, obviously correct, minimal scope, very low
+regression risk]
 
 ---
 
-## PHASE 3: GIT HISTORY
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-- `kfd_procfs_del_queue()` was introduced by commit 6d220a7e7971ec
-  (Amber Lin, 2020-01-30) - old function
-- `kfd_create_process_sysfs()` was introduced by commit 4cd255b9694647
-  (Zhu Lingshan, 2025-04-22) - the commit that extracted sysfs creation
-  into a separate function
-- The error path that's missing `= NULL` was introduced in
-  4cd255b9694647
+The buggy code pattern (`set_bit` before `mt76_worker_disable`) was
+introduced by:
+- `f4fdd7716290a2` ("wifi: mt76: partially move channel change code to
+  core") — v6.12
+- `0b3be9d1d34e21` ("wifi: mt76: add separate tx scheduling queue for
+  off-channel tx") — v6.12
 
-### Step 3.2: Fixes target
-No explicit Fixes: tag. The bug was introduced by 4cd255b9694647
-("amdkfd: Introduce kfd_create_process_sysfs as a separate function").
-This commit first appeared in v7.0-rc1 - confirmed NOT in v6.19,
-v6.16-rc1, v6.15-rc1, or v6.14.
+These two commits together created the bug: one added the off-channel TX
+pending mechanism, the other moved channel change code to core with the
+wrong ordering.
+
+Record: Bug introduced in v6.12 by commits f4fdd7716290a2 and
+0b3be9d1d34e21.
+
+### Step 3.2: Fixes Tag
+No Fixes: tag present (expected for autosel). However, the bug clearly
+traces back to `0b3be9d1d34e` — two related fixes (228bc0e79c852 and
+49fba87205bec) already reference it with `Fixes:` tags.
+
+Record: Related fixes 228bc0e79c852 and 49fba87205bec both fix
+0b3be9d1d34e — this is a third fix for the same problematic commit.
 
 ### Step 3.3: File History
-Many intermediate changes between the buggy commit and the fix (treewide
-refactoring, unrelated amdkfd changes). No other fix for this specific
-issue.
+Related recent commits:
+- `228bc0e79c852` (v6.14): "only enable tx worker after setting the
+  channel" — Fixes: 0b3be9d1d34e
+- `49fba87205bec`: "fix linked list corruption" — Fixes: 0b3be9d1d34e
+- `bdeac7815629c`: "free pending offchannel tx frames on wcid cleanup"
+
+Record: Multiple follow-up fixes to the same offchannel TX code. This
+commit is standalone — only needs the pre-existing
+mt76_txq_schedule_pending function.
 
 ### Step 3.4: Author
-Eric Huang is an AMD developer with multiple amdkfd commits (pasid
-debugfs, smi events, TLB flush, etc.) - a regular contributor to the
-subsystem.
+Felix Fietkau (`nbd@nbd.name`) is the mt76 subsystem maintainer and
+original author of the driver. Very high confidence in fix correctness.
+
+Record: Author is the mt76 maintainer — highest trust level.
 
 ### Step 3.5: Dependencies
-The fix modifies `kfd_create_process_sysfs()` which only exists since
-4cd255b9694647 (v7.0-rc1). The fix is self-contained and needs no other
-patches.
+- `mt76_txq_schedule_pending()` exists since v6.12 (commit 0b3be9d1d34e)
+- `__mt76_set_channel()` exists since v6.14 (commit 82334623af0cd2)
+- For v6.12 backport: function is called `mt76_set_channel()` with
+  different context — needs adaptation
+- For v6.14+/7.0: should apply cleanly or with minimal context
+  adjustment
+- Commit `228bc0e79c852` (v6.14) should ideally be present first, as it
+  repositions `mt76_worker_enable()`. The v6.12 code has enable before
+  `set_channel`, which was moved by that fix.
+
+Record: Dependencies on 0b3be9d1d34e (present since v6.12) and
+82334623af0cd2 (v6.14). For v6.12 backport, adaptation is needed.
 
 ---
 
-## PHASE 4: MAILING LIST
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: Patch Discussion
-b4 dig found the original submission at:
-`https://patch.msgid.link/20260327180036.131096-1-
-jinhuieric.huang@amd.com`
+b4 dig could not find the exact commit by the Link msgid. The msgid
+suggests this is patch 8 of a series from Felix Fietkau dated
+2026-03-09.
 
-The mbox shows:
-- v1 submission on 2026-03-27 by Eric Huang
-- Kent Russell replied with `Reviewed-by` on the same day
-- No NAKs, no concerns raised
-- No stable nomination by reviewers, but this is expected for commits in
-  the autosel pipeline
+Record: Part of a larger series. Could not retrieve full lore discussion
+due to lore anti-bot protections.
 
 ### Step 4.2: Reviewers
-Patch was sent to `amd-gfx@lists.freedesktop.org`, reviewed by Kent
-Russell (AMD KFD team), committed by Alex Deucher (AMD DRM maintainer).
-Appropriate review chain.
+Felix Fietkau is both author and maintainer — self-reviewed. This is
+normal for mt76 where he is the primary maintainer.
 
-### Step 4.3: Bug Report
-No external bug report link. The author discovered this through internal
-testing of the execve() code path.
+Record: Author is subsystem maintainer.
 
-### Step 4.4: Related Patches
-Single standalone patch (v1 only, no series).
+### Step 4.3-4.5: Bug Report
+No Reported-by tag, no syzbot report. This appears to be found through
+code review by the maintainer. No stable-specific discussion found.
 
-### Step 4.5: Stable Discussion
-No prior stable discussion found.
+Record: Found by maintainer code review.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions Modified
-- `kfd_procfs_del_queue()` - called to delete a queue's sysfs entry
-- `kfd_create_process_sysfs()` - creates sysfs entries for a KFD process
-
-### Step 5.2: Callers
-- `kfd_procfs_del_queue()` called from `kfd_process_queue_manager.c` in
-  two places: during queue destruction and queue resource cleanup
-- `kfd_create_process_sysfs()` called from `kfd_process.c` (initial
-  process creation) and `kfd_chardev.c` (secondary process context
-  creation via ioctl)
+### Step 5.1-5.2: Key Functions
+- `__mt76_set_channel()` — called from `mt76_set_channel()`
+  (mac80211.c:1071) and `mt76_chanctx_assign_vif()` (channel.c:29)
+- `mt76_set_channel()` is the mac80211 callback for channel changes
+- This is called during every channel switch, scan, remain-on-channel —
+  a **common operation**
 
 ### Step 5.3-5.4: Call Chain
-The bug path: user calls `execve()` → KFD detects mm change → re-opens
-KFD → `kfd_create_process_sysfs()` fails → dangling `kobj` → process
-cleanup → `kfd_process_remove_sysfs()` → crash via stale pointer
+`mac80211 → mt76_set_channel() → __mt76_set_channel()` — this is the
+standard channel switch path, reachable during normal WiFi operation
+(scanning, roaming, channel changes).
+
+Record: Commonly triggered during WiFi scanning and channel switching.
 
 ### Step 5.5: Similar Patterns
-The existing `kfd_process_remove_sysfs()` already has a `if (!p->kobj)
-return;` guard (line 1158), which is the correct pattern. The bug is
-that the error path in `kfd_create_process_sysfs()` doesn't maintain the
-invariant that freed kobj should be NULL.
+The MT76_RESET bail-out pattern in `mt76_txq_schedule_pending_wcid()`
+(line 626) is the direct cause. The same flag check exists in other TX
+scheduling paths (lines 492, 546) which are also affected by the
+ordering.
+
+Record: MT76_RESET acts as gating mechanism in multiple TX paths.
 
 ---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable Trees
-The buggy function `kfd_create_process_sysfs()` was introduced in commit
-4cd255b9694647, which is in v7.0-rc1 and v7.0 only. It is NOT in v6.19,
-v6.14, or any earlier stable tree. The fix is only relevant for the
-**7.0.y** stable tree.
+### Step 6.1: Bug Existence in Stable
+- **v6.6 and earlier**: Bug does NOT exist —
+  `mt76_txq_schedule_pending()` and the offchannel TX mechanism weren't
+  added until v6.12
+- **v6.12**: Bug EXISTS — has both the offchannel TX pending mechanism
+  and the wrong ordering in `mt76_set_channel()`
+- **v6.14+**: Bug EXISTS — has `__mt76_set_channel()` with the wrong
+  ordering
+
+Record: Bug exists in v6.12+ stable trees.
 
 ### Step 6.2: Backport Complications
-The fix should apply cleanly to 7.0.y since the code context matches
-directly.
+- **v7.0**: Should apply cleanly
+- **v6.14**: Should apply cleanly or near-cleanly (function name same)
+- **v6.12**: Needs adaptation — different function name
+  (`mt76_set_channel` vs `__mt76_set_channel`), different surrounding
+  code (mutex_lock, cancel_delayed_work), may also need 228bc0e79c852 as
+  prerequisite
 
-### Step 6.3: Related Fixes Already in Stable
-No related fixes found.
+Record: Clean for v6.14+; needs rework for v6.12.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem
-- **Subsystem**: drivers/gpu/drm/amd/amdkfd - AMD GPU Kernel Fusion
-  Driver
-- **Criticality**: IMPORTANT - AMD GPU users running KFD compute
-  workloads (ROCm, OpenCL)
+### Step 7.1: Subsystem Criticality
+WiFi driver (mt76) — **IMPORTANT**. MediaTek MT76xx chipsets are
+extremely common in consumer routers, laptops (mt7921/mt7922), and
+access points (mt7915, mt7996). This is one of the most widely used WiFi
+driver families in Linux.
+
+Record: [drivers/net/wireless/mediatek/mt76] [IMPORTANT — very common
+WiFi hardware]
 
 ### Step 7.2: Activity
-Very active subsystem with frequent changes.
+Very active subsystem with frequent fixes from the maintainer.
 
 ---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-Users of AMD GPU KFD (ROCm compute users) who hit the error path in
-`kfd_create_process_sysfs()` during process creation, specifically when
-`execve()` causes a re-open with a different mm.
+### Step 8.1: Affected Users
+All users of MT76-based WiFi devices (mt7603, mt76x0, mt76x2, mt7615,
+mt7915, mt7921/mt7922, mt7996) — a very large user base including laptop
+users, router users, and embedded systems.
 
-### Step 8.2: Trigger
-When `kobject_init_and_add()` fails during KFD process sysfs creation
-AND the process later gets cleaned up. This is an error path, but can be
-triggered by resource exhaustion or sysfs conflicts.
+Record: [Driver-specific but very widely used]
+
+### Step 8.2: Trigger Conditions
+- Triggered during any channel switch (scanning, roaming, offchannel
+  operations)
+- WiFi scanning happens automatically and frequently
+- The bug window is when frames are queued on `tx_pending` just before a
+  channel switch
+
+Record: [Common trigger — scanning happens regularly on all WiFi
+devices]
 
 ### Step 8.3: Failure Mode
-**CRITICAL**: Kernel crash (use of dangling pointer / NULL dereference
-in sysfs teardown).
+- TX frame loss — nullfunc PS frames not transmitted → AP may not know
+  client is going off-channel → potential packet loss, connectivity
+  issues
+- Not a crash, but a functional correctness issue affecting WiFi
+  reliability
+
+Record: [Failure mode: TX frame loss during channel switch] [Severity:
+MEDIUM-HIGH — affects WiFi reliability]
 
 ### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH - prevents kernel crash
-- **Risk**: VERY LOW - 2-line fix, setting pointer to NULL after free
-  and adding a NULL check
-- **Ratio**: Strongly favorable
+- **Benefit**: Fixes TX frame loss during channel switch on widely-used
+  WiFi hardware. Medium-high benefit.
+- **Risk**: Very low — 5 lines of reordering, obviously correct,
+  authored by maintainer
+- **Ratio**: Strong benefit, minimal risk
+
+Record: [Benefit: medium-high] [Risk: very low] [Favorable ratio]
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence
-**FOR backporting:**
-- Fixes a kernel crash (dangling pointer causes crash in sysfs teardown)
-- Tiny fix: 2 lines changed in 1 file
-- Obviously correct (NULL pointer after free, NULL check before use)
-- Reviewed by subsystem developer (Kent Russell)
-- Committed by subsystem maintainer (Alex Deucher)
-- Standalone fix with no dependencies
-- Buggy code exists in 7.0.y stable tree
 
-**AGAINST backporting:**
-- Error path only (not every user will hit this)
-- Only affects 7.0.y (the buggy code is new in v7.0-rc1)
-- No Fixes: tag (expected for autosel candidates)
+**FOR backporting**:
+- Fixes a real bug: TX frames lost during channel switch
+- Small, surgical fix: ~5 lines of meaningful change
+- Authored by the mt76 maintainer (Felix Fietkau)
+- Affects widely-used WiFi hardware
+- Common trigger (WiFi scanning)
+- Obviously correct: just reordering operations and adding a synchronous
+  flush
+- Very low regression risk
+- Related to same code that already has two other Fixes: tagged commits
+
+**AGAINST backporting**:
+- No Fixes: tag (expected for autosel)
+- No Reported-by (found by maintainer review)
+- Part of a larger series (patch 8) — but the fix is self-contained
+- v6.12 backport would need adaptation
+- Not a crash — "just" frame loss (but impacts WiFi reliability)
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - trivial NULL-after-free
-   pattern, reviewed
-2. Fixes a real bug? **YES** - kernel crash on sysfs teardown
-3. Important issue? **YES** - kernel crash (CRITICAL severity)
-4. Small and contained? **YES** - 2 lines, 1 file
-5. No new features or APIs? **YES** - pure bug fix
-6. Can apply to stable? **YES** - code exists in 7.0.y, should apply
-   cleanly
+1. Obviously correct? **YES** — ordering fix is straightforward
+2. Fixes a real bug? **YES** — TX frame loss during channel switch
+3. Important issue? **YES** — WiFi reliability on common hardware
+4. Small and contained? **YES** — ~5 lines across 3 files in same
+   subsystem
+5. No new features? **YES** — just fixes ordering
+6. Can apply to stable? **YES** for v6.14+; **needs rework** for v6.12
 
 ### Step 9.3: Exception Categories
-Not an exception category - this is a standard bug fix.
+Not an exception category — this is a straightforward bug fix.
+
+### Step 9.4: Decision
+The fix addresses a real TX frame loss bug during WiFi channel switching
+on widely-used MT76 hardware. It is small, obviously correct, authored
+by the subsystem maintainer, and carries minimal regression risk. The
+bug affects WiFi reliability for a large user base.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Kent Russell, Signed-off-by Alex
-  Deucher (maintainer), no Fixes/Cc-stable
-- [Phase 2] Diff analysis: +2/-1 lines; adds `process->kobj = NULL`
-  after `kobject_put()` and `!q->process->kobj` check in
-  `kfd_procfs_del_queue()`
-- [Phase 3] git blame: error path introduced by 4cd255b9694647 (Zhu
-  Lingshan, 2025-04-22)
-- [Phase 3] git merge-base: 4cd255b9694647 is in v7.0-rc1 and v7.0, NOT
-  in v6.19 or earlier
-- [Phase 3] git log between buggy and fix: no intermediate fix for same
-  issue found
-- [Phase 4] b4 dig: found original at `https://patch.msgid.link/20260327
-  180036.131096-1-jinhuieric.huang@amd.com`
-- [Phase 4] b4 dig -a: single v1 submission, no revisions
-- [Phase 4] mbox review: Kent Russell gave Reviewed-by, no NAKs or
-  concerns
-- [Phase 5] Grep callers: `kfd_procfs_del_queue()` called from
-  `kfd_process_queue_manager.c` (2 sites); `kfd_create_process_sysfs()`
-  called from both `kfd_process.c` and `kfd_chardev.c`
-- [Phase 5] `kfd_process_remove_sysfs()` at line 1158 already has `if
-  (!p->kobj) return;` guard, confirming the invariant the fix maintains
-- [Phase 6] Buggy code only in v7.0-rc1+, fix relevant for 7.0.y stable
-  only
-- [Phase 8] Failure mode: kernel crash on dangling pointer dereference
-  during sysfs teardown, severity CRITICAL
-
-The fix is small, surgical, obviously correct, and prevents a kernel
-crash. It meets all stable kernel criteria.
+- [Phase 1] Parsed tags: Link to patch.msgid.link, Signed-off-by Felix
+  Fietkau (mt76 maintainer)
+- [Phase 2] Diff analysis: Reorders
+  set_bit(MT76_RESET)/mt76_worker_disable, adds
+  mt76_txq_schedule_pending() call, makes function non-static
+- [Phase 2] Confirmed MT76_RESET bail-out at tx.c line 626:
+  `test_bit(MT76_RESET, &phy->state)` causes schedule_pending_wcid to
+  return -1
+- [Phase 2] Confirmed mt76_has_tx_pending() only checks DMA queues
+  (q->queued), not software pending list
+- [Phase 3] git blame: `set_bit(MT76_RESET)` ordering from
+  f4fdd7716290a2 (v6.12), offchannel pending from 0b3be9d1d34e21 (v6.12)
+- [Phase 3] git show 228bc0e79c852: Related fix "only enable tx worker
+  after setting the channel", Fixes: 0b3be9d1d34e (v6.14)
+- [Phase 3] git show 49fba87205bec: Related fix "fix linked list
+  corruption", Fixes: 0b3be9d1d34e
+- [Phase 3] Confirmed __mt76_set_channel() introduced in 82334623af0cd2
+  (v6.14)
+- [Phase 3] Felix Fietkau confirmed as mt76 maintainer via git log
+  --author
+- [Phase 5] mt76_txq_schedule_pending called from mt76_txq_schedule_all
+  → mt76_tx_worker_run → tx_worker — normal TX path
+- [Phase 6] Confirmed mt76_txq_schedule_pending does NOT exist in v6.6
+  (bug not present pre-v6.12)
+- [Phase 6] Confirmed v6.12 has the same bug pattern (set_bit before
+  worker_disable, no schedule_pending call)
+- [Phase 6] v6.12 uses `mt76_set_channel()` not `__mt76_set_channel()` —
+  backport needs adaptation
+- UNVERIFIED: Could not access lore.kernel.org discussion thread due to
+  anti-bot protections
 
 **YES**
 
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 5 +++--
+ drivers/net/wireless/mediatek/mt76/mt76.h     | 1 +
+ drivers/net/wireless/mediatek/mt76/tx.c       | 2 +-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 12e24fbf8c463..c6782904d2f1c 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -679,7 +679,7 @@ static void kfd_procfs_add_sysfs_files(struct kfd_process *p)
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index d0c522909e980..73d252e0a7bf3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -1030,9 +1030,10 @@ int __mt76_set_channel(struct mt76_phy *phy, struct cfg80211_chan_def *chandef,
+ 	int timeout = HZ / 5;
+ 	int ret;
  
- void kfd_procfs_del_queue(struct queue *q)
+-	set_bit(MT76_RESET, &phy->state);
+-
+ 	mt76_worker_disable(&dev->tx_worker);
++	mt76_txq_schedule_pending(phy);
++
++	set_bit(MT76_RESET, &phy->state);
+ 	wait_event_timeout(dev->tx_wait, !mt76_has_tx_pending(phy), timeout);
+ 	mt76_update_survey(phy);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index d05e83ea1cacc..7bba0831bc0eb 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -1518,6 +1518,7 @@ void mt76_stop_tx_queues(struct mt76_phy *phy, struct ieee80211_sta *sta,
+ void mt76_tx_check_agg_ssn(struct ieee80211_sta *sta, struct sk_buff *skb);
+ void mt76_txq_schedule(struct mt76_phy *phy, enum mt76_txq_id qid);
+ void mt76_txq_schedule_all(struct mt76_phy *phy);
++void mt76_txq_schedule_pending(struct mt76_phy *phy);
+ void mt76_tx_worker_run(struct mt76_dev *dev);
+ void mt76_tx_worker(struct mt76_worker *w);
+ void mt76_release_buffered_frames(struct ieee80211_hw *hw,
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index 0753acf2eccb8..ab62591b7a260 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -660,7 +660,7 @@ mt76_txq_schedule_pending_wcid(struct mt76_phy *phy, struct mt76_wcid *wcid,
+ 	return ret;
+ }
+ 
+-static void mt76_txq_schedule_pending(struct mt76_phy *phy)
++void mt76_txq_schedule_pending(struct mt76_phy *phy)
  {
--	if (!q)
-+	if (!q || !q->process->kobj)
- 		return;
- 
- 	kobject_del(&q->kobj);
-@@ -858,6 +858,7 @@ int kfd_create_process_sysfs(struct kfd_process *process)
- 	if (ret) {
- 		pr_warn("Creating procfs pid directory failed");
- 		kobject_put(process->kobj);
-+		process->kobj = NULL;
- 		return ret;
- 	}
- 
+ 	LIST_HEAD(tx_list);
+ 	int ret = 0;
 -- 
 2.53.0
 
