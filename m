@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668F633B6D3;
-	Mon, 20 Apr 2026 15:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7C733B6EF;
+	Mon, 20 Apr 2026 15:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699888; cv=none; b=DoaDHwBqDQ6BYtNRfqEzfPwEvGUFhcLNFzAFUNsvHALiUI3LY5rGrok/hsIhqJd1FdCtLWZYkg26xeEMUPMCOibTrukdRLGcnqs7kuJkyfk8tuf1cZt/Zy49OANYuXx2Cr9QZP6D5pRb9W8Gr0C32p8U7aKAJ/w+TDhmGE4lVhE=
+	t=1776699891; cv=none; b=s7iC5dMV88cwX61U3wML/lEetUMi5qurupQ3Mfytz+t4SfZoBj8qtXoUVGzuUSM8y4jkbGJwn8bLPdLT85t/w7QLuPkG7k+uqX0Wcxmrgf8/fe0JAYqVJYb0reZ6MZXqUaDS4fGgum0HenijqnCCyFNJgwYxRn6IABL4he3xEXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699888; c=relaxed/simple;
-	bh=GO6VVItUC3vAlojph73BYWJd4Ns8OmfAWG2P4Q6dcw4=;
+	s=arc-20240116; t=1776699891; c=relaxed/simple;
+	bh=j+yahGM9QGF9seJBxsBp8UajpU/BgUfRZRNJfxkygc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxExeNFqERabCP0aQxYdI7+/KHybZ/xjTOIECflqxvHEWRnSVRu5VoOIBJli9iwG24aHZWNm1+N1GgoGh5C6L6/OECkdvmm6UAgoCOto5mfyR1P2JpNMp8qe3fJ7ODlJxgwT5HigSqS2fQg9DYWMst7X0atVxs5PpUGDXkdTkRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqaozXqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5MHjDqM3Qo3QfUfQt+Oyj/+BRwio0GNtls56rwBlpBnMfSEhRtdP+4gHRzh7sihM5nLgKrewYCixT6Y7/R3UbnC3rpJBlG8emdlLwt2Lg8ej4SsVz5od1pVM/njKF6BVZwoyWVSL3klmNX4j6D6lpkcbu6nyoOoBhy9lrrf7Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpaoeCU6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqaozXqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04F4C19425;
-	Mon, 20 Apr 2026 15:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpaoeCU6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82973C19425;
+	Mon, 20 Apr 2026 15:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699888;
-	bh=GO6VVItUC3vAlojph73BYWJd4Ns8OmfAWG2P4Q6dcw4=;
+	s=korg; t=1776699890;
+	bh=j+yahGM9QGF9seJBxsBp8UajpU/BgUfRZRNJfxkygc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqaozXqoLozUSb5ndpCr3vSnACw1FYfb55tc9K1KmJ97pNRTQOWwiB0eUyFrOLKEC
-	 CZJHK8pRU74XCwArV5jcLCE/2hAV7YfSmtNWpKX0vcwXiobrK5tkTe3FH7gbvBMWC9
-	 Ar3JFqGS3OGA9BNhB6ZjvmnWE5+f+gESFVGzIcds=
+	b=lpaoeCU6uxjlxlOxc+Gii009AaD9JOLdruHsRxo8kY7iUx4IzhsLja06zOHsHj96Y
+	 RqCmgF3zjeDaC/XgUZe8M5anMdayVSqi2vqRizBpiYVp4GIZ0L0RauDScf/Np0eN5M
+	 Fi1EuJyyFIUE1HeluELDcXO08FdZRHWzWWj5eTQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.0 08/76] net: usb: cdc-phonet: fix skb frags[] overflow in rx_complete()
-Date: Mon, 20 Apr 2026 17:41:19 +0200
-Message-ID: <20260420153911.121719136@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Thierry Escande <thierry.escande@linux.intel.com>,
+	Samuel Ortiz <sameo@linux.intel.com>,
+	stable <stable@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 09/76] NFC: digital: Bounds check NFC-A cascade depth in SDD response handler
+Date: Mon, 20 Apr 2026 17:41:20 +0200
+Message-ID: <20260420153911.158385477@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -56,52 +56,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 600dc40554dc5ad1e6f3af51f700228033f43ea7 upstream.
+commit 46ce8be2ced389bccd84bcc04a12cf2f4d0c22d1 upstream.
 
-A malicious USB device claiming to be a CDC Phonet modem can overflow
-the skb_shared_info->frags[] array by sending an unbounded sequence of
-full-page bulk transfers.
+The NFC-A anti-collision cascade in digital_in_recv_sdd_res() appends 3
+or 4 bytes to target->nfcid1 on each round, but the number of cascade
+rounds is controlled entirely by the peer device.  The peer sets the
+cascade tag in the SDD_RES (deciding 3 vs 4 bytes) and the
+cascade-incomplete bit in the SEL_RES (deciding whether another round
+follows).
 
-Drop the skb and increment the length error when the frag limit is
-reached.  This matches the same fix that commit f0813bcd2d9d ("net:
-wwan: t7xx: fix potential skb->frags overflow in RX path") did for the
-t7xx driver.
+ISO 14443-3 limits NFC-A to three cascade levels and target->nfcid1 is
+sized accordingly (NFC_NFCID1_MAXSIZE = 10), but nothing in the driver
+actually enforces this.  This means a malicious peer can keep the
+cascade running, writing past the heap-allocated nfc_target with each
+round.
 
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
+Fix this by rejecting the response when the accumulated UID would exceed
+the buffer.
+
+Commit e329e71013c9 ("NFC: nci: Bounds check struct nfc_target arrays")
+fixed similar missing checks against the same field on the NCI path.
+
+Cc: Simon Horman <horms@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Thierry Escande <thierry.escande@linux.intel.com>
+Cc: Samuel Ortiz <sameo@linux.intel.com>
+Fixes: 2c66daecc409 ("NFC Digital: Add NFC-A technology support")
 Cc: stable <stable@kernel.org>
 Assisted-by: gregkh_clanker_t1000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026041134-dreamboat-buddhism-d1ec@gregkh
-Fixes: 87cf65601e17 ("USB host CDC Phonet network interface driver")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/2026040913-figure-seducing-bd3f@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/cdc-phonet.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/nfc/digital_technology.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/usb/cdc-phonet.c
-+++ b/drivers/net/usb/cdc-phonet.c
-@@ -157,11 +157,16 @@ static void rx_complete(struct urb *req)
- 						PAGE_SIZE);
- 				page = NULL;
- 			}
--		} else {
-+		} else if (skb_shinfo(skb)->nr_frags < MAX_SKB_FRAGS) {
- 			skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
- 					page, 0, req->actual_length,
- 					PAGE_SIZE);
- 			page = NULL;
-+		} else {
-+			dev_kfree_skb_any(skb);
-+			pnd->rx_skb = NULL;
-+			skb = NULL;
-+			dev->stats.rx_length_errors++;
- 		}
- 		if (req->actual_length < PAGE_SIZE)
- 			pnd->rx_skb = NULL; /* Last fragment */
+--- a/net/nfc/digital_technology.c
++++ b/net/nfc/digital_technology.c
+@@ -424,6 +424,12 @@ static void digital_in_recv_sdd_res(stru
+ 		size = 4;
+ 	}
+ 
++	if (target->nfcid1_len + size > NFC_NFCID1_MAXSIZE) {
++		PROTOCOL_ERR("4.7.2.1");
++		rc = -EPROTO;
++		goto exit;
++	}
++
+ 	memcpy(target->nfcid1 + target->nfcid1_len, sdd_res->nfcid1 + offset,
+ 	       size);
+ 	target->nfcid1_len += size;
 
 
