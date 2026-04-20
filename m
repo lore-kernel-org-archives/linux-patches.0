@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BC932E696;
-	Mon, 20 Apr 2026 15:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB0832ED54;
+	Mon, 20 Apr 2026 15:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699817; cv=none; b=PZhZzQ5LhFShNmMFcw2WttwDMwU229mISKIJC1H17AmUi8dtff0jRp7/onvgpDAz8fCx9IqrmOkLHAGerR1zxhdpcE5EZaDXwJ9lEJZuBdfuHBVIhO8MYddnFVEPlvj/wGJLwfVhIYFjqDrPiYV1EhDwV775XJVQwRwKKO08UHU=
+	t=1776699819; cv=none; b=TxMF0hBmt357Lr4FsineQU5UZwOl0jXDPRicqR7y5wBArFOWEbGhS0+fNb3/6KdKFVn2wGfRL0ssnbe7+Iyot4HxjI9754G5SXvAR8vFsEhOaJBgZZ9LOm/EbjgQDkB323OdT4SHBIrg1FQi4Aj90rwZjHWmWNsGgW+5eBusi2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699817; c=relaxed/simple;
-	bh=vTR3OZkIeUD0ZxJEq/o9y7577APdV+4kyrlaRmxbIfY=;
+	s=arc-20240116; t=1776699819; c=relaxed/simple;
+	bh=Eeq4Oa6e/ysivuJJmvmW4mxYB6xlGXs2SWNQ/g9f76s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Id9C8fO7OCV5a6WZOH7Y9Nz2v0t58s4RKALSkyJi8km38DmQZmnkLzSIDI9016vd3Q49WLzcX/vQfxxgzyyJxWLMI8ADaQEGW/3L1H0dCU2WfoKwidSYJMHVGEWnkh5khMDcNs4jnYBQn7ZygFImgWFq6rp/yB5y2fm6kuyMAzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4rji99f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eTZWllfaGjxv3vfq6r6b8BskJLhgc+4Dfgm9skjBUsvwWOK3Qfiiq2DACXLTJGX5PpbSfGTkynR9y5mDKJyzJFJSdm9X6tli/cdG0ixYjIjd43QIfdv/Z2g/zuQInsrRSrCw/ClAv/mxxrqlxZoQeF5ZEJ0SZfn2RXIrwMtkCQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQn3YwFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4rji99f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D74C19425;
-	Mon, 20 Apr 2026 15:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQn3YwFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A53C19425;
+	Mon, 20 Apr 2026 15:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699816;
-	bh=vTR3OZkIeUD0ZxJEq/o9y7577APdV+4kyrlaRmxbIfY=;
+	s=korg; t=1776699819;
+	bh=Eeq4Oa6e/ysivuJJmvmW4mxYB6xlGXs2SWNQ/g9f76s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4rji99fHozg46JTtPt8m6PvqsAO1FPp1ZoRV+sPfkEpiHJK2pXzng6xJCBsS1S4l
-	 6zbSpLxgR1QNdYdrStOOXgjsm2fhcwpudGf8hlsguxnfluWYq+eFxtGgvbVgywK2YI
-	 GhK087ZcvdSXvTp6HQt5ULGFQH92tTuNrNXIvZVg=
+	b=uQn3YwFWUTD/CoKC8vnKdBNcCxM150VvR0W2DoOy1+i3RCGysyKuyc13vZdBIJlov
+	 H8ks4WIidXYrkmuzhTsgjrLEAM2laNnbTnsVdk3WMbbdc9TyZr9EJJ9XU5173vmrTR
+	 86WbNnypM0pVg9WRyrbl6xrYZcdY54xmDzR45j28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 01/76] nfc: llcp: add missing return after LLCP_CLOSED checks
-Date: Mon, 20 Apr 2026 17:41:12 +0200
-Message-ID: <20260420153910.868092406@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	stable <stable@kernel.org>
+Subject: [PATCH 7.0 10/76] drm/vc4: platform_get_irq_byname() returns an int
+Date: Mon, 20 Apr 2026 17:41:21 +0200
+Message-ID: <20260420153911.194114055@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -45,54 +51,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junxi Qian <qjx1298677004@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 2b5dd4632966c39da6ba74dbc8689b309065e82c upstream.
+commit e597a809a2b97e927060ba182f58eb3e6101bc70 upstream.
 
-In nfc_llcp_recv_hdlc() and nfc_llcp_recv_disc(), when the socket
-state is LLCP_CLOSED, the code correctly calls release_sock() and
-nfc_llcp_sock_put() but fails to return. Execution falls through to
-the remainder of the function, which calls release_sock() and
-nfc_llcp_sock_put() again. This results in a double release_sock()
-and a refcount underflow via double nfc_llcp_sock_put(), leading to
-a use-after-free.
+platform_get_irq_byname() will return a negative value if an error
+happens, so it should be checked and not just passed directly into
+devm_request_threaded_irq() hoping all will be ok.
 
-Add the missing return statements after the LLCP_CLOSED branches
-in both functions to prevent the fall-through.
-
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
-Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260408081006.3723-1-qjx1298677004@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Cc: Maíra Canal <mcanal@igalia.com>
+Cc: Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: stable <stable@kernel.org>
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026022339-cornflake-t-shirt-2471@gregkh
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/vc4/vc4_hdmi.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1091,6 +1091,7 @@ static void nfc_llcp_recv_hdlc(struct nf
- 	if (sk->sk_state == LLCP_CLOSED) {
- 		release_sock(sk);
- 		nfc_llcp_sock_put(llcp_sock);
-+		return;
- 	}
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -2449,17 +2449,23 @@ static int vc4_hdmi_hotplug_init(struct
+ 	int ret;
  
- 	/* Pass the payload upstream */
-@@ -1182,6 +1183,7 @@ static void nfc_llcp_recv_disc(struct nf
- 	if (sk->sk_state == LLCP_CLOSED) {
- 		release_sock(sk);
- 		nfc_llcp_sock_put(llcp_sock);
-+		return;
- 	}
+ 	if (vc4_hdmi->variant->external_irq_controller) {
+-		unsigned int hpd_con = platform_get_irq_byname(pdev, "hpd-connected");
+-		unsigned int hpd_rm = platform_get_irq_byname(pdev, "hpd-removed");
++		int hpd = platform_get_irq_byname(pdev, "hpd-connected");
  
- 	if (sk->sk_state == LLCP_CONNECTED) {
+-		ret = devm_request_threaded_irq(&pdev->dev, hpd_con,
++		if (hpd < 0)
++			return hpd;
++
++		ret = devm_request_threaded_irq(&pdev->dev, hpd,
+ 						NULL,
+ 						vc4_hdmi_hpd_irq_thread, IRQF_ONESHOT,
+ 						"vc4 hdmi hpd connected", vc4_hdmi);
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = devm_request_threaded_irq(&pdev->dev, hpd_rm,
++		hpd = platform_get_irq_byname(pdev, "hpd-removed");
++		if (hpd < 0)
++			return hpd;
++
++		ret = devm_request_threaded_irq(&pdev->dev, hpd,
+ 						NULL,
+ 						vc4_hdmi_hpd_irq_thread, IRQF_ONESHOT,
+ 						"vc4 hdmi hpd disconnected", vc4_hdmi);
 
 
