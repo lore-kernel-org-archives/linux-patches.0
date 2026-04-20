@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5436B329C6D;
-	Mon, 20 Apr 2026 15:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CBB3385B6;
+	Mon, 20 Apr 2026 15:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700517; cv=none; b=gjXdtdQU1AAc8k8k7fRnpyjWWMBmHaU0x/79/dmrVuhKsn2plaSQl0rVmSzqSQ58Malc/zGvG/WACDJckl4t7QDCxzpAVN1F5Rse+kD3BReW2/Hnz5zx5dOb8TwhJlKmtCGNFye8+ukgDb3DX/Nztm8k8QUrkQQR4Vsfx+1ZpQo=
+	t=1776700519; cv=none; b=lrNk+xXDbiepnjLhFDpBdGRwCURcRU7hdlYmvFobI9GcnQzXOPsWmZpbFr19ASQPQDQroe3QLd0X1JJaA0HxUNzy8zokE1Ecg4npQVTkUsXc8Id7HATFKfWfQuXCApE7Vo9QPqZkpySXT59N8zSGoREjWbMkDPFZBxVhOD3sOlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700517; c=relaxed/simple;
-	bh=PLOF4rehmdxNiVtA3LRbce76vEO96HeQgS3VpP94eNw=;
+	s=arc-20240116; t=1776700519; c=relaxed/simple;
+	bh=nsVoiw2CaHThiSDItu9J8Wt7uwMcz6IhjQD+Sfua+Vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwnMVqP336+aayymCzQxB/WhWB1AL5PyPCEcVBv1NRlmXMQFB26xW3/54GXuaWynwoCMp5blVhd3zXimoWp3zqtVr6q7XGOd1SwEUCXmg2Ow+s3WstOTaQok7WpET4DlBwvSM5UlBR7QcDGxSI884fZ9p4qeVllL15059/se4x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+RbG8N1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plBNZpAJnplX94VmIkFu3FQphUPquy3vKpRb0raC0YYMVrzJq496TOSbXVtnM3BR22ZH3GDKtpfiPmstGwt5LMs4VAZhnVTT+shWRhhWiWX0HQnpH1khAt4Gn+yIAo/KpgwQtRxxJ7H76HW6oloyxccronGATOSOsMhMQhpLSL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUcUWBeH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+RbG8N1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E56C19425;
-	Mon, 20 Apr 2026 15:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUcUWBeH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2AEC19425;
+	Mon, 20 Apr 2026 15:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700517;
-	bh=PLOF4rehmdxNiVtA3LRbce76vEO96HeQgS3VpP94eNw=;
+	s=korg; t=1776700519;
+	bh=nsVoiw2CaHThiSDItu9J8Wt7uwMcz6IhjQD+Sfua+Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+RbG8N1BsxVMCFmhNpTqD38hVlfxMC/mSl8g0CqdonghvPhYDnJX/nDwGwuo+EY3
-	 3li/cmWDDU9Db/8KRfeSFnZav90OUPGrnYPt1CTxqHvSKHwVdEBz/HUNZkwIWd0R2W
-	 d9HIcKUjpcy2h0FcgJP54zi1uPXyQGIayAyX5ZGs=
+	b=YUcUWBeH7si02ljOVcLEsz0+VDKgM2RU8WpbwZyEn9lD898ke573klMne7sU7dnrc
+	 /ITYTEOmT0tLspyUtV/QJCTN8VNTrJW2A4m5ysGx4Mt59xfddugBSdn507xjtmejkb
+	 lm6djjRhC9bIqUkt+ennKuCBHJgrYbwlVxId1f7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yashu Zhang <zhangjiaji1@huawei.com>,
-	Tom Lendacky <thomas.lendacky@gmail.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.19 203/220] KVM: x86: Use scratch field in MMIO fragment to hold small write values
-Date: Mon, 20 Apr 2026 17:42:24 +0200
-Message-ID: <20260420153941.337082616@linuxfoundation.org>
+	Harin Lee <me@harin.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.19 177/220] ALSA: ctxfi: Limit PTP to a single page
+Date: Mon, 20 Apr 2026 17:41:58 +0200
+Message-ID: <20260420153940.400642719@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,157 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Harin Lee <me@harin.net>
 
-commit 0b16e69d17d8c35c5c9d5918bf596c75a44655d3 upstream.
+commit e9418da50d9e5c496c22fe392e4ad74c038a94eb upstream.
 
-When exiting to userspace to service an emulated MMIO write, copy the
-to-be-written value to a scratch field in the MMIO fragment if the size
-of the data payload is 8 bytes or less, i.e. can fit in a single chunk,
-instead of pointing the fragment directly at the source value.
+Commit 391e69143d0a increased CT_PTP_NUM from 1 to 4 to support 256
+playback streams, but the additional pages are not used by the card
+correctly. The CT20K2 hardware already has multiple VMEM_PTPAL
+registers, but using them separately would require refactoring the
+entire virtual memory allocation logic.
 
-This fixes a class of use-after-free bugs that occur when the emulator
-initiates a write using an on-stack, local variable as the source, the
-write splits a page boundary, *and* both pages are MMIO pages.  Because
-KVM's ABI only allows for physically contiguous MMIO requests, accesses
-that split MMIO pages are separated into two fragments, and are sent to
-userspace one at a time.  When KVM attempts to complete userspace MMIO in
-response to KVM_RUN after the first fragment, KVM will detect the second
-fragment and generate a second userspace exit, and reference the on-stack
-variable.
+ct_vm_map() always uses PTEs in vm->ptp[0].area regardless of
+CT_PTP_NUM. On AMD64 systems, a single PTP covers 512 PTEs (2M). When
+aggregate memory allocations exceed this limit, ct_vm_map() tries to
+access beyond the allocated space and causes a page fault:
 
-The issue is most visible if the second KVM_RUN is performed by a separate
-task, in which case the stack of the initiating task can show up as truly
-freed data.
+  BUG: unable to handle page fault for address: ffffd4ae8a10a000
+  Oops: Oops: 0002 [#1] SMP PTI
+  RIP: 0010:ct_vm_map+0x17c/0x280 [snd_ctxfi]
+  Call Trace:
+  atc_pcm_playback_prepare+0x225/0x3b0
+  ct_pcm_playback_prepare+0x38/0x60
+  snd_pcm_do_prepare+0x2f/0x50
+  snd_pcm_action_single+0x36/0x90
+  snd_pcm_action_nonatomic+0xbf/0xd0
+  snd_pcm_ioctl+0x28/0x40
+  __x64_sys_ioctl+0x97/0xe0
+  do_syscall_64+0x81/0x610
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-  ==================================================================
-  BUG: KASAN: use-after-free in complete_emulated_mmio+0x305/0x420
-  Read of size 1 at addr ffff888009c378d1 by task syz-executor417/984
+Revert CT_PTP_NUM to 1. The 256 SRC_RESOURCE_NUM and playback_count
+remain unchanged.
 
-  CPU: 1 PID: 984 Comm: syz-executor417 Not tainted 5.10.0-182.0.0.95.h2627.eulerosv2r13.x86_64 #3
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014 Call Trace:
-  dump_stack+0xbe/0xfd
-  print_address_description.constprop.0+0x19/0x170
-  __kasan_report.cold+0x6c/0x84
-  kasan_report+0x3a/0x50
-  check_memory_region+0xfd/0x1f0
-  memcpy+0x20/0x60
-  complete_emulated_mmio+0x305/0x420
-  kvm_arch_vcpu_ioctl_run+0x63f/0x6d0
-  kvm_vcpu_ioctl+0x413/0xb20
-  __se_sys_ioctl+0x111/0x160
-  do_syscall_64+0x30/0x40
-  entry_SYSCALL_64_after_hwframe+0x67/0xd1
-  RIP: 0033:0x42477d
-  Code: <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-  RSP: 002b:00007faa8e6890e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 00000000004d7338 RCX: 000000000042477d
-  RDX: 0000000000000000 RSI: 000000000000ae80 RDI: 0000000000000005
-  RBP: 00000000004d7330 R08: 00007fff28d546df R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004d733c
-  R13: 0000000000000000 R14: 000000000040a200 R15: 00007fff28d54720
-
-  The buggy address belongs to the page:
-  page:0000000029f6a428 refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9c37
-  flags: 0xfffffc0000000(node=0|zone=1|lastcpupid=0x1fffff)
-  raw: 000fffffc0000000 0000000000000000 ffffea0000270dc8 0000000000000000
-  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000 page dumped because: kasan: bad access detected
-
-  Memory state around the buggy address:
-  ffff888009c37780: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  ffff888009c37800: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  >ffff888009c37880: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                                                   ^
-  ffff888009c37900: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  ffff888009c37980: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  ==================================================================
-
-The bug can also be reproduced with a targeted KVM-Unit-Test by hacking
-KVM to fill a large on-stack variable in complete_emulated_mmio(), i.e. by
-overwrite the data value with garbage.
-
-Limit the use of the scratch fields to 8-byte or smaller accesses, and to
-just writes, as larger accesses and reads are not affected thanks to
-implementation details in the emulator, but add a sanity check to ensure
-those details don't change in the future.  Specifically, KVM never uses
-on-stack variables for accesses larger that 8 bytes, e.g. uses an operand
-in the emulator context, and *all* reads are buffered through the mem_read
-cache.
-
-Note!  Using the scratch field for reads is not only unnecessary, it's
-also extremely difficult to handle correctly.  As above, KVM buffers all
-reads through the mem_read cache, and heavily relies on that behavior when
-re-emulating the instruction after a userspace MMIO read exit.  If a read
-splits a page, the first page is NOT an MMIO page, and the second page IS
-an MMIO page, then the MMIO fragment needs to point at _just_ the second
-chunk of the destination, i.e. its position in the mem_read cache.  Taking
-the "obvious" approach of copying the fragment value into the destination
-when re-emulating the instruction would clobber the first chunk of the
-destination, i.e. would clobber the data that was read from guest memory.
-
-Fixes: f78146b0f923 ("KVM: Fix page-crossing MMIO")
-Suggested-by: Yashu Zhang <zhangjiaji1@huawei.com>
-Reported-by: Yashu Zhang <zhangjiaji1@huawei.com>
-Closes: https://lore.kernel.org/all/369eaaa2b3c1425c85e8477066391bc7@huawei.com
+Fixes: 391e69143d0a ("ALSA: ctxfi: Bump playback substreams to 256")
 Cc: stable@vger.kernel.org
-Tested-by: Tom Lendacky <thomas.lendacky@gmail.com>
-Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Link: https://patch.msgid.link/20260225012049.920665-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Harin Lee <me@harin.net>
+Link: https://patch.msgid.link/20260406074857.216034-1-me@harin.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c       |   14 +++++++++++++-
- include/linux/kvm_host.h |    3 ++-
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ sound/pci/ctxfi/ctvmem.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -8214,7 +8214,13 @@ static int emulator_read_write_onepage(u
- 	WARN_ON(vcpu->mmio_nr_fragments >= KVM_MAX_MMIO_FRAGMENTS);
- 	frag = &vcpu->mmio_fragments[vcpu->mmio_nr_fragments++];
- 	frag->gpa = gpa;
--	frag->data = val;
-+	if (write && bytes <= 8u) {
-+		frag->val = 0;
-+		frag->data = &frag->val;
-+		memcpy(&frag->val, val, bytes);
-+	} else {
-+		frag->data = val;
-+	}
- 	frag->len = bytes;
- 	return X86EMUL_CONTINUE;
- }
-@@ -8229,6 +8235,9 @@ static int emulator_read_write(struct x8
- 	gpa_t gpa;
- 	int rc;
+--- a/sound/pci/ctxfi/ctvmem.h
++++ b/sound/pci/ctxfi/ctvmem.h
+@@ -15,7 +15,7 @@
+ #ifndef CTVMEM_H
+ #define CTVMEM_H
  
-+	if (WARN_ON_ONCE((bytes > 8u || !ops->write) && object_is_on_stack(val)))
-+		return X86EMUL_UNHANDLEABLE;
-+
- 	if (ops->read_write_prepare &&
- 		  ops->read_write_prepare(vcpu, val, bytes))
- 		return X86EMUL_CONTINUE;
-@@ -11834,6 +11843,9 @@ static int complete_emulated_mmio(struct
- 		frag++;
- 		vcpu->mmio_cur_fragment++;
- 	} else {
-+		if (WARN_ON_ONCE(frag->data == &frag->val))
-+			return -EIO;
-+
- 		/* Go forward to the next mmio piece. */
- 		frag->data += len;
- 		frag->gpa += len;
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -320,7 +320,8 @@ static inline bool kvm_vcpu_can_poll(kti
- struct kvm_mmio_fragment {
- 	gpa_t gpa;
- 	void *data;
--	unsigned len;
-+	u64 val;
-+	unsigned int len;
- };
+-#define CT_PTP_NUM	4	/* num of device page table pages */
++#define CT_PTP_NUM	1	/* num of device page table pages */
  
- struct kvm_vcpu {
+ #include <linux/mutex.h>
+ #include <linux/list.h>
 
 
