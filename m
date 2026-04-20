@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A24B47D927;
-	Mon, 20 Apr 2026 13:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7D647D940;
+	Mon, 20 Apr 2026 13:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691861; cv=none; b=nKRQ5ouGxPEFjsXCGfD2xgzK2RQIf8PKKyr048oVJFn7tPepq6kVdlKSXV5VqHUSeESoGz6NHvwzw5hul3WlXOziSYgZl+bx+1hgdyc+1GWSNSCe0WLrcgPRIU0Ahky10Eh4gLQk4fTy4CG1+imyukoJ2cEWbLZBMvTFHazorMM=
+	t=1776691863; cv=none; b=U5KokZoZjzJHT3a9/XIVgdS1WHEoNhKcH+25HJ0vNp69j7pgsia31ISGMUX/1Yt/avPcYxnQNm/4BkWqs2jmBzlR9X3zxG7hNbBjWD6sW0a/t/FY6K+gH7iNY0IxJcQTc6gitNGBjr+pPY4FATqdR1RdqzEnzlbxCcm1DvXkXOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691861; c=relaxed/simple;
-	bh=48JtW9cCcmV/lE6IItbeHK7PJgdusZOtDdUqSrtKxPY=;
+	s=arc-20240116; t=1776691863; c=relaxed/simple;
+	bh=CvP8nD4HG2uD44hOmrt8v4Fu61Ks5uwpzaWd/ENKyQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HMVgAXH1m/JRAp4mQZXPcKGgB/Wh4ZEGI+O/4k8++LWYEbjarG64OZgwoBPaJtMKCzEsUVJX5ukBKiF7spBtUybEjs/WZX+nc6nxteLTj4LQw+slZbUp1P4sIySE8rx8eJIlBy3x9RBG8lS3e6igohFlEuI7im+7eQFi/jshXts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DOHzJf8W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PKEPIHfPht5VNv2P5WYTm5UMgFH7pKUqVZ44x201lOV3uYus/eacDn7NgpHJCxPw3Pc0U98C0YgFgQPDFXtzucsnQdgiY1kR3W40uVkfz6Aicg/OlsZxmv68akHZNNqn4pv5btJMB7vaBsETEohh1q4lWb96aQUt+G/lrfIRUoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AS1BmRqn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DOHzJf8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159D9C19425;
-	Mon, 20 Apr 2026 13:31:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AS1BmRqn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE1CC4AF09;
+	Mon, 20 Apr 2026 13:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691861;
-	bh=48JtW9cCcmV/lE6IItbeHK7PJgdusZOtDdUqSrtKxPY=;
+	s=k20201202; t=1776691863;
+	bh=CvP8nD4HG2uD44hOmrt8v4Fu61Ks5uwpzaWd/ENKyQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DOHzJf8Wn+daNTJmbSVd1Y6aTbH1pifOJvIUZm1xM0e6A4+HrErP9ZEttDwRF7IhX
-	 L55U8Twq12GWGGGbOPb6Kokbut9P1kkQ2cuHQEnAq69lGbVCKACUI3l9pZYhJw2NlL
-	 DN5jawpONnxBxzGRPmOMZLf6VnOJNHE207fZLEuyYv6DsTp/PUlVQpluz2fRp0JqEU
-	 AEHFff9x4z61KplWVMg/bL+Cm7tCDsV/xPF5zRAGgEFKpeCc+1ya76ME/UCQQukFdW
-	 agKnBHMabNQIfGx1Ep+mdMLcrQYbJ+AJNzWdAQkoCGttfb04kizUQeIwr+b0hLnx0G
-	 TIPumgpQgLpmQ==
+	b=AS1BmRqnzfDc6gi1O7FJsOUUXUC3zsqXO3qtZhZ+8hVOYN/+YzwSQG6k1tmoOo3Di
+	 zWEWM0QMbEn/DNR0ET/lQZqMtZVMjlNsBZoLpYlmlCB8vryiHtOxzt2LRGSICdK/ov
+	 82Oi52oInQTnbd2aaGlOzsiIL4iLaZjEYC2DQPrqhj1petG2MbRsiL1YMgOBqYoHHr
+	 eRbNIxW9sXFu557arLF9T30WOo5Ai9HBYnklCS4X+SWQf218JxRs5UYZvTyvt8xn6u
+	 5GY2Ka5GnQFiiP3jOxvJ3T+fHXYX6x3C/BB8pKQnKR0OGZ0dz7drJeZbeWDRwcPrej
+	 XLMsr5GtoB2PA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andrey Skvortsov <andrej.skvortzov@gmail.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Kees Cook <kees@kernel.org>,
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Felix Maurer <fmaurer@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] pstore: fix ftrace dump, when ECC is enabled
-Date: Mon, 20 Apr 2026 09:20:31 -0400
-Message-ID: <20260420132314.1023554-237-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] net: hsr: emit notification for PRP slave2 changed hw addr on port deletion
+Date: Mon, 20 Apr 2026 09:20:32 -0400
+Message-ID: <20260420132314.1023554-238-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,361 +57,341 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 4ef6255cc56343bc90d82420b49dab1b11dee414 ]
+[ Upstream commit 2ce8a41113eda1adddc1e6dc43cf89383ec6dc22 ]
 
-total_size is sum of record->size and record->ecc_notice_size (ECC: No
-errors detected). When ECC is not used, then there is no problem.
-When ECC is enabled, then ftrace dump is decoded incorrectly after
-restart.
+On PRP protocol, when deleting the port the MAC address change
+notification was missing. In addition to that, make sure to only perform
+the MAC address change on slave2 deletion and PRP protocol as the
+operation isn't necessary for HSR nor slave1.
 
-First this affects starting offset calculation, that breaks
-reading of all ftrace records.
+Note that the eth_hw_addr_set() is correct on PRP context as the slaves
+are either in promiscuous mode or forward offload enabled.
 
-  CPU:66 ts:51646260179894273 3818ffff80008002  fe00ffff800080f0  0x3818ffff80008002 <- 0xfe00ffff800080f0
-  CPU:66 ts:56589664458375169 3818ffff80008002  ff02ffff800080f0  0x3818ffff80008002 <- 0xff02ffff800080f0
-  CPU:67 ts:13194139533313 afe4ffff80008002  1ffff800080f0  0xafe4ffff80008002 <- 0x1ffff800080f0
-  CPU:67 ts:13194139533313 b7d0ffff80008001  100ffff80008002  0xb7d0ffff80008001 <- 0x100ffff80008002
-  CPU:67 ts:51646260179894273 8de0ffff80008001  202ffff80008002  0x8de0ffff80008001 <- 0x202ffff80008002
-
-Second ECC notice message is printed like ftrace record and as a
-result couple of last records are completely wrong.
-
-For example, when the starting offset is fixed:
-
- CPU:0 ts:113 ffffffc00879bd04  ffffffc0080dc08c  cpuidle_enter <- do_idle+0x20c/0x290
- CPU:0 ts:114 ffffffc00879bd04  ffffffc0080dc08c  cpuidle_enter <- do_idle+0x20c/0x290
- CPU:100 ts:28259048229270629 6f4e203a4343450a  2073726f72726520  0x6f4e203a4343450a <- 0x2073726f72726520
-
-Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Link: https://patch.msgid.link/20260215185156.317394-1-andrej.skvortzov@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Reported-by: Luka Gejak <luka.gejak@linux.dev>
+Closes: https://lore.kernel.org/netdev/DHFCZEM93FTT.1RWFBIE32K7OT@linux.dev/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Felix Maurer <fmaurer@redhat.com>
+Link: https://patch.msgid.link/20260403123928.4249-2-fmancera@suse.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information for a thorough analysis. Let me compile my
-findings.
+Now I have all the information needed. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-- **Subsystem**: `pstore`
-- **Action verb**: "fix" — explicitly a bug fix
-- **Summary**: Fix ftrace dump decoding when ECC is enabled
-
-Record: [pstore] [fix] [ftrace dump decoded incorrectly when ECC is
-enabled]
+- **Subsystem**: net: hsr (HSR/PRP networking protocol)
+- **Action verb**: "emit notification" (implies a missing notification =
+  bug fix)
+- **Summary**: Adds missing NETDEV_CHANGEADDR notification when PRP
+  slave2's MAC is restored during port deletion, and scopes the MAC
+  restore to only PRP slave_B.
 
 ### Step 1.2: Tags
-- **Signed-off-by**: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-  (author)
-- **Tested-by**: Guilherme G. Piccoli <gpiccoli@igalia.com> (independent
-  tester)
-- **Link**: https://patch.msgid.link/20260215185156.317394-1-
-  andrej.skvortzov@gmail.com
-- **Signed-off-by**: Kees Cook <kees@kernel.org> (pstore subsystem
-  maintainer — applied the patch)
-
-Record: Patch tested independently by Guilherme Piccoli and applied by
-subsystem maintainer Kees Cook. No syzbot, but this is a real-world ECC
-usage bug.
+- **Reported-by**: Luka Gejak <luka.gejak@linux.dev> — real user report
+- **Closes**:
+  https://lore.kernel.org/netdev/DHFCZEM93FTT.1RWFBIE32K7OT@linux.dev/ —
+  links to the bug report
+- **Signed-off-by**: Fernando Fernandez Mancera <fmancera@suse.de>
+  (author, SUSE), Paolo Abeni <pabeni@redhat.com> (networking
+  maintainer)
+- **Reviewed-by**: Felix Maurer <fmaurer@redhat.com>
+- **Link**:
+  https://patch.msgid.link/20260403123928.4249-2-fmancera@suse.de
+- **Fixes: b65999e7238e** ("net: hsr: sync hw addr of slave2 according
+  to slave1 hw addr on PRP") — found in the original mbox, targets the
+  commit that introduced the bug
 
 ### Step 1.3: Commit Body
-The commit clearly explains:
-- `total_size` = `record->size + record->ecc_notice_size`. When ECC is
-  enabled, this includes the ECC notice string (e.g. "ECC: No errors
-  detected").
-- **Bug 1**: The starting offset calculation `total_size % REC_SIZE` is
-  wrong because it should only use the ftrace data size, not total size
-  including ECC notice. This corrupts ALL ftrace record offsets.
-- **Bug 2**: The boundary check `data->off + REC_SIZE > ps->total_size`
-  allows iteration to read into the ECC notice string area, interpreting
-  text bytes as ftrace records.
-- Concrete examples of corrupted output are provided showing garbled
-  entries.
+The commit explains that on PRP protocol, when deleting a port, the
+NETDEV_CHANGEADDR notification was missing. The commit also restricts
+the MAC address restoration to only slave_B on PRP (since only slave_B's
+MAC is changed at setup time). The commit author explicitly notes that
+`eth_hw_addr_set()` is correct since PRP slaves are in promiscuous mode
+or have forward offload enabled.
 
-Record: Bug is data corruption in ftrace dump. When ECC is off, no
-problem. When ECC is on, two symptoms: (1) wrong starting offset breaks
-all records, (2) ECC text is decoded as ftrace records.
-
-### Step 1.4: Hidden Bug Fix Detection
-This is an explicit fix, not hidden.
+### Step 1.4: Hidden Bug Fix
+This is an explicit bug fix — a missing notification and an overly-broad
+MAC address restoration.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **1 file changed**: `fs/pstore/inode.c`
-- **3 lines changed**: Each replaces `ps->total_size` with
-  `ps->record->size`
-- **Functions modified**: `pstore_ftrace_seq_start()` (2 changes),
-  `pstore_ftrace_seq_next()` (1 change)
+- **File**: `net/hsr/hsr_slave.c` (single file)
+- **Lines**: +5, -1 (net 4 lines added)
+- **Function**: `hsr_del_port()`
 - **Scope**: Single-file surgical fix
 
-Record: Extremely small, 3-line change in 2 functions, single file.
-
 ### Step 2.2: Code Flow Change
-- **Before**: Ftrace seq iterators used `ps->total_size` (=
-  `record->size + record->ecc_notice_size`) for offset calculation and
-  boundary checks
-- **After**: They use `ps->record->size` (= just the ftrace data
-  portion)
+**Before**: The unconditional `eth_hw_addr_set(port->dev,
+port->original_macaddress)` was called for ALL non-master ports (both
+HSR and PRP, both slave_A and slave_B), and no NETDEV_CHANGEADDR
+notification was emitted.
 
-This is correct because:
-- Buffer layout: `[ftrace data: record->size bytes][ECC notice:
-  ecc_notice_size bytes]`
-- Only the first `record->size` bytes contain valid ftrace records
+**After**: The MAC restoration is conditional on `hsr->prot_version ==
+PRP_V1 && port->type == HSR_PT_SLAVE_B`, and a
+`call_netdevice_notifiers(NETDEV_CHANGEADDR, port->dev)` is emitted.
 
 ### Step 2.3: Bug Mechanism
-**Category**: Logic/correctness fix — wrong size variable used for array
-bounds
-
-The code at line 77 computes `total_size % REC_SIZE` to find the
-alignment offset of the first ftrace record, but `total_size` includes
-the ECC notice string length. Similarly, bounds checks at lines 79 and
-97 allow reading past the actual ftrace data into the ECC string.
+**Category**: Logic/correctness fix — missing notification + overly
+broad MAC restoration
+- The creation path (`hsr_dev_finalize()` and `hsr_netdev_notify()`)
+  correctly calls `call_netdevice_notifiers(NETDEV_CHANGEADDR, ...)` but
+  the deletion path did not.
+- The MAC address was restored even for ports that never had their MAC
+  changed (HSR ports, PRP slave_A).
 
 ### Step 2.4: Fix Quality
-- **Obviously correct**: Yes — the buffer contains ftrace data in `[0,
-  record->size)` and ECC text in `[record->size, total_size)`. The
-  ftrace iterator should only read the former.
-- **Minimal**: 3 identical substitutions
-- **Regression risk**: Essentially zero — this change restricts
-  iteration to the valid ftrace region
-- **No red flags**: Does not touch locking, APIs, or public interfaces
+- Obviously correct — symmetric with the creation path behavior
+- Minimal and surgical — 4 net lines
+- No regression risk — restricts behavior to only the case where it's
+  needed
+- Reviewed by Felix Maurer (Red Hat), applied by Paolo Abeni (networking
+  maintainer)
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-The buggy lines were introduced in commit `83f70f0769ddd8` ("pstore: Do
-not duplicate record metadata") from 2017-03-04. This commit refactored
-`pstore_private` to hold a pointer to `pstore_record` and introduced
-`total_size = record->size + record->ecc_notice_size`. When replacing
-the old `ps->size` with `ps->total_size` in the ftrace functions, the
-semantic change was incorrect — `ps->size` in the old code was already
-wrong (it too was set to the total size including ECC).
+The buggy line (`eth_hw_addr_set(port->dev, port->original_macaddress)`)
+was introduced by commit `b65999e7238e6` (Fernando Fernandez Mancera,
+2025-04-09).
 
-Verified: The bug was introduced in **v4.12-rc1** (first appeared in
-`v4.12-rc1~136^2~8`).
-
-### Step 3.2: Fixes Tag
-No explicit Fixes: tag in the commit message (expected for AUTOSEL
-candidates). But git blame clearly traces the bug to commit
-`83f70f0769ddd8`.
+### Step 3.2: Fixes Target
+Commit `b65999e7238e6` ("net: hsr: sync hw addr of slave2 according to
+slave1 hw addr on PRP") first appeared in v6.16. It added PRP MAC
+synchronization: setting slave_B's MAC to match slave_A's during
+creation, propagating MAC changes from slave_A to slave_B, and restoring
+the original MAC during deletion. The deletion path was incomplete — no
+notification and no scope restriction.
 
 ### Step 3.3: File History
-Recent changes to `fs/pstore/inode.c` are cosmetic (kmalloc_obj
-conversions, cleanup.h adoption, mount API conversion). No conflicting
-changes to the ftrace seq functions.
+Between `b65999e7238e6` and HEAD, `hsr_del_port()` was NOT modified —
+the buggy code persists unchanged in current HEAD.
 
 ### Step 3.4: Author
-Andrey Skvortsov is not a regular pstore contributor. However, the patch
-was applied by Kees Cook, the pstore subsystem maintainer, and
-independently tested by Guilherme Piccoli.
+Fernando Fernandez Mancera is both the author of the original buggy
+commit and the fix. He has multiple HSR-related commits in the tree.
+He's now at SUSE (was at riseup.net).
 
 ### Step 3.5: Dependencies
-None. The fix replaces `ps->total_size` with `ps->record->size`. Both
-fields exist in all stable trees since v4.12. The `pstore_private`
-struct has had both `total_size` and `record` pointer since v4.12.
+This is a standalone fix. The only prerequisite is `b65999e7238e6` which
+introduced the code being fixed. No other patches needed.
 
 ---
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.5
-The lore.kernel.org search was blocked by anti-scraping. However:
-- The commit was applied by Kees Cook (maintainer SOB confirms)
-- It has a Tested-by from Guilherme Piccoli
-- The patch Link: uses `patch.msgid.link` confirming it went through
-  standard review
+### Step 4.1: Original Discussion
+The original patch `b65999e7238e6` (v3, net-next) was reviewed on the
+mailing list. Luka Gejak posted a detailed review pointing out the exact
+issues this fix addresses: missing `call_netdevice_notifiers()` in
+`hsr_del_port()` and the use of `eth_hw_addr_set()` vs
+`dev_set_mac_address()`. Despite these review comments, the patch was
+merged by David S. Miller.
+
+### Step 4.2: Fix Review
+The fix was reviewed by Felix Maurer (Red Hat) and applied by Paolo
+Abeni (Red Hat, networking maintainer). DKIM verified.
+
+### Step 4.3: Bug Report
+The Closes: tag references Luka Gejak's review of the original commit
+where he identified the missing notification and other issues.
+
+### Step 4.4: Series Context
+b4 confirms this is a single standalone patch (Total patches: 1),
+despite the message-id suffix "-2".
+
+### Step 4.5: Stable Discussion
+The author noted in the patch: "routed through net-next tree as the next
+net tree as rc6 batch is already out." The original mbox contains a
+`Fixes:` tag targeting `b65999e7238e`.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-- `pstore_ftrace_seq_start()` — seq_file start iterator
-- `pstore_ftrace_seq_next()` — seq_file next iterator
+### Step 5.1: Functions Modified
+Only `hsr_del_port()` is modified.
 
 ### Step 5.2: Callers
-These are seq_file callbacks registered in `pstore_ftrace_seq_ops`.
-Called when userspace reads pstore ftrace files via
-`/sys/fs/pstore/ftrace-*`.
+`hsr_del_port()` is called during HSR/PRP interface teardown. This is
+the standard port deletion path triggered by userspace via netlink.
 
-### Step 5.3-5.4: Call Chain
-Userspace `cat /sys/fs/pstore/ftrace-*` → `pstore_file_read()` →
-`seq_read()` → `pstore_ftrace_seq_start/next/show`. Directly user-
-triggered.
+### Step 5.3: Consistency
+The creation path in `hsr_dev_finalize()` (line 798-800) correctly does:
+```c
+if (protocol_version == PRP_V1) {
+    eth_hw_addr_set(slave[1], slave[0]->dev_addr);
+    call_netdevice_notifiers(NETDEV_CHANGEADDR, slave[1]);
+}
+```
+The fix makes the deletion path symmetric with this.
 
 ### Step 5.5: Similar Patterns
-No similar patterns elsewhere — this is pstore-specific ftrace iteration
-code.
+The `hsr_netdev_notify()` handler (lines 82-88) also correctly calls
+`call_netdevice_notifiers(NETDEV_CHANGEADDR, ...)` when propagating MAC
+changes to slave_B. The deletion path was the only one missing the
+notification.
 
 ---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
 ### Step 6.1: Buggy Code in Stable
-The buggy code was introduced in v4.12 (2017). It exists in **ALL**
-active stable trees (5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y, 7.0.y).
+The buggy commit `b65999e7238e6` first appeared in v6.16. It is present
+in v6.16.y, v6.17.y, v6.18.y, v6.19.y, and v7.0.y stable trees.
 
-### Step 6.2: Backport Complications
-The patch should apply cleanly to recent stable trees. The only
-complication in older trees would be the `kzalloc_obj()` vs `kzalloc()`
-difference and `return_ptr()` vs manual kfree — but the changed lines
-themselves only modify `ps->total_size` → `ps->record->size` which is
-stable across all trees since v4.12.
+### Step 6.2: Backport Difficulty
+The `hsr_del_port()` function has NOT changed between v6.16 and v7.0.
+The patch applies cleanly to v6.16.y.
 
-### Step 6.3: No related fixes already in stable for this issue.
+### Step 6.3: No prior fix exists for this issue in stable.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1
-- **Subsystem**: `fs/pstore` — persistent storage for crash diagnostics
-  (ftrace, dmesg, console)
-- **Criticality**: IMPORTANT — pstore is used in production for crash
-  analysis, especially with ramoops on embedded/Android systems
+### Step 7.1: Subsystem
+- **Subsystem**: net/hsr (HSR/PRP networking protocol)
+- **Criticality**: IMPORTANT — industrial Ethernet redundancy protocol
+  used in factory automation and critical infrastructure
 
-### Step 7.2
-pstore is a mature, moderately active subsystem maintained by Kees Cook.
+### Step 7.2: Activity
+The HSR subsystem has seen steady development (20+ commits since
+b65999e7238e6), indicating active maintenance.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users who have pstore with ECC enabled (ramoops backend with ECC). This
-includes embedded systems and Android devices using persistent RAM for
-crash diagnostics.
+### Step 8.1: Who is Affected
+PRP (Parallel Redundancy Protocol) users — industrial networking
+deployments that rely on PRP for redundancy. Not a huge user base, but
+the users who need this need it to work correctly.
 
 ### Step 8.2: Trigger Conditions
-Triggered every time a user reads ftrace records from pstore when ECC is
-enabled. Common in production crash analysis workflows. The trigger is
-simply: `cat /sys/fs/pstore/ftrace-*`.
+The bug is triggered every time a PRP interface is deleted. This is a
+common administrative operation.
 
-### Step 8.3: Failure Mode
-- **Data corruption**: Ftrace dump output is completely garbled
-- **Severity**: MEDIUM-HIGH — crash diagnostic data is unusable, which
-  defeats the purpose of pstore ftrace logging
-- Not a kernel crash, but renders a key diagnostic feature broken
+### Step 8.3: Failure Mode Severity
+- Userspace doesn't receive NETDEV_CHANGEADDR notification, meaning
+  network management tools have stale MAC information after PRP teardown
+  — **MEDIUM** severity
+- Unnecessary MAC restoration on HSR/PRP slave_A — **LOW** (no-op in
+  practice since the MAC matches)
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH — fixes a fundamental data decoding bug that makes
-  ftrace pstore output useless when ECC is enabled
-- **Risk**: VERY LOW — 3-line change replacing one size field with
-  another, obviously correct from buffer layout analysis
-- **Ratio**: Very favorable for backport
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: Fixes missing notification for PRP users, makes teardown
+  path consistent with creation
+- **Risk**: Very low — 4 lines, single function, restricts behavior to
+  where it's needed
+- **Ratio**: Favorable
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
-
+### Step 9.1: Evidence Summary
 **FOR backporting:**
-- Fixes a real, clearly documented data corruption bug
-- 3-line change, single file — minimal and surgical
-- Obviously correct: ftrace records are in `[0, record->size)`, not `[0,
-  total_size)`
-- Tested independently (Tested-by: tag)
-- Applied by subsystem maintainer (Kees Cook)
-- Bug has existed since v4.12 (2017) — all stable trees affected
-- No dependencies on other patches
-- Zero regression risk
+- Fixes a real bug introduced by `b65999e7238e6` (missing
+  NETDEV_CHANGEADDR notification)
+- Has Fixes: tag in original patch
+- Reported by a user (Luka Gejak)
+- Reviewed by Felix Maurer (Red Hat)
+- Applied by Paolo Abeni (networking maintainer)
+- Small, surgical fix (4 net lines, single file, single function)
+- Consistent with the creation path behavior
+- Standalone — no dependencies beyond the already-present buggy commit
 
 **AGAINST backporting:**
-- None significant
+- MEDIUM severity (missing notification, not a crash or security issue)
+- Affects a niche subsystem (PRP)
 
 ### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — verified by code analysis and
-   has Tested-by
-2. **Fixes a real bug?** YES — ftrace dump completely broken with ECC
-3. **Important issue?** YES — data corruption (diagnostic data unusable)
-4. **Small and contained?** YES — 3 lines in 1 file
-5. **No new features or APIs?** Correct — no new features
-6. **Can apply to stable?** YES — code and fields exist in all stable
-   trees
+1. Obviously correct? **YES** — makes deletion symmetric with creation
+2. Fixes a real bug? **YES** — missing notification reported by a user
+3. Important issue? **YES** — incorrect behavior visible to userspace
+4. Small and contained? **YES** — 4 lines, single function
+5. No new features or APIs? **YES** — no new features
+6. Can apply to stable trees? **YES** — code unchanged since v6.16
 
 ### Step 9.3: Exception Categories
-Not applicable — this is a straightforward bug fix.
+Not applicable — this is a standard bug fix, not a hardware quirk or
+device ID.
+
+### Step 9.4: Decision
+The fix is small, obviously correct, fixes a real user-reported bug
+(missing NETDEV_CHANGEADDR notification during PRP port deletion), has a
+Fixes: tag, is reviewed, and applies cleanly to affected stable trees.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Tested-by: Guilherme G. Piccoli, Signed-off-by:
-  Kees Cook (maintainer), Link: patch.msgid.link URL
-- [Phase 2] Diff analysis: 3 lines changed in
-  `pstore_ftrace_seq_start()` and `pstore_ftrace_seq_next()`, replacing
-  `ps->total_size` with `ps->record->size`
-- [Phase 3] git blame: buggy code introduced in commit 83f70f0769ddd8
-  (v4.12, 2017), present in all active stable trees
-- [Phase 3] git show 83f70f0769ddd8: confirmed the refactoring that
-  introduced `total_size` replacing old `size` field, where both
-  incorrectly included ECC notice size for ftrace
-- [Phase 3] git describe --contains 83f70f0769ddd8: v4.12-rc1~136^2~8 —
-  confirmed version
-- [Phase 4] lore.kernel.org blocked by anti-scraping; confirmed commit
-  was accepted by maintainer via SOB
-- [Phase 5] Callers: seq_file callbacks triggered via userspace read on
-  `/sys/fs/pstore/ftrace-*` — user-triggered
-- [Phase 5] Verified buffer layout from `ramoops_pstore_read()`:
-  `[ftrace data: size bytes][ECC string: ecc_notice_size bytes]`
-- [Phase 6] Code exists in all active stable trees (v5.10+, bug
-  introduced in v4.12)
-- [Phase 6] No conflicting changes — recent changes to the file are
-  cosmetic (kmalloc_obj, cleanup.h)
-- [Phase 8] Failure mode: complete corruption of ftrace dump output when
-  ECC enabled, severity MEDIUM-HIGH
-- [Phase 8] Risk: VERY LOW — 3 identical substitutions, obviously
-  correct
-
-The fix is small, surgical, obviously correct, independently tested, and
-applied by the subsystem maintainer. It fixes a data corruption bug
-present since v4.12 that makes pstore ftrace output completely unusable
-when ECC is enabled.
+- [Phase 1] Parsed tags: Reported-by from Luka Gejak, Closes link to
+  lore, Reviewed-by Felix Maurer, Link to patch.msgid.link, applied by
+  Paolo Abeni
+- [Phase 2] Diff analysis: +5/-1 lines in `hsr_del_port()` in
+  `net/hsr/hsr_slave.c`, adds PRP_V1+SLAVE_B condition and
+  `call_netdevice_notifiers()` call
+- [Phase 3] git blame: buggy line introduced by `b65999e7238e6`
+  (2025-04-09), first in v6.16
+- [Phase 3] git show b65999e7238e6: confirmed original commit adds MAC
+  sync for PRP but misses notification in deletion path
+- [Phase 3] git tag --contains: b65999e7238e6 is in v6.16, v6.17, v6.18,
+  v6.19, v7.0
+- [Phase 3] git diff v6.16: `hsr_del_port()` unchanged between v6.16 and
+  v7.0, patch applies cleanly
+- [Phase 4] b4 dig -c b65999e7238e6: found original submission at
+  https://patch.msgid.link/20250409101911.3120-1-ffmancera@riseup.net
+- [Phase 4] b4 dig -a: v1 and v3 revisions found for original commit
+- [Phase 4] Read /tmp/hsr_thread.mbox: Luka Gejak's review explicitly
+  identified the missing notification bug
+- [Phase 4] b4 am: fix is standalone (Total patches: 1), Reviewed-by and
+  DKIM verified
+- [Phase 4] Original mbox contains Fixes: b65999e7238e tag
+- [Phase 5] Creation path in hsr_device.c:798-800 does call
+  `call_netdevice_notifiers()` — deletion should too
+- [Phase 5] Notification path in hsr_main.c:82-88 also calls
+  `call_netdevice_notifiers()` — consistent pattern
+- [Phase 6] Bug exists in v6.16+ stable trees, patch applies cleanly to
+  v6.16
+- [Phase 8] Failure mode: missing userspace notification on PRP port
+  deletion, severity MEDIUM
 
 **YES**
 
- fs/pstore/inode.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/hsr/hsr_slave.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/pstore/inode.c b/fs/pstore/inode.c
-index 83fa0bb3435ac..d0ca91040591c 100644
---- a/fs/pstore/inode.c
-+++ b/fs/pstore/inode.c
-@@ -74,9 +74,9 @@ static void *pstore_ftrace_seq_start(struct seq_file *s, loff_t *pos)
- 	if (!data)
- 		return NULL;
+diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
+index 44f83c8c56a79..d9af9e65f72f0 100644
+--- a/net/hsr/hsr_slave.c
++++ b/net/hsr/hsr_slave.c
+@@ -243,7 +243,11 @@ void hsr_del_port(struct hsr_port *port)
+ 		if (!port->hsr->fwd_offloaded)
+ 			dev_set_promiscuity(port->dev, -1);
+ 		netdev_upper_dev_unlink(port->dev, master->dev);
+-		eth_hw_addr_set(port->dev, port->original_macaddress);
++		if (hsr->prot_version == PRP_V1 &&
++		    port->type == HSR_PT_SLAVE_B) {
++			eth_hw_addr_set(port->dev, port->original_macaddress);
++			call_netdevice_notifiers(NETDEV_CHANGEADDR, port->dev);
++		}
+ 	}
  
--	data->off = ps->total_size % REC_SIZE;
-+	data->off = ps->record->size % REC_SIZE;
- 	data->off += *pos * REC_SIZE;
--	if (data->off + REC_SIZE > ps->total_size)
-+	if (data->off + REC_SIZE > ps->record->size)
- 		return NULL;
- 
- 	return_ptr(data);
-@@ -94,7 +94,7 @@ static void *pstore_ftrace_seq_next(struct seq_file *s, void *v, loff_t *pos)
- 
- 	(*pos)++;
- 	data->off += REC_SIZE;
--	if (data->off + REC_SIZE > ps->total_size)
-+	if (data->off + REC_SIZE > ps->record->size)
- 		return NULL;
- 
- 	return data;
+ 	kfree_rcu(port, rcu);
 -- 
 2.53.0
 
