@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A288C3BD63F;
-	Mon, 20 Apr 2026 13:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3243A545E;
+	Mon, 20 Apr 2026 13:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691030; cv=none; b=sN1T5K41MM9fPouJIwfxN3/4PU5M3N3MY+GuYLG64ti14BZC5G2FUWMgeRTUEDg9SxmhxbGCDNXOW2xcc0q5zbf6agx1Q3WY1rHGHm6NAKvGhxw4gpTHxFPE22WRm2euDGk+CvS0aTvWJxkc8Vue8HKhjj1Y6c4FgJKB126iihA=
+	t=1776691032; cv=none; b=AYUysie1PAfuVnPVgfcgCNKKcBe+9RKZdqiGzTneMnEd45AtruHOAmbRds2jYhz63oOJsnE0SD55BtyLxNzybv4eR5NAp+iUyBtaibbyoe2CLSyhHxhEZ3WWbC6N8KGrFJu3fjYs3MslNG+BaizefaUKVxoUK+rUF4uxXMdngyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691030; c=relaxed/simple;
-	bh=+5PzIcn1PPhKL0i3+4TDAICDhlT1NTy16K4bjiv9JVM=;
+	s=arc-20240116; t=1776691032; c=relaxed/simple;
+	bh=Kmw1rpUeW2WlRAoPrreiJSopgyjbzwdEJvI1xGkoz6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TxPcut+a3lRXsDNSKrvYoqf7U+dH3VuKZxiVEH2hVaCLcWFjxaHT8xGggOi2ap3l1AzvHftM6qQF84nCuZxTx5b0z6isLTftXjqTn0hGe2djZ4+8oT7X5H3IQ/GCjLYj0qou6VV4d6rTQRb09Hbg1WOCW+QLWxDXZ0qNZnRF1N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JP0V59Jr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=izHaDuIpIYjXUFDIsCH06QdvxkkK5V+upxtuqd1ebrh7PyY5XLus7ChcvWj30O0IxP/qosxdLyjRJhwByaAa74rPFHHTfjC2YZOuN9kZrW8k5arfLuH7nWYLX+JhWlRhyvT3+oUviUMCIfBLlD4ET4k8gZHXcXBNqO7Cy3+AplE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JoKRiekS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JP0V59Jr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C61DC2BCB9;
-	Mon, 20 Apr 2026 13:17:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JoKRiekS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0532EC2BCB6;
+	Mon, 20 Apr 2026 13:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691030;
-	bh=+5PzIcn1PPhKL0i3+4TDAICDhlT1NTy16K4bjiv9JVM=;
+	s=k20201202; t=1776691032;
+	bh=Kmw1rpUeW2WlRAoPrreiJSopgyjbzwdEJvI1xGkoz6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JP0V59JrxYH4+Xy3LHWdm2PVjpHVPsoc/dxroUGsO2bVlvNjazYdM15yfHDyKB6cB
-	 kuN0jiZP6vqLXObDmnEtUKhRAn7YHbIMv06/XTgjZrB7UHqAAipRJEbYADXzLb8c/l
-	 AEp/PaRhTsyr9dYc/AsA7Os3lqDQ/KDUws0DZE3RE1zM4SedX0xvFFBedJlHYhWo8j
-	 TTz4WtviA9SeC0ZNyyfLUXHbQo+6nMg0SkEtDrjXBvQn8Cr5bM9HxU455Qkg1uu5PZ
-	 8nRdjXRt4gDsLMOR6bH89/hEAimSqmTFz6YeHnrWDy+CfzOYodTMlmRHKaQV5bctL7
-	 1JXtz1UzMcgLg==
+	b=JoKRiekSbJHJK415wold0Wy82XMAR6V/ICrjXzI2bzdYiGBJ1JhErR1cPuDwbsuEU
+	 tcju6DgalzRS3rXr2VhHQ29qH2/+AXGMzBcOGdW0KIIEcElobHA5pqu52ARVlW/gIr
+	 n6TyjQ8+VR7BSl+GCT+iMn8MlNHGuAxXK8L9pA3jzegHDCA3Ch8sM9f3xRFCtFcqZW
+	 wmheMPdm6jFew+ls8j9F88WKrV3W6K6spqcFcHahpwWN/J+XHcrrDqcUYB/ygTH1Ss
+	 6oaGgBikALR7ZuNp37asUjSFhgLgi0zM29KPxHANRU+lFCECo5ykMLwmwhkKrafkTv
+	 DTH/ztAVFfx2Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Florian Fainelli <florian.fainelli@broadcom.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+Cc: Li Chen <me@linux.beauty>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 7.0-6.1] memory: brcmstb_memc: Expand LPDDR4 check to cover for LPDDR5
-Date: Mon, 20 Apr 2026 09:08:39 -0400
-Message-ID: <20260420131539.986432-53-sashal@kernel.org>
+	lyude@redhat.com,
+	dakr@kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-6.12] nouveau: pci: quiesce GPU on shutdown
+Date: Mon, 20 Apr 2026 09:08:40 -0400
+Message-ID: <20260420131539.986432-54-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -52,306 +60,537 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Li Chen <me@linux.beauty>
 
-[ Upstream commit a969a0835152984a0f556434eafdee0b84213670 ]
+[ Upstream commit 310326bb7df4bba094a3fc60364c641c547fd923 ]
 
-The same limitations that apply to LPDDR4 also apply to LPDDR5. Expand
-the check and rename accordingly.
+Kexec reboot does not reset PCI devices.
+Invoking the full DRM/TTM teardown from ->shutdown can trigger WARNs when
+userspace still holds DRM file descriptors.
 
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260122003501.1191059-1-florian.fainelli@broadcom.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Quiesce the GPU through the suspend path and then power down the PCI
+function so the next kernel can re-initialize the device from a consistent
+state.
+
+WARNING: drivers/gpu/drm/drm_mode_config.c:578 at drm_mode_config_cleanup+0x2e7/0x300, CPU#2: kexec/1300
+Call Trace:
+ <TASK>
+ ? srso_return_thunk+0x5/0x5f
+ ? enable_work+0x3a/0x100
+ nouveau_display_destroy+0x39/0x70 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
+ nouveau_drm_device_fini+0x7b/0x1f0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
+ nouveau_drm_shutdown+0x52/0xc0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
+ pci_device_shutdown+0x35/0x60
+ device_shutdown+0x11c/0x1b0
+ kernel_kexec+0x13a/0x160
+ __do_sys_reboot+0x209/0x240
+ do_syscall_64+0x81/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? __rtnl_unlock+0x37/0x70
+ ? srso_return_thunk+0x5/0x5f
+ ? netdev_run_todo+0x63/0x570
+ ? netif_change_flags+0x54/0x70
+ ? srso_return_thunk+0x5/0x5f
+ ? devinet_ioctl+0x1e5/0x790
+ ? srso_return_thunk+0x5/0x5f
+ ? inet_ioctl+0x1e9/0x200
+ ? srso_return_thunk+0x5/0x5f
+ ? srso_return_thunk+0x5/0x5f
+ ? sock_do_ioctl+0x7d/0x130
+ ? srso_return_thunk+0x5/0x5f
+ ? __x64_sys_ioctl+0x97/0xe0
+ ? srso_return_thunk+0x5/0x5f
+ ? srso_return_thunk+0x5/0x5f
+ ? do_syscall_64+0x23b/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? put_user_ifreq+0x7a/0x90
+ ? srso_return_thunk+0x5/0x5f
+ ? sock_do_ioctl+0x107/0x130
+ ? srso_return_thunk+0x5/0x5f
+ ? __x64_sys_ioctl+0x97/0xe0
+ ? srso_return_thunk+0x5/0x5f
+ ? do_syscall_64+0x81/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? exc_page_fault+0x7e/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+nouveau 0000:26:00.0: [drm] drm_WARN_ON(!list_empty(&fb->filp_head))
+WARNING: drivers/gpu/drm/drm_framebuffer.c:833 at drm_framebuffer_free+0x73/0xa0, CPU#2: kexec/1300
+Call Trace:
+ <TASK>
+ drm_mode_config_cleanup+0x248/0x300
+ ? __pfx___drm_printfn_dbg+0x10/0x10
+ ? drm_mode_config_cleanup+0x1dc/0x300
+ nouveau_display_destroy+0x39/0x70 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
+ nouveau_drm_device_fini+0x7b/0x1f0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
+ nouveau_drm_shutdown+0x52/0xc0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
+ pci_device_shutdown+0x35/0x60
+ device_shutdown+0x11c/0x1b0
+ kernel_kexec+0x13a/0x160
+ __do_sys_reboot+0x209/0x240
+ do_syscall_64+0x81/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? __rtnl_unlock+0x37/0x70
+ ? srso_return_thunk+0x5/0x5f
+ ? netdev_run_todo+0x63/0x570
+ ? netif_change_flags+0x54/0x70
+ ? srso_return_thunk+0x5/0x5f
+ ? devinet_ioctl+0x1e5/0x790
+ ? srso_return_thunk+0x5/0x5f
+ ? inet_ioctl+0x1e9/0x200
+ ? srso_return_thunk+0x5/0x5f
+ ? srso_return_thunk+0x5/0x5f
+ ? sock_do_ioctl+0x7d/0x130
+ ? srso_return_thunk+0x5/0x5f
+ ? __x64_sys_ioctl+0x97/0xe0
+ ? srso_return_thunk+0x5/0x5f
+ ? srso_return_thunk+0x5/0x5f
+ ? do_syscall_64+0x23b/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? put_user_ifreq+0x7a/0x90
+ ? srso_return_thunk+0x5/0x5f
+ ? sock_do_ioctl+0x107/0x130
+ ? srso_return_thunk+0x5/0x5f
+ ? __x64_sys_ioctl+0x97/0xe0
+ ? srso_return_thunk+0x5/0x5f
+ ? do_syscall_64+0x81/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? exc_page_fault+0x7e/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+WARNING: include/drm/ttm/ttm_resource.h:406 at nouveau_ttm_fini+0x257/0x270 [nouveau], CPU#2: kexec/1300
+Call Trace:
+ <TASK>
+ nouveau_drm_device_fini+0x93/0x1f0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
+ nouveau_drm_shutdown+0x52/0xc0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
+ pci_device_shutdown+0x35/0x60
+ device_shutdown+0x11c/0x1b0
+ kernel_kexec+0x13a/0x160
+ __do_sys_reboot+0x209/0x240
+ do_syscall_64+0x81/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? __rtnl_unlock+0x37/0x70
+ ? srso_return_thunk+0x5/0x5f
+ ? netdev_run_todo+0x63/0x570
+ ? netif_change_flags+0x54/0x70
+ ? srso_return_thunk+0x5/0x5f
+ ? devinet_ioctl+0x1e5/0x790
+ ? srso_return_thunk+0x5/0x5f
+ ? inet_ioctl+0x1e9/0x200
+ ? srso_return_thunk+0x5/0x5f
+ ? srso_return_thunk+0x5/0x5f
+ ? sock_do_ioctl+0x7d/0x130
+ ? srso_return_thunk+0x5/0x5f
+ ? __x64_sys_ioctl+0x97/0xe0
+ ? srso_return_thunk+0x5/0x5f
+ ? srso_return_thunk+0x5/0x5f
+ ? do_syscall_64+0x23b/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? put_user_ifreq+0x7a/0x90
+ ? srso_return_thunk+0x5/0x5f
+ ? sock_do_ioctl+0x107/0x130
+ ? srso_return_thunk+0x5/0x5f
+ ? __x64_sys_ioctl+0x97/0xe0
+ ? srso_return_thunk+0x5/0x5f
+ ? do_syscall_64+0x81/0x610
+ ? srso_return_thunk+0x5/0x5f
+ ? exc_page_fault+0x7e/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Signed-off-by: Li Chen <me@linux.beauty>
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260121113646.111561-1-me@linux.beauty
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to complete the full analysis. Let me
-compile my findings.
+Now I have all the information needed. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: PARSE THE SUBJECT LINE
-- **Subsystem**: `memory: brcmstb_memc:` (Broadcom STB memory controller
-  driver)
-- **Action verb**: "Expand" (extending an existing check)
-- **Summary**: Expand LPDDR4 check to also cover LPDDR5 memory types
+- **Subsystem**: `nouveau: pci:` (Nouveau GPU driver, PCI subsystem)
+- **Action verb**: "quiesce" - implies bringing hardware to a
+  quiet/consistent state, a hardware management fix
+- **Summary**: Quiesce the NVIDIA GPU on PCI shutdown to handle kexec
+  reboot properly
 
-Record: [memory/brcmstb_memc] [expand] [Extend existing LPDDR4 hardware
-limitation check to also apply to LPDDR5]
+Record: [nouveau: pci] [quiesce] [Add proper GPU shutdown handler for
+kexec reboot]
 
 ### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by**: Florian Fainelli <florian.fainelli@broadcom.com>
-  (author, Broadcom employee, original driver author)
-- **Link**: https://patch.msgid.link/20260122003501.1191059-1-
-  florian.fainelli@broadcom.com
-- **Signed-off-by**: Krzysztof Kozlowski <krzk@kernel.org> (subsystem
-  maintainer who applied it)
-- No Fixes: tag, no Cc: stable, no Reported-by, no Tested-by, no
-  Reviewed-by
+- **Signed-off-by: Li Chen <me@linux.beauty>** - the author
+- **Reviewed-by: Dave Airlie <airlied@redhat.com>** - DRM maintainer
+  reviewed it
+- **Signed-off-by: Dave Airlie <airlied@redhat.com>** - DRM maintainer
+  also signed off (committed it)
+- **Link:**
+  https://patch.msgid.link/20260121113646.111561-1-me@linux.beauty - the
+  v2 submission
 
-Record: Author is the original driver author (Florian Fainelli at
-Broadcom). Applied by memory subsystem maintainer Krzysztof Kozlowski.
+No Fixes: tag, no Cc: stable tag, no Reported-by. The absence of these
+is expected.
+
+Record: Reviewed-by and Signed-off-by from Dave Airlie (DRM maintainer)
+is a strong quality signal.
 
 ### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The message says: "The same limitations that apply to LPDDR4 also apply
-to LPDDR5. Expand the check and rename accordingly."
+The commit describes two problems:
+1. **Problem 1**: Kexec reboot does not reset PCI devices, so without a
+   shutdown handler, the GPU hardware remains in an unknown state after
+   kexec.
+2. **Problem 2**: Doing a full DRM/TTM teardown from `->shutdown`
+   triggers WARNs when userspace still holds DRM file descriptors.
 
-The limitation in question: On LPDDR4 chips, the inactivity timeout for
-Self-Refresh Power Down (SRPD) cannot be changed because the dynamic
-tuning process is affected by the inactivity timeout, making it non-
-functional. This same limitation applies to LPDDR5.
+Three stack traces are provided showing WARNING triggers at:
+- `drm_mode_config_cleanup+0x2e7/0x300` (drm_mode_config.c:578)
+- `drm_framebuffer_free+0x73/0xa0` (drm_framebuffer.c:833) -
+  `drm_WARN_ON(!list_empty(&fb->filp_head))`
+- `nouveau_ttm_fini+0x257/0x270` (ttm_resource.h:406)
 
-Without this fix, on LPDDR5 hardware, a user writing to the `srpd` sysfs
-attribute would successfully change the SRPD inactivity timeout, which
-would break the dynamic tuning process, making the memory controller
-non-functional.
+All triggered through the path: `kernel_kexec -> device_shutdown ->
+pci_device_shutdown -> nouveau_drm_shutdown -> nouveau_drm_device_fini`
 
-Record: [Bug: missing LPDDR5 check allows dangerous SRPD timeout
-modification on LPDDR5 hardware] [Symptom: dynamic memory tuning becomes
-non-functional on LPDDR5 systems] [Root cause: original code only
-checked for LPDDR4, not LPDDR5]
+**Solution**: Use the suspend path (which properly handles open
+userspace FDs) instead of full teardown, then power down the PCI
+function to D3hot.
+
+Record: [Bug: GPU not properly quiesced during kexec reboot, causing
+WARNs and potential GPU init failures in next kernel] [Symptom: multiple
+kernel WARNINGs during kexec shutdown] [Root cause: Missing .shutdown
+callback, and naive full-teardown approach triggers WARNs with open FDs]
 
 ### Step 1.4: DETECT HIDDEN BUG FIXES
-This IS a real bug fix disguised as "expand." The keyword "expand" masks
-the fact that without this change, LPDDR5 users can corrupt their memory
-controller tuning through the sysfs interface.
+This is an overt bug fix. The commit directly addresses kernel WARNINGs
+and ensures proper GPU quiescing during kexec. It's a hardware
+workaround for the fact that kexec doesn't reset PCI devices.
 
-Record: [Yes, this is a hidden bug fix. It prevents a user from making
-the dynamic tuning process non-functional on LPDDR5 hardware.]
+Record: Not a hidden bug fix - this is an explicit fix for kernel
+WARNINGs and kexec reliability.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
 ### Step 2.1: INVENTORY THE CHANGES
-- **File**: `drivers/memory/brcmstb_memc.c`
-- **Lines added**: ~4 (new define, extra condition, rename)
-- **Lines removed**: ~3 (old function name, old single condition)
-- **Functions modified**: `brcmstb_memc_uses_lpddr4` renamed to
-  `brcmstb_memc_uses_lpddr45`, `srpd_store` (caller updated)
-- **Scope**: Single-file, surgical fix
+- **Files changed**: `drivers/gpu/drm/nouveau/nouveau_drm.c` (1 file)
+- **Lines added**: ~32 lines (new function + 1 line to hook it up)
+- **Lines removed**: 0
+- **Functions modified**: None modified; one new function
+  `nouveau_drm_shutdown()` added
+- **Scope**: Single-file, purely additive change
 
-Record: [1 file changed, ~4 lines added, ~3 removed] [Functions:
-brcmstb_memc_uses_lpddr4→brcmstb_memc_uses_lpddr45, srpd_store] [Single-
-file surgical fix]
+Record: [1 file, +32/-0 lines] [New function nouveau_drm_shutdown(),
+struct pci_driver updated] [Scope: single-file surgical addition]
 
 ### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-**Hunk 1** - Define addition:
-- Before: Only `CNTRLR_CONFIG_LPDDR4_SHIFT` (value 5) defined
-- After: Also defines `CNTRLR_CONFIG_LPDDR5_SHIFT` (value 6)
+**Before**: `nouveau_drm_pci_driver` has no `.shutdown` callback. During
+kexec, `pci_device_shutdown()` does nothing for nouveau, leaving the GPU
+in an unknown hardware state.
 
-**Hunk 2** - Function logic change:
-- Before: `brcmstb_memc_uses_lpddr4()` returns true only if register
-  value == 5 (LPDDR4)
-- After: `brcmstb_memc_uses_lpddr45()` returns true if register value ==
-  5 (LPDDR4) OR == 6 (LPDDR5)
+**After**: `nouveau_drm_shutdown()` is called during PCI device
+shutdown. It:
+1. Checks if drm is NULL (safety check)
+2. Checks if power is already off (switcheroo check, matching suspend
+   pattern)
+3. Calls `nouveau_do_suspend(drm, false)` to quiesce the GPU through the
+   proven suspend path
+4. Calls `pci_save_state`, `pci_disable_device`,
+   `pci_set_power_state(PCI_D3hot)` to power down PCI
+5. Calls `usleep_range(200, 400)` to allow PCI power transition to
+   settle (mirrors `udelay(200)` in `nouveau_pmops_suspend`)
 
-**Hunk 3** - Caller update:
-- Before: `srpd_store()` calls `brcmstb_memc_uses_lpddr4()`
-- After: `srpd_store()` calls `brcmstb_memc_uses_lpddr45()`
-
-The change affects the `srpd_store` sysfs path. When a user writes to
-`/sys/.../srpd`, the check now correctly blocks the write for both
-LPDDR4 and LPDDR5.
-
-Record: [Before: LPDDR5 memory allowed dangerous SRPD timeout change.
-After: LPDDR5 correctly blocked like LPDDR4.]
+Record: [Before: no shutdown handler -> GPU left in unknown state during
+kexec] [After: proper suspend-based quiescing + PCI power down]
 
 ### Step 2.3: IDENTIFY THE BUG MECHANISM
-This is a **hardware workaround/limitation enforcement** fix. Category
-(h) - Hardware workarounds. The hardware has a limitation (LPDDR5
-dynamic tuning breaks with SRPD timeout changes) that wasn't enforced in
-software.
+This is a **hardware workaround** fix. Category: **Missing shutdown
+handler causing kernel WARNINGs and potential GPU initialization
+failures**.
 
-Record: [Hardware workaround - extending existing HW limitation check to
-cover LPDDR5]
+The fix closely mirrors `nouveau_pmops_suspend()`:
+
+```1034:1053:drivers/gpu/drm/nouveau/nouveau_drm.c
+nouveau_pmops_suspend(struct device *dev)
+{
+        struct pci_dev *pdev = to_pci_dev(dev);
+        struct nouveau_drm *drm = pci_get_drvdata(pdev);
+        // ... same pattern: do_suspend, pci_save_state,
+pci_disable_device, pci_set_power_state, udelay
+```
+
+Record: [Category: Missing shutdown handler / hardware quiescing]
+[Mechanism: PCI device not properly quiesced before kexec, leading to
+inconsistent GPU state and WARNs if full teardown attempted]
 
 ### Step 2.4: ASSESS THE FIX QUALITY
-- Obviously correct: Yes. The author is the Broadcom engineer who wrote
-  the driver and knows the hardware limitations.
-- Minimal/surgical: Yes. Adds one define, one condition, renames a
-  function.
-- Regression risk: Extremely low. The only change is that LPDDR5 systems
-  now return `-EOPNOTSUPP` from `srpd_store`, which is the correct
-  behavior. LPDDR4 and other memory types are unaffected.
+- **Obviously correct**: Yes - it mirrors the well-tested suspend path
+  exactly, using `nouveau_do_suspend()` which is the proven way to
+  quiesce the GPU
+- **Minimal/surgical**: Yes - purely additive, touches one file, doesn't
+  modify existing code
+- **Regression risk**: Very low - adds a new callback that reuses
+  existing proven infrastructure
+- **Red flags**: None. The function is self-contained and uses well-
+  established APIs
 
-Record: [Fix is obviously correct, minimal, and low regression risk]
+Record: [Fix quality: Excellent. Reuses proven suspend path. Purely
+additive.] [Regression risk: Very low - new callback, no modification to
+existing paths]
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: BLAME THE CHANGED LINES
-From git blame, all the relevant code was introduced by Florian Fainelli
-in commit `a4be90ff7a7d2` ("memory: brcmstb_memc: Add Broadcom STB
-memory controller driver"), first appearing in v6.1-rc1. The buggy code
-(missing LPDDR5 check) has been present since the driver was introduced.
+The PCI driver struct (`nouveau_drm_pci_driver`) was created in commit
+`9458029940ffc6` by Ben Skeggs (2012-07-06). It has never had a
+`.shutdown` handler. This means the bug has existed since the nouveau
+driver was first created - the GPU has never been properly quiesced on
+PCI shutdown.
 
-Record: [Buggy code introduced in a4be90ff7a7d2, merged in v6.1-rc1.
-Present in all stable trees from 6.1 onward.]
+Record: [PCI driver struct created 2012 (v3.6 era), never had .shutdown]
+[Bug present since nouveau's inception]
 
-### Step 3.2: FOLLOW THE FIXES TAG
-No Fixes: tag present. This is expected.
+### Step 3.2: FOLLOW THE FIXES: TAG
+No Fixes: tag present (expected for autosel candidates).
 
-### Step 3.3: CHECK FILE HISTORY
-The file has had minimal changes: initial addition in v6.1, then a few
-minor cleanups and build fixes. No major refactoring. The patch should
-apply cleanly or with trivial adjustments to stable trees.
+Record: [No Fixes: tag - expected]
 
-Record: [File has minimal history - 6 commits total. No conflicting
-changes.]
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Recent commits to `nouveau_drm.c` include `8f8a4dce64013` ("nouveau: add
+a third state to the fini handler") which changed `nvif_client_suspend`
+to take a `bool runtime` parameter. However, this doesn't affect the new
+`nouveau_drm_shutdown` function, which calls `nouveau_do_suspend(drm,
+false)` - and `nouveau_do_suspend`'s external interface `(struct
+nouveau_drm *, bool)` has been stable since at least 2014.
 
-### Step 3.4: CHECK THE AUTHOR
-Florian Fainelli is the original author of this driver and a Broadcom
-employee who is the de facto maintainer. His fix carries maximum
-authority for this driver.
+Record: [Related commit 8f8a4dce64013 changes internals of
+nouveau_do_suspend but not its interface] [No prerequisites needed for
+this patch]
 
-Record: [Author is the original driver author and de facto maintainer at
-Broadcom]
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Li Chen has no other commits to the nouveau driver. However, the patch
+was reviewed and signed off by Dave Airlie, who is the DRM maintainer
+and a major contributor to nouveau.
 
-### Step 3.5: CHECK FOR DEPENDENCIES
-This is a standalone single-commit fix. No dependencies on other
-commits.
+Record: [Author: Li Chen (new contributor to nouveau)] [Reviewer: Dave
+Airlie (DRM maintainer) - strong endorsement]
 
-Record: [Standalone fix, no dependencies]
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+The patch is completely standalone:
+- It adds a new function using only existing stable APIs
+  (`nouveau_do_suspend`, PCI helpers, `usleep_range`)
+- It adds a single struct field assignment (`.shutdown =
+  nouveau_drm_shutdown`)
+- No modifications to existing functions
+
+Record: [No dependencies. Fully standalone. All APIs used are long-
+standing.]
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
 ### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-b4 dig failed to find the commit by message-id (the commit may not be in
-the local repo since we're on 7.0 and the commit isn't present in HEAD
-yet). Lore is behind a challenge page. The Link tag points to `patch.msg
-id.link/20260122003501.1191059-1-florian.fainelli@broadcom.com`.
+Found the full discussion on dri-devel mailing list:
+- **v1**: Jan 20, 2026 - Initial submission without comment on
+  usleep_range
+- **v2**: Jan 21, 2026 - Added comment explaining usleep_range, gained
+  Reviewed-by from Dave Airlie
+- **Applied**: Feb 9, 2026 - Dave Airlie applied to drm-misc-next
+  targeting 7.1
 
-Record: [Could not access lore discussion due to anti-bot protection.
-The patch was accepted by maintainer Krzysztof Kozlowski.]
+Dave Airlie's v1 review asked "Why is this [usleep_range] needed? it at
+least needs a comment." After Li Chen explained, Dave gave `Reviewed-by:
+Dave Airlie <airlied@redhat.com>` on v1 with the comment addition, and
+the v2 with the comment was applied.
 
-### Step 4.2-4.5: MAILING LIST RESEARCH
-Unable to verify via lore due to access restrictions. However, the patch
-was accepted by the memory subsystem maintainer with no modifications.
+Record: [v1 and v2 submitted] [Dave Airlie reviewed, requested comment
+on usleep_range] [Applied to drm-misc-next targeting 7.1] [No NAKs or
+concerns]
 
-Record: [UNVERIFIED: Could not access mailing list discussion. Accepted
-by maintainer.]
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+CC'd: Dave Airlie, Lyude Paul, Danilo Krummrich, Maarten Lankhorst,
+Maxime Ripard, Thomas Zimmermann, Simona Vetter, dri-devel, nouveau,
+linux-kernel. All appropriate maintainers were included.
+
+Record: [All DRM/nouveau maintainers were CC'd] [Dave Airlie (DRM
+maintainer) reviewed]
+
+### Step 4.3: SEARCH FOR THE BUG REPORT
+The commit itself contains the bug report in the form of stack traces.
+The author hit this during kexec reboot with nouveau hardware. No
+separate bug report found.
+
+Record: [Author-reported bug with full stack traces in commit message]
+
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+This is a standalone single-patch submission (not part of a series).
+
+Record: [Standalone single patch, no series]
+
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+No specific stable discussion found. Dave Airlie noted it targets 7.1,
+but no explicit discussion about stable backporting.
+
+Record: [No stable-specific discussion found]
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: KEY FUNCTIONS
-- `brcmstb_memc_uses_lpddr4` (renamed to `brcmstb_memc_uses_lpddr45`)
-- `srpd_store` (caller)
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+- `nouveau_drm_shutdown()` (new function)
+- References: `nouveau_do_suspend()`, PCI helpers
 
 ### Step 5.2: TRACE CALLERS
-`brcmstb_memc_uses_lpddr4` is called only from `srpd_store`, which is
-the sysfs write handler for the `srpd` attribute. This is user-
-accessible.
+`nouveau_drm_shutdown()` is called from `pci_device_shutdown()` (PCI
+core) via the `.shutdown` function pointer. This is triggered during:
+- `kernel_kexec()` -> `device_shutdown()` -> `pci_device_shutdown()`
+- `kernel_restart()` -> `device_shutdown()` -> `pci_device_shutdown()`
+- `kernel_power_off()` -> `device_shutdown()` -> `pci_device_shutdown()`
 
-Record: [Called from srpd_store sysfs handler - user-triggered path]
+Record: [Called from PCI core during system shutdown/kexec/restart]
+[Affects all nouveau users during kexec]
 
-### Step 5.3-5.4: CALL CHAIN
-User writes to `/sys/devices/.../srpd` → `srpd_store()` →
-`brcmstb_memc_uses_lpddr45()` reads hardware register → if LPDDR4/5,
-returns -EOPNOTSUPP.
+### Step 5.3: TRACE CALLEES
+The function calls:
+1. `pci_get_drvdata()` - get driver data
+2. `nouveau_do_suspend(drm, false)` - the main GPU quiescing function,
+   proven by years of suspend/resume usage
+3. `pci_save_state()`, `pci_disable_device()`, `pci_set_power_state()` -
+   standard PCI power management
+4. `usleep_range()` - kernel delay function
 
-Record: [User-triggered via sysfs write. Direct path.]
+Record: [All callees are well-established, well-tested functions]
 
-### Step 5.5: SIMILAR PATTERNS
-No similar patterns elsewhere - this is the only LPDDR type check in
-this driver.
+### Step 5.4: FOLLOW THE CALL CHAIN
+`kernel_kexec()` -> `device_shutdown()` -> `pci_device_shutdown()` ->
+`nouveau_drm_shutdown()` -> `nouveau_do_suspend()` -> suspends display,
+evicts VRAM, idles channels, suspends fences, suspends object tree
 
-Record: [Unique check in this driver]
+This is a critical path for kexec reliability. Without proper GPU
+quiescing, the GPU may continue DMA operations after kexec, potentially
+corrupting the new kernel's memory.
+
+Record: [Reachable via kexec syscall - a real user operation] [Critical
+for system reliability during kexec]
+
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+Both `amdgpu` and `xe` (Intel) drivers have `.shutdown` handlers. This
+is a well-established pattern for GPU PCI drivers. Nouveau was the
+notable omission.
+
+Record: [amdgpu, xe, and many other DRM drivers have .shutdown handlers
+- nouveau was missing one]
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
 ### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-The driver was introduced in v6.1-rc1 (commit `a4be90ff7a7d2`). It
-exists in:
-- 6.1.y (LTS) ✓
-- 6.6.y (LTS) ✓
-- 6.12.y ✓
-- 7.0 ✓
+The `nouveau_drm_pci_driver` struct without `.shutdown` has existed
+since kernel 3.6 (2012). This bug affects ALL stable trees. The nouveau
+driver exists in all active stable trees.
 
-Record: [Buggy code exists in all active stable trees: 6.1.y, 6.6.y,
-6.12.y]
+Record: [Bug exists in ALL stable trees - nouveau has never had a
+.shutdown handler]
 
-### Step 6.2: BACKPORT COMPLICATIONS
-The file has had only minor changes across versions. The patch should
-apply cleanly or with trivial context adjustments.
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+The patch adds code between `nouveau_pmops_resume` and
+`nouveau_pmops_freeze`, and adds `.shutdown` to the pci_driver struct.
+Both areas have been stable for years (blame shows 2012 era). The patch
+should apply cleanly to all stable trees.
 
-Record: [Expected clean apply across all stable trees]
+One minor consideration: in stable trees without commit `8f8a4dce64013`,
+`nouveau_do_suspend` internally calls
+`nvif_client_suspend(&drm->_client)` (without the `bool` parameter).
+However, this doesn't affect the new function at all - it only calls
+`nouveau_do_suspend(drm, false)`, and the `nouveau_do_suspend` interface
+has been stable since 2014.
 
-### Step 6.3: RELATED FIXES ALREADY IN STABLE
-No related fixes for LPDDR5 exist.
+Record: [Expected: clean apply to all stable trees] [No conflicts
+anticipated]
 
-Record: [No prior fix for this issue in stable]
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
+No related fix exists in any stable tree. Nouveau has never had a
+`.shutdown` handler.
+
+Record: [No related fixes in stable]
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY SUBSYSTEM CRITICALITY
-- **Subsystem**: drivers/memory - memory controller drivers
-- **Criticality**: PERIPHERAL (specific Broadcom STB hardware) but the
-  consequences of the bug (making dynamic tuning non-functional) are
-  significant for affected users.
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+- **Subsystem**: `drivers/gpu/drm/nouveau/` - NVIDIA GPU driver
+- **Criticality**: IMPORTANT - nouveau is the open-source driver for all
+  NVIDIA GPUs, widely used in Linux distributions
 
-Record: [drivers/memory, PERIPHERAL - Broadcom STB specific, but real
-hardware impact]
+Record: [Subsystem: nouveau/DRM GPU driver] [Criticality: IMPORTANT -
+widely used GPU driver]
 
-### Step 7.2: SUBSYSTEM ACTIVITY
-Only 6 commits to this file over its entire existence (since 6.1).
-Mature and stable code.
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+The nouveau driver is actively developed with recent commits for
+GB10x/GB20x/GH100 support, GSP-RM support, etc.
 
-Record: [Mature, stable codebase with minimal changes]
+Record: [Actively maintained subsystem]
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: WHO IS AFFECTED
-Users of Broadcom STB SoCs with LPDDR5 memory. This is primarily
-embedded/set-top-box devices.
+### Step 8.1: DETERMINE WHO IS AFFECTED
+All users with NVIDIA GPUs using the nouveau driver who perform kexec
+reboots. This includes:
+- Systems using kexec for fast reboots
+- Systems using kdump for crash dump collection
+- Systems using KHO/LUO (Kernel Handover)
+- Enterprise and data center environments that rely on kexec
 
-Record: [Driver-specific: Broadcom STB users with LPDDR5 memory]
+Record: [Affected: All nouveau users performing kexec/kdump] [Subsystem-
+specific but affects a large user base]
 
-### Step 8.2: TRIGGER CONDITIONS
-Triggered when a user (or system script) writes to the `srpd` sysfs
-attribute on a system with LPDDR5 memory. On affected systems, the write
-succeeds (should fail with -EOPNOTSUPP) and the SRPD configuration
-change breaks the dynamic tuning process.
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+- **Trigger**: Performing a kexec reboot on a system with a nouveau-
+  driven NVIDIA GPU
+- **How common**: Kexec is commonly used in server environments, kdump
+  configurations, and development workflows
+- **Unprivileged**: No - kexec requires root/CAP_SYS_BOOT
 
-Record: [Triggered by sysfs write on LPDDR5 systems. Could be triggered
-by power management scripts.]
+Record: [Triggered by kexec reboot with nouveau GPU] [Moderately common
+trigger for server/dev environments]
 
-### Step 8.3: FAILURE MODE SEVERITY
-When triggered, the dynamic tuning process becomes "non-functional" (per
-the existing code comment). This affects the memory controller's dynamic
-tuning, which could lead to system instability or incorrect memory
-timing. Severity: **MEDIUM-HIGH** for affected hardware.
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+When the bug triggers:
+1. **Without any shutdown handler (current state)**: GPU hardware left
+   in unknown state after kexec. The next kernel may fail to initialize
+   the GPU, or the GPU may continue DMA into the new kernel's memory
+   (potential memory corruption/crash). Severity: **HIGH**
+2. **With naive full-teardown shutdown handler**: Multiple kernel
+   WARNINGs triggered (`drm_mode_config_cleanup`,
+   `drm_framebuffer_free`, `nouveau_ttm_fini`). Severity: **MEDIUM-
+   HIGH** (WARNs, potential instability)
 
-Record: [Memory controller dynamic tuning becomes non-functional.
-Severity: MEDIUM-HIGH]
+Record: [Failure mode: GPU init failure in kexec'd kernel + kernel
+WARNINGs] [Severity: HIGH]
 
-### Step 8.4: RISK-BENEFIT RATIO
-- **BENEFIT**: Prevents memory controller misconfiguration on LPDDR5
-  Broadcom STB systems. Real hardware fix for real users.
-- **RISK**: Extremely low. Only adds one additional condition to an
-  existing check. The only behavioral change is that LPDDR5 systems now
-  correctly return -EOPNOTSUPP on SRPD write, matching the existing
-  LPDDR4 behavior.
-- **Ratio**: Very favorable. Minimal risk, meaningful benefit for
-  affected hardware.
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+- **BENEFIT**: Prevents GPU initialization failures and kernel WARNINGs
+  during kexec. Ensures GPU is in a consistent state for the next
+  kernel. Enables proper kdump operation.
+- **RISK**: Very low. ~32 lines of purely additive code. Uses proven
+  suspend infrastructure. Reviewed by DRM maintainer. Cannot affect non-
+  shutdown paths.
 
-Record: [High benefit for affected users, minimal risk. Very favorable
-ratio.]
+Record: [Benefit: HIGH - prevents kexec failures and WARNs] [Risk: VERY
+LOW - additive, reuses proven code, DRM maintainer review] [Ratio:
+Strongly favorable]
 
 ---
 
@@ -359,118 +598,144 @@ ratio.]
 
 ### Step 9.1: COMPILE THE EVIDENCE
 
-**FOR backporting:**
-- Fixes a real hardware limitation enforcement bug on LPDDR5 systems
-- Without the fix, users can break dynamic memory tuning on LPDDR5
-  Broadcom STB hardware
-- Extremely small and surgical (adds 1 define, 1 condition, renames
-  function)
-- Written by the original driver author (Florian Fainelli at Broadcom)
-- Accepted by subsystem maintainer
-- Applies cleanly to stable trees (minimal file history)
-- Driver exists in all active LTS trees (6.1+)
-- Falls into the "hardware quirk/workaround" exception category
-- Zero regression risk to existing LPDDR4 or other memory type users
+**Evidence FOR backporting:**
+- Fixes real kernel WARNINGs with concrete stack traces
+- Prevents GPU initialization failures after kexec (potential for DMA
+  corruption)
+- Purely additive, small (~32 lines), single-file change
+- Reuses proven `nouveau_do_suspend()` suspend path
+- Follows the same pattern as `nouveau_pmops_suspend()` and other GPU
+  drivers (amdgpu, xe)
+- Reviewed and signed off by Dave Airlie (DRM maintainer)
+- No dependencies on other patches
+- Should apply cleanly to all stable trees
+- Bug has existed since nouveau's creation (2012)
+- Fills a gap - nouveau was one of the few major GPU drivers without
+  `.shutdown`
 
-**AGAINST backporting:**
-- Affects only Broadcom STB users with LPDDR5 memory (narrow user base)
-- No Fixes: tag, no Reported-by (but this is expected for the review
-  pipeline)
-- The commit message uses "expand" rather than "fix" language
+**Evidence AGAINST backporting:**
+- No explicit `Cc: stable@vger.kernel.org` tag
+- No `Fixes:` tag
+- Author applied it to drm-misc-next (targeting 7.1), not stable
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES - single condition addition, by
-   driver author
-2. **Fixes a real bug?** YES - allows dangerous SRPD modification on
-   LPDDR5
-3. **Important issue?** MEDIUM-HIGH - memory controller misconfiguration
-4. **Small and contained?** YES - ~4 lines changed in 1 file
-5. **No new features or APIs?** CORRECT - only extends an existing check
-6. **Can apply to stable trees?** YES - driver exists since 6.1
+**UNRESOLVED QUESTIONS:**
+- None significant - all aspects verified
 
-### Step 9.3: EXCEPTION CATEGORIES
-This falls into the **hardware quirk/workaround** category - extending
-an existing hardware limitation check to cover newly-recognized
-hardware.
+### Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. **Obviously correct and tested?** YES - mirrors proven suspend path,
+   reviewed by DRM maintainer
+2. **Fixes a real bug?** YES - kernel WARNINGs + GPU initialization
+   failures during kexec
+3. **Important issue?** YES - system warnings, potential GPU DMA
+   corruption, kexec/kdump reliability
+4. **Small and contained?** YES - 32 lines, 1 file, purely additive
+5. **No new features or APIs?** CORRECT - no new features, just a
+   missing shutdown handler
+6. **Can apply to stable trees?** YES - standalone, uses stable APIs
 
-### Step 9.4: DECISION
-The fix is small, surgical, obviously correct, written by the driver
-author, and prevents real hardware misconfiguration on LPDDR5 Broadcom
-STB systems. The risk is negligible and the benefit is real for affected
-users.
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+This could be classified as a **hardware workaround** (ensuring GPU is
+properly quiesced before kexec), which is an allowed exception category.
+
+### Step 9.4: MAKE YOUR DECISION
+The evidence strongly supports backporting. This is a small, well-
+contained fix that prevents real kernel WARNINGs and potential GPU
+initialization failures during kexec. It reuses proven suspend
+infrastructure, was reviewed by the DRM maintainer, and has no
+dependencies. The risk is very low and the benefit is significant for
+anyone using kexec/kdump with NVIDIA hardware.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by by Florian Fainelli (driver
-  author), accepted by Krzysztof Kozlowski (maintainer). No
-  Fixes/Reported-by tags.
-- [Phase 2] Diff analysis: 1 new #define, 1 additional condition in
-  existing check function, 1 function rename, 1 caller update. Total ~4
-  lines changed.
-- [Phase 3] git blame: All code introduced in commit a4be90ff7a7d2
-  (v6.1-rc1) by same author (Florian Fainelli).
-- [Phase 3] git describe --contains: confirmed driver first appeared in
-  v6.1-rc1.
-- [Phase 3] git log v6.1..v6.6..v6.12: confirmed driver exists in all
-  active stable trees.
-- [Phase 3] git log --author="Florian Fainelli": confirmed author is
-  original driver author and active maintainer.
-- [Phase 3] File history: only 6 commits total, minimal churn, clean
-  backport expected.
-- [Phase 5] Code analysis: brcmstb_memc_uses_lpddr4 called only from
-  srpd_store (sysfs write handler), user-triggerable path.
-- [Phase 6] Driver exists in 6.1.y, 6.6.y, 6.12.y stable trees.
-- [Phase 8] Failure mode: dynamic tuning becomes non-functional on
-  LPDDR5 systems. Severity MEDIUM-HIGH.
-- UNVERIFIED: Could not access lore.kernel.org discussion due to anti-
-  bot protection. Relied on maintainer acceptance and commit tags.
+- [Phase 1] Parsed tags: Reviewed-by Dave Airlie (DRM maintainer), Link
+  to patch.msgid.link
+- [Phase 2] Diff analysis: 32 lines added in one file. New
+  `nouveau_drm_shutdown()` function + `.shutdown` hook in pci_driver
+  struct. Purely additive.
+- [Phase 2] Code comparison: New function mirrors
+  `nouveau_pmops_suspend()` (lines 1034-1053 of current tree) with
+  matching pattern of do_suspend + PCI power management
+- [Phase 3] git blame: `nouveau_drm_pci_driver` struct created 2012
+  (commit 9458029940ffc6), never had `.shutdown` - bug present since
+  inception
+- [Phase 3] Related commit `8f8a4dce64013` changes `nouveau_do_suspend`
+  internals but not its interface - no conflict with this patch
+- [Phase 3] No prerequisites found - patch is standalone
+- [Phase 4] Mailing list: v1 submitted Jan 20, v2 with comment on
+  usleep_range submitted Jan 21, Dave Airlie reviewed and applied Feb 9
+  to drm-misc-next targeting 7.1
+- [Phase 4] Dave Airlie explicitly gave Reviewed-by after reviewing v1
+  and requesting a comment addition
+- [Phase 4] No NAKs or concerns raised by any reviewer
+- [Phase 5] `nouveau_drm_shutdown()` called from `pci_device_shutdown()`
+  during kexec/restart/poweroff - standard PCI driver shutdown path
+- [Phase 5] Both amdgpu and xe (Intel) GPU drivers have `.shutdown`
+  handlers - nouveau was the outlier
+- [Phase 6] Bug exists in all stable trees - nouveau has never had a
+  .shutdown handler
+- [Phase 6] Patch expected to apply cleanly - `nouveau_do_suspend(struct
+  nouveau_drm *, bool)` interface stable since 2014
+- [Phase 8] Failure mode: kernel WARNINGs + potential GPU init failure
+  after kexec. Severity: HIGH
+- [Phase 8] Risk: Very low - purely additive, uses proven code paths
 
 **YES**
 
- drivers/memory/brcmstb_memc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_drm.c | 32 +++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/memory/brcmstb_memc.c b/drivers/memory/brcmstb_memc.c
-index ba73470b1b134..c28fe90936168 100644
---- a/drivers/memory/brcmstb_memc.c
-+++ b/drivers/memory/brcmstb_memc.c
-@@ -14,6 +14,7 @@
- 
- #define REG_MEMC_CNTRLR_CONFIG		0x00
- #define  CNTRLR_CONFIG_LPDDR4_SHIFT	5
-+#define  CNTRLR_CONFIG_LPDDR5_SHIFT	6
- #define  CNTRLR_CONFIG_MASK		0xf
- #define REG_MEMC_SRPD_CFG_21		0x20
- #define REG_MEMC_SRPD_CFG_20		0x34
-@@ -34,14 +35,15 @@ struct brcmstb_memc {
- 	u32 srpd_offset;
- };
- 
--static int brcmstb_memc_uses_lpddr4(struct brcmstb_memc *memc)
-+static int brcmstb_memc_uses_lpddr45(struct brcmstb_memc *memc)
- {
- 	void __iomem *config = memc->ddr_ctrl + REG_MEMC_CNTRLR_CONFIG;
- 	u32 reg;
- 
- 	reg = readl_relaxed(config) & CNTRLR_CONFIG_MASK;
- 
--	return reg == CNTRLR_CONFIG_LPDDR4_SHIFT;
-+	return reg == CNTRLR_CONFIG_LPDDR4_SHIFT ||
-+	       reg == CNTRLR_CONFIG_LPDDR5_SHIFT;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
+index 915f73279302d..cb22237ac17d9 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -1079,6 +1079,37 @@ nouveau_pmops_resume(struct device *dev)
+ 	return ret;
  }
  
- static int brcmstb_memc_srpd_config(struct brcmstb_memc *memc,
-@@ -95,7 +97,7 @@ static ssize_t srpd_store(struct device *dev, struct device_attribute *attr,
- 	 * dynamic tuning process will also get affected by the inactivity
- 	 * timeout, thus making it non functional.
- 	 */
--	if (brcmstb_memc_uses_lpddr4(memc))
-+	if (brcmstb_memc_uses_lpddr45(memc))
- 		return -EOPNOTSUPP;
++static void
++nouveau_drm_shutdown(struct pci_dev *pdev)
++{
++	struct nouveau_drm *drm = pci_get_drvdata(pdev);
++	int ret;
++
++	if (!drm)
++		return;
++
++	if (drm->dev->switch_power_state == DRM_SWITCH_POWER_OFF ||
++	    drm->dev->switch_power_state == DRM_SWITCH_POWER_DYNAMIC_OFF)
++		return;
++
++	ret = nouveau_do_suspend(drm, false);
++	if (ret)
++		NV_ERROR(drm, "shutdown suspend failed with: %d\n", ret);
++
++	pci_save_state(pdev);
++	pci_disable_device(pdev);
++	pci_set_power_state(pdev, PCI_D3hot);
++	/*
++	 *  This is just to give the pci power transition time to settle
++	 *  before an immediate kexec jump. it’s mirroring the existing
++	 *  nouveau_pmops_suspend() behavior, which already does
++	 *  udelay(200) right after pci_set_power_state(..., pci_d3hot). In
++	 *  ->shutdown() we’re allowed to sleep, so I used usleep_range()
++	 *  instead of a busy-wait udelay().
++	 */
++	usleep_range(200, 400);
++}
++
+ static int
+ nouveau_pmops_freeze(struct device *dev)
+ {
+@@ -1408,6 +1439,7 @@ nouveau_drm_pci_driver = {
+ 	.id_table = nouveau_drm_pci_table,
+ 	.probe = nouveau_drm_probe,
+ 	.remove = nouveau_drm_remove,
++	.shutdown = nouveau_drm_shutdown,
+ 	.driver.pm = &nouveau_pm_ops,
+ };
  
- 	ret = kstrtouint(buf, 10, &val);
 -- 
 2.53.0
 
