@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9179433F5BC;
-	Mon, 20 Apr 2026 16:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8480E3446BC;
+	Mon, 20 Apr 2026 16:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701401; cv=none; b=MA6slVtFi2S1kloZkkmzjop+d9WGKJ495RU6oFc1JX1tN1+E9qQNwFa3A9mF0yM0Hg7/uZSEqa06j1AovNzvjPBpReYoNu7B46A4YGIKUn58T2TFtEhUF7JvYa69wu9wp/sD+RI7/1RtJAxXiLrmYmGfQTfi6NPqzGGExja7cVo=
+	t=1776701404; cv=none; b=HdYbV7KtgEjxqIR5xc6SjDg3jy960/16v3tDQi0AOENOIrmuNJOq/yUvZYZqVNwa/inKe5lRNkiTh3t6EzOPHMOY97KtSLCdt+/xdVsVrURbVwG7CLrwDuoqzLc3hvDqDYxs+fjD92+OUWwn6ztMDk3l0GKtubglG78h9jPm/sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701401; c=relaxed/simple;
-	bh=eXw5At4c00CL43YCfBMftl3JyV/Qu6djET7rt/i+yxI=;
+	s=arc-20240116; t=1776701404; c=relaxed/simple;
+	bh=fLis9AiKCbUccjCbwaVGPstO8PZCdRS3k8eVprsI90k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mPd8+Il9QX0NGVbcy7h/7oVBUzbIfLtR7A9wt9hfPgwqPCmaUMs0SAfRRRDwH16wtBW1ToHJI3tA3lirQueD0yMjFrtKPP04ioQ9Gs4CXww9ajxFxQBlD8xGvT5VkoQKULTR/wa8Kw3bkl3TMrhwxUthILT9S8WIjEnjKkAMjC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKBqihDL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZXqik99wxeguy5Htf7s2Xx3yhui62pWIrjjEBfmvnh7ZGXmyMaqnVkyKUcyy78+sJNWKQ7CQNzQgXaBQh1QPP+57CD4IgaI+aOIdm8FZNlePMnK1KgwFultoOkPZV/Lk27Ql39mkMsb8xF9WgCTyPV/g/FxW54CrqoUVdz07qQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ds/5NZfM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKBqihDL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DC7C19425;
-	Mon, 20 Apr 2026 16:10:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ds/5NZfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46ECC19425;
+	Mon, 20 Apr 2026 16:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701401;
-	bh=eXw5At4c00CL43YCfBMftl3JyV/Qu6djET7rt/i+yxI=;
+	s=korg; t=1776701404;
+	bh=fLis9AiKCbUccjCbwaVGPstO8PZCdRS3k8eVprsI90k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKBqihDLtoSEmSg9ZkHDOZaO//zVdcIYoWiRQjHHEzTKtaP+R4RQam74g2FVnEdAC
-	 qA3uzq87hh8rrhfQwkC1yVC3vRNvbf0/ll0kHBfwglmgRttWgb+LZVfP4eVWsVT1fq
-	 m3g06Uq3cfOg9S59KQ7CJ/FyTDUxwb6lLBgznp4A=
+	b=ds/5NZfMBiso7E+DsZbWzQMo9+gQTGi5HmithtcufvJL7fr4FZFogohWjRhc/ccwn
+	 Vae/mtc8jynS88zr3W/Wh3eFmFxDOldxKdTvZj0xrK+5/O6EVGhwh1gIKPairbuYa2
+	 jnn6SbnBJ1p12q1RsbXOsWAWUiyZ+6T9zHV7o2os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Thierry Escande <thierry.escande@linux.intel.com>,
-	Samuel Ortiz <sameo@linux.intel.com>,
-	stable <stable@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 100/162] NFC: digital: Bounds check NFC-A cascade depth in SDD response handler
-Date: Mon, 20 Apr 2026 17:42:12 +0200
-Message-ID: <20260420153930.660657614@linuxfoundation.org>
+	John Stultz <jstultz@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 083/162] sched/deadline: Use revised wakeup rule for dl_server
+Date: Mon, 20 Apr 2026 17:41:55 +0200
+Message-ID: <20260420153930.040876538@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -54,58 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 46ce8be2ced389bccd84bcc04a12cf2f4d0c22d1 upstream.
+[ Upstream commit 14a857056466be9d3d907a94e92a704ac1be149b ]
 
-The NFC-A anti-collision cascade in digital_in_recv_sdd_res() appends 3
-or 4 bytes to target->nfcid1 on each round, but the number of cascade
-rounds is controlled entirely by the peer device.  The peer sets the
-cascade tag in the SDD_RES (deciding 3 vs 4 bytes) and the
-cascade-incomplete bit in the SEL_RES (deciding whether another round
-follows).
+John noted that commit 115135422562 ("sched/deadline: Fix 'stuck' dl_server")
+unfixed the issue from commit a3a70caf7906 ("sched/deadline: Fix dl_server
+behaviour").
 
-ISO 14443-3 limits NFC-A to three cascade levels and target->nfcid1 is
-sized accordingly (NFC_NFCID1_MAXSIZE = 10), but nothing in the driver
-actually enforces this.  This means a malicious peer can keep the
-cascade running, writing past the heap-allocated nfc_target with each
-round.
+The issue in commit 115135422562 was for wakeups of the server after the
+deadline; in which case you *have* to start a new period. The case for
+a3a70caf7906 is wakeups before the deadline.
 
-Fix this by rejecting the response when the accumulated UID would exceed
-the buffer.
+Now, because the server is effectively running a least-laxity policy, it means
+that any wakeup during the runnable phase means dl_entity_overflow() will be
+true. This means we need to adjust the runtime to allow it to still run until
+the existing deadline expires.
 
-Commit e329e71013c9 ("NFC: nci: Bounds check struct nfc_target arrays")
-fixed similar missing checks against the same field on the NCI path.
+Use the revised wakeup rule for dl_defer entities.
 
-Cc: Simon Horman <horms@kernel.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Thierry Escande <thierry.escande@linux.intel.com>
-Cc: Samuel Ortiz <sameo@linux.intel.com>
-Fixes: 2c66daecc409 ("NFC Digital: Add NFC-A technology support")
-Cc: stable <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026040913-figure-seducing-bd3f@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 115135422562 ("sched/deadline: Fix 'stuck' dl_server")
+Reported-by: John Stultz <jstultz@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Tested-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/20260404102244.GB22575@noisy.programming.kicks-ass.net
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/digital_technology.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/sched/deadline.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/nfc/digital_technology.c
-+++ b/net/nfc/digital_technology.c
-@@ -424,6 +424,12 @@ static void digital_in_recv_sdd_res(stru
- 		size = 4;
- 	}
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 8acdd97538546..1ef891f8e3f2f 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1079,7 +1079,7 @@ static void update_dl_entity(struct sched_dl_entity *dl_se)
+ 	if (dl_time_before(dl_se->deadline, rq_clock(rq)) ||
+ 	    dl_entity_overflow(dl_se, rq_clock(rq))) {
  
-+	if (target->nfcid1_len + size > NFC_NFCID1_MAXSIZE) {
-+		PROTOCOL_ERR("4.7.2.1");
-+		rc = -EPROTO;
-+		goto exit;
-+	}
-+
- 	memcpy(target->nfcid1 + target->nfcid1_len, sdd_res->nfcid1 + offset,
- 	       size);
- 	target->nfcid1_len += size;
+-		if (unlikely(!dl_is_implicit(dl_se) &&
++		if (unlikely((!dl_is_implicit(dl_se) || dl_se->dl_defer) &&
+ 			     !dl_time_before(dl_se->deadline, rq_clock(rq)) &&
+ 			     !is_dl_boosted(dl_se))) {
+ 			update_dl_revised_wakeup(dl_se, rq);
+-- 
+2.53.0
+
 
 
