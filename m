@@ -1,52 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57183BE632;
-	Mon, 20 Apr 2026 13:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD833A5E8B;
+	Mon, 20 Apr 2026 13:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691036; cv=none; b=uai+LCeYrXHlRnHWazs9CNWHzo86nbczqfUroENui8nd94b/RlX8+CWQwY4+x820RnBPZU8xp7VHl6tYLZwkU5S89lJwxa6DeD3cLrY+CXqdE9ESOkqrDmkXsorHk30h0Qq3JkKJKp+4eM8U8xYWz5LaKol97IoAnvTZROlwY5g=
+	t=1776691037; cv=none; b=renxf5oKHyDB4TkisfGV1lIS8YbL62wpmeI4zXs8xZnLcoY5jLOzwPuCOMk2yCyZcC25cFOyyhG+4R0S3/vB1y1qUNqcsNXcTsmDMAYjWXmexKEKQBlwbMTQ/bLXn4Z4/mujoaN6M8h267+kaUi2sf43KSIEx+oESGZ9zevCf+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691036; c=relaxed/simple;
-	bh=v+YKt47OzZz2vi95JOA5Cavf8tQENiTTUFpgqDmIr2c=;
+	s=arc-20240116; t=1776691037; c=relaxed/simple;
+	bh=s4G8zpqOYFeSri/61okSTFd2Tvlt/DHWyYwTn/Zdl/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UMkDYah8sxhSK4Ud5DZJhub25SPFJkaB3VWewOtDYw+fJnoNWO7q3GCWhGrmfASEJhiN2sk9tSQepN5Ki+lbyuKQcLooK1o/z6hikcMFo2oVBAVKf86pQzygBi9G18tZSxuYWchTjAQ88gwD9BZBzeimx6fkdFzREDvFmL9UKh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QTEE//Ss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IhWInSc+Fy/mVovMxw0Kk+oiz3uvFf7GevctRPddNK9owprll480OuwKUJiErEszYAlE89CZesVbeIuNAsG12NspBc3xZUZSZfaJS8rVXmQ5kdfPknpyTp6gZrptQuwfGb5UVE8vHDo2Mc9NsP3tjY9LjK12m97OH0SecsUJPK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pwwpwu8o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QTEE//Ss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFE6C2BCB9;
-	Mon, 20 Apr 2026 13:17:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pwwpwu8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6505C2BCF4;
+	Mon, 20 Apr 2026 13:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691036;
-	bh=v+YKt47OzZz2vi95JOA5Cavf8tQENiTTUFpgqDmIr2c=;
+	s=k20201202; t=1776691037;
+	bh=s4G8zpqOYFeSri/61okSTFd2Tvlt/DHWyYwTn/Zdl/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTEE//SsQ2XbVShuOKIKQEMkFJoCxFOOePx786YOMLDofpg+q1u52B4/MJJ3Hqk8p
-	 keGPzl2PmBJnbzWBclWtehKxN57zYoZCwKfYspr3oJ23KmrWuQ375N0Gcl2410Ahhb
-	 tKwEE/AwH2ljVg+vWMTKT7OTuR8EgEqnMsYVWDLmnAFafK2ppCCouK8CiVH6UqwFEB
-	 XAq8vHPDC8c+zQgjnChQq2T8hbnwoVY5pNywtt0VU2oxNWC6gSqVbdI4V/oj3xkNBY
-	 PGtidE9TKKEFMG9iRxKfO2DTU8QHWOyn3wDlEdiDyeU2r9FQ2a7TN4gTGy2YP7lpbe
-	 lPkpHh5NrzmLQ==
+	b=pwwpwu8oqQ8F7WshMy/3jG1zRnnZvCdNIhkwX2XSvye3AxvgGNVt5/IrV/3+ppYeG
+	 LDzD55mQh0aUtzTcw34FVIhUBglFkau/suF65PeuWwD4wikl0Prm/mKhCCYc28EV5H
+	 yQjiYd9yBbDx8MRP9m7CvVlArVRcuifN8u9HZyq1QbVG8dsa9QwvvyiQJhhr+pU7ys
+	 Y1qWIk4wyrIODRytBGss9WFVHgIX1yzSEzMjUb3jeVA6NaZ2a7GEqRT6Jibe97BGDU
+	 vDsu81T/wBZ8dvoZT77wl0BSvZ+C5adX9ADbY33C0E0qUBVFlAfigMkOZ9cbn4Swpz
+	 +GAjA7WUEidBg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charlene Liu <Charlene.Liu@amd.com>,
-	Leo Chen <leo.chen@amd.com>,
-	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] drm/amd/display: Fix dcn401_optimize_bandwidth
-Date: Mon, 20 Apr 2026 09:08:42 -0400
-Message-ID: <20260420131539.986432-56-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] wifi: rtw88: coex: Ignore BT info byte 5 from RTL8821A
+Date: Mon, 20 Apr 2026 09:08:43 -0400
+Message-ID: <20260420131539.986432-57-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -62,338 +52,341 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 002f32db0d4292f117994c330928d2374887b28e ]
+[ Upstream commit 658e3c836969e1624a7572c75684f54ec503c2ed ]
 
-[Why&How]
-We should check for != zstate disallow and programming extend blank from a
-different struct.
+Sometimes while watching a Youtube video with Bluetooth headphones the
+audio has a lot of interruptions, because the 5th byte of the BT info
+sent by RTL8821AU has strange values, which result in
+coex_stat->bt_hid_pair_num being 2 or 3. When this happens
+rtw_coex_freerun_check() returns true, which causes
+rtw_coex_action_wl_connected() to call rtw_coex_action_freerun() instead
+of rtw_coex_action_bt_a2dp().
 
-Reviewed-by: Leo Chen <leo.chen@amd.com>
-Reviewed-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The RTL8821AU vendor driver doesn't do anything with the 5th byte of the
+BT info, so ignore it here as well.
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/bbf06c83-d2ee-4205-8fbb-829e2347586f@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me compile the full analysis.
+Good. Now I have a complete picture. Here is the full analysis:
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `drm/amd/display` (AMD GPU display controller)
-- Action verb: "Fix"
-- Summary: Fix dcn401_optimize_bandwidth function
+### Step 1.1: Subject Line
+- **Subsystem**: `wifi: rtw88: coex:` (Realtek RTW88 WiFi driver,
+  Bluetooth coexistence)
+- **Action verb**: "Ignore" — indicates a hardware-specific workaround
+  to suppress bad data
+- **Summary**: Ignore erroneous BT info byte 5 from RTL8821A chip to fix
+  Bluetooth audio interruptions
 
-Record: [drm/amd/display] [Fix] [Corrects zstate condition and struct
-access in dcn401_optimize_bandwidth]
+### Step 1.2: Tags
+- **Signed-off-by**: Bitterblue Smith (author) + Ping-Ke Shih (subsystem
+  maintainer)
+- **Acked-by**: Ping-Ke Shih — the Realtek WiFi subsystem maintainer
+  endorsed this
+- **Link**: patch.msgid.link reference
+- No Fixes: tag (expected for manual review candidates)
+- No Reported-by: tag, but the commit message describes a user-visible
+  symptom experienced by the author
+- No Cc: stable (expected)
 
-**Step 1.2: Tags**
-- Reviewed-by: Leo Chen, Dmytro Laktyushkin (AMD display engineers)
-- Tested-by: Dan Wheeler (AMD test engineer)
-- Signed-off-by: Charlene Liu (author), Ivan Lipski (submitter), Alex
-  Deucher (AMD GPU maintainer)
-- No Fixes: tag, no Cc: stable (expected for autosel candidates)
+### Step 1.3: Body Analysis
+The commit describes a real, user-visible bug:
+- **Bug**: While watching YouTube with Bluetooth headphones, audio has
+  frequent interruptions
+- **Root cause**: RTL8821AU sends BT info with "strange values" in byte
+  5 (bt_info_hb2), which causes `bt_hid_pair_num` to be 2 or 3
+- **Impact chain**: `bt_hid_pair_num >= 2` → `rtw_coex_freerun_check()`
+  returns true → `rtw_coex_action_freerun()` is called instead of
+  `rtw_coex_action_bt_a2dp()` → wrong coexistence algorithm → audio
+  stuttering
+- **Vendor driver evidence**: RTL8821AU vendor driver doesn't use byte 5
+  at all
 
-Record: Two reviewers, one tester, submitted through AMD's standard
-display patch process. Author is an AMD display team member.
+### Step 1.4: Hidden Bug Fix Detection
+This IS a bug fix. The "Ignore" verb is a hardware workaround — the chip
+sends garbage data in byte 5 that causes incorrect coexistence
+decisions.
 
-**Step 1.3: Commit Body**
-The message says "We should check for != zstate disallow and programming
-extend blank from a different struct." This describes two bugs:
-1. The zstate check condition was too restrictive
-2. The extended blank register value was being read from the wrong
-   struct
+Record: This is a hardware quirk/workaround disguised with neutral
+language.
 
-Record: Two bugs described. Both relate to incorrect programming of
-extended blank during bandwidth optimization for DCN4.01 display
-hardware.
-
-**Step 1.4: Hidden Bug Fix Detection**
-Not hidden — explicitly labeled as "Fix" with clear description.
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- 1 file changed:
-  `drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c`
-- 2 lines changed (1 condition, 1 struct access)
-- Function modified: `dcn401_optimize_bandwidth`
-- Scope: Single-file, single-function surgical fix
+### Step 2.1: Inventory
+- **Files changed**: 1 (`drivers/net/wireless/realtek/rtw88/coex.c`)
+- **Lines added**: 3 (including blank line)
+- **Lines removed**: 0
+- **Function modified**: `rtw_coex_bt_info_notify()`
+- **Scope**: Single-file surgical fix, chip-specific
 
-**Step 2.2: Code Flow Change**
+### Step 2.2: Code Flow Change
+**Before**: Byte 5 of BT info (`bt_info_c2h[rsp_source][5]`) is stored
+verbatim from the buffer, then copied into `bt_info_hb2`, and later used
+to compute `bt_hid_pair_num`, `bt_hid_slot`, `bt_opp_exist`, etc.
 
-Change 1 (line 1476→1486):
-- Before: `if (zstate_support == DCN_ZSTATE_SUPPORT_ALLOW)` — only
-  enters the extended blank programming block when zstate is exactly
-  `ALLOW`
-- After: `if (zstate_support != DCN_ZSTATE_SUPPORT_DISALLOW)` — enters
-  for ALL allow modes
+**After**: For RTL8821A only, byte 5 is zeroed immediately after being
+copied from the buffer. This means all downstream fields derived from
+`bt_info_hb2` (like `bt_hid_pair_num`, `bt_hid_slot`, `bt_opp_exist`,
+`bt_a2dp_active`, `bt_slave`) will be based on a zero value instead of
+garbage.
 
-The enum `dcn_zstate_support_state` has values: UNKNOWN, ALLOW,
-ALLOW_Z8_ONLY, ALLOW_Z8_Z10_ONLY, ALLOW_Z10_ONLY, DISALLOW. The old code
-missed Z8_ONLY, Z8_Z10_ONLY, and Z10_ONLY modes.
+### Step 2.3: Bug Mechanism
+This is a **hardware workaround** (category h). The RTL8821A firmware
+sends unreliable data in byte 5 of BT info. The fix zeros it to prevent
+incorrect coexistence algorithm selection.
 
-Change 2 (line 1484):
-- Before: `pipe_ctx->dlg_regs.min_dst_y_next_start` — reads from old
-  DML1 struct `_vcs_dpi_display_dlg_regs_st`
-- After: `pipe_ctx->hubp_regs.dlg_regs.min_dst_y_next_start` — reads
-  from DML2.1 struct `dml2_dchub_per_pipe_register_set`
+The critical impact path: `bt_hid_pair_num` (derived from bits 6-7 of
+byte 5) being >= 2 causes `rtw_coex_freerun_check()` at line 127 to
+return true, which in `rtw_coex_action_wl_connected()` (lines 2496-2516)
+causes "freerun" mode instead of the proper A2DP algorithm.
 
-**Step 2.3: Bug Mechanism**
+### Step 2.4: Fix Quality
+- **Obviously correct**: Yes — the vendor driver ignores this byte
+  entirely, zeroing it is the conservative approach
+- **Minimal/surgical**: Yes — 2 lines of real code, chip-specific guard
+- **Regression risk**: Very low — only affects RTL8821A, and only
+  suppresses data that's already garbage
+- **Red flags**: None
 
-Bug 1 (Logic/correctness): Wrong condition excludes valid z-state power
-modes from extended blank programming. This is a logic bug where the
-original code was copied from DCN20 which only had ALLOW/DISALLOW, but
-DCN401 has additional modes (Z8, Z10, etc.).
-
-Bug 2 (Wrong struct access): DCN401 uses DML2.1 which populates
-`pipe_ctx->hubp_regs`. The old `pipe_ctx->dlg_regs` is populated by
-DML2.0's `dml21_update_pipe_ctx_dchub_regs`, which was removed in commit
-63ab80d9ac0a. Reading from the wrong struct yields zero/stale data.
-
-**Step 2.4: Fix Quality**
-- Obviously correct: aligns with how all other DCN clk_mgr code checks
-  zstate (`!= DISALLOW`), and aligns with how all other DCN401 code
-  accesses hubp_regs
-- Minimal/surgical: exactly 2 lines
-- No regression risk: both changes narrow in on the correct behavior
+---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-The buggy code was introduced by commit `70839da636050` (Aurabindo
-Pillai, 2024-04-19) "drm/amd/display: Add new DCN401 sources". This
-commit first appeared in v6.11.
+### Step 3.1: Blame
+- `bt_hid_pair_num` extraction from `bt_info_hb2` was introduced by
+  commit `4136214f7c4683` (Yan-Hsuan Chuang, 2019-07-31) — present since
+  very early rtw88 history
+- The freerun check using `bt_hid_pair_num >= 2` was added by commit
+  `8e6947dcb95d77` (Ching-Te Ku, 2020-11-26)
+- However, `RTW_CHIP_TYPE_8821A` was only added in v6.13 (commit
+  `d12722830ea4f`, 2024-10-23)
 
-The dlg_regs bug was latent until commit `63ab80d9ac0a` (Rafal
-Ostrowski, 2024-12-17) "drm/amd/display: DML2.1 Post-Si Cleanup" which
-removed `dml21_update_pipe_ctx_dchub_regs` that was populating
-`pipe_ctx->dlg_regs`. This commit is in v6.14+ only.
+### Step 3.2: Fixes Tag
+No Fixes: tag present. The bug exists since RTL8821A support was first
+added in v6.13.
 
-Record: zstate bug exists since v6.11. dlg_regs bug became active in
-v6.14 when the function populating the old struct was removed.
+### Step 3.3: Related Changes
+The author (Bitterblue Smith) has been the primary contributor of
+RTL8821A/RTL8812A support in rtw88, with numerous commits adding the
+chip support infrastructure. Related commit `bfcee5ee924fc` ("wifi:
+rtw88: 8821a: Regularly ask for BT info updates") also addresses
+RTL8821AU BT coexistence quirks — another sign the chip's BT behavior is
+non-standard.
 
-**Step 3.2: No Fixes: tag** (expected)
+### Step 3.4: Author Context
+Bitterblue Smith is the primary developer who reverse-engineered and
+ported RTL8821A/RTL8812A support to the rtw88 framework. They are the de
+facto maintainer of this chip's support. The fix is acked by the rtw88
+subsystem maintainer Ping-Ke Shih.
 
-**Step 3.3: File History**
-Recent file changes are mostly unrelated (NULL ptr deref fix, DPP
-guards, cursor offload). No prerequisites for this fix.
+### Step 3.5: Dependencies
+The fix depends on `RTW_CHIP_TYPE_8821A` existing in the enum (added in
+v6.13). No other dependencies — the code is self-contained.
 
-**Step 3.4: Author**
-Charlene Liu is a regular AMD display team contributor with many commits
-in the subsystem. Ivan Lipski is the submitter who regularly contributes
-AMD display fixes.
+---
 
-**Step 3.5: Dependencies**
-No dependencies. The fix is standalone — both `hubp_regs` and the zstate
-enum values exist since v6.11.
+## PHASE 4: MAILING LIST RESEARCH
 
-## PHASE 4: MAILING LIST
+### Step 4.1-4.5
+Lore is protected by Anubis bot detection and could not be fetched. b4
+dig could not find the commit (it's not yet in the local tree). However,
+the patch link
+(`patch.msgid.link/bbf06c83-d2ee-4205-8fbb-829e2347586f@gmail.com`) is
+in the commit metadata.
 
-**Step 4.1: Original Submission**
-Found at: `https://yhbt.net/lore/amd-
-gfx/20260218165116.155001-6-IVAN.LIPSKI@amd.com/`
-Part of a 9-patch series "DC Patches February 18, 2026". This is patch
-5/9. The series includes other display fixes (cursor, DPIA, compiler
-warnings).
+The commit has **Acked-by: Ping-Ke Shih** (Realtek maintainer) AND
+**Signed-off-by: Ping-Ke Shih** (meaning he applied it through his
+tree), which is strong evidence of proper review.
 
-**Step 4.2: Reviewers**
-Appropriate AMD display maintainers and engineers were CC'd: Harry
-Wentland, Leo Li, Aurabindo Pillai, Wayne Lin, Tom Chung, and the
-specific reviewers Leo Chen and Dmytro Laktyushkin.
+Record: Could not access lore. However, maintainer ack and sign-off
+confirmed from commit tags.
 
-**Step 4.3: Bug Report**
-No specific bug report link found. This appears to be found during
-internal code review/testing at AMD.
-
-**Step 4.4: Series Independence**
-Other patches in the series (cursor pos fix, DPIA fix, type mismatch)
-are independent. This fix is standalone.
-
-**Step 4.5: No stable-specific discussion found.**
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Modified Function**
-`dcn401_optimize_bandwidth` — called during display bandwidth
-optimization after clock updates.
+### Step 5.1-5.2: Function & Callers
+The modified function is `rtw_coex_bt_info_notify()`. The zeroed byte 5
+(`bt_info_hb2`) affects:
+1. `rtw_coex_freerun_check()` via `bt_hid_pair_num` (line 127) —
+   controls whether freerun or proper A2DP coex is used
+2. `bt_opp_exist`, `bt_a2dp_active`, `bt_slave`, `bt_hid_slot`,
+   `bt_hid_pair_num`, `bt_418_hid_exist` (lines 3251-3262) — all derived
+   from byte 5
 
-**Step 5.2: Callers**
-`dcn401_optimize_bandwidth` is a hardware sequencer function registered
-in the DCN401 init table. It is called during DC bandwidth optimization,
-which occurs on display mode changes, resolution changes, and power
-state transitions.
+For RTL8821A, since the vendor driver ignores all of byte 5, zeroing it
+is the correct behavior for all these fields.
 
-**Step 5.3: Callees**
-The affected code calls
-`pipe_ctx->plane_res.hubp->funcs->program_extended_blank()` which
-programs display hardware registers for extended blanking during z-state
-power saving.
+### Step 5.3-5.5
+The freerun vs A2DP algorithm choice directly impacts the Bluetooth TDMA
+scheduling — freerun mode doesn't properly coordinate WiFi/BT time slots
+for A2DP streaming, causing audio dropouts.
 
-**Step 5.4: Call Chain**
-Reachable via standard display mode setting paths (user-triggered via
-xrandr, display manager, etc.) and power management transitions. This is
-not an obscure path.
-
-**Step 5.5: Similar Patterns**
-DCN20 (`dcn20_hwseq.c:2458`) has the same `== DCN_ZSTATE_SUPPORT_ALLOW`
-pattern, which is potentially also a bug but uses the old DML path where
-`pipe_ctx->dlg_regs` IS populated.
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Code Existence**
-- DCN401 code exists since v6.11
-- `hubp_regs` field exists since v6.11 (commit 00c391102abc)
-- The dlg_regs regression was introduced in v6.14 (commit 63ab80d9ac0a)
-- Both bugs are present in v7.0
+### Step 6.1: Code Existence in Stable
+- `RTW_CHIP_TYPE_8821A` was added in v6.13 (commit `d12722830ea4f`)
+- The coex code being modified (`rtw_coex_bt_info_notify`) exists in all
+  trees, but the chip type enum only exists in v6.13+
+- **Applicable stable trees**: 6.13.y, 6.14.y, 6.15.y, and this 7.0.y
+  tree
+- **NOT applicable**: 6.12.y and older (no RTL8821A support)
 
-**Step 6.2: Backport Difficulty**
-The patch should apply cleanly to v7.0.y — the modified lines are
-unchanged from when they were introduced. For v6.14.y+, both fixes
-apply. For v6.12.y and earlier, only the zstate fix applies (dlg_regs is
-still populated there).
+### Step 6.2: Backport Complications
+The patch should apply cleanly to any tree with RTL8821A support
+(v6.13+). The surrounding code in `rtw_coex_bt_info_notify()` has been
+stable.
 
-**Step 6.3: No related fixes in stable.**
+---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1:** drm/amd/display — IMPORTANT subsystem. DCN401 is AMD's
-display controller for newer GPUs. Display bugs directly affect user
-experience.
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: WiFi driver (drivers/net/wireless/realtek/rtw88) —
+  IMPORTANT level
+- RTL8821AU is a common USB WiFi dongle used by many Linux users
 
-**Step 7.2:** Actively developed subsystem with frequent commits.
+### Step 7.2: Activity
+Active subsystem with regular commits from both Bitterblue Smith and
+Ping-Ke Shih.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1:** Affects users of AMD GPUs with DCN4.01 display controller
-hardware.
+### Step 8.1: Affected Users
+Users of RTL8821AU USB WiFi dongles who use Bluetooth headphones
+simultaneously (a very common use case for laptop users with USB WiFi
+adapters).
 
-**Step 8.2:** Triggers during power management transitions (z-state
-changes) — common on laptops and energy-efficient desktops. The zstate
-bug triggers whenever Z8/Z10 power modes are selected instead of full
-Z-state.
+### Step 8.2: Trigger Conditions
+- Trigger: Using Bluetooth A2DP headphones while WiFi is connected
+- Very common scenario — watching video with BT headphones is an
+  everyday task
+- No special privileges needed
 
-**Step 8.3:** Failure mode is incorrect display hardware programming:
-- Without extended blank programming during z-states: display artifacts,
-  flickering, or incorrect power management behavior
-- With wrong/zero value for min_dst_y_next_start: incorrect blank
-  timing, potential display corruption
-- Severity: HIGH (visible display issues for affected hardware)
+### Step 8.3: Failure Mode Severity
+- **Failure mode**: Bluetooth audio has frequent
+  interruptions/stuttering
+- **Severity**: MEDIUM-HIGH — not a crash, but makes BT audio unusable,
+  which is a significant functionality regression for a very common use
+  case
 
-**Step 8.4:**
-- Benefit: HIGH — fixes real display hardware programming bugs for
-  DCN401 users
-- Risk: VERY LOW — 2-line change, obviously correct, reviewed and tested
-- Ratio: Strongly favors backporting
+### Step 8.4: Risk-Benefit
+- **Benefit**: HIGH — fixes Bluetooth audio for RTL8821AU users, very
+  common use case
+- **Risk**: VERY LOW — 2 lines, chip-specific guard, vendor driver
+  doesn't use this byte at all, maintainer-acked
+- **Ratio**: Strongly favorable
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence**
+### Step 9.1: Evidence
+**FOR backporting:**
+- Fixes real user-visible bug (BT audio stuttering)
+- Extremely small (2 lines of code)
+- Hardware-specific quirk (only RTL8821A affected)
+- Consistent with vendor driver behavior
+- Acked by subsystem maintainer (Ping-Ke Shih)
+- Zero regression risk for other chips
+- Common use case (BT audio + WiFi)
 
-FOR backporting:
-- Fixes two real bugs: incorrect zstate condition and wrong struct
-  access
-- Small, surgical fix (2 lines)
-- Reviewed by two AMD display engineers, tested
-- Affects real hardware (DCN401 GPUs)
-- Display bugs directly affect user experience
-- Consistent with how other DCN code handles zstate and hubp_regs
+**AGAINST backporting:**
+- Only affects trees with RTL8821A support (v6.13+)
+- No Fixes: tag (expected for review candidates)
+- No explicit stable nomination
 
-AGAINST backporting:
-- DCN401 is relatively new hardware (v6.11+)
-- No user bug reports (found during code review)
-- The dlg_regs bug only manifests in v6.14+ (after DML2.1 cleanup)
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** — matches vendor driver, acked
+   by maintainer
+2. Fixes a real bug? **YES** — BT audio interruptions
+3. Important issue? **YES** — makes BT audio unusable with this common
+   USB dongle
+4. Small and contained? **YES** — 2 lines, single file, chip-specific
+5. No new features or APIs? **CORRECT** — this is a workaround, not a
+   feature
+6. Can apply to stable trees? **YES** — clean apply to v6.13+
 
-**Step 9.2: Stable Rules**
-1. Obviously correct? YES — aligns with all other zstate checks and
-   hubp_regs usage
-2. Fixes real bug? YES — wrong hardware programming values
-3. Important issue? YES — display correctness on affected hardware
-4. Small and contained? YES — 2 lines, 1 function, 1 file
-5. No new features? CORRECT — pure bug fix
-6. Applies to stable? YES — cleanly for v7.0.y
+### Step 9.3: Exception Category
+This is a **hardware quirk/workaround** — a classic exception category
+that is automatically YES for stable.
 
-**Step 9.3:** No exception category — standard bug fix.
-
-**Step 9.4:** The evidence clearly supports backporting.
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Leo Chen and Dmytro Laktyushkin,
-  Tested-by Dan Wheeler, author Charlene Liu
-- [Phase 2] Diff analysis: 2 lines changed in
-  dcn401_optimize_bandwidth(): broadened zstate condition and fixed
-  struct access
-- [Phase 2] Verified enum values at `dc.h:665-671`: 6 states including
-  ALLOW, Z8_ONLY, Z8_Z10_ONLY, Z10_ONLY, DISALLOW
-- [Phase 2] Verified `pipe_ctx->hubp_regs` is `struct
-  dml2_dchub_per_pipe_register_set` containing `dlg_regs` with
-  `min_dst_y_next_start` field
-- [Phase 2] Verified `pipe_ctx->dlg_regs` is the OLD
-  `_vcs_dpi_display_dlg_regs_st` struct (different type)
-- [Phase 3] git blame: buggy code introduced in commit 70839da636050
-  (v6.11, "Add new DCN401 sources")
-- [Phase 3] Confirmed `hubp_regs` added in commit 00c391102abc (also
-  v6.11)
-- [Phase 3] Confirmed dlg_regs regression introduced by 63ab80d9ac0a
-  (v6.14, "DML2.1 Post-Si Cleanup") which removed
-  `dml21_update_pipe_ctx_dchub_regs`
-- [Phase 3] Verified `dml21_utils.c:225` populates `pipe_ctx->hubp_regs`
-  via memcpy for DCN401 (DML2.1 path)
-- [Phase 3] Verified DCN401 uses DML2.1 (`dcn401_resource.c` has
-  `.using_dml21 = true`)
-- [Phase 3] Verified other DCN401 code uses
-  `pipe_ctx->hubp_regs.dlg_regs` (dcn401_hwseq.c:2889-2892)
-- [Phase 4] Found original submission at lore (patch 5/9 in DC Patches
-  Feb 18 2026 series)
-- [Phase 4] Appropriate AMD display maintainers were CC'd
-- [Phase 5] Confirmed `program_extended_blank` is registered in hubp
-  function tables for DCN31/DCN35
-- [Phase 6] Verified 63ab80d9ac0a is NOT in v6.12/v6.13 but IS in v6.14+
-- [Phase 6] Both bugs present in v7.0
-- [Phase 8] Display correctness issue for DCN401 GPU users during power
-  state transitions
+- [Phase 1] Parsed tags: Acked-by and Signed-off-by from Ping-Ke Shih
+  (subsystem maintainer)
+- [Phase 2] Diff analysis: 2 lines added after buffer copy in
+  `rtw_coex_bt_info_notify()`, zeroes byte 5 for RTL8821A only
+- [Phase 2] Verified impact path: byte 5 → `bt_info_hb2` →
+  `bt_hid_pair_num` at line 3258 → `rtw_coex_freerun_check()` at line
+  127 → wrong algorithm at lines 2496-2516
+- [Phase 3] git blame: `bt_hid_pair_num` extraction from 2019, freerun
+  check from 2020, RTL8821A chip type added v6.13
+- [Phase 3] `RTW_CHIP_TYPE_8821A` added in commit d12722830ea4f (v6.13)
+- [Phase 3] RTL8821A driver (rtw8821a.c) added in commit 32e284a238806
+  (v6.13)
+- [Phase 3] Author is the primary RTL8821A/RTL8812A contributor with
+  many commits in rtw88
+- [Phase 4] Lore access blocked by Anubis. UNVERIFIED: could not read
+  mailing list discussion
+- [Phase 5] Traced `bt_hid_pair_num` usage: line 127
+  (`rtw_coex_freerun_check`), line 1530 (algorithm selection), lines
+  3258-3262 (418 HID detection)
+- [Phase 6] Applicable to stable trees v6.13.y and newer only (RTL8821A
+  support not present in older trees)
+- [Phase 6] Patch applies cleanly — no conflicting changes in
+  surrounding code
+- [Phase 8] Failure mode: BT A2DP audio stuttering when WiFi connected,
+  severity MEDIUM-HIGH
 
-The fix is small, surgical, obviously correct, reviewed, tested, and
-fixes real display hardware programming bugs for DCN401 users. It meets
-all stable kernel criteria.
+---
+
+This is a textbook hardware quirk fix: a 2-line, chip-specific
+workaround that fixes a real user-visible Bluetooth audio problem, is
+consistent with the vendor driver, and is endorsed by the subsystem
+maintainer. The regression risk is negligible since it only affects
+RTL8821A and only zeroes a byte containing garbage data. It meets all
+stable kernel criteria.
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/coex.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 4973d36aadc5d..a3d33d10853b8 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -1492,7 +1492,7 @@ void dcn401_optimize_bandwidth(
- 			dc->clk_mgr,
- 			context,
- 			true);
--	if (context->bw_ctx.bw.dcn.clk.zstate_support == DCN_ZSTATE_SUPPORT_ALLOW) {
-+	if (context->bw_ctx.bw.dcn.clk.zstate_support != DCN_ZSTATE_SUPPORT_DISALLOW) {
- 		for (i = 0; i < dc->res_pool->pipe_count; ++i) {
- 			struct pipe_ctx *pipe_ctx = &context->res_ctx.pipe_ctx[i];
+diff --git a/drivers/net/wireless/realtek/rtw88/coex.c b/drivers/net/wireless/realtek/rtw88/coex.c
+index b4dc6ff2c1750..97fc7392b48a8 100644
+--- a/drivers/net/wireless/realtek/rtw88/coex.c
++++ b/drivers/net/wireless/realtek/rtw88/coex.c
+@@ -3095,6 +3095,9 @@ void rtw_coex_bt_info_notify(struct rtw_dev *rtwdev, u8 *buf, u8 length)
+ 	for (i = 0; i < COEX_BTINFO_LENGTH; i++)
+ 		coex_stat->bt_info_c2h[rsp_source][i] = buf[i];
  
-@@ -1500,7 +1500,7 @@ void dcn401_optimize_bandwidth(
- 				&& pipe_ctx->stream->adjust.v_total_min == pipe_ctx->stream->adjust.v_total_max
- 				&& pipe_ctx->stream->adjust.v_total_max > pipe_ctx->stream->timing.v_total)
- 					pipe_ctx->plane_res.hubp->funcs->program_extended_blank(pipe_ctx->plane_res.hubp,
--						pipe_ctx->dlg_regs.min_dst_y_next_start);
-+						pipe_ctx->hubp_regs.dlg_regs.min_dst_y_next_start);
- 		}
- 	}
- }
++	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821A)
++		coex_stat->bt_info_c2h[rsp_source][5] = 0;
++
+ 	/* get the same info from bt, skip it */
+ 	if (coex_stat->bt_info_c2h[rsp_source][1] == coex_stat->bt_info_lb2 &&
+ 	    coex_stat->bt_info_c2h[rsp_source][2] == coex_stat->bt_info_lb3 &&
 -- 
 2.53.0
 
