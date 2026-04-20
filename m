@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5583E024E;
-	Mon, 20 Apr 2026 13:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ED83E0C56;
+	Mon, 20 Apr 2026 13:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691469; cv=none; b=dbaOGSigiiqEyRFOH63+SmuLEjzC7ofP7FCJ0gFC9OWO6N4nUce6PjaCGnSQvERLOnsXQ0S4zzMa962In8D9GOPxE9uuZdsCXPc/KPFpmwyr9qDh6f0eV4DxLNeHPjPIQawAcOWoO4JBIG+MiBYHRBAWLpUf/LZ2dsn5+fqYSy8=
+	t=1776691470; cv=none; b=VXpLp6wkoejowfyAi1Keb5xtQsYlv9a0Q0/FVd7i4QXLZbYYAq+CWv5xkvUXlYh49Y4Kd3EmzI960rjv37Stkfe2YtJf3svYZbUOaYPID2rTI7NNCkiD26I0VNDZ+SrCfT3Vbx3FNANwQrSB+x0SvJU7K6EJKOsMoEob/jT8DhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691469; c=relaxed/simple;
-	bh=mdTTLFFRGSvS9pVXxreZEr6WIIMFyUkAMBZmnwnFgGM=;
+	s=arc-20240116; t=1776691470; c=relaxed/simple;
+	bh=f6QPOIIGf0z10Meo2LBJgjPd1cjbcB4hiFCPNOlNWSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qmPPLdyYxtmOrWzJ1g2VVJVSJhrVSU8KKuwvm32ErYVKZL4KjjgY+n7hn4auO4C7Ml9mLrjxlg5sqWM+lLtF25CEHQgmzx154fC1haTgNdgh/VtTKeLfXKErGTK4cafvoUkZJ9RTDliC7wo4o+gkAmf27bgBcwwd7koIOVvBuLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ht8SJa56; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=peHjqHvcOa/5Xru25cx7Hzc+c+ByRXqUAJvBzv9OptPhFTFunAHt954O3EFjW1ilR55OOYsPfhZBOrtkc5QnxjlitvkWUpackOjdNe8DrSm2aWRgcMmkFqEAuEtHWZzA13/e/FCvufz8fCvsVAiJ6s390JNjF2YLcB0E6+ki2XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kpsLKZrU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ht8SJa56"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E1D4C2BCB4;
-	Mon, 20 Apr 2026 13:24:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kpsLKZrU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31939C19425;
+	Mon, 20 Apr 2026 13:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691468;
-	bh=mdTTLFFRGSvS9pVXxreZEr6WIIMFyUkAMBZmnwnFgGM=;
+	s=k20201202; t=1776691470;
+	bh=f6QPOIIGf0z10Meo2LBJgjPd1cjbcB4hiFCPNOlNWSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ht8SJa563vBIdvtheNgt9tiBYHMZoa9Hz+7rjpLyO/o+rrpCqTbPDaOLEth6zt5Wu
-	 lWbMnNLYecz90pKu1r5cMtc6Qtf5QqV9nlJl/IclZ/4tZP+/96T97y5H1c8KXTHSR3
-	 6hSq3MuqMlXI8jHcCWrfL6TWY2YzVxrZ7g8+4QqUhZFv6u/Ce9ZydFGnu8Or2W2Hxe
-	 RCMbMB7hHuZI7oq7kx0/txJ8ssEffALSXNvspojoXxnvv8alroxYRtYLD5qTchu44N
-	 fES+MmgaXSc9A2pwlfp9A4sX5lv5kN1yU0OOAZCQNHo/T6JYzLHYJ6tQ+sm+31PZIg
-	 cU1TcKJHqqBaQ==
+	b=kpsLKZrU3QmVjM9SPESUqLMSlZUYcMQykUmiqQV9bjzV+S+PjEbi2AOVgW9facCKA
+	 9QzrBMao8qdH9ky4jdc0PibBvSG8GsPCPJuGqHvvhVc6mm/xC6HnKdCbOyQab+VAeT
+	 yxGEXiqmdJIaK4S8t2rAajyhRmlpCSaEGjq7vzrao5DAmya1yO97XI3GmgX0oP8Fpp
+	 AuBiTknendveR69CS9ha49hSWuMsXdilpm5e0T3YrXhlxM+kniLDz3PSe/E9t/zN2M
+	 Yz65LWlSrZo6eLfrVxzcWpLAqieR6zq1nORtWiEPKwxMlJZu6x////3cMXBNF6l96X
+	 JV3UKKEHxlBKA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thierry Reding <treding@nvidia.com>,
+Cc: Satish Kharat <satishkh@cisco.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	thierry.reding@kernel.org,
-	jonathanh@nvidia.com,
-	devicetree@vger.kernel.org,
-	linux-tegra@vger.kernel.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] arm64: tegra: Fix snps,blen properties
-Date: Mon, 20 Apr 2026 09:17:21 -0400
-Message-ID: <20260420132314.1023554-47-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] enic: add V2 SR-IOV VF device ID
+Date: Mon, 20 Apr 2026 09:17:22 -0400
+Message-ID: <20260420132314.1023554-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -57,313 +56,335 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thierry Reding <treding@nvidia.com>
+From: Satish Kharat <satishkh@cisco.com>
 
-[ Upstream commit 51f10c527a63dc4a71bce4b40fc53eee78bbbd52 ]
+[ Upstream commit 803a1b02027918450b58803190aa7cacb8056265 ]
 
-The snps,blen property of stmmac-axi-config nodes needs to have 7
-entries in total, with unsupported burst lengths listed as 0.
+Register the V2 VF PCI device ID (0x02b7) so the driver binds to V2
+virtual functions created via sriov_configure. Update enic_is_sriov_vf()
+to recognize V2 VFs alongside the existing V1 type.
 
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Satish Kharat <satishkh@cisco.com>
+Link: https://patch.msgid.link/20260401-enic-sriov-v2-prep-v4-2-d5834b2ef1b9@cisco.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for my analysis.
+Now I have all the information needed for a comprehensive analysis. Let
+me compile the full assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `arm64: tegra` (ARM64 device tree, Tegra SoC)
-- Action verb: "Fix" — direct bug fix language
-- Summary: Fix the `snps,blen` DT properties for MGBE Ethernet
-  controllers
-- Record: [arm64: tegra] [fix] [correcting snps,blen DT property to have
-  required 7 entries]
+### Step 1.1: Subject Line
+- **Subsystem**: `enic` (Cisco VIC Ethernet NIC driver,
+  `drivers/net/ethernet/cisco/enic/`)
+- **Action verb**: "add" — adding a new device ID
+- **Summary**: Add V2 SR-IOV VF PCI device ID to the enic driver
 
-**Step 1.2: Tags**
-- `Signed-off-by: Thierry Reding <treding@nvidia.com>` — Author is the
-  Tegra platform maintainer at NVIDIA.
-- No Fixes: tag, no Cc: stable, no Reported-by (expected for auto-
-  selection candidates).
-- Record: No notable tags beyond authorship. Author is the subsystem
-  maintainer.
+### Step 1.2: Tags
+- **Signed-off-by**: Satish Kharat `<satishkh@cisco.com>` (author, Cisco
+  employee — the hardware vendor)
+- **Link**: `https://patch.msgid.link/20260401-enic-
+  sriov-v2-prep-v4-2-d5834b2ef1b9@cisco.com` — patch 2 of series "enic-
+  sriov-v2-prep", version 4
+- **Signed-off-by**: Jakub Kicinski `<kuba@kernel.org>` (networking
+  subsystem maintainer)
+- No Fixes: tag, no Reported-by:, no Cc: stable — expected for this
+  review pipeline.
 
-**Step 1.3: Commit Body**
-- States: "The snps,blen property of stmmac-axi-config nodes needs to
-  have 7 entries in total, with unsupported burst lengths listed as 0."
-- This describes a DT schema violation — the property had 4 entries but
-  the driver requires 7.
-- Record: Bug is a malformed DT property that doesn't match the driver's
-  expectation.
+### Step 1.3: Commit Body
+The commit body states: Register the V2 VF PCI device ID (0x02b7) so the
+driver binds to V2 virtual functions created via `sriov_configure`.
+Update `enic_is_sriov_vf()` to recognize V2 VFs alongside the existing
+V1 type. Without this change, V2 VFs exposed by the hardware will not be
+claimed by the enic driver at all.
 
-**Step 1.4: Hidden Bug Fix Detection**
-- This is NOT a hidden fix — it's explicitly labeled "Fix." The
-  underlying bug is that `of_property_read_u32_array(np, "snps,blen",
-  axi_blen, 7)` fails silently when the property only has 4 entries,
-  leaving the stack buffer uninitialized.
-- Record: Direct bug fix, not disguised.
+### Step 1.4: Hidden Bug Fix Detection
+This is a **device ID addition** — a well-known exception category.
+Without this ID, users with V2 VF hardware cannot use SR-IOV on their
+Cisco VIC adapters. This is a hardware enablement fix.
+
+Record: [Device ID addition for hardware that the driver already
+supports] [Not disguised — clearly a device ID add]
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- 1 file changed: `arch/arm64/boot/dts/nvidia/tegra234.dtsi`
-- 3 lines changed (each identical):
-  - `snps,blen = <256 128 64 32>;` → `snps,blen = <256 128 64 32 0 0
-    0>;`
-- Affects MGBE0, MGBE1, MGBE2 stmmac-axi-config nodes.
-- Record: Single DT file, 3 identical one-line changes. Scope:
-  minimal/surgical.
+### Step 2.1: Inventory
+- **File changed**: `drivers/net/ethernet/cisco/enic/enic_main.c`
+  (single file)
+- **Lines added**: 3 functional lines
+  1. `#define PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2   0x02b7`
+  2. `{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2) },` in
+     the PCI ID table
+  3. `|| enic->pdev->device == PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2` in
+     `enic_is_sriov_vf()`
+- **Scope**: Single-file, surgical, 3-line addition
 
-**Step 2.2: Code Flow**
-- Before: DT property has 4 u32 entries.
-- After: DT property has 7 u32 entries (3 trailing zeros for unsupported
-  burst lengths).
-- The stmmac driver calls `of_property_read_u32_array(np, "snps,blen",
-  axi_blen, AXI_BLEN)` where `AXI_BLEN = 7`. With only 4 entries,
-  `of_find_property_value_of_size()` checks `prop->length (16) < min
-  (28)` and returns `-EOVERFLOW`. The stack array `axi_blen[7]` is never
-  written. Then `stmmac_axi_blen_to_mask()` processes uninitialized
-  stack data.
+### Step 2.2: Code Flow
+- **Before**: Driver only recognized PCI device 0x0071 as an SR-IOV VF.
+  V2 VFs (0x02b7) were unrecognized.
+- **After**: Driver recognizes both 0x0071 (V1) and 0x02b7 (V2) as SR-
+  IOV VFs. V2 VFs get identical treatment as V1 VFs.
+- `enic_is_sriov_vf()` is called in 6 places throughout the driver to
+  branch behavior for VFs (MTU handling, MAC address, station address,
+  netdev_ops selection). All behave correctly with V2 VFs after this
+  change.
 
-**Step 2.3: Bug Mechanism**
-- Category: **Uninitialized data** / **incorrect DT specification**
-- Mechanism: The DT property is too short, causing
-  `of_property_read_u32_array()` to fail, leaving a stack buffer
-  uninitialized. The uninitialized data is then used to configure the
-  AXI DMA burst length register for network hardware.
-- Record: Uninitialized stack data used for hardware DMA configuration.
-  The fix ensures the property has the correct count.
+### Step 2.3: Bug Mechanism
+- **Category**: Hardware workaround / Device ID addition (category h)
+- Without the ID in `enic_id_table`, the PCI core won't bind the enic
+  driver to V2 VFs at all
+- Without the `enic_is_sriov_vf()` update, even if bound, V2 VFs would
+  get incorrect PF (physical function) code paths
 
-**Step 2.4: Fix Quality**
-- Obviously correct: all other DT files using `snps,blen` have exactly 7
-  entries (verified by grep across all arm64 DT files).
-- Minimal/surgical: 3 identical one-line changes.
-- Zero regression risk: adding trailing zeros only enables the driver to
-  read the property successfully, and zero entries are explicitly
-  skipped by `stmmac_axi_blen_to_mask()`.
-- Record: Fix is obviously correct, minimal, zero regression risk.
+### Step 2.4: Fix Quality
+- Obviously correct: mirrors the existing V1 VF pattern exactly
+- Minimal and surgical: 3 lines
+- Zero regression risk: only affects devices with PCI ID 0x02b7
+- No API changes, no lock changes, no memory management changes
+
+---
 
 ## PHASE 3: GIT HISTORY
 
-**Step 3.1: Blame**
-- The buggy `snps,blen = <256 128 64 32>` was introduced by commit
-  `81695da63b977` ("arm64: tegra: Add AXI configuration for Tegra234
-  MGBE") by Thierry Reding, dated 2024-02-21, merged in v6.9.
-- Record: Bug introduced in v6.9 by the same author who is now fixing
-  it.
+### Step 3.1: Blame
+- The original V1 VF support (PCI ID 0x0071) was added in commit
+  `3a4adef5c0adbb` by Roopa Prabhu in January 2012, over 14 years ago.
+- The `enic_is_sriov_vf()` function and PCI ID table entry have been
+  untouched since then.
+- The enic driver itself dates to 2008 (commit `01f2e4ead2c512`).
 
-**Step 3.2: Fixes tag**
-- No Fixes: tag present. The implicit fix target is `81695da63b977`.
+### Step 3.2: Fixes Tag
+- No Fixes: tag (expected for device ID additions).
 
-**Step 3.3: File History**
-- Recent changes to `tegra234.dtsi` are mostly DT cleanup/additions. No
-  related fixes.
-- Record: Standalone fix, no prerequisites.
+### Step 3.3: File History
+- Recent commits to `enic_main.c` are mostly cleanup/refactoring
+  (kmalloc conversion, timer rename, page pool API). No conflicting
+  changes around the PCI ID table or `enic_is_sriov_vf()`.
 
-**Step 3.4: Author**
-- Thierry Reding is the Tegra platform maintainer at NVIDIA. He wrote
-  the original buggy commit and is now fixing it.
-- Record: Subsystem maintainer self-fix.
+### Step 3.4: Author
+- Satish Kharat is a Cisco employee listed in MAINTAINERS for enic
+  (commit `9b8eeccd7110d` updates enic maintainers). He is a regular
+  contributor and domain expert for this driver.
 
-**Step 3.5: Dependencies**
-- None. The fix is a pure DT property value change that applies
-  independently.
-- Record: No dependencies, applies cleanly standalone.
+### Step 3.5: Dependencies
+- This is patch 2 of the "enic-sriov-v2-prep" series. However, the diff
+  is **completely self-contained**: it only adds a `#define`, a table
+  entry, and an OR condition. None of these reference anything
+  introduced by patch 1 of the series.
+- The code applies cleanly to the current v7.0 tree — the PCI ID table
+  and `enic_is_sriov_vf()` are unchanged from when this patch was
+  written.
 
-## PHASE 4: MAILING LIST RESEARCH
+Record: [Self-contained, no dependencies on other patches]
 
-**Step 4.1: Original Submission**
-- Found via web search: patch is `[PATCH 09/10]` in a series "dt-
-  bindings: Various cleanups for Tegra-related bindings" posted
-  2026-02-23.
-- Part of a v3 cleanup series. While most patches in the series are DT
-  binding cleanups, this specific patch (09/10) is a genuine bug fix.
-- Record: Part of a larger DT cleanup series, but this patch is an
-  independent bug fix.
+---
 
-**Step 4.2: Reviewers**
-- b4 dig found the original commit (81695da63b977) was reviewed and
-  tested by Jon Hunter (NVIDIA Tegra co-maintainer). The fix itself is
-  straightforward enough that formal review was likely implicit.
-- Record: Original buggy code was reviewed by Jon Hunter.
+## PHASE 4: MAILING LIST
 
-**Step 4.3-4.5: Bug Reports / Stable History**
-- No specific bug report found. Likely discovered by the author during
-  code review / DT validation.
-- No prior stable discussion found.
+### Step 4.1-4.5
+- b4 dig was unable to match directly (the commit isn't in this tree's
+  history). Lore.kernel.org returned anti-scraping pages.
+- The Link tag shows this is **v4** of the series, meaning it went
+  through 4 rounds of review. Applied by Jakub Kicinski (net-next
+  maintainer).
+- The earlier v2 series from the same author
+  (`v2_20260223_satishkh_net_ethernet_enic_add_vic_ids_and_link_modes`)
+  shows the author was actively contributing VIC subsystem ID and link
+  mode support around the same timeframe.
+
+Record: [Patch went through v4 review, applied by net-next maintainer
+Jakub Kicinski]
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.4: Key Functions**
-- `stmmac_axi_setup()` in `stmmac_platform.c` parses the DT property.
-- Called during stmmac platform driver probe for any device using
-  `snps,axi-config` DT phandle.
-- `stmmac_axi_blen_to_mask()` converts the burst length array to
-  register value.
-- The register value is written to hardware in `dwxgmac2_dma_init()` /
-  `dwmac4_dma_init()` / `dwmac1000_dma_init()`.
-- Impact: Affects AXI DMA configuration for MGBE Ethernet on Tegra234.
+### Step 5.1-5.4: Function Impact
+`enic_is_sriov_vf()` is called in 6 locations:
+1. **Line 365**: MTU change notification handling (VFs schedule work vs
+   warn)
+2. **Line 1010**: MAC address setting (VFs accept zero MAC)
+3. **Line 1736**: Open path (VFs skip station addr add)
+4. **Line 1804**: Close path (VFs skip station addr del)
+5. **Line 1864**: MTU change (VFs return -EOPNOTSUPP)
+6. **Line 2831**: Probe path (VFs get `enic_netdev_dynamic_ops`)
 
-**Step 5.5: Similar Patterns**
-- All other arm64 DT files consistently use 7 entries for `snps,blen`.
-  Tegra234 was the ONLY outlier with 4 entries.
+All 6 call sites already handle VFs correctly — they just need the VF
+detection to work for V2 devices. The change in `enic_is_sriov_vf()`
+propagates the correct behavior automatically.
+
+### Step 5.5: Similar Patterns
+The original V1 VF ID addition (commit `3a4adef5c0adbb` from 2012)
+followed the exact same pattern: define + table + function. This V2
+addition mirrors it exactly.
+
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy Code in Stable**
-- Commit `81695da63b977` was introduced in v6.9. It exists in stable
-  trees v6.12.y and any newer LTS branches.
-- It does NOT exist in v6.6.y (confirmed via `git merge-base --is-
-  ancestor`).
-- Record: Bug affects v6.9+ stable trees (v6.12.y at minimum).
+### Step 6.1: Code Existence in Stable
+- Current HEAD is `v7.0`. The enic driver code is identical to mainline
+  at the branch point.
+- The PCI ID table, `enic_is_sriov_vf()`, and all call sites exist
+  unchanged in this tree.
+- This code has been present since 2012 (kernel 3.3+), so it exists in
+  ALL active stable trees.
 
-**Step 6.2: Backport Complications**
-- Pure DT change with no code dependencies. Should apply cleanly.
-- Record: Clean apply expected.
+### Step 6.2: Backport Complications
+- The diff applies cleanly — no intermediate changes to the PCI ID table
+  or `enic_is_sriov_vf()`.
+- No conflicts expected.
 
-**Step 6.3: Related Fixes**
-- No prior fix for this issue found in any tree.
+### Step 6.3: Related Fixes
+- No other fixes for V2 VF support exist in stable.
+
+---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1: Subsystem**
-- ARM64 Device Tree for Tegra234 MGBE (Multi-Gigabit Ethernet).
-- Criticality: IMPORTANT — affects Tegra234 network hardware users
-  (NVIDIA Jetson AGX Orin, etc.).
-- Record: [arm64/tegra DT] [IMPORTANT — Jetson platform network
-  hardware]
+### Step 7.1: Subsystem
+- **Subsystem**: Network drivers / Cisco VIC Ethernet
+- **Criticality**: IMPORTANT — Cisco VIC adapters are used in enterprise
+  data centers (UCS servers)
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+### Step 7.2: Activity
+- The enic driver receives periodic updates. The maintainer (from Cisco)
+  is actively contributing.
 
-**Step 8.1: Affected Users**
-- Users of NVIDIA Tegra234 platforms (Jetson AGX Orin) using MGBE
-  Ethernet controllers.
-- Platform-specific but widely deployed in industrial/embedded
-  applications.
+---
 
-**Step 8.2: Trigger Conditions**
-- Triggered on every boot when the MGBE driver probes. No special
-  configuration needed.
-- The AXI burst length read fails silently, so uninitialized data
-  configures DMA hardware.
+## PHASE 8: IMPACT AND RISK
 
-**Step 8.3: Failure Mode**
-- Uninitialized stack data used for DMA hardware configuration.
-- Could result in suboptimal network performance, potential DMA errors,
-  or undefined hardware behavior depending on what stack values happen
-  to be.
-- Severity: **HIGH** (hardware misconfiguration from uninitialized data,
-  affecting network DMA)
+### Step 8.1: Affected Users
+- Users with Cisco VIC adapters that create V2 SR-IOV virtual functions.
+  This is enterprise/data center hardware.
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: High — fixes broken AXI DMA configuration for 3 MGBE Ethernet
-  controllers on Tegra234.
-- RISK: Very low — 3 identical one-line DT property changes, adding
-  trailing zeros, no code change.
-- Record: Very favorable risk-benefit ratio.
+### Step 8.2: Trigger
+- Any user enabling SR-IOV on a Cisco VIC that produces V2 VFs (PCI ID
+  0x02b7). Without this patch, VFs simply don't work.
+
+### Step 8.3: Severity
+- Without this patch: V2 VFs are **completely non-functional** (driver
+  won't bind). Severity: HIGH for affected users.
+
+### Step 8.4: Risk-Benefit
+- **Benefit**: HIGH — enables SR-IOV V2 VF functionality for Cisco VIC
+  users
+- **Risk**: VERY LOW — 3 lines, only affects devices with PCI ID 0x02b7,
+  mirrors existing V1 pattern exactly
+- **Ratio**: Excellent — high benefit, near-zero risk
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Summary**
+### Step 9.1: Evidence Summary
+**FOR backporting:**
+- Classic PCI device ID addition — explicitly allowed exception in
+  stable rules
+- Only 3 functional lines of code
+- Self-contained, no dependencies
+- Applies cleanly to v7.0 tree
+- Author is Cisco engineer / enic maintainer
+- Applied by net-next maintainer (Jakub Kicinski)
+- Went through v4 review cycle
+- Mirrors existing V1 VF pattern from 2012
+- Enables hardware that is completely non-functional without this change
+- Zero regression risk (only affects new PCI device ID)
 
-FOR backporting:
-- Fixes real bug: `of_property_read_u32_array()` fails with only 4/7
-  entries, leading to uninitialized stack data being used for hardware
-  DMA configuration
-- Minimal, surgical fix: 3 identical one-line DT changes
-- Obviously correct: all other DT files use 7 entries
-- Written by subsystem maintainer (Thierry Reding, NVIDIA Tegra
-  maintainer)
-- Zero regression risk: trailing zeros are explicitly handled ("Burst
-  values of zero must be skipped")
-- Applies to v6.12.y+ stable trees
+**AGAINST backporting:**
+- Part of a multi-patch series — but this patch is self-contained
+- No Fixes: tag — expected for device ID additions
 
-AGAINST backporting:
-- No explicit user report of symptoms (could mean it works by luck with
-  stack data)
-- Part of a larger series (but this patch is independent)
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** — mirrors existing V1 pattern
+   exactly, v4 review, from vendor
+2. Fixes a real bug? **YES** — V2 VFs don't work without this
+3. Important issue? **YES** — complete hardware non-functionality
+4. Small and contained? **YES** — 3 lines, 1 file
+5. No new features or APIs? **YES** — just adds device ID to existing
+   driver
+6. Can apply to stable? **YES** — clean apply expected
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct? **YES** — all other DT files have 7 entries
-2. Fixes a real bug? **YES** — uninitialized data used for HW
-   configuration
-3. Important issue? **YES** — hardware DMA misconfiguration
-4. Small and contained? **YES** — 3 one-line changes in 1 DT file
-5. No new features? **YES** — pure DT fix
-6. Can apply to stable? **YES** — clean DT-only change
+### Step 9.3: Exception Category
+**PCI Device ID addition to existing driver** — this is a canonical
+example of the exception category.
 
-**Step 9.3: Exception Category**
-- DT update fixing existing hardware description — automatic YES
-  category
+### Step 9.4: Decision
+This is a textbook PCI device ID addition: 3 lines, single file, from
+the hardware vendor, enables V2 SR-IOV VFs on Cisco VIC adapters. It
+meets all stable criteria and falls into the explicit "new device IDs"
+exception category.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed subject: "Fix" verb, arm64 tegra subsystem, snps,blen
-  property
-- [Phase 2] Diff: 3 lines changed in tegra234.dtsi, each adds `0 0 0` to
-  snps,blen property
-- [Phase 2] Verified AXI_BLEN=7 in `include/linux/stmmac.h` line 109
-- [Phase 2] Verified `of_property_read_u32_array()` calls
-  `of_find_property_value_of_size()` with min=28 bytes; property has 16
-  bytes (4 entries), so it returns -EOVERFLOW
-- [Phase 2] Verified `stmmac_axi_blen_to_mask()` skips zero entries
-  ("Burst values of zero must be skipped")
-- [Phase 3] git blame: buggy code from 81695da63b977 (v6.9), author:
-  Thierry Reding
-- [Phase 3] git merge-base: confirmed 81695da63b977 is in v6.12 but not
-  v6.6
-- [Phase 4] b4 dig: found original commit submission at lore (patch-id
-  match)
-- [Phase 4] Web search: fix is PATCH 09/10 of "dt-bindings: Various
-  cleanups for Tegra-related bindings"
-- [Phase 5] Verified all other arm64 DT snps,blen entries have exactly 7
-  values (grep across arch/arm64/boot/dts)
-- [Phase 5] Traced call chain: stmmac_axi_setup →
-  of_property_read_u32_array → of_find_property_value_of_size
-- [Phase 6] Bug exists in v6.9+ stable trees
-- [Phase 8] Failure mode: uninitialized stack data used for AXI DMA
-  register, severity HIGH
+- [Phase 1] Parsed tags: Signed-off-by from Cisco author and net-next
+  maintainer; Link to v4 patch 2
+- [Phase 2] Diff analysis: 3 lines — 1 define, 1 PCI table entry, 1 OR
+  condition in `enic_is_sriov_vf()`
+- [Phase 3] git blame: Original VF support (0x0071) added by
+  `3a4adef5c0adbb` (2012, kernel 3.3); unchanged since
+- [Phase 3] git show `3a4adef5c0adbb`: Confirmed identical pattern for
+  V1 VF
+- [Phase 3] git log: No conflicting recent changes to PCI ID table or
+  `enic_is_sriov_vf()`
+- [Phase 3] Author: Satish Kharat (Cisco), listed in MAINTAINERS update
+  commit `9b8eeccd7110d`
+- [Phase 4] b4 dig: Could not match commit (not in tree's history); Lore
+  blocked by anti-scraping
+- [Phase 4] Series context: v4 series "enic-sriov-v2-prep", applied by
+  Jakub Kicinski
+- [Phase 5] grep `enic_is_sriov_vf`: 6 call sites — all branch VF/PF
+  behavior correctly; V2 VFs get same treatment
+- [Phase 6] HEAD is v7.0; enic PCI table unchanged; clean apply
+  confirmed
+- [Phase 8] Failure mode: V2 VFs completely non-functional (driver won't
+  bind), severity HIGH for affected users
+- [Phase 8] Risk: Near-zero — new PCI ID only affects matching hardware
 
 **YES**
 
- arch/arm64/boot/dts/nvidia/tegra234.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/cisco/enic/enic_main.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-index 850c473235e36..04a95b6658caa 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -3621,7 +3621,7 @@ ethernet@6800000 {
- 			snps,axi-config = <&mgbe0_axi_setup>;
+diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
+index e839081f9ee44..e16dfbcd2c229 100644
+--- a/drivers/net/ethernet/cisco/enic/enic_main.c
++++ b/drivers/net/ethernet/cisco/enic/enic_main.c
+@@ -66,12 +66,14 @@
+ #define PCI_DEVICE_ID_CISCO_VIC_ENET         0x0043  /* ethernet vnic */
+ #define PCI_DEVICE_ID_CISCO_VIC_ENET_DYN     0x0044  /* enet dynamic vnic */
+ #define PCI_DEVICE_ID_CISCO_VIC_ENET_VF      0x0071  /* enet SRIOV VF */
++#define PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2   0x02b7  /* enet SRIOV V2 VF */
  
- 			mgbe0_axi_setup: stmmac-axi-config {
--				snps,blen = <256 128 64 32>;
-+				snps,blen = <256 128 64 32 0 0 0>;
- 				snps,rd_osr_lmt = <63>;
- 				snps,wr_osr_lmt = <63>;
- 			};
-@@ -3663,7 +3663,7 @@ ethernet@6900000 {
- 			snps,axi-config = <&mgbe1_axi_setup>;
+ /* Supported devices */
+ static const struct pci_device_id enic_id_table[] = {
+ 	{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET) },
+ 	{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET_DYN) },
+ 	{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET_VF) },
++	{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2) },
+ 	{ 0, }	/* end of table */
+ };
  
- 			mgbe1_axi_setup: stmmac-axi-config {
--				snps,blen = <256 128 64 32>;
-+				snps,blen = <256 128 64 32 0 0 0>;
- 				snps,rd_osr_lmt = <63>;
- 				snps,wr_osr_lmt = <63>;
- 			};
-@@ -3705,7 +3705,7 @@ ethernet@6a00000 {
- 			snps,axi-config = <&mgbe2_axi_setup>;
+@@ -307,7 +309,8 @@ int enic_sriov_enabled(struct enic *enic)
  
- 			mgbe2_axi_setup: stmmac-axi-config {
--				snps,blen = <256 128 64 32>;
-+				snps,blen = <256 128 64 32 0 0 0>;
- 				snps,rd_osr_lmt = <63>;
- 				snps,wr_osr_lmt = <63>;
- 			};
+ static int enic_is_sriov_vf(struct enic *enic)
+ {
+-	return enic->pdev->device == PCI_DEVICE_ID_CISCO_VIC_ENET_VF;
++	return enic->pdev->device == PCI_DEVICE_ID_CISCO_VIC_ENET_VF ||
++	       enic->pdev->device == PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2;
+ }
+ 
+ int enic_is_valid_vf(struct enic *enic, int vf)
 -- 
 2.53.0
 
