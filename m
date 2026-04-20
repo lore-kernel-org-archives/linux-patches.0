@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEDF3264F1;
-	Mon, 20 Apr 2026 16:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6B6330B14;
+	Mon, 20 Apr 2026 16:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701154; cv=none; b=ncbZ3QQfFguTYhS9BlkBq7T5TJ4ZiE1DvvmBjhjtqhYPuNeW8mtdwxh+FyJcGUH/BUCcAP0xZziyaBvkVZaoFeg8Gy86bYJ+GdzHMhxmn2XrYTZkDWMI2f343HBcEpSNPMpd77OKnA5dHkMZSHxdKGelz7X73r7n48M+nXkVTrs=
+	t=1776701157; cv=none; b=EArJubbWunA/iwLny6+Q1RqhymzM1GO71SG3A7ZNsbdgNj5CMgynKQNLwaEyrjz/B/4fvfzCY3O5kB86B9wD6f4j7P7gMemS/kuMueDnCDc7FU66E6+R88w65CU1v6w9I8FkGzvwdTQtetOmTJcqjb/6W68m8HGDgSAhRI6RkL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701154; c=relaxed/simple;
-	bh=ldKU0dCjI1u6Q1PXNGTkaCvkzQ0l7pnvWeCrQEULti8=;
+	s=arc-20240116; t=1776701157; c=relaxed/simple;
+	bh=Patym70Igc8jk9C010/lvzPCrwiIJ6sRj8rFVl1ncXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MaVZASp0xP9y783xOukdLrXSMWtkhTw39rbxPOgU2IokFLxbbzZk18ZMFUhUVQcQTrsVDI/9ZZnW1VjDBhXAFAM3EFsr0gpcdOzNIzE0ZXdrCWG4GPOAr1vWHjeFFMuJqi6gRg+zQ/4WWJHLWt9yovpqeWVDUyuMXrOhNOJY5NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKQ8d+uT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aE+4zYY6H63cRzNCfsgiSSBqq7nFK5M4GB9M8q4NVZeIcTt+lWi0n2mp6C8TMB71YtSmFnZGs0vCdnqaktFm+cXd6vOOEZl0bp+QVq+6pktMci/Kdg05w9+GrciFwETCzuZVfL8BOo84NRfNEfOSwsZ8Of1/XZcBlQdWg2MsCEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6lMnRvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKQ8d+uT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F01C2BCB6;
-	Mon, 20 Apr 2026 16:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6lMnRvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88525C2BCB4;
+	Mon, 20 Apr 2026 16:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701154;
-	bh=ldKU0dCjI1u6Q1PXNGTkaCvkzQ0l7pnvWeCrQEULti8=;
+	s=korg; t=1776701156;
+	bh=Patym70Igc8jk9C010/lvzPCrwiIJ6sRj8rFVl1ncXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKQ8d+uTWwxYAatFqjN/tBBDpQG/0aIXcbH0zCFVTAGNJW7R8rAuqbjbREYv5/b/g
-	 K5bUXyIe6sEl4Bfc4+nim63dZ4a0bhmrbm1QEMag07dzmyGd5lTcIbaqeFDcpKRZx1
-	 paLL0p+VSybhbkfrtSIqy+MIzEB9q7gHxHUyTWgY=
+	b=T6lMnRvvASZ7JL+akyi5moRMiKbvwxo3sg8BBxlztCNhIgKyyUtpTYbGZaxGXJEpE
+	 sPvJMrqJBt3zxV7Bn9IEWThV3Y/4zIV/LYLVddsbYI0slNYch+jxChvV7uTNMEH2Nc
+	 +gC6DAN7ttcmZbc9Gabw0AZ+FGo57nw88/LglG5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 182/198] ASoC: qcom: q6apm: move component registration to unmanaged version
-Date: Mon, 20 Apr 2026 17:42:41 +0200
-Message-ID: <20260420153942.169930727@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 183/198] mm/kasan: fix double free for kasan pXds
+Date: Mon, 20 Apr 2026 17:42:42 +0200
+Message-ID: <20260420153942.205178028@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,149 +56,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-commit 6ec1235fc941dac6c011b30ee01d9220ff87e0cd upstream.
+commit 51d8c78be0c27ddb91bc2c0263941d8b30a47d3b upstream.
 
-q6apm component registers dais dynamically from ASoC toplology, which
-are allocated using device managed version apis. Allocating both
-component and dynamic dais using managed version could lead to incorrect
-free ordering, dai will be freed while component still holding references
-to it.
+kasan_free_pxd() assumes the page table is always struct page aligned.
+But that's not always the case for all architectures.  E.g.  In case of
+powerpc with 64K pagesize, PUD table (of size 4096) comes from slab cache
+named pgtable-2^9.  Hence instead of page_to_virt(pxd_page()) let's just
+directly pass the start of the pxd table which is passed as the 1st
+argument.
 
-Fix this issue by moving component to unmanged version so
-that the dai pointers are only freeded after the component is removed.
+This fixes the below double free kasan issue seen with PMEM:
 
+radix-mmu: Mapped 0x0000047d10000000-0x0000047f90000000 with 2.00 MiB pages
 ==================================================================
-BUG: KASAN: slab-use-after-free in snd_soc_del_component_unlocked+0x3d4/0x400 [snd_soc_core]
-Read of size 8 at addr ffff00084493a6e8 by task kworker/u48:0/3426
-Tainted: [W]=WARN
-Hardware name: LENOVO 21N2ZC5PUS/21N2ZC5PUS, BIOS N42ET57W (1.31 ) 08/08/2024
-Workqueue: pdr_notifier_wq pdr_notifier_work [pdr_interface]
-Call trace:
- show_stack+0x28/0x7c (C)
- dump_stack_lvl+0x60/0x80
- print_report+0x160/0x4b4
- kasan_report+0xac/0xfc
- __asan_report_load8_noabort+0x20/0x34
- snd_soc_del_component_unlocked+0x3d4/0x400 [snd_soc_core]
- snd_soc_unregister_component_by_driver+0x50/0x88 [snd_soc_core]
- devm_component_release+0x30/0x5c [snd_soc_core]
- devres_release_all+0x13c/0x210
- device_unbind_cleanup+0x20/0x190
- device_release_driver_internal+0x350/0x468
- device_release_driver+0x18/0x30
- bus_remove_device+0x1a0/0x35c
- device_del+0x314/0x7f0
- device_unregister+0x20/0xbc
- apr_remove_device+0x5c/0x7c [apr]
- device_for_each_child+0xd8/0x160
- apr_pd_status+0x7c/0xa8 [apr]
- pdr_notifier_work+0x114/0x240 [pdr_interface]
- process_one_work+0x500/0xb70
- worker_thread+0x630/0xfb0
- kthread+0x370/0x6c0
- ret_from_fork+0x10/0x20
+BUG: KASAN: double-free in kasan_remove_zero_shadow+0x9c4/0xa20
+Free of addr c0000003c38e0000 by task ndctl/2164
 
-Allocated by task 77:
- kasan_save_stack+0x40/0x68
- kasan_save_track+0x20/0x40
- kasan_save_alloc_info+0x44/0x58
- __kasan_kmalloc+0xbc/0xdc
- __kmalloc_node_track_caller_noprof+0x1f4/0x620
- devm_kmalloc+0x7c/0x1c8
- snd_soc_register_dai+0x50/0x4f0 [snd_soc_core]
- soc_tplg_pcm_elems_load+0x55c/0x1eb8 [snd_soc_core]
- snd_soc_tplg_component_load+0x4f8/0xb60 [snd_soc_core]
- audioreach_tplg_init+0x124/0x1fc [snd_q6apm]
- q6apm_audio_probe+0x10/0x1c [snd_q6apm]
- snd_soc_component_probe+0x5c/0x118 [snd_soc_core]
- soc_probe_component+0x44c/0xaf0 [snd_soc_core]
- snd_soc_bind_card+0xad0/0x2370 [snd_soc_core]
- snd_soc_register_card+0x3b0/0x4c0 [snd_soc_core]
- devm_snd_soc_register_card+0x50/0xc8 [snd_soc_core]
- x1e80100_platform_probe+0x208/0x368 [snd_soc_x1e80100]
- platform_probe+0xc0/0x188
- really_probe+0x188/0x804
- __driver_probe_device+0x158/0x358
- driver_probe_device+0x60/0x190
- __device_attach_driver+0x16c/0x2a8
- bus_for_each_drv+0x100/0x194
- __device_attach+0x174/0x380
- device_initial_probe+0x14/0x20
- bus_probe_device+0x124/0x154
- deferred_probe_work_func+0x140/0x220
- process_one_work+0x500/0xb70
- worker_thread+0x630/0xfb0
- kthread+0x370/0x6c0
- ret_from_fork+0x10/0x20
+CPU: 34 UID: 0 PID: 2164 Comm: ndctl Not tainted 6.19.0-rc1-00048-gea1013c15392 #157 VOLUNTARY
+Hardware name: IBM,9080-HEX POWER10 (architected) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_012) hv:phyp pSeries
+Call Trace:
+ dump_stack_lvl+0x88/0xc4 (unreliable)
+ print_report+0x214/0x63c
+ kasan_report_invalid_free+0xe4/0x110
+ check_slab_allocation+0x100/0x150
+ kmem_cache_free+0x128/0x6e0
+ kasan_remove_zero_shadow+0x9c4/0xa20
+ memunmap_pages+0x2b8/0x5c0
+ devm_action_release+0x54/0x70
+ release_nodes+0xc8/0x1a0
+ devres_release_all+0xe0/0x140
+ device_unbind_cleanup+0x30/0x120
+ device_release_driver_internal+0x3e4/0x450
+ unbind_store+0xfc/0x110
+ drv_attr_store+0x78/0xb0
+ sysfs_kf_write+0x114/0x140
+ kernfs_fop_write_iter+0x264/0x3f0
+ vfs_write+0x3bc/0x7d0
+ ksys_write+0xa4/0x190
+ system_call_exception+0x190/0x480
+ system_call_vectored_common+0x15c/0x2ec
+---- interrupt: 3000 at 0x7fff93b3d3f4
+NIP:  00007fff93b3d3f4 LR: 00007fff93b3d3f4 CTR: 0000000000000000
+REGS: c0000003f1b07e80 TRAP: 3000   Not tainted  (6.19.0-rc1-00048-gea1013c15392)
+MSR:  800000000280f033 <SF,VEC,VSX,EE,PR,FP,ME,IR,DR,RI,LE>  CR: 48888208  XER: 00000000
+<...>
+NIP [00007fff93b3d3f4] 0x7fff93b3d3f4
+LR [00007fff93b3d3f4] 0x7fff93b3d3f4
+---- interrupt: 3000
 
-Freed by task 3426:
- kasan_save_stack+0x40/0x68
- kasan_save_track+0x20/0x40
- __kasan_save_free_info+0x4c/0x80
- __kasan_slab_free+0x78/0xa0
- kfree+0x100/0x4a4
- devres_release_all+0x144/0x210
- device_unbind_cleanup+0x20/0x190
- device_release_driver_internal+0x350/0x468
- device_release_driver+0x18/0x30
- bus_remove_device+0x1a0/0x35c
- device_del+0x314/0x7f0
- device_unregister+0x20/0xbc
- apr_remove_device+0x5c/0x7c [apr]
- device_for_each_child+0xd8/0x160
- apr_pd_status+0x7c/0xa8 [apr]
- pdr_notifier_work+0x114/0x240 [pdr_interface]
- process_one_work+0x500/0xb70
- worker_thread+0x630/0xfb0
- kthread+0x370/0x6c0
- ret_from_fork+0x10/0x20
+ The buggy address belongs to the object at c0000003c38e0000
+  which belongs to the cache pgtable-2^9 of size 4096
+ The buggy address is located 0 bytes inside of
+  4096-byte region [c0000003c38e0000, c0000003c38e1000)
 
-Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ The buggy address belongs to the physical page:
+ page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x3c38c
+ head: order:2 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+ memcg:c0000003bfd63e01
+ flags: 0x63ffff800000040(head|node=6|zone=0|lastcpupid=0x7ffff)
+ page_type: f5(slab)
+ raw: 063ffff800000040 c000000140058980 5deadbeef0000122 0000000000000000
+ raw: 0000000000000000 0000000080200020 00000000f5000000 c0000003bfd63e01
+ head: 063ffff800000040 c000000140058980 5deadbeef0000122 0000000000000000
+ head: 0000000000000000 0000000080200020 00000000f5000000 c0000003bfd63e01
+ head: 063ffff800000002 c00c000000f0e301 00000000ffffffff 00000000ffffffff
+ head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000004
+ page dumped because: kasan: bad access detected
+
+[  138.953636] [   T2164] Memory state around the buggy address:
+[  138.953643] [   T2164]  c0000003c38dff00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  138.953652] [   T2164]  c0000003c38dff80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  138.953661] [   T2164] >c0000003c38e0000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  138.953669] [   T2164]                    ^
+[  138.953675] [   T2164]  c0000003c38e0080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  138.953684] [   T2164]  c0000003c38e0100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  138.953692] [   T2164] ==================================================================
+[  138.953701] [   T2164] Disabling lock debugging due to kernel taint
+
+Link: https://lkml.kernel.org/r/2f9135c7866c6e0d06e960993b8a5674a9ebc7ec.1771938394.git.ritesh.list@gmail.com
+Fixes: 0207df4fa1a8 ("kernel/memremap, kasan: make ZONE_DEVICE with work with KASAN")
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ mm/kasan/init.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -767,13 +767,22 @@ static int apm_probe(gpr_device_t *gdev)
- 
- 	q6apm_get_apm_state(apm);
- 
--	ret = devm_snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
-+	ret = snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to register q6apm: %d\n", ret);
- 		return ret;
+--- a/mm/kasan/init.c
++++ b/mm/kasan/init.c
+@@ -292,7 +292,7 @@ static void kasan_free_pte(pte_t *pte_st
+ 			return;
  	}
  
--	return of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
-+	if (ret)
-+		snd_soc_unregister_component(dev);
-+
-+	return ret;
-+}
-+
-+static void apm_remove(gpr_device_t *gdev)
-+{
-+	snd_soc_unregister_component(&gdev->dev);
+-	pte_free_kernel(&init_mm, (pte_t *)page_to_virt(pmd_page(*pmd)));
++	pte_free_kernel(&init_mm, pte_start);
+ 	pmd_clear(pmd);
  }
  
- struct audioreach_module *q6apm_find_module_by_mid(struct q6apm_graph *graph, uint32_t mid)
-@@ -840,6 +849,7 @@ MODULE_DEVICE_TABLE(of, apm_device_id);
+@@ -307,7 +307,7 @@ static void kasan_free_pmd(pmd_t *pmd_st
+ 			return;
+ 	}
  
- static gpr_driver_t apm_driver = {
- 	.probe = apm_probe,
-+	.remove = apm_remove,
- 	.gpr_callback = apm_callback,
- 	.driver = {
- 		.name = "qcom-apm",
+-	pmd_free(&init_mm, (pmd_t *)page_to_virt(pud_page(*pud)));
++	pmd_free(&init_mm, pmd_start);
+ 	pud_clear(pud);
+ }
+ 
+@@ -322,7 +322,7 @@ static void kasan_free_pud(pud_t *pud_st
+ 			return;
+ 	}
+ 
+-	pud_free(&init_mm, (pud_t *)page_to_virt(p4d_page(*p4d)));
++	pud_free(&init_mm, pud_start);
+ 	p4d_clear(p4d);
+ }
+ 
+@@ -337,7 +337,7 @@ static void kasan_free_p4d(p4d_t *p4d_st
+ 			return;
+ 	}
+ 
+-	p4d_free(&init_mm, (p4d_t *)page_to_virt(pgd_page(*pgd)));
++	p4d_free(&init_mm, p4d_start);
+ 	pgd_clear(pgd);
+ }
+ 
 
 
