@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEFC3DFC6C;
-	Mon, 20 Apr 2026 13:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAB83DFC90;
+	Mon, 20 Apr 2026 13:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691466; cv=none; b=qpnswFGK2u5SpceNF4XZpeQ5RVlkbggyHnf1knGwLbzSY9Gzb9EIprvnSSGWJlP2yMy4d0s4RUhhANTxZrJWJy08FqPGB3rjlLCtnX/8duQmZwgYwqIRNloPEG1Fkr5w9yg/Sw/xkQAerTnKONh3W6LC4LRy+OmMlvTGnrQ58WI=
+	t=1776691467; cv=none; b=G+ZawHwHH+MF4uiJdmRTN3G+YCo5yUluqEaqLtcCB7Ozmx2UPy7C2zSy4+NxHtdRgPFl3kiLEHiNW+pU/FkYnSahMuUQEPR8Zki9mg5cGqlBYNEJqWtsB61FJe6Rfbu+FmCVQ8RMpcGed/g7E4ACoktgAWhXmei7hjS45nrbr3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691466; c=relaxed/simple;
-	bh=lGgmgehFZKHkBWXmd+Y1CJyMp2bguwHqwvnoqatn6Bw=;
+	s=arc-20240116; t=1776691467; c=relaxed/simple;
+	bh=IgJq5V+26na4YOff+t5F2K2k2dIbRenoNEI6CsdwQDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i3e8zB/rjucjwhsL3H92gVgNYkMQQy4vOlnjcjPvTyzm1Q82Ju9cnnmU4ekVdL9KxZXMz8LKDXSkPLiFxBNF3wo6ssxszzb0/rjJoCTOokgGqPOQlOYPYCDio99GRpj4Js5FRMR1pbMkd9/e0/XXEYvJONAKzp03SahBQqk3pWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQpd9/aQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nbGu4vp1ZzPOuR4CdUi1Ye38f9NnAeaf3LWOauMakFc70rS2yjHsWF2HdclmIknetZjYWK/LeQtuAZ3CH/hcUmucv+J6TiB/EWdfPiW0as46Tr/6lS3iMgp7bcTaHUqzby/oRdGgdwx5cVby7TjGwGD5b8Bhsfg2iXVVwg3PTkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ArZxFb7y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQpd9/aQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDCCC2BCB7;
-	Mon, 20 Apr 2026 13:24:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ArZxFb7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C242C2BCB4;
+	Mon, 20 Apr 2026 13:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691466;
-	bh=lGgmgehFZKHkBWXmd+Y1CJyMp2bguwHqwvnoqatn6Bw=;
+	s=k20201202; t=1776691467;
+	bh=IgJq5V+26na4YOff+t5F2K2k2dIbRenoNEI6CsdwQDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQpd9/aQwhaUAaa522RzmlrWW7HUxnbWfqVoBmvLAltJFYDP+P6dD0fnnOocaqPJS
-	 b/JIAHcuwiqg+nU9wIVBhwouLs8d0rbX0srYpRmwnd9mO7UbWq59GHxcUEvSyyRrEL
-	 QIaZx++wEb4fNaY6PxXAfCntz/U53z3pEQd6jYBarVoHD7W7/V6UnCjKdvaHWmIPLn
-	 fiorBBF1ibqroymsazCCePSM/I/RAf8YscN6BS/3BggHHyCiZu1MD4Fp/xBMdh1g3P
-	 lHhvX5jPLylcwvEsdYs3ii47GwCc0n10tif2PyYQycNMgfobwEawjnR3DIlDVIKYos
-	 0bs/j7W+JkhbA==
+	b=ArZxFb7yELXdlHK7VlJH6374RAr4zEGMun3wmK0dk1mkIF+/mJIevA4nlx6uYwAaa
+	 smY5tmIv792ABvhefE3lTBS7Gz0oOn2pjtS4e41UEYiaUrjoEqHbaxUlssYpd1ttut
+	 JQVdEVoi3MfrzOdWnKV8nOPnL2+IYzjsR9BnOzfell/FOeEFgnqXDml9NVaxVQrbu7
+	 zjC02K+mr/fDCc/9Qh5vmzyassi9x3RpBSqcZV2+uJp9PYHxjQDF0PZuDnoAYIlszY
+	 e+x1+VVYbzvI5ycV9+Zbj0F4aGLiDkcpZPAYa5gElpr/8Jr4Igj26f1w4jW6+Lzx7S
+	 hqdb/NQ5sLEnQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kamiyama Chiaki <nercone@nercone.dev>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Qu Wenruo <wqu@suse.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
+	linux-block@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] Bluetooth: btusb: MediaTek MT7922: Add VID 0489 & PID e11d
-Date: Mon, 20 Apr 2026 09:17:19 -0400
-Message-ID: <20260420132314.1023554-45-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] block: reject zero length in bio_add_page()
+Date: Mon, 20 Apr 2026 09:17:20 -0400
+Message-ID: <20260420132314.1023554-46-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -55,269 +52,318 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kamiyama Chiaki <nercone@nercone.dev>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 5e17010bfc7e6820a5004f1e06d08db886e3927e ]
+[ Upstream commit 643893647cac7317bafca4040dd0cfb815b510d4 ]
 
-Add VID 0489 & PID e11d for MediaTek MT7922 USB Bluetooth chip.
-Found in Dynabook GA/ZY (W6GAZY5RCL).
+The function bio_add_page() returns the number of bytes added to the
+bio, and if that failed it should return 0.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+However there is a special quirk, if a caller is passing a page with
+length 0, that function will always return 0 but with different results:
 
-T:  Bus=03 Lev=01 Prnt=01 Port=03 Cnt=02 Dev#=  3 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e11d Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
+- The page is added to the bio
+  If there is enough bvec slot or the folio can be merged with the last
+  bvec.
 
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Kamiyama Chiaki <nercone@nercone.dev>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  The return value 0 is just the length passed in, which is also 0.
+
+- The page is not added to the bio
+  If the page is not mergeable with the last bvec, or there is no bvec
+  slot available.
+
+  The return value 0 means page is not added into the bio.
+
+Unfortunately the caller is not able to distinguish the above two cases,
+and will treat the 0 return value as page addition failure.
+
+In that case, this can lead to the double releasing of the last page:
+
+- By the bio cleanup
+  Which normally goes through every page of the bio, including the last
+  page which is added into the bio.
+
+- By the caller
+  Which believes the page is not added into the bio, thus would manually
+  release the page.
+
+I do not think anyone should call bio_add_folio()/bio_add_page() with zero
+length, but idiots like me can still show up.
+
+So add an extra WARN_ON_ONCE() check for zero length and rejects it
+early to avoid double freeing.
+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Link: https://patch.msgid.link/bc2223c080f38d0b63f968f605c918181c840f40.1773734749.git.wqu@suse.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good. Now let me finalize the analysis. I have all the key facts.
+Now I have enough information for a comprehensive analysis. Let me
+compile my findings.
 
 ---
 
-## Complete Analysis: Bluetooth: btusb: MediaTek MT7922: Add VID 0489 &
-PID e11d
-
-### PHASE 1: COMMIT MESSAGE FORENSICS
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `Bluetooth: btusb`
-- Action: "Add" (device ID addition)
-- Summary: Adds USB Vendor ID 0489 and Product ID e11d for a MediaTek
-  MT7922 Bluetooth chip.
-- Record: [Bluetooth/btusb] [Add] [New USB device ID for MT7922 variant
-  in Dynabook laptop]
+- Subsystem: `block` (core block layer)
+- Action verb: `reject` (defensive fix/hardening)
+- Summary: Reject zero-length pages in `bio_add_page()` to prevent
+  double-free
 
 **Step 1.2: Tags**
-- Reviewed-by: Paul Menzel (well-known kernel reviewer)
-- Signed-off-by: Kamiyama Chiaki (author)
-- Signed-off-by: Luiz Augusto von Dentz (Bluetooth subsystem maintainer)
-- No Fixes: tag (expected — this is a device ID, not a bug fix)
-- No Reported-by / syzbot
-- Record: Reviewed by Paul Menzel. Signed off by the Bluetooth
-  maintainer (Luiz von Dentz). No Fixes/Cc: stable tags expected for
-  device ID additions.
+- `Signed-off-by: Qu Wenruo <wqu@suse.com>` - Author, btrfs developer
+- `Link:` patch.msgid.link URL (lore blocked by anti-scraping)
+- `Signed-off-by: Jens Axboe <axboe@kernel.dk>` - Block layer maintainer
+  committed it
+- No `Fixes:` tag (expected for candidates), no `Cc: stable`, no
+  `Reported-by`
 
-**Step 1.3: Commit Body**
-- Identifies the specific laptop: Dynabook GA/ZY (W6GAZY5RCL)
-- Provides full USB descriptor dump confirming MediaTek Inc. as
-  manufacturer
-- The device is a "Wireless_Device" at USB 2.0 speed (480 Mbps)
-- Record: Clear real-world hardware identification. Without this ID,
-  Bluetooth does not work on this specific laptop.
+**Step 1.3: Commit Body Analysis**
+The commit describes a clear bug mechanism:
+- When `len=0` is passed to `bio_add_page()`, return value is always 0
+- But 0 can mean "success with zero bytes" (page added) OR "failure"
+  (page not added)
+- Caller cannot distinguish these two cases, treats return 0 as failure
+- If the page WAS added, the caller releases the page manually (thinking
+  it wasn't added), AND the bio cleanup also releases it → **double-
+  free**
+
+The author says: "I do not think anyone should call
+bio_add_folio()/bio_add_page() with zero length, but idiots like me can
+still show up" — referencing his own btrfs zlib bug.
 
 **Step 1.4: Hidden Bug Fix Detection**
-- This is not a hidden bug fix — it's an explicit device ID addition.
-  But it does fix a real user problem: Bluetooth doesn't work on
-  Dynabook GA/ZY without this entry.
-- Record: Not a hidden bug fix. Straightforward device enablement.
+This IS a bug fix. While framed as adding a defensive check, it prevents
+a concrete double-free scenario that was actually triggered in btrfs
+(commit `0dcabcb920a5c`).
 
-### PHASE 2: DIFF ANALYSIS
+Record: [block] [reject] [Adds WARN_ON_ONCE check for zero-length to
+prevent double-free from API ambiguity]
 
-**Step 2.1: Changes Inventory**
-- 1 file modified: `drivers/bluetooth/btusb.c`
-- 2 lines added, 0 lines removed
-- Change location: USB device ID quirks_table[] in the MT7922A section
-- Record: Single file, +2 lines, one function (static table). Scope:
-  trivially small.
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: Inventory**
+- 1 file changed: `block/bio.c`
+- +2 lines added (only)
+- Function modified: `bio_add_page()`
+- Scope: Single-file, single-function, surgical fix
 
 **Step 2.2: Code Flow Change**
-- Before: Device 0489:e11d is not recognized by btusb → generic USB
-  handling, Bluetooth non-functional
-- After: Device 0489:e11d is matched → BTUSB_MEDIATEK |
-  BTUSB_WIDEBAND_SPEECH flags set → proper MediaTek initialization path
-  used → Bluetooth works
-- Record: Table entry addition only. No logic change.
+Single hunk: After the BIO_CLONED check, adds:
+```c
+if (WARN_ON_ONCE(len == 0))
+    return 0;
+```
+Before: zero-length pages could be silently added, causing return value
+ambiguity.
+After: zero-length is rejected early with a WARN, returning 0
+unambiguously meaning failure.
 
 **Step 2.3: Bug Mechanism**
-- Category: Hardware enablement (device ID addition)
-- The new entry `{ USB_DEVICE(0x0489, 0xe11d), .driver_info =
-  BTUSB_MEDIATEK | BTUSB_WIDEBAND_SPEECH }` is identical in pattern to
-  all other MT7922A entries in the table.
-- Record: Device ID addition to existing driver table. Uses identical
-  flags as all sibling entries.
+Category: Double-free prevention (memory safety fix). The zero-length
+case creates an ambiguous return path where the page can be freed by
+both the bio cleanup and the caller.
 
 **Step 2.4: Fix Quality**
-- Obviously correct — exact same pattern as dozens of adjacent entries
-- Minimal/surgical — 2 lines in a static table
-- Zero regression risk — only affects the specific USB device 0489:e11d
-- Record: Trivially correct. Zero regression risk.
+- Obviously correct — nobody should add zero bytes to a bio
+- Minimal — 2 lines
+- No regression risk — no valid caller should pass len=0
+- WARN_ON_ONCE is low-overhead, fires once per boot maximum
 
-### PHASE 3: GIT HISTORY
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: Blame**
-- MT7922A section created in commit 6932627425d6 (Dec 2021, v5.17 cycle)
-- MT7922 support added in 8c0401b7308cb (Mar 2024)
-- Both are ancestors of HEAD (v7.0)
-- Many other device IDs have been added to this section over the years
-- Record: MT7922A driver support has existed since Linux 5.17. Present
-  in all active stable trees.
+`bio_add_page()` was refactored by Christoph Hellwig in commit
+`0aa69fd32a5f76` (2018-06-01), but the fundamental function dates back
+to Linus's original `1da177e4c3f41` (2005). The zero-length ambiguity
+has existed since the function's creation.
+
+**Step 3.2: Fixes tag** — No Fixes: tag present. The bug is in the API
+design of `bio_add_page()` itself, not introduced by a specific commit.
 
 **Step 3.3: File History**
-- `btusb.c` is actively maintained with frequent device ID additions
-- Recent commits include other MT7922 ID additions (e170, e152, e153,
-  3584, etc.)
-- Record: Active file. Frequent device ID additions. No prerequisites
-  needed.
+`block/bio.c` has been actively modified — 159 commits since v6.6.
+Recent refactoring by Christoph Hellwig (`38446014648c9`,
+`12da89e8844ae`) changed the merge logic but didn't address zero-length.
 
-**Step 3.4: Author Context**
-- Author (Kamiyama Chiaki) appears to be a first-time contributor (no
-  other commits found)
-- Signed off by Bluetooth maintainer Luiz Augusto von Dentz
-- Reviewed by Paul Menzel
-- Record: New contributor, but patch reviewed and signed off by the
-  subsystem maintainer.
+**Step 3.4: Author**
+Qu Wenruo is a prolific btrfs developer. He discovered this issue while
+debugging the btrfs zlib crash (`0dcabcb920a5c`), which was reported by
+David Sterba and syzbot. He fixed both the btrfs caller AND added this
+block-level defense.
 
 **Step 3.5: Dependencies**
-- The diff context shows `0xe174` and `0x04ca, 0x3807` in the
-  surrounding lines, which are NOT present in the 7.0 tree. These are
-  other device IDs added around the same time.
-- However, this is a table entry addition — it has no code dependencies.
-  The entry can be placed anywhere in the MT7922A section.
-- Record: No functional dependencies. Minor context conflict expected
-  (trivially resolvable by placing the entry adjacent to existing
-  0489:e102 entry).
+None. The 2-line check has no prerequisites. It uses only existing
+macros (`WARN_ON_ONCE`).
 
-### PHASE 4: MAILING LIST RESEARCH
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1-4.2:** b4 dig could not find the commit (it hasn't been
-applied to the tree under analysis). Web search did not find the
-specific lore thread. However, the commit was reviewed by Paul Menzel
-and signed off by the Bluetooth maintainer, which is sufficient vetting.
+**Step 4.1-4.5:** Lore.kernel.org was blocked by anti-scraping
+protection. However, from examining the related btrfs fix commit
+(`0dcabcb920a5c`), I can confirm:
+- The bug was reported by David Sterba (btrfs maintainer), Jean-
+  Christophe Guillain (user), and syzbot
+- A bugzilla was filed:
+  https://bugzilla.kernel.org/show_bug.cgi?id=221176
+- The root cause was bio_add_folio/bio_add_page accepting zero-length
+- The fix was signed off by Jens Axboe (block maintainer)
 
-**Step 4.3-4.5:** No bug report — this is hardware enablement rather
-than a bug fix. No stable discussion found.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 5.1:** Modified function: `bio_add_page()`
 
-**Step 5.1-5.4:** Not applicable in the traditional sense — this is a
-static data table addition, not a function change. The `quirks_table[]`
-is used by the USB core to match devices during enumeration. When a
-device with VID 0489/PID e11d is connected, the `BTUSB_MEDIATEK` flag
-triggers the MediaTek initialization path in btusb.
+**Step 5.2: Callers**
+`bio_add_page()` is called from 44+ files across the kernel: filesystems
+(btrfs, gfs2, ocfs2, ntfs3, f2fs, squashfs, nfs, erofs, direct-io),
+block layer (blk-map, blk-crypto), device mapper (dm-crypt, dm-io, dm-
+writecache, dm-log-writes, dm-flakey, dm-zoned), RAID (raid1, raid5,
+raid10), NVMe target, SCSI target, drbd, zram, xen-blkback, floppy. This
+is a CORE API.
 
-Record: Static table entry. The MediaTek code path is well-tested and
-used by dozens of other device IDs.
+**Step 5.3:** `bio_add_page` calls `bvec_try_merge_page` and
+`__bio_add_page`, manipulating bio vectors.
 
-### PHASE 6: STABLE TREE ANALYSIS
+**Step 5.4:** Any filesystem or block driver issuing I/O can reach this
+function. It's on the hot path for ALL block I/O.
 
-**Step 6.1:** The MT7922A device ID section exists in all stable trees
-from 5.17 onward. The `BTUSB_MEDIATEK` and `BTUSB_WIDEBAND_SPEECH` flags
-exist in all active stable trees.
+**Step 5.5:** The same zero-length ambiguity exists in `bio_add_folio()`
+which wraps `bio_add_page()`, so this fix protects both paths.
 
-**Step 6.2:** Minor context conflict expected due to other device IDs
-added in the same section. Trivial to resolve — just add the 2-line
-entry in the correct position.
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.3:** No related fixes already in stable for this specific
-device ID.
+**Step 6.1:** `bio_add_page()` exists in ALL stable trees (present since
+2005). The zero-length ambiguity has existed since the beginning.
 
-### PHASE 7: SUBSYSTEM CONTEXT
+**Step 6.2: Backport Compatibility**
+- v6.6/v6.12: Function has slightly different structure (uses
+  `same_page` variable, `bvec_try_merge_page` has different signature),
+  but the fix location (after the BIO_CLONED check, before the size
+  check) is identical. Patch should apply cleanly or with trivial
+  context adjustment.
+- v6.1: Function uses `__bio_try_merge_page()` instead. Fix still
+  applies at the top of the function.
+- v5.15: Same as v6.1.
 
-**Step 7.1:** Bluetooth (drivers/bluetooth/) — IMPORTANT subsystem.
-Bluetooth is critical for laptops and mobile devices.
+**Step 6.3:** No related zero-length fix exists in any stable tree.
 
-**Step 7.2:** btusb.c is actively developed with frequent device ID
-additions. This is a well-established pattern.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 7.1:** Block layer (`block/`) — **CORE** criticality. Affects all
+users who do any I/O.
 
-**Step 8.1:** Affects users of Dynabook GA/ZY (W6GAZY5RCL) and any other
-device using the Foxconn/MediaTek 0489:e11d Bluetooth adapter.
+**Step 7.2:** Actively developed subsystem (20+ recent commits).
 
-**Step 8.2:** Trigger: any user who has this hardware and plugs it in or
-boots with it. Without this entry, Bluetooth is completely non-
-functional.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.3:** Without the fix: Bluetooth does not work at all. Severity:
-HIGH for affected users (complete loss of functionality).
+**Step 8.1:** Universal — every kernel user performs block I/O through
+`bio_add_page()`.
 
-**Step 8.4:**
-- Benefit: HIGH — enables Bluetooth on real hardware
-- Risk: VERY LOW — 2-line static table entry, affects only this specific
-  USB device
-- Ratio: Excellent benefit-to-risk ratio
+**Step 8.2: Trigger Conditions**
+Currently, the btrfs zlib path (`3d74a7556fba`, only in 7.0+) was the
+known trigger. In stable trees, no known caller currently passes zero-
+length. However, any future backported fix or existing edge case that
+accidentally computes zero-length would trigger the double-free.
 
-### PHASE 9: FINAL SYNTHESIS
+**Step 8.3: Failure Mode**
+Double-free of a page → memory corruption, crash, or security
+vulnerability. Severity: **CRITICAL** when triggered.
 
-**Step 9.1: Evidence FOR backporting:**
-- Textbook USB device ID addition — the #1 most common exception
-  category for stable
-- 2 lines added to a static table — minimal possible change
-- Zero regression risk — only affects the specific 0489:e11d device
-- MT7922 driver support exists in all active stable trees (since 5.17)
-- Reviewed and signed off by the Bluetooth subsystem maintainer
-- Enables hardware for a real product (Dynabook GA/ZY)
+**Step 8.4: Risk-Benefit Ratio**
+- BENEFIT: Prevents double-free from API misuse; hardens a core API used
+  by 44+ files
+- RISK: Effectively zero — 2 lines, adds a check for an invalid input
+  that should never occur
+- Ratio: Very favorable
 
-**Evidence AGAINST backporting:**
-- None identified. Minor context conflict is trivially resolvable.
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.2: Stable Rules Checklist:**
-1. Obviously correct? YES — identical pattern to 20+ adjacent entries
-2. Fixes a real problem? YES — Bluetooth non-functional without it
-3. Important issue? YES — complete loss of Bluetooth functionality
-4. Small and contained? YES — 2 lines in one file
-5. No new features or APIs? CORRECT — just a device ID
-6. Can apply to stable? YES — with trivial context adjustment
+**Step 9.1: Evidence Compilation**
 
-**Step 9.3: Exception Category:** YES — This is a **NEW DEVICE ID**
-addition to an existing driver. This is explicitly listed as an allowed
-exception to stable rules.
+FOR backporting:
+- Prevents double-free (memory safety, potential security issue)
+- 2-line fix, obviously correct, zero regression risk
+- Core block layer API used by 44+ files
+- Real bug was triggered (btrfs zlib crash with syzbot report + user
+  reports)
+- Block maintainer (Jens Axboe) signed off
+- The API ambiguity exists in all stable kernels
+- No caller should ever pass zero-length; this enforces a correct
+  invariant
 
-### Verification
+AGAINST backporting:
+- The specific known trigger (btrfs zlib) only exists in 7.0+ code
+- No known caller in stable trees currently passes zero-length
+- Somewhat defensive/hardening in nature for older stable trees
 
-- [Phase 1] Parsed tags: Reviewed-by Paul Menzel, Signed-off-by Luiz von
-  Dentz (Bluetooth maintainer)
-- [Phase 2] Diff analysis: +2 lines in static USB device ID table,
-  identical pattern to adjacent entries
-- [Phase 3] git blame: MT7922A section created in 6932627425d6 (Dec
-  2021), present in tree since v5.17
-- [Phase 3] git merge-base: Confirmed 6932627425d6 and 8c0401b7308cb are
-  ancestors of HEAD
-- [Phase 3] Grep for 0xe11d: Confirmed device ID not yet present in v7.0
-  tree
-- [Phase 5] Grep for MT7922: Confirmed MT7922/MT7922A sections exist
-  with many similar entries at lines 675-719
-- [Phase 6] MT7922A support exists in all active stable trees
-  (introduced in 5.17 cycle)
-- [Phase 6] Context conflict: 0xe174 and 0x04ca:3807 in diff context
-  don't exist in 7.0 — trivial conflict
-- [Phase 8] Impact: Complete Bluetooth failure on Dynabook GA/ZY without
-  this ID
-- UNVERIFIED: Could not access lore.kernel.org discussion thread due to
-  anti-bot protection
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct? **YES** — trivially verifiable
+2. Fixes a real bug? **YES** — double-free is real, demonstrated in
+   btrfs
+3. Important issue? **YES** — double-free = memory corruption/crash
+4. Small and contained? **YES** — 2 lines in 1 file
+5. No new features? **YES** — purely defensive check
+6. Applies to stable? **YES** — with minor context adjustments
 
-This is a textbook device ID addition — the most common and safest type
-of stable backport. Two lines in a static table, zero regression risk,
-enables real hardware for real users.
+**Step 9.3: Exception Categories** — N/A
+
+**Step 9.4: Decision**
+The fix is tiny, obviously correct, and addresses a genuine API-level
+design flaw that leads to double-free when any caller passes zero-
+length. While the known trigger exists only in 7.0+, the underlying API
+ambiguity has existed since 2005 and could be triggered by any of the
+44+ callers if they ever compute a zero-length. The defensive hardening
+of such a critical, widely-used API is appropriate for stable.
+
+## Verification
+
+- [Phase 1] Parsed tags: Signed-off-by Qu Wenruo (author), Jens Axboe
+  (block maintainer), Link: tag present
+- [Phase 2] Diff analysis: 2 lines added to `bio_add_page()` —
+  WARN_ON_ONCE(len == 0) + return 0
+- [Phase 3] git blame: bio_add_page refactored in 0aa69fd32a5f76 (2018),
+  original from 1da177e (2005); zero-length bug exists since origin
+- [Phase 3] Author check: Qu Wenruo is prolific btrfs developer,
+  discovered bug while fixing btrfs zlib crash (0dcabcb920a5c)
+- [Phase 3] Related commit 0dcabcb920a5c confirmed: btrfs zlib double-
+  free from zero-length bio_add_folio, reported by David Sterba, syzbot,
+  and user
+- [Phase 4] Lore blocked by anti-scraping; patch link confirmed via
+  commit message
+- [Phase 5] grep found 44+ files calling bio_add_page() across fs/,
+  drivers/, block/ — CORE API
+- [Phase 6] bio_add_page in v6.6, v6.1, v5.15 confirmed via git show —
+  function exists in all stable trees; fix applies at same location (top
+  of function)
+- [Phase 6] No existing zero-length check in any stable tree version
+  confirmed
+- [Phase 7] Block layer — CORE subsystem, affects all users
+- [Phase 8] Double-free → memory corruption → CRITICAL severity when
+  triggered; 2-line fix → zero regression risk
+- UNVERIFIED: Could not access lore.kernel.org to read full review
+  discussion due to anti-scraping protection
 
 **YES**
 
- drivers/bluetooth/btusb.c | 2 ++
+ block/bio.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 1acc07d0dc061..5672f0ac27557 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -699,6 +699,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe102), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe11d), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe152), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe153), .driver_info = BTUSB_MEDIATEK |
+diff --git a/block/bio.c b/block/bio.c
+index d80d5d26804e3..6048d9382fecf 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1064,6 +1064,8 @@ int bio_add_page(struct bio *bio, struct page *page,
+ {
+ 	if (WARN_ON_ONCE(bio_flagged(bio, BIO_CLONED)))
+ 		return 0;
++	if (WARN_ON_ONCE(len == 0))
++		return 0;
+ 	if (bio->bi_iter.bi_size > BIO_MAX_SIZE - len)
+ 		return 0;
+ 
 -- 
 2.53.0
 
