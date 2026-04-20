@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C9C33B975;
-	Mon, 20 Apr 2026 15:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBE3336896;
+	Mon, 20 Apr 2026 15:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700553; cv=none; b=c/35nS01/Ui5nA8ZJ+AmWUgn5YvJtntWxgqwNm5ANI51f2qT03Y/u3lsHdXJSbnIWibdMvRSFPStOQbKe2Xxq5TlpKQBM19j+hBWKPhiPFGHl9IyqWrI87T99n4W1ikTW+mmSF88RzX9TibxgFqtUJMcrEPbJAYwtZ14NRydWCw=
+	t=1776700555; cv=none; b=XPfQOYUm2OXyScurhIe6wbJogLKmrKSp9dYDMgi7QvMpN5FJmPwJrskkXT3dGLLDZ8kLS6WNPx2a9PSGbOyc4qEoL4kLLGCSfyvudiRbaIFknLYJ7P6auMsJhkrTNapHKdhJkqZ10Fn3GfvrfGlzdYp5O7O22mxY+KRH5xAX++4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700553; c=relaxed/simple;
-	bh=Wu2Fei/OFM7ZAayv3k1uD25m/KngVs4HP7aBlBdkqcY=;
+	s=arc-20240116; t=1776700555; c=relaxed/simple;
+	bh=vWMrgbicuGrFQN2Aj1y3J23atsjIBaDRsqhKbsCEZsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYMtLzMDSLaYB80DOO3vyknrKZ4vOFZ2s/O/dQLKfmx3D0pcJmsMf542383ZiLZiphnPjpoxHRBfX6eUAW+2OcffD38irwOuhLI4711nX4dM9utLXwQXI3uxPZpTf62P+0hfGJ2km0Xovl5mWwriwVOzo/mXyYb8foDc+XfCRZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fb7mMowv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mA7ljWTe6MFbDXfhPwI6vZI/gmdwUCmk8CO3zo53+FQcHalGo9zUrDrAwDtRSx6ka/hn/zwzF8C04qOsW5bC8dK7sgfZ8hcGMrxH4vES1+iyX7Nxnlxhkv88RSxnTmnmweJWhroIOwnC9HBqHhyM/j+SO5f3QfXxD89fO4PTM58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3NBTpFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb7mMowv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836A5C19425;
-	Mon, 20 Apr 2026 15:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3NBTpFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42783C19425;
+	Mon, 20 Apr 2026 15:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700553;
-	bh=Wu2Fei/OFM7ZAayv3k1uD25m/KngVs4HP7aBlBdkqcY=;
+	s=korg; t=1776700555;
+	bh=vWMrgbicuGrFQN2Aj1y3J23atsjIBaDRsqhKbsCEZsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fb7mMowv+UhvCf5FP9ZKrpQFrRujg1dzdEmtd6EjZb5kxJaYRvNOOxBMYZa1pGp9k
-	 0JWrXjxX0rLwDLgYwJ6AsQ0brxjPcNpt4cPttAA91xQYY15ohDSPFcEEK2wn+Sca4q
-	 9y5b0+b8CZUkCVHzNisY336cSQvKkvnsIIXHcnmc=
+	b=t3NBTpFWZs4/cXIZur6QoAkmQ3KZGXuAYqeK4w+bNOO0VZgfUqtDhGo7IkuwnvMvQ
+	 Km0zhV12wVJl6HP9yiAF/D5nI4ICVAf6o7/H9RhOYWoZSNR8QKCgTFrHyojdU///c7
+	 xSP5hBItES6M0K/4YgvPfEUOhTvWepfitqD1W1nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alistair Popple <apopple@nvidia.com>,
-	Zenghui Yu <zenghui.yu@linux.dev>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 174/220] selftests/mm: hmm-tests: dont hardcode THP size to 2MB
-Date: Mon, 20 Apr 2026 17:41:55 +0200
-Message-ID: <20260420153940.291178781@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.19 211/220] ALSA: 6fire: fix use-after-free on disconnect
+Date: Mon, 20 Apr 2026 17:42:32 +0200
+Message-ID: <20260420153941.624417766@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -61,245 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alistair Popple <apopple@nvidia.com>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit f9d7975c52c00b3685cf9a90a81023d17817d991 upstream.
+commit b9c826916fdce6419b94eb0cd8810fdac18c2386 upstream.
 
-Several HMM tests hardcode TWOMEG as the THP size. This is wrong on
-architectures where the PMD size is not 2MB such as arm64 with 64K base
-pages where THP is 512MB. Fix this by using read_pmd_pagesize() from
-vm_util instead.
+In usb6fire_chip_abort(), the chip struct is allocated as the card's
+private data (via snd_card_new with sizeof(struct sfire_chip)).  When
+snd_card_free_when_closed() is called and no file handles are open, the
+card and embedded chip are freed synchronously.  The subsequent
+chip->card = NULL write then hits freed slab memory.
 
-While here also replace the custom file_read_ulong() helper used to
-parse the default hugetlbfs page size from /proc/meminfo with the
-existing default_huge_page_size() from vm_util.
+Call trace:
+  usb6fire_chip_abort sound/usb/6fire/chip.c:59 [inline]
+  usb6fire_chip_disconnect+0x348/0x358 sound/usb/6fire/chip.c:182
+  usb_unbind_interface+0x1a8/0x88c drivers/usb/core/driver.c:458
+  ...
+  hub_event+0x1a04/0x4518 drivers/usb/core/hub.c:5953
 
-Link: https://lore.kernel.org/20260331063445.3551404-3-apopple@nvidia.com
-Link: https://lore.kernel.org/linux-mm/8bd0396a-8997-4d2e-a13f-5aac033083d7@linux.dev/
-Fixes: fee9f6d1b8df ("mm/hmm/test: add selftests for HMM")
-Fixes: 519071529d2a ("selftests/mm/hmm-tests: new tests for zone device THP migration")
-Signed-off-by: Alistair Popple <apopple@nvidia.com>
-Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
-Closes: https://lore.kernel.org/linux-mm/8bd0396a-8997-4d2e-a13f-5aac033083d7@linux.dev/
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix by moving the card lifecycle out of usb6fire_chip_abort() and into
+usb6fire_chip_disconnect().  The card pointer is saved in a local
+before any teardown, snd_card_disconnect() is called first to prevent
+new opens, URBs are aborted while chip is still valid, and
+snd_card_free_when_closed() is called last so chip is never accessed
+after the card may be freed.
+
+Fixes: a0810c3d6dd2 ("ALSA: 6fire: Release resources at card release")
+Cc: stable@vger.kernel.org
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260410051341.1069716-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/hmm-tests.c |   83 ++++++---------------------------
- 1 file changed, 16 insertions(+), 67 deletions(-)
+ sound/usb/6fire/chip.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/tools/testing/selftests/mm/hmm-tests.c
-+++ b/tools/testing/selftests/mm/hmm-tests.c
-@@ -34,6 +34,7 @@
-  */
- #include <lib/test_hmm_uapi.h>
- #include <mm/gup_test.h>
-+#include <mm/vm_util.h>
- 
- struct hmm_buffer {
- 	void		*ptr;
-@@ -548,7 +549,7 @@ TEST_F(hmm, anon_write_child)
- 
- 	for (migrate = 0; migrate < 2; ++migrate) {
- 		for (use_thp = 0; use_thp < 2; ++use_thp) {
--			npages = ALIGN(use_thp ? TWOMEG : HMM_BUFFER_SIZE,
-+			npages = ALIGN(use_thp ? read_pmd_pagesize() : HMM_BUFFER_SIZE,
- 				       self->page_size) >> self->page_shift;
- 			ASSERT_NE(npages, 0);
- 			size = npages << self->page_shift;
-@@ -728,7 +729,7 @@ TEST_F(hmm, anon_write_huge)
- 	int *ptr;
- 	int ret;
- 
--	size = 2 * TWOMEG;
-+	size = 2 * read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -744,7 +745,7 @@ TEST_F(hmm, anon_write_huge)
- 			   buffer->fd, 0);
- 	ASSERT_NE(buffer->ptr, MAP_FAILED);
- 
--	size = TWOMEG;
-+	size /= 2;
- 	npages = size >> self->page_shift;
- 	map = (void *)ALIGN((uintptr_t)buffer->ptr, size);
- 	ret = madvise(map, size, MADV_HUGEPAGE);
-@@ -771,54 +772,6 @@ TEST_F(hmm, anon_write_huge)
+--- a/sound/usb/6fire/chip.c
++++ b/sound/usb/6fire/chip.c
+@@ -53,11 +53,6 @@ static void usb6fire_chip_abort(struct s
+ 			usb6fire_comm_abort(chip);
+ 		if (chip->control)
+ 			usb6fire_control_abort(chip);
+-		if (chip->card) {
+-			snd_card_disconnect(chip->card);
+-			snd_card_free_when_closed(chip->card);
+-			chip->card = NULL;
+-		}
+ 	}
  }
  
- /*
-- * Read numeric data from raw and tagged kernel status files.  Used to read
-- * /proc and /sys data (without a tag) and from /proc/meminfo (with a tag).
-- */
--static long file_read_ulong(char *file, const char *tag)
--{
--	int fd;
--	char buf[2048];
--	int len;
--	char *p, *q;
--	long val;
--
--	fd = open(file, O_RDONLY);
--	if (fd < 0) {
--		/* Error opening the file */
--		return -1;
--	}
--
--	len = read(fd, buf, sizeof(buf));
--	close(fd);
--	if (len < 0) {
--		/* Error in reading the file */
--		return -1;
--	}
--	if (len == sizeof(buf)) {
--		/* Error file is too large */
--		return -1;
--	}
--	buf[len] = '\0';
--
--	/* Search for a tag if provided */
--	if (tag) {
--		p = strstr(buf, tag);
--		if (!p)
--			return -1; /* looks like the line we want isn't there */
--		p += strlen(tag);
--	} else
--		p = buf;
--
--	val = strtol(p, &q, 0);
--	if (*q != ' ') {
--		/* Error parsing the file */
--		return -1;
--	}
--
--	return val;
--}
--
--/*
-  * Write huge TLBFS page.
-  */
- TEST_F(hmm, anon_write_hugetlbfs)
-@@ -826,15 +779,13 @@ TEST_F(hmm, anon_write_hugetlbfs)
- 	struct hmm_buffer *buffer;
- 	unsigned long npages;
- 	unsigned long size;
--	unsigned long default_hsize;
-+	unsigned long default_hsize = default_huge_page_size();
- 	unsigned long i;
- 	int *ptr;
- 	int ret;
- 
--	default_hsize = file_read_ulong("/proc/meminfo", "Hugepagesize:");
--	if (default_hsize < 0 || default_hsize*1024 < default_hsize)
-+	if (!default_hsize)
- 		SKIP(return, "Huge page size could not be determined");
--	default_hsize = default_hsize*1024; /* KB to B */
- 
- 	size = ALIGN(TWOMEG, default_hsize);
- 	npages = size >> self->page_shift;
-@@ -1606,7 +1557,7 @@ TEST_F(hmm, compound)
- 	struct hmm_buffer *buffer;
- 	unsigned long npages;
- 	unsigned long size;
--	unsigned long default_hsize;
-+	unsigned long default_hsize = default_huge_page_size();
- 	int *ptr;
- 	unsigned char *m;
- 	int ret;
-@@ -1614,10 +1565,8 @@ TEST_F(hmm, compound)
- 
- 	/* Skip test if we can't allocate a hugetlbfs page. */
- 
--	default_hsize = file_read_ulong("/proc/meminfo", "Hugepagesize:");
--	if (default_hsize < 0 || default_hsize*1024 < default_hsize)
-+	if (!default_hsize)
- 		SKIP(return, "Huge page size could not be determined");
--	default_hsize = default_hsize*1024; /* KB to B */
- 
- 	size = ALIGN(TWOMEG, default_hsize);
- 	npages = size >> self->page_shift;
-@@ -2106,7 +2055,7 @@ TEST_F(hmm, migrate_anon_huge_empty)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2158,7 +2107,7 @@ TEST_F(hmm, migrate_anon_huge_zero)
- 	int ret;
- 	int val;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2221,7 +2170,7 @@ TEST_F(hmm, migrate_anon_huge_free)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2280,7 +2229,7 @@ TEST_F(hmm, migrate_anon_huge_fault)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2332,7 +2281,7 @@ TEST_F(hmm, migrate_partial_unmap_fault)
+@@ -168,6 +163,7 @@ destroy_chip:
+ static void usb6fire_chip_disconnect(struct usb_interface *intf)
  {
- 	struct hmm_buffer *buffer;
- 	unsigned long npages;
--	unsigned long size = TWOMEG;
-+	unsigned long size = read_pmd_pagesize();
- 	unsigned long i;
- 	void *old_ptr;
- 	void *map;
-@@ -2398,7 +2347,7 @@ TEST_F(hmm, migrate_remap_fault)
- {
- 	struct hmm_buffer *buffer;
- 	unsigned long npages;
--	unsigned long size = TWOMEG;
-+	unsigned long size = read_pmd_pagesize();
- 	unsigned long i;
- 	void *old_ptr, *new_ptr = NULL;
- 	void *map;
-@@ -2498,7 +2447,7 @@ TEST_F(hmm, migrate_anon_huge_err)
- 	int *ptr;
- 	int ret;
+ 	struct sfire_chip *chip;
++	struct snd_card *card;
  
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
+ 	chip = usb_get_intfdata(intf);
+ 	if (chip) { /* if !chip, fw upload has been performed */
+@@ -178,8 +174,19 @@ static void usb6fire_chip_disconnect(str
+ 				chips[chip->regidx] = NULL;
+ 			}
  
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2593,7 +2542,7 @@ TEST_F(hmm, migrate_anon_huge_zero_err)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
++			/*
++			 * Save card pointer before teardown.
++			 * snd_card_free_when_closed() may free card (and
++			 * the embedded chip) immediately, so it must be
++			 * called last and chip must not be accessed after.
++			 */
++			card = chip->card;
+ 			chip->shutdown = true;
++			if (card)
++				snd_card_disconnect(card);
+ 			usb6fire_chip_abort(chip);
++			if (card)
++				snd_card_free_when_closed(card);
+ 		}
+ 	}
+ }
 
 
