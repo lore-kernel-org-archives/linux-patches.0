@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F193CD8CB;
-	Mon, 20 Apr 2026 13:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F117D3CEB95;
+	Mon, 20 Apr 2026 13:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691750; cv=none; b=SnTgFYKnsZAkBOkLOV4/JDusQhdK73ZAEG9WPM47QrV1P8Ew2fDs6WImBuQP8QB5pcwO65LyEZGFNVZLzlgipQAVtTn40YvH7sq8Cme7+MjHzYxJL9NsPc35jIj1HoYNRKTnF7lnwRyxnVvxL8EdrV8I2kljjn1JfzmSQA7mpjA=
+	t=1776691752; cv=none; b=jCIxD1ycGMZ0iHUzlrmBNmApmo+eFH00pmzdLom/JLXikrNtpq3Q3bHuYMsdkB+67ckKSWHaXXePmKv+tYgCxmtrraqEl4VO8GnLU4TnAr5yaQH0kjsotqbcZ5lsAudzhRiP0P6a6Hmv7BmEa1GoKQD49JOBPp2u26hNNZV15to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691750; c=relaxed/simple;
-	bh=V0VFj8aZzqmCnTuc3+SedQ4MvFev3ZEavBb0Ggnm2WI=;
+	s=arc-20240116; t=1776691752; c=relaxed/simple;
+	bh=ScQ6dAwJ3nJ1e211k15M5MBZcZrbS/VbzJqrbbcJTHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bSPrgBAQynUeqJ0Sr8A+V2CzJ5dhL7/f6JYbhT3w8Zd24mYwgxsmdud2W+zzUAK2V6yA+CH/TzRO/xp2Mwgh7ibVu9J8AqHPj81gWHfY63FeZ/Fed5jDQcQRLr9grz5Wbcmbfi8TtmXdoITIZhH1j02FRCuAYD/lZsmXjmbe8B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GRbqZn9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oC7VS1LhqsiDOfPlTUV7NxXX5IAWXd8fnf7lSKkRBM/O7ZDAwUw7s5Ih4uaDMjbokpdL/6Z8fIh1HFKyfK9gObpQje8BzVol77wTnwXmmezR6XPyKQZRu78zfRfoPZ05i65r15AJBU+PSu7sogl5b28dlFMxHVvHkXdU1FiAt+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eKX0B856; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GRbqZn9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC0CC2BCB6;
-	Mon, 20 Apr 2026 13:29:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eKX0B856"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2DFC2BCB6;
+	Mon, 20 Apr 2026 13:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691750;
-	bh=V0VFj8aZzqmCnTuc3+SedQ4MvFev3ZEavBb0Ggnm2WI=;
+	s=k20201202; t=1776691751;
+	bh=ScQ6dAwJ3nJ1e211k15M5MBZcZrbS/VbzJqrbbcJTHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRbqZn9TH0Y8eVwo2bjF/K40fO5H2IJrsx+HET535VhhZmtRBIzkeTsRwaeh+XDRl
-	 xeSTcAjFVVKghwFrztGyAI/I1ouchs4D5YDnqRTWyzYGvVj5eZqbtIhcbCWnXj+fOx
-	 VPwd+jPBwrhKjf/HroKhlA8sEc1X/QhnuglQ+ynN7Dqep0BnaHTnRFx4NcPth9hh//
-	 GSeWjYeJ6IS98rqrdkR3MSI5kFNudzNoyIHbBxq0Sv2Ll+VlmSW4FTIXdI6t+uvqme
-	 Ci5OCJBR8LgYa6mPtBLK46QljOUCRBr6+S0aTZ0hRZMPSMpbIgc/by7+L97VgOgTsn
-	 3anHUavsg7clw==
+	b=eKX0B856ruMt1RXYsgZAxzKytIq77dfiapxsAX3qqkoW+4ZvbrowvTjK0v5AvLHL9
+	 YGNvefvjZcaqGNafDC6Bi+HcCNg5oAsGR9c2oWskj0Y0JNTe075z2cXXkP7FEYRz8b
+	 oVx6zt88FfPfpSP9pqzbNlx5UbIb5IIz40s3Q6Fn2HB3gh/Xjd0ONoN24pW8CVc+Cx
+	 BFeLzExyeGD47S9tnsoAD1ex6yuxY9WFJwAxdaoc2Ji6vLSBTgfBeTm8sNd0/3AVu1
+	 SqlNrPiNTzyzUU/wWEO1dL8N8aOZCHCNkGqOkd9Lr/l3SW+O12TatmvaNJnj54z7kp
+	 CU3cOEhNbxgRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Le Ma <le.ma@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	laurent.pinchart@ideasonboard.com,
+	kieran.bingham+renesas@ideasonboard.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/amdgpu: fix array out of bounds accesses for mes sw_fini
-Date: Mon, 20 Apr 2026 09:19:25 -0400
-Message-ID: <20260420132314.1023554-171-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] media: renesas: vsp1: histo: Fix code enumeration
+Date: Mon, 20 Apr 2026 09:19:26 -0400
+Message-ID: <20260420132314.1023554-172-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -57,372 +57,337 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Le Ma <le.ma@amd.com>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit 418b4e397570f1b0ffb6d5c8aa0872bc33071d49 ]
+[ Upstream commit a7985d28b3b13cd5e23f4271d702a46532f80424 ]
 
-The mes.fw[] is per-pipe resource shared accross xcc inst.
-And enlarge hung_queue array to max inst_pipes.
+The histogram media bus code enumeration does not check the index when
+operating on the source pad, resulting in an infinite loop if userspace
+keeps enumerating code without any loop boundary. Fix it by returning an
+error for indices larger than 0 as the pad supports a single format.
 
-Signed-off-by: Le Ma <le.ma@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com> # HiHope RZ/G2M
+Link: https://patch.msgid.link/20260318235907.831556-10-laurent.pinchart+renesas@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile the findings.
+Now I have all the data needed for a thorough analysis. Let me compile
+the full assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: `drm/amdgpu` (AMD GPU DRM driver)
-- **Action verb**: "fix" — explicitly a bug fix
-- **Summary**: Fixes array out-of-bounds accesses in MES sw_fini path
+**Step 1.1: Subject Line**
+Record: [media: renesas: vsp1: histo] [Fix] [Fix code enumeration —
+missing bounds check on index during mbus code enumeration on source
+pad]
 
-Record: [drm/amdgpu] [fix] [Out-of-bounds array accesses in MES sw_fini
-due to incorrect array sizing and indexing]
+**Step 1.2: Tags**
+- `Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>` —
+  tested on HiHope RZ/G2M hardware
+- `Link: https://patch.msgid.link/20260318235907.831556-10-
+  laurent.pinchart+renesas@ideasonboard.com` — this is patch **10** of a
+  series
+- `Signed-off-by: Laurent Pinchart` — original VSP1 driver author
+- `Signed-off-by: Hans Verkuil` — V4L2/media subsystem co-maintainer
 
-### Step 1.2: Tags
-- **Signed-off-by**: Le Ma (author), Alex Deucher (AMD DRM maintainer)
-- **Reviewed-by**: Hawking Zhang (AMD engineer/reviewer)
-- No Fixes: tag, no Cc: stable, no Reported-by, no Link
-- Absence of tags is expected for autoselection candidates
+Record: Patch 10 of a series. Tested on real hardware. Signed by
+subsystem maintainer and driver author. No Fixes: tag (expected). No
+syzbot.
 
-Record: Author is Le Ma (AMD engineer). Reviewed by Hawking Zhang.
-Merged by Alex Deucher (AMD DRM maintainer). No syzbot or external
-reporter.
+**Step 1.3: Commit Body**
+The message clearly describes: the source pad path in
+`histo_enum_mbus_code()` never checks `code->index`, so userspace
+calling `VIDIOC_SUBDEV_ENUM_MBUS_CODE` with incrementing indices loops
+infinitely. The pad supports a single format, so index > 0 should return
+`-EINVAL`.
 
-### Step 1.3: Commit Body
-The message states: "The mes.fw[] is per-pipe resource shared accross
-xcc inst. And enlarge hung_queue array to max inst_pipes."
+Record: Bug = infinite loop when enumerating codes on source pad.
+Symptom = userspace hangs. Root cause = missing bounds check.
 
-Two distinct bugs are described:
-1. `mes.fw[]` is per-pipe (size 2) but was accessed with per-instance
-   index (`inst = xcc_id * 2 + pipe`) → OOB when xcc_id > 0
-2. `hung_queue_db_array_*` arrays were sized at `AMDGPU_MAX_MES_PIPES`
-   (2) but accessed up to `AMDGPU_MAX_MES_INST_PIPES` (16) → OOB when
-   num_xcc > 1
-
-Record: Bug is OOB array access. Affects multi-xcc (multi-die) AMD GPU
-configurations (e.g., MI300 series). The sw_fini path runs during driver
-unload/cleanup.
-
-### Step 1.4: Hidden Bug Fix Detection
-This is explicitly labeled as a "fix" — no hiding here. Both are clear
-out-of-bounds memory accesses.
-
-Record: This is an explicit, clearly-described bug fix.
+**Step 1.4: Hidden Bug Fix Detection**
+Record: This is explicitly described as a bug fix. Not hidden at all.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- `amdgpu_mes.h`: 3 lines changed (array size `AMDGPU_MAX_MES_PIPES` →
-  `AMDGPU_MAX_MES_INST_PIPES`)
-- `mes_v12_1.c`: 1 line removed, 3 lines added (move
-  `amdgpu_ucode_release` call out of xcc loop)
-- Total: +6/-4 lines — very small, surgical fix
-- Functions modified: `mes_v12_1_sw_fini()`
-- Scope: Single-subsystem, single-driver fix
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/media/platform/renesas/vsp1/vsp1_histo.c`
+- +3 lines added (index check + blank line), 1 line changed
+  (`MEDIA_BUS_FMT_FIXED` → `MEDIA_BUS_FMT_METADATA_FIXED`)
+- Function modified: `histo_enum_mbus_code()`
+- Scope: Single-file, single-function surgical fix
 
-### Step 2.2: Code Flow Change
-**Hunk 1 (amdgpu_mes.h)**:
-- Before: `hung_queue_db_array_*[AMDGPU_MAX_MES_PIPES]` — arrays of size
-  2
-- After: `hung_queue_db_array_*[AMDGPU_MAX_MES_INST_PIPES]` — arrays of
-  size 16
-- `amdgpu_mes_init()` and `amdgpu_mes_fini()` iterate `for (i = 0; i <
-  AMDGPU_MAX_MES_PIPES * num_xcc; i++)` and access these arrays with
-  index `i`. When num_xcc > 1, `i` exceeds 2.
+**Step 2.2: Code Flow Change**
+Before: When `code->pad == HISTO_PAD_SOURCE`, unconditionally set
+`code->code = MEDIA_BUS_FMT_FIXED` and return 0, regardless of
+`code->index`.
+After: When `code->pad == HISTO_PAD_SOURCE`, first check if `code->index
+> 0` and return `-EINVAL` (since only one format is supported). Then set
+`code->code = MEDIA_BUS_FMT_METADATA_FIXED` and return 0.
 
-**Hunk 2 (mes_v12_1.c)**:
-- Before: `amdgpu_ucode_release(&adev->mes.fw[inst])` inside the
-  xcc×pipe double loop, where `inst = xcc_id * AMDGPU_MAX_MES_PIPES +
-  pipe` can be up to 15
-- After: Separate loop `for (pipe = 0; pipe < AMDGPU_MAX_MES_PIPES;
-  pipe++)` outside the xcc loop, using `pipe` (0 or 1) as index
+**Step 2.3: Bug Mechanism**
+This is a **logic/correctness fix** — missing bounds validation. The
+V4L2 enumeration API protocol requires callbacks to return `-EINVAL`
+when `code->index` exceeds the number of supported formats. Without
+this, the framework loops forever.
 
-### Step 2.3: Bug Mechanism
-**Category**: Buffer overflow / out-of-bounds array access
+Reference: `vsp1_subdev_enum_mbus_code()` in `vsp1_entity.c` line 212
+correctly does `if (code->index) return -EINVAL;` for its source pad
+path. The histogram entity bypasses that function for the source pad and
+handles it locally, but forgot the check.
 
-Bug 1: `mes.fw[AMDGPU_MAX_MES_PIPES]` (size 2) accessed at index `inst`
-(up to 15). This is OOB write/read during sw_fini.
+**Step 2.4: Fix Quality**
+- Obviously correct: follows the exact pattern used everywhere else in
+  the driver
+- Minimal and surgical
+- Very low regression risk: adding a bounds check cannot break anything
+- The `MEDIA_BUS_FMT_METADATA_FIXED` change is a secondary correctness
+  change (0x0001 → 0x7001) that changes the format code reported to
+  userspace
 
-Bug 2: `hung_queue_db_array_*[AMDGPU_MAX_MES_PIPES]` (size 2) accessed
-at indices up to `AMDGPU_MAX_MES_PIPES * num_xcc - 1` (up to 15). OOB
-access during init, fini, and hung queue detection.
-
-### Step 2.4: Fix Quality
-- Obviously correct: array sizing matches access patterns
-- Minimal and surgical: no unrelated changes
-- Regression risk: extremely low — just correcting array bounds and
-  indexing
-- The `fw[]` fix is semantically correct: firmware IS per-pipe, loaded
-  via `amdgpu_mes_init_microcode()` which uses pipe index (verified in
-  `amdgpu_mes.c` line 694)
-
-Record: Fix quality is HIGH. Minimal risk of regression. Obviously
-correct.
+Record: Fix is trivially correct. Index check = zero risk. Format
+constant change = minor behavioral change.
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-- The buggy `sw_fini` function was introduced by `e220edf2d6fd6d`
-  ("drm/amdgpu/mes_v12_1: initial support for mes_v12_1" by Jack Xiao,
-  2025-05-14), which appeared in v7.0-rc1.
-- The buggy `hung_queue_db_array_*` array declarations were introduced
-  by `d09c7e266c8cd` ("drm/amdgpu/mes: add multi-xcc support" by Jack
-  Xiao, 2024-11-21), also in v7.0-rc1.
+**Step 3.1: Blame**
+The buggy code was introduced in commit `99362e32332b5c` ("v4l: vsp1:
+Add histogram support") from September 2016, authored by Laurent
+Pinchart. This bug has been present since the histogram feature was
+first added, affecting all kernel versions from approximately v4.9
+onward.
 
-### Step 3.2: No Fixes: tag present, but root cause commits identified
-above.
+**Step 3.2: No Fixes: tag** — expected for autosel candidates.
 
-### Step 3.3: File History
-Related commits to `mes_v12_1.c` after initial creation:
-- `a5192fbb2ee42`: "fix mes code error for muti-xcc" — different fix for
-  different multi-xcc issues
-- `75053887d6d8f`: "add cooperative dispatch support" — added
-  `shared_cmd_buf_obj` arrays
-- Multiple other features added during v7.0 development
+**Step 3.3: File History**
+The file has had 9 commits since v6.1. Recent changes are mostly
+refactoring (wrappers dropped, vb2_ops cleanup), not related to this
+bug.
 
-### Step 3.4: Author
-Le Ma is an AMD engineer who has contributed multiple amdgpu patches.
-The fix was reviewed by Hawking Zhang and merged by Alex Deucher, the
-AMD DRM maintainer.
+**Step 3.4: Author**
+Laurent Pinchart is the **original author** of the entire VSP1 driver
+and is the de-facto maintainer. His fixes carry the highest possible
+authority for this code.
 
-### Step 3.5: Dependencies
-No prerequisites beyond what's already in v7.0. The fix modifies only
-existing code in a self-contained way.
+**Step 3.5: Dependencies — CRITICAL FINDING**
+By examining the pre-patch blob (`d7843c170f944`), I confirmed that the
+diff was created against a state where:
+1. The `histo` local variable was already removed from
+   `histo_enum_mbus_code()`
+2. `vsp1_subdev_enum_mbus_code()` was already refactored to take 3
+   arguments (instead of the current tree's 5)
+
+The current v7.0 tree still has the 5-argument version with the `histo`
+variable. This means **a prior patch in the same series (patches 1-9)
+refactored the function signature**, and this patch depends on it. The
+patch will NOT apply cleanly to the current stable tree.
+
+However, the core fix (the `code->index > 0` check) operates entirely
+within the `if (code->pad == HISTO_PAD_SOURCE)` block, which is
+unchanged between versions. A trivial manual backport would add just the
+index check.
+
+Record: Depends on prior patches for clean apply. Core fix is self-
+contained and trivially adaptable.
 
 ---
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-The patch was found at `https://www.spinics.net/lists/amd-
-gfx/msg138868.html`, submitted by Alex Deucher on March 6, 2026. It was
-a single standalone patch (not part of a series). No objections or NAKs
-found in the thread.
+**Step 4.1-4.5:** Lore.kernel.org returned Anubis challenge pages,
+preventing access. The `b4 dig` command could not find the commit by the
+msgid fragment. The `Link:` tag in the commit message points to `patch.m
+sgid.link/20260318235907.831556-10-
+laurent.pinchart+renesas@ideasonboard.com`, confirming this is patch 10
+in a series. The series likely performs broader cleanup/fixes on the
+VSP1 histogram subdevice, with this specific patch addressing the
+infinite loop bug.
 
-Record: No stable nomination in the mailing list discussion. No NAKs or
-concerns raised.
+Record: Could not access lore discussion. From msgid, this is patch 10
+of a series.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions Modified
-- `mes_v12_1_sw_fini()` — called during driver teardown/module unload
+**Step 5.1: Functions Modified**
+`histo_enum_mbus_code()` — the only function changed.
 
-### Step 5.2: Callers of sw_fini
-This is registered as the `sw_fini` callback in the amdgpu IP block
-framework. It's called during:
-- Module unload
-- Driver teardown
-- Error recovery paths
+**Step 5.2: Callers**
+`histo_enum_mbus_code` is registered as `.enum_mbus_code` in
+`histo_pad_ops` (line 376), which is set on the histogram subdevice.
+It's called via:
+- `v4l2_subdev_call(sd, pad, enum_mbus_code, ...)` →
+  `call_enum_mbus_code()` in `v4l2-subdev.c`
+- Triggered by `VIDIOC_SUBDEV_ENUM_MBUS_CODE` ioctl (line 859 of
+  `v4l2-subdev.c`)
 
-### Step 5.3: The OOB access in `amdgpu_mes_init()` /
-`amdgpu_mes_fini()` (hung_queue arrays)
-These are called during driver initialization and teardown — common
-paths for any AMD GPU.
+This is **directly reachable from userspace** via the subdevice node
+(e.g., `/dev/v4l-subdevX`).
 
-### Step 5.4: Reachability
-The `hung_queue_db_array_*` OOB accesses are triggered on ANY multi-xcc
-GPU (MI300 series) during normal driver init/fini. The `fw[]` OOB is
-triggered during driver teardown on multi-xcc.
+**Step 5.3-5.4: Call Chain**
+Userspace → `ioctl(fd, VIDIOC_SUBDEV_ENUM_MBUS_CODE, ...)` →
+`v4l2-subdev.c:subdev_do_ioctl_lock()` → `call_enum_mbus_code()` →
+`histo_enum_mbus_code()` → **bug: no index check → always returns 0 →
+caller loops forever**
+
+**Step 5.5: Similar Patterns**
+The `histo_enum_frame_size()` at line 186 correctly returns `-EINVAL`
+for non-sink pads. `vsp1_subdev_enum_mbus_code()` at line 212 correctly
+checks `if (code->index) return -EINVAL;` for source pads. The histogram
+entity is the only one that bypasses the common helper and forgets the
+check.
 
 ---
 
-## PHASE 6: STABLE TREE ANALYSIS
+## PHASE 6: CROSS-REFERENCING
 
-### Step 6.1: Which stable trees contain the buggy code?
+**Step 6.1: Buggy code in stable trees**
+The buggy code (commit `99362e32332b5c`) has been present since ~v4.9
+(2016). It exists in ALL active stable trees (5.10.y, 5.15.y, 6.1.y,
+6.6.y, 6.12.y).
 
-| Stable Tree | mes_v12_1.c exists? | hung_queue arrays? | multi-xcc
-MES? |
-|-------------|--------------------|--------------------|---------------
--|
-| v6.6        | NO                 | NO (not arrays)    | NO
-|
-| v6.12       | NO                 | NO                 | NO
-|
-| v6.19       | NO                 | Scalar, not arrays | NO
-|
-| **v7.0**    | **YES**            | **YES (buggy)**    | **YES**
-|
+**Step 6.2: Backport Complications**
+The patch will NOT apply cleanly due to the function signature change
+(`vsp1_subdev_enum_mbus_code` 3-arg vs 5-arg) and the missing `histo`
+variable. Needs a trivial manual adaptation: just add the index check to
+the existing code.
 
-**The buggy code exists ONLY in v7.0.** The `mes_v12_1.c` file was
-created during the 7.0 development cycle. The `hung_queue_db_array_*`
-arrays (with multi-xcc indexing) were introduced by `d09c7e266c8cd`
-which is also 7.0-only.
-
-### Step 6.2: Backport Complications
-The fix should apply cleanly to 7.0.y since the code is identical.
+**Step 6.3:** No related fix has been applied to stable for this issue.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem
-- **drm/amdgpu** — AMD GPU driver. IMPORTANT subsystem: used by data
-  center GPUs (MI300 series uses multi-xcc), desktop/workstation GPUs.
-- Criticality: IMPORTANT (driver-specific but affects high-value
-  enterprise hardware)
+**Step 7.1:** Renesas VSP1 video processing driver — used on Renesas
+R-Car SoC platforms common in automotive and embedded systems.
+Criticality: PERIPHERAL (specific hardware), but important in its niche.
 
-### Step 7.2: Activity
-Extremely active subsystem with many recent commits.
+**Step 7.2:** Moderate activity — a handful of commits per release
+cycle. Mature driver, bug has persisted for ~10 years.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected?
-Users with multi-xcc AMD GPUs (MI300 series, data center/AI
-accelerators). The single-xcc path (num_xcc = 1) would not trigger the
-OOB because `inst` maxes at 1.
+**Step 8.1: Who is affected**
+Users of Renesas R-Car platforms with VSP1 hardware (automotive,
+embedded, industrial).
 
-### Step 8.2: Trigger conditions
-- **hung_queue OOB**: Triggered during driver initialization
-  (`amdgpu_mes_init`) — EVERY BOOT on multi-xcc hardware
-- **fw[] OOB**: Triggered during driver teardown (`sw_fini`) — every
-  module unload or error recovery
+**Step 8.2: Trigger conditions**
+Any userspace program that calls `VIDIOC_SUBDEV_ENUM_MBUS_CODE` on the
+histogram source pad with incrementing index values. This is standard
+V4L2 API usage — tools like `v4l2-ctl --list-subdev-mbus-codes` would
+trigger this.
 
-### Step 8.3: Failure mode severity
-Out-of-bounds array access in kernel structures:
-- Can corrupt adjacent struct members in `amdgpu_mes`
-- Can cause kernel oops/panic from corrupted pointers
-- Severity: **CRITICAL** (memory corruption, potential crash, affects
-  every boot on affected hardware)
+**Step 8.3: Failure mode**
+**Infinite loop** — the userspace process hangs, and the ioctl never
+returns. This is effectively a system hang for any V4L2 application that
+enumerates formats on this pad. Severity: **HIGH** (system hang / DoS,
+userspace triggerable).
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: HIGH — prevents memory corruption and potential crashes
-  on multi-xcc AMD GPUs
-- **Risk**: VERY LOW — 10 lines, obviously correct array sizing and
-  indexing fix
-- **Ratio**: Very favorable
+**Step 8.4: Risk-Benefit**
+- BENEFIT: HIGH — prevents userspace-triggerable infinite loop on
+  affected hardware
+- RISK: VERY LOW — adding a single bounds check is trivially safe; the
+  format constant change is a minor behavioral fix
+- RATIO: Strongly favorable for backporting
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Evidence FOR backporting:**
+- Fixes a real, userspace-triggerable infinite loop (system hang)
+- Bug has been present since 2016 — affects all stable trees
+- Fix is surgical (3 lines added to one function)
+- Obviously correct — follows established patterns in the same driver
+- Author is the driver's original creator and maintainer
+- Tested on real hardware
+- Signed off by V4L2 subsystem maintainer
 
-**FOR backporting:**
-- Fixes real OOB array accesses (memory corruption)
-- Triggered on every boot/shutdown of multi-xcc AMD GPUs
-- Small, surgical fix (+6/-4 lines)
-- Obviously correct: array sizing matches access patterns
-- Reviewed by AMD maintainer (Hawking Zhang)
-- Merged by subsystem maintainer (Alex Deucher)
-- Self-contained, no dependencies
+**Evidence AGAINST backporting:**
+- Part of a larger series (patch 10); depends on prior patches for clean
+  application
+- Changes the format constant (`MEDIA_BUS_FMT_FIXED` →
+  `MEDIA_BUS_FMT_METADATA_FIXED`) which is a behavioral change
+- Affects only Renesas platform users (niche hardware)
 
-**AGAINST backporting:**
-- Only applicable to 7.0.y (no older stable trees have this code)
-- Only affects multi-xcc configurations (MI300 series)
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — array sizing fix is trivially
-   verifiable
-2. Fixes a real bug? **YES** — OOB array access causing memory
-   corruption
-3. Important issue? **YES** — memory corruption, potential kernel crash
-4. Small and contained? **YES** — 10 lines across 2 files in same driver
-5. No new features? **YES** — pure bug fix
-6. Can apply to stable? **YES** — 7.0.y only, should apply cleanly
-
-### Step 9.3: Exception categories
-Not an exception category — this is a standard bug fix.
-
-### Step 9.4: Decision
-This is a clear bug fix for out-of-bounds array accesses that cause
-memory corruption on multi-xcc AMD GPUs. The fix is small, obvious, and
-well-reviewed. It should be backported to the 7.0.y stable tree.
+**Stable Rules Checklist:**
+1. Obviously correct? YES — trivially verifiable against sister
+   functions
+2. Fixes a real bug? YES — infinite loop from userspace
+3. Important issue? YES — system hang
+4. Small and contained? YES — 4 lines changed in 1 function
+5. No new features? CORRECT — pure bug fix
+6. Can apply to stable? Needs minor manual adaptation (the index check
+   itself applies trivially; the context differs)
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by Le Ma (author), Reviewed-by
-  Hawking Zhang, Signed-off-by Alex Deucher (maintainer)
-- [Phase 2] Diff analysis: 3 lines in header change array sizes, 4 lines
-  in .c restructure fw release loop. Total +6/-4.
-- [Phase 2] Confirmed `fw[]` declared as `AMDGPU_MAX_MES_PIPES` (size 2)
-  at amdgpu_mes.h:98
-- [Phase 2] Confirmed `fw[]` loaded per-pipe in `amdgpu_mes.c:694` using
-  pipe index (0 or 1)
-- [Phase 2] Confirmed `hung_queue_db_array_*` accessed at index up to
-  `AMDGPU_MAX_MES_PIPES * num_xcc` in `amdgpu_mes.c:220,266`
-- [Phase 2] Confirmed `AMDGPU_MAX_MES_PIPES = 2`,
-  `AMDGPU_MAX_GC_INSTANCES = 8`, `AMDGPU_MAX_MES_INST_PIPES = 16`
-- [Phase 3] git blame: `sw_fini` introduced by `e220edf2d6fd6d`
-  (v7.0-rc1), hung_queue arrays by `d09c7e266c8cd` (v7.0-rc1)
-- [Phase 3] git tag --contains: both commits only in v7.0-rc1, v7.0
-- [Phase 3] git show v6.19: `mes_v12_1.c` does not exist;
-  `hung_queue_db_array_*` are scalar not arrays; no
-  `AMDGPU_MAX_MES_INST_PIPES` macro
-- [Phase 3] git show v6.12, v6.6: none of this code exists
-- [Phase 4] Found patch on spinics.net amd-gfx list (March 6, 2026),
-  standalone patch, no objections
-- [Phase 5] `sw_fini` is IP block teardown callback, called during
-  driver unload
-- [Phase 5] `amdgpu_mes_init()`/`amdgpu_mes_fini()` access hung_queue
-  arrays with multi-xcc indices
-- [Phase 6] Buggy code exists ONLY in v7.0 tree — not in v6.19, v6.12,
-  or v6.6
-- [Phase 8] Failure mode: OOB memory access → memory corruption →
-  potential kernel crash. Severity CRITICAL on multi-xcc hardware.
+- [Phase 1] Parsed tags: Tested-by from Renesas tester, Link to msgid
+  (patch 10/N), signed by maintainer and subsystem co-maintainer
+- [Phase 2] Diff analysis: +3 lines adding index bounds check in
+  `histo_enum_mbus_code()`, +1 line format constant change
+- [Phase 3] git blame: buggy code introduced in commit 99362e32332b5c
+  (2016, ~v4.9), present in all active stable trees
+- [Phase 3] Dependency check: pre-patch blob d7843c170f944 differs from
+  current tree — `vsp1_subdev_enum_mbus_code` has 3 args in diff vs 5 in
+  tree. Requires manual backport adaptation.
+- [Phase 4] Lore/b4: blocked by Anubis. From msgid, confirmed as patch
+  10 in a series.
+- [Phase 5] Traced call chain: userspace → VIDIOC_SUBDEV_ENUM_MBUS_CODE
+  ioctl → v4l2-subdev.c → histo_enum_mbus_code() — confirmed reachable
+  from userspace
+- [Phase 5] Verified sister function at vsp1_entity.c:212 properly
+  checks `if (code->index)` — confirms the fix pattern
+- [Phase 6] Buggy code exists in all active stable trees (v5.10+,
+  v5.15+, v6.1+, v6.6+, v6.12+)
+- [Phase 6] MEDIA_BUS_FMT_METADATA_FIXED introduced in commit
+  6ad253cc3436 (Oct 2020) — available in all active stable trees
+- [Phase 8] Failure mode: infinite loop = userspace hang, severity HIGH
+- UNVERIFIED: Could not access lore discussion to check if stable was
+  discussed by reviewers
+
+The fix addresses a real, long-standing, userspace-triggerable infinite
+loop in the V4L2 media enumeration path. The core fix (the index check)
+is trivially correct, minimal, and follows patterns used throughout the
+driver. While it needs minor manual adaptation for clean application to
+stable trees due to series dependencies, the fix itself is well within
+stable criteria.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h | 6 +++---
- drivers/gpu/drm/amd/amdgpu/mes_v12_1.c  | 4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/platform/renesas/vsp1/vsp1_histo.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
-index bcf2a067dc410..f80e3aca9c78e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
-@@ -159,9 +159,9 @@ struct amdgpu_mes {
+diff --git a/drivers/media/platform/renesas/vsp1/vsp1_histo.c b/drivers/media/platform/renesas/vsp1/vsp1_histo.c
+index 390ea50f1595a..30e5f5ac09371 100644
+--- a/drivers/media/platform/renesas/vsp1/vsp1_histo.c
++++ b/drivers/media/platform/renesas/vsp1/vsp1_histo.c
+@@ -170,7 +170,10 @@ static int histo_enum_mbus_code(struct v4l2_subdev *subdev,
+ 	struct vsp1_histogram *histo = subdev_to_histo(subdev);
  
- 	int				hung_queue_db_array_size;
- 	int				hung_queue_hqd_info_offset;
--	struct amdgpu_bo		*hung_queue_db_array_gpu_obj[AMDGPU_MAX_MES_PIPES];
--	uint64_t			hung_queue_db_array_gpu_addr[AMDGPU_MAX_MES_PIPES];
--	void				*hung_queue_db_array_cpu_addr[AMDGPU_MAX_MES_PIPES];
-+	struct amdgpu_bo		*hung_queue_db_array_gpu_obj[AMDGPU_MAX_MES_INST_PIPES];
-+	uint64_t			hung_queue_db_array_gpu_addr[AMDGPU_MAX_MES_INST_PIPES];
-+	void				*hung_queue_db_array_cpu_addr[AMDGPU_MAX_MES_INST_PIPES];
- 
- 	/* cooperative dispatch */
- 	bool                enable_coop_mode;
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v12_1.c b/drivers/gpu/drm/amd/amdgpu/mes_v12_1.c
-index 7b8c670d0a9ed..d8e4b52bdfd50 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_1.c
-@@ -1611,7 +1611,6 @@ static int mes_v12_1_sw_fini(struct amdgpu_ip_block *ip_block)
- 			amdgpu_bo_free_kernel(&adev->mes.eop_gpu_obj[inst],
- 					      &adev->mes.eop_gpu_addr[inst],
- 					      NULL);
--			amdgpu_ucode_release(&adev->mes.fw[inst]);
- 
- 			if (adev->enable_uni_mes || pipe == AMDGPU_MES_SCHED_PIPE) {
- 				amdgpu_bo_free_kernel(&adev->mes.ring[inst].mqd_obj,
-@@ -1622,6 +1621,9 @@ static int mes_v12_1_sw_fini(struct amdgpu_ip_block *ip_block)
- 		}
+ 	if (code->pad == HISTO_PAD_SOURCE) {
+-		code->code = MEDIA_BUS_FMT_FIXED;
++		if (code->index > 0)
++			return -EINVAL;
++
++		code->code = MEDIA_BUS_FMT_METADATA_FIXED;
+ 		return 0;
  	}
  
-+	for (pipe = 0; pipe < AMDGPU_MAX_MES_PIPES; pipe++)
-+		amdgpu_ucode_release(&adev->mes.fw[pipe]);
-+
- 	for (xcc_id = 0; xcc_id < num_xcc; xcc_id++) {
- 		if (!adev->enable_uni_mes) {
- 			amdgpu_bo_free_kernel(&adev->gfx.kiq[xcc_id].ring.mqd_obj,
 -- 
 2.53.0
 
