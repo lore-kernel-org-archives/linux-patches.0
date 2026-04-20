@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4D93314C4;
-	Mon, 20 Apr 2026 15:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8C8331A78;
+	Mon, 20 Apr 2026 15:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700481; cv=none; b=RpGz2fI9EKoKooPwLLh1vG+PpR3pMZMw8sNBN1snwjEN0wzMT7zSKmgJLT82yZN0eT+Pi4KlnykmNbEkvc3p7NxgIqsl6e1w/ZFyTPieaBkRtaPCY3e6Q/SZ3QLXaZ8od4zwYJ1R1jui58LVrboCOs8NYcN9NcPPcNpsuEHOr/Y=
+	t=1776700484; cv=none; b=eaI97WnJ/qeTw7Hengn/jH1Mzyq0hM2sxvUHD8bP+HmgkOREzDgZry0DTHujZvFcgz2c3aF/0QnJoZ/wADwtxJA2eF0Lr7cCQFhenqwXx20dRI4soRTqWwwKFxVUhAzIs5txSmz69NF9QV0LiUb2TLQYJAZ/fWFSpuEEpP0f8fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700481; c=relaxed/simple;
-	bh=YvatBB+poIG+GJ1pbkyBxRBjA0thngF6pWhphiChDF0=;
+	s=arc-20240116; t=1776700484; c=relaxed/simple;
+	bh=JvazAjmQvVPUwnyMynuNyoZlTeVAR6duhqZolr8EC1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqMTPb5sjz56aTyDJ7Gy7/NwFk86B0TArKQhJomGU5puAtGrkyPgBKpakHh0XWaRY5TZ9sHOIpN3Q/3rgI+dw8IstiFGeCRQdjmo0NJuxjXiJ3iud7oNBrp1v7hlA07yw1/Q1yBXCIRZ9G1iVNYcYmouQ4tJoMXdioUiDA6TQe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoQo8v1S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C51oCK7L+fNjdImrGN2cIj/RPQE/yuCMUKXcoFYyDbgXq67yD8USTizDFz9mgDkzMAwLRb6528mqGEHom0uzqK0WVhM30bhm6NAdKaIauLc+isUartiymBG+ltmn1ZL059qIAiyPbK2PcxhcDBSvnLHWCbPumJP4jpfpj4Slf8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZuXGO3L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoQo8v1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13457C19425;
-	Mon, 20 Apr 2026 15:54:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZuXGO3L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B86C19425;
+	Mon, 20 Apr 2026 15:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700481;
-	bh=YvatBB+poIG+GJ1pbkyBxRBjA0thngF6pWhphiChDF0=;
+	s=korg; t=1776700483;
+	bh=JvazAjmQvVPUwnyMynuNyoZlTeVAR6duhqZolr8EC1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FoQo8v1SMgKG7lfUi9aO0QE3hflmdWnf7OArVhks17FjvfJeDr5cd9i+3Mc0v1qJF
-	 nUmR7Ux7TCq4VZ3CpUG6t7ZtMSfWAeYGRaBvKKkeQKBj7Zr0N2EY14Af3cZAg2UJUZ
-	 1fp+L8VWLajS8Yn6k7O8DiY6UcStb8yuMwgLkp10=
+	b=nZuXGO3LiR5hqH5PnBLCdODZC4XK9kfspxk+5AsN3jtdarpnoUfjdbbW6ooswGALI
+	 Xd7NVNKYKYpwCUHESWVvXtF9hW5ejd6YuyDrBBmTUVQpWhXadHvekHV5QHI7nOcnnm
+	 t5u+RJGi9VX+3Gm3dYj6IcZijI5LAmO+0SwbK94E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jethro Beekman <jethro@fortanix.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.19 190/220] KVM: SEV: Disallow LAUNCH_FINISH if vCPUs are actively being created
-Date: Mon, 20 Apr 2026 17:42:11 +0200
-Message-ID: <20260420153940.866825876@linuxfoundation.org>
+Subject: [PATCH 6.19 191/220] KVM: SEV: Lock all vCPUs when synchronzing VMSAs for SNP launch finish
+Date: Mon, 20 Apr 2026 17:42:12 +0200
+Message-ID: <20260420153940.902462774@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,83 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 624bf3440d7214b62c22d698a0a294323f331d5d upstream.
+commit cb923ee6a80f4e604e6242a4702b59251e61a380 upstream.
 
-Reject LAUNCH_FINISH for SEV-ES and SNP VMs if KVM is actively creating
-one or more vCPUs, as KVM needs to process and encrypt each vCPU's VMSA.
-Letting userspace create vCPUs while LAUNCH_FINISH is in-progress is
-"fine", at least in the current code base, as kvm_for_each_vcpu() operates
-on online_vcpus, LAUNCH_FINISH (all SEV+ sub-ioctls) holds kvm->mutex, and
-fully onlining a vCPU in kvm_vm_ioctl_create_vcpu() is done under
-kvm->mutex.  I.e. there's no difference between an in-progress vCPU and a
-vCPU that is created entirely after LAUNCH_FINISH.
+Lock all vCPUs when synchronizing and encrypting VMSAs for SNP guests, as
+allowing userspace to manipulate and/or run a vCPU while its state is being
+synchronized would at best corrupt vCPU state, and at worst crash the host
+kernel.
 
-However, given that concurrent LAUNCH_FINISH and vCPU creation can't
-possibly work (for any reasonable definition of "work"), since userspace
-can't guarantee whether a particular vCPU will be encrypted or not,
-disallow the combination as a hardening measure, to reduce the probability
-of introducing bugs in the future, and to avoid having to reason about the
-safety of future changes related to LAUNCH_FINISH.
+Opportunistically assert that vcpu->mutex is held when synchronizing its
+VMSA (the SEV-ES path already locks vCPUs).
 
-Cc: Jethro Beekman <jethro@fortanix.com>
-Closes: https://lore.kernel.org/all/b31f7c6e-2807-4662-bcdd-eea2c1e132fa@fortanix.com
+Fixes: ad27ce155566 ("KVM: SEV: Add KVM_SEV_SNP_LAUNCH_FINISH command")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260310234829.2608037-5-seanjc@google.com
+Link: https://patch.msgid.link/20260310234829.2608037-6-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c   |   10 ++++++++--
- include/linux/kvm_host.h |    7 +++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/sev.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
-@@ -1023,6 +1023,9 @@ static int sev_launch_update_vmsa(struct
- 	if (!sev_es_guest(kvm))
- 		return -ENOTTY;
+@@ -875,6 +875,8 @@ static int sev_es_sync_vmsa(struct vcpu_
+ 	u8 *d;
+ 	int i;
  
-+	if (kvm_is_vcpu_creation_in_progress(kvm))
-+		return -EBUSY;
++	lockdep_assert_held(&vcpu->mutex);
 +
- 	kvm_for_each_vcpu(i, vcpu, kvm) {
- 		ret = mutex_lock_killable(&vcpu->mutex);
- 		if (ret)
-@@ -2043,8 +2046,8 @@ static int sev_check_source_vcpus(struct
- 	struct kvm_vcpu *src_vcpu;
- 	unsigned long i;
+ 	if (vcpu->arch.guest_state_protected)
+ 		return -EINVAL;
  
--	if (src->created_vcpus != atomic_read(&src->online_vcpus) ||
--	    dst->created_vcpus != atomic_read(&dst->online_vcpus))
-+	if (kvm_is_vcpu_creation_in_progress(src) ||
-+	    kvm_is_vcpu_creation_in_progress(dst))
+@@ -2460,6 +2462,10 @@ static int snp_launch_update_vmsa(struct
+ 	if (kvm_is_vcpu_creation_in_progress(kvm))
  		return -EBUSY;
  
- 	if (!sev_es_guest(src))
-@@ -2454,6 +2457,9 @@ static int snp_launch_update_vmsa(struct
- 	unsigned long i;
- 	int ret;
- 
-+	if (kvm_is_vcpu_creation_in_progress(kvm))
-+		return -EBUSY;
++	ret = kvm_lock_all_vcpus(kvm);
++	if (ret)
++		return ret;
 +
  	data.gctx_paddr = __psp_pa(sev->snp_context);
  	data.page_type = SNP_PAGE_TYPE_VMSA;
  
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -1030,6 +1030,13 @@ static inline struct kvm_vcpu *kvm_get_v
- 	return NULL;
+@@ -2469,12 +2475,12 @@ static int snp_launch_update_vmsa(struct
+ 
+ 		ret = sev_es_sync_vmsa(svm);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 
+ 		/* Transition the VMSA page to a firmware state. */
+ 		ret = rmp_make_private(pfn, INITIAL_VMSA_GPA, PG_LEVEL_4K, sev->asid, true);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 
+ 		/* Issue the SNP command to encrypt the VMSA */
+ 		data.address = __sme_pa(svm->sev_es.vmsa);
+@@ -2483,7 +2489,7 @@ static int snp_launch_update_vmsa(struct
+ 		if (ret) {
+ 			snp_page_reclaim(kvm, pfn);
+ 
+-			return ret;
++			goto out;
+ 		}
+ 
+ 		svm->vcpu.arch.guest_state_protected = true;
+@@ -2497,7 +2503,9 @@ static int snp_launch_update_vmsa(struct
+ 		svm_enable_lbrv(vcpu);
+ 	}
+ 
+-	return 0;
++out:
++	kvm_unlock_all_vcpus(kvm);
++	return ret;
  }
  
-+static inline bool kvm_is_vcpu_creation_in_progress(struct kvm *kvm)
-+{
-+	lockdep_assert_held(&kvm->lock);
-+
-+	return kvm->created_vcpus != atomic_read(&kvm->online_vcpus);
-+}
-+
- void kvm_destroy_vcpus(struct kvm *kvm);
- 
- int kvm_trylock_all_vcpus(struct kvm *kvm);
+ static int snp_launch_finish(struct kvm *kvm, struct kvm_sev_cmd *argp)
 
 
