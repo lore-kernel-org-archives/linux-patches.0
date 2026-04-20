@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A08331A78;
-	Mon, 20 Apr 2026 15:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEE0331A78;
+	Mon, 20 Apr 2026 15:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700389; cv=none; b=pwkxjhDoDH+gGyBlxhe7ZaM5biGwuQn+XwNUjolmDySoxpnop8YV/+oaEJaEuWkDG6fh+3fgFire2sJ3bjEik5hyO2SqSyEm4CtOpB9Rmc+vTjqqkOTpt7m2kp3236JubUZO/0KurdWWEmjId0NET3zGrilPZ/2eozdL8AU7Pj0=
+	t=1776700392; cv=none; b=q7pydDDK0YpibiRsjUJohuzHho0BG6QfY0eag63atHwjNCT892dR0d0hxrqNuZVofezkZel/js4kjZIkpDfx/Q5P/9BQdqpFXqn8X0sDFUckxnTr4ScgSPmtpfM3AD9+wQ1UF6PYNUUKUB/kgpzcP/kZyW+EELNQVJS7NeGUWcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700389; c=relaxed/simple;
-	bh=pPpnfJjmT/RB629I6SbA8hz9MmVAGcvl920OKQDRgyc=;
+	s=arc-20240116; t=1776700392; c=relaxed/simple;
+	bh=/pMWIMo9q3W9ChVqWrCYb6q+v06PNmVqb1xoJUpIH7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k4vkVh1ZPVzMSEWRtH2PCO56sY6G8XDJgb9qSElPsmnumeX40a2NLNheVjRrU/6vbYJQx+RNIjE1svcwH8EkimVvdZVVMPpDiR5ar00K7hmXjEfSduk+GYgI2PMXVt53V3bza1NjLb8RsivI3utOLno55H/f2ZR3Xbcby2U70Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5SfV4K8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uvIA9AqFqw210/NXpKQpOi3TLOK3ydbxNOPXhgpmzJnJ2AVOIkr2VvzbxoIOovQy0Ti2CJguBuz4w9RK1s8CqJWLh9l7lHELfiknaAVgFjAiU+2546t2Qb7LvEOpWSLuyvNjTD8qZJfsZDYvHmc9gnNiOuV6PG02O32scss1AIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FI2+QsNM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5SfV4K8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3E0C19425;
-	Mon, 20 Apr 2026 15:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FI2+QsNM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FA9C19425;
+	Mon, 20 Apr 2026 15:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700389;
-	bh=pPpnfJjmT/RB629I6SbA8hz9MmVAGcvl920OKQDRgyc=;
+	s=korg; t=1776700392;
+	bh=/pMWIMo9q3W9ChVqWrCYb6q+v06PNmVqb1xoJUpIH7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5SfV4K8VkQ+5EXjdZXpSJrMqjF02HL6X2ronguFiaCJEdawTiwnxq67Gv8TEq6U4
-	 6FA5ChvIqUAVdqdFDHCVSaFyxuI/HBQKCzBIphjVGhApBlfmZTGrvQinzXOCqXw+r7
-	 W2RZCs+tTYKTYab6gg+jEZ4SmvMKgFE7ctXajcHI=
+	b=FI2+QsNM1T05yHk7WqR0P82ICzmoGmtdEndQ2R82/FNWdEH6Vy7RZvpDbRLJGxs6Y
+	 3JBp8hqad/wqsgWrIlEKPZmuqFKfqcGpNFMsnt+3hppqgf8pJ/HXEPuU8hPdcxbvS9
+	 EGNOcvOwCKP+4TBvy2HCM3Mwqc9AfqVenwboHsDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.19 154/220] usb: gadget: f_phonet: fix skb frags[] overflow in pn_rx_complete()
-Date: Mon, 20 Apr 2026 17:41:35 +0200
-Message-ID: <20260420153939.573337272@linuxfoundation.org>
+Subject: [PATCH 6.19 155/220] usb: gadget: renesas_usb3: validate endpoint index in standard request handlers
+Date: Mon, 20 Apr 2026 17:41:36 +0200
+Message-ID: <20260420153939.608626443@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,49 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit c088d5dd2fffb4de1fb8e7f57751c8b82942180a upstream.
+commit f880aac8a57ebd92abfa685d45424b2998ac1059 upstream.
 
-A broken/bored/mean USB host can overflow the skb_shared_info->frags[]
-array on a Linux gadget exposing a Phonet function by sending an
-unbounded sequence of full-page OUT transfers.
+The GET_STATUS and SET/CLEAR_FEATURE handlers extract the endpoint
+number from the host-supplied wIndex without any sort of validation.
+Fix this up by validating the number of endpoints actually match up with
+the number the device has before attempting to dereference a pointer
+based on this math.
 
-pn_rx_complete() finalizes the skb only when req->actual < req->length,
-where req->length is set to PAGE_SIZE by the gadget.  If the host always
-sends exactly PAGE_SIZE bytes per transfer, fp->rx.skb will never be
-reset and each completion will add another fragment via
-skb_add_rx_frag().  Once nr_frags exceeds MAX_SKB_FRAGS (default 17),
-subsequent frag stores overwrite memory adjacent to the shinfo on the
-heap.
+This is just like what was done in commit ee0d382feb44 ("usb: gadget:
+aspeed_udc: validate endpoint index for ast udc") for the aspeed driver.
 
-Drop the skb and account a length error when the frag limit is reached,
-matching the fix applied in t7xx by commit f0813bcd2d9d ("net: wwan:
-t7xx: fix potential skb->frags overflow in RX path").
-
+Fixes: 746bfe63bba3 ("usb: gadget: renesas_usb3: add support for Renesas USB3.0 peripheral controller")
 Cc: stable <stable@kernel.org>
 Assisted-by: gregkh_clanker_t1000
-Link: https://patch.msgid.link/2026040705-fruit-unloved-0701@gregkh
+Link: https://patch.msgid.link/2026040647-sincerity-untidy-b104@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_phonet.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/gadget/udc/renesas_usb3.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_phonet.c
-+++ b/drivers/usb/gadget/function/f_phonet.c
-@@ -333,6 +333,15 @@ static void pn_rx_complete(struct usb_ep
- 		if (unlikely(!skb))
- 			break;
- 
-+		if (unlikely(skb_shinfo(skb)->nr_frags >= MAX_SKB_FRAGS)) {
-+			/* Frame count from host exceeds frags[] capacity */
-+			dev_kfree_skb_any(skb);
-+			if (fp->rx.skb == skb)
-+				fp->rx.skb = NULL;
-+			dev->stats.rx_length_errors++;
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -1669,6 +1669,10 @@ static bool usb3_std_req_get_status(stru
+ 		break;
+ 	case USB_RECIP_ENDPOINT:
+ 		num = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
++		if (num >= usb3->num_usb3_eps) {
++			stall = true;
 +			break;
 +		}
-+
- 		if (skb->len == 0) { /* First fragment */
- 			skb->protocol = htons(ETH_P_PHONET);
- 			skb_reset_mac_header(skb);
+ 		usb3_ep = usb3_get_ep(usb3, num);
+ 		if (usb3_ep->halt)
+ 			status |= 1 << USB_ENDPOINT_HALT;
+@@ -1781,7 +1785,8 @@ static bool usb3_std_req_feature_endpoin
+ 	struct renesas_usb3_ep *usb3_ep;
+ 	struct renesas_usb3_request *usb3_req;
+ 
+-	if (le16_to_cpu(ctrl->wValue) != USB_ENDPOINT_HALT)
++	if ((le16_to_cpu(ctrl->wValue) != USB_ENDPOINT_HALT) ||
++	    (num >= usb3->num_usb3_eps))
+ 		return true;	/* stall */
+ 
+ 	usb3_ep = usb3_get_ep(usb3, num);
 
 
