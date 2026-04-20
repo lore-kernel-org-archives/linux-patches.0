@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F9D33858B;
-	Mon, 20 Apr 2026 16:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442F1333445;
+	Mon, 20 Apr 2026 16:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701521; cv=none; b=jSAtIt/b8jlz6yPArANTb+3lFclZpx0fkRAPtTDdsbwto8mMpwHxLfUxckBj+HnBObFaTsd5gyQiwHhOar77S9/0aoVnpupxtPBKNdf6LN7O98a8GH172KXrO7iOa1bl8PCFbVp6cLC2zJ3aL8HXamZZ+EYDuJ6IsDVWuUy5GNk=
+	t=1776701524; cv=none; b=ArxXhoJzAaX36bSMw5mBWwvAl4rNgAU4SVsGdJadIteMRXBHdBhoE7LaxGzXKKs2hatwh8e8CEj7z+KPatqQVampZqcC0YZt1AHdiX+hdEd7oPnF5QB/MRETqr5D+KbrTsXrwVpaxwJR9uVkcUX8GcDjQ2qFzBqjRS+otQEGtFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701521; c=relaxed/simple;
-	bh=THA8bq7VDMfWur3IQGqD1bHRW1R11GZlBiEsrmm3jb8=;
+	s=arc-20240116; t=1776701524; c=relaxed/simple;
+	bh=CbILyzM9OVahtLL3orWfCo8X+4qdUhMPfV3I/wE2G54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXRwJxMt5l8Fgx2R6ZnnHOJknvz3qo4MVwAS34+QCeG73ESiiHhPRIhztA3VWhBZL820bovBS1lmPhZQzcMMATFDQcow6eGpgTL/1EzAtfm8Odw2fw9vVYGehhnbJiFj2FJyKFRhbyXjD2jPGkAh1IFxH0ym4XLCLAmbkCNp+zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMlRabpO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s7wMuQZBwOKZTvWXTG+6wWXjI3kE+3bMRH1bVZUqluB5YBZMdOBJDz7dKM/pKq7fvY3HLYy4jrmhgYsn/ltFQY0RBBvZXuUMZv3ZQCcKEGTVt9njE7zAbyk24H8dqf9Wt1G89zbRC2Kfd9lUo+opDducXdWOI+4PzrHjbQCOGd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2q1G56a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMlRabpO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472A6C19425;
-	Mon, 20 Apr 2026 16:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2q1G56a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4BEC19425;
+	Mon, 20 Apr 2026 16:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701521;
-	bh=THA8bq7VDMfWur3IQGqD1bHRW1R11GZlBiEsrmm3jb8=;
+	s=korg; t=1776701524;
+	bh=CbILyzM9OVahtLL3orWfCo8X+4qdUhMPfV3I/wE2G54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMlRabpO65cFQnpz34/clkEvziS4zLc0LXn0YuOE2J5k0I65cyAr4oDZ1Uxpbie7O
-	 JPezRiV0e6jAXIhN/DlZ+VTE9tjymhWF4t7YkeB3B8fJ7xI5Q3cYNcUc7H9oIHwsU7
-	 SkrAzg+jfmFHQn+jiB7h3OZzC6B4BD0UWnWeN3fk=
+	b=F2q1G56aPcgquX0Q3aFthmc8DlMqAJNZNDzHgFCszJNd5q0B3QGx+tBNlZe08zJVa
+	 w/bdIy9poIy5O15K5GA7FgDrKuhuIuxVgL+QmU7yZnaOF52YrjGmJKTEGcuaiIk6p+
+	 q4b+2P8DfhKQw27ABQvZs5QSibCUoB1LmUeOG7AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 146/162] media: vidtv: fix nfeeds state corruption on start_streaming failure
-Date: Mon, 20 Apr 2026 17:42:58 +0200
-Message-ID: <20260420153932.338203749@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 120/162] USB: serial: option: add Telit Cinterion FN990A MBIM composition
+Date: Mon, 20 Apr 2026 17:42:32 +0200
+Message-ID: <20260420153931.388326950@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,62 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit a0e5a598fe9a4612b852406b51153b881592aede upstream.
+commit f8cc59ecc22841be5deb07b549c0c6a2657cd5f9 upstream.
 
-syzbot reported a memory leak in vidtv_psi_service_desc_init [1].
+Add the following Telit Cinterion FN990A MBIM composition:
 
-When vidtv_start_streaming() fails inside vidtv_start_feed(), the
-nfeeds counter is left incremented even though no feed was actually
-started. This corrupts the driver state: subsequent start_feed calls
-see nfeeds > 1 and skip starting the mux, while stop_feed calls
-eventually try to stop a non-existent stream.
+0x1074: MBIM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (diag) +
+        DPL (Data Packet Logging) + adb
 
-This state corruption can also lead to memory leaks, since the mux
-and channel resources may be partially allocated during a failed
-start_streaming but never cleaned up, as the stop path finds
-dvb->streaming == false and returns early.
+T:  Bus=01 Lev=01 Prnt=04 Port=06 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1074 Rev=05.04
+S:  Manufacturer=Telit Wireless Solutions
+S:  Product=FN990
+S:  SerialNumber=70628d0c
+C:  #Ifs= 8 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fix by decrementing nfeeds back when start_streaming fails, keeping
-the counter in sync with the actual number of active feeds.
-
-[1]
-BUG: memory leak
-unreferenced object 0xffff888145b50820 (size 32):
- comm "syz.0.17", pid 6068, jiffies 4294944486
- backtrace (crc 90a0c7d4):
-  vidtv_psi_service_desc_init+0x74/0x1b0 drivers/media/test-drivers/vidtv/vidtv_psi.c:288
-  vidtv_channel_s302m_init+0xb1/0x2a0 drivers/media/test-drivers/vidtv/vidtv_channel.c:83
-  vidtv_channels_init+0x1b/0x40 drivers/media/test-drivers/vidtv/vidtv_channel.c:524
-  vidtv_mux_init+0x516/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:518
-  vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
-  vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
-
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=639ebc6ec75e96674741
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_bridge.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -237,8 +237,10 @@ static int vidtv_start_feed(struct dvb_d
- 
- 	if (dvb->nfeeds == 1) {
- 		ret = vidtv_start_streaming(dvb);
--		if (ret < 0)
-+		if (ret < 0) {
-+			dvb->nfeeds--;
- 			rc = ret;
-+		}
- 	}
- 
- 	mutex_unlock(&dvb->feed_lock);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1383,6 +1383,8 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990A (ECM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1074, 0xff),	/* Telit FN990A (MBIM) */
++	  .driver_info = NCTRL(5) | RSVD(6) | RSVD(7) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990A (PCIe) */
+ 	  .driver_info = RSVD(0) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1077, 0xff),	/* Telit FN990A (rmnet + audio) */
 
 
