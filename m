@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A721EB5CE;
-	Mon, 20 Apr 2026 15:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C4E33B970;
+	Mon, 20 Apr 2026 15:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700741; cv=none; b=G2MY2MqgNYcX8VtORUa6z+hmcsjpZiitQHLs1t6duiqghwSU+QDf1ErpZRK216GvUUxGAczgNdJxgUJTS4wwFCVZfYJfFwvm0V/XGl7feFgcTR06vZ8gXlRUB0NgSuei6EUe/Lqzhl2F95v9ZUCf/K+WtpxWoTrI9U3aHM2U6As=
+	t=1776700744; cv=none; b=EBdCfsgjRtnphCAbf98bRxGtFcLIzRL5EWr3/rEf3Kqo+H+P0r2wfwIbH8wtrd4wtTsA7IT5ikAHHOKhVecdT43P5pgUtcyJs6Smc7DcL5Clu6ME6OwWAkUDiirHWRBzeKYsu1LrE/+LcePKxItY7dveEOLZCftLXEFVWZLJRGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700741; c=relaxed/simple;
-	bh=nzHr05GC+ZV/e6yXtgU+TsNohVCpcUZd0a/Ka68/tR8=;
+	s=arc-20240116; t=1776700744; c=relaxed/simple;
+	bh=A9CsL/iu3TsUHObuqKwqdlvjyMUgFjJuwhi8jcyMChs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bUw2kNfgzQ/fB5ljRJElKK0VOe1id8V3gVyKJ53QXaVt40eaXO52y8tkjF3fkZJA3lPlKNa/e7AeunWPQ8hAOkShcC94g1g9lgjQozzxCtwhpyv1bdrTCEO5QF3rsKmi29PPDNmo5uu5VTwef+RXxLSwzKIJbOizsdp7t0WjMR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duSLrFqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJtBDeJvlRUc28p+PiSqhDlUvDam0q9pOcdtA65L1r6A8jStmFAB5CwdLk5Jd/H1BHf2gzLm+50XLu3nX3Cd2O+ErYwdYCgqLMBU6yUs+KoPN0/qI8WAfum4M0EmN590zRTAq7613f2wRGmB7092ZVNPaNP4bjlZNgo+eooDXv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FIKblMy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duSLrFqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FE1C19425;
-	Mon, 20 Apr 2026 15:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FIKblMy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3329C19425;
+	Mon, 20 Apr 2026 15:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700741;
-	bh=nzHr05GC+ZV/e6yXtgU+TsNohVCpcUZd0a/Ka68/tR8=;
+	s=korg; t=1776700744;
+	bh=A9CsL/iu3TsUHObuqKwqdlvjyMUgFjJuwhi8jcyMChs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=duSLrFqpahlmVdjzAqiYHqpCBMj+9N++cScsX146o9eSqbiATIcviFUUUjeUQ+6kK
-	 oZnjvgt1R5UMQHvdmZ/brIx9UK6hKlJbAgOnuRGTFp4mV7nO4yMHmSJL1+0oZC4gQf
-	 1Qr9W3PwHdllbGjvSVoMqmid32PfgaGbRiaFpEBI=
+	b=1FIKblMyPLjZxgpy8eTpI0o4SGi7D8nohZD33TdfohJSPGbUtlAqE9jhvmOXhM4X5
+	 T2+l294SOIh/tJiK3xq4Wom7IeW8OIUbFVeHNt9hDxI9q9zky3oA/bbybzSHpINbjy
+	 mKT/+6Bwj3Har1cfimgYWGDAEpgio6ljjQgggjck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Nicholas Carlini <nicholas@carlini.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/198] drm/vc4: Protect madv read in vc4_gem_object_mmap() with madv_lock
-Date: Mon, 20 Apr 2026 17:40:47 +0200
-Message-ID: <20260420153938.060315447@linuxfoundation.org>
+Subject: [PATCH 6.18 069/198] eventpoll: defer struct eventpoll free to RCU grace period
+Date: Mon, 20 Apr 2026 17:40:48 +0200
+Message-ID: <20260420153938.095774487@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -45,50 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Nicholas Carlini <nicholas@carlini.com>
 
-[ Upstream commit 338c56050d8e892604da97f67bfa8cc4015a955f ]
+[ Upstream commit 07712db80857d5d09ae08f3df85a708ecfc3b61f ]
 
-The mmap callback reads bo->madv without holding madv_lock, racing with
-concurrent DRM_IOCTL_VC4_GEM_MADVISE calls that modify the field under
-the same lock. Add the missing locking to prevent the data race.
+In certain situations, ep_free() in eventpoll.c will kfree the epi->ep
+eventpoll struct while it still being used by another concurrent thread.
+Defer the kfree() to an RCU callback to prevent UAF.
 
-Fixes: b9f19259b84d ("drm/vc4: Add the DRM_IOCTL_VC4_GEM_MADVISE ioctl")
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-4-92defc940a29@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: f2e467a48287 ("eventpoll: Fix semi-unbounded recursion")
+Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_bo.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/eventpoll.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
-index 4aaa587be3a5e..a1efda9c39f92 100644
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -738,12 +738,15 @@ static int vc4_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
- 		return -EINVAL;
- 	}
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index bcc7dcbefc419..a8e30414d996c 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -226,6 +226,9 @@ struct eventpoll {
+ 	 */
+ 	refcount_t refcount;
  
-+	mutex_lock(&bo->madv_lock);
- 	if (bo->madv != VC4_MADV_WILLNEED) {
- 		DRM_DEBUG("mmapping of %s BO not allowed\n",
- 			  bo->madv == VC4_MADV_DONTNEED ?
- 			  "purgeable" : "purged");
-+		mutex_unlock(&bo->madv_lock);
- 		return -EINVAL;
- 	}
-+	mutex_unlock(&bo->madv_lock);
- 
- 	return drm_gem_dma_mmap(&bo->base, vma);
++	/* used to defer freeing past ep_get_upwards_depth_proc() RCU walk */
++	struct rcu_head rcu;
++
+ #ifdef CONFIG_NET_RX_BUSY_POLL
+ 	/* used to track busy poll napi_id */
+ 	unsigned int napi_id;
+@@ -819,7 +822,8 @@ static void ep_free(struct eventpoll *ep)
+ 	mutex_destroy(&ep->mtx);
+ 	free_uid(ep->user);
+ 	wakeup_source_unregister(ep->ws);
+-	kfree(ep);
++	/* ep_get_upwards_depth_proc() may still hold epi->ep under RCU */
++	kfree_rcu(ep, rcu);
  }
+ 
+ /*
 -- 
 2.53.0
 
