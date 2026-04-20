@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7835A33F8B7;
-	Mon, 20 Apr 2026 15:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E1E336EC9;
+	Mon, 20 Apr 2026 15:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700269; cv=none; b=upwn2kKRK8w/XvSj6c8b8rIJYHQAKWAoReWgDSI3bVnD3Udv+I2yAwcuz2xH10zD4QuLlQU5RcoK6OIITRsKMO6MdxL0JJocEqvz7aOutKvsFSTMoEf+zqXpRCeSvshz/VxvNKd3lQkzUrDuwFiKg/BAKt1FxR9el8oaiK0qtSk=
+	t=1776700271; cv=none; b=dl/4wIaK8iCIlRGMj9GRroCB+4cvJCSFVNb7v7+JXyYJAmHd1HCRpPdiMdbGaYTvtphIr9hBbt36BcxbPX2mcwcW37gMPDx1b1EtjCdWnevBztRKIqErkIIg3Ewak1FL6Z2ryNfBzyPqIpDJ+gmqK+yR9YVAWAvMUv+Z0AXhG/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700269; c=relaxed/simple;
-	bh=lPkOBzyr/IU0SR5ZLbQKlkt5ouTvku3ENSaxg6dgeAU=;
+	s=arc-20240116; t=1776700271; c=relaxed/simple;
+	bh=zFlRpd4gj/Wkqcma3qFesoVFp6JiUuwOGEjpFz6y6iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MMQrYlLB50qouPGt2oqjiqty6NQnE7Ufp7KGcYeKg2P+glz2mXHif70b6v71HRT2VdBwml+h0GihTkRQQ1dzGeQk/KteHZDW5oQJ5/10IkmVWyEAh3N+gw7sKYM+Gf2/2oipeWIZEkvVKetRpnXGK+x+PYXUg/eeE0XT5bR58Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkyOv6NG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D6xcMqYzfo4Nk93zMmh8C+zNIBcV0jbL2QjNBaztcjmX3QrDsQDYy8wu6hLHurZe0WvJxiWDPG1eU+5AeybcEFHhAfL4pyCtyfV3lQm/u5+Q9roTvAxiNTzELi/ViAtfFrjhNSqe0VBtBKcfDTjtOz3aHOXUK3MZ8UgXDTe09fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUaYN/NZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkyOv6NG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD09CC19425;
-	Mon, 20 Apr 2026 15:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUaYN/NZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA00C19425;
+	Mon, 20 Apr 2026 15:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700269;
-	bh=lPkOBzyr/IU0SR5ZLbQKlkt5ouTvku3ENSaxg6dgeAU=;
+	s=korg; t=1776700271;
+	bh=zFlRpd4gj/Wkqcma3qFesoVFp6JiUuwOGEjpFz6y6iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkyOv6NGyku/TcXbXdA2jP+voeDzkizGZXr79lbtIs2G6F1L4M+ndQRpiO5Mz4pZm
-	 nQ0e6oa4zZfkH4p5KzIDDJqUM7UUjZeNzllLAYQsj4YFffKVxayZjqAqbrtVRSFCZM
-	 iMgdltI3jJQPHC1+zlzmrnggzErkMW8GoBqbmkwU=
+	b=oUaYN/NZTC8/M/cH1YrHua61sVmzqepOqOJSYlJJ9Uud3P5xxbMlofKVtOKBDi1kX
+	 kSKFQQuqW7Rj18ebSG6sraFkkbHIX8rQJw9mCBWxHHSPynMNv8LysgWnNpmr7RJsYT
+	 3KkHkWb8c2v2jo2ggk+vdZhP2vbZaqb8h8Vz1kKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Melissa Wen <mwen@igalia.com>,
 	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 074/220] drm/vc4: Fix a memory leak in hang state error path
-Date: Mon, 20 Apr 2026 17:40:15 +0200
-Message-ID: <20260420153936.702432632@linuxfoundation.org>
+Subject: [PATCH 6.19 075/220] drm/vc4: Protect madv read in vc4_gem_object_mmap() with madv_lock
+Date: Mon, 20 Apr 2026 17:40:16 +0200
+Message-ID: <20260420153936.738796296@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -54,67 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 9525d169e5fd481538cf8c663cc5839e54f2e481 ]
+[ Upstream commit 338c56050d8e892604da97f67bfa8cc4015a955f ]
 
-When vc4_save_hang_state() encounters an early return condition, it
-returns without freeing the previously allocated `kernel_state`,
-leaking memory.
+The mmap callback reads bo->madv without holding madv_lock, racing with
+concurrent DRM_IOCTL_VC4_GEM_MADVISE calls that modify the field under
+the same lock. Add the missing locking to prevent the data race.
 
-Add the missing kfree() calls by consolidating the early return paths
-into a single place.
-
-Fixes: 214613656b51 ("drm/vc4: Add an interface for capturing the GPU state after a hang.")
+Fixes: b9f19259b84d ("drm/vc4: Add the DRM_IOCTL_VC4_GEM_MADVISE ioctl")
 Reviewed-by: Melissa Wen <mwen@igalia.com>
-Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-3-92defc940a29@igalia.com
+Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-4-92defc940a29@igalia.com
 Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_gem.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/vc4/vc4_bo.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index 0562f78e28357..840aadb14b518 100644
---- a/drivers/gpu/drm/vc4/vc4_gem.c
-+++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -171,10 +171,8 @@ vc4_save_hang_state(struct drm_device *dev)
- 	spin_lock_irqsave(&vc4->job_lock, irqflags);
- 	exec[0] = vc4_first_bin_job(vc4);
- 	exec[1] = vc4_first_render_job(vc4);
--	if (!exec[0] && !exec[1]) {
--		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
--		return;
--	}
-+	if (!exec[0] && !exec[1])
-+		goto err_free_state;
- 
- 	/* Get the bos from both binner and renderer into hang state. */
- 	state->bo_count = 0;
-@@ -191,10 +189,8 @@ vc4_save_hang_state(struct drm_device *dev)
- 	kernel_state->bo = kcalloc(state->bo_count,
- 				   sizeof(*kernel_state->bo), GFP_ATOMIC);
- 
--	if (!kernel_state->bo) {
--		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
--		return;
--	}
-+	if (!kernel_state->bo)
-+		goto err_free_state;
- 
- 	k = 0;
- 	for (i = 0; i < 2; i++) {
-@@ -286,6 +282,12 @@ vc4_save_hang_state(struct drm_device *dev)
- 		vc4->hang_state = kernel_state;
- 		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+diff --git a/drivers/gpu/drm/vc4/vc4_bo.c b/drivers/gpu/drm/vc4/vc4_bo.c
+index 46b4474ac41d4..44b1f2b00f9b0 100644
+--- a/drivers/gpu/drm/vc4/vc4_bo.c
++++ b/drivers/gpu/drm/vc4/vc4_bo.c
+@@ -739,12 +739,15 @@ static int vc4_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
+ 		return -EINVAL;
  	}
-+
-+	return;
-+
-+err_free_state:
-+	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
-+	kfree(kernel_state);
- }
  
- static void
++	mutex_lock(&bo->madv_lock);
+ 	if (bo->madv != VC4_MADV_WILLNEED) {
+ 		DRM_DEBUG("mmapping of %s BO not allowed\n",
+ 			  bo->madv == VC4_MADV_DONTNEED ?
+ 			  "purgeable" : "purged");
++		mutex_unlock(&bo->madv_lock);
+ 		return -EINVAL;
+ 	}
++	mutex_unlock(&bo->madv_lock);
+ 
+ 	return drm_gem_dma_mmap(&bo->base, vma);
+ }
 -- 
 2.53.0
 
