@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C536A33DEDF;
-	Mon, 20 Apr 2026 16:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5848A33EAF9;
+	Mon, 20 Apr 2026 16:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701051; cv=none; b=MgzGavnPxTInfPZpgKUShRn5Qx9o6LEImQ98Rtmdy9EVdNdnLccm2t+qlbOGymIFGnbc9uc0byRuAWbv52i3A+0L4q5D8ZiADEWFz4cZgj2QF+y2WZ3FtCfjVT8BfW8YRSMc9o5iqaX9KV5VW7epeCMZTlMe5yUzHE65iztAf+8=
+	t=1776701054; cv=none; b=DUuVSLIOinfl0hAsoa5FESA6iXMn2Uhf6XUUZnaSj2FcJSlvwECG0qeW7+Ij/b7x/gBOvRkFX9UC0nzO9VOhYUs5rVQA/i56j1uZiW3idGvUrUaaHj8P2zSb6AILhfg6G9UEbOLdKg8JDUmBLcrB3MMLJIfI+mk+yWHvjRRHYrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701051; c=relaxed/simple;
-	bh=f0lQ0pQFIb+/Vvx6EUJhabi+xVxZ1JwCIjd6/8hAUhE=;
+	s=arc-20240116; t=1776701054; c=relaxed/simple;
+	bh=X+GEsOws126odAYru3I+HT1uaV8GQunFQPJ0+5SXEZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubrWLJ3stCJ4kCUW4e5uGnAMQKDoeTlocMlv75RrGkRdcJqMnkNSuNxqumgMPJO1C27MfyF3dmJoQzx8pU+XyJhs4IgLFlo284cebKM+7ZcpQJhjLwi2lxxyuKcaO0LzMA2fhVycWYISmzxw7b3cPRAwQcxX35s9BT9YMe2qPss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GH0sw4a2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NciQz+wgHR7HFxD7TIPCJFDBAA974lG/76j+c6P7nXurFjUK0dpUAUyOq5woFuZvTx8/WWToY/RE21yBx7dMEDW7Q2nyHflixHXp/fdF/nHD9I0OVTEbbI0nGzYi276Gi01HnkjQdXT15+YqXsFgxiF3Bdfwy0C9WWASLm90SM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvO/qrT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GH0sw4a2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8A7C2BCB6;
-	Mon, 20 Apr 2026 16:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvO/qrT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E077BC2BCB4;
+	Mon, 20 Apr 2026 16:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701051;
-	bh=f0lQ0pQFIb+/Vvx6EUJhabi+xVxZ1JwCIjd6/8hAUhE=;
+	s=korg; t=1776701054;
+	bh=X+GEsOws126odAYru3I+HT1uaV8GQunFQPJ0+5SXEZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GH0sw4a2RQ+DG/eWSxn2qEhn/BbgBdwW5fiIuZSLhqErJ+65e7xyAT/fzgwq0Uwv/
-	 fgN+FteVT+B+lZFN6BfEbqVsrifz9mknhVt9t2BjABXzzyvIz4RpsTg3ZoGZrXJXPE
-	 RIDSVnoJUsTRfmi2t22a1yk4jth9w4d+VBdWLZXc=
+	b=UvO/qrT8XeBxAB4iiPTINQ6pFqqS9xREL+MLkEo9VfVqTXgCy2XrTcJA+qiyyJLvX
+	 8b9yVfrWU9SppUioNyedjXY28VbwZUocJeL6gC6qq2PBXHe9lanvtG0SuNF96I02/T
+	 TfxZ5gTyLXDO1enS18XLuuxiqni3uy40k4LpiMU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 162/198] ocfs2: handle invalid dinode in ocfs2_group_extend
-Date: Mon, 20 Apr 2026 17:42:21 +0200
-Message-ID: <20260420153941.445649189@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.18 163/198] PCI: endpoint: pci-epf-vntb: Stop cmd_handler work in epf_ntb_epc_cleanup
+Date: Mon, 20 Apr 2026 17:42:22 +0200
+Message-ID: <20260420153941.481344727@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -57,77 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 4a1c0ddc6e7bcf2e9db0eeaab9340dcfe97f448f upstream.
+commit d799984233a50abd2667a7d17a9a710a3f10ebe2 upstream.
 
-[BUG]
-kernel BUG at fs/ocfs2/resize.c:308!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-RIP: 0010:ocfs2_group_extend+0x10aa/0x1ae0 fs/ocfs2/resize.c:308
-Code: 8b8520ff ffff83f8 860f8580 030000e8 5cc3c1fe
-Call Trace:
- ...
- ocfs2_ioctl+0x175/0x6e0 fs/ocfs2/ioctl.c:869
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x197/0x1e0 fs/ioctl.c:583
- x64_sys_call+0x1144/0x26a0 arch/x86/include/generated/asm/syscalls_64.h:17
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x93/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
- ...
+Disable the delayed work before clearing BAR mappings and doorbells to
+avoid running the handler after resources have been torn down.
 
-[CAUSE]
-ocfs2_group_extend() assumes that the global bitmap inode block
-returned from ocfs2_inode_lock() has already been validated and
-BUG_ONs when the signature is not a dinode. That assumption is too
-strong for crafted filesystems because the JBD2-managed buffer path
-can bypass structural validation and return an invalid dinode to the
-resize ioctl.
+  Unable to handle kernel paging request at virtual address ffff800083f46004
+  [...]
+  Internal error: Oops: 0000000096000007 [#1]  SMP
+  [...]
+  Call trace:
+   epf_ntb_cmd_handler+0x54/0x200 [pci_epf_vntb] (P)
+   process_one_work+0x154/0x3b0
+   worker_thread+0x2c8/0x400
+   kthread+0x148/0x210
+   ret_from_fork+0x10/0x20
 
-[FIX]
-Validate the dinode explicitly in ocfs2_group_extend(). If the global
-bitmap buffer does not contain a valid dinode, report filesystem
-corruption with ocfs2_error() and fail the resize operation instead of
-crashing the kernel.
-
-Link: https://lkml.kernel.org/r/20260401092303.3709187-1-gality369@gmail.com
-Fixes: 10995aa2451a ("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.")
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260226084142.2226875-4-den@valinux.co.jp
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/resize.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ocfs2/resize.c
-+++ b/fs/ocfs2/resize.c
-@@ -303,9 +303,13 @@ int ocfs2_group_extend(struct inode * in
- 
- 	fe = (struct ocfs2_dinode *)main_bm_bh->b_data;
- 
--	/* main_bm_bh is validated by inode read inside ocfs2_inode_lock(),
--	 * so any corruption is a code bug. */
--	BUG_ON(!OCFS2_IS_VALID_DINODE(fe));
-+	/* JBD-managed buffers can bypass validation, so treat this as corruption. */
-+	if (!OCFS2_IS_VALID_DINODE(fe)) {
-+		ret = ocfs2_error(main_bm_inode->i_sb,
-+				  "Invalid dinode #%llu\n",
-+				  (unsigned long long)OCFS2_I(main_bm_inode)->ip_blkno);
-+		goto out_unlock;
-+	}
- 
- 	if (le16_to_cpu(fe->id2.i_chain.cl_cpg) !=
- 		ocfs2_group_bitmap_size(osb->sb, 0,
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -836,6 +836,7 @@ err_config_interrupt:
+  */
+ static void epf_ntb_epc_cleanup(struct epf_ntb *ntb)
+ {
++	disable_delayed_work_sync(&ntb->cmd_handler);
+ 	epf_ntb_mw_bar_clear(ntb, ntb->num_mws);
+ 	epf_ntb_db_bar_clear(ntb);
+ 	epf_ntb_config_sspad_bar_clear(ntb);
 
 
