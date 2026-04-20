@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6342D77E5;
-	Mon, 20 Apr 2026 15:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F585332919;
+	Mon, 20 Apr 2026 15:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700152; cv=none; b=PKyF+BhQuJKXh0s8P/n8GKcVBBFclxEdwboG122DAD6n3OZ4jyg+OgQAObYymwUltp8/2vcpSZmk1XEs7JidwIdWL2gogIvsjKV0Roa+bj2ejcjSmj/EPDiBtH3m+7x1/hHyoOH7FjWLWXRphwKwIu1KAEZRbbXgOqVjQHnNIJw=
+	t=1776700155; cv=none; b=GEYso22tdLXR20Yjn/TRR4qaWJtyDF0TZh4JWWOaVvycJgrTg75NWxetyOt2a+qhNsKuE/1fnljQVB0aF92v0A7XUnwGp9wCvRYYA0zxOqaznwET4W9Sg0ieXhvd04bAN0KhzEH7r+6AR1Ccu9DaeD6DROjRfHIPAKntQSfI+KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700152; c=relaxed/simple;
-	bh=pysmekRQorfCQfWNb20967DdaOuUOG0w6xqEwklbhoM=;
+	s=arc-20240116; t=1776700155; c=relaxed/simple;
+	bh=kD46m8Yua7ucd6KzIYJSYRvwHIqm8BetGF+yO5ylFdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mO/+klxX0MQVdZicGosHJfNr3yvmUsyA9jx/VI69cA5+HotK7X77hcKGDzci/n7uo5AvdxaNwL1v7hjnJ+gH7TWeLwfAvhSBYcNGkyK3An0pmpc2yeJLWBu8RooznpmyW59Mp5iIGxkWGZzrr0CDcUOD6Vnhe15LzvsIqQllBK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5RZQd0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EzN5qEjFhhPTkfAIehqEpxDztQT2fq1WxT6O8O3XI1cvJTVby9hoxJ3MdP8HkJq7IIITc+QCyP0HMzf/Rvvi1AiBXm/+od9zNLoMxEhSwQIO2P6xUabeof+3ZLDO3p4507mcdHw2P8crXlpJ7n+yO7oaTo0giQxfuZYBeNneJRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzAWjqr1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5RZQd0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2140FC19425;
-	Mon, 20 Apr 2026 15:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzAWjqr1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4982C19425;
+	Mon, 20 Apr 2026 15:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700152;
-	bh=pysmekRQorfCQfWNb20967DdaOuUOG0w6xqEwklbhoM=;
+	s=korg; t=1776700155;
+	bh=kD46m8Yua7ucd6KzIYJSYRvwHIqm8BetGF+yO5ylFdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5RZQd0IHBIaft572segJ8aBGiC+4hRNf4V+m4aZAtBBgxvl4RO04y5jU89ayn0Y4
-	 GY8d3yX4xu+m9pGZH1+FyeZvJ0n1SO/OE7MhYFwttls20/0nM5q3OyPXTL7kgHF93A
-	 qvXb4XLA9/1v1O+LU5ShSw/Gi/jzpC6QbkqwQKAM=
+	b=yzAWjqr1OPZsnNISLCIOMLXHpnaCGNSINFc0hnaeZu0CBdDBvCKvxTALYI/kbLHsu
+	 n/cPoR5BPP8/yR4kiOInSOFdZoF1nEjEf786hj/wIKnuAfK9CWNXNUcnPHdE+OioYy
+	 PstiX9YXh5bIQ6s+uoG4o2jLQIBNsgVgGDelYBaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 062/220] soc: microchip: mpfs-control-scb: Fix resource leak on driver unbind
-Date: Mon, 20 Apr 2026 17:40:03 +0200
-Message-ID: <20260420153936.274352388@linuxfoundation.org>
+Subject: [PATCH 6.19 036/220] pinctrl: intel: Fix the revision for new features (1kOhm PD, HW debouncer)
+Date: Mon, 20 Apr 2026 17:39:37 +0200
+Message-ID: <20260420153935.335433827@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,38 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 27459f86a43792d5c29f267a41dbd387601e772b ]
+[ Upstream commit a4337a24d13e9e3b98a113e71d6b80dc5ed5f8c4 ]
 
-Use devm_mfd_add_devices() instead of mfd_add_devices() to ensure
-child devices are properly removed when the driver unbinds.
+The 1kOhm pull down and hardware debouncer are features of the revision 0.92
+of the Chassis specification. Fix that in the code accordingly.
 
-Fixes: 4aac11c9a6e7 ("soc: microchip: add mfd drivers for two syscon regions on PolarFire SoC")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/microchip/mpfs-control-scb.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pinctrl/intel/pinctrl-intel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/microchip/mpfs-control-scb.c b/drivers/soc/microchip/mpfs-control-scb.c
-index f0b84b1f49cbc..8dda5704a389f 100644
---- a/drivers/soc/microchip/mpfs-control-scb.c
-+++ b/drivers/soc/microchip/mpfs-control-scb.c
-@@ -14,8 +14,10 @@ static int mpfs_control_scb_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 
--	return mfd_add_devices(dev, PLATFORM_DEVID_NONE, mpfs_control_scb_devs,
--			       ARRAY_SIZE(mpfs_control_scb_devs), NULL, 0, NULL);
-+	return devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE,
-+				    mpfs_control_scb_devs,
-+				    ARRAY_SIZE(mpfs_control_scb_devs), NULL, 0,
-+				    NULL);
- }
- 
- static const struct of_device_id mpfs_control_scb_of_match[] = {
+diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
+index cf9db8ac0f42e..106835b5ee5a5 100644
+--- a/drivers/pinctrl/intel/pinctrl-intel.c
++++ b/drivers/pinctrl/intel/pinctrl-intel.c
+@@ -1610,7 +1610,7 @@ int intel_pinctrl_probe(struct platform_device *pdev,
+ 		value = readl(regs + REVID);
+ 		if (value == ~0u)
+ 			return -ENODEV;
+-		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x94) {
++		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x92) {
+ 			community->features |= PINCTRL_FEATURE_DEBOUNCE;
+ 			community->features |= PINCTRL_FEATURE_1K_PD;
+ 		}
 -- 
 2.53.0
 
