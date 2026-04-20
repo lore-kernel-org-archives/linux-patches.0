@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA38D3358B0;
-	Mon, 20 Apr 2026 16:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E44A33E373;
+	Mon, 20 Apr 2026 16:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701088; cv=none; b=fWUb9kFRnzAKEmWtVtIKB1wRBXZvzebQQLq/XWl4HkGE/q3pr1C/IgJnrI6nX6Y4zDbcDxgTnuik+7oPkEuss3lJZddRIRqLfcBXXWN2Vo8mhRj2ZjuoPzYgdHXJs95zijvIRiwyVsJjq5BoXc4PjOcDPPP122vf8VRwA6lipjs=
+	t=1776701090; cv=none; b=Cy4pYtJ6LrfENTuHnR2KfNEGVPWlNqJmDWLtKXTBtmYWqkxtaU8PyZI5fnThaltPSavXS8shVHcrozDmew5ZYxEu/1hi3x3VZzU9jmurtHjnqSUZ0AG3ooE6QU2LET5TfBwLDu/7bH6SK6WqLwV07MQUqhyZrcJkQoKahWiaIRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701088; c=relaxed/simple;
-	bh=33VXxE3rqHirNen+Mns6i3j6QVusosd64J1rgFDFGLk=;
+	s=arc-20240116; t=1776701090; c=relaxed/simple;
+	bh=HsxjKbojB2dyscvySW+aqJT91rOoFelFKc/x8J2zJAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9DEFHEJO3HYodexnra3czvNTHmGMLTA0GIW9AQM68FB9eeIsDUaK1O4Pt/IrnsOnn59VACBxBFsUV1avh6iafM0ChDlng1ubPDXjUpep+VWcLYEgR02USJx8eutWbJ13grfrNg+gwyfczRIm3DBD2v1aFR5uR/it2JQE0v0dnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qOxAAoQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQjz3C2Di+8NYkn1TwoaIovSubeZFfDW0XEvEI2Kp9uMlSlnC52o7C/qjQXkGLStiuiXDGDITfQ3m/iSEjs5F0REj0KLyAkqxFv5gUVqtCvZ5obVGumt9nHG8OKpj88kjEXOO0/WYj7RzL49JK6WpvUByEUKuuyPYnnkajJcvsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ao3lTP5O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qOxAAoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C37BC19425;
-	Mon, 20 Apr 2026 16:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ao3lTP5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C905CC19425;
+	Mon, 20 Apr 2026 16:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701087;
-	bh=33VXxE3rqHirNen+Mns6i3j6QVusosd64J1rgFDFGLk=;
+	s=korg; t=1776701090;
+	bh=HsxjKbojB2dyscvySW+aqJT91rOoFelFKc/x8J2zJAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2qOxAAoQhFcwkxCktAx6YbSBImc1lSvtva5VTkyZc6JjDcIUA8weXwaFuR293UHJ5
-	 Pb/hduz8vxWEGgWJR7XkUVZq9OiAHlThg4VTwkGt8Xeft7DxnzOwqfbfZjQhRN3K1d
-	 4qDeBhjx+yQ72knyI9fj+gf0ds7SrRF1Y6wLCs84=
+	b=Ao3lTP5OlfbXdsA/tSQw/AbCCi2PzuNy3fgtxlkvMRzXWVTUP8IfZ4vqCjBkUYfS1
+	 I+ZvVSmVGjKcqLVzeX97TitoRSJjAI9W3VYXfqq4bUZfs7SC43Uwp91+a0sR/u1xg8
+	 kYWWatlUPiU0srhDp8NL9DijYlgXNxKQNXSgj6Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+c897823f699449cc3eb4@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 175/198] ocfs2: validate inline data i_size during inode read
-Date: Mon, 20 Apr 2026 17:42:34 +0200
-Message-ID: <20260420153941.916454017@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alexey Charkov <alchark@flipper.net>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Heikki Krogerus <heikki.krogrerus@linux.intel.com>
+Subject: [PATCH 6.18 145/198] usb: typec: fusb302: Switch to threaded IRQ handler
+Date: Mon, 20 Apr 2026 17:42:04 +0200
+Message-ID: <20260420153940.829277350@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -59,85 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Alexey Charkov <alchark@flipper.net>
 
-[ Upstream commit 1524af3685b35feac76662cc551cbc37bd14775f ]
+commit 6b9db53197094f38a18797495df2e3c758ec51dc upstream.
 
-When reading an inode from disk, ocfs2_validate_inode_block() performs
-various sanity checks but does not validate the size of inline data.  If
-the filesystem is corrupted, an inode's i_size can exceed the actual
-inline data capacity (id_count).
+FUSB302 fails to probe with -EINVAL if its interrupt line is connected via
+an I2C GPIO expander, such as TI TCA6416.
 
-This causes ocfs2_dir_foreach_blk_id() to iterate beyond the inline data
-buffer, triggering a use-after-free when accessing directory entries from
-freed memory.
+Switch the interrupt handler to a threaded one, which also works behind
+such GPIO expanders.
 
-In the syzbot report:
-  - i_size was 1099511627576 bytes (~1TB)
-  - Actual inline data capacity (id_count) is typically <256 bytes
-  - A garbage rec_len (54648) caused ctx->pos to jump out of bounds
-  - This triggered a UAF in ocfs2_check_dir_entry()
-
-Fix by adding a validation check in ocfs2_validate_inode_block() to ensure
-inodes with inline data have i_size <= id_count.  This catches the
-corruption early during inode read and prevents all downstream code from
-operating on invalid data.
-
-Link: https://lkml.kernel.org/r/20251212052132.16750-1-kartikey406@gmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reported-by: syzbot+c897823f699449cc3eb4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c897823f699449cc3eb4
-Tested-by: syzbot+c897823f699449cc3eb4@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/20251211115231.3560028-1-kartikey406@gmail.com/T/ [v1]
-Link: https://lore.kernel.org/all/20251212040400.6377-1-kartikey406@gmail.com/T/ [v2]
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 7bc5da4842be ("ocfs2: fix out-of-bounds write in ocfs2_write_end_inline")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: 309b6341d557 ("usb: typec: fusb302: Revert incorrect threaded irq fix")
+Signed-off-by: Alexey Charkov <alchark@flipper.net>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Heikki Krogerus <heikki.krogrerus@linux.intel.com>
+Link: https://patch.msgid.link/20260317-fusb302-irq-v2-1-dbabd5c5c961@flipper.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/inode.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/usb/typec/tcpm/fusb302.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1505,12 +1505,25 @@ int ocfs2_validate_inode_block(struct su
- 		goto bail;
+--- a/drivers/usb/typec/tcpm/fusb302.c
++++ b/drivers/usb/typec/tcpm/fusb302.c
+@@ -1755,8 +1755,9 @@ static int fusb302_probe(struct i2c_clie
+ 		goto destroy_workqueue;
  	}
  
--	if ((le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) &&
--	    le32_to_cpu(di->i_clusters)) {
--		rc = ocfs2_error(sb, "Invalid dinode %llu: %u clusters\n",
--				 (unsigned long long)bh->b_blocknr,
--				 le32_to_cpu(di->i_clusters));
--		goto bail;
-+	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
-+		struct ocfs2_inline_data *data = &di->id2.i_data;
-+
-+		if (le32_to_cpu(di->i_clusters)) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode %llu: %u clusters\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 le32_to_cpu(di->i_clusters));
-+			goto bail;
-+		}
-+
-+		if (le64_to_cpu(di->i_size) > le16_to_cpu(data->id_count)) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: inline data i_size %llu exceeds id_count %u\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)le64_to_cpu(di->i_size),
-+					 le16_to_cpu(data->id_count));
-+			goto bail;
-+		}
- 	}
- 
- 	rc = 0;
+-	ret = request_irq(chip->gpio_int_n_irq, fusb302_irq_intn,
+-			  IRQF_TRIGGER_LOW, "fsc_interrupt_int_n", chip);
++	ret = request_threaded_irq(chip->gpio_int_n_irq, NULL, fusb302_irq_intn,
++				   IRQF_ONESHOT | IRQF_TRIGGER_LOW,
++				   "fsc_interrupt_int_n", chip);
+ 	if (ret < 0) {
+ 		dev_err(dev, "cannot request IRQ for GPIO Int_N, ret=%d", ret);
+ 		goto tcpm_unregister_port;
 
 
