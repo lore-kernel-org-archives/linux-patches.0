@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B2833F5B0;
-	Mon, 20 Apr 2026 16:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25B8343D9E;
+	Mon, 20 Apr 2026 16:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701190; cv=none; b=KKRItUv6ofO39Cd/1wni+OUptlrYbNC5IWr/KMzfYfbUUXchg/acaUycWuuZrfQFddxjIbRGngi23xa5IgYFe0OfGVpoH03ngEPbkwqLLCz1GpLAv7TxLOuTjtKq+LlC+o+fRpxkY4fzINQ89aIFOuG+yvuiuKXnc4VuwemkGXg=
+	t=1776701192; cv=none; b=Q7TV0kuPgRJGBlhLNtrWNOeAeglBTugtV4U77rUf1EBstP1fiT9unaHu+2LA2J4Go4WLhkdrsoyc3C969bfzIp7fZrtvWiKtObirVO/87Bf2SVaY5qhjrILduw2pVLBGJ5SXo888A6g2MYkHS3dn7Z93GU7bJcChiHQX/uH8nAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701190; c=relaxed/simple;
-	bh=PJzss61xWn1QLFwmfUAPno1WKoTaRJ1hDkO7cz67Up4=;
+	s=arc-20240116; t=1776701192; c=relaxed/simple;
+	bh=uhwmqbadA4mYxavaX+orjiBoJey9ibMJfXG0WNFG0Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qp6lqu1CbTJuhH9zPnIG+g3aylluj4a4S4C1wB+h/rLdXUK0eilLfz1dNeR07gfoDEV50ojAeKislVvPkMXVG9UosWXUSEJqe2oYUrsT1YYvBdGpqDuSmHiYuNvDbicKyuOPxGjzyHyMmTh13YRtoIya7Wvd4knVAPNARdekSSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2aLXCIg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y90QcqDYU9gBvtPbQEMDpyFWK59q6oHxITGlc2QXwvelsfC1THCE+UAIeN5mSErC4kW5gryMaQ60szsgH8OvT0aFaYE8tsX5TKqj/SEoXL0BfiU4QK0FFwNmesUGDcYapN2oXHRJVXN+bvX3alTMHAqrjIVxS8H6mCf+mzbTcz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5qRgEQs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2aLXCIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF015C2BCB4;
-	Mon, 20 Apr 2026 16:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5qRgEQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A368C19425;
+	Mon, 20 Apr 2026 16:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701190;
-	bh=PJzss61xWn1QLFwmfUAPno1WKoTaRJ1hDkO7cz67Up4=;
+	s=korg; t=1776701192;
+	bh=uhwmqbadA4mYxavaX+orjiBoJey9ibMJfXG0WNFG0Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2aLXCIgI7iaYZWt2yWmQXFz/Ae1zdEbZU5LZlHv2GIOJEkoQMHLQ82Uozbq8G85w
-	 39WsuynNK/3w4ws9pdApnnZqWy3Dz2HagVo+Y+1vQV7CSSoEoT7yO821yk97Urf6X8
-	 f8p/5KRh63jBHTCZvKZsm57jquLpxi1ETxzKjnC0=
+	b=T5qRgEQsEcHCgUQjNacOFq8SqW+I9nCVFd9m4NABLJ+ywy27CcNStd7RanMnAKwiO
+	 cwa08vdtS/sfkcNLi7R6nvluabtszNZMjWrcao4wWdP48k+bApktj0mPS8pkldghjE
+	 t4ETRJ4Qg/rsPoK1omNrR2JKdIDZqB8EpCDvUniU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Denis Benato <denis.benato@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/162] RDMA/irdma: Fix double free related to rereg_user_mr
-Date: Mon, 20 Apr 2026 17:40:33 +0200
-Message-ID: <20260420153927.064140297@linuxfoundation.org>
+Subject: [PATCH 6.12 011/162] platform/x86: asus-nb-wmi: add DMI quirk for ASUS ROG Flow Z13-KJP GZ302EAC
+Date: Mon, 20 Apr 2026 17:40:43 +0200
+Message-ID: <20260420153927.426347730@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -45,48 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit 29a3edd7004bb635d299fb9bc6f0ea4ef13ed5a2 ]
+[ Upstream commit 0198d2743207d67f995cd6df89e267e1b9f5e1f1 ]
 
-If IB_MR_REREG_TRANS is set during rereg_user_mr, the
-umem will be released and a new one will be allocated
-in irdma_rereg_mr_trans. If any step of irdma_rereg_mr_trans
-fails after the new umem is allocated, it releases the umem,
-but does not set iwmr->region to NULL. The problem is that
-this failure is propagated to the user, who will then call
-ibv_dereg_mr (as they should). Then, the dereg_mr path will
-see a non-NULL umem and attempt to call ib_umem_release again.
+The ASUS ROG Flow Z13-KJP GZ302EAC model uses sys_vendor name ASUS
+rather than ASUSTeK COMPUTER INC., but it needs the same folio quirk as
+the other ROG Flow Z13. To keep things simple, just match on sys_vendor
+ASUS since it covers both.
 
-Fix this by setting iwmr->region to NULL after ib_umem_release.
-
-Fixed: 5ac388db27c4 ("RDMA/irdma: Add support to re-register a memory region")
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20260227152743.1183388-1-jmoroni@google.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Denis Benato <denis.benato@linux.dev>
+Link: https://patch.msgid.link/20260312212246.1608080-1-matthew.schwartz@linux.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/asus-nb-wmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 1f267dea6460e..0b9cf175ed73b 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -3210,6 +3210,7 @@ static int irdma_rereg_mr_trans(struct irdma_mr *iwmr, u64 start, u64 len,
- 
- err:
- 	ib_umem_release(region);
-+	iwmr->region = NULL;
- 	return err;
- }
- 
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index 1955495ea95f4..10bdb1a431819 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -547,7 +547,7 @@ static const struct dmi_system_id asus_quirks[] = {
+ 		.callback = dmi_matched,
+ 		.ident = "ASUS ROG Z13",
+ 		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow Z13"),
+ 		},
+ 		.driver_data = &quirk_asus_z13,
 -- 
 2.53.0
 
