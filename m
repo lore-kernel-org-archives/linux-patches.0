@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4080F329E44;
-	Mon, 20 Apr 2026 15:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6E1331A78;
+	Mon, 20 Apr 2026 15:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700749; cv=none; b=A7yJCo7K4+70FVKlf7pSjKwZNedtKjzgjFcfeFEh2dekcmRicSu5N/vnfKMBAd2QYFh5ANaGsCwrHYBHP3UEsFWIQtgWwUlJ0pr3jZ4ptjZkyDCIX1NptuC2UZLXyJXaCA40Ko0dM2elGlyiGmjPxAsCO5vQjZrbjyZD2iLHdBM=
+	t=1776700751; cv=none; b=DkW0SY5NLVytJmR/COJD1bP3Qtoye+rKWu0QbFPv4VvqmoRv4okIkBW6LtipJdKzXi8C++sYSuVSwpCb9DOcgNY9p3kzvbNq1CdHru97FF52mbrbnEZe9LYaEGDKSrc+CCQ5jjMMzofbBAiG2szQlVrkoCj2q3Bz5hRSBwOEVw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700749; c=relaxed/simple;
-	bh=vupX0sITVuvpKDClANtyrJmaujiU+kNjXWVrtiBdlqE=;
+	s=arc-20240116; t=1776700751; c=relaxed/simple;
+	bh=uQ4AUAaFtx+FdC7A0E6mLYGFA902OPgog7wsko1yxmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUcEFrUTiTGmcYkfS8iBYd7MyFEonmMmyxZZ50+cQfn6W8j7LZ171Kjrwreol7t5txhzZ0SZcSjrfDyoXs5k71OcvJvjg87365HvMqDLruB1MXO6LhJ+VEtEHURRyitSsiV+QgNuU7SK+fQW+z/FeC+SvyO63K48BMtZzaTKDUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnMVvIC+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BjMiWgBntPZHPWBCkiVQxoe6FdIBYb7ODelBqWluybk2mOBvy5fS179R4+lz95IDyAjufag1CSE4bmkaKk8CT0tpFwQ77wwnddxjldmRPNfJC/MkyJ39fcFjnUo1JomwEyl4sp4ocSp2UCKuepnSEyRE8jP1LGECez1EcQ0REk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVI9Y3yM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnMVvIC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEC6C19425;
-	Mon, 20 Apr 2026 15:59:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVI9Y3yM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636B8C19425;
+	Mon, 20 Apr 2026 15:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700749;
-	bh=vupX0sITVuvpKDClANtyrJmaujiU+kNjXWVrtiBdlqE=;
+	s=korg; t=1776700751;
+	bh=uQ4AUAaFtx+FdC7A0E6mLYGFA902OPgog7wsko1yxmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UnMVvIC+1OH6nEeg7ulGTOew01KI1bB1GbxHiAEuONnSy9/9LQFE4vNQVyy2XyG2a
-	 O86PxGebLO/iNzjIBmbjPRpSZZbVhTozZIhwHuPrMfn0qesJ9L64O92veQerCBk32/
-	 lAZlqiNbI5MNN2WKOiEPntX9Wf69WhUqA2Pv4IwM=
+	b=jVI9Y3yMHPwRh4cAsdWPNbirMY/8FzwZo0ORu00nspUMD1nzl5KefSdbQCtNP+K1x
+	 Qootjc2zf9QYXF4vwplMRw2c4pSTn+ZL3iKJJ5lkc0EqPPj2iMcLqSjgGpXcWrsGkR
+	 iEvfk22eRACAQicin/98IFlYX/LAcCV5SPGMYO1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Garcia Corona <fgarcor@gmail.com>,
-	songxiebing <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Silvan Jegen <s.jegen@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/198] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14IAH10
-Date: Mon, 20 Apr 2026 17:40:18 +0200
-Message-ID: <20260420153937.025894068@linuxfoundation.org>
+Subject: [PATCH 6.18 040/198] HID: roccat: fix use-after-free in roccat_report_event
+Date: Mon, 20 Apr 2026 17:40:19 +0200
+Message-ID: <20260420153937.061645245@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -46,45 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: songxiebing <songxiebing@kylinos.cn>
+From: Benoît Sevens <bsevens@google.com>
 
-[ Upstream commit f0541edb2e7333f320642c7b491a67912c1f65db ]
+[ Upstream commit d802d848308b35220f21a8025352f0c0aba15c12 ]
 
-The bass speakers are not working, and add the following entry
-in /etc/modprobe.d/snd.conf:
-options snd-sof-intel-hda-generic hda_model=alc287-yoga9-bass-spk-pin
-Fixes the bass speakers.
+roccat_report_event() iterates over the device->readers list without
+holding the readers_lock. This allows a concurrent roccat_release() to
+remove and free a reader while it's still being accessed, leading to a
+use-after-free.
 
-So add the quick ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN here.
+Protect the readers list traversal with the readers_lock mutex.
 
-Reported-by: Fernando Garcia Corona <fgarcor@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221317
-Signed-off-by: songxiebing <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260405012651.133838-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-roccat.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 2e89528e5cec1..6b53a7d90932d 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7467,6 +7467,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38fd, "ThinkBook plus Gen5 Hybrid", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x391a, "Lenovo Yoga Slim 7 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TXNW2781_I2C),
+diff --git a/drivers/hid/hid-roccat.c b/drivers/hid/hid-roccat.c
+index c7f7562e22e56..e413662f75082 100644
+--- a/drivers/hid/hid-roccat.c
++++ b/drivers/hid/hid-roccat.c
+@@ -257,6 +257,7 @@ int roccat_report_event(int minor, u8 const *data)
+ 	if (!new_value)
+ 		return -ENOMEM;
+ 
++	mutex_lock(&device->readers_lock);
+ 	mutex_lock(&device->cbuf_lock);
+ 
+ 	report = &device->cbuf[device->cbuf_end];
+@@ -279,6 +280,7 @@ int roccat_report_event(int minor, u8 const *data)
+ 	}
+ 
+ 	mutex_unlock(&device->cbuf_lock);
++	mutex_unlock(&device->readers_lock);
+ 
+ 	wake_up_interruptible(&device->wait);
+ 	return 0;
 -- 
 2.53.0
 
