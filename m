@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C708A2DE6E3;
-	Mon, 20 Apr 2026 16:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C142E2665;
+	Mon, 20 Apr 2026 16:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700941; cv=none; b=lMxWkraVnV6xtdEXkqvVsBn92Qe6mI+AFEBr9Fc3vnwYybzAQ227ddZ2gjU2fMpt2k7Fy92KQJ+JrMEQ/3fsHua8rvIELEQ9andW5UC3H0sYOaWqxIoZRvSxOPLHaWlz7OIFjZquVOQTaSWBnXg1lHgzJw+3Et12tcy7tdYn3go=
+	t=1776700944; cv=none; b=V83D77hOyHJY3EaWMZsK0OhP9r9b1W+C0LqcX5kWT5KOpLMfPat4NGQTbRWLYCNg0LbkeC6LDj+VYdWsjvS1WIQanMEO/CkzGqIbuH3LFP8nuw2V/aD8Yf4bD+fNa9dj2IyCFYfNAZGeMZwMo74i8dR7xFb+O+cZRi2adOIRY2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700941; c=relaxed/simple;
-	bh=owNnJ00flc9aQS9bgHynrgFhnh3Aede45vOHer+q+bU=;
+	s=arc-20240116; t=1776700944; c=relaxed/simple;
+	bh=Lmbr6p2HslNUC6aYSfxbuYOC88JQtR3+E7SjPM1RUAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RHWvgeeCqOnfWsbbOMRnE0LJ9NTAC8a28YmEvDIFWGQQIPU47Iqm2N5PmSfHIbr280UUsvXBovK6Zc5QOaCUD7Ku0RACkigsAvYOwHn4MidmXs/STTJlGtUXHc34f7aETUu6edAKwwmTMLITbI4KksUUltvZUJizK4FDz10Ffo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2BI+jS9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=apNIW23BXh2QX6EfP+LQQM42Dsfl5nZG/t0HxZQZ/jHIh6DGoD2FlZmOqHwh6EMfTvFsr3vb+sCTZyi1lzPgAetRzKRVVPT9s54OYOfL36WIjLLcgKc2nGNdgJXAB1RYJFriRpDtw20O2kOUAtwOdVGTqIKeAHNKHVTuzVcFXtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeRzxjY8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2BI+jS9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A0DC19425;
-	Mon, 20 Apr 2026 16:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeRzxjY8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75FFC19425;
+	Mon, 20 Apr 2026 16:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700941;
-	bh=owNnJ00flc9aQS9bgHynrgFhnh3Aede45vOHer+q+bU=;
+	s=korg; t=1776700944;
+	bh=Lmbr6p2HslNUC6aYSfxbuYOC88JQtR3+E7SjPM1RUAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t2BI+jS9vTojCQTIqOGpKeDTq/xgUBuU9o0HlFAHH5wsVDOvs1+IzXs7Vqm596pDp
-	 uaRvEploEPbmWEUZiG+pOdFH7mshlObb83auM/bR/tsSQX9ACUHna5L/0gJk9nkxzN
-	 JWmrac1z0AgWbFkAGwMRs5gEcyv7tiBwDwfF1Er4=
+	b=WeRzxjY8WSmo/UAVd0UsNbj2j9NtfVbYrjFDhOt/x5IQQkyj3smAi9xXA/StIeed3
+	 mIFPKV2eQsGOyyVBGk4ScISKLpmlerHVIqxlLdfe4IqO2sIreA9iLbDC68lB445m7L
+	 DqwC3MBhg8cw3AzR0KOjN9pvP+3tAuX92Vj5XUX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com,
-	Daniel Pouzzner <douzzer@mega.nu>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/198] crypto: algif_aead - Fix minimum RX size check for decryption
-Date: Mon, 20 Apr 2026 17:41:39 +0200
-Message-ID: <20260420153939.927133221@linuxfoundation.org>
+Subject: [PATCH 6.18 121/198] netfilter: conntrack: add missing netlink policy validations
+Date: Mon, 20 Apr 2026 17:41:40 +0200
+Message-ID: <20260420153939.962712088@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,36 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3d14bd48e3a77091cbce637a12c2ae31b4a1687c ]
+[ Upstream commit f900e1d77ee0ef87bfb5ab3fe60f0b3d8ad5ba05 ]
 
-The check for the minimum receive buffer size did not take the
-tag size into account during decryption.  Fix this by adding the
-required extra length.
+Hyunwoo Kim reports out-of-bounds access in sctp and ctnetlink.
 
-Reported-by: syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com
-Reported-by: Daniel Pouzzner <douzzer@mega.nu>
-Fixes: d887c52d6ae4 ("crypto: algif_aead - overhaul memory management")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+These attributes are used by the kernel without any validation.
+Extend the netlink policies accordingly.
+
+Quoting the reporter:
+  nlattr_to_sctp() assigns the user-supplied CTA_PROTOINFO_SCTP_STATE
+  value directly to ct->proto.sctp.state without checking that it is
+  within the valid range. [..]
+
+  and: ... with exp->dir = 100, the access at
+  ct->master->tuplehash[100] reads 5600 bytes past the start of a
+  320-byte nf_conn object, causing a slab-out-of-bounds read confirmed by
+  UBSAN.
+
+Fixes: 076a0ca02644 ("netfilter: ctnetlink: add NAT support for expectations")
+Fixes: a258860e01b8 ("netfilter: ctnetlink: add full support for SCTP to ctnetlink")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algif_aead.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c    | 2 +-
+ net/netfilter/nf_conntrack_proto_sctp.c | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/algif_aead.c b/crypto/algif_aead.c
-index dda15bb05e892..f8bd45f7dc839 100644
---- a/crypto/algif_aead.c
-+++ b/crypto/algif_aead.c
-@@ -144,7 +144,7 @@ static int _aead_recvmsg(struct socket *sock, struct msghdr *msg,
- 	if (usedpages < outlen) {
- 		size_t less = outlen - usedpages;
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index becffc15e7579..fbe9e3f1036f8 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3475,7 +3475,7 @@ ctnetlink_change_expect(struct nf_conntrack_expect *x,
  
--		if (used < less) {
-+		if (used < less + (ctx->enc ? 0 : as)) {
- 			err = -EINVAL;
- 			goto free;
- 		}
+ #if IS_ENABLED(CONFIG_NF_NAT)
+ static const struct nla_policy exp_nat_nla_policy[CTA_EXPECT_NAT_MAX+1] = {
+-	[CTA_EXPECT_NAT_DIR]	= { .type = NLA_U32 },
++	[CTA_EXPECT_NAT_DIR]	= NLA_POLICY_MAX(NLA_BE32, IP_CT_DIR_REPLY),
+ 	[CTA_EXPECT_NAT_TUPLE]	= { .type = NLA_NESTED },
+ };
+ #endif
+diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
+index 7c6f7c9f73320..645d2c43ebf7a 100644
+--- a/net/netfilter/nf_conntrack_proto_sctp.c
++++ b/net/netfilter/nf_conntrack_proto_sctp.c
+@@ -582,7 +582,8 @@ static int sctp_to_nlattr(struct sk_buff *skb, struct nlattr *nla,
+ }
+ 
+ static const struct nla_policy sctp_nla_policy[CTA_PROTOINFO_SCTP_MAX+1] = {
+-	[CTA_PROTOINFO_SCTP_STATE]	    = { .type = NLA_U8 },
++	[CTA_PROTOINFO_SCTP_STATE]	    = NLA_POLICY_MAX(NLA_U8,
++							 SCTP_CONNTRACK_HEARTBEAT_SENT),
+ 	[CTA_PROTOINFO_SCTP_VTAG_ORIGINAL]  = { .type = NLA_U32 },
+ 	[CTA_PROTOINFO_SCTP_VTAG_REPLY]     = { .type = NLA_U32 },
+ };
 -- 
 2.53.0
 
