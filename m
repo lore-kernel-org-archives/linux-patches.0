@@ -1,51 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528843D1CAE;
-	Mon, 20 Apr 2026 13:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9381A6800;
+	Mon, 20 Apr 2026 13:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691088; cv=none; b=cxd6d0EZVHWIxygtEW4ImzFQbsyfjnBQC50tgV25swdGVBB7RAjX6l4m4cC9hYzG+4R9dvdQh2aaQ5ENhPuq0tYvYFx2bfcgrg1bdJMTkhuBHDjLUC3xVpzbo9CtDAn45LePFXXcMvpNdvicHrE3qvwDxZhjDOgrcmGtwrNeYeo=
+	t=1776691396; cv=none; b=UySiFXrVsP+XgN489YWFCgOWI82/08plfPIb0FS7QlWiBL2b+rjZxLI6rjQrPEXQhiQ6vpqgG36b+QkcQujwAm7x1cCkZ/MsqtpxlzRWx7V4bA/ENcUy29GVP8yrIe4zABM+2JyW3sC7dRH64pEUkE6Md44oeNL/VAFNaCj1V8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691088; c=relaxed/simple;
-	bh=WJDSyxUOR4RJXk43zQxmajHePsyAzx3QqzEfKuaS1sE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t+6bKqvQKHYMrff4MmVwLdR53VRED/XvFnghgjRpJ3w52UB82nWoTq2E/cIABc8CuEcmw7v0ObYN4GTK5Mq2kx9/FTcbxQpCPLCKponHoCk+aniC2Ban8bex9Qmx6YDSOlbJmydYIjdnVWCtCy+PbxYmpFJ0ex+ImsB4mZhtVLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RcjSKiEk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776691396; c=relaxed/simple;
+	bh=HeIqewgVBjC+cs5vcBEs31qFo9TZK6JeLdzhZB2khp4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I6dEPR9+WAurA34KGPqy5IhumvqDtJcMdkgkqPSX86BnE3bDEcbPuWRzaXQz06vC2ozHFH7JNH3fSPo1MVZ6eF0T4VZW4ZKNdMF7YTmXoe3POPtDJQz8rEI4ttEJdmXgvLz7SDDyEQvqfIOYYhhaJgtbXPSZ0S6FlVTyzTOFBBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E/aW5m5W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RcjSKiEk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18BCC2BCB8;
-	Mon, 20 Apr 2026 13:18:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E/aW5m5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8C5C19425;
+	Mon, 20 Apr 2026 13:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691088;
-	bh=WJDSyxUOR4RJXk43zQxmajHePsyAzx3QqzEfKuaS1sE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcjSKiEkty2iNHoI/OhhwyZCk4VwkO3tAGcGwDZXwLJXu6WTc1dwrw0tD7/jOSyUM
-	 Fdey+OylQUEvtVcu6ovffTriRa91FN5QKckQZIOJPNX7ElkcRp5evHm4/JDnTL7bna
-	 ChzecYzi2hO0R+bgzItVezPQCUpeAJbWFBGfU6j8gEweKU4ACZSsTkAdEcayN+mOhG
-	 0miD8Bbo183mrxFJgwCWBpWvRuJppmtlkevOtKTPpeCWad3aZmnNvIXWGgN+md4/vB
-	 ej8NkHdAE1jR3Cp9pi50ce1WoidZ4mDLIcTSGMIawbJNZwgffwcjoo8L5mI3NidnsM
-	 QYBoCZvSf7vow==
+	s=k20201202; t=1776691396;
+	bh=HeIqewgVBjC+cs5vcBEs31qFo9TZK6JeLdzhZB2khp4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=E/aW5m5W/32+/8d7aHlcSgAfBbEtsitNl5+Yav5O5EhNGhGHde3U5Vfhx5qnfyEwa
+	 OoXz3GOIHkUucecxRx2tVBEF4neAu+sGtvFf1berDRXjLLxRlNNpbRe4ODEbNDWtLy
+	 isr+WyZUS81XHdog6il8+112GHaQz39tDAAQN+hgkM8OR4y+Cv+WeDCQ1Wz9mjn//Q
+	 tM22UK4DjcAfiJpEphRmnGty4tmm8Us6j+bXqD4pgEKgIMTUPPzuaFlvDDJ0PBJLGf
+	 oP9bctPbnvximL40deKwoEqUPn01V61EjDYOmwW5mJR7YHDBAFcI4K+ktmyFg0duoh
+	 wAR9y1uhNYFLA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aravind Anilraj <aravindanilraj0702@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+Cc: Marek Vasut <marex@nabladev.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	pierre-louis.bossart@linux.intel.com,
-	liam.r.girdwood@linux.intel.com,
-	yang.jie@linux.intel.com,
+	shenghao-ding@ti.com,
+	kevin-lu@ti.com,
+	baojun.xu@ti.com,
+	lgirdwood@gmail.com,
 	perex@perex.cz,
 	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ASoC: Intel: bytcr_rt5651: Fix MCLK leak on platform_clock_control error
-Date: Mon, 20 Apr 2026 09:09:12 -0400
-Message-ID: <20260420131539.986432-86-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ASoC: tas2552: Allow audio enable GPIO to sleep
+Date: Mon, 20 Apr 2026 09:16:35 -0400
+Message-ID: <20260420132314.1023554-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
-References: <20260420131539.986432-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,316 +55,354 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aravind Anilraj <aravindanilraj0702@gmail.com>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit b022e5c142efe4c5497e6cfda1f143618b4b9254 ]
+[ Upstream commit 5ebc20921b7fff9feb44de465448e17a382c9965 ]
 
-If byt_rt5651_prepare_and_enable_pll1() fails, the function returns
-without calling clk_disable_unprepare() on priv->mclk, which was
-already enabled earlier in the same code path. Add the missing
-cleanup call to prevent the clock from leaking.
+The audio enable GPIO is not toggled in any critical section where it
+could not sleep, allow the audio enable GPIO to sleep. This allows the
+driver to operate the audio enable GPIO connected to I2C GPIO expander.
 
-Signed-off-by: Aravind Anilraj <aravindanilraj0702@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260401220507.23557-3-aravindanilraj0702@gmail.com
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260220202332.241035-1-marex@nabladev.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the full analysis.
+Now I have all the information needed for the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: ASoC: Intel: bytcr_rt5651
-- **Action verb**: "Fix" — explicitly a bug fix
-- **Summary**: Fix clock (MCLK) resource leak on error path in
-  `platform_clock_control`
+**Step 1.1: Subject Line**
+- Subsystem: `ASoC: tas2552` (sound, ASoC codec driver)
+- Action verb: "Allow" - implies enabling something previously not
+  supported
+- Summary: Allow the enable GPIO to sleep, enabling use with I2C GPIO
+  expanders
 
-### Step 1.2: Tags
-- **Signed-off-by**: Aravind Anilraj (author, community contributor — no
-  prior commits in this subsystem)
-- **Reviewed-by**: Cezary Rojewski (Intel audio maintainer)
-- **Link**: patch.msgid.link/20260401220507.23557-3 — patch 3 in a
-  series
-- **Signed-off-by**: Mark Brown (ASoC subsystem maintainer — applied the
-  patch)
-- No Fixes: tag, no Cc: stable, no Reported-by (all expected for autosel
-  review)
+**Step 1.2: Tags**
+- Signed-off-by: Marek Vasut <marex@nabladev.com> (author)
+- Link:
+  https://patch.msgid.link/20260220202332.241035-1-marex@nabladev.com
+- Signed-off-by: Mark Brown <broonie@kernel.org> (ASoC subsystem
+  maintainer)
+- No Fixes: tag, no Reported-by, no Cc: stable (expected for autosel
+  candidates)
 
-### Step 1.3: Commit Body
-The message clearly describes: if `byt_rt5651_prepare_and_enable_pll1()`
-fails, the function returns without calling `clk_disable_unprepare()` on
-`priv->mclk`, which was already enabled by `clk_prepare_enable()`. This
-is a straightforward clock resource leak on an error path.
+**Step 1.3: Commit Body**
+The commit describes that the enable GPIO is never toggled from atomic
+context, so it's safe to use the sleeping variant. This allows the
+driver to work when the enable GPIO is connected to an I2C GPIO expander
+(which requires sleeping for bus access).
 
-### Step 1.4: Hidden Bug Fix?
-No — this is explicitly labeled as a bug fix and is genuinely one. The
-commit message directly describes the resource leak mechanism.
+**Step 1.4: Hidden Bug Fix Detection**
+YES - this is a bug fix. Using `gpiod_set_value()` with a sleeping GPIO
+triggers `WARN_ON(desc->gdev->can_sleep)` in gpiolib.c:3899. This is
+incorrect API usage that produces kernel warnings.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files changed**: 1 (`sound/soc/intel/boards/bytcr_rt5651.c`)
-- **Lines added**: 2 (`+if (ret < 0)` and
-  `+clk_disable_unprepare(priv->mclk);`)
-- **Lines removed**: 0
-- **Function modified**: `platform_clock_control()`
-- **Scope**: Single-file, single-function, 2-line surgical fix
+**Step 2.1: Inventory**
+- 1 file changed: `sound/soc/codecs/tas2552.c`
+- 5 lines changed (identical substitution at each site)
+- Functions modified: `tas2552_runtime_suspend`,
+  `tas2552_runtime_resume`, `tas2552_component_probe` (x2),
+  `tas2552_component_remove`
 
-### Step 2.2: Code Flow Change
-**Before**: In the `SND_SOC_DAPM_EVENT_ON` branch:
-1. `clk_prepare_enable(priv->mclk)` — enables the clock
-2. `byt_rt5651_prepare_and_enable_pll1()` — configures PLL
-3. If step 2 fails, `ret < 0` falls through to the error path at line
-   225, which logs the error and returns — **without disabling the
-   clock**
+**Step 2.2: Code Flow Change**
+Each hunk is identical: `gpiod_set_value(tas2552->enable_gpio, X)` ->
+`gpiod_set_value_cansleep(tas2552->enable_gpio, X)`. No logic change —
+both APIs call the same `gpiod_set_value_nocheck()` internally.
 
-**After**: If `byt_rt5651_prepare_and_enable_pll1()` fails,
-`clk_disable_unprepare(priv->mclk)` is called immediately, properly
-balancing the earlier `clk_prepare_enable()`.
+**Step 2.3: Bug Mechanism**
+Verified in `drivers/gpio/gpiolib.c`:
 
-### Step 2.3: Bug Mechanism
-**Category**: Resource leak (clock) on error path.
-- `clk_prepare_enable()` increments the clock's reference count
-- On PLL1 failure, the corresponding `clk_disable_unprepare()` was never
-  called
-- The clock remains permanently enabled, leaking the resource
+```3895:3901:drivers/gpio/gpiolib.c
+int gpiod_set_value(struct gpio_desc *desc, int value)
+{
+        VALIDATE_DESC(desc);
+        /* Should be using gpiod_set_value_cansleep() */
+        WARN_ON(desc->gdev->can_sleep);
+        return gpiod_set_value_nocheck(desc, value);
+}
+```
 
-### Step 2.4: Fix Quality
-- **Obviously correct**: Yes — directly mirrors the existing cleanup in
-  the `else` branch (line 221-222)
-- **Minimal**: Yes — 2 lines, no unnecessary changes
-- **Regression risk**: Essentially zero — only executes on an existing
-  error path
+vs:
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+```4359:4364:drivers/gpio/gpiolib.c
+int gpiod_set_value_cansleep(struct gpio_desc *desc, int value)
+{
+        might_sleep();
+        VALIDATE_DESC(desc);
+        return gpiod_set_value_nocheck(desc, value);
+}
+```
 
-### Step 3.1: Blame
-- Line 206 (`clk_prepare_enable`): Refactored by `a8627df5491e00` (Andy
-  Shevchenko, 2021-10-07) — but the original logic dates to
-  `02c0a3b3047f8f` (Pierre-Louis Bossart, 2017-10-12)
-- Line 211 (`byt_rt5651_prepare_and_enable_pll1`): Introduced by
-  `aeec6cc0821573` (Hans de Goede, 2018-03-04) — **this is when the bug
-  was introduced**. The PLL1 call was added between the clock enable and
-  the end of the branch, without error handling for the clock.
+The bug: When the enable GPIO is on an I2C GPIO expander (`can_sleep =
+true`), `gpiod_set_value()` fires `WARN_ON` producing a kernel warning
+with stack trace on every suspend/resume cycle and on probe/remove.
 
-### Step 3.2: Fixes Target
-No explicit Fixes: tag. The implicit fix target is `aeec6cc0821573`
-("ASoC: Intel: bytcr_rt5651: Configure PLL1 before using it",
-v4.17-rc1). This commit is present in **all active stable trees** (it
-dates to 2018).
+**Step 2.4: Fix Quality**
+- Obviously correct: the only change is which wrapper is used; both call
+  the same underlying function
+- Minimal: 5 identical one-line substitutions
+- Zero regression risk: `gpiod_set_value_cansleep()` is strictly more
+  permissive (works with both sleeping and non-sleeping GPIOs)
+- All call sites are process context (PM callbacks, probe, remove) where
+  sleeping is allowed
 
-### Step 3.3: Related Changes
-The file has had several unrelated changes since the bug was introduced,
-but none touch the specific error path being fixed. The fix applies
-cleanly.
+## PHASE 3: GIT HISTORY
 
-### Step 3.4: Author
-Aravind Anilraj appears to be a community contributor (no other commits
-in this subsystem found). However, the patch was **Reviewed-by** Cezary
-Rojewski (Intel audio maintainer) and **merged by** Mark Brown (ASoC
-maintainer).
+**Step 3.1: Blame**
+The `gpiod_set_value()` calls were introduced by commit `82cf77a1bd61d9`
+(Axel Lin, 2015) which simplified NULL checks. The original code existed
+since `5df7f71d5cdfbc` (Dan Murphy, 2014). The buggy code has been
+present since v4.3-rc1.
 
-### Step 3.5: Dependencies
-None. The fix is completely standalone — it references only `priv->mclk`
-and `clk_disable_unprepare()`, both of which have existed since the
-original code. No prerequisites needed.
+**Step 3.2: Fixes tag**
+No Fixes: tag present (expected for autosel).
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 3.3: File History**
+Recent changes to the file are trivial: RUNTIME_PM_OPS conversion,
+removing redundant `pm_runtime_mark_last_busy()`, dropping unused GPIO
+includes. No conflicts.
 
-### Step 4.1-4.2: Patch Discussion
-The Link tag indicates this is patch 3 in a series (message-id contains
-"23557-3"). Lore.kernel.org was blocked by anti-bot protection,
-preventing direct discussion retrieval. However:
-- The patch was reviewed by Intel's audio maintainer (Cezary Rojewski)
-- Merged by the ASoC subsystem maintainer (Mark Brown)
-- Both are strong trust indicators
+**Step 3.4: Author**
+Marek Vasut is a prolific kernel contributor with extensive work across
+DRM, DT bindings, and sound subsystems. Not the TAS2552 maintainer but a
+well-known contributor.
 
-### Step 4.3-4.5
-No explicit bug report or syzbot link — this appears to be found by code
-inspection. No previous stable discussion found.
+**Step 3.5: Prerequisites**
+None. The change is standalone and independent of the RUNTIME_PM_OPS
+conversion. It touches only the `gpiod_set_value()` calls which exist in
+all stable trees.
+
+## PHASE 4: MAILING LIST RESEARCH
+
+**Step 4.1: Original Patch**
+Found via `b4 am`. The patch was submitted as a single standalone patch
+on 2026-02-20. CC'd appropriate maintainers (Mark Brown, Takashi Iwai,
+TI engineers, linux-sound, linux-kernel). Applied directly by Mark Brown
+(ASoC maintainer). No v2/v3 revisions — accepted as-is.
+
+**Step 4.2: Reviewers**
+The patch was CC'd to all relevant TI and ASoC maintainers. Mark Brown
+(ASoC subsystem maintainer) applied it directly.
+
+**Step 4.3: Bug Report**
+No external bug report. Marek Vasut likely encountered this on a board
+with an I2C GPIO expander.
+
+**Step 4.4: Related Patches**
+This is a well-established pattern. Multiple identical fixes have been
+applied to other ASoC codecs:
+- `5f83ee4b1f0c0` ASoC: tas5086: use sleeping variants of gpiod API
+- `897d8e86bac76` ASoC: tlv320aic31xx: switch to
+  gpiod_set_value_cansleep
+- `5d7e0b1516dfc` ASoC: dmic: Allow GPIO operations to sleep
+- `ea2a2ad17ca1e` ASoC: dio2125: use gpiod_set_value_cansleep (had
+  Fixes: tag)
+
+**Step 4.5: Stable Discussion**
+No stable-specific discussion found. The dio2125 variant (ea2a2ad17ca1e)
+had a Fixes: tag and was likely auto-selected for stable.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.2: Function Context
-`platform_clock_control()` is registered as a DAPM supply callback:
+**Step 5.1: Functions Modified**
+- `tas2552_runtime_suspend()` — PM runtime callback
+- `tas2552_runtime_resume()` — PM runtime callback
+- `tas2552_component_probe()` — ASoC component probe (x2 sites)
+- `tas2552_component_remove()` — ASoC component remove
 
-```253:255:sound/soc/intel/boards/bytcr_rt5651.c
-        SND_SOC_DAPM_SUPPLY("Platform Clock", SND_SOC_NOPM, 0, 0,
-                            platform_clock_control, SND_SOC_DAPM_PRE_PMU
-|
-                            SND_SOC_DAPM_POST_PMD),
-```
+**Step 5.2: Callers**
+All five call sites are invoked from process context:
+- Runtime PM callbacks are invoked by the PM subsystem in process
+  context
+- Component probe/remove are called from the ASoC registration path,
+  always sleepable
 
-This is called every time the audio path is powered up (PRE_PMU) or down
-(POST_PMD). It is a **common path** for any user of this audio hardware.
+**Step 5.3-5.4: No atomic context concerns**
+All callers can sleep. The `gpiod_set_value_cansleep()` API with its
+`might_sleep()` is the correct choice.
 
-### Step 5.3: Callees
-- `clk_prepare_enable()` / `clk_disable_unprepare()`: standard Linux
-  clock framework
-- `byt_rt5651_prepare_and_enable_pll1()`: configures PLL via
-  `snd_soc_dai_set_pll()` and `snd_soc_dai_set_sysclk()` — can fail if
-  the codec rejects the configuration
-
-### Step 5.4: Sibling Pattern Confirmation
-The sibling driver `bytcr_rt5640.c` has the **identical bug** at lines
-285-291:
-
-```285:291:sound/soc/intel/boards/bytcr_rt5640.c
-        if (SND_SOC_DAPM_EVENT_ON(event)) {
-                ret = clk_prepare_enable(priv->mclk);
-                if (ret < 0) {
-                        dev_err(card->dev, "could not configure MCLK
-state\n");
-                        return ret;
-                }
-                ret = byt_rt5640_prepare_and_enable_pll1(codec_dai,
-48000);
-```
-
-No `clk_disable_unprepare()` on PLL1 failure there either. This confirms
-the bug pattern is real and systematic.
+**Step 5.5: Similar Patterns**
+There are 5 remaining `gpiod_set_value()` calls in this file — this
+patch converts all of them. Other ASoC drivers have undergone identical
+transformations.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Code in Stable
-The buggy code was introduced in `aeec6cc0821573` (v4.17-rc1, March
-2018). This code exists in **all active stable trees** (5.4.y, 5.10.y,
-5.15.y, 6.1.y, 6.6.y, 6.12.y).
+**Step 6.1: Buggy Code in Stable?**
+YES. The `gpiod_set_value()` calls date back to commit `82cf77a1bd61d9`
+(v4.3-rc1, 2015). All active stable trees contain this code.
 
-### Step 6.2: Backport Complications
-The fix is 2 lines with minimal context sensitivity. The surrounding
-code has been stable since the a8627df5491e00 refactoring in 2021. It
-should apply cleanly to all trees from 5.15+ at minimum; older trees may
-need trivial context adjustment for the `BYT_RT5651_MCLK_EN` quirk check
-that was removed by `a8627df5491e00`.
+**Step 6.2: Backport Complications**
+Minimal. The `gpiod_set_value()` lines are identical across all stable
+versions. The only difference is that pre-6.12 trees have `#ifdef
+CONFIG_PM` guards and `SET_RUNTIME_PM_OPS` instead of `RUNTIME_PM_OPS`,
+but this doesn't affect the changed lines. The patch should apply
+cleanly or with trivial context offset.
 
-### Step 6.3: No related fixes for this bug already in stable.
+**Step 6.3: No Existing Fix**
+No related fix for this specific issue in any stable tree.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-- **Subsystem**: ASoC / Intel audio machine driver
-- **Criticality**: PERIPHERAL — affects users of Bay Trail / Cherry
-  Trail devices with RT5651 codec (budget tablets, laptops)
-- **Activity**: Moderate — file sees occasional updates
+**Step 7.1:** Sound/ASoC codec driver — PERIPHERAL criticality (specific
+codec driver), but TAS2552 is used in embedded systems.
+
+**Step 7.2:** The driver is mature/stable with minimal recent activity
+(only cleanup commits).
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users with Intel Bay Trail or Cherry Trail devices using the RT5651
-audio codec. These are common budget tablets and laptops.
+**Step 8.1: Affected Users**
+Users of the TAS2552 audio amplifier who have the enable GPIO connected
+to an I2C GPIO expander. This is a valid embedded hardware
+configuration.
 
-### Step 8.2: Trigger Conditions
-Triggered when: (a) audio starts playing (DAPM PRE_PMU event), AND (b)
-PLL1 configuration fails. While PLL failure is itself an error
-condition, repeated failures with clock leaks can compound the problem
-and prevent power management from working correctly.
+**Step 8.2: Trigger Conditions**
+The WARN_ON triggers on EVERY suspend/resume cycle and on driver
+probe/remove — not rare at all for affected hardware.
 
-### Step 8.3: Failure Mode
-- **Severity: MEDIUM** — The leaked clock prevents the MCLK from being
-  disabled, which:
-  - Wastes power (clock stays enabled)
-  - May prevent subsequent clock operations from working correctly
-  - Could contribute to audio subsystem malfunction after error recovery
+**Step 8.3: Failure Mode**
+- WARN_ON with full stack trace in kernel log (MEDIUM severity normally)
+- With `panic_on_warn=1`: kernel panic (CRITICAL severity for those
+  configurations)
+- Without panic_on_warn: console spam, log pollution, incorrect API
+  usage flagged
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: Fixes a real resource leak, prevents clock reference
-  count imbalance
-- **Risk**: Essentially zero — 2-line addition only on error path,
-  obviously correct
-- **Ratio**: Very favorable for backport
+**Step 8.4: Risk-Benefit**
+- BENEFIT: Eliminates WARN_ON spam, enables I2C GPIO expander hardware
+  correctly, fixes incorrect API usage
+- RISK: Virtually zero — both APIs call the same underlying function,
+  the only difference is the debug assertion
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Step 9.1: Evidence Summary**
 
-**FOR backporting:**
-- Fixes a real clock resource leak on error path
-- 2-line fix, minimal and surgical
-- Obviously correct (mirrors existing cleanup pattern in the else
-  branch)
-- Reviewed by Intel audio maintainer, merged by ASoC subsystem
-  maintainer
-- Bug exists since v4.17, present in all active stable trees
-- No dependencies, completely standalone
-- Sibling driver (bytcr_rt5640) has the identical bug, confirming the
-  pattern
+FOR backporting:
+- Fixes incorrect GPIO API usage that triggers WARN_ON
+- Can cause kernel panic with `panic_on_warn=1`
+- Trivially small (5 identical line substitutions), trivially correct
+- Zero regression risk (both APIs have identical functional behavior)
+- Well-established pattern applied to many other drivers
+- Applied by ASoC subsystem maintainer Mark Brown
+- Buggy code present since v4.3 — affects all stable trees
+- No dependencies on other patches
 
-**AGAINST backporting:**
-- The trigger requires PLL1 configuration failure (uncommon in normal
-  operation)
-- No user reports or syzbot bugs — found by code inspection
-- Author is a community contributor with no other commits in this
-  subsystem
+AGAINST backporting:
+- No Reported-by (no evidence of real-world user reports)
+- WARN_ON is non-fatal in default configurations
+- Affects specific hardware configuration (I2C GPIO expander)
+- Could be seen as "enablement" rather than pure "fix"
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — trivially correct, reviewed
-   by maintainer
-2. Fixes a real bug? **YES** — clock resource leak on error path
-3. Important issue? **MEDIUM** — resource leak, not a crash
-4. Small and contained? **YES** — 2 lines in 1 file
-5. No new features/APIs? **YES** — no new functionality
-6. Applies to stable trees? **YES** — code unchanged, clean apply
-   expected
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested: YES — trivially provable
+2. Fixes a real bug: YES — WARN_ON from incorrect API usage
+3. Important issue: MEDIUM — WARN_ON, potential panic with panic_on_warn
+4. Small and contained: YES — 5 lines in 1 file
+5. No new features: YES — just API correction
+6. Can apply to stable: YES — clean apply expected
 
-### Step 9.3: Exception Categories
-Not applicable — this is a standard bug fix, not an exception category.
-
----
+**Step 9.3: Exception Categories**
+This is closest to a hardware quirk/workaround — it makes the driver
+work correctly with I2C GPIO expanders.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Cezary Rojewski (Intel), Signed-
-  off-by Mark Brown (ASoC maintainer)
-- [Phase 2] Diff analysis: 2 lines added to error path in
-  `platform_clock_control()`, adds missing `clk_disable_unprepare()`
-- [Phase 3] git blame: buggy code path introduced in `aeec6cc0821573`
-  (v4.17-rc1, 2018-03-04), present in all stable trees
-- [Phase 3] git describe: confirmed `aeec6cc0821573` first appeared in
-  v4.17-rc1
-- [Phase 3] git log: no prior fix for this issue exists
-- [Phase 4] lore.kernel.org: blocked by anti-bot protection, could not
-  read discussion
-- [Phase 4] b4 dig: confirmed PLL1 commit is patch v3 15/22 from Hans de
-  Goede series
-- [Phase 5] Verified `platform_clock_control()` is a DAPM supply
-  callback (line 253-255), called on every audio path enable/disable
-- [Phase 5] Verified sibling `bytcr_rt5640.c` has identical bug pattern
-  at lines 285-291
-- [Phase 6] Code exists in all active stable trees (bug from v4.17,
-  2018)
-- [Phase 8] Failure mode: clock resource leak preventing proper power
-  management, severity MEDIUM
-- UNVERIFIED: Could not read mailing list discussion due to anti-bot
-  protection; relied on tags in commit message for review assessment
+- [Phase 1] Parsed tags: Signed-off-by from author and ASoC maintainer,
+  Link to patch.msgid
+- [Phase 2] Diff analysis: 5 identical `gpiod_set_value` ->
+  `gpiod_set_value_cansleep` substitutions
+- [Phase 2] Verified `gpiod_set_value()` has
+  `WARN_ON(desc->gdev->can_sleep)` at gpiolib.c:3899
+- [Phase 2] Verified `gpiod_set_value_cansleep()` calls same
+  `gpiod_set_value_nocheck()` at gpiolib.c:4363
+- [Phase 3] git blame: `gpiod_set_value` calls introduced by commit
+  82cf77a1bd61d9 (v4.3-rc1, 2015)
+- [Phase 3] git log: no conflicting changes in recent history
+- [Phase 3] RUNTIME_PM_OPS conversion (1570c33f2f38b) does not affect
+  the changed lines
+- [Phase 4] b4 am: found original patch, single standalone submission
+- [Phase 4] Multiple identical fixes applied to other ASoC codecs
+  (tas5086, tlv320aic31xx, dmic, dio2125)
+- [Phase 5] All call sites (runtime_suspend/resume,
+  component_probe/remove) are process context — can sleep
+- [Phase 6] Buggy code present since v4.3, exists in all active stable
+  trees
+- [Phase 6] Patch applies cleanly — no conflicting changes to the
+  affected lines
+- [Phase 8] WARN_ON triggers on every suspend/resume for affected
+  hardware, not a rare event
 
-The fix is small, surgical, obviously correct, and meets all stable
-kernel criteria. It fixes a genuine resource leak with zero regression
-risk.
+The fix is trivially correct, carries zero regression risk, and fixes
+incorrect GPIO API usage that produces kernel warnings (and potential
+panics) for valid hardware configurations. While it's not fixing a crash
+in the default configuration, the WARN_ON is a genuine bug indicator,
+and this well-established pattern has been applied to many other
+drivers.
 
 **YES**
 
- sound/soc/intel/boards/bytcr_rt5651.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/tas2552.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5651.c b/sound/soc/intel/boards/bytcr_rt5651.c
-index 68cf463f1d507..8932fc5d6f4f2 100644
---- a/sound/soc/intel/boards/bytcr_rt5651.c
-+++ b/sound/soc/intel/boards/bytcr_rt5651.c
-@@ -209,6 +209,8 @@ static int platform_clock_control(struct snd_soc_dapm_widget *w,
- 			return ret;
- 		}
- 		ret = byt_rt5651_prepare_and_enable_pll1(codec_dai, 48000, 50);
-+		if (ret < 0)
-+			clk_disable_unprepare(priv->mclk);
- 	} else {
- 		/*
- 		 * Set codec clock source to internal clock before
+diff --git a/sound/soc/codecs/tas2552.c b/sound/soc/codecs/tas2552.c
+index 43449d7c25843..80206c2e09462 100644
+--- a/sound/soc/codecs/tas2552.c
++++ b/sound/soc/codecs/tas2552.c
+@@ -487,7 +487,7 @@ static int tas2552_runtime_suspend(struct device *dev)
+ 	regcache_cache_only(tas2552->regmap, true);
+ 	regcache_mark_dirty(tas2552->regmap);
+ 
+-	gpiod_set_value(tas2552->enable_gpio, 0);
++	gpiod_set_value_cansleep(tas2552->enable_gpio, 0);
+ 
+ 	return 0;
+ }
+@@ -496,7 +496,7 @@ static int tas2552_runtime_resume(struct device *dev)
+ {
+ 	struct tas2552_data *tas2552 = dev_get_drvdata(dev);
+ 
+-	gpiod_set_value(tas2552->enable_gpio, 1);
++	gpiod_set_value_cansleep(tas2552->enable_gpio, 1);
+ 
+ 	tas2552_sw_shutdown(tas2552, 0);
+ 
+@@ -583,7 +583,7 @@ static int tas2552_component_probe(struct snd_soc_component *component)
+ 		return ret;
+ 	}
+ 
+-	gpiod_set_value(tas2552->enable_gpio, 1);
++	gpiod_set_value_cansleep(tas2552->enable_gpio, 1);
+ 
+ 	ret = pm_runtime_resume_and_get(component->dev);
+ 	if (ret < 0) {
+@@ -608,7 +608,7 @@ static int tas2552_component_probe(struct snd_soc_component *component)
+ 
+ probe_fail:
+ 	pm_runtime_put_noidle(component->dev);
+-	gpiod_set_value(tas2552->enable_gpio, 0);
++	gpiod_set_value_cansleep(tas2552->enable_gpio, 0);
+ 
+ 	regulator_bulk_disable(ARRAY_SIZE(tas2552->supplies),
+ 					tas2552->supplies);
+@@ -621,7 +621,7 @@ static void tas2552_component_remove(struct snd_soc_component *component)
+ 
+ 	pm_runtime_put(component->dev);
+ 
+-	gpiod_set_value(tas2552->enable_gpio, 0);
++	gpiod_set_value_cansleep(tas2552->enable_gpio, 0);
+ };
+ 
+ #ifdef CONFIG_PM
 -- 
 2.53.0
 
