@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A243BED78;
-	Mon, 20 Apr 2026 13:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B92A3FA5C7;
+	Mon, 20 Apr 2026 13:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691569; cv=none; b=JiXZaV6qAEz3ldltDhOX/Q9z3HitKo6LNsSQhJryAsODU6WMWV0xEr0DpyXz4OvtysXIQIGfWmitqNXsNA/b3bAqjD512Gbs9H3/7pgB4wN8Vo/Pb34NeFX3zFW/vl5DEWNtmJV30OTxBHkrqyO/Esr8F1HzyT4hnGG21jWjofs=
+	t=1776691570; cv=none; b=LbZiQlLZqeDJQnvEUIP1dm0RhSZLOLZKAGBN5aEm/DbDE0/ltrgs8t0/lOJ/vD558/WR5KO36Jtwvddahh6+Ivc6idrivK39bMRrZUVUPJEy7sIQ+EfxJUUOVexXhjxytda6u65J8FD7RrrgEXo9O0ojBACWYfAs/t27HqnTRho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691569; c=relaxed/simple;
-	bh=SJCCV0RuN9QdhST71zCkxmMQ+9pbQKyDd/uaEnagZ8A=;
+	s=arc-20240116; t=1776691570; c=relaxed/simple;
+	bh=aePsErvzFJloIxrrjSbTedTghx+HOM3zzVUhqil3lD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SIm2xj2e0CB/KxEMBevpcmQo2ECkyjT+FDm3bf+c+scgWBUkxAVnIqDtTqTqWfqNquFRnz5q2xt/PVviwA7iAYHNME+pLdvZP0TNG+yGeQxpFIbwIY8WhRyv2IeXldS7juh06HHM5lqMeJQSQhx3SzIddTLIK6oKyz8q/1jk24s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d22nDM6b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ED8sKLh04VuB+YLgHrQFZSHfOX8cTyhNIVwpR3uThBGql0pgrCrtsxZtdgN7y8qmfLjlUQVzjz1JaIAYxKvXbWFiB9yl1K44/Jd5D/f5ySuc5hAXgN44w1fYnzb0T+kDVxzmZ84Ga3ijs/3sf/JvL04N/XpM8d43Vsbcwt55ACc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=icqTMtZn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d22nDM6b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA362C2BCB6;
-	Mon, 20 Apr 2026 13:26:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="icqTMtZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E743C2BCC4;
+	Mon, 20 Apr 2026 13:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691568;
-	bh=SJCCV0RuN9QdhST71zCkxmMQ+9pbQKyDd/uaEnagZ8A=;
+	s=k20201202; t=1776691570;
+	bh=aePsErvzFJloIxrrjSbTedTghx+HOM3zzVUhqil3lD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d22nDM6bEvkny/UtwPN4twZSu0+aSPmIDiWMdPCBwn6a3IVU7/AS42gS3U7YvE7hD
-	 dPdhECfp8urmmR+KiBZBAzP8EStc2hLTFea4X5nfUKbnQX3dGAjm4szXVUp/nMALEl
-	 aE1y3QVxAclNWE8Ot0MqqD6dsLMt7Az2gyRkdpq+Z7qhU+h8K7ACR4sFdeFDS4BTHE
-	 s19bC04O8BjuKf4v5K+2ioyjmd3GNOH7O2V/lS/OUOJpFMEAmVY05yR4JmTG0x8+ph
-	 Pkmgbi7M/Tz/dp7xf1TzrEyvlnfzEHUoOuJruWFrYsMSiUfIFePtkWmFIWOgKfWmLq
-	 zBQCAwbVeYFWg==
+	b=icqTMtZn6xf2oHTfaBb5BaWJZUyBlO551NidNUQWHtDfrTTzS1roNwU80vGf3DhVK
+	 BjMUxyEXlto0ugs3cF5YdTMUhWe6i0SxrauxsRTBxpJQqvPdry6Z5Nu2NZsqwSNin4
+	 8QOMLemH/14BzzIEsc0nQbZRYSRZuB4nrHFbC74MJ763hKSXBkjxmXes7GnN6RPlBK
+	 q9zq7y1MbwbNDWjfrMCrb7sbn+aZqTe+viJVX0xML5RdugpMxFVDP2do48Wbegta/P
+	 mUgpsMfkW8e45vS5mUM31TlGgjZeDxMqQv7OAozxfq2iHnqqauXXgg8vSrOwwGd+3W
+	 Qc/QBRGtFDtKg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Keith Busch <kbusch@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+Cc: Hawking Zhang <Hawking.Zhang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] PCI: Allow all bus devices to use the same slot
-Date: Mon, 20 Apr 2026 09:18:19 -0400
-Message-ID: <20260420132314.1023554-105-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] drm/amdgpu: Handle IH v7_1 reg offset differences
+Date: Mon, 20 Apr 2026 09:18:20 -0400
+Message-ID: <20260420132314.1023554-106-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,509 +56,372 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Hawking Zhang <Hawking.Zhang@amd.com>
 
-[ Upstream commit 102c8b26b54e363f85c4c86099ca049a0a76bb58 ]
+[ Upstream commit 41c61e60f82d55e9a3a3f3f04d192d732230a91c ]
 
-A PCIe hotplug slot applies to the entire secondary bus. Thus, pciehp only
-allocates a single hotplug_slot for the bridge to that bus. The existing
-PCI slot, though, would only match to functions on device 0, meaning any
-devices beyond that, e.g., ARI functions, are not matched to any slot even
-though they share it. A slot reset will break all the missing devices
-because the handling skips them.
+IH v7_1 changes the offsets of some registers relative to
+IH v7_0. Introduce IH v7_1-specific register access
 
-For example, ARI devices with more than 8 functions fail because their
-state is not properly handled, nor is the attached driver notified of the
-reset. In the best case, the device will appear unresponsive to the driver,
-resulting in unexpected errors. A worse possibility may panic the kernel if
-in-flight transactions trigger hardware reported errors like this real
-observation:
-
-  vfio-pci 0000:01:00.0: resetting
-  vfio-pci 0000:01:00.0: reset done
-  {1}[Hardware Error]:  Error 1, type: fatal
-  {1}[Hardware Error]:   section_type: PCIe error
-  {1}[Hardware Error]:   port_type: 0, PCIe end point
-  {1}[Hardware Error]:   version: 0.2
-  {1}[Hardware Error]:   command: 0x0140, status: 0x0010
-  {1}[Hardware Error]:   device_id: 0000:01:01.0
-  {1}[Hardware Error]:   slot: 0
-  {1}[Hardware Error]:   secondary_bus: 0x00
-  {1}[Hardware Error]:   vendor_id: 0x1d9b, device_id: 0x0207
-  {1}[Hardware Error]:   class_code: 020000
-  {1}[Hardware Error]:   bridge: secondary_status: 0x0000, control: 0x0000
-  {1}[Hardware Error]:   aer_cor_status: 0x00008000, aer_cor_mask: 0x00002000
-  {1}[Hardware Error]:   aer_uncor_status: 0x00010000, aer_uncor_mask: 0x00100000
-  {1}[Hardware Error]:   aer_uncor_severity: 0x006f6030
-  {1}[Hardware Error]:   TLP Header: 0a412800 00192080 60000004 00000004
-  GHES: Fatal hardware error but panic disabled
-  Kernel panic - not syncing: GHES: Fatal hardware error
-
-Allow a slot to be created to claim all devices on a bus, not just a
-matching device. This is done by introducing a sentinel value, named
-PCI_SLOT_ALL_DEVICES, which then has the PCI slot match to any device on
-the bus. This fixes slot resets for pciehp.
-
-Since 0xff already has special meaning, the chosen value for this new
-feature is 0xfe. This will not clash with any actual slot number since they
-are limited to 5 bits.
-
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20260217160836.2709885-3-kbusch@meta.com
+Signed-off-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a comprehensive understanding. Let me compile my final
-analysis.
+Connection lost, reconnecting (attempt 1)...
+Retry attempt 1...
+Now let me compile the final analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: PCI (pciehp hotplug)
-- Action verb: "Allow" - describes enabling a new behavior
-- Summary: Enables PCIe hotplug slot to match ALL bus devices, not just
-  device 0
-- Record: [PCI/pciehp] [Allow] [bus-wide slot matching for ARI device
-  reset handling]
+### Step 1.1: Subject Line
+- **Subsystem**: `drm/amdgpu` (AMD GPU driver, IH = Interrupt Handler)
+- **Action verb**: "Handle" - implies addressing a functional issue
+- **Summary**: Addresses register offset differences between IH v7.0 and
+  IH v7.1 hardware IP versions
 
-**Step 1.2: Tags**
-- Signed-off-by: Keith Busch <kbusch@kernel.org> (author, prolific PCI
-  contributor)
-- Signed-off-by: Bjorn Helgaas <bhelgaas@google.com> (PCI subsystem
-  maintainer)
-- Reviewed-by: Dan Williams <dan.j.williams@intel.com> (Intel PCI/CXL
-  expert)
-- Link:
-  https://patch.msgid.link/20260217160836.2709885-3-kbusch@meta.com
-  (patch 3 of a series)
-- No Fixes: tag, no Cc: stable, no Reported-by - all expected for
-  autosel candidates
-- Record: Strong author+reviewer pedigree. Accepted through PCI
-  maintainer tree.
+Record: [drm/amdgpu] [Handle] [Fix wrong register offsets for IH v7.1
+hardware]
 
-**Step 1.3: Commit Body**
-- Bug: pciehp allocates a single hotplug_slot for the bridge, but only
-  matches device 0. ARI devices with >8 functions have functions
-  appearing to be on different PCI_SLOT() values. These are not matched
-  to the slot.
-- Symptom: Slot reset skips unmatched devices - drivers not notified,
-  state not saved/restored. This causes hardware errors, device
-  unresponsiveness, and **kernel panic** from fatal PCIe AER errors.
-- Real observed failure: Hardware Error with `Kernel panic - not
-  syncing: GHES: Fatal hardware error` shown for a vfio-pci device at
-  0000:01:01.0 during reset of 0000:01:00.0.
-- Record: Bug is kernel panic during slot reset of ARI devices. Root
-  cause is slot matching only covers device 0.
+### Step 1.2: Tags
+- Signed-off-by: Hawking Zhang (AMD GPU architect/contributor)
+- Reviewed-by: Lijo Lazar (AMD GPU developer)
+- Signed-off-by: Alex Deucher (AMD GPU subsystem maintainer)
+- No Fixes: tag, no Reported-by, no Cc: stable - all expected for
+  candidate evaluation.
 
-**Step 1.4: Hidden Bug Fix Detection**
-- Despite the "Allow" verb (sounds feature-like), this fixes a concrete
-  kernel panic. The commit includes a full hardware error trace showing
-  the panic.
-- Record: This IS a bug fix, clearly demonstrated by the panic trace.
+Record: Standard AMD GPU driver patch flow. Reviewed by subsystem
+contributor, signed off by maintainer.
+
+### Step 1.3: Commit Body
+The body explains: "IH v7_1 changes the offsets of some registers
+relative to IH v7_0." This states factually that register offsets differ
+between hardware versions. "Introduce IH v7_1-specific register access"
+means the fix adds conditional paths.
+
+Record: The bug is that IH v7.1 hardware has different register offsets
+for certain registers, but the driver uses v7.0 offsets for all
+versions, leading to wrong register accesses.
+
+### Step 1.4: Hidden Bug Fix Detection
+This IS a hidden bug fix. The phrase "Handle... differences" understates
+the issue: without this change, the driver reads/writes WRONG register
+offsets on IH v7.1 hardware. This is a functional correctness bug.
+
+Record: Yes, this is a hidden bug fix disguised as enablement.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- `include/linux/pci.h`: +8 lines (define + comment), 1 line changed
-  (struct comment)
-- `drivers/pci/hotplug/pciehp_core.c`: 2 lines changed (0 ->
-  PCI_SLOT_ALL_DEVICES)
-- `drivers/pci/slot.c`: +8 lines (new sysfs case), 3 conditionals
-  changed, ~12 lines doc updates
-- Total: ~20-25 functional lines, rest documentation. 3 files changed.
-- Functions modified: `init_slot()`, `address_read_file()`,
-  `pci_slot_release()`, `pci_dev_assign_slot()`, `pci_create_slot()`
-- Record: Small-to-medium scope, well-contained to slot management code.
+### Step 2.1: Inventory
+- **Files**: `drivers/gpu/drm/amd/amdgpu/ih_v7_0.c` (+22 lines net)
+- **Functions modified**: `ih_v7_0_irq_init()`
+- **Scope**: Single-file, single-function, surgical fix
 
-**Step 2.2: Code Flow Changes**
-1. `pci.h`: Adds `PCI_SLOT_ALL_DEVICES 0xfe` sentinel constant
-2. `pciehp_core.c init_slot()`: Changes slot number from `0` to
-   `PCI_SLOT_ALL_DEVICES`
-3. `slot.c pci_slot_release()`: Adds `slot->number ==
-   PCI_SLOT_ALL_DEVICES ||` check - ensures ALL bus devices get
-   `dev->slot = NULL` on release
-4. `slot.c pci_dev_assign_slot()`: Same pattern - ensures ALL bus
-   devices get `dev->slot = slot` during assignment
-5. `slot.c pci_create_slot()`: Same pattern - ensures ALL devices on bus
-   get `dev->slot` at creation
-6. `slot.c address_read_file()`: New sysfs case for PCI_SLOT_ALL_DEVICES
-   emitting `0` for device number (backward compatible)
+### Step 2.2: Code Flow Change
+The diff modifies `ih_v7_0_irq_init()` in three places:
 
-**Step 2.3: Bug Mechanism**
-- Category: Logic/correctness bug in slot matching
-- What was broken: `PCI_SLOT(dev->devfn) == slot->number` only matches
-  device 0. ARI functions >=8 have `PCI_SLOT(devfn) != 0`.
-- How the fix works: The sentinel `PCI_SLOT_ALL_DEVICES` makes all
-  comparisons match any device on the bus.
-- Impact chain: `pci_dev_assign_slot()` skips ARI devices -> `dev->slot
-  == NULL` -> `pci_slot_lock/save/restore` skips them (checks
-  `!dev->slot || dev->slot != slot`) -> state not saved during reset ->
-  hardware errors -> kernel panic
+1. **IH_CHICKEN register** (lines 321-324): Before: always uses
+   `regIH_CHICKEN` (0x018a from v7.0 header). After: checks IP version;
+   uses 0x0129 for v7.1, 0x018a for v7.0.
 
-**Step 2.4: Fix Quality**
-- Obviously correct: Yes - the matching logic is straightforward
-- Minimal: Mostly - introduces a new constant as mechanism, but the
-  functional changes are small
-- Regression risk: Very low - the new code path only triggers when
-  `slot->number == PCI_SLOT_ALL_DEVICES`, which only pciehp sets
-- Record: High quality fix, well-reviewed, low regression risk.
+2. **IH_RING1_CLIENT_CFG_INDEX** (lines 361-363): Before: always uses
+   `regIH_RING1_CLIENT_CFG_INDEX` (0x0183). After: uses 0x0122 for v7.1.
 
-## PHASE 3: GIT HISTORY
+3. **IH_RING1_CLIENT_CFG_DATA** (lines 365-371): Before: always uses
+   `regIH_RING1_CLIENT_CFG_DATA` (0x0184). After: uses 0x0123 for v7.1.
 
-**Step 3.1: Blame**
-- `slot.c` line 76 (`PCI_SLOT(dev->devfn) == slot->number`): from commit
-  cef354db0d7a72 (2008)
-- `slot.c` line 169 (pci_dev_assign_slot): from cef354db0d7a72 (2008)
-- `pciehp_core.c` line 82 (passing `0`): from 774d446b0f9222 (2018),
-  originally from even earlier
-- The buggy slot matching logic has been present since 2008 - it exists
-  in ALL stable trees.
-- Record: Buggy code from 2008, present in all active stable trees.
+Six local `#define` constants are added for the v7.1 offsets.
 
-**Step 3.2: No Fixes: tag to follow** - Expected for autosel candidates.
+### Step 2.3: Bug Mechanism
+**Category**: Hardware register access correctness bug
 
-**Step 3.3: File History**
-- Recent changes to slot.c include treewide allocator changes (non-
-  conflicting) and minor hotplug cleanups
-- The pci_slot_lock() fix (1f5e57c622b4d) is already in 7.0, which was a
-  prerequisite from the same author
-- Record: File has low recent churn. Prerequisite slot lock fix already
-  present.
+I verified the register offsets from the actual header files:
 
-**Step 3.4: Author Assessment**
-- Keith Busch is a major PCI/NVMe subsystem contributor at Meta
-- Has 30+ commits to `drivers/pci/` in this tree, focusing on error
-  recovery and reset handling
-- Record: Author is a key subsystem expert.
+**osssys_7_0_0_offset.h**:
+- `regIH_CHICKEN` = 0x018a
+- `regIH_RING1_CLIENT_CFG_INDEX` = 0x0183
+- `regIH_RING1_CLIENT_CFG_DATA` = 0x0184
 
-**Step 3.5: Dependencies**
-- This is patch 3 of a series (msgid ...-3). The v2 series had 4
-  patches. Patches 1+2 from v2 are in 7.0 (trylock fix + slot lock fix).
-  Patches 3+4 from v2 were NOT applied (they took a different approach:
-  removing slot-specific lock/unlock).
-- The Feb 17 series (v3?) evolved the approach. This patch introduces
-  PCI_SLOT_ALL_DEVICES instead of removing slot-specific functions.
-- This patch is self-contained: it only modifies slot matching in slot.c
-  and the init call in pciehp_core.c. The existing pci.c code
-  (`dev->slot != slot` checks) works automatically once `dev->slot` is
-  correctly assigned.
-- Record: Self-contained, no additional dependencies beyond what's
-  already in 7.0.
+**osssys_7_1_0_offset.h**:
+- `regIH_CHICKEN` = 0x0129
+- `regIH_RING1_CLIENT_CFG_INDEX` = 0x0122
+- `regIH_RING1_CLIENT_CFG_DATA` = 0x0123
+
+The offsets differ significantly (e.g., IH_CHICKEN is 0x61 dwords
+apart). Since `ih_v7_0.c` only includes the v7.0 header, on v7.1
+hardware it reads/writes completely wrong registers.
+
+### Step 2.4: Fix Quality
+- **Obviously correct**: Yes - version check + correct v7.1 offsets
+  verified against official header
+- **Minimal/surgical**: Yes - only the three affected registers are
+  touched
+- **Regression risk**: Very low - only changes behavior for
+  IP_VERSION(7,1,0); v7.0 paths unchanged
+- **Red flags**: None
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame
+The buggy `RREG32_SOC15(OSSSYS, 0, regIH_CHICKEN)` at line 321 was
+introduced by `12443fc53e7d7` (Likun Gao, 2023 - initial ih_v7_0
+support). The IH_RING1 client config lines (359-371) were added by
+`f0c6b79bfc921` (Sunil Khatri, July 2024).
+
+### Step 3.2: Fixes Tag
+No Fixes: tag present. The underlying issue is that `692c70f4d8024`
+("drm/amdgpu: Use ih v7_0 ip block for ih v7_1") claimed v7.1 could
+share the v7.0 implementation, but didn't account for register offset
+differences. This commit IS in the stable tree.
+
+### Step 3.3: File History
+20+ commits to ih_v7_0.c, mostly API refactoring. The v7.1-specific code
+(retry CAM) was added by `e06d194201189` which IS in this tree.
+
+### Step 3.4: Author
+Hawking Zhang is a principal AMD GPU architect and frequent contributor,
+also added the osssys v7.1 headers.
+
+### Step 3.5: Dependencies
+No dependencies. The commit is self-contained - it adds local #defines
+rather than including the v7.1 header (avoiding symbol clashes).
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1: Original Patch Discussion**
-- b4 dig found the v2 series at
-  https://patch.msgid.link/20260130165953.751063-3-kbusch@meta.com
-- The v2 thread shows this was a 4-patch series: trylock fix, slot lock
-  fix, remove slot-specific functions, make reset_subordinate hotplug
-  safe
-- The "Allow all bus devices" commit (Feb 17) is from a later revision
-  that changed approach
-- Dan Williams reviewed patches 3 and 4 of v2, providing feedback that
-  led to the evolved approach
-- Record: Series went through multiple revisions with review feedback
-  incorporated.
-
-**Step 4.2: Reviewers**
-- Dan Williams (Intel, CXL/PCI expert) - Reviewed-by
-- Bjorn Helgaas (PCI maintainer) - accepted and signed off
-- Record: Key PCI maintainers reviewed and approved.
-
-**Step 4.3: Bug Report**
-- No external bug report link, but the commit message contains a real
-  panic trace from production hardware
-- The error shows vfio-pci resetting 0000:01:00.0, then device
-  0000:01:01.0 (ARI function) triggering fatal hardware error
-- Record: Real-world production failure documented in commit message.
-
-**Step 4.4-4.5**: Lore site behind Anubis protection, but b4 dig
-provided series information.
+Could not find the specific patch thread on lore.kernel.org (Anubis
+anti-scraping protection blocked search). Web search also did not find
+the exact patch. The "Consolidate register access methods" series by
+Lijo Lazar (Jan 2026) appears to be a follow-up refactoring.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Key Functions**
-Modified: `init_slot()`, `address_read_file()`, `pci_slot_release()`,
-`pci_dev_assign_slot()`, `pci_create_slot()`
+### Step 5.1: Key Functions
+`ih_v7_0_irq_init()` is the only function modified.
 
-**Step 5.2: Callers**
-- `pci_dev_assign_slot()` called from `pci_setup_device()` in probe.c -
-  called during EVERY device enumeration
-- `pci_create_slot()` called from pciehp init and other hotplug drivers
-- The reset path uses `dev->slot` pointer in: `pci_slot_resettable()`,
-  `pci_slot_lock()`, `pci_slot_unlock()`, `pci_slot_trylock()`,
-  `pci_slot_save_and_disable_locked()`, `pci_slot_restore_locked()`
-- `pci_reset_bus()` is called from VFIO, error recovery, and other reset
-  paths
-- Record: Highly reachable code paths. Reset triggered from userspace
-  via VFIO.
+### Step 5.2: Callers
+`ih_v7_0_irq_init()` is called from:
+- `ih_v7_0_hw_init()` -> called during device load
+- `ih_v7_0_resume()` -> called during system resume
 
-**Step 5.3-5.5**: The fix ensures all devices on a pciehp bus get
-`dev->slot` assigned, which propagates to all existing slot iteration
-functions without any changes to pci.c.
+These are critical initialization paths that run every time the GPU is
+initialized or resumed.
 
-## PHASE 6: STABLE TREE ANALYSIS
+### Step 5.4: Reachability
+Absolutely reachable - runs on every device init and resume for any GPU
+using IH v7.x.
 
-**Step 6.1: Buggy Code in Stable**
-- The slot matching code (`PCI_SLOT(dev->devfn) == slot->number`) exists
-  since 2008 - present in ALL active stable trees
-- pciehp passing `0` as slot_nr exists since at least 2018 (commit
-  774d446b0f9222)
-- Record: Bug exists in all stable trees from 5.x through 7.0.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 6.2: Backport Complications**
-- The 7.0 tree has some treewide refactoring (kmalloc -> kmalloc_obj)
-  that might cause minor context conflicts
-- The core changes should apply cleanly with minor adjustments
-- Record: Minor conflicts possible, but straightforward to resolve.
+### Step 6.1: Buggy Code in Stable
+YES - both the code and the IH v7.1 hardware recognition
+(`amdgpu_discovery.c` line 2110: `case IP_VERSION(7, 1, 0)`) exist in
+this 7.0 tree. The v7.1-specific retry CAM code (commit `e06d194201189`)
+is also present.
 
-**Step 6.3: No related fixes already in stable for this specific
-issue.**
+### Step 6.2: Backport Complications
+The patch should apply cleanly - the file in the stable tree matches the
+pre-image of the diff exactly. The current code at lines 303-402 matches
+what the diff expects.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Step 6.3: Related Fixes
+No related fix for the same issue already in stable.
 
-**Step 7.1: Subsystem**
-- PCI core / pciehp - CORE subsystem
-- Affects all systems with PCIe hotplug and ARI-capable devices
-- Common in: VFIO/SR-IOV virtualization, datacenter hardware
-- Record: [PCI/hotplug] [CORE/IMPORTANT]
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-## PHASE 8: IMPACT AND RISK
+### Step 7.1: Subsystem Criticality
+`drm/amdgpu` - IMPORTANT. AMD GPUs are very widely used. IH (Interrupt
+Handler) is critical for GPU interrupt delivery.
 
-**Step 8.1: Affected Users**
-- Users with PCIe ARI devices (multi-function devices with >8 functions)
-  undergoing slot reset
-- Common in VFIO/SR-IOV scenarios in datacenters and virtualization
-- Record: Important user population (datacenter, virtualization)
+### Step 7.2: Activity
+Very active subsystem with frequent changes.
 
-**Step 8.2: Trigger Conditions**
-- Triggered by slot reset (VFIO reset, error recovery, hotplug events)
-- Can be triggered from userspace via VFIO
-- The VFIO use case is common in production
-- Record: Realistic trigger, reachable from userspace
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.3: Failure Mode**
-- Kernel panic from fatal hardware error (GHES)
-- Device unresponsiveness, unexpected driver errors
-- Record: CRITICAL severity - kernel panic
+### Step 8.1: Affected Users
+Users with IH v7.1 GPUs (specific AMD GPU generation). These GPUs are
+detected and loaded by the driver in the 7.0 stable tree.
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Very high - prevents kernel panic in production VFIO/ARI
-  scenarios
-- RISK: Low - changes are well-contained, only affect slots with
-  PCI_SLOT_ALL_DEVICES, backward compatible sysfs output
-- Record: Strong benefit/risk ratio
+### Step 8.2: Trigger Conditions
+Every GPU initialization and every system resume. 100% reproducible on
+affected hardware.
+
+### Step 8.3: Failure Mode Severity
+Without this fix on IH v7.1 hardware:
+- **IH_CHICKEN wrong**: Bus address mode for IH not configured ->
+  potential firmware load path issues
+- **IH_RING1_CLIENT_CFG wrong**: Interrupt redirection to ring 1 broken
+  for dGPUs -> interrupt handling incomplete
+- **Wrong register writes**: Writing to offset 0x018a instead of 0x0129
+  corrupts whatever register is actually at 0x018a
+- Severity: **HIGH** - broken interrupt initialization on affected GPUs
+
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: HIGH - makes IH v7.1 GPUs work correctly with proper
+  interrupt handling
+- **Risk**: VERY LOW - only changes behavior for IP_VERSION(7,1,0), all
+  v7.0 paths unchanged
+- **Ratio**: Strongly favorable
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Summary**
-FOR backporting:
-- Fixes documented kernel panic with real hardware error trace
-- Affects production VFIO/SR-IOV users with ARI devices
-- Author is key PCI contributor, reviewed by Dan Williams, accepted by
-  Bjorn Helgaas
-- Self-contained fix, no dependencies on other unmerged patches
-- Low regression risk - new code path only for PCI_SLOT_ALL_DEVICES
-  slots
-- Buggy code present since 2008 - affects all stable trees
-- The sysfs change preserves backward compatibility
+### Step 9.1: Evidence Summary
 
-AGAINST backporting:
-- Introduces new `PCI_SLOT_ALL_DEVICES` constant (new kernel-internal
-  API)
-- Adds new semantics to `pci_create_slot()` (bus-wide slots)
-- Part of a multi-patch series (patch 3), though self-contained
-- Not purely surgical - includes documentation and sysfs behavior
-  changes
-- No Fixes: tag (expected for autosel)
+**FOR backporting**:
+- Fixes wrong register access on hardware already supported in stable
+  (v7.1 IP recognized, block loaded)
+- Three registers accessed at completely wrong offsets (0x018a vs
+  0x0129, etc.)
+- Wrong register writes can corrupt hardware state and break interrupt
+  handling
+- Every GPU init/resume triggers the bug on affected hardware
+- Self-contained single-file fix
+- Reviewed by AMD developer, signed off by AMD maintainer
+- Low regression risk (v7.0 hardware unaffected)
+- Fix quality is high: correct offsets verified against official header
+  file
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? YES - reviewed by Dan Williams,
-   accepted by Bjorn Helgaas
-2. Fixes a real bug? YES - kernel panic during ARI device slot reset
-3. Important issue? YES - kernel panic (CRITICAL severity)
-4. Small and contained? YES (borderline) - ~25 functional lines, 3
-   files, well-contained scope
-5. No new features/APIs? BORDERLINE - `PCI_SLOT_ALL_DEVICES` is new but
-   is mechanism for bug fix, not a user-facing feature
-6. Can apply to stable? YES with possible minor context adjustments
+**AGAINST backporting**:
+- Moderate size (~22 lines, 6 #defines + conditional logic)
+- Commit message reads more like enablement than a bug fix
+- No Reported-by or syzbot (hardware may not yet be widely deployed)
+- Could be considered part of ongoing hardware bring-up
 
-**Step 9.3: Exception Categories**
-- This is a hardware workaround/fix category - fixing slot reset to
-  properly handle ARI devices
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** - offsets verified against v7.1
+   header
+2. Fixes a real bug? **YES** - wrong register addresses on v7.1 hardware
+3. Important issue? **YES** - broken interrupt initialization, potential
+   register corruption
+4. Small and contained? **YES** - single file, single function, ~22
+   lines
+5. No new features? **YES** - fixes existing hardware support
+6. Can apply to stable? **YES** - file matches pre-image exactly
 
-**Step 9.4: Decision**
-The kernel panic severity, production impact (VFIO/ARI), strong
-authorship/review, self-contained nature, and backward compatibility
-outweigh the concern about the new internal constant. The
-`PCI_SLOT_ALL_DEVICES` define is the minimal mechanism needed to fix
-this bug correctly.
+### Step 9.3: Exception Categories
+This is a **hardware workaround/quirk** for register offset differences
+- this exception category applies.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Keith Busch (author), Bjorn Helgaas (maintainer
-  SOB), Dan Williams (Reviewed-by), Link to v3 series patch 3
-- [Phase 2] Diff analysis: ~25 functional lines across 3 files. New
-  PCI_SLOT_ALL_DEVICES constant, 3 conditional changes in slot.c, 1 init
-  change in pciehp_core.c, sysfs backward-compatible change
-- [Phase 3] git blame: Buggy slot matching in slot.c from commit
-  cef354db0d7a72 (2008), pciehp passing 0 from commit 774d446b0f9222
-  (2018)
-- [Phase 3] git log author: Keith Busch has 30+ PCI commits including
-  error recovery and reset handling
-- [Phase 3] git log: Slot lock fix (1f5e57c622b4d) already in 7.0; v2
-  patches 3+4 not applied (different approach evolved)
-- [Phase 4] b4 dig -c 1f5e57c622b4d: Found v2 series [PATCHv2 0/4] pci:
-  slot handling fixes at lore
-- [Phase 4] b4 dig -a: Series went through at least v2 (Jan 30) and v3+
-  (Feb 17) revisions
-- [Phase 4] Thread review: Dan Williams reviewed the series, patches 1+2
-  merged, 3+4 replaced by this new approach
-- [Phase 5] pci_dev_assign_slot() called from pci_setup_device() during
-  every device probe
-- [Phase 5] pci_reset_bus() reachable from VFIO userspace and error
-  recovery - confirms user reachability
-- [Phase 5] pci.c slot iteration uses `dev->slot != slot` pointer
-  comparison - works automatically once dev->slot correctly assigned
-- [Phase 6] Buggy code exists in all stable trees (code from 2008/2018)
-- [Phase 6] Minor context conflicts possible from treewide refactoring
-- [Phase 8] Failure mode: kernel panic from GHES fatal hardware error -
-  severity CRITICAL
-- UNVERIFIED: Could not access lore.kernel.org directly due to Anubis
-  protection for detailed discussion review
-- UNVERIFIED: Exact series composition for the v3 (Feb 17) submission
-  beyond patch 3
+- [Phase 1] Parsed tags: Reviewed-by: Lijo Lazar, Signed-off-by: Hawking
+  Zhang + Alex Deucher
+- [Phase 2] Diff analysis: adds #defines for 3 v7.1 register offsets +
+  conditional selection in ih_v7_0_irq_init()
+- [Phase 2] Verified v7.0 offsets: IH_CHICKEN=0x018a, CFG_INDEX=0x0183,
+  CFG_DATA=0x0184 (from osssys_7_0_0_offset.h)
+- [Phase 2] Verified v7.1 offsets: IH_CHICKEN=0x0129, CFG_INDEX=0x0122,
+  CFG_DATA=0x0123 (from osssys_7_1_0_offset.h)
+- [Phase 2] Confirmed #defines in patch match v7.1 header values exactly
+- [Phase 2] Confirmed all other IH registers (RB_BASE, RB_CNTL, etc.)
+  have SAME offsets in v7.0 and v7.1 - only these three differ
+- [Phase 3] git blame: regIH_CHICKEN usage introduced by 12443fc53e7d7
+  (initial ih_v7_0, 2023); client CFG added by f0c6b79bfc921 (2024)
+- [Phase 3] git show 692c70f4d8024: confirmed this commit added
+  IP_VERSION(7,1,0) mapping to ih_v7_0_ip_block in discovery
+- [Phase 3] git show e06d194201189: confirmed v7.1-specific CAM code
+  exists in stable tree
+- [Phase 5] ih_v7_0_irq_init() called from hw_init (device load) and
+  resume - critical paths
+- [Phase 6] Confirmed IP_VERSION(7,1,0) recognized in amdgpu_discovery.c
+  line 2110 of this tree
+- [Phase 6] Confirmed osssys_7_1_0_offset.h exists in this tree (commit
+  755b5591739cc)
+- [Phase 6] File matches pre-image of diff exactly - clean apply
+  expected
+- [Phase 6] RREG32_SOC15 macro verified: uses
+  `adev->reg_offset[ip_HWIP][inst][reg_BASE_IDX] + reg` - the `reg`
+  value comes from the included header (7_0_0)
+- UNVERIFIED: Could not access lore.kernel.org to read patch discussion
+  (Anubis protection)
+- UNVERIFIED: Which specific GPU models use IH v7.1 (but confirmed it IS
+  recognized in this tree)
 
 **YES**
 
- drivers/pci/hotplug/pciehp_core.c |  3 ++-
- drivers/pci/slot.c                | 31 +++++++++++++++++++++++++++----
- include/linux/pci.h               | 10 +++++++++-
- 3 files changed, 38 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/ih_v7_0.c | 36 ++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pci/hotplug/pciehp_core.c b/drivers/pci/hotplug/pciehp_core.c
-index 1e9158d7bac75..2cafd3b26f344 100644
---- a/drivers/pci/hotplug/pciehp_core.c
-+++ b/drivers/pci/hotplug/pciehp_core.c
-@@ -79,7 +79,8 @@ static int init_slot(struct controller *ctrl)
- 	snprintf(name, SLOT_NAME_SIZE, "%u", PSN(ctrl));
- 
- 	retval = pci_hp_initialize(&ctrl->hotplug_slot,
--				   ctrl->pcie->port->subordinate, 0, name);
-+				   ctrl->pcie->port->subordinate,
-+				   PCI_SLOT_ALL_DEVICES, name);
- 	if (retval) {
- 		ctrl_err(ctrl, "pci_hp_initialize failed: error %d\n", retval);
- 		kfree(ops);
-diff --git a/drivers/pci/slot.c b/drivers/pci/slot.c
-index 787311614e5b6..e0b7fb43423c9 100644
---- a/drivers/pci/slot.c
-+++ b/drivers/pci/slot.c
-@@ -42,6 +42,15 @@ static ssize_t address_read_file(struct pci_slot *slot, char *buf)
- 				  pci_domain_nr(slot->bus),
- 				  slot->bus->number);
- 
-+	/*
-+	 * Preserve legacy ABI expectations that hotplug drivers that manage
-+	 * multiple devices per slot emit 0 for the device number.
-+	 */
-+	if (slot->number == PCI_SLOT_ALL_DEVICES)
-+		return sysfs_emit(buf, "%04x:%02x:00\n",
-+				  pci_domain_nr(slot->bus),
-+				  slot->bus->number);
-+
- 	return sysfs_emit(buf, "%04x:%02x:%02x\n",
- 			  pci_domain_nr(slot->bus),
- 			  slot->bus->number,
-@@ -73,7 +82,8 @@ static void pci_slot_release(struct kobject *kobj)
- 
- 	down_read(&pci_bus_sem);
- 	list_for_each_entry(dev, &slot->bus->devices, bus_list)
--		if (PCI_SLOT(dev->devfn) == slot->number)
-+		if (slot->number == PCI_SLOT_ALL_DEVICES ||
-+		    PCI_SLOT(dev->devfn) == slot->number)
- 			dev->slot = NULL;
- 	up_read(&pci_bus_sem);
- 
-@@ -166,7 +176,8 @@ void pci_dev_assign_slot(struct pci_dev *dev)
- 
- 	mutex_lock(&pci_slot_mutex);
- 	list_for_each_entry(slot, &dev->bus->slots, list)
--		if (PCI_SLOT(dev->devfn) == slot->number)
-+		if (slot->number == PCI_SLOT_ALL_DEVICES ||
-+		    PCI_SLOT(dev->devfn) == slot->number)
- 			dev->slot = slot;
- 	mutex_unlock(&pci_slot_mutex);
+diff --git a/drivers/gpu/drm/amd/amdgpu/ih_v7_0.c b/drivers/gpu/drm/amd/amdgpu/ih_v7_0.c
+index 451828bf583e4..1fbe904f4223b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/ih_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/ih_v7_0.c
+@@ -289,6 +289,13 @@ static uint32_t ih_v7_0_setup_retry_doorbell(u32 doorbell_index)
+ 	return val;
  }
-@@ -188,7 +199,8 @@ static struct pci_slot *get_slot(struct pci_bus *parent, int slot_nr)
- /**
-  * pci_create_slot - create or increment refcount for physical PCI slot
-  * @parent: struct pci_bus of parent bridge
-- * @slot_nr: PCI_SLOT(pci_dev->devfn) or -1 for placeholder
-+ * @slot_nr: PCI_SLOT(pci_dev->devfn), -1 for placeholder, or
-+ *	PCI_SLOT_ALL_DEVICES
-  * @name: user visible string presented in /sys/bus/pci/slots/<name>
-  * @hotplug: set if caller is hotplug driver, NULL otherwise
-  *
-@@ -222,6 +234,16 @@ static struct pci_slot *get_slot(struct pci_bus *parent, int slot_nr)
-  * consist solely of a dddd:bb tuple, where dddd is the PCI domain of the
-  * %struct pci_bus and bb is the bus number. In other words, the devfn of
-  * the 'placeholder' slot will not be displayed.
-+ *
-+ * Bus-wide slots:
-+ * For PCIe hotplug, the physical slot encompasses the entire secondary
-+ * bus, not just a single device number. If the device supports ARI and ARI
-+ * Forwarding is enabled in the upstream bridge, a multi-function device
-+ * may include functions that appear to have several different device
-+ * numbers, i.e., PCI_SLOT() values.  Pass @slot_nr == PCI_SLOT_ALL_DEVICES
-+ * to create a slot that matches all devices on the bus. Unlike placeholder
-+ * slots, bus-wide slots go through normal slot lookup and reuse existing
-+ * slots if present.
-  */
- struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
- 				 const char *name,
-@@ -285,7 +307,8 @@ struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
  
- 	down_read(&pci_bus_sem);
- 	list_for_each_entry(dev, &parent->devices, bus_list)
--		if (PCI_SLOT(dev->devfn) == slot_nr)
-+		if (slot_nr == PCI_SLOT_ALL_DEVICES ||
-+		    PCI_SLOT(dev->devfn) == slot_nr)
- 			dev->slot = slot;
- 	up_read(&pci_bus_sem);
- 
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 1c270f1d51230..5ae2dfdb2d6f3 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -72,12 +72,20 @@
- /* return bus from PCI devid = ((u16)bus_number) << 8) | devfn */
- #define PCI_BUS_NUM(x) (((x) >> 8) & 0xff)
- 
-+/*
-+ * PCI_SLOT_ALL_DEVICES indicates a slot that covers all devices on the bus.
-+ * Used for PCIe hotplug where the physical slot is the entire secondary bus,
-+ * and, if ARI Forwarding is enabled, functions may appear to be on multiple
-+ * devices.
-+ */
-+#define PCI_SLOT_ALL_DEVICES	0xfe
++#define regIH_RING1_CLIENT_CFG_INDEX_V7_1             0x122
++#define regIH_RING1_CLIENT_CFG_INDEX_V7_1_BASE_IDX    0
++#define regIH_RING1_CLIENT_CFG_DATA_V7_1              0x123
++#define regIH_RING1_CLIENT_CFG_DATA_V7_1_BASE_IDX     0
++#define regIH_CHICKEN_V7_1                            0x129
++#define regIH_CHICKEN_V7_1_BASE_IDX                   0
 +
- /* pci_slot represents a physical slot */
- struct pci_slot {
- 	struct pci_bus		*bus;		/* Bus this slot is on */
- 	struct list_head	list;		/* Node in list of slots */
- 	struct hotplug_slot	*hotplug;	/* Hotplug info (move here) */
--	unsigned char		number;		/* PCI_SLOT(pci_dev->devfn) */
-+	unsigned char		number;		/* Device nr, or PCI_SLOT_ALL_DEVICES */
- 	struct kobject		kobj;
- };
+ /**
+  * ih_v7_0_irq_init - init and enable the interrupt ring
+  *
+@@ -307,6 +314,7 @@ static int ih_v7_0_irq_init(struct amdgpu_device *adev)
+ 	u32 tmp;
+ 	int ret;
+ 	int i;
++	u32 reg_addr;
  
+ 	/* disable irqs */
+ 	ret = ih_v7_0_toggle_interrupts(adev, false);
+@@ -318,10 +326,15 @@ static int ih_v7_0_irq_init(struct amdgpu_device *adev)
+ 	if (unlikely((adev->firmware.load_type == AMDGPU_FW_LOAD_DIRECT) ||
+ 		     (adev->firmware.load_type == AMDGPU_FW_LOAD_RLC_BACKDOOR_AUTO))) {
+ 		if (ih[0]->use_bus_addr) {
+-			ih_chicken = RREG32_SOC15(OSSSYS, 0, regIH_CHICKEN);
++			if (amdgpu_ip_version(adev, OSSSYS_HWIP, 0) == IP_VERSION(7, 1, 0))
++				reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_CHICKEN_V7_1);
++			else
++				reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_CHICKEN);
++			ih_chicken = RREG32(reg_addr);
++			/* The reg fields definitions are identical in ih v7_0 and ih v7_1 */
+ 			ih_chicken = REG_SET_FIELD(ih_chicken,
+ 					IH_CHICKEN, MC_SPACE_GPA_ENABLE, 1);
+-			WREG32_SOC15(OSSSYS, 0, regIH_CHICKEN, ih_chicken);
++			WREG32(reg_addr, ih_chicken);
+ 		}
+ 	}
+ 
+@@ -358,17 +371,26 @@ static int ih_v7_0_irq_init(struct amdgpu_device *adev)
+ 
+ 	/* Redirect the interrupts to IH RB1 for dGPU */
+ 	if (adev->irq.ih1.ring_size) {
+-		tmp = RREG32_SOC15(OSSSYS, 0, regIH_RING1_CLIENT_CFG_INDEX);
++		if (amdgpu_ip_version(adev, OSSSYS_HWIP, 0) == IP_VERSION(7, 1, 0))
++			reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_RING1_CLIENT_CFG_INDEX_V7_1);
++		else
++			reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_RING1_CLIENT_CFG_INDEX);
++		tmp = RREG32(reg_addr);
++		/* The reg fields definitions are identical in ih v7_0 and ih v7_1 */
+ 		tmp = REG_SET_FIELD(tmp, IH_RING1_CLIENT_CFG_INDEX, INDEX, 0);
+-		WREG32_SOC15(OSSSYS, 0, regIH_RING1_CLIENT_CFG_INDEX, tmp);
++		WREG32(reg_addr, tmp);
+ 
+-		tmp = RREG32_SOC15(OSSSYS, 0, regIH_RING1_CLIENT_CFG_DATA);
++		if (amdgpu_ip_version(adev, OSSSYS_HWIP, 0) == IP_VERSION(7, 1, 0))
++			reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_RING1_CLIENT_CFG_DATA_V7_1);
++		else
++			reg_addr = SOC15_REG_OFFSET(OSSSYS, 0, regIH_RING1_CLIENT_CFG_DATA);
++		tmp = RREG32(reg_addr);
++		/* The reg fields definitions are identical in ih v7_0 and ih v7_1 */
+ 		tmp = REG_SET_FIELD(tmp, IH_RING1_CLIENT_CFG_DATA, CLIENT_ID, 0xa);
+ 		tmp = REG_SET_FIELD(tmp, IH_RING1_CLIENT_CFG_DATA, SOURCE_ID, 0x0);
+ 		tmp = REG_SET_FIELD(tmp, IH_RING1_CLIENT_CFG_DATA,
+ 				    SOURCE_ID_MATCH_ENABLE, 0x1);
+-
+-		WREG32_SOC15(OSSSYS, 0, regIH_RING1_CLIENT_CFG_DATA, tmp);
++		WREG32(reg_addr, tmp);
+ 	}
+ 
+ 	pci_set_master(adev->pdev);
 -- 
 2.53.0
 
