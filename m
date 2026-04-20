@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F8743CEC8;
-	Mon, 20 Apr 2026 13:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9123A43C05F;
+	Mon, 20 Apr 2026 13:29:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691792; cv=none; b=NdbyC5WhlOGUCRIv+y5I6IGAsXXKlkeBUiYPz145/8MgNAnPD3gtcRLKALMBoV2tdXNDPdxSlxH/jvK81UVPrsC8cpRXK1E/fylTWnRvIT71pdUDX7SPgn+XHl9QwUEnF6CAy5fZidg5deBgJcUjs+3SPFnJ13gwxhrPMTgJgpI=
+	t=1776691793; cv=none; b=qMLH1z95TNQocCmlDxLiwUXIJFXpZzHBFrW0K7wByyvRBvo+syE1OB5nzHG1i9G/kuTFwH+MOPvmCNmKKwGXEGfwgd6yN+bNsihquGhGpDPXSGCQM8dH+f9ttoDBomycNrOWS+UNf7BDH/hRD72vcoJ75XM/u7/k//8DAF/kaVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691792; c=relaxed/simple;
-	bh=Teg3PZk4joL13q6+vgKFwwZm+5qBJJjOBbONA6sS+Ro=;
+	s=arc-20240116; t=1776691793; c=relaxed/simple;
+	bh=Qxjq/FzQw6lO9c+b6rojdQouk4f6/GD8nNBGBgqf1u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MJANRYj6FskBR9MI7ID89a2suqFrEd3fMOaq5XyXYcZEpCsQAUuWTVmM5H84q0vhtBfgRpNR699HBl24lcTMXBIzZoQpPlJqmoGQBPyolDpCVtRWZcn4pWYuMD5m7RSzRPHTj/W3D6fPsuzqpcp4D6rmxTtwPuQlI74GeljnRYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RCXKag4B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=n/HUnT2bYNOoN1aqkOOFIDCmk12sxVe2/eJubTRgH+ziRXfxcwXYUY7N0/hJLsaM0mvoBrBY99nQIUDYI783/BbH5vlgV+zXq9qovA9sTo3aOvx4bdwoPYet2r7HTaVbZrBde4jXe0jyDQnEsEiv4tPnxPsNOHlLLByEvUm3JkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cRR+ss4A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RCXKag4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778A4C2BCB6;
-	Mon, 20 Apr 2026 13:29:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cRR+ss4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45329C2BCB4;
+	Mon, 20 Apr 2026 13:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691791;
-	bh=Teg3PZk4joL13q6+vgKFwwZm+5qBJJjOBbONA6sS+Ro=;
+	s=k20201202; t=1776691793;
+	bh=Qxjq/FzQw6lO9c+b6rojdQouk4f6/GD8nNBGBgqf1u0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCXKag4B286qlBwFzEZZ9xPSbFhhY1e/R7ZpTpdS0wx0zkAnY39qefSCWazwBLxAx
-	 plQ5gBF0UAVN22IxRTcATJ01WYE4Nsu/tzhsOTk8gfuwy4XQV22xmq86QL4yzoMsTP
-	 5VKTvMYEm9D1rI/JrYxhVIBJR8TXdSLbrpBUx+l4LT2TFYE4NIKcsKkBpb/WKW+Ao4
-	 P8Pv6JR/n9je71mZ+qAZ87uIsQIK+0iCLjOUafY3SgWorbWp8H75eHi7f+9xOM4INb
-	 PWVAtP1naXMzj4oT5VD5eOaE19+4vBsL4HoXNB8nfliY06vAQlqrq3adEHerEt+X8X
-	 C/RhrHfYFIVqQ==
+	b=cRR+ss4AWgFN4DAv5YXRJH/R2XpAjCjXSNV2TSFms/H5XEBYARSDuRfQIU/TcPjhK
+	 JJei5L3Ela3cew07hac+0mXQOexNMuuzF94BPb3fXK43O5gezzHEblCdDUBbIs8bxE
+	 pvpu5G5lyRW8IAaR/IiRlIXCA8xTGYnjLxjC/H6e0VB5LHrdsu9UKdTf98aGqixWXs
+	 32lg18ThWPluIAK3k2p3mjvzJwdYNo4BRsqt46XA1tkX76mgSx+bckwZ+XD4YUahtE
+	 hB2u4yAMgKfcUlwOPWeqBmMJbqDKx1Euf028ht7bfvHRpa9+IkQIrSoVaZ2Da6rUXw
+	 a4/TK3DtHz9Uw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosen Penev <rosenp@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
-	brcm80211@lists.linux.dev,
-	brcm80211-dev-list.pdl@broadcom.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] wifi: brcmfmac: of: defer probe for MAC address
-Date: Mon, 20 Apr 2026 09:19:50 -0400
-Message-ID: <20260420132314.1023554-196-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] media: ccs-pll: Fix pre-PLL divider calculation for EXT_IP_PLL_DIVIDER flag
+Date: Mon, 20 Apr 2026 09:19:51 -0400
+Message-ID: <20260420132314.1023554-197-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -55,323 +54,323 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Alexander Shiyan <eagle.alexander923@gmail.com>
 
-[ Upstream commit 084863593243c5dce0f2eef44e23de8c53ebf4a2 ]
+[ Upstream commit b7ef8bbb9fbd43d33ecb92e23aa7c5a55dab5513 ]
 
-of_get_mac_address can return EPROBE_DEFER if the specific nvmem driver
-has not been loaded yet.
+When the CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER flag is set, odd pre-PLL divider
+values are allowed. However, in the operational timing branch the
+calculation of the minimum pre-PLL divider incorrectly uses clk_div_even_up,
+forcing the minimum value to be even, even if the flag is set. This prevents
+selecting a valid odd divider like 3, which may be required for certain
+sensor configurations.
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260220022739.41755-1-rosenp@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by removing the forced even rounding from the minimum pre-PLL
+divider calculation. The loop later uses the flag to determine the step,
+so odd values will be considered when the flag is set.
+
+Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile the findings.
+Now I have a comprehensive understanding. Let me compile the full
+analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: `wifi: brcmfmac: of:` (Broadcom WiFi driver, device-
-  tree integration)
-- **Action verb**: "defer" — implies fixing a probe ordering issue
-- **Summary**: Handle `-EPROBE_DEFER` return from `of_get_mac_address`
-  to properly defer probe when nvmem isn't ready
+### Step 1.1: Parse Subject Line
+- **Subsystem:** `media: ccs-pll:` — MIPI CCS PLL calculator for camera
+  sensors
+- **Action verb:** "Fix" — explicit bug fix
+- **Summary:** Corrects pre-PLL divider calculation when
+  `EXT_IP_PLL_DIVIDER` flag is set
 
-### Step 1.2: Tags
-- **Signed-off-by**: Rosen Penev (author)
-- **Acked-by**: Arend van Spriel (Broadcom WiFi maintainer) — strong
-  endorsement
-- **Link**:
-  `https://patch.msgid.link/20260220022739.41755-1-rosenp@gmail.com`
-- **Signed-off-by**: Johannes Berg (wireless subsystem maintainer)
-- No Fixes: tag, no Reported-by, no Cc: stable (all expected for this
-  review)
+### Step 1.2: Parse Tags
+- **Signed-off-by:** Alexander Shiyan (author), Sakari Ailus (CCS
+  subsystem maintainer), Mauro Carvalho Chehab (media subsystem
+  maintainer)
+- No Fixes: tag, no Cc: stable, no Reported-by, no Link — expected for
+  autosel candidate
 
-### Step 1.3: Commit Body
-The commit explains that `of_get_mac_address` can return `-EPROBE_DEFER`
-if the nvmem driver hasn't loaded yet. This is a well-known kernel
-pattern — nvmem drivers often load as modules, and the order relative to
-network drivers is not guaranteed.
+### Step 1.3: Commit Body Analysis
+The bug: when `CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER` is set, odd pre-PLL
+dividers should be allowed. However, the initial minimum calculation
+uses `clk_div_even_up()`, unconditionally forcing the minimum to be
+even. This prevents selecting valid odd dividers (like 3). The loop step
+already respects the flag, but the minimum is pre-constrained to even
+values.
 
-### Step 1.4: Hidden Bug Fix Detection
-This IS a real bug fix. The unchecked return value means the driver
-proceeds without a valid MAC address. On systems relying on nvmem-
-provided MAC addresses (common on embedded platforms), the device ends
-up with no proper MAC.
-
-**Record**: Real bug fix disguised as a simple probe improvement.
+### Step 1.4: Hidden Bug Detection
+This is explicitly labeled as a fix. The logic error is real and
+verifiable from the code.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **1 file** changed:
-  `drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c`
-- **+3 lines, -1 line** (net +2 lines)
-- **Function modified**: `brcmf_of_probe()`
+- **File:** `drivers/media/i2c/ccs-pll.c` — 3 lines removed, 2 lines
+  added
+- **Function:** `ccs_pll_calculate()` — single function, single hunk
+- **Scope:** Single-file surgical fix
 
 ### Step 2.2: Code Flow Change
-**Before**: `of_get_mac_address(np, settings->mac);` — return value
-discarded
-**After**:
-```c
-err = of_get_mac_address(np, settings->mac);
-if (err == -EPROBE_DEFER)
-    return err;
-```
+**Before:** `min_op_pre_pll_clk_div` first calculation uses
+`clk_div_even_up(DIV_ROUND_UP(...))`, always forcing the frequency-based
+minimum to be even.
 
-Only `-EPROBE_DEFER` is checked; other errors (e.g., no MAC in DT) are
-still silently ignored, preserving the original behavior where a missing
-MAC is not fatal.
+**After:** `min_op_pre_pll_clk_div` first calculation uses raw
+`DIV_ROUND_UP(...)`, preserving odd values.
+
+The flag-based conditional even check at lines 846-847 then properly
+decides whether to force even.
 
 ### Step 2.3: Bug Mechanism
-**Category**: Logic/correctness fix — missing return value check
-- `of_get_mac_address()` -> `of_get_mac_address_nvmem()` ->
-  `of_nvmem_cell_get()` -> nvmem core returns `-EPROBE_DEFER` when the
-  nvmem device isn't yet available
-- Without the fix: probe succeeds with wrong/empty MAC
-- With the fix: probe defers, retries later when nvmem is ready, gets
-  correct MAC
+This is a **logic/correctness bug**. The `clk_div_even_up()` at line 827
+conflicts with the flag-based conditional check at line 846-847 (added
+by `660e613d05e449`). Since `max_t()` propagates the larger value, the
+unconditionally-even first calculation can become the binding
+constraint, defeating the flag check.
 
 ### Step 2.4: Fix Quality
-- **Obviously correct**: 3-line change, checking exactly one specific
-  error code
-- **Minimal/surgical**: No unrelated changes
-- **Regression risk**: Extremely low — only adds a `return
-  -EPROBE_DEFER` path, which the caller already handles (verified in
-  `common.c` line 564)
-- The exact same pattern is used by ath9k, mt76, and rt2x00 drivers (all
-  by the same author)
+- Minimal and surgical — removes one wrapper function call
+- Obviously correct — the VT tree equivalent code at lines 412-416 does
+  NOT use `clk_div_even_up()` for the analogous calculation
+- The flag check at 846-847 ensures sensors without the flag still get
+  even values
+- Zero regression risk for sensors without the flag
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-The buggy line (`of_get_mac_address(np, settings->mac)` without return
-check) was introduced by commit `716c220b4d990a` (Pavel Löbl,
-2022-05-06, "brcmfmac: allow setting wlan MAC address using device
-tree"), first present in v5.19.
+From git blame:
+- Line 827 (`clk_div_even_up(`) traces to `6de1b143a45d3c` from **2012**
+  (originally `smiapp-pll.c`)
+- The `EXT_IP_PLL_DIVIDER` loop step support was added by
+  `4e1e8d240dff96` in **2020**
+- The flag check at lines 846-847 was added by `660e613d05e449` in
+  **February 2025**
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The implicit fix target is `716c220b4d990a`.
+The inconsistency existed since 2020 when odd divider support was added
+but the initial min calculation wasn't updated.
 
-### Step 3.3: File History
-Recent changes to `of.c`:
-- `082d9e263af8d` — Check return of `of_property_read_string_index()`
-  (v6.14+)
-- `2e19a3b590ebf` — Release 'root' node in all paths (v6.13)
-- `7cc7267a01631` — Use `devm_clk_get_optional_enabled_with_rate()`
-  (v6.13)
-- `0ff0843310b74` — Changed function from `void` to `int`, added LPO
-  clock (v6.13)
+### Step 3.2: Related Commits
+- `660e613d05e449` ("Start OP pre-PLL multiplier search from correct
+  value") — added the flag check after the second min calculation. Has
+  `Cc: stable@vger.kernel.org`. This is the **prerequisite** for the
+  commit being analyzed, and it IS in 7.0.
+- `06d2d478b09e6` ("Start VT pre-PLL multiplier search from correct
+  value") — the VT tree equivalent fix, which correctly doesn't use
+  `clk_div_even_up()` for the initial min. Also has `Cc: stable`.
 
-The current commit is standalone — no dependencies on other patches.
-
-### Step 3.4: Author
-Rosen Penev is a regular contributor who has systematically fixed this
-exact same bug across multiple wireless drivers:
-- ath9k: `dfffb317519f8` (2024-11-05)
-- mt76: `c7c682100cec9` (same pattern)
-- rt2x00: `428ea708b714b` (same pattern)
-- brcmfmac: THIS commit (completing the series)
+### Step 3.3: Author Context
+Alexander Shiyan is a community contributor, not the CCS subsystem
+maintainer. However, the patch was reviewed and signed off by Sakari
+Ailus (CCS maintainer) and Mauro Carvalho Chehab (media subsystem
+maintainer), giving it strong authority.
 
 ### Step 3.5: Dependencies
-- **Requires** `0ff0843310b74e` (v6.13) — changed `brcmf_of_probe` from
-  `void` to `int`
-- **Requires** `9e935c0fe3f80` (v6.15) — memory leak fix in caller's
-  EPROBE_DEFER handling
-- Both are present in v7.0 (verified via `git merge-base --is-ancestor`)
+This commit requires `660e613d05e449` to be present (the flag check at
+line 846-847 is in the diff context). That commit IS in the 7.0 tree and
+was already Cc'd to stable.
 
 ---
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.5
-Lore is protected by Anubis anti-bot, so direct fetch was blocked.
-However:
-- The commit was **Acked-by Arend van Spriel** (Broadcom WiFi
-  maintainer)
-- Merged by **Johannes Berg** (wireless subsystem maintainer)
-- The exact same fix pattern was applied to ath9k, mt76, rt2x00 — well-
-  established approach
+### Step 4.1: Original Discussion
+b4 dig could not find the commit (it's not yet in this tree). Web search
+did not find the specific patch thread. The AUTOSEL thread for 6.15
+found at yhbt.net/lore includes related CCS PLL patches from the same
+series of fixes by Sakari Ailus.
+
+### Step 4.2: Reviewer Context
+Signed off by both the CCS subsystem maintainer (Sakari Ailus) and media
+subsystem maintainer (Mauro Carvalho Chehab), indicating proper review
+chain.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Function Call Chain
-```
-brcmf_sdio_probe / brcmf_pcie_probe / brcmf_usb_probe
-  -> brcmf_get_module_param()  [common.c:564]
-    -> brcmf_of_probe()  [of.c:69]
-      -> of_get_mac_address()  [net/core/of_net.c:126]
-        -> of_get_mac_address_nvmem()  [net/core/of_net.c:61]
-          -> of_nvmem_cell_get()  -> nvmem core returns -EPROBE_DEFER
-```
+### Step 5.1: Functions Modified
+- `ccs_pll_calculate()` — the main PLL calculator entry point
 
-All three bus probes (SDIO, PCIe, USB) properly handle
-`ERR_PTR(-EPROBE_DEFER)` returned from `brcmf_get_module_param()`.
+### Step 5.2: Callers
+- Called from `ccs_pll_calculate()` in `ccs-core.c` (line 512) and
+  `imx214.c`
+- Called during sensor initialization — affects whether the camera
+  sensor can be configured
 
-### Step 5.5: Similar Patterns
-The exact same fix exists in 3 other wireless drivers:
-- `drivers/net/wireless/ath/ath9k/init.c:651` — checks EPROBE_DEFER
-- `drivers/net/wireless/mediatek/mt76/eeprom.c:174` — checks
-  EPROBE_DEFER
-- `drivers/net/wireless/ralink/rt2x00/rt2x00dev.c:996` — checks
-  EPROBE_DEFER
+### Step 5.4: Call Chain
+`sensor probe → pll_calculate → ccs_pll_calculate()` — this is called
+during sensor initialization. If PLL calculation fails, the sensor
+cannot operate.
 
-brcmfmac was the outlier that did NOT check.
+### Step 5.5: Pattern Comparison
+The VT tree equivalent (lines 412-416) does NOT use `clk_div_even_up()`
+for the analogous min calculation, confirming the OP tree code is
+inconsistent.
 
 ---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable Trees
-- The `of_get_mac_address` call was added in v5.19 (`716c220b4d990a`)
-- But `brcmf_of_probe` was changed from `void` to `int` in v6.13
-  (`0ff0843310b74e`)
-- For v7.0 stable: all prerequisites present, fix applies cleanly
-- For v6.13–v6.15: prerequisites present, may need minor backport
-  adjustments
-- For v6.12 and older: function returns `void`, fix is structurally
-  incompatible
+### Step 6.1: Code Presence
+- The `clk_div_even_up()` at line 827 traces back to 2012
+  (`6de1b143a45d3c`, v3.8)
+- The `EXT_IP_PLL_DIVIDER` flag support was added in 2020
+  (`4e1e8d240dff96`, v5.10-rc6 era)
+- The prerequisite flag check (`660e613d05e449`) is in 7.0 tree and was
+  Cc'd to stable
+- The buggy code exists in all stable trees that have both the original
+  code and the flag support
 
 ### Step 6.2: Backport Complications
-For v7.0: The code matches exactly — clean apply expected.
+The diff applies cleanly to 7.0 — the "before" state in the diff matches
+the current code exactly.
 
 ---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
 ### Step 7.1: Subsystem
-- **Subsystem**: WiFi driver (brcmfmac) — Broadcom wireless
-- **Criticality**: IMPORTANT — widely used in embedded/SBC/OpenWrt
-  platforms (Raspberry Pi, many routers)
+- **Subsystem:** drivers/media/i2c — camera sensor I2C driver
+  infrastructure
+- **Criticality:** PERIPHERAL — affects CCS-compatible camera sensors
+  with specific capabilities
+- The CCS PLL calculator is used by the CCS sensor driver and referenced
+  by other sensor drivers (imx214)
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Affected Users
-Users of brcmfmac WiFi devices where the MAC address is provided via
-nvmem (device tree). This is common on:
-- OpenWrt routers
-- Embedded ARM platforms
-- Single-board computers with Broadcom WiFi
+Driver-specific: affects CCS-compatible sensors with
+`CCS_CLOCK_TREE_PLL_CAPABILITY_EXT_DIVIDER` capability
 
 ### Step 8.2: Trigger Conditions
-The bug triggers when:
-1. Device tree specifies MAC address via nvmem
-2. The nvmem driver loads AFTER brcmfmac
-3. This is a race between module loading order — common in practice
+Triggered during sensor initialization when:
+1. The sensor has the EXT_DIVIDER capability
+2. The frequency constraint calculation produces an odd minimum divider
+3. That odd minimum is the binding constraint (larger than the
+   multiplier-based constraint)
 
 ### Step 8.3: Failure Mode
-- **Severity**: MEDIUM-HIGH
-- Device probes with wrong/random MAC address
-- Can break network configuration, DHCP leases, MAC-based filtering
-- No crash, but real functional breakage for affected users
+- PLL calculation selects wrong divider or fails entirely
+- Result: camera sensor doesn't work or operates suboptimally
+- **Severity: MEDIUM** — non-working hardware, not crash/corruption
 
 ### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH — fixes MAC address assignment on affected embedded
-  platforms
-- **Risk**: VERY LOW — 3-line change, only adds one conditional return
-  path that the caller already handles
-- **Ratio**: Strongly favorable
+- **Benefit:** Enables correct PLL configuration for affected sensors
+- **Risk:** Negligible — the fix only changes behavior when
+  `EXT_IP_PLL_DIVIDER` flag is set; the flag check at 846-847 ensures
+  correct behavior for sensors without the flag
+- **Ratio:** Favorable — meaningful benefit with essentially zero
+  regression risk
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+### Step 9.1: Evidence Compilation
 
 **FOR backporting:**
-- Fixes a real, functional bug (wrong MAC address on embedded platforms)
-- Extremely small and surgical (3 lines)
-- Obviously correct — matches identical fixes in 3 other wireless
-  drivers
-- Acked by Broadcom WiFi maintainer, merged by wireless maintainer
-- Same author systematically fixed this across all affected drivers
-- All prerequisites present in v7.0
-- Caller already handles EPROBE_DEFER properly
+- Real logic bug that prevents valid PLL configurations
+- Very small, surgical fix (remove one function wrapper)
+- Obviously correct — consistent with VT tree pattern
+- Signed off by both CCS and media subsystem maintainers
+- Prerequisite commit already in stable with Cc: stable tag
+- Applies cleanly to 7.0
+- Zero regression risk for sensors without the flag
 
 **AGAINST backporting:**
-- No crash or security issue — "just" wrong MAC address
-- No Fixes: tag or explicit stable nomination
-
-The "against" points are very weak here — wrong MAC addresses are a real
-functional problem.
+- Niche user population (CCS sensors with specific capability)
+- No crash, security issue, or data corruption — functional correctness
+  only
+- No Fixes: tag or Cc: stable from author
+- No Reported-by: (no evidence of user reports)
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — identical pattern in 3 other
-   drivers, acked by maintainer
-2. Fixes a real bug? **YES** — device gets wrong MAC when nvmem loads
-   after driver
-3. Important issue? **YES** — functional networking failure on affected
-   platforms
-4. Small and contained? **YES** — 3 lines, 1 file, 1 function
-5. No new features or APIs? **YES**
-6. Can apply to stable? **YES** — code matches v7.0 exactly
+1. **Obviously correct?** YES — removing unconditional even-rounding
+   that conflicts with conditional check
+2. **Fixes real bug?** YES — wrong PLL divider selection for sensors
+   with odd divider support
+3. **Important issue?** MEDIUM — non-working hardware for affected
+   sensors
+4. **Small and contained?** YES — 3 lines removed, 2 added in single
+   function
+5. **No new features?** YES — pure bug fix
+6. **Applies to stable?** YES — applies cleanly
 
-### Verification:
-- [Phase 1] Parsed tags: Acked-by Arend van Spriel (broadcom
-  maintainer), Signed-off-by Johannes Berg (wireless maintainer)
-- [Phase 2] Diff analysis: 3 lines changed — capture return value of
-  `of_get_mac_address()`, return EPROBE_DEFER
-- [Phase 3] git blame: buggy line `716c220b4d990a` introduced in v5.19
-  (2022), unchecked of_get_mac_address
-- [Phase 3] git show `0ff0843310b74e`: confirmed prerequisite
-  (void->int) present in v6.13+
-- [Phase 3] git merge-base: all 3 prerequisites (`716c220b`, `0ff08433`,
-  `9e935c0f`) in v7.0
-- [Phase 3] Author history: Rosen Penev fixed same bug in ath9k, mt76,
-  rt2x00 — systematic fix campaign
-- [Phase 4] Lore discussion: blocked by Anubis; maintainer ack/merge
-  confirmed from commit tags
-- [Phase 5] Callers traced: `brcmf_get_module_param()` in `common.c:564`
-  already checks EPROBE_DEFER
-- [Phase 5] of_get_mac_address -> of_get_mac_address_nvmem ->
-  of_nvmem_cell_get -> nvmem core returns EPROBE_DEFER (confirmed in
-  `drivers/nvmem/core.c:1123`)
-- [Phase 5] 3 other wireless drivers handle this identical pattern
-  (verified via grep)
-- [Phase 6] Code exists in v7.0 stable tree, clean apply expected
-- [Phase 8] Failure mode: wrong MAC address on embedded platforms,
-  severity MEDIUM-HIGH
+---
 
-The fix is tiny, obviously correct, follows an established pattern
-across multiple drivers, is acked by the subsystem maintainer, and fixes
-a real functional bug on embedded platforms.
+## Verification
+
+- [Phase 1] Parsed commit message: explicit "Fix" in subject, describes
+  logic error with EXT_IP_PLL_DIVIDER
+- [Phase 2] Diff analysis: removes `clk_div_even_up()` wrapper from
+  first `min_op_pre_pll_clk_div` calculation (line 827)
+- [Phase 3] git blame: `clk_div_even_up()` at line 827 from commit
+  `6de1b143a45d3c` (2012), flag support from `4e1e8d240dff96` (2020)
+- [Phase 3] git show `660e613d05e449`: confirmed prerequisite commit is
+  in 7.0 tree, has `Cc: stable`, adds flag check at lines 846-847
+- [Phase 3] git show `06d2d478b09e6`: confirmed VT tree equivalent fix
+  pattern doesn't use `clk_div_even_up()` for its min calculation
+- [Phase 3] git show `4e1e8d240dff96`: confirmed this is when
+  EXT_IP_PLL_DIVIDER loop step was added
+- [Phase 4] Web search: could not find specific patch thread; found
+  related AUTOSEL 6.15 series with CCS PLL fixes
+- [Phase 5] Grep callers: `ccs_pll_calculate()` called from `ccs-
+  core.c:512` during sensor setup
+- [Phase 5] Grep `CCS_PLL_FLAG_EXT_IP_PLL_DIVIDER`: set in `ccs-
+  core.c:3506` based on sensor capability register
+- [Phase 6] Code present in 7.0 tree; diff applies cleanly; prerequisite
+  already present
+- [Phase 7] VT tree (lines 412-416) confirmed to NOT use
+  `clk_div_even_up()`, showing OP tree is inconsistent
+- UNVERIFIED: Exact mainline commit hash not found in this tree;
+  specific lore.kernel.org thread not accessible
+
+---
+
+This is a small, obviously correct bug fix that removes an unconditional
+even-rounding operation that conflicts with a flag-based conditional
+check for sensors supporting odd PLL dividers. The fix makes the OP tree
+code consistent with the VT tree code. The prerequisite commit is
+already in stable trees. The risk is negligible and the fix enables
+correct hardware operation for affected sensors.
 
 **YES**
 
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ccs-pll.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-index 1681ad00f82ec..03efae36a0b2d 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-@@ -128,7 +128,9 @@ int brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
- 	if (err)
- 		brcmf_err("failed to get OF country code map (err=%d)\n", err);
+diff --git a/drivers/media/i2c/ccs-pll.c b/drivers/media/i2c/ccs-pll.c
+index 4eb83636e1027..1605cfa5db19d 100644
+--- a/drivers/media/i2c/ccs-pll.c
++++ b/drivers/media/i2c/ccs-pll.c
+@@ -824,9 +824,8 @@ int ccs_pll_calculate(struct device *dev, const struct ccs_pll_limits *lim,
+ 				   op_lim_fr->min_pll_ip_clk_freq_hz));
+ 	min_op_pre_pll_clk_div =
+ 		max_t(u16, op_lim_fr->min_pre_pll_clk_div,
+-		      clk_div_even_up(
+-			      DIV_ROUND_UP(pll->ext_clk_freq_hz,
+-					   op_lim_fr->max_pll_ip_clk_freq_hz)));
++		      DIV_ROUND_UP(pll->ext_clk_freq_hz,
++				   op_lim_fr->max_pll_ip_clk_freq_hz));
+ 	dev_dbg(dev, "pre-pll check: min / max op_pre_pll_clk_div: %u / %u\n",
+ 		min_op_pre_pll_clk_div, max_op_pre_pll_clk_div);
  
--	of_get_mac_address(np, settings->mac);
-+	err = of_get_mac_address(np, settings->mac);
-+	if (err == -EPROBE_DEFER)
-+		return err;
- 
- 	if (bus_type != BRCMF_BUSTYPE_SDIO)
- 		return 0;
 -- 
 2.53.0
 
