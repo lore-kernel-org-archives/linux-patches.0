@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F7D3264F1;
-	Mon, 20 Apr 2026 16:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96002DE6E3;
+	Mon, 20 Apr 2026 16:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701243; cv=none; b=dIHioK7ykyTBCJ+a6frFld6fvtrnZWnWsaKWeP117VIPad1Qt1b4Qqlc59sW9HjoKbVf/tYekSoc6n1Q4fDKrb8GQB5SSavp0PBRI2A4wK/Hd8/ixBBF1TrOnOWfOKkvaOq6dqwLLibUgzgk2s/cPwjWjMdbl6iU6d8aKoHWkp4=
+	t=1776701245; cv=none; b=NSLjYjZworicCXIuq7B2eOP+VhgT7y7TA8D0vLCzoP2njdanhxwujE+kAg2+zsYJ5UBL6BCFYkK1yRnls5OqLKGQrC5HcNQ8mHOgdGb/31tRT6wJvqngCsW/ogHvcrJkcLKKZiBvWuvojLGYTCKCg8f7F1yv37QCEKaXeYtGVD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701243; c=relaxed/simple;
-	bh=J1KBdRqDjRF8y4i8GbBd9aIYeec37AACYrU2uOQ9Muk=;
+	s=arc-20240116; t=1776701245; c=relaxed/simple;
+	bh=M/19IIrLC8V91ZLtWpZ1j4+xY74w7yXeHwMFuWR1Mwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKb/RyyHXDKz/4OKsL+bTJqnqfyoxtj+UY26qeOBh8D5BeqEg3aRwRMWWL6D8WZ80GTuYTJJT5rIybzsjpDXdM7ERC70BEsIDMaMgOQ7FsnuSgnpGAXsc4f2+dHCTKs89hGtpHDtbwWPuT57fyz9ZSAxye4occ75r5XUy2NUK1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buir7FSk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ulpo9ubgUObdm+ZLyVjnzrlhtpNmJVagO0mkNaoY+gVvNkIJU2VDhq5PBhpmPHNFUSGuilJSEr8BdSdCjbof4IexDRV5re4eFqsPNAXb5wGvQWFdeBVFMMHEvaPZuT9h1VBP5Bsrxpn3YCYYxLHPl9JYIWymIdrpQaSI18MNJtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLdX78er; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buir7FSk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5A3C19425;
-	Mon, 20 Apr 2026 16:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLdX78er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB06C19425;
+	Mon, 20 Apr 2026 16:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701243;
-	bh=J1KBdRqDjRF8y4i8GbBd9aIYeec37AACYrU2uOQ9Muk=;
+	s=korg; t=1776701245;
+	bh=M/19IIrLC8V91ZLtWpZ1j4+xY74w7yXeHwMFuWR1Mwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=buir7FSk/Tvg4DbpvUSRJr1jp1qjLYA9pfxoRGDgOxPhah04kcRMixFgbTDalS84O
-	 Jar9QVVHUSnEt7B/dlKuauugxFdk+0J7vpQi48C8lCz5EEMu8nx/GTNGSbf1D2iau0
-	 369jQzRuLwe6twVI1LJMzZgftaiqyyZdRj/MLvrA=
+	b=gLdX78erP+eenzqY/QVNoN5nt6OHFSsuzKIbrwWh2YnU2bIJrxf2DfI9W6/4/owAB
+	 BmlKyhWPebz160RPeVH77MCS3/PKe1doHlN9JurPzSGARKBCr7t+DOutLJeasIH8dM
+	 OJHpVZzMwVz8rEoUfkHa4BSAhMef8slZnlfPED0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luke Wang <ziniu.wang_1@nxp.com>,
+	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/162] arm64: dts: imx93-9x9-qsb: change usdhc tuning step for eMMC and SD
-Date: Mon, 20 Apr 2026 17:41:09 +0200
-Message-ID: <20260420153928.370879924@linuxfoundation.org>
+Subject: [PATCH 6.12 038/162] arm64: dts: imx93-tqma9352: improve eMMC pad configuration
+Date: Mon, 20 Apr 2026 17:41:10 +0200
+Message-ID: <20260420153928.407199167@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -45,59 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 
-[ Upstream commit 08903184553def7ba1ad6ba4fa8afe1ba2ee0a21 ]
+[ Upstream commit b6c94c71f349479b76fcc0ef0dc7147f3f326dff ]
 
-During system resume, the following errors occurred:
+Use DSE x4 an PullUp for CMD an DAT, DSE x4 and PullDown for CLK to improve
+stability and detection at low temperatures under -25°C.
 
-  [  430.638625] mmc1: error -84 writing Cache Enable bit
-  [  430.643618] mmc1: error -84 doing runtime resume
-
-For eMMC and SD, there are two tuning pass windows and the gap between
-those two windows may only have one cell. If tuning step > 1, the gap may
-just be skipped and host assumes those two windows as a continuous
-windows. This will cause a wrong delay cell near the gap to be selected.
-
-Set the tuning step to 1 to avoid selecting the wrong delay cell.
-
-For SDIO, the gap is sufficiently large, so the default tuning step does
-not cause this issue.
-
-Fixes: 0565d20cd8c2 ("arm64: dts: freescale: Support i.MX93 9x9 Quick Start Board")
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Fixes: 0b5fdfaa8e45 ("arm64: dts: freescale: imx93-tqma9352: set SION for cmd and data pad of USDHC")
+Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ .../boot/dts/freescale/imx93-tqma9352.dtsi    | 26 +++++++++----------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts b/arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts
-index f8a73612fa051..8856835834a04 100644
---- a/arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts
-+++ b/arch/arm64/boot/dts/freescale/imx93-9x9-qsb.dts
-@@ -311,6 +311,7 @@ &usdhc1 {
- 	pinctrl-2 = <&pinctrl_usdhc1_200mhz>;
- 	bus-width = <8>;
- 	non-removable;
-+	fsl,tuning-step = <1>;
- 	status = "okay";
- };
- 
-@@ -323,6 +324,7 @@ &usdhc2 {
- 	vmmc-supply = <&reg_usdhc2_vmmc>;
- 	bus-width = <4>;
- 	no-mmc;
-+	fsl,tuning-step = <1>;
- 	status = "okay";
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi b/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
+index 09385b058664c..f189685370cc8 100644
+--- a/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93-tqma9352.dtsi
+@@ -273,21 +273,21 @@ MX93_PAD_SD2_RESET_B__GPIO3_IO07	0x106
+ 	/* enable SION for data and cmd pad due to ERR052021 */
+ 	pinctrl_usdhc1: usdhc1grp {
+ 		fsl,pins = <
+-			/* PD | FSEL 3 | DSE X5 */
+-			MX93_PAD_SD1_CLK__USDHC1_CLK		0x5be
++			/* PD | FSEL 3 | DSE X4 */
++			MX93_PAD_SD1_CLK__USDHC1_CLK		0x59e
+ 			/* HYS | FSEL 0 | no drive */
+ 			MX93_PAD_SD1_STROBE__USDHC1_STROBE	0x1000
+-			/* HYS | FSEL 3 | X5 */
+-			MX93_PAD_SD1_CMD__USDHC1_CMD		0x400011be
+-			/* HYS | FSEL 3 | X4 */
+-			MX93_PAD_SD1_DATA0__USDHC1_DATA0	0x4000119e
+-			MX93_PAD_SD1_DATA1__USDHC1_DATA1	0x4000119e
+-			MX93_PAD_SD1_DATA2__USDHC1_DATA2	0x4000119e
+-			MX93_PAD_SD1_DATA3__USDHC1_DATA3	0x4000119e
+-			MX93_PAD_SD1_DATA4__USDHC1_DATA4	0x4000119e
+-			MX93_PAD_SD1_DATA5__USDHC1_DATA5	0x4000119e
+-			MX93_PAD_SD1_DATA6__USDHC1_DATA6	0x4000119e
+-			MX93_PAD_SD1_DATA7__USDHC1_DATA7	0x4000119e
++			/* HYS | PU | FSEL 3 | DSE X4 */
++			MX93_PAD_SD1_CMD__USDHC1_CMD		0x4000139e
++			/* HYS | PU | FSEL 3 | DSE X4 */
++			MX93_PAD_SD1_DATA0__USDHC1_DATA0	0x4000139e
++			MX93_PAD_SD1_DATA1__USDHC1_DATA1	0x4000139e
++			MX93_PAD_SD1_DATA2__USDHC1_DATA2	0x4000139e
++			MX93_PAD_SD1_DATA3__USDHC1_DATA3	0x4000139e
++			MX93_PAD_SD1_DATA4__USDHC1_DATA4	0x4000139e
++			MX93_PAD_SD1_DATA5__USDHC1_DATA5	0x4000139e
++			MX93_PAD_SD1_DATA6__USDHC1_DATA6	0x4000139e
++			MX93_PAD_SD1_DATA7__USDHC1_DATA7	0x4000139e
+ 		>;
+ 	};
  
 -- 
 2.53.0
