@@ -1,49 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB96141B35D;
-	Mon, 20 Apr 2026 13:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B5341C2EA;
+	Mon, 20 Apr 2026 13:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691650; cv=none; b=bfrBtUDu4/5W+HlCVg3FRB5VLpAcTEyVRXWgVGPsVA4t0EMMQd1wObfOz1uPfKBXbaT1XLp+EHVeSPYCphOOO4v++YvvlTWdilYr+3Lq3xUXB+IwSG+L4evWFd+McQBi/sjt93x2+J075ZYsqU70am5jpfXV9TurM7BGFeUazKk=
+	t=1776691652; cv=none; b=ZUP8joZrTG4b5CAi2o3eYtt4yd5VPtj//Dqsgclgh4OoKTUy6ioOAkhUqrc1wkSDHsC3xHNofTNrM5HETku/maFodoojKfVl0tYwbGcOVguPA//rAxg23a4ZhHFVkIre/nzorZs9+jREZZnQhQUobjdx0i9rn6xIVlIHQHtwoaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691650; c=relaxed/simple;
-	bh=D480m6qAHdcY8uZpl1p3THiphdgDGFpRw7UAQVuTndc=;
+	s=arc-20240116; t=1776691652; c=relaxed/simple;
+	bh=kWHvlumYuARspLhTbn3pLUQ8CZS38EoDirgo6FEmhoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eoJG0EElBniwPsw2jqkyUtUWNq6c4g7lMn+L0a7lAa9YBEVbcDs5hFV0QXxp4LX6VM/7BnVLqJK24QuID2ZImHecEjTXIUp8L/SaVoKT5881oSqKQ7QrzWvmwvP9cwQ3MI+Hrl0Y2/LfOEjdRS+PRzcKKnK20/8u+x5tSBX6uko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=omJteUnF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L1kJRPTSRn8kYXVDBBryfsnNWmeymN1k5RvSwuHn/Ywu9rB6uh3XJzFTkWbovobD3w1mXrgL9fI0XosdgK6DLEp7oWhJR92QnGgR2yVVd0fjEPOAKXnDtDmGryflwgSiCf6Vw7bJ3j5SqFK9Oqy65Qo4pSsEFcbyJRBZ4Lj07hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AEePd5Tr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="omJteUnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8208C2BCB6;
-	Mon, 20 Apr 2026 13:27:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AEePd5Tr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF868C19425;
+	Mon, 20 Apr 2026 13:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691650;
-	bh=D480m6qAHdcY8uZpl1p3THiphdgDGFpRw7UAQVuTndc=;
+	s=k20201202; t=1776691652;
+	bh=kWHvlumYuARspLhTbn3pLUQ8CZS38EoDirgo6FEmhoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omJteUnFOvqQRP1easyRO2auFu6vxuRyn+9EZj/SASGE3QFDlFyP+6FSwteLab8UU
-	 D5bY+u/rTSD6p1NmMVJ2FQYGzpnMb0ToK5SHEDIcCO2HwYw4dAocAXr0U/yJcQFh4z
-	 r/cfQxCaCn8rlV87fimszyyo9G1CtanHetC23eMw006BD1UtrqIt5B+6f/jQzQ+1vh
-	 2T7eW2Kgf/LrS+DpcGyQ2u36Gv49b9atb1wKTANu+wYzBF9CB/L0ZT8qrxEpVKg58k
-	 kjsZBmHvkR03JnXKUo64mm6k321/uCBCeqkCcRn4m16zFwEaimngb8fwN3pOinkcGI
-	 SEIp/enTD/HDw==
+	b=AEePd5Tre0nN1nBHBFGB17ir16NJ53Kx0mY8oJcLeSx4lWoZG/FhDRo8UPHIf/MNP
+	 MNy2NiiXXYcDXOxp8hulwpITR+ROEpUVgQNnY4uCJzojuElLRLiQxwL0q8dMKjH/AX
+	 1bbxHnFZ39mLEy4ydXJ9Sl53i2mGrmRLRQL1GWTi3qnrg0qemF/JvQxhi8kxUqZSAu
+	 +G2oaj1scZCxPcHGFqBocpKmXSPENH7vkk0Br2Ctgweboqfk84KTQjJWoHOp0EzUy2
+	 v+zleizAJPl4hgZMoZ0A+bYLD4ZkcXjyer1Zx2PMNcdgnf8Dz0LIZCeqcr6Dw2z9s5
+	 SaJqDHTfbcJag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+Cc: Daniel Golle <daniel@makrotopia.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	niklas.soderlund@ragnatech.se,
-	andrew+netdev@lunn.ch,
+	andrew@lunn.ch,
+	olteanv@gmail.com,
 	davem@davemloft.net,
 	edumazet@google.com,
 	pabeni@redhat.com,
 	netdev@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] net: ethernet: ravb: Disable interrupts when closing device
-Date: Mon, 20 Apr 2026 09:19:06 -0400
-Message-ID: <20260420132314.1023554-152-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] dsa: tag_mxl862xx: set dsa_default_offload_fwd_mark()
+Date: Mon, 20 Apr 2026 09:19:07 -0400
+Message-ID: <20260420132314.1023554-153-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -53,331 +51,277 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 9278b888920ee8f3cea06622f04da681536b6601 ]
+[ Upstream commit 4250ff1640ea1ede99bfe02ca949acbcc6c0927f ]
 
-Disable E-MAC interrupts when closing the device.
+The MxL862xx offloads bridge forwarding in hardware, so set
+dsa_default_offload_fwd_mark() to avoid duplicate forwarding of
+packets of (eg. flooded) frames arriving at the CPU port.
 
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-[Niklas: Rebase from BSP and reword commit message]
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://patch.msgid.link/20260307095532.2118495-1-niklas.soderlund+renesas@ragnatech.se
+Link-local frames are directly trapped to the CPU port only, so don't
+set dsa_default_offload_fwd_mark() on those.
+
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/e1161c90894ddc519c57dc0224b3a0f6bfa1d2d6.1775049897.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a comprehensive understanding of the commit. Let me compile
-the full analysis.
+Now I have all the information needed for a complete analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: `net: ethernet: ravb` (Renesas Ethernet AVB driver)
-- **Action verb**: "Disable" - indicates fixing a missing operation
-- **Summary**: Disable E-MAC interrupts when closing the device
+**Step 1.1: Subject Line**
+- Subsystem: `dsa: tag_mxl862xx`
+- Action: "set" (adding a missing call)
+- Summary: Set `dsa_default_offload_fwd_mark()` in the MxL862xx DSA tag
+  RCV path to prevent duplicate forwarding.
 
-Record: The commit adds a missing interrupt disable for the E-MAC
-interrupt source register (ECSIPR) during device close.
+**Step 1.2: Tags**
+- `Signed-off-by: Daniel Golle` - author and original driver creator
+- `Link:` - patch.msgid.link URL (standard for netdev)
+- `Signed-off-by: Jakub Kicinski` - net maintainer applied the patch
+- No Fixes: tag, no Reported-by:, no Cc: stable (expected for this
+  review)
 
-### Step 1.2: Tags
-- **Signed-off-by**: Yoshihiro Shimoda (original author, Renesas)
-- **Signed-off-by**: Niklas Soderlund (rebased from BSP)
-- **Signed-off-by**: Jakub Kicinski (net maintainer, applied the patch)
-- **Link**: `https://patch.msgid.link/20260307095532.2118495-1-
-  niklas.soderlund+renesas@ragnatech.se`
-- No Fixes: tag (expected for AUTOSEL candidate)
-- No Reported-by tag
+**Step 1.3: Commit Body**
+The message explains: MxL862xx offloads bridge forwarding in hardware.
+Without `dsa_default_offload_fwd_mark()`, the software bridge doesn't
+know the hardware already forwarded the packet, so it forwards again,
+creating duplicate frames (especially flooded frames). Link-local frames
+are trapped directly to the CPU and should NOT have the mark set.
 
-Record: BSP-originated fix from Renesas engineer, applied by net
-maintainer.
-
-### Step 1.3: Commit Body
-The message says "Disable E-MAC interrupts when closing the device." The
-`[Niklas: Rebase from BSP and reword commit message]` note tells us this
-was found and fixed in Renesas's vendor BSP kernel, then upstreamed.
-
-Record: Fix for missing interrupt disable discovered by the hardware
-vendor (Renesas).
-
-### Step 1.4: Hidden Bug Fix Detection
-This is absolutely a bug fix: the E-MAC interrupt enable register was
-left active after device close. This means interrupts could fire after
-the device teardown has progressed.
-
-Record: Yes, this is a real bug fix — missing disable of E-MAC
-interrupts during close.
-
----
+**Step 1.4: Hidden Bug Fix**
+This IS a real bug fix disguised as a "set" action. The missing offload
+forward mark causes concrete packet duplication on the network.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files**: `drivers/net/ethernet/renesas/ravb_main.c` — 1 line added
-- **Function**: `ravb_close()`
-- **Scope**: Single-line surgical fix
+**Step 2.1: Inventory**
+- Files changed: 1 (`net/dsa/tag_mxl862xx.c`)
+- Lines: +3 added, 0 removed
+- Function modified: `mxl862_tag_rcv()`
 
-### Step 2.2: Code Flow Change
-**Before**: `ravb_close()` disables RIC0, RIC2, TIC interrupt masks but
-does NOT disable the ECSIPR (E-MAC Status Interrupt Policy Register).
+**Step 2.2: Code Flow Change**
+Before: `mxl862_tag_rcv()` identifies the source port, sets `skb->dev`,
+strips the tag, returns. `skb->offload_fwd_mark` is never set (defaults
+to 0/false).
 
-**After**: `ravb_close()` also writes 0 to ECSIPR, disabling all E-MAC
-interrupts (link change, carrier error, magic packet).
+After: Before stripping the tag, if the destination is NOT a link-local
+address, `dsa_default_offload_fwd_mark(skb)` is called, which sets
+`skb->offload_fwd_mark = !!(dp->bridge)`. This tells the software bridge
+that hardware already forwarded this packet.
 
-### Step 2.3: Bug Mechanism
-The E-MAC interrupt handler (`ravb_emac_interrupt_unlocked`) can be
-triggered when ECSIPR bits are enabled. During `ravb_open()`,
-`ravb_emac_init()` sets ECSIPR to enable E-MAC interrupts. But during
-`ravb_close()`, ECSIPR was never cleared. This means:
+**Step 2.3: Bug Mechanism**
+Category: Logic/correctness fix. The missing
+`dsa_default_offload_fwd_mark()` call means
+`nbp_switchdev_allowed_egress()` (in `net/bridge/br_switchdev.c` line
+67-74) sees `offload_fwd_mark == 0` and allows the software bridge to
+forward the packet AGAIN, even though the hardware switch already
+forwarded it. This causes duplicate frames on bridged interfaces.
 
-1. E-MAC interrupts remain enabled after close
-2. They can fire during device teardown (while NAPI is being disabled,
-   ring buffers being freed)
-3. The handler accesses device registers, stats counters, and can call
-   `ravb_rcv_snd_disable()`/`ravb_rcv_snd_enable()` which modify device
-   state
-
-The ECSIPR bits include:
-- `ECSIPR_ICDIP` (carrier detection)
-- `ECSIPR_MPDIP` (magic packet)
-- `ECSIPR_LCHNGIP` (link change)
-
-### Step 2.4: Fix Quality
-- **Obviously correct**: The other three interrupt registers (RIC0,
-  RIC2, TIC) are already cleared. ECSIPR was simply omitted.
-- **Minimal**: 1 line addition
-- **Regression risk**: Effectively zero — it's disabling interrupts that
-  should already be disabled
-- **Consistent with codebase**: `ravb_wol_setup()` also explicitly
-  manages ECSIPR (setting it to `ECSIPR_MPDIP` only)
-
-Record: Trivially correct, zero regression risk.
-
----
+**Step 2.4: Fix Quality**
+- Obviously correct: YES - this is the identical pattern used by ~15
+  other DSA tag drivers
+- Minimal/surgical: YES - 3 lines
+- Regression risk: Extremely low - the same pattern is well-tested
+  across all other DSA tag drivers
+- The `is_link_local_ether_addr` guard is used identically by
+  `tag_brcm.c` (lines 179-180, 254-255)
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The interrupt disable block (RIC0/RIC2/TIC) was introduced in the
-original driver commit `c156633f135326` (2015-06-11) by Sergei Shtylyov.
-The ECSIPR write was missing from the very beginning — this bug has been
-present since the driver's inception in Linux 4.2.
+**Step 3.1: Blame**
+All lines in `tag_mxl862xx.c` trace to commit `85ee987429027` ("net:
+dsa: add tag format for MxL862xx switches"), which was in v7.0-rc1. The
+bug has been present since the file was created.
 
-Record: Bug present since the driver was first added (commit
-c156633f1353, Linux 4.2, 2015).
+**Step 3.2: No Fixes: tag** - N/A. The implicit target is
+`85ee987429027`.
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present. Based on analysis, the correct Fixes: tag would
-point to `c156633f135326` (the original driver).
+**Step 3.3: File History**
+Only one commit touches this file: `85ee987429027` (the initial
+creation). No intermediate fixes or refactoring.
 
-### Step 3.3: File History
-Recent activity includes timestamp-related improvements and a close-
-function reorder by Claudiu Beznea. The `ravb_close()` function was
-recently reordered in `a5f149a97d09c` but that change also did not add
-the missing ECSIPR disable.
+**Step 3.4: Author**
+Daniel Golle is the original author of the MxL862xx tag driver and the
+MxL862xx DSA driver. He created the driver and is clearly the maintainer
+of this code.
 
-Record: Standalone fix, no dependencies.
+**Step 3.5: Dependencies**
+No dependencies. The fix is standalone; `dsa_default_offload_fwd_mark()`
+and `is_link_local_ether_addr()` both already exist in the tree. The
+file hasn't changed since its introduction.
 
-### Step 3.4: Author Context
-Yoshihiro Shimoda is a regular Renesas contributor with multiple ravb
-fixes. Niklas Soderlund is the Renesas upstreaming contact who regularly
-ports BSP fixes.
+## PHASE 4: MAILING LIST
 
-Record: Fix from the hardware vendor's engineers.
-
-### Step 3.5: Dependencies
-None. The `ECSIPR` register and `ravb_write()` function have been in the
-driver since day one.
-
-Record: Fully standalone, applies to any kernel version with this
-driver.
-
----
-
-## PHASE 4: MAILING LIST RESEARCH
-
-### Step 4.1-4.5
-Lore was not accessible (anti-bot protection). However:
-- The patch was applied by Jakub Kicinski (net maintainer), confirming
-  it passed review
-- The Link: tag confirms it went through the standard netdev submission
-  process
-- The BSP origin confirms Renesas discovered this in their own testing
-
-Record: Maintainer-applied, vendor-validated fix.
-
----
+Lore.kernel.org was blocked by bot protection. However:
+- b4 dig found the original driver submission at `https://patch.msgid.li
+  nk/c64e6ddb6c93a4fac39f9ab9b2d8bf551a2b118d.1770433307.git.daniel@makr
+  otopia.org` (v14 of the series, meaning extensive review)
+- The fix was signed off by Jakub Kicinski, the net maintainer
+- The original driver was Reviewed-by Vladimir Oltean (DSA maintainer) -
+  the missing `dsa_default_offload_fwd_mark()` was an oversight in the
+  original v14 series
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Function Analysis
-The E-MAC interrupt handler chain:
-- `ravb_emac_interrupt()` (or `ravb_interrupt()` → ISS_MS check) →
-  `ravb_emac_interrupt_unlocked()`
-- The handler reads ECSR, writes ECSR (to clear), reads PSR, and can
-  call `ravb_rcv_snd_disable()`/`ravb_rcv_snd_enable()`
-- With ECSIPR not cleared, these interrupts fire after `ravb_close()`
-  disables NAPI and frees ring buffers
-- The interrupt uses `devm_request_irq()`, so it stays registered until
-  device removal
+**Step 5.1:** Function modified: `mxl862_tag_rcv()`
 
-Record: Spurious E-MAC interrupts after close could access device state
-during/after teardown.
+**Step 5.2: Callers**
+`mxl862_tag_rcv` is registered as `.rcv` callback in
+`mxl862_netdev_ops`. It's called by the DSA core on every packet
+received from the switch. This is a HOT PATH for every single network
+packet.
 
----
+**Step 5.3/5.4:** `dsa_default_offload_fwd_mark()` sets
+`skb->offload_fwd_mark` based on `dp->bridge` being non-NULL. This is
+checked by `nbp_switchdev_allowed_egress()` in the bridge forwarding
+path, which prevents duplicate forwarding.
+
+**Step 5.5: Similar patterns**
+The exact same pattern (`is_link_local` check +
+`dsa_default_offload_fwd_mark`) is used in `tag_brcm.c`. The simpler
+form (unconditional `dsa_default_offload_fwd_mark`) is used in 12+ other
+tag drivers (`tag_ksz.c`, `tag_mtk.c`, `tag_ocelot.c`,
+`tag_hellcreek.c`, `tag_rtl4_a.c`, `tag_rtl8_4.c`, `tag_rzn1_a5psw.c`,
+`tag_xrs700x.c`, `tag_vsc73xx_8021q.c`, `tag_yt921x.c`, etc.).
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Bug Existence in Stable Trees
-The buggy code (`ravb_close()` missing ECSIPR disable) has existed since
-the driver's creation in Linux 4.2. It exists in all stable trees.
+**Step 6.1: File existence in stable trees**
+- `net/dsa/tag_mxl862xx.c` does NOT exist in v6.19 or any earlier kernel
+- It was introduced in v7.0-rc1
+- The fix is ONLY relevant for 7.0.y stable
 
-### Step 6.2: Backport Complications
-The fix is a single `ravb_write()` call added alongside identical
-existing calls. It will apply cleanly to any kernel with this driver.
+**Step 6.2: Backport Complications**
+The file in 7.0.y is identical to the v7.0-rc1/v7.0 version. The patch
+will apply cleanly with no conflicts.
 
-Record: Clean apply expected in all stable trees.
-
----
+**Step 6.3: No related fixes already in stable.**
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1
-- **Subsystem**: Network driver for Renesas R-Car/RZ SoCs
-- **Criticality**: IMPORTANT — used on embedded automotive and
-  industrial systems
-- **Users**: Renesas R-Car and RZ platform users (automotive, IoT,
-  embedded)
+**Step 7.1:** Subsystem: Networking / DSA (Distributed Switch
+Architecture). Criticality: IMPORTANT - affects users of MxL862xx
+hardware switches.
 
-### Step 7.2
-Active subsystem with regular development activity.
-
----
+**Step 7.2:** The MxL862xx driver is very new (added in 7.0-rc1), but
+DSA as a subsystem is mature and actively developed.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users of Renesas R-Car and RZ Ethernet (ravb) hardware — automotive and
-embedded systems.
+**Step 8.1: Who is affected**
+All users of MxL862xx switches with bridged ports. This is
+embedded/networking hardware.
 
-### Step 8.2: Trigger Conditions
-Every device close (`ifconfig down`, `ip link set down`, system
-shutdown). This is a routine operation.
+**Step 8.2: Trigger conditions**
+Every bridged packet received from the switch triggers this bug. Flooded
+frames (broadcast, unknown unicast, multicast) are explicitly mentioned.
+This is extremely common - essentially all normal network traffic when
+using bridging.
 
-### Step 8.3: Failure Mode
-Without the fix, E-MAC interrupts fire after close. Possible
-consequences:
-- **Spurious interrupts** during teardown — the handler accesses freed
-  state
-- On systems with separate E-MAC IRQ line, `ravb_emac_interrupt()` can
-  fire and access the device after NAPI is disabled
-- In the shared IRQ case (`ravb_interrupt()`), the ISS_MS check can
-  trigger `ravb_emac_interrupt_unlocked()` which modifies device
-  registers during teardown
+**Step 8.3: Failure mode**
+- Duplicate frames on the network for every bridged packet
+- Potential broadcast storms (flooded frames duplicated endlessly)
+- Network instability and degraded performance
+- Severity: HIGH (network malfunction, not a crash, but makes bridging
+  essentially broken)
 
-Severity: **MEDIUM-HIGH** (spurious interrupts during teardown,
-potential for accessing freed resources)
-
-### Step 8.4: Risk-Benefit
-- **Benefit**: Prevents spurious E-MAC interrupts during device close on
-  all Renesas AVB platforms
-- **Risk**: Effectively zero — writing 0 to an interrupt enable register
-  at close time is inherently safe
-- **Ratio**: Very favorable
-
----
+**Step 8.4: Risk-Benefit**
+- BENEFIT: Very high - fixes completely broken bridge forwarding for
+  this hardware
+- RISK: Very low - 3 lines, well-established pattern used by 15+ other
+  drivers, zero chance of regression
+- Ratio: Strongly favorable
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
-**FOR backporting:**
-- Fixes a bug present since driver creation (2015, Linux 4.2)
-- 1-line fix, obviously correct, zero regression risk
-- Discovered by the hardware vendor (Renesas BSP)
-- Applied by the netdev maintainer
-- Consistent with existing pattern (other interrupt masks already
-  cleared)
-- Common trigger (every device close)
-- Prevents spurious interrupts during teardown
+**Evidence FOR backporting:**
+1. Fixes a real, significant bug: duplicate forwarding of all bridged
+   packets
+2. Tiny fix: 3 lines
+3. Follows the exact same pattern as 15+ other DSA tag drivers (well-
+   tested)
+4. Written by the original driver author
+5. Applied by net maintainer Jakub Kicinski
+6. Applies cleanly to 7.0.y
+7. Zero regression risk
 
-**AGAINST backporting:**
-- No explicit crash/syzbot report (found by code inspection/vendor
-  testing)
-- Commit message is terse
+**Evidence AGAINST backporting:**
+1. Only affects 7.0.y stable (file doesn't exist in earlier kernels)
+2. No explicit Fixes: tag or Cc: stable (expected for reviewed commits)
+3. MxL862xx is relatively new hardware (niche user base)
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — trivially obvious, vendor-
-   tested
-2. Fixes a real bug? **YES** — missing interrupt disable on close
-3. Important issue? **YES** — spurious interrupts during teardown
-4. Small and contained? **YES** — 1 line
-5. No new features or APIs? **YES** — pure fix
-6. Can apply to stable? **YES** — clean apply expected
-
-### Step 9.3: Exception Categories
-Not needed — this is a straightforward bug fix.
-
-### Step 9.4: Decision
-This is a minimal, obviously correct fix for a long-standing bug where
-E-MAC interrupts were not disabled during device close. The fix is 1
-line, has zero regression risk, and was originated by the hardware
-vendor.
-
----
+**Stable Rules Checklist:**
+1. Obviously correct? YES - identical pattern to 15+ other tag drivers
+2. Fixes a real bug? YES - duplicate forwarding of bridged packets
+3. Important issue? YES - makes bridging non-functional (duplicate
+   frames, potential storms)
+4. Small and contained? YES - 3 lines, one file
+5. No new features? CORRECT - no new features
+6. Applies to stable? YES - clean apply to 7.0.y
 
 ## Verification
 
-- [Phase 1] Parsed commit message: BSP-origin fix, applied by netdev
-  maintainer Jakub Kicinski
-- [Phase 2] Diff analysis: 1 line added (`ravb_write(ndev, 0, ECSIPR)`)
-  in `ravb_close()` alongside existing RIC0/RIC2/TIC clears
-- [Phase 3] git blame: The interrupt disable block was in commit
-  c156633f1353 (2015, Linux 4.2), ECSIPR omitted since then
-- [Phase 3] Confirmed ECSIPR is set during `ravb_emac_init_rcar()` (line
-  585) and `ravb_emac_init_gbeth()` (line 551) but never cleared during
-  close
-- [Phase 3] git show c156633f1353: confirmed original `ravb_close()`
-  already disabled RIC0/RIC2/TIC but omitted ECSIPR
-- [Phase 3] File history: fix is standalone, no dependencies
-- [Phase 4] Lore inaccessible (anti-bot); confirmed maintainer
-  application via commit tags
-- [Phase 5] `ravb_emac_interrupt_unlocked()` at line 1111 handles
-  ECSIPR-enabled interrupts, accesses device state
-- [Phase 5] `ravb_wol_setup()` at line 3164 explicitly manages ECSIPR,
-  confirming it needs to be handled
-- [Phase 6] Bug exists in all stable trees (present since driver
-  creation in Linux 4.2)
-- [Phase 6] 1-line fix will apply cleanly everywhere
-- [Phase 8] Trigger: every device close; Severity: MEDIUM-HIGH (spurious
-  interrupts during teardown)
+- [Phase 1] Parsed tags: Signed-off-by Daniel Golle (author) and Jakub
+  Kicinski (net maintainer). No Fixes/Reported-by tags.
+- [Phase 2] Diff analysis: 3 lines added in `mxl862_tag_rcv()`, adds
+  missing `dsa_default_offload_fwd_mark()` call with
+  `is_link_local_ether_addr` guard.
+- [Phase 3] git blame: all code from `85ee987429027` (v7.0-rc1). Bug
+  present since file creation.
+- [Phase 3] git log: only 1 commit touches `tag_mxl862xx.c`, no
+  intermediate changes.
+- [Phase 3] Author is original driver creator (verified via blame + git
+  log --author).
+- [Phase 4] b4 dig found original series: v14 of MxL862xx driver
+  submission. Reviewed by Vladimir Oltean.
+- [Phase 4] Lore fetch blocked by bot protection; relied on b4 dig
+  results.
+- [Phase 5] grep confirmed `dsa_default_offload_fwd_mark()` used by 15+
+  other DSA tag drivers with identical pattern.
+- [Phase 5] `tag_brcm.c` uses exact same `is_link_local_ether_addr`
+  guard (lines 179-180, 254-255).
+- [Phase 5] `nbp_switchdev_allowed_egress()` in `br_switchdev.c:67-74`
+  confirmed: uses `offload_fwd_mark` to suppress duplicate forwarding.
+- [Phase 6] `git show v6.19.12:net/dsa/tag_mxl862xx.c` → "does not
+  exist". File only in 7.0+.
+- [Phase 6] `git show v7.0:net/dsa/tag_mxl862xx.c` → file identical to
+  current HEAD, patch applies cleanly.
+- [Phase 8] Failure mode: duplicate forwarding of all bridged frames,
+  severity HIGH.
 
 **YES**
 
- drivers/net/ethernet/renesas/ravb_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/dsa/tag_mxl862xx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 84b657fc2e158..2c725824b3488 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2367,6 +2367,7 @@ static int ravb_close(struct net_device *ndev)
- 	ravb_write(ndev, 0, RIC0);
- 	ravb_write(ndev, 0, RIC2);
- 	ravb_write(ndev, 0, TIC);
-+	ravb_write(ndev, 0, ECSIPR);
+diff --git a/net/dsa/tag_mxl862xx.c b/net/dsa/tag_mxl862xx.c
+index 01f2158682718..8daefeb8d49df 100644
+--- a/net/dsa/tag_mxl862xx.c
++++ b/net/dsa/tag_mxl862xx.c
+@@ -86,6 +86,9 @@ static struct sk_buff *mxl862_tag_rcv(struct sk_buff *skb,
+ 		return NULL;
+ 	}
  
- 	/* PHY disconnect */
- 	if (ndev->phydev) {
++	if (likely(!is_link_local_ether_addr(eth_hdr(skb)->h_dest)))
++		dsa_default_offload_fwd_mark(skb);
++
+ 	/* remove the MxL862xx special tag between the MAC addresses and the
+ 	 * current ethertype field.
+ 	 */
 -- 
 2.53.0
 
