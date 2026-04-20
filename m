@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4420729BDBF;
-	Mon, 20 Apr 2026 15:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A523C22541C;
+	Mon, 20 Apr 2026 15:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700009; cv=none; b=sWfkLbR8xQHRXhRccTAGSPwNlfzWaptFX7NxPVwlPYyMAhxmeOxjM7NybyFfSZdG0Kack8VCKaA4fd3UlEjf9BKuFZrI4vJpapZnwu8noECcjWbqZt1X9tRLIxEB3IRcVDDsozpgJ0c5af4B3iET0XyVs07zAW66NZBsKCGluJo=
+	t=1776700011; cv=none; b=mWU/g1nMbUp4HKJwQUnbvWJoJc3u6613NWLCii2evH+Gv0Z92opzQDvgZ8hp/XliDohuk1u4ghfwUMnKCwgTzGkCZfK7Ffl1h4F6alHZb93/rKEBV90p4l9CO4MJ+18Nnu9s/CrwUzKelP6jsY1R62a7j5miI6bsNa0qODVf2Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700009; c=relaxed/simple;
-	bh=4gBCQJmyDCfTQksRkAFBjwD6iuQLkvQXbndT8w7cNmU=;
+	s=arc-20240116; t=1776700011; c=relaxed/simple;
+	bh=RdAV3FY1bcuF76HDhwcHMtj//RoVv2lpCYFkTDR28+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6WI2O1so6Hc06FLWOLkXuSedYSrZ3Dh1LbvLkRYX91Zz7bnjFcBCT6SijXgo6bFUrGAGdfhO/usB7hoWpYPFZqOFJDxEWvZOObO4xU8fEsPzUdV0oJvoOWXEYK1OQ8Dn09qrikR8UNjkROdf4NiBeJMrQe0+5+XOO0YCeuUmLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uytmE+d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwB6ymICuS9hNqHfx2mvch9ZrFt1rsMUAj0K7huTU17VRf2QvWbSggM1eou0pGKrfAb8oiEk3O58wGf16RL9VuUwCb3owrubr4r3aojrSd4sF2GV79wm/Kq05YTQmit3AeEwtm+YeIB6o2ilO3+EhjQRgm+xtEAlgbmoTT0ynYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhYvO0gg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uytmE+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE30C19425;
-	Mon, 20 Apr 2026 15:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhYvO0gg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5BCC19425;
+	Mon, 20 Apr 2026 15:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700009;
-	bh=4gBCQJmyDCfTQksRkAFBjwD6iuQLkvQXbndT8w7cNmU=;
+	s=korg; t=1776700011;
+	bh=RdAV3FY1bcuF76HDhwcHMtj//RoVv2lpCYFkTDR28+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2uytmE+drnOqfY1Nt3vYBV/dLlCGg5kyC/y7oQ82iU2Q8pY5iSnSejxTw3SECWDvi
-	 /Xmh4hsqhOOeIsnVTMehpgzBzX/YAR+KQLSuPufqnzouvxSSfn5Pg15CbiTdoW/T2N
-	 j70lbHRqtfa7rSmxHWorp9iSObRa6PzAMZ/9SHvs=
+	b=OhYvO0ggSWFshJR7+SDxDePF2seyxBG9jZxNMi2uhzJFFmGlrQnuB4oc3FePIsB0U
+	 0+AMMaNKQHt/Wj0L8yhPvgDwXL+UlHy/yrAq86hcYSK0CvUI5phOxoHVHRPqkp3tx6
+	 7qHEvGcRkVlGwFgakqjvkGYMuPSP7+8sYwMHMrk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com,
-	syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 75/76] media: hackrf: fix to not free memory after the device is registered in hackrf_probe()
-Date: Mon, 20 Apr 2026 17:42:26 +0200
-Message-ID: <20260420153913.545945841@linuxfoundation.org>
+Subject: [PATCH 7.0 66/76] media: mediatek: vcodec: fix use-after-free in encoder release path
+Date: Mon, 20 Apr 2026 17:42:17 +0200
+Message-ID: <20260420153913.223077452@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -52,87 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 3b7da2b4d0fe014eff181ed37e3bf832eb8ed258 upstream.
+commit 76e35091ffc722ba39b303e48bc5d08abb59dd56 upstream.
 
-In hackrf driver, the following race condition occurs:
-```
-		CPU0						CPU1
-hackrf_probe()
-  kzalloc(); // alloc hackrf_dev
-  ....
-  v4l2_device_register();
-  ....
-						fd = sys_open("/path/to/dev"); // open hackrf fd
-						....
-  v4l2_device_unregister();
-  ....
-  kfree(); // free hackrf_dev
-  ....
-						sys_ioctl(fd, ...);
-						  v4l2_ioctl();
-						    video_is_registered() // UAF!!
-						....
-						sys_close(fd);
-						  v4l2_release() // UAF!!
-						    hackrf_video_release()
-						      kfree(); // DFB!!
-```
+The fops_vcodec_release() function frees the context structure (ctx)
+without first cancelling any pending or running work in ctx->encode_work.
+This creates a race window where the workqueue handler (mtk_venc_worker)
+may still be accessing the context memory after it has been freed.
 
-When a V4L2 or video device is unregistered, the device node is removed so
-new open() calls are blocked.
+Race condition:
 
-However, file descriptors that are already open-and any in-flight I/O-do
-not terminate immediately; they remain valid until the last reference is
-dropped and the driver's release() is invoked.
+    CPU 0 (release path)               CPU 1 (workqueue)
+    ---------------------               ------------------
+    fops_vcodec_release()
+      v4l2_m2m_ctx_release()
+        v4l2_m2m_cancel_job()
+        // waits for m2m job "done"
+                                        mtk_venc_worker()
+                                          v4l2_m2m_job_finish()
+                                          // m2m job "done"
+                                          // BUT worker still running!
+                                          // post-job_finish access:
+                                        other ctx dereferences
+                                          // UAF if ctx already freed
+        // returns (job "done")
+      kfree(ctx)  // ctx freed
 
-Therefore, freeing device memory on the error path after hackrf_probe()
-has registered dev it will lead to a race to use-after-free vuln, since
-those already-open handles haven't been released yet.
+Root cause: The v4l2_m2m_ctx_release() only waits for the m2m job
+lifecycle (via TRANS_RUNNING flag), not the workqueue lifecycle.
+After v4l2_m2m_job_finish() is called, the m2m framework considers
+the job complete and v4l2_m2m_ctx_release() returns, but the worker
+function continues executing and may still access ctx.
 
-And since release() free memory too, race to use-after-free and
-double-free vuln occur.
+The work is queued during encode operations via:
+  queue_work(ctx->dev->encode_workqueue, &ctx->encode_work)
+The worker function accesses ctx->m2m_ctx, ctx->dev, and other ctx
+fields even after calling v4l2_m2m_job_finish().
 
-To prevent this, if device is registered from probe(), it should be
-modified to free memory only through release() rather than calling
-kfree() directly.
+This vulnerability was confirmed with KASAN by running an instrumented
+test module that widens the post-job_finish race window. KASAN detected:
 
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6ffd76b5405c006a46b7
-Reported-by: syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1b20958f93d2d250727
-Fixes: 8bc4a9ed8504 ("[media] hackrf: add support for transmitter")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+  BUG: KASAN: slab-use-after-free in mtk_venc_worker+0x159/0x180
+  Read of size 4 at addr ffff88800326e000 by task kworker/u8:0/12
+
+  Workqueue: mtk_vcodec_enc_wq mtk_venc_worker
+
+  Allocated by task 47:
+    __kasan_kmalloc+0x7f/0x90
+    fops_vcodec_open+0x85/0x1a0
+
+  Freed by task 47:
+    __kasan_slab_free+0x43/0x70
+    kfree+0xee/0x3a0
+    fops_vcodec_release+0xb7/0x190
+
+Fix this by calling cancel_work_sync(&ctx->encode_work) before kfree(ctx).
+This ensures the workqueue handler is both cancelled (if pending) and
+synchronized (waits for any running handler to complete) before the
+context is freed.
+
+Placement rationale: The fix is placed after v4l2_ctrl_handler_free()
+and before list_del_init(&ctx->list). At this point, all m2m operations
+are done (v4l2_m2m_ctx_release() has returned), and we need to ensure
+the workqueue is synchronized before removing ctx from the list and
+freeing it.
+
+Note: The open error path does NOT need cancel_work_sync() because
+INIT_WORK() only initializes the work structure - it does not schedule
+it. Work is only scheduled later during device_run() operations.
+
+Fixes: 0934d3759615 ("media: mediatek: vcodec: separate decoder and encoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/hackrf/hackrf.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/media/usb/hackrf/hackrf.c
-+++ b/drivers/media/usb/hackrf/hackrf.c
-@@ -1485,7 +1485,7 @@ static int hackrf_probe(struct usb_inter
- 	if (ret) {
- 		dev_err(dev->dev,
- 			"Failed to register as video device (%d)\n", ret);
--		goto err_v4l2_device_unregister;
-+		goto err_v4l2_device_put;
- 	}
- 	dev_info(dev->dev, "Registered as %s\n",
- 		 video_device_node_name(&dev->rx_vdev));
-@@ -1513,8 +1513,9 @@ static int hackrf_probe(struct usb_inter
- 	return 0;
- err_video_unregister_device_rx:
- 	video_unregister_device(&dev->rx_vdev);
--err_v4l2_device_unregister:
--	v4l2_device_unregister(&dev->v4l2_dev);
-+err_v4l2_device_put:
-+	v4l2_device_put(&dev->v4l2_dev);
-+	return ret;
- err_v4l2_ctrl_handler_free_tx:
- 	v4l2_ctrl_handler_free(&dev->tx_ctrl_handler);
- err_v4l2_ctrl_handler_free_rx:
+--- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
+@@ -215,6 +215,15 @@ static int fops_vcodec_release(struct fi
+ 	v4l2_fh_exit(&ctx->fh);
+ 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
+ 
++	/*
++	 * Cancel any pending encode work before freeing the context.
++	 * Although v4l2_m2m_ctx_release() waits for m2m job completion,
++	 * the workqueue handler (mtk_venc_worker) may still be accessing
++	 * the context after v4l2_m2m_job_finish() returns. Without this,
++	 * a use-after-free occurs when the worker accesses ctx after kfree.
++	 */
++	cancel_work_sync(&ctx->encode_work);
++
+ 	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_del_init(&ctx->list);
+ 	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
 
 
