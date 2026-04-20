@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7615034252C;
-	Mon, 20 Apr 2026 16:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C8A333445;
+	Mon, 20 Apr 2026 16:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701552; cv=none; b=tqMGCzsbIULh8eQ3aTCfR5OGSTC2ZBwVvwE1WVBv148cd+zdeIjF/FsGVoQ/BN6Hex//0Q8W7iU0ajqlYFAiOW8t1AD7OS9xYHSp+YsHl04tt/nhk1ODoylKLGKia021WG3uRoRPENTuwhVc3qMeI8djjCJoJyNinBwwIo34hs8=
+	t=1776701555; cv=none; b=XdsZd1UQ5U13IEKR8U91jCIm13tdOH+CKNC2XurX7rrKgFVED0I/wiwpCPy1E8EizxKFOwvXEI253+5gjfPvN4g4CJMDG3lh9Q+TwxMPpXa1xgfYPwzjtd3LNv0B4ASBgD1XC5w+/r9z08sgKoVvtc5faFo9l94pffi7+Xg0Xdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701552; c=relaxed/simple;
-	bh=pbx1Lu2n6SZQ/JeH6goPTe0vySwepCBgMpcS9Fn69AQ=;
+	s=arc-20240116; t=1776701555; c=relaxed/simple;
+	bh=Ja92mSMTBxpy6V8E6IVy0OVL8TfBsRg7QIforuh423k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TOXo4A6nEJN18lmuXOuZ1uCGaVVBbJNCFQBsqXzURWx8tZGdqpByp5ceo3VUCNCjTxki8JGW/ZtIBcW3bhVGTKjB7AlHb3HIDXsQSidPnJbKvAdaYErCrfrfnAmyCle9vlIUQ6zuimefdf+V7A6IJFFNnDiHEMOJNTL1FBG9kIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuM4ZP3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ASAkmMFNsQAIeiRlUoPc7zGFPgEp3hOWTroWjx2hT8QPmiWMv48jlQhLbh+mNIpY7H+0lZsPr3D8vpFF4zRV+lS3ZB12I9tJZEFe/cNFEoivgcIDaqWMyVLg/MN6uBuBo4RmQGFA+RD3+yUfWDhsu3/N0t9p8l6Pn5hVhoK+QkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prAcIplW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuM4ZP3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05C1C19425;
-	Mon, 20 Apr 2026 16:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prAcIplW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0BFC19425;
+	Mon, 20 Apr 2026 16:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701552;
-	bh=pbx1Lu2n6SZQ/JeH6goPTe0vySwepCBgMpcS9Fn69AQ=;
+	s=korg; t=1776701554;
+	bh=Ja92mSMTBxpy6V8E6IVy0OVL8TfBsRg7QIforuh423k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuM4ZP3Y1d+5elDfT4iQHVRK/LhpQ3+YRGnyN7V9hPT4Kc4uXWQiVHUvOe9fu69PF
-	 CMB3/WbIXEHWDc2436+bKhQBTecOo9Nity1YGqtB77t25IdVBfNCXUd3U3uE9cDPrr
-	 jwpBDSvqOYlSKtIuGa/cZiWfm1hsn9cwB0Hd4uEc=
+	b=prAcIplWz3qdxGXquO8MZEcCAjAvdKOcT3GpagX/n3JxXHaCtTrjnIkb4/LHpA8Z0
+	 SOgFDQxIgyhQjLDqramkNTJGr/KZACO8kVT0y28NROYzgGnb4JR/c+hXVQ/gcQlGWK
+	 ZEsKmrPDMvQIWRReLdYAE0Yc1uQMcbyDBeTO8gB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejas Bharambe <tejas.bharambe@outlook.com>,
-	syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 126/162] ocfs2: fix use-after-free in ocfs2_fault() when VM_FAULT_RETRY
-Date: Mon, 20 Apr 2026 17:42:38 +0200
-Message-ID: <20260420153931.605400708@linuxfoundation.org>
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Fiona Behrens <me@kloenk.dev>,
+	Trevor Gross <tmgross@umich.edu>,
+	Tamir Duberstein <tamird@kernel.org>
+Subject: [PATCH 6.12 117/162] scripts: generate_rust_analyzer.py: avoid FD leak
+Date: Mon, 20 Apr 2026 17:42:29 +0200
+Message-ID: <20260420153931.280074704@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -58,101 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejas Bharambe <tejas.bharambe@outlook.com>
+From: Tamir Duberstein <tamird@kernel.org>
 
-commit 7de554cabf160e331e4442e2a9ad874ca9875921 upstream.
+commit 9b4744d8eda2824041064a5639ccbb079850914d upstream.
 
-filemap_fault() may drop the mmap_lock before returning VM_FAULT_RETRY,
-as documented in mm/filemap.c:
+Use `pathlib.Path.read_text()` to avoid leaking file descriptors.
 
-  "If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
-  may be dropped before doing I/O or by lock_folio_maybe_drop_mmap()."
-
-When this happens, a concurrent munmap() can call remove_vma() and free
-the vm_area_struct via RCU. The saved 'vma' pointer in ocfs2_fault() then
-becomes a dangling pointer, and the subsequent trace_ocfs2_fault() call
-dereferences it -- a use-after-free.
-
-Fix this by saving ip_blkno as a plain integer before calling
-filemap_fault(), and removing vma from the trace event. Since
-ip_blkno is copied by value before the lock can be dropped, it
-remains valid regardless of what happens to the vma or inode
-afterward.
-
-Link: https://lkml.kernel.org/r/20260410083816.34951-1-tejas.bharambe@outlook.com
-Fixes: 614a9e849ca6 ("ocfs2: Remove FILE_IO from masklog.")
-Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
-Reported-by: syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a49010a0e8fcdeea075f
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
+Cc: stable@vger.kernel.org
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Reviewed-by: Fiona Behrens <me@kloenk.dev>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Link: https://patch.msgid.link/20260127-rust-analyzer-fd-leak-v2-1-1bb55b9b6822@kernel.org
+Signed-off-by: Tamir Duberstein <tamird@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/mmap.c        |    7 +++----
- fs/ocfs2/ocfs2_trace.h |   10 ++++------
- 2 files changed, 7 insertions(+), 10 deletions(-)
+ scripts/generate_rust_analyzer.py |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/mmap.c
-+++ b/fs/ocfs2/mmap.c
-@@ -30,7 +30,8 @@
+--- a/scripts/generate_rust_analyzer.py
++++ b/scripts/generate_rust_analyzer.py
+@@ -146,9 +146,10 @@ def generate_crates(srctree, objtree, sy
  
- static vm_fault_t ocfs2_fault(struct vm_fault *vmf)
- {
--	struct vm_area_struct *vma = vmf->vma;
-+	unsigned long long ip_blkno =
-+		OCFS2_I(file_inode(vmf->vma->vm_file))->ip_blkno;
- 	sigset_t oldset;
- 	vm_fault_t ret;
+     def is_root_crate(build_file, target):
+         try:
+-            return f"{target}.o" in open(build_file).read()
++            contents = build_file.read_text()
+         except FileNotFoundError:
+             return False
++        return f"{target}.o" in contents
  
-@@ -38,11 +39,9 @@ static vm_fault_t ocfs2_fault(struct vm_
- 	ret = filemap_fault(vmf);
- 	ocfs2_unblock_signals(&oldset);
- 
--	trace_ocfs2_fault(OCFS2_I(vma->vm_file->f_mapping->host)->ip_blkno,
--			  vma, vmf->page, vmf->pgoff);
-+	trace_ocfs2_fault(ip_blkno, vmf->page, vmf->pgoff);
- 	return ret;
- }
--
- static vm_fault_t __ocfs2_page_mkwrite(struct file *file,
- 			struct buffer_head *di_bh, struct page *page)
- {
---- a/fs/ocfs2/ocfs2_trace.h
-+++ b/fs/ocfs2/ocfs2_trace.h
-@@ -1246,22 +1246,20 @@ TRACE_EVENT(ocfs2_write_end_inline,
- 
- TRACE_EVENT(ocfs2_fault,
- 	TP_PROTO(unsigned long long ino,
--		 void *area, void *page, unsigned long pgoff),
--	TP_ARGS(ino, area, page, pgoff),
-+		 void *page, unsigned long pgoff),
-+	TP_ARGS(ino, page, pgoff),
- 	TP_STRUCT__entry(
- 		__field(unsigned long long, ino)
--		__field(void *, area)
- 		__field(void *, page)
- 		__field(unsigned long, pgoff)
- 	),
- 	TP_fast_assign(
- 		__entry->ino = ino;
--		__entry->area = area;
- 		__entry->page = page;
- 		__entry->pgoff = pgoff;
- 	),
--	TP_printk("%llu %p %p %lu",
--		  __entry->ino, __entry->area, __entry->page, __entry->pgoff)
-+	TP_printk("%llu %p %lu",
-+		  __entry->ino, __entry->page, __entry->pgoff)
- );
- 
- /* End of trace events for fs/ocfs2/mmap.c. */
+     # Then, the rest outside of `rust/`.
+     #
 
 
