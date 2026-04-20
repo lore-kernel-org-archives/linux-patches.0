@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F5C48BD5D;
-	Mon, 20 Apr 2026 13:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D823A3A9DB3;
+	Mon, 20 Apr 2026 13:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691928; cv=none; b=QJzxfpO3QO0B1oeA/6QdkQpW2i8MwjoU1+JyXJqJ5Oi4lXdgzG0gE061q0MLjShMGRSXJITFpMbWE7UWpLID2PvIRrsi0PYUT48BKvJd1taizoAwgg6VGV1y+liTeN0Vj6uRLEfibsOPpD4mMs85DRql48BjdLCVSaSVT4Aral8=
+	t=1776691929; cv=none; b=fjrjTJzEism7Bw93iAUWDJ4+SdPls3aLe4eJdCLo0RURRKuGNOOnnsfm01srONVsbmfjIwrA5ei673UQ/uQdAK6CmiQVOv4PLtL+hfrd40lR0qpXAi0/zxjEXDFSERLoM8IdGdQjJH1jaNRd0TVKdU4K6fF1c7ZPNvwMket4xL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691928; c=relaxed/simple;
-	bh=SXDq7jTu5wSPdVSajHBdhavLJFyfzR8Zka0VyZuuoL4=;
+	s=arc-20240116; t=1776691929; c=relaxed/simple;
+	bh=ezqlU37ANbeKsqozw/1jOWoBmKYZeToNqHXnc2Ys4rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HmRMMfDd4lHZfCgIX5rUgW6KImOpwlRpiI2mIn7EeAPrNLC9BSzCBHB6zGkP45TjskyOR0C8Zk8mRLmtlrkEP9Y2DesHjJoLuSy0aZmbHz3bVhRHOV2n6qAPNlZ++3EtW8meJxxdOB2vqS5cXMCxDKP9qudjdIEMiyQ9nCM9bJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vKVjP89x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8ks1EQjL/hKWYD2YBYPskhoaYtB3tZaPo0MQOX+FKoHCIghB78o50gHCKlZzKclL6jaMG+lpJHzg2Ufuv7bdEjIEKUhF3vjRwvaMxqTCis98UltK/tn6991pVyzwKh2nYq7gvSNdmNM5AIzU9GncUzWgDw8TMo9MtkHgyrVZEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=txde56fa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vKVjP89x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526D9C2BCB4;
-	Mon, 20 Apr 2026 13:32:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="txde56fa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982DAC19425;
+	Mon, 20 Apr 2026 13:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691928;
-	bh=SXDq7jTu5wSPdVSajHBdhavLJFyfzR8Zka0VyZuuoL4=;
+	s=k20201202; t=1776691929;
+	bh=ezqlU37ANbeKsqozw/1jOWoBmKYZeToNqHXnc2Ys4rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKVjP89xhinnBP4y8RJ/EmSIZ/aRsw+GPU46QAbDRQyKEdsC9k5FNwTC4zUoQqGlD
-	 131VlNtt9a6Vy7CN0EaWIkoB2DUETO6iVuZmLDAdVRu332FnSceZjncOoUKHF5pXl9
-	 QpALayZuU05MIHorkj0LPHnNOWNHXljk/c8nGJI8TPx/ERGRMW9JDlaFtE+ippBeF8
-	 rWKtFxlJD47nATqa6tN8WTLAht5zZOxfF64+8gmn7ilbwxJeGDm/MYpOD+bAIsREDE
-	 rZtC7zDviAetO/VanzSItcV3OM7RJQzHxusRbmHmvFkV36WAIjgEcAdFR1neWtwj0m
-	 e+1vFMXqFT+qw==
+	b=txde56faJQKBBmpJl2S97m1nnkvJL6KmRykK2MR9eekEV/KgTw/BRafHtDLoo8il6
+	 aRflBNa3YMTbFWNKufIMQGf0hSypOXBpPSra8EjcAuGYv6R1fBgraNSZ+RTiV+BNSH
+	 ExNZtzMJrIL0q5JCfWLcMvSrhCIR3KNtvmhx8cHwXrn95EXATpFsNFGAYdueinf0uN
+	 sJPBDcuHFtdHk5DbO+bgGnRmx1A0NEC3f+iCNB8RYxZq1iszEJMYd05ByFfOAdlNOY
+	 bcKM9p7jWmNnrL+Rl5rAWzN1/I96BIgMlusaTl7CPe94xw60rivEjnHzUch/3fPOy8
+	 09eCcc6tZ2Jhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] wifi: rtw88: TX QOS Null data the same way as Null data
-Date: Mon, 20 Apr 2026 09:21:08 -0400
-Message-ID: <20260420132314.1023554-274-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.19] btrfs: zoned: cap delayed refs metadata reservation to avoid overcommit
+Date: Mon, 20 Apr 2026 09:21:09 -0400
+Message-ID: <20260420132314.1023554-275-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -49,308 +51,581 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 737e980e12983bb7420a2c00b981a1e607079a84 ]
+[ Upstream commit 7bcb04de982ff0718870112ad9f38c35cbca528b ]
 
-When filling out the TX descriptor, Null data frames are treated like
-management frames, but QOS Null data frames are treated like normal
-data frames. Somehow this causes a problem for the firmware.
+On zoned filesystems metadata space accounting can become overly optimistic
+due to delayed refs reservations growing without a hard upper bound.
 
-When connected to a network in the 2.4 GHz band, wpa_supplicant (or
-NetworkManager?) triggers a scan every five minutes. During these scans
-mac80211 transmits many QOS Null frames in quick succession. Because
-these frames are marked with IEEE80211_TX_CTL_REQ_TX_STATUS, rtw88
-asks the firmware to report the TX ACK status for each of these frames.
-Sometimes the firmware can't process the TX status requests quickly
-enough, they add up, it only processes some of them, and then marks
-every subsequent TX status report with the wrong number.
+The delayed_refs_rsv block reservation is allowed to speculatively grow and
+is only backed by actual metadata space when refilled. On zoned devices this
+can result in delayed_refs_rsv reserving a large portion of metadata space
+that is already effectively unusable due to zone write pointer constraints.
+As a result, space_info->may_use can grow far beyond the usable metadata
+capacity, causing the allocator to believe space is available when it is not.
 
-The symptom is that after a while the warning "failed to get tx report
-from firmware" appears every five minutes.
+This leads to premature ENOSPC failures and "cannot satisfy tickets" reports
+even though commits would be able to make progress by flushing delayed refs.
 
-This problem apparently happens only with the older RTL8723D, RTL8821A,
-RTL8812A, and probably RTL8703B chips.
+Analysis of "-o enospc_debug" dumps using a Python debug script
+confirmed that delayed_refs_rsv was responsible for the majority of
+metadata overcommit on zoned devices. By correlating space_info counters
+(total, used, may_use, zone_unusable) across transactions, the analysis
+showed that may_use continued to grow even after usable metadata space
+was exhausted, with delayed refs refills accounting for the excess
+reservations.
 
-Treat QOS Null data frames the same way as Null data frames. This seems
-to avoid the problem.
+Here's the output of the analysis:
 
-Tested with RTL8821AU, RTL8723DU, RTL8811CU, and RTL8812BU.
+  ======================================================================
+  Space Type: METADATA
+  ======================================================================
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/2b53fb0d-b1ed-47b6-8caa-2bb9ae2acb80@gmail.com
+  Raw Values:
+    Total:                256.00 MB (268435456 bytes)
+    Used:                 128.00 KB (131072 bytes)
+    Pinned:                16.00 KB (16384 bytes)
+    Reserved:             144.00 KB (147456 bytes)
+    May Use:              255.48 MB (267894784 bytes)
+    Zone Unusable:        192.00 KB (196608 bytes)
+
+  Calculated Metrics:
+    Actually Usable:       255.81 MB (total - zone_unusable)
+    Committed:             255.77 MB (used + pinned + reserved + may_use)
+    Consumed:              320.00 KB (used + zone_unusable)
+
+  Percentages:
+    Zone Unusable:    0.07% of total
+    May Use:         99.80% of total
+
+Fix this by adding a zoned-specific cap in btrfs_delayed_refs_rsv_refill():
+Before reserving additional metadata bytes, limit the delayed refs
+reservation based on the usable metadata space (total bytes minus
+zone_unusable). If the reservation would exceed this cap, return -EAGAIN
+to trigger the existing flush/commit logic instead of overcommitting
+metadata space.
+
+This preserves the existing reservation and flushing semantics while
+preventing metadata overcommit on zoned devices. The change is limited to
+metadata space and does not affect non-zoned filesystems.
+
+This patch addresses premature metadata ENOSPC conditions on zoned devices
+and ensures delayed refs are throttled before exhausting usable metadata.
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-compile the complete assessment.
+Now I have a thorough understanding. Let me compile the final analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `wifi: rtw88:`
-- Action: "TX QOS Null data the same way as Null data" — implies
-  correcting inconsistent behavior, which is a bug fix
-- Summary: QoS Null data frames should be treated like regular Null data
-  frames during TX descriptor setup
+### Step 1.1: Subject Line
+- **Subsystem**: `btrfs: zoned:` (btrfs filesystem, zoned device mode)
+- **Action verb**: "cap" (limit/constrain)
+- **Summary**: Cap delayed refs metadata reservation to avoid overcommit
+  on zoned filesystems
 
-**Step 1.2: Tags**
-- `Signed-off-by: Bitterblue Smith` — author, active rtw88 contributor
-- `Acked-by: Ping-Ke Shih` — rtw88 subsystem maintainer explicitly
-  acknowledged
-- `Signed-off-by: Ping-Ke Shih` — maintainer merged it
-- `Link: https://patch.msgid.link/...` — patch submission link
-- No Fixes: tag (expected for this review pipeline)
-- No Cc: stable (expected)
+Record: [btrfs: zoned] [cap] [Limit delayed refs metadata reservation to
+prevent metadata overcommit on zoned devices]
 
-**Step 1.3: Body Text**
-The commit describes:
-- **Bug**: QoS Null frames are treated as normal data frames, while
-  plain Null frames go through the management path. This causes firmware
-  misbehavior.
-- **Trigger**: On 2.4 GHz, wpa_supplicant/NetworkManager triggers scans
-  every 5 minutes. During scans, many QoS Null frames with
-  `IEEE80211_TX_CTL_REQ_TX_STATUS` are sent. Firmware can't keep up with
-  TX status reports.
-- **Symptom**: "failed to get tx report from firmware" warning every 5
-  minutes.
-- **Affected chips**: RTL8723D, RTL8821A, RTL8812A, RTL8703B (older
-  chips).
-- **Tested with**: RTL8821AU, RTL8723DU, RTL8811CU, RTL8812BU.
+### Step 1.2: Tags
+- **Reviewed-by**: Filipe Manana <fdmanana@suse.com> -- a core btrfs
+  developer and the most prolific btrfs contributor
+- **Signed-off-by**: Johannes Thumshirn <johannes.thumshirn@wdc.com> --
+  author, WDC employee, active btrfs/zoned contributor
+- **Signed-off-by**: David Sterba <dsterba@suse.com> -- btrfs maintainer
+  who merged it
+- No Fixes: tag (expected for manual review candidates)
+- No Cc: stable tag (expected)
+- No Reported-by tag (author-discovered through debugging)
 
-**Step 1.4: Hidden Bug Fix?**
-This is clearly a bug fix, not disguised. The commit explicitly explains
-the incorrect behavior and the symptom.
+Record: Reviewed by Filipe Manana (core btrfs developer), committed by
+maintainer David Sterba. No bug report reference.
+
+### Step 1.3: Commit Body
+The commit describes a real-world ENOSPC problem on zoned btrfs:
+- `delayed_refs_rsv` speculatively grows without a hard upper bound
+- On zoned devices, zone write pointer constraints make some space
+  unusable
+- `space_info->may_use` grows beyond usable metadata capacity
+- This causes premature ENOSPC failures ("cannot satisfy tickets")
+- The author provided extensive analysis output from enospc_debug dumps
+  showing may_use at 99.80% of total while consumed was only 320KB
+
+**Failure mode**: Premature ENOSPC errors on zoned devices, preventing
+writes even though space could be recovered by flushing delayed refs.
+
+Record: [Bug: Metadata overcommit on zoned devices leads to premature
+ENOSPC] [Symptom: cannot satisfy tickets, premature ENOSPC] [Root cause:
+delayed_refs_rsv unbounded growth relative to zone_unusable space]
+
+### Step 1.4: Hidden Bug Fix Detection
+This is NOT a hidden bug fix - the commit explicitly describes fixing
+premature ENOSPC on zoned devices. It's a clear bug fix with detailed
+analysis.
+
+Record: [Direct bug fix, not hidden]
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Single file: `drivers/net/wireless/realtek/rtw88/tx.c`
-- 1 line changed: `ieee80211_is_nullfunc(fc)` →
-  `ieee80211_is_any_nullfunc(fc)`
-- Function modified: `rtw_tx_pkt_info_update()`
-- Scope: absolute minimal — single token change
+### Step 2.1: Change Inventory
+- **fs/btrfs/delayed-ref.c**: +28 lines (new function
+  `btrfs_zoned_cap_metadata_reservation` + 3-line call site)
+- **fs/btrfs/transaction.c**: +8 lines (handle -EAGAIN from refill by
+  committing transaction and retrying)
+- **Total**: ~36 lines added, 0 removed
+- **Functions modified**: `btrfs_delayed_refs_rsv_refill()`,
+  `start_transaction()`
+- **New function**: `btrfs_zoned_cap_metadata_reservation()` (static
+  helper)
+- **Scope**: Two-file surgical fix, limited to zoned mode
 
-**Step 2.2: Code Flow Change**
-Before: QoS Null frames (subtype `IEEE80211_STYPE_QOS_NULLFUNC`) don't
-match `ieee80211_is_nullfunc()` but DO match `ieee80211_is_data()`, so
-they go through `rtw_tx_data_pkt_info_update()` which sets MCS rates,
-software sequencing, and potential AMPDU.
+Record: [2 files, ~36 lines added] [btrfs_delayed_refs_rsv_refill
+modified, start_transaction modified] [Small surgical fix]
 
-After: QoS Null frames match `ieee80211_is_any_nullfunc()`, so they go
-through `rtw_tx_mgmt_pkt_info_update()` which sets basic rates, hardware
-sequencing, and `dis_qselseq = true`.
+### Step 2.2: Code Flow Changes
 
-**Step 2.3: Bug Mechanism**
-Category: **Logic/correctness fix**. QoS Null frames are
-control/management-like frames that should not be treated as normal data
-traffic. Being processed as data frames causes the firmware to choke on
-rapid TX status report requests.
+**Hunk 1 (delayed-ref.c)**: New static function
+`btrfs_zoned_cap_metadata_reservation`:
+- Before: No cap on delayed refs reservation
+- After: On zoned devices, checks if `block_rsv->size` exceeds half of
+  usable metadata (`total_bytes - bytes_zone_unusable`). Returns -EAGAIN
+  if exceeded.
+- Only affects zoned mode (`btrfs_is_zoned` check at start)
 
-**Step 2.4: Fix Quality**
-- Obviously correct: `ieee80211_is_any_nullfunc()` is the standard
-  helper for this exact pattern (introduced in commit 30b2f0be23fb
-  precisely for cases where both Null and QoS Null need matching)
-- Minimal: 1 token change
-- Regression risk: very low — QoS Null frames will now use basic rates
-  and hardware sequencing, same as plain Null frames, which is the
-  expected behavior
+**Hunk 2 (delayed-ref.c)**: Call to new function in
+`btrfs_delayed_refs_rsv_refill`:
+- Before: Directly calls `btrfs_reserve_metadata_bytes`
+- After: First checks the zoned cap; if exceeded, returns -EAGAIN before
+  attempting actual reservation
 
-## PHASE 3: GIT HISTORY
+**Hunk 3 (transaction.c)**: -EAGAIN handling in `start_transaction`:
+- Before: Any error from `btrfs_delayed_refs_rsv_refill` goes to
+  `reserve_fail`
+- After: If -EAGAIN (zoned cap hit), commits current transaction (which
+  flushes delayed refs, freeing space), then retries the refill
 
-**Step 3.1: Blame**
-The buggy line was introduced in `e3037485c68ec1` ("rtw88: new Realtek
-802.11ac driver") from v5.2-rc1 (April 2019). The bug has existed since
-the driver was first written.
+Record: [New cap check prevents overcommit] [EAGAIN triggers transaction
+commit + retry] [Only zoned mode affected]
 
-**Step 3.2: Fixes target**
-No Fixes: tag, but the root cause is in `e3037485c68ec1` — the initial
-driver commit. This means ALL stable trees that contain rtw88 have the
-bug.
+### Step 2.3: Bug Mechanism
+Category: **Logic/correctness fix** for metadata accounting on zoned
+devices.
 
-**Step 3.3: Related commits**
-The same author has addressed this "failed to get tx report from
-firmware" issue from multiple angles:
-- `57289d30cd2ae3` — beacon loss detection (v6.13) — works around the
-  symptom
-- `28818b4d871bc9` — USB disconnection fix after beacon loss (v6.11) —
-  separate but related bug
-- `c7706b1173c77` — data rate fallback for older chips — same set of
-  affected chips
-This commit appears to be the **root cause fix** rather than a
-workaround.
+What was broken: The delayed refs block reserve could grow arbitrarily
+large on zoned filesystems, where zone write pointer constraints
+(tracked as `bytes_zone_unusable`) make portions of metadata space
+physically unusable. The overcommit logic didn't account for this, so
+`may_use` could far exceed actually usable space.
 
-**Step 3.4: Author**
-Bitterblue Smith is a prolific rtw88 contributor with 20+ commits to the
-driver. Not the subsystem maintainer but a trusted regular contributor,
-especially for USB variants of Realtek chips.
+How the fix works: Adds a zoned-specific cap at 50% of usable metadata
+space (`usable >> 1`). When the cap is hit, returns -EAGAIN instead of
+proceeding with the reservation. The caller (transaction start) responds
+by committing the current transaction, which flushes delayed refs and
+frees the overcommitted space.
 
-**Step 3.5: Dependencies**
-None. `ieee80211_is_any_nullfunc()` was added in v5.7-rc1 (commit
-30b2f0be23fb40). Verified it exists in v5.10, v5.15, v6.1, and v6.6
-trees. The patch applies cleanly to all stable trees.
+Record: [Logic/correctness bug in metadata accounting on zoned devices]
+[Fix: cap at 50% usable space, trigger flush when cap exceeded]
 
-## PHASE 4: MAILING LIST
+### Step 2.4: Fix Quality
+- The fix is well-contained: adds one static helper + two call sites
+- The zoned-only guard (`btrfs_is_zoned`) ensures non-zoned systems are
+  completely unaffected
+- The `ASSERT(btrfs_is_zoned(fs_info))` in the EAGAIN handler is good
+  defensive coding
+- The retry pattern (commit, then retry) is a well-established pattern
+  in btrfs space management
+- Reviewed by Filipe Manana who is the most active btrfs contributor
+- Potential regression risk is LOW: only affects zoned mode, uses
+  existing flush/commit mechanisms, and the cap is generous (50% of
+  usable)
 
-Lore.kernel.org was not accessible due to bot protection. However:
-- The commit has `Acked-by: Ping-Ke Shih` (subsystem maintainer)
-- The commit was merged by Ping-Ke Shih
-- Testing was done on 4 different devices
+Record: [Obviously correct, well-reviewed, minimal regression risk for
+non-zoned users] [Zero risk for non-zoned, low risk for zoned]
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame
+- `btrfs_delayed_refs_rsv_refill()` was introduced by Josef Bacik in
+  commit `6ef03debdb3d82` (2019-06-19), present since approximately
+  v5.3.
+- The function has been refined by Filipe Manana (2023) and others but
+  its core logic (grow unbounded) has been present since inception.
+- The zoned mode support was added later, but the interaction with
+  delayed refs rsv was never specifically addressed.
+
+Record: [Refill function from v5.3 (6ef03debdb3d82)] [Zoned support
+added later without accounting for delayed refs rsv interaction]
+
+### Step 3.2: Fixes Tag
+No Fixes: tag present. The bug is a design gap in how delayed refs rsv
+interacts with zoned mode constraints, not introduced by a single
+commit.
+
+Record: [No Fixes: tag - this is a design gap, not a single-commit
+regression]
+
+### Step 3.3: Related Changes
+- `28270e25c69a2` (v6.7) - "btrfs: always reserve space for delayed refs
+  when starting transaction" - changed how delayed refs reservations
+  work, may have exacerbated the issue
+- `64d2c847ba380` (v6.9) - "btrfs: zoned: fix
+  calc_available_free_space() for zoned mode" - closely related fix for
+  overcommit on zoned, was CC'd to stable
+- `a1359d06d7878` (v7.0) - API change to `btrfs_reserve_metadata_bytes`
+  that would affect clean backport
+
+Record: [Related to 28270e25c69a2 and 64d2c847ba380] [API differences
+across stable trees]
+
+### Step 3.4: Author
+Johannes Thumshirn is a WDC employee and regular btrfs/zoned contributor
+with 20+ btrfs commits visible. He is a recognized expert on zoned
+btrfs.
+
+Record: [Author is a recognized zoned btrfs expert at WDC]
+
+### Step 3.5: Dependencies
+**CRITICAL**: `btrfs_commit_current_transaction()` was introduced in
+commit `ded980eb3fadd7` (2024-05-22), which is only present in v6.11+.
+This function is used in the `transaction.c` hunk. Backporting to v6.6.y
+or older stable trees would require either:
+1. Also backporting `ded980eb3fadd7` (and its dependents)
+2. Replacing the call with the inline equivalent
+   (`btrfs_attach_transaction_barrier` + `btrfs_commit_transaction`)
+
+Additionally, `btrfs_reserve_metadata_bytes()` had its signature changed
+by `a1359d06d7878` (dropping `fs_info` argument), which is only in the
+latest tree. Older trees have a different API.
+
+Record: [Depends on ded980eb3fadd7 (btrfs_commit_current_transaction) -
+only in v6.11+] [API differences for btrfs_reserve_metadata_bytes across
+versions]
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1-4.5
+b4 dig could not find the commit (likely very recent, post-7.0-rc or in
+a merge window). Web searches also did not find the specific patch
+discussion. Lore.kernel.org was protected by anti-bot measures.
+
+Record: [Could not find mailing list discussion - commit appears very
+recent, possibly in 7.0 merge window or rc cycle] [UNVERIFIED: Full
+mailing list discussion not available]
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Modified function**
-`rtw_tx_pkt_info_update()` — the central TX path function.
+### Step 5.1-5.4: Functions and Call Chains
+- `btrfs_delayed_refs_rsv_refill()` is called from:
+  1. `start_transaction()` in `transaction.c` - called on every
+     transaction start with num_items==0
+  2. `btrfs_truncate_inode_items()` in `inode-item.c` - called during
+     truncate/unlink (with BTRFS_RESERVE_NO_FLUSH)
+- `start_transaction()` is called from many places throughout btrfs
+  (dozens of call sites)
+- The `num_items == 0` path specifically handles callers using
+  `btrfs_start_transaction(root, 0)` which is a very common pattern (24+
+  call sites across btrfs)
 
-**Step 5.2: Callers**
-- `rtw_tx()` (line 556) — main TX entry point from mac80211
-- `rtw_txq_push_skb()` (line 613) — TX queue push path
-Both are hot paths executed for every transmitted frame.
+The `inode-item.c` caller already converts ALL errors to `-EAGAIN` (line
+708), so the new -EAGAIN from the cap function is handled correctly
+without modification.
 
-**Step 5.3-5.4: Call chain**
-This is directly reachable from mac80211's TX path — every WiFi frame
-goes through this function. The QoS Null frames are triggered
-automatically by mac80211 during scans.
+Record: [btrfs_delayed_refs_rsv_refill called from transaction start and
+truncate] [Very widely called function] [inode-item.c caller unaffected
+by change]
 
-**Step 5.5: Similar patterns**
-The `ieee80211_is_any_nullfunc()` helper was specifically created
-because multiple places in mac80211 had the same bug of only checking
-for non-QoS nullfunc. Other drivers (iwlwifi, ath, rtw89) already use
-`ieee80211_is_any_nullfunc()` correctly.
+### Step 5.5: Similar Patterns
+The previous fix `64d2c847ba380` ("btrfs: zoned: fix
+calc_available_free_space() for zoned mode") addressed a very similar
+issue - overcommit on zoned mode leading to ENOSPC. That fix was CC'd to
+stable 6.9+. This new fix addresses a different vector of the same
+overcommit problem.
 
-## PHASE 6: STABLE TREE ANALYSIS
+Record: [Similar fix 64d2c847ba380 was CC'd to stable 6.9+]
 
-**Step 6.1: Buggy code in stable trees?**
-YES. Verified the exact buggy line `ieee80211_is_nullfunc(fc)` exists in
-v5.10, v5.15, v6.1, and v6.6 trees.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 6.2: Backport complications**
-None. The patch applies with zero context conflicts. The surrounding
-code is identical across all stable trees.
+### Step 6.1: Existence in Stable Trees
+- The delayed refs rsv refill mechanism exists since v5.3
+- Zoned mode support has been present since ~v5.12
+- The interaction problem exists in all stable trees with zoned mode
+  support
+- However, `28270e25c69a2` (v6.7) changed delayed refs reservation
+  behavior and may have worsened the problem
 
-**Step 6.3: Related fixes in stable**
-No. This specific fix has not been applied to any stable tree.
+Record: [Buggy interaction exists in v5.12+, but may be worse in v6.7+
+due to 28270e25c69a2]
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Step 6.2: Backport Complications
+**SIGNIFICANT backport complications:**
+1. `btrfs_commit_current_transaction()` only exists in v6.11+ - requires
+   adaptation for older trees
+2. `btrfs_reserve_metadata_bytes()` API changed - minor adaptation
+   needed for older trees
+3. The `delayed-ref.c` hunk adding the new function should apply
+   relatively cleanly
 
-**Step 7.1: Subsystem**
-WiFi driver (rtw88) — IMPORTANT category. RTL8723D, RTL8821A, RTL8812A
-are common consumer WiFi chips used in USB dongles and embedded systems.
+Record: [Needs adaptation for v6.6-v6.10 due to missing
+btrfs_commit_current_transaction] [API differences need resolution]
 
-**Step 7.2: Activity**
-Actively developed with regular fixes from multiple contributors.
+### Step 6.3: Related Fixes Already in Stable
+`64d2c847ba380` (CC: stable 6.9+) addresses a different vector of the
+same overcommit problem. This new patch addresses a complementary
+vector.
 
-## PHASE 8: IMPACT AND RISK
+Record: [64d2c847ba380 is a related but different fix, CC'd to stable
+6.9+]
 
-**Step 8.1: Affected users**
-Users of RTL8723D, RTL8821A, RTL8812A, RTL8703B WiFi chips connected to
-2.4 GHz networks. These are popular budget WiFi chips.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 8.2: Trigger**
-Automatic — triggered every 5 minutes during background scans by
-wpa_supplicant/NetworkManager. No user action required.
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: btrfs filesystem, zoned device support
+- **Criticality**: IMPORTANT (btrfs is a widely used filesystem, but
+  zoned mode is a specialized use case for SMR/ZNS devices)
+- Zoned btrfs is increasingly used on enterprise/datacenter storage
+  systems with ZNS SSDs
 
-**Step 8.3: Severity**
-MEDIUM — the "failed to get tx report from firmware" warning floods logs
-periodically. While not a crash, it indicates firmware state
-desynchronization that can lead to further issues. The related commits
-show this same symptom can escalate to disconnections.
+Record: [btrfs filesystem, zoned mode - IMPORTANT but specialized use
+case]
 
-**Step 8.4: Risk-Benefit**
-- **Benefit**: HIGH — fixes a recurring warning every 5 minutes for
-  users of popular hardware, prevents potential firmware state
-  corruption
-- **Risk**: VERY LOW — single token change using a well-established
-  kernel helper, tested on 4 devices, acked by maintainer
+### Step 7.2: Subsystem Activity
+btrfs is one of the most actively developed filesystems in the kernel.
+The zoned mode subsystem specifically is under active development by
+WDC/Seagate engineers.
 
-## PHASE 9: SYNTHESIS
+Record: [Very active subsystem]
 
-**Evidence FOR:**
-- Fixes a real, user-visible bug (recurring firmware warnings every 5
-  minutes)
-- Affects popular WiFi hardware (RTL8723D/RTL8821A/RTL8812A/RTL8703B)
-- Trivial one-line change — absolute minimal scope
-- Uses standard kernel helper (`ieee80211_is_any_nullfunc`) available in
-  all stable trees
-- Bug exists since the driver was created (v5.2) — all stable trees
-  affected
-- Acked by subsystem maintainer
-- Tested on 4 different hardware variants
-- No dependencies, clean apply to all stable trees
-- Same class of bug (missing QoS Null check) was fixed in mac80211 core
-  via the same helper
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Evidence AGAINST:**
-- No Fixes: tag (expected for review pipeline)
-- Symptom is a warning, not a crash (but related to firmware state
-  desync that can escalate)
+### Step 8.1: Affected Users
+Users of btrfs on zoned block devices (SMR HDDs, ZNS SSDs). This is a
+growing but still specialized use case, primarily in
+enterprise/datacenter environments.
 
-**Stable Rules Checklist:**
-1. Obviously correct? YES — standard helper for this exact pattern
-2. Fixes a real bug? YES — recurring firmware desync warning
-3. Important issue? YES (firmware interaction bug, periodic warning,
-   potential escalation)
-4. Small and contained? YES — 1 line in 1 file
-5. No new features? Correct — pure bug fix
-6. Can apply to stable? YES — verified helper exists in all stable trees
+Record: [Affected: btrfs zoned mode users, primarily
+enterprise/datacenter]
+
+### Step 8.2: Trigger Conditions
+- Occurs on zoned devices when delayed refs accumulate
+- Triggered by normal write workloads that generate many delayed
+  references
+- More likely with sustained write activity and many COW operations
+- Not timing-dependent - deterministic once space accounting gets out of
+  balance
+
+Record: [Triggered by normal sustained write workloads on zoned devices]
+[Deterministic, not timing-dependent]
+
+### Step 8.3: Failure Mode Severity
+- **ENOSPC errors** - writes fail prematurely
+- This is a HIGH severity issue for affected users: they lose the
+  ability to write to their filesystem even though space could be
+  reclaimed
+- Not a crash/security issue, but a significant usability/functionality
+  bug
+- Data in-flight could potentially be lost if applications don't handle
+  ENOSPC gracefully
+
+Record: [Premature ENOSPC - HIGH severity for affected users] [No
+crash/corruption, but functional failure]
+
+### Step 8.4: Risk-Benefit Ratio
+**BENEFIT**: High for zoned btrfs users - fixes a real ENOSPC issue
+preventing normal operation
+**RISK**:
+- Very low for non-zoned users (completely unaffected - `btrfs_is_zoned`
+  guard)
+- Low for zoned users (uses existing transaction commit mechanism)
+- ~36 lines added, well-contained
+- BUT: requires backport adaptation due to
+  `btrfs_commit_current_transaction` dependency
+
+Record: [HIGH benefit for zoned users] [LOW risk overall] [Needs
+adaptation for older stable trees]
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence Compilation
+
+**FOR backporting:**
+- Fixes a real, significant ENOSPC bug affecting zoned btrfs users
+- Well-analyzed and well-documented by the author
+- Reviewed by Filipe Manana (core btrfs developer)
+- Committed by David Sterba (btrfs maintainer)
+- Small and well-contained (~36 lines, 2 files)
+- Zero risk to non-zoned users
+- Author is a recognized zoned btrfs expert
+- Related fix (64d2c847ba380) was explicitly CC'd to stable
+
+**AGAINST backporting:**
+- Requires adaptation for stable trees older than v6.11
+  (`btrfs_commit_current_transaction` dependency)
+- API differences in `btrfs_reserve_metadata_bytes` across stable trees
+- No Fixes: tag or Cc: stable tag (design gap, not single-commit
+  regression)
+- Zoned mode is a specialized use case (fewer affected users)
+- The new static function adds ~25 lines of new code (more than a
+  trivial one-liner)
+
+**UNRESOLVED:**
+- Could not access mailing list discussion to check for stable
+  nominations by reviewers
+- Could not verify whether this was part of a larger series
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** - reviewed by Filipe Manana,
+   well-analyzed
+2. Fixes a real bug? **YES** - premature ENOSPC on zoned devices
+3. Important issue? **YES** - prevents normal filesystem operation
+   (ENOSPC)
+4. Small and contained? **YES** - ~36 lines, 2 files, zoned-only
+5. No new features or APIs? **YES** - no new features, just a cap on
+   existing behavior
+6. Can apply to stable trees? **NEEDS ADAPTATION** - requires backport
+   work for v6.6-v6.10
+
+### Step 9.3: Exception Categories
+Not an exception category (not a device ID, quirk, DT, build fix, or doc
+fix). It's a standard bug fix.
+
+### Step 9.4: Decision
+
+This is a genuine bug fix for premature ENOSPC on zoned btrfs devices.
+The fix is well-contained, well-reviewed, and carries very low
+regression risk (zero for non-zoned users). However, it has notable
+backport complications:
+
+1. The dependency on `btrfs_commit_current_transaction()` (v6.11+) means
+   this cannot be cleanly cherry-picked to older stable trees without
+   adaptation.
+2. API differences in `btrfs_reserve_metadata_bytes()` add further
+   complications for older trees.
+
+Despite the backport complications, the fix addresses a real,
+significant user-facing bug (premature ENOSPC preventing writes), is
+well-reviewed by the top btrfs developer, and is small enough to warrant
+the adaptation effort. The related fix `64d2c847ba380` was CC'd to
+stable 6.9+, indicating the maintainers recognize zoned overcommit
+issues as stable-worthy.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Acked-by Ping-Ke Shih (maintainer), tested with
-  4 devices
-- [Phase 2] Diff: 1 token change in `rtw_tx_pkt_info_update()`:
-  `ieee80211_is_nullfunc` → `ieee80211_is_any_nullfunc`
-- [Phase 3] git blame: buggy code from `e3037485c68ec1` (v5.2-rc1, rtw88
-  driver creation), present in all stable trees
-- [Phase 3] git describe: `v5.2-rc1~133^2~37^2~8` confirmed for original
-  commit
-- [Phase 3] git show v6.6/v6.1/v5.15: verified identical buggy line
-  exists
-- [Phase 3] git log author: Bitterblue Smith has 20+ rtw88 commits,
-  trusted contributor
-- [Phase 3] Related commits: `57289d30cd2ae3` (beacon loss workaround)
-  and `28818b4d871bc9` (USB disconnection fix) address same symptom
-  family
-- [Phase 4] Lore inaccessible due to bot protection; maintainer ack
-  verified in commit tags
-- [Phase 5] `rtw_tx_pkt_info_update()` called from `rtw_tx()` and
-  `rtw_txq_push_skb()` — main TX paths
-- [Phase 5] `ieee80211_is_any_nullfunc()` already used by iwlwifi, ath,
-  rtw89 for same purpose
-- [Phase 6] `ieee80211_is_any_nullfunc()` verified present in v5.10
-  (line 735), v5.15 (line 732), v6.1 (line 769)
-- [Phase 6] Patch applies cleanly — surrounding code identical across
-  stable trees
-- [Phase 8] Trigger: automatic every 5 minutes on 2.4 GHz; severity
-  MEDIUM (firmware desync)
+- [Phase 1] Parsed tags: Reviewed-by: Filipe Manana, Signed-off-by:
+  Johannes Thumshirn (author), David Sterba (maintainer)
+- [Phase 2] Diff analysis: ~36 lines added across 2 files, new static
+  helper + EAGAIN handling
+- [Phase 2] Verified inode-item.c caller already handles all errors as
+  -EAGAIN (line 708)
+- [Phase 3] git blame: btrfs_delayed_refs_rsv_refill from 6ef03debdb3d82
+  (Josef Bacik, 2019, v5.3)
+- [Phase 3] git blame: btrfs_commit_current_transaction from
+  ded980eb3fadd7 (Filipe Manana, 2024-05-22)
+- [Phase 3] Verified ded980eb3fadd7 is in v6.11+ but NOT in v6.10 or
+  earlier
+- [Phase 3] Verified 28270e25c69a2 (always reserve for delayed refs) is
+  in v6.7+
+- [Phase 3] git show 64d2c847ba380: confirmed related zoned overcommit
+  fix was CC'd to stable 6.9+
+- [Phase 4] b4 dig failed to find commit (too recent); lore.kernel.org
+  blocked by anti-bot
+- [Phase 4] UNVERIFIED: Could not access mailing list discussion for
+  stable nominations
+- [Phase 5] Verified btrfs_delayed_refs_rsv_refill callers:
+  start_transaction (transaction.c), btrfs_truncate_inode_items (inode-
+  item.c)
+- [Phase 5] Verified btrfs_start_transaction(root, 0) has 24+ call sites
+  across btrfs
+- [Phase 6] Verified btrfs_commit_current_transaction exists in current
+  tree (line 2040 of transaction.c) but not in v6.6
+- [Phase 6] Verified bytes_zone_unusable field exists in space-info.h
+  (all relevant stable trees)
+- [Phase 6] Verified btrfs_reserve_metadata_bytes API changed by
+  a1359d06d7878 (signature differs in older trees)
+- [Phase 8] Failure mode: premature ENOSPC preventing writes on zoned
+  devices - severity HIGH for affected users
 
 **YES**
 
- drivers/net/wireless/realtek/rtw88/tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/delayed-ref.c | 28 ++++++++++++++++++++++++++++
+ fs/btrfs/transaction.c |  8 ++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/tx.c b/drivers/net/wireless/realtek/rtw88/tx.c
-index 2ab440cb2d67b..3106edb84fb47 100644
---- a/drivers/net/wireless/realtek/rtw88/tx.c
-+++ b/drivers/net/wireless/realtek/rtw88/tx.c
-@@ -421,7 +421,7 @@ void rtw_tx_pkt_info_update(struct rtw_dev *rtwdev,
- 		pkt_info->mac_id = rtwvif->mac_id;
- 	}
+diff --git a/fs/btrfs/delayed-ref.c b/fs/btrfs/delayed-ref.c
+index 3766ff29fbbb1..605858c2d9a95 100644
+--- a/fs/btrfs/delayed-ref.c
++++ b/fs/btrfs/delayed-ref.c
+@@ -207,6 +207,30 @@ void btrfs_dec_delayed_refs_rsv_bg_updates(struct btrfs_fs_info *fs_info)
+  * This will refill the delayed block_rsv up to 1 items size worth of space and
+  * will return -ENOSPC if we can't make the reservation.
+  */
++static int btrfs_zoned_cap_metadata_reservation(struct btrfs_space_info *space_info)
++{
++	struct btrfs_fs_info *fs_info = space_info->fs_info;
++	struct btrfs_block_rsv *block_rsv = &fs_info->delayed_refs_rsv;
++	u64 usable;
++	u64 cap;
++	int ret = 0;
++
++	if (!btrfs_is_zoned(fs_info))
++		return 0;
++
++	spin_lock(&space_info->lock);
++	usable = space_info->total_bytes - space_info->bytes_zone_unusable;
++	spin_unlock(&space_info->lock);
++	cap = usable >> 1;
++
++	spin_lock(&block_rsv->lock);
++	if (block_rsv->size > cap)
++		ret = -EAGAIN;
++	spin_unlock(&block_rsv->lock);
++
++	return ret;
++}
++
+ int btrfs_delayed_refs_rsv_refill(struct btrfs_fs_info *fs_info,
+ 				  enum btrfs_reserve_flush_enum flush)
+ {
+@@ -228,6 +252,10 @@ int btrfs_delayed_refs_rsv_refill(struct btrfs_fs_info *fs_info,
+ 	if (!num_bytes)
+ 		return 0;
  
--	if (ieee80211_is_mgmt(fc) || ieee80211_is_nullfunc(fc))
-+	if (ieee80211_is_mgmt(fc) || ieee80211_is_any_nullfunc(fc))
- 		rtw_tx_mgmt_pkt_info_update(rtwdev, pkt_info, sta, skb);
- 	else if (ieee80211_is_data(fc))
- 		rtw_tx_data_pkt_info_update(rtwdev, pkt_info, sta, skb);
++	ret = btrfs_zoned_cap_metadata_reservation(space_info);
++	if (ret)
++		return ret;
++
+ 	ret = btrfs_reserve_metadata_bytes(space_info, num_bytes, flush);
+ 	if (ret)
+ 		return ret;
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index 8dd77c431974d..86c5ebdf56998 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -678,6 +678,14 @@ start_transaction(struct btrfs_root *root, unsigned int num_items,
+ 		 * here.
+ 		 */
+ 		ret = btrfs_delayed_refs_rsv_refill(fs_info, flush);
++		if (ret == -EAGAIN) {
++			ASSERT(btrfs_is_zoned(fs_info));
++			ret = btrfs_commit_current_transaction(root);
++			if (ret)
++				goto reserve_fail;
++			ret = btrfs_delayed_refs_rsv_refill(fs_info, flush);
++		}
++
+ 		if (ret)
+ 			goto reserve_fail;
+ 	}
 -- 
 2.53.0
 
