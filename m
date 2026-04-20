@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4F5334C39;
-	Mon, 20 Apr 2026 15:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A876133F5BC;
+	Mon, 20 Apr 2026 15:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700022; cv=none; b=uQv7Ioff336i8W0X4ym25yNKMsoA2ifPCPcn29iJ9A/30W31fSoOKLxJGBDlEktUMMCFlaTseYOsCZkiXQ7pfirKRr4z+PoFQQtg/sbAUgCTVoJ4rCTXmEPjLL8uIo1vu8fyndqDf6UG+3cThlcajZ5I9d+yxE8RhAcvYYpaYp4=
+	t=1776700024; cv=none; b=dX0tP4F7aEB8BcIEcZ9QBzTv+Jz4Mtr79woEf1km9gb42hG5jUfiqMfhMQ8zEimo/JUUWbx72O2VrjbC2QZE9XmqnSvQa5HplEZe3uvdWO5ORZEIzpYCScv9MOFF762jsl/38O8vbBRlWFDkafZ2kVTub5ORbnIEvxcDG1sNHq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700022; c=relaxed/simple;
-	bh=f95zj2QlZ8Pyu7WKI1adb9fZGU1Xn27yjMMYY7X7nBI=;
+	s=arc-20240116; t=1776700024; c=relaxed/simple;
+	bh=3viq9MH/JCFxeuc4XB39LU+lAy0upibbvxxX139bimc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UphWpWfOBf5GE9aEIcljTFDjTXqfoTXdsjwf7M2TbfZfToVTNX/q4MAuSG0a38iwjMCoL7FFi2r0jTefUjVlaInNhXA9cuzEKY/u8I3+LmkFYXvy/288kIaTJ0/GFhBahh8XHfIKq4xApJWVazAN0pJYSMwRZDxGFdqX0Y90zv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ck+1ghpw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFx62JvoEdUegKpx/z6XoPBP7CybR6TrAWK2we+/bMm6IVHzL01RJaNSaJiNUXQFCHNEPfRXCRdaleguU72ciAQK6OkgVXRyTm3FKP/uhuuSWjBi84gpw4GbryyXzdiTfssV0dh2MF0gbAAI02KaQbhrW/C4PB+whtSQId9cMro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nurKHLZO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ck+1ghpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8807C2BCB6;
-	Mon, 20 Apr 2026 15:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nurKHLZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364DBC19425;
+	Mon, 20 Apr 2026 15:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700022;
-	bh=f95zj2QlZ8Pyu7WKI1adb9fZGU1Xn27yjMMYY7X7nBI=;
+	s=korg; t=1776700024;
+	bh=3viq9MH/JCFxeuc4XB39LU+lAy0upibbvxxX139bimc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ck+1ghpwWX5feH3ayE0yiS2l9fm50G8PAwKmXFN+pUirZ+X3yrFfWEdh67QO1Tcgu
-	 gE28DanFyBGoF36+G0AxyAjYCiCt+KTEjwAOf7xdCiyZwIe4/lr9g5tlZ/qUEVuTuY
-	 Xygog6BFEcsQWw5UsqZUDFcH8iUTowjzyBEZLGv0=
+	b=nurKHLZOfVcLfNmOKdk/lCBPwaQoGE4gmvKum1ZXK9aejCX5HFSaAEv8jnJmstUpC
+	 X/GXKrhz52SccgLLQ1bHJQLEtlo1y+bcINm1zU7XITvyEmUJQnHTGuigBp/RNEwmGE
+	 GEqeVgfrIkP6eFESV6GGyVnPgSwJUlAKYFC/4tEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyuan Li <2063309626@qq.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Hasun Park <hasunpark@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 012/220] can: mcp251x: add error handling for power enable in open and resume
-Date: Mon, 20 Apr 2026 17:39:13 +0200
-Message-ID: <20260420153934.469000305@linuxfoundation.org>
+Subject: [PATCH 6.19 013/220] ASoC: amd: acp: add ASUS HN7306EA quirk for legacy SDW machine
+Date: Mon, 20 Apr 2026 17:39:14 +0200
+Message-ID: <20260420153934.504865441@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,88 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenyuan Li <2063309626@qq.com>
+From: Hasun Park <hasunpark@gmail.com>
 
-[ Upstream commit 7a57354756c7df223abe2c33774235ad70cb4231 ]
+[ Upstream commit 2594196f4e3bd70782e7cf1e22e3e398cdb74f78 ]
 
-Add missing error handling for mcp251x_power_enable() calls in both
-mcp251x_open() and mcp251x_can_resume() functions.
+Add a DMI quirk entry for ASUS HN7306EA in the ACP SoundWire legacy
+machine driver.
 
-In mcp251x_open(), if power enable fails, jump to error path to close
-candev without attempting to disable power again.
+Set driver_data to ASOC_SDW_ACP_DMIC for this board so the
+platform-specific DMIC quirk path is selected.
 
-In mcp251x_can_resume(), properly check return values of power enable calls
-for both power and transceiver regulators. If any fails, return the error
-code to the PM framework and log the failure.
-
-This ensures the driver properly handles power control failures and
-maintains correct device state.
-
-Signed-off-by: Wenyuan Li <2063309626@qq.com>
-Link: https://patch.msgid.link/tencent_F3EFC5D7738AC548857B91657715E2D3AA06@qq.com
-[mkl: fix patch description]
-[mkl: mcp251x_can_resume(): replace goto by return]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Hasun Park <hasunpark@gmail.com>
+Link: https://patch.msgid.link/20260319163321.30326-1-hasunpark@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/mcp251x.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ sound/soc/amd/acp/acp-sdw-legacy-mach.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
-index bb7782582f401..0d0190ae094a1 100644
---- a/drivers/net/can/spi/mcp251x.c
-+++ b/drivers/net/can/spi/mcp251x.c
-@@ -1225,7 +1225,11 @@ static int mcp251x_open(struct net_device *net)
- 	}
+diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+index 4f92de33a71a0..2e0f751afe250 100644
+--- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+@@ -111,6 +111,14 @@ static const struct dmi_system_id soc_sdw_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)(ASOC_SDW_CODEC_SPKR),
+ 	},
++	{
++		.callback = soc_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "HN7306EA"),
++		},
++		.driver_data = (void *)(ASOC_SDW_ACP_DMIC),
++	},
+ 	{}
+ };
  
- 	mutex_lock(&priv->mcp_lock);
--	mcp251x_power_enable(priv->transceiver, 1);
-+	ret = mcp251x_power_enable(priv->transceiver, 1);
-+	if (ret) {
-+		dev_err(&spi->dev, "failed to enable transceiver power: %pe\n", ERR_PTR(ret));
-+		goto out_close_candev;
-+	}
- 
- 	priv->force_quit = 0;
- 	priv->tx_skb = NULL;
-@@ -1272,6 +1276,7 @@ static int mcp251x_open(struct net_device *net)
- 	mcp251x_hw_sleep(spi);
- out_close:
- 	mcp251x_power_enable(priv->transceiver, 0);
-+out_close_candev:
- 	close_candev(net);
- 	mutex_unlock(&priv->mcp_lock);
- 	if (release_irq)
-@@ -1516,11 +1521,25 @@ static int __maybe_unused mcp251x_can_resume(struct device *dev)
- {
- 	struct spi_device *spi = to_spi_device(dev);
- 	struct mcp251x_priv *priv = spi_get_drvdata(spi);
-+	int ret = 0;
- 
--	if (priv->after_suspend & AFTER_SUSPEND_POWER)
--		mcp251x_power_enable(priv->power, 1);
--	if (priv->after_suspend & AFTER_SUSPEND_UP)
--		mcp251x_power_enable(priv->transceiver, 1);
-+	if (priv->after_suspend & AFTER_SUSPEND_POWER) {
-+		ret = mcp251x_power_enable(priv->power, 1);
-+		if (ret) {
-+			dev_err(dev, "failed to restore power: %pe\n", ERR_PTR(ret));
-+			return ret;
-+		}
-+	}
-+
-+	if (priv->after_suspend & AFTER_SUSPEND_UP) {
-+		ret = mcp251x_power_enable(priv->transceiver, 1);
-+		if (ret) {
-+			dev_err(dev, "failed to restore transceiver power: %pe\n", ERR_PTR(ret));
-+			if (priv->after_suspend & AFTER_SUSPEND_POWER)
-+				mcp251x_power_enable(priv->power, 0);
-+			return ret;
-+		}
-+	}
- 
- 	if (priv->after_suspend & (AFTER_SUSPEND_POWER | AFTER_SUSPEND_UP))
- 		queue_work(priv->wq, &priv->restart_work);
 -- 
 2.53.0
 
