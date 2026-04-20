@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EAA2D77E5;
-	Mon, 20 Apr 2026 15:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1205A2FE56A;
+	Mon, 20 Apr 2026 15:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700430; cv=none; b=YfCXICOcdIFJhXNi8wC3FLD4bdUE0IPnndJtiR+EM1WxCZUayep/vylcHtQfkmtD0QrgYYKX/4UeNB02PwZxO/4iPamMoOHYdqBN1IouM2IOD3pIPIHX7Z57G80BUnRxJ6zMnJWLzM+jmecaldI8FkVJNOQW/WsviVB0pZlqVso=
+	t=1776700433; cv=none; b=ukbL9sCO2G+NA4HDDXTRFPlXJ31CoeVl8SS/jv7i/HLamw8p3Z7+stLLeCHOGf0wxSvFYv7j6eUOJfFO/3Gg2QeuiY0SBIrDH9dt7G5kJxeY3PvluOrU/J/8e3p0i/lIXxCrxrqmWbNxM3e/LrdBhDYlZg/CwzNDYwWnfLR+gjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700430; c=relaxed/simple;
-	bh=yoJqo52KZjh3bhnidofb7s7oSzNqOyTAeB1s8qTa/Lw=;
+	s=arc-20240116; t=1776700433; c=relaxed/simple;
+	bh=WorR7y9zKs1+jOH/LoixRz6BGuvaURLWFGmM4LP64Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDNPQHj8mhuiP8zU/C6/NJrJrqR0QEx8ObIAVds7ua8norxHH0B0nV7DnR8ehK+Ubhcwjl2SHZp5lVocOPg9C/K7a/C97GRN5tTNR7r9MVZBM0aJcO79Tn/KSkBjjFyxfeQhFq79W4BX6pebqL6+PHgPRovN+am77sREOom/RMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSLQqqh0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mb+VTHDft16iBlcbqvbwvMAgdIPJ20ruDHJnfaW/tkwTZ3h2GpbMNRMmb/80k99w5eZA4SdNvGCfCXjh1YiD0IPUyrtVxPT+GKwRiyZuT7GPYRbXaftksNkU4JanrOKz6ZODAafaa55vCKbyP9LIkrmjbu3DWSJGvIKB32ZZsvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwEPd3ED; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSLQqqh0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A946C19425;
-	Mon, 20 Apr 2026 15:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwEPd3ED"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA30C19425;
+	Mon, 20 Apr 2026 15:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700430;
-	bh=yoJqo52KZjh3bhnidofb7s7oSzNqOyTAeB1s8qTa/Lw=;
+	s=korg; t=1776700433;
+	bh=WorR7y9zKs1+jOH/LoixRz6BGuvaURLWFGmM4LP64Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSLQqqh0xwUMoQLqsxS0Po4gPHOc9k2gMv9EAhOd61ssidP30L9ZX1YFBAbLzUY3D
-	 X0yNCQf+a/yrPB2+ckD9k1mVyk6LTlRmm9su0vWgX8yUpJY1Tq1Si85y8iihBthtw/
-	 wVo//II+a+QPuTd9RzcHLD7QcNoAMYbT/rjxKpvk=
+	b=VwEPd3EDjxk1YuJcQ2QdMDNLYRCZympaSn2KYB1cW85vToSZGW4i6BVOGg6uExHPa
+	 J+bUPUpNZDFeZmIZUsPnsfqfm/LtI5G0cn0U8clL0oA+fNKWOFF3IGBq2kO/dRQ+z3
+	 48c/tpp5aLn64/h4JMjpCjgVEWvv/e52BgnZB5Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernie Thompson <bernie@plugable.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.19 169/220] fbdev: udlfb: avoid divide-by-zero on FBIOPUT_VSCREENINFO
-Date: Mon, 20 Apr 2026 17:41:50 +0200
-Message-ID: <20260420153940.111792709@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Lin YuChen <starpt.official@gmail.com>
+Subject: [PATCH 6.19 143/220] staging: rtl8723bs: initialize le_tmp64 in rtw_BIP_verify()
+Date: Mon, 20 Apr 2026 17:41:24 +0200
+Message-ID: <20260420153939.177014551@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -50,37 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Lin YuChen <starpt.official@gmail.com>
 
-commit a31e4518bec70333a0a98f2946a12b53b45fe5b9 upstream.
+commit 8c964b82a4e97ec7f25e17b803ee196009b38a57 upstream.
 
-Much like commit 19f953e74356 ("fbdev: fb_pm2fb: Avoid potential divide
-by zero error"), we also need to prevent that same crash from happening
-in the udlfb driver as it uses pixclock directly when dividing, which
-will crash.
+Initialize le_tmp64 to zero in rtw_BIP_verify() to prevent using
+uninitialized data.
 
-Cc: Bernie Thompson <bernie@plugable.com>
-Cc: Helge Deller <deller@gmx.de>
-Fixes: 59277b679f8b ("Staging: udlfb: add dynamic modeset support")
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Smatch warns that only 6 bytes are copied to this 8-byte (u64)
+variable, leaving the last two bytes uninitialized:
+
+drivers/staging/rtl8723bs/core/rtw_security.c:1308 rtw_BIP_verify()
+warn: not copying enough bytes for '&le_tmp64' (8 vs 6 bytes)
+
+Initializing the variable at the start of the function fixes this
+warning and ensures predictable behavior.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-staging/abvwIQh0CHTp4wNJ@stanley.mountain/
+Signed-off-by: Lin YuChen <starpt.official@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20260320172502.167332-1-starpt.official@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_security.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1018,6 +1018,9 @@ static int dlfb_ops_check_var(struct fb_
- 	struct fb_videomode mode;
- 	struct dlfb_data *dlfb = info->par;
+--- a/drivers/staging/rtl8723bs/core/rtw_security.c
++++ b/drivers/staging/rtl8723bs/core/rtw_security.c
+@@ -1313,7 +1313,7 @@ u32 rtw_BIP_verify(struct adapter *padap
+ 	u8 mic[16];
+ 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
+ 	__le16 le_tmp;
+-	__le64 le_tmp64;
++	__le64 le_tmp64 = 0;
  
-+	if (!var->pixclock)
-+		return -EINVAL;
-+
- 	/* set device-specific elements of var unrelated to mode */
- 	dlfb_var_color_format(var);
- 
+ 	ori_len = pattrib->pkt_len - WLAN_HDR_A3_LEN + BIP_AAD_SIZE;
+ 	BIP_AAD = rtw_zmalloc(ori_len);
 
 
