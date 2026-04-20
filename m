@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6803E2E093A;
-	Mon, 20 Apr 2026 15:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5EE2D77E5;
+	Mon, 20 Apr 2026 15:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700343; cv=none; b=hxWj3bO9Liz9s+2MWASFaTA8X0Z/km/tqJ21a/ugRUla9rSXQCOKH3j/V3hM369/vFYkXtfBg+UaywZSUcIwxHZHVtLtipvgTl8BdjAvncCa4NnELD897IP9dgRZDj7ueLjoHctjcAEGByC9gTBXQvNLTDABdjYatClYmIgJoJo=
+	t=1776700346; cv=none; b=E8EdUJs4SDJcX/VaDyvjE0JBR/sGHlNMpc2W6X0J4PO+enZz6Nz+8hs9hzGWOWwrSWRvnPl13hxg1JxKJmu/OIxGRMA5Z+8vmkIK9u3ynY6QG4BremvkzZXTbxHwMsPdqaACbI9cLMOP8rluXCYMR6lmdUxMEk196jboXUSWu/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700343; c=relaxed/simple;
-	bh=C5i0IrRHi1niETQrjEY9Ou1evnkyLTPXWAO85t/yNPw=;
+	s=arc-20240116; t=1776700346; c=relaxed/simple;
+	bh=hSQZxJgYvvptUDcTgABs0wkIG9ZjhbLQ5CYeGEHJ+ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgYOszV7HT+BplmC3qkPGk++aSe6eTXrRMagX/rbhTFjtaJp13r1avq7nWyV0Fbz5ikSEG3IM5WBQNgnw2UhsesQvxRCh7wxil/GgInnb+qRQBCrgL3h+nwfqWD/451SNzGNIzuXMMXs74khZeJYy3iIwcCFOuspc/j1R+BMjAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3L6e5Ii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vgb6Q04nIYpt6DP7ib6yGIdDl5tw5mE1rm9heDq3epLy3RAZAqAV1j9A9NEq8bD+Pv4dBf+/A/hVWGw7xYLsSLombDGv4g+0fl7JSxzBvniZP8nr11vE5RaNWvbEjtiPRsLL20T/sghGyIeKX+gWhpPH3TnNStq1NiZVx62SLKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2rViGee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3L6e5Ii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18A2C19425;
-	Mon, 20 Apr 2026 15:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2rViGee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A79C19425;
+	Mon, 20 Apr 2026 15:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700343;
-	bh=C5i0IrRHi1niETQrjEY9Ou1evnkyLTPXWAO85t/yNPw=;
+	s=korg; t=1776700345;
+	bh=hSQZxJgYvvptUDcTgABs0wkIG9ZjhbLQ5CYeGEHJ+ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3L6e5IiIjaFnmp3j0DOQ/7qBEc1J+acvyJRkuna8bo37ZqgTAdfYF6GCKGu9qMwa
-	 GgWUBWVW749ChWi89yNmptVtN5gvVSABl7KVMIZKNaY8rYWSF8c2nk2nRtr3lF3QYJ
-	 p4PuCfu0rZ7zkOYtBROFpSUiJvVAjXt52FqU5aEs=
+	b=C2rViGeetGvarsTB8bcIEPDAgx7bnRhhk6/rSS+sg+g0U2zZDEHjaUlou07YHmuh0
+	 BYOMzVm4Z4SeQ86P+YIwGballH6eJPw6TT+Fbh6zyhb7b6TJZTJuHPlkqtsZWUZ8RE
+	 CLSd7smd2JeEyLdsHd282CnDGmV7v2MOmfHffkwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
 	Zide Chen <zide.chen@intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Steve Wahl <steve.wahl@hpe.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 134/220] perf/x86/intel/uncore: Skip discovery table for offline dies
-Date: Mon, 20 Apr 2026 17:41:15 +0200
-Message-ID: <20260420153938.851807867@linuxfoundation.org>
+Subject: [PATCH 6.19 135/220] perf/x86/intel/uncore: Fix die ID init and look up bugs
+Date: Mon, 20 Apr 2026 17:41:16 +0200
+Message-ID: <20260420153938.887775203@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -55,43 +55,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit 7b568e9eba2fad89a696f22f0413d44cf4a1f892 ]
+[ Upstream commit a16d1ec4dd0cdcf689f324adde6067083bce9099 ]
 
-This warning can be triggered if NUMA is disabled and the system
-boots with fewer CPUs than the number of CPUs in die 0.
+In snbep_pci2phy_map_init(), in the nr_node_ids > 8 path,
+uncore_device_to_die() may return -1 when all CPUs associated
+with the UBOX device are offline.
 
-WARNING: CPU: 9 PID: 7257 at uncore.c:1157 uncore_pci_pmu_register+0x136/0x160 [intel_uncore]
+Remove the WARN_ON_ONCE(die_id == -1) check for two reasons:
 
-Currently, the discovery table continues to be parsed even if all CPUs
-in the associated die are offline.  This can lead to an array overflow
-at "pmu->boxes[die] = box" in uncore_pci_pmu_register(), which may
-trigger the warning above or cause other issues.
+- The current code breaks out of the loop. This is incorrect because
+  pci_get_device() does not guarantee iteration in domain or bus order,
+  so additional UBOX devices may be skipped during the scan.
 
-Fixes: edae1f06c2cd ("perf/x86/intel/uncore: Parse uncore discovery tables")
-Reported-by: Steve Wahl <steve.wahl@hpe.com>
+- Returning -EINVAL is incorrect, since marking offline buses with
+  die_id == -1 is expected and should not be treated as an error.
+
+Separately, when NUMA is disabled on a NUMA-capable platform,
+pcibus_to_node() returns NUMA_NO_NODE, causing uncore_device_to_die()
+to return -1 for all PCI devices.  As a result,
+spr_update_device_location(), used on Intel SPR and EMR, ignores the
+corresponding PMON units and does not add them to the RB tree.
+
+Fix this by using uncore_pcibus_to_dieid(), which retrieves topology
+from the UBOX GIDNIDMAP register and works regardless of whether NUMA
+is enabled in Linux.  This requires snbep_pci2phy_map_init() to be
+added in spr_uncore_pci_init().
+
+Keep uncore_device_to_die() only for the nr_node_ids > 8 case, where
+NUMA is expected to be enabled.
+
+Fixes: 9a7832ce3d92 ("perf/x86/intel/uncore: With > 8 nodes, get pci bus die id from NUMA info")
+Fixes: 65248a9a9ee1 ("perf/x86/uncore: Add a quirk for UPI on SPR")
 Signed-off-by: Zide Chen <zide.chen@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Tested-by: Steve Wahl <steve.wahl@hpe.com>
-Link: https://patch.msgid.link/20260313174050.171704-3-zide.chen@intel.com
+Link: https://patch.msgid.link/20260313174050.171704-4-zide.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_discovery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/intel/uncore.c       |  1 +
+ arch/x86/events/intel/uncore_snbep.c | 13 ++++++-------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/events/intel/uncore_discovery.c b/arch/x86/events/intel/uncore_discovery.c
-index 7d57ce706feb1..c5adbe4409047 100644
---- a/arch/x86/events/intel/uncore_discovery.c
-+++ b/arch/x86/events/intel/uncore_discovery.c
-@@ -383,7 +383,7 @@ static bool intel_uncore_has_discovery_tables_pci(int *ignore)
- 				     (val & UNCORE_DISCOVERY_DVSEC2_BIR_MASK) * UNCORE_DISCOVERY_BIR_STEP;
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index e228e564b15ea..8301a589d9a61 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -67,6 +67,7 @@ int uncore_die_to_segment(int die)
+ 	return bus ? pci_domain_nr(bus) : -EINVAL;
+ }
  
- 			die = get_device_die_id(dev);
--			if (die < 0)
-+			if ((die < 0) || (die >= uncore_max_dies()))
- 				continue;
++/* Note: This API can only be used when NUMA information is available. */
+ int uncore_device_to_die(struct pci_dev *dev)
+ {
+ 	int node = pcibus_to_node(dev->bus);
+diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
+index a338ee01bb242..0182785cad1fe 100644
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -1475,13 +1475,7 @@ static int snbep_pci2phy_map_init(int devid, int nodeid_loc, int idmap_loc, bool
+ 			}
  
- 			parse_discovery_table(dev, die, bar_offset, &parsed, ignore);
+ 			map->pbus_to_dieid[bus] = die_id = uncore_device_to_die(ubox_dev);
+-
+ 			raw_spin_unlock(&pci2phy_map_lock);
+-
+-			if (WARN_ON_ONCE(die_id == -1)) {
+-				err = -EINVAL;
+-				break;
+-			}
+ 		}
+ 	}
+ 
+@@ -6533,7 +6527,7 @@ static void spr_update_device_location(int type_id)
+ 
+ 	while ((dev = pci_get_device(PCI_VENDOR_ID_INTEL, device, dev)) != NULL) {
+ 
+-		die = uncore_device_to_die(dev);
++		die = uncore_pcibus_to_dieid(dev->bus);
+ 		if (die < 0)
+ 			continue;
+ 
+@@ -6557,6 +6551,11 @@ static void spr_update_device_location(int type_id)
+ 
+ int spr_uncore_pci_init(void)
+ {
++	int ret = snbep_pci2phy_map_init(0x3250, SKX_CPUNODEID, SKX_GIDNIDMAP, true);
++
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * The discovery table of UPI on some SPR variant is broken,
+ 	 * which impacts the detection of both UPI and M3UPI uncore PMON.
 -- 
 2.53.0
 
