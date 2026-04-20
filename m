@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61084336EE1;
-	Mon, 20 Apr 2026 16:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FAE34216C;
+	Mon, 20 Apr 2026 16:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701207; cv=none; b=QYIo3Fr31rv6b0lREpozvvlzYKuIFP2nUSEw3TLJx+L0pKRNd0ITfk4hm4Lm3uxzvl439xP3pWFQmb6P8XAAQ5QJUt+SVa0WnBnH50qvjk87HqUlZA5uvIvj2fxTbuQ/gsNyyS+PjfoeWftwHu8R93zaoSupkA3WS5xrFybKCgQ=
+	t=1776701210; cv=none; b=rR71ncHKVom+6bW3AoUZ46qyvTCK8U661dQxGhit65Vya6vEEqr3AjSDd7iaZsm00PBZG2H/ZX0K6UZXIEbK4qFSIDEwc5UVYMIN1ztimuuoPKtsaQJakuwz1Gp/EDgk8EXdDlj4+yCBWzeA70UkhaosuHJrlHP7SxuKtEtCz1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701207; c=relaxed/simple;
-	bh=eTTBJ5KKprb4AuajIlCneNYeGZ6lQkNOLP7onK2Q9sI=;
+	s=arc-20240116; t=1776701210; c=relaxed/simple;
+	bh=Hm/Ir3lG8ovCjfvPyxCgkzyqx81bHb0mVoTLCag6NWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIYHHsaj4oHVSqEuWSxaQ5BVAWbL6irgOss8lrSMaWjcOQaAnEPTHlk3/NmPc9Gmn7mmHcUfdDJE84IDv/a2BNcKbFFwOgouQSpc1GsCi7ZjYvFizq6j5VL0uAWWlSVzxlj0XJP1Bh2lCIYpPa2fKiX/Lhrc5CVZ0XKMQPcAgqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4YY4IGA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r8ifXRTDNUX7o0pvTxu5BvsmRWoeIqdq/lIewHC4MkKDqR/uvMxDpdOifsCbf9wps+HUsRv+j+4uh0Da59v6gtU/XnX1PnR1x47wFFY3sfFx4hDAxM1dGVlJ+eiBeOSQ1QR/5sl759gTZ0qAjfLMdkVRuLIux1ZBNCEaxnLCPGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlJa1CH5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4YY4IGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E939AC19425;
-	Mon, 20 Apr 2026 16:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlJa1CH5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D347C2BCB4;
+	Mon, 20 Apr 2026 16:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701207;
-	bh=eTTBJ5KKprb4AuajIlCneNYeGZ6lQkNOLP7onK2Q9sI=;
+	s=korg; t=1776701209;
+	bh=Hm/Ir3lG8ovCjfvPyxCgkzyqx81bHb0mVoTLCag6NWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z4YY4IGAylkSo8yN/UPhIW3CIAKbm9jbTMpgjbV7s2u68fhSZgWT8TA7UKLkH2C1e
-	 epUsn4iBikcDLGFUFdwx19dogRpgE1IwdoQJTQKWY6OrphSqE1zcyF6JHSBZOT1j8l
-	 NiKJZ+d3WHyPdLt7tkRYqkLjQOhdJdCBFcW9kkPo=
+	b=wlJa1CH59xyk9c/vU2uR5qTMB+p0b7STeRq+SeBjtPrdu3c762dwFGfEo5G9RKhWY
+	 Ddzco3UfO3FfOvgrjoIG6kojpmW/CENE6M/uNt2AZnkdajWc2wgsZiC0SpbuEggfQF
+	 LvmKiQqZR2epCB1xFsxIb9b/dLshHkMnKHWAbWzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Savenko <alex.sav4387@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/162] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14IMH9
-Date: Mon, 20 Apr 2026 17:40:56 +0200
-Message-ID: <20260420153927.896780609@linuxfoundation.org>
+Subject: [PATCH 6.12 025/162] pinctrl: intel: Fix the revision for new features (1kOhm PD, HW debouncer)
+Date: Mon, 20 Apr 2026 17:40:57 +0200
+Message-ID: <20260420153927.932550246@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,56 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Savenko <alex.sav4387@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 217d5bc9f96272316ac5a3215c7cc32a5127bbf3 ]
+[ Upstream commit a4337a24d13e9e3b98a113e71d6b80dc5ed5f8c4 ]
 
-The Lenovo Yoga Pro 7 14IMH9 (DMI: 83E2) shares PCI SSID 17aa:3847
-with the Legion 7 16ACHG6, but has a different codec subsystem ID
-(17aa:38cf). The existing SND_PCI_QUIRK for 17aa:3847 applies
-ALC287_FIXUP_LEGION_16ACHG6, which attempts to initialize an external
-I2C amplifier (CLSA0100) that is not present on the Yoga Pro 7 14IMH9.
+The 1kOhm pull down and hardware debouncer are features of the revision 0.92
+of the Chassis specification. Fix that in the code accordingly.
 
-As a result, pin 0x17 (bass speakers) is connected to DAC 0x06 which
-has no volume control, making hardware volume adjustment completely
-non-functional. Audio is either silent or at maximum volume regardless
-of the slider position.
-
-Add a HDA_CODEC_QUIRK entry using the codec subsystem ID (17aa:38cf)
-to correctly identify the Yoga Pro 7 14IMH9 and apply
-ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN, which redirects pin 0x17 to
-DAC 0x02 and restores proper volume control. The existing Legion entry
-is preserved unchanged.
-
-This follows the same pattern used for 17aa:386e, where Legion Y9000X
-and Yoga Pro 7 14ARP8 share a PCI SSID but are distinguished via
-HDA_CODEC_QUIRK.
-
-Link: https://github.com/nomad4tech/lenovo-yoga-pro-7-linux
-Tested-by: Alexander Savenko <alex.sav4387@gmail.com>
-Signed-off-by: Alexander Savenko <alex.sav4387@gmail.com>
-Link: https://patch.msgid.link/20260331082929.44890-1-alex.sav4387@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pinctrl/intel/pinctrl-intel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 04e10da997b53..b73c2741f8ae7 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11524,6 +11524,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
-+	/* Yoga Pro 7 14IMH9 shares PCI SSID 17aa:3847 with Legion 7 16ACHG6;
-+	 * use codec SSID to distinguish them
-+	 */
-+	HDA_CODEC_QUIRK(0x17aa, 0x38cf, "Lenovo Yoga Pro 7 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3847, "Legion 7 16ACHG6", ALC287_FIXUP_LEGION_16ACHG6),
- 	SND_PCI_QUIRK(0x17aa, 0x384a, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
+index f8abc69a39d16..5d147a3a49389 100644
+--- a/drivers/pinctrl/intel/pinctrl-intel.c
++++ b/drivers/pinctrl/intel/pinctrl-intel.c
+@@ -1588,7 +1588,7 @@ int intel_pinctrl_probe(struct platform_device *pdev,
+ 		value = readl(regs + REVID);
+ 		if (value == ~0u)
+ 			return -ENODEV;
+-		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x94) {
++		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x92) {
+ 			community->features |= PINCTRL_FEATURE_DEBOUNCE;
+ 			community->features |= PINCTRL_FEATURE_1K_PD;
+ 		}
 -- 
 2.53.0
 
