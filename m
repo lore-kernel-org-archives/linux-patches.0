@@ -1,43 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A6E329C6D;
-	Mon, 20 Apr 2026 15:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FBF3368AF;
+	Mon, 20 Apr 2026 15:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700525; cv=none; b=MOC7xtTx6jOTPnKsfD5hv/ELDd9HWjgnOg8amw+3seBrqx+z+8kgYwE9vYbI4V3mt1n/Zs/S6r1slgvnzI/s481N0wRFwsez/75ABMAwyv2pF0NDs02AqYoKGnWvn/KJthbv9iWK8+TZ07T5ThsV61wYB7vlDVaDin3EUq/Gc/8=
+	t=1776700527; cv=none; b=VP+tEbNemkB2fnOJ4euF9iOT6xmKJ9EINGiqlXnoJOIuBkmacx9YLA+iy+uX60ZLHV2EIWKv4CJW4N8HsPS03j+zU4zZSFI4L+6Y/OX/4x6KFIjMqSXEFKM2OHA1om+4jUvTyGdAJfoVlPILs1RWlaQfYBYzj7ELKvRi/0P0/zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700525; c=relaxed/simple;
-	bh=YOLRhTx8+MRQ68dcy0UG1ZQLRDUYRw8+RQtRUYq3UeE=;
+	s=arc-20240116; t=1776700527; c=relaxed/simple;
+	bh=i3Y5L8cLOr8AogPWRIhzyIxtkAkK+Hpsm07x3aS/5xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5ttQsYJsRsK+x/seTHH5mraDGRSF+1KrRmdjuMIBip2yDffzG++NKRRZ2a9muExtWc8BPrFRIFhjG6jpU8zqszVthOY9OAWAOSHSH1VSJJVReO4k9Y/KX2olBNt1Yhy/Jb5vd8H4lUKcv8BDQI4VMTEtQFOq9tusL4/Qf8FmMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImqDeDZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzgPkEW2ZufgU1l3DOqfq8E98IcDHmCW3hHQWqXmg0eYLTgyMVavZDNzvKjPNQAeToiL+BK7qFVW6y8IUvFqlQzOMHu5vkI5gPlXtS5PltVrimzvyJYtzt9UVCpY7jI3c/xv66nidgCPvCELlMtpOKyOpfeXEd6fRJtqtGayjS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5zH4Jip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImqDeDZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DD2C19425;
-	Mon, 20 Apr 2026 15:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5zH4Jip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F7BC19425;
+	Mon, 20 Apr 2026 15:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700524;
-	bh=YOLRhTx8+MRQ68dcy0UG1ZQLRDUYRw8+RQtRUYq3UeE=;
+	s=korg; t=1776700527;
+	bh=i3Y5L8cLOr8AogPWRIhzyIxtkAkK+Hpsm07x3aS/5xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImqDeDZEiRp2esIrge5kzYoxK4n2nE38Ge4DHmPa6s38k5Xc/foW+oYXHnbc+1vAc
-	 6iNrAo/dCFhyomYABsW8nmnrlKnbQj7xvBX1HhXZKbecRh6GELs9akRM9XWF7Kyx5J
-	 di6iwCETRJK1OG6g4ol3tNEnFWXEwKIikVNcpItU=
+	b=I5zH4JipVcnmTKpe4okvvhrXIjNPUtmJdWVAeA3CbY1pxYq96I84cx1/Wsi19tN4S
+	 e1d+Ux3+5g39pwHHsix0LgdJ3+DFvEOCmzKLm7lBAMGNYidxdEmUYjihS3JW5qWrLr
+	 g9yyZDE+A0168A6aVDGQFurP3RE2KQQrcP8g8SjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	JP Kobryn <inwardvessel@gmail.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Tejun Heo <tj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 205/220] mm/kasan: fix double free for kasan pXds
-Date: Mon, 20 Apr 2026 17:42:26 +0200
-Message-ID: <20260420153941.409199166@linuxfoundation.org>
+Subject: [PATCH 6.19 206/220] mm: blk-cgroup: fix use-after-free in cgwb_release_workfn()
+Date: Mon, 20 Apr 2026 17:42:27 +0200
+Message-ID: <20260420153941.445086853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -56,139 +64,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 51d8c78be0c27ddb91bc2c0263941d8b30a47d3b upstream.
+commit 8f5857be99f1ed1fa80991c72449541f634626ee upstream.
 
-kasan_free_pxd() assumes the page table is always struct page aligned.
-But that's not always the case for all architectures.  E.g.  In case of
-powerpc with 64K pagesize, PUD table (of size 4096) comes from slab cache
-named pgtable-2^9.  Hence instead of page_to_virt(pxd_page()) let's just
-directly pass the start of the pxd table which is passed as the 1st
-argument.
+cgwb_release_workfn() calls css_put(wb->blkcg_css) and then later accesses
+wb->blkcg_css again via blkcg_unpin_online().  If css_put() drops the last
+reference, the blkcg can be freed asynchronously (css_free_rwork_fn ->
+blkcg_css_free -> kfree) before blkcg_unpin_online() dereferences the
+pointer to access blkcg->online_pin, resulting in a use-after-free:
 
-This fixes the below double free kasan issue seen with PMEM:
+  BUG: KASAN: slab-use-after-free in blkcg_unpin_online (./include/linux/instrumented.h:112 ./include/linux/atomic/atomic-instrumented.h:400 ./include/linux/refcount.h:389 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 block/blk-cgroup.c:1367)
+  Write of size 4 at addr ff11000117aa6160 by task kworker/71:1/531
+   Workqueue: cgwb_release cgwb_release_workfn
+   Call Trace:
+    <TASK>
+     blkcg_unpin_online (./include/linux/instrumented.h:112 ./include/linux/atomic/atomic-instrumented.h:400 ./include/linux/refcount.h:389 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 block/blk-cgroup.c:1367)
+     cgwb_release_workfn (mm/backing-dev.c:629)
+     process_scheduled_works (kernel/workqueue.c:3278 kernel/workqueue.c:3385)
 
-radix-mmu: Mapped 0x0000047d10000000-0x0000047f90000000 with 2.00 MiB pages
-==================================================================
-BUG: KASAN: double-free in kasan_remove_zero_shadow+0x9c4/0xa20
-Free of addr c0000003c38e0000 by task ndctl/2164
+   Freed by task 1016:
+    kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6246 mm/slub.c:6561)
+    css_free_rwork_fn (kernel/cgroup/cgroup.c:5542)
+    process_scheduled_works (kernel/workqueue.c:3302 kernel/workqueue.c:3385)
 
-CPU: 34 UID: 0 PID: 2164 Comm: ndctl Not tainted 6.19.0-rc1-00048-gea1013c15392 #157 VOLUNTARY
-Hardware name: IBM,9080-HEX POWER10 (architected) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_012) hv:phyp pSeries
-Call Trace:
- dump_stack_lvl+0x88/0xc4 (unreliable)
- print_report+0x214/0x63c
- kasan_report_invalid_free+0xe4/0x110
- check_slab_allocation+0x100/0x150
- kmem_cache_free+0x128/0x6e0
- kasan_remove_zero_shadow+0x9c4/0xa20
- memunmap_pages+0x2b8/0x5c0
- devm_action_release+0x54/0x70
- release_nodes+0xc8/0x1a0
- devres_release_all+0xe0/0x140
- device_unbind_cleanup+0x30/0x120
- device_release_driver_internal+0x3e4/0x450
- unbind_store+0xfc/0x110
- drv_attr_store+0x78/0xb0
- sysfs_kf_write+0x114/0x140
- kernfs_fop_write_iter+0x264/0x3f0
- vfs_write+0x3bc/0x7d0
- ksys_write+0xa4/0x190
- system_call_exception+0x190/0x480
- system_call_vectored_common+0x15c/0x2ec
----- interrupt: 3000 at 0x7fff93b3d3f4
-NIP:  00007fff93b3d3f4 LR: 00007fff93b3d3f4 CTR: 0000000000000000
-REGS: c0000003f1b07e80 TRAP: 3000   Not tainted  (6.19.0-rc1-00048-gea1013c15392)
-MSR:  800000000280f033 <SF,VEC,VSX,EE,PR,FP,ME,IR,DR,RI,LE>  CR: 48888208  XER: 00000000
-<...>
-NIP [00007fff93b3d3f4] 0x7fff93b3d3f4
-LR [00007fff93b3d3f4] 0x7fff93b3d3f4
----- interrupt: 3000
+** Stack based on commit 66672af7a095 ("Add linux-next specific files
+for 20260410")
 
- The buggy address belongs to the object at c0000003c38e0000
-  which belongs to the cache pgtable-2^9 of size 4096
- The buggy address is located 0 bytes inside of
-  4096-byte region [c0000003c38e0000, c0000003c38e1000)
+I am seeing this crash sporadically in Meta fleet across multiple kernel
+versions.  A full reproducer is available at:
+https://github.com/leitao/debug/blob/main/reproducers/repro_blkcg_uaf.sh
 
- The buggy address belongs to the physical page:
- page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x3c38c
- head: order:2 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
- memcg:c0000003bfd63e01
- flags: 0x63ffff800000040(head|node=6|zone=0|lastcpupid=0x7ffff)
- page_type: f5(slab)
- raw: 063ffff800000040 c000000140058980 5deadbeef0000122 0000000000000000
- raw: 0000000000000000 0000000080200020 00000000f5000000 c0000003bfd63e01
- head: 063ffff800000040 c000000140058980 5deadbeef0000122 0000000000000000
- head: 0000000000000000 0000000080200020 00000000f5000000 c0000003bfd63e01
- head: 063ffff800000002 c00c000000f0e301 00000000ffffffff 00000000ffffffff
- head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000004
- page dumped because: kasan: bad access detected
+(The race window is narrow.  To make it easily reproducible, inject a
+msleep(100) between css_put() and blkcg_unpin_online() in
+cgwb_release_workfn().  With that delay and a KASAN-enabled kernel, the
+reproducer triggers the splat reliably in less than a second.)
 
-[  138.953636] [   T2164] Memory state around the buggy address:
-[  138.953643] [   T2164]  c0000003c38dff00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  138.953652] [   T2164]  c0000003c38dff80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  138.953661] [   T2164] >c0000003c38e0000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  138.953669] [   T2164]                    ^
-[  138.953675] [   T2164]  c0000003c38e0080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  138.953684] [   T2164]  c0000003c38e0100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[  138.953692] [   T2164] ==================================================================
-[  138.953701] [   T2164] Disabling lock debugging due to kernel taint
+Fix this by moving blkcg_unpin_online() before css_put(), so the
+cgwb's CSS reference keeps the blkcg alive while blkcg_unpin_online()
+accesses it.
 
-Link: https://lkml.kernel.org/r/2f9135c7866c6e0d06e960993b8a5674a9ebc7ec.1771938394.git.ritesh.list@gmail.com
-Fixes: 0207df4fa1a8 ("kernel/memremap, kasan: make ZONE_DEVICE with work with KASAN")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Link: https://lore.kernel.org/20260413-blkcg-v1-1-35b72622d16c@debian.org
+Fixes: 59b57717fff8 ("blkcg: delay blkg destruction until after writeback has finished")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Dennis Zhou <dennis@kernel.org>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: JP Kobryn <inwardvessel@gmail.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Tejun Heo <tj@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/init.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/backing-dev.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/mm/kasan/init.c
-+++ b/mm/kasan/init.c
-@@ -292,7 +292,7 @@ static void kasan_free_pte(pte_t *pte_st
- 			return;
- 	}
+--- a/mm/backing-dev.c
++++ b/mm/backing-dev.c
+@@ -618,12 +618,13 @@ static void cgwb_release_workfn(struct w
+ 	wb_shutdown(wb);
  
--	pte_free_kernel(&init_mm, (pte_t *)page_to_virt(pmd_page(*pmd)));
-+	pte_free_kernel(&init_mm, pte_start);
- 	pmd_clear(pmd);
- }
+ 	css_put(wb->memcg_css);
+-	css_put(wb->blkcg_css);
+-	mutex_unlock(&wb->bdi->cgwb_release_mutex);
  
-@@ -307,7 +307,7 @@ static void kasan_free_pmd(pmd_t *pmd_st
- 			return;
- 	}
+ 	/* triggers blkg destruction if no online users left */
+ 	blkcg_unpin_online(wb->blkcg_css);
  
--	pmd_free(&init_mm, (pmd_t *)page_to_virt(pud_page(*pud)));
-+	pmd_free(&init_mm, pmd_start);
- 	pud_clear(pud);
- }
++	css_put(wb->blkcg_css);
++	mutex_unlock(&wb->bdi->cgwb_release_mutex);
++
+ 	fprop_local_destroy_percpu(&wb->memcg_completions);
  
-@@ -322,7 +322,7 @@ static void kasan_free_pud(pud_t *pud_st
- 			return;
- 	}
- 
--	pud_free(&init_mm, (pud_t *)page_to_virt(p4d_page(*p4d)));
-+	pud_free(&init_mm, pud_start);
- 	p4d_clear(p4d);
- }
- 
-@@ -337,7 +337,7 @@ static void kasan_free_p4d(p4d_t *p4d_st
- 			return;
- 	}
- 
--	p4d_free(&init_mm, (p4d_t *)page_to_virt(pgd_page(*pgd)));
-+	p4d_free(&init_mm, p4d_start);
- 	pgd_clear(pgd);
- }
- 
+ 	spin_lock_irq(&cgwb_lock);
 
 
