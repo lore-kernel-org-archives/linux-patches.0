@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938333264F1;
-	Mon, 20 Apr 2026 15:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234EF32B9B5;
+	Mon, 20 Apr 2026 15:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700532; cv=none; b=NZVtFxQ8o2dGzJYwoo8A0OC/qYY2fiX9BECirefF0IiV1Z3D+NDSIoIaXNH7ujWZ+1Tk49PlSUx6MwIhfd14QBxbemteawvxwu/fKynDADY2QiPDsdPQ3eMEorxrDcsu2miTNhFoALPbAPJX/FUAMHPZKkjosHFXTn/s6PZ0CmU=
+	t=1776700535; cv=none; b=GgQKfVjq0wes/l+f8oQDhD6QBxQSRstN8knE9dxZ0KXq/ega5CdoM8k3AZtBjSFL6ADnp79JzWAdLFIwKwjZWFbF6HWMFUiyX0lFeXiOsXf1SnEyYbTXeuXeDNBU/ff9VzujmlkPuxYv9x8hYts++fh+lSq3nLgP1ArtVe+XBoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700532; c=relaxed/simple;
-	bh=dOX7H5Di7ECwRG591rJ0KMnynrN62GioZmaRXXBL7s4=;
+	s=arc-20240116; t=1776700535; c=relaxed/simple;
+	bh=ND41Jeo8tNjEiXkWpATfFtL5HvapbQKi4ZROVlnpHk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=liXqPH9c7YfcnuafWvP51i9yk3o50iuRF50opQW0v2gXt/mwiYMr7pPIjEukGl/+1IP6Dc5L1mvFCWiGvKpUy5hhAozBig6kWfNTKbl0NQMyTeLgK//XTn0PpKU+ALtDkWkWEo4BRp/SqFQ3KnDJJfB3+0DTArh3jWDWTsHftv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHwdK3CZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ej6BlqB6FpqmXM5ERn+1h1Jjn63EqJ31oElPqjcnow8BFmTh99gqUf4wXKLbdYY3+jdfwyr++eb943DiwJcdxDlSdmf+yyL7vW8e1aROWIxKe4oPep9qEDTEFo6TWyEW7/6upNN31PwYKhQ/mOe2uhRuWpOQ/7UgUp3elQUNz7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEqHQefN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHwdK3CZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A280C19425;
-	Mon, 20 Apr 2026 15:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEqHQefN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF09C2BCB6;
+	Mon, 20 Apr 2026 15:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700532;
-	bh=dOX7H5Di7ECwRG591rJ0KMnynrN62GioZmaRXXBL7s4=;
+	s=korg; t=1776700535;
+	bh=ND41Jeo8tNjEiXkWpATfFtL5HvapbQKi4ZROVlnpHk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHwdK3CZ9CH+LkLalO8ewjdp4xWeLOuT+Kte2r2oRFL//Bpmaj9eA8vKIu55cJfFR
-	 A+xJmUTKkit28FstOvI9joIISK80U8GrM58A8c3IQsuckXaDTKCiAHVcCz+G/W6guM
-	 CaXHj279feRISjAJbumGm0auSD1xwrkwegxTc1wA=
+	b=mEqHQefN2BLD5v0vLlg74rzd9SBJJgIXnb/LkmoiqJwqURn0bU3Fs959G8XFyDBzZ
+	 /u9k57kDIi1pat3DKocg1uLuztbYjohrin3DhsIO3MdqNAWGfFEjG96NU89zhv14vI
+	 Ns/jvP/kdx7iwsjw5gGz+jNAcc5f8q+EsPjgqAxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com,
+	Abhishek Kumar <abhishek_sts8@yahoo.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.19 208/220] media: mediatek: vcodec: fix use-after-free in encoder release path
-Date: Mon, 20 Apr 2026 17:42:29 +0200
-Message-ID: <20260420153941.517573922@linuxfoundation.org>
+Subject: [PATCH 6.19 209/220] media: em28xx: fix use-after-free in em28xx_v4l2_open()
+Date: Mon, 20 Apr 2026 17:42:30 +0200
+Message-ID: <20260420153941.553244329@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,104 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Abhishek Kumar <abhishek_sts8@yahoo.com>
 
-commit 76e35091ffc722ba39b303e48bc5d08abb59dd56 upstream.
+commit a66485a934c7187ae8e36517d40615fa2e961cff upstream.
 
-The fops_vcodec_release() function frees the context structure (ctx)
-without first cancelling any pending or running work in ctx->encode_work.
-This creates a race window where the workqueue handler (mtk_venc_worker)
-may still be accessing the context memory after it has been freed.
+em28xx_v4l2_open() reads dev->v4l2 without holding dev->lock,
+creating a race with em28xx_v4l2_init()'s error path and
+em28xx_v4l2_fini(), both of which free the em28xx_v4l2 struct
+and set dev->v4l2 to NULL under dev->lock.
 
-Race condition:
+This race leads to two issues:
+ - use-after-free in v4l2_fh_init() when accessing vdev->ctrl_handler,
+   since the video_device is embedded in the freed em28xx_v4l2 struct.
+ - NULL pointer dereference in em28xx_resolution_set() when accessing
+   v4l2->norm, since dev->v4l2 has been set to NULL.
 
-    CPU 0 (release path)               CPU 1 (workqueue)
-    ---------------------               ------------------
-    fops_vcodec_release()
-      v4l2_m2m_ctx_release()
-        v4l2_m2m_cancel_job()
-        // waits for m2m job "done"
-                                        mtk_venc_worker()
-                                          v4l2_m2m_job_finish()
-                                          // m2m job "done"
-                                          // BUT worker still running!
-                                          // post-job_finish access:
-                                        other ctx dereferences
-                                          // UAF if ctx already freed
-        // returns (job "done")
-      kfree(ctx)  // ctx freed
+Fix this by moving the mutex_lock() before the dev->v4l2 read and
+adding a NULL check for dev->v4l2 under the lock.
 
-Root cause: The v4l2_m2m_ctx_release() only waits for the m2m job
-lifecycle (via TRANS_RUNNING flag), not the workqueue lifecycle.
-After v4l2_m2m_job_finish() is called, the m2m framework considers
-the job complete and v4l2_m2m_ctx_release() returns, but the worker
-function continues executing and may still access ctx.
-
-The work is queued during encode operations via:
-  queue_work(ctx->dev->encode_workqueue, &ctx->encode_work)
-The worker function accesses ctx->m2m_ctx, ctx->dev, and other ctx
-fields even after calling v4l2_m2m_job_finish().
-
-This vulnerability was confirmed with KASAN by running an instrumented
-test module that widens the post-job_finish race window. KASAN detected:
-
-  BUG: KASAN: slab-use-after-free in mtk_venc_worker+0x159/0x180
-  Read of size 4 at addr ffff88800326e000 by task kworker/u8:0/12
-
-  Workqueue: mtk_vcodec_enc_wq mtk_venc_worker
-
-  Allocated by task 47:
-    __kasan_kmalloc+0x7f/0x90
-    fops_vcodec_open+0x85/0x1a0
-
-  Freed by task 47:
-    __kasan_slab_free+0x43/0x70
-    kfree+0xee/0x3a0
-    fops_vcodec_release+0xb7/0x190
-
-Fix this by calling cancel_work_sync(&ctx->encode_work) before kfree(ctx).
-This ensures the workqueue handler is both cancelled (if pending) and
-synchronized (waits for any running handler to complete) before the
-context is freed.
-
-Placement rationale: The fix is placed after v4l2_ctrl_handler_free()
-and before list_del_init(&ctx->list). At this point, all m2m operations
-are done (v4l2_m2m_ctx_release() has returned), and we need to ensure
-the workqueue is synchronized before removing ctx from the list and
-freeing it.
-
-Note: The open error path does NOT need cancel_work_sync() because
-INIT_WORK() only initializes the work structure - it does not schedule
-it. Work is only scheduled later during device_run() operations.
-
-Fixes: 0934d3759615 ("media: mediatek: vcodec: separate decoder and encoder")
+Reported-by: syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c025d34b8eaa54c571b8
+Fixes: 8139a4d583ab ("[media] em28xx: move v4l2 user counting fields from struct em28xx to struct v4l2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Abhishek Kumar <abhishek_sts8@yahoo.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/media/usb/em28xx/em28xx-video.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
-+++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
-@@ -215,6 +215,15 @@ static int fops_vcodec_release(struct fi
- 	v4l2_fh_exit(&ctx->fh);
- 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -2126,7 +2126,7 @@ static int em28xx_v4l2_open(struct file
+ {
+ 	struct video_device *vdev = video_devdata(filp);
+ 	struct em28xx *dev = video_drvdata(filp);
+-	struct em28xx_v4l2 *v4l2 = dev->v4l2;
++	struct em28xx_v4l2 *v4l2;
+ 	enum v4l2_buf_type fh_type = 0;
+ 	int ret;
  
-+	/*
-+	 * Cancel any pending encode work before freeing the context.
-+	 * Although v4l2_m2m_ctx_release() waits for m2m job completion,
-+	 * the workqueue handler (mtk_venc_worker) may still be accessing
-+	 * the context after v4l2_m2m_job_finish() returns. Without this,
-+	 * a use-after-free occurs when the worker accesses ctx after kfree.
-+	 */
-+	cancel_work_sync(&ctx->encode_work);
+@@ -2143,13 +2143,19 @@ static int em28xx_v4l2_open(struct file
+ 		return -EINVAL;
+ 	}
+ 
++	if (mutex_lock_interruptible(&dev->lock))
++		return -ERESTARTSYS;
 +
- 	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
- 	list_del_init(&ctx->list);
- 	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
++	v4l2 = dev->v4l2;
++	if (!v4l2) {
++		mutex_unlock(&dev->lock);
++		return -ENODEV;
++	}
++
+ 	em28xx_videodbg("open dev=%s type=%s users=%d\n",
+ 			video_device_node_name(vdev), v4l2_type_names[fh_type],
+ 			v4l2->users);
+ 
+-	if (mutex_lock_interruptible(&dev->lock))
+-		return -ERESTARTSYS;
+-
+ 	ret = v4l2_fh_open(filp);
+ 	if (ret) {
+ 		dev_err(&dev->intf->dev,
 
 
