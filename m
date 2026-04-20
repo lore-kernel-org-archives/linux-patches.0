@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0B334107F;
-	Mon, 20 Apr 2026 16:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ABB344029;
+	Mon, 20 Apr 2026 16:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701580; cv=none; b=mbBmnBTsp+z2PVWQoCmV+KKDvx7Pzp9fRZWYVrNfRGCNPYITH4wr63CUXH02kIP/pK87TviekYuMzppDHG+8tCzI4DfkNjy1mSZNBCMv9dDdlcljwpg78LHBS3cf4wDIFBW8et+ctTowpV3x1CNdKNTZT3BYJkKfdmUy4dccVuk=
+	t=1776701583; cv=none; b=NST+z3jEQ+8SdnVo4qm49uw0Vi2g4wa7spzZNwBrd24kN5InTI3L7ODe6lhCt9WNBGLK7+XDhHgW+IZE9o/3DUxsSifuTvBqP04ntsAJ7eYyRbSTQj59lpbBvmQ4bpHM5lIgFXIJ+4LLsVWS+1Ldn+IFaBqlti1pEYSwIjqtcVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701580; c=relaxed/simple;
-	bh=3mcL31hM0ovu0jMK91xgTYZrnbs8zsWei5miGYg8Wa8=;
+	s=arc-20240116; t=1776701583; c=relaxed/simple;
+	bh=WEvOCUI+NYG/Fzr6Lj9BOJs9HgB/83MpiTeomgu4uWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L///R7xObRWdfItFAYspgpvwh7uctYUwOLI7Ctfq+hydnKwRDZFjovcwnm9fYXJlEExcWGIPXbGxBNYaEVAS/99XDEssMT69h2+Fa5yebE1ggsp9jRIorfL+ZsyUJ7zFONFhYnXTE9WY+pOeqMJQk2i9Et8NccjxHpReL7NbFuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcDn1Wi5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c0NDohG6Jc1ZeM8htIBX0qektfHmHhEsdrRswc3JMEcYMfhJz39JsJ/3DwQXAzB5t8qIQJXfL5pUds04Aj704/CqKYvc3yCv5ir/Lz+8k6rSmcjGW7vtpAqAs93rS4BcwNoEKqZG3rIMu+r3bf/Vy4rf7Y5Gc00+Til3xfcxsJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqPyB+fT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcDn1Wi5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F62C19425;
-	Mon, 20 Apr 2026 16:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqPyB+fT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF7FC19425;
+	Mon, 20 Apr 2026 16:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701580;
-	bh=3mcL31hM0ovu0jMK91xgTYZrnbs8zsWei5miGYg8Wa8=;
+	s=korg; t=1776701582;
+	bh=WEvOCUI+NYG/Fzr6Lj9BOJs9HgB/83MpiTeomgu4uWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JcDn1Wi5aFzuUladPRRMmt57jSInS5WsiydpeJJa0yDlqNSEVRkFRX0e0Yh1bQfGA
-	 3JXRhNftPXMZTVuDQ/0UG3CUq0MhA1Ep7h4vcUZB9p9xrCB8PsFZLNFVj9HpePIfU3
-	 zULPxTbpXqul2uZzmPaSQpqt9V2AkhD/7/gVgeDY=
+	b=PqPyB+fTjWgIpR9Yx3xfSUPkStuMXkD+aKsWcfzxj81ZfQKSASRl1Jcj/j5PZl+kR
+	 VJrIhp8ekYEO/tYaZjry8LWJ2U1VfipD+FuD0kHU/yul1Wuvkx4wwpsy0UIB/lqfr5
+	 CvbTqS2DvYLbALWsGJMOGbKnYH57HPB/zPk7mUOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 6.12 160/162] PCI: Fix placement of pci_save_state() in pci_bus_add_device()
-Date: Mon, 20 Apr 2026 17:43:12 +0200
-Message-ID: <20260420153932.851452840@linuxfoundation.org>
+	Minhong He <heminhong@kylinos.cn>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.12 161/162] ipv6: add NULL checks for idev in SRv6 paths
+Date: Mon, 20 Apr 2026 17:43:13 +0200
+Message-ID: <20260420153932.888502369@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -49,45 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Minhong He <heminhong@kylinos.cn>
 
-Commit 58130e7ce6cb ("PCI/ERR: Ensure error recoverability at all
-times") sought to backport upstream commit a2f1e22390ac, but misplaced
-the call to pci_save_state() in pci_bus_add_device():
+[ Upstream commit 06413793526251870e20402c39930804f14d59c0 ]
 
-It put the call at the top of the function even though the upstream
-commit deliberately put it in the middle to capture config space changes
-caused by pci_fixup_final().
+__in6_dev_get() can return NULL when the device has no IPv6 configuration
+(e.g. MTU < IPV6_MIN_MTU or after NETDEV_UNREGISTER).
 
-Fix the placement.
+Add NULL checks for idev returned by __in6_dev_get() in both
+seg6_hmac_validate_skb() and ipv6_srh_rcv() to prevent potential NULL
+pointer dereferences.
 
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
+Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
+Signed-off-by: Minhong He <heminhong@kylinos.cn>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260316073301.106643-1-heminhong@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/bus.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv6/exthdrs.c   |    4 ++++
+ net/ipv6/seg6_hmac.c |    2 ++
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/pci/bus.c
-+++ b/drivers/pci/bus.c
-@@ -331,9 +331,6 @@ void pci_bus_add_device(struct pci_dev *
- 	struct device_node *dn = dev->dev.of_node;
- 	int retval;
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -379,6 +379,10 @@ static int ipv6_srh_rcv(struct sk_buff *
+ 	hdr = (struct ipv6_sr_hdr *)skb_transport_header(skb);
  
--	/* Save config space for error recoverability */
--	pci_save_state(dev);
--
- 	/*
- 	 * Can not put in pci_device_add yet because resources
- 	 * are not assigned yet for some devices.
-@@ -346,6 +343,9 @@ void pci_bus_add_device(struct pci_dev *
- 	pci_proc_attach_device(dev);
- 	pci_bridge_d3_update(dev);
+ 	idev = __in6_dev_get(skb->dev);
++	if (!idev) {
++		kfree_skb(skb);
++		return -1;
++	}
  
-+	/* Save config space for error recoverability */
-+	pci_save_state(dev);
-+
- 	dev->match_driver = !dn || of_device_is_available(dn);
- 	retval = device_attach(&dev->dev);
- 	if (retval < 0 && retval != -EPROBE_DEFER)
+ 	accept_seg6 = min(READ_ONCE(net->ipv6.devconf_all->seg6_enabled),
+ 			  READ_ONCE(idev->cnf.seg6_enabled));
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -245,6 +245,8 @@ bool seg6_hmac_validate_skb(struct sk_bu
+ 	int require_hmac;
+ 
+ 	idev = __in6_dev_get(skb->dev);
++	if (!idev)
++		return false;
+ 
+ 	srh = (struct ipv6_sr_hdr *)skb_transport_header(skb);
+ 
 
 
