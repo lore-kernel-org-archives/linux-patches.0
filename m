@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917C22D77E5;
-	Mon, 20 Apr 2026 15:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C62C2D77E5;
+	Mon, 20 Apr 2026 15:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700175; cv=none; b=iaWONlNxlbUwyxeJzTONDq/qHBgQP8K3obXuJyXVz9rrgCNKIZNlTIjDEZKsYuI77kORvOFqLWob6o/82PURkuoJkMgjqQxyjMgFFnmK6nuBEzhEUMkRqQE2SS0r0qlo9Tm9AqXIc3XXkg5UXoykJ2/kmsiKu1cAtdZevVBkNko=
+	t=1776700178; cv=none; b=ncSng2SGVV8D8Ib3+/Wg1VUKK9MAiBCKyDZh/rizqIUHdPY6CpHb7lQqqxXdlqs6PTuK3gubSaPeeNyAxEYeSZ+iZ7sV9+sLc4iTd6vH8DZBMH4VYAhIY/T01B7sJ12ssBgY7rwg496X9c9yXUTd90r6v/gH8Syvh52oavXi1To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700175; c=relaxed/simple;
-	bh=oDqYG3R+ssGjvK2eiTygbEzIGyPlYVQzgxJgIbUtELY=;
+	s=arc-20240116; t=1776700178; c=relaxed/simple;
+	bh=5s7p3QCpY5IVC29zOKCiaFOnxXuVKwAtteZ1mGaT7gU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2IsKT3+DOrTnry1py/xj0kjFC4Ac6H/0cpEByjzdGnmuDtnz7aR2HhiU/xKSsOaDDCDnqKtHynRAC1WO+GT8qhHOnemtFLM07o0xbvTq6zyng+eHvCCrcCW5Qt19bVNOidH6jhjzY7hal6mro17SpvyTRQ/XQFGK0WLKB4qcww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sryq3dk3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2Hrk3T50bxSs/5yt61xWazKU487H2GhDO6rkamL4/2HvxJF4oJ7kvvM32e9BXH/+0BFxAHTfnnjnQgfwoVpOMMn9Pnj4h3/Uik6EQq+0s6YuBth9ySCfgPvkeLuBZlx/rRiTd6CfUUxCZ6DmOciNhrrcTfwAUMkjQ3DjCjG5TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oF3hVwvX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sryq3dk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220C8C2BCB4;
-	Mon, 20 Apr 2026 15:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oF3hVwvX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D49C2BCB6;
+	Mon, 20 Apr 2026 15:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700175;
-	bh=oDqYG3R+ssGjvK2eiTygbEzIGyPlYVQzgxJgIbUtELY=;
+	s=korg; t=1776700178;
+	bh=5s7p3QCpY5IVC29zOKCiaFOnxXuVKwAtteZ1mGaT7gU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sryq3dk3qJyq8/0pKfMxdBoswOfzI7OW1ybH4YYLciPhF3m0+v4Tk7YRoxIwnh2tf
-	 m9RvoUT+1QNEZ/kBY33eX+wmgf7IgEGAF711yzbHx3iGaoFL/ZllzfxXdXTrPKhSQ+
-	 TC0gO1/sGGAvGC3GHqd0vtMMW2GEz39a6DlAXn2k=
+	b=oF3hVwvXjvYJ+HYa0g8L5ZjX0UOMlYV3iMUGLeC45TwRl5KFNZ1Wp3wQ3d4h7y80Q
+	 ZTfBy4XNJRHSU/X/KBnCj+09Zwxi4IeYYo7EIsO5bWUqE7JpOvxi502gP1JEz7Mpwn
+	 hc6JJYBzJ3HdtYzhC51NDVoiXUj9zy+OFVdALITM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Even Xu <even.xu@intel.com>,
+	leo vriska <leo@60228.dev>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 038/220] HID: Intel-thc-hid: Intel-quickspi: Add NVL Device IDs
-Date: Mon, 20 Apr 2026 17:39:39 +0200
-Message-ID: <20260420153935.407080721@linuxfoundation.org>
+Subject: [PATCH 6.19 039/220] HID: quirks: add HID_QUIRK_ALWAYS_POLL for 8BitDo Pro 3
+Date: Mon, 20 Apr 2026 17:39:40 +0200
+Message-ID: <20260420153935.442962247@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,57 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Even Xu <even.xu@intel.com>
+From: leo vriska <leo@60228.dev>
 
-[ Upstream commit 48e91af0cbe942d50ef6257d850accdca1d01378 ]
+[ Upstream commit 532743944324a873bbaf8620fcabcd0e69e30c36 ]
 
-Add Nova Lake THC QuickSPI device IDs to support list.
+According to a mailing list report [1], this controller's predecessor
+has the same issue. However, it uses the xpad driver instead of HID, so
+this quirk wouldn't apply.
 
-Signed-off-by: Even Xu <even.xu@intel.com>
+[1]: https://lore.kernel.org/linux-input/unufo3$det$1@ciao.gmane.io/
+
+Signed-off-by: leo vriska <leo@60228.dev>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c | 6 ++++++
- drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h | 2 ++
- 2 files changed, 8 insertions(+)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-index ad6bd59963b28..b6a69995692cb 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-@@ -37,6 +37,10 @@ struct quickspi_driver_data arl = {
- 	.max_packet_size_value = MAX_PACKET_SIZE_VALUE_MTL,
- };
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 7fd67745ee010..666ce30c83b42 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -22,6 +22,9 @@
+ #define USB_DEVICE_ID_3M2256		0x0502
+ #define USB_DEVICE_ID_3M3266		0x0506
  
-+struct quickspi_driver_data nvl = {
-+	.max_packet_size_value = MAX_PACKET_SIZE_VALUE_LNL,
-+};
++#define USB_VENDOR_ID_8BITDO		0x2dc8
++#define USB_DEVICE_ID_8BITDO_PRO_3	0x6009
 +
- /* THC QuickSPI ACPI method to get device properties */
- /* HIDSPI Method: {6e2ac436-0fcf-41af-a265-b32a220dcfab} */
- static guid_t hidspi_guid =
-@@ -982,6 +986,8 @@ static const struct pci_device_id quickspi_pci_tbl[] = {
- 	{PCI_DEVICE_DATA(INTEL, THC_WCL_DEVICE_ID_SPI_PORT2, &ptl), },
- 	{PCI_DEVICE_DATA(INTEL, THC_ARL_DEVICE_ID_SPI_PORT1, &arl), },
- 	{PCI_DEVICE_DATA(INTEL, THC_ARL_DEVICE_ID_SPI_PORT2, &arl), },
-+	{PCI_DEVICE_DATA(INTEL, THC_NVL_H_DEVICE_ID_SPI_PORT1, &nvl), },
-+	{PCI_DEVICE_DATA(INTEL, THC_NVL_H_DEVICE_ID_SPI_PORT2, &nvl), },
- 	{}
- };
- MODULE_DEVICE_TABLE(pci, quickspi_pci_tbl);
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-index c30e1a42eb098..bf5e18f5a5f42 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-@@ -23,6 +23,8 @@
- #define PCI_DEVICE_ID_INTEL_THC_WCL_DEVICE_ID_SPI_PORT2 	0x4D4B
- #define PCI_DEVICE_ID_INTEL_THC_ARL_DEVICE_ID_SPI_PORT1 	0x7749
- #define PCI_DEVICE_ID_INTEL_THC_ARL_DEVICE_ID_SPI_PORT2 	0x774B
-+#define PCI_DEVICE_ID_INTEL_THC_NVL_H_DEVICE_ID_SPI_PORT1	0xD349
-+#define PCI_DEVICE_ID_INTEL_THC_NVL_H_DEVICE_ID_SPI_PORT2	0xD34B
+ #define USB_VENDOR_ID_A4TECH		0x09da
+ #define USB_DEVICE_ID_A4TECH_WCP32PU	0x0006
+ #define USB_DEVICE_ID_A4TECH_X5_005D	0x000a
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 3217e436c052c..f6be3ffee0232 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -25,6 +25,7 @@
+  */
  
- /* HIDSPI special ACPI parameters DSM methods */
- #define ACPI_QUICKSPI_REVISION_NUM			2
+ static const struct hid_device_id hid_quirks[] = {
++	{ HID_USB_DEVICE(USB_VENDOR_ID_8BITDO, USB_DEVICE_ID_8BITDO_PRO_3), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_GAMEPAD), HID_QUIRK_BADPAD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_PREDATOR), HID_QUIRK_BADPAD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE), HID_QUIRK_ALWAYS_POLL },
 -- 
 2.53.0
 
