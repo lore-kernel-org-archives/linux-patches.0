@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993B53358B0;
-	Mon, 20 Apr 2026 16:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B7533EAF9;
+	Mon, 20 Apr 2026 16:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701018; cv=none; b=E+69GjeHFeF9Om/H5sEAtzR+4iGtt1TwiJ7pQMQu7Ka63VakEMcKz1BVEuolHYRMOeGKomCy3law4WWVrgC8CnGxpyZaMOg8iztV2eYTC61TH2SrSkSWU3Uf7KfBFMh7X+dS6zQm8ff4xsnI2tzbdyCKxx+HrWFsTEDLlzZL4bg=
+	t=1776701021; cv=none; b=gAmaJpPCM2KJO53DS6CZWY+uc+A3c3sVFjDfpGUCi14bef/Rmyk4ZZZPUBTXnQ+9A+fC4D5jbJYj35LR3NMB4TjLcKptcW2R+wWkuYK+GNQ+MFHRX5LQBQdeyKAcXAlAjapz+kvM6KEDrbUDAioQvb/hPbIWG8MmGceD68lb5wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701018; c=relaxed/simple;
-	bh=uLy56vTql2Oo0PluU5NDeJpszMaWMYtfwNohMUBM8H4=;
+	s=arc-20240116; t=1776701021; c=relaxed/simple;
+	bh=74ky5X6xQL4pQV4Y1fN4C7ITBle5ET0j4jUD0JRZ7dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teF3Ka2OCnsYD8EbnsKib0GiNTRq6jV7LDLUa0RSY+7pgypah8IqGEOfyLKPqYwBwzCa/sOUuj2rPlEqphrghXpSyksBlU/pd1D5XBimGzofty5gVVuJ2+oaoRFYdTatirDTp4dQycPiar302c1uN4dHu0LQir7I6bUPr09YaLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rtd2XpRX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TUejQ2Rmg1UjbYexmnL1M/2obrFyT87jG+bl1IPwQPJWnMKzof4HIDFdWzjFOJ8BDgs/yBBSkXAgOHaXzi8MS4DieNfnhNEHW98PrRJkTCeSL8i2MxluWEePWmkkWlg+OGl53D4J2ahkm/qCfLLnM7AvfA6JTZD3H4WGHelKi2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOABzS9F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rtd2XpRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063B3C19425;
-	Mon, 20 Apr 2026 16:03:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOABzS9F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7039C19425;
+	Mon, 20 Apr 2026 16:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701018;
-	bh=uLy56vTql2Oo0PluU5NDeJpszMaWMYtfwNohMUBM8H4=;
+	s=korg; t=1776701021;
+	bh=74ky5X6xQL4pQV4Y1fN4C7ITBle5ET0j4jUD0JRZ7dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rtd2XpRXFj7r9/7XEVJfpycID0ULD4QMGhT4leiXGVI6ATn/Qed2/gpYvbNiZ8BYD
-	 iQIfi0cgzPLqGnaTSGEvpfYcKO9DSlc1u+PaH+ZyJOa4Vc9/RRgTgKuN6nVAFAuxXs
-	 9Jax7sCcyC7bHXD4e5+MzYiX2wlLJk4wjjazPZi0=
+	b=hOABzS9FqKDJp2ieDm/8BI4Oxg4g5H8ajoIm/2m+cEHv9LafoxrsUvZhzCu2oTOD4
+	 0Vp0htNpLZX4aIbgfSadXW6wRds+N2ovaXfpj3msIJYZi3K8lx54vW9H3TmIOPHMUz
+	 jyMyLoG1YKl/qvBIAInbB/WEWzb3JsgPi5CQmmF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruikai Peng <ruikai@pwno.io>,
-	stable@kernel.org,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	security@kernel.org,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 142/198] smb: client: avoid double-free in smbd_free_send_io() after smbd_send_batch_flush()
-Date: Mon, 20 Apr 2026 17:42:01 +0200
-Message-ID: <20260420153940.722158137@linuxfoundation.org>
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Fiona Behrens <me@kloenk.dev>,
+	Trevor Gross <tmgross@umich.edu>,
+	Tamir Duberstein <tamird@kernel.org>
+Subject: [PATCH 6.18 151/198] scripts: generate_rust_analyzer.py: avoid FD leak
+Date: Mon, 20 Apr 2026 17:42:10 +0200
+Message-ID: <20260420153941.044039182@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -61,63 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Tamir Duberstein <tamird@kernel.org>
 
-commit 27b7c3e916218b5eb2ee350211140e961bfc49be upstream.
+commit 9b4744d8eda2824041064a5639ccbb079850914d upstream.
 
-smbd_send_batch_flush() already calls smbd_free_send_io(),
-so we should not call it again after smbd_post_send()
-moved it to the batch list.
+Use `pathlib.Path.read_text()` to avoid leaking file descriptors.
 
-Reported-by: Ruikai Peng <ruikai@pwno.io>
-Closes: https://lore.kernel.org/linux-cifs/CAFD3drNOSJ05y3A+jNXSDxW-2w09KHQ0DivhxQ_pcc7immVVOQ@mail.gmail.com/
-Fixes: 21538121efe6 ("smb: client: make use of smbdirect_socket.send_io.bcredits")
-Cc: stable@kernel.org
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: Ruikai Peng <ruikai@pwno.io>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Cc: security@kernel.org
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Tested-by: Ruikai Peng <ruikai@pwno.io>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
+Cc: stable@vger.kernel.org
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Reviewed-by: Fiona Behrens <me@kloenk.dev>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Link: https://patch.msgid.link/20260127-rust-analyzer-fd-leak-v2-1-1bb55b9b6822@kernel.org
+Signed-off-by: Tamir Duberstein <tamird@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smbdirect.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ scripts/generate_rust_analyzer.py |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -1525,17 +1525,25 @@ static int smbd_post_send_iter(struct sm
+--- a/scripts/generate_rust_analyzer.py
++++ b/scripts/generate_rust_analyzer.py
+@@ -168,9 +168,10 @@ def generate_crates(srctree, objtree, sy
  
- 	rc = smbd_post_send(sc, batch, request);
- 	if (!rc) {
-+		/*
-+		 * From here request is moved to batch
-+		 * and we should not free it explicitly.
-+		 */
-+
- 		if (batch != &_batch)
- 			return 0;
+     def is_root_crate(build_file, target):
+         try:
+-            return f"{target}.o" in open(build_file).read()
++            contents = build_file.read_text()
+         except FileNotFoundError:
+             return False
++        return f"{target}.o" in contents
  
- 		rc = smbd_send_batch_flush(sc, batch, true);
- 		if (!rc)
- 			return 0;
-+
-+		goto err_flush;
- 	}
- 
- err_dma:
- 	smbd_free_send_io(request);
- 
-+err_flush:
- err_alloc:
- 	atomic_inc(&sc->send_io.credits.count);
- 	wake_up(&sc->send_io.credits.wait_queue);
+     # Then, the rest outside of `rust/`.
+     #
 
 
