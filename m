@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459133A1D1C;
-	Mon, 20 Apr 2026 13:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537BB3A1A43;
+	Mon, 20 Apr 2026 13:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776690947; cv=none; b=oefPBOnj1kXnXtZ45aZCGy3BV+YbBFo26U3FhIBFUvzJ78vanhjKeZqJeVRT6vT8NwmwWHtMiwLJ7N0y+2qPXCnVYdh8maEPAGzUTpFGqZMbhdn0O/te6wxVOdbsk2yvWVoHLK1Y5zaawbqJ4BupM/iQQwJ9yMAY/xvTDSJoqR8=
+	t=1776690948; cv=none; b=Zse9URtAddwlbVIlWk4xrggT6Fa1oZHehbNEmbsls22PAMD2d4RIzMGlmVEbyp/tWNgIYKYtvXRadsZEHpdIfGFK/NmBI7XhnNfQz2WHJII0uBy/703gvtFNhnai/YLAAIkimyN6bDWpUmAE2Gy9oMOEsAcbOCU/Ucx/y2uxOCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776690947; c=relaxed/simple;
-	bh=I08iWKfEmQEfJeKYRN2XAeadK5RKPg3wszDX3YiYvm8=;
+	s=arc-20240116; t=1776690948; c=relaxed/simple;
+	bh=ElydiWKgLhVeyXRfLHbMAdxfRMOsgbbmzORiMWBgC4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qh2qMKAjwXI0BSCeDJnKfTPlB3hYWuCBuJ+N+amk3mlwr73+pSdvfgjr3O6+E2TbSsyDCgDQvsBZFmndVBhZp7axrf4hemBOBP7qYHq6KtF7rcZJ4HWdDZWmXngvO8Es5AUp4hdmVkbRK04F83WvDi/alH93SAet0xBgbwLnJAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZmdlfF+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EVeKMCi91fbEV8hOgsH8FoTubn2ML7ZPRF3XIwJGhtdAARCN4AiFgKmHk8ovvXrwLoJAnixo9iYg+nYb+BZa47O4xuDKtFtL5wKLnWw/Ft0PxzF+QdWoHLIzNmeVmACDqxBNmzCRQWo8MvT9gTW9ma1JTbGtFeOj0TUtwHLyrX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bk9gazyK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZmdlfF+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB3FC2BCB4;
-	Mon, 20 Apr 2026 13:15:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bk9gazyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB661C2BCB8;
+	Mon, 20 Apr 2026 13:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776690946;
-	bh=I08iWKfEmQEfJeKYRN2XAeadK5RKPg3wszDX3YiYvm8=;
+	s=k20201202; t=1776690948;
+	bh=ElydiWKgLhVeyXRfLHbMAdxfRMOsgbbmzORiMWBgC4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZmdlfF+Ci1U9mwNN4q+RYzhLEf5/MQLYotGwJLvC/tN5203rcTYw1ulYjGocmaX7l
-	 C45W/BBxLNzNwjFhFPRDVPjZw7TiuQ9/Evnd8dBt7cSkaBOww0FycqCA061niCZgmd
-	 RhkRW3nxBVPooX3ueViVg4gQB1r5jsrHvBIhO/y9Y1mYwiOWuhkeHJvKpwnyRZ089X
-	 H1hs/IPGK4TZv4ptWNK3oN4RfmA4WaUqT9aFtLdvuh3OToTHBauGIwACjVSlYpngVh
-	 TDbauE1PnLc5rK52ccGZQBuvV/u6E8WYz49FCeQcn4BUv9hMaxbNmU0cf3lgRo+mog
-	 sH7SFP7EKvIaQ==
+	b=bk9gazyKuIxhiZpWAox6W38HY7ETEnLeEkELJFOEravUvotak/YTczgZPhGky/JFw
+	 WRgi178jeX5ZVK/lDkoLQvGlH3NmbdL0paIeXe6X+VlQ9Ba7AUGhxY3jph3k0rLB1S
+	 QQxSlTatjTXjmWhTcBM4X5p68+t19TAz2f4C5llsl5ooxlWCQDyNSkwFsa5EQzXYmZ
+	 pkRi/excHWlbBdeipJ1AtdOpSKKvOMJawQnFClt4oq08BQAV5jsl+Y6jz/XL2GlF1W
+	 x+Xk45LbfHOIUIKWk6/ViIREOQJrRjnwmOZgGGDoISx/pGJjPaTlgbvXkM64cAkgbu
+	 x2zqNLcOJekEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ahmed Naseef <naseefkm@gmail.com>,
-	Bjorn Helgaas <helgaas@kernel.org>,
-	Caleb James DeLisle <cjd@cjdns.fr>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Dudu Lu <phx0fer@gmail.com>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org,
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] PCI: Prevent assignment to unsupported bridge windows
-Date: Mon, 20 Apr 2026 09:07:50 -0400
-Message-ID: <20260420131539.986432-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] smb: client: fix integer underflow in receive_encrypted_read()
+Date: Mon, 20 Apr 2026 09:07:51 -0400
+Message-ID: <20260420131539.986432-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -51,305 +52,435 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ahmed Naseef <naseefkm@gmail.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 92427ab4378faa168d6953d0f8574b8fc1edcc14 ]
+[ Upstream commit 6b83b03c07fbe0b57bb729bee91ae44c623c82ff ]
 
-Previously, pci_read_bridge_io() and pci_read_bridge_mmio_pref()
-unconditionally set resource type flags (IORESOURCE_IO or IORESOURCE_MEM |
-IORESOURCE_PREFETCH) when reading bridge window registers. For windows that
-are not implemented in hardware, this may cause the allocator to assign
-space for a window that doesn't exist.
+In receive_encrypted_read(), the length of data to read from the socket
+is computed as:
 
-For example, the EcoNET EN7528 SoC Root Port doesn't support the
-prefetchable window, but since a downstream device had a prefetchable BAR,
-the allocator mistakenly assigned a prefetchable window:
+  len = le32_to_cpu(tr_hdr->OriginalMessageSize) -
+        server->vals->read_rsp_size;
 
-  pci 0001:00:01.0: [14c3:0811] type 01 class 0x060400 PCIe Root Port
-  pci 0001:00:01.0: PCI bridge to [bus 01-ff]
-  pci 0001:00:01.0: bridge window [mem 0x28000000-0x280fffff]: assigned
-  pci 0001:00:01.0: bridge window [mem 0x28100000-0x282fffff pref]: assigned
-  pci 0001:01:00.0: BAR 0 [mem 0x28100000-0x281fffff 64bit pref]: assigned
+OriginalMessageSize comes from the server's transform header and is
+untrusted. If a malicious server sends a value smaller than
+read_rsp_size, the unsigned subtraction wraps to a very large value
+(~4GB). This value is then passed to netfs_alloc_folioq_buffer() and
+cifs_read_iter_from_socket(), causing either a massive allocation
+attempt that fails with -ENOMEM (DoS), or under extreme memory
+pressure, potential heap corruption.
 
-pci_read_bridge_windows() already detects unsupported windows by testing
-register writability and sets dev->io_window/pref_window accordingly.
+Fix by adding a check that OriginalMessageSize is at least
+read_rsp_size before the subtraction. On failure, jump to
+discard_data to drain the remaining PDU from the socket, preventing
+desync of subsequent reads on the connection.
 
-Check dev->io_window/pref_window so we don't set the resource flags for
-unsupported windows, which prevents the allocator from assigning space to
-them.
-
-After this commit, the prefetchable BAR is correctly allocated from the
-non-prefetchable window:
-
-  pci 0001:00:01.0: bridge window [mem 0x28000000-0x281fffff]: assigned
-  pci 0001:01:00.0: BAR 0 [mem 0x28000000-0x280fffff 64bit pref]: assigned
-
-Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
-Link: https://lore.kernel.org/all/20260113210259.GA715789@bhelgaas/
-Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
-Signed-off-by: Caleb James DeLisle <cjd@cjdns.fr>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260312165332.569772-4-cjd@cjdns.fr
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me compile the full analysis.
+Now I have all the information needed for a comprehensive analysis. Let
+me compile my findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject line.**
-Record: [PCI] [Prevent] Prevents resource allocator from assigning space
-to unsupported bridge windows (IO and prefetchable memory).
+### Step 1.1: Subject Line
+- **Subsystem**: `smb: client:` (SMB/CIFS network filesystem client)
+- **Action verb**: "fix" (explicitly a bug fix)
+- **Summary**: Fix integer underflow in `receive_encrypted_read()` when
+  server sends a small `OriginalMessageSize`
 
-**Step 1.2: Tags.**
-- Suggested-by: Bjorn Helgaas (PCI maintainer suggested the fix
-  approach)
-- Link: https://lore.kernel.org/all/20260113210259.GA715789@bhelgaas/
-  (original suggestion)
-- Signed-off-by: Ahmed Naseef (original author of the fix)
-- Signed-off-by: Caleb James DeLisle (series author)
-- Signed-off-by: Bjorn Helgaas (PCI maintainer committed it)
-- Link: https://patch.msgid.link/20260312165332.569772-4-cjd@cjdns.fr
-  (patch submission)
-- No Fixes: tag (expected for review candidates)
-- No Cc: stable (expected)
+Record: [smb: client] [fix] [integer underflow in receive_encrypted_read
+from untrusted server data]
 
-**Step 1.3: Body analysis.**
-The commit describes that `pci_read_bridge_io()` and
-`pci_read_bridge_mmio_pref()` unconditionally set resource type flags
-when reading bridge window registers. For hardware-unsupported windows
-(registers hardwired to 0), both base and limit read as 0, and since `0
-<= 0` is true, a bogus window is created. The allocator then assigns
-space to a non-existent window. The concrete example is the EcoNET
-EN7528 SoC root port, which doesn't support prefetchable windows,
-causing a WiFi device (mt7615e) to be placed in a non-existent window
-and fail.
+### Step 1.2: Tags
+- **Signed-off-by**: Dudu Lu <phx0fer@gmail.com> (author)
+- **Reviewed-by**: Enzo Matsumiya <ematsumiya@suse.de> (known CIFS/SMB
+  contributor at SUSE)
+- **Signed-off-by**: Steve French <stfrench@microsoft.com> (SMB/CIFS
+  subsystem maintainer)
+- No Fixes: tag (expected - that's why it's being reviewed)
+- No Cc: stable tag (expected)
 
-**Step 1.4: Hidden bug fix?**
-This is an explicit bug fix. The word "Prevent" in the subject indicates
-fixing incorrect behavior. The commit clearly describes a failure mode
-where devices become non-functional.
+Record: Reviewed by known SMB developer, committed by subsystem
+maintainer Steve French. No syzbot/reporter tags, but the bug is found
+by code inspection of untrusted network input handling.
+
+### Step 1.3: Commit Body Analysis
+- **Bug**: `OriginalMessageSize` is read from network (server's
+  transform header) and is untrusted. It's used in an unsigned
+  subtraction `OriginalMessageSize - read_rsp_size`. If the server sends
+  a value smaller than `read_rsp_size`, the subtraction wraps around to
+  ~4GB.
+- **Symptom**: Massive allocation attempt via
+  `netfs_alloc_folioq_buffer()` leading to -ENOMEM (DoS), or under
+  extreme memory pressure, potential heap corruption.
+- **Failure mode**: DoS via malicious server, potential heap corruption
+- **Root cause**: Missing input validation on network-supplied value
+  before unsigned arithmetic
+
+Record: Integer underflow from untrusted network input. Symptom is DoS
+or potential heap corruption. Clear security bug.
+
+### Step 1.4: Hidden Bug Fix Detection
+This is an explicit bug fix, not disguised. The word "fix" and the
+detailed description of the vulnerability make it clear.
+
+Record: Explicit bug fix. Not hidden.
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory.**
-- 1 file changed: `drivers/pci/probe.c`
-- +6 lines, 0 lines removed
-- Functions modified: `pci_read_bridge_io()`,
-  `pci_read_bridge_mmio_pref()`
-- Scope: single-file, very surgical fix
+### Step 2.1: Inventory
+- **File**: `fs/smb/client/smb2ops.c` (single file)
+- **Lines added**: 8 (the validation check + debug message + error path)
+- **Lines removed**: 0
+- **Function modified**: `receive_encrypted_read()`
+- **Scope**: Single-file, single-function surgical fix
 
-**Step 2.2: Code flow change.**
-Two early returns are added:
-1. `pci_read_bridge_io()`: If `!dev->io_window`, return immediately
-   before reading any IO window registers or setting any resource flags.
-2. `pci_read_bridge_mmio_pref()`: If `!dev->pref_window`, return
-   immediately before reading any prefetchable window registers or
-   setting any resource flags.
+Record: 1 file changed, +8 lines. Extremely surgical.
 
-**Step 2.3: Bug mechanism.**
-This is a **logic/correctness fix**. The bug is that
-`pci_read_bridge_bases()` calls these functions unconditionally for ALL
-bridges, even those where `pci_read_bridge_windows()` has already
-determined the window is unsupported. When registers are hardwired to 0,
-`base == limit == 0`, and `0 <= 0` creates a bogus resource.
+### Step 2.2: Code Flow Change
+Before: The code reads `OriginalMessageSize` from the server and
+subtracts `read_rsp_size` unconditionally. If `OriginalMessageSize <
+read_rsp_size`, `len` wraps to ~4GB unsigned.
 
-**Step 2.4: Fix quality.**
-The fix is obviously correct. The `io_window` and `pref_window` flags
-are already set correctly by `pci_read_bridge_windows()` during
-enumeration and are already used by `pci_bridge_check_ranges()` in
-setup-bus.c. This fix simply extends the same guard to
-`pci_read_bridge_bases()`. Zero regression risk -- if the window IS
-supported, `io_window`/`pref_window` is set to 1 and the early return is
-not taken.
+After: Before the subtraction, a check verifies `OriginalMessageSize >=
+read_rsp_size`. On failure, logs a debug message and jumps to
+`discard_data` which drains the remaining PDU and cleans up properly.
 
-## PHASE 3: GIT HISTORY
+Record: Adds input validation before unsafe unsigned subtraction of
+untrusted server data.
 
-**Step 3.1: Blame.**
-The affected functions have been in the kernel since Linus's initial
-tree commit (v2.6.12, 2005). The `io_window` and `pref_window` fields
-were added in commit `51c48b310183a` (v5.1) by Bjorn Helgaas. This means
-the infrastructure to detect unsupported windows existed since v5.1, but
-the detection was never used in `pci_read_bridge_bases()`.
+### Step 2.3: Bug Mechanism
+- **Category**: Buffer overflow / integer underflow from untrusted input
+- **Mechanism**: Unsigned integer underflow when `OriginalMessageSize <
+  read_rsp_size`, leading to ~4GB allocation attempt
+- **Security aspect**: Server-controlled value, exploitable by malicious
+  SMB server (network attack vector)
 
-**Step 3.2:** No Fixes: tag (expected).
+Record: Integer underflow of untrusted network data → massive allocation
+→ DoS or heap corruption.
 
-**Step 3.3:** Recent changes to probe.c include `8278c6914306f` ("PCI:
-Preserve bridge window resource type flags") which changed flag behavior
-but is independent of this fix.
+### Step 2.4: Fix Quality
+- Obviously correct: simple bounds check before subtraction
+- Minimal/surgical: 8 lines added, no unrelated changes
+- Regression risk: extremely low - only adds a validation check and
+  error path using existing `discard_data` label
+- The error path (`goto discard_data`) is well-tested by other failure
+  paths in the same function
 
-**Step 3.4:** Caleb James DeLisle is a new contributor adding EN7528
-support. Ahmed Naseef authored this particular fix. Bjorn Helgaas (PCI
-maintainer) suggested and signed off on the fix.
+Record: Obviously correct, minimal, no regression risk.
 
-**Step 3.5:** The fix has no prerequisites. It uses `dev->io_window` and
-`dev->pref_window` which have been present since v5.1.
+---
 
-## PHASE 4: MAILING LIST
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-The mbox file (7 messages) reveals a thorough review by Bjorn Helgaas.
-He initially couldn't reproduce the bug (because his test device had
-non-prefetchable BARs), but Ahmed Naseef provided a detailed config
-access trace showing:
-1. `pci_read_bridge_windows()` correctly detects pref_window = 0
-2. Later, `pci_read_bridge_bases()` reads the same registers without
-   checking, creates bogus resource
-3. Allocator assigns prefetchable window to bridge that doesn't have one
-4. WiFi device (mt7615e with prefetchable BARs) is placed in the bogus
-   window and fails
+### Step 3.1: Blame
+The buggy code was introduced in commit `1fc6ad2f10ad6f` (2018-06-01) by
+Ronnie Sahlberg, which was a refactor of `receive_encrypted_read()`. The
+original function was introduced even earlier in `93012bf984163f`
+(2018-03-31). Both are from the 4.17-4.18 era.
 
-Bjorn was satisfied with the explanation and committed the patch with
-his own Signed-off-by. This is patch 3/3 of a series, but it's
-completely self-contained in PCI core.
+Record: Buggy code has been present since ~v4.17 (2018). Present in ALL
+active stable trees.
+
+### Step 3.2: Fixes tag
+No Fixes: tag present. The bug was introduced in 93012bf984163f or
+1fc6ad2f10ad6f, both from 2018.
+
+### Step 3.3: Related Changes
+- `eec04ea119691` ("smb: client: fix OOB in
+  receive_encrypted_standard()") - same class of bug (CVE-2024-0565) in
+  the sibling function, already has Cc: stable
+- `860ca5e50f73c` ("smb: client: Add check for next_buffer in
+  receive_encrypted_standard()") - follow-up NULL check fix
+- These show that the same pattern of missing validation on untrusted
+  server data in this file has been a recurring security issue
+
+Record: Related CVE-2024-0565 fix exists for the sibling function. This
+is the same class of vulnerability.
+
+### Step 3.4: Author
+Dudu Lu appears to be a new contributor (no other commits found).
+However, the fix was reviewed by Enzo Matsumiya (SUSE, known CIFS
+contributor) and committed by Steve French (subsystem maintainer).
+
+Record: New author, but reviewed and committed by experienced subsystem
+maintainers.
+
+### Step 3.5: Dependencies
+The fix uses the existing `discard_data` label and existing code
+patterns. No dependencies on other patches. Standalone fix.
+
+Record: Fully standalone, no dependencies.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Patch Discussion
+Unable to find the exact lore thread via b4 dig (commit not yet in
+tree). Web search found CVE-2024-0565 for the related bug in
+`receive_encrypted_standard()`, confirming this is a known class of
+vulnerability in the SMB encrypted receive path.
+
+Record: Could not find lore thread (commit not in mainline yet).
+CVE-2024-0565 confirms the vulnerability class.
+
+### Step 4.2: Reviewers
+- Reviewed by Enzo Matsumiya (SUSE, active CIFS developer)
+- Committed by Steve French (Microsoft, CIFS/SMB maintainer)
+
+Record: Appropriate reviewers involved.
+
+### Step 4.3: Bug Report
+The bug was found by code inspection (not crash report or fuzzer). The
+similarity to CVE-2024-0565 strengthens the case - that CVE was for
+`receive_encrypted_standard()` and THIS fix is for
+`receive_encrypted_read()`, the sibling function that handles large
+encrypted reads.
+
+Record: Found by code audit, related to CVE-2024-0565.
+
+### Step 4.4-4.5: Related patches / Stable history
+The sibling fix (CVE-2024-0565) for `receive_encrypted_standard()` was
+backported to stable. This fix addresses the same vulnerability pattern
+in the other code path.
+
+Record: Sibling fix was backported to stable. This fix addresses the
+same gap.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-`pci_read_bridge_io()` and `pci_read_bridge_mmio_pref()` are called from
-two sites:
-1. `pci_read_bridge_windows()` -- already guards with
-   `io_window`/`pref_window`; the early returns are redundant here but
-   harmless
-2. `pci_read_bridge_bases()` -- calls unconditionally, **this is where
-   the bug manifests**
+### Step 5.1-5.4: Function Tracing
+- `receive_encrypted_read()` is called from `smb3_receive_transform()`
+  (line 5147)
+- `smb3_receive_transform()` is registered as `.receive_transform` ops
+  callback for SMB3 protocol
+- Called from `cifs_demultiplex_thread()` in `connect.c` (line 1341) -
+  the main SMB connection handler
+- This is in the hot path for ALL encrypted SMB3 read operations
+- Reachable from any SMB client mount with encryption enabled (common
+  enterprise configuration)
 
-`pci_read_bridge_bases()` is called from `pci_bus_allocate_resources()`
-in setup-bus.c for every PCI bridge during bus allocation. This is a
-core enumeration path that runs on every system with PCI bridges.
+Record: Called from main demux thread for all encrypted SMB3 reads. High
+traffic path. Reachable from network.
 
-## PHASE 6: STABLE TREE ANALYSIS
+### Step 5.5: Similar Patterns
+The caller `smb3_receive_transform()` already has partial validation
+(lines 5131-5143) that checks `pdu_length` against
+`OriginalMessageSize`, but doesn't check `OriginalMessageSize` against
+`read_rsp_size`. The `receive_encrypted_read()` path bypasses the
+standard path's protections because it's for large PDUs.
 
-The buggy code (`pci_read_bridge_bases()` calling these functions
-unconditionally) has existed since Linux 2.6.12. The
-`io_window`/`pref_window` infrastructure was added in v5.1, so the fix
-is applicable to all active stable trees (5.4.y through 6.12.y).
+Record: Caller has some checks but insufficient for the
+`receive_encrypted_read` path.
 
-The fix may need minor context adjustment for kernels before v6.8 (where
-`63c6ebb294b7c` changed function signatures), but the actual fix logic
-(two early returns) is identical.
+---
 
-## PHASE 7: SUBSYSTEM AND CRITICALITY
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-PCI core (`drivers/pci/probe.c`) is CORE infrastructure used by all PCI
-systems. The bug specifically affects embedded SoCs with limited bridge
-window support, making it IMPORTANT for ARM/MIPS embedded users.
+### Step 6.1: Code Existence in Stable
+The buggy code exists since v4.17. It is present in ALL active stable
+trees (5.10, 5.15, 6.1, 6.6, 6.12, etc.).
+
+Record: Bug exists in all active stable trees.
+
+### Step 6.2: Backport Complications
+The fix is 8 lines of added validation. The surrounding code structure
+is stable. The function uses `netfs_alloc_folioq_buffer()` which was
+added in newer kernels (replacing older `alloc_pages` pattern), so older
+stable trees (5.x) may need minor adaptation, but the core validation
+check is independent of that.
+
+Record: Clean apply expected for recent stable trees (6.x). Older trees
+may need minor context adaptation.
+
+### Step 6.3: Related Fixes in Stable
+CVE-2024-0565 fix for `receive_encrypted_standard()` is already in
+stable. This is the companion fix for `receive_encrypted_read()`.
+
+Record: Companion fix for sibling function already in stable.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: fs/smb/client (CIFS/SMB network filesystem client)
+- **Criticality**: IMPORTANT - SMB is widely used in enterprise
+  environments for network file sharing (Windows interop, NAS, etc.)
+
+Record: [fs/smb/client] [IMPORTANT - widely used enterprise network
+filesystem]
+
+### Step 7.2: Subsystem Activity
+The SMB client is actively maintained with regular fixes. Steve French
+is the active maintainer.
+
+Record: Actively maintained subsystem.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Who is affected:** Users of any platform with PCI bridges that lack IO
-or prefetchable window support. This primarily includes embedded SoCs
-(ARM, MIPS). The known affected device is EcoNET EN7528.
+### Step 8.1: Affected Users
+All users who mount SMB3 shares with encryption enabled (increasingly
+common in enterprise environments with security requirements).
 
-**Trigger conditions:** Automatic during PCI enumeration when a
-downstream device has prefetchable BARs behind a bridge without
-prefetchable window support. No user action needed.
+Record: Enterprise SMB users with encryption - significant population.
 
-**Failure mode:** Device non-functional (BARs placed in non-existent
-window). Severity: HIGH -- the device completely fails to work (mt7615e
-WiFi shows "Firmware is not ready for download").
+### Step 8.2: Trigger Conditions
+- A malicious SMB server (or man-in-the-middle) can send a crafted
+  transform header with a small `OriginalMessageSize` during an
+  encrypted read response
+- Triggered on any large encrypted read operation
+- Exploitable from network without any local privileges
 
-**Risk-benefit ratio:** Benefit is HIGH (fixes device failure). Risk is
-VERY LOW (6 lines, two early returns using already-tested flags, zero
-side effects when windows ARE supported).
+Record: Network-exploitable, triggered by malicious server response. No
+local privileges needed.
+
+### Step 8.3: Failure Mode Severity
+- **Primary**: DoS - massive allocation attempt fails with -ENOMEM
+- **Secondary**: Under memory pressure, potential heap corruption from
+  the wrapped-around length value passed to allocation/socket read
+  functions
+- **Severity**: CRITICAL (network-exploitable DoS, potential remote heap
+  corruption)
+
+Record: DoS (guaranteed) to potential heap corruption (under pressure).
+Severity: CRITICAL.
+
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: Very high - fixes a network-exploitable security
+  vulnerability in a widely-used filesystem
+- **Risk**: Very low - 8-line addition of input validation using
+  existing error path, obviously correct
+- **Ratio**: Extremely favorable
+
+Record: Very high benefit, very low risk. Strong backport candidate.
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- Real bug fix that makes PCI devices completely non-functional on
-  affected hardware
-- Minimal fix: 6 lines added, 0 removed
-- Obviously correct: uses existing `io_window`/`pref_window` flags
-  already tested elsewhere
-- PCI maintainer (Bjorn Helgaas) suggested, reviewed, and committed the
-  fix
-- Affects PCI core code present in all stable trees since v5.1
-- Bug exists in all kernel versions since 2005 (base == limit == 0 case)
-- The affected code path (`pci_read_bridge_bases()`) runs during normal
-  PCI enumeration
+### Step 9.1: Evidence Compilation
 
-**Evidence AGAINST backporting:**
-- The only known affected hardware (EN7528) is new and not in stable
-  trees
-- No other hardware has reported this bug (though other embedded SoCs
-  could be affected)
-- This is patch 3/3 of a series (but is self-contained in PCI core)
+**FOR backporting:**
+- Fixes a security vulnerability (integer underflow from untrusted
+  network input)
+- Network-exploitable DoS with potential for heap corruption
+- Related vulnerability in sibling function was assigned CVE-2024-0565
+  and already backported
+- Small, surgical fix: 8 lines, single file, single function
+- Obviously correct: simple bounds check before unsigned subtraction
+- Reviewed by known CIFS developer, committed by subsystem maintainer
+- Bug exists in all active stable trees (since v4.17, 2018)
+- Zero regression risk
+- Standalone fix with no dependencies
 
-**Stable rules checklist:**
-1. Obviously correct? YES -- uses existing flags, minimal change
-2. Fixes real bug? YES -- devices fail behind bridges without pref
-   windows
-3. Important issue? YES -- device non-functional
-4. Small and contained? YES -- 6 lines in 1 file
-5. No new features? CORRECT -- no new features
-6. Can apply to stable? YES -- may need minor context adjustment for
-   older trees
+**AGAINST backporting:**
+- (None identified)
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** - trivial bounds check,
+   reviewed by maintainers
+2. Fixes a real bug? **YES** - integer underflow from untrusted network
+   data
+3. Important issue? **YES** - network-exploitable DoS/potential heap
+   corruption, security bug
+4. Small and contained? **YES** - 8 lines, 1 file, 1 function
+5. No new features or APIs? **YES** - pure validation fix
+6. Can apply to stable? **YES** - recent trees should apply cleanly
+
+### Step 9.3: Exception Categories
+Not an exception - this is a standard security/correctness fix that
+meets all stable criteria directly.
+
+### Step 9.4: Decision
+This is a clear YES. It's a security fix for a network-exploitable
+integer underflow vulnerability in the SMB3 encrypted read path. The fix
+is minimal (8 lines), obviously correct, reviewed by subsystem experts,
+has zero regression risk, and the bug has existed since 2018 in all
+stable trees. The related CVE-2024-0565 for the sibling function was
+already backported to stable.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Suggested-by Bjorn Helgaas, two Signed-off-bys,
-  two Links
-- [Phase 2] Diff analysis: +6 lines in `pci_read_bridge_io()` and
-  `pci_read_bridge_mmio_pref()`, adds early return when window not
-  supported
-- [Phase 3] git blame: buggy unconditional calls exist since v2.6.12;
-  `io_window`/`pref_window` added in 51c48b310183a (v5.1)
-- [Phase 3] git describe: 51c48b310183a first appeared in v5.1-rc1
-- [Phase 3] `pci_bridge_check_ranges()` already correctly checks these
-  flags, confirming the fix pattern is established
-- [Phase 4] b4 mbox retrieved 7-message thread; Bjorn Helgaas reviewed,
-  requested config trace, was satisfied, committed
-- [Phase 4] Ahmed Naseef provided detailed config access trace proving
-  the exact bug mechanism
-- [Phase 4] Series is 3 patches (DT bindings, driver, core fix); patch
-  3/3 is self-contained in PCI core
-- [Phase 5] `pci_read_bridge_bases()` called from
-  `pci_bus_allocate_resources()` -- standard PCI enumeration path
-- [Phase 5] Two call sites for affected functions: one already guarded
-  (pci_read_bridge_windows), one not (pci_read_bridge_bases)
-- [Phase 6] `io_window`/`pref_window` present in all active stable trees
-  (v5.1+)
-- [Phase 6] Commit 8278c6914306f is independent; fix works on code both
-  before and after it
-- [Phase 8] Failure mode: device completely non-functional when BAR
-  assigned to non-existent bridge window
-- UNVERIFIED: Whether other production platforms besides EN7528 are
-  affected in practice (likely given many embedded SoCs have limited
-  bridge support)
+- [Phase 1] Parsed subject: "smb: client: fix integer underflow in
+  receive_encrypted_read()" - explicit fix for integer underflow
+- [Phase 1] Parsed tags: Reviewed-by Enzo Matsumiya (SUSE), SOB Steve
+  French (maintainer)
+- [Phase 2] Diff analysis: +8 lines in `receive_encrypted_read()`, adds
+  bounds check before unsigned subtraction of `OriginalMessageSize -
+  read_rsp_size`
+- [Phase 2] Error path: `goto discard_data` is existing label (verified
+  at line 5018) that drains remaining PDU and cleans up
+- [Phase 3] git blame: buggy subtraction at line 4946 introduced by
+  commit `1fc6ad2f10ad6f` (2018-06-01, Ronnie Sahlberg) and
+  `93012bf984163f` (2018-03-31)
+- [Phase 3] git tag --contains: original code present since v4.17 era,
+  in all stable trees including 5.10, 5.15+
+- [Phase 3] Related fix: `eec04ea119691` (CVE-2024-0565) fixed same
+  class of bug in sibling function `receive_encrypted_standard()`, Cc:
+  stable
+- [Phase 4] b4 dig: could not find lore thread (commit not yet in
+  mainline)
+- [Phase 4] Web search: confirmed CVE-2024-0565 for related
+  vulnerability in `receive_encrypted_standard()`
+- [Phase 5] Call chain traced: `cifs_demultiplex_thread()` →
+  `smb3_receive_transform()` → `receive_encrypted_read()` - main SMB
+  connection path
+- [Phase 5] `OriginalMessageSize` confirmed as network-supplied value
+  from `struct smb2_transform_hdr` (defined in `smb2pdu.h` line 211)
+- [Phase 6] Bug exists in all active stable trees (code from 2018)
+- [Phase 6] Caller's existing check at line 5139 validates `pdu_length
+  >= orig_len + sizeof(transform_hdr)` but does NOT validate `orig_len
+  >= read_rsp_size`
+- [Phase 8] Failure mode: unsigned wrap to ~4GB → massive allocation →
+  -ENOMEM (DoS) or heap corruption
+- UNVERIFIED: Exact lore discussion thread not found (does not affect
+  decision)
 
 **YES**
 
- drivers/pci/probe.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/client/smb2ops.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index bccc7a4bdd794..4eacb741b4ec1 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -395,6 +395,9 @@ static void pci_read_bridge_io(struct pci_dev *dev, struct resource *res,
- 	unsigned long io_mask, io_granularity, base, limit;
- 	struct pci_bus_region region;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 509fcea28a429..a2105f4b54db7 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4943,6 +4943,14 @@ receive_encrypted_read(struct TCP_Server_Info *server, struct mid_q_entry **mid,
+ 		goto free_dw;
+ 	server->total_read += rc;
  
-+	if (!dev->io_window)
-+		return;
-+
- 	io_mask = PCI_IO_RANGE_MASK;
- 	io_granularity = 0x1000;
- 	if (dev->io_window_1k) {
-@@ -465,6 +468,9 @@ static void pci_read_bridge_mmio_pref(struct pci_dev *dev, struct resource *res,
- 	pci_bus_addr_t base, limit;
- 	struct pci_bus_region region;
- 
-+	if (!dev->pref_window)
-+		return;
-+
- 	pci_read_config_word(dev, PCI_PREF_MEMORY_BASE, &mem_base_lo);
- 	pci_read_config_word(dev, PCI_PREF_MEMORY_LIMIT, &mem_limit_lo);
- 	base64 = (mem_base_lo & PCI_PREF_RANGE_MASK) << 16;
++	if (le32_to_cpu(tr_hdr->OriginalMessageSize) <
++	    server->vals->read_rsp_size) {
++		cifs_server_dbg(VFS, "OriginalMessageSize %u too small for read response (%zu)\n",
++			le32_to_cpu(tr_hdr->OriginalMessageSize),
++			server->vals->read_rsp_size);
++		rc = -EINVAL;
++		goto discard_data;
++	}
+ 	len = le32_to_cpu(tr_hdr->OriginalMessageSize) -
+ 		server->vals->read_rsp_size;
+ 	dw->len = len;
 -- 
 2.53.0
 
