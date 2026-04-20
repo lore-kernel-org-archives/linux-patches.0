@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E013B38AE;
-	Mon, 20 Apr 2026 13:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E11D3B3BF4;
+	Mon, 20 Apr 2026 13:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691007; cv=none; b=b9gXWr6nzVlmQ4JdiOpPRRFIh3ay4RxktiFoZ0xxQCQFwQx6Igvr7m31EdoXR8F7LoWI47AOkf/KBtYl1xaL3we0H6ONIiPZeMo5zpyP470x0LqT411sN3tUu+D9qqcVZ+oa9K5v4LzHig3sNkVXc9JNbMwMFoKqc/vmEok1CJY=
+	t=1776691008; cv=none; b=ha90zNdL22EoGQ3kFks+ebOImToHkwi12rmJ9SXFyRuH6ztw3eUs64hhlEQ8dwNXI1IkkAhF+9vUv9q9QcMK44pFnMa0aRXkwGIDWCjySXexWPHErUJjmBQc+VF+sAM3phwnDR9SA/7M4Se6PdPMFMbg9IZjyt/RwA6mxLZK8wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691007; c=relaxed/simple;
-	bh=ZoszNydaLQofCj2GKZoDLQEsFcd927i5D8t5v/p8GTM=;
+	s=arc-20240116; t=1776691008; c=relaxed/simple;
+	bh=gNoPHLTzLSHP/u4qNCTb11g14KhSXkf/SUU7ZM0A0fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjKBTkAXV9r9s3deYmmbTc4P8baPV7PmMWZicu7S6507jiGUTHmJWcoZ3r0/3wp+j5IQ9OstM9u7UzppbNgMriRCRC5ZJiPg/wUpqfUagBIlRGUIIE7JGpUIAfau7IpR9g7DMEDvi6pFngqS5qhbEESYYojDda3JzP3bA0raVmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edvuBKxm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LrA1/TaRMntCXLDanu2+JnrSr8TgPoFvfJK0H+3BdAjiz9vg6Q8PQqBlZayDVRNiegULiwiAvL1sCWpj0Wp33M9sjQ6+vOaenWAuAFalBZDlZ4V+kAl2BJxRWg4Y8/7klScM1FhUDbkOMo9hInEyDbPX1G4pZ5WHGey8+mnvHvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uP9Rcf1c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edvuBKxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6EF2C19425;
-	Mon, 20 Apr 2026 13:16:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uP9Rcf1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB63C19425;
+	Mon, 20 Apr 2026 13:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691006;
-	bh=ZoszNydaLQofCj2GKZoDLQEsFcd927i5D8t5v/p8GTM=;
+	s=k20201202; t=1776691008;
+	bh=gNoPHLTzLSHP/u4qNCTb11g14KhSXkf/SUU7ZM0A0fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=edvuBKxmddpO/DM+pTwYAPEBwdVt8jRGn4W2G0BQC2gTsQpKAdhex3QNiRfQolApZ
-	 CkiVMGrtE6/wj6SUP/7axOXeXvTvTjgfVq/CeRXiH6VekR5EETd0bAkbIh6VyhQ3ou
-	 0Hyt3cbLDsilHhph9o4gYp9QovtqtsYLHGswFvh6Ww4nNb3FVsNnbefcd0kWfHdLW8
-	 MZGAbvsy5mYqY5efetOWwun4ZJfqGzVZucienKL1El3gDv4lprXjwWKbJauKeyIFhF
-	 BlYLpVsMytZo1wmWXObFxL/Y4D3nokjJbhJf/FVMPOnEOwqzNvcDBMD09WF9aqrdIU
-	 cx3gZDP8g6AxQ==
+	b=uP9Rcf1cPXITWjO0cXgPkcUF9ghG0vptRgstt0vXQFDTFth9Rp2qHCbFvHr0xNCz/
+	 bO5oZsvsTgyR8rb36kbMvYOSs3RaU9BUGQDamiB16gDkNZHS8OiGVzR+nTGiBN/q19
+	 VquL+5OeAYCdDOYSUpPiBz3YnxdYuYGBS0r379dg5CZdgIzmNRIKe6spI9mgNd2r+p
+	 5LqwcquxoXEc8RBzf1kfGFqF2qT/mlaxMIHSayFqTLONG747XG0Dm42BOX2Y/Z/AJZ
+	 Pm4sGx/A80D0FyKULaMs3e9/YZ+R5nLHhny7wC2eK+W/ogpaHcHbw2AQ5IpgeO5EyR
+	 0pdnv3/OjKYIg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lorenzo Bianconi <lorenzo@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: =?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] wifi: mac80211: Remove deleted sta links in ieee80211_ml_reconf_work()
-Date: Mon, 20 Apr 2026 09:08:25 -0400
-Message-ID: <20260420131539.986432-39-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] HID: logitech-hidpp: fix race condition when accessing stale stack pointer
+Date: Mon, 20 Apr 2026 09:08:26 -0400
+Message-ID: <20260420131539.986432-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -47,370 +48,434 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Benoît Sevens <bsevens@google.com>
 
-[ Upstream commit 84674b03d8bf3a850f023a98136c27909f0a2b61 ]
+[ Upstream commit e2aaf2d3ad92ac4a8afa6b69ad4c38e7747d3d6e ]
 
-Delete stale station links announced in the reconfiguration IE
-transmitted by the AP in the beacon frames.
+The driver uses hidpp->send_receive_buf to point to a stack-allocated
+buffer in the synchronous command path (__do_hidpp_send_message_sync).
+However, this pointer is not cleared when the function returns.
 
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260309-mac80211-reconf-remove-sta-link-v2-1-1582aac720c6@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+If an event is processed (e.g. by a different thread) while the
+send_mutex is held by a new command, but before that command has
+updated send_receive_buf, the handler (hidpp_raw_hidpp_event) will
+observe that the mutex is locked and dereference the stale pointer.
+
+This results in an out-of-bounds access on a different thread's kernel
+stack (or a NULL pointer dereference on the very first command).
+
+Fix this by:
+1. Clearing hidpp->send_receive_buf to NULL before releasing the mutex
+   in the synchronous command path.
+2. Moving the assignment of the local 'question' and 'answer' pointers
+   inside the mutex_is_locked() block in the handler, and adding
+   a NULL check before dereferencing.
+
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the data needed for my analysis. Let me compile the final
-assessment.
-
----
+Now I have enough information to make a thorough analysis. Let me
+compile my findings.
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `wifi: mac80211:`
-- Action verb: "Remove" (implies cleaning up something that should have
-  been cleaned up but wasn't)
-- Summary: Remove deleted sta links in ieee80211_ml_reconf_work()
-- Record: [wifi: mac80211] [Remove] [Clean up stale station link data
-  during AP-initiated MLO reconfiguration]
+**Step 1.1: Parse Subject Line**
+- Record: Subsystem `HID: logitech-hidpp`, action verb `fix`, summary:
+  race condition when accessing stale stack pointer (clear bug fix).
 
-**Step 1.2: Tags**
-- Signed-off-by: Lorenzo Bianconi (author)
-- Link: https://patch.msgid.link/20260309-mac80211-reconf-remove-sta-
-  link-v2-1-1582aac720c6@kernel.org
-- Signed-off-by: Johannes Berg (mac80211 maintainer who applied it)
-- No Fixes: tag
-- No Cc: stable tag
-- No Reported-by: tag
-- Record: Applied by mac80211 maintainer Johannes Berg. No explicit
-  stable nomination. This is v2 of the patch.
+**Step 1.2: Parse Tags**
+- Record: `Signed-off-by: Benoît Sevens <bsevens@google.com>` (author)
+  and `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID subsystem
+  maintainer). No Reported-by/Link/Fixes tags. No stable tag. Author is
+  a known Google security researcher (has other HID UAF/OOB fixes in
+  roccat and wacom).
 
-**Step 1.3: Commit Body**
-- "Delete stale station links announced in the reconfiguration IE
-  transmitted by the AP in the beacon frames."
-- The commit describes missing cleanup of station link data when an AP
-  announces link removal via the ML Reconfiguration element in beacons.
-- Record: Bug is missing STA link cleanup during AP-initiated ML
-  reconfiguration. No crash described, but clear data
-  inconsistency/leak.
+**Step 1.3: Analyze Body**
+- Record: Bug description: `hidpp->send_receive_buf` is assigned to
+  point at a stack-allocated response buffer inside
+  `__do_hidpp_send_message_sync()` but never cleared when the function
+  returns. Meanwhile `hidpp_raw_hidpp_event()` speculatively reads this
+  pointer whenever `send_mutex` is locked. The race:
+  1. Thread A finishes a command; leaves `send_receive_buf` pointing at
+     A's stack.
+  2. Thread B grabs `send_mutex`; there is a window before B writes
+     `send_receive_buf = response`.
+  3. Event handler fires (different thread), sees the mutex locked,
+     dereferences the stale pointer from A's stack. The handler even
+     performs `*answer = *report` — a WRITE to the stale stack pointer
+     using device-supplied data (potential stack corruption / info leak
+     / exploit primitive).
+  4. On very first use, `send_receive_buf` is NULL → NULL deref.
+     Symptom: OOB stack access on a different thread or NULL deref on
+     first command.
 
-**Step 1.4: Hidden Bug Fix Detection**
-- "Remove deleted sta links" and "Delete stale station links" = this IS
-  a bug fix: cleanup that was missing, leading to stale/leaked
-  resources.
-- Record: YES - this is a hidden bug fix. Station links were not being
-  freed during AP-initiated link removal, creating resource leaks and
-  data inconsistency.
+**Step 1.4: Hidden Bug Detection**
+- Record: Not hidden — commit title already says "fix race condition".
+  Classic race + UAF/stale-pointer bug.
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- Single file: `net/mac80211/mlme.c`
-- +11 lines added, 0 removed
-- Function modified: `ieee80211_ml_reconf_work()`
-- Record: [net/mac80211/mlme.c: +11/-0] [ieee80211_ml_reconf_work]
-  [Single-file surgical fix]
+- Record: One file changed (`drivers/hid/hid-logitech-hidpp.c`), +17/-7
+  lines. Two functions touched: `__do_hidpp_send_message_sync()` and
+  `hidpp_raw_hidpp_event()`. Classification: single-file surgical fix.
 
-**Step 2.2: Code Flow**
-- BEFORE: After adjusting active links, the function calls
-  `ieee80211_vif_set_links()` to update VIF-level links but NEVER cleans
-  up STA-level link data.
-- AFTER: Before calling `ieee80211_vif_set_links()`, the function looks
-  up the AP station, iterates removed links, and calls
-  `ieee80211_sta_free_link()` for each to clean up STA link data.
-- Affected path: Normal AP-initiated ML reconfiguration path (beacon-
-  driven link removal).
+**Step 2.2: Code Flow Change**
+- Record: Producer (`__do_hidpp_send_message_sync`): early returns
+  converted to `goto out`, new `out:` label clears
+  `hidpp->send_receive_buf = NULL` before returning. Consumer
+  (`hidpp_raw_hidpp_event`): `question/answer` assignments moved inside
+  the `mutex_is_locked()` block, plus `if (!question) return 0;` NULL
+  guard before use.
 
 **Step 2.3: Bug Mechanism**
-- Category: Resource leak + data inconsistency
-- `sta_remove_link()` (called by `ieee80211_sta_free_link()`) performs:
-  1. Clears `sta->sta.valid_links & ~BIT(link_id)`
-  2. Accumulates removed link statistics
-  3. NULLs `sta->link[link_id]` and `sta->sta.link[link_id]` pointers
-  4. Frees the link_sta allocation via `kfree_rcu()`
-  5. Recalculates aggregates
-- Without this fix, all of the above are skipped, causing memory leaks
-  and stale data.
+- Record: Category (b)+(d) — race / memory safety fix. Adds implicit
+  synchronization by ensuring the shared pointer is NULL'd while still
+  holding `send_mutex`, and adds a NULL check on the read side to close
+  the small window between mutex acquisition and pointer assignment.
+  Addresses two failure modes: stale stack pointer dereference (UAF of
+  stack memory) and NULL dereference on first use.
 
 **Step 2.4: Fix Quality**
-- Obviously correct: mirrors the STA-initiated path in
-  `ieee80211_mgd_assoc_ml_reconf()` (line 10997-11003)
-- Minimal/surgical: only 11 lines, single function, single file
-- Regression risk: very low - `ieee80211_sta_free_link()` is a well-
-  tested function
-- Johannes Berg (maintainer) reviewed and applied it
-- Record: Fix is obviously correct, minimal, and well-contained.
+- Record: Obviously correct. Minimal. No new locks, no API/ABI changes.
+  Possible (extremely minor) regression risk: if a report raced in
+  between `mutex_lock` and the assignment, the early-out `return 0` will
+  now skip matching it against the question — but this was already
+  broken (it used a stale pointer) and the send path has a 5-second
+  timeout with retry, so the benign behavior is strictly safer. No
+  regression risk beyond that.
 
-## PHASE 3: GIT HISTORY
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: Blame**
-- All lines in `ieee80211_ml_reconf_work()` trace back to 8eb8dd2ffbbb
-  (Ilan Peer, 2023-06-18) = the original ML reconf support commit.
-- This commit is in v6.5-rc1, meaning the bug has existed since v6.5.
+- Record: The stale-pointer pattern (`hidpp->send_receive_buf =
+  response;` and the speculative read `struct hidpp_report *question =
+  hidpp->send_receive_buf;`) dates to commit `2f31c52529103d` "HID:
+  Introduce hidpp" by Benjamin Tissoires, Sep 2014 (≈ v3.18). Bug is
+  therefore present in every stable tree from v3.18 through
+  v6.19/mainline.
 
-**Step 3.2: Fixes tag**
-- No Fixes: tag present. The implicit target would be 8eb8dd2ffbbb
-  ("wifi: mac80211: Support link removal using Reconfiguration ML
-  element").
-- 8eb8dd2ffbbb is in v6.5+ (verified: in v6.5, v6.6, NOT in v6.1).
+**Step 3.2: Fixes: tag**
+- Record: No `Fixes:` tag in the commit. Manually identified introducing
+  commit as `2f31c52529103d` (original driver introduction, 2014).
 
-**Step 3.3: Related Changes**
-- `3f654d53dff56` converted ml_reconf_work to wiphy_hrtimer_work
-  (v6.18-rc5+, NOT in v6.12 or v6.6)
-- `162d331d833dc` bounds-check link_id in ieee80211_ml_reconfiguration
-  (Cc: stable)
-- These are independent changes. The fix under review is standalone.
+**Step 3.3: Related Changes to the File**
+- Record: Recent file history shows actively maintained file (device ID
+  adds, quirks, other UAF fix `f7a4c78b` "Prevent use-after-free on
+  force feedback initialisation failure"). Function was split into
+  `__do_hidpp_send_message_sync`/`hidpp_send_message_sync` in
+  `60165ab774cb0c` (v6.7, Jul 2023). Before that split (v6.6 is the
+  earliest with `__do_hidpp_send_message_sync`), the logic lived inline
+  in `hidpp_send_message_sync`.
 
-**Step 3.4: Author**
-- Lorenzo Bianconi is a known wireless contributor with 10+ mac80211
-  commits.
-- The patch was applied by Johannes Berg, the mac80211 maintainer.
+**Step 3.4: Author's Other Commits**
+- Record: Benoît Sevens (Google) has prior HID security fixes:
+  `d802d848` (roccat UAF), `2f1763f6` (wacom OOB), plus similar fixes in
+  uvcvideo and ALSA. Consistent pattern of Google-originated kernel
+  security research. High trust.
 
 **Step 3.5: Dependencies**
-- `ieee80211_sta_free_link()` exists since v6.0-rc1 (commit
-  21476ad16d3ca)
-- `sta_info_get()` is a long-standing function
-- No dependencies beyond what exists in stable trees with the ML reconf
-  feature.
-- For stable trees < 6.18, the function signature uses
-  `wiphy_delayed_work` instead of `wiphy_hrtimer_work`, requiring minor
-  backport adjustment.
+- Record: Self-contained, no prerequisites. Fix only touches one file
+  and two functions. For v6.1.y and older the function was not yet
+  split, so the fix requires trivial rewording to apply (move the NULL-
+  out before `mutex_unlock` in `hidpp_send_message_sync`), but the
+  change is mechanical.
 
-## PHASE 4: MAILING LIST
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1: Discussion**
-- v1 submitted 2026-03-07 to wireless-next
-- Lachlan Hodges suggested using `scoped_guard(rcu)` instead
-- Johannes Berg reviewed and provided critical feedback:
-  1. Remove unnecessary `rcu_read_lock/unlock` (wiphy mutex is held)
-  2. Asked whether `ieee80211_sta_remove_link()` should be used instead
-     to notify the driver
-  3. Noted TDLS station cleanup is also needed (separate commit)
-- Lorenzo addressed feedback in v2 (removed rcu locks)
-- v2 applied by Johannes Berg
+**Step 4.1: Original Discussion**
+- Record: `b4 dig -c e2aaf2d3ad92a` found the thread at https://lore.ker
+  nel.org/all/20260401144811.1242722-1-bsevens@google.com/. Only one
+  version (v1) was posted; no review-imposed revisions.
 
 **Step 4.2: Reviewers**
-- Johannes Berg (mac80211 maintainer) directly reviewed and applied the
-  patch.
+- Record: `b4 dig -w`: patch CC'd `Filipe Laíns`, `Bastien Nocera`,
+  `Jiri Kosina`, `Benjamin Tissoires`, linux-input, linux-kernel — all
+  the correct maintainers. Merged by Jiri Kosina (subsystem maintainer)
+  with note: "Now applied. Benjamin had some ideas on further cleanup
+  (allocating with __free__ instead of using stack pointer), but that'd
+  be a little bigger cleanup, so let's keep that separate." Confirms
+  maintainer reviewed and accepted; any follow-up is an orthogonal
+  cleanup, not a fix correction.
 
-**Step 4.3: Bug Report**
-- No external bug report. Discovered by code review / development.
+**Step 4.3: Bug Reports**
+- Record: No Reported-by or Link tags. Author is from Google — likely
+  discovered via internal audit/fuzzing. No public reproducer cited.
 
-**Step 4.4: Series**
-- Standalone single patch, not part of a series.
+**Step 4.4: Related Series**
+- Record: Single standalone patch, no series.
 
-**Step 4.5: Stable Discussion**
-- No stable-specific discussion found. Patch was sent to wireless-next.
+**Step 4.5: Stable ML**
+- Record: Not searched; the patch was only posted April 1, 2026 and
+  applied soon after — too fresh for independent stable ML activity.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 **Step 5.1: Key Functions**
-- `ieee80211_ml_reconf_work()` - the work function for AP-initiated ML
-  reconfiguration
-- `ieee80211_sta_free_link()` - cleans up STA link data (calls
-  `sta_remove_link` without unhashing)
+- Record: `__do_hidpp_send_message_sync` (producer) and
+  `hidpp_raw_hidpp_event` (consumer).
 
 **Step 5.2: Callers**
-- `ieee80211_ml_reconf_work` is scheduled by
-  `ieee80211_ml_reconfiguration()` when the AP advertises link removal
-  via ML Reconfiguration element in beacons.
-- This is triggered by real AP behavior in MLO (WiFi 7) environments.
+- Record: 45 call sites for `hidpp_send_*_sync` inside the driver —
+  every HID++ query (battery, connect, feature discovery, probe,
+  get_report_length, etc.). `hidpp_raw_hidpp_event` is invoked from
+  `hidpp_raw_event` (registered as `.raw_event` in `hid_ll_driver`),
+  reached from the HID core for every HID report coming from any
+  Logitech HID++ device (receivers, mice, keyboards, touchpads). Both
+  paths fire during normal operation — not rare.
 
-**Step 5.3-5.4: Call Chain**
-- AP beacon -> `ieee80211_ml_reconfiguration()` -> schedules
-  `ieee80211_ml_reconf_work` -> (the fix adds)
-  `ieee80211_sta_free_link()` -> `sta_remove_link()` -> `kfree_rcu()`
-  for link_sta allocation
+**Step 5.3: Callees**
+- Record: Sync path calls `__hidpp_send_report()` (USB/Bluetooth
+  transmit) and `wait_event_timeout()`. Event path does a struct-copy
+  `*answer = *report` — this is the dangerous write when `answer` is
+  stale.
+
+**Step 5.4: Reachability**
+- Record: The sync path runs in process context (probe, sysfs,
+  workqueue). The event path runs from HID input processing (URB
+  completion / BT callback, softirq or kthread depending on transport).
+  Different contexts on different CPUs → true concurrent race possible.
+  Triggers do not require privilege — any HID++ device that sends
+  unsolicited reports while a command is in flight can race. This is the
+  normal mode of operation for hidpp devices (connect events, battery
+  notifications, keypresses).
 
 **Step 5.5: Similar Patterns**
-- The STA-initiated path (`ieee80211_mgd_assoc_ml_reconf`, line
-  10997-11003) correctly calls `ieee80211_sta_remove_link()`. This fix
-  makes the AP-initiated path consistent.
+- Record: Only one occurrence of `send_receive_buf` in the file; pattern
+  is unique to this driver.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
 **Step 6.1: Buggy Code in Stable**
-- Original ML reconf feature (8eb8dd2ffbbb) is in v6.5+
-- Active stable trees affected: 6.6.y (the primary LTS)
-- NOT in 6.1.y (too old for MLO support)
+- Record: Verified via `git show <tag>:drivers/hid/hid-logitech-hidpp.c`
+  that the exact same vulnerable pattern (`send_receive_buf = response`
+  without clearing, `question = hidpp->send_receive_buf` read without
+  NULL check) exists in v4.19, v5.4, v5.10, v5.15, v6.1, v6.6. All
+  active stable trees are affected.
 
 **Step 6.2: Backport Complications**
-- For 6.6.y: the function uses `wiphy_delayed_work` not
-  `wiphy_hrtimer_work`, so the `container_of` will need a minor
-  adjustment. The core logic is the same.
-- The fix itself is simple enough that adaptation should be trivial.
+- Record: v6.6+ (and mainline): patch applies cleanly — identical
+  function structure. v6.1 and earlier: `__do_hidpp_send_message_sync`
+  does not yet exist; the logic is inline in `hidpp_send_message_sync`
+  which also holds/releases `send_mutex`. Backport requires mechanically
+  placing `hidpp->send_receive_buf = NULL;` before
+  `mutex_unlock(&hidpp->send_mutex)` in `hidpp_send_message_sync`, and
+  applying the event-handler hunk unchanged. Straightforward for the
+  stable maintainers.
 
 **Step 6.3: Related Fixes in Stable**
-- No related fix for this specific bug in stable.
+- Record: No prior independent fix for this specific race is in stable.
+  Unrelated recent fixes (force-feedback UAF `f7a4c78b`) target other
+  paths.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1: Subsystem**
-- net/mac80211 - WiFi MAC layer, core wireless infrastructure
-- Criticality: IMPORTANT - affects all WiFi 7 (MLO) users
+**Step 7.1: Criticality**
+- Record: Subsystem: `drivers/hid/` HID++ Logitech driver. Logitech
+  Unifying receivers/MX mice/keyboards are ubiquitous on laptops and
+  desktops; the driver ships on most distributions. Classification:
+  IMPORTANT (wide hardware user base), not CORE.
 
 **Step 7.2: Activity**
-- mac80211 is very actively developed (MLO/WiFi 7 features ongoing).
+- Record: Actively developed — multiple merges per release cycle (device
+  IDs, quirks, bug fixes). Mature core codepaths in the driver have been
+  stable for years.
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: Who Is Affected**
-- Users of WiFi 7 (MLO/Multi-Link Operation) where the AP performs link
-  reconfiguration
-- Growing user base as WiFi 7 hardware becomes common
+- Record: Anyone with a Logitech HID++ device (mice, keyboards,
+  receivers, presenters) using the in-tree driver. Essentially most
+  laptop users with Logitech peripherals. Driver-specific but very
+  widespread hardware.
 
 **Step 8.2: Trigger Conditions**
-- Triggered when an AP removes a link via ML Reconfiguration element in
-  beacon frames
-- This is a normal WiFi 7 operational scenario (AP-initiated link
-  removal)
-- Not timing-dependent
+- Record: Requires concurrent activity: one thread invoking a sync
+  command while the device sends an asynchronous report. Races happen
+  during connect/disconnect, battery reporting, feature queries. The
+  very-first-use path yields NULL deref (no concurrency needed: any
+  async event before any sync command completes once) — but that path is
+  rare because probe typically drives the first sync command before any
+  report arrives. Attacker plane: a malicious or faulty HID device can
+  flood reports to widen the window — reachable from device-trust
+  boundary, relevant for BadUSB-style threat models.
 
-**Step 8.3: Failure Mode**
-- Memory leak: `link_sta_info` and allocation leaked for each removed
-  link (via missing `kfree_rcu`)
-- Data inconsistency: `sta->sta.valid_links` still has bits set for
-  removed links
-- Stale STA link pointers not NULLed (potential stale data access)
-- RX/TX paths checking `sta.valid_links` may behave incorrectly (40+
-  references across mac80211)
-- Severity: HIGH (memory leak in operational path + data inconsistency
-  affecting correctness)
+**Step 8.3: Failure Mode Severity**
+- Record: (a) NULL pointer dereference → kernel oops (CRITICAL: crash).
+  (b) Stale stack pointer read → OOB read (HIGH: info leak). (c) Stale
+  stack pointer WRITE via `*answer = *report` using device-controlled
+  data → stack corruption on an unrelated thread (CRITICAL: memory
+  corruption, potential privilege escalation/exploit primitive). Overall
+  severity: CRITICAL.
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Prevents memory leaks and data inconsistency in WiFi 7 MLO
-  link removal. Fixes a correctness bug that affects all WiFi 7 users
-  with AP-initiated link removal.
-- RISK: Very low. 11 lines added, calls well-tested
-  `ieee80211_sta_free_link()`. Reviewed by mac80211 maintainer. Minor
-  backport adjustment needed for older stable trees.
-- Ratio: High benefit, very low risk.
+**Step 8.4: Risk/Benefit**
+- Record: Benefit HIGH — closes a long-standing race with
+  crash/corruption potential in a widely-deployed driver. Risk LOW —
+  24-line surgical change, no new locking, no API change, reviewed and
+  applied by subsystem maintainer, only risk is a missed-answer timeout
+  that already has retry logic and a 5-second wait. Ratio clearly favors
+  backporting.
 
 ## PHASE 9: FINAL SYNTHESIS
 
 **Step 9.1: Evidence**
+- FOR: Fixes real race/UAF/NULL-deref, very widespread hardware, small
+  and surgical, author has security-fix track record, applied by
+  subsystem maintainer, bug is 10+ years old (present in every active
+  stable), failure modes include potential stack corruption from device-
+  controlled data (security-relevant).
+- AGAINST: No Reported-by/Fixes/Cc: stable tag; no public reproducer;
+  for older stables (≤v6.1) a trivial mechanical adaptation is needed
+  because the function was later split.
+- UNRESOLVED: Exact kernel trigger rate in the wild is not documented;
+  CVE status unknown.
 
-FOR backporting:
-- Fixes a real bug: missing STA link cleanup = memory leak + data
-  inconsistency
-- Small, surgical fix: 11 lines added in one function, one file
-- Obviously correct: mirrors the existing STA-initiated reconfig path
-- Reviewed and applied by mac80211 maintainer Johannes Berg
-- Bug exists since v6.5, affects active stable tree 6.6.y
-- `ieee80211_sta_free_link()` exists in all affected stable trees
-- No dependencies on other patches
+**Step 9.2: Stable Rules**
+1. Obviously correct & tested? Yes — tiny, mechanical; applied by
+   maintainer.
+2. Fixes real bug? Yes — race + stale/NULL pointer deref with concrete
+   failure modes.
+3. Important? Yes — kernel oops and potential stack corruption.
+4. Small & contained? Yes — 24 lines, one file, two functions.
+5. No new features/APIs? Correct — pure fix.
+6. Applies to stable? v6.6+: clean. ≤v6.1: needs trivial adaptation.
 
-AGAINST backporting:
-- Sent to wireless-next (not wireless/fixes), suggesting
-  author/maintainer didn't consider it urgent
-- No Fixes: tag, no Cc: stable tag
-- No crash reports or user-visible symptoms documented
-- WiFi 7 MLO is relatively new (fewer affected users currently)
-- Minor backport adaptation needed for pre-6.18 trees
-  (wiphy_delayed_work vs wiphy_hrtimer_work)
-
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? YES - mirrors existing pattern,
-   reviewed by maintainer
-2. Fixes a real bug? YES - memory leak and data inconsistency
-3. Important issue? MEDIUM-HIGH - memory leak in operational path, data
-   corruption risk
-4. Small and contained? YES - 11 lines, single file
-5. No new features? CORRECT - no new features
-6. Can apply to stable? YES with minor adjustment for function signature
-
-**Step 9.3: Exception Categories**
-- Not an exception category (not device ID, quirk, DT, build fix, or doc
-  fix)
+**Step 9.3: Exceptions**
+- Not an exception category; qualifies on normal bug-fix merit.
 
 **Step 9.4: Decision**
-This is a clear correctness bug fix that prevents memory leaks and data
-inconsistency in WiFi 7 MLO link removal. The fix is small, surgical,
-obviously correct, and reviewed by the maintainer. While it was sent to
-wireless-next and lacks explicit stable tags, the technical merit of the
-fix warrants backporting. The memory leak occurs every time an AP
-removes a link, which is a normal operational scenario for WiFi 7 users.
+- The commit is a textbook stable candidate: small, targeted race fix in
+  a broadly used driver, repairing a NULL-deref + stale-pointer write
+  that a faulty/malicious device can provoke.
 
-## Verification
+### Verification
 
-- [Phase 1] Parsed tags: Signed-off-by Lorenzo Bianconi (author) +
-  Johannes Berg (maintainer). No Fixes:, no Cc: stable, no Reported-by.
-- [Phase 2] Diff analysis: 11 lines added in ieee80211_ml_reconf_work(),
-  adds sta link cleanup via ieee80211_sta_free_link() before
-  ieee80211_vif_set_links()
-- [Phase 2] Compared with ieee80211_mgd_assoc_ml_reconf (lines
-  10997-11003) which correctly calls ieee80211_sta_remove_link() for
-  removed links - confirms the AP-initiated path was missing equivalent
-  cleanup
-- [Phase 2] Read sta_remove_link() (line 414-448): confirmed it frees
-  link_sta allocation via kfree_rcu, NULLs pointers, clears valid_links
-  bits, accumulates stats
-- [Phase 3] git blame: all lines in ieee80211_ml_reconf_work trace to
-  8eb8dd2ffbbb (v6.5-rc1, June 2023)
-- [Phase 3] Verified 8eb8dd2ffbbb is in v6.5, v6.6 (YES), not in v6.1
-  (NO)
-- [Phase 3] ieee80211_sta_free_link introduced in 21476ad16d3ca
-  (v6.0-rc1) - exists in all affected stable trees
-- [Phase 3] 3f654d53dff56 (hrtimer conversion) NOT in v6.12 or v6.6 -
-  minor backport adaptation needed
-- [Phase 4] b4 mbox: retrieved full v1 and v2 threads from lore
-- [Phase 4] v1->v2 evolution: v2 removed unnecessary
-  rcu_read_lock/unlock per Johannes Berg's review
-- [Phase 4] Johannes Berg (maintainer) reviewed directly, asked about
-  ieee80211_sta_remove_link vs ieee80211_sta_free_link - accepted
-  ieee80211_sta_free_link since driver is notified via set_active_links
-- [Phase 4] Patch sent to wireless-next (not wireless/fixes)
-- [Phase 5] Verified sta_info_get() and ieee80211_sta_free_link() are
-  available in all affected stable trees
-- [Phase 5] sta.valid_links is referenced 40+ times across mac80211 -
-  stale bits affect many code paths
-- [Phase 6] Bug affects v6.5+ stable trees; 6.6.y is primary affected
-  LTS
-- [Phase 8] Failure mode: memory leak (kfree_rcu not called) + data
-  inconsistency (valid_links stale) - severity HIGH
+- [Phase 1] Read full commit message — no Fixes/Reported-by/Cc: stable
+  tags; identified bug description and two-step fix.
+- [Phase 2] Read diff end-to-end; confirmed +17/-7 in one file, two
+  functions, classic NULL-out + NULL-check pattern with `goto out`.
+- [Phase 3] `git blame` on both functions: pattern dates to
+  `2f31c52529103d` (2014, v3.18). Split into
+  `__do_hidpp_send_message_sync` at `60165ab774cb0c` (v6.7).
+- [Phase 3] `git log --oneline -- drivers/hid/hid-logitech-hidpp.c`:
+  file is actively maintained.
+- [Phase 3] `git log --oneline --author="Benoit Sevens\|Benoît Sevens"`:
+  confirmed author's pattern of HID/UVC/ALSA security fixes.
+- [Phase 4] `b4 dig -c e2aaf2d3ad92a`: found lore thread at `https://lor
+  e.kernel.org/all/20260401144811.1242722-1-bsevens@google.com/`.
+- [Phase 4] `b4 dig -w`: confirmed CC list includes Jiri Kosina,
+  Benjamin Tissoires, Filipe Laíns, Bastien Nocera, linux-input, linux-
+  kernel.
+- [Phase 4] `b4 dig -a`: only v1 was posted; no further revisions.
+- [Phase 4] Read `/tmp/hidpp_race.mbox`: confirmed maintainer Jiri
+  Kosina's "Now applied" reply and note about deferred cleanup idea from
+  Benjamin Tissoires.
+- [Phase 5] `rg send_receive_buf`: confirmed only 4 references (struct
+  member + 1 write + 2 reads), no other use sites.
+- [Phase 5] Read `hidpp_raw_event` caller: confirmed registered as
+  `.raw_event` and called for every HID++ short/long/very-long report
+  from the device.
+- [Phase 6] `git show vX:drivers/hid/hid-logitech-hidpp.c` for v4.19,
+  v5.4, v5.10, v5.15, v6.1, v6.6: verified vulnerable pattern exists in
+  every stable tree.
+- [Phase 6] Verified `__do_hidpp_send_message_sync` only exists from
+  v6.6 onward; older trees need trivial adaptation of the producer hunk.
+- [Phase 8] Reviewed event handler body: `*answer = *report` is a write,
+  confirming the stack-corruption / write-primitive aspect (not merely
+  an info leak).
+- UNVERIFIED: Whether a CVE was assigned; whether a public reproducer
+  exists; exact in-wild trigger rate.
+
+The fix is small, surgical, reviewed by the HID maintainer, repairs a
+long-standing race with crash and stack-corruption consequences
+affecting extremely common Logitech hardware, and backports cleanly to
+recent stables with only a mechanical adjustment needed for older ones.
 
 **YES**
 
- net/mac80211/mlme.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 810bea1aacc5e..68da06434bb5d 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -7001,6 +7001,7 @@ static void ieee80211_ml_reconf_work(struct wiphy *wiphy,
- 		container_of(work, struct ieee80211_sub_if_data,
- 			     u.mgd.ml_reconf_work.work);
- 	u16 new_valid_links, new_active_links, new_dormant_links;
-+	struct sta_info *sta;
- 	int ret;
- 
- 	if (!sdata->u.mgd.removed_links)
-@@ -7036,6 +7037,16 @@ static void ieee80211_ml_reconf_work(struct wiphy *wiphy,
- 		}
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 5f63f1d2303a0..b1330d23bd2d0 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -306,21 +306,22 @@ static int __do_hidpp_send_message_sync(struct hidpp_device *hidpp,
+ 	if (ret) {
+ 		dbg_hid("__hidpp_send_report returned err: %d\n", ret);
+ 		memset(response, 0, sizeof(struct hidpp_report));
+-		return ret;
++		goto out;
  	}
  
-+	sta = sta_info_get(sdata, sdata->vif.cfg.ap_addr);
-+	if (sta) {
-+		unsigned long removed_links = sdata->u.mgd.removed_links;
-+		unsigned int link_id;
-+
-+		for_each_set_bit(link_id, &removed_links,
-+				 IEEE80211_MLD_MAX_NUM_LINKS)
-+			ieee80211_sta_free_link(sta, link_id);
-+	}
-+
- 	new_dormant_links = sdata->vif.dormant_links & ~sdata->u.mgd.removed_links;
+ 	if (!wait_event_timeout(hidpp->wait, hidpp->answer_available,
+ 				5*HZ)) {
+ 		dbg_hid("%s:timeout waiting for response\n", __func__);
+ 		memset(response, 0, sizeof(struct hidpp_report));
+-		return -ETIMEDOUT;
++		ret = -ETIMEDOUT;
++		goto out;
+ 	}
  
- 	ret = ieee80211_vif_set_links(sdata, new_valid_links,
+ 	if (response->report_id == REPORT_ID_HIDPP_SHORT &&
+ 	    response->rap.sub_id == HIDPP_ERROR) {
+ 		ret = response->rap.params[1];
+ 		dbg_hid("%s:got hidpp error %02X\n", __func__, ret);
+-		return ret;
++		goto out;
+ 	}
+ 
+ 	if ((response->report_id == REPORT_ID_HIDPP_LONG ||
+@@ -328,10 +329,14 @@ static int __do_hidpp_send_message_sync(struct hidpp_device *hidpp,
+ 	    response->fap.feature_index == HIDPP20_ERROR) {
+ 		ret = response->fap.params[1];
+ 		dbg_hid("%s:got hidpp 2.0 error %02X\n", __func__, ret);
+-		return ret;
++		goto out;
+ 	}
+ 
+-	return 0;
++	ret = 0;
++
++out:
++	hidpp->send_receive_buf = NULL;
++	return ret;
+ }
+ 
+ /*
+@@ -3843,8 +3848,7 @@ static int hidpp_input_configured(struct hid_device *hdev,
+ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
+ 		int size)
+ {
+-	struct hidpp_report *question = hidpp->send_receive_buf;
+-	struct hidpp_report *answer = hidpp->send_receive_buf;
++	struct hidpp_report *question, *answer;
+ 	struct hidpp_report *report = (struct hidpp_report *)data;
+ 	int ret;
+ 	int last_online;
+@@ -3854,6 +3858,12 @@ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
+ 	 * previously sent command.
+ 	 */
+ 	if (unlikely(mutex_is_locked(&hidpp->send_mutex))) {
++		question = hidpp->send_receive_buf;
++		answer = hidpp->send_receive_buf;
++
++		if (!question)
++			return 0;
++
+ 		/*
+ 		 * Check for a correct hidpp20 answer or the corresponding
+ 		 * error
 -- 
 2.53.0
 
