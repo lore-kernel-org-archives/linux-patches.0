@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9616117A31C;
-	Mon, 20 Apr 2026 15:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40DD17A31C;
+	Mon, 20 Apr 2026 15:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700640; cv=none; b=ST6O6vLqD5gsj4MVnFV1uMlBfCY2OfJT/5HTg7+d1j06Mb07XObcH3oOSCZUHOnUUFTJHizVOG+7J+8OUpQiWZDFCn4ZcfTdW7fWgwBNNyBbhdRptOPX6aj7EN3FEHAewfxWAHv1ymOTe06K5Rr8Evwx2MbBRbnniziKtHLxi3o=
+	t=1776700642; cv=none; b=CFe8RINJpAvYJstdUBj03O5++6iNZV32YfDNGUSFHrAInQqPWfOcMTLpdAnwe+XcdimNmPuFDUBswAamTX7AjcHtfM0T1iNGhI6JV+9edJIJ8VYlyTEfN7nDOJIa34venMpxTL2I0+VpMr393egb4Mn3j1K+2SbYA7lW17R5lmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700640; c=relaxed/simple;
-	bh=cuTgodR+wkEaoqJVlQxZbPvMpw1Lh5qgrKVR/2xUNJ4=;
+	s=arc-20240116; t=1776700642; c=relaxed/simple;
+	bh=KFt/eMrzILL2fan9Zzzt/BzF+Hx/Ta5NmEqYK+1dZ/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgbR8F8uIRSpH0W2OS2F7aQPkWPI8lZ+JxGPmmsZbYeNBQVN8Zui5v+O/R692NQjRIMBPP2nDC7TmzpKNkUK/4wOXgfu0BbZa8Z2ho8DfzobVXcaSNf9UhMabkCvc246euMBz7B81wGBQOlC1GXFS4TUbeNt1m4EekkfDC+G8uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFeSEnJo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6+xaanhXpJLCfiZdQOhc7/8R6ChCpjUkEwE4kp8Y7FVqq3j31RRbs12D2r0MdH2Rs7EJr+Ej3rrsYzwOvhRai1J/Ygv3zZMg38zj0qL+qXesE1fkGmHBg6sWx9GRMArOkSnjQ6XQB+9O+M038X4K87B4d1nH7XG68t1EmrBZGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaNXkgWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFeSEnJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D68C19425;
-	Mon, 20 Apr 2026 15:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaNXkgWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CC8C19425;
+	Mon, 20 Apr 2026 15:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700640;
-	bh=cuTgodR+wkEaoqJVlQxZbPvMpw1Lh5qgrKVR/2xUNJ4=;
+	s=korg; t=1776700642;
+	bh=KFt/eMrzILL2fan9Zzzt/BzF+Hx/Ta5NmEqYK+1dZ/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFeSEnJogwPuq4rYQOUrfNEGU0m7LGPPPlvMMFNR8RqbSDyoTes5Bt9CH5ARIINo1
-	 SB76ICFvHRna6K0OH9VYyYyF/ssK9dIcVQprSNmA7PxiY9UlHjCLVMwx2iac8Qvd+f
-	 zmhDe2dueDHcJj5YfilFBorwLPe7VB3ru6Op+sV4=
+	b=kaNXkgWS+l7+5VVUpBnM+ARPYDRjAdbOLope+EYUDE1LDmDzmjQ/rg2QaFndjTvX3
+	 kvaPVVKd4kAFgSBvPJPh3yjuMYGfsHXISpAsKTOy/SirActusTwAfz+a+Z4UbD7hlt
+	 Hl90WOen2kfvIuE7oR42HbTkqKad0ILASDvYp10w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vee Satayamas <vsatayamas@gmail.com>,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Garcicasti <andresgarciacastilla@gmail.com>,
+	songxiebing <songxiebing@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/198] ASoC: amd: yc: Add DMI quirk for ASUS EXPERTBOOK BM1403CDA
-Date: Mon, 20 Apr 2026 17:39:42 +0200
-Message-ID: <20260420153935.734759849@linuxfoundation.org>
+Subject: [PATCH 6.18 030/198] ALSA: hda/realtek: Add quirk for Lenovo Yoga Slim 7 14AKP10
+Date: Mon, 20 Apr 2026 17:40:09 +0200
+Message-ID: <20260420153936.702046214@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vee Satayamas <vsatayamas@gmail.com>
+From: songxiebing <songxiebing@kylinos.cn>
 
-[ Upstream commit f200b2f9a810c440c6750b56fc647b73337749a1 ]
+[ Upstream commit e6c888202297eca21860b669edb74fc600e679d9 ]
 
-Add a DMI quirk for the Asus Expertbook BM1403CDA to resolve the issue of the
-internal microphone not being detected.
+The Pin Complex 0x17 (bass/woofer speakers) is incorrectly reported as
+unconnected in the BIOS (pin default 0x411111f0 = N/A). This causes the
+kernel to configure speaker_outs=0, meaning only the tweeters (pin 0x14)
+are used. The result is very low, tinny audio with no bass.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221236
-Signed-off-by: Vee Satayamas <vsatayamas@gmail.com>
-Reviewed-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260315142511.66029-2-vsatayamas@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The existing quirk ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN (already present
+in patch_realtek.c for SSID 0x17aa3801) fixes the issue completely.
+
+Reported-by: Garcicasti <andresgarciacastilla@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221298
+Signed-off-by: songxiebing <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260331033650.285601-1-songxiebing@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 1324543b42d72..c536de1bb94ad 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -717,6 +717,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "PM1503CDA"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "BM1403CDA"),
-+		}
-+	},
- 	{}
- };
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index c76d339009a9b..1c8ee8263ab3a 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7464,6 +7464,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
++	SND_PCI_QUIRK(0x17aa, 0x391a, "Lenovo Yoga Slim 7 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3929, "Thinkbook 13x Gen 5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
 -- 
 2.53.0
 
