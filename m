@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C9433A70A;
-	Mon, 20 Apr 2026 16:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6BB33F5BC;
+	Mon, 20 Apr 2026 16:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701340; cv=none; b=rR8T1xpVnnlnWGBNE0xKEls2jytO2ZVdh86OwFjgMvtITD2bEt3AOwuRYp9e3YDJWwCQgbbRawDKDSAXrVgMWiKz7lkXyLehTKuN3tuu0UK0oEdt01NVdLbfBgrn694OOSxyvhWCnYptZmESCZlIktHCLtajw0SAhY04tVmgG/8=
+	t=1776701343; cv=none; b=dNWcu2jz0DP6JwM+9XRwMgUc3R73ILP3BX9x6HVh5o/6f9De91aglrNceClf8IWZN4O6kRJngndRT7qXlA6tio9+n5YWUDTywq6uY3YeDhsPn0VY7c/ebsCq99HEDvEcQTDMxoLaMubUQ/XrChy+l1JTCWw7wYVaAHg/JfaDqwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701340; c=relaxed/simple;
-	bh=zWcud3pZQHoPHpd6i/t6qtf6choR8oqpsZBUZldRIAE=;
+	s=arc-20240116; t=1776701343; c=relaxed/simple;
+	bh=9EbpEJ8Z/OK5Ay5R1rMsgiwx+h0nuQf+DZh7Rp+N3cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZAgyN0SuWLL0Vi2yB84eprmvOlMU5ECsZhBJoJSO/Ebc61RxjfTWJolvXuPKA9nxY5EsMJ2AfOV1o8PsDT6W1zc+oMj7ukLD19eOajCcwxsgx7YIw4XfimRQ48xLdSRQVY4qtV+Cy6bYhtwWFkycBwXpBm7QiPb/uO8k6/JJ0kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16T6yLFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NS3M1D06NvOFBwhsKY0NhW/f8w1IZ3HEkRCm3504i8p5aV9Rk3sqo3+kH062ei7TB5lNxU+7UkQnTPl/fa5yY1+/RvMv2nUZ5eMy/fy5WmTUj2ZNm62C+Fce4EpZRZqBH9AQyVgrv7+HuGCbjQeAz2GqqRBmZcFNy+4GzU9LpMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFx/kdG/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16T6yLFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5FAC19425;
-	Mon, 20 Apr 2026 16:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFx/kdG/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832C2C19425;
+	Mon, 20 Apr 2026 16:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701340;
-	bh=zWcud3pZQHoPHpd6i/t6qtf6choR8oqpsZBUZldRIAE=;
+	s=korg; t=1776701342;
+	bh=9EbpEJ8Z/OK5Ay5R1rMsgiwx+h0nuQf+DZh7Rp+N3cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16T6yLFfK43JidrCjJCAWraBnDp4opiHGfgokF8ikvZtevTeS3S3f8TC0fMqy/xun
-	 oSdLKcAkCs9Om/08YldeZs58DESFRPzmiI7FXAAgego2O0tteQ/2DvdVYH9wl4ZmWn
-	 Hbcvw1Ao4yYdfExaZflrJBY1PqXKtEpThg3wRKK0=
+	b=ZFx/kdG/sCA9b7+H7A00jLKFsRvk5HDIxfBRQKMm0aHVmH7jEbuqwQ1fTwJmD1tDm
+	 ChsaJl42vgKmpxiUu/MxBEVIEbg/VCtrtmWeGC33gjbX4P5ZSyvD1Mj7GwnmNxKpmS
+	 LnRHjWfQfb0i/D7UgQLDnHc/FSMIJhB0O36cELPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Fabio Baltieri <fabio.baltieri@gmail.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/162] eventpoll: defer struct eventpoll free to RCU grace period
-Date: Mon, 20 Apr 2026 17:41:20 +0200
-Message-ID: <20260420153928.766750698@linuxfoundation.org>
+Subject: [PATCH 6.12 075/162] net: txgbe: leave space for null terminators on property_entry
+Date: Mon, 20 Apr 2026 17:41:47 +0200
+Message-ID: <20260420153929.753729867@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,46 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Fabio Baltieri <fabio.baltieri@gmail.com>
 
-[ Upstream commit 07712db80857d5d09ae08f3df85a708ecfc3b61f ]
+[ Upstream commit 5a37d228799b0ec2c277459c83c814a59d310bc3 ]
 
-In certain situations, ep_free() in eventpoll.c will kfree the epi->ep
-eventpoll struct while it still being used by another concurrent thread.
-Defer the kfree() to an RCU callback to prevent UAF.
+Lists of struct property_entry are supposed to be terminated with an
+empty property, this driver currently seems to be allocating exactly the
+amount of entry used.
 
-Fixes: f2e467a48287 ("eventpoll: Fix semi-unbounded recursion")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Change the struct definition to leave an extra element for all
+property_entry.
+
+Fixes: c3e382ad6d15 ("net: txgbe: Add software nodes to support phylink")
+Signed-off-by: Fabio Baltieri <fabio.baltieri@gmail.com>
+Tested-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/20260405222013.5347-1-fabio.baltieri@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_type.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index aa4318271eee4..075aa8793aaa9 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -226,6 +226,9 @@ struct eventpoll {
- 	 */
- 	refcount_t refcount;
- 
-+	/* used to defer freeing past ep_get_upwards_depth_proc() RCU walk */
-+	struct rcu_head rcu;
-+
- #ifdef CONFIG_NET_RX_BUSY_POLL
- 	/* used to track busy poll napi_id */
- 	unsigned int napi_id;
-@@ -790,7 +793,8 @@ static void ep_free(struct eventpoll *ep)
- 	mutex_destroy(&ep->mtx);
- 	free_uid(ep->user);
- 	wakeup_source_unregister(ep->ws);
--	kfree(ep);
-+	/* ep_get_upwards_depth_proc() may still hold epi->ep under RCU */
-+	kfree_rcu(ep, rcu);
- }
- 
- /*
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+index 5fe415f3f2ca9..27f8db89a5c7e 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+@@ -295,10 +295,10 @@ struct txgbe_nodes {
+ 	char i2c_name[32];
+ 	char sfp_name[32];
+ 	char phylink_name[32];
+-	struct property_entry gpio_props[1];
+-	struct property_entry i2c_props[3];
+-	struct property_entry sfp_props[8];
+-	struct property_entry phylink_props[2];
++	struct property_entry gpio_props[2];
++	struct property_entry i2c_props[4];
++	struct property_entry sfp_props[9];
++	struct property_entry phylink_props[3];
+ 	struct software_node_ref_args i2c_ref[1];
+ 	struct software_node_ref_args gpio0_ref[1];
+ 	struct software_node_ref_args gpio1_ref[1];
 -- 
 2.53.0
 
