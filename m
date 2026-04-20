@@ -1,50 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9C93A2551;
-	Mon, 20 Apr 2026 13:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060823A7F71;
+	Mon, 20 Apr 2026 13:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776690972; cv=none; b=tGP9LiqmXM0uJ8FssSiY6FwskZ3jzo9a/Q8yqiISfQlDVuSKbDVtj73KMetiV96ZMilehGx+hW7YS3bNPF9LkuW04XEhkPSAxvfZRSvwoirJ82AF8n0lV2MbC0k9JoRBK7mlRqjfGxkMXIRpUFNfhRiyCQKYGqSMCPXCOOv5WkM=
+	t=1776690974; cv=none; b=Ce2V6tM81wKbNqARrRSW9LrTcN0aKtvL4vJxLWIiwgOIgy6T07kTWsAZm+sSRfIm5UbafdjZ3D2jjSj0URjCJ+1KA4ljRUrpWYmDCgTBwhwOWq3bnqMWdox/IAm8VTaCyjsJzLGpvbgagC75j384RzB5y4q3cRxRUxZJugj4S+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776690972; c=relaxed/simple;
-	bh=XRu+DMAZZf7fnaXEhjw82GF1wBHfzxLJuoQc7tEAjZc=;
+	s=arc-20240116; t=1776690974; c=relaxed/simple;
+	bh=7wvmA6qzUSdsbGyXey2C/opKsngNLL4M7rqpkTGQq4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DzmhUy5k6ED82OCG8fe8qxp2o5vrQBeO6pikC5D3iXcIiY+tdLtbaHPHGDKqGuEyB/zzT+ahe/OZNUzhxAhuVPD4SzQ0yzKilMY546t+oN82rugHViP2d4sYNGKeojBAwqGs7Muj8u6ktq5stpoMgAPoPmqk31VFRymMRQS03n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QRHwl6ih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HnV9yJjNKAOnLClpOvqzUH96E+/bVCOQWTczYb32fYMNB5M1DbdCRzJ90BK7KoIQ7stHwquYY3mxkt8c/ZtSBQTKm7tlMPTWqtEIlmEAogp5qDc42A7/9io2P6MhTayMDVza/HUsNTkU/O4gVi2N6VA0oX+UeNI/YbW1XfDyxLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P202Hfgz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QRHwl6ih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1038C2BCC4;
-	Mon, 20 Apr 2026 13:16:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P202Hfgz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6081C2BCB8;
+	Mon, 20 Apr 2026 13:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776690972;
-	bh=XRu+DMAZZf7fnaXEhjw82GF1wBHfzxLJuoQc7tEAjZc=;
+	s=k20201202; t=1776690973;
+	bh=7wvmA6qzUSdsbGyXey2C/opKsngNLL4M7rqpkTGQq4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRHwl6ih7O4Ep0yW0eyLlp11HYqg37Y0e64D1tUxQp9nXu+KLy5EPHIJyHKPy/mQw
-	 A8gSPrAj+FJn57XHPNKbLlEFgakXVngpPA0cRllsYi6skQU92rPuybx3yvCwXrMSSR
-	 Tiw1hraIzRKdz3c8jOyoxWn6iOq+yNVDllWWxkXkAPk+JYzPuVk369tBbp0i1pmO1F
-	 BAizd3QWRbDTFf/MF85TaNjXyNpk+dXTQA3Dpifh9VvZWZDKxAY2mTlwTOGO+VeUJg
-	 cS1cbKtC6J0zA/Uw18rSF+C+SEqFl6OnqpxwjqZKdukY0cNicuviOiy87+AyTjniI3
-	 z4QwVYnnLExGA==
+	b=P202HfgzOZh94o+7xvRkrmpaifNaWcPgdoiEJ5xD80cRblwzgJrneHbJwsh1JYy1U
+	 8wQZvvjvjBuOGa8Ks/uSYKwqVxtl6G9UwwhRq0ywyVqY7/88r5PL7AiceLdkbsaWIh
+	 oeeP4/l6EfUdKgD02dR2vWBc1z6bh6VUNjL4sO+Pcs04crTrhQkCABxRTiTbs//Xpa
+	 RM3PJ7CNAZ1DdzjwkyA19uX9bNJ3KR+IIl+NJvkS7lB+HT5H+qZLOYlV6B6vfC8f7z
+	 gWCeMKPJEQtuy5DV8WOTabrOCRhgZ4Oe89q/LiHw/PpPw1RHQad18aEuX1NFc9RPnE
+	 Y+xEQ1GKACTig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Leon Yen <leon.yen@mediatek.com>,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Felix Fietkau <nbd@nbd.name>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	kvalo@kernel.org,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 7.0-6.6] wifi: mt76: mt792x: Fix a potential deadlock in high-load situations
-Date: Mon, 20 Apr 2026 09:08:05 -0400
-Message-ID: <20260420131539.986432-19-sashal@kernel.org>
+	devel@lists.orangefs.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-6.12] orangefs: add usercopy whitelist to orangefs_op_cache
+Date: Mon, 20 Apr 2026 09:08:06 -0400
+Message-ID: <20260420131539.986432-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -60,294 +52,396 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leon Yen <leon.yen@mediatek.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit bb2f07819d063a58756186cac6465341956ac0a4 ]
+[ Upstream commit f855f4ab123b2b9c93465288c03fbb07a5903bb3 ]
 
-A deadlock may occur between two works, ps_work and mac_work, if their work
-functions run simultaneously as they attempt to cancel each other by
-calling cancel_delayed_work_sync().
+orangefs_op_cache is created with kmem_cache_create(), which provides
+no usercopy whitelist. orangefs_devreq_read() copies the tag and upcall
+fields directly from slab objects to userspace via copy_to_user(). With
+CONFIG_HARDENED_USERCOPY enabled, this triggers usercopy_abort().
 
-mt792x_mac_work() ->   ...  -> cancel_delayed_work_sync(&pm->ps_work);
-mt792x_pm_power_save_work() -> cancel_delayed_work_sync(&mphy->mac_work);
+Switch to kmem_cache_create_usercopy() with a whitelist covering the
+tag and upcall fields, matching the pattern already used by
+orangefs_inode_cache in super.c.
 
-In high-load situations, they are queued but may not have chance to be
-executed until the CPUs are released. Once the CPUs are available, there
-is a high possibility that the ps_work function and mac_work function will
-be executed simultaneously, resulting in a possible deadlock.
-
-This patch replaces cancel_delayed_work_sync() with cancel_delayed_work()
-in ps_work to eliminate the deadlock and make the code easier to maintain.
-
-Signed-off-by: Leon Yen <leon.yen@mediatek.com>
-Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Link: https://patch.msgid.link/20251215122231.3180648-1-leon.yen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the data needed. Let me compile the full analysis.
+Now I have enough information to write up the complete analysis.
 
----
+## Analysis
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `wifi: mt76: mt792x`
-- Action verb: "Fix"
-- Summary: Fixes a potential deadlock between ps_work and mac_work in
-  high-load situations.
+**Step 1.1 - Subject line parsing:**
+Record: subsystem = `orangefs`, action verb = `add`, summary = "adds a
+usercopy whitelist to the orangefs_op_cache slab so that copy_to_user()
+from cache objects does not trigger the hardened-usercopy check."
 
-Record: [wifi/mt76/mt792x] [Fix] [Deadlock between two work functions
-that cancel each other with _sync variant]
+**Step 1.2 - Tags:**
+- Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu> (author)
+- Signed-off-by: Mike Marshall <hubcap@omnibond.com> (orangefs
+  maintainer)
+- No Fixes:, no Cc: stable, no Reported-by:, no Reviewed-by:, no Tested-
+  by:, no Link:
+Record: Minimal tag set. Maintainer SOB present (Mike Marshall maintains
+fs/orangefs/).
 
-**Step 1.2: Tags**
-- `Signed-off-by: Leon Yen <leon.yen@mediatek.com>` — Author from
-  MediaTek (the chip vendor)
-- `Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>` — Tested
-  by a Canonical engineer
-- `Link: https://patch.msgid.link/20251215122231.3180648-1-
-  leon.yen@mediatek.com`
-- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` — mt76 subsystem
-  maintainer accepted the patch
+**Step 1.3 - Body analysis:**
+Record: Claims that `orangefs_devreq_read()` performs `copy_to_user()`
+on fields inside a slab-allocated `orangefs_kernel_op_s`. Because the
+cache was created without a usercopy whitelist, the hardened-usercopy
+check rejects the copy and calls `usercopy_abort()` (which `BUG()`s).
+Fix: switch to `kmem_cache_create_usercopy()` with a whitelist that
+spans from `tag` through end of `upcall`.
 
-Record: Author is from MediaTek (chip vendor). Tested by Canonical
-(Ubuntu). Accepted by mt76 maintainer Felix Fietkau. No Fixes: tag, no
-Reported-by (expected since this is a code-analysis-based fix).
+**Step 1.4 - Hidden bug fix detection:**
+Record: Although the subject uses "add" not "fix", the body explicitly
+says "this triggers usercopy_abort()" - this is clearly a bug fix
+against a kernel panic, not a feature addition.
 
-**Step 1.3: Commit Body**
-The message describes:
-- **Bug**: A deadlock between two delayed works: `ps_work` and
-  `mac_work`
-- **Mechanism**: Both try to cancel each other using
-  `cancel_delayed_work_sync()`, which blocks until the target work
-  finishes
-- **Trigger**: High-load situations where both works get queued and
-  execute simultaneously on different CPUs
-- **Fix**: Replace `cancel_delayed_work_sync()` with
-  `cancel_delayed_work()` in ps_work
+### PHASE 2: DIFF ANALYSIS
 
-Record: Classic ABBA deadlock. Failure mode is system hang (deadlock).
-Triggered under high CPU load with WiFi active.
+**Step 2.1 - Inventory:**
+Record: 1 file, `fs/orangefs/orangefs-cache.c`, +5/-1 lines. Modifies
+only `op_cache_initialize()`. Single-file surgical fix.
 
-**Step 1.4: Hidden Bug Fix?**
-No — this is explicitly labeled "Fix" and clearly describes a deadlock.
-Not hidden.
+**Step 2.2 - Code flow change:**
+Record: Before: `op_cache = kmem_cache_create(...)` - cache has
+useroffset=0, usersize=0 (non-usercopy). After: `op_cache =
+kmem_cache_create_usercopy(..., useroffset=offsetof(tag),
+usersize=offsetof(upcall)+sizeof(upcall)-offsetof(tag), ...)`. The
+whitelist starts at `tag` and extends through the end of `upcall`.
 
-## PHASE 2: DIFF ANALYSIS
+**Step 2.3 - Bug mechanism:**
+Record: Hardware/runtime safety fix - slab usercopy whitelist.
+`orangefs_devreq_read()` (fs/orangefs/devorangefs-req.c lines 287-294)
+does two `copy_to_user()` calls from `cur_op` (slab object):
+1. `&cur_op->tag`, size `sizeof(__u64)`
+2. `&cur_op->upcall`, size `sizeof(struct orangefs_upcall_s)`
 
-**Step 2.1: Inventory**
-- 1 file changed: `drivers/net/wireless/mediatek/mt76/mt792x_mac.c`
-- 1 line changed: `-cancel_delayed_work_sync(` → `+cancel_delayed_work(`
-- Function modified: `mt792x_pm_power_save_work()`
-- Scope: Single-file, single-line, surgical fix
+Without whitelist, `__check_heap_object()` in mm/slub.c compares offset
+against `s->useroffset`/`s->usersize` (both 0 here) and fails →
+`usercopy_abort()` → `BUG()`. The new whitelist covers both copies (tag
+at offsetof(tag), upcall at offsetof(upcall); whitelist spans
+`[offsetof(tag), offsetof(upcall)+sizeof(upcall))`).
 
-**Step 2.2: Code Flow Change**
-Before: `mt792x_pm_power_save_work()` calls
-`cancel_delayed_work_sync(&mphy->mac_work)`, which blocks until any
-currently-running `mac_work` completes.
+**Step 2.4 - Fix quality:**
+Record: Obviously correct - mirrors the pre-existing pattern for
+`orangefs_inode_cache` in `fs/orangefs/super.c:642` (commit
+6b330623e5690). Tiny scope. Only concern: added lines use mixed
+tabs+space indentation (5 tabs + space) that is inconsistent with
+existing 4-tab alignment; purely cosmetic, no functional impact. No
+regression risk from the change itself - `kmem_cache_create_usercopy()`
+is the explicit API for this case, established since v4.16.
 
-After: It calls `cancel_delayed_work(&mphy->mac_work)`, which cancels a
-pending work but does NOT wait for a running instance to finish.
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 2.3: Bug Mechanism — Deadlock**
+**Step 3.1 - Blame:**
+Record: The buggy `kmem_cache_create()` for `op_cache` dates back to
+575e946125f70 ("Orangefs: change pvfs2 filenames to orangefs", v4.6-rc1,
+Dec 2015) when the file was renamed; the code pattern has been present
+since OrangeFS was first merged into the kernel in v4.6. Bug exists in
+all stable trees.
 
-The deadlock is an ABBA pattern between two work functions:
+**Step 3.2 - Fixes: tag:**
+Record: No Fixes: tag in the patch. However, by analogy with
+2a71a1a8d0ed7 (net sock hardened usercopy panic, Dec 2025), the root
+cause trace is 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to
+size 0", v4.16-rc1, 2018) - this changed the default usercopy region to
+0, making caches without a whitelist reject all copies. Strict
+enforcement (no fallback) came with 53944f171a89d ("mm: remove
+HARDENED_USERCOPY_FALLBACK", v5.16-rc1). Both exist in all currently
+supported stable trees.
 
-**Chain A** (mac_work → waits for ps_work):
+**Step 3.3 - File history:**
+Record: `fs/orangefs/orangefs-cache.c` has been very quiet: last change
+before this was 3635d000f04b7 ("fs/orangefs: remove
+ORANGEFS_CACHE_CREATE_FLAGS", in v6.12) - this replaced the
+`ORANGEFS_CACHE_CREATE_FLAGS` argument with `0`. In stable trees ≤6.6,
+the `flags` argument is `ORANGEFS_CACHE_CREATE_FLAGS`, so a tiny
+backport adjustment is needed there. Standalone patch, not part of a
+series.
 
-```
-mt792x_mac_work()
-  → mt792x_mutex_acquire()
-    → mt76_connac_mutex_acquire()
-      → mt76_connac_pm_wake()
-        → cancel_delayed_work_sync(&pm->ps_work)   ← WAITS for ps_work
-```
+**Step 3.4 - Author context:**
+Record: Ziyi Guo has no prior orangefs commits in the repo. Mike
+Marshall is the orangefs subsystem maintainer (per MAINTAINERS) and
+added his SOB, indicating maintainer acceptance.
 
-**Chain B** (ps_work → waits for mac_work):
+**Step 3.5 - Dependencies:**
+Record: None. `kmem_cache_create_usercopy()` has existed since v4.16
+(2db51b1a3e ~). `offsetof()` and the struct layout exist unchanged in
+all stable trees.
 
-```
-mt792x_pm_power_save_work()
-  → cancel_delayed_work_sync(&mphy->mac_work)      ← WAITS for mac_work
-```
+### PHASE 4: MAILING LIST RESEARCH
 
-If both execute simultaneously:
-- CPU1's mac_work waits for ps_work to finish
-- CPU2's ps_work waits for mac_work to finish
-- **Classic ABBA deadlock → system hang**
+**Step 4.1 - b4 dig:**
+Record: b4 dig found the original submission at https://lore.kernel.org/
+all/20260212020806.2522161-1-n7l8m4@u.northwestern.edu/. Only one
+revision (v1); no later iterations.
 
-The two works run on *different* workqueues (`mac_work` on ieee80211's
-workqueue, `ps_work` on `dev->mt76.wq`), which confirms they CAN execute
-in parallel on different CPUs.
+**Step 4.2 - Reviewers:**
+Record: CCed: Mike Marshall (maintainer), Martin Brandenburg (co-
+maintainer), devel@lists.orangefs.org, linux-kernel. Saved thread has
+only the submission email - no visible public review response, but Mike
+Marshall added his SOB which indicates maintainer acceptance.
+(lore.kernel.org is behind Anubis bot-protection so could not
+independently fetch web thread view; mbox download via b4 dig succeeded
+and showed only the patch.)
 
-**Step 2.4: Fix Quality**
-- Obviously correct: removing `_sync` breaks the circular dependency
-- The non-sync variant is safe here because after the cancel, `ps_work`
-  immediately returns. If `mac_work` is running, it will re-queue itself
-  (line 30-31) and will be properly managed in the next power-save
-  cycle. `mac_work` acquires `mt792x_mutex_acquire` which wakes the
-  device if needed.
-- Minimal/surgical: exactly 1 function call changed
-- Regression risk: Very low — the only difference is not waiting for a
-  running `mac_work` to finish, which is acceptable since `ps_work`
-  doesn't depend on `mac_work` completion
+**Step 4.3 - Bug report:**
+Record: No Reported-by or Link: tag. No external bug report referenced.
 
-## PHASE 3: GIT HISTORY
+**Step 4.4 - Related patches:**
+Record: Single-patch submission. Strong analog exists: 43e7e284fc77b
+("cifs: Fix the smbd_response slab to allow usercopy", 2025) and
+2a71a1a8d0ed7 ("net: sock: fix hardened usercopy panic in
+sock_recv_errqueue", Dec 2025) both fix the same class of hardened-
+usercopy BUG() in other subsystems. The CIFS fix was already backported
+(present in `stable-push/linux-6.12.y`).
 
-**Step 3.1: Blame**
-The buggy line was introduced by commit `c21a7f9f406bba` (Lorenzo
-Bianconi, 2023-06-28), "wifi: mt76: mt7921: move shared runtime-pm code
-on mt792x-lib". This was code movement that created the mt792x_mac.c
-file, carrying the original deadlock-prone pattern from mt7921/mac.c.
+**Step 4.5 - Stable ML:**
+Record: Not searched further because lore.kernel.org is protected by
+bot-challenge. UNVERIFIED: No independent evidence of prior stable
+discussion.
 
-**Step 3.2: Fixes tag** — No Fixes: tag present (expected).
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 3.3: Related changes** — The file has had several changes since,
-but none addressing this specific deadlock.
+**Step 5.1 - Key functions:**
+Record: `op_cache_initialize()` (one-time init at module load).
 
-**Step 3.4: Author** — Leon Yen is a MediaTek engineer with multiple
-mt76 contributions, including WiFi/BT combo fixes and power management
-work.
+**Step 5.2 - Callers of affected code:**
+Record: `op_cache_initialize()` is called from `orangefs_init()` in
+`fs/orangefs/orangefs-mod.c` at module init. `op_cache` itself is used
+by `op_alloc()` (allocates every upcall op) and `op_release()` (frees
+them). Used on every VFS operation that requires communication with the
+userspace daemon.
 
-**Step 3.5: Dependencies** — None. This is a standalone one-line fix.
+**Step 5.3 - Callees:**
+Record: `kmem_cache_create_usercopy()` - core slab API, present since
+v4.16.
 
-## PHASE 4: MAILING LIST RESEARCH
+**Step 5.4 - Reachability:**
+Record: Bug is trigger path is `orangefs_devreq_read()` at
+fs/orangefs/devorangefs-req.c:287-294. Reachable from userspace `read()`
+syscall on `/dev/pvfs2-req` by the pvfs2-client-core daemon on every
+orangefs upcall (every VFS op → every file/dir access). With
+CONFIG_HARDENED_USERCOPY=y and no fallback (v5.16+), the very first read
+after mounting orangefs BUG()s the kernel.
 
-b4 dig did not find the exact commit (it matched a different file
-change). The lore.kernel.org search was blocked. However, the commit
-message Link tag points to the original submission:
-`20251215122231.3180648-1-leon.yen@mediatek.com`. The patch was accepted
-by Felix Fietkau (mt76 maintainer) and tested by a Canonical engineer.
+**Step 5.5 - Similar patterns:**
+Record: `orangefs_inode_cache` in `fs/orangefs/super.c:642` uses the
+same `kmem_cache_create_usercopy()` pattern (commit 6b330623e5690,
+v4.16). This patch completes what was an incomplete conversion -
+`op_cache` was overlooked in the original 2017 work.
 
-Record: Maintainer-accepted, independently tested. Standalone patch (not
-a series).
+### PHASE 6: CROSS-REFERENCING STABLE
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 6.1 - Bug in stable trees:**
+Record: Verified the buggy `op_cache = kmem_cache_create(...)` line is
+present in `stable-push/linux-5.10.y`, `linux-5.15.y`, `linux-6.1.y`,
+`linux-6.6.y`, `linux-6.12.y`, `linux-6.17.y`, `linux-6.18.y`,
+`linux-6.19.y` via `git show <branch>:fs/orangefs/orangefs-cache.c`.
+Hard-panic semantics active on v5.16+ stable (linux-6.1, 6.6, 6.12,
+6.17, 6.18, 6.19). On 5.10/5.15, the old fallback would emit a warning
+instead of BUG() - less severe but still undesirable.
 
-**Step 5.1: Functions modified**: `mt792x_pm_power_save_work()`
+**Step 6.2 - Backport complications:**
+Record: For stable trees ≤6.6, the `flags` parameter is
+`ORANGEFS_CACHE_CREATE_FLAGS` instead of `0` - trivial one-word
+adjustment. File has seen minimal churn since v4.6. Expected apply:
+6.12+ = nearly clean; ≤6.6 = tiny context adjustment.
 
-**Step 5.2: Callers**: This function is the work handler for
-`pm.ps_work`, queued on `dev->mt76.wq` (an ordered workqueue) via
-`mt76_connac_power_save_sched()`. It is called indirectly when the
-device transitions to power-save mode.
+**Step 6.3 - Related fixes in stable:**
+Record: No orangefs-specific usercopy fix already in stable. Related
+precedent: `43e7e284fc77b` ("cifs: Fix the smbd_response slab to allow
+usercopy") is in `stable-push/linux-6.12.y` as 87dcc7e33fc3d -
+confirming this class of fix is accepted in stable.
 
-**Step 5.3-5.4: Call chain**: The power-save work is scheduled via
-`mt76_connac_mutex_release()` → `mt76_connac_power_save_sched()`, which
-is called after every device register access. This is a very hot path
-for any mt792x WiFi operation.
+### PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 5.5: Similar patterns**: The `mt7615` driver has similar power-
-save code at `drivers/net/wireless/mediatek/mt76/mt7615/mac.c`, but this
-specific fix only addresses the mt792x code path.
+**Step 7.1 - Criticality:**
+Record: `fs/orangefs/` - filesystem driver. PERIPHERAL criticality
+(niche distributed filesystem used mostly in HPC). However, any user who
+does use it is guaranteed to hit this on a hardened kernel.
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 7.2 - Activity:**
+Record: Low-activity subsystem with a responsive maintainer (Mike
+Marshall). The file `orangefs-cache.c` itself is essentially frozen
+(last change in v6.12 was cosmetic).
 
-**Step 6.1**: The buggy code was introduced in commit `c21a7f9f406bba`
-(June 2023), which is present in v6.6 but NOT in v6.1. Affected stable
-trees: v6.6.y, v6.12.y, and any later LTS.
+### PHASE 8: IMPACT / RISK
 
-**Step 6.2**: The fix is a one-line change. It should apply cleanly to
-any tree containing the buggy code.
+**Step 8.1 - Affected users:**
+Record: Anyone running orangefs on a kernel with
+`CONFIG_HARDENED_USERCOPY=y` (default in many distros) on v5.16+.
+Affects everyone using orangefs on those kernels.
 
-**Step 6.3**: No related fixes for this specific deadlock already in
-stable.
+**Step 8.2 - Trigger conditions:**
+Record: Unconditional - triggered on the very first read() from
+`/dev/pvfs2-req` after orangefs mounts and the client daemon starts.
+This happens at every orangefs mount. No privilege required beyond
+what's already needed to run pvfs2-client-core (typically root). The bug
+is 100% reproducible on affected kernels.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+**Step 8.3 - Failure mode severity:**
+Record: `usercopy_abort()` → `BUG()` → kernel panic on filesystem
+mount/use. CRITICAL.
 
-**Step 7.1**: `drivers/net/wireless/mediatek/mt76` — WiFi driver for
-MediaTek MT7921/MT7922/MT7925 chipsets. These are extremely popular WiFi
-chips found in many modern laptops (Framework, Lenovo ThinkPad, Dell,
-etc.). Criticality: **IMPORTANT** — affects many real users.
+**Step 8.4 - Risk/benefit:**
+Record: BENEFIT = High for orangefs users on hardened kernels (unusable
+otherwise); zero impact for everyone else. RISK = Very low: 4 lines, API
+has existed since v4.16, exact-same pattern already in same subsystem
+(super.c). No chance of breaking anything because
+`kmem_cache_create_usercopy()` with a non-zero whitelist only relaxes
+the hardened-usercopy check on specific offsets - it cannot produce new
+failures.
 
-**Step 7.2**: The mt76 subsystem is very active with regular
-contributions.
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1**: Affects all users with MT7921/MT7922/MT7925 WiFi chipsets
-(very large population, especially Ubuntu/Fedora laptop users).
-
-**Step 8.2**: Trigger is high CPU load with active WiFi. Both works must
-execute simultaneously. Under heavy load this is realistic — the commit
-specifically says "In high-load situations, they are queued but may not
-have chance to be executed until the CPUs are released."
-
-**Step 8.3**: **Failure mode: DEADLOCK → system hang**. Severity:
-**CRITICAL** — the system becomes unresponsive.
-
-**Step 8.4**:
-- Benefit: VERY HIGH — prevents deadlock/hang on popular hardware
-- Risk: VERY LOW — 1-line change, removing a sync variant that was
-  causing the deadlock
-- Ratio: Extremely favorable
-
-## PHASE 9: FINAL SYNTHESIS
+### PHASE 9: SYNTHESIS
 
 **Evidence FOR backporting:**
-- Fixes a real deadlock (ABBA pattern) verified through code analysis
-- 1-line fix, obviously correct, minimal regression risk
-- Affects widely-used WiFi hardware (MT7921/MT7922/MT7925)
-- Tested by Canonical engineer (Ubuntu LTS relevance)
-- Accepted by subsystem maintainer
-- Buggy code exists in stable trees v6.6+
-- Failure mode is system hang (CRITICAL)
-- Author is from MediaTek (chip vendor, deep domain expertise)
+- Fixes a kernel panic (`BUG()` from `usercopy_abort()`).
+- 100% reproducible on orangefs + CONFIG_HARDENED_USERCOPY=y + kernel
+  ≥5.16.
+- Tiny, surgical 4-line change.
+- Directly mirrors existing, established pattern in the same driver's
+  super.c.
+- Maintainer (Mike Marshall) has signed off.
+- Matches precedent of 43e7e284fc77b (cifs) and 2a71a1a8d0ed7 (net sock)
+  usercopy whitelist fixes that are stable material.
+- Affected code has been in place since v4.6; bug exposure since v5.16
+  removed fallback.
 
 **Evidence AGAINST backporting:**
-- None significant
+- No Fixes:, no Cc: stable, no Reported-by: (typical for candidate
+  review - not disqualifying).
+- No public reviewer feedback captured (only v1, but maintainer SOB
+  present).
+- Commit not yet in mainline master (currently only in `fs-next`) -
+  needs to land first; this is candidate pre-review.
+- OrangeFS is niche; user population is small.
 
 **Stable rules checklist:**
-1. Obviously correct and tested? **YES** — 1-line change, independently
-   tested
-2. Fixes a real bug? **YES** — deadlock under high load
-3. Important issue? **YES** — system deadlock/hang (CRITICAL)
-4. Small and contained? **YES** — 1 line in 1 file
-5. No new features? **YES** — pure bug fix
-6. Applies to stable? **YES** — clean apply expected for v6.6+
+1. Obviously correct and tested? - Correct yes (mirrors super.c).
+   Tested: relies on author's testing; no explicit Tested-by, but very
+   mechanical change.
+2. Real bug? - YES, kernel panic.
+3. Important? - YES, CRITICAL (panic).
+4. Small/contained? - YES, +5/-1 in one function.
+5. No new feature/API? - YES, purely a slab-config change.
+6. Applies cleanly? - YES to ≥6.12; needs trivial flag adjustment for
+   ≤6.6.
+
+**Exception category:** Hardware/runtime quirk-equivalent for userspace
+API plumbing. Fixes a panic.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Tested-by from Canonical, maintainer SOB from
-  Felix Fietkau
-- [Phase 2] Diff analysis: 1-line change in
-  `mt792x_pm_power_save_work()`, `cancel_delayed_work_sync` →
-  `cancel_delayed_work`
-- [Phase 3] git blame: buggy code from commit c21a7f9f406bba (June
-  2023), code refactoring that moved runtime-PM code to mt792x-lib
-- [Phase 3] `git merge-base --is-ancestor`: confirmed code is in v6.6
-  but NOT in v6.1
-- [Phase 5] Traced deadlock chain: mac_work→mt792x_mutex_acquire→mt76_co
-  nnac_pm_wake→cancel_delayed_work_sync(&ps_work) vs
-  ps_work→cancel_delayed_work_sync(&mac_work)
-- [Phase 5] Verified `dev->mt76.wq` is `alloc_ordered_workqueue`
-  (mac80211.c line 733) and mac_work uses ieee80211's workqueue
-  (different queues → parallel execution possible)
-- [Phase 5] Verified `mt76_connac_power_save_sched` at line 62-83 of
-  mt76_connac_mac.c schedules ps_work, confirming the scheduling path
-- [Phase 6] Confirmed fix applies to v6.6+ stable trees
-- [Phase 7] mt76 is a widely used WiFi driver subsystem
-- [Phase 8] Failure mode: system deadlock/hang, severity CRITICAL
+- [Phase 1] Parsed tags: verified only SOB tags present (author +
+  maintainer). No Fixes:, Cc: stable, Reported-by:, Link:.
+- [Phase 1] Author verification: confirmed Mike Marshall's SOB indicates
+  maintainer acceptance (he is the orangefs maintainer).
+- [Phase 2] Diff inspection: confirmed +5/-1 lines in single function
+  `op_cache_initialize()` of `fs/orangefs/orangefs-cache.c`.
+- [Phase 2] Confirmed `orangefs_devreq_read()` at
+  `fs/orangefs/devorangefs-req.c:287-294` does
+  `copy_to_user(&cur_op->tag, sizeof(__u64))` and
+  `copy_to_user(&cur_op->upcall, sizeof(struct orangefs_upcall_s))` from
+  slab memory.
+- [Phase 2] Confirmed whitelist math: useroffset = offsetof(tag),
+  usersize = offsetof(upcall) + sizeof(upcall) - offsetof(tag), which
+  covers both copies (verified struct layout in `fs/orangefs/orangefs-
+  kernel.h:109-135`).
+- [Phase 2] Inspected `mm/slub.c:8044` `__check_heap_object()`:
+  confirmed it calls `usercopy_abort()` (which is `__noreturn` per
+  `mm/usercopy.c:86`) when offset/size fall outside
+  `s->useroffset`/`s->usersize`.
+- [Phase 3] git log file history: verified `op_cache =
+  kmem_cache_create(...)` pattern has been there since OrangeFS was
+  added. Last change 3635d000f04b7 in v6.12 removed
+  ORANGEFS_CACHE_CREATE_FLAGS.
+- [Phase 3] git describe 575e946125f70 → v4.6-rc1 (confirms OrangeFS
+  merge window).
+- [Phase 3] git describe 53944f171a89d → v5.16-rc1 (confirms when strict
+  enforcement began).
+- [Phase 4] `b4 dig -c f855f4ab123b2 -m /tmp/orangefs_thread.mbox`:
+  found and saved the thread (lore URL: https://lore.kernel.org/all/2026
+  0212020806.2522161-1-n7l8m4@u.northwestern.edu/).
+- [Phase 4] `b4 dig -c ... -a`: only v1 exists.
+- [Phase 4] `b4 dig -c ... -w`: Maintainer Mike Marshall and co-
+  maintainer Martin Brandenburg were CCed. devel@lists.orangefs.org and
+  linux-kernel were CCed.
+- [Phase 4] Saved mbox: only the patch email; no public reply.
+  UNVERIFIED: Cannot independently fetch web view of lore thread (Anubis
+  bot-challenge blocks WebFetch).
+- [Phase 4] Cross-ref: verified similar fixes 43e7e284fc77b (cifs) and
+  2a71a1a8d0ed7 (net) exist and address same BUG() class.
+- [Phase 5] `grep` + `Read` verified `orangefs_inode_cache` in
+  `fs/orangefs/super.c:642` already uses `kmem_cache_create_usercopy()`
+  - confirming the pattern is accepted.
+- [Phase 5] Reachability: `orangefs_devreq_read` is reached from a
+  userspace `read()` on `/dev/pvfs2-req`. Triggered on every upcall read
+  by pvfs2-client-core.
+- [Phase 6] `git show <branch>:fs/orangefs/orangefs-cache.c` for stable-
+  push 5.10, 5.15, 6.1, 6.6, 6.12, 6.17, 6.18, 6.19: verified buggy
+  `kmem_cache_create("orangefs_op_cache", ...)` is present in all of
+  them.
+- [Phase 6] Verified 43e7e284fc77b cifs fix was backported
+  (87dcc7e33fc3d in 6.12.y) - confirms precedent.
+- [Phase 7] Subsystem context: verified Mike Marshall is orangefs
+  maintainer; fs/orangefs/ has low churn.
+- [Phase 8] Failure mode: confirmed `usercopy_abort` is `__noreturn` →
+  `BUG()` → panic. Severity CRITICAL verified.
+- [Phase 9] Commit is in `fs-next` only, not yet in `master`. UNVERIFIED
+  at this moment: final upstream landing SHA (will be assigned when
+  Torvalds pulls).
+- UNVERIFIED: No public reviewer response could be retrieved (lore
+  Anubis challenge). Maintainer SOB is the primary acceptance signal.
+- UNVERIFIED: No direct user bug report or Reported-by reference; impact
+  assessment rests on code analysis, not a real-world crash log.
+
+## Decision
+
+This is a textbook stable candidate: a 4-line, obviously-correct, low-
+risk change that fixes a guaranteed kernel panic on any system running
+OrangeFS with `CONFIG_HARDENED_USERCOPY=y` (very common in modern
+distros) on kernels ≥ v5.16. The fix mirrors the existing whitelist
+already present on `orangefs_inode_cache` in the same driver, and
+follows precedent of recently-backported identical-class fixes (cifs
+smbd_response, net sock_recv_errqueue). Backport needs at most a trivial
+`0` → `ORANGEFS_CACHE_CREATE_FLAGS` adjustment for stable ≤6.6. Benefit
+clearly outweighs risk.
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/orangefs/orangefs-cache.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-index 71dec93094ebd..888e5a5056731 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-@@ -375,7 +375,7 @@ void mt792x_pm_power_save_work(struct work_struct *work)
- 	}
+diff --git a/fs/orangefs/orangefs-cache.c b/fs/orangefs/orangefs-cache.c
+index e75e173a91862..0bdb99e897447 100644
+--- a/fs/orangefs/orangefs-cache.c
++++ b/fs/orangefs/orangefs-cache.c
+@@ -19,10 +19,14 @@ static struct kmem_cache *op_cache;
  
- 	if (!mt792x_mcu_fw_pmctrl(dev)) {
--		cancel_delayed_work_sync(&mphy->mac_work);
-+		cancel_delayed_work(&mphy->mac_work);
- 		return;
- 	}
- out:
+ int op_cache_initialize(void)
+ {
+-	op_cache = kmem_cache_create("orangefs_op_cache",
++	op_cache = kmem_cache_create_usercopy("orangefs_op_cache",
+ 				     sizeof(struct orangefs_kernel_op_s),
+ 				     0,
+ 				     0,
++					 offsetof(struct orangefs_kernel_op_s, tag),
++					 offsetof(struct orangefs_kernel_op_s, upcall) +
++					     sizeof(struct orangefs_upcall_s) -
++						 offsetof(struct orangefs_kernel_op_s, tag),
+ 				     NULL);
+ 
+ 	if (!op_cache) {
 -- 
 2.53.0
 
