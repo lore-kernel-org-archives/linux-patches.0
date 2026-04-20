@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FDF3A5444;
-	Mon, 20 Apr 2026 13:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAD73BC67C;
+	Mon, 20 Apr 2026 13:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691517; cv=none; b=JLk2qXccvGP3sm6bOWEkwH+P7CjrNS4kAj6bEMPZ5qM/sfhJ4iy5vgoTRNVRGCdKFr8cHthyg+R3oJo/7QMM58UWxu3FttfnShJTxnmm+eLr0sNNgrvKtX/y3djQwd18y2u6tu0g8DPAGwqZO+1GYQ0ptYQEsDxhcYoI4pM0tac=
+	t=1776691519; cv=none; b=QljIR1H2RyPVs7hmFGUy6UljjC3lqHMXEfeYw3skM6sS5ZLIINDNiH2c6rQgXGR2PSLsev6HtXw3pvTaK1BWfat8RTX1eSleCW3vLg85+UbzFSi4U8Tqc45BZ5kwzfO4uPIGuVUq2+H0ER8lcWGTpaRzPGj9idk3Js/kwW4bMfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691517; c=relaxed/simple;
-	bh=1tMwr7fKz198F+7PJAx76Ncs0+xGjN2tu4IcqbtjbiE=;
+	s=arc-20240116; t=1776691519; c=relaxed/simple;
+	bh=2WenpJpauDKcsmxbdzzadx+CKzBVD2DP/jmTNdOnrG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=snzBwz5aw92GjKvy/Ghb2blmrI1f3TmZ2cIedP8aRtPVwkhR2+lvUuTQxOJ28Cl8nUvcX8azbM+caC1uLBBBPTiAIu+m/z8XTDxSQLkJ6+VjbtBUB/urHo5/BeoZh6QGHpRIJ4v/FljKgrej3Ai1X3OX29+GkFVE8l9Lc3Isuac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j6dCnO9Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HJVpEFjLlCpXnLsBUzaUCDlje9mqZBhY9iMWa9vIW4cJhbAGRaPPKbGOi+Ats638jI2kKjZKa3p1Pnod1DSdY+9FUWJC0vxvKqxfj22xnfDHgAPswKM6fuddq+1ANYm1amdL4HHoIO9ERzyRp1Cx2Tpy+GNMMFljqo8u3QXpi4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T90UfdDH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j6dCnO9Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2225C19425;
-	Mon, 20 Apr 2026 13:25:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T90UfdDH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CF4C2BCC6;
+	Mon, 20 Apr 2026 13:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691517;
-	bh=1tMwr7fKz198F+7PJAx76Ncs0+xGjN2tu4IcqbtjbiE=;
+	s=k20201202; t=1776691519;
+	bh=2WenpJpauDKcsmxbdzzadx+CKzBVD2DP/jmTNdOnrG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6dCnO9Yp+9dzF26xa9K2nSj+40pehzD4+uHt8A/VxUhlMCrswrT4w44XULqgdvMw
-	 SDPhE+CjshQhVyv9mNkjjG2REmo43oEu6trpphcBg0AJ4uHuE0lJfFLVzRmGHKGjWC
-	 cMaVcEptQ7waKss8OaHeGUlT4YatGAS3W06ClqKHChT6ZbT+j8AlK4/mbximBRDjBV
-	 eHn2c1BniVezAMmPDZbJXX0YmThVIEF6wJkoZhCGnb6yrbz4jV54SQnQ/5n1V5tn1B
-	 8zAh6jPJFkdHuQJ1t9gP3LPk3l/ohEI+pZcXsM2dgVksn9fvN2L2NKSQi6xpZoMUD5
-	 v/kFfXwk72rzQ==
+	b=T90UfdDHymDnjvaIgz9oDG2zK9GS8v7t/BKBi+Z+YOiafIY1OAs7yQEz5AZhLkSDY
+	 W+noP8K3SOGJn6964BwKcNwkHtp+T5c8MLSN9dPX6647t5HlJafrSLtw1Gazqpu47g
+	 R68W5GrRFMlwOOd1nQee6X/qZ/3V1LyX2ekFVs+tq3v7KFiT3kfvp13IH7vhkElEbl
+	 mp/zTZD03MYJ4r8O1rqSF6Mc8ZdxQCRrd4YKLKOEk68rIKY04O9hrnUTH8U6nrq+cD
+	 FuBnXGFNZxn/FMPUGebOVsKe8txvZE0BHjtIhI8jwOOb2CNmMc9H1PWJDeSg7VZZNE
+	 EyR7yKyRZ6xXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>,
-	Sathishkumar Muruganandam <quic_murugana@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Aravind Anilraj <aravindanilraj0702@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	liam.r.girdwood@linux.intel.com,
+	peter.ujfalusi@linux.intel.com,
+	yung-chuan.liao@linux.intel.com,
+	ranjani.sridharan@linux.intel.com,
+	kai.vehmanen@linux.intel.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] wifi: mac80211: use ap_addr for 4-address NULL frame destination
-Date: Mon, 20 Apr 2026 09:17:50 -0400
-Message-ID: <20260420132314.1023554-76-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ASoC: Intel: cht_bsw_rt5672: Fix MCLK leak on platform_clock_control error
+Date: Mon, 20 Apr 2026 09:17:51 -0400
+Message-ID: <20260420132314.1023554-77-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,429 +60,377 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
+From: Aravind Anilraj <aravindanilraj0702@gmail.com>
 
-[ Upstream commit 594be50a3f0a6b7389f40f7acbf0dd731beb5204 ]
+[ Upstream commit dced5a373a96cfd9f3bd0ffcf5339a7579d1473a ]
 
-Currently ieee80211_send_4addr_nullfunc() uses deflink.u.mgd.bssid
-for addr1 and addr3 fields. In MLO configurations, deflink.u.mgd.bssid
-represents link 0's BSSID and is not updated when link 0 is not an
-assoc link. This causes 4-address NULL frames to be sent to the
-wrong address, preventing WDS AP_VLAN interface creation on the peer AP.
+If snd_soc_dai_set_pll() or snd_soc_dai_set_sysclk() fail inside the
+EVENT_ON path, the function returns without calling
+clk_disable_unprepare() on ctx->mclk, which was already enabled earlier
+in the same code path. Add the missing clk_disable_unprepare() calls
+before returning the error.
 
-To fix this use sdata->vif.cfg.ap_addr instead, which contains the AP's MLD
-address populated during authentication/association and remains
-valid regardless of which links are active.
-
-This ensures 4-address NULL frames reach the correct AP, allowing
-proper WDS operation over MLO connections.
-
-Co-developed-by: Sathishkumar Muruganandam <quic_murugana@quicinc.com>
-Signed-off-by: Sathishkumar Muruganandam <quic_murugana@quicinc.com>
-Signed-off-by: Tamizh Chelvam Raja <tamizh.raja@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260326164723.553927-3-tamizh.raja@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Aravind Anilraj <aravindanilraj0702@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260401220507.23557-4-aravindanilraj0702@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need for the complete analysis. Let me
-compile the findings.
+I now have all the information needed for a complete analysis. Let me
+compile the full assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse the Subject Line
-- **Subsystem:** wifi: mac80211
-- **Action verb:** "use" (corrective - implying the current usage is
-  wrong)
-- **Summary:** Use the correct AP address (`ap_addr`) instead of deflink
-  BSSID for 4-address NULL frame destination in MLO configurations.
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: [ASoC: Intel: cht_bsw_rt5672] [Fix] [MCLK leak on
+platform_clock_control error path]
 
-Record: [wifi: mac80211] [use/fix] [Correct the destination address for
-4-addr NULL frames in MLO mode]
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Signed-off-by:** Aravind Anilraj (author)
+- **Reviewed-by:** Cezary Rojewski (Intel ASoC reviewer)
+- **Link:** patch.msgid.link to the original patch
+- **Signed-off-by:** Mark Brown (ASoC subsystem maintainer, committer)
+- No Fixes: tag (expected for manual review candidates)
+- No Reported-by: tag
+- No Cc: stable tag
 
-### Step 1.2: Parse All Tags
-- **Co-developed-by:** Sathishkumar Muruganandam
-  <quic_murugana@quicinc.com>
-- **Signed-off-by:** Sathishkumar Muruganandam, Tamizh Chelvam Raja
-  (author), Johannes Berg (maintainer)
-- **Link:** https://patch.msgid.link/20260326164723.553927-3-
-  tamizh.raja@oss.qualcomm.com
-- **No Fixes: tag** (expected - that's why it needs review)
-- **No Reported-by:** (likely found through code review / internal
-  testing at Qualcomm)
-- **No Cc: stable** (expected)
+Record: Reviewed by Intel ASoC developer and merged by ASoC subsystem
+maintainer. No syzbot or external reporter — this is a code-inspection-
+found bug.
 
-Johannes Berg is the mac80211 maintainer who signed off — strong trust
-signal.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit message clearly states: if `snd_soc_dai_set_pll()` or
+`snd_soc_dai_set_sysclk()` fail in the EVENT_ON path, the function
+returns without calling `clk_disable_unprepare()` on `ctx->mclk`, which
+was already enabled. The fix adds the missing cleanup calls.
 
-Record: Co-developed by Qualcomm engineers, committed by mac80211
-maintainer Johannes Berg. Message-id suggests this is patch 3 of a
-series.
+Record: Bug: clock resource leak on error paths. Symptom: MCLK left
+enabled after error, preventing proper power management. Root cause:
+missing cleanup in two error return paths.
 
-### Step 1.3: Analyze the Commit Body
-- **Bug:** `deflink.u.mgd.bssid` represents link 0's BSSID which is NOT
-  updated when link 0 is not an assoc link in MLO configurations
-- **Symptom:** 4-address NULL frames are sent to the WRONG address,
-  preventing WDS AP_VLAN interface creation on the peer AP
-- **Root cause:** Wrong field used for destination address in MLO mode
-- **Fix:** Use `sdata->vif.cfg.ap_addr` which contains the AP's MLD
-  address populated during authentication/association
+### Step 1.4: DETECT HIDDEN BUG FIXES
+This is explicitly labeled as a "Fix" and describes a resource leak — no
+disguise here.
 
-Record: Bug is that WDS (4-addr mode) over MLO connections is completely
-broken. Frames go to wrong AP address, preventing the AP from creating
-VLAN interfaces for the client.
-
-### Step 1.4: Detect Hidden Bug Fixes
-This is clearly a bug fix, not hidden. The commit message explicitly
-describes broken functionality (wrong destination address for 4-addr
-NULL frames in MLO).
-
-Record: This is an explicit bug fix for MLO+WDS functionality.
-
----
+Record: This is an overt bug fix for a resource leak.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory the Changes
-- **File:** `net/mac80211/mlme.c`
-- **Lines changed:** 2 lines modified (addr1 and addr3 source changed)
-- **Function modified:** `ieee80211_send_4addr_nullfunc()`
-- **Scope:** Single-file, surgical, 2-line fix
+### Step 2.1: INVENTORY THE CHANGES
+- **File:** `sound/soc/intel/boards/cht_bsw_rt5672.c`
+- **Lines added:** +4 (two `if (ctx->mclk)
+  clk_disable_unprepare(ctx->mclk);` blocks)
+- **Lines removed:** 0
+- **Functions modified:** `platform_clock_control()`
+- **Scope:** Single-file, surgical fix
 
-Record: 1 file, 2 lines changed. Scope: minimal surgical fix.
+Record: 1 file, 4 lines added, 0 removed. Single function modified.
+Extremely contained.
 
-### Step 2.2: Code Flow Change
-- **Before:** `memcpy(nullfunc->addr1, sdata->deflink.u.mgd.bssid, ...)`
-  and same for addr3
-- **After:** `memcpy(nullfunc->addr1, sdata->vif.cfg.ap_addr, ...)` and
-  same for addr3
-- **Path affected:** The 4-address NULL frame construction path (called
-  during association and interface config change)
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+- **Before:** In the EVENT_ON path, after
+  `clk_prepare_enable(ctx->mclk)` succeeds, if either
+  `snd_soc_dai_set_pll()` or `snd_soc_dai_set_sysclk()` fails, the
+  function returns the error without disabling the clock.
+- **After:** Both error paths now call
+  `clk_disable_unprepare(ctx->mclk)` (guarded by `if (ctx->mclk)`)
+  before returning the error.
 
-Record: Only the source of the MAC address for addr1/addr3 fields
-changes. Both are ETH_ALEN copies from valid struct members.
+Record: Error paths now properly clean up the enabled clock before
+returning.
 
-### Step 2.3: Bug Mechanism
-Category: **Logic/correctness fix** — wrong data source used for frame
-addresses in MLO.
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Category: Error path / resource leak fix.**
 
-- In non-MLO: `deflink.u.mgd.bssid` == `vif.cfg.ap_addr`, so behavior is
-  unchanged
-- In MLO: `deflink.u.mgd.bssid` may point to an uninitialized/wrong link
-  0 BSSID, while `vif.cfg.ap_addr` correctly holds the AP MLD address
+The clock `ctx->mclk` is enabled via `clk_prepare_enable()` at line 67.
+If subsequent calls fail (lines 78-81 or 86-89), the function returns
+without the matching `clk_disable_unprepare()`. This leaves the platform
+clock running, preventing proper power management. The EVENT_OFF path at
+line 103-104 already properly calls `clk_disable_unprepare()`,
+confirming the intended pattern.
 
-Record: Logic bug — wrong field referenced for AP address in MLO mode.
-Fix uses the documented correct field.
+Record: Resource leak — MCLK left in enabled/prepared state on error
+paths.
 
-### Step 2.4: Fix Quality
-- **Obviously correct?** YES — `vif.cfg.ap_addr` is documented as "AP
-  MLD address, or BSSID for non-MLO connections" which is exactly what's
-  needed here.
-- **Minimal?** YES — 2 lines changed.
-- **Regression risk?** Virtually zero — the same pattern was applied in
-  commit 8a9be422f5ff3 for tx.c paths, and `ap_addr` is already used
-  extensively in the same file for the same purpose.
+### Step 2.4: ASSESS THE FIX QUALITY
+- **Obviously correct:** Yes. Mirrors the existing cleanup pattern in
+  the EVENT_OFF path (line 103-104). The `if (ctx->mclk)` guard is
+  consistent with the guard at line 66.
+- **Minimal/surgical:** Yes. Only 4 lines added, no unrelated changes.
+- **Regression risk:** Extremely low. Only affects error paths. The
+  `clk_disable_unprepare()` call is the exact counterpart to
+  `clk_prepare_enable()` that was already called.
 
-Record: Fix is obviously correct, minimal, follows established
-precedent. Zero regression risk.
-
----
+Record: Fix is obviously correct, minimal, and has negligible regression
+risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame the Changed Lines
-- The buggy `sdata->deflink.u.mgd.bssid` was introduced by commit
-  **bfd8403adddd09** ("wifi: mac80211: reorg some iface data structs for
-  MLD") from May 2022 by Johannes Berg.
-- Before that commit, the code used `sdata->u.mgd.bssid` which was fine
-  for non-MLO.
-- The deflink reorg moved things to per-link structures but didn't
-  update this function to use the MLD-aware `ap_addr` for address
-  fields.
+### Step 3.1: BLAME THE CHANGED LINES
+The MCLK handling was introduced by commit `c25695ae88ce26` (Pierre-
+Louis Bossart, 2017-06-23) — "ASoC: Intel: cht_bsw_rt5672: 19.2MHz clock
+for Baytrail platforms". The bug has existed since that commit, which
+was included in v4.13-rc1.
 
-Record: Buggy code introduced in bfd8403adddd09 (May 2022), present in
-v6.1+.
+Record: Buggy code introduced in c25695ae88ce26 (v4.13-rc1, 2017).
+Present in all active stable trees.
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The implicit Fixes target is bfd8403adddd09.
+### Step 3.2: FOLLOW THE FIXES: TAG
+No Fixes: tag present. However, the logical "Fixes:" target is
+`c25695ae88ce26`, which introduced the MCLK handling without proper
+error path cleanup.
 
-Record: No explicit Fixes tag. Implicit target is bfd8403adddd09 (in
-v6.1+).
+Record: The implicit Fixes target (c25695ae88ce26) is in all stable
+trees since v4.13.
 
-### Step 3.3: Related Changes
-- Commit **8a9be422f5ff3** ("wifi: mac80211: tx: use AP address in some
-  places for MLO") by Johannes Berg himself did the exact same fix
-  pattern for tx.c paths — changing `deflink.u.mgd.bssid` to
-  `vif.cfg.ap_addr`. This was the same class of bug that was missed in
-  `ieee80211_send_4addr_nullfunc()`.
+### Step 3.3: CHECK FILE HISTORY
+The file has had ~20 commits over the years, mostly cleanups and
+conversions. No prior attempt to fix this specific leak was found (no
+commits matching "MCLK leak" in the history).
 
-Record: Strong precedent exists (8a9be422f5ff3). This is a missed
-instance of the same fix pattern.
+Record: Standalone fix, no prerequisites needed. No prior fix for this
+issue exists.
 
-### Step 3.4: Author Context
-- Authors are Qualcomm engineers (Tamizh Chelvam Raja, Sathishkumar
-  Muruganandam)
-- Committed by Johannes Berg (mac80211 maintainer)
-- The maintainer's sign-off indicates review and approval
+### Step 3.4: CHECK THE AUTHOR
+The author (Aravind Anilraj) appears to be a new contributor. However,
+the patch was reviewed by Cezary Rojewski (Intel ASoC reviewer) and
+merged by Mark Brown (ASoC subsystem maintainer).
 
-Record: Fix accepted by subsystem maintainer.
+Record: Reviewed by experienced subsystem developers despite being from
+a new contributor.
 
-### Step 3.5: Dependencies
-- `ap_addr` field exists since commit b65567b03c9502 (June 2022), which
-  is in v6.1+
-- The `deflink` structure exists since bfd8403adddd09, also in v6.1+
-- No code dependencies beyond what exists in stable trees
+### Step 3.5: CHECK FOR DEPENDENCIES
+The fix only adds `clk_disable_unprepare()` calls to existing error
+paths. No new functions, structures, or APIs are used. The fix is
+completely self-contained.
 
-Record: No additional dependencies. All required structures exist in
-v6.1+.
-
----
+Record: No dependencies. Can apply standalone.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.5
-Lore.kernel.org was blocked by anti-bot protection. b4 dig couldn't find
-the commit (it's not yet in the tree as an applied commit). The Link:
-tag in the commit message references
-`20260326164723.553927-3-tamizh.raja@oss.qualcomm.com`, suggesting this
-is patch 3 of a series.
+### Step 4.1-4.5: PATCH DISCUSSION
+The lore.kernel.org site was not reachable due to bot protection. b4 dig
+could not find the commit by message-id (it doesn't exist in this tree
+as a commit). However, the commit tags show:
+- **Reviewed-by:** Cezary Rojewski (Intel) — an active ASoC reviewer
+- **Signed-off-by:** Mark Brown — the ASoC subsystem maintainer who
+  merged it
 
-The commit was signed off by Johannes Berg (mac80211 maintainer), which
-is a strong quality indicator.
+These signatures indicate the patch went through proper review.
 
-Record: Could not access lore discussion. Maintainer sign-off verified.
-
----
+Record: Proper review by Intel ASoC developer and subsystem maintainer.
+Could not access lore discussion directly.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-Modified function: `ieee80211_send_4addr_nullfunc()`
+### Step 5.1-5.2: FUNCTION AND CALLERS
+`platform_clock_control()` is registered as a DAPM supply widget
+callback:
 
-### Step 5.2: Callers
-Two call sites:
-1. `net/mac80211/mlme.c:6555` — called during
-   `ieee80211_assoc_success()` when `ifmgd->use_4addr` is true
-2. `net/mac80211/cfg.c:298` — called when 4addr mode is enabled via
-   `ieee80211_change_iface()`
+```114:116:sound/soc/intel/boards/cht_bsw_rt5672.c
+        SND_SOC_DAPM_SUPPLY("Platform Clock", SND_SOC_NOPM, 0, 0,
+                        platform_clock_control, SND_SOC_DAPM_PRE_PMU |
+                        SND_SOC_DAPM_POST_PMD),
+```
 
-Record: Called from association path and interface config path. Both are
-normal operational paths.
+It is called by the DAPM framework whenever the "Platform Clock" supply
+widget powers up (PRE_PMU) or down (POST_PMD). This happens during every
+audio playback/capture start and stop operation. All audio paths
+("Headphone", "Headset Mic", "Int Mic", "Ext Spk") depend on this widget
+(lines 130-133).
 
-### Step 5.3-5.4: Call Chain
-The function is reachable when:
-- A station associates with 4-addr mode (WDS) enabled → common for
-  mesh/backhaul setups
-- A user enables 4-addr mode via nl80211/iw
+Record: Called on every audio stream open/close. High frequency for
+audio-active systems.
 
-Record: Reachable from normal user operations (association, interface
-config).
+### Step 5.3-5.5: SIMILAR PATTERNS
+I found the same bug pattern in sibling drivers `bytcr_rt5651.c` and
+`bytcr_rt5640.c`, though those have slightly different code structure.
+The `cht_bsw_rt5672.c` fix is specific to this driver and doesn't
+require changes to siblings.
 
-### Step 5.5: Similar Patterns
-The same bug pattern (`deflink.u.mgd.bssid` → `vif.cfg.ap_addr`) was
-fixed in tx.c (commit 8a9be422f5ff3). There are still 8 remaining
-instances of `deflink.u.mgd.bssid` in mlme.c — some may be correct
-(link-specific operations) while others might need similar fixes.
-
-Record: Same pattern was already fixed in tx.c. This is a remaining
-instance.
-
----
+Record: Similar pattern exists in sibling drivers but this fix is self-
+contained for cht_bsw_rt5672.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Does Buggy Code Exist in Stable?
-- `deflink.u.mgd.bssid` was introduced by bfd8403adddd09 — confirmed in
-  v6.1+
-- `vif.cfg.ap_addr` was introduced by b65567b03c9502 — confirmed in
-  v6.1+
-- Both structures exist in all active stable trees (6.1.y, 6.6.y,
-  6.12.y)
+### Step 6.1: BUGGY CODE IN STABLE
+The buggy code was introduced in v4.13-rc1 (commit c25695ae88ce26). It
+exists in all active stable trees (5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y,
+etc.).
 
-Record: Buggy code exists in v6.1+ stable trees.
+Record: Bug affects all active stable trees.
 
-### Step 6.2: Backport Complications
-- mlme.c has had 233 changes since v6.6, so context may differ
-- However, the function `ieee80211_send_4addr_nullfunc()` is self-
-  contained and hasn't changed much
-- The 2-line fix should apply cleanly or with trivial context adjustment
+### Step 6.2: BACKPORT COMPLICATIONS
+The file has been relatively stable. The current code at the fix site
+matches what was introduced in c25695ae88ce26, with only minor changes
+(the `if (ctx->mclk)` guard and the `65b2df10a1e62` commit that changed
+the EVENT_OFF path). The fix should apply cleanly or with minimal
+adjustment.
 
-Record: Minor context conflicts possible but fix is self-contained. Low
-backport difficulty.
+Record: Expected clean or near-clean apply to all stable trees.
 
-### Step 6.3: Related Fixes Already in Stable
-The precedent fix 8a9be422f5ff3 (tx.c changes) is in v6.1+, establishing
-that `ap_addr` is the correct field for MLO-aware AP addressing.
+### Step 6.3: RELATED FIXES
+No prior fix for this specific issue was found in any tree.
 
-Record: Precedent fix already in stable trees.
+Record: No existing fix for this leak.
 
----
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem:** sound/soc/intel/boards — ASoC Intel machine driver
+- **Criticality:** PERIPHERAL (specific to Cherryview/Baytrail platforms
+  with RT5672 codec)
+- **Affected hardware:** Lenovo and other Cherryview/Baytrail-based
+  laptops/tablets with RT5670/RT5672 codec (reasonably common consumer
+  devices)
 
-### Step 7.1: Subsystem Criticality
-- **Subsystem:** net/mac80211 (WiFi)
-- **Criticality:** IMPORTANT — WiFi is critical for many users;
-  4-addr/WDS mode is used in enterprise mesh/backhaul
+Record: ASoC Intel board driver, PERIPHERAL but for consumer devices
+(laptops/tablets).
 
-Record: IMPORTANT subsystem. WiFi WDS used in enterprise/mesh
-deployments.
+### Step 7.2: SUBSYSTEM ACTIVITY
+The file sees occasional updates (cleanups and fixes). It's a mature
+driver.
 
-### Step 7.2: Activity
-mac80211 is very actively developed, especially around MLO support.
-
-Record: Highly active subsystem.
-
----
+Record: Mature, stable driver with occasional maintenance commits.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is Affected
-Users running MLO (WiFi 7) connections with 4-addr/WDS mode enabled.
-This is a specific but real use case (enterprise mesh backhaul over WiFi
-7).
+### Step 8.1: AFFECTED USERS
+Users of Cherryview/Baytrail platforms with RT5670/RT5672 codec. This
+includes Lenovo and similar consumer laptops/tablets from the Baytrail
+era.
 
-Record: Affected: MLO + WDS users. Growing user base as WiFi 7 adoption
-increases.
+Record: Platform-specific but for real consumer devices.
 
-### Step 8.2: Trigger Conditions
-- Triggerable whenever an MLO station associates with 4-addr mode
-  enabled
-- Requires MLO-capable hardware and AP
-- No special privileges needed beyond configuring 4-addr mode
+### Step 8.2: TRIGGER CONDITIONS
+The bug triggers when `snd_soc_dai_set_pll()` or
+`snd_soc_dai_set_sysclk()` fails during audio stream start. While these
+failures are not common in normal operation, they can occur during
+hardware errors, suspend/resume transitions, or codec communication
+issues.
 
-Record: Triggered on every MLO+WDS association. 100% reproducible for
-affected configurations.
+Record: Trigger requires PLL/sysclk configuration failure during audio
+start. Uncommon but possible.
 
-### Step 8.3: Failure Mode Severity
-- **Not a crash** — the frame is sent to the wrong address
-- **Functional failure** — WDS doesn't work at all over MLO (AP can't
-  create VLAN interface)
-- **Severity: MEDIUM-HIGH** — Complete feature breakage for affected
-  users, but no data corruption/crash
+### Step 8.3: FAILURE MODE SEVERITY
+When triggered, the platform clock remains enabled (leaked), preventing
+proper power management. Repeated triggering could cause increased power
+consumption. The clock framework may also track prepare/enable counts
+incorrectly, potentially affecting system suspend or causing warnings.
 
-Record: Severity MEDIUM-HIGH — complete WDS functionality failure over
-MLO.
+Record: Severity: MEDIUM (resource leak affecting power management, no
+crash).
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit:** Enables WDS/4-addr mode to work over MLO connections
-  (currently completely broken)
-- **Risk:** 2-line change to memcpy source, using a well-documented
-  field already used extensively elsewhere. Virtually zero regression
-  risk.
-- **Ratio:** Very favorable — HIGH benefit, VERY LOW risk
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit:** Fixes a real resource leak on error paths, improves power
+  management reliability.
+- **Risk:** Very low — 4 lines added, only on error paths, mirrors
+  existing cleanup patterns.
+- **Ratio:** Favorable. Even though the trigger is uncommon, the fix is
+  trivially safe.
 
-Record: HIGH benefit, VERY LOW risk.
-
----
+Record: Benefit outweighs risk. Minimal fix with no regression
+potential.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
-
+### Step 9.1: EVIDENCE COMPILATION
 **FOR backporting:**
-- Fixes real broken functionality (WDS over MLO completely non-
-  functional)
-- Extremely small fix (2 lines) that is obviously correct
-- Uses `ap_addr` which is documented as "AP MLD address, or BSSID for
-  non-MLO"
-- Follows established precedent (commit 8a9be422f5ff3 did the same fix
-  for tx.c)
-- `ap_addr` is already used ~20+ times in the same file for the same
-  purpose
-- Accepted by mac80211 maintainer Johannes Berg
-- No behavior change for non-MLO configurations
-- All required data structures exist in stable trees (v6.1+)
+- Fixes a real clock resource leak (missing `clk_disable_unprepare()` on
+  error paths)
+- Extremely small and surgical (4 lines, single file, single function)
+- Obviously correct — mirrors existing cleanup pattern in the same
+  function
+- Bug has existed since v4.13-rc1 (2017), affects all stable trees
+- Reviewed by Intel ASoC developer, merged by subsystem maintainer
+- No dependencies, self-contained
+- No regression risk
 
 **AGAINST backporting:**
-- No Fixes: or Cc: stable tags (expected for AUTOSEL candidates)
-- MLO is relatively new and may not have many stable users yet
-- Not a crash/security/corruption bug — it's a functional regression
-- Part of a series (patch 3/N — other patches may or may not be needed)
+- No user reports of the issue (code-inspection find)
+- Trigger requires error conditions that are uncommon in normal
+  operation
+- Driver-specific (not core kernel)
 
-**UNRESOLVED:**
-- Could not access lore discussion to check if series patches are
-  independent
-- Could not verify exact stable tree code state
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** — reviewed by Intel developer,
+   merged by maintainer
+2. Fixes a real bug? **YES** — clock resource leak on error paths
+3. Important issue? **MEDIUM** — resource leak, not a crash
+4. Small and contained? **YES** — 4 lines, single file
+5. No new features or APIs? **YES** — only adds cleanup calls
+6. Can apply to stable? **YES** — code unchanged since introduction
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — change to documented correct
-   field, accepted by maintainer
-2. **Fixes a real bug?** YES — WDS over MLO doesn't work at all
-3. **Important issue?** MEDIUM-HIGH — complete feature breakage for
-   MLO+WDS users
-4. **Small and contained?** YES — 2 lines in one function
-5. **No new features?** Correct — no new features
-6. **Can apply to stable?** YES — all required structures present in
-   v6.1+
+### Step 9.3: EXCEPTION CATEGORIES
+Not an exception category — this is a straightforward bug fix.
 
-### Step 9.3: Exception Categories
-Not an exception category — this is a standard bug fix.
-
-### Step 9.4: Decision
-The fix is tiny, obviously correct, follows an established pattern from
-the maintainer, fixes real broken functionality, and carries virtually
-zero regression risk. While it's not a crash or security fix, it fixes
-complete feature breakage for WDS over MLO — a real use case for
-enterprise WiFi deployments. The 2-line change is the kind of surgical
-fix that stable trees are designed to accept.
-
----
+### Step 9.4: DECISION
+This is a small, obvious, and safe fix for a real resource leak. The fix
+adds missing `clk_disable_unprepare()` calls on two error paths where
+the clock was already enabled. It's reviewed by the right people, has no
+dependencies, and applies to all stable trees.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Co-developed-by from Qualcomm, SOB from
-  mac80211 maintainer Johannes Berg
-- [Phase 2] Diff analysis: 2 lines changed in
-  `ieee80211_send_4addr_nullfunc()`, changing memcpy source from
-  `sdata->deflink.u.mgd.bssid` to `sdata->vif.cfg.ap_addr`
-- [Phase 3] git blame: Buggy lines introduced by bfd8403adddd09 (May
-  2022, Johannes Berg), confirmed in v6.1 via `git merge-base --is-
-  ancestor`
-- [Phase 3] Confirmed precedent commit 8a9be422f5ff3 exists doing same
-  fix pattern for tx.c
-- [Phase 3] `ap_addr` field introduced by b65567b03c9502, confirmed
-  present in v6.1 and v6.6
-- [Phase 5] Found 2 callers: mlme.c:6555 (assoc path) and cfg.c:298
-  (interface config)
-- [Phase 5] Verified `vif.cfg.ap_addr` is used extensively in mlme.c
-  (~20+ instances) for same purpose
-- [Phase 5] Verified `ap_addr` documented as "AP MLD address, or BSSID
-  for non-MLO connections"
-- [Phase 6] Confirmed buggy code and required structures exist in v6.1.y
-  and v6.6.y stable trees
-- [Phase 8] Failure mode: WDS completely non-functional over MLO,
-  severity MEDIUM-HIGH
-- UNVERIFIED: Could not access lore discussion to check series
-  independence (anti-bot protection)
-- UNVERIFIED: Exact patch applicability to specific stable tree branches
-  not tested
+- [Phase 1] Parsed tags: Reviewed-by Cezary Rojewski (Intel), merged by
+  Mark Brown (ASoC maintainer)
+- [Phase 2] Diff analysis: 4 lines added, two `if (ctx->mclk)
+  clk_disable_unprepare(ctx->mclk)` blocks on error paths
+- [Phase 3] git blame: buggy code introduced in c25695ae88ce26
+  (v4.13-rc1, 2017), present in all stable trees
+- [Phase 3] git show c25695ae88ce26: confirmed original commit added
+  MCLK handling without error path cleanup
+- [Phase 3] git describe --contains c25695ae88ce26:
+  v4.13-rc1~142^2~1^2~5^2~8 — confirmed it's been in mainline since
+  v4.13
+- [Phase 3] git log --oneline -20 -- file: no prior MCLK leak fix found
+- [Phase 4] b4 dig: could not find commit by message-id in local tree;
+  lore blocked by bot protection
+- [Phase 5] DAPM widget registration at lines 114-116 confirms
+  `platform_clock_control` is called on every audio stream start/stop
+- [Phase 5] DAPM routes at lines 130-133 confirm all audio paths depend
+  on Platform Clock
+- [Phase 5] Grep for clk_disable_unprepare in sibling drivers confirms
+  the same cleanup pattern is expected
+- [Phase 6] Code at the fix site is essentially unchanged since
+  c25695ae88ce26 — clean apply expected
+- [Phase 8] Failure mode: clock resource leak preventing proper power
+  management, severity MEDIUM
+- UNVERIFIED: Could not access lore.kernel.org discussion for reviewer
+  commentary on stable suitability
 
 **YES**
 
- net/mac80211/mlme.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/intel/boards/cht_bsw_rt5672.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 68da06434bb5d..200a075c97c9c 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -2496,9 +2496,9 @@ void ieee80211_send_4addr_nullfunc(struct ieee80211_local *local,
- 	fc = cpu_to_le16(IEEE80211_FTYPE_DATA | IEEE80211_STYPE_NULLFUNC |
- 			 IEEE80211_FCTL_FROMDS | IEEE80211_FCTL_TODS);
- 	nullfunc->frame_control = fc;
--	memcpy(nullfunc->addr1, sdata->deflink.u.mgd.bssid, ETH_ALEN);
-+	memcpy(nullfunc->addr1, sdata->vif.cfg.ap_addr, ETH_ALEN);
- 	memcpy(nullfunc->addr2, sdata->vif.addr, ETH_ALEN);
--	memcpy(nullfunc->addr3, sdata->deflink.u.mgd.bssid, ETH_ALEN);
-+	memcpy(nullfunc->addr3, sdata->vif.cfg.ap_addr, ETH_ALEN);
- 	memcpy(nullfunc->addr4, sdata->vif.addr, ETH_ALEN);
+diff --git a/sound/soc/intel/boards/cht_bsw_rt5672.c b/sound/soc/intel/boards/cht_bsw_rt5672.c
+index 359723f2700e4..57d6997eb12ff 100644
+--- a/sound/soc/intel/boards/cht_bsw_rt5672.c
++++ b/sound/soc/intel/boards/cht_bsw_rt5672.c
+@@ -77,6 +77,8 @@ static int platform_clock_control(struct snd_soc_dapm_widget *w,
+ 				CHT_PLAT_CLK_3_HZ, 48000 * 512);
+ 		if (ret < 0) {
+ 			dev_err(card->dev, "can't set codec pll: %d\n", ret);
++			if (ctx->mclk)
++				clk_disable_unprepare(ctx->mclk);
+ 			return ret;
+ 		}
  
- 	IEEE80211_SKB_CB(skb)->flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
+@@ -85,6 +87,8 @@ static int platform_clock_control(struct snd_soc_dapm_widget *w,
+ 			48000 * 512, SND_SOC_CLOCK_IN);
+ 		if (ret < 0) {
+ 			dev_err(card->dev, "can't set codec sysclk: %d\n", ret);
++			if (ctx->mclk)
++				clk_disable_unprepare(ctx->mclk);
+ 			return ret;
+ 		}
+ 	} else {
 -- 
 2.53.0
 
