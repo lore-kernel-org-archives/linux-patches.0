@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F53534107F;
-	Mon, 20 Apr 2026 16:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDCC333445;
+	Mon, 20 Apr 2026 16:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701565; cv=none; b=cSaZPSeLddKaEwCmyRS+uBB/Hj+EEDVzwOk4lKhWMPXSJ1jyW5gUOQlccuh00dBLjOaAP8Oj9iYS1l7jeBNyVW5IwBiuFF/p0qS7JFzgX52P46VD2rT2G21WQozLTXfdZcnrHdtevwyzUKmjFRTFMnQQVUQdh0+TSqrMR/MstDQ=
+	t=1776701567; cv=none; b=AVUOb2TFm+wYA4l1bUiEnA9wnATpE2OOYZvlprE3K88ob/6RC7D5wpZAumNhlGBlozvlenJjDbOyTDFlArgFj6T/HG/nPPoSi6Fu/iuId1cUzZpOOxxOLz5NqnN2/6EVQJNawkJ+8c0XKYhxTAfUe/5LEaKMQAtfh/SRPLBB5Eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701565; c=relaxed/simple;
-	bh=Ao6p2bksbJxN0X8Otx3vvrBs+x7N09eKMN/YEM6cZQQ=;
+	s=arc-20240116; t=1776701567; c=relaxed/simple;
+	bh=Qk3mS6h4VVL//FG8zMMUyIv+v1oib4pJ5DqThtdTPp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h++deFL2J+Bde9x/tDUiW8uqI5SIVHHlJb6WavyaD/2cM/MTZ8jtlL+tm08n+b6zDyf62xpSPTMSihldiSDIxPD/Cqn5I2/2zjGeVW8IDM3oiONLWLCNdIJ3WW59AJJC9jNSPxjiYhduSiP2He4BR9r9K1nUb7XzDxr8gbCrLQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYynj9IH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kSirUUJv3vE9h11+AwcJMpp63IyBrh+eW+beuW9iV34f5TBvvdGVD/vrl48k6E5xl+36lrnaL46q977HQgYmBUEGlRkmEWUAzfIAnwhdqrVGtN9zVd9FU5A1VXefC5FvZ+potRXhN3FR/oi7BGyVKKX+c1DhmQRwOgk3hTTaqJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AK3p7Q5M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYynj9IH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E1EC19425;
-	Mon, 20 Apr 2026 16:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AK3p7Q5M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7CCC19425;
+	Mon, 20 Apr 2026 16:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701565;
-	bh=Ao6p2bksbJxN0X8Otx3vvrBs+x7N09eKMN/YEM6cZQQ=;
+	s=korg; t=1776701567;
+	bh=Qk3mS6h4VVL//FG8zMMUyIv+v1oib4pJ5DqThtdTPp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYynj9IHAeDnTUBkUHEMFbeLGo8KAn9vc7+OP5jnlMTjVwfLb5qgdmTGaqNwpOwmV
-	 FcKOWoFWKlIds9ROSIRVaEacz5R8pMiZJZO1ejDVwsQQSGnQcB2dL9OAN52x9pdpYH
-	 kCXy/2W55GsfTiMTUOtL/pijz8fqswpS0RabKivk=
+	b=AK3p7Q5M8l7qYEX9tDfBcLbntaCun2htHdZw8HHHK3jitPAyxNzzUJQv2a3WybHV1
+	 EauzOhK9aDVaDA/y7RHul3pQggeKRaraS616ygEZMw4cFNhwdLe2WotHstIOG4XXbq
+	 nqzC/T3KqNFuPStF2VKTAkwyEkiJcKGA4c7Mqxzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com,
-	syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 155/162] media: hackrf: fix to not free memory after the device is registered in hackrf_probe()
-Date: Mon, 20 Apr 2026 17:43:07 +0200
-Message-ID: <20260420153932.665429950@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+c16daba279a1161acfb0@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joseph Qi <jiangqi903@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 156/162] ocfs2: add inline inode consistency check to ocfs2_validate_inode_block()
+Date: Mon, 20 Apr 2026 17:43:08 +0200
+Message-ID: <20260420153932.701091288@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -52,87 +60,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 3b7da2b4d0fe014eff181ed37e3bf832eb8ed258 upstream.
+[ Upstream commit a2b1c419ff72ec62ff5831684e30cd1d4f0b09ee ]
 
-In hackrf driver, the following race condition occurs:
-```
-		CPU0						CPU1
-hackrf_probe()
-  kzalloc(); // alloc hackrf_dev
-  ....
-  v4l2_device_register();
-  ....
-						fd = sys_open("/path/to/dev"); // open hackrf fd
-						....
-  v4l2_device_unregister();
-  ....
-  kfree(); // free hackrf_dev
-  ....
-						sys_ioctl(fd, ...);
-						  v4l2_ioctl();
-						    video_is_registered() // UAF!!
-						....
-						sys_close(fd);
-						  v4l2_release() // UAF!!
-						    hackrf_video_release()
-						      kfree(); // DFB!!
-```
+In 'ocfs2_validate_inode_block()', add an extra check whether an inode
+with inline data (i.e.  self-contained) has no clusters, thus preventing
+an invalid inode from being passed to 'ocfs2_evict_inode()' and below.
 
-When a V4L2 or video device is unregistered, the device node is removed so
-new open() calls are blocked.
-
-However, file descriptors that are already open-and any in-flight I/O-do
-not terminate immediately; they remain valid until the last reference is
-dropped and the driver's release() is invoked.
-
-Therefore, freeing device memory on the error path after hackrf_probe()
-has registered dev it will lead to a race to use-after-free vuln, since
-those already-open handles haven't been released yet.
-
-And since release() free memory too, race to use-after-free and
-double-free vuln occur.
-
-To prevent this, if device is registered from probe(), it should be
-modified to free memory only through release() rather than calling
-kfree() directly.
-
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6ffd76b5405c006a46b7
-Reported-by: syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1b20958f93d2d250727
-Fixes: 8bc4a9ed8504 ("[media] hackrf: add support for transmitter")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://lkml.kernel.org/r/20251023141650.417129-1-dmantipov@yandex.ru
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+c16daba279a1161acfb0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c16daba279a1161acfb0
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Joseph Qi <jiangqi903@gmail.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 7bc5da4842be ("ocfs2: fix out-of-bounds write in ocfs2_write_end_inline")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/hackrf/hackrf.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/ocfs2/inode.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/media/usb/hackrf/hackrf.c
-+++ b/drivers/media/usb/hackrf/hackrf.c
-@@ -1486,7 +1486,7 @@ static int hackrf_probe(struct usb_inter
- 	if (ret) {
- 		dev_err(dev->dev,
- 			"Failed to register as video device (%d)\n", ret);
--		goto err_v4l2_device_unregister;
-+		goto err_v4l2_device_put;
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1419,6 +1419,14 @@ int ocfs2_validate_inode_block(struct su
+ 		goto bail;
  	}
- 	dev_info(dev->dev, "Registered as %s\n",
- 		 video_device_node_name(&dev->rx_vdev));
-@@ -1515,8 +1515,9 @@ static int hackrf_probe(struct usb_inter
- 	return 0;
- err_video_unregister_device_rx:
- 	video_unregister_device(&dev->rx_vdev);
--err_v4l2_device_unregister:
--	v4l2_device_unregister(&dev->v4l2_dev);
-+err_v4l2_device_put:
-+	v4l2_device_put(&dev->v4l2_dev);
-+	return ret;
- err_v4l2_ctrl_handler_free_tx:
- 	v4l2_ctrl_handler_free(&dev->tx_ctrl_handler);
- err_v4l2_ctrl_handler_free_rx:
+ 
++	if ((le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) &&
++	    le32_to_cpu(di->i_clusters)) {
++		rc = ocfs2_error(sb, "Invalid dinode %llu: %u clusters\n",
++				 (unsigned long long)bh->b_blocknr,
++				 le32_to_cpu(di->i_clusters));
++		goto bail;
++	}
++
+ 	rc = 0;
+ 
+ bail:
 
 
