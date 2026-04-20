@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A582D978C;
-	Mon, 20 Apr 2026 15:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7324B2E093A;
+	Mon, 20 Apr 2026 15:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700353; cv=none; b=n8g4J6/VLjWyHxjirQZeVYlDfU+WwqkTdgKZgEbqGuj66+ML2WzWi0sX6KXrSdmuFP0eGoSLblStzf03yz35DUkF9PfDVGZQOhiF3RS4AKeCE3wTnGwX4Ce+Jnexexr5GpR4MUCEcpCHJwO/UvpezUfL8e4qSemklh+JF/GAFCE=
+	t=1776700356; cv=none; b=b+EBa9vjXNyNjfa+2eDklxhbqTep8P1Df7rSa4r5FicRQ2A52W2rWO6kF3F6XuVkA9UW22cwoBe3nYnfU2VXeRPfO2XtV7u2DHP4P53ShcE70Dpz6UQwqPOC3ux9Jz6KiA7r30f/q+bakHgJhuYrH9YTQ3F1488oQDI1LTZBa10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700353; c=relaxed/simple;
-	bh=6C6Y1NVlJSLe4od0PMuE5eb+aVYRgzXsbgER/06CCwk=;
+	s=arc-20240116; t=1776700356; c=relaxed/simple;
+	bh=wYmkqLFVQx/SjVsrpEaQPKzw35b+jBVo6Z9AzGOeR3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pf9pi91USa/XbNQhSSOs6kETHaRkqkY1/fDozyhEynO+Nbrcs658tWhxKaIEwpFJiHFIvrS39eT4V/Z8ya4hxDegZFj1ZUCGrQoNvARKOAWltxE3wlzZzUbk41u8CrAc9hsFnBhZNav1fDBRkOnTQuiuYn2NARyOStkBEolDW/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mFLE2BN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DVLgwMBqDe6XP8zkC9eNOk8RcGzQMOuT/oCElqBMPpCMTXqubkaRorEo5Ea1YpKoMiadVU2akJAiw1SEnaagi+a4XqI8f7qw9gIVKRU4vIDZyjqJmLdo6g+RNQTuzhZ9x7Bgy7VLkJX6PkRd77cVeijOUxvLSe/nXv/kmswGVBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhuZszYT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mFLE2BN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393E8C19425;
-	Mon, 20 Apr 2026 15:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhuZszYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C015BC19425;
+	Mon, 20 Apr 2026 15:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700353;
-	bh=6C6Y1NVlJSLe4od0PMuE5eb+aVYRgzXsbgER/06CCwk=;
+	s=korg; t=1776700356;
+	bh=wYmkqLFVQx/SjVsrpEaQPKzw35b+jBVo6Z9AzGOeR3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mFLE2BNr/wTjJK2Os8ADir2csuoLnKdpRNwE5bBDHyg4I7j5v34AG6L5ISVVpZgo
-	 laQ5FaVCEQYTBI3T8KfJFfOME7PBzkG6nmxn4xq9GHvL15xR+kuojqSmcSfh0jQ83R
-	 zUFK+4SMtFG1cNIdYNxEVzS3mmoOlnoJUC2aznm0=
+	b=qhuZszYTHEgmjoVssktNysB+jFQMFEvK+BOVGl0HVrcp7SEZS2DmHNxNMA6BwE84a
+	 bLUVn+0psi+TKnRWurdbO7ux/DTzVDzYD4Em3IZGODccvGH5GhKJfag+pIxGHhlL9p
+	 EImkyjmvnt2yV51swVjhuwjPJRTQihtrJq5nVNDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d23888375c2737c17ba5@syzkaller.appspotmail.com,
+	syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com,
+	Daniel Pouzzner <douzzer@mega.nu>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 138/220] crypto: af_alg - Fix page reassignment overflow in af_alg_pull_tsgl
-Date: Mon, 20 Apr 2026 17:41:19 +0200
-Message-ID: <20260420153938.993728494@linuxfoundation.org>
+Subject: [PATCH 6.19 139/220] crypto: algif_aead - Fix minimum RX size check for decryption
+Date: Mon, 20 Apr 2026 17:41:20 +0200
+Message-ID: <20260420153939.029120163@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -53,40 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 31d00156e50ecad37f2cb6cbf04aaa9a260505ef ]
+[ Upstream commit 3d14bd48e3a77091cbce637a12c2ae31b4a1687c ]
 
-When page reassignment was added to af_alg_pull_tsgl the original
-loop wasn't updated so it may try to reassign one more page than
-necessary.
+The check for the minimum receive buffer size did not take the
+tag size into account during decryption.  Fix this by adding the
+required extra length.
 
-Add the check to the reassignment so that this does not happen.
-
-Also update the comment which still refers to the obsolete offset
-argument.
-
-Reported-by: syzbot+d23888375c2737c17ba5@syzkaller.appspotmail.com
-Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
+Reported-by: syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com
+Reported-by: Daniel Pouzzner <douzzer@mega.nu>
+Fixes: d887c52d6ae4 ("crypto: algif_aead - overhaul memory management")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/af_alg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ crypto/algif_aead.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/af_alg.c b/crypto/af_alg.c
-index 7373f7dd8f417..8953e2ffd55ce 100644
---- a/crypto/af_alg.c
-+++ b/crypto/af_alg.c
-@@ -705,8 +705,8 @@ void af_alg_pull_tsgl(struct sock *sk, size_t used, struct scatterlist *dst)
- 			 * Assumption: caller created af_alg_count_tsgl(len)
- 			 * SG entries in dst.
- 			 */
--			if (dst) {
--				/* reassign page to dst after offset */
-+			if (dst && plen) {
-+				/* reassign page to dst */
- 				get_page(page);
- 				sg_set_page(dst + j, page, plen, sg[i].offset);
- 				j++;
+diff --git a/crypto/algif_aead.c b/crypto/algif_aead.c
+index dda15bb05e892..f8bd45f7dc839 100644
+--- a/crypto/algif_aead.c
++++ b/crypto/algif_aead.c
+@@ -144,7 +144,7 @@ static int _aead_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	if (usedpages < outlen) {
+ 		size_t less = outlen - usedpages;
+ 
+-		if (used < less) {
++		if (used < less + (ctx->enc ? 0 : as)) {
+ 			err = -EINVAL;
+ 			goto free;
+ 		}
 -- 
 2.53.0
 
