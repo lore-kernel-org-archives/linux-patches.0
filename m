@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B88A329E46;
-	Mon, 20 Apr 2026 15:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BCE33F5AE;
+	Mon, 20 Apr 2026 15:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700114; cv=none; b=UgpZR7Cr9ehbwCseKtHPFFRjXuuaQRhwPCVvGvN753qQlGkicipN6hzywRUOJTOIWAruW7vPmpnPtGLZgjB/J9LzYurIn+a08z6i6RAa0oq7BOwgsh8U8fwpljp3ykaZ9tWpTxTHNq9EbSlgHxtUCCQRA5UsyMio7O/pJDtowdM=
+	t=1776700116; cv=none; b=muVmex1KRsaChqIeRCOp309zBx9fsAz+lpSpeSJn7MEoXWe32YTg6ENVK3MfSMyaX3vUHg9k70ZlbyZtdXnPLLyJec+Pu14GwYNQ9GHKb2IFQYSPXqSIPucqAFAzBXAaEUn70GO+xgI3VV8i86sri3/q7yp5+zYKHnUCG0A2Jj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700114; c=relaxed/simple;
-	bh=Jg2Iqzf+RCIpN/mLMm1I8MzCNg4FWAKjryfmgcyArnw=;
+	s=arc-20240116; t=1776700116; c=relaxed/simple;
+	bh=os+sk5ednQPg5MJzm2MljkpLk8d0MrgWXDpyvd2fOzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWU5wXnSMKC6rBFfNB2ZZMEAwen62LiTEAZLTa5PcAz8CKO5CU4ja1OToC2FtCLM1sBXdRsx369nOITcmg2WUnVZ9B5A8yVPds4rQMnMbdDrlSxOdWPiq3v2ORV2ERBLkPLHpS5XfFw773SZF0ymkB1DbQg91XbmwxvJUBV2jjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHlWDKcx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+mk5DKlc7WShwuPHcelQnX93siOk82r90jSBVwJXq9B/LY4Ph01wVOrPg5ZG4yodHTwFPjH+oJW/FWo0iYxzhsXQmCkU27wKfyQ+LaJY4Z8PGdrNofPwXN3vNr/1KQ8wBDisHOsp+y/RQcxcXw8TlDxSc8YWlxbisqW/U2VlGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZDjcpm3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHlWDKcx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFD6C19425;
-	Mon, 20 Apr 2026 15:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZDjcpm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F5AC19425;
+	Mon, 20 Apr 2026 15:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700114;
-	bh=Jg2Iqzf+RCIpN/mLMm1I8MzCNg4FWAKjryfmgcyArnw=;
+	s=korg; t=1776700116;
+	bh=os+sk5ednQPg5MJzm2MljkpLk8d0MrgWXDpyvd2fOzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHlWDKcxzvsoPsyyj8ptuFqSXHUOZl4pznpStNPWLkHAxWIGKi6QPlTDROqJHaeyh
-	 bSiAI27YJwoIO1Q2z60XO0lLOClkbP/diXANPRNGfJ7Ik9/JP8d9FNJBXZ56YgKvFY
-	 JpN08EiaE3DGnbunGmgUJ9MnUqCltJ5HET4mfLvk=
+	b=0ZDjcpm388guAs1i79TccbDxi/GVgMc9bE47QRHC1xVs8e2Ladp+0GeY49QFkPe31
+	 r0eSIl5xXLZtt+jW12G+8+vHPsU9wZgjAL3JSc0bftX6vQeRzGGX40tKjLoq8ciKqu
+	 lz439MZMWji9oX39gNZ+DmXyZ8ubbBPBmxd30bBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel J Blueman <daniel@quora.org>,
+	Ravi Hothi <ravi.hothi@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 048/220] arm64: dts: qcom: hamoa/x1: fix idle exit latency
-Date: Mon, 20 Apr 2026 17:39:49 +0200
-Message-ID: <20260420153935.770067459@linuxfoundation.org>
+Subject: [PATCH 6.19 049/220] arm64: dts: qcom: qcm6490-idp: Fix WCD9370 reset GPIO polarity
+Date: Mon, 20 Apr 2026 17:39:50 +0200
+Message-ID: <20260420153935.805732527@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,47 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel J Blueman <daniel@quora.org>
+From: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
 
-[ Upstream commit 3ecea84d2b90bbf934d5ca75514fa902fd71e03f ]
+[ Upstream commit b7df21c59739cceb7b866c6c5e8a6ba03875ab71 ]
 
-Designs based on the Qualcomm X1 Hamoa reference platform report:
-driver: Idle state 1 target residency too low
+The WCD9370 audio codec reset line on QCM6490 IDP should be active-low, but
+the device tree described it as active-high. As a result, the codec is
+kept in reset and fails to reset the SoundWire, leading to timeouts
+and ASoC card probe failure (-ETIMEDOUT).
 
-This is because the declared X1 idle entry plus exit latency of 680us
-exceeds the declared minimum 600us residency time:
-  entry-latency-us = <180>;
-  exit-latency-us = <500>;
-  min-residency-us = <600>;
+Fix the reset GPIO polarity to GPIO_ACTIVE_LOW so the codec can properly
+initialize.
 
-Fix this to be 320us so the sum of the entry and exit latencies matches
-the downstream 500us exit latency, as directed by Maulik.
-
-Tested on a Lenovo Yoga Slim 7x with Qualcomm X1E-80-100.
-
-Fixes: 2e65616ef07f ("arm64: dts: qcom: x1e80100: Update C4/C5 residency/exit numbers")
-Signed-off-by: Daniel J Blueman <daniel@quora.org>
+Fixes: aa04c298619f ("arm64: dts: qcom: qcm6490-idp: Add WSA8830 speakers and WCD9370 headset codec")
+Signed-off-by: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260220124626.8611-1-daniel@quora.org
+Link: https://lore.kernel.org/r/20260220090220.2992193-1-ravi.hothi@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/hamoa.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-index 9e0934b302c3e..f1ebb99d94241 100644
---- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
-+++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-@@ -269,7 +269,7 @@ cluster_c4: cpu-sleep-0 {
- 				idle-state-name = "ret";
- 				arm,psci-suspend-param = <0x00000004>;
- 				entry-latency-us = <180>;
--				exit-latency-us = <500>;
-+				exit-latency-us = <320>;
- 				min-residency-us = <600>;
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index 089a027c57d5c..b2f00e107643d 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -177,7 +177,7 @@ wcd9370: audio-codec-0 {
+ 		pinctrl-0 = <&wcd_default>;
+ 		pinctrl-names = "default";
+ 
+-		reset-gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
++		reset-gpios = <&tlmm 83 GPIO_ACTIVE_LOW>;
+ 
+ 		vdd-buck-supply = <&vreg_l17b_1p7>;
+ 		vdd-rxtx-supply = <&vreg_l18b_1p8>;
 -- 
 2.53.0
 
