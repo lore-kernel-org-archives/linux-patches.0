@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BD143DA26;
-	Mon, 20 Apr 2026 13:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EC743DA48;
+	Mon, 20 Apr 2026 13:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691799; cv=none; b=abPZVGn3/RtA5vCo/OiS7I54ynb3fwudSHLf+YD5IrC+wMF0h6T7/7F7prdooKRr2Dcxc2yHm5nyNJvoaksZRZVg82Gs7rqrY+Y4nDZ4p59i2E/laEM8Jf8zGq9EKZS/d3e2iOOEZWyybaMmTX0e1MZW2niNie/me8yyzL/Tstg=
+	t=1776691800; cv=none; b=bkNaDJKgimmBdx2DdKFxGo4c6e8g5ta5lXghT87TrQe+T9B03Z5ZxGlOWwkGUHwQfF6bSlu1YHPwuDhLtCkjSy29WGCW9ilyL01X3e3n6LgkBhNz4g9Wjw9l+7Zn2/+3yY3ViUACPNivcNNOlBSxJq50xYMCSenOh4125An5Xo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691799; c=relaxed/simple;
-	bh=JDWJGiM6aOLHlB0Z5OiIY/34rqLyGSQTW/tZJy53How=;
+	s=arc-20240116; t=1776691800; c=relaxed/simple;
+	bh=9gmm8hE1FEqgRq6dxa1smE9VP0HArrH4lZWol0kVoBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H0wgudoz/up7+SVsMeZIwyDg26W/Ul43iwnPo5tUbPK3GmmQl4zifFJ2ZamLDpHxPKTkpudN3Oycnck3fqEjNW0dBVd4Iki1diNYohWZh90CXKyOvOxp1ltYCg/Kw9xp3WTc6uzCEKWSMG4rcwX+CrKxCzwlXdOVf6rJqUwZTCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lHogR+Bs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oa2v4lNjtv8ed8kXS1j7eQSJXRwJ3QqaWJwQ9x5nLfivDHUWvknp3JJjW3uB31hZEX8XK3IbH2cW383+CgCVNY+WY3fvsJjr61/QFnmFRVst0ryT0FbtSHFxXsCSgFSgg2UDCSONyLOlg5Y+Ttw3Ye/xe5ddWB7qmyy6t7qhPKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CZC7rsRp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lHogR+Bs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B77C19425;
-	Mon, 20 Apr 2026 13:29:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CZC7rsRp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2795FC2BCB7;
+	Mon, 20 Apr 2026 13:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691798;
-	bh=JDWJGiM6aOLHlB0Z5OiIY/34rqLyGSQTW/tZJy53How=;
+	s=k20201202; t=1776691800;
+	bh=9gmm8hE1FEqgRq6dxa1smE9VP0HArrH4lZWol0kVoBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lHogR+Bs5q1KG/kPhyvh4juNcsgGnNFC9wkWSFvqS/mK61kbG5QSbPThabS/LBkNS
-	 Ts3H5alfhX9x65YKG4m7alNocJEEGzNa6Ks67TitmoswewiSnfFNUvnrDUtuywDeai
-	 KuP/fd9wsjMZnGF/oLF6FONUYAUxTNCN//mjozgpRUZIUK0vOHTgztmG++Jc7MQ7GY
-	 a5zSaC6KPWGTrP4wRDu+FH5hgrxrC5HVo6NRWhd4LUyOB3Vk8CGkenHfSFgpnda6CQ
-	 7a0FyF5q0G75awdbbGJ/HDRYWN30fpfSZi+dFDyTIXpWxdI1Bk/RCHA3AK86vZ7tSL
-	 Ka74IP3IKIPAQ==
+	b=CZC7rsRpp4kR7W1uWS2fvSPp2BpSFCNG0of0kKwwJNIK+RwysAf0/boeH4znnUqm2
+	 bIJd2QcGMtHk6kZnnRAmOK4wSAmtrk8PEQHvRjw40ULAdzeEepLtXCVr0/0noeED5P
+	 RQpysUNYU8khSsZahtQFgczSmOhvV5HcRcpKQCB9yiaZD0tDi0XbmRH4WChqfI8Ndh
+	 TjuRL5qKBOHkReLNvzAbgDLK+36CmRaWVAWtCJEqeozrOPu0VKBDp0PUKzA6pRnbif
+	 XP6IJe9vreQlUNp4BrtVesT6Pue/G/VZO2fY67WxsL2mSjhmegwNgIOMiA3qRnN1Mv
+	 3H3k254vDv//Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	"Colin K. Williams" <colin@li-nk.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	davem@davemloft.net,
+	dsahern@kernel.org,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] firmware: qcom: scm: allow QSEECOM on ASUS Vivobook X1P42100 variant
-Date: Mon, 20 Apr 2026 09:19:54 -0400
-Message-ID: <20260420132314.1023554-200-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ipv6: ioam: fix potential NULL dereferences in __ioam6_fill_trace_data()
+Date: Mon, 20 Apr 2026 09:19:55 -0400
+Message-ID: <20260420132314.1023554-201-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -51,235 +53,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
+X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 26b86610650eaac17bf6574f34d9119151b95483 ]
+[ Upstream commit 4e65a8b8daa18d63255ec58964dd192c7fdd9f8b ]
 
-Enables access to EFI variables on this machine.
+We need to check __in6_dev_get() for possible NULL value, as
+suggested by Yiming Qian.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Tested-by: Colin K. Williams <colin@li-nk.org>
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Link: https://lore.kernel.org/r/20260214-b4-vivobook-v3-2-3c88065bbf77@oldschoolsolutions.biz
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Also add skb_dst_dev_rcu() instead of skb_dst_dev(),
+and two missing READ_ONCE().
+
+Note that @dev can't be NULL.
+
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260402101732.1188059-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Here is my complete analysis:
+Error: Failed to generate final synthesis
 
----
+ net/ipv6/ioam6.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: Subject Line**
-- Subsystem: `firmware: qcom: scm`
-- Action verb: "allow" — enabling a device on an existing allowlist
-- Summary: Add ASUS Vivobook X1P42100 variant to the QSEECOM allowlist
-
-**Step 1.2: Tags**
-- `Reviewed-by: Dmitry Baryshkov` — a well-known Qualcomm subsystem
-  reviewer
-- `Tested-by: Colin K. Williams` — independently tested by another
-  person
-- `Signed-off-by: Jens Glathe` — author, also contributed multiple other
-  QSEECOM allowlist entries (HP Omnibook X14, Lenovo Thinkbook 16,
-  Windows Dev Kit 2023)
-- `Signed-off-by: Bjorn Andersson` — subsystem maintainer who accepted
-  the patch
-- `Link:` to lore.kernel.org (v3 of the patch series)
-- No syzbot, no Fixes: tag (expected)
-
-**Step 1.3: Body**
-- "Enables access to EFI variables on this machine."
-- Without this entry, the ASUS Vivobook X1P42100 variant cannot access
-  EFI variables, which is a fundamental firmware interface needed for
-  boot configuration and UEFI operations.
-
-**Step 1.4: Hidden Bug Fix?**
-This is not a disguised bug fix — it's an explicit hardware allowlist
-addition.
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: Inventory**
-- 1 file changed: `drivers/firmware/qcom/qcom_scm.c`
-- 1 line added: `{ .compatible = "asus,vivobook-s15-x1p4" },`
-- Function: static data table `qcom_scm_qseecom_allowlist[]`
-
-**Step 2.2: Code Flow**
-- Before: The allowlist does not include the X1P42100 variant;
-  `qcom_scm_qseecom_init()` skips QSEECOM initialization on this
-  machine, printing "untested machine, skipping"
-- After: The allowlist includes the variant; QSEECOM is initialized,
-  enabling EFI variable access
-
-**Step 2.3: Bug Mechanism**
-Category: Hardware enablement — adding a device compatible string to an
-existing allowlist table. This is functionally identical to adding a
-PCI/USB device ID.
-
-**Step 2.4: Fix Quality**
-- Obviously correct: a single compatible string added to a static array
-- Minimal/surgical: 1 line
-- Regression risk: effectively zero — only affects the specific ASUS
-  Vivobook X1P42100 variant
-- Pattern is well-established: the allowlist has had dozens of similar
-  additions
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: Blame**
-The allowlist was created in commit `00b1248606ba39` (2023-08-27) and
-first appeared in v6.7. The table structure has been unchanged; only new
-entries have been added over time.
-
-**Step 3.2: No Fixes: tag** — expected.
-
-**Step 3.3: File History**
-Many identical one-line QSEECOM allowlist additions have been made:
-Dell, HP, Lenovo, Microsoft Surface, Huawei, Medion, etc. This is a
-well-trodden pattern.
-
-**Step 3.4: Author**
-Jens Glathe has contributed 3 other QSEECOM allowlist entries (HP
-Omnibook X14, Lenovo Thinkbook 16, Windows Dev Kit 2023). They are a
-regular contributor to this subsystem.
-
-**Step 3.5: Dependencies**
-None. This is a self-contained one-line table addition with no code
-dependencies.
-
-## PHASE 4: MAILING LIST RESEARCH
-
-The Link tag shows this is v3 of the series
-(`20260214-b4-vivobook-v3-2-...`), meaning it went through review
-iterations. The patch was reviewed by Dmitry Baryshkov (prominent
-Qualcomm maintainer) and tested by an independent tester (Colin K.
-Williams). The subsystem maintainer Bjorn Andersson applied it.
-
-Lore was unreachable via WebFetch (Anubis protection), but b4 dig
-confirmed the pattern matches other QSEECOM allowlist additions.
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1-5.4:** The `qcom_scm_qseecom_allowlist` is used in
-`qcom_scm_qseecom_init()` which calls
-`of_machine_device_match(qcom_scm_qseecom_allowlist)` (v6.19+) or the
-open-coded equivalent in earlier kernels. If the machine's compatible
-string isn't in the list, QSEECOM is not initialized, and EFI variable
-access is unavailable.
-
-## PHASE 6: STABLE TREE ANALYSIS
-
-**Step 6.1:** The allowlist was introduced in v6.7. It exists in stable
-trees v6.12.y and later. It does NOT exist in v6.6.y or earlier.
-
-**Step 6.2:** Backport should be clean for v6.12.y+ since the table
-format is identical. The only difference is that v6.19 introduced
-`of_machine_device_match()` instead of the open-coded function, but that
-doesn't affect the table entries.
-
-**Step 6.3:** No related fixes already in stable.
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-- Subsystem: `firmware/qcom` — Qualcomm firmware interface, used by
-  Qualcomm Snapdragon ARM64 laptops
-- Criticality: IMPORTANT — these are real consumer laptops (ASUS
-  Vivobook line)
-- The subsystem is active with regular QSEECOM allowlist additions
-
-## PHASE 8: IMPACT AND RISK
-
-**Step 8.1:** Affected users: owners of ASUS Vivobook X1P42100 variant
-laptops running Linux
-**Step 8.2:** Trigger: every boot — without this entry, EFI variables
-are inaccessible on this hardware
-**Step 8.3:** Failure mode: no EFI variable access = unable to manage
-boot entries, firmware settings. Severity: MEDIUM-HIGH for affected
-users
-**Step 8.4:**
-- Benefit: HIGH — enables core firmware functionality on real consumer
-  hardware
-- Risk: VERY LOW — 1 line, only affects the specific machine
-- Ratio: Excellent
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Evidence FOR:**
-- Classic device ID / allowlist addition — explicitly listed as an
-  exception in stable rules
-- 1-line change, zero regression risk to any other machine
-- Reviewed by Qualcomm subsystem reviewer, tested independently,
-  accepted by maintainer
-- Well-established pattern with dozens of identical precedents
-- Enables fundamental functionality (EFI variable access) on real
-  consumer hardware
-- Author is a known contributor to this exact subsystem
-
-**Evidence AGAINST:**
-- None significant. The only caveat is it doesn't apply to v6.6.y or
-  earlier (the allowlist didn't exist then)
-
-**Stable Rules Checklist:**
-1. Obviously correct? YES — single compatible string in a static table
-2. Fixes real issue? YES — enables EFI access on real hardware
-3. Important? YES — EFI variables are fundamental for boot management
-4. Small and contained? YES — 1 line
-5. No new features? CORRECT — enables existing feature on additional
-   hardware
-6. Applies to stable? YES — clean for v6.12.y+
-
-**Exception Category: Device ID / hardware allowlist addition** —
-explicitly allowed.
-
-## Verification
-
-- [Phase 1] Parsed tags: Reviewed-by Dmitry Baryshkov, Tested-by Colin
-  K. Williams, maintainer SOB Bjorn Andersson
-- [Phase 2] Diff analysis: 1 line added to static
-  `qcom_scm_qseecom_allowlist[]` table
-- [Phase 3] git blame: allowlist created in `00b1248606ba39` (v6.7,
-  2023-08-27), table structure unchanged
-- [Phase 3] git log --grep="QSEECOM": confirmed ~18 similar allowlist
-  additions over time
-- [Phase 3] git log --author="Jens Glathe": author has 3 prior QSEECOM
-  allowlist contributions
-- [Phase 4] b4 dig: lore thread found for similar commits confirming
-  review pattern
-- [Phase 4] Link tag shows v3 — patch went through review iterations
-- [Phase 5] Grep: `qcom_scm_qseecom_allowlist` used in
-  `qcom_scm_qseecom_init()` at line 2352
-- [Phase 6] `git tag --contains 00b1248606ba39`: first in v6.7, exists
-  in v6.12.y+ stable trees
-- [Phase 6] `f83b42705782c` (Simplify with of_machine_device_match) is
-  v6.19+, does not affect table format
-- [Phase 8] 1-line change with zero cross-machine risk, enables EFI on
-  specific hardware
-
-**YES**
-
- drivers/firmware/qcom/qcom_scm.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 8fbc96693a55f..2fe1632f06e90 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -2290,6 +2290,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
-  */
- static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
- 	{ .compatible = "asus,vivobook-s15" },
-+	{ .compatible = "asus,vivobook-s15-x1p4" },
- 	{ .compatible = "asus,zenbook-a14-ux3407qa" },
- 	{ .compatible = "asus,zenbook-a14-ux3407ra" },
- 	{ .compatible = "dell,inspiron-14-plus-7441" },
+diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
+index 8db7f965696aa..12350e1e18bde 100644
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -710,7 +710,9 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 				    struct ioam6_schema *sc,
+ 				    unsigned int sclen, bool is_input)
+ {
+-	struct net_device *dev = skb_dst_dev(skb);
++	/* Note: skb_dst_dev_rcu() can't be NULL at this point. */
++	struct net_device *dev = skb_dst_dev_rcu(skb);
++	struct inet6_dev *i_skb_dev, *idev;
+ 	struct timespec64 ts;
+ 	ktime_t tstamp;
+ 	u64 raw64;
+@@ -721,13 +723,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 
+ 	data = trace->data + trace->remlen * 4 - trace->nodelen * 4 - sclen * 4;
+ 
++	i_skb_dev = skb->dev ? __in6_dev_get(skb->dev) : NULL;
++	idev = __in6_dev_get(dev);
++
+ 	/* hop_lim and node_id */
+ 	if (trace->type.bit0) {
+ 		byte = ipv6_hdr(skb)->hop_limit;
+ 		if (is_input)
+ 			byte--;
+ 
+-		raw32 = dev_net(dev)->ipv6.sysctl.ioam6_id;
++		raw32 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id);
+ 
+ 		*(__be32 *)data = cpu_to_be32((byte << 24) | raw32);
+ 		data += sizeof(__be32);
+@@ -735,18 +740,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 
+ 	/* ingress_if_id and egress_if_id */
+ 	if (trace->type.bit1) {
+-		if (!skb->dev)
++		if (!i_skb_dev)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id);
++			raw16 = (__force u16)READ_ONCE(i_skb_dev->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+ 
+-		if (dev->flags & IFF_LOOPBACK)
++		if ((dev->flags & IFF_LOOPBACK) || !idev)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id);
++			raw16 = (__force u16)READ_ONCE(idev->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+@@ -822,7 +827,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 		if (is_input)
+ 			byte--;
+ 
+-		raw64 = dev_net(dev)->ipv6.sysctl.ioam6_id_wide;
++		raw64 = READ_ONCE(dev_net(dev)->ipv6.sysctl.ioam6_id_wide);
+ 
+ 		*(__be64 *)data = cpu_to_be64(((u64)byte << 56) | raw64);
+ 		data += sizeof(__be64);
+@@ -830,18 +835,18 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 
+ 	/* ingress_if_id and egress_if_id (wide) */
+ 	if (trace->type.bit9) {
+-		if (!skb->dev)
++		if (!i_skb_dev)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id_wide);
++			raw32 = READ_ONCE(i_skb_dev->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
+ 
+-		if (dev->flags & IFF_LOOPBACK)
++		if ((dev->flags & IFF_LOOPBACK) || !idev)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id_wide);
++			raw32 = READ_ONCE(idev->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
 -- 
 2.53.0
 
