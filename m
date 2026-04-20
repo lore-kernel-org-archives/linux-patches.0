@@ -1,46 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D41C3A9632;
-	Mon, 20 Apr 2026 13:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD8A3AC0D0;
+	Mon, 20 Apr 2026 13:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776690986; cv=none; b=i9szW8E/o+VhtBXaVM7lhSASSHMtXuAJxiddvKcqnN1209poTIryBE4qbJinaB9M0/xKNMNBURSS/9YuAPs4xFon6T0g2a7/NqkvCXILZ8GMuuKCHZBYSdnKAjLENB+1zyPTavlrgJ/MhCksEuKbTxXhdAeUGmz+cYVlen2GnO4=
+	t=1776690988; cv=none; b=DMhqURE9fIsi/4W2w8n7Q+Fr7gSyMgjajTVRtJuK4i7/FFObEt7t3qny4yoojKU370AOLP2vJPmmMtSELsXYPt/ZQM4DLjeDenx5VUNwxQyi6RcGmVJ3/NVfN0HNrifutKMWXkBriBpJNJf8wXdebRPeNMBOx4i+sCSl9ykU2MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776690986; c=relaxed/simple;
-	bh=DVU6sSQpDMKb7gtxs0qNmAm09iL05HHL/I4CIuRAQgo=;
+	s=arc-20240116; t=1776690988; c=relaxed/simple;
+	bh=3oJxisr8ElyevvozMhLtDUhxMcjE2+xbpngtCRiv7EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jImd5PYk4+FtWCauvGeykSE300WFZq2qUougMBKgF7V7wvbcDCf9ameg373ajlH0UktOv2SjHUD860YAWWl0yAXpbsV7Nx4oeF70zlwgYGXh/UR0mKz0ctIivrYfLcTSGK5Zk8O+ccipYjJZXxZSEla1CqZAz6MdHF95f1U07RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cr7UtpmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hzXZlpuHfJnBgV+rmY9n1xcppDooHg6NJU0Oe7GC+psnKadl5ju7K2jJDmGzjepyWCM9vHtLQvyd6D54dFpDu++ehIVbmsQwrl6Ow2KiwFATu9LTOh2Hsblkl3lb+oWOOG8zjBKZFfWcsUo8n4BSsBmgukbdD3HCsM1XR6Y+DZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VhHyvMcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cr7UtpmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F602C2BCB6;
-	Mon, 20 Apr 2026 13:16:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VhHyvMcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C42C2BCB8;
+	Mon, 20 Apr 2026 13:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776690985;
-	bh=DVU6sSQpDMKb7gtxs0qNmAm09iL05HHL/I4CIuRAQgo=;
+	s=k20201202; t=1776690987;
+	bh=3oJxisr8ElyevvozMhLtDUhxMcjE2+xbpngtCRiv7EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cr7UtpmH3De6MI1Mu7O887JwmzdJN8wPtoV0hUSdbkxLKvLoLnMHLuhPyYrBLm+PR
-	 +c+y3SGrslKYKZGTopC47tgCFVic0GjB8wnWZ3IaignUBbkDTjfWa2dEiYInaPi62o
-	 45b/XV4cfvwfcG3QnoJt1jqCee05//28eKPk7eIZyShe7KXhXiim5F+CQm/MqLkkjS
-	 iiGEd+exfg9va0CSdP03dtk3lT9VceJeYDcRz8tIqM7OKOrsU4CFOcN5ju9AWoYMk1
-	 6ElVn20iM0pP2syQhctJi/oMf+NV4/b1v8B+MW7xeErepyl7PqMAl8Ss5pI0+1uUTp
-	 zjFa7Q92+Nbyw==
+	b=VhHyvMcGZeX+BKze+jjgmDoppXZURDf4g/B0ZGyiM9Jd7nSlHdApCG0xpnK5Mqj4w
+	 5+TFKEHa1MG8/7H/6eMLg9CqclDvHoanZQa4+aR1oVtXF2WYVGUctfQ8OL61MJF+P+
+	 OFSqa4nwfKZkYlba5zbLBKIoK80KAOJ8U1VVe6ZpHB+69Gka/M0UjGVksIUgKrMX4+
+	 5r9DLCMsipLWnO4WiQ05yKy2ld5NqbPLX/D7EjSOkV2zZ5yyc0Bjlzb+GIISFt56j9
+	 Iu025j2iN/N6TdksCjaKD9ny/mh0vLy4rNsPhvBVf46GY+KMUGujYoUSrBTZFwJ5am
+	 M/aiHLtDW9eYA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	laurent.pinchart@ideasonboard.com,
+	kieran.bingham+renesas@ideasonboard.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] ASoC: SDCA: Add CS47L47 to class driver
-Date: Mon, 20 Apr 2026 09:08:13 -0400
-Message-ID: <20260420131539.986432-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] media: renesas: vsp1: rpf: Fix crop left and top clamping
+Date: Mon, 20 Apr 2026 09:08:14 -0400
+Message-ID: <20260420131539.986432-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -50,314 +53,408 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit ada32396f90951e12465224c04742607ca56a982 ]
+[ Upstream commit 55823379e61511d534b099949608677d703f709b ]
 
-Add the SoundWire ID for CS47L47 to the class driver.
+The RPF doesn't enforces the alignment constraint on the sink pad
+format, which could have an odd size, possibly down to 1x1. In that
+case, the upper bounds for the left and top coordinates clamping would
+become negative, cast to a very large positive value. Incorrect crop
+rectangle coordinates would then be incorrectly accepted.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260223150256.326143-4-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+A second issue can occur when the requested left and top coordinates are
+negative. They are cast to a large unsigned value, clamped to the
+maximum. While the calculation will produce valid values for the
+hardware, this is not compliant with the V4L2 specification that
+requires values to be adjusted to the closest valid value.
+
+Fix both issues by switching to signed clamping, with an explicit
+minimum to adjust negative values, and adjusting the clamp bounds to
+avoid negative upper bounds.
+
+Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com> # HiHope RZ/G2M
+Link: https://patch.msgid.link/20260318235907.831556-5-laurent.pinchart+renesas@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile my analysis.
+Now let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `ASoC: SDCA`
-- Action verb: "Add" (device ID addition)
-- Summary: Add CS47L47 SoundWire device ID to the SDCA class driver
-
-Record: [ASoC: SDCA] [Add] [SoundWire ID for CS47L47 added to class
-driver device table]
+- Subsystem: `media: renesas: vsp1: rpf`
+- Action verb: "Fix"
+- Summary: Fix crop left and top coordinate clamping in the RPF
+  subdevice
 
 **Step 1.2: Tags**
-- `Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>` -
-  Author, Cirrus Logic employee (device vendor)
-- `Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>` -
-  SoundWire subsystem reviewer
-- `Link: https://patch.msgid.link/20260223150256.326143-4-
-  rf@opensource.cirrus.com` - patch 4 of a series (message numbering
-  indicates patch 3/3 of the content, with 1 being cover letter)
-- `Signed-off-by: Mark Brown <broonie@kernel.org>` - Applied by the ASoC
-  subsystem maintainer
-- No Fixes: tag (expected for a device ID addition)
-- No Cc: stable (expected)
-
-Record: Reviewed by SoundWire expert. Applied by ASoC maintainer. Author
-is from Cirrus Logic (vendor).
+- Tested-by: Niklas Söderlund (Renesas contributor/tester)
+- Reviewed-by: Jacopo Mondi (media subsystem reviewer)
+- Tested-by: Lad Prabhakar (Renesas RZ/G2M platform tester)
+- Link: `https://patch.msgid.link/20260318235907.831556-5-
+  laurent.pinchart+renesas@ideasonboard.com`
+- Signed-off-by: Laurent Pinchart (subsystem author/maintainer)
+- Signed-off-by: Hans Verkuil (V4L2 subsystem co-maintainer)
+- Notable: TWO independent Tested-by tags from different engineers on
+  different platforms, plus a Reviewed-by. No Fixes: tag (expected for
+  autosel candidates). No Reported-by or syzbot.
 
 **Step 1.3: Commit Body**
-The body is minimal: "Add the SoundWire ID for CS47L47 to the class
-driver." This is standard for device ID additions — no bug description
-needed because this is hardware enablement.
-
-Record: Straightforward device ID addition. No bug fix, no failure mode
-described.
+Two distinct bugs described:
+1. When the sink pad format has odd dimensions (e.g. 1x1),
+   `format->width - 2` underflows when used as `unsigned int`, producing
+   a huge value. The `min_t(unsigned int, ...)` then fails to bound the
+   coordinate.
+2. Negative `left`/`top` values (from userspace - `__s32` type) are cast
+   to large unsigned values, clamped to the maximum rather than to the
+   closest valid value (0). This violates the V4L2 specification.
 
 **Step 1.4: Hidden Bug Fix Detection**
-This is not a hidden bug fix. It is a device ID addition to enable new
-hardware (CS47L47 audio codec) on an existing driver. This falls
-squarely into the "NEW DEVICE IDs" exception category.
+This is explicitly labeled "Fix" — no disguise needed.
 
-Record: Not a hidden bug fix. It's a device ID addition — an explicit
-exception category for stable.
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- Files changed: 1 (`sound/soc/sdca/sdca_class.c`)
-- Lines added: 1
-- Lines removed: 0
-- Function modified: None — change is in the `class_sdw_id[]` static
-  data table
-- Scope: Single-line addition to a device ID table — as minimal as
-  possible
-
-Record: [sound/soc/sdca/sdca_class.c +1/-0] [No function logic changed,
-only data table entry added] [Trivial single-line]
+- Single file changed: `drivers/media/platform/renesas/vsp1/vsp1_rwpf.c`
+- Single function modified: `vsp1_rwpf_set_selection()`
+- ~20 lines of net change (added local variables, updated clamping
+  logic, added comments)
+- Scope: single-file surgical fix
 
 **Step 2.2: Code Flow Change**
-- Before: The `class_sdw_id[]` table contains one entry
-  `SDW_SLAVE_ENTRY(0x01FA, 0x4245, 0)` matching one Cirrus Logic device.
-- After: The table has two entries, adding `SDW_SLAVE_ENTRY(0x01FA,
-  0x4747, 0)` for CS47L47.
-- Effect: The SoundWire bus will now match CS47L47 devices to this
-  driver and call `class_sdw_probe()`.
 
-Record: Before: only CS42L45 (0x4245) matched. After: CS47L47 (0x4747)
-also matched. Normal probe path, no error path changes.
+Before:
+```c
+sel->r.left = min_t(unsigned int, sel->r.left, format->width - 2);
+sel->r.top = min_t(unsigned int, sel->r.top, format->height - 2);
+```
+
+After:
+```c
+// min_width/min_height computed to avoid negative upper bounds
+sel->r.left = clamp_t(int, sel->r.left, 0, format->width - min_width);
+sel->r.top = clamp_t(int, sel->r.top, 0, format->height - min_height);
+```
 
 **Step 2.3: Bug Mechanism**
-Category (h) — Hardware workarounds/enablement. This is a device ID
-addition, not a bug fix.
+This is a **type/integer overflow bug** (category g: logic/correctness +
+category f: type bugs):
 
-Record: [Device ID addition] [Adds SoundWire slave entry for CS47L47 to
-existing driver's ID table]
+- `struct v4l2_rect` has `__s32 left` and `__s32 top` (confirmed at
+  `include/uapi/linux/videodev2.h:442-447`)
+- `RWPF_MIN_WIDTH = 1` and `RWPF_MIN_HEIGHT = 1` — so format can legally
+  be 1x1
+- For YUV formats, the hardcoded `format->width - 2` becomes `-1` when
+  `width=1`
+- `min_t(unsigned int, ...)` casts this to `0xFFFFFFFF` (~4 billion),
+  making the clamp a no-op
+- Negative `sel->r.left` values (valid `__s32` input) also wrap to huge
+  unsigned values
 
 **Step 2.4: Fix Quality**
-- Obviously correct: Yes — identical pattern to the existing entry, just
-  a different device/part ID
-- Minimal: Yes — exactly 1 line
-- Regression risk: Essentially zero — only affects CS47L47 hardware;
-  cannot impact existing devices
-- No red flags
+- Obviously correct: switches to signed clamping (`clamp_t(int, ...)`
+  with explicit 0 lower bound)
+- Prevents underflow by computing `min_width = min(ALIGN(min_width, 2),
+  format->width)` which guarantees `format->width - min_width >= 0`
+- Minimal/surgical: changes only the clamping logic in one function
+- Very low regression risk: identical behavior for well-formed inputs;
+  only corrects behavior for edge cases
 
-Record: Trivially correct. Zero regression risk for existing devices.
+---
 
-## PHASE 3: GIT HISTORY
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: Blame**
-The device ID table was introduced in commit `2d877d0659cb6` ("ASoC:
-SDCA: Add basic SDCA class driver") by Charles Keepax, November 2025.
-This was merged in v6.19-rc1. The SDCA class driver exists in v7.0.
+- The buggy `min_t(unsigned int, ...)` lines were introduced by commit
+  `e5ad37b64de975` ("[media] v4l: vsp1: Add cropping support", Laurent
+  Pinchart, 2013-08-24) — this is from the v3.12 era
+- The YUV alignment code (which creates the `format->width - 2` problem
+  for odd formats) was added by `85a0638b7855df` (Damian Hobson-Garcia,
+  2015-05-28)
+- Bug has existed since 2013/2015 — present in ALL active stable trees
 
-Record: Driver introduced in v6.19, present in v7.0. Device ID table
-area unchanged since creation.
-
-**Step 3.2: No Fixes: tag** — expected, as this is a device ID addition.
+**Step 3.2: No Fixes: tag present** (expected for autosel)
 
 **Step 3.3: File History**
-Only 3 commits to `sdca_class.c`:
-1. `2d877d0659cb6` - Initial driver
-2. `7a5214f769c7c` - Add suspend support
-3. `da7afdc79cba0` - Add init serialization lock
-
-All are from the same Cirrus Logic team. No conflicting changes.
-
-Record: Clean history, no prerequisites needed beyond the base driver.
+Recent commits to this file are mostly from Laurent Pinchart adding
+colorspace support features. The bug fix is standalone and does not
+depend on any of those feature commits.
 
 **Step 3.4: Author**
-Richard Fitzgerald is a Cirrus Logic engineer, the vendor of the
-CS47L47. He's a regular contributor to the Cirrus Logic sound codec
-drivers (cs35l56, cs42l42 family). This is authoritative — the device
-vendor adding their own device ID.
-
-Record: Author is from the device vendor (Cirrus Logic), regular sound
-subsystem contributor.
+Laurent Pinchart is the original author and subsystem maintainer for the
+VSP1 driver (wrote the file in 2013). He is the most qualified person to
+fix this code.
 
 **Step 3.5: Dependencies**
-This is patch 3/3 of the series "ASoC: SDCA: Initial support for Cirrus
-Logic CS47L47":
-1. `soundwire: intel_auxdevice: Add CS47L47 to wake_capable_list`
-   (supplementary)
-2. `ASoC: soc_sdw_utils: Add device info for CS47L47` (supplementary)
-3. This commit: Add device ID to class driver (core enablement)
+- `clamp_t` macro exists in all stable trees (confirmed: present in
+  v5.15 at `include/linux/minmax.h:124`)
+- `RWPF_MIN_WIDTH`/`RWPF_MIN_HEIGHT` exist in the same file in all
+  versions
+- The fix is standalone — no prerequisites needed
 
-This commit is standalone — it adds the device ID that allows probe. The
-other patches add supplementary features (wake capability, extra device
-info) but are not prerequisites for basic device operation via the class
-driver.
+---
 
-Record: Standalone. Other series patches are supplementary, not required
-for this to work.
+## PHASE 4: MAILING LIST / EXTERNAL RESEARCH
 
-## PHASE 4: MAILING LIST
+**Step 4.1-4.2:** Lore.kernel.org is protected by anti-bot (Anubis),
+direct web fetches failed. b4 dig could not locate the exact commit by
+message-id. However:
+- The patch was reviewed and tested by two independent testers and an
+  experienced reviewer
+- Hans Verkuil (V4L2 co-maintainer) applied it
+- Part of a series (patch 5 of N) but this specific patch is a self-
+  contained bug fix
 
-**Step 4.1-4.5: External Research**
-Lore pages were blocked by anti-scraping, but from patchew.org I
-confirmed:
-- This is patch 3/3 of the series
-- The patch was reviewed by Pierre-Louis Bossart (SoundWire expert)
-- Applied by Mark Brown (ASoC maintainer)
-- No NAKs, no concerns raised
-- Single revision — no v2/v3 needed
+**Step 4.3-4.5:** Could not verify lore discussion directly due to anti-
+bot protection.
 
-Record: Clean review. Applied by maintainer. No concerns raised.
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.5:**
-The only change is in the `class_sdw_id[]` data table. No functions are
-modified. The table is consumed by the SoundWire bus matching
-infrastructure — when a CS47L47 device appears on the bus, the existing
-`class_sdw_probe()` function will be called. This is a well-tested code
-path (already used for the CS42L45 device).
+**Step 5.1: Functions Modified**
+Only `vsp1_rwpf_set_selection()` is modified.
 
-Record: No function logic changed. The existing probe path handles the
-new device ID through standard bus matching.
+**Step 5.2: Callers**
+- Registered as `.set_selection` pad operation in `vsp1_rwpf_pad_ops`
+- Called from userspace via `VIDIOC_SUBDEV_S_SELECTION` ioctl (standard
+  V4L2 path)
+- Called from `vsp1_drm.c:157` during DRM pipeline configuration
+- Both are real-world, commonly exercised code paths on Renesas
+  platforms
+
+**Step 5.3-5.4: Call Chain**
+Userspace → V4L2 ioctl → subdev dispatch → `vsp1_rwpf_set_selection()`
+The buggy path is directly reachable from userspace with arbitrary crop
+rectangle values.
+
+**Step 5.5: Similar Patterns**
+Other `set_selection` implementations in the same driver
+(`uif_set_selection`, `histo_set_selection`, `brx_set_selection`) use
+different clamping logic and are not affected by this same bug.
+
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1:** The SDCA class driver was introduced in v6.19. This v7.0
-stable tree has the driver. The file has had minimal changes (3 total
-commits) and the device ID table area is untouched since creation.
+**Step 6.1: Buggy Code in Stable Trees**
+Verified the exact same buggy lines exist in:
+- **v5.15**: `min_t(unsigned int, sel->r.left, format->width - 2)` at
+  line 225 (path: `drivers/media/platform/vsp1/vsp1_rwpf.c`)
+- **v6.1**: Same code at line 225 (path:
+  `drivers/media/platform/renesas/vsp1/vsp1_rwpf.c`)
+- **v6.6**: Same code at line 225
+- **v6.12**: Same code at line 212
 
-**Step 6.2:** The patch will apply cleanly — the context around the
-device ID table is unchanged from the original driver creation.
+**Step 6.2: Backport Complications**
+- v6.12: Clean apply expected (same API as HEAD)
+- v6.6, v6.1, v5.15: Minor context differences (older API names like
+  `vsp1_entity_get_pad_format` vs `v4l2_subdev_state_get_format`), but
+  the actual changed lines are identical. Straightforward adaptation
+  needed.
 
-**Step 6.3:** No related fixes already in stable for this device.
+**Step 6.3:** No related fixes already in stable for this issue.
 
-Record: Code exists in v7.0 stable. Clean apply expected. No conflicts.
+---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1:** ASoC (ALSA System on Chip) / SDCA — audio codec driver.
-Criticality: IMPORTANT — audio is a core user-facing feature on laptops
-and embedded devices.
+**Step 7.1:**
+- Subsystem: drivers/media (V4L2, Renesas VSP1)
+- Criticality: PERIPHERAL but important — VSP1 is the video processing
+  unit on Renesas R-Car and RZ platforms, used in automotive and
+  industrial embedded systems
 
-**Step 7.2:** Active subsystem with regular contributions from Cirrus
-Logic and Intel teams.
+**Step 7.2:** The VSP1 driver is actively maintained by Laurent Pinchart
+with ongoing feature and fix development.
 
-Record: [ASoC/SDCA audio] [IMPORTANT criticality] [Active subsystem]
+---
 
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1:** Affected users: Anyone with CS47L47 hardware (Cirrus Logic
-audio codec on SoundWire bus). Without this patch, the CS47L47 device
-will not be recognized by the kernel and audio will not work.
+**Step 8.1: Who is Affected**
+Users of Renesas R-Car / RZ platforms with VSP1 hardware who set crop
+rectangles (via V4L2 or DRM APIs).
 
-**Step 8.2:** Trigger: Device enumeration on the SoundWire bus during
-boot. Every user with this hardware is affected, every boot.
+**Step 8.2: Trigger Conditions**
+- Setting crop on an RPF subdevice when the sink pad format has odd or
+  small dimensions (especially 1x1 YUV)
+- Passing negative left/top values in the crop rectangle (legal __s32
+  values per V4L2 API)
+- Reachable from unprivileged userspace via V4L2 ioctls
 
-**Step 8.3:** Without this fix: no audio support for CS47L47 hardware.
-Severity: MEDIUM-HIGH (hardware completely non-functional).
+**Step 8.3: Failure Mode**
+- Incorrect crop coordinates silently accepted → hardware
+  misconfiguration → potential DMA to/from wrong memory regions
+- V4L2 specification non-compliance (negative values adjusted to maximum
+  instead of 0)
+- Severity: **MEDIUM-HIGH** (incorrect hardware operation, potential
+  memory safety implications via DMA)
 
-**Step 8.4:** Risk-benefit:
-- BENEFIT: HIGH — enables an entire audio codec for users with this
-  hardware
-- RISK: VERY LOW — 1 line, identical pattern to existing entry, only
-  affects CS47L47 hardware, zero regression risk for other devices
-- Ratio: Excellent
+**Step 8.4: Risk-Benefit**
+- **Benefit**: HIGH — fixes real integer underflow bug reachable from
+  userspace, prevents hardware misconfiguration
+- **Risk**: VERY LOW — ~20 lines in a single function, changing only the
+  type and method of clamping, well-tested by two independent testers
+- Ratio: strongly favorable
 
-Record: [HIGH benefit] [VERY LOW risk] [Excellent ratio]
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence**
+**Step 9.1: Evidence Summary**
+
 FOR backporting:
-- Classic device ID addition (explicit stable exception category)
-- Single line change, obviously correct
-- Zero regression risk for existing devices
-- From the device vendor (Cirrus Logic)
-- Reviewed by SoundWire expert, applied by ASoC maintainer
-- Enables hardware that is completely non-functional without it
-- Applies cleanly to v7.0
+- Fixes a real signed/unsigned integer underflow bug in crop coordinate
+  clamping
+- The bug allows incorrect hardware configuration, reachable from
+  userspace
+- Fix is small (~20 lines), surgical (single function), obviously
+  correct
+- Written by the subsystem maintainer (Laurent Pinchart)
+- Two independent Tested-by and one Reviewed-by
+- Applied by the V4L2 co-maintainer (Hans Verkuil)
+- Bug exists in ALL active stable trees (since 2013)
+- Uses only standard kernel primitives (`clamp_t`, `min`) available in
+  all stable trees
+- Self-contained — no dependencies on other commits
 
 AGAINST backporting:
-- Not a bug fix per se (hardware enablement)
-- Part of a 3-patch series (but standalone for basic support)
+- No reports of the bug triggering in the wild (no Reported-by)
+- Requires minor adaptation for older stable trees (context differences)
+- Niche hardware (Renesas VSP1) — fewer users than core kernel
 
 **Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? YES — trivial pattern match, reviewed,
-   applied by maintainer
-2. Fixes a real bug? N/A — device ID addition exception
-3. Important issue? YES — hardware completely non-functional without it
-4. Small and contained? YES — 1 line
-5. No new features or APIs? Correct — no new features, just device
-   recognition
-6. Can apply to stable? YES — clean apply
+1. Obviously correct and tested? **YES** — two testers, one reviewer,
+   logic is straightforward
+2. Fixes a real bug? **YES** — integer underflow in crop coordinate
+   clamping
+3. Important issue? **YES** — potential hardware misconfiguration, V4L2
+   spec violation
+4. Small and contained? **YES** — ~20 lines in one function, one file
+5. No new features/APIs? **CORRECT** — no new features
+6. Can apply to stable? **YES** — with minor context adaptation for
+   older trees
 
-**Step 9.3: Exception Category**
-YES — this is a **NEW DEVICE ID** addition to an existing driver. This
-is explicitly listed as an allowed exception for stable trees.
+**Step 9.3: Exception Categories**
+Not applicable — this is a standard bug fix, not a quirk/device-ID/DT
+addition.
 
-**Step 9.4: Decision**
-This is a textbook device ID addition — a single `SDW_SLAVE_ENTRY` line
-added to an existing driver's device table. It enables the CS47L47 audio
-codec to be recognized by the kernel's SDCA class driver. The change is
-trivially correct, carries zero regression risk, and falls into the
-explicit "New Device IDs" exception category for stable.
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Pierre-Louis Bossart, Signed-off-by
-  Mark Brown (maintainer)
-- [Phase 2] Diff analysis: exactly 1 line added —
-  `SDW_SLAVE_ENTRY(0x01FA, 0x4747, 0)` to device ID table
-- [Phase 3] git blame: device ID table introduced in commit
-  2d877d0659cb6 (v6.19), unchanged since
-- [Phase 3] git log: only 3 commits to sdca_class.c, clean history
-- [Phase 3] Author: Richard Fitzgerald is Cirrus Logic (device vendor)
-  engineer, regular contributor
-- [Phase 4] patchew.org: confirmed patch 3/3 of series, clean review, no
-  NAKs
-- [Phase 4] b4 dig: failed to find (commit not in local tree), used web
-  search instead
-- [Phase 4] lore: blocked by anti-scraping (Anubis), used patchew as
-  fallback
-- [Phase 5] No function logic changed — only data table addition
-- [Phase 6] SDCA class driver exists in v7.0 (introduced v6.19), clean
-  apply expected
-- [Phase 6] Confirmed no 0x4747 or CS47L47 references exist in current
-  tree
-- [Phase 7] ASoC subsystem, IMPORTANT criticality
-- [Phase 8] Benefit: HIGH (enables hardware); Risk: VERY LOW (1-line
-  data-only change)
-- UNVERIFIED: Could not read original lore discussion directly due to
-  anti-scraping. Used patchew mirror instead, which showed no concerns.
+- [Phase 1] Parsed tags: Found Tested-by x2 (Niklas Söderlund, Lad
+  Prabhakar), Reviewed-by (Jacopo Mondi), Signed-off-by (Laurent
+  Pinchart + Hans Verkuil)
+- [Phase 2] Diff analysis: ~20 lines changed in
+  `vsp1_rwpf_set_selection()`, replaces `min_t(unsigned int, ...)` with
+  `clamp_t(int, ...)` and adds min_width/min_height bounds
+- [Phase 2] Verified `struct v4l2_rect` has `__s32 left, top` at
+  `include/uapi/linux/videodev2.h:442-447`, confirming signed→unsigned
+  cast bug
+- [Phase 3] git blame: buggy `min_t` lines introduced by
+  `e5ad37b64de975` (2013, v3.12-era); YUV alignment by `85a0638b7855df`
+  (2015)
+- [Phase 3] Author Laurent Pinchart is the original file author and
+  subsystem maintainer (all blame entries)
+- [Phase 3] File history: no prerequisite commits needed
+- [Phase 5] Callers: `vsp1_rwpf_set_selection` registered as
+  `.set_selection` in `vsp1_rwpf_pad_ops:283`, called from userspace
+  V4L2 ioctls and from `vsp1_drm.c:157`
+- [Phase 6] Verified identical buggy code in v5.15:225, v6.1:225,
+  v6.6:225, v6.12:212
+- [Phase 6] Verified `clamp_t` exists in v5.15 at
+  `include/linux/minmax.h:124`
+- [Phase 6] Minor context differences in v5.15/v6.1 (different API
+  names: `vsp1_entity_get_pad_format` vs `v4l2_subdev_state_get_format`)
+  but core buggy lines are identical
+- UNVERIFIED: Could not access lore.kernel.org due to anti-bot
+  protection; reviewer/mailing-list discussion details not verified
+- UNVERIFIED: Whether this is part of a multi-patch series where other
+  patches are also needed (the Link msgid suggests patch 5 of N, but the
+  fix is self-contained based on diff analysis)
+
+The fix is small, surgical, obviously correct, well-tested, authored by
+the subsystem maintainer, fixes a real integer underflow bug present
+since 2013, and meets all stable kernel criteria.
 
 **YES**
 
- sound/soc/sdca/sdca_class.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../media/platform/renesas/vsp1/vsp1_rwpf.c   | 28 ++++++++++++++++---
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/sdca/sdca_class.c b/sound/soc/sdca/sdca_class.c
-index 918b638acb577..55c33ff63ca21 100644
---- a/sound/soc/sdca/sdca_class.c
-+++ b/sound/soc/sdca/sdca_class.c
-@@ -317,6 +317,7 @@ static const struct dev_pm_ops class_pm_ops = {
+diff --git a/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c b/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
+index 9c8085d5d3060..7c7bfb946b779 100644
+--- a/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
++++ b/drivers/media/platform/renesas/vsp1/vsp1_rwpf.c
+@@ -216,6 +216,8 @@ static int vsp1_rwpf_set_selection(struct v4l2_subdev *subdev,
+ 				   struct v4l2_subdev_state *sd_state,
+ 				   struct v4l2_subdev_selection *sel)
+ {
++	unsigned int min_width = RWPF_MIN_WIDTH;
++	unsigned int min_height = RWPF_MIN_HEIGHT;
+ 	struct vsp1_rwpf *rwpf = to_rwpf(subdev);
+ 	struct v4l2_subdev_state *state;
+ 	struct v4l2_mbus_framefmt *format;
+@@ -244,18 +246,36 @@ static int vsp1_rwpf_set_selection(struct v4l2_subdev *subdev,
+ 	format = v4l2_subdev_state_get_format(state, RWPF_PAD_SINK);
  
- static const struct sdw_device_id class_sdw_id[] = {
- 	SDW_SLAVE_ENTRY(0x01FA, 0x4245, 0),
-+	SDW_SLAVE_ENTRY(0x01FA, 0x4747, 0),
- 	{}
- };
- MODULE_DEVICE_TABLE(sdw, class_sdw_id);
+ 	/*
+-	 * Restrict the crop rectangle coordinates to multiples of 2 to avoid
+-	 * shifting the color plane.
++	 * For YUV formats, restrict the crop rectangle coordinates to multiples
++	 * of 2 to avoid shifting the color plane.
+ 	 */
+ 	if (format->code == MEDIA_BUS_FMT_AYUV8_1X32) {
+ 		sel->r.left = ALIGN(sel->r.left, 2);
+ 		sel->r.top = ALIGN(sel->r.top, 2);
+ 		sel->r.width = round_down(sel->r.width, 2);
+ 		sel->r.height = round_down(sel->r.height, 2);
++
++		/*
++		 * The RPF doesn't enforces the alignment constraint on the sink
++		 * pad format, which could have an odd size, possibly down to
++		 * 1x1. In that case, the minimum width and height would be
++		 * smaller than the sink pad format, leading to a negative upper
++		 * bound in the left and top clamping. Clamp the minimum width
++		 * and height to the format width and height to avoid this.
++		 *
++		 * In such a situation, odd values for the crop rectangle size
++		 * would be accepted when clamping the width and height below.
++		 * While that would create an invalid hardware configuration,
++		 * the video device enforces proper alignment of the pixel
++		 * format, and the mismatch will then result in link validation
++		 * failure. Incorrect operation of the hardware is not possible.
++		 */
++		min_width = min(ALIGN(min_width, 2), format->width);
++		min_height = min(ALIGN(min_height, 2), format->height);
+ 	}
+ 
+-	sel->r.left = min_t(unsigned int, sel->r.left, format->width - 2);
+-	sel->r.top = min_t(unsigned int, sel->r.top, format->height - 2);
++	sel->r.left = clamp_t(int, sel->r.left, 0, format->width - min_width);
++	sel->r.top = clamp_t(int, sel->r.top, 0, format->height - min_height);
+ 	sel->r.width = min_t(unsigned int, sel->r.width,
+ 			     format->width - sel->r.left);
+ 	sel->r.height = min_t(unsigned int, sel->r.height,
 -- 
 2.53.0
 
