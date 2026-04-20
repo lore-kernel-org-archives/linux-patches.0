@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8DD439010;
-	Mon, 20 Apr 2026 13:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF3043C04D;
+	Mon, 20 Apr 2026 13:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691788; cv=none; b=uO4nN0WzUjDfpWEqW8rL50jHIBdkAS9KiVUdFmh/s/cFSKlmuLzhAnuhDK/wQ6ZYRg8xzPr34T9P9D36pPTTVNnGuldNv80SSng1MFUfHn004Q5BQFY/5LgyRCMnQWZGOR1uCgO0Rz0scoSCDYjsH5VSIx6Z4G4vLajhBI1OGic=
+	t=1776691790; cv=none; b=M8O2xOPLMuE2a426ciiYdpaqxCencbMJExm5LppAdsJ9HMXeE408OrIbh91u9vObriptJdrqi5BX82GBZShP6MeuvyFg+in68+ZoKJO2+NDS+kP8Zrnt9pAAG+/Egfx19BeTedk15othxLFF/i/+Jkewi9crqi0lnAqzDco7Efo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691788; c=relaxed/simple;
-	bh=6sXsfTwXW3QyGOUavvnOrzsxY+EGiiR7YLO5jM9XyEo=;
+	s=arc-20240116; t=1776691790; c=relaxed/simple;
+	bh=ENPWtoaRZ6I1Cp8jOxId7RI33mNaSVg5gJ18TA5yeBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ODqWgqRa1zlc3FCxf+BUDyUuCJGTrZMUmhGCHQaiwwf/Ev5ayTpKPrvVOvu2fJHyMVFy2nkSOWaZqhZtaYNz2/bQoakAsvdgBuP4vVQibCmQe36PKrfGTSUvaWiYDImFcQJUTKbFjsAYfKWg03Xff/pUNgtuannExUX6SflKypE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EK89t9Bi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZQqBFkLTLmWtww6lAwkVEOirufFkK7Z/P0UUBd50VhN222ISXNkyCbxY/mcpI+l46E8aC+Tq9HM15XndatPcmn+kXI5jbYi6Oouyw76aKcohvt90NwwS7s0TwYCgz8NxByrcQNfxM0FRtE6O6l62DB4FyZRkww6JTS2FJ0Mimqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DzKp3L8c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EK89t9Bi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EE5C2BCC4;
-	Mon, 20 Apr 2026 13:29:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DzKp3L8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C084BC2BCB9;
+	Mon, 20 Apr 2026 13:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691788;
-	bh=6sXsfTwXW3QyGOUavvnOrzsxY+EGiiR7YLO5jM9XyEo=;
+	s=k20201202; t=1776691790;
+	bh=ENPWtoaRZ6I1Cp8jOxId7RI33mNaSVg5gJ18TA5yeBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EK89t9BiWVIGsfQSmLSYRtFmd7hXw2Lj0vRe5X+AIM1ztZRr5baeFb79giXIeZTJ1
-	 CNJqRtyRbdWwI0OwiQRFBORaNzXDld7RuIT4/mV8vZ4Yy8pJIFer02GLwfoXjGqHtC
-	 2jVHTc9+V2kjG47gbbb0ObLkwL8/Ffmk2HuVwWBKhNjfwgZr98jMR1AbgxgmXQeF/h
-	 D45tF+2uCgvJeeu9yBdMylBo0KWTtqmQx9JmGABhXoSps0dErR/hfNmrNXjnQLpSUs
-	 mRuC0sqHai+nlhtMqNcc5xTMTg7u8zJTCGbn0NTFLVevys+G+gsOfzzE3dRzKaP2uH
-	 F6R3CsbNTFdTQ==
+	b=DzKp3L8cxI799QzVEJgkXb4+w/TcsVeu1B9DdT8Wwo0yRlFodZBbxz4jkhA8ciza4
+	 t2V9ACVsmKz8HGOopEgBQ1aK9kvkNTFz0pRTbTl/e86m5wG1Ar9/Ld2VnM06D/epTL
+	 8mqSMQQ7cCM2ue+M5nG1Aomm3Ri0nsnev7zlB6v4RvZuv68ZUYFZiJS8JZmsY2gzYv
+	 TYF1KqGax+E7xmqH4VYlG/WmqvddYWIRd4Nb3ESwGJm+k4TnbPsB/LXNeb4p2YpCZK
+	 vyW4xDDrWU6Yu4Exst4mmsJ95cL56WuLtDYmRxtmQOR+vQuXI26uXUiHWd76EFfsq7
+	 EnTg57jEtaIXA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: songxiebing <songxiebing@kylinos.cn>,
-	Fernando Garcia Corona <fgarcor@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Nikolaos Gkarlis <nickgarlis@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	ebiederm@aristanetworks.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14IAH10
-Date: Mon, 20 Apr 2026 09:19:48 -0400
-Message-ID: <20260420132314.1023554-194-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] rtnetlink: add missing netlink_ns_capable() check for peer netns
+Date: Mon, 20 Apr 2026 09:19:49 -0400
+Message-ID: <20260420132314.1023554-195-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,22 +56,24 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: songxiebing <songxiebing@kylinos.cn>
+From: Nikolaos Gkarlis <nickgarlis@gmail.com>
 
-[ Upstream commit f0541edb2e7333f320642c7b491a67912c1f65db ]
+[ Upstream commit 7b735ef81286007794a227ce2539419479c02a5f ]
 
-The bass speakers are not working, and add the following entry
-in /etc/modprobe.d/snd.conf:
-options snd-sof-intel-hda-generic hda_model=alc287-yoga9-bass-spk-pin
-Fixes the bass speakers.
+rtnl_newlink() lacks a CAP_NET_ADMIN capability check on the peer
+network namespace when creating paired devices (veth, vxcan,
+netkit). This allows an unprivileged user with a user namespace
+to create interfaces in arbitrary network namespaces, including
+init_net.
 
-So add the quick ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN here.
+Add a netlink_ns_capable() check for CAP_NET_ADMIN in the peer
+namespace before allowing device creation to proceed.
 
-Reported-by: Fernando Garcia Corona <fgarcor@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221317
-Signed-off-by: songxiebing <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260405012651.133838-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 81adee47dfb6 ("net: Support specifying the network namespace upon device creation.")
+Signed-off-by: Nikolaos Gkarlis <nickgarlis@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260402181432.4126920-1-nickgarlis@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,21 +81,77 @@ LLM Generated explanations, may be completely bogus:
 
 Error: Failed to generate final synthesis
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/rtnetlink.c | 40 +++++++++++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 2e89528e5cec1..6b53a7d90932d 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7467,6 +7467,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38fd, "ThinkBook plus Gen5 Hybrid", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x391a, "Lenovo Yoga Slim 7 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TXNW2781_I2C),
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index f3b22d5526fe6..f4ed60bd9a256 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3887,28 +3887,42 @@ static int rtnl_newlink_create(struct sk_buff *skb, struct ifinfomsg *ifm,
+ 	goto out;
+ }
+ 
+-static struct net *rtnl_get_peer_net(const struct rtnl_link_ops *ops,
++static struct net *rtnl_get_peer_net(struct sk_buff *skb,
++				     const struct rtnl_link_ops *ops,
+ 				     struct nlattr *tbp[],
+ 				     struct nlattr *data[],
+ 				     struct netlink_ext_ack *extack)
+ {
+-	struct nlattr *tb[IFLA_MAX + 1];
++	struct nlattr *tb[IFLA_MAX + 1], **attrs;
++	struct net *net;
+ 	int err;
+ 
+-	if (!data || !data[ops->peer_type])
+-		return rtnl_link_get_net_ifla(tbp);
+-
+-	err = rtnl_nla_parse_ifinfomsg(tb, data[ops->peer_type], extack);
+-	if (err < 0)
+-		return ERR_PTR(err);
+-
+-	if (ops->validate) {
+-		err = ops->validate(tb, NULL, extack);
++	if (!data || !data[ops->peer_type]) {
++		attrs = tbp;
++	} else {
++		err = rtnl_nla_parse_ifinfomsg(tb, data[ops->peer_type], extack);
+ 		if (err < 0)
+ 			return ERR_PTR(err);
++
++		if (ops->validate) {
++			err = ops->validate(tb, NULL, extack);
++			if (err < 0)
++				return ERR_PTR(err);
++		}
++
++		attrs = tb;
+ 	}
+ 
+-	return rtnl_link_get_net_ifla(tb);
++	net = rtnl_link_get_net_ifla(attrs);
++	if (IS_ERR_OR_NULL(net))
++		return net;
++
++	if (!netlink_ns_capable(skb, net->user_ns, CAP_NET_ADMIN)) {
++		put_net(net);
++		return ERR_PTR(-EPERM);
++	}
++
++	return net;
+ }
+ 
+ static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+@@ -4047,7 +4061,7 @@ static int rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		}
+ 
+ 		if (ops->peer_type) {
+-			peer_net = rtnl_get_peer_net(ops, tb, data, extack);
++			peer_net = rtnl_get_peer_net(skb, ops, tb, data, extack);
+ 			if (IS_ERR(peer_net)) {
+ 				ret = PTR_ERR(peer_net);
+ 				goto put_ops;
 -- 
 2.53.0
 
