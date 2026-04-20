@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C3617A31C;
-	Mon, 20 Apr 2026 15:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B440332E696;
+	Mon, 20 Apr 2026 15:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700310; cv=none; b=UPdbJsA9NeVU2qguUPo5TrorRbMEkkbzIsqFJVbbSgRFvSbsdMESJRsOKRrN+mjT5cikd96Q7DIp9CCM3IyzbtCRgmnUo2x8f1vJqK3FuUHW5DHIiK9Tz3xEVY389iiLbEELcdWIeU1hBbPuBc5hvTSk0lnCu/ksRk6I7OL3FxA=
+	t=1776700312; cv=none; b=BoeCR7x9o7YJcbvqDQyES1OcrTAGxP5uaiixR5NOZ4tfa+bvKHwewN2RtdAzZlo2he4xX5ncl2VZ72kkwzJXmYcAYNSEv4SwnoyxebodMFcubGaUbZsOTVe7bSInWhVCmddlX4IPxtyrv79Q/k8l96O+Z+TbcAAMdiisxETOf48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700310; c=relaxed/simple;
-	bh=VXGXWMLUjLlFODd7fbbKq9xdgOFH/knJ0fT3botpvnY=;
+	s=arc-20240116; t=1776700312; c=relaxed/simple;
+	bh=8rgzU5yaCIMrqgV646aWUqUJmSfh/MM72M2gRh456iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgHY64h+GnhX+7kdZrIfu7q9oOGuGvs5TsEuDdvi8vpBtajeBfc84FUlgn9nb8n/2JIhzlMdCtUoU5IIhFaF+3FeDIuqM40efb+2Rf1bFkDp9yL8jCbyarVYGBBckICFAtiNMQTTgkZqlF578p/SAhC9vbqYUm3WXU7WAO8hHhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwwSoAPm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AxY65vmudFirv1zjCINN2/d1q8bXOkYP6xUQ53W5nFXnrugANOofh9Obxzot8Lb0QBTN/wOOJHuxoQwT23ooFZKx5YHu/sGGh9zIei7OJGKxBDDAXVV7RjtWjkFR4u/ikvMM5+lLATdj90Zc/QaJRYJYqXM/tFeeEAH8ApVN7JI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZmkm9xW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwwSoAPm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B81C19425;
-	Mon, 20 Apr 2026 15:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZmkm9xW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4AFC19425;
+	Mon, 20 Apr 2026 15:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700310;
-	bh=VXGXWMLUjLlFODd7fbbKq9xdgOFH/knJ0fT3botpvnY=;
+	s=korg; t=1776700312;
+	bh=8rgzU5yaCIMrqgV646aWUqUJmSfh/MM72M2gRh456iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GwwSoAPmqaYmXGv3hXsQj/3XqGhOZFEjfdSeGh/7hz27gCyb1J05lZhcFadXXe3Bf
-	 KB76t7OxBXLMYNJMYeKLv/Pr8uI9OXWQbHHR/pP90iStE1fY1N2ymhrTpektyvNCeC
-	 0BefeOuFy9hSSgyw1JNrwHxhXZ0VFxpZyhUZC9Uk=
+	b=hZmkm9xWR1zBB8NjOMox7ltHvhdtGmnDSd1qr9JqFFvibMDiGzhNqwaeCWob4SO0z
+	 ZizboZXJD1y/KVAd5c8gmiAtjUVkaFlFLotUH3YEB10qLwhXUhrjPz0aRES491XPce
+	 m2w+Slam0gZgP43u8c20vPzfHBSSEez87GuhawnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Syed Saba Kareem <Syed.SabaKareem@amd.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 123/220] ASoC: amd: acp: update DMI quirk and add ACP DMIC for Lenovo platforms
-Date: Mon, 20 Apr 2026 17:41:04 +0200
-Message-ID: <20260420153938.457424263@linuxfoundation.org>
+Subject: [PATCH 6.19 106/220] vsock/test: fix send_buf()/recv_buf() EINTR handling
+Date: Mon, 20 Apr 2026 17:40:47 +0200
+Message-ID: <20260420153937.850458592@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -53,56 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Syed Saba Kareem <Syed.SabaKareem@amd.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 6b6f7263d626886a96fce6352f94dfab7a24c339 ]
+[ Upstream commit 24ad7ff668896325591fa0b570f2cca6c55f136f ]
 
-Replace DMI_EXACT_MATCH with DMI_MATCH for Lenovo SKU entries (21YW,
-21YX) so the quirk applies to all variants of these models, not just
-exact SKU matches.
+When send() or recv() returns -1 with errno == EINTR, the code skips
+the break but still adds the return value to nwritten/nread, making it
+decrease by 1. This leads to wrong buffer offsets and wrong bytes count.
 
-Add ASOC_SDW_ACP_DMIC flag alongside ASOC_SDW_CODEC_SPKR in driver_data
-for these Lenovo platform entries, as these platforms use ACP PDM DMIC
-instead of SoundWire DMIC for digital microphone support.
+Fix it by explicitly continuing the loop on EINTR, so the return value
+is only added when it is positive.
 
-Fixes: 3acf517e1ae0 ("ASoC: amd: amd_sdw: add machine driver quirk for Lenovo models")
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Signed-off-by: Syed Saba Kareem <Syed.SabaKareem@amd.com>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20260408133029.1368317-1-syed.sabakareem@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a8ed71a27ef5 ("vsock/test: add recv_buf() utility function")
+Fixes: 12329bd51fdc ("vsock/test: add send_buf() utility function")
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://patch.msgid.link/20260403093251.30662-1-sgarzare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sdw-legacy-mach.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/testing/vsock/util.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-index 2e0f751afe250..9d67443672768 100644
---- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-@@ -99,17 +99,17 @@ static const struct dmi_system_id soc_sdw_quirk_table[] = {
- 		.callback = soc_sdw_quirk_cb,
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "21YW"),
-+			DMI_MATCH(DMI_PRODUCT_SKU, "21YW"),
- 		},
--		.driver_data = (void *)(ASOC_SDW_CODEC_SPKR),
-+		.driver_data = (void *)((ASOC_SDW_CODEC_SPKR) | (ASOC_SDW_ACP_DMIC)),
- 	},
- 	{
- 		.callback = soc_sdw_quirk_cb,
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "21YX"),
-+			DMI_MATCH(DMI_PRODUCT_SKU, "21YX"),
- 		},
--		.driver_data = (void *)(ASOC_SDW_CODEC_SPKR),
-+		.driver_data = (void *)((ASOC_SDW_CODEC_SPKR) | (ASOC_SDW_ACP_DMIC)),
- 	},
- 	{
- 		.callback = soc_sdw_quirk_cb,
+diff --git a/tools/testing/vsock/util.c b/tools/testing/vsock/util.c
+index 9430ef5b8bc3e..1fe1338c79cd1 100644
+--- a/tools/testing/vsock/util.c
++++ b/tools/testing/vsock/util.c
+@@ -344,7 +344,9 @@ void send_buf(int fd, const void *buf, size_t len, int flags,
+ 		ret = send(fd, buf + nwritten, len - nwritten, flags);
+ 		timeout_check("send");
+ 
+-		if (ret == 0 || (ret < 0 && errno != EINTR))
++		if (ret < 0 && errno == EINTR)
++			continue;
++		if (ret <= 0)
+ 			break;
+ 
+ 		nwritten += ret;
+@@ -396,7 +398,9 @@ void recv_buf(int fd, void *buf, size_t len, int flags, ssize_t expected_ret)
+ 		ret = recv(fd, buf + nread, len - nread, flags);
+ 		timeout_check("recv");
+ 
+-		if (ret == 0 || (ret < 0 && errno != EINTR))
++		if (ret < 0 && errno == EINTR)
++			continue;
++		if (ret <= 0)
+ 			break;
+ 
+ 		nread += ret;
 -- 
 2.53.0
 
