@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CF32236E3;
-	Mon, 20 Apr 2026 16:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209B42DE6E3;
+	Mon, 20 Apr 2026 16:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700867; cv=none; b=XcBU95djlckzf0eS5tKHugjeFQsRQBILUFrfS3vO6EguigB9Jh+C7myJgFDomverHbjK2yT8SK6Krdk6djdpeVknNFXuysdlf85qa2Gz/umRcouiyhvys6mg7HW6ARx8AQiXhWLZTILZpMokzv5EOEmAAYpWNYvdbxvGKEpg09o=
+	t=1776700870; cv=none; b=K1yr+TImh0UlYg0jNnx6xVH7bh/+FcjLRHJ6zmXu1rawupWocwKH14eriI7O7diClBBLuHKKikGict62sRymYgt3Javg3SP/l3safhZgGOOUNyp4Ve7f/lzaNOhXolc++thullLOx5zt8e+nnvpp3WFwx+bXQlBK2psDO2C/uTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700867; c=relaxed/simple;
-	bh=hBe5rpssxnRxv2MySEKeDyJgRAtR9+gpxM21YxFwueA=;
+	s=arc-20240116; t=1776700870; c=relaxed/simple;
+	bh=Q590OYleU/QcdzB8s15VkuTsvPeLbD+Fs0RxU5djNOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vBWr8SSXCbpm0TT0oR2I7uBgbkkkb1PnNZ/Duf3udfCN2GmBM6sNNexpE1977XRVcT7gmOeE3CNkNyT0y4iTbyUmx0c9FMxylfTgfXftCeNd8M6s9y+DfEvDftt6KxUUv2ENRaI8ppD/PhdOCqRKmdL3/o+bVozHcHgw8JIXkCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ed7iPznG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ipCzEeTKfh/E4jgMhIC5LOwS5iydPGgsfP4uHO+GFrS8mmRZDz148lCokQ88hASR4MTT0jkBwus4Tbtzxffk4yCfF0XmTCJ2/SA+ahey5nfPRzsbz/2GFwwTzijs0BsypHmWhyck9jvdkx1y2z6Sp0RGYcu8ecb4WXmCsxbNt38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMHX0C50; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ed7iPznG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5F4C19425;
-	Mon, 20 Apr 2026 16:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMHX0C50"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6ABC19425;
+	Mon, 20 Apr 2026 16:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700867;
-	bh=hBe5rpssxnRxv2MySEKeDyJgRAtR9+gpxM21YxFwueA=;
+	s=korg; t=1776700870;
+	bh=Q590OYleU/QcdzB8s15VkuTsvPeLbD+Fs0RxU5djNOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ed7iPznG80ad6IP0Wn4MaZLednQAxGm7jG3HOnuixNOIqcCCf5ZARhG9iWXKubVdG
-	 2llws1fw03P3eLjGP5Ha5iewbIPREuoqlhTRNYeJtHA0JsCAJaW37qVm1pLLXhciIH
-	 0pvVEbdlzmbk75r5LpEc6QbT/AI0ydscFDy9Vq/g=
+	b=EMHX0C50KSAy9fb2vVj778ccQKXXDSTZjbgoPN+w0UOb+ouvS5aQLgXI+9gMjVG+J
+	 TpjcR94/qZ07zWpb+AD/FFZ6j3PmiPhKw9vwbrD2w6TVQnT7DR2F6rJZcGANEyWUzt
+	 /1PJgJB4c49Xyk9oMu05X1RVX/LvtIjg9rsd5iNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 090/198] xsk: fix XDP_UMEM_SG_FLAG issues
-Date: Mon, 20 Apr 2026 17:41:09 +0200
-Message-ID: <20260420153938.847405325@linuxfoundation.org>
+Subject: [PATCH 6.18 091/198] xsk: validate MTU against usable frame size on bind
+Date: Mon, 20 Apr 2026 17:41:10 +0200
+Message-ID: <20260420153938.883198072@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -55,54 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 93e84fe45b752d17a5a46b306ed78f0133bbc719 ]
+[ Upstream commit 36ee60b569ba0dfb6f961333b90d19ab5b323fa9 ]
 
-Currently xp_assign_dev_shared() is missing XDP_USE_SG being propagated
-to flags so set it in order to preserve mtu check that is supposed to be
-done only when no multi-buffer setup is in picture.
+AF_XDP bind currently accepts zero-copy pool configurations without
+verifying that the device MTU fits into the usable frame space provided
+by the UMEM chunk.
 
-Also, this flag has the same value as XDP_UMEM_TX_SW_CSUM so we could
-get unexpected SG setups for software Tx checksums. Since csum flag is
-UAPI, modify value of XDP_UMEM_SG_FLAG.
+This becomes a problem since we started to respect tailroom which is
+subtracted from chunk_size (among with headroom). 2k chunk size might
+not provide enough space for standard 1500 MTU, so let us catch such
+settings at bind time. Furthermore, validate whether underlying HW will
+be able to satisfy configured MTU wrt XSK's frame size multiplied by
+supported Rx buffer chain length (that is exposed via
+net_device::xdp_zc_max_segs).
 
-Fixes: d609f3d228a8 ("xsk: add multi-buffer support for sockets sharing umem")
+Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
 Reviewed-by: Björn Töpel <bjorn@kernel.org>
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://patch.msgid.link/20260402154958.562179-4-maciej.fijalkowski@intel.com
+Link: https://patch.msgid.link/20260402154958.562179-5-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock.h  | 2 +-
- net/xdp/xsk_buff_pool.c | 4 ++++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ net/xdp/xsk_buff_pool.c | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
-index ce587a2256618..7c2bc46c67050 100644
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -14,7 +14,7 @@
- #include <linux/mm.h>
- #include <net/sock.h>
- 
--#define XDP_UMEM_SG_FLAG (1 << 1)
-+#define XDP_UMEM_SG_FLAG BIT(3)
- 
- struct net_device;
- struct xsk_queue;
 diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index aa9788f20d0db..677c7d00f8c32 100644
+index 677c7d00f8c32..a129ce6f1c25f 100644
 --- a/net/xdp/xsk_buff_pool.c
 +++ b/net/xdp/xsk_buff_pool.c
-@@ -259,6 +259,10 @@ int xp_assign_dev_shared(struct xsk_buff_pool *pool, struct xdp_sock *umem_xs,
- 		return -EINVAL;
+@@ -10,6 +10,8 @@
+ #include "xdp_umem.h"
+ #include "xsk.h"
  
- 	flags = umem->zc ? XDP_ZEROCOPY : XDP_COPY;
++#define ETH_PAD_LEN (ETH_HLEN + 2 * VLAN_HLEN  + ETH_FCS_LEN)
 +
-+	if (umem->flags & XDP_UMEM_SG_FLAG)
-+		flags |= XDP_USE_SG;
+ void xp_add_xsk(struct xsk_buff_pool *pool, struct xdp_sock *xs)
+ {
+ 	unsigned long flags;
+@@ -165,8 +167,12 @@ static void xp_disable_drv_zc(struct xsk_buff_pool *pool)
+ int xp_assign_dev(struct xsk_buff_pool *pool,
+ 		  struct net_device *netdev, u16 queue_id, u16 flags)
+ {
++	u32 needed = netdev->mtu + ETH_PAD_LEN;
++	u32 segs = netdev->xdp_zc_max_segs;
++	bool mbuf = flags & XDP_USE_SG;
+ 	bool force_zc, force_copy;
+ 	struct netdev_bpf bpf;
++	u32 frame_size;
+ 	int err = 0;
+ 
+ 	ASSERT_RTNL();
+@@ -186,7 +192,7 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
+ 	if (err)
+ 		return err;
+ 
+-	if (flags & XDP_USE_SG)
++	if (mbuf)
+ 		pool->umem->flags |= XDP_UMEM_SG_FLAG;
+ 
+ 	if (flags & XDP_USE_NEED_WAKEUP)
+@@ -208,8 +214,24 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
+ 		goto err_unreg_pool;
+ 	}
+ 
+-	if (netdev->xdp_zc_max_segs == 1 && (flags & XDP_USE_SG)) {
+-		err = -EOPNOTSUPP;
++	if (mbuf) {
++		if (segs == 1) {
++			err = -EOPNOTSUPP;
++			goto err_unreg_pool;
++		}
++	} else {
++		segs = 1;
++	}
 +
- 	if (umem_xs->pool->uses_need_wakeup)
- 		flags |= XDP_USE_NEED_WAKEUP;
++	/* open-code xsk_pool_get_rx_frame_size() as pool->dev is not
++	 * set yet at this point; we are before getting down to driver
++	 */
++	frame_size = __xsk_pool_get_rx_frame_size(pool) -
++		     xsk_pool_get_tailroom(mbuf);
++	frame_size = ALIGN_DOWN(frame_size, 128);
++
++	if (needed > frame_size * segs) {
++		err = -EINVAL;
+ 		goto err_unreg_pool;
+ 	}
  
 -- 
 2.53.0
