@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242D92C11C6;
-	Mon, 20 Apr 2026 16:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDF1329C6D;
+	Mon, 20 Apr 2026 16:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701261; cv=none; b=EKp6Shla7JbuSi0GV99DO7waYFQWaS15pGYwWwPAtyHYhk9EP/okeBnSvhjwXX/L17sSNKySvuSDFN3g1oVROFMNqGU0okbNwi7N5jofr2vt0vWSR9u0VTCQFlb9KRqEXYHRa+RE7jmUsYADJA+F19qhwVbDqvCeVrtYvFmq3zs=
+	t=1776701264; cv=none; b=LpEG3Kvf+4eVbhK1CiWyHZVq4JadFTtDzJthaiZ0qLQmYc7CmTdYf/Tke0g4Ys1hbQOLIFEpXmp0PezTIPkuQ7C/lNF9eU6pNL+ars9jZ+/T9VyKltbQUlWaa5zx+feidPiJO9LoDa0GRND0Qmau6Y4PKE8z5p4faiS3EA9tzs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701261; c=relaxed/simple;
-	bh=yYVAYPLx5reyrC++WXtBL/zEXlahWPw6V6ZX2/PIUHE=;
+	s=arc-20240116; t=1776701264; c=relaxed/simple;
+	bh=9QsVKQrbqow6pYIbCJh+IvKhXeufHjQg8JVwpWRHpgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSi95X7Kfy0nTfd6pa+1mhzMHzvId2QR7TxF27ABYA8KsRXJpKqolYDDxUhfdBOy8PeDdnc6h1Mn510HChsx9d5CK+0umvbSMLr0cBBkwY5MVt2vhsTI2B16sNfOJrN3rQ17orr1VrNi9FjvDopsBrRMHvPTpNrIjdwFIAoR5JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqOEqrzi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fgLb3zZkPwNY+r4wpExfIF78UR4rnAIWKCY6OLOJAGQfJWD46T8IY57cD0v3D7qoJEmvgtJe6C2SiO0gQQzfMX2zJUX0Tp93bYfJJTsMdGG8YeZZQdc+wpXZe+S8uPo0nk/m0mQrd7bW0HTBD9p5EbYPvHp9MSdrdFE6+F+wX1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/zSjDVM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqOEqrzi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3B1C19425;
-	Mon, 20 Apr 2026 16:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/zSjDVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401EBC2BCB4;
+	Mon, 20 Apr 2026 16:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701261;
-	bh=yYVAYPLx5reyrC++WXtBL/zEXlahWPw6V6ZX2/PIUHE=;
+	s=korg; t=1776701263;
+	bh=9QsVKQrbqow6pYIbCJh+IvKhXeufHjQg8JVwpWRHpgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqOEqrzio+S/KdxNHRxdyMi/HxPlaf4vSiLcKpdv8kjZqaTPaBngryEzTs5tZQPh2
-	 RB1wibRf1Jr8oGy9JAxph+prd4LuwKDvV8ARg3UjDaGrOV59zs82zQEtjjKAmITeRr
-	 VEfmpzcDrei/9ehX+yBypJWD97fpWW323VOrKNn0=
+	b=t/zSjDVMoNxQNjYMDweoZkycAp9Fd0HD8QNvykuLZ7Qwj13UhxvTCyYLTfq+zhhMg
+	 Tn6cQoHBW3DgOv75AbCaTekMSj6RuU3OazWp+XDay0lXrUyJHKb+IztNEzdeXrFuyd
+	 9rP0tH/U/TFP4rhR4x2N43Hsk5FUc6Henx5xqLr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keenan Dong <keenanat2000@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Melissa Wen <mwen@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/162] xfrm: account XFRMA_IF_ID in aevent size calculation
-Date: Mon, 20 Apr 2026 17:41:15 +0200
-Message-ID: <20260420153928.587622754@linuxfoundation.org>
+Subject: [PATCH 6.12 044/162] drm/vc4: Release runtime PM reference after binding V3D
+Date: Mon, 20 Apr 2026 17:41:16 +0200
+Message-ID: <20260420153928.623348811@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -45,65 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keenan Dong <keenanat2000@gmail.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 7081d46d32312f1a31f0e0e99c6835a394037599 ]
+[ Upstream commit aaefbdde9abdc43699e110679c0e10972a5e1c59 ]
 
-xfrm_get_ae() allocates the reply skb with xfrm_aevent_msgsize(), then
-build_aevent() appends attributes including XFRMA_IF_ID when x->if_id is
-set.
+The vc4_v3d_bind() function acquires a runtime PM reference via
+pm_runtime_resume_and_get() to access V3D registers during setup.
+However, this reference is never released after a successful bind.
+This prevents the device from ever runtime suspending, since the
+reference count never reaches zero.
 
-xfrm_aevent_msgsize() does not include space for XFRMA_IF_ID. For states
-with if_id, build_aevent() can fail with -EMSGSIZE and hit BUG_ON(err < 0)
-in xfrm_get_ae(), turning a malformed netlink interaction into a kernel
-panic.
+Release the runtime PM reference by adding pm_runtime_put_autosuspend()
+after autosuspend is configured, allowing the device to runtime suspend
+after the delay.
 
-Account XFRMA_IF_ID in the size calculation unconditionally and replace
-the BUG_ON with normal error unwinding.
-
-Fixes: 7e6526404ade ("xfrm: Add a new lookup key to match xfrm interfaces.")
-Reported-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 266cff37d7fc ("drm/vc4: v3d: Rework the runtime_pm setup")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-1-92defc940a29@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vc4/vc4_v3d.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 6aed7ae900130..9516655e92f19 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2601,7 +2601,8 @@ static inline unsigned int xfrm_aevent_msgsize(struct xfrm_state *x)
- 	       + nla_total_size(4) /* XFRM_AE_RTHR */
- 	       + nla_total_size(4) /* XFRM_AE_ETHR */
- 	       + nla_total_size(sizeof(x->dir)) /* XFRMA_SA_DIR */
--	       + nla_total_size(4); /* XFRMA_SA_PCPU */
-+	       + nla_total_size(4) /* XFRMA_SA_PCPU */
-+	       + nla_total_size(sizeof(x->if_id)); /* XFRMA_IF_ID */
- }
+diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
+index 43f69d74e8761..334d2cfe3433b 100644
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -479,6 +479,7 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
  
- static int build_aevent(struct sk_buff *skb, struct xfrm_state *x, const struct km_event *c)
-@@ -2713,7 +2714,12 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	c.portid = nlh->nlmsg_pid;
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_set_autosuspend_delay(dev, 40); /* a little over 2 frames. */
++	pm_runtime_put_autosuspend(dev);
  
- 	err = build_aevent(r_skb, x, &c);
--	BUG_ON(err < 0);
-+	if (err < 0) {
-+		spin_unlock_bh(&x->lock);
-+		xfrm_state_put(x);
-+		kfree_skb(r_skb);
-+		return err;
-+	}
+ 	return 0;
  
- 	err = nlmsg_unicast(net->xfrm.nlsk, r_skb, NETLINK_CB(skb).portid);
- 	spin_unlock_bh(&x->lock);
 -- 
 2.53.0
 
