@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9418B345729;
-	Mon, 20 Apr 2026 15:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD1033262B;
+	Mon, 20 Apr 2026 15:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700078; cv=none; b=a17mX3W9MVnlU8zVPqSQGrHc/BRQCqTdgDPfO3H2LxSl9j2w/LRFIV3AQj9WWNSbUTAC6lyWMFCzxGr8LLV/JC8Rp9BZKeIFR7arxmim1jkTGey1jPKF7FCWhiwez/XIqudORP7hSNvZmZ8b2c7+5txv0Bt1RueNxIl75xWE/NA=
+	t=1776700081; cv=none; b=Md05YRPMchLSE20yFxnotxN16VR1Pbi7/53qmzTA40JRVn9DY/SmuV/oiex2w+9sumFnmv7vwu+1pxq47IoJD9pkAmAe7BcLzfEyydsb4uhKPZ0m44LNdBk8WiTDGxs3ON+hdBKuLBpo8ePyvs7JWzi16biK7NNfeerB11jD8qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700078; c=relaxed/simple;
-	bh=1U/XrJA0b6QgNRflqXzo0yTGM7A2eEyHd5X7OP8tCKU=;
+	s=arc-20240116; t=1776700081; c=relaxed/simple;
+	bh=igHgcaYwpunnbyqRMGA/1pvj+mSwJ70HwZ1OFuZviik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qArSDuDrNDwABI8wVRn86PR3ygxcPN4gc3r3V9BIYUGwm6xUcuwWIvzABJ7VAQDt0bxW15e8O4iTjtWRAMWG3qzqhWu31AzvPNPSqFVjI8cgKYSTTzcv5IZjxcbKSaqVtSQrdJYhKJtlD775z/CH4ZEjohBaiHW1sSCSFuS3RvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhZKnmwd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=odqO35LbEb6kqmiKocr4CbQIFvpewwPdwBQwqJw4O+EcN9vOh58aSxZxGgDi5k8/EHIu+yR4ip5jjJvttDRQxHNr0Co7YtA1SPlRxVVgx0G++4gcop0uC+rPicJ+d7KXazE+agV2sxWjGlyOWTvb+xx7123d3ftCmG+luifE4HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d37jG5BN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhZKnmwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74DAC2BCB6;
-	Mon, 20 Apr 2026 15:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d37jG5BN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985B6C19425;
+	Mon, 20 Apr 2026 15:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700078;
-	bh=1U/XrJA0b6QgNRflqXzo0yTGM7A2eEyHd5X7OP8tCKU=;
+	s=korg; t=1776700080;
+	bh=igHgcaYwpunnbyqRMGA/1pvj+mSwJ70HwZ1OFuZviik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhZKnmwdEe8/Qtx/78NF827JHJ8/oQj7qlUr4ZpqQXzVqJScY5Q2ELfPhBHGQBHVK
-	 ILYxOLjq2Ra+/CCSbynrDdX0tqjpip31DHdAtXO6XaT5+dt3QMWS1VorjmV29PLW6A
-	 UfU3RrMIA04WYPAEXiI4JUbjRgTLDj3OrmhiBrW0=
+	b=d37jG5BNzNuHBxNpH59twxcxIIu2UO1GfgMSxml+0CEpWYGfZHGqGN/Zm6xybVn6s
+	 y8qs8oAttzvlXJaFXBEfbqlCItPVNza5N/8Hl43Z8Dq2q9dfjqvREN1BihRRKtgxEI
+	 +aE/5vbFfx5RRaiz6nMGV9yaTX2gBaUvQpWfjcqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Donet Tom <donettom@linux.ibm.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 032/220] drm/amdkfd: Fix queue preemption/eviction failures by aligning control stack size to GPU page size
-Date: Mon, 20 Apr 2026 17:39:33 +0200
-Message-ID: <20260420153935.190962667@linuxfoundation.org>
+Subject: [PATCH 6.19 005/220] ALSA: hda/realtek: add quirk for Lenovo Yoga 7 2-in-1 16AKP10
+Date: Mon, 20 Apr 2026 17:39:06 +0200
+Message-ID: <20260420153934.214265692@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,74 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 78746a474e92fc7aaed12219bec7c78ae1bd6156 ]
+[ Upstream commit 7bae956cac0433c4d41aac9f1d04e42694e0b706 ]
 
-The control stack size is calculated based on the number of CUs and
-waves, and is then aligned to PAGE_SIZE. When the resulting control
-stack size is aligned to 64 KB, GPU hangs and queue preemption
-failures are observed while running RCCL unit tests on systems with
-more than two GPUs.
+This machine is equipped with ALC287 and requires the quirk
+ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN to fix the issue
+where the bass speakers are not configured and the speaker
+volume cannot be controlled.
 
-amdgpu 0048:0f:00.0: amdgpu: Queue preemption failed for queue with
-doorbell_id: 80030008
-amdgpu 0048:0f:00.0: amdgpu: Failed to evict process queues
-amdgpu 0048:0f:00.0: amdgpu: GPU reset begin!. Source: 4
-amdgpu 0048:0f:00.0: amdgpu: Queue preemption failed for queue with
-doorbell_id: 80030008
-amdgpu 0048:0f:00.0: amdgpu: Failed to evict process queues
-amdgpu 0048:0f:00.0: amdgpu: Failed to restore process queues
-
-This issue is observed on both 4 KB and 64 KB system page-size
-configurations.
-
-This patch fixes the issue by aligning the control stack size to
-AMDGPU_GPU_PAGE_SIZE instead of PAGE_SIZE, so the control stack size
-will not be 64 KB on systems with a 64 KB page size and queue
-preemption works correctly.
-
-Additionally, In the current code, wg_data_size is aligned to PAGE_SIZE,
-which can waste memory if the system page size is large. In this patch,
-wg_data_size is aligned to AMDGPU_GPU_PAGE_SIZE. The cwsr_size, calculated
-from wg_data_size and the control stack size, is aligned to PAGE_SIZE.
-
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a3e14436304392fbada359edd0f1d1659850c9b7)
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221210
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260313080624.1395362-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_queue.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-index 2822c90bd7be4..b97f4a51db6e3 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-@@ -444,10 +444,11 @@ void kfd_queue_ctx_save_restore_size(struct kfd_topology_device *dev)
- 		    min(cu_num * 40, props->array_count / props->simd_arrays_per_engine * 512)
- 		    : cu_num * 32;
- 
--	wg_data_size = ALIGN(cu_num * WG_CONTEXT_DATA_SIZE_PER_CU(gfxv, props), PAGE_SIZE);
-+	wg_data_size = ALIGN(cu_num * WG_CONTEXT_DATA_SIZE_PER_CU(gfxv, props),
-+				AMDGPU_GPU_PAGE_SIZE);
- 	ctl_stack_size = wave_num * CNTL_STACK_BYTES_PER_WAVE(gfxv) + 8;
- 	ctl_stack_size = ALIGN(SIZEOF_HSA_USER_CONTEXT_SAVE_AREA_HEADER + ctl_stack_size,
--			       PAGE_SIZE);
-+			       AMDGPU_GPU_PAGE_SIZE);
- 
- 	if ((gfxv / 10000 * 10000) == 100000) {
- 		/* HW design limits control stack size to 0x7000.
-@@ -459,7 +460,7 @@ void kfd_queue_ctx_save_restore_size(struct kfd_topology_device *dev)
- 
- 	props->ctl_stack_size = ctl_stack_size;
- 	props->debug_memory_size = ALIGN(wave_num * DEBUGGER_BYTES_PER_WAVE, DEBUGGER_BYTES_ALIGN);
--	props->cwsr_size = ctl_stack_size + wg_data_size;
-+	props->cwsr_size = ALIGN(ctl_stack_size + wg_data_size, PAGE_SIZE);
- 
- 	if (gfxv == 80002)	/* GFX_VERSION_TONGA */
- 		props->eop_buffer_size = 0x8000;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index cbe4bbf9b1171..ce9cb7614bec7 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7613,6 +7613,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	HDA_CODEC_QUIRK(0x17aa, 0x391c, "Lenovo Yoga 7 2-in-1 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	HDA_CODEC_QUIRK(0x17aa, 0x391d, "Lenovo Yoga 7 2-in-1 16AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b7, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.53.0
 
