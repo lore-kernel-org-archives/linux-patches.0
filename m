@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0952B3E4C8A;
-	Mon, 20 Apr 2026 13:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C413E51C0;
+	Mon, 20 Apr 2026 13:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691489; cv=none; b=eHlUCcAaGtYA/2Q7Hfyg1/GPPAgfNPX/zyE7Ku8xN5AWGKIReUP8ZCmGclUNHCZXketzIJJhd2LUCC+tPxHWwNgR+xEJdQ8JhRWJ701alvTQvALjoI+BYR2NN3HMRdig1/AdqBvOYznBfjM3VvK8tc7R4LtkRaUJYYuoOt+SPRk=
+	t=1776691490; cv=none; b=afmIAdUaUN70Q96lyxW5j3H5/nk6d+47R6Di80k4ykOmP7dT1GsDgTv5D4TW6hOlm8Gt5xNeP9NmC9YfjHLqwu5CSBf5pO9ljC/tByQDFJvSXHUd7m+Zo6J2EFL7Fy5xZuIdOK33x+mFLZPPo08BtRYZWGwGqdwPsLZ4Q1+AJrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691489; c=relaxed/simple;
-	bh=K+abhW/puOvk0GiLGkZxTD+eABJaQ50Ve9fCR3OGFe8=;
+	s=arc-20240116; t=1776691490; c=relaxed/simple;
+	bh=7TQ9hUneeJHjOa2d72CSq1bOeMUupaSmCfwh+du39mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BttHDce/vkG0/sx134wWLCfG7mGbvsr/KXyvAsE3HkuQTrNyvHBBa956SxcMb17a4koJzcDTrDiGmae8Zr4wLNTbY/dTxcMHcBhaMqjIHhBZY2Q+ENC2It48+aF6sravsy/LgsRxKk1uaZ+smSVNR1rDGmCfgU5/tP/eQ9Lh52k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vGynKn33; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ffIZBdCNc5iro0Krb7C5kZRyhGiZGGoq32a1n9BGDzLLUP1+A9k2Qt0wW+vz2zTstEPfDQgmsce6x0qLnxTnHeSbAW1oijUU6OkT4DVKeIw48MDikKE2k0BsuSNXoKCKpvNfgBqDAgQgfKsOWlthRjyKdkT/s6NfkBjGMYhf3eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uWiPMPe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vGynKn33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729B6C2BCB6;
-	Mon, 20 Apr 2026 13:24:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uWiPMPe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367D9C19425;
+	Mon, 20 Apr 2026 13:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691488;
-	bh=K+abhW/puOvk0GiLGkZxTD+eABJaQ50Ve9fCR3OGFe8=;
+	s=k20201202; t=1776691490;
+	bh=7TQ9hUneeJHjOa2d72CSq1bOeMUupaSmCfwh+du39mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGynKn337kPdSCNCMySywj+EX3uGFeppBH7nUjEGXJ2OAGP58RLV5PTHJM+0iRYU8
-	 qiKCZGgaXWIx60zYuzEHvqkAu/NzpcaUYev2X8/PkDB9GcEWuo1plck/oVp4rBtgP4
-	 nB4PrkIrws94+yCPqtxzwM+zPxMRcs3chVyNNnCUIqMuCEkvT9FVIY0NMozlEb4K8V
-	 bTfrgJdw6KiWLDqBoQ8UFT98kmfNq/pEaZX6OzJFzmmlG6X8KkHFunxynqrxSJjDQf
-	 3EymuTVS42rWyCzKutsdx8jHbVgKal5bdU7BMrwcdQhMJaPJO23vgTvg/saEo+Jls9
-	 wlFQtSQEabgfA==
+	b=uWiPMPe58YdsgeGZFAV+nH5Pl8qTzR/lFRMDcXe5Ki+ksg+p+ZTSao7YEyLxLRvqT
+	 bfGu3+T92KCSDjhXMBaE2TAev84fQPkcYrXyv23Wkxb2WXTCaz9zI5nVBH+JoWj3fa
+	 KAEtdu37FNWSehCojlz/PrOv7V469iPXit7qa+E52rzZvVmDRePZ/DNjw2Bm4OBooE
+	 4QVGn2+1Hk+dkTRUCoC3pTozPy75NndqdTqlHIbsc9ogRfQkDBQE6x1BEWf9+9FwiC
+	 2BKqF73LJZzr9xgRJqUV4ShAVBa3RJvXWe3G7F1YWtaO9X/MAfuD/klLOiT4oxJ6LN
+	 iBb5dVJagD+0w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brian Nguyen <brian3.nguyen@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+Cc: Mark Brown <broonie@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	intel-xe@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/xe: Skip adding PRL entry to NULL VMA
-Date: Mon, 20 Apr 2026 09:17:33 -0400
-Message-ID: <20260420132314.1023554-59-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ALSA: compress: Refuse to update timestamps for unconfigured streams
+Date: Mon, 20 Apr 2026 09:17:34 -0400
+Message-ID: <20260420132314.1023554-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -58,330 +55,318 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Nguyen <brian3.nguyen@intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 1b12096b4bc5177d685ae098fdb90260ffd5db6b ]
+[ Upstream commit cf6c18cf83e48986ac40a053d09d3c33624135f6 ]
 
-NULL VMAs have no corresponding PTE, so skip adding a PRL entry to avoid
-an unnecessary PRL abort during unbind.
+There are a number of mechanisms, including the userspace accessible
+timestamp and buffer availability ioctl()s, which allow us to trigger
+a timestamp update on a stream before it has been configured. Since
+drivers might rely on stream configuration for reporting of pcm_io_frames,
+including potentially doing a division by the number of channels, and
+these operations are not meaningful for an unconfigured stream reject
+attempts to read timestamps before any configuration is done.
 
-Signed-off-by: Brian Nguyen <brian3.nguyen@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260305171546.67691-8-brian3.nguyen@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Acked-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260401-alsa-unconfigured-tstamp-v1-1-694c2cb5f71d@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile the findings.
+This confirms: `snd_compr_ioctl_avail` calls `snd_compr_calc_avail`
+(line 267) which calls `snd_compr_update_tstamp` **before** the state
+check at line 275. So even the AVAIL ioctl triggers the `->pointer()`
+callback before checking state. The fix in `snd_compr_update_tstamp`
+itself properly guards *both* paths (TSTAMP and AVAIL).
+
+Now let me finalize the analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: drm/xe (Intel Xe GPU driver)
-- **Action verb**: "Skip" - implies avoiding an incorrect/unnecessary
-  operation
-- **Summary**: Skip adding Page Reclaim List (PRL) entry for NULL VMAs
+**Step 1.1: Subject Line**
+- Subsystem: `ALSA: compress`
+- Action verb: "Refuse" (defensive/preventive - indicates preventing
+  incorrect behavior)
+- Summary: Refuse timestamp updates for streams that haven't been
+  configured yet.
 
-### Step 1.2: Tags
-- **Signed-off-by**: Brian Nguyen (author), Matt Roper (xe maintainer
-  applied it)
-- **Reviewed-by**: Matthew Brost (xe subsystem maintainer) - strong
-  quality signal
-- **Link**: `https://patch.msgid.link/20260305171546.67691-8-
-  brian3.nguyen@intel.com` - patch 8 of a series
-- No Fixes: tag (expected for manual review candidates)
-- No Reported-by: (indicates developer-found issue during
-  development/testing)
-- No Cc: stable (expected)
+Record: [ALSA: compress] [Refuse] [Prevent timestamp update on
+unconfigured streams]
 
-### Step 1.3: Commit Body
-- Bug: NULL VMAs have no corresponding PTE, so they shouldn't have PRL
-  entries
-- Consequence: "an unnecessary PRL abort during unbind"
-- When PRL aborts, it invalidates the entire PRL batch and falls back to
-  full PPC (Page-Private Cache) invalidation
+**Step 1.2: Tags**
+- `Signed-off-by: Mark Brown <broonie@kernel.org>` - Author is the ASoC
+  subsystem maintainer
+- `Acked-by: Vinod Koul <vkoul@kernel.org>` - Vinod Koul is the original
+  compress_offload author
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` - Takashi Iwai is the
+  ALSA top-level maintainer
+- `Link:` to patch.msgid.link (the submission)
 
-### Step 1.4: Hidden Bug Fix Detection
-This is a correctness fix disguised as optimization. The word "skip" and
-"unnecessary" might sound like optimization, but the actual issue is:
-NULL VMAs being processed through page reclaim creates incorrect PRL
-entries with bogus physical addresses (address 0), which triggers PRL
-abort for the entire unbind batch.
+Record: Authored by ASoC subsystem maintainer, Acked by compress_offload
+author, merged by ALSA maintainer. Strong review pedigree.
+
+**Step 1.3: Commit Body**
+The commit describes: userspace-accessible timestamp and buffer
+availability ioctls can trigger a timestamp update on a stream before it
+has been configured. Drivers might rely on stream configuration for
+reporting `pcm_io_frames`, including "potentially doing a division by
+the number of channels." Since these operations are not meaningful for
+unconfigured streams, reject attempts to read timestamps before
+configuration.
+
+Record: Bug = calling driver `->pointer()` callback before `set_params`
+has been called. Symptom = potential divide-by-zero in drivers (number
+of channels = 0 before configuration). Root cause = missing state
+validation in `snd_compr_update_tstamp()`.
+
+**Step 1.4: Hidden Bug Fix?**
+This is explicitly a defensive fix preventing a divide-by-zero crash.
+The "Refuse" language hides what is actually a crash prevention fix.
+
+Record: YES, this is a hidden bug fix. The commit message explicitly
+says "doing a division by the number of channels" which is the crash
+mechanism.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Single file**: `drivers/gpu/drm/xe/xe_page_reclaim.c`
-- **+8 lines / -0 lines** (3 doc comment lines, 3 code lines including
-  blank, 2 context lines)
-- **Function modified**: `xe_page_reclaim_skip()`
-- **Scope**: Single-file surgical fix
+**Step 2.1: Inventory**
+- Single file: `sound/core/compress_offload.c`
+- Lines added: ~7 (switch statement checking SNDRV_PCM_STATE_OPEN)
+- Lines removed: 0
+- Function modified: `snd_compr_update_tstamp()`
+- Classification: Single-file surgical fix
 
-### Step 2.2: Code Flow Change
-**Before**: `xe_page_reclaim_skip()` directly accesses
-`vma->attr.pat_index` and checks L3 policy. For NULL VMAs, this produces
-a potentially meaningless L3 policy result, and the function returns
-false (don't skip), leading to PRL entry generation.
+**Step 2.2: Code Flow Change**
+Before: `snd_compr_update_tstamp()` immediately calls
+`stream->ops->pointer()` with no state validation.
+After: A switch statement checks if `stream->runtime->state ==
+SNDRV_PCM_STATE_OPEN` (pre-configuration state) and returns `-EBADFD` if
+so, preventing the `->pointer()` call.
 
-**After**: An `xe_vma_is_null(vma)` check at the top returns true (skip)
-immediately for NULL VMAs, preventing any page reclaim processing.
+**Step 2.3: Bug Mechanism**
+Category: Divide-by-zero / uninitialized state access. When a compress
+offload stream is just opened (state = OPEN), driver parameters
+(channels, sample_container_bytes) are zero. Calling `->pointer()` in
+this state causes drivers like SOF's `sof_compr_pointer()` to execute
+`div_u64(..., sstream->channels * sstream->sample_container_bytes)`
+which divides by zero.
 
-### Step 2.3: Bug Mechanism
-**Category**: Logic/correctness fix. NULL VMAs (`DRM_GPUVA_SPARSE`) have
-PTEs with `XE_PTE_NULL` bit set (bit 9) but no real physical backing.
-When processed through the PRL generation during unbind:
-1. The PTE is non-zero (has `XE_PTE_NULL` set), so it passes the `if
-   (!pte)` check
-2. `generate_reclaim_entry()` extracts `phys_addr = pte &
-   XE_PTE_ADDR_MASK` which gives address 0
-3. This creates bogus PRL entries or triggers PRL abort, invalidating
-   the ENTIRE PRL for the batch
+**Step 2.4: Fix Quality**
+- Obviously correct: The state check pattern is used extensively
+  throughout this same file (lines 276, 391, 446, 652, 846, 946, 998)
+- Minimal: 7 lines added
+- No regression risk: Returning -EBADFD for OPEN state is the standard
+  pattern used by all other ioctls
+- The caller `snd_compr_calc_avail` already has comment "Still need to
+  return avail even if tstamp can't be filled in" showing it handles the
+  error
 
-### Step 2.4: Fix Quality
-- **Obviously correct**: NULL VMAs have no physical backing, so page
-  reclaim is meaningless for them
-- **Minimal/surgical**: 2 lines of actual code
-- **Regression risk**: Near zero - `xe_vma_is_null()` is used throughout
-  the codebase for exactly this purpose
-- **No red flags**: Uses existing well-tested inline function
+## PHASE 3: GIT HISTORY
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.1: Blame**
+- `snd_compr_update_tstamp()` was introduced by commit b21c60a4edd22e
+  (2011, v3.3-era) by Vinod Koul as part of the original
+  compress_offload support
+- The bug has existed since the very beginning (~2011)
 
-### Step 3.1: Blame
-The buggy code (`xe_page_reclaim_skip` without NULL VMA check) was
-introduced by commit `7c52f13b76c531` (2025-12-13) "drm/xe: Optimize
-flushing of L2$ by skipping unnecessary page reclaim". This was part of
-the initial page reclaim feature series.
+**Step 3.2: Fixes tag**
+- No Fixes: tag present (expected for autosel candidates)
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The root cause is `7c52f13b76c53` which didn't
-account for NULL VMAs when implementing the skip logic.
+**Step 3.3: File history**
+- Recent changes to the file: 64-bit timestamp infrastructure
+  (2c92e2fbe9e22c, Sept 2025) made the issue more visible since it
+  changed the pointer callback signature, but the underlying bug
+  predates that
 
-### Step 3.3: File History
-The entire `xe_page_reclaim.c` was introduced in v7.0-rc1 (commit
-`b912138df2993`, 2025-12-13). 6 commits have touched this file. The
-sibling patch from the same series (`38b8dcde23164` "Skip over non leaf
-pte for PRL generation") was already cherry-picked to
-`stable/linux-7.0.y`.
+**Step 3.4: Author**
+- Mark Brown (`broonie@kernel.org`) is the ASoC subsystem maintainer -
+  one of the most trusted kernel developers
 
-### Step 3.4: Author
-Brian Nguyen is the primary developer of the page reclaim feature
-(authored all ~15 page reclaim commits). He is the domain expert for
-this code.
+**Step 3.5: Dependencies**
+- This fix applies independently. It only adds a state check using
+  existing infrastructure (`SNDRV_PCM_STATE_OPEN`).
+- NOTE: In older stable trees (pre-6.12ish), the function signature may
+  differ (uses `snd_compr_tstamp` instead of `snd_compr_tstamp64`), but
+  the state check logic is identical and would need only trivial
+  adaptation.
 
-### Step 3.5: Dependencies
-This fix is standalone - it only adds a guard check to an existing
-function. No prerequisite patches needed. The function
-`xe_vma_is_null()` exists in all v7.0 trees.
+## PHASE 4: MAILING LIST
 
-## PHASE 4: MAILING LIST RESEARCH
+Lore was blocked by Anubis anti-bot protection. However:
+- The patch was v1 (no revisions needed, indicating it was clean from
+  the start)
+- It was Acked by the compress_offload author Vinod Koul
+- Merged directly by ALSA maintainer Takashi Iwai
 
-### Step 4.1: Patch Discussion
-b4 dig found the series as "Page Reclamation Fixes" (v3/v4 series, 3
-patches). The series went through at least 3 revisions (v2, v3, v4)
-before being accepted, indicating thorough review.
-
-### Step 4.2: Reviewers
-- Matthew Brost (xe maintainer) reviewed the patch
-- Stuart Summers was CC'd
-- Applied by Matt Roper (Intel xe maintainer)
-
-### Steps 4.3-4.5:
-Lore.kernel.org was inaccessible due to anti-bot protection. Could not
-verify mailing list discussion details.
+Record: Could not fetch lore discussion. Strong review indicators from
+tags.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.2: Callers
-`xe_page_reclaim_skip()` is called from a single location in `xe_pt.c`
-line 2084:
+**Step 5.1: Functions modified**
+- `snd_compr_update_tstamp()` - the internal timestamp update helper
 
-```2083:2084:drivers/gpu/drm/xe/xe_pt.c
-pt_op->prl = (xe_page_reclaim_list_valid(&pt_update_ops->prl) &&
-             !xe_page_reclaim_skip(tile, vma)) ? &pt_update_ops->prl :
-NULL;
-```
+**Step 5.2: Callers**
+- `snd_compr_calc_avail()` (line 209) - called from AVAIL/AVAIL64 ioctls
+- `snd_compr_tstamp()` (line 760) - called from TSTAMP/TSTAMP64 ioctls
+- Both paths are directly reachable from userspace via ioctl
 
-This is in the unbind preparation path, called whenever a VMA is being
-unbound from a tile.
+**Step 5.3-5.4: Call chain**
+`open() → ioctl(SNDRV_COMPRESS_TSTAMP) → snd_compr_tstamp() →
+snd_compr_update_tstamp() → stream->ops->pointer()` - This is directly
+triggerable by any user with access to the compress device.
 
-### Step 5.3-5.4: Call Chain
-The unbind path is reachable from userspace via
-`ioctl(DRM_IOCTL_XE_VM_BIND)` with `DRM_XE_VM_BIND_OP_UNMAP`. NULL VMAs
-are created via sparse binding operations, which are a normal GPU usage
-pattern.
-
-### Step 5.5: Similar Patterns
-`xe_vma_is_null()` is already checked at multiple points in the Xe
-driver:
-- `xe_pt.c` line 449/479 (page table walk: "null VMA's do not have dma
-  addresses")
-- `xe_vm.c` line 4033 (invalidation: `xe_assert(!xe_vma_is_null(vma))`)
-- `xe_vm_madvise.c` line 209 (madvise: skip null VMAs)
-
-This confirms the established pattern: NULL VMAs need special handling
-throughout the driver.
+**Step 5.5: Similar patterns**
+- Confirmed: `sof_compr_pointer()` does `div_u64(..., sstream->channels
+  * sstream->sample_container_bytes)` at line 384-385
+- `sst_cdev_tstamp()` does `div_u64(fw_tstamp.hardware_counter,
+  stream->num_ch * ...)` at line 348-349
+- Both would divide by zero if called before set_params
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Code Existence in Stable
-- **v7.0.y**: YES - file exists, code is present, fix is needed
-- **v6.13.y and older**: NO - `xe_page_reclaim.c` does not exist
-  (`fatal: path exists on disk, but not in 'v6.13'`)
+**Step 6.1: Code exists in stable trees**
+- The buggy function `snd_compr_update_tstamp()` has existed since 2011
+  (v3.3)
+- Present in ALL active stable trees
+- NOTE: The 64-bit tstamp infrastructure is only in v6.12+. Older trees
+  use `snd_compr_tstamp` struct. The fix concept applies to all, but the
+  exact patch applies cleanly only to v7.0 and trees with the 64-bit
+  tstamp change.
 
-### Step 6.2: Backport Complications
-The fix would apply cleanly to 7.0.y - the file in `stable/linux-7.0.y`
-is identical to the file on the main branch at v7.0.
+**Step 6.2: Backport complications**
+- For v7.0: Applies cleanly (verified function matches exactly)
+- For older trees: Needs minor adaptation (different struct type in
+  signature)
 
-### Step 6.3: Related Fixes in Stable
-The sibling patch `38b8dcde23164` ("Skip over non leaf pte for PRL
-generation") from the same "Page Reclamation Fixes" series was already
-cherry-picked to 7.0.y stable (has explicit `Fixes:` tag).
+**Step 6.3: Related fixes**
+- No similar state check has been applied to `snd_compr_update_tstamp`
+  before
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem
-- **Subsystem**: GPU driver (drivers/gpu/drm/xe) - Intel Xe
-  discrete/integrated GPU
-- **Criticality**: IMPORTANT - Intel Xe GPU users on newer hardware
-  (Lunar Lake, Arrow Lake, etc.)
+**Step 7.1: Subsystem**
+- `sound/core/` - ALSA core, IMPORTANT criticality
+- Compress offload is used by mobile/embedded platforms (Qualcomm, Intel
+  Atom, SOF)
 
-### Step 7.2: Activity
-Very active subsystem with many fixes flowing to 7.0.y stable (20+ xe
-patches already cherry-picked).
+**Step 7.2: Activity**
+- Active subsystem with recent work (64-bit tstamp infrastructure added
+  in 2025)
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Intel Xe GPU users with hardware that supports page reclaim (specific
-newer GPUs with `has_page_reclaim_hw_assist`).
+**Step 8.1: Who is affected**
+- Users of ALSA compressed audio (primarily mobile/embedded, Android,
+  Intel Atom, SOF platforms)
 
-### Step 8.2: Trigger Conditions
-Triggered when unbinding sparse/NULL VMAs, which happens during normal
-GPU memory management operations. Common in graphics workloads using
-sparse resources.
+**Step 8.2: Trigger conditions**
+- Trivially triggerable: open compress device, call TSTAMP or AVAIL
+  ioctl before SET_PARAMS
+- Can be triggered by unprivileged user with access to the audio device
+- No special timing required - completely deterministic
 
-### Step 8.3: Failure Mode
-- PRL abort -> fallback to full PPC (Page-Private Cache) invalidation
-- Severity: MEDIUM - performance degradation (full cache flush instead
-  of targeted reclaim), not crash/corruption
-- The abort invalidates the ENTIRE PRL batch, affecting all VMAs in the
-  unbind operation, not just the NULL one
+**Step 8.3: Failure severity**
+- Divide-by-zero → kernel oops/crash → **CRITICAL**
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: MEDIUM - prevents incorrect PRL processing and
-  unnecessary PRL aborts for all unbind batches containing NULL VMAs
-- **Risk**: VERY LOW - 2-line guard check using existing well-tested
-  function
-- **Ratio**: Favorable
+**Step 8.4: Risk-benefit**
+- BENEFIT: Very high - prevents deterministic kernel crash from
+  userspace
+- RISK: Very low - 7 lines, uses established pattern, authored by ASoC
+  maintainer, acked by compress_offload author
 
-## PHASE 9: SYNTHESIS
+## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
+**Evidence FOR:**
+1. Fixes a divide-by-zero crash triggerable from userspace (CRITICAL)
+2. Extremely small and surgical fix (7 lines)
+3. Uses an existing, well-established pattern (same check at 6+ other
+   locations in the file)
+4. Authored by ASoC subsystem maintainer Mark Brown
+5. Acked by compress_offload original author Vinod Koul
+6. Bug exists since 2011 - affects all stable trees
+7. Multiple drivers have the vulnerable division (SOF, Intel Atom)
 
-**FOR backporting:**
-- Small, surgical fix (2 lines of code)
-- Obviously correct (NULL VMAs have no physical backing, well-
-  established pattern)
-- Reviewed by subsystem maintainer (Matthew Brost)
-- Same series as another commit already cherry-picked to 7.0.y
-- Prevents incorrect behavior in page reclaim path
-- Near-zero regression risk
-- Author is the page reclaim feature developer
+**Evidence AGAINST:**
+1. Needs minor adaptation for trees without 64-bit tstamp (pre-6.12ish)
 
-**AGAINST backporting:**
-- No explicit Fixes: tag
-- Not a crash/corruption/security fix - primarily
-  performance/correctness
-- Only applicable to 7.0.y (code doesn't exist in older stable trees)
-- PRL abort is handled gracefully (fallback mechanism exists)
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - trivial guard check, reviewed
-   by maintainer
-2. Fixes a real bug? **YES** - NULL VMAs incorrectly processed through
-   page reclaim
-3. Important issue? **MEDIUM** - causes PRL abort and full cache flush
-   fallback for all VMAs in batch
-4. Small and contained? **YES** - 2 lines in one file
-5. No new features? **YES** - just a guard check
-6. Applies to stable? **YES** for 7.0.y only
-
-### Step 9.3: Exception Categories
-Not applicable.
-
-### Step 9.4: Decision
-This is a small, correct, well-reviewed fix for a real logic bug in the
-Xe page reclaim path. While the consequence is primarily performance
-(PRL abort causing full cache flush fallback) rather than crash, the fix
-is extremely low-risk and the sibling patch from the same series was
-already selected for 7.0.y stable. The fix prevents incorrect behavior
-for a common GPU operation (unbinding sparse VMAs).
+**Stable rules checklist:**
+1. Obviously correct? YES - uses identical pattern to 6+ other ioctls in
+   same file
+2. Fixes a real bug? YES - divide-by-zero crash
+3. Important issue? YES - kernel crash triggerable from userspace
+4. Small and contained? YES - 7 lines, single function
+5. No new features/APIs? Correct - purely defensive check
+6. Applies to stable? YES for 7.0 (clean apply); needs minor rework for
+   older trees
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Matthew Brost (xe maintainer),
-  applied by Matt Roper
-- [Phase 2] Diff analysis: 2 functional lines added to
-  `xe_page_reclaim_skip()`, adding NULL VMA guard check
-- [Phase 3] git blame: buggy code introduced in `7c52f13b76c531`
-  (v7.0-rc1, 2025-12-13)
-- [Phase 3] git log: entire `xe_page_reclaim.c` file created in v7.0-rc1
-- [Phase 3] git show: author Brian Nguyen wrote all page reclaim commits
-  (domain expert)
-- [Phase 4] b4 dig -a: series "Page Reclamation Fixes" went through
-  v2→v3→v4, indicating thorough review
-- [Phase 4] b4 dig -w: Matthew Brost, Stuart Summers, intel-xe@ involved
-  in review
-- [Phase 4] UNVERIFIED: Could not access lore.kernel.org discussion due
-  to anti-bot protection
-- [Phase 5] Grep for callers: `xe_page_reclaim_skip()` called only from
-  `xe_pt.c:2084` (unbind path)
-- [Phase 5] Grep for `xe_vma_is_null`: used at 10+ locations in xe
-  driver, well-established pattern
-- [Phase 6] `git show v6.13:drivers/gpu/drm/xe/xe_page_reclaim.c`
-  confirmed file does NOT exist in v6.13 or v6.12
-- [Phase 6] `git show
-  stable/linux-7.0.y:drivers/gpu/drm/xe/xe_page_reclaim.c` confirmed
-  code exists in 7.0.y without fix
-- [Phase 6] Sibling patch `38b8dcde23164` already in stable/linux-7.0.y
-  (confirmed via `git log stable/linux-7.0.y`)
-- [Phase 8] PRL abort path verified: invalidates PRL, increments
-  counter, logs debug message - graceful fallback
+- [Phase 1] Parsed tags: Signed-off-by Mark Brown (ASoC maintainer),
+  Acked-by Vinod Koul (compress_offload author), Signed-off-by Takashi
+  Iwai (ALSA maintainer)
+- [Phase 2] Diff analysis: 7 lines added in `snd_compr_update_tstamp()`,
+  adds state check for SNDRV_PCM_STATE_OPEN
+- [Phase 3] git blame: `snd_compr_update_tstamp()` introduced in commit
+  b21c60a4edd22e (2011), present in all stable trees
+- [Phase 3] git show b21c60a4edd22e: confirmed original compress_offload
+  commit
+- [Phase 3] git merge-base: confirmed 64-bit tstamp infrastructure
+  (2c92e2fbe9e22c) is ancestor of v7.0
+- [Phase 4] Lore blocked by Anubis; relied on tag analysis for review
+  evidence
+- [Phase 5] Grep callers: `snd_compr_update_tstamp` called from lines
+  209 and 760, both ioctl-reachable
+- [Phase 5] Verified SOF driver `sof_compr_pointer()` does `div_u64(...,
+  sstream->channels * sstream->sample_container_bytes)` at line 384-385
+- [Phase 5] Verified Intel Atom `sst_cdev_tstamp()` does `div_u64(...,
+  stream->num_ch * ...)` at line 348-349
+- [Phase 5] Verified `snd_compr_set_params()` sets channels (line 256 in
+  sof compress.c), confirming channels=0 before set_params
+- [Phase 6] git show v7.0:compress_offload.c: function matches current
+  HEAD exactly, clean apply confirmed
+- [Phase 6] Existing divide-by-zero protection commit 678e2b44c8e3fec
+  (2018) validates this class of bug is real
+- [Phase 7] Identified `snd_compr_ioctl_avail` line 267 calls
+  update_tstamp BEFORE its own state check at line 275, confirming both
+  AVAIL and TSTAMP paths are vulnerable
+- [Phase 8] Failure mode: divide-by-zero → kernel oops, severity
+  CRITICAL, trivially triggerable from userspace
+
+This is a textbook stable backport: a small, surgical fix preventing a
+deterministic kernel crash (divide-by-zero) that is trivially
+triggerable from userspace via ioctl. Authored and reviewed by the top
+three relevant maintainers.
 
 **YES**
 
- drivers/gpu/drm/xe/xe_page_reclaim.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/core/compress_offload.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_page_reclaim.c b/drivers/gpu/drm/xe/xe_page_reclaim.c
-index e13c71a89da2c..390bcb82e4c5c 100644
---- a/drivers/gpu/drm/xe/xe_page_reclaim.c
-+++ b/drivers/gpu/drm/xe/xe_page_reclaim.c
-@@ -26,12 +26,18 @@
-  * flushes.
-  * - pat_index is transient display (1)
-  *
-+ * For cases of NULL VMA, there should be no corresponding PRL entry
-+ * so skip over.
-+ *
-  * Return: true when page reclamation is unnecessary, false otherwise.
-  */
- bool xe_page_reclaim_skip(struct xe_tile *tile, struct xe_vma *vma)
+diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
+index fdba6e4b25fdc..67b3b1a3b5261 100644
+--- a/sound/core/compress_offload.c
++++ b/sound/core/compress_offload.c
+@@ -192,6 +192,14 @@ static int snd_compr_update_tstamp(struct snd_compr_stream *stream,
  {
- 	u8 l3_policy;
- 
-+	if (xe_vma_is_null(vma))
-+		return true;
+ 	if (!stream->ops->pointer)
+ 		return -ENOTSUPP;
 +
- 	l3_policy = xe_pat_index_get_l3_policy(tile->xe, vma->attr.pat_index);
- 
- 	/*
++	switch (stream->runtime->state) {
++	case SNDRV_PCM_STATE_OPEN:
++		return -EBADFD;
++	default:
++		break;
++	}
++
+ 	stream->ops->pointer(stream, tstamp);
+ 	pr_debug("dsp consumed till %u total %llu bytes\n", tstamp->byte_offset,
+ 		 tstamp->copied_total);
 -- 
 2.53.0
 
