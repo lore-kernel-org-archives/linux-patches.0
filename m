@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DEB33AD9A;
-	Mon, 20 Apr 2026 15:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D635B22259F;
+	Mon, 20 Apr 2026 15:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700685; cv=none; b=UmeRdoFhDPYrYnNcQZGgl3tjQxjjwuDBSib3xwNk3+5rcDLRJxwivyLLm2OK/zC7FJIfMb7to1uhuxS74jXx5EeOQQ84ZmjCEvjutw9XmMHTjvt1HOyGu6fI5SrJLdZXdBsUqfqrcSzLYmx6gGHtL9qDpOyxdLdi1Np07DWdjB4=
+	t=1776700687; cv=none; b=DuN0aZR1NHkDoGP9AdtkjVGvM47wgza3x8BFEWc5nJXTJAul/laMoTvuLtNGpON+l0MqAEZhGaz6OUPMaVOeA6HUmtyAeIUfPYPGaCHOABSh+YTrtR8oRNvIkdemHXZr3fZ/3LTNlFLJa9r/bkVAvxxUR8GMEvzVLZIjU1aVtUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700685; c=relaxed/simple;
-	bh=frx3MvksR5dj8CdkfjC7wKt7aJ2olGt/KTe6qo7w58Y=;
+	s=arc-20240116; t=1776700687; c=relaxed/simple;
+	bh=YN7caUdg5uNRc5XVwSafaaRl3kzsi45KTuSSmXmSFiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tHFZfJOKo3wKhGpmqDiepZzszKDWwaSLsJ/R9bTcf9AQBm9ODUz7O0KyimbX6/9EL6P/DJR1b5xGSiQGW2N1ZjodVl3v577gbNVW4GndQNSF+uh/a9cL3ywtTxccUwf4mBMQGlphTwXEQ59MySWn4YzWBzYtU0/z0rJkrJYmhmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpRWoufc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C3lxAEjl6+zXUjnOeOMSobcLGmobihnvxHGeXQ4XzSUhYhbWm9LJgeD0hdtK+lTJlVSS8au3c6BEiBlSpOUJLRmbE62MTCMuecepFUpn2FHnsGj2Lfqsxe9rHIiEm50d+z1AOrT9Ml/quGp9tiP3iAr9gWkqLwvHUI7DlgpQqP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rva9PyQM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpRWoufc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA020C19425;
-	Mon, 20 Apr 2026 15:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rva9PyQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB32C19425;
+	Mon, 20 Apr 2026 15:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700685;
-	bh=frx3MvksR5dj8CdkfjC7wKt7aJ2olGt/KTe6qo7w58Y=;
+	s=korg; t=1776700687;
+	bh=YN7caUdg5uNRc5XVwSafaaRl3kzsi45KTuSSmXmSFiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gpRWoufcpMc5MAIPzAX4BSJd7qTvF8aihMAHPKnQbeBf5EW/cHhhprtUHm6UGPtaR
-	 ZchA1wWuDqchGcB0Jsxr+gdCEpncgfzy6m54JYSv8K3ab87PhDRZ+TXWlP/uyZLlQp
-	 OsLqH4V2QY9uLuk9WO9A6tJFfD+89i68KHWeSex8=
+	b=Rva9PyQMfJ0+d6x870koVXxxAIbs0mGHiGnPUd14jY49hQBy9fR6RxSPQQittc2qc
+	 Oibp28K465ryJhaUA4mRkGTjakaFHsloWXntC4a1KNHOgBI4YdWBz3pWat24H9dzpu
+	 5NwflaKbpqITy4mqSO6hGl4zZ29bn7W13GW1Zp4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Hothi <ravi.hothi@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Peng Fan <peng.fan@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 048/198] arm64: dts: qcom: qcm6490-idp: Fix WCD9370 reset GPIO polarity
-Date: Mon, 20 Apr 2026 17:40:27 +0200
-Message-ID: <20260420153937.346475502@linuxfoundation.org>
+Subject: [PATCH 6.18 049/198] arm64: dts: imx8mq: Set the correct gpu_ahb clock frequency
+Date: Mon, 20 Apr 2026 17:40:28 +0200
+Message-ID: <20260420153937.382540937@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -53,42 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit b7df21c59739cceb7b866c6c5e8a6ba03875ab71 ]
+[ Upstream commit 1f99b5d93d99ca17d50b386a674d0ce1f20932d8 ]
 
-The WCD9370 audio codec reset line on QCM6490 IDP should be active-low, but
-the device tree described it as active-high. As a result, the codec is
-kept in reset and fails to reset the SoundWire, leading to timeouts
-and ASoC card probe failure (-ETIMEDOUT).
+According to i.MX 8M Quad Reference Manual, GPU_AHB_CLK_ROOT's maximum
+frequency is 400MHz.
 
-Fix the reset GPIO polarity to GPIO_ACTIVE_LOW so the codec can properly
-initialize.
-
-Fixes: aa04c298619f ("arm64: dts: qcom: qcm6490-idp: Add WSA8830 speakers and WCD9370 headset codec")
-Signed-off-by: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260220090220.2992193-1-ravi.hothi@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 45d2c84eb3a2 ("arm64: dts: imx8mq: add GPU node")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mq.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 73fce639370cd..214671b462770 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -177,7 +177,7 @@ wcd9370: audio-codec-0 {
- 		pinctrl-0 = <&wcd_default>;
- 		pinctrl-names = "default";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+index 607962f807beb..6a25e219832ce 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+@@ -1632,7 +1632,7 @@ gpu: gpu@38000000 {
+ 			                         <&clk IMX8MQ_GPU_PLL_OUT>,
+ 			                         <&clk IMX8MQ_GPU_PLL>;
+ 			assigned-clock-rates = <800000000>, <800000000>,
+-			                       <800000000>, <800000000>, <0>;
++			                       <800000000>, <400000000>, <0>;
+ 			power-domains = <&pgc_gpu>;
+ 		};
  
--		reset-gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&tlmm 83 GPIO_ACTIVE_LOW>;
- 
- 		vdd-buck-supply = <&vreg_l17b_1p7>;
- 		vdd-rxtx-supply = <&vreg_l18b_1p8>;
 -- 
 2.53.0
 
