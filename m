@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF2F333727;
-	Mon, 20 Apr 2026 16:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BE2336EE1;
+	Mon, 20 Apr 2026 16:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701162; cv=none; b=bLHeqKOl5Z5yhKhvtrlZO7iYDo56m//pmi3sF5DPFDu70VnzEGzPeHivDB2KXD1BLZ+8KpaKCGKqQOSwiUy9qO4QilplxDXXEDZTLTYvV/SpyaFpRo3Rw5UDb3FGWayMmu4i8K7LksflpCnzaZrBKs7slTzX2pwqiExvxE927uw=
+	t=1776701164; cv=none; b=A9fs6i99uWNRUCMWbhK71qFI+docBMfviBVL6fEZ1oUIRPLQbvdue/jrhR5JkotC4REoBxl8KbtEtres7vwHeklA8ROYgNJRXm55yX9cCXcyMUCocKx3ewShhpueERDOqoGyYrbdmKnAhTK276ol+P0bCx/fn2TiSimKwac15+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701162; c=relaxed/simple;
-	bh=4gkN/az5noHxGZoFFODAdwU2nhL37hLuYeqvLRrQAEg=;
+	s=arc-20240116; t=1776701164; c=relaxed/simple;
+	bh=VxrEpifehDmZ91EuU5rOqDne0tYRf7iSSiBzBZtsfUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bl1ED29xx2kyFkLW+LkekPRIRnaNx0BxxANcC8sikEkz8ZzyLn3lL3FqrI3Mg5XYqTVfVrDKmIkJxHx4RLsRpNSjfRaSuflDTUVvBueCBytj84sHy6xEVhYlRxLGNd39BbtVy5xJ8jrIk4W4vLzDi9nPuOLhv2JzKgh/bVKVfso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utRhM1EM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W/aREsGhg17uwrPJV5aER6ipHs89Sa7fMhlnwLKgWvgvto6Ha8CeZpWe6Zjfh0wbL+jbPYwX8Acb62bxYkVNq6mXVxd5OPOv4Y7KCsFUPRlh/EIsm9Yyng6jVK8cfFSvqWBUIB81Gk0xiFGwWQ2KqzwyLhZZCjDT0gjDZQ6rAls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHUBhjbi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utRhM1EM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5916C2BCB7;
-	Mon, 20 Apr 2026 16:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHUBhjbi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E32C2BCB4;
+	Mon, 20 Apr 2026 16:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701162;
-	bh=4gkN/az5noHxGZoFFODAdwU2nhL37hLuYeqvLRrQAEg=;
+	s=korg; t=1776701164;
+	bh=VxrEpifehDmZ91EuU5rOqDne0tYRf7iSSiBzBZtsfUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utRhM1EMa+GHq0IsXv3gw32foVXd102sODb4P9ouCsz4kx9LdKZG4TGFuRDYjG+Aw
-	 is+e8NT8rnE/9WLXu5OhoZ9QCByKdxrW74vv5sScnw8T6y+B6XCgukUGlI2rh5PhAR
-	 qYaCV3SH6MwNA23TLq9fFt6linM21uUBmmmw49S8=
+	b=jHUBhjbiZcrAu3ILJNfhvN7lythXQWuZ7+G15EobpKiSPS8lHAbp1O6eBisMYlvQ3
+	 s+iV/zSaOC3vUBL63/Ga+TtGjLLEjpIXeiYIE6tABQ2WyhJuuj3k8ZMD35Hb5QWAvb
+	 Y4/Cjvz7ITT9WNJtOMQHyTG8gTOSuMIMG/VTncx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 185/198] media: vidtv: fix nfeeds state corruption on start_streaming failure
-Date: Mon, 20 Apr 2026 17:42:44 +0200
-Message-ID: <20260420153942.277840574@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	syzbot+62c1793956716ea8b28a@syzkaller.appspotmail.com,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 176/198] ocfs2: fix out-of-bounds write in ocfs2_write_end_inline
+Date: Mon, 20 Apr 2026 17:42:35 +0200
+Message-ID: <20260420153941.954092811@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,62 +58,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit a0e5a598fe9a4612b852406b51153b881592aede upstream.
+[ Upstream commit 7bc5da4842bed3252d26e742213741a4d0ac1b14 ]
 
-syzbot reported a memory leak in vidtv_psi_service_desc_init [1].
+KASAN reports a use-after-free write of 4086 bytes in
+ocfs2_write_end_inline, called from ocfs2_write_end_nolock during a
+copy_file_range splice fallback on a corrupted ocfs2 filesystem mounted on
+a loop device.  The actual bug is an out-of-bounds write past the inode
+block buffer, not a true use-after-free.  The write overflows into an
+adjacent freed page, which KASAN reports as UAF.
 
-When vidtv_start_streaming() fails inside vidtv_start_feed(), the
-nfeeds counter is left incremented even though no feed was actually
-started. This corrupts the driver state: subsequent start_feed calls
-see nfeeds > 1 and skip starting the mux, while stop_feed calls
-eventually try to stop a non-existent stream.
+The root cause is that ocfs2_try_to_write_inline_data trusts the on-disk
+id_count field to determine whether a write fits in inline data.  On a
+corrupted filesystem, id_count can exceed the physical maximum inline data
+capacity, causing writes to overflow the inode block buffer.
 
-This state corruption can also lead to memory leaks, since the mux
-and channel resources may be partially allocated during a failed
-start_streaming but never cleaned up, as the stop path finds
-dvb->streaming == false and returns early.
+Call trace (crash path):
 
-Fix by decrementing nfeeds back when start_streaming fails, keeping
-the counter in sync with the actual number of active feeds.
+   vfs_copy_file_range (fs/read_write.c:1634)
+     do_splice_direct
+       splice_direct_to_actor
+         iter_file_splice_write
+           ocfs2_file_write_iter
+             generic_perform_write
+               ocfs2_write_end
+                 ocfs2_write_end_nolock (fs/ocfs2/aops.c:1949)
+                   ocfs2_write_end_inline (fs/ocfs2/aops.c:1915)
+                     memcpy_from_folio     <-- KASAN: write OOB
 
-[1]
-BUG: memory leak
-unreferenced object 0xffff888145b50820 (size 32):
- comm "syz.0.17", pid 6068, jiffies 4294944486
- backtrace (crc 90a0c7d4):
-  vidtv_psi_service_desc_init+0x74/0x1b0 drivers/media/test-drivers/vidtv/vidtv_psi.c:288
-  vidtv_channel_s302m_init+0xb1/0x2a0 drivers/media/test-drivers/vidtv/vidtv_channel.c:83
-  vidtv_channels_init+0x1b/0x40 drivers/media/test-drivers/vidtv/vidtv_channel.c:524
-  vidtv_mux_init+0x516/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:518
-  vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
-  vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+So add id_count upper bound check in ocfs2_validate_inode_block() to
+alongside the existing i_size check to fix it.
 
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=639ebc6ec75e96674741
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://lkml.kernel.org/r/20260403063830.3662739-1-joseph.qi@linux.alibaba.com
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: syzbot+62c1793956716ea8b28a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=62c1793956716ea8b28a
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_bridge.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ocfs2/inode.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -237,8 +237,10 @@ static int vidtv_start_feed(struct dvb_d
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1516,6 +1516,16 @@ int ocfs2_validate_inode_block(struct su
+ 			goto bail;
+ 		}
  
- 	if (dvb->nfeeds == 1) {
- 		ret = vidtv_start_streaming(dvb);
--		if (ret < 0)
-+		if (ret < 0) {
-+			dvb->nfeeds--;
- 			rc = ret;
++		if (le16_to_cpu(data->id_count) >
++		    ocfs2_max_inline_data_with_xattr(sb, di)) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode #%llu: inline data id_count %u exceeds max %d\n",
++					 (unsigned long long)bh->b_blocknr,
++					 le16_to_cpu(data->id_count),
++					 ocfs2_max_inline_data_with_xattr(sb, di));
++			goto bail;
 +		}
- 	}
- 
- 	mutex_unlock(&dvb->feed_lock);
++
+ 		if (le64_to_cpu(di->i_size) > le16_to_cpu(data->id_count)) {
+ 			rc = ocfs2_error(sb,
+ 					 "Invalid dinode #%llu: inline data i_size %llu exceeds id_count %u\n",
 
 
