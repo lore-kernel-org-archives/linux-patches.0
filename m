@@ -1,113 +1,356 @@
-Received: from n169-114.mail.139.com (n169-114.mail.139.com [120.232.169.114])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100F1345CDA
-	for <patches@lists.linux.dev>; Mon, 20 Apr 2026 05:43:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8933E7E792;
+	Mon, 20 Apr 2026 12:41:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776663826; cv=none; b=Do4196XKcnVgbeqxdCrTZwsUoQkFFbKwtnlWiMzgwrYi+4vvpDKGIgNXIajxAWK4aBvmf14is2/Vwhbm08WUesW4kVB4QOkRKdBDLhoamqmGGTX7TA9ABn9gokAxvQEuRAgvqHtwwP1zwlvyBRemeeGdrMS9KyqBoWBfBImEV4w=
+	t=1776688916; cv=none; b=lvpW7UfK68kPVRL2RUPOsBXGooTVTAUb44WqCkrD6NmvFFrrxyXQjErUC7Lvr4UxRw+NV7LYlU6Lr8bRMb/+KQXhO/0Sp61EPa9FNcbSLLpZEwRbn+wELFwvbkpU9inX512McesFeHsJ2ZRwABA+HbO/in6iQh02b8qBWMEJamw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776663826; c=relaxed/simple;
-	bh=aVbyG8hmO8QBPDCIqF+eHjjGxHVD+FBHnipkxql8DTs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=a4SR8eHynhsdVT+h4MdzWUMsBNMcI3mqcDfb1hOW+0fJFhEPDFniazaZlWE/+u88Rsgsu/E7aAR8/eZfR1jnWMWzkInPRJvIPGNy3xzYsp8V1JOVXRGnD6EIExxWgE+Qrh926fo1ZELfWw+UcsuewDmC0lLuPqhJhCyKYMjR9LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=l3fY/9in; arc=none smtp.client-ip=120.232.169.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+	s=arc-20240116; t=1776688916; c=relaxed/simple;
+	bh=MoKDeQ7Txc4MEZE5sqm0T/fQAqxNUXKiEjWbzAq2ac4=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tRXae1j1T7fXyEK3ubY6j/gby5mDYdAJdyO29nCcUdfd1EU70cO5z9V/j5SdRkhjT7jCxSegqU4UoYNZQ4c1VGbjt++MS6MHBhKsFSC7GsSO1IUfvmxphZa1oog2xEPsbSPMv9n91B81uUIRVkzHZt3GsdboyOMmq6k4pW+UXnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BcG9qJle; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="l3fY/9in"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=l3fY/9intQESJ8HYLdyducwbcyPvpWMNwvDy82/38IllAETzA9WC9PIaLG21X5Oo8aH/EyfslaZad
-	 Kyd1ZKmkNz9NZNsb3vVjdBB47kz1hzXVpNGpGdiRleLEhPTcFXBxZeAD5sZqSCfE+zAU/n2ep+8Tnz
-	 7YYlubN+byeUZbZI=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-45-12076 (RichMail) with SMTP id 2f2c69e5bd04763-057d4;
-	Mon, 20 Apr 2026 13:43:35 +0800 (CST)
-X-RM-TRANSID:2f2c69e5bd04763-057d4
-From: Li hongliang <1468888505@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	heminhong@kylinos.cn
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	davem@davemloft.net,
-	dsahern@kernel.org,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	david.lebrun@uclouvain.be,
-	netdev@vger.kernel.org,
-	andrea.mayer@uniroma2.it
-Subject: [PATCH 5.10.y] ipv6: add NULL checks for idev in SRv6 paths
-Date: Mon, 20 Apr 2026 13:43:34 +0800
-Message-Id: <20260420054334.3043858-1-1468888505@139.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BcG9qJle"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FF0C19425;
+	Mon, 20 Apr 2026 12:41:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776688916;
+	bh=MoKDeQ7Txc4MEZE5sqm0T/fQAqxNUXKiEjWbzAq2ac4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=BcG9qJle7PysOAGR9SmcqVDBTb02XhZ5C+Ye3y6RaYfETrtqxAm++3a8+cDhxNL3V
+	 OP/87jLnMAqV6HeJLqL+mfqcinyCrcblW1/nsoVk5CXSzXRXzcVxD88pkpQZKkEruc
+	 tLtOvdgJYhgbiGxB3xZE/ZqtTCodhuhmvIf1GIwbkmk7TMGO61ATOdfwjya2fJthyh
+	 KHtrsN1RTkGBUbazYjc8ilKXOROJY4hZF4Q01VTIKcRyR8481kvRLT0c6UZMa0hmpR
+	 9YCPUwHkOkToZymd7zuPtl+mjbdaKYF1krwo+EhvTwcnuRBhxUG7EWB2w/nQqiilNU
+	 iPnrTzhlMvFLA==
+Date: Mon, 20 Apr 2026 13:41:46 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Fang Wang <32840572@qq.com>
+Cc: maudspierings@gocontroll.com, gregkh@linuxfoundation.org,
+ stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, lars@metafoo.de, dimitri.fedrau@liebherr.com,
+ markus.koeniger@liebherr.com, andy@kernel.org, linux-iio@vger.kernel.org,
+ Jonathan.Cameron@huawei.com
+Subject: Re: [PATCH 6.6.y] iio: common: st_sensors: Fix use of uninitialize
+ device structs
+Message-ID: <20260420134146.274134e3@jic23-huawei>
+In-Reply-To: <tencent_B4E5A4D17E67F7C7096F7BF8A4C701223008@qq.com>
+References: <tencent_B4E5A4D17E67F7C7096F7BF8A4C701223008@qq.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-From: Minhong He <heminhong@kylinos.cn>
+On Tue, 14 Apr 2026 14:45:53 +0800
+Fang Wang <32840572@qq.com> wrote:
 
-[ Upstream commit 06413793526251870e20402c39930804f14d59c0 ]
+> From: Maud Spierings <maudspierings@gocontroll.com>
+> 
+> [ Upstream commit 9f92e93e257b33e73622640a9205f8642ec16ddd ]
+> 
+> Throughout the various probe functions &indio_dev->dev is used before it
+> is initialized. 
 
-__in6_dev_get() can return NULL when the device has no IPv6 configuration
-(e.g. MTU < IPV6_MIN_MTU or after NETDEV_UNREGISTER).
+Looking at this again, I'm not sure what exactly what meant by 'initialized'
+given device_initialize() has definitely been called on indio_dev->dev
+as that's part of the allocation functions.
 
-Add NULL checks for idev returned by __in6_dev_get() in both
-seg6_hmac_validate_skb() and ipv6_srh_rcv() to prevent potential NULL
-pointer dereferences.
+What this is actually about is device private structure (dev->p) being initialized
+which are only done on device_add. 
 
-Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
-Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260316073301.106643-1-heminhong@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Li hongliang <1468888505@139.com>
----
- net/ipv6/exthdrs.c   | 4 ++++
- net/ipv6/seg6_hmac.c | 2 ++
- 2 files changed, 6 insertions(+)
+Given the struct device in the iio_dev is always the wrong thing to use
+for messages (as it's not very informative if nothing else) this is fine.
 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index cdad9019c77c..dfa0fb3d6c35 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -361,6 +361,10 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
- 	hdr = (struct ipv6_sr_hdr *)skb_transport_header(skb);
- 
- 	idev = __in6_dev_get(skb->dev);
-+	if (!idev) {
-+		kfree_skb(skb);
-+		return -1;
-+	}
- 
- 	accept_seg6 = net->ipv6.devconf_all->seg6_enabled;
- 	if (accept_seg6 > idev->cnf.seg6_enabled)
-diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
-index f82fcd8908e1..b52985c867c2 100644
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -245,6 +245,8 @@ bool seg6_hmac_validate_skb(struct sk_buff *skb)
- 	struct inet6_dev *idev;
- 
- 	idev = __in6_dev_get(skb->dev);
-+	if (!idev)
-+		return false;
- 
- 	srh = (struct ipv6_sr_hdr *)skb_transport_header(skb);
- 
--- 
-2.34.1
+So if not picked up already
+Acked-by: Jonathan Cameron <jic23@kernel.org>
 
+
+
+
+>This caused a kernel panic in st_sensors_power_enable()
+> when the call to devm_regulator_bulk_get_enable() fails and then calls
+> dev_err_probe() with the uninitialized device.
+> 
+> This seems to only cause a panic with dev_err_probe(), dev_err(),
+> dev_warn() and dev_info() don't seem to cause a panic, but are fixed
+> as well.
+> 
+> The issue is reported and traced here: [1]
+> 
+> Link: https://lore.kernel.org/all/AM7P189MB100986A83D2F28AF3FFAF976E39EA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM/ [1]
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
+> Reviewed-by: Andy Shevchenko <andy@kernel.org>
+> Link: https://... [1]
+> Link: https://patch.msgid.link/20250527-st_iio_fix-v4-1-12d89801c761@gocontroll.com
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Fang Wang <32840572@qq.com>
+> ---
+>  drivers/iio/accel/st_accel_core.c             | 10 +++---
+>  .../iio/common/st_sensors/st_sensors_core.c   | 36 +++++++++----------
+>  .../common/st_sensors/st_sensors_trigger.c    | 20 +++++------
+>  3 files changed, 31 insertions(+), 35 deletions(-)
+> 
+> diff --git a/drivers/iio/accel/st_accel_core.c b/drivers/iio/accel/st_accel_core.c
+> index 51d8de18e6d6..45d2268e042e 100644
+> --- a/drivers/iio/accel/st_accel_core.c
+> +++ b/drivers/iio/accel/st_accel_core.c
+> @@ -1342,6 +1342,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
+>  	union acpi_object *ont;
+>  	union acpi_object *elements;
+>  	acpi_status status;
+> +	struct device *parent = indio_dev->dev.parent;
+>  	int ret = -EINVAL;
+>  	unsigned int val;
+>  	int i, j;
+> @@ -1360,7 +1361,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
+>  	};
+>  
+>  
+> -	adev = ACPI_COMPANION(indio_dev->dev.parent);
+> +	adev = ACPI_COMPANION(parent);
+>  	if (!adev)
+>  		return -ENXIO;
+>  
+> @@ -1369,8 +1370,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
+>  	if (status == AE_NOT_FOUND) {
+>  		return -ENXIO;
+>  	} else if (ACPI_FAILURE(status)) {
+> -		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
+> -			 status);
+> +		dev_warn(parent, "failed to execute _ONT: %d\n", status);
+>  		return status;
+>  	}
+>  
+> @@ -1446,12 +1446,12 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
+>  	}
+>  
+>  	ret = 0;
+> -	dev_info(&indio_dev->dev, "computed mount matrix from ACPI\n");
+> +	dev_info(parent, "computed mount matrix from ACPI\n");
+>  
+>  out:
+>  	kfree(buffer.pointer);
+>  	if (ret)
+> -		dev_dbg(&indio_dev->dev,
+> +		dev_dbg(parent,
+>  			"failed to apply ACPI orientation data: %d\n", ret);
+>  
+>  	return ret;
+> diff --git a/drivers/iio/common/st_sensors/st_sensors_core.c b/drivers/iio/common/st_sensors/st_sensors_core.c
+> index c77d7bdcc121..78f5728417d5 100644
+> --- a/drivers/iio/common/st_sensors/st_sensors_core.c
+> +++ b/drivers/iio/common/st_sensors/st_sensors_core.c
+> @@ -154,7 +154,7 @@ static int st_sensors_set_fullscale(struct iio_dev *indio_dev, unsigned int fs)
+>  	return err;
+>  
+>  st_accel_set_fullscale_error:
+> -	dev_err(&indio_dev->dev, "failed to set new fullscale.\n");
+> +	dev_err(indio_dev->dev.parent, "failed to set new fullscale.\n");
+>  	return err;
+>  }
+>  
+> @@ -231,8 +231,7 @@ int st_sensors_power_enable(struct iio_dev *indio_dev)
+>  					     ARRAY_SIZE(regulator_names),
+>  					     regulator_names);
+>  	if (err)
+> -		return dev_err_probe(&indio_dev->dev, err,
+> -				     "unable to enable supplies\n");
+> +		return dev_err_probe(parent, err, "unable to enable supplies\n");
+>  
+>  	return 0;
+>  }
+> @@ -241,13 +240,14 @@ EXPORT_SYMBOL_NS(st_sensors_power_enable, IIO_ST_SENSORS);
+>  static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
+>  					struct st_sensors_platform_data *pdata)
+>  {
+> +	struct device *parent = indio_dev->dev.parent;
+>  	struct st_sensor_data *sdata = iio_priv(indio_dev);
+>  
+>  	/* Sensor does not support interrupts */
+>  	if (!sdata->sensor_settings->drdy_irq.int1.addr &&
+>  	    !sdata->sensor_settings->drdy_irq.int2.addr) {
+>  		if (pdata->drdy_int_pin)
+> -			dev_info(&indio_dev->dev,
+> +			dev_info(parent,
+>  				 "DRDY on pin INT%d specified, but sensor does not support interrupts\n",
+>  				 pdata->drdy_int_pin);
+>  		return 0;
+> @@ -256,29 +256,27 @@ static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
+>  	switch (pdata->drdy_int_pin) {
+>  	case 1:
+>  		if (!sdata->sensor_settings->drdy_irq.int1.mask) {
+> -			dev_err(&indio_dev->dev,
+> -					"DRDY on INT1 not available.\n");
+> +			dev_err(parent, "DRDY on INT1 not available.\n");
+>  			return -EINVAL;
+>  		}
+>  		sdata->drdy_int_pin = 1;
+>  		break;
+>  	case 2:
+>  		if (!sdata->sensor_settings->drdy_irq.int2.mask) {
+> -			dev_err(&indio_dev->dev,
+> -					"DRDY on INT2 not available.\n");
+> +			dev_err(parent, "DRDY on INT2 not available.\n");
+>  			return -EINVAL;
+>  		}
+>  		sdata->drdy_int_pin = 2;
+>  		break;
+>  	default:
+> -		dev_err(&indio_dev->dev, "DRDY on pdata not valid.\n");
+> +		dev_err(parent, "DRDY on pdata not valid.\n");
+>  		return -EINVAL;
+>  	}
+>  
+>  	if (pdata->open_drain) {
+>  		if (!sdata->sensor_settings->drdy_irq.int1.addr_od &&
+>  		    !sdata->sensor_settings->drdy_irq.int2.addr_od)
+> -			dev_err(&indio_dev->dev,
+> +			dev_err(parent,
+>  				"open drain requested but unsupported.\n");
+>  		else
+>  			sdata->int_pin_open_drain = true;
+> @@ -336,6 +334,7 @@ EXPORT_SYMBOL_NS(st_sensors_dev_name_probe, IIO_ST_SENSORS);
+>  int st_sensors_init_sensor(struct iio_dev *indio_dev,
+>  					struct st_sensors_platform_data *pdata)
+>  {
+> +	struct device *parent = indio_dev->dev.parent;
+>  	struct st_sensor_data *sdata = iio_priv(indio_dev);
+>  	struct st_sensors_platform_data *of_pdata;
+>  	int err = 0;
+> @@ -343,7 +342,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
+>  	mutex_init(&sdata->odr_lock);
+>  
+>  	/* If OF/DT pdata exists, it will take precedence of anything else */
+> -	of_pdata = st_sensors_dev_probe(indio_dev->dev.parent, pdata);
+> +	of_pdata = st_sensors_dev_probe(parent, pdata);
+>  	if (IS_ERR(of_pdata))
+>  		return PTR_ERR(of_pdata);
+>  	if (of_pdata)
+> @@ -370,7 +369,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
+>  		if (err < 0)
+>  			return err;
+>  	} else
+> -		dev_info(&indio_dev->dev, "Full-scale not possible\n");
+> +		dev_info(parent, "Full-scale not possible\n");
+>  
+>  	err = st_sensors_set_odr(indio_dev, sdata->odr);
+>  	if (err < 0)
+> @@ -405,7 +404,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
+>  			mask = sdata->sensor_settings->drdy_irq.int2.mask_od;
+>  		}
+>  
+> -		dev_info(&indio_dev->dev,
+> +		dev_info(parent,
+>  			 "set interrupt line to open drain mode on pin %d\n",
+>  			 sdata->drdy_int_pin);
+>  		err = st_sensors_write_data_with_mask(indio_dev, addr,
+> @@ -594,21 +593,20 @@ EXPORT_SYMBOL_NS(st_sensors_get_settings_index, IIO_ST_SENSORS);
+>  int st_sensors_verify_id(struct iio_dev *indio_dev)
+>  {
+>  	struct st_sensor_data *sdata = iio_priv(indio_dev);
+> +	struct device *parent = indio_dev->dev.parent;
+>  	int wai, err;
+>  
+>  	if (sdata->sensor_settings->wai_addr) {
+>  		err = regmap_read(sdata->regmap,
+>  				  sdata->sensor_settings->wai_addr, &wai);
+>  		if (err < 0) {
+> -			dev_err(&indio_dev->dev,
+> -				"failed to read Who-Am-I register.\n");
+> -			return err;
+> +			return dev_err_probe(parent, err,
+> +					     "failed to read Who-Am-I register.\n");
+>  		}
+>  
+>  		if (sdata->sensor_settings->wai != wai) {
+> -			dev_err(&indio_dev->dev,
+> -				"%s: WhoAmI mismatch (0x%x).\n",
+> -				indio_dev->name, wai);
+> +			dev_warn(parent, "%s: WhoAmI mismatch (0x%x).\n",
+> +				 indio_dev->name, wai);
+>  			return -EINVAL;
+>  		}
+>  	}
+> diff --git a/drivers/iio/common/st_sensors/st_sensors_trigger.c b/drivers/iio/common/st_sensors/st_sensors_trigger.c
+> index a0df9250a69f..b900acd471bd 100644
+> --- a/drivers/iio/common/st_sensors/st_sensors_trigger.c
+> +++ b/drivers/iio/common/st_sensors/st_sensors_trigger.c
+> @@ -127,7 +127,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+>  	sdata->trig = devm_iio_trigger_alloc(parent, "%s-trigger",
+>  					     indio_dev->name);
+>  	if (sdata->trig == NULL) {
+> -		dev_err(&indio_dev->dev, "failed to allocate iio trigger.\n");
+> +		dev_err(parent, "failed to allocate iio trigger.\n");
+>  		return -ENOMEM;
+>  	}
+>  
+> @@ -143,7 +143,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+>  	case IRQF_TRIGGER_FALLING:
+>  	case IRQF_TRIGGER_LOW:
+>  		if (!sdata->sensor_settings->drdy_irq.addr_ihl) {
+> -			dev_err(&indio_dev->dev,
+> +			dev_err(parent,
+>  				"falling/low specified for IRQ but hardware supports only rising/high: will request rising/high\n");
+>  			if (irq_trig == IRQF_TRIGGER_FALLING)
+>  				irq_trig = IRQF_TRIGGER_RISING;
+> @@ -156,21 +156,19 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+>  				sdata->sensor_settings->drdy_irq.mask_ihl, 1);
+>  			if (err < 0)
+>  				return err;
+> -			dev_info(&indio_dev->dev,
+> +			dev_info(parent,
+>  				 "interrupts on the falling edge or active low level\n");
+>  		}
+>  		break;
+>  	case IRQF_TRIGGER_RISING:
+> -		dev_info(&indio_dev->dev,
+> -			 "interrupts on the rising edge\n");
+> +		dev_info(parent, "interrupts on the rising edge\n");
+>  		break;
+>  	case IRQF_TRIGGER_HIGH:
+> -		dev_info(&indio_dev->dev,
+> -			 "interrupts active high level\n");
+> +		dev_info(parent, "interrupts active high level\n");
+>  		break;
+>  	default:
+>  		/* This is the most preferred mode, if possible */
+> -		dev_err(&indio_dev->dev,
+> +		dev_err(parent,
+>  			"unsupported IRQ trigger specified (%lx), enforce rising edge\n", irq_trig);
+>  		irq_trig = IRQF_TRIGGER_RISING;
+>  	}
+> @@ -179,7 +177,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+>  	if (irq_trig == IRQF_TRIGGER_FALLING ||
+>  	    irq_trig == IRQF_TRIGGER_RISING) {
+>  		if (!sdata->sensor_settings->drdy_irq.stat_drdy.addr) {
+> -			dev_err(&indio_dev->dev,
+> +			dev_err(parent,
+>  				"edge IRQ not supported w/o stat register.\n");
+>  			return -EOPNOTSUPP;
+>  		}
+> @@ -214,13 +212,13 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
+>  					sdata->trig->name,
+>  					sdata->trig);
+>  	if (err) {
+> -		dev_err(&indio_dev->dev, "failed to request trigger IRQ.\n");
+> +		dev_err(parent, "failed to request trigger IRQ.\n");
+>  		return err;
+>  	}
+>  
+>  	err = devm_iio_trigger_register(parent, sdata->trig);
+>  	if (err < 0) {
+> -		dev_err(&indio_dev->dev, "failed to register iio trigger.\n");
+> +		dev_err(parent, "failed to register iio trigger.\n");
+>  		return err;
+>  	}
+>  	indio_dev->trig = iio_trigger_get(sdata->trig);
 
