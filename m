@@ -1,50 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3243A545E;
-	Mon, 20 Apr 2026 13:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0FA3BE163;
+	Mon, 20 Apr 2026 13:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691032; cv=none; b=AYUysie1PAfuVnPVgfcgCNKKcBe+9RKZdqiGzTneMnEd45AtruHOAmbRds2jYhz63oOJsnE0SD55BtyLxNzybv4eR5NAp+iUyBtaibbyoe2CLSyhHxhEZ3WWbC6N8KGrFJu3fjYs3MslNG+BaizefaUKVxoUK+rUF4uxXMdngyo=
+	t=1776691034; cv=none; b=T16jrXx77rn1jfsMePp4pmcgJsA4DJmJTBwX6+FTHFughDi9K8xqbbGcUxHpCZ4sRaB7BAxWNENZylTmUmHZ3aG7h4dOKERtrSFIbs/pPEZqRzpdjwMp2xdxzcUEB5aMOXNiIc6eDscnAFhPsL19X/W9Y1YTlmZePdc5jD7o3jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691032; c=relaxed/simple;
-	bh=Kmw1rpUeW2WlRAoPrreiJSopgyjbzwdEJvI1xGkoz6E=;
+	s=arc-20240116; t=1776691034; c=relaxed/simple;
+	bh=81Ng9CutKyy/7MQcL5BdbyBnhxSmd8NnfjmHPiUjoww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=izHaDuIpIYjXUFDIsCH06QdvxkkK5V+upxtuqd1ebrh7PyY5XLus7ChcvWj30O0IxP/qosxdLyjRJhwByaAa74rPFHHTfjC2YZOuN9kZrW8k5arfLuH7nWYLX+JhWlRhyvT3+oUviUMCIfBLlD4ET4k8gZHXcXBNqO7Cy3+AplE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JoKRiekS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AzPksNp6Em/rcf8A1fsonTUq0B8qS6yTQKhDOOyyCkimsHE6I6zHk8FB+DWVW1lCOnbuCCUC47oas7JKrbvBbI4gzk7Qot4ObkZAbwDfKS+HEY+Hgb6r0IxPOQXkfjJ4QUQTCGY6RzSSpdVvUAh/fEOzfCmZe/hEOfduGmCXclw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tJ/o9J/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JoKRiekS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0532EC2BCB6;
-	Mon, 20 Apr 2026 13:17:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tJ/o9J/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FF5C19425;
+	Mon, 20 Apr 2026 13:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691032;
-	bh=Kmw1rpUeW2WlRAoPrreiJSopgyjbzwdEJvI1xGkoz6E=;
+	s=k20201202; t=1776691034;
+	bh=81Ng9CutKyy/7MQcL5BdbyBnhxSmd8NnfjmHPiUjoww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JoKRiekSbJHJK415wold0Wy82XMAR6V/ICrjXzI2bzdYiGBJ1JhErR1cPuDwbsuEU
-	 tcju6DgalzRS3rXr2VhHQ29qH2/+AXGMzBcOGdW0KIIEcElobHA5pqu52ARVlW/gIr
-	 n6TyjQ8+VR7BSl+GCT+iMn8MlNHGuAxXK8L9pA3jzegHDCA3Ch8sM9f3xRFCtFcqZW
-	 wmheMPdm6jFew+ls8j9F88WKrV3W6K6spqcFcHahpwWN/J+XHcrrDqcUYB/ygTH1Ss
-	 6oaGgBikALR7ZuNp37asUjSFhgLgi0zM29KPxHANRU+lFCECo5ykMLwmwhkKrafkTv
-	 DTH/ztAVFfx2Q==
+	b=tJ/o9J/bpQZkCfaH7vEDlqjQ+RRyxFtJOrygjdNpPdMUD/r7+n/iaycw6SatXYAcS
+	 Ef2asPmDLuv/X/DWI8DTNkCnOMnEFhEZwslrD0Jl9hdn8vbwj1Q2yFlvs4pGlHi0YP
+	 w4SQuv4INozniKWmN2Xc2tDeuClPhpPdObygaJmku5P1MfYLW1Z4343Syl9nI5RtzB
+	 CbDtJ2DdgskfcRbG7RCWXG1x5rvME0vXxPUHJDoFIZHGqIiMfrFpzdTCFMra84EB/O
+	 V+LpQEiCitUz0E6Eokqi3L1T4uqlsDJ+1lJC2C+A1EDtZvWuZS+++gJlf9rjsZyEgB
+	 4rrpF1VW3RISw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Chen <me@linux.beauty>,
-	Dave Airlie <airlied@redhat.com>,
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lyude@redhat.com,
-	dakr@kernel.org,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	dri-devel@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
+	mingo@redhat.com,
+	acme@kernel.org,
+	tglx@kernel.org,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] nouveau: pci: quiesce GPU on shutdown
-Date: Mon, 20 Apr 2026 09:08:40 -0400
-Message-ID: <20260420131539.986432-54-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] perf/amd/ibs: Avoid race between event add and NMI
+Date: Mon, 20 Apr 2026 09:08:41 -0400
+Message-ID: <20260420131539.986432-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -60,682 +59,426 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Chen <me@linux.beauty>
+From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit 310326bb7df4bba094a3fc60364c641c547fd923 ]
+[ Upstream commit 1b044ff3c17e9d7fd93ffc0ba541ccdeb992d7f5 ]
 
-Kexec reboot does not reset PCI devices.
-Invoking the full DRM/TTM teardown from ->shutdown can trigger WARNs when
-userspace still holds DRM file descriptors.
+Consider the following race:
 
-Quiesce the GPU through the suspend path and then power down the PCI
-function so the next kernel can re-initialize the device from a consistent
-state.
+  --------
+  o OP_CTL contains stale value: OP_CTL[Val]=1, OP_CTL[En]=0
+  o A new IBS OP event is being added
+  o [P]: Process context, [N]: NMI context
 
-WARNING: drivers/gpu/drm/drm_mode_config.c:578 at drm_mode_config_cleanup+0x2e7/0x300, CPU#2: kexec/1300
-Call Trace:
- <TASK>
- ? srso_return_thunk+0x5/0x5f
- ? enable_work+0x3a/0x100
- nouveau_display_destroy+0x39/0x70 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
- nouveau_drm_device_fini+0x7b/0x1f0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
- nouveau_drm_shutdown+0x52/0xc0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
- pci_device_shutdown+0x35/0x60
- device_shutdown+0x11c/0x1b0
- kernel_kexec+0x13a/0x160
- __do_sys_reboot+0x209/0x240
- do_syscall_64+0x81/0x610
- ? srso_return_thunk+0x5/0x5f
- ? __rtnl_unlock+0x37/0x70
- ? srso_return_thunk+0x5/0x5f
- ? netdev_run_todo+0x63/0x570
- ? netif_change_flags+0x54/0x70
- ? srso_return_thunk+0x5/0x5f
- ? devinet_ioctl+0x1e5/0x790
- ? srso_return_thunk+0x5/0x5f
- ? inet_ioctl+0x1e9/0x200
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- ? sock_do_ioctl+0x7d/0x130
- ? srso_return_thunk+0x5/0x5f
- ? __x64_sys_ioctl+0x97/0xe0
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- ? do_syscall_64+0x23b/0x610
- ? srso_return_thunk+0x5/0x5f
- ? put_user_ifreq+0x7a/0x90
- ? srso_return_thunk+0x5/0x5f
- ? sock_do_ioctl+0x107/0x130
- ? srso_return_thunk+0x5/0x5f
- ? __x64_sys_ioctl+0x97/0xe0
- ? srso_return_thunk+0x5/0x5f
- ? do_syscall_64+0x81/0x610
- ? srso_return_thunk+0x5/0x5f
- ? exc_page_fault+0x7e/0x1a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [P] perf_ibs_add(event) {
+  [P]     if (test_and_set_bit(IBS_ENABLED, pcpu->state))
+  [P]         return;
+  [P]     /* pcpu->state = IBS_ENABLED */
+  [P]
+  [P]     pcpu->event = event;
+  [P]
+  [P]     perf_ibs_start(event) {
+  [P]         set_bit(IBS_STARTED, pcpu->state);
+  [P]         /* pcpu->state = IBS_ENABLED | IBS_STARTED */
+  [P]         clear_bit(IBS_STOPPING, pcpu->state);
+  [P]         /* pcpu->state = IBS_ENABLED | IBS_STARTED */
 
-nouveau 0000:26:00.0: [drm] drm_WARN_ON(!list_empty(&fb->filp_head))
-WARNING: drivers/gpu/drm/drm_framebuffer.c:833 at drm_framebuffer_free+0x73/0xa0, CPU#2: kexec/1300
-Call Trace:
- <TASK>
- drm_mode_config_cleanup+0x248/0x300
- ? __pfx___drm_printfn_dbg+0x10/0x10
- ? drm_mode_config_cleanup+0x1dc/0x300
- nouveau_display_destroy+0x39/0x70 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
- nouveau_drm_device_fini+0x7b/0x1f0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
- nouveau_drm_shutdown+0x52/0xc0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
- pci_device_shutdown+0x35/0x60
- device_shutdown+0x11c/0x1b0
- kernel_kexec+0x13a/0x160
- __do_sys_reboot+0x209/0x240
- do_syscall_64+0x81/0x610
- ? srso_return_thunk+0x5/0x5f
- ? __rtnl_unlock+0x37/0x70
- ? srso_return_thunk+0x5/0x5f
- ? netdev_run_todo+0x63/0x570
- ? netif_change_flags+0x54/0x70
- ? srso_return_thunk+0x5/0x5f
- ? devinet_ioctl+0x1e5/0x790
- ? srso_return_thunk+0x5/0x5f
- ? inet_ioctl+0x1e9/0x200
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- ? sock_do_ioctl+0x7d/0x130
- ? srso_return_thunk+0x5/0x5f
- ? __x64_sys_ioctl+0x97/0xe0
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- ? do_syscall_64+0x23b/0x610
- ? srso_return_thunk+0x5/0x5f
- ? put_user_ifreq+0x7a/0x90
- ? srso_return_thunk+0x5/0x5f
- ? sock_do_ioctl+0x107/0x130
- ? srso_return_thunk+0x5/0x5f
- ? __x64_sys_ioctl+0x97/0xe0
- ? srso_return_thunk+0x5/0x5f
- ? do_syscall_64+0x81/0x610
- ? srso_return_thunk+0x5/0x5f
- ? exc_page_fault+0x7e/0x1a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [N] --> NMI due to genuine FETCH event. perf_ibs_handle_irq()
+  [N]     called for OP PMU as well.
+  [N]
+  [N] perf_ibs_handle_irq(perf_ibs) {
+  [N]     event = pcpu->event; /* See line 6 */
+  [N]
+  [N]     if (!test_bit(IBS_STARTED, pcpu->state)) /* false */
+  [N]         return 0;
+  [N]
+  [N]     if (WARN_ON_ONCE(!event)) /* false */
+  [N]         goto fail;
+  [N]
+  [N]     if (!(*buf++ & perf_ibs->valid_mask)) /* false due to stale
+  [N]                                            * IBS_OP_CTL value */
+  [N]         goto fail;
+  [N]
+  [N]         ...
+  [N]
+  [N]     perf_ibs_enable_event() // *Accidentally* enable the event.
+  [N] }
+  [N]
+  [N] /*
+  [N]  * Repeated NMIs may follow due to accidentally enabled IBS OP
+  [N]  * event if the sample period is very low. It could also lead
+  [N]  * to pcpu->state corruption if the event gets throttled due
+  [N]  * to too frequent NMIs.
+  [N]  */
 
-WARNING: include/drm/ttm/ttm_resource.h:406 at nouveau_ttm_fini+0x257/0x270 [nouveau], CPU#2: kexec/1300
-Call Trace:
- <TASK>
- nouveau_drm_device_fini+0x93/0x1f0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
- nouveau_drm_shutdown+0x52/0xc0 [nouveau c19e0da7fd83583a023f855c510d9a3903808734]
- pci_device_shutdown+0x35/0x60
- device_shutdown+0x11c/0x1b0
- kernel_kexec+0x13a/0x160
- __do_sys_reboot+0x209/0x240
- do_syscall_64+0x81/0x610
- ? srso_return_thunk+0x5/0x5f
- ? __rtnl_unlock+0x37/0x70
- ? srso_return_thunk+0x5/0x5f
- ? netdev_run_todo+0x63/0x570
- ? netif_change_flags+0x54/0x70
- ? srso_return_thunk+0x5/0x5f
- ? devinet_ioctl+0x1e5/0x790
- ? srso_return_thunk+0x5/0x5f
- ? inet_ioctl+0x1e9/0x200
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- ? sock_do_ioctl+0x7d/0x130
- ? srso_return_thunk+0x5/0x5f
- ? __x64_sys_ioctl+0x97/0xe0
- ? srso_return_thunk+0x5/0x5f
- ? srso_return_thunk+0x5/0x5f
- ? do_syscall_64+0x23b/0x610
- ? srso_return_thunk+0x5/0x5f
- ? put_user_ifreq+0x7a/0x90
- ? srso_return_thunk+0x5/0x5f
- ? sock_do_ioctl+0x107/0x130
- ? srso_return_thunk+0x5/0x5f
- ? __x64_sys_ioctl+0x97/0xe0
- ? srso_return_thunk+0x5/0x5f
- ? do_syscall_64+0x81/0x610
- ? srso_return_thunk+0x5/0x5f
- ? exc_page_fault+0x7e/0x1a0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [P]         perf_ibs_enable_event();
+  [P]     }
+  [P] }
+  --------
 
-Signed-off-by: Li Chen <me@linux.beauty>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260121113646.111561-1-me@linux.beauty
+We cannot safely clear IBS_{FETCH|OP}_CTL while disabling the event,
+because the register might be read again later. So, clear the register
+in the enable path - before we update pcpu->state and enable the event.
+This guarantees that any NMI that lands in the gap finds Val=0 and
+bails out cleanly.
+
+Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://patch.msgid.link/20260216042216.1440-6-ravi.bangoria@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the full analysis.
+Now I have a thorough understanding. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-- **Subsystem**: `nouveau: pci:` (Nouveau GPU driver, PCI subsystem)
-- **Action verb**: "quiesce" - implies bringing hardware to a
-  quiet/consistent state, a hardware management fix
-- **Summary**: Quiesce the NVIDIA GPU on PCI shutdown to handle kexec
-  reboot properly
+### Step 1.1: Subject Line
+- **Subsystem**: `perf/amd/ibs` (AMD Instruction-Based Sampling perf PMU
+  driver)
+- **Action verb**: "Avoid" (almost always indicates fixing a bug)
+- **Summary**: Prevent race between adding a perf event and NMI handling
+  in IBS
 
-Record: [nouveau: pci] [quiesce] [Add proper GPU shutdown handler for
-kexec reboot]
+### Step 1.2: Tags
+- **Signed-off-by: Ravi Bangoria** - the author, AMD IBS subsystem
+  expert
+- **Signed-off-by: Peter Zijlstra (Intel)** - perf core maintainer,
+  committed the patch
+- **Acked-by: Namhyung Kim** - another perf subsystem maintainer
+- **Link**:
+  `https://patch.msgid.link/20260216042216.1440-6-ravi.bangoria@amd.com`
+  - patch 5/5 (originally numbered 6 including cover letter) in a series
+- **No Fixes: tag** - expected for manual review candidates
+- **No Cc: stable tag** - expected
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by: Li Chen <me@linux.beauty>** - the author
-- **Reviewed-by: Dave Airlie <airlied@redhat.com>** - DRM maintainer
-  reviewed it
-- **Signed-off-by: Dave Airlie <airlied@redhat.com>** - DRM maintainer
-  also signed off (committed it)
-- **Link:**
-  https://patch.msgid.link/20260121113646.111561-1-me@linux.beauty - the
-  v2 submission
+Record: Strong reviewer/maintainer endorsement. No syzbot or bug
+reports.
 
-No Fixes: tag, no Cc: stable tag, no Reported-by. The absence of these
-is expected.
+### Step 1.3: Commit Body
+The commit body provides an extremely detailed, step-by-step walkthrough
+of the race:
+1. `OP_CTL` has stale `Val=1, En=0` from a previous IBS sample
+2. In process context, `perf_ibs_add()` → `perf_ibs_start()` sets
+   `IBS_STARTED`
+3. Before `perf_ibs_enable_event()` is called, an NMI arrives (from a
+   FETCH event)
+4. NMI handler sees `IBS_STARTED=true`, reads stale `OP_CTL[Val]=1`,
+   treats it as valid
+5. NMI handler calls `perf_ibs_enable_event()`, **accidentally**
+   enabling the OP event
+6. Results in: repeated NMIs, `pcpu->state` corruption, potential
+   throttle issues
 
-Record: Reviewed-by and Signed-off-by from Dave Airlie (DRM maintainer)
-is a strong quality signal.
+**Failure mode**: NMI storm and state corruption.
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The commit describes two problems:
-1. **Problem 1**: Kexec reboot does not reset PCI devices, so without a
-   shutdown handler, the GPU hardware remains in an unknown state after
-   kexec.
-2. **Problem 2**: Doing a full DRM/TTM teardown from `->shutdown`
-   triggers WARNs when userspace still holds DRM file descriptors.
-
-Three stack traces are provided showing WARNING triggers at:
-- `drm_mode_config_cleanup+0x2e7/0x300` (drm_mode_config.c:578)
-- `drm_framebuffer_free+0x73/0xa0` (drm_framebuffer.c:833) -
-  `drm_WARN_ON(!list_empty(&fb->filp_head))`
-- `nouveau_ttm_fini+0x257/0x270` (ttm_resource.h:406)
-
-All triggered through the path: `kernel_kexec -> device_shutdown ->
-pci_device_shutdown -> nouveau_drm_shutdown -> nouveau_drm_device_fini`
-
-**Solution**: Use the suspend path (which properly handles open
-userspace FDs) instead of full teardown, then power down the PCI
-function to D3hot.
-
-Record: [Bug: GPU not properly quiesced during kexec reboot, causing
-WARNs and potential GPU init failures in next kernel] [Symptom: multiple
-kernel WARNINGs during kexec shutdown] [Root cause: Missing .shutdown
-callback, and naive full-teardown approach triggers WARNs with open FDs]
-
-### Step 1.4: DETECT HIDDEN BUG FIXES
-This is an overt bug fix. The commit directly addresses kernel WARNINGs
-and ensures proper GPU quiescing during kexec. It's a hardware
-workaround for the fact that kexec doesn't reset PCI devices.
-
-Record: Not a hidden bug fix - this is an explicit fix for kernel
-WARNINGs and kexec reliability.
+### Step 1.4: Hidden Bug Fix Detection
+This is explicitly described as a race condition fix - not disguised at
+all.
 
 ---
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
-- **Files changed**: `drivers/gpu/drm/nouveau/nouveau_drm.c` (1 file)
-- **Lines added**: ~32 lines (new function + 1 line to hook it up)
+### Step 2.1: Inventory
+- **Files changed**: 1 (`arch/x86/events/amd/ibs.c`)
+- **Lines added**: +8 (6 comment lines + 1 blank + 1 code line)
 - **Lines removed**: 0
-- **Functions modified**: None modified; one new function
-  `nouveau_drm_shutdown()` added
-- **Scope**: Single-file, purely additive change
+- **Functions modified**: `perf_ibs_start()`
+- **Scope**: Single-function surgical fix
 
-Record: [1 file, +32/-0 lines] [New function nouveau_drm_shutdown(),
-struct pci_driver updated] [Scope: single-file surgical addition]
+### Step 2.2: Code Flow Change
+**Before**: After computing `config`, `perf_ibs_start()` sets
+`IBS_STARTED`, clears `IBS_STOPPING`, and enables the event. The IBS
+control MSR may contain stale `Val=1` data from a previous sample.
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-**Before**: `nouveau_drm_pci_driver` has no `.shutdown` callback. During
-kexec, `pci_device_shutdown()` does nothing for nouveau, leaving the GPU
-in an unknown hardware state.
+**After**: Before setting `IBS_STARTED`, the code calls
+`perf_ibs_disable_event(perf_ibs, hwc, 0)` which writes 0 to the IBS
+control MSR, clearing `Val` and `En` bits. Any NMI arriving in the
+window between this write and the actual event enable will read `Val=0`
+and bail out.
 
-**After**: `nouveau_drm_shutdown()` is called during PCI device
-shutdown. It:
-1. Checks if drm is NULL (safety check)
-2. Checks if power is already off (switcheroo check, matching suspend
-   pattern)
-3. Calls `nouveau_do_suspend(drm, false)` to quiesce the GPU through the
-   proven suspend path
-4. Calls `pci_save_state`, `pci_disable_device`,
-   `pci_set_power_state(PCI_D3hot)` to power down PCI
-5. Calls `usleep_range(200, 400)` to allow PCI power transition to
-   settle (mirrors `udelay(200)` in `nouveau_pmops_suspend`)
+### Step 2.3: Bug Mechanism
+**Category**: Race condition between process context and NMI context
+- The NMI handler (`perf_ibs_handle_irq`) is called for both FETCH and
+  OP PMUs on every IBS NMI (see `perf_ibs_nmi_handler` at line
+  1396-1411)
+- A stale `Val=1` in the OP_CTL MSR fools the handler into thinking a
+  valid sample exists
+- The handler then re-enables the event prematurely
 
-Record: [Before: no shutdown handler -> GPU left in unknown state during
-kexec] [After: proper suspend-based quiescing + PCI power down]
-
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-This is a **hardware workaround** fix. Category: **Missing shutdown
-handler causing kernel WARNINGs and potential GPU initialization
-failures**.
-
-The fix closely mirrors `nouveau_pmops_suspend()`:
-
-```1034:1053:drivers/gpu/drm/nouveau/nouveau_drm.c
-nouveau_pmops_suspend(struct device *dev)
-{
-        struct pci_dev *pdev = to_pci_dev(dev);
-        struct nouveau_drm *drm = pci_get_drvdata(pdev);
-        // ... same pattern: do_suspend, pci_save_state,
-pci_disable_device, pci_set_power_state, udelay
-```
-
-Record: [Category: Missing shutdown handler / hardware quiescing]
-[Mechanism: PCI device not properly quiesced before kexec, leading to
-inconsistent GPU state and WARNs if full teardown attempted]
-
-### Step 2.4: ASSESS THE FIX QUALITY
-- **Obviously correct**: Yes - it mirrors the well-tested suspend path
-  exactly, using `nouveau_do_suspend()` which is the proven way to
-  quiesce the GPU
-- **Minimal/surgical**: Yes - purely additive, touches one file, doesn't
-  modify existing code
-- **Regression risk**: Very low - adds a new callback that reuses
-  existing proven infrastructure
-- **Red flags**: None. The function is self-contained and uses well-
-  established APIs
-
-Record: [Fix quality: Excellent. Reuses proven suspend path. Purely
-additive.] [Regression risk: Very low - new callback, no modification to
-existing paths]
+### Step 2.4: Fix Quality
+- **Obviously correct**: A single MSR zero-write before enabling, using
+  an existing function
+- **Minimal/surgical**: 1 functional line + comments
+- **Regression risk**: Extremely low - clearing a register before
+  writing new values into it is safe. The MSR was going to be written
+  anyway a few instructions later by `perf_ibs_enable_event()`
+- **No red flags**: Single function, single file, existing API
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-The PCI driver struct (`nouveau_drm_pci_driver`) was created in commit
-`9458029940ffc6` by Ben Skeggs (2012-07-06). It has never had a
-`.shutdown` handler. This means the bug has existed since the nouveau
-driver was first created - the GPU has never been properly quiesced on
-PCI shutdown.
+### Step 3.1: Blame
+The IBS state machine code (set_bit/clear_bit for STARTED/STOPPING) was
+introduced by:
+- `5a50f529170113` (Peter Zijlstra, 2016-03-16): "Fix race with
+  IBS_STARTING state"
+- `85dc600263c229` (Peter Zijlstra, 2016-03-21): "Fix pmu::stop()
+  nesting"
 
-Record: [PCI driver struct created 2012 (v3.6 era), never had .shutdown]
-[Bug present since nouveau's inception]
+Both were merged in kernel 4.7. The race condition has existed since
+then — present in **all active stable trees**.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-No Fixes: tag present (expected for autosel candidates).
+### Step 3.2: No Fixes: tag (expected)
 
-Record: [No Fixes: tag - expected]
+### Step 3.3: File History
+Recent changes to `ibs.c` are mostly feature additions (ldlat filtering,
+min_period, etc.) and cleanups (MSR rename, syscore changes). This fix
+doesn't conflict with any of them.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Recent commits to `nouveau_drm.c` include `8f8a4dce64013` ("nouveau: add
-a third state to the fini handler") which changed `nvif_client_suspend`
-to take a `bool runtime` parameter. However, this doesn't affect the new
-`nouveau_drm_shutdown` function, which calls `nouveau_do_suspend(drm,
-false)` - and `nouveau_do_suspend`'s external interface `(struct
-nouveau_drm *, bool)` has been stable since at least 2014.
+### Step 3.4: Author
+Ravi Bangoria is the AMD IBS subsystem maintainer/expert with 15+
+commits to `arch/x86/events/amd/ibs.c`. This fix carries strong
+authority.
 
-Record: [Related commit 8f8a4dce64013 changes internals of
-nouveau_do_suspend but not its interface] [No prerequisites needed for
-this patch]
+### Step 3.5: Dependencies
+This is patch 5/5 in a series titled "perf/amd/ibs: Assorted fixes":
+1. "Account interrupt for discarded samples"
+2. "Limit ldlat->l3missonly dependency to Zen5"
+3. "Preserve PhyAddrVal bit when clearing PhyAddr MSR"
+4. "Avoid calling perf_allow_kernel() from the IBS NMI handler"
+5. "Avoid race between event add and NMI" (this patch)
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Li Chen has no other commits to the nouveau driver. However, the patch
-was reviewed and signed off by Dave Airlie, who is the DRM maintainer
-and a major contributor to nouveau.
-
-Record: [Author: Li Chen (new contributor to nouveau)] [Reviewer: Dave
-Airlie (DRM maintainer) - strong endorsement]
-
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-The patch is completely standalone:
-- It adds a new function using only existing stable APIs
-  (`nouveau_do_suspend`, PCI helpers, `usleep_range`)
-- It adds a single struct field assignment (`.shutdown =
-  nouveau_drm_shutdown`)
-- No modifications to existing functions
-
-Record: [No dependencies. Fully standalone. All APIs used are long-
-standing.]
+**Critical finding**: This patch is **completely standalone**. It only
+adds a call to the existing `perf_ibs_disable_event()` function. It does
+not depend on any changes from patches 1-4 (which address unrelated
+bugs).
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Found the full discussion on dri-devel mailing list:
-- **v1**: Jan 20, 2026 - Initial submission without comment on
-  usleep_range
-- **v2**: Jan 21, 2026 - Added comment explaining usleep_range, gained
-  Reviewed-by from Dave Airlie
-- **Applied**: Feb 9, 2026 - Dave Airlie applied to drm-misc-next
-  targeting 7.1
+### Step 4.1: Patch Discussion
+- Found via patchew.org and spinics.net
+- Upstream commit: `1b044ff3c17e9d7fd93ffc0ba541ccdeb992d7f5`
+- Merged into tip/perf/core on Feb 27, 2026 by Peter Zijlstra
+- v2 series (v1 was at different URL, split from enhancements)
 
-Dave Airlie's v1 review asked "Why is this [usleep_range] needed? it at
-least needs a comment." After Li Chen explained, Dave gave `Reviewed-by:
-Dave Airlie <airlied@redhat.com>` on v1 with the comment addition, and
-the v2 with the comment was applied.
+### Step 4.2: Reviewers
+- **Namhyung Kim** Acked the entire series
+- **Peter Zijlstra** (perf core maintainer) committed it
+- All appropriate subsystem maintainers were involved
 
-Record: [v1 and v2 submitted] [Dave Airlie reviewed, requested comment
-on usleep_range] [Applied to drm-misc-next targeting 7.1] [No NAKs or
-concerns]
-
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-CC'd: Dave Airlie, Lyude Paul, Danilo Krummrich, Maarten Lankhorst,
-Maxime Ripard, Thomas Zimmermann, Simona Vetter, dri-devel, nouveau,
-linux-kernel. All appropriate maintainers were included.
-
-Record: [All DRM/nouveau maintainers were CC'd] [Dave Airlie (DRM
-maintainer) reviewed]
-
-### Step 4.3: SEARCH FOR THE BUG REPORT
-The commit itself contains the bug report in the form of stack traces.
-The author hit this during kexec reboot with nouveau hardware. No
-separate bug report found.
-
-Record: [Author-reported bug with full stack traces in commit message]
-
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-This is a standalone single-patch submission (not part of a series).
-
-Record: [Standalone single patch, no series]
-
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-No specific stable discussion found. Dave Airlie noted it targets 7.1,
-but no explicit discussion about stable backporting.
-
-Record: [No stable-specific discussion found]
+### Step 4.3-4.5: No specific bug report (author-found via code
+analysis), no stable-specific discussion found.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-- `nouveau_drm_shutdown()` (new function)
-- References: `nouveau_do_suspend()`, PCI helpers
+### Step 5.1: Key Functions
+- `perf_ibs_start()` (modified) - called from `perf_ibs_add()` during
+  event scheduling
+- `perf_ibs_disable_event()` (called, not modified) - writes 0 to IBS
+  control MSR
 
-### Step 5.2: TRACE CALLERS
-`nouveau_drm_shutdown()` is called from `pci_device_shutdown()` (PCI
-core) via the `.shutdown` function pointer. This is triggered during:
-- `kernel_kexec()` -> `device_shutdown()` -> `pci_device_shutdown()`
-- `kernel_restart()` -> `device_shutdown()` -> `pci_device_shutdown()`
-- `kernel_power_off()` -> `device_shutdown()` -> `pci_device_shutdown()`
+### Step 5.2: Callers of perf_ibs_start
+- `perf_ibs_add()` → `perf_ibs_start()` — called during perf event
+  scheduling to CPU
+- This is a standard perf PMU operation, triggered whenever a perf event
+  using IBS is scheduled
 
-Record: [Called from PCI core during system shutdown/kexec/restart]
-[Affects all nouveau users during kexec]
+### Step 5.3-5.4: Call Chain
+`perf_event_open()` → context scheduling → `perf_ibs_add()` →
+`perf_ibs_start()`. The race is triggerable from userspace by using
+`perf record` with IBS events on AMD processors. This is a common usage
+path.
 
-### Step 5.3: TRACE CALLEES
-The function calls:
-1. `pci_get_drvdata()` - get driver data
-2. `nouveau_do_suspend(drm, false)` - the main GPU quiescing function,
-   proven by years of suspend/resume usage
-3. `pci_save_state()`, `pci_disable_device()`, `pci_set_power_state()` -
-   standard PCI power management
-4. `usleep_range()` - kernel delay function
-
-Record: [All callees are well-established, well-tested functions]
-
-### Step 5.4: FOLLOW THE CALL CHAIN
-`kernel_kexec()` -> `device_shutdown()` -> `pci_device_shutdown()` ->
-`nouveau_drm_shutdown()` -> `nouveau_do_suspend()` -> suspends display,
-evicts VRAM, idles channels, suspends fences, suspends object tree
-
-This is a critical path for kexec reliability. Without proper GPU
-quiescing, the GPU may continue DMA operations after kexec, potentially
-corrupting the new kernel's memory.
-
-Record: [Reachable via kexec syscall - a real user operation] [Critical
-for system reliability during kexec]
-
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Both `amdgpu` and `xe` (Intel) drivers have `.shutdown` handlers. This
-is a well-established pattern for GPU PCI drivers. Nouveau was the
-notable omission.
-
-Record: [amdgpu, xe, and many other DRM drivers have .shutdown handlers
-- nouveau was missing one]
+### Step 5.5: Similar Patterns
+The existing IBS state machine already had two prior race fixes (5a50f52
+and 85dc600) for similar NMI vs. process context races. This is a third
+variant of the same class of bug.
 
 ---
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-The `nouveau_drm_pci_driver` struct without `.shutdown` has existed
-since kernel 3.6 (2012). This bug affects ALL stable trees. The nouveau
-driver exists in all active stable trees.
+### Step 6.1: Buggy Code in Stable
+The vulnerable code (`set_bit(IBS_STARTED, ...)` followed by
+`perf_ibs_enable_event()` without clearing stale MSR data) has existed
+since kernel 4.7 (2016). It exists in **all active stable trees**:
+5.4.y, 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y.
 
-Record: [Bug exists in ALL stable trees - nouveau has never had a
-.shutdown handler]
+### Step 6.2: Backport Complications
+The `perf_ibs_start()` function has seen minor changes over the years
+(8b0bed7d in v5.9 added config variable, fa5d0a82 added min_period
+check), but the core structure — compute config, set STARTED, enable
+event — has remained stable. The MSR accessor names changed (`wrmsrl` →
+`wrmsrq`) in newer trees, but the older trees still have
+`perf_ibs_disable_event()` with the same signature. The patch should
+apply cleanly to recent stable trees, and with trivial adjustments to
+older ones.
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-The patch adds code between `nouveau_pmops_resume` and
-`nouveau_pmops_freeze`, and adds `.shutdown` to the pci_driver struct.
-Both areas have been stable for years (blame shows 2012 era). The patch
-should apply cleanly to all stable trees.
-
-One minor consideration: in stable trees without commit `8f8a4dce64013`,
-`nouveau_do_suspend` internally calls
-`nvif_client_suspend(&drm->_client)` (without the `bool` parameter).
-However, this doesn't affect the new function at all - it only calls
-`nouveau_do_suspend(drm, false)`, and the `nouveau_do_suspend` interface
-has been stable since 2014.
-
-Record: [Expected: clean apply to all stable trees] [No conflicts
-anticipated]
-
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
-No related fix exists in any stable tree. Nouveau has never had a
-`.shutdown` handler.
-
-Record: [No related fixes in stable]
+### Step 6.3: No related fixes already in stable for this specific race.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-- **Subsystem**: `drivers/gpu/drm/nouveau/` - NVIDIA GPU driver
-- **Criticality**: IMPORTANT - nouveau is the open-source driver for all
-  NVIDIA GPUs, widely used in Linux distributions
+### Step 7.1: Subsystem
+- **Path**: `arch/x86/events/amd/ibs.c`
+- **Subsystem**: x86 perf/PMU (AMD IBS)
+- **Criticality**: IMPORTANT — AMD IBS is used by all AMD processor
+  users running perf profiling, which is standard practice for
+  performance analysis
 
-Record: [Subsystem: nouveau/DRM GPU driver] [Criticality: IMPORTANT -
-widely used GPU driver]
-
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-The nouveau driver is actively developed with recent commits for
-GB10x/GB20x/GH100 support, GSP-RM support, etc.
-
-Record: [Actively maintained subsystem]
+### Step 7.2: Activity
+Actively maintained by Ravi Bangoria at AMD with regular fixes and
+enhancements.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-All users with NVIDIA GPUs using the nouveau driver who perform kexec
-reboots. This includes:
-- Systems using kexec for fast reboots
-- Systems using kdump for crash dump collection
-- Systems using KHO/LUO (Kernel Handover)
-- Enterprise and data center environments that rely on kexec
+### Step 8.1: Who is Affected
+All users of AMD processors (Zen and later) using `perf` with IBS
+events. This includes server workloads, desktop profiling, and CI
+systems running performance testing.
 
-Record: [Affected: All nouveau users performing kexec/kdump] [Subsystem-
-specific but affects a large user base]
+### Step 8.2: Trigger Conditions
+- Both IBS FETCH and IBS OP events are in use (or hardware has residual
+  FETCH state)
+- NMI from FETCH arrives during OP event initialization
+- OP_CTL MSR has stale Val=1 from a previous sample
+- More likely with low sample periods (high sampling frequency)
+- Triggered from unprivileged perf usage (with appropriate
+  perf_event_paranoid)
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-- **Trigger**: Performing a kexec reboot on a system with a nouveau-
-  driven NVIDIA GPU
-- **How common**: Kexec is commonly used in server environments, kdump
-  configurations, and development workflows
-- **Unprivileged**: No - kexec requires root/CAP_SYS_BOOT
+### Step 8.3: Failure Mode
+- **NMI storm**: Repeated NMIs can occur if the sample period is very
+  low
+- **State corruption**: `pcpu->state` can become corrupted if the event
+  gets throttled
+- **Severity**: HIGH — NMI storms can make a system unresponsive; state
+  corruption can lead to further crashes or undefined behavior
 
-Record: [Triggered by kexec reboot with nouveau GPU] [Moderately common
-trigger for server/dev environments]
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-When the bug triggers:
-1. **Without any shutdown handler (current state)**: GPU hardware left
-   in unknown state after kexec. The next kernel may fail to initialize
-   the GPU, or the GPU may continue DMA into the new kernel's memory
-   (potential memory corruption/crash). Severity: **HIGH**
-2. **With naive full-teardown shutdown handler**: Multiple kernel
-   WARNINGs triggered (`drm_mode_config_cleanup`,
-   `drm_framebuffer_free`, `nouveau_ttm_fini`). Severity: **MEDIUM-
-   HIGH** (WARNs, potential instability)
-
-Record: [Failure mode: GPU init failure in kexec'd kernel + kernel
-WARNINGs] [Severity: HIGH]
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-- **BENEFIT**: Prevents GPU initialization failures and kernel WARNINGs
-  during kexec. Ensures GPU is in a consistent state for the next
-  kernel. Enables proper kdump operation.
-- **RISK**: Very low. ~32 lines of purely additive code. Uses proven
-  suspend infrastructure. Reviewed by DRM maintainer. Cannot affect non-
-  shutdown paths.
-
-Record: [Benefit: HIGH - prevents kexec failures and WARNs] [Risk: VERY
-LOW - additive, reuses proven code, DRM maintainer review] [Ratio:
-Strongly favorable]
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: Prevents NMI storms and state corruption on AMD systems
+  during IBS profiling — HIGH benefit
+- **Risk**: Single function call to an existing function, writing 0 to
+  an MSR before writing new values — VERY LOW risk
+- **Ratio**: Extremely favorable
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence Summary
 
-**Evidence FOR backporting:**
-- Fixes real kernel WARNINGs with concrete stack traces
-- Prevents GPU initialization failures after kexec (potential for DMA
-  corruption)
-- Purely additive, small (~32 lines), single-file change
-- Reuses proven `nouveau_do_suspend()` suspend path
-- Follows the same pattern as `nouveau_pmops_suspend()` and other GPU
-  drivers (amdgpu, xe)
-- Reviewed and signed off by Dave Airlie (DRM maintainer)
-- No dependencies on other patches
-- Should apply cleanly to all stable trees
-- Bug has existed since nouveau's creation (2012)
-- Fills a gap - nouveau was one of the few major GPU drivers without
-  `.shutdown`
+**FOR backporting:**
+- Fixes a concrete race condition between process context and NMI
+  context
+- Can cause NMI storms and state corruption (HIGH severity)
+- Single line of functional code + comments (VERY LOW risk)
+- Uses existing `perf_ibs_disable_event()` function (no new code paths)
+- Self-contained — no dependencies on other patches
+- Written by the AMD IBS maintainer, committed by perf core maintainer
+- Acked by Namhyung Kim (another perf maintainer)
+- Bug exists in all stable trees (since v4.7, 2016)
+- Obviously correct — clearing a register before enabling it
 
-**Evidence AGAINST backporting:**
-- No explicit `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag
-- Author applied it to drm-misc-next (targeting 7.1), not stable
+**AGAINST backporting:**
+- No user-reported bug or syzbot report (found via code analysis)
+- Part of a 5-patch series (but confirmed standalone)
+- No explicit stable nomination
 
-**UNRESOLVED QUESTIONS:**
-- None significant - all aspects verified
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** YES — single MSR write, committed
+   by PeterZ, Acked by Namhyung
+2. **Fixes a real bug?** YES — documented race causing NMI storms and
+   state corruption
+3. **Important issue?** YES — NMI storm = system hang; state corruption
+   = undefined behavior
+4. **Small and contained?** YES — 1 functional line in 1 function in 1
+   file
+5. **No new features or APIs?** Correct — no new features
+6. **Can apply to stable trees?** YES — clean apply expected
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES - mirrors proven suspend path,
-   reviewed by DRM maintainer
-2. **Fixes a real bug?** YES - kernel WARNINGs + GPU initialization
-   failures during kexec
-3. **Important issue?** YES - system warnings, potential GPU DMA
-   corruption, kexec/kdump reliability
-4. **Small and contained?** YES - 32 lines, 1 file, purely additive
-5. **No new features or APIs?** CORRECT - no new features, just a
-   missing shutdown handler
-6. **Can apply to stable trees?** YES - standalone, uses stable APIs
+### Step 9.3: Exception Categories
+Not an exception category — this is a standard race condition bug fix.
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-This could be classified as a **hardware workaround** (ensuring GPU is
-properly quiesced before kexec), which is an allowed exception category.
-
-### Step 9.4: MAKE YOUR DECISION
-The evidence strongly supports backporting. This is a small, well-
-contained fix that prevents real kernel WARNINGs and potential GPU
-initialization failures during kexec. It reuses proven suspend
-infrastructure, was reviewed by the DRM maintainer, and has no
-dependencies. The risk is very low and the benefit is significant for
-anyone using kexec/kdump with NVIDIA hardware.
+### Step 9.4: Decision
+Strong YES. This is a textbook stable backport candidate: a minimal,
+obviously correct fix for a real race condition with severe consequences
+(NMI storms, state corruption), written and reviewed by the appropriate
+maintainers.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Dave Airlie (DRM maintainer), Link
-  to patch.msgid.link
-- [Phase 2] Diff analysis: 32 lines added in one file. New
-  `nouveau_drm_shutdown()` function + `.shutdown` hook in pci_driver
-  struct. Purely additive.
-- [Phase 2] Code comparison: New function mirrors
-  `nouveau_pmops_suspend()` (lines 1034-1053 of current tree) with
-  matching pattern of do_suspend + PCI power management
-- [Phase 3] git blame: `nouveau_drm_pci_driver` struct created 2012
-  (commit 9458029940ffc6), never had `.shutdown` - bug present since
-  inception
-- [Phase 3] Related commit `8f8a4dce64013` changes `nouveau_do_suspend`
-  internals but not its interface - no conflict with this patch
-- [Phase 3] No prerequisites found - patch is standalone
-- [Phase 4] Mailing list: v1 submitted Jan 20, v2 with comment on
-  usleep_range submitted Jan 21, Dave Airlie reviewed and applied Feb 9
-  to drm-misc-next targeting 7.1
-- [Phase 4] Dave Airlie explicitly gave Reviewed-by after reviewing v1
-  and requesting a comment addition
-- [Phase 4] No NAKs or concerns raised by any reviewer
-- [Phase 5] `nouveau_drm_shutdown()` called from `pci_device_shutdown()`
-  during kexec/restart/poweroff - standard PCI driver shutdown path
-- [Phase 5] Both amdgpu and xe (Intel) GPU drivers have `.shutdown`
-  handlers - nouveau was the outlier
-- [Phase 6] Bug exists in all stable trees - nouveau has never had a
-  .shutdown handler
-- [Phase 6] Patch expected to apply cleanly - `nouveau_do_suspend(struct
-  nouveau_drm *, bool)` interface stable since 2014
-- [Phase 8] Failure mode: kernel WARNINGs + potential GPU init failure
-  after kexec. Severity: HIGH
-- [Phase 8] Risk: Very low - purely additive, uses proven code paths
+- [Phase 1] Parsed tags: Signed-off-by (Bangoria, PeterZ), Acked-by
+  (Namhyung Kim), Link to patchew/lore
+- [Phase 2] Diff analysis: 1 functional line added
+  (`perf_ibs_disable_event(perf_ibs, hwc, 0)`) + 7 comment/blank lines
+  in `perf_ibs_start()`
+- [Phase 2] Verified `perf_ibs_disable_event()` with config=0 writes 0
+  to the MSR (lines 451-459 of ibs.c)
+- [Phase 2] Verified NMI handler checks `valid_mask` at line 1261 —
+  stale Val=1 bypasses this check
+- [Phase 2] Verified NMI handler is called for both FETCH and OP PMUs at
+  lines 1402-1403
+- [Phase 3] git blame: IBS_STARTED state machine introduced by
+  5a50f529170113 (v4.7, 2016) and refined by 85dc600263c229 (v4.7, 2016)
+  — present in all stable trees
+- [Phase 3] git log --author="Ravi Bangoria": 15+ commits to ibs.c —
+  confirmed subsystem expert
+- [Phase 3] Verified no dependencies on other patches in series — only
+  uses existing `perf_ibs_disable_event()`
+- [Phase 4] patchew.org: confirmed patch 5/5 in "Assorted fixes" series,
+  all Acked by Namhyung
+- [Phase 4] spinics.net: confirmed upstream commit
+  1b044ff3c17e9d7fd93ffc0ba541ccdeb992d7f5, merged Feb 27, 2026
+- [Phase 4] Verified series patches 1-4 are independent bug fixes
+  (different issues)
+- [Phase 5] Verified `perf_ibs_start()` called from `perf_ibs_add()`
+  (line 568), a standard PMU scheduling path
+- [Phase 6] git log v6.6.. and v6.1..: ibs.c has had changes but core
+  start() structure is preserved
+- [Phase 8] Failure mode: NMI storm + state corruption → severity HIGH
+- UNVERIFIED: Could not access lore.kernel.org directly due to Anubis
+  bot protection — used patchew.org and spinics.net mirrors instead
 
 **YES**
 
- drivers/gpu/drm/nouveau/nouveau_drm.c | 32 +++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ arch/x86/events/amd/ibs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
-index 915f73279302d..cb22237ac17d9 100644
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -1079,6 +1079,37 @@ nouveau_pmops_resume(struct device *dev)
- 	return ret;
- }
+diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
+index e35132c5448dd..705e9a65c9ac9 100644
+--- a/arch/x86/events/amd/ibs.c
++++ b/arch/x86/events/amd/ibs.c
+@@ -490,6 +490,14 @@ static void perf_ibs_start(struct perf_event *event, int flags)
+ 	}
+ 	config |= period >> 4;
  
-+static void
-+nouveau_drm_shutdown(struct pci_dev *pdev)
-+{
-+	struct nouveau_drm *drm = pci_get_drvdata(pdev);
-+	int ret;
-+
-+	if (!drm)
-+		return;
-+
-+	if (drm->dev->switch_power_state == DRM_SWITCH_POWER_OFF ||
-+	    drm->dev->switch_power_state == DRM_SWITCH_POWER_DYNAMIC_OFF)
-+		return;
-+
-+	ret = nouveau_do_suspend(drm, false);
-+	if (ret)
-+		NV_ERROR(drm, "shutdown suspend failed with: %d\n", ret);
-+
-+	pci_save_state(pdev);
-+	pci_disable_device(pdev);
-+	pci_set_power_state(pdev, PCI_D3hot);
 +	/*
-+	 *  This is just to give the pci power transition time to settle
-+	 *  before an immediate kexec jump. it’s mirroring the existing
-+	 *  nouveau_pmops_suspend() behavior, which already does
-+	 *  udelay(200) right after pci_set_power_state(..., pci_d3hot). In
-+	 *  ->shutdown() we’re allowed to sleep, so I used usleep_range()
-+	 *  instead of a busy-wait udelay().
++	 * Reset the IBS_{FETCH|OP}_CTL MSR before updating pcpu->state.
++	 * Doing so prevents a race condition in which an NMI due to other
++	 * source might accidentally activate the event before we enable
++	 * it ourselves.
 +	 */
-+	usleep_range(200, 400);
-+}
++	perf_ibs_disable_event(perf_ibs, hwc, 0);
 +
- static int
- nouveau_pmops_freeze(struct device *dev)
- {
-@@ -1408,6 +1439,7 @@ nouveau_drm_pci_driver = {
- 	.id_table = nouveau_drm_pci_table,
- 	.probe = nouveau_drm_probe,
- 	.remove = nouveau_drm_remove,
-+	.shutdown = nouveau_drm_shutdown,
- 	.driver.pm = &nouveau_pm_ops,
- };
- 
+ 	/*
+ 	 * Set STARTED before enabling the hardware, such that a subsequent NMI
+ 	 * must observe it.
 -- 
 2.53.0
 
