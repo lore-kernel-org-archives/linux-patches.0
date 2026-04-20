@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8666243376;
-	Mon, 20 Apr 2026 16:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC791329C6D;
+	Mon, 20 Apr 2026 16:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701320; cv=none; b=icL40ZzbzsnTqfAH+4hUSPwvKVNrELhQV3U4oHMMYiOWC/LGS3lp42+2X1sHsYZfVxLx2fhd/zjrG64i56dYs6/Ia+Si9KjRQwIzej9mySQLOhakfH2t+dP1z6GFqZ70QZNRzUei/Mbi+/J5jd2l1rD9Xp5suZRhoaGqNLBQVx4=
+	t=1776701322; cv=none; b=LKG9tcUCq4aRjGs5yJnqPkCxZ/pnLWGuz9FUNMhi8ldKSTavB4SyJNjByJrcMEXJy60JAbhxwYo3XGY5SB48xmbFMco5JempK7JsJiZY7h6Rao2pQ0ntJew6LtXsZ451cDTNR0evzMuEIou54F5G2YqDDJ+w4BnvEvYz/9tsSio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701320; c=relaxed/simple;
-	bh=2nsDjl3StxEf+LiryQDf2BabgzzCNQi4PYFbUc/6dLM=;
+	s=arc-20240116; t=1776701322; c=relaxed/simple;
+	bh=JzgQAlvsFGNkHVKkYAiAlhh7tzb5wLn0FTZus8TNF5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+krGZ1xZEDF6EC34JtYZeCeETiu/rLdA9gx+n7M+Wq2DaLwjDD6oRCcs9ObHfw1KuN66A19lOiwCsz7RTeHz1+IGk8X5P+xXerp2Q2jeXwxuhXHfKusnaX3FtefTNiRzW/nprytdKR9zj9DY6jpKzYZSp8GyyCwP+OZSwt0Oik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RP6cf7z2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RjkLCp6qMNhnTUiKQP8LeRQvvQVgk+ROI6j1eNoO87Lu92sk5kCHcfc+lvcuFGh1R8T71WQu+nFyCZ2fjJWZWsfrdlA2jGk8RdNztpCug0QTOCi2Zux2FEQzpyp2391vjt0iHiWLcmSoupk2oDV+ZuqyEyceitDv+bJor8KL+GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSMSpd3r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RP6cf7z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB4FC2BCB4;
-	Mon, 20 Apr 2026 16:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSMSpd3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1212EC2BCB4;
+	Mon, 20 Apr 2026 16:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701319;
-	bh=2nsDjl3StxEf+LiryQDf2BabgzzCNQi4PYFbUc/6dLM=;
+	s=korg; t=1776701322;
+	bh=JzgQAlvsFGNkHVKkYAiAlhh7tzb5wLn0FTZus8TNF5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RP6cf7z24W4fDLI60XsIcjX8x6lyaMaC0rZhZZLopCOaqEK1nqXPVJiTf/pArjQ+5
-	 +hMIjg74BsVEq2ysSrXw7J3R3tBTi0mvMt00QEnIIE2/u4PWssReGskC0orIxi8uYe
-	 O6MNWsHDBXReMdnKchmeWJkNiWBYZXwAzDSpsz2M=
+	b=dSMSpd3r1SORWU3feSmx7t4l7vARVj4+Ovo7ceS9whu49ChUSeQ3YOdMUz2IbiGmu
+	 3HdTH60Q+/n15MruFmZf3fzjPKbNPeqC5JFyyzvChNZyOF8Msm9IrbFn2VTP4uQHNd
+	 CN14yOWcK2Um+F7c7G/WONuHFmW1SLkaled90SNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/162] xfrm_user: fix info leak in build_mapping()
-Date: Mon, 20 Apr 2026 17:41:39 +0200
-Message-ID: <20260420153929.462852139@linuxfoundation.org>
+Subject: [PATCH 6.12 068/162] selftests: net: bridge_vlan_mcast: wait for h1 before querier check
+Date: Mon, 20 Apr 2026 17:41:40 +0200
+Message-ID: <20260420153929.499136773@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -56,43 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 1beb76b2053b68c491b78370794b8ff63c8f8c02 ]
+[ Upstream commit efaa71faf212324ecbf6d5339e9717fe53254f58 ]
 
-struct xfrm_usersa_id has a one-byte padding hole after the proto
-field, which ends up never getting set to zero before copying out to
-userspace.  Fix that up by zeroing out the whole structure before
-setting individual variables.
+The querier-interval test adds h1 (currently a slave of the VRF created
+by simple_if_init) to a temporary bridge br1 acting as an outside IGMP
+querier. The kernel VRF driver (drivers/net/vrf.c) calls cycle_netdev()
+on every slave add and remove, toggling the interface admin-down then up.
+Phylink takes the PHY down during the admin-down half of that cycle.
+Since h1 and swp1 are cable-connected, swp1 also loses its link may need
+several seconds to re-negotiate.
 
-Fixes: 3a2dfbe8acb1 ("xfrm: Notify changes in UDP encapsulation via netlink")
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Use setup_wait_dev $h1 0 which waits for h1 to return to UP state, so the
+test can rely on the link being back up at this point.
+
+Fixes: 4d8610ee8bd77 ("selftests: net: bridge: add vlan mcast_querier_interval tests")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/c830f130860fd2efae08bfb9e5b25fd028e58ce5.1775424423.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 1 +
+ tools/testing/selftests/net/forwarding/bridge_vlan_mcast.sh | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 9516655e92f19..c00c33c39f20c 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -4062,6 +4062,7 @@ static int build_mapping(struct sk_buff *skb, struct xfrm_state *x,
- 
- 	um = nlmsg_data(nlh);
- 
-+	memset(&um->id, 0, sizeof(um->id));
- 	memcpy(&um->id.daddr, &x->id.daddr, sizeof(um->id.daddr));
- 	um->id.spi = x->id.spi;
- 	um->id.family = x->props.family;
+diff --git a/tools/testing/selftests/net/forwarding/bridge_vlan_mcast.sh b/tools/testing/selftests/net/forwarding/bridge_vlan_mcast.sh
+index 72dfbeaf56b92..e8031f68200ad 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_vlan_mcast.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_vlan_mcast.sh
+@@ -414,6 +414,7 @@ vlmc_querier_intvl_test()
+ 	bridge vlan add vid 10 dev br1 self pvid untagged
+ 	ip link set dev $h1 master br1
+ 	ip link set dev br1 up
++	setup_wait_dev $h1 0
+ 	bridge vlan add vid 10 dev $h1 master
+ 	bridge vlan global set vid 10 dev br1 mcast_snooping 1 mcast_querier 1
+ 	sleep 2
 -- 
 2.53.0
 
