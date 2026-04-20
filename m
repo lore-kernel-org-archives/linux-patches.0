@@ -1,43 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C78E40F8E4;
-	Mon, 20 Apr 2026 13:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB396410D1D;
+	Mon, 20 Apr 2026 13:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691640; cv=none; b=W7xKS8NqnVQ9gFCJDjItaKrQnvt8Wbg1Sx9hMf8W26rTn8AkpY7QyfJjCSg+zrtR35aaP9E+y3iV/FMfD9NdETAk5TyinU7q14kxdTiUt0yaJ88SmC+Y+7JrJcHCxcPjXwX3DqqxA75tdJnH+0Sb5tEueG3/zz7HozeaDou49JM=
+	t=1776691644; cv=none; b=ubNK/YupGXw+2ZL/nTU7OSTDla1ylZtgLvzhHg337jIs7OsZieLqpBbbDkKigKLVRFFSref5gkSnCLfNjn5EmA7GFDffGPE2CfSLmzPdJM6VlHdcP1FdKsQld9yZ/YlfwN2udNACryhIPqwPTRobqtjPjyWRWaQMUSjt2hAv1Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691640; c=relaxed/simple;
-	bh=CPsXeg1Q9d1VEn2dQOJBxmAMy/iazXITNvkbYYEgFNU=;
+	s=arc-20240116; t=1776691644; c=relaxed/simple;
+	bh=zcpRu7PTle2h3X/ZDntIMH5OT49jZM9svO4tKruyPtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GLnIzPiJfYUKdHbPfc53mpf08YOUH8o/9TNONqK7TScGajGasQjvMHe7ulMIJ73EP3TQNWRYCxikm6VRWgBf7lf8kazyXdSD9kMRoRFOj9T90O8+U+S2hVpg+ZMUcbvwS2O4ROPcjRHomyFghocRcM25elePYVor1/x3yA2rT1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tsnPCARC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ilZ6P2aUBhHmq60caSQhQNNWSyE63TiLFB+suNj735AZFO8r9iEowCFYOf29lbLRbJa3OJhzFlFrQ59kcB0TVx6CHpTiwLg7qRcXvAabq+iNri7G8gSQSsit8oi7rb/ObKqL0oGtqmu2JMHi9lPdTdpwI8CzLJKx0eaVMmhvAgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n+oJmv8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tsnPCARC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0426C2BCB7;
-	Mon, 20 Apr 2026 13:27:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n+oJmv8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69B8C4AF09;
+	Mon, 20 Apr 2026 13:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691640;
-	bh=CPsXeg1Q9d1VEn2dQOJBxmAMy/iazXITNvkbYYEgFNU=;
+	s=k20201202; t=1776691643;
+	bh=zcpRu7PTle2h3X/ZDntIMH5OT49jZM9svO4tKruyPtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tsnPCARC8cTuaHvuBPF2iPI1wbog/CTYqmazZmfbiCqejzTjJKFq0aMpxEFIq39iw
-	 srrBpqatOAYSmjwwz+cQv/Doxozw5TQ2ugOeBvwlwT6+ukFNIEzKOuFVc304vSLr+H
-	 5YqMEYZejAjcDQ3tJWfw3Xi/ziSdIRtz01ga5LBjS0FH+SYRZQCkRNAyXxG4dIJtWw
-	 YfFS4JAT5EN/IP9ODzQP4NLbP7kCWBuiJsiT0QsZgVNqjo6Zv9pfmLC4XBVg+Fn5ms
-	 aTea+Y9vo4/u1IErVcL2oC7IgUPJrTlARblMk5ds7t3PuD7Q9iH1ZvkRfCRfMESwee
-	 Y5/ZOyOwoNxTQ==
+	b=n+oJmv8khECyeWvNgffxI0PhV5D3tqtW/c6ZnlayQL0oIvMnUZK1l79L4CBdbJ9d0
+	 qnnN0B6xL+C0Y5FJZ6YQNKeBnGbktW4JghhP5MM7gn3oCenXR+0pg+S541SfXdS3Mg
+	 Nxz1FvQP1doSf5F3+BsfR+e35Fdlz4LxkCvknjeoGg2z4KHdipN01AYWR8yCfcElVO
+	 1L1rjLgMDstvKcWhlbApYtmtnqLHOlKtK2FJbO5z6BWmNt1sswYKM+OoTr9Qck3XUI
+	 /gB+yV+AWM+0/leebvZAUwlOercsLBxAgTW4CBkl9WdsXd2PYiqsR6Cbt5dslnOSjA
+	 1ajOGpi8euonw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Linus Walleij <linusw@kernel.org>,
+Cc: Zhengchuan Liang <zcliangcn@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>,
-	Shyam-sundar.S-k@amd.com,
-	linux-gpio@vger.kernel.org,
+	pablo@netfilter.org,
+	davem@davemloft.net,
+	dsahern@kernel.org,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] pinctrl: amd: Support new ACPI ID AMDI0033
-Date: Mon, 20 Apr 2026 09:19:01 -0400
-Message-ID: <20260420132314.1023554-147-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] netfilter: ip6t_eui64: reject invalid MAC header for all packets
+Date: Mon, 20 Apr 2026 09:19:02 -0400
+Message-ID: <20260420132314.1023554-148-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -49,297 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
+X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-[ Upstream commit 127e98c05c46654867faf5f578cb56d375b89092 ]
+[ Upstream commit fdce0b3590f724540795b874b4c8850c90e6b0a8 ]
 
-Add AMDI0033 to the AMD GPIO ACPI match table.
-This lets the driver bind on new AMD platforms that expose this HID.
+`eui64_mt6()` derives a modified EUI-64 from the Ethernet source address
+and compares it with the low 64 bits of the IPv6 source address.
 
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+The existing guard only rejects an invalid MAC header when
+`par->fragoff != 0`. For packets with `par->fragoff == 0`, `eui64_mt6()`
+can still reach `eth_hdr(skb)` even when the MAC header is not valid.
+
+Fix this by removing the `par->fragoff != 0` condition so that packets
+with an invalid MAC header are rejected before accessing `eth_hdr(skb)`.
+
+Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Walkthrough
+Error: Failed to generate final synthesis
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+ net/ipv6/netfilter/ip6t_eui64.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-**Step 1.1: Subject Line Parse**
-Record: Subsystem `pinctrl: amd:`; action verb `Support` (effectively
-"add"); summary: adds new ACPI HID `AMDI0033` to the AMD GPIO ACPI match
-table.
-
-**Step 1.2: Commit Message Tags**
-Record: Tags present:
-- `Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>` (AMD
-  vendor author)
-- `Signed-off-by: Linus Walleij <linusw@kernel.org>` (pinctrl subsystem
-  maintainer)
-- No `Fixes:`, no `Cc: stable`, no `Reported-by:`, no `Link:` — absence
-  is expected for a review candidate.
-
-**Step 1.3: Commit Body**
-Record: Body states `Add AMDI0033 to the AMD GPIO ACPI match table. This
-lets the driver bind on new AMD platforms that expose this HID.` No
-stack traces, no crash symptoms — this is a hardware enablement patch,
-not a crash fix.
-
-**Step 1.4: Hidden Bug Fix?**
-Record: Not a hidden bug fix. It is an explicit hardware-enablement (new
-device ID) addition. Falls into the stable exception "NEW DEVICE IDs".
-
-### PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: Inventory**
-Record: 1 file modified, `drivers/pinctrl/pinctrl-amd.c`, +1/-0. Scope:
-single-line addition inside `amd_gpio_acpi_match[]`. No functions
-modified.
-
-**Step 2.2: Code Flow Change**
-Record: Before, the `acpi_device_id` table had `AMD0030`, `AMDI0030`,
-`AMDI0031`. After, `AMDI0033` is an additional entry. With this change
-the `amd_gpio` platform driver will match/bind on ACPI devices whose
-`_HID` is `AMDI0033`.
-
-**Step 2.3: Bug Mechanism Category**
-Record: Category (h) — Hardware workaround / device ID addition. No
-locking, no refcount, no error path, no memory safety change.
-
-**Step 2.4: Fix Quality**
-Record: Obviously correct. Identical in pattern to the 2021 `AMDI0031`
-addition (commit `1ca46d3e43569`) and 2016 `AMDI0030` addition (commit
-`42a44402ecb78`). Cannot regress existing platforms because adding an
-entry to an ACPI match table only expands which devices bind; it does
-not change behavior for existing IDs. Zero regression risk for systems
-lacking `AMDI0033`.
-
-### PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: Blame**
-Record: `git blame` on lines 1273–1280 shows the table was introduced in
-`dbad75dd1f25e0` (Ken Xue, 2015). Prior ID additions:
-- `AMDI0030` in `42a44402ecb78` (2016)
-- `AMDI0031` in `1ca46d3e43569` (2021)
-Both precedents for the same kind of change, and both the driver and its
-ACPI table have existed since v4.1-era.
-
-**Step 3.2: Fixes: tag**
-Record: No `Fixes:` tag — N/A. This is not a bug fix commit.
-
-**Step 3.3: Related Recent Changes**
-Record: `git log --oneline -5 -- drivers/pinctrl/pinctrl-amd.c` shows
-benign recent churn (header cleanup, IRQ hwirq access, PM debug
-messages, treewide rename). No prerequisite refactor touches
-`amd_gpio_acpi_match[]`.
-
-**Step 3.4: Author**
-Record: Basavaraj Natikar is an AMD engineer with a long history of AMD
-pinctrl/platform fixes (`git log --author=Basavaraj` shows many prior
-AMD pinctrl commits). The co-SoB is Linus Walleij, the pinctrl
-maintainer. Both strong credibility signals.
-
-**Step 3.5: Prerequisites**
-Record: None. The match array already exists; only adds one entry.
-Stands alone. Patch applies literally to the file's existing structure.
-
-### PHASE 4: MAILING LIST RESEARCH
-
-**Step 4.1 / 4.2: b4 dig results**
-Record: `b4 dig -c 127e98c05c466` located the submission at `https://lor
-e.kernel.org/all/20260327050616.3816318-1-Basavaraj.Natikar@amd.com/` (a
-RESEND of the initial post). `b4 dig -a` shows only a single series
-version (v1 / RESEND). `b4 dig -w` shows recipients: Basavaraj Natikar,
-Shyam-sundar.S-k@amd.com (AMD), Linus Walleij (maintainer), `linux-
-gpio@vger.kernel.org`. All appropriate people were included; the pinctrl
-maintainer signed it off.
-
-Note: Lore requires interactive JS (Anubis); direct WebFetch was blocked
-so I could not read thread replies. Based on the patch having only a
-RESEND (no revisions) and being applied by the maintainer via his own
-SoB, there is no evidence of objections. UNVERIFIED: exact thread reply
-content.
-
-**Step 4.3 / 4.4 / 4.5**
-Record: No Reported-by/Link tags; no bug report to follow. Not part of a
-larger dependent series (single-patch submission). No prior stable
-discussion — N/A for a trivial ID add.
-
-### PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1–5.5**
-Record: The modified entity is a data table, not a function. Impact
-surface: the ACPI subsystem's platform-bus matcher reads this table at
-driver registration to decide which ACPI devices the `amd_gpio` platform
-driver probes. Adding an entry makes exactly one additional HID
-(`AMDI0033`) bind to `amd_gpio_probe()`. Existing ID behavior is
-unchanged. No other code needs updating; no quirks table search turned
-up `AMDI0033` (Grep found the new ID only in `pinctrl-amd.c`).
-
-### PHASE 6: STABLE TREE CROSS-REFERENCING
-
-**Step 6.1: Does the code exist in stable?**
-Record: The AMD pinctrl driver and its ACPI match table have existed
-since 2015. Every active stable tree (5.4, 5.10, 5.15, 6.1, 6.6, 6.12,
-6.17) contains `amd_gpio_acpi_match[]`. Adding one more entry applies
-trivially.
-
-**Step 6.2: Backport Complications**
-Record: Clean apply expected across all active stable trees. The context
-lines (`AMD0030`, `AMDI0030`, `AMDI0031` entries) are present in every
-stable tree that contains the driver.
-
-**Step 6.3: Related fixes already in stable?**
-Record: No — this ID is genuinely new. Not a duplicate of anything.
-
-### PHASE 7: SUBSYSTEM CONTEXT
-
-**Step 7.1: Subsystem**
-Record: `drivers/pinctrl/pinctrl-amd.c` — AMD GPIO/pinctrl driver used
-on essentially all modern AMD client platforms (laptops/desktops).
-Criticality: IMPORTANT — without this binding, GPIO-driven devices
-(trackpads, PM controls, power buttons, wake sources) on affected AMD
-systems may not work, and wake-from-suspend can regress.
-
-**Step 7.2: Activity**
-Record: Actively maintained; regular but modest activity. New ACPI HIDs
-appear every few years as AMD rolls out new platform silicon.
-
-### PHASE 8: IMPACT AND RISK
-
-**Step 8.1: Who's affected**
-Record: Users of new AMD platforms (SoCs/APUs) whose firmware exposes
-GPIO with `_HID "AMDI0033"`. Without this patch, the `amd_gpio` driver
-never binds → no pinctrl/GPIO, and anything depending on it (e.g., I2C
-HID trackpads routed through AMD GPIO interrupts, wake-on-GPIO) fails.
-
-**Step 8.2: Trigger**
-Record: Triggered at every boot on affected hardware. Extremely
-deterministic — it's simply whether the driver binds or not.
-
-**Step 8.3: Failure Mode Severity**
-Record: Without the patch: non-functional input/power/wake peripherals
-on new AMD platforms. Not a crash, but a severe hardware-enablement
-functional regression (no keyboard/trackpad/wake). Severity HIGH for
-affected users.
-
-**Step 8.4: Risk-Benefit**
-Record: BENEFIT: high for owners of new AMD hardware that lands on
-stable kernels. RISK: near-zero — adding an ACPI match entry cannot
-break existing hardware, cannot introduce UAF/locking/corruption, and
-the driver's probe path is unchanged. This is the textbook safe stable
-exception.
-
-### PHASE 9: SYNTHESIS
-
-**Step 9.1: Evidence**
-For: Exactly matches the explicit stable exception "NEW DEVICE IDs —
-trivial one-line additions to existing drivers that enable hardware
-support." One-line addition. Maintainer SoB. Vendor author. Long-
-established driver. Prior precedent `AMDI0031` was added the same way.
-Clean apply.
-Against: None of substance. No Fixes:/Cc: stable (expected for review
-candidates, not a negative signal per the criteria).
-Unresolved: Could not read lore thread replies directly due to Anubis.
-
-**Step 9.2: Stable Rules**
-1. Obviously correct and tested? Yes — trivial table entry, in mainline
-   under the maintainer.
-2. Fixes real issue? Yes — enables hardware that otherwise won't work.
-3. Important? Yes — GPIO/pinctrl is foundational for input/power/wake on
-   affected AMD systems.
-4. Small and contained? Yes — +1 line in one file.
-5. New feature or API? No — no new API, no new uapi.
-6. Applies to stable? Yes — context is ancient and unchanged.
-
-**Step 9.3: Exception Category**
-Hits the "NEW DEVICE IDs" exception explicitly.
-
-**Step 9.4: Decision**
-Classic stable-worthy one-line ACPI ID add to an existing, mature
-driver. Risk is near zero; benefit is real hardware enablement on new
-AMD platforms.
-
-## Verification
-
-- [Phase 1] Read commit subject, body, and tags; confirmed no Fixes:/Cc:
-  stable/Reported-by/Link tags; two SoBs (AMD author + pinctrl
-  maintainer Linus Walleij).
-- [Phase 2] Read the diff: single entry `{ "AMDI0033", 0},` appended
-  between `AMDI0031` and terminator in `amd_gpio_acpi_match[]` in
-  `drivers/pinctrl/pinctrl-amd.c` (lines ~1273–1278). Confirmed no
-  function body changes.
-- [Phase 2] Read `drivers/pinctrl/pinctrl-amd.c` lines 1270–1298 to
-  confirm context and that `MODULE_DEVICE_TABLE(acpi, ...)` is
-  unchanged.
-- [Phase 3] `git blame drivers/pinctrl/pinctrl-amd.c -L 1273,1280`:
-  table introduced by `dbad75dd1f25e0` (Ken Xue, 2015); `AMDI0030` added
-  by `42a44402ecb78` (2016); `AMDI0031` added by `1ca46d3e43569` (2021).
-  Confirms long-standing driver and precedent for the same kind of
-  change.
-- [Phase 3] `git log --oneline -5 -- drivers/pinctrl/pinctrl-amd.c`:
-  recent churn is benign and unrelated to the match table.
-- [Phase 3] `git log --oneline --author="Basavaraj" -10 --
-  drivers/pinctrl/pinctrl-amd.c`: author has a substantive history of
-  AMD pinctrl commits — established AMD platform engineer.
-- [Phase 4] `b4 dig -c 127e98c05c466`: matched by patch-id; URL `https:/
-  /lore.kernel.org/all/20260327050616.3816318-1-
-  Basavaraj.Natikar@amd.com/`.
-- [Phase 4] `b4 dig -c 127e98c05c466 -a`: only a single revision (v1 /
-  RESEND); no evolution from reviewer feedback.
-- [Phase 4] `b4 dig -c 127e98c05c466 -w`: original recipients included
-  Linus Walleij (maintainer), linux-gpio list, and AMD reviewers —
-  appropriate coverage.
-- [Phase 5] Grep for `AMDI003[0-9]` across the tree: new ID occurs only
-  in `drivers/pinctrl/pinctrl-amd.c`; existing `AMDI0030` references in
-  `drivers/gpio/gpiolib-acpi-quirks.c` are quirk entries not dependent
-  on this patch.
-- [Phase 6] Confirmed by blame that the `amd_gpio_acpi_match[]` array
-  structure has existed since 2015, so context applies cleanly to all
-  active stable trees.
-- [Phase 8] Impact reasoning is based on how ACPI platform driver
-  binding works generically (match table controls probe); no user-bug-
-  report was needed because the change is a pure hardware-enablement
-  addition.
-- UNVERIFIED: I could not directly read replies on the lore thread
-  because lore.kernel.org is currently gated by Anubis anti-bot; however
-  `b4 dig -a` showed no later revisions, and the maintainer's SoB on the
-  committed patch indicates no unresolved objections.
-- UNVERIFIED: I did not enumerate every stable branch's exact file state
-  because this is a workspace-only checkout; however, since all
-  preceding IDs (`AMDI0030`, `AMDI0031`) have been present since 2016
-  and 2021 respectively and the match-table block has not been
-  restructured, clean apply is expected on 5.4+.
-
-This commit is a textbook stable exception: a trivial one-line ACPI
-device ID addition to an existing, widely-used driver, authored by the
-hardware vendor and signed off by the subsystem maintainer. Risk is
-effectively zero; benefit is enabling GPIO/pinctrl on new AMD platforms
-that would otherwise be non-functional.
-
-**YES**
-
- drivers/pinctrl/pinctrl-amd.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
-index 2af94ef564342..e3128b0045d22 100644
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -1274,6 +1274,7 @@ static const struct acpi_device_id amd_gpio_acpi_match[] = {
- 	{ "AMD0030", 0 },
- 	{ "AMDI0030", 0},
- 	{ "AMDI0031", 0},
-+	{ "AMDI0033", 0},
- 	{ },
- };
- MODULE_DEVICE_TABLE(acpi, amd_gpio_acpi_match);
+diff --git a/net/ipv6/netfilter/ip6t_eui64.c b/net/ipv6/netfilter/ip6t_eui64.c
+index d704f7ed300c2..da69a27e8332c 100644
+--- a/net/ipv6/netfilter/ip6t_eui64.c
++++ b/net/ipv6/netfilter/ip6t_eui64.c
+@@ -22,8 +22,7 @@ eui64_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ 	unsigned char eui64[8];
+ 
+ 	if (!(skb_mac_header(skb) >= skb->head &&
+-	      skb_mac_header(skb) + ETH_HLEN <= skb->data) &&
+-	    par->fragoff != 0) {
++	      skb_mac_header(skb) + ETH_HLEN <= skb->data)) {
+ 		par->hotdrop = true;
+ 		return false;
+ 	}
 -- 
 2.53.0
 
