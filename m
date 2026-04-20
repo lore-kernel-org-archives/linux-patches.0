@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E25634107F;
-	Mon, 20 Apr 2026 16:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3597634107F;
+	Mon, 20 Apr 2026 16:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701539; cv=none; b=u4jYVOYn9X3cH5jUFjOc+umgOzw18CR9sPPpFMZtRTOyS9kaViZp3xspI8W7ciVoi6IfHCc7s5NyrgrWuIXbBRwN2m4S0Pux9fr5OLT8xtwVn6Nlyu7qZATBymmdAElUzt9Ol+Lok+XXoFO+Z5p7IC8WLWW1RS3TJbTouQpktkM=
+	t=1776701542; cv=none; b=QjUj7O4UU/PKqYmQLF1NWUGutpomd0Y2uzZouBetkFVPZ0pFdewDY9aGWcjEWzbarF+Tj4tf8RJnevxNKo4rYQLcCYV/TO6GF6WpXk+k4V45wNg17e3BYdimwPe/wfdS9jPnBrBunwJVdSPCrRlgprlwoWQuKSzR6hWhzq5jvkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701539; c=relaxed/simple;
-	bh=K0SfNqdC417fOCvOAFHP7WBtqcbZ3BkbcV+cgD7pyIc=;
+	s=arc-20240116; t=1776701542; c=relaxed/simple;
+	bh=sk906yPYLxa6JuPRnJ4CT5tTgU0FqyNldH/k6hxXFkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6Do7FmKWxtanZWndkNkwswUsiVViUsr0RyB1m4rLve5m+7d81pg1rCzJCGROcWt+xuw6bNtxHYkUbmdUIxlQMk9DsJZQqx4+NM5jZdSBig93grxp7o/Tt6NuIAkZ4z2An7rjkbhenmn6HRHMzUr/QbWAT2lsIUiBxZV+UQ+9DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7QpkuU4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zfz8CgYg6l6CfoLn6t/5s+W4n+gA+s4r210UoP/Xacskw42RRIdbCpP4EUlCmkBJhXRPVx8gkGFrCwi/VAEWnNFR3OP/GYVpGRJF3kV6LKO/G06CA82FHRnBOEeHsXTOomLo1RwluahlqtmixEnu7bZ74n8Sulj5ebKZy8uN0M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8/5WXE+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7QpkuU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FE2C19425;
-	Mon, 20 Apr 2026 16:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8/5WXE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1622C19425;
+	Mon, 20 Apr 2026 16:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701539;
-	bh=K0SfNqdC417fOCvOAFHP7WBtqcbZ3BkbcV+cgD7pyIc=;
+	s=korg; t=1776701542;
+	bh=sk906yPYLxa6JuPRnJ4CT5tTgU0FqyNldH/k6hxXFkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x7QpkuU4oOajAx6Lvwa4UhNf6IK7klwTJ0APDPx78IQ8iOQcs+TfazEwiUMmoFZ5G
-	 nLEfSwtfaY1KX3I/W/s86hUc+gPkpIjviRJAj4HJGIXKFJMOS150pgxMorJpAw+X9l
-	 aDxmKHoPCHNdqQRmRZatgN0yScVFmVRCyv+6u4pY=
+	b=c8/5WXE+R8QmT9jmQPe+VG87errv9KnrbaTJ7fxcvc/eueSLCOTaTWjPJAXnuANvB
+	 6vJXyj2tRfoLI0Um5meXkJmKLqvYzbc52mdatTqLbn0X7nL/IdSXcIskEtpzUlrSXi
+	 +4sDHN30VoPzDS1Qhjg69uKM6slob7hKhVXOp87k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 121/162] Docs/admin-guide/mm/damon/reclaim: warn commit_inputs vs param updates race
-Date: Mon, 20 Apr 2026 17:42:33 +0200
-Message-ID: <20260420153931.424556955@linuxfoundation.org>
+	Harin Lee <me@harin.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 122/162] ALSA: ctxfi: Limit PTP to a single page
+Date: Mon, 20 Apr 2026 17:42:34 +0200
+Message-ID: <20260420153931.461101896@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -50,58 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Harin Lee <me@harin.net>
 
-commit 0beba407d4585a15b0dc09f2064b5b3ddcb0e857 upstream.
+commit e9418da50d9e5c496c22fe392e4ad74c038a94eb upstream.
 
-Patch series "Docs/admin-guide/mm/damon: warn commit_inputs vs other
-params race".
+Commit 391e69143d0a increased CT_PTP_NUM from 1 to 4 to support 256
+playback streams, but the additional pages are not used by the card
+correctly. The CT20K2 hardware already has multiple VMEM_PTPAL
+registers, but using them separately would require refactoring the
+entire virtual memory allocation logic.
 
-Writing 'Y' to the commit_inputs parameter of DAMON_RECLAIM and
-DAMON_LRU_SORT, and writing other parameters before the commit_inputs
-request is completely processed can cause race conditions.  While the
-consequence can be bad, the documentation is not clearly describing that.
-Add clear warnings.
+ct_vm_map() always uses PTEs in vm->ptp[0].area regardless of
+CT_PTP_NUM. On AMD64 systems, a single PTP covers 512 PTEs (2M). When
+aggregate memory allocations exceed this limit, ct_vm_map() tries to
+access beyond the allocated space and causes a page fault:
 
-The issue was discovered [1,2] by sashiko.
+  BUG: unable to handle page fault for address: ffffd4ae8a10a000
+  Oops: Oops: 0002 [#1] SMP PTI
+  RIP: 0010:ct_vm_map+0x17c/0x280 [snd_ctxfi]
+  Call Trace:
+  atc_pcm_playback_prepare+0x225/0x3b0
+  ct_pcm_playback_prepare+0x38/0x60
+  snd_pcm_do_prepare+0x2f/0x50
+  snd_pcm_action_single+0x36/0x90
+  snd_pcm_action_nonatomic+0xbf/0xd0
+  snd_pcm_ioctl+0x28/0x40
+  __x64_sys_ioctl+0x97/0xe0
+  do_syscall_64+0x81/0x610
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
+Revert CT_PTP_NUM to 1. The 256 SRC_RESOURCE_NUM and playback_count
+remain unchanged.
 
-This patch (of 2):
-
-DAMON_RECLAIM handles commit_inputs request inside kdamond thread,
-reading the module parameters.  If the user updates the module
-parameters while the kdamond thread is reading those, races can happen.
-To avoid this, the commit_inputs parameter shows whether it is still in
-the progress, assuming users wouldn't update parameters in the middle of
-the work.  Some users might ignore that.  Add a warning about the
-behavior.
-
-The issue was discovered in [1] by sashiko.
-
-Link: https://lore.kernel.org/20260329153052.46657-2-sj@kernel.org
-Link: https://lore.kernel.org/20260319161620.189392-3-objecting@objecting.org [1]
-Link: https://lore.kernel.org/20260319161620.189392-2-objecting@objecting.org [3]
-Fixes: 81a84182c343 ("Docs/admin-guide/mm/damon/reclaim: document 'commit_inputs' parameter")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.19.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 391e69143d0a ("ALSA: ctxfi: Bump playback substreams to 256")
+Cc: stable@vger.kernel.org
+Signed-off-by: Harin Lee <me@harin.net>
+Link: https://patch.msgid.link/20260406074857.216034-1-me@harin.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/mm/damon/reclaim.rst |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/ctxfi/ctvmem.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -71,6 +71,10 @@ of parametrs except ``enabled`` again.
- parameter is set as ``N``.  If invalid parameters are found while the
- re-reading, DAMON_RECLAIM will be disabled.
+--- a/sound/pci/ctxfi/ctvmem.h
++++ b/sound/pci/ctxfi/ctvmem.h
+@@ -15,7 +15,7 @@
+ #ifndef CTVMEM_H
+ #define CTVMEM_H
  
-+Once ``Y`` is written to this parameter, the user must not write to any
-+parameters until reading ``commit_inputs`` again returns ``N``.  If users
-+violate this rule, the kernel may exhibit undefined behavior.
-+
- min_age
- -------
+-#define CT_PTP_NUM	4	/* num of device page table pages */
++#define CT_PTP_NUM	1	/* num of device page table pages */
  
+ #include <linux/mutex.h>
+ #include <linux/list.h>
 
 
