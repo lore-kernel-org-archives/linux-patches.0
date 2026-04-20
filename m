@@ -1,49 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7643C2769;
-	Mon, 20 Apr 2026 13:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565D53C345F;
+	Mon, 20 Apr 2026 13:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691049; cv=none; b=GQhLg5K5pDE2Trnf5kFMCsPTXSc7Nq7LRuMTrRLD2zwVr1ObB7bElqlscEARSsAMreh6oMyhFSwSPZz9xISIDAbfTaxDHLkOK7M1wUFz8obD9EtTwiuaIb0GH4N2tlJUaBLen6eBrJxxOPNW6BLA1BuLtIHAtn7Wxl5u0ED00jw=
+	t=1776691051; cv=none; b=a3+hsCfDgAlTeiF2Q/+hHQLLztW1iKKKMn09b5+kzEZd+ifH+ec93ILgpnuKQefnmoJ8WyM8UzHiTpBjsiw65AbHjXpUue6Us4Azr2X38/QfOe/VyhJeV+1pOPCO3GbtUrwcQ9f9pLaCMQkn6jE7HysOuIFG5cSSdUBkz2LM1BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691049; c=relaxed/simple;
-	bh=9aPVkcRuTSgqcTqdXSJQNUbhuhgr30ISjyLMfNdWJGc=;
+	s=arc-20240116; t=1776691051; c=relaxed/simple;
+	bh=7X5Udci/GbMjq5DiV3vyaQVZSRriOrN3RQrkmmC9Xzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J4B8wZqkuR69hkJhPsZYI84X953c7tnLidjhezkoNdq3UPMblAVVlxrgm0OttQJObYs2GRGTU0vWVsUfhMwFnWytBave+fDI5Gf5qq2vLsX1S4Ny2FEVXonicZd5N68xfhU3FQQqy0OA0s0zg0CpEYZjBhXjcw/vWY0xeDZ0SV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LTqLF4vV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A1lM51Z/F8lsGZ6bEGuns2w9e1lGnAVJiI/KfdeOu1yIwijMOZ10V3M3n0MF6EtLmMztAodEjxaas98xMA3VAWQoNo3ZKe/N91TMotGes39xm8T1feKKW0px0nNfOxYxZ7E1aejN60C9BEAi85s22Hpdp1DLv+hcyw85kKqD0OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CY2JTM3A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LTqLF4vV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD75C2BCB6;
-	Mon, 20 Apr 2026 13:17:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CY2JTM3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E722C2BCB6;
+	Mon, 20 Apr 2026 13:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691049;
-	bh=9aPVkcRuTSgqcTqdXSJQNUbhuhgr30ISjyLMfNdWJGc=;
+	s=k20201202; t=1776691051;
+	bh=7X5Udci/GbMjq5DiV3vyaQVZSRriOrN3RQrkmmC9Xzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTqLF4vV3/Sne7oYCJWMEG6rfbDUDxx81+X7XczzK5acB16PJOxXj7KI3ngX/2Eqh
-	 PRlTlsRQppYZzv4o0UNC/9ugIwe3oloIiiuOzSOjm87MFgs78B0Oxxaw5snTcEoPvt
-	 8LRL+AYNOO3vql9B3PVZ6cXAubt0atv2VaNgRqUBFcB7dUylrEOXRsgTKFhzGbv4VW
-	 k6sN2hMZ7biEERBwEmj66cFkcb8nVUgnGuQ3miH5wdaCGF8xNSoZNtKtD8G+geT6WK
-	 yReR2BER6bKHaHTkGIxg0HD0Hqyf3gIRgQ0MEkj4Ook+oVAEOfUgYHpSL3pM7WLEta
-	 nmMYUUgFGiZTw==
+	b=CY2JTM3A0q6zNKhtzVKqVxlC2vnlz9TfG5ODaZzvva4ii9ao4z2GIDxJvb5W2TH9v
+	 ypdpv0siYJ5MRsTgF3eKO6RIPN6OKSO4u/Y9Me0uFIzjkZ6yCxDFC9el0XmHGWOCEN
+	 DcVwvoGo3B1gDoH1LR6kwxa0U0qhWB7K/VSPQzyGltZa7gkyLt26Z9Ao+wMtPecAVu
+	 UwpNlI93DfKpLFwy5pJvdZTMb5rVrAS1XDHr/h5JVUBQo3tOicri3ekWoMZ/J9o19x
+	 2D5japPl3tShjnYoYawIMgpsP7LUxyxmuGxtErRvi1icEdOaqaFLf41InY6eGQ+8T/
+	 3xx4Dq35R+Ksg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Florian Westphal <fw@strlen.de>,
-	Scott Mitchell <scott.k.mitch1@gmail.com>,
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pablo@netfilter.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
-	netdev@vger.kernel.org,
+	thomas.richard@bootlin.com,
+	linusw@kernel.org,
+	brgl@kernel.org,
+	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] netfilter: nfnetlink_queue: make hash table per queue
-Date: Mon, 20 Apr 2026 09:08:50 -0400
-Message-ID: <20260420131539.986432-64-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] gpio: cgbc: normalize return value of gpio_get
+Date: Mon, 20 Apr 2026 09:08:51 -0400
+Message-ID: <20260420131539.986432-65-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -55,320 +51,289 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.18.23
+X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 936206e3f6ff411581e615e930263d6f8b78df9d ]
+[ Upstream commit 49621f1c97788216f2f10f1a9e903f216e289f5d ]
 
-Sharing a global hash table among all queues is tempting, but
-it can cause crash:
+The GPIO get callback is expected to return 0 or 1 (or a negative error
+code). Ensure that the value returned by cgbc_gpio_get() is normalized
+to the [0, 1] range.
 
-BUG: KASAN: slab-use-after-free in nfqnl_recv_verdict+0x11ac/0x15e0 [nfnetlink_queue]
-[..]
- nfqnl_recv_verdict+0x11ac/0x15e0 [nfnetlink_queue]
- nfnetlink_rcv_msg+0x46a/0x930
- kmem_cache_alloc_node_noprof+0x11e/0x450
-
-struct nf_queue_entry is freed via kfree, but parallel cpu can still
-encounter such an nf_queue_entry when walking the list.
-
-Alternative fix is to free the nf_queue_entry via kfree_rcu() instead,
-but as we have to alloc/free for each skb this will cause more mem
-pressure.
-
-Cc: Scott Mitchell <scott.k.mitch1@gmail.com>
-Fixes: e19079adcd26 ("netfilter: nfnetlink_queue: optimize verdict lookup with hash table")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/20260218190657.2974723-2-dmitry.torokhov@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Error: Failed to generate final synthesis
+Now I have all the information needed for a complete analysis.
 
- include/net/netfilter/nf_queue.h |   1 -
- net/netfilter/nfnetlink_queue.c  | 139 +++++++++++--------------------
- 2 files changed, 49 insertions(+), 91 deletions(-)
+---
 
-diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
-index 45eb26b2e95b3..d17035d14d96c 100644
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -23,7 +23,6 @@ struct nf_queue_entry {
- 	struct nf_hook_state	state;
- 	bool			nf_ct_is_unconfirmed;
- 	u16			size; /* sizeof(entry) + saved route keys */
--	u16			queue_num;
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: Subject Line**
+- Subsystem: `gpio: cgbc:`
+- Action verb: "normalize" (implies correcting incorrect behavior)
+- Summary: Normalizes the return value of the GPIO get callback to the
+  [0, 1] range
+
+**Step 1.2: Tags**
+- `Signed-off-by: Dmitry Torokhov` - author, prolific kernel/input/GPIO
+  contributor
+- `Link:` to lore patch submission
+- `Signed-off-by: Bartosz Golaszewski` - GPIO subsystem maintainer who
+  applied it
+- No `Fixes:` tag, no `Cc: stable` tag (but sibling patches in the same
+  series DO have these tags)
+
+**Step 1.3: Commit Body**
+- Clearly states the API contract: GPIO get callback must return 0, 1,
+  or negative error
+- States the driver violates this by returning non-normalized values
+  (e.g., 2, 4, 8, etc.)
+- The fix "normalizes" to [0, 1]
+
+**Step 1.4: Hidden Bug Fix Detection**
+- YES - this is a bug fix. The driver violates the gpio_chip API
+  contract. With the gpiolib sanitization commit (86ef402d805d) present
+  in v6.15+, this violation causes either `-EBADE` errors or runtime
+  warnings.
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/gpio/gpio-cgbc.c`
+- 2 lines removed, 2 lines added (net 0 change)
+- Function modified: `cgbc_gpio_get()`
+- Scope: single-file, single-function surgical fix
+
+**Step 2.2: Code Flow Change**
+- BEFORE: `return (int)(val & (u8)BIT(offset));` — returns the raw bit
+  value (could be 1, 2, 4, 8, 16, 32, 64, 128)
+- AFTER: `return !!(val & BIT(offset));` — returns 0 or 1
+- Also removes unnecessary `else` after `return ret`
+
+**Step 2.3: Bug Mechanism**
+- Category: Logic/correctness fix (API contract violation)
+- The `BIT(offset)` for offset > 0 yields values > 1 (BIT(1)=2,
+  BIT(2)=4, etc.)
+- The old code masks `val` with `BIT(offset)`, returning the bit's
+  position value rather than 0/1
+- With gpiolib sanitize (86ef402d805d in v6.15+), returning values > 1
+  triggers `-EBADE` or a warning
+
+**Step 2.4: Fix Quality**
+- Obviously correct: `!!` is the standard C idiom for boolean
+  normalization
+- Minimal/surgical: 2-line change in a single function
+- Zero regression risk: `!!` can only produce 0 or 1, which is exactly
+  what's expected
+- The fix is identical in pattern to all 6 other patches in the series
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: Blame**
+- The buggy `return (int)(val & (u8)BIT(offset))` line was introduced by
+  commit `4342bf63b64b0` (Thomas Richard, 2024-10-01) when the cgbc GPIO
+  driver was first created in v6.13-rc1.
+
+**Step 3.2: Fixes Target**
+- The commit doesn't have a `Fixes:` tag, but the sibling patches
+  reference `Fixes: 86ef402d805d ("gpiolib: sanitize the return value of
+  gpio_chip::get()")`, which was added in v6.15-rc1.
+
+**Step 3.3: Related Changes**
+- This is part of a 7-patch series by Dmitry Torokhov, all normalizing
+  gpio_get return values across different drivers.
+- The gpiolib core workaround (ec2cceadfae72) landed in v7.0-rc2, adding
+  normalization + warning in gpiolib itself.
+- The cgbc_gpio_get function has been unchanged since its creation — no
+  conflicting changes.
+
+**Step 3.4: Author**
+- Dmitry Torokhov is a highly respected kernel developer (input
+  subsystem maintainer, Google). He reported the problem with the
+  gpiolib sanitize commit and contributed the driver-side fixes.
+
+**Step 3.5: Dependencies**
+- The fix touches only `cgbc_gpio_get()` which is unchanged since the
+  driver was created. No dependencies on any other patches.
+- The diff applies cleanly to any tree containing the cgbc driver
+  (v6.13+).
+
+## PHASE 4: MAILING LIST RESEARCH
+
+**Step 4.1: Original Patch Discussion**
+- Patch 2/7 in series `[PATCH 1/7] gpio: bd9571mwv: normalize return
+  value of gpio_get`
+- 11 messages in thread. Applied by Bartosz Golaszewski (GPIO
+  maintainer).
+- Discussion revealed Dmitry recommended reverting 86ef402d805d for
+  stable but keeping it for 7.0. Bartosz instead sent ec2cceadfae72 to
+  normalize in gpiolib core (with `Cc: stable`).
+
+**Step 4.2: Reviewers**
+- Applied directly by Bartosz Golaszewski (GPIO subsystem maintainer)
+- No explicit Reviewed-by on the cgbc patch, but the entire series was
+  applied together
+
+**Step 4.3-4.5: Bug Context**
+- The underlying issue is well-documented: commit 86ef402d805d broke
+  many GPIO drivers that returned non-normalized values. The cgbc driver
+  is one of them.
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1-5.4: Function Analysis**
+- `cgbc_gpio_get()` is the `.get` callback for the cgbc GPIO chip,
+  assigned at probe time (line 173)
+- It's called by gpiolib core (`gpiochip_get()`) whenever any consumer
+  reads this GPIO
+- For Congatec Board Controller GPIO, this affects 14 GPIO pins (pins
+  0-13)
+- Pins with offset > 0 would return values > 1, triggering the bug
+
+## PHASE 6: STABLE TREE ANALYSIS
+
+**Step 6.1: Code Existence in Stable**
+- cgbc driver: exists in v6.13+ stable trees
+- gpiolib sanitize (86ef402d805d): exists in v6.15+ stable trees
+- gpiolib normalize workaround (ec2cceadfae72, `Cc: stable`): exists in
+  v7.0, will be backported to v6.15+
+
+**Step 6.2: Backport Complexity**
+- The `cgbc_gpio_get()` function is IDENTICAL in all stable trees from
+  v6.13 onwards
+- The patch applies cleanly to any tree with the cgbc driver
+
+**Step 6.3: Impact Matrix**
+- **v6.13-v6.14 stable**: Driver exists, sanitize check absent. Bug is
+  latent (no user-visible effect since gpiolib didn't check). Low
+  priority.
+- **v6.15+ stable**: Driver AND sanitize check exist. Without
+  ec2cceadfae72: driver returns `-EBADE` for pins > 0 (broken!). With
+  ec2cceadfae72 but without this fix: driver works but triggers a
+  warning on every `gpio_get` for pins 1-13.
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+- Subsystem: GPIO (`drivers/gpio/`) - IMPORTANT, used by many
+  embedded/SBC platforms
+- The Congatec Board Controller is used in embedded industrial computing
+- Criticality: PERIPHERAL (specific hardware), but users of this
+  hardware depend on it
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: Affected Users**
+- Users of Congatec Board Controller hardware with GPIO
+
+**Step 8.2: Trigger Conditions**
+- Any read of GPIO pins 1-13 (offset > 0) triggers the bug
+- This is a normal operation path, not an edge case
+
+**Step 8.3: Failure Severity**
+- Without gpiolib workaround: GPIO reads return error (-EBADE) for most
+  pins → MEDIUM-HIGH (driver broken)
+- With gpiolib workaround: Warning emitted on every read → LOW-MEDIUM
+  (functional but noisy)
+
+**Step 8.4: Risk-Benefit**
+- BENEFIT: Fixes incorrect driver behavior, eliminates runtime warnings,
+  prevents potential breakage
+- RISK: Virtually zero — `!!` normalization is trivially correct
+- RATIO: Very favorable
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Evidence FOR backporting:**
+1. Fixes a real API contract violation that causes warnings or errors in
+   v6.15+ trees
+2. 2-line change, trivially correct (`!!` normalization)
+3. Sibling patches in the same series have `Fixes:` and `Cc: stable`
+   tags
+4. Applied by GPIO subsystem maintainer
+5. Author is a top-tier kernel developer
+6. Zero regression risk
+7. Clean apply to all stable trees containing the driver
+
+**Evidence AGAINST backporting:**
+1. The gpiolib core workaround (ec2cceadfae72) already handles this at
+   the framework level
+2. No explicit `Fixes:` or `Cc: stable` on this specific patch
+3. For v6.13-v6.14 where the sanitize check doesn't exist, the bug is
+   latent
+
+**Stable Rules Checklist:**
+1. Obviously correct? YES — `!!` is trivially correct
+2. Fixes a real bug? YES — API violation causing errors/warnings
+3. Important issue? MEDIUM — driver broken or warning-spewing without
+   fix
+4. Small and contained? YES — 2 lines in 1 function
+5. No new features? Correct — pure bug fix
+6. Applies to stable? YES — cleanly
+
+## Verification
+
+- [Phase 1] Parsed tags: Signed-off-by Dmitry Torokhov and Bartosz
+  Golaszewski, Link to patch submission
+- [Phase 2] Diff analysis: 2 lines changed in `cgbc_gpio_get()`,
+  `(int)(val & (u8)BIT(offset))` → `!!(val & BIT(offset))`
+- [Phase 3] git blame: buggy code introduced in 4342bf63b64b0
+  (v6.13-rc1), present in stable 6.13+
+- [Phase 3] git show 86ef402d805d: confirmed sanitize commit in
+  v6.15-rc1, makes non-[0,1] returns an error
+- [Phase 3] git show ec2cceadfae72: confirmed gpiolib normalize
+  workaround in v7.0-rc2 with `Cc: stable`
+- [Phase 3] git tag --contains: verified cgbc in v6.13+, sanitize in
+  v6.15+, normalize in v7.0
+- [Phase 3] git diff shows `cgbc_gpio_get()` unchanged since driver
+  creation — clean apply
+- [Phase 4] b4 mbox: found 11-message thread, all 7 patches applied by
+  Bartosz Golaszewski
+- [Phase 4] Mailing list discussion: Dmitry recommended reverting
+  sanitize for stable; Bartosz instead sent gpiolib normalize fix
+- [Phase 4] Sibling patches (e2fa075d5ce19, 2bb995e6155cb,
+  fb22bb9701d48) all have `Fixes: 86ef402d805d` and `Cc: stable`
+- [Phase 5] `cgbc_gpio_get()` is the `.get` callback called by gpiolib
+  on every GPIO read
+- [Phase 6] Confirmed driver exists in 6.13+ and sanitize check in
+  6.15+; patch applies cleanly
+- [Phase 8] For offset > 0, `BIT(offset)` yields values 2-128; returning
+  these violates API and triggers warnings/errors
+
+The fix is small, surgical, trivially correct, and eliminates incorrect
+API behavior that causes runtime warnings in stable trees. The sibling
+patches explicitly target stable. The absence of `Cc: stable` on this
+specific patch appears to be an oversight or inconsistency within the
+series.
+
+**YES**
+
+ drivers/gpio/gpio-cgbc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpio/gpio-cgbc.c b/drivers/gpio/gpio-cgbc.c
+index 0efa1b61001ad..84b5ed3c6e22b 100644
+--- a/drivers/gpio/gpio-cgbc.c
++++ b/drivers/gpio/gpio-cgbc.c
+@@ -47,8 +47,8 @@ static int cgbc_gpio_get(struct gpio_chip *chip, unsigned int offset)
  
- 	/* extra space to store route keys */
- };
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index a39d3b989063c..fe5942535245d 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -49,8 +49,8 @@
- #endif
- 
- #define NFQNL_QMAX_DEFAULT 1024
--#define NFQNL_HASH_MIN     1024
--#define NFQNL_HASH_MAX     1048576
-+#define NFQNL_HASH_MIN     8
-+#define NFQNL_HASH_MAX     32768
- 
- /* We're using struct nlattr which has 16bit nla_len. Note that nla_len
-  * includes the header length. Thus, the maximum packet length that we
-@@ -60,29 +60,10 @@
-  */
- #define NFQNL_MAX_COPY_RANGE (0xffff - NLA_HDRLEN)
- 
--/* Composite key for packet lookup: (net, queue_num, packet_id) */
--struct nfqnl_packet_key {
--	possible_net_t net;
--	u32 packet_id;
--	u16 queue_num;
--} __aligned(sizeof(u32));  /* jhash2 requires 32-bit alignment */
--
--/* Global rhashtable - one for entire system, all netns */
--static struct rhashtable nfqnl_packet_map __read_mostly;
--
--/* Helper to initialize composite key */
--static inline void nfqnl_init_key(struct nfqnl_packet_key *key,
--				  struct net *net, u32 packet_id, u16 queue_num)
--{
--	memset(key, 0, sizeof(*key));
--	write_pnet(&key->net, net);
--	key->packet_id = packet_id;
--	key->queue_num = queue_num;
--}
--
- struct nfqnl_instance {
- 	struct hlist_node hlist;		/* global list of queues */
--	struct rcu_head rcu;
-+	struct rhashtable nfqnl_packet_map;
-+	struct rcu_work	rwork;
- 
- 	u32 peer_portid;
- 	unsigned int queue_maxlen;
-@@ -106,6 +87,7 @@ struct nfqnl_instance {
- 
- typedef int (*nfqnl_cmpfn)(struct nf_queue_entry *, unsigned long);
- 
-+static struct workqueue_struct *nfq_cleanup_wq __read_mostly;
- static unsigned int nfnl_queue_net_id __read_mostly;
- 
- #define INSTANCE_BUCKETS	16
-@@ -124,34 +106,10 @@ static inline u_int8_t instance_hashfn(u_int16_t queue_num)
- 	return ((queue_num >> 8) ^ queue_num) % INSTANCE_BUCKETS;
- }
- 
--/* Extract composite key from nf_queue_entry for hashing */
--static u32 nfqnl_packet_obj_hashfn(const void *data, u32 len, u32 seed)
--{
--	const struct nf_queue_entry *entry = data;
--	struct nfqnl_packet_key key;
--
--	nfqnl_init_key(&key, entry->state.net, entry->id, entry->queue_num);
--
--	return jhash2((u32 *)&key, sizeof(key) / sizeof(u32), seed);
--}
--
--/* Compare stack-allocated key against entry */
--static int nfqnl_packet_obj_cmpfn(struct rhashtable_compare_arg *arg,
--				  const void *obj)
--{
--	const struct nfqnl_packet_key *key = arg->key;
--	const struct nf_queue_entry *entry = obj;
--
--	return !net_eq(entry->state.net, read_pnet(&key->net)) ||
--	       entry->queue_num != key->queue_num ||
--	       entry->id != key->packet_id;
--}
--
- static const struct rhashtable_params nfqnl_rhashtable_params = {
- 	.head_offset = offsetof(struct nf_queue_entry, hash_node),
--	.key_len = sizeof(struct nfqnl_packet_key),
--	.obj_hashfn = nfqnl_packet_obj_hashfn,
--	.obj_cmpfn = nfqnl_packet_obj_cmpfn,
-+	.key_offset = offsetof(struct nf_queue_entry, id),
-+	.key_len = sizeof(u32),
- 	.automatic_shrinking = true,
- 	.min_size = NFQNL_HASH_MIN,
- 	.max_size = NFQNL_HASH_MAX,
-@@ -190,6 +148,10 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 	spin_lock_init(&inst->lock);
- 	INIT_LIST_HEAD(&inst->queue_list);
- 
-+	err = rhashtable_init(&inst->nfqnl_packet_map, &nfqnl_rhashtable_params);
-+	if (err < 0)
-+		goto out_free;
+ 	if (ret)
+ 		return ret;
+-	else
+-		return (int)(val & (u8)BIT(offset));
 +
- 	spin_lock(&q->instances_lock);
- 	if (instance_lookup(q, queue_num)) {
- 		err = -EEXIST;
-@@ -210,6 +172,8 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 
- out_unlock:
- 	spin_unlock(&q->instances_lock);
-+	rhashtable_destroy(&inst->nfqnl_packet_map);
-+out_free:
- 	kfree(inst);
- 	return ERR_PTR(err);
- }
-@@ -217,15 +181,18 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- static void nfqnl_flush(struct nfqnl_instance *queue, nfqnl_cmpfn cmpfn,
- 			unsigned long data);
- 
--static void
--instance_destroy_rcu(struct rcu_head *head)
-+static void instance_destroy_work(struct work_struct *work)
- {
--	struct nfqnl_instance *inst = container_of(head, struct nfqnl_instance,
--						   rcu);
-+	struct nfqnl_instance *inst;
- 
-+	inst = container_of(to_rcu_work(work), struct nfqnl_instance,
-+			    rwork);
- 	rcu_read_lock();
- 	nfqnl_flush(inst, NULL, 0);
- 	rcu_read_unlock();
-+
-+	rhashtable_destroy(&inst->nfqnl_packet_map);
-+
- 	kfree(inst);
- 	module_put(THIS_MODULE);
- }
-@@ -234,7 +201,9 @@ static void
- __instance_destroy(struct nfqnl_instance *inst)
- {
- 	hlist_del_rcu(&inst->hlist);
--	call_rcu(&inst->rcu, instance_destroy_rcu);
-+
-+	INIT_RCU_WORK(&inst->rwork, instance_destroy_work);
-+	queue_rcu_work(nfq_cleanup_wq, &inst->rwork);
++	return !!(val & BIT(offset));
  }
  
- static void
-@@ -250,9 +219,7 @@ __enqueue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
- {
- 	int err;
- 
--	entry->queue_num = queue->queue_num;
--
--	err = rhashtable_insert_fast(&nfqnl_packet_map, &entry->hash_node,
-+	err = rhashtable_insert_fast(&queue->nfqnl_packet_map, &entry->hash_node,
- 				     nfqnl_rhashtable_params);
- 	if (unlikely(err))
- 		return err;
-@@ -266,23 +233,19 @@ __enqueue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
- static void
- __dequeue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
- {
--	rhashtable_remove_fast(&nfqnl_packet_map, &entry->hash_node,
-+	rhashtable_remove_fast(&queue->nfqnl_packet_map, &entry->hash_node,
- 			       nfqnl_rhashtable_params);
- 	list_del(&entry->list);
- 	queue->queue_total--;
- }
- 
- static struct nf_queue_entry *
--find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id,
--		   struct net *net)
-+find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id)
- {
--	struct nfqnl_packet_key key;
- 	struct nf_queue_entry *entry;
- 
--	nfqnl_init_key(&key, net, id, queue->queue_num);
--
- 	spin_lock_bh(&queue->lock);
--	entry = rhashtable_lookup_fast(&nfqnl_packet_map, &key,
-+	entry = rhashtable_lookup_fast(&queue->nfqnl_packet_map, &id,
- 				       nfqnl_rhashtable_params);
- 
- 	if (entry)
-@@ -1531,7 +1494,7 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
- 
- 	verdict = ntohl(vhdr->verdict);
- 
--	entry = find_dequeue_entry(queue, ntohl(vhdr->id), info->net);
-+	entry = find_dequeue_entry(queue, ntohl(vhdr->id));
- 	if (entry == NULL)
- 		return -ENOENT;
- 
-@@ -1880,40 +1843,38 @@ static int __init nfnetlink_queue_init(void)
- {
- 	int status;
- 
--	status = rhashtable_init(&nfqnl_packet_map, &nfqnl_rhashtable_params);
--	if (status < 0)
--		return status;
-+	nfq_cleanup_wq = alloc_ordered_workqueue("nfq_workqueue", 0);
-+	if (!nfq_cleanup_wq)
-+		return -ENOMEM;
- 
- 	status = register_pernet_subsys(&nfnl_queue_net_ops);
--	if (status < 0) {
--		pr_err("failed to register pernet ops\n");
--		goto cleanup_rhashtable;
--	}
-+	if (status < 0)
-+		goto cleanup_pernet_subsys;
- 
--	netlink_register_notifier(&nfqnl_rtnl_notifier);
--	status = nfnetlink_subsys_register(&nfqnl_subsys);
--	if (status < 0) {
--		pr_err("failed to create netlink socket\n");
--		goto cleanup_netlink_notifier;
--	}
-+	status = netlink_register_notifier(&nfqnl_rtnl_notifier);
-+	if (status < 0)
-+	       goto cleanup_rtnl_notifier;
- 
- 	status = register_netdevice_notifier(&nfqnl_dev_notifier);
--	if (status < 0) {
--		pr_err("failed to register netdevice notifier\n");
--		goto cleanup_netlink_subsys;
--	}
-+	if (status < 0)
-+		goto cleanup_dev_notifier;
-+
-+	status = nfnetlink_subsys_register(&nfqnl_subsys);
-+	if (status < 0)
-+		goto cleanup_nfqnl_subsys;
- 
- 	nf_register_queue_handler(&nfqh);
- 
- 	return status;
- 
--cleanup_netlink_subsys:
--	nfnetlink_subsys_unregister(&nfqnl_subsys);
--cleanup_netlink_notifier:
-+cleanup_nfqnl_subsys:
-+	unregister_netdevice_notifier(&nfqnl_dev_notifier);
-+cleanup_dev_notifier:
- 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
-+cleanup_rtnl_notifier:
- 	unregister_pernet_subsys(&nfnl_queue_net_ops);
--cleanup_rhashtable:
--	rhashtable_destroy(&nfqnl_packet_map);
-+cleanup_pernet_subsys:
-+	destroy_workqueue(nfq_cleanup_wq);
- 	return status;
- }
- 
-@@ -1924,9 +1885,7 @@ static void __exit nfnetlink_queue_fini(void)
- 	nfnetlink_subsys_unregister(&nfqnl_subsys);
- 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
- 	unregister_pernet_subsys(&nfnl_queue_net_ops);
--
--	rhashtable_destroy(&nfqnl_packet_map);
--
-+	destroy_workqueue(nfq_cleanup_wq);
- 	rcu_barrier(); /* Wait for completion of call_rcu()'s */
- }
- 
+ static int __cgbc_gpio_set(struct gpio_chip *chip, unsigned int offset,
 -- 
 2.53.0
 
