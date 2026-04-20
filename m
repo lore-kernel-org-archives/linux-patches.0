@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B8E3446B7;
-	Mon, 20 Apr 2026 15:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FDB33F590;
+	Mon, 20 Apr 2026 15:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700248; cv=none; b=JFqKqfCFuqebifEVW1cm3xYbkzhUJZuOiqPIl0ypCJanFQsgjimPZiuB6w1sRMDhR5P92h4ergZUw7F3ns2VToleXt3hmQKaQEys7UCIW+nwEZSe4kgVexo3uEkpSOr/9LJl7awTonAzp2fEw+S/pItzeCkFpUQv3ILWZnVDWHc=
+	t=1776700251; cv=none; b=SFkgd5AvlK8+86Nt4OV6/P58s9pjI+4Bxe0yuWjrAheg/htHq0C12t+KiLTxsVZNwmxazQsFrB/MZi41+t8+6uDNt3aT4Ji/OkqncOfEGph+kSq6X7vyeMXLE1bhwRYMitF93hA1af3lQd46mk5zCX2OvGA7lyGo1xO1UMCtznw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700248; c=relaxed/simple;
-	bh=j09I7Q4VOmB/U3ZyWvvK+S1al5s+QLwyQUG2LHAIQoM=;
+	s=arc-20240116; t=1776700251; c=relaxed/simple;
+	bh=L7SXgTvWUnYLs68t3UxZSswvFZNPInrzqqyi9Iwji3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tW2CgOYvMeNsDAt78L4ZJwWw1gcFZhLYNUymOC4NiW70AXQ0o7tHeJsm5e/UrC1VpANo93ixUwr+MSmpYO3W5yF5gfaA6pCATKBOWcvPQFh7u243SQcg5W1OjWVDsqZyqSKnKGRNdXUvfOxeBFk7uNg1WJRfNUZo2/2hrlLpnA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHAlMghA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IDYIyFHSeUKiiwVqDjr6VPLkcc29aO4aaDk68WrP1Kaxy1c9KxUjUR+A3mn1zaJqhFhFgjCsbCYL4jruamsU3SEbGqkPbbeChIRFyKiNRuuIS1AFKNbNx+RzK2/nxXJHGHkibWYdxROoC6tv2PYhTNvf5vPbOBg1hDcLnFZ9T9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rF+oK7RR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHAlMghA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203F0C19425;
-	Mon, 20 Apr 2026 15:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rF+oK7RR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE566C19425;
+	Mon, 20 Apr 2026 15:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700248;
-	bh=j09I7Q4VOmB/U3ZyWvvK+S1al5s+QLwyQUG2LHAIQoM=;
+	s=korg; t=1776700251;
+	bh=L7SXgTvWUnYLs68t3UxZSswvFZNPInrzqqyi9Iwji3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHAlMghATX7A/qLDqL5UzaHxvlOW63hod2uAUuq9eZ+eqMhaLHfPD6ycQ6k78g61S
-	 klYUtd3p1m1EnmZSoa+mYODvsV1vtVzEVHQo4Vb8g7kixS72pv8HNiQao94HrIYWui
-	 zCEX1/tvGFz+a6cU4ZljkiI1/l5RIz13VRwLTs3I=
+	b=rF+oK7RRF6d7xFO5A9vgPdSVQgH+6mue4rqaQAjVtDefm58055Kyllmj6Z4cfDYnt
+	 TJnFXMoBX8AM9eTxu9S0Dkq+7DWqJONZlPQhD6Jlw6PTjmbgUVjKlzenqDjVD4bNLW
+	 0ZQ62OvCfQfc/Re42iPDD7SB5Z9svtJaj1GCvPH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Melissa Wen <mwen@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 098/220] ice: ptp: dont WARN when controlling PF is unavailable
-Date: Mon, 20 Apr 2026 17:40:39 +0200
-Message-ID: <20260420153937.562523716@linuxfoundation.org>
+Subject: [PATCH 6.19 072/220] drm/vc4: Release runtime PM reference after binding V3D
+Date: Mon, 20 Apr 2026 17:40:13 +0200
+Message-ID: <20260420153936.630626250@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -46,52 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit bb3f21edc7056cdf44a7f7bd7ba65af40741838c ]
+[ Upstream commit aaefbdde9abdc43699e110679c0e10972a5e1c59 ]
 
-In VFIO passthrough setups, it is possible to pass through only a PF
-which doesn't own the source timer. In that case the PTP controlling PF
-(adapter->ctrl_pf) is never initialized in the VM, so ice_get_ctrl_ptp()
-returns NULL and triggers WARN_ON() in ice_ptp_setup_pf().
+The vc4_v3d_bind() function acquires a runtime PM reference via
+pm_runtime_resume_and_get() to access V3D registers during setup.
+However, this reference is never released after a successful bind.
+This prevents the device from ever runtime suspending, since the
+reference count never reaches zero.
 
-Since this is an expected behavior in that configuration, replace
-WARN_ON() with an informational message and return -EOPNOTSUPP.
+Release the runtime PM reference by adding pm_runtime_put_autosuspend()
+after autosuspend is configured, allowing the device to runtime suspend
+after the delay.
 
-Fixes: e800654e85b5 ("ice: Use ice_adapter for PTP shared data instead of auxdev")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 266cff37d7fc ("drm/vc4: v3d: Rework the runtime_pm setup")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-1-92defc940a29@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_v3d.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 2726830014762..082313023024c 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -3048,7 +3048,13 @@ static int ice_ptp_setup_pf(struct ice_pf *pf)
- 	struct ice_ptp *ctrl_ptp = ice_get_ctrl_ptp(pf);
- 	struct ice_ptp *ptp = &pf->ptp;
+diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
+index 3ffe09bc89d27..d31b906cb8e78 100644
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -481,6 +481,7 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
  
--	if (WARN_ON(!ctrl_ptp) || pf->hw.mac_type == ICE_MAC_UNKNOWN)
-+	if (!ctrl_ptp) {
-+		dev_info(ice_pf_to_dev(pf),
-+			 "PTP unavailable: no controlling PF\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	if (pf->hw.mac_type == ICE_MAC_UNKNOWN)
- 		return -ENODEV;
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_set_autosuspend_delay(dev, 40); /* a little over 2 frames. */
++	pm_runtime_put_autosuspend(dev);
  
- 	INIT_LIST_HEAD(&ptp->port.list_node);
+ 	return 0;
+ 
 -- 
 2.53.0
 
