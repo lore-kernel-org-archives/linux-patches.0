@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4E64657CC;
-	Mon, 20 Apr 2026 13:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A42844DB68;
+	Mon, 20 Apr 2026 13:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691830; cv=none; b=f6zZrK+B2IkTyMcBSc9d2KryReIpI44Fa3+Xb8/1TccH13Mps43NiPcxNFPpzv9fdxlrCKy8gG0n3u8+NvF6OJj31C98DJS+gqOfFzaTFqH+t7+CqCiVCoMrXL9qlKo/92BWO1ic8Z9F+n+myLz9aIPZZ4WWXW+O2vS0kpFdmTM=
+	t=1776691832; cv=none; b=Mw8OAU8kZcrRFJr9mL3b86Z8KsABGpKrfd7WzaPlM4P0vYbzTVh9IuNE5vx5VEmTzH40aRrFhWkdUWjpeUHhj3a2DAHixSwo7XUNCZkqX2gjr9YcRcqQOCvILmlRzQSIngwJFrUzAJrrAQF4h60Ke3iPrPP8LDTPxmipU0IeOKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691830; c=relaxed/simple;
-	bh=cmg9KuhF5WyD3sfoKBJfBIlEtsiosFUQoJ3tomSefTE=;
+	s=arc-20240116; t=1776691832; c=relaxed/simple;
+	bh=QWqzlxLEdJC2C6QA8VUWn4kJuHJ0GHoc5SSo2zvPuJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BRrwpR2nAa3VyscCbpXDHmVYUk6ahNrA8Wa+0TuwJ4raY2soSbBiWeLP6R7jCazW17v6eDVI2X5bx27y073HB7BHSCsOfCv5gu4bHPFHELMwlEJZc0g2Q2M2/2Prsj2NApm+Xp1iQ0l0url4K5zT0Zkq2Fyk83s9Zjr75IRwgtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rf2WiIA9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EA65TS7pddc8C5M56RGHWtE1WIKXIQXWZIN61lg72dX4kyk5ETYCW62txEKWY+J2kOGy7BCqqnOj3S6a4KW2KLVvNab7vaBpOvPV/7HlnT4bDgFdGq0XErG5En3Wy8oPtWEuXdFEecBb6IHuWWiqXHUeRCrqWrQWDiEiA2MOoeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gNsexIpZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rf2WiIA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8284FC2BCB4;
-	Mon, 20 Apr 2026 13:30:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gNsexIpZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7D2C19425;
+	Mon, 20 Apr 2026 13:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691830;
-	bh=cmg9KuhF5WyD3sfoKBJfBIlEtsiosFUQoJ3tomSefTE=;
+	s=k20201202; t=1776691832;
+	bh=QWqzlxLEdJC2C6QA8VUWn4kJuHJ0GHoc5SSo2zvPuJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rf2WiIA9BuK7Xs8i6pU+0B1b3/QRAhVBMGxbrdM5ECCETqYtMSgrVItBHlhW9lNxO
-	 uOfGtQM0roSrJWLw28XfbJq3lxO4jGcdY5Y96xcnxKWAl+MuFJG27pqS+HPtj1VQfQ
-	 BHhaYYAn+oOJLfaPpfZkvj6QPIdoZbbDaMSaj3y63+GNHLaugQTJy4SUKHlTbTNNO+
-	 FjVNhTbssq3bznBFrlw3lNv15vC5I/QoC5EufE9h0e31fKDqigzFfzAV/+Umzm42j8
-	 MddNpRb37P4O1NVnH5U3yQwPFT3Spgw0Ehhbc5x2RAreF+AaIO39iaRgy5Ba7yJV1l
-	 JrJa8GRTc1Jbw==
+	b=gNsexIpZc2LeIf8+q6jkkNxFVIB1zuf6LjQWPJ69w+ZrRIBTVYwRQ78Sq8Gjez5xH
+	 fLhT+cqA2eBeyY+ryRWJeE/M4TSIj5T8XzkgbvK59MLmmYDInFcLZ3wPtsUk6FEn5R
+	 nBEJ4gm4okjtR+BmpI8x3JDoqly1JY3gH87QWufSe7FQki1FxRDAmv49Aiupew3VNy
+	 nYK2SqUukvp2fn9QF2FeiKv1eHNXRe2sueloz0QcB52Wnv6ug5lhTrA+jm6QnqBY6E
+	 ZhB8yNHzxbudeXiZrc4nxz7uroOLgDgDdQzJVfRuUrk0UxFNDLxnLr0tbMEF55xPPQ
+	 RjWTDQL6HkHsg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chris Lu <chris.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Wesley Atwell <atwellwea@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
+	ncardwell@google.com,
+	davem@davemloft.net,
+	dsahern@kernel.org,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] Bluetooth: btusb: MT7922: Add VID/PID 0489/e174
-Date: Mon, 20 Apr 2026 09:20:14 -0400
-Message-ID: <20260420132314.1023554-220-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] tcp: use WRITE_ONCE() for tsoffset in tcp_v6_connect()
+Date: Mon, 20 Apr 2026 09:20:15 -0400
+Message-ID: <20260420132314.1023554-221-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,344 +58,326 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Wesley Atwell <atwellwea@gmail.com>
 
-[ Upstream commit 1f2ac009d3e06380400618e777c858e582872efa ]
+[ Upstream commit dc9902bbd480aae510b885b67cd30cd04cfce3a8 ]
 
-Add VID 0489 & PID e174 for MediaTek MT7922 USB Bluetooth chip.
+Commit dd23c9f1e8d5 ("tcp: annotate data-races around tp->tsoffset")
+updated do_tcp_getsockopt() to read tp->tsoffset with READ_ONCE()
+for TCP_TIMESTAMP because another CPU may change it concurrently.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+tcp_v6_connect() still stores tp->tsoffset with a plain write. That
+store runs under lock_sock() via inet_stream_connect(), but the socket
+lock does not serialize a concurrent getsockopt(TCP_TIMESTAMP) from
+another task sharing the socket.
 
-T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e174 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+Use WRITE_ONCE() for the tcp_v6_connect() store so the connect-time
+writer matches the lockless TCP_TIMESTAMP reader. This also makes the
+IPv6 path consistent with tcp_v4_connect().
 
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Wesley Atwell <atwellwea@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260310012604.145661-1-atwellwea@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good. The patch would insert the `0xe174` entry right after the `0xe170`
-entry (line 704-705), which is exactly the position shown in the diff.
-The context lines match perfectly. Now I have all the information needed
-for the analysis.
+I now have all the information needed for a comprehensive analysis. Let
+me compile the findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: [Bluetooth: btusb] [Add] [VID/PID 0489/e174 for MediaTek MT7922
-USB Bluetooth chip]
+**Step 1.1: Subject Line**
+- **Subsystem**: `tcp` (networking, IPv6 TCP stack)
+- **Action verb**: "use" - specifically requesting `WRITE_ONCE()`
+  annotation
+- **Summary**: Adds `WRITE_ONCE()` for `tp->tsoffset` in
+  `tcp_v6_connect()` to fix a data race with concurrent
+  `getsockopt(TCP_TIMESTAMP)`.
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-- Signed-off-by: Chris Lu <chris.lu@mediatek.com> — author, MediaTek
-  employee
-- Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com> —
-  Bluetooth subsystem maintainer
-- No Fixes: tag (expected for device ID additions)
-- No Reported-by: tag (not a bug fix, so expected)
-- No Cc: stable tag (expected — that's why we're reviewing)
+**Step 1.2: Tags**
+- **Reviewed-by**: Eric Dumazet (Google networking maintainer, and
+  importantly the AUTHOR of the original annotation commit
+  dd23c9f1e8d5c)
+- **Reviewed-by**: Jiayuan Chen
+- **Link**:
+  https://patch.msgid.link/20260310012604.145661-1-atwellwea@gmail.com
+- **Signed-off-by**: Jakub Kicinski (net maintainer)
+- No Fixes: tag, no Cc: stable tag (expected for manual review)
 
-Record: Author is from MediaTek (chip vendor). Merged by the Bluetooth
-subsystem maintainer.
+Record: Notably reviewed by Eric Dumazet who authored the original
+tsoffset annotation commit. Strong quality signal.
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-The commit body provides the USB device descriptor dump from
-`/sys/kernel/debug/usb/devices`, confirming this is a real MediaTek
-MT7922 Bluetooth USB device (Vendor=0489, ProdID=e174,
-Manufacturer=MediaTek Inc., Product=Wireless_Device). The device runs at
-USB 2.0 High Speed (480 Mbps) and has 3 interfaces typical of a
-Bluetooth HCI device.
+**Step 1.3: Body Text Analysis**
+The commit explains:
+1. dd23c9f1e8d5c added `READ_ONCE()` to `do_tcp_getsockopt()` for
+   `TCP_TIMESTAMP` and `WRITE_ONCE()` to `tcp_v4_connect()`
+2. `tcp_v6_connect()` was missed - it still uses a plain write for
+   `tp->tsoffset`
+3. `tcp_v6_connect()` runs under `lock_sock()`, but
+   `getsockopt(TCP_TIMESTAMP)` doesn't hold the socket lock when reading
+   `tsoffset`
+4. This creates a data race between the writer (connect) and the
+   lockless reader (getsockopt)
 
-Record: No bug described — this is a device ID addition enabling
-hardware support. The device is verified to exist and be manufactured by
-MediaTek.
+Record: Bug is a data race in `tp->tsoffset` store in IPv6 connect path.
+The IPv4 path was correctly annotated but IPv6 was missed. This is a gap
+in the original fix dd23c9f1e8d5c.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: This is not a hidden bug fix. It is a straightforward device ID
-addition to enable Bluetooth on hardware with this specific VID/PID.
+**Step 1.4: Hidden Bug Fix?**
+This is explicitly described as completing a data race annotation that
+was missed. It IS a bug fix (data race fix).
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: INVENTORY THE CHANGES**
-- Files changed: `drivers/bluetooth/btusb.c` only
-- Lines added: +2 (one `USB_DEVICE` table entry spanning 2 lines)
-- Lines removed: 0
-- Function modified: None — this adds to the static `quirks_table[]`
-  array
-- Scope: single-file, single-table-entry addition
+**Step 2.1: Inventory**
+- **Files**: 1 file changed (`net/ipv6/tcp_ipv6.c`)
+- **Change**: 1 line modified (-1/+1)
+- **Function**: `tcp_v6_connect()`
+- **Scope**: Single-file, single-line, surgical fix
 
-Record: [1 file, +2/-0 lines] [quirks_table[] static data only] [Trivial
-single-entry addition]
+**Step 2.2: Code Flow Change**
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- BEFORE: Device with VID 0489 / PID e174 is not recognized by btusb
-  driver, so Bluetooth doesn't work on this hardware
-- AFTER: Device is matched by `usb_device_id` table with `BTUSB_MEDIATEK
-  | BTUSB_WIDEBAND_SPEECH` flags, enabling the existing MediaTek
-  Bluetooth support path
+Before:
 
-Record: Purely a data table entry; no logic changes.
+```328:328:net/ipv6/tcp_ipv6.c
+                tp->tsoffset = st.ts_off;
+```
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Category: (h) Hardware workaround / Device ID addition. Without this
-entry, the btusb driver doesn't bind to the device, and the user's
-Bluetooth hardware is completely non-functional.
+After (from the diff):
+```c
+                WRITE_ONCE(tp->tsoffset, st.ts_off);
+```
 
-Record: [Device ID addition] [Enables existing MT7922 driver code for a
-new PID variant]
+The only change is wrapping a plain C store in `WRITE_ONCE()`, which
+prevents store tearing and acts as a compiler barrier. The actual value
+stored is identical.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-- Obviously correct: Yes — identical pattern to dozens of other entries
-  in the same table
-- Minimal: Yes — 2 lines, data-only
-- Regression risk: Zero — only affects devices with this specific
-  VID/PID
-- No API changes, no logic changes, no locking changes
+**Step 2.3: Bug Mechanism**
+Category: **Data race (KCSAN-class)**. The concurrent reader
+(`do_tcp_getsockopt()` at line 4721 in `tcp.c`) uses `READ_ONCE()` but
+the writer in IPv6 doesn't use `WRITE_ONCE()`, violating the kernel's
+data race annotation convention. Under the C memory model, a plain write
+concurrent with a `READ_ONCE` constitutes undefined behavior.
 
-Record: [Perfect quality — trivial table entry] [Zero regression risk]
+**Step 2.4: Fix Quality**
+- Obviously correct: Yes. Trivially so. WRITE_ONCE wrapping a store is
+  mechanically correct.
+- Minimal/surgical: Yes. One line.
+- Regression risk: Zero. WRITE_ONCE cannot change functional behavior.
+- Consistent with existing pattern: IPv4 path already uses `WRITE_ONCE`
+  since dd23c9f1e8d5c.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: BLAME THE CHANGED LINES**
-The neighboring entry `0xe170` was added by Chris Lu (same author) in
-commit `5a6700a31c953` on 2025-10-15. The MT7922A device section has
-entries going back to 2023. The BTUSB_MEDIATEK driver support has been
-present since at least v6.10.
+**Step 3.1: Blame**
+The blame shows line 328 (`tp->tsoffset = st.ts_off;`) was introduced by
+commit `165573e41f2f66` (Eric Dumazet, 2026-03-02, "tcp: secure_seq: add
+back ports to TS offset"). However, the underlying issue (plain write
+without WRITE_ONCE) existed BEFORE this refactoring — the original
+annotation commit dd23c9f1e8d5c (v6.5-rc3, July 2023) already missed the
+IPv6 path.
 
-Record: MT7922 support exists in tree since v6.10. This is just another
-PID variant for the same chip family.
+**Step 3.2: Fixes Tag Follow-up**
+The commit references dd23c9f1e8d5c ("tcp: annotate data-races around
+tp->tsoffset"). Verified:
+- dd23c9f1e8d5c only modified `net/ipv4/tcp.c` and `net/ipv4/tcp_ipv4.c`
+  — it did NOT touch `net/ipv6/tcp_ipv6.c`
+- It added `WRITE_ONCE()` to `tcp_v4_connect()` and
+  `do_tcp_setsockopt()`, and `READ_ONCE()` to `do_tcp_getsockopt()`
+- The IPv6 writer was missed entirely
 
-**Step 3.2: FOLLOW THE FIXES: TAG**
-No Fixes: tag — expected for a device ID addition.
+dd23c9f1e8d5c is in mainline since v6.5-rc3, and was backported to
+stable trees (6.1.y, 6.4.y, etc.).
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Recent btusb.c commits are heavily dominated by device ID additions
-(e0e2, e0e4, e0f1, e0f2, e0f5, e0f6, e102, e152, e153, e170, plus IDs
-from other vendors). This is a pattern of ongoing hardware enablement
-for the MT7922 family.
+**Step 3.3: File History**
+Recent changes to `tcp_ipv6.c` include the `165573e41f2f66` refactoring
+(March 2026). For stable trees older than this, the code around the
+tsoffset assignment looks different (uses `secure_tcpv6_ts_off()`
+directly), but the fix is trivially adaptable.
 
-Record: Standalone commit. No prerequisites beyond existing MT7922
-support.
+**Step 3.4: Author**
+Wesley Atwell is not the subsystem maintainer but the patch was reviewed
+by Eric Dumazet (Google TCP maintainer) who wrote the original
+annotation commit. Applied by Jakub Kicinski (net maintainer).
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Chris Lu at MediaTek is a regular contributor to the Bluetooth/btusb
-subsystem. He authored the e170 entry, the e135 (MT7920) entry, and a
-kernel crash fix for MediaTek ISO interfaces. He clearly works on
-Bluetooth at MediaTek.
+**Step 3.5: Dependencies**
+The recent refactoring `165573e41f2f66` changes the code shape in the
+diff. In older stable trees (pre-7.0), the backport would need trivial
+adaptation: wrapping `secure_tcpv6_ts_off(...)` in `WRITE_ONCE()`
+instead of `st.ts_off`. The fix is logically independent.
 
-Record: Author is a domain expert from the chip vendor.
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-The only prerequisite is MT7922 support via BTUSB_MEDIATEK, which has
-been present since v6.10 (commit `8c0401b7308cb`). The entry `0xe170`
-(the sibling right before) exists in the current tree. The patch applies
-cleanly — the diff context matches the current file exactly.
+**Step 4.1**: b4 dig found the submission at
+https://patch.msgid.link/20260324221326.1395799-3-atwellwea@gmail.com
+(v2 or later revision). Lore.kernel.org is behind anti-bot protection,
+so direct access was blocked.
 
-Record: No dependencies beyond base MT7922 support already in stable
-trees (v6.10+).
+**Step 4.2**: Review from Eric Dumazet is the strongest possible signal
+for this subsystem.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
-Found via web search: The patch was submitted as `[PATCH v1]` and then
-`[PATCH RESEND v1]` on the linux-mediatek mailing list in January 2026.
-The RESEND indicates initial posting may not have received attention.
-The mailing list archive at lists.infradead.org confirms the exact same
-diff.
-
-Record: [https://lists.infradead.org/pipermail/linux-
-mediatek/2026-January/103452.html] [v1 + RESEND v1] [No concerns or NAKs
-visible]
-
-**Step 4.2: CHECK WHO REVIEWED THE PATCH**
-Merged by Luiz Augusto von Dentz (Bluetooth subsystem maintainer at
-Intel), as indicated by his Signed-off-by.
-
-Record: Bluetooth subsystem maintainer merged this.
-
-**Step 4.3-4.5:** Not applicable — no bug report (this is hardware
-enablement), no series dependencies.
+**Step 4.3-4.5**: No syzbot report (this is a code-inspection-found data
+race). No specific bug report — found by reading the code and noticing
+the IPv6 path was missed.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.5:** The change is purely to the `quirks_table[]` static
-data array. No functions are modified. The USB_DEVICE macro expands to
-match criteria for the USB core's device matching infrastructure. When a
-device with VID=0x0489/PID=0xe174 is plugged in, the btusb driver will
-bind to it using the BTUSB_MEDIATEK code path. This code path is well-
-tested through dozens of other MT7922 variants.
+**Step 5.1: Functions Modified**: `tcp_v6_connect()`
 
-Record: No function changes. Data-only addition to existing, well-tested
-USB device matching infrastructure.
+**Step 5.2: Race Partners**
+- Writer: `tcp_v6_connect()` → stores `tp->tsoffset` (under
+  `lock_sock()` via `inet_stream_connect()`)
+- Reader: `do_tcp_getsockopt()` at line 4721 → reads `tp->tsoffset` with
+  `READ_ONCE()` — verified NO lock_sock() is held for `TCP_TIMESTAMP`
+- Other writers: `do_tcp_setsockopt()` (already uses `WRITE_ONCE()`,
+  line 4178), `tcp_v4_connect()` (already uses `WRITE_ONCE()`, line 336)
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+The race is real and verified: `getsockopt(TCP_TIMESTAMP)` can run
+concurrently with `connect()` from another thread sharing the socket.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?**
-The MT7922 BTUSB_MEDIATEK support exists since v6.10. The
-`quirks_table[]` and the entire MT7922 code path exist in all current
-active stable trees from v6.10 onward. For older stable trees (v6.6,
-v6.1), the base MT7922 support may not be present, so the device ID
-alone wouldn't help there.
+**Step 5.3: Other tsoffset accessors**
+- `tcp_output.c` line 995: plain read of `tp->tsoffset` — but this runs
+  in the data path under the socket lock, so no data race with connect
+- `tcp_input.c` lines 4680, 4712, 6884: plain reads — also under socket
+  lock
+- `tcp_minisocks.c` line 350, 643: assignments during socket
+  creation/accept — not concurrent
 
-Record: Applicable to stable trees v6.10+, v6.12+, and future LTS
-branches.
+Record: The data race is specifically between
+`getsockopt(TCP_TIMESTAMP)` lockless reader and `tcp_v6_connect()`
+writer.
 
-**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
-The diff context matches the current tree perfectly. The entry goes
-right after 0xe170 and before 0x04ca entries. The patch will apply
-cleanly.
+## PHASE 6: STABLE TREE ANALYSIS
 
-Record: Clean apply expected.
+**Step 6.1: Buggy Code in Stable?**
+- The original annotation commit dd23c9f1e8d5c is in v6.5-rc3, so it was
+  backported to stable trees 6.1.y, 6.4.y, 6.5.y, 6.6.y, etc.
+- In ALL those trees, the IPv6 path was NOT annotated (because
+  dd23c9f1e8d5c never touched `tcp_ipv6.c`)
+- The bug exists in every stable tree that has dd23c9f1e8d5c
 
-**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE**
-No prior fix for this specific VID/PID exists.
+**Step 6.2: Backport Complications**
+Minor: In stable trees without `165573e41f2f66` (which is a very recent
+March 2026 change), the line looks different. The fix would need trivial
+adaptation to wrap `secure_tcpv6_ts_off(...)` instead of `st.ts_off`.
+This is a straightforward mechanical change.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 6.3**: No other fix for this specific IPv6 data race was found.
 
-**Step 7.1:** Subsystem: Bluetooth (drivers/bluetooth/). Criticality:
-IMPORTANT — Bluetooth is essential on laptops and IoT devices.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.2:** btusb.c is very actively developed with frequent device ID
-additions. The MT7922 is a popular WiFi/Bluetooth combo chip used in
-many laptops.
+**Step 7.1**: TCP networking subsystem — **CORE** criticality. Every
+system uses TCP.
+
+**Step 7.2**: Active subsystem with frequent commits.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: WHO IS AFFECTED**
-Users with laptops/devices containing a MediaTek MT7922 Bluetooth chip
-with the specific VID/PID 0489:e174. Without this patch, Bluetooth is
-completely non-functional for these users.
+**Step 8.1: Affected Users**: All users using IPv6 TCP connections where
+`getsockopt(TCP_TIMESTAMP)` is called concurrently with `connect()`.
 
-**Step 8.2: TRIGGER CONDITIONS**
-Trigger: simply having this hardware. Every boot, every time.
+**Step 8.2: Trigger**: A multi-threaded application where one thread
+calls `connect()` on an IPv6 TCP socket while another calls
+`getsockopt(TCP_TIMESTAMP)`. The race window exists but the practical
+trigger is uncommon.
 
-**Step 8.3: FAILURE MODE**
-Without the patch: Bluetooth hardware is completely non-functional
-(driver doesn't bind). With the patch: full Bluetooth functionality.
+**Step 8.3: Severity**: MEDIUM. A torn read of `tsoffset` would yield an
+incorrect timestamp value from `getsockopt()`. However, under the C
+memory model this is undefined behavior, and KCSAN would flag it as a
+data race.
 
-**Step 8.4: RISK-BENEFIT RATIO**
-- BENEFIT: HIGH — enables Bluetooth for real hardware users
-- RISK: VERY LOW — 2-line data-only change, cannot affect any other
-  device
-- Ratio: Excellent — maximum benefit, minimum risk
+**Step 8.4: Risk-Benefit**
+- **Benefit**: Completes the data race annotation intended by
+  dd23c9f1e8d5c. Fixes UB. Consistent with IPv4 path. Extremely
+  important for KCSAN-clean kernels.
+- **Risk**: Zero. `WRITE_ONCE()` is a transparent compiler annotation
+  that cannot introduce regressions.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: EVIDENCE COMPILATION**
+**Step 9.1: Evidence**
 FOR backporting:
-- Classic device ID addition — an explicit exception category that is
-  always YES
-- Only 2 lines added, data-only (zero code changes)
-- Zero regression risk (only matches this specific VID/PID)
-- Author is from MediaTek (chip vendor), merged by subsystem maintainer
-- Real hardware that users have (USB device dump provided)
-- Identical pattern to dozens of existing entries
-- MT7922 driver support exists in stable trees (v6.10+)
+- Fixes a real data race (UB under C memory model)
+- Completes a fix that was already backported (dd23c9f1e8d5c) but missed
+  the IPv6 path
+- One-line change, zero regression risk
+- Reviewed by Eric Dumazet (author of the original annotation, TCP
+  maintainer)
+- Makes IPv6 consistent with IPv4
+- Core networking subsystem
 
 AGAINST backporting:
-- None
+- Practical impact is low (torn read returns slightly wrong timestamp)
+- Minor adaptation needed for older stable trees (trivial)
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct? YES — trivial table entry
-2. Fixes a real bug? YES — enables hardware for real users
-3. Important issue? YES — without it, Bluetooth is completely broken on
-   this hardware
-4. Small and contained? YES — 2 lines
-5. No new features/APIs? CORRECT — no new features
-6. Can apply to stable? YES — clean apply
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** — trivially correct one-line
+   WRITE_ONCE wrapping
+2. Fixes a real bug? **YES** — data race (undefined behavior per C
+   memory model)
+3. Important issue? **MEDIUM** — data race, potential KCSAN splat;
+   completes an incomplete prior fix
+4. Small and contained? **YES** — 1 line, 1 file
+5. No new features or APIs? **Correct** — no new features
+6. Can apply to stable trees? **YES** — with trivial adaptation for
+   older trees
 
-**Step 9.3: EXCEPTION CATEGORY**
-This is a **Device ID addition to an existing driver** — one of the
-explicit exception categories that is automatically YES for stable.
+**Step 9.3: Exception Categories**: Not an exception category, but a
+standard bug fix.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from Chris Lu (MediaTek) and Luiz
-  Augusto von Dentz (Bluetooth maintainer)
-- [Phase 2] Diff analysis: +2 lines, single USB_DEVICE entry in
-  quirks_table[], data-only
-- [Phase 3] git blame: neighboring entry 0xe170 added by same author in
-  5a6700a31c953 (Oct 2025)
-- [Phase 3] MT7922 base support in commit 8c0401b7308cb, present since
-  v6.10
-- [Phase 3] git merge-base: confirmed MT7922 support in v6.10 and v6.12,
-  NOT in v6.6 or v6.1
-- [Phase 4] Web search: found mailing list post at lists.infradead.org
-  confirming RESEND v1 submission Jan 2026
-- [Phase 4] Mailing list archive: identical diff confirmed, no NAKs or
-  objections
-- [Phase 5] No functions modified — purely static data table change
-- [Phase 6] Patch applies cleanly — verified context lines match current
-  tree exactly (lines 704-706)
-- [Phase 6] BTUSB_MEDIATEK appears 70 times in btusb.c — well-tested
-  code path
-- [Phase 8] Risk: zero (only affects devices with VID=0x0489,
-  PID=0xe174)
+- [Phase 1] Parsed tags: Reviewed-by Eric Dumazet and Jiayuan Chen, Link
+  to submission, SOB from Jakub Kicinski
+- [Phase 2] Diff: single line change `tp->tsoffset = st.ts_off` →
+  `WRITE_ONCE(tp->tsoffset, st.ts_off)` in `tcp_v6_connect()`
+- [Phase 3] git show dd23c9f1e8d5c: confirmed it only modified
+  `net/ipv4/tcp.c` and `net/ipv4/tcp_ipv4.c`, NOT `net/ipv6/tcp_ipv6.c`
+- [Phase 3] git blame: line 328 from `165573e41f2f66` (2026-03-02) but
+  the missing annotation predates that refactoring
+- [Phase 3] Verified dd23c9f1e8d5c is in v6.5-rc3 via `git describe
+  --contains`
+- [Phase 5] Verified `do_tcp_getsockopt()` at line 4510-4721 does NOT
+  hold `lock_sock()` for `TCP_TIMESTAMP` case — confirmed lockless
+  READ_ONCE reader
+- [Phase 5] Verified `tcp_v4_connect()` at line 336 already has
+  `WRITE_ONCE(tp->tsoffset, ...)` — IPv4 was fixed, IPv6 wasn't
+- [Phase 5] Verified all other `tp->tsoffset` writers already use
+  WRITE_ONCE (lines 336, 4178 in ipv4/)
+- [Phase 6] dd23c9f1e8d5c was in v6.5-rc3, so present in all active
+  stable trees (6.1.y through 6.12.y)
+- [Phase 6] Backport needs trivial adaptation for pre-165573e41f2f66
+  trees (wrap `secure_tcpv6_ts_off()` instead of `st.ts_off`)
 
-This is a textbook device ID addition to an existing, well-tested
-driver. It enables Bluetooth on real MediaTek MT7922 hardware for users
-who have this specific VID/PID variant. The change is 2 lines of data-
-only additions with zero regression risk.
+This is a minimal, obviously correct, zero-risk fix that completes a
+data race annotation already present in stable trees. The fix was
+reviewed by the original annotation author (Eric Dumazet). It brings the
+IPv6 path in line with the already-annotated IPv4 path.
 
 **YES**
 
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/tcp_ipv6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 5c535f3ab7228..aeba026bdb427 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -703,6 +703,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe170), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe174), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index bb09d5ccf5990..ba7cd7d3d4da0 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -325,7 +325,7 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
+ 						 inet->inet_dport);
+ 		if (!tp->write_seq)
+ 			WRITE_ONCE(tp->write_seq, st.seq);
+-		tp->tsoffset = st.ts_off;
++		WRITE_ONCE(tp->tsoffset, st.ts_off);
+ 	}
+ 
+ 	if (tcp_fastopen_defer_connect(sk, &err))
 -- 
 2.53.0
 
