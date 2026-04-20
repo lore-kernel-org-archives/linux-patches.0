@@ -1,46 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD9A4C9001;
-	Mon, 20 Apr 2026 13:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F8F3A4501;
+	Mon, 20 Apr 2026 13:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691992; cv=none; b=Cvr53wtnuU7CNMenuyc8vNULWXd7MnBqTxbUDtcKPJkm2Vss2aGHuJzQxkaf8PoLcmdMGe4N8zdQ9+U2ONj+UWVkNM/U4D9vWgXwz+ET491Gid2r7tIgwyClHe4ldd7Gbfu65Mu7LNM+FCd3I6ienGaeow0KKfp7+657mw46xec=
+	t=1776691994; cv=none; b=DdaKArAECjiB5y39NK1cYxo1jHcfANcRk36/QFerNhsv3Bvc32Eo0YoMek1odtCFCVtuCAQ0DlYBFQJrCtshL+463GX/icRP2KPgIzzUwgMWVZXlkNfsycQyMElhLL74JCYBE4D7kD89wkgAcY7jiKQMgOQeopX4QFM9fbs2JrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691992; c=relaxed/simple;
-	bh=+vmSndEVp52wvblAv5m1xmOuZHtwy8gjJ84CcLtYM4I=;
+	s=arc-20240116; t=1776691994; c=relaxed/simple;
+	bh=LUDV08gzADyENRa5emx25syYugOXi3ly76AbdcLA3bY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m/e8Cy/ij7Kn/RDRua8rVLl8FTcb4fmpXXyTRn5IT/ZfKQdJE8xfhZvDtP6NnsxfMDew6dAwoHY0+G6WJtg9kOQYv+fxj6yabL+yk3GboeJoqQpt6eZd3lCub2TvLJayWCHEaAeS+ThWPxtLetBnMKj8t0HxQ9AP1Tz+wHlm98E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y62ICUO0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iG9GZLfxeznStsNZOOvOpR9fvp8lTVBr6eYfbryfyWpSHp3WFYsFprKL0UdXI2SxJhvWWHb1bEBPrcpFh7OFFh/t8OXfmd7mAkAlRkqE9H18CmJJYLTpi1GfRYjw6XHtMoo61nWgu6bNpruyhdf+OlXmrpvKnrGvxwGG1M50jAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Es6XmYlT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y62ICUO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5222C2BCB4;
-	Mon, 20 Apr 2026 13:33:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Es6XmYlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9297C2BCB4;
+	Mon, 20 Apr 2026 13:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691992;
-	bh=+vmSndEVp52wvblAv5m1xmOuZHtwy8gjJ84CcLtYM4I=;
+	s=k20201202; t=1776691994;
+	bh=LUDV08gzADyENRa5emx25syYugOXi3ly76AbdcLA3bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y62ICUO0k4+SZ+bHd6QSwaZrh4x//XnnZzu2fQSpondy2bi3Ua0G80bOVk/Ds4AIQ
-	 uODeikWA6WExqzxHyK2XIJ9kGi/6Q99kDuIE/mOFawQnxYyd4XEHK2NYWadgPHPJtm
-	 d2WJoKfOULPDHt96qff8bAXiXKTxJ1iMq2p6BD5qyx3mY+daszk+z4QvKm2q0gHS9q
-	 zB9iZiGUtOfTbp/Lw3+96u+A7M7uaGn4D3Ln8tSk4LDwTvEYv0T5QZlchl6/t88G5v
-	 ghSPGaNIryjHCHRyuwAb4rvQwZ7cx+pTukMSPQIJCXPOfCr7siC+ECKulaYCz5o2i1
-	 Ue3ZEEZvd8jMg==
+	b=Es6XmYlTqs3BBTnvqjJUpgRI7DueoTS6FtWmRKniI2T+SrrMcpmympzye5S/ilYRr
+	 Hf9eEuBnRh/Hz77sWl+p7Xl+SfOg6Eo0YGggbGt1iIns5fxkeCXM+c72eYo+ZaaICy
+	 QJ2xsE3GFn9eUvhpX5Hl6U/lmoHu9/2qyaPVcjvN0Gyfyn+IZWixKK4NC885ut/pE+
+	 qtLQmoBFrvSRJaX7w43gn/FzxsHQLA8oOTsCLhtEl/vf+jCHCzmlCzVdUkbc8cuDYf
+	 DzriRbUGQ4+BQOuUlyY/OQGlwsNGAwq/Vxq4WCNMq0HLjZhnyCme2EaEY1dWRS7wt/
+	 78YA1QtVDN4ng==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sunil Khatri <sunil.khatri@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Avula Sri Charan <quic_asrichar@quicinc.com>,
+	Roopni Devanathan <roopni.devanathan@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	jjohnson@kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath12k@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] drm/amdgpu: fix some more bug in amdgpu_gem_va_ioctl
-Date: Mon, 20 Apr 2026 09:21:44 -0400
-Message-ID: <20260420132314.1023554-310-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] wifi: ath12k: Skip adding inactive partner vdev info
+Date: Mon, 20 Apr 2026 09:21:45 -0400
+Message-ID: <20260420132314.1023554-311-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -50,572 +51,263 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Christian König <christian.koenig@amd.com>
+From: Avula Sri Charan <quic_asrichar@quicinc.com>
 
-[ Upstream commit 68bd4f6b8310f309eb63b41e15088690c9cec0a9 ]
+[ Upstream commit 7d7dc26f72abb7a76abb4a68ebad75d5ab7b375e ]
 
-Some illegal combination of input flags were not checked and we need to
-take the PDEs into account when returning the fence as well.
+Currently, a vdev that is created is considered active for partner link
+population. In case of an MLD station, non-associated link vdevs can be
+created but not started. Yet, they are added as partner links. This leads
+to the creation of stale FW partner entries which accumulate and cause
+assertions.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Acked-by: Sunil Khatri <sunil.khatri@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+To resolve this issue, check if the vdev is started and operating on a
+chosen frequency, i.e., arvif->is_started, instead of checking if the vdev
+is created, i.e., arvif->is_created. This determines if the vdev is active
+or not and skips adding it as a partner link if it's inactive.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01181-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Avula Sri Charan <quic_asrichar@quicinc.com>
+Signed-off-by: Roopni Devanathan <roopni.devanathan@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260330040732.1847263-1-roopni.devanathan@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Here is my complete analysis.
+Now I have sufficient information. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: drm/amdgpu
-- **Action verb**: "fix" (explicit bug fix)
-- **Summary**: Fix multiple bugs in the `amdgpu_gem_va_ioctl` function
-  related to input flag validation and fence handling for PDE updates.
+**Step 1.1:** Subsystem: `wifi: ath12k:`. Action verb: "Skip" (which
+implies avoiding incorrect behavior). Summary: Skip adding inactive
+partner vdev info to prevent firmware assertions.
 
-Record: [drm/amdgpu] [fix] [Multiple bugs in gem VA ioctl: illegal flag
-combinations and missing PDE fence]
+**Step 1.2:** Tags:
+- Tested-on: QCN9274 hw2.0 PCI (hardware-tested)
+- Signed-off-by: Avula Sri Charan (author), Roopni Devanathan
+  (submitter), Jeff Johnson (ath12k maintainer)
+- Reviewed-by: Rameshkumar Sundaram, Baochen Qiang (both active ath12k
+  contributors)
+- Link: patch.msgid.link URL for the submission
+- No Fixes: tag (expected for review candidates)
+- No Cc: stable (expected for review candidates)
 
-### Step 1.2: Tags
-- **Signed-off-by**: Christian König (author, AMD DRM subsystem co-
-  maintainer)
-- **Acked-by**: Sunil Khatri (AMD developer)
-- **Signed-off-by**: Alex Deucher (AMD DRM maintainer, committer)
-- No Fixes: tag, no Reported-by, no Link: tag
+**Step 1.3:** Bug: When MLD station mode has non-associated link vdevs
+that are created but not started, they are incorrectly added as partner
+links. This leads to stale FW partner entries that accumulate and
+**cause firmware assertions** (FW crash). Root cause: the check used
+`is_created` but should use `is_started` to ensure only active vdevs are
+added.
 
-Record: Author is Christian König, one of the primary amdgpu/drm
-maintainers. Acked by AMD colleague, committed by the AMD DRM
-maintainer.
-
-### Step 1.3: Commit Body
-The body says: "Some illegal combination of input flags were not checked
-and we need to take the PDEs into account when returning the fence as
-well."
-
-Two distinct bugs identified:
-1. Missing input validation for contradictory flag combinations
-2. Missing PDE (Page Directory Entry) fence in the returned fence to
-   userspace
-
-Record: [Bug 1: invalid flag combinations not rejected] [Bug 2: PDE
-updates missing from returned fence, could cause premature GPU memory
-access] [No version info given] [Root cause: incomplete validation and
-incomplete fence merging]
-
-### Step 1.4: Hidden Bug Fix Detection
-This is an explicit "fix" commit, not disguised as cleanup.
-
-Record: This is explicitly labeled as a bug fix. No hidden intent.
-
----
+**Step 1.4:** This is clearly a bug fix despite not using the word "fix"
+prominently. "Skip adding" = avoiding incorrect behavior that causes
+firmware crashes.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **File**: `drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c` (1 file)
-- **Added**: `#include <linux/dma-fence-unwrap.h>` (1 line)
-- **Functions modified**: `amdgpu_gem_va_update_vm()`,
-  `amdgpu_gem_va_ioctl()`
-- **Scope**: ~35 lines removed, ~30 lines added in
-  `amdgpu_gem_va_update_vm`; ~10 lines changed in `amdgpu_gem_va_ioctl`
+**Step 2.1:** Single file changed:
+`drivers/net/wireless/ath/ath12k/mac.c`. Change is 1 line: `is_created`
+-> `is_started`. Minimal scope.
 
-Record: [1 file, ~45 lines changed, 2 functions modified] [Single-file
-contained fix]
+**Step 2.2:** In `ath12k_mac_mlo_get_vdev_args()`, when iterating
+partner link vdevs:
+- BEFORE: Check `arvif_p->is_created` (vdev allocated in firmware)
+- AFTER: Check `arvif_p->is_started` (vdev started and operating on
+  frequency)
+- This is a more restrictive check that filters out vdevs that exist but
+  are not active.
 
-### Step 2.2: Code Flow Changes
+**Step 2.3:** Bug category: Logic/correctness fix. A created-but-not-
+started vdev should not be treated as an active partner, because it has
+no channel context yet. Adding it causes stale FW partner entries ->
+firmware assertion.
 
-**Hunk 1 - `amdgpu_gem_va_update_vm` - VM-not-ready path**:
-- Before: `fence = dma_fence_get(vm->last_update)` then if not ready,
-  return that fence
-- After: If not ready, return `dma_fence_get_stub()` immediately
-- Effect: Cleaner early return; stub fence is sufficient when VM isn't
-  ready
-
-**Hunk 2 - `amdgpu_vm_clear_freed` argument**:
-- Before: `amdgpu_vm_clear_freed(adev, vm, &fence)` (local variable)
-- After: `amdgpu_vm_clear_freed(adev, vm, &vm->last_update)` (VM state
-  directly)
-- Effect: `vm->last_update` is kept current after clearing freed
-  mappings, so subsequent `amdgpu_vm_update_pdes` properly syncs
-
-**Hunk 3 - Fence return logic**:
-- Before: Switch/case returning either `vm->last_update` or
-  `bo_va->last_pt_update` (but NOT both)
-- After: For non-always-valid MAP/REPLACE, merges both `vm->last_update`
-  and `bo_va->last_pt_update` using `dma_fence_unwrap_merge()`; includes
-  OOM fallback; for other cases returns `vm->last_update`
-- Effect: Returned fence now accounts for both PTE and PDE updates
-
-**Hunk 4 - Error path**:
-- Before: Falls through from normal path to error label, always returns
-  local fence
-- After: Normal path returns fence via explicit `return`; error path
-  returns `dma_fence_get(vm->last_update)`
-- Effect: Cleaner separation of normal and error paths
-
-**Hunk 5 - `amdgpu_gem_va_ioctl` - flag validation**:
-- Added check: `AMDGPU_VM_DELAY_UPDATE && vm_timeline_syncobj_out`
-  returns -EINVAL
-- Effect: Rejects contradictory flags (delay + immediate fence request)
-
-**Hunk 6 - `amdgpu_gem_va_ioctl` - update condition**:
-- Before: `!adev->debug_vm`
-- After: `(!adev->debug_vm || timeline_syncobj)`
-- Effect: When timeline syncobj is requested, update happens even in
-  debug mode
-
-Record: [6 distinct hunks, all fixing correctness issues]
-
-### Step 2.3: Bug Mechanism
-This is a **logic/correctness fix** with two aspects:
-1. **Missing fence merge**: `amdgpu_vm_update_pdes()` stores its fence
-   into `vm->last_update` (verified at `amdgpu_vm.c:1006`). For non-
-   always-valid BOs on MAP/REPLACE, the old code returned only
-   `bo_va->last_pt_update`, missing the PDE fence. Userspace could start
-   using the mapping before PDE updates complete.
-2. **Input validation gap**: DELAY_UPDATE + syncobj_out is contradictory
-   and wasn't rejected.
-
-Record: [Logic/correctness fix] [Missing PDE fence could cause premature
-GPU memory access; missing input validation for contradictory flags]
-
-### Step 2.4: Fix Quality
-- The fix uses `dma_fence_unwrap_merge()` which is the correct API for
-  merging fences
-- OOM fallback with `dma_fence_wait` + `dma_fence_get_stub()` is
-  reasonable
-- The flag validation check is trivially correct
-- The debug_vm condition change is obviously correct
-- Low regression risk: the fence merge is strictly more conservative
-  (waits for more work)
-
-Record: [Fix is well-designed with proper fallback] [Low regression risk
-- waits for MORE work, not less]
-
----
+**Step 2.4:** Fix quality: Obviously correct. `is_started` is a subset
+of `is_created` (a vdev must be created before it can be started), so
+this is strictly more restrictive. The fix cannot introduce regressions
+because any vdev that is started is also created. The fix is reviewed by
+two ath12k developers and tested on real hardware.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The code being modified was primarily introduced by:
-- `efdc66fe12b07` (2026-01-09) - "Refactor amdgpu_gem_va_ioctl v7"
-- `bd8150a1b3370` (2025-12-11) - "Refactor amdgpu_gem_va_ioctl v4"
+**Step 3.1:** Blame shows the buggy line (`is_created` check) was
+introduced by commit `315d80be304ac1` ("wifi: ath12k: allocate new links
+in change_vif_links()") by Aditya Kumar Singh. This commit appeared at
+v6.13-rc6, landing in v6.15.
 
-Both are in v7.0-rc1/v7.0. The bugs were introduced in the v7.0 cycle.
+**Step 3.2:** The original function `ath12k_mac_mlo_get_vdev_args()` was
+introduced by `1ea0cdee6fb3a4` ("wifi: ath12k: MLO vdev bringup
+changes") at v6.12-rc4, landing in v6.14. The `is_created` check was an
+addition on top in v6.15.
 
-Record: [Buggy code from efdc66fe12b07 and bd8150a1b3370, both v7.0
-cycle]
+**Step 3.3:** The fix is standalone. No other patches are needed as
+prerequisites.
 
-### Step 3.2: Fixes tag
-No Fixes: tag present. The bugs were introduced by `bd8150a1b3370` and
-partially addressed by `efdc66fe12b07`, but this commit fixes remaining
-issues in `efdc66fe12b07`.
+**Step 3.4:** Avula Sri Charan has one other commit in ath12k (napi
+fix). Roopni Devanathan has multiple ath12k contributions. Reviewers
+(Rameshkumar Sundaram, Baochen Qiang) are active ath12k contributors.
 
-Record: [No explicit Fixes: tag; fixes bugs remaining from
-efdc66fe12b07]
-
-### Step 3.3: File History
-44 commits changed this file since v6.12. The specific area
-(va_update_vm, va_ioctl) has been actively modified in the v7.0 cycle
-with bd8150a1b3370 and efdc66fe12b07.
-
-Record: [Active development area; this is a follow-up fix for recent
-refactoring]
-
-### Step 3.4: Author
-Christian König is one of the primary amdgpu/drm TTM maintainers. He
-authored many critical fixes in this subsystem. He also
-suggested/reviewed the v7 refactor that this commit fixes further. His
-fixes carry high weight.
-
-Record: [Author is subsystem co-maintainer with deep expertise]
-
-### Step 3.5: Dependencies
-- Depends on `efdc66fe12b07` (present in tree as v7.0)
-- Requires `dma_fence_unwrap_merge` (present in tree via
-  `include/linux/dma-fence-unwrap.h`)
-- Requires `amdgpu_vm_is_bo_always_valid` (present in tree)
-- The patch context matches the current tree state exactly - clean apply
-  expected
-
-Record: [All dependencies present in 7.0 tree; should apply cleanly]
-
----
+**Step 3.5:** No dependent commits needed. The fix only changes one
+condition.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1: Original Discussion
-lore.kernel.org blocked automated access. However, I found via b4 dig
-that the predecessor commit (`efdc66fe12b07`) was submitted as v7 of the
-refactoring series, meaning the fence handling went through 7 iterations
-of review. The current fix is by Christian König himself who guided the
-entire refactoring.
+**Step 4.1:** b4 dig could not find the commit (it's not yet merged).
+The submission URL is `https://patch.msgid.link/20260330040732.1847263-
+1-roopni.devanathan@oss.qualcomm.com`. Lore is behind Anubis protection,
+but we can confirm from the commit tags that it was reviewed by two
+developers and accepted by the subsystem maintainer Jeff Johnson.
 
-Record: [Unable to access lore directly; predecessor went through 7
-review iterations]
+**Step 4.2:** Two reviewers (Rameshkumar Sundaram, Baochen Qiang)
+reviewed the patch. Jeff Johnson (ath12k maintainer) signed off.
 
-### Step 4.2: Reviewers
-- Christian König (author) - AMD DRM co-maintainer
-- Sunil Khatri (acker) - AMD developer
-- Alex Deucher (committer) - AMD DRM maintainer
-
-Record: [Reviewed by top AMD DRM maintainers]
-
-### Step 4.3-4.5: Bug Reports / Related Patches / Stable Discussion
-The predecessor commits (`bd8150a1b3370`) had a documented crash
-signature (refcount underflow, use-after-free, kernel panic). While
-`efdc66fe12b07` fixed the worst of it, this commit addresses remaining
-correctness issues.
-
-Record: [Predecessor had kernel panic crash signature; this fixes
-remaining issues]
-
----
+**Step 4.3-4.5:** Bug report details not available via web due to Anubis
+protection. The commit message itself describes the bug mechanism
+clearly.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-- `amdgpu_gem_va_update_vm()` - updates VM page tables after VA
-  operation
-- `amdgpu_gem_va_ioctl()` - userspace-facing ioctl handler
+**Step 5.1:** Modified function: `ath12k_mac_mlo_get_vdev_args()`
 
-### Step 5.2: Callers
-`amdgpu_gem_va_ioctl` is the DRM ioctl handler called via
-`DRM_IOCTL_DEF_DRV(AMDGPU_GEM_VA, ...)` at `amdgpu_drv.c:3082`. It's
-callable by any process with DRM_AUTH|DRM_RENDER_ALLOW. This is a hot
-path for all AMD GPU userspace (Mesa, ROCm, etc.).
+**Step 5.2:** Called from `ath12k_mac_vdev_start_restart()` (line
+11210), which is a key function in the vdev start path. This is called
+during channel context assignment (common MLO WiFi operation).
 
-`amdgpu_gem_va_update_vm` is called only from `amdgpu_gem_va_ioctl`.
+**Step 5.3-5.4:** The function populates partner link info that gets
+sent to firmware via `ath12k_wmi_vdev_start()`. Incorrect partner
+entries lead to firmware state corruption and assertion failures.
 
-Record: [Directly callable from userspace; affects all AMD GPU users]
-
-### Step 5.4: Reachability
-The buggy code path is reachable from any unprivileged process that
-opens a DRM render node and performs VM address space management
-(standard GPU operation).
-
-Record: [Reachable from unprivileged userspace; common GPU operation
-path]
-
----
+**Step 5.5:** The `is_started` flag is well-established in the codebase
+with clear semantics: set when vdev starts operating, cleared when it
+stops.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Code in Stable Trees
-`bd8150a1b3370` first appears in v7.0-rc1. It does NOT exist in v6.14 or
-earlier stable trees. The timeline syncobj support
-(`vm_timeline_syncobj_out`, `AMDGPU_VM_DELAY_UPDATE` in this context) is
-v7.0-only functionality. The fix is relevant ONLY for the 7.0.y stable
-tree.
+**Step 6.1:** The buggy code (`is_created` check in
+`ath12k_mac_mlo_get_vdev_args()`) was introduced in v6.15 (commit
+`315d80be304ac1`). It exists in:
+- v7.0 (confirmed: `git merge-base --is-ancestor` = IN v7.0)
+- v6.15+ (confirmed)
+- NOT in v6.14 or earlier (MLO function is different or doesn't have the
+  check)
 
-Record: [Buggy code only in 7.0.y; not in 6.12.y or earlier]
+**Step 6.2:** The fix is a single-line change. It will apply cleanly to
+the 7.0 stable tree since the surrounding code is identical.
 
-### Step 6.2: Backport Complications
-The diff context matches the current tree state perfectly. Clean apply
-expected.
-
-Record: [Clean apply expected for 7.0.y]
-
-### Step 6.3: Related Fixes Already in Stable
-`efdc66fe12b07` (the v7 refactor fix) is already in the 7.0 tree, but
-this commit fixes remaining issues.
-
-Record: [Predecessor fix present; this addresses additional bugs]
-
----
+**Step 6.3:** No related fixes already in stable for this specific
+issue.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem
-- **Subsystem**: drivers/gpu/drm/amd/amdgpu (GPU driver)
-- **Criticality**: IMPORTANT - AMD GPU driver is used by millions of
-  users (desktop Linux, server compute, embedded)
+**Step 7.1:** Subsystem: WiFi/ath12k (wireless driver). Criticality:
+IMPORTANT - ath12k supports Qualcomm WiFi 7 hardware (QCN9274, WCN7850)
+used in modern systems.
 
-Record: [GPU driver, IMPORTANT criticality, affects all AMD GPU users]
-
-### Step 7.2: Subsystem Activity
-Very actively developed - 44 changes to this file since v6.12. The VA
-ioctl area specifically is being stabilized after recent refactoring.
-
-Record: [Very active; area being stabilized after v7.0 refactoring]
-
----
+**Step 7.2:** Very active subsystem - 232 commits to this file since the
+MLO function was introduced.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-All users of AMD GPUs on kernel 7.0.y. This includes desktop,
-workstation, and compute users.
+**Step 8.1:** Affected users: ath12k WiFi users in MLD/MLO station mode.
+This is a growing user base as WiFi 7 hardware becomes more common.
 
-Record: [All AMD GPU users on 7.0.y]
+**Step 8.2:** Trigger: MLD station connects with multiple links, non-
+associated link vdevs are created but not started, then a vdev start
+occurs. This is a normal MLO operation path, not an edge case.
 
-### Step 8.2: Trigger Conditions
-The missing PDE fence bug triggers during MAP/REPLACE operations on non-
-always-valid BOs, which is the normal case for application-managed GPU
-memory. This is the common path for all GPU applications. The invalid
-flag combination requires specific userspace to pass contradictory
-flags.
+**Step 8.3:** Failure mode: Firmware assertion (crash). Severity:
+**CRITICAL** - the WiFi firmware crashes, requiring recovery.
 
-Record: [PDE fence bug: common GPU operation; flag validation: requires
-specific bad input]
-
-### Step 8.3: Failure Mode Severity
-- **Missing PDE fence**: Userspace sees mapping as ready before PDE
-  updates complete. Could lead to GPU page faults, incorrect GPU memory
-  access, or visual corruption. Severity: **HIGH**
-- **Invalid flag combination**: Unexpected behavior with contradictory
-  flags. Severity: **MEDIUM**
-- **debug_vm condition**: Timeline syncobj never signals in debug mode.
-  Severity: **MEDIUM** (only affects debug configs)
-
-Record: [HIGH severity for PDE fence bug; MEDIUM for others]
-
-### Step 8.4: Risk-Benefit
-- **BENEFIT**: Prevents GPU page faults and incorrect memory access in
-  common GPU operations; validates contradictory input flags
-- **RISK**: Medium-sized change (~45 lines); restructures fence return
-  logic; adds `dma_fence_unwrap_merge` dependency. However, the new
-  logic is strictly more conservative (waits for more work) so
-  regression risk is low.
-
-Record: [High benefit, low-medium risk; net positive]
-
----
+**Step 8.4:**
+- Benefit: HIGH - prevents firmware crashes during normal MLO operation
+- Risk: VERY LOW - 1 line change, strictly more restrictive condition,
+  cannot regress
+- Ratio: Strongly favorable
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
+**Evidence FOR backporting:**
+- Fixes firmware assertion (crash) - critical severity
+- Single-line change, obviously correct
+- `is_started` is a strict subset of `is_created` - no regression
+  possible
+- Reviewed by 2 developers, tested on real hardware
+- Affects normal MLO WiFi operation path
+- Clean apply to 7.0 stable
 
-**FOR backporting**:
-- Fixes real correctness bugs: missing PDE fence, invalid input not
-  rejected
-- Author is Christian König, AMD DRM co-maintainer with deep expertise
-- Acked by AMD developer, committed by AMD DRM maintainer
-- Single file change, well-contained
-- Userspace-facing ioctl - affects all AMD GPU applications
-- The missing PDE fence could cause GPU page faults or incorrect memory
-  access
-- All dependencies present in 7.0 tree
-- Clean apply expected
-- The fence merge is strictly more conservative (lower regression risk)
+**Evidence AGAINST backporting:**
+- Affects only MLO (WiFi 7) users with ath12k hardware (limited
+  audience)
+- Relatively new code (v6.15+)
+- No explicit Fixes: tag or Cc: stable
 
-**AGAINST backporting**:
-- Medium-sized change (~45 lines), not a tiny surgical fix
-- Restructures fence return logic in `amdgpu_gem_va_update_vm`
-- Adds new API usage (`dma_fence_unwrap_merge`)
-- Bugs only exist in 7.0 code (limited affected trees)
-- Area is under active development and may see more changes
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **Yes** - from subsystem maintainer,
-   well-reviewed
-2. Fixes a real bug? **Yes** - missing PDE fence, invalid input not
-   rejected
-3. Important issue? **Yes** - GPU page faults, incorrect memory access
-   (HIGH severity)
-4. Small and contained? **Yes** - single file, ~45 lines, 2 functions
-5. No new features or APIs? **Correct** - no new features
-6. Can apply to stable? **Yes** - context matches exactly for 7.0.y
-
-### Step 9.3: Exception Categories
-Not an exception category; standard bug fix.
-
-### Step 9.4: Decision
-The bugs are real and affect all AMD GPU users on 7.0.y. The missing PDE
-fence is a correctness issue that can cause GPU page faults during
-normal operations. The fix is from the subsystem maintainer, well-
-reviewed, contained to a single file, and all dependencies are met.
-
----
+**Stable rules checklist:**
+1. Obviously correct and tested? **YES** - 1-line change, more
+   restrictive check, HW-tested
+2. Fixes a real bug? **YES** - firmware assertions/crashes
+3. Important issue? **YES** - firmware crash
+4. Small and contained? **YES** - 1 line in 1 file
+5. No new features? **YES** - purely a fix
+6. Can apply to stable? **YES** - clean apply
 
 ## Verification
 
-- [Phase 1] Parsed tags: Author Christian König (AMD DRM co-maintainer),
-  Acked-by Sunil Khatri, committed by Alex Deucher
-- [Phase 2] Diff analysis: ~45 lines changed in `amdgpu_gem.c`, modifies
-  `amdgpu_gem_va_update_vm` and `amdgpu_gem_va_ioctl`
-- [Phase 2] Verified `amdgpu_vm_update_pdes` stores its fence in
-  `vm->last_update` (amdgpu_vm.c:1006) - confirms PDE fence is missed
-  without the merge
-- [Phase 2] Verified `amdgpu_vm_clear_freed` replaces `*fence` when work
-  is done (amdgpu_vm.c:1583-1588) - confirms changing argument from
-  `&fence` to `&vm->last_update` keeps VM state current
-- [Phase 3] git blame: buggy code from `efdc66fe12b07` (2026-01-09) and
-  `bd8150a1b3370` (2025-12-11)
-- [Phase 3] git tag --contains: both commits first appear in
-  v7.0-rc1/v7.0
-- [Phase 3] Author's recent commits: 15 commits in amdgpu, including
-  multiple critical fixes
-- [Phase 4] b4 dig -c efdc66fe12b07: found v7 submission thread
-- [Phase 4] b4 dig -a: patch went through v6->v7 iterations
-- [Phase 5] `amdgpu_gem_va_ioctl` is registered as DRM ioctl at
-  amdgpu_drv.c:3082 (DRM_AUTH|DRM_RENDER_ALLOW)
-- [Phase 6] `bd8150a1b3370` NOT in v6.14 (verified via git log
-  v6.12..v6.14); only in v7.0+
-- [Phase 6] `dma_fence_unwrap_merge` exists in tree (include/linux/dma-
-  fence-unwrap.h:69)
-- [Phase 6] Current file state matches diff context exactly - clean
-  apply expected
-- [Phase 8] PDE fence bug: triggers on all MAP/REPLACE of non-always-
-  valid BOs (common path)
-- UNVERIFIED: Could not verify lore.kernel.org discussion for the
-  specific commit under analysis (bot protection blocked access)
+- [Phase 1] Parsed tags: Tested-on: QCN9274, Reviewed-by: 2 developers,
+  Signed-off-by: Jeff Johnson (maintainer)
+- [Phase 2] Diff analysis: 1 line changed in
+  `ath12k_mac_mlo_get_vdev_args()`, `is_created` -> `is_started`
+- [Phase 3] git blame: buggy `is_created` check introduced in
+  315d80be304ac1 (v6.15), added by Aditya Kumar Singh
+- [Phase 3] git describe: 315d80be304ac1 = v6.13-rc6-1322, landed in
+  v6.15
+- [Phase 3] git merge-base: 315d80be304ac1 IS in v7.0, NOT in v6.14
+- [Phase 3] git merge-base: 1ea0cdee6fb3a4 (original function) IS in
+  v6.14, NOT in v6.13
+- [Phase 5] Grep callers: `ath12k_mac_mlo_get_vdev_args()` called from
+  `ath12k_mac_vdev_start_restart()` at line 11210
+- [Phase 5] Grep `is_started`: set to true in vdev start path (lines
+  11637, 12106, 12118), false in unassign path (lines 12168, 12179)
+- [Phase 6] Buggy code exists in v6.15+ and v7.0 stable trees only
+- [Phase 7] Active subsystem: 232 commits since MLO function
+  introduction
+- [Phase 8] Failure mode: firmware assertion = CRITICAL
+- UNVERIFIED: Could not access lore.kernel.org discussion due to Anubis
+  protection
+
+The fix is a minimal, obviously correct, single-line change that
+prevents firmware crashes during normal MLO WiFi operation. It meets all
+stable kernel criteria.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c | 76 +++++++++++--------------
- 1 file changed, 34 insertions(+), 42 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-index a6107109a2b86..c4839cf2dce37 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-@@ -30,6 +30,7 @@
- #include <linux/pagemap.h>
- #include <linux/pci.h>
- #include <linux/dma-buf.h>
-+#include <linux/dma-fence-unwrap.h>
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 769d240e3ae24..6fca4418ab0bd 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -11122,7 +11122,7 @@ ath12k_mac_mlo_get_vdev_args(struct ath12k_link_vif *arvif,
+ 		if (arvif == arvif_p)
+ 			continue;
  
- #include <drm/amdgpu_drm.h>
- #include <drm/drm_drv.h>
-@@ -744,11 +745,10 @@ amdgpu_gem_va_update_vm(struct amdgpu_device *adev,
- 	struct dma_fence *fence;
- 	int r = 0;
+-		if (!arvif_p->is_created)
++		if (!arvif_p->is_started)
+ 			continue;
  
--	/* Always start from the VM's existing last update fence. */
--	fence = dma_fence_get(vm->last_update);
--
-+	/* If the VM is not ready return only a stub. */
- 	if (!amdgpu_vm_ready(vm))
--		return fence;
-+		return dma_fence_get_stub();
-+
- 
- 	/*
- 	 * First clean up any freed mappings in the VM.
-@@ -757,7 +757,7 @@ amdgpu_gem_va_update_vm(struct amdgpu_device *adev,
- 	 * schedules GPU work. If nothing needs clearing, @fence can remain as
- 	 * the original vm->last_update.
- 	 */
--	r = amdgpu_vm_clear_freed(adev, vm, &fence);
-+	r = amdgpu_vm_clear_freed(adev, vm, &vm->last_update);
- 	if (r)
- 		goto error;
- 
-@@ -774,47 +774,34 @@ amdgpu_gem_va_update_vm(struct amdgpu_device *adev,
- 	if (r)
- 		goto error;
- 
--	/*
--	 * Decide which fence best represents the last update:
--	 *
--	 * MAP/REPLACE:
--	 *   - For always-valid mappings, use vm->last_update.
--	 *   - Otherwise, export bo_va->last_pt_update.
--	 *
--	 * UNMAP/CLEAR:
--	 *   Keep the fence returned by amdgpu_vm_clear_freed(). If no work was
--	 *   needed, it can remain as vm->last_pt_update.
--	 *
--	 * The VM and BO update fences are always initialized to a valid value.
--	 * vm->last_update and bo_va->last_pt_update always start as valid fences.
--	 * and are never expected to be NULL.
--	 */
--	switch (operation) {
--	case AMDGPU_VA_OP_MAP:
--	case AMDGPU_VA_OP_REPLACE:
-+	if ((operation == AMDGPU_VA_OP_MAP ||
-+	     operation == AMDGPU_VA_OP_REPLACE) &&
-+	    !amdgpu_vm_is_bo_always_valid(vm, bo_va->base.bo)) {
-+
- 		/*
--		 * For MAP/REPLACE, return the page table update fence for the
--		 * mapping we just modified. bo_va is expected to be valid here.
-+		 * For MAP/REPLACE of non per-VM BOs we need to sync to both the
-+		 * bo_va->last_pt_update and vm->last_update or otherwise we
-+		 * potentially miss the PDE updates.
- 		 */
--		dma_fence_put(fence);
--
--		if (amdgpu_vm_is_bo_always_valid(vm, bo_va->base.bo))
--			fence = dma_fence_get(vm->last_update);
--		else
--			fence = dma_fence_get(bo_va->last_pt_update);
--		break;
--	case AMDGPU_VA_OP_UNMAP:
--	case AMDGPU_VA_OP_CLEAR:
--	default:
--		/* keep @fence as returned by amdgpu_vm_clear_freed() */
--		break;
-+		fence = dma_fence_unwrap_merge(vm->last_update,
-+					       bo_va->last_pt_update);
-+		if (!fence) {
-+			/* As fallback in OOM situations */
-+			dma_fence_wait(vm->last_update, false);
-+			dma_fence_wait(bo_va->last_pt_update, false);
-+			fence = dma_fence_get_stub();
-+		}
-+	} else {
-+		fence = dma_fence_get(vm->last_update);
- 	}
- 
-+	return fence;
-+
- error:
- 	if (r && r != -ERESTARTSYS)
- 		DRM_ERROR("Couldn't update BO_VA (%d)\n", r);
- 
--	return fence;
-+	return dma_fence_get(vm->last_update);
- }
- 
- int amdgpu_gem_va_ioctl(struct drm_device *dev, void *data,
-@@ -835,7 +822,6 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, void *data,
- 	struct amdgpu_bo_va *bo_va;
- 	struct drm_syncobj *timeline_syncobj = NULL;
- 	struct dma_fence_chain *timeline_chain = NULL;
--	struct dma_fence *fence;
- 	struct drm_exec exec;
- 	uint64_t vm_size;
- 	int r = 0;
-@@ -887,6 +873,10 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, void *data,
- 		return -EINVAL;
- 	}
- 
-+	if (args->flags & AMDGPU_VM_DELAY_UPDATE &&
-+	    args->vm_timeline_syncobj_out)
-+		return -EINVAL;
-+
- 	if ((args->operation != AMDGPU_VA_OP_CLEAR) &&
- 	    !(args->flags & AMDGPU_VM_PAGE_PRT)) {
- 		gobj = drm_gem_object_lookup(filp, args->handle);
-@@ -976,11 +966,13 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, void *data,
- 	 * that represents the last relevant update for this mapping. This
- 	 * fence can then be exported to the user-visible VM timeline.
- 	 */
--	if (!r && !(args->flags & AMDGPU_VM_DELAY_UPDATE) && !adev->debug_vm) {
-+	if (!r && !(args->flags & AMDGPU_VM_DELAY_UPDATE) &&
-+	    (!adev->debug_vm || timeline_syncobj)) {
-+		struct dma_fence *fence;
-+
- 		fence = amdgpu_gem_va_update_vm(adev, &fpriv->vm, bo_va,
- 						args->operation);
--
--		if (timeline_syncobj && fence) {
-+		if (timeline_syncobj) {
- 			if (!args->vm_timeline_point) {
- 				/* Replace the existing fence when no point is given. */
- 				drm_syncobj_replace_fence(timeline_syncobj,
+ 		link_conf = wiphy_dereference(ahvif->ah->hw->wiphy,
 -- 
 2.53.0
 
