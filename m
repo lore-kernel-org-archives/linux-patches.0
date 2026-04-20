@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A351344D99;
-	Mon, 20 Apr 2026 16:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7390345729;
+	Mon, 20 Apr 2026 16:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701488; cv=none; b=ik2YWYhKqly63KWSxwsx/w1Yv5Qtk69H0HEwbzMHYItjsa7gUH0uITkRodcImhArKdAeuT/WMUNbNliQEKANTD1nlrL5om3juZ3ZnRLp3JZIeizUOGqlJfgYn/bLQOc+nm79GBIHTI4vrYf8MsEZSx5kwzU067oLsDx577EzUEU=
+	t=1776701491; cv=none; b=GEpqL4Ewluz871Eng485OEigJF+EPR/QG7+KaKjOVCQiWf3btm6Yf0L00DRRXqT7DUX/UvW52h9CzBoAAu2K+7UB3c3cgrO3udCKqGnCDtbwnfSJZ8dXjK496kyZE7i1WhPSZ8oKdtz3dV4uT0sPHClXF0GOMwaJb8Zc046houo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701488; c=relaxed/simple;
-	bh=c051yRc6US0Wg2ZMh33U0U3DkPicb+1J4oaX6wcrHDA=;
+	s=arc-20240116; t=1776701491; c=relaxed/simple;
+	bh=zU1XPulFSABQIcRZF124PN/q/b0pBnrBLbFFqveonz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uuC8UulfGpFYwsy/xfjekU5zJgyYghEVQEqtsFCuiKjnfwxzNMJpK77tV3880hC7XVUZco5Wi7O0Qj49lEQkmCBSVVHIp4FFuu+fOY9KVGOiWtPGG30xYebacnnr/zcvLgbnHYO5ywmzEIoarF8wyeOsTuX/HFLIbavLKpUC3sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GW1P4XG6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AcBifhFZw/SoLlKsBp6JuAHcRmCLNhZMipFuOuUMK3r/NBKLKyR1lYWkHXZsHPkRLvl45gjAeAagm+c3uXI05x6MPpd6AsNRr0Np1ZJOvumioulozVmTrrCMMIMZPGZ0Xl8jBH9OPRv/xUt9UUo6Rl9k2ILUKeDAFXIP42Hun0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kB9e99In; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GW1P4XG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23DAC2BCB6;
-	Mon, 20 Apr 2026 16:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kB9e99In"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D51C19425;
+	Mon, 20 Apr 2026 16:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701488;
-	bh=c051yRc6US0Wg2ZMh33U0U3DkPicb+1J4oaX6wcrHDA=;
+	s=korg; t=1776701490;
+	bh=zU1XPulFSABQIcRZF124PN/q/b0pBnrBLbFFqveonz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GW1P4XG6yLC304wUOMV6AlYJjzy+wzA7ElJ38vJ/1PBhrVK42MvJ3REETD3KMMBW/
-	 QfuAtfJSnXWIYY0Hj+QH6CxixlCH11Cpms+mnByP5MxEsOMhFzB/9ZnMDWo6hfjqcE
-	 OjRWPTwR0rTYNStIEzGdikiLys9EUwKusRyfq4LU=
+	b=kB9e99InmF89guz1EcOCq8OaEUm8nlnM5oYiYcq6dImPYXy5Iv/MoiZ7fd6RJZys1
+	 Ts+31FT88i9cHsF/hdTdg53q0twlMo658t/tJ8y4MYHQJcyHybDwdcQdYmWOinppX3
+	 x1b6lJnW3f51V6DsLq6qVDotYd0MH47nUcpKp9TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f3a497f02c389d86ef16@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Peng Zhang <zhangpeng.00@bytedance.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heiko Stuebner <heiko.stuebner@cherry.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 134/162] net: sched: fix TCF_LAYER_TRANSPORT handling in tcf_get_base_ptr()
-Date: Mon, 20 Apr 2026 17:42:46 +0200
-Message-ID: <20260420153931.899955161@linuxfoundation.org>
+Subject: [PATCH 6.12 135/162] kernel: be more careful about dup_mmap() failures and uprobe registering
+Date: Mon, 20 Apr 2026 17:42:47 +0200
+Message-ID: <20260420153931.936189095@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -54,129 +60,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Liam R. Howlett <Liam.Howlett@Oracle.com>
 
-[Upstream commit 4fe5a00ec70717a7f1002d8913ec6143582b3c8e]
+[ Upstream commit 64c37e134b120fb462fb4a80694bfb8e7be77b14 ]
 
-syzbot reported that tcf_get_base_ptr() can be called while transport
-header is not set [1].
+If a memory allocation fails during dup_mmap(), the maple tree can be left
+in an unsafe state for other iterators besides the exit path.  All the
+locks are dropped before the exit_mmap() call (in mm/mmap.c), but the
+incomplete mm_struct can be reached through (at least) the rmap finding
+the vmas which have a pointer back to the mm_struct.
 
-Instead of returning a dangling pointer, return NULL.
+Up to this point, there have been no issues with being able to find an
+mm_struct that was only partially initialised.  Syzbot was able to make
+the incomplete mm_struct fail with recent forking changes, so it has been
+proven unsafe to use the mm_struct that hasn't been initialised, as
+referenced in the link below.
 
-Fix tcf_get_base_ptr() callers to handle this NULL value.
+Although 8ac662f5da19f ("fork: avoid inappropriate uprobe access to
+invalid mm") fixed the uprobe access, it does not completely remove the
+race.
 
-[1]
- WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 skb_transport_header include/linux/skbuff.h:3071 [inline]
- WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 tcf_get_base_ptr include/net/pkt_cls.h:539 [inline]
- WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 em_nbyte_match+0x2d8/0x3f0 net/sched/em_nbyte.c:43
-Modules linked in:
-CPU: 1 UID: 0 PID: 6019 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-Call Trace:
- <TASK>
-  tcf_em_match net/sched/ematch.c:494 [inline]
-  __tcf_em_tree_match+0x1ac/0x770 net/sched/ematch.c:520
-  tcf_em_tree_match include/net/pkt_cls.h:512 [inline]
-  basic_classify+0x115/0x2d0 net/sched/cls_basic.c:50
-  tc_classify include/net/tc_wrapper.h:197 [inline]
-  __tcf_classify net/sched/cls_api.c:1764 [inline]
-  tcf_classify+0x4cf/0x1140 net/sched/cls_api.c:1860
-  multiq_classify net/sched/sch_multiq.c:39 [inline]
-  multiq_enqueue+0xfd/0x4c0 net/sched/sch_multiq.c:66
-  dev_qdisc_enqueue+0x4e/0x260 net/core/dev.c:4118
-  __dev_xmit_skb net/core/dev.c:4214 [inline]
-  __dev_queue_xmit+0xe83/0x3b50 net/core/dev.c:4729
-  packet_snd net/packet/af_packet.c:3076 [inline]
-  packet_sendmsg+0x3e33/0x5080 net/packet/af_packet.c:3108
-  sock_sendmsg_nosec net/socket.c:727 [inline]
-  __sock_sendmsg+0x21c/0x270 net/socket.c:742
-  ____sys_sendmsg+0x505/0x830 net/socket.c:2630
+This patch sets the MMF_OOM_SKIP to avoid the iteration of the vmas on the
+oom side (even though this is extremely unlikely to be selected as an oom
+victim in the race window), and sets MMF_UNSTABLE to avoid other potential
+users from using a partially initialised mm_struct.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+f3a497f02c389d86ef16@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6920855a.a70a0220.2ea503.0058.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20251121154100.1616228-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+When registering vmas for uprobe, skip the vmas in an mm that is marked
+unstable.  Modifying a vma in an unstable mm may cause issues if the mm
+isn't fully initialised.
+
+Link: https://lore.kernel.org/all/6756d273.050a0220.2477f.003d.GAE@google.com/
+Link: https://lkml.kernel.org/r/20250127170221.1761366-1-Liam.Howlett@oracle.com
+Fixes: d24062914837 ("fork: use __mt_dup() to duplicate maple tree in dup_mmap()")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Peng Zhang <zhangpeng.00@bytedance.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[resolved conflict from missing header includes:
+ - linux/workqueue.h missing, introduced by commit 2bf8e5aceff8 ("uprobes:
+   allow put_uprobe() from non-sleepable softirq context")
+ - linux/srcu.h missing, introduced by commit dd1a7567784e ("uprobes:
+   SRCU-protect uretprobe lifetime (with timeout)") ]
+Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pkt_cls.h |  2 ++
- net/sched/em_cmp.c    |  5 ++++-
- net/sched/em_nbyte.c  |  2 ++
- net/sched/em_text.c   | 11 +++++++++--
- 4 files changed, 17 insertions(+), 3 deletions(-)
+ kernel/events/uprobes.c |  4 ++++
+ kernel/fork.c           | 17 ++++++++++++++---
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
-index 4229e4fcd2a9e..ea2c69fdc8396 100644
---- a/include/net/pkt_cls.h
-+++ b/include/net/pkt_cls.h
-@@ -536,6 +536,8 @@ static inline unsigned char * tcf_get_base_ptr(struct sk_buff *skb, int layer)
- 		case TCF_LAYER_NETWORK:
- 			return skb_network_header(skb);
- 		case TCF_LAYER_TRANSPORT:
-+			if (!skb_transport_header_was_set(skb))
-+				break;
- 			return skb_transport_header(skb);
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index 1ff26dc3bdb01..5059de5fcc230 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -27,6 +27,7 @@
+ #include <linux/shmem_fs.h>
+ #include <linux/khugepaged.h>
+ #include <linux/rcupdate_trace.h>
++#include <linux/oom.h>          /* check_stable_address_space */
+ 
+ #include <linux/uprobes.h>
+ 
+@@ -1106,6 +1107,9 @@ register_for_each_vma(struct uprobe *uprobe, struct uprobe_consumer *new)
+ 		 * returns NULL in find_active_uprobe_rcu().
+ 		 */
+ 		mmap_write_lock(mm);
++		if (check_stable_address_space(mm))
++			goto unlock;
++
+ 		vma = find_vma(mm, info->vaddr);
+ 		if (!vma || !valid_vma(vma, is_register) ||
+ 		    file_inode(vma->vm_file) != uprobe->inode)
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 55086df4d24cb..a01cf3a904bfd 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -766,7 +766,8 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 		mt_set_in_rcu(vmi.mas.tree);
+ 		ksm_fork(mm, oldmm);
+ 		khugepaged_fork(mm, oldmm);
+-	} else if (mpnt) {
++	} else {
++
+ 		/*
+ 		 * The entire maple tree has already been duplicated. If the
+ 		 * mmap duplication fails, mark the failure point with
+@@ -774,8 +775,18 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 		 * stop releasing VMAs that have not been duplicated after this
+ 		 * point.
+ 		 */
+-		mas_set_range(&vmi.mas, mpnt->vm_start, mpnt->vm_end - 1);
+-		mas_store(&vmi.mas, XA_ZERO_ENTRY);
++		if (mpnt) {
++			mas_set_range(&vmi.mas, mpnt->vm_start, mpnt->vm_end - 1);
++			mas_store(&vmi.mas, XA_ZERO_ENTRY);
++			/* Avoid OOM iterating a broken tree */
++			set_bit(MMF_OOM_SKIP, &mm->flags);
++		}
++		/*
++		 * The mm_struct is going to exit, but the locks will be dropped
++		 * first.  Set the mm_struct as unstable is advisable as it is
++		 * not fully initialised.
++		 */
++		set_bit(MMF_UNSTABLE, &mm->flags);
  	}
- 
-diff --git a/net/sched/em_cmp.c b/net/sched/em_cmp.c
-index 64b637f18bc7d..48c1bce74f498 100644
---- a/net/sched/em_cmp.c
-+++ b/net/sched/em_cmp.c
-@@ -22,9 +22,12 @@ static int em_cmp_match(struct sk_buff *skb, struct tcf_ematch *em,
- 			struct tcf_pkt_info *info)
- {
- 	struct tcf_em_cmp *cmp = (struct tcf_em_cmp *) em->data;
--	unsigned char *ptr = tcf_get_base_ptr(skb, cmp->layer) + cmp->off;
-+	unsigned char *ptr = tcf_get_base_ptr(skb, cmp->layer);
- 	u32 val = 0;
- 
-+	if (!ptr)
-+		return 0;
-+	ptr += cmp->off;
- 	if (!tcf_valid_offset(skb, ptr, cmp->align))
- 		return 0;
- 
-diff --git a/net/sched/em_nbyte.c b/net/sched/em_nbyte.c
-index 4f9f21a05d5e4..c65ffa5fff946 100644
---- a/net/sched/em_nbyte.c
-+++ b/net/sched/em_nbyte.c
-@@ -42,6 +42,8 @@ static int em_nbyte_match(struct sk_buff *skb, struct tcf_ematch *em,
- 	struct nbyte_data *nbyte = (struct nbyte_data *) em->data;
- 	unsigned char *ptr = tcf_get_base_ptr(skb, nbyte->hdr.layer);
- 
-+	if (!ptr)
-+		return 0;
- 	ptr += nbyte->hdr.off;
- 
- 	if (!tcf_valid_offset(skb, ptr, nbyte->hdr.len))
-diff --git a/net/sched/em_text.c b/net/sched/em_text.c
-index 420c66203b177..8331f38eadc60 100644
---- a/net/sched/em_text.c
-+++ b/net/sched/em_text.c
-@@ -29,12 +29,19 @@ static int em_text_match(struct sk_buff *skb, struct tcf_ematch *m,
- 			 struct tcf_pkt_info *info)
- {
- 	struct text_match *tm = EM_TEXT_PRIV(m);
-+	unsigned char *ptr;
- 	int from, to;
- 
--	from = tcf_get_base_ptr(skb, tm->from_layer) - skb->data;
-+	ptr = tcf_get_base_ptr(skb, tm->from_layer);
-+	if (!ptr)
-+		return 0;
-+	from = ptr - skb->data;
- 	from += tm->from_offset;
- 
--	to = tcf_get_base_ptr(skb, tm->to_layer) - skb->data;
-+	ptr = tcf_get_base_ptr(skb, tm->to_layer);
-+	if (!ptr)
-+		return 0;
-+	to = ptr - skb->data;
- 	to += tm->to_offset;
- 
- 	return skb_find_text(skb, from, to, tm->config) != UINT_MAX;
+ out:
+ 	mmap_write_unlock(mm);
 -- 
 2.53.0
 
