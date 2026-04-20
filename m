@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E385E47ECE0;
-	Mon, 20 Apr 2026 13:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07D53A2560;
+	Mon, 20 Apr 2026 13:31:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691875; cv=none; b=srPujJl7+sqVviBPTfCd78R5NkJolTySwCeTHFSTdEOdXp4gCH6k9xVepIrZtcruahHRJ6WXPmxztKG2gZNZZOsF+0BZs7VFV+Qv6PSxFxOd8Lyb9c91ufRWkBj3DNt+d2C+ki3oMlvdftH+X++XjFyQgcORbcAIEE/gL56nfDM=
+	t=1776691876; cv=none; b=NeTOEJLQ6uF8fFYKu3ic6JzeFzKMl5NK9tLCyTDIgil/SB8LyQcV+SW/StDPOr6wUeYGVhi+2US/t6oaHw4iNhsi7cfqYftVyc8850OFHJ7Dk+mkT5cQ/+BldRWmq8Rbn/ATpRJHAyUxCKEm0kzF3FLUihhnhteU9dMsZTQSfYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691875; c=relaxed/simple;
-	bh=gvyXCCMJAH//t5bxq4mcivXbyjUIsK1an0vvgrVeBnc=;
+	s=arc-20240116; t=1776691876; c=relaxed/simple;
+	bh=0AZBXFP3Gue6Qoq8KpSwhCHDauX03K+T/rigRISsjzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jjy0GtF8UUQotX1MjZXly5jtT3xHnbcsHfXq3b3E8A36kaPogor3bbnA28e0ChYBH7sRNRhqnK9nQzD58cIa519YfBkvCh5jCBkJUYhxs+zBwaV/Gd7NL+ccZrTfgQwme4aEZLqWjhNpErme1ByM3P515sTmx9dSMDktQU3l/ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o/melf3f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KuAPnvLPxAdZdLmja6zIH5kTzWdXsVynCsdYAv0WodykWGn3kLDIhC/tgSehJJH0zm16+Ss5mfOSr7p+d5HcZpefU+rJyPpz9QbK2sNrGHza+4/I8XamkGMH8bVb7iPVc/kVaRnVw3KcKY/p214HzYIB2N/ZG+ixSRS9q0thniY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NNzuMbb6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o/melf3f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557E4C2BCB4;
-	Mon, 20 Apr 2026 13:31:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NNzuMbb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32841C2BCB9;
+	Mon, 20 Apr 2026 13:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691874;
-	bh=gvyXCCMJAH//t5bxq4mcivXbyjUIsK1an0vvgrVeBnc=;
+	s=k20201202; t=1776691876;
+	bh=0AZBXFP3Gue6Qoq8KpSwhCHDauX03K+T/rigRISsjzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/melf3fBFQ89Mf2fHjCDkF/ZVQ8I2vOkI2bvtMlCwuBcKXY8504QiHM/xGiakwuA
-	 Tjyysh5xRS2VcyBg+2E7xAISu+IN4qWBQI3ruZkpe5Hk/zI+/9WOwNzC6Jyxo+Psdz
-	 ndRJXznPIK5VjRkZ+S7rnovatHTVefFY9P238d8qFe9KuHTe8WZxb3LLs2pge+IkKB
-	 wi1MZgJEQGN0CnT5Qden5prasKOzxAL6RPipcOjYs9qtTojAPuwIfC38TytWL+9csx
-	 aN1Vaku8IIgrXnIQ9s9w8CvbbD5N31vZxb6Mqx1vlo5S/BeVv8jhhkZyILNFDKiTw8
-	 ZQn8cCvWYJvcg==
+	b=NNzuMbb6rE47Plsi09+uFBqmFEPFkpzUiCHMMLngcrd0f4OFfCunlbLRe/RqdLVNs
+	 qKQn/DGZHWK5I2GOXdC4Pi0CAsLcqDaGJcag2p+YDwQ+bWW+1OheZdi/RH5HuatcM7
+	 oBJiXia+fh9ApAAa6y3OKUN9Sh02jnnp3WtCBgO1oiKI3lNYRAttgA2dpThoPJn9TU
+	 HYVe1ZFR+Or9tOYJITvV+u8+LEWgKwVr4bGKGSTI3FQWPEorOxu+5JZLli9d6Gx+SV
+	 V7YDSaIS0lKQdvZNgswjPj0Wt21/MXdf3sxdRI0r9uGXaWF1EmKJL8sorgeg+TfM6A
+	 hn9XaZaoLC5qA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sreekant Somasekharan <Sreekant.Somasekharan@amd.com>,
-	Mukul Joshi <mukul.joshi@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Christian Eggers <ceggers@arri.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/amdgpu: Revert setting up Retry based Thrashing on GFX 12.1
-Date: Mon, 20 Apr 2026 09:20:39 -0400
-Message-ID: <20260420132314.1023554-245-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] Bluetooth: L2CAP: CoC: Disconnect if received packet size exceeds MPS
+Date: Mon, 20 Apr 2026 09:20:40 -0400
+Message-ID: <20260420132314.1023554-246-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,296 +51,379 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sreekant Somasekharan <Sreekant.Somasekharan@amd.com>
+From: Christian Eggers <ceggers@arri.de>
 
-[ Upstream commit 29756a7535facdaed39d0b5572201068a7746812 ]
+[ Upstream commit 728a3d128325bad286b1e4f191026e8de8d12a85 ]
 
-Bug found with retry based thrashing mechanism. Revert to the old
-thrashing method.
+Core 6.0, Vol 3, Part A, 3.4.3:
+"... If the payload size of any K-frame exceeds the receiver's MPS, the
+receiver shall disconnect the channel..."
 
-Signed-off-by: Sreekant Somasekharan <Sreekant.Somasekharan@amd.com>
-Reviewed-by: Mukul Joshi <mukul.joshi@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This fixes L2CAP/LE/CFC/BV-27-C (running together with 'l2test -r -P
+0x0027 -V le_public -I 100').
+
+Signed-off-by: Christian Eggers <ceggers@arri.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to complete the full analysis. Let me
-compile everything.
+Now I have all the information needed for a comprehensive analysis. Let
+me compile the findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem:** drm/amdgpu (AMD GPU driver)
-- **Action verb:** "Revert" - undoing a previous feature that's buggy
-- **Summary:** Revert the retry-based thrashing prevention mechanism on
-  GFX 12.1 hardware
+### Step 1.1: Parse Subject Line
+- **Subsystem**: `Bluetooth: L2CAP: CoC` (Bluetooth L2CAP Connection-
+  oriented Channels)
+- **Action verb**: "Disconnect" - implies enforcing mandatory protocol
+  behavior (a fix for missing behavior)
+- **Summary**: Enforce Bluetooth spec-mandated channel disconnect when
+  received packet exceeds MPS (Maximum PDU Size)
 
-### Step 1.2: Tags
-- **Signed-off-by:** Sreekant Somasekharan (AMD employee, author)
-- **Reviewed-by:** Mukul Joshi (the original author of the reverted
-  feature)
-- **Signed-off-by:** Alex Deucher (AMD GPU subsystem maintainer)
-- No Fixes:, Reported-by:, Cc: stable, or Link: tags (expected for
-  autosel candidates)
+Record: [Bluetooth: L2CAP: CoC] [Disconnect/fix] [Enforce mandatory MPS
+check and channel disconnect per BT Core 6.0 spec]
 
-### Step 1.3: Commit Body
-The message says: "Bug found with retry based thrashing mechanism.
-Revert to the old thrashing method." This is terse, but the prior revert
-of the same mechanism (commit `127770bcfccc2`) was more explicit:
-"causing **data mismatch and slowness issues with multiple HIP tests**."
-Data mismatch is a data corruption symptom.
+### Step 1.2: Parse Tags
+- **Signed-off-by**: Christian Eggers (author), Luiz Augusto von Dentz
+  (Bluetooth subsystem maintainer, committer)
+- **Tested-by**: Christian Eggers (author tested the v2 version)
+- **No Fixes: tag** - Expected for AUTOSEL review
+- **No Cc: stable** - Expected for AUTOSEL review
+- **No Reported-by** - This was found through BT Qualification test
+  suite compliance testing
 
-### Step 1.4: Hidden Bug Fix?
-This is an explicit revert of a buggy hardware feature enablement. No
-hidden fix — it's straightforward.
+Record: Author is Christian Eggers, a regular Bluetooth contributor.
+Committed by subsystem maintainer Luiz Augusto von Dentz. Tested by the
+author.
+
+### Step 1.3: Analyze Commit Body
+- References **Bluetooth Core 6.0, Vol 3, Part A, 3.4.3** specification
+  requirement
+- The spec mandates: "If the payload size of any K-frame exceeds the
+  receiver's MPS, the receiver shall disconnect the channel"
+- This fixes **L2CAP/LE/CFC/BV-27-C** Bluetooth test case (a PTS
+  qualification test)
+- Without this fix, the kernel violates the Bluetooth specification
+
+Record: Bug = missing mandatory MPS check per Bluetooth spec. Symptom =
+BT qualification test failure; potential protocol state confusion from
+oversized packets. Root cause = l2cap_ecred_data_rcv() never validated
+packet size against MPS.
+
+### Step 1.4: Detect Hidden Bug Fixes
+This IS a bug fix, not disguised at all. The commit enforces a mandatory
+spec requirement that was missing, preventing oversized packets from
+being processed.
+
+Record: Yes, this is a genuine spec compliance bug fix.
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **Files:** 1 file modified: `drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c`
-- **Lines:** 0 added, 19 removed (pure deletion)
-- **Functions modified:**
-  - `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl` (entirely removed)
-  - `gfx_v12_1_init_golden_registers` (one call removed)
-- **Scope:** Single-file surgical removal
+- **Files changed**: `net/bluetooth/l2cap_core.c` (1 file)
+- **Lines**: +7 added, 0 removed
+- **Function modified**: `l2cap_ecred_data_rcv()`
+- **Scope**: Single-file, single-function, surgical addition
 
 ### Step 2.2: Code Flow Change
-- **Before:** `gfx_v12_1_init_golden_registers()` called
-  `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl()` for each XCC, which
-  programmed the TCP_UTCL0_THRASHING_CTRL register with retry-based
-  thrashing settings (THRASHING_EN=0x2,
-  RETRY_FRAGMENT_THRESHOLD_UP_EN=1, RETRY_FRAGMENT_THRESHOLD_DOWN_EN=1)
-- **After:** That function and its call are removed. The hardware's
-  default (non-retry-based) thrashing prevention is used instead.
+The patch adds a new check between the existing IMTU check and the
+credit decrement:
+
+- **Before**: After validating `skb->len <= chan->imtu`, immediately
+  decrements rx_credits
+- **After**: After IMTU check, also validates `skb->len <= chan->mps`.
+  If exceeded, logs error, sends disconnect request, returns -ENOBUFS
 
 ### Step 2.3: Bug Mechanism
-This is a **hardware workaround** — the retry-based thrashing mode in
-GFX 12.1's TCP UTCL0 has bugs causing data mismatch and performance
-issues. Reverting to the old thrashing method avoids triggering the
-hardware bug.
+Category: **Logic/correctness fix** - missing validation per Bluetooth
+specification
+
+The ERTM path (`l2cap_data_rcv()` at line 6561) already checks MPS: `if
+(len > chan->mps)`. This check was missing from the LE/Enhanced Credit
+Based flow control path (`l2cap_ecred_data_rcv()`), which was added in
+v5.7.
 
 ### Step 2.4: Fix Quality
-- Obviously correct: pure deletion of a function and its call site
-- Minimal/surgical: only removes the problematic code, nothing else
-  changes
-- Regression risk: essentially zero — only reverts to the previous
-  (working) behavior
-- Reviewed by the feature's original author
+- **Obviously correct**: Yes - identical pattern to the MPS check in
+  `l2cap_data_rcv()` and the IMTU check immediately above
+- **Minimal/surgical**: Yes - +7 lines, single check block
+- **Regression risk**: Very low - this only rejects oversized packets
+  that the spec says must be rejected
+- **Red flags**: None
+
+Record: Trivial, obviously correct spec compliance fix.
+
+---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-The buggy function `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl` was
-introduced in commit `a41d94a7bb962` ("Setup Retry based thrashing
-prevention on GFX 12.1") by Mukul Joshi. This commit IS in v7.0.
+- `l2cap_ecred_data_rcv()` was created in commit `15f02b91056253`
+  ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+  from v5.7-rc1
+- The original LE flow control code (`aac23bf63659`) dates from
+  v3.14-rc1 (2013)
+- The MPS check was never present in the ecred/LE flow control receive
+  path
 
 ### Step 3.2: Fixes Tag
-No Fixes: tag present. However, this commit effectively fixes/reverts
-`a41d94a7bb962`.
+No Fixes: tag present (expected for AUTOSEL). However, the sibling
+commits by the same author (e1d9a66889867, b6a2bf43aa376) reference
+`Fixes: aac23bf63659`, which is in v3.14+.
 
-### Step 3.3: File History
-The history reveals a pattern:
-1. An earlier version of retry-based thrashing was in the original file
-2. It was reverted in `127770bcfccc2` due to "data mismatch and slowness
-   issues with multiple HIP tests"
-3. It was re-added with different register settings in `a41d94a7bb962`
-4. This commit (`29756a7535fac`) reverts it again because bugs persist
+### Step 3.3: File History / Related Changes
+The commit is part of a **4-patch series** by Christian Eggers:
+1. [PATCH 1/4] `e1d9a66889867` - Disconnect if SDU exceeds IMTU
+   (**already in v7.0**)
+2. [PATCH 2/4] THIS COMMIT - Disconnect if packet exceeds MPS (reworked
+   as v2 by maintainer)
+3. [PATCH 3/4] `b6a2bf43aa376` - Disconnect if sum of payload sizes
+   exceed SDU (**already in v7.0**)
+4. [PATCH 4/4] `0e4d4dcc1a6e8` - SMP test fix (**already in v7.0**)
 
-### Step 3.4: Author Context
-Sreekant Somasekharan is an AMD employee working on the AMDGPU driver.
-The reviewer Mukul Joshi is the author of both the feature and the first
-revert. Alex Deucher is the subsystem maintainer.
+Patches 1, 3, 4 are in the v7.0 tree. Patch 2 was reworked as a v2 by
+the maintainer and applied to bluetooth-next (commit cb75c9a0505b).
+
+### Step 3.4: Author's Context
+Christian Eggers is a regular Bluetooth contributor with 8+ commits to
+the Bluetooth subsystem. The maintainer (Luiz von Dentz) reworked v1 to
+a simpler v2 (using `chan->mps` directly instead of a new `mps_orig_le`
+field), demonstrating active review.
 
 ### Step 3.5: Dependencies
-The revert is standalone — it removes code without requiring any other
-changes. It will apply cleanly to v7.0 as verified by checking the exact
-state of the file in v7.0.
+- **Soft dependency**: Commit `e1d9a66889867` changes the context above
+  (reformats IMTU check and adds `l2cap_send_disconn_req`). Without it,
+  the patch needs minor context adjustment, but the code logic is
+  independent.
+- This is functionally standalone - the MPS check is new code that
+  doesn't depend on any other check.
+
+Record: The MPS check is functionally standalone. In older stable trees
+without e1d9a66889867, the context would differ slightly but the fix can
+be adapted.
+
+---
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.5
-b4 dig could not find the patch on lore.kernel.org (both for the revert
-and the original commit). This is common for AMD GPU patches that may go
-through internal review or GitLab merge requests. Web searches also did
-not find the specific patch thread.
+### Step 4.1: Original Discussion
+- **v1** submitted as [PATCH 2/4] at
+  `20260225170728.30327-2-ceggers@arri.de`
+- v1 introduced a new `mps_orig_le` field (Luiz questioned this
+  approach)
+- **v2** submitted by Luiz Augusto von Dentz with simplified approach
+  using `chan->mps` directly
+- Applied to bluetooth-next on Feb 27, 2026
 
-The related patch "gfx 12.1 cleanups" (found on spinics.net) confirms
-this file was actively being cleaned up in the same timeframe,
-validating that GFX 12.1 support was being actively refined.
+### Step 4.2: Reviewers
+- Luiz Augusto von Dentz (Bluetooth subsystem maintainer) personally
+  reworked the patch
+- Christian Eggers provided Tested-by on v2
+- No NAKs or concerns raised
+
+### Step 4.3: No syzbot or user bug reports; found via BT qualification
+testing
+
+### Step 4.4: Series Context
+The other 3 patches in the series are already in v7.0. This is the only
+one remaining to be backported.
+
+### Step 4.5: No stable-specific discussion found.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4
-- `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl` is called from
-  `gfx_v12_1_init_golden_registers`
-- `gfx_v12_1_init_golden_registers` is called from `gfx_v12_1_hw_init` —
-  the hardware initialization path during GPU probe/resume
-- This is a **normal initialization path** hit every time the GPU is
-  initialized (boot, resume, GPU reset)
-- The buggy register programming affects all GFX 12.1 users on every GPU
-  init
+### Step 5.1: Key Function
+- `l2cap_ecred_data_rcv()` - receives data for LE FlowCtl and Enhanced
+  Credit Based modes
+
+### Step 5.2: Callers
+Called from `l2cap_data_channel()` at line 6834 for both
+`L2CAP_MODE_LE_FLOWCTL` and `L2CAP_MODE_EXT_FLOWCTL` modes. This is the
+main L2CAP data receive path for all LE Connection-oriented Channels.
+
+### Step 5.3-5.4: Impact Surface
+This function is called on every incoming L2CAP packet for LE CoC
+connections. Any Bluetooth device using LE L2CAP (BLE) can trigger this
+code path.
 
 ### Step 5.5: Similar Patterns
-The TCP_UTCL0_THRASHING_CTRL register only exists in GFX 12.1 headers.
-No other GFX versions use this specific register in the same way.
+The ERTM path in `l2cap_data_rcv()` (line 6561) already has `if (len >
+chan->mps)` with disconnect. The ecred path was missing this analogous
+check.
+
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Does the buggy code exist in stable?
-- `gfx_v12_1.c` does **NOT exist** in v6.12, v6.13, or v6.19 (verified
-  via `git show v6.X:...`)
-- The file was introduced during the v7.0-rc1 cycle
-- The buggy commit `a41d94a7bb962` **IS in v7.0** (verified via `git
-  merge-base --is-ancestor`)
-- The revert `29756a7535fac` is **NOT in v7.0** (verified)
-- **Only v7.0.y stable is affected**
+### Step 6.1: Buggy Code Existence
+- `l2cap_ecred_data_rcv()` exists since v5.7 (commit `15f02b91056253`)
+- The function exists in ALL active stable trees: v5.10, v5.15, v6.1,
+  v6.6, v6.12, v7.0
 
 ### Step 6.2: Backport Complications
-The patch should apply cleanly — the state of
-`gfx_v12_1_init_golden_registers` in v7.0 exactly matches the diff
-context (verified by examining the v7.0 tree).
+- For stable trees that already have `e1d9a66889867` (IMTU disconnect
+  fix): clean apply
+- For trees without it: minor context adjustment needed (the IMTU check
+  looks slightly different)
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### Step 6.3: No related MPS fix already in stable.
 
-### Step 7.1
-- **Subsystem:** GPU driver (drm/amdgpu) — IMPORTANT for AMD GPU users
-- GFX 12.1 is new AMD hardware (likely RDNA/CDNA generation)
+---
 
-### Step 7.2
-The file has extremely active development (~30 commits since
-introduction), expected for new hardware enablement.
+## PHASE 7: SUBSYSTEM CONTEXT
+
+### Step 7.1: Subsystem
+- **Bluetooth** (`net/bluetooth/`) - IMPORTANT subsystem
+- Used by all BLE-capable devices (billions of devices)
+
+### Step 7.2: Activity
+Very active - 30+ L2CAP changes in recent history with many security and
+correctness fixes.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is affected?
-All users with GFX 12.1 AMD GPUs running v7.0.y kernels.
+### Step 8.1: Affected Users
+All users of Bluetooth Low Energy (BLE) with L2CAP Connection-oriented
+Channels. This includes IoT devices, audio devices, input peripherals,
+and more.
 
-### Step 8.2: Trigger conditions
-The bug triggers on **every GPU initialization** — boot, resume, GPU
-reset. It's not a rare race or edge case.
+### Step 8.2: Trigger Conditions
+Any remote BLE device sending a K-frame with payload exceeding the
+receiver's MPS. This can be triggered by:
+- A misbehaving or malicious remote BLE device
+- Protocol violations from buggy firmware
 
-### Step 8.3: Failure mode
-Based on the earlier revert message: "data mismatch and slowness issues
-with multiple HIP tests." Data mismatch is effectively **data
-corruption** in GPU compute workloads. Severity: **HIGH** (data
-corruption + performance degradation).
+### Step 8.3: Failure Mode Severity
+Without the fix:
+- **Spec violation**: Oversized packets are processed instead of being
+  rejected (MEDIUM)
+- **Potential protocol state confusion**: Processing oversized data can
+  corrupt SDU reassembly (MEDIUM-HIGH)
+- **Security implication**: Remote device can send larger-than-expected
+  data that gets processed (MEDIUM)
+- Severity: **MEDIUM-HIGH**
 
-### Step 8.4: Risk-Benefit
-- **Benefit:** HIGH — fixes data corruption and performance issues for
-  all GFX 12.1 users on every GPU init
-- **Risk:** VERY LOW — pure deletion of 19 lines, reverts to known-good
-  previous behavior
-- **Ratio:** Strongly favors backporting
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: HIGH - enforces mandatory Bluetooth spec requirement,
+  fixes qualification test, prevents oversized packet processing
+- **Risk**: VERY LOW - +7 lines, identical pattern to existing checks,
+  only rejects already-invalid packets
+- **Ratio**: Strongly favorable for backport
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Evidence FOR backporting:
-- Fixes real bug: data mismatch (corruption) and slowness in GPU compute
-  workloads
-- Pure code removal (19 lines deleted, 0 added) — zero regression risk
-- Reviewed by the original feature author (Mukul Joshi)
-- Signed off by AMD GPU maintainer (Alex Deucher)
-- The buggy code IS in v7.0 stable tree
-- Triggers on every GPU initialization (not a rare edge case)
-- History shows this feature was already reverted once before for the
-  same class of issues
+### Step 9.1: Evidence Compilation
 
-### Evidence AGAINST backporting:
-- Terse commit message doesn't detail the specific bug
-- Only applies to v7.0.y (new hardware)
-- No Fixes: tag or explicit stable nomination
+**FOR backporting:**
+- Fixes missing mandatory Bluetooth Core Spec validation (spec
+  compliance bug)
+- +7 lines, single function, obviously correct surgical fix
+- Follows identical pattern to existing MPS check in ERTM path and IMTU
+  check in same function
+- Reviewed/reworked by Bluetooth subsystem maintainer
+- Tested by the original author
+- The companion patches (1/4, 3/4) are already merged, making this
+  independent
+- Prevents processing oversized packets from remote devices (security-
+  adjacent)
+- Code exists in all active stable trees (v5.7+)
 
-### Stable Rules Checklist:
-1. Obviously correct and tested? **YES** — pure deletion, reviewed by
-   feature author
-2. Fixes a real bug? **YES** — data mismatch/corruption and slowness
-3. Important issue? **YES** — data corruption severity
-4. Small and contained? **YES** — 19 lines in one file
-5. No new features or APIs? **YES** — only removes code
-6. Can apply to stable? **YES** — applies cleanly to v7.0
+**AGAINST backporting:**
+- Not triggered by syzbot or user crash reports (found via qualification
+  testing)
+- No explicit Fixes: tag (expected for AUTOSEL)
+- Minor context adjustment may be needed for older trees without
+  e1d9a66889867
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** - tested by author, pattern-
+   matched to existing code
+2. Fixes a real bug? **YES** - missing mandatory spec validation
+3. Important issue? **YES** - protocol compliance, potential
+   security/state confusion
+4. Small and contained? **YES** - +7 lines in one function
+5. No new features/APIs? **YES** - only adds validation
+6. Can apply to stable? **YES** - clean apply to v7.0; minor adjustment
+   for older trees
+
+### Step 9.3: Exception Categories
+Not an exception category; this is a standard protocol compliance bug
+fix.
+
+### Step 9.4: Decision
+This is a small, obviously correct fix that enforces a mandatory
+Bluetooth specification requirement. It prevents oversized packets from
+being processed by the kernel, which is both a spec compliance issue and
+a security-adjacent concern. The fix is minimal (+7 lines), follows
+established patterns in the same codebase, was reviewed/reworked by the
+subsystem maintainer, and tested by the author.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Mukul Joshi, Signed-off-by Alex
-  Deucher (maintainer)
-- [Phase 2] Diff analysis: 19 lines removed, 0 added. Function
-  `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl` deleted, call removed from
-  `gfx_v12_1_init_golden_registers`
-- [Phase 3] git show a41d94a7bb962: confirmed original commit added
-  retry thrashing, is in v7.0
-- [Phase 3] git merge-base --is-ancestor a41d94a7bb962 v7.0: YES
-- [Phase 3] git merge-base --is-ancestor 29756a7535fac v7.0: NO (not in
-  v7.0 yet)
-- [Phase 3] git show 127770bcfccc2: earlier revert described "data
-  mismatch and slowness issues with multiple HIP tests"
-- [Phase 3] git tag --contains a41d94a7bb962: confirmed in v7.0,
-  v7.0-rc1 through rc7
-- [Phase 4] b4 dig -c 29756a7535fac: no match found on lore
-- [Phase 4] b4 dig -c a41d94a7bb962: no match found on lore
-- [Phase 5] grep TCP_UTCL0_THRASHING: only in gfx_v12_1.c and register
-  headers
-- [Phase 6] git show v6.12/v6.13/v6.19: file does not exist in any prior
-  stable tree
-- [Phase 6] Verified v7.0 tree state: function exists at line 2632,
-  called at line 2698, patch applies cleanly
-- [Phase 8] Failure mode: data corruption (data mismatch) + performance
-  degradation, severity HIGH
-- UNVERIFIED: Exact nature of the "bug found" in the revert message (but
-  corroborated by the earlier revert's more detailed description)
-
-The fix is a minimal, zero-risk pure deletion that fixes data corruption
-and performance issues on GFX 12.1 hardware. The buggy code exists in
-v7.0 stable, and the patch applies cleanly.
+- [Phase 1] Parsed commit message: references BT Core 6.0, Vol 3, Part
+  A, 3.4.3; fixes L2CAP/LE/CFC/BV-27-C test
+- [Phase 2] Diff analysis: +7 lines in `l2cap_ecred_data_rcv()`, adds
+  MPS size validation with disconnect
+- [Phase 3] git blame: `l2cap_ecred_data_rcv()` created in
+  `15f02b91056253` (v5.7-rc1), MPS check never present
+- [Phase 3] git show: ERTM path at line 6561 already has `if (len >
+  chan->mps)` - ecred path missing this
+- [Phase 3] Related commits: siblings e1d9a66889867, b6a2bf43aa376
+  already in v7.0 with Fixes: aac23bf63659
+- [Phase 3] git merge-base: aac23bf63659 is in v3.14+; 15f02b91056253 is
+  in v5.7+; both in all active stable trees
+- [Phase 4] Mailing list: v1 reworked to v2 by maintainer Luiz von
+  Dentz; Christian Eggers confirmed v2 works (Tested-by)
+- [Phase 4] Applied to bluetooth-next on Feb 27, 2026 (patchwork-bot
+  confirmation)
+- [Phase 4] No NAKs or objections raised
+- [Phase 5] Callers: `l2cap_data_channel()` for L2CAP_MODE_LE_FLOWCTL
+  and L2CAP_MODE_EXT_FLOWCTL
+- [Phase 6] Code exists in all active stable trees (v5.10+, v6.1, v6.6,
+  v6.12)
+- [Phase 8] Impact: all BLE CoC users; trigger: remote device sends
+  packet > MPS; severity MEDIUM-HIGH
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c | 19 -------------------
- 1 file changed, 19 deletions(-)
+ net/bluetooth/l2cap_core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-index eb9725ae1607a..812de881027b4 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-@@ -2629,24 +2629,6 @@ static void gfx_v12_1_xcc_disable_gpa_mode(struct amdgpu_device *adev,
- 	WREG32_SOC15(GC, GET_INST(GC, xcc_id), regCPG_PSP_DEBUG, data);
- }
- 
--static void gfx_v12_1_xcc_setup_tcp_thrashing_ctrl(struct amdgpu_device *adev,
--					 int xcc_id)
--{
--	uint32_t val;
--
--	/* Set the TCP UTCL0 register to enable atomics */
--	val = RREG32_SOC15(GC, GET_INST(GC, xcc_id),
--					regTCP_UTCL0_THRASHING_CTRL);
--	val = REG_SET_FIELD(val, TCP_UTCL0_THRASHING_CTRL, THRASHING_EN, 0x2);
--	val = REG_SET_FIELD(val, TCP_UTCL0_THRASHING_CTRL,
--					RETRY_FRAGMENT_THRESHOLD_UP_EN, 0x1);
--	val = REG_SET_FIELD(val, TCP_UTCL0_THRASHING_CTRL,
--					RETRY_FRAGMENT_THRESHOLD_DOWN_EN, 0x1);
--
--	WREG32_SOC15(GC, GET_INST(GC, xcc_id),
--					regTCP_UTCL0_THRASHING_CTRL, val);
--}
--
- static void gfx_v12_1_xcc_enable_atomics(struct amdgpu_device *adev,
- 					 int xcc_id)
- {
-@@ -2695,7 +2677,6 @@ static void gfx_v12_1_init_golden_registers(struct amdgpu_device *adev)
- 	for (i = 0; i < NUM_XCC(adev->gfx.xcc_mask); i++) {
- 		gfx_v12_1_xcc_disable_burst(adev, i);
- 		gfx_v12_1_xcc_enable_atomics(adev, i);
--		gfx_v12_1_xcc_setup_tcp_thrashing_ctrl(adev, i);
- 		gfx_v12_1_xcc_disable_early_write_ack(adev, i);
- 		gfx_v12_1_xcc_disable_tcp_spill_cache(adev, i);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 95c65fece39bd..9916ae6abef04 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6705,6 +6705,13 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+ 		return -ENOBUFS;
  	}
+ 
++	if (skb->len > chan->mps) {
++		BT_ERR("Too big LE L2CAP MPS: len %u > %u", skb->len,
++		       chan->mps);
++		l2cap_send_disconn_req(chan, ECONNRESET);
++		return -ENOBUFS;
++	}
++
+ 	chan->rx_credits--;
+ 	BT_DBG("chan %p: rx_credits %u -> %u",
+ 	       chan, chan->rx_credits + 1, chan->rx_credits);
 -- 
 2.53.0
 
