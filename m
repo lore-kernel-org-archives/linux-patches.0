@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEFB44DB68;
-	Mon, 20 Apr 2026 13:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9A83D16E6;
+	Mon, 20 Apr 2026 13:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691826; cv=none; b=PO7WIR0DZH7ZJt1UjzudemeeMtfHk26qFaLDAJ+LmoeMg2Fe5EGR5TeXj4G9soY+X68tlYyi7XHX06pB8uscy62cnjUTXBu9oRm2uTn4xxj6JQhayqgMNNjuBg4zKdfHjFzvTlN73l/hhs+eFr5A0TMFVK3X7llI+R3GbF3SwUs=
+	t=1776691828; cv=none; b=Sd+lWbAlEf55yARSuURSaTxlfH+p6mSHdINrnyN8Orhn3c82Ee1irSJH+lh5jT+tmApaHWMR3ir2zHQtE4zsAHBTMnyy9Whb5AN6bsjpkQbR9t5Sc9+dwls/lFGXwenmi0G+BQC2DFudLVuP9QmcQcMGHMIhMKauJUHsvGyaP+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691826; c=relaxed/simple;
-	bh=qidpnksWH8YCgvNCmhvq/DCXQiiTWg4VFcR0Pg+sVQI=;
+	s=arc-20240116; t=1776691828; c=relaxed/simple;
+	bh=z/z1ABLtKbMTeOi76lytgpPZA98q1EEHs1/gS1076sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JKoajvNw42fsic2X3OWyP/2bXwKSuKbJZXwJ84P1OV1V6udQSBSPny0TPyySEwlpLN2nxDDiO3B9rdIfulJ2sqZCcm0WHzr13FeB4/w2Pw3mGOZW1aql7ug8YI2rr/1KacXHsXKWHa1NN1J8PpjQvpVSgq9hpnR595ICoHRP8PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Flak9/wH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jSOUBaV/sPqiAQ3ABK7aX7A0YlK4CpmJDlndS27iS7H2lLhIE03ol1jGD9ZJ+Mn8WqwAPeRNQo+UabV0soy2t2znmy00FwTybV4NsAVI751Y2O1CDg/isw0fSaQ/9ersczy/SUEqzFS92o8Pw23RPQ1yEeVyJ25kQnrFGbL1XsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UV7G+Fca; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Flak9/wH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D0C2BCB6;
-	Mon, 20 Apr 2026 13:30:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UV7G+Fca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7173EC2BCB8;
+	Mon, 20 Apr 2026 13:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691826;
-	bh=qidpnksWH8YCgvNCmhvq/DCXQiiTWg4VFcR0Pg+sVQI=;
+	s=k20201202; t=1776691827;
+	bh=z/z1ABLtKbMTeOi76lytgpPZA98q1EEHs1/gS1076sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Flak9/wHQzuekj31x9Y94yO+iB24xsaBvFQbJFoCz1yQD/9iiZG7//EkBzq+3KC6t
-	 faoX0Xbh6XbjKUFWClPZI/TE0wxTgXrY4ic/acBD0u5pYoyuHVMG3ITRaqrCyIGScD
-	 TS7BA1CfjlkkJ7+wqjhnLvT9pFZ52I6dalVXBy32hwuO/BwOjkyIjXkvMivdfEl3Pr
-	 wgx3cBHtpta/OwzEpfXavMk0Rx/iKI8oGKGXPmLxbIl7vl0DvVkPc9BOKwAVQnk4Ew
-	 5Y+kYV0VHUlI44lsWrk8o3jal+go6qKmw5MhNVzP7RQg/T68pmQR98ZCHK64SA7Njc
-	 bmvX5mgP4tlCQ==
+	b=UV7G+FcaCtYJ0hyNQSjKRwoKcAn5U+rXNEWCd4loWsG/oDOWQ+mhcI1g1k24VzzQf
+	 vF95ZtmxvQx0TUuwLy09J23PWOIfn76uShTJv3cNxngP4JFKwdGwdT+4iV8/iCZXyy
+	 2CCRmmV0cW1nrSAkwBXhc8xMycxAFCy0fhMJXa/REG0puYb8ov/FE1PSQiBGEm4+IB
+	 i8Wr2v+rQk4Sj7hBpNhFpaIrk2hGc9rtYqImDcKkUKrATJKIGRHZIzS0M22LBkpLBi
+	 MRSou6H6H1Bs341D2DaOuBeSAPIufzBZGhBcD5hm6MjSqsgBPAesyG+V0t7FI2b6yk
+	 ZwMMR9qKlvPlg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hyungjung Joo <jhj140711@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-fsdevel@vger.kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] affs: bound hash_pos before table lookup in affs_readdir
-Date: Mon, 20 Apr 2026 09:20:11 -0400
-Message-ID: <20260420132314.1023554-217-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] drm/amdgpu/userq: defer queue publication until create completes
+Date: Mon, 20 Apr 2026 09:20:12 -0400
+Message-ID: <20260420132314.1023554-218-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -46,332 +50,287 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyungjung Joo <jhj140711@gmail.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-[ Upstream commit 6fa253b38b9b293a0de2a361de400557ca7666ca ]
+[ Upstream commit 28cacaace5cde8318b7da967b3955a73cc6de91a ]
 
-affs_readdir() decodes ctx->pos into hash_pos and chain_pos and then
-dereferences AFFS_HEAD(dir_bh)->table[hash_pos] before validating
-that hash_pos is within the runtime table bound. Treat out-of-range
-positions as end-of-directory before the first table lookup.
+The userq create path publishes queues to global xarrays such as
+userq_doorbell_xa and userq_xa before creation was fully complete.
+Later on if create queue fails, teardown could free an already
+visible queue, opening a UAF race with concurrent queue walkers.
+Also calling amdgpu_userq_put in such cases complicates the cleanup.
 
-Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Solution is to defer queue publication until create succeeds and no
+partially initialized queue is exposed.
+
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Now I have all the information needed. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: PARSE THE SUBJECT LINE
-- **Subsystem**: `affs` (Amiga Fast File System)
-- **Action verb**: "bound" — implies adding a missing bounds check
-- **Summary**: Bound `hash_pos` before using it as an array index into
-  `AFFS_HEAD(dir_bh)->table[]` in `affs_readdir()`
-
-Record: [affs] [bound/validate] [Add missing bounds check on hash_pos
-before table array lookup in readdir]
+Record: [drm/amdgpu/userq] [defer] — Defers queue publication to global
+xarrays until `amdgpu_userq_create()` completes, preventing UAF races
+with concurrent queue walkers.
 
 ### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by**: Hyungjung Joo <jhj140711@gmail.com> — the author
-- **Reviewed-by**: David Sterba <dsterba@suse.com> — the AFFS maintainer
-- **Signed-off-by**: David Sterba <dsterba@suse.com> — the AFFS
-  maintainer applied it
-- No Fixes: tag, no Reported-by:, no Link:, no Cc: stable — all expected
-  for autosel candidates.
-
-Record: Patch was reviewed AND applied by the subsystem maintainer
-(David Sterba is listed as AFFS maintainer in MAINTAINERS). Strong
-quality signal.
+- **Signed-off-by**: Sunil Khatri (author, regular AMD GPU contributor)
+- **Reviewed-by**: Christian König (AMD GPU subsystem maintainer —
+  strong quality signal)
+- **Signed-off-by**: Alex Deucher (AMD GPU maintainer, committer)
+- No Fixes: tag, no Cc: stable, no Reported-by. Absence of
+  Fixes/Cc:stable is expected for candidates under review.
 
 ### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The message explains:
-1. `affs_readdir()` decodes `ctx->pos` into `hash_pos` and `chain_pos`.
-2. It then dereferences `AFFS_HEAD(dir_bh)->table[hash_pos]` **before**
-   validating that `hash_pos` is within the runtime bound
-   (`s_hashsize`).
-3. The fix treats out-of-range positions as end-of-directory before the
-   first table lookup.
-
-Record: Bug = out-of-bounds array access. Symptom = potential read
-beyond buffer. The author clearly understands the bug mechanism.
+The body clearly describes:
+- **Bug**: The userq create path publishes queues to `userq_doorbell_xa`
+  and `userq_xa` before creation is fully complete.
+- **Failure mode**: If create fails later, teardown frees a queue that's
+  already visible, opening a UAF race with concurrent queue walkers
+  (suspend/resume, reset, enforce isolation).
+- **Root cause**: Premature publication of partially initialized objects
+  to global data structures.
 
 ### Step 1.4: DETECT HIDDEN BUG FIXES
-This is NOT hidden — it's explicitly a missing bounds check (a real out-
-of-bounds access fix).
-
-Record: This is a direct bug fix adding a missing safety check.
+This is explicitly a UAF race fix, not disguised. The commit also
+implicitly fixes resource leaks on error paths (the old `kasprintf`
+failure leaked xarray entries).
 
 ---
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## PHASE 2: DIFF ANALYSIS — LINE BY LINE
 
 ### Step 2.1: INVENTORY THE CHANGES
-- **Files changed**: 1 (`fs/affs/dir.c`)
-- **Lines added**: 2
-- **Lines removed**: 0
-- **Function modified**: `affs_readdir()`
-- **Scope**: Single-file, single-function, 2-line surgical fix.
-
-Record: Extremely minimal change — 2 lines added in one function in one
-file.
+- **File**: `drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c` (+33/−33 lines)
+- **Function**: `amdgpu_userq_create()`
+- **Scope**: Single function in a single file — surgical.
 
 ### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**BEFORE** (current stable tree code):
+1. `mqd_create()` → `kref_init()` → `xa_store_irq(doorbell_xa)` →
+   `xa_alloc(userq_xa)` → `map_helper()` → `kasprintf()` → debugfs
 
-The fix adds this check between lines 121 and 123 (before the first
-array dereference):
+**AFTER** (with this patch):
+1. `mqd_create()` → `map_helper()` → `kref_init()` →
+   `xa_alloc(userq_xa)` → `xa_store_irq(doorbell_xa)` → debugfs
 
-```c
-if (hash_pos >= AFFS_SB(sb)->s_hashsize)
-    goto done;
-```
-
-**BEFORE**: `hash_pos` derived from `(ctx->pos - 2) >> 16` is used
-directly as an index into `table[]` with no validation. The only bounds
-check is in the later `for` loop at line 139.
-
-**AFTER**: If `hash_pos >= s_hashsize`, we jump to `done` which cleanly
-saves state and returns (end-of-directory).
+The key reordering: queue creation and mapping are fully completed
+BEFORE the queue is published to global xarrays. Only on success are the
+xarray entries created.
 
 ### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Category**: UAF race condition + resource leaks on error paths.
 
-This is a **buffer overflow / out-of-bounds read** (category g -
-logic/correctness + category d - memory safety):
+Specific bugs in the current stable tree code:
 
-- `struct affs_head` has a flexible array member `__be32 table[]` (from
-  `amigaffs.h` line 84)
-- `table` occupies space within the disk block buffer. Its valid size is
-  `s_hashsize = blocksize / 4 - 56` entries (set in `super.c` line 401)
-- `hash_pos` comes from `(ctx->pos - 2) >> 16`. Since `ctx->pos` is a
-  `loff_t` and can be set via `lseek()` on the directory file
-  descriptor, a user can set it to any value
-- An out-of-range `hash_pos` reads past the allocated block buffer,
-  which is a heap buffer overread
+1. **UAF race**: Between `xa_store_irq(doorbell_xa)` (line 863) and
+   `map_helper()` (line 891), the queue is visible to concurrent walkers
+   via `xa_for_each(&adev->userq_doorbell_xa)`. I verified 7 call sites
+   iterate this xarray (suspend, resume, enforce isolation stop/start,
+   pre/post reset, mes detection). If create fails at `map_helper()`,
+   the error path frees the queue while walkers may hold a pointer to
+   it.
 
-Contrast with other callers: `affs_hash_name()` (used in `namei.c` and
-`amigaffs.c`) returns `hash % AFFS_SB(sb)->s_hashsize` — always bounded.
-But `affs_readdir()` is the ONLY place where `hash_pos` comes from user-
-controlled `ctx->pos` without bounds validation.
+2. **Missing doorbell xa cleanup**: The `xa_alloc` failure path (line
+   872-880) does NOT call `xa_erase_irq(&adev->userq_doorbell_xa,
+   index)`, leaking the doorbell xarray entry pointing to freed memory.
 
-Record: Out-of-bounds array read. `hash_pos` from user-controlled
-`ctx->pos` used as index into `table[]` without bounds check. Fix adds
-the check before the first dereference.
+3. **kasprintf leak**: The `kasprintf` failure (line 902-906) does `goto
+   unlock` without cleaning up xarray entries, the mapped queue, or any
+   other resources — the queue is abandoned in global xarrays.
 
 ### Step 2.4: ASSESS THE FIX QUALITY
-- **Obviously correct**: Yes. The check `hash_pos >= s_hashsize` is the
-  exact same condition used in the `for` loop at line 139. The `goto
-  done` label already exists and is the correct cleanup path.
-- **Minimal/surgical**: Yes. 2 lines, single function, no side effects.
-- **Regression risk**: Essentially zero. For valid `hash_pos` values,
-  behavior is unchanged. For invalid values that previously caused OOB
-  access, we now cleanly return end-of-directory.
-
-Record: Fix is trivially correct, minimal, and carries no regression
-risk.
+- The fix is obviously correct: it simply reorders operations so
+  publication happens last.
+- Error paths in the new code properly clean up everything (including
+  calling `amdgpu_userq_unmap_helper` if needed).
+- The `kasprintf` allocation is replaced with a stack buffer (`char
+  queue_name[32]` + `scnprintf`), eliminating that failure path
+  entirely.
+- Regression risk is low — the fix only changes ordering within the
+  create path.
+- Reviewed by Christian König (subsystem maintainer).
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: BLAME THE CHANGED LINES
-From git blame, line 123 (`ino =
-be32_to_cpu(AFFS_HEAD(dir_bh)->table[hash_pos]);`) is attributed to
-`^1da177e4c3f41` — Linus Torvalds, 2005-04-16 — the initial Linux
-2.6.12-rc2 commit.
+- The xarray-based queue management was introduced by `f18719ef4bb7b`
+  (Jesse.Zhang, 2025-10-21) — "Convert amdgpu userqueue management from
+  IDR to XArray"
+- The refcount mechanism was added by `65b5c326ce410` (Sunil Khatri,
+  2026-03-02) — already cherry-picked to this stable tree with `Cc:
+  <stable@vger.kernel.org>`
 
-Record: The buggy code has been present since **Linux 2.6.12-rc2
-(2005)**. This means the bug exists in **every stable tree ever**.
+### Step 3.2: FOLLOW THE FIXES: TAG
+No Fixes: tag present (expected for review candidates).
 
-### Step 3.2: FOLLOW THE FIXES TAG
-No Fixes: tag present. However, the bug effectively traces back to
-`1da177e4c3f41` (Linux 2.6.12-rc2).
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Between the mainline refcount commit (`4952189b284d4`) and this commit
+(`28cacaace5cde`), there are 3 intermediate commits:
+- `2d60e9898a1d4` — change queue id type to u32 (NOT in stable tree)
+- `f0e46fd06c3f7` — add missing `xa_erase_irq` in xa_alloc failure (NOT
+  in stable tree)
+- `a978ed3d6454e` — add missing `xa_erase_irq` in map_helper failure
+  (NOT in stable tree)
 
-Record: Bug predates all current stable trees.
+**This commit supersedes both `f0e46fd06c3f7` and `a978ed3d6454e`** by
+restructuring the code to eliminate these error paths entirely.
 
-### Step 3.3: CHECK FILE HISTORY
-The file `fs/affs/dir.c` has been remarkably stable. Between v5.15 and
-v6.6, there were **zero changes**. The only change between v6.6 and v7.0
-was `bad74142a04bf` (affs: store cookie in private data, 2024-08-30)
-which refactored how the iversion cookie is stored. The core readdir
-logic including the buggy lines hasn't changed since 2005.
-
-Record: Very stable file. No prerequisites needed. The fix is
-standalone.
-
-### Step 3.4: CHECK THE AUTHOR
-Hyungjung Joo doesn't appear to have other commits in this tree (not a
-regular contributor). However, the patch was reviewed and applied by
-David Sterba, who is the AFFS maintainer per MAINTAINERS.
-
-Record: External contributor, but vetted by the subsystem maintainer.
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Sunil Khatri is an active AMD GPU contributor with multiple commits in
+the subsystem. He authored the refcount commit which was already
+selected for stable.
 
 ### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-The fix adds a simple check using `AFFS_SB(sb)->s_hashsize` and the
-existing `done` label — both present in all kernel versions since 6.6+
-(and much earlier). No dependencies.
-
-Record: Completely standalone. No prerequisites.
+**Critical finding**: The diff expects context lines that include
+`xa_erase_irq(&adev->userq_doorbell_xa, index)` in the xa_alloc and
+map_helper failure paths. These lines were added by intermediate commits
+`f0e46fd06c3f7` and `a978ed3d6454e`, which are **NOT in the stable
+tree**. The patch will **not apply cleanly** without either including
+those intermediate commits or manually adjusting the diff.
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Steps 4.1-4.5
-Lore.kernel.org was not accessible due to bot protection. b4 dig could
-not find the commit hash (the commit isn't in this tree). However:
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+- `b4 dig -c 28cacaace5cde` found nothing (patch may have gone through a
+  different path).
+- Web search found the patch series on the amd-gfx mailing list as
+  `[PATCH v4 1/3]`.
+- Fetched the review thread at
+  `https://lists.freedesktop.org/archives/amd-
+  gfx/2026-March/140034.html`.
+- Christian König reviewed and gave `Reviewed-by` on patch 1/3 (this
+  commit).
 
-- The patch was reviewed by the AFFS maintainer David Sterba (`Reviewed-
-  by:`)
-- David Sterba also applied it (`Signed-off-by:` as committer)
-- The "Odd Fixes" maintenance status in MAINTAINERS means this subsystem
-  only gets bug fixes, which is consistent with this patch being a fix.
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+- Christian König (subsystem maintainer) reviewed and approved.
+- Alex Deucher (AMD GPU maintainer) committed it.
 
-Record: Could not fetch lore discussion due to bot protection. The
-maintainer's review and sign-off provide sufficient confidence.
+### Step 4.3: SEARCH FOR THE BUG REPORT
+No external bug report. The author identified the race condition through
+code inspection while working on the refcount series.
+
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+The patch is part of a v4 3-patch series:
+- 1/3: This commit (defer queue publication) — **bug fix**
+- 2/3: "declutter the code with goto" — cleanup, not needed for stable
+- 3/3: "push userq debugfs function in amdgpu_debugfs files" —
+  refactoring, not needed for stable
+
+Only patch 1/3 is a bug fix.
+
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+The predecessor commit (refcount userqueues, `65b5c326ce410`) was
+explicitly marked `Cc: <stable@vger.kernel.org>`, confirming the stable
+maintainers already identified the userq race conditions as stable-
+worthy. This commit is a direct follow-up fix to the same issue.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS
-Modified function: `affs_readdir()`
+### Step 5.1-5.4: TRACE CALLERS AND IMPACT SURFACE
+- `amdgpu_userq_create()` is called from `amdgpu_userq_ioctl()` →
+  reachable from userspace via DRM IOCTL.
+- The concurrent walkers iterating `userq_doorbell_xa` include:
+  - `amdgpu_userq_suspend()` / `amdgpu_userq_resume()` — power
+    management
+  - `amdgpu_userq_stop_sched_for_enforce_isolation()` /
+    `amdgpu_userq_start_sched_for_enforce_isolation()` — workload
+    isolation
+  - `amdgpu_userq_pre_reset()` / `amdgpu_userq_post_reset()` — GPU reset
+  - `mes_userqueue.c:` detect-and-reset path
 
-### Step 5.2: TRACE CALLERS
-`affs_readdir` is registered as `.iterate_shared` in
-`affs_dir_operations`. It is called by the VFS `getdents`/`readdir`
-syscall path when reading entries from an AFFS directory. This is
-directly reachable from userspace by any user who can mount and read
-AFFS filesystems.
+These are all real, frequently exercised code paths (suspend/resume, GPU
+reset).
 
-### Step 5.3-5.4: CALL CHAIN
-Userspace path: `getdents64()` syscall -> `iterate_dir()` ->
-`affs_readdir()` -> `AFFS_HEAD(dir_bh)->table[hash_pos]` (OOB access)
-
-The user controls `ctx->pos` via `lseek()` on the directory fd. Setting
-it to a large value produces a large `hash_pos` that triggers the OOB
-read.
-
-Record: Directly reachable from userspace. Any user with access to an
-AFFS mount can trigger this.
-
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Other AFFS table accesses (in `namei.c`, `amigaffs.c`) use
-`affs_hash_name()` which returns `hash % s_hashsize` — always bounded.
-The `readdir` path is the only one that computes `hash_pos` from user-
-controlled input without bounds checking.
-
-Record: This is the only vulnerable access pattern; other paths are
-properly bounded.
+### Step 5.5: SIMILAR PATTERNS
+The doorbell xa walkers do NOT use `amdgpu_userq_get()` (the kref-
+protected accessor). They iterate with `xa_for_each` and use the queue
+pointer directly, meaning the kref doesn't protect against the UAF in
+these paths.
 
 ---
 
 ## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
 ### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-Yes. The buggy line (line 123) is from the original 2005 commit. It
-exists in **all** stable trees. Verified that `fs/affs/dir.c` had zero
-changes between v5.15 and v6.6, and only one minor refactor
-(`bad74142a04bf`) between v6.6 and v7.0.
+Yes. The userq code exists in this 7.0 stable tree. The buggy ordering
+was introduced with the xarray conversion (`f18719ef4bb7b`, 2025-10-21),
+which is in this tree.
 
-Record: Bug exists in all active stable trees.
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+**The patch will NOT apply cleanly.** The intermediate commits
+`f0e46fd06c3f7` and `a978ed3d6454e` added `xa_erase_irq` lines that the
+diff expects to see in the context. These are missing from the current
+stable tree. The diff would need manual adjustment or the intermediate
+commits need to be included first.
 
-### Step 6.2: BACKPORT COMPLICATIONS
-The patch context differs slightly between v7.0 (where `data->ino` and
-`data->cookie` are used) and v6.6 and older (where `file->private_data`
-and `file->f_version` are used). However, the fix inserts between the
-iversion check and the table lookup, and the critical line `ino =
-be32_to_cpu(AFFS_HEAD(dir_bh)->table[hash_pos])` is identical across all
-versions. The patch may need minor context adjustment for trees before
-v6.12, but the fix itself is trivially portable.
-
-Record: Clean apply on v6.12+; may need minor context fixup for v6.6 and
-older. Trivially adaptable.
-
-### Step 6.3: RELATED FIXES ALREADY IN STABLE
-No related fixes found. This specific OOB access has never been patched
-before.
-
-Record: No duplicate fix exists.
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
+The refcount commit (`65b5c326ce410`) is in this tree, but the
+intermediate xa_erase fixes and this commit are not.
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY SUBSYSTEM AND CRITICALITY
-- **Subsystem**: `fs/affs/` — Amiga Fast File System
-- **Criticality**: PERIPHERAL — niche filesystem, but used for Amiga
-  disk image access and retro-computing communities
-- **Maintenance status**: "Odd Fixes" — only bug fixes accepted,
-  consistent with this patch
-
-Record: Peripheral subsystem. However, filesystem bugs can cause data
-corruption or security issues, and the fix is trivially safe.
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem**: drivers/gpu/drm/amd/amdgpu — IMPORTANT (widely used AMD
+  GPU driver)
+- User queues are a newer feature but actively used on modern AMD
+  hardware.
 
 ### Step 7.2: SUBSYSTEM ACTIVITY
-Very low activity — a handful of commits over years. This is a mature,
-stable codebase. The bug has been latent for 20 years.
-
-Record: Mature subsystem. Bug has been present since the beginning.
+Very active — many commits per week in amdgpu. The userq subsystem is
+under active development.
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: AFFECTED USERS
-Users who mount AFFS filesystems (Amiga-format media). This is niche but
-real — retro-computing, disk image forensics, embedded systems with
-Amiga hardware.
-
-Record: Niche filesystem users, but any system that processes AFFS
-images is affected.
+### Step 8.1: WHO IS AFFECTED
+Users of AMD GPUs with userqueue support (GFX11+, GFX12+, SDMA v6/v7).
+This includes modern Radeon RX 7000/8000 series and data center GPUs.
 
 ### Step 8.2: TRIGGER CONDITIONS
-- Mount an AFFS filesystem
-- Open a directory
-- `lseek()` the directory fd to a position where `(pos - 2) >> 16 >=
-  s_hashsize`
-- Call `getdents()` (or any readdir)
-
-This is **trivially triggerable by an unprivileged local user** with
-access to the mount, or by a **crafted disk image** (e.g., automounted
-removable media).
-
-Record: Easily triggered. Unprivileged user can trigger via lseek +
-getdents. Also triggerable via crafted disk images.
+- **Trigger**: Create a userqueue via IOCTL while a concurrent operation
+  (suspend/resume, GPU reset, enforce isolation) is walking the doorbell
+  xarray.
+- **Likelihood**: Medium — requires timing overlap between queue
+  creation failure and concurrent walker.
+- **Unprivileged trigger**: Yes — the IOCTL is accessible to
+  unprivileged users (no CAP check for normal priority).
 
 ### Step 8.3: FAILURE MODE SEVERITY
-The OOB read on `AFFS_HEAD(dir_bh)->table[hash_pos]` reads beyond the
-block buffer (`dir_bh->b_data`). This can:
-- **Read garbage data** from adjacent slab objects → potential
-  **information leak**
-- **Trigger KASAN** reports (slab-out-of-bounds)
-- **Crash** if the read hits an unmapped page
-- Use the garbage value as a block number for `affs_bread()`, leading to
-  further **unpredictable behavior**
-
-Record: Severity = **HIGH**. Out-of-bounds heap read with potential for
-crash, information leak, or cascading corruption.
+- **UAF**: When triggered, can cause kernel crash (oops), memory
+  corruption, or potentially privilege escalation.
+- **Severity**: HIGH — UAF reachable from unprivileged userspace.
 
 ### Step 8.4: RISK-BENEFIT RATIO
-- **BENEFIT**: Fixes an OOB read reachable from userspace, present in
-  all stable trees for 20 years. Prevents potential crash/info-leak.
-- **RISK**: 2 lines, uses existing check pattern and existing `done`
-  label. Effectively zero regression risk.
-- **Ratio**: Very high benefit, near-zero risk.
-
-Record: Excellent risk/benefit ratio.
+- **Benefit**: HIGH — prevents UAF, fixes resource leaks, hardens
+  security.
+- **Risk**: LOW-MEDIUM — 66 lines changed, single function, but needs
+  backport adjustment.
+- **Ratio**: Strongly favors backporting.
 
 ---
 
@@ -379,97 +338,199 @@ Record: Excellent risk/benefit ratio.
 
 ### Step 9.1: COMPILE THE EVIDENCE
 
-**Evidence FOR backporting:**
-- Fixes a real out-of-bounds array read bug
-- Directly reachable from unprivileged userspace (lseek + getdents)
-- Also triggerable by crafted disk images
-- Bug exists since Linux 2.6.12-rc2 (2005) — present in ALL stable trees
-- Fix is 2 lines, obviously correct, and uses existing patterns
-- Reviewed and applied by the AFFS maintainer (David Sterba)
-- Zero regression risk
-- No dependencies on other patches
+**FOR backporting:**
+- Fixes a real UAF race condition reachable from unprivileged userspace
+- Fixes resource leaks on error paths (kasprintf failure, missing
+  xa_erase)
+- Reviewed and approved by Christian König (subsystem maintainer) and
+  Alex Deucher (committer)
+- Single file, single function change — well-contained
+- The prerequisite refcount commit is already in stable (with Cc: stable
+  tag)
+- Supersedes two intermediate fixes that are also needed for stable
 
-**Evidence AGAINST backporting:**
-- AFFS is a niche filesystem (low user population)
-- Minor context adjustment may be needed for pre-6.12 stable trees
-- No syzbot report or Reported-by (but the bug is clearly real from code
-  inspection)
-
-**Unresolved:**
-- Could not access lore discussion due to bot protection (not impactful
-  — maintainer review provides sufficient confidence)
+**AGAINST backporting:**
+- The diff does NOT apply cleanly (context mismatch due to missing
+  intermediate commits)
+- Part of a 3-patch series (but only 1/3 is needed)
+- Moderate size (66 lines)
 
 ### Step 9.2: STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES — trivial bounds check,
-   reviewed by maintainer
-2. **Fixes a real bug?** YES — out-of-bounds array read from user-
-   controlled input
-3. **Important issue?** YES — potential crash, info leak, or undefined
-   behavior from userspace
-4. **Small and contained?** YES — 2 lines in one function in one file
-5. **No new features or APIs?** CORRECT — purely a safety check
-6. **Can apply to stable trees?** YES — clean or near-clean apply across
-   all active stable trees
+1. Obviously correct and tested? **YES** — reviewed by subsystem
+   maintainer, reordering is straightforward
+2. Fixes a real bug? **YES** — UAF race with concurrent queue walkers
+3. Important issue? **YES** — UAF reachable from userspace = security
+   concern
+4. Small and contained? **YES** — single function in single file
+5. No new features or APIs? **YES** — pure bug fix
+6. Can apply to stable? **NEEDS ADJUSTMENT** — intermediate commits
+   missing from tree
 
 ### Step 9.3: EXCEPTION CATEGORIES
-Not an exception category — this is a standard bug fix.
+Not an exception category — standard bug fix.
 
 ### Step 9.4: DECISION
-This is a small, obviously correct bounds check that prevents an out-of-
-bounds array access reachable from unprivileged userspace. It has been
-reviewed and applied by the subsystem maintainer, carries no regression
-risk, and applies to all stable trees. This is a textbook stable
-backport candidate.
+The commit fixes a real UAF race condition in the AMD GPU userqueue
+create path. The race is between queue creation (IOCTL) and concurrent
+doorbell xarray walkers (suspend/resume, GPU reset, enforce isolation).
+The fix is well-contained, well-reviewed, and the prerequisite refcount
+infrastructure is already in this stable tree. The backport will need
+manual adjustment due to missing intermediate context, but the
+underlying bugs are real and security-relevant.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by David Sterba (AFFS maintainer), SOB
-  from David Sterba as committer
-- [Phase 2] Diff analysis: 2 lines added in `affs_readdir()`, adds
-  bounds check `if (hash_pos >= s_hashsize) goto done;` before first
-  `table[hash_pos]` access
-- [Phase 2] Verified `struct affs_head` has `__be32 table[]` flexible
-  array member (`amigaffs.h:77-85`)
-- [Phase 2] Verified `s_hashsize = blocksize / 4 - 56` (`super.c:401`)
-- [Phase 2] Verified `hash_pos = (ctx->pos - 2) >> 16` derived from
-  user-controllable file position
-- [Phase 3] git blame: buggy line 123 from commit `1da177e4c3f41` (Linux
-  2.6.12-rc2, 2005), present in all stable trees
-- [Phase 3] git log: zero changes to dir.c between v5.15 and v6.6; one
-  unrelated refactor `bad74142a04bf` between v6.6 and v7.0
-- [Phase 3] MAINTAINERS: David Sterba listed as AFFS maintainer, status
-  "Odd Fixes"
-- [Phase 5] Verified `affs_hash_name()` returns `hash % s_hashsize`
-  (bounded), but `affs_readdir` computes hash_pos from unchecked user
-  input
-- [Phase 5] Verified `affs_readdir` is called via `.iterate_shared` in
-  VFS readdir path — directly reachable from getdents syscall
-- [Phase 6] Verified v6.6 `fs/affs/dir.c` has identical buggy code at
-  the same location
-- [Phase 6] No duplicate fix found in any stable tree
-- UNVERIFIED: Could not access lore discussion due to bot protection
-  (does not affect decision — maintainer review confirmed via tags)
+- [Phase 1] Parsed tags: Reviewed-by Christian König, Signed-off-by Alex
+  Deucher (both AMD GPU maintainers)
+- [Phase 2] Diff analysis: 33 lines added, 33 removed in
+  `amdgpu_userq_create()`, reorders xa_store/xa_alloc after map_helper
+- [Phase 2] Verified current tree at lines 858-906: queue published to
+  doorbell_xa at line 863, BEFORE map_helper at line 891
+- [Phase 2] Verified kasprintf failure at line 902-906 leaks xarray
+  entries (goto unlock without cleanup)
+- [Phase 2] Verified xa_alloc failure at line 872-880 does NOT call
+  xa_erase_irq for doorbell_xa
+- [Phase 3] git blame: xarray code from f18719ef4bb7b (2025-10-21),
+  refcount from 65b5c326ce410 (in stable, Cc: stable)
+- [Phase 3] Intermediate commits f0e46fd06c3f7 and a978ed3d6454e NOT in
+  stable tree (verified with git log --grep)
+- [Phase 3] git show 28cacaace5cde: confirmed mainline commit exists,
+  authored 2026-03-04
+- [Phase 4] Mailing list review at freedesktop.org: Christian König gave
+  Reviewed-by on patch 1/3
+- [Phase 4] Series is v4 1/3; patches 2/3 and 3/3 are
+  cleanup/refactoring (not needed for stable)
+- [Phase 5] Verified 7 call sites using
+  xa_for_each(&adev->userq_doorbell_xa) — all are real paths (suspend,
+  resume, reset, enforce isolation)
+- [Phase 5] Verified doorbell xa walkers do NOT use amdgpu_userq_get()
+  (no kref protection)
+- [Phase 6] Verified patch does NOT apply cleanly: diff expects
+  xa_erase_irq lines not in stable tree
+- [Phase 6] Refcount prerequisite (65b5c326ce410) confirmed in stable
+  tree
+- [Phase 7] amdgpu is an actively maintained, widely used driver
+  subsystem
+- [Phase 8] IOCTL is accessible to unprivileged users (no CAP check for
+  normal priority)
+- UNVERIFIED: Cannot determine exact AMD GPU models that exercise this
+  code path in practice (depends on firmware/hardware support for
+  userqueues)
 
 **YES**
 
- fs/affs/dir.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 66 +++++++++++------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/fs/affs/dir.c b/fs/affs/dir.c
-index 5c8d83387a394..075c18c4ccde6 100644
---- a/fs/affs/dir.c
-+++ b/fs/affs/dir.c
-@@ -119,6 +119,8 @@ affs_readdir(struct file *file, struct dir_context *ctx)
- 		pr_debug("readdir() left off=%d\n", ino);
- 		goto inside;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index 1849894d2837b..09f1d05328897 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -765,7 +765,6 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
+ 	const struct amdgpu_userq_funcs *uq_funcs;
+ 	struct amdgpu_usermode_queue *queue;
+ 	struct amdgpu_db_info db_info;
+-	char *queue_name;
+ 	bool skip_map_queue;
+ 	u32 qid;
+ 	uint64_t index;
+@@ -855,32 +854,6 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
+ 		goto unlock;
  	}
-+	if (hash_pos >= AFFS_SB(sb)->s_hashsize)
-+		goto done;
  
- 	ino = be32_to_cpu(AFFS_HEAD(dir_bh)->table[hash_pos]);
- 	for (i = 0; ino && i < chain_pos; i++) {
+-	/* drop this refcount during queue destroy */
+-	kref_init(&queue->refcount);
+-
+-	/* Wait for mode-1 reset to complete */
+-	down_read(&adev->reset_domain->sem);
+-	r = xa_err(xa_store_irq(&adev->userq_doorbell_xa, index, queue, GFP_KERNEL));
+-	if (r) {
+-		kfree(queue);
+-		up_read(&adev->reset_domain->sem);
+-		goto unlock;
+-	}
+-
+-	r = xa_alloc(&uq_mgr->userq_xa, &qid, queue,
+-		     XA_LIMIT(1, AMDGPU_MAX_USERQ_COUNT), GFP_KERNEL);
+-	if (r) {
+-		drm_file_err(uq_mgr->file, "Failed to allocate a queue id\n");
+-		amdgpu_userq_fence_driver_free(queue);
+-		xa_erase_irq(&adev->userq_doorbell_xa, index);
+-		uq_funcs->mqd_destroy(queue);
+-		kfree(queue);
+-		r = -ENOMEM;
+-		up_read(&adev->reset_domain->sem);
+-		goto unlock;
+-	}
+-	up_read(&adev->reset_domain->sem);
+-
+ 	/* don't map the queue if scheduling is halted */
+ 	if (adev->userq_halt_for_enforce_isolation &&
+ 	    ((queue->queue_type == AMDGPU_HW_IP_GFX) ||
+@@ -892,28 +865,55 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
+ 		r = amdgpu_userq_map_helper(queue);
+ 		if (r) {
+ 			drm_file_err(uq_mgr->file, "Failed to map Queue\n");
+-			xa_erase_irq(&adev->userq_doorbell_xa, index);
+-			xa_erase(&uq_mgr->userq_xa, qid);
+-			amdgpu_userq_fence_driver_free(queue);
+ 			uq_funcs->mqd_destroy(queue);
++			amdgpu_userq_fence_driver_free(queue);
+ 			kfree(queue);
+ 			goto unlock;
+ 		}
+ 	}
+ 
+-	queue_name = kasprintf(GFP_KERNEL, "queue-%d", qid);
+-	if (!queue_name) {
++	/* drop this refcount during queue destroy */
++	kref_init(&queue->refcount);
++
++	/* Wait for mode-1 reset to complete */
++	down_read(&adev->reset_domain->sem);
++	r = xa_alloc(&uq_mgr->userq_xa, &qid, queue,
++		     XA_LIMIT(1, AMDGPU_MAX_USERQ_COUNT), GFP_KERNEL);
++	if (r) {
++		if (!skip_map_queue)
++			amdgpu_userq_unmap_helper(queue);
++
++		uq_funcs->mqd_destroy(queue);
++		amdgpu_userq_fence_driver_free(queue);
++		kfree(queue);
+ 		r = -ENOMEM;
++		up_read(&adev->reset_domain->sem);
+ 		goto unlock;
+ 	}
+ 
++	r = xa_err(xa_store_irq(&adev->userq_doorbell_xa, index, queue, GFP_KERNEL));
++	if (r) {
++		xa_erase(&uq_mgr->userq_xa, qid);
++		if (!skip_map_queue)
++			amdgpu_userq_unmap_helper(queue);
++
++		uq_funcs->mqd_destroy(queue);
++		amdgpu_userq_fence_driver_free(queue);
++		kfree(queue);
++		up_read(&adev->reset_domain->sem);
++		goto unlock;
++	}
++	up_read(&adev->reset_domain->sem);
++
+ #if defined(CONFIG_DEBUG_FS)
++	char queue_name[32];
++
++	scnprintf(queue_name, sizeof(queue_name), "queue_%d", qid);
+ 	/* Queue dentry per client to hold MQD information   */
+ 	queue->debugfs_queue = debugfs_create_dir(queue_name, filp->debugfs_client);
+ 	debugfs_create_file("mqd_info", 0444, queue->debugfs_queue, queue, &amdgpu_mqd_info_fops);
+ #endif
+ 	amdgpu_userq_init_hang_detect_work(queue);
+-	kfree(queue_name);
+ 
+ 	args->out.queue_id = qid;
+ 	atomic_inc(&uq_mgr->userq_count[queue->queue_type]);
 -- 
 2.53.0
 
