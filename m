@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0B334216C;
-	Mon, 20 Apr 2026 16:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3017C33B945;
+	Mon, 20 Apr 2026 16:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701447; cv=none; b=qVe55HlQlTuNyw3qn9+HFGwk+WQ5lighB7y217Wsurjh2U9I5xbSmp7p9qNKT7JgmV5A3HNW3QLNt9rPQOCkXWlDgds0GbPjWpC5LN3Ggb4jkE+sBScZI/u+LCWvk7rn0A27YjgEV5miAVOfsAzFNrqQFbV0jMUrTc2AZP2fiRk=
+	t=1776701450; cv=none; b=gJHiz75EIehJ8l7iMRNtWDQMJzAStBBNisVZuPa5cT4l4sVk8afoL/Ef61k8I5qYGJuKBNEU5a1YN3NR8HE3F3JMSbCFl7YmFxOwYc5dNpeLfTdRjp1XyoeHf1Eo4SS2qSnOgYTEBy86TOBq/SC6iifBN6gv+4OdL2gWpbroaTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701447; c=relaxed/simple;
-	bh=DhS9Ob6TAf/u7cexH+SfgrchwJJn5wIBEmpnMhlrpL0=;
+	s=arc-20240116; t=1776701450; c=relaxed/simple;
+	bh=8NVmexDXbALKT7yGDh3n1Dc8dmzuznUrnRkZySrI99s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocuyz9RygqHwiie9eLCFmiSxcOVVkljZP9QPlUHjfvR22n9Piv2QdT57O6/AHzqRjsDfno8P1TTrcyOQvmRL6n0vUwoE5lEyvjv+XSadesPPJgEI+VBSYZ+Ec6akTnlDH03r14pKp41RN5XFOTZyKh2WmjOPdj+kfrQibRnqEAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L46LC8nX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gS7NpAj0k2dVJdIJimKcX6/oJXc3METNy3PKBdC3NHHjra3gSYp6C0WUOncytgsj2NksV1Y7Lqc/vcXc/XH+sumSojdeb1J2g3MxiaHdlXl6/fj+gGKRdjSBBYdCNH8D1Pt+5pamO7tPk/jY3rVIuFJm2yJPri+XYEb58dtWku0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kl2cr3hR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L46LC8nX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAB1C19425;
-	Mon, 20 Apr 2026 16:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kl2cr3hR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A44C19425;
+	Mon, 20 Apr 2026 16:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701447;
-	bh=DhS9Ob6TAf/u7cexH+SfgrchwJJn5wIBEmpnMhlrpL0=;
+	s=korg; t=1776701450;
+	bh=8NVmexDXbALKT7yGDh3n1Dc8dmzuznUrnRkZySrI99s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L46LC8nXel/5uiThaMKmP/1oxZTctWCEr5QeCy8d10zqnfYtM7NKiQMLQODGU3oIE
-	 gCIIgOdh5W7Lg7PCzjHkHppX55laBPJYQsCd+CSdtWYIVRAyOBRE4r/bzkIPLse033
-	 q1Ogx8yuKTwb/OS4+bHAaF5fo9VAl3u1FgJtCLdI=
+	b=kl2cr3hRcIpUqZqI01VbWC95itsqrn+9pNQyD2gPNUoZP9rJtZ50FVfXQcXip+PrC
+	 H+XWgoC2MGXwUcfRjf6+rlwfIrmgLuKmBgBvbh0j/FDOMIPcWNysvlynsZZoE/xrx8
+	 kV+C2iY0qM0dvdOYSWQGO6hBo3eiz+hfcp3kKP7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernie Thompson <bernie@plugable.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 116/162] fbdev: udlfb: avoid divide-by-zero on FBIOPUT_VSCREENINFO
-Date: Mon, 20 Apr 2026 17:42:28 +0200
-Message-ID: <20260420153931.243879059@linuxfoundation.org>
+	syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com,
+	Daniel Pouzzner <douzzer@mega.nu>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 085/162] crypto: algif_aead - Fix minimum RX size check for decryption
+Date: Mon, 20 Apr 2026 17:41:57 +0200
+Message-ID: <20260420153930.113240857@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -50,37 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit a31e4518bec70333a0a98f2946a12b53b45fe5b9 upstream.
+[ Upstream commit 3d14bd48e3a77091cbce637a12c2ae31b4a1687c ]
 
-Much like commit 19f953e74356 ("fbdev: fb_pm2fb: Avoid potential divide
-by zero error"), we also need to prevent that same crash from happening
-in the udlfb driver as it uses pixclock directly when dividing, which
-will crash.
+The check for the minimum receive buffer size did not take the
+tag size into account during decryption.  Fix this by adding the
+required extra length.
 
-Cc: Bernie Thompson <bernie@plugable.com>
-Cc: Helge Deller <deller@gmx.de>
-Fixes: 59277b679f8b ("Staging: udlfb: add dynamic modeset support")
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com
+Reported-by: Daniel Pouzzner <douzzer@mega.nu>
+Fixes: d887c52d6ae4 ("crypto: algif_aead - overhaul memory management")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/udlfb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ crypto/algif_aead.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1018,6 +1018,9 @@ static int dlfb_ops_check_var(struct fb_
- 	struct fb_videomode mode;
- 	struct dlfb_data *dlfb = info->par;
+diff --git a/crypto/algif_aead.c b/crypto/algif_aead.c
+index 7d58cbbce4af2..481e66f8708bb 100644
+--- a/crypto/algif_aead.c
++++ b/crypto/algif_aead.c
+@@ -170,7 +170,7 @@ static int _aead_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	if (usedpages < outlen) {
+ 		size_t less = outlen - usedpages;
  
-+	if (!var->pixclock)
-+		return -EINVAL;
-+
- 	/* set device-specific elements of var unrelated to mode */
- 	dlfb_var_color_format(var);
- 
+-		if (used < less) {
++		if (used < less + (ctx->enc ? 0 : as)) {
+ 			err = -EINVAL;
+ 			goto free;
+ 		}
+-- 
+2.53.0
+
 
 
