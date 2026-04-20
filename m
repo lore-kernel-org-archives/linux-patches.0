@@ -1,46 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ED83E0C56;
-	Mon, 20 Apr 2026 13:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751413E122A;
+	Mon, 20 Apr 2026 13:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691470; cv=none; b=VXpLp6wkoejowfyAi1Keb5xtQsYlv9a0Q0/FVd7i4QXLZbYYAq+CWv5xkvUXlYh49Y4Kd3EmzI960rjv37Stkfe2YtJf3svYZbUOaYPID2rTI7NNCkiD26I0VNDZ+SrCfT3Vbx3FNANwQrSB+x0SvJU7K6EJKOsMoEob/jT8DhQ=
+	t=1776691472; cv=none; b=HPg0392ch5Dn0D9etaA6oAnXFA488yjAy+wL7FH1tbZ9jF7E8nMf5Z1lrzMGVvjT83/eR0V5HT8ehN7viUwxTadUap2hbk1Q2cKsk5lBZRqAsy+w6HWQpbSR604VtgWArjASynrv51Ic7sG0pDY10AfExYrKtAgiDxg46YWqM30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691470; c=relaxed/simple;
-	bh=f6QPOIIGf0z10Meo2LBJgjPd1cjbcB4hiFCPNOlNWSI=;
+	s=arc-20240116; t=1776691472; c=relaxed/simple;
+	bh=DPtaWdyhUp8H1tWTXq5W9Jp5ki8Hc4CFyVzacyf3Vjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=peHjqHvcOa/5Xru25cx7Hzc+c+ByRXqUAJvBzv9OptPhFTFunAHt954O3EFjW1ilR55OOYsPfhZBOrtkc5QnxjlitvkWUpackOjdNe8DrSm2aWRgcMmkFqEAuEtHWZzA13/e/FCvufz8fCvsVAiJ6s390JNjF2YLcB0E6+ki2XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kpsLKZrU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rnGHgxoMEnpNQxlR2J4dhFiKZu7om9Bh74HqGgHMUUFn5feufNkSIOdqz2se4rIosLncihCd+xjBYYA5VSdTrvS24OBH2CLtqOYkRu8x6Q58QExtHOxL2/hBxY5TiMq57BLN91htX/5E6DVKfR5e8WxFXb2qSmcD8/U+4/IkeF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VyXqcnNC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kpsLKZrU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31939C19425;
-	Mon, 20 Apr 2026 13:24:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VyXqcnNC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D7DC19425;
+	Mon, 20 Apr 2026 13:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691470;
-	bh=f6QPOIIGf0z10Meo2LBJgjPd1cjbcB4hiFCPNOlNWSI=;
+	s=k20201202; t=1776691472;
+	bh=DPtaWdyhUp8H1tWTXq5W9Jp5ki8Hc4CFyVzacyf3Vjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kpsLKZrU3QmVjM9SPESUqLMSlZUYcMQykUmiqQV9bjzV+S+PjEbi2AOVgW9facCKA
-	 9QzrBMao8qdH9ky4jdc0PibBvSG8GsPCPJuGqHvvhVc6mm/xC6HnKdCbOyQab+VAeT
-	 yxGEXiqmdJIaK4S8t2rAajyhRmlpCSaEGjq7vzrao5DAmya1yO97XI3GmgX0oP8Fpp
-	 AuBiTknendveR69CS9ha49hSWuMsXdilpm5e0T3YrXhlxM+kniLDz3PSe/E9t/zN2M
-	 Yz65LWlSrZo6eLfrVxzcWpLAqieR6zq1nORtWiEPKwxMlJZu6x////3cMXBNF6l96X
-	 JV3UKKEHxlBKA==
+	b=VyXqcnNCBCo86IRtIH72mspN4kaeOXGQdi8n0fV5Zl6BS9diZ9wx3YSXy6pKwiGNo
+	 5ava8KqjyTyVEXY1fpy92Ft/3SOC4GnqDxnLl/0H3pqUs5AVsOy+irasYt7TnV7OMw
+	 c8lC4L2Ckb2q0eWPDVFHTSzfgsyKlUlHeZpke9FDdtycEGW+PKQbHjlRsj3/APAnmO
+	 ZV4c+F8tl6uwJbXoaYvjpvA1nX/W+uBoF4N7ZQ0D0wJpLxH6YV4QD/w46dUeqw9haZ
+	 1iGnMOt1u/vw/RG/xfN7ufI7JNBwMh+1Xh7CbkZ9EC34mzSiWQjbgcUEFTGmYO4tdC
+	 up0LCX6joFvxQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Satish Kharat <satishkh@cisco.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Harry Wentland <harry.wentland@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Chuanyu Tseng <chuanyu.tseng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] enic: add V2 SR-IOV VF device ID
-Date: Mon, 20 Apr 2026 09:17:22 -0400
-Message-ID: <20260420132314.1023554-48-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] drm/amd/display: Merge pipes for validate
+Date: Mon, 20 Apr 2026 09:17:23 -0400
+Message-ID: <20260420132314.1023554-49-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -56,335 +59,363 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Satish Kharat <satishkh@cisco.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 803a1b02027918450b58803190aa7cacb8056265 ]
+[ Upstream commit 606f6b171326152ef08d0ef0ad49f52034edca07 ]
 
-Register the V2 VF PCI device ID (0x02b7) so the driver binds to V2
-virtual functions created via sriov_configure. Update enic_is_sriov_vf()
-to recognize V2 VFs alongside the existing V1 type.
+Validation expects to operate on non-split pipes. This is
+seen in dcn20_fast_validate_bw, which merges pipes for
+validation. We weren't doing that in the non-fast path
+which lead to validation failures when operating with
+4-to-1 MPC and a writeback connector.
 
-Signed-off-by: Satish Kharat <satishkh@cisco.com>
-Link: https://patch.msgid.link/20260401-enic-sriov-v2-prep-v4-2-d5834b2ef1b9@cisco.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Co-developed by Claude Sonnet 4.5
+
+Assisted-by: Claude:claude-sonnet-4.5
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Chuanyu Tseng <chuanyu.tseng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile the full assessment.
+Now I have all the information needed for a complete analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-- **Subsystem**: `enic` (Cisco VIC Ethernet NIC driver,
-  `drivers/net/ethernet/cisco/enic/`)
-- **Action verb**: "add" — adding a new device ID
-- **Summary**: Add V2 SR-IOV VF PCI device ID to the enic driver
+- **Subsystem**: `drm/amd/display` (AMD display driver, DCN30
+  specifically)
+- **Action verb**: "Merge" (in the sense of merging split pipes before
+  validation)
+- **Summary**: Adds pipe merge step before validation in dcn30 non-fast
+  path, matching the fast path behavior.
+
+Record: [drm/amd/display] [merge/fix] [Add missing pipe merge call
+before validation to match fast-validate path]
 
 ### Step 1.2: Tags
-- **Signed-off-by**: Satish Kharat `<satishkh@cisco.com>` (author, Cisco
-  employee — the hardware vendor)
-- **Link**: `https://patch.msgid.link/20260401-enic-
-  sriov-v2-prep-v4-2-d5834b2ef1b9@cisco.com` — patch 2 of series "enic-
-  sriov-v2-prep", version 4
-- **Signed-off-by**: Jakub Kicinski `<kuba@kernel.org>` (networking
-  subsystem maintainer)
-- No Fixes: tag, no Reported-by:, no Cc: stable — expected for this
-  review pipeline.
+- **Fixes:** NONE (expected for autosel candidate)
+- **Cc: stable:** NONE (expected for autosel candidate)
+- **Co-developed by Claude Sonnet 4.5** - AI-assisted development
+- **Assisted-by:** Claude:claude-sonnet-4.5
+- **Reviewed-by:** Nicholas Kazlauskas (AMD display engineer)
+- **Signed-off-by:** Harry Wentland (AMD display developer), Chuanyu
+  Tseng, Alex Deucher (AMD DRM maintainer)
+- **Reported-by:** NONE
 
-### Step 1.3: Commit Body
-The commit body states: Register the V2 VF PCI device ID (0x02b7) so the
-driver binds to V2 virtual functions created via `sriov_configure`.
-Update `enic_is_sriov_vf()` to recognize V2 VFs alongside the existing
-V1 type. Without this change, V2 VFs exposed by the hardware will not be
-claimed by the enic driver at all.
+Record: No Fixes tag, no Cc stable, no Reported-by. Reviewed by AMD
+display expert. Signed by AMD DRM maintainer. No user bug reports.
+
+### Step 1.3: Commit Body Text
+The commit says: "Validation expects to operate on non-split pipes. This
+is seen in dcn20_fast_validate_bw, which merges pipes for validation. We
+weren't doing that in the non-fast path which lead to validation
+failures when operating with 4-to-1 MPC and a writeback connector."
+
+Bug: `dcn30_internal_validate_bw` passes split pipe configurations to
+DML validation, but DML expects merged (non-split) pipes.
+Symptom: Validation failures with 4-to-1 MPC split + writeback
+connector.
+Root cause: Missing `dcn20_merge_pipes_for_validate()` call that
+dcn20_fast_validate_bw already has.
+
+Record: [Validation expects non-split pipes; DCN30 non-fast path missed
+merge call] [Validation failures with 4-to-1 MPC + writeback] [No
+version info] [Same pattern as dcn20/dcn21 fast-validate]
 
 ### Step 1.4: Hidden Bug Fix Detection
-This is a **device ID addition** — a well-known exception category.
-Without this ID, users with V2 VF hardware cannot use SR-IOV on their
-Cisco VIC adapters. This is a hardware enablement fix.
+This is NOT hidden - it clearly describes a validation failure bug and
+the fix.
 
-Record: [Device ID addition for hardware that the driver already
-supports] [Not disguised — clearly a device ID add]
-
----
+Record: [Explicit bug fix - validation failures on specific
+configuration]
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **File changed**: `drivers/net/ethernet/cisco/enic/enic_main.c`
-  (single file)
-- **Lines added**: 3 functional lines
-  1. `#define PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2   0x02b7`
-  2. `{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2) },` in
-     the PCI ID table
-  3. `|| enic->pdev->device == PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2` in
-     `enic_is_sriov_vf()`
-- **Scope**: Single-file, surgical, 3-line addition
+- **Files**: 1 file (`dcn30_resource.c`), +2 lines added (function call
+  + blank line)
+- **Functions modified**: `dcn30_internal_validate_bw`
+- **Scope**: Single-file, single-line surgical fix
 
-### Step 2.2: Code Flow
-- **Before**: Driver only recognized PCI device 0x0071 as an SR-IOV VF.
-  V2 VFs (0x02b7) were unrecognized.
-- **After**: Driver recognizes both 0x0071 (V1) and 0x02b7 (V2) as SR-
-  IOV VFs. V2 VFs get identical treatment as V1 VFs.
-- `enic_is_sriov_vf()` is called in 6 places throughout the driver to
-  branch behavior for VFs (MTU handling, MAC address, station address,
-  netdev_ops selection). All behave correctly with V2 VFs after this
-  change.
+Record: [1 file, +2 lines] [dcn30_internal_validate_bw] [Single-line
+surgical fix]
+
+### Step 2.2: Code Flow Change
+- **Before**: `dcn30_internal_validate_bw` immediately proceeds to set
+  DML parameters and populate DML pipes without merging previously-split
+  pipes.
+- **After**: Before setting DML parameters, it calls
+  `dcn20_merge_pipes_for_validate(dc, context)` to merge ODM-split and
+  MPC-split pipes back into their head pipes, matching what
+  `dcn20_fast_validate_bw` does.
+
+The merge function (already existing in dcn20_resource.c, lines
+1792-1849):
+1. Merges ODM-split pipes by unlinking the chain
+2. Merges MPC-split pipes by removing bottom_pipe entries
+3. Both needed "since mode support needs to make the decision"
+
+Record: [Before: validate with split pipes (wrong)] [After: merge pipes
+first, then validate (correct, matching dcn20/dcn21)]
 
 ### Step 2.3: Bug Mechanism
-- **Category**: Hardware workaround / Device ID addition (category h)
-- Without the ID in `enic_id_table`, the PCI core won't bind the enic
-  driver to V2 VFs at all
-- Without the `enic_is_sriov_vf()` update, even if bound, V2 VFs would
-  get incorrect PF (physical function) code paths
+This is a **logic/correctness fix**. The DML validation expects a single
+non-split pipe view and makes its own split decisions. When pipes are
+already split from a previous configuration, the validation gets
+confused about pipe counts and resources, leading to false validation
+failures.
+
+Record: [Logic correctness bug] [DML fed split pipes when it expects
+non-split pipes; fixes false validation failures]
 
 ### Step 2.4: Fix Quality
-- Obviously correct: mirrors the existing V1 VF pattern exactly
-- Minimal and surgical: 3 lines
-- Zero regression risk: only affects devices with PCI ID 0x02b7
-- No API changes, no lock changes, no memory management changes
+- **Obviously correct**: YES - directly matches the established pattern
+  in `dcn20_fast_validate_bw` (line 2057) and dcn21's validate function
+  (line 812)
+- **Minimal/surgical**: YES - 1 line of actual code
+- **Regression risk**: Extremely low - calling existing, well-tested
+  function at the correct location
+- **Red flags**: None
 
----
+Record: [Obviously correct, matches established pattern] [No regression
+risk from the fix itself]
 
 ## PHASE 3: GIT HISTORY
 
 ### Step 3.1: Blame
-- The original V1 VF support (PCI ID 0x0071) was added in commit
-  `3a4adef5c0adbb` by Roopa Prabhu in January 2012, over 14 years ago.
-- The `enic_is_sriov_vf()` function and PCI ID table entry have been
-  untouched since then.
-- The enic driver itself dates to 2008 (commit `01f2e4ead2c512`).
+- `dcn30_internal_validate_bw` was introduced by `5dba4991fd338d`
+  (2020-05-21, "drm/amd/display: Add DCN3 Resource")
+- The merge logic was available via `dcn20_merge_pipes_for_validate`
+  since `ea817dd5ad7950` (2020-09-18, "drm/amd/display: add dcn21 bw
+  validation")
+- The bug has existed since DCN3 was first added (v5.9)
+- `dcn20_resource.h` is already included by dcn30_resource.c (line 34)
+
+Record: [Buggy code from 5dba4991fd338d, introduced in v5.9] [Bug
+present in all stable trees with DCN3 support]
 
 ### Step 3.2: Fixes Tag
-- No Fixes: tag (expected for device ID additions).
+No Fixes: tag present. The bug was introduced when DCN3 resource was
+added without the merge call.
 
-### Step 3.3: File History
-- Recent commits to `enic_main.c` are mostly cleanup/refactoring
-  (kmalloc conversion, timer rename, page pool API). No conflicting
-  changes around the PCI ID table or `enic_is_sriov_vf()`.
+### Step 3.3: Related Changes
+- Commit `269c1d1443d668` (2025-05-14) changed `fast_validate` to `enum
+  dc_validate_mode` - affects function signature but NOT the insertion
+  point
+- Commit `71c4ca2d3b079d` (2023-02-01) added `allow_self_refresh_only`
+  parameter
+
+Record: [Standalone fix, no prerequisites] [May need minor context
+adjustment for older stable trees]
 
 ### Step 3.4: Author
-- Satish Kharat is a Cisco employee listed in MAINTAINERS for enic
-  (commit `9b8eeccd7110d` updates enic maintainers). He is a regular
-  contributor and domain expert for this driver.
+Harry Wentland is a well-known AMD display developer and regular
+contributor. Alex Deucher is the AMD DRM maintainer.
+
+Record: [Authored by established AMD display developer, signed off by
+subsystem maintainer]
 
 ### Step 3.5: Dependencies
-- This is patch 2 of the "enic-sriov-v2-prep" series. However, the diff
-  is **completely self-contained**: it only adds a `#define`, a table
-  entry, and an OR condition. None of these reference anything
-  introduced by patch 1 of the series.
-- The code applies cleanly to the current v7.0 tree — the PCI ID table
-  and `enic_is_sriov_vf()` are unchanged from when this patch was
-  written.
+The commit calls `dcn20_merge_pipes_for_validate()` which has existed
+since v5.10+. The function is declared in `dcn20_resource.h` which is
+already included. No new dependencies.
 
-Record: [Self-contained, no dependencies on other patches]
+Record: [No dependencies, function already exists and is accessible]
 
----
+## PHASE 4: MAILING LIST RESEARCH
 
-## PHASE 4: MAILING LIST
+I was unable to find the original patch submission on lore.kernel.org
+due to anti-bot protections. Web searches found related AMD display work
+by the same authors but not this specific patch.
 
-### Step 4.1-4.5
-- b4 dig was unable to match directly (the commit isn't in this tree's
-  history). Lore.kernel.org returned anti-scraping pages.
-- The Link tag shows this is **v4** of the series, meaning it went
-  through 4 rounds of review. Applied by Jakub Kicinski (net-next
-  maintainer).
-- The earlier v2 series from the same author
-  (`v2_20260223_satishkh_net_ethernet_enic_add_vic_ids_and_link_modes`)
-  shows the author was actively contributing VIC subsystem ID and link
-  mode support around the same timeframe.
-
-Record: [Patch went through v4 review, applied by net-next maintainer
-Jakub Kicinski]
-
----
+Record: [UNVERIFIED - could not find original lore discussion] [No
+stable-specific discussion found]
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Function Impact
-`enic_is_sriov_vf()` is called in 6 locations:
-1. **Line 365**: MTU change notification handling (VFs schedule work vs
-   warn)
-2. **Line 1010**: MAC address setting (VFs accept zero MAC)
-3. **Line 1736**: Open path (VFs skip station addr add)
-4. **Line 1804**: Close path (VFs skip station addr del)
-5. **Line 1864**: MTU change (VFs return -EOPNOTSUPP)
-6. **Line 2831**: Probe path (VFs get `enic_netdev_dynamic_ops`)
+### Step 5.1: Functions Modified
+Only `dcn30_internal_validate_bw` is modified.
 
-All 6 call sites already handle VFs correctly — they just need the VF
-detection to work for V2 devices. The change in `enic_is_sriov_vf()`
-propagates the correct behavior automatically.
+### Step 5.2: Callers
+`dcn30_internal_validate_bw` is called from:
+1. `dcn30_validate_bandwidth` (dcn30_resource.c:2091) - main validation
+   entry point for DCN3.0
+2. `dcn31_validate_bandwidth` (dcn31_resource.c:1812) - DCN3.1
+3. `dcn314_validate_bandwidth` (dcn314_resource.c:1751) - DCN3.14
+4. `dcn30_fpu.c` (lines 342, 634) - called in loops for dummy pstate and
+   watermark calculations
+
+This means the fix affects ALL DCN 3.x generations.
+
+### Step 5.3-5.4: Call Chain
+Display mode validation → `dcn30_validate_bandwidth` →
+`dcn30_internal_validate_bw` → DML validation
+This is triggered during every mode set/display configuration change.
+
+Record: [Called during every mode set on DCN 3.0/3.1/3.14 hardware]
+[Affects RDNA 2 GPUs (RX 6000), Rembrandt APUs, Phoenix APUs]
 
 ### Step 5.5: Similar Patterns
-The original V1 VF ID addition (commit `3a4adef5c0adbb` from 2012)
-followed the exact same pattern: define + table + function. This V2
-addition mirrors it exactly.
-
----
+Confirmed: `dcn20_fast_validate_bw` at line 2057 and dcn21's validate
+function at line 812 both already call `dcn20_merge_pipes_for_validate`
+in the exact same position.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Code Existence in Stable
-- Current HEAD is `v7.0`. The enic driver code is identical to mainline
-  at the branch point.
-- The PCI ID table, `enic_is_sriov_vf()`, and all call sites exist
-  unchanged in this tree.
-- This code has been present since 2012 (kernel 3.3+), so it exists in
-  ALL active stable trees.
+### Step 6.1: Buggy Code in Stable Trees
+DCN3 support (and `dcn30_internal_validate_bw`) has been present since
+v5.9. All active stable trees (6.1.y, 6.6.y, 6.12.y) contain this code.
 
 ### Step 6.2: Backport Complications
-- The diff applies cleanly — no intermediate changes to the PCI ID table
-  or `enic_is_sriov_vf()`.
-- No conflicts expected.
+The function signature changed over time:
+- v6.1/v6.6: has `bool fast_validate` parameter
+- v6.12+: has `enum dc_validate_mode validate_mode`
+- The insertion point (after `if (!pipes) return false;`, before
+  `maxMpcComb = 0`) is stable across versions
+- Minor context adjustment may be needed for older trees
 
-### Step 6.3: Related Fixes
-- No other fixes for V2 VF support exist in stable.
+Record: [Likely clean apply or trivial conflict on most stable trees]
 
----
+### Step 6.3: Related Fixes Already in Stable
+No related fixes found for the same issue.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem
-- **Subsystem**: Network drivers / Cisco VIC Ethernet
-- **Criticality**: IMPORTANT — Cisco VIC adapters are used in enterprise
-  data centers (UCS servers)
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: drm/amd/display - display driver for AMD GPUs
+- **Criticality**: IMPORTANT - AMD RDNA 2/3 GPUs are among the most
+  widely deployed discrete GPUs
+- DCN3.0 covers RX 6000 series, DCN3.1 covers Ryzen 6000 mobile APUs
 
-### Step 7.2: Activity
-- The enic driver receives periodic updates. The maintainer (from Cisco)
-  is actively contributing.
+### Step 7.2: Subsystem Activity
+Very active subsystem with frequent changes.
 
----
-
-## PHASE 8: IMPACT AND RISK
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Affected Users
-- Users with Cisco VIC adapters that create V2 SR-IOV virtual functions.
-  This is enterprise/data center hardware.
+Users with AMD RDNA 2+ hardware (RX 6000 series, Ryzen 6000+ APUs) who
+use display configurations triggering 4-to-1 MPC split with writeback.
+This is driver-specific but on very popular hardware.
 
-### Step 8.2: Trigger
-- Any user enabling SR-IOV on a Cisco VIC that produces V2 VFs (PCI ID
-  0x02b7). Without this patch, VFs simply don't work.
+### Step 8.2: Trigger Conditions
+- Requires 4-to-1 MPC pipe split (high resolution/bandwidth scenarios)
+- Plus writeback connector active (screen capture, virtual display)
+- Not a common everyday trigger, but can occur with specific display
+  configurations
 
-### Step 8.3: Severity
-- Without this patch: V2 VFs are **completely non-functional** (driver
-  won't bind). Severity: HIGH for affected users.
+### Step 8.3: Failure Mode
+Validation failure → mode set fails → display configuration rejected
+Severity: MEDIUM-HIGH (can cause display output failure)
 
-### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH — enables SR-IOV V2 VF functionality for Cisco VIC
-  users
-- **Risk**: VERY LOW — 3 lines, only affects devices with PCI ID 0x02b7,
-  mirrors existing V1 pattern exactly
-- **Ratio**: Excellent — high benefit, near-zero risk
-
----
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit**: Prevents display validation failures on widely deployed
+  hardware
+- **Risk**: Extremely low (1-line change, calling existing well-tested
+  function)
+- **Ratio**: Strongly favorable for backporting
 
 ## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence Summary
+
 **FOR backporting:**
-- Classic PCI device ID addition — explicitly allowed exception in
-  stable rules
-- Only 3 functional lines of code
-- Self-contained, no dependencies
-- Applies cleanly to v7.0 tree
-- Author is Cisco engineer / enic maintainer
-- Applied by net-next maintainer (Jakub Kicinski)
-- Went through v4 review cycle
-- Mirrors existing V1 VF pattern from 2012
-- Enables hardware that is completely non-functional without this change
-- Zero regression risk (only affects new PCI device ID)
+- Fixes a real validation failure bug (display config rejection)
+- Extremely surgical: 1 line of actual code
+- Matches established pattern in dcn20/dcn21 (proven correct)
+- Zero regression risk
+- Affects widely deployed hardware (AMD RDNA 2+)
+- Affects multiple DCN generations (3.0, 3.1, 3.14 all call this
+  function)
+- Bug has existed since v5.9 (long-standing)
+- Reviewed by AMD display expert (Nicholas Kazlauskas)
+- Signed off by AMD DRM maintainer (Alex Deucher)
+- Function already exists and is included via header
 
 **AGAINST backporting:**
-- Part of a multi-patch series — but this patch is self-contained
-- No Fixes: tag — expected for device ID additions
+- Specific trigger condition (4-to-1 MPC + writeback)
+- No Fixes: tag, no Cc: stable (expected)
+- No user bug reports (Reported-by)
+- Writeback connector usage is relatively niche
+- Co-developed with AI (unusual, though reviewed by expert)
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — mirrors existing V1 pattern
-   exactly, v4 review, from vendor
-2. Fixes a real bug? **YES** — V2 VFs don't work without this
-3. Important issue? **YES** — complete hardware non-functionality
-4. Small and contained? **YES** — 3 lines, 1 file
-5. No new features or APIs? **YES** — just adds device ID to existing
-   driver
-6. Can apply to stable? **YES** — clean apply expected
+1. Obviously correct and tested? **YES** - matches exact pattern in
+   dcn20/dcn21
+2. Fixes a real bug? **YES** - validation failures with specific
+   configuration
+3. Important issue? **MEDIUM** - display config rejection, not
+   crash/security
+4. Small and contained? **YES** - 1 line in 1 file
+5. No new features or APIs? **YES** - just calls existing function
+6. Can apply to stable? **YES** - insertion point is stable across
+   versions
 
-### Step 9.3: Exception Category
-**PCI Device ID addition to existing driver** — this is a canonical
-example of the exception category.
+### Step 9.3: Exception Categories
+Not an exception category - this is a standard bug fix.
 
 ### Step 9.4: Decision
-This is a textbook PCI device ID addition: 3 lines, single file, from
-the hardware vendor, enables V2 SR-IOV VFs on Cisco VIC adapters. It
-meets all stable criteria and falls into the explicit "new device IDs"
-exception category.
-
----
+The fix is extremely low risk (single function call, well-established
+pattern) and prevents real validation failures on popular AMD hardware.
+While the specific trigger (4-to-1 MPC + writeback) is not common in
+everyday use, the fix has virtually zero regression potential and
+corrects a clear inconsistency between the DCN20/21 and DCN30 validation
+paths.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from Cisco author and net-next
-  maintainer; Link to v4 patch 2
-- [Phase 2] Diff analysis: 3 lines — 1 define, 1 PCI table entry, 1 OR
-  condition in `enic_is_sriov_vf()`
-- [Phase 3] git blame: Original VF support (0x0071) added by
-  `3a4adef5c0adbb` (2012, kernel 3.3); unchanged since
-- [Phase 3] git show `3a4adef5c0adbb`: Confirmed identical pattern for
-  V1 VF
-- [Phase 3] git log: No conflicting recent changes to PCI ID table or
-  `enic_is_sriov_vf()`
-- [Phase 3] Author: Satish Kharat (Cisco), listed in MAINTAINERS update
-  commit `9b8eeccd7110d`
-- [Phase 4] b4 dig: Could not match commit (not in tree's history); Lore
-  blocked by anti-scraping
-- [Phase 4] Series context: v4 series "enic-sriov-v2-prep", applied by
-  Jakub Kicinski
-- [Phase 5] grep `enic_is_sriov_vf`: 6 call sites — all branch VF/PF
-  behavior correctly; V2 VFs get same treatment
-- [Phase 6] HEAD is v7.0; enic PCI table unchanged; clean apply
-  confirmed
-- [Phase 8] Failure mode: V2 VFs completely non-functional (driver won't
-  bind), severity HIGH for affected users
-- [Phase 8] Risk: Near-zero — new PCI ID only affects matching hardware
+- [Phase 1] Parsed tags: Reviewed-by Nicholas Kazlauskas, SOBs from
+  Wentland/Tseng/Deucher, Co-developed by AI
+- [Phase 2] Diff analysis: +2 lines (1 function call + blank line) in
+  dcn30_internal_validate_bw
+- [Phase 2] Verified dcn20_fast_validate_bw at line 2057 already has
+  identical call
+- [Phase 2] Verified dcn21 validate function at line 812 already has
+  identical call
+- [Phase 3] git blame: dcn30_internal_validate_bw introduced in
+  5dba4991fd338d (2020-05-21, v5.9)
+- [Phase 3] git blame: dcn20_merge_pipes_for_validate introduced in
+  ea817dd5ad7950 (2020-09-18)
+- [Phase 3] Verified dcn30_resource.c includes dcn20/dcn20_resource.h at
+  line 34
+- [Phase 3] Verified function signature changes: validate_mode in
+  269c1d1443d66 (2025), allow_self_refresh_only in 71c4ca2d3b079d (2023)
+- [Phase 5] Confirmed callers: dcn30_validate_bandwidth, dcn31, dcn314,
+  dcn30_fpu.c (multiple call sites)
+- [Phase 5] Verified dcn20_merge_pipes_for_validate function body (lines
+  1792-1849): merges ODM and MPC splits
+- [Phase 6] Confirmed DCN3 present in stable trees since v5.9 (tag
+  contains check)
+- [Phase 6] maxMpcComb=0 line (context) confirmed present since v6.1
+  (4931ce22eca6ed)
+- UNVERIFIED: Could not access lore.kernel.org for mailing list
+  discussion due to anti-bot protections
+- UNVERIFIED: Could not find original patch submission via b4 dig or web
+  search
 
 **YES**
 
- drivers/net/ethernet/cisco/enic/enic_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/resource/dcn30/dcn30_resource.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
-index e839081f9ee44..e16dfbcd2c229 100644
---- a/drivers/net/ethernet/cisco/enic/enic_main.c
-+++ b/drivers/net/ethernet/cisco/enic/enic_main.c
-@@ -66,12 +66,14 @@
- #define PCI_DEVICE_ID_CISCO_VIC_ENET         0x0043  /* ethernet vnic */
- #define PCI_DEVICE_ID_CISCO_VIC_ENET_DYN     0x0044  /* enet dynamic vnic */
- #define PCI_DEVICE_ID_CISCO_VIC_ENET_VF      0x0071  /* enet SRIOV VF */
-+#define PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2   0x02b7  /* enet SRIOV V2 VF */
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn30/dcn30_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn30/dcn30_resource.c
+index 87b7b4ee04c64..b00054ea18178 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn30/dcn30_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn30/dcn30_resource.c
+@@ -1675,6 +1675,8 @@ noinline bool dcn30_internal_validate_bw(
+ 	if (!pipes)
+ 		return false;
  
- /* Supported devices */
- static const struct pci_device_id enic_id_table[] = {
- 	{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET) },
- 	{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET_DYN) },
- 	{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET_VF) },
-+	{ PCI_VDEVICE(CISCO, PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2) },
- 	{ 0, }	/* end of table */
- };
- 
-@@ -307,7 +309,8 @@ int enic_sriov_enabled(struct enic *enic)
- 
- static int enic_is_sriov_vf(struct enic *enic)
- {
--	return enic->pdev->device == PCI_DEVICE_ID_CISCO_VIC_ENET_VF;
-+	return enic->pdev->device == PCI_DEVICE_ID_CISCO_VIC_ENET_VF ||
-+	       enic->pdev->device == PCI_DEVICE_ID_CISCO_VIC_ENET_VF_V2;
- }
- 
- int enic_is_valid_vf(struct enic *enic, int vf)
++	dcn20_merge_pipes_for_validate(dc, context);
++
+ 	context->bw_ctx.dml.vba.maxMpcComb = 0;
+ 	context->bw_ctx.dml.vba.VoltageLevel = 0;
+ 	context->bw_ctx.dml.vba.DRAMClockChangeSupport[0][0] = dm_dram_clock_change_vactive;
 -- 
 2.53.0
 
