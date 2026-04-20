@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA28336EC9;
-	Mon, 20 Apr 2026 15:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797783396EE;
+	Mon, 20 Apr 2026 15:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699873; cv=none; b=o9COqc6OYVjdg65prf+btJIx1s9/z0xRcrPjsJx/HO5Gbnem2gold4A/qlTgl2CVvreFZ+blXoJlqbPjndJq+0ATWMzWaaeLN1adfpLUADfJa684ahHBzd0V3aaIuTvFMWMLd9YlXIp64TY0aZ0TDbdG/Qi0In6oZ+hHf59Z9uo=
+	t=1776699875; cv=none; b=bNHpLF/GtlFAnsJ/HOdvY8LSqx3thTxOzRWF7jNkoJRsAIotZ/YrgTgnAMjvcei9tZh/pB/usTUFvyZdbekoh3eJsy2GejzvGG7XnYDSY5o346bSc2h/Dq8oYG2ybZBKc0HBNtNwtnKmWJquKjGeYyQbJgbSlBdprpGVtWzuV8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699873; c=relaxed/simple;
-	bh=3GxLfuP92OAOwFm6L8NFODOWJxEZ7Y0Oat142DkDTvY=;
+	s=arc-20240116; t=1776699875; c=relaxed/simple;
+	bh=na7il5onoAowDj4HOQcsdvMTBKtKn9IhbcEMXkhav/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PpAVYtTgPGNvsGemlzM1BNzmhoiIaslu6KbBZE+EKU+by7tpzNAn1b20UgLqvZ2yl1EAbrwBUSoHQbMLxsXUo0R2S10KmNCJJTz9Nv01RmhH1UR3mYpRoqCri99VHMZ6YkAi42iPDkqlxuX3BHqryUSIIhxukRz5NsbVQsw7fdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqdJtZsS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lsKHE5R54FOlvBUBldgWIrUSA4CFHnCR8/9e9JjSjgBe+RMRTVcGAH7V68Pyc7s9guNiHtIh97h04d6kboTmODn5vn8hX2tTwYFNcQ5uz91lITlPDW1vrbDBo5pY17vb/V9txtwytNi9uBJxRkWoqkJpX5l0QPqeTPxzyfR10wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmOQPDuv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqdJtZsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A906C19425;
-	Mon, 20 Apr 2026 15:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmOQPDuv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1145BC19425;
+	Mon, 20 Apr 2026 15:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699872;
-	bh=3GxLfuP92OAOwFm6L8NFODOWJxEZ7Y0Oat142DkDTvY=;
+	s=korg; t=1776699875;
+	bh=na7il5onoAowDj4HOQcsdvMTBKtKn9IhbcEMXkhav/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sqdJtZsS6BKCGJWPAeH0Xv+jlpnMt3ZWteOdYPwMcei2wPRXlaKoRfe+6cscdO3U4
-	 INzmTfMxykKPOOGwaw0MFZIsC1/FByQ5YeNcJvlHPZGNlNSaAaGB5DQm7pe2rhugJo
-	 wUSzxaLiaS8Nh60fUgNN6UIMojycsdH4qEnxdyY0=
+	b=VmOQPDuvIla1TipcKDNgI+hbK7Q/JClt3bSL7Loy7lL/hwO4pqK3DfwY27rDBBfv8
+	 xNLNQ62Wyk17tnzqYPdnwhgkdYP/YgrbYhWvjdjJWbuyJ7vveFoXsZKFyWymnJhCzX
+	 jVMm3/7ckaXkYXq/1csJvYlaG2Grzfx0R5lLRcro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 7.0 03/76] can: raw: fix ro->uniq use-after-free in raw_rcv()
-Date: Mon, 20 Apr 2026 17:41:14 +0200
-Message-ID: <20260420153910.939809989@linuxfoundation.org>
+	stable@kernel.org,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 7.0 30/76] usb: port: add delay after usb_hub_set_port_power()
+Date: Mon, 20 Apr 2026 17:41:41 +0200
+Message-ID: <20260420153911.919724843@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -51,68 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit a535a9217ca3f2fccedaafb2fddb4c48f27d36dc upstream.
+commit b84cc80610a8ce036deb987f056ce3196ead7f1e upstream.
 
-raw_release() unregisters raw CAN receive filters via can_rx_unregister(),
-but receiver deletion is deferred with call_rcu(). This leaves a window
-where raw_rcv() may still be running in an RCU read-side critical section
-after raw_release() frees ro->uniq, leading to a use-after-free of the
-percpu uniq storage.
+When a port is disabled, an attached device will be disconnected.  This
+causes a port-status-change event, which will race with hub autosuspend
+(if the disabled port was the only connected port on its hub), causing
+an immediate resume and a second autosuspend.  Both of these can be
+avoided by adding a short delay after the call to
+usb_hub_set_port_power().
 
-Move free_percpu(ro->uniq) out of raw_release() and into a raw-specific
-socket destructor. can_rx_unregister() takes an extra reference to the
-socket and only drops it from the RCU callback, so freeing uniq from
-sk_destruct ensures the percpu area is not released until the relevant
-callbacks have drained.
+Below log shows what is happening:
 
-Fixes: 514ac99c64b2 ("can: fix multiple delivery of a single CAN frame for overlapping CAN filters")
-Cc: stable@vger.kernel.org # v4.1+
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
-Link: https://patch.msgid.link/26ec626d-cae7-4418-9782-7198864d070c@bynar.io
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-[mkl: applied manually]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+$ echo 1 > usb1-port1/disable
+[   37.958239] usb 1-1: USB disconnect, device number 2
+[   37.964101] usb 1-1: unregistering device
+[   37.970070] hub 1-0:1.0: hub_suspend
+[   37.971305] hub 1-0:1.0: state 7 ports 1 chg 0000 evt 0002
+[   37.974412] usb usb1: bus auto-suspend, wakeup 1
+[   37.988175] usb usb1: suspend raced with wakeup event         <---
+[   37.993947] usb usb1: usb auto-resume
+[   37.998401] hub 1-0:1.0: hub_resume
+[   38.105688] usb usb1-port1: status 0000, change 0000, 12 Mb/s
+[   38.112399] hub 1-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   38.118645] hub 1-0:1.0: hub_suspend
+[   38.122963] usb usb1: bus auto-suspend, wakeup 1
+[   38.200368] usb usb1: usb wakeup-resume
+[   38.204982] usb usb1: usb auto-resume
+[   38.209376] hub 1-0:1.0: hub_resume
+[   38.213676] usb usb1-port1: status 0101 change 0001
+[   38.321552] hub 1-0:1.0: state 7 ports 1 chg 0002 evt 0000
+[   38.327978] usb usb1-port1: status 0101, change 0000, 12 Mb/s
+[   38.457429] usb 1-1: new high-speed USB device number 3 using ci_hdrc
+
+Then, port change bit will be fixed to the final state and
+usb_clear_port_feature() can correctly clear it after this period. This
+will also avoid usb runtime suspend routine to run because
+usb_autopm_put_interface() not run yet.
+
+Fixes: f061f43d7418 ("usb: hub: port: add sysfs entry to switch port power")
+Cc: stable@kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260316095042.1559882-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/raw.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/usb/core/port.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -361,6 +361,14 @@ static int raw_notifier(struct notifier_
- 	return NOTIFY_DONE;
- }
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -141,6 +141,7 @@ static ssize_t disable_store(struct devi
+ 		usb_disconnect(&port_dev->child);
  
-+static void raw_sock_destruct(struct sock *sk)
-+{
-+	struct raw_sock *ro = raw_sk(sk);
-+
-+	free_percpu(ro->uniq);
-+	can_sock_destruct(sk);
-+}
-+
- static int raw_init(struct sock *sk)
- {
- 	struct raw_sock *ro = raw_sk(sk);
-@@ -387,6 +395,8 @@ static int raw_init(struct sock *sk)
- 	if (unlikely(!ro->uniq))
- 		return -ENOMEM;
+ 	rc = usb_hub_set_port_power(hdev, hub, port1, !disabled);
++	msleep(2 * hub_power_on_good_delay(hub));
  
-+	sk->sk_destruct = raw_sock_destruct;
-+
- 	/* set notifier */
- 	spin_lock(&raw_notifier_lock);
- 	list_add_tail(&ro->notifier, &raw_notifier_list);
-@@ -436,7 +446,6 @@ static int raw_release(struct socket *so
- 	ro->bound = 0;
- 	ro->dev = NULL;
- 	ro->count = 0;
--	free_percpu(ro->uniq);
- 
- 	sock_orphan(sk);
- 	sock->sk = NULL;
+ 	if (disabled) {
+ 		usb_clear_port_feature(hdev, port1, USB_PORT_FEAT_C_CONNECTION);
 
 
