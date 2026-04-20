@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BC633F8DC;
-	Mon, 20 Apr 2026 16:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C37F33F5BC;
+	Mon, 20 Apr 2026 16:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701177; cv=none; b=BiSmVL0zyG9ZCZKG+z0RzkmqXmjZ0WNWoi0IOjsZ4UHW+j3IW9ma8yxbYOJD5GCa0llDsFLEDQcoQ5wnEdV+0bj44zrlNMjqgvgL9L5AeRFCERh/fqklZW/TUzJfDPdQee7apTXSpumPfKclAJFO7t1mp1kOp9IqJ6eBdQQYZlE=
+	t=1776701180; cv=none; b=YqBL/RZ6SJ6xHkFfre1z3z30r9WZwtSDcj3NdZSOlEGpZmMXKm1GnRvXNsG1O6PGy3/rnjXhq9Iz2g66+MCM8YdzgsUUZmvcA4rG86p/9Girf2byHADxbbq54mMCz/HyhJpasjNb/d1xQh6tyTO/4dhgLZlYHdulrGRPSS6tr1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701177; c=relaxed/simple;
-	bh=lkXXK9tv7DEUSToGqftvPN2iS65Ft2XT8ErBVC2GFEg=;
+	s=arc-20240116; t=1776701180; c=relaxed/simple;
+	bh=vuvDqBcPwyH1Ts9GyrKsBFdpG5c0Bx3HsRyKp76xONE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccmU8NVd1o4T6mnxH6nEMPeeav9dVQnY9hLTSQzp5fzz698biaut3iuGk7/dE35Ac23ejqVKr2PxgGNH+otDwS2BXeONRp5RlMJx72eqRsL8isMDY+t+FnyTrCvg1XeEN5K9Pg1S8EdPumo7o+xAQSdEojO0g4NNfEWhQxPoQt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tC/KGuyi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elAxpflKC8l8rEJ1RIdSY8pbvhlj3L+x6HIzwluGBTMnTAqnJJvKrW16+hjYMATtj56y6vAslQ7UoHsT6I2F2ppTen7/QbJmQ0vzDQhttATVSjXvexzmnR7EkPWNG2QUjkwqm8Xm1F3L1wUSwlhEbbA/5ZPG2+Wm8+LLDZx4qB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3LZxLS/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tC/KGuyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23231C2BCB6;
-	Mon, 20 Apr 2026 16:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3LZxLS/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB99FC19425;
+	Mon, 20 Apr 2026 16:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701177;
-	bh=lkXXK9tv7DEUSToGqftvPN2iS65Ft2XT8ErBVC2GFEg=;
+	s=korg; t=1776701180;
+	bh=vuvDqBcPwyH1Ts9GyrKsBFdpG5c0Bx3HsRyKp76xONE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tC/KGuyiTbBfrhN32kxOWi8Gfa2HXtQ5zmuvaiLffSELYQg/Xs24sqQO0UqhspStz
-	 fR/N26GHoBH+MOc2QZZ8vXqttQ6BUaLtFXq4BOHqJ7Cq796pO+Wh5HgAz2O9isTWj9
-	 wGtwq6yjaM4/sCSnlcyMECY3mrWgPtjXb/km14KQ=
+	b=z3LZxLS/gb+nEiTIf/nqs7+O7jx2P96Fyr38q+Nk8d/b3r1nLX229+b27UO2Rr17b
+	 ObQ8HpPAsp5JdtrI+pFz1t2zldzELzYB2iJ8vxNrVeTzQrMowhvw6W52Tn02TN/PC3
+	 fCe+qU++k2datOg/+LfLEFazJmJa6qr1lbXESKmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Arnd Bergmann <arnd@arndb.de>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/162] media: rkvdec: reduce stack usage in rkvdec_init_v4l2_vp9_count_tbl()
-Date: Mon, 20 Apr 2026 17:40:37 +0200
-Message-ID: <20260420153927.208313969@linuxfoundation.org>
+Subject: [PATCH 6.12 006/162] ALSA: asihpi: avoid write overflow check warning
+Date: Mon, 20 Apr 2026 17:40:38 +0200
+Message-ID: <20260420153927.244733061@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -54,45 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit c03b7dec3c4ddc97872fa12bfca75bae9cb46510 ]
+[ Upstream commit 591721223be9e28f83489a59289579493b8e3d83 ]
 
-The deeply nested loop in rkvdec_init_v4l2_vp9_count_tbl() needs a lot
-of registers, so when the clang register allocator runs out, it ends up
-spilling countless temporaries to the stack:
+clang-22 rightfully warns that the memcpy() in adapter_prepare() copies
+between different structures, crossing the boundary of nested
+structures inside it:
 
-drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c:966:12: error: stack frame size (1472) exceeds limit (1280) in 'rkvdec_vp9_start' [-Werror,-Wframe-larger-than]
+In file included from sound/pci/asihpi/hpimsgx.c:13:
+In file included from include/linux/string.h:386:
+include/linux/fortify-string.h:569:4: error: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+  569 |                         __write_overflow_field(p_size_field, size);
 
-Marking this function as noinline_for_stack keeps it out of
-rkvdec_vp9_start(), giving the compiler more room for optimization.
+The two structures seem to refer to the same layout, despite the
+separate definitions, so the code is in fact correct.
 
-The resulting code is good enough that both the total stack usage
-and the loop get enough better to stay under the warning limit,
-though it's still slow, and would need a larger rework if this
-function ends up being called in a fast path.
+Avoid the warning by copying the two inner structures separately.
+I see the same pattern happens in other functions in the same file,
+so there is a chance that this may come back in the future, but
+this instance is the only one that I saw in practice, hitting it
+multiple times per day in randconfig build.
 
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://patch.msgid.link/20260318124016.3488566-1-arnd@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec-vp9.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/asihpi/hpimsgx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec-vp9.c b/drivers/staging/media/rkvdec/rkvdec-vp9.c
-index 0e7e16f20eeb0..bc74d2d824ef2 100644
---- a/drivers/staging/media/rkvdec/rkvdec-vp9.c
-+++ b/drivers/staging/media/rkvdec/rkvdec-vp9.c
-@@ -923,7 +923,8 @@ static void rkvdec_vp9_done(struct rkvdec_ctx *ctx,
- 	update_ctx_last_info(vp9_ctx);
- }
+diff --git a/sound/pci/asihpi/hpimsgx.c b/sound/pci/asihpi/hpimsgx.c
+index b68e6bfbbfbab..ed1c7b7744361 100644
+--- a/sound/pci/asihpi/hpimsgx.c
++++ b/sound/pci/asihpi/hpimsgx.c
+@@ -581,8 +581,10 @@ static u16 adapter_prepare(u16 adapter)
+ 		HPI_ADAPTER_OPEN);
+ 	hm.adapter_index = adapter;
+ 	hw_entry_point(&hm, &hr);
+-	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter], &hr,
+-		sizeof(rESP_HPI_ADAPTER_OPEN[0]));
++	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter].h, &hr,
++		sizeof(rESP_HPI_ADAPTER_OPEN[adapter].h));
++	memcpy(&rESP_HPI_ADAPTER_OPEN[adapter].a, &hr.u.ax.info,
++		sizeof(rESP_HPI_ADAPTER_OPEN[adapter].a));
+ 	if (hr.error)
+ 		return hr.error;
  
--static void rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
-+static noinline_for_stack void
-+rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
- {
- 	struct rkvdec_vp9_ctx *vp9_ctx = ctx->priv;
- 	struct rkvdec_vp9_intra_frame_symbol_counts *intra_cnts = vp9_ctx->count_tbl.cpu;
 -- 
 2.53.0
 
