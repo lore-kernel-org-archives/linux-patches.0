@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A1934252C;
-	Mon, 20 Apr 2026 16:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869D633A70A;
+	Mon, 20 Apr 2026 16:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701371; cv=none; b=AT99gM9py0AqYe+xO86YGA3tGHmnuu98uL99Dno9h2+KsudENbggdG5FOAO/ykv/IAukc5UG18OSda9B8o9tB0a2qC8W6ZcaLD5Pp46aL707DxDfT9hEDRbuIIs6GJxbQa6CZcfN2ByYiSNW2Jqsw0emcW1TmWYaCQ4muiC+k9E=
+	t=1776701373; cv=none; b=bn9wpXpb11g9GIg+0Idlj4juwI4bvfhrwTndq7MGv9jPe3WHeOaPwt/LyuvTNdvbGxFWftMwDs/1RaaneNYgbDfHQpjxcrptpQ6mnl58lto1pTqzh2FlzLV9vG7/WEzJt5BVWzI5+3+ZEdHI8ZCHK51Q4Dx6S1sB7Rs6gSdnFpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701371; c=relaxed/simple;
-	bh=GN6SI/3JCVjEIAiipZzFCaewLs5EwQJSVgcj5yQltfw=;
+	s=arc-20240116; t=1776701373; c=relaxed/simple;
+	bh=EvRUKGFd+6162K8alWLBvwu0oufIHSFzsNqge7r3yCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVAMAKjaVVuFWXMJPn7BVHFnEcQH/O3mmdRu/mThK+YTblKA5xG5dr/CLjpVZIu/B1dFRVQCV93P/BqwBbmp3OqHA8/sULq6pJjcIHYqUHYdlOR7pQFb61K8KgX2hqVt6UoLnNodXzKUihm2VA/8mWxt2Qk9Cd1xM4FltkCIHCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3CiVx9l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W7TAOdO5ziRQHok0jaCcCd9922dymLI2/h/ORRx8HAlaBxZDHGZ0QmhpVBYqwc2f4RxUeXo5URHbypevUB7dX1+JSx0IY30B15rcOwIjiCSJaYYGx99+YFzgk7xBydONzJ1jD73m+AqKrnoex8hYvt7z6Kt5EC4Ac7wR3ik+v14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRMjQXun; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3CiVx9l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6F5C19425;
-	Mon, 20 Apr 2026 16:09:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRMjQXun"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2BBC19425;
+	Mon, 20 Apr 2026 16:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701370;
-	bh=GN6SI/3JCVjEIAiipZzFCaewLs5EwQJSVgcj5yQltfw=;
+	s=korg; t=1776701373;
+	bh=EvRUKGFd+6162K8alWLBvwu0oufIHSFzsNqge7r3yCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3CiVx9ltsUWlhDLdX0HNKtFHKaPesqae2FQSvh/1GHErx3UwikmiqUeVypxEGD2i
-	 Biu4llaZgd/lleWpeku9+LGWdHlEVu64zEYEskCiiNskagrPbNQJQZdTT6JGBMv1Jz
-	 VrQvsqIs6TYOHXaGVhPd8qRIzF7ozQTQummyBM2c=
+	b=vRMjQXun1Ix9mTrsw8wEYFXUN9QlSdq8n2s9lr/KdBY1ofc5oIe6wptVu8GzdG44g
+	 2GxuLUUd5Ue2/X+kJK4vQl511vMuF7qeR/+AD1gBuTOgHnjiokkhRClHsOpt4va+Cx
+	 Go87jrkDrRypkVBAg8KnyTUIVwdeSQzy4PO5i9sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris J Arges <carges@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Melissa Wen <mwen@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/162] net: increase IP_TUNNEL_RECURSION_LIMIT to 5
-Date: Mon, 20 Apr 2026 17:41:26 +0200
-Message-ID: <20260420153928.992818317@linuxfoundation.org>
+Subject: [PATCH 6.12 045/162] drm/vc4: Fix memory leak of BO array in hang state
+Date: Mon, 20 Apr 2026 17:41:17 +0200
+Message-ID: <20260420153928.659495926@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -45,46 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris J Arges <carges@cloudflare.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 77facb35227c421467cdb49268de433168c2dcef ]
+[ Upstream commit f4dfd6847b3e5d24e336bca6057485116d17aea4 ]
 
-In configurations with multiple tunnel layers and MPLS lwtunnel routing, a
-single tunnel hop can increment the counter beyond this limit. This causes
-packets to be dropped with the "Dead loop on virtual device" message even
-when a routing loop doesn't exist.
+The hang state's BO array is allocated separately with kzalloc() in
+vc4_save_hang_state() but never freed in vc4_free_hang_state(). Add the
+missing kfree() for the BO array before freeing the hang state struct.
 
-Increase IP_TUNNEL_RECURSION_LIMIT from 4 to 5 to handle this use-case.
-
-Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
-Link: https://lore.kernel.org/netdev/88deb91b-ef1b-403c-8eeb-0f971f27e34f@redhat.com/
-Signed-off-by: Chris J Arges <carges@cloudflare.com>
-Link: https://patch.msgid.link/20260402222401.3408368-1-carges@cloudflare.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 214613656b51 ("drm/vc4: Add an interface for capturing the GPU state after a hang.")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-2-92defc940a29@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_tunnels.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_gem.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 0a5556ef16729..583fd1afd2387 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -29,7 +29,7 @@
-  * recursion involves route lookups and full IP output, consuming much
-  * more stack per level, so a lower limit is needed.
-  */
--#define IP_TUNNEL_RECURSION_LIMIT	4
-+#define IP_TUNNEL_RECURSION_LIMIT	5
+diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
+index be9c0b72ebe86..373d310c7b6a5 100644
+--- a/drivers/gpu/drm/vc4/vc4_gem.c
++++ b/drivers/gpu/drm/vc4/vc4_gem.c
+@@ -60,6 +60,7 @@ vc4_free_hang_state(struct drm_device *dev, struct vc4_hang_state *state)
+ 	for (i = 0; i < state->user_state.bo_count; i++)
+ 		drm_gem_object_put(state->bo[i]);
  
- /* Keep error state on tunnel for 30 sec */
- #define IPTUNNEL_ERR_TIMEO	(30*HZ)
++	kfree(state->bo);
+ 	kfree(state);
+ }
+ 
 -- 
 2.53.0
 
