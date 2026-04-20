@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FB9334C39;
-	Mon, 20 Apr 2026 15:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D80329C6D;
+	Mon, 20 Apr 2026 15:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699965; cv=none; b=s+pjhox3uVPcw1H815b5kNR72GRIBh7qHrat/qu3oXXIyVXxTudU8/55KxU84IHd5IIfOz9siG/qk+Zx+o0w9YcWMWVfjhp2x374ts4UsD2ppgvg80KZsapkht18wvFFBsUzOvQfJZ5Ej50X00thWSjfD07vSt3uWfALVnjhmK8=
+	t=1776699968; cv=none; b=u9dLB4Eqy0G18ztXGBeXbHB3WD5e9qKYyP8AXXIuVULSe4nP/Z63P6DJRqvyn6kc1unVfLSWuQuOK4ckmCgA7XVIU5tZ9nGAckAYy9KrRnIOeCTZydLHjRqAC1m/8+NPRitkGBhPACRt7jYkRCxzMEPvGfixUY+huL3F/TPDWZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699965; c=relaxed/simple;
-	bh=hBkLX/9KTCxV9w2BNhYhU2LlD0L8/5gfpIyQ4hF7If8=;
+	s=arc-20240116; t=1776699968; c=relaxed/simple;
+	bh=QCvdH3wWj8SdYExyNYjueMUxThcx2mT9dUL/96ufOXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MotpfepkJ+3IOwv6xyh3/vhESwOLXs1bFDIx3HL8A0Cxy22UWi/mYDyZyTwbl1Oyx8zEojP0GU9xoDfO4bIUDKiIwucQCZy+jv8qvFY1+3EerxEpk3HOZs2zr0CnlnioJ8f9ep8kxltCtWebOgz8NYqTWUtvTqBMXzvcF38Zdw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/t49b17; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dMTvjZEjq1tnC1fjxB6qtbnfX6dB90rUORIrvAu2a68BREcT+j7A96+GfXqekwkpQhyb9sLytO2jS20Q0ykBCjdvSjf1x47+uX4nx9zkTxIDua9HgwXJExQEEy/xijtz09rqiROHDMNOYAELjJwVf1ytOyX8pxb6+l5PG79IO64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5J3fi1m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/t49b17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B849C19425;
-	Mon, 20 Apr 2026 15:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5J3fi1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D15FC19425;
+	Mon, 20 Apr 2026 15:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699965;
-	bh=hBkLX/9KTCxV9w2BNhYhU2LlD0L8/5gfpIyQ4hF7If8=;
+	s=korg; t=1776699967;
+	bh=QCvdH3wWj8SdYExyNYjueMUxThcx2mT9dUL/96ufOXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/t49b17T5l+3zGH7NoFP/8rmK9OIDErdzhMCVQGfunXfRP3Bj2SMP8LY4/Idcx4m
-	 pYyY3IQ6bFoy+Wxv7X4NgOQBgioVIffWwP3aWh2rrLS61pSSDixUsRd0M2qlN3E+u7
-	 /p+0+aGs64b9TVPnsD9jHlPaQEbrCuE3JgjAhTT8=
+	b=I5J3fi1m2QqmrXtZI0lORqDDxUb0WX/vEaf0+dBqkHER4Uf2wrZFF3ucl7GFdpU0e
+	 VSqn5Eti+kz1rKmtIx9z1byu7SkwCxhU8ZuOVlIWqsSBVfkKnDS3Jeiump6jIJLq3u
+	 R/86NyUeBgV9rbPrP0PDgHxP2wz6My/NwfQVNwJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 65/76] media: vidtv: fix nfeeds state corruption on start_streaming failure
-Date: Mon, 20 Apr 2026 17:42:16 +0200
-Message-ID: <20260420153913.186873278@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>
+Subject: [PATCH 7.0 35/76] staging: sm750fb: fix division by zero in ps_to_hz()
+Date: Mon, 20 Apr 2026 17:41:46 +0200
+Message-ID: <20260420153912.100403486@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -51,62 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit a0e5a598fe9a4612b852406b51153b881592aede upstream.
+commit 75a1621e4f91310673c9acbcbb25c2a7ff821cd3 upstream.
 
-syzbot reported a memory leak in vidtv_psi_service_desc_init [1].
+ps_to_hz() is called from hw_sm750_crtc_set_mode() without validating
+that pixclock is non-zero. A zero pixclock passed via FBIOPUT_VSCREENINFO
+causes a division by zero.
 
-When vidtv_start_streaming() fails inside vidtv_start_feed(), the
-nfeeds counter is left incremented even though no feed was actually
-started. This corrupts the driver state: subsequent start_feed calls
-see nfeeds > 1 and skip starting the mux, while stop_feed calls
-eventually try to stop a non-existent stream.
+Fix by rejecting zero pixclock in lynxfb_ops_check_var(), consistent
+with other framebuffer drivers.
 
-This state corruption can also lead to memory leaks, since the mux
-and channel resources may be partially allocated during a failed
-start_streaming but never cleaned up, as the stop path finds
-dvb->streaming == false and returns early.
-
-Fix by decrementing nfeeds back when start_streaming fails, keeping
-the counter in sync with the actual number of active feeds.
-
-[1]
-BUG: memory leak
-unreferenced object 0xffff888145b50820 (size 32):
- comm "syz.0.17", pid 6068, jiffies 4294944486
- backtrace (crc 90a0c7d4):
-  vidtv_psi_service_desc_init+0x74/0x1b0 drivers/media/test-drivers/vidtv/vidtv_psi.c:288
-  vidtv_channel_s302m_init+0xb1/0x2a0 drivers/media/test-drivers/vidtv/vidtv_channel.c:83
-  vidtv_channels_init+0x1b/0x40 drivers/media/test-drivers/vidtv/vidtv_channel.c:524
-  vidtv_mux_init+0x516/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:518
-  vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
-  vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
-
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
+Fixes: 81dee67e215b ("staging: sm750fb: add sm750 to staging")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=639ebc6ec75e96674741
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881AFBFCE28CCF528B35D0CAF4BA@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_bridge.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/sm750fb/sm750.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -237,8 +237,10 @@ static int vidtv_start_feed(struct dvb_d
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -481,6 +481,9 @@ static int lynxfb_ops_check_var(struct f
+ 	struct lynxfb_crtc *crtc;
+ 	resource_size_t request;
  
- 	if (dvb->nfeeds == 1) {
- 		ret = vidtv_start_streaming(dvb);
--		if (ret < 0)
-+		if (ret < 0) {
-+			dvb->nfeeds--;
- 			rc = ret;
-+		}
- 	}
- 
- 	mutex_unlock(&dvb->feed_lock);
++	if (!var->pixclock)
++		return -EINVAL;
++
+ 	ret = 0;
+ 	par = info->par;
+ 	crtc = &par->crtc;
 
 
