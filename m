@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90426332916;
-	Mon, 20 Apr 2026 15:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68E2336EE1;
+	Mon, 20 Apr 2026 15:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700402; cv=none; b=cfVB7Z6Pj8r2hqZHinJC22b8qBNzWzBkLwRVay7Gn91aBJ4488u+/o+ajhRpKsM9djjpAH3g5f6RX/zC8lB5/TZgbR/x0uk8/ybTFzpgjNiHiCBirtgVRHul7Lq+Es8vXoyRJtUcovvWECKTzbehAMyBAFgs/ckfMdU/nRZbDEs=
+	t=1776700405; cv=none; b=Il+HVF5w3cDZTe+dDWTteBndZOEqZVEQLcKGsf4FYjXFlmQ38DLPg2zIxBnpVTvnwsFmT2q1QzDxwqS+zhGqSYePFSgVhKd4UdeSnHmAS1W+3lULU4/wSpcOe4BaS4nePIPa4RaRWGcPyIUNXcfrsXZQu7UjNGU2EADgVib+z2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700402; c=relaxed/simple;
-	bh=hJD3QkRaqcIkB/16anp0kTHlCusRL1BYapPMyaQqztk=;
+	s=arc-20240116; t=1776700405; c=relaxed/simple;
+	bh=BvCuMIUe2R/Jg5QjIKWCscr+B3pbfQceDjopoAz0Geg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlVtDMVb1B8TOp3AkWIoACLINv0U+f4mjdc/dbak0rfaBok86ZENODActh4+nPguUYcoydFv7B9+B6adYYJDLnKkgUcoUXG+ZBbLQ75b+jzHsiXHnvzYyFBVMEiGgmZqCvzUqxhFtnVlJvSpSEw3m16LswzzDxSv1Fgz1PQz9+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1LunpTf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AhqS3mTiBwxGR64mHeEj+nVun5f5XY9fVV9gs8abF0TIEPRxQupMDakynmB2yv2Tul6vGMi95NFn1PnkaBOmS7dZEjazTh3Wmx6OvvvJKNGBI2KGs0B6XhEuujN16sI8s/chvNmXunp5HCKgbp6S+SEHZvYLfFOvUSoxzeZKF6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gngtrglu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1LunpTf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E898BC19425;
-	Mon, 20 Apr 2026 15:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gngtrglu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C81AC19425;
+	Mon, 20 Apr 2026 15:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700402;
-	bh=hJD3QkRaqcIkB/16anp0kTHlCusRL1BYapPMyaQqztk=;
+	s=korg; t=1776700404;
+	bh=BvCuMIUe2R/Jg5QjIKWCscr+B3pbfQceDjopoAz0Geg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1LunpTft3uetqd/ccCZVTWjC7OoXXW+teGRM6gpXeo0a0sJFZhnepZyjkmBvSv8Z
-	 LxoNQdvNUXTgd1dHffIv5MLOsHmwTC1nEoAq9Da5cgOqyHV2K7FEGSNOVYDhY/X7mR
-	 C5gMc6cYgNzxAV3B/DtjSSuyzDmmGP0BhwJhauNk=
+	b=GngtrgluMlR7zuC6lWdZW7iETRHwdS8he7Ons9TlJb9B1FSfudIcogq6kBQWtUlik
+	 Y9R2QqPBq8z9jNOFrwC7X35KkhMLUIaJYXRAMmEpeYZkYZ0lxzInQ7LkRh0Q4pm/9d
+	 GGh4a5A/5UJwBtG0iZPZognqhs+Uovo7VBDIz91Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	stable@kernel.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 159/220] ksmbd: require 3 sub-authorities before reading sub_auth[2]
-Date: Mon, 20 Apr 2026 17:41:40 +0200
-Message-ID: <20260420153939.753139892@linuxfoundation.org>
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.19 142/220] i2c: s3c24xx: check the size of the SMBUS message before using it
+Date: Mon, 20 Apr 2026 17:41:23 +0200
+Message-ID: <20260420153939.141215064@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -57,49 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 53370cf9090777774e07fd9a8ebce67c6cc333ab upstream.
+commit c0128c7157d639a931353ea344fb44aad6d6e17a upstream.
 
-parse_dacl() compares each ACE SID against sid_unix_NFS_mode and on
-match reads sid.sub_auth[2] as the file mode.  If sid_unix_NFS_mode is
-the prefix S-1-5-88-3 with num_subauth = 2 then compare_sids() compares
-only min(num_subauth, 2) sub-authorities so a client SID with
-num_subauth = 2 and sub_auth = {88, 3} will match.
+The first byte of an i2c SMBUS message is the size, and it should be
+verified to ensure that it is in the range of 0..I2C_SMBUS_BLOCK_MAX
+before processing it.
 
-If num_subauth = 2 and the ACE is placed at the very end of the security
-descriptor, sub_auth[2] will be  4 bytes past end_of_acl.  The
-out-of-band bytes will then be masked to the low 9 bits and applied as
-the file's POSIX mode, probably not something that is good to have
-happen.
+This is the same logic that was added in commit a6e04f05ce0b ("i2c:
+tegra: check msg length in SMBUS block read") to the i2c tegra driver.
 
-Fix this up by forcing the SID to actually carry a third sub-authority
-before reading it at all.
-
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>
+Cc: Andi Shyti <andi.shyti@kernel.org>
+Cc: stable <stable@kernel.org>
+Assisted-by: gkh_clanker_2000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/2026022314-rely-scrubbed-4839@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-s3c2410.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -451,7 +451,8 @@ static void parse_dacl(struct mnt_idmap
- 		ppace[i]->access_req =
- 			smb_map_generic_desired_access(ppace[i]->access_req);
+--- a/drivers/i2c/busses/i2c-s3c2410.c
++++ b/drivers/i2c/busses/i2c-s3c2410.c
+@@ -503,8 +503,13 @@ static void i2c_s3c_irq_nextbyte(struct
+ 		i2c->msg->buf[i2c->msg_ptr++] = byte;
  
--		if (!(compare_sids(&ppace[i]->sid, &sid_unix_NFS_mode))) {
-+		if (ppace[i]->sid.num_subauth >= 3 &&
-+		    !(compare_sids(&ppace[i]->sid, &sid_unix_NFS_mode))) {
- 			fattr->cf_mode =
- 				le32_to_cpu(ppace[i]->sid.sub_auth[2]);
- 			break;
+ 		/* Add actual length to read for smbus block read */
+-		if (i2c->msg->flags & I2C_M_RECV_LEN && i2c->msg->len == 1)
++		if (i2c->msg->flags & I2C_M_RECV_LEN && i2c->msg->len == 1) {
++			if (byte == 0 || byte > I2C_SMBUS_BLOCK_MAX) {
++				s3c24xx_i2c_stop(i2c, -EPROTO);
++				break;
++			}
+ 			i2c->msg->len += byte;
++		}
+  prepare_read:
+ 		if (is_msglast(i2c)) {
+ 			/* last byte of buffer */
 
 
