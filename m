@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849973ACF06;
-	Mon, 20 Apr 2026 13:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F834C6EE1;
+	Mon, 20 Apr 2026 13:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691980; cv=none; b=rQKeA5GtdcfRV4gRl6IyEddQa1iQNlqiqHT9Se2Ox0GD9pPdcpNUdwxneSaatS8hwIBiad8R91QRuLRt7RSPwH7QApbYgBBrY2HW415CTqRmiEvgSBkRjDX0nm+93azZ9qYCR45AJqmy+WMhaHePeM0jxSySMo0Pu5OjiXiAUuw=
+	t=1776691982; cv=none; b=RkepwP5TFAIfg8uytGWGSD/ZAXdrwuv36g1GmE0PXsb2CtoeLWnq0L07gDXo9R8tAqisQQC/CQsA5OI0sFGmRCEvJPREVJWJaLg352hDI0R+GfN1Bd9RUkXK0ywptWIiykFkOMBhpXWp2j14BiiHF0X1tSchqhq5YtZm/21BL9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691980; c=relaxed/simple;
-	bh=G4wzPzy8muVNOXH8GZxNbaJADst6JlOxADlrHSIS5eY=;
+	s=arc-20240116; t=1776691982; c=relaxed/simple;
+	bh=F25UWTVoXxyJ+BPRUSSCjj0W9ZCJy+A1CCOh8EOuGJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IeGSJmqOXcDqmsgNFWRY0Xc6Ar0YYV4Ou0fCpStg/vz00Ff6VFSm5txGl00gTMwcjhptI8uAJz4920bGmgDPFjFgLEvW7Eq/R1f87q8M9KHfZI5qJMwwVSHoIo1NcyFQXEA7UFmRrhK9rxKxdzIxwa8DUXSMwZyt9X9+T5B41OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIhoFyyH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jLQQ2/ysa7uH/3hySPY8SGSAtPPVWlc/dUqz9z8ZQCWm+Gn72wxYaeLSUuoX8P5v6R6bR3OYDTyDovAl1PdyJVh/pqqXe4nGP7qQyvG6wnatZlFcRW0bci4bGAf3ggD6lGpRqTGRt/x6BSegvzw4j9DyPjK0zhdLs2kHO45p5Mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D5vPuwyS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIhoFyyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E2EC2BCB4;
-	Mon, 20 Apr 2026 13:32:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D5vPuwyS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCA3C2BCB6;
+	Mon, 20 Apr 2026 13:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691980;
-	bh=G4wzPzy8muVNOXH8GZxNbaJADst6JlOxADlrHSIS5eY=;
+	s=k20201202; t=1776691982;
+	bh=F25UWTVoXxyJ+BPRUSSCjj0W9ZCJy+A1CCOh8EOuGJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIhoFyyHsOtEF66KTAxiIqeZYpaltfnZRN7je/nTUAZCJ+1EyGrItDIgfbi7xfq9s
-	 mRCFelSdkwyPKrRbKNi8P4au7+75T5lYx7WDEsnpB3yyywbbCSMHekrWPsOvioMpm3
-	 WNKf5d7HZ9ldWHLe+YKDuVELgtNCcUt0mybRsj5MXiO04LlNCyYXp0MdIkfq7AyenO
-	 UCRC61CX3hHc1hXc0f+IYDwSjmEzKsPtk56bE4C7Rrr/R38NrwGZkOwk+GcmDlUjyR
-	 SMK+Qep66cmEKxxP/9Tjrn4+2aBRkCDoKKV7HhkXa6FS/sNJKkJnaRao6plH1aqRX6
-	 iLnw29+jgKnBg==
+	b=D5vPuwySqztejAkOXd/W4LgePXbgSavxL5Oo8xCeDV8bme//TYDn9bXCJ+sYyUQNN
+	 tHXYr5H9U8zEWa4CM5gJiNXHIkQRuayMxAf0xGxamPY0Qd7j3/DjpsjzoT+3oND2Du
+	 1FKnmtfAv7Ec8rYZ93ut5OA90xQLoaVf1b/kwLVH2X+vNYIZIJXbkCV3+Mwj6Hn7R3
+	 m4vSUFMtPsXe+rCMqxS7d/QFErnNVuWtJa3S6Hn3d+TQp0rykzmGGkunzoiAELsUkb
+	 IXr2oc49Zx6blkIASjrwfIwFDZZ0Zfc6MRyIDrrJ8p0oCofjluBWPABi5sj82zoBtG
+	 JiEbMiYMfu2tw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: HyungJung Joo <jhj140711@gmail.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+Cc: Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	devel@lists.orangefs.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] orangefs: validate getxattr response length
-Date: Mon, 20 Apr 2026 09:21:37 -0400
-Message-ID: <20260420132314.1023554-303-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] drm/amdgpu: Add default reset method for soc_v1_0
+Date: Mon, 20 Apr 2026 09:21:38 -0400
+Message-ID: <20260420132314.1023554-304-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -49,407 +54,384 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: HyungJung Joo <jhj140711@gmail.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 092e0d0e964279feb9f43f81e8d1c52ef080d085 ]
+[ Upstream commit eb737fb303dd73ceb0f646fc2e696595e576056f ]
 
-orangefs_inode_getxattr() trusts the userspace-client-controlled
-downcall.resp.getxattr.val_sz and uses it as a memcpy() length
-both for the temporary user buffer and the cached xattr buffer.
-Reject malformed negative or oversized lengths before copying
-response bytes.
+Add mode2 as default reset method for soc_v1_0
 
-Reported-by: Hyungjung Joo <jhj140711@gmail.com>
-Signed-off-by: HyungJung Joo <jhj140711@gmail.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+v2: Remove unnecessary overrides while selecting reset method (Lijo)
+v4: Add dev_warn_once (Lijo)
+
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my thorough investigation, let me provide the comprehensive
-analysis.
+Now I have all the evidence I need. Let me compile my analysis.
+
+---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Parse the subject line**
-Record: [orangefs] [validate - action verb implying defensive check
-addition] [adding bounds validation for userspace-controlled xattr
-response length]
+**Step 1.1: Subject Line**
+- Subsystem: `drm/amdgpu`
+- Action verb: "Add" (default reset method)
+- Summary: Adds mode2 as the default reset method for soc_v1_0.
+- Record: [drm/amdgpu] [Add] [Default reset method for soc_v1_0 -
+  filling in a missing required callback]
 
-**Step 1.2: Parse all commit message tags**
-Record: Tags found:
-- Reported-by: Hyungjung Joo <jhj140711@gmail.com>
-- Signed-off-by: HyungJung Joo <jhj140711@gmail.com> (same person as
-  reporter - self-reported)
-- Signed-off-by: Mike Marshall <hubcap@omnibond.com> (orangefs subsystem
-  maintainer - carries weight)
-- No Fixes: tag (expected for candidates)
-- No Cc: stable tag (expected for candidates)
-- No Link: or syzbot tags
+**Step 1.2: Tags**
+- Signed-off-by: Asad Kamal (author, AMD developer)
+- Reviewed-by: Lijo Lazar (AMD engineer, specifically requested changes
+  in v2 and v4)
+- Signed-off-by: Alex Deucher (AMD GPU subsystem maintainer)
+- No Fixes: tag (expected), no Cc: stable, no Reported-by, no Link.
+- Record: Reviewed by AMD engineer, signed off by subsystem maintainer.
+  No syzbot or bug reports.
 
-**Step 1.3: Analyze commit body**
-Record: Body explains that `orangefs_inode_getxattr()` trusts
-`downcall.resp.getxattr.val_sz`, a field controlled by the userspace
-orangefs client, and uses it directly as `memcpy()` length for both a
-temporary user buffer and the cached xattr buffer. The fix rejects
-"malformed negative or oversized lengths" before copying bytes. The
-mechanism is clear: untrusted input used as memory copy length = buffer
-overflow / OOB read risk.
+**Step 1.3: Commit Body**
+- The commit message is minimal: "Add mode2 as default reset method for
+  soc_v1_0"
+- v2: Removed unnecessary overrides (Lijo's suggestion)
+- v4: Added dev_warn_once (Lijo's suggestion)
+- No bug description, no stack trace, no reproduction steps.
+- Record: The message describes feature completion but the underlying
+  issue is that `soc_v1_0_asic_funcs` has a NULL `.reset_method`
+  pointer.
 
-**Step 1.4: Detect hidden bug fixes**
-Record: "validate" clearly signals a missing safety check - confirmed
-bug fix, not cleanup or refactor. Language like "trusts the userspace-
-client-controlled" confirms security framing.
+**Step 1.4: Hidden Bug Fix Detection**
+- This IS a hidden bug fix. The `amdgpu_asic_reset_method()` macro at
+  `amdgpu.h:1454` dereferences `.reset_method` directly with NO null
+  check. Without this patch, any call to
+  `amdgpu_asic_reset_method(adev)` on soc_v1_0 hardware dereferences a
+  NULL function pointer, causing a kernel oops.
+- Record: YES, this is a hidden bug fix - fixes NULL pointer dereference
+  of missing `.reset_method` callback.
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-Record: Single file (`fs/orangefs/xattr.c`), +4/-0 lines total. One
-function modified: `orangefs_inode_getxattr()`. Scope: single-file
-surgical fix.
+- Single file: `drivers/gpu/drm/amd/amdgpu/soc_v1_0.c`
+- +24 lines added, 0 removed
+- Functions modified: `soc_v1_0_asic_reset` (filled in stub),
+  `soc_v1_0_asic_funcs` (added callback)
+- Functions added: `soc_v1_0_asic_reset_method` (new function)
+- Record: Single-file, +24 lines, surgical fix
 
-**Step 2.2: Code flow change**
-Record: BEFORE: `length = new_op->downcall.resp.getxattr.val_sz;` then
-immediately used in comparisons and (conditionally) as memcpy size.
-AFTER: Immediately after reading `val_sz` into `length`, the patch adds
-`if (length < 0 || length > ORANGEFS_MAX_XATTR_VALUELEN) { ret = -EIO;
-goto out_release_op; }`.
+**Step 2.2: Code Flow Change**
+- BEFORE: `soc_v1_0_asic_reset` was a stub returning 0 (no-op).
+  `.reset_method` was NULL in `soc_v1_0_asic_funcs`.
+- AFTER: `soc_v1_0_asic_reset_method` selects Mode2 reset for specific
+  hardware configs, or returns the module param default.
+  `soc_v1_0_asic_reset` dispatches based on the selected method.
+  `.reset_method` callback is populated.
 
-**Step 2.3: Identify bug mechanism**
-Record: Memory safety fix (category d in the taxonomy). The bug
-mechanism:
-- `val_sz` is `__s32` (signed 32-bit) in `struct
-  orangefs_getxattr_response` (see `fs/orangefs/downcall.h:60`).
-- It is copied verbatim from `/dev/pvfs2-req` writes via
-  `copy_from_iter_full(&op->downcall, ...)` in `fs/orangefs/devorangefs-
-  req.c:423`.
-- The kernel-side buffers `new_op->downcall.resp.getxattr.val[]` and
-  `cx->val[]` are both fixed at `ORANGEFS_MAX_XATTR_VALUELEN = 8192`
-  (protocol.h:187, orangefs-kernel.h:224).
-- If a malicious/buggy userspace client returns `val_sz > 8192`, the
-  unchecked `memcpy(cx->val, buffer, length)` overflows the cached xattr
-  buffer (kernel heap overflow) and `memcpy(buffer,
-  new_op->downcall.resp.getxattr.val, length)` reads past the 8192-byte
-  source buffer (OOB read / info leak).
-- The `length > size` check above the memcpy to `buffer` is NOT a
-  substitute: if userspace supplies a buffer big enough (e.g.,
-  `XATTR_SIZE_MAX=65536`) and val_sz is 20000, the check passes and
-  memcpy reads 11808 bytes of adjacent kernel memory, and the subsequent
-  cache store `memcpy(cx->val, buffer, length)` writes 11808 bytes past
-  `cx->val[8192]`.
-- For negative val_sz, `size == 0` path returns the negative value
-  directly to userspace (incorrect errno-like return).
+**Step 2.3: Bug Mechanism**
+- Category: NULL pointer dereference + missing functionality
+- The `amdgpu_asic_reset_method` macro (amdgpu.h:1454) calls
+  `(adev)->asic_funcs->reset_method((adev))` without NULL check.
+  Multiple callers in `amdgpu_device.c` and `amdgpu_reset.c` invoke this
+  during GPU reset paths. Without `.reset_method` set, this is a NULL
+  deref crash.
+- Record: NULL pointer dereference in GPU reset path. All other SoC
+  variants (si, cik, vi, soc15, soc21, soc24, nv) set `.reset_method` —
+  soc_v1_0 was the only one missing it.
 
-**Step 2.4: Fix quality**
-Record: Fix is obviously correct - a simple range check (`< 0 || > MAX`)
-returning `-EIO` matches the existing defensive pattern already present
-in the same file's `orangefs_listxattr()` (lines 457-464: same `< 0 || >
-MAX => -EIO` for `returned_count`). Additive check only; does not alter
-behavior for valid inputs. No regression risk.
+**Step 2.4: Fix Quality**
+- Obviously correct — follows exact same pattern as soc24, soc21, soc15,
+  etc.
+- Minimal and surgical
+- Low regression risk — only affects soc_v1_0 hardware
+- Minor dead code: `return 0;` after the switch in `soc_v1_0_asic_reset`
+  is unreachable (both cases return), but harmless.
+- Record: High quality fix, follows established patterns, low regression
+  risk.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
-**Step 3.1: Blame the changed area**
-Record: The unchecked `length = new_op->downcall.resp.getxattr.val_sz;`
-use dates back to the xattr cache implementation commit `fc2e2e9c43e3b`
-"orangefs: implement xattr cache" by Martin Brandenburg, merged in
-v5.2-rc1 (Dec 2017). The cache path `memcpy(cx->val, buffer, length)`
-(where the heap overflow occurs) was introduced in that commit. Prior
-code also used `val_sz` for the user-buffer memcpy but without the cache
-overflow vector.
+**Step 3.1: Blame**
+- The buggy code (stub `soc_v1_0_asic_reset` and missing
+  `.reset_method`) was introduced in commit `297b0cebbcc3a`
+  ("drm/amdgpu: Add soc v1_0 support") by Hawking Zhang on 2025-12-08.
+  The original commit even noted "reset placeholders" in its changelog
+  (v3).
+- Record: Bug introduced in 297b0cebbcc3a, v7.0-rc1. Explicitly noted as
+  "placeholder" in original commit.
 
-**Step 3.2: Follow Fixes: tag**
-Record: No Fixes: tag present. The buggy code has been unchanged in this
-area since fc2e2e9c43e3b (v5.2). All stable branches 5.10+ contain the
-bug.
+**Step 3.2: No Fixes: tag to follow.**
 
-**Step 3.3: File history for related changes**
-Record: Prior validation for the adjacent
-`resp.listxattr.returned_count` was added in `62441fa53bccc` "Orangefs:
-validate resp.listxattr.returned_count" (v4.5+) and `02a5cc537dfa2`
-"orangefs: sanitize listxattr and return EIO on impossible values" -
-establishing precedent for exactly this pattern. Also a recent security-
-focused orangefs xattr fix: `025e880759c27` "orangefs: fix xattr related
-buffer overflow..." (Sep 2025, Mike Marshall) addresses adjacent
-vulnerabilities reported by Aisle Research - the file has been under
-security scrutiny recently.
+**Step 3.3: File History**
+- 11 commits touch soc_v1_0.c, all building out the new soc_v1_0 driver.
+  No intermediate fix for the reset method issue.
+- Record: Standalone fix. No prerequisites needed beyond the initial
+  soc_v1_0 support.
 
-**Step 3.4: Author context**
-Record: HyungJung Joo has submitted multiple small fs-subsystem bug
-fixes in the same timeframe: `d227786ab1119` mb_cache UAF fix,
-`baa4c4d1bfce1` omfs validation fix, `6fa253b38b9b2` affs bounds fix.
-Pattern of a researcher doing responsible disclosure with fixes. Co-
-signer Mike Marshall is the orangefs subsystem maintainer (MAINTAINERS
-entry).
+**Step 3.4: Author**
+- Asad Kamal is an AMD developer with multiple commits in the PM and GPU
+  subsystem.
+- Alex Deucher (AMD GPU maintainer) signed off and submitted the patch
+  series.
+- Record: Author is AMD developer, maintainer signed off.
 
 **Step 3.5: Dependencies**
-Record: No dependencies. The check references only
-`ORANGEFS_MAX_XATTR_VALUELEN` (defined in protocol.h since earliest
-orangefs) and the existing `out_release_op` goto label. Standalone
-patch.
+- The companion patch "Disable reset on init for soc_v1_0" starts from
+  this commit's output hash (bd7043729e6a3), so it depends on this
+  patch. This patch does NOT depend on any other uncommitted patches.
+- Record: This patch is standalone and applies independently. A
+  companion patch depends on it.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1: Find original submission**
-Record: `b4 dig -c 092e0d0e96427` returned "Nothing matching" for all
-three match strategies (patch-id, author/subject, in-body From). Direct
-lore.kernel.org searches via WebFetch/curl were blocked by Anubis anti-
-bot protection. UNVERIFIED: cannot directly confirm review discussion on
-lore. However, the two SoB chain (author -> maintainer) indicates the
-patch traversed the orangefs maintainer tree before reaching fs-next.
+**Step 4.1: Patch Discussion**
+- Found on spinics: `https://www.spinics.net/lists/amd-
+  gfx/msg138861.html`
+- Part of a series of soc_v1_0 fixes posted by Alex Deucher on
+  2026-03-06
+- The series includes ~12 related patches for soc_v1_0 and related
+  hardware
+- Patch went through v1 → v2 (removed unnecessary overrides) → v4 (added
+  dev_warn_once)
+- No explicit stable nomination in the discussion
+- Record: Found submission thread. Multi-revision patch, review-driven
+  improvements. No NAKs.
 
-**Step 4.2: Who reviewed**
-Record: UNVERIFIED from lore, but SoB chain shows Mike Marshall
-(orangefs maintainer) added his SoB - strong implicit endorsement by the
-correct maintainer.
+**Step 4.2: Reviewers**
+- Reviewed-by: Lijo Lazar (AMD engineer who provided specific feedback
+  driving v2 and v4 changes)
+- Signed-off-by: Alex Deucher (subsystem maintainer)
+- Record: Properly reviewed by AMD engineers.
 
-**Step 4.3: Bug report**
-Record: Self-reported by the patch author - no external bug tracker
-link. No syzbot involvement.
+**Step 4.3: Bug Report**
+- No formal bug report or syzbot report. This is a proactive fix for
+  missing functionality that would crash on GPU reset.
+- Record: No bug report; proactive fix for obviously broken code.
 
-**Step 4.4: Related patches**
-Record: `025e880759c27` (Sep 2025) is the immediate predecessor fixing
-related xattr_key() infinite loop and cache hash collision issues in the
-same function. The current patch addresses a different vulnerability in
-the same function. No multi-patch series.
+**Step 4.4: Related Patches**
+- Companion patch "Disable reset on init for soc_v1_0" removes the
+  always-true `need_reset_on_init` logic. This is NOT in the 7.0 tree
+  yet.
+- Record: Companion patch exists but this commit is standalone.
 
-**Step 4.5: Stable mailing list**
-Record: UNVERIFIED due to Anubis blocking. Cannot confirm stable-list
-discussion.
+**Step 4.5: Stable Discussion**
+- No stable-specific discussion found.
+- Record: No stable discussion.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Key functions**
-Record: `orangefs_inode_getxattr()` (the only modified function).
+**Step 5.1: Functions**
+- New: `soc_v1_0_asic_reset_method`
+- Modified: `soc_v1_0_asic_reset`, `soc_v1_0_asic_funcs`
 
 **Step 5.2: Callers**
-Record: `orangefs_xattr_get_default()` (xattr.c:549) and
-`orangefs_inode_get_acl()` (acl.c call site).
-`orangefs_xattr_get_default()` is the `.get` handler registered in
-`orangefs_xattr_default_handler` (xattr.c:555) for the default xattr
-handler with `.prefix = ""` (matches any name). This means ALL xattr
-reads on orangefs go through this path, reachable from `getxattr(2)`,
-`listxattr(2)` consumers, and ACL lookups - very hot path for any
-orangefs user.
+- `amdgpu_asic_reset_method(adev)` is called from:
+  - `amdgpu_device.c:3216` — `amdgpu_device_check_vram_lost()` (during
+    reset)
+  - `amdgpu_device.c:4179` — `amdgpu_device_xgmi_reset_work()` (XGMI
+    reset)
+  - `amdgpu_device.c:6114` — `amdgpu_device_set_mp1_state()` (during
+    reset)
+  - `amdgpu_device.c:6158` — `amdgpu_device_suspend_display_audio()`
+    (during reset)
+  - `amdgpu_reset.c:113` — XGMI reset path
+  - `amdgpu_ras.c:4885` — RAS error handling
+- These are all common GPU reset/recovery code paths.
+- Record: The NULL `.reset_method` is dereferenced from multiple common
+  code paths during GPU hang recovery.
 
-**Step 5.3: Callees**
-Record: `service_operation()` communicates with userspace client via
-`/dev/pvfs2-req`; the response is copied directly with
-`copy_from_iter_full(&op->downcall, ...)` in `devorangefs-req.c:423`
-without per-field validation.
+**Step 5.3-5.5: Call Chain / Similar Patterns**
+- Every other SoC variant (si, cik, vi, nv, soc15, soc21, soc24) has
+  `.reset_method` populated. soc_v1_0 was the only one missing it.
+- Record: Systematic omission — soc_v1_0 was incomplete compared to all
+  sibling drivers.
 
-**Step 5.4: Reachability**
-Record: Reachable from `getxattr`/`lgetxattr`/`fgetxattr` syscalls on
-any file on an orangefs mount, by any user who can read the file (i.e.,
-permissions already granted). Trust boundary: userspace orangefs client
-daemon must be privileged, but a compromised/buggy client can trigger
-this path.
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 5.5: Similar patterns**
-Record: Confirmed - the sibling function `orangefs_listxattr()` in the
-same file already does the exact same style of validation at lines
-457-464 (for `returned_count`) and 470-478 (for `lengths[i]`), using the
-same `< 0 || > MAX => -EIO` pattern. This patch brings
-`orangefs_inode_getxattr()` to parity.
+**Step 6.1: Buggy Code Existence**
+- soc_v1_0.c was introduced in v7.0-rc1 (commit 297b0cebbcc3a). It
+  exists in v7.0.
+- Only relevant for 7.0.y stable tree.
+- Record: Bug exists in 7.0.y only.
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+**Step 6.2: Backport Complications**
+- The diff applies against the base hash `26e7566a5479c`, which is the
+  current state in v7.0. Should apply cleanly.
+- Record: Clean apply expected for 7.0.y.
 
-**Step 6.1: Buggy code in stable**
-Record: Verified the exact vulnerable code pattern `length =
-new_op->downcall.resp.getxattr.val_sz;` followed by unchecked `memcpy`
-exists in:
-- `stable-push/linux-5.10.y` xattr.c (checked)
-- `stable-push/linux-5.15.y` xattr.c (checked)
-- `stable-push/linux-6.1.y` xattr.c (checked)
-- `stable-push/linux-6.6.y` xattr.c (checked)
-- `stable-push/linux-6.12.y` xattr.c (checked)
-- `stable-push/linux-6.19.y` xattr.c (checked)
-All branches contain the bug.
+**Step 6.3: Related Fixes in Stable**
+- No related fixes found in stable.
+- Record: None.
 
-**Step 6.2: Backport complications**
-Record: Clean apply expected. The surrounding context lines (`length =
-new_op->downcall.resp.getxattr.val_sz;` followed by the comment and `if
-(size == 0)` block) are identical across all stable branches. The only
-variation is superficial (`strcpy` vs `strscpy`, `kmalloc` vs
-`kmalloc_obj`) in unrelated parts. `ORANGEFS_MAX_XATTR_VALUELEN` is
-defined in all branches.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 6.3: Related fixes already in stable**
-Record: `025e880759c27` (the previous xattr buffer-overflow fix) has
-been backported as `bc812574de633` (6.1.y), `15afebb959744` (5.15.y),
-`ef892d2bf4f3f` (5.10.y), `c2ca015ac109f` (linux-rolling-stable), etc.
-No fix for the val_sz issue is already in stable.
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: Subsystem criticality**
-Record: fs/orangefs is a parallel/distributed filesystem driver.
-PERIPHERAL at the user-population level (not every system uses
-orangefs), but CRITICAL at the memory-safety level within its users (HPC
-clusters, research facilities). The vulnerability is kernel heap
-overflow - severe for any affected user.
+**Step 7.1: Subsystem**
+- `drivers/gpu/drm/amd/amdgpu` — AMD GPU driver
+- Criticality: IMPORTANT — affects users of AMD GPUs with GC 12.1
+  hardware
+- Record: GPU driver, IMPORTANT criticality.
 
 **Step 7.2: Activity**
-Record: Actively maintained by Mike Marshall (hubcap@omnibond.com).
-Recent commits include security fixes (025e880759c27, 53e4efa470d5f,
-f7c8484316325) - subsystem is under active security-hardening work.
+- Very active subsystem — 40 changes between v7.0-rc1 and v7.0 in amdgpu
+  alone.
+- Record: Highly active, new hardware being brought up.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 8: IMPACT AND RISK
 
-**Step 8.1: Who is affected**
-Record: Filesystem-specific - users of OrangeFS parallel filesystem
-(HPC, research computing). Every orangefs getxattr call (extremely
-common - ACL checks, `security.*`, `trusted.*` xattrs) traverses this
-path.
+**Step 8.1: Affected Users**
+- Users with soc_v1_0 (GC 12.1) AMD GPU hardware running kernel 7.0.y
+- Record: Driver-specific, but for current-gen AMD hardware.
 
-**Step 8.2: Trigger conditions**
-Record: Requires a compromised/buggy/malicious userspace orangefs client
-returning oversized `val_sz`. The client runs as root in normal
-deployments, but the kernel should still validate its input (defense in
-depth). An attacker with root on the orangefs client host, or a memory-
-corrupted client process, can trigger OOB kernel access.
+**Step 8.2: Trigger Conditions**
+- Any GPU hang or error that triggers the GPU reset recovery path will
+  hit the NULL deref.
+- GPU hangs can happen during normal operation (driver bugs, power
+  management issues, etc.)
+- Record: Triggered by GPU reset, which can happen during normal GPU
+  usage.
 
-**Step 8.3: Failure mode severity**
-Record: HIGH. Kernel heap buffer overflow on `memcpy(cx->val, buffer,
-length)` when length > 8192 -> corrupts adjacent kmalloc slab memory ->
-potential kernel panic or privilege escalation. OOB read on
-`memcpy(buffer, new_op->downcall.resp.getxattr.val, length)` -> info
-leak of kernel memory to userspace.
+**Step 8.3: Failure Mode**
+- NULL pointer dereference → kernel oops/panic
+- Severity: CRITICAL
+- Record: Kernel crash during GPU reset recovery.
 
-**Step 8.4: Risk-benefit**
-Record: BENEFIT: HIGH - closes a kernel heap overflow / OOB read vector
-in a path reachable via standard syscalls. RISK: VERY LOW - 4-line
-additive bounds check, returning `-EIO` in a way that matches the
-function's existing error contract and mirrors the listxattr precedent
-in the same file. Net: strongly favors backport.
+**Step 8.4: Risk-Benefit**
+- BENEFIT: HIGH — prevents kernel crash on GPU reset for soc_v1_0
+  hardware
+- RISK: LOW — 24 lines in a single file, follows exact pattern of all
+  sibling SoC variants, only affects soc_v1_0 hardware
+- Record: High benefit, low risk.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence compiled**
+**Step 9.1: Evidence Summary**
 
-FOR:
-- Small surgical fix (+4/-0 lines)
-- Defensive bounds validation on userspace-controlled length used as
-  memcpy size
-- Prevents kernel heap overflow and OOB reads
-- Pattern mirrors existing `orangefs_listxattr` validation in the same
-  file
-- Signed off by subsystem maintainer (Mike Marshall)
-- Buggy code exists unchanged in all active stable trees (5.10+)
-- Applies cleanly to all stable branches (context verified)
-- No dependencies, self-contained
-- Recent security focus on adjacent code (025e880759c27) shows this file
-  is actively being hardened
+FOR backporting:
+- Fixes NULL pointer dereference (kernel crash) — CRITICAL severity
+- Small, contained (24 lines, single file)
+- Follows exact pattern of all other SoC variants (si, cik, vi, nv,
+  soc15, soc21, soc24)
+- Reviewed by AMD engineer, signed off by AMD GPU subsystem maintainer
+- The bug is in code shipped in v7.0; users with this hardware will hit
+  it on any GPU hang
+- Standalone patch, no dependencies
 
-AGAINST:
-- Trust boundary is narrow (requires compromised/malicious userspace
-  client which is typically root)
-- No Fixes: tag (expected absence per problem statement)
-- UNVERIFIED: mailing list discussion (Anubis blocked lore.kernel.org
-  scraping)
-- Self-reported (author = reporter), but maintainer SoB compensates
+AGAINST backporting:
+- No explicit Cc: stable or Fixes: tag (expected — that's why it's being
+  reviewed)
+- Could be seen as "feature completion" rather than "bug fix"
+- Very new code (soc_v1_0 only in v7.0)
+- No reported user impact yet (hardware may be very new)
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? YES - trivially correct bounds check,
-   maintainer-reviewed
-2. Fixes real bug? YES - heap overflow + OOB read in kernel memcpy
-3. Important issue? YES - memory safety (HIGH severity)
-4. Small and contained? YES - 4 lines, single file, single function
-5. No new features? YES - pure defensive check
-6. Applies to stable? YES - verified identical context across
-   5.10.y..6.19.y
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? YES — follows identical pattern in 7
+   other SoC variants, reviewed by AMD
+2. Fixes a real bug? YES — NULL pointer dereference on GPU reset
+3. Important issue? YES — kernel crash (CRITICAL)
+4. Small and contained? YES — 24 lines, single file
+5. No new features? BORDERLINE — adds required callback, but the
+   functionality is not "new" (all other variants have it)
+6. Can apply to stable? YES — applies cleanly to 7.0.y
 
-**Step 9.3: Exception category**
-Record: Not needed - passes general criteria. Closest category: memory-
-safety bug fix.
+**Step 9.3: Exception Categories**
+- Not a standard exception category, but fixes a crash in new hardware
+  support that shipped in v7.0.
 
 **Step 9.4: Decision**
-All stable-rule criteria met. Small, obviously-correct, defensive fix
-that prevents real kernel memory corruption. Parallel pattern already in
-the same file. Backport is low-risk, high-value.
+The missing `.reset_method` callback in `soc_v1_0_asic_funcs` causes a
+NULL pointer dereference whenever GPU reset is triggered on this
+hardware. This is a CRITICAL crash bug. The fix is 24 lines, self-
+contained, follows established patterns from all other AMD GPU SoC
+variants, and was reviewed by AMD engineers including the subsystem
+maintainer. While it could be characterized as "completing" the driver,
+the practical effect is fixing a kernel crash.
 
 ## Verification
 
-- [Phase 1] Parsed tags via `git show 092e0d0e96427`: Reported-by and
-  SoB by same author, SoB by maintainer Mike Marshall. Confirmed no
-  Fixes:/Cc: stable/Link:/syzbot tags.
-- [Phase 2] Read full `fs/orangefs/xattr.c` at current state: verified
-  the exact 4-line addition at the correct location and the existing
-  vulnerable memcpy sites at lines 208 (user buffer) and 224/231 (cache
-  buffer cx->val).
-- [Phase 2] Read `fs/orangefs/protocol.h:187`: confirmed
-  `ORANGEFS_MAX_XATTR_VALUELEN = 8192`.
-- [Phase 2] Read `fs/orangefs/downcall.h:59-63`: confirmed `val_sz` is
-  `__s32` and `val[ORANGEFS_MAX_XATTR_VALUELEN]`.
-- [Phase 2] Read `fs/orangefs/orangefs-kernel.h:221-227`: confirmed
-  `struct orangefs_cached_xattr` has `val[ORANGEFS_MAX_XATTR_VALUELEN]`.
-- [Phase 2] Read `fs/orangefs/devorangefs-req.c:423`: confirmed
-  `copy_from_iter_full(&op->downcall, ...)` copies userspace data
-  directly into `downcall` without per-field validation.
-- [Phase 3] `git log --oneline -- fs/orangefs/xattr.c`: verified
-  fc2e2e9c43e3b introduced the cache path and `git describe --contains
-  fc2e2e9c43e3b` = v5.2-rc1.
-- [Phase 3] `git show 025e880759c27`: confirmed recent security fix
-  precedent (Sep 2025).
-- [Phase 3] `git show 62441fa53bccc`: confirmed listxattr validation
-  precedent using the same `< 0 || > MAX => -EIO` pattern.
-- [Phase 3] `git log --author="jhj140711"`: confirmed author has
-  submitted multiple other fs bug fixes (mbcache UAF, omfs, affs).
-- [Phase 4] `b4 dig -c 092e0d0e96427`: returned no match by patch-id /
-  author+subject / in-body From. UNVERIFIED direct lore thread.
-- [Phase 4] lore.kernel.org WebFetch/curl: blocked by Anubis anti-bot.
-  UNVERIFIED lore discussion content.
-- [Phase 5] `grep -rn "service_operation" fs/orangefs/`: traced the
-  getxattr call flow.
-- [Phase 5] Verified `orangefs_listxattr()` lines 457-478 contain the
-  analogous `< 0 || > MAX => -EIO` pattern for `returned_count` and
-  `lengths[i]`.
-- [Phase 6] `git show stable-push/linux-5.10.y:fs/orangefs/xattr.c`:
-  confirmed identical vulnerable pattern.
-- [Phase 6] Same for `linux-5.15.y`, `linux-6.1.y`, `linux-6.6.y`,
-  `linux-6.12.y`, `linux-6.19.y`: all contain the bug with essentially
-  identical context for clean apply.
-- [Phase 6] `git log --oneline stable-push/linux-*.y --grep="orangefs"`:
-  confirmed no prior fix for the val_sz validation already backported.
-- [Phase 7] `git log --oneline --author="hubcap" -- fs/orangefs/`:
-  confirmed Mike Marshall is the active orangefs maintainer.
-- [Phase 8] Bug severity derived from verified code analysis: heap
-  overflow on fixed 8192-byte `cx->val` and OOB read on fixed 8192-byte
-  `downcall.resp.getxattr.val`.
-- UNVERIFIED: Whether the patch has a corresponding lore thread with
-  explicit stable nomination or reviewer feedback; Anubis challenge
-  prevented direct lore queries and b4 dig found no match. This does NOT
-  drive the decision - the technical analysis is independently
-  sufficient.
-
-The fix is small, obviously correct, addresses a memory-safety bug in a
-syscall-reachable path, mirrors an existing validation pattern in the
-same file, was signed off by the subsystem maintainer, and applies
-cleanly to all active stable branches that contain the vulnerable code.
+- [Phase 1] Parsed tags: Reviewed-by: Lijo Lazar, Signed-off-by: Alex
+  Deucher (maintainer). No syzbot/Fixes/Cc:stable.
+- [Phase 2] Diff analysis: +24 lines in soc_v1_0.c. Adds
+  `soc_v1_0_asic_reset_method` function, fills in `soc_v1_0_asic_reset`
+  stub, populates `.reset_method` in asic_funcs.
+- [Phase 2] Verified: `amdgpu_asic_reset_method` macro at amdgpu.h:1454
+  dereferences `.reset_method` with NO null check.
+- [Phase 2] Verified: All other SoC variants (si, cik, vi, nv, soc15,
+  soc21, soc24) have `.reset_method` set. soc_v1_0 is the only one
+  missing it.
+- [Phase 3] git blame: buggy stub introduced in commit 297b0cebbcc3a
+  (2025-12-08), present since v7.0-rc1. Original commit described it as
+  "reset placeholders."
+- [Phase 3] git tag: 297b0cebbcc3a is contained in v7.0-rc1, v7.0.
+- [Phase 3] git log: 11 commits touch soc_v1_0.c, none fix the reset
+  method issue.
+- [Phase 4] Found original submission: spinics.net/lists/amd-
+  gfx/msg138861.html — part of series by Alex Deucher on 2026-03-06
+- [Phase 4] Patch evolved v1→v2→v4, review-driven improvements, no NAKs
+- [Phase 4] Companion patch "Disable reset on init for soc_v1_0" exists
+  and depends on this commit
+- [Phase 5] Verified callers: `amdgpu_asic_reset_method()` called from
+  amdgpu_device.c:3216, 4179, 6114, 6158 and amdgpu_reset.c:113 — all
+  GPU reset code paths
+- [Phase 6] Code exists only in v7.0 (soc_v1_0 introduced in v7.0-rc1)
+- [Phase 8] Failure mode: NULL deref → kernel oops on GPU reset,
+  severity CRITICAL
+- UNVERIFIED: Whether any users have actually triggered this crash
+  (hardware is very new)
 
 **YES**
 
- fs/orangefs/xattr.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/soc_v1_0.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/fs/orangefs/xattr.c b/fs/orangefs/xattr.c
-index 1b372189cd10b..b6d116302de4e 100644
---- a/fs/orangefs/xattr.c
-+++ b/fs/orangefs/xattr.c
-@@ -188,6 +188,10 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
- 	 * Length returned includes null terminator.
- 	 */
- 	length = new_op->downcall.resp.getxattr.val_sz;
-+	if (length < 0 || length > ORANGEFS_MAX_XATTR_VALUELEN) {
-+		ret = -EIO;
-+		goto out_release_op;
-+	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c b/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
+index 59ab952d5cce4..ca66a0169c781 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc_v1_0.c
+@@ -229,8 +229,31 @@ static bool soc_v1_0_need_reset_on_init(struct amdgpu_device *adev)
+ 	return false;
+ }
  
- 	/*
- 	 * Just return the length of the queried attribute.
++static enum amd_reset_method
++soc_v1_0_asic_reset_method(struct amdgpu_device *adev)
++{
++	if ((adev->gmc.xgmi.supported && adev->gmc.xgmi.connected_to_cpu) ||
++	    (amdgpu_ip_version(adev, MP1_HWIP, 0) == IP_VERSION(15, 0, 8))) {
++		if (amdgpu_reset_method != -1)
++			dev_warn_once(adev->dev, "Reset override isn't supported, using Mode2 instead.\n");
++
++		return AMD_RESET_METHOD_MODE2;
++	}
++
++	return amdgpu_reset_method;
++}
++
+ static int soc_v1_0_asic_reset(struct amdgpu_device *adev)
+ {
++	switch (soc_v1_0_asic_reset_method(adev)) {
++	case AMD_RESET_METHOD_MODE2:
++		dev_info(adev->dev, "MODE2 reset\n");
++		return amdgpu_dpm_mode2_reset(adev);
++	default:
++		dev_info(adev->dev, "Invalid reset method Not supported\n");
++		return -EOPNOTSUPP;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -244,6 +267,7 @@ static const struct amdgpu_asic_funcs soc_v1_0_asic_funcs = {
+ 	.need_reset_on_init = &soc_v1_0_need_reset_on_init,
+ 	.encode_ext_smn_addressing = &soc_v1_0_encode_ext_smn_addressing,
+ 	.reset = soc_v1_0_asic_reset,
++	.reset_method = &soc_v1_0_asic_reset_method,
+ };
+ 
+ static int soc_v1_0_common_early_init(struct amdgpu_ip_block *ip_block)
 -- 
 2.53.0
 
