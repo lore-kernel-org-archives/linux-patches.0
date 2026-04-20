@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B636B3264F1;
-	Mon, 20 Apr 2026 16:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140BD3264F1;
+	Mon, 20 Apr 2026 16:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701281; cv=none; b=qkfMBJSofOK1FkFB67Mn5/TjAXohnBky5S6c300ur8udE+TUtqd+ezOfqGh7qjaaxaECeIBP9pl9+uh4TRX+iZFq/VeDSJfZb9ztu/a6mcw3Q4hczhVg+7PwrRzDtppmwpaSmRNh/CbCChcgRgCbhTsw0D8SUrDPC4mUHM/dFu4=
+	t=1776701284; cv=none; b=o3ikZ1oDIhKDUHdBV5ar5B8lFMrY1o4AgGh2oV74M3eTq24XyfE62P7gqX14DtREnGOFLiM5SSsMUu/QwYO058JrMd81dI8Uy90sgW643rNtswjvk7mEZoEnN3GmRGXKldVVqdWk1/BDzavL02LPR7LWFLqOLDz25yXdNd5xUy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701281; c=relaxed/simple;
-	bh=jIMTF/HqsD+zWnz+99hTUFOSm6FUe3NAPrp8hNGp/g4=;
+	s=arc-20240116; t=1776701284; c=relaxed/simple;
+	bh=tjlqBejakTbcgR4B5gF5n6QX0KmlmaI1A+52sLQQYv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fk4PTImm7KwZOgmG74hpgQamjhSTXB7Llfkh9XroliNr+t4GrZxUjDe/dyc/Wywd9FWZ5fDPwj78HjziR8R/Dafy5jUQEw4QXz/n1a6WIEbOkURkdWcy829PxWkWHcnI2NlwNxw6EFcg7Ao41MoIr5L/L2/uzci44/VOFxnBVVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jp9KhHAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qzh7mpE8QA9CwM6rTagE/p2oGvxB1OeetWabKkO6z82xyuLSNMvfY02TmyC4GalRRUoPYoyTKxJg3A0e7uSzOy8Sydc8y0E78AcLOiutqa4xKnxP7VM9jfC154LiA64TCxyooyzKJHVyBWbt23pXCDxR5h984Bmni/mqHuYZlDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9UH4nX3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jp9KhHAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14674C19425;
-	Mon, 20 Apr 2026 16:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9UH4nX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBC6C19425;
+	Mon, 20 Apr 2026 16:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701281;
-	bh=jIMTF/HqsD+zWnz+99hTUFOSm6FUe3NAPrp8hNGp/g4=;
+	s=korg; t=1776701284;
+	bh=tjlqBejakTbcgR4B5gF5n6QX0KmlmaI1A+52sLQQYv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jp9KhHAvx+chsfaimdakDmxlhH/fu1q1r5/3rOx8Vq0cwOJ8NX64PvlB9pDE313aN
-	 6jIWvaWu93KgXx58RTAsvqydHmgittGE8l56A98AWuCD3BBaoh13HFH0mn5G0SoDH/
-	 yx21ZsoJoDifieQnmmrtL/pdc8UlhPnjWxum9r60=
+	b=I9UH4nX3d9AoZauy4MOHBjEFaes6ZMRUpJgmc5r/31lgX0aBNULhdszVlF9Okj6JT
+	 xmzYgURcl5LQe4fI1Ql66oQ52RHREdjV/1Z6ZGCrXZl2/tGDf5KJ4FackQx2PC6Ct2
+	 o+6RQ7uoFepaz/7ez66Nb2FM28qC3D4f+/VhjXr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyuan Li <2063309626@qq.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Melissa Wen <mwen@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/162] can: mcp251x: add error handling for power enable in open and resume
-Date: Mon, 20 Apr 2026 17:40:42 +0200
-Message-ID: <20260420153927.388497816@linuxfoundation.org>
+Subject: [PATCH 6.12 046/162] drm/vc4: Fix a memory leak in hang state error path
+Date: Mon, 20 Apr 2026 17:41:18 +0200
+Message-ID: <20260420153928.695375033@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -45,94 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wenyuan Li <2063309626@qq.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 7a57354756c7df223abe2c33774235ad70cb4231 ]
+[ Upstream commit 9525d169e5fd481538cf8c663cc5839e54f2e481 ]
 
-Add missing error handling for mcp251x_power_enable() calls in both
-mcp251x_open() and mcp251x_can_resume() functions.
+When vc4_save_hang_state() encounters an early return condition, it
+returns without freeing the previously allocated `kernel_state`,
+leaking memory.
 
-In mcp251x_open(), if power enable fails, jump to error path to close
-candev without attempting to disable power again.
+Add the missing kfree() calls by consolidating the early return paths
+into a single place.
 
-In mcp251x_can_resume(), properly check return values of power enable calls
-for both power and transceiver regulators. If any fails, return the error
-code to the PM framework and log the failure.
-
-This ensures the driver properly handles power control failures and
-maintains correct device state.
-
-Signed-off-by: Wenyuan Li <2063309626@qq.com>
-Link: https://patch.msgid.link/tencent_F3EFC5D7738AC548857B91657715E2D3AA06@qq.com
-[mkl: fix patch description]
-[mkl: mcp251x_can_resume(): replace goto by return]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 214613656b51 ("drm/vc4: Add an interface for capturing the GPU state after a hang.")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260330-vc4-misc-fixes-v1-3-92defc940a29@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/mcp251x.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vc4/vc4_gem.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
-index 74906aa98be3e..b241953d2ef61 100644
---- a/drivers/net/can/spi/mcp251x.c
-+++ b/drivers/net/can/spi/mcp251x.c
-@@ -1212,7 +1212,11 @@ static int mcp251x_open(struct net_device *net)
+diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
+index 373d310c7b6a5..62d19601ef356 100644
+--- a/drivers/gpu/drm/vc4/vc4_gem.c
++++ b/drivers/gpu/drm/vc4/vc4_gem.c
+@@ -169,10 +169,8 @@ vc4_save_hang_state(struct drm_device *dev)
+ 	spin_lock_irqsave(&vc4->job_lock, irqflags);
+ 	exec[0] = vc4_first_bin_job(vc4);
+ 	exec[1] = vc4_first_render_job(vc4);
+-	if (!exec[0] && !exec[1]) {
+-		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+-		return;
+-	}
++	if (!exec[0] && !exec[1])
++		goto err_free_state;
+ 
+ 	/* Get the bos from both binner and renderer into hang state. */
+ 	state->bo_count = 0;
+@@ -189,10 +187,8 @@ vc4_save_hang_state(struct drm_device *dev)
+ 	kernel_state->bo = kcalloc(state->bo_count,
+ 				   sizeof(*kernel_state->bo), GFP_ATOMIC);
+ 
+-	if (!kernel_state->bo) {
+-		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+-		return;
+-	}
++	if (!kernel_state->bo)
++		goto err_free_state;
+ 
+ 	k = 0;
+ 	for (i = 0; i < 2; i++) {
+@@ -284,6 +280,12 @@ vc4_save_hang_state(struct drm_device *dev)
+ 		vc4->hang_state = kernel_state;
+ 		spin_unlock_irqrestore(&vc4->job_lock, irqflags);
  	}
- 
- 	mutex_lock(&priv->mcp_lock);
--	mcp251x_power_enable(priv->transceiver, 1);
-+	ret = mcp251x_power_enable(priv->transceiver, 1);
-+	if (ret) {
-+		dev_err(&spi->dev, "failed to enable transceiver power: %pe\n", ERR_PTR(ret));
-+		goto out_close_candev;
-+	}
- 
- 	priv->force_quit = 0;
- 	priv->tx_skb = NULL;
-@@ -1259,6 +1263,7 @@ static int mcp251x_open(struct net_device *net)
- 	mcp251x_hw_sleep(spi);
- out_close:
- 	mcp251x_power_enable(priv->transceiver, 0);
-+out_close_candev:
- 	close_candev(net);
- 	mutex_unlock(&priv->mcp_lock);
- 	if (release_irq)
-@@ -1494,11 +1499,25 @@ static int __maybe_unused mcp251x_can_resume(struct device *dev)
- {
- 	struct spi_device *spi = to_spi_device(dev);
- 	struct mcp251x_priv *priv = spi_get_drvdata(spi);
-+	int ret = 0;
- 
--	if (priv->after_suspend & AFTER_SUSPEND_POWER)
--		mcp251x_power_enable(priv->power, 1);
--	if (priv->after_suspend & AFTER_SUSPEND_UP)
--		mcp251x_power_enable(priv->transceiver, 1);
-+	if (priv->after_suspend & AFTER_SUSPEND_POWER) {
-+		ret = mcp251x_power_enable(priv->power, 1);
-+		if (ret) {
-+			dev_err(dev, "failed to restore power: %pe\n", ERR_PTR(ret));
-+			return ret;
-+		}
-+	}
 +
-+	if (priv->after_suspend & AFTER_SUSPEND_UP) {
-+		ret = mcp251x_power_enable(priv->transceiver, 1);
-+		if (ret) {
-+			dev_err(dev, "failed to restore transceiver power: %pe\n", ERR_PTR(ret));
-+			if (priv->after_suspend & AFTER_SUSPEND_POWER)
-+				mcp251x_power_enable(priv->power, 0);
-+			return ret;
-+		}
-+	}
++	return;
++
++err_free_state:
++	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
++	kfree(kernel_state);
+ }
  
- 	if (priv->after_suspend & (AFTER_SUSPEND_POWER | AFTER_SUSPEND_UP))
- 		queue_work(priv->wq, &priv->restart_work);
+ static void
 -- 
 2.53.0
 
