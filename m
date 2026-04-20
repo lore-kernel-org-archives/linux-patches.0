@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62511334C39;
-	Mon, 20 Apr 2026 15:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B8B33262B;
+	Mon, 20 Apr 2026 15:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700320; cv=none; b=PGG4SnszRuNH8IaN4tggMDqkdnLZTgJ/990DDQpN8JFt7H0xj6Vs/WDfUwVd3ZIWDMBwZohgzecthb1gvk5zUFFiWSy1HI8gmtsd1OlVZFJlNf8xSQrYfL40sDEyQmypj5VqeV2z1duM4ACq4EqgzGmlTXUQOV9PrwIGaNlv63o=
+	t=1776700323; cv=none; b=jIYid8hH0XnLswfMGwukkn85p2tcoxIBvW6WA+9RybII3HmI9tQ45/H/jSjRpFAvs4HSywKr/e2rO3pelrmWhkNanzWIt8C/TE6kN0cz0DByXD4UCSmFyEidz+6pOYnA5g7H+M4ALYpMLNpqdCDBSxXhNdtrRQUjPr/XoyC1plc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700320; c=relaxed/simple;
-	bh=j8VbCZ9HbnqpSGlcWAfqTpOCEA9XXksrdbjhrAnbl6U=;
+	s=arc-20240116; t=1776700323; c=relaxed/simple;
+	bh=4FULiEwre8gWiYOsa0GYw9YzYwaEkyE2VKsk8oVpIfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GEnm34K33iTFS2QJAh0F6Hxg9EKVZi/9qvFQYZ8ZaBNxG1yBwu9yrY6hiyRiiccaFpn07DTQJaHlRyOhaJm5s6RF6S+I4TrDeOMrZQUHZs17DAzzDLT49KoCLEZ2TqYuaiWHh5AhFRLRdoksdPc3vuhgLlsMP+8xO3ki5d/4SM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAe5Xvss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCpy+24U97SiYczmZeZAiL4vFF87MGKo9qTFGx07GZKacijeMsECIdPff1daxcBMwVQYlpevm0O6hQbFJHDvxXoz1bcfCGk/3BpsSBEAbEsMX9kDwayS2e/7gPdJH2IgfPhUQ6Q1aRjiy+rEhaAjKh+FRde/OHsSul9F4RFDh7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjimM3l7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAe5Xvss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC194C19425;
-	Mon, 20 Apr 2026 15:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjimM3l7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB45C19425;
+	Mon, 20 Apr 2026 15:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700320;
-	bh=j8VbCZ9HbnqpSGlcWAfqTpOCEA9XXksrdbjhrAnbl6U=;
+	s=korg; t=1776700322;
+	bh=4FULiEwre8gWiYOsa0GYw9YzYwaEkyE2VKsk8oVpIfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wAe5Xvss3l91U8ZCo5T6f38nxqGULj8VfEClqdkowIttxOLJhcVtgkcHpfnE1vIh9
-	 SAZLN8rI6f+Yy8FEMeQnpzjlFFfqnGEcWVxvUENl/mqXThnvw79VigIZcz3nTYQESb
-	 rKbQTULDWCqaFRV7/pi3fHOpAs55DPHy0hpEI0RQ=
+	b=EjimM3l7647fM8WRXhwgX/qMktFQ9kHq8T7xNkwMUrvIZGn+SABuyZTJzxCtzlwtX
+	 qqylmivV2S0KC0ihV6UjQoP/hmLKYuuRQVTRLm+YFHI7zTVooSrES8Uq2+cJPn8OnY
+	 BFoM33v6WnFaC6mjkOVG3KnPAKx+Go1r0m4LtjuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Baltieri <fabio.baltieri@gmail.com>,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 126/220] net: txgbe: leave space for null terminators on property_entry
-Date: Mon, 20 Apr 2026 17:41:07 +0200
-Message-ID: <20260420153938.564408546@linuxfoundation.org>
+Subject: [PATCH 6.19 127/220] af_unix: read UNIX_DIAG_VFS data under unix_state_lock
+Date: Mon, 20 Apr 2026 17:41:08 +0200
+Message-ID: <20260420153938.600659761@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,46 +58,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Baltieri <fabio.baltieri@gmail.com>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-[ Upstream commit 5a37d228799b0ec2c277459c83c814a59d310bc3 ]
+[ Upstream commit 39897df386376912d561d4946499379effa1e7ef ]
 
-Lists of struct property_entry are supposed to be terminated with an
-empty property, this driver currently seems to be allocating exactly the
-amount of entry used.
+Exact UNIX diag lookups hold a reference to the socket, but not to
+u->path. Meanwhile, unix_release_sock() clears u->path under
+unix_state_lock() and drops the path reference after unlocking.
 
-Change the struct definition to leave an extra element for all
-property_entry.
+Read the inode and device numbers for UNIX_DIAG_VFS while holding
+unix_state_lock(), then emit the netlink attribute after dropping the
+lock.
 
-Fixes: c3e382ad6d15 ("net: txgbe: Add software nodes to support phylink")
-Signed-off-by: Fabio Baltieri <fabio.baltieri@gmail.com>
-Tested-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/20260405222013.5347-1-fabio.baltieri@gmail.com
+This keeps the VFS data stable while the reply is being built.
+
+Fixes: 5f7b0569460b ("unix_diag: Unix inode info NLA")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260407080015.1744197-1-n05ec@lzu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_type.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/unix/diag.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-index 82433e9cb0e33..6b05f32b4a010 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-@@ -424,10 +424,10 @@ struct txgbe_nodes {
- 	char i2c_name[32];
- 	char sfp_name[32];
- 	char phylink_name[32];
--	struct property_entry gpio_props[1];
--	struct property_entry i2c_props[3];
--	struct property_entry sfp_props[8];
--	struct property_entry phylink_props[2];
-+	struct property_entry gpio_props[2];
-+	struct property_entry i2c_props[4];
-+	struct property_entry sfp_props[9];
-+	struct property_entry phylink_props[3];
- 	struct software_node_ref_args i2c_ref[1];
- 	struct software_node_ref_args gpio0_ref[1];
- 	struct software_node_ref_args gpio1_ref[1];
+diff --git a/net/unix/diag.c b/net/unix/diag.c
+index ca34730261510..c9c1e51c44196 100644
+--- a/net/unix/diag.c
++++ b/net/unix/diag.c
+@@ -28,18 +28,23 @@ static int sk_diag_dump_name(struct sock *sk, struct sk_buff *nlskb)
+ 
+ static int sk_diag_dump_vfs(struct sock *sk, struct sk_buff *nlskb)
+ {
+-	struct dentry *dentry = unix_sk(sk)->path.dentry;
++	struct unix_diag_vfs uv;
++	struct dentry *dentry;
++	bool have_vfs = false;
+ 
++	unix_state_lock(sk);
++	dentry = unix_sk(sk)->path.dentry;
+ 	if (dentry) {
+-		struct unix_diag_vfs uv = {
+-			.udiag_vfs_ino = d_backing_inode(dentry)->i_ino,
+-			.udiag_vfs_dev = dentry->d_sb->s_dev,
+-		};
+-
+-		return nla_put(nlskb, UNIX_DIAG_VFS, sizeof(uv), &uv);
++		uv.udiag_vfs_ino = d_backing_inode(dentry)->i_ino;
++		uv.udiag_vfs_dev = dentry->d_sb->s_dev;
++		have_vfs = true;
+ 	}
++	unix_state_unlock(sk);
+ 
+-	return 0;
++	if (!have_vfs)
++		return 0;
++
++	return nla_put(nlskb, UNIX_DIAG_VFS, sizeof(uv), &uv);
+ }
+ 
+ static int sk_diag_dump_peer(struct sock *sk, struct sk_buff *nlskb)
 -- 
 2.53.0
 
