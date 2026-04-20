@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B5423BD17;
-	Mon, 20 Apr 2026 16:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84243396EE;
+	Mon, 20 Apr 2026 16:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700906; cv=none; b=W0EplZVd7Pb6oLaTHdZ3hvqXPetEuuMWW3FOV2oF5JhXmJ5la7q+vuu9VdBhVt7Az0Z2TUKo9Zqd4VK7pc1gwxGl/XGyCS0BfGa8gV6CgeZbsbs1reydFTWw7rhniSandLAujpJ9/U/xeqKqjv3csc4FkJqcNVMNHl4fN+fC9L8=
+	t=1776700908; cv=none; b=RIauXghjDZqtpO0mIVPftHsGEpckTbNmScEoWTpvsPRp+aJQ3TXYqmQEGSg5N3AGmkHzEi3kEI1Z/dHA0b46a2nUZ66uMnjSchW6jo4ku3tO+Y+x0qCfu4p6M0pw7Uef/S1dUOFZR1l5ZWeBljyakGxhVbpcAOa1GUwWilA4ztQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700906; c=relaxed/simple;
-	bh=c9NmwBH+PIC3Y/s1dPZgHmuKfrZp34RU77pg4ydUU80=;
+	s=arc-20240116; t=1776700908; c=relaxed/simple;
+	bh=ldM3gqXnx/RQnu56kMuXsbi5nrJ/9acujqCmTkeSUYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFsacIZgw+Bgrr/YjkupOLb1XmhmM1ZXGeQUongrmydtfhryL9gknKlu6bbdIT3jbhZ5Y/Em+m74CtgIXvUqVhKJdj9eoDXqWX19i7KFOJIwqnafFDrCeBsibz/W1l3VQIe9JWogTknfFtyifoxs6l+60DzJUeXxS7eMdngUySU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDLju25g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBpOyTJvOQWQUJ/R/1S8VyueNwM4bwkxjY5+DIUYWRCCeuvaF7aJf2EwOr8y7fjtrrZg45YIJQKf1VVNXFPJ17CXxw6WpSGyh+GvJsFsHorORHwi7WAKhzMfjozIm3dI925HaqSdQgy0cLFDTATJPM0kCVvsHzkdHd5+Us4w6W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSaVhoLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDLju25g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F7CC19425;
-	Mon, 20 Apr 2026 16:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSaVhoLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0748BC19425;
+	Mon, 20 Apr 2026 16:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700905;
-	bh=c9NmwBH+PIC3Y/s1dPZgHmuKfrZp34RU77pg4ydUU80=;
+	s=korg; t=1776700908;
+	bh=ldM3gqXnx/RQnu56kMuXsbi5nrJ/9acujqCmTkeSUYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDLju25gkUIQ2eyRa5zs7KvTWeXARuC2w4BVjITfhaiN9mRAHdNOblxI3APFyAv8j
-	 QwJRYudzkTKsJpPhhH/lLRoB0kc4LMZPCYFv1nJ/2z/mSkoE9URXWRpFLF2ufA/3/5
-	 TNBJkJ3c6u0R9YVV6Bt8UPbCZLhEqNpeasDF2K4w=
+	b=rSaVhoLzeHxbA/pX1NhWJWKCSn6vxOBtXAUrMbIVb5kSuLNmH7mfx7/5GjBcdLq/w
+	 w5MPDFVFYbI1i4HoVhzutOpFJU/3yL1nGLUUqyJTepudUakQm/6ItVCP3yfb7vnkT/
+	 gcbU38shIVSCaXMr1MFR50rp9DoGYAmDN7/qJX2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Strozek <mstrozek@opensource.cirrus.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zijing Yin <yzjaurora@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 104/198] ASoC: SDCA: Fix overwritten var within for loop
-Date: Mon, 20 Apr 2026 17:41:23 +0200
-Message-ID: <20260420153939.346764206@linuxfoundation.org>
+Subject: [PATCH 6.18 074/198] bridge: guard local VLAN-0 FDB helpers against NULL vlan group
+Date: Mon, 20 Apr 2026 17:40:53 +0200
+Message-ID: <20260420153938.274119015@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -52,38 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Strozek <mstrozek@opensource.cirrus.com>
+From: Zijing Yin <yzjaurora@gmail.com>
 
-[ Upstream commit 23e0cbe55736de222ed975863cf06baf29bee5fe ]
+[ Upstream commit 1979645e1842cb7017525a61a0e0e0beb924d02a ]
 
-mask variable should not be overwritten within the for loop or it will
-skip certain bits. Change to using BIT() macro.
+When CONFIG_BRIDGE_VLAN_FILTERING is not set, br_vlan_group() and
+nbp_vlan_group() return NULL (br_private.h stub definitions). The
+BR_BOOLOPT_FDB_LOCAL_VLAN_0 toggle code is compiled unconditionally and
+reaches br_fdb_delete_locals_per_vlan_port() and
+br_fdb_insert_locals_per_vlan_port(), where the NULL vlan group pointer
+is dereferenced via list_for_each_entry(v, &vg->vlan_list, vlist).
 
-Fixes: b9ab3b618241 ("ASoC: SDCA: Add some initial IRQ handlers")
-Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260408093835.2881486-2-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The observed crash is in the delete path, triggered when creating a
+bridge with IFLA_BR_MULTI_BOOLOPT containing BR_BOOLOPT_FDB_LOCAL_VLAN_0
+via RTM_NEWLINK. The insert helper has the same bug pattern.
+
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000056: 0000 [#1] KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x00000000000002b0-0x00000000000002b7]
+  RIP: 0010:br_fdb_delete_locals_per_vlan+0x2b9/0x310
+  Call Trace:
+   br_fdb_toggle_local_vlan_0+0x452/0x4c0
+   br_toggle_fdb_local_vlan_0+0x31/0x80 net/bridge/br.c:276
+   br_boolopt_toggle net/bridge/br.c:313
+   br_boolopt_multi_toggle net/bridge/br.c:364
+   br_changelink net/bridge/br_netlink.c:1542
+   br_dev_newlink net/bridge/br_netlink.c:1575
+
+Add NULL checks for the vlan group pointer in both helpers, returning
+early when there are no VLANs to iterate. This matches the existing
+pattern used by other bridge FDB functions such as br_fdb_add() and
+br_fdb_delete().
+
+Fixes: 21446c06b441 ("net: bridge: Introduce UAPI for BR_BOOLOPT_FDB_LOCAL_VLAN_0")
+Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260402140153.3925663-1-yzjaurora@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdca/sdca_interrupts.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/bridge/br_fdb.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/sdca/sdca_interrupts.c b/sound/soc/sdca/sdca_interrupts.c
-index f83413587da5a..4189efdfe2747 100644
---- a/sound/soc/sdca/sdca_interrupts.c
-+++ b/sound/soc/sdca/sdca_interrupts.c
-@@ -104,9 +104,7 @@ static irqreturn_t function_status_handler(int irq, void *data)
+diff --git a/net/bridge/br_fdb.c b/net/bridge/br_fdb.c
+index 0501ffcb8a3dd..e2c17f620f009 100644
+--- a/net/bridge/br_fdb.c
++++ b/net/bridge/br_fdb.c
+@@ -597,6 +597,9 @@ static void br_fdb_delete_locals_per_vlan_port(struct net_bridge *br,
+ 		dev = br->dev;
+ 	}
  
- 	status = val;
- 	for_each_set_bit(mask, &status, BITS_PER_BYTE) {
--		mask = 1 << mask;
--
--		switch (mask) {
-+		switch (BIT(mask)) {
- 		case SDCA_CTL_ENTITY_0_FUNCTION_NEEDS_INITIALIZATION:
- 			//FIXME: Add init writes
- 			break;
++	if (!vg)
++		return;
++
+ 	list_for_each_entry(v, &vg->vlan_list, vlist)
+ 		br_fdb_find_delete_local(br, p, dev->dev_addr, v->vid);
+ }
+@@ -630,6 +633,9 @@ static int br_fdb_insert_locals_per_vlan_port(struct net_bridge *br,
+ 		dev = br->dev;
+ 	}
+ 
++	if (!vg)
++		return 0;
++
+ 	list_for_each_entry(v, &vg->vlan_list, vlist) {
+ 		if (!br_vlan_should_use(v))
+ 			continue;
 -- 
 2.53.0
 
