@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBFF336896;
-	Mon, 20 Apr 2026 15:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FFC329C6D;
+	Mon, 20 Apr 2026 15:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700573; cv=none; b=b1rmmhFrZqxLdw59CiKSvqXH4M9hDIszq0ioGOUWTqvcXB0YDazgNK59GR3tas4mZbdk40+WVYohE9iz4Jb6gmXmsN/5PKl4agGMFLtam7nB0YaZkHpa91e2o4/J7puKTK9L6GMAG0Rvnn9L+uMX7YNAjcf6J9pHeUpBxYmUDu0=
+	t=1776700576; cv=none; b=bIZW7UmgCguEZdLFYKyg9qelHh7WAPaiJqEvfbxN+GKjWGRTkeH8JjOn6vDjHp6b5mM5g7z0oRrsx3ECuQF4BD+Eq284qk5BYRuKxGo5r0Gf0A0S/sY3t2VSwPoY57ap1D69lRiWoezEl5E19XsJDQpaDfKA8rUs4vA8W4Mrwto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700573; c=relaxed/simple;
-	bh=vSp1iQE4v4S7icYAhGNjgm15ayUfQuPATxRJl2Mki4M=;
+	s=arc-20240116; t=1776700576; c=relaxed/simple;
+	bh=/wV2Nq04RgQibA0dBHLk62L/bL432vJNKLanbiJwAQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QzjHMeQkg3Eo5SGcRvC62xuW/b6UA6HLzO28bIFD2ZJ2q8fJ7o/QMnDO/dPsMi1OEpv8QZtexMfNTi78g25TT8IzI0NB3zAZgmc0ulpcZO6Zg2HkGR740qoU0jAWct7MouACMSR4KwGvVG9kV5TvpvyPwnMLyc1r3/cVTgh9orQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jv9fB5/H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRnvjR8X50WCtqF6ZP+VlkLclpHnYKCN8avwbfINE9Yy+19kHI76lmTjiv3M0JqhO4IQCSa7SPnmhYsayDejxNc+Nppc4BJb4fkdNfi3iMiBiIsHLQd8TPybpMwlKyJVuHd0nT/GqmLUIlCe4AoQukFWZqPFusXj57FP+bm6RxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JOKlWZ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jv9fB5/H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740ACC19425;
-	Mon, 20 Apr 2026 15:56:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JOKlWZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06FEC19425;
+	Mon, 20 Apr 2026 15:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700573;
-	bh=vSp1iQE4v4S7icYAhGNjgm15ayUfQuPATxRJl2Mki4M=;
+	s=korg; t=1776700576;
+	bh=/wV2Nq04RgQibA0dBHLk62L/bL432vJNKLanbiJwAQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jv9fB5/HHzeU7kKzRWR/uGCXNFcnMWlGFzvpDVpfKg1HwNAs6e2vUnJuVOBpN4CYM
-	 DG3mmivmTllM2z/hFRBmgzMuxRNumx02J0DsZXIBcK3MJm52GQL5TCTTpnlHl0+Lpl
-	 RrUL0rNM89sf8vbJ8nw01EQgLGH3xV8CJEZC2oCY=
+	b=0JOKlWZ/7+OXRIaQ085XC90nxrBLZ0BD3elZnc3bHIENoA4IWstjxrFhQ5aNx1cPZ
+	 DDfDbnNiw+hp7LJyXW6l+OJTYsbJlbred/VfoiurYatB6b9sWSowPXdRkNQMhGCoIB
+	 mrL5ADVxM1nB8zrD9JDC5bKwby/fJuqKffIEbsnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com,
-	syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.19 217/220] media: hackrf: fix to not free memory after the device is registered in hackrf_probe()
-Date: Mon, 20 Apr 2026 17:42:38 +0200
-Message-ID: <20260420153941.839059140@linuxfoundation.org>
+	Jianhui Zhou <jianhuizzzzz@gmail.com>,
+	syzbot+f525fd79634858f478e7@syzkaller.appspotmail.com,
+	SeongJae Park <sj@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Jane Chu <jane.chu@oracle.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	JonasZhou <JonasZhou@zhaoxin.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.19 218/220] mm/userfaultfd: fix hugetlb fault mutex hash calculation
+Date: Mon, 20 Apr 2026 17:42:39 +0200
+Message-ID: <20260420153941.875284084@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,87 +62,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Jianhui Zhou <jianhuizzzzz@gmail.com>
 
-commit 3b7da2b4d0fe014eff181ed37e3bf832eb8ed258 upstream.
+commit 0217c7fb4de4a40cee667eb21901f3204effe5ac upstream.
 
-In hackrf driver, the following race condition occurs:
-```
-		CPU0						CPU1
-hackrf_probe()
-  kzalloc(); // alloc hackrf_dev
-  ....
-  v4l2_device_register();
-  ....
-						fd = sys_open("/path/to/dev"); // open hackrf fd
-						....
-  v4l2_device_unregister();
-  ....
-  kfree(); // free hackrf_dev
-  ....
-						sys_ioctl(fd, ...);
-						  v4l2_ioctl();
-						    video_is_registered() // UAF!!
-						....
-						sys_close(fd);
-						  v4l2_release() // UAF!!
-						    hackrf_video_release()
-						      kfree(); // DFB!!
-```
+In mfill_atomic_hugetlb(), linear_page_index() is used to calculate the
+page index for hugetlb_fault_mutex_hash().  However, linear_page_index()
+returns the index in PAGE_SIZE units, while hugetlb_fault_mutex_hash()
+expects the index in huge page units.  This mismatch means that different
+addresses within the same huge page can produce different hash values,
+leading to the use of different mutexes for the same huge page.  This can
+cause races between faulting threads, which can corrupt the reservation
+map and trigger the BUG_ON in resv_map_release().
 
-When a V4L2 or video device is unregistered, the device node is removed so
-new open() calls are blocked.
+Fix this by introducing hugetlb_linear_page_index(), which returns the
+page index in huge page granularity, and using it in place of
+linear_page_index().
 
-However, file descriptors that are already open-and any in-flight I/O-do
-not terminate immediately; they remain valid until the last reference is
-dropped and the driver's release() is invoked.
-
-Therefore, freeing device memory on the error path after hackrf_probe()
-has registered dev it will lead to a race to use-after-free vuln, since
-those already-open handles haven't been released yet.
-
-And since release() free memory too, race to use-after-free and
-double-free vuln occur.
-
-To prevent this, if device is registered from probe(), it should be
-modified to free memory only through release() rather than calling
-kfree() directly.
-
+Link: https://lkml.kernel.org/r/20260310110526.335749-1-jianhuizzzzz@gmail.com
+Fixes: a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in filemap.c")
+Signed-off-by: Jianhui Zhou <jianhuizzzzz@gmail.com>
+Reported-by: syzbot+f525fd79634858f478e7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f525fd79634858f478e7
+Acked-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: JonasZhou <JonasZhou@zhaoxin.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
 Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+6ffd76b5405c006a46b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6ffd76b5405c006a46b7
-Reported-by: syzbot+f1b20958f93d2d250727@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f1b20958f93d2d250727
-Fixes: 8bc4a9ed8504 ("[media] hackrf: add support for transmitter")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/hackrf/hackrf.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/linux/hugetlb.h |   17 +++++++++++++++++
+ mm/userfaultfd.c        |    2 +-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/hackrf/hackrf.c
-+++ b/drivers/media/usb/hackrf/hackrf.c
-@@ -1485,7 +1485,7 @@ static int hackrf_probe(struct usb_inter
- 	if (ret) {
- 		dev_err(dev->dev,
- 			"Failed to register as video device (%d)\n", ret);
--		goto err_v4l2_device_unregister;
-+		goto err_v4l2_device_put;
- 	}
- 	dev_info(dev->dev, "Registered as %s\n",
- 		 video_device_node_name(&dev->rx_vdev));
-@@ -1513,8 +1513,9 @@ static int hackrf_probe(struct usb_inter
- 	return 0;
- err_video_unregister_device_rx:
- 	video_unregister_device(&dev->rx_vdev);
--err_v4l2_device_unregister:
--	v4l2_device_unregister(&dev->v4l2_dev);
-+err_v4l2_device_put:
-+	v4l2_device_put(&dev->v4l2_dev);
-+	return ret;
- err_v4l2_ctrl_handler_free_tx:
- 	v4l2_ctrl_handler_free(&dev->tx_ctrl_handler);
- err_v4l2_ctrl_handler_free_rx:
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -796,6 +796,23 @@ static inline unsigned huge_page_shift(s
+ 	return h->order + PAGE_SHIFT;
+ }
+ 
++/**
++ * hugetlb_linear_page_index() - linear_page_index() but in hugetlb
++ *				 page size granularity.
++ * @vma: the hugetlb VMA
++ * @address: the virtual address within the VMA
++ *
++ * Return: the page offset within the mapping in huge page units.
++ */
++static inline pgoff_t hugetlb_linear_page_index(struct vm_area_struct *vma,
++		unsigned long address)
++{
++	struct hstate *h = hstate_vma(vma);
++
++	return ((address - vma->vm_start) >> huge_page_shift(h)) +
++		(vma->vm_pgoff >> huge_page_order(h));
++}
++
+ static inline bool order_is_gigantic(unsigned int order)
+ {
+ 	return order > MAX_PAGE_ORDER;
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -573,7 +573,7 @@ retry:
+ 		 * in the case of shared pmds.  fault mutex prevents
+ 		 * races with other faulting threads.
+ 		 */
+-		idx = linear_page_index(dst_vma, dst_addr);
++		idx = hugetlb_linear_page_index(dst_vma, dst_addr);
+ 		mapping = dst_vma->vm_file->f_mapping;
+ 		hash = hugetlb_fault_mutex_hash(mapping, idx);
+ 		mutex_lock(&hugetlb_fault_mutex_table[hash]);
 
 
