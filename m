@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F91E3DA5BB;
-	Mon, 20 Apr 2026 13:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C25963B9;
+	Mon, 20 Apr 2026 13:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691441; cv=none; b=cfaGGsR1wUhkR8cEplIqEBeX7UA1vnd/m0nCUil12au4xOtVw30jyESkYaOmF9zXjFczzAwxC16J5TrXCKG6Q8VUjGtYyAAvgSM0t4xAS9rzatN/zDZJeCx19X9hXIw2ECWLpwajs7i1ZZS7h6gN9BuQ3kFpTrt3mTSwtycYScc=
+	t=1776691442; cv=none; b=ZPCNHnlRg2vPqilajuf/9EXKPqvMfEHz0T8hQHagdSCuhlKhu8qYsH0Dz13HL4Do6V1OUZYzTyQYEiIfdvuagtQkjMvl6bjZTC21VKaDmyyVDi7B0gX6i4dNhRryQYldf0PoAdQP+uzmywZzfa+nOS1q2QsCDC3XZh/D6bW/pt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691441; c=relaxed/simple;
-	bh=7zvufrhHYV6ds7spDOco84VdhgcOR1nJgg0J/89FE9k=;
+	s=arc-20240116; t=1776691442; c=relaxed/simple;
+	bh=GJALDK3NgxUrEXYG6meOs/y9B/fAwbD5dYUuAZTMqDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nD0DHLMGOE2d5e3gm8Z/GX/GM2YUqi2H106jTBVhLJCJUvzqCbP/4dtx2NupeOHp5jVqTHWJg50yvo71Zql8ALxXV/ppSkMkMlRD1Xr2n6uC6s1D98JjIvv1uvD6eu/f6+nu1f9BcDCp3KNsmlp82zC5k14s/w6n89joZJvverw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WxmVUNc9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EfID5nY4iRhTzTQ18Ikpgx5RmoDiVBuoRWTxsiE4OCXJxiqgqGl/KFHEOqKEUNIh8YzivcJ74raitnF0uZJ+T2EoromOGzFSfCrmLQ0o/BjUHH9XNlHx3jzzHMcq2zviwb7KHw5wNzIL41bjJlwxYIbUCDddnuT+v3yRHzA9rNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o0k7Eqpm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WxmVUNc9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A44C19425;
-	Mon, 20 Apr 2026 13:24:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o0k7Eqpm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B2AC2BCB6;
+	Mon, 20 Apr 2026 13:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691440;
-	bh=7zvufrhHYV6ds7spDOco84VdhgcOR1nJgg0J/89FE9k=;
+	s=k20201202; t=1776691442;
+	bh=GJALDK3NgxUrEXYG6meOs/y9B/fAwbD5dYUuAZTMqDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WxmVUNc9LMDXO1yjAnv5Rxur/S/4YXAAQzQwFvikOWL/T3b6GsjYY8Zb6Jqn5M2Wk
-	 7m35jwp8sfJ2Ux7Yojjadq+sUH50oQMZdZvUDv0aSHejJrblVydLOWNOhFDMkTdpnp
-	 n7Ry3Zf9tE7cOZJG6H9Z9T7JM+aJMzuCJrU8b0yDRUXAXImsZHX+nNjLe9VjImfIKq
-	 7YYFce6NZIACCOJykul7oTpzx2axiCg8D+OLUd6nZ2BxwwbXUTFCQ3kvDnoo92fD4Z
-	 E/tLXrrh/OCFe14RT4GG4goNJpz8+UnPGGMVY8mE/cgCzpBa4hiWUuKXDdHg3k5w8O
-	 2RFk0ffOfwM9Q==
+	b=o0k7Eqpm/HEH59Q9CSgRHe2ogRw5VUTsKJWgmUWXqKKBYVAI0H2Q0fwfztCnc9qJj
+	 vLQKf1Ib1HXsIYnpM1gX8+yfKnPUNXKJPX6/f/GAYmBQXxeECE2pEctPUEcduWModZ
+	 8g82ztfClfoxhQH+gbrDjSPLwf1m6z2oqXv8XPxO9cy00ly2qRSWneacKupZG3Nibq
+	 Td7qj/ICse+qIxOzzBr979yrrY2+8ZUevsqxMelatG0Z6Re6LyM2TozVhyG1B52hLM
+	 6yoNGQs1rS/RvpKY53fbsaoO9LH0PHLPYzpftaZ84IaB4MaR9fj2okedGkW5QCbT6V
+	 Jh0FUvEEL2U5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Suraj P Kizhakkethil <suraj.kizhakkethil@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] wifi: mac80211: set band information only for non-MLD when probing stations using NULL frame
-Date: Mon, 20 Apr 2026 09:17:03 -0400
-Message-ID: <20260420132314.1023554-29-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] drm/amdgpu/userq: unlock cancel_delayed_work_sync for hang_detect_work
+Date: Mon, 20 Apr 2026 09:17:04 -0400
+Message-ID: <20260420132314.1023554-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -47,391 +50,443 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suraj P Kizhakkethil <suraj.kizhakkethil@oss.qualcomm.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-[ Upstream commit 73e7df69edb6f1271ea0fa876794761e6c73e76a ]
+[ Upstream commit f802f7b0bc0917023f4b5938246fd7abf23fa5e3 ]
 
-Currently, when sending a NULL frame to probe a station, the band
-information is derived from the chanctx_conf in the mac80211 vif's
-bss_conf. However, for AP MLD, chanctx_conf is not assigned to the
-vif's bss_conf; instead it is assigned on a per-link basis. As a result,
-for AP MLD, sending a NULL packet to probe will trigger a warning.
+cancel_delayed_work_sync for work hand_detect_work should not be
+locked since the amdgpu_userq_hang_detect_work also need the same
+mutex and when they run together it could be a deadlock.
 
-WARNING: net/mac80211/cfg.c:4635 at ieee80211_probe_client+0x1a8/0x1d8 [mac80211], CPU#2: hostapd/244
-Call trace:
- ieee80211_probe_client+0x1a8/0x1d8 [mac80211] (P)
- nl80211_probe_client+0xac/0x170 [cfg80211]
- genl_family_rcv_msg_doit+0xc8/0x134
- genl_rcv_msg+0x200/0x280
- netlink_rcv_skb+0x38/0xf0
- genl_rcv+0x34/0x48
- netlink_unicast+0x314/0x3a0
- netlink_sendmsg+0x150/0x390
- ____sys_sendmsg+0x1f4/0x21c
- ___sys_sendmsg+0x98/0xc0
- __sys_sendmsg+0x74/0xcc
- __arm64_sys_sendmsg+0x20/0x34
- invoke_syscall.constprop.0+0x4c/0xd0
- do_el0_svc+0x3c/0xd0
- el0_svc+0x28/0xc0
- el0t_64_sync_handler+0x98/0xdc
- el0t_64_sync+0x154/0x158
----[ end trace 0000000000000000 ]---
+we do not need to hold the mutex for
+cancel_delayed_work_sync(&queue->hang_detect_work). With this in place
+if cancel and worker thread run at same time they will not deadlock.
 
-For NULL packets sent to probe stations, set the band information only
-for non-MLD, since MLD transmissions does not rely on band.
+Due to any failures if there is a hand detect and reset that there a
+deadlock scenarios between cancel and running the main thread.
 
-Signed-off-by: Suraj P Kizhakkethil <suraj.kizhakkethil@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260213100126.1414398-2-suraj.kizhakkethil@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ 243.118276] task:kworker/9:0 state:D stack:0 pid:73 tgid:73 ppid:2 task_flags:0x4208060 flags:0x00080000
+[ 243.118283] Workqueue: events amdgpu_userq_hang_detect_work [amdgpu]
+[ 243.118636] Call Trace:
+[ 243.118639] <TASK>
+[ 243.118644] __schedule+0x581/0x1810
+[ 243.118649] ? srso_return_thunk+0x5/0x5f
+[ 243.118656] ? srso_return_thunk+0x5/0x5f
+[ 243.118659] ? wake_up_process+0x15/0x20
+[ 243.118665] schedule+0x64/0xe0
+[ 243.118668] schedule_preempt_disabled+0x15/0x30
+[ 243.118671] __mutex_lock+0x346/0x950
+[ 243.118677] __mutex_lock_slowpath+0x13/0x20
+[ 243.118681] mutex_lock+0x2c/0x40
+[ 243.118684] amdgpu_userq_hang_detect_work+0x63/0x90 [amdgpu]
+[ 243.118888] process_scheduled_works+0x1f0/0x450
+[ 243.118894] worker_thread+0x27f/0x370
+[ 243.118899] kthread+0x1ed/0x210
+[ 243.118903] ? __pfx_worker_thread+0x10/0x10
+[ 243.118906] ? srso_return_thunk+0x5/0x5f
+[ 243.118909] ? __pfx_kthread+0x10/0x10
+[ 243.118913] ret_from_fork+0x10f/0x1b0
+[ 243.118916] ? __pfx_kthread+0x10/0x10
+[ 243.118920] ret_from_fork_asm+0x1a/0x30
+
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have all the information needed for a complete analysis. Let me
-compile the full report.
+Now I have the full picture. Here is my complete analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `wifi: mac80211`
-- Action verb: "set" (conditionalize behavior)
-- Summary: Set band information only for non-MLD interfaces when probing
-  stations using NULL frames.
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: [drm/amdgpu/userq] [unlock/fix] Move `cancel_delayed_work_sync`
+for `hang_detect_work` outside the mutex to prevent a deadlock.
 
-Record: [wifi: mac80211] [set/conditionalize] [Fix probe_client to
-handle AP MLD correctly by skipping band derivation from vif bss_conf
-chanctx_conf]
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>** - author,
+  regular AMD GPU contributor
+- **Reviewed-by: Christian Konig <christian.koenig@amd.com>** - key
+  DRM/AMDGPU maintainer/reviewer
+- **Signed-off-by: Alex Deucher <alexander.deucher@amd.com>** - AMDGPU
+  subsystem maintainer who committed it
+- No Fixes: tag (expected for candidates under review)
+- No Cc: stable (expected)
+- No Reported-by tag, but includes a stack trace showing the actual
+  deadlock
 
-**Step 1.2: Tags**
-- `Signed-off-by: Suraj P Kizhakkethil
-  <suraj.kizhakkethil@oss.qualcomm.com>` — author from Qualcomm
-- `Link: https://patch.msgid.link/20260213100126.1414398-2-
-  suraj.kizhakkethil@oss.qualcomm.com` — mailing list patch link
-- `Signed-off-by: Johannes Berg <johannes.berg@intel.com>` — mac80211
-  subsystem maintainer merged this
-- No Fixes: tag, no Cc: stable (expected for manual review candidates)
-- No Reported-by: tag (author likely discovered it internally)
+Record: Reviewed by Christian Konig (senior AMDGPU developer), committed
+by Alex Deucher (subsystem maintainer). Stack trace provided.
 
-Record: Merged by Johannes Berg (mac80211 maintainer). No explicit
-Fixes: tag. Qualcomm contributor.
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit describes a classic AB-BA deadlock:
+- `amdgpu_userq_destroy()` holds `userq_mutex` and calls
+  `cancel_delayed_work_sync(&queue->hang_detect_work)`
+- `amdgpu_userq_hang_detect_work()` tries to acquire `userq_mutex`
+- When both run concurrently, deadlock occurs: destroy waits for work to
+  finish, work waits for mutex
 
-**Step 1.3: Commit Body**
-- Bug: For AP MLD, `chanctx_conf` is not assigned to the vif's
-  `bss_conf` but per-link. Accessing it from
-  `sdata->vif.bss_conf.chanctx_conf` returns NULL.
-- Symptom: WARN_ON fires at `cfg.c:4635`, function returns -EINVAL,
-  probe client functionality is completely broken for AP MLD.
-- Stack trace provided: triggered via `nl80211_probe_client` ->
-  `ieee80211_probe_client`, reachable from userspace hostapd.
-- Root cause: The chanctx_conf architecture changed for MLD (per-link
-  instead of per-vif), but this function was never updated.
+The commit includes a full kernel stack trace showing the deadlock in
+action (task stuck in `D` state waiting on `__mutex_lock` inside the
+workqueue worker for `amdgpu_userq_hang_detect_work`).
 
-Record: [WARN_ON trigger + -EINVAL return breaking probe_client for AP
-MLD] [Stack trace confirms userspace reachability] [Root cause: MLD per-
-link chanctx_conf not assigned at vif level]
+Record: Classic deadlock. Symptom is system hang (task in D state).
+Triggered when queue destruction races with pending hang detection work.
 
-**Step 1.4: Hidden Bug Fix Detection**
-This is NOT hidden — the commit message clearly describes a warning
-trigger and broken functionality. The subject says "set band information
-only for non-MLD" which is effectively "fix broken AP MLD probe_client."
+### Step 1.4: DETECT HIDDEN BUG FIXES
+This is explicitly a deadlock fix, not disguised at all. The title says
+"unlock" and the body describes the deadlock mechanism clearly.
 
-Record: [Direct bug fix, not disguised]
+Record: Not hidden. Explicit deadlock fix.
 
-## PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-**Step 2.1: Inventory**
-- 1 file modified: `net/mac80211/cfg.c`
-- Lines changed: +10/-5 (net +5 lines)
-- Function modified: `ieee80211_probe_client()`
-- Scope: single-function surgical fix
+### Step 2.1: INVENTORY THE CHANGES
+- **File**: `drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c`
+- **Function modified**: `amdgpu_userq_destroy()`
+- **Lines added**: ~4 (cancel + NULL assignment moved)
+- **Lines removed**: ~4 (old placement removed)
+- **Scope**: Single-file, single-function surgical fix
 
-**Step 2.2: Code Flow Change**
-BEFORE: Unconditionally dereferences `sdata->vif.bss_conf.chanctx_conf`
-to get band. For AP MLD, chanctx_conf is NULL, triggers WARN_ON, returns
--EINVAL.
+Record: 1 file, 1 function, net change ~0 lines (code reorganization).
+Surgical fix.
 
-AFTER: Checks `ieee80211_vif_is_mld()` first. If MLD, sets `band = 0`
-(MLD transmissions don't rely on band). If not MLD, uses the original
-chanctx_conf path unchanged.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Before**: `cancel_delayed_work_sync(&queue->hang_detect_work)` was
+called INSIDE `mutex_lock(&uq_mgr->userq_mutex)`, conditionally (only if
+`hang_detect_fence` is set).
 
-**Step 2.3: Bug Mechanism**
-Category: Logic/correctness fix — missing MLD case handling.
-Mechanism: The function assumed chanctx_conf is always assigned at the
-vif's bss_conf level. After MLD introduction, this is only true for non-
-MLD interfaces. For MLD, chanctx_conf lives per-link.
+**After**: `cancel_delayed_work_sync(&queue->hang_detect_work)` is
+called BEFORE `mutex_lock(&uq_mgr->userq_mutex)`, unconditionally. Then
+`queue->hang_detect_fence = NULL` is set after acquiring the mutex.
 
-**Step 2.4: Fix Quality**
-- Obviously correct: the conditional is clean and the MLD path avoids
-  the NULL dereference.
-- Minimal: only touches the necessary code path.
-- Regression risk: Very low. Non-MLD path is completely unchanged. MLD
-  path now gets `band = 0` instead of crashing.
-- Merged by Johannes Berg (mac80211 maintainer), who deeply understands
-  MLD architecture.
+Record: cancel_delayed_work_sync moved outside mutex scope; conditional
+removed (cancel is safe to call unconditionally).
 
-Record: [High quality, surgical fix] [Very low regression risk]
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+**Category**: Deadlock (ABBA lock ordering)
+
+The deadlock path:
+1. Thread A (destroy path): `mutex_lock(&uq_mgr->userq_mutex)` ->
+   `cancel_delayed_work_sync(&queue->hang_detect_work)` [waits for work
+   to finish]
+2. Thread B (worker): `amdgpu_userq_hang_detect_work()` ->
+   `mutex_lock(&uq_mgr->userq_mutex)` [waits for mutex]
+
+Thread A holds the mutex and waits for the work to complete. The work
+holds the CPU and waits for the mutex. Classic deadlock.
+
+Record: ABBA deadlock between userq_mutex and cancel_delayed_work_sync.
+
+### Step 2.4: ASSESS THE FIX QUALITY
+- **Obviously correct**: Yes. Moving `cancel_delayed_work_sync` outside
+  the mutex breaks the deadlock cycle. `cancel_delayed_work_sync` is
+  documented as safe to call on uninitialized or never-scheduled work
+  items.
+- **Minimal/surgical**: Yes. Only reorders existing operations in one
+  function.
+- **Regression risk**: Very low. Removing the conditional `if
+  (queue->hang_detect_fence)` check is safe because
+  `cancel_delayed_work_sync` on a work that hasn't been scheduled is a
+  no-op. Setting `hang_detect_fence = NULL` after the mutex is acquired
+  is still correct as it's protecting the shared state.
+
+Record: Obviously correct, minimal, very low regression risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-- `chanctx_conf = rcu_dereference(sdata->vif.bss_conf.chanctx_conf)`
-  introduced by commit `d0a9123ef548de` (2022-05-10) — "wifi: mac80211:
-  move some future per-link data to bss_conf"
-- This was a mechanical rename moving `chanctx_conf` from `vif` to
-  `vif.bss_conf` as prep for MLD
-- The probe_client function itself dates back to `06500736c5d26b`
-  (2011-11-04) by Johannes Berg
+### Step 3.1: BLAME THE CHANGED LINES
+The buggy code was introduced by commit `fc3336be9c629` (Jesse.Zhang,
+2026-01-13) which first appeared in v7.0-rc1. This commit added the
+`hang_detect_work` mechanism and placed the `cancel_delayed_work_sync`
+call inside the mutex lock in `amdgpu_userq_destroy`.
 
-Record: [chanctx_conf access moved to bss_conf in d0a9123ef548de (2022)]
-[Function dates to 2011]
+Record: Buggy code introduced in fc3336be9c629, first present in
+v7.0-rc1.
 
-**Step 3.2: Fixes Tag**
-No Fixes: tag present. The bug was introduced when MLD AP support was
-completed, making chanctx_conf per-link but not updating this function.
+### Step 3.2: FOLLOW THE FIXES TAG
+No Fixes: tag present. However, the implicit Fixes target is
+`fc3336be9c629` which added the hang_detect_work feature with the
+deadlock bug.
 
-**Step 3.3: File History**
-Recent changes to `net/mac80211/cfg.c` are mostly unrelated (key
-handling, UHR support, kmalloc changes). No related prerequisite
-refactoring needed.
+Record: Implicitly fixes fc3336be9c629 (v7.0-rc1).
 
-Record: [Standalone fix, no dependencies]
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+The file has been heavily modified. Notable: commit `65b5c326ce410`
+(refcount userqueues, 2026-03-02) also touches `amdgpu_userq_destroy()`
+but did NOT fix this deadlock. That refcount commit has `Cc:
+stable@vger.kernel.org`.
 
-**Step 3.4: Author**
-- Author: Suraj P Kizhakkethil (Qualcomm) — first commit to
-  net/mac80211/
-- Merged by: Johannes Berg — mac80211 maintainer/creator
+Record: The refcount commit (already marked for stable) still has this
+deadlock. The fix is standalone.
 
-Record: [Author is Qualcomm WiFi engineer; maintainer reviewed and
-merged]
+### Step 3.4: CHECK THE AUTHOR
+Sunil Khatri is a regular AMD GPU driver contributor with 10+ commits in
+this subsystem. The fix was reviewed by Christian Konig, a key AMDGPU
+maintainer.
 
-**Step 3.5: Prerequisites**
-- Requires `ieee80211_vif_is_mld()` which exists since v6.5 (commit
-  `f1871abd27641`, June 2023)
-- Verified present in v6.6 and v6.12
+Record: Experienced contributor; reviewed by subsystem expert.
 
-Record: [Self-contained fix; prerequisite function exists in 6.5+]
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+The fix applies to the code as it exists in v7.0 (post-fc3336be9c629).
+The refcount rework (`65b5c326ce410`) changed the function signature but
+did not change the deadlock pattern. The fix needs to be checked for
+whether it applies to the pre- or post-refcount version of the code. In
+v7.0, the code has the old (non-refcount) signature. The fix targets the
+post-refcount version (based on the diff showing
+`amdgpu_userq_destroy(struct amdgpu_userq_mgr *uq_mgr, struct
+amdgpu_usermode_queue *queue)` instead of `amdgpu_userq_destroy(struct
+drm_file *filp, int queue_id)`).
 
-## PHASE 4: MAILING LIST RESEARCH
+Record: The fix targets the post-refcount version. For v7.0.y, the
+refcount commit (`65b5c326ce410`) would need to be applied first (it's
+already marked Cc: stable).
 
-**Step 4.1-4.2: Patch Discussion**
-- Lore was not directly accessible (anti-bot protection)
-- b4 dig could not match the message-id directly
-- The patch was merged by Johannes Berg, indicating it passed his review
-- The Link tag confirms it went through the standard wireless review
-  process
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-Record: [Maintainer-reviewed and merged; lore inaccessible for detailed
-discussion]
+### Step 4.1-4.5
+b4 dig could not find the specific commit because it hasn't been
+committed to mainline yet (it's a candidate). The refcount commit series
+was found on lore. Web search for the deadlock fix patch was blocked by
+Anubis bot protection on lore.kernel.org.
 
-**Step 4.3: Bug Report**
-No explicit Reported-by. The stack trace with hostapd suggests the
-author encountered this in Qualcomm AP MLD testing.
-
-**Step 4.4-4.5: Related Patches/Stable Discussion**
-The patch message-id suggests this is patch 2 of a series, but it is
-self-contained — the fix only touches `ieee80211_probe_client()` and has
-no code dependencies on other patches in the series.
+Record: Lore investigation limited by anti-scraping measures. Based on
+code analysis alone, the deadlock is verified.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions Modified**
-- `ieee80211_probe_client()` — the only function modified
+### Step 5.1: KEY FUNCTIONS
+- `amdgpu_userq_destroy()` - the function being fixed
+- `amdgpu_userq_hang_detect_work()` - the work handler that creates the
+  deadlock
 
-**Step 5.2: Callers**
-- Called via `.probe_client` in `cfg80211_ops` (line 5632 of cfg.c)
-- Called from `nl80211_probe_client()` in `net/wireless/nl80211.c`
-- Triggered from userspace via netlink (hostapd uses this for station
-  monitoring)
+### Step 5.2: TRACE CALLERS
+`amdgpu_userq_destroy()` is called from `amdgpu_userq_kref_destroy()`
+(line 680), which is the kref release callback. This is triggered via
+`amdgpu_userq_put()` (line 701), called when the last reference to a
+userqueue is dropped. This happens during:
+- Queue destruction IOCTL (user-initiated)
+- fini path (cleanup on file descriptor close)
 
-Record: [Reachable from userspace via netlink; called during normal AP
-operation]
+Record: Called during normal queue teardown - common user-triggered
+operation.
 
-**Step 5.3-5.4: Call Chain**
-Userspace (hostapd) -> netlink -> `genl_rcv_msg` ->
-`nl80211_probe_client` -> `ieee80211_probe_client` -> WARN_ON + return
--EINVAL
+### Step 5.3-5.4: CALL CHAIN
+User -> IOCTL -> `amdgpu_userq_put()` -> `kref_put()` ->
+`amdgpu_userq_kref_destroy()` -> `amdgpu_userq_destroy()` [holds mutex]
+-> `cancel_delayed_work_sync()` [deadlocks if work is running].
 
-This is a HOT path for AP MLD operation — hostapd regularly probes
-stations to check if they're still connected.
+The hang detect work is scheduled during normal fence operations via
+`amdgpu_userq_start_hang_detect_work()`, called from
+`amdgpu_userq_fence.c`.
 
-**Step 5.5: Similar Patterns**
-Other places in mac80211 access `sdata->vif.bss_conf.chanctx_conf` (28
-occurrences across mac80211). This fix addresses only the probe_client
-path.
+Record: Both paths are reachable from normal userspace operations. The
+race window is between submitting GPU work (which schedules hang
+detection) and destroying a queue.
 
-## PHASE 6: STABLE TREE ANALYSIS
+### Step 5.5: SIMILAR PATTERNS
+The `cancel_delayed_work_sync(&uq_mgr->resume_work)` calls throughout
+the file are already placed OUTSIDE the mutex (e.g., lines 632, 1391,
+1447, etc.), demonstrating the correct pattern. The `hang_detect_work`
+cancellation was the only instance that violated this pattern.
 
-**Step 6.1: Buggy Code in Stable Trees**
-- v6.6: YES — verified. The exact same buggy code exists at line 4150 in
-  v6.6's cfg.c. `ieee80211_vif_is_mld()` also exists in v6.6's
-  mac80211.h.
-- v6.12: YES — verified. Same buggy code at line 4226. Same
-  `ieee80211_vif_is_mld()`.
-- v6.1: NO — `ieee80211_vif_is_mld()` does not exist in v6.1 (not an
-  ancestor of v6.1). MLD was not mature enough in 6.1 to have this
-  issue.
+Record: All other cancel_delayed_work_sync calls in this file follow the
+correct pattern (outside mutex).
 
-Record: [Bug affects v6.5+ stable trees, including v6.6.y and v6.12.y]
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 6.2: Backport Complications**
-- v6.6: Minor conflict — uses `mutex_lock(&local->mtx)` instead of
-  `lockdep_assert_wiphy()`. Fix code itself applies cleanly since it
-  only touches the chanctx_conf logic.
-- v6.12: Should apply cleanly — uses the same `lockdep_assert_wiphy()`.
+### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
+- **v6.19.y**: `hang_detect_work` does NOT exist. The file exists but
+  the feature was not added until v7.0-rc1.
+- **v7.0.y**: The bug EXISTS. The `hang_detect_work` was introduced in
+  v7.0-rc1 by `fc3336be9c629`.
+- No earlier stable trees (6.12.y, 6.6.y, etc.) are affected.
 
-Record: [v6.12: clean apply; v6.6: minor context difference in locking,
-fix itself applies]
+Record: Bug exists ONLY in 7.0.y.
 
-**Step 6.3: Related Fixes**
-No related fixes for this specific bug already in stable.
+### Step 6.2: BACKPORT COMPLICATIONS
+The fix's diff shows the post-refcount function signature
+(`amdgpu_userq_destroy(struct amdgpu_userq_mgr *uq_mgr, struct
+amdgpu_usermode_queue *queue)`). The v7.0 release has the OLD signature.
+The refcount commit (`65b5c326ce410`) is already marked `Cc: stable` and
+must be applied first for this fix to apply cleanly.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+Record: Needs refcount commit as prerequisite. Minor conflicts possible
+if refcount is not applied.
 
-**Step 7.1: Subsystem Criticality**
-- Subsystem: WiFi/mac80211 — IMPORTANT
-- Used by AP/router deployments (hostapd), all WiFi-enabled devices
-- AP MLD (WiFi 7) is increasingly deployed
+### Step 6.3: RELATED FIXES ALREADY IN STABLE
+No related fix for this specific deadlock has been found.
 
-**Step 7.2: Subsystem Activity**
-Actively developed subsystem with continuous changes. MLD support is
-actively being improved.
+Record: No alternative fix exists.
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: SUBSYSTEM AND CRITICALITY
+- **Subsystem**: DRM/AMDGPU (GPU drivers)
+- **Criticality**: IMPORTANT - AMD GPUs are widely used in desktops,
+  laptops, and workstations. Userqueues are a new feature in 7.0 for
+  user-mode GPU scheduling.
+
+Record: IMPORTANT subsystem. Affects AMD GPU users with userqueue-
+enabled hardware.
+
+### Step 7.2: SUBSYSTEM ACTIVITY
+The file has 59 commits between v6.19 and v7.0 - extremely active
+development. Userqueue support is new infrastructure being actively
+developed.
+
+Record: Very active subsystem. New feature code.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-Anyone running an AP MLD (WiFi 7 multi-link) configuration using
-hostapd.
+### Step 8.1: WHO IS AFFECTED
+Users with AMD GPUs that use the new userqueue feature
+(AMDGPU_CAP_USERQ). This is new GPU scheduling infrastructure.
 
-**Step 8.2: Trigger Conditions**
-- Triggered during normal operation when hostapd probes client stations
-- Happens automatically via hostapd's station monitoring
-- Any AP MLD with connected stations will trigger this repeatedly
-- Reachable from userspace (hostapd)
+Record: AMD GPU users with userqueue support enabled.
 
-**Step 8.3: Failure Mode Severity**
-- WARN_ON fires every time a station is probed — spams kernel log
-- Function returns -EINVAL — station probing is completely non-
-  functional for AP MLD
-- Without probe_client, hostapd cannot determine if stations are still
-  alive
-- Severity: HIGH (functionality completely broken + WARN_ON spam)
+### Step 8.2: TRIGGER CONDITIONS
+The deadlock is triggered when:
+1. A delayed `hang_detect_work` is pending (scheduled after a fence
+   submission)
+2. The user destroys the queue (via IOCTL or process exit)
+3. The work fires and tries to acquire the mutex at the same time
 
-**Step 8.4: Risk-Benefit Ratio**
-- BENEFIT: HIGH — fixes broken AP MLD functionality, eliminates WARN_ON
-  spam
-- RISK: VERY LOW — 5-line net change, self-contained, maintainer-
-  reviewed, non-MLD path completely unchanged
+This is a realistic race window, especially during error scenarios (the
+hang detection work has a timeout-based delay).
+
+Record: Triggered during queue destruction with pending hang detection.
+Realistic race window.
+
+### Step 8.3: FAILURE MODE SEVERITY
+**CRITICAL**: System deadlock. Tasks enter D state (uninterruptible
+sleep) and cannot be killed. The stack trace in the commit message
+confirms this - the system hangs.
+
+Record: System deadlock/hang. Severity: CRITICAL.
+
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit**: Prevents a deadlock that hangs the system. HIGH benefit.
+- **Risk**: Minimal. Reordering a cancel_delayed_work_sync before a
+  mutex_lock is obviously correct. The pattern matches all other similar
+  calls in the same file. VERY LOW risk.
+
+Record: Benefit HIGH, Risk VERY LOW. Strongly favorable ratio.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Summary**
+### Step 9.1: COMPILE THE EVIDENCE
 
-FOR backporting:
-- Fixes a clear, reproducible WARN_ON trigger during normal AP MLD
-  operation
-- Fixes broken probe_client functionality for AP MLD (returns -EINVAL)
-- Small, surgical fix (+10/-5 lines)
-- Merged by Johannes Berg (mac80211 maintainer/creator)
-- Affects v6.6 and v6.12 stable trees (verified)
-- Stack trace in commit message proves real-world trigger
-- Reachable from userspace (hostapd normal operation)
-- No dependencies on other patches
+**Evidence FOR backporting:**
+- Fixes a real, reproducible deadlock (stack trace provided)
+- Deadlock leads to system hang (CRITICAL severity)
+- Small, surgical fix (reordering ~4 lines in one function)
+- Obviously correct (matches the pattern used everywhere else in the
+  file)
+- Reviewed by Christian Konig (key AMDGPU maintainer)
+- Committed by Alex Deucher (subsystem maintainer)
+- The bug exists in v7.0 release
 
-AGAINST backporting:
-- No explicit Fixes: tag (expected for review candidates)
-- No explicit Cc: stable (expected)
-- Author's first mac80211 commit (but maintainer-reviewed)
+**Evidence AGAINST backporting:**
+- No Fixes: tag (expected, not a negative signal)
+- The feature (`hang_detect_work`) is new in v7.0, so only affects 7.0.y
+  stable
+- May require the refcount prerequisite commit (`65b5c326ce410`, already
+  Cc: stable) to apply cleanly
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? YES — clear conditional check, stack
-   trace shows testing
-2. Fixes a real bug? YES — WARN_ON + broken functionality
-3. Important issue? YES — breaks AP MLD station probing entirely
-4. Small and contained? YES — 5 net lines, single function
-5. No new features? CORRECT — only fixes existing broken path
-6. Can apply to stable? YES — verified code exists in v6.6 and v6.12
+**UNRESOLVED:**
+- Could not verify if the exact commit SHA exists in mainline (the fix
+  may be pending in a subsystem tree)
+- Mailing list discussion not accessible due to lore anti-scraping
 
-**Step 9.3: Exception Categories**
-Not an exception category — this is a straightforward bug fix.
+### Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. **Obviously correct and tested?** YES - stack trace demonstrates the
+   bug, fix is logically obvious
+2. **Fixes a real bug?** YES - deadlock
+3. **Important issue?** YES - system deadlock/hang (CRITICAL)
+4. **Small and contained?** YES - ~8 line change in one function
+5. **No new features or APIs?** YES - just reorders existing code
+6. **Can apply to stable trees?** YES (7.0.y), with refcount commit
+   prerequisite
 
-**Step 9.4: Decision**
-Clear YES. This fixes a real, reproducible bug that completely breaks AP
-MLD probe_client functionality. The fix is small, obvious, self-
-contained, and maintainer-reviewed.
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+Not an exception category - this is a standard bug fix (deadlock).
+
+### Step 9.4: MAKE YOUR DECISION
+This is a clear deadlock fix for code in v7.0. The fix is small,
+obviously correct, reviewed by the right people, and prevents a system
+hang. It meets all stable kernel criteria.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Link to patch.msgid.link, merged by Johannes
-  Berg (mac80211 maintainer)
-- [Phase 2] Diff analysis: +10/-5 lines in single function
-  `ieee80211_probe_client()`, adds MLD conditional check
-- [Phase 3] git blame: chanctx_conf access introduced by d0a9123ef548de
-  (2022-05-10)
-- [Phase 3] git show b4487c2d0edaf: unrelated older fix (2011) for
-  different warning in same function
-- [Phase 3] git log --author="Suraj": no prior mac80211 commits (first
-  contribution, but maintainer-reviewed)
-- [Phase 4] b4 dig: unable to match exact message-id, but patch link
-  confirms standard review process
-- [Phase 5] Grep: `ieee80211_probe_client` called via cfg80211_ops
-  `.probe_client` callback from nl80211
-- [Phase 5] Stack trace: confirms userspace reachability via
-  nl80211_probe_client -> hostapd
-- [Phase 6] git show v6.6:net/mac80211/cfg.c: confirmed same buggy code
-  at line 4150
-- [Phase 6] git show v6.12:net/mac80211/cfg.c: confirmed same buggy code
-  at line 4226
-- [Phase 6] git show v6.6:include/net/mac80211.h: confirmed
-  `ieee80211_vif_is_mld()` exists
-- [Phase 6] git merge-base --is-ancestor: `ieee80211_vif_is_mld` in v6.5
-  and v6.6, NOT in v6.1
-- [Phase 8] Failure mode: WARN_ON trigger + -EINVAL return = broken
-  functionality, severity HIGH
-- UNVERIFIED: Exact mailing list discussion content (lore blocked by
-  anti-bot protection)
+- [Phase 1] Parsed tags: Reviewed-by Christian Konig, Signed-off-by Alex
+  Deucher (subsystem maintainer). Stack trace in commit message.
+- [Phase 2] Diff analysis: ~8 lines changed in `amdgpu_userq_destroy()`,
+  moves `cancel_delayed_work_sync` before `mutex_lock`
+- [Phase 2] Verified `amdgpu_userq_hang_detect_work()` acquires
+  `uq_mgr->userq_mutex` at line 168
+- [Phase 2] Verified `amdgpu_userq_destroy()` acquires same mutex at
+  line 633, then calls `cancel_delayed_work_sync` at line 637 while
+  holding it
+- [Phase 3] git blame: buggy code introduced by `fc3336be9c629`
+  (Jesse.Zhang, 2026-01-13), first in v7.0-rc1
+- [Phase 3] `git tag --contains fc3336be9c629`: confirmed present in
+  v7.0-rc1 and v7.0
+- [Phase 3] Author Sunil Khatri has 10+ commits in amdgpu subsystem
+- [Phase 5] Verified all other `cancel_delayed_work_sync` calls in the
+  file are placed OUTSIDE the mutex (correct pattern)
+- [Phase 5] Traced call chain: IOCTL -> `amdgpu_userq_put()` ->
+  `kref_put()` -> `amdgpu_userq_kref_destroy()` ->
+  `amdgpu_userq_destroy()`
+- [Phase 6] Verified `hang_detect_work` does NOT exist in v6.19.12 (grep
+  returned 0 matches)
+- [Phase 6] Bug exists ONLY in v7.0.y
+- [Phase 6] Prerequisite: refcount commit `65b5c326ce410` (already Cc:
+  stable) may be needed for clean apply
+- UNVERIFIED: Could not access lore.kernel.org discussion due to anti-
+  scraping protection
+- UNVERIFIED: Could not confirm the mainline commit SHA (the fix is not
+  yet in this tree's git log)
 
 **YES**
 
- net/mac80211/cfg.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index b85375ceb575d..85b18f59a7821 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -4629,12 +4629,17 @@ static int ieee80211_probe_client(struct wiphy *wiphy, struct net_device *dev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index e8d12556d690a..ad39460b54dc5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -630,13 +630,14 @@ amdgpu_userq_destroy(struct amdgpu_userq_mgr *uq_mgr, struct amdgpu_usermode_que
+ 	int r = 0;
  
- 	qos = sta->sta.wme;
- 
--	chanctx_conf = rcu_dereference(sdata->vif.bss_conf.chanctx_conf);
--	if (WARN_ON(!chanctx_conf)) {
--		ret = -EINVAL;
--		goto unlock;
-+	if (ieee80211_vif_is_mld(&sdata->vif)) {
-+		/* MLD transmissions must not rely on the band */
-+		band = 0;
-+	} else {
-+		chanctx_conf = rcu_dereference(sdata->vif.bss_conf.chanctx_conf);
-+		if (WARN_ON(!chanctx_conf)) {
-+			ret = -EINVAL;
-+			goto unlock;
-+		}
-+		band = chanctx_conf->def.chan->band;
- 	}
--	band = chanctx_conf->def.chan->band;
- 
- 	if (qos) {
- 		fc = cpu_to_le16(IEEE80211_FTYPE_DATA |
+ 	cancel_delayed_work_sync(&uq_mgr->resume_work);
++
++	/* Cancel any pending hang detection work and cleanup */
++	cancel_delayed_work_sync(&queue->hang_detect_work);
++
+ 	mutex_lock(&uq_mgr->userq_mutex);
++	queue->hang_detect_fence = NULL;
+ 	amdgpu_userq_wait_for_last_fence(queue);
+-	/* Cancel any pending hang detection work and cleanup */
+-	if (queue->hang_detect_fence) {
+-		cancel_delayed_work_sync(&queue->hang_detect_work);
+-		queue->hang_detect_fence = NULL;
+-	}
++
+ 	r = amdgpu_bo_reserve(queue->db_obj.obj, true);
+ 	if (!r) {
+ 		amdgpu_bo_unpin(queue->db_obj.obj);
 -- 
 2.53.0
 
