@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6DC34107F;
-	Mon, 20 Apr 2026 16:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF6833B945;
+	Mon, 20 Apr 2026 16:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701452; cv=none; b=rmz7zHUD52edrPq7poam41+pa33odj75npQoai/8NAw33/3TOyvHM/HImruY7vpHKZP3h2jPkW6UvLdmmyQU7h42IVFUFIlC+W9qv48KUwpdphx1rsAXmrwnf94G9czbQI3vP6ba9DHIMe55TkPSx8P5Kegt9kKgvvUYdsETvK8=
+	t=1776701455; cv=none; b=fFfKwBwFzveWSrYHz3W3sP5F/QscCbtF7bX3JxxZ8Me0Lv8qI0t29OrqYeHJUCqzJaeyKefxhlO+t5My3HUz+n5RjsMWFoxkawkl9QBmXsc8Kc11dn09QmFJur9clIQRKbNyxTzu9BIFIFehhGonFniTvuJ0iyVN6fcK6nFDE3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701452; c=relaxed/simple;
-	bh=XbCrEiilqlhLRUoZ9vtL3udeddYuubszkQH7RepY91w=;
+	s=arc-20240116; t=1776701455; c=relaxed/simple;
+	bh=PVV6ho+zQw/zuenkYBmbS67DwK8+EzujwQFGK3MbRVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNTRANCJq+c++L938d6PpCA5x8jayrxlQKSHF+fDMnEPxVTKEOVYUE5/xEDn3VpnJ8DhVWquUQlYVSNzRlU/fRyV1YeHsXqBeGDKj2BuCtiL14NVQKwXpaSwByjNEQ+BCLpjq6Iz5T7m+OKp4eUqgdoI3bV1AdeqRglxvc7AS1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ad3+z5jh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WKO/rn1QI9Bc12jVab2c9W0ANBFuMGUJmEUA7HJze2V7bjZ81qzkpkNO7S4l4++z/1KAszyYSbY9zBujF7SjWzikbttU9Orb9SlHjBBTiiLd0WMXKIxDI5ZP/y3l9P9gvDTyztklOs8sjPABsTEBRnzUVRakXoUQKG/X10DM/Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBgGVjwv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ad3+z5jh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F58C19425;
-	Mon, 20 Apr 2026 16:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBgGVjwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60C0C19425;
+	Mon, 20 Apr 2026 16:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701452;
-	bh=XbCrEiilqlhLRUoZ9vtL3udeddYuubszkQH7RepY91w=;
+	s=korg; t=1776701455;
+	bh=PVV6ho+zQw/zuenkYBmbS67DwK8+EzujwQFGK3MbRVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ad3+z5jhNGZ379ZiRXKPMi59hWDzTLLYzKXPLBQgBsphACPPtPo+fTCJYihwjSF34
-	 RKn0bn7jJ6/G2yEkAg3/vnGIxGSi0/W2TTzfHwMQQno1J+eiYvXM0zwQJ1VPq7hd0a
-	 5nl2lLjed1tAjj/rkGMm54qXiYQDXAPYeeGRBYvc=
+	b=zBgGVjwvX9zjQS61EHCSisQmWdY9y3VzCKZZnOpspWv371Ytzl+92Mc99VAir+iT6
+	 F6q7KQMRuldVNIUQ1uXxe2Mz0tJB/r1OSyVgr1HWDUKo6wp8mw49pMrOfEg0twVKYn
+	 m1oKHhPkE1JXwKdxqDUOwFXBlNfu3cbcLEZn/ATM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 086/162] netfilter: conntrack: add missing netlink policy validations
-Date: Mon, 20 Apr 2026 17:41:58 +0200
-Message-ID: <20260420153930.149237413@linuxfoundation.org>
+Subject: [PATCH 6.12 087/162] Revert "drm/xe/mmio: Avoid double-adjust in 64-bit reads"
+Date: Mon, 20 Apr 2026 17:41:59 +0200
+Message-ID: <20260420153930.185050090@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,62 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+This reverts commit 8f6848b2f6eadd903d29572ba0a684eda1e2f4ef.
 
-[ Upstream commit f900e1d77ee0ef87bfb5ab3fe60f0b3d8ad5ba05 ]
-
-Hyunwoo Kim reports out-of-bounds access in sctp and ctnetlink.
-
-These attributes are used by the kernel without any validation.
-Extend the netlink policies accordingly.
-
-Quoting the reporter:
-  nlattr_to_sctp() assigns the user-supplied CTA_PROTOINFO_SCTP_STATE
-  value directly to ct->proto.sctp.state without checking that it is
-  within the valid range. [..]
-
-  and: ... with exp->dir = 100, the access at
-  ct->master->tuplehash[100] reads 5600 bytes past the start of a
-  320-byte nf_conn object, causing a slab-out-of-bounds read confirmed by
-  UBSAN.
-
-Fixes: 076a0ca02644 ("netfilter: ctnetlink: add NAT support for expectations")
-Fixes: a258860e01b8 ("netfilter: ctnetlink: add full support for SCTP to ctnetlink")
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c    | 2 +-
- net/netfilter/nf_conntrack_proto_sctp.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_mmio.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 323e147fe282b..f51cdfba68fbd 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3460,7 +3460,7 @@ ctnetlink_change_expect(struct nf_conntrack_expect *x,
+diff --git a/drivers/gpu/drm/xe/xe_mmio.c b/drivers/gpu/drm/xe/xe_mmio.c
+index 449e6c5636712..9ea0973337eda 100644
+--- a/drivers/gpu/drm/xe/xe_mmio.c
++++ b/drivers/gpu/drm/xe/xe_mmio.c
+@@ -316,11 +316,11 @@ u64 __xe_mmio_read64_2x32(struct xe_mmio *mmio, struct xe_reg reg)
+ 	struct xe_reg reg_udw = { .addr = reg.addr + 0x4 };
+ 	u32 ldw, udw, oldudw, retries;
  
- #if IS_ENABLED(CONFIG_NF_NAT)
- static const struct nla_policy exp_nat_nla_policy[CTA_EXPECT_NAT_MAX+1] = {
--	[CTA_EXPECT_NAT_DIR]	= { .type = NLA_U32 },
-+	[CTA_EXPECT_NAT_DIR]	= NLA_POLICY_MAX(NLA_BE32, IP_CT_DIR_REPLY),
- 	[CTA_EXPECT_NAT_TUPLE]	= { .type = NLA_NESTED },
- };
- #endif
-diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index 4cc97f971264e..fabb2c1ca00ab 100644
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -587,7 +587,8 @@ static int sctp_to_nlattr(struct sk_buff *skb, struct nlattr *nla,
- }
+-	/*
+-	 * The two dwords of a 64-bit register can never straddle the offset
+-	 * adjustment cutoff.
+-	 */
+-	xe_tile_assert(mmio->tile, !in_range(mmio->adj_limit, reg.addr + 1, 7));
++	reg.addr = xe_mmio_adjusted_addr(mmio, reg.addr);
++	reg_udw.addr = xe_mmio_adjusted_addr(mmio, reg_udw.addr);
++
++	/* we shouldn't adjust just one register address */
++	xe_tile_assert(mmio->tile, reg_udw.addr == reg.addr + 0x4);
  
- static const struct nla_policy sctp_nla_policy[CTA_PROTOINFO_SCTP_MAX+1] = {
--	[CTA_PROTOINFO_SCTP_STATE]	    = { .type = NLA_U8 },
-+	[CTA_PROTOINFO_SCTP_STATE]	    = NLA_POLICY_MAX(NLA_U8,
-+							 SCTP_CONNTRACK_HEARTBEAT_SENT),
- 	[CTA_PROTOINFO_SCTP_VTAG_ORIGINAL]  = { .type = NLA_U32 },
- 	[CTA_PROTOINFO_SCTP_VTAG_REPLY]     = { .type = NLA_U32 },
- };
+ 	oldudw = xe_mmio_read32(mmio, reg_udw);
+ 	for (retries = 5; retries; --retries) {
 -- 
 2.53.0
 
