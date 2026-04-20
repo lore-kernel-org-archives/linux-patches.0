@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942524DC527;
-	Mon, 20 Apr 2026 13:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3774DC543;
+	Mon, 20 Apr 2026 13:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776692029; cv=none; b=TWzYXvTLAA52V59/dqY2rWrYkfD3voaUZGb39ph+rgK+QIJDwS65FcOHkuwjGqeQZQWYY2X8fD2cmeEnPbI9nibmX83twvW9TJ3GZpMbASBQytaMjRhRVcXkn0bIZCi/EJLYfwFm20x5qaRvRxWAnkjqBv/7RwV6xcZL1SwPfk4=
+	t=1776692031; cv=none; b=h+/fs678hinqhy7woqnoHdOhL3QIc79serabX4u9R22f8A8xu/4ZWbCh8fWmBBHWJ9oWcV1V9MiyR1+iFCifufLyEXNBUKFikgdQwqEiTybtpxKGrncc6j6BeUFePXVQvuAiyl8eEUkH1vU6ZUiky5y3NaMkItRxxwGE681MxiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776692029; c=relaxed/simple;
-	bh=kI5JVNp9MVMlPRc6VYu1r9vjEcn5Otqd4Y7FJptMpFg=;
+	s=arc-20240116; t=1776692031; c=relaxed/simple;
+	bh=bfM8runhSQsGmk9HGK5s+jLFhQeLx7mAZbta7McleiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rKMHSODVD2yJcKZ3e7CZ7sxy5mn/bVm+2EWPl3z4MI6w+n6X1BdWYgoRRX7IfwbnxGusa5pbRrcZM/Snno78OAF0DlWP+kWhGR9tJu9jPiHrhzGZtGwUiDAEmw42kfXPe4XtQJn3AKCeBrA6R9n4clw7R9Oa3Ay6N+Rpyc0+1cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bH6xSMxn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l+JfwOEWKirS4nb1/2DKI/7s+9Roz5/fZdO8IJPLWi5nxfyt1xJv7EJ2Y8enEtr8C9L9oXACZOUzewXk2wr7sG5/+pm1Zu+q9vPyr4j4sjO8M4JXHweBriMeWj2zsVVS3fJRcY86GLwIuCXT2jgRQKmMW0KHGPNx6eFa/vCoxA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LjG8Ge9i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bH6xSMxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638E3C19425;
-	Mon, 20 Apr 2026 13:33:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LjG8Ge9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB51C2BCB4;
+	Mon, 20 Apr 2026 13:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776692029;
-	bh=kI5JVNp9MVMlPRc6VYu1r9vjEcn5Otqd4Y7FJptMpFg=;
+	s=k20201202; t=1776692031;
+	bh=bfM8runhSQsGmk9HGK5s+jLFhQeLx7mAZbta7McleiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bH6xSMxnSA5Qp0t1tQWsjfvCO0qG2JB34cvrr+0ZXPdi1gpbuIAtvkqTd9Num1tMD
-	 0EM6CQtIGgvWkhnCQxFayq+axmA9eOyPvwHmcOEj76Dp1dnCX9pTv3fEzxzselp/Q5
-	 1JihPZXUIvJ2dDzGAC80c5B3+SELYjPqgRkcdJ58lszkGZf4Ugg2m0Ry9s3SQvrOVg
-	 gRF4pWHS9EqU4z8iy4kaR/At6vQV0w4CVllLV3DzzEH0zJp9Q0juki0WXRzq7l5lRd
-	 WKVP4Wq9XtQ11HjDJILB1r3vjUZy9wvSvjZiIkqaEHWQoFWkZ6Pc3wI0ApeBhwvpQw
-	 7mSkUVi1codkg==
+	b=LjG8Ge9i8VY0QCt5zfWfazNyAUe4XvUA2GzmQd1/ahgqEaVlSqO9TC+SBm9t2TZVw
+	 G5KGG61hM1uGIhgZ+Ic4Uv4JlvSABOrY/bVnDsqd2AzHz3l3D3RATPErz0jrHoYTMJ
+	 yHmUbRhgEZb7soegHkSczzfQUCdE2T/N//gvIbvWSqnO9EphwK6ymSlR7sXQk+9Srr
+	 LyOAbdA+hoTIW9qDi6IlnZqwI3vG0ELlK06OrXBGBn5+KMiyCkzirn+MDlFztIYz2i
+	 3pe4tTjEFnVIuukSCZvIG0cPvLmAyAOXQhU4j8y1vlfzcoGy+/SfEfWzgZ08w+wD5t
+	 UO1AcwFhAe0/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Jo=C3=A3o=20Paredes?= <joaommp@yahoo.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+Cc: Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shaggy@kernel.org,
-	jfs-discussion@lists.sourceforge.net,
+	pbonzini@redhat.com,
+	tglx@kernel.org,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	kvm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] JFS: always load filesystem UUID during mount
-Date: Mon, 20 Apr 2026 09:22:07 -0400
-Message-ID: <20260420132314.1023554-333-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] KVM: x86: Check for injected exceptions before queuing a debug exception
+Date: Mon, 20 Apr 2026 09:22:08 -0400
+Message-ID: <20260420132314.1023554-334-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -47,334 +52,365 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: João Paredes <joaommp@yahoo.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-[ Upstream commit 679330e4a7af1d102d035b13b2b9d41bc1dfbbf7 ]
+[ Upstream commit e907b4e72488f1df878e7e8acf88d23e49cb3ca7 ]
 
-The filesystem UUID was only being loaded into super_block sb when an
-external journal device was in use. When mounting without an external
-journal, the UUID remained unset, which prevented the computation of
-a filesystem ID (fsid), which could be confirmed via `stat -f -c "%i"`
-and thus user space could not use fanotify correctly.
+On KVM_SET_GUEST_DEBUG, if a #DB or #BP is injected with
+KVM_GUESTDBG_INJECT_DB or KVM_GUESTDBG_INJECT_BP, KVM fails with -EBUSY
+if there is an existing pending exception. This was introduced in
+commit 4f926bf29186 ("KVM: x86: Polish exception injection via
+KVM_SET_GUEST_DEBUG") to avoid a warning in kvm_queue_exception(),
+presumably to avoid overriding a pending exception.
 
-A missing filesystem ID causes fanotify to return ENODEV when marking
-the filesystem for events like FAN_CREATE, FAN_DELETE, FAN_MOVED_TO,
-and FAN_MOVED_FROM. As a result, applications relying on fanotify
-could not monitor these events on JFS filesystems without an external
-journal.
+This added another (arguably nice) property, if there's a pending
+exception, KVM_SET_GUEST_DEBUG cannot cause a #DF or triple fault.
+However, if an exception is injected, KVM_SET_GUEST_DEBUG will cause
+a #DF or triple fault in the guest, as kvm_multiple_exception() combines
+them.
 
-Moved the UUID initialization so it is always performed during mount,
-ensuring the superblock UUID is consistently available.
+Check for both pending and injected exceptions for
+KVM_GUESTDBG_INJECT_DB and KVM_GUESTDBG_INJECT_BP, to avoid accidentally
+injecting a #DB or triple fault.
 
-Signed-off-by: João Paredes <joaommp@yahoo.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+base-commit: a68a4bbc5b9ce5b722473399f05cb05217abaee8
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-compile it.
+I have sufficient information to complete my analysis. Let me write up
+the findings.
 
----
+# Analysis: KVM x86 - Check for injected exceptions before queuing debug
+exception
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-- **Subsystem:** JFS (Journaled File System)
-- **Action verb:** "always load" (correcting behavior that should have
-  been unconditional)
-- **Summary:** Ensures the filesystem UUID is always loaded during
-  mount, not just when external journal is configured
-- Record: [JFS] [always load / ensure] [Fix UUID not being loaded for
-  inline-log configurations, breaking fsid and fanotify]
+**Step 1.1: SUBJECT LINE**
+Record: Subsystem = "KVM: x86"; Action verb = "Check for" (implicit fix
+- adds missing check); Summary = adds check for injected exceptions (not
+just pending) before queuing #DB/#BP in KVM_SET_GUEST_DEBUG to prevent
+accidental #DF/triple fault.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by: João Paredes <joaommp@yahoo.com>** - Author of the
-  fix (no prior JFS commits found)
-- **Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>** - JFS
-  maintainer, signed off = reviewed and accepted
-- No Fixes: tag, no Reported-by, no Cc: stable (expected for this
-  pipeline)
-- Record: Fix accepted by JFS subsystem maintainer. No explicit stable
-  nomination.
+**Step 1.2: TAGS**
+Record:
+- Signed-off-by: Yosry Ahmed (author) and Sean Christopherson (KVM x86
+  maintainer, committer)
+- base-commit: a68a4bbc5b9c
+- NO Fixes: tag (expected - this is candidate review)
+- NO Reported-by: (no syzbot tag directly on this patch, though cover
+  letter referenced syzkaller repro for the series)
+- NO Reviewed-by/Tested-by/Acked-by on the final committed patch
+- NO Cc: stable
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The commit clearly describes the bug:
-- **Bug:** UUID only loaded when external journal used (`!JFS_INLINELOG`
-  path); inline log (the default) left `sbi->uuid` unset (all zeros)
-- **Symptom:** `stat -f -c "%i"` returns 0 (no filesystem ID); fanotify
-  returns `ENODEV` for `FAN_CREATE`, `FAN_DELETE`, `FAN_MOVED_TO`,
-  `FAN_MOVED_FROM`
-- **Root cause:** `uuid_copy` was inside the else branch of the inline-
-  log conditional
-- **Impact:** Applications relying on fanotify cannot monitor filesystem
-  events on JFS
-- Record: Real functional bug with clear user-visible symptoms. Fanotify
-  breaks for the default JFS configuration.
+**Step 1.3: COMMIT BODY**
+Record:
+- Bug description: `kvm_arch_vcpu_ioctl_set_guest_debug()` only checks
+  `kvm_is_exception_pending()` before queuing a #DB/#BP; if an exception
+  is currently *injected* (not pending), the check passes and
+  `kvm_queue_exception()` combines the two via
+  `kvm_multiple_exception()`, escalating to #DF or triple fault.
+- Failure mode: Accidental #DF (double fault) or triple fault in the
+  guest.
+- Author mentions introducing commit 4f926bf29186 from 2009.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-Not hidden at all. The commit message is direct about the bug mechanism
-and user-visible impact.
+**Step 1.4: HIDDEN BUG FIX?**
+Record: Subject uses "Check for" rather than "fix", but body explicitly
+describes a bug and the mechanism. This IS a bug fix.
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
-- **File:** `fs/jfs/jfs_mount.c` only
-- **Lines added:** 2 (uuid_copy + blank line before if/else)
-- **Lines removed:** 1 (uuid_copy from else block)
-- **Net change:** +1 line
-- **Function modified:** `chkSuper()`
-- **Scope:** Single-file, surgical one-line fix
-- Record: [fs/jfs/jfs_mount.c: +2/-1] [chkSuper()] [Single-file surgical
-  fix]
+**Step 2.1: INVENTORY**
+Record: Single file `arch/x86/kvm/x86.c`, 1 line added, 1 line removed.
+Function: `kvm_arch_vcpu_ioctl_set_guest_debug`. Surgical single-file
+fix.
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Step 2.2: CODE FLOW CHANGE**
+Record: Before: only returned -EBUSY if `kvm_is_exception_pending()`
+(which checks `exception.pending`, `exception_vmexit.pending`,
+`KVM_REQ_TRIPLE_FAULT`). After: also returns -EBUSY if
+`vcpu->arch.exception.injected`.
 
-**Before:**
+**Step 2.3: BUG MECHANISM**
+Record: Category (g) Logic/correctness fix - missing condition in
+return-value check. Looking at `kvm_multiple_exception()` (x86.c:837+),
+if another exception is already present (injected or pending), it either
+synthesizes #DF (for contributory+contributory or PF+non-benign), or
+escalates to triple fault if previous was DF. The fix prevents entering
+`kvm_queue_exception` when injection is in progress.
 
-```381:387:fs/jfs/jfs_mount.c
-        if (sbi->mntflag & JFS_INLINELOG)
-                sbi->logpxd = j_sb->s_logpxd;
-        else {
-                sbi->logdev =
-new_decode_dev(le32_to_cpu(j_sb->s_logdev));
-                uuid_copy(&sbi->uuid, &j_sb->s_uuid);
-                uuid_copy(&sbi->loguuid, &j_sb->s_loguuid);
-        }
-```
-
-**After:** `uuid_copy(&sbi->uuid, &j_sb->s_uuid)` is moved BEFORE the
-if/else block, making it unconditional. `uuid_copy(&sbi->loguuid, ...)`
-stays in else (correct - only needed for external log).
-
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-- **Category:** Logic/correctness fix - conditional initialization that
-  should be unconditional
-- **What was broken:** UUID needed unconditionally (for fsid computation
-  in `jfs_statfs()`), but was only loaded in the external-log path
-- **How the fix works:** Moves the uuid_copy call outside the
-  conditional
-
-### Step 2.4: ASSESS THE FIX QUALITY
-- **Obviously correct:** Yes - the UUID is a filesystem property, not a
-  journal-specific property
-- **Minimal:** Yes - moving one line
-- **Regression risk:** Essentially zero. For the inline-log case, UUID
-  is now properly populated (was zeros before). For the external-log
-  case, behavior is identical.
+**Step 2.4: FIX QUALITY**
+Record: Obviously correct; surgical one-line addition of a boolean
+condition to existing guard. No risk of deadlock/regression - it only
+adds another case that returns -EBUSY, which is existing ioctl behavior
+that userspace must already tolerate. Aligns with architectural
+behavior: you cannot queue a new exception while one is being delivered.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-- The if/else structure dates to `^1da177e4c3f41` (Linux 2.6.12-rc2,
-  2005-04-16, Linus Torvalds) - present since initial git history
-- The `uuid_copy` line was updated by `2e3bc6125154c6` (Andy Shevchenko,
-  2019-01-10) - UUID API conversion only, didn't change the placement
-- The original code ALWAYS had the UUID copy inside the else branch
-- Record: Buggy placement dates to the initial Linux git import
-  (v2.6.12). Present in ALL stable trees.
+**Step 3.1: BLAME**
+Record: Checked line; the code has been structured this way since
+introduction in 2009.
 
-### Step 3.2: THE REAL FIXES TARGET
-The fsid computation using `sbi->uuid` was added by `b5c816a4f1776`
-(Coly Li, 2009-01-21, "jfs: return f_fsid for statfs(2)"). This commit
-added the CRC32-based fsid computation but didn't realize the UUID was
-only loaded for external-log configurations. So the actual bug was
-introduced in 2009 when the UUID became functionally significant beyond
-just external log tracking.
+**Step 3.2: ORIGINAL BUGGY COMMIT**
+Record: Bug introduced in commit `4f926bf291863` ("KVM: x86: Polish
+exception injection via KVM_SET_GUEST_DEBUG") by Jan Kiszka, Oct 2009.
+`git describe --contains` = `v2.6.33-rc1~387^2~10`. This means the bug
+exists in every active stable tree (5.4, 5.10, 5.15, 6.1, 6.6, 6.12,
+etc.).
 
-### Step 3.3-3.5: RELATED CHANGES
-- No recent JFS changes to jfs_mount.c affect this area
-- This is a standalone fix with no dependencies
-- Author João Paredes has no other JFS commits (first-time contributor),
-  but the fix was accepted by JFS maintainer Dave Kleikamp
+**Step 3.3: FILE HISTORY**
+Record: `arch/x86/kvm/x86.c` has had 479 commits since v6.6. The
+`kvm_is_exception_pending()` helper was introduced in commit
+`7709aba8f7161` (v6.1-rc1). For stable trees >= v6.1, the fix applies
+cleanly. For v5.15 and v5.10, an equivalent inline check against
+`vcpu->arch.exception.pending || vcpu->arch.exception.injected` would be
+needed (trivial adaptation).
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 3.4: AUTHOR CONTEXT**
+Record: Yosry Ahmed is a regular KVM contributor (multiple nSVM/SVM
+fixes merged, plus memory management). Sean Christopherson applied the
+patch - he is the KVM x86 maintainer. Strong pedigree.
 
-### Step 4.1-4.5
-- Could not find the original patch submission on lore.kernel.org due to
-  bot protection
-- The fix was accepted by Dave Kleikamp (JFS maintainer) which provides
-  strong quality signal
-- No CVE was found for this specific issue
+**Step 3.5: DEPENDENCIES**
+Record: The commit was patch 3/3 of a series. Sean explicitly confirmed
+on the list: "So you'll apply patch 3 as-is, drop patch 2, and
+(potentially) take patch 1 and build another series on top of it?" --
+"Yeah, that's where I'm trending." Patch 3 is explicitly standalone.
+
+## PHASE 4: MAILING LIST RESEARCH
+
+**Step 4.1: ORIGINAL DISCUSSION**
+Record: `b4 dig -c e907b4e72488f` found the patch at
+https://lore.kernel.org/all/20260227011306.3111731-4-yosry@kernel.org/.
+Single revision (v1). Sean Christopherson reviewed explicitly and said:
+"First off, this patch looks good irrespective of nested crud.
+Disallowing injection of #DB/#BP while there's already an injected
+exception aligns with architectural behavior; KVM needs to finish
+delivering the exception and thus 'complete' the instruction before
+queueing a new exception." This is a strong endorsement from the
+subsystem maintainer.
+
+**Step 4.2: REVIEWERS**
+Record: `b4 dig -w` showed recipients: Sean Christopherson (KVM x86
+maintainer), Paolo Bonzini (KVM maintainer), kvm@ and linux-kernel@
+mailing lists. Appropriate review coverage.
+
+**Step 4.3: BUG REPORT**
+Record: Cover letter references a syzkaller reproducer that triggers
+nested_run_pending WARN; the series was motivated by syzkaller findings.
+Patch 3 addresses an architectural correctness issue that the author
+noticed while investigating, more than a direct syzkaller report.
+
+**Step 4.4: SERIES CONTEXT**
+Record: Part of "[PATCH 0/3] KVM: x86: Fix incorrect handling of triple
+faults". Sean confirmed he'd apply patch 3 standalone and defer patches
+1-2.
+
+**Step 4.5: STABLE DISCUSSION**
+Record: No explicit stable nomination was made by the author or reviewer
+on the mailing list.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.2: KEY FUNCTIONS AND CALLERS
-The impacted code path:
-1. `chkSuper()` is called during `jfs_mount()` (line 83) and during
-   `jfs_mount_rw()` remount (line 232)
-2. `sbi->uuid` is consumed by:
-   - `jfs_statfs()` in `fs/jfs/super.c` (lines 146-150) - computes
-     `f_fsid` via CRC32 of UUID
-   - `lmLogFileSystem()` in `fs/jfs/jfs_logmgr.c` (line 1713) - tracks
-     active filesystems in log
-3. `jfs_statfs()` is the VFS `.statfs` operation, called via
-   `vfs_statfs()` and `vfs_get_fsid()`
-4. `fanotify_test_fsid()` calls `vfs_get_fsid()` which calls
-   `jfs_statfs()` - confirmed in `fs/notify/fanotify/fanotify_user.c`
-   line 1771
+**Step 5.1: KEY FUNCTIONS**
+Record: `kvm_arch_vcpu_ioctl_set_guest_debug` is the only modified
+function.
 
-### Step 5.3-5.4: FANOTIFY ENODEV MECHANISM CONFIRMED
-In `fanotify_test_fsid()` (line 1776):
+**Step 5.2: CALLERS**
+Record: `kvm_arch_vcpu_ioctl_set_guest_debug` is the top-level ioctl
+handler for `KVM_SET_GUEST_DEBUG` - invoked directly from userspace
+through the KVM ioctl interface.
 
-```1776:1779:fs/notify/fanotify/fanotify_user.c
-        if (!fsid->id.val[0] && !fsid->id.val[1]) {
-                err = -ENODEV;
-                goto weak;
-        }
-```
+**Step 5.3: CALLEES**
+Record: Relevant callees: `kvm_is_exception_pending()` (x86.h:198-203,
+checks pending + exception_vmexit.pending + KVM_REQ_TRIPLE_FAULT),
+`kvm_queue_exception()` → `kvm_multiple_exception()` (x86.c:837, which
+is the function that synthesizes #DF or triple fault).
 
-When `sbi->uuid` is all zeros (kzalloc'd), `crc32_le(0, zeros, N) = 0`
-(CRC is linear, zero input with zero init = zero output). So `f_fsid =
-{0, 0}`, triggering the ENODEV path. The `weak` label returns `-ENODEV`
-for non-inode marks (FAN_MARK_FILESYSTEM, FAN_MARK_MOUNT).
+**Step 5.4: CALL CHAIN / REACHABILITY**
+Record: Reachable directly from userspace ioctl `KVM_SET_GUEST_DEBUG`.
+Any VMM/debugger that uses this ioctl with `KVM_GUESTDBG_INJECT_DB` or
+`KVM_GUESTDBG_INJECT_BP` can hit this code path.
 
-### Step 5.5: SIMILAR PATTERNS
-The comment at line 1769 explicitly says: "Make sure dentry is not of a
-filesystem with zero fsid (e.g. fuse)." JFS was silently in this same
-broken category for inline-log configs.
+**Step 5.5: SIMILAR PATTERNS**
+Record: Grep shows `vmx/vmx.c:6130` already combines both checks:
+`(kvm_is_exception_pending(vcpu) || vcpu->arch.exception.injected)`. The
+fix makes `kvm_arch_vcpu_ioctl_set_guest_debug` consistent with this
+existing VMX pattern.
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+## PHASE 6: CROSS-REFERENCING STABLE TREE
 
-### Step 6.1: BUGGY CODE EXISTS IN ALL STABLE TREES
-Confirmed via `git show v7.0-rc7:fs/jfs/jfs_mount.c` - the buggy
-conditional UUID loading is present. The code has been this way since
-the initial Linux git import and exists in ALL active stable trees.
+**Step 6.1: CODE EXISTS IN STABLE?**
+Record: The buggy code exists in ALL stable trees back to v2.6.33
+(2010). The specific `kvm_is_exception_pending()` helper was added in
+v6.1 (Oct 2022). For trees v6.1+, direct apply. For v5.15.y, v5.10.y,
+the equivalent fix would use `vcpu->arch.exception.pending ||
+vcpu->arch.exception.injected` directly.
 
-### Step 6.2: BACKPORT COMPLICATIONS
-None. The patch will apply cleanly - the surrounding code in
-`chkSuper()` has been unchanged for years.
+**Step 6.2: BACKPORT COMPLICATIONS**
+Record: For v6.1, v6.6, v6.12: clean apply expected. For v5.15 and
+earlier: need to replace `kvm_is_exception_pending(vcpu)` with raw field
+check (`vcpu->arch.exception.pending`) — trivial adaptation.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 6.3: RELATED FIXES IN STABLE?**
+Record: No prior fix for this specific issue in stable (checked mainline
+history - single commit e907b4e72488f).
 
-### Step 7.1: SUBSYSTEM CRITICALITY
-- **Subsystem:** JFS filesystem (fs/jfs/)
-- **Criticality:** IMPORTANT - filesystem correctness affects data and
-  application behavior
-- JFS is a mature filesystem used particularly in enterprise
-  environments
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.2: SUBSYSTEM ACTIVITY
-JFS receives minimal but ongoing maintenance, mostly bug fixes.
+**Step 7.1: SUBSYSTEM**
+Record: `arch/x86/kvm/` - KVM (Kernel-based Virtual Machine) x86
+implementation. Criticality: IMPORTANT. KVM is widely used in
+cloud/server workloads and affects any distro running VMs.
+
+**Step 7.2: ACTIVITY**
+Record: 479 commits since v6.6 in x86.c alone; very active subsystem.
+Bug is not recent though - it's a 15-year-old latent bug.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: WHO IS AFFECTED
-All JFS users mounting without an external journal (the default
-configuration). This is the vast majority of JFS users.
+**Step 8.1: AFFECTED POPULATION**
+Record: Users of KVM_SET_GUEST_DEBUG ioctl with INJECT_DB/BP - primarily
+debuggers (gdb stub), QEMU, and other VMMs that perform guest
+introspection. Not all VMMs use this, but it's common enough.
 
-### Step 8.2: TRIGGER CONDITIONS
-- **How common:** Every single mount of a JFS filesystem with inline log
-- **User trigger:** Any application using fanotify with
-  `FAN_MARK_FILESYSTEM` or `FAN_MARK_MOUNT` on JFS
-- **No special privileges needed** beyond normal fanotify access
+**Step 8.2: TRIGGER CONDITIONS**
+Record: Requires (1) a VMM/debugger using KVM_SET_GUEST_DEBUG with
+KVM_GUESTDBG_INJECT_DB or KVM_GUESTDBG_INJECT_BP, AND (2) timing where
+the target vCPU has an already-injected exception at that moment. Not an
+unprivileged trigger (VMM-level access needed).
 
-### Step 8.3: FAILURE MODE SEVERITY
-- **Failure:** Applications using fanotify (file monitoring, security
-  tools, backup software) get ENODEV and cannot monitor JFS filesystems
-- **Severity:** HIGH - functional breakage of a standard kernel
-  interface for a standard filesystem configuration
-- Not a crash or security issue, but a clear functional bug affecting
-  userspace applications
+**Step 8.3: FAILURE MODE**
+Record: Accidental injection of #DF or triple fault into the guest -
+causes guest kernel crash / reset. Severity: MEDIUM - guest-only impact
+(no host compromise, no security escalation, no host-level crash).
 
-### Step 8.4: RISK-BENEFIT RATIO
-- **Benefit:** HIGH - fixes fanotify for all JFS users with inline log
-  (the common case)
-- **Risk:** VERY LOW - 1 line moved, obviously correct, no possible
-  regression
-- **Ratio:** Excellent
+**Step 8.4: RISK-BENEFIT**
+Record: BENEFIT: medium (prevents unexpected guest crashes in a
+debugger/VMM corner case, matches architectural behavior). RISK: very
+low - 1-line addition of a condition to an existing -EBUSY return path
+that userspace must already handle. Ratio strongly favors backporting.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: EVIDENCE COMPILATION
+**Step 9.1: EVIDENCE**
+FOR backporting:
+- Minimal, surgical 1-line fix
+- Explicitly endorsed by KVM x86 maintainer Sean Christopherson ("patch
+  looks good irrespective of nested crud")
+- Fixes real bug present since 2009 in every active stable tree
+- Matches architectural behavior and makes code consistent with
+  vmx.c:6130
+- Fix quality is obvious by reading the code
+- Low regression risk (only expands an existing -EBUSY guard)
+- Author/committer are experienced KVM contributors
 
-**FOR backporting:**
-- Fixes a real, user-visible bug: fanotify returns ENODEV for default
-  JFS configurations
-- Extremely small and surgical fix: 1 line moved
-- Obviously correct: UUID is a filesystem property, not journal-specific
-- Accepted by JFS maintainer (Dave Kleikamp)
-- Bug affects ALL stable trees (code unchanged since initial git import)
-- Patch applies cleanly
-- Zero regression risk
-- Bug has existed since 2009 (fsid computation added)
+AGAINST backporting:
+- No explicit stable tag/nomination on the list
+- Impact is guest-only (not host)
+- Requires specific user action via KVM_SET_GUEST_DEBUG ioctl
+- For pre-v6.1 trees, minor adaptation is needed (inline the helper's
+  check)
 
-**AGAINST backporting:**
-- No Fixes: tag or Cc: stable (expected - that's why it needs review)
-- No syzbot/KASAN/crash - it's a functional bug, not a memory safety
-  issue
-- Author is a first-time contributor (but fix accepted by maintainer)
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? YES - reviewed by maintainer, trivial
+   change, matches existing pattern.
+2. Fixes a real bug? YES - guest-side #DF or triple fault.
+3. Important issue? MEDIUM - guest kernel crash but not host-side.
+4. Small and contained? YES - 1 line.
+5. No new features or APIs? YES.
+6. Applies cleanly? YES for v6.1+; trivial adaptation for v5.15 and
+   earlier.
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **YES** - trivially verifiable,
-   accepted by maintainer
-2. Fixes a real bug? **YES** - fanotify ENODEV for default JFS
-   configuration
-3. Important issue? **YES** - breaks standard kernel interface for
-   application monitoring
-4. Small and contained? **YES** - 1 line moved in 1 file
-5. No new features or APIs? **YES** - just fixes existing behavior
-6. Can apply to stable? **YES** - will apply cleanly to all stable trees
+**Step 9.3: EXCEPTION CATEGORIES**
+Record: Does not fall into a trivial exception category (not a device
+ID, not a quirk, not DT, not docs). But it IS a small, surgical bug fix
+that fits the general stable criteria.
 
-### Step 9.3: EXCEPTION CATEGORIES
-Not an exception category - this is a standard bug fix.
+**Step 9.4: DECISION**
+This is a small, surgical, well-reviewed fix for a long-standing latent
+bug that can cause guest crashes through a KVM ioctl path. The subsystem
+maintainer explicitly endorsed the patch as architecturally correct.
+Regression risk is minimal (just an extra -EBUSY condition). The bug has
+been present in every stable tree for 15+ years.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from author and JFS maintainer
-  Dave Kleikamp
-- [Phase 2] Diff analysis: 1 line moved from else block to unconditional
-  execution in `chkSuper()`
-- [Phase 3] git blame: buggy conditional structure present since
-  `^1da177e4c3f41` (v2.6.12, 2005); fsid computation added in
-  `b5c816a4f1776` (2009) made it functionally significant
-- [Phase 3] git show v7.0-rc7: confirmed buggy code exists unchanged in
-  v7.0 stable tree
-- [Phase 5] Traced call chain: `fanotify_test_fsid()` ->
-  `vfs_get_fsid()` -> `jfs_statfs()` -> CRC32 of `sbi->uuid`; confirmed
-  zero-UUID produces zero fsid which triggers ENODEV at
-  fanotify_user.c:1776-1777
-- [Phase 5] Confirmed `sbi` allocated via `kzalloc_obj` in super.c:452,
-  so uuid is zero-initialized
-- [Phase 5] Confirmed `JFS_INLINELOG` (0x00000800) is the default/common
-  JFS configuration
-- [Phase 6] Code is identical across all stable trees - patch applies
-  cleanly
-- [Phase 8] Failure mode: fanotify returns -ENODEV for
-  FAN_MARK_FILESYSTEM/MOUNT on default JFS, severity HIGH
-- UNVERIFIED: Could not access lore.kernel.org for original patch
-  discussion (bot protection blocked access)
+- [Phase 1] Parsed tags: only SOB tags; no Fixes:/Reported-by:/Cc:stable
+  as expected for candidate patch.
+- [Phase 2] Diff analysis: confirmed 1 line added / 1 removed in
+  `kvm_arch_vcpu_ioctl_set_guest_debug()`; verified the change adds `||
+  vcpu->arch.exception.injected` to existing condition.
+- [Phase 2] `kvm_multiple_exception()` in x86.c:837-898 confirmed: when
+  `exception.injected=true`, code goes into #DF/triple-fault synthesis
+  path.
+- [Phase 3] `git show 4f926bf29186` confirmed bug introduced by Jan
+  Kiszka in Oct 2009.
+- [Phase 3] `git describe --contains 4f926bf29186` =
+  `v2.6.33-rc1~387^2~10` → bug present in all stable trees.
+- [Phase 3] `git describe --contains e907b4e72488f` =
+  `next-20260313~...` → fix is in linux-next, not yet in a released tag.
+- [Phase 3] `git describe --contains 7709aba8f7161` =
+  `v6.1-rc1~107^2~19` → `kvm_is_exception_pending()` helper exists only
+  in v6.1+.
+- [Phase 4] `b4 dig -c e907b4e72488f` found original submission at
+  https://lore.kernel.org/all/20260227011306.3111731-4-yosry@kernel.org/
+- [Phase 4] `b4 dig -a` confirmed single v1 revision; no v2/v3 needed.
+- [Phase 4] `b4 dig -w` confirmed recipients included Sean
+  Christopherson and Paolo Bonzini.
+- [Phase 4] Read thread mbox: Sean explicitly said "this patch looks
+  good irrespective of nested crud" and confirmed he would apply patch 3
+  as-is, dropping patches 1-2 for later work.
+- [Phase 4] Cover letter references syzkaller reproducer (manually
+  modified) but for the series as a whole; patch 3 itself is
+  architectural correctness.
+- [Phase 5] `grep kvm_is_exception_pending` confirmed vmx.c:6130 uses
+  exactly the same combined check pattern - fix makes x86.c consistent.
+- [Phase 6] File exists in all stable trees; helper
+  `kvm_is_exception_pending()` only in v6.1+, minor adaptation needed
+  for v5.15/v5.10.
+- [Phase 7] `git log --pretty | rg "^Yosry"` confirmed Yosry Ahmed is
+  regular KVM contributor.
+- [Phase 8] Reachability: KVM_SET_GUEST_DEBUG is the direct ioctl
+  handler - reachable from userspace VMMs/debuggers.
+- UNVERIFIED: Whether any real-world VMM has actually hit this bug in
+  production (no specific user report in the patch).
+- UNVERIFIED: Exact backport complexity for v5.15.y/v5.10.y - not tested
+  but a trivial inline expansion.
+
+The fix is small, surgical, maintainer-endorsed as architecturally
+correct, applies to a 15-year-old latent bug, is reachable from
+userspace VMMs, and has very low regression risk. It meets stable kernel
+criteria.
 
 **YES**
 
- fs/jfs/jfs_mount.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/x86.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_mount.c b/fs/jfs/jfs_mount.c
-index 52e6b58c5dbd2..dac822f150701 100644
---- a/fs/jfs/jfs_mount.c
-+++ b/fs/jfs/jfs_mount.c
-@@ -378,11 +378,12 @@ static int chkSuper(struct super_block *sb)
- 	sbi->nbperpage = PSIZE >> sbi->l2bsize;
- 	sbi->l2nbperpage = L2PSIZE - sbi->l2bsize;
- 	sbi->l2niperblk = sbi->l2bsize - L2DISIZE;
-+	uuid_copy(&sbi->uuid, &j_sb->s_uuid);
-+
- 	if (sbi->mntflag & JFS_INLINELOG)
- 		sbi->logpxd = j_sb->s_logpxd;
- 	else {
- 		sbi->logdev = new_decode_dev(le32_to_cpu(j_sb->s_logdev));
--		uuid_copy(&sbi->uuid, &j_sb->s_uuid);
- 		uuid_copy(&sbi->loguuid, &j_sb->s_loguuid);
- 	}
- 	sbi->fsckpxd = j_sb->s_fsckpxd;
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index fd1c4a36b5936..58f7247814e06 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -12529,7 +12529,7 @@ int kvm_arch_vcpu_ioctl_set_guest_debug(struct kvm_vcpu *vcpu,
+ 
+ 	if (dbg->control & (KVM_GUESTDBG_INJECT_DB | KVM_GUESTDBG_INJECT_BP)) {
+ 		r = -EBUSY;
+-		if (kvm_is_exception_pending(vcpu))
++		if (kvm_is_exception_pending(vcpu) || vcpu->arch.exception.injected)
+ 			goto out;
+ 		if (dbg->control & KVM_GUESTDBG_INJECT_DB)
+ 			kvm_queue_exception(vcpu, DB_VECTOR);
 -- 
 2.53.0
 
