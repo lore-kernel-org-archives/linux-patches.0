@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D823A3A9DB3;
-	Mon, 20 Apr 2026 13:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CA248C419;
+	Mon, 20 Apr 2026 13:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691929; cv=none; b=fjrjTJzEism7Bw93iAUWDJ4+SdPls3aLe4eJdCLo0RURRKuGNOOnnsfm01srONVsbmfjIwrA5ei673UQ/uQdAK6CmiQVOv4PLtL+hfrd40lR0qpXAi0/zxjEXDFSERLoM8IdGdQjJH1jaNRd0TVKdU4K6fF1c7ZPNvwMket4xL8=
+	t=1776691931; cv=none; b=Lcr2wVQh5ENkJXvVtG/4rUgMC1D13axgSMjhsvKGnrTH77MAEzeA6wiPtDxZb7P5YDmwWn36mbyv7jC0y7hufXKYRwXSHgaDi2vnBTv63Urlur/AiMPN5F5RXxf1APGfPXoD3uVcCe6GcoEIKDxPy/14Lzmx1VGWx9xEVZNCFjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691929; c=relaxed/simple;
-	bh=ezqlU37ANbeKsqozw/1jOWoBmKYZeToNqHXnc2Ys4rs=;
+	s=arc-20240116; t=1776691931; c=relaxed/simple;
+	bh=/eaq8lMCumNDRzpCT8cYDTdDPbgwBpq/RFNHpaJfm3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8ks1EQjL/hKWYD2YBYPskhoaYtB3tZaPo0MQOX+FKoHCIghB78o50gHCKlZzKclL6jaMG+lpJHzg2Ufuv7bdEjIEKUhF3vjRwvaMxqTCis98UltK/tn6991pVyzwKh2nYq7gvSNdmNM5AIzU9GncUzWgDw8TMo9MtkHgyrVZEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=txde56fa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=drHkmEfc2mP50vuLBFw4kr+9MtWNltuY0wNYcCEZW1zmTz/rAxZTLlf5wU0G5+KsfGXDWZeNq2sakpGpH+SXli86jP9SMwAK+1hB0i/0aggulU+5kB8q328Ey28cM587Cgt37I4w+K3qcUVP4hmRKJOAHfhlTedK1v81rHTZZH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ibB8bD88; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="txde56fa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982DAC19425;
-	Mon, 20 Apr 2026 13:32:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ibB8bD88"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD92C2BCB4;
+	Mon, 20 Apr 2026 13:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691929;
-	bh=ezqlU37ANbeKsqozw/1jOWoBmKYZeToNqHXnc2Ys4rs=;
+	s=k20201202; t=1776691931;
+	bh=/eaq8lMCumNDRzpCT8cYDTdDPbgwBpq/RFNHpaJfm3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txde56faJQKBBmpJl2S97m1nnkvJL6KmRykK2MR9eekEV/KgTw/BRafHtDLoo8il6
-	 aRflBNa3YMTbFWNKufIMQGf0hSypOXBpPSra8EjcAuGYv6R1fBgraNSZ+RTiV+BNSH
-	 ExNZtzMJrIL0q5JCfWLcMvSrhCIR3KNtvmhx8cHwXrn95EXATpFsNFGAYdueinf0uN
-	 sJPBDcuHFtdHk5DbO+bgGnRmx1A0NEC3f+iCNB8RYxZq1iszEJMYd05ByFfOAdlNOY
-	 bcKM9p7jWmNnrL+Rl5rAWzN1/I96BIgMlusaTl7CPe94xw60rivEjnHzUch/3fPOy8
-	 09eCcc6tZ2Jhg==
+	b=ibB8bD88ZJK1KniHUjmB3qd5B5U+O3OcHVj5rmDFTGjxl63EpQgItDAxT4DtdAT1A
+	 6IpLleP4DcZ0RbD98eDneJUaSQjyJTZDx+OOX6HH5pnxmwCQWQkWSygNAYc5sC+LAX
+	 k03TGOze9+zQGR6rGBttKad4QSPpJvDfQ5IiqMvewtgwLBUHD/kB2ljzbwyRB92YQl
+	 D3gzX6+PU+XuofsZ04T+OF+hhZnMgcU2NeAVsAuqQop0V4dsWzUFocd24nmFF1KEQi
+	 LHldL2WGgYevo2Zg2h8ucdxaPq4YZYZyZKs1kYoth6zXvQCrZNYRnDfcaSZ/9T/NVi
+	 pP2k6FaLE5JPw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Antheas Kapenekakis <lkml@antheas.dev>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	cryolitia@uniontech.com,
+	linux-hwmon@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] btrfs: zoned: cap delayed refs metadata reservation to avoid overcommit
-Date: Mon, 20 Apr 2026 09:21:09 -0400
-Message-ID: <20260420132314.1023554-275-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] hwmon: (gpd-fan) Add GPD Win 5
+Date: Mon, 20 Apr 2026 09:21:10 -0400
+Message-ID: <20260420132314.1023554-276-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -51,581 +50,324 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 7bcb04de982ff0718870112ad9f38c35cbca528b ]
+[ Upstream commit 4853b53264869e51378cad7bf1556d4e8049d445 ]
 
-On zoned filesystems metadata space accounting can become overly optimistic
-due to delayed refs reservations growing without a hard upper bound.
+The GPD Win 5 is a new device by GPD with an AMD AI MAX 385/395 chip.
+It uses the same fan control registers as the GPD Win Duo. This
+information was provided by GPD.
 
-The delayed_refs_rsv block reservation is allowed to speculatively grow and
-is only backed by actual metadata space when refilled. On zoned devices this
-can result in delayed_refs_rsv reserving a large portion of metadata space
-that is already effectively unusable due to zone write pointer constraints.
-As a result, space_info->may_use can grow far beyond the usable metadata
-capacity, causing the allocator to believe space is available when it is not.
-
-This leads to premature ENOSPC failures and "cannot satisfy tickets" reports
-even though commits would be able to make progress by flushing delayed refs.
-
-Analysis of "-o enospc_debug" dumps using a Python debug script
-confirmed that delayed_refs_rsv was responsible for the majority of
-metadata overcommit on zoned devices. By correlating space_info counters
-(total, used, may_use, zone_unusable) across transactions, the analysis
-showed that may_use continued to grow even after usable metadata space
-was exhausted, with delayed refs refills accounting for the excess
-reservations.
-
-Here's the output of the analysis:
-
-  ======================================================================
-  Space Type: METADATA
-  ======================================================================
-
-  Raw Values:
-    Total:                256.00 MB (268435456 bytes)
-    Used:                 128.00 KB (131072 bytes)
-    Pinned:                16.00 KB (16384 bytes)
-    Reserved:             144.00 KB (147456 bytes)
-    May Use:              255.48 MB (267894784 bytes)
-    Zone Unusable:        192.00 KB (196608 bytes)
-
-  Calculated Metrics:
-    Actually Usable:       255.81 MB (total - zone_unusable)
-    Committed:             255.77 MB (used + pinned + reserved + may_use)
-    Consumed:              320.00 KB (used + zone_unusable)
-
-  Percentages:
-    Zone Unusable:    0.07% of total
-    May Use:         99.80% of total
-
-Fix this by adding a zoned-specific cap in btrfs_delayed_refs_rsv_refill():
-Before reserving additional metadata bytes, limit the delayed refs
-reservation based on the usable metadata space (total bytes minus
-zone_unusable). If the reservation would exceed this cap, return -EAGAIN
-to trigger the existing flush/commit logic instead of overcommitting
-metadata space.
-
-This preserves the existing reservation and flushing semantics while
-preventing metadata overcommit on zoned devices. The change is limited to
-metadata space and does not affect non-zoned filesystems.
-
-This patch addresses premature metadata ENOSPC conditions on zoned devices
-and ensures delayed refs are throttled before exhausting usable metadata.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://lore.kernel.org/r/20260220161601.2344291-1-lkml@antheas.dev
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a thorough understanding. Let me compile the final analysis.
+Now I have all the information I need. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: `btrfs: zoned:` (btrfs filesystem, zoned device mode)
-- **Action verb**: "cap" (limit/constrain)
-- **Summary**: Cap delayed refs metadata reservation to avoid overcommit
-  on zoned filesystems
+**Step 1.1: Subject Line**
+- Subsystem: `hwmon: (gpd-fan)`
+- Action verb: "Add" — adding a new device entry
+- Summary: Adding DMI match for GPD Win 5 handheld device to the gpd-fan
+  hwmon driver
+- Record: [hwmon/gpd-fan] [Add] [New DMI entry for GPD Win 5 device]
 
-Record: [btrfs: zoned] [cap] [Limit delayed refs metadata reservation to
-prevent metadata overcommit on zoned devices]
+**Step 1.2: Tags**
+- `Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>` — the author,
+  a GPD/handheld Linux contributor
+- `Link:
+  https://lore.kernel.org/r/20260220161601.2344291-1-lkml@antheas.dev` —
+  original submission
+- `Signed-off-by: Guenter Roeck <linux@roeck-us.net>` — the hwmon
+  subsystem maintainer accepted the patch
+- No Fixes: tag (expected for this type of commit)
+- No Reported-by, no Cc: stable (expected for device ID additions)
+- Record: Accepted by hwmon maintainer Guenter Roeck. No bug report tags
+  — this is hardware enablement.
 
-### Step 1.2: Tags
-- **Reviewed-by**: Filipe Manana <fdmanana@suse.com> -- a core btrfs
-  developer and the most prolific btrfs contributor
-- **Signed-off-by**: Johannes Thumshirn <johannes.thumshirn@wdc.com> --
-  author, WDC employee, active btrfs/zoned contributor
-- **Signed-off-by**: David Sterba <dsterba@suse.com> -- btrfs maintainer
-  who merged it
-- No Fixes: tag (expected for manual review candidates)
-- No Cc: stable tag (expected)
-- No Reported-by tag (author-discovered through debugging)
+**Step 1.3: Commit Body**
+- The GPD Win 5 is a new handheld device by GPD with AMD AI MAX 385/395.
+- It uses the same fan control registers as the GPD Win Duo.
+- Information was provided directly by GPD (the manufacturer).
+- Record: Hardware enablement for a new device using already-existing
+  driver data. No bug being fixed — this is a device ID addition.
 
-Record: Reviewed by Filipe Manana (core btrfs developer), committed by
-maintainer David Sterba. No bug report reference.
-
-### Step 1.3: Commit Body
-The commit describes a real-world ENOSPC problem on zoned btrfs:
-- `delayed_refs_rsv` speculatively grows without a hard upper bound
-- On zoned devices, zone write pointer constraints make some space
-  unusable
-- `space_info->may_use` grows beyond usable metadata capacity
-- This causes premature ENOSPC failures ("cannot satisfy tickets")
-- The author provided extensive analysis output from enospc_debug dumps
-  showing may_use at 99.80% of total while consumed was only 320KB
-
-**Failure mode**: Premature ENOSPC errors on zoned devices, preventing
-writes even though space could be recovered by flushing delayed refs.
-
-Record: [Bug: Metadata overcommit on zoned devices leads to premature
-ENOSPC] [Symptom: cannot satisfy tickets, premature ENOSPC] [Root cause:
-delayed_refs_rsv unbounded growth relative to zone_unusable space]
-
-### Step 1.4: Hidden Bug Fix Detection
-This is NOT a hidden bug fix - the commit explicitly describes fixing
-premature ENOSPC on zoned devices. It's a clear bug fix with detailed
-analysis.
-
-Record: [Direct bug fix, not hidden]
+**Step 1.4: Hidden Bug Fix Detection**
+- This is NOT a hidden bug fix. It is purely a device ID addition to
+  enable fan control on new hardware.
+- Without this entry, the GPD Win 5 has no kernel-level fan control,
+  which could result in overheating or always-on-full-speed fans.
+- Record: Not a hidden bug fix; a device ID addition in the "exception"
+  category.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Change Inventory
-- **fs/btrfs/delayed-ref.c**: +28 lines (new function
-  `btrfs_zoned_cap_metadata_reservation` + 3-line call site)
-- **fs/btrfs/transaction.c**: +8 lines (handle -EAGAIN from refill by
-  committing transaction and retrying)
-- **Total**: ~36 lines added, 0 removed
-- **Functions modified**: `btrfs_delayed_refs_rsv_refill()`,
-  `start_transaction()`
-- **New function**: `btrfs_zoned_cap_metadata_reservation()` (static
-  helper)
-- **Scope**: Two-file surgical fix, limited to zoned mode
+**Step 2.1: Inventory**
+- Files changed: `drivers/hwmon/gpd-fan.c` only
+- Lines added: +8 (a single DMI table entry block)
+- Lines removed: 0
+- Functions modified: None — the change is to the static `dmi_table[]`
+  array
+- Scope: Single-file, trivial table entry addition
+- Record: [drivers/hwmon/gpd-fan.c: +8/-0] [dmi_table[] data array]
+  [Trivial table entry]
 
-Record: [2 files, ~36 lines added] [btrfs_delayed_refs_rsv_refill
-modified, start_transaction modified] [Small surgical fix]
+**Step 2.2: Code Flow Change**
+- BEFORE: The `dmi_table[]` does not match GPD Win 5 (DMI product name
+  "G1618-05"). The driver returns `-ENODEV` on this hardware.
+- AFTER: The `dmi_table[]` has an entry for "G1618-05" pointing to
+  `&gpd_duo_drvdata`. The driver will probe and provide fan control on
+  GPD Win 5.
+- Record: [Before: no match, driver not loaded → After: match found,
+  driver loads with duo drvdata]
 
-### Step 2.2: Code Flow Changes
+**Step 2.3: Bug Mechanism**
+- Category: Hardware workaround / Device ID addition (category h)
+- This is a DMI match table entry addition — the exact same pattern as
+  USB device IDs, PCI IDs, etc.
+- Uses existing `gpd_duo_drvdata` — no new data structures, code paths,
+  or logic.
+- Record: [Device ID addition] [DMI_MATCH entry enabling existing driver
+  on new hardware]
 
-**Hunk 1 (delayed-ref.c)**: New static function
-`btrfs_zoned_cap_metadata_reservation`:
-- Before: No cap on delayed refs reservation
-- After: On zoned devices, checks if `block_rsv->size` exceeds half of
-  usable metadata (`total_bytes - bytes_zone_unusable`). Returns -EAGAIN
-  if exceeded.
-- Only affects zoned mode (`btrfs_is_zoned` check at start)
-
-**Hunk 2 (delayed-ref.c)**: Call to new function in
-`btrfs_delayed_refs_rsv_refill`:
-- Before: Directly calls `btrfs_reserve_metadata_bytes`
-- After: First checks the zoned cap; if exceeded, returns -EAGAIN before
-  attempting actual reservation
-
-**Hunk 3 (transaction.c)**: -EAGAIN handling in `start_transaction`:
-- Before: Any error from `btrfs_delayed_refs_rsv_refill` goes to
-  `reserve_fail`
-- After: If -EAGAIN (zoned cap hit), commits current transaction (which
-  flushes delayed refs, freeing space), then retries the refill
-
-Record: [New cap check prevents overcommit] [EAGAIN triggers transaction
-commit + retry] [Only zoned mode affected]
-
-### Step 2.3: Bug Mechanism
-Category: **Logic/correctness fix** for metadata accounting on zoned
-devices.
-
-What was broken: The delayed refs block reserve could grow arbitrarily
-large on zoned filesystems, where zone write pointer constraints
-(tracked as `bytes_zone_unusable`) make portions of metadata space
-physically unusable. The overcommit logic didn't account for this, so
-`may_use` could far exceed actually usable space.
-
-How the fix works: Adds a zoned-specific cap at 50% of usable metadata
-space (`usable >> 1`). When the cap is hit, returns -EAGAIN instead of
-proceeding with the reservation. The caller (transaction start) responds
-by committing the current transaction, which flushes delayed refs and
-frees the overcommitted space.
-
-Record: [Logic/correctness bug in metadata accounting on zoned devices]
-[Fix: cap at 50% usable space, trigger flush when cap exceeded]
-
-### Step 2.4: Fix Quality
-- The fix is well-contained: adds one static helper + two call sites
-- The zoned-only guard (`btrfs_is_zoned`) ensures non-zoned systems are
-  completely unaffected
-- The `ASSERT(btrfs_is_zoned(fs_info))` in the EAGAIN handler is good
-  defensive coding
-- The retry pattern (commit, then retry) is a well-established pattern
-  in btrfs space management
-- Reviewed by Filipe Manana who is the most active btrfs contributor
-- Potential regression risk is LOW: only affects zoned mode, uses
-  existing flush/commit mechanisms, and the cap is generous (50% of
-  usable)
-
-Record: [Obviously correct, well-reviewed, minimal regression risk for
-non-zoned users] [Zero risk for non-zoned, low risk for zoned]
+**Step 2.4: Fix Quality**
+- Obviously correct: just adds one DMI table entry with vendor "GPD" and
+  product "G1618-05"
+- Minimal/surgical: 8 lines, all in the DMI table
+- Regression risk: Essentially zero. The entry only matches on the
+  specific GPD Win 5 DMI strings. No other hardware affected.
+- Record: [Obviously correct, trivially reviewable] [Zero regression
+  risk to existing hardware]
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-- `btrfs_delayed_refs_rsv_refill()` was introduced by Josef Bacik in
-  commit `6ef03debdb3d82` (2019-06-19), present since approximately
-  v5.3.
-- The function has been refined by Filipe Manana (2023) and others but
-  its core logic (grow unbounded) has been present since inception.
-- The zoned mode support was added later, but the interaction with
-  delayed refs rsv was never specifically addressed.
+**Step 3.1: Blame**
+- The `dmi_table[]` structure was introduced in commit `0ab88e2394392`
+  (Sep 2025, v6.18) by Cryolitia PukNgae.
+- Additional entries have been added in subsequent releases (Micro PC 2
+  in v7.0).
+- Record: [DMI table introduced in v6.18, exists in 7.0]
 
-Record: [Refill function from v5.3 (6ef03debdb3d82)] [Zoned support
-added later without accounting for delayed refs rsv interaction]
+**Step 3.2: Fixes Tag**
+- No Fixes: tag — expected for device ID additions.
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The bug is a design gap in how delayed refs rsv
-interacts with zoned mode constraints, not introduced by a single
-commit.
+**Step 3.3: File History**
+- The driver was created in v6.18 and has had fixes and additions
+  through v7.0.
+- Between v6.18 and v7.0: 3 commits (Micro PC 2 support, subsystem
+  locking fix, merge).
+- The file is stable and well-maintained.
+- Record: [Standalone commit, no prerequisites beyond the base driver
+  existing in 7.0]
 
-Record: [No Fixes: tag - this is a design gap, not a single-commit
-regression]
+**Step 3.4: Author**
+- Antheas Kapenekakis is a regular contributor to GPD/handheld Linux
+  support, with commits to platform/x86 (oxpec), iommu, and HID
+  subsystems.
+- Not the subsystem maintainer, but a domain expert for GPD hardware.
+- Record: [Domain expert for GPD hardware, active kernel contributor]
 
-### Step 3.3: Related Changes
-- `28270e25c69a2` (v6.7) - "btrfs: always reserve space for delayed refs
-  when starting transaction" - changed how delayed refs reservations
-  work, may have exacerbated the issue
-- `64d2c847ba380` (v6.9) - "btrfs: zoned: fix
-  calc_available_free_space() for zoned mode" - closely related fix for
-  overcommit on zoned, was CC'd to stable
-- `a1359d06d7878` (v7.0) - API change to `btrfs_reserve_metadata_bytes`
-  that would affect clean backport
-
-Record: [Related to 28270e25c69a2 and 64d2c847ba380] [API differences
-across stable trees]
-
-### Step 3.4: Author
-Johannes Thumshirn is a WDC employee and regular btrfs/zoned contributor
-with 20+ btrfs commits visible. He is a recognized expert on zoned
-btrfs.
-
-Record: [Author is a recognized zoned btrfs expert at WDC]
-
-### Step 3.5: Dependencies
-**CRITICAL**: `btrfs_commit_current_transaction()` was introduced in
-commit `ded980eb3fadd7` (2024-05-22), which is only present in v6.11+.
-This function is used in the `transaction.c` hunk. Backporting to v6.6.y
-or older stable trees would require either:
-1. Also backporting `ded980eb3fadd7` (and its dependents)
-2. Replacing the call with the inline equivalent
-   (`btrfs_attach_transaction_barrier` + `btrfs_commit_transaction`)
-
-Additionally, `btrfs_reserve_metadata_bytes()` had its signature changed
-by `a1359d06d7878` (dropping `fs_info` argument), which is only in the
-latest tree. Older trees have a different API.
-
-Record: [Depends on ded980eb3fadd7 (btrfs_commit_current_transaction) -
-only in v6.11+] [API differences for btrfs_reserve_metadata_bytes across
-versions]
+**Step 3.5: Dependencies**
+- The commit only references `gpd_duo_drvdata` which exists in the 7.0
+  tree (introduced in the original driver commit `0ab88e2394392`).
+- No dependencies on any other patches.
+- Record: [No dependencies. `gpd_duo_drvdata` already exists in 7.0.
+  Standalone commit.]
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1-4.5
-b4 dig could not find the commit (likely very recent, post-7.0-rc or in
-a merge window). Web searches also did not find the specific patch
-discussion. Lore.kernel.org was protected by anti-bot measures.
+**Step 4.1: Original Patch**
+- Link in commit:
+  `https://lore.kernel.org/r/20260220161601.2344291-1-lkml@antheas.dev`
+- Lore was blocked by Anubis anti-scraping. Could not fetch discussion
+  directly.
+- The patch was accepted by hwmon maintainer Guenter Roeck (Signed-off-
+  by).
+- Record: [Lore URL identified but inaccessible. Accepted by maintainer
+  per SOB.]
 
-Record: [Could not find mailing list discussion - commit appears very
-recent, possibly in 7.0 merge window or rc cycle] [UNVERIFIED: Full
-mailing list discussion not available]
+**Step 4.2: Reviewers**
+- Guenter Roeck (hwmon maintainer) signed off on the patch — this is the
+  appropriate maintainer.
+- Record: [hwmon maintainer accepted the patch]
+
+**Step 4.3-4.5: Bug report / Related patches / Stable history**
+- Not applicable — this is a device ID addition, not a bug fix. No bug
+  report expected.
+- Record: [N/A for device ID additions]
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Functions and Call Chains
-- `btrfs_delayed_refs_rsv_refill()` is called from:
-  1. `start_transaction()` in `transaction.c` - called on every
-     transaction start with num_items==0
-  2. `btrfs_truncate_inode_items()` in `inode-item.c` - called during
-     truncate/unlink (with BTRFS_RESERVE_NO_FLUSH)
-- `start_transaction()` is called from many places throughout btrfs
-  (dozens of call sites)
-- The `num_items == 0` path specifically handles callers using
-  `btrfs_start_transaction(root, 0)` which is a very common pattern (24+
-  call sites across btrfs)
+**Step 5.1-5.4: Functions**
+- No functions are modified. The change is to a static data table
+  (`dmi_table[]`).
+- The table is consumed by `dmi_first_match()` in `gpd_fan_init()`,
+  which is the module init path.
+- The matched `gpd_duo_drvdata` is used by existing code paths
+  (`gpd_read_rpm()`, `gpd_write_pwm()`, `gpd_duo_write_pwm()`, etc.)
+  that already handle the `duo` board type.
+- Record: [Data-only change. All code paths that consume this data
+  already exist and work for GPD Duo.]
 
-The `inode-item.c` caller already converts ALL errors to `-EAGAIN` (line
-708), so the new -EAGAIN from the cap function is handled correctly
-without modification.
-
-Record: [btrfs_delayed_refs_rsv_refill called from transaction start and
-truncate] [Very widely called function] [inode-item.c caller unaffected
-by change]
-
-### Step 5.5: Similar Patterns
-The previous fix `64d2c847ba380` ("btrfs: zoned: fix
-calc_available_free_space() for zoned mode") addressed a very similar
-issue - overcommit on zoned mode leading to ENOSPC. That fix was CC'd to
-stable 6.9+. This new fix addresses a different vector of the same
-overcommit problem.
-
-Record: [Similar fix 64d2c847ba380 was CC'd to stable 6.9+]
+**Step 5.5: Similar Patterns**
+- The entire `dmi_table[]` follows the same pattern. There are 13
+  existing entries that are structurally identical.
+- Record: [Pattern is identical to all other DMI entries in the table]
 
 ## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 6.1: Existence in Stable Trees
-- The delayed refs rsv refill mechanism exists since v5.3
-- Zoned mode support has been present since ~v5.12
-- The interaction problem exists in all stable trees with zoned mode
-  support
-- However, `28270e25c69a2` (v6.7) changed delayed refs reservation
-  behavior and may have worsened the problem
+**Step 6.1: Does the code exist in stable trees?**
+- The `gpd-fan` driver was introduced in v6.18. The 7.0 stable tree has
+  the complete driver including `gpd_duo_drvdata`.
+- Record: [Driver exists in 7.0.y. The `gpd_duo_drvdata` structure
+  exists.]
 
-Record: [Buggy interaction exists in v5.12+, but may be worse in v6.7+
-due to 28270e25c69a2]
+**Step 6.2: Backport Complications**
+- The patch should apply cleanly to 7.0.y. The `dmi_table[]` is largely
+  unchanged since the driver was introduced, with minor additions (Micro
+  PC 2 in 7.0).
+- Record: [Expected clean apply to 7.0.y]
 
-### Step 6.2: Backport Complications
-**SIGNIFICANT backport complications:**
-1. `btrfs_commit_current_transaction()` only exists in v6.11+ - requires
-   adaptation for older trees
-2. `btrfs_reserve_metadata_bytes()` API changed - minor adaptation
-   needed for older trees
-3. The `delayed-ref.c` hunk adding the new function should apply
-   relatively cleanly
-
-Record: [Needs adaptation for v6.6-v6.10 due to missing
-btrfs_commit_current_transaction] [API differences need resolution]
-
-### Step 6.3: Related Fixes Already in Stable
-`64d2c847ba380` (CC: stable 6.9+) addresses a different vector of the
-same overcommit problem. This new patch addresses a complementary
-vector.
-
-Record: [64d2c847ba380 is a related but different fix, CC'd to stable
-6.9+]
+**Step 6.3: Related Fixes**
+- No related fixes already in stable.
+- Record: [No prior attempt to add GPD Win 5 support to stable]
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-- **Subsystem**: btrfs filesystem, zoned device support
-- **Criticality**: IMPORTANT (btrfs is a widely used filesystem, but
-  zoned mode is a specialized use case for SMR/ZNS devices)
-- Zoned btrfs is increasingly used on enterprise/datacenter storage
-  systems with ZNS SSDs
+**Step 7.1: Subsystem**
+- `drivers/hwmon/` — hardware monitoring, specifically fan control for a
+  handheld gaming device
+- Criticality: PERIPHERAL (specific device driver), but for real users
+  of GPD Win 5 handheld devices, fan control is critical for thermal
+  management.
+- Record: [hwmon, PERIPHERAL but important for device users]
 
-Record: [btrfs filesystem, zoned mode - IMPORTANT but specialized use
-case]
-
-### Step 7.2: Subsystem Activity
-btrfs is one of the most actively developed filesystems in the kernel.
-The zoned mode subsystem specifically is under active development by
-WDC/Seagate engineers.
-
-Record: [Very active subsystem]
+**Step 7.2: Activity**
+- The driver is actively maintained with regular additions and fixes.
+- Record: [Active subsystem/driver]
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Users of btrfs on zoned block devices (SMR HDDs, ZNS SSDs). This is a
-growing but still specialized use case, primarily in
-enterprise/datacenter environments.
+**Step 8.1: Who is affected**
+- Users of the GPD Win 5 handheld device running stable kernels.
+- Without this patch, the device has no kernel fan control, which may
+  mean fans stuck at default speeds or no thermal management.
+- Record: [Driver-specific: GPD Win 5 users only]
 
-Record: [Affected: btrfs zoned mode users, primarily
-enterprise/datacenter]
+**Step 8.2: Trigger**
+- The DMI match is evaluated at module load time. Every GPD Win 5 user
+  is affected.
+- Record: [Every GPD Win 5 user is affected — automatic match on boot]
 
-### Step 8.2: Trigger Conditions
-- Occurs on zoned devices when delayed refs accumulate
-- Triggered by normal write workloads that generate many delayed
-  references
-- More likely with sustained write activity and many COW operations
-- Not timing-dependent - deterministic once space accounting gets out of
-  balance
+**Step 8.3: Severity**
+- Without fan control: potential thermal issues, user has no way to
+  control fan speed.
+- This is hardware enablement rather than a crash fix, but fan control
+  is essential for a handheld device.
+- Record: [MEDIUM — no crash, but essential hardware functionality
+  missing]
 
-Record: [Triggered by normal sustained write workloads on zoned devices]
-[Deterministic, not timing-dependent]
-
-### Step 8.3: Failure Mode Severity
-- **ENOSPC errors** - writes fail prematurely
-- This is a HIGH severity issue for affected users: they lose the
-  ability to write to their filesystem even though space could be
-  reclaimed
-- Not a crash/security issue, but a significant usability/functionality
-  bug
-- Data in-flight could potentially be lost if applications don't handle
-  ENOSPC gracefully
-
-Record: [Premature ENOSPC - HIGH severity for affected users] [No
-crash/corruption, but functional failure]
-
-### Step 8.4: Risk-Benefit Ratio
-**BENEFIT**: High for zoned btrfs users - fixes a real ENOSPC issue
-preventing normal operation
-**RISK**:
-- Very low for non-zoned users (completely unaffected - `btrfs_is_zoned`
-  guard)
-- Low for zoned users (uses existing transaction commit mechanism)
-- ~36 lines added, well-contained
-- BUT: requires backport adaptation due to
-  `btrfs_commit_current_transaction` dependency
-
-Record: [HIGH benefit for zoned users] [LOW risk overall] [Needs
-adaptation for older stable trees]
+**Step 8.4: Risk-Benefit**
+- BENEFIT: Enables fan control for all GPD Win 5 users on stable kernels
+- RISK: Essentially zero — 8-line data-only change that only matches one
+  specific DMI product ID
+- Record: [High benefit for GPD Win 5 users, near-zero risk]
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
+**Step 9.1: Evidence**
+- FOR: Device ID addition to existing driver (explicit exception
+  category), trivially small (8 lines), data-only change, uses existing
+  driver data structure, accepted by hwmon maintainer, zero regression
+  risk, enables real hardware for real users.
+- AGAINST: Not a bug fix per se — it's hardware enablement. The GPD Win
+  5 is a very new device.
+- UNRESOLVED: Could not access lore discussion due to Anubis protection.
 
-**FOR backporting:**
-- Fixes a real, significant ENOSPC bug affecting zoned btrfs users
-- Well-analyzed and well-documented by the author
-- Reviewed by Filipe Manana (core btrfs developer)
-- Committed by David Sterba (btrfs maintainer)
-- Small and well-contained (~36 lines, 2 files)
-- Zero risk to non-zoned users
-- Author is a recognized zoned btrfs expert
-- Related fix (64d2c847ba380) was explicitly CC'd to stable
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** — trivial DMI table entry,
+   accepted by maintainer, info from GPD.
+2. Fixes a real bug that affects users? **Partial** — it's a device ID
+   addition, which is an explicit exception.
+3. Important issue? **For affected users, yes** — no fan control without
+   this.
+4. Small and contained? **YES** — 8 lines in one file, data-only.
+5. No new features or APIs? **YES** — no new code, just a table entry.
+6. Can apply to stable trees? **YES** — clean apply to 7.0.y expected.
 
-**AGAINST backporting:**
-- Requires adaptation for stable trees older than v6.11
-  (`btrfs_commit_current_transaction` dependency)
-- API differences in `btrfs_reserve_metadata_bytes` across stable trees
-- No Fixes: tag or Cc: stable tag (design gap, not single-commit
-  regression)
-- Zoned mode is a specialized use case (fewer affected users)
-- The new static function adds ~25 lines of new code (more than a
-  trivial one-liner)
+**Step 9.3: Exception Category**
+This falls into the **"New Device IDs"** exception category. Adding DMI
+match entries to existing drivers is explicitly allowed in stable,
+analogous to PCI/USB device IDs.
 
-**UNRESOLVED:**
-- Could not access mailing list discussion to check for stable
-  nominations by reviewers
-- Could not verify whether this was part of a larger series
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - reviewed by Filipe Manana,
-   well-analyzed
-2. Fixes a real bug? **YES** - premature ENOSPC on zoned devices
-3. Important issue? **YES** - prevents normal filesystem operation
-   (ENOSPC)
-4. Small and contained? **YES** - ~36 lines, 2 files, zoned-only
-5. No new features or APIs? **YES** - no new features, just a cap on
-   existing behavior
-6. Can apply to stable trees? **NEEDS ADAPTATION** - requires backport
-   work for v6.6-v6.10
-
-### Step 9.3: Exception Categories
-Not an exception category (not a device ID, quirk, DT, build fix, or doc
-fix). It's a standard bug fix.
-
-### Step 9.4: Decision
-
-This is a genuine bug fix for premature ENOSPC on zoned btrfs devices.
-The fix is well-contained, well-reviewed, and carries very low
-regression risk (zero for non-zoned users). However, it has notable
-backport complications:
-
-1. The dependency on `btrfs_commit_current_transaction()` (v6.11+) means
-   this cannot be cleanly cherry-picked to older stable trees without
-   adaptation.
-2. API differences in `btrfs_reserve_metadata_bytes()` add further
-   complications for older trees.
-
-Despite the backport complications, the fix addresses a real,
-significant user-facing bug (premature ENOSPC preventing writes), is
-well-reviewed by the top btrfs developer, and is small enough to warrant
-the adaptation effort. The related fix `64d2c847ba380` was CC'd to
-stable 6.9+, indicating the maintainers recognize zoned overcommit
-issues as stable-worthy.
+**Step 9.4: Decision**
+This is a textbook device ID addition. The stable kernel rules
+explicitly allow these. The change is 8 lines of data-only change, uses
+an existing driver data structure (`gpd_duo_drvdata`), was accepted by
+the hwmon maintainer, and enables fan control for a real shipping
+device.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by: Filipe Manana, Signed-off-by:
-  Johannes Thumshirn (author), David Sterba (maintainer)
-- [Phase 2] Diff analysis: ~36 lines added across 2 files, new static
-  helper + EAGAIN handling
-- [Phase 2] Verified inode-item.c caller already handles all errors as
-  -EAGAIN (line 708)
-- [Phase 3] git blame: btrfs_delayed_refs_rsv_refill from 6ef03debdb3d82
-  (Josef Bacik, 2019, v5.3)
-- [Phase 3] git blame: btrfs_commit_current_transaction from
-  ded980eb3fadd7 (Filipe Manana, 2024-05-22)
-- [Phase 3] Verified ded980eb3fadd7 is in v6.11+ but NOT in v6.10 or
-  earlier
-- [Phase 3] Verified 28270e25c69a2 (always reserve for delayed refs) is
-  in v6.7+
-- [Phase 3] git show 64d2c847ba380: confirmed related zoned overcommit
-  fix was CC'd to stable 6.9+
-- [Phase 4] b4 dig failed to find commit (too recent); lore.kernel.org
-  blocked by anti-bot
-- [Phase 4] UNVERIFIED: Could not access mailing list discussion for
-  stable nominations
-- [Phase 5] Verified btrfs_delayed_refs_rsv_refill callers:
-  start_transaction (transaction.c), btrfs_truncate_inode_items (inode-
-  item.c)
-- [Phase 5] Verified btrfs_start_transaction(root, 0) has 24+ call sites
-  across btrfs
-- [Phase 6] Verified btrfs_commit_current_transaction exists in current
-  tree (line 2040 of transaction.c) but not in v6.6
-- [Phase 6] Verified bytes_zone_unusable field exists in space-info.h
-  (all relevant stable trees)
-- [Phase 6] Verified btrfs_reserve_metadata_bytes API changed by
-  a1359d06d7878 (signature differs in older trees)
-- [Phase 8] Failure mode: premature ENOSPC preventing writes on zoned
-  devices - severity HIGH for affected users
+- [Phase 1] Parsed tags: Signed-off-by from author (Antheas Kapenekakis)
+  and hwmon maintainer (Guenter Roeck). Link to lore present.
+- [Phase 2] Diff analysis: +8 lines, single DMI_MATCH entry in
+  dmi_table[] referencing existing `gpd_duo_drvdata`
+- [Phase 3] git blame: `dmi_table[]` introduced in commit
+  `0ab88e2394392` (v6.18, Sep 2025), exists in 7.0
+- [Phase 3] git log: `gpd_duo_drvdata` structure confirmed present at
+  line 74-84 of current file
+- [Phase 3] Author check: Antheas Kapenekakis is active GPD/handheld
+  contributor (multiple commits found)
+- [Phase 3] Dependencies: `gpd_duo_drvdata` exists in 7.0 tree, no other
+  prerequisites
+- [Phase 4] Lore: URL identified
+  (`20260220161601.2344291-1-lkml@antheas.dev`), inaccessible due to
+  Anubis protection
+- [Phase 5] Code analysis: data-only change to static table, consumed by
+  `dmi_first_match()` in `gpd_fan_init()`, all code paths for `duo`
+  board type already exist
+- [Phase 6] Driver exists in 7.0.y (introduced v6.18), patch expected to
+  apply cleanly
+- [Phase 8] Risk assessment: 8-line data-only change, zero regression
+  risk, high benefit for GPD Win 5 users
+- UNVERIFIED: Could not read lore discussion to check for reviewer
+  concerns or stable nomination
 
 **YES**
 
- fs/btrfs/delayed-ref.c | 28 ++++++++++++++++++++++++++++
- fs/btrfs/transaction.c |  8 ++++++++
- 2 files changed, 36 insertions(+)
+ drivers/hwmon/gpd-fan.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/btrfs/delayed-ref.c b/fs/btrfs/delayed-ref.c
-index 3766ff29fbbb1..605858c2d9a95 100644
---- a/fs/btrfs/delayed-ref.c
-+++ b/fs/btrfs/delayed-ref.c
-@@ -207,6 +207,30 @@ void btrfs_dec_delayed_refs_rsv_bg_updates(struct btrfs_fs_info *fs_info)
-  * This will refill the delayed block_rsv up to 1 items size worth of space and
-  * will return -ENOSPC if we can't make the reservation.
-  */
-+static int btrfs_zoned_cap_metadata_reservation(struct btrfs_space_info *space_info)
-+{
-+	struct btrfs_fs_info *fs_info = space_info->fs_info;
-+	struct btrfs_block_rsv *block_rsv = &fs_info->delayed_refs_rsv;
-+	u64 usable;
-+	u64 cap;
-+	int ret = 0;
-+
-+	if (!btrfs_is_zoned(fs_info))
-+		return 0;
-+
-+	spin_lock(&space_info->lock);
-+	usable = space_info->total_bytes - space_info->bytes_zone_unusable;
-+	spin_unlock(&space_info->lock);
-+	cap = usable >> 1;
-+
-+	spin_lock(&block_rsv->lock);
-+	if (block_rsv->size > cap)
-+		ret = -EAGAIN;
-+	spin_unlock(&block_rsv->lock);
-+
-+	return ret;
-+}
-+
- int btrfs_delayed_refs_rsv_refill(struct btrfs_fs_info *fs_info,
- 				  enum btrfs_reserve_flush_enum flush)
- {
-@@ -228,6 +252,10 @@ int btrfs_delayed_refs_rsv_refill(struct btrfs_fs_info *fs_info,
- 	if (!num_bytes)
- 		return 0;
- 
-+	ret = btrfs_zoned_cap_metadata_reservation(space_info);
-+	if (ret)
-+		return ret;
-+
- 	ret = btrfs_reserve_metadata_bytes(space_info, num_bytes, flush);
- 	if (ret)
- 		return ret;
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 8dd77c431974d..86c5ebdf56998 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -678,6 +678,14 @@ start_transaction(struct btrfs_root *root, unsigned int num_items,
- 		 * here.
- 		 */
- 		ret = btrfs_delayed_refs_rsv_refill(fs_info, flush);
-+		if (ret == -EAGAIN) {
-+			ASSERT(btrfs_is_zoned(fs_info));
-+			ret = btrfs_commit_current_transaction(root);
-+			if (ret)
-+				goto reserve_fail;
-+			ret = btrfs_delayed_refs_rsv_refill(fs_info, flush);
-+		}
-+
- 		if (ret)
- 			goto reserve_fail;
- 	}
+diff --git a/drivers/hwmon/gpd-fan.c b/drivers/hwmon/gpd-fan.c
+index 1729729b135f8..80de5f20781eb 100644
+--- a/drivers/hwmon/gpd-fan.c
++++ b/drivers/hwmon/gpd-fan.c
+@@ -209,6 +209,14 @@ static const struct dmi_system_id dmi_table[] = {
+ 		},
+ 		.driver_data = &gpd_duo_drvdata,
+ 	},
++	{
++		// GPD Win 5 with AMD AI MAX 395
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "GPD"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "G1618-05"),
++		},
++		.driver_data = &gpd_duo_drvdata,
++	},
+ 	{
+ 		// GPD Pocket 4
+ 		.matches = {
 -- 
 2.53.0
 
