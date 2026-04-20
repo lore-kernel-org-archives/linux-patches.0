@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC63CC9F4;
-	Mon, 20 Apr 2026 13:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E31C3A6B82;
+	Mon, 20 Apr 2026 13:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691067; cv=none; b=nbHJizljjPMhTOcQY/mkrL/EwMmjt3VOKBhEL4M2USiglIZxcsziwG+czd98fLc5gUsmeS847DHc3kf7QN3heM1MjT0H8//gZNwuYd88eBB2z+2lIXgvapqvG3Hff9WaVTxKil8lj2VNGGHdvel/VV7oz+W9rw3qqDtaP9saYck=
+	t=1776691069; cv=none; b=apQiPQ0/BC0BlliiMY0YzkTXudUFe6CXAelD7PYc/4JcONIqWvjlqEucBktM79Bb/S86vNV+MZ5/63CyPELI3eUhgCNJ/tiKlbZ26WpfPD9ZEjwF/xqH+3vVfK3zC7mfvWW3AGzNyVfO1jNXaHCZf8A27TRQ8VXC9v3ExS+Ywpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691067; c=relaxed/simple;
-	bh=1BnUsJ9rtrA+zccP0lKv+OjEToMSdEhfzh6+sSmolwQ=;
+	s=arc-20240116; t=1776691069; c=relaxed/simple;
+	bh=f3xsyAIWxI4nn00HNYNNjBmimSPNBuKH8vBU5p8iJLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SJ90cdXf6m5VTMBt62WYaqfQSFBP1MufPGASd+ZjRBuwR/ZxdXzTLLBbk50453pQhVvv3TnDXoSUCBfjT+JE8i8cXMihjbqHx5W1bwpuDBZIQ8IgiKBeCTIpuM2Hf+xGFK9+4jYWYQzovQZ6nLjNpjXqMElDRn6JmcgZp5mt0TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KCcHaTcB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DV6xw5E4oyf1QGafEr8s1drVpaBb/tv9W2aOX2ABCYyGICsYiA6iq9/1QY0+UzzHXng1ocQjv9RE5urp8P3jJYcO0SyLmynRy/0zUMAc5AbA00oZJwa2AUA5Nl6POvyO1x4OuET7Fx6hxceffBSpu9mblHuMfFOb5xF9e+7FNa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HdAG88Nm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KCcHaTcB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26673C2BCB9;
-	Mon, 20 Apr 2026 13:17:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HdAG88Nm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C7FC2BCB4;
+	Mon, 20 Apr 2026 13:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691067;
-	bh=1BnUsJ9rtrA+zccP0lKv+OjEToMSdEhfzh6+sSmolwQ=;
+	s=k20201202; t=1776691069;
+	bh=f3xsyAIWxI4nn00HNYNNjBmimSPNBuKH8vBU5p8iJLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KCcHaTcBm1NVlUdKyDheb2LRPJAjpUhV1ASZr2DscPx8UIJJtQ5wU5Mixt1PBwIiF
-	 7rO6LSHtFHGX4ZBlOaIMLpLLL4PDdSoUCCoaZZJh2lZbw8ZpCMN05YwV+cy9Mq6ms2
-	 8vkwtpGnV6c73yNtFQ+o4B/b/Mch0A70J3YV57QBvSpT25M410/HM1UAF9OVyBN8bZ
-	 atAhljH9xRpTr01aRFAL6BCWSu5FZiLll8SBZR3jnxf+FPEt1Extvf7qmy7IsYVUB0
-	 Cvyix52NURo83NCFuTrH4yq9H9VYh1RZAhEHbEK48uN5BDhTS9svSE8iD+MtzkNgVe
-	 0kmUUUluAgedw==
+	b=HdAG88NmYH6GuyXj6dySNYWssxcVNOdzdhVyR+KpfwJc259LU5t5tWjs204yFJvRh
+	 y8rk/wdANibgQDkz4JRqA1NPX3WsDv6fHqsyMGpP+g/6wbL4b/YMQFihstQub8Ykyb
+	 DXO1FJFB4vfg+e45cBgqGddS9vXeMC1fG22Px0KppXDSRvK1vl7+GGkRxwqBE6N1ss
+	 tX4cgGVgC2VhT2a+oLBY971QEXvWJqpSUopzF1A/P8Yhoh4viDKkAE1FoQgBfBeBEB
+	 HKgGO0k49LpRap3DySWaPNHbpDDf5shFFtg47o5sRqXZQ0zDhuV9XG9JWbL//9OmLi
+	 eKUfzB4QNahhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefano Radaelli <stefano.r@variscite.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	johan.hedberg@gmail.com,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] Bluetooth: hci_ll: Enable BROKEN_ENHANCED_SETUP_SYNC_CONN for WL183x
-Date: Mon, 20 Apr 2026 09:09:00 -0400
-Message-ID: <20260420131539.986432-74-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	kvalo@kernel.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 7.0-6.18] wifi: mt76: abort ROC on chanctx changes
+Date: Mon, 20 Apr 2026 09:09:01 -0400
+Message-ID: <20260420131539.986432-75-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -52,440 +55,348 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefano Radaelli <stefano.r@variscite.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 1c0bc11cd445ba8235ac8ec87d5999b6769ed8b9 ]
+[ Upstream commit de62b24224ac1533c17b3d5bae77164a82ae2e49 ]
 
-TI WL183x controllers advertise support for the HCI Enhanced Setup
-Synchronous Connection command, but SCO setup fails when the enhanced
-path is used. The only working configuration is to fall back to the
-legacy HCI Setup Synchronous Connection (0x0028).
+mt76_change_chanctx() calls mt76_phy_update_channel() which switches
+the hardware channel. If ROC is active on the same phy, this switches
+away from the ROC channel and clears offchannel, but leaves ROC state
+intact. Mac80211 still thinks the phy is on the ROC channel.
 
-This matches the scenario described in commit 05abad857277
-("Bluetooth: HCI: Add HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN quirk").
+Abort any active ROC before proceeding, matching the pattern already
+used in add, remove, assign, unassign, and switch chanctx functions.
 
-Enable HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN automatically for
-devices compatible with:
-  - ti,wl1831-st
-  - ti,wl1835-st
-  - ti,wl1837-st
-
-Signed-off-by: Stefano Radaelli <stefano.r@variscite.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://patch.msgid.link/20260309060730.87840-5-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now let me compile the full analysis.
+I now have all the information needed for a complete analysis. Let me
+compile the findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-- **Subsystem prefix**: `Bluetooth: hci_ll:`
-- **Action verb**: "Enable" — enabling a quirk workaround for broken
-  hardware
-- **Summary**: Enable the BROKEN_ENHANCED_SETUP_SYNC_CONN quirk for TI
-  WL183x Bluetooth controllers because SCO setup fails when using the
-  enhanced path.
+**Step 1.1: Subject Line**
+- Subsystem: `wifi: mt76:` (MediaTek MT76 wireless driver)
+- Action: "abort" - stopping an ongoing operation to prevent state
+  inconsistency
+- Summary: Abort ROC (Remain on Channel) on channel context changes
+- Record: [wifi: mt76] [abort] [Abort active ROC when channel context
+  changes to prevent state desync]
 
-Record: [Bluetooth: hci_ll] [Enable] [Hardware quirk for broken enhanced
-SCO setup on WL183x]
+**Step 1.2: Tags**
+- Link: `https://patch.msgid.link/20260309060730.87840-5-nbd@nbd.name`
+  (patch 5 in a series)
+- Signed-off-by: Felix Fietkau `<nbd@nbd.name>` (mt76 subsystem
+  maintainer/author)
+- No Fixes: tag (expected for autosel candidates)
+- No Reported-by (no external report; author found the issue)
+- Record: Author is the mt76 subsystem creator. Patch 5 of a series.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by: Stefano Radaelli** — patch author (Variscite
-  employee, embedded board vendor)
-- **Signed-off-by: Luiz Augusto von Dentz** — Bluetooth subsystem
-  maintainer who merged it
-- No Fixes: tag (expected for review candidates)
-- No Cc: stable (expected)
-- No Reported-by (author found the bug during hardware validation)
-- No Link: tags
+**Step 1.3: Commit Body Analysis**
+The commit describes a concrete bug mechanism:
+1. `mt76_change_chanctx()` calls `mt76_phy_update_channel()` which
+   switches the hardware channel
+2. If ROC is active on the same phy, the hardware switches away from ROC
+   channel
+3. `offchannel` is cleared (set to false), but ROC state (`roc_vif`,
+   `roc_link`, `roc_work` timer) remains intact
+4. Mac80211 still believes the phy is on the ROC channel
 
-Record: Maintainer SOB from Luiz Augusto von Dentz. No syzbot, no
-explicit stable nomination.
+Record: [State inconsistency between driver and mac80211 when chanctx
+changes during active ROC] [Symptom: mac80211 and hardware out of sync
+on channel state] [Bug introduced with channel.c in v6.14]
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The commit explains that TI WL183x controllers advertise support for HCI
-Enhanced Setup Synchronous Connection but SCO fails when the enhanced
-path is used. The only working configuration is to fall back to legacy
-HCI Setup Synchronous Connection (0x0028). This references commit
-05abad857277 which introduced the exact quirk for this scenario.
-
-Record: Bug = SCO audio setup fails on WL183x chips. Symptom = SCO
-connection failure. Root cause = controller claims enhanced setup
-support but it's broken.
-
-### Step 1.4: DETECT HIDDEN BUG FIXES
-This is a **hardware quirk/workaround**, not a hidden fix. It's
-explicitly enabling an existing quirk for specific devices that are
-broken. This falls squarely into the "hardware quirk" exception category
-for stable.
-
-Record: This is a hardware workaround (quirk), a known exception
-category that IS appropriate for stable.
+**Step 1.4: Hidden Bug Fix Detection**
+This is clearly a bug fix, not cleanup. The commit explicitly describes
+a state desynchronization between the hardware and the mac80211 layer.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
-- **File**: `drivers/bluetooth/hci_ll.c`
-- **Lines added**: ~10 (1 struct field + 4 lines in probe + 3 lines in
-  setup)
-- **Functions modified**: `struct ll_device` (field addition),
-  `ll_setup()` (quirk setting), `hci_ti_probe()` (compatible detection)
-- **Scope**: Single-file, surgical change
+**Step 2.1: Inventory**
+- 1 file changed: `drivers/net/wireless/mediatek/mt76/channel.c`
+- +3 lines added (including blank line), 0 removed
+- Function modified: `mt76_change_chanctx()`
+- Scope: Single-function surgical fix
+- Record: [channel.c +3/-0] [mt76_change_chanctx modified] [Single-file
+  surgical fix]
 
-Record: 1 file, ~10 lines added, 3 locations modified. Small and
-contained.
+**Step 2.2: Code Flow Change**
+Before: `mt76_change_chanctx()` directly proceeds to cancel mac_work and
+update channel.
+After: Before canceling mac_work, checks if ROC is active
+(`phy->roc_vif`) and aborts it via `mt76_abort_roc(phy)`.
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-1. **struct ll_device**: adds `bool broken_enhanced_setup` field
-2. **hci_ti_probe()**: checks if device is compatible with
-   wl1831-st/wl1835-st/wl1837-st and sets the new bool
-3. **ll_setup()**: if `broken_enhanced_setup` is true, calls
-   `hci_set_quirk()` to set `HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN`
+**Step 2.3: Bug Mechanism**
+Verified by reading `__mt76_set_channel()` at mac80211.c:1045:
+`phy->offchannel = offchannel;`. When called from
+`mt76_phy_update_channel()` with `offchannel = false`, it clears the
+offchannel flag. But the ROC state (`roc_vif`, `roc_link`, `roc_work`)
+remains set, causing a desynchronization.
 
-Record: Probe detects WL183x compatible → stores flag → setup applies
-quirk during device initialization.
+Classification: **Logic/correctness fix** - missing cleanup of related
+state when switching channels.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-Category: **Hardware workaround** (h). The TI WL183x chips claim support
-for Enhanced Setup Synchronous Connection but it doesn't work. The quirk
-tells the Bluetooth stack to fall back to the legacy command.
-
-Record: Hardware quirk. Broken enhanced SCO command on WL183x. Fix = set
-existing quirk flag.
-
-### Step 2.4: ASSESS THE FIX QUALITY
-- Obviously correct — same pattern used by btusb.c for QCA and MTK
-  controllers
-- Minimal and surgical — only affects WL183x devices
-- Zero regression risk for non-WL183x devices (guarded by compatible
-  check)
-- Low regression risk for WL183x (just falls back to legacy SCO path
-  that works)
-
-Record: High quality, obviously correct, follows established pattern. No
-regression risk.
+**Step 2.4: Fix Quality**
+- Obviously correct: follows the exact pattern established by all other
+  chanctx functions which abort scans
+- Minimal: 2 lines of actual logic
+- `mt76_abort_roc()` handles its own locking (takes `dev->mutex`
+  internally), so calling it before the existing `mutex_lock` is correct
+- Regression risk: extremely low - if ROC is not active (`roc_vif ==
+  NULL`), the check is a no-op
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-The areas being modified were introduced by:
-- `struct ll_device`: Rob Herring, 2017-04-13 (commit 371805522f8709) —
-  in tree since v4.13
-- `ll_setup()`: David Lechner, 2017-12-12 (commit 0e58d0cdb3eb6e) — in
-  tree since v4.16
-- `hci_ti_probe()`: Rob Herring, 2017-04-13 — in tree since v4.13
+**Step 3.1: Blame**
+From git blame, the buggy `mt76_change_chanctx()` was introduced by
+commit `82334623af0cd` ("wifi: mt76: add chanctx functions for multi-
+channel phy support") by Felix Fietkau on 2025-01-02. This commit is in
+v6.14.
 
-Record: Code being modified is very old (v4.13-v4.16), present in all
-stable trees.
+**Step 3.2: Fixes Tag**
+No Fixes: tag present. The implicit target is `82334623af0cd` which
+introduced `mt76_change_chanctx` without ROC abort handling.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-No Fixes: tag. The commit references 05abad857277 as context (the commit
-that added the quirk), not as a Fixes target.
+**Step 3.3: File History**
+The file has 7 commits since creation: the original, scanning code, ROC
+functions, offchannel link, a deref fix, abort scan/roc on hw restart,
+and relicensing. No conflicting changes near the modified area.
 
-Record: N/A — no Fixes tag, but the referenced quirk commit
-(05abad857277) exists since v5.19.
+**Step 3.4: Author**
+Felix Fietkau (nbd@nbd.name) is the creator and maintainer of the mt76
+driver. He wrote the original `channel.c` file and all major chanctx
+functions.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Recent changes to hci_ll.c are mostly unrelated (firmware leak fix,
-alloc_obj conversion, hci_set_quirk API migration). No prerequisites
-needed.
-
-Record: Standalone change. No prerequisites beyond the existing quirk
-definition (v5.19+) and compatible strings (always existed).
-
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Stefano Radaelli from Variscite is primarily an embedded/DTS contributor
-(imx8mp, imx93). This is their first Bluetooth subsystem commit. The
-patch was reviewed and merged by the Bluetooth maintainer (Luiz Augusto
-von Dentz).
-
-Record: Author is a hardware vendor contributor; patch was accepted by
-subsystem maintainer.
-
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-- `HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN` exists since v5.19 (commit
-  05abad857277)
-- `hci_set_quirk()` API exists since v6.16 (commit 6851a0c228fc04)
-- For stable trees v6.1-v6.15, the quirk must use
-  `set_bit(HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN,
-  &hu->hdev->quirks)` instead of `hci_set_quirk()`
-- v5.15 CANNOT receive this fix (quirk doesn't exist there)
-
-Record: Backportable to v6.1+ with minor API adjustment for trees before
-v6.16.
+**Step 3.5: Dependencies**
+The commit is patch 5 of a series (msgid `-5-`). However, the fix is
+**self-contained**:
+- `mt76_abort_roc()` already exists in the tree (since `a8f424c1287cc`,
+  in v6.14)
+- `phy->roc_vif` already exists in `mt76.h`
+- `mt76_abort_roc` is declared in `mt76.h` and accessible from
+  `channel.c`
+- No other patch from the series is needed for this fix to work
+  correctly.
 
 ---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Found at patchew.org — this is v2 of a 2-version series. v1 used a DT
-property approach, and after review feedback from Krzysztof Kozlowski,
-v2 switched to detecting the compatible string. The patch went through
-proper review.
+**Step 4.1-4.5**: Lore.kernel.org is behind Anubis anti-bot protection
+and could not be accessed. The `b4 dig` also did not find a match for
+the message-id (possibly a future date issue). However, the patch URL is
+well-formed and the commit is by the subsystem maintainer, providing
+strong quality assurance.
 
-Record: v1→v2 evolution. Reviewer suggested compatible-based detection
-instead of DT property. Final version is clean.
-
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-- Krzysztof Kozlowski reviewed v1 and suggested the approach used in v2
-- Luiz Augusto von Dentz (Bluetooth maintainer) merged the patch
-- David Lechner and Marcel Holtmann were CC'd
-
-Record: Proper review by DT and Bluetooth maintainers.
-
-### Step 4.3: SEARCH FOR THE BUG REPORT
-The author (Variscite) found this during platform validation. The linked
-bugzilla (215576) for the original quirk commit shows this is a known
-class of bugs across multiple BT controller vendors (QCA, MTK, and now
-TI WL183x).
-
-Record: Real hardware bug affecting real products.
-
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-This is a standalone patch (v2 0/1 series). No dependencies on other
-patches.
-
-Record: Standalone, no series dependencies.
-
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-No prior stable discussion found for this specific commit.
-
-Record: No prior stable discussion.
+Record: [UNVERIFIED: Could not access lore/b4 due to anti-bot
+protection] [Author is mt76 maintainer which provides confidence in
+quality]
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: IDENTIFY KEY FUNCTIONS AND TRACE CALL CHAINS
-- `hci_ti_probe()` → called during device enumeration when DT compatible
-  matches
-- `ll_setup()` → called during HCI device setup (hci_uart_proto.setup)
-- `enhanced_sync_conn_capable()` → checked in `hci_conn.c` and `sco.c`
-  when setting up SCO connections
-- The quirk prevents `HCI_OP_ENHANCED_SETUP_SYNC_CONN` from being used,
-  falling back to `HCI_OP_SETUP_SYNC_CONN`
+**Step 5.1: Functions Modified**
+- `mt76_change_chanctx()` - modified to add ROC abort call
 
-Record: The quirk controls a well-defined code path in SCO connection
-setup. Impact is limited to SCO/audio on affected devices.
+**Step 5.2: Callers**
+`mt76_change_chanctx` is a mac80211 callback assigned via
+`ieee80211_ops`. It is called by mac80211 whenever the channel context
+configuration changes (width changes, radar detection changes). This is
+a normal operation path triggered by AP configuration, DFS, or
+regulatory changes.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-The exact same quirk is set for QCA (commit d44e1dbda36ff) and MTK
-(commit e11523e97f474) controllers in btusb.c. This is an established,
-well-tested pattern.
+**Step 5.3: Callees**
+`mt76_abort_roc()` calls:
+1. `cancel_delayed_work_sync(&phy->roc_work)` - cancels the ROC timeout
+2. `mt76_roc_complete(phy)` under mutex - restores main channel, frees
+   offchannel link, notifies mac80211
 
-Record: Identical pattern used for 2 other controller families.
+**Step 5.4: Call Chain**
+Userspace/regulatory -> mac80211 -> `mt76_change_chanctx` -> bug
+triggers if ROC active. This is reachable from normal WiFi operation
+(e.g., DFS, bandwidth changes during P2P).
 
----
-
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
-
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-- The hci_ll driver with WL183x compatibles exists in all stable trees
-  (v4.13+)
-- The quirk mechanism exists in v5.19+ (v6.1.y, v6.6.y, v6.12.y stable
-  trees)
-- The `hci_set_quirk()` API only exists in v6.16+; older trees use
-  `set_bit()`
-
-Record: The bug exists in v6.1+, v6.6+, v6.12+ stable trees. Fix is
-applicable with minor API adjustment.
-
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-- For v6.16+ (v7.0 target): clean apply
-- For v6.1-v6.15: needs `set_bit()` instead of `hci_set_quirk()` —
-  trivial one-line change
-
-Record: Clean apply to v7.0. Minor adjustment for older stable trees.
-
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
-No other fix for WL183x SCO exists in any stable tree.
-
-Record: No related fixes in stable.
+**Step 5.5: Similar Patterns**
+All 5 other chanctx functions (`add`, `remove`, `assign`, `unassign`,
+`switch`) already call `mt76_abort_scan()`. The fix adds the equivalent
+`mt76_abort_roc()` to the one function that was missing it.
 
 ---
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-- Subsystem: Bluetooth (drivers/bluetooth) — IMPORTANT
-- Affects users of TI WL183x Bluetooth modules on embedded platforms
-  (Variscite boards, etc.)
+**Step 6.1: Buggy Code in Stable Trees**
+- `channel.c` with `mt76_change_chanctx` was introduced in v6.14 (commit
+  `82334623af0cd`)
+- `mt76_abort_roc` function exists since v6.14 (commit `a8f424c1287cc`)
+- `mt76_abort_roc` is declared in `mt76.h` even in v6.14 (confirmed at
+  line 1586)
+- Bug affects: v6.14.y and later stable trees
 
-Record: Bluetooth driver, IMPORTANT subsystem, embedded hardware
-audience.
+**Step 6.2: Backport Complications**
+The code in v6.14 matches exactly: `mt76_change_chanctx()` is identical
+to the pre-patch state in v7.0. The patch would apply cleanly. No
+forward-declaration issues since `mt76_abort_roc` is declared in
+`mt76.h`.
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-The Bluetooth subsystem is actively maintained by Luiz Augusto von
-Dentz. The hci_ll driver sees moderate activity.
+**Step 6.3: Related Fixes**
+No alternative fix for this specific bug exists in stable trees.
 
-Record: Active subsystem, moderate driver activity.
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1: Subsystem**
+- Subsystem: WiFi/wireless drivers (drivers/net/wireless/mediatek/mt76)
+- Criticality: IMPORTANT - mt76 is one of the most widely used WiFi
+  chipset drivers (MT7921, MT7922, MT7925, MT7996, etc.), found in many
+  laptops and routers
+
+**Step 7.2: Activity**
+Actively maintained by Felix Fietkau with recent commits in the channel
+management area. The multi-radio/chanctx support is relatively new
+(v6.14).
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-Users of TI WL1831/WL1835/WL1837 Bluetooth modules. These are common on
-embedded ARM platforms (iMX, TI AM series, etc.) particularly for IoT
-and automotive applications.
+**Step 8.1: Affected Users**
+All users of MediaTek mt76 WiFi chipsets who use P2P, scanning, or any
+ROC functionality while channel context changes occur.
 
-Record: Driver-specific, but significant embedded user base.
+**Step 8.2: Trigger Conditions**
+- Trigger: Channel context change (width change or radar detection)
+  while ROC is active
+- Likelihood: Moderate - occurs during DFS, bandwidth negotiation, or
+  regulatory changes that happen to coincide with P2P discovery or off-
+  channel management frames
+- Not directly triggered by unprivileged users (requires wireless state
+  machine interaction)
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-Trigger: Any attempt to use SCO/HFP audio over Bluetooth on affected
-WL183x hardware. This is a common use case (phone calls, headsets).
+**Step 8.3: Failure Mode**
+- Driver/mac80211 state desynchronization
+- ROC operations fail silently or behave unpredictably
+- P2P connection failures
+- Dangling ROC state may cause subsequent operations to fail or produce
+  unexpected behavior
+- Severity: **MEDIUM-HIGH** (functional failure, not crash, but can
+  break WiFi connectivity features)
 
-Record: Common trigger (SCO audio setup), happens every time audio is
-used.
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-Without this fix, SCO audio connections simply fail. Users cannot use
-Bluetooth audio functionality (HFP/HSP profiles). This is a **functional
-failure** — a complete feature doesn't work.
-
-Record: Functional failure — SCO audio doesn't work at all. Severity:
-HIGH (complete loss of Bluetooth audio functionality).
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-- **BENEFIT**: HIGH — enables Bluetooth audio on WL183x hardware
-- **RISK**: VERY LOW — 10 lines of code, only affects WL183x devices,
-  uses a well-tested quirk mechanism already proven with QCA and MTK
-- **Ratio**: Very favorable for backporting
-
-Record: Benefit HIGH, Risk VERY LOW. Clear favorable ratio.
+**Step 8.4: Risk-Benefit**
+- Benefit: Fixes real state inconsistency in a widely-used WiFi driver
+- Risk: Extremely low - 2 lines, guarded by `if (phy->roc_vif)` check,
+  calls well-tested existing function
+- Ratio: Very favorable
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1: Evidence Compilation**
 
-**Evidence FOR backporting:**
-- Fixes a real hardware bug: SCO audio completely fails on WL183x
-- Hardware quirk — a recognized exception category for stable
-- Small, surgical change (~10 lines, single file)
-- Uses an established pattern (same quirk for QCA and MTK controllers)
-- Reviewed and merged by Bluetooth subsystem maintainer
-- Zero regression risk for non-affected devices
-- The driver and compatible strings exist in all stable trees
-- The quirk definition exists in v6.1+
+FOR backporting:
+- Fixes a real state desynchronization bug between driver and mac80211
+- 2-line fix, obviously correct, minimal risk
+- Written by the mt76 subsystem maintainer/author (Felix Fietkau)
+- Follows the established pattern used by all other chanctx functions
+- Self-contained, no dependencies on other patches
+- Applies cleanly to v6.14+ stable trees
+- mt76 is a widely-used WiFi driver
 
-**Evidence AGAINST backporting:**
-- No Fixes: tag or explicit stable nomination (but expected for review
-  candidates)
-- Author is not a regular BT subsystem contributor (but patch was
-  accepted by maintainer)
-- Needs trivial API adjustment for stable trees < v6.16 (set_bit vs
-  hci_set_quirk)
+AGAINST backporting:
+- No crash/panic, no data corruption - the bug causes functional issues
+  (ROC state desync)
+- No user reports (no Reported-by tag)
+- Part of a larger series (other patches in series not evaluated)
 
-**UNRESOLVED:**
-- None significant
+UNRESOLVED:
+- Could not access mailing list discussion due to anti-bot protection
+- Could not verify if other patches in the series are also being
+  considered
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **YES** — tested on WL183x hardware,
-   follows existing pattern
-2. Fixes a real bug? **YES** — SCO audio fails completely
-3. Important issue? **YES** — complete loss of Bluetooth audio
-   functionality
-4. Small and contained? **YES** — ~10 lines, single file
-5. No new features or APIs? **YES** — just enables existing quirk for
-   additional devices
-6. Can apply to stable trees? **YES** — clean apply to 7.0, minor
-   adjustment for older trees
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** - trivial 2-line check, follows
+   existing pattern, by subsystem maintainer
+2. Fixes a real bug? **YES** - state desync between driver and mac80211
+   during ROC
+3. Important issue? **MEDIUM-HIGH** - WiFi functionality failure, not
+   crash
+4. Small and contained? **YES** - 2 lines in 1 file
+5. No new features? **YES** - purely a bug fix
+6. Can apply to stable? **YES** - clean apply to v6.14+
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-This falls into the **hardware quirk/workaround** exception category.
-Adding a quirk to an existing driver for broken hardware is explicitly
-listed as appropriate for stable.
+**Step 9.3: Exception Categories**
+Not an exception category; this is a standard bug fix.
 
-### Step 9.4: DECISION
-This is a textbook hardware quirk for stable. It's small, obviously
-correct, fixes a real functional failure (no Bluetooth audio on WL183x),
-follows an established pattern, and carries virtually no regression
-risk.
+**Step 9.4: Decision**
+The fix is small, surgical, obviously correct, written by the subsystem
+maintainer, and fixes a real state inconsistency bug in a widely-used
+WiFi driver. The risk is minimal and the benefit is clear.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed commit message: no Fixes: tag, no Reported-by,
-  maintainer SOB from Luiz von Dentz
-- [Phase 2] Diff analysis: ~10 lines added to 1 file, 3 locations
-  (struct, probe, setup). Adds bool flag and quirk setting
-- [Phase 3] git blame: code modified dates to v4.13-v4.16
-  (371805522f8709, 0e58d0cdb3eb6e), present in all stable trees
-- [Phase 3] git show 05abad857277d: confirmed original quirk commit
-  exists since v5.19
-- [Phase 3] git merge-base checks: quirk in v5.19+, hci_set_quirk API in
-  v6.16+ only
-- [Phase 3] Verified WL183x compatibles exist in v5.15, v6.1, v6.6,
-  v6.12
-- [Phase 4] Found original submission on patchew.org: v2 series, v1→v2
-  evolution per reviewer feedback
-- [Phase 4] Review discussion: Krzysztof Kozlowski suggested compatible-
-  based approach
-- [Phase 5] Verified identical quirk pattern used for QCA
-  (d44e1dbda36ff) and MTK (e11523e97f474) in btusb.c
-- [Phase 6] Verified quirk does NOT exist in v5.15 (cannot backport
-  there), EXISTS in v6.1+
-- [Phase 6] Verified hci_set_quirk() NOT in v6.12/v6.15; older trees
-  need set_bit() instead
-- [Phase 8] Failure mode: complete SCO audio failure on WL183x hardware.
-  Severity: HIGH
+- [Phase 1] Parsed tags: Link to patch.msgid.link, SOB by Felix Fietkau
+  (mt76 maintainer)
+- [Phase 2] Diff analysis: +3 lines (2 logic + 1 blank) in
+  `mt76_change_chanctx()`, adds ROC abort guard
+- [Phase 2] Verified `__mt76_set_channel()` at mac80211.c:1045 sets
+  `phy->offchannel = offchannel`, confirming the bug mechanism
+- [Phase 3] git blame: `mt76_change_chanctx` introduced by commit
+  `82334623af0cd` (v6.14) by Felix Fietkau
+- [Phase 3] `mt76_abort_roc` introduced by `a8f424c1287cc` (v6.14),
+  declared in mt76.h line 1586
+- [Phase 3] Confirmed `b36d55610215a` (EXPORT_SYMBOL_GPL for abort_roc)
+  is NOT in v6.14 but not needed since abort_roc is declared in mt76.h
+- [Phase 3] Confirmed patch is self-contained: all referenced
+  functions/fields exist in v6.14
+- [Phase 4] UNVERIFIED: Could not access lore.kernel.org or b4 dig
+  results due to anti-bot protection
+- [Phase 5] Verified all 5 other chanctx functions call
+  `mt76_abort_scan()` - this fix adds the analogous ROC abort
+- [Phase 5] Verified `mt76_abort_roc` cancels work, locks mutex, calls
+  `mt76_roc_complete`, unlocks - proper cleanup
+- [Phase 6] `82334623af0cd` is in v6.14 (confirmed via `git merge-base
+  --is-ancestor`)
+- [Phase 6] v6.14 `mt76_change_chanctx` code is identical to pre-patch
+  v7.0 - clean apply
+- [Phase 8] Failure mode: state desynchronization causing ROC/P2P
+  failures, severity MEDIUM-HIGH
 
 **YES**
 
- drivers/bluetooth/hci_ll.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/wireless/mediatek/mt76/channel.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_ll.c b/drivers/bluetooth/hci_ll.c
-index 91c96ad123422..ab744001dafc4 100644
---- a/drivers/bluetooth/hci_ll.c
-+++ b/drivers/bluetooth/hci_ll.c
-@@ -68,6 +68,7 @@ struct ll_device {
- 	struct gpio_desc *enable_gpio;
- 	struct clk *ext_clk;
- 	bdaddr_t bdaddr;
-+	bool broken_enhanced_setup;
- };
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 2b705bdb7993c..a6e45b8d63d6b 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -88,6 +88,9 @@ void mt76_change_chanctx(struct ieee80211_hw *hw,
+ 			 IEEE80211_CHANCTX_CHANGE_RADAR)))
+ 		return;
  
- struct ll_struct {
-@@ -658,6 +659,10 @@ static int ll_setup(struct hci_uart *hu)
- 			hci_set_quirk(hu->hdev, HCI_QUIRK_INVALID_BDADDR);
- 	}
- 
-+	if (lldev->broken_enhanced_setup)
-+		hci_set_quirk(hu->hdev,
-+			      HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN);
++	if (phy->roc_vif)
++		mt76_abort_roc(phy);
 +
- 	/* Operational speed if any */
- 	if (hu->oper_speed)
- 		speed = hu->oper_speed;
-@@ -712,6 +717,11 @@ static int hci_ti_probe(struct serdev_device *serdev)
- 	of_property_read_u32(serdev->dev.of_node, "max-speed", &max_speed);
- 	hci_uart_set_speeds(hu, 115200, max_speed);
+ 	cancel_delayed_work_sync(&phy->mac_work);
  
-+	if (of_device_is_compatible(serdev->dev.of_node, "ti,wl1831-st") ||
-+	    of_device_is_compatible(serdev->dev.of_node, "ti,wl1835-st") ||
-+	    of_device_is_compatible(serdev->dev.of_node, "ti,wl1837-st"))
-+		lldev->broken_enhanced_setup = true;
-+
- 	/* optional BD address from nvram */
- 	bdaddr_cell = nvmem_cell_get(&serdev->dev, "bd-address");
- 	if (IS_ERR(bdaddr_cell)) {
+ 	mutex_lock(&dev->mutex);
 -- 
 2.53.0
 
