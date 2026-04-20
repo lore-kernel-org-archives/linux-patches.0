@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF17C33A9FE;
-	Mon, 20 Apr 2026 15:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC853385B6;
+	Mon, 20 Apr 2026 15:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699857; cv=none; b=pbFfnmug3/clhZ7Yq45I23BHpG9sEQ1zmJBeAvchgJBdYz+SryUo2QoLZfnBhR8QP0M/SjM8eqRxay+FrI+w3M2pgSncfCef/ozWgjrXI7hOuMxd3nlNTMlXgBNNtbUl7WpxIeijia+4kmFd6n6WoKjnImHydDi5Ikr7Ulzg1M0=
+	t=1776699860; cv=none; b=F97+mHD7/DgNJCb24GbnEyXCqe4u6Pmb+65YTEOzqC9ajIATmgBw6l8YwTduuXUdlywqb3rztydZK07mV5Q/uBqjD38Hifsl8M+gi/VytbHxjB8zqXBvHHCA8PdsoTAqKRZ0CGqERDdeoIXzxCfm/NjD3MShPsByYw1pJaWqk70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699857; c=relaxed/simple;
-	bh=LYTCiJf6qmLJkGVTnGHAKZBzm29nm5z8atWCuRnlyMg=;
+	s=arc-20240116; t=1776699860; c=relaxed/simple;
+	bh=nAlc6RJgKN9tqd3Xnaxw2wlzel+9FFHEuOomZvTQNME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unn/92uppLrXm8nrbToC4clACCP7haGmSNTLV5YhOxLa3ODVzVnWE9A+zZBEBDgto7G4ARwaHtD0EqXSnPgYK7qwiffuiq0HJpbOtNVRGvjlHUPKvom930z/yr9WF610lk1Hbenw7go4xSdV0Nl1ZoeLmINPCysKrXY/n9OirYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fptz5j59; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B99MColMM5obKv9GZvs/kC4Ut8IAzTLHqS5hIE/IKrp3oiwURpoQ0DDJW/UXDB9FCZhbNMJ1wIK0VJYx2MnIl6EOy89OBkGVVRT3P0X2HUVe/9ZLvn00srJOJasWlVBhiLhl7iHjbB2iffjLA9QeMQRmZwXwd26ce0ssdyWqclI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0I+gviOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fptz5j59"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A926C19425;
-	Mon, 20 Apr 2026 15:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0I+gviOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71D1C19425;
+	Mon, 20 Apr 2026 15:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699857;
-	bh=LYTCiJf6qmLJkGVTnGHAKZBzm29nm5z8atWCuRnlyMg=;
+	s=korg; t=1776699860;
+	bh=nAlc6RJgKN9tqd3Xnaxw2wlzel+9FFHEuOomZvTQNME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fptz5j59Ehb+XYjctgBeiQwpSOliVTB4CrbKrwYSPJatsMzXE++5ILFE1+crVsV9u
-	 j8Sj1l+yaWz6NEFOibKXkw+7/69oTqpmY1AgVOaIzoMQt5kzxYNKGTGUYgAiu9Ovy+
-	 WYrhAHu84YVi60gmqj+0320wvPFop+tqk5BM3AZk=
+	b=0I+gviOEZc2/y9v2MjtaIVZkbA+PFc2xDS0Dza8lXob28sFN1kYs1FqHtWdq9YiHV
+	 /qbRN0l4sz1MzWYsDD1I7PO5usRhvwGFEAIm1+0OPkfxbYQpmdRkBCYML/u6P9X2dt
+	 W4u9Oi4Vm/VG7zRlBn1r8XBh7yiVj26CbwEkkUps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruikai Peng <ruikai@pwno.io>,
-	stable@kernel.org,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	security@kernel.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.0 24/76] smb: server: avoid double-free in smb_direct_free_sendmsg after smb_direct_flush_send_list()
-Date: Mon, 20 Apr 2026 17:41:35 +0200
-Message-ID: <20260420153911.703560229@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Nathan Rebello <nathan.c.rebello@gmail.com>
+Subject: [PATCH 7.0 25/76] usbip: validate number_of_packets in usbip_pack_ret_submit()
+Date: Mon, 20 Apr 2026 17:41:36 +0200
+Message-ID: <20260420153911.740388710@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -60,59 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Nathan Rebello <nathan.c.rebello@gmail.com>
 
-commit 84ff995ae826aa6bbcc6c7b9ea569ff67c021d72 upstream.
+commit 2ab833a16a825373aad2ba7d54b572b277e95b71 upstream.
 
-smb_direct_flush_send_list() already calls smb_direct_free_sendmsg(),
-so we should not call it again after post_sendmsg()
-moved it to the batch list.
+When a USB/IP client receives a RET_SUBMIT response,
+usbip_pack_ret_submit() unconditionally overwrites
+urb->number_of_packets from the network PDU. This value is
+subsequently used as the loop bound in usbip_recv_iso() and
+usbip_pad_iso() to iterate over urb->iso_frame_desc[], a flexible
+array whose size was fixed at URB allocation time based on the
+*original* number_of_packets from the CMD_SUBMIT.
 
-Reported-by: Ruikai Peng <ruikai@pwno.io>
-Closes: https://lore.kernel.org/linux-cifs/CAFD3drNOSJ05y3A+jNXSDxW-2w09KHQ0DivhxQ_pcc7immVVOQ@mail.gmail.com/
-Fixes: 34abd408c8ba ("smb: server: make use of smbdirect_socket.send_io.bcredits")
-Cc: stable@kernel.org
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Ruikai Peng <ruikai@pwno.io>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Cc: security@kernel.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Tested-by: Ruikai Peng <ruikai@pwno.io>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+A malicious USB/IP server can set number_of_packets in the response
+to a value larger than what was originally submitted, causing a heap
+out-of-bounds write when usbip_recv_iso() writes to
+urb->iso_frame_desc[i] beyond the allocated region.
+
+KASAN confirmed this with kernel 7.0.0-rc5:
+
+  BUG: KASAN: slab-out-of-bounds in usbip_recv_iso+0x46a/0x640
+  Write of size 4 at addr ffff888106351d40 by task vhci_rx/69
+
+  The buggy address is located 0 bytes to the right of
+   allocated 320-byte region [ffff888106351c00, ffff888106351d40)
+
+The server side (stub_rx.c) and gadget side (vudc_rx.c) already
+validate number_of_packets in the CMD_SUBMIT path since commits
+c6688ef9f297 ("usbip: fix stub_rx: harden CMD_SUBMIT path to handle
+malicious input") and b78d830f0049 ("usbip: fix vudc_rx: harden
+CMD_SUBMIT path to handle malicious input"). The server side validates
+against USBIP_MAX_ISO_PACKETS because no URB exists yet at that point.
+On the client side we have the original URB, so we can use the tighter
+bound: the response must not exceed the original number_of_packets.
+
+This mirrors the existing validation of actual_length against
+transfer_buffer_length in usbip_recv_xbuff(), which checks the
+response value against the original allocation size.
+
+Kelvin Mbogo's series ("usb: usbip: fix integer overflow in
+usbip_recv_iso()", v2) hardens the receive-side functions themselves;
+this patch complements that work by catching the bad value at its
+source -- in usbip_pack_ret_submit() before the overwrite -- and
+using the tighter per-URB allocation bound rather than the global
+USBIP_MAX_ISO_PACKETS limit.
+
+Fix this by checking rpdu->number_of_packets against
+urb->number_of_packets in usbip_pack_ret_submit() before the
+overwrite. On violation, clamp to zero so that usbip_recv_iso() and
+usbip_pad_iso() safely return early.
+
+Fixes: 1325f85fa49f ("staging: usbip: bugfix add number of packets for isochronous frames")
+Cc: stable <stable@kernel.org>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Nathan Rebello <nathan.c.rebello@gmail.com>
+Link: https://patch.msgid.link/20260402085259.234-1-nathan.c.rebello@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_rdma.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/usbip/usbip_common.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -1588,15 +1588,21 @@ static int smb_direct_post_send_data(str
- 	if (ret)
- 		goto err;
- 
-+	/*
-+	 * From here msg is moved to send_ctx
-+	 * and we should not free it explicitly.
-+	 */
-+
- 	if (send_ctx == &_send_ctx) {
- 		ret = smb_direct_flush_send_list(sc, send_ctx, true);
- 		if (ret)
--			goto err;
-+			goto flush_failed;
+--- a/drivers/usb/usbip/usbip_common.c
++++ b/drivers/usb/usbip/usbip_common.c
+@@ -470,6 +470,18 @@ static void usbip_pack_ret_submit(struct
+ 		urb->status		= rpdu->status;
+ 		urb->actual_length	= rpdu->actual_length;
+ 		urb->start_frame	= rpdu->start_frame;
++		/*
++		 * The number_of_packets field determines the length of
++		 * iso_frame_desc[], which is a flexible array allocated
++		 * at URB creation time. A response must never claim more
++		 * packets than originally submitted; doing so would cause
++		 * an out-of-bounds write in usbip_recv_iso() and
++		 * usbip_pad_iso(). Clamp to zero on violation so both
++		 * functions safely return early.
++		 */
++		if (rpdu->number_of_packets < 0 ||
++		    rpdu->number_of_packets > urb->number_of_packets)
++			rpdu->number_of_packets = 0;
+ 		urb->number_of_packets = rpdu->number_of_packets;
+ 		urb->error_count	= rpdu->error_count;
  	}
- 
- 	return 0;
- err:
- 	smb_direct_free_sendmsg(sc, msg);
-+flush_failed:
- header_failed:
- 	atomic_inc(&sc->send_io.credits.count);
- credit_failed:
 
 
