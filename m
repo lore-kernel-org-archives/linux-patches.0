@@ -1,99 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37709374726;
-	Mon, 20 Apr 2026 14:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3838C35B14B;
+	Mon, 20 Apr 2026 15:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776694333; cv=none; b=MUtzx4XjUL2DsbB1Z9RH9lmlwtHvIrYanKL5XMpIaz44qykmjz93u+78tMfEoPCCeG7uQI2Gpwmekgm57XuTHM7gRVXD06zOElw6wfmPS/K7sBqXUNPhKIVRpWht8u2WbEC1wbOIVVoGBnppQxCoA/Vvj2pET8UzFAnkmL+bjk8=
+	t=1776697777; cv=none; b=HDgYs7USlA0LMsremzk8o8Vx4EBrS8NCm8EKe/XjtG9Xxq7dM4X4XjZ/mjEdczCgyp0bS+gpNqLR296fXGRxAJUSqLRshm2sw5ALRhQVmcrXTmrokTDOog5Ibp714AhkD5Ae96ik4hxhtJE3gm1S6jQ5VTBuihg1fllrvIGCEPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776694333; c=relaxed/simple;
-	bh=KUP+V4uqfCUMaSGxnbv21QPHCD50bcmDKtIbRcY1gAU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rakqwsIb8G7fkPlTN48bg6Jq/c+LZCTuSYmsh3V0xcWulXhN8e75C9E9wmb3YY6BzS5XfvfDtTdl9kFeKUopZdGTIaZDn01IUUTUKRVwLFel40FPWrP0mSHxyPGahm3S1huSpxjlQJufRu83/O1QRwBVvs7la71MiTdFcnsrYYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fozhAgKi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776697777; c=relaxed/simple;
+	bh=4IbzJI6K9IX8/ArQUQEVhy70gC0jpAGzopV+wDK/xoo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JYgxPAT5dsvgJ2PgnrjL5FQYG0TjfrDilA8hWtRHGbqdeVnHEjXPINc7mPq8cCrRSjcG8fSRGMPou3vrIFDW5c/GsFsPgXXVxFX66mJWrMmVhbkqzo6+gpCGYBJUwMPUQ/w/cqDiTrmAdx8G9qQGbcyXgRlb+Yszvh07Eox0Aos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z7KdHnbA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fozhAgKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345DDC19425;
-	Mon, 20 Apr 2026 14:12:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z7KdHnbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085A9C19425;
+	Mon, 20 Apr 2026 15:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776694332;
-	bh=KUP+V4uqfCUMaSGxnbv21QPHCD50bcmDKtIbRcY1gAU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=fozhAgKiO0oARp9McnWrXz36z+yMgW+gnevRQ3c/2puRTFLWSzQpxWvpGmWlsdS9y
-	 ajwWMVjBWTi920FtX2Cfjo4jkBRZrVsdTW3+nMPucOTiCJETgzbdRwdOWLmZMpQsPt
-	 eDORtrDe79ADrBDQQwa92qvlN4maUO+qNhmHus7pE28afezXitr4v3LGLZBlGV3ncY
-	 0CTgkUC9cXHlsU8hhMAtUAHQK1EfuLmmOCa7kgxMUB4R3S9r7TvrFALt+SNOC9Vi7V
-	 PGgJl/uXryxG8Ie6cfK8X13HjR/xrtItozEEGAVAQBSorsFP9KxAGnPejmTCOsFTy3
-	 e8FrUslvEEf4w==
-From: Thomas Gleixner <tglx@kernel.org>
-To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
- stable@vger.kernel.org
-Cc: Calvin Owens <calvin@wbinvd.org>, Borislav Petkov <bp@alien8.de>, Sasha
- Levin <sashal@kernel.org>, fweisbec@gmail.com, mingo@kernel.org,
- akpm@linux-foundation.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.18] clockevents: Prevent timer interrupt
- starvation
-In-Reply-To: <20260420131539.986432-78-sashal@kernel.org>
-References: <20260420131539.986432-1-sashal@kernel.org>
- <20260420131539.986432-78-sashal@kernel.org>
-Date: Mon, 20 Apr 2026 16:12:09 +0200
-Message-ID: <87pl3ten5y.ffs@tglx>
+	s=k20201202; t=1776697777;
+	bh=4IbzJI6K9IX8/ArQUQEVhy70gC0jpAGzopV+wDK/xoo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Z7KdHnbALu/BDgXLIh3c8UFddIZDOgklMP0zfy60Ipv9Lv8gtjtaUOh8CJ0PH/IQu
+	 zOriUGHPHSQw5RHHtB1rEx+eE7FA4XxKJijgiKQztsjF3KPVspcUOOvQtVVDDmIAe1
+	 7KoxAgSJ5f5elRGEIe4jHrSrJYnw8f1IdTWFtBpkZAN1gwE3AFDfDr7qVlWhSt29Nb
+	 wGiMwovIZkuCAJCcIZczB5p03B0Ci4i2P/fxO6aIIJzOY33dFjBsxNuxOzpd2W+srG
+	 aINPdatxVVXQHbagAnOYhgF+1QScP4VPJT4ywtR8MpsDPYZv7jsnvPdPpBMOLd/0bS
+	 5TNMDqU7if41Q==
+Date: Mon, 20 Apr 2026 08:09:36 -0700
+From: "Darrick J. Wong" <djwong@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Sergio Lopez <slp@redhat.com>, Miklos Szeredi <mszeredi@redhat.com>,
+	miklos@szeredi.hu, linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 7.0-5.15] fuse: mark DAX inode releases as
+ blocking
+Message-ID: <20260420150936.GE7765@frogsfrogsfrogs>
+References: <20260420132314.1023554-1-sashal@kernel.org>
+ <20260420132314.1023554-286-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260420132314.1023554-286-sashal@kernel.org>
 
-On Mon, Apr 20 2026 at 09:09, Sasha Levin wrote:
-> From: Thomas Gleixner <tglx@kernel.org>
->
-> [ Upstream commit d6e152d905bdb1f32f9d99775e2f453350399a6a ]
->
-> Calvin reported an odd NMI watchdog lockup which claims that the CPU locked
-> up in user space. He provided a reproducer, which sets up a timerfd based
-> timer and then rearms it in a loop with an absolute expiry time of 1ns.
->
-> As the expiry time is in the past, the timer ends up as the first expiring
-> timer in the per CPU hrtimer base and the clockevent device is programmed
-> with the minimum delta value. If the machine is fast enough, this ends up
-> in a endless loop of programming the delta value to the minimum value
-> defined by the clock event device, before the timer interrupt can fire,
-> which starves the interrupt and consequently triggers the lockup detector
-> because the hrtimer callback of the lockup mechanism is never invoked.
->
-> As a first step to prevent this, avoid reprogramming the clock event device
-> when:
->      - a forced minimum delta event is pending
->      - the new expiry delta is less then or equal to the minimum delta
->
-> Thanks to Calvin for providing the reproducer and to Borislav for testing
-> and providing data from his Zen5 machine.
->
-> The problem is not limited to Zen5, but depending on the underlying
-> clock event device (e.g. TSC deadline timer on Intel) and the CPU speed
-> not necessarily observable.
->
-> This change serves only as the last resort and further changes will be made
-> to prevent this scenario earlier in the call chain as far as possible.
->
-> [ tglx: Updated to restore the old behaviour vs. !force and delta <= 0 and
->   	fixed up the tick-broadcast handlers as pointed out by Borislav ]
->
-> Fixes: d316c57ff6bf ("[PATCH] clockevents: add core functionality")
+On Mon, Apr 20, 2026 at 09:21:20AM -0400, Sasha Levin wrote:
+> From: Sergio Lopez <slp@redhat.com>
+> 
+> [ Upstream commit 42fbb31310b2c145308d3cdcb32d8f05998cfd6c ]
 
-Please hold that off until
+<snip>
 
-   4096fd0e8eae ("clockevents: Add missing resets of the next_event_forced flag")
+> - UNVERIFIED: Could not access lore.kernel.org discussion thread due to
+>   Anubis protection
 
-hits Linus tree. It fixes above commit and is marked for stable. So
-ideally you apply them together.
+HAHAHA LOL
 
-4096fd0e8eae will not apply to 7.0 and older. I'll provide you a updated
-version once Linus pulled it.
+> **YES**
 
-Thanks,
+Yes, I thin this patch is appropriate for 6.1.
 
-        tglx
+--D
+
+>  fs/fuse/file.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+> index 676fd9856bfbf..14740134faff7 100644
+> --- a/fs/fuse/file.c
+> +++ b/fs/fuse/file.c
+> @@ -117,6 +117,12 @@ static void fuse_file_put(struct fuse_file *ff, bool sync)
+>  			fuse_simple_request(ff->fm, args);
+>  			fuse_release_end(ff->fm, args, 0);
+>  		} else {
+> +			/*
+> +			 * DAX inodes may need to issue a number of synchronous
+> +			 * request for clearing the mappings.
+> +			 */
+> +			if (ra && ra->inode && FUSE_IS_DAX(ra->inode))
+> +				args->may_block = true;
+>  			args->end = fuse_release_end;
+>  			if (fuse_simple_background(ff->fm, args,
+>  						   GFP_KERNEL | __GFP_NOFAIL))
+> -- 
+> 2.53.0
+> 
