@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74EB3A7F4A;
-	Mon, 20 Apr 2026 13:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9C93A2551;
+	Mon, 20 Apr 2026 13:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776690970; cv=none; b=oqS4F0G7OqIS42KF8Dgzbk196DqQCJ+Jm2x8iGXcxeTdiPgR//Sz1/8mgwx0O0zl5zoXUSfL84BO31b78xPnnWSeAnmvMPa33jH2McimbLdCIs9Xde1qq6IiEkcRgwfBKII9wctA5g2UJIS2EtKBH46slVourwwDcYFMQUBfq7U=
+	t=1776690972; cv=none; b=tGP9LiqmXM0uJ8FssSiY6FwskZ3jzo9a/Q8yqiISfQlDVuSKbDVtj73KMetiV96ZMilehGx+hW7YS3bNPF9LkuW04XEhkPSAxvfZRSvwoirJ82AF8n0lV2MbC0k9JoRBK7mlRqjfGxkMXIRpUFNfhRiyCQKYGqSMCPXCOOv5WkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776690970; c=relaxed/simple;
-	bh=CqB6f6BO16HoJiFomyWK/H5P8xJm22jbSv1gMmamNKw=;
+	s=arc-20240116; t=1776690972; c=relaxed/simple;
+	bh=XRu+DMAZZf7fnaXEhjw82GF1wBHfzxLJuoQc7tEAjZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OYOWGKiYsEG/9fdu4wVL8lVJtpRlJ1lyL6R2Krm6kYNVZ/fB3oqhfsWVn6Jcmq+8jwDqtpD0SWzPpWED39FpG68QbVvSzGAWdzTwik1kae21PU6b5+EAjNL2X6Wmnez9/Qxe4MGWTO71G3ZRYISfwxN9Iw4bA1xn3pLbHohOfUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afzSjnvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DzmhUy5k6ED82OCG8fe8qxp2o5vrQBeO6pikC5D3iXcIiY+tdLtbaHPHGDKqGuEyB/zzT+ahe/OZNUzhxAhuVPD4SzQ0yzKilMY546t+oN82rugHViP2d4sYNGKeojBAwqGs7Muj8u6ktq5stpoMgAPoPmqk31VFRymMRQS03n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QRHwl6ih; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="afzSjnvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30D0C2BCB9;
-	Mon, 20 Apr 2026 13:16:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QRHwl6ih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1038C2BCC4;
+	Mon, 20 Apr 2026 13:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776690970;
-	bh=CqB6f6BO16HoJiFomyWK/H5P8xJm22jbSv1gMmamNKw=;
+	s=k20201202; t=1776690972;
+	bh=XRu+DMAZZf7fnaXEhjw82GF1wBHfzxLJuoQc7tEAjZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afzSjnvq1dymL/v99vHOiR6g7dpv2J6RmCdovaj41xSDnGjZP8LBVTJ7dZ5gdqFV4
-	 CGqSa1HtrbkVLDJpzlKdHxMA1IUBfB+bxRdXZTB6ObMi4as1AT0A0LvYH8MiNBglZS
-	 0SY8afRGmZlm+pTZI1EVnVmYhSikJkx9S32LFGMGKg+uqw8D0DF6QNbK+fHmQ0qPlX
-	 HYVbv+KvXH6FWLrDxpsAt1HrESAgsA1pJO6OBvu/x/ozpMct1lhSnScC0GnR9BRrqJ
-	 5AKyMDEO3TkUeMp19rPCPvt7kjNaPuNC0kJJuLnRZ9C2iOroIbmiGjODS+u4tQNreF
-	 4tGr6lnDFEIVA==
+	b=QRHwl6ih7O4Ep0yW0eyLlp11HYqg37Y0e64D1tUxQp9nXu+KLy5EPHIJyHKPy/mQw
+	 A8gSPrAj+FJn57XHPNKbLlEFgakXVngpPA0cRllsYi6skQU92rPuybx3yvCwXrMSSR
+	 Tiw1hraIzRKdz3c8jOyoxWn6iOq+yNVDllWWxkXkAPk+JYzPuVk369tBbp0i1pmO1F
+	 BAizd3QWRbDTFf/MF85TaNjXyNpk+dXTQA3Dpifh9VvZWZDKxAY2mTlwTOGO+VeUJg
+	 cS1cbKtC6J0zA/Uw18rSF+C+SEqFl6OnqpxwjqZKdukY0cNicuviOiy87+AyTjniI3
+	 z4QwVYnnLExGA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Matthew Sakai <msakai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+Cc: Leon Yen <leon.yen@mediatek.com>,
+	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] dm vdo slab-depot: validate old zone count on load
-Date: Mon, 20 Apr 2026 09:08:04 -0400
-Message-ID: <20260420131539.986432-18-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	kvalo@kernel.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 7.0-6.6] wifi: mt76: mt792x: Fix a potential deadlock in high-load situations
+Date: Mon, 20 Apr 2026 09:08:05 -0400
+Message-ID: <20260420131539.986432-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -51,322 +60,294 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Sakai <msakai@redhat.com>
+From: Leon Yen <leon.yen@mediatek.com>
 
-[ Upstream commit b3929b2cc2a6003b8e301e6540c651e60d24dcb4 ]
+[ Upstream commit bb2f07819d063a58756186cac6465341956ac0a4 ]
 
-Verify the old zone count has a valid value before using
-it to compute slab summary entry offsets.
+A deadlock may occur between two works, ps_work and mac_work, if their work
+functions run simultaneously as they attempt to cancel each other by
+calling cancel_delayed_work_sync().
 
-Signed-off-by: Matthew Sakai <msakai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+mt792x_mac_work() ->   ...  -> cancel_delayed_work_sync(&pm->ps_work);
+mt792x_pm_power_save_work() -> cancel_delayed_work_sync(&mphy->mac_work);
+
+In high-load situations, they are queued but may not have chance to be
+executed until the CPUs are released. Once the CPUs are available, there
+is a high possibility that the ps_work function and mac_work function will
+be executed simultaneously, resulting in a possible deadlock.
+
+This patch replaces cancel_delayed_work_sync() with cancel_delayed_work()
+in ps_work to eliminate the deadlock and make the code easier to maintain.
+
+Signed-off-by: Leon Yen <leon.yen@mediatek.com>
+Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+Link: https://patch.msgid.link/20251215122231.3180648-1-leon.yen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a thorough understanding. Let me compile my final analysis.
+Now I have all the data needed. Let me compile the full analysis.
 
 ---
 
-## Complete Analysis: dm vdo slab-depot: validate old zone count on load
-
-### PHASE 1: COMMIT MESSAGE FORENSICS
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `dm vdo slab-depot` (device-mapper VDO subsystem, slab
-  depot component)
-- Action verb: "validate" — implies adding a missing safety check,
-  strongly suggests bug fix
-- Summary: Validates the `old_zone_count` field read from on-disk
-  metadata before using it as an array index.
-- Record: [dm vdo slab-depot] [validate] [add bounds check on old zone
-  count loaded from disk]
+- Subsystem: `wifi: mt76: mt792x`
+- Action verb: "Fix"
+- Summary: Fixes a potential deadlock between ps_work and mac_work in
+  high-load situations.
+
+Record: [wifi/mt76/mt792x] [Fix] [Deadlock between two work functions
+that cancel each other with _sync variant]
 
 **Step 1.2: Tags**
-- `Signed-off-by: Matthew Sakai <msakai@redhat.com>` — author, VDO
-  subsystem maintainer
-- `Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>` — DM subsystem
-  maintainer
-- No Fixes: tag, no Reported-by, no Link: tags
-- Record: Patch authored by VDO maintainer, signed off by DM maintainer.
-  No external bug report; likely found via code audit.
+- `Signed-off-by: Leon Yen <leon.yen@mediatek.com>` — Author from
+  MediaTek (the chip vendor)
+- `Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>` — Tested
+  by a Canonical engineer
+- `Link: https://patch.msgid.link/20251215122231.3180648-1-
+  leon.yen@mediatek.com`
+- `Signed-off-by: Felix Fietkau <nbd@nbd.name>` — mt76 subsystem
+  maintainer accepted the patch
+
+Record: Author is from MediaTek (chip vendor). Tested by Canonical
+(Ubuntu). Accepted by mt76 maintainer Felix Fietkau. No Fixes: tag, no
+Reported-by (expected since this is a code-analysis-based fix).
 
 **Step 1.3: Commit Body**
-- "Verify the old zone count has a valid value before using it to
-  compute slab summary entry offsets."
-- This directly describes a missing input validation on data loaded from
-  disk. The "old zone count" is deserialized from the VDO super block
-  and used to compute array offsets without bounds checking.
-- Record: Bug = missing validation of on-disk value used as array index;
-  Symptom = potential OOB memory access; Root cause = zone_count from
-  disk not validated against MAX_VDO_PHYSICAL_ZONES.
+The message describes:
+- **Bug**: A deadlock between two delayed works: `ps_work` and
+  `mac_work`
+- **Mechanism**: Both try to cancel each other using
+  `cancel_delayed_work_sync()`, which blocks until the target work
+  finishes
+- **Trigger**: High-load situations where both works get queued and
+  execute simultaneously on different CPUs
+- **Fix**: Replace `cancel_delayed_work_sync()` with
+  `cancel_delayed_work()` in ps_work
 
-**Step 1.4: Hidden Bug Fix Detection**
-- This IS a bug fix. "Validate" = adding a missing safety check. The
-  code was using an untrusted on-disk value to compute memory offsets.
-- Record: Yes, this is a validation bug fix preventing out-of-bounds
-  access.
+Record: Classic ABBA deadlock. Failure mode is system hang (deadlock).
+Triggered under high CPU load with WiFi active.
 
-### PHASE 2: DIFF ANALYSIS
+**Step 1.4: Hidden Bug Fix?**
+No — this is explicitly labeled "Fix" and clearly describes a deadlock.
+Not hidden.
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- Files: `drivers/md/dm-vdo/slab-depot.c` (+3 lines)
-- Function modified: `vdo_decode_slab_depot()`
-- Scope: Single-file, surgical 3-line addition
-- Record: 1 file, +3 lines, single function, surgical fix.
+- 1 file changed: `drivers/net/wireless/mediatek/mt76/mt792x_mac.c`
+- 1 line changed: `-cancel_delayed_work_sync(` → `+cancel_delayed_work(`
+- Function modified: `mt792x_pm_power_save_work()`
+- Scope: Single-file, single-line, surgical fix
 
 **Step 2.2: Code Flow Change**
-- BEFORE: `state.zone_count` from on-disk metadata was stored as
-  `depot->old_zone_count` without any bounds validation. The decode
-  function (`decode_slab_depot_state_2_0` in `encodings.c`) reads
-  `zone_count` as a raw byte (`buffer[(*offset)++]`) and stores it
-  without validation.
-- AFTER: `state.zone_count` is checked against `MAX_VDO_PHYSICAL_ZONES`
-  (16). If it exceeds 16, `UDS_CORRUPT_DATA` error is returned before
-  any allocation.
-- The check is placed BEFORE the allocation of the depot structure, so
-  no memory leak on this error path.
-- Record: Before = raw on-disk byte used unchecked; After = validated
-  against maximum before use.
+Before: `mt792x_pm_power_save_work()` calls
+`cancel_delayed_work_sync(&mphy->mac_work)`, which blocks until any
+currently-running `mac_work` completes.
 
-**Step 2.3: Bug Mechanism**
-This is an **out-of-bounds memory access** bug:
+After: It calls `cancel_delayed_work(&mphy->mac_work)`, which cancels a
+pending work but does NOT wait for a running instance to finish.
 
-1. `zone_count` is a `zone_count_t` (u8), so it can be 0-255.
-2. `MAX_VDO_PHYSICAL_ZONES` = 16.
-3. In `combine_summaries()` (line 4575-4588), `depot->old_zone_count` is
-   used to cycle through zones: `entries + (zone * MAX_VDO_SLABS) +
-   entry_number`, where `zone` ranges from 0 to `old_zone_count - 1`.
-4. The `summary_entries` buffer is allocated with
-   `MAXIMUM_VDO_SLAB_SUMMARY_ENTRIES` = `MAX_VDO_SLABS *
-   MAX_VDO_PHYSICAL_ZONES` = 8192 * 16 = 131,072 entries.
-5. If `old_zone_count` = 17, the maximum offset becomes 16 * 8192 + 8191
-   = 139,263, which exceeds the buffer size of 131,072. With
-   `old_zone_count` = 255, the max offset is 2,088,959 — massively out
-   of bounds.
-6. This causes an OOB read (data copied from beyond the buffer boundary)
-   and potentially corruption, since `combine_summaries` uses `memcpy`
-   both for reading and writing.
+**Step 2.3: Bug Mechanism — Deadlock**
 
-Record: [OOB memory access] [corrupt on-disk zone_count > 16 causes
-access beyond allocated summary_entries buffer in combine_summaries()]
+The deadlock is an ABBA pattern between two work functions:
+
+**Chain A** (mac_work → waits for ps_work):
+
+```
+mt792x_mac_work()
+  → mt792x_mutex_acquire()
+    → mt76_connac_mutex_acquire()
+      → mt76_connac_pm_wake()
+        → cancel_delayed_work_sync(&pm->ps_work)   ← WAITS for ps_work
+```
+
+**Chain B** (ps_work → waits for mac_work):
+
+```
+mt792x_pm_power_save_work()
+  → cancel_delayed_work_sync(&mphy->mac_work)      ← WAITS for mac_work
+```
+
+If both execute simultaneously:
+- CPU1's mac_work waits for ps_work to finish
+- CPU2's ps_work waits for mac_work to finish
+- **Classic ABBA deadlock → system hang**
+
+The two works run on *different* workqueues (`mac_work` on ieee80211's
+workqueue, `ps_work` on `dev->mt76.wq`), which confirms they CAN execute
+in parallel on different CPUs.
 
 **Step 2.4: Fix Quality**
-- Obviously correct: a simple bounds check against a well-defined
-  constant.
-- Minimal/surgical: 3 lines, inserted in the right place (before
-  allocation and use).
-- No regression risk: this only rejects corrupt/invalid data early.
-- Placed before allocation, so no resource leak on this new error path.
-- Record: Fix is obviously correct, minimal, zero regression risk.
+- Obviously correct: removing `_sync` breaks the circular dependency
+- The non-sync variant is safe here because after the cancel, `ps_work`
+  immediately returns. If `mac_work` is running, it will re-queue itself
+  (line 30-31) and will be properly managed in the next power-save
+  cycle. `mac_work` acquires `mt792x_mutex_acquire` which wakes the
+  device if needed.
+- Minimal/surgical: exactly 1 function call changed
+- Regression risk: Very low — the only difference is not waiting for a
+  running `mac_work` to finish, which is acceptable since `ps_work`
+  doesn't depend on `mac_work` completion
 
-### PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
 **Step 3.1: Blame**
-- The buggy code (using `state.zone_count` without validation) was
-  introduced by `7ce49449ffb940` ("dm vdo: add the slab depot") by
-  Matthew Sakai on 2023-11-16.
-- This is contained in v6.9-rc1, so it has been present since kernel
-  6.9.
-- Record: Buggy code introduced in commit 7ce49449ffb940 (v6.9-rc1),
-  present since kernel 6.9.
+The buggy line was introduced by commit `c21a7f9f406bba` (Lorenzo
+Bianconi, 2023-06-28), "wifi: mt76: mt7921: move shared runtime-pm code
+on mt792x-lib". This was code movement that created the mt792x_mac.c
+file, carrying the original deadlock-prone pattern from mt7921/mac.c.
 
 **Step 3.2: Fixes tag** — No Fixes: tag present (expected).
 
-**Step 3.3: File History**
-- The file has had moderate recent activity (kerneldoc fixes, refcount
-  rework, ring reference removal). No related validation fixes found.
-- Record: No prior fix for this issue. Standalone fix.
+**Step 3.3: Related changes** — The file has had several changes since,
+but none addressing this specific deadlock.
 
-**Step 3.4: Author**
-- Matthew Sakai is the VDO subsystem maintainer and author of the
-  original VDO code. Mikulas Patocka is the DM subsystem maintainer who
-  signed off.
-- Record: Fix from subsystem maintainer, signed off by DM maintainer.
-  High confidence.
+**Step 3.4: Author** — Leon Yen is a MediaTek engineer with multiple
+mt76 contributions, including WiFi/BT combo fixes and power management
+work.
 
-**Step 3.5: Dependencies**
-- This is entirely standalone. It adds a check using
-  `MAX_VDO_PHYSICAL_ZONES` and `UDS_CORRUPT_DATA`, both of which already
-  exist in all stable trees with dm-vdo.
-- Record: No dependencies. Clean standalone fix.
+**Step 3.5: Dependencies** — None. This is a standalone one-line fix.
 
-### PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1-4.5:** Could not find the original mailing list submission
-through web search or b4 dig (the commit may be very recent or submitted
-through a different channel). The DM tree often takes patches directly.
-Both the VDO and DM maintainer signed off, indicating proper review.
-- Record: Mailing list thread not found (may be recent/not yet indexed).
-  Maintainer sign-offs provide review confidence.
+b4 dig did not find the exact commit (it matched a different file
+change). The lore.kernel.org search was blocked. However, the commit
+message Link tag points to the original submission:
+`20251215122231.3180648-1-leon.yen@mediatek.com`. The patch was accepted
+by Felix Fietkau (mt76 maintainer) and tested by a Canonical engineer.
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+Record: Maintainer-accepted, independently tested. Standalone patch (not
+a series).
 
-**Step 5.1: Key Functions**
-- Modified: `vdo_decode_slab_depot()` — the main decoder for VDO slab
-  depot on-disk state.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.2: Callers**
-- `vdo_decode_slab_depot()` is called from `dm-vdo-target.c:1360` during
-  VDO volume load/activation. This is triggered when a VDO device is
-  started (e.g., `dmsetup create`).
-- Record: Called during device activation — any VDO user hits this code
-  path.
+**Step 5.1: Functions modified**: `mt792x_pm_power_save_work()`
 
-**Step 5.3-5.4: Impact Path**
-- `vdo_decode_slab_depot()` → stores `old_zone_count` →
-  `combine_summaries()` uses it to compute offsets into
-  `summary_entries` array → OOB access if value > 16.
-- The bug is triggered whenever VDO loads a volume with corrupt metadata
-  (malicious disk image, bit rot, filesystem corruption).
+**Step 5.2: Callers**: This function is the work handler for
+`pm.ps_work`, queued on `dev->mt76.wq` (an ordered workqueue) via
+`mt76_connac_power_save_sched()`. It is called indirectly when the
+device transitions to power-save mode.
 
-**Step 5.5: Similar Patterns**
-- The `dm-vdo-target.c` already validates `physical_zone_count` at line
-  421 (`if (count > MAX_VDO_PHYSICAL_ZONES)`), but the on-disk
-  deserialization path in `decode_slab_depot_state_2_0` does NOT
-  validate `zone_count`. This is an inconsistency that this fix
-  addresses.
-- Record: New zone_count validated in dm-vdo-target.c; old zone_count
-  from disk was NOT validated. Asymmetric validation = bug.
+**Step 5.3-5.4: Call chain**: The power-save work is scheduled via
+`mt76_connac_mutex_release()` → `mt76_connac_power_save_sched()`, which
+is called after every device register access. This is a very hot path
+for any mt792x WiFi operation.
 
-### PHASE 6: CROSS-REFERENCING
+**Step 5.5: Similar patterns**: The `mt7615` driver has similar power-
+save code at `drivers/net/wireless/mediatek/mt76/mt7615/mac.c`, but this
+specific fix only addresses the mt792x code path.
 
-**Step 6.1: Stable Tree Presence**
-- dm-vdo was introduced in v6.9-rc1. File does NOT exist in v6.8 or
-  earlier.
-- Exists in stable trees: 6.12.y, and any other active stable tree >=
-  6.9.
-- Record: Bug exists in all kernels >= 6.9 (6.12.y stable tree).
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.2: Backport Complications**
-- The v6.9 code is identical to current mainline for this function
-  (verified). Patch should apply cleanly.
-- Record: Clean apply expected.
+**Step 6.1**: The buggy code was introduced in commit `c21a7f9f406bba`
+(June 2023), which is present in v6.6 but NOT in v6.1. Affected stable
+trees: v6.6.y, v6.12.y, and any later LTS.
 
-**Step 6.3: Related Fixes**
-- No related fix found in stable.
+**Step 6.2**: The fix is a one-line change. It should apply cleanly to
+any tree containing the buggy code.
 
-### PHASE 7: SUBSYSTEM CONTEXT
+**Step 6.3**: No related fixes for this specific deadlock already in
+stable.
 
-**Step 7.1:** dm-vdo (device-mapper Virtual Data Optimizer) is a data
-deduplication and compression layer. Classification: IMPORTANT — used in
-production storage (Red Hat VDO in RHEL).
-- Record: Subsystem: DM/VDO, Criticality: IMPORTANT (production
-  storage).
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 7.1**: `drivers/net/wireless/mediatek/mt76` — WiFi driver for
+MediaTek MT7921/MT7922/MT7925 chipsets. These are extremely popular WiFi
+chips found in many modern laptops (Framework, Lenovo ThinkPad, Dell,
+etc.). Criticality: **IMPORTANT** — affects many real users.
 
-**Step 8.1: Who is affected** — All VDO users loading VDO volumes (dm-
-vdo is used in RHEL/Fedora storage stacks).
+**Step 7.2**: The mt76 subsystem is very active with regular
+contributions.
 
-**Step 8.2: Trigger** — Loading a VDO volume with corrupt on-disk
-metadata where zone_count > 16. This can happen from:
-- Disk corruption / bit rot
-- Malicious crafted disk images
-- Record: Triggered on VDO volume load with corrupt metadata.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.3: Severity** — OOB memory access → can cause:
-- Kernel crash/oops (most likely outcome)
-- Memory corruption
-- Potential information leak
-- Severity: **HIGH** (OOB access from untrusted on-disk data)
+**Step 8.1**: Affects all users with MT7921/MT7922/MT7925 WiFi chipsets
+(very large population, especially Ubuntu/Fedora laptop users).
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Prevents OOB memory access from corrupt disk metadata.
-  Protects all VDO users.
-- RISK: 3 lines, obviously correct bounds check, zero regression risk.
-- Record: Very high benefit, very low risk.
+**Step 8.2**: Trigger is high CPU load with active WiFi. Both works must
+execute simultaneously. Under heavy load this is realistic — the commit
+specifically says "In high-load situations, they are queued but may not
+have chance to be executed until the CPUs are released."
 
-### PHASE 9: FINAL SYNTHESIS
+**Step 8.3**: **Failure mode: DEADLOCK → system hang**. Severity:
+**CRITICAL** — the system becomes unresponsive.
 
-**Step 9.1: Evidence**
+**Step 8.4**:
+- Benefit: VERY HIGH — prevents deadlock/hang on popular hardware
+- Risk: VERY LOW — 1-line change, removing a sync variant that was
+  causing the deadlock
+- Ratio: Extremely favorable
 
-FOR backporting:
-- Fixes out-of-bounds memory access from unvalidated on-disk data
-- 3-line surgical fix, obviously correct
-- Written by VDO maintainer, signed off by DM maintainer
-- Affects all VDO users when loading corrupt volumes
-- `zone_count_t` is u8 (0-255) but must be <= 16; no validation existed
-- `combine_summaries()` computes `zone * MAX_VDO_SLABS` (up to 254 *
-  8192) into a buffer of only 131,072 entries
-- Similar validation already exists for new zone_count in dm-vdo-
-  target.c
-- Code exists in stable trees >= 6.9 (including 6.12.y)
+## PHASE 9: FINAL SYNTHESIS
 
-AGAINST backporting:
-- No explicit Reported-by or syzbot trigger (likely found by code audit)
-- No CVE assigned (yet)
-- Requires corrupt/malicious on-disk metadata to trigger
+**Evidence FOR backporting:**
+- Fixes a real deadlock (ABBA pattern) verified through code analysis
+- 1-line fix, obviously correct, minimal regression risk
+- Affects widely-used WiFi hardware (MT7921/MT7922/MT7925)
+- Tested by Canonical engineer (Ubuntu LTS relevance)
+- Accepted by subsystem maintainer
+- Buggy code exists in stable trees v6.6+
+- Failure mode is system hang (CRITICAL)
+- Author is from MediaTek (chip vendor, deep domain expertise)
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — trivial bounds check
-2. Fixes a real bug? **YES** — OOB access from untrusted input
-3. Important issue? **YES** — OOB memory access =
-   crash/corruption/security
-4. Small and contained? **YES** — 3 lines, single file
-5. No new features or APIs? **YES** — validation only
-6. Can apply to stable? **YES** — code is identical in 6.9+
+**Evidence AGAINST backporting:**
+- None significant
 
-**Step 9.3: Exception Categories** — N/A (standard bug fix)
+**Stable rules checklist:**
+1. Obviously correct and tested? **YES** — 1-line change, independently
+   tested
+2. Fixes a real bug? **YES** — deadlock under high load
+3. Important issue? **YES** — system deadlock/hang (CRITICAL)
+4. Small and contained? **YES** — 1 line in 1 file
+5. No new features? **YES** — pure bug fix
+6. Applies to stable? **YES** — clean apply expected for v6.6+
 
-**Step 9.4: Decision**
-This is a clear-cut missing input validation fix for on-disk data that
-can cause out-of-bounds memory access. It's 3 lines, obviously correct,
-from the subsystem maintainer, with zero regression risk.
+## Verification
 
-### Verification
-
-- [Phase 1] Parsed commit message: "validate old zone count" = bounds
-  check on deserialized data
-- [Phase 2] Diff analysis: 3 lines added to `vdo_decode_slab_depot()`,
-  validates `state.zone_count <= MAX_VDO_PHYSICAL_ZONES`
-- [Phase 2] Confirmed OOB: zone_count=17 → offset 139,263 > buffer
-  131,072; zone_count=255 → offset 2,088,959
-- [Phase 3] git blame: buggy code introduced in 7ce49449ffb940
-  (v6.9-rc1, 2023-11-16)
-- [Phase 3] git describe: 7ce49449ffb940 is `v6.9-rc1~148^2~114`
-- [Phase 3] Confirmed no Fixes: tag (expected for AUTOSEL candidate)
-- [Phase 3] Confirmed standalone fix, no dependencies
-- [Phase 4] b4 dig: could not find mailing list thread (UNVERIFIED:
-  thread may be too recent)
-- [Phase 5] `vdo_decode_slab_depot()` called from `dm-vdo-target.c:1360`
-  during VDO volume activation
-- [Phase 5] `combine_summaries()` at line 4575-4588 uses
-  `old_zone_count` to compute offsets into `summary_entries`
-- [Phase 5] `decode_slab_depot_state_2_0()` at line 631 reads
-  `zone_count` as raw byte with no validation
-- [Phase 5] Confirmed asymmetric validation: new zone_count validated at
-  dm-vdo-target.c:421, but not old zone_count from disk
-- [Phase 6] File exists in v6.9+ (confirmed `v6.9:drivers/md/dm-
-  vdo/slab-depot.c` exists, `v6.8` does not)
-- [Phase 6] v6.9 version of `vdo_decode_slab_depot()` is identical —
-  clean apply expected
-- [Phase 8] Failure mode: OOB memory read/write in `combine_summaries()`
-  → crash or corruption, severity HIGH
-- UNVERIFIED: Could not locate mailing list discussion; relying on
-  maintainer SOBs for review confidence
+- [Phase 1] Parsed tags: Tested-by from Canonical, maintainer SOB from
+  Felix Fietkau
+- [Phase 2] Diff analysis: 1-line change in
+  `mt792x_pm_power_save_work()`, `cancel_delayed_work_sync` →
+  `cancel_delayed_work`
+- [Phase 3] git blame: buggy code from commit c21a7f9f406bba (June
+  2023), code refactoring that moved runtime-PM code to mt792x-lib
+- [Phase 3] `git merge-base --is-ancestor`: confirmed code is in v6.6
+  but NOT in v6.1
+- [Phase 5] Traced deadlock chain: mac_work→mt792x_mutex_acquire→mt76_co
+  nnac_pm_wake→cancel_delayed_work_sync(&ps_work) vs
+  ps_work→cancel_delayed_work_sync(&mac_work)
+- [Phase 5] Verified `dev->mt76.wq` is `alloc_ordered_workqueue`
+  (mac80211.c line 733) and mac_work uses ieee80211's workqueue
+  (different queues → parallel execution possible)
+- [Phase 5] Verified `mt76_connac_power_save_sched` at line 62-83 of
+  mt76_connac_mac.c schedules ps_work, confirming the scheduling path
+- [Phase 6] Confirmed fix applies to v6.6+ stable trees
+- [Phase 7] mt76 is a widely used WiFi driver subsystem
+- [Phase 8] Failure mode: system deadlock/hang, severity CRITICAL
 
 **YES**
 
- drivers/md/dm-vdo/slab-depot.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-vdo/slab-depot.c b/drivers/md/dm-vdo/slab-depot.c
-index 034ecaa51f481..ad00afc2c168d 100644
---- a/drivers/md/dm-vdo/slab-depot.c
-+++ b/drivers/md/dm-vdo/slab-depot.c
-@@ -4262,6 +4262,10 @@ int vdo_decode_slab_depot(struct slab_depot_state_2_0 state, struct vdo *vdo,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+index 71dec93094ebd..888e5a5056731 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+@@ -375,7 +375,7 @@ void mt792x_pm_power_save_work(struct work_struct *work)
  	}
- 	slab_size_shift = ilog2(slab_size);
  
-+	if (state.zone_count > MAX_VDO_PHYSICAL_ZONES)
-+		return vdo_log_error_strerror(UDS_CORRUPT_DATA,
-+					      "invalid zone count");
-+
- 	result = vdo_allocate_extended(struct slab_depot,
- 				       vdo->thread_config.physical_zone_count,
- 				       struct block_allocator, __func__, &depot);
+ 	if (!mt792x_mcu_fw_pmctrl(dev)) {
+-		cancel_delayed_work_sync(&mphy->mac_work);
++		cancel_delayed_work(&mphy->mac_work);
+ 		return;
+ 	}
+ out:
 -- 
 2.53.0
 
