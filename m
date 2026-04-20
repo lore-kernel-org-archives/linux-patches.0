@@ -1,47 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2A9428475;
-	Mon, 20 Apr 2026 13:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C0B3A6F1E;
+	Mon, 20 Apr 2026 13:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691767; cv=none; b=Y9uqi4MNnZezPHhe6RZLIa/Ydx7sqmyEv3mbZxjW7IX1571oTYqZW8miO3zMe2baIkqHERHCNi4u0SwvxV7DMtr+niyCYWmaspXVnrbGWmuOC1FfkcCJvZ8vPd9GWo1n1QjY1Ka0PbdQVEhphWfSb53v5RjwiXhLsshnLwFTjH8=
+	t=1776691769; cv=none; b=dmeU6mxBsSLIHhfzGyBjVJgSUf+DFGqUmLT8h//cfeU8uYQWMYNGHrSCy2D9DGxC3SrYuBJ4NUVrJ9RKzB4wC4dri3RUxi4u8umBuQsTwuqEQEPMIWFS+7FeENcaSShHedELETzwJ2sgD1OpPQgBCY6C2tc/72QWiIgs22bLugY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691767; c=relaxed/simple;
-	bh=aPuk84CbzBBWvrq3as1c1H2p8eRrE6Hhh8GyK6r30Dg=;
+	s=arc-20240116; t=1776691769; c=relaxed/simple;
+	bh=tHZti5mAqn4TNxo9fZndn3N+v+E4Uj4c1I4MpcySLe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y32IucGNpo/qF/Ej7wRzVDHApEMVf/3Aay+GyHwS61OL5nlhBlpbsVekHOxKo2sNyYMKBAhk0NQZ4o4Q4k0E1qLcMmZVXE9lOe5b+7IgiIoYYoOpX3L4cffotJ+GZEJ/7ZIRTawbCtd+1bT+O6q7WH9wcRsb3BmYw1yH5EaFX34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZIuy2EQF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Wy80fMp0thONyOeNn1xEPOfqG2yw8I2CKiI+lvbwVA8FnmuB+QOE1tmV6q4fJzTPbS+Rhf/RjdZ6vvD3T2/a5vwsaeXPzZ7wu5wMkf03fg2hQQheKJ/EUF06qG0oNp8I4Hq09u0lnFGw5Fk4wQf4hGtA8JzU0FD1emWhW/0T4ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R8opCKp+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZIuy2EQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC556C2BCB4;
-	Mon, 20 Apr 2026 13:29:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R8opCKp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB887C2BCC4;
+	Mon, 20 Apr 2026 13:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691767;
-	bh=aPuk84CbzBBWvrq3as1c1H2p8eRrE6Hhh8GyK6r30Dg=;
+	s=k20201202; t=1776691769;
+	bh=tHZti5mAqn4TNxo9fZndn3N+v+E4Uj4c1I4MpcySLe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZIuy2EQFzQeveVacJBXu2/c/UNrvOYbHJDCQFzyTotIo0b8ao9xWDs3Fx1Dtm+3Gp
-	 UB62XK76kH00sABQQ4K5EUWvRb4Xq72dPCSrc+Hmw/kbDaUS5nApGkpswrzMAOFEOJ
-	 OA+XapX8A1mtQAPCM9uijtdRRZ72Uz9ni82DJj8rts+s+jjS4vpkb4GUFA+18oI659
-	 6lHtDU9CovYIG8vyBR9qLN/rGY6UeB1XjEdNzy/KG+g7EPshAGjOGAD0Qds4NhDLVn
-	 bUd6Bl5GqsKEXYRwBTOGQ9k3/vTywrRqjTvx3mti0g4a998LoRkqyHQPGTk+9wv2pX
-	 eZFH3+Cue0v4w==
+	b=R8opCKp+29pe7DTDWFIDkxZnlyTuMRGHSN4A7VCjVYD3FUZ+h1HdXqTyQ5YFbaxUk
+	 laF3YSBi5SFUarTnIIpRfOvfk25QtqQ46zZYAYBsxiqeFOq+qneETPqvyLBZCxtunj
+	 va5zTYLq5t5/fHutLzk1oFD3eHszYAJFYef9K1qljIHkZWZRObNo8I0FlWlhX/Q7db
+	 pgBG6AdlFqHobNXtZPJRtBXU/eDWFao/qkXiDxbhvvmqHhUOed6HtOHUDRwzLQEuya
+	 mRRGLdXdLPnaWfuz7m5HM1/ML1HI3o/6udpj7X/QpuEZJg9oh6wWC7qzCkv3lsPHvM
+	 Ls5rgv/a6ma1Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Ankit Garg <nktgrg@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Joshua Washington <joshwash@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kuniyu@google.com,
-	pabeni@redhat.com,
-	willemb@google.com,
+	andrew+netdev@lunn.ch,
 	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] net: initialize sk_rx_queue_mapping in sk_clone()
-Date: Mon, 20 Apr 2026 09:19:35 -0400
-Message-ID: <20260420132314.1023554-181-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.19] gve: Advertise NETIF_F_GRO_HW instead of NETIF_F_LRO
+Date: Mon, 20 Apr 2026 09:19:36 -0400
+Message-ID: <20260420132314.1023554-182-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -57,440 +59,426 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Ankit Garg <nktgrg@google.com>
 
-[ Upstream commit 1a6b3965385a935ffd70275d162f68139bd86898 ]
+[ Upstream commit e637c244b954426b84340cbc551ca0e2a32058ce ]
 
-sk_clone() initializes sk_tx_queue_mapping via sk_tx_queue_clear()
-but does not initialize sk_rx_queue_mapping. Since this field is in
-the sk_dontcopy region, it is neither copied from the parent socket
-by sock_copy() nor zeroed by sk_prot_alloc() (called without
-__GFP_ZERO from sk_clone).
+The device behind DQO format has always coalesced packets per stricter
+hardware GRO spec even though it was being advertised as LRO.
 
-Commit 03cfda4fa6ea ("tcp: fix another uninit-value
-(sk_rx_queue_mapping)") attempted to fix this by introducing
-sk_mark_napi_id_set() with force_set=true in tcp_child_process().
-However, sk_mark_napi_id_set() -> sk_rx_queue_set() only writes
-when skb_rx_queue_recorded(skb) is true. If the 3-way handshake
-ACK arrives through a device that does not record rx_queue (e.g.
-loopback or veth), sk_rx_queue_mapping remains uninitialized.
+Update advertised capability to match device behavior.
 
-When a subsequent data packet arrives with a recorded rx_queue,
-sk_mark_napi_id() -> sk_rx_queue_update() reads the uninitialized
-field for comparison (force_set=false path), triggering KMSAN.
-
-This was reproduced by establishing a TCP connection over loopback
-(which does not call skb_record_rx_queue), then attaching a BPF TC
-program on lo ingress to set skb->queue_mapping on data packets:
-
-BUG: KMSAN: uninit-value in tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1875)
- tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1875)
- tcp_v4_rcv (net/ipv4/tcp_ipv4.c:2287)
- ip_protocol_deliver_rcu (net/ipv4/ip_input.c:207)
- ip_local_deliver_finish (net/ipv4/ip_input.c:242)
- ip_local_deliver (net/ipv4/ip_input.c:262)
- ip_rcv (net/ipv4/ip_input.c:573)
- __netif_receive_skb (net/core/dev.c:6294)
- process_backlog (net/core/dev.c:6646)
- __napi_poll (net/core/dev.c:7710)
- net_rx_action (net/core/dev.c:7929)
- handle_softirqs (kernel/softirq.c:623)
- do_softirq (kernel/softirq.c:523)
- __local_bh_enable_ip (kernel/softirq.c:?)
- __dev_queue_xmit (net/core/dev.c:?)
- ip_finish_output2 (net/ipv4/ip_output.c:237)
- ip_output (net/ipv4/ip_output.c:438)
- __ip_queue_xmit (net/ipv4/ip_output.c:534)
- __tcp_transmit_skb (net/ipv4/tcp_output.c:1693)
- tcp_write_xmit (net/ipv4/tcp_output.c:3064)
- tcp_sendmsg_locked (net/ipv4/tcp.c:?)
- tcp_sendmsg (net/ipv4/tcp.c:1465)
- inet_sendmsg (net/ipv4/af_inet.c:865)
- sock_write_iter (net/socket.c:1195)
- vfs_write (fs/read_write.c:688)
- ...
-Uninit was created at:
- kmem_cache_alloc_noprof (mm/slub.c:4873)
- sk_prot_alloc (net/core/sock.c:2239)
- sk_alloc (net/core/sock.c:2301)
- inet_create (net/ipv4/af_inet.c:334)
- __sock_create (net/socket.c:1605)
- __sys_socket (net/socket.c:1747)
-
-Fix this at the root by adding sk_rx_queue_clear() alongside
-sk_tx_queue_clear() in sk_clone().
-
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260407084219.95718-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ankit Garg <nktgrg@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Signed-off-by: Joshua Washington <joshwash@google.com>
+Link: https://patch.msgid.link/20260303195549.2679070-2-joshwash@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile the full report.
+Now I have all the information needed for a complete analysis. Let me
+compile my findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-- **Subsystem**: `net` (core networking)
-- **Action verb**: "initialize" — adding missing initialization,
-  strongly indicative of fixing uninitialized data use
-- **Summary**: Initialize `sk_rx_queue_mapping` in `sk_clone()` to
-  prevent KMSAN uninit-value reads
-
-Record: [net] [initialize] [Fix uninitialized sk_rx_queue_mapping in
-cloned sockets]
+- **Subsystem:** `gve` (Google Virtual Ethernet driver -
+  `drivers/net/ethernet/google/gve/`)
+- **Action verb:** "Advertise" (correcting what capability is reported)
+- **Summary:** Changes the driver to advertise `NETIF_F_GRO_HW` instead
+  of `NETIF_F_LRO` since the DQO hardware actually does GRO-compliant
+  coalescing.
+- Record: [gve] [Advertise (correct)] [Fix incorrect feature flag: LRO →
+  GRO_HW for DQO]
 
 ### Step 1.2: Tags
-- **Signed-off-by**: Jiayuan Chen (author), Sasha Levin (pipeline)
-- **Reviewed-by**: Eric Dumazet (net maintainer — the person who wrote
-  the earlier incomplete fix 03cfda4fa6ea)
-- **Link**: `https://patch.msgid.link/20260407084219.95718-1-
-  jiayuan.chen@linux.dev`
-- **No explicit Fixes: tag** — expected for this review pipeline
-- **No Cc: stable** — expected
-- **No Reported-by** — the author found this independently (or via KMSAN
-  testing)
+- **Signed-off-by:** Ankit Garg (author), Joshua Washington
+  (committer/submitter), Paolo Abeni (netdev maintainer)
+- **Reviewed-by:** Willem de Bruijn, Harshitha Ramamurthy (Google gve
+  developers)
+- **Link:** `https://patch.msgid.link/20260303195549.2679070-2-
+  joshwash@google.com` (patch 2 of a series)
+- No Fixes: tag (expected for autosel candidates)
+- No Reported-by: tag
+- No Cc: stable tag
+- Record: Reviewed by two GVE developers. Applied by netdev maintainer
+  Paolo Abeni. Part of a series (patch 2).
 
-Record: Reviewed by Eric Dumazet (net subsystem maintainer/major
-contributor). No syzbot report, but KMSAN stack trace included.
+### Step 1.3: Commit Body Analysis
+- The commit states: "The device behind DQO format has always coalesced
+  packets per stricter hardware GRO spec even though it was being
+  advertised as LRO."
+- The fix corrects the advertised capability to match actual device
+  behavior.
+- Bug: NETIF_F_LRO is incorrectly advertised when the hardware does GRO.
+- Symptom: The kernel treats the feature as LRO and disables it
+  unnecessarily in forwarding/bridging scenarios.
+- Record: Bug = incorrect feature flag. Symptom = unnecessary disabling
+  of hardware offload in forwarding/bridging.
 
-### Step 1.3: Commit Body
-The bug is clearly explained:
-1. `sk_clone()` initializes `sk_tx_queue_mapping` but not
-   `sk_rx_queue_mapping`
-2. `sk_rx_queue_mapping` is in the `sk_dontcopy` region, so it's neither
-   copied from parent nor zeroed during allocation
-3. The earlier fix (03cfda4fa6ea) tried to fix this by calling
-   `sk_mark_napi_id_set()` in `tcp_child_process()`, but that function
-   only writes when `skb_rx_queue_recorded(skb)` is true
-4. Loopback and veth don't call `skb_record_rx_queue()`, so the field
-   stays uninitialized
-5. When a subsequent data packet with a recorded rx_queue arrives,
-   `sk_rx_queue_update()` reads the uninitialized field for comparison
+### Step 1.4: Hidden Bug Fix Detection
+YES - this IS a hidden bug fix. While described as "Update advertised
+capability," the practical consequence of the incorrect flag is that:
+1. When IP forwarding is enabled, `dev_disable_lro()` disables the
+   hardware coalescing unnecessarily.
+2. When the device is bridged, the same happens.
+3. When used under upper devices, `NETIF_F_UPPER_DISABLES` (which
+   includes `NETIF_F_LRO` but NOT `NETIF_F_GRO_HW`) forces it off.
 
-**Full KMSAN stack trace provided** — reproducible via TCP connection
-over loopback with a BPF TC program.
+This is exactly the same bug class fixed in virtio-net (commit
+`dbcf24d153884`) which carried a `Fixes:` tag.
 
-Record: [Bug: uninitialized memory read of sk_rx_queue_mapping in cloned
-TCP sockets] [Symptom: KMSAN uninit-value] [Root cause: field in
-dontcopy region never initialized, and earlier fix incomplete for
-devices that don't record rx_queue] [Author explanation: thorough and
-correct]
-
-### Step 1.4: Hidden Bug Fix?
-Not hidden at all — this is explicitly fixing an uninitialized data read
-detected by KMSAN. The verb "initialize" directly describes the bug
-being fixed.
-
-Record: [Direct bug fix, not disguised]
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **Files changed**: 1 (`net/core/sock.c`)
-- **Lines added**: 1
-- **Lines removed**: 0
-- **Functions modified**: `sk_clone()`
-- **Scope**: Single-line surgical fix
+- **Files:** `gve_adminq.c` (+2/-2 effective), `gve_main.c` (+6/-5
+  effective)
+- **Functions modified:**
+  - `gve_adminq_get_create_rx_queue_cmd()` - 1 line change
+  - `gve_adminq_describe_device()` - 2 line change (comment + feature
+    flag)
+  - `gve_verify_xdp_configuration()` - 2 line change (check + error
+    message)
+  - `gve_set_features()` - 5 line changes
+- **Scope:** Single-driver surgical fix, ~10 meaningful line changes
+- Record: 2 files, 4 functions, single-driver scope, very small.
 
-Record: [1 file, +1 line, sk_clone() function, single-line fix]
-
-### Step 2.2: Code Flow Change
-Before: `sk_tx_queue_clear(newsk)` is called but `sk_rx_queue_mapping`
-is left in whatever state the slab allocator provided.
-After: `sk_rx_queue_clear(newsk)` is added right after
-`sk_tx_queue_clear(newsk)`, setting `sk_rx_queue_mapping` to
-`NO_QUEUE_MAPPING`.
-
-Record: [Before: uninitialized sk_rx_queue_mapping -> After: properly
-initialized to NO_QUEUE_MAPPING]
+### Step 2.2: Code Flow Changes
+1. **`gve_adminq_get_create_rx_queue_cmd`:** `enable_rsc` now checks
+   `NETIF_F_GRO_HW` instead of `NETIF_F_LRO` — correct, since the
+   hardware feature maps to GRO.
+2. **`gve_adminq_describe_device`:** Advertises `NETIF_F_GRO_HW` in
+   `hw_features` instead of `NETIF_F_LRO` for DQO queue format.
+3. **`gve_verify_xdp_configuration`:** Checks `NETIF_F_GRO_HW` and
+   updates error message.
+4. **`gve_set_features`:** Handles `NETIF_F_GRO_HW` toggle instead of
+   `NETIF_F_LRO`.
 
 ### Step 2.3: Bug Mechanism
-**Category: Uninitialized data use (KMSAN)**
-- `sk_rx_queue_mapping` is in the `sk_dontcopy_begin`/`sk_dontcopy_end`
-  region
-- `sock_copy()` skips this region during cloning
-- `sk_prot_alloc()` does not zero-fill (no `__GFP_ZERO`)
-- The earlier fix (03cfda4fa6ea) only works when the incoming skb has
-  `rx_queue` recorded
-- For loopback/veth paths, the field remains uninitialized until
-  `sk_rx_queue_update()` reads it
+**Category:** Logic/correctness fix — incorrect feature flag used
+throughout driver.
 
-Record: [Uninitialized memory read due to field in dontcopy region not
-being explicitly initialized in sk_clone]
+The kernel networking stack treats LRO and GRO_HW differently:
+- `NETIF_F_LRO` is in `NETIF_F_UPPER_DISABLES` — forcibly disabled when
+  forwarding/bridging
+- `NETIF_F_GRO_HW` is NOT in `NETIF_F_UPPER_DISABLES` — stays enabled
+  (safe for forwarding)
+- `dev_disable_lro()` is called by bridge (`br_if.c`), IP forwarding
+  (`devinet.c`), IPv6, OVS, HSR
+- This incorrectly disables GVE DQO's hardware packet coalescing in
+  those scenarios
 
 ### Step 2.4: Fix Quality
-- **Obviously correct**: Yes. `sk_rx_queue_clear()` is a trivial inline
-  that does `WRITE_ONCE(sk->sk_rx_queue_mapping, NO_QUEUE_MAPPING)`.
-  It's placed symmetrically alongside `sk_tx_queue_clear()`.
-- **Minimal**: 1 line added.
-- **Regression risk**: Essentially zero. Setting to `NO_QUEUE_MAPPING`
-  is the expected default for a new socket. The first real data will set
-  it properly.
-- **Red flags**: None.
+- The fix is obviously correct: pure 1:1 substitution of `NETIF_F_LRO` →
+  `NETIF_F_GRO_HW`
+- Minimal and surgical
+- Very low regression risk — the hardware behavior doesn't change; only
+  the correct flag is used
+- Identical pattern to the well-accepted virtio-net fix
+- Record: High quality, low regression risk.
 
-Record: [Obviously correct, minimal, zero regression risk]
+---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-- `sk_tx_queue_clear(newsk)` was added in `bbc20b70424ae` (Eric Dumazet,
-  2021-01-27) as part of reducing indentation in `sk_clone_lock()`.
-- The `sk_dontcopy` region containing `sk_rx_queue_mapping` has existed
-  since the field was added in 2021 via `4e1beecc3b586` (Feb 2021).
-- The incomplete fix `03cfda4fa6ea` is from Dec 2021.
+- The `NETIF_F_LRO` usage was introduced by:
+  - `5e8c5adf95f8a5` (Bailey Forrest, 2021-06-24) "gve: DQO: Add core
+    netdev features" — the `hw_features` and `set_features` usage
+  - `1f6228e459f8bc` (Bailey Forrest, 2021-06-24) "gve: Update adminq
+    commands to support DQO queues" — the `enable_rsc` usage
+- These are in v5.14+, meaning the bug exists in stable trees 5.15.y,
+  6.1.y, 6.6.y, 6.12.y, 6.19.y.
+- Record: Buggy code present since v5.14 (2021). Affects all active
+  stable trees.
 
-Record: [Bug existed since sk_rx_queue_mapping was added in ~v5.12. Root
-cause commit 342159ee394d is in v6.1 and v6.6.]
-
-### Step 3.2: Fixes Chain
-- `342159ee394d` ("net: avoid dirtying sk->sk_rx_queue_mapping")
-  introduced the compare-before-write optimization that reads the field
-- `03cfda4fa6ea` ("tcp: fix another uninit-value") was an incomplete fix
-- This new commit fixes the remaining gap in the incomplete fix
-- Both `342159ee394d` and `03cfda4fa6ea` exist in v6.1 and v6.6
-
-Record: [Both root cause and incomplete fix exist in all active stable
-trees v6.1+]
+### Step 3.2: Fixes Tag
+No Fixes: tag present (expected).
 
 ### Step 3.3: File History
-No other recent commits specifically address `sk_rx_queue_mapping`
-initialization in `sk_clone`.
-
-Record: [Standalone fix, no prerequisites beyond existing code]
+Recent GVE file changes are mostly unrelated (stats, buffer sizes, XDP,
+ethtool). No conflicting changes affecting the LRO/GRO_HW flag.
+- Record: Standalone fix, no prerequisites identified.
 
 ### Step 3.4: Author
-Jiayuan Chen is an active kernel networking contributor with multiple
-merged fixes (UAF, memory leak, NULL deref fixes). The patch was
-reviewed by Eric Dumazet, who is the net subsystem maintainer and the
-person who wrote the original incomplete fix.
-
-Record: [Active contributor, reviewed by the net subsystem authority]
+Ankit Garg is a regular GVE contributor (8+ commits in the driver).
+Joshua Washington is the primary GVE maintainer/submitter. Both are
+Google engineers working on the driver.
+- Record: Fix from driver maintainers — high confidence.
 
 ### Step 3.5: Dependencies
-The only dependency is that `sk_rx_queue_clear()` must exist in the
-target tree. Verified: it exists in v6.1 and v6.6. The function name in
-stable trees is `sk_clone_lock()` (renamed to `sk_clone()` in
-151b98d10ef7c, which is NOT in stable). The fix would need trivial
-adaptation for the function name.
+The change is a pure flag substitution. `NETIF_F_GRO_HW` has existed
+since commit `fb1f5f79ae963` (kernel v4.16). No dependencies on other
+patches.
+- Record: Self-contained. NETIF_F_GRO_HW exists in all active stable
+  trees.
 
-Record: [One cosmetic dependency: function name is sk_clone_lock() in
-stable, not sk_clone(). sk_rx_queue_clear() exists in all stable trees.]
+---
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.5
-The lore.kernel.org site was blocked by anti-scraping protection, but I
-confirmed the patch was submitted at message-id
-`20260407084219.95718-1-jiayuan.chen@linux.dev`, was reviewed by Eric
-Dumazet, and merged by Jakub Kicinski — the two primary net subsystem
-maintainers.
+### Step 4.1-4.5:
+b4 dig could not find the commit (not yet in the tree being analyzed).
+Lore.kernel.org was inaccessible due to bot protection. However, the
+virtio-net precedent (`dbcf24d153884`) provides strong context — that
+commit was:
+- Tagged with `Fixes:`
+- Had `Reported-by:` and `Tested-by:` from a user who hit the issue
+- Described the exact same symptoms: unnecessary feature disabling in
+  bridging/forwarding
+- Record: Could not access lore directly. Virtio-net precedent strongly
+  supports this as a bug fix.
 
-Record: [Patch reviewed by Eric Dumazet, merged by Jakub Kicinski — two
-top net maintainers]
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.2: Function Impact
-`sk_clone()` (or `sk_clone_lock()` in stable) is called from:
-- `inet_csk_clone_lock()` -> `tcp_create_openreq_child()` — every new
-  TCP connection via passive open
-- SCTP accept path
-- This is a HOT path — every TCP connection that goes through the
-  SYN/ACK handshake uses this
-
-### Step 5.3-5.4: Call Chain
-The KMSAN bug is triggered via: `socket() -> connect()` (loopback) ->
-server accepts -> `tcp_v4_rcv` -> `tcp_child_process` ->
-`sk_mark_napi_id_set` (sets field only if skb has rx_queue) -> later
-data packet -> `sk_mark_napi_id` -> `sk_rx_queue_update` -> reads
-uninitialized field
-
-Record: [Reachable from standard TCP connection accept, common path]
+### Step 5.1-5.4: Impact Surface
+The key behavioral difference stems from the kernel networking core:
+- `netif_disable_lro()` (`net/core/dev.c:1823`) clears `NETIF_F_LRO`
+  from `wanted_features`
+- Called from: `net/bridge/br_if.c` (bridging), `net/ipv4/devinet.c`
+  (forwarding), `net/ipv6/addrconf.c`, `net/openvswitch/vport-netdev.c`,
+  `net/hsr/hsr_slave.c`
+- `NETIF_F_UPPER_DISABLES` includes `NETIF_F_LRO` but NOT
+  `NETIF_F_GRO_HW`
+- Result: Any GVE DQO device used in bridging, forwarding, OVS, or HSR
+  has its hardware receive coalescing incorrectly disabled.
 
 ### Step 5.5: Similar Patterns
-The existing `sk_tx_queue_clear()` already follows this pattern — the
-fix brings `sk_rx_queue` into symmetry with `sk_tx_queue`.
+The exact same fix was applied to: virtio-net (`dbcf24d153884`), bnxt_en
+(`1054aee823214`), bnx2x (`3c3def5fc667f`), qede (`18c602dee4726`). All
+converted from LRO to GRO_HW.
+- Record: Well-established fix pattern across multiple drivers.
 
-Record: [Symmetric with existing sk_tx_queue_clear pattern]
+---
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable
-- Verified: `sk_rx_queue_mapping` is in the `sk_dontcopy` region in v6.1
-  and v6.6
-- Verified: `sk_tx_queue_clear()` is called without corresponding
-  `sk_rx_queue_clear()` in v6.1 and v6.6
-- Verified: `sk_rx_queue_clear()` function exists in v6.1 and v6.6
-  headers
-- The bug has been present since the field was introduced (~v5.12)
-
-Record: [Bug exists in all active stable trees v6.1, v6.6. Fix will
-apply with minor adaptation for function name.]
+### Step 6.1: Code Existence
+The buggy `NETIF_F_LRO` code was introduced in v5.14 and exists in all
+active stable trees (5.15.y through 6.19.y).
+`NETIF_F_GRO_HW` was introduced in v4.16 and exists in all active stable
+trees.
 
 ### Step 6.2: Backport Complications
-The surrounding context in `sk_clone_lock()` at the exact fix location
-is identical in v6.1, v6.6, and v7.0. The only difference is the
-function name (`sk_clone_lock` vs `sk_clone`). The one-line addition of
-`sk_rx_queue_clear(newsk)` after `sk_tx_queue_clear(newsk)` will apply
-cleanly in all stable trees.
+The diff is a straightforward flag substitution. Should apply cleanly to
+most stable trees. Some context lines may differ (e.g., newer features
+added around the changed lines), but the core changes are against code
+that has been stable since 2021.
+- Record: Expected clean apply or minor fuzz for older trees.
 
-Record: [Clean apply expected with trivial function name context
-adjustment]
+### Step 6.3: Related Fixes in Stable
+No GVE LRO→GRO_HW fix exists in stable.
 
-### Step 6.3: Related Fixes
-The incomplete fix (03cfda4fa6ea) is already in stable trees. This new
-fix addresses the remaining gap.
+---
 
-Record: [No conflicting fixes; this completes an earlier incomplete fix]
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
 ### Step 7.1: Subsystem
-- **Subsystem**: `net/core` — core networking (socket infrastructure)
-- **Criticality**: CORE — affects every TCP connection on every Linux
-  system
-
-Record: [net/core, CORE criticality — affects all TCP users]
+- **Subsystem:** Network device driver
+  (drivers/net/ethernet/google/gve/)
+- **Criticality:** IMPORTANT — GVE is the virtual NIC for Google Cloud
+  VMs, used by a very large number of cloud workloads.
+- Record: Network driver, IMPORTANT criticality.
 
 ### Step 7.2: Activity
-The net subsystem is extremely active with frequent changes.
+220+ commits to GVE since v5.15. Very actively developed.
 
-Record: [Highly active subsystem]
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-Every system making TCP connections over loopback or veth interfaces
-(extremely common in containers, microservices, and testing).
-
-Record: [Universal impact — any TCP over loopback/veth triggers this]
+### Step 8.1: Who Is Affected
+All Google Cloud VM users running GVE DQO format with bridging, IP
+forwarding, OVS, or HSR configurations.
+- Record: GVE-driver-specific, but large user base in cloud.
 
 ### Step 8.2: Trigger Conditions
-- TCP connection over loopback or veth (no rx_queue recording)
-- Subsequent data packet arrives with recorded rx_queue (or BPF sets
-  queue_mapping)
-- Very common in containerized workloads and testing scenarios
-
-Record: [Common trigger — loopback TCP connections, container
-networking]
+- Triggered whenever IP forwarding is enabled OR device is bridged
+- Very common in cloud deployments (VPN gateways, container networking,
+  virtual routing)
+- Not a crash, but an unnecessary performance degradation
+- Record: Common trigger in cloud/container/forwarding scenarios.
 
 ### Step 8.3: Failure Mode
-- KMSAN uninit-value read — in production kernels without KMSAN this
-  means reading garbage data
-- The garbage value is compared against the real rx_queue, which can
-  cause incorrect `WRITE_ONCE` behavior (writing when it shouldn't or
-  not writing when it should)
-- Severity: **MEDIUM-HIGH** (undefined behavior from uninitialized
-  memory, potential incorrect queue mapping affecting network
-  performance, reproducible KMSAN warning)
-
-Record: [Uninitialized data read — undefined behavior, KMSAN warning,
-potential incorrect queue routing]
+- **Severity: MEDIUM** — performance degradation (hardware receive
+  offload unnecessarily disabled), not a crash or data corruption
+- No kernel panic, no data loss, no security issue
+- The hardware coalescing is silently disabled, reducing network
+  throughput
+- Record: Performance degradation. Severity MEDIUM.
 
 ### Step 8.4: Risk-Benefit
-- **Benefit**: HIGH — fixes uninitialized memory read in core TCP path,
-  affects containers and loopback
-- **Risk**: VERY LOW — 1 line addition, uses existing well-tested helper
-  function, symmetric with existing tx_queue initialization
-- **Ratio**: Excellent — very high benefit, negligible risk
+- **Benefit:** MEDIUM — fixes unnecessary performance degradation for
+  forwarding/bridging GVE users
+- **Risk:** VERY LOW — pure flag substitution, no logic changes, same
+  pattern as 4+ other drivers
+- **Ratio:** Favorable, but not critical
+- Record: Low risk, medium benefit.
 
-Record: [HIGH benefit, VERY LOW risk — excellent ratio]
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence Summary
 
 **FOR backporting:**
-- Fixes a real, reproducible KMSAN uninit-value bug with full stack
-  trace
-- Core TCP path — affects every system with loopback/veth TCP
-  connections
-- 1-line fix — absolute minimum change possible
-- Obviously correct — symmetric with existing `sk_tx_queue_clear()`
-- Reviewed by Eric Dumazet (net maintainer, author of the earlier
-  incomplete fix)
-- Merged by Jakub Kicinski (net co-maintainer)
-- `sk_rx_queue_clear()` exists in all active stable trees
-- The buggy code exists in all active stable trees (v6.1+)
-- Fixes a gap in an earlier fix that was already applied to stable
-  (03cfda4fa6ea)
-- Zero regression risk
+- Fixes a real, long-standing bug (incorrect feature flag since v5.14)
+- Very small, surgical, obviously correct change
+- Identical fix pattern successfully applied to 4+ other drivers
+  (virtio-net had Fixes: tag)
+- Fix from driver maintainers, reviewed by two developers, applied by
+  netdev maintainer
+- Zero regression risk — hardware behavior unchanged, only correct flag
+  used
+- Affects significant user base (Google Cloud)
+- Self-contained, no dependencies, should apply cleanly
 
 **AGAINST backporting:**
-- Function was renamed from `sk_clone_lock()` to `sk_clone()` — trivial
-  context adaptation needed
-- No explicit `Cc: stable` or `Fixes:` tag (expected, that's why it's
-  being reviewed)
+- Not fixing a crash, security issue, or data corruption
+- Impact is performance degradation, not a hard failure
+- Only affects specific configurations (bridging/forwarding)
+- No Reported-by, suggesting no one explicitly complained about this
+- Commit message frames it as correctness improvement, not urgent fix
+- Part of a series (patch 2), though appears self-contained
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — trivial 1-line init, reviewed
-   by subsystem authority
-2. Fixes a real bug? **YES** — KMSAN uninit-value with full reproduction
-   and stack trace
-3. Important issue? **YES** — uninitialized memory read in core TCP path
-4. Small and contained? **YES** — 1 line, 1 file
-5. No new features or APIs? **YES** — just adds initialization
-6. Can apply to stable? **YES** — with trivial function name context
-   adjustment
+1. Obviously correct and tested? **YES** — pure flag substitution,
+   reviewed by 2, well-established pattern
+2. Fixes a real bug? **YES** — incorrect feature advertisement causes
+   wrong kernel behavior
+3. Important issue? **BORDERLINE** — not crash/security, but real
+   performance impact in common configs
+4. Small and contained? **YES** — ~10 lines in 2 files, single driver
+5. No new features or APIs? **YES** — corrects existing feature flag
+6. Can apply to stable? **YES** — clean change, NETIF_F_GRO_HW exists in
+   all stable trees
 
 ### Step 9.3: Exception Categories
-Not an exception case — this is a straightforward bug fix that meets all
-standard criteria.
+Does not fall into automatic exception categories.
+
+### Step 9.4: Decision
+This is borderline. It IS a correctness bug fix (same class as the
+Fixes:-tagged virtio-net commit), and it IS small and obviously correct.
+However, the impact is performance degradation rather than
+crash/corruption/security. For cloud users running GVE with
+forwarding/bridging (a common scenario), this is a meaningful fix. The
+risk is essentially zero.
+
+Given the low risk and the fact that this fixes demonstrably incorrect
+kernel behavior (unnecessarily disabling hardware offload), and that the
+identical pattern was treated as a bug fix for virtio-net with a Fixes:
+tag, this leans YES.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Eric Dumazet, Link to patch
-  submission, no Fixes/Cc:stable (expected)
-- [Phase 2] Diff analysis: +1 line adding `sk_rx_queue_clear(newsk)`
-  after `sk_tx_queue_clear(newsk)` in `sk_clone()`
-- [Phase 3] git blame: `sk_tx_queue_clear` line from commit
-  bbc20b70424ae (2021), sk_rx_queue_mapping introduced in 4e1beecc3b586
-  (~v5.12)
-- [Phase 3] git show 03cfda4fa6ea: confirmed earlier incomplete fix
-  exists and is in v6.1 and v6.6
-- [Phase 3] git merge-base: 342159ee394d (root cause) in v6.1 and v6.6;
-  03cfda4fa6ea (incomplete fix) in v6.1 and v6.6
-- [Phase 3] git show 151b98d10ef7c: confirmed function rename from
-  sk_clone_lock to sk_clone is NOT in stable
-- [Phase 4] b4 dig and lore search: lore blocked by anti-scraping;
-  confirmed Link and author via commit metadata
-- [Phase 5] sk_clone/sk_clone_lock called from inet_csk_clone_lock for
-  every passive TCP connection — hot path
-- [Phase 5] Code path verified: __sk_rx_queue_set with force_set=false
-  reads sk_rx_queue_mapping at line 2062 — confirmed uninit read
-- [Phase 6] Confirmed sk_rx_queue_clear() exists in v6.1 and v6.6
-  include/net/sock.h
-- [Phase 6] Confirmed identical surrounding context (sk_tx_queue_clear
-  -> RCU_INIT_POINTER) in v6.1 and v6.6
-- [Phase 6] Confirmed sk_rx_queue_mapping is in sk_dontcopy region in
-  v6.1 and v6.6
-- [Phase 8] Trigger: TCP over loopback/veth (extremely common), severity
-  MEDIUM-HIGH (uninit memory read)
+- [Phase 1] Parsed tags: Reviewed-by from two GVE developers, SOB from
+  netdev maintainer, Link to patch msgid
+- [Phase 2] Diff analysis: ~10 lines changed across 2 files, pure
+  NETIF_F_LRO → NETIF_F_GRO_HW substitution in 4 functions
+- [Phase 3] git blame: buggy code introduced in commits 5e8c5adf95f8a5
+  and 1f6228e459f8bc (v5.14, 2021-06-24), present in all stable trees
+- [Phase 3] git merge-base: confirmed buggy code is in v5.14 and v5.15
+  trees
+- [Phase 3] git log --author: Ankit Garg is a regular GVE contributor
+  (8+ commits)
+- [Phase 4] b4 dig: could not find the commit directly (not yet in this
+  tree)
+- [Phase 4] lore: inaccessible due to bot protection
+- [Phase 5] Verified NETIF_F_UPPER_DISABLES includes NETIF_F_LRO but not
+  NETIF_F_GRO_HW (netdev_features.h:236)
+- [Phase 5] Verified dev_disable_lro() called from br_if.c, devinet.c,
+  addrconf.c, OVS, HSR
+- [Phase 5] Confirmed netif_disable_lro() only clears NETIF_F_LRO,
+  dev_disable_gro_hw() separately handles NETIF_F_GRO_HW
+- [Phase 5] Verified identical fix pattern in virtio-net
+  (dbcf24d153884), bnxt_en, bnx2x, qede
+- [Phase 6] NETIF_F_GRO_HW introduced in v4.16 (fb1f5f79ae963), exists
+  in all stable trees
+- [Phase 6] Confirmed the change is self-contained with no dependencies
+- [Phase 8] Failure mode: performance degradation (hardware offload
+  unnecessarily disabled), severity MEDIUM
+- UNVERIFIED: Whether anyone reported this as a problem (no Reported-by
+  tag, could not access lore)
+- UNVERIFIED: Whether other patches in the series are needed (msgid
+  suggests patch 2, but change appears standalone)
 
 **YES**
 
- net/core/sock.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/google/gve/gve_adminq.c |  6 +++---
+ drivers/net/ethernet/google/gve/gve_main.c   | 15 ++++++++-------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 5976100a9d55a..a12c5eca88f2c 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2583,6 +2583,7 @@ struct sock *sk_clone(const struct sock *sk, const gfp_t priority,
+diff --git a/drivers/net/ethernet/google/gve/gve_adminq.c b/drivers/net/ethernet/google/gve/gve_adminq.c
+index b72cc0fa2ba2b..873672f680e3a 100644
+--- a/drivers/net/ethernet/google/gve/gve_adminq.c
++++ b/drivers/net/ethernet/google/gve/gve_adminq.c
+@@ -791,7 +791,7 @@ static void gve_adminq_get_create_rx_queue_cmd(struct gve_priv *priv,
+ 		cmd->create_rx_queue.rx_buff_ring_size =
+ 			cpu_to_be16(priv->rx_desc_cnt);
+ 		cmd->create_rx_queue.enable_rsc =
+-			!!(priv->dev->features & NETIF_F_LRO);
++			!!(priv->dev->features & NETIF_F_GRO_HW);
+ 		if (priv->header_split_enabled)
+ 			cmd->create_rx_queue.header_buffer_size =
+ 				cpu_to_be16(priv->header_buf_size);
+@@ -1127,9 +1127,9 @@ int gve_adminq_describe_device(struct gve_priv *priv)
  
- 	sk_set_socket(newsk, NULL);
- 	sk_tx_queue_clear(newsk);
-+	sk_rx_queue_clear(newsk);
- 	RCU_INIT_POINTER(newsk->sk_wq, NULL);
+ 	gve_set_default_rss_sizes(priv);
  
- 	if (newsk->sk_prot->sockets_allocated)
+-	/* DQO supports LRO. */
++	/* DQO supports HW-GRO. */
+ 	if (!gve_is_gqi(priv))
+-		priv->dev->hw_features |= NETIF_F_LRO;
++		priv->dev->hw_features |= NETIF_F_GRO_HW;
+ 
+ 	priv->max_registered_pages =
+ 				be64_to_cpu(descriptor->max_registered_pages);
+diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
+index 9eb4b3614c4f5..9cae4fc88a2ff 100644
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -1717,9 +1717,9 @@ static int gve_verify_xdp_configuration(struct net_device *dev,
+ 	struct gve_priv *priv = netdev_priv(dev);
+ 	u16 max_xdp_mtu;
+ 
+-	if (dev->features & NETIF_F_LRO) {
++	if (dev->features & NETIF_F_GRO_HW) {
+ 		NL_SET_ERR_MSG_MOD(extack,
+-				   "XDP is not supported when LRO is on.");
++				   "XDP is not supported when HW-GRO is on.");
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+@@ -2136,12 +2136,13 @@ static int gve_set_features(struct net_device *netdev,
+ 
+ 	gve_get_curr_alloc_cfgs(priv, &tx_alloc_cfg, &rx_alloc_cfg);
+ 
+-	if ((netdev->features & NETIF_F_LRO) != (features & NETIF_F_LRO)) {
+-		netdev->features ^= NETIF_F_LRO;
+-		if (priv->xdp_prog && (netdev->features & NETIF_F_LRO)) {
++	if ((netdev->features & NETIF_F_GRO_HW) !=
++	    (features & NETIF_F_GRO_HW)) {
++		netdev->features ^= NETIF_F_GRO_HW;
++		if (priv->xdp_prog && (netdev->features & NETIF_F_GRO_HW)) {
+ 			netdev_warn(netdev,
+-				    "XDP is not supported when LRO is on.\n");
+-			err =  -EOPNOTSUPP;
++				    "HW-GRO is not supported when XDP is on.");
++			err = -EOPNOTSUPP;
+ 			goto revert_features;
+ 		}
+ 		if (netif_running(netdev)) {
 -- 
 2.53.0
 
