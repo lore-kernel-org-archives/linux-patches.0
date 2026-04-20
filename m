@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5796E244661;
-	Mon, 20 Apr 2026 15:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D460D244661;
+	Mon, 20 Apr 2026 15:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700315; cv=none; b=A5metzZk5GLViR72f6WJYunSXe0RPf4DUjG2ajQJhHnniVkzO3s1jbhYwyqOtjX3JWj7YkrL6QOXaAOJGQdQklRbzbh/gfvRsKecSRkJLV3GzljY66z9dVzcnq/LJwXfuhXej10PRT9Cfvuhi60pDmoZUPsU/ygoE+OTHI/itNc=
+	t=1776700317; cv=none; b=h8oqVBLr1nHBhkqKj+l4ZCMOFPsB24KoV5zmlZp91mUWVrGkIo2Fb6n8GId6sxrPnsk0oo7q46/F5QSQlnOa3pguaHDz+tqj3oJazbn0e9HuCReUuJ7PYble+W2nzvW973GsF6B+XVLOPPhNw/cqDuhzHMioF8TkxL/MMROA2bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700315; c=relaxed/simple;
-	bh=uECNalsUlnGi5nPYBYwlUE1oGX+AIlrkC8mmezoYvug=;
+	s=arc-20240116; t=1776700317; c=relaxed/simple;
+	bh=HtcDEXlrwDkhswwnjVfOBx4gcQzr0FTi1i1YxYCbLSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8m0vDwB07oW5PLjNd9FmvXfN1rqkwBsq6rM2tDOx1MsqMhIX/wtsOyb9okIFQrFfsezmdROocAQv0b+yDHofMpD47bMZsa9zXqBwSo8p1X6mW9ESuX9j3HKBmJCJUO+tS072oVEnYZ3y66VUwOFr7lySgkgU74EdcjM2HzYSzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svDnFk6h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jhu3nFF4HfOgJ4IEZcRFUpxP2Jo13NYOscbRDbRb4vqz4JHgsm82IQ717Mcnpsf/dJUsZb66e5yipI9BMNS8DrjPz3gn+Tsbx8pKCqS+O+UTd/lXxjzIaDIqyusVR6MjwKBzx4Z5glbhqOpMDIGw3NZSJ8SGoo6oXOAoReflwFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qaa6lP4C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svDnFk6h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81F7C19425;
-	Mon, 20 Apr 2026 15:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qaa6lP4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF6CC19425;
+	Mon, 20 Apr 2026 15:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700315;
-	bh=uECNalsUlnGi5nPYBYwlUE1oGX+AIlrkC8mmezoYvug=;
+	s=korg; t=1776700317;
+	bh=HtcDEXlrwDkhswwnjVfOBx4gcQzr0FTi1i1YxYCbLSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=svDnFk6hgmY0aC+TXkGaW8GdAvVdCeHD4tsppW2sOakt/4OQzjqLAuzRDPXk+30Ys
-	 cryB9OQQMLfkhTZLM8vZY9ZqFiXRgr9cF/raKKKM9o1ejHwuRlJVP009cbW8olvvks
-	 gruaWr7u+rVwXqm0I5fzkSGIbQ+O2WS86o7xzTKM=
+	b=Qaa6lP4CdaOKtzYuLljTae961iBud0MXDEckMxWQNIV5nTagZVVWBOKGiIzmmVv82
+	 OwVEGwgJ0vBHg/D+nrxLTntqBMZwOm8qtbuVaw07lwfywBrDWO54rzHFZxDpKF791S
+	 ViLKVYDHJOaKIE9DaDNdk3oJLsZ3QEClSh5a5jCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Justin Iurman <justin.iurman@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 124/220] net: mdio: realtek-rtl9300: use scoped device_for_each_child_node loop
-Date: Mon, 20 Apr 2026 17:41:05 +0200
-Message-ID: <20260420153938.493012471@linuxfoundation.org>
+Subject: [PATCH 6.19 125/220] net: ioam6: fix OOB and missing lock
+Date: Mon, 20 Apr 2026 17:41:06 +0200
+Message-ID: <20260420153938.528393651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,44 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-[ Upstream commit c09ea768bdb975e828f8e17293c397c3d14ad85d ]
+[ Upstream commit b30b1675aa2bcf0491fd3830b051df4e08a7c8ca ]
 
-Switch to device_for_each_child_node_scoped() to auto-release fwnode
-references on early exit.
+When trace->type.bit6 is set:
 
-Fixes: 24e31e474769 ("net: mdio: Add RTL9300 MDIO driver")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260405-rtl9300-v1-1-08e4499cf944@gmail.com
+    if (trace->type.bit6) {
+        ...
+        queue = skb_get_tx_queue(dev, skb);
+        qdisc = rcu_dereference(queue->qdisc);
+
+This code can lead to an out-of-bounds access of the dev->_tx[] array
+when is_input is true. In such a case, the packet is on the RX path and
+skb->queue_mapping contains the RX queue index of the ingress device. If
+the ingress device has more RX queues than the egress device (dev) has
+TX queues, skb_get_queue_mapping(skb) will exceed dev->num_tx_queues.
+Add a check to avoid this situation since skb_get_tx_queue() does not
+clamp the index. This issue has also revealed that per queue visibility
+cannot be accurate and will be replaced later as a new feature.
+
+While at it, add missing lock around qdisc_qstats_qlen_backlog(). The
+function __ioam6_fill_trace_data() is called from both softirq and
+process contexts, hence the use of spin_lock_bh() here.
+
+Fixes: b63c5478e9cb ("ipv6: ioam: Support for Queue depth data field")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20260403214418.2233266-2-kuba@kernel.org/
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260404134137.24553-1-justin.iurman@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-realtek-rtl9300.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ipv6/ioam6.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/mdio/mdio-realtek-rtl9300.c b/drivers/net/mdio/mdio-realtek-rtl9300.c
-index 405a07075dd11..8d5fb014ca06c 100644
---- a/drivers/net/mdio/mdio-realtek-rtl9300.c
-+++ b/drivers/net/mdio/mdio-realtek-rtl9300.c
-@@ -466,7 +466,6 @@ static int rtl9300_mdiobus_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct rtl9300_mdio_priv *priv;
--	struct fwnode_handle *child;
- 	int err;
+diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
+index 12350e1e18bde..b91de51ffa9ea 100644
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -803,12 +803,16 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
+ 		struct Qdisc *qdisc;
+ 		__u32 qlen, backlog;
  
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-@@ -487,7 +486,7 @@ static int rtl9300_mdiobus_probe(struct platform_device *pdev)
- 	if (err)
- 		return err;
+-		if (dev->flags & IFF_LOOPBACK) {
++		if (dev->flags & IFF_LOOPBACK ||
++		    skb_get_queue_mapping(skb) >= dev->num_tx_queues) {
+ 			*(__be32 *)data = cpu_to_be32(IOAM6_U32_UNAVAILABLE);
+ 		} else {
+ 			queue = skb_get_tx_queue(dev, skb);
+ 			qdisc = rcu_dereference(queue->qdisc);
++
++			spin_lock_bh(qdisc_lock(qdisc));
+ 			qdisc_qstats_qlen_backlog(qdisc, &qlen, &backlog);
++			spin_unlock_bh(qdisc_lock(qdisc));
  
--	device_for_each_child_node(dev, child) {
-+	device_for_each_child_node_scoped(dev, child) {
- 		err = rtl9300_mdiobus_probe_one(dev, priv, child);
- 		if (err)
- 			return err;
+ 			*(__be32 *)data = cpu_to_be32(backlog);
+ 		}
 -- 
 2.53.0
 
