@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E916336896;
-	Mon, 20 Apr 2026 15:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C917129D268;
+	Mon, 20 Apr 2026 15:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699901; cv=none; b=kBHyg6gMtOLb8SWHzmMHlNh3TRvnM8/GKeV/PxSX+YVxT8LFBKlqFJ0/hxmA8qjee+PVOlpDjASBQ4lKI83HDUvpRcSMMfmpH4XLK4LTRi5J7gBzjU6lxQ2pEBClQx7UNj6Z5unWm28KXK8bUBqUuzSojHKyId1ou6YWRPNRg3o=
+	t=1776699903; cv=none; b=Cn1Cmcum3w7SHrkip/oF/ubIM2ZJIVlioUX7IuPcU1OlhQeWRVj23Np/U7V+N8k8U/ZVEJEb1eSmAa/y+fGJ3bn6BgId+LIzj9ZlP1gX7MN6Nza/o32RsKsc+cK1LMARG2PKfNBgQfBJsMDkllj0iwW8nhaoFeP4qn/UuLoDk54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699901; c=relaxed/simple;
-	bh=ECnoCFSMXRcHIdlsSL3WYxJRTeKQxr4FfLliShw0NzA=;
+	s=arc-20240116; t=1776699903; c=relaxed/simple;
+	bh=vS2YsL8S5R0a7mi4Yu0aKOM54jDaXAGdf0EKe3uw6rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GxE1ozhUE994b/7ttT+2yyTLW81ye+v19/DdQ+41HSzkVrvIiGfRWixssWCLEBgmCfd7bAGmC16cIHbFqn0sPAqLLnMdFT/YjdYStSyN9q1bbPHkdttZYbi782RhYCbXtRqBEH1D2GtfIghIdXj25ZeiYzrGjPJxksov6xr1LNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIt8Axkx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l9BzoMk03mq1c6m2nqX0dtC4Pnmjh61P2exLKg9zYBWL7Khj+2c/vSHa+3TXgUs2/6EwvG+utA7/WdSYCq+2j7qF5xHP8djUzGjibGp+bbfrpQ5nfQf0AByWHQTd7bVQhL5pFktitIOea2HTWAnYDVqQ2JzzmdAgehnfm+/BiJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOgFPFz1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIt8Axkx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F01C19425;
-	Mon, 20 Apr 2026 15:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOgFPFz1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583C7C19425;
+	Mon, 20 Apr 2026 15:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699901;
-	bh=ECnoCFSMXRcHIdlsSL3WYxJRTeKQxr4FfLliShw0NzA=;
+	s=korg; t=1776699903;
+	bh=vS2YsL8S5R0a7mi4Yu0aKOM54jDaXAGdf0EKe3uw6rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIt8AxkxAIwG2N5N3phPuIPNXmjXzOXf7DsnAbW+k+hAE1bLnx6hoI/OTa/qnXbex
-	 q7iUxNbZNzk6Q8X0u3kNO6nsHRbsiXBQ/vt1/i7XuLmesSgrA2OkXeMmDJthN4D9HZ
-	 YAbOq+jsy9jgr1uH5jJwz7+iY19daFQ5mGXqs4Cs=
+	b=zOgFPFz1h+4RCrgFYMoluRolMti7NF1DQiJmcyJUjI1OLRtXedCOZzAZD28g9Ad/B
+	 DmZjyNymcqPbEgCLyghdYbSdsY0TbELJaQHcOewuepd8qBcH9UmmHMOZpLNbcl9m+z
+	 kLiw2woYrRwPv4HLZvpdhs94nentwMPOUc0GLE6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 7.0 42/76] vfio/xe: Reorganize the init to decouple migration from reset
-Date: Mon, 20 Apr 2026 17:41:53 +0200
-Message-ID: <20260420153912.358168480@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 7.0 43/76] arm64: mm: Handle invalid large leaf mappings correctly
+Date: Mon, 20 Apr 2026 17:41:54 +0200
+Message-ID: <20260420153912.393742438@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -45,175 +44,406 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Winiarski <michal.winiarski@intel.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 1b81ed612e12ea9df8c5cb6f0ddd4419fd0b8ac8 upstream.
+commit 15bfba1ad77fad8e45a37aae54b3c813b33fe27c upstream.
 
-Attempting to issue reset on VF devices that don't support migration
-leads to the following:
+It has been possible for a long time to mark ptes in the linear map as
+invalid. This is done for secretmem, kfence, realm dma memory un/share,
+and others, by simply clearing the PTE_VALID bit. But until commit
+a166563e7ec37 ("arm64: mm: support large block mapping when
+rodata=full") large leaf mappings were never made invalid in this way.
 
-  BUG: unable to handle page fault for address: 00000000000011f8
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: Oops: 0000 [#1] SMP NOPTI
-  CPU: 2 UID: 0 PID: 7443 Comm: xe_sriov_flr Tainted: G S   U              7.0.0-rc1-lgci-xe-xe-4588-cec43d5c2696af219-nodebug+ #1 PREEMPT(lazy)
-  Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
-  Hardware name: Intel Corporation Alder Lake Client Platform/AlderLake-P DDR4 RVP, BIOS RPLPFWI1.R00.4035.A00.2301200723 01/20/2023
-  RIP: 0010:xe_sriov_vfio_wait_flr_done+0xc/0x80 [xe]
-  Code: ff c3 cc cc cc cc 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 55 48 89 e5 41 54 53 <83> bf f8 11 00 00 02 75 61 41 89 f4 85 f6 74 52 48 8b 47 08 48 89
-  RSP: 0018:ffffc9000f7c39b8 EFLAGS: 00010202
-  RAX: ffffffffa04d8660 RBX: ffff88813e3e4000 RCX: 0000000000000000
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-  RBP: ffffc9000f7c39c8 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000000 R12: ffff888101a48800
-  R13: ffff88813e3e4150 R14: ffff888130d0d008 R15: ffff88813e3e40d0
-  FS:  00007877d3d0d940(0000) GS:ffff88890b6d3000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00000000000011f8 CR3: 000000015a762000 CR4: 0000000000f52ef0
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   xe_vfio_pci_reset_done+0x49/0x120 [xe_vfio_pci]
-   pci_dev_restore+0x3b/0x80
-   pci_reset_function+0x109/0x140
-   reset_store+0x5c/0xb0
-   dev_attr_store+0x17/0x40
-   sysfs_kf_write+0x72/0x90
-   kernfs_fop_write_iter+0x161/0x1f0
-   vfs_write+0x261/0x440
-   ksys_write+0x69/0xf0
-   __x64_sys_write+0x19/0x30
-   x64_sys_call+0x259/0x26e0
-   do_syscall_64+0xcb/0x1500
-   ? __fput+0x1a2/0x2d0
-   ? fput_close_sync+0x3d/0xa0
-   ? __x64_sys_close+0x3e/0x90
-   ? x64_sys_call+0x1b7c/0x26e0
-   ? do_syscall_64+0x109/0x1500
-   ? __task_pid_nr_ns+0x68/0x100
-   ? __do_sys_getpid+0x1d/0x30
-   ? x64_sys_call+0x10b5/0x26e0
-   ? do_syscall_64+0x109/0x1500
-   ? putname+0x41/0x90
-   ? do_faccessat+0x1e8/0x300
-   ? __x64_sys_access+0x1c/0x30
-   ? x64_sys_call+0x1822/0x26e0
-   ? do_syscall_64+0x109/0x1500
-   ? tick_program_event+0x43/0xa0
-   ? hrtimer_interrupt+0x126/0x260
-   ? irqentry_exit+0xb2/0x710
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  RIP: 0033:0x7877d5f1c5a4
-  Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d a5 ea 0e 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 55 48 89 e5 48 83 ec 20 48 89
-  RSP: 002b:00007fff48e5f908 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-  RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007877d5f1c5a4
-  RDX: 0000000000000001 RSI: 00007877d621b0c9 RDI: 0000000000000009
-  RBP: 0000000000000001 R08: 00005fb49113b010 R09: 0000000000000007
-  R10: 0000000000000000 R11: 0000000000000202 R12: 00007877d621b0c9
-  R13: 0000000000000009 R14: 00007fff48e5fac0 R15: 00007fff48e5fac0
-   </TASK>
+It turns out various parts of the code base are not equipped to handle
+invalid large leaf mappings (in the way they are currently encoded) and
+I've observed a kernel panic while booting a realm guest on a
+BBML2_NOABORT system as a result:
 
-This is caused by the fact that some of the xe_vfio_pci_core_device
-members needed for handling reset are only initialized as part of
-migration init.
+[   15.432706] software IO TLB: Memory encryption is active and system is using DMA bounce buffers
+[   15.476896] Unable to handle kernel paging request at virtual address ffff000019600000
+[   15.513762] Mem abort info:
+[   15.527245]   ESR = 0x0000000096000046
+[   15.548553]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   15.572146]   SET = 0, FnV = 0
+[   15.592141]   EA = 0, S1PTW = 0
+[   15.612694]   FSC = 0x06: level 2 translation fault
+[   15.640644] Data abort info:
+[   15.661983]   ISV = 0, ISS = 0x00000046, ISS2 = 0x00000000
+[   15.694875]   CM = 0, WnR = 1, TnD = 0, TagAccess = 0
+[   15.723740]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   15.755776] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000081f3f000
+[   15.800410] [ffff000019600000] pgd=0000000000000000, p4d=180000009ffff403, pud=180000009fffe403, pmd=00e8000199600704
+[   15.855046] Internal error: Oops: 0000000096000046 [#1]  SMP
+[   15.886394] Modules linked in:
+[   15.900029] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.0.0-rc4-dirty #4 PREEMPT
+[   15.935258] Hardware name: linux,dummy-virt (DT)
+[   15.955612] pstate: 21400005 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[   15.986009] pc : __pi_memcpy_generic+0x128/0x22c
+[   16.006163] lr : swiotlb_bounce+0xf4/0x158
+[   16.024145] sp : ffff80008000b8f0
+[   16.038896] x29: ffff80008000b8f0 x28: 0000000000000000 x27: 0000000000000000
+[   16.069953] x26: ffffb3976d261ba8 x25: 0000000000000000 x24: ffff000019600000
+[   16.100876] x23: 0000000000000001 x22: ffff0000043430d0 x21: 0000000000007ff0
+[   16.131946] x20: 0000000084570010 x19: 0000000000000000 x18: ffff00001ffe3fcc
+[   16.163073] x17: 0000000000000000 x16: 00000000003fffff x15: 646e612065766974
+[   16.194131] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+[   16.225059] x11: 0000000000000000 x10: 0000000000000010 x9 : 0000000000000018
+[   16.256113] x8 : 0000000000000018 x7 : 0000000000000000 x6 : 0000000000000000
+[   16.287203] x5 : ffff000019607ff0 x4 : ffff000004578000 x3 : ffff000019600000
+[   16.318145] x2 : 0000000000007ff0 x1 : ffff000004570010 x0 : ffff000019600000
+[   16.349071] Call trace:
+[   16.360143]  __pi_memcpy_generic+0x128/0x22c (P)
+[   16.380310]  swiotlb_tbl_map_single+0x154/0x2b4
+[   16.400282]  swiotlb_map+0x5c/0x228
+[   16.415984]  dma_map_phys+0x244/0x2b8
+[   16.432199]  dma_map_page_attrs+0x44/0x58
+[   16.449782]  virtqueue_map_page_attrs+0x38/0x44
+[   16.469596]  virtqueue_map_single_attrs+0xc0/0x130
+[   16.490509]  virtnet_rq_alloc.isra.0+0xa4/0x1fc
+[   16.510355]  try_fill_recv+0x2a4/0x584
+[   16.526989]  virtnet_open+0xd4/0x238
+[   16.542775]  __dev_open+0x110/0x24c
+[   16.558280]  __dev_change_flags+0x194/0x20c
+[   16.576879]  netif_change_flags+0x24/0x6c
+[   16.594489]  dev_change_flags+0x48/0x7c
+[   16.611462]  ip_auto_config+0x258/0x1114
+[   16.628727]  do_one_initcall+0x80/0x1c8
+[   16.645590]  kernel_init_freeable+0x208/0x2f0
+[   16.664917]  kernel_init+0x24/0x1e0
+[   16.680295]  ret_from_fork+0x10/0x20
+[   16.696369] Code: 927cec03 cb0e0021 8b0e0042 a9411c26 (a900340c)
+[   16.723106] ---[ end trace 0000000000000000 ]---
+[   16.752866] Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+[   16.792556] Kernel Offset: 0x3396ea200000 from 0xffff800080000000
+[   16.818966] PHYS_OFFSET: 0xfff1000080000000
+[   16.837237] CPU features: 0x0000000,00060005,13e38581,957e772f
+[   16.862904] Memory Limit: none
+[   16.876526] ---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b ]---
 
-Fix the problem by reorganizing the code to decouple VF init from
-migration init.
+This panic occurs because the swiotlb memory was previously shared to
+the host (__set_memory_enc_dec()), which involves transitioning the
+(large) leaf mappings to invalid, sharing to the host, then marking the
+mappings valid again. But pageattr_p[mu]d_entry() would only update the
+entry if it is a section mapping, since otherwise it concluded it must
+be a table entry so shouldn't be modified. But p[mu]d_sect() only
+returns true if the entry is valid. So the result was that the large
+leaf entry was made invalid in the first pass then ignored in the second
+pass. It remains invalid until the above code tries to access it and
+blows up.
 
-Fixes: 1f5556ec8b9ef ("vfio/xe: Add device specific vfio_pci driver variant for Intel graphics")
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7352
+The simple fix would be to update pageattr_pmd_entry() to use
+!pmd_table() instead of pmd_sect(). That would solve this problem.
+
+But the ptdump code also suffers from a similar issue. It checks
+pmd_leaf() and doesn't call into the arch-specific note_page() machinery
+if it returns false. As a result of this, ptdump wasn't even able to
+show the invalid large leaf mappings; it looked like they were valid
+which made this super fun to debug. the ptdump code is core-mm and
+pmd_table() is arm64-specific so we can't use the same trick to solve
+that.
+
+But we already support the concept of "present-invalid" for user space
+entries. And even better, pmd_leaf() will return true for a leaf mapping
+that is marked present-invalid. So let's just use that encoding for
+present-invalid kernel mappings too. Then we can use pmd_leaf() where we
+previously used pmd_sect() and everything is magically fixed.
+
+Additionally, from inspection kernel_page_present() was broken in a
+similar way, so I'm also updating that to use pmd_leaf().
+
+The transitional page tables component was also similarly broken; it
+creates a copy of the kernel page tables, making RO leaf mappings RW in
+the process. It also makes invalid (but-not-none) pte mappings valid.
+But it was not doing this for large leaf mappings. This could have
+resulted in crashes at kexec- or hibernate-time. This code is fixed to
+flip "present-invalid" mappings back to "present-valid" at all levels.
+
+Finally, I have hardened split_pmd()/split_pud() so that if it is passed
+a "present-invalid" leaf, it will maintain that property in the split
+leaves, since I wasn't able to convince myself that it would only ever
+be called for "present-valid" leaves.
+
+Fixes: a166563e7ec3 ("arm64: mm: support large block mapping when rodata=full")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20260410224948.900550-1-michal.winiarski@intel.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/xe/main.c |   43 +++++++++++++++++++++++++------------------
- 1 file changed, 25 insertions(+), 18 deletions(-)
+ arch/arm64/include/asm/pgtable-prot.h |    2 +
+ arch/arm64/include/asm/pgtable.h      |    9 ++++--
+ arch/arm64/mm/mmu.c                   |    4 ++
+ arch/arm64/mm/pageattr.c              |   50 +++++++++++++++++++---------------
+ arch/arm64/mm/trans_pgd.c             |   42 ++++------------------------
+ 5 files changed, 48 insertions(+), 59 deletions(-)
 
---- a/drivers/vfio/pci/xe/main.c
-+++ b/drivers/vfio/pci/xe/main.c
-@@ -454,39 +454,46 @@ static const struct vfio_migration_ops x
- static void xe_vfio_pci_migration_init(struct xe_vfio_pci_core_device *xe_vdev)
+--- a/arch/arm64/include/asm/pgtable-prot.h
++++ b/arch/arm64/include/asm/pgtable-prot.h
+@@ -25,6 +25,8 @@
+  */
+ #define PTE_PRESENT_INVALID	(PTE_NG)		 /* only when !PTE_VALID */
+ 
++#define PTE_PRESENT_VALID_KERNEL (PTE_VALID | PTE_MAYBE_NG)
++
+ #ifdef CONFIG_HAVE_ARCH_USERFAULTFD_WP
+ #define PTE_UFFD_WP		(_AT(pteval_t, 1) << 58) /* uffd-wp tracking */
+ #define PTE_SWP_UFFD_WP		(_AT(pteval_t, 1) << 3)	 /* only for swp ptes */
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -322,9 +322,11 @@ static inline pte_t pte_mknoncont(pte_t
+ 	return clear_pte_bit(pte, __pgprot(PTE_CONT));
+ }
+ 
+-static inline pte_t pte_mkvalid(pte_t pte)
++static inline pte_t pte_mkvalid_k(pte_t pte)
  {
- 	struct vfio_device *core_vdev = &xe_vdev->core_device.vdev;
--	struct pci_dev *pdev = to_pci_dev(core_vdev->dev);
--	struct xe_device *xe = xe_sriov_vfio_get_pf(pdev);
+-	return set_pte_bit(pte, __pgprot(PTE_VALID));
++	pte = clear_pte_bit(pte, __pgprot(PTE_PRESENT_INVALID));
++	pte = set_pte_bit(pte, __pgprot(PTE_PRESENT_VALID_KERNEL));
++	return pte;
+ }
  
--	if (!xe)
--		return;
--	if (!xe_sriov_vfio_migration_supported(xe))
-+	if (!xe_sriov_vfio_migration_supported(xe_vdev->xe))
- 		return;
+ static inline pte_t pte_mkinvalid(pte_t pte)
+@@ -594,6 +596,7 @@ static inline int pmd_protnone(pmd_t pmd
+ #define pmd_mkclean(pmd)	pte_pmd(pte_mkclean(pmd_pte(pmd)))
+ #define pmd_mkdirty(pmd)	pte_pmd(pte_mkdirty(pmd_pte(pmd)))
+ #define pmd_mkyoung(pmd)	pte_pmd(pte_mkyoung(pmd_pte(pmd)))
++#define pmd_mkvalid_k(pmd)	pte_pmd(pte_mkvalid_k(pmd_pte(pmd)))
+ #define pmd_mkinvalid(pmd)	pte_pmd(pte_mkinvalid(pmd_pte(pmd)))
+ #ifdef CONFIG_HAVE_ARCH_USERFAULTFD_WP
+ #define pmd_uffd_wp(pmd)	pte_uffd_wp(pmd_pte(pmd))
+@@ -635,6 +638,8 @@ static inline pmd_t pmd_mkspecial(pmd_t
  
--	mutex_init(&xe_vdev->state_mutex);
--	spin_lock_init(&xe_vdev->reset_lock);
+ #define pud_young(pud)		pte_young(pud_pte(pud))
+ #define pud_mkyoung(pud)	pte_pud(pte_mkyoung(pud_pte(pud)))
++#define pud_mkwrite_novma(pud)	pte_pud(pte_mkwrite_novma(pud_pte(pud)))
++#define pud_mkvalid_k(pud)	pte_pud(pte_mkvalid_k(pud_pte(pud)))
+ #define pud_write(pud)		pte_write(pud_pte(pud))
+ 
+ static inline pud_t pud_mkhuge(pud_t pud)
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -602,6 +602,8 @@ static int split_pmd(pmd_t *pmdp, pmd_t
+ 		tableprot |= PMD_TABLE_PXN;
+ 
+ 	prot = __pgprot((pgprot_val(prot) & ~PTE_TYPE_MASK) | PTE_TYPE_PAGE);
++	if (!pmd_valid(pmd))
++		prot = pte_pgprot(pte_mkinvalid(pfn_pte(0, prot)));
+ 	prot = __pgprot(pgprot_val(prot) & ~PTE_CONT);
+ 	if (to_cont)
+ 		prot = __pgprot(pgprot_val(prot) | PTE_CONT);
+@@ -647,6 +649,8 @@ static int split_pud(pud_t *pudp, pud_t
+ 		tableprot |= PUD_TABLE_PXN;
+ 
+ 	prot = __pgprot((pgprot_val(prot) & ~PMD_TYPE_MASK) | PMD_TYPE_SECT);
++	if (!pud_valid(pud))
++		prot = pmd_pgprot(pmd_mkinvalid(pfn_pmd(0, prot)));
+ 	prot = __pgprot(pgprot_val(prot) & ~PTE_CONT);
+ 	if (to_cont)
+ 		prot = __pgprot(pgprot_val(prot) | PTE_CONT);
+--- a/arch/arm64/mm/pageattr.c
++++ b/arch/arm64/mm/pageattr.c
+@@ -25,6 +25,11 @@ static ptdesc_t set_pageattr_masks(ptdes
+ {
+ 	struct page_change_data *masks = walk->private;
+ 
++	/*
++	 * Some users clear and set bits which alias each other (e.g. PTE_NG and
++	 * PTE_PRESENT_INVALID). It is therefore important that we always clear
++	 * first then set.
++	 */
+ 	val &= ~(pgprot_val(masks->clear_mask));
+ 	val |= (pgprot_val(masks->set_mask));
+ 
+@@ -36,7 +41,7 @@ static int pageattr_pud_entry(pud_t *pud
+ {
+ 	pud_t val = pudp_get(pud);
+ 
+-	if (pud_sect(val)) {
++	if (pud_leaf(val)) {
+ 		if (WARN_ON_ONCE((next - addr) != PUD_SIZE))
+ 			return -EINVAL;
+ 		val = __pud(set_pageattr_masks(pud_val(val), walk));
+@@ -52,7 +57,7 @@ static int pageattr_pmd_entry(pmd_t *pmd
+ {
+ 	pmd_t val = pmdp_get(pmd);
+ 
+-	if (pmd_sect(val)) {
++	if (pmd_leaf(val)) {
+ 		if (WARN_ON_ONCE((next - addr) != PMD_SIZE))
+ 			return -EINVAL;
+ 		val = __pmd(set_pageattr_masks(pmd_val(val), walk));
+@@ -132,11 +137,12 @@ static int __change_memory_common(unsign
+ 	ret = update_range_prot(start, size, set_mask, clear_mask);
+ 
+ 	/*
+-	 * If the memory is being made valid without changing any other bits
+-	 * then a TLBI isn't required as a non-valid entry cannot be cached in
+-	 * the TLB.
++	 * If the memory is being switched from present-invalid to valid without
++	 * changing any other bits then a TLBI isn't required as a non-valid
++	 * entry cannot be cached in the TLB.
+ 	 */
+-	if (pgprot_val(set_mask) != PTE_VALID || pgprot_val(clear_mask))
++	if (pgprot_val(set_mask) != PTE_PRESENT_VALID_KERNEL ||
++	    pgprot_val(clear_mask) != PTE_PRESENT_INVALID)
+ 		flush_tlb_kernel_range(start, start + size);
+ 	return ret;
+ }
+@@ -237,18 +243,18 @@ int set_memory_valid(unsigned long addr,
+ {
+ 	if (enable)
+ 		return __change_memory_common(addr, PAGE_SIZE * numpages,
+-					__pgprot(PTE_VALID),
+-					__pgprot(0));
++					__pgprot(PTE_PRESENT_VALID_KERNEL),
++					__pgprot(PTE_PRESENT_INVALID));
+ 	else
+ 		return __change_memory_common(addr, PAGE_SIZE * numpages,
+-					__pgprot(0),
+-					__pgprot(PTE_VALID));
++					__pgprot(PTE_PRESENT_INVALID),
++					__pgprot(PTE_PRESENT_VALID_KERNEL));
+ }
+ 
+ int set_direct_map_invalid_noflush(struct page *page)
+ {
+-	pgprot_t clear_mask = __pgprot(PTE_VALID);
+-	pgprot_t set_mask = __pgprot(0);
++	pgprot_t clear_mask = __pgprot(PTE_PRESENT_VALID_KERNEL);
++	pgprot_t set_mask = __pgprot(PTE_PRESENT_INVALID);
+ 
+ 	if (!can_set_direct_map())
+ 		return 0;
+@@ -259,8 +265,8 @@ int set_direct_map_invalid_noflush(struc
+ 
+ int set_direct_map_default_noflush(struct page *page)
+ {
+-	pgprot_t set_mask = __pgprot(PTE_VALID | PTE_WRITE);
+-	pgprot_t clear_mask = __pgprot(PTE_RDONLY);
++	pgprot_t set_mask = __pgprot(PTE_PRESENT_VALID_KERNEL | PTE_WRITE);
++	pgprot_t clear_mask = __pgprot(PTE_PRESENT_INVALID | PTE_RDONLY);
+ 
+ 	if (!can_set_direct_map())
+ 		return 0;
+@@ -296,8 +302,8 @@ static int __set_memory_enc_dec(unsigned
+ 	 * entries or Synchronous External Aborts caused by RIPAS_EMPTY
+ 	 */
+ 	ret = __change_memory_common(addr, PAGE_SIZE * numpages,
+-				     __pgprot(set_prot),
+-				     __pgprot(clear_prot | PTE_VALID));
++				     __pgprot(set_prot | PTE_PRESENT_INVALID),
++				     __pgprot(clear_prot | PTE_PRESENT_VALID_KERNEL));
+ 
+ 	if (ret)
+ 		return ret;
+@@ -311,8 +317,8 @@ static int __set_memory_enc_dec(unsigned
+ 		return ret;
+ 
+ 	return __change_memory_common(addr, PAGE_SIZE * numpages,
+-				      __pgprot(PTE_VALID),
+-				      __pgprot(0));
++				      __pgprot(PTE_PRESENT_VALID_KERNEL),
++				      __pgprot(PTE_PRESENT_INVALID));
+ }
+ 
+ static int realm_set_memory_encrypted(unsigned long addr, int numpages)
+@@ -404,15 +410,15 @@ bool kernel_page_present(struct page *pa
+ 	pud = READ_ONCE(*pudp);
+ 	if (pud_none(pud))
+ 		return false;
+-	if (pud_sect(pud))
+-		return true;
++	if (pud_leaf(pud))
++		return pud_valid(pud);
+ 
+ 	pmdp = pmd_offset(pudp, addr);
+ 	pmd = READ_ONCE(*pmdp);
+ 	if (pmd_none(pmd))
+ 		return false;
+-	if (pmd_sect(pmd))
+-		return true;
++	if (pmd_leaf(pmd))
++		return pmd_valid(pmd);
+ 
+ 	ptep = pte_offset_kernel(pmdp, addr);
+ 	return pte_valid(__ptep_get(ptep));
+--- a/arch/arm64/mm/trans_pgd.c
++++ b/arch/arm64/mm/trans_pgd.c
+@@ -31,36 +31,6 @@ static void *trans_alloc(struct trans_pg
+ 	return info->trans_alloc_page(info->trans_alloc_arg);
+ }
+ 
+-static void _copy_pte(pte_t *dst_ptep, pte_t *src_ptep, unsigned long addr)
+-{
+-	pte_t pte = __ptep_get(src_ptep);
 -
--	/* PF internal control uses vfid index starting from 1 */
--	xe_vdev->vfid = pci_iov_vf_id(pdev) + 1;
--	xe_vdev->xe = xe;
+-	if (pte_valid(pte)) {
+-		/*
+-		 * Resume will overwrite areas that may be marked
+-		 * read only (code, rodata). Clear the RDONLY bit from
+-		 * the temporary mappings we use during restore.
+-		 */
+-		__set_pte(dst_ptep, pte_mkwrite_novma(pte));
+-	} else if (!pte_none(pte)) {
+-		/*
+-		 * debug_pagealloc will removed the PTE_VALID bit if
+-		 * the page isn't in use by the resume kernel. It may have
+-		 * been in use by the original kernel, in which case we need
+-		 * to put it back in our copy to do the restore.
+-		 *
+-		 * Other cases include kfence / vmalloc / memfd_secret which
+-		 * may call `set_direct_map_invalid_noflush()`.
+-		 *
+-		 * Before marking this entry valid, check the pfn should
+-		 * be mapped.
+-		 */
+-		BUG_ON(!pfn_valid(pte_pfn(pte)));
 -
- 	core_vdev->migration_flags = VFIO_MIGRATION_STOP_COPY | VFIO_MIGRATION_P2P;
- 	core_vdev->mig_ops = &xe_vfio_pci_migration_ops;
- }
- 
--static void xe_vfio_pci_migration_fini(struct xe_vfio_pci_core_device *xe_vdev)
-+static int xe_vfio_pci_vf_init(struct xe_vfio_pci_core_device *xe_vdev)
+-		__set_pte(dst_ptep, pte_mkvalid(pte_mkwrite_novma(pte)));
+-	}
+-}
+-
+ static int copy_pte(struct trans_pgd_info *info, pmd_t *dst_pmdp,
+ 		    pmd_t *src_pmdp, unsigned long start, unsigned long end)
  {
--	if (!xe_vdev->vfid)
--		return;
-+	struct vfio_device *core_vdev = &xe_vdev->core_device.vdev;
-+	struct pci_dev *pdev = to_pci_dev(core_vdev->dev);
-+	struct xe_device *xe = xe_sriov_vfio_get_pf(pdev);
+@@ -76,7 +46,11 @@ static int copy_pte(struct trans_pgd_inf
  
--	mutex_destroy(&xe_vdev->state_mutex);
-+	if (!pdev->is_virtfn)
-+		return 0;
-+	if (!xe)
-+		return -ENODEV;
-+	xe_vdev->xe = xe;
+ 	src_ptep = pte_offset_kernel(src_pmdp, start);
+ 	do {
+-		_copy_pte(dst_ptep, src_ptep, addr);
++		pte_t pte = __ptep_get(src_ptep);
 +
-+	/* PF internal control uses vfid index starting from 1 */
-+	xe_vdev->vfid = pci_iov_vf_id(pdev) + 1;
-+
-+	xe_vfio_pci_migration_init(xe_vdev);
-+
-+	return 0;
- }
++		if (pte_none(pte))
++			continue;
++		__set_pte(dst_ptep, pte_mkvalid_k(pte_mkwrite_novma(pte)));
+ 	} while (dst_ptep++, src_ptep++, addr += PAGE_SIZE, addr != end);
  
- static int xe_vfio_pci_init_dev(struct vfio_device *core_vdev)
- {
- 	struct xe_vfio_pci_core_device *xe_vdev =
- 		container_of(core_vdev, struct xe_vfio_pci_core_device, core_device.vdev);
-+	int ret;
+ 	return 0;
+@@ -109,8 +83,7 @@ static int copy_pmd(struct trans_pgd_inf
+ 			if (copy_pte(info, dst_pmdp, src_pmdp, addr, next))
+ 				return -ENOMEM;
+ 		} else {
+-			set_pmd(dst_pmdp,
+-				__pmd(pmd_val(pmd) & ~PMD_SECT_RDONLY));
++			set_pmd(dst_pmdp, pmd_mkvalid_k(pmd_mkwrite_novma(pmd)));
+ 		}
+ 	} while (dst_pmdp++, src_pmdp++, addr = next, addr != end);
  
--	xe_vfio_pci_migration_init(xe_vdev);
-+	mutex_init(&xe_vdev->state_mutex);
-+	spin_lock_init(&xe_vdev->reset_lock);
-+
-+	ret = xe_vfio_pci_vf_init(xe_vdev);
-+	if (ret)
-+		return ret;
+@@ -145,8 +118,7 @@ static int copy_pud(struct trans_pgd_inf
+ 			if (copy_pmd(info, dst_pudp, src_pudp, addr, next))
+ 				return -ENOMEM;
+ 		} else {
+-			set_pud(dst_pudp,
+-				__pud(pud_val(pud) & ~PUD_SECT_RDONLY));
++			set_pud(dst_pudp, pud_mkvalid_k(pud_mkwrite_novma(pud)));
+ 		}
+ 	} while (dst_pudp++, src_pudp++, addr = next, addr != end);
  
- 	return vfio_pci_core_init_dev(core_vdev);
- }
-@@ -496,7 +503,7 @@ static void xe_vfio_pci_release_dev(stru
- 	struct xe_vfio_pci_core_device *xe_vdev =
- 		container_of(core_vdev, struct xe_vfio_pci_core_device, core_device.vdev);
- 
--	xe_vfio_pci_migration_fini(xe_vdev);
-+	mutex_destroy(&xe_vdev->state_mutex);
- }
- 
- static const struct vfio_device_ops xe_vfio_pci_ops = {
 
 
