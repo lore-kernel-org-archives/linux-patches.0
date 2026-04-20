@@ -1,48 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF2632E696;
-	Mon, 20 Apr 2026 15:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE11332916;
+	Mon, 20 Apr 2026 15:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699970; cv=none; b=IHZCDdxv8P/w2GXMM7zEz1vPE97C5cdcxwEB5YT5MAq0a5K/LVMJf9ImdaZSdccplCSntEVxrcdXbe/g+JDeQL7QQUyNEw5eK9cxoDJQ7BfdB8WYBN067BVhkqP+bjy1i3lh8TSQhh9t0hSUMHkoJ7cHj7Tf0EbJBddAJhbgMW4=
+	t=1776699973; cv=none; b=ucfTk5jwHa3HHKgCvSr9HAroPv39vAvR5+jAhL8sWqAWv2QV5SGv6irZzg78nQzDt7NaMjgrkG3Dd+LcTIJJOEscX+YO5oE3WOg4UW9WIHQPEKbGGYMCG5koZ8s186hiuzz3attTTAwvMQPmw04V86rsPb+7zNQMOmvq6XcW/MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699970; c=relaxed/simple;
-	bh=mx8OgC753+ecKK1+es1hejr0js+wTiaswIBoYu26fAM=;
+	s=arc-20240116; t=1776699973; c=relaxed/simple;
+	bh=LLdp7pedhrZFAOCmxf8GS+FIOGL8LHOhG9NHBbQ77Us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTKr55XPEScgsvXdwyMnvdgppaKDIJX2dmt2TUHY5qwUbjIcZrHK7ccbjP311I6LeOxUsIua7aLHUJKJWSSstFocwOSdhvZkl9Tl69BjHHzZEIEKBJYKEoFTMUjn80BQ8aKE37nRm2aQN06x6yA4/qfme1P4EzFqY2xkgxzvsR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Na0T2mJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0xsnTDLFrifzlFP1itD8wl6QSlV1qR7BbhEC66ZqVHQsgGc7VV7gy55X9bWbExR7FdEolW3YfioPZnabQTL0pUvTrdW/uFonSdUVNGDo2CClBo4r5t5mtDYejE1gmFe1LTRnsYbALCG5Bcezd4c7SzmAGsOGjawjHctEdlPvg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5qA9TX8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Na0T2mJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1444C19425;
-	Mon, 20 Apr 2026 15:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5qA9TX8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EE8C19425;
+	Mon, 20 Apr 2026 15:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699970;
-	bh=mx8OgC753+ecKK1+es1hejr0js+wTiaswIBoYu26fAM=;
+	s=korg; t=1776699973;
+	bh=LLdp7pedhrZFAOCmxf8GS+FIOGL8LHOhG9NHBbQ77Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Na0T2mJ72i/djYW77Fz6/F4qom6fV883VcPUtIbIA5cAAW5zjyOiu9Mbo8zeZRIK
-	 S2qMV2kjYYEwA749Cc0O4dVKMYeq2hhumL+ACgXLvUiOkn6UmjBpu1LPGWKM0dx20C
-	 U8HBsT0OjU7vx3OeXKV9Rxgd8bswEe4P6wXHgmUg=
+	b=d5qA9TX8aqh5dGYzCKmj5rxZgVXsCIvd8SW1ErjKOhD2gK3xQdalcZmCI+llUIOoD
+	 80M04glvtXlolb+kNHhCnIHCZoLv3xMtrI9EjBaavg9GTcD1n8XYLYtzk8bvptZ3YQ
+	 DXMU+PUbc38R5r7tJjZ9T8rGwJ1LSRpAOGXFKNy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alistair Popple <apopple@nvidia.com>,
-	Zenghui Yu <zenghui.yu@linux.dev>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 36/76] selftests/mm: hmm-tests: dont hardcode THP size to 2MB
-Date: Mon, 20 Apr 2026 17:41:47 +0200
-Message-ID: <20260420153912.137603475@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.0 37/76] USB: serial: option: add Telit Cinterion FN990A MBIM composition
+Date: Mon, 20 Apr 2026 17:41:48 +0200
+Message-ID: <20260420153912.174364876@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -61,245 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alistair Popple <apopple@nvidia.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit f9d7975c52c00b3685cf9a90a81023d17817d991 upstream.
+commit f8cc59ecc22841be5deb07b549c0c6a2657cd5f9 upstream.
 
-Several HMM tests hardcode TWOMEG as the THP size. This is wrong on
-architectures where the PMD size is not 2MB such as arm64 with 64K base
-pages where THP is 512MB. Fix this by using read_pmd_pagesize() from
-vm_util instead.
+Add the following Telit Cinterion FN990A MBIM composition:
 
-While here also replace the custom file_read_ulong() helper used to
-parse the default hugetlbfs page size from /proc/meminfo with the
-existing default_huge_page_size() from vm_util.
+0x1074: MBIM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (diag) +
+        DPL (Data Packet Logging) + adb
 
-Link: https://lore.kernel.org/20260331063445.3551404-3-apopple@nvidia.com
-Link: https://lore.kernel.org/linux-mm/8bd0396a-8997-4d2e-a13f-5aac033083d7@linux.dev/
-Fixes: fee9f6d1b8df ("mm/hmm/test: add selftests for HMM")
-Fixes: 519071529d2a ("selftests/mm/hmm-tests: new tests for zone device THP migration")
-Signed-off-by: Alistair Popple <apopple@nvidia.com>
-Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
-Closes: https://lore.kernel.org/linux-mm/8bd0396a-8997-4d2e-a13f-5aac033083d7@linux.dev/
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+T:  Bus=01 Lev=01 Prnt=04 Port=06 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1074 Rev=05.04
+S:  Manufacturer=Telit Wireless Solutions
+S:  Product=FN990
+S:  SerialNumber=70628d0c
+C:  #Ifs= 8 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/hmm-tests.c |   83 ++++++---------------------------
- 1 file changed, 16 insertions(+), 67 deletions(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/selftests/mm/hmm-tests.c
-+++ b/tools/testing/selftests/mm/hmm-tests.c
-@@ -34,6 +34,7 @@
-  */
- #include <lib/test_hmm_uapi.h>
- #include <mm/gup_test.h>
-+#include <mm/vm_util.h>
- 
- struct hmm_buffer {
- 	void		*ptr;
-@@ -548,7 +549,7 @@ TEST_F(hmm, anon_write_child)
- 
- 	for (migrate = 0; migrate < 2; ++migrate) {
- 		for (use_thp = 0; use_thp < 2; ++use_thp) {
--			npages = ALIGN(use_thp ? TWOMEG : HMM_BUFFER_SIZE,
-+			npages = ALIGN(use_thp ? read_pmd_pagesize() : HMM_BUFFER_SIZE,
- 				       self->page_size) >> self->page_shift;
- 			ASSERT_NE(npages, 0);
- 			size = npages << self->page_shift;
-@@ -728,7 +729,7 @@ TEST_F(hmm, anon_write_huge)
- 	int *ptr;
- 	int ret;
- 
--	size = 2 * TWOMEG;
-+	size = 2 * read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -744,7 +745,7 @@ TEST_F(hmm, anon_write_huge)
- 			   buffer->fd, 0);
- 	ASSERT_NE(buffer->ptr, MAP_FAILED);
- 
--	size = TWOMEG;
-+	size /= 2;
- 	npages = size >> self->page_shift;
- 	map = (void *)ALIGN((uintptr_t)buffer->ptr, size);
- 	ret = madvise(map, size, MADV_HUGEPAGE);
-@@ -771,54 +772,6 @@ TEST_F(hmm, anon_write_huge)
- }
- 
- /*
-- * Read numeric data from raw and tagged kernel status files.  Used to read
-- * /proc and /sys data (without a tag) and from /proc/meminfo (with a tag).
-- */
--static long file_read_ulong(char *file, const char *tag)
--{
--	int fd;
--	char buf[2048];
--	int len;
--	char *p, *q;
--	long val;
--
--	fd = open(file, O_RDONLY);
--	if (fd < 0) {
--		/* Error opening the file */
--		return -1;
--	}
--
--	len = read(fd, buf, sizeof(buf));
--	close(fd);
--	if (len < 0) {
--		/* Error in reading the file */
--		return -1;
--	}
--	if (len == sizeof(buf)) {
--		/* Error file is too large */
--		return -1;
--	}
--	buf[len] = '\0';
--
--	/* Search for a tag if provided */
--	if (tag) {
--		p = strstr(buf, tag);
--		if (!p)
--			return -1; /* looks like the line we want isn't there */
--		p += strlen(tag);
--	} else
--		p = buf;
--
--	val = strtol(p, &q, 0);
--	if (*q != ' ') {
--		/* Error parsing the file */
--		return -1;
--	}
--
--	return val;
--}
--
--/*
-  * Write huge TLBFS page.
-  */
- TEST_F(hmm, anon_write_hugetlbfs)
-@@ -826,15 +779,13 @@ TEST_F(hmm, anon_write_hugetlbfs)
- 	struct hmm_buffer *buffer;
- 	unsigned long npages;
- 	unsigned long size;
--	unsigned long default_hsize;
-+	unsigned long default_hsize = default_huge_page_size();
- 	unsigned long i;
- 	int *ptr;
- 	int ret;
- 
--	default_hsize = file_read_ulong("/proc/meminfo", "Hugepagesize:");
--	if (default_hsize < 0 || default_hsize*1024 < default_hsize)
-+	if (!default_hsize)
- 		SKIP(return, "Huge page size could not be determined");
--	default_hsize = default_hsize*1024; /* KB to B */
- 
- 	size = ALIGN(TWOMEG, default_hsize);
- 	npages = size >> self->page_shift;
-@@ -1606,7 +1557,7 @@ TEST_F(hmm, compound)
- 	struct hmm_buffer *buffer;
- 	unsigned long npages;
- 	unsigned long size;
--	unsigned long default_hsize;
-+	unsigned long default_hsize = default_huge_page_size();
- 	int *ptr;
- 	unsigned char *m;
- 	int ret;
-@@ -1614,10 +1565,8 @@ TEST_F(hmm, compound)
- 
- 	/* Skip test if we can't allocate a hugetlbfs page. */
- 
--	default_hsize = file_read_ulong("/proc/meminfo", "Hugepagesize:");
--	if (default_hsize < 0 || default_hsize*1024 < default_hsize)
-+	if (!default_hsize)
- 		SKIP(return, "Huge page size could not be determined");
--	default_hsize = default_hsize*1024; /* KB to B */
- 
- 	size = ALIGN(TWOMEG, default_hsize);
- 	npages = size >> self->page_shift;
-@@ -2106,7 +2055,7 @@ TEST_F(hmm, migrate_anon_huge_empty)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2158,7 +2107,7 @@ TEST_F(hmm, migrate_anon_huge_zero)
- 	int ret;
- 	int val;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2221,7 +2170,7 @@ TEST_F(hmm, migrate_anon_huge_free)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2280,7 +2229,7 @@ TEST_F(hmm, migrate_anon_huge_fault)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2332,7 +2281,7 @@ TEST_F(hmm, migrate_partial_unmap_fault)
- {
- 	struct hmm_buffer *buffer;
- 	unsigned long npages;
--	unsigned long size = TWOMEG;
-+	unsigned long size = read_pmd_pagesize();
- 	unsigned long i;
- 	void *old_ptr;
- 	void *map;
-@@ -2398,7 +2347,7 @@ TEST_F(hmm, migrate_remap_fault)
- {
- 	struct hmm_buffer *buffer;
- 	unsigned long npages;
--	unsigned long size = TWOMEG;
-+	unsigned long size = read_pmd_pagesize();
- 	unsigned long i;
- 	void *old_ptr, *new_ptr = NULL;
- 	void *map;
-@@ -2498,7 +2447,7 @@ TEST_F(hmm, migrate_anon_huge_err)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
-@@ -2593,7 +2542,7 @@ TEST_F(hmm, migrate_anon_huge_zero_err)
- 	int *ptr;
- 	int ret;
- 
--	size = TWOMEG;
-+	size = read_pmd_pagesize();
- 
- 	buffer = malloc(sizeof(*buffer));
- 	ASSERT_NE(buffer, NULL);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1383,6 +1383,8 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990A (ECM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1074, 0xff),	/* Telit FN990A (MBIM) */
++	  .driver_info = NCTRL(5) | RSVD(6) | RSVD(7) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990A (PCIe) */
+ 	  .driver_info = RSVD(0) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1077, 0xff),	/* Telit FN990A (rmnet + audio) */
 
 
