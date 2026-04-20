@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4002D77E5;
-	Mon, 20 Apr 2026 15:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91072D77E5;
+	Mon, 20 Apr 2026 15:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700132; cv=none; b=ujWWwn4OuitzVLnqOrPZFwh98xUt/B4VOqowYYGq8azD6R02FRZI+YzpWRBb+52/D4sR6OUiKRG0kF/lWKr3oh/W2BR+7VGLoZDukmilXXE0eBlxEN2K2Yw1P0OMGxqR8RS7AIh9vaKekkRdh+JCEe8qAl3oXVUP9+qWjsyZFLc=
+	t=1776700134; cv=none; b=OHqRbQOi8Kz3GzgVovTCG9z1KtixXMJUML2TiBqZlGv0gjmXWXl5vtKJPCoF2qrbCXnK2+cnM+3dMNGGZk1J5fVz8RM3N9pB4sZJBRUhXhRzUCgjyP4f/ZG0jHnfoTur5F/10b98hoTFs2Y5ihuEbND9FY7lCVcK8MAKnYNm/R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700132; c=relaxed/simple;
-	bh=7rxUVTAstHeZTfX5oJ+Na2iwZPNJ/NxfWY+cvbMkcG4=;
+	s=arc-20240116; t=1776700134; c=relaxed/simple;
+	bh=tKiG1BzLg3TgnFnbpBQNPULSfig1/ggFyzVeB6PE2qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clIRM0ujTQxAwzBYJNEshLFv0bvOlFCGUfkdvKWGMCgvUJ+VQ+9vC31ERE+kcuQY7OaQELD0fJwLnPtvgEsYgrb6JJLUS7v/N2QbwV2W86FKvIwhZulSElu5Ea7DXRaOed+PfKtpPqgpL58bjaLnYmuUxuaPQ7T1BvhhfS0wke0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdT+1mgI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOjlrcibsYVBr1J9BAwX8bHOUpvAokYCnDRVOY7jMzrhDSUdzntVk4I1yd1ZeKevhBct2VP/IhUXlMFVzUqshHHWhBBsStFIFdd378Hi0MD5YkRu24Z20/fiVD3TVtpGoNElH48Z7DTTYV1bjIKoZXkmYZ1tEcWBzkmeIf0hdDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBJwhDVS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdT+1mgI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEC5C19425;
-	Mon, 20 Apr 2026 15:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBJwhDVS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42195C19425;
+	Mon, 20 Apr 2026 15:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700132;
-	bh=7rxUVTAstHeZTfX5oJ+Na2iwZPNJ/NxfWY+cvbMkcG4=;
+	s=korg; t=1776700134;
+	bh=tKiG1BzLg3TgnFnbpBQNPULSfig1/ggFyzVeB6PE2qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdT+1mgIubrQfUgqLJCcOu6DHUwBcVjZRnmTVKL8m/nVVStaGL3QfYGw8ggIwzMfm
-	 1vNHI7Y2kHhj/5mQzy2OrdiJZEOp2T9DylSj4LvknTe65FCAOCyo8y+4rUmZtnchTZ
-	 ZqH239zswgo9/tfiWXci3Np6auYfr9+LArqTID6g=
+	b=dBJwhDVS3IXH+g6m4eeye7HY5F+GgyWkxghdCeVb/73FKMvMm1WwbDZALwxqZkBU5
+	 Se801gqRSCSPXWH0pmovKcTRdpbZx2U+NqBCEP2Bz5Pc4l+tmjaMERZn1MyXwiFz+j
+	 zyCEDvgAwJlOsQPXP30pM/EYFYgqaDEbGUGpcV60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Nikita Travkin <nikita@trvn.ru>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 054/220] arm64: dts: qcom: monaco: Fix UART10 pinconf
-Date: Mon, 20 Apr 2026 17:39:55 +0200
-Message-ID: <20260420153935.985381247@linuxfoundation.org>
+Subject: [PATCH 6.19 055/220] soc: qcom: pd-mapper: Fix element length in servreg_loc_pfr_req_ei
+Date: Mon, 20 Apr 2026 17:39:56 +0200
+Message-ID: <20260420153936.021591872@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -53,44 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit 5b2a16ab0dbd090dc545c05ee79a077cc7a9c1e0 ]
+[ Upstream commit 641f6fda143b879da1515f821ee475073678cf2a ]
 
-UART10 RTS and TX pins were incorrectly mapped to gpio84 and gpio85.
-Correct them to gpio85 (RTS) and gpio86 (TX) to match the hardware
-I/O mapping.
+It looks element length declared in servreg_loc_pfr_req_ei for reason
+not matching servreg_loc_pfr_req's reason field due which we could
+observe decoding error on PD crash.
 
-Fixes: 467284a3097f ("arm64: dts: qcom: qcs8300: Add QUPv3 configuration")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+  qmi_decode_string_elem: String len 81 >= Max Len 65
+
+Fix this by matching with servreg_loc_pfr_req's reason field.
+
+Fixes: 1ebcde047c54 ("soc: qcom: add pd-mapper implementation")
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260202155611.1568-1-loic.poulain@oss.qualcomm.com
+Tested-by: Nikita Travkin <nikita@trvn.ru>
+Link: https://lore.kernel.org/r/20260129152320.3658053-2-mukesh.ojha@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/monaco.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/pdr_internal.h | 2 +-
+ drivers/soc/qcom/qcom_pdr_msg.c | 2 +-
+ include/linux/soc/qcom/pdr.h    | 1 +
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
-index 816fa2af8a9a6..f74045be62420 100644
---- a/arch/arm64/boot/dts/qcom/monaco.dtsi
-+++ b/arch/arm64/boot/dts/qcom/monaco.dtsi
-@@ -5437,12 +5437,12 @@ qup_uart10_cts: qup-uart10-cts-state {
- 			};
+diff --git a/drivers/soc/qcom/pdr_internal.h b/drivers/soc/qcom/pdr_internal.h
+index 039508c1bbf7d..047c0160b6178 100644
+--- a/drivers/soc/qcom/pdr_internal.h
++++ b/drivers/soc/qcom/pdr_internal.h
+@@ -84,7 +84,7 @@ struct servreg_set_ack_resp {
  
- 			qup_uart10_rts: qup-uart10-rts-state {
--				pins = "gpio84";
-+				pins = "gpio85";
- 				function = "qup1_se2";
- 			};
+ struct servreg_loc_pfr_req {
+ 	char service[SERVREG_NAME_LENGTH + 1];
+-	char reason[257];
++	char reason[SERVREG_PFR_LENGTH + 1];
+ };
  
- 			qup_uart10_tx: qup-uart10-tx-state {
--				pins = "gpio85";
-+				pins = "gpio86";
- 				function = "qup1_se2";
- 			};
+ struct servreg_loc_pfr_resp {
+diff --git a/drivers/soc/qcom/qcom_pdr_msg.c b/drivers/soc/qcom/qcom_pdr_msg.c
+index ca98932140d87..02022b11ecf05 100644
+--- a/drivers/soc/qcom/qcom_pdr_msg.c
++++ b/drivers/soc/qcom/qcom_pdr_msg.c
+@@ -325,7 +325,7 @@ const struct qmi_elem_info servreg_loc_pfr_req_ei[] = {
+ 	},
+ 	{
+ 		.data_type = QMI_STRING,
+-		.elem_len = SERVREG_NAME_LENGTH + 1,
++		.elem_len = SERVREG_PFR_LENGTH + 1,
+ 		.elem_size = sizeof(char),
+ 		.array_type = VAR_LEN_ARRAY,
+ 		.tlv_type = 0x02,
+diff --git a/include/linux/soc/qcom/pdr.h b/include/linux/soc/qcom/pdr.h
+index 83a8ea612e69a..2b7691e47c2a9 100644
+--- a/include/linux/soc/qcom/pdr.h
++++ b/include/linux/soc/qcom/pdr.h
+@@ -5,6 +5,7 @@
+ #include <linux/soc/qcom/qmi.h>
  
+ #define SERVREG_NAME_LENGTH	64
++#define SERVREG_PFR_LENGTH	256
+ 
+ struct pdr_service;
+ struct pdr_handle;
 -- 
 2.53.0
 
