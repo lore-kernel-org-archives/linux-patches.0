@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC122D77E5;
-	Mon, 20 Apr 2026 15:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1296E33262B;
+	Mon, 20 Apr 2026 15:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700170; cv=none; b=XUNxX3NHXQIk1Q8xCORtcoWcHlU/ScANiv2VSeS8YZufSN4zPhESRiu0uCsvuqydWWR2ipmC28HuiADy6tbjselTY8sLtTViX+hQLhefNLX/CmTF/RHPSJXfM9jLYvd+gRTVetb6OtFdKBa0hMgg39qYQbH1jV0aaVsnbLtyL5A=
+	t=1776700173; cv=none; b=Hr1N3mySUN79XffODJR9m90+ijyetY4JdJY1hWIRwBW5Z6MzqG4TtRbebvJBywrr17Z2n0NJ9upgAip79+ezYLRaT2mfkM3SFHRg3W7ae8NkxgZ0jChHJMrKz+3oQyf4VlFY1k+aZsjg42W9YkaaWktpjUyLrfl99hobwZuD2vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700170; c=relaxed/simple;
-	bh=u323AYusz6wyzb2Hh6CTxXcnIafXvOWViU0hOjzTIis=;
+	s=arc-20240116; t=1776700173; c=relaxed/simple;
+	bh=f0qH5cCh9AdINWXEB4P8SwKWWfnRtg6461RCKC4J2Iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFNhm/P+LFy77Cz51YTu0FGNO3yLsKkVqc4ucwsU0TUOasY9BnHX+iALTHiKzJH01T5DVrnV97aZBhF9Uzmm6yFDVgz6CIgh+1hlS3bB2//F90Hb0QxFwQnz0ohJ8+/BH7TMimdxLNcytP2c65hks4K8bB7iAX63g93/p0wGuc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckPQ6/d4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AxlbtD43R681QFOwZj10wf4GB7MQe74KGfnhvBJG+vHlYTNOemV3Lu824IZFRAnu3vyAATwr8/a4RQetIUK4hMxawmw8REOIqEaw0iMvAQ4pE8zOxSUe5IEfEzYJ7rlsnW7X5RhQwgR3mI/n8BgJLrnY9eap3NRPR5EYO46f/Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xa9GPQFS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckPQ6/d4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05339C2BCB7;
-	Mon, 20 Apr 2026 15:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xa9GPQFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96251C2BCB6;
+	Mon, 20 Apr 2026 15:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700170;
-	bh=u323AYusz6wyzb2Hh6CTxXcnIafXvOWViU0hOjzTIis=;
+	s=korg; t=1776700172;
+	bh=f0qH5cCh9AdINWXEB4P8SwKWWfnRtg6461RCKC4J2Iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckPQ6/d4PX5agtT59bqQKsOIBqyKvVrCN9aAPSihD0arU4bayJa5lGOB035XQueW+
-	 2202KPJraOfdUI3eVBk+ilVc9gIpQbZXF9SjT5y7xPPiH1W7JScFaDimjfA5pQhtK5
-	 +OCy7jSom+EdmkN4Fn43p1epx651yC8O0XotU6dg=
+	b=xa9GPQFSju59t3cp7bfWJxWMjoy+YmfXPM4lurY+gtlHwHE5C6tGMjnRkSpJji7YE
+	 kWIduWYduQF1uLoJ7QZf2l1thGtKs9NyysW4ANJepJVKnAyY1d8y9kYgJ5tV2lhyHQ
+	 hJSHXsqLkxcCblpoUBczCzdSnkUjafxW9zOgckD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Tesarik <ptesarik@suse.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Imrane <ihalim.me@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 068/220] dma-mapping: add DMA_ATTR_CPU_CACHE_CLEAN
-Date: Mon, 20 Apr 2026 17:40:09 +0200
-Message-ID: <20260420153936.489182200@linuxfoundation.org>
+Subject: [PATCH 6.19 037/220] platform/x86/amd: pmc: Add Thinkpad L14 Gen3 to quirk_s2idle_bug
+Date: Mon, 20 Apr 2026 17:39:38 +0200
+Message-ID: <20260420153935.371006435@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -46,69 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 61868dc55a119a5e4b912d458fc2c48ba80a35fe ]
+[ Upstream commit 1a9452c428a6b76f0b797bae21daa454fccef1a2 ]
 
-When multiple small DMA_FROM_DEVICE or DMA_BIDIRECTIONAL buffers share a
-cacheline, and DMA_API_DEBUG is enabled, we get this warning:
-	cacheline tracking EEXIST, overlapping mappings aren't supported.
+This platform is a similar vintage of platforms that had a BIOS bug
+leading to a 10s delay at resume from s0i3.
 
-This is because when one of the mappings is removed, while another one
-is active, CPU might write into the buffer.
+Add a quirk for it.
 
-Add an attribute for the driver to promise not to do this, making the
-overlapping safe, and suppressing the warning.
-
-Message-ID: <2d5d091f9d84b68ea96abd545b365dd1d00bbf48.1767601130.git.mst@redhat.com>
-Reviewed-by: Petr Tesarik <ptesarik@suse.com>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: 3d48c9fd78dd ("dma-debug: suppress cacheline overlap warning when arch has no DMA alignment requirement")
+Reported-by: Imrane <ihalim.me@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221273
+Tested-by: Imrane <ihalim.me@gmail.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260324211647.357924-1-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dma-mapping.h | 7 +++++++
- kernel/dma/debug.c          | 3 ++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/linux/dma-mapping.h b/include/linux/dma-mapping.h
-index 190eab9f5e8c2..3e63046b899bc 100644
---- a/include/linux/dma-mapping.h
-+++ b/include/linux/dma-mapping.h
-@@ -78,6 +78,13 @@
-  */
- #define DMA_ATTR_MMIO		(1UL << 10)
- 
-+/*
-+ * DMA_ATTR_CPU_CACHE_CLEAN: Indicates the CPU will not dirty any cacheline
-+ * overlapping this buffer while it is mapped for DMA. All mappings sharing
-+ * a cacheline must have this attribute for this to be considered safe.
-+ */
-+#define DMA_ATTR_CPU_CACHE_CLEAN	(1UL << 11)
-+
- /*
-  * A dma_addr_t can hold any valid DMA or bus address for the platform.  It can
-  * be given to a device to use as a DMA source or target.  It is specific to a
-diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
-index 138ede653de40..7e66d863d573f 100644
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -595,7 +595,8 @@ static void add_dma_entry(struct dma_debug_entry *entry, unsigned long attrs)
- 	if (rc == -ENOMEM) {
- 		pr_err_once("cacheline tracking ENOMEM, dma-debug disabled\n");
- 		global_disable = true;
--	} else if (rc == -EEXIST && !(attrs & DMA_ATTR_SKIP_CPU_SYNC) &&
-+	} else if (rc == -EEXIST &&
-+		   !(attrs & (DMA_ATTR_SKIP_CPU_SYNC | DMA_ATTR_CPU_CACHE_CLEAN)) &&
- 		   !(IS_ENABLED(CONFIG_DMA_BOUNCE_UNALIGNED_KMALLOC) &&
- 		     is_swiotlb_active(entry->dev))) {
- 		err_printk(entry->dev, entry,
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index ed285afaf9b0d..24506e3429430 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -203,6 +203,15 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
+ 		}
+ 	},
++	/* https://bugzilla.kernel.org/show_bug.cgi?id=221273 */
++	{
++		.ident = "Thinkpad L14 Gen3",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21C6"),
++		}
++	},
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
+ 	{
+ 		.ident = "Lenovo Yoga 6 13ALC6",
 -- 
 2.53.0
 
