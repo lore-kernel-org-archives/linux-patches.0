@@ -1,50 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19ACB3C8716;
-	Mon, 20 Apr 2026 13:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7763CA493;
+	Mon, 20 Apr 2026 13:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691060; cv=none; b=XE04DgYKy85rjXPuRmCpQCMotlEs72LWGEDrD2y70fEY13ROFGddVeQoIyFQGjACQqWqzDrs8C+/PJTr7fU/c8lKig/w84e8N7UukI1T0hJaOvTj5z2Hp/X4lmuBVF74ln5wRQmfG3bBdu5M8JXngmt3Jbnq1ngIQc0NK/pBJ28=
+	t=1776691062; cv=none; b=G0FWXme8s2cArReHWbEcvfYs/tOO7faxmsEB/acHiKU803qSjlWJ5g5+DA1Z+8ioJcVSx66zOknrYPhFua2PPFRE5PXVZjpCj4jMDyck0SYT/pOdUX0MM9CbmlDZYy4VhdckmujR/86gYXxw8uG+w5eIaQFLRrWEZBAD3cZu+X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691060; c=relaxed/simple;
-	bh=+8K6dHnVzrZ3DomlPVMPG7Wb4KyVTqjmF1fazeZMeGw=;
+	s=arc-20240116; t=1776691062; c=relaxed/simple;
+	bh=4LhA/ekNF8VXPZGUFStEsaW/fv1Qg6XXQYP6qjgZg58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TejDx0rUHMycNFyM7sxtH3RfaVd3s3l7gUQ8S6RPELSpT45oTyhkB6vOdLv5H0LDTxcRICiOKYuT0aGGeQJ7EPQaVRNlBSsC8GT3pjcSLm8SNPn+t+dJr2oIuO4yfyJaajrEX/nYT8GIFNI0gy33QE0dS7ltS1GVnt6qq7Y9K20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sJgr+/p6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cHA1d6Cd1odZpgyA7Wutt9yRHiXDhYanT2/cbHJbXyejyXUEhxSCcIPn6WbuiNxxHuTGCb1/oQBL5uVlbwBuHlt67si5390AJLNo5o5vw3nGKpfqssWactTLrKz+6X6Bz3Wvj/BrMWIzwxXdidRNTGpVP1vKl44pK5dUgOSjAn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AgmK4vFk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sJgr+/p6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947BDC2BCB6;
-	Mon, 20 Apr 2026 13:17:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AgmK4vFk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D991C19425;
+	Mon, 20 Apr 2026 13:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691060;
-	bh=+8K6dHnVzrZ3DomlPVMPG7Wb4KyVTqjmF1fazeZMeGw=;
+	s=k20201202; t=1776691062;
+	bh=4LhA/ekNF8VXPZGUFStEsaW/fv1Qg6XXQYP6qjgZg58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sJgr+/p6TQMyjXnc8Sjc3q1MonT9+TIzuLO7R3VVoDpk71vzQMw5qfrfIsLUmz9iZ
-	 n6qbrOOpL1Kz77IaYM3sieJ9Ak654M+3/0RRX0VFSbV94sX92xydUuLoGHn1Ml5fYO
-	 wgqiTvFVbBi9lTuaVuGy+XgJIUINDPEydnPiehp+LqHm7GGcvFtz8rJLJGGIHGvPWi
-	 30jGCrNtCSzNpzQFtwUJaPdPhaBck3IjaM0p6DU+ho3XQvdnGjZOipy87bdw0LDHhi
-	 zLT3SjCVPIqx33/fbshbXhmJurxI5cODTvwq2E/GztJZ+4yoCX2rrAgPj/oWjzihWe
-	 KurXtRr8fQjeA==
+	b=AgmK4vFkIFGogVR4TpJXId5vvBMf1kMk3ORgcPC3jF2T/Y1qFjTFF2QCrVFbPxxFR
+	 GMjJe/uF4j0uW6aSKQ5DnszLjj+iIYn3ETrH22r+7Sox3HGtCojR2MIA69bniWpOJg
+	 JSyCqGyEzUvFVnUXFrLcatoI7788YRbM6o+2nVb2t07vhdSiGd7YlvJnxMIubSyPjZ
+	 CsPGMaNNycjWUlc2XTiQDSzYyW+hUObTi3FP69hW8/0JkZMeT+bTe6YyaKP6PX50Qq
+	 /y8tYXcPBaTbYImMnA4CbGvVSUb3vrFeeiqb/+0hAKOF7TlkyvLU6ESwI3nD94Rbmy
+	 wYJwszyUKyEpQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: John Pavlick <jspavlick@posteo.net>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Marcin Nita <marcin.nita@leolabs.pl>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Michal Schmidt <mschmidt@redhat.com>,
+	Xiaoqiang Xiong <xxiong@redhat.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux@armlinux.org.uk,
-	andrew@lunn.ch,
-	hkallweit1@gmail.com,
+	przemyslaw.kitszel@intel.com,
+	andrew+netdev@lunn.ch,
 	davem@davemloft.net,
 	edumazet@google.com,
+	kuba@kernel.org,
 	pabeni@redhat.com,
+	jacob.e.keller@intel.com,
+	jedrzej.jagielski@intel.com,
+	intel-wired-lan@lists.osuosl.org,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] net: sfp: add quirks for Hisense and HSGQ GPON ONT SFP modules
-Date: Mon, 20 Apr 2026 09:08:56 -0400
-Message-ID: <20260420131539.986432-70-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] ixgbevf: add missing negotiate_features op to Hyper-V ops table
+Date: Mon, 20 Apr 2026 09:08:57 -0400
+Message-ID: <20260420131539.986432-71-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -59,31 +62,46 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: John Pavlick <jspavlick@posteo.net>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 95aca8602ef70ffd3d971675751c81826e124f90 ]
+[ Upstream commit 4821d563cd7f251ae728be1a6d04af82a294a5b9 ]
 
-Several GPON ONT SFP sticks based on Realtek RTL960x report
-1000BASE-LX at 1300MBd in their EEPROM but can operate at 2500base-X.
-On hosts capable of 2500base-X (e.g. Banana Pi R3 / MT7986), the
-kernel negotiates only 1G because it trusts the incorrect EEPROM data.
+Commit a7075f501bd3 ("ixgbevf: fix mailbox API compatibility by
+negotiating supported features") added the .negotiate_features callback
+to ixgbe_mac_operations and populated it in ixgbevf_mac_ops, but forgot
+to add it to ixgbevf_hv_mac_ops. This leaves the function pointer NULL
+on Hyper-V VMs.
 
-Add quirks for:
-- Hisense-Leox LXT-010S-H
-- Hisense ZNID-GPON-2311NA
-- HSGQ HSGQ-XPON-Stick
+During probe, ixgbevf_negotiate_api() calls ixgbevf_set_features(),
+which unconditionally dereferences hw->mac.ops.negotiate_features().
+On Hyper-V this results in a NULL pointer dereference:
 
-Each quirk advertises 2500base-X and ignores TX_FAULT during the
-module's ~40s Linux boot time.
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  [...]
+  Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine [...]
+  Workqueue: events work_for_cpu_fn
+  RIP: 0010:0x0
+  [...]
+  Call Trace:
+   ixgbevf_negotiate_api+0x66/0x160 [ixgbevf]
+   ixgbevf_sw_init+0xe4/0x1f0 [ixgbevf]
+   ixgbevf_probe+0x20f/0x4a0 [ixgbevf]
+   local_pci_probe+0x50/0xa0
+   work_for_cpu_fn+0x1a/0x30
+   [...]
 
-Tested on Banana Pi R3 (MT7986) with OpenWrt 25.12.1, confirmed
-2.5Gbps link and full throughput with flow offloading.
+Add ixgbevf_hv_negotiate_features_vf() that returns -EOPNOTSUPP and
+wire it into ixgbevf_hv_mac_ops. The caller already handles -EOPNOTSUPP
+gracefully.
 
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Suggested-by: Marcin Nita <marcin.nita@leolabs.pl>
-Signed-off-by: John Pavlick <jspavlick@posteo.net>
-Link: https://patch.msgid.link/20260406132321.72563-1-jspavlick@posteo.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a7075f501bd3 ("ixgbevf: fix mailbox API compatibility by negotiating supported features")
+Reported-by: Xiaoqiang Xiong <xxiong@redhat.com>
+Closes: https://issues.redhat.com/browse/RHEL-155455
+Assisted-by: Claude:claude-4.6-opus-high Cursor
+Tested-by: Xiaoqiang Xiong <xxiong@redhat.com>
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -91,36 +109,34 @@ LLM Generated explanations, may be completely bogus:
 
 Error: Failed to generate final synthesis
 
- drivers/net/phy/sfp.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/net/ethernet/intel/ixgbevf/vf.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 7a85b758fb1e6..c62e3f364ea73 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -543,6 +543,22 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
- 		  sfp_fixup_ignore_tx_fault_and_los),
+diff --git a/drivers/net/ethernet/intel/ixgbevf/vf.c b/drivers/net/ethernet/intel/ixgbevf/vf.c
+index b67b580f7f1c9..f6df86d124b9e 100644
+--- a/drivers/net/ethernet/intel/ixgbevf/vf.c
++++ b/drivers/net/ethernet/intel/ixgbevf/vf.c
+@@ -709,6 +709,12 @@ static int ixgbevf_negotiate_features_vf(struct ixgbe_hw *hw, u32 *pf_features)
+ 	return err;
+ }
  
-+	// Hisense LXT-010S-H is a GPON ONT SFP (sold as LEOX LXT-010S-H) that
-+	// can operate at 2500base-X, but reports 1000BASE-LX / 1300MBd in its
-+	// EEPROM
-+	SFP_QUIRK("Hisense-Leox", "LXT-010S-H", sfp_quirk_2500basex,
-+		  sfp_fixup_ignore_tx_fault),
++static int ixgbevf_hv_negotiate_features_vf(struct ixgbe_hw *hw,
++					    u32 *pf_features)
++{
++	return -EOPNOTSUPP;
++}
 +
-+	// Hisense ZNID-GPON-2311NA can operate at 2500base-X, but reports
-+	// 1000BASE-LX / 1300MBd in its EEPROM
-+	SFP_QUIRK("Hisense", "ZNID-GPON-2311NA", sfp_quirk_2500basex,
-+		  sfp_fixup_ignore_tx_fault),
-+
-+	// HSGQ HSGQ-XPON-Stick can operate at 2500base-X, but reports
-+	// 1000BASE-LX / 1300MBd in its EEPROM
-+	SFP_QUIRK("HSGQ", "HSGQ-XPON-Stick", sfp_quirk_2500basex,
-+		  sfp_fixup_ignore_tx_fault),
-+
- 	// Lantech 8330-262D-E and 8330-265D can operate at 2500base-X, but
- 	// incorrectly report 2500MBd NRZ in their EEPROM.
- 	// Some 8330-265D modules have inverted LOS, while all of them report
+ /**
+  *  ixgbevf_set_vfta_vf - Set/Unset VLAN filter table address
+  *  @hw: pointer to the HW structure
+@@ -1142,6 +1148,7 @@ static const struct ixgbe_mac_operations ixgbevf_hv_mac_ops = {
+ 	.setup_link		= ixgbevf_setup_mac_link_vf,
+ 	.check_link		= ixgbevf_hv_check_mac_link_vf,
+ 	.negotiate_api_version	= ixgbevf_hv_negotiate_api_version_vf,
++	.negotiate_features	= ixgbevf_hv_negotiate_features_vf,
+ 	.set_rar		= ixgbevf_hv_set_rar_vf,
+ 	.update_mc_addr_list	= ixgbevf_hv_update_mc_addr_list_vf,
+ 	.update_xcast_mode	= ixgbevf_hv_update_xcast_mode,
 -- 
 2.53.0
 
