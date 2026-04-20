@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E9B2D9EE4;
-	Mon, 20 Apr 2026 15:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82002D9EE4;
+	Mon, 20 Apr 2026 15:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699996; cv=none; b=UkIjc6sOMNbt3wZqO4ffTnZJuogPpTSJUAYHxHOcffMEJPmW/TOevTjs+fzHqgPrQMslt6Vg+0aaQwvuvVJ5C6kJVNMsEVgAkPip3OAscrSUb7NVm7+G2/kgw2fim/2eCsDZ5ks+WNGRg7es/ZzHDzgRxk+BxwBdovJdmqNg7sw=
+	t=1776699998; cv=none; b=WIzGtgJBhEUEIZamXq3Jr/HL2qNOjjncgsv7xuVJ52pTclWvk2JqUhawKWjvn24fD/SgHrdgmSNG8eTTlWZu6WIw0xNX2NLx778pgaF60k/Wc9pLVy7Hz5z4P7r21T6LtQLOwbdnzJprSzS8gHQWnd/pup0w5BUf64k94V+5kFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699996; c=relaxed/simple;
-	bh=bPPfGwOPjJ93kB0w1jY39VmUjRv+zADb8UkjIhukdcU=;
+	s=arc-20240116; t=1776699998; c=relaxed/simple;
+	bh=myDYlClgU3eGSzoixIfwtmGbEF2cKAxosg1fVE7Cbpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UsjqguGJ/qCSO1j2v6g5eVku+Jlkou9J78J5fykskKyAQwdz8N/xG5ySCPOTKYtPdKbKQsLqHY9XQH0hjnUVlzdE4bm1Dudbg3J1WviA9cdhMdWkNvX0BWo5dr0If/MZTnv+U+gxNclue68GsIpiieY3tKWLoTXfGoyFuE/baQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkDmIHrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BHvyTX82s2GJyRRvEfAmpcyGzhgfCaYpDuMiweMAwI7dHF1vTtHDPraNSAESsADjPNrOJCygsp14g5ei7KVC0u+nlETeNNO2jRhm4aOcjB/TtEJD4F+tBUadXtkJ6GnNjepRRr9mBOvb3BWj6dkRQcyeIDvCwvRGdIG2mHxUdsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzERbsiG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkDmIHrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2407C19425;
-	Mon, 20 Apr 2026 15:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzERbsiG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471F9C19425;
+	Mon, 20 Apr 2026 15:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699996;
-	bh=bPPfGwOPjJ93kB0w1jY39VmUjRv+zADb8UkjIhukdcU=;
+	s=korg; t=1776699998;
+	bh=myDYlClgU3eGSzoixIfwtmGbEF2cKAxosg1fVE7Cbpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gkDmIHrEsyYdcAb+R3XQfVh2/TpqiPI76Alk4sfZV4AszCTgRmZ7sRLOkMuwhNo+N
-	 lDquJqReJOV4w/gGMZcjj7dpNOjWETHsuLjNoCkDq6fmbx8ORI9i+pCXt/FQsO54Jn
-	 t32gfNnLEKEx805MKu4Iy1cxB2bqHIKAZyXyoYl0=
+	b=HzERbsiGenAL68Xho7sPSF9lz85OTg1OY2c+hWzKQpfVeVLS9TP2NJiGrixhaNose
+	 c8N+FuiNWt7hCpgpFLd41zHlIPaP5M2Owntp2wq5CoZl6b7TUqu/3+iHV6DIuGt0/i
+	 5iY4GDvE9h5+i6qeUsUseXv/w8TX+Tqmng8xf/go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.0 70/76] bcache: fix cached_dev.sb_bio use-after-free and crash
-Date: Mon, 20 Apr 2026 17:42:21 +0200
-Message-ID: <20260420153913.365443735@linuxfoundation.org>
+	syzbot+f2fbf7478a35a94c8b7c@syzkaller.appspotmail.com,
+	Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 71/76] wireguard: device: use exit_rtnl callback instead of manual rtnl_lock in pre_exit
+Date: Mon, 20 Apr 2026 17:42:22 +0200
+Message-ID: <20260420153913.402890031@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -51,67 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-commit fec114a98b8735ee89c75216c45a78e28be0f128 upstream.
+commit 60a25ef8dacb3566b1a8c4de00572a498e2a3bf9 upstream.
 
-In our production environment, we have received multiple crash reports
-regarding libceph, which have caught our attention:
+wg_netns_pre_exit() manually acquires rtnl_lock() inside the
+pernet .pre_exit callback.  This causes a hung task when another
+thread holds rtnl_mutex - the cleanup_net workqueue (or the
+setup_net failure rollback path) blocks indefinitely in
+wg_netns_pre_exit() waiting to acquire the lock.
 
-```
-[6888366.280350] Call Trace:
-[6888366.280452]  blk_update_request+0x14e/0x370
-[6888366.280561]  blk_mq_end_request+0x1a/0x130
-[6888366.280671]  rbd_img_handle_request+0x1a0/0x1b0 [rbd]
-[6888366.280792]  rbd_obj_handle_request+0x32/0x40 [rbd]
-[6888366.280903]  __complete_request+0x22/0x70 [libceph]
-[6888366.281032]  osd_dispatch+0x15e/0xb40 [libceph]
-[6888366.281164]  ? inet_recvmsg+0x5b/0xd0
-[6888366.281272]  ? ceph_tcp_recvmsg+0x6f/0xa0 [libceph]
-[6888366.281405]  ceph_con_process_message+0x79/0x140 [libceph]
-[6888366.281534]  ceph_con_v1_try_read+0x5d7/0xf30 [libceph]
-[6888366.281661]  ceph_con_workfn+0x329/0x680 [libceph]
-```
+Convert to .exit_rtnl, introduced in commit 7a60d91c690b ("net:
+Add ->exit_rtnl() hook to struct pernet_operations."), where the
+framework already holds RTNL and batches all callbacks under a
+single rtnl_lock()/rtnl_unlock() pair, eliminating the contention
+window.
 
-After analyzing the coredump file, we found that the address of
-dc->sb_bio has been freed. We know that cached_dev is only freed when it
-is stopped.
+The rcu_assign_pointer(wg->creating_net, NULL) is safe to move
+from .pre_exit to .exit_rtnl (which runs after synchronize_rcu())
+because all RCU readers of creating_net either use maybe_get_net()
+- which returns NULL for a dying namespace with zero refcount - or
+access net->user_ns which remains valid throughout the entire
+ops_undo_list sequence.
 
-Since sb_bio is a part of struct cached_dev, rather than an alloc every
-time.  If the device is stopped while writing to the superblock, the
-released address will be accessed at endio.
-
-This patch hopes to wait for sb_write to complete in cached_dev_free.
-
-It should be noted that we analyzed the cause of the problem, then tell
-all details to the QWEN and adopted the modifications it made.
-
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Fixes: cafe563591446 ("bcache: A block layer cache")
-Cc: stable@vger.kernel.org # 3.10+
-Signed-off-by: Coly Li <colyli@fnnas.com>
-Link: https://patch.msgid.link/20260322134102.480107-1-colyli@fnnas.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: syzbot+f2fbf7478a35a94c8b7c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?id=cb64c22a492202ca929e18262fdb8cb89e635c70
+Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+[ Jason: added __net_exit and __read_mostly annotations that were missing. ]
+Fixes: 900575aa33a3 ("wireguard: device: avoid circular netns references")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20260414153944.2742252-5-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/super.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireguard/device.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1373,6 +1373,13 @@ static CLOSURE_CALLBACK(cached_dev_free)
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -411,12 +411,11 @@ static struct rtnl_link_ops link_ops __r
+ 	.newlink		= wg_newlink,
+ };
  
- 	mutex_unlock(&bch_register_lock);
+-static void wg_netns_pre_exit(struct net *net)
++static void __net_exit wg_netns_exit_rtnl(struct net *net, struct list_head *dev_kill_list)
+ {
+ 	struct wg_device *wg;
+ 	struct wg_peer *peer;
  
-+	/*
-+	 * Wait for any pending sb_write to complete before free.
-+	 * The sb_bio is embedded in struct cached_dev, so we must
-+	 * ensure no I/O is in progress.
-+	 */
-+	closure_sync(&dc->sb_write);
-+
- 	if (dc->sb_disk)
- 		folio_put(virt_to_folio(dc->sb_disk));
+-	rtnl_lock();
+ 	list_for_each_entry(wg, &device_list, device_list) {
+ 		if (rcu_access_pointer(wg->creating_net) == net) {
+ 			pr_debug("%s: Creating namespace exiting\n", wg->dev->name);
+@@ -429,11 +428,10 @@ static void wg_netns_pre_exit(struct net
+ 			mutex_unlock(&wg->device_update_lock);
+ 		}
+ 	}
+-	rtnl_unlock();
+ }
  
+-static struct pernet_operations pernet_ops = {
+-	.pre_exit = wg_netns_pre_exit
++static struct pernet_operations pernet_ops __read_mostly = {
++	.exit_rtnl = wg_netns_exit_rtnl
+ };
+ 
+ int __init wg_device_init(void)
 
 
