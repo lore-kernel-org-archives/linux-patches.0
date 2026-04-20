@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DC933C19E;
-	Mon, 20 Apr 2026 15:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F69322749;
+	Mon, 20 Apr 2026 15:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700675; cv=none; b=mTnQJJWeEOMJuEUuJadE+sBY+kA+ANZg//I4/dXp5sR/ka4fkDgQUI/GZ5PKZnsMnIqYZZIddCxrZweIbQPRWoSoI9NoFehQoo5ZZvFOE5g1AJta0pKNrlPZkJ3eUZALcyidOp6pQ6aQmhYBWWSex7J6ufn+Rdn7hQZMN/zILz0=
+	t=1776700677; cv=none; b=BFeECe6qQb80vSNj9AJfSDwaN6kJERMcmudGdjzflLJhH8hoC4WIiJDIRnxRgakRJbML2z0jmD8i/D9WwtCoaOX1+DhrOCqbEJ7RUMESzyD7+JB2M2YFB24bXrEN3fedofaG9ZJ2XlIFIqwex33Oave0rIyCfz19ZpfXVUA22hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700675; c=relaxed/simple;
-	bh=b228TxizukoDc/+1BN0H4KGYA/xUy+TwKchIISLNjww=;
+	s=arc-20240116; t=1776700677; c=relaxed/simple;
+	bh=TPi22R44xO568q+Uygf+kYA5OOEL8WcbWzmA810CJ7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WqTXYjj6oAN8oUV9GdPvCYtc75Iyy6l3LA23zhxXklezaogQcaBitMzYzwQfghsVr0tzqVptC793XBLNZFRv6Rubhc/PbkucoeqPdx+XlODVuv3mzZdvo7yhtfmM+kI30Yvqc+H7olUTAKDn1rdxXWh6BG8rOEepCjbjxX9JSYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCiHvB5L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fgw9CyuFmQPGH+hA+2kJjMpReuarIiJ6vc7n8XZeaKMPSXUwUE7rKwgVSM2Ah7CLTEqVQ1xU1sW3JItGrWolI4avPydukMnMZHDWzfeyZDdd6uULFSuyrcuKmvPMwfWY2pcOSr3GZhacPVR2tbViEJhaYGz0cfbwOpsb+2RGa3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lt4/H3cC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCiHvB5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F4DC19425;
-	Mon, 20 Apr 2026 15:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lt4/H3cC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F46C19425;
+	Mon, 20 Apr 2026 15:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700675;
-	bh=b228TxizukoDc/+1BN0H4KGYA/xUy+TwKchIISLNjww=;
+	s=korg; t=1776700677;
+	bh=TPi22R44xO568q+Uygf+kYA5OOEL8WcbWzmA810CJ7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JCiHvB5L+r8iZg/hAVBFWPVQo7MH5UVh9jrg5HpOjuCNOardIQFrrtvR0q2Xj5qgq
-	 uTKOnfSl6Ogrn+plc6hwcGtnPzMiYBteKqOxoEmfTpgChpmi0ar0K39azaAb4+tOz9
-	 /Ov+sRr8xLIXhc1d6WEnlV5Qh/Bv3Kiv/gW/8omU=
+	b=Lt4/H3cCCtq0qpJLV0m9gGueKKCF1dTsOwLBnGbtmdqV+0D4q3A5j3BsRL7tPYgJG
+	 5PTZ8iT7iltB2bJtKBvvPlCVrLRGTRmkKTvf58ce6fsi8FHRWJeDjJwPcqN8IvmIfG
+	 uuF5HNQYPAI7tQdppzMAQT/yh9zReb+hak1zNB94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=EA=B9=80=EC=98=81=EB=AF=BC?= <osori@hspace.io>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tomasz Merta <tommerta@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/198] x86: shadow stacks: proper error handling for mmap lock
-Date: Mon, 20 Apr 2026 17:40:23 +0200
-Message-ID: <20260420153937.204016469@linuxfoundation.org>
+Subject: [PATCH 6.18 045/198] ASoC: stm32_sai: fix incorrect BCLK polarity for DSP_A/B, LEFT_J
+Date: Mon, 20 Apr 2026 17:40:24 +0200
+Message-ID: <20260420153937.239661336@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -48,80 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Tomasz Merta <tomasz.merta@arrow.com>
 
-[ Upstream commit 52f657e34d7b21b47434d9d8b26fa7f6778b63a0 ]
+[ Upstream commit 0669631dbccd41cf3ca7aa70213fcd8bb41c4b38 ]
 
-김영민 reports that shstk_pop_sigframe() doesn't check for errors from
-mmap_read_lock_killable(), which is a silly oversight, and also shows
-that we haven't marked those functions with "__must_check", which would
-have immediately caught it.
+The STM32 SAI driver do not set the clock strobing bit (CKSTR) for DSP_A,
+DSP_B and LEFT_J formats, causing data to be sampled on the wrong BCLK
+edge when SND_SOC_DAIFMT_NB_NF is used.
 
-So let's fix both issues.
+Per ALSA convention, NB_NF requires sampling on the rising BCLK edge.
+The STM32MP25 SAI reference manual states that CKSTR=1 is required for
+signals received by the SAI to be sampled on the SCK rising edge.
+Without setting CKSTR=1, the SAI samples on the falling edge, violating
+the NB_NF convention. For comparison, the NXP FSL SAI driver correctly
+sets FSL_SAI_CR2_BCP for DSP_A, DSP_B and LEFT_J, consistent with its
+I2S handling.
 
-Reported-by: 김영민 <osori@hspace.io>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Dave Hansen <dave.hansen@intel.com>
-Acked-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+This patch adds SAI_XCR1_CKSTR for DSP_A, DSP_B and LEFT_J in
+stm32_sai_set_dai_fmt which was verified empirically with a cs47l35 codec.
+RIGHT_J (LSB) is not investigated and addressed by this patch.
+
+Note: the STM32 I2S driver (stm32_i2s_set_dai_fmt) may have the same issue
+for DSP_A mode, as I2S_CGFR_CKPOL is not set. This has not been verified
+and is left for a separate investigation.
+
+Signed-off-by: Tomasz Merta <tommerta@gmail.com>
+Link: https://patch.msgid.link/20260408084056.20588-1-tommerta@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/shstk.c   | 3 ++-
- include/linux/mmap_lock.h | 6 +++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ sound/soc/stm/stm32_sai_sub.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/kernel/shstk.c b/arch/x86/kernel/shstk.c
-index 978232b6d48d7..ff8edea8511b4 100644
---- a/arch/x86/kernel/shstk.c
-+++ b/arch/x86/kernel/shstk.c
-@@ -351,7 +351,8 @@ static int shstk_pop_sigframe(unsigned long *ssp)
- 	need_to_check_vma = PAGE_ALIGN(*ssp) == *ssp;
- 
- 	if (need_to_check_vma)
--		mmap_read_lock_killable(current->mm);
-+		if (mmap_read_lock_killable(current->mm))
-+			return -EINTR;
- 
- 	err = get_shstk_data(&token_addr, (unsigned long __user *)*ssp);
- 	if (unlikely(err))
-diff --git a/include/linux/mmap_lock.h b/include/linux/mmap_lock.h
-index 2c9fffa58714f..95ee1f224c492 100644
---- a/include/linux/mmap_lock.h
-+++ b/include/linux/mmap_lock.h
-@@ -322,7 +322,7 @@ static inline void mmap_write_lock_nested(struct mm_struct *mm, int subclass)
- 	__mmap_lock_trace_acquire_returned(mm, true, true);
- }
- 
--static inline int mmap_write_lock_killable(struct mm_struct *mm)
-+static inline int __must_check mmap_write_lock_killable(struct mm_struct *mm)
- {
- 	int ret;
- 
-@@ -369,7 +369,7 @@ static inline void mmap_read_lock(struct mm_struct *mm)
- 	__mmap_lock_trace_acquire_returned(mm, false, true);
- }
- 
--static inline int mmap_read_lock_killable(struct mm_struct *mm)
-+static inline int __must_check mmap_read_lock_killable(struct mm_struct *mm)
- {
- 	int ret;
- 
-@@ -379,7 +379,7 @@ static inline int mmap_read_lock_killable(struct mm_struct *mm)
- 	return ret;
- }
- 
--static inline bool mmap_read_trylock(struct mm_struct *mm)
-+static inline bool __must_check mmap_read_trylock(struct mm_struct *mm)
- {
- 	bool ret;
- 
+diff --git a/sound/soc/stm/stm32_sai_sub.c b/sound/soc/stm/stm32_sai_sub.c
+index 5ae4d2577f28b..c2540383ab86f 100644
+--- a/sound/soc/stm/stm32_sai_sub.c
++++ b/sound/soc/stm/stm32_sai_sub.c
+@@ -802,6 +802,7 @@ static int stm32_sai_set_dai_fmt(struct snd_soc_dai *cpu_dai, unsigned int fmt)
+ 		break;
+ 	/* Left justified */
+ 	case SND_SOC_DAIFMT_MSB:
++		cr1 |= SAI_XCR1_CKSTR;
+ 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSDEF;
+ 		break;
+ 	/* Right justified */
+@@ -809,9 +810,11 @@ static int stm32_sai_set_dai_fmt(struct snd_soc_dai *cpu_dai, unsigned int fmt)
+ 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSDEF;
+ 		break;
+ 	case SND_SOC_DAIFMT_DSP_A:
++		cr1 |= SAI_XCR1_CKSTR;
+ 		frcr |= SAI_XFRCR_FSPOL | SAI_XFRCR_FSOFF;
+ 		break;
+ 	case SND_SOC_DAIFMT_DSP_B:
++		cr1 |= SAI_XCR1_CKSTR;
+ 		frcr |= SAI_XFRCR_FSPOL;
+ 		break;
+ 	default:
 -- 
 2.53.0
 
