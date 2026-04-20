@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F190F3CB2D9;
-	Mon, 20 Apr 2026 13:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189583A6EE1;
+	Mon, 20 Apr 2026 13:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691064; cv=none; b=p4Mm6i4bI8DP26ewDAyWShHAs67yGd/bUBact1ecsnPXNo0Gouvmov11UPKMBUbevcDuky7vlEeaa66wLdYN4txe+ZOz1p/qK+ZelZvVIa3h8psNf28eGarUzFHdbHrceDZJh+P4nupgGPr65V7wRXmvZfFA83BOPdQqPBxSpmg=
+	t=1776691066; cv=none; b=Pf5tGQBnR89ZVDoP/2+fCyHYaKN4Y4PmoXDUACCOmElOCwbGKoZi8SfHxK1r7k1IUNiJn/v3khEDysFcnvuinVCtD72LMtGt27rJu0DC1Zlu7S5CCNMxv+S3tIwvWDNxzxExZowPLSs+ylX6ob4rGOdQN8Fq+5yU8dS8icdwGfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691064; c=relaxed/simple;
-	bh=kgfq54QGG2g58urvUeBUMahf9u493TsnAKZki1DT03Q=;
+	s=arc-20240116; t=1776691066; c=relaxed/simple;
+	bh=ArOCUE3+Y8VR7T0cVnTsPyfhBwK+5Y4/JLiBPjzYrH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lj5sfEJ01occkvimGeuaNuMVEjMV1zdzcG3FyTaQY9j+02o4rYsT+SUxY9FX5N89kz7d6pGQR72dO70jfoIwXq+kF92umNa0rWtFtK4P6zyyLdC1e5Pk1FgVxyp3LAQB15fnh6eejTWG6KFmpGG/JVZpRpYxhhR9K7ki2Zj725A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uiqL3gbW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NT50fMYggFLiXTe22UUdGy6PQ133ngdy3Q6OseQE63PDRfwh/FibAUAPBY3lhUhlozIzbcVBs7OXg9eMShatDEWazTCjfUuk5gNbWKV6V4Qtppi9BqaePrXRNacQVe6AJ7BXvzDerLeI6Twu/pXbmd2H3+qrwcwzSLIEOL80Vfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/YRZadA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uiqL3gbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C336C2BCB4;
-	Mon, 20 Apr 2026 13:17:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/YRZadA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDF9C2BCB8;
+	Mon, 20 Apr 2026 13:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691063;
-	bh=kgfq54QGG2g58urvUeBUMahf9u493TsnAKZki1DT03Q=;
+	s=k20201202; t=1776691065;
+	bh=ArOCUE3+Y8VR7T0cVnTsPyfhBwK+5Y4/JLiBPjzYrH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uiqL3gbWk+jJbU+nFLsHg44O6xpCrh75V1QgBnS3AGwB/Xf8GL3waJ60JGIPwnI6C
-	 IpL0X/ChLtZCwgQxNnz+K59M/k/MtqljVmHFEl8vFVlfjca7Iclj6zrfvFzjhs8lwh
-	 4bTBoFMEj0GmYj8WTxpVrut/hdK3vsJV+AnwZfaezpdNBPwKd/iCfUGksk3oQWgksg
-	 j+5PmHNuNQxp9SLzUAjOudPtQ25efXleufy+xPUdw2QoxOJQNSDfMApkQtLdA/0zYK
-	 jNREtu2fxD0QkaikZa+ZVkzWp30c9yfPmFaVpjey2y2X+g2shxSaq4YFp+ah1GdIUL
-	 OcUdC0VAqXrIA==
+	b=i/YRZadAv2oMtMByyma8TDR1+1b9JoovTv6icImy+7VqZzKIowwISzcbTMOzSuijM
+	 grJ9wpFVWuOG5H6K1hyAaAGwfMAB0mh2Z6eCEHig/cg0aBElhd+gOITV1+yu4yvGdy
+	 3zogp6q3B3THGWV/P7c6O5xbJfDibhDbJn8LJoch2FbcwbNY9L2BcqrXFY/HVyHpp/
+	 8NswYCCiXZiNCADoibpegwp16xLtOrn2slTg+r4JEGFO3hPLX4koFSNI4g4eeFU7HY
+	 hGzdQlgTFUhYPxN8n6xom4d9AaRelUgQo57oZav0+OT5WqnE0vO5poSLhhyJew5myl
+	 i6bf6rkYFzppA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dawei Liu <dawei.liu.jy@renesas.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Dave Chen <davechen@synology.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Robbie Ko <robbieko@synology.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jdelvare@suse.com,
-	corbet@lwn.net,
-	linux-hwmon@vger.kernel.org,
-	linux-doc@vger.kernel.org,
+	clm@fb.com,
+	josef@toxicpanda.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] hwmon: (pmbus/isl68137) Add support for Renesas RAA228942 and RAA228943
-Date: Mon, 20 Apr 2026 09:08:58 -0400
-Message-ID: <20260420131539.986432-72-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] btrfs: use BTRFS_FS_UPDATE_UUID_TREE_GEN flag for UUID tree rescan check
+Date: Mon, 20 Apr 2026 09:08:59 -0400
+Message-ID: <20260420131539.986432-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -52,291 +53,397 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dawei Liu <dawei.liu.jy@renesas.com>
+From: Dave Chen <davechen@synology.com>
 
-[ Upstream commit 7c760db74c9f30da7281c7f450d0676ec78ec3e6 ]
+[ Upstream commit e70e3f858e084aee34a2206e5f4dd49a47673f6a ]
 
-Add I2C device IDs for Renesas RAA228942 and RAA228943.
+The UUID tree rescan check in open_ctree() compares
+fs_info->generation with the superblock's uuid_tree_generation.
+This comparison is not reliable because fs_info->generation is
+bumped at transaction start time in join_transaction(), while
+uuid_tree_generation is only updated at commit time via
+update_super_roots().
 
-At the Linux PMBus hwmon interface level currently supported by this
-driver, these devices are compatible with the existing 2-rail non-TC
-controllers, so devicetree will use fallback compatibles and no
-dedicated OF match entries are needed.
+Between the early BTRFS_FS_UPDATE_UUID_TREE_GEN flag check and the
+late rescan decision, mount operations such as file orphan cleanup
+from an unclean shutdown start transactions without committing
+them. This advances fs_info->generation past uuid_tree_generation
+and produces a false-positive mismatch.
 
-Signed-off-by: Dawei Liu <dawei.liu.jy@renesas.com>
-Link: https://lore.kernel.org/r/20260325090208.857-3-dawei.liu.jy@renesas.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Use the BTRFS_FS_UPDATE_UUID_TREE_GEN flag directly instead. The
+flag was already set earlier in open_ctree() when the generations
+were known to match, and accurately represents "UUID tree is up to
+date" without being affected by subsequent transaction starts.
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Dave Chen <davechen@synology.com>
+Signed-off-by: Robbie Ko <robbieko@synology.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile the findings.
+Now I have a complete picture. Let me compile the final analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `hwmon: (pmbus/isl68137)`
-- Action verb: "Add support"
-- Summary: Add I2C device IDs for two new Renesas voltage regulators
-  (RAA228942 and RAA228943)
-- Record: This is a device ID addition, not a bug fix.
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: [btrfs] [use] [Replace unreliable generation comparison with
+reliable flag for UUID tree rescan check]
 
-**Step 1.2: Tags**
-- Signed-off-by: Dawei Liu <dawei.liu.jy@renesas.com> (author, Renesas
-  employee)
-- Link: lore.kernel.org mail link
-- Signed-off-by: Guenter Roeck <linux@roeck-us.net> (hwmon subsystem
-  maintainer - accepted the patch)
-- No Fixes: tag (expected for candidates)
-- No Cc: stable (expected for candidates)
-- No Reported-by, Tested-by, or Reviewed-by
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Reviewed-by:** Filipe Manana <fdmanana@suse.com> — Filipe is a
+  prolific btrfs maintainer/developer (verified: 5+ recent commits in
+  btrfs)
+- **Signed-off-by:** Dave Chen <davechen@synology.com> — Author
+- **Signed-off-by:** Robbie Ko <robbieko@synology.com> — Co-
+  author/submitter from Synology
+- **Signed-off-by:** Filipe Manana <fdmanana@suse.com> — Committer path
+- **Signed-off-by:** David Sterba <dsterba@suse.com> — Btrfs tree
+  maintainer
 
-**Step 1.3: Commit Body**
-- States that these devices "are compatible with the existing 2-rail
-  non-TC controllers"
-- Explicitly says "devicetree will use fallback compatibles and no
-  dedicated OF match entries are needed"
-- This is a pure hardware enablement addition
+No Fixes: tag, no Reported-by, no Link, no Cc: stable. Absence is
+expected.
 
-**Step 1.4: Hidden Bug Fix?**
-- No. This is not a hidden bug fix. It is straightforward device ID
-  addition.
+Record: Patch was reviewed by Filipe Manana (btrfs expert) and committed
+through Filipe and David Sterba (btrfs maintainer). Strong review chain.
+
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit explains:
+- **Bug mechanism:** `fs_info->generation` is bumped at transaction
+  start time in `join_transaction()`, while `uuid_tree_generation` is
+  only updated at commit time in `update_super_roots()`.
+- **What goes wrong:** Between the early `BTRFS_FS_UPDATE_UUID_TREE_GEN`
+  flag check and the late UUID rescan decision, mount operations (orphan
+  cleanup from unclean shutdown) start transactions without committing
+  them. This advances `fs_info->generation` past `uuid_tree_generation`,
+  producing a **false-positive mismatch**.
+- **Result:** Unnecessary UUID tree rescan on mount after unclean
+  shutdown.
+- **Fix:** Use the `BTRFS_FS_UPDATE_UUID_TREE_GEN` flag directly instead
+  of re-comparing generations.
+
+Record: Real bug — false-positive UUID tree rescan triggered on mount
+after unclean shutdown. Root cause is generation counter advancing from
+uncommitted transactions between the flag-set point and the check point.
+
+### Step 1.4: DETECT HIDDEN BUG FIXES
+This IS a real bug fix, though the commit message doesn't use the word
+"fix" directly. The language "not reliable," "false-positive mismatch,"
+and the explanation of the broken mechanism clearly describe a bug being
+corrected.
+
+Record: Yes, this is a real bug fix for an incorrect condition that
+triggers unnecessary rescans.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- `Documentation/hwmon/isl68137.rst`: +20 lines (documentation for two
-  new devices)
-- `drivers/hwmon/pmbus/isl68137.c`: +2 lines (two I2C device ID table
-  entries)
-- Total: +22 lines, 0 removed
-- Scope: Trivially small, single-file code change + docs
+### Step 2.1: INVENTORY THE CHANGES
+- **File:** `fs/btrfs/disk-io.c` — 1 line changed (1 removed, 1 added)
+- **Function:** `open_ctree()` — the main btrfs mount function
+- **Scope:** Single-file, single-line, surgical fix
 
-**Step 2.2: Code Flow**
-- Two entries added to the `raa_dmpvr_id[]` I2C device ID table:
-  - `{"raa228942", raa_dmpvr2_2rail_nontc}`
-  - `{"raa228943", raa_dmpvr2_2rail_nontc}`
-- These use the existing `raa_dmpvr2_2rail_nontc` variant, which was
-  introduced in commit 51fb91ed5a6fa (v5.10 era). The variant disables
-  `TEMP3` and configures 2-page mode.
-- No new code paths, no new functions, no logic changes
+Record: 1 file, 1 line change, in `open_ctree()`. Minimal scope.
 
-**Step 2.3: Bug Mechanism**
-- Category: Hardware device ID addition (exception category h)
-- Without these IDs, the kernel cannot bind the existing ISL68137 PMBus
-  driver to these Renesas parts
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
 
-**Step 2.4: Fix Quality**
-- Obviously correct: merely adding two string/enum pairs to an existing
-  table
-- Minimal and surgical
-- Zero regression risk: only affects systems with these specific I2C
-  devices
-- No new code paths, APIs, or behavioral changes
+**Before (line 3677):**
+```c
+fs_info->generation != btrfs_super_uuid_tree_generation(disk_super)
+```
+Compares current in-memory generation counter vs. on-disk
+uuid_tree_generation.
 
-## PHASE 3: GIT HISTORY
+**After:**
+```c
+!test_bit(BTRFS_FS_UPDATE_UUID_TREE_GEN, &fs_info->flags)
+```
+Tests the flag that was set earlier at line 3537 when generations were
+known to match.
 
-**Step 3.1: Blame**
-- The `raa_dmpvr_id[]` table has been present since commit f621d61fd59f4
-  (2020). The `raa_dmpvr2_2rail_nontc` variant was added in commit
-  51fb91ed5a6fa (2020, v5.10 era).
-- Both are present in all active stable trees (5.10+, 5.15+, 6.1+, 6.6+)
+Record: Normal mount path affected. Changes the condition from an
+unreliable runtime comparison to a stable flag check.
 
-**Step 3.2: Fixes Tag**
-- No Fixes: tag (not applicable - this is a device ID addition, not a
-  bug fix)
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+This is a **logic/correctness bug**. The comparison `fs_info->generation
+!= uuid_tree_generation` was correct at the time it was originally
+written, but commit 44c0ca211a4da (Boris Burkov, 2020) refactored the
+code to move orphan cleanup and other rw mount operations *before* this
+check via `btrfs_start_pre_rw_mount()`. Those operations start
+transactions (confirmed: `btrfs_orphan_cleanup()` calls
+`btrfs_start_transaction()` at line 3870 of `inode.c`), which bumps
+`fs_info->generation` (confirmed: `join_transaction()` at line 392 of
+`transaction.c`). The on-disk `uuid_tree_generation` doesn't change
+until `update_super_roots()` at commit time (confirmed: line 1985-1986
+of `transaction.c`).
 
-**Step 3.3: File History**
-- Prior identical-pattern commit: 2190ad55a601d added RAA228244 and
-  RAA228246 in the same manner. This was a v6.18/6.19 timeframe commit.
-- The pattern of adding new Renesas device IDs to this driver is well
-  established.
+Record: Logic bug category. Condition became incorrect after code was
+reordered by refactoring commit 44c0ca211a4da.
 
-**Step 3.4: Author**
-- Dawei Liu is a Renesas employee (dawei.liu.jy@renesas.com),
-  appropriate for submitting Renesas device support.
+### Step 2.4: ASSESS THE FIX QUALITY
+- Obviously correct: The flag `BTRFS_FS_UPDATE_UUID_TREE_GEN` is already
+  set at line 3537 exactly when the generations match, and is unaffected
+  by transaction starts
+- Minimal/surgical: 1 line change
+- No regression risk: The flag is already the authoritative indicator
+  (used by `update_super_roots()` at commit time)
+- Reviewed by Filipe Manana
 
-**Step 3.5: Dependencies**
-- No dependencies. The `raa_dmpvr2_2rail_nontc` enum value and its case
-  statement already exist in stable trees back to 5.10.
+Record: Fix quality is excellent. Obviously correct, minimal, no
+regression risk.
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: BLAME THE CHANGED LINES
+The buggy line (3677) was introduced by commit 44c0ca211a4da9 (Boris
+Burkov, 2020-11-18) — "btrfs: lift read-write mount setup from mount and
+remount". This refactoring moved rw mount setup into
+`btrfs_start_pre_rw_mount()` but left the generation comparison in
+`open_ctree()` after the call, creating the false-positive window.
+
+Record: Buggy code introduced by 44c0ca211a4da (v5.11). Present in all
+active stable trees from 5.15+.
+
+### Step 3.2: FOLLOW THE FIXES TAG
+No Fixes: tag, but the bug was introduced by 44c0ca211a4da. The earlier
+fix attempt (75ec1db8717a8 by Josef Bacik, 2020) set the flag *before*
+the problematic code paths, specifically to prevent this exact class of
+bug. But the 44c0ca211a4da refactoring reintroduced the problem by
+moving more transaction-starting code between the flag set and the
+rescan check, without updating the check to use the flag.
+
+Record: 44c0ca211a4da introduced the bug. It's in v5.11+ (all active
+stable trees).
+
+### Step 3.3: CHECK FILE HISTORY
+Recent file history shows active maintenance with various fixes. No
+dependency concerns.
+
+Record: Standalone fix, no prerequisites needed.
+
+### Step 3.4: AUTHOR
+Dave Chen from Synology is a btrfs contributor. Robbie Ko from Synology
+is also a known btrfs contributor with multiple commits. Filipe Manana
+reviewed.
+
+Record: Authors are active btrfs contributors, reviewer is btrfs expert.
+
+### Step 3.5: DEPENDENCIES
+The fix depends on `BTRFS_FS_UPDATE_UUID_TREE_GEN` flag existing and
+being set early in `open_ctree()`. This was added by 75ec1db8717a8
+(Josef Bacik, 2020, v5.6, CC stable 4.19+). Verified: The flag and the
+early set_bit at line 3537 exist in current code.
+
+Record: No additional dependencies. The flag infrastructure exists since
+v5.6.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1-4.5:** Lore is behind bot protection and cannot be fetched.
-However, the Link: tag confirms the patch was submitted via the standard
-process and accepted by hwmon maintainer Guenter Roeck. The `b4 dig` of
-the prior similar commit (2190ad55a601d) confirmed it was part of a
-normal patch series accepted through the standard hwmon tree.
+### Step 4.1-4.5
+b4 dig could not find the specific patch submission (the commit may be
+very recent or submitted through a different path). Web searches also
+couldn't reach lore due to anti-bot protection. The commit message and
+review chain (Reviewed-by: Filipe Manana, SOBs from Filipe Manana and
+David Sterba) confirm it went through proper btrfs review.
+
+Record: Could not access mailing list discussion directly. Review chain
+confirms proper vetting.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.5:**
-- The only code change is adding entries to a static `struct
-  i2c_device_id` table.
-- When the I2C subsystem finds a device matching `"raa228942"` or
-  `"raa228943"`, it will call `isl68137_probe()` with the
-  `raa_dmpvr2_2rail_nontc` variant.
-- The `raa_dmpvr2_2rail_nontc` case (lines 413-416) simply disables
-  TEMP3, falls through to the 2-rail handler. This is well-tested code
-  used by RAA228228, RAA228244, and RAA228246.
-- No new code paths are created.
+### Step 5.1: KEY FUNCTIONS
+Modified function: `open_ctree()` — the main btrfs filesystem mount
+function.
+
+### Step 5.2: CALLERS
+`open_ctree()` is called during every btrfs mount. This is a universally
+exercised path.
+
+### Step 5.3-5.4: TRIGGER PATH
+The false-positive triggers when:
+1. Filesystem had an unclean shutdown (so orphan items exist)
+2. Mount starts a transaction during orphan cleanup → bumps generation
+3. UUID rescan check falsely detects a mismatch → triggers unnecessary
+   rescan
+
+This is extremely common — every btrfs mount after crash/power failure.
+
+Record: Bug path is very commonly triggered (any mount after unclean
+shutdown).
+
+### Step 5.5: SIMILAR PATTERNS
+Josef Bacik's commit 75ec1db8717a8 fixed the exact same class of bug
+earlier (log replay bumping generation), showing this is a recurring
+pattern.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1:** The driver exists in all active stable trees (5.10+). The
-`raa_dmpvr2_2rail_nontc` variant exists since 5.10.
+### Step 6.1: BUGGY CODE IN STABLE
+The bug was introduced in 44c0ca211a4da (v5.11). It exists in stable
+trees: 5.15.y, 6.1.y, 6.6.y, 6.12.y, and now 7.0.
 
-**Step 6.2:** The patch adds 2 lines to the I2C ID table and
-documentation. It will apply cleanly or with trivial context adjustments
-(the table is in alphabetical order).
+### Step 6.2: BACKPORT COMPLICATIONS
+The fix is a single-line change. The surrounding code context may differ
+slightly between stable trees, but the essential structure (uuid_root
+check with generation comparison) should be present in all affected
+trees.
 
-**Step 6.3:** No related fixes already in stable for these specific
-devices.
+Record: Clean apply expected in most trees; minor conflicts possible in
+very old trees due to surrounding code changes.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Step 6.3: RELATED FIXES
+No other fix for this specific issue found in history.
 
-**Step 7.1:** `drivers/hwmon/pmbus` - hardware monitoring for PMBus
-voltage regulators. Criticality: PERIPHERAL (specific hardware).
-However, PMBus voltage regulators are used in servers and embedded
-systems where stable kernels are common.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.2:** Actively maintained by Guenter Roeck, with regular device
-ID additions.
+### Step 7.1: SUBSYSTEM CRITICALITY
+btrfs (fs/btrfs/) — IMPORTANT. Major Linux filesystem used in many
+distributions (SUSE, openSUSE, Fedora) and NAS products (Synology, which
+is where this fix comes from).
 
-## PHASE 8: IMPACT AND RISK
+### Step 7.2: ACTIVITY
+Very actively developed and maintained. Multiple fixes merged during 7.0
+cycle.
 
-**Step 8.1:** Affects users of Renesas RAA228942/RAA228943 hardware
-specifically.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.2:** Without these IDs, the driver cannot bind to the hardware
-at all. Users with this hardware have no workaround on stable kernels.
+### Step 8.1: WHO IS AFFECTED
+All btrfs users who experience unclean shutdowns (crash, power failure,
+hard reset).
 
-**Step 8.3:** Failure mode without fix: hardware is completely
-inaccessible. Severity: MEDIUM (functional but not crash/corruption).
+### Step 8.2: TRIGGER CONDITIONS
+- Trigger: Mount after unclean shutdown when orphan items exist → very
+  common
+- No special privileges needed, just mounting the filesystem
+- Deterministic (not timing-dependent)
 
-**Step 8.4:**
-- Benefit: Enables hardware monitoring for users with these specific
-  Renesas voltage regulators on stable kernels.
-- Risk: Essentially zero. Two table entries using an existing, well-
-  tested variant.
-- Ratio: Very favorable benefit/risk.
+### Step 8.3: FAILURE MODE SEVERITY
+- **Not a crash or data corruption** — the UUID tree rescan is
+  unnecessary but harmless
+- **Performance impact:** The rescan walks the entire UUID tree,
+  verifying every entry. On a filesystem with many subvolumes/snapshots,
+  this can be expensive and slow down mount time significantly
+- **User-visible symptom:** "checking UUID tree" message in dmesg on
+  every mount after unclean shutdown, plus slower mount
+
+Record: Severity: MEDIUM. Unnecessary expensive operation during mount.
+No data risk.
+
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit:** Eliminates unnecessary UUID tree rescans on mount after
+  unclean shutdown. Improves mount time for btrfs users (especially
+  those with many subvolumes)
+- **Risk:** Extremely low — 1-line change, obviously correct, uses a
+  flag that was designed for exactly this purpose
+- **Ratio:** Very favorable
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- Device ID addition to existing driver - explicitly allowed exception
-  category
-- Trivially small (2 lines of code)
-- Uses existing, well-tested variant (`raa_dmpvr2_2rail_nontc`) present
-  since v5.10
-- Zero regression risk
-- Accepted by subsystem maintainer (Guenter Roeck)
-- Author is from the chip vendor (Renesas)
-- Enables real hardware for real users
+### Step 9.1: EVIDENCE
 
-**Evidence AGAINST backporting:**
-- Not a bug fix - purely hardware enablement
-- Affects only users with these specific Renesas parts (narrow audience)
+**FOR backporting:**
+- Fixes a real bug: unnecessary UUID tree rescan triggered by false-
+  positive generation mismatch
+- Extremely small and surgical: 1 line change
+- Obviously correct: uses the flag designed for this exact purpose
+- Reviewed by Filipe Manana (btrfs expert)
+- Bug affects all btrfs users who experience unclean shutdowns
+- Bug exists since v5.11 (all active stable trees)
+- No regression risk
+- The flag infrastructure is already present in all stable trees
 
-**Stable Rules Checklist:**
-1. Obviously correct? **YES** - trivial table addition
-2. Fixes a real bug? **No** - but device ID additions are an explicit
-   exception
-3. Important? Moderately - enables hardware for users who have it
-4. Small and contained? **YES** - 2 lines of code + docs
-5. No new features/APIs? **YES** - no new features, just ID binding
-6. Can apply to stable? **YES** - clean apply expected
+**AGAINST backporting:**
+- Not a crash, security issue, or data corruption
+- The unnecessary rescan is a performance issue, not a correctness issue
+  (the rescan itself is harmless)
+- No Fixes: or Cc: stable tags from the author (expected — that's why
+  we're reviewing)
 
-**Exception Category:** Device ID addition to existing driver - this is
-one of the explicitly listed categories that ARE allowed in stable
-despite being "additions."
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** — trivial 1-line change
+   reviewed by btrfs expert
+2. Fixes a real bug that affects users? **YES** — unnecessary expensive
+   operation on mount after crash
+3. Important issue? **MEDIUM** — performance issue on common path, not
+   crash/corruption
+4. Small and contained? **YES** — 1 line, 1 file
+5. No new features or APIs? **YES** — no new features
+6. Can apply to stable trees? **YES** — simple change to code present
+   since v5.11
+
+### Step 9.3: EXCEPTION CATEGORIES
+Not an exception category, but a straightforward bug fix.
+
+### Step 9.4: DECISION
+This is a clean, minimal, obviously correct fix for a real bug that
+causes unnecessary expensive UUID tree rescans during btrfs mount after
+unclean shutdown. It was reviewed by btrfs expert Filipe Manana and
+committed through the proper btrfs maintainer chain. While not a crash
+or security issue, it fixes a genuine problem that affects all btrfs
+users who experience power failures or crashes, and the risk of
+regression from this 1-line change is essentially zero. This meets
+stable kernel criteria.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from Renesas author + hwmon
-  maintainer Guenter Roeck; Link to lore
-- [Phase 2] Diff analysis: +2 lines in I2C ID table (raa228942/raa228943
-  as raa_dmpvr2_2rail_nontc), +20 lines docs
-- [Phase 3] git blame: ID table present since f621d61fd59f4 (2020);
-  nontc variant since 51fb91ed5a6fa (2020, v5.10 era)
-- [Phase 3] git tag --contains 51fb91ed5a6fa: present in p-5.10, p-5.15,
-  all active stable trees
-- [Phase 3] git log: prior identical-pattern commit 2190ad55a601d
-  (RAA228244/RAA228246) confirmed
-- [Phase 3] git log --author: author is Renesas employee
-- [Phase 4] b4 dig: lore blocked by bot protection; confirmed standard
-  hwmon maintainer acceptance via prior similar commit
-- [Phase 5] Code reading: raa_dmpvr2_2rail_nontc case at line 413
-  disables TEMP3, falls through to 2-rail; well-tested
-- [Phase 6] Verified existing variant in tree at lines 76, 413, 498-500,
-  549-551
-- [Phase 6] No raa228942/raa228943 references found anywhere in current
-  tree (grep confirmed)
-- [Phase 8] Risk: zero regression potential from static table entry
-  addition
-- UNVERIFIED: Could not read lore discussion due to bot protection
-
-This is a textbook device ID addition - the simplest and safest type of
-stable backport. Two lines adding I2C device IDs to an existing driver
-using an existing, well-tested variant. Zero regression risk, enables
-hardware for real users.
+- [Phase 1] Parsed tags: Reviewed-by Filipe Manana, SOBs from Dave Chen,
+  Robbie Ko, Filipe Manana, David Sterba
+- [Phase 2] Diff analysis: 1 line changed in `open_ctree()` at line 3677
+  of disk-io.c — replaces `fs_info->generation !=
+  btrfs_super_uuid_tree_generation(disk_super)` with
+  `!test_bit(BTRFS_FS_UPDATE_UUID_TREE_GEN, &fs_info->flags)`
+- [Phase 3] git blame: buggy line introduced by commit 44c0ca211a4da
+  (Boris Burkov, v5.11, 2020-11-18)
+- [Phase 3] git show 75ec1db8717a8: confirmed this is the original fix
+  that added the flag and early set_bit, with CC: stable 4.19+
+- [Phase 3] Verified `join_transaction()` bumps generation at
+  transaction.c:392
+- [Phase 3] Verified `btrfs_orphan_cleanup()` starts transactions at
+  inode.c:3870
+- [Phase 3] Verified `update_super_roots()` uses the flag to write
+  uuid_tree_generation at transaction.c:1985-1986
+- [Phase 3] Verified the flag is set early at disk-io.c:3535-3537
+- [Phase 3] Verified `btrfs_start_pre_rw_mount()` calls orphan cleanup
+  at disk-io.c:3119, before the UUID rescan check at line 3677
+- [Phase 3] git merge-base: 44c0ca211a4da is in v5.11 but not v5.10; bug
+  exists in stable trees 5.15+
+- [Phase 4] b4 dig: could not find original submission thread
+- [Phase 4] UNVERIFIED: Could not access lore.kernel.org discussion due
+  to anti-bot protection
+- [Phase 5] `open_ctree()` called on every btrfs mount — universal code
+  path
+- [Phase 5] Trigger: mount after unclean shutdown → orphan cleanup →
+  transaction → generation bump → false positive
+- [Phase 7] btrfs is an important filesystem used by major distributions
+  and NAS vendors
+- [Phase 8] Failure mode: unnecessary UUID tree rescan (walks entire
+  tree), severity MEDIUM (performance, not crash)
 
 **YES**
 
- Documentation/hwmon/isl68137.rst | 20 ++++++++++++++++++++
- drivers/hwmon/pmbus/isl68137.c   |  2 ++
- 2 files changed, 22 insertions(+)
+ fs/btrfs/disk-io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/hwmon/isl68137.rst b/Documentation/hwmon/isl68137.rst
-index e77f582c28505..0ce20d09164fc 100644
---- a/Documentation/hwmon/isl68137.rst
-+++ b/Documentation/hwmon/isl68137.rst
-@@ -394,6 +394,26 @@ Supported chips:
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 1b0eb246b7147..70357b12508d0 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3674,7 +3674,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
  
-       Provided by Renesas upon request and NDA
- 
-+  * Renesas RAA228942
-+
-+    Prefix: 'raa228942'
-+
-+    Addresses scanned: -
-+
-+    Datasheet:
-+
-+      Provided by Renesas upon request and NDA
-+
-+  * Renesas RAA228943
-+
-+    Prefix: 'raa228943'
-+
-+    Addresses scanned: -
-+
-+    Datasheet:
-+
-+      Provided by Renesas upon request and NDA
-+
-   * Renesas RAA229001
- 
-     Prefix: 'raa229001'
-diff --git a/drivers/hwmon/pmbus/isl68137.c b/drivers/hwmon/pmbus/isl68137.c
-index 3e3a887aad050..c8930f2d54237 100644
---- a/drivers/hwmon/pmbus/isl68137.c
-+++ b/drivers/hwmon/pmbus/isl68137.c
-@@ -498,6 +498,8 @@ static const struct i2c_device_id raa_dmpvr_id[] = {
- 	{"raa228228", raa_dmpvr2_2rail_nontc},
- 	{"raa228244", raa_dmpvr2_2rail_nontc},
- 	{"raa228246", raa_dmpvr2_2rail_nontc},
-+	{"raa228942", raa_dmpvr2_2rail_nontc},
-+	{"raa228943", raa_dmpvr2_2rail_nontc},
- 	{"raa229001", raa_dmpvr2_2rail},
- 	{"raa229004", raa_dmpvr2_2rail},
- 	{"raa229141", raa_dmpvr2_2rail_pmbus},
+ 	if (fs_info->uuid_root &&
+ 	    (btrfs_test_opt(fs_info, RESCAN_UUID_TREE) ||
+-	     fs_info->generation != btrfs_super_uuid_tree_generation(disk_super))) {
++	     !test_bit(BTRFS_FS_UPDATE_UUID_TREE_GEN, &fs_info->flags))) {
+ 		btrfs_info(fs_info, "checking UUID tree");
+ 		ret = btrfs_check_uuid_tree(fs_info);
+ 		if (ret) {
 -- 
 2.53.0
 
