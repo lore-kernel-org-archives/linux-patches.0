@@ -1,44 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4CF3EB7FB;
-	Mon, 20 Apr 2026 13:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916893EBF24;
+	Mon, 20 Apr 2026 13:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691506; cv=none; b=rb6pEzXfNjL6tzDAgiR4CGZkaU97qFG2kntP2ksReUoqab2bNt+UgqgwSPujVuDnUPlUZZ7D4z2cNT401T61VyJC6+gs3CVOA9NwCBfWokvM1tiGQoXkc720c65DbcXMZsFPIo2ZdHDVe0qZ2f44JGa8fOrF/jh3VD1E7GXj+w0=
+	t=1776691508; cv=none; b=kpYlHzh7sESowi/BPjXSuwF+Y4cpTZO2Sk8t/RXrCWMG69ZFdTbLwRqWojqAYdK/ZnfDeYEJrf1+btrOF8mwDkma2I94pRfKM7vTMkLSG12Qa5HaNGHK0MlYKg12IPdwskk9xLkUH/WytvzfJOa2LnbJeTnEVt9qSQij91jyER4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691506; c=relaxed/simple;
-	bh=Hf9yTG5cr4alGT2BO4PBU0V4D4wRXPj1kxS6E8TimL8=;
+	s=arc-20240116; t=1776691508; c=relaxed/simple;
+	bh=Tm2TK+2FNVWxTTlWKNIQ+aQP0xbWrywECEF+yY3Ixt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n43Kwg625M25bLt6/pmUYGM5O4jFbDhAcLe/7aTWt0wQ/BP+A4dCngn3lT70te5GU6lrV2U874dhvK4NuqN+yGYsZP02PBqyNxEO3xZ5TTbRWiRMdXtjSjBozpJuxRr+KXN/SRWklz6GYJ0G+I1ZQEtQdOVZ62+zkoQJ4wqcfEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ldV5z1ri; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aiiofg/iqybEmkFTwFArRsL95L8y0QvqEVK7NFE8T0hFHtMb703AxHynLG4zeakSDpaF9k/ZiLCc4uE9yHcD8safDaOfdm9Y5oY85LRs7aslhHhQITCChliSqEfCSEuc5MeVeiCHlaeEXtfhzsBY1XngtwuuVd8uvcM5FUFKBeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCE1YcQW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ldV5z1ri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33091C2BCB6;
-	Mon, 20 Apr 2026 13:25:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DCE1YcQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCBDC2BCB4;
+	Mon, 20 Apr 2026 13:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691506;
-	bh=Hf9yTG5cr4alGT2BO4PBU0V4D4wRXPj1kxS6E8TimL8=;
+	s=k20201202; t=1776691508;
+	bh=Tm2TK+2FNVWxTTlWKNIQ+aQP0xbWrywECEF+yY3Ixt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldV5z1riys3DD8c6RpHyuVfvn3BfKWl5jvLR44F3bD4iBQZ6nR8b/DzfCNSZspA/M
-	 a0uRVXvhnlCC9VDDN2y+P11od4VBgOAOQoUqy8Ff7Tb/I/ZOCu21LoqhX2b1YiKsaG
-	 jYRc9orhNt8+96tctaJBNCpDrK0J5YDDhD7eayg+R09zAC0zIn7dcjxyRzoUQquHah
-	 /ZyRJ5+GQ8mP7bQpn2Q7MO5nSd36c9wVkrKJhWhahwVlWS0XoCurVEabl6XCyiW6nv
-	 v93ZBrQ5nfzLmtYN3XV3SYoxDrnZwDB2vsU3SH52lQbYjKx4NnNMnlrTRZ110C+a1b
-	 kH/eK1+ARK/fA==
+	b=DCE1YcQWOQ0+XgQKAf/KtQTijLPwf4g++MahK6HCi1mM/vM3+4yjuP/DGJujMKr0F
+	 IHAxNfsoyDU/Za6F1E2vVVSWLdONlz3kTAbgESbUF3w74xn+jSsEudrf+DwPWk82Cd
+	 FemvZFCXcdzXz2FXzm2YDPnKWl1w1szUsUPJ6NdPejZeZQgAkeizbR33F3MNt5u+KO
+	 O+VsUmzMNyLI7eCG7cS//wwDZHtIBjeXiuOovMYCi3otKaeNyTSABRhSVvSseMVHJf
+	 EdMHP05rNty1Srzbl4Qhk57whTtlvz5EeZ2a8N8nUXbnq7L/xsCG1aZzC89I1pE2N5
+	 eZ4dZ9I9Q6TUA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	pablo@netfilter.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	kaber@trash.net,
+	eric@inl.fr,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] firmware: qcom: scm: Allow QSEECOM on Lenovo IdeaCentre Mini X
-Date: Mon, 20 Apr 2026 09:17:44 -0400
-Message-ID: <20260420132314.1023554-70-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] netfilter: nfnetlink_log: initialize nfgenmsg in NLMSG_DONE terminator
+Date: Mon, 20 Apr 2026 09:17:45 -0400
+Message-ID: <20260420132314.1023554-71-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -50,242 +58,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
+X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit a31ad9339eff4ce401dec816b01a94b4e3c47898 ]
+[ Upstream commit 1f3083aec8836213da441270cdb1ab612dd82cf4 ]
 
-The Hamoa-based Lenovo IdeaCentre Mini X provides the same UEFI variable
-access through uefisecapp as other Hamoa devices, add it to the
-allowlist.
+When batching multiple NFLOG messages (inst->qlen > 1), __nfulnl_send()
+appends an NLMSG_DONE terminator with sizeof(struct nfgenmsg) payload via
+nlmsg_put(), but never initializes the nfgenmsg bytes. The nlmsg_put()
+helper only zeroes alignment padding after the payload, not the payload
+itself, so four bytes of stale kernel heap data are leaked to userspace
+in the NLMSG_DONE message body.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260401-ideacentre-v2-3-5745fe2c764e@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Use nfnl_msg_put() to build the NLMSG_DONE terminator, which initializes
+the nfgenmsg payload via nfnl_fill_hdr(), consistent with how
+__build_packet_message() already constructs NFULNL_MSG_PACKET headers.
+
+Fixes: 29c5d4afba51 ("[NETFILTER]: nfnetlink_log: fix sending of multipart messages")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a thorough picture. Let me compile the analysis.
+Error: Failed to generate final synthesis
 
----
+ net/netfilter/nfnetlink_log.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1: Subject Line**
-- Subsystem: `firmware: qcom: scm`
-- Action verb: "Allow" (enable a device on an allowlist)
-- Summary: Adds the Lenovo IdeaCentre Mini X to the QSEECOM allowlist
-  for UEFI variable access.
-
-**Step 1.2: Tags**
-- `Reviewed-by: Dmitry Baryshkov` — Qualcomm maintainer reviewed it
-- `Signed-off-by: Bjorn Andersson` — both as author and as committer;
-  he's the Qualcomm SCM subsystem maintainer
-- `Link:` to lore.kernel.org for the v2 series
-- No `Fixes:` tag (expected for a device ID / allowlist addition)
-- No `Cc: stable`
-
-**Step 1.3: Commit Body**
-The commit explains this is a Hamoa-based device that provides the same
-UEFI variable access (through `uefisecapp`) as other Hamoa devices
-already on the allowlist. The purpose is to enable UEFI variable access
-on this specific hardware.
-
-**Step 1.4: Hidden Bug Fix?**
-This is not a hidden bug fix. It's a straightforward device allowlist
-addition — enabling existing, validated functionality on a new machine.
-
-Record: This is a device allowlist addition, akin to adding a device ID.
-
-## PHASE 2: DIFF ANALYSIS
-
-**Step 2.1: Inventory**
-- 1 file changed: `drivers/firmware/qcom/qcom_scm.c`
-- 1 line added: `{ .compatible = "lenovo,ideacentre-mini-01q8x10" }`
-- No lines removed (other than context shift)
-- Function affected: static array `qcom_scm_qseecom_allowlist[]`
-
-**Step 2.2: Code Flow Change**
-Before: The Lenovo IdeaCentre Mini X is not in the allowlist →
-`qcom_scm_qseecom_machine_is_allowed()` returns false →
-QSEECOM/uefisecapp is not initialized → no UEFI variable access on this
-device.
-After: The device is matched → QSEECOM is enabled → UEFI variable access
-works.
-
-**Step 2.3: Bug Mechanism**
-Category: Hardware enablement / device ID addition. This is analogous to
-adding a PCI/USB device ID to an existing driver. The driver and feature
-exist; only the allowlist entry is new.
-
-**Step 2.4: Fix Quality**
-- Trivially correct — a single compatible string added alphabetically to
-  an existing table
-- Zero regression risk — only affects this specific machine
-- Minimal change (1 line)
-
-## PHASE 3: GIT HISTORY
-
-**Step 3.1: Blame**
-The allowlist was introduced by `00b1248606ba39` (Maximilian Luz,
-2023-08-27) with just ThinkPad X13s. It has been incrementally expanded
-since then with many similar one-line additions. The table has existed
-since approximately v6.7.
-
-**Step 3.2: No Fixes: tag** — expected for allowlist additions.
-
-**Step 3.3: File History**
-Many similar QSEECOM allowlist additions have been committed: Dell XPS
-13, Surface Pro, HP Omnibook, ASUS Vivobook, Lenovo Thinkbook 16, etc.
-This is a well-established pattern. Each is a standalone one-liner.
-
-**Step 3.4: Author**
-Bjorn Andersson is the Qualcomm SCM subsystem maintainer and the main
-committer for this driver. High trust level.
-
-**Step 3.5: Dependencies**
-No dependencies. This is a self-contained one-line addition to an
-existing table.
-
-## PHASE 4: MAILING LIST
-
-b4 dig failed to find the commit (it's not yet in the tree as a
-committed hash). The lore link was blocked by anti-bot protection.
-However, the Link: tag shows this is v2 of the series, reviewed by
-Dmitry Baryshkov, confirming proper review.
-
-Record: Could not fetch lore discussion due to anti-scraping protection.
-The commit has proper review tags.
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-The allowlist is checked by `qcom_scm_qseecom_machine_is_allowed()`
-which is called during `qcom_scm_qseecom_init()`. This function gates
-whether the QSEECOM/uefisecapp platform device is created. Without the
-allowlist entry, the specific machine gets an "untested machine,
-skipping" message and UEFI variable access is completely unavailable.
-
-This is critical for the device: without this entry, the user cannot
-access UEFI variables at all (including boot configuration).
-
-## PHASE 6: STABLE TREE ANALYSIS
-
-**Step 6.1: Code existence in stable**
-- v6.6: The allowlist does NOT exist (0 matches) → Not applicable
-- v6.8+: The allowlist exists (3 matches found)
-- The allowlist has been present and growing since approximately
-  v6.7/v6.8
-
-The commit is relevant for stable trees v6.8+. However, the current file
-in mainline has additional entries that may not all be in older stable
-trees. The diff should apply cleanly or with trivial context adjustment
-since it's just inserting one line in alphabetical order in a table.
-
-**Step 6.2: Backport complications**
-Minor context differences possible (some entries in the list may not be
-present in older stables), but since this is adding a line to a simple
-table, a backport is trivial — worst case requires manual insertion at
-the right alphabetical position.
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-- Subsystem: Qualcomm firmware / SCM (Secure Channel Manager)
-- Criticality: IMPORTANT for Qualcomm ARM laptop users. The QSEECOM
-  interface provides UEFI variable access, which is essential for boot
-  configuration on these devices.
-- Very active subsystem with regular allowlist additions.
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: Affected Users**
-Users of the Lenovo IdeaCentre Mini X (Snapdragon/Hamoa-based). Without
-this entry, they have no UEFI variable access.
-
-**Step 8.2: Trigger**
-Every boot — the allowlist is checked during driver initialization.
-
-**Step 8.3: Severity**
-Without this fix: the user cannot access UEFI variables on their
-hardware. This is a functional hardware enablement issue.
-
-**Step 8.4: Risk-Benefit**
-- Benefit: HIGH — enables essential functionality on real hardware
-- Risk: VERY LOW — 1-line addition to a device table, affects only one
-  specific machine
-- Ratio: Excellent — high benefit, near-zero risk
-
-## PHASE 9: FINAL SYNTHESIS
-
-**Evidence FOR backporting:**
-- This is a device allowlist addition — directly analogous to adding a
-  device ID, which is an established exception category for stable
-- 1-line change, trivially correct, zero regression risk
-- Written and committed by the subsystem maintainer (Bjorn Andersson)
-- Reviewed by Qualcomm maintainer (Dmitry Baryshkov)
-- Follows a well-established pattern (20+ similar commits in history)
-- Enables essential UEFI variable access on real shipping hardware
-
-**Evidence AGAINST backporting:**
-- The allowlist doesn't exist in v6.6 and earlier (limits applicability
-  to v6.8+ stable trees)
-- This is technically "new hardware enablement" rather than a "bug fix"
-
-**Decision:** This falls squarely into the **device ID / hardware
-allowlist addition** exception category. It's a single-line addition to
-an existing allowlist table in an existing driver, enabling known-good
-functionality on a new machine. The pattern is identical to adding
-PCI/USB device IDs. It has proper review, is written by the maintainer,
-and carries essentially zero risk.
-
-## Verification
-
-- [Phase 1] Parsed tags: Reviewed-by Dmitry Baryshkov, Signed-off-by
-  Bjorn Andersson (2x — author and committer)
-- [Phase 2] Diff: 1 line added to `qcom_scm_qseecom_allowlist[]` array —
-  a compatible string
-- [Phase 3] git blame: allowlist created by commit `00b1248606ba39`
-  (v6.7 era, 2023-08-27)
-- [Phase 3] git tag --contains: allowlist first in `next-20251219`, not
-  in v6.6
-- [Phase 3] v6.8 check: allowlist exists with 3 references (confirmed
-  with `git show v6.8:...`)
-- [Phase 3] git log: 20+ similar QSEECOM allowlist additions in history
-  (established pattern)
-- [Phase 4] b4 dig: failed to find commit (not yet in tree); lore
-  blocked by anti-bot
-- [Phase 5] Allowlist checked in `qcom_scm_qseecom_machine_is_allowed()`
-  → gates QSEECOM init → without entry, device prints "untested machine,
-  skipping" and UEFI access is disabled
-- [Phase 6] Applicable to v6.8+ stable trees only; trivial backport
-  (table insertion)
-- [Phase 8] Risk: VERY LOW (1 line, only affects one machine); Benefit:
-  HIGH (enables UEFI access)
-- UNVERIFIED: Exact lore discussion content (anti-bot blocked); does not
-  affect decision
-
-**YES**
-
- drivers/firmware/qcom/qcom_scm.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index f06bed79666b9..4450741b8221b 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -2301,6 +2301,7 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
- 	{ .compatible = "hp,omnibook-x14" },
- 	{ .compatible = "huawei,gaokun3" },
- 	{ .compatible = "lenovo,flex-5g" },
-+	{ .compatible = "lenovo,ideacentre-mini-01q8x10" },
- 	{ .compatible = "lenovo,thinkbook-16" },
- 	{ .compatible = "lenovo,thinkpad-t14s" },
- 	{ .compatible = "lenovo,thinkpad-x13s", },
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index dcd2493a9a404..b1f3eda85989c 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -361,10 +361,10 @@ static void
+ __nfulnl_send(struct nfulnl_instance *inst)
+ {
+ 	if (inst->qlen > 1) {
+-		struct nlmsghdr *nlh = nlmsg_put(inst->skb, 0, 0,
+-						 NLMSG_DONE,
+-						 sizeof(struct nfgenmsg),
+-						 0);
++		struct nlmsghdr *nlh = nfnl_msg_put(inst->skb, 0, 0,
++						    NLMSG_DONE, 0,
++						    AF_UNSPEC, NFNETLINK_V0,
++						    htons(inst->group_num));
+ 		if (WARN_ONCE(!nlh, "bad nlskb size: %u, tailroom %d\n",
+ 			      inst->skb->len, skb_tailroom(inst->skb))) {
+ 			kfree_skb(inst->skb);
 -- 
 2.53.0
 
