@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E423A2E093A;
-	Mon, 20 Apr 2026 15:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D152741A0;
+	Mon, 20 Apr 2026 15:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700364; cv=none; b=NW+nKLchCAClxK6jHQTG1Qwi+wgVpnwnmDg0TZ3yFphFaDz0zH/floSJm34iFKB1RyhBn/Mc/K1N/rE1XNVeOK0wzHKAYOrqtvGlAYkaY6+gg4P3I+d+QSx7XdN7iSGvHVbGHdpSSqAo00Za7HZVe3EgM6KJF6n28ZmYUw3VjrU=
+	t=1776700366; cv=none; b=rHn5OUOjsyJ1vlbcJSql4nDc8Z8iY7HlVKr8sWyLwOyog5Ygc+3TeSvdr8v1fCiWY36zVZZBAchkVL1hGK00YmDpYkGkyNFWYHP2N3sQEYjeuH7CqTbmUogImLwRycm+K+kFE3Apx1QrtUGmb7LmmhGpcIM7MNCiFAMSZ+ceHaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700364; c=relaxed/simple;
-	bh=Cv0ck2E7Dw/sBLyKxf7uBUjHlBUypCfBkyXpZ9sXKIA=;
+	s=arc-20240116; t=1776700366; c=relaxed/simple;
+	bh=uiswTQHbvj42FjcWpaFoCKkkpi+h4Rme+dkqZqTSbyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PO21erqRdCXYzqkGICyvvUh17iFMO97u7PJ2oB+4v6FHpVn182xrmP12MNgzJrTS3IYyE9FB/SyqW1hzaXB1jrnJ8WzP7YHj5YBLVwHsMfKleo+BqVLQXP/1sYA+zuSv1fJ3MCU6M/8XIi1MPt0E9rKnbqDKwDzAzfw3Rum2csE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qChuNFux; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUCRL7ivjhGCJrIZMz9M1RQm0VrV8S2fTSekXYvck0Zt59JhuNYRN+exUslVdWkpQa9jPD7VcMQbgnfxc7Ew/UiJ8gST8mqt3s3pMt2J7+khgWQXdKTHsIZlrsRPYoVRqcbYgbN/ptLlGKUZMx1w8RKv4zuas/57mGOInyzQW8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfp/zROo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qChuNFux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B1BC19425;
-	Mon, 20 Apr 2026 15:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfp/zROo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121BEC19425;
+	Mon, 20 Apr 2026 15:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700363;
-	bh=Cv0ck2E7Dw/sBLyKxf7uBUjHlBUypCfBkyXpZ9sXKIA=;
+	s=korg; t=1776700366;
+	bh=uiswTQHbvj42FjcWpaFoCKkkpi+h4Rme+dkqZqTSbyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qChuNFuxUw2/PLIUwmIrVItySTs43QRodAfzcuicPiySbIbNk2Iw28o1uGro2ITzr
-	 6swIra1ym6IdEnOpSmYij+vBlx5pZTgAnP/1YmbD53o61RdQsmgDJIGdD5IlN1zNYi
-	 RBPachsQ10N7HN5MFXOqEXUg3Ua3TJb1th1+Ey3k=
+	b=sfp/zROoKXtAChWZLLF7ou6iH1SXPix0KPVBfEVdNUocH+GTKjk0yotDRcRpBT9wN
+	 217MJDu1VbtH0GHmvb9g5WewvTN57aAAWTPQShynHKEx9YoActJt4Qew6+vSRBd7HR
+	 WcO7BarDN54+WS7qtcswGMGqA9qa4ob0cxXzOu5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Xiao Liu <lx24@stu.ynu.edu.cn>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Francesco Lavra <flavra@baylibre.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 110/220] net: af_key: zero aligned sockaddr tail in PF_KEY exports
-Date: Mon, 20 Apr 2026 17:40:51 +0200
-Message-ID: <20260420153937.993115004@linuxfoundation.org>
+Subject: [PATCH 6.19 111/220] pinctrl: mcp23s08: Disable all pin interrupts during probe
+Date: Mon, 20 Apr 2026 17:40:52 +0200
+Message-ID: <20260420153938.028526484@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -56,143 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Francesco Lavra <flavra@baylibre.com>
 
-[ Upstream commit 426c355742f02cf743b347d9d7dbdc1bfbfa31ef ]
+[ Upstream commit db5b8cecbdf479ad13156af750377e5b43853fab ]
 
-PF_KEY export paths use `pfkey_sockaddr_size()` when reserving sockaddr
-payload space, so IPv6 addresses occupy 32 bytes on the wire. However,
-`pfkey_sockaddr_fill()` initializes only the first 28 bytes of
-`struct sockaddr_in6`, leaving the final 4 aligned bytes uninitialized.
+A chip being probed may have the interrupt-on-change feature enabled on
+some of its pins, for example after a reboot. This can cause the chip to
+generate interrupts for pins that don't have a registered nested handler,
+which leads to a kernel crash such as below:
 
-Not every PF_KEY message is affected. The state and policy dump builders
-already zero the whole message buffer before filling the sockaddr
-payloads. Keep the fix to the export paths that still append aligned
-sockaddr payloads with plain `skb_put()`:
+[    7.928897] Unable to handle kernel read from unreadable memory at virtual address 00000000000000ac
+[    7.932314] Mem abort info:
+[    7.935081]   ESR = 0x0000000096000004
+[    7.938808]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    7.944094]   SET = 0, FnV = 0
+[    7.947127]   EA = 0, S1PTW = 0
+[    7.950247]   FSC = 0x04: level 0 translation fault
+[    7.955101] Data abort info:
+[    7.957961]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    7.963421]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    7.968447]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    7.973734] user pgtable: 4k pages, 48-bit VAs, pgdp=00000000089b7000
+[    7.980148] [00000000000000ac] pgd=0000000000000000, p4d=0000000000000000
+[    7.986913] Internal error: Oops: 0000000096000004 [#1]  SMP
+[    7.992545] Modules linked in:
+[    8.073678] CPU: 0 UID: 0 PID: 81 Comm: irq/18-4-0025 Not tainted 7.0.0-rc6-gd2b5a1f931c8-dirty #199
+[    8.073689] Hardware name: Khadas VIM3 (DT)
+[    8.073692] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    8.094639] pc : _raw_spin_lock_irq+0x40/0x80
+[    8.098970] lr : handle_nested_irq+0x2c/0x168
+[    8.098979] sp : ffff800082b2bd20
+[    8.106599] x29: ffff800082b2bd20 x28: ffff800080107920 x27: ffff800080104d88
+[    8.106611] x26: ffff000003298080 x25: 0000000000000001 x24: 000000000000ff00
+[    8.113707] x23: 0000000000000001 x22: 0000000000000000 x21: 000000000000000e
+[    8.120850] x20: 0000000000000000 x19: 00000000000000ac x18: 0000000000000000
+[    8.135046] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[    8.135062] x14: ffff800081567ea8 x13: ffffffffffffffff x12: 0000000000000000
+[    8.135070] x11: 00000000000000c0 x10: 0000000000000b60 x9 : ffff800080109e0c
+[    8.135078] x8 : 1fffe0000069dbc1 x7 : 0000000000000001 x6 : ffff0000034ede00
+[    8.135086] x5 : 0000000000000000 x4 : ffff0000034ede08 x3 : 0000000000000001
+[    8.163460] x2 : 0000000000000000 x1 : 0000000000000001 x0 : 00000000000000ac
+[    8.170560] Call trace:
+[    8.180094]  _raw_spin_lock_irq+0x40/0x80 (P)
+[    8.184443]  mcp23s08_irq+0x248/0x358
+[    8.184462]  irq_thread_fn+0x34/0xb8
+[    8.184470]  irq_thread+0x1a4/0x310
+[    8.195093]  kthread+0x13c/0x150
+[    8.198309]  ret_from_fork+0x10/0x20
+[    8.201850] Code: d65f03c0 d2800002 52800023 f9800011 (885ffc01)
+[    8.207931] ---[ end trace 0000000000000000 ]---
 
-  - `SADB_ACQUIRE`
-  - `SADB_X_NAT_T_NEW_MAPPING`
-  - `SADB_X_MIGRATE`
+This issue has always been present, but has been latent until commit
+"f9f4fda15e72" ("pinctrl: mcp23s08: init reg_defaults from HW at probe and
+switch cache type"), which correctly removed reg_defaults from the regmap
+and as a side effect changed the behavior of the interrupt handler so that
+the real value of the MCP_GPINTEN register is now being read from the chip
+instead of using a bogus 0 default value; a non-zero value for this
+register can trigger the invocation of a nested handler which may not exist
+(yet).
+Fix this issue by disabling all pin interrupts during initialization.
 
-Fix those paths by clearing only the aligned sockaddr tail after
-`pfkey_sockaddr_fill()`.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Xiao Liu <lx24@stu.ynu.edu.cn>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: f9f4fda15e72 ("pinctrl: mcp23s08: init reg_defaults from HW at probe and switch cache type")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 52 +++++++++++++++++++++++++++++++-----------------
- 1 file changed, 34 insertions(+), 18 deletions(-)
+ drivers/pinctrl/pinctrl-mcp23s08.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index bc91aeeb74bbf..a6a9a40717ee8 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -757,6 +757,22 @@ static unsigned int pfkey_sockaddr_fill(const xfrm_address_t *xaddr, __be16 port
- 	return 0;
- }
+diff --git a/drivers/pinctrl/pinctrl-mcp23s08.c b/drivers/pinctrl/pinctrl-mcp23s08.c
+index 586f2f67c6177..b89b3169e8be5 100644
+--- a/drivers/pinctrl/pinctrl-mcp23s08.c
++++ b/drivers/pinctrl/pinctrl-mcp23s08.c
+@@ -664,6 +664,15 @@ int mcp23s08_probe_one(struct mcp23s08 *mcp, struct device *dev,
+ 	if (mcp->irq && mcp->irq_controller) {
+ 		struct gpio_irq_chip *girq = &mcp->chip.irq;
  
-+static unsigned int pfkey_sockaddr_fill_zero_tail(const xfrm_address_t *xaddr,
-+						  __be16 port,
-+						  struct sockaddr *sa,
-+						  unsigned short family)
-+{
-+	unsigned int prefixlen;
-+	int sockaddr_len = pfkey_sockaddr_len(family);
-+	int sockaddr_size = pfkey_sockaddr_size(family);
++		/*
++		 * Disable all pin interrupts, to prevent the interrupt handler from
++		 * calling nested handlers for any currently-enabled interrupts that
++		 * do not (yet) have an actual handler.
++		 */
++		ret = mcp_write(mcp, MCP_GPINTEN, 0);
++		if (ret < 0)
++			return dev_err_probe(dev, ret, "can't disable interrupts\n");
 +
-+	prefixlen = pfkey_sockaddr_fill(xaddr, port, sa, family);
-+	if (sockaddr_size > sockaddr_len)
-+		memset((u8 *)sa + sockaddr_len, 0, sockaddr_size - sockaddr_len);
-+
-+	return prefixlen;
-+}
-+
- static struct sk_buff *__pfkey_xfrm_state2msg(const struct xfrm_state *x,
- 					      int add_keys, int hsc)
- {
-@@ -3206,9 +3222,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 	addr->sadb_address_proto = 0;
- 	addr->sadb_address_reserved = 0;
- 	addr->sadb_address_prefixlen =
--		pfkey_sockaddr_fill(&x->props.saddr, 0,
--				    (struct sockaddr *) (addr + 1),
--				    x->props.family);
-+		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      x->props.family);
- 	if (!addr->sadb_address_prefixlen)
- 		BUG();
- 
-@@ -3221,9 +3237,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 	addr->sadb_address_proto = 0;
- 	addr->sadb_address_reserved = 0;
- 	addr->sadb_address_prefixlen =
--		pfkey_sockaddr_fill(&x->id.daddr, 0,
--				    (struct sockaddr *) (addr + 1),
--				    x->props.family);
-+		pfkey_sockaddr_fill_zero_tail(&x->id.daddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      x->props.family);
- 	if (!addr->sadb_address_prefixlen)
- 		BUG();
- 
-@@ -3421,9 +3437,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
- 	addr->sadb_address_proto = 0;
- 	addr->sadb_address_reserved = 0;
- 	addr->sadb_address_prefixlen =
--		pfkey_sockaddr_fill(&x->props.saddr, 0,
--				    (struct sockaddr *) (addr + 1),
--				    x->props.family);
-+		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      x->props.family);
- 	if (!addr->sadb_address_prefixlen)
- 		BUG();
- 
-@@ -3443,9 +3459,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
- 	addr->sadb_address_proto = 0;
- 	addr->sadb_address_reserved = 0;
- 	addr->sadb_address_prefixlen =
--		pfkey_sockaddr_fill(ipaddr, 0,
--				    (struct sockaddr *) (addr + 1),
--				    x->props.family);
-+		pfkey_sockaddr_fill_zero_tail(ipaddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      x->props.family);
- 	if (!addr->sadb_address_prefixlen)
- 		BUG();
- 
-@@ -3474,15 +3490,15 @@ static int set_sadb_address(struct sk_buff *skb, int sasize, int type,
- 	switch (type) {
- 	case SADB_EXT_ADDRESS_SRC:
- 		addr->sadb_address_prefixlen = sel->prefixlen_s;
--		pfkey_sockaddr_fill(&sel->saddr, 0,
--				    (struct sockaddr *)(addr + 1),
--				    sel->family);
-+		pfkey_sockaddr_fill_zero_tail(&sel->saddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      sel->family);
- 		break;
- 	case SADB_EXT_ADDRESS_DST:
- 		addr->sadb_address_prefixlen = sel->prefixlen_d;
--		pfkey_sockaddr_fill(&sel->daddr, 0,
--				    (struct sockaddr *)(addr + 1),
--				    sel->family);
-+		pfkey_sockaddr_fill_zero_tail(&sel->daddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      sel->family);
- 		break;
- 	default:
- 		return -EINVAL;
+ 		gpio_irq_chip_set_chip(girq, &mcp23s08_irq_chip);
+ 		/* This will let us handle the parent IRQ in the driver */
+ 		girq->parent_handler = NULL;
 -- 
 2.53.0
 
