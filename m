@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080D23368AF;
-	Mon, 20 Apr 2026 15:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF633321AA;
+	Mon, 20 Apr 2026 15:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700579; cv=none; b=X0UHTH6AfS39tamJTGv/gcUkTNAR/50TXzPL3uhDFR393mjfAee056VvV+KlYQt1rmp2Yvcb3AJTfF4RxLuctQDzBk+BsZwDpAZHRa0i7GtiCm5cldlL40Vb9NnSlvC0kbarCC3S44X3QVFHOV4rRD5YQ7oFJPXQmiGZn53MBek=
+	t=1776700581; cv=none; b=PadtYL6Mx+dArscqT80eD4WQNlMWK4d4Uu1mPnSvK2kZHfF6nKAoQfh9BF+SLvpdRrFwm4OnXxpRayoZqZ66yCgWVbVLx/v+3jBja7HXhg+kXlKqVFg3a49t+0CyFUJtFbHL5Hh9N1kfBSuQe2ANaTYSUOovoPFnJbkLxDeGoz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700579; c=relaxed/simple;
-	bh=vMTQe8JWtuSgrIaniyPz4Hz/sw1HFjaBfVYDDKVx9t8=;
+	s=arc-20240116; t=1776700581; c=relaxed/simple;
+	bh=rHc+Ge6fdv1IZeVsq9cegwzb+RmrjQcdNkfS6KluaoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWcN4/IoNRHndxQM3PDZRpyw15Ez7ajEPxzylOAtQ+29MjqixFUWyNZeLKXT//uBTK5ziS1Fd+KIIrtiZoTYyFrwH7rCvO3ks9fitBa6/fVtZWMjkUOVm4fqMmPrugdRavEHdG8gdthqr9C6mrTb90oTtCu62KiXF9jShbQ2uk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPIwL1Hh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBITuSKxxm4vFlQujdb5tzy89JnNGid9dOksp9l3FFSDRZ+cYnbVf7DP/T7rPT+dYCix9e0KTSSbvCIAqq8XY6vtg6afi+CfGHgRA92dWckt1iockhFZ1qH7ydcRClO090prOfCLODYlhpzdXqA/YWW8XY4E2bdYWXWZj0HE+8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWadmnei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPIwL1Hh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95483C2BCB4;
-	Mon, 20 Apr 2026 15:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWadmnei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240A4C19425;
+	Mon, 20 Apr 2026 15:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700578;
-	bh=vMTQe8JWtuSgrIaniyPz4Hz/sw1HFjaBfVYDDKVx9t8=;
+	s=korg; t=1776700581;
+	bh=rHc+Ge6fdv1IZeVsq9cegwzb+RmrjQcdNkfS6KluaoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPIwL1HhykhSwUHfb3vzBo43N8mc+RKPDuRFh6Uk9NY19+Rl7Qou6R02sXpURcH9e
-	 2gDIaBj7XidrcJ6Wrag+W4Bb6eJ34tXRtcZAdVXw5Fl6UfAXp9AzHhM3+EMdLmEFgS
-	 okKkn9DEEPr9ySKkDek6YGUgN8lD2HHldqjCJe7Q=
+	b=dWadmneiS+ygFLSIvqU9a7Scqa88WY5xgshfJl+YwSpgKj8ZrDyJhnJVrwaJJDBmo
+	 KucVB0yYhZUzavrbsBDxMtLbgOBqx/16AZJdeP2VnaZcl8E6t6ql7IrB5XAtzgIv5Y
+	 KOqlflPkpAwILCm0cyysd9BNqeHSDix0pw4JiIos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 6.19 219/220] dma-debug: Allow multiple invocations of overlapping entries
-Date: Mon, 20 Apr 2026 17:42:40 +0200
-Message-ID: <20260420153941.911123710@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.19 210/220] hwmon: (powerz) Fix use-after-free on USB disconnect
+Date: Mon, 20 Apr 2026 17:42:31 +0200
+Message-ID: <20260420153941.588854268@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -50,97 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit eca58535b154e6951327319afda94ac80eae7dc3 upstream.
+commit 08e57f5e1a9067d5fbf33993aa7f51d60b3d13a4 upstream.
 
-Repeated DMA mappings with DMA_ATTR_CPU_CACHE_CLEAN trigger the
-following splat. This prevents using the attribute in cases where a DMA
-region is shared and reused more than seven times.
+After powerz_disconnect() frees the URB and releases the mutex, a
+subsequent powerz_read() call can acquire the mutex and call
+powerz_read_data(), which dereferences the freed URB pointer.
 
- ------------[ cut here ]------------
- DMA-API: exceeded 7 overlapping mappings of cacheline 0x000000000438c440
- WARNING: kernel/dma/debug.c:467 at add_dma_entry+0x219/0x280, CPU#4: ibv_rc_pingpong/1644
- Modules linked in: xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat nf_nat xt_addrtype br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay mlx5_fwctl zram zsmalloc mlx5_ib fuse rpcrdma rdma_ucm ib_uverbs ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_core ib_core
- CPU: 4 UID: 2733 PID: 1644 Comm: ibv_rc_pingpong Not tainted 6.19.0+ #129 PREEMPT
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
- RIP: 0010:add_dma_entry+0x221/0x280
- Code: c0 0f 84 f2 fe ff ff 83 e8 01 89 05 6d 99 11 01 e9 e4 fe ff ff 0f 8e 1f ff ff ff 48 8d 3d 07 ef 2d 01 be 07 00 00 00 48 89 e2 <67> 48 0f b9 3a e9 06 ff ff ff 48 c7 c7 98 05 2b 82 c6 05 72 92 28
- RSP: 0018:ff1100010e657970 EFLAGS: 00010002
- RAX: 0000000000000007 RBX: ff1100010234eb00 RCX: 0000000000000000
- RDX: ff1100010e657970 RSI: 0000000000000007 RDI: ffffffff82678660
- RBP: 000000000438c440 R08: 0000000000000228 R09: 0000000000000000
- R10: 00000000000001be R11: 000000000000089d R12: 0000000000000800
- R13: 00000000ffffffef R14: 0000000000000202 R15: ff1100010234eb00
- FS:  00007fb15f3f6740(0000) GS:ff110008dcc19000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fb15f32d3a0 CR3: 0000000116f59001 CR4: 0000000000373eb0
- Call Trace:
-  <TASK>
-  debug_dma_map_sg+0x1b4/0x390
-  __dma_map_sg_attrs+0x6d/0x1a0
-  dma_map_sgtable+0x19/0x30
-  ib_umem_get+0x284/0x3b0 [ib_uverbs]
-  mlx5_ib_reg_user_mr+0x68/0x2a0 [mlx5_ib]
-  ib_uverbs_reg_mr+0x17f/0x2a0 [ib_uverbs]
-  ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0xc2/0x130 [ib_uverbs]
-  ib_uverbs_cmd_verbs+0xa0b/0xae0 [ib_uverbs]
-  ? ib_uverbs_handler_UVERBS_METHOD_QUERY_PORT_SPEED+0xe0/0xe0 [ib_uverbs]
-  ? mmap_region+0x7a/0xb0
-  ? do_mmap+0x3b8/0x5c0
-  ib_uverbs_ioctl+0xa7/0x110 [ib_uverbs]
-  __x64_sys_ioctl+0x14f/0x8b0
-  ? ksys_mmap_pgoff+0xc5/0x190
-  do_syscall_64+0x8c/0xbf0
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
- RIP: 0033:0x7fb15f5e4eed
- Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
- RSP: 002b:00007ffe09a5c540 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
- RAX: ffffffffffffffda RBX: 00007ffe09a5c5d0 RCX: 00007fb15f5e4eed
- RDX: 00007ffe09a5c5f0 RSI: 00000000c0181b01 RDI: 0000000000000003
- RBP: 00007ffe09a5c590 R08: 0000000000000028 R09: 00007ffe09a5c794
- R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffe09a5c794
- R13: 000000000000000c R14: 0000000025a49170 R15: 000000000000000c
-  </TASK>
- ---[ end trace 0000000000000000 ]---
+Fix by:
+ - Setting priv->urb to NULL in powerz_disconnect() so that
+   powerz_read_data() can detect the disconnected state.
+ - Adding a !priv->urb check at the start of powerz_read_data()
+   to return -ENODEV on a disconnected device.
+ - Moving usb_set_intfdata() before hwmon registration so the
+   disconnect handler can always find the priv pointer.
 
-Fixes: 61868dc55a11 ("dma-mapping: add DMA_ATTR_CPU_CACHE_CLEAN")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260316-dma-debug-overlap-v3-1-1dde90a7f08b@nvidia.com
+Fixes: 4381a36abdf1c ("hwmon: add POWER-Z driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260410002521.422645-2-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/debug.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwmon/powerz.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -453,7 +453,7 @@ static int active_cacheline_set_overlap(
- 	return overlap;
- }
- 
--static void active_cacheline_inc_overlap(phys_addr_t cln)
-+static void active_cacheline_inc_overlap(phys_addr_t cln, bool is_cache_clean)
+--- a/drivers/hwmon/powerz.c
++++ b/drivers/hwmon/powerz.c
+@@ -108,6 +108,9 @@ static int powerz_read_data(struct usb_d
  {
- 	int overlap = active_cacheline_read_overlap(cln);
+ 	int ret;
  
-@@ -462,7 +462,7 @@ static void active_cacheline_inc_overlap
- 	/* If we overflowed the overlap counter then we're potentially
- 	 * leaking dma-mappings.
- 	 */
--	WARN_ONCE(overlap > ACTIVE_CACHELINE_MAX_OVERLAP,
-+	WARN_ONCE(!is_cache_clean && overlap > ACTIVE_CACHELINE_MAX_OVERLAP,
- 		  pr_fmt("exceeded %d overlapping mappings of cacheline %pa\n"),
- 		  ACTIVE_CACHELINE_MAX_OVERLAP, &cln);
++	if (!priv->urb)
++		return -ENODEV;
++
+ 	priv->status = -ETIMEDOUT;
+ 	reinit_completion(&priv->completion);
+ 
+@@ -224,6 +227,8 @@ static int powerz_probe(struct usb_inter
+ 	mutex_init(&priv->mutex);
+ 	init_completion(&priv->completion);
+ 
++	usb_set_intfdata(intf, priv);
++
+ 	hwmon_dev =
+ 	    devm_hwmon_device_register_with_info(parent, DRIVER_NAME, priv,
+ 						 &powerz_chip_info, NULL);
+@@ -232,8 +237,6 @@ static int powerz_probe(struct usb_inter
+ 		return PTR_ERR(hwmon_dev);
+ 	}
+ 
+-	usb_set_intfdata(intf, priv);
+-
+ 	return 0;
  }
-@@ -495,7 +495,7 @@ static int active_cacheline_insert(struc
- 	if (rc == -EEXIST) {
- 		struct dma_debug_entry *existing;
  
--		active_cacheline_inc_overlap(cln);
-+		active_cacheline_inc_overlap(cln, entry->is_cache_clean);
- 		existing = radix_tree_lookup(&dma_active_cacheline, cln);
- 		/* A lookup failure here after we got -EEXIST is unexpected. */
- 		WARN_ON(!existing);
+@@ -244,6 +247,7 @@ static void powerz_disconnect(struct usb
+ 	mutex_lock(&priv->mutex);
+ 	usb_kill_urb(priv->urb);
+ 	usb_free_urb(priv->urb);
++	priv->urb = NULL;
+ 	mutex_unlock(&priv->mutex);
+ }
+ 
 
 
