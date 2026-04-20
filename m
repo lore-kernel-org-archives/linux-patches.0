@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CAC33AD9A;
-	Mon, 20 Apr 2026 15:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0863317A31C;
+	Mon, 20 Apr 2026 15:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700759; cv=none; b=fBR0u8kfJC7GJDsgq0wmQEKg2rbtnK3v6dqB0GVnjcRZCNsVEAygOybZByUy2Cb9XKH3lLFJ3kkX5znlO5WRQn6m6UXzdVE7zuINkejD1JfDbW/gEYVQEQsgHcIefCLlvTS3ruztlYJwBNC48f2QNrW4WFl9HeC16S2ZV/HCOXk=
+	t=1776700762; cv=none; b=WWHQhr2T03aim9kVBtLR7kKNBvzKBAZZ5E6Pn4pES+8bJGerhs5+ef26qB9fD/sVQZKjUT/IwAKrJeDAp1rb4VeuPOBrxQsK+g4DxHt6bQcJx/nRefZCxufIYQWkLDOmMNKBNUMNq8UdTb/0AptDrrzTl+75r+XsiambK4rkc3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700759; c=relaxed/simple;
-	bh=MYHS91XmdEuY4W4IjnevEDO01YrDhEiRMc0t4p8g5hM=;
+	s=arc-20240116; t=1776700762; c=relaxed/simple;
+	bh=b4l9aRbw7HUPciQkPg7H9TYP0D5G4tPDIEqexEbPTZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/1//LFFt9EnkFSYdlNeu7TeDyCLX+Q2Vrpe30RSuBThQ0LGEV8AjkCDWvoxDgV9HT0rVNkBGHLEa7oCxLqnI0yCNqxXFaG3Dqu1IMomkHYuZcQbeyX4ZMAlz+LYbl+ez1qiJTqIVRIb4fsv35p/7l3iHZpMRe0r1LUaQkpb3QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojaK33zM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bVg12GBrLRBJ7uSu9Zs0QdHvaRSPkFvBB06T+OHHP1CvdYa5kBN7hiGnOLSoUfQF3WQK6xt7ou8G0Zu9RCAMrmj6IJYIc0xz0sMxueCFL4kXeNbI5viR6ZEnmF/iJhIbBnczJLsqxzC4tGcFYzsX5FuJ1TzpmgnD+eZp2r6CorE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/87WmLA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojaK33zM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3C0C19425;
-	Mon, 20 Apr 2026 15:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/87WmLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E5CC19425;
+	Mon, 20 Apr 2026 15:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700759;
-	bh=MYHS91XmdEuY4W4IjnevEDO01YrDhEiRMc0t4p8g5hM=;
+	s=korg; t=1776700761;
+	bh=b4l9aRbw7HUPciQkPg7H9TYP0D5G4tPDIEqexEbPTZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ojaK33zMqLGGeZ5e/i5JBBbt57kabJBobX0FJMbOQIPbwjaUjJX8D0Xnsj/Oc1eFW
-	 w/uHidESPte2ZZF8A7ccJWn8MQgX7Xqc1i64dVm2kwIcnF0jiMUadh+N7Fu1DnwGrA
-	 u9hGeXmaZUOKwnX1+XcMue8EjYsdI4KSCEJVfAw8=
+	b=g/87WmLAigGv/AxHR8DEFz4JlPoxQzoAHUP2OU+71IAotpyWX0VMM6edfbxfrBcFt
+	 /SF6lCZmy1FLBBtGvQdrW+FgIEM6NwZKT37RO+6tLDy1gK6Dnez37c6JAqKgVfnbjd
+	 60YbE08kL3kwcqjU1K8ieJmS890rgGL7dpc9vTK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Marcin Nita <marcin.nita@leolabs.pl>,
-	John Pavlick <jspavlick@posteo.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Savenko <alex.sav4387@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/198] net: sfp: add quirks for Hisense and HSGQ GPON ONT SFP modules
-Date: Mon, 20 Apr 2026 17:40:22 +0200
-Message-ID: <20260420153937.168542679@linuxfoundation.org>
+Subject: [PATCH 6.18 034/198] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14IMH9
+Date: Mon, 20 Apr 2026 17:40:13 +0200
+Message-ID: <20260420153936.846824243@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -53,63 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Pavlick <jspavlick@posteo.net>
+From: Alexander Savenko <alex.sav4387@gmail.com>
 
-[ Upstream commit 95aca8602ef70ffd3d971675751c81826e124f90 ]
+[ Upstream commit 217d5bc9f96272316ac5a3215c7cc32a5127bbf3 ]
 
-Several GPON ONT SFP sticks based on Realtek RTL960x report
-1000BASE-LX at 1300MBd in their EEPROM but can operate at 2500base-X.
-On hosts capable of 2500base-X (e.g. Banana Pi R3 / MT7986), the
-kernel negotiates only 1G because it trusts the incorrect EEPROM data.
+The Lenovo Yoga Pro 7 14IMH9 (DMI: 83E2) shares PCI SSID 17aa:3847
+with the Legion 7 16ACHG6, but has a different codec subsystem ID
+(17aa:38cf). The existing SND_PCI_QUIRK for 17aa:3847 applies
+ALC287_FIXUP_LEGION_16ACHG6, which attempts to initialize an external
+I2C amplifier (CLSA0100) that is not present on the Yoga Pro 7 14IMH9.
 
-Add quirks for:
-- Hisense-Leox LXT-010S-H
-- Hisense ZNID-GPON-2311NA
-- HSGQ HSGQ-XPON-Stick
+As a result, pin 0x17 (bass speakers) is connected to DAC 0x06 which
+has no volume control, making hardware volume adjustment completely
+non-functional. Audio is either silent or at maximum volume regardless
+of the slider position.
 
-Each quirk advertises 2500base-X and ignores TX_FAULT during the
-module's ~40s Linux boot time.
+Add a HDA_CODEC_QUIRK entry using the codec subsystem ID (17aa:38cf)
+to correctly identify the Yoga Pro 7 14IMH9 and apply
+ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN, which redirects pin 0x17 to
+DAC 0x02 and restores proper volume control. The existing Legion entry
+is preserved unchanged.
 
-Tested on Banana Pi R3 (MT7986) with OpenWrt 25.12.1, confirmed
-2.5Gbps link and full throughput with flow offloading.
+This follows the same pattern used for 17aa:386e, where Legion Y9000X
+and Yoga Pro 7 14ARP8 share a PCI SSID but are distinguished via
+HDA_CODEC_QUIRK.
 
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Suggested-by: Marcin Nita <marcin.nita@leolabs.pl>
-Signed-off-by: John Pavlick <jspavlick@posteo.net>
-Link: https://patch.msgid.link/20260406132321.72563-1-jspavlick@posteo.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/nomad4tech/lenovo-yoga-pro-7-linux
+Tested-by: Alexander Savenko <alex.sav4387@gmail.com>
+Signed-off-by: Alexander Savenko <alex.sav4387@gmail.com>
+Link: https://patch.msgid.link/20260331082929.44890-1-alex.sav4387@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 7a85b758fb1e6..c62e3f364ea73 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -543,6 +543,22 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
- 		  sfp_fixup_ignore_tx_fault_and_los),
- 
-+	// Hisense LXT-010S-H is a GPON ONT SFP (sold as LEOX LXT-010S-H) that
-+	// can operate at 2500base-X, but reports 1000BASE-LX / 1300MBd in its
-+	// EEPROM
-+	SFP_QUIRK("Hisense-Leox", "LXT-010S-H", sfp_quirk_2500basex,
-+		  sfp_fixup_ignore_tx_fault),
-+
-+	// Hisense ZNID-GPON-2311NA can operate at 2500base-X, but reports
-+	// 1000BASE-LX / 1300MBd in its EEPROM
-+	SFP_QUIRK("Hisense", "ZNID-GPON-2311NA", sfp_quirk_2500basex,
-+		  sfp_fixup_ignore_tx_fault),
-+
-+	// HSGQ HSGQ-XPON-Stick can operate at 2500base-X, but reports
-+	// 1000BASE-LX / 1300MBd in its EEPROM
-+	SFP_QUIRK("HSGQ", "HSGQ-XPON-Stick", sfp_quirk_2500basex,
-+		  sfp_fixup_ignore_tx_fault),
-+
- 	// Lantech 8330-262D-E and 8330-265D can operate at 2500base-X, but
- 	// incorrectly report 2500MBd NRZ in their EEPROM.
- 	// Some 8330-265D modules have inverted LOS, while all of them report
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 1c8ee8263ab3a..2e89528e5cec1 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7402,6 +7402,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
++	/* Yoga Pro 7 14IMH9 shares PCI SSID 17aa:3847 with Legion 7 16ACHG6;
++	 * use codec SSID to distinguish them
++	 */
++	HDA_CODEC_QUIRK(0x17aa, 0x38cf, "Lenovo Yoga Pro 7 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3847, "Legion 7 16ACHG6", ALC287_FIXUP_LEGION_16ACHG6),
+ 	SND_PCI_QUIRK(0x17aa, 0x384a, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
 -- 
 2.53.0
 
