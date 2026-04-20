@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33BC3D413C;
-	Mon, 20 Apr 2026 13:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F6A3D47DD;
+	Mon, 20 Apr 2026 13:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691419; cv=none; b=kt7S8S0B9Y5VFf9HzPI6zhPY0MVfDFha1pRIJ0l6aJGIlf57Fpg0Uwjcz2OCpJmBnGJhfCJFK/wme+kiDrJy2p3CbPpityWdRXMhSDVTDwTSNEJ3oU3TW5Ds5ccpN+Xv58Z6asDaGXDtmyHqEk26Lbh/X3kgAEdj5SU0Uwnocms=
+	t=1776691420; cv=none; b=JUAHylv5Ub+6aPj1xnTegcuz/x8Z69pe6U7CFPOk8y9RiW82UKP2qNMKbr7P+Lm0rrUaiUuZ3ueAwwNMtmGxoZ1G3PIu3WPpUjKfpVf152chMltghXAvvSsEXDPtvOWjKJgYBnIsuvjEWf49xkWy+7lkAUrLBr++bmsKQ2ulIVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691419; c=relaxed/simple;
-	bh=tn6kix7pzSCA8qfRs5qKPBWVdHTu2MB5RaBMY2HOXms=;
+	s=arc-20240116; t=1776691420; c=relaxed/simple;
+	bh=cNGyNEfbHOaX+mqn2fFZRBv+MY/EX7TyQpYcmO5pWaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mNNRuj3YXezNfZ1bEXdfOs/ThIGFeHrtsXz+wK5IUNhdB4b36gB/Skm1yChkg2XsX33jy1+FuYkUi5VhVGFLdVH8EQAsFXVjjd1Q4qd9Az/rAgFdP6SCNXA0I1e2tsgDjdccGbQB23AL5OeTM9b38dyMCWigo+oJA7s/gBRAOg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iScWhOPe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oA5kanHIAjGFiy3mpQMk+ZdaherTNzoSDbkogYZ93X5sYR+sRdMAgL6weWgLvgUapBYxUwueDB7xTXezHGt2V5L7V5kg0VsE3vXSjXeUAoo2ymS70BvquTg0dHOaBn6/xukhtht5LXYpXwjqHMRPD9mzJJhz0hKUnRb5/BcP+j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E0TGapmy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iScWhOPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B13C2BCB4;
-	Mon, 20 Apr 2026 13:23:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E0TGapmy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE21C19425;
+	Mon, 20 Apr 2026 13:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691419;
-	bh=tn6kix7pzSCA8qfRs5qKPBWVdHTu2MB5RaBMY2HOXms=;
+	s=k20201202; t=1776691420;
+	bh=cNGyNEfbHOaX+mqn2fFZRBv+MY/EX7TyQpYcmO5pWaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iScWhOPe8Ffegrlrn5jKG+jaztj/J1Ge0efkepz+oKcaAsVGJlX0hAa3wxKJz91ld
-	 l2HIuZPwXFtB24Dzjd7bjB6LWe2eSNpexlQX0UbvovwgaGCGHQKol1xapBignlvSVo
-	 BGMwG7g3tpsYeNmQ1mvi0j9BrCCJE6J7k1NmDbdkPa/hDpXTa+9ui+A8f3tL/JunM7
-	 wFXIEiMLM4yOx7QQ7mlIgrPrl+ZTiXSP4w3JkldfxO3ntgE5kWIWcAbA6JsxKI5g8j
-	 vZL80qsRNoKnojWPp4Q4eVKyzAqCkJznr4fjUNSWGG8VNGiKSmFReGwt3uFZDdttaV
-	 uDXOwVyPr0Aig==
+	b=E0TGapmyJu5rKwtzUDu2xfzDwNEn7XlNrHLPcVW6D/JjEqtr83gWkWLqTzaJvBn/a
+	 8yfV0z/rWinHEGmrrLlibp8mar0bjp8JynQ1gO2wmJmT/vbeshlGbcG7ha9B128VdA
+	 makdrGxMBlfPIw4UbQnw1UvkULcPNx+DnN6dUgYYhtSyRBJkQTYCNkeDam+A1lWp2q
+	 7dgVo6PC+kkPN8snQPo9pR+ZpPWZ/5ANTKQNymDA7JFLzmmnmGBIh4OCr43U+Jtkha
+	 dGYPPJMbG2g0DkAvTXQz8GXggqCiXBDOzCexWixqGMFsfNR9PWBk+o+FND7c8yIbag
+	 5Ax0VDI6C/UEg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Ping-Ke Shih <pkshih@realtek.com>,
+	Oleksandr Havrylov <goainwo@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] FDDI: defxx: Rate-limit memory allocation errors
-Date: Mon, 20 Apr 2026 09:16:49 -0400
-Message-ID: <20260420132314.1023554-15-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] wifi: rtw88: add quirks to disable PCI ASPM and deep LPS for HP P3S95EA#ACB
+Date: Mon, 20 Apr 2026 09:16:50 -0400
+Message-ID: <20260420132314.1023554-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -57,268 +52,273 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Maciej W. Rozycki" <macro@orcam.me.uk>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 7fae6616704a17c64438ad4b73a6effa6c03ffda ]
+[ Upstream commit b2bf9d61e14af4129362aeb9c10034229a6d8f08 ]
 
-Prevent the system from becoming unstable or unusable due to a flood of
-memory allocation error messages under memory pressure, e.g.:
+On an HP laptop (P3S95EA#ACB) equipped with a Realtek RTL8821CE 802.11ac
+PCIe adapter (PCI ID: 10ec:c821), the system experiences a hard lockup
+(complete freeze of the UI and kernel, sysrq doesn't work, requires
+holding the power button) when the WiFi adapter enters the power
+saving state. Disable PCI ASPM to avoid system freeze.
 
-[...]
-fddi0: Could not allocate receive buffer.  Dropping packet.
-fddi0: Could not allocate receive buffer.  Dropping packet.
-fddi0: Could not allocate receive buffer.  Dropping packet.
-fddi0: Could not allocate receive buffer.  Dropping packet.
-rcu: INFO: rcu_sched self-detected stall on CPU
-rcu: 	0-...!: (332 ticks this GP) idle=255c/1/0x40000000 softirq=16420123/16420123 fqs=0
-rcu: 	(t=2103 jiffies g=35680089 q=4 ncpus=1)
-rcu: rcu_sched kthread timer wakeup didn't happen for 2102 jiffies! g35680089 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
-rcu: 	Possible timer handling issue on cpu=0 timer-softirq=12779658
-rcu: rcu_sched kthread starved for 2103 jiffies! g35680089 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=0
-rcu: 	Unless rcu_sched kthread gets sufficient CPU time, OOM is now expected behavior.
-rcu: RCU grace-period kthread stack dump:
-task:rcu_sched       state:I stack:0     pid:14    tgid:14    ppid:2      flags:0x00004000
-Call Trace:
- __schedule+0x258/0x580
- schedule+0x19/0xa0
- schedule_timeout+0x4a/0xb0
- ? hrtimers_cpu_dying+0x1b0/0x1b0
- rcu_gp_fqs_loop+0xb1/0x450
- rcu_gp_kthread+0x9d/0x130
- kthread+0xb2/0xe0
- ? rcu_gp_init+0x4a0/0x4a0
- ? kthread_park+0x90/0x90
- ret_from_fork+0x2d/0x50
- ? kthread_park+0x90/0x90
- ret_from_fork_asm+0x12/0x20
- entry_INT80_32+0x10d/0x10d
-CPU: 0 UID: 500 PID: 21895 Comm: 31370.exe Not tainted 6.13.0-dirty #2
+In addition, driver throws messages periodically. Though this doesn't
+always cause unstable connection, missing H2C commands might cause
+unpredictable results. Disable deep LPS to avoid this as well.
 
-(here running the libstdc++-v3 testsuite).
+ rtw88_8821ce 0000:13:00.0: firmware failed to leave lps state
+ rtw88_8821ce 0000:13:00.0: failed to send h2c command
+ rtw88_8821ce 0000:13:00.0: failed to send h2c command
 
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/alpine.DEB.2.21.2603291236590.60268@angie.orcam.me.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested on HP Notebook P3S95EA#ACB (kernel 6.19.7-1-cachyos):
+
+  - No hard freeze observed during idle or active usage.
+  - Zero h2c or lps errors in dmesg across idle (10 min),
+    load stress (100MB download), and suspend/resume cycle.
+  - Both quirk flags confirmed active via sysfs without any
+    manual modprobe parameters.
+
+Reported-by: Oleksandr Havrylov <goainwo@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/CALdGYqSQ1Ko2TTBhUizMu_FvLMUAuQfFrVwS10n_C-LSQJQQkQ@mail.gmail.com/
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Tested-by: Oleksandr Havrylov <goainwo@gmail.com>
+Link: https://patch.msgid.link/20260316035635.16550-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Now I have all the information I need. Let me compile my analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-- **Subsystem:** `FDDI: defxx:` (FDDI network driver, DEC FDDI
-  controllers)
-- **Action verb:** "Rate-limit" — this implies controlling the frequency
-  of something
-- **Summary:** Rate-limit memory allocation error messages to prevent
-  system instability
+**Record:** [wifi: rtw88] [add quirks] [Adds DMI-based quirks to disable
+PCI ASPM and deep LPS for a specific HP laptop model]
 
 ### Step 1.2: Tags
-- **Signed-off-by:** Maciej W. Rozycki `<macro@orcam.me.uk>` — **the
-  driver maintainer** (verified from line 24 of defxx.c)
-- **Reviewed-by:** Andrew Lunn `<andrew@lunn.ch>` — well-known
-  networking reviewer
-- **Link:** patch.msgid.link URL (lore.kernel.org was blocked by Anubis)
-- **Signed-off-by:** Jakub Kicinski `<kuba@kernel.org>` — **the net
-  subsystem maintainer** (applied by him)
-- No Fixes: tag, no Cc: stable, no Reported-by — expected for manual
-  review candidates
+- **Reported-by:** Oleksandr Havrylov <goainwo@gmail.com> — a real user
+  reporting the bug
+- **Closes:** lore.kernel.org link to original bug report
+- **Signed-off-by:** Ping-Ke Shih <pkshih@realtek.com> — Realtek's rtw88
+  maintainer
+- **Tested-by:** Oleksandr Havrylov <goainwo@gmail.com> — reporter
+  confirmed the fix works
+- **Link:** patch.msgid.link for the submission
 
-### Step 1.3: Commit Body
-The commit describes a **real observed problem**: under memory pressure,
-the unlimited `printk()` in the receive path floods the console so badly
-that it causes:
-- RCU stall (`rcu_sched self-detected stall on CPU`)
-- RCU kthread starvation (`rcu_sched kthread starved for 2103 jiffies!`)
-- System becoming "unstable or unusable"
-- The message "Unless rcu_sched kthread gets sufficient CPU time, OOM is
-  now expected behavior"
+No Fixes: tag (expected for this type of quirk addition). No Cc: stable
+(expected). Author is the rtw88 subsystem maintainer.
 
-A full stack trace is provided showing the real crash scenario. The
-trigger was running the libstdc++-v3 testsuite, causing memory pressure
-leading to allocation failures in the receive path.
+### Step 1.3: Commit Body Analysis
+- **Bug:** HP laptop (P3S95EA#ACB) with RTL8821CE WiFi experiences
+  **hard lockup** (complete system freeze, SysRq unresponsive, requires
+  power button) when WiFi adapter enters power saving state
+- **Secondary issue:** Firmware error messages ("failed to leave lps
+  state", "failed to send h2c command") suggesting broken power
+  management communication
+- **Testing evidence:** Detailed test plan with idle, load, and
+  suspend/resume validation on 6.19.7 kernel
+- **Failure mode:** CRITICAL — hard lockup requiring power cycle
 
 ### Step 1.4: Hidden Bug Fix Detection
-This IS a bug fix, not a cosmetic change. The unlimited printk in a hot
-interrupt-driven receive path causes:
-1. Console flooding → CPU time consumed by printk
-2. RCU stalls → system instability
-3. Potential OOM due to RCU kthread starvation
-
-The fix prevents a **soft lockup/RCU stall** which is a serious system
-stability issue.
+**Record:** This is NOT a hidden bug fix — it's an explicit hardware
+quirk/workaround for a specific device that causes system-wide hard
+lockups. This falls squarely into the "hardware quirk" exception
+category for stable.
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **Files changed:** 1 (`drivers/net/fddi/defxx.c`)
-- **Lines changed:** 1 line modified (`printk` → `printk_ratelimited`)
-- **Function modified:** `dfx_rcv_queue_process()`
-- **Scope:** Single-file, single-line, surgical fix
+- `main.h`: +5 lines — new enum `rtw_quirk_dis_caps` with 2 values
+- `pci.c`: +31 lines — DMI include, callback function, quirk table,
+  `dmi_check_system()` call
+- Total: **+36 lines, 0 removed**
+- Functions modified: `rtw_pci_probe()` (1 line added). New:
+  `rtw_pci_disable_caps()` callback
+- Scope: Single-driver, self-contained
 
 ### Step 2.2: Code Flow Change
-- **Before:** Every failed `netdev_alloc_skb()` in the receive path
-  prints an unrestricted message via `printk()`
-- **After:** The same message is printed via `printk_ratelimited()`,
-  which limits output to
-  DEFAULT_RATELIMIT_INTERVAL/DEFAULT_RATELIMIT_BURST (typically 5
-  seconds/10 messages)
-- **Execution path affected:** The error/failure path within the
-  interrupt-driven packet receive handler
+1. New enum provides named constants for quirk capability bits
+2. `rtw_pci_disable_caps()`: DMI callback that sets
+   `rtw_pci_disable_aspm` and/or `rtw_disable_lps_deep_mode` global
+   bools to true based on bitmask in driver_data
+3. `rtw_pci_quirks[]`: DMI table matching HP vendor + "HP Notebook"
+   product + "P3S95EA#ACB" SKU
+4. `dmi_check_system()` call added in `rtw_pci_probe()` before
+   `rtw_core_init()`, so quirks are set before driver initialization
+   uses those globals
 
 ### Step 2.3: Bug Mechanism
-This is a **system stability fix** — the unlimited printk in a hot path
-(interrupt handler → receive queue processing) causes:
-- Console output flooding
-- CPU starvation for other kernel threads (RCU)
-- RCU stalls leading to system hang
-
-Category: **Performance/stability fix that prevents soft lockups and RCU
-stalls** — this is a CRITICAL stability issue, not a mere optimization.
+**Category: Hardware workaround (DMI quirk)**
+- The quirk sets the same module-level bools (`rtw_pci_disable_aspm`,
+  `rtw_disable_lps_deep_mode`) that existing module parameters expose
+- These bools are already checked in `rtw_pci_clkreq_set()`,
+  `rtw_pci_aspm_set()`, and `rtw_update_lps_deep_mode()`
+- The mechanism simply automates what a user would do with `modprobe
+  rtw88_pci disable_aspm=Y` + `rtw88_core disable_lps_deep=Y`
 
 ### Step 2.4: Fix Quality
-- **Obviously correct:** Yes. `printk_ratelimited()` is a drop-in
-  replacement for `printk()` with rate limiting. It's a well-established
-  kernel API.
-- **Minimal/surgical:** Yes — exactly 1 line changed, same format
-  string, same arguments.
-- **Regression risk:** Virtually none. The only behavioral difference is
-  fewer log messages under sustained failure, which is the desired
-  behavior.
-- **Red flags:** None.
+- **Obviously correct:** Uses standard DMI matching infrastructure. Sets
+  existing, well-tested booleans. The same mechanism already works via
+  module parameters.
+- **Minimal and surgical:** Only affects the specific HP laptop model
+  with the matching DMI strings. No behavioral change for any other
+  system.
+- **Regression risk:** Essentially zero — only changes behavior on one
+  specific laptop, and only disables power saving features that cause
+  lockups on that device.
 
 ---
 
-## PHASE 3: GIT HISTORY
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-The buggy `printk` line dates back to commit `1da177e4c3f41` — the
-**initial Linux git import** (April 2005, Linux 2.6.12-rc2). This code
-has been present in every kernel version since the beginning of git
-history, meaning **all active stable trees** contain this bug.
+- `rtw_pci_disable_aspm` introduced by commit `68aa716b7dd36f`
+  (2020-07-15) — present since ~v5.9
+- `rtw_disable_lps_deep_mode` introduced by commit `fc3ac64a3a2868`
+  (2020-10-30) — present since ~v5.10
+- Both variables are available in ALL active stable trees
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present (expected for manual review candidates).
+### Step 3.2: No Fixes tag — N/A
 
 ### Step 3.3: File History
-The file has had very few changes in recent history (only 1 change since
-v6.1 — `HAS_IOPORT` dependencies). This means the fix will apply cleanly
-to all stable trees.
+The pci.c file is moderately active. The eb101d2abdccc commit (upstream
+bridge check) touches a different part of the file and does NOT conflict
+with this patch. The quirk insertion point (after `rtw_pci_err_handler`
+export and before `rtw_pci_probe`) and the `dmi_check_system()`
+insertion point (in `rtw_pci_probe` before `rtw_core_init`) are both
+clean in the current v7.0 tree.
 
 ### Step 3.4: Author
-Maciej W. Rozycki is the **listed maintainer** of the defxx driver (line
-24: "Maintainers: macro Maciej W. Rozycki <macro@orcam.me.uk>"). This is
-a fix from the subsystem maintainer who encountered the issue firsthand.
+Ping-Ke Shih (pkshih@realtek.com) is the **rtw88 subsystem maintainer**
+at Realtek. He maintains the rtw tree and has many commits across the
+rtw88 codebase.
 
 ### Step 3.5: Dependencies
-None. `printk_ratelimited` has been available in the kernel since ~2010.
-No prerequisites needed.
+- The patch is **fully standalone** — no prerequisites needed
+- It only references existing global variables and standard kernel DMI
+  infrastructure
+- The enum addition in main.h is self-contained
 
 ---
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.5
-The lore.kernel.org and patch.msgid.link URLs were blocked by Anubis
-anti-bot protection. However:
-- The patch was **reviewed by Andrew Lunn** (well-known net reviewer)
-- The patch was **applied by Jakub Kicinski** (net subsystem maintainer)
-- The commit message includes a detailed real-world reproduction
-  scenario
+### Step 4.1: Original Discussion
+- b4 dig found the submission at
+  `20260316035635.16550-1-pkshih@realtek.com`
+- Only v1 — no revisions needed. Clean acceptance.
+- Thread from mbox: The reporter (Oleksandr Havrylov) provided detailed
+  Tested-by with positive results.
+- Maintainer (Ping-Ke Shih) acknowledged the test and added Tested-by to
+  the commit message.
+
+### Step 4.2: Reviewers
+- linux-wireless@vger.kernel.org was CC'd
+- Reporter provided Tested-by — direct confirmation the fix works
+
+### Step 4.3: Bug Report
+- Closes link points to the original bug report email from the user
+- Single reporter but the issue is deterministic: hard lockup when WiFi
+  enters power saving
+
+### Step 4.4: Series Context
+- Single standalone patch, not part of a series
+
+### Step 4.5: Stable Discussion
+- No specific stable discussion found. No Cc: stable on the original
+  patch.
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-- `dfx_rcv_queue_process()` — the function where the change is made
+### Step 5.1: Functions
+- `rtw_pci_disable_caps()` — new callback, only called by
+  `dmi_check_system()`
+- `rtw_pci_probe()` — modified to call `dmi_check_system()`
 
 ### Step 5.2: Callers
-- Called from `dfx_int_common()` (line 1889), which is the interrupt
-  service routine
-- `dfx_int_common()` is called from `dfx_interrupt()` (lines 1972, 1998,
-  2023) — the hardware IRQ handler
-- This is called on **every received packet interrupt**, making it a hot
-  path
+- `rtw_pci_probe()` is the PCI probe function called for every rtw88
+  PCIe device during driver loading — common path
+- `rtw_pci_disable_aspm` is checked in `rtw_pci_clkreq_set()` and
+  `rtw_pci_aspm_set()` — called during power state transitions
+- `rtw_disable_lps_deep_mode` is checked in `rtw_update_lps_deep_mode()`
+  — called during firmware init
 
-### Step 5.3-5.4: Call Chain
-The call chain is: `Hardware IRQ → dfx_interrupt() → dfx_int_common() →
-dfx_rcv_queue_process() → [allocation failure] → printk()`
-
-Under memory pressure, every incoming packet that fails allocation
-triggers the printk. On an active FDDI network (100 Mbit/s), this could
-be thousands of packets per second, each generating a printk call —
-overwhelming the system.
-
-### Step 5.5: Similar Patterns
-There are many other `printk("Could not...")` calls in the driver (11
-total), but only this one is in a hot interrupt-driven path where rapid
-repetition is possible.
+### Step 5.3-5.5: Call Chain
+The quirk only sets global booleans that are already checked in existing
+code paths. No new logic branches introduced.
 
 ---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable Trees
-The buggy code has been present since the initial git import (2005). It
-exists in **all stable trees** (5.4.y, 5.10.y, 5.15.y, 6.1.y, 6.6.y,
-6.12.y, etc.).
+### Step 6.1: Code Exists in Stable
+- `rtw_pci_disable_aspm` exists since v5.9 (commit 68aa716b7dd36f)
+- `rtw_disable_lps_deep_mode` exists since v5.10 (commit fc3ac64a3a2868)
+- The RTL8821CE driver exists in all active stable trees
+- **The buggy behavior exists in all stable trees supporting this
+  hardware**
 
 ### Step 6.2: Backport Complications
-The file has had minimal changes. The printk line is unchanged since
-2005. The patch will apply **cleanly** to all active stable trees.
+- The patch should apply cleanly or with minimal offset to all active
+  stable trees
+- The insertion points (after EXPORT_SYMBOL, before probe function,
+  inside probe) are stable
+- No conflicting structural changes in this area
 
-### Step 6.3: Related Fixes
-No related fixes for this specific issue found in stable.
+### Step 6.3: No related fixes already in stable for this specific
+laptop
 
 ---
 
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem
-- **Path:** `drivers/net/fddi/` — FDDI networking driver
-- **Criticality:** PERIPHERAL — FDDI is a legacy technology, but there
-  are real users (the maintainer himself encountered this bug while
-  testing)
+- **drivers/net/wireless/realtek/rtw88** — WiFi driver for Realtek
+  chipsets
+- **Criticality: IMPORTANT** — RTL8821CE is a widely-used WiFi adapter
+  in consumer laptops
+- RTW88 is an active, well-maintained in-tree driver
 
 ### Step 7.2: Activity
-Very low activity — the file has had only a handful of changes in recent
-years. This is mature, stable code.
+- Actively maintained by Realtek engineers (Ping-Ke Shih is the
+  maintainer)
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Population
-Users of DEC FDDI controllers (DEFTA/DEFEA/DEFPA) under memory pressure.
-While this is a niche user base, the fix is risk-free for everyone.
+### Step 8.1: Affected Users
+- Users of the specific HP laptop model (P3S95EA#ACB) with RTL8821CE
+  WiFi adapter
+- DMI matching is narrowly scoped (vendor + product + SKU)
 
 ### Step 8.2: Trigger Conditions
-- System must be under memory pressure (allocation failures)
-- FDDI interface must be receiving packets
-- The combination causes printk flooding → RCU stalls → system hang
-- Triggered in real life (libstdc++ testsuite causing memory pressure)
+- **Trigger:** WiFi adapter enters power saving state — this happens
+  automatically during normal idle usage
+- **Frequency:** Very common — happens during any period of idle WiFi
+  usage
+- **Deterministic:** The lockup is reproducible
 
 ### Step 8.3: Failure Mode Severity
-- **RCU stall / soft lockup → CRITICAL** (system becomes
-  unusable/unstable)
-- Can lead to OOM as stated in the RCU warning
-- Data loss risk from system hang
+- **Hard lockup** — system completely freezes, SysRq unresponsive,
+  requires holding power button
+- **Severity: CRITICAL** — total system unavailability, potential data
+  loss from unclean shutdown
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit:** Prevents system hang/RCU stall under memory pressure —
-  HIGH
-- **Risk:** 1 line change, `printk` → `printk_ratelimited`, well-
-  established API — VERY LOW
-- **Ratio:** Strongly favorable
+### Step 8.4: Risk-Benefit
+- **Benefit: HIGH** — prevents deterministic hard lockups on affected
+  hardware
+- **Risk: VERY LOW** — only affects one specific laptop model; uses
+  existing, well-tested disable mechanisms; is functionally identical to
+  module parameters that already exist
+- **Ratio: Excellent** — high benefit, near-zero regression risk
 
 ---
 
@@ -327,87 +327,156 @@ While this is a niche user base, the fix is risk-free for everyone.
 ### Step 9.1: Evidence Compilation
 
 **FOR backporting:**
-- Fixes a real RCU stall / system instability issue with concrete
-  reproduction
-- Single-line, obviously correct change (`printk` →
-  `printk_ratelimited`)
-- Fix is from the driver maintainer who observed the bug firsthand
-- Reviewed by Andrew Lunn, applied by Jakub Kicinski (net maintainer)
-- Buggy code exists in all stable trees since 2005
-- Patch applies cleanly — no dependencies, no conflicts expected
-- Zero regression risk
+- Fixes deterministic hard lockups (CRITICAL severity)
+- Small, self-contained change (+36 lines, single driver)
+- Written by the subsystem maintainer (Ping-Ke Shih at Realtek)
+- Tested and confirmed working by the reporter
+- Uses standard DMI quirk pattern already used in other drivers (ath9k,
+  etc.)
+- Only automates existing module parameter functionality
+- Zero regression risk for non-affected systems (narrow DMI match)
+- The underlying infrastructure (module params) exists in all stable
+  trees since v5.10
+- Hardware quirk = explicitly allowed exception for stable
 
 **AGAINST backporting:**
-- FDDI is a legacy/niche technology with a small user base
-- The trigger requires specific conditions (memory pressure + active
-  FDDI traffic)
+- No explicit Cc: stable (expected — that's why we're reviewing it)
+- Adds new code rather than modifying existing code (but this is
+  inherent to quirk additions)
 
 ### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — author encountered and
-   reproduced it; 1-line drop-in replacement
-2. **Fixes a real bug?** YES — RCU stall / system hang under memory
-   pressure
-3. **Important issue?** YES — system instability, RCU stalls, potential
-   OOM
-4. **Small and contained?** YES — single line change in a single file
-5. **No new features or APIs?** YES — no new features
-6. **Can apply to stable trees?** YES — code unchanged since 2005, clean
-   apply expected
+1. **Obviously correct and tested?** YES — uses standard DMI matching,
+   confirmed by Tested-by
+2. **Fixes a real bug?** YES — hard lockup reported and reproduced by a
+   user
+3. **Important issue?** YES — CRITICAL: hard lockup requiring power
+   cycle
+4. **Small and contained?** YES — 36 lines, 2 files, single driver
+5. **No new features?** YES — disables power features that cause
+   lockups; no new user-visible behavior
+6. **Can apply to stable?** YES — clean, standalone, no dependencies
 
-### Step 9.3: Exception Categories
-Not an exception category — this is a straightforward bug fix.
-
-### Step 9.4: Decision
-This is a minimal, zero-risk fix for a real system stability issue (RCU
-stalls). It meets all stable kernel criteria.
+### Step 9.3: Exception Category
+**Hardware quirk/workaround** — DMI-based quirk to disable broken power
+management on specific hardware. This is an explicitly allowed exception
+for stable trees.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Andrew Lunn, applied by Jakub
-  Kicinski (net maintainer SOB)
-- [Phase 1] Commit body includes full RCU stall stack trace
-  demonstrating the real-world bug
-- [Phase 2] Diff: exactly 1 line changed in `dfx_rcv_queue_process()`,
-  `printk` → `printk_ratelimited`
-- [Phase 3] git blame: buggy printk line from `1da177e4c3f41` (initial
-  git import, 2005), present in all stable trees
-- [Phase 3] git log --author: Maciej W. Rozycki is the driver maintainer
-  (confirmed from file header line 24)
-- [Phase 3] git log v6.6../v6.1../v5.15.. -- defxx.c: minimal changes,
-  patch will apply cleanly
-- [Phase 4] b4 dig and WebFetch: lore blocked by Anubis; could not
-  verify mailing list discussion directly
-- [Phase 5] Callers traced: `dfx_interrupt()` → `dfx_int_common()` →
-  `dfx_rcv_queue_process()` — this is a hardware IRQ path, hot path for
-  every received packet
-- [Phase 5] Grep confirmed: `printk_ratelimited` is a well-established
-  macro in `include/linux/printk.h`
-- [Phase 6] Code present in all stable trees (unchanged since 2005)
-- [Phase 8] Failure mode: RCU stall → system hang, severity CRITICAL
-- UNVERIFIED: Could not access lore.kernel.org discussion due to Anubis
-  protection; however, the commit message and review tags provide
-  sufficient evidence
+- [Phase 1] Parsed tags: Reported-by from real user, Tested-by from same
+  user, author is rtw88 maintainer
+- [Phase 2] Diff: +36 lines across 2 files (main.h enum + pci.c DMI
+  table + probe call), no code removed
+- [Phase 3] git blame: `rtw_pci_disable_aspm` from 68aa716b7dd36f
+  (2020-07-15), `rtw_disable_lps_deep_mode` from fc3ac64a3a2868
+  (2020-10-30) — both present in all active stable trees
+- [Phase 3] git log: no dependencies identified; eb101d2abdccc touches
+  different code area
+- [Phase 4] b4 dig -c b2bf9d61e14af: found at
+  https://patch.msgid.link/20260316035635.16550-1-pkshih@realtek.com
+- [Phase 4] b4 dig -a: only v1, clean acceptance with no revisions
+- [Phase 4] b4 dig -w: linux-wireless list and reporter CC'd
+- [Phase 4] mbox: reporter confirmed fix with detailed test (idle, load,
+  suspend/resume)
+- [Phase 5] `rtw_pci_disable_aspm` checked in `rtw_pci_clkreq_set()` and
+  `rtw_pci_aspm_set()`; `rtw_disable_lps_deep_mode` checked in
+  `rtw_update_lps_deep_mode()` — all existing code paths
+- [Phase 6] Code infrastructure exists in all active stable trees
+  (v5.10+), patch is standalone
+- [Phase 6] Diff against v7.0 shows clean insertion points with no
+  conflicts
+- [Phase 7] ath9k uses identical `dmi_check_system` quirk pattern,
+  establishing precedent
+- [Phase 8] Failure mode: hard lockup (CRITICAL), triggers during normal
+  idle WiFi usage
+
+**YES** — This is a textbook hardware quirk that prevents deterministic
+hard lockups on specific hardware. It uses standard DMI matching
+infrastructure, is written by the subsystem maintainer, tested by the
+reporter, adds only 36 lines, has zero regression risk for unaffected
+systems, and the underlying mechanism already exists in all stable
+trees.
 
 **YES**
 
- drivers/net/fddi/defxx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/main.h |  5 ++++
+ drivers/net/wireless/realtek/rtw88/pci.c  | 31 +++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/drivers/net/fddi/defxx.c b/drivers/net/fddi/defxx.c
-index 0fbbb7286008d..6b8cfbee3b9d6 100644
---- a/drivers/net/fddi/defxx.c
-+++ b/drivers/net/fddi/defxx.c
-@@ -3182,7 +3182,7 @@ static void dfx_rcv_queue_process(
- 							       pkt_len + 3);
- 				if (skb == NULL)
- 					{
--					printk("%s: Could not allocate receive buffer.  Dropping packet.\n", bp->dev->name);
-+					printk_ratelimited("%s: Could not allocate receive buffer.  Dropping packet.\n", bp->dev->name);
- 					bp->rcv_discards++;
- 					break;
- 					}
+diff --git a/drivers/net/wireless/realtek/rtw88/main.h b/drivers/net/wireless/realtek/rtw88/main.h
+index 1ab70214ce36e..55b794d4584c4 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.h
++++ b/drivers/net/wireless/realtek/rtw88/main.h
+@@ -432,6 +432,11 @@ enum rtw_wow_flags {
+ 	RTW_WOW_FLAG_MAX,
+ };
+ 
++enum rtw_quirk_dis_caps {
++	QUIRK_DIS_CAP_PCI_ASPM,
++	QUIRK_DIS_CAP_LPS_DEEP,
++};
++
+ /* the power index is represented by differences, which cck-1s & ht40-1s are
+  * the base values, so for 1s's differences, there are only ht20 & ofdm
+  */
+diff --git a/drivers/net/wireless/realtek/rtw88/pci.c b/drivers/net/wireless/realtek/rtw88/pci.c
+index 56b16186d3aa4..ca26e0a7f538f 100644
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -2,6 +2,7 @@
+ /* Copyright(c) 2018-2019  Realtek Corporation
+  */
+ 
++#include <linux/dmi.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ #include "main.h"
+@@ -1744,6 +1745,34 @@ const struct pci_error_handlers rtw_pci_err_handler = {
+ };
+ EXPORT_SYMBOL(rtw_pci_err_handler);
+ 
++static int rtw_pci_disable_caps(const struct dmi_system_id *dmi)
++{
++	uintptr_t dis_caps = (uintptr_t)dmi->driver_data;
++
++	if (dis_caps & BIT(QUIRK_DIS_CAP_PCI_ASPM))
++		rtw_pci_disable_aspm = true;
++
++	if (dis_caps & BIT(QUIRK_DIS_CAP_LPS_DEEP))
++		rtw_disable_lps_deep_mode = true;
++
++	return 1;
++}
++
++static const struct dmi_system_id rtw_pci_quirks[] = {
++	{
++		.callback = rtw_pci_disable_caps,
++		.ident = "HP Notebook - P3S95EA#ACB",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "HP Notebook"),
++			DMI_MATCH(DMI_PRODUCT_SKU, "P3S95EA#ACB"),
++		},
++		.driver_data = (void *)(BIT(QUIRK_DIS_CAP_PCI_ASPM) |
++					BIT(QUIRK_DIS_CAP_LPS_DEEP)),
++	},
++	{}
++};
++
+ int rtw_pci_probe(struct pci_dev *pdev,
+ 		  const struct pci_device_id *id)
+ {
+@@ -1771,6 +1800,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
+ 	rtwpci = (struct rtw_pci *)rtwdev->priv;
+ 	atomic_set(&rtwpci->link_usage, 1);
+ 
++	dmi_check_system(rtw_pci_quirks);
++
+ 	ret = rtw_core_init(rtwdev);
+ 	if (ret)
+ 		goto err_release_hw;
 -- 
 2.53.0
 
