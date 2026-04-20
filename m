@@ -1,51 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089873FB04E;
-	Mon, 20 Apr 2026 13:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811983FB7E3;
+	Mon, 20 Apr 2026 13:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691580; cv=none; b=W/nXqkyKQ0jrAm/kFUajhRO1PMtkFWa9SPHHbrNbC3PDhXZ6kBQMOPcZdOBqdElTHedBeJhTts9lXRoAtjt57fJqvAUB+oDAkAJjj/s5c9puJnmMrN3FUKWP/MrSk13v+sA1fjLSsQWSGK0iIod0HqSrTW+wjxBjdepAVPxtt6o=
+	t=1776691581; cv=none; b=JeaNvwym5FNVDU0zfiZPZeWO3Wsm3u8eMtdhiMlc2S95E9DUYaNr2KKLtYclEsRhrq4kRSdOod3hz6tykP0zcNJEv22maLlBXG5FTAY8F7wpccn4I+iCv0akT7J28aBbOpTIpxJVWEBl5BMnnL1cHzFmWCbIsTBEr22NW6KNLW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691580; c=relaxed/simple;
-	bh=y22peYpMlpSzuER+C2gLxScD6Jxm+fW4HrEpcE8vri8=;
+	s=arc-20240116; t=1776691581; c=relaxed/simple;
+	bh=fzKma1MMTkr/gNiJd5XPapfupPdsDWu34VNqy1vzaPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TEUWisG3vLYjdZEEaUpgV6lIVucKU5MqS11vYm61qw7SoWxAZx8FIDo1fNk2yz3l/XnZcf1SknQ2bsWpG4g7JTbHEDAW2Gr4i22DlvU+9I8YBJTgkfjmEF3JduxdMdLO8zlpgznaErgSew09e+qyOlMXg8xhVhQoKMxE/0OX224=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YqyCHUeE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EjG3I5/ZcFFPm1Q3v7tKy40JQsOObdCeDetvWcAblAKKlzxEeyniR7ycwALqrTDWM4u5cNYDdd9NLk4cEYFgfoFrjHsqt78QENOuRgs06eSisEq4oF1nQIhsRxiW2fid8LlHfBngsd7Qea5TVIhe7khtR7FjbIJZ/aWKSSPMLdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H3vGsSYo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YqyCHUeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FED0C2BCC6;
-	Mon, 20 Apr 2026 13:26:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H3vGsSYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46866C2BCB7;
+	Mon, 20 Apr 2026 13:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691579;
-	bh=y22peYpMlpSzuER+C2gLxScD6Jxm+fW4HrEpcE8vri8=;
+	s=k20201202; t=1776691581;
+	bh=fzKma1MMTkr/gNiJd5XPapfupPdsDWu34VNqy1vzaPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqyCHUeEC/t0W4qRTRY+/yUqP4l4oQeahUL4R8HwMqiSJuS4xhMs7BhZVY12Ptu0T
-	 GktHsOFVxiU9wb0U3f8H75deCBAVli4idmM9l8faX+BmXbwvpkSaYPILASzNf2BlWk
-	 rz7fIpMW55de5ScZP6+7gk6AP8Ak+1ARztP6+t571HgZ5cv27Z2x6urdHlk/3edPSX
-	 vq2pb77p+A1NmwrwfWl+QMYugwVoNiUuO7/H38T78tqnNOihy7rVNiYm5WeytlDOkB
-	 BX9ykWWvXMy/Hh9miTqVv5JKOIQ4e7KmgAxch6qtE95f6nk+snkDQ/hwm/sREOiyHd
-	 raUjMhuO4/eXA==
+	b=H3vGsSYonB+0YrN/SotOgeWvNW+x91MYnXCzo1rEXnbZHNjkrP3NnEn4FmswlSU25
+	 Olhtqz4U0Hlw/UddIPRgHdYenHoUlPsRiScnzMtWvB2sBOTQzI544mTp456nWQUbn0
+	 flxtQ5VOohLnMXs5gceBsb3vEN3Vr7XVMsTEcLJXjlLzPzf+Qv6eDAFmagIlyQ/amq
+	 r2kX4JG/6LbkQWIynmU9ueyN6Faffvc6O2AcoZ4KTykEeihx4prEFQemFbFO/lJNam
+	 jC4aX6knCelehOmyHyRL31FyX9/CAW2uhz1Bto9hRp0Z5hKWbXAuLYt7K5CfGGxjr9
+	 ESzg0mypHg0xQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Martin Kepplinger-Novakovic <martin.kepplinger-novakovic@ginzinger.com>,
-	kernel test robot <lkp@intel.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+Cc: Bradford Love <brad@nextdimension.cc>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	tzimmermann@suse.de,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	Frank.Li@nxp.com,
-	dri-devel@lists.freedesktop.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] drm/imx: parallel-display: add DRM_DISPLAY_HELPER for DRM_IMX_PARALLEL_DISPLAY
-Date: Mon, 20 Apr 2026 09:18:26 -0400
-Message-ID: <20260420132314.1023554-112-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] media: em28xx: remove tuner type from Hauppauge DVB DualHD
+Date: Mon, 20 Apr 2026 09:18:27 -0400
+Message-ID: <20260420132314.1023554-113-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -58,320 +50,356 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Kepplinger-Novakovic <martin.kepplinger-novakovic@ginzinger.com>
+From: Bradford Love <brad@nextdimension.cc>
 
-[ Upstream commit 02df94d98ff837074788ce921edf67707dbad404 ]
+[ Upstream commit a5dcbff7d50a89bf0376e7f2fb1ba3163a6dac0a ]
 
-When I build for an old imx53 platform I see the same as the test robot
-saw before:
+This reverts a patch which was perhaps inadvertently added.
 
-arm-buildroot-linux-gnueabihf-ld: drivers/gpu/drm/imx/ipuv3/parallel-display.o: in function `imx_pd_bind':
-parallel-display.c:(.text+0xb8): undefined reference to `drm_bridge_connector_init'
+This was changed during the 5.15-rc4 merge. The faulty commit appears
+lost in the pull request somehow, I cannot find it to check the
+explanation.
 
-Selecting DRM_DISPLAY_HELPER for DRM_IMX_PARALLEL_DISPLAY fixes the build.
+commit c52e7b855b33 ("Merge tag 'v5.15-rc4' into media_tree")
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512241721.jZgcwRfr-lkp@intel.com/
+There was nothing wrong with this device and no reason to moodify the
+board profile. The DVB capabilities are added via dvb_module_probe.
+Additionally, the device contains *zero* analog inputs, so I'm not
+sure why one was added.
 
-Signed-off-by: Martin Kepplinger-Novakovic <martin.kepplinger-novakovic@ginzinger.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Link: https://patch.msgid.link/20260121102607.4087362-1-martin.kepplinger-novakovic@ginzinger.com
+Signed-off-by: Bradford Love <brad@nextdimension.cc>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-compile the full assessment.
+Now I have all the information needed. Let me compile the complete
+analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-- **Subsystem:** drm/imx: parallel-display
-- **Action verb:** "add" (Kconfig dependency)
-- **Summary:** Add missing `DRM_DISPLAY_HELPER` Kconfig select for
-  `DRM_IMX_PARALLEL_DISPLAY`
-- Record: [drm/imx subsystem] [add missing dependency] [fixes link error
-  for drm_bridge_connector_init]
+- **Subsystem**: `media: em28xx`
+- **Action verb**: "remove" (reverting an inadvertent change)
+- **Summary**: Remove incorrect tuner type and input from Hauppauge
+  WinTV-dualHD DVB board profile
+- Record: [media: em28xx] [remove/revert] [Restores correct board
+  profile for DVB-only device]
 
 ### Step 1.2: Tags
-- **Reported-by:** kernel test robot `<lkp@intel.com>` — automated build
-  testing found this
-- **Closes:** lore link to kbuild error report
-- **Signed-off-by:** Martin Kepplinger-Novakovic (author), Philipp Zabel
-  (maintainer)
-- **Reviewed-by:** Philipp Zabel (subsystem maintainer)
-- **Link:** patch.msgid.link to original submission
-- No Fixes: tag, no Cc: stable (expected for manual review candidates)
-- Record: Kernel test robot reported build failure. Subsystem maintainer
-  reviewed AND committed.
+- **Signed-off-by**: Bradford Love (brad@nextdimension.cc) - author,
+  original Hauppauge em28xx developer
+- **Signed-off-by**: Hans Verkuil (hverkuil+cisco@kernel.org) - media
+  subsystem co-maintainer
+- No Fixes: tag (expected for candidates)
+- No Reported-by: tag
+- No Cc: stable
+- Record: Signed off by the subsystem expert (Brad Love is the original
+  author of multiple Hauppauge em28xx board entries) and the media
+  subsystem maintainer.
 
-### Step 1.3: Body Text
-The commit message includes the exact linker error:
-```
-arm-buildroot-linux-gnueabihf-ld: ... undefined reference to
-`drm_bridge_connector_init'
-```
-The author confirms reproducing this on a real imx53 platform build. The
-fix is explicitly stated: "Selecting DRM_DISPLAY_HELPER for
-DRM_IMX_PARALLEL_DISPLAY fixes the build."
-
-Record: [Build failure — linker error for undefined
-`drm_bridge_connector_init`] [Symptom: build fails for imx53 parallel
-display] [Confirmed by both author and test robot]
+### Step 1.3: Commit Body
+The commit message explains:
+- This reverts a change that was "perhaps inadvertently added" during
+  the 5.15-rc4 merge into the media tree
+- References `c52e7b855b33` ("Merge tag 'v5.15-rc4' into media_tree") as
+  the source
+- The author says "There was nothing wrong with this device" and "no
+  reason to modify the board profile"
+- DVB capabilities are handled via `dvb_module_probe` (not via analog
+  tuner infrastructure)
+- The device has "zero analog inputs" so the added composite input was
+  bogus
+- Record: Bug is a merge-introduced corruption of a board profile.
+  Symptom is incorrect device configuration.
 
 ### Step 1.4: Hidden Bug Fix Detection
-This is explicitly a build fix, not disguised. No hidden complexity.
-
----
+This is a clear bug fix disguised as "remove" - it reverts an
+inadvertent merge artifact that broke a device's board profile. The
+commit restores the original known-correct configuration.
+- Record: YES, this is a real bug fix - restoring a corrupted board
+  profile.
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **Files changed:** 1 (`drivers/gpu/drm/imx/ipuv3/Kconfig`)
-- **Lines added:** 1 (`select DRM_DISPLAY_HELPER`)
-- **Lines removed:** 0
-- **Scope:** Single-file, single-line Kconfig change
-- Record: [1 file, +1 line, single Kconfig select statement]
+- **Files changed**: 1 (`drivers/media/usb/em28xx/em28xx-cards.c`)
+- **Lines**: +1/-6 (net -5 lines)
+- **Functions modified**: None (data structure change only)
+- **Scope**: Single-file, single board entry modification
+- Record: Minimal change to one board profile entry in one file.
 
-### Step 2.2: Code Flow
-- **Before:** `DRM_IMX_PARALLEL_DISPLAY` selects `DRM_BRIDGE_CONNECTOR`
-  but not `DRM_DISPLAY_HELPER`
-- **After:** Also selects `DRM_DISPLAY_HELPER`
+### Step 2.2: Code Flow Change
+**Hunk 1**: Changes `.tuner_type` from `TUNER_SI2157` back to
+`TUNER_ABSENT` and removes the bogus `.input` block.
 
-The root cause: `DRM_BRIDGE_CONNECTOR` is defined inside `if
-DRM_DISPLAY_HELPER` in `drivers/gpu/drm/display/Kconfig` (line 15-17).
-The `drm_bridge_connector.o` object is compiled as part of the
-`drm_display_helper` module. Without `DRM_DISPLAY_HELPER` enabled,
-`drm_bridge_connector_init()` is never compiled, causing the linker
-error.
+Before: Board profile claims an Si2157 analog tuner and a composite
+video input
+After: Board profile correctly declares no analog tuner and no analog
+inputs
 
 ### Step 2.3: Bug Mechanism
-Category: **Build fix** — missing Kconfig dependency causes link
-failure.
+This is a **hardware profile/data corruption fix** (category h -
+hardware workaround/device profile).
+
+The incorrect `TUNER_SI2157` value causes:
+1. **Unnecessary I2C bus probing**: `em28xx_v4l2_init()` (line
+   2589-2622) attempts to discover and configure an analog tuner via
+   I2C, potentially conflicting with the DVB tuner probe
+2. **Spurious error message**: The check at line 4057-4058 (`has_dual_ts
+   && tuner_type != TUNER_ABSENT`) triggers "We currently don't support
+   analog TV or stream capture on dual tuners"
+3. **Incorrect capability advertisement**: V4L2_CAP_TUNER would be
+   advertised (line 2758)
+4. **Bogus input listing**: A non-existent composite video input
+   referencing TVP5150 decoder
+
+Record: Incorrect board profile data causing unnecessary I2C probing,
+spurious errors, and incorrect capability reporting.
 
 ### Step 2.4: Fix Quality
-- Obviously correct: the function is in the `drm_display_helper` module,
-  so the module must be selected
-- Minimal: 1 line
-- Zero runtime regression risk: only affects build-time dependency
-  resolution
-- Record: [Perfect quality, zero regression risk]
-
----
+- Obviously correct: Restores the original correct state (matches pre-
+  merge value and sibling board profile)
+- Minimal/surgical: Only changes the one affected board entry
+- Regression risk: Virtually zero - restoring known-good configuration
+- Record: Fix is trivially correct. Zero regression risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-From `git blame`, `DRM_BRIDGE_CONNECTOR` was added to this Kconfig by
-commit f673055a46784 ("drm/imx: Add missing DRM_BRIDGE_CONNECTOR
-dependency") in the v6.13 cycle. That commit itself was a partial fix —
-it added the `DRM_BRIDGE_CONNECTOR` select but missed adding
-`DRM_DISPLAY_HELPER`.
+The original correct board entry (`TUNER_ABSENT`) was introduced by Olli
+Salonen in commit `11a2a949d05e9d` (2016). The incorrect change was
+introduced by merge commit `c52e7b855b33f` during the 5.15-rc4 merge
+into media_tree, attributed to Mauro Carvalho Chehab's merge resolution.
 
-### Step 3.2: Root Cause Chain
-- Commit 9da7ec9b19d8 ("drm/bridge-connector: move to DRM_DISPLAY_HELPER
-  module") moved `drm_bridge_connector` under `DRM_DISPLAY_HELPER` —
-  root cause
-- Commit 5f6e56d3319d2 ("drm/imx: parallel-display: switch to
-  drm_panel_bridge") introduced bridge usage
-- Commit f673055a46784 added `select DRM_BRIDGE_CONNECTOR` but missed
-  `DRM_DISPLAY_HELPER`
-- The bug is that several commits were applied to bring bridge_connector
-  to imx but the Kconfig dependency chain was incomplete
+Record: Buggy code introduced by merge artifact c52e7b855b33f (Oct
+2021), first appearing in v5.16. Correct code existed since 2016 (v4.7
+era).
 
-### Step 3.3: Prerequisite Check
-All prerequisite commits (5f6e56d3319d2, f673055a46784, ef214002e6b38)
-are already in v7.0. This fix applies standalone.
+### Step 3.2: Fixes Tag
+No Fixes: tag present. The commit references `c52e7b855b33` as the
+source of the bug.
 
-### Step 3.4: Author Context
-Martin Kepplinger-Novakovic is a recognized contributor (has
-MAINTAINERS/CREDITS changes). The fix was reviewed by Philipp Zabel, the
-actual subsystem maintainer for drm/imx.
+Verified: `git diff v5.15..v5.16 -- drivers/media/usb/em28xx/em28xx-
+cards.c` confirms the TUNER_SI2157 and input changes were introduced
+between v5.15 and v5.16 via that merge.
 
-### Step 3.5: Stable Tree Applicability
-- **v6.12:** Bug does NOT exist — `parallel-display.c` doesn't call
-  `drm_bridge_connector_init()` (verified: 0 occurrences)
-- **v6.13:** Bug EXISTS — Kconfig has `select DRM_BRIDGE_CONNECTOR` but
-  not `select DRM_DISPLAY_HELPER`
-- **v6.14:** Bug EXISTS — same Kconfig state as v6.13
-- **v7.0:** Bug EXISTS — confirmed identical Kconfig state, fix applies
-  cleanly
+### Step 3.3: File History
+Recent commits to em28xx-cards.c are unrelated (MyGica UTV3 support,
+build system changes). No conflicting changes found.
+Record: Standalone fix, no prerequisites needed.
 
----
+### Step 3.4: Author
+Bradford Love (brad@nextdimension.cc) is the original Hauppauge em28xx
+developer who authored multiple board entries including `em28xx: Add pid
+for bulk revision of Hauppauge 461eV2`, `em28xx: Add pid for bulk
+revision of Hauppauge 461e`, `em28xx: Add support for Hauppauge USB
+QuadHD`, etc.
+Record: Author is the domain expert for Hauppauge em28xx devices.
 
-## PHASE 4: MAILING LIST RESEARCH
+### Step 3.5: Dependencies
+None. This is a standalone data change to a board profile. No code
+dependencies.
 
-### Step 4.1-4.2: Original Discussion
-- b4 dig for the prior commit (f673055a46784) found the thread at lore.
-  It was a single-patch fix
-- The current fix was submitted by the author after hitting the build
-  failure on real hardware
-- Reviewed-by from Philipp Zabel (the drm/imx maintainer who also
-  committed it)
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.3: Bug Report
-The kernel test robot (kbuild) reported the linker error, referenced in
-the Closes: tag.
+### Step 4.1-4.5
+Lore.kernel.org was unavailable due to bot protection. B4 dig could not
+be used on the merge commit (it's a merge). The commit was signed off by
+Hans Verkuil (media maintainer), confirming proper review.
 
-### Step 4.4-4.5: Series Context
-Standalone single-patch fix, no dependencies on other uncommitted
-patches.
-
----
+Record: Could not access lore discussion. Fix reviewed and accepted by
+media subsystem maintainer.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Function Analysis
-`drm_bridge_connector_init()` is called at line 206 of `parallel-
-display.c` in `imx_pd_bind()`. This is the driver probe/bind path —
-critical for anyone using the i.MX parallel display interface. Without
-this fix, the driver simply cannot be built (link error).
+### Step 5.1-5.4: Key Code Paths Affected
+Verified the following code paths are affected by the incorrect
+`TUNER_SI2157`:
 
-### Step 5.5: Similar Patterns
-Many other DRM drivers already `select DRM_DISPLAY_HELPER` alongside
-`DRM_BRIDGE_CONNECTOR` (verified via grep: bridge/Kconfig,
-panel/Kconfig, rockchip/Kconfig all have it). The IMX parallel display
-was simply missed.
+1. **`em28xx_v4l2_init()`** (em28xx-video.c:2589): When `tuner_type !=
+   TUNER_ABSENT`, probes I2C bus for analog tuner. The Si2157 DVB tuner
+   lives at I2C addresses 0x60/0x63 (from em28xx-dvb.c:1412). The analog
+   probe at line 2604-2612 uses `v4l2_i2c_tuner_addrs()` which could
+   overlap with these addresses.
 
----
+2. **`em28xx_usb_probe()`** (em28xx-cards.c:4057-4066): Dual-TS check
+   with `tuner_type != TUNER_ABSENT` triggers error message and disables
+   video.
 
-## PHASE 6: CROSS-REFERENCING
+3. **`em28xx_tuner_setup()`** (em28xx-video.c:2469): Attempts to
+   configure tuner type TUNER_SI2157 via V4L2 tuner subsystem.
 
-### Step 6.1: Bug Exists in Stable
-Confirmed the bug exists in v7.0. The Kconfig file in v7.0 exactly
-matches the "before" state of the diff.
+4. The sibling board `EM28174_BOARD_HAUPPAUGE_WINTV_DUALHD_01595`
+   correctly uses `TUNER_ABSENT` and has no input entry, confirming the
+   fix is correct.
 
-### Step 6.2: Backport Complexity
-**Clean apply** — the diff applies directly to v7.0 without any
-modifications.
+Record: Bug affects I2C probing, capability reporting, and error message
+generation. DVB tuner is handled separately via `dvb_module_probe`, not
+the analog tuner infrastructure.
 
-### Step 6.3: No Existing Fix
-No alternative fix exists in v7.0 for this issue.
+## PHASE 6: STABLE TREE ANALYSIS
 
----
+### Step 6.1: Bug Exists in Stable Trees
+Verified: The buggy change entered mainline in v5.16 via merge
+`c52e7b855b33f`. All active stable trees (6.1.y, 6.6.y, 6.12.y) contain
+this bug. The v5.15.y LTS tree does NOT (bug was introduced after 5.15).
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Step 6.2: Backport Complications
+The change is to a data structure entry. It should apply cleanly to all
+affected stable trees as the board profile has not been modified since
+the merge.
 
-### Step 7.1: Subsystem
-- **Path:** drivers/gpu/drm/imx/ipuv3
-- **Criticality:** PERIPHERAL (embedded i.MX ARM platform, but has real
-  users building kernels for imx53 boards)
+### Step 6.3: No related fixes already in stable.
 
-### Step 7.2: Activity
-The subsystem has moderate activity with several recent Kconfig fixes
-for the same dependency chain.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
----
+### Step 7.1
+- **Subsystem**: drivers/media/usb (USB media capture device driver)
+- **Criticality**: PERIPHERAL (affects users of specific Hauppauge
+  WinTV-dualHD DVB USB device)
+- The Hauppauge WinTV-dualHD is a consumer DVB USB stick, commonly used
+  for DVB-T/T2 reception
 
-## PHASE 8: IMPACT AND RISK
+### Step 7.2
+The em28xx subsystem is mature and stable. The bug has been present
+since v5.16 (~4 years).
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 ### Step 8.1: Affected Users
-Anyone building a kernel with `CONFIG_DRM_IMX_PARALLEL_DISPLAY=y/m`
-where `DRM_DISPLAY_HELPER` is not otherwise selected. This affects
-embedded Linux developers targeting i.MX53 platforms.
+Users of the Hauppauge WinTV-dualHD DVB (USB IDs 2040:0265 and
+2040:8265).
 
-### Step 8.2: Trigger
-100% reproducible — any build with the right config fails. Not a timing
-issue.
+### Step 8.2: Trigger Conditions
+Every time the device is plugged in or the driver loads. 100%
+reproducible for affected hardware.
 
-### Step 8.3: Severity
-**Build failure** — the kernel cannot be compiled with this driver
-enabled. Severity: HIGH for affected users.
+### Step 8.3: Failure Mode
+- Spurious error message in dmesg: "We currently don't support analog TV
+  or stream capture on dual tuners" (MEDIUM)
+- Unnecessary I2C bus probing that could conflict with DVB tuner
+  (MEDIUM)
+- Incorrect V4L2 capability advertising (LOW)
+- Non-existent composite input exposed to userspace (LOW)
+- Overall severity: MEDIUM
 
 ### Step 8.4: Risk-Benefit
-- **Benefit:** HIGH — fixes a hard build failure, enables compilation of
-  i.MX parallel display driver
-- **Risk:** NEAR-ZERO — 1-line Kconfig `select` addition, no runtime
-  code change whatsoever
-- **Ratio:** Excellent
-
----
+- **Benefit**: Fixes incorrect device behavior for all users of this
+  hardware, eliminates spurious errors, prevents potential I2C conflicts
+- **Risk**: Extremely low - 5-line change to a data structure, restoring
+  known-good values that existed for 5 years before the merge artifact
+- **Ratio**: HIGH benefit / VERY LOW risk
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
-**FOR backporting:**
-- Fixes a real, reproducible build failure (linker error)
-- Single-line Kconfig change — minimal scope
-- Zero runtime regression risk
-- Reported by kernel test robot AND reproduced by author on real
-  hardware
-- Reviewed and committed by subsystem maintainer
-- Bug exists in v7.0 (verified)
-- Clean apply to v7.0
+### Step 9.1: Evidence
+**FOR backporting**:
+- Fixes an incorrect board profile caused by a merge artifact
+- Small (5 lines net), obviously correct, data-only change
+- Restores original known-good configuration (verified by blame)
+- Matches sibling device's correct profile
+- Author is the domain expert for this hardware
+- Reviewed by media subsystem maintainer (Hans Verkuil)
+- Bug affects all stable trees from 6.1.y through 6.12.y
+- Prevents spurious error messages and potential I2C bus conflicts
+- Clean apply expected (no conflicting changes to this entry)
 
-**AGAINST backporting:**
-- None identified
+**AGAINST backporting**:
+- Bug has been present ~4 years without widespread reports (limited user
+  impact)
+- DVB functionality likely still works despite the incorrect profile
+- No syzbot/crash reports associated with this
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — Kconfig dependency is
-   unambiguously needed
-2. Fixes a real bug? **YES** — hard build failure
-3. Important issue? **YES** — prevents building the driver entirely
-4. Small and contained? **YES** — 1 line in 1 file
-5. No new features or APIs? **YES** — purely a build dependency fix
-6. Can apply to stable? **YES** — clean apply verified
+1. Obviously correct and tested? **YES** - restores pre-merge state,
+   signed off by domain expert and maintainer
+2. Fixes a real bug? **YES** - incorrect device profile from merge
+   artifact
+3. Important issue? **MEDIUM** - spurious errors, potential I2C
+   conflicts, incorrect capabilities
+4. Small and contained? **YES** - 5 lines in one file, one board entry
+5. No new features or APIs? **YES** - purely corrective
+6. Can apply to stable? **YES** - clean apply expected
 
-### Step 9.3: Exception Category
-This is a **BUILD FIX** — one of the explicitly allowed exception
-categories for stable.
+### Step 9.3: Exception Categories
+This falls into the **hardware quirk/device profile fix** category -
+correcting incorrect device data in an existing driver.
 
----
+### Step 9.4: Decision
+This is a small, obviously correct fix to a board profile that was
+corrupted by a merge artifact. It restores the original known-good
+configuration for a specific USB device, matching the sibling board's
+correct profile. It was written by the domain expert and reviewed by the
+media maintainer. The risk is minimal and the fix prevents incorrect
+driver behavior for users of this hardware.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reported-by kernel test robot, Reviewed-by
-  Philipp Zabel (maintainer), Closes link to kbuild report
-- [Phase 2] Diff analysis: +1 line `select DRM_DISPLAY_HELPER` in
-  Kconfig
-- [Phase 3] git blame: `DRM_BRIDGE_CONNECTOR` added by f673055a46784 in
-  v6.13 cycle without matching `DRM_DISPLAY_HELPER`
-- [Phase 3] git show v7.0:Kconfig: confirmed bug exists (missing select
-  DRM_DISPLAY_HELPER)
-- [Phase 3] git show v6.12:parallel-display.c: confirmed 0 calls to
-  `drm_bridge_connector_init`, bug doesn't exist pre-6.13
-- [Phase 3] git show v6.13/v6.14:Kconfig: confirmed bug present in both
-- [Phase 4] b4 dig -c f673055a46784: found original thread for the
-  incomplete fix
-- [Phase 5] Grep: `drm_bridge_connector_init` called at line 206 in
-  `imx_pd_bind()`
-- [Phase 5] Grep: `DRM_BRIDGE_CONNECTOR` inside `if DRM_DISPLAY_HELPER`
-  at display/Kconfig:15-17
-- [Phase 5] Grep: `drm_display_helper-$(CONFIG_DRM_BRIDGE_CONNECTOR)` in
-  display/Makefile confirms build dependency
-- [Phase 6] v7.0 Kconfig state matches diff's "before" — clean apply
-  guaranteed
-- [Phase 8] Failure mode: 100% reproducible link error, severity HIGH
-  for affected configs
-
-This is a textbook build fix: one-line Kconfig dependency addition, zero
-runtime risk, fixes a hard build failure for i.MX parallel display
-users. It meets every stable kernel criterion.
+- [Phase 1] Parsed commit message: author explains merge-introduced
+  incorrect board profile
+- [Phase 2] Diff analysis: +1/-6 lines, changes `.tuner_type` from
+  TUNER_SI2157 to TUNER_ABSENT, removes 5-line bogus `.input` block
+- [Phase 3] git blame: Correct TUNER_ABSENT value existed since commit
+  11a2a949d05e9d (2016, Olli Salonen). Bug introduced by merge
+  c52e7b855b33f (Oct 2021)
+- [Phase 3] git diff v5.15..v5.16: Confirmed the TUNER_SI2157 and input
+  changes were introduced between v5.15 and v5.16 via the merge
+- [Phase 3] git blame tuner-types.c: TUNER_SI2157 entry was also added
+  by same merge c52e7b855b33f (stub entry with no parameters)
+- [Phase 3] git log --author: Brad Love is the Hauppauge em28xx expert
+  with multiple device contributions
+- [Phase 5] Grep for TUNER_SI2157 in em28xx: Only used in the one
+  incorrect board entry
+- [Phase 5] Code analysis em28xx-video.c:2589-2622: tuner_type !=
+  TUNER_ABSENT triggers I2C analog tuner probe
+- [Phase 5] Code analysis em28xx-cards.c:4057-4066: dual_ts + tuner !=
+  ABSENT triggers error message
+- [Phase 5] Code analysis em28xx-dvb.c:1384-1422: Si2157 tuner handled
+  via dvb_module_probe at fixed I2C addresses, not analog tuner
+  infrastructure
+- [Phase 5] Verified sibling board
+  EM28174_BOARD_HAUPPAUGE_WINTV_DUALHD_01595 correctly uses TUNER_ABSENT
+  with no input
+- [Phase 6] Bug introduced in v5.16, affects all active stable trees
+  (6.1.y, 6.6.y, 6.12.y)
+- [Phase 6] No conflicting changes to this board entry since v5.16
+- UNVERIFIED: Could not access lore.kernel.org discussion due to bot
+  protection
 
 **YES**
 
- drivers/gpu/drm/imx/ipuv3/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/em28xx/em28xx-cards.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/ipuv3/Kconfig b/drivers/gpu/drm/imx/ipuv3/Kconfig
-index acaf250890019..b2240998df4f1 100644
---- a/drivers/gpu/drm/imx/ipuv3/Kconfig
-+++ b/drivers/gpu/drm/imx/ipuv3/Kconfig
-@@ -15,6 +15,7 @@ config DRM_IMX_PARALLEL_DISPLAY
- 	depends on DRM_IMX
- 	select DRM_BRIDGE
- 	select DRM_BRIDGE_CONNECTOR
-+	select DRM_DISPLAY_HELPER
- 	select DRM_IMX_LEGACY_BRIDGE
- 	select DRM_PANEL_BRIDGE
- 	select VIDEOMODE_HELPERS
+diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
+index 2d19f8ecd6857..d7075ebabceb8 100644
+--- a/drivers/media/usb/em28xx/em28xx-cards.c
++++ b/drivers/media/usb/em28xx/em28xx-cards.c
+@@ -2522,17 +2522,12 @@ const struct em28xx_board em28xx_boards[] = {
+ 		.def_i2c_bus   = 1,
+ 		.i2c_speed     = EM28XX_I2C_CLK_WAIT_ENABLE |
+ 				 EM28XX_I2C_FREQ_400_KHZ,
+-		.tuner_type    = TUNER_SI2157,
++		.tuner_type    = TUNER_ABSENT,
+ 		.tuner_gpio    = hauppauge_dualhd_dvb,
+ 		.has_dvb       = 1,
+ 		.has_dual_ts   = 1,
+ 		.ir_codes      = RC_MAP_HAUPPAUGE,
+ 		.leds          = hauppauge_dualhd_leds,
+-		.input         = { {
+-			.type     = EM28XX_VMUX_COMPOSITE,
+-			.vmux     = TVP5150_COMPOSITE1,
+-			.amux     = EM28XX_AMUX_LINE_IN,
+-		} },
+ 	},
+ 	/*
+ 	 * 2040:026d Hauppauge WinTV-dualHD (model 01595 - ATSC/QAM) Isoc.
 -- 
 2.53.0
 
