@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710F92E093A;
-	Mon, 20 Apr 2026 15:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D8B2E093A;
+	Mon, 20 Apr 2026 15:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700302; cv=none; b=VRqNEmOAFzvaOggbyC960474Rd8J25WmFh64cbxOMefUpCzgSCRCl8LZWwBKMxmJLBNQlVjkyAdOzuKiTA8T4uqRR80N6KVMznA++9fnFsbdlRCU1QU9TQ5uKujBpDOg8pOZQkB65AgdXnKqcJMvxWQMSsARhZe3T4phWThTRxQ=
+	t=1776700305; cv=none; b=pEgGdwV8F7odI44P/tQ7rDnxvkolBmoO7NQwnmJUbQjVRAm1Y/GszNBPOFaEvsmplOjKvEcPm0eQAEV1LZ4zRwRdIorEhACGgJu/++jVeYoKvE+ce68+j1QwK70Fp0+5MxHj6a8tb6jmb4YvBNI7ZcYMkfWKFT1QfQ6oZIuJKco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700302; c=relaxed/simple;
-	bh=gsDm+mnxhHQerrlHu6D7whaHI5XsZQIQrD/eVC/ympM=;
+	s=arc-20240116; t=1776700305; c=relaxed/simple;
+	bh=zWEqOrKGh7O9L+tHcG5AffAVPxrnXIV5wsWrTVo72Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaT7eLynLkatQDBqXVoSR+ubRMw2+5lBFp+05T9PflKlB8VRgcyWY/pQJoE2cGPHdsJxEjeAdMqr8i6KDQsygK9FP7Na77E/E/mNC3d3Wu/Tu/KJsSC7MYs+KcT2ML6LxojtLzirX0+oNtjKeqEjgYtzen38aIISb53pgRcNKH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crY31XXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c2P5OwNFVAOX2FFGEhaQByJbBO21EkMWvAPr45JtM9tDTaZvP1jvw+8UUXuYnqBlAobILHerJPIz833sIqqAiKENg3W2MkrzocGJvWIDKu2u1YMcR+6GnhGmyqdbKf/xVsgt1IFAXOwnoYO00s+cFQ7/9G9uyhDrjqNf1MJoGtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/ZT/Lbb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crY31XXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DF7C19425;
-	Mon, 20 Apr 2026 15:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/ZT/Lbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95495C19425;
+	Mon, 20 Apr 2026 15:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700302;
-	bh=gsDm+mnxhHQerrlHu6D7whaHI5XsZQIQrD/eVC/ympM=;
+	s=korg; t=1776700304;
+	bh=zWEqOrKGh7O9L+tHcG5AffAVPxrnXIV5wsWrTVo72Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crY31XXvhL+6K7h4SVkTSvage2CbffjynV2Wwrc4QVb1UKGcUS0PGiPgeKJrTBmLt
-	 t6aLF1u16ogESzmVJ8+dM7qxDvuC01hwNK6dlNaDb6BhonEKR6yMX6us1uhzvzEW+K
-	 ymEtyX9iMkg/5C+7W5bvNgBm2jXMWH4cGfkDa1HM=
+	b=M/ZT/Lbbs/txX/fEd8RiguuxVBSHDzdxiy65+dYXog9PW3aVV8Cf5ttAUrr74fZi7
+	 5FVLlW5+57J4f3gjYSGwETnzzh/55v/uCrgzsQwKGewKTWxrDyhZw2ZOYD2Bwbrgv0
+	 xGcRQnc1DTudAbRnTSUKbAS+3LIQibY5bUugM6GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mitchell <scott.k.mitch1@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Maciej Strozek <mstrozek@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 120/220] netfilter: nfnetlink_queue: make hash table per queue
-Date: Mon, 20 Apr 2026 17:41:01 +0200
-Message-ID: <20260420153938.350397049@linuxfoundation.org>
+Subject: [PATCH 6.19 121/220] ASoC: SDCA: Fix overwritten var within for loop
+Date: Mon, 20 Apr 2026 17:41:02 +0200
+Message-ID: <20260420153938.385911849@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,312 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-[ Upstream commit 936206e3f6ff411581e615e930263d6f8b78df9d ]
+[ Upstream commit 23e0cbe55736de222ed975863cf06baf29bee5fe ]
 
-Sharing a global hash table among all queues is tempting, but
-it can cause crash:
+mask variable should not be overwritten within the for loop or it will
+skip certain bits. Change to using BIT() macro.
 
-BUG: KASAN: slab-use-after-free in nfqnl_recv_verdict+0x11ac/0x15e0 [nfnetlink_queue]
-[..]
- nfqnl_recv_verdict+0x11ac/0x15e0 [nfnetlink_queue]
- nfnetlink_rcv_msg+0x46a/0x930
- kmem_cache_alloc_node_noprof+0x11e/0x450
-
-struct nf_queue_entry is freed via kfree, but parallel cpu can still
-encounter such an nf_queue_entry when walking the list.
-
-Alternative fix is to free the nf_queue_entry via kfree_rcu() instead,
-but as we have to alloc/free for each skb this will cause more mem
-pressure.
-
-Cc: Scott Mitchell <scott.k.mitch1@gmail.com>
-Fixes: e19079adcd26 ("netfilter: nfnetlink_queue: optimize verdict lookup with hash table")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: b9ab3b618241 ("ASoC: SDCA: Add some initial IRQ handlers")
+Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260408093835.2881486-2-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_queue.h |   1 -
- net/netfilter/nfnetlink_queue.c  | 139 +++++++++++--------------------
- 2 files changed, 49 insertions(+), 91 deletions(-)
+ sound/soc/sdca/sdca_interrupts.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/net/netfilter/nf_queue.h b/include/net/netfilter/nf_queue.h
-index 45eb26b2e95b3..d17035d14d96c 100644
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -23,7 +23,6 @@ struct nf_queue_entry {
- 	struct nf_hook_state	state;
- 	bool			nf_ct_is_unconfirmed;
- 	u16			size; /* sizeof(entry) + saved route keys */
--	u16			queue_num;
+diff --git a/sound/soc/sdca/sdca_interrupts.c b/sound/soc/sdca/sdca_interrupts.c
+index be269f204d623..4739fabb75f23 100644
+--- a/sound/soc/sdca/sdca_interrupts.c
++++ b/sound/soc/sdca/sdca_interrupts.c
+@@ -117,9 +117,7 @@ static irqreturn_t function_status_handler(int irq, void *data)
  
- 	/* extra space to store route keys */
- };
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index a39d3b989063c..fe5942535245d 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -49,8 +49,8 @@
- #endif
- 
- #define NFQNL_QMAX_DEFAULT 1024
--#define NFQNL_HASH_MIN     1024
--#define NFQNL_HASH_MAX     1048576
-+#define NFQNL_HASH_MIN     8
-+#define NFQNL_HASH_MAX     32768
- 
- /* We're using struct nlattr which has 16bit nla_len. Note that nla_len
-  * includes the header length. Thus, the maximum packet length that we
-@@ -60,29 +60,10 @@
-  */
- #define NFQNL_MAX_COPY_RANGE (0xffff - NLA_HDRLEN)
- 
--/* Composite key for packet lookup: (net, queue_num, packet_id) */
--struct nfqnl_packet_key {
--	possible_net_t net;
--	u32 packet_id;
--	u16 queue_num;
--} __aligned(sizeof(u32));  /* jhash2 requires 32-bit alignment */
+ 	status = val;
+ 	for_each_set_bit(mask, &status, BITS_PER_BYTE) {
+-		mask = 1 << mask;
 -
--/* Global rhashtable - one for entire system, all netns */
--static struct rhashtable nfqnl_packet_map __read_mostly;
--
--/* Helper to initialize composite key */
--static inline void nfqnl_init_key(struct nfqnl_packet_key *key,
--				  struct net *net, u32 packet_id, u16 queue_num)
--{
--	memset(key, 0, sizeof(*key));
--	write_pnet(&key->net, net);
--	key->packet_id = packet_id;
--	key->queue_num = queue_num;
--}
--
- struct nfqnl_instance {
- 	struct hlist_node hlist;		/* global list of queues */
--	struct rcu_head rcu;
-+	struct rhashtable nfqnl_packet_map;
-+	struct rcu_work	rwork;
- 
- 	u32 peer_portid;
- 	unsigned int queue_maxlen;
-@@ -106,6 +87,7 @@ struct nfqnl_instance {
- 
- typedef int (*nfqnl_cmpfn)(struct nf_queue_entry *, unsigned long);
- 
-+static struct workqueue_struct *nfq_cleanup_wq __read_mostly;
- static unsigned int nfnl_queue_net_id __read_mostly;
- 
- #define INSTANCE_BUCKETS	16
-@@ -124,34 +106,10 @@ static inline u_int8_t instance_hashfn(u_int16_t queue_num)
- 	return ((queue_num >> 8) ^ queue_num) % INSTANCE_BUCKETS;
- }
- 
--/* Extract composite key from nf_queue_entry for hashing */
--static u32 nfqnl_packet_obj_hashfn(const void *data, u32 len, u32 seed)
--{
--	const struct nf_queue_entry *entry = data;
--	struct nfqnl_packet_key key;
--
--	nfqnl_init_key(&key, entry->state.net, entry->id, entry->queue_num);
--
--	return jhash2((u32 *)&key, sizeof(key) / sizeof(u32), seed);
--}
--
--/* Compare stack-allocated key against entry */
--static int nfqnl_packet_obj_cmpfn(struct rhashtable_compare_arg *arg,
--				  const void *obj)
--{
--	const struct nfqnl_packet_key *key = arg->key;
--	const struct nf_queue_entry *entry = obj;
--
--	return !net_eq(entry->state.net, read_pnet(&key->net)) ||
--	       entry->queue_num != key->queue_num ||
--	       entry->id != key->packet_id;
--}
--
- static const struct rhashtable_params nfqnl_rhashtable_params = {
- 	.head_offset = offsetof(struct nf_queue_entry, hash_node),
--	.key_len = sizeof(struct nfqnl_packet_key),
--	.obj_hashfn = nfqnl_packet_obj_hashfn,
--	.obj_cmpfn = nfqnl_packet_obj_cmpfn,
-+	.key_offset = offsetof(struct nf_queue_entry, id),
-+	.key_len = sizeof(u32),
- 	.automatic_shrinking = true,
- 	.min_size = NFQNL_HASH_MIN,
- 	.max_size = NFQNL_HASH_MAX,
-@@ -190,6 +148,10 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 	spin_lock_init(&inst->lock);
- 	INIT_LIST_HEAD(&inst->queue_list);
- 
-+	err = rhashtable_init(&inst->nfqnl_packet_map, &nfqnl_rhashtable_params);
-+	if (err < 0)
-+		goto out_free;
-+
- 	spin_lock(&q->instances_lock);
- 	if (instance_lookup(q, queue_num)) {
- 		err = -EEXIST;
-@@ -210,6 +172,8 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 
- out_unlock:
- 	spin_unlock(&q->instances_lock);
-+	rhashtable_destroy(&inst->nfqnl_packet_map);
-+out_free:
- 	kfree(inst);
- 	return ERR_PTR(err);
- }
-@@ -217,15 +181,18 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- static void nfqnl_flush(struct nfqnl_instance *queue, nfqnl_cmpfn cmpfn,
- 			unsigned long data);
- 
--static void
--instance_destroy_rcu(struct rcu_head *head)
-+static void instance_destroy_work(struct work_struct *work)
- {
--	struct nfqnl_instance *inst = container_of(head, struct nfqnl_instance,
--						   rcu);
-+	struct nfqnl_instance *inst;
- 
-+	inst = container_of(to_rcu_work(work), struct nfqnl_instance,
-+			    rwork);
- 	rcu_read_lock();
- 	nfqnl_flush(inst, NULL, 0);
- 	rcu_read_unlock();
-+
-+	rhashtable_destroy(&inst->nfqnl_packet_map);
-+
- 	kfree(inst);
- 	module_put(THIS_MODULE);
- }
-@@ -234,7 +201,9 @@ static void
- __instance_destroy(struct nfqnl_instance *inst)
- {
- 	hlist_del_rcu(&inst->hlist);
--	call_rcu(&inst->rcu, instance_destroy_rcu);
-+
-+	INIT_RCU_WORK(&inst->rwork, instance_destroy_work);
-+	queue_rcu_work(nfq_cleanup_wq, &inst->rwork);
- }
- 
- static void
-@@ -250,9 +219,7 @@ __enqueue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
- {
- 	int err;
- 
--	entry->queue_num = queue->queue_num;
--
--	err = rhashtable_insert_fast(&nfqnl_packet_map, &entry->hash_node,
-+	err = rhashtable_insert_fast(&queue->nfqnl_packet_map, &entry->hash_node,
- 				     nfqnl_rhashtable_params);
- 	if (unlikely(err))
- 		return err;
-@@ -266,23 +233,19 @@ __enqueue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
- static void
- __dequeue_entry(struct nfqnl_instance *queue, struct nf_queue_entry *entry)
- {
--	rhashtable_remove_fast(&nfqnl_packet_map, &entry->hash_node,
-+	rhashtable_remove_fast(&queue->nfqnl_packet_map, &entry->hash_node,
- 			       nfqnl_rhashtable_params);
- 	list_del(&entry->list);
- 	queue->queue_total--;
- }
- 
- static struct nf_queue_entry *
--find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id,
--		   struct net *net)
-+find_dequeue_entry(struct nfqnl_instance *queue, unsigned int id)
- {
--	struct nfqnl_packet_key key;
- 	struct nf_queue_entry *entry;
- 
--	nfqnl_init_key(&key, net, id, queue->queue_num);
--
- 	spin_lock_bh(&queue->lock);
--	entry = rhashtable_lookup_fast(&nfqnl_packet_map, &key,
-+	entry = rhashtable_lookup_fast(&queue->nfqnl_packet_map, &id,
- 				       nfqnl_rhashtable_params);
- 
- 	if (entry)
-@@ -1531,7 +1494,7 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
- 
- 	verdict = ntohl(vhdr->verdict);
- 
--	entry = find_dequeue_entry(queue, ntohl(vhdr->id), info->net);
-+	entry = find_dequeue_entry(queue, ntohl(vhdr->id));
- 	if (entry == NULL)
- 		return -ENOENT;
- 
-@@ -1880,40 +1843,38 @@ static int __init nfnetlink_queue_init(void)
- {
- 	int status;
- 
--	status = rhashtable_init(&nfqnl_packet_map, &nfqnl_rhashtable_params);
--	if (status < 0)
--		return status;
-+	nfq_cleanup_wq = alloc_ordered_workqueue("nfq_workqueue", 0);
-+	if (!nfq_cleanup_wq)
-+		return -ENOMEM;
- 
- 	status = register_pernet_subsys(&nfnl_queue_net_ops);
--	if (status < 0) {
--		pr_err("failed to register pernet ops\n");
--		goto cleanup_rhashtable;
--	}
-+	if (status < 0)
-+		goto cleanup_pernet_subsys;
- 
--	netlink_register_notifier(&nfqnl_rtnl_notifier);
--	status = nfnetlink_subsys_register(&nfqnl_subsys);
--	if (status < 0) {
--		pr_err("failed to create netlink socket\n");
--		goto cleanup_netlink_notifier;
--	}
-+	status = netlink_register_notifier(&nfqnl_rtnl_notifier);
-+	if (status < 0)
-+	       goto cleanup_rtnl_notifier;
- 
- 	status = register_netdevice_notifier(&nfqnl_dev_notifier);
--	if (status < 0) {
--		pr_err("failed to register netdevice notifier\n");
--		goto cleanup_netlink_subsys;
--	}
-+	if (status < 0)
-+		goto cleanup_dev_notifier;
-+
-+	status = nfnetlink_subsys_register(&nfqnl_subsys);
-+	if (status < 0)
-+		goto cleanup_nfqnl_subsys;
- 
- 	nf_register_queue_handler(&nfqh);
- 
- 	return status;
- 
--cleanup_netlink_subsys:
--	nfnetlink_subsys_unregister(&nfqnl_subsys);
--cleanup_netlink_notifier:
-+cleanup_nfqnl_subsys:
-+	unregister_netdevice_notifier(&nfqnl_dev_notifier);
-+cleanup_dev_notifier:
- 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
-+cleanup_rtnl_notifier:
- 	unregister_pernet_subsys(&nfnl_queue_net_ops);
--cleanup_rhashtable:
--	rhashtable_destroy(&nfqnl_packet_map);
-+cleanup_pernet_subsys:
-+	destroy_workqueue(nfq_cleanup_wq);
- 	return status;
- }
- 
-@@ -1924,9 +1885,7 @@ static void __exit nfnetlink_queue_fini(void)
- 	nfnetlink_subsys_unregister(&nfqnl_subsys);
- 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);
- 	unregister_pernet_subsys(&nfnl_queue_net_ops);
--
--	rhashtable_destroy(&nfqnl_packet_map);
--
-+	destroy_workqueue(nfq_cleanup_wq);
- 	rcu_barrier(); /* Wait for completion of call_rcu()'s */
- }
- 
+-		switch (mask) {
++		switch (BIT(mask)) {
+ 		case SDCA_CTL_ENTITY_0_FUNCTION_NEEDS_INITIALIZATION:
+ 			//FIXME: Add init writes
+ 			break;
 -- 
 2.53.0
 
