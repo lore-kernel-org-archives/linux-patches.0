@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44B02E093A;
-	Mon, 20 Apr 2026 15:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E711E633C;
+	Mon, 20 Apr 2026 15:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700381; cv=none; b=u+jUX7aPFmtXDKY0WkwhzqSseoLvT2qLHqHTESkHw9axob4sLil8sHjMD3HkLIy3aAAKM4XZofuG9C5wrkv/cssrysQ9uvBpWkmU2k199hceJrZJG56H9KyZcGSY3d6Q5YQTB6AqI8x0GJhlxBU603uVG4+VkiOSO5cDhh5QEAQ=
+	t=1776700384; cv=none; b=V5YKg2i8OKNqZK0grpkS9tlKcSZvlV3VJ+HzbEvufFkGR4PfRpTswwSOiEaxI3QThXyHZiAUstDnnqHUhpkxVEDLgvWieUIsxH231BplYHVmH0mZPMYpqUI9t7e0Qveg4zhJfqthDTrP2WyZJH6f4XOO6pgvdykzH/OmWDMA3z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700381; c=relaxed/simple;
-	bh=TE0AhqHLzOI64paO4CuNg5bmyI3SSEZBXC2UGl3ZDHw=;
+	s=arc-20240116; t=1776700384; c=relaxed/simple;
+	bh=EF9nupvaIMpfhQlmXcfwtBgXLLLU3jquxRYQDErNUA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHSTkNgs42OkTDt9CULoRVYnpMcBFEiHpXB3kneTQUPcejspufjhRwZtqlLLLceiFg9JOxjys4jsrtG0Mfrn4XTeXttBgbz0Fx5EocmdjVue0Y74+8gVaBUyVtqI8B/UGzxkKM+KdGnw+1kkrQzuavvmhrfDGaSiEC9c0WmJXSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SA1cd6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQdqk7fetUgRF35kxjE8q6EI+i1iex+GpXPqsQxKC0lxy1DGzvhozOkLruiRYsHg/xu1QjCZNBr32aUAf8wWsdWBEtc01THbyU+yy+vOwFuuofJsj5XZarNr/TFqkGKfpLb7op7lqvUfjwDT3LsfRG7rO64NZtB0zpGvN6qUqVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNQ7mVLk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SA1cd6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE11C19425;
-	Mon, 20 Apr 2026 15:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNQ7mVLk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFF5C19425;
+	Mon, 20 Apr 2026 15:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700381;
-	bh=TE0AhqHLzOI64paO4CuNg5bmyI3SSEZBXC2UGl3ZDHw=;
+	s=korg; t=1776700384;
+	bh=EF9nupvaIMpfhQlmXcfwtBgXLLLU3jquxRYQDErNUA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SA1cd6BnmgRPBc+dzwZsrW6Y316ICu9i8IZxddG4wVhNxqhc7fg7p2g2jFOfm17a
-	 rdFMUTKJeP/xFPuHPbWJmA759JsYQ1WBzknRImHzD11b6gTGjYsp1+LyYrVVlyPCGF
-	 MJA0XQvK+CM420nUoUvwiUadQXCF8Ia30cpLyT9Q=
+	b=TNQ7mVLkg58XF3EVmy3dA3Ny4gXlffQTuq3jbjYOE2rjJ/RBcYD1Q3c6w9qLcXe9Q
+	 h7jB+dwQdH1M0mVNvuMifIA6YhSIcMf8WeSX5EtCzsmN3GN1ylyhJAe1LhCulWxwIy
+	 YcZfVHPp7b/h81wRN8SEsL3SqphoBXBqfv3yiIWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clemens Ladisch <clemens@ladisch.de>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	stable <stable@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.19 151/220] ALSA: fireworks: bound device-supplied status before string array lookup
-Date: Mon, 20 Apr 2026 17:41:32 +0200
-Message-ID: <20260420153939.465859491@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.19 152/220] fbdev: tdfxfb: avoid divide-by-zero on FBIOPUT_VSCREENINFO
+Date: Mon, 20 Apr 2026 17:41:33 +0200
+Message-ID: <20260420153939.502103296@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -56,50 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 07704bbf36f57e4379e4cadf96410dab14621e3b upstream.
+commit 8f98b81fe011e1879e6a7b1247e69e06a5e17af2 upstream.
 
-The status field in an EFW response is a 32-bit value supplied by the
-firewire device.  efr_status_names[] has 17 entries so a status value
-outside that range goes off into the weeds when looking at the %s value.
+Much like commit 19f953e74356 ("fbdev: fb_pm2fb: Avoid potential divide
+by zero error"), we also need to prevent that same crash from happening
+in the udlfb driver as it uses pixclock directly when dividing, which
+will crash.
 
-Even worse, the status could return EFR_STATUS_INCOMPLETE which is
-0x80000000, and is obviously not in that array of potential strings.
-
-Fix this up by properly bounding the index against the array size and
-printing "unknown" if it's not recognized.
-
-Cc: Clemens Ladisch <clemens@ladisch.de>
-Cc: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Fixes: bde8a8f23bbe ("ALSA: fireworks: Add transaction and some commands")
-Cc: stable <stable@kernel.org>
+Cc: Helge Deller <deller@gmx.de>
 Assisted-by: gregkh_clanker_t1000
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://patch.msgid.link/2026040953-astute-camera-1aa1@gregkh
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/fireworks/fireworks_command.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/tdfxfb.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/firewire/fireworks/fireworks_command.c
-+++ b/sound/firewire/fireworks/fireworks_command.c
-@@ -151,10 +151,13 @@ efw_transaction(struct snd_efw *efw, uns
- 	    (be32_to_cpu(header->category) != category) ||
- 	    (be32_to_cpu(header->command) != command) ||
- 	    (be32_to_cpu(header->status) != EFR_STATUS_OK)) {
-+		u32 st = be32_to_cpu(header->status);
-+
- 		dev_err(&efw->unit->device, "EFW command failed [%u/%u]: %s\n",
- 			be32_to_cpu(header->category),
- 			be32_to_cpu(header->command),
--			efr_status_names[be32_to_cpu(header->status)]);
-+			st < ARRAY_SIZE(efr_status_names) ?
-+				efr_status_names[st] : "unknown");
- 		err = -EIO;
- 		goto end;
+--- a/drivers/video/fbdev/tdfxfb.c
++++ b/drivers/video/fbdev/tdfxfb.c
+@@ -496,6 +496,9 @@ static int tdfxfb_check_var(struct fb_va
+ 		}
  	}
+ 
++	if (!var->pixclock)
++		return -EINVAL;
++
+ 	if (PICOS2KHZ(var->pixclock) > par->max_pixclock) {
+ 		DPRINTK("pixclock too high (%ldKHz)\n",
+ 			PICOS2KHZ(var->pixclock));
 
 
