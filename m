@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF0D2D978C;
-	Mon, 20 Apr 2026 16:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B351D33F5BC;
+	Mon, 20 Apr 2026 16:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701074; cv=none; b=lN2IGluy+99ROHyHBY2apqZDtFo+huPFlXSVl3M2G9fGzGj961z3TU62WEYYGTy15IfEyavFbaeGuW9xVra+d/AkmAey3es39FyvOAdIOlQt+YLrweJ2DGuszqOc30Y7F2AGJgvLPa9bRq+iPy+Bs14MYJbkfMLRh5jz+p0/OtM=
+	t=1776701077; cv=none; b=ds0zhxE8bjLvh3qeOmkxWsZYfM9O7KN0XkhYmRlhnnoPmQjnZoNsF5nELuKkU8KrBTSepZTDVVIWRNygIgRRPfs+CqghlDZasFseUJFgtjJ9OK6lv2HllCdA9n1TAcLKByDlZbbkJCbmHDbgrrylM2UzIVOsKsEWdKzKDiBixl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701074; c=relaxed/simple;
-	bh=04AgJ4UYTcFnRjAVSx/tJSpOF1xQjbkwZYnyeBDLj5U=;
+	s=arc-20240116; t=1776701077; c=relaxed/simple;
+	bh=+++Jn+DS2ZhmvhSQR6WO7HEJ30mqYRxtXKSo8+yNWJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjKNBxjpduCZwTPfJb8jmfuecQTR5EXaABT9C39Lll4ki2Y7bNC5KgHrP316LEPeAc1iDsADH0qPEnze/E8zsIMjQ+q1a5HW3V9TDJDcSKVMMVg4pwjwH7BBgPRY5R2j1awueHtLonVP2ubhzY3jHzufTTB0YVVV6ZSRieX/dVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxjWpcfS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ADoqaVpCOiaMBHO8vvh+fYi9m3JzpBaBGcjM8wFv5ZaJWS6vLyHILsmFcL6Uuh05CHdoF8x1yy78o68fp8qWNIA0sBKehkpdgqrdX6B7G8gq77CJmWGQCRjQbgHjbrazlW8OBX7jheVq6O4QxZmayIU0IctlVmUskd9psfZO/WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gj9pLhHS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxjWpcfS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5655BC19425;
-	Mon, 20 Apr 2026 16:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gj9pLhHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB9DC19425;
+	Mon, 20 Apr 2026 16:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701074;
-	bh=04AgJ4UYTcFnRjAVSx/tJSpOF1xQjbkwZYnyeBDLj5U=;
+	s=korg; t=1776701077;
+	bh=+++Jn+DS2ZhmvhSQR6WO7HEJ30mqYRxtXKSo8+yNWJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxjWpcfS8FlrNNokxbKPiuOy04QjvFH3jq9cBUcoFZx3Ixzib8RKXTottJaXryQ3m
-	 m+xtraiBqmS9gNPUJTRLPWKtWEmYJWo172HAXwvLBqpevwYjrbsmL9pDpGsW+aweQ4
-	 YkJiHIhSSO43TVbSjOO9HyKzV+hnrqea0ag78whc=
+	b=gj9pLhHSc3NGeUOEU2Hgkd6Q36J81NsgWcZn7QCDHXREY76w4fJcd8OOoaRiuYV0T
+	 D7yoldXkHjOhK6yMoy0B52jz+j8Zje3hGTwsjNCp1KT04f/XCBWCHbTAAm3hoLBN40
+	 fZRXkxSs+rXaLwjjEoNFNbWpuOfxY2cx2S8HQ45g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Nathan Rebello <nathan.c.rebello@gmail.com>
-Subject: [PATCH 6.18 144/198] usbip: validate number_of_packets in usbip_pack_ret_submit()
-Date: Mon, 20 Apr 2026 17:42:03 +0200
-Message-ID: <20260420153940.794249679@linuxfoundation.org>
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.18 171/198] selftests/bpf: Test refinement of single-value tnum
+Date: Mon, 20 Apr 2026 17:42:30 +0200
+Message-ID: <20260420153941.767053199@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,86 +51,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Rebello <nathan.c.rebello@gmail.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit 2ab833a16a825373aad2ba7d54b572b277e95b71 upstream.
+commit e6ad477d1bf8829973cddd9accbafa9d1a6cd15a upstream.
 
-When a USB/IP client receives a RET_SUBMIT response,
-usbip_pack_ret_submit() unconditionally overwrites
-urb->number_of_packets from the network PDU. This value is
-subsequently used as the loop bound in usbip_recv_iso() and
-usbip_pad_iso() to iterate over urb->iso_frame_desc[], a flexible
-array whose size was fixed at URB allocation time based on the
-*original* number_of_packets from the CMD_SUBMIT.
+This patch introduces selftests to cover the new bounds refinement
+logic introduced in the previous patch. Without the previous patch,
+the first two tests fail because of the invariant violation they
+trigger. The last test fails because the R10 access is not detected as
+dead code. In addition, all three tests fail because of R0 having a
+non-constant value in the verifier logs.
 
-A malicious USB/IP server can set number_of_packets in the response
-to a value larger than what was originally submitted, causing a heap
-out-of-bounds write when usbip_recv_iso() writes to
-urb->iso_frame_desc[i] beyond the allocated region.
+In addition, the last two cases are covering the negative cases: when we
+shouldn't refine the bounds because the u64 and tnum overlap in at least
+two values.
 
-KASAN confirmed this with kernel 7.0.0-rc5:
-
-  BUG: KASAN: slab-out-of-bounds in usbip_recv_iso+0x46a/0x640
-  Write of size 4 at addr ffff888106351d40 by task vhci_rx/69
-
-  The buggy address is located 0 bytes to the right of
-   allocated 320-byte region [ffff888106351c00, ffff888106351d40)
-
-The server side (stub_rx.c) and gadget side (vudc_rx.c) already
-validate number_of_packets in the CMD_SUBMIT path since commits
-c6688ef9f297 ("usbip: fix stub_rx: harden CMD_SUBMIT path to handle
-malicious input") and b78d830f0049 ("usbip: fix vudc_rx: harden
-CMD_SUBMIT path to handle malicious input"). The server side validates
-against USBIP_MAX_ISO_PACKETS because no URB exists yet at that point.
-On the client side we have the original URB, so we can use the tighter
-bound: the response must not exceed the original number_of_packets.
-
-This mirrors the existing validation of actual_length against
-transfer_buffer_length in usbip_recv_xbuff(), which checks the
-response value against the original allocation size.
-
-Kelvin Mbogo's series ("usb: usbip: fix integer overflow in
-usbip_recv_iso()", v2) hardens the receive-side functions themselves;
-this patch complements that work by catching the bad value at its
-source -- in usbip_pack_ret_submit() before the overwrite -- and
-using the tighter per-URB allocation bound rather than the global
-USBIP_MAX_ISO_PACKETS limit.
-
-Fix this by checking rpdu->number_of_packets against
-urb->number_of_packets in usbip_pack_ret_submit() before the
-overwrite. On violation, clamp to zero so that usbip_recv_iso() and
-usbip_pad_iso() safely return early.
-
-Fixes: 1325f85fa49f ("staging: usbip: bugfix add number of packets for isochronous frames")
-Cc: stable <stable@kernel.org>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Nathan Rebello <nathan.c.rebello@gmail.com>
-Link: https://patch.msgid.link/20260402085259.234-1-nathan.c.rebello@gmail.com
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/90d880c8cf587b9f7dc715d8961cd1b8111d01a8.1772225741.git.paul.chaignon@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[shung-hsi.yu: test for backported upstream commit efc11a667878 ("bpf: Improve
+bounds when tnum has a single possible value")]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/usbip/usbip_common.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ tools/testing/selftests/bpf/progs/verifier_bounds.c |  137 ++++++++++++++++++++
+ 1 file changed, 137 insertions(+)
 
---- a/drivers/usb/usbip/usbip_common.c
-+++ b/drivers/usb/usbip/usbip_common.c
-@@ -470,6 +470,18 @@ static void usbip_pack_ret_submit(struct
- 		urb->status		= rpdu->status;
- 		urb->actual_length	= rpdu->actual_length;
- 		urb->start_frame	= rpdu->start_frame;
-+		/*
-+		 * The number_of_packets field determines the length of
-+		 * iso_frame_desc[], which is a flexible array allocated
-+		 * at URB creation time. A response must never claim more
-+		 * packets than originally submitted; doing so would cause
-+		 * an out-of-bounds write in usbip_recv_iso() and
-+		 * usbip_pad_iso(). Clamp to zero on violation so both
-+		 * functions safely return early.
-+		 */
-+		if (rpdu->number_of_packets < 0 ||
-+		    rpdu->number_of_packets > urb->number_of_packets)
-+			rpdu->number_of_packets = 0;
- 		urb->number_of_packets = rpdu->number_of_packets;
- 		urb->error_count	= rpdu->error_count;
- 	}
+--- a/tools/testing/selftests/bpf/progs/verifier_bounds.c
++++ b/tools/testing/selftests/bpf/progs/verifier_bounds.c
+@@ -1709,4 +1709,141 @@ __naked void jeq_disagreeing_tnums(void
+ 	: __clobber_all);
+ }
+ 
++/* This test covers the bounds deduction when the u64 range and the tnum
++ * overlap only at umax. After instruction 3, the ranges look as follows:
++ *
++ * 0    umin=0xe01     umax=0xf00                              U64_MAX
++ * |    [xxxxxxxxxxxxxx]                                       |
++ * |----------------------------|------------------------------|
++ * |   x               x                                       | tnum values
++ *
++ * The verifier can therefore deduce that the R0=0xf0=240.
++ */
++SEC("socket")
++__description("bounds refinement with single-value tnum on umax")
++__msg("3: (15) if r0 == 0xe0 {{.*}} R0=240")
++__success __log_level(2)
++__flag(BPF_F_TEST_REG_INVARIANTS)
++__naked void bounds_refinement_tnum_umax(void *ctx)
++{
++	asm volatile("			\
++	call %[bpf_get_prandom_u32];	\
++	r0 |= 0xe0;			\
++	r0 &= 0xf0;			\
++	if r0 == 0xe0 goto +2;		\
++	if r0 == 0xf0 goto +1;		\
++	r10 = 0;			\
++	exit;				\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/* This test covers the bounds deduction when the u64 range and the tnum
++ * overlap only at umin. After instruction 3, the ranges look as follows:
++ *
++ * 0    umin=0xe00     umax=0xeff                              U64_MAX
++ * |    [xxxxxxxxxxxxxx]                                       |
++ * |----------------------------|------------------------------|
++ * |    x               x                                      | tnum values
++ *
++ * The verifier can therefore deduce that the R0=0xe0=224.
++ */
++SEC("socket")
++__description("bounds refinement with single-value tnum on umin")
++__msg("3: (15) if r0 == 0xf0 {{.*}} R0=224")
++__success __log_level(2)
++__flag(BPF_F_TEST_REG_INVARIANTS)
++__naked void bounds_refinement_tnum_umin(void *ctx)
++{
++	asm volatile("			\
++	call %[bpf_get_prandom_u32];	\
++	r0 |= 0xe0;			\
++	r0 &= 0xf0;			\
++	if r0 == 0xf0 goto +2;		\
++	if r0 == 0xe0 goto +1;		\
++	r10 = 0;			\
++	exit;				\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/* This test covers the bounds deduction when the only possible tnum value is
++ * in the middle of the u64 range. After instruction 3, the ranges look as
++ * follows:
++ *
++ * 0    umin=0x7cf   umax=0x7df                                U64_MAX
++ * |    [xxxxxxxxxxxx]                                         |
++ * |----------------------------|------------------------------|
++ * |     x            x            x            x            x | tnum values
++ *       |            +--- 0x7e0
++ *       +--- 0x7d0
++ *
++ * Since the lower four bits are zero, the tnum and the u64 range only overlap
++ * in R0=0x7d0=2000. Instruction 5 is therefore dead code.
++ */
++SEC("socket")
++__description("bounds refinement with single-value tnum in middle of range")
++__msg("3: (a5) if r0 < 0x7cf {{.*}} R0=2000")
++__success __log_level(2)
++__naked void bounds_refinement_tnum_middle(void *ctx)
++{
++	asm volatile("			\
++	call %[bpf_get_prandom_u32];	\
++	if r0 & 0x0f goto +4;		\
++	if r0 > 0x7df goto +3;		\
++	if r0 < 0x7cf goto +2;		\
++	if r0 == 0x7d0 goto +1;		\
++	r10 = 0;			\
++	exit;				\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/* This test cover the negative case for the tnum/u64 overlap. Since
++ * they contain the same two values (i.e., {0, 1}), we can't deduce
++ * anything more.
++ */
++SEC("socket")
++__description("bounds refinement: several overlaps between tnum and u64")
++__msg("2: (25) if r0 > 0x1 {{.*}} R0=scalar(smin=smin32=0,smax=umax=smax32=umax32=1,var_off=(0x0; 0x1))")
++__failure __log_level(2)
++__naked void bounds_refinement_several_overlaps(void *ctx)
++{
++	asm volatile("			\
++	call %[bpf_get_prandom_u32];	\
++	if r0 < 0 goto +3;		\
++	if r0 > 1 goto +2;		\
++	if r0 == 1 goto +1;		\
++	r10 = 0;			\
++	exit;				\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/* This test cover the negative case for the tnum/u64 overlap. Since
++ * they overlap in the two values contained by the u64 range (i.e.,
++ * {0xf, 0x10}), we can't deduce anything more.
++ */
++SEC("socket")
++__description("bounds refinement: multiple overlaps between tnum and u64")
++__msg("2: (25) if r0 > 0x10 {{.*}} R0=scalar(smin=umin=smin32=umin32=15,smax=umax=smax32=umax32=16,var_off=(0x0; 0x1f))")
++__failure __log_level(2)
++__naked void bounds_refinement_multiple_overlaps(void *ctx)
++{
++	asm volatile("			\
++	call %[bpf_get_prandom_u32];	\
++	if r0 < 0xf goto +3;		\
++	if r0 > 0x10 goto +2;		\
++	if r0 == 0x10 goto +1;		\
++	r10 = 0;			\
++	exit;				\
++"	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
+ char _license[] SEC("license") = "GPL";
 
 
