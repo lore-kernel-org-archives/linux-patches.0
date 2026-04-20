@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D17B1FB1;
-	Mon, 20 Apr 2026 16:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A351344D99;
+	Mon, 20 Apr 2026 16:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701486; cv=none; b=ZDaeXxgXlSJIkfLfHh9F0BlbtozIh1bS1OuzGhe/kTOx+JBx4cdghBZi2bkqPQU1KlhIQJGHxZd2g1baARYZiN1ErWPSPXGvylD6qtmfH6fMBg9b5BX9BJLjmL5Y6F+P+iMR4108peQcFt+QjOgoWaSFn+Sr34ebCDVQpDXH47w=
+	t=1776701488; cv=none; b=ik2YWYhKqly63KWSxwsx/w1Yv5Qtk69H0HEwbzMHYItjsa7gUH0uITkRodcImhArKdAeuT/WMUNbNliQEKANTD1nlrL5om3juZ3ZnRLp3JZIeizUOGqlJfgYn/bLQOc+nm79GBIHTI4vrYf8MsEZSx5kwzU067oLsDx577EzUEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701486; c=relaxed/simple;
-	bh=BL0F4xSQJ2M71R/dSfNM2e3f0IEB1HWBxq7ZRRDtxbQ=;
+	s=arc-20240116; t=1776701488; c=relaxed/simple;
+	bh=c051yRc6US0Wg2ZMh33U0U3DkPicb+1J4oaX6wcrHDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gxdCivTPwhf8Yc2mo7ROdweiPNxHrhY708Ac1zMurSgPZy8KSownJGra4uSrNa3QF0N29iQl3UyRaeTXvbtzzZa7P2EPn5x8BQlLEAwAHI/Dmh7bTmcH1bly4JMd9Clp5CeDx0r5eXVBG0J1PUig+b2jjWUzA3cXHdRetQ/ngwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7ykHOnU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uuC8UulfGpFYwsy/xfjekU5zJgyYghEVQEqtsFCuiKjnfwxzNMJpK77tV3880hC7XVUZco5Wi7O0Qj49lEQkmCBSVVHIp4FFuu+fOY9KVGOiWtPGG30xYebacnnr/zcvLgbnHYO5ywmzEIoarF8wyeOsTuX/HFLIbavLKpUC3sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GW1P4XG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7ykHOnU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618D4C19425;
-	Mon, 20 Apr 2026 16:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GW1P4XG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23DAC2BCB6;
+	Mon, 20 Apr 2026 16:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701485;
-	bh=BL0F4xSQJ2M71R/dSfNM2e3f0IEB1HWBxq7ZRRDtxbQ=;
+	s=korg; t=1776701488;
+	bh=c051yRc6US0Wg2ZMh33U0U3DkPicb+1J4oaX6wcrHDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7ykHOnUxuKBDdCNNnTPxyiXRVJwho6gpYm2lRTBDgyaq5oDXyzislbjEiFn7ccPo
-	 Wm0tpVwKRVpUDluQol2ZAuSAJSssBQgmH6SUxxA+Z4PVH9QARA6GZ8jaPPbvuBGk7E
-	 8n//eR6Vsj6Qh+XQLCN1YOK8gG/PDWbb/iBYxLZI=
+	b=GW1P4XG6yLC304wUOMV6AlYJjzy+wzA7ElJ38vJ/1PBhrVK42MvJ3REETD3KMMBW/
+	 QfuAtfJSnXWIYY0Hj+QH6CxixlCH11Cpms+mnByP5MxEsOMhFzB/9ZnMDWo6hfjqcE
+	 OjRWPTwR0rTYNStIEzGdikiLys9EUwKusRyfq4LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Lewalski <jakub.lewalski@nokia.com>,
-	=?UTF-8?q?Pawe=C5=82=20Narewski?= <pawel.narewski@nokia.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
+	syzbot+f3a497f02c389d86ef16@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/162] gpiolib: fix race condition for gdev->srcu
-Date: Mon, 20 Apr 2026 17:42:45 +0200
-Message-ID: <20260420153931.862711703@linuxfoundation.org>
+Subject: [PATCH 6.12 134/162] net: sched: fix TCF_LAYER_TRANSPORT handling in tcf_get_base_ptr()
+Date: Mon, 20 Apr 2026 17:42:46 +0200
+Message-ID: <20260420153931.899955161@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -47,166 +48,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paweł Narewski <pawel.narewski@nokia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a7ac22d53d0990152b108c3f4fe30df45fcb0181 ]
+[Upstream commit 4fe5a00ec70717a7f1002d8913ec6143582b3c8e]
 
-If two drivers were calling gpiochip_add_data_with_key(), one may be
-traversing the srcu-protected list in gpio_name_to_desc(), meanwhile
-other has just added its gdev in gpiodev_add_to_list_unlocked().
-This creates a non-mutexed and non-protected timeframe, when one
-instance is dereferencing and using &gdev->srcu, before the other
-has initialized it, resulting in crash:
+syzbot reported that tcf_get_base_ptr() can be called while transport
+header is not set [1].
 
-[    4.935481] Unable to handle kernel paging request at virtual address ffff800272bcc000
-[    4.943396] Mem abort info:
-[    4.943400]   ESR = 0x0000000096000005
-[    4.943403]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    4.943407]   SET = 0, FnV = 0
-[    4.943410]   EA = 0, S1PTW = 0
-[    4.943413]   FSC = 0x05: level 1 translation fault
-[    4.943416] Data abort info:
-[    4.943418]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-[    4.946220]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    4.955261]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    4.955268] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000038e6c000
-[    4.961449] [ffff800272bcc000] pgd=0000000000000000
-[    4.969203] , p4d=1000000039739003
-[    4.979730] , pud=0000000000000000
-[    4.980210] phandle (CPU): 0x0000005e, phandle (BE): 0x5e000000 for node "reset"
-[    4.991736] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
-...
-[    5.121359] pc : __srcu_read_lock+0x44/0x98
-[    5.131091] lr : gpio_name_to_desc+0x60/0x1a0
-[    5.153671] sp : ffff8000833bb430
-[    5.298440]
-[    5.298443] Call trace:
-[    5.298445]  __srcu_read_lock+0x44/0x98
-[    5.309484]  gpio_name_to_desc+0x60/0x1a0
-[    5.320692]  gpiochip_add_data_with_key+0x488/0xf00
-    5.946419] ---[ end trace 0000000000000000 ]---
+Instead of returning a dangling pointer, return NULL.
 
-Move initialization code for gdev fields before it is added to
-gpio_devices, with adjacent initialization code.
-Adjust goto statements  to reflect modified order of operations
+Fix tcf_get_base_ptr() callers to handle this NULL value.
 
-Fixes: 47d8b4c1d868 ("gpio: add SRCU infrastructure to struct gpio_device")
-Reviewed-by: Jakub Lewalski <jakub.lewalski@nokia.com>
-Signed-off-by: Paweł Narewski <pawel.narewski@nokia.com>
-[Bartosz: fixed a build issue, removed stray newline]
-Link: https://lore.kernel.org/r/20251224082641.10769-1-bartosz.golaszewski@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-[missing commit fcc8b637c542 ("gpiolib: switch the line state notifier
- to atomic"), commit dcb73cbaaeb3 ("gpio: cdev: use raw notifier for
- line state events") and commit d4f335b410dd ("gpiolib: rename GPIO chip
- printk macros") in 6.12.y.
- Both notifiers as well as both srcu inits are moved before the
- scoped_guard, following same logic as in a7ac22d53d09.
- Rest is changes to git context only.]
-Cc: stable@vger.kernel.org # 6.12
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+[1]
+ WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 skb_transport_header include/linux/skbuff.h:3071 [inline]
+ WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 tcf_get_base_ptr include/net/pkt_cls.h:539 [inline]
+ WARNING: CPU: 1 PID: 6019 at ./include/linux/skbuff.h:3071 em_nbyte_match+0x2d8/0x3f0 net/sched/em_nbyte.c:43
+Modules linked in:
+CPU: 1 UID: 0 PID: 6019 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+Call Trace:
+ <TASK>
+  tcf_em_match net/sched/ematch.c:494 [inline]
+  __tcf_em_tree_match+0x1ac/0x770 net/sched/ematch.c:520
+  tcf_em_tree_match include/net/pkt_cls.h:512 [inline]
+  basic_classify+0x115/0x2d0 net/sched/cls_basic.c:50
+  tc_classify include/net/tc_wrapper.h:197 [inline]
+  __tcf_classify net/sched/cls_api.c:1764 [inline]
+  tcf_classify+0x4cf/0x1140 net/sched/cls_api.c:1860
+  multiq_classify net/sched/sch_multiq.c:39 [inline]
+  multiq_enqueue+0xfd/0x4c0 net/sched/sch_multiq.c:66
+  dev_qdisc_enqueue+0x4e/0x260 net/core/dev.c:4118
+  __dev_xmit_skb net/core/dev.c:4214 [inline]
+  __dev_queue_xmit+0xe83/0x3b50 net/core/dev.c:4729
+  packet_snd net/packet/af_packet.c:3076 [inline]
+  packet_sendmsg+0x3e33/0x5080 net/packet/af_packet.c:3108
+  sock_sendmsg_nosec net/socket.c:727 [inline]
+  __sock_sendmsg+0x21c/0x270 net/socket.c:742
+  ____sys_sendmsg+0x505/0x830 net/socket.c:2630
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+f3a497f02c389d86ef16@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6920855a.a70a0220.2ea503.0058.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20251121154100.1616228-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ include/net/pkt_cls.h |  2 ++
+ net/sched/em_cmp.c    |  5 ++++-
+ net/sched/em_nbyte.c  |  2 ++
+ net/sched/em_text.c   | 11 +++++++++--
+ 4 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 3f9019cc832ac..5c8cd81656963 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -988,6 +988,17 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 	gdev->ngpio = gc->ngpio;
- 	gdev->can_sleep = gc->can_sleep;
- 
-+	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
-+	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
-+
-+	ret = init_srcu_struct(&gdev->srcu);
-+	if (ret)
-+		goto err_free_label;
-+
-+	ret = init_srcu_struct(&gdev->desc_srcu);
-+	if (ret)
-+		goto err_cleanup_gdev_srcu;
-+
- 	scoped_guard(mutex, &gpio_devices_lock) {
- 		/*
- 		 * TODO: this allocates a Linux GPIO number base in the global
-@@ -1002,7 +1013,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 			if (base < 0) {
- 				ret = base;
- 				base = 0;
--				goto err_free_label;
-+				goto err_cleanup_desc_srcu;
- 			}
- 
- 			/*
-@@ -1022,21 +1033,10 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 		ret = gpiodev_add_to_list_unlocked(gdev);
- 		if (ret) {
- 			chip_err(gc, "GPIO integer space overlap, cannot add chip\n");
--			goto err_free_label;
-+			goto err_cleanup_desc_srcu;
- 		}
+diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
+index 4229e4fcd2a9e..ea2c69fdc8396 100644
+--- a/include/net/pkt_cls.h
++++ b/include/net/pkt_cls.h
+@@ -536,6 +536,8 @@ static inline unsigned char * tcf_get_base_ptr(struct sk_buff *skb, int layer)
+ 		case TCF_LAYER_NETWORK:
+ 			return skb_network_header(skb);
+ 		case TCF_LAYER_TRANSPORT:
++			if (!skb_transport_header_was_set(skb))
++				break;
+ 			return skb_transport_header(skb);
  	}
  
--	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
--	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
--
--	ret = init_srcu_struct(&gdev->srcu);
--	if (ret)
--		goto err_remove_from_list;
--
--	ret = init_srcu_struct(&gdev->desc_srcu);
--	if (ret)
--		goto err_cleanup_gdev_srcu;
--
- #ifdef CONFIG_PINCTRL
- 	INIT_LIST_HEAD(&gdev->pin_ranges);
- #endif
-@@ -1046,11 +1046,11 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+diff --git a/net/sched/em_cmp.c b/net/sched/em_cmp.c
+index 64b637f18bc7d..48c1bce74f498 100644
+--- a/net/sched/em_cmp.c
++++ b/net/sched/em_cmp.c
+@@ -22,9 +22,12 @@ static int em_cmp_match(struct sk_buff *skb, struct tcf_ematch *em,
+ 			struct tcf_pkt_info *info)
+ {
+ 	struct tcf_em_cmp *cmp = (struct tcf_em_cmp *) em->data;
+-	unsigned char *ptr = tcf_get_base_ptr(skb, cmp->layer) + cmp->off;
++	unsigned char *ptr = tcf_get_base_ptr(skb, cmp->layer);
+ 	u32 val = 0;
  
- 	ret = gpiochip_set_names(gc);
- 	if (ret)
--		goto err_cleanup_desc_srcu;
-+		goto err_remove_from_list;
++	if (!ptr)
++		return 0;
++	ptr += cmp->off;
+ 	if (!tcf_valid_offset(skb, ptr, cmp->align))
+ 		return 0;
  
- 	ret = gpiochip_init_valid_mask(gc);
- 	if (ret)
--		goto err_cleanup_desc_srcu;
-+		goto err_remove_from_list;
+diff --git a/net/sched/em_nbyte.c b/net/sched/em_nbyte.c
+index 4f9f21a05d5e4..c65ffa5fff946 100644
+--- a/net/sched/em_nbyte.c
++++ b/net/sched/em_nbyte.c
+@@ -42,6 +42,8 @@ static int em_nbyte_match(struct sk_buff *skb, struct tcf_ematch *em,
+ 	struct nbyte_data *nbyte = (struct nbyte_data *) em->data;
+ 	unsigned char *ptr = tcf_get_base_ptr(skb, nbyte->hdr.layer);
  
- 	for (desc_index = 0; desc_index < gc->ngpio; desc_index++) {
- 		struct gpio_desc *desc = &gdev->descs[desc_index];
-@@ -1117,10 +1117,6 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 	of_gpiochip_remove(gc);
- err_free_valid_mask:
- 	gpiochip_free_valid_mask(gc);
--err_cleanup_desc_srcu:
--	cleanup_srcu_struct(&gdev->desc_srcu);
--err_cleanup_gdev_srcu:
--	cleanup_srcu_struct(&gdev->srcu);
- err_remove_from_list:
- 	scoped_guard(mutex, &gpio_devices_lock)
- 		list_del_rcu(&gdev->list);
-@@ -1130,6 +1126,10 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 		gpio_device_put(gdev);
- 		goto err_print_message;
- 	}
-+err_cleanup_desc_srcu:
-+	cleanup_srcu_struct(&gdev->desc_srcu);
-+err_cleanup_gdev_srcu:
-+	cleanup_srcu_struct(&gdev->srcu);
- err_free_label:
- 	kfree_const(gdev->label);
- err_free_descs:
++	if (!ptr)
++		return 0;
+ 	ptr += nbyte->hdr.off;
+ 
+ 	if (!tcf_valid_offset(skb, ptr, nbyte->hdr.len))
+diff --git a/net/sched/em_text.c b/net/sched/em_text.c
+index 420c66203b177..8331f38eadc60 100644
+--- a/net/sched/em_text.c
++++ b/net/sched/em_text.c
+@@ -29,12 +29,19 @@ static int em_text_match(struct sk_buff *skb, struct tcf_ematch *m,
+ 			 struct tcf_pkt_info *info)
+ {
+ 	struct text_match *tm = EM_TEXT_PRIV(m);
++	unsigned char *ptr;
+ 	int from, to;
+ 
+-	from = tcf_get_base_ptr(skb, tm->from_layer) - skb->data;
++	ptr = tcf_get_base_ptr(skb, tm->from_layer);
++	if (!ptr)
++		return 0;
++	from = ptr - skb->data;
+ 	from += tm->from_offset;
+ 
+-	to = tcf_get_base_ptr(skb, tm->to_layer) - skb->data;
++	ptr = tcf_get_base_ptr(skb, tm->to_layer);
++	if (!ptr)
++		return 0;
++	to = ptr - skb->data;
+ 	to += tm->to_offset;
+ 
+ 	return skb_find_text(skb, from, to, tm->config) != UINT_MAX;
 -- 
 2.53.0
 
