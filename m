@@ -1,44 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87303DEAE4;
-	Mon, 20 Apr 2026 13:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE27A3DEFF7;
+	Mon, 20 Apr 2026 13:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691462; cv=none; b=OBnjdagvZyQm6td9tCHOP6GVFHbpsDgEiyv1fooL7g3JOKWdOXjl7dr+CgpBJghA4OWPnGUuSQT4b5fqxFkm3/7J4Vu+iRbqndJEUa45yWPmQ73gOkvU4v12KDWYos4VsrH+qKFNdEyyui8+dMuk6ecGXQNUhKas9MlkvtgTNvs=
+	t=1776691464; cv=none; b=otPg8ekVHyase7Aybgp/Yw2RHziVvoJKfUrjZy9CbnxsxNERL4Tb78xDton2XuOZo3acLDScQvmhoD7DC4XGKvkWi74VHo61RVgkdvnFgkhQzlRJXHnKClDUc08OzyrW2VhHyN+iyUCOVOQSFbBRMrR9De9CHB8J1EdTRpj87tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691462; c=relaxed/simple;
-	bh=UjvABFKh4vOpX+wJoBCPDMZBcNXqY5zQd6sZzLMY1N4=;
+	s=arc-20240116; t=1776691464; c=relaxed/simple;
+	bh=PFof+sqPrsbw5QjSULIQvTePoLhi3BlC0bcTDi+1jwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gPPiBi4NnIL1k3COaZGwjLgROMVdh6yiuGqU4JkNcn8r/xxLpe+VIDAplCRwpUGv2Qxm4rnMBrydj0x1i6hd3Ra8ZI7o/TjO4RdC37eTM74j9CnUr4TFDCo+BAyBDWdPgjCnYiclynZTFBPUSknicsyLy8cqly2gdHmPC55ut8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mXPM/mES; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EiP9GDyGvwe1T9dhrS4Lb0/bAzUuw10s57QsBW8xJFJxDhLYj30LH2MYaU7VyF90um5iecNtykGw51HWMOe+jWstcxDdIHiJdnRRMGvBO5rpbq/1ndIgXGEFx6T4qoYe1Ic5JigdnKtaxO4q+WCCXy7DdJrv7+x11KdlC5yg9w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DsinxEoc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mXPM/mES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0797C2BCC4;
-	Mon, 20 Apr 2026 13:24:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DsinxEoc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14218C19425;
+	Mon, 20 Apr 2026 13:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691462;
-	bh=UjvABFKh4vOpX+wJoBCPDMZBcNXqY5zQd6sZzLMY1N4=;
+	s=k20201202; t=1776691464;
+	bh=PFof+sqPrsbw5QjSULIQvTePoLhi3BlC0bcTDi+1jwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mXPM/mESvLl6BKAZYTWQwBfFsEE5b/mOYvryEXTwavqlPYfDC+hbJFhOp6JUoUW3O
-	 h2om/kdJct29lhantKKUrX4kw+rFxpaGyUy/dWgU1owUGXCMk5SwVvsKSAlv2UmXt7
-	 5d4LUyAgFe9P3JNDn/kRQwHkKIPUUUPiX6znN/Y2V+Sg91PyGeEbbgpyC0jVYUedu/
-	 WZ9OStZyWiZchacmbJGu5NU9KB3KW7ddL08Ij5YRejcIRRGx0J/sYjvd2obfTzB9cB
-	 16VmPJCP2g0MWx4oH14bfmKoZWYsPjFXC2iSlmT1mxLH9R7V5XBu0j9fC+ddYUF+fQ
-	 pvGpva/qGpGKA==
+	b=DsinxEoc+6nxdSlYlH4/u1zJDZ7JuiNuixUvDmbsmCPfkGNx06I2Exg+3YsYfiJaH
+	 j9V9KPuLYGRQXqn7sjkJPsp7pQ9PlLpEHXChdCpsNcFmOKZ7F2PsqeYZ+NyQKyVj8c
+	 cicpErrMG7KUjc3Tmve5MIxL3od+BTW0ih8zuqWhR/59wHVsVuveWCNPW59V5hUIov
+	 c1L16yoxv+NuA1yYPujYB70UbfN47rPT8V8K1WsjIjTozRVV5mFAfosmitP0n/VTAv
+	 zZPTTVajO+R6RtrCsUpqqc0jUQJDbJsMQHi9EYefc5C971FDHRTpcNY3HQs/W+I9Vi
+	 7vb91OS7QZ+nA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Thomas Gleixner <tglx@kernel.org>,
+Cc: Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
+	kys@microsoft.com,
+	haiyangz@microsoft.com,
+	wei.liu@kernel.org,
+	decui@microsoft.com,
+	longli@microsoft.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	linux-hyperv@vger.kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] sched/fair: Make hrtick resched hard
-Date: Mon, 20 Apr 2026 09:17:17 -0400
-Message-ID: <20260420132314.1023554-43-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] net: mana: hardening: Validate adapter_mtu from MANA_QUERY_DEV_CONFIG
+Date: Mon, 20 Apr 2026 09:17:18 -0400
+Message-ID: <20260420132314.1023554-44-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -51,346 +59,316 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Peter Zijlstra (Intel)" <peterz@infradead.org>
+From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-[ Upstream commit 5d88e424ec1b3ea7f552bd14d932f510146c45c7 ]
+[ Upstream commit d7709812e13d06132ddae3d21540472ea5cb11c5 ]
 
-Since the tick causes hard preemption, the hrtick should too.
+As a part of MANA hardening for CVM, validate the adapter_mtu value
+returned from the MANA_QUERY_DEV_CONFIG HWC command.
 
-Letting the hrtick do lazy preemption completely defeats the purpose, since
-it will then still be delayed until a old tick and be dependent on
-CONFIG_HZ.
+The adapter_mtu value is used to compute ndev->max_mtu via:
+gc->adapter_mtu - ETH_HLEN. If hardware returns a bogus adapter_mtu
+smaller than ETH_HLEN (e.g. 0), the unsigned subtraction wraps to a
+huge value, silently allowing oversized MTU settings.
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260224163428.933894105@kernel.org
+Add a validation check to reject adapter_mtu values below
+ETH_MIN_MTU + ETH_HLEN, returning -EPROTO to fail the device
+configuration early with a clear error message.
+
+Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+Link: https://patch.msgid.link/20260326173101.2010514-1-ernis@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-compile the full assessment.
+This confirms the integer underflow. Now let me complete the analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `sched/fair` (CFS scheduler)
-- Action verb: "Make" (corrective - restoring proper behavior)
-- Summary: Change hrtick reschedule from lazy to hard preemption
+- Subsystem: `net: mana:` (Microsoft Azure Network Adapter driver)
+- Action: "hardening: Validate" - input validation / defensive check
+- Summary: Validates `adapter_mtu` from hardware config query to prevent
+  integer underflow
 
 **Step 1.2: Tags**
-- Signed-off-by: Peter Zijlstra (Intel) - scheduler maintainer, author
-- Signed-off-by: Thomas Gleixner - core kernel maintainer
-- Signed-off-by: Peter Zijlstra (Intel) - applied by PZ
-- Link: `https://patch.msgid.link/20260224163428.933894105@kernel.org`
-- No Fixes: tag (expected), no Reported-by, no Cc: stable
+- `Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>` -
+  author, Microsoft employee, regular MANA contributor (9+ commits)
+- `Link: https://patch.msgid.link/20260326173101.2010514-1-
+  ernis@linux.microsoft.com` - single patch (not part of a series,
+  1-of-1)
+- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` - netdev maintainer
+  accepted the patch
+- No Fixes: tag (expected for candidates under review)
+- No Reported-by tag
+- No Cc: stable tag
 
-**Step 1.3: Commit Body**
-The message explains: the tick causes hard preemption, so the hrtick
-should too. Letting hrtick use lazy preemption completely defeats its
-purpose because it will be delayed until the next periodic tick, making
-hrtick behavior dependent on CONFIG_HZ rather than the high-resolution
-timer.
+**Step 1.3: Body Text**
+- Bug: `adapter_mtu` value from hardware can be bogus (< ETH_HLEN = 14).
+  The subtraction `gc->adapter_mtu - ETH_HLEN` used to compute
+  `ndev->max_mtu` wraps to a huge value (~4GB), silently allowing
+  oversized MTU settings.
+- Context: Part of CVM (Confidential VM) hardening where the hypervisor
+  is less trusted.
+- Fix: Reject values below `ETH_MIN_MTU + ETH_HLEN` (82 bytes) with
+  `-EPROTO`.
 
 **Step 1.4: Hidden Bug Fix Detection**
-This IS a bug fix. The word "Make" disguises what is actually a fix for
-a regression: the lazy preemption conversion (7c70cb94d29cd3)
-incorrectly applied `resched_curr_lazy()` to the hrtick path, completely
-defeating the purpose of hrtick scheduling.
-
-Record: [sched/fair] [Make (fix regression)] [Restore hard preemption
-for hrtick path defeated by lazy preemption]
+- Though labeled "hardening," this IS a real bug fix: it prevents a
+  concrete integer underflow that leads to incorrect max_mtu. The bug
+  mechanism is clear and the consequences (allowing oversized MTU
+  settings) are real.
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- 1 file changed: `kernel/sched/fair.c`
-- 1 line changed (−1, +1): `resched_curr_lazy()` → `resched_curr()`
-- Function modified: `entity_tick()`
-- Scope: single-line surgical fix
+- Files: `drivers/net/ethernet/microsoft/mana/mana_en.c` (+8/-2 net, ~6
+  lines of logic)
+- Function modified: `mana_query_device_cfg()`
+- Scope: Single-file, single-function, surgical fix
 
 **Step 2.2: Code Flow Change**
-Before: When hrtick fires (`queued=1`), `entity_tick()` calls
-`resched_curr_lazy()`, which sets `TIF_NEED_RESCHED_LAZY`. With lazy
-preemption, this does NOT trigger immediate rescheduling - it waits
-until `scheduler_tick()` promotes it to `TIF_NEED_RESCHED`.
-
-After: `entity_tick()` calls `resched_curr()`, which sets
-`TIF_NEED_RESCHED` directly, causing immediate preemption.
+- Before: `resp.adapter_mtu` was accepted unconditionally when
+  msg_version >= GDMA_MESSAGE_V2
+- After: Validates `resp.adapter_mtu >= ETH_MIN_MTU + ETH_HLEN` (82)
+  before accepting; returns `-EPROTO` on failure
+- The else branch and brace additions are purely cosmetic (adding braces
+  to existing if/else)
 
 **Step 2.3: Bug Mechanism**
-Category: Logic/correctness fix (regression from lazy preemption
-conversion).
-
-The mechanism:
-1. `hrtick()` callback (core.c:885) calls `task_tick()` with `queued=1`
-2. `task_tick_fair()` calls `entity_tick()` with `queued=1`
-3. `entity_tick()` calls `resched_curr_lazy()` → sets
-   `TIF_NEED_RESCHED_LAZY`
-4. Unlike `scheduler_tick()` (core.c:5570-5571) which promotes
-   `TIF_NEED_RESCHED_LAZY` to `TIF_NEED_RESCHED`, the hrtick callback
-   does NOT do this promotion
-5. Result: preemption delayed until the next periodic tick, defeating
-   hrtick entirely
+- Category: Integer underflow / input validation bug
+- Mechanism: `gc->adapter_mtu` (u16, could be 0) used in `ndev->max_mtu
+  = gc->adapter_mtu - ETH_HLEN`. If adapter_mtu < 14, the result wraps
+  to ~4GB as unsigned int.
+- Confirmed via two usage sites:
+  - `mana_en.c:3349`: `ndev->max_mtu = gc->adapter_mtu - ETH_HLEN`
+  - `mana_bpf.c:242`: `ndev->max_mtu = gc->adapter_mtu - ETH_HLEN`
 
 **Step 2.4: Fix Quality**
-- Obviously correct: the fix simply uses hard resched for hrtick,
-  matching the intent
-- Minimal: one line change
-- Regression risk: essentially zero - this restores the pre-lazy-
-  preemption behavior for this specific path
-- The other two `resched_curr_lazy()` call sites in fair.c (update_curr
-  and check_preempt_wakeup_fair) correctly use lazy, since those are
-  normal CFS preemption decisions
-
-Record: [1 file, 1 line change] [entity_tick] [Single-line surgical fix]
-[resched_curr_lazy → resched_curr for queued hrtick only]
+- Obviously correct: simple bounds check with a clear threshold
+- Minimal: 6 lines of logic change
+- No regression risk: only rejects values that would cause incorrect
+  behavior anyway
+- Clean: well-contained, single function
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: Blame**
-Git blame shows line 5603 was last changed by commit 7c70cb94d29cd3
-("sched: Add Lazy preemption model", 2024-10-04) which converted
-`resched_curr()` to `resched_curr_lazy()`. Before that, the code used
-`resched_curr()` since 2008 (commit 8f4d37ec073c17).
+- The `adapter_mtu` field assignment was introduced in commit
+  `80f6215b450eb8` ("net: mana: Add support for jumbo frame", Haiyang
+  Zhang, 2023-04-12)
+- This commit was first included in `v6.4-rc1`
+- The vulnerable code has been present since v6.4
 
-**Step 3.2: Fixes Target**
-No explicit Fixes: tag. However, the implicit target is 7c70cb94d29cd3
-("sched: Add Lazy preemption model") which was merged in v6.13. This
-commit exists in v6.13, v6.14, v6.15, and v7.0.
+**Step 3.2: No Fixes: tag to follow**
 
-**Step 3.3: Related Changes**
-- 95a0155224a65 ("sched/fair: Limit hrtick work") is a related commit in
-  v7.0 that optimizes `task_tick_fair()` for hrtick, but it modifies
-  `task_tick_fair()`, NOT `entity_tick()`. The current fix is
-  independent.
-- The fix applies inside `entity_tick()` regardless of
-  `task_tick_fair()` changes.
+**Step 3.3: File History**
+- The file has active development with multiple fixes applied. No
+  conflicting changes to the `mana_query_device_cfg()` function recently
+  aside from commit `290e5d3c49f687` which added GDMA_MESSAGE_V3
+  handling.
 
 **Step 3.4: Author**
-Peter Zijlstra is THE scheduler maintainer. He's also the author of the
-original lazy preemption commit that introduced this bug.
+- Erni Sri Satya Vennela is a regular MANA contributor with 9+ commits
+  to the driver, all from `@linux.microsoft.com`. The author is part of
+  the Microsoft team maintaining this driver.
 
 **Step 3.5: Dependencies**
-The fix requires only that `resched_curr_lazy()` exists (introduced in
-7c70cb94d29cd3). No other dependencies. Standalone fix.
-
-Record: [Buggy code from 7c70cb94d29cd3 (v6.13)] [Fix is standalone, no
-dependencies] [Author is subsystem maintainer]
+- This is a standalone patch (1-of-1, not part of a series)
+- Uses only existing constants (`ETH_MIN_MTU`, `ETH_HLEN`) which exist
+  in all kernel versions
+- The GDMA_MESSAGE_V2 check already exists in stable trees since v6.4
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1-4.5:** Lore.kernel.org is currently behind anti-bot
-protection (Anubis). b4 dig could not find the commit by message-id. The
-Link: tag points to
-`https://patch.msgid.link/20260224163428.933894105@kernel.org` which is
-also inaccessible.
-
-From the commit metadata, the patch was signed by both Peter Zijlstra
-and Thomas Gleixner, indicating it went through the tip tree with review
-from two top-tier kernel maintainers.
-
-Record: [Could not access lore due to anti-bot protection] [Two top
-maintainer SOBs indicates proper review]
+**Step 4.1-4.5:** b4 dig failed to find the thread. Lore is behind an
+anti-scraping wall. However, the patch was accepted by netdev maintainer
+Jakub Kicinski (signed-off-by), which indicates it passed netdev review.
+The Link tag confirms it was a single-patch submission.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
 **Step 5.1: Functions Modified**
-- `entity_tick()` in `kernel/sched/fair.c`
+- `mana_query_device_cfg()` - device configuration query during probe
 
 **Step 5.2: Callers**
-`entity_tick()` is called from `task_tick_fair()` (line 13435), which is
-the CFS `task_tick` callback. It's called from:
-1. `scheduler_tick()` (core.c:5573) with `queued=0` (periodic tick)
-2. `hrtick()` (core.c:894) with `queued=1` (high-res timer tick)
+- Called from `mana_probe_port()` -> `mana_query_device_cfg()` during
+  device initialization
+- This is the main probe path for all MANA network interfaces in Azure
+  VMs
 
-The bug ONLY affects the hrtick path (`queued=1`).
+**Step 5.3: Downstream Impact**
+- `gc->adapter_mtu` is used in two places to compute `ndev->max_mtu`:
+  - `mana_en.c:3349` during probe
+  - `mana_bpf.c:242` when XDP is detached
+- Both perform `gc->adapter_mtu - ETH_HLEN` without checking for
+  underflow
 
-**Step 5.3-5.4: Call Chain**
-`hrtick()` → `task_tick_fair()` → `entity_tick()` →
-`resched_curr_lazy()` (buggy) / `resched_curr()` (fixed)
-
-The hrtick is triggered from hardirq context when a high-resolution
-timer fires. The timer is programmed by `hrtick_start_fair()` to fire at
-the exact point a task's time slice expires.
-
-**Step 5.5: Similar Patterns**
-The other two `resched_curr_lazy()` sites in fair.c (line 1329 in
-`update_curr()` and line 8938 in `check_preempt_wakeup_fair()`) are
-correct for lazy preemption - those are normal CFS scheduling decisions
-where lazy preemption is intentional.
-
-Record: [entity_tick called from scheduler_tick (queued=0) and hrtick
-(queued=1)] [Only hrtick path affected] [Other lazy sites are correct]
+**Step 5.4: Reachability**
+- This code is reached during every MANA device probe in Azure VMs -
+  very common path for Azure users
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy Code in Stable**
-The lazy preemption model (7c70cb94d29cd3) was merged in v6.13. It is
-NOT in v6.12 (the current LTS). Affected trees: v6.13.y, v6.14.y,
-v6.15.y, v7.0.y.
+**Step 6.1: Buggy Code in Stable Trees**
+- `adapter_mtu` was added in v6.4-rc1 via commit `80f6215b450eb8`
+- Present in stable trees: 6.6.y, 6.12.y, 7.0.y
+- NOT present in: 6.1.y, 5.15.y, 5.10.y (pre-dates adapter_mtu feature)
 
-**Step 6.2: Backport Complexity**
-The fix is a single-line change in `entity_tick()`. The surrounding code
-in this function has been stable since 2008. The fix should apply
-cleanly to any tree with the lazy preemption model.
+**Step 6.2: Backport Complications**
+- Note: the current 7.0 tree has `resp.hdr.response.msg_version` (from
+  commit `290e5d3c49f687`) while older stable trees may have
+  `resp.hdr.resp.msg_version`. The diff may need minor adjustment for
+  6.6.y.
+- The validation logic itself is self-contained and trivially adaptable.
 
-**Step 6.3: Related Fixes in Stable**
-No related fixes found for this specific issue in any stable tree.
+**Step 6.3: No related fixes already in stable.**
 
-Record: [Bug exists in v6.13+] [Clean apply expected] [No related fixes
-already in stable]
-
-## PHASE 7: SUBSYSTEM CONTEXT
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: Subsystem**
-- kernel/sched (scheduler) - CORE subsystem affecting all users
-- Specifically CFS (Completely Fair Scheduler) with hrtick enabled
+- `drivers/net/ethernet/microsoft/mana/` - MANA network driver for Azure
+  VMs
+- Criticality: IMPORTANT - widely used in Azure cloud infrastructure
+  (millions of VMs)
 
 **Step 7.2: Activity**
-Very active subsystem with frequent changes from Peter Zijlstra and
-other scheduler developers.
-
-Record: [CORE subsystem] [Very active]
+- Actively maintained with regular fixes. The author and team are
+  Microsoft employees dedicated to this driver.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: Who is Affected**
-Users on v6.13+ who:
-1. Use `CONFIG_PREEMPT_LAZY` or `dynamic_preempt_lazy()` (lazy
-   preemption model)
-2. Have `HRTICK` sched feature enabled (disabled by default, enabled via
-   `/sys/kernel/debug/sched/features`)
-3. `CONFIG_SCHED_HRTICK` is compiled in (auto-enabled with
-   `HIGH_RES_TIMERS`)
-
-This is a subset of users - those who explicitly enable HRTICK for low-
-latency CFS scheduling.
+- All Azure VM users running MANA driver (very large population)
+- Especially CVM (Confidential VM) users where the hypervisor is less
+  trusted
 
 **Step 8.2: Trigger Conditions**
-The bug is triggered every time the hrtick fires on a system with lazy
-preemption enabled and HRTICK sched feature enabled. It's deterministic,
-not a race.
+- Triggered when hardware/hypervisor returns `adapter_mtu < 82` in the
+  config query response
+- In CVM scenarios: malicious hypervisor could deliberately trigger this
+- In non-CVM: unlikely but possible with firmware bugs
 
-**Step 8.3: Failure Mode**
-- hrtick preemption is delayed by up to one full periodic tick (1-10ms
-  depending on CONFIG_HZ)
-- This defeats the entire purpose of hrtick (sub-tick precision
-  scheduling)
-- Severity: MEDIUM (scheduling latency degradation, not
-  crash/corruption)
-- For latency-sensitive workloads relying on hrtick: HIGH (makes the
-  feature useless)
+**Step 8.3: Failure Mode Severity**
+- Integer underflow causes `max_mtu` to be set to ~4GB
+- This silently allows setting huge MTU values that the hardware cannot
+  support
+- Could lead to packet corruption, buffer overflows in TX path, or
+  device malfunction
+- Severity: HIGH (potential for data corruption or security issue,
+  especially in CVM)
 
 **Step 8.4: Risk-Benefit Ratio**
-- BENEFIT: Fixes a clear regression that makes hrtick completely useless
-  under lazy preemption
-- RISK: Essentially zero - 1 line change, restoring pre-regression
-  behavior for this specific path
-- Ratio: Excellent benefit-to-risk
-
-Record: [Affects HRTICK users on lazy preemption v6.13+] [Deterministic
-trigger] [MEDIUM severity - scheduling latency regression] [Excellent
-risk-benefit ratio]
+- BENEFIT: Prevents integer underflow and incorrect device
+  configuration. HIGH for CVM users, MEDIUM for regular Azure users.
+- RISK: VERY LOW - only adds a bounds check on the initialization path.
+  Cannot cause regression because it only rejects values that would
+  cause broken behavior.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Compilation**
+**Step 9.1: Evidence Summary**
 
 FOR backporting:
-- Fixes a clear regression from 7c70cb94d29cd3 (lazy preemption
-  conversion)
-- 1-line change, minimal, obviously correct
-- From the subsystem maintainer (Peter Zijlstra) AND Thomas Gleixner
-- Completely defeats the purpose of hrtick under lazy preemption
-- Zero regression risk
-- Standalone fix, no dependencies
+- Fixes a concrete integer underflow bug (adapter_mtu - ETH_HLEN wraps
+  to ~4GB)
+- Small, surgical fix (6 lines of logic)
+- Obviously correct bounds check
+- No regression risk
+- Accepted by netdev maintainer
+- Author is regular driver contributor
+- Affects widely-used Azure MANA driver
+- Security-relevant in CVM environments
 
 AGAINST backporting:
-- HRTICK sched feature is disabled by default (opt-in)
-- Not a crash, data corruption, or security issue
-- Bug only exists in v6.13+ (not in LTS v6.12.y or older)
-- Impact limited to subset of users who enable HRTICK
+- Labeled as "hardening" rather than "fix"
+- No user reports of this being triggered in practice
+- Trigger requires malicious or buggy firmware
+- May need minor adjustment for older stable trees (response field name)
 
 **Step 9.2: Stable Rules Checklist**
-1. Obviously correct? YES - restores pre-regression behavior for this
-   path
-2. Fixes a real bug? YES - hrtick is completely broken under lazy
-   preemption
-3. Important issue? MEDIUM - scheduling latency regression (not
-   crash/security)
-4. Small and contained? YES - 1 line, 1 file
-5. No new features? YES - pure fix
-6. Can apply to stable? YES - clean apply expected
+1. Obviously correct and tested? **YES** - simple bounds check, accepted
+   by netdev maintainer
+2. Fixes a real bug? **YES** - integer underflow leading to incorrect
+   max_mtu
+3. Important issue? **YES** - incorrect MTU can cause device
+   malfunction; security issue in CVM
+4. Small and contained? **YES** - 6 lines, single function, single file
+5. No new features or APIs? **CORRECT** - no new features
+6. Can apply to stable? **YES** - may need trivial adjustment for
+   response field name in 6.6.y
 
 **Step 9.3: Exception Categories**
-Not an exception category. Standard bug fix.
+- Not a standard exception category, but fits the pattern of input
+  validation fixes that prevent integer overflow/underflow.
 
 **Step 9.4: Decision**
-The fix is a 1-line surgical change by the subsystem maintainer that
-corrects a clear regression from the lazy preemption model introduction.
-While hrtick is not enabled by default, the bug completely breaks the
-feature for anyone who uses it. The risk is essentially zero and the
-benefit is restoring correct behavior for an important scheduling
-mechanism.
+The fix prevents a concrete integer underflow that causes `max_mtu` to
+be set to ~4GB when hardware returns an invalid adapter_mtu. The fix is
+minimal, obviously correct, and has zero regression risk. It is relevant
+for Azure CVM security and defensive against firmware bugs.
 
 ## Verification
 
-- [Phase 1] Parsed tags: SOBs from Peter Zijlstra and Thomas Gleixner,
-  Link to patch.msgid.link
-- [Phase 2] Diff: 1 line changed in `entity_tick()`:
-  `resched_curr_lazy()` → `resched_curr()`
-- [Phase 3] git blame: line 5603 changed by 7c70cb94d29cd3 (lazy
-  preemption, 2024-10-04), previously `resched_curr()` since 2008
-  (8f4d37ec073c17)
-- [Phase 3] git merge-base: 7c70cb94d29cd3 is NOT in v6.12, IS in
-  v6.13/v6.14/v6.15/v7.0
-- [Phase 3] 95a0155224a65 ("Limit hrtick work") modifies
-  `task_tick_fair()`, independent of this fix to `entity_tick()`
-- [Phase 3] Author is Peter Zijlstra, THE scheduler maintainer
-- [Phase 4] Lore inaccessible (Anubis anti-bot). b4 dig failed to find
-  match by message-id
-- [Phase 5] `entity_tick()` called from `hrtick()` (queued=1) and
-  `scheduler_tick()` (queued=0)
-- [Phase 5] `hrtick()` (core.c:885-898) does NOT promote
-  TIF_NEED_RESCHED_LAZY, unlike `scheduler_tick()` (core.c:5570-5571)
-- [Phase 5] Other `resched_curr_lazy()` sites in fair.c (lines 1329,
-  8938) are correct
-- [Phase 6] Bug exists only in v6.13+ (lazy preemption not in v6.12 LTS)
-- [Phase 6] Fix applies cleanly - `entity_tick()` unchanged since 2008
-  except for the lazy conversion
-- [Phase 7] CONFIG_SCHED_HRTICK is `def_bool HIGH_RES_TIMERS` (compiled
-  in commonly), but HRTICK sched feature defaults to false
-- [Phase 8] Failure: scheduling latency degradation, hrtick completely
-  defeated. Severity: MEDIUM
-- UNVERIFIED: Mailing list discussion contents (lore inaccessible). Does
-  not affect decision since fix is obviously correct from code analysis.
+- [Phase 1] Parsed tags: Signed-off-by from author (Microsoft) and
+  netdev maintainer Jakub Kicinski; Link to single-patch submission
+- [Phase 2] Diff analysis: +6 lines of validation in
+  `mana_query_device_cfg()`, checks `resp.adapter_mtu >= ETH_MIN_MTU +
+  ETH_HLEN` (82)
+- [Phase 2] Integer underflow verified: adapter_mtu=0 ->
+  max_mtu=4294967282 (~4GB) via Python simulation
+- [Phase 3] git blame: adapter_mtu code introduced in commit
+  `80f6215b450eb8` (v6.4-rc1, 2023-04-12)
+- [Phase 3] git describe --contains: confirmed in v6.4-rc1
+- [Phase 3] Author has 9+ commits to MANA driver, regular contributor
+- [Phase 4] b4 dig failed to find thread (timeout); lore blocked by
+  anti-bot measures
+- [Phase 5] Callers: `mana_query_device_cfg()` called from probe path;
+  `gc->adapter_mtu - ETH_HLEN` used at mana_en.c:3349 and mana_bpf.c:242
+- [Phase 5] Both usage sites perform unsigned subtraction without bounds
+  check
+- [Phase 6] Buggy code exists in stable trees 6.6.y+ (since v6.4-rc1)
+- [Phase 6] Standalone fix, may need minor field name adjustment for
+  older trees
+- [Phase 7] MANA driver widely used in Azure (IMPORTANT criticality)
+- [Phase 8] Failure mode: max_mtu set to ~4GB, allowing oversized MTU;
+  severity HIGH
+- [Phase 8] Risk: VERY LOW (only rejects clearly invalid values)
 
 **YES**
 
- kernel/sched/fair.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index ab4114712be74..42051bdea3f17 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5600,7 +5600,7 @@ entity_tick(struct cfs_rq *cfs_rq, struct sched_entity *curr, int queued)
- 	 * validating it and just reschedule.
- 	 */
- 	if (queued) {
--		resched_curr_lazy(rq_of(cfs_rq));
-+		resched_curr(rq_of(cfs_rq));
- 		return;
- 	}
- #endif
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index 09a53c9775455..7589ead7efdb6 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -1214,10 +1214,16 @@ static int mana_query_device_cfg(struct mana_context *ac, u32 proto_major_ver,
+ 
+ 	*max_num_vports = resp.max_num_vports;
+ 
+-	if (resp.hdr.response.msg_version >= GDMA_MESSAGE_V2)
++	if (resp.hdr.response.msg_version >= GDMA_MESSAGE_V2) {
++		if (resp.adapter_mtu < ETH_MIN_MTU + ETH_HLEN) {
++			dev_err(dev, "Adapter MTU too small: %u\n",
++				resp.adapter_mtu);
++			return -EPROTO;
++		}
+ 		gc->adapter_mtu = resp.adapter_mtu;
+-	else
++	} else {
+ 		gc->adapter_mtu = ETH_FRAME_LEN;
++	}
+ 
+ 	if (resp.hdr.response.msg_version >= GDMA_MESSAGE_V3)
+ 		*bm_hostmode = resp.bm_hostmode;
 -- 
 2.53.0
 
