@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B516D3A63F8;
-	Mon, 20 Apr 2026 13:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B6C3A3E66;
+	Mon, 20 Apr 2026 13:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776690958; cv=none; b=bn8ZBogfxZblpJPYb6tEUYI2ThQAJZAmTHaHPBE3PnoLkMehJoaumwXUW5XsBPtVW54kmR9GoIud/MBYdPu9b1hgbkS2gCHGB4N9F+6zK79lc6dkvYAxqss3aAgfkoZKm3JuuGROD5qjLniwcrtEchrQwqcGufxQk4o6GN3jwgc=
+	t=1776690960; cv=none; b=P8FTK65RgCwK/ugoOJydDLa7yI+/ldXDgH5U7mPSAiGP+DaCUzdlXXUn7VwNXf4ZZJRPTf95emR/3jgyffdXwDZ3ShP3XxDlYkJn/n2Ry677+L4386EmuVUVUWvwQ/xVWZ0SDRBNNVJQt5BSg/gO0l4hKBeJsOP3/KmQW4VkgaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776690958; c=relaxed/simple;
-	bh=ap10gA4x702GegdyFFkhpC7MtN3m7LIoExCHfGHCtWc=;
+	s=arc-20240116; t=1776690960; c=relaxed/simple;
+	bh=7XmZ6akHRE7O9IB/dFcnB8pxMxs3OlsefPwJMEwNtH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BcWyMku12vh7AafiJUcaqdScJo3duvFfXgTAgO0T0FRNgBzGQl5pxb360wlwXiLcV626fjxBOY3l2h98Rs3qoHMYxHbgmyrk6sn9YZ1RoUugeK71fc0LvNWiZeN+cdc8Yg3/H7FnFwzL7e7BnOVgvtDNTXozA2NsgGnzABwXPHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NUuopON2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YEINcgtF7hZVHz+ftmeiS9bdKwZfQXVcqwNdVxCDCrasVxOxLPxOgjQTHEXrGFC9/PWw26T2lqmhkprMhtwuFxWHWTURJLOxP5xUHN2dCgfpQpeI6BdFgzVw2zwoN0XQHCU0xEg5+qFqLMwif6pEA4J2+Q8tQHw3XZNC8NNYrSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mkZkOUG9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NUuopON2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9B3C2BCB6;
-	Mon, 20 Apr 2026 13:15:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mkZkOUG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC222C2BCB4;
+	Mon, 20 Apr 2026 13:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776690958;
-	bh=ap10gA4x702GegdyFFkhpC7MtN3m7LIoExCHfGHCtWc=;
+	s=k20201202; t=1776690960;
+	bh=7XmZ6akHRE7O9IB/dFcnB8pxMxs3OlsefPwJMEwNtH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NUuopON2zwHfEcREufdSFwIlsiRjSs1jYOsrdJ/2qxfyQH1+0cEXRzE7OVzwSuo0Q
-	 VWF2ErQXYoK5DPqIlooJd7Qrndchl67Tv0uoKx/s63OGjyRpPGHQ/ede3nmg12vDIs
-	 Og6D2wo4lCMIi7Iszp8t+pvUPAMG7R1E8U0UFg4NLc5qeU8AjgtiUfPbVuZef7hZB6
-	 iqXS8+H/rIb5+bsgdfOl3hX1T2k3UYGqZFpm3+S8aWKmpOETTm38o0tcVbfI64nCri
-	 Hk8NdUHrf408FuGc02Vh4mIyy0tV60Zcl9czLt5ZCzxv6bUabGSNQOao1owF9EfSGU
-	 9OKd8mwJwA9Dg==
+	b=mkZkOUG9F+sSVWM5v+lFTDXn2qvJxF8OLYcVku+dCs3CuWuZ5NfIb+LBf9CRX+136
+	 QcV26ybDXpjfAZoOxrZo24F4h94RTJbVPlAiDqTft4CkbUcTOZIJ8iJq8giWouJRQ4
+	 CZzh9EO6smzG/5UnyDtY4XZx0XjBdw5R5xwziDWmcutTGwLLuTYxWiueonf2QALSBA
+	 ey3RD6qJIuzXIFAl8GXPxlKO1Z1ZPhPlY4m70t7rkA1JWfVVln9d05qpyIM4mrp/P+
+	 oFnUAG9/9uL118b825Wjzy5omCwsAqbsFq8BRSNefZ35gpGEagTHN6UYWjdZxy3DWC
+	 NsUhnC38Z4LmA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+Cc: Luke Wang <ziniu.wang_1@nxp.com>,
+	Bough Chen <haibo.chen@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org,
+	shawnguo@kernel.org,
+	linux-imx@nxp.com,
+	linux-mmc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] net: qrtr: fix endian handling of confirm_rx field
-Date: Mon, 20 Apr 2026 09:07:58 -0400
-Message-ID: <20260420131539.986432-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] mmc: sdhci-esdhc-imx: wait for data transfer completion before reset
+Date: Mon, 20 Apr 2026 09:07:59 -0400
+Message-ID: <20260420131539.986432-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -52,379 +51,457 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-[ Upstream commit e4cf6087cab382c7031e6b436ec55202fa9f2d7b ]
+[ Upstream commit 8ceb70c9f970bfbdceb1e51578850a60b9de2236 ]
 
-Convert confirm_rx to little endian when enqueueing and convert it back on
-receive. This fixes control flow on big endian hosts, little endian is
-unaffected.
+On IMX7ULP platforms, certain SD cards (e.g. Kingston Canvas Go! Plus)
+cause system hangs and reboots during manual tuning. These cards exhibit
+large gaps (~16us) between tuning command response and data transmission.
+When cmd CRC errors occur during tuning, the code assumes data errors even
+tuning data hasn't been fully received and then reset host data circuit.
 
-On transmit, store confirm_rx as __le32 using cpu_to_le32(). On receive,
-apply le32_to_cpu() before using the value. !! ensures the value is 0 or 1
-in native endianness, so the conversion isn’t strictly required here, but
-it is kept for consistency and clarity.
+Per IMX7ULP reference manual, reset operations (RESET_DATA/ALL) need to
+make sure no active data transfers. Previously, resetting while data was
+in-flight would clear data circuit, including ADMA/SDMA address, causing
+data to be transmitted to incorrect memory address. This patch adds
+polling for data transfer completion before executing resets.
 
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Reviewed-by: Bough Chen <haibo.chen@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis.
+Now I have all the information needed for a comprehensive analysis. Let
+me compile the final assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-Record: **[net: qrtr]** **[fix]** Fix endian handling of `confirm_rx`
-field — the word "fix" is used explicitly, targeting an endianness bug
-in QRTR protocol.
+### Step 1.1: Subject Line
+- **Subsystem**: `mmc: sdhci-esdhc-imx:` (MMC host controller driver for
+  NXP i.MX ESDHC)
+- **Action verb**: "wait" (defensive/preventive action)
+- **Summary**: Wait for data transfer completion before resetting the
+  host data circuit to avoid system hang.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>** —
-  QRTR/Qualcomm ARM SoC maintainer
-- **Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>**
-  — Author (Westermo, embedded networking)
-- **Reviewed-by: Simon Horman <horms@kernel.org>** — Netdev reviewer
-- **Signed-off-by: David S. Miller <davem@davemloft.net>** — Net
-  subsystem maintainer merged it
+Record: [mmc: sdhci-esdhc-imx] [wait/prevent] [Prevent system hang by
+ensuring data transfer is complete before reset]
 
-No Fixes: tag (it was deliberately removed at Simon Horman's request
-during review — see Phase 4). No Reported-by tag. No Cc: stable tag.
+### Step 1.2: Tags
+- **Signed-off-by**: Luke Wang <ziniu.wang_1@nxp.com> (author, NXP
+  engineer)
+- **Reviewed-by**: Bough Chen <haibo.chen@nxp.com> (NXP subsystem
+  maintainer for sdhci-esdhc-imx, prolific contributor)
+- **Acked-by**: Adrian Hunter <adrian.hunter@intel.com> (senior
+  SDHCI/MMC subsystem maintainer)
+- **Signed-off-by**: Ulf Hansson <ulf.hansson@linaro.org> (MMC subsystem
+  maintainer who merged this)
+- No Fixes: tag (expected for autosel candidates)
+- No Cc: stable (expected)
+- No Link: tag
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The commit explains that:
-- On transmit, `confirm_rx` needs `cpu_to_le32()` because the header
-  struct field is `__le32`
-- On receive, `le32_to_cpu()` should be applied before use
-- The `!!` ensures the value is 0 or 1, so the receive-side conversion
-  isn't strictly required but is kept for consistency
-- This "fixes control flow on big endian hosts"
+Record: Reviewed by NXP subsystem expert (haibo.chen), ACK'd by sdhci
+co-maintainer (Adrian Hunter), merged by MMC maintainer (Ulf Hansson).
+Strong review chain.
 
-Record: Bug: Missing endian conversion for the `confirm_rx` field on
-both TX and RX paths. Symptom: Broken flow control on big-endian hosts.
-Little-endian unaffected. Root cause: `confirm_rx` was stored/read as
-native endian into a `__le32` field.
+### Step 1.3: Body Analysis
+- **Bug**: On IMX7ULP platforms, certain SD cards (Kingston Canvas Go!
+  Plus) cause **system hangs and reboots** during manual tuning.
+- **Root cause**: Large gaps (~16us) between tuning command response and
+  data transmission. When CRC errors occur during tuning, code resets
+  the host data circuit while data is still in-flight.
+- **Failure mechanism**: Per IMX7ULP reference manual,
+  RESET_DATA/RESET_ALL must not be issued during active data transfer.
+  Resetting while data is in-flight clears the data circuit including
+  ADMA/SDMA address, causing **data to be transmitted to incorrect
+  memory address**.
+- **Symptom**: System hang and reboot.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-Not hidden — this is an explicit endianness bug fix. The subject says
-"fix" directly.
+Record: Critical bug - system hang/reboot. DMA address corruption from
+reset during active transfer. Hardware-documented requirement violated.
+Specific SD card makes the timing gap visible.
 
----
+### Step 1.4: Hidden Bug Fix Detection
+This is NOT hidden - it's an explicit fix for system hangs. The commit
+clearly describes a hardware requirement (per reference manual) that was
+being violated, leading to DMA address corruption and system hangs.
 
-## PHASE 2: DIFF ANALYSIS — LINE BY LINE
+Record: Explicit bug fix - system hang prevention. Not a disguised fix.
 
-### Step 2.1: INVENTORY THE CHANGES
-- **File**: `net/qrtr/af_qrtr.c` — 2 lines changed (1 modified in TX
-  path, 1 modified in RX path)
-- **Functions modified**: `qrtr_node_enqueue()` (TX),
-  `qrtr_endpoint_post()` (RX)
-- **Scope**: Single-file, extremely surgical fix
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+### Step 2.1: Inventory
+- **Files changed**: 1 file (`drivers/mmc/host/sdhci-esdhc-imx.c`)
+- **Lines added**: ~18 (2 for the define, 16 for the polling logic)
+- **Lines removed**: 0
+- **Functions modified**: `esdhc_reset()` - the core reset callback for
+  this driver
+- **Scope**: Single-file, single-function, surgical fix
 
-**Hunk 1 (line 364, TX path in `qrtr_node_enqueue`):**
-- Before: `hdr->confirm_rx = !!confirm_rx;` — stores native-endian int
-  into `__le32` field
-- After: `hdr->confirm_rx = cpu_to_le32(!!confirm_rx);` — properly
-  converts to little-endian
-- On LE hosts: `cpu_to_le32` is a no-op, identical behavior
-- On BE hosts: Value 1 was stored as `0x00000001` in native (big-endian)
-  byte order = `0x01000000` in LE interpretation. Now correctly stored
-  as LE 1.
+Record: [sdhci-esdhc-imx.c +18/-0] [esdhc_reset() modified] [Single-file
+surgical fix]
 
-**Hunk 2 (line 465, RX path in `qrtr_endpoint_post`):**
-- Before: `cb->confirm_rx = !!v1->confirm_rx;` — reads `__le32` as
-  native int
-- After: `cb->confirm_rx = !!le32_to_cpu(v1->confirm_rx);` — properly
-  converts from LE first
-- Due to `!!`, the result on the receive side was already correct (any
-  non-zero becomes 1). The fix adds the conversion for
-  correctness/consistency.
+### Step 2.2: Code Flow Change
+1. **New define**: `ESDHC_DATA_INHIBIT_WAIT_US 100000` (100ms timeout)
+2. **Before**: `esdhc_reset()` directly called `sdhci_and_cqhci_reset()`
+   without checking data transfer state
+3. **After**: Before reset, if the reset mask includes
+   `SDHCI_RESET_DATA` or `SDHCI_RESET_ALL`, poll `ESDHC_PRSSTAT`
+   register waiting for `SDHCI_DATA_INHIBIT` to clear (indicating no
+   active data transfer). Timeout at 100ms with a warning. Then proceed
+   to reset.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-Category: **Endianness/type bug (f)**. The `qrtr_hdr_v1` struct declares
-`confirm_rx` as `__le32`, and every other field in the struct uses
-proper `cpu_to_le32()`/`le32_to_cpu()` conversions — except
-`confirm_rx`. This is the one field that was missed.
+Record: Added defensive wait-for-idle before data/full reset. 100ms
+timeout with warning on failure. Non-blocking (proceeds even on
+timeout).
 
-### Step 2.4: ASSESS THE FIX QUALITY
-- **Obviously correct**: Yes — it follows the exact same pattern as all
-  adjacent fields (type, src_node_id, etc.)
-- **Minimal**: Yes — 2 lines, exactly matching the existing code pattern
-- **Regression risk**: Essentially zero. On LE hosts (the vast
-  majority), these are no-ops. On BE hosts, this makes the behavior
-  correct.
+### Step 2.3: Bug Mechanism
+Category: **Hardware workaround / DMA corruption fix**
+- The bug is a violation of hardware specification requirements (IMX7ULP
+  reference manual)
+- Resetting while `SDHCI_DATA_INHIBIT` is set clears ADMA/SDMA addresses
+  mid-transfer
+- Data goes to wrong memory address → system hang/reboot (effectively
+  memory corruption)
+- The fix polls the Present State register bit 1 (DATA_INHIBIT) before
+  issuing reset
+- Uses `readl_poll_timeout_atomic` with 2us polling interval and 100ms
+  max wait
 
----
+Record: [HW requirement violation → DMA address corruption → system
+hang] [Fix: poll for data idle before reset]
+
+### Step 2.4: Fix Quality
+- **Obviously correct**: Yes. The reference manual explicitly requires
+  waiting. The pattern of polling ESDHC_PRSSTAT is already used twice in
+  this driver (lines 471, 1028).
+- **Minimal/surgical**: Yes. Only adds the required wait before existing
+  reset call.
+- **Regression risk**: Very low. On timeout, it warns but still proceeds
+  with reset (graceful degradation). The 100ms timeout is generous.
+  Using `readl_poll_timeout_atomic` is appropriate since reset can be
+  called from interrupt context.
+- **Red flags**: None. Well-contained, uses established patterns from
+  the same driver.
+
+Record: High quality fix. Uses existing driver patterns. Graceful
+timeout handling. Minimal regression risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-- TX line (364): `hdr->confirm_rx = !!confirm_rx;` — introduced by
-  commit **5fdeb0d372ab** ("net: qrtr: Implement outgoing flow
-  control"), authored 2020-01-13, first appeared in **v5.6-rc1**
-- RX line (465): `cb->confirm_rx = !!v1->confirm_rx;` — introduced by
-  commit **194ccc88297ae** ("net: qrtr: Support decoding incoming v2
-  packets"), authored 2017-10-10, first appeared in **v4.15**
+### Step 3.1: Blame
+- `esdhc_reset()` introduced in commit `0718e59ae259f7` by Russell King
+  (2014-04-25), present since ~v3.16
+- Modified by `fb1dec44c6750b` (Brian Norris, 2022-10-26) to use
+  `sdhci_and_cqhci_reset`, present since v6.2
+- The function has been stable in its current form since v6.2
 
-Record: The buggy TX code has been present since v5.6. The buggy RX code
-since v4.15. Both are in all active stable trees (5.10, 5.15, 6.1, 6.6,
-6.12, 7.0).
+Record: esdhc_reset() has existed since v3.16 (2014). Current form since
+v6.2. Bug has been present since the function was introduced - the
+hardware requirement was never respected.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-The v2 submission HAD `Fixes: 5fdeb0d372ab` but it was removed at Simon
-Horman's request. The original buggy commit 5fdeb0d372ab ("Implement
-outgoing flow control") is present in v5.6+ and all active stable trees.
+### Step 3.2: No Fixes: tag present (expected).
 
-### Step 3.3: CHECK FILE HISTORY
-Recent changes to `af_qrtr.c` are unrelated refactoring (xarray
-conversion, treewide changes, proto_ops changes). No recent endianness
+### Step 3.3: File History
+Recent changes to the file are mostly tuning-related fixes (manual
+tuning, clock loopback, PM refactoring). The `esdhc_reset()` function
+itself hasn't been touched recently (last change was the cqhci fix in
+2022).
+
+Record: No prerequisites identified. The fix is standalone.
+
+### Step 3.4: Author
+Luke Wang (ziniu.wang_1@nxp.com) is a regular NXP contributor with 14+
+commits in the MMC subsystem and sdhci-esdhc-imx driver specifically.
+He's contributed tuning improvements, PM refactoring, and other driver
 fixes.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Alexander Wilhelm from Westermo has a clear pattern of fixing endianness
-bugs in Qualcomm subsystems: QMI encoding/decoding, MHI BHI vector
-table, ath12k QMI data. This is part of an effort to make Qualcomm
-subsystems work on big-endian platforms.
+Record: Regular subsystem contributor from the hardware vendor (NXP).
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-None. The fix applies directly to the original buggy lines without any
-prerequisites.
+### Step 3.5: Dependencies
+- Uses `readl_poll_timeout_atomic` from `<linux/iopoll.h>` - already
+  included in all stable versions
+- Uses `ESDHC_PRSSTAT` and `SDHCI_DATA_INHIBIT` - both already defined
+- Uses `SDHCI_RESET_DATA` and `SDHCI_RESET_ALL` - standard SDHCI defines
+- Only dependency: `sdhci_and_cqhci_reset` (present since v6.2). For
+  v5.15, the function uses `sdhci_reset` instead - minor backport
+  adjustment needed.
 
----
+Record: Fully standalone for v6.1+. Minor adjustment needed for v5.15
+(different reset function name). All APIs/macros already available.
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Found via yhbt.net mirror of lore.kernel.org. The patch went through 3
-versions:
-- **v1** (2026-03-20): Initial submission with Fixes tag, targeted at
-  `net`
-- **v2** (2026-03-24): Rebase on latest net tree, improved commit
-  message, still had Fixes tag
-- **v3** (2026-03-26): Rebase on `net-next`, Fixes tag removed at Simon
-  Horman's request
+### Step 4.1-4.5
+I was unable to find the specific mailing list thread for this patch via
+b4 dig (commit not in tree) or web searches. The patch was found
+indirectly via the "1-bit bus width" series which built on top of the
+file state after this patch was applied (blob `97461e20425d`).
 
-### Step 4.2: KEY REVIEWER FEEDBACK
-**Simon Horman** (netdev reviewer): "But as this isn't strictly
-necessary let's target net-next and drop the Fixes tag." This is a
-**negative signal** for stable backport — the netdev reviewer explicitly
-downgraded from fix to enhancement.
+The commit has strong review signals:
+- **Reviewed-by** from Bough Chen (NXP maintainer of this driver, 30+
+  commits)
+- **Acked-by** from Adrian Hunter (SDHCI co-maintainer, 100+ SDHCI
+  commits)
+- **Signed-off-by** from Ulf Hansson (MMC subsystem maintainer who
+  merged it)
 
-**Manivannan Sadhasivam** (QRTR maintainer) disagreed: "FWIW: Adding
-Fixes tag doesn't mean that the patch should be queued for -rcS." Mani
-thought the Fixes tag was appropriate.
-
-### Step 4.3: BUG REPORT
-No external bug report. The author found this during systematic
-endianness auditing.
-
-### Step 4.4: RELATED PATCHES
-This is a standalone fix. Not part of a series.
-
-### Step 4.5: STABLE MAILING LIST HISTORY
-No stable-specific discussion found.
-
----
+Record: Could not find lore thread directly (commit not yet in tree).
+But review chain is complete: hardware vendor reviewer + SDHCI
+maintainer ACK + subsystem maintainer merge.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS
-- `qrtr_node_enqueue()` — TX path
-- `qrtr_endpoint_post()` — RX path
+### Step 5.1: Functions Modified
+- `esdhc_reset()` - the `.reset` callback in `sdhci_esdhc_ops`
 
-### Step 5.2: TRACE CALLERS
-- `qrtr_node_enqueue()` is called from: `qrtr_sendmsg()` (the main
-  sendmsg path), `qrtr_send_resume_tx()`, and broadcast path. It's the
-  core TX function.
-- `qrtr_endpoint_post()` is called from: MHI driver (`qrtr_mhi.c`), SMD
-  driver (`qrtr_smd.c`), tun driver (`qrtr_tun.c`). It's the core RX
-  entry point — called for EVERY incoming QRTR packet.
+### Step 5.2: Callers
+`esdhc_reset` is called via `sdhci_do_reset()` (line 247 of sdhci.c)
+through the ops->reset function pointer. `sdhci_do_reset` is called
+from:
+- `sdhci_reset_for_all()` - init, suspend/resume paths (SDHCI_RESET_ALL)
+- `sdhci_reset_for_reason()` - error recovery, tuning abort, card
+  removal, CQE recovery (SDHCI_RESET_CMD, SDHCI_RESET_DATA)
+- These are called from tuning abort, data error paths, card removal,
+  CQE recovery, and initialization
 
-### Step 5.3-5.4: CALL CHAIN
-`qrtr_endpoint_post()` is called directly from hardware transport
-drivers on every received packet. `qrtr_node_enqueue()` is called on
-every transmitted packet. Both are hot-path functions.
+The fix specifically triggers on `SDHCI_RESET_DATA | SDHCI_RESET_ALL`,
+which covers error recovery (data errors, request errors) and full
+initialization.
 
-### Step 5.5: SIMILAR PATTERNS
-All other fields in `qrtr_hdr_v1` already use proper endian conversions.
-`confirm_rx` was the only one missed.
+Record: Called from multiple critical paths - error recovery, tuning
+abort, card removal, init. High-traffic code path.
 
----
+### Step 5.3-5.4: The affected code path is triggered during normal card
+operations (tuning, error recovery). Any user of an i.MX SDHCI host
+controller can trigger this.
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+### Step 5.5: Similar Patterns
+The Freescale ESDHC of-driver (`sdhci-of-esdhc.c`) has a separate
+`quirk_ignore_data_inhibit` for unreliable DATA_INHIBIT bits on some
+controllers. The `readl_poll_timeout` pattern is already used twice in
+this same driver for similar hardware waits.
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-The TX bug (5fdeb0d372ab) exists in **v5.6+**, so all active stable
-trees: 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y.
-The RX bug (194ccc88297ae) exists since **v4.15**.
+Record: Pattern is consistent with existing driver practices.
 
-### Step 6.2: BACKPORT COMPLICATIONS
-The code at these two lines has not changed since introduction. The
-patch should apply cleanly to all active stable trees.
+## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.3: RELATED FIXES ALREADY IN STABLE
-None found.
+### Step 6.1: Buggy Code in Stable Trees
+- `esdhc_reset()` exists in **all stable trees** (v5.15, v6.1, v6.6,
+  v6.12, v6.19)
+- The bug has been present since the function was introduced in v3.16
+  (2014)
+- IMX7ULP support was added before v5.15
 
----
+Record: Bug exists in ALL active stable trees.
+
+### Step 6.2: Backport Complications
+- For v6.1, v6.6, v6.12, v6.19: Patch applies cleanly. `esdhc_reset()`
+  is identical.
+- For v5.15: Minor adjustment needed - function calls `sdhci_reset()`
+  instead of `sdhci_and_cqhci_reset()`, but the added code goes BEFORE
+  that call, so it's unaffected.
+
+Record: Clean apply for v6.1+. Trivial adjustment for v5.15.
+
+### Step 6.3: No related fixes already in stable for this issue.
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: SUBSYSTEM CRITICALITY
-**net/qrtr** — Qualcomm IPC Router, used for communication between Linux
-and Qualcomm firmware (modem, WiFi, etc.).
-Criticality: **PERIPHERAL** — affects users of Qualcomm SoC platforms
-running big-endian kernels (very niche). Qualcomm SoCs are little-endian
-ARM, so the primary users are unaffected.
+### Step 7.1
+- **Subsystem**: drivers/mmc/host - MMC host controller drivers
+- **Criticality**: IMPORTANT - MMC/SD cards are used for storage on
+  embedded platforms, IoT devices, and Android devices running i.MX
+  SoCs. System hangs on these platforms = production device failure.
 
-### Step 7.2: SUBSYSTEM ACTIVITY
-Moderate activity — mostly maintenance fixes, not heavy development.
-
----
+### Step 7.2
+The sdhci-esdhc-imx driver is actively maintained by NXP engineers. 28
+changes between v6.6 and v6.19.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: WHO IS AFFECTED
-Only big-endian hosts that use QRTR. This is extremely niche — Qualcomm
-SoCs are LE ARM. However, Westermo (author's company) apparently runs BE
-systems with QRTR, and there could be other embedded platforms.
+### Step 8.1: Affected Population
+- Users of NXP i.MX SoCs with SDHCI host controllers (IMX7ULP
+  specifically named, but the fix applies to all i.MX ESDHC variants)
+- Embedded/IoT devices, industrial controllers, automotive platforms
+  using NXP i.MX chips
+- The bug is triggered with specific SD cards (Kingston Canvas Go! Plus
+  mentioned) during tuning
 
-### Step 8.2: TRIGGER CONDITIONS
-Every QRTR data transmission on a big-endian host. The TX side stores
-the wrong endianness, which means the remote end receives a malformed
-`confirm_rx` value. The RX side is actually mitigated by `!!` (any non-
-zero normalizes to 1).
+### Step 8.2: Trigger Conditions
+- Occurs during SD card tuning (happens on card initialization/re-
+  initialization)
+- Triggered when CRC errors occur during tuning while data has gaps in
+  transmission
+- Not every card triggers it - depends on card timing characteristics
+- Can happen on any boot/card insertion with affected cards
 
-### Step 8.3: FAILURE MODE SEVERITY
-On big-endian hosts: The flow control mechanism (confirm_rx/resume_tx)
-breaks. The TX side sends `confirm_rx` in wrong byte order. If the
-remote firmware compares `confirm_rx` directly to 1 (rather than using
-`!!`), it won't send RESUME_TX messages, causing the sender to
-eventually block or exhaust remote resources.
-Severity: **MEDIUM** — broken flow control on a niche platform.
+### Step 8.3: Failure Mode Severity
+- **System hang and reboot** = CRITICAL
+- DMA writes to incorrect memory address = potential **memory
+  corruption**
+- The reset clears ADMA/SDMA addresses, so DMA writes to address 0 or
+  stale address
+- This is a hardware-documented requirement violation
 
-### Step 8.4: RISK-BENEFIT RATIO
-- **Benefit**: Fixes real protocol-level correctness bug on BE hosts.
-  Low impact population but real for those affected.
-- **Risk**: Essentially zero. `cpu_to_le32`/`le32_to_cpu` are no-ops on
-  LE. The fix follows the established pattern used by every other field
-  in the same struct.
+Record: CRITICAL severity. System hang, reboot, potential memory
+corruption.
 
----
+### Step 8.4: Risk-Benefit Ratio
+- **BENEFIT**: HIGH - prevents system hangs/reboots on NXP i.MX
+  platforms with certain SD cards
+- **RISK**: VERY LOW
+  - ~18 lines added, single function, single file
+  - Uses existing patterns from the same driver
+  - Graceful timeout (warning + proceed) prevents any new hangs from the
+    fix itself
+  - `readl_poll_timeout_atomic` is safe for all calling contexts
+  - Only adds a wait before an existing operation
+
+Record: HIGH benefit / VERY LOW risk. Strongly favorable ratio.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence Summary
 
 **FOR backporting:**
-- Real endianness correctness bug
-- Extremely small fix (2 lines), obviously correct
-- Zero regression risk on LE systems (no-op), fixes BE systems
-- Follows the identical pattern of all adjacent header fields
-- Present in all stable trees since v5.6
-- Reviewed by 2 reviewers, merged by David Miller
-- Manivannan Sadhasivam (QRTR maintainer) considered the Fixes tag
-  appropriate
+1. Fixes **system hangs and reboots** (CRITICAL severity)
+2. Fixes **DMA address corruption** from violating hardware
+   specification
+3. Small, surgical fix (~18 lines in one function, one file)
+4. Uses existing patterns from the same driver (`readl_poll_timeout`)
+5. Reviewed by NXP driver maintainer (haibo.chen), ACK'd by SDHCI co-
+   maintainer (Adrian Hunter), merged by MMC maintainer (Ulf Hansson)
+6. Author is NXP engineer with deep knowledge of the hardware
+7. Bug exists in ALL active stable trees (code unchanged since v6.2)
+8. Patch applies cleanly to v6.1+ with no modifications needed
+9. Graceful degradation on timeout (warn + continue)
+10. References hardware reference manual as justification
 
 **AGAINST backporting:**
-- Simon Horman explicitly said "not strictly necessary," asked to drop
-  Fixes tag and target net-next
-- Big-endian QRTR usage is extremely niche
-- The `!!` on the RX path mitigates the receive side (only TX is truly
-  broken)
-- No user bug report — found during code audit
+- No concrete signals against. The fix is well-contained and low-risk.
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **Yes** — standard endian conversion
-   pattern
-2. Fixes a real bug? **Yes** — broken wire protocol on BE hosts
-3. Important issue? **Borderline** — broken flow control, but only on BE
-   hosts using QRTR
-4. Small and contained? **Yes** — 2 lines in 1 file
-5. No new features? **Correct**
-6. Can apply to stable? **Yes** — clean apply expected
+**UNRESOLVED:**
+- Could not find the original lore thread (commit appears very
+  recent/not yet merged)
+- No Fixes: tag identifying original buggy commit (but bug has existed
+  since 2014)
 
-### Step 9.3: EXCEPTION CATEGORIES
-None applicable.
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** YES - follows hardware manual
+   requirement, reviewed by 3 maintainers, uses established driver
+   patterns
+2. **Fixes a real bug?** YES - system hangs and reboots on real hardware
+   with real SD cards
+3. **Important issue?** YES - system hang, reboot, DMA corruption =
+   CRITICAL
+4. **Small and contained?** YES - ~18 lines, single function, single
+   file
+5. **No new features/APIs?** CORRECT - no new features, just defensive
+   hardware wait
+6. **Can apply to stable?** YES - applies cleanly to v6.1+, minor
+   adjustment for v5.15
 
-### Step 9.4: DECISION
-This is a genuine endianness bug fix with zero regression risk. While
-the affected population is niche, the fix is so small and obviously
-correct that the risk/benefit ratio strongly favors inclusion. The
-netdev reviewer's pushback was about targeting net vs. net-next (merge
-window process), not about whether the fix is correct. The QRTR
-maintainer (Mani) disagreed with dropping the Fixes tag. For stable
-users on big-endian platforms running QRTR, this fixes a real protocol-
-level correctness issue in the flow control mechanism.
+### Step 9.3: Exception Categories
+Not needed - this meets standard stable criteria as a critical bug fix.
 
----
+### Step 9.4: Decision
+This is a clear YES. It fixes a **critical** system hang/reboot caused
+by violating a hardware-documented requirement, with a small, surgical,
+well-reviewed patch that carries minimal regression risk.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by from Manivannan Sadhasivam and
-  Simon Horman, SOB from David S. Miller (merger)
-- [Phase 2] Diff analysis: 2 lines changed — adding `cpu_to_le32()` on
-  TX, `le32_to_cpu()` on RX, matching pattern of all other fields
-- [Phase 2] Verified `qrtr_hdr_v1.confirm_rx` is declared as `__le32`
-  (line 44 of af_qrtr.c)
-- [Phase 3] git blame: TX line introduced by 5fdeb0d372ab (v5.6,
-  2020-01-13), RX line by 194ccc88297ae (v4.15, 2017-10-10)
-- [Phase 3] git merge-base: Confirmed 5fdeb0d372ab is in v5.10, v5.15,
-  v6.1, v6.6 (all active stable trees)
-- [Phase 3] Author check: Alexander Wilhelm has 7 commits all fixing
-  Qualcomm endianness bugs
-- [Phase 4] Mailing list (yhbt.net mirror): Found full v2 thread. Simon
-  Horman said "not strictly necessary," Mani disagreed
-- [Phase 4] Patch went v1->v2->v3; v3 dropped Fixes tag, targeted net-
-  next at reviewer request
-- [Phase 5] Callers verified: `qrtr_node_enqueue` is core TX path,
-  `qrtr_endpoint_post` is core RX entry point (EXPORT_SYMBOL_GPL)
-- [Phase 5] Verified all other `qrtr_hdr_v1` fields use proper endian
-  conversions — only `confirm_rx` was missed
-- [Phase 6] Code is unchanged at buggy lines since introduction — clean
-  apply expected
-- [Phase 8] Risk assessment: zero risk on LE (no-op conversions), fixes
-  correctness on BE
+- [Phase 1] Parsed tags: Reviewed-by: haibo.chen (NXP), Acked-by: Adrian
+  Hunter (SDHCI maintainer), SOB: Ulf Hansson (MMC maintainer)
+- [Phase 2] Diff analysis: ~18 lines added to `esdhc_reset()`, adds
+  `readl_poll_timeout_atomic` for DATA_INHIBIT before reset
+- [Phase 2] Verified `readl_poll_timeout_atomic` is defined in
+  `include/linux/iopoll.h` (line 230)
+- [Phase 2] Verified `ESDHC_PRSSTAT` defined at offset 0x24 in `sdhci-
+  esdhc.h` (line 34), same as `SDHCI_PRESENT_STATE`
+- [Phase 2] Verified `SDHCI_DATA_INHIBIT` is 0x00000002 at `sdhci.h:82`
+- [Phase 3] git blame: `esdhc_reset()` introduced in `0718e59ae259f7`
+  (2014), modified by `fb1dec44c6750b` (2022)
+- [Phase 3] Confirmed `sdhci_and_cqhci_reset` present in v6.1 and v6.6
+  via `git merge-base --is-ancestor`
+- [Phase 3] Confirmed `esdhc_reset()` in v6.1 and v6.6 is identical to
+  current mainline (before this patch)
+- [Phase 3] Author Luke Wang has 14+ commits in MMC subsystem, regular
+  NXP contributor
+- [Phase 3] No prerequisites identified - patch is standalone
+- [Phase 4] b4 dig could not find thread (commit not in tree). Web
+  searches confirmed author's other patches and expertise.
+- [Phase 5] `esdhc_reset` called via `sdhci_do_reset()` from error
+  recovery, tuning abort, init, CQE recovery paths
+- [Phase 5] `readl_poll_timeout` pattern already used twice in this
+  driver (lines 471, 1028)
+- [Phase 6] Confirmed `esdhc_reset()` exists identically in v6.1 and
+  v6.6 stable trees
+- [Phase 6] Confirmed `<linux/iopoll.h>` is included in v6.1 (verified
+  directly)
+- [Phase 6] For v5.15, `esdhc_reset` uses `sdhci_reset()` instead -
+  minor backport adjustment needed
+- [Phase 7] IMX7ULP support (`usdhc_imx7ulp_data`) present in driver,
+  confirmed at line 324
+- [Phase 8] Failure mode: system hang + reboot + DMA address corruption
+  → CRITICAL severity
+- UNVERIFIED: Could not access the original lore thread for this
+  specific patch
 
 **YES**
 
- net/qrtr/af_qrtr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index d77e9c8212da5..7cec6a7859b03 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -361,7 +361,7 @@ static int qrtr_node_enqueue(struct qrtr_node *node, struct sk_buff *skb,
- 	}
+diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+index a7a5df673b0f6..97461e20425d8 100644
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -216,6 +216,8 @@
+ #define ESDHC_FLAG_DUMMY_PAD		BIT(19)
  
- 	hdr->size = cpu_to_le32(len);
--	hdr->confirm_rx = !!confirm_rx;
-+	hdr->confirm_rx = cpu_to_le32(!!confirm_rx);
+ #define ESDHC_AUTO_TUNING_WINDOW	3
++/* 100ms timeout for data inhibit */
++#define ESDHC_DATA_INHIBIT_WAIT_US	100000
  
- 	rc = skb_put_padto(skb, ALIGN(len, 4) + sizeof(*hdr));
+ enum wp_types {
+ 	ESDHC_WP_NONE,		/* no WP, neither controller nor gpio */
+@@ -1453,6 +1455,22 @@ static void esdhc_set_uhs_signaling(struct sdhci_host *host, unsigned timing)
  
-@@ -462,7 +462,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 		cb->type = le32_to_cpu(v1->type);
- 		cb->src_node = le32_to_cpu(v1->src_node_id);
- 		cb->src_port = le32_to_cpu(v1->src_port_id);
--		cb->confirm_rx = !!v1->confirm_rx;
-+		cb->confirm_rx = !!le32_to_cpu(v1->confirm_rx);
- 		cb->dst_node = le32_to_cpu(v1->dst_node_id);
- 		cb->dst_port = le32_to_cpu(v1->dst_port_id);
+ static void esdhc_reset(struct sdhci_host *host, u8 mask)
+ {
++	u32 present_state;
++	int ret;
++
++	/*
++	 * For data or full reset, ensure any active data transfer completes
++	 * before resetting to avoid system hang.
++	 */
++	if (mask & (SDHCI_RESET_DATA | SDHCI_RESET_ALL)) {
++		ret = readl_poll_timeout_atomic(host->ioaddr + ESDHC_PRSSTAT, present_state,
++						!(present_state & SDHCI_DATA_INHIBIT), 2,
++						ESDHC_DATA_INHIBIT_WAIT_US);
++		if (ret == -ETIMEDOUT)
++			dev_warn(mmc_dev(host->mmc),
++				 "timeout waiting for data transfer completion\n");
++	}
++
+ 	sdhci_and_cqhci_reset(host, mask);
  
+ 	sdhci_writel(host, host->ier, SDHCI_INT_ENABLE);
 -- 
 2.53.0
 
