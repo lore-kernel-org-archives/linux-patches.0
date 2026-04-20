@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128E1331A78;
-	Mon, 20 Apr 2026 15:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938333264F1;
+	Mon, 20 Apr 2026 15:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700530; cv=none; b=Q76jjw+hukW2m+jq1vGn66tsU/fGvAZmHRsDtk2IIDVKKAxany5w2c9TAHThYam1cTPou6zoxxbCzL1T77mc2RxYIu1YryKqjstLofJyHkQy6xx+YvN7n+rWifk7wWGbw7Y/TXVq5ERI1MusDPSBRMSh+dLzWQT0uonD31xArRA=
+	t=1776700532; cv=none; b=NZVtFxQ8o2dGzJYwoo8A0OC/qYY2fiX9BECirefF0IiV1Z3D+NDSIoIaXNH7ujWZ+1Tk49PlSUx6MwIhfd14QBxbemteawvxwu/fKynDADY2QiPDsdPQ3eMEorxrDcsu2miTNhFoALPbAPJX/FUAMHPZKkjosHFXTn/s6PZ0CmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700530; c=relaxed/simple;
-	bh=eWQ4UXLi4u01tyZs9q5sbraW0xzA/UaAMLhj3hpWhjA=;
+	s=arc-20240116; t=1776700532; c=relaxed/simple;
+	bh=dOX7H5Di7ECwRG591rJ0KMnynrN62GioZmaRXXBL7s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/0fB8KwnCkmmSK64eoJNKvuA4Qon3xwEn/iD480b76LTtKWhzdPHR2rhTp5enKbHbtbQxNWsQ2ZsYStE+NTQB5ZDN+oeI6p9MQaPwHKq21womVvuzAllRSmltuOHEEuYajXYSKJz3SGVlzZZSIuuX1fLlKG8sAACdZtqxVKdOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDnlQZ+r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liXqPH9c7YfcnuafWvP51i9yk3o50iuRF50opQW0v2gXt/mwiYMr7pPIjEukGl/+1IP6Dc5L1mvFCWiGvKpUy5hhAozBig6kWfNTKbl0NQMyTeLgK//XTn0PpKU+ALtDkWkWEo4BRp/SqFQ3KnDJJfB3+0DTArh3jWDWTsHftv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHwdK3CZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDnlQZ+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7BBC19425;
-	Mon, 20 Apr 2026 15:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHwdK3CZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A280C19425;
+	Mon, 20 Apr 2026 15:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700530;
-	bh=eWQ4UXLi4u01tyZs9q5sbraW0xzA/UaAMLhj3hpWhjA=;
+	s=korg; t=1776700532;
+	bh=dOX7H5Di7ECwRG591rJ0KMnynrN62GioZmaRXXBL7s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDnlQZ+rsL0hXjSIYvqxR8PXqwpCfKCYGepFoWoysVmqW5fUDSfIE79JWDHbRb3he
-	 4S2MgjJQ7AEWfFFfNzy1cNHvrcff0lH4tmk+92rNSBPARz8Kp1iuhX7U01Jo2Uvxoq
-	 V3/+yDrPyZAUemqz7GIhEVXcmnoegFhBpMqkOseQ=
+	b=MHwdK3CZ9CH+LkLalO8ewjdp4xWeLOuT+Kte2r2oRFL//Bpmaj9eA8vKIu55cJfFR
+	 A+xJmUTKkit28FstOvI9joIISK80U8GrM58A8c3IQsuckXaDTKCiAHVcCz+G/W6guM
+	 CaXHj279feRISjAJbumGm0auSD1xwrkwegxTc1wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.19 207/220] media: vidtv: fix nfeeds state corruption on start_streaming failure
-Date: Mon, 20 Apr 2026 17:42:28 +0200
-Message-ID: <20260420153941.481858944@linuxfoundation.org>
+Subject: [PATCH 6.19 208/220] media: mediatek: vcodec: fix use-after-free in encoder release path
+Date: Mon, 20 Apr 2026 17:42:29 +0200
+Message-ID: <20260420153941.517573922@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,62 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit a0e5a598fe9a4612b852406b51153b881592aede upstream.
+commit 76e35091ffc722ba39b303e48bc5d08abb59dd56 upstream.
 
-syzbot reported a memory leak in vidtv_psi_service_desc_init [1].
+The fops_vcodec_release() function frees the context structure (ctx)
+without first cancelling any pending or running work in ctx->encode_work.
+This creates a race window where the workqueue handler (mtk_venc_worker)
+may still be accessing the context memory after it has been freed.
 
-When vidtv_start_streaming() fails inside vidtv_start_feed(), the
-nfeeds counter is left incremented even though no feed was actually
-started. This corrupts the driver state: subsequent start_feed calls
-see nfeeds > 1 and skip starting the mux, while stop_feed calls
-eventually try to stop a non-existent stream.
+Race condition:
 
-This state corruption can also lead to memory leaks, since the mux
-and channel resources may be partially allocated during a failed
-start_streaming but never cleaned up, as the stop path finds
-dvb->streaming == false and returns early.
+    CPU 0 (release path)               CPU 1 (workqueue)
+    ---------------------               ------------------
+    fops_vcodec_release()
+      v4l2_m2m_ctx_release()
+        v4l2_m2m_cancel_job()
+        // waits for m2m job "done"
+                                        mtk_venc_worker()
+                                          v4l2_m2m_job_finish()
+                                          // m2m job "done"
+                                          // BUT worker still running!
+                                          // post-job_finish access:
+                                        other ctx dereferences
+                                          // UAF if ctx already freed
+        // returns (job "done")
+      kfree(ctx)  // ctx freed
 
-Fix by decrementing nfeeds back when start_streaming fails, keeping
-the counter in sync with the actual number of active feeds.
+Root cause: The v4l2_m2m_ctx_release() only waits for the m2m job
+lifecycle (via TRANS_RUNNING flag), not the workqueue lifecycle.
+After v4l2_m2m_job_finish() is called, the m2m framework considers
+the job complete and v4l2_m2m_ctx_release() returns, but the worker
+function continues executing and may still access ctx.
 
-[1]
-BUG: memory leak
-unreferenced object 0xffff888145b50820 (size 32):
- comm "syz.0.17", pid 6068, jiffies 4294944486
- backtrace (crc 90a0c7d4):
-  vidtv_psi_service_desc_init+0x74/0x1b0 drivers/media/test-drivers/vidtv/vidtv_psi.c:288
-  vidtv_channel_s302m_init+0xb1/0x2a0 drivers/media/test-drivers/vidtv/vidtv_channel.c:83
-  vidtv_channels_init+0x1b/0x40 drivers/media/test-drivers/vidtv/vidtv_channel.c:524
-  vidtv_mux_init+0x516/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:518
-  vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
-  vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+The work is queued during encode operations via:
+  queue_work(ctx->dev->encode_workqueue, &ctx->encode_work)
+The worker function accesses ctx->m2m_ctx, ctx->dev, and other ctx
+fields even after calling v4l2_m2m_job_finish().
 
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
+This vulnerability was confirmed with KASAN by running an instrumented
+test module that widens the post-job_finish race window. KASAN detected:
+
+  BUG: KASAN: slab-use-after-free in mtk_venc_worker+0x159/0x180
+  Read of size 4 at addr ffff88800326e000 by task kworker/u8:0/12
+
+  Workqueue: mtk_vcodec_enc_wq mtk_venc_worker
+
+  Allocated by task 47:
+    __kasan_kmalloc+0x7f/0x90
+    fops_vcodec_open+0x85/0x1a0
+
+  Freed by task 47:
+    __kasan_slab_free+0x43/0x70
+    kfree+0xee/0x3a0
+    fops_vcodec_release+0xb7/0x190
+
+Fix this by calling cancel_work_sync(&ctx->encode_work) before kfree(ctx).
+This ensures the workqueue handler is both cancelled (if pending) and
+synchronized (waits for any running handler to complete) before the
+context is freed.
+
+Placement rationale: The fix is placed after v4l2_ctrl_handler_free()
+and before list_del_init(&ctx->list). At this point, all m2m operations
+are done (v4l2_m2m_ctx_release() has returned), and we need to ensure
+the workqueue is synchronized before removing ctx from the list and
+freeing it.
+
+Note: The open error path does NOT need cancel_work_sync() because
+INIT_WORK() only initializes the work structure - it does not schedule
+it. Work is only scheduled later during device_run() operations.
+
+Fixes: 0934d3759615 ("media: mediatek: vcodec: separate decoder and encoder")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=639ebc6ec75e96674741
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_bridge.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -237,8 +237,10 @@ static int vidtv_start_feed(struct dvb_d
+--- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
+@@ -215,6 +215,15 @@ static int fops_vcodec_release(struct fi
+ 	v4l2_fh_exit(&ctx->fh);
+ 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
  
- 	if (dvb->nfeeds == 1) {
- 		ret = vidtv_start_streaming(dvb);
--		if (ret < 0)
-+		if (ret < 0) {
-+			dvb->nfeeds--;
- 			rc = ret;
-+		}
- 	}
- 
- 	mutex_unlock(&dvb->feed_lock);
++	/*
++	 * Cancel any pending encode work before freeing the context.
++	 * Although v4l2_m2m_ctx_release() waits for m2m job completion,
++	 * the workqueue handler (mtk_venc_worker) may still be accessing
++	 * the context after v4l2_m2m_job_finish() returns. Without this,
++	 * a use-after-free occurs when the worker accesses ctx after kfree.
++	 */
++	cancel_work_sync(&ctx->encode_work);
++
+ 	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_del_init(&ctx->list);
+ 	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
 
 
