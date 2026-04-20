@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F585332919;
-	Mon, 20 Apr 2026 15:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7E83385B2;
+	Mon, 20 Apr 2026 15:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700155; cv=none; b=GEYso22tdLXR20Yjn/TRR4qaWJtyDF0TZh4JWWOaVvycJgrTg75NWxetyOt2a+qhNsKuE/1fnljQVB0aF92v0A7XUnwGp9wCvRYYA0zxOqaznwET4W9Sg0ieXhvd04bAN0KhzEH7r+6AR1Ccu9DaeD6DROjRfHIPAKntQSfI+KM=
+	t=1776700157; cv=none; b=mmi2ihoFiogPnLxyPJgNaKNlu2rziR/OT0HWUu2MdovuWEJ5iL8a/Qb/Q6qfyCrAY+wVAomMYgqsdTd+iG/TyrJV/wtbtL3sqRUpzzsvg+4eiUcYdPLypEO7i9cI7AI7QPKUOTcvYkXt2XHjYqZwA18AyBuoTyoYhsVsU2ZQWog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700155; c=relaxed/simple;
-	bh=kD46m8Yua7ucd6KzIYJSYRvwHIqm8BetGF+yO5ylFdk=;
+	s=arc-20240116; t=1776700157; c=relaxed/simple;
+	bh=YWhfHmZBeJSAVSHPLHeDtOR5ufelwEQ99arUOMy2ZLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzN5qEjFhhPTkfAIehqEpxDztQT2fq1WxT6O8O3XI1cvJTVby9hoxJ3MdP8HkJq7IIITc+QCyP0HMzf/Rvvi1AiBXm/+od9zNLoMxEhSwQIO2P6xUabeof+3ZLDO3p4507mcdHw2P8crXlpJ7n+yO7oaTo0giQxfuZYBeNneJRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzAWjqr1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KRfF0XepYO6BQh+l1T2uaOS/1ybx+8uVreicOdwa1Zvfpr4eLZonudaZxIagb+276l7GHieg5oizUNsCfOS6RmPPX5pJ9Vbr8C91+D33ZypK0d9A4TyJdUz6vxhfUhmaH+bGQr83EGXD9Qqo/ritC3P/6/S0k552MjkU3bRsg+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtTzLQp0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzAWjqr1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4982C19425;
-	Mon, 20 Apr 2026 15:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtTzLQp0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35433C19425;
+	Mon, 20 Apr 2026 15:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700155;
-	bh=kD46m8Yua7ucd6KzIYJSYRvwHIqm8BetGF+yO5ylFdk=;
+	s=korg; t=1776700157;
+	bh=YWhfHmZBeJSAVSHPLHeDtOR5ufelwEQ99arUOMy2ZLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yzAWjqr1OPZsnNISLCIOMLXHpnaCGNSINFc0hnaeZu0CBdDBvCKvxTALYI/kbLHsu
-	 n/cPoR5BPP8/yR4kiOInSOFdZoF1nEjEf786hj/wIKnuAfK9CWNXNUcnPHdE+OioYy
-	 PstiX9YXh5bIQ6s+uoG4o2jLQIBNsgVgGDelYBaw=
+	b=PtTzLQp0VtfHNv+OjLm8nI3eAvfqj9Lvfh2reYQTR2k8S2Bm2w9Rx0RK1A1YBCZu5
+	 cJqkV4F48IurBUFc/1+b94WBy3IVGFSvSU04XA+HaJFxkmG4M41TvtYW/4xEryDxlS
+	 KRG0bdRiRAOAQe7CZv81Arp6wruRO5CZ1CXRPoxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 036/220] pinctrl: intel: Fix the revision for new features (1kOhm PD, HW debouncer)
-Date: Mon, 20 Apr 2026 17:39:37 +0200
-Message-ID: <20260420153935.335433827@linuxfoundation.org>
+Subject: [PATCH 6.19 063/220] soc: microchip: mpfs-mss-top-sysreg: Fix resource leak on driver unbind
+Date: Mon, 20 Apr 2026 17:40:04 +0200
+Message-ID: <20260420153936.309995526@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -50,32 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit a4337a24d13e9e3b98a113e71d6b80dc5ed5f8c4 ]
+[ Upstream commit 3bfc213d4675736567a4e263c51c25144d565949 ]
 
-The 1kOhm pull down and hardware debouncer are features of the revision 0.92
-of the Chassis specification. Fix that in the code accordingly.
+Use devm_mfd_add_devices() instead of mfd_add_devices() to ensure
+child devices are properly removed when the driver unbinds.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 4aac11c9a6e7 ("soc: microchip: add mfd drivers for two syscon regions on PolarFire SoC")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/microchip/mpfs-mss-top-sysreg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
-index cf9db8ac0f42e..106835b5ee5a5 100644
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -1610,7 +1610,7 @@ int intel_pinctrl_probe(struct platform_device *pdev,
- 		value = readl(regs + REVID);
- 		if (value == ~0u)
- 			return -ENODEV;
--		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x94) {
-+		if (((value & REVID_MASK) >> REVID_SHIFT) >= 0x92) {
- 			community->features |= PINCTRL_FEATURE_DEBOUNCE;
- 			community->features |= PINCTRL_FEATURE_1K_PD;
- 		}
+diff --git a/drivers/soc/microchip/mpfs-mss-top-sysreg.c b/drivers/soc/microchip/mpfs-mss-top-sysreg.c
+index b2244e44ff0fa..b0f42b8dd3ed6 100644
+--- a/drivers/soc/microchip/mpfs-mss-top-sysreg.c
++++ b/drivers/soc/microchip/mpfs-mss-top-sysreg.c
+@@ -16,8 +16,10 @@ static int mpfs_mss_top_sysreg_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+ 
+-	ret = mfd_add_devices(dev, PLATFORM_DEVID_NONE, mpfs_mss_top_sysreg_devs,
+-			      ARRAY_SIZE(mpfs_mss_top_sysreg_devs) , NULL, 0, NULL);
++	ret = devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE,
++				   mpfs_mss_top_sysreg_devs,
++				   ARRAY_SIZE(mpfs_mss_top_sysreg_devs), NULL,
++				   0, NULL);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.53.0
 
