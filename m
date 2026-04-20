@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6ED23FD14C;
-	Mon, 20 Apr 2026 13:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB0D3C13E9;
+	Mon, 20 Apr 2026 13:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691591; cv=none; b=Q5DCSCDDC9ZDsBA5VVI1NZ0gvL80AFt26k228AWs9gRMw4YX4yRHaO7mhlJZjnXVD4lQLFv/qBXp2REGJcDeqmjbT9ESQZyC9bL6uVw0jJuymVimhsfyZheJjK4NI1tW62HkiehUkGLohs/V1tt0XiKvHboBhFWz/9bHInXRsNQ=
+	t=1776691592; cv=none; b=Y2qd6MI/eWkoAyYAZofXTrjAo/RSLgN4c9aqCB7siNsjrPcygz8pCPBMc1oNokL5uBCJ9d7QU7kB0/iWhU1kCUfXsHV6xNGpvRlE2hataM1/HdD2bdmWCa7MlVv0KsFJonE2sOI93eadNvLrvKUSRKZG7CLJ9yCxmiEAc3goPUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691591; c=relaxed/simple;
-	bh=m5QEVKm030ElDj9lg8EY1wI7itCIqVkRRRQ2p0XlGck=;
+	s=arc-20240116; t=1776691592; c=relaxed/simple;
+	bh=8W9KPgsSAYJmRhFtq/1x0/cV+rNs9gHlmHkDL8Wy/x0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cyjScZkttsU9PN1ZUHXwT4854lemrBuySxhFRQ3iicL0s9ZrCMLMwYUPfYchhh4Uk+yILTImFZ5hTvri8lpPWpKcCu0al49qXm590BTk3Noo1nBYuu7u3x96xdjPVcAW/ru12qgrtdE7CMqL32s3/1cKw1cL342Z3FM85bYZS5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gKvyc+gj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVe5KxBDiVAFsQ7LJ1U83seslDtmEMe6tasg1/ffpee4w54RE9s8M8fv/BR2aB4jg7ZSyXISAgqzWTHkhsgN2zHljv8N2BFccMj2YGeOVkpQcCJUux32NLG9V37im93aQ3hJcuUK7V7okLK9gzqxNyUqbcF6TrEO1v43W3uLHVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jng+qS7c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gKvyc+gj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6514EC2BCB6;
-	Mon, 20 Apr 2026 13:26:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jng+qS7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B64BC2BCB4;
+	Mon, 20 Apr 2026 13:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691590;
-	bh=m5QEVKm030ElDj9lg8EY1wI7itCIqVkRRRQ2p0XlGck=;
+	s=k20201202; t=1776691592;
+	bh=8W9KPgsSAYJmRhFtq/1x0/cV+rNs9gHlmHkDL8Wy/x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gKvyc+gjjt6Ak7MFltDV+dlIIbVjnyP5QThlin9bGR0N0Pf85x8ITp3G/J11gYZBX
-	 KlZLETl8F7mDwi0vhNLi/G5Mk2s5VAcIFbr64mBUB/PtT7O3VPcPEoB/pwYyldnVLD
-	 Iv+rCKd4H4jHpEi2i9LBSs1vzjQ3hU1ES8kxUYW8Z5Uf5hK3Hl+UAAf57nzITzuWXQ
-	 emAXb6r/p8ZCXCcGtkWx5HluLD74KsaArgQ+6qLu7nKKN9LhsHaUbK4cO4W6huvvPB
-	 JpFXF+cwSIUDjWuSobrIrmx0YJgycvJsDLVcX4P/N9+dtiHR+K1X+5f8qj8yQF0HIL
-	 teD78Ct+K/5fw==
+	b=Jng+qS7c5Bvf3iHdlas6DToCfPgQbMgqM2yUpgDVsiAcftzeaaYQQnFMRsjCw6ZLr
+	 M/POHwxPyJfIGoaixAzx4AcKvMd9m1wMD1PUvWGMX8t49A/eJklp0YpRcoyQubS559
+	 41wCWxKdNDTfSm/jL3snLZ4q0muVzCb7S4AUyriA5xRctetUsxHWVoI4fduSeS1Iyx
+	 NDjSlY2Zo6UrfaqrUdokLdf5B9CVt7AKDbR/2XEhsij+9LFvtiyqk83vpJR2UY0aAc
+	 bLPa7EAH5jFSMZ7HqW5Dl2SnWpTZhSzt16LRFG7I5JiRehIbjYGL6flrU4ne7mvUco
+	 SLVjsvwfhiuMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Sean Wang <sean.wang@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	Frank.Li@nxp.com,
-	linux-sound@vger.kernel.org,
-	imx@lists.linux.dev,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] ASoC: mxs-sgtl5000: disable MCLK on error paths of mxs_sgtl5000_probe()
-Date: Mon, 20 Apr 2026 09:18:33 -0400
-Message-ID: <20260420132314.1023554-119-sashal@kernel.org>
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 7.0-6.12] Bluetooth: btmtk: add MT7902 MCU support
+Date: Mon, 20 Apr 2026 09:18:34 -0400
+Message-ID: <20260420132314.1023554-120-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -55,283 +55,371 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit c8ef13d692f19cdbbf195fb845421a5b71801704 ]
+[ Upstream commit aab25984e55972e53f3e58821cb85a7101876056 ]
 
-Call mxs_saif_put_mclk() to disable MCLK on error
-paths of mxs_sgtl5000_probe().
+Add MT7902 device ID and firmware filename to enable MCU firmware
+loading.
 
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20260401053051.586290-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me compile the full analysis.
+Now I have enough information for a thorough analysis. Let me compile my
+findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `ASoC: mxs-sgtl5000`
-- Action verb: "disable" (implies fixing a missing cleanup)
-- Summary: Disable MCLK on error paths of `mxs_sgtl5000_probe()`
-- Record: [ASoC/mxs-sgtl5000] [disable/fix] [Add missing
-  mxs_saif_put_mclk() on probe error paths]
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: [Bluetooth: btmtk] [add] [MT7902 MCU support - adds device ID
+and firmware filename for MT7902 chip]
 
-**Step 1.2: Tags**
-- Signed-off-by: Haoxiang Li (author) - a contributor focused on error-
-  path resource leak fixes
-- Link: `https://patch.msgid.link/20260401053051.586290-1-
-  lihaoxiang@isrc.iscas.ac.cn`
-- Signed-off-by: Mark Brown (ASoC maintainer applied the patch)
-- No Fixes: tag, no Reported-by, no Cc: stable (expected for review
-  candidates)
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- Signed-off-by: Sean Wang <sean.wang@mediatek.com> - Author, MediaTek
+  employee, regular Bluetooth/WiFi contributor
+- Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com> -
+  Bluetooth subsystem maintainer, applied the patch
+- No Fixes: tag (expected for this type of commit)
+- No Reported-by: (this is hardware enablement, not a bug report)
+- No Cc: stable (expected)
 
-**Step 1.3: Commit Body**
-The message is concise: call `mxs_saif_put_mclk()` to disable MCLK on
-error paths. The bug is a resource leak - `mxs_saif_get_mclk()` enables
-a hardware clock, and if probe fails after that point, the clock remains
-enabled.
+Record: Author is MediaTek developer. Applied by Bluetooth subsystem
+maintainer.
 
-**Step 1.4: Hidden Bug Fix Detection**
-This IS a resource leak fix. The wording "disable MCLK on error paths"
-is a classic resource-leak-on-error-path fix pattern.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+The commit message is straightforward: "Add MT7902 device ID and
+firmware filename to enable MCU firmware loading." This is new hardware
+enablement for the MT7902 Bluetooth chip.
+
+Record: No bug description - this is a device ID addition for hardware
+enablement.
+
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Without this patch, MT7902 devices that are matched by the vendor
+wildcard USB entry `USB_VENDOR_AND_INTERFACE_INFO(0x0e8d, 0xe0, 0x01,
+0x01)` will hit the `default:` case in `btmtk_usb_setup()` and return
+-ENODEV with "Unsupported hardware variant". This effectively makes the
+hardware non-functional.
+
+Record: This is a hardware enablement commit, not a hidden bug fix. But
+it prevents -ENODEV for real hardware.
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- 1 file changed: `sound/soc/mxs/mxs-sgtl5000.c`
-- 2 lines added: two `mxs_saif_put_mclk(0)` calls + braces adjustment
-- Functions modified: `mxs_sgtl5000_probe()`
-- Scope: single-file surgical fix
+**Step 2.1: INVENTORY THE CHANGES**
+- `drivers/bluetooth/btmtk.h`: +1 line (FIRMWARE_MT7902 define)
+- `drivers/bluetooth/btmtk.c`: +1 line (case 0x7902: in switch)
+- Total: 2 lines added, 0 removed
+- Functions modified: `btmtk_usb_setup()` (new case label in switch)
+- Scope: single-file surgical addition
 
-**Step 2.2: Code Flow Change**
-Two error paths are fixed:
+Record: 2 files, 2 lines added, scope is minimal.
 
-1. **`snd_soc_of_parse_audio_routing()` failure** (line 160): BEFORE:
-   returned directly without disabling MCLK. AFTER: calls
-   `mxs_saif_put_mclk(0)` before returning.
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+- Before: `btmtk_usb_setup()` switch on dev_id has cases for 0x7663,
+  0x7668, 0x7922, 0x7925, 0x7961. Device ID 0x7902 falls to `default:`
+  -> returns -ENODEV.
+- After: 0x7902 falls through to the same path as 0x7922/0x7925/0x7961,
+  which calls `btmtk_fw_get_filename()` to generate firmware name and
+  `btmtk_setup_firmware_79xx()` to load it.
 
-2. **`devm_snd_soc_register_card()` failure** (line 165): BEFORE:
-   returned directly without disabling MCLK. AFTER: calls
-   `mxs_saif_put_mclk(0)` before returning.
+Record: Adds a case label to fall through to existing firmware loading
+code. No new execution paths.
 
-**Step 2.3: Bug Mechanism**
-Category: **Error path / resource leak fix**.
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Category: Hardware workaround / Device ID addition.
+The change adds chip ID 0x7902 to a switch statement and a firmware
+filename define. The firmware name generation function
+`btmtk_fw_get_filename()` already handles 0x7902 correctly via its
+`else` branch, producing `"mediatek/BT_RAM_CODE_MT7902_1_%x_hdr.bin"`.
 
-`mxs_saif_get_mclk()` at line 144:
-- Calls `__mxs_saif_get_mclk()` which sets `saif->mclk_in_use = 1`
-- Calls `clk_prepare_enable(saif->clk)` to enable the hardware clock
-- Writes to SAIF_CTRL to enable MCLK output
+Record: Device ID addition pattern. Existing code infrastructure handles
+0x7902 without changes.
 
-When probe fails after this, `mxs_saif_put_mclk()` (which disables the
-clock, clears MCLK output, and sets `mclk_in_use = 0`) is never called.
-The `remove()` callback only runs if `probe()` succeeded.
+**Step 2.4: ASSESS THE FIX QUALITY**
+- Obviously correct: new case label falls through to identical handling
+  as 0x7922/0x7925/0x7961
+- Minimal and surgical: 2 lines
+- Regression risk: essentially zero - this code path was unreachable
+  before (would hit default case)
+- No red flags
 
-**Step 2.4: Fix Quality**
-- Obviously correct: mirrors the cleanup done in `mxs_sgtl5000_remove()`
-- Minimal/surgical: only 2 meaningful lines added
-- Regression risk: essentially zero - only affects error paths
-- The fix follows the exact same pattern as the existing `remove()`
-  function
+Record: Trivially correct, zero regression risk.
+
+---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame Analysis**
-- The `mxs_saif_get_mclk()` call was introduced in the original driver
-  commit `fcb5e47eff29a1` (2011, v3.2). So the register_card error-path
-  leak has existed since 2011.
-- The audio-routing error path was introduced by `949293d45d6b09` (2018,
-  v4.16) which added `snd_soc_of_parse_audio_routing()` without cleanup
-  on failure.
-- Both error paths predate all active stable trees.
+**Step 3.1: BLAME THE CHANGED LINES**
+- `case 0x7922:` introduced by Chris Lu in 5c5e8c52e3cafa (2024-07-04) -
+  the btmtk refactoring commit
+- `case 0x7961:` introduced by Hao Qin in a7208610761ae9 (2025-01-10) -
+  same pattern of adding device ID
+- The switch statement and firmware loading infrastructure have been in
+  the tree since mid-2024
 
-**Step 3.2: No Fixes: tag** (expected for review candidates)
+Record: Code infrastructure stable since mid-2024. Existing device IDs
+added via same pattern.
 
-**Step 3.3: Related Changes**
-- `6ae0a4d8fec55` (2022): Fixed a different resource leak (of_node_put)
-  in the same probe function - shows this function has a history of
-  incomplete error handling.
-- `7a17f6a95a613` (2021): Switched to `dev_err_probe()` for
-  register_card failure.
+**Step 3.2: FOLLOW THE FIXES TAG**
+No Fixes: tag present (expected for device ID additions).
 
-**Step 3.4: Author Context**
-Haoxiang Li is a prolific error-path/resource-leak fix contributor.
-Their commit history shows many similar fixes across kernel subsystems
-(PCI, SCSI, media, DRM, clock, bus drivers).
+**Step 3.3: CHECK FILE HISTORY**
+Recent changes to btmtk.c are mostly refactoring (btusb -> btmtk moves)
+and bug fixes (UAF, shutdown timeout). The device ID infrastructure is
+stable.
 
-**Step 3.5: Dependencies**
-No dependencies. The fix only adds `mxs_saif_put_mclk(0)` calls, which
-has existed since the driver was created. Should apply cleanly to all
-stable trees.
+Record: Standalone commit, no prerequisites needed.
 
-## PHASE 4: MAILING LIST RESEARCH
+**Step 3.4: CHECK AUTHOR**
+Sean Wang is a MediaTek developer, regular contributor to both Bluetooth
+and WiFi subsystems. Multiple recent commits in drivers/bluetooth/.
 
-Lore was not accessible due to bot protection. However:
-- The patch was accepted by Mark Brown (ASoC subsystem maintainer)
-  directly
-- The Link tag points to the original submission
-- Single-version submission (no v2/v3), suggesting it was
-  straightforward
+Record: Author is domain expert from the hardware vendor.
+
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+This is patch 2/4 in a series, but it is standalone for USB devices. The
+other patches add SDIO device ID (1/4), USB VID/PID for third-party
+module (3/4), and SDIO support code (4/4). This patch is sufficient for
+USB devices matched by the vendor wildcard
+`USB_VENDOR_AND_INTERFACE_INFO(0x0e8d, ...)`.
+
+Record: Standalone for USB devices via vendor wildcard matching.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Found via spinics.net. This is [PATCH 2/4] in Sean Wang's MT7902 series
+posted 2026-02-19. The series includes:
+1. mmc: sdio: add MediaTek MT7902 SDIO device ID
+2. Bluetooth: btmtk: add MT7902 MCU support (THIS commit)
+3. Bluetooth: btusb: Add new VID/PID 13d3/3579 for MT7902
+4. Bluetooth: btmtk: add MT7902 SDIO support
+
+Record: Part of 4-patch series. This specific patch is standalone for
+USB via vendor wildcard.
+
+**Step 4.2: CHECK WHO REVIEWED**
+Applied by Luiz Augusto von Dentz, the Bluetooth subsystem maintainer.
+Sent to linux-bluetooth and linux-mediatek mailing lists.
+
+Record: Applied by subsystem maintainer.
+
+**Step 4.3: SEARCH FOR BUG REPORT**
+No specific bug report - this is proactive hardware enablement by the
+chip vendor.
+
+**Step 4.4: RELATED PATCHES**
+A separate patch from OnlineLearningTutorials also attempted to add
+MT7902 USB IDs (with the same case 0x7902 addition). This confirms real
+user demand for MT7902 support.
+
+Record: Multiple independent submissions for MT7902 support indicate
+real hardware availability.
+
+**Step 4.5: STABLE MAILING LIST**
+No specific stable discussion found.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions Modified**
-Only `mxs_sgtl5000_probe()` is modified.
+**Step 5.1: KEY FUNCTIONS**
+Modified: `btmtk_usb_setup()` - only a new case label added.
 
-**Step 5.2: Resource Chain**
-- `mxs_saif_get_mclk()` → `__mxs_saif_get_mclk()` → sets
-  `mclk_in_use=1`, clears CLKGATE, configures clock rate →
-  `clk_prepare_enable()` → writes SAIF_CTRL to enable MCLK RUN
-- `mxs_saif_put_mclk()` → `clk_disable_unprepare()` → sets CLKGATE →
-  clears RUN → `mclk_in_use=0`
+**Step 5.2: TRACE CALLERS**
+`btmtk_usb_setup()` <- `btusb_mtk_setup()` <- assigned to `hdev->setup`
+for all BTUSB_MEDIATEK devices. Called during device initialization for
+every MediaTek Bluetooth USB device.
 
-Without the fix, on error: clock stays enabled, hardware MCLK output
-stays active, `mclk_in_use` remains 1 (preventing future attempts to get
-MCLK).
+**Step 5.3-5.4: CALL CHAIN**
+USB device probes -> btusb_probe() -> sets hdev->setup = btusb_mtk_setup
+-> HCI core calls hdev->setup() -> btusb_mtk_setup() ->
+btmtk_usb_setup() -> switch(dev_id). This is a standard device
+initialization path, triggered on every device connection.
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 5.5: SIMILAR PATTERNS**
+The same pattern is used for MT7922, MT7925, MT7961 - all case labels in
+the same switch with identical fall-through behavior.
 
-**Step 6.1: Code Presence**
-The buggy code exists in ALL active stable trees:
-- The register_card error leak exists since v3.2 (2011)
-- The audio-routing error leak exists since v4.16 (2018)
-- All stable trees (5.4.y, 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y) contain
-  both bugs
+---
 
-**Step 6.2: Backport Difficulty**
-The patch should apply cleanly or with trivial fuzz. Stable trees older
-than 6.1 use `of_find_property()` instead of `of_property_present()`,
-but the error path code is unchanged. The `devm_snd_soc_register_card`
-error path in trees before 5.15 uses slightly different error printing
-(not `dev_err_probe`), but the fix location is the same.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-## PHASE 7: SUBSYSTEM CONTEXT
+**Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE?**
+The switch statement and all 79xx case labels exist in the 7.0 tree. The
+firmware loading infrastructure is present. Only the 0x7902 case is
+missing.
 
-- Subsystem: ASoC (sound/soc) - audio driver infrastructure
-- Criticality: PERIPHERAL (MXS/i.MX28 embedded audio, specific platform)
-- The MXS SAIF + SGTL5000 combination is used on Freescale/NXP i.MX28
-  boards
+Record: Infrastructure exists in stable. Only the device ID is missing.
+
+**Step 6.2: BACKPORT COMPLICATIONS**
+The diff context shows a retry mechanism (`BTMTK_FIRMWARE_DL_RETRY`)
+that doesn't exist in the 7.0 tree. The patch will need minor context
+adjustment for the btmtk.c hunk. The btmtk.h hunk applies cleanly.
+
+Record: Minor context conflict expected; trivial manual resolution
+needed.
+
+**Step 6.3: RELATED FIXES IN STABLE**
+No MT7902 support exists in stable at all.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+**Step 7.1: SUBSYSTEM CRITICALITY**
+Bluetooth (drivers/bluetooth/) - IMPORTANT subsystem. Bluetooth is
+widely used in laptops, phones, and IoT devices.
+
+**Step 7.2: SUBSYSTEM ACTIVITY**
+Actively developed with regular commits. Device ID additions are a
+common pattern.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-Platform-specific: users of i.MX28 boards with SGTL5000 audio codec
-(embedded systems).
+**Step 8.1: WHO IS AFFECTED**
+Users with MT7902 Bluetooth hardware. The MT7902 is a MediaTek wireless
+chip used in laptops and embedded devices. It appears to be a
+recent/current-generation chip.
 
-**Step 8.2: Trigger**
-Probe failure on the audio device. This can be triggered by:
-- Invalid/malformed audio-routing DT property
-- `devm_snd_soc_register_card()` failure (e.g., codec not ready, probe
-  deferral errors)
+**Step 8.2: TRIGGER CONDITIONS**
+Triggered when a user has MT7902 hardware and the device is enumerated
+via USB. The vendor wildcard USB entry matches MediaTek devices, so the
+driver binds but fails at firmware loading without this patch.
 
-**Step 8.3: Failure Mode**
-- Clock resource leak (hardware clock left enabled, consuming power)
-- `mclk_in_use` flag remains set, potentially blocking future MCLK
-  acquisition
-- Severity: MEDIUM (resource leak, not crash)
+**Step 8.3: FAILURE MODE**
+Without this patch: `bt_dev_err(hdev, "Unsupported hardware variant
+(%08x)")` and return -ENODEV. Bluetooth is completely non-functional for
+these devices.
 
-**Step 8.4: Risk-Benefit**
-- BENEFIT: Fixes resource leak on error paths. Clean cleanup of hardware
-  state.
-- RISK: Very low. Only 2 lines, only error paths, mirrors existing
-  remove() logic.
-- Ratio: Favorable. Very low risk fix for a real resource leak.
+Record: Severity: MEDIUM-HIGH (complete loss of Bluetooth functionality
+for affected hardware).
+
+**Step 8.4: RISK-BENEFIT RATIO**
+- BENEFIT: Enables Bluetooth for MT7902 hardware users on stable
+  kernels. High benefit.
+- RISK: 2 lines, falls through to well-tested existing code path.
+  Essentially zero risk.
+
+Record: Very high benefit-to-risk ratio.
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- Fixes a real resource leak (hardware clock left enabled on probe
-  failure)
-- Fixes `mclk_in_use` state leak that can prevent subsequent attempts
-- Tiny, surgical fix (2 lines of meaningful code)
-- Obviously correct (mirrors the cleanup in `remove()`)
-- Accepted by ASoC subsystem maintainer (Mark Brown)
-- Bug exists in all stable trees (since v3.2/v4.16)
-- Zero regression risk (only error paths affected)
-- The same function had a prior similar fix (`6ae0a4d8fec55` for
-  of_node_put)
+**Step 9.1: EVIDENCE**
 
-**Evidence AGAINST:**
-- Platform-specific driver (limited user base, i.MX28)
-- No Reported-by (found by code review, not user complaint)
-- Resource leak, not crash/security/corruption
-- No Fixes: tag (but expected for review candidates)
+FOR backporting:
+- Classic device ID addition to existing driver (explicit exception
+  category)
+- Only 2 lines changed
+- Falls through to well-tested code path (same as MT7922/MT7925/MT7961)
+- Author is the chip vendor's engineer
+- Applied by Bluetooth subsystem maintainer
+- Enables real hardware that would otherwise be completely non-
+  functional
+- Multiple independent submissions for MT7902 confirm real user demand
+- Zero regression risk (new case label, previously unreachable code
+  path)
 
-**Stable Rules Checklist:**
-1. Obviously correct and tested? **YES** - mirrors remove() pattern,
-   accepted by maintainer
-2. Fixes a real bug? **YES** - clock resource leak on error
-3. Important issue? **MEDIUM** - resource leak, not critical severity
-4. Small and contained? **YES** - 2 lines, 1 file
-5. No new features? **YES** - pure bugfix
-6. Can apply to stable? **YES** - should apply cleanly to all active
-   trees
+AGAINST backporting:
+- Part of a 4-patch series (but this patch is standalone for USB via
+  vendor wildcard)
+- Minor context conflict may need resolution for btmtk.c hunk
+- No Fixes: tag or Cc: stable (expected for device ID additions)
+
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct and tested? YES - trivial fall-through case label
+2. Fixes a real bug? YES - enables hardware that returns -ENODEV
+3. Important issue? YES - complete Bluetooth non-functionality for
+   affected hardware
+4. Small and contained? YES - 2 lines across 2 files
+5. No new features or APIs? YES - just enables existing infrastructure
+   for new chip ID
+6. Can apply to stable? YES - with minor context adjustment
+
+**Step 9.3: EXCEPTION CATEGORY**
+YES - Device ID addition to existing driver. This is an explicitly
+allowed exception.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Link to patch.msgid.link, SOB by Mark Brown
-  (maintainer), author Haoxiang Li
-- [Phase 2] Diff analysis: 2 lines of `mxs_saif_put_mclk(0)` added to
-  two error paths in `mxs_sgtl5000_probe()`
-- [Phase 3] git blame: `mxs_saif_get_mclk()` introduced in
-  fcb5e47eff29a1 (v3.2, 2011); audio-routing error path introduced in
-  949293d45d6b09 (v4.16, 2018)
-- [Phase 3] git show 949293d45d6b09: confirmed it added
-  `snd_soc_of_parse_audio_routing()` error path without cleanup
-- [Phase 3] git show 6ae0a4d8fec55: confirmed prior error-handling fix
-  in same function (of_node_put leak)
-- [Phase 3] Author commits: Haoxiang Li is a serial error-path leak
-  fixer
-- [Phase 4] Lore inaccessible due to bot protection; patch accepted by
-  Mark Brown directly
-- [Phase 5] Read mxs_saif_get_mclk: confirms it enables clock + sets
-  mclk_in_use=1; put_mclk disables clock + clears flag
-- [Phase 6] Code exists in all stable trees from 5.4.y through 6.12.y
-- [Phase 6] git log v6.6..HEAD: only 4 commits to this file since v6.6,
-  none conflicting
-- [Phase 8] Failure mode: clock resource leak + mclk_in_use state leak
-  on probe error, severity MEDIUM
+- [Phase 1] Parsed tags: Sean Wang (MediaTek) authored, Luiz von Dentz
+  (BT maintainer) applied
+- [Phase 2] Diff analysis: +1 case label in switch, +1 firmware define.
+  2 lines total.
+- [Phase 3] git blame: switch infrastructure from 5c5e8c52e3cafa
+  (2024-07-04), present in stable
+- [Phase 3] git log: confirmed 0x7902 does not exist anywhere in the
+  current tree
+- [Phase 4] Found original submission on spinics.net: [PATCH 2/4] in
+  MT7902 series dated 2026-02-19
+- [Phase 4] Multiple submissions: both Sean Wang (MediaTek) and an
+  independent user submitted MT7902 support
+- [Phase 5] Traced call chain: USB probe -> btusb_probe ->
+  btusb_mtk_setup -> btmtk_usb_setup -> switch(dev_id)
+- [Phase 5] Verified `btmtk_fw_get_filename()` handles 0x7902 via
+  existing `else` branch
+- [Phase 5] Verified vendor wildcard USB entry
+  `USB_VENDOR_AND_INTERFACE_INFO(0x0e8d, ...)` matches MT7902
+- [Phase 6] Confirmed switch statement and firmware loading
+  infrastructure exist in 7.0 tree
+- [Phase 6] Identified minor context conflict: retry mechanism in diff
+  not present in stable
+- [Phase 8] Without patch: "Unsupported hardware variant" error, -ENODEV
+  returned, Bluetooth non-functional
 
-The fix is small, surgical, obviously correct, and fixes a real resource
-leak that has existed since 2011/2018. It meets all stable kernel
-criteria.
+This is a textbook device ID addition - minimal, obviously correct,
+enabling real hardware for real users on stable kernels, with
+essentially zero regression risk.
 
 **YES**
 
- sound/soc/mxs/mxs-sgtl5000.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btmtk.c | 1 +
+ drivers/bluetooth/btmtk.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/sound/soc/mxs/mxs-sgtl5000.c b/sound/soc/mxs/mxs-sgtl5000.c
-index 245f174116384..f1c0e612313dd 100644
---- a/sound/soc/mxs/mxs-sgtl5000.c
-+++ b/sound/soc/mxs/mxs-sgtl5000.c
-@@ -157,13 +157,16 @@ static int mxs_sgtl5000_probe(struct platform_device *pdev)
- 		if (ret) {
- 			dev_err(&pdev->dev, "failed to parse audio-routing (%d)\n",
- 				ret);
-+			mxs_saif_put_mclk(0);
- 			return ret;
- 		}
- 	}
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 0ada5a12130dc..c56c9e077040d 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -1332,6 +1332,7 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 	case 0x7922:
+ 	case 0x7925:
+ 	case 0x7961:
++	case 0x7902:
+ 		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
+ 				      fw_version, fw_flavor);
  
- 	ret = devm_snd_soc_register_card(&pdev->dev, card);
--	if (ret)
-+	if (ret) {
-+		mxs_saif_put_mclk(0);
- 		return dev_err_probe(&pdev->dev, ret, "snd_soc_register_card failed\n");
-+	}
+diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
+index 5df7c32966247..b4506186b2f70 100644
+--- a/drivers/bluetooth/btmtk.h
++++ b/drivers/bluetooth/btmtk.h
+@@ -5,6 +5,7 @@
+ #define FIRMWARE_MT7663		"mediatek/mt7663pr2h.bin"
+ #define FIRMWARE_MT7668		"mediatek/mt7668pr2h.bin"
+ #define FIRMWARE_MT7922		"mediatek/BT_RAM_CODE_MT7922_1_1_hdr.bin"
++#define FIRMWARE_MT7902		"mediatek/BT_RAM_CODE_MT7902_1_1_hdr.bin"
+ #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
+ #define FIRMWARE_MT7925		"mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin"
  
- 	return 0;
- }
 -- 
 2.53.0
 
