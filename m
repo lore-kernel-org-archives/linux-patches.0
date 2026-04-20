@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83ED43E490;
-	Mon, 20 Apr 2026 13:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4566A3CFF7F;
+	Mon, 20 Apr 2026 13:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691802; cv=none; b=hMzVha8BCbgFe0/OtY10MJyOphMOQsyjCsNaH6YcJ7gk0rU5pkmNqv/DV5GoLn9zcHNLMrClceBZ+DxAyr1PROy3QeXdOFhuGtyu8huZ/seDv0dbWX8LpeO3UDbK9FQ4m1fnQ7M1/EZNwl7gRelvg3EKtsnBBTh8ohWkKesgiM8=
+	t=1776691804; cv=none; b=jNJRHc8U6F+FAGGpVVbqj/qKEyE5i7NxuENiZx14Tt5NjdMJZqhzUvt2DWbYEbnmvIym01x5w4x+9eu5BY9LUnbTfqSXyIkH3tfqpSTiBCXDnnrgaqiC1nRpus3z9N2QGBcLuIykdWyFCU7iv9kmk8C4eVShWEuL8F0VR5m2LSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691802; c=relaxed/simple;
-	bh=mWRQILyU3nYc0zxb2eBK81xWcn9ZqTdyq0u0KDN1QiA=;
+	s=arc-20240116; t=1776691804; c=relaxed/simple;
+	bh=ghaPincQOs244mgYCMn6MyfnRCF8amLEIfKgGJ2w/oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LzZiwMTrbHMBVXy9oyi4WgbjKwMV0j05bhNrZ8f94+Es/+bL2+MP7crcfojVe87I3eR35OPvrHNQaG1TAoKT0CKCNySMjKJEM8CXSEn+kvhLkhGSGq8o8TolYm+cJjNxWrJqS88OeqBYTjjGsaZ0dhWGSowy8Un+zhGu4f3Fhp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WLrH7nsp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PcxXA0hSexUyDtO0LEd183sKsizyjLH8UjaDYZIK1kTlU3GRjMS1ZYc5Q7FG53fdw4mAEQ540bOUYbW0wyn7gruaVOsAYs1BaIx/Y7xnB/vl8Y2NJtwh6H9dm+EEecSs2Fd2PK9Ob1FcmccQKfngITNgFk5Cwtzxtirmn1rpqro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nizKC1yL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WLrH7nsp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDCBC2BCB7;
-	Mon, 20 Apr 2026 13:30:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nizKC1yL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04B1C2BCC4;
+	Mon, 20 Apr 2026 13:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691802;
-	bh=mWRQILyU3nYc0zxb2eBK81xWcn9ZqTdyq0u0KDN1QiA=;
+	s=k20201202; t=1776691804;
+	bh=ghaPincQOs244mgYCMn6MyfnRCF8amLEIfKgGJ2w/oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLrH7nsp/mQr37UQjB5QTf0pF4V9VaxQmxtRZ7+Q/rgRvUtPSuh8KLpOo43yRRiwm
-	 MLFVLlLtCoC5wPP3NyKkJ6UuJyYtfeXL8BGk2b5fwyu5IuSu6e9kamyYIeRqqtSDlE
-	 8AbouXhsHzqzKsV/HjYVn8qGu0XjUANNhBrl1bZEiw2a1pgEIpg53rOzJyuZs8te3h
-	 15GjJTi8j5Ec+glWxSFY0t41MoVyzyTwAJmpfb3oc+oILf6XqThnozY09sBtw0hjfk
-	 yPnhKvVs37nRH2SjL24kYCLnA/iLeAlYHN3hRQoc9WNgoqvG/G3+MondSuawL/aaP3
-	 v0eGSpTjH6N5A==
+	b=nizKC1yLntWxIsPXSubVLO5RN6OTSC0hI35+7T4Jq4LeXVldxyTsLlBaqI4Wd9s/6
+	 mXCZR88qqAix65gXdGsFh0A0NKM/RMt7u25lclO55mudiJFcFKF1B+VDkblFLNx6iS
+	 66Qw8qLFh8QPPr1LY/GeyTEOW70T57SYjTkJVd4XKjGdGfmf9af2mB0YAD0TPy569d
+	 WUdB5zVe/hLW+hLOT+f8VusDFyq0o631bnh5GBnpslttcLBlo5qCV0LYh2nJlBBwus
+	 2smwyUgNZm+qhD2RzM+9Wvrxiz5xz0F2pr+k+9dIMiRCd48hr04MdbwxAdvFlJfpII
+	 jc95dkD18N97g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Francis <David.Francis@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: =?UTF-8?q?N=C3=ADcolas=20F=2E=20R=2E=20A=2E=20Prado?= <nfraprado@collabora.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Felix.Kuehling@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] drm/amdgpu: Check for multiplication overflow in checkpoint stack size
-Date: Mon, 20 Apr 2026 09:19:56 -0400
-Message-ID: <20260420132314.1023554-202-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] HID: quirks: Set ALWAYS_POLL for LOGITECH_BOLT_RECEIVER
+Date: Mon, 20 Apr 2026 09:19:57 -0400
+Message-ID: <20260420132314.1023554-203-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -51,401 +48,363 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: David Francis <David.Francis@amd.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 421c0f19043337a553e802b2dfe4b56d538ef4d6 ]
+[ Upstream commit d4229fc0cb50c52b385538d072c5fc8827b287a9 ]
 
-get_checkpoint_info() in kfd_mqd_manager_v9.c finds 32-bit value
-ctl_stack_size by multiplying two 32-bit values. This can overflow to a
-lower value, which could result in copying outside the bounds of
-a buffer in checkpoint_mqd() in the same file.
+The Logitech Bolt receiver once connected to a wireless device will
+generate data on interface 2. If this data isn't polled, when the USB
+port it is connected to gets suspended (and if that happens within 5
+minutes of the last input from the wireless device), it will trigger a
+remote wakeup 3 seconds later, which will result in a spurious system
+wakeup if the port was suspended as part of system sleep.
 
-Put in a check for the overflow, and fail with -EINVAL if detected.
+Set the ALWAYS_POLL quirk for this device to ensure interface 2 is
+always polled and this spurious wakeup never happens.
 
-v2: use check_mul_overflow()
+With this change in place the system can be suspended with the receiver
+plugged in and the system can be woken up when an input is sent from the
+wireless device.
 
-Signed-off-by: David Francis <David.Francis@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me compile the full analysis.
-
----
+Now I have all the information needed. Let me compile the analysis.
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `drm/amdgpu` (AMD GPU driver, KFD subsystem)
-- Action verb: "Check" (adding a missing safety check)
-- Summary: Add overflow check to prevent out-of-bounds copy in
-  checkpoint stack size computation
+**Step 1.1: Subject Line Parse**
+- Subsystem prefix: `HID: quirks:`
+- Action verb: "Set" (adds a quirk entry - this is effectively fixing
+  broken hardware behavior)
+- Record: HID subsystem; adding `HID_QUIRK_ALWAYS_POLL` for the Logitech
+  Bolt Receiver.
 
-**Step 1.2: Tags**
-- Signed-off-by: David Francis (author)
-- Reviewed-by: Alex Deucher (AMD DRM subsystem maintainer)
-- Signed-off-by: Alex Deucher (committer/maintainer)
-- No Fixes: tag (expected for autosel candidates)
-- No Cc: stable (expected)
-- No Reported-by (found by code inspection, not a crash report)
+**Step 1.2: All Tags**
+- `Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>`
+  (author)
+- `Signed-off-by: Jiri Kosina <jkosina@suse.com>` (HID subsystem
+  maintainer)
+- No Fixes:, no Cc: stable, no Reported-by:, no Link: (expected — that's
+  why it needs review)
+- Record: Applied by HID maintainer directly; concise author-maintainer
+  chain.
 
-**Step 1.3: Commit Body**
-- Bug: `get_checkpoint_info()` computes `ctl_stack_size` by multiplying
-  two 32-bit values (`m->cp_hqd_cntl_stack_size *
-  NUM_XCC(mm->dev->xcc_mask)`). This can overflow to a smaller value.
-- Consequence: The overflowed smaller value is used to size a buffer
-  allocation. Later, `checkpoint_mqd()` copies data using the actual
-  (non-overflowed) hardware values, writing beyond the buffer boundary.
-- Failure mode: Out-of-bounds memory write (buffer overflow)
-- Fix: Use `check_mul_overflow()` and return -EINVAL on overflow
+**Step 1.3: Body Analysis**
+- Bug mechanism: Once a wireless device connects to the Bolt receiver,
+  interface 2 generates data. If not polled and the USB port is
+  suspended within 5 min of last wireless input, the device triggers a
+  remote wakeup 3 seconds later, causing a spurious system wakeup when
+  suspended as part of system sleep.
+- Symptom: **System spontaneously wakes from suspend** when Bolt
+  receiver is attached.
+- Author confirms testing: "With this change in place the system can be
+  suspended with the receiver plugged in and the system can be woken up
+  when an input is sent from the wireless device."
+- Record: Real, observed, user-visible issue (spurious wake-from-
+  suspend); root cause clearly identified (device emits data on
+  interface 2 that triggers remote wakeup).
 
 **Step 1.4: Hidden Bug Fix Detection**
-This is explicitly a bug fix for a buffer overflow vulnerability. The v2
-notation indicates the fix went through review iteration.
+- "Set ALWAYS_POLL" — this is a hardware workaround/quirk. Functionally,
+  it is a **bug fix** for buggy hardware behavior that breaks system
+  suspend for affected users.
+- Record: This is a classic hardware quirk bug fix.
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- 6 files changed: `kfd_device_queue_manager.c`,
-  `kfd_device_queue_manager.h`, `kfd_mqd_manager.h`,
-  `kfd_mqd_manager_v9.c`, `kfd_mqd_manager_vi.c`,
-  `kfd_process_queue_manager.c`
-- Net change: +22/-8 lines
-- Functions modified: `get_checkpoint_info` (v9 and vi),
-  `get_queue_checkpoint_info` (dqm), `pqm_get_queue_checkpoint_info`
-- Scope: Multi-file but contained - all changes serve a single purpose
-  (propagating error from overflow check)
+- Files: `drivers/hid/hid-quirks.c` only, +1/-0 lines.
+- Functions: none — adds a single table entry to `hid_quirks[]`.
+- Classification: trivial, single-file, surgical quirk table entry.
 
-**Step 2.2: Code Flow Change**
-- Core fix in `kfd_mqd_manager_v9.c`: replaces unchecked multiplication
-  with `check_mul_overflow()`, returning -EINVAL on overflow
-- Plumbing: `get_checkpoint_info` and `get_queue_checkpoint_info`
-  signatures changed from `void` to `int` to propagate the error
-- `kfd_mqd_manager_vi.c`: trivially updated to return 0 (no overflow
-  risk since `*ctl_stack_size = 0`)
-- `kfd_process_queue_manager.c`: now checks the return value and
-  propagates errors
+**Step 2.2: Code Flow**
+- Before: device matched only by default HID logic → `usbhid_open()` and
+  related code treated it like any normal device (autosuspend-enabled,
+  sets `needs_remote_wakeup = 1`).
+- After: the quirk flag makes `usbhid/hid-core.c` paths at lines 689,
+  752, 756, 1185, 1234 bypass autosuspend/remote wakeup logic —
+  `needs_remote_wakeup` stays 0 and interface 2 is always polled.
+- Record: exactly the change documented in commit message.
 
 **Step 2.3: Bug Mechanism**
-Category: **Buffer overflow / out-of-bounds write**
-
-The flow is:
-1. `get_checkpoint_info()` computes `ctl_stack_size =
-   m->cp_hqd_cntl_stack_size * NUM_XCC(...)` - can overflow to a small
-   value
-2. `criu_checkpoint_queues_device()` uses this to allocate a buffer:
-   `kzalloc(sizeof(*q_data) + mqd_size + ctl_stack_size, ...)`
-3. `checkpoint_mqd_v9_4_3()` loops over each XCC and calls
-   `memcpy(ctl_stack_dst, ctl_stack, m->cp_hqd_cntl_stack_size)` for
-   each, writing the full actual size
-4. Total bytes written = `m->cp_hqd_cntl_stack_size * NUM_XCC(...)` (the
-   actual, non-overflowed product), exceeding the buffer
+- Category: (h) Hardware workaround / quirk table entry for buggy device
+  behavior.
+- Mechanism: `HID_QUIRK_ALWAYS_POLL` is an established mechanism used by
+  many Logitech, Lenovo, Microsoft, Chicony mice/dongles for exactly
+  this kind of problem (preventing spurious wakeups / keeping endpoint
+  pollable). The Bolt receiver exhibits the same pattern.
 
 **Step 2.4: Fix Quality**
-- Obviously correct: uses standard `check_mul_overflow()` kernel macro
-- Minimal/surgical: core logic is 3 lines; rest is necessary type
-  signature propagation
-- No regression risk: overflow case now fails gracefully with -EINVAL
-  instead of silently corrupting memory
-- Reviewed by subsystem maintainer Alex Deucher
+- Obviously correct: trivial one-line addition to an existing quirk
+  table.
+- Minimal and surgical: yes.
+- Regression risk: essentially zero — the quirk only affects devices
+  matching vendor=0x046d, product=0xc548. All other devices are
+  untouched.
+- Risk introduced by the fix itself: slight extra USB traffic for Bolt
+  receiver users (acknowledged by author). This is well within
+  acceptable for the quirk behavior that's applied to many devices
+  already.
 
-## PHASE 3: GIT HISTORY
+## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: Blame**
-- `get_checkpoint_info` was introduced by commit 3a9822d7bd623b (David
-  Yat Sin, 2021-01-25) for CRIU checkpoint support
-- The multiplication `* NUM_XCC(...)` was added by commit f6c0f3d24478a0
-  / a578f2a58c3ab (David Yat Sin, 2025-07-16) "Fix checkpoint-restore on
-  multi-xcc"
-- The multi-xcc fix was merged in v6.18 and was cherry-picked with `Cc:
-  stable@vger.kernel.org`
+- `USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER` define added in commit
+  `526748b925185` ("HID: multitouch: Add quirk for Logitech Bolt
+  receiver w/ Casa touchpad") — first shipped in **v6.12**.
+- Record: buggy hardware behavior exists since device was first
+  supported; device ID is present in stable 6.12.y and later.
 
-**Step 3.2: Fixes tag** - No Fixes: tag present, which is expected.
+**Step 3.2: Fixes Tag**
+- No Fixes: tag (device behavior is a hardware issue, not a regression
+  from a specific commit). Not applicable.
 
-**Step 3.3: File History** - The file is actively developed with 30+
-changes since v6.6.
+**Step 3.3: File History**
+- `drivers/hid/hid-quirks.c` receives quirk additions routinely (VRS
+  steering wheel, Cooler Master MM712, Apple keyboards,
+  Lenovo/Edifier/etc.). This is the normal pattern.
+- Record: no prerequisite patches; standalone one-line addition.
 
-**Step 3.4: Author** - David Francis is an AMD employee working on
-KFD/CRIU support.
+**Step 3.4: Author**
+- Author is a Collabora Mediatek/Genio/thermal/kernel developer (regular
+  upstream contributor). Applied by HID maintainer Jiri Kosina directly.
+- Record: normal maintainer acceptance path.
 
-**Step 3.5: Dependencies** - This commit is standalone. It only changes
-the existing code path without requiring other patches.
+**Step 3.5: Dependencies**
+- Uses `USB_VENDOR_ID_LOGITECH` (long-existing) and
+  `USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER` (added in v6.12). No other
+  dependencies.
+- Record: applies cleanly to any stable tree ≥ 6.12. Older trees (6.6,
+  6.1, 5.15, 5.10, 5.4) do not have the device ID define; backport would
+  need the `hid-ids.h` define too — likely not worth doing given the
+  device ID was added in 6.12.
 
 ## PHASE 4: MAILING LIST
 
-- Original submission found at spinics.net/lists/amd-gfx/msg138647.html
-  (posted 2026-03-04)
-- v2 iteration used `check_mul_overflow()` (v1 presumably used manual
-  overflow checks)
-- Alex Deucher provided Reviewed-by (msg138731)
-- No NAKs or concerns raised
-- No explicit stable nomination by reviewers, but the fix targets a bug
-  in code that was itself `Cc: stable`
+**Step 4.1: Original thread**
+- `b4 dig -c d4229fc0cb50c` → https://lore.kernel.org/all/20260407-logi-
+  bolt-hid-quirk-always-poll-v1-1-4dae0fda344e@collabora.com/
+- Single revision (v1). Applied as submitted.
+
+**Step 4.2: Reviewers**
+- Thread saved to mbox. Jiri Kosina (HID maintainer, `jikos@kernel.org`)
+  replied: "In the meantime, I am applying this one. Thanks,"
+- Author proposed possible future improvement (a "poll-before-suspend
+  only" quirk) but Jiri didn't object to the current approach.
+- Recipients: Jiri Kosina, Benjamin Tissoires, linux-
+  input@vger.kernel.org, linux-kernel@vger.kernel.org,
+  kernel@collabora.com.
+- Record: patch reviewed and applied by the subsystem maintainer with no
+  objections; no stable nomination request was made but also no concerns
+  raised.
+
+**Step 4.3: Bug Report**
+- No Link: tag, but commit message and author's reply indicate this is a
+  directly-observed reproducible issue.
+
+**Step 4.4: Series context**
+- `b4 dig -a`: only v1 exists. Standalone single patch.
+
+**Step 4.5: Stable discussion**
+- None found in thread.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Key Functions**
-- `get_checkpoint_info()` in v9 (core fix)
-- `get_queue_checkpoint_info()` in dqm (plumbing)
-- `pqm_get_queue_checkpoint_info()` (plumbing)
+**Step 5.1: Functions modified**
+- None. Adds one table entry to `hid_quirks[]` consumed by
+  `usbhid_exists_squirk()` / `hid_lookup_quirk()`.
 
-**Step 5.2: Callers**
-- `pqm_get_queue_checkpoint_info()` -> `get_queue_data_sizes()` ->
-  `criu_checkpoint_queues_device()` -> `kfd_process_get_queue_info()`
-- Called during CRIU checkpoint operations (process migration/save)
+**Step 5.2: Callers of quirk**
+- `drivers/hid/usbhid/hid-core.c`: lines 689, 752, 756, 1185, 1234 all
+  check `HID_QUIRK_ALWAYS_POLL` and branch accordingly in `usbhid_open`,
+  `usbhid_close`, `usbhid_start`, `usbhid_stop` (standard HID USB device
+  lifecycle).
+- Record: well-established, widely-used quirk path.
+
+**Step 5.3: Callees**
+- N/A — this is a data table entry.
 
 **Step 5.4: Reachability**
-The path is reachable from userspace through the KFD ioctl interface
-during CRIU operations. On multi-XCC AMD GPUs, if
-`cp_hqd_cntl_stack_size` is large enough, the multiplication overflows.
+- Reached for any system with the Bolt receiver plugged in during device
+  enumeration — every affected user.
+
+**Step 5.5: Similar patterns**
+- Many similar quirk additions in same file (Apple keyboard
+  c55092187d9ad, Dell KM5221W 62cc9c3cb3ec1, VRS R295 1141ed52348d3,
+  Cooler Master MM712 0be4253bf878d, Lenovo PixArt mice, etc.). This is
+  a recurring, well-accepted pattern.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy code in stable**
-- The multiplication was introduced in commit a578f2a58c3ab, merged in
-  v6.18
-- The cherry-pick f6c0f3d24478a0 has `Cc: stable@vger.kernel.org`, so it
-  was intended for backport to active stable trees
-- The 7.0 tree we're evaluating definitely has this code
-- Any stable tree that received the multi-xcc fix backport also has the
-  bug
+**Step 6.1: Code exists in stable?**
+- The device ID `USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER = 0xc548` is in
+  stable 6.12.y and later (added by commit 526748b925185 before v6.12).
+- The `hid_quirks[]` table exists in all stable trees.
+- Record: backport applicable to 6.12.y, 6.13.y, 6.14.y, 6.15.y (current
+  active trees that carry the define). Not applicable to older LTS
+  (6.6.y, 6.1.y, 5.15.y, 5.10.y) unless the device ID define is
+  backported along.
 
-**Step 6.2: Backport complexity** - The patch should apply cleanly since
-the code structure hasn't changed significantly.
+**Step 6.2: Backport complications**
+- Mainline hunk context includes neighboring entries added later (8BitDo
+  Pro 3, Edifier QR30). Fuzz/minor context adjustment likely sufficient;
+  any stable tree with the `LOGITECH_BOLT_RECEIVER` define will accept
+  this addition trivially — the surrounding entries have been stable for
+  years.
+- Record: clean apply with possibly trivial fuzz on older-than-mainline
+  stable.
+
+**Step 6.3: Related fixes in stable?**
+- None found.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1:** drm/amdgpu (KFD) - GPU compute driver. Used by ROCm.
-Criticality: IMPORTANT for AMD GPU users.
+**Step 7.1: Subsystem**
+- `drivers/hid/` — device drivers (HID, USB input).
+- Criticality: IMPORTANT — keyboards, mice, and wireless receivers are
+  common desktop/laptop hardware. Suspend/resume breakage affects user-
+  visible laptop power management.
 
-**Step 7.2:** Very actively developed subsystem.
+**Step 7.2: Activity**
+- Very active file; routine quirk additions merged frequently.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 8: IMPACT AND RISK
 
-**Step 8.1:** Affects users of AMD multi-XCC GPUs (MI200/MI300 series)
-who use CRIU checkpoint/restore.
+**Step 8.1: Affected users**
+- Owners of Logitech Bolt receivers (a fairly popular wireless receiver
+  used with Logitech MX-family peripherals and modern wireless
+  keyboards/mice) who suspend their systems.
 
-**Step 8.2: Trigger conditions**
-- Requires multi-XCC AMD GPU hardware
-- Requires CRIU checkpoint operation
-- Requires `cp_hqd_cntl_stack_size` large enough to overflow when
-  multiplied by XCC count
-- Triggerable from userspace via KFD ioctl
+**Step 8.2: Trigger**
+- Occurs every system suspend within 5 minutes of wireless input
+  activity. Very easy to trigger on any laptop using this receiver.
 
-**Step 8.3: Failure mode** - Out-of-bounds kernel heap write. Severity:
-**HIGH** (memory corruption, potential crash, potential security
-vulnerability).
+**Step 8.3: Severity**
+- Failure mode: **spurious wake-from-suspend** → battery drain, system
+  not actually suspending, potential data/security exposure on machines
+  users thought were asleep. Severity: **MEDIUM-HIGH** (not a crash, but
+  a serious user-visible regression of the suspend feature; affects
+  laptop battery life and sleep reliability).
 
-**Step 8.4: Risk-Benefit**
-- Benefit: Prevents kernel heap buffer overflow -> HIGH
-- Risk: Very low - adds a standard overflow check, graceful error return
-- Ratio: Strongly favorable for backport
+**Step 8.4: Risk-benefit**
+- Benefit: clear, reproducible user-facing fix for laptop suspend/resume
+  with a common wireless receiver.
+- Risk: one-line table entry for a specific (vendor,product) tuple;
+  cannot affect other devices. Extra URB polling for the one device —
+  the same trade-off accepted for dozens of similar quirks. Very low
+  risk.
+- Record: benefit >> risk.
 
-## PHASE 9: SYNTHESIS
+## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- Fixes a real buffer overflow (out-of-bounds heap write)
-- Small and contained (+22/-8 lines, mostly plumbing)
-- Uses standard kernel overflow checking macro (`check_mul_overflow`)
-- Obviously correct - reviewed by subsystem maintainer Alex Deucher
-- The buggy code was itself marked `Cc: stable` (the multi-xcc fix), so
-  the bug exists in stable trees
-- Graceful error handling (returns -EINVAL instead of corrupting memory)
+**Step 9.1: Evidence**
+- FOR: one-line surgical quirk; applied by HID maintainer; established
+  pattern (dozens of similar entries); fixes real user-visible suspend
+  misbehavior; author tested both suspend and wakeup paths.
+- AGAINST: none material. Adds a tiny bit of USB traffic for the one
+  device (acknowledged).
+- Unresolved: backport to pre-6.12 trees would additionally need the
+  `hid-ids.h` define from commit 526748b925185 — but active stable trees
+  (6.12.y+) already contain it.
 
-**Evidence AGAINST backporting:**
-- The bug requires specific hardware (multi-XCC AMD GPUs) and specific
-  operation (CRIU checkpoint)
-- The overflow may require unrealistic `cp_hqd_cntl_stack_size` values
-  in practice
-- The function signature change touches 6 files (though all changes are
-  mechanical)
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct? **YES** — matches existing pattern, maintainer-
+   applied.
+2. Fixes real bug affecting users? **YES** — spurious wake from suspend.
+3. Important issue? **YES** — suspend/resume reliability on common
+   hardware.
+4. Small and contained? **YES** — 1 line, 1 file.
+5. No new features/APIs? **YES** — quirk entry only.
+6. Applies to stable? **YES** — for trees containing the device ID
+   define (v6.12+).
 
-**Stable rules checklist:**
-1. Obviously correct and tested? **YES** - uses standard
-   `check_mul_overflow()`, reviewed by maintainer
-2. Fixes a real bug? **YES** - buffer overflow from integer overflow
-3. Important issue? **YES** - out-of-bounds heap write, potential memory
-   corruption
-4. Small and contained? **YES** - 30 lines total, core logic is 3 lines
-5. No new features? **YES** - purely defensive overflow check
-6. Applies to stable? **YES** - any tree with the multi-xcc checkpoint
-   fix (6.18+, plus stable backports)
+**Step 9.3: Exception Category**
+- Fits the explicit "QUIRKS and WORKAROUNDS" exception and "NEW DEVICE
+  IDs / device-specific quirks to existing drivers" exception in stable
+  rules.
+
+**Step 9.4: Decision**
+- This is a textbook stable candidate: a minimal, targeted hardware
+  quirk that fixes a reproducible suspend issue for a common piece of
+  hardware, applied by the subsystem maintainer, matching dozens of
+  prior similar backported quirks.
 
 ## Verification
 
-- [Phase 1] Parsed subject: drm/amdgpu, "Check" (adding safety check),
-  overflow in checkpoint stack size
-- [Phase 1] Tags: Reviewed-by Alex Deucher (subsystem maintainer),
-  Signed-off-by Alex Deucher
-- [Phase 2] Diff: 6 files, +22/-8 lines. Core fix is
-  `check_mul_overflow()` in `get_checkpoint_info()` v9
-- [Phase 2] Traced overflow to buffer allocation in
-  `criu_checkpoint_queues_device()` (line 895: kzalloc) and memcpy in
-  `checkpoint_mqd()` (line 412) / `checkpoint_mqd_v9_4_3()` (lines
-  424-430)
-- [Phase 3] git blame: multiplication introduced by f6c0f3d24478a0
-  (2025-07-16), cherry-pick of a578f2a58c3ab with `Cc: stable`
-- [Phase 3] Original `get_checkpoint_info` introduced by 3a9822d7bd623b
-  (2021-01-25)
-- [Phase 3] Multi-xcc fix entered mainline in v6.18
-- [Phase 4] Found original patch at spinics.net/lists/amd-
-  gfx/msg138647.html, Alex Deucher reviewed at msg138731
-- [Phase 4] No NAKs, no concerns raised
-- [Phase 5] Traced call chain: KFD ioctl -> kfd_process_get_queue_info
-  -> get_queue_data_sizes -> pqm_get_queue_checkpoint_info ->
-  get_queue_checkpoint_info -> get_checkpoint_info
-- [Phase 5] Confirmed overflowed value feeds into buffer allocation
-  (kzalloc) but actual memcpy uses non-overflowed per-XCC size
-- [Phase 6] Buggy code exists in mainline since v6.18 and in any stable
-  tree that backported the multi-xcc checkpoint fix
-- [Phase 8] Failure mode: heap buffer overflow (out-of-bounds write),
-  severity HIGH
+- [Phase 1] Parsed commit message: confirmed no
+  Fixes/Cc:stable/Link/Reported-by; two Signed-off-bys (author + HID
+  maintainer Jiri Kosina).
+- [Phase 2] Diff inspection: verified the change is exactly `+1` line in
+  `drivers/hid/hid-quirks.c` adding a `HID_QUIRK_ALWAYS_POLL` entry for
+  `USB_VENDOR_ID_LOGITECH`/`USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER`.
+- [Phase 2] Confirmed quirk semantics via `drivers/hid/usbhid/hid-
+  core.c` lines 689, 752, 756, 1185, 1234 — flag bypasses
+  autosuspend/remote-wakeup paths.
+- [Phase 2] Verified `HID_QUIRK_ALWAYS_POLL = BIT(10)` in
+  `include/linux/hid.h:406`.
+- [Phase 3] `git log` on `drivers/hid/hid-quirks.c` + `rg
+  USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER` → identified define introduced
+  in commit `526748b925185`.
+- [Phase 3] `git tag --contains 526748b925185` → device ID first shipped
+  in v6.12.
+- [Phase 3] `git log --oneline --grep="ALWAYS_POLL"` → verified many
+  similar one-line quirk additions historically.
+- [Phase 4] `b4 dig -c d4229fc0cb50c` → found original thread at
+  lore.kernel.org/all/20260407-logi-bolt-hid-quirk-always-
+  poll-v1-1-4dae0fda344e@collabora.com/.
+- [Phase 4] `b4 dig -a` → single v1, applied as-is.
+- [Phase 4] `b4 dig -m /tmp/bolt-thread.mbx` → read full thread: Jiri
+  Kosina (HID maintainer) applied the patch; author confirmed testing;
+  no NAKs.
+- [Phase 5] Confirmed `hid_quirks[]` entries are consumed by the
+  standard USB HID core paths — impact scope is exactly the one matched
+  device.
+- [Phase 6] Device ID present in mainline and 6.12.y+ stable branches.
+- [Phase 7] `drivers/hid/` is IMPORTANT subsystem — affects HID input on
+  desktops/laptops.
+- [Phase 8] Failure mode: spurious system wake from suspend, confirmed
+  by commit message text.
+- UNVERIFIED: I did not check every LTS stable tree file-by-file for
+  divergent context around the insertion point, but given this is a
+  sorted alphabetical table and the neighboring Logitech entries
+  (`LOGITECH_C007`, `LOGITECH_C077`, `LOGITECH_KEYBOARD_G710_PLUS`) have
+  been present for many years, a clean backport is essentially
+  guaranteed for 6.12+ trees.
+
+Single-line hardware quirk entry that fixes a real, reproducible
+suspend/wakeup bug affecting owners of the Logitech Bolt receiver.
+Matches the "quirks and workarounds" stable exception exactly, is
+maintainer-applied, carries negligible regression risk, and applies
+cleanly to stable trees that carry the device ID (v6.12+).
 
 **YES**
 
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c  | 7 +++++--
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h  | 2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.h           | 3 ++-
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c        | 7 +++++--
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c        | 3 ++-
- drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 8 +++++++-
- 6 files changed, 22 insertions(+), 8 deletions(-)
+ drivers/hid/hid-quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index 3ddf06c755b52..ab3b2e7be9bd0 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -2720,7 +2720,7 @@ static int get_wave_state(struct device_queue_manager *dqm,
- 			ctl_stack, ctl_stack_used_size, save_area_used_size);
- }
- 
--static void get_queue_checkpoint_info(struct device_queue_manager *dqm,
-+static int get_queue_checkpoint_info(struct device_queue_manager *dqm,
- 			const struct queue *q,
- 			u32 *mqd_size,
- 			u32 *ctl_stack_size)
-@@ -2728,6 +2728,7 @@ static void get_queue_checkpoint_info(struct device_queue_manager *dqm,
- 	struct mqd_manager *mqd_mgr;
- 	enum KFD_MQD_TYPE mqd_type =
- 			get_mqd_type_from_queue_type(q->properties.type);
-+	int ret = 0;
- 
- 	dqm_lock(dqm);
- 	mqd_mgr = dqm->mqd_mgrs[mqd_type];
-@@ -2735,9 +2736,11 @@ static void get_queue_checkpoint_info(struct device_queue_manager *dqm,
- 	*ctl_stack_size = 0;
- 
- 	if (q->properties.type == KFD_QUEUE_TYPE_COMPUTE && mqd_mgr->get_checkpoint_info)
--		mqd_mgr->get_checkpoint_info(mqd_mgr, q->mqd, ctl_stack_size);
-+		ret = mqd_mgr->get_checkpoint_info(mqd_mgr, q->mqd, ctl_stack_size);
- 
- 	dqm_unlock(dqm);
-+
-+	return ret;
- }
- 
- static int checkpoint_mqd(struct device_queue_manager *dqm,
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
-index ef07e44916f80..3272328da11f9 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
-@@ -192,7 +192,7 @@ struct device_queue_manager_ops {
- 
- 	int (*reset_queues)(struct device_queue_manager *dqm,
- 					uint16_t pasid);
--	void	(*get_queue_checkpoint_info)(struct device_queue_manager *dqm,
-+	int	(*get_queue_checkpoint_info)(struct device_queue_manager *dqm,
- 				  const struct queue *q, u32 *mqd_size,
- 				  u32 *ctl_stack_size);
- 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.h b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.h
-index 2429d278ef0eb..06ca6235ff1b7 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.h
-@@ -102,7 +102,8 @@ struct mqd_manager {
- 				  u32 *ctl_stack_used_size,
- 				  u32 *save_area_used_size);
- 
--	void	(*get_checkpoint_info)(struct mqd_manager *mm, void *mqd, uint32_t *ctl_stack_size);
-+	int	(*get_checkpoint_info)(struct mqd_manager *mm, void *mqd,
-+				       uint32_t *ctl_stack_size);
- 
- 	void	(*checkpoint_mqd)(struct mqd_manager *mm,
- 				  void *mqd,
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index a535f151cb5fd..fe471a8b98095 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -393,11 +393,14 @@ static int get_wave_state(struct mqd_manager *mm, void *mqd,
- 	return 0;
- }
- 
--static void get_checkpoint_info(struct mqd_manager *mm, void *mqd, u32 *ctl_stack_size)
-+static int get_checkpoint_info(struct mqd_manager *mm, void *mqd, u32 *ctl_stack_size)
- {
- 	struct v9_mqd *m = get_mqd(mqd);
- 
--	*ctl_stack_size = m->cp_hqd_cntl_stack_size * NUM_XCC(mm->dev->xcc_mask);
-+	if (check_mul_overflow(m->cp_hqd_cntl_stack_size, NUM_XCC(mm->dev->xcc_mask), ctl_stack_size))
-+		return -EINVAL;
-+
-+	return 0;
- }
- 
- static void checkpoint_mqd(struct mqd_manager *mm, void *mqd, void *mqd_dst, void *ctl_stack_dst)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-index 69c1b8a690b86..5a758ed14ea50 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
-@@ -275,10 +275,11 @@ static int get_wave_state(struct mqd_manager *mm, void *mqd,
- 	return 0;
- }
- 
--static void get_checkpoint_info(struct mqd_manager *mm, void *mqd, u32 *ctl_stack_size)
-+static int get_checkpoint_info(struct mqd_manager *mm, void *mqd, u32 *ctl_stack_size)
- {
- 	/* Control stack is stored in user mode */
- 	*ctl_stack_size = 0;
-+	return 0;
- }
- 
- static void checkpoint_mqd(struct mqd_manager *mm, void *mqd, void *mqd_dst, void *ctl_stack_dst)
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index f5d2847e1cbb4..cc2621ae12f9c 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -1070,6 +1070,7 @@ int pqm_get_queue_checkpoint_info(struct process_queue_manager *pqm,
- 				  uint32_t *ctl_stack_size)
- {
- 	struct process_queue_node *pqn;
-+	int ret;
- 
- 	pqn = get_queue_by_qid(pqm, qid);
- 	if (!pqn) {
-@@ -1082,9 +1083,14 @@ int pqm_get_queue_checkpoint_info(struct process_queue_manager *pqm,
- 		return -EOPNOTSUPP;
- 	}
- 
--	pqn->q->device->dqm->ops.get_queue_checkpoint_info(pqn->q->device->dqm,
-+	ret = pqn->q->device->dqm->ops.get_queue_checkpoint_info(pqn->q->device->dqm,
- 						       pqn->q, mqd_size,
- 						       ctl_stack_size);
-+	if (ret) {
-+		pr_debug("amdkfd: Overflow while computing stack size for queue %d\n", qid);
-+		return ret;
-+	}
-+
- 	return 0;
- }
- 
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 02f7db5c10564..eb811b1fb80f9 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -134,6 +134,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6019), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_602E), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_6093), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_BOLT_RECEIVER), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C007), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C077), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_KEYBOARD_G710_PLUS), HID_QUIRK_NOGET },
 -- 
 2.53.0
 
