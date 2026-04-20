@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83DE344057;
-	Mon, 20 Apr 2026 16:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1DF3446AF;
+	Mon, 20 Apr 2026 16:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701394; cv=none; b=G0PeJIYlUrA/eMk46p/4hBVLMKCdrga08cMHZe6NLvf6FPos8kr1gSAt2r8j4R4bkbI2Nkm5P8PB7dEEFvSGuHESb8ic75eUmLcn0A23EFWlEYvgPG4WKCEbL0EQKEpYu084SuTlnKr6XdsFgLHfVCr1ZYuaMaVg1fo+vXEQ10Y=
+	t=1776701396; cv=none; b=VIQKvKPtc3SUVgvo16niHbkHnszgkYsE4VPU5CNMiZn2satA9iUYRHSMZYKnBCZP0+kKwgxSWBg043XK/5mttXS2qbm9mkWhaxPQuFOEb7NTGBzhKXo2/iUY1OBB20rWBbo800wchbPIO1ADC6kgx5VmCkbArfX220M4KqAMcA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701394; c=relaxed/simple;
-	bh=8RzUqbCLCEQKB8B0wRrY26xUVEZbC+qBAUHRhPNIOX0=;
+	s=arc-20240116; t=1776701396; c=relaxed/simple;
+	bh=1vMdsIbVgwap351kwbMG9Rynsy+X/4bhaUAUWLjvkOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/QDaqNNeZMSyllhxX3hSuGbLsxT3K7zOecYBRXTQwTvkWHFDswi4SQk63+x94mJ13H0uFysPLLgcxmfvVIOLt6RW7J92jZQ6qcKoG1RZy+WmBneMV4xj3yfW2whK1af7izon30dROf9J8C4j0dsbWiy8TADJVzfG2/caXsBBWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRMckKhw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LL+mW2yCNU5NiXlnpxAalo6QInDmEYxuo0e80/HEA54reeJu3GGJpZedGpNYkxafmnXPjqYU4Fl//I2rVrOn39EVnpMFpXFogyIzG/He8udeqeLGAcKE96ADuM3AUlQFoFfv+u7h3LSZEGVce81P/ExyIqHz3KrCHcqWF7HLhbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AG5tG7oU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRMckKhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1E0C2BCB4;
-	Mon, 20 Apr 2026 16:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AG5tG7oU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13555C19425;
+	Mon, 20 Apr 2026 16:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701393;
-	bh=8RzUqbCLCEQKB8B0wRrY26xUVEZbC+qBAUHRhPNIOX0=;
+	s=korg; t=1776701396;
+	bh=1vMdsIbVgwap351kwbMG9Rynsy+X/4bhaUAUWLjvkOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TRMckKhwCBNIfA+s0+1LWOYf7Gint6F9QlsE0y25/YLV8dLoQNJfOKn3qyjc26xs1
-	 /Dlpfs9BHDUC5M0Q+1zepjGwAJiVE7DmDOBoOsIWk2UI5xYuN3zql0B1t4gDQE/BHZ
-	 JK7IUqSwi2L3EHPTwch7BmwZiqhizakZ4Zo4zgRI=
+	b=AG5tG7oUShMRWDYXezU8vaoUsEhs8gWpDSl3pKpLGAXpap5lm2aKaA1mYDym52pj8
+	 mKvMHO+He36MIX0taE0FhN3LvTOuPRFQNiC5giguVmLQnbc7zM6qMhM8rfTCyjTdYz
+	 jyVDex3h65HraqrLN8ibQOOni/w1jDhZiV2nPyZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Jiri Kosina <jikos@kernel.org>,
 	Benjamin Tissoires <bentiss@kernel.org>,
-	Masaki Ota <masaki.ota@jp.alps.com>,
 	linux-input@vger.kernel.org,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 097/162] HID: alps: fix NULL pointer dereference in alps_raw_event()
-Date: Mon, 20 Apr 2026 17:42:09 +0200
-Message-ID: <20260420153930.553805210@linuxfoundation.org>
+Subject: [PATCH 6.12 098/162] HID: core: clamp report_size in s32ton() to avoid undefined shift
+Date: Mon, 20 Apr 2026 17:42:10 +0200
+Message-ID: <20260420153930.589360189@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -56,42 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 1badfc4319224820d5d890f8eab6aa52e4e83339 upstream.
+commit 69c02ffde6ed4d535fa4e693a9e572729cad3d0d upstream.
 
-Commit ecfa6f34492c ("HID: Add HID_CLAIMED_INPUT guards in raw_event
-callbacks missing them") attempted to fix up the HID drivers that had
-missed the previous fix that was done in 2ff5baa9b527 ("HID: appleir:
-Fix potential NULL dereference at raw event handle"), but the alps
-driver was missed.
+s32ton() shifts by n-1 where n is the field's report_size, a value that
+comes directly from a HID device.  The HID parser bounds report_size
+only to <= 256, so a broken HID device can supply a report descriptor
+with a wide field that triggers shift exponents up to 256 on a 32-bit
+type when an output report is built via hid_output_field() or
+hid_set_field().
 
-Fix this up by properly checking in the hid-alps driver that it had been
-claimed correctly before attempting to process the raw event.
+Commit ec61b41918587 ("HID: core: fix shift-out-of-bounds in
+hid_report_raw_event") added the same n > 32 clamp to the function
+snto32(), but s32ton() was never given the same fix as I guess syzbot
+hadn't figured out how to fuzz a device the same way.
 
-Fixes: 73196ebe134d ("HID: alps: add support for Alps T4 Touchpad device")
+Fix this up by just clamping the max value of n, just like snto32()
+does.
+
 Cc: stable <stable@kernel.org>
 Cc: Jiri Kosina <jikos@kernel.org>
 Cc: Benjamin Tissoires <bentiss@kernel.org>
-Cc: Masaki Ota <masaki.ota@jp.alps.com>
 Cc: linux-input@vger.kernel.org
 Assisted-by: gregkh_clanker_t1000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-alps.c |    3 +++
+ drivers/hid/hid-core.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-alps.c
-+++ b/drivers/hid/hid-alps.c
-@@ -437,6 +437,9 @@ static int alps_raw_event(struct hid_dev
- 	int ret = 0;
- 	struct alps_dev *hdata = hid_get_drvdata(hdev);
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -71,6 +71,9 @@ static u32 s32ton(__s32 value, unsigned
+ 	if (!value || !n)
+ 		return 0;
  
-+	if (!(hdev->claimed & HID_CLAIMED_INPUT) || !hdata->input)
-+		return 0;
++	if (n > 32)
++		n = 32;
 +
- 	switch (hdev->product) {
- 	case HID_PRODUCT_ID_T4_BTNLESS:
- 		ret = t4_raw_event(hdata, data, size);
+ 	a = value >> (n - 1);
+ 	if (a && a != -1)
+ 		return value < 0 ? 1 << (n - 1) : (1 << (n - 1)) - 1;
 
 
