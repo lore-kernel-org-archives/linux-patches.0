@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B440332E696;
-	Mon, 20 Apr 2026 15:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5796E244661;
+	Mon, 20 Apr 2026 15:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700312; cv=none; b=BoeCR7x9o7YJcbvqDQyES1OcrTAGxP5uaiixR5NOZ4tfa+bvKHwewN2RtdAzZlo2he4xX5ncl2VZ72kkwzJXmYcAYNSEv4SwnoyxebodMFcubGaUbZsOTVe7bSInWhVCmddlX4IPxtyrv79Q/k8l96O+Z+TbcAAMdiisxETOf48=
+	t=1776700315; cv=none; b=A5metzZk5GLViR72f6WJYunSXe0RPf4DUjG2ajQJhHnniVkzO3s1jbhYwyqOtjX3JWj7YkrL6QOXaAOJGQdQklRbzbh/gfvRsKecSRkJLV3GzljY66z9dVzcnq/LJwXfuhXej10PRT9Cfvuhi60pDmoZUPsU/ygoE+OTHI/itNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700312; c=relaxed/simple;
-	bh=8rgzU5yaCIMrqgV646aWUqUJmSfh/MM72M2gRh456iM=;
+	s=arc-20240116; t=1776700315; c=relaxed/simple;
+	bh=uECNalsUlnGi5nPYBYwlUE1oGX+AIlrkC8mmezoYvug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxY65vmudFirv1zjCINN2/d1q8bXOkYP6xUQ53W5nFXnrugANOofh9Obxzot8Lb0QBTN/wOOJHuxoQwT23ooFZKx5YHu/sGGh9zIei7OJGKxBDDAXVV7RjtWjkFR4u/ikvMM5+lLATdj90Zc/QaJRYJYqXM/tFeeEAH8ApVN7JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZmkm9xW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J8m0vDwB07oW5PLjNd9FmvXfN1rqkwBsq6rM2tDOx1MsqMhIX/wtsOyb9okIFQrFfsezmdROocAQv0b+yDHofMpD47bMZsa9zXqBwSo8p1X6mW9ESuX9j3HKBmJCJUO+tS072oVEnYZ3y66VUwOFr7lySgkgU74EdcjM2HzYSzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svDnFk6h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZmkm9xW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4AFC19425;
-	Mon, 20 Apr 2026 15:51:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svDnFk6h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81F7C19425;
+	Mon, 20 Apr 2026 15:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700312;
-	bh=8rgzU5yaCIMrqgV646aWUqUJmSfh/MM72M2gRh456iM=;
+	s=korg; t=1776700315;
+	bh=uECNalsUlnGi5nPYBYwlUE1oGX+AIlrkC8mmezoYvug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZmkm9xWR1zBB8NjOMox7ltHvhdtGmnDSd1qr9JqFFvibMDiGzhNqwaeCWob4SO0z
-	 ZizboZXJD1y/KVAd5c8gmiAtjUVkaFlFLotUH3YEB10qLwhXUhrjPz0aRES491XPce
-	 m2w+Slam0gZgP43u8c20vPzfHBSSEez87GuhawnE=
+	b=svDnFk6hgmY0aC+TXkGaW8GdAvVdCeHD4tsppW2sOakt/4OQzjqLAuzRDPXk+30Ys
+	 cryB9OQQMLfkhTZLM8vZY9ZqFiXRgr9cF/raKKKM9o1ejHwuRlJVP009cbW8olvvks
+	 gruaWr7u+rVwXqm0I5fzkSGIbQ+O2WS86o7xzTKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 106/220] vsock/test: fix send_buf()/recv_buf() EINTR handling
-Date: Mon, 20 Apr 2026 17:40:47 +0200
-Message-ID: <20260420153937.850458592@linuxfoundation.org>
+Subject: [PATCH 6.19 124/220] net: mdio: realtek-rtl9300: use scoped device_for_each_child_node loop
+Date: Mon, 20 Apr 2026 17:41:05 +0200
+Message-ID: <20260420153938.493012471@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -52,54 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 24ad7ff668896325591fa0b570f2cca6c55f136f ]
+[ Upstream commit c09ea768bdb975e828f8e17293c397c3d14ad85d ]
 
-When send() or recv() returns -1 with errno == EINTR, the code skips
-the break but still adds the return value to nwritten/nread, making it
-decrease by 1. This leads to wrong buffer offsets and wrong bytes count.
+Switch to device_for_each_child_node_scoped() to auto-release fwnode
+references on early exit.
 
-Fix it by explicitly continuing the loop on EINTR, so the return value
-is only added when it is positive.
-
-Fixes: a8ed71a27ef5 ("vsock/test: add recv_buf() utility function")
-Fixes: 12329bd51fdc ("vsock/test: add send_buf() utility function")
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://patch.msgid.link/20260403093251.30662-1-sgarzare@redhat.com
+Fixes: 24e31e474769 ("net: mdio: Add RTL9300 MDIO driver")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260405-rtl9300-v1-1-08e4499cf944@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/vsock/util.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/mdio/mdio-realtek-rtl9300.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/testing/vsock/util.c b/tools/testing/vsock/util.c
-index 9430ef5b8bc3e..1fe1338c79cd1 100644
---- a/tools/testing/vsock/util.c
-+++ b/tools/testing/vsock/util.c
-@@ -344,7 +344,9 @@ void send_buf(int fd, const void *buf, size_t len, int flags,
- 		ret = send(fd, buf + nwritten, len - nwritten, flags);
- 		timeout_check("send");
+diff --git a/drivers/net/mdio/mdio-realtek-rtl9300.c b/drivers/net/mdio/mdio-realtek-rtl9300.c
+index 405a07075dd11..8d5fb014ca06c 100644
+--- a/drivers/net/mdio/mdio-realtek-rtl9300.c
++++ b/drivers/net/mdio/mdio-realtek-rtl9300.c
+@@ -466,7 +466,6 @@ static int rtl9300_mdiobus_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct rtl9300_mdio_priv *priv;
+-	struct fwnode_handle *child;
+ 	int err;
  
--		if (ret == 0 || (ret < 0 && errno != EINTR))
-+		if (ret < 0 && errno == EINTR)
-+			continue;
-+		if (ret <= 0)
- 			break;
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+@@ -487,7 +486,7 @@ static int rtl9300_mdiobus_probe(struct platform_device *pdev)
+ 	if (err)
+ 		return err;
  
- 		nwritten += ret;
-@@ -396,7 +398,9 @@ void recv_buf(int fd, void *buf, size_t len, int flags, ssize_t expected_ret)
- 		ret = recv(fd, buf + nread, len - nread, flags);
- 		timeout_check("recv");
- 
--		if (ret == 0 || (ret < 0 && errno != EINTR))
-+		if (ret < 0 && errno == EINTR)
-+			continue;
-+		if (ret <= 0)
- 			break;
- 
- 		nread += ret;
+-	device_for_each_child_node(dev, child) {
++	device_for_each_child_node_scoped(dev, child) {
+ 		err = rtl9300_mdiobus_probe_one(dev, priv, child);
+ 		if (err)
+ 			return err;
 -- 
 2.53.0
 
