@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C8A333445;
-	Mon, 20 Apr 2026 16:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8949C2853F3;
+	Mon, 20 Apr 2026 16:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701555; cv=none; b=XdsZd1UQ5U13IEKR8U91jCIm13tdOH+CKNC2XurX7rrKgFVED0I/wiwpCPy1E8EizxKFOwvXEI253+5gjfPvN4g4CJMDG3lh9Q+TwxMPpXa1xgfYPwzjtd3LNv0B4ASBgD1XC5w+/r9z08sgKoVvtc5faFo9l94pffi7+Xg0Xdc=
+	t=1776701557; cv=none; b=TUCyCd+mOYiCCG7oBGe3i8ykASsBYLqRzS9xkWdd5rPtGo5r2VAm40wQapURtPLi64PEiTnJiqOH9+31dGZVvxFW9lgCqcedybageSY78htFS30XfuAN6sSlrarXlJ6ZJeaCb9El/K2g5/2ad4VkSlRREyC5h8ploDPVYyn26CU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701555; c=relaxed/simple;
-	bh=Ja92mSMTBxpy6V8E6IVy0OVL8TfBsRg7QIforuh423k=;
+	s=arc-20240116; t=1776701557; c=relaxed/simple;
+	bh=Eevp+sNcesNVsbSyNDqd5Fba8v3lTv80wpZFzPttnD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASAkmMFNsQAIeiRlUoPc7zGFPgEp3hOWTroWjx2hT8QPmiWMv48jlQhLbh+mNIpY7H+0lZsPr3D8vpFF4zRV+lS3ZB12I9tJZEFe/cNFEoivgcIDaqWMyVLg/MN6uBuBo4RmQGFA+RD3+yUfWDhsu3/N0t9p8l6Pn5hVhoK+QkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prAcIplW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A8Ywv5EqXzRNrZninpNKtEpEfI3HnZP8d4v3NKFo3bK5gE0D3QVCsjhb3Y9gcU05dAWhZYy6tE2PcFK4MHcFyjQSl8rPkpKE617Vm2lmpS3K465Fd9GbAjafnmORtPBo2S3yejl1jr21wlFwtNNoYj5qKU9VYpKJOxZ9MRS0TH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DthaVn9Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prAcIplW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0BFC19425;
-	Mon, 20 Apr 2026 16:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DthaVn9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5E0C19425;
+	Mon, 20 Apr 2026 16:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701554;
-	bh=Ja92mSMTBxpy6V8E6IVy0OVL8TfBsRg7QIforuh423k=;
+	s=korg; t=1776701557;
+	bh=Eevp+sNcesNVsbSyNDqd5Fba8v3lTv80wpZFzPttnD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prAcIplWz3qdxGXquO8MZEcCAjAvdKOcT3GpagX/n3JxXHaCtTrjnIkb4/LHpA8Z0
-	 SOgFDQxIgyhQjLDqramkNTJGr/KZACO8kVT0y28NROYzgGnb4JR/c+hXVQ/gcQlGWK
-	 ZEsKmrPDMvQIWRReLdYAE0Yc1uQMcbyDBeTO8gB8=
+	b=DthaVn9YjL37h0KP6+8QxjZX2zQbjVa+c126DdhVafJ0G+9f3IngovmwzUS30hGRA
+	 Sybkqi3qhEPsTQY9I0m10ibG8HK+ZtbG3avZxpFgP4unJ8d3sH16XSNBc2I7uMO9qj
+	 APXVtJV1x5Jw6Nrcw4U9lCo1XlMZTfJ+mvg3lRQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Fiona Behrens <me@kloenk.dev>,
-	Trevor Gross <tmgross@umich.edu>,
-	Tamir Duberstein <tamird@kernel.org>
-Subject: [PATCH 6.12 117/162] scripts: generate_rust_analyzer.py: avoid FD leak
-Date: Mon, 20 Apr 2026 17:42:29 +0200
-Message-ID: <20260420153931.280074704@linuxfoundation.org>
+	syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 6.12 153/162] nilfs2: fix NULL i_assoc_inode dereference in nilfs_mdt_save_to_shadow_map
+Date: Mon, 20 Apr 2026 17:43:05 +0200
+Message-ID: <20260420153932.591629020@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -52,37 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamir Duberstein <tamird@kernel.org>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 9b4744d8eda2824041064a5639ccbb079850914d upstream.
+commit 4a4e0328edd9e9755843787d28f16dd4165f8b48 upstream.
 
-Use `pathlib.Path.read_text()` to avoid leaking file descriptors.
+The DAT inode's btree node cache (i_assoc_inode) is initialized lazily
+during btree operations. However, nilfs_mdt_save_to_shadow_map()
+assumes i_assoc_inode is already initialized when copying dirty pages
+to the shadow map during GC.
 
-Fixes: 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
+If NILFS_IOCTL_CLEAN_SEGMENTS is called immediately after mount before
+any btree operation has occurred on the DAT inode, i_assoc_inode is
+NULL leading to a general protection fault.
+
+Fix this by calling nilfs_attach_btree_node_cache() on the DAT inode
+in nilfs_dat_read() at mount time, ensuring i_assoc_inode is always
+initialized before any GC operation can use it.
+
+Reported-by: syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b4093b1f24ad789bf37
+Tested-by: syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com
+Fixes: e897be17a441 ("nilfs2: fix lockdep warnings in page operations for btree nodes")
+Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-Reviewed-by: Fiona Behrens <me@kloenk.dev>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Link: https://patch.msgid.link/20260127-rust-analyzer-fd-leak-v2-1-1bb55b9b6822@kernel.org
-Signed-off-by: Tamir Duberstein <tamird@kernel.org>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/generate_rust_analyzer.py |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nilfs2/dat.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/scripts/generate_rust_analyzer.py
-+++ b/scripts/generate_rust_analyzer.py
-@@ -146,9 +146,10 @@ def generate_crates(srctree, objtree, sy
+--- a/fs/nilfs2/dat.c
++++ b/fs/nilfs2/dat.c
+@@ -523,6 +523,9 @@ int nilfs_dat_read(struct super_block *s
+ 	if (err)
+ 		goto failed;
  
-     def is_root_crate(build_file, target):
-         try:
--            return f"{target}.o" in open(build_file).read()
-+            contents = build_file.read_text()
-         except FileNotFoundError:
-             return False
-+        return f"{target}.o" in contents
- 
-     # Then, the rest outside of `rust/`.
-     #
++	err = nilfs_attach_btree_node_cache(dat);
++	if (err)
++		goto failed;
+ 	err = nilfs_read_inode_common(dat, raw_inode);
+ 	if (err)
+ 		goto failed;
 
 
