@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2D03396EE;
-	Mon, 20 Apr 2026 15:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B78C3321AA;
+	Mon, 20 Apr 2026 15:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700627; cv=none; b=c7sw2Hre/C7NdGrMUMYrpJWaw8zUuKDj0ADr9ds1RPCpXOY+EeVDsxGgQ+ABYowFeyQAJNcBSYe/qLQ0L04ElNsWhTqg8u/gejbnMFaoFUASOo+W19iSemIuqCCKli6mml1HPkXBsc+SJAlUtoavhsxd80sJXR3s7QBmywIbm0I=
+	t=1776700630; cv=none; b=jqycBUCVB71DgGPtHaB/M4gJSFNPLqsnV1kXaqYLTo9bkLEJCP2juTzYgbj4JNTX5HKeLjW8EpBSeQK4LsOEmBJWLLZ6nlK22lzw9/WFoGn8ZbTO0/Z6hO4cc+s5phXKbecVDFVhU7voJxJvZGhid180ehFL3PSTMP8NGGWyC/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700627; c=relaxed/simple;
-	bh=GYD3kh5gvTTMV3e7h2IOpOFvMgSWC9U5zx+g2RkYlLY=;
+	s=arc-20240116; t=1776700630; c=relaxed/simple;
+	bh=/ynAEnQ3O1KR65xAoK6oytau+gr0/U04ojZ2r8Go+WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emeWiayMu4Nm7kKIowCOFnhUyaXKbPljUgZFm8EOK9s/pkflfvIicCXOBkTDMzbXk9cNlg4F2U9KDnM9Y8jhOT4TRd+FcOjVstkl2k0PHDYHxJNWbwGawMrHggaQyRjPtSEDFxFqBNgwGz7ZSB2l6GvC7ZuzrHBbRJ3g7IP0usU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvsPawcR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pUhUpuyjFUItLYRK+hi2VylxKa3GzuffjjsCcNUVYISi6DdZ/wnbntLLon9mCyPZCb7VInZIZ9zYbmAOuuhWeXZboYLsUVA3gtrUsh2oFQJnt+t48jQUfFwDzCTcfb0rciC9fHkuYUUprRvhaUNraNuGQWXDqAj0UxaRBGdgCKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMRfxWuR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvsPawcR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C48C19425;
-	Mon, 20 Apr 2026 15:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMRfxWuR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94358C19425;
+	Mon, 20 Apr 2026 15:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700627;
-	bh=GYD3kh5gvTTMV3e7h2IOpOFvMgSWC9U5zx+g2RkYlLY=;
+	s=korg; t=1776700629;
+	bh=/ynAEnQ3O1KR65xAoK6oytau+gr0/U04ojZ2r8Go+WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yvsPawcRWCFYWjDK8XZ0gjHaBpwKc9sCjmEyq7+Mv7bThRpL8s9MXZ1cGjZEyFR3W
-	 KbKFfeBu3Vwu914aiX82aw5M1SPcQ56/lI49gArwDdj+W3XHVcxZ73+OwN2rFoELD/
-	 0785qEtDhSYxtWk0nRoxT8KH0YM9WFCeImxcD4W0=
+	b=eMRfxWuRa7F6JL1I+MmXUeE3qM/51auUNFoWaD3i8h6g0nbjFsPcB1r4FJf472o2F
+	 4ViagBePdmdpSxwwtHgcfFGtLQTHhZ4MjzzFprM1iF+/6/TStLpcK71S0AjQDoG5Pv
+	 hEhG4SzR6CsfzWyagDQMstoFEdH8oA/TfLInk0bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dustin L. Howett" <dustin@howett.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 025/198] ALSA: hda/realtek: add quirk for Framework F111:000F
-Date: Mon, 20 Apr 2026 17:40:04 +0200
-Message-ID: <20260420153936.523818015@linuxfoundation.org>
+Subject: [PATCH 6.18 026/198] wifi: wl1251: validate packet IDs before indexing tx_frames
+Date: Mon, 20 Apr 2026 17:40:05 +0200
+Message-ID: <20260420153936.559146515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,36 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dustin L. Howett <dustin@howett.net>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit bac1e57adf08c9ee33e95fb09cd032f330294e70 ]
+[ Upstream commit 0fd56fad9c56356e7fa7a7c52e7ecbf807a44eb0 ]
 
-Similar to commit 7b509910b3ad ("ALSA hda/realtek: Add quirk for
-Framework F111:000C") and previous quirks for Framework systems with
-Realtek codecs.
+wl1251_tx_packet_cb() uses the firmware completion ID directly to index
+the fixed 16-entry wl->tx_frames[] array. The ID is a raw u8 from the
+completion block, and the callback does not currently verify that it
+fits the array before dereferencing it.
 
-000F is another new platform with an ALC285 which needs the same quirk.
+Reject completion IDs that fall outside wl->tx_frames[] and keep the
+existing NULL check in the same guard. This keeps the fix local to the
+trust boundary and avoids touching the rest of the completion flow.
 
-Signed-off-by: Dustin L. Howett <dustin@howett.net>
-Link: https://patch.msgid.link/20260327-framework-alsa-000f-v1-1-74013aba1c00@howett.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260323080845.40033-1-pengpeng@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ti/wl1251/tx.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 0c975005793e7..e7f7b148b40e5 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7555,6 +7555,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x000b, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x000c, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0xf111, 0x000f, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+diff --git a/drivers/net/wireless/ti/wl1251/tx.c b/drivers/net/wireless/ti/wl1251/tx.c
+index adb4840b04893..c264d83e71d9c 100644
+--- a/drivers/net/wireless/ti/wl1251/tx.c
++++ b/drivers/net/wireless/ti/wl1251/tx.c
+@@ -402,12 +402,14 @@ static void wl1251_tx_packet_cb(struct wl1251 *wl,
+ 	int hdrlen;
+ 	u8 *frame;
  
- #if 0
- 	/* Below is a quirk table taken from the old code.
+-	skb = wl->tx_frames[result->id];
+-	if (skb == NULL) {
+-		wl1251_error("SKB for packet %d is NULL", result->id);
++	if (unlikely(result->id >= ARRAY_SIZE(wl->tx_frames) ||
++		     wl->tx_frames[result->id] == NULL)) {
++		wl1251_error("invalid packet id %u", result->id);
+ 		return;
+ 	}
+ 
++	skb = wl->tx_frames[result->id];
++
+ 	info = IEEE80211_SKB_CB(skb);
+ 
+ 	if (!(info->flags & IEEE80211_TX_CTL_NO_ACK) &&
 -- 
 2.53.0
 
