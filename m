@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B27933F5BC;
-	Mon, 20 Apr 2026 16:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FAA1FB1;
+	Mon, 20 Apr 2026 16:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701215; cv=none; b=iR9fZGjRjBqpw8QeIyNdTd/7xMFVUfupcf0kqoVeuYc44z+sJdv7dUfQ8UCfTPjF7colc8J5+Lt2xsAcL/VbYZqJSmojwFLgVHQopKQZNXcFS0+IdIVxph92cp3GvYoi3Qt8wQPcsTiqRFSYqfgTWq8XOuIUUXvacGL/48VU0+M=
+	t=1776701217; cv=none; b=pre5VPkTOGEgsvTUUc1xkO/R1HO8GaQy7ZJlQK55TVCO/5S02YJ+XjCNnKPeblxmIF0mLZSXG7Pqiz4/pZBchu/C0KnlTq6FV4rVzo+S1ci7khFxoyASCVJ3UZejvXrAGlu4aTgxkasGwqYeJ+/tuGo4Q/1ThYzSnJpe8hM1T4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701215; c=relaxed/simple;
-	bh=vod8egGUn6RK7YPNCjB9SbkUHWnAQYGLFg+Vlvf5Lm8=;
+	s=arc-20240116; t=1776701217; c=relaxed/simple;
+	bh=YTAY/pF70Ma+maxMgIiCTdrB1fisyC8jAoPft8N3S2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f04uIUnRG2ZkcXiOGEWh3bHsdNMkc3AzqhN8jLoQ2kAfHUkJQPT/ma6+Y9c/gInqiwCWlCLh59Br82UkuH0J1QG2M/JS0I48SoYQb3guS/vbREpD9LCtNf6/aC/sZbVeFTn8/xGkBP18dZF8YsBlDyFKap/V6n11iVkj4l2Ox0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXMwmoe2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckph+/J3urF6ZGjPWFXTnvC94iaKOpDmA8fXJIP6UXBNR6ddnvglsd3mtGTni56xmuNM5WbnorgSuE9DzH7XjmYSnvfiX32Wc6gm+LW8VpwqXLmdYNfrh1aqeALU1MRKUcNUyU8nH3HSeB19sC1B51u9w21SXOMA7qWFdXKDzDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HBLdDs+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXMwmoe2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B89C19425;
-	Mon, 20 Apr 2026 16:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HBLdDs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A33C19425;
+	Mon, 20 Apr 2026 16:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701214;
-	bh=vod8egGUn6RK7YPNCjB9SbkUHWnAQYGLFg+Vlvf5Lm8=;
+	s=korg; t=1776701217;
+	bh=YTAY/pF70Ma+maxMgIiCTdrB1fisyC8jAoPft8N3S2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXMwmoe2DoZLqevmsCBhPlxG6QTtx4Sf5EUQCVWFLwf0Oo8AtX3G9Hvv3u1ur1qrC
-	 Yegjs+WGlmJTD+5u3xXSW1imMw+Pdf5hW3itedIvI+zJBs/S76xlvVYe5Bdo/u75af
-	 eRBYALPljmbc/pNa/vECZ8VFpxE91otc9kZg6hMI=
+	b=0HBLdDs+jF/7cTgZKzC5REEAA4FRj6ho1kfw7CH5ZOx91uNyP8e6fBEp4NVcZyBlP
+	 bsOrnM2IqAEv2n++C1d73JzhYZD7clSO6BOCJO0lKmI/sLO5A1lmLut5geFqRxx82H
+	 e8foYVPhAiNYrZXnLuuOCtvoNzdM5pVRrRXl9/yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	leo vriska <leo@60228.dev>,
-	Jiri Kosina <jkosina@suse.com>,
+	Fernando Garcia Corona <fgarcor@gmail.com>,
+	songxiebing <songxiebing@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/162] HID: quirks: add HID_QUIRK_ALWAYS_POLL for 8BitDo Pro 3
-Date: Mon, 20 Apr 2026 17:40:59 +0200
-Message-ID: <20260420153928.004001991@linuxfoundation.org>
+Subject: [PATCH 6.12 028/162] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14IAH10
+Date: Mon, 20 Apr 2026 17:41:00 +0200
+Message-ID: <20260420153928.039685970@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,50 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: leo vriska <leo@60228.dev>
+From: songxiebing <songxiebing@kylinos.cn>
 
-[ Upstream commit 532743944324a873bbaf8620fcabcd0e69e30c36 ]
+[ Upstream commit f0541edb2e7333f320642c7b491a67912c1f65db ]
 
-According to a mailing list report [1], this controller's predecessor
-has the same issue. However, it uses the xpad driver instead of HID, so
-this quirk wouldn't apply.
+The bass speakers are not working, and add the following entry
+in /etc/modprobe.d/snd.conf:
+options snd-sof-intel-hda-generic hda_model=alc287-yoga9-bass-spk-pin
+Fixes the bass speakers.
 
-[1]: https://lore.kernel.org/linux-input/unufo3$det$1@ciao.gmane.io/
+So add the quick ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN here.
 
-Signed-off-by: leo vriska <leo@60228.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Fernando Garcia Corona <fgarcor@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221317
+Signed-off-by: songxiebing <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260405012651.133838-1-songxiebing@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 3 +++
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 4 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 25eb5cc7de70e..475e6eb4702af 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -22,6 +22,9 @@
- #define USB_DEVICE_ID_3M2256		0x0502
- #define USB_DEVICE_ID_3M3266		0x0506
- 
-+#define USB_VENDOR_ID_8BITDO		0x2dc8
-+#define USB_DEVICE_ID_8BITDO_PRO_3	0x6009
-+
- #define USB_VENDOR_ID_A4TECH		0x09da
- #define USB_DEVICE_ID_A4TECH_WCP32PU	0x0006
- #define USB_DEVICE_ID_A4TECH_X5_005D	0x000a
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 7a3e0675d9ba2..d9e33dde89899 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -25,6 +25,7 @@
-  */
- 
- static const struct hid_device_id hid_quirks[] = {
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_8BITDO, USB_DEVICE_ID_8BITDO_PRO_3), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_GAMEPAD), HID_QUIRK_BADPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AASHIMA, USB_DEVICE_ID_AASHIMA_PREDATOR), HID_QUIRK_BADPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ADATA_XPG, USB_VENDOR_ID_ADATA_XPG_WL_GAMING_MOUSE), HID_QUIRK_ALWAYS_POLL },
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index b73c2741f8ae7..4cab9696fdab0 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11587,6 +11587,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38fd, "ThinkBook plus Gen5 Hybrid", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.53.0
 
