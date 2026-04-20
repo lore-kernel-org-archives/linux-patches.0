@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8C8331A78;
-	Mon, 20 Apr 2026 15:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C02722259F;
+	Mon, 20 Apr 2026 15:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700484; cv=none; b=eaI97WnJ/qeTw7Hengn/jH1Mzyq0hM2sxvUHD8bP+HmgkOREzDgZry0DTHujZvFcgz2c3aF/0QnJoZ/wADwtxJA2eF0Lr7cCQFhenqwXx20dRI4soRTqWwwKFxVUhAzIs5txSmz69NF9QV0LiUb2TLQYJAZ/fWFSpuEEpP0f8fM=
+	t=1776700486; cv=none; b=NN9YhdhWbU3a4gaia+NiQfoJTTTl25PnMQlMWJ/1DO+wZL3rTj3HeKTgYt/MRU7vEgMePGduvVppO6f8OA9LRHG7tcdtBAnQ6CVpVfu8jv4VGcu8gp39CISN+5eqvvfpD/6x8xhwBiReLLAdXJfy2Znn51bqxWm0g5WzG1MWfRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700484; c=relaxed/simple;
-	bh=JvazAjmQvVPUwnyMynuNyoZlTeVAR6duhqZolr8EC1I=;
+	s=arc-20240116; t=1776700486; c=relaxed/simple;
+	bh=VNvIXAj0TyK9ZloeCBDS+I8h8Ozd+xanc/gkWZn5QXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C51oCK7L+fNjdImrGN2cIj/RPQE/yuCMUKXcoFYyDbgXq67yD8USTizDFz9mgDkzMAwLRb6528mqGEHom0uzqK0WVhM30bhm6NAdKaIauLc+isUartiymBG+ltmn1ZL059qIAiyPbK2PcxhcDBSvnLHWCbPumJP4jpfpj4Slf8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZuXGO3L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QNAPFVVx+t1dTor7ezoIHlYSWbDWpmDgkxjz8LJZr0xraBM69wazmJR1KduHyUDSN9NFvylP/gPgZi3by281n60CrkWW5g+wp8q1jNS17DGOC3C86XH6N5cpgIDgaK8ELH+1v23I5ExyLy6djt+VanM0kFlNT4ItcVzAaHTc7sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+MQNsJp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZuXGO3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B86C19425;
-	Mon, 20 Apr 2026 15:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+MQNsJp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330A0C19425;
+	Mon, 20 Apr 2026 15:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700483;
-	bh=JvazAjmQvVPUwnyMynuNyoZlTeVAR6duhqZolr8EC1I=;
+	s=korg; t=1776700486;
+	bh=VNvIXAj0TyK9ZloeCBDS+I8h8Ozd+xanc/gkWZn5QXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZuXGO3LiR5hqH5PnBLCdODZC4XK9kfspxk+5AsN3jtdarpnoUfjdbbW6ooswGALI
-	 Xd7NVNKYKYpwCUHESWVvXtF9hW5ejd6YuyDrBBmTUVQpWhXadHvekHV5QHI7nOcnnm
-	 t5u+RJGi9VX+3Gm3dYj6IcZijI5LAmO+0SwbK94E=
+	b=a+MQNsJpgpk1xSBz90FCriQdDdd8xyLdAaZF6plvac+x3RyJMQvwRFAF/phJbpQey
+	 zNZLTkYNBIpJwpZRILCyvN3tyoxwuOOMYILk/mVBT+xzgCkQvOpsi66lziCMyjo8R4
+	 gvDB8g3FADcW4EWcdAAYEvZoMPzlAd77kSabrnA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Liam Merwick <liam.merwick@oracle.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.19 191/220] KVM: SEV: Lock all vCPUs when synchronzing VMSAs for SNP launch finish
-Date: Mon, 20 Apr 2026 17:42:12 +0200
-Message-ID: <20260420153940.902462774@linuxfoundation.org>
+Subject: [PATCH 6.19 192/220] KVM: SEV: Drop WARN on large size for KVM_MEMORY_ENCRYPT_REG_REGION
+Date: Mon, 20 Apr 2026 17:42:13 +0200
+Message-ID: <20260420153940.938531219@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -51,81 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit cb923ee6a80f4e604e6242a4702b59251e61a380 upstream.
+commit 8acffeef5ef720c35e513e322ab08e32683f32f2 upstream.
 
-Lock all vCPUs when synchronizing and encrypting VMSAs for SNP guests, as
-allowing userspace to manipulate and/or run a vCPU while its state is being
-synchronized would at best corrupt vCPU state, and at worst crash the host
-kernel.
+Drop the WARN in sev_pin_memory() on npages overflowing an int, as the
+WARN is comically trivially to trigger from userspace, e.g. by doing:
 
-Opportunistically assert that vcpu->mutex is held when synchronizing its
-VMSA (the SEV-ES path already locks vCPUs).
+  struct kvm_enc_region range = {
+          .addr = 0,
+          .size = -1ul,
+  };
 
-Fixes: ad27ce155566 ("KVM: SEV: Add KVM_SEV_SNP_LAUNCH_FINISH command")
+  __vm_ioctl(vm, KVM_MEMORY_ENCRYPT_REG_REGION, &range);
+
+Note, the checks in sev_mem_enc_register_region() that presumably exist to
+verify the incoming address+size are completely worthless, as both "addr"
+and "size" are u64s and SEV is 64-bit only, i.e. they _can't_ be greater
+than ULONG_MAX.  That wart will be cleaned up in the near future.
+
+	if (range->addr > ULONG_MAX || range->size > ULONG_MAX)
+		return -EINVAL;
+
+Opportunistically add a comment to explain why the code calculates the
+number of pages the "hard" way, e.g. instead of just shifting @ulen.
+
+Fixes: 78824fabc72e ("KVM: SVM: fix svn_pin_memory()'s use of get_user_pages_fast()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260310234829.2608037-6-seanjc@google.com
+Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
+Tested-by: Liam Merwick <liam.merwick@oracle.com>
+Link: https://patch.msgid.link/20260313003302.3136111-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/sev.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
-@@ -875,6 +875,8 @@ static int sev_es_sync_vmsa(struct vcpu_
- 	u8 *d;
- 	int i;
+@@ -683,10 +683,16 @@ static struct page **sev_pin_memory(stru
+ 	if (ulen == 0 || uaddr + ulen < uaddr)
+ 		return ERR_PTR(-EINVAL);
  
-+	lockdep_assert_held(&vcpu->mutex);
-+
- 	if (vcpu->arch.guest_state_protected)
- 		return -EINVAL;
+-	/* Calculate number of pages. */
++	/*
++	 * Calculate the number of pages that need to be pinned to cover the
++	 * entire range.  Note!  This isn't simply ulen >> PAGE_SHIFT, as KVM
++	 * doesn't require the incoming address+size to be page aligned!
++	 */
+ 	first = (uaddr & PAGE_MASK) >> PAGE_SHIFT;
+ 	last = ((uaddr + ulen - 1) & PAGE_MASK) >> PAGE_SHIFT;
+ 	npages = (last - first + 1);
++	if (npages > INT_MAX)
++		return ERR_PTR(-EINVAL);
  
-@@ -2460,6 +2462,10 @@ static int snp_launch_update_vmsa(struct
- 	if (kvm_is_vcpu_creation_in_progress(kvm))
- 		return -EBUSY;
- 
-+	ret = kvm_lock_all_vcpus(kvm);
-+	if (ret)
-+		return ret;
-+
- 	data.gctx_paddr = __psp_pa(sev->snp_context);
- 	data.page_type = SNP_PAGE_TYPE_VMSA;
- 
-@@ -2469,12 +2475,12 @@ static int snp_launch_update_vmsa(struct
- 
- 		ret = sev_es_sync_vmsa(svm);
- 		if (ret)
--			return ret;
-+			goto out;
- 
- 		/* Transition the VMSA page to a firmware state. */
- 		ret = rmp_make_private(pfn, INITIAL_VMSA_GPA, PG_LEVEL_4K, sev->asid, true);
- 		if (ret)
--			return ret;
-+			goto out;
- 
- 		/* Issue the SNP command to encrypt the VMSA */
- 		data.address = __sme_pa(svm->sev_es.vmsa);
-@@ -2483,7 +2489,7 @@ static int snp_launch_update_vmsa(struct
- 		if (ret) {
- 			snp_page_reclaim(kvm, pfn);
- 
--			return ret;
-+			goto out;
- 		}
- 
- 		svm->vcpu.arch.guest_state_protected = true;
-@@ -2497,7 +2503,9 @@ static int snp_launch_update_vmsa(struct
- 		svm_enable_lbrv(vcpu);
+ 	locked = sev->pages_locked + npages;
+ 	lock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
+@@ -695,9 +701,6 @@ static struct page **sev_pin_memory(stru
+ 		return ERR_PTR(-ENOMEM);
  	}
  
--	return 0;
-+out:
-+	kvm_unlock_all_vcpus(kvm);
-+	return ret;
- }
- 
- static int snp_launch_finish(struct kvm *kvm, struct kvm_sev_cmd *argp)
+-	if (WARN_ON_ONCE(npages > INT_MAX))
+-		return ERR_PTR(-EINVAL);
+-
+ 	/* Avoid using vmalloc for smaller buffers. */
+ 	size = npages * sizeof(struct page *);
+ 	if (size > PAGE_SIZE)
 
 
