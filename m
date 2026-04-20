@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE763FA5E0;
-	Mon, 20 Apr 2026 13:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE593BF667;
+	Mon, 20 Apr 2026 13:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691571; cv=none; b=HAvFmJoAA13/1nPzOwmJBx+XxWPNZh8/dMjQLQis0k6b92reWMx9mMcNxxmzLAlL089gL6aBZHQEzq11dm01EHKyg1wGQbHVn0G8jbDLr0k0L3y+XBwFFWMJeOVOdPzGpf8WOXrWollh2US+C2Pc8JFxYH5XCKQNgWla9vL/bJQ=
+	t=1776691573; cv=none; b=Qb5hjzFz1r3ezJ2x9yJX58roTou4zhagpeIMNnU/vd8sjZ1LEhN3oYMVkVyaLWFlILfOSMVlavG5dWVUds6P6uWBxpGIkA3nnXDvIum/QP/i65zLukbozO3KI1T+nSVPg6FNe3FJu1tmLqBJ11OzchAs1fiubtICSNt0+sn/SHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691571; c=relaxed/simple;
-	bh=WLQgOMFtCDW3oXcYgQSCIpO+YNH9wFtx5GdhAlLdSrI=;
+	s=arc-20240116; t=1776691573; c=relaxed/simple;
+	bh=vSLavixEUEuwgCzTDQQQmqZVD/P6u16k5TITO7ii3go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cfafx9d7QFWMBkZTQAQV367gaCid9z/IR3aq1oJfrRcQ0N15A4IuQM32xpbEzo/cNuQPejei5S8RstTcJpcOlpT3A0hxlNJLD7UKL9mSxjNFxiTbEqkQOgX2KzLNxCXyL3dpRiRwumH5K0Jxyypf1KWbv9YL8HIjvZ017MQQW/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GRqgWJpg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bmmF4XrUr5p1cTkdZNC90elyroXMYCSA+nCnq+Ww5e/94A8iy4nt6mPWb7l2NIMKl5L8ajPuerDuR6RZBUBZKjGznFSxdBfefEVo0vpRGUPcBUbHnghtHQqOUH/9H4tylg7n2TWvS8LQD/+4FoMr8rrXu5Lw0Gm/1ODfeWl3Uyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YF6tKH4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GRqgWJpg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBAE6C2BCB4;
-	Mon, 20 Apr 2026 13:26:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YF6tKH4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2D4C19425;
+	Mon, 20 Apr 2026 13:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691571;
-	bh=WLQgOMFtCDW3oXcYgQSCIpO+YNH9wFtx5GdhAlLdSrI=;
+	s=k20201202; t=1776691573;
+	bh=vSLavixEUEuwgCzTDQQQmqZVD/P6u16k5TITO7ii3go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRqgWJpgUzrZVoJ4J/DhJAyMewOVlcS5P6F+Ya383N7PnqM2JvA3u9B1ydfjLouY0
-	 QsSqR8Wsa6luLGugLLOpgtBOHERV70MU9G2qa1Jx8Zx/jbjRXXIKXiGpQx4F2nVUN/
-	 WVOfufLmxdbvEqQt9bHMpoPvDxEnz5igyBt/jhl5lm571y0I97+hes2RKFDrMh9sL3
-	 CtkmmArGT9vk9SJrmlgb/2GaKfj02VeHhV8Xbuq2WEVExxSogDdnDTujas5GyXqciL
-	 kLRM5z3OkF7BfQxRMqcHd3/xIQPoG3ze/XbBUk8wy7WTiI/a/yM57AG0ItzuBnG1VS
-	 7ByWB13BkYigA==
+	b=YF6tKH4x0BXhU0Ss5Qb+6oyUDToKjvZ4IaRvnKvejLPEMbR6nbmKJCTMvfiCB+ff2
+	 3NVI9Z41Ome/CuHNxwLhUeZOl/IPjRKdIolbgO9bQkSUOKxdUIUyUIsrb42HYkhSv+
+	 2aolkBzqKrVARSVnOzAv/lgur5aPmFVh2GkX0vwxnIb60xQbmhICeK6IB1U29Oldql
+	 PIlkY5hrpWcqFA7juZ4wENnpp+1mzVn7w084UXFDrgq/AGj/wqUshOKbuym/2UAC8f
+	 trpECLwjbOa6lNetqTuS78Krj5FIgjjnsJVgqYAR4JBrFVpn2uxx/XLwWmYFx2R0pi
+	 i794zIo3i5WaQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+Cc: Maciej Strozek <mstrozek@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] wifi: iwlwifi: mld: always assign a fw id to a vif
-Date: Mon, 20 Apr 2026 09:18:21 -0400
-Message-ID: <20260420132314.1023554-107-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.19] ASoC: sdw_utils: Add CS42L43B codec info
+Date: Mon, 20 Apr 2026 09:18:22 -0400
+Message-ID: <20260420132314.1023554-108-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -49,310 +53,379 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-[ Upstream commit 4f1da5cf31cf6345f145e914a0158c2e114bbe27 ]
+[ Upstream commit 3e314fde2304b328929c471a70906bc5968f9dcf ]
 
-We used to have a fw id assignment in iwl_mld_init_vif since all interface
-types that were added to the driver was immediately added to the FW as
-well.
-Since NAN was introduced, this is no longer the case - the NAN interface
-is not added to the fw until a local schedule is configured.
+Add codec_info for a new variant of CS42L43. It can resue existing info
+but needs a new part_id.
 
-For this vif we don't assign a fw id so it is 0 by default.
-But later, when the vif is removed from the driver, we think that it has
-a valid fw id (0) and we point fw_id_to_vif[0] to NULL.
-fw_id_to_vif[0] might actually point to another vif with a valid fw id
-0. In this case, we end up messing fw_id_to_vif.
-
-Fix this by initializing a vif with a special invalid fw id, and by
-exiting iwl_mld_rm_vif early for NAN interfaces.
-
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260321192637.f3b5cc59098f.I3d1dbe66bd224cbb786c2b0ab3d1c9f7ec9003e4@changeid
+Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260306152829.3130530-2-mstrozek@opensource.cirrus.com
+Tested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good. Now I have a complete picture. Let me compile the full analysis.
+Now I have a complete picture. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `wifi: iwlwifi: mld:` (Intel wireless driver, MLD sub-
-  driver)
-- Action verb: "always assign" - implies fixing missing initialization
-- Summary: Ensure every vif gets a proper fw_id (even NAN interfaces
-  that don't get a real one)
-
-Record: [wifi: iwlwifi: mld] [fix/ensure] [Initialize fw_id for NAN vifs
-to prevent fw_id_to_vif table corruption]
+Record: [ASoC: sdw_utils] [Add] [CS42L43B codec info entry to
+codec_info_list]
 
 **Step 1.2: Tags**
-- Reviewed-by: Emmanuel Grumbach (Intel wifi subsystem co-maintainer)
-- Signed-off-by: Miri Korenblit (Intel wifi maintainer)
-- Link: patch.msgid.link URL
-- No Fixes: tag (expected for candidates)
-- No Cc: stable (expected for candidates)
+- Signed-off-by: Maciej Strozek (Cirrus Logic engineer, author)
+- Reviewed-by: Charles Keepax (Cirrus Logic, subsystem expert)
+- Tested-by: Charles Keepax (verified the fix works)
+- Link: patch.msgid.link for original submission
+- Signed-off-by: Mark Brown (ASoC maintainer, applied the patch)
 
-Record: Reviewed by a subsystem co-maintainer. No syzbot, no external
-reporters.
+Record: Reviewed AND tested by Charles Keepax (Cirrus Logic), applied by
+ASoC maintainer Mark Brown. No Fixes tag (expected). No syzbot.
 
-**Step 1.3: Commit Body Analysis**
-The message clearly describes:
-- The bug: NAN interfaces don't get a fw_id, so fw_id defaults to 0
-- The symptom: On NAN vif removal, `fw_id_to_vif[0]` is set to NULL,
-  which may belong to a *different* valid vif with fw_id 0
-- The consequence: Corrupts the fw_id_to_vif mapping table
-- The fix: Initialize fw_id to `IWL_MLD_INVALID_FW_ID` and skip rm_vif
-  for NAN
+**Step 1.3: Body Text**
+The message says: "Add codec_info for a new variant of CS42L43. It can
+reuse existing info but needs a new part_id." This is adding a device ID
+(part_id = 0x2A3B) for a hardware variant of the existing CS42L43 codec.
 
-Record: This is a data corruption bug in the vif-to-firmware-id mapping
-table.
+Record: New hardware variant CS42L43B needs a new part_id entry. Reuses
+existing callbacks and configuration.
 
-**Step 1.4: Hidden Bug Fix?**
-This is clearly described as a bug fix. The commit message explains the
-exact corruption mechanism.
+**Step 1.4: Hidden Bug Fix Detection**
+At face value this is a device ID addition, not a "hidden" bug fix.
+However, as I'll show in Phase 6, the ACPI match tables referencing
+CS42L43B are already in v7.0, making this missing entry cause audio
+probe failure on affected systems.
+
+Record: This is a device ID addition that also fixes a functional gap
+(ACPI tables present but codec_info missing).
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- 1 file changed: `drivers/net/wireless/intel/iwlwifi/mld/iface.c`
-- 2 hunks: one in `iwl_mld_init_vif()` (+1 line), one in
-  `iwl_mld_rm_vif()` (+3 lines)
-- Net: +4 lines. Extremely small, surgical fix.
+- Files changed: `sound/soc/sdw_utils/soc_sdw_utils.c`
+- Lines added: ~54 lines (all data, no code logic)
+- Lines removed: 0
+- Functions modified: None; the change is within the `codec_info_list[]`
+  static array initializer
+- Scope: single-file, purely additive data entry
+
+Record: 1 file, +54 lines of struct data, 0 removed, purely data.
 
 **Step 2.2: Code Flow Change**
+The diff adds a new `codec_info_list[]` entry with `.part_id = 0x2A3B`
+between the existing CS42L43 entry (0x4243) and the CS42L45 entry
+(0x4245). The new entry is structurally identical to the CS42L43 entry —
+same name_prefix, same sidecar functions, same 4 DAIs with same
+callbacks, same quirks. The only difference is `.part_id = 0x2A3B`.
 
-Hunk 1 (`iwl_mld_init_vif`): Adds `mld_vif->fw_id =
-IWL_MLD_INVALID_FW_ID;` (0xff). Before: fw_id is 0 (zeroed struct).
-After: fw_id is 0xff (invalid sentinel).
-
-Hunk 2 (`iwl_mld_rm_vif`): Adds early return for NAN interfaces. Before:
-NAN vif removal proceeds to NULL out `fw_id_to_vif[0]`. After: NAN
-removal returns immediately without touching the table.
+Record: Before: no entry for 0x2A3B; After: new entry identical to
+0x4243 but with part_id 0x2A3B.
 
 **Step 2.3: Bug Mechanism**
-This is a **logic/correctness bug** leading to **data corruption** in
-the fw_id_to_vif mapping:
-1. NAN vif is created - fw_id stays at default 0 (no allocation)
-2. NAN vif is removed - `fw_id_to_vif[0]` is set to NULL
-3. If another vif legitimately holds fw_id 0, its mapping is destroyed
+This is category (h) — Hardware workaround / Device ID addition. The new
+`part_id = 0x2A3B` is the SoundWire equivalent of a PCI/USB device ID,
+enabling the CS42L43B hardware variant to be matched by
+`asoc_sdw_find_codec_info_part()`.
 
-The existing WARN_ON check (`mld_vif->fw_id >=
-ARRAY_SIZE(mld->fw_id_to_vif)`) doesn't catch this because 0 is a valid
-index. But with the fix, IWL_MLD_INVALID_FW_ID (0xff) would trigger the
-WARN_ON as a safety net.
+Record: Device ID addition (new part_id for SoundWire codec variant).
 
 **Step 2.4: Fix Quality**
-- Obviously correct: IWL_MLD_INVALID_FW_ID already exists and is used
-  elsewhere in the codebase (scan.c)
-- Minimal: only 4 lines added
-- No regression risk: NAN interfaces should never touch fw_id_to_vif,
-  and the early return prevents any interaction
-- Double defense: Both the sentinel value AND the early return prevent
-  the corruption
+- The data is an exact copy of the existing 0x4243 entry with only
+  part_id changed
+- All referenced callbacks (`asoc_sdw_cs42l43_hs_rtd_init`,
+  `asoc_sdw_cs42l43_spk_init`, etc.) already exist
+- No new code logic, no new functions, no API changes
+- Regression risk: essentially zero (only affects systems with CS42L43B
+  hardware)
+
+Record: Trivially correct, minimal regression risk. Pure data addition.
+
+---
 
 ## PHASE 3: GIT HISTORY
 
-**Step 3.1: Blame Results**
-- `iwl_mld_init_vif` was introduced by `d1e879ec600f9` (add iwlmld sub-
-  driver, 2025-02-16), first in v6.15
-- The NAN support that introduced the bug was `9e978d8ebbe96`
-  (2025-11-10), first in v7.0
-- The `iwl_mld_rm_vif` function has been unchanged since the mld driver
-  introduction, with only the void return refactor in `0755db9f2605e`
+**Step 3.1: Blame**
+The existing CS42L43 entry (0x4243) was introduced in commit
+`e377c94773171e` by Vijendar Mukunda on 2024-08-01, when the
+codec_info_list was moved from Intel SOF to common sdw_utils. This file
+has been in the tree since v6.12.
 
-Record: Bug introduced by commit 9e978d8ebbe96 in v7.0-rc1. Only v7.0+
-stable trees are affected.
+Record: File created v6.12 (2024-08-01). CS42L43 entry (0x4243) has been
+stable since then.
 
-**Step 3.2: Fixes tag** - No Fixes: tag present (expected).
+**Step 3.2: No Fixes tag** — expected, N/A.
 
 **Step 3.3: File History**
-Post-v7.0 commits touching iface.c are only recent tree-wide changes and
-the wifi generation fix. The file is stable.
+Recent changes to this file are mostly additions of new codec entries
+and minor fixes. The file is actively maintained as new codecs and
+variants are added.
 
-**Step 3.4: Author**
-Miri Korenblit is the primary maintainer of iwlwifi. Emmanuel Grumbach
-reviewed the patch.
+Record: Active file with frequent codec_info additions. No conflicts
+expected.
+
+**Step 3.4: Author Context**
+Maciej Strozek is a Cirrus Logic engineer, a regular contributor to the
+CS42L43/CS42L45 codec subsystem. He has ~10 recent commits in the sound
+subsystem.
+
+Record: Author is domain expert at Cirrus Logic, the vendor of this
+codec.
 
 **Step 3.5: Dependencies**
-- `IWL_MLD_INVALID_FW_ID` (0xff) already exists in v7.0 at `mld.h:530`
-- NAN support already exists in v7.0
-- No other prerequisites needed. This is standalone.
+The critical dependency is the ACPI match entries for CS42L43B. These
+exist in:
+- `sound/soc/amd/acp/amd-acp70-acpi-match.c` (commit `ddd9bf2212ab8`,
+  2026-01-27) — **already in v7.0**
+- `sound/soc/amd/acp/amd-acp63-acpi-match.c` (commit `fd13fc700e3e2`,
+  2026-02-24) — **already in v7.0**
 
-## PHASE 4: MAILING LIST RESEARCH
+Both ACPI match tables reference `0x00003101FA2A3B01ull` which encodes
+part_id 0x2A3B. These are already in the stable tree. Without this
+codec_info entry, the ACPI match succeeds but the codec configuration
+lookup fails.
 
-Lore was inaccessible due to anti-bot protection. b4 dig found the
-submission URL: `https://patch.msgid.link/20260324093333.2953495-1-
-miriam.rachel.korenblit@intel.com`. This was part of a batch submission
-by Miri Korenblit. The patch was reviewed by Emmanuel Grumbach, the
-iwlwifi co-maintainer.
+Record: Dependencies are MET — ACPI match tables for cs42l43b already in
+v7.0.
+
+---
+
+## PHASE 4: MAILING LIST
+
+**Step 4.1-4.5:**
+b4 dig could not find the commit (likely the Message-ID format didn't
+match expectations). Lore was protected by anti-scraping. However, the
+commit itself documents the review chain: Reviewed-by and Tested-by from
+Charles Keepax, applied by Mark Brown. This is the standard ASoC review
+process.
+
+Record: Could not fetch lore discussion due to anti-scraping protection.
+The commit tags show proper review process.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.4: Key Functions**
-- `iwl_mld_init_vif()`: Called from `iwl_mld_add_vif()` during interface
-  creation - standard mac80211 callback path
-- `iwl_mld_rm_vif()`: Called during interface removal
-- `fw_id_to_vif[]` is accessed from many places: notification handlers,
-  low_latency, scan code - corruption of this table has wide-reaching
-  effects
+**Step 5.1: Key Functions**
+No functions are modified. The change is in the static
+`codec_info_list[]` array.
 
-**Step 5.5: Similar Patterns**
-`IWL_MLD_INVALID_FW_ID` is already used as a sentinel value for
-`fw_link_id` in scan.c, so this pattern is established in the codebase.
+**Step 5.2: Callers of `asoc_sdw_find_codec_info_part()`**
+This function is called at two critical points:
+- Line 1366: `asoc_sdw_count_sdw_endpoints()` — if it returns NULL,
+  returns `-EINVAL`, causing the entire endpoint counting to fail
+- Line 1526: the DAI link creation path — if it returns NULL, returns
+  `-EINVAL`, causing the machine driver probe to fail
+
+Record: Without a matching codec_info entry, the machine driver probe
+fails with -EINVAL. Audio is completely non-functional on affected
+systems.
+
+**Step 5.3-5.5:** N/A — no new code logic to trace.
+
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Buggy Code in Stable**
-- NAN support (`9e978d8ebbe96`) first appeared in v7.0-rc1
-- Not present in v6.19, v6.16, or v6.15
-- Bug exists ONLY in v7.0 stable tree
-- Current HEAD is v7.0, and we confirmed the v7.0 code has the bug
+**Step 6.1: Buggy Code in Stable Trees**
+The `codec_info_list[]` array exists in v7.0 (file created in v6.12).
+The ACPI match tables for cs42l43b are already in v7.0 (`ddd9bf2212ab8`
+and `fd13fc700e3e2` both verified as ancestors of v7.0). This means v7.0
+stable already has systems defined that use CS42L43B hardware, but the
+codec_info entry for part_id 0x2A3B is MISSING.
+
+Record: The gap exists in v7.0 — ACPI tables reference CS42L43B but
+codec_info_list lacks the entry.
 
 **Step 6.2: Backport Complications**
-The diff between v7.0 and HEAD for this file is empty (HEAD IS v7.0).
-The patch applies cleanly with no conflicts whatsoever.
+The patch is purely additive data into a well-defined array. It should
+apply cleanly.
 
-**Step 6.3: No related fixes already in stable.**
+Record: Clean apply expected.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 6.3:** No prior fix for this issue.
 
-**Step 7.1:** wifi: iwlwifi is an IMPORTANT subsystem - Intel WiFi is
-among the most widely used WiFi hardware on Linux (laptops, desktops).
-Criticality: IMPORTANT.
+---
 
-**Step 7.2:** The iwlwifi mld driver is actively developed with NAN and
-EMLSR features being added in the v7.0 cycle.
+## PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1:** ASoC / SoundWire machine driver support — IMPORTANT
+subsystem. Audio is a core user-facing feature.
+**Step 7.2:** Actively maintained with frequent additions.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-Users of Intel WiFi hardware using the iwlmld driver with NAN
-functionality. As NAN is a new feature in v7.0, this primarily affects
-users of newer WiFi 7 hardware.
+**Step 8.1: Who is Affected**
+Users with AMD ACP63 or ACP70 platforms that have CS42L43B audio codec
+hardware. These are real laptop configurations defined in the ACPI match
+tables already in v7.0.
 
 **Step 8.2: Trigger Conditions**
-- Create a NAN interface, then remove it. This will corrupt
-  fw_id_to_vif[0].
-- If another vif with fw_id 0 exists, it becomes invisible to the
-  driver.
-- Trigger: normal NAN usage lifecycle (create/destroy NAN interface)
+Boot any system with CS42L43B hardware → audio subsystem probes → ACPI
+match succeeds → codec_info lookup fails → `-EINVAL` → no audio. This is
+100% reproducible on affected hardware.
 
 **Step 8.3: Failure Mode**
-- The fw_id_to_vif table corruption means the driver loses track of
-  active interfaces
-- This can cause: wrong vif returned from firmware notifications, NULL
-  pointer dereferences when accessing the corrupted entry, incorrect
-  driver behavior
-- Severity: HIGH (data corruption of internal mapping, potential for
-  subsequent crashes)
+Machine driver probe failure (returns -EINVAL). Complete audio loss on
+affected systems. Severity: **HIGH** — audio is a fundamental feature.
 
 **Step 8.4: Risk-Benefit**
-- BENEFIT: High - prevents corruption of critical internal data
-  structure
-- RISK: Very low - 4 lines, obviously correct, uses existing sentinel
-  value, reviewed by co-maintainer
+- Benefit: HIGH — enables audio on affected hardware; fixes complete
+  functional failure
+- Risk: VERY LOW — purely additive data, identical to existing proven
+  entry, only part_id differs
 - Ratio: Strongly favorable
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence Summary**
+**Evidence FOR backporting:**
+- Device ID addition to existing driver (explicit stable exception)
+- ACPI match tables referencing this hardware are ALREADY in v7.0
+- Without this, audio probe fails with -EINVAL on affected systems
+- Purely data — no new code paths, no new logic
+- Exact copy of existing, proven CS42L43 entry with only part_id changed
+- Reviewed AND tested by Cirrus Logic domain expert
+- Applied by ASoC maintainer Mark Brown
+- Zero regression risk (only affects cs42l43b hardware)
 
-FOR backporting:
-- Fixes real data corruption bug in fw_id_to_vif mapping table
-- Extremely small (4 lines), surgical, obviously correct
-- Uses existing infrastructure (IWL_MLD_INVALID_FW_ID)
-- Reviewed by subsystem co-maintainer Emmanuel Grumbach
-- Applies cleanly to v7.0 (zero diff between HEAD and v7.0)
-- No dependencies needed
-- Bug is triggered by normal NAN usage lifecycle
+**Evidence AGAINST backporting:**
+- No explicit Fixes: tag or Cc: stable (expected for autosel candidates)
+- 54 lines rather than single-line ID addition (but all data, no code)
+- Commit message doesn't describe a "bug" — describes hardware
+  enablement
 
-AGAINST backporting:
-- NAN is a new feature, so the user population is still growing
-- No Fixes: tag or explicit stable nomination (but this is expected for
-  all candidates)
+**Stable Rules Checklist:**
+1. Obviously correct and tested? **YES** — exact copy of existing entry,
+   tested by reviewer
+2. Fixes a real bug? **YES** — audio probe failure on hardware already
+   matched by ACPI tables in v7.0
+3. Important? **YES** — complete audio loss
+4. Small and contained? **YES** — 54 lines of data in one file
+5. No new features or APIs? **YES** — just a device ID
+6. Can apply to stable? **YES** — clean apply expected
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? YES - trivial fix, reviewed by co-
-   maintainer
-2. Fixes a real bug? YES - fw_id_to_vif corruption on NAN vif removal
-3. Important issue? YES - data corruption of internal driver state
-4. Small and contained? YES - 4 lines in 1 file
-5. No new features? Correct - pure bug fix
-6. Can apply to stable? YES - applies cleanly to v7.0
+**Exception Category:** Device ID addition to existing driver.
 
-**Step 9.3: Exception Categories** - Not applicable; this is a
-straightforward bug fix.
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Emmanuel Grumbach (Intel co-
-  maintainer), Signed-off-by Miri Korenblit (maintainer)
-- [Phase 2] Diff: +1 line in iwl_mld_init_vif (sentinel init), +3 lines
-  in iwl_mld_rm_vif (NAN early return)
-- [Phase 3] git blame: NAN support introduced in 9e978d8ebbe96
-  (v7.0-rc1), confirmed via `git tag --contains`
-- [Phase 3] git show 9e978d8ebbe96: confirmed it moved fw_id allocation
-  out of init_vif without initializing to invalid for NAN
-- [Phase 3] Verified `d1e879ec600f9b` (mld driver) first appeared in
-  v6.15, NAN support only in v7.0
-- [Phase 4] b4 dig found submission URL; lore inaccessible due to bot
-  protection
-- [Phase 5] IWL_MLD_INVALID_FW_ID (0xff) already exists in v7.0
-  mld.h:530 and is used in scan.c
-- [Phase 5] fw_id_to_vif[] accessed from iface.c, low_latency.c,
-  notification handlers - wide impact surface
-- [Phase 6] NAN not in v6.19, v6.16, or v6.15 (confirmed via `git show
-  v6.19:...nan.c`). Bug only in v7.0
-- [Phase 6] git diff v7.0..HEAD is empty for iface.c - patch applies
-  cleanly
-- [Phase 6] v7.0 code verified: iwl_mld_init_vif lacks fw_id init,
-  iwl_mld_rm_vif lacks NAN check
-- [Phase 7] fw_id is u8 inside zeroed_on_hw_restart struct_group,
-  confirmed default is 0 (valid index)
-- [Phase 8] Corruption path verified: NAN vif removed -> fw_id=0 ->
-  fw_id_to_vif[0]=NULL -> corrupts valid mapping
+- [Phase 1] Parsed tags: Reviewed-by + Tested-by from Charles Keepax
+  (Cirrus), applied by Mark Brown (ASoC maintainer)
+- [Phase 2] Diff analysis: +54 lines, all struct data, new
+  `codec_info_list[]` entry with `.part_id = 0x2A3B`, identical to
+  existing 0x4243 entry
+- [Phase 3] git blame: CS42L43 entry (0x4243) introduced in
+  e377c94773171e (v6.12, 2024-08-01), present in v7.0
+- [Phase 3] git merge-base: ddd9bf2212ab8 (ACP70 cs42l43b ACPI match) IS
+  ancestor of v7.0 — confirmed
+- [Phase 3] git merge-base: fd13fc700e3e2 (ACP63 cs42l43b ACPI match) IS
+  ancestor of v7.0 — confirmed
+- [Phase 4] b4 dig failed to find match; lore anti-scraping blocked web
+  fetch
+- [Phase 5] Verified call sites: `asoc_sdw_find_codec_info_part()`
+  returns NULL for unknown part_id → callers return -EINVAL → probe
+  failure
+- [Phase 5] Read lines 1366-1368 and 1526-1528: confirmed NULL → -EINVAL
+  return path
+- [Phase 6] ACPI match tables reference `0x00003101FA2A3B01ull` (part_id
+  0x2A3B) already in v7.0
+- [Phase 6] codec_info_list lacks 0x2A3B entry in v7.0 — confirmed via
+  grep
+- [Phase 8] Failure mode: probe returns -EINVAL → complete audio loss on
+  cs42l43b systems, severity HIGH
 
-This is a small, surgical, obviously correct fix for a real data
-corruption bug in the iwlwifi mld driver's NAN handling. It meets all
-stable kernel criteria and applies cleanly to v7.0.
+The ACPI match tables already in v7.0 promise CS42L43B support, but
+without this codec_info entry, the machine driver probe fails. This is a
+device ID addition that fixes complete audio failure on affected AMD
+laptop platforms.
 
 **YES**
 
- drivers/net/wireless/intel/iwlwifi/mld/iface.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/sdw_utils/soc_sdw_utils.c | 54 +++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/iface.c b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-index 9215fc7e2eca7..fb56e59894726 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-@@ -434,6 +434,7 @@ iwl_mld_init_vif(struct iwl_mld *mld, struct ieee80211_vif *vif)
- 	lockdep_assert_wiphy(mld->wiphy);
- 
- 	mld_vif->mld = mld;
-+	mld_vif->fw_id = IWL_MLD_INVALID_FW_ID;
- 	mld_vif->roc_activity = ROC_NUM_ACTIVITIES;
- 
- 	if (!mld->fw_status.in_hw_restart) {
-@@ -481,6 +482,10 @@ void iwl_mld_rm_vif(struct iwl_mld *mld, struct ieee80211_vif *vif)
- 
- 	lockdep_assert_wiphy(mld->wiphy);
- 
-+	/* NAN interface type is not known to FW */
-+	if (vif->type == NL80211_IFTYPE_NAN)
-+		return;
-+
- 	iwl_mld_mac_fw_action(mld, vif, FW_CTXT_ACTION_REMOVE);
- 
- 	if (WARN_ON(mld_vif->fw_id >= ARRAY_SIZE(mld->fw_id_to_vif)))
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index 0e67d9f34cba3..4f9089b2a9f84 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -723,6 +723,60 @@ struct asoc_sdw_codec_info codec_info_list[] = {
+ 		},
+ 		.dai_num = 4,
+ 	},
++	{
++		.part_id = 0x2A3B,
++		.name_prefix = "cs42l43",
++		.count_sidecar = asoc_sdw_bridge_cs35l56_count_sidecar,
++		.add_sidecar = asoc_sdw_bridge_cs35l56_add_sidecar,
++		.dais = {
++			{
++				.direction = {true, false},
++				.codec_name = "cs42l43-codec",
++				.dai_name = "cs42l43-dp5",
++				.dai_type = SOC_SDW_DAI_TYPE_JACK,
++				.dailink = {SOC_SDW_JACK_OUT_DAI_ID, SOC_SDW_UNUSED_DAI_ID},
++				.rtd_init = asoc_sdw_cs42l43_hs_rtd_init,
++				.controls = generic_jack_controls,
++				.num_controls = ARRAY_SIZE(generic_jack_controls),
++				.widgets = generic_jack_widgets,
++				.num_widgets = ARRAY_SIZE(generic_jack_widgets),
++			},
++			{
++				.direction = {false, true},
++				.codec_name = "cs42l43-codec",
++				.dai_name = "cs42l43-dp1",
++				.dai_type = SOC_SDW_DAI_TYPE_MIC,
++				.dailink = {SOC_SDW_UNUSED_DAI_ID, SOC_SDW_DMIC_DAI_ID},
++				.rtd_init = asoc_sdw_cs42l43_dmic_rtd_init,
++				.widgets = generic_dmic_widgets,
++				.num_widgets = ARRAY_SIZE(generic_dmic_widgets),
++				.quirk = SOC_SDW_CODEC_MIC,
++				.quirk_exclude = true,
++			},
++			{
++				.direction = {false, true},
++				.codec_name = "cs42l43-codec",
++				.dai_name = "cs42l43-dp2",
++				.dai_type = SOC_SDW_DAI_TYPE_JACK,
++				.dailink = {SOC_SDW_UNUSED_DAI_ID, SOC_SDW_JACK_IN_DAI_ID},
++			},
++			{
++				.direction = {true, false},
++				.codec_name = "cs42l43-codec",
++				.dai_name = "cs42l43-dp6",
++				.dai_type = SOC_SDW_DAI_TYPE_AMP,
++				.dailink = {SOC_SDW_AMP_OUT_DAI_ID, SOC_SDW_UNUSED_DAI_ID},
++				.init = asoc_sdw_cs42l43_spk_init,
++				.rtd_init = asoc_sdw_cs42l43_spk_rtd_init,
++				.controls = generic_spk_controls,
++				.num_controls = ARRAY_SIZE(generic_spk_controls),
++				.widgets = generic_spk_widgets,
++				.num_widgets = ARRAY_SIZE(generic_spk_widgets),
++				.quirk = SOC_SDW_CODEC_SPKR | SOC_SDW_SIDECAR_AMPS,
++			},
++		},
++		.dai_num = 4,
++	},
+ 	{
+ 		.part_id = 0x4245,
+ 		.name_prefix = "cs42l45",
 -- 
 2.53.0
 
