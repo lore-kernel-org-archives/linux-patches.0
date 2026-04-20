@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416F5451056;
-	Mon, 20 Apr 2026 13:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4E64657CC;
+	Mon, 20 Apr 2026 13:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691829; cv=none; b=uQsu7tTtwsG0YK9CejN2V4HsAn5uADoT7sv0qn8bhF8ulyyk+rMJYtj/6ly0rvnu8vJ53NF1lQexFBsIwdD610kwF1GnH2vU5e9LYKd72faQCzCjMkG5nHIRXSxzuLQTDSXQ2InrA2u2utKJ2hlKg6iNxMbf5TNW33tVJwDQo/8=
+	t=1776691830; cv=none; b=f6zZrK+B2IkTyMcBSc9d2KryReIpI44Fa3+Xb8/1TccH13Mps43NiPcxNFPpzv9fdxlrCKy8gG0n3u8+NvF6OJj31C98DJS+gqOfFzaTFqH+t7+CqCiVCoMrXL9qlKo/92BWO1ic8Z9F+n+myLz9aIPZZ4WWXW+O2vS0kpFdmTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691829; c=relaxed/simple;
-	bh=O4b1Y+xQEG8AiQcB2M8vWaECIB5j/E6fhegWDL6BDYE=;
+	s=arc-20240116; t=1776691830; c=relaxed/simple;
+	bh=cmg9KuhF5WyD3sfoKBJfBIlEtsiosFUQoJ3tomSefTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cVoAuV39xUjxeuBWR62SdDQtBAdp5g6WwHxTN6G6Janx7zeHg9+KbWGM4H64gbKaAi+vT08eb1Mt83KsjGtG8CAjPRYLJ0yHxMS7lt0k/vKtLsAOvKjKs0TmUaDYs7+TdcOzumAFYP3Qv8CXPZJFsT4GjPFNQv+sWtNoVLzvNuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p/cUjcry; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BRrwpR2nAa3VyscCbpXDHmVYUk6ahNrA8Wa+0TuwJ4raY2soSbBiWeLP6R7jCazW17v6eDVI2X5bx27y073HB7BHSCsOfCv5gu4bHPFHELMwlEJZc0g2Q2M2/2Prsj2NApm+Xp1iQ0l0url4K5zT0Zkq2Fyk83s9Zjr75IRwgtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rf2WiIA9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p/cUjcry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2718EC19425;
-	Mon, 20 Apr 2026 13:30:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rf2WiIA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8284FC2BCB4;
+	Mon, 20 Apr 2026 13:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691829;
-	bh=O4b1Y+xQEG8AiQcB2M8vWaECIB5j/E6fhegWDL6BDYE=;
+	s=k20201202; t=1776691830;
+	bh=cmg9KuhF5WyD3sfoKBJfBIlEtsiosFUQoJ3tomSefTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/cUjcryWN5bypyGaqQfaLhCxmspM2h6yDThmBZ6c079wCDG5Orx3z76YX7RF5Lo0
-	 54wfZDxdZ4XEfyjR5YDAX0a7SztUsYl6LJ625rSWTgjP1D4pJIgoFiYvxna5mdofeb
-	 KmRq9Ic6NL1EWRkHSsGtNif4AlXruwsh3kQ20jGQ46oly/ymcl4wCL3fed9FC9LPU0
-	 +oD7dvQiWhGHj+wfnP3txNZZIPnbToY7qIezJxJHQA1Wxd5GuflsfKTSQcY2CM8Auv
-	 eZ0DT2jJ3IQhJarlDj/AFaeQsHjVqg6gk5ITzdqgK2nFyIwmv8xoOwVSS9HfQMWMAC
-	 v3zij0qfnfVOw==
+	b=Rf2WiIA9BuK7Xs8i6pU+0B1b3/QRAhVBMGxbrdM5ECCETqYtMSgrVItBHlhW9lNxO
+	 uOfGtQM0roSrJWLw28XfbJq3lxO4jGcdY5Y96xcnxKWAl+MuFJG27pqS+HPtj1VQfQ
+	 BHhaYYAn+oOJLfaPpfZkvj6QPIdoZbbDaMSaj3y63+GNHLaugQTJy4SUKHlTbTNNO+
+	 FjVNhTbssq3bznBFrlw3lNv15vC5I/QoC5EufE9h0e31fKDqigzFfzAV/+Umzm42j8
+	 MddNpRb37P4O1NVnH5U3yQwPFT3Spgw0Ehhbc5x2RAreF+AaIO39iaRgy5Ba7yJV1l
+	 JrJa8GRTc1Jbw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] ALSA: hda/realtek: Add support for HP Laptops
-Date: Mon, 20 Apr 2026 09:20:13 -0400
-Message-ID: <20260420132314.1023554-219-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] Bluetooth: btusb: MT7922: Add VID/PID 0489/e174
+Date: Mon, 20 Apr 2026 09:20:14 -0400
+Message-ID: <20260420132314.1023554-220-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,327 +54,344 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 8dbbd39d0605b93a176f2c775dd2b6bb7c7a8adb ]
+[ Upstream commit 1f2ac009d3e06380400618e777c858e582872efa ]
 
-Add support for HP Auster, Trekker and Agusta G7KX.
-Laptops use 2 CS35L41 Amps with HDA, using Internal boost, with I2C
+Add VID 0489 & PID e174 for MediaTek MT7922 USB Bluetooth chip.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260330134651.443439-2-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
+
+T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e174 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have all the information needed for a comprehensive analysis.
-Here's my complete walkthrough:
+Good. The patch would insert the `0xe174` entry right after the `0xe170`
+entry (line 704-705), which is exactly the position shown in the diff.
+The context lines match perfectly. Now I have all the information needed
+for the analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem**: `ALSA: hda/realtek` (HDA audio codec - Realtek)
-- **Action verb**: "Add support" - adding hardware support entries
-- **Summary**: Adds PCI quirk entries for HP Auster, Trekker G7JC, and
-  Agusta G7KX laptops
-- Record: [ALSA/HDA Realtek] [Add] [Hardware quirk entries for HP
-  laptops with CS35L41 amps]
+**Step 1.1: PARSE THE SUBJECT LINE**
+Record: [Bluetooth: btusb] [Add] [VID/PID 0489/e174 for MediaTek MT7922
+USB Bluetooth chip]
 
-### Step 1.2: Tags
-- **Signed-off-by**: Stefan Binding (sbinding@opensource.cirrus.com) -
-  Cirrus Logic engineer, regular CS35L41 contributor
-- **Link**: `https://patch.msgid.link/20260330134651.443439-2-
-  sbinding@opensource.cirrus.com` - patch 2 of series
-- **Signed-off-by**: Takashi Iwai (tiwai@suse.de) - ALSA subsystem
-  maintainer
-- No Fixes: tag (expected for quirk additions)
-- No Reported-by: tag (expected - hardware enablement)
-- No Cc: stable tag (expected - this is what we're evaluating)
-- Record: Standard tags for a quirk addition. Merged by the ALSA
-  subsystem maintainer.
+**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
+- Signed-off-by: Chris Lu <chris.lu@mediatek.com> — author, MediaTek
+  employee
+- Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com> —
+  Bluetooth subsystem maintainer
+- No Fixes: tag (expected for device ID additions)
+- No Reported-by: tag (not a bug fix, so expected)
+- No Cc: stable tag (expected — that's why we're reviewing)
 
-### Step 1.3: Commit Body
-- "Add support for HP Auster, Trekker and Agusta G7KX."
-- "Laptops use 2 CS35L41 Amps with HDA, using Internal boost, with I2C"
-- This is a standard hardware enablement description from Cirrus Logic.
-- Record: Without these quirk entries, the CS35L41 amplifiers on these
-  HP laptops won't be configured correctly, resulting in no audio output
-  or broken audio.
+Record: Author is from MediaTek (chip vendor). Merged by the Bluetooth
+subsystem maintainer.
 
-### Step 1.4: Hidden Bug Fix?
-- Not a hidden bug fix - this is a straightforward hardware enablement
-  via quirk table entries. However, the absence of these entries means
-  audio doesn't work on these laptops, which is a real user-facing
-  issue.
-- Record: Not a hidden bug fix. It's a hardware quirk addition, which is
-  an explicitly allowed exception for stable.
+**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
+The commit body provides the USB device descriptor dump from
+`/sys/kernel/debug/usb/devices`, confirming this is a real MediaTek
+MT7922 Bluetooth USB device (Vendor=0489, ProdID=e174,
+Manufacturer=MediaTek Inc., Product=Wireless_Device). The device runs at
+USB 2.0 High Speed (480 Mbps) and has 3 interfaces typical of a
+Bluetooth HCI device.
 
-## PHASE 2: DIFF ANALYSIS
+Record: No bug described — this is a device ID addition enabling
+hardware support. The device is verified to exist and be manufactured by
+MediaTek.
 
-### Step 2.1: Inventory
-- **Files changed**: 1 file (`sound/hda/codecs/realtek/alc269.c`)
-- **Lines added**: 4 (pure additions)
-- **Lines removed**: 0
-- **Functions modified**: None (only the `alc269_fixup_tbl[]` data table
-  is changed)
-- Record: Single-file, 4-line addition to a data table. Minimal scope.
+**Step 1.4: DETECT HIDDEN BUG FIXES**
+Record: This is not a hidden bug fix. It is a straightforward device ID
+addition to enable Bluetooth on hardware with this specific VID/PID.
 
-### Step 2.2: Code Flow Change
-Four new `SND_PCI_QUIRK()` entries inserted in sorted order:
-1. `0x8e75` → "HP Trekker G7JC" → `ALC287_FIXUP_CS35L41_I2C_2`
-2. `0x8f07` → "HP Agusta G7KX" → `ALC287_FIXUP_CS35L41_I2C_2`
-3. `0x8f2d` → "HP Auster 14" → `ALC287_FIXUP_CS35L41_I2C_2`
-4. `0x8f2e` → "HP Auster 14" → `ALC287_FIXUP_CS35L41_I2C_2`
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-Before: These PCI subsystem IDs have no quirk entry → generic behavior →
-CS35L41 amps not properly configured.
-After: These IDs match → `cs35l41_fixup_i2c_two()` is called → 2 CS35L41
-amps configured via I2C with internal boost.
+**Step 2.1: INVENTORY THE CHANGES**
+- Files changed: `drivers/bluetooth/btusb.c` only
+- Lines added: +2 (one `USB_DEVICE` table entry spanning 2 lines)
+- Lines removed: 0
+- Function modified: None — this adds to the static `quirks_table[]`
+  array
+- Scope: single-file, single-table-entry addition
 
-### Step 2.3: Bug Mechanism
-- Category: **Hardware workaround / device ID addition**
-- Without the quirk entry, the HDA codec driver doesn't know these
-  laptop models have CS35L41 amplifiers that need specific I2C
-  configuration. Audio will be broken or absent.
+Record: [1 file, +2/-0 lines] [quirks_table[] static data only] [Trivial
+single-entry addition]
 
-### Step 2.4: Fix Quality
-- Obviously correct: just adds entries to a sorted lookup table using an
-  existing fixup
-- Minimal/surgical: 4 lines, data-only
-- Zero regression risk: only affects the specific HP PCI subsystem IDs
-  listed
-- No code logic changes whatsoever
+**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
+- BEFORE: Device with VID 0489 / PID e174 is not recognized by btusb
+  driver, so Bluetooth doesn't work on this hardware
+- AFTER: Device is matched by `usb_device_id` table with `BTUSB_MEDIATEK
+  | BTUSB_WIDEBAND_SPEECH` flags, enabling the existing MediaTek
+  Bluetooth support path
+
+Record: Purely a data table entry; no logic changes.
+
+**Step 2.3: IDENTIFY THE BUG MECHANISM**
+Category: (h) Hardware workaround / Device ID addition. Without this
+entry, the btusb driver doesn't bind to the device, and the user's
+Bluetooth hardware is completely non-functional.
+
+Record: [Device ID addition] [Enables existing MT7922 driver code for a
+new PID variant]
+
+**Step 2.4: ASSESS THE FIX QUALITY**
+- Obviously correct: Yes — identical pattern to dozens of other entries
+  in the same table
+- Minimal: Yes — 2 lines, data-only
+- Regression risk: Zero — only affects devices with this specific
+  VID/PID
+- No API changes, no logic changes, no locking changes
+
+Record: [Perfect quality — trivial table entry] [Zero regression risk]
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-- The `ALC287_FIXUP_CS35L41_I2C_2` fixup was introduced in commit
-  `07bcab93946cd` (January 2022, merged in v5.18). It has been stable
-  and used by dozens of other HP/ASUS laptop quirk entries ever since.
-- Record: The fixup function exists in all active stable trees (v5.18+).
+**Step 3.1: BLAME THE CHANGED LINES**
+The neighboring entry `0xe170` was added by Chris Lu (same author) in
+commit `5a6700a31c953` on 2025-10-15. The MT7922A device section has
+entries going back to 2023. The BTUSB_MEDIATEK driver support has been
+present since at least v6.10.
 
-### Step 3.2: No Fixes: tag (expected for quirk additions)
+Record: MT7922 support exists in tree since v6.10. This is just another
+PID variant for the same chip family.
 
-### Step 3.3: File History
-- Stefan Binding has numerous similar commits adding CS35L41 quirk
-  entries for HP laptops: `108c422c495dc` (HP Clipper), `720eebd514c0c`
-  (HP Trekker), `f8b1ff6555868` (HP Turbine). This is a well-established
-  pattern.
-- Record: Standalone commit, no prerequisites needed.
+**Step 3.2: FOLLOW THE FIXES: TAG**
+No Fixes: tag — expected for a device ID addition.
 
-### Step 3.4: Author
-- Stefan Binding is a Cirrus Logic engineer who is the primary
-  contributor for CS35L41 HDA support. He has dozens of similar commits
-  over the past 4 years.
-- Record: Author is the de facto maintainer of CS35L41 HDA integration.
+**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
+Recent btusb.c commits are heavily dominated by device ID additions
+(e0e2, e0e4, e0f1, e0f2, e0f5, e0f6, e102, e152, e153, e170, plus IDs
+from other vendors). This is a pattern of ongoing hardware enablement
+for the MT7922 family.
 
-### Step 3.5: Dependencies
-- This is part of a 2-patch series (patch 1/2). Patch 2/2 adds ASUS
-  laptop quirks. The two patches are completely independent - they add
-  entries for different manufacturers to the same table.
-- `ALC287_FIXUP_CS35L41_I2C_2` already exists (line 6248 in current
-  tree).
-- Record: Fully standalone; no dependencies.
+Record: Standalone commit. No prerequisites beyond existing MT7922
+support.
 
-## PHASE 4: MAILING LIST RESEARCH
+**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
+Chris Lu at MediaTek is a regular contributor to the Bluetooth/btusb
+subsystem. He authored the e170 entry, the e135 (MT7920) entry, and a
+kernel crash fix for MediaTek ISO interfaces. He clearly works on
+Bluetooth at MediaTek.
 
-### Step 4.1: Original Submission
-- Found via `b4 am`: Series is "[PATCH v1 0/2] Add support for various
-  HP and ASUS laptops using CS35L41 HDA"
-- Cover letter confirms: "These laptops use Internal boost, with SPI or
-  I2C."
-- v1 only (no revisions needed) - accepted as-is by Takashi Iwai.
-- Record: Clean submission, applied without revisions.
+Record: Author is a domain expert from the chip vendor.
 
-### Step 4.2: Reviewers
-- Sent to Jaroslav Kysela (ALSA co-maintainer), Takashi Iwai (ALSA
-  maintainer), linux-sound@vger.kernel.org,
-  patches@opensource.cirrus.com
-- Applied by Takashi Iwai directly.
-- Record: Proper review chain through the subsystem maintainer.
+**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
+The only prerequisite is MT7922 support via BTUSB_MEDIATEK, which has
+been present since v6.10 (commit `8c0401b7308cb`). The entry `0xe170`
+(the sibling right before) exists in the current tree. The patch applies
+cleanly — the diff context matches the current file exactly.
 
-### Step 4.3: No bug report (hardware enablement, not a bug report)
+Record: No dependencies beyond base MT7922 support already in stable
+trees (v6.10+).
 
-### Step 4.4: Series context
-- Patch 2/2 adds ASUS quirks; completely independent.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.5: Lore blocked by anti-bot protection; unable to search
-stable mailing list directly. No stable-specific discussion expected for
-a new quirk addition.
+**Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION**
+Found via web search: The patch was submitted as `[PATCH v1]` and then
+`[PATCH RESEND v1]` on the linux-mediatek mailing list in January 2026.
+The RESEND indicates initial posting may not have received attention.
+The mailing list archive at lists.infradead.org confirms the exact same
+diff.
+
+Record: [https://lists.infradead.org/pipermail/linux-
+mediatek/2026-January/103452.html] [v1 + RESEND v1] [No concerns or NAKs
+visible]
+
+**Step 4.2: CHECK WHO REVIEWED THE PATCH**
+Merged by Luiz Augusto von Dentz (Bluetooth subsystem maintainer at
+Intel), as indicated by his Signed-off-by.
+
+Record: Bluetooth subsystem maintainer merged this.
+
+**Step 4.3-4.5:** Not applicable — no bug report (this is hardware
+enablement), no series dependencies.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions
-- No functions modified. Only the `alc269_fixup_tbl[]` static data table
-  is changed.
+**Step 5.1-5.5:** The change is purely to the `quirks_table[]` static
+data array. No functions are modified. The USB_DEVICE macro expands to
+match criteria for the USB core's device matching infrastructure. When a
+device with VID=0x0489/PID=0xe174 is plugged in, the btusb driver will
+bind to it using the BTUSB_MEDIATEK code path. This code path is well-
+tested through dozens of other MT7922 variants.
 
-### Step 5.2-5.4: Call chain
-- The quirk table is consulted during HDA codec probe via
-  `snd_pci_quirk_lookup()`. When a matching PCI subsystem vendor/device
-  ID is found, the corresponding fixup function
-  (`cs35l41_fixup_i2c_two`) is called during codec initialization.
-- This is a standard, well-tested path used by 100+ existing quirk
-  entries.
+Record: No function changes. Data-only addition to existing, well-tested
+USB device matching infrastructure.
 
-### Step 5.5: Similar patterns
-- 114 existing uses of `ALC287_FIXUP_CS35L41_I2C_2` in the current tree.
-  This is one of the most commonly used fixups.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?**
+The MT7922 BTUSB_MEDIATEK support exists since v6.10. The
+`quirks_table[]` and the entire MT7922 code path exist in all current
+active stable trees from v6.10 onward. For older stable trees (v6.6,
+v6.1), the base MT7922 support may not be present, so the device ID
+alone wouldn't help there.
 
-### Step 6.1: Buggy code in stable?
-- The "bug" is the absence of quirk entries for these specific HP laptop
-  models. The fixup infrastructure exists in all stable trees from v5.18
-  onward.
-- Record: `ALC287_FIXUP_CS35L41_I2C_2` confirmed present in v5.18 (13
-  uses) and v6.6 (25 uses).
+Record: Applicable to stable trees v6.10+, v6.12+, and future LTS
+branches.
 
-### Step 6.2: Backport complications
-- Minor context mismatch: in the mainline diff, entry `0x8e60` shows "HP
-  Trekker" with `ALC287_FIXUP_CS35L41_I2C_2`, but in the current 7.0
-  tree, it shows "HP OmniBook 7 Laptop 16-bh0xxx" with
-  `ALC245_FIXUP_CS35L41_I2C_2_MUTE_LED`. This means the first hunk
-  context won't match exactly, but the insertion points (after 0x8e62,
-  after 0x8ee7, after 0x8f0e) all exist and match.
-- For older stable trees (pre-6.14), the file is at
-  `sound/pci/hda/patch_realtek.c` instead of
-  `sound/hda/codecs/realtek/alc269.c` (file moved in July 2025).
-- Record: Minor fuzz needed for 7.0; path adjustment needed for older
-  trees. Trivial.
+**Step 6.2: CHECK FOR BACKPORT COMPLICATIONS**
+The diff context matches the current tree perfectly. The entry goes
+right after 0xe170 and before 0x04ca entries. The patch will apply
+cleanly.
 
-### Step 6.3: No related fixes already in stable for these specific PCI
-IDs.
+Record: Clean apply expected.
+
+**Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE**
+No prior fix for this specific VID/PID exists.
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1
-- Subsystem: ALSA/HDA (audio) - **IMPORTANT** level. Audio is critical
-  for laptop users.
-- HP is one of the largest laptop manufacturers globally.
+**Step 7.1:** Subsystem: Bluetooth (drivers/bluetooth/). Criticality:
+IMPORTANT — Bluetooth is essential on laptops and IoT devices.
 
-### Step 7.2
-- This file is extremely actively maintained - frequent quirk additions
-  for new laptop models.
+**Step 7.2:** btusb.c is very actively developed with frequent device ID
+additions. The MT7922 is a popular WiFi/Bluetooth combo chip used in
+many laptops.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected users
-- Users of HP Auster 14, HP Trekker G7JC, and HP Agusta G7KX laptops.
-- These are new HP commercial/consumer laptop models.
+**Step 8.1: WHO IS AFFECTED**
+Users with laptops/devices containing a MediaTek MT7922 Bluetooth chip
+with the specific VID/PID 0489:e174. Without this patch, Bluetooth is
+completely non-functional for these users.
 
-### Step 8.2: Trigger
-- Every boot on these specific laptop models. Audio is broken without
-  the quirk.
+**Step 8.2: TRIGGER CONDITIONS**
+Trigger: simply having this hardware. Every boot, every time.
 
-### Step 8.3: Failure mode
-- Without the quirk: CS35L41 amplifiers not configured → no audio output
-  (speakers don't work).
-- Severity: HIGH for affected users (audio completely non-functional).
+**Step 8.3: FAILURE MODE**
+Without the patch: Bluetooth hardware is completely non-functional
+(driver doesn't bind). With the patch: full Bluetooth functionality.
 
-### Step 8.4: Risk-benefit
-- **Benefit**: Enables audio on specific HP laptop models. High value
-  for affected users.
-- **Risk**: Essentially zero. Adds 4 entries to a lookup table. Only
-  affects the exact PCI subsystem IDs listed. Cannot affect any other
-  hardware.
-- **Ratio**: Extremely favorable.
+**Step 8.4: RISK-BENEFIT RATIO**
+- BENEFIT: HIGH — enables Bluetooth for real hardware users
+- RISK: VERY LOW — 2-line data-only change, cannot affect any other
+  device
+- Ratio: Excellent — maximum benefit, minimum risk
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence
-**FOR backporting:**
-- Textbook hardware quirk addition (explicitly listed as an exception in
-  stable rules)
-- 4 lines of pure data additions, zero logic changes
-- Uses well-established fixup present since v5.18
-- Author is the primary CS35L41 maintainer at Cirrus Logic
-- Merged by the ALSA subsystem maintainer (Takashi Iwai)
-- Fixes real user-facing issue (broken audio on new HP laptops)
-- Identical pattern to dozens of previously-backported quirk entries
+**Step 9.1: EVIDENCE COMPILATION**
+FOR backporting:
+- Classic device ID addition — an explicit exception category that is
+  always YES
+- Only 2 lines added, data-only (zero code changes)
+- Zero regression risk (only matches this specific VID/PID)
+- Author is from MediaTek (chip vendor), merged by subsystem maintainer
+- Real hardware that users have (USB device dump provided)
+- Identical pattern to dozens of existing entries
+- MT7922 driver support exists in stable trees (v6.10+)
 
-**AGAINST backporting:**
-- Minor context mismatch requiring trivial adjustment
-- File path differs in older stable trees (pre-6.14)
+AGAINST backporting:
+- None
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - data table entries using
-   existing fixup
-2. Fixes a real bug? **YES** - audio doesn't work on these laptops
-   without it
-3. Important issue? **YES** - complete audio failure on affected
-   hardware
-4. Small and contained? **YES** - 4 lines, single file, data-only
-5. No new features or APIs? **CORRECT** - no new features
-6. Can apply to stable? **YES** - with minor fuzz for context
+**Step 9.2: STABLE RULES CHECKLIST**
+1. Obviously correct? YES — trivial table entry
+2. Fixes a real bug? YES — enables hardware for real users
+3. Important issue? YES — without it, Bluetooth is completely broken on
+   this hardware
+4. Small and contained? YES — 2 lines
+5. No new features/APIs? CORRECT — no new features
+6. Can apply to stable? YES — clean apply
 
-### Step 9.3: Exception Category
-This is a **hardware quirk addition** - one of the explicitly allowed
-exception categories for stable.
-
-### Step 9.4: Decision
-Clear YES. This is a textbook example of a stable-worthy hardware quirk
-addition.
+**Step 9.3: EXCEPTION CATEGORY**
+This is a **Device ID addition to an existing driver** — one of the
+explicit exception categories that is automatically YES for stable.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by Stefan Binding (Cirrus Logic),
-  applied by Takashi Iwai (ALSA maintainer)
-- [Phase 2] Diff analysis: 4 lines added to `alc269_fixup_tbl[]` data
-  table, all using existing `ALC287_FIXUP_CS35L41_I2C_2` fixup
-- [Phase 3] git show 07bcab93946cd: confirmed
-  `ALC287_FIXUP_CS35L41_I2C_2` introduced January 2022 (v5.18)
-- [Phase 3] git show v5.18/v6.6 confirmed fixup present: 13 uses in
-  v5.18, 25 in v6.6
-- [Phase 3] git log author: Stefan Binding has dozens of identical quirk
-  additions (108c422c495dc, 720eebd514c0c, f8b1ff6555868)
-- [Phase 4] b4 am: Found 2-patch series, both independent quirk
-  additions. v1 only, accepted without revision
-- [Phase 4] b4 dig -w (on related commit): Sent to ALSA maintainers and
-  linux-sound list
-- [Phase 5] Grep: 114 existing uses of ALC287_FIXUP_CS35L41_I2C_2 in
-  current tree
-- [Phase 6] Fixup definition confirmed at line 6248; all insertion
-  points (0x8e62, 0x8ee7, 0x8f0e) present in 7.0 tree
-- [Phase 6] Context mismatch: 0x8e60 entry differs between mainline and
-  7.0 (different name/fixup) - minor fuzz needed
-- [Phase 6] File renamed from `sound/pci/hda/patch_realtek.c` to
-  `sound/hda/codecs/realtek/alc269.c` in v6.14 cycle
-- [Phase 8] Risk: zero (data-only, only matches specific PCI IDs).
-  Benefit: high (enables audio on HP laptops)
+- [Phase 1] Parsed tags: Signed-off-by from Chris Lu (MediaTek) and Luiz
+  Augusto von Dentz (Bluetooth maintainer)
+- [Phase 2] Diff analysis: +2 lines, single USB_DEVICE entry in
+  quirks_table[], data-only
+- [Phase 3] git blame: neighboring entry 0xe170 added by same author in
+  5a6700a31c953 (Oct 2025)
+- [Phase 3] MT7922 base support in commit 8c0401b7308cb, present since
+  v6.10
+- [Phase 3] git merge-base: confirmed MT7922 support in v6.10 and v6.12,
+  NOT in v6.6 or v6.1
+- [Phase 4] Web search: found mailing list post at lists.infradead.org
+  confirming RESEND v1 submission Jan 2026
+- [Phase 4] Mailing list archive: identical diff confirmed, no NAKs or
+  objections
+- [Phase 5] No functions modified — purely static data table change
+- [Phase 6] Patch applies cleanly — verified context lines match current
+  tree exactly (lines 704-706)
+- [Phase 6] BTUSB_MEDIATEK appears 70 times in btusb.c — well-tested
+  code path
+- [Phase 8] Risk: zero (only affects devices with VID=0x0489,
+  PID=0xe174)
+
+This is a textbook device ID addition to an existing, well-tested
+driver. It enables Bluetooth on real MediaTek MT7922 hardware for users
+who have this specific VID/PID variant. The change is 2 lines of data-
+only additions with zero regression risk.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index d86781e976ac0..44f0fcd20cf51 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7198,6 +7198,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8e60, "HP OmniBook 7 Laptop 16-bh0xxx", ALC245_FIXUP_CS35L41_I2C_2_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8e61, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e62, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8e75, "HP Trekker G7JC", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e8a, "HP NexusX", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8e9c, "HP 16 Clipper OmniBook X X360", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e9d, "HP 17 Turbine OmniBook X UMA", ALC287_FIXUP_CS35L41_I2C_2),
-@@ -7219,8 +7220,11 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8ee4, "HP Bantie A6U", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x8ee5, "HP Bantie A6U", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x8ee7, "HP Abe A6U", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_GPIO),
-+	SND_PCI_QUIRK(0x103c, 0x8f07, "HP Agusta G7KX", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8f0c, "HP ZBook X G2i 16W", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8f0e, "HP ZBook X G2i 16W", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8f2d, "HP Auster 14", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8f2e, "HP Auster 14", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8f40, "HP ZBook 8 G2a 14", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8f41, "HP ZBook 8 G2a 16", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8f42, "HP ZBook 8 G2a 14W", ALC245_FIXUP_HP_TAS2781_I2C_MUTE_LED),
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 5c535f3ab7228..aeba026bdb427 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -703,6 +703,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe170), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe174), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.53.0
 
