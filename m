@@ -1,44 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEF933C532;
-	Mon, 20 Apr 2026 13:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F91B39E182;
+	Mon, 20 Apr 2026 13:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776690942; cv=none; b=sXspeals/LXifgDS006JiCu0iPas7Vr4XoVWx0sMwN5chleJHMOJFOXmTdn1/j2XFl3UM0wSCLMAI13EwFomMhkyzCiDnpOem4b2zV8C0AhwrNLMQWUv1we98x6OcKr5I63wCWXpt8RrgtJZVqCpcDt8cVm4Zuz6HYwT09nU1Ak=
+	t=1776690944; cv=none; b=vFYez1YdXOF8dyFB6738uQe2ea56/SGAvUltMnjjU0g4jrg0hKXAPbwqAlKpMXnat08Jh4OpMzbIgQtIQPVRhGG16mXhE/tmx6iEkVAUJX+jF6+qDTBqBn7cTJ6towGpCn8SWUAhEJRzD+AxbvQRoPvqjVGImM0k1pLIvum2vcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776690942; c=relaxed/simple;
-	bh=IJRaeUrOT4uxjtqct0t5ecqTdc2mzEjDLrfsy60+b04=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fEcu8G7ASU6FWqgdZJEDu7Rk7SD1Nw9Aa6heQ2gEpVufRecbVvMY0vjUVUrd2SnoYbRTwP4z6IW+c2VRK3ZRdmnxLusXKohY5m3wSz3eW7CGfvR8tsAfuujrU8kziDIkOkbdN3bcD7BQ/4ixtjw18KBm+e1xtFInKujFvChLilA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A66MNC5u; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776690944; c=relaxed/simple;
+	bh=nbtEepHGcKjFocf8FsJ2bVcEcjjJDHtrZnTX6JgzQFg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CKnCxe4gLP/7OfL6KckY/8PE0icqEUCcWBMu49GPbBZCSJ/nKfi7xi9Bdz4gGfL4x8RReXFL04jOuGSjL0w43/RJ2ngJSnDqgg8BuqCKh7hFG/Ey4/87bZ4oZDwsW9DGqj47gRPbrhtex6RApFj5tjH5FbcAcbn3zgNDuWF7GOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HumKejWe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A66MNC5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F1EC19425;
-	Mon, 20 Apr 2026 13:15:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HumKejWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45751C2BCB7;
+	Mon, 20 Apr 2026 13:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776690941;
-	bh=IJRaeUrOT4uxjtqct0t5ecqTdc2mzEjDLrfsy60+b04=;
-	h=From:To:Cc:Subject:Date:From;
-	b=A66MNC5uAmJo3ESN/UeRL5KYSrrJpUPBO/M+Op3676M/ng2lvo8t2qFXCla795G2D
-	 8HgKXSnWg3CGDnvkb70/8J4XloUsFNTNyFeTuFuTTp8wYKtT7tW2c20O/rngGiqaj+
-	 JC91iMAwm9PDGSkytJkyke6ZcEmK74VeUKcY1/PMFWWgH9vvk/5ztztz1WmBMUl3/Z
-	 E16Tx3c7epPg1edgsp2CbYrdVSj2+MeUUgYf2oNCuIo+J0NzmjmHxEahGAO/57z8PR
-	 ftgmv52tjYom+x2DuiWV2IGQuZbK7vHk8R4Iz/RKYG3JaMyPKs5W8BNWd+OqyYcDEd
-	 HUVoDdBgyrUmw==
+	s=k20201202; t=1776690944;
+	bh=nbtEepHGcKjFocf8FsJ2bVcEcjjJDHtrZnTX6JgzQFg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HumKejWe7qIhwPaC0X4XqES8bxWuB5nSPYAkQJQqcjo2p/7Rmz1rmBiNc7AfEgAa3
+	 4WLsdGmQBSwXWyk19+eOmNF8LWcvumLQYly89ehv+v4IDGlNwFze4FsFs++i6T/Ati
+	 u8vYH0yJ2PncMt0iEY+zGvrploArpUfp38VYXqczqk6O8efuTWOPq0b3kblTNf3gZr
+	 mZskCmdVoyGmCc3jghGsAIvV1kxQ0fo2oQnuXF0uQHcAXOljmON6T5NurRd11KnLc7
+	 GJUWqP1oXTUDBy7utgWraLGy28Eh1uXVBF5tR+ZLUoMwGzTfmkrzKtTT4Rjuax8hXO
+	 g3aG1iDZLPWwQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Jon Hunter <jonathanh@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	alexandre.torgue@foss.st.com,
+	joabreu@synopsys.com,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	mcoquelin.stm32@gmail.com,
+	thierry.reding@gmail.com,
+	vbhadram@nvidia.com,
+	ruppala@nvidia.com,
+	netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-tegra@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] ALSA: hda/realtek: add quirk for Lenovo Yoga 7 2-in-1 16AKP10
-Date: Mon, 20 Apr 2026 09:07:47 -0400
-Message-ID: <20260420131539.986432-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] net: stmmac: Fix PTP ref clock for Tegra234
+Date: Mon, 20 Apr 2026 09:07:48 -0400
+Message-ID: <20260420131539.986432-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
+References: <20260420131539.986432-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,19 +64,30 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 7bae956cac0433c4d41aac9f1d04e42694e0b706 ]
+[ Upstream commit 1345e9f4e3f3bc7d8a0a2138ae29e205a857a555 ]
 
-This machine is equipped with ALC287 and requires the quirk
-ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN to fix the issue
-where the bass speakers are not configured and the speaker
-volume cannot be controlled.
+Since commit 030ce919e114 ("net: stmmac: make sure that ptp_rate is not
+0 before configuring timestamping") was added the following error is
+observed on Tegra234:
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221210
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260313080624.1395362-1-zhangheng@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+ ERR KERN tegra-mgbe 6800000.ethernet eth0: Invalid PTP clock rate
+ WARNING KERN tegra-mgbe 6800000.ethernet eth0: PTP init failed
+
+It turns out that the Tegra234 device-tree binding defines the PTP ref
+clock name as 'ptp-ref' and not 'ptp_ref' and the above commit now
+exposes this and that the PTP clock is not configured correctly.
+
+In order to update device-tree to use the correct 'ptp_ref' name, update
+the Tegra MGBE driver to use 'ptp_ref' by default and fallback to using
+'ptp-ref' if this clock name is present.
+
+Fixes: d8ca113724e7 ("net: stmmac: tegra: Add MGBE support")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260401102941.17466-2-jonathanh@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,21 +95,55 @@ LLM Generated explanations, may be completely bogus:
 
 Error: Failed to generate final synthesis
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../net/ethernet/stmicro/stmmac/dwmac-tegra.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 1b64292220ac8..4b06cb48252e2 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7429,6 +7429,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	HDA_CODEC_QUIRK(0x17aa, 0x391c, "Lenovo Yoga 7 2-in-1 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
-+	HDA_CODEC_QUIRK(0x17aa, 0x391d, "Lenovo Yoga 7 2-in-1 16AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b7, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
+index d765acbe37548..21a0a11fc0118 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
+@@ -9,7 +9,7 @@
+ #include "stmmac_platform.h"
+ 
+ static const char *const mgbe_clks[] = {
+-	"rx-pcs", "tx", "tx-pcs", "mac-divider", "mac", "mgbe", "ptp-ref", "mac"
++	"rx-pcs", "tx", "tx-pcs", "mac-divider", "mac", "mgbe", "ptp_ref", "mac"
+ };
+ 
+ struct tegra_mgbe {
+@@ -215,6 +215,7 @@ static int tegra_mgbe_probe(struct platform_device *pdev)
+ {
+ 	struct plat_stmmacenet_data *plat;
+ 	struct stmmac_resources res;
++	bool use_legacy_ptp = false;
+ 	struct tegra_mgbe *mgbe;
+ 	int irq, err, i;
+ 	u32 value;
+@@ -257,9 +258,23 @@ static int tegra_mgbe_probe(struct platform_device *pdev)
+ 	if (!mgbe->clks)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i <  ARRAY_SIZE(mgbe_clks); i++)
++	/* Older device-trees use 'ptp-ref' rather than 'ptp_ref'.
++	 * Fall back when the legacy name is present.
++	 */
++	if (of_property_match_string(pdev->dev.of_node, "clock-names",
++				     "ptp-ref") >= 0)
++		use_legacy_ptp = true;
++
++	for (i = 0; i < ARRAY_SIZE(mgbe_clks); i++) {
+ 		mgbe->clks[i].id = mgbe_clks[i];
+ 
++		if (use_legacy_ptp && !strcmp(mgbe_clks[i], "ptp_ref")) {
++			dev_warn(mgbe->dev,
++				 "Device-tree update needed for PTP clock!\n");
++			mgbe->clks[i].id = "ptp-ref";
++		}
++	}
++
+ 	err = devm_clk_bulk_get(mgbe->dev, ARRAY_SIZE(mgbe_clks), mgbe->clks);
+ 	if (err < 0)
+ 		return err;
 -- 
 2.53.0
 
