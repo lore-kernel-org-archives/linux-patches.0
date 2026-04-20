@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89C82C11C6;
-	Mon, 20 Apr 2026 16:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A8C3382C7;
+	Mon, 20 Apr 2026 16:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701034; cv=none; b=pCpaSnmUV1iajJPVcZOkVWXVPVJHVIz/Con3cOT7M/0XpTn+JEQcLvhYtCMEEEjC1RLa5QDHhDMcPUjV7sXwYAsosbMozGnTt3QIIcGz8bNAIzmuIQT+LaAZzgbpaUZZQa/OI5DDecV2Ija1zSZj3+si08Y6AvTVpy/RvzPjpcE=
+	t=1776701036; cv=none; b=lQMuw1DNOVKBWAR1wuett1qmviCyTvXGkyE9RxD7Vg3KCbnkUbqrvkJk+Qo9NuKpanV7OVW74T/JaraFHrB8IghazxklZRXrTMGPPjeEec28hUGUUBaQ93vyf6bdI4UMKAV4yQ9dcNGTNQEvU2+f2DMXbasYlTUgTPvBkrbUEoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701034; c=relaxed/simple;
-	bh=7aXQdTMEARZl9FduLu1JkJ7RgwCWFm121cSMfP8mXWE=;
+	s=arc-20240116; t=1776701036; c=relaxed/simple;
+	bh=R+Xg43lOGyTDwYB+aw1NoJA4jyd87CMAy6YB3iZqaQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzbUOZ6vgWpCgWDC9vtaafVSND46qmcYvSgZprK7wg7iq08CROtbqe2UzKLq8/0k9y9XoJ+56K/GLKEnIhdzWHm+GhOkLIiO9dg1WZy61GwzmWfcCwtcxD+rnLjLo7rrRHkwqe2j4mYkeMsY/r9gDUc9n8vChyGPIPyNClAh1YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT16w27Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+/Xlel3pcbqKfktYdVAHflTZHdUrfbCIQutTMeLlUhlQ3Rm2VvxV73BnIujfwOEchkPi6xvEzvnO8prFkB8fHYfj99EktzCqQehmvuUOi9S//fN8UrWk0zr22rsIyWBlpbPOiP7pyxWr6DHFvwV4pkHCTF4hsXNcoPdYwWBZYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvithVLK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT16w27Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80419C19425;
-	Mon, 20 Apr 2026 16:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvithVLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE09C19425;
+	Mon, 20 Apr 2026 16:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701033;
-	bh=7aXQdTMEARZl9FduLu1JkJ7RgwCWFm121cSMfP8mXWE=;
+	s=korg; t=1776701036;
+	bh=R+Xg43lOGyTDwYB+aw1NoJA4jyd87CMAy6YB3iZqaQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT16w27QJ1iWvItC+Dp9zweDCRvewyDz82SJuQEkINc/OTbXp9eH0UekzpyL8Pmnn
-	 n5txGL1rFFVzAG3Zhob9F6TZXL4OC2j53AbHU04/lLkHnl/NneDkiVFQ4AP0Ki39aJ
-	 CQ2Xur8lqUkXNmmPDrZvEUstHiSn6exos1du9ZX4=
+	b=nvithVLKURtkqv2qP7lJXKwFsVrZufwlxRUJVcoKE6DsyaKJmV9OXeYpsPk5ccfme
+	 fZJioU7/WRq43BvaDIzUmT/mzCz+BxM1tdw2kjW7ioQ0wK2iTSjnSMBI0wJjrIOfMv
+	 /K+kYDGsBMVyB82pVUaTr9LRxz9iXAnqxTTIKu18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harin Lee <me@harin.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 156/198] ALSA: ctxfi: Limit PTP to a single page
-Date: Mon, 20 Apr 2026 17:42:15 +0200
-Message-ID: <20260420153941.225392002@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.18 157/198] dcache: Limit the minimal number of bucket to two
+Date: Mon, 20 Apr 2026 17:42:16 +0200
+Message-ID: <20260420153941.260747382@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -50,58 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harin Lee <me@harin.net>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit e9418da50d9e5c496c22fe392e4ad74c038a94eb upstream.
+commit f08fe8891c3eeb63b73f9f1f6d97aa629c821579 upstream.
 
-Commit 391e69143d0a increased CT_PTP_NUM from 1 to 4 to support 256
-playback streams, but the additional pages are not used by the card
-correctly. The CT20K2 hardware already has multiple VMEM_PTPAL
-registers, but using them separately would require refactoring the
-entire virtual memory allocation logic.
+There is an OOB read problem on dentry_hashtable when user sets
+'dhash_entries=1':
+  BUG: unable to handle page fault for address: ffff888b30b774b0
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  Oops: Oops: 0000 [#1] SMP PTI
+  RIP: 0010:__d_lookup+0x56/0x120
+   Call Trace:
+    d_lookup.cold+0x16/0x5d
+    lookup_dcache+0x27/0xf0
+    lookup_one_qstr_excl+0x2a/0x180
+    start_dirop+0x55/0xa0
+    simple_start_creating+0x8d/0xa0
+    debugfs_start_creating+0x8c/0x180
+    debugfs_create_dir+0x1d/0x1c0
+    pinctrl_init+0x6d/0x140
+    do_one_initcall+0x6d/0x3d0
+    kernel_init_freeable+0x39f/0x460
+    kernel_init+0x2a/0x260
 
-ct_vm_map() always uses PTEs in vm->ptp[0].area regardless of
-CT_PTP_NUM. On AMD64 systems, a single PTP covers 512 PTEs (2M). When
-aggregate memory allocations exceed this limit, ct_vm_map() tries to
-access beyond the allocated space and causes a page fault:
+There will be only one bucket in dentry_hashtable when dhash_entries is
+set as one, and d_hash_shift is calculated as 32 by dcache_init(). Then,
+following process will access more than one buckets(which memory region
+is not allocated) in dentry_hashtable:
+ d_lookup
+  b = d_hash(hash)
+    dentry_hashtable + ((u32)hashlen >> d_hash_shift)
+    // The C standard defines the behavior of right shift amounts
+    // exceeding the bit width of the operand as undefined. The
+    // result of '(u32)hashlen >> d_hash_shift' becomes 'hashlen',
+    // so 'b' will point to an unallocated memory region.
+  hlist_bl_for_each_entry_rcu(b)
+   hlist_bl_first_rcu(head)
+    h->first  // read OOB!
 
-  BUG: unable to handle page fault for address: ffffd4ae8a10a000
-  Oops: Oops: 0002 [#1] SMP PTI
-  RIP: 0010:ct_vm_map+0x17c/0x280 [snd_ctxfi]
-  Call Trace:
-  atc_pcm_playback_prepare+0x225/0x3b0
-  ct_pcm_playback_prepare+0x38/0x60
-  snd_pcm_do_prepare+0x2f/0x50
-  snd_pcm_action_single+0x36/0x90
-  snd_pcm_action_nonatomic+0xbf/0xd0
-  snd_pcm_ioctl+0x28/0x40
-  __x64_sys_ioctl+0x97/0xe0
-  do_syscall_64+0x81/0x610
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Fix it by limiting the minimal number of dentry_hashtable bucket to two,
+so that 'd_hash_shift' won't exceeds the bit width of type u32.
 
-Revert CT_PTP_NUM to 1. The 256 SRC_RESOURCE_NUM and playback_count
-remain unchanged.
-
-Fixes: 391e69143d0a ("ALSA: ctxfi: Bump playback substreams to 256")
 Cc: stable@vger.kernel.org
-Signed-off-by: Harin Lee <me@harin.net>
-Link: https://patch.msgid.link/20260406074857.216034-1-me@harin.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://patch.msgid.link/20260130034853.215819-1-chengzhihao1@huawei.com
+Reviewed-by: Yang Erkun <yangerkun@huawei.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctvmem.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dcache.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/pci/ctxfi/ctvmem.h
-+++ b/sound/pci/ctxfi/ctvmem.h
-@@ -15,7 +15,7 @@
- #ifndef CTVMEM_H
- #define CTVMEM_H
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -3207,7 +3207,7 @@ static void __init dcache_init_early(voi
+ 					HASH_EARLY | HASH_ZERO,
+ 					&d_hash_shift,
+ 					NULL,
+-					0,
++					2,
+ 					0);
+ 	d_hash_shift = 32 - d_hash_shift;
  
--#define CT_PTP_NUM	4	/* num of device page table pages */
-+#define CT_PTP_NUM	1	/* num of device page table pages */
+@@ -3238,7 +3238,7 @@ static void __init dcache_init(void)
+ 					HASH_ZERO,
+ 					&d_hash_shift,
+ 					NULL,
+-					0,
++					2,
+ 					0);
+ 	d_hash_shift = 32 - d_hash_shift;
  
- #include <linux/mutex.h>
- #include <linux/list.h>
 
 
