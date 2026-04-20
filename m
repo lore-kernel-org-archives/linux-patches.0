@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C994ADD94;
-	Mon, 20 Apr 2026 13:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA544BC004;
+	Mon, 20 Apr 2026 13:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691970; cv=none; b=nVDrA9JWmJ1kgfkC/IEyoU767l7bDow/qx2ZcoQ5tGmKO0QjReWt07364a5vaPijF42aW4tgiMgy4pAA+42s9sRzbXQe62RCBbGcLnm6k6+jmN3auZZ3gkqjnd/uUsPfB9GSMJvHDIM3VRs1hbtCaxamUosfffj8jCTo/RhCVuo=
+	t=1776691971; cv=none; b=RSFV1cOUkQUU+r5dr9ZEWqYWVYvivC0hJaWyzmFW7FxLfdtmLIciuB7VRTld+RY13Tb2dkoSf/dT/7E+NpVIjJwRkmyIabFjzgtKqFg15FjpdnOvMZTx6jhGVdHBjKk42/EugRIyH60rli0YGNf/HScaKw1SyFEIQN29t5vMxrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691970; c=relaxed/simple;
-	bh=r1ETDzZT8bR4ZGDRKLz16LoiMGU7USaV67F5PeK7gOw=;
+	s=arc-20240116; t=1776691971; c=relaxed/simple;
+	bh=oDr1PIzwDp5YYugVwrLE/51FsDIcdPDkoDsKpEp8Ta4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeuVIwYBZupJpeDUSR5SGXoCeB5oIimzilmWeQ1dke94D64DpmUYee8WBE5DCxF6E7hosmDDCqp0+BTu3A0xL4kjF1vE1xk9Ykme5kfwq7TjsMT81LnRn4n6AbSeHMnKZpIZ9oEsgGTOJ90p1HpIhcjl+8fnnuYiZbB6M7wugsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AZyURW8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UjTBexozMYqJMA8c6caJJOrDQqsp+e53mXFGhYRKLZpylxKgc08KyL+YQITYYkSidSda7CTnUxPgGLusalItvTcQLVO3xhdBIzQTReqNg8res4YzPowrD7Uv/vvkmOBm2CsGgiZVi1CBrPmoposvx837MOyjK+Nt4LrIs8WptdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKpBBMOP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AZyURW8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7E2C2BCB8;
-	Mon, 20 Apr 2026 13:32:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKpBBMOP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71AA1C19425;
+	Mon, 20 Apr 2026 13:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691970;
-	bh=r1ETDzZT8bR4ZGDRKLz16LoiMGU7USaV67F5PeK7gOw=;
+	s=k20201202; t=1776691971;
+	bh=oDr1PIzwDp5YYugVwrLE/51FsDIcdPDkoDsKpEp8Ta4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZyURW8p60547rdcSgk1T4aSUnS6h01POJJZKEZT5wfEDl51CAr5wtyXdnBXQbyCF
-	 ApqrvNWTc56G9swXvUlSKGrPrdAd14QiNeIP4iI5Ye2EYp8HF9IBx5fqWaKRmXcCVR
-	 +ylUdQjhtmzrAuQ2FY4hxarrffCoMozux414yt8/7MZOXlwb9Pyt8j5RT/0i/9taOh
-	 B/WNUEaebr3ot1VzPIyNHmdOxajsJLlEBq3V0xWGSdh0dF0r1XeeSfRaZmLGZ69/Qg
-	 GYO3cpuri9Rowr9fUrO2UUFANqSSMvXFDWcBGuV8Cg9kGtkYhrFr874UGuv8X98vX/
-	 DIxJRwj9O8alQ==
+	b=WKpBBMOPJImsAMeMUCTgJcTXVGDZQLviDYeRodNgx27L7CEcpS2x/CJXlWHb8qyHX
+	 3zPBGtsAlIHI1nLCYs1viln3CaMi8mxMjCKdnbaJWdu0gLmSJSe69c6NlRmwxTEljs
+	 OGCn5pdhyZX5GxeovIkscaMnqitoXcBRH5NGELZOXEY5daiigF7PFfcwNwJ83EcIbp
+	 Bp/N1tF/S2ujJojfHAHX3us1SnbhbxQoYI8Y5Ef1IVT5X3D+Vh/NSNe4OPij4KHgAm
+	 kBZKXQXRkZbMl7GsvZDAISa8j/hKRjxLIbeoVDB57amNECR3Cv9aLiy8Kv1a6h1tJD
+	 HzSWaAPVXCIxA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bradford Love <brad@nextdimension.cc>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Guanghui Feng <guanghuifeng@linux.alibaba.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
+	joro@8bytes.org,
+	will@kernel.org,
+	iommu@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] media: cx25840: Fix NTSC-J, PAL-N, and SECAM standards
-Date: Mon, 20 Apr 2026 09:21:31 -0400
-Message-ID: <20260420132314.1023554-297-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] iommu/amd: Fix illegal cap/mmio access in IOMMU debugfs
+Date: Mon, 20 Apr 2026 09:21:32 -0400
+Message-ID: <20260420132314.1023554-298-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -50,449 +51,437 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bradford Love <brad@nextdimension.cc>
+From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 
-[ Upstream commit 36200241f5a3dd28b95fdefb2885ca9fd52f6387 ]
+[ Upstream commit 0e59645683b7b6fa20eceb21a6f420e4f7412943 ]
 
-Formats did not correctly decode prior.
+In the current AMD IOMMU debugfs, when multiple processes simultaneously
+access the IOMMU mmio/cap registers using the IOMMU debugfs, illegal
+access issues can occur in the following execution flow:
 
-Modifications are based off cx25840 datasheet.
+1. CPU1: Sets a valid access address using iommu_mmio/capability_write,
+and verifies the access address's validity in iommu_mmio/capability_show
 
-Signed-off-by: Bradford Love <brad@nextdimension.cc>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+2. CPU2: Sets an invalid address using iommu_mmio/capability_write
+
+3. CPU1: accesses the IOMMU mmio/cap registers based on the invalid
+address, resulting in an illegal access.
+
+This patch modifies the execution process to first verify the address's
+validity and then access it based on the same address, ensuring
+correctness and robustness.
+
+Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis.
+Now I have all the information needed for a complete analysis. Let me
+compile the findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line Analysis
-- **Subsystem**: `media: cx25840` - video decoder I2C driver (Conexant
-  CX25840)
-- **Action verb**: "Fix" - explicit bug fix
-- **Summary**: Fix incorrect decoding of NTSC-J, PAL-N, and SECAM video
-  standards
-- Record: [media: cx25840] [fix] [Fix incorrect video standard register
-  programming for three TV standards]
+### Step 1.1: Subject Line
+- **Subsystem**: iommu/amd (AMD IOMMU driver, debugfs interface)
+- **Action verb**: "Fix" — explicitly a bug fix
+- **Summary**: Fixes illegal cap/mmio register access in IOMMU debugfs
+  caused by a TOCTOU race condition
 
 ### Step 1.2: Tags
-- **Signed-off-by**: Bradford Love <brad@nextdimension.cc> (author,
-  known Hauppauge/media contributor)
-- **Signed-off-by**: Hans Verkuil <hverkuil+cisco@kernel.org> (media
-  subsystem maintainer who merged it)
+- `Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>` —
+  author
+- `Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>` — IOMMU subsystem
+  maintainer applied it
 - No Fixes: tag (expected for autosel candidates)
-- No Cc: stable tag (expected for autosel candidates)
-- No Reported-by (the author is a hardware vendor contributor who
-  presumably found this through device testing)
-- Record: Signed off by both the author and the media subsystem
-  maintainer. No Fixes: tag, no Reported-by.
+- No Cc: stable (expected for autosel candidates)
+- No Reported-by or syzbot tags
 
 ### Step 1.3: Commit Body
-- "Formats did not correctly decode prior" - describes a real user-
-  visible symptom (broken video decoding)
-- "Modifications are based off cx25840 datasheet" - the fix is grounded
-  in hardware specifications
-- The failure mode: video output from the CX25840 decoder chip is
-  incorrect when using NTSC-J (Japan), PAL-N (Argentina/Uruguay), or
-  SECAM (France/Russia/many other countries) standards
-- Record: Bug = incorrect video standard register programming. Symptom =
-  video does not decode correctly for NTSC-J, PAL-N, SECAM. Root cause =
-  missing register writes specified in cx25840 datasheet.
+The commit describes a clear TOCTOU race condition between concurrent
+processes:
+1. CPU1 writes a valid offset and show function verifies it
+2. CPU2 writes an invalid offset (overwriting shared state)
+3. CPU1 reads MMIO/PCI config using the now-invalid offset → illegal
+   access
 
-### Step 1.4: Hidden Bug Fix Detection
-- This is an explicit bug fix, not disguised. The commit message says
-  "Fix" and the change adds required hardware register writes that were
-  missing.
-- Record: Not a hidden fix - explicitly a correctness fix against the
-  hardware datasheet.
+**Bug description**: Concurrent debugfs access allows one process to
+modify the shared `dbg_mmio_offset`/`dbg_cap_offset` between validation
+and use in another process.
+**Failure mode**: Out-of-bounds MMIO read or PCI config space read.
+
+### Step 1.4: Hidden Bug Fix Assessment
+Not hidden — this is explicitly described as a race condition fix.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Changes Inventory
-- **Files**: 1 file - `drivers/media/i2c/cx25840/cx25840-core.c`
-- **Lines**: +27 / -2 (net +25 lines)
-- **Function modified**: `set_v4lstd()` only
-- **Scope**: Single function in a single file, surgical fix
-- Record: Single file, single function, +27/-2, scope = surgical
+### Step 2.1: Inventory
+- **Files changed**: 1 — `drivers/iommu/amd/debugfs.c`
+- **Lines**: ~19 added, ~23 removed (net -4)
+- **Functions modified**: `iommu_mmio_write`, `iommu_mmio_show`,
+  `iommu_capability_write`, `iommu_capability_show`
+- **Scope**: Small, single-file surgical fix
 
 ### Step 2.2: Code Flow Change
-The `set_v4lstd()` function configures the CX25840 chip's registers when
-switching video standards. Changes:
 
-1. **New variables**: `pal_n`, `ntsc_j`, `tmp_reg` added
-2. **NTSC-J**: Now also sets `ntsc_j = 0x80` (register 0x403 bit 7) -
-   was missing
-3. **PAL-N**: Now also sets `pal_n = 0x40` (register 0x403 bit 6) - was
-   missing
-4. **SECAM (fmt=0xc)**: New block toggles CKILLEN bit (register 0x401
-   bit 5) per datasheet step 9c - was completely missing
-5. **PAL formats (4-7)**: New block toggles CAGCEN (bit 6) and CKILLEN
-   (bit 5) in register 0x401 - was missing
-6. **Register 0x403**: Previously written unconditionally (clearing bits
-   0:1 for every standard even when pal_m=0). Now conditionally written
-   only when pal_m, pal_n, or ntsc_j is set, and with the correct
-   bitmask for each case.
-7. **Minor**: `~6` changed to `~0x6` (cosmetic, same value)
+**Write functions (mmio + capability)**:
+- **Before**: Parse user input directly into shared
+  `iommu->dbg_mmio_offset`/`iommu->dbg_cap_offset`, then validate
+- **After**: Parse into local variable, validate, then store to shared
+  field only if valid
+
+**Show functions (mmio + capability)**:
+- **Before**: Check `iommu->dbg_*_offset < 0`, then use
+  `iommu->dbg_*_offset` for MMIO/PCI access
+- **After**: Snapshot shared field to local variable, validate both
+  lower AND upper bounds on the local copy, then use local copy for
+  access
 
 ### Step 2.3: Bug Mechanism
-- **Category**: Logic/correctness fix (hardware register
-  misconfiguration)
-- **Mechanism**: The cx25840 datasheet specifies that certain register
-  bits must be set for specific video standards. The driver was setting
-  the format register (0x400) but NOT setting companion configuration
-  bits in register 0x403 for NTSC-J and PAL-N, and NOT performing
-  required register toggles in 0x401 for SECAM and PAL. Additionally,
-  the old code unconditionally cleared bits 0:1 of register 0x403 on
-  every standard change, which could interfere with correct operation.
-- Record: Hardware register misconfiguration fix per datasheet. Three
-  standards (NTSC-J, PAL-N, SECAM) had missing register writes.
+**Category**: Race condition / TOCTOU (Time-of-check-to-time-of-use)
+
+The shared fields `dbg_mmio_offset` and `dbg_cap_offset` in the
+`amd_iommu` structure are accessed without synchronization. Between the
+validity check in `_show()` and the actual register access, another
+process can call `_write()` which:
+1. First sets the shared field to -1
+2. Then parses user input directly into it (potentially invalid value)
+3. Then validates — but the other CPU has already passed its check
+
+The fix uses a standard local-variable-snapshot pattern to eliminate the
+TOCTOU window.
 
 ### Step 2.4: Fix Quality
-- **Obviously correct?** Yes - changes are directly based on the cx25840
-  datasheet (referenced in both existing comments and the new code).
-  Register addresses, bit positions, and toggle sequences are specified.
-- **Minimal?** Yes - only touches the function that needs fixing, adds
-  only what the datasheet requires
-- **Regression risk?** Low - changes only affect the three specific
-  video standards that were broken. Other standards (NTSC-M, PAL
-  generic, etc.) take different code paths and are unaffected. The PAL
-  toggle sequence was already partially implemented in the existing
-  `input_change()` function at line 1296-1297.
-- Record: Fix is obviously correct (datasheet-based), minimal, and low
-  regression risk.
+- **Obviously correct**: Yes — local variable snapshot is a well-
+  established pattern
+- **Minimal**: Yes — only changes the four affected functions
+- **Regression risk**: Very low — the semantics are preserved, only the
+  race window is eliminated
+- **Additional defense**: Show functions now also validate the upper
+  bound (previously only write validated upper bound), adding defense-
+  in-depth
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-The `set_v4lstd()` function was created by Hans Verkuil in commit
-`081b496a75fec1` ("V4L/DVB (7344): cx25840: better PAL-M and NTSC-KR
-handling") from **2008**. The format selection `if/else` chain and the
-register 0x403 write were added in that commit. The PAL ghosting fix
-(fmt >= 4 && fmt < 8) block came from commit `73dcddc583c40b` from
-**2006**. The code being fixed has been present since 2008, meaning the
-bug has existed for ~18 years.
-- Record: Buggy code introduced in 2008 (commit 081b496a75fec1), present
-  in ALL stable trees.
+The buggy code was introduced by:
+- `7a4ee419e8c14` ("iommu/amd: Add debugfs support to dump IOMMU MMIO
+  registers") — authored 2025-07-02, first in v6.17-rc1
+- `4d9c5d5a1dc94` ("iommu/amd: Add debugfs support to dump IOMMU
+  Capability registers") — authored 2025-07-02, first in v6.17-rc1
 
-### Step 3.2: No Fixes Tag
-- No Fixes: tag to follow. The bug was introduced in 2008, long before
-  the current stable trees branched.
-- Record: N/A - no Fixes: tag. Bug has been present since v2.6.26-era.
+### Step 3.2: Fixes tag
+No Fixes: tag present. The bug was introduced by the two commits above.
 
 ### Step 3.3: File History
-Recent changes to the file are all unrelated cosmetic/cleanup changes:
-- email address updates
-- i2c_device_id initialization cleanup
-- DIF setup simplification
-- i2c probe API changes
-- No other standard-setting fixes in recent history.
-- Record: No related recent changes. This is a standalone fix.
+The file has had limited changes since the debugfs features were added
+in v6.17. One intermediate fix exists: `a0c7005333f9a` (OOB fix changing
+`-4` to `sizeof(u64)`), which is in v6.19-rc1+.
 
-### Step 3.4: Author History
-Bradford Love (brad@nextdimension.cc) is a well-established media
-contributor with 80+ commits, primarily for Hauppauge devices. He
-previously contributed `038fd41410298` ("media: cx25840: Register
-labeling, chip specific correction") and many cx23885/cx231xx/em28xx
-fixes. He clearly has deep knowledge of these chips.
-- Record: Author is a domain expert (Hauppauge contributor), not a
-  drive-by contributor.
+### Step 3.4: Author
+Guanghui Feng (Alibaba) is not the subsystem maintainer but has multiple
+iommu-related fixes in the tree. Joerg Roedel (IOMMU maintainer) applied
+and signed off.
 
 ### Step 3.5: Dependencies
-The patch modifies only the `set_v4lstd()` function which has not
-changed significantly since 2012. It uses `cx25840_and_or()` and
-`cx25840_read()` which are basic register access helpers present in all
-stable trees. No dependencies on other patches.
-- Record: Fully standalone, no prerequisites needed.
+This is patch 2/2 in a series. Patch 1/2 fixes the same class of TOCTOU
+race for `sbdf` (device-id) in different functions. The two patches
+modify **non-overlapping functions** in the same file, so they are
+functionally independent. The OOB fix `a0c7005333f9a` is a prerequisite
+for clean context matching in v6.19+.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1: Patch Discussion
-Found on the linuxtv-commits mailing list (msg48550). The commit was
-applied directly by Hans Verkuil (media subsystem maintainer) to
-media.git/next. The adjacent commits in the commit stream (msg48547:
-si2168 fix, msg48551: vimc sensor addition) are unrelated, confirming
-this is a standalone fix.
-- Record: Applied directly by subsystem maintainer. Standalone patch.
+### Step 4.1: Original Discussion
+Found at: `https://yhbt.net/lore/lkml/20260319073754.651998-1-
+guanghuifeng@linux.alibaba.com/T/`
+
+Key findings:
+- **Jörg Rödel (maintainer)**: "Applied, thanks. **this patch-set fixes
+  pretty serious issues**. Can you please further review the AMD IOMMU
+  debugfs code to make it more robust and secure?"
+- **Vasant Hegde (AMD)**: "Looks good. Reviewed-by: Vasant Hegde"
+- Only one version (v1) submitted, no revisions needed
+- No NAKs or concerns raised
 
 ### Step 4.2: Reviewers
-Hans Verkuil, the media subsystem maintainer, signed off on this patch
-and committed it directly.
-- Record: Subsystem maintainer accepted and merged the patch.
+- Sent to: joro (Joerg Roedel), suravee.suthikulpanit, will (Will
+  Deacon), robin.murphy
+- CC: iommu list, linux-kernel
+- Reviewed and applied by appropriate maintainers
 
-### Step 4.3: Bug Report
-No explicit bug report link. The fix likely came from the author's
-direct testing of Hauppauge devices with these video standards.
-- Record: No external bug report; author-discovered through hardware
-  testing.
-
-### Step 4.4-4.5: Related Patches / Stable Discussion
-This is a standalone fix, not part of a series. No stable-specific
-discussion found.
-- Record: Standalone fix, no series dependencies.
+### Step 4.3-4.5: Bug Reports / Stable Discussion
+No specific bug report link, but the author mentions monitoring scripts
+as a real-world trigger scenario. No prior stable discussion found.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions Modified
-Only `set_v4lstd()` is modified.
+### Step 5.1: Key Functions
+Modified: `iommu_mmio_write`, `iommu_mmio_show`,
+`iommu_capability_write`, `iommu_capability_show`
 
 ### Step 5.2: Callers
-`set_v4lstd()` is called from exactly one place: `cx25840_s_std()` at
-line 2488, which is a V4L2 subdev operation (`.s_std` callback). This is
-invoked whenever userspace or a bridge driver sets the video standard on
-a CX25840-based capture device.
-- Record: Called via V4L2 s_std operation - triggered by userspace video
-  standard selection.
+These are debugfs file operation callbacks (via
+`DEFINE_SHOW_STORE_ATTRIBUTE`). They're called when userspace
+reads/writes `/sys/kernel/debug/iommu/amd/iommuXX/mmio` and
+`.../capability`.
 
 ### Step 5.3-5.4: Call Chain
-Userspace (e.g., v4l2-ctl, tvtime, VLC) -> VIDIOC_S_STD ioctl -> bridge
-driver (ivtv, cx23885, cx231xx, pvrusb2) -> cx25840_s_std() ->
-set_v4lstd(). This is a standard video capture path - very commonly
-exercised by users with these capture cards.
-- Record: Reachable from userspace VIDIOC_S_STD ioctl. Common operation
-  for analog video capture users.
+- Userspace `echo "0x18" > .../mmio` → VFS write → `iommu_mmio_write`
+- Userspace `cat .../mmio` → VFS read → seq_file open →
+  `iommu_mmio_show`
+- Both reachable from userspace (root-only via debugfs)
+- `readq(iommu->mmio_base + offset)` performs MMIO access — OOB offset
+  can cause machine check
+- `pci_read_config_dword(iommu->dev, cap_ptr + offset, ...)` performs
+  PCI config space access
 
 ### Step 5.5: Similar Patterns
-The `input_change()` function (line 1283) already performs similar
-register toggles on 0x401 for bits 5:6, following the same datasheet
-section 3.16. The new code in `set_v4lstd()` is consistent with this
-existing pattern.
-- Record: Similar register toggle pattern already exists in
-  input_change(). Fix is consistent with existing code style.
+Patch 1/2 in the same series fixes the identical TOCTOU pattern for the
+`sbdf` global variable in `devid_show`, `iommu_devtbl_show`, and
+`iommu_irqtbl_show`.
 
-## PHASE 6: CROSS-REFERENCING
+## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Code Exists in Stable Trees
-The `set_v4lstd()` function is virtually identical across all stable
-trees (v5.4, v5.10, v5.15, v6.1, v6.6, v6.12). The buggy code has been
-present since 2008. The patch should apply cleanly to all active stable
-trees.
-- Record: Buggy code exists in ALL active stable trees. Patch should
-  apply cleanly.
+### Step 6.1: Buggy Code Existence
+- **v6.12 LTS and earlier**: Code does NOT exist (debugfs was minimal)
+- **v6.17.y**: Code exists (buggy code first introduced here, with
+  `mmio_phys_end - 4`)
+- **v6.18.y**: Code exists (same as v6.17 context)
+- **v6.19.y**: Code exists (with `sizeof(u64)` from OOB fix)
+- **v7.0**: Code exists (matches patch context exactly)
 
 ### Step 6.2: Backport Complications
-The function hasn't changed in the relevant area since 2012. Changes
-between stable trees (email updates, cosmetic changes, DIF table
-additions) are all outside the `set_v4lstd()` function. The patch should
-apply cleanly.
-- Record: Clean apply expected in all stable trees.
+- v6.19.y / v7.0.y: Should apply cleanly (context matches)
+- v6.17.y / v6.18.y: Need minor adjustment (`mmio_phys_end - 4` vs
+  `sizeof(u64)`)
 
-### Step 6.3: Related Fixes in Stable
-No related fixes for this specific issue have been applied to any stable
-tree.
-- Record: No prior fixes for this bug in stable.
+### Step 6.3: Related Fixes Already in Stable
+No. The race fix has not been applied anywhere yet.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem Criticality
-- **Subsystem**: `drivers/media/i2c/cx25840` - Video decoder driver for
-  Conexant CX25840 chip
-- **Criticality**: PERIPHERAL (specific hardware) - but the cx25840 is
-  used in many popular TV capture cards (Hauppauge, Yuan MPC622, etc.)
-- The affected standards serve large populations: NTSC-J (Japan), PAL-N
-  (Argentina, Uruguay, Paraguay), SECAM (France, Russia, North Africa,
-  Middle East, Eastern Europe)
-- Record: Peripheral driver, but widely used in popular capture
-  hardware; affected standards serve large geographic regions.
+### Step 7.1: Subsystem
+- **Path**: `drivers/iommu/amd/` — AMD IOMMU driver
+- **Criticality**: IMPORTANT — IOMMU is critical infrastructure for AMD
+  systems, though debugfs is a debugging interface
 
-### Step 7.2: Subsystem Activity
-The cx25840 driver is mature/stable with minimal recent changes (all
-cosmetic). This means the fix addresses a long-standing bug that has
-been present for 18 years.
-- Record: Mature driver, very low activity. Bug has been present for ~18
-  years.
+### Step 7.2: Activity
+Active subsystem with regular updates.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+## PHASE 8: IMPACT AND RISK
 
 ### Step 8.1: Affected Users
-Users with CX25840-based video capture devices (Hauppauge PVR, cx23885
-cards, cx231xx cards, pvrusb2 USB devices) who use NTSC-J, PAL-N, or
-SECAM video standards. This includes users in Japan, South America
-(Argentina, Uruguay, Paraguay), France, Russia, and many other
-countries.
-- Record: Users of CX25840-based capture devices using NTSC-J, PAL-N, or
-  SECAM standards.
+Systems with AMD IOMMU hardware using debugfs for monitoring/debugging.
+Monitoring scripts that concurrently access IOMMU debugfs are
+specifically mentioned.
 
 ### Step 8.2: Trigger Conditions
-Triggered whenever a user selects NTSC-J, PAL-N, or SECAM standard on
-their capture device (VIDIOC_S_STD ioctl). 100% reproducible, no race
-conditions.
-- Record: Deterministic trigger - selecting the affected video standard
-  always triggers the bug.
+- Requires root access (debugfs)
+- Requires concurrent access to the same IOMMU's debugfs files
+- Realistic in monitoring script scenarios
+- Unprivileged users cannot trigger it
 
 ### Step 8.3: Failure Mode Severity
-The video does not decode correctly for these three standards. This is a
-functional failure - the device produces incorrect video output. It
-doesn't crash or corrupt data, but it renders the device effectively
-non-functional for users in affected regions.
-- **Severity**: MEDIUM-HIGH (device non-functional for specific
-  standards, no crash/corruption)
-- Record: Incorrect video decoding = device unusable for affected
-  standards. Severity: MEDIUM-HIGH.
+- **OOB MMIO read**: Can cause machine check exception → system crash
+  (CRITICAL)
+- **OOB PCI config read**: Undefined behavior, potentially reading
+  adjacent config space (HIGH)
+- Combined severity: **HIGH** (requires root + concurrency, but
+  consequences are severe)
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: HIGH - fixes broken video decoding for three major TV
-  standards affecting users in many countries
-- **Risk**: VERY LOW - 27 lines added to a single function, changes are
-  datasheet-based, only affect the three broken standards, no impact on
-  working standards
-- Record: High benefit, very low risk.
+### Step 8.4: Risk-Benefit
+- **Benefit**: Prevents system crash / machine check from concurrent
+  debugfs access
+- **Risk**: Very low — local variable snapshot is a trivial, well-
+  understood pattern; 19 lines added
+- **Ratio**: Favorable for backport
 
 ## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: Evidence Summary
 
 **FOR backporting:**
-- Fixes real user-visible bug: video standards don't decode correctly
-- Small, surgical fix: 1 file, 1 function, +27/-2 lines
-- Obviously correct: based directly on cx25840 hardware datasheet
-- Accepted by subsystem maintainer (Hans Verkuil)
-- Author is a domain expert (Bradford Love, Hauppauge contributor with
-  80+ commits)
-- Standalone: no dependencies on other patches
-- Affects users in many countries (Japan, France, Russia, Argentina,
-  etc.)
-- Code is identical across all active stable trees - clean apply
-  expected
-- Bug has existed since 2008 - all stable users affected
-- Consistent with existing register programming patterns in the driver
+- Fixes a genuine TOCTOU race leading to OOB MMIO/PCI access
+- IOMMU maintainer (Jörg Rödel) explicitly called it "pretty serious
+  issues"
+- Reviewed-by from AMD IOMMU developer (Vasant Hegde)
+- Small, surgical fix (single file, ~19 lines added, well-understood
+  pattern)
+- No new features or API changes
+- Realistic trigger scenario (monitoring scripts)
 
 **AGAINST backporting:**
-- No Reported-by tag (but author-discovered through hardware testing is
-  normal)
-- Not a crash/security/corruption bug (it's a functional correctness
-  issue)
-- Relatively niche hardware (CX25840-based capture cards)
-- The change is slightly larger than typical one-liner quirk additions
+- Requires root access + concurrent debugfs access
+- Buggy code is relatively new (v6.17+, not in LTS trees ≤6.12)
+- Part of 2-patch series (but functionally independent)
+- Needs minor adjustment for v6.17/v6.18 stable trees
 
 ### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES - datasheet-based, maintainer-
-   accepted, author is hardware expert
-2. **Fixes a real bug?** YES - video standards decode incorrectly
-3. **Important issue?** MEDIUM-HIGH - device non-functional for affected
-   standards (not crash/security, but functional failure)
-4. **Small and contained?** YES - 27 lines in 1 function, 1 file
-5. **No new features?** CORRECT - fixes existing standard support
-6. **Can apply to stable?** YES - code unchanged across all stable trees
+1. Obviously correct and tested? **YES** — standard TOCTOU fix pattern,
+   reviewed by maintainer
+2. Fixes a real bug? **YES** — race condition causing OOB hardware
+   access
+3. Important issue? **YES** — can cause machine check/system crash
+4. Small and contained? **YES** — single file, ~19 lines
+5. No new features? **YES** — purely fixes race condition
+6. Can apply to stable? **YES** — clean apply to v6.19.y/v7.0.y; minor
+   adjustment for v6.17/v6.18
 
 ### Step 9.3: Exception Categories
-This is closest to a **hardware quirk/workaround** - it corrects the
-register programming to match what the hardware datasheet requires. This
-is the kind of fix that makes hardware work correctly.
+Not an exception category — this is a standard bug fix.
 
 ### Step 9.4: Decision
-This is a well-contained, datasheet-based correctness fix for a real
-hardware issue affecting multiple video standards. It was written by a
-domain expert and accepted by the subsystem maintainer. It's small,
-obviously correct, standalone, and should apply cleanly to all stable
-trees. While it's not a crash or security fix, it fixes completely
-broken functionality for users of these standards.
+The fix is well-contained, obviously correct, addresses a real race
+condition that can cause system crashes, and was explicitly
+characterized as "pretty serious" by the IOMMU subsystem maintainer. The
+risk of regression is negligible.
 
 ## Verification
 
-- [Phase 1] Parsed subject: "media: cx25840: Fix NTSC-J, PAL-N, and
-  SECAM standards" - explicit fix
-- [Phase 1] Parsed tags: Signed-off-by Bradford Love (author) and Hans
-  Verkuil (maintainer). No Fixes:, no Reported-by (expected).
-- [Phase 2] Diff analysis: +27/-2 in set_v4lstd() function, adds missing
-  register writes for 3 video standards per datasheet
-- [Phase 3] git blame: set_v4lstd() format selection chain from commit
-  081b496a75fec1 (2008, Hans Verkuil), present in ALL stable trees
-- [Phase 3] git log -- file: No related changes to set_v4lstd() in
-  recent history; patch is fully standalone
-- [Phase 3] Author check: Bradford Love has 80+ commits to
-  drivers/media/, including prior cx25840 work (038fd41410298)
-- [Phase 4] Found commit on mail-archive.com (linuxtv-commits msg48550),
-  confirmed standalone commit applied by Hans Verkuil
-- [Phase 4] Adjacent messages (msg48547, msg48551) are unrelated
-  patches, confirming no series dependency
-- [Phase 5] set_v4lstd() called from cx25840_s_std() (line 2488), which
-  is the V4L2 .s_std callback
-- [Phase 5] Similar register toggle pattern already in input_change() at
-  lines 1296-1297
-- [Phase 6] File changes between v6.6 and v7.0 are all cosmetic (email
-  updates, DIF tables) - unrelated to set_v4lstd()
-- [Phase 6] Identical set_v4lstd() code across v5.10, v5.15, v6.1, v6.6
-  stable trees
-- [Phase 8] Failure mode: incorrect video output for NTSC-J/PAL-N/SECAM,
-  severity MEDIUM-HIGH (device non-functional for those standards)
-- UNVERIFIED: Could not access lore.kernel.org directly (bot
-  protection). Used mail-archive.com instead.
-- UNVERIFIED: Could not verify exact kernel versions in stable trees
-  where this applies cleanly (but code hasn't changed since 2012 in this
-  function).
+- [Phase 1] Parsed tags: Signed-off-by from author and IOMMU maintainer
+  Joerg Roedel
+- [Phase 2] Diff analysis: 4 functions modified in single file, local
+  variable snapshot pattern eliminates TOCTOU
+- [Phase 3] git blame: buggy code introduced in `7a4ee419e8c14`
+  (v6.17-rc1) and `4d9c5d5a1dc94` (v6.17-rc1), confirmed via `git
+  describe --tags --contains`
+- [Phase 3] git show: confirmed original commits added the vulnerable
+  write/show pattern
+- [Phase 3] Prerequisite `a0c7005333f9a` (OOB fix) confirmed in v6.19+
+  via `git merge-base --is-ancestor`
+- [Phase 4] Found original thread at yhbt.net lore mirror — Jörg Rödel
+  said "Applied, thanks" and "fixes pretty serious issues"
+- [Phase 4] Vasant Hegde gave Reviewed-by for both patches in the series
+- [Phase 4] Only v1 submitted, no concerns or NAKs
+- [Phase 5] Functions called via debugfs seq_file ops — reachable from
+  root userspace; `readq()` on OOB offset can cause machine check
+- [Phase 6] v6.12 LTS confirmed to NOT have the buggy code (verified via
+  `git show v6.12:drivers/iommu/amd/debugfs.c`)
+- [Phase 6] v6.17, v6.19 confirmed to have the buggy code
+- [Phase 8] Failure mode: OOB MMIO read → potential machine check/crash;
+  severity HIGH
+- UNVERIFIED: Could not access lore.kernel.org directly (Anubis bot
+  protection); used yhbt.net mirror instead
 
 **YES**
 
- drivers/media/i2c/cx25840/cx25840-core.c | 29 ++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/debugfs.c | 42 +++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/media/i2c/cx25840/cx25840-core.c b/drivers/media/i2c/cx25840/cx25840-core.c
-index a863063043303..69d5cc648c0fc 100644
---- a/drivers/media/i2c/cx25840/cx25840-core.c
-+++ b/drivers/media/i2c/cx25840/cx25840-core.c
-@@ -1652,10 +1652,14 @@ static int set_v4lstd(struct i2c_client *client)
- 	struct cx25840_state *state = to_state(i2c_get_clientdata(client));
- 	u8 fmt = 0;	/* zero is autodetect */
- 	u8 pal_m = 0;
-+	u8 pal_n = 0;
-+	u8 ntsc_j = 0;
-+	u8 tmp_reg = 0;
+diff --git a/drivers/iommu/amd/debugfs.c b/drivers/iommu/amd/debugfs.c
+index 0b03e0622f67e..4e66473d7ceaf 100644
+--- a/drivers/iommu/amd/debugfs.c
++++ b/drivers/iommu/amd/debugfs.c
+@@ -26,22 +26,19 @@ static ssize_t iommu_mmio_write(struct file *filp, const char __user *ubuf,
+ {
+ 	struct seq_file *m = filp->private_data;
+ 	struct amd_iommu *iommu = m->private;
+-	int ret;
+-
+-	iommu->dbg_mmio_offset = -1;
++	int ret, dbg_mmio_offset = iommu->dbg_mmio_offset = -1;
  
- 	/* First tests should be against specific std */
- 	if (state->std == V4L2_STD_NTSC_M_JP) {
- 		fmt = 0x2;
-+		ntsc_j = 0x80;
- 	} else if (state->std == V4L2_STD_NTSC_443) {
- 		fmt = 0x3;
- 	} else if (state->std == V4L2_STD_PAL_M) {
-@@ -1663,6 +1667,7 @@ static int set_v4lstd(struct i2c_client *client)
- 		fmt = 0x5;
- 	} else if (state->std == V4L2_STD_PAL_N) {
- 		fmt = 0x6;
-+		pal_n = 0x40;
- 	} else if (state->std == V4L2_STD_PAL_Nc) {
- 		fmt = 0x7;
- 	} else if (state->std == V4L2_STD_PAL_60) {
-@@ -1689,10 +1694,30 @@ static int set_v4lstd(struct i2c_client *client)
- 		/* Set format to NTSC-M */
- 		cx25840_and_or(client, 0x400, ~0xf, 1);
- 		/* Turn off LCOMB */
--		cx25840_and_or(client, 0x47b, ~6, 0);
-+		cx25840_and_or(client, 0x47b, ~0x6, 0);
-+	} else if (fmt == 0xc) { /* SECAM - Step 9c - toggle CKILLEN */
-+		tmp_reg = cx25840_read(client, 0x401);
-+		cx25840_and_or(client, 0x401, ~0x20, tmp_reg & 0x20 ? 0x00 : 0x20);
-+		cx25840_and_or(client, 0x401, ~0x20, tmp_reg & 0x20 ? 0x20 : 0x00);
+ 	if (cnt > OFS_IN_SZ)
+ 		return -EINVAL;
+ 
+-	ret = kstrtou32_from_user(ubuf, cnt, 0, &iommu->dbg_mmio_offset);
++	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_mmio_offset);
+ 	if (ret)
+ 		return ret;
+ 
+-	if (iommu->dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64)) {
+-		iommu->dbg_mmio_offset = -1;
+-		return  -EINVAL;
+-	}
++	if (dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64))
++		return -EINVAL;
+ 
++	iommu->dbg_mmio_offset = dbg_mmio_offset;
+ 	return cnt;
+ }
+ 
+@@ -49,14 +46,16 @@ static int iommu_mmio_show(struct seq_file *m, void *unused)
+ {
+ 	struct amd_iommu *iommu = m->private;
+ 	u64 value;
++	int dbg_mmio_offset = iommu->dbg_mmio_offset;
+ 
+-	if (iommu->dbg_mmio_offset < 0) {
++	if (dbg_mmio_offset < 0 || dbg_mmio_offset >
++			iommu->mmio_phys_end - sizeof(u64)) {
+ 		seq_puts(m, "Please provide mmio register's offset\n");
+ 		return 0;
  	}
-+
- 	cx25840_and_or(client, 0x400, ~0xf, fmt);
--	cx25840_and_or(client, 0x403, ~0x3, pal_m);
-+
-+	if (fmt >= 4 && fmt < 8) {
-+		tmp_reg = cx25840_read(client, 0x401);
-+		cx25840_and_or(client, 0x401, ~0x40, tmp_reg & 0x40 ? 0x00 : 0x40); /* CAGCEN */
-+		cx25840_and_or(client, 0x401, ~0x40, tmp_reg & 0x40 ? 0x40 : 0x00);
-+		cx25840_and_or(client, 0x401, ~0x20, tmp_reg & 0x20 ? 0x00 : 0x20); /* CKILLEN */
-+		cx25840_and_or(client, 0x401, ~0x20, tmp_reg & 0x20 ? 0x20 : 0x00);
-+	}
-+
-+	if (pal_m)
-+		cx25840_and_or(client, 0x403, ~0x3, pal_m);
-+	else if (pal_n)         /* cx25840 datasheet table 3-19 */
-+		cx25840_and_or(client, 0x403, ~0x40, pal_n);
-+	else if (ntsc_j)        /* cx25840 datasheet table 3-19 */
-+		cx25840_and_or(client, 0x403, ~0x80, ntsc_j);
-+
- 	if (is_cx23888(state))
- 		cx23888_std_setup(client);
- 	else
+ 
+-	value = readq(iommu->mmio_base + iommu->dbg_mmio_offset);
+-	seq_printf(m, "Offset:0x%x Value:0x%016llx\n", iommu->dbg_mmio_offset, value);
++	value = readq(iommu->mmio_base + dbg_mmio_offset);
++	seq_printf(m, "Offset:0x%x Value:0x%016llx\n", dbg_mmio_offset, value);
+ 
+ 	return 0;
+ }
+@@ -67,23 +66,20 @@ static ssize_t iommu_capability_write(struct file *filp, const char __user *ubuf
+ {
+ 	struct seq_file *m = filp->private_data;
+ 	struct amd_iommu *iommu = m->private;
+-	int ret;
+-
+-	iommu->dbg_cap_offset = -1;
++	int ret, dbg_cap_offset = iommu->dbg_cap_offset = -1;
+ 
+ 	if (cnt > OFS_IN_SZ)
+ 		return -EINVAL;
+ 
+-	ret = kstrtou32_from_user(ubuf, cnt, 0, &iommu->dbg_cap_offset);
++	ret = kstrtou32_from_user(ubuf, cnt, 0, &dbg_cap_offset);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/* Capability register at offset 0x14 is the last IOMMU capability register. */
+-	if (iommu->dbg_cap_offset > 0x14) {
+-		iommu->dbg_cap_offset = -1;
++	if (dbg_cap_offset > 0x14)
+ 		return -EINVAL;
+-	}
+ 
++	iommu->dbg_cap_offset = dbg_cap_offset;
+ 	return cnt;
+ }
+ 
+@@ -91,21 +87,21 @@ static int iommu_capability_show(struct seq_file *m, void *unused)
+ {
+ 	struct amd_iommu *iommu = m->private;
+ 	u32 value;
+-	int err;
++	int err, dbg_cap_offset = iommu->dbg_cap_offset;
+ 
+-	if (iommu->dbg_cap_offset < 0) {
++	if (dbg_cap_offset < 0 || dbg_cap_offset > 0x14) {
+ 		seq_puts(m, "Please provide capability register's offset in the range [0x00 - 0x14]\n");
+ 		return 0;
+ 	}
+ 
+-	err = pci_read_config_dword(iommu->dev, iommu->cap_ptr + iommu->dbg_cap_offset, &value);
++	err = pci_read_config_dword(iommu->dev, iommu->cap_ptr + dbg_cap_offset, &value);
+ 	if (err) {
+ 		seq_printf(m, "Not able to read capability register at 0x%x\n",
+-			   iommu->dbg_cap_offset);
++			   dbg_cap_offset);
+ 		return 0;
+ 	}
+ 
+-	seq_printf(m, "Offset:0x%x Value:0x%08x\n", iommu->dbg_cap_offset, value);
++	seq_printf(m, "Offset:0x%x Value:0x%08x\n", dbg_cap_offset, value);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
