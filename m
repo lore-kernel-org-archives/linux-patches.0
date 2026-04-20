@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FA24D90D1;
-	Mon, 20 Apr 2026 13:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73534D98F8;
+	Mon, 20 Apr 2026 13:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776692017; cv=none; b=cIe8+UKrAmht5zBm5KkyaUWTCf/jfLIqD3hFF/RzGZLoWBpj2puwqTmc4j5+k5o5/p/Wzlo2MALQs13A7kVKnKaY9kBaykTI+ZECZ0/X296OWy/RtZ9FiH2GAiyPn5RgkkR+fE8CV+/MdEFsZZxisfrWTcqXzzeuCgIisaiwm14=
+	t=1776692018; cv=none; b=Qee1Gbe2+iaV82pHfUlqfNkMxIVFYkQlYz/qv111Py/U45yCLDUNNzFb96TpbxkD74CsZsthJh7Cxysx8Jre/ZckC5+gTwGQdrHcAo/lioo1fxMZoL0DLUJUbfG5WrSQDRHw/KlHCGv76GnWUZ2m0dKs1IVFyBTEmQO3ACE5ocM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776692017; c=relaxed/simple;
-	bh=jvmYOPkTLZLZlS7JN2M40phX4qLm75L0szk72vSc99M=;
+	s=arc-20240116; t=1776692018; c=relaxed/simple;
+	bh=jgZWabGUujhafuo9BtlfJU1ksYakC7LsTIbq4wGHocY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAjcNVualS9aFlJzZ9cgVaJZ+ab3uJEtO9N+qlVAwW3wIXefFJRFoPdPHCJ18KDfvOLqpAiGryPmmc5JGZTbAsHhSsgJ8MZsxkwnUVdXcIQQiWIGARvFcOQWmH4aqWkhACYEViVoCDy6UWBfA99GeiXKR5bOidih4CKv8nexgQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BF1jXNcX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VUs3nalRC6qa1Kl0mgGM/vgdIXaz1F18Wn2goHNZu481RgxYkfZj5nDAEJ904rHdWquEklt2i/bV9aXVUzYFI+07ljiusZuMaSGo/Hf8NI7Lly1H99xI3cgf5MGs34NMPnpZh/KdLV3Ot06HXM8Q0C7pvfbjaJ2tj2zveCpGuJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gp0Uz/ru; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BF1jXNcX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F074C2BCB4;
-	Mon, 20 Apr 2026 13:33:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gp0Uz/ru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7178CC19425;
+	Mon, 20 Apr 2026 13:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776692017;
-	bh=jvmYOPkTLZLZlS7JN2M40phX4qLm75L0szk72vSc99M=;
+	s=k20201202; t=1776692018;
+	bh=jgZWabGUujhafuo9BtlfJU1ksYakC7LsTIbq4wGHocY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BF1jXNcXTvRhRjRSgpMLEN0GIQcMaLwE77WkWUfOfFwrwAxEWfVUTnVbjZY1RR7t+
-	 AfVAEuy3KgZjScaMLVxnfKBhEKg7oneR/kw+dRH1ZKFeLRQb7CwwIA356Hk3tgKHJe
-	 sXm0rvTNRQ/lqIRcW8XEvq6J1bQqfSWlDCvwbzrk1NezuLbL4BrM4Q8MCIzjhzLFIR
-	 QZRKL/peXnWY8bXMJXESIOTu7tApCBM4iRcdrpH1GbEWlzOHTRe0OhFROjYhBLqQM2
-	 vOVUkOc2Q4ySKrDumNSHYxDcpaKqnior/zCcO2l+Jxy6jOhc53OAFaYcjZ1k5qe3Df
-	 HbBqZX5LFIc3g==
+	b=Gp0Uz/ru3htgWF/J+c5Jq3FGJbiyJBR/Yv6imxEpr7hyF1ddcBEW03rvm7zoYE0Tz
+	 mBXcs7NjA1dk2yWmp7VeUK9RNfgzn6b6NDl62XUjkEhL5GsHb8WcfdnWyIXFo+0kFj
+	 HkJywT0+eqAN8V5Db9rrMtHJ46HsOiRsIqkLPgwCiqkll9oC3PU74s5oEAcskujyda
+	 PMKxEJbnfMhqmuNnUeMmeEPj3UOH7RxG5sPI7RETNKslPI8HBprrZ+csBnHRZOXfw0
+	 zuYb23nisuO/HYnMQBEZhDyLDhtvxVjAAI4T+J7xi2puaNWPgGZFxS/JvGjjzo9Q6h
+	 fN6ScEaM9A8VA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Matthew Sakai <msakai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+Cc: songxiebing <songxiebing@kylinos.cn>,
+	dzidmail <dzidmail@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	dm-devel@lists.linux.dev,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] dm vdo indexer: validate saved zone count
-Date: Mon, 20 Apr 2026 09:21:58 -0400
-Message-ID: <20260420132314.1023554-324-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] ALSA: hda/realtek: Add quirk for HP Spectre x360 14-ea
+Date: Mon, 20 Apr 2026 09:21:59 -0400
+Message-ID: <20260420132314.1023554-325-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -49,379 +52,270 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Sakai <msakai@redhat.com>
+From: songxiebing <songxiebing@kylinos.cn>
 
-[ Upstream commit 9e809bb1defe9be7fed2e21552c6b03b2694394d ]
+[ Upstream commit 882321ccaeea52dd645dff98bfea2f92b286e673 ]
 
-Verify that the loaded zone count is in the valid range
-before using it as a loop iterator.
+HP Spectre x360 Convertible 14-ea0xxx (2021 model or so)
+doesn't make produce sound,The Bang & Olufsen speaker amplifier
+is not enabled.
 
-Signed-off-by: Matthew Sakai <msakai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Root causing:
+The PCI subsystem ID is 103c:0000 (HP left it unset), while the codec
+subsystem ID is 103c:885b. The vendor-wide catch-all
+SND_PCI_QUIRK_VENDOR(0x103c, "HP", ALC269_FIXUP_HP_MUTE_LED) matches
+103c:0000 before the codec SSID fallback is reached, so
+ALC245_FIXUP_HP_X360_AMP never applies.
+
+So add the quirk in alc269_fixup_tbl.
+
+Reported-by: dzidmail <dzidmail@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221341
+Signed-off-by: songxiebing <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260413011854.96520-1-songxiebing@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 Now I have all the information needed for a thorough analysis. Let me
-compile everything.
+compile the findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem:** `dm vdo indexer` (device mapper, VDO deduplication
-  index)
-- **Action verb:** "validate" - implies adding a missing safety check
-- **Summary:** Validates the zone count loaded from disk before using it
-  as a loop iterator
+**Step 1.1: Subject Line**
+- Subsystem: `ALSA: hda/realtek`
+- Action: "Add quirk"
+- Summary: Adding a codec SSID quirk for HP Spectre x360 14-ea to enable
+  its speaker amplifier.
+- Record: [ALSA/HDA/Realtek] [Add] [Hardware quirk for HP Spectre x360
+  14-ea speaker amp]
 
-**Record:** [dm vdo indexer] [validate] [Add bounds check on zone count
-read from disk before loop use]
+**Step 1.2: Tags**
+- Reported-by: dzidmail <dzidmail@gmail.com> — a real user reporting the
+  issue
+- Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221341 — filed bug
+  report
+- Signed-off-by: songxiebing <songxiebing@kylinos.cn> — author, a
+  recurring HDA contributor
+- Link: patch.msgid.link — lore submission link
+- Signed-off-by: Takashi Iwai <tiwai@suse.de> — the HDA subsystem
+  maintainer applied it
+- Record: User-reported bug with bugzilla tracker. HDA maintainer
+  Takashi Iwai merged it directly.
 
-### Step 1.2: Tags
-- `Signed-off-by: Matthew Sakai <msakai@redhat.com>` - the dm-vdo
-  subsystem author/maintainer
-- `Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>` - the dm
-  subsystem maintainer who committed it
+**Step 1.3: Commit Body**
+- Bug: HP Spectre x360 14-ea (2021 model) produces no sound. Bang &
+  Olufsen speaker amplifier is not enabled.
+- Root cause explained clearly: PCI subsystem ID is `103c:0000` (HP left
+  it unset). The vendor catch-all `SND_PCI_QUIRK_VENDOR(0x103c, "HP",
+  ALC269_FIXUP_HP_MUTE_LED)` matches first because it checks PCI SSID,
+  preventing the codec SSID fallback from ever reaching
+  `ALC245_FIXUP_HP_X360_AMP`.
+- Fix: Use `HDA_CODEC_QUIRK(0x103c, 0x885b, ...)` which sets
+  `match_codec_ssid=true`, causing matching against codec SSID
+  `103c:885b` in the primary loop, before vendor catch-all kicks in.
+- Record: [No audio output] [Speaker amp not enabled] [Incorrect quirk
+  applied due to unset PCI SSID]
 
-No Fixes: tag, no Reported-by, no Cc: stable. The absence of these is
-expected for commits under manual review.
-
-**Record:** Author is the dm-vdo subsystem maintainer. Committed through
-the dm maintainer. No explicit bug reporter.
-
-### Step 1.3: Commit Body
-The message says: "Verify that the loaded zone count is in the valid
-range before using it as a loop iterator." This clearly states:
-- The zone count comes from loaded (on-disk) data
-- It's used as a loop iterator
-- Without validation, an invalid value would be used in the loop
-
-**Record:** Bug = missing input validation on disk-loaded data used as
-loop bound. Failure = out-of-bounds array access. Root cause = no bounds
-check after reading from persistent storage.
-
-### Step 1.4: Hidden Bug Fix Detection
-This IS a bug fix despite using "validate" rather than "fix". It adds a
-missing bounds check on data read from disk, preventing an out-of-bounds
-array access. This is a classic data corruption / corrupted metadata
-handling fix.
-
-**Record:** Yes, this is a real bug fix - adding a missing bounds check
-on untrusted data from disk.
-
----
+**Step 1.4: Hidden Bug Fix?**
+This is an explicit hardware quirk fix. Not hidden — it directly
+addresses a broken hardware scenario. The commit explains the exact
+mechanism.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Changes Inventory
-- **File:** `drivers/md/dm-vdo/indexer/index-layout.c`
-- **Lines added:** 3 (the `if` check + error return)
-- **Function modified:** `reconstruct_index_save()`
-- **Scope:** Single-file, single-function, 3-line surgical fix
+**Step 2.1: Inventory**
+- 1 file changed: `sound/hda/codecs/realtek/alc269.c`
+- 1 line added: `HDA_CODEC_QUIRK(0x103c, 0x885b, "HP Spectre x360
+  14-ea", ALC245_FIXUP_HP_X360_AMP),`
+- Scope: Single-line surgical addition to an existing quirk table.
+- Record: [+1 line in alc269_fixup_tbl quirk table] [Minimal scope]
 
-**Record:** 1 file, +3 lines, extremely small and contained.
+**Step 2.2: Code Flow Change**
+- Before: No entry for codec SSID `103c:885b`. The vendor catch-all
+  applies `ALC269_FIXUP_HP_MUTE_LED`, which doesn't toggle the GPIO pin
+  needed for the B&O speaker amp.
+- After: `HDA_CODEC_QUIRK` with `match_codec_ssid=true` matches in the
+  primary loop via codec SSID → `ALC245_FIXUP_HP_X360_AMP` applied →
+  GPIO toggled → speaker amp enabled.
 
-### Step 2.2: Code Flow Change
-**Before:** Line 1447 computes `isl->zone_count =
-table->header.region_count - 3` from disk data, then immediately uses
-`zone_count` as the loop bound at line 1476: `for (z = 0; z <
-isl->zone_count; z++)`, indexing into `volume_index_zones[z]`.
+**Step 2.3: Bug Mechanism**
+Category (h): Hardware workaround / codec quirk. The existing
+`ALC245_FIXUP_HP_X360_AMP` fixup already exists and works for sibling
+models (0x87f6, 0x87f7). This just adds the correct matching entry for a
+model with an unset PCI SSID.
 
-**After:** After computing `zone_count`, the code checks `if
-(isl->zone_count > MAX_ZONES)` and returns `UDS_CORRUPT_DATA` error if
-invalid.
-
-### Step 2.3: Bug Mechanism
-This is a **buffer overflow / out-of-bounds write** fix:
-
-- `region_count` is a `u16` (0-65535) read from disk via
-  `decode_u16_le()` at line 1129
-- `zone_count = region_count - 3` (line 1447) - stored in `unsigned int`
-- If `region_count > MAX_ZONES + 3 = 19`, then `zone_count > 16`, and
-  the loop writes past the end of `volume_index_zones[MAX_ZONES]` (a
-  fixed-size array of 16 entries at line 162)
-- If `region_count < 3`, the subtraction wraps to a very large unsigned
-  value, causing massive OOB access
-- There's NO other validation of `region_count` vs `MAX_ZONES` in the
-  load path
-
-**Record:** [Out-of-bounds array access] [zone_count from disk used
-without bounds check as index into fixed-size MAX_ZONES=16 array]
-
-### Step 2.4: Fix Quality
-- The fix is **obviously correct**: it checks `zone_count > MAX_ZONES`
-  before the array is accessed
-- It's **minimal**: exactly 3 lines
-- It returns a proper error code (`UDS_CORRUPT_DATA`) with a log message
-- **Zero regression risk**: it only rejects previously-invalid data that
-  would have caused corruption
-
-**Record:** Fix is obviously correct, minimal, zero regression risk.
-
----
+**Step 2.4: Fix Quality**
+- Obviously correct: Uses the well-established `HDA_CODEC_QUIRK` pattern
+  already present ~10 times in this same table.
+- Minimal: Single table entry addition.
+- Regression risk: Essentially zero. Only affects devices with codec
+  SSID `103c:885b`.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame
-The buggy code was introduced in commit `b46d79bdb82aa1` ("dm vdo: add
-deduplication index storage interface"), authored by Matthew Sakai on
-2023-11-16. This commit first appeared in v6.9-rc1. The buggy code has
-been present since the initial introduction of dm-vdo.
+**Step 3.1: Blame**
+The existing `ALC245_FIXUP_HP_X360_AMP` entries for sibling models
+(0x87f6, 0x87f7) date back to commit `aeeb85f26c3bb` (2025-07-09 file
+split), but originate from much earlier. The fixup function
+`alc245_fixup_hp_x360_amp` exists at line 1448.
 
-**Record:** Bug introduced in b46d79bdb82aa1 (v6.9-rc1). Present in all
-kernels since v6.9.
+**Step 3.2: Fixes tag**
+No Fixes: tag — expected for this type of quirk addition.
 
-### Step 3.2: Fixes Tag
-No Fixes: tag present. The implicit target would be b46d79bdb82aa1.
+**Step 3.3: File History**
+Recent history shows a steady stream of similar quirk additions (Lenovo
+Yoga, Acer Swift, HP Laptop, Samsung, ASUS, Framework). This is routine
+maintenance for this file.
 
-### Step 3.3: File History
-Recent changes to this file are minimal:
-- `f4e99b846c901` - string warning fix (cosmetic)
-- `b0e6210e7e616` - removed unused function
-- `41c58a36e2c04` - use-after-free fix (similar safety concern)
+**Step 3.4: Author**
+songxiebing is a recurring HDA contributor with 4 other commits in this
+tree. Patch was merged by Takashi Iwai, the HDA subsystem maintainer.
 
-There's also `9ddf6d3fcbe0b` ("dm vdo: return error on corrupted
-metadata in start_restoring_volume functions") - a very similar pattern:
-adding proper error returns on corrupted metadata in the same subsystem,
-with a Fixes: tag.
+**Step 3.5: Dependencies**
+No dependencies. All required infrastructure exists in the 7.0 tree:
+- `HDA_CODEC_QUIRK` macro (verified in
+  `sound/hda/common/hda_local.h:314-320`)
+- `ALC245_FIXUP_HP_X360_AMP` fixup (line 4841-4846)
+- `alc245_fixup_hp_x360_amp` function (line 1448)
+- `match_codec_ssid` matching logic in `auto_parser.c`
 
-**Record:** Standalone fix, no prerequisites. Similar metadata
-validation fixes have been applied to dm-vdo.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 3.4: Author
-Matthew Sakai is the original author and maintainer of dm-vdo. He
-authored the initial dm-vdo code (40-patch series) and continues
-maintaining it. This fix comes from the subsystem maintainer.
-
-**Record:** Author is the subsystem maintainer - highest trust level.
-
-### Step 3.5: Dependencies
-None. This is a self-contained 3-line addition that doesn't depend on
-any other commits.
-
-**Record:** No dependencies. Fully standalone.
-
----
-
-## PHASE 4: MAILING LIST RESEARCH
-
-### Step 4.1-4.2: Patch Discussion
-I was unable to find the exact mailing list submission via b4 dig (the
-commit isn't in the tree yet, so there's no SHA to search). Web searches
-didn't return the specific patch thread. However, the commit was signed
-off by both the subsystem maintainer (Sakai) and the dm maintainer
-(Patocka), indicating it went through the standard dm review process.
-
-**Record:** Could not locate specific lore thread. Verified through
-standard dm maintainer chain.
-
-### Step 4.3: Bug Report
-No Reported-by tag. This appears to be a proactive fix found through
-code review by the maintainer.
-
-**Record:** Proactive fix by maintainer, not triggered by user report.
-
----
+**Step 4.1-4.5:** Lore and bugzilla were unreachable due to anti-bot
+protections. However, the commit message provides sufficient context:
+- Bug reported via bugzilla.kernel.org (#221341)
+- Patch submitted and applied within days by the subsystem maintainer
+- The Link: tag confirms it went through normal mailing list review
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: Call Chain
-The full call chain from user-facing API to the vulnerable function:
-1. `uds_make_index_layout()` - public API for creating/loading VDO index
-2. `load_index_layout()` - loads existing index from disk
-3. `load_sub_index_regions()` - loads saved index regions
-4. `load_index_save()` - loads individual index save
-5. `load_region_table()` - reads region table from disk (reads
-   `region_count` as u16)
-6. **`reconstruct_index_save()`** - uses `region_count` without
-   validation -> OOB
+**Step 5.1-5.2:** The affected function `alc245_fixup_hp_x360_amp` (line
+1448) toggles GPIO pin 0x01 to enable the speaker amplifier. This is
+called during HDA codec initialization. Without this quirk matching, the
+amplifier stays off = no speaker output.
 
-This is called during VDO volume activation/load, which happens when a
-dm-vdo target is activated (e.g., mounting a VDO-backed filesystem or
-activating a VDO logical volume). The data comes from on-disk metadata.
+**Step 5.3-5.4:** The matching logic in `snd_hda_pick_fixup`
+(`auto_parser.c:1066-1080`) walks the quirk table linearly. With
+`match_codec_ssid=true`, the new entry is checked against codec SSID on
+every probe of this codec. The call chain is: codec probe →
+`snd_hda_pick_fixup` → table walk → match codec SSID → apply fixup.
 
-**Record:** Reachable from VDO volume activation. Triggered by corrupted
-on-disk metadata.
-
-### Step 5.5: Similar Patterns
-The similar fix `9ddf6d3fcbe0b` validates corrupted metadata in
-`start_restoring_volume` functions, showing this is a known pattern in
-dm-vdo where disk metadata isn't sufficiently validated.
-
----
+**Step 5.5:** Similar `HDA_CODEC_QUIRK` entries exist for the same
+purpose (ASUS, Lenovo devices with mismatched PCI/codec SSIDs). This is
+a well-established pattern.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable
-dm-vdo was introduced in v6.9-rc1. Active stable trees that contain this
-code:
-- **v6.12.y** (LTS) - YES, contains dm-vdo
-- **v6.14.y** (stable) - YES
-- **v6.19.y** (stable) - YES
-- v6.6.y (LTS) - NO (pre-dates dm-vdo)
-- v6.1.y (LTS) - NO
+**Step 6.1:** The `HDA_CODEC_QUIRK` infrastructure and
+`ALC245_FIXUP_HP_X360_AMP` fixup exist in the 7.0 stable tree. In older
+trees (6.x), the file path would be `sound/pci/hda/patch_realtek.c` and
+`HDA_CODEC_QUIRK` may need to be verified.
 
-**Record:** Bug exists in v6.12.y, v6.14.y, v6.19.y stable trees.
+**Step 6.2:** For 7.0 specifically, the patch should apply with at most
+minor context offset. The surrounding lines match the current tree
+exactly.
 
-### Step 6.2: Backport Complications
-Changes to the file between v6.12 and HEAD are minimal (MAGIC_SIZE
-cleanup and function removal) - none affect the
-`reconstruct_index_save()` function area. The patch should apply cleanly
-to all stable trees with dm-vdo.
-
-**Record:** Clean apply expected on all relevant stable trees.
-
----
+**Step 6.3:** No existing fix for this specific device in the tree.
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem
-- **Subsystem:** `drivers/md/dm-vdo` - Device Mapper VDO (deduplication
-  + compression)
-- **Criticality:** IMPORTANT - VDO is used for storage deduplication in
-  RHEL/enterprise environments. Data integrity is paramount for storage
-  subsystems.
+**Step 7.1:** ALSA/HDA is an IMPORTANT subsystem. Audio is a core user-
+facing feature — no audio output is a severe usability issue.
 
-### Step 7.2: Activity
-dm-vdo sees regular maintenance commits from its author. It's an
-actively maintained storage driver.
-
----
+**Step 7.2:** The file sees constant quirk additions (10+ in recent
+history), and Takashi Iwai actively maintains it.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-Users of dm-vdo (VDO deduplication). This includes RHEL and enterprise
-Linux users who use VDO for storage optimization.
-
-### Step 8.2: Trigger Conditions
-- **Trigger:** Corrupted on-disk VDO metadata where `region_count` is
-  out of expected range
-- **How likely:** Corruption can occur from disk errors, power failures,
-  or malicious manipulation
-- **User triggering:** Any user activating a VDO volume with corrupted
-  metadata
-
-### Step 8.3: Failure Mode Severity
-Without this fix, corrupted metadata causes an **out-of-bounds array
-write** on a stack-based or structure-embedded array
-(`volume_index_zones[MAX_ZONES]`). This results in:
-- **Stack/heap corruption** - writing past the array bounds
-- **Kernel crash/panic** - likely from corrupted data structures
-- **Potential privilege escalation** - corrupted kernel data structures
-  from controlled input
-
-**Severity: CRITICAL** - out-of-bounds write from disk-loaded data,
-potential kernel crash or memory corruption.
-
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit:** HIGH - prevents kernel crash/corruption from malformed
-  on-disk metadata
-- **Risk:** VERY LOW - 3-line check that only rejects invalid data; zero
-  chance of regression for valid data
-- **Ratio:** Extremely favorable
-
----
+**Step 8.1:** Affected: Users of HP Spectre x360 14-ea (2021 model).
+This is a premium consumer laptop.
+**Step 8.2:** Trigger: Every boot. Device always has no speaker output.
+100% reproducible.
+**Step 8.3:** Severity: HIGH — complete loss of audio output from
+speakers. Device is essentially broken for audio use without this quirk.
+**Step 8.4:** Benefit: HIGH — restores audio on a shipping consumer
+laptop. Risk: VERY LOW — single table entry, only affects devices with
+codec SSID 103c:885b, uses a well-tested fixup function that already
+works on sibling models.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Evidence FOR:**
+- Fixes complete audio failure (no speaker output) on a real consumer
+  laptop
+- User-reported via bugzilla (#221341)
+- Single-line quirk table entry — minimal, surgical, obviously correct
+- Uses existing well-tested fixup (`ALC245_FIXUP_HP_X360_AMP`) already
+  applied to sibling models
+- Merged by HDA subsystem maintainer Takashi Iwai
+- Falls into the "hardware quirk" exception category — automatically YES
+  per stable rules
+- All required infrastructure exists in the 7.0 tree
 
-**FOR backporting:**
-- Fixes an out-of-bounds array access from unvalidated disk-read data
-  (security-relevant)
-- Only 3 lines added - minimal surgical fix
-- Obviously correct - simple bounds check against well-defined constant
-- Zero regression risk - only rejects data that would have caused OOB
-  access
-- Written by subsystem maintainer, committed through dm maintainer
-- Bug exists since dm-vdo introduction (v6.9), affects all stable trees
-  with dm-vdo
-- Clean apply expected
-- Similar fix pattern already accepted for dm-vdo (`9ddf6d3fcbe0b`)
+**Evidence AGAINST:**
+- None identified.
 
-**AGAINST backporting:**
-- No explicit user report or syzbot trigger (proactive fix)
-- Requires corrupted on-disk metadata to trigger (not everyday scenario)
+**Stable Rules Checklist:**
+1. Obviously correct and tested? YES — identical pattern to existing
+   entries, user-reported fix
+2. Fixes a real bug? YES — no audio output on HP Spectre x360 14-ea
+3. Important issue? YES — complete loss of speaker output
+4. Small and contained? YES — 1 line added
+5. No new features or APIs? YES — no new features
+6. Can apply to stable? YES — all infrastructure present
 
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** - trivial bounds check,
-   maintainer-authored
-2. Fixes a real bug? **YES** - OOB array access from unvalidated disk
-   data
-3. Important issue? **YES** - kernel memory corruption/crash from
-   corrupted storage metadata
-4. Small and contained? **YES** - 3 lines in one function
-5. No new features? **YES** - pure safety check
-6. Can apply to stable? **YES** - clean apply expected
-
-### Step 9.3: Exception Categories
-Not needed - this qualifies as a straightforward bug fix.
-
----
+**Exception Category:** Hardware quirk addition — automatically
+qualifies for stable.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from subsystem maintainer (Sakai)
-  and dm maintainer (Patocka)
-- [Phase 2] Diff analysis: 3 lines added in `reconstruct_index_save()`,
-  adds `zone_count > MAX_ZONES` bounds check
-- [Phase 2] Confirmed `volume_index_zones[MAX_ZONES]` at line 162,
-  MAX_ZONES=16 at config.h:23
-- [Phase 2] Confirmed `region_count` is u16 read from disk at line 1129,
-  used unvalidated at line 1447
-- [Phase 3] git blame: all code in `reconstruct_index_save` from commit
-  b46d79bdb82aa1 (v6.9-rc1)
-- [Phase 3] git describe: b46d79bdb82aa1 first appears at
-  v6.9-rc1~148^2~132
-- [Phase 3] Similar fix 9ddf6d3fcbe0b validates corrupted metadata in
-  same subsystem, has Fixes: tag
-- [Phase 4] Could not locate specific lore thread (commit not yet
-  merged, no SHA for b4 dig)
-- [Phase 5] Call chain traced: uds_make_index_layout ->
-  load_index_layout -> load_sub_index_regions -> load_index_save ->
-  reconstruct_index_save
-- [Phase 5] Trigger: VDO volume activation with corrupted on-disk
-  metadata
-- [Phase 6] File exists in v6.12.y, v6.14.y, v6.19.y; confirmed via git
-  log
-- [Phase 6] Changes since v6.12 don't affect the patched function area -
-  clean apply expected
-- [Phase 7] Subsystem: dm-vdo, actively maintained, IMPORTANT
-  criticality (enterprise storage)
-- [Phase 8] Failure mode: OOB array write -> kernel memory
-  corruption/crash, severity CRITICAL
-
-This is a textbook stable-worthy fix: a tiny, obviously correct bounds
-check that prevents an out-of-bounds array access from corrupted on-disk
-metadata in an enterprise storage driver. The fix has zero regression
-risk and addresses a potentially security-relevant memory corruption
-bug.
+- [Phase 1] Parsed all tags: Reported-by user, Closes bugzilla, merged
+  by Takashi Iwai (HDA maintainer)
+- [Phase 2] Diff: exactly 1 line added — `HDA_CODEC_QUIRK(0x103c,
+  0x885b, ...)` in `alc269_fixup_tbl`
+- [Phase 3] git blame: sibling entries (0x87f6, 0x87f7) for same fixup
+  present since file split (aeeb85f26c3bb)
+- [Phase 3] git log author: songxiebing has 4 other HDA commits in tree
+- [Phase 5] Verified `HDA_CODEC_QUIRK` macro definition at
+  `hda_local.h:314-320` sets `match_codec_ssid=true`
+- [Phase 5] Verified `snd_hda_pick_fixup` matching logic at
+  `auto_parser.c:1067-1080` — codec SSID path
+- [Phase 5] Verified guard at `auto_parser.c:1019` prevents double-
+  matching
+- [Phase 5] Verified vendor catch-all at `alc269.c:7834` is in separate
+  `alc269_fixup_vendor_tbl[]`
+- [Phase 5] Verified `alc245_fixup_hp_x360_amp` function exists at line
+  1448 (toggles GPIO for speaker amp)
+- [Phase 6] Verified `ALC245_FIXUP_HP_X360_AMP` and `HDA_CODEC_QUIRK`
+  both exist in the 7.0 tree
+- [Phase 4] UNVERIFIED: Could not access bugzilla or lore due to anti-
+  bot protections; relied on commit message metadata
 
 **YES**
 
- drivers/md/dm-vdo/indexer/index-layout.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/dm-vdo/indexer/index-layout.c b/drivers/md/dm-vdo/indexer/index-layout.c
-index 61edf2b72427d..37144249f7ba6 100644
---- a/drivers/md/dm-vdo/indexer/index-layout.c
-+++ b/drivers/md/dm-vdo/indexer/index-layout.c
-@@ -1445,6 +1445,9 @@ static int __must_check reconstruct_index_save(struct index_save_layout *isl,
- 	u64 last_block = next_block + isl->index_save.block_count;
- 
- 	isl->zone_count = table->header.region_count - 3;
-+	if (isl->zone_count > MAX_ZONES)
-+		return vdo_log_error_strerror(UDS_CORRUPT_DATA,
-+					      "invalid zone count");
- 
- 	last_region = &table->regions[table->header.region_count - 1];
- 	if (last_region->kind == RL_KIND_EMPTY) {
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index f10ee482151f6..e50ad953b09e7 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6955,6 +6955,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8847, "HP EliteBook x360 830 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x884b, "HP EliteBook 840 Aero G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x884c, "HP EliteBook 840 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_LED),
++	HDA_CODEC_QUIRK(0x103c, 0x885b, "HP Spectre x360 14-ea", ALC245_FIXUP_HP_X360_AMP),
+ 	SND_PCI_QUIRK(0x103c, 0x8862, "HP ProBook 445 G8 Notebook PC", ALC236_FIXUP_HP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x103c, 0x8863, "HP ProBook 445 G8 Notebook PC", ALC236_FIXUP_HP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x103c, 0x886d, "HP ZBook Fury 17.3 Inch G8 Mobile Workstation PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
 -- 
 2.53.0
 
