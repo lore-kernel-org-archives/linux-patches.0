@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F110148B376;
-	Mon, 20 Apr 2026 13:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30E648AE29;
+	Mon, 20 Apr 2026 13:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691922; cv=none; b=LniCNWWaU7XUaCElyo4Zea4T0hcsF2bzsOY5KW41i5CI0NWYcfbOdd4t8LQxPaMZS+S0UV4t4MequDxb1KoFQ0gqUjPOcVbxbTetF0krAtATv1y5gxQWrgq2lsiUbHpfbr5Lc3vm6fP7t7b+DepcmvBAP4svRrP5u7DOEcKww5o=
+	t=1776691923; cv=none; b=cMnHFke9rIEjkmNYcxPpoQZSABikqL1ciuZsgOBtGXRWHvYmUwqf2ykD/QDOGDTGL3sJ3FH3rcnaubCNZbHDFE9hVZVTjzhdvSmxq643ZM6vCTq/vxINuJi2H0qnSOQwQYZXnAAb41KXVdepTBYrEXkOEXGGw+GgY3H4qdg9G2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691922; c=relaxed/simple;
-	bh=gmbf/gTaKQaOra4NR4CajkbwSmE6V8nMt+ioOl3tHrA=;
+	s=arc-20240116; t=1776691923; c=relaxed/simple;
+	bh=sAeeCHmKP9SRQ2EKpCxXk/Hm5GZYYx7Fh4XT159vIY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P2Epv8nHPAfkg/7mwe9UiPXFdmTD844tHhGufDT1+ObcFo7ACCAJpLQOhlnSYv73tqRmymSrajtzX7sr6jlJ9c7pwibuOKmwolMb1GyADMB3f8iFN62Rc1qnotH3Ry5YIx/L7XvQXAyhO47FGmg1v/FqUBBka6gYanx6+fxYPaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NmCAiodY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gr/0J3XjoP9Wz8K+k1zdrb3HyPP1cklAqBlvw3CGp32TQg3AqOEyaJHKfN16M7xLZUVp4/m5tDaSeKMf8TCWIxLBm6mF/Z63d69q4tTduO4U8JVjizdO7d0DTU9jfUVnFP3SytmTZ0sJPeQ7Keb5JkEIF1K14Fu6UaU13DfXpWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPGEm8t8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NmCAiodY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59256C2BCB6;
-	Mon, 20 Apr 2026 13:32:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPGEm8t8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B87AC2BCB6;
+	Mon, 20 Apr 2026 13:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691921;
-	bh=gmbf/gTaKQaOra4NR4CajkbwSmE6V8nMt+ioOl3tHrA=;
+	s=k20201202; t=1776691923;
+	bh=sAeeCHmKP9SRQ2EKpCxXk/Hm5GZYYx7Fh4XT159vIY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NmCAiodYRwWs5VUbWEjpPmpmlvKLIWbpb/4IOlSZVFuUGNXsTdZi9leUGEwBOptPi
-	 SthdjL29K4kBDIu8RZJML2qqL7Odc2Vcj8C58WJES5Yi1wIStTfVy1cK3lkhRHNA3K
-	 AHu5cu0yuCyD1JpUFhLKy5mqErFNxomMjqAYybajHVPRJ3hEGLime5oOO8xXvxsai6
-	 uICUuw8iXddrPyaVrMA+aCJ77DXc/ZvCT3GH/ZbOIvisoQ9gdV9hYKYTkIP1vQxxBY
-	 uwCdJlH9cUxrfR4sqGsT7JpZPKJpuW2bCclvR4txpkPhe0VlocjlqEiyNhFp2ZNNtx
-	 NTa4u4RzGUOBA==
+	b=hPGEm8t8fgTB47dQSHDtvN3GltZRcpHBof/MOFBlFkZ/nM14bweSfyFKJK2ZpfphX
+	 91crwvPs3vFtoC58PrR4lwe5ZnG7+VogjQlRW7veo7sniOqz5hF44UWAhc67Q2NeCH
+	 bvJ8hmUIJZYXf8deTdVGiym7ynC9LoAIyT07xLlPpdBhufaBuKPeH3WWnYp6Tm9rJ6
+	 G68/SQLYx6Vd1W/nS9d0dDxGxnmjFhfDRo8jVNzPZVKPfU/oU/eJr5VKqDcNdGwBfu
+	 x4cgtyG2g5yD6v6zEuuPbzl7wPRHeP0DtwAW6MYDmptdhbrwgniQ76Oanasp7Cb5A0
+	 QIeKyMhfSTWMA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Horst Birthelmer <hbirthelmer@ddn.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+Cc: Marek Vasut <marex@nabladev.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	miklos@szeredi.hu,
-	linux-fsdevel@vger.kernel.org,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] fuse: fix inode initialization race
-Date: Mon, 20 Apr 2026 09:21:04 -0400
-Message-ID: <20260420132314.1023554-270-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] Bluetooth: btbcm: Add entry for BCM4343A2 UART Bluetooth
+Date: Mon, 20 Apr 2026 09:21:05 -0400
+Message-ID: <20260420132314.1023554-271-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -51,344 +52,254 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Horst Birthelmer <hbirthelmer@ddn.com>
+From: Marek Vasut <marex@nabladev.com>
 
-[ Upstream commit aff12041b4b2f4f2c164a0cf1b9688408515d036 ]
+[ Upstream commit 04c217a7fc8f23a1c99b014cb6a89cf77ac7a012 ]
 
-Fix a race between fuse_iget() and fuse_reverse_inval_inode() where
-invalidation can arrive while an inode is being initialized, causing
-the invalidation to be lost.
-By keeping the inode state I_NEW as long as the attributes are not valid
-the invalidation can wait until the inode is fully initialized.
+This patch adds the device ID for the BCM4343A2 module, found e.g.
+in the muRata 1YN WiFi+BT combined device. The required firmware
+file is named 'BCM4343A2.hcd'.
 
-Suggested-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Horst Birthelmer <hbirthelmer@ddn.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my thorough investigation, I will now provide my analysis.
+The analysis is clear. Let me write it up.
 
-## Phase 1: Commit Message Forensics
+---
 
-**Step 1.1: Parse the subject line**
-- Record: subsystem=`fuse`, action="fix", summary="inode initialization
-  race"
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2: Parse tags**
-- Record:
-  - `Suggested-by: Joanne Koong <joannelkoong@gmail.com>` (known FUSE
-    contributor)
-  - `Signed-off-by: Horst Birthelmer <hbirthelmer@ddn.com>` (DDN, works
-    on distributed FUSE)
-  - `Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>` (FUSE
-    maintainer)
-  - No Reported-by, no Link, no Cc: stable, no Fixes:
-  - Note: "Suggested-by" indicates a reviewer proposed this exact
-    approach
+**Step 1.1: Subject Line**
+- Subsystem: `Bluetooth: btbcm:`
+- Action verb: "Add entry"
+- Summary: Adds a device ID for BCM4343A2 UART Bluetooth chip.
+Record: [Bluetooth/btbcm] [Add] [Device ID for BCM4343A2 UART module]
 
-**Step 1.3: Analyze the commit body**
-- Record: Describes a race between `fuse_iget()` and
-  `fuse_reverse_inval_inode()` where invalidation arrives while inode is
-  being initialized, causing the invalidation to be lost. The fix keeps
-  I_NEW set during attribute initialization so invalidation waits via
-  ilookup5's wait_on_new_inode.
+**Step 1.2: Tags**
+- `Signed-off-by: Marek Vasut <marex@nabladev.com>` — author
+- `Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>` — reviewer
+- `Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>` —
+  Bluetooth subsystem maintainer
+- No Fixes: tag (expected — this is a device ID addition, not a bug fix
+  per se)
+- No Cc: stable tag (expected)
+Record: Reviewed by Paul Menzel, committed by Bluetooth maintainer Luiz
+von Dentz.
 
-**Step 1.4: Hidden bug fix detection**
-- Record: Explicitly labeled as "fix", not hidden.
+**Step 1.3: Commit Body**
+The BCM4343A2 module is found in the muRata 1YN WiFi+BT combined device.
+The required firmware file is `BCM4343A2.hcd`. Without this entry, the
+driver cannot identify the chip variant and load the correct firmware.
+Record: [Without this ID, users with muRata 1YN hardware cannot use
+Bluetooth properly]
 
-## Phase 2: Diff Analysis
+**Step 1.4: Hidden Bug Fix?**
+Not a hidden bug fix — it's an explicit device ID addition to enable
+hardware support.
+Record: [Not a hidden fix — explicit hardware enablement via device ID]
+
+## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- Record: 1 file (fs/fuse/inode.c), 5 additions, 2 deletions, single
-  function (`fuse_iget`). Surgical fix.
+- Files changed: 1 (`drivers/bluetooth/btbcm.c`)
+- Lines added: 1
+- Lines removed: 0
+- Function modified: none — change is in a static data table
+  (`bcm_uart_subver_table[]`)
+Record: [1 file, +1 line, data table only, zero code logic change]
 
-**Step 2.2: Code flow change**
-- Record:
-  - BEFORE: `if (I_NEW) { fuse_init_inode(); unlock_new_inode(); } ...
-    fuse_change_attributes_i();`
-  - AFTER: `is_new_inode = I_NEW; if (is_new_inode) { fuse_init_inode();
-    } ... fuse_change_attributes_i(); if (is_new_inode)
-    unlock_new_inode();`
-  - Effect: The I_NEW lock now protects the full initialization
-    including attribute setting.
+**Step 2.2: Code Flow**
+The `bcm_uart_subver_table[]` is iterated in `btbcm_setup()` (line 618)
+to match a `subver` value from the hardware against known chip names. If
+a match is found, `hw_name` is set, which is then used to construct the
+firmware filename (e.g., `brcm/BCM4343A2.hcd`). Without the entry, the
+chip gets a generic "BCM" name and firmware loading will likely fail.
+Record: [Before: BCM4343A2 not recognized → generic fallback. After:
+correct name and firmware path used]
 
-**Step 2.3: Bug mechanism**
-- Record: Category (b) synchronization / race condition fix. Mechanism:
-  Extends the I_NEW window so concurrent `ilookup5()` in `fuse_ilookup()
-  -> fuse_reverse_inval_inode()` waits (via `wait_on_new_inode()` in
-  `ilookup5()`) until inode is fully initialized.
+**Step 2.3: Bug Mechanism**
+Category: Hardware enablement / device ID addition. This is not fixing a
+code bug — it enables a previously unsupported hardware variant.
+Record: [Device ID addition — enables correct firmware loading for
+BCM4343A2]
 
-**Step 2.4: Fix quality**
-- Record: Obviously correct, minimal, no unrelated changes. Low
-  regression risk because: (1) Joanne Koong's review verified
-  `fuse_change_attributes_i()` for I_NEW inodes is quick (no synchronous
-  requests, `truncate_pagecache()` gated by oldsize != attr->size is
-  always false, `invalidate_inode_pages2()` gated similarly). (2) The
-  `fi->lock` in `fuse_change_attributes_i` is separate from `i_state`,
-  so no deadlock risk.
+**Step 2.4: Fix Quality**
+Trivially correct — a single static data table entry following an
+established pattern used by dozens of other entries. Zero regression
+risk.
+Record: [Trivially correct, zero regression risk, follows established
+pattern]
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY
 
-**Step 3.1: blame the code**
-- Record: The `unlock_new_inode()` -> `fuse_change_attributes()` pattern
-  has existed since at least 2009 when `fuse_reverse_inval_inode()` was
-  added (commit 3b463ae0c6264, v2.6.31). The race pattern is present in
-  all stable trees.
+**Step 3.1: Blame**
+The `bcm_uart_subver_table` was introduced in 2015 by Marcel Holtmann
+(commit `9a0bb57d2d08f1`) and has been populated with additional entries
+continuously ever since. The table and driver exist in all stable trees.
+Record: [Table exists since 2015, present in all stable trees]
 
-**Step 3.2: Fixes tag**
-- Record: No Fixes: tag. The race has been latent since the invalidation
-  notification mechanism was introduced.
+**Step 3.2: Fixes Tag**
+No Fixes: tag — not applicable for device ID additions.
 
-**Step 3.3: Related changes**
-- Record: Related recent fix: `69efbff69f89c fuse: fix race between
-  concurrent setattrs from multiple nodes` (also from a DDN engineer),
-  confirming distributed FUSE users encounter such races.
+**Step 3.3: Related Changes**
+Multiple identical-pattern commits exist: BCM4343A0 (`d456f678a074b`),
+BCM43430A1 (`feb16722b5d5f`), BCM43430B0 (`27f4d1f214ae4`), BCM4373A0
+(`0d37ddfc50d9a`). This commit is entirely standalone.
+Record: [Standalone, follows well-established pattern of prior device ID
+additions]
 
-**Step 3.4: Author's relationship**
-- Record: Horst Birthelmer works at DDN (distributed storage), deals
-  with DLM-based FUSE where invalidations are frequent.
+**Step 3.4: Author**
+Marek Vasut is a well-known Linux kernel developer, primarily in
+embedded/ARM. This is a straightforward hardware enablement patch from a
+board vendor.
+Record: [Established kernel contributor]
 
 **Step 3.5: Dependencies**
-- Record: Standalone. No dependencies. Uses existing helpers
-  (`unlock_new_inode`, `fuse_change_attributes_i`).
+None. The change is a single table entry addition. The data structure
+and all surrounding code are unchanged.
+Record: [No dependencies, standalone patch]
 
-## Phase 4: Mailing List Research
+## PHASE 4: MAILING LIST
 
-**Step 4.1: original discussion**
-- Record: `b4 dig -c aff12041b4b2f` returned
-  `https://lore.kernel.org/all/20260327-fix-inode-init-
-  race-v3-1-73766b91b415@ddn.com/`
+**Step 4.1: Discussion**
+Found the original submission on patchew.org. Paul Menzel reviewed it,
+asking about firmware availability. Marek pointed to the muRata firmware
+repository. Paul gave `Reviewed-by`. No objections or NAKs.
+Record: [Clean review, no concerns raised, Reviewed-by given]
 
-**Step 4.2: Recipients**
-- Record: Miklos Szeredi (maintainer), Bernd Schubert (regular FUSE
-  reviewer), Joanne Koong (regular FUSE contributor), linux-fsdevel.
+**Step 4.2: Reviewers**
+The Bluetooth maintainer (Luiz von Dentz) committed the patch. Paul
+Menzel reviewed.
+Record: [Committed by subsystem maintainer]
 
-**Step 4.3: Series evolution**
-- Record: v1 added a dedicated waitqueue. Reviewers (Miklos, Joanne)
-  suggested a simpler approach: just hold I_NEW longer. Joanne
-  explicitly analyzed safety: for I_NEW inodes,
-  `fuse_change_attributes_i` is fast (no pagecache work because
-  oldsize==attr->size and old_mtime==new_mtime from fuse_init_inode).
-  v2/v3 implement this approach.
+**Step 4.3-4.5:** No bug report (this is hardware enablement), no series
+context needed, no stable discussion found.
 
-**Step 4.4: Reviewer feedback**
-- Record: Miklos: "Applied, thanks." Bernd: Reviewed-by (v1). Joanne:
-  Suggested-by. No NAKs. No stable nomination.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 4.5: Stable discussion**
-- Record: No stable-specific discussion found.
+**Step 5.1-5.4:** The modified data is consumed by `btbcm_setup()` which
+iterates the table to match a subver ID from hardware. This function is
+called during Bluetooth device initialization — a standard, well-tested
+code path. Adding an entry to the lookup table does not change any code
+flow.
+Record: [Consumed by btbcm_setup(), standard init path, no code flow
+change]
 
-## Phase 5: Code Semantic Analysis
+**Step 5.5:** Many similar entries exist (20+ in UART table alone). This
+is an established pattern.
 
-**Step 5.1: Key functions**
-- Record: `fuse_iget()`.
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 5.2: Callers**
-- Record: Called from `fuse_lookup_name` (dir.c:587), `fuse_create_open`
-  (dir.c:888), `fuse_atomic_open` (dir.c:1015), `fuse_get_root_inode`
-  (inode.c:1065), `fuse_fill_super_submount` (inode.c:1744),
-  `fuse_direntplus_link` (readdir.c:236). Called on every FUSE
-  lookup/create/readdirplus - hot path for FUSE.
+**Step 6.1:** The `bcm_uart_subver_table` has existed since 2015. The
+file and table structure are present in all active stable trees.
+Record: [Present in all stable trees]
 
-**Step 5.3: Callees**
-- Record: `iget5_locked`, `fuse_init_inode`, `unlock_new_inode`,
-  `fuse_change_attributes_i`.
+**Step 6.2:** The patch applies cleanly — it's a single line insertion
+into a data table. Even if surrounding entries differ slightly between
+trees, this adds a new entry after the BCM4356A2 line (`0x230f`), which
+has been in the table since 2017.
+Record: [Clean apply expected]
 
-**Step 5.4: Call chain / reachability**
-- Record: `fuse_reverse_inval_inode` reachable via
-  `fuse_notify_inval_inode` from `/dev/fuse` ioctl read path
-  (FUSE_NOTIFY_INVAL_INODE from userspace daemon). Triggerable any time
-  the FUSE server sends a notification. Realistic for distributed FUSE
-  filesystems with DLM/coherency protocols.
+**Step 6.3:** No related fix exists in stable for BCM4343A2.
 
-**Step 5.5: Similar patterns**
-- Record: Standard I_NEW pattern used throughout VFS. The fix aligns
-  `fuse_iget` with the common practice of holding I_NEW during full
-  inode setup.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-## Phase 6: Cross-Referencing and Stable Tree Analysis
+**Step 7.1:** Bluetooth driver — IMPORTANT subsystem. Bluetooth is
+widely used, and BCM chips are common in embedded/IoT platforms.
+Record: [Bluetooth/driver, IMPORTANT criticality]
 
-**Step 6.1: Does buggy code exist in stable?**
-- Record: YES. Verified in v5.15, v6.1, v6.6, v6.12, v6.17 - all have
-  the pattern `unlock_new_inode()` called before
-  `fuse_change_attributes[_i]()`.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 6.2: Backport complications**
-- Record: Minor. For v6.14 and earlier, `inode_state_read_once(inode) &
-  I_NEW` was `inode->i_state & I_NEW` (pre b4dbfd8653b34). For v6.12 and
-  earlier, `fuse_change_attributes_i` was `fuse_change_attributes`
-  without `evict_ctr`. Trivial adjustments needed.
+**Step 8.1:** Users with muRata 1YN WiFi+BT hardware (BCM4343A2 chip)
+are affected.
+Record: [Driver-specific: users of BCM4343A2/muRata 1YN hardware]
 
-**Step 6.3: Related fixes already in stable?**
-- Record: No prior fix for this specific race found.
+**Step 8.2:** Triggered on every boot/device init for users with this
+hardware.
+Record: [Triggered on device init — blocking for affected users]
 
-## Phase 7: Subsystem Context
+**Step 8.3:** Without this ID, the Bluetooth chip cannot be properly
+identified and firmware cannot be loaded — Bluetooth is non-functional
+for this hardware.
+Record: [Bluetooth non-functional for affected hardware, severity
+MEDIUM-HIGH]
 
-**Step 7.1: Criticality**
-- Record: fs/fuse - IMPORTANT (heavily used by containers, Docker,
-  Android, network FS gateways like s3fs/gvfs/rclone, distributed
-  filesystems, glusterfs, AWS EFS client, etc.).
+**Step 8.4:**
+- Benefit: HIGH — enables Bluetooth for specific hardware that otherwise
+  doesn't work
+- Risk: VERY LOW — 1 line data table addition, zero code change, follows
+  established pattern
+Record: [Excellent risk-benefit ratio]
 
-**Step 7.2: Activity**
-- Record: Actively developed (recent work on io-uring, timeouts,
-  epochs).
+## PHASE 9: FINAL SYNTHESIS
 
-## Phase 8: Impact and Risk Assessment
+**Step 9.1: Evidence FOR backporting:**
+- Classic device ID addition to existing driver (explicit exception
+  category)
+- 1-line change, trivially correct, zero code logic change
+- Follows established pattern (20+ prior similar entries)
+- Reviewed by Paul Menzel, committed by Bluetooth maintainer
+- Enables real hardware (muRata 1YN) for real users
+- Table exists in all stable trees since 2015
 
-**Step 8.1: Affected users**
-- Record: All FUSE users that receive FUSE_NOTIFY_INVAL_INODE
-  notifications. Most critical for distributed/networked FUSE
-  filesystems using cache coherency protocols.
+**Evidence AGAINST backporting:**
+- None identified.
 
-**Step 8.2: Trigger conditions**
-- Record: Race window between `unlock_new_inode()` and
-  `fuse_change_attributes_i()` - small but real. Triggering requires
-  concurrent lookup and invalidation on same nodeid, which author states
-  happens with DLM-based systems ("relatively many notifications since
-  they are bound to the DLM system").
+**Step 9.2: Stable Rules Checklist:**
+1. Obviously correct and tested? YES — single static data entry
+2. Fixes a real bug? YES — enables broken-without-it hardware
+3. Important issue? YES for affected users (no Bluetooth at all)
+4. Small and contained? YES — 1 line
+5. No new features/APIs? YES — just a data table entry
+6. Applies to stable? YES — table unchanged across trees
 
-**Step 8.3: Failure mode severity**
-- Record: MEDIUM. Result is stale cached attributes / stale page cache.
-  Not a crash, not corruption of on-disk data, but cache coherency
-  violation that can surface as application seeing old data/size/mtime
-  after a remote change should have invalidated it.
-
-**Step 8.4: Risk-benefit**
-- Record: BENEFIT: fixes real coherency bug affecting distributed FUSE
-  users. RISK: very low - 5-line change in init path, I_NEW held
-  slightly longer (microseconds), no new locks taken, approach vetted by
-  subsystem experts. Ratio favors backport.
-
-## Phase 9: Final Synthesis
-
-**Step 9.1: Evidence**
-- FOR: Real race fixed, small scope, maintainer-applied, suggested by
-  domain expert (Joanne Koong), DDN engineers have real production
-  motivation, well-discussed approach, safe pattern, fix is well-
-  understood.
-- AGAINST: No explicit stable tag, no Fixes: tag, not a crash/security
-  fix, severity is correctness not corruption.
-- UNVERIFIED: Exact frequency of race in non-DLM FUSE setups; whether
-  other distros have reported this.
-
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? YES - maintainer reviewed, small scope
-2. Fixes a real bug? YES - race condition in invalidation handling
-3. Important issue? MEDIUM - cache coherency, not crash/corruption
-4. Small and contained? YES - 5/2 lines, single function
-5. No new features? YES - pure fix
-6. Can apply to stable? YES with trivial tweaks for older trees
-
-**Step 9.3: Exception categories**
-- Not a device ID or quirk, but a legitimate race condition fix.
-
-**Step 9.4: Decision**
-This is a small, well-reviewed race condition fix in a critical, widely-
-used subsystem (FUSE). The fix prevents lost invalidations - a real
-correctness bug affecting distributed FUSE users. It was suggested by
-Joanne Koong (a top FUSE contributor), approved by the FUSE maintainer
-Miklos Szeredi, and reviewed by Bernd Schubert. The approach is
-defensive and the regression risk is minimal.
+**Step 9.3: Exception Category:**
+This is a **Device ID addition to an existing driver** — an explicit
+exception category that is automatically YES for stable.
 
 ## Verification
 
-- [Phase 1] Parsed tags: found Suggested-by (Joanne Koong), Signed-off-
-  by (Horst Birthelmer, Miklos Szeredi). No Reported-by, no Fixes:, no
-  Cc: stable.
-- [Phase 2] Diff analysis: 5 additions, 2 deletions in `fuse_iget()`
-  only. Confirmed by reading the commit in the repository (`git show
-  aff12041b4b2f --stat`).
-- [Phase 3] `git log --grep="fuse: fix inode initialization race"` found
-  commit `aff12041b4b2f4f2c164a0cf1b9688408515d036` in the tree.
-- [Phase 3] Read `fs/fuse/inode.c` to see current state of
-  `fuse_iget()`; read `fuse_change_attributes_i` and
-  `fuse_change_attributes_common`.
-- [Phase 3] Confirmed `fuse_reverse_inval_inode` was added in 2009
-  (commit 3b463ae0c6264) - race has been latent since then.
-- [Phase 4] `b4 dig -c aff12041b4b2f` found original submission.
-- [Phase 4] `b4 dig -c aff12041b4b2f -a` showed v1 (2026-03-18), v2
-  (2026-03-27), v3 (2026-03-27) - applied is the latest.
-- [Phase 4] `b4 dig -c aff12041b4b2f -w` showed recipients including
-  Miklos, Bernd, Joanne.
-- [Phase 4] Downloaded full thread via `b4 mbox` and read reviewer
-  discussion: Joanne proposed the exact approach used; Miklos approved
-  and applied it. Bernd gave Reviewed-by on v1. No NAKs.
-- [Phase 5] `grep -rn "fuse_iget"` found 6 call sites confirming
-  fuse_iget is on the hot path (lookup, create, readdirplus).
-- [Phase 5] Confirmed `ilookup5()` calls `wait_on_new_inode()` in
-  `fs/inode.c:1662` - so keeping I_NEW set is effective at blocking
-  concurrent invalidation.
-- [Phase 6] Checked v5.15, v6.1, v6.6, v6.12, v6.17 of
-  `fs/fuse/inode.c`: race pattern (`unlock_new_inode()` before
-  `fuse_change_attributes[_i]()`) exists in all.
-- [Phase 6] v6.14 and earlier uses `inode->i_state & I_NEW` rather than
-  `inode_state_read_once(inode) & I_NEW` - minor backport adjustment
-  needed.
-- [Phase 7] Subsystem fs/fuse - heavily used; recent related fix
-  (69efbff69f89c by another DDN engineer) confirms distributed FUSE
-  users hit such coherency races.
-- [Phase 8] Failure mode: lost invalidation -> stale cached attrs/pages
-  -> user sees old data after remote modification. Severity MEDIUM (not
-  crash, but coherency).
-- UNVERIFIED: Exact numeric frequency of the race in the field; my
-  detailed attr_version trace suggests the early-return in
-  fuse_change_attributes_i would usually catch the race, but I could not
-  reproduce the exact scenario where invalidation is truly lost - I
-  defer to the authors' analysis since the fix is clearly defensive
-  against a real race window.
-
-The fix is small, surgical, maintainer-approved, and addresses a real
-race condition in a widely-used subsystem. It follows a well-known VFS
-synchronization pattern (holding I_NEW during full initialization).
-Regression risk is minimal.
+- [Phase 1] Parsed tags: Reviewed-by Paul Menzel, SOB by Bluetooth
+  maintainer Luiz von Dentz
+- [Phase 2] Diff analysis: exactly 1 line added to static
+  `bcm_uart_subver_table[]` data table
+- [Phase 3] git blame: table introduced in 2015 (commit
+  `9a0bb57d2d08f1`), present in all stable trees
+- [Phase 3] git log for related entries: confirmed 5+ prior identical-
+  pattern device ID additions
+- [Phase 4] Patchew/lore: found original submission, clean review, no
+  objections
+- [Phase 5] Code tracing: table consumed by `btbcm_setup()` at line
+  615-622, standard init path
+- [Phase 6] Table structure unchanged since 2015, clean apply expected
+- [Phase 8] Without entry, BCM4343A2 Bluetooth is non-functional for
+  muRata 1YN users
 
 **YES**
 
- fs/fuse/inode.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btbcm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
-index c795abe47a4f4..9b67bd3a1097d 100644
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -470,6 +470,7 @@ struct inode *fuse_iget(struct super_block *sb, u64 nodeid,
- 	struct inode *inode;
- 	struct fuse_inode *fi;
- 	struct fuse_conn *fc = get_fuse_conn_super(sb);
-+	bool is_new_inode = false;
- 
- 	/*
- 	 * Auto mount points get their node id from the submount root, which is
-@@ -505,13 +506,13 @@ struct inode *fuse_iget(struct super_block *sb, u64 nodeid,
- 	if (!inode)
- 		return NULL;
- 
--	if ((inode_state_read_once(inode) & I_NEW)) {
-+	is_new_inode = inode_state_read_once(inode) & I_NEW;
-+	if (is_new_inode) {
- 		inode->i_flags |= S_NOATIME;
- 		if (!fc->writeback_cache || !S_ISREG(attr->mode))
- 			inode->i_flags |= S_NOCMTIME;
- 		inode->i_generation = generation;
- 		fuse_init_inode(inode, attr, fc);
--		unlock_new_inode(inode);
- 	} else if (fuse_stale_inode(inode, generation, attr)) {
- 		/* nodeid was reused, any I/O on the old inode should fail */
- 		fuse_make_bad(inode);
-@@ -528,6 +529,8 @@ struct inode *fuse_iget(struct super_block *sb, u64 nodeid,
- done:
- 	fuse_change_attributes_i(inode, attr, NULL, attr_valid, attr_version,
- 				 evict_ctr);
-+	if (is_new_inode)
-+		unlock_new_inode(inode);
- 	return inode;
- }
- 
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index d33cc70eec662..975b73cd04e67 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -507,6 +507,7 @@ static const struct bcm_subver_table bcm_uart_subver_table[] = {
+ 	{ 0x6119, "BCM4345C0"	},	/* 003.001.025 */
+ 	{ 0x6606, "BCM4345C5"	},	/* 003.006.006 */
+ 	{ 0x230f, "BCM4356A2"	},	/* 001.003.015 */
++	{ 0x2310, "BCM4343A2"	},	/* 001.003.016 */
+ 	{ 0x220e, "BCM20702A1"  },	/* 001.002.014 */
+ 	{ 0x420d, "BCM4349B1"	},	/* 002.002.013 */
+ 	{ 0x420e, "BCM4349B1"	},	/* 002.002.014 */
 -- 
 2.53.0
 
