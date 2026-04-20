@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18862FD1B3;
-	Mon, 20 Apr 2026 15:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9616117A31C;
+	Mon, 20 Apr 2026 15:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700637; cv=none; b=oRxpUqfnoOylpBGTtVDwlfF5hsi0Fc8Q02CvkS08Y1lqKrmx7eBcadsbSeOky9XEkX46u2prA6pr7T7MKSzx+6TnW4RYkUnEXM7/i+ewrkrUaN824VgYyB1CbPmP/AiIbBiUz4E1+UPhXi8dBmBZwh2mgO5R31iRDnExl8PuAR8=
+	t=1776700640; cv=none; b=ST6O6vLqD5gsj4MVnFV1uMlBfCY2OfJT/5HTg7+d1j06Mb07XObcH3oOSCZUHOnUUFTJHizVOG+7J+8OUpQiWZDFCn4ZcfTdW7fWgwBNNyBbhdRptOPX6aj7EN3FEHAewfxWAHv1ymOTe06K5Rr8Evwx2MbBRbnniziKtHLxi3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700637; c=relaxed/simple;
-	bh=B/c0dhMWvROZPWiNQ1/36+ZvBRAdl05zZQVv+wcYft0=;
+	s=arc-20240116; t=1776700640; c=relaxed/simple;
+	bh=cuTgodR+wkEaoqJVlQxZbPvMpw1Lh5qgrKVR/2xUNJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtQSM5AQJrRdIZppC7rOJv/xAJqcNt1f/y7OSxbaSAwxK+WZ0ClXZ8BPfyEnfi00JpHBai+k7hBIbIx7OSbiQajIJEd7Ip0k2SErSnfwCJZZoxbMGV1q8pIUn/eFbx+NHJXWLH08+SSQk5DyjJpTnC709GleZQkvEiA4uFUgkME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vM1Lecdh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pgbR8F8uIRSpH0W2OS2F7aQPkWPI8lZ+JxGPmmsZbYeNBQVN8Zui5v+O/R692NQjRIMBPP2nDC7TmzpKNkUK/4wOXgfu0BbZa8Z2ho8DfzobVXcaSNf9UhMabkCvc246euMBz7B81wGBQOlC1GXFS4TUbeNt1m4EekkfDC+G8uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFeSEnJo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vM1Lecdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477D7C4AF09;
-	Mon, 20 Apr 2026 15:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFeSEnJo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D68C19425;
+	Mon, 20 Apr 2026 15:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700637;
-	bh=B/c0dhMWvROZPWiNQ1/36+ZvBRAdl05zZQVv+wcYft0=;
+	s=korg; t=1776700640;
+	bh=cuTgodR+wkEaoqJVlQxZbPvMpw1Lh5qgrKVR/2xUNJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vM1Lecdh6iIqK1DDhYS2I6FOk/zAqA7noLPdIaZYsQS1+Y22O2Ami4HhzlaskYBJo
-	 c5PN1bc/1gosCGHNc0t/vPajXRpgvh27+txykrnvW9gYFrXXnKC1srxTVqyQaSj/0o
-	 e/vt9v6ft5KZRpF8vMZ20qM2cvwQKMAoB5zudQJs=
+	b=wFeSEnJogwPuq4rYQOUrfNEGU0m7LGPPPlvMMFNR8RqbSDyoTes5Bt9CH5ARIINo1
+	 SB76ICFvHRna6K0OH9VYyYyF/ssK9dIcVQprSNmA7PxiY9UlHjCLVMwx2iac8Qvd+f
+	 zmhDe2dueDHcJj5YfilFBorwLPe7VB3ru6Op+sV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Wang <yuleopen@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Phil Willoughby <willerz@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vee Satayamas <vsatayamas@gmail.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/198] ALSA: usb-audio: Fix quirk flags for NeuralDSP Quad Cortex
-Date: Mon, 20 Apr 2026 17:40:08 +0200
-Message-ID: <20260420153936.666418906@linuxfoundation.org>
+Subject: [PATCH 6.18 003/198] ASoC: amd: yc: Add DMI quirk for ASUS EXPERTBOOK BM1403CDA
+Date: Mon, 20 Apr 2026 17:39:42 +0200
+Message-ID: <20260420153935.734759849@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -54,39 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Willoughby <willerz@gmail.com>
+From: Vee Satayamas <vsatayamas@gmail.com>
 
-[ Upstream commit bc5b4e5ae1a67700a618328217b6a3bd0f296e97 ]
+[ Upstream commit f200b2f9a810c440c6750b56fc647b73337749a1 ]
 
-The NeuralDSP Quad Cortex does not support DSD playback. We need
-this product-specific entry with zero quirks because otherwise it
-falls through to the vendor-specific entry which marks it as
-supporting DSD playback.
+Add a DMI quirk for the Asus Expertbook BM1403CDA to resolve the issue of the
+internal microphone not being detected.
 
-Cc: Yue Wang <yuleopen@gmail.com>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Phil Willoughby <willerz@gmail.com>
-Link: https://patch.msgid.link/20260328080921.3310-1-willerz@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221236
+Signed-off-by: Vee Satayamas <vsatayamas@gmail.com>
+Reviewed-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260315142511.66029-2-vsatayamas@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 9f585dbc770cb..a2c039a1b3cd6 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2296,6 +2296,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x13e5, 0x0001, /* Serato Phono */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x152a, 0x880a, /* NeuralDSP Quad Cortex */
-+		   0), /* Doesn't have the vendor quirk which would otherwise apply */
- 	DEVICE_FLG(0x154e, 0x1002, /* Denon DCD-1500RE */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x154e, 0x1003, /* Denon DA-300USB */
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 1324543b42d72..c536de1bb94ad 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -717,6 +717,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "PM1503CDA"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "BM1403CDA"),
++		}
++	},
+ 	{}
+ };
+ 
 -- 
 2.53.0
 
