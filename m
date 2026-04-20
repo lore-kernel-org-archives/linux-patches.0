@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8754A2D978C;
-	Mon, 20 Apr 2026 16:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9933396EE;
+	Mon, 20 Apr 2026 16:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701108; cv=none; b=lV1RZ/nexrGW9V3q8SOifqBlRUOoK7W72O17S/4FtKfH4aqeF8uGTxyblWmw+2jqHd3/nTMxWjyPcK4mJUfKh7B3bYh/xCMHQ6cQ7Gq0X1ToS3ObHFUabW4p2L5wiiwxwF4ajd1a8HUVXpj7N3cOVY1cvHD9v7O+wWRbDw2+pLI=
+	t=1776701111; cv=none; b=Sq7yayaHf7dLIg3UV0tH9cEUKULs5PABVF2u9JjWXQHivP/EZgvDY1Q0zkwyCnJcUuQkIw62BsRuC6mEQs/88/GkAhPU8d1zO7HMrSivxe8q9gOAAVQls+N3/aJcA24U0SKnFfDHjQOGA7WWYMXUFey5NB0HlsbcQ8pKA3V5hbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701108; c=relaxed/simple;
-	bh=UvHFnvYJaYA3dkgsoIvkZ60U1ZO/iYFp77rVRGCvmqI=;
+	s=arc-20240116; t=1776701111; c=relaxed/simple;
+	bh=HWJkYBMWLMtrWTJTK4QIzJLcoCXySbTq+G2ePNO8ABk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBleGPzv8FAtpZknvSpWCbJtvrT54+xErOYDKeVbRUj+6871vTfEWr5NjO4YKdcawxM+Rj0l/hlHmcKsJWVive/85WKJKBZORXJluyCakwFrUqs6rMW+5eAMgi7kQPp0k0SRc0H15NFC17yfiaBGsb4oZTio/wj6XxXSUiFztqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5WCzch6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V3v6I1LQ2rNi4rj38c/OYRW0O2PHHIIza7tHhENNuCffrHp1fCtPG2WOxhz7mm/oJBT4IeFYU7VAHc3Hb2BtEAPezqcYKjbZGNxl6FoysXkLs+o+jWnwosFdMBlmXfUOA0erfrvD2ahUuWaqblvk6HGenHCav9VKKnPTaonHVKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4d+X5In; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5WCzch6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133BEC19425;
-	Mon, 20 Apr 2026 16:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4d+X5In"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F4BC19425;
+	Mon, 20 Apr 2026 16:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701108;
-	bh=UvHFnvYJaYA3dkgsoIvkZ60U1ZO/iYFp77rVRGCvmqI=;
+	s=korg; t=1776701110;
+	bh=HWJkYBMWLMtrWTJTK4QIzJLcoCXySbTq+G2ePNO8ABk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5WCzch6DZFGERqAUMsQzaKBXH8cvkBNiFd65WbfKfLfcY9d+HHZG5EmKWMNzHNCS
-	 gxLDU7c5mtHYPHqHv+DGqb3gAjq5x+nmjZU6NremGgtEhVsSeUpsbbRPi7tZEkGVZ8
-	 3pq0EawEzQwTm0+LQ8FDzY82qNpzPpijbjS4UiTw=
+	b=v4d+X5Inc9ypwKqRZFOZzWw2hYiUWCJcfOnJ7FAHpp7zTpngR5/eS8/CXhQ3MNMc/
+	 EUBhOe9OnYQDN2dpET6G+axQ8nFA9jR3FZ1K00HSn9rG/om2cs6paBY/+MrKwKokHv
+	 nG0qjhdSvZ63eqW8ZmlgdM9QNYguZGYWo8R2XJ4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Joe Perches <joe@perches.com>,
-	Andy Whitcroft <apw@canonical.com>,
-	Dwaipayan Ray <dwaipayanray1@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 177/198] checkpatch: add support for Assisted-by tag
-Date: Mon, 20 Apr 2026 17:42:36 +0200
-Message-ID: <20260420153941.990587474@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 186/198] media: mediatek: vcodec: fix use-after-free in encoder release path
+Date: Mon, 20 Apr 2026 17:42:45 +0200
+Message-ID: <20260420153942.314091999@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -56,63 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit d1db4118489fffd2b2f612140b7acbb477880839 upstream.
+commit 76e35091ffc722ba39b303e48bc5d08abb59dd56 upstream.
 
-The Assisted-by tag was introduced in
-Documentation/process/coding-assistants.rst for attributing AI tool
-contributions to kernel patches.  However, checkpatch.pl did not recognize
-this tag, causing two issues:
+The fops_vcodec_release() function frees the context structure (ctx)
+without first cancelling any pending or running work in ctx->encode_work.
+This creates a race window where the workqueue handler (mtk_venc_worker)
+may still be accessing the context memory after it has been freed.
 
-  WARNING: Non-standard signature: Assisted-by:
-  ERROR: Unrecognized email address: 'AGENT_NAME:MODEL_VERSION'
+Race condition:
 
-Fix this by:
-1. Adding Assisted-by to the recognized $signature_tags list
-2. Skipping email validation for Assisted-by lines since they use the
-   AGENT_NAME:MODEL_VERSION format instead of an email address
-3. Warning when the Assisted-by value doesn't match the expected format
+    CPU 0 (release path)               CPU 1 (workqueue)
+    ---------------------               ------------------
+    fops_vcodec_release()
+      v4l2_m2m_ctx_release()
+        v4l2_m2m_cancel_job()
+        // waits for m2m job "done"
+                                        mtk_venc_worker()
+                                          v4l2_m2m_job_finish()
+                                          // m2m job "done"
+                                          // BUT worker still running!
+                                          // post-job_finish access:
+                                        other ctx dereferences
+                                          // UAF if ctx already freed
+        // returns (job "done")
+      kfree(ctx)  // ctx freed
 
-Link: https://lkml.kernel.org/r/20260311215818.518930-1-sashal@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Reported-by: Bart Van Assche <bvanassche@acm.org>
-Acked-by: Joe Perches <joe@perches.com>
-Cc: Andy Whitcroft <apw@canonical.com>
-Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Root cause: The v4l2_m2m_ctx_release() only waits for the m2m job
+lifecycle (via TRANS_RUNNING flag), not the workqueue lifecycle.
+After v4l2_m2m_job_finish() is called, the m2m framework considers
+the job complete and v4l2_m2m_ctx_release() returns, but the worker
+function continues executing and may still access ctx.
+
+The work is queued during encode operations via:
+  queue_work(ctx->dev->encode_workqueue, &ctx->encode_work)
+The worker function accesses ctx->m2m_ctx, ctx->dev, and other ctx
+fields even after calling v4l2_m2m_job_finish().
+
+This vulnerability was confirmed with KASAN by running an instrumented
+test module that widens the post-job_finish race window. KASAN detected:
+
+  BUG: KASAN: slab-use-after-free in mtk_venc_worker+0x159/0x180
+  Read of size 4 at addr ffff88800326e000 by task kworker/u8:0/12
+
+  Workqueue: mtk_vcodec_enc_wq mtk_venc_worker
+
+  Allocated by task 47:
+    __kasan_kmalloc+0x7f/0x90
+    fops_vcodec_open+0x85/0x1a0
+
+  Freed by task 47:
+    __kasan_slab_free+0x43/0x70
+    kfree+0xee/0x3a0
+    fops_vcodec_release+0xb7/0x190
+
+Fix this by calling cancel_work_sync(&ctx->encode_work) before kfree(ctx).
+This ensures the workqueue handler is both cancelled (if pending) and
+synchronized (waits for any running handler to complete) before the
+context is freed.
+
+Placement rationale: The fix is placed after v4l2_ctrl_handler_free()
+and before list_del_init(&ctx->list). At this point, all m2m operations
+are done (v4l2_m2m_ctx_release() has returned), and we need to ensure
+the workqueue is synchronized before removing ctx from the list and
+freeing it.
+
+Note: The open error path does NOT need cancel_work_sync() because
+INIT_WORK() only initializes the work structure - it does not schedule
+it. Work is only scheduled later during device_run() operations.
+
+Fixes: 0934d3759615 ("media: mediatek: vcodec: separate decoder and encoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/checkpatch.pl |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -641,6 +641,7 @@ our $signature_tags = qr{(?xi:
- 	Reviewed-by:|
- 	Reported-by:|
- 	Suggested-by:|
-+	Assisted-by:|
- 	To:|
- 	Cc:
- )};
-@@ -3087,6 +3088,15 @@ sub process {
- 				}
- 			}
+--- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
+@@ -215,6 +215,15 @@ static int fops_vcodec_release(struct fi
+ 	v4l2_fh_exit(&ctx->fh);
+ 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
  
-+			# Assisted-by uses AGENT_NAME:MODEL_VERSION format, not email
-+			if ($sign_off =~ /^Assisted-by:/i) {
-+				if ($email !~ /^\S+:\S+/) {
-+					WARN("BAD_SIGN_OFF",
-+					     "Assisted-by expects 'AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]' format\n" . $herecurr);
-+				}
-+				next;
-+			}
++	/*
++	 * Cancel any pending encode work before freeing the context.
++	 * Although v4l2_m2m_ctx_release() waits for m2m job completion,
++	 * the workqueue handler (mtk_venc_worker) may still be accessing
++	 * the context after v4l2_m2m_job_finish() returns. Without this,
++	 * a use-after-free occurs when the worker accesses ctx after kfree.
++	 */
++	cancel_work_sync(&ctx->encode_work);
 +
- 			my ($email_name, $name_comment, $email_address, $comment) = parse_email($email);
- 			my $suggested_email = format_email(($email_name, $name_comment, $email_address, $comment));
- 			if ($suggested_email eq "") {
+ 	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_del_init(&ctx->list);
+ 	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
 
 
