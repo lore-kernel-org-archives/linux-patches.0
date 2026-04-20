@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C1234252C;
-	Mon, 20 Apr 2026 16:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BC633F8DC;
+	Mon, 20 Apr 2026 16:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701175; cv=none; b=KnEFwZFxyc9pWJZz0bHdPS30jCEaYslAGIN7/dIKf2T/8pHnr0nKu6lCHsBvCG+ej0ZC251jnIJ/vsKeLx2J/MS8siT7UY4fNXJtygcvkzhUF6gl3OHckIGw/SyifvSAX4FHxhqwFrN9VOSpeclfvlCKBs+Dpt/5HNfVoWYGPpY=
+	t=1776701177; cv=none; b=BiSmVL0zyG9ZCZKG+z0RzkmqXmjZ0WNWoi0IOjsZ4UHW+j3IW9ma8yxbYOJD5GCa0llDsFLEDQcoQ5wnEdV+0bj44zrlNMjqgvgL9L5AeRFCERh/fqklZW/TUzJfDPdQee7apTXSpumPfKclAJFO7t1mp1kOp9IqJ6eBdQQYZlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701175; c=relaxed/simple;
-	bh=RFoMvTt2iBGIsXGNek/xuFkAZOait5orCHpVLAeb3eI=;
+	s=arc-20240116; t=1776701177; c=relaxed/simple;
+	bh=lkXXK9tv7DEUSToGqftvPN2iS65Ft2XT8ErBVC2GFEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZilLZYzyya/6yGOrL9zR3+HvxFF0N7iXHKpM5H71Zt01+REDSAbgvsIjR5bP9X5nXnB5Nk3gL4tBiiX1+5ov0rj//yDUrYCapIM8iPsnbeEmU651E2oedy+mGDn1x7Dgi6mKUR+3ODPgh2QezTmmkXgRl+xXYsloSi/lRq9HQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8WIVsWm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccmU8NVd1o4T6mnxH6nEMPeeav9dVQnY9hLTSQzp5fzz698biaut3iuGk7/dE35Ac23ejqVKr2PxgGNH+otDwS2BXeONRp5RlMJx72eqRsL8isMDY+t+FnyTrCvg1XeEN5K9Pg1S8EdPumo7o+xAQSdEojO0g4NNfEWhQxPoQt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tC/KGuyi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8WIVsWm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918EEC2BCB6;
-	Mon, 20 Apr 2026 16:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tC/KGuyi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23231C2BCB6;
+	Mon, 20 Apr 2026 16:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701174;
-	bh=RFoMvTt2iBGIsXGNek/xuFkAZOait5orCHpVLAeb3eI=;
+	s=korg; t=1776701177;
+	bh=lkXXK9tv7DEUSToGqftvPN2iS65Ft2XT8ErBVC2GFEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P8WIVsWmyGhI41qu3qj8ornkibPEk9185XVPvafizUnxIbGroA5O1DTolwH9dABpM
-	 CXCcqp7Q6RV79LQ0Nl9K0mvKpWa4cT5eA+XOFqwByrWbwPYYro0KOxiVARklcVcsIB
-	 GyQbLCRkHWvkrtfZ5OMfOI9klB82AhjYeTYuck1Y=
+	b=tC/KGuyiTbBfrhN32kxOWi8Gfa2HXtQ5zmuvaiLffSELYQg/Xs24sqQO0UqhspStz
+	 fR/N26GHoBH+MOc2QZZ8vXqttQ6BUaLtFXq4BOHqJ7Cq796pO+Wh5HgAz2O9isTWj9
+	 wGtwq6yjaM4/sCSnlcyMECY3mrWgPtjXb/km14KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/162] ALSA: hda/realtek: Add quirk for ASUS ROG Flow Z13-KJP GZ302EAC
-Date: Mon, 20 Apr 2026 17:40:36 +0200
-Message-ID: <20260420153927.171991385@linuxfoundation.org>
+Subject: [PATCH 6.12 005/162] media: rkvdec: reduce stack usage in rkvdec_init_v4l2_vp9_count_tbl()
+Date: Mon, 20 Apr 2026 17:40:37 +0200
+Message-ID: <20260420153927.208313969@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,33 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 59f68dc1d8df3142cb58fd2568966a9bb7b0ed8a ]
+[ Upstream commit c03b7dec3c4ddc97872fa12bfca75bae9cb46510 ]
 
-Fixes lack of audio output on the ASUS ROG Flow Z13-KJP GZ302EAC model,
-similar to the ASUS ROG Flow Z13 GZ302EA.
+The deeply nested loop in rkvdec_init_v4l2_vp9_count_tbl() needs a lot
+of registers, so when the clang register allocator runs out, it ends up
+spilling countless temporaries to the stack:
 
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Link: https://patch.msgid.link/20260313172503.285846-1-matthew.schwartz@linux.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c:966:12: error: stack frame size (1472) exceeds limit (1280) in 'rkvdec_vp9_start' [-Werror,-Wframe-larger-than]
+
+Marking this function as noinline_for_stack keeps it out of
+rkvdec_vp9_start(), giving the compiler more room for optimization.
+
+The resulting code is good enough that both the total stack usage
+and the loop get enough better to stay under the warning limit,
+though it's still slow, and would need a larger rework if this
+function ends up being called in a fast path.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/media/rkvdec/rkvdec-vp9.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 0dd789119f96b..96df0d12b68dc 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11197,6 +11197,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x14e3, "ASUS G513PI/PU/PV", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x14f2, "ASUS VivoBook X515JA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1503, "ASUS G733PY/PZ/PZV/PYV", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x1043, 0x1514, "ASUS ROG Flow Z13 GZ302EAC", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
- 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301VV/VQ/VU/VJ/VA/VC/VE/VVC/VQC/VUC/VJC/VEC/VCC", ALC285_FIXUP_ASUS_HEADSET_MIC),
+diff --git a/drivers/staging/media/rkvdec/rkvdec-vp9.c b/drivers/staging/media/rkvdec/rkvdec-vp9.c
+index 0e7e16f20eeb0..bc74d2d824ef2 100644
+--- a/drivers/staging/media/rkvdec/rkvdec-vp9.c
++++ b/drivers/staging/media/rkvdec/rkvdec-vp9.c
+@@ -923,7 +923,8 @@ static void rkvdec_vp9_done(struct rkvdec_ctx *ctx,
+ 	update_ctx_last_info(vp9_ctx);
+ }
+ 
+-static void rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
++static noinline_for_stack void
++rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
+ {
+ 	struct rkvdec_vp9_ctx *vp9_ctx = ctx->priv;
+ 	struct rkvdec_vp9_intra_frame_symbol_counts *intra_cnts = vp9_ctx->count_tbl.cpu;
 -- 
 2.53.0
 
