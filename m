@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB1C3B8BBF;
-	Mon, 20 Apr 2026 13:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948B63DC4B2;
+	Mon, 20 Apr 2026 13:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691450; cv=none; b=oR4zM/BjcoSFiabrzoKvECyr5BZ8+gJSl7qaBozoHzFhJQXVUYGbG6XnVtOBliPkawUy1gHORAVd0uPzrS7N2amUhSj2WOyumgMZ+6W7Hku3CdZKjwf7ryzv7JlkU+Ijd2BI5n/oYjqWO9shfW/4iCtNdzzTxVKttAmc31WUWF0=
+	t=1776691451; cv=none; b=gxAl3X4iD+MGDglT0ONmLQj2LGzrDRoAUtNthOQu+s1zVrJ8QMmZnDLKLKmp0BgDuc/Ng6ZKivtbCStvOcsW582faI6Jy8iDW572wLKxXepBtEUlqXQvl93ftR0imaIezkykrA28nIH/rQw1hSTGD1GQVHJ9h+mlFXWDkvSE+MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691450; c=relaxed/simple;
-	bh=aS3LkgAoHg9dVJ0OchQoeDO63o8ka4gMw1Q9LvUtJjY=;
+	s=arc-20240116; t=1776691451; c=relaxed/simple;
+	bh=FEnyd1UQ/zZHWMGwmgtUtyWm7G0MehOng4821bhIHuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sjH53DVz8eB+TmB18/qM++NqKxyz+X247TNs9ME17GEtBtSB4q652/MlH2g+1yImZWH/MBSgPaiLarFIS3YZBVoy3n6FmeBaZnzYJkmNTOhOolPjFjthtZV325EseOTO21nQx1dDRqdOcvGSH+I2z0Ptu10fHp9kt3RIMDXXYtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=txy91itg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T5ttJe5V3a5zIoWWzzIocpwnUWCgK/A4eosQqL+Rwtd+8P49dwfasmZ38tes9/lTDO1no/hj+4Y4cEVs9qVer8oXgoawupgKNhCj5JKHciUGg4ZC00mctcg9UbvLXM7Z40IbOyT4omizHNnrVQzXM9QvMSvR5/jYnT0QgnlGydE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nW/xqpEu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="txy91itg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E545C2BCB4;
-	Mon, 20 Apr 2026 13:24:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nW/xqpEu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C56DC2BCB9;
+	Mon, 20 Apr 2026 13:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691450;
-	bh=aS3LkgAoHg9dVJ0OchQoeDO63o8ka4gMw1Q9LvUtJjY=;
+	s=k20201202; t=1776691451;
+	bh=FEnyd1UQ/zZHWMGwmgtUtyWm7G0MehOng4821bhIHuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txy91itg99ppwyeTqVfTkG+63EEFnTmGnQFWWDfH1FSfAqaqUmJ9Y+Jqy40cbysLr
-	 bVIR+jLaKJp0LCnuhjL28eycIpNgAukuyYf+6ycwfBkVWFeNxR9mX/J6egcPlP8hCg
-	 K5ZxD0DVnIxxWwnR0vEiIbenZ1tdHC7Y5oHh0YLlGsz1InCLr0AknFZTKA8hNAuDpa
-	 wceQ7xDkUGr7c5mzEiKisUXXi+ygjQW7HoA9nxc6SDzX802RKTRjy3HjzaKQIsMsOn
-	 TzVydE9o0iy/MLrrjOkyqqyzSbr/jdxyQ+g9974wR56dgnWyNFhrSnBiOsyoN3FscB
-	 8//xFzzu9nNxA==
+	b=nW/xqpEuDFfmInz0VFvrKHs4eKR3Gq3EKEzgZycqd9RqhM1nywHv9r3rVCw+5YyuC
+	 gJrFcC+LHWlHEHCEIu3Cwm9hLSCaLHI68WYECg00KhCiimtzdFPaKsu5I66dERxE3w
+	 AQmnAGbS1gRAYlbgIlgMjhhnUOtzJbWbzOaWmhSGpB3F9vYV/+IgNwN2JsNdZOtheK
+	 IejJQEWmUxiDVFbQbZd0G/5IIfeDf7jOZaeJ2ezbkT1JFrM/OU7DqHw1ixwpUOMeq4
+	 nJfozi6O5ZxQg0P1YbShQlXuE9IzbU+yYfECyQUyjs1+9vbIr6oBDEij+fqdw7SUvT
+	 yU6GTym85DlZw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vincent Guittot <vincent.guittot@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	juri.lelli@redhat.com,
+	devel@lists.orangefs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] sched/eevdf: Clear buddies for preempt_short
-Date: Mon, 20 Apr 2026 09:17:09 -0400
-Message-ID: <20260420132314.1023554-35-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] orangefs_readahead: don't overflow the bufmap slot.
+Date: Mon, 20 Apr 2026 09:17:10 -0400
+Message-ID: <20260420132314.1023554-36-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -53,408 +51,395 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Mike Marshall <hubcap@omnibond.com>
 
-[ Upstream commit 78cde54ea5f03398f1cf6656de2472068f6da966 ]
+[ Upstream commit 415e507cdefc510c01de8ab6644163327ee9a5d0 ]
 
-next buddy should not prevent shorter slice preemption. Don't take buddy
-into account when checking if shorter slice entity can preempt and clear it
-if the entity with a shorter slice can preempt current.
+generic/340 showed that this caller of wait_for_direct_io was
+sometimes asking for more than a bufmap slot could hold. This splits
+the calls up if needed.
 
-Test on snapdragon rb5:
-hackbench -T -p -l 16000000 -g 2 1> /dev/null &
-hackbench runs in cgroup /test-A
-cyclictest -t 1 -i 2777 -D 63 --policy=fair --mlock  -h 20000 -q
-cyclictest runs in cgroup /test-B
-
-                     tip/sched/core  tip/sched/core    +this patch
-cyclictest slice  (ms) (default)2.8             8               8
-hackbench slice   (ms) (default)2.8            20              20
-Total Samples          |    22679           22595           22686
-Average           (us) |       84              94(-12%)        59( 37%)
-Median (P50)      (us) |       56              56(  0%)        56(  0%)
-90th Percentile   (us) |       64              65(- 2%)        63(  3%)
-99th Percentile   (us) |     1047            1273(-22%)        74( 94%)
-99.9th Percentile (us) |     2431            4751(-95%)       663( 86%)
-Maximum           (us) |     4694            8655(-84%)      3934( 55%)
-
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260410132321.2897789-1-vincent.guittot@linaro.org
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information for my final analysis. Let me compile my
-findings.
-
----
-
-## PHASE 1: COMMIT MESSAGE FORENSICS
-
-### Step 1.1: Subject Line
-- **Subsystem**: `sched/eevdf` (scheduler, EEVDF entity-level)
-- **Action verb**: "Clear" — implies removing something that shouldn't
-  be there
-- **Summary**: Clear buddy hints to prevent them from blocking shorter-
-  slice preemption
-
-Record: [sched/eevdf] [Clear] [Fix buddy mechanism defeating
-PREEMPT_SHORT feature]
-
-### Step 1.2: Tags
-- `Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>` —
-  author, scheduler maintainer
-- `Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>` —
-  applied by scheduler co-maintainer
-- `Link: https://patch.msgid.link/20260410132321.2897789-1-
-  vincent.guittot@linaro.org` — original submission
-- No Fixes: tag (expected for AUTOSEL candidates)
-- No Reported-by: tag
-- No Cc: stable (expected)
-
-Record: Both scheduler co-maintainers signed off. No explicit bug
-reporter.
-
-### Step 1.3: Commit Body
-The commit describes: "next buddy should not prevent shorter slice
-preemption." The buddy mechanism (`cfs_rq->next`) currently overrides
-PREEMPT_SHORT, preventing a shorter-slice entity from preempting the
-current task. The fix: (1) don't consider buddy when `protect=false`,
-(2) clear buddy when shorter-slice preemption succeeds.
-
-Performance data from cyclictest on Snapdragon RB5 shows:
-- **99th percentile**: 1273us → 74us (**94% improvement**)
-- **99.9th percentile**: 4751us → 663us (**86% improvement**)
-- **Maximum**: 8655us → 3934us (**55% improvement**)
-
-Record: The bug causes the PREEMPT_SHORT feature to be effectively
-broken when a buddy is set. Tail latency is dramatically worse. The
-commit provides concrete benchmark data.
-
-### Step 1.4: Hidden Bug Fix?
-This IS a bug fix. The PREEMPT_SHORT feature is explicitly designed to
-allow shorter-slice entities to preempt. The buddy mechanism introduced
-in v6.19 (e837456fdca818) inadvertently defeats this by returning the
-buddy before the `protect` parameter is even considered. The `protect`
-parameter was specifically added to distinguish PREEMPT_SHORT from
-normal picks, but the buddy check ignores it.
-
-Record: This is a real functional bug where two scheduler features
-interact incorrectly.
-
-## PHASE 2: DIFF ANALYSIS
-
-### Step 2.1: Inventory
-- **File**: `kernel/sched/fair.c` only
-- **Change 1** (line 1027): Added `&& protect` condition to PICK_BUDDY
-  check in `__pick_eevdf()` — 1 line modified
-- **Change 2** (lines 8935-8937): Added `clear_buddies(cfs_rq, se)` in
-  the PREEMPT_WAKEUP_SHORT preemption path — 3 lines changed (added
-  braces + new call)
-- **Total**: ~4 lines of functional change
-
-Record: Single file, 2 hunks, ~4 lines modified. Extremely surgical fix.
-
-### Step 2.2: Code Flow Change
-**Hunk 1**: In `__pick_eevdf()`, BEFORE: buddy always returned if
-eligible. AFTER: buddy only returned if eligible AND `protect=true`.
-When called for PREEMPT_SHORT (`protect=false`), the buddy is skipped
-and normal EEVDF pick logic runs.
-
-**Hunk 2**: In `wakeup_preempt_fair()` preempt path, BEFORE: only
-`cancel_protect_slice(se)` called for SHORT. AFTER: also calls
-`clear_buddies(cfs_rq, se)` to prevent stale buddy from interfering with
-future scheduling decisions.
-
-### Step 2.3: Bug Mechanism
-**Category**: Logic/correctness fix — feature interaction bug.
-
-The `protect` parameter was designed to differentiate PREEMPT_SHORT from
-normal scheduling. The slice protection check at line 1037 correctly
-uses `protect`, but the buddy check at line 1027 does not. This is an
-oversight in the e837456fdca818 commit that added the `protect`
-parameter.
-
-### Step 2.4: Fix Quality
-- Obviously correct — the `protect` parameter already exists and is used
-  for the slice protection check; this extends it to the buddy check
-- Minimal and surgical — 4 lines
-- Low regression risk — `clear_buddies` is well-tested and used
-  elsewhere; adding `&& protect` only narrows the buddy selection, never
-  broadens it
-- Normal path (`pick_eevdf`) calls `__pick_eevdf(cfs_rq, true)`, so
-  buddy behavior is unchanged for all non-PREEMPT_SHORT calls
-
-Record: Fix is obviously correct, minimal, and low-risk.
-
-## PHASE 3: GIT HISTORY
-
-### Step 3.1: Blame
-The buggy code (PICK_BUDDY check without `protect`) was introduced in
-e837456fdca818 ("sched/fair: Reimplement NEXT_BUDDY to align with EEVDF
-goals") by Mel Gorman, dated 2025-11-12, first appeared in v6.19.
-
-Record: Bug introduced in v6.19 by e837456fdca818.
-
-### Step 3.2: Fixes Target
-No explicit Fixes: tag, but the implicit fix target is e837456fdca818
-which added the `protect` parameter but failed to apply it to the buddy
-check.
-
-Record: e837456fdca818 is in v6.19 and v7.0.
-
-### Step 3.3: Related Changes
-- 15257cc2f905d ("sched/fair: Revert force wakeup preemption") — Vincent
-  Guittot's previous fix for e837456fdca818, already in v6.19-rc7. This
-  confirms the NEXT_BUDDY reimplementation had issues.
-- 493afbd187c4c ("sched/fair: Fix NEXT_BUDDY") — earlier buddy fix for
-  delayed dequeue interaction
-
-Record: There is a pattern of fixes for the NEXT_BUDDY reimplementation.
-This is a standalone fix, no prerequisites needed.
-
-### Step 3.4: Author
-Vincent Guittot is the primary CFS/EEVDF scheduler maintainer at Linaro.
-He has extensive commit history in `kernel/sched/fair.c` (20+ recent
-commits). He also authored the previous fix for the same NEXT_BUDDY
-reimplementation.
-
-Record: Author is the subsystem maintainer. Maximum credibility.
-
-### Step 3.5: Dependencies
-The fix requires:
-- `protect` parameter in `__pick_eevdf()` (from e837456fdca818, v6.19)
-- `PREEMPT_WAKEUP_SHORT` enum (from e837456fdca818, v6.19)
-- `clear_buddies()` function (present since early CFS, well-established)
-- `cancel_protect_slice()` (from 9de74a9850b94, v6.17)
-
-All prerequisites exist in v6.19 and v7.0.
-
-Record: Standalone fix, applies cleanly to v6.19+ and v7.0.
-
-## PHASE 4: MAILING LIST RESEARCH
-
-### Step 4.1-4.5
-Lore is behind anti-bot protection. b4 dig could not match the exact
-message ID. However:
-- The Link: tag confirms it was submitted via LKML
-- Peter Zijlstra's SOB confirms it was accepted by the scheduler
-  maintainer
-- No NAKs mentioned
-- No multi-version series (single patch)
-
-Record: Could not access full mailing list discussion due to anti-bot
-protection. UNVERIFIED: Whether reviewers discussed stable suitability.
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Functions Modified
-- `__pick_eevdf()` — core EEVDF entity pick function
-- `wakeup_preempt_fair()` — wakeup preemption decision function
-
-### Step 5.2: Callers
-- `__pick_eevdf()` is called by:
-  - `pick_eevdf()` (with `protect=true`) — normal scheduling pick
-  - `wakeup_preempt_fair()` (with `protect=false` for PREEMPT_SHORT) —
-    this is the affected path
-- `wakeup_preempt_fair()` is called on every task wakeup for fair-class
-  tasks
-
-Record: The bug is in the wakeup preemption hot path, triggered on every
-CFS wakeup when PREEMPT_SHORT conditions are met.
-
-### Step 5.3-5.4: Call Chain
-Userspace → syscall → wake_up_process → try_to_wake_up → wakeup_preempt
-→ wakeup_preempt_fair → `__pick_eevdf(cfs_rq, false)`
-
-Record: Bug is reachable from any task wakeup path. Very common code
-path.
-
-## PHASE 6: STABLE TREE ANALYSIS
-
-### Step 6.1: Code in Stable Trees
-- The buggy code (`protect` parameter + PICK_BUDDY without protect
-  check) was introduced in e837456fdca818 which is in v6.19 and v7.0
-- v6.12 and earlier do NOT have this code (no `protect` parameter,
-  different buddy mechanism)
-
-Record: Bug exists in v6.19.y and v7.0.y stable trees only.
-
-### Step 6.2: Backport Complications
-The code in v6.19 and v7.0 is identical to HEAD for these specific
-lines. The patch would apply cleanly.
-
-Record: Clean apply expected for v6.19.y and v7.0.y.
-
-## PHASE 7: SUBSYSTEM CONTEXT
-
-### Step 7.1: Subsystem Criticality
-- Subsystem: `kernel/sched/fair.c` — CFS/EEVDF scheduler
-- Criticality: **CORE** — affects all users running the fair scheduler
-  (virtually everyone)
-
-### Step 7.2: Activity
-Very actively developed. Many recent changes from multiple maintainers.
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Affected Population
-All users of the CFS scheduler with `PREEMPT_SHORT` enabled (which is
-the default since 85e511df3cec46). This means virtually all users on
-v6.19+.
-
-### Step 8.2: Trigger Conditions
-The bug triggers whenever:
-1. A task with a shorter slice wakes up and could preempt the current
-   task
-2. AND there is a `cfs_rq->next` buddy set (from a previous wakeup or
-   yield_to)
-3. AND the buddy is eligible
-
-The buddy is set via `set_next_buddy()` which is called from
-`yield_to_task_fair()`, `dequeue_task_fair()`, and
-`set_preempt_buddy()`. This is a common scenario in multi-task
-workloads.
-
-### Step 8.3: Failure Mode Severity
-This is not a crash or corruption — it's a **latency regression**. The
-PREEMPT_SHORT feature effectively doesn't work when a buddy is set. The
-test data shows:
-- 99th percentile latency: **17x worse** (74us → 1273us)
-- 99.9th percentile latency: **7x worse** (663us → 4751us)
-
-For real-time-ish workloads (cyclictest), audio applications,
-interactive applications, this is a significant degradation. However, it
-doesn't cause crashes, data corruption, or security issues.
-
-Severity: **MEDIUM-HIGH** — feature completely broken, significant
-latency regression for latency-sensitive workloads.
-
-### Step 8.4: Risk-Benefit Ratio
-- **BENEFIT**: HIGH — Restores PREEMPT_SHORT functionality, dramatically
-  improves tail latency for all CFS users
-- **RISK**: VERY LOW — 4-line change, obviously correct, from the
-  scheduler maintainer, only narrows buddy selection (never broadens),
-  `clear_buddies` is a well-tested function
-
-## PHASE 9: SYNTHESIS
-
-### Step 9.1: Evidence Compilation
-
-**FOR backporting:**
-- Fixes a real functional bug where PREEMPT_SHORT is defeated by the
-  buddy mechanism
-- Dramatic improvement in tail latency (94% improvement in p99)
-- Small, surgical fix (4 lines)
-- Authored by scheduler maintainer (Vincent Guittot)
-- Applied by scheduler co-maintainer (Peter Zijlstra)
-- Bug introduced in v6.19 by e837456fdca818, present in v7.0
-- The `protect` parameter was specifically designed for PREEMPT_SHORT,
-  but the buddy check ignores it — clear oversight
-- Previous fix from same author for same commit (15257cc2f905d) confirms
-  NEXT_BUDDY rewrite had issues
-- Clean apply to v6.19 and v7.0
-
-**AGAINST backporting:**
-- No crash, data corruption, or security impact
-- This is a latency/performance issue, not a hard bug
-- No Fixes: tag
-- No user reports (Reported-by)
-- Primarily benefits latency-sensitive workloads
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — clearly extends existing
-   `protect` logic, tested with cyclictest/hackbench
-2. Fixes a real bug? **YES** — PREEMPT_SHORT feature is broken when
-   buddy is set
-3. Important issue? **MEDIUM-HIGH** — not a crash but significant
-   latency regression for common workloads
-4. Small and contained? **YES** — 4 lines, single file
-5. No new features? **CORRECT** — no new features, fixes existing
-   feature interaction
-6. Applies to stable? **YES** — clean apply to v6.19 and v7.0
-
-### Step 9.3: Exception Categories
-Not an exception category (not a device ID, quirk, DT, build fix, or
-docs fix).
-
-### Step 9.4: Decision
-This is borderline. It's a real bug fix — the PREEMPT_SHORT feature is
-broken when a buddy exists — but it manifests as a performance/latency
-issue rather than a crash. The fix is extremely small, obviously
-correct, and from the scheduler maintainer. The regression in tail
-latency is severe (17x worse p99). However, stable rules generally
-prefer crash/corruption/security fixes.
-
-On balance, the severity of the latency regression (p99 going from 74us
-to 1273us is extreme), the small scope, the obvious correctness, and the
-fact that it fixes a feature that is essentially completely broken in
-certain common scenarios tips this toward YES. This is not mere
-optimization — it's restoring intended functionality that was broken by
-a recent commit.
+I now have enough information to provide a comprehensive analysis.
+
+## Analysis
+
+### Phase 1: Commit Message Forensics
+
+**Step 1.1 — Subject parsing:**
+Record: subsystem = `fs/orangefs`, function = `orangefs_readahead`;
+action = "don't overflow" (prevention/fix verb); claim = bufmap slot
+overflow is avoided by splitting up large wait_for_direct_io calls.
+
+**Step 1.2 — Tags:**
+Record: Only `Signed-off-by: Mike Marshall <hubcap@omnibond.com>`
+(author is the OrangeFS subsystem maintainer per MAINTAINERS). No
+Fixes:, Cc: stable:, Reviewed-by:, Tested-by:, Reported-by:, or Link:
+tags. The absence of these tags is expected for autoselection review.
+
+**Step 1.3 — Body analysis:**
+Record: The bug manifests via xfstests `generic/340` (a known mmap
+writing race test using the `holetest` helper — verified by fetching the
+test source). The author states the caller was "sometimes asking for
+more than a bufmap slot could hold," i.e. the `total_size` passed to
+`wait_for_direct_io` could exceed the bufmap descriptor's slot size.
+
+**Step 1.4 — Hidden bug fix detection:**
+Record: The verb "don't overflow" and the claim of "sometimes asking for
+more than a bufmap slot could hold" is explicit: this is an out-of-
+bounds / overflow fix, not a cleanup.
+
+### Phase 2: Diff Analysis
+
+**Step 2.1 — Inventory:**
+Record: Single file (`fs/orangefs/inode.c`), single function
+(`orangefs_readahead`). +27/−9, ~18 net added lines. Single-file
+surgical fix.
+
+**Step 2.2 — Code flow change:**
+Record:
+- BEFORE: One call `wait_for_direct_io(..., readahead_length(rac), ...)`
+  using the full readahead length which can exceed 4 MB.
+- AFTER: A loop that chunks the request into pieces of at most 4194304
+  bytes (4 MB), advancing `offset` and draining `remaining`.
+
+**Step 2.3 — Bug mechanism:**
+Record: Category (f/h) bounds/size fix. I inspected
+`fs/orangefs/orangefs-bufmap.c` and `orangefs_bufmap_copy_to_iovec`:
+
+```497:521:fs/orangefs/orangefs-bufmap.c
+int orangefs_bufmap_copy_to_iovec(struct iov_iter *iter,
+                                    int buffer_index,
+                                    size_t size)
+{
+        struct orangefs_bufmap_desc *from;
+        int i;
+
+        from = &__orangefs_bufmap->desc_array[buffer_index];
+        ...
+        for (i = 0; size; i++) {
+                struct page *page = from->page_array[i];
+                size_t n = size;
+                if (n > PAGE_SIZE)
+                        n = PAGE_SIZE;
+                n = copy_page_to_iter(page, 0, n, iter);
+```
+
+Each `desc.page_array` is a pointer into a shared larger
+`bufmap->page_array` sliced by `pages_per_desc` (`desc_size /
+PAGE_SIZE`, i.e. 1024 pages for a 4 MB slot). If `size` exceeds one
+slot, the loop index `i` walks off the end of the slot into the next
+slot's pages — or, for the last slot, off the end of
+`bufmap->page_array` entirely. This produces either data corruption
+(mixing data destined for a different concurrent I/O) or a wild out-of-
+bounds dereference of an uninitialized page pointer.
+
+**Step 2.4 — Fix quality:**
+Record: The fix is obviously correct in shape: it bounds each call to ≤
+4 MB and correctly advances both `offset` and the loop counter. `iter`
+is naturally advanced inside `wait_for_direct_io` via
+`orangefs_bufmap_copy_to_iovec`. There is an existing precedent for the
+same pattern in the same file in `orangefs_direct_IO` (lines 519–565),
+which uses `orangefs_bufmap_size_query()` to cap the per-call size —
+this is literally the same idea. Minor concern: the fix hardcodes
+`4194304` rather than using `orangefs_bufmap_size_query()`, but the same
+function already hardcodes `4194304` for `readahead_expand` above, so
+the fix is internally consistent with surrounding code. Regression risk
+is very low; worst-case is a marginal performance change (two 4 MB
+round-trips instead of one >4 MB round-trip).
+
+### Phase 3: Git History Investigation
+
+**Step 3.1 — Blame:**
+Record: `git blame` shows the buggy `readahead_length(rac)` call site
+has been unchanged since commit `0c4b7cadd1ade1` "Orangef: implement
+orangefs_readahead." authored by Mike Marshall on 2021-03-28 (kernel
+v5.13 merge window). The only cosmetic change was `iov_iter_xarray`
+signature churn in v6.1 by Al Viro (`de4eda9de2d957`).
+
+**Step 3.2 — Fixes tag:**
+Record: No Fixes: tag in the commit, but blame reveals the introducing
+commit is `0c4b7cadd1ade1` (present in v5.13+).
+
+**Step 3.3 — File history:**
+Record: Recent touches to the readahead code are `cd01049d9ca37` (folio
+conversion, 2023) and `121a83ce6fe69` ("orangefs: Bufmap deadcoding").
+None of them alter the bounds behavior; all stable trees retain the
+unsafe pattern.
+
+**Step 3.4 — Author:**
+Record: Mike Marshall (`hubcap@omnibond.com`) is the OrangeFS
+maintainer. The commit arrived through the `for-linus-7.1-ofs1` pull
+request (verified by fetching the PR from lore.kernel.org archive search
+results). Author credibility is high.
+
+**Step 3.5 — Dependencies:**
+Record: Fix is standalone. It does not touch any function signatures,
+nor depend on the companion series commit `e61bc5e4d8743` (bufmap-as-
+folios) that was pulled alongside.
+
+### Phase 4: Mailing List Research
+
+**Step 4.1 — b4 dig:**
+Record: `b4 dig -c 415e507cdefc5...` searched lore by patch-id, subject,
+and author — all three attempts returned no match. This is consistent
+with OrangeFS patches that are often applied directly from the
+maintainer tree without appearing on a public list as a standalone patch
+thread. The PR containing the fix (`for-linus-7.1-ofs1`, 2026-04-17) is
+visible in the lore archive but does not contain a per-patch discussion
+thread.
+
+**Step 4.2/4.3 — Discussion/bug report:**
+Record: No separate review thread was found; the change flowed through
+Mike Marshall's maintainer tree to Linus in the 7.1-rc window.
+`generic/340` is the reproducer cited by the author and is a documented
+mmap write race test in xfstests (verified by fetching its source).
+
+**Step 4.4/4.5 — Related patches/stable discussion:**
+Record: No related stable mailing list discussion found. The sibling
+commit `e61bc5e4d8743` ("bufmap: manage as folios, V2") confirms a slot
+size of 4 MB in ten-slot configurations — establishing the `4194304`
+constant matches the real slot size.
+
+### Phase 5: Code Semantic Analysis
+
+**Step 5.1/5.2 — Functions/callers:**
+Record: Only `orangefs_readahead` is modified. It is registered as
+`.readahead` in `orangefs_address_operations` (verified via grep in each
+stable branch). It is invoked by the VFS readahead machinery
+(`page_cache_ra_*`), reachable from any buffered read of an OrangeFS
+file, including `read(2)` and `mmap(2)` page faults — i.e. the normal
+user-facing path.
+
+**Step 5.3 — Callees:**
+Record: Calls `wait_for_direct_io` (fs/orangefs/file.c), which allocates
+a bufmap slot via `orangefs_bufmap_get()`, then uses
+`orangefs_bufmap_copy_to_iovec` to fetch up to `total_size` bytes — the
+OOB occurs here.
+
+**Step 5.4 — Reachability:**
+Record: Path is reachable from userspace with a normal read/mmap of any
+file on OrangeFS. `generic/340` triggers it via `holetest`. Reproducer
+exists.
+
+**Step 5.5 — Similar patterns:**
+Record: `orangefs_direct_IO` already chunks I/O using
+`orangefs_bufmap_size_query()` (lines 519–565). The readahead path was
+simply missing this safety loop; the fix adds the analogous defense.
+
+### Phase 6: Stable Tree Analysis
+
+**Step 6.1 — Buggy code in stable:**
+Record: Checked `stable-push/linux-5.15.y`, `6.1.y`, `6.6.y`, `6.12.y`,
+`6.17.y`, `6.18.y`, `6.19.y`. All have the identical unbounded single-
+call pattern. The bug exists in every active LTS and rolling-stable
+branch.
+
+**Step 6.2 — Backport difficulty:**
+Record: The modified hunk itself is identical across all stable trees —
+only the surrounding "clean up" block differs
+(`readahead_page`/`page_endio` in 5.15/6.1 vs.
+`readahead_folio`/`folio_*` from 6.6 onward). The fix inserts its loop
+before that block and does not touch it, so application should be clean
+or essentially clean on every LTS.
+
+**Step 6.3 — Prior fixes:**
+Record: No earlier or alternative fix has been applied to stable for
+this issue.
+
+### Phase 7: Subsystem Context
+
+**Step 7.1/7.2:**
+Record: Subsystem is `fs/orangefs` — a distributed filesystem.
+Criticality: PERIPHERAL (limited user base compared to ext4/xfs) but
+still a real filesystem with real data-integrity expectations. Activity
+is low-to-moderate; mostly maintenance.
+
+### Phase 8: Impact and Risk
+
+**Step 8.1 — Affected population:**
+Record: Filesystem-specific — only OrangeFS users. But for those users,
+the bug fires on ordinary reads, not a rare configuration.
+
+**Step 8.2 — Trigger:**
+Record: Fires any time the readahead window exceeds 4 MB, which the
+existing `readahead_expand(... 4194304)` plus kernel heuristics make
+fairly likely for sequential reads of large files. An unprivileged user
+reading a >4 MB file can trigger it.
+
+**Step 8.3 — Failure severity:**
+Record: Out-of-bounds `page_array[i]` dereference → at best reads pages
+belonging to another concurrent OrangeFS I/O (silent data corruption /
+info leak between slots); at worst walks off the end of
+`bufmap->page_array` (NULL/garbage page pointer, crash in
+`copy_page_to_iter`). Classification: HIGH.
+
+**Step 8.4 — Risk/benefit:**
+Record:
+- Benefit: Prevents data corruption and possible OOB read on a user-
+  triggerable path in OrangeFS.
+- Risk: Very low. ~18 net lines in a single function. Identical chunking
+  pattern exists elsewhere in the file. No API or locking changes. The
+  only downside is slightly more round-trips for >4 MB readaheads.
+- Ratio: Favorable.
+
+### Phase 9: Synthesis
+
+**Step 9.1 — Evidence:**
+FOR: Real OOB/corruption fix reachable from userspace (reads, mmap);
+reproduced by xfstests generic/340; surgical scope; author is subsystem
+maintainer; identical pattern already used elsewhere in the same file;
+bug present in every stable tree since v5.13.
+AGAINST: No explicit Cc: stable or Fixes: tag (expected for
+autoselection); fix uses a hardcoded constant instead of
+`orangefs_bufmap_size_query()` (cosmetic concern, consistent with
+neighbouring code).
+
+**Step 9.2 — Stable rules:**
+1. Obviously correct? Yes — clean chunking, matches existing precedent.
+2. Real bug? Yes — OOB in bufmap page array.
+3. Important? Yes — data corruption / OOB read, HIGH severity.
+4. Small and contained? Yes — ~18 net lines, single function, single
+   file.
+5. No new features/APIs? Correct.
+6. Applies to stable? Yes — identical hunk context in all LTS branches.
+
+**Step 9.3 — Exception categories:** Not applicable; this is a
+straightforward bug fix.
+
+**Step 9.4 — Decision:** YES.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Author is Vincent Guittot (scheduler
-  maintainer), applied by Peter Zijlstra
-- [Phase 2] Diff analysis: 4 lines changed in 2 hunks of
-  `kernel/sched/fair.c` — adds `&& protect` to buddy check, adds
-  `clear_buddies()` call
-- [Phase 3] git blame: Buggy code introduced by e837456fdca818 (Mel
-  Gorman, 2025-11-12, v6.19)
-- [Phase 3] git tag --contains: e837456fdca818 first in v6.19,
-  85e511df3cec46 (PREEMPT_SHORT) first in v6.12
-- [Phase 3] Related fix 15257cc2f905d confirms NEXT_BUDDY
-  reimplementation had issues (Fixes: e837456fdca818)
-- [Phase 3] Author Vincent Guittot has 20+ recent commits to
-  kernel/sched/fair.c
-- [Phase 4] b4 dig failed to match message ID; lore protected by anti-
-  bot
-- UNVERIFIED: Full mailing list discussion details, whether reviewers
-  nominated for stable
-- [Phase 5] `__pick_eevdf()` called from `pick_eevdf()` and
-  `wakeup_preempt_fair()` — confirmed via grep
-- [Phase 5] `wakeup_preempt_fair()` is on every CFS wakeup path —
-  confirmed via code analysis
-- [Phase 6] Verified v6.19 has identical buggy code via `git show
-  v6.19:kernel/sched/fair.c`
-- [Phase 6] v6.12 does NOT have this code (no PICK_BUDDY in
-  `__pick_eevdf`)
-- [Phase 8] Latency regression quantified from commit message: p99
-  1273us→74us, p99.9 4751us→663us
+- [Phase 1] Parsed tags: only `Signed-off-by: Mike Marshall` present; no
+  Fixes:/Cc:stable/Link:/Reported-by: (confirmed via `git log -1
+  --format='%B'`).
+- [Phase 1] Verified `generic/340` is xfstests mmap-write race via
+  `holetest` by fetching
+  `github.com/kdave/xfstests/raw/master/tests/generic/340`.
+- [Phase 2] Inspected `orangefs_bufmap_copy_to_iovec` in
+  `fs/orangefs/orangefs-bufmap.c`: confirmed unchecked
+  `from->page_array[i]` indexing driven by `size`.
+- [Phase 2] Inspected `orangefs_bufmap_map`: confirmed
+  `desc_array[i].page_array` are slices of the shared
+  `bufmap->page_array` (line 279–285), so an over-sized `size` walks
+  into the next slot or off the end.
+- [Phase 2] Inspected `orangefs_direct_IO` (lines 519–565): confirmed
+  existing per-call size cap using `orangefs_bufmap_size_query()` — the
+  readahead fix mirrors this pattern.
+- [Phase 3] `git blame` on lines 242–247 in `fs/orangefs/inode.c`: buggy
+  pattern originates in `0c4b7cadd1ade1` (2021-03-28, v5.13 merge
+  window).
+- [Phase 3] `git log --oneline -- fs/orangefs/inode.c`: confirmed only
+  cosmetic changes (`de4eda9de2d957`, `cd01049d9ca37`) since
+  introduction.
+- [Phase 3] `git log --author="Mike Marshall" --oneline`: confirmed
+  author is the long-time OrangeFS maintainer.
+- [Phase 4] `b4 dig -c 415e507cdefc5...`: no lore match (by patch-id, by
+  author/subject, or by in-body From). Falls back to pull-request
+  channel.
+- [Phase 4] `WebFetch https://yhbt.net/lore/linux-fsdevel/?q=for-
+  linus-7.1-ofs1`: located the pull request for 7.1-ofs1 by Mike
+  Marshall (2026-04-17) and pr-tracker-bot confirmation.
+- [Phase 4] Searched lore for "orangefs_readahead bufmap slot" and
+  related phrases: no standalone review thread found — patch flowed
+  through the maintainer tree.
+- [Phase 5] `Grep` for `.readahead = orangefs_readahead` in all stable
+  branches: confirmed it is wired into `orangefs_address_operations` and
+  thus reachable from ordinary VFS reads.
+- [Phase 5] Inspected `wait_for_direct_io` (`fs/orangefs/file.c` lines
+  49–280): confirmed `total_size` is passed unchecked as
+  `new_op->upcall.req.io.count` and is used to drive
+  `orangefs_bufmap_copy_to_iovec`'s loop.
+- [Phase 6] `git show stable-
+  push/linux-{5.15,6.1,6.6,6.12,6.17,6.18,6.19}.y:fs/orangefs/inode.c`:
+  confirmed identical unbounded `wait_for_direct_io(...,
+  readahead_length(rac), ...)` call in every branch.
+- [Phase 6] Compared context lines: modified hunk is identical; only the
+  post-loop cleanup differs (page vs folio) and is not touched by the
+  fix — clean apply expected.
+- [Phase 8] Verified bufmap slot size: sibling commit `e61bc5e4d8743`
+  ("bufmap: manage as folios, V2.") explicitly documents ten 4 MB slots;
+  matches the `4194304` constant.
+- UNVERIFIED: Exact mainline release that will first contain this commit
+  (it is in the 7.1-ofs1 PR, so 7.1-rc onward); not yet merged into the
+  tree HEAD I have available — irrelevant to the YES decision.
+- UNVERIFIED: Whether `generic/340` was observed to reproduce on every
+  stable branch (not directly tested, but the code path is identical in
+  every branch so the same failure applies).
+
+The fix addresses a real, userspace-triggerable out-of-bounds memory
+access in a filesystem read path, is minimal, self-contained, authored
+by the subsystem maintainer, validated by an xfstests reproducer, and
+applies cleanly to all active stable trees where the bug has been
+present since v5.13.
 
 **YES**
 
- kernel/sched/fair.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/orangefs/inode.c | 36 +++++++++++++++++++++++++++---------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 42051bdea3f17..1d89db9498fed 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -1024,7 +1024,7 @@ static struct sched_entity *__pick_eevdf(struct cfs_rq *cfs_rq, bool protect)
- 	/*
- 	 * Picking the ->next buddy will affect latency but not fairness.
- 	 */
--	if (sched_feat(PICK_BUDDY) &&
-+	if (sched_feat(PICK_BUDDY) && protect &&
- 	    cfs_rq->next && entity_eligible(cfs_rq, cfs_rq->next)) {
- 		/* ->next will never be delayed */
- 		WARN_ON_ONCE(cfs_rq->next->sched_delayed);
-@@ -8932,8 +8932,10 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
- 	return;
+diff --git a/fs/orangefs/inode.c b/fs/orangefs/inode.c
+index 2d4710d0e05e1..af7c9432e141b 100644
+--- a/fs/orangefs/inode.c
++++ b/fs/orangefs/inode.c
+@@ -224,6 +224,8 @@ static void orangefs_readahead(struct readahead_control *rac)
+ 	loff_t new_start = readahead_pos(rac);
+ 	int ret;
+ 	size_t new_len = 0;
++	size_t this_size;
++	size_t remaining;
  
- preempt:
--	if (preempt_action == PREEMPT_WAKEUP_SHORT)
-+	if (preempt_action == PREEMPT_WAKEUP_SHORT) {
- 		cancel_protect_slice(se);
-+		clear_buddies(cfs_rq, se);
+ 	loff_t bytes_remaining = inode->i_size - readahead_pos(rac);
+ 	loff_t pages_remaining = bytes_remaining / PAGE_SIZE;
+@@ -239,17 +241,33 @@ static void orangefs_readahead(struct readahead_control *rac)
+ 	offset = readahead_pos(rac);
+ 	i_pages = &rac->mapping->i_pages;
+ 
+-	iov_iter_xarray(&iter, ITER_DEST, i_pages, offset, readahead_length(rac));
++	iov_iter_xarray(&iter, ITER_DEST, i_pages,
++				offset, readahead_length(rac));
+ 
+-	/* read in the pages. */
+-	if ((ret = wait_for_direct_io(ORANGEFS_IO_READ, inode,
+-			&offset, &iter, readahead_length(rac),
+-			inode->i_size, NULL, NULL, rac->file)) < 0)
+-		gossip_debug(GOSSIP_FILE_DEBUG,
+-			"%s: wait_for_direct_io failed. \n", __func__);
+-	else
+-		ret = 0;
++	remaining = readahead_length(rac);
++	while (remaining) {
++		if (remaining > 4194304)
++			this_size = 4194304;
++		else
++			this_size = remaining;
++
++		/* read in the pages. */
++		if ((ret = wait_for_direct_io(ORANGEFS_IO_READ, inode,
++				&offset, &iter, this_size,
++				inode->i_size, NULL, NULL, rac->file)) < 0) {
++			gossip_debug(GOSSIP_FILE_DEBUG,
++				"%s: wait_for_direct_io failed. :%d: \n",
++				__func__, ret);
++			goto cleanup;
++		} else {
++			ret = 0;
++		}
++
++		remaining -= this_size;
++		offset += this_size;
 +	}
  
- 	resched_curr_lazy(rq);
- }
++cleanup:
+ 	/* clean up. */
+ 	while ((folio = readahead_folio(rac))) {
+ 		if (!ret)
 -- 
 2.53.0
 
