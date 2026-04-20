@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86103EF0C2;
-	Mon, 20 Apr 2026 13:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941093EF650;
+	Mon, 20 Apr 2026 13:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691523; cv=none; b=L5Ghpm0RZwXHjdSoxSCwS6mebvqTqCSX2OaQAuXKzv29PZ7PK7bOahwMKb8GiFKc06p+zNOeBtzevXu0WcqZedIjfzPWPD66p9GpAP3p/5Eq6/WJbPR9fsyktsK2ntxp2g0GL7C/g4dGpr04D3zZmpdw+gfDbKL+DbpvL88ZMhA=
+	t=1776691525; cv=none; b=lFS1dPq1kZ9ixW4Y2c8QD76WCZcNF75H8zl/UrboJrOSBL1hf82nCoMzvrQXqudxwXye2JTd98j/udiMqqHU6vSqm4cmCYeIJP2qaPMdWTGb6/FziD4pRReapLzbqwy53wr5CG7zH0w0kmwPfCVYCYV7Cl8nh9xp84qS/WRoj2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691523; c=relaxed/simple;
-	bh=y71kcRYQpao/17pO/wcWPCws9upPBl1PHmX/t/RFhHo=;
+	s=arc-20240116; t=1776691525; c=relaxed/simple;
+	bh=2VRNVQbyAA2kIKYeFyG7zX3zgXDl8CdjLF3CM8tWmQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ewcGFGQH0O49w0T7B+fVwQg10eUhoDqJYK42CcW7b0WRoo2xW5Q83CYtK76np+grMFDSMxzj34d8l6zKQIkirmo9ty93CMbERGqEzIJBqxLOm2OnmrDB5ywErQrCxno2YKiYC71vlVmnk0JAUsSnK3L57TY9xU847F3kVMx4wwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZG4eQ2ZF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bBxhvlwqzq7hkJLzgq4/HmutuSXUOHx71aedQnCui76yFR4z2GUUQE9P/032fPB40Z5p3lLT5vXIfE+UR4iqTm+76gFJPWegQQYDUfqAxb2ntAFggySsL0zbyEyXqvILGgI/+XnjWTCAsHIi34ZH5Op86+yP2TuacNXuyXsyq+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2Tv7AhE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZG4eQ2ZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2C4C19425;
-	Mon, 20 Apr 2026 13:25:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2Tv7AhE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0526EC2BCC7;
+	Mon, 20 Apr 2026 13:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691523;
-	bh=y71kcRYQpao/17pO/wcWPCws9upPBl1PHmX/t/RFhHo=;
+	s=k20201202; t=1776691525;
+	bh=2VRNVQbyAA2kIKYeFyG7zX3zgXDl8CdjLF3CM8tWmQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZG4eQ2ZFrYCB+xyUSv+QOrQjX5A34SgK0qtnr+5mwXUnVxv0tlLelpy/cIIvw1Ko/
-	 XqB4F/3oXX3VqKFKMYhEbzNllZUGvez+Lqa4eKu6+WbY9YIIOsbB3RD7kiPVJrJOox
-	 OBOLoZnvmoLKEoXIZ4LXtGWwPz+dUow4T6OisZeMbEb7bndx2KS2z5uSM6Z8h2cYDu
-	 L1V9eM61GdTllroPMG0yM549FXxSVdCDDu3en8UEYQMrRsoMy8FSipTtZpTUGGa0cR
-	 k6PwYWLt4glu6wCz+PImIEWRL006wgdjfewoD1JG8egIhzKdT1tQ3BIG5Tzs3ttbMH
-	 oe+hCzbtSxLrA==
+	b=Z2Tv7AhEwECvtXFuSwK77hOmR9ENpU5qBFKsQhEghjKrl3qh35kaOhQMk88ETVxXL
+	 TvuyCNE9WnY9P6KDIar7v8tAt2n+IJyFKmme3UARXbVkVQroz3tJxeGeJ8MBOp2/p+
+	 EI9FcL0S5LY6A3lMscK+7zBwNwkKSQhJWMVwx08rrIs6EfWmjufZ0Z2BH13tXjwX20
+	 06rMsAi8tTgDjN8+glYfDORl/9us75LzriWm4/PHdIU+2IQ93SwEJ9VErJtfiL1WT+
+	 fDCpT/QvOQ8fh4s6otffsOfxDr7QWTnYQS1AQcy9rIJuPYwEVx/C7xivO6+/mELCVx
+	 D/h01m96vs6oQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aaron Tomlin <atomlin@atomlin.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: =?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ronak.doshi@broadcom.com,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	srini@kernel.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] vmxnet3: Suppress page allocation warning for massive Rx Data ring
-Date: Mon, 20 Apr 2026 09:17:53 -0400
-Message-ID: <20260420132314.1023554-79-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ASoC: codecs: wcd-clsh: Always update buck/flyback on transitions on transitions
+Date: Mon, 20 Apr 2026 09:17:54 -0400
+Message-ID: <20260420132314.1023554-80-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,394 +51,364 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
 
-[ Upstream commit c31770c49348fb019167fa95119f330597c99193 ]
+[ Upstream commit f8d51e903a6c97d8d298f14d9f8b4fff808670e3 ]
 
-The vmxnet3 driver supports an Rx Data ring (rx-mini) to optimise the
-processing of small packets. The size of this ring's DMA-coherent memory
-allocation is determined by the product of the primary Rx ring size and
-the data ring descriptor size:
+The WCD934x audio outputs (earpiece, headphone, speaker) share two power
+supply converters, a buck and a flyback, managed by reference counters
+(buck_users, flyback_users) in the Class-H controller.
 
-    sz = rq->rx_ring[0].size * rq->data_ring.desc_size;
+The early return in wcd_clsh_ctrl_set_state() when nstate == ctrl->state
+prevented _wcd_clsh_ctrl_set_state() from being called when switching
+between outputs sharing the same state value. As a result, the buck and
+flyback reference counters were never decremented on disable, leaving the
+converters active and their counters out of sync with the actual hardware
+state.
 
-When a user configures the maximum supported parameters via ethtool
-(rx_ring[0].size = 4096, data_ring.desc_size = 2048), the required
-contiguous memory allocation reaches 8 MB (8,388,608 bytes).
+This caused audible distortion on the earpiece output and spurious MBHC
+over-current protection interrupts on HPHL/HPHR during output switching.
 
-In environments lacking Contiguous Memory Allocator (CMA),
-dma_alloc_coherent() falls back to the standard zone buddy allocator. An
-8 MB allocation translates to a page order of 11, which strictly exceeds
-the default MAX_PAGE_ORDER (10) on most architectures.
+Remove the early return so that CLSH_REQ_ENABLE and CLSH_REQ_DISABLE are
+always dispatched, keeping the buck and flyback reference counters
+consistent on every state transition.
 
-Consequently, __alloc_pages_noprof() catches the oversize request and
-triggers a loud kernel warning stack trace:
-
-    WARN_ON_ONCE_GFP(order > MAX_PAGE_ORDER, gfp)
-
-This warning is unnecessary and alarming to system administrators because
-the vmxnet3 driver already handles this allocation failure gracefully.
-If dma_alloc_coherent() returns NULL, the driver safely disables the
-Rx Data ring (adapter->rxdataring_enabled = false) and falls back to
-standard, streaming DMA packet processing.
-
-To resolve this, append the __GFP_NOWARN flag to the dma_alloc_coherent()
-gfp_mask. This instructs the page allocator to silently fail the
-allocation if it exceeds order limits or memory is too fragmented,
-preventing the spurious warning stack trace.
-
-Furthermore, enhance the subsequent netdev_err() fallback message to
-include the requested allocation size. This provides critical debugging
-context to the administrator (e.g., revealing that an 8 MB allocation
-was attempted and failed) without making hardcoded assumptions about
-the state of the system's configurations.
-
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Link: https://patch.msgid.link/20260226163121.4045808-1-atomlin@atomlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
+Link: https://patch.msgid.link/20260304141006.280894-1-cedric.bellegarde@adishatz.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the evidence needed for a comprehensive analysis.
+Now I have all the information I need. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-Record: [vmxnet3] [Suppress] Suppress page allocation warning for
-massive Rx Data ring allocation that exceeds MAX_PAGE_ORDER. The verb
-"Suppress" indicates removing a spurious warning, not adding a new
-feature.
+### Step 1.1: Subject Line
+- **Subsystem:** ASoC: codecs: wcd-clsh
+- **Action verb:** "Always update" (implies something was incorrectly
+  not being updated = bug fix)
+- **Summary:** Remove an incorrect early return that prevented
+  buck/flyback power supply reference counters from being updated during
+  audio output transitions.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Reviewed-by:** Jijie Shao <shaojijie@huawei.com> - a networking
-  contributor (hns3 driver)
-- **Signed-off-by:** Aaron Tomlin <atomlin@atomlin.com> - the author, a
-  kernel contributor (modules, tracing subsystems)
-- **Link:**
-  https://patch.msgid.link/20260226163121.4045808-1-atomlin@atomlin.com
-- **Signed-off-by:** Jakub Kicinski <kuba@kernel.org> - the net tree
-  maintainer, committed it
-- No Fixes: tag (expected for candidates)
-- No Reported-by: tag
-- No Cc: stable tag
+### Step 1.2: Tags
+- **Signed-off-by:** Cédric Bellegarde (author)
+- **Link:** https://patch.msgid.link/20260304141006.280894-1-
+  cedric.bellegarde@adishatz.org
+- **Signed-off-by:** Mark Brown (ASoC maintainer, applied the patch)
+- No Fixes: tag, no Reported-by, no Cc: stable — all expected for
+  candidate review.
 
-Record: Committed by the net maintainer (Jakub Kicinski). Reviewed by a
-networking contributor.
+### Step 1.3: Commit Body Analysis
+The commit message is detailed and clearly explains:
+- **Bug:** Early return in `wcd_clsh_ctrl_set_state()` when `nstate ==
+  ctrl->state` prevented `_wcd_clsh_ctrl_set_state()` from being called
+  during disable transitions.
+- **Root cause:** Each audio output (earpiece, HPHL, HPHR) calls
+  `set_state` with the same `nstate` for both enable (PRE_DAC) and
+  disable (POST_PA). The early return silently skips the disable call.
+- **Symptom:** Buck/flyback reference counters never decremented →
+  converters left active → audible distortion on earpiece + spurious
+  MBHC over-current interrupts on HPHL/HPHR.
+- **Fix:** Remove the 3-line early return.
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The commit explains in detail:
-- When max ethtool parameters are set (rx_ring[0].size=4096,
-  data_ring.desc_size=2048), the DMA allocation is 8 MB
-- 8 MB requires page order 11, which exceeds MAX_PAGE_ORDER (10)
-- This triggers `WARN_ON_ONCE_GFP(order > MAX_PAGE_ORDER, gfp)` in
-  page_alloc.c
-- The driver already gracefully handles the failure (disables data ring
-  and falls back)
-- The warning is "unnecessary and alarming to system administrators"
+### Step 1.4: Hidden Bug Fix?
+No — this is explicitly described as a bug fix with clear user-visible
+symptoms. The commit message thoroughly explains the bug mechanism.
 
-Record: Bug is a spurious WARN_ON_ONCE kernel stack trace when VMware
-users configure max ring parameters. Symptom is an alarming stack trace
-in dmesg. Driver handles the failure fine. Root cause: missing
-`__GFP_NOWARN` flag.
-
-### Step 1.4: DETECT HIDDEN BUG FIXES
-This is a real bug fix disguised with "suppress" language. The
-`WARN_ON_ONCE_GFP` macro at line 5226 of `mm/page_alloc.c` was
-specifically designed to be suppressed by `__GFP_NOWARN`. The vmxnet3
-driver was missing this flag, causing the allocator to emit a warning
-the driver was designed to tolerate. This is a legitimate fix for an
-incorrect warning.
-
-Record: Yes, this is a real bug fix. The warning is spurious because the
-driver handles the failure gracefully.
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
-- **File:** `drivers/net/vmxnet3/vmxnet3_drv.c`
-- **Lines changed:** 2 lines modified (net change: 0 added, 0 removed -
-  just modifications)
-- **Function modified:** `vmxnet3_rq_create()`
+### Step 2.1: Inventory
+- **Files changed:** 1 (`sound/soc/codecs/wcd-clsh-v2.c`)
+- **Lines:** -3, +0 (pure deletion)
+- **Function modified:** `wcd_clsh_ctrl_set_state()`
 - **Scope:** Single-file, surgical fix
 
-Record: 1 file, 2 lines changed, in `vmxnet3_rq_create()`. Extremely
-small scope.
+### Step 2.2: Code Flow Change
+**Before:** When `nstate == ctrl->state`, the function returns
+immediately without calling `_wcd_clsh_ctrl_set_state()`. This means
+neither CLSH_REQ_ENABLE nor CLSH_REQ_DISABLE is dispatched.
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-- **Line 2271:** `GFP_KERNEL` → `GFP_KERNEL | __GFP_NOWARN` for the data
-  ring DMA allocation
-- **Line 2274:** `"rx data ring will be disabled\n"` → `"failed to
-  allocate %zu bytes, rx data ring will be disabled\n", sz` to include
-  the allocation size in the error message
+**After:** The function always proceeds to the switch on `clsh_event`,
+dispatching either CLSH_REQ_ENABLE or CLSH_REQ_DISABLE to
+`_wcd_clsh_ctrl_set_state()`.
 
-Before: allocation failure triggers WARN_ON_ONCE + generic log message.
-After: allocation failure is silent (no WARN) + informative log message
-with size.
+### Step 2.3: Bug Mechanism
+This is a **reference counting bug**. Looking at the actual call pattern
+in wcd934x.c:
 
-Record: Two hunks: (1) Add __GFP_NOWARN to suppress spurious warning;
-(2) Improve error message with allocation size.
+1. **Enable EAR** (PRE_PMU): `set_state(ctrl, PRE_DAC,
+   WCD_CLSH_STATE_EAR, CLS_H_NORMAL)` → state=EAR, buck_users++,
+   flyback_users++
+2. **Disable EAR** (POST_PMD): `set_state(ctrl, POST_PA,
+   WCD_CLSH_STATE_EAR, CLS_H_NORMAL)` → nstate=EAR == ctrl->state=EAR →
+   **EARLY RETURN!** Buck/flyback never decremented.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-Category: **Logic/correctness fix** - The allocator's `WARN_ON_ONCE_GFP`
-macro at `mm/page_alloc.c:5226` is designed to suppress warnings when
-`__GFP_NOWARN` is passed. The vmxnet3 driver was missing this flag for
-an allocation that is expected to fail on systems without CMA, producing
-a scary but meaningless kernel warning.
+The same pattern affects ALL outputs (HPHL, HPHR, LO, AUX) across ALL
+WCD codec drivers (wcd9335, wcd934x, wcd937x, wcd938x, wcd939x).
 
-Record: Missing __GFP_NOWARN flag on an allocation expected to fail. The
-WARN_ON_ONCE_GFP macro specifically checks for this flag (verified in
-mm/internal.h:92-96).
+### Step 2.4: Fix Quality
+- **Obviously correct:** Yes. The early return was clearly wrong — the
+  function uses `clsh_event` (enable vs disable) to dispatch different
+  operations, and the early return bypasses this dispatch.
+- **Minimal/surgical:** Maximum surgical — 3-line deletion.
+- **Regression risk:** Very low. The removed check was a premature
+  optimization that incorrectly assumed same nstate means no-op. The
+  `_wcd_clsh_ctrl_set_state` sub-functions use reference counting
+  (buck_users, flyback_users) which already handles idempotency
+  correctly.
 
-### Step 2.4: ASSESS THE FIX QUALITY
-- Obviously correct: `__GFP_NOWARN` is the standard kernel mechanism for
-  this exact purpose
-- Minimal: 2 lines changed
-- Regression risk: Zero - `__GFP_NOWARN` only affects the warning, not
-  allocation behavior
-- Pattern precedent: Same fix applied to r8152 (5cc33f139e11b), gtp
-  (bd5cd35b782ab), netdevsim (83cf4213bafc4)
-
-Record: Fix is trivially correct, minimal, and follows well-established
-kernel patterns. No regression risk.
+---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-The affected code was introduced in commit `50a5ce3e7116a7` by
-Shrikrishna Khare on 2016-06-16 ("vmxnet3: add receive data ring
-support"). This was first included in v4.8-rc1, meaning the buggy code
-has been present since kernel 4.8 (~2016).
+### Step 3.1: Blame
+The buggy early return at line 851-852 was introduced in commit
+`cc2e324d39b26` ("ASoC: wcd9335: add CLASS-H Controller support") by
+Srinivas Kandagatla, merged in **v5.1-rc1**. This code has been present
+since the initial creation of the file.
 
-Record: Buggy code from commit 50a5ce3e7116a7 (v4.8-rc1, June 2016).
-Present in ALL active stable trees.
+### Step 3.2: Fixes Tag
+No Fixes: tag present. However, the bug was clearly introduced by
+`cc2e324d39b26` (v5.1-rc1).
 
-### Step 3.2: FOLLOW THE FIXES TAG
-No Fixes: tag present (expected).
+### Step 3.3: File History
+9 commits to `wcd-clsh-v2.c` since initial creation. Changes have been
+minor: unused function removal, new codec version support, symbol
+renaming, GENMASK fixes. No prior fix to this early return logic.
 
-### Step 3.3: CHECK FILE HISTORY
-84 commits to vmxnet3_drv.c since the buggy code was introduced. The
-file is actively maintained. A closely related commit is `ffbe335b8d471`
-("vmxnet3: disable rx data ring on dma allocation failure") which fixed
-a BUG crash when the same allocation fails. This shows the allocation
-failure path is a known problem area.
+### Step 3.4: Author
+Cédric Bellegarde has one other commit in the tree (ASoC: qcom: q6asm:
+drop DSP responses for closed data streams). Not the subsystem
+maintainer, but the patch was accepted by Mark Brown (ASoC maintainer).
 
-Record: Active file. The data ring allocation failure path has had real
-bugs before (ffbe335b8d471 fixed a BUG/crash).
+### Step 3.5: Dependencies
+None. This is a standalone 3-line deletion with no dependencies on other
+patches.
 
-### Step 3.4: CHECK AUTHOR
-Aaron Tomlin is a kernel contributor (primarily in modules, tracing
-subsystems). Jakub Kicinski (net maintainer) committed this.
-
-Record: Not a vmxnet3 maintainer, but committed by the net tree
-maintainer.
-
-### Step 3.5: DEPENDENCIES
-No dependencies. This is a standalone 2-line change that only adds a GFP
-flag and improves a log message. The code context exists in all stable
-trees since v4.8.
-
-Record: Fully standalone, no prerequisites.
+---
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.5
-Lore.kernel.org was unavailable (Anubis protection). However:
-- The Link: tag confirms submission via netdev mailing list
-- Jakub Kicinski (net maintainer) accepted and committed it
-- Jijie Shao provided a Reviewed-by
+### Step 4.1: Original Discussion
+Found via web search at yhbt.net/lore mirror. The patch was submitted on
+2026-03-04 and applied by Mark Brown on 2026-03-16 to `broonie/sound
+for-7.1` (commit `f8d51e903a6c`).
 
-Record: Unable to fetch lore discussion due to anti-bot protection.
-UNVERIFIED: detailed mailing list discussion content. However, the
-commit was accepted by the net maintainer.
+### Step 4.2: Reviewer Feedback
+Mark Brown applied directly with no review comments or objections — a
+clean accept from the ASoC subsystem maintainer. No NAKs or concerns
+raised.
+
+### Step 4.3: Bug Report
+No separate bug report; the author discovered this through direct
+debugging (audio distortion and spurious interrupts during output
+switching).
+
+### Step 4.4: Series Context
+Single standalone patch, not part of any series.
+
+### Step 4.5: Stable Discussion
+No stable-specific discussion found.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: FUNCTION ANALYSIS
-`vmxnet3_rq_create()` is called from:
-1. `vmxnet3_rq_create_all()` - called during adapter initialization
-2. Directly at line 3472 during queue reset/resize
-3. `vmxnet3_rq_create_all()` also called at line 3655 during MTU change
+### Step 5.1: Modified Function
+`wcd_clsh_ctrl_set_state()` — exported function, the main API for the
+Class-H controller.
 
-The affected allocation is on the normal path (not error-only),
-triggered during device initialization and MTU changes. VMware vmxnet3
-is ubiquitous in VMware virtual machines.
+### Step 5.2: Callers
+`wcd_clsh_ctrl_set_state()` is called from **5 different WCD codec
+drivers**:
+- `wcd9335.c` — 8 call sites (EAR, HPHL, HPHR, LO)
+- `wcd934x.c` — 8 call sites (EAR, HPHL, HPHR, LO)
+- `wcd937x.c` — 8 call sites (EAR, HPHL, HPHR, AUX)
+- `wcd938x.c` — 10 call sites (EAR, HPHL, HPHR, AUX)
+- `wcd939x.c` — 6 call sites (EAR, HPHL, HPHR)
 
-Record: The function is called during normal device initialization and
-reconfiguration. Very common code path for VMware users.
+All follow the same pattern: PRE_DAC enable on PMU, POST_PA disable on
+PMD.
 
-### Step 5.5: SIMILAR PATTERNS
-The vmxnet3 driver already uses `__GFP_NOWARN` in
-`vmxnet3_pp_get_buff()` at line 1425 for page pool allocations. Multiple
-other network drivers have applied the same fix pattern (r8152, gtp,
-netdevsim).
+### Step 5.3-5.4: Call Chain
+These are called from DAPM widget event handlers, triggered during
+normal audio routing changes. Every user who plays audio through
+earpiece, headphones, or speaker on a Qualcomm WCD93xx-based device
+triggers this code path.
 
-Record: Pattern is already used elsewhere in vmxnet3 itself, and widely
-across network drivers.
+### Step 5.5: Similar Patterns
+The reference counting pattern in `wcd_clsh_buck_ctrl()` and
+`wcd_clsh_flyback_ctrl()` (and v3 variants) all use increment-on-
+enable/decrement-on-disable with `buck_users`/`flyback_users`. The early
+return prevented the decrement path from ever executing.
+
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: BUGGY CODE IN STABLE
-The buggy code (commit 50a5ce3e7116a7) has been present since v4.8. It
-exists in ALL active stable trees (5.10, 5.15, 6.1, 6.6, 6.12, etc.).
+### Step 6.1: Buggy Code in Stable
+The bug was introduced in `cc2e324d39b26` (v5.1-rc1). This code exists
+in **all active stable trees**: 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y,
+and any other LTS/stable branches.
 
-Record: Code exists in all active stable trees.
+### Step 6.2: Backport Complications
+The file has had only minor changes (renaming, cleanup). The patch is a
+simple 3-line deletion that should apply cleanly to all stable trees.
 
-### Step 6.2: BACKPORT COMPLICATIONS
-The code at line 2271 in the current tree is still `GFP_KERNEL` (no
-__GFP_NOWARN), and the context looks clean. The `%zu` format specifier
-for size_t is standard. Should apply cleanly to all stable trees.
+### Step 6.3: Related Fixes
+No prior fix for this issue in any stable tree.
 
-Record: Expected clean apply.
+---
 
-### Step 6.3: RELATED FIXES IN STABLE
-No prior fix for this specific warning exists.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### Step 7.1: Subsystem
+- **Path:** sound/soc/codecs/
+- **Subsystem:** ASoC (Audio System on Chip) — audio codec drivers
+- **Criticality:** IMPORTANT — affects audio on all Qualcomm WCD93xx
+  codec-based phones and devices (many Android devices, some embedded
+  systems)
 
-### Step 7.1: SUBSYSTEM CRITICALITY
-- **Subsystem:** drivers/net/vmxnet3 - VMware virtual network driver
-- **Criticality:** IMPORTANT - vmxnet3 is the standard NIC in VMware
-  environments, which powers a vast number of enterprise servers
+### Step 7.2: Activity
+Moderately active subsystem with steady fixes and improvements.
 
-### Step 7.2: ACTIVITY
-The subsystem is actively developed (v9 protocol support recently
-added). 84 commits since the data ring feature.
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: WHO IS AFFECTED
-All VMware users running vmxnet3 who configure maximum ethtool ring
-parameters. VMware is extremely widespread in enterprise.
+### Step 8.1: Affected Users
+All users of Qualcomm WCD93xx-series audio codecs (WCD9335, WCD934x,
+WCD937x, WCD938x, WCD939x). This includes many Android phones and
+Qualcomm-based embedded systems.
 
-### Step 8.2: TRIGGER CONDITIONS
-Triggered when: (a) user sets ethtool `rx_ring[0].size=4096` and
-`data_ring.desc_size=2048` (both maximum values), and (b) system lacks
-CMA for large contiguous allocations. This is a realistic configuration
-for performance-tuned VMs.
+### Step 8.2: Trigger Conditions
+- **Trigger:** Any normal audio output switching (e.g., call on
+  earpiece, then play music through headphones) — extremely common
+  operation.
+- **Unprivileged trigger:** Yes — any userspace audio playback triggers
+  this.
 
-### Step 8.3: FAILURE MODE SEVERITY
-The `WARN_ON_ONCE` produces a full kernel stack trace in dmesg that
-looks like a kernel bug. While not a crash, it:
-- Alarms system administrators
-- Can trigger automated monitoring/alerting systems
-- May generate unnecessary bug reports
-- Severity: MEDIUM (no functional impact, but user-visible alarm)
+### Step 8.3: Failure Mode Severity
+- **Audible distortion** on earpiece — MEDIUM-HIGH (user-perceivable
+  audio quality issue)
+- **Spurious MBHC over-current interrupts** — MEDIUM (can cause spurious
+  headphone detection events)
+- **Power supply reference counter leak** — MEDIUM (converters left
+  active, wasted power, potential for undefined hardware behavior)
+- Overall severity: **HIGH** — directly affects audio functionality
 
-### Step 8.4: RISK-BENEFIT RATIO
-- **Benefit:** Eliminates spurious kernel warning in VMware
-  environments, improves log message quality
-- **Risk:** Essentially zero - `__GFP_NOWARN` only suppresses the
-  warning, doesn't change allocation behavior
-- **Size:** 2 lines, obviously correct
-- **Ratio:** HIGH benefit / ZERO risk
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit:** HIGH — fixes audio distortion and spurious interrupts on
+  a wide class of devices, bug present since v5.1
+- **Risk:** VERY LOW — 3-line deletion, obviously correct, no regression
+  risk (the removed check was always wrong)
+- **Ratio:** Very favorable for backporting
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: EVIDENCE COMPILATION
+### Step 9.1: Evidence Compilation
 
 **FOR backporting:**
-- Fixes a real user-visible issue (spurious WARN_ON_ONCE stack trace)
-- Extremely small and obviously correct (2 lines)
-- Zero regression risk
-- Well-established pattern (r8152, gtp, netdevsim all did the same)
-- vmxnet3 already uses `__GFP_NOWARN` elsewhere in the driver
-- Buggy code has been present since v4.8, affects all stable trees
-- VMware vmxnet3 is widely used in enterprise
-- Accepted by net maintainer Jakub Kicinski
-- Improved error message provides better diagnostic information
-- Prior crash (ffbe335b8d471) shows this allocation failure path is a
-  real concern
+- Fixes a real, user-visible bug: audio distortion and spurious
+  interrupts
+- Reference counting bug — buck/flyback users never decremented on
+  disable
+- Affects ALL WCD93xx codec users (5 codec drivers, ~40 call sites)
+- Bug present since v5.1-rc1 — affects all active stable trees
+- Fix is minimal: 3-line deletion, obviously correct
+- Applied by ASoC maintainer Mark Brown with no concerns
+- No dependencies — standalone fix
+- Will apply cleanly to all stable trees
 
 **AGAINST backporting:**
-- Not a crash/security/corruption fix (it's a warning suppression)
-- No Fixes: tag or explicit stable nomination
-- WARN_ON_ONCE only fires once per boot (limited repeated impact)
+- No Fixes: tag (expected — that's why it's under manual review)
+- Author is not the subsystem maintainer
+- No formal Reported-by (author found it themselves)
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **YES** - trivial `__GFP_NOWARN`
-   addition, standard pattern
-2. Fixes a real bug? **YES** - spurious kernel warning that alarms
-   admins
-3. Important issue? **MEDIUM** - not a crash, but affects many VMware
-   users
-4. Small and contained? **YES** - 2 lines in 1 file
-5. No new features? **YES** - no new features
-6. Can apply to stable? **YES** - clean apply expected
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** YES — 3-line deletion, logic
+   clearly wrong, applied by maintainer
+2. **Fixes a real bug?** YES — audio distortion, spurious interrupts,
+   reference counter leak
+3. **Important issue?** YES — user-perceivable audio quality degradation
+   on common hardware
+4. **Small and contained?** YES — 3 lines removed from 1 file, 1
+   function
+5. **No new features or APIs?** YES — pure bug fix
+6. **Can apply to stable?** YES — clean apply expected
 
-### Step 9.3: EXCEPTION CATEGORIES
-Not a standard exception category, but analogous to prior stable-
-backported `__GFP_NOWARN` fixes.
+### Step 9.3: Exception Categories
+Not applicable — this is a straightforward bug fix, not an exception
+category.
 
-### Step 9.4: DECISION
-The fix is tiny, obviously correct, zero-risk, follows well-established
-patterns, and eliminates a spurious kernel warning that can alarm VMware
-administrators. While not a crash fix, the WARN_ON_ONCE stack trace is
-user-visible and can trigger automated alerting systems. The bar is very
-low for risk vs. benefit here.
+### Step 9.4: Decision
+This is a clear, minimal fix for a real reference counting bug that
+causes audible audio distortion on all Qualcomm WCD93xx codec-based
+devices. The bug has existed since v5.1. The fix is a 3-line deletion
+that is obviously correct and was accepted by the ASoC maintainer.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Jijie Shao, committed by Jakub
-  Kicinski (net maintainer)
-- [Phase 2] Diff analysis: 2 lines changed in vmxnet3_rq_create(): adds
-  __GFP_NOWARN, improves log message
-- [Phase 2] Verified WARN_ON_ONCE_GFP at mm/internal.h:92-96
-  specifically checks __GFP_NOWARN flag
-- [Phase 2] Verified WARN_ON_ONCE_GFP at mm/page_alloc.c:5226 is
-  triggered when order > MAX_PAGE_ORDER
-- [Phase 3] git blame: buggy code introduced in commit 50a5ce3e7116a7
-  (v4.8-rc1, 2016), present in all stable trees
-- [Phase 3] git log: 84 commits to file since buggy code introduced;
-  active file
-- [Phase 3] Related fix ffbe335b8d471 confirms the data ring allocation
-  failure path has had real bugs
-- [Phase 4] UNVERIFIED: Full mailing list discussion (lore unavailable
-  due to anti-bot)
-- [Phase 5] Traced callers: vmxnet3_rq_create() called from
-  vmxnet3_rq_create_all() during init, MTU change, and queue reset
-- [Phase 5] Confirmed vmxnet3 already uses __GFP_NOWARN at line 1425
-  (vmxnet3_pp_get_buff)
-- [Phase 5] Similar pattern in r8152 (5cc33f139e11b), gtp
-  (bd5cd35b782ab), netdevsim (83cf4213bafc4)
-- [Phase 6] Code exists in all active stable trees (since v4.8)
-- [Phase 6] Current tree still has GFP_KERNEL at line 2271 - clean apply
-  expected
-- [Phase 8] Failure mode: spurious WARN_ON_ONCE stack trace, severity
-  MEDIUM
+- [Phase 1] Parsed tags: Signed-off-by (author + Mark Brown), Link to
+  patch.msgid.link
+- [Phase 2] Diff analysis: 3 lines removed from
+  `wcd_clsh_ctrl_set_state()`, removes incorrect early return
+- [Phase 2] Verified bug mechanism: PRE_DAC sets state=EAR, POST_PA
+  passes same nstate=EAR, early return prevents DISABLE dispatch
+- [Phase 2] Verified reference counting: `wcd_clsh_buck_ctrl()` (line
+  182-183) and `wcd_clsh_flyback_ctrl()` (line 231-232) use
+  increment/decrement of `buck_users`/`flyback_users`
+- [Phase 3] git blame: buggy code introduced in cc2e324d39b26 (v5.1-rc1)
+  — present since file creation
+- [Phase 3] git log: only 9 commits to this file since creation, no
+  prior fix for this issue
+- [Phase 4] Found original submission at yhbt.net lore mirror: single
+  patch, clean accept by Mark Brown for-7.1
+- [Phase 4] No NAKs, no review concerns raised
+- [Phase 5] Verified callers: 5 codec drivers (wcd9335, wcd934x,
+  wcd937x, wcd938x, wcd939x), ~40 call sites, all follow enable/disable
+  pattern
+- [Phase 6] Code exists in all active stable trees (v5.1+)
+- [Phase 6] File has minimal changes — clean apply expected
+- [Phase 8] Failure mode: audio distortion + spurious interrupts,
+  severity HIGH
 
 **YES**
 
- drivers/net/vmxnet3/vmxnet3_drv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wcd-clsh-v2.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index 0572f6a9bdb62..40522afc05320 100644
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -2268,10 +2268,10 @@ vmxnet3_rq_create(struct vmxnet3_rx_queue *rq, struct vmxnet3_adapter *adapter)
- 		rq->data_ring.base =
- 			dma_alloc_coherent(&adapter->pdev->dev, sz,
- 					   &rq->data_ring.basePA,
--					   GFP_KERNEL);
-+					   GFP_KERNEL | __GFP_NOWARN);
- 		if (!rq->data_ring.base) {
- 			netdev_err(adapter->netdev,
--				   "rx data ring will be disabled\n");
-+				   "failed to allocate %zu bytes, rx data ring will be disabled\n", sz);
- 			adapter->rxdataring_enabled = false;
- 		}
- 	} else {
+diff --git a/sound/soc/codecs/wcd-clsh-v2.c b/sound/soc/codecs/wcd-clsh-v2.c
+index 13d07296916f6..62ca22ea0f3b6 100644
+--- a/sound/soc/codecs/wcd-clsh-v2.c
++++ b/sound/soc/codecs/wcd-clsh-v2.c
+@@ -848,9 +848,6 @@ int wcd_clsh_ctrl_set_state(struct wcd_clsh_ctrl *ctrl,
+ {
+ 	struct snd_soc_component *comp = ctrl->comp;
+ 
+-	if (nstate == ctrl->state)
+-		return 0;
+-
+ 	if (!wcd_clsh_is_state_valid(nstate)) {
+ 		dev_err(comp->dev, "Class-H not a valid new state:\n");
+ 		return -EINVAL;
 -- 
 2.53.0
 
