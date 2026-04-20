@@ -1,46 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E376C3C0623;
-	Mon, 20 Apr 2026 13:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EBB3C0624;
+	Mon, 20 Apr 2026 13:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691045; cv=none; b=qdfKBjPgNhQH3dI3cW4GuCy1LUGMazegQM/TefFJd/dFdmsZzw47KVpRvqOShDR66Oh1F+/yX/PwlJpiozWuJASf/XnulLiDlfoMxDK9J7IV01r3iHuOQwJAz4AxqrSGqmIxafSY95zjtNg6oKOj2soU3/Iu3W8+n1GUkAiwoLQ=
+	t=1776691046; cv=none; b=Qztb+8/lAPzxh4mzw5TNU0QBNunQAVNlYy29vnUgZd5JrxeoCnuxAH5EMC7+lvW/s0eX4UvrhdwUd//2ZYsYZmmylVe9IMg7+/vhWVsC+6x2MopsXcYX6LIUgLv6CNC+d7YG1ypLXm1Pk3O8JcdN8ANjpb59VhenYiLHkhthG8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691045; c=relaxed/simple;
-	bh=ThxMyVbcwAzW0tqsHpizXd80AqabTKh2lu5uYmqS6bU=;
+	s=arc-20240116; t=1776691046; c=relaxed/simple;
+	bh=a5qCtqYAadx+H8N6GedWRAAhoHLaCmOXqs9zf4+AemA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JT4FvTz08yzcfi1+y788bm1zZQ80c/Ytzw8tpwI73QT0B8FDgIlGsBZRcIJyzwDuTaZWh48hoqa5AMAgNyp0LljkixTRQGTunxkpGAt0ELrdyspIBB9qdrRep5YUM/Qs+CK8qpAwRxO16uUuayTDrlVt2b7FuiRWKvQdC9C9Ou4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cw4J6MzC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kwOzCg/u2hGDuFUi6GCWiqS9KoTf7Dvy5ndg5I/Al5G/n2H2hyvxD5Rg3gmnXzB+EqLcJhQIeAPGAb8eLgDQRX6np/cPN3NalWXJENLDvcc+inA8+VBktod+r1gnzf5nlTGgnqnz/XNcLodJNyJpp1WXmOHY60PwLfq4IlOMHxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dh8YuRmE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cw4J6MzC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA21C19425;
-	Mon, 20 Apr 2026 13:17:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dh8YuRmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF94C2BCB6;
+	Mon, 20 Apr 2026 13:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691044;
-	bh=ThxMyVbcwAzW0tqsHpizXd80AqabTKh2lu5uYmqS6bU=;
+	s=k20201202; t=1776691046;
+	bh=a5qCtqYAadx+H8N6GedWRAAhoHLaCmOXqs9zf4+AemA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cw4J6MzCcaRN+URlTbXsevMjj9pk2ib47xRaneBLUa9vfhHt7FmD/TKleUsgZpYAq
-	 Hn0s2RppOKrTLPpKvkSwOI/Qwpnt4zHcTiUzG+pnYwH/QZr9LsVqulnrKF1OHYH7c3
-	 eeoOyPHCBizoG1JqiOGomOXAOEZlv6PDIgu+lGZ3diMBsnYKsu5RI0xLjhXdkP8ZaF
-	 FoK0UzmA3wZyRKyC3C+8ssvtOjWbi4CI0HKbxtquOx9QmvrYiFvrlwrNw98AbPiVx7
-	 Zc830HUT4AL9QkWwVK1LeYZt6mHmysU1Fb1uSwk1u2Z/bv7xDxD+UduTHLGw+jIgmr
-	 +/PHfR1ugANbg==
+	b=dh8YuRmEUHMbN19XaJqYUd6EVVLvZrZ7SSZVXXkf5a8OapyvI0snThgtDrpfO/SbM
+	 eWrQuPCY3uuMsQDr4Qkr9vt45FaPw9U4royPbHKo956qTAhyPKVpXV6JWaBd4eXDx+
+	 gt56OaHvxOLOBuIhDu31RtS/Tf5QJeCsIudwZBu8DLuTFsCi3tm/EsHz3axWQeAdXn
+	 16sw0kRA1DuKRmMXQw85DNFZQTZJoGjBU5+MDeIxw120heSdE7oZkgEi6YeiT34eyz
+	 IYq0iTYk8N4DD7OpYHOmot/bOwlrfwcYJdUo9+jdEuusw1MdpO+zEO9IIqGStT1qeS
+	 Qoh0KCbYmISbw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: wangdicheng <wangdicheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-sound@vger.kernel.org,
+	andrzej.hajda@intel.com,
+	neil.armstrong@linaro.org,
+	rfoss@kernel.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ALSA: aoa/onyx: Fix OF node leak on probe failure
-Date: Mon, 20 Apr 2026 09:08:47 -0400
-Message-ID: <20260420131539.986432-61-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] drm/bridge: waveshare-dsi: Register and attach our DSI device at probe
+Date: Mon, 20 Apr 2026 09:08:48 -0400
+Message-ID: <20260420131539.986432-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -56,317 +60,395 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit e5d5aef802a5f41283084f7d443ef4fd4b65d86d ]
+[ Upstream commit b8eb97ead862de7a321dd55a901542a372f8f1cd ]
 
-Add missing of_node_put() in the error path.
+In order to avoid any probe ordering issue, the best practice is to move
+the secondary MIPI-DSI device registration and attachment to the
+MIPI-DSI host at probe time.
 
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Link: https://patch.msgid.link/20260403014736.33014-1-wangdich9700@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Besides solving the probe ordering problems, this makes the bridge work
+with R-Car DU. The R-Car DU will attempt to locate the DSI host bridge in
+its own rcar_du_probe()->rcar_du_modeset_init()->rcar_du_encoder_init()
+by calling of_drm_find_bridge() which calls of_drm_find_and_get_bridge()
+and iterates over bridge_list to locate the DSI host bridge.
+
+However, unless the WS driver calls mipi_dsi_attach() in probe(), the
+DSI host bridge .attach callback rcar_mipi_dsi_host_attach() is not
+called and the DSI host bridge is not added into bridge_list. Therefore
+the of_drm_find_and_get_bridge() called from du_probe() will never find
+the DSI host bridge and probe will indefinitelly fail with -EPROBE_DEFER.
+
+The circular dependency here is, that if rcar_du_encoder_init() would
+manage to find the DSI host bridge, it would call the WS driver .attach
+callback ws_bridge_bridge_attach(), but this is too late and can never
+happen. This change avoids the circular dependency.
+
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Link: https://patch.msgid.link/20260206125801.78705-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the full analysis.
+Good - the patch applies cleanly. Now let me complete the analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Parse the Subject Line
-- **Subsystem**: ALSA: aoa/onyx (Apple Onboard Audio, onyx codec)
-- **Action verb**: "Fix" — direct bug fix
-- **Summary**: Fixes an OF (Open Firmware) device tree node reference
-  leak when the probe function fails
+### Step 1.1: Subject Line
+- **Subsystem**: `drm/bridge: waveshare-dsi:`
+- **Action verb**: "Register and attach" (moving registration to probe
+  time)
+- **Summary**: Moves DSI device registration/attachment from bridge
+  .attach callback to probe() to fix circular probe ordering dependency
 
-### Step 1.2: Parse All Commit Message Tags
-- **Signed-off-by**: wangdicheng <wangdicheng@kylinos.cn> (author)
-- **Link**:
-  https://patch.msgid.link/20260403014736.33014-1-wangdich9700@163.com
-  (patch discussion)
-- **Signed-off-by**: Takashi Iwai <tiwai@suse.de> (ALSA subsystem
-  maintainer; this means it was reviewed/applied by the maintainer)
-- No Fixes: tag (expected — that's why we're reviewing)
-- No Cc: stable (expected — that's why we're reviewing)
-- No Reported-by (static analysis / code review finding)
+Record: [drm/bridge] [register/attach] [move DSI registration to probe
+to fix probe ordering deadlock]
 
-### Step 1.3: Analyze the Commit Body Text
-The commit body is concise: "Add missing of_node_put() in the error
-path." This describes a classic OF node reference leak fix. When
-`of_node_get()` acquires a reference but the error path doesn't call
-`of_node_put()`, the node's reference count is leaked.
+### Step 1.2: Tags
+- **Reviewed-by:** Luca Ceresoli (DRM bridge subsystem co-maintainer,
+  also committer)
+- **Signed-off-by:** Marek Vasut (author, well-known Renesas/DRM
+  contributor)
+- **Signed-off-by:** Luca Ceresoli (committer)
+- **Link:** patch.msgid.link reference
+- No Fixes: tag (expected)
+- No Cc: stable (expected)
+- No Reported-by tag
 
-### Step 1.4: Detect Hidden Bug Fixes
-This is an explicit bug fix, not disguised. The subject says "Fix" and
-the body confirms a missing cleanup call.
+Record: Reviewed by subsystem maintainer. Author is a well-known kernel
+developer (Marek Vasut).
 
----
+### Step 1.3: Commit Body
+The commit describes a circular dependency:
+1. R-Car DU's `rcar_du_encoder_init()` calls `of_drm_find_bridge()` to
+   find the DSI host bridge in `bridge_list`
+2. The DSI host bridge is only added to `bridge_list` via
+   `drm_bridge_add()` inside `rcar_mipi_dsi_host_attach()`
+3. `rcar_mipi_dsi_host_attach()` is only triggered by
+   `mipi_dsi_attach()`
+4. `mipi_dsi_attach()` (via `ws_bridge_attach_dsi()`) is only called
+   from `ws_bridge_bridge_attach()`
+5. `ws_bridge_bridge_attach()` only gets called once the pipeline is
+   assembled - but the pipeline can't be assembled (step 1 fails)
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+Failure mode: indefinite -EPROBE_DEFER — the driver never successfully
+probes with R-Car DU.
 
-### Step 2.1: Inventory the Changes
-- **File**: `sound/aoa/codecs/onyx.c`
-- **Lines**: +3, -1 (net +2 lines)
-- **Function**: `onyx_i2c_probe()`
-- **Scope**: Single-file surgical fix to one error path
+Record: Real circular dependency causing permanent probe failure. The
+waveshare bridge cannot work with R-Car DU at all.
 
-### Step 2.2: Understand the Code Flow Change
-The key flow in `onyx_i2c_probe()`:
+### Step 1.4: Hidden Bug Fix Detection
+Despite not using "fix" in the subject, this IS a bug fix. "Register and
+attach... at probe" indicates correcting the timing of a critical
+operation. The body clearly describes a broken code path resulting in a
+permanent, unrecoverable probe failure.
 
-```978:990:sound/aoa/codecs/onyx.c
-        onyx->codec.init = onyx_init_codec;
-        onyx->codec.exit = onyx_exit_codec;
-        onyx->codec.node = of_node_get(node);  // acquires OF node
-reference
+Record: Yes, this is a hidden bug fix. Moving DSI registration to probe
+fixes a real circular dependency.
 
-        if (aoa_codec_register(&onyx->codec)) {
-                goto fail;  // BEFORE: leaks OF node reference
-        }
-        ...
- fail:
-        kfree(onyx);  // frees memory but doesn't release OF node ref
-        return -ENODEV;
-```
+## PHASE 2: DIFF ANALYSIS
 
-**After the fix**: `goto fail` becomes `goto fail_put`, which first
-calls `of_node_put(onyx->codec.node)` then falls through to `fail`.
+### Step 2.1: Inventory
+- **Files**: 1 file changed: `drivers/gpu/drm/bridge/waveshare-dsi.c`
+- **Lines**: +1, -6 (net -5 lines)
+- **Functions modified**: `ws_bridge_bridge_attach()` (removed call),
+  `ws_bridge_probe()` (added call)
+- **Scope**: Single-file surgical fix
 
-### Step 2.3: Identify the Bug Mechanism
-Category: **Reference counting fix / resource leak**. `of_node_get()`
-increments the device tree node refcount. If `aoa_codec_register()`
-fails, the refcount is never decremented, leaking the OF node.
+Record: Extremely small change — moves 1 function call from one location
+to another.
 
-### Step 2.4: Assess the Fix Quality
-- **Obviously correct**: Yes — `of_node_get()` at line 980 must be
-  balanced by `of_node_put()` on error. The remove path at line 997
-  already correctly calls `of_node_put()`.
-- **Minimal/surgical**: Yes — only 3 lines added, 1 changed.
-- **Regression risk**: Essentially zero. The new label only executes on
-  error paths and merely balances a reference count.
+### Step 2.2: Code Flow Change
+**Hunk 1** (`ws_bridge_bridge_attach`): Removes the call to
+`ws_bridge_attach_dsi(ws)` and its error check. The function now only
+calls `drm_bridge_attach()`.
 
----
+**Hunk 2** (`ws_bridge_probe`): Changes `return 0` to `return
+ws_bridge_attach_dsi(ws)`. DSI registration now happens at probe time.
+
+Record: Before: DSI registration in .attach callback (lazy). After: DSI
+registration in .probe (eager). This breaks the circular dependency.
+
+### Step 2.3: Bug Mechanism
+This is a **probe ordering / circular dependency** fix. The bug category
+is "logic/correctness fix" — the code called a function at the wrong
+lifecycle point, creating a deadlock in the probe ordering chain.
+
+Record: Circular dependency between R-Car DU encoder init and waveshare
+bridge DSI registration. Permanent EPROBE_DEFER.
+
+### Step 2.4: Fix Quality
+- Obviously correct: follows the well-established pattern from
+  `6ef7ee48765f` (sn65dsi83 bridge)
+- Minimal: net -5 lines
+- Regression risk: Very low. If the DSI host isn't ready at probe time,
+  `ws_bridge_attach_dsi()` returns `-EPROBE_DEFER` and the driver will
+  be re-probed later. All resources use `devm_*` management.
+
+Record: High quality fix, minimal regression risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: Blame the Changed Lines
-The buggy code was introduced by commit `f3d9478b2ce468` ("[ALSA] snd-
-aoa: add snd-aoa") by Johannes Berg, dated **2006-06-21**. This is the
-original addition of the entire AOA subsystem. The bug has been present
-for ~20 years, meaning it exists in **every supported stable tree**.
+### Step 3.1: Blame
+All code in `waveshare-dsi.c` was introduced by `dbdea37add132` (Joseph
+Guo, Aug 6, 2025). The buggy pattern (DSI registration in .attach
+instead of .probe) has existed since the driver was first added.
 
-### Step 3.2: Follow the Fixes Tag
-No Fixes: tag present, but the implicit fix target is `f3d9478b2ce468`
-(2006). The same commit was referenced by the related fix
-`222bce5eb88d1` ("ALSA: snd-aoa: add of_node_put() in error path") which
-fixed a *similar* OF node leak in `sound/aoa/core/gpio-feature.c` but
-did NOT touch `onyx.c`.
+Record: Bug present since driver inception (v6.18 cycle, Aug 2025).
+Present in 7.0.
 
-### Step 3.3: Related Changes
-- `222bce5eb88d1` — Fixed same bug class in `gpio-feature.c` (2018),
-  never touched onyx.c
-- The sibling codec `tas.c` has the **exact same bug** at lines 864-875
-  (acquires `of_node_get(node)` but `goto fail` doesn't release it)
+### Step 3.2: No Fixes: tag — expected.
 
-### Step 3.4: Author's Other Commits
-wangdicheng appears to be contributing fixes across multiple subsystems
-(KylinOS developer). Takashi Iwai, who applied the patch, is the ALSA
-subsystem maintainer — adding significant confidence.
+### Step 3.3: File History
+Only 2 commits exist in 7.0 for this file:
+1. `dbdea37add132` — driver addition
+2. `3e6339a19cfc9` — devm_drm_bridge_alloc bailout fix
 
-### Step 3.5: Dependent/Prerequisite Commits
-None. The fix is fully standalone. The code structure (`fail` label,
-`kfree(onyx)`) has been unchanged since 2006.
+In mainline, additional commits follow but are NOT in 7.0:
+- `b8eb97ead862d` — this commit (not in 7.0)
+- `fca11428425e9` — DSI lanes support (not in 7.0)
+- `a469749640fbc` — signedness bug fix (not in 7.0)
 
----
+Record: Standalone fix. No prerequisite commits needed. The lanes and
+signedness commits are independent.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+### Step 3.4: Author
+Marek Vasut is a very well-known kernel contributor, particularly for
+Renesas/R-Car and DRM bridge subsystems.
 
-### Step 4.1-4.5: Patch Discussion
-Lore.kernel.org is behind a proof-of-work challenge, and b4 dig couldn't
-match this commit by patch-id. However, the patch was applied by ALSA
-maintainer Takashi Iwai directly, which confirms it passed maintainer
-review. The Link tag provides the message-id for the submission.
+Record: Author is a trusted, experienced kernel contributor.
 
----
+### Step 3.5: Dependencies
+The patch applies cleanly to 7.0 HEAD (verified via `git apply
+--check`). No dependencies on other patches.
+
+Record: Clean apply, no dependencies.
+
+## PHASE 4: MAILING LIST RESEARCH
+
+### Step 4.1: Patch Discussion
+- **b4 dig** found the original submission: v1 on Jan 12, 2026; v2
+  (applied version) on Feb 6, 2026
+- v1 was identical in diff but had a shorter commit message
+- Luca Ceresoli (subsystem maintainer) reviewed v1 and asked for a
+  better description of what goes wrong
+- v2 added the detailed explanation of the R-Car DU circular dependency
+- The v1 message referenced `6ef7ee48765f` ("drm/bridge: sn65dsi83:
+  Register and attach our DSI device at probe") as the precedent
+
+Record: Patch went through v1→v2 review. Applied version is v2 with
+improved description. Reviewed-by from subsystem maintainer.
+
+### Step 4.2: Recipients
+Major DRM bridge maintainers were CC'd: Andrzej Hajda, Laurent Pinchart,
+Neil Armstrong, Maxime Ripard, Simona Vetter, Thomas Zimmermann, plus
+dri-devel and linux-renesas-soc lists.
+
+Record: Properly reviewed by appropriate people.
+
+### Step 4.3: Bug Report
+No external bug report — author discovered the issue while working with
+R-Car DU hardware.
+
+### Step 4.4-4.5: No related series or stable discussion found.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-- `onyx_i2c_probe()` — the I2C driver probe function, called when the
-  device is matched
+### Step 5.1-5.2: Functions Modified
+- `ws_bridge_bridge_attach()`: Called by DRM framework when attaching
+  bridge to encoder pipeline
+- `ws_bridge_probe()`: Called by I2C subsystem on device match
 
-### Step 5.2: Callers
-`onyx_i2c_probe()` is the `.probe` callback in `onyx_driver` (i2c_driver
-struct at line 1012). It is called by the I2C core during device
-enumeration/binding. This is a standard device probe path.
+### Step 5.3-5.4: Call Chain for the Bug
+Verified the circular dependency path:
+1. `rcar_du_encoder_init()` → `of_drm_find_bridge()` → searches
+   `bridge_list` → NOT FOUND → returns `-EPROBE_DEFER` (confirmed in
+   `rcar_du_encoder.c` line 75-77)
+2. R-Car DSI bridge only enters `bridge_list` via `drm_bridge_add()` at
+   line 943 of `rcar_mipi_dsi.c`, which is inside
+   `rcar_mipi_dsi_host_attach()`, which requires `mipi_dsi_attach()` to
+   be called first
+3. Without moving `ws_bridge_attach_dsi()` to probe, `mipi_dsi_attach()`
+   never gets called at the right time
 
-### Step 5.3-5.4: Reachability
-The probe function is called whenever the kernel attempts to bind the
-onyx I2C codec to its driver. On Apple Mac hardware with this audio
-codec, this happens during boot. If `aoa_codec_register()` fails (which
-can happen — e.g. if the fabric isn't registered yet), this leak
-triggers.
+Record: Circular dependency fully verified through code inspection.
 
 ### Step 5.5: Similar Patterns
-As verified, `sound/aoa/codecs/tas.c` has the **identical bug** (lines
-864-875): `of_node_get(node)` followed by `goto fail` that doesn't call
-`of_node_put()`.
+The exact same fix was applied to `sn65dsi83` bridge in commit
+`6ef7ee48765f` (Oct 2021). This is a well-known pattern.
 
----
+## PHASE 6: STABLE TREE ANALYSIS
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+### Step 6.1: Code Exists in 7.0
+The waveshare-dsi driver exists in 7.0 (added in `dbdea37add132`, which
+is in 7.0). The buggy code is present.
 
-### Step 6.1: Buggy Code Existence in Stable Trees
-The buggy code exists in **all** stable trees. It was introduced in 2006
-(`f3d9478b2ce468`) and has never been fixed.
+Record: Bug exists in 7.0 stable tree.
 
 ### Step 6.2: Backport Complications
-The file has had minor changes (guard() conversions, alloc_obj macros)
-but the probe function structure around the error path is essentially
-unchanged since 2006. The patch should apply **cleanly** to all stable
-trees, possibly with trivial context adjustments (e.g. `kzalloc_obj` vs
-`kzalloc`).
+Patch applies cleanly — verified. The file in 7.0 is at the exact state
+the patch expects.
 
-### Step 6.3: Related Fixes Already in Stable
-No. The related `222bce5eb88d1` fix was for `gpio-feature.c`, not
-`onyx.c`.
+Record: Clean apply confirmed.
 
----
+### Step 6.3: No related fixes already in 7.0.
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 ### Step 7.1: Subsystem Criticality
-- **Subsystem**: ALSA / AOA (Apple Onboard Audio) — driver-specific
-- **Criticality**: PERIPHERAL — affects Apple PowerPC/Mac hardware with
-  onyx codecs
-- **Maintainer review**: Applied by Takashi Iwai (ALSA maintainer)
-  directly
+DRM bridge driver — PERIPHERAL. Affects only users of waveshare DSI
+panels on R-Car DU hardware.
 
-### Step 7.2: Subsystem Activity
-Low activity (last substantive change was treewide refactoring). This is
-a mature, stable driver.
+Record: PERIPHERAL subsystem, specific hardware combination.
 
----
+### Step 7.2: Activity
+The waveshare-dsi driver is relatively new (Aug 2025) with active
+development.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who Is Affected
-Users of Apple Mac hardware with the pcm3052 (onyx) audio codec. This is
-primarily older PowerPC-based Macs.
+### Step 8.1: Affected Users
+Users of waveshare DSI2DPI panels connected to R-Car DU display
+controllers. This is a specific embedded/industrial use case.
+
+Record: Driver-specific, R-Car platform-specific.
 
 ### Step 8.2: Trigger Conditions
-The leak triggers when `aoa_codec_register()` fails during probe. This
-can happen if the AOA fabric isn't registered, or if
-`attach_codec_to_fabric()` returns an error. While not extremely common,
-repeated probe failures (e.g. during deferred probing or error
-injection) would accumulate leaked OF nodes.
+Every boot on affected hardware. The bug is deterministic — it always
+triggers. The system will log endless `-EPROBE_DEFER` messages and the
+display never works.
 
-### Step 8.3: Failure Mode Severity
-- **Failure mode**: OF node reference count leak (resource leak)
-- **Severity**: LOW-MEDIUM — repeated leaks consume memory, and the
-  leaked OF node can never be freed, but this is a one-time probe path,
-  not a hot path
+Record: 100% trigger rate on affected hardware. Deterministic.
 
-### Step 8.4: Risk-Benefit Ratio
-- **Benefit**: Fixes a real resource leak that has existed for 20 years.
-  Trivial to understand and verify.
-- **Risk**: Essentially zero — 3 lines added to an error path, one
-  `goto` target changed
-- **Ratio**: Very favorable — minimal risk for a correct bug fix
+### Step 8.3: Failure Severity
+Permanent probe failure — the display hardware never initializes. The
+bridge never works with R-Car DU. This is a complete functionality
+failure.
 
----
+Record: Severity HIGH — complete hardware failure on affected platforms.
+
+### Step 8.4: Risk-Benefit
+- **Benefit**: Makes waveshare bridge actually work on R-Car DU (from
+  non-functional to functional)
+- **Risk**: Very low — 1 file, net -5 lines, uses devm for cleanup,
+  follows established pattern, reviewed by maintainer. Tested on R-Car
+  hardware by the author.
+
+Record: HIGH benefit for affected users, VERY LOW risk.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compiled
+### Step 9.1: Evidence Summary
 
 **FOR backporting:**
-- Fixes a real bug: missing `of_node_put()` causing OF node reference
-  leak
-- Extremely small and surgical fix (3 lines added, 1 changed)
-- Obviously correct — verified by reading the code and comparing with
-  the remove path
-- Applied by ALSA subsystem maintainer (Takashi Iwai)
-- Bug exists in all stable trees (introduced in 2006)
-- Zero regression risk
-- Consistent with similar fixes applied to the same subsystem
-  (222bce5eb88d1)
+- Fixes a real, deterministic bug (circular dependency → permanent
+  EPROBE_DEFER)
+- Extremely small fix: 1 file, net -5 lines
+- Follows a well-established pattern (same fix applied to sn65dsi83 4+
+  years ago)
+- Reviewed by DRM bridge subsystem maintainer (Luca Ceresoli)
+- Author is a trusted senior kernel developer (Marek Vasut)
+- Applies cleanly to 7.0 stable
+- No dependencies on other commits
+- No regression risk (devm-managed resources, EPROBE_DEFER handles
+  ordering)
 
 **AGAINST backporting:**
-- Low-severity bug (resource leak, not crash/security/corruption)
-- Affects niche hardware (Apple PowerPC Macs)
-- Only triggers on probe failure (not common under normal conditions)
+- Affects a narrow user base (waveshare DSI + R-Car DU)
+- No Fixes: tag or Cc: stable (expected — this is why we're reviewing
+  it)
+- Could be seen as "enabling hardware" rather than "fixing a regression"
 
 ### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — trivial fix, applied by
-   maintainer
-2. Fixes a real bug? **YES** — OF node reference leak
-3. Important issue? **MEDIUM** — resource leak, not critical
-4. Small and contained? **YES** — 3 lines, single file, single function
-5. No new features or APIs? **YES** — pure fix
-6. Can apply to stable trees? **YES** — code unchanged since 2006
+1. Obviously correct and tested? **YES** — follows established pattern,
+   reviewed by maintainer, tested by author on R-Car
+2. Fixes a real bug? **YES** — permanent EPROBE_DEFER, display never
+   works
+3. Important issue? **YES** — complete hardware failure (display never
+   initializes)
+4. Small and contained? **YES** — 1 file, net -5 lines
+5. No new features or APIs? **YES** — just moves an existing call
+6. Can apply to stable? **YES** — verified clean apply
 
 ### Step 9.3: Exception Categories
-None applicable, but this is a standard reference counting bug fix — a
-very common category for stable backports.
+Not applicable — this is a straightforward bug fix, not a quirk/device-
+ID/DT case.
 
 ### Step 9.4: Decision
-This is a small, obvious, correct fix for a real reference counting bug.
-While the severity is low (resource leak on error path in niche
-hardware), the fix carries essentially zero regression risk and meets
-all stable kernel criteria.
-
----
+The fix resolves a deterministic probe ordering bug that completely
+prevents the waveshare DSI bridge from working with R-Car DU. While it
+affects a narrow user base, the fix is tiny, obviously correct, follows
+a well-established pattern, and carries essentially zero regression
+risk. It meets all stable kernel criteria.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by author + Takashi Iwai
-  (maintainer), Link tag present
-- [Phase 2] Diff analysis: 3 lines added to error path in
-  `onyx_i2c_probe()`, adds missing `of_node_put()` after `of_node_get()`
-  at line 980
-- [Phase 3] git blame: buggy code introduced in `f3d9478b2ce468`
-  (2006-06-21), present in all stable trees
-- [Phase 3] Related fix `222bce5eb88d1`: same bug class fixed in `gpio-
-  feature.c` but NOT in `onyx.c`
-- [Phase 3] Confirmed `tas.c` has identical unfixed bug at lines 864-875
-- [Phase 4] Lore blocked by anti-scraping; b4 dig failed to match. Patch
-  applied by ALSA maintainer confirms review
-- [Phase 5] `onyx_i2c_probe()` is standard I2C probe callback, called
-  during device binding
-- [Phase 5] `aoa_codec_register()` at `sound/aoa/core/core.c:57`
-  confirmed: can return error from `attach_codec_to_fabric()`
-- [Phase 6] Code structure unchanged since 2006; patch should apply
-  cleanly to all stable trees
-- [Phase 6] No related fix already in stable for this specific file
-- [Phase 8] Failure mode: OF node reference leak, severity LOW-MEDIUM;
-  risk of fix: essentially zero
+- [Phase 1] Parsed tags: Reviewed-by Luca Ceresoli, Signed-off-by Marek
+  Vasut, Link to patch.msgid.link
+- [Phase 2] Diff analysis: -5 lines removed from
+  ws_bridge_bridge_attach(), +1 line in ws_bridge_probe(), moves
+  ws_bridge_attach_dsi() call
+- [Phase 3] git blame: all code introduced in dbdea37add132 (Aug 2025),
+  present in 7.0
+- [Phase 3] git log ancestry-path: only 3e6339a19cfc9
+  (devm_drm_bridge_alloc fix) between driver add and HEAD for this file
+- [Phase 3] git merge-base: confirmed dbdea37add132 is in 7.0 tree
+- [Phase 3] git branch --contains: b8eb97ead862d NOT in HEAD, is in
+  core-next etc.
+- [Phase 4] b4 dig -c b8eb97ead862d: found v2 at https://patch.msgid.lin
+  k/20260206125801.78705-1-marek.vasut+renesas@mailbox.org
+- [Phase 4] b4 dig -a: v1 (Jan 12, 2026) → v2 (Feb 6, 2026), v2 is
+  applied version
+- [Phase 4] b4 dig -w: Proper DRM bridge maintainers were CC'd
+- [Phase 4] b4 dig -m: Read full thread — reviewer asked for better
+  description, v2 added it
+- [Phase 5] Verified circular dependency: rcar_du_encoder.c line 75-77
+  returns -EPROBE_DEFER when bridge not found; rcar_mipi_dsi.c line 943
+  drm_bridge_add() only called from host_attach callback
+- [Phase 5] Confirmed sn65dsi83 precedent: commit 6ef7ee48765f exists
+  and is identical pattern
+- [Phase 6] git apply --check: patch applies cleanly to 7.0 HEAD
+- [Phase 6] fca11428425e9 (lanes) and a469749640fbc (signedness) are
+  independent, not dependencies
+- [Phase 8] Failure mode: permanent EPROBE_DEFER on R-Car DU + waveshare
+  DSI — display never works
 
 **YES**
 
- sound/aoa/codecs/onyx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/waveshare-dsi.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/sound/aoa/codecs/onyx.c b/sound/aoa/codecs/onyx.c
-index 04961c456d2c5..da0eebf5dfbc2 100644
---- a/sound/aoa/codecs/onyx.c
-+++ b/sound/aoa/codecs/onyx.c
-@@ -980,10 +980,12 @@ static int onyx_i2c_probe(struct i2c_client *client)
- 	onyx->codec.node = of_node_get(node);
+diff --git a/drivers/gpu/drm/bridge/waveshare-dsi.c b/drivers/gpu/drm/bridge/waveshare-dsi.c
+index 43f4e7412d722..9254446f54958 100644
+--- a/drivers/gpu/drm/bridge/waveshare-dsi.c
++++ b/drivers/gpu/drm/bridge/waveshare-dsi.c
+@@ -80,11 +80,6 @@ static int ws_bridge_bridge_attach(struct drm_bridge *bridge,
+ 				   enum drm_bridge_attach_flags flags)
+ {
+ 	struct ws_bridge *ws = bridge_to_ws_bridge(bridge);
+-	int ret;
+-
+-	ret = ws_bridge_attach_dsi(ws);
+-	if (ret)
+-		return ret;
  
- 	if (aoa_codec_register(&onyx->codec)) {
--		goto fail;
-+		goto fail_put;
- 	}
- 	printk(KERN_DEBUG PFX "created and attached onyx instance\n");
- 	return 0;
-+ fail_put:
-+	of_node_put(onyx->codec.node);
-  fail:
- 	kfree(onyx);
- 	return -ENODEV;
+ 	return drm_bridge_attach(encoder, ws->next_bridge,
+ 				 &ws->bridge, flags);
+@@ -179,7 +174,7 @@ static int ws_bridge_probe(struct i2c_client *i2c)
+ 	ws->bridge.of_node = dev->of_node;
+ 	devm_drm_bridge_add(dev, &ws->bridge);
+ 
+-	return 0;
++	return ws_bridge_attach_dsi(ws);
+ }
+ 
+ static const struct of_device_id ws_bridge_of_ids[] = {
 -- 
 2.53.0
 
