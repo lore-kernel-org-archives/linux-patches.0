@@ -1,53 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F54547F2EA;
-	Mon, 20 Apr 2026 13:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD73480DD4;
+	Mon, 20 Apr 2026 13:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691891; cv=none; b=BOWDEeT/KEoG+kMMJH89uDf5GAFg6yF0EEyh6TuwcGTAK+i9EuRwIjzHdpPcmyzNaXZgF3/zhDLLE60rzynWiK8wUynK/kxqjKOTiJCVGE4E4VfYiC+3mvx/yFfytWVzQhPZIZMSw80bMWj9sxi78I4PWf0bLjcKDmkE35C0lr8=
+	t=1776691893; cv=none; b=N0bWz8s00lWtetHVahZ93bokxw+p+9OAtAbjPi1f1DrVc2mxmIDmeLkCPmNiZjQxyrDh96IF7G1fOM30EpKpvyMkKIVqwUBkXaKuHDis0iWH8ou5/UoxCGKgiFk4SS4RSWDOb+yEdaQ+oD7kMaY4r9epgeKYk9J/iVnCvSE6uW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691891; c=relaxed/simple;
-	bh=zlcHTpa2ZsJ6GNWjqV8E7J6S2piuEFdQXj/3/loQ2Qw=;
+	s=arc-20240116; t=1776691893; c=relaxed/simple;
+	bh=MYrgMk1MFpaK0NMjUX5JOisREaAuUSWxePYjYG7xn4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKn36vFCN0YvYReFviJCvyQ9SRGBhgpuuVBGIKYL4rAhyCJSywYkAlRmp3XI+3d4ZFrxCeUJywYmMBkGascjyuyQAxPooxjKLr14mNdO4bKS7HPhUZT1bsjBtFLcqi9lkcAzoyuLePJjjbFmFE/9KtgitX8G2AT6fQpyUSiY91E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PmSPj07E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MNJBR5rSxuFlhKxdPIwLHhlBBbIv6GP3m2nuAv2WC7cLiA/56IHbyz/f2UxlyAFj4TTP0gPHa/Rf0WsSyoWdHZBSekdphKKXJQGnwgOFFyVUYB8ir/dDWMzZJhWf5bUqOwhCdiei5/Vm5J65Bl+SgVIlltfa4d6lrz0TGeBF3B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bd7DJEuM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PmSPj07E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E0AC2BCF4;
-	Mon, 20 Apr 2026 13:31:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bd7DJEuM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5882C2BCC4;
+	Mon, 20 Apr 2026 13:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691891;
-	bh=zlcHTpa2ZsJ6GNWjqV8E7J6S2piuEFdQXj/3/loQ2Qw=;
+	s=k20201202; t=1776691893;
+	bh=MYrgMk1MFpaK0NMjUX5JOisREaAuUSWxePYjYG7xn4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PmSPj07ETBnlUQxi/nFRGNdG13hwT5+EEqf0OxDdYJ2tMd0+ZnN/heFUY9AxNpnmB
-	 6wy0LrYOxFF2qwL6xqUpUJpADHlRU2EhSWnf6x5MlpMd5fZO47OAqsmcjcjR6ksdYc
-	 BprpeSDVEllIJDnzQL5w/rals6r1/I4gphemdJsKqY38N/D8bD3p5znEZqT3TXM1Gq
-	 1L334BvRh2htJ3WIfnyRXzyTisjRf+a3uk80qaMhtfpiJ6v72+gVOIIkg3B/mFkENM
-	 Poi9Em4y8gd9xnwtdFRMT2Mx7ORj0gs/soU30WfPKNF934uy2HbGMtq95Doz2BycQ6
-	 cAsAV/OU8LQpg==
+	b=Bd7DJEuMWLmKDGSr9JcCDGDdytj5MMoa7vkRFjm/worY/hHIeGu4lWBES55zh4zSH
+	 lu7mgN8G9wFjxttVBHfgNjj/WGAo2aoT94UG2wegnoFjRZ4fNHxFbxtt0eQfFp0HLO
+	 jVYWk8OHLVAHykBnDkq1iNOfjxARzb4nCZYDcbvYISXOhde/dsyoRPnEVunzLIMG7U
+	 z2SM8NnxowM3N1JCzO+emcSG7lEOcQj1gF0euUM3dZhDs4D1obtUNFbvfs9nyyJpHh
+	 wpXU2wJrlzOCioB0or6TX1sYuaVUwaWuwVCcHIFIJZKRfLjBroUGs27NksrtzN2R+J
+	 c5DeDGxv1Ee9Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Austin Zheng <Austin.Zheng@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
-	Chuanyu Tseng <chuanyu.tseng@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>,
-	austin.zheng@amd.com,
-	jun.lei@amd.com,
-	harry.wentland@amd.com,
-	sunpeng.li@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	sre@kernel.org,
+	linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.19] drm/amd/display: Fix number of opp
-Date: Mon, 20 Apr 2026 09:20:48 -0400
-Message-ID: <20260420132314.1023554-254-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] power: supply: sbs-manager: normalize return value of gpio_get
+Date: Mon, 20 Apr 2026 09:20:49 -0400
+Message-ID: <20260420132314.1023554-255-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -60,303 +52,338 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Austin Zheng <Austin.Zheng@amd.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 2c5f15ee2c760514c5be0f02cf9c9f1ff68b9ac8 ]
+[ Upstream commit 5c2ffc0b215a884dbc961d4737f636067348b8bd ]
 
-[Why/How]
-Patch number of opp based on IP caps
+The GPIO get callback is expected to return 0 or 1 (or a negative error
+code). Ensure that the value returned by sbsm_gpio_get_value() is
+normalized to the [0, 1] range.
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Austin Zheng <Austin.Zheng@amd.com>
-Signed-off-by: Chuanyu Tseng <chuanyu.tseng@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/aZYoL2MnTYU5FuQh@google.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile the full report.
-
----
+Now I have a complete understanding. Let me compile the analysis.
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `drm/amd/display`
-- Action verb: "Fix"
-- Summary: Fix the number of OPP (Output Pixel Processors) patching from
-  IP caps.
+**Step 1.1 - Subject Line Parsing:**
+Record: Subsystem: `power: supply: sbs-manager` | Action verb:
+"normalize" | Summary: Normalize the return value of the GPIO `get`
+callback to the [0, 1] range.
 
-Record: [drm/amd/display] [fix] [Ensures max_num_opp is patched from IP
-capabilities]
+**Step 1.2 - Commit Tags:**
+Record:
+- Signed-off-by: Dmitry Torokhov (author)
+- Reviewed-by: Linus Walleij (GPIO maintainer)
+- Reviewed-by: Bartosz Golaszewski (GPIO maintainer)
+- Link: https://patch.msgid.link/aZYoL2MnTYU5FuQh@google.com
+- Signed-off-by: Sebastian Reichel (power supply maintainer)
+- NO Fixes: tag, NO Cc: stable tag (unlike sibling patches)
 
-**Step 1.2: Tags**
-- Reviewed-by: Dillon Varone (AMD display team member)
-- Signed-off-by: Austin Zheng (author), Chuanyu Tseng (series submitter)
-- Tested-by: Dan Wheeler (AMD's display QA)
-- Signed-off-by: Alex Deucher (AMD display maintainer)
-- No Fixes: tag (expected for autosel candidates)
-- No Cc: stable (expected)
+**Step 1.3 - Commit Body Analysis:**
+Record: Bug description: The GPIO `.get()` callback is contractually
+required to return 0, 1, or a negative error code.
+`sbsm_gpio_get_value()` was returning `ret & BIT(off)`, which yields
+`BIT(off)` = 1, 2, 4, 8 for `off` = 0, 1, 2, 3 respectively. Values of
+2, 4, 8 violate the API contract. The fix applies `!!()` to normalize.
 
-Record: Reviewed, tested, and signed off by the AMD display team. No
-syzbot or external reports.
-
-**Step 1.3: Body Text**
-- "[Why/How] Patch number of opp based on IP caps"
-- Terse message typical of AMD display DML patches. Indicates the OPP
-  count should come from IP capabilities (hardware-specific) rather than
-  remaining at the compile-time default.
-
-Record: Bug is that `max_num_opp` was not being patched from hardware IP
-caps, leaving it at a static default regardless of actual hardware.
-
-**Step 1.4: Hidden Bug Fix Detection**
-This is explicitly labeled "Fix" and adds a missing field assignment
-that was omitted when OPP validation was introduced.
-
-Record: This is a direct bug fix for a missing field patching, not a
-hidden fix.
+**Step 1.4 - Hidden Bug Fix Detection:**
+Record: "Normalize" is a bug-fix verb. This is a real bug fix disguised
+as a "normalization" — the driver's GPIO callback was violating the
+gpio_chip API contract.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- 1 file changed: `dml2_core_dcn4.c`
-- +1 line added
-- Function modified: `patch_ip_params_with_ip_caps()`
-- Scope: Single-file, surgical 1-line fix
+**Step 2.1 - Inventory:**
+Record: Single file `drivers/power/supply/sbs-manager.c`, 1 line changed
+(1+/1-). Function affected: `sbsm_gpio_get_value()`. Scope: surgical.
 
-**Step 2.2: Code Flow Change**
-The single line added:
+**Step 2.2 - Code Flow:**
+Record:
+- Before: `return ret & BIT(off)` returns `BIT(off)` value (1, 2, 4, 8)
+  when the bit is set
+- After: `return !!(ret & BIT(off))` returns 0 or 1 as required by the
+  API
 
-```c
-ip_params->max_num_opp = ip_caps->otg_count;
-```
+**Step 2.3 - Bug Mechanism:**
+Record: Category (g) Logic / correctness fix — API contract violation.
+The `ngpio = SBSM_MAX_BATS = 4`, so `off` takes values 0-3 corresponding
+to 4 smart batteries. For `off=0`, `BIT(0)=1` happens to be valid. For
+`off=1,2,3`, the raw return is 2, 4, 8 — invalid.
 
-BEFORE: `patch_ip_params_with_ip_caps()` copies all IP capability fields
-to IP params EXCEPT `max_num_opp`. The `max_num_opp` remains at the
-compile-time default from `core_dcn4_ip_caps_base` (hardcoded to 4).
-
-AFTER: `max_num_opp` is correctly patched from `ip_caps->otg_count`,
-matching the actual hardware's OTG count.
-
-**Step 2.3: Bug Mechanism**
-This is a **logic/correctness fix** - an omission bug. Commit
-`610cf76e9453b` ("Add opp count validation to dml2.1") added OPP count
-validation checks in `dml2_core_dcn4_calcs.c` that read
-`mode_lib->ip.max_num_opp`, but the function that patches IP params from
-IP caps (`patch_ip_params_with_ip_caps`) was not updated to copy
-`max_num_opp`. The validation uses a stale default value instead of the
-actual hardware capability.
-
-The validation code at lines 8588 checks:
-```c
-if (mode_lib->ms.TotalNumberOfActiveOPP > (unsigned
-int)mode_lib->ip.max_num_opp)
-    mode_lib->ms.support.TotalAvailablePipesSupport = false;
-```
-
-If `max_num_opp` is wrong, display modes may be incorrectly accepted or
-rejected.
-
-**Step 2.4: Fix Quality**
-- Obviously correct: follows the exact same pattern as ALL other fields
-  in the function
-- Minimal/surgical: 1 line
-- Regression risk: effectively zero - it only adds missing
-  initialization
-- No red flags
+**Step 2.4 - Fix Quality:**
+Record: The fix is obviously correct. `!!()` is the idiomatic C
+conversion to 0/1 boolean. No regression risk.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-The `patch_ip_params_with_ip_caps` function was introduced by commit
-`70839da636050` (Aurabindo Pillai, 2024-04-19, "Add new DCN401
-sources"). The function was created without a `max_num_opp` line because
-at that time there was no `max_num_opp` field or OPP validation.
+**Step 3.1 - Blame:**
+Record: The buggy code was present since the driver was introduced in
+commit `dbc4deda03fe6` ("power: Adds support for Smart Battery System
+Manager") in v4.15 (2017). The bug was latent for years.
 
-**Step 3.2: Fixes Target**
-The commit that introduced the bug is `610cf76e9453b` ("Add opp count
-validation to dml2.1", by Dmytro Laktyushkin, v6.19). That commit:
-- Added `max_num_opp = 4` to `core_dcn4_ip_caps_base` static struct
-- Added `max_num_opp` field to `dml2_core_ip_params`
-- Added OPP validation in `dml2_core_dcn4_calcs.c`
-- BUT did NOT add `max_num_opp` patching to
-  `patch_ip_params_with_ip_caps()`
+**Step 3.2 - Follow Fixes: (None in this commit, but related commit):**
+Record: The gpiolib wrapper that makes the invalid return value actually
+matter is commit `86ef402d805d` ("gpiolib: sanitize the return value of
+gpio_chip::get()") in v6.15-rc1. This wrapper rejects any value > 1 by
+returning -EBADE.
 
-Record: The bug was introduced in v6.19. It exists in v6.19 and v7.0.
+**Step 3.3 - File History:**
+Record: Recent changes to sbs-manager.c are minor (probe conversions,
+fwnode updates). No prerequisites for this fix.
 
-**Step 3.3: File History**
-Only one commit in the 7.0 tree modified this specific file (the rename
-from dml2/ to dml2_0/). The original code has had many "reintegration"
-commits prior to v7.0.
+**Step 3.4 - Author Context:**
+Record: Dmitry Torokhov submitted 3 sibling commits across multiple
+subsystems for the SAME class of bug:
+- `e2fa075d5ce19 iio: adc: ti-ads7950: normalize return value of
+  gpio_get` (with Fixes: + Cc: stable)
+- `2bb995e6155cb net: phy: qcom: qca807x: normalize return value of
+  gpio_get` (with Fixes:)
+- `5c2ffc0b215a8 power: supply: sbs-manager: normalize return value of
+  gpio_get` (this commit, no Fixes/stable)
 
-**Step 3.4: Author**
-Austin Zheng is a regular AMD display team contributor. Other commits
-include DML-related fixes and data type corrections.
-
-**Step 3.5: Dependencies**
-The fix depends on commit `610cf76e9453b` ("Add opp count validation")
-being present. Verified:
-- v6.19: Has this prerequisite (confirmed via `git show`)
-- v6.18 and older: Do NOT have this prerequisite
-- v6.12 LTS: Does NOT have this prerequisite
+**Step 3.5 - Dependencies:**
+Record: No dependencies. Standalone fix.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-Found the original submission: "[PATCH v2 0/9] DC Patches March 10,
-2026" on amd-gfx mailing list. The fix was patch 7 of 9 in a v2 series
-submitted by Chuanyu Tseng. The series was merged via the normal AMD
-display patch flow. It was NOT part of drm-fixes-7.0 (the -fixes pull
-only had different urgent fixes).
+**Step 4.1 - Original Discussion:**
+Record: `b4 dig -c 5c2ffc0b215a8` found the thread at
+https://lore.kernel.org/all/aZYoL2MnTYU5FuQh@google.com/. Single patch
+(v1), two positive Reviewed-by responses, applied by the power supply
+maintainer.
 
-No NAKs or objections found. No explicit stable nomination.
+**Step 4.2 - Reviewers:**
+Record: Linus Walleij (GPIO maintainer), Bartosz Golaszewski (GPIO
+maintainer) both Reviewed-by. Sebastian Reichel (power supply
+maintainer) applied. Appropriate maintainer review coverage.
+
+**Step 4.3 - Bug Report:**
+Record: No external bug report. The fix was found as part of Dmitry
+Torokhov auditing drivers for return value compliance after the sanitize
+wrapper exposed the issue.
+
+**Step 4.4 - Related Patches:**
+Record: Part of a broader effort by Dmitry to fix drivers that violated
+the new API contract. See sibling patches above.
+
+**Step 4.5 - Stable Discussion:**
+Record: No explicit stable discussion for this specific commit. However,
+the CLOSELY related commit `ec2cceadfae72` ("gpiolib: normalize the
+return value of gc->get() on behalf of buggy drivers") explicitly has
+`Cc: stable@vger.kernel.org` and `Fixes: 86ef402d805d`, acknowledging
+that the sanitize change broke multiple drivers. That commit references
+`aZSkqGTqMp_57qC7@google.com` as a closes link and was co-reported by
+Dmitry.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Key function:** `patch_ip_params_with_ip_caps()` - called from
-`core_dcn4_initialize()` during DML2 core initialization.
+**Step 5.1 - Key Functions:**
+Record: `sbsm_gpio_get_value()` — assigned to `gc->get` at
+`drivers/power/supply/sbs-manager.c:287`.
 
-**Impact path:** `dml21_populate_dml_init_params()` ->
-`core_dcn4_initialize()` -> `patch_ip_params_with_ip_caps()`. This runs
-during display mode validation for every display configuration change on
-DCN4+ hardware.
+**Step 5.2 - Callers:**
+Record: Called via the gpiolib layer `gpiochip_get()` which is called
+from `gpio_chip_get_value()` and `gpio_chip_get_multiple()`. Any
+consumer that calls `gpiod_get_value()` on these GPIO lines routes
+through this function.
 
-**Consumer of `max_num_opp`:** Used in `CalculateODMMode()` and the main
-mode support validation loop in `dml2_core_dcn4_calcs.c` (lines 8421,
-8442, 8588) to validate that active OPP count doesn't exceed hardware
-capability.
+**Step 5.3 - Callees:**
+Record: Calls `sbsm_read_word()` which performs an SMBus read on the
+hardware.
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 5.4 - Reachability:**
+Record: Reachable from userspace via GPIO character device ioctls
+(GPIO_V2_LINE_VALUES_IOCTL), sysfs GPIO interface, or any in-kernel
+consumer. With the SBS manager hardware present and a userspace tool
+like `gpioget`, the buggy path is trivially reached.
 
-**Bug existence by tree:**
-- v7.0: BUG EXISTS (verified - `max_num_opp` in struct at line 31,
-  validation in calcs, but missing patching)
-- v6.19: BUG EXISTS (verified - same state as 7.0, file at dml2_0 path)
-- v6.18: Bug does NOT exist (no `max_num_opp` field or validation)
-- v6.12 LTS: Bug does NOT exist
-- v6.6 LTS, v6.1 LTS: Bug does NOT exist
+**Step 5.5 - Similar Patterns:**
+Record: Sibling fixes `e2fa075d5ce19` (ti-ads7950), `2bb995e6155cb`
+(qca807x). The qca807x fix is ALREADY in stable 6.17.y
+(`cb8f0a3857386`), 6.18.y, 6.19.y — establishing precedent that this
+class of fix is appropriate for stable.
 
-**Backport complexity:** For 7.0.y: should apply cleanly. For 6.19.y:
-path may need adjustment (file is at `dml2_0/` in v6.19 already, so it
-may apply cleanly).
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+
+**Step 6.1 - Buggy Code in Stable:**
+Record: `sbsm_gpio_get_value()` with the buggy `ret & BIT(off)` exists
+identically in 6.17.y, 6.18.y, 6.19.y stable trees. For older trees
+(5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y), the gpiolib wrapper
+`86ef402d805d` is NOT present, so the bug is latent (API contract
+violation without functional consequence).
+
+**Step 6.2 - Backport Complications:**
+Record: The patch applies cleanly to 6.17.y, 6.18.y, 6.19.y (verified
+code is identical). For older stable trees, the patch would also apply
+but the functional benefit is minimal until the wrapper lands there.
+
+**Step 6.3 - Related Fixes in Stable:**
+Record: Qca807x normalize fix IS already in 6.17.y (`cb8f0a3857386`),
+6.18.y, 6.19.y (`554e8f2fbce86`). The alternative "normalize-on-behalf"
+wrapper fix `ec2cceadfae72` has `Cc: stable` but has not yet landed in
+these stable trees (verified: all three still have the EBADE-returning
+version).
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-- Subsystem: drm/amd/display - DML2 (Display Mode Library) for DCN4+
-- Criticality: IMPORTANT - affects AMD GPU display output for newer
-  hardware
-- The DML2.1 code is actively developed with frequent "reintegration"
-  commits
+**Step 7.1 - Subsystem:**
+Record: `drivers/power/supply/` — power supply (battery) subsystem.
+PERIPHERAL criticality (specific hardware), but affects laptops/embedded
+systems with SBS-compliant multi-battery setups.
+
+**Step 7.2 - Activity:**
+Record: sbs-manager is a mature, low-activity driver (since 2017). Used
+in real products with LTC1760 and similar chips.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Who is affected:** Users of AMD DCN4+ GPUs where the actual OPP/OTG
-count differs from the compile-time default of 4 (e.g., harvested
-silicon, different SKUs).
+**Step 8.1 - Affected Users:**
+Record: Users of SBS-compliant smart battery manager chips (LTC1760 and
+others). Target: laptops, industrial embedded devices with multiple hot-
+swappable batteries. Specifically affected on kernels 6.15+ that have
+the gpiolib sanitize wrapper.
 
-**Trigger conditions:** Any display mode validation on affected
-hardware. This runs during every display configuration change (mode set,
-multi-monitor setup, etc.).
+**Step 8.2 - Trigger:**
+Record: Triggered automatically whenever userspace (or any in-kernel
+consumer) reads the state of battery 2, 3, or 4 via the exposed GPIO
+lines on an SBS manager. For battery 1 (`off=0`), `BIT(0)=1` escapes the
+check. Trigger is deterministic — not a race.
 
-**Failure mode:** Incorrect DML mode validation:
-- If real OPP count < 4: modes could be accepted that the hardware can't
-  support (display corruption or failure)
-- If real OPP count > 4: modes could be incorrectly rejected (user can't
-  use supported display configurations)
-- Severity: MEDIUM-HIGH for affected hardware
+**Step 8.3 - Failure Mode Severity:**
+Record: On stable trees 6.17.y/6.18.y/6.19.y that have the EBADE
+wrapper, reading batteries 2-4 returns `-EBADE` instead of the actual
+state. Userspace tools that read these GPIOs see errors. This is a
+functional regression: MEDIUM severity (broken hardware functionality,
+but not a crash/corruption).
 
-**Risk-Benefit:**
-- Benefit: Correct mode validation on all DCN4 hardware variants
-- Risk: VERY LOW - 1 line, follows established pattern, no behavioral
-  change for hardware where count == 4
+**Step 8.4 - Risk-Benefit:**
+Record:
+- BENEFIT: Restores correct GPIO reporting for SBS multi-battery systems
+  on 6.17+.
+- RISK: Extremely low — single-line `!!` normalization, impossible to
+  regress correctness. Returns 0 or 1 as API requires.
+- Ratio: Very favorable — trivial risk, real user benefit.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- Fixes a real bug (missing field initialization) with concrete
-  consequences
-- Trivially correct (1 line, follows exact pattern of all other fields)
-- Reviewed and tested by AMD display team
-- Affects display functionality on AMD DCN4 hardware
-- Zero regression risk for hardware where OPP count == 4 (most current
-  hardware)
+**Step 9.1 - Evidence Compilation:**
 
-**Evidence AGAINST backporting:**
-- Only affects hardware with non-default OPP counts (subset of DCN4
-  ASICs)
-- Commit message is terse with minimal detail
-- Not submitted via -fixes flow (went through normal DC patches)
-- Only applicable to trees containing v6.19+ (610cf76e9453b)
+FOR backporting:
+- Fixes a real functional regression on stable 6.17.y/6.18.y/6.19.y
+  (batteries 2-4 return -EBADE)
+- One-line, obviously correct `!!` normalization
+- Reviewed by both GPIO maintainers (Linus Walleij, Bartosz Golaszewski)
+- Applied by power supply maintainer (Sebastian Reichel)
+- Precedent: sibling commit for qca807x (same fix pattern) is already in
+  6.17.y, 6.18.y, 6.19.y stable
+- Applies cleanly (identical code in stable trees)
 
-**Stable rules checklist:**
-1. Obviously correct? YES - exact pattern match with all other fields
-2. Fixes real bug? YES - incorrect DML mode validation
-3. Important issue? YES for affected hardware (display functionality)
-4. Small and contained? YES - 1 line
-5. No new features? YES
-6. Applies to stable? YES for 7.0.y and 6.19.y
+AGAINST backporting:
+- Original submission had no `Fixes:` tag or `Cc: stable` (unlike
+  sibling ti-ads7950 patch)
+- On older stable trees (<6.15) without the gpiolib wrapper, the bug is
+  purely theoretical
 
----
+UNRESOLVED: Whether `ec2cceadfae72` will be backported first and make
+this technically unnecessary — but even so, this patch properly fixes
+the driver rather than relying on a workaround.
+
+**Step 9.2 - Stable Rules Checklist:**
+1. Obviously correct and tested: YES — trivial `!!`, reviewed by
+   maintainers
+2. Real bug: YES — -EBADE returned for real GPIO reads on 6.17+
+3. Important issue: YES (MEDIUM) — broken functionality on SBS multi-
+   battery systems
+4. Small and contained: YES — 1 line
+5. No new features: YES
+6. Applies to stable: YES
+
+**Step 9.3 - Exception Categories:**
+Not a device-ID/quirk addition, but it's a small, surgical correctness
+fix. Meets core stable criteria on its own merits.
+
+**Step 9.4 - Decision:**
+The patch fixes a real regression on stable kernels 6.17.y, 6.18.y, and
+6.19.y (which contain the gpiolib sanitize wrapper from v6.15). It's a
+one-line, obviously correct normalization endorsed by two GPIO subsystem
+maintainers and the power supply maintainer. The sibling qca807x fix has
+already been accepted into these same stable trees, establishing clear
+precedent. For older stable trees lacking the wrapper, the fix is still
+beneficial as a correctness improvement with zero risk.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Dillon Varone, Tested-by Dan
-  Wheeler, author Austin Zheng, maintainer Alex Deucher
-- [Phase 2] Diff analysis: 1 line added to
-  `patch_ip_params_with_ip_caps()`, adds missing `max_num_opp` field
-  patching
-- [Phase 3] git blame: `patch_ip_params_with_ip_caps()` introduced in
-  70839da636050 (v6.12 era) without `max_num_opp`
-- [Phase 3] git show 610cf76e9453b: confirmed this commit added opp
-  validation but missed updating `patch_ip_params_with_ip_caps()` - this
-  is the root cause
-- [Phase 3] git show v6.19 file: confirmed `max_num_opp = 4` in struct
-  AND validation in calcs, BUT missing patching - bug exists in v6.19
-- [Phase 3] git show v6.18 file: confirmed no `max_num_opp` at all - bug
-  does NOT exist pre-6.19
-- [Phase 3] git show v6.12 file: confirmed no `max_num_opp` at all
-- [Phase 4] Found original submission: "[PATCH v2 0/9] DC Patches March
-  10, 2026" on amd-gfx mailing list
-- [Phase 4] No NAKs or concerns found in mailing list
-- [Phase 5] `max_num_opp` is consumed at lines 8421, 8442, 8588 of
-  dml2_core_dcn4_calcs.c for display mode validation
-- [Phase 5] `patch_ip_params_with_ip_caps()` called from
-  `core_dcn4_initialize()`, which runs during every DML initialization
-- [Phase 6] Bug exists in v6.19 and v7.0 only - confirmed by checking
-  file contents at each tagged version
-- [Phase 8] Failure mode: incorrect mode validation leading to display
-  issues, severity MEDIUM-HIGH for affected hardware
-- UNVERIFIED: Exact set of AMD ASICs where OPP count differs from
-  default 4 could not be determined (dcn42 bounding box header not found
-  in tree)
-
-The fix is a trivially correct 1-line addition that patches a missing
-field from the hardware IP capabilities, fixing incorrect DML mode
-validation on AMD DCN4 hardware where the OPP count may differ from the
-compile-time default.
+- [Phase 1] Parsed tags: confirmed author, two Reviewed-by entries from
+  GPIO maintainers, applied by power supply maintainer; no Fixes/Cc-
+  stable tags (unlike sibling ti-ads7950 patch)
+- [Phase 2] Diff analysis: verified in original commit that exactly one
+  line changes `ret & BIT(off)` to `!!(ret & BIT(off))`
+- [Phase 2] Verified `ngpio = SBSM_MAX_BATS = 4` via Read of
+  `drivers/power/supply/sbs-manager.c`, confirming off = 0..3 and
+  BIT(off) = 1, 2, 4, 8
+- [Phase 3] `git log` showed driver introduced in `dbc4deda03fe6`
+  (v4.15, 2017), buggy code present since inception
+- [Phase 3] `git log --grep="normalize return value"` found 2 sibling
+  Dmitry Torokhov commits (ti-ads7950 with `Cc: Stable`, qca807x with
+  `Fixes: 86ef402d805d`)
+- [Phase 3] `git show 86ef402d805d` confirmed gpiolib wrapper returns
+  `-EBADE` for ret > 1
+- [Phase 3] `git describe --contains 86ef402d805d` → `v6.15-rc1` —
+  confirms wrapper is in v6.15+
+- [Phase 4] `b4 dig -c 5c2ffc0b215a8` located thread at
+  lore.kernel.org/all/aZYoL2MnTYU5FuQh@google.com/
+- [Phase 4] Read `/tmp/sbsm_thread.mbox`: confirmed single-version
+  submission, positive reviews, quick application
+- [Phase 4] Identified related commit `ec2cceadfae72` with `Cc:
+  stable@vger.kernel.org` acknowledging the wrapper broke drivers
+- [Phase 5] Confirmed `sbsm_gpio_get_value` is assigned to `gc->get` and
+  reachable from userspace GPIO APIs
+- [Phase 6] Verified with `git show stable-
+  push/linux-6.17.y:drivers/gpio/gpiolib.c` that 6.17.y has the EBADE-
+  returning wrapper
+- [Phase 6] Verified same for 6.18.y and 6.19.y
+- [Phase 6] Verified 5.10/5.15/6.1/6.6/6.12 do NOT have the wrapper (bug
+  is latent there)
+- [Phase 6] Verified via `git show stable-
+  push/linux-6.17.y:drivers/power/supply/sbs-manager.c` that buggy `ret
+  & BIT(off)` is present
+- [Phase 6] Verified qca807x sibling fix is already in
+  6.17.y/6.18.y/6.19.y (`cb8f0a3857386`, `554e8f2fbce86`)
+- [Phase 6] Verified `ec2cceadfae72` alternative fix is NOT yet in those
+  stable trees
+- [Phase 8] Failure mode: on 6.17/6.18/6.19 the wrapper converts
+  BIT(1/2/3) to -EBADE — verified by reading the wrapper implementation
 
 **YES**
 
- .../amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4.c   | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/power/supply/sbs-manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4.c b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4.c
-index eba948e187c11..93d479083acde 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4.c
-@@ -107,6 +107,7 @@ static void patch_ip_params_with_ip_caps(struct dml2_core_ip_params *ip_params,
- {
- 	ip_params->max_num_dpp = ip_caps->pipe_count;
- 	ip_params->max_num_otg = ip_caps->otg_count;
-+	ip_params->max_num_opp = ip_caps->otg_count;
- 	ip_params->num_dsc = ip_caps->num_dsc;
- 	ip_params->max_num_dp2p0_streams = ip_caps->max_num_dp2p0_streams;
- 	ip_params->max_num_dp2p0_outputs = ip_caps->max_num_dp2p0_outputs;
+diff --git a/drivers/power/supply/sbs-manager.c b/drivers/power/supply/sbs-manager.c
+index 6fe526222f7f4..343ad4ab4082c 100644
+--- a/drivers/power/supply/sbs-manager.c
++++ b/drivers/power/supply/sbs-manager.c
+@@ -199,7 +199,7 @@ static int sbsm_gpio_get_value(struct gpio_chip *gc, unsigned int off)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	return ret & BIT(off);
++	return !!(ret & BIT(off));
+ }
+ 
+ /*
 -- 
 2.53.0
 
