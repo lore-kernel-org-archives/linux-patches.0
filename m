@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71473451B0;
-	Mon, 20 Apr 2026 16:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BC8344021;
+	Mon, 20 Apr 2026 16:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701463; cv=none; b=eQ4wqa//CystkkANParhAiYfVweRjpcum+PjbotjFhKGutlLurMMqCNtX1Ept9NabZl0eIj/8/sR7/NjWxrp33b2FKXeLr7VuzEgAFU03++ZIj7yFjELbDnZZIHNNxLI7ECMghyZqmammaAI1gIAzc/6Gr670EWxzKzj6bzz5ec=
+	t=1776701465; cv=none; b=tM6ReI/GICZWkD3oYsjss4AFtTTg160IC3QyfREeF00Bu02Tx0bgb+L/w87TVeetqKwfeG23njCsCDm7U4yvW5o1iqfJ6w/NbYcr+VTGoweLJW++ADgqj44ZxlyK8cecQcEVaqebyxfCrIPGzDbxV4ESanGLofnO+bjoJ1U38vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701463; c=relaxed/simple;
-	bh=vdOOiOzfkF5jxZzsoXIghTI2Qr8Otbi3QTIVeeCzKko=;
+	s=arc-20240116; t=1776701465; c=relaxed/simple;
+	bh=OwEjorOTkfs/la0cu2sQQRm7zCVUZ7YuDMHxjVzSrgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UraL/dHDhbTEH9A/UOQCjNNa5iITCJk89fr63RY9W+DQmCXqram2d1YBdjPIsK4A5KnyAu98gYmWAReiYob1cwBGl7CoqQHhHlh+F21j4lfJ5XcPtTALtLrwH/nsYc4RysBpvr3JVL1mh5cWI9H5FhfR8klKQECae/KTL1WHr4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSkzXwS1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHFL1fBlWfu6xnCejkh3T0LVZJvIZ2Efs6s9rR6YIARynuaRuUGBw1qXwMJnTQEIVEIhDpb4iiMwE+MpjCRaDmkokwGeLDRKFr0N4xmLt/I8qogAgH6Fgc2T2KBH+dPxncUVowmQPhhJYz9dOCT/HuOWvE7r5UA3fIqvP6VRs6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFihApzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSkzXwS1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D435C19425;
-	Mon, 20 Apr 2026 16:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFihApzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08845C19425;
+	Mon, 20 Apr 2026 16:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701462;
-	bh=vdOOiOzfkF5jxZzsoXIghTI2Qr8Otbi3QTIVeeCzKko=;
+	s=korg; t=1776701465;
+	bh=OwEjorOTkfs/la0cu2sQQRm7zCVUZ7YuDMHxjVzSrgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZSkzXwS1UOwCYCx3wgUVxVeTnLTs3xO7DSn9noyC49NwIGOyxKU4aBM5AIceXxe7l
-	 HLUuE/KuC0c934fYDG1OX1e0JowlQ5z6UpF/K9tEwL3ENQyoi3PORK3oTTrq9DhiJj
-	 xMvOBz4mxEOtrlpC1gpyb7eHI6i03j2NELjhIFZ4=
+	b=wFihApzml/HgzS0MRuO2ZP7crkRvttQJ5glTqb1kaSbRTHEJcnAQwWkGb0IRKQC6Y
+	 Xh2KLI1U2m+dMOIPrtf5kJm8sM79t3IpJBxU/63pHzURhKu2aLV45UgQq8wJSiK2hs
+	 FwspFuzgcIrICDZWEUcorGaNg3Gkp5lThjpnjmLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3b3852c6031d0f30dfaf@syzkaller.appspotmail.com,
-	Mauricio Faria de Oliveira <mfo@igalia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Douya Le <ldy3087146292@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/162] thermal: core: Address thermal zone removal races with resume
-Date: Mon, 20 Apr 2026 17:42:02 +0200
-Message-ID: <20260420153930.295576301@linuxfoundation.org>
+Subject: [PATCH 6.12 081/162] crypto: af_alg - limit RX SG extraction by receive buffer budget
+Date: Mon, 20 Apr 2026 17:41:53 +0200
+Message-ID: <20260420153929.969960609@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -53,182 +56,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Douya Le <ldy3087146292@gmail.com>
 
-[ Upstream commit 45b859b0728267a6199ee5002d62e6c6f3e8c89d ]
+[ Upstream commit 8eceab19eba9dcbfd2a0daec72e1bf48aa100170 ]
 
-Since thermal_zone_pm_complete() and thermal_zone_device_resume()
-re-initialize the poll_queue delayed work for the given thermal zone,
-the cancel_delayed_work_sync() in thermal_zone_device_unregister()
-may miss some already running work items and the thermal zone may
-be freed prematurely [1].
+Make af_alg_get_rsgl() limit each RX scatterlist extraction to the
+remaining receive buffer budget.
 
-There are two failing scenarios that both start with
-running thermal_pm_notify_complete() right before invoking
-thermal_zone_device_unregister() for one of the thermal zones.
+af_alg_get_rsgl() currently uses af_alg_readable() only as a gate
+before extracting data into the RX scatterlist. Limit each extraction
+to the remaining af_alg_rcvbuf(sk) budget so that receive-side
+accounting matches the amount of data attached to the request.
 
-In the first scenario, there is a work item already running for
-the given thermal zone when thermal_pm_notify_complete() calls
-thermal_zone_pm_complete() for that thermal zone and it continues to
-run when thermal_zone_device_unregister() starts.  Since the poll_queue
-delayed work has been re-initialized by thermal_pm_notify_complete(), the
-running work item will be missed by the cancel_delayed_work_sync() in
-thermal_zone_device_unregister() and if it continues to run past the
-freeing of the thermal zone object, a use-after-free will occur.
+If skcipher cannot obtain enough RX space for at least one chunk while
+more data remains to be processed, reject the recvmsg call instead of
+rounding the request length down to zero.
 
-In the second scenario, thermal_zone_device_resume() queued up by
-thermal_pm_notify_complete() runs right after the thermal_zone_exit()
-called by thermal_zone_device_unregister() has returned.  The poll_queue
-delayed work is re-initialized by it before cancel_delayed_work_sync() is
-called by thermal_zone_device_unregister(), so it may continue to run
-after the freeing of the thermal zone object, which also leads to a
-use-after-free.
-
-Address the first failing scenario by ensuring that no thermal work
-items will be running when thermal_pm_notify_complete() is called.
-For this purpose, first move the cancel_delayed_work() call from
-thermal_zone_pm_complete() to thermal_zone_pm_prepare() to prevent
-new work from entering the workqueue going forward.  Next, switch
-over to using a dedicated workqueue for thermal events and update
-the code in thermal_pm_notify() to flush that workqueue after
-thermal_pm_notify_prepare() has returned which will take care of
-all leftover thermal work already on the workqueue (that leftover
-work would do nothing useful anyway because all of the thermal zones
-have been flagged as suspended).
-
-The second failing scenario is addressed by adding a tz->state check
-to thermal_zone_device_resume() to prevent it from re-initializing
-the poll_queue delayed work if the thermal zone is going away.
-
-Note that the above changes will also facilitate relocating the suspend
-and resume of thermal zones closer to the suspend and resume of devices,
-respectively.
-
-Fixes: 5a5efdaffda5 ("thermal: core: Resume thermal zones asynchronously")
-Reported-by: syzbot+3b3852c6031d0f30dfaf@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=3b3852c6031d0f30dfaf
-Reported-by: Mauricio Faria de Oliveira <mfo@igalia.com>
-Closes: https://lore.kernel.org/linux-pm/20260324-thermal-core-uaf-init_delayed_work-v1-1-6611ae76a8a1@igalia.com/ [1]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mauricio Faria de Oliveira <mfo@igalia.com>
-Tested-by: Mauricio Faria de Oliveira <mfo@igalia.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/6267615.lOV4Wx5bFT@rafael.j.wysocki
-[ mfo: backport for 6.12.y:
-  - No guard() or thermal_pm_notify_{prepare,complete}() for the lack of
-    commit d1c8aa2a5c5c ("thermal: core: Manage thermal_list_lock using a mutex guard")
-    - thermal_zone_device_resume() calls mutex_unlock() to return;
-    - thermal_pm_notify() has thermal_pm_notify_prepare() in *_PREPARE;
-  - No WQ_PERCPU flag in alloc_workqueue(), introduced in v6.17. ]
-Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Fixes: e870456d8e7c8d57c059ea479b5aadbb55ff4c3a ("crypto: algif_skcipher - overhaul memory management")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Douya Le <ldy3087146292@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 33 ++++++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
+ crypto/af_alg.c         | 2 ++
+ crypto/algif_skcipher.c | 5 +++++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 4663ca7a587c5..8ce1134e15e56 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -42,6 +42,8 @@ static struct thermal_governor *def_governor;
+diff --git a/crypto/af_alg.c b/crypto/af_alg.c
+index 78e995dddf879..0530dc85e4f87 100644
+--- a/crypto/af_alg.c
++++ b/crypto/af_alg.c
+@@ -1258,6 +1258,8 @@ int af_alg_get_rsgl(struct sock *sk, struct msghdr *msg, int flags,
  
- static bool thermal_pm_suspended;
+ 		seglen = min_t(size_t, (maxsize - len),
+ 			       msg_data_left(msg));
++		/* Never pin more pages than the remaining RX accounting budget. */
++		seglen = min_t(size_t, seglen, af_alg_rcvbuf(sk));
  
-+static struct workqueue_struct *thermal_wq __ro_after_init;
-+
- /*
-  * Governor section: set of functions to handle thermal governors
-  *
-@@ -328,7 +330,7 @@ static void thermal_zone_device_set_polling(struct thermal_zone_device *tz,
- 	if (delay > HZ)
- 		delay = round_jiffies_relative(delay);
- 
--	mod_delayed_work(system_freezable_power_efficient_wq, &tz->poll_queue, delay);
-+	mod_delayed_work(thermal_wq, &tz->poll_queue, delay);
- }
- 
- static void thermal_zone_recheck(struct thermal_zone_device *tz, int error)
-@@ -1691,6 +1693,12 @@ static void thermal_zone_device_resume(struct work_struct *work)
- 
- 	mutex_lock(&tz->lock);
- 
-+	/* If the thermal zone is going away, there's nothing to do. */
-+	if (tz->state & TZ_STATE_FLAG_EXIT) {
-+		mutex_unlock(&tz->lock);
-+		return;
-+	}
-+
- 	tz->state &= ~(TZ_STATE_FLAG_SUSPENDED | TZ_STATE_FLAG_RESUMING);
- 
- 	thermal_debug_tz_resume(tz);
-@@ -1722,6 +1730,9 @@ static void thermal_zone_pm_prepare(struct thermal_zone_device *tz)
- 
- 	tz->state |= TZ_STATE_FLAG_SUSPENDED;
- 
-+	/* Prevent new work from getting to the workqueue subsequently. */
-+	cancel_delayed_work(&tz->poll_queue);
-+
- 	mutex_unlock(&tz->lock);
- }
- 
-@@ -1729,8 +1740,6 @@ static void thermal_zone_pm_complete(struct thermal_zone_device *tz)
- {
- 	mutex_lock(&tz->lock);
- 
--	cancel_delayed_work(&tz->poll_queue);
--
- 	reinit_completion(&tz->resume);
- 	tz->state |= TZ_STATE_FLAG_RESUMING;
- 
-@@ -1740,7 +1749,7 @@ static void thermal_zone_pm_complete(struct thermal_zone_device *tz)
+ 		if (list_empty(&areq->rsgl_list)) {
+ 			rsgl = &areq->first_rsgl;
+diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
+index 125d395c5e009..3549ad1cc42e6 100644
+--- a/crypto/algif_skcipher.c
++++ b/crypto/algif_skcipher.c
+@@ -130,6 +130,11 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	 * full block size buffers.
  	 */
- 	INIT_DELAYED_WORK(&tz->poll_queue, thermal_zone_device_resume);
- 	/* Queue up the work without a delay. */
--	mod_delayed_work(system_freezable_power_efficient_wq, &tz->poll_queue, 0);
-+	mod_delayed_work(thermal_wq, &tz->poll_queue, 0);
- 
- 	mutex_unlock(&tz->lock);
- }
-@@ -1762,6 +1771,11 @@ static int thermal_pm_notify(struct notifier_block *nb,
- 			thermal_zone_pm_prepare(tz);
- 
- 		mutex_unlock(&thermal_list_lock);
-+		/*
-+		 * Allow any leftover thermal work items already on the
-+		 * worqueue to complete so they don't get in the way later.
-+		 */
-+		flush_workqueue(thermal_wq);
- 		break;
- 	case PM_POST_HIBERNATION:
- 	case PM_POST_RESTORE:
-@@ -1801,9 +1815,16 @@ static int __init thermal_init(void)
- 	if (result)
- 		goto error;
- 
-+	thermal_wq = alloc_workqueue("thermal_events",
-+				      WQ_FREEZABLE | WQ_POWER_EFFICIENT, 0);
-+	if (!thermal_wq) {
-+		result = -ENOMEM;
-+		goto unregister_netlink;
-+	}
+ 	if (ctx->more || len < ctx->used) {
++		if (len < bs) {
++			err = -EINVAL;
++			goto free;
++		}
 +
- 	result = thermal_register_governors();
- 	if (result)
--		goto unregister_netlink;
-+		goto destroy_workqueue;
- 
- 	thermal_class = kzalloc(sizeof(*thermal_class), GFP_KERNEL);
- 	if (!thermal_class) {
-@@ -1830,6 +1851,8 @@ static int __init thermal_init(void)
- 
- unregister_governors:
- 	thermal_unregister_governors();
-+destroy_workqueue:
-+	destroy_workqueue(thermal_wq);
- unregister_netlink:
- 	thermal_netlink_exit();
- error:
+ 		len -= len % bs;
+ 		cflags |= CRYPTO_SKCIPHER_REQ_NOTFINAL;
+ 	}
 -- 
 2.53.0
 
