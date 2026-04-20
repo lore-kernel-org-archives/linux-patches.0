@@ -1,132 +1,139 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CD33A63E8;
-	Mon, 20 Apr 2026 13:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633B83A63E8;
+	Mon, 20 Apr 2026 13:26:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691599; cv=none; b=Vl4ClrcBzTmQZZ6YcKVaC6GF9dGhVY3uWJ/ePgJqJsCWD4seLAiz1cfr7uxFUxh/Td/xOH/p8wyeu0SkRZG7r7EyNa5dUU0cAohiEXTcWkkcT2Rfz5W02TSgacrXIuT3O+InW5Lp/S0jd26M6mQbp53QT28NXffH1sq7pI3MBLM=
+	t=1776691600; cv=none; b=oz31HK4gGDQPcQ3QZkRKe5tZnkkHIeef7MWjeL7QbYYpNkkuadM+9egtbyzlWue2Oe7/ZPab63fSIi9TKHWtGL0aulddUv80iGudJYxkqiHr3gjuCBrj6JAnWfYDGQrUM8N7d5KlF6vOTsJq0rHwcmX6977XcdxN29li8USdQfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691599; c=relaxed/simple;
-	bh=MBUI7aOKHRe8BiUU0y7rB8VvsEBoFmLmKdnrYb++wWE=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=n9ur33w4uzi/ORtlX84lKU2nPKz20lQveAqKHFDQvzlgU0TzV+cQut1in3sNnUmdxRh1MGvfWa25P9hEzdzgq072jSv6Zqaej5WXNGFUOrwD4CF9DeCM9jW9k9nEaqbYAti2ixA3Odl73PE06b71UbeCUlE7B4d8Rt2Ys2Mx0gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3/GE62n; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776691600; c=relaxed/simple;
+	bh=k43V/qSmU7C+NtBAQOUmZaioCpCS405F2aNaLv2Pv2c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cf6IxPwNYiZu1VSavpPdlopdquuH0ttpfpRLylX5l3Xzpc6M/2pTZixF+KGgWX9UpvafYuBjbC1gF5nYWnVKKQTJ64Dg4JS14G4DZDWa6MGICcSc7DLBEleFtFPla2C+np0Jv78m4mopkjXUXZ/RQZ4/fB++Bj/K9CRYjWZUULU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LKqZ9uDu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3/GE62n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A38C2BCF4;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LKqZ9uDu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555A8C2BCB9;
 	Mon, 20 Apr 2026 13:26:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776691599;
-	bh=MBUI7aOKHRe8BiUU0y7rB8VvsEBoFmLmKdnrYb++wWE=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=I3/GE62nh65co3nJoPC5mxKhI6l9RyvaFexVwqDMupjmeZjqcxjkTUzUyxHsdZGwx
-	 thUi/OJfvQ6e3St0ZfabBaCBu8CcoLAvQt+aBBwM3x/Z2WSxRMesCgNPD2fRuKgqnT
-	 uBLZWfrmtQDW9GXDUV7Hm/EbthLP13tvaoy8S9ps=
-Subject: Patch "netfilter: conntrack: add missing netlink policy validations" has been added to the 6.18-stable tree
-To: 1468888505@139.com,coreteam@netfilter.org,davem@davemloft.net,edumazet@google.com,fw@strlen.de,gregkh@linuxfoundation.org,horms@kernel.org,imv4bel@gmail.com,kaber@trash.net,kadlec@netfilter.org,kuba@kernel.org,pabeni@redhat.com,pablo@netfilter.org,patches@lists.linux.dev
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Mon, 20 Apr 2026 15:24:02 +0200
-In-Reply-To: <20260414033129.48460-1-1468888505@139.com>
-Message-ID: <2026042002-pep-blunderer-6148@gregkh>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776691600;
+	bh=k43V/qSmU7C+NtBAQOUmZaioCpCS405F2aNaLv2Pv2c=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LKqZ9uDu9W19ShroGAzPcXdARXWx2+j0DrkIFEgHsbXuL0+Fe2cZgKgREv+Lbdy6q
+	 xAiqN7rJYzyUFb+P+Mhef/Za35sh6rHHDXn13p7mPiPooGQgwmpzhQS9d1Wy5MsBzp
+	 6EohYkWCurybDKJQwzxMe25YlKCfA0847+FRXOkSWL1OngCbyt+9vtp670g/wZKgLF
+	 5g2vj49qmQHXiznZt5QB1IaMzPleN2lbMQu3PjutxFH5tIkdB910SiGY8WyBfHaJlD
+	 sMCNhP/siYg+/4NcMlN4ZN8mo2rUGyxlq1MPsvrYh9jiDb9WrHvv4ZG67NWf0MVC3o
+	 lMkaeeBolnreQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Jiexun Wang <wangjiexun2025@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	xemul@parallels.com,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] af_unix: read UNIX_DIAG_VFS data under unix_state_lock
+Date: Mon, 20 Apr 2026 09:18:38 -0400
+Message-ID: <20260420132314.1023554-124-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
+References: <20260420132314.1023554-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
 
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-This is a note to let you know that I've just added the patch titled
+[ Upstream commit 39897df386376912d561d4946499379effa1e7ef ]
 
-    netfilter: conntrack: add missing netlink policy validations
+Exact UNIX diag lookups hold a reference to the socket, but not to
+u->path. Meanwhile, unix_release_sock() clears u->path under
+unix_state_lock() and drops the path reference after unlocking.
 
-to the 6.18-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+Read the inode and device numbers for UNIX_DIAG_VFS while holding
+unix_state_lock(), then emit the netlink attribute after dropping the
+lock.
 
-The filename of the patch is:
-     netfilter-conntrack-add-missing-netlink-policy-validations.patch
-and it can be found in the queue-6.18 subdirectory.
+This keeps the VFS data stable while the reply is being built.
 
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From stable+bounces-237711-greg=kroah.com@vger.kernel.org Tue Apr 14 05:31:44 2026
-From: Li hongliang <1468888505@139.com>
-Date: Tue, 14 Apr 2026 11:31:29 +0800
-Subject: netfilter: conntrack: add missing netlink policy validations
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, fw@strlen.de
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, pablo@netfilter.org, kadlec@netfilter.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, horms@kernel.org, kaber@trash.net, netfilter-devel@vger.kernel.org, coreteam@netfilter.org, netdev@vger.kernel.org, imv4bel@gmail.com
-Message-ID: <20260414033129.48460-1-1468888505@139.com>
-
-From: Florian Westphal <fw@strlen.de>
-
-[ Upstream commit f900e1d77ee0ef87bfb5ab3fe60f0b3d8ad5ba05 ]
-
-Hyunwoo Kim reports out-of-bounds access in sctp and ctnetlink.
-
-These attributes are used by the kernel without any validation.
-Extend the netlink policies accordingly.
-
-Quoting the reporter:
-  nlattr_to_sctp() assigns the user-supplied CTA_PROTOINFO_SCTP_STATE
-  value directly to ct->proto.sctp.state without checking that it is
-  within the valid range. [..]
-
-  and: ... with exp->dir = 100, the access at
-  ct->master->tuplehash[100] reads 5600 bytes past the start of a
-  320-byte nf_conn object, causing a slab-out-of-bounds read confirmed by
-  UBSAN.
-
-Fixes: 076a0ca02644 ("netfilter: ctnetlink: add NAT support for expectations")
-Fixes: a258860e01b8 ("netfilter: ctnetlink: add full support for SCTP to ctnetlink")
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Li hongliang <1468888505@139.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5f7b0569460b ("unix_diag: Unix inode info NLA")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260407080015.1744197-1-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c    | 2 +-
- net/netfilter/nf_conntrack_proto_sctp.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 879413b9fa06..2bb9eb2d25fb 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3465,7 +3465,7 @@ ctnetlink_change_expect(struct nf_conntrack_expect *x,
+LLM Generated explanations, may be completely bogus:
+
+Error: Failed to generate final synthesis
+
+ net/unix/diag.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
+
+diff --git a/net/unix/diag.c b/net/unix/diag.c
+index ca34730261510..c9c1e51c44196 100644
+--- a/net/unix/diag.c
++++ b/net/unix/diag.c
+@@ -28,18 +28,23 @@ static int sk_diag_dump_name(struct sock *sk, struct sk_buff *nlskb)
  
- #if IS_ENABLED(CONFIG_NF_NAT)
- static const struct nla_policy exp_nat_nla_policy[CTA_EXPECT_NAT_MAX+1] = {
--	[CTA_EXPECT_NAT_DIR]	= { .type = NLA_U32 },
-+	[CTA_EXPECT_NAT_DIR]	= NLA_POLICY_MAX(NLA_BE32, IP_CT_DIR_REPLY),
- 	[CTA_EXPECT_NAT_TUPLE]	= { .type = NLA_NESTED },
- };
- #endif
-diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index 7c6f7c9f7332..645d2c43ebf7 100644
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -582,7 +582,8 @@ static int sctp_to_nlattr(struct sk_buff *skb, struct nlattr *nla,
+ static int sk_diag_dump_vfs(struct sock *sk, struct sk_buff *nlskb)
+ {
+-	struct dentry *dentry = unix_sk(sk)->path.dentry;
++	struct unix_diag_vfs uv;
++	struct dentry *dentry;
++	bool have_vfs = false;
+ 
++	unix_state_lock(sk);
++	dentry = unix_sk(sk)->path.dentry;
+ 	if (dentry) {
+-		struct unix_diag_vfs uv = {
+-			.udiag_vfs_ino = d_backing_inode(dentry)->i_ino,
+-			.udiag_vfs_dev = dentry->d_sb->s_dev,
+-		};
+-
+-		return nla_put(nlskb, UNIX_DIAG_VFS, sizeof(uv), &uv);
++		uv.udiag_vfs_ino = d_backing_inode(dentry)->i_ino;
++		uv.udiag_vfs_dev = dentry->d_sb->s_dev;
++		have_vfs = true;
+ 	}
++	unix_state_unlock(sk);
+ 
+-	return 0;
++	if (!have_vfs)
++		return 0;
++
++	return nla_put(nlskb, UNIX_DIAG_VFS, sizeof(uv), &uv);
  }
  
- static const struct nla_policy sctp_nla_policy[CTA_PROTOINFO_SCTP_MAX+1] = {
--	[CTA_PROTOINFO_SCTP_STATE]	    = { .type = NLA_U8 },
-+	[CTA_PROTOINFO_SCTP_STATE]	    = NLA_POLICY_MAX(NLA_U8,
-+							 SCTP_CONNTRACK_HEARTBEAT_SENT),
- 	[CTA_PROTOINFO_SCTP_VTAG_ORIGINAL]  = { .type = NLA_U32 },
- 	[CTA_PROTOINFO_SCTP_VTAG_REPLY]     = { .type = NLA_U32 },
- };
+ static int sk_diag_dump_peer(struct sock *sk, struct sk_buff *nlskb)
 -- 
-2.34.1
+2.53.0
 
-
-
-Patches currently in stable-queue which might be from 1468888505@139.com are
-
-queue-6.18/netfilter-conntrack-add-missing-netlink-policy-validations.patch
