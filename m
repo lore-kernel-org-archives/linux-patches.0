@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526C033262B;
-	Mon, 20 Apr 2026 15:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BF3332919;
+	Mon, 20 Apr 2026 15:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776699983; cv=none; b=LuDbDY9bT9Tff3k+sHBl4SRU0OKtS7Qiv4/6zxBalfWGm6Hq4qW7zuRysdsmpyPhbgDMGKseAqlL1Fs6SvPwnkVPRJU93YbFWKKbHn7lj2t9WeQq7x1E6pEmXTGsZAPXbJz4jGD76R0yVx9VXRftQ2fvf0JqsRe0DM4UndGoBJI=
+	t=1776699985; cv=none; b=AgYnPtW7Yh4HNu4jUohi4p97NNaeuc5QyYkxRNMdc8R0S9fFHh389X2sGhMQSi5WgAMVvjeUUjavGjgaL3vp2UaF85OnZQmSTRrzexMRFpkgQhkskEoIhV8C6lZMsDBs9Q+n2PAnaObwZUgUG80mvZ0M4EPKSjttQRYs9A6tkOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776699983; c=relaxed/simple;
-	bh=2TT3lJ4PTIbCBGJ2VA4Nujm5eHgW9f9uclXRQi/EI2c=;
+	s=arc-20240116; t=1776699985; c=relaxed/simple;
+	bh=nLG1bLXf3wikWEHvXVfMR1Q0qOxkaWNid22tPRHm0is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQUQupJL0Iio8U+72UfVFMQ8QEkElgRxnIPy/3p4sDZMdivyKdrZrknh8fjz5O2xFohPobtnfrPaykkbTY6gRmXsaDH3qMa9MWdSQpHfGlI0ld2rZC8+MaIkCJV3McntFUSavCcz/E5i6dA9VMOrvPDJhAeN6DjXSTO4KwQrKF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hClQZnDJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N9j9lNFi8Q7srAA1h7/PSO62i2k0WCtR7AaQtWlM6ulH0Pvru8CxdB5qid5TUxkJcwq/LhPW3w5q9+QHG7kS8A4lW9NV/1+0zsTAUFfqFMQ/nBiW/AGx/hOT0PeY3MCs0Vtyt2OU/HFnBFxmNlFMQAKoMSsBBTGbYBRaQhNFSnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmYyYwwv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hClQZnDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9CFC19425;
-	Mon, 20 Apr 2026 15:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmYyYwwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0C4C19425;
+	Mon, 20 Apr 2026 15:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776699983;
-	bh=2TT3lJ4PTIbCBGJ2VA4Nujm5eHgW9f9uclXRQi/EI2c=;
+	s=korg; t=1776699985;
+	bh=nLG1bLXf3wikWEHvXVfMR1Q0qOxkaWNid22tPRHm0is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hClQZnDJC0878n40c4LDivpIhSD+wTWRZEN3Ugs+ckUPnm0HdOSQDpRyEWNkwZNMw
-	 EcTc+NDEKOLT3NzVFnwTliar1XJLwrqBsbj0aGM4+0FpN63BKNSAzxGmlDK06sIG7M
-	 ptJKZ8/ZQRSPO9BuhkAHjgGVhKy06maXMmTJ8/R8=
+	b=NmYyYwwvqhS23pM2Ulwr+63bZQ2w4cvegT74qFmx09d3asuhd5xvWKeSbJkyKHIiI
+	 XZXwGTUoryK5Mu1cqC3Ya19zOnU9tBVTsRlPFlcvMsJlkWMslMNo5rLRcqyfEfOvW5
+	 L9AV1Sklfrb5AYV57hqcGvuQM6fvV4ORBcDRx+QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernie Thompson <bernie@plugable.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.0 31/76] fbdev: udlfb: avoid divide-by-zero on FBIOPUT_VSCREENINFO
-Date: Mon, 20 Apr 2026 17:41:42 +0200
-Message-ID: <20260420153911.955256631@linuxfoundation.org>
+	syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com,
+	Abhishek Kumar <abhishek_sts8@yahoo.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 67/76] media: em28xx: fix use-after-free in em28xx_v4l2_open()
+Date: Mon, 20 Apr 2026 17:42:18 +0200
+Message-ID: <20260420153913.259008008@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -50,37 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Abhishek Kumar <abhishek_sts8@yahoo.com>
 
-commit a31e4518bec70333a0a98f2946a12b53b45fe5b9 upstream.
+commit a66485a934c7187ae8e36517d40615fa2e961cff upstream.
 
-Much like commit 19f953e74356 ("fbdev: fb_pm2fb: Avoid potential divide
-by zero error"), we also need to prevent that same crash from happening
-in the udlfb driver as it uses pixclock directly when dividing, which
-will crash.
+em28xx_v4l2_open() reads dev->v4l2 without holding dev->lock,
+creating a race with em28xx_v4l2_init()'s error path and
+em28xx_v4l2_fini(), both of which free the em28xx_v4l2 struct
+and set dev->v4l2 to NULL under dev->lock.
 
-Cc: Bernie Thompson <bernie@plugable.com>
-Cc: Helge Deller <deller@gmx.de>
-Fixes: 59277b679f8b ("Staging: udlfb: add dynamic modeset support")
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+This race leads to two issues:
+ - use-after-free in v4l2_fh_init() when accessing vdev->ctrl_handler,
+   since the video_device is embedded in the freed em28xx_v4l2 struct.
+ - NULL pointer dereference in em28xx_resolution_set() when accessing
+   v4l2->norm, since dev->v4l2 has been set to NULL.
+
+Fix this by moving the mutex_lock() before the dev->v4l2 read and
+adding a NULL check for dev->v4l2 under the lock.
+
+Reported-by: syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c025d34b8eaa54c571b8
+Fixes: 8139a4d583ab ("[media] em28xx: move v4l2 user counting fields from struct em28xx to struct v4l2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abhishek Kumar <abhishek_sts8@yahoo.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/usb/em28xx/em28xx-video.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1018,6 +1018,9 @@ static int dlfb_ops_check_var(struct fb_
- 	struct fb_videomode mode;
- 	struct dlfb_data *dlfb = info->par;
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -2126,7 +2126,7 @@ static int em28xx_v4l2_open(struct file
+ {
+ 	struct video_device *vdev = video_devdata(filp);
+ 	struct em28xx *dev = video_drvdata(filp);
+-	struct em28xx_v4l2 *v4l2 = dev->v4l2;
++	struct em28xx_v4l2 *v4l2;
+ 	enum v4l2_buf_type fh_type = 0;
+ 	int ret;
  
-+	if (!var->pixclock)
-+		return -EINVAL;
+@@ -2143,13 +2143,19 @@ static int em28xx_v4l2_open(struct file
+ 		return -EINVAL;
+ 	}
+ 
++	if (mutex_lock_interruptible(&dev->lock))
++		return -ERESTARTSYS;
 +
- 	/* set device-specific elements of var unrelated to mode */
- 	dlfb_var_color_format(var);
++	v4l2 = dev->v4l2;
++	if (!v4l2) {
++		mutex_unlock(&dev->lock);
++		return -ENODEV;
++	}
++
+ 	em28xx_videodbg("open dev=%s type=%s users=%d\n",
+ 			video_device_node_name(vdev), v4l2_type_names[fh_type],
+ 			v4l2->users);
  
+-	if (mutex_lock_interruptible(&dev->lock))
+-		return -ERESTARTSYS;
+-
+ 	ret = v4l2_fh_open(filp);
+ 	if (ret) {
+ 		dev_err(&dev->intf->dev,
 
 
