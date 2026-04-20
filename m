@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632BF3D3012;
-	Mon, 20 Apr 2026 13:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09523D3326;
+	Mon, 20 Apr 2026 13:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691411; cv=none; b=J4MbOLveOksQpa+WDyDJuOvnPGkMvHaw9Ps26nOPDOJrAjxLWCxhyUweH+B4VvR3or/Wq7YAs9Iho65TbWmuqj2ZDJBZ/wWsRNR5BLJN6mHIDmwVQuHTFcgpCz6fxB/ZiL35zYbVM58uUIC/DhDdegrwsIH9sd1RkMZa9BNMG9Y=
+	t=1776691413; cv=none; b=F+c/ZbKTDD/0D1kYz+N8gIHcus8hkRVuA9FRBU6KJuOmZJAWizlQf7kAvNopbgTUSK8D+am+OXSD3WZYWKJfD6c0Uj2JapUhxwkho2KIRD+M4v92RyBeNcFTS1zoLxVJk1gxMrZPnsRH0OLNfmDQF66G2G2MlPzyZ0Z+QAfAXXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691411; c=relaxed/simple;
-	bh=MZEuU3Y93HSS0LylEUPvD8xXO8PAZIqVKPE46K33WHY=;
+	s=arc-20240116; t=1776691413; c=relaxed/simple;
+	bh=QCvy9OvKnWbejpp6mFQcwprpj2Lu56vqf8tTWQD8YfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SWJcoM2YOQDNhBuO6/DpCvdhF++cD2FxCj05kXu4SMfDnLZ4wy4qkCSpqLTWdY7/ig9tWDwPdClTs8cSogdPrOdxGI1Few1RM9fK3vywvxhvLihuJcY0sIrKbDdxv4TboIs/fJoIwXvDxlf4Zklah+BwiQfoq/cLme3xTKmelM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ddEGI0rd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPf4c4VR6lNWH2L6VTzIEDCB3iqrditx3VsttpwwoaP414lvnaBblj8Ev3hkPsPQV5ptvIKx7ladXf9VMuQ7D2WA6adKiOsAod7of2XPtrKrnD7QWpWUiADtJA8/6ljGYstK7KOV2OzAyc8KsnFzl9dtoKeGFk0JJcolySfUEkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPQ242Bb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ddEGI0rd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B71CC19425;
-	Mon, 20 Apr 2026 13:23:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPQ242Bb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6DCC2BCB7;
+	Mon, 20 Apr 2026 13:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691411;
-	bh=MZEuU3Y93HSS0LylEUPvD8xXO8PAZIqVKPE46K33WHY=;
+	s=k20201202; t=1776691412;
+	bh=QCvy9OvKnWbejpp6mFQcwprpj2Lu56vqf8tTWQD8YfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddEGI0rdfZFYlnpeJNT9VrdiRlyo8HKHXkc5Q5V+qkpSoPHOxbOHFpfHnYYY9I1E6
-	 WVHPoR25oFfhea7yxBGlK9q3KmIPaPiWWvn16f+Il1GFGxd2XglCLFTE7uvf7wnCd5
-	 ET8651mMZ9asZ5xQ9msaKGOl/84qdO7VyMMG9FI6OYz9FHNdSMY8ZuTVe+GTo9yQji
-	 HUkdQazgP3jT5fqPctVbSuhRyPNKvXrjYF2esJ4M4lACl6FJNi+DJxXG222jtdzQ3B
-	 F+8hgNSLXHiKmgPkQ6BPIye6/Iyeo7lpF9eLFaBjXKJqYY8fJniNLYTOYmDnQt5fE+
-	 Gb7wXNa5SsmKA==
+	b=gPQ242BbupvLgAIgzJcV1OMu8JS0rGJGR3RmvqrHlXcTbukLB8EiJ2vmXeNHqAsBn
+	 T1CptwM3Mpnmnn3nUm2u7kkMbf1D5Tbuj7/vegveq4dMG8uofNw51apFH8hdd4gL64
+	 7KWpAXEGmjsRxlaEWv3v9IzIyGRP9Vcl75hhjnaoJbkgjcIvv5q6Jig2LHupIixzSi
+	 KhRXeTfkuCF6a0XHvGaf72caKLG+Hi0aTzGmi0sQNU/222oS3PPzNMqCqW7OAtgB1h
+	 SAD5Uk0oDADqt0bVa4k2RnrLVNZNtNsvX2ZFiGGU0Rb31ZGf6dah/PcvHxHbsO39uk
+	 FjBvROI2SUenA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun@kernel.org>,
+Cc: Maximilian Pezzullo <maximilianpezzullo@gmail.com>,
+	Casey Croy <ccroy@bugzilla.kernel.org>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jiangshanlai@gmail.com,
-	josh@joshtriplett.org,
-	rcu@vger.kernel.org,
+	basavaraj.natikar@amd.com,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] srcu: Use irq_work to start GP in tiny SRCU
-Date: Mon, 20 Apr 2026 09:16:44 -0400
-Message-ID: <20260420132314.1023554-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] HID: amd_sfh: don't log error when device discovery fails with -EOPNOTSUPP
+Date: Mon, 20 Apr 2026 09:16:45 -0400
+Message-ID: <20260420132314.1023554-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -54,34 +56,24 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Maximilian Pezzullo <maximilianpezzullo@gmail.com>
 
-[ Upstream commit a6fc88b22bc8d12ad52e8412c667ec0f5bf055af ]
+[ Upstream commit 743677a8cb30b09f16a7f167f497c2c927891b5a ]
 
-Tiny SRCU's srcu_gp_start_if_needed() directly calls schedule_work(),
-which acquires the workqueue pool->lock.
+When sensor discovery fails on systems without AMD SFH sensors, the
+code already emits a warning via dev_warn() in amd_sfh_hid_client_init().
+The subsequent dev_err() in sfh_init_work() for the same -EOPNOTSUPP
+return value is redundant and causes unnecessary alarm.
 
-This causes a lockdep splat when call_srcu() is called with a scheduler
-lock held, due to:
+Suppress the dev_err() for -EOPNOTSUPP to avoid confusing users who
+have no AMD SFH sensors.
 
-  call_srcu() [holding pi_lock]
-    srcu_gp_start_if_needed()
-      schedule_work() -> pool->lock
-
-  workqueue_init() / create_worker() [holding pool->lock]
-    wake_up_process() -> try_to_wake_up() -> pi_lock
-
-Also add irq_work_sync() to cleanup_srcu_struct() to prevent a
-use-after-free if a queued irq_work fires after cleanup begins.
-
-Tested with rcutorture SRCU-T and no lockdep warnings.
-
-[ Thanks to Boqun for similar fix in patch "rcu: Use an intermediate irq_work
-to start process_srcu()" ]
-
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Boqun Feng <boqun@kernel.org>
+Fixes: 2105e8e00da4 ("HID: amd_sfh: Improve boot time when SFH is available")
+Reported-by: Casey Croy <ccroy@bugzilla.kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221099
+Signed-off-by: Maximilian Pezzullo <maximilianpezzullo@gmail.com>
+Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -89,102 +81,23 @@ LLM Generated explanations, may be completely bogus:
 
 Error: Failed to generate final synthesis
 
- include/linux/srcutiny.h |  4 ++++
- kernel/rcu/srcutiny.c    | 19 ++++++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ drivers/hid/amd-sfh-hid/amd_sfh_pcie.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/srcutiny.h b/include/linux/srcutiny.h
-index 51ce25f07930e..1f9a226e6fd81 100644
---- a/include/linux/srcutiny.h
-+++ b/include/linux/srcutiny.h
-@@ -11,6 +11,7 @@
- #ifndef _LINUX_SRCU_TINY_H
- #define _LINUX_SRCU_TINY_H
- 
-+#include <linux/irq_work_types.h>
- #include <linux/swait.h>
- 
- struct srcu_struct {
-@@ -24,18 +25,21 @@ struct srcu_struct {
- 	struct rcu_head *srcu_cb_head;	/* Pending callbacks: Head. */
- 	struct rcu_head **srcu_cb_tail;	/* Pending callbacks: Tail. */
- 	struct work_struct srcu_work;	/* For driving grace periods. */
-+	struct irq_work srcu_irq_work;	/* Defer schedule_work() to irq work. */
- #ifdef CONFIG_DEBUG_LOCK_ALLOC
- 	struct lockdep_map dep_map;
- #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
- };
- 
- void srcu_drive_gp(struct work_struct *wp);
-+void srcu_tiny_irq_work(struct irq_work *irq_work);
- 
- #define __SRCU_STRUCT_INIT(name, __ignored, ___ignored)			\
- {									\
- 	.srcu_wq = __SWAIT_QUEUE_HEAD_INITIALIZER(name.srcu_wq),	\
- 	.srcu_cb_tail = &name.srcu_cb_head,				\
- 	.srcu_work = __WORK_INITIALIZER(name.srcu_work, srcu_drive_gp),	\
-+	.srcu_irq_work = { .func = srcu_tiny_irq_work },		\
- 	__SRCU_DEP_MAP_INIT(name)					\
- }
- 
-diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
-index e3b64a5e0ec7e..d9c11d5f0ea45 100644
---- a/kernel/rcu/srcutiny.c
-+++ b/kernel/rcu/srcutiny.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include <linux/export.h>
-+#include <linux/irq_work.h>
- #include <linux/mutex.h>
- #include <linux/preempt.h>
- #include <linux/rcupdate_wait.h>
-@@ -41,6 +42,7 @@ static int init_srcu_struct_fields(struct srcu_struct *ssp)
- 	ssp->srcu_idx_max = 0;
- 	INIT_WORK(&ssp->srcu_work, srcu_drive_gp);
- 	INIT_LIST_HEAD(&ssp->srcu_work.entry);
-+	init_irq_work(&ssp->srcu_irq_work, srcu_tiny_irq_work);
- 	return 0;
- }
- 
-@@ -84,6 +86,7 @@ EXPORT_SYMBOL_GPL(init_srcu_struct);
- void cleanup_srcu_struct(struct srcu_struct *ssp)
- {
- 	WARN_ON(ssp->srcu_lock_nesting[0] || ssp->srcu_lock_nesting[1]);
-+	irq_work_sync(&ssp->srcu_irq_work);
- 	flush_work(&ssp->srcu_work);
- 	WARN_ON(ssp->srcu_gp_running);
- 	WARN_ON(ssp->srcu_gp_waiting);
-@@ -172,6 +175,20 @@ void srcu_drive_gp(struct work_struct *wp)
- }
- EXPORT_SYMBOL_GPL(srcu_drive_gp);
- 
-+/*
-+ * Use an irq_work to defer schedule_work() to avoid acquiring the workqueue
-+ * pool->lock while the caller might hold scheduler locks, causing lockdep
-+ * splats due to workqueue_init() doing a wakeup.
-+ */
-+void srcu_tiny_irq_work(struct irq_work *irq_work)
-+{
-+	struct srcu_struct *ssp;
-+
-+	ssp = container_of(irq_work, struct srcu_struct, srcu_irq_work);
-+	schedule_work(&ssp->srcu_work);
-+}
-+EXPORT_SYMBOL_GPL(srcu_tiny_irq_work);
-+
- static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
- {
- 	unsigned long cookie;
-@@ -184,7 +201,7 @@ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
- 	WRITE_ONCE(ssp->srcu_idx_max, cookie);
- 	if (!READ_ONCE(ssp->srcu_gp_running)) {
- 		if (likely(srcu_init_done))
--			schedule_work(&ssp->srcu_work);
-+			irq_work_queue(&ssp->srcu_irq_work);
- 		else if (list_empty(&ssp->srcu_work.entry))
- 			list_add(&ssp->srcu_work.entry, &srcu_boot_list);
+diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
+index 1d9f955573aa4..4b81cebdc3359 100644
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
+@@ -413,7 +413,8 @@ static void sfh_init_work(struct work_struct *work)
+ 	rc = amd_sfh_hid_client_init(mp2);
+ 	if (rc) {
+ 		amd_sfh_clear_intr(mp2);
+-		dev_err(&pdev->dev, "amd_sfh_hid_client_init failed err %d\n", rc);
++		if (rc != -EOPNOTSUPP)
++			dev_err(&pdev->dev, "amd_sfh_hid_client_init failed err %d\n", rc);
+ 		return;
  	}
+ 
 -- 
 2.53.0
 
