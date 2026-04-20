@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D933D1719;
-	Mon, 20 Apr 2026 13:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA7447799B;
+	Mon, 20 Apr 2026 13:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691844; cv=none; b=fQ6PG3p2Wjog44+XE1cOx1MjzobCs69B3elwxClQS+h9nuXu1JQ/h+OXuoTacabcnuL1EWbeLxy0qaiE0ddEBAJ3WwrzQ4GSHAtPd99EoSVsV/J5LmldpNmLjpgABMt2XNwVTlJFqU0d1NQYQ2VmijaCcIVCHU/1J4gusLpqSFI=
+	t=1776691846; cv=none; b=F8wjdeXtIuBCh/h67GFYlQ0EYNsMGhLPib6OzHdDehJdZYWjPyIMi5pwm/AHIYfX6m8K/BtMpLseRaJbK5b9QG7xUbI0GagFJHlmroQ925WxhMgTii8v2g4BgBLMuZuv5/LK8B5YvpwJ/lyCubqEEzgVgc5oia+n9hq3DTJ64CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691844; c=relaxed/simple;
-	bh=LDBsa2lH87nC/8hnNwfaUBqp4kitb5/tu/BziOxOUlQ=;
+	s=arc-20240116; t=1776691846; c=relaxed/simple;
+	bh=lJ7eIvqq60QyAW0GBDng2apvzHdbc3nol6hDSeLn33I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MD9i5tg1VoFFV5O5wFILOYrcOp2nPMTn7KoqHRIauxm8y/DkWkR3wGfjxM/4nugtS7gMgNUmfhm5o9lHS6QB91s6/yr4ZmKK/zxFLdyU2UbO7HV8gGDh+5UyvfisJnl7KCEvhJLOkomYZ3OoA3wywtWOY9eIXr8fMY+rXhdW/mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FYWdt0+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XZX49zm/ozseavlPUlUhlu8gGosHj/QSsj9FWh5e4AyLGwLhW+jX+9gkCUoFI9k2Rqlmlb4FcbeOoeKd5mlDG9RVel+8hKrrgg4lvf1Z2eHNo7/2SBLu2I4g/Ts81zhwj6SUWsyR3sVNQHEDB3EvL2rFSXsQ3GyJ5uBbwOR88RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bpOBXuPe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FYWdt0+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B90CC19425;
-	Mon, 20 Apr 2026 13:30:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bpOBXuPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B57AC19425;
+	Mon, 20 Apr 2026 13:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691844;
-	bh=LDBsa2lH87nC/8hnNwfaUBqp4kitb5/tu/BziOxOUlQ=;
+	s=k20201202; t=1776691845;
+	bh=lJ7eIvqq60QyAW0GBDng2apvzHdbc3nol6hDSeLn33I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYWdt0+Qtt132laXdPORMRHt8zo7/aIpD82A2khBySo8QBQbYXwTpPvIEyN6BORiA
-	 Tp2/P/spwpZvXwKAW810R44S/1Dd0L3mDAtWXFEafMwGMZ4yySWOS0DjuGsWarz2Vs
-	 5jSsFg6vYr4f5sPs8jDMuua0ebXkkys96UiidLkTYpOLc4dTzbIDgWItg76xzESwx1
-	 13PyCmKBAmmcqNQ6UmmOF5FWfIUJhnfcHKMy3RxPxY9+PVfhnSJjTQxzea9HI63Iyo
-	 HAVsv0SL/CmXYIQ/WMr/qvNYNsMeeeAziS1ak+Hpf0GwC6r0h/m9yVGFuYsSUq5tFL
-	 Hde/9Vz0VzQew==
+	b=bpOBXuPeC8PPlD7zL3a6IzpPhbf0ZRP7xaDiIIkApWhRhd0ObyaLF0DkU/aazQciS
+	 OLtp5cEOY/hSfI6YIWZO4Fnbp5Qqoe/8RYSB7yqsr9ETi35PDUW01jD+e0oFL9mP/8
+	 zbkgnUggITUYKRmBimkKxU6QF8gzdkgHyGAHX7FDLt5d0vNa+BaBGSFUBtpNtQTr7H
+	 WSJBDHvLFj1v3p9kxk7rSbefgEzXb9wm52fFfBKnMWIDrVumPf1Qa43x7YMkqKXKnF
+	 8LVfs1TyfiRk8sE5LO98GOtZ393Bjsw8wyL6LYmOZYaSCs/dxykEsjEgIV8aJ4x1iE
+	 y8WYIRbmFMZlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sunil Khatri <sunil.khatri@amd.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Frederic Popp <frederic.l.popp@t-online.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] drm/amdgpu/userq: fix dma_fence refcount underflow in userq path
-Date: Mon, 20 Apr 2026 09:20:21 -0400
-Message-ID: <20260420132314.1023554-227-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] ALSA: usb-audio: add Studio 1824 support
+Date: Mon, 20 Apr 2026 09:20:22 -0400
+Message-ID: <20260420132314.1023554-228-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -51,398 +48,380 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Transfer-Encoding: 8bit
 
-From: Sunil Khatri <sunil.khatri@amd.com>
+From: Frederic Popp <frederic.l.popp@t-online.de>
 
-[ Upstream commit 7a14a4e9b3fda05b907d0445a3be9e7c0e887f4e ]
+[ Upstream commit c4791ce96b88a444b04c7089ae2827a3b3ae1877 ]
 
-An extra dma_fence_put() can drop the last reference to a fence while it is
-still attached to a dma_resv object. This frees the fence prematurely via
-dma_fence_release() while other users still hold the pointer.
+Adapt the already implemented support for the Studio 1824c
+audio interface to the predecessor Studio 1824.
 
-Later accesses through dma_resv iteration may then operate on the freed
-fence object, leading to refcount underflow warnings and potential hangs
-when walking reservation fences.
+Basically just a change adding the
+different hardware ID in the relevant places.
 
-Fix this by correcting the fence lifetime so the dma_resv object retains a
-valid reference until it is done with the fence.i
+Tested as much as possible.
+All implemented functionality seemingly works.
 
-[   31.133803] refcount_t: underflow; use-after-free.
-[   31.133805] WARNING: lib/refcount.c:28 at refcount_warn_saturate+0x58/0x90, CPU#18: kworker/u96:1/188
-
-Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Frederic Popp <frederic.l.popp@t-online.de>
+Link: https://patch.msgid.link/20260308153334.50433-2-frederic.l.popp@t-online.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the full analysis.
+The context matches the diff perfectly. The patch would apply cleanly.
+Now I have all the information needed.
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Complete Analysis
 
-### Step 1.1: PARSE THE SUBJECT LINE
-- **Subsystem**: drm/amdgpu/userq (AMD GPU user queue fence handling)
-- **Action verb**: "fix" - explicitly states it's a bug fix
-- **Summary**: Fixes dma_fence refcount underflow (double-put) in the
-  userqueue wait ioctl path
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>** - Author, AMD
-  employee, regular contributor to amdgpu
-- **Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>** - Major
-  DRM subsystem contributor
-- **Reviewed-by: Christian König <christian.koenig@amd.com>** - AMD DRM
-  maintainer, very strong endorsement
-- **Signed-off-by: Alex Deucher <alexander.deucher@amd.com>** - amdgpu
-  subsystem maintainer who committed it
-- **No Fixes: tag** - expected for AUTOSEL candidates; the mailing list
-  discussion confirmed it should be `Fixes: bea29bb0dd29
-  ("drm/amdgpu/userq: Consolidate wait ioctl exit path")`
-- **No explicit Cc: stable** - expected for AUTOSEL
+**Step 1.1: Parse the Subject Line**
+- Subsystem: `ALSA: usb-audio`
+- Action verb: "add" (add support)
+- Summary: Adding USB device ID for Presonus Studio 1824 to existing
+  driver
+Record: [ALSA: usb-audio] [add] [Studio 1824 device support via ID
+addition to existing 1824c code paths]
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-- **Bug description**: An extra `dma_fence_put()` drops the last
-  reference to a fence still attached to a `dma_resv` object, freeing it
-  prematurely
-- **Symptom**: refcount underflow warnings (`refcount_t: underflow; use-
-  after-free`) followed by soft lockup (`watchdog: BUG: soft lockup -
-  CPU#9 stuck for 26s!`)
-- **Root cause**: After the "Consolidate wait ioctl exit path" commit
-  merged both exit paths into one, fences get double-put: once inside
-  the processing loop and once in the shared cleanup path
-- **Stack traces**: Two crash traces provided - the refcount underflow
-  in `drm_sched_entity_pop_job` and a 26s soft lockup in
-  `dma_resv_iter_walk_unlocked` from `amdgpu_bo_kmap`
+**Step 1.2: Parse All Commit Message Tags**
+- Signed-off-by: Frederic Popp <frederic.l.popp@t-online.de> (author)
+- Link: https://patch.msgid.link/20260308153334.50433-2-
+  frederic.l.popp@t-online.de (patch 2 in a series)
+- Signed-off-by: Takashi Iwai <tiwai@suse.de> (ALSA maintainer, accepted
+  the patch)
+- No Fixes: tag (expected)
+- No Cc: stable (expected)
+- No Reported-by: tag (author is the user of this hardware)
+Record: Author SOB, maintainer SOB, link suggests patch 2 of a series.
+Maintainer Takashi Iwai applied it.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-This is a clear, explicit bug fix, not a hidden one.
+**Step 1.3: Analyze the Commit Body Text**
+The commit message says: "Adapt the already implemented support for the
+Studio 1824c audio interface to the predecessor Studio 1824. Basically
+just a change adding the different hardware ID in the relevant places."
+Author states they tested it: "Tested as much as possible. All
+implemented functionality seemingly works."
+Record: No bug described. This adds hardware support for an existing
+device family. The Studio 1824 is a predecessor of the 1824c with a
+different USB product ID (0x0107 vs 0x010d).
 
-Record: This is a direct fix for a use-after-free / refcount underflow
-caused by double `dma_fence_put()`.
+**Step 1.4: Detect Hidden Bug Fixes**
+This is not a hidden bug fix. It is straightforwardly adding a new USB
+device ID to an existing driver to enable a hardware device. This falls
+under the "NEW DEVICE IDs" exception category.
+Record: Not a hidden bug fix. This is a device ID addition.
 
----
+### PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+**Step 2.1: Inventory the Changes**
+- `sound/usb/format.c`: +4 lines (new device ID check for sample rate
+  filtering)
+- `sound/usb/mixer_quirks.c`: +3 lines (new case in switch for mixer
+  init)
+- `sound/usb/mixer_s1810c.c`: +2 lines in two locations (new case labels
+  in switches)
+- Total: ~9 lines added, 0 removed
+- Functions modified: `parse_uac2_sample_rate_range()`,
+  `snd_usb_mixer_apply_create_quirk()`, `snd_s1810c_init_mixer_maps()`,
+  `snd_sc1810_init_mixer()`
+Record: 3 files, +9 lines, all adding `USB_ID(0x194f, 0x0107)` case
+entries. Scope: trivial device ID addition.
 
-### Step 2.1: INVENTORY THE CHANGES
-- **Files changed**: 1
-  (`drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c`)
-- **Lines removed**: 5 (three `dma_fence_put(fences[i])` calls and
-  associated braces)
-- **Lines added**: 1 (reformatting `if (r)` to single line)
-- **Net change**: -4 lines
-- **Functions modified**: `amdgpu_userq_wait_ioctl()`
-- **Scope**: Single-file, single-function surgical fix
+**Step 2.2: Code Flow Change**
+Each hunk adds the Presonus Studio 1824 USB ID (0x194f, 0x0107) to the
+same code paths that already handle the 1824c (0x194f, 0x010d):
+1. `format.c`: Before: 1824 rates not filtered. After: invalid sample
+   rates filtered using same `s1810c_valid_sample_rate()` function.
+2. `mixer_quirks.c`: Before: 1824 not recognized. After: calls
+   `snd_sc1810_init_mixer()` like the 1824c does.
+3. `mixer_s1810c.c` (init_mixer_maps): Before: 1824 not handled. After:
+   falls through to 1824c case for initial mix setup.
+4. `mixer_s1810c.c` (snd_sc1810_init_mixer): Before: 1824 not handled.
+   After: falls through to 1824c case for mono switch init.
+Record: All hunks simply add the 1824 USB ID alongside the existing
+1824c ID to follow the same code paths.
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-**Hunk 1 (non-userq fence path)**: Removes `dma_fence_put(fences[i])` on
-both the error and success branches of the `dma_fence_wait()` call for
-non-userq fences.
+**Step 2.3: Bug Mechanism**
+Category: Hardware enablement - device ID addition. Not a bug fix per
+se, but enables a hardware device that is otherwise non-functional or
+partially functional without proper mixer initialization and sample rate
+filtering.
+Record: [Device ID addition] [Without this, the Studio 1824 would lack
+proper mixer initialization and sample rate filtering]
 
-**Hunk 2 (userq fence path)**: Removes `dma_fence_put(fences[i])` after
-extracting fence_info for userq fences.
+**Step 2.4: Fix Quality**
+- Obviously correct: Yes. Identical pattern to the existing 1824c
+  entries.
+- Minimal/surgical: Yes. Only device ID additions, 9 lines total.
+- Regression risk: Essentially zero. Only affects users who plug in a
+  Presonus Studio 1824 (USB ID 0x194f:0x0107). Cannot affect any other
+  device.
+- No red flags.
+Record: Fix quality excellent. Zero regression risk. Trivial, obviously
+correct.
 
-**Cleanup path** (unchanged): The `free_fences:` label at the end
-already iterates through ALL fences and puts them:
-```c
-while (num_fences-- > 0)
-    dma_fence_put(fences[num_fences]);
-```
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-**Before**: Fences were put inside the loop (3 locations) AND again in
-the cleanup loop = double-put.
-**After**: Fences are only put in the cleanup loop = correct single put.
+**Step 3.1: Blame the Changed Lines**
+The code being modified was introduced by:
+- `8dc5efe3d17cd` (v5.7-rc1): Initial 1810c support by Nick Kossifidis
+- `080564558eb13` (v6.15-rc1): 1824c device ID addition by Amin Dandache
+- `0ca29010d426e` (v6.18-rc1): 1824c initial mixer maps by Roy Vegard
+  Ovesen
+- `659169c4eb21f` (v6.18-rc1): 1824c mono switch by Roy Vegard Ovesen
+Record: Driver has been in the tree since v5.7. The 1824c support (which
+this 1824 commit mirrors) landed in v6.15/v6.18.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-- **Category**: Reference counting bug / double-free / use-after-free
-- **Mechanism**: The `fences[]` array holds references obtained via
-  `dma_fence_get()`. After the exit path consolidation (commit
-  bea29bb0dd29), all exits go through `free_fences` which puts every
-  fence. But the loop was also putting fences individually, resulting in
-  each processed fence getting put twice. This drops the refcount below
-  zero, triggering `refcount_warn_saturate()`, and may free the fence
-  while `dma_resv` still holds the pointer, leading to use-after-free
-  and hangs.
+**Step 3.2: Follow the Fixes: tag**
+No Fixes: tag present (expected - this is a device ID addition, not a
+bug fix).
+Record: N/A
 
-### Step 2.4: ASSESS THE FIX QUALITY
-- **Obviously correct**: Yes. The cleanup loop handles all fence puts
-  correctly. Removing the in-loop puts ensures exactly one put per get.
-- **Minimal/surgical**: Yes, -4 net lines, only removing erroneous calls
-- **Regression risk**: Extremely low - this purely removes double-puts.
-  No new logic introduced.
-- **Red flags**: None
+**Step 3.3: File History**
+The mixer_s1810c.c file has seen active development recently with 1824c
+improvements (initial mix, mono switch, cleanups). The Studio 1824
+support piggybacks on all of this.
+Record: Active file with recent 1824c-related improvements. This commit
+adds 1824 on top of that work.
 
----
+**Step 3.4: Author's Other Commits**
+Frederic Popp has no other commits in this tree. First-time contributor
+with tested hardware support. Patch was accepted by subsystem maintainer
+Takashi Iwai.
+Record: First-time contributor. Patch vetted by ALSA maintainer.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.5: Dependencies**
+The commit depends on:
+1. `080564558eb13` - 1824c basic support (v6.15) - **IN TREE**
+   (verified)
+2. `0ca29010d426e` - 1824c initial mixer maps (v6.18) - **IN TREE**
+   (verified)
+3. `659169c4eb21f` - 1824c mono switch (v6.18) - **IN TREE** (verified)
+4. `d1d6ad7f6686e` - Removal of skip_setting quirk for 1824c - **IN
+   TREE** (verified)
 
-### Step 3.1: BLAME THE CHANGED LINES
-- The in-loop `dma_fence_put` calls originated in commit
-  `15e30a6e479282` (Arunpravin Paneer Selvam, 2024-10-30) - "Add wait
-  IOCTL timeline syncobj support"
-- The cleanup loop `free_fences` was modified by commit `048c1c4e51715`
-  (Tvrtko Ursulin, 2026-02-23) - "Consolidate wait ioctl exit path",
-  cherry-picked from mainline `bea29bb0dd29`
-- The consolidation commit merged the success and error exit paths into
-  one, creating the double-put
+All dependencies present. The message-id suggests patch 2 of a series,
+but the diff is self-contained (patch 1 was likely a cover letter or an
+unrelated companion change).
+Record: All dependencies present in tree. Commit is self-contained.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-The mailing list discussion confirms `Fixes: bea29bb0dd29
-("drm/amdgpu/userq: Consolidate wait ioctl exit path")`. This commit is
-present in the 7.0 stable tree as `048c1c4e51715`.
+### PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Only one commit after the consolidation: `65b5c326ce410` (refcount
-userqueues), which modifies different parts of the function (queue
-lookup, not the fence loop). The fix is standalone.
+**Step 4.1-4.5: Mailing List**
+Lore.kernel.org is blocking automated access (Anubis protection). b4 dig
+could not find the commit (not yet in the tree). However, the Link: tag
+confirms the patch was submitted to the ALSA mailing list and was
+accepted by Takashi Iwai (the ALSA subsystem maintainer).
+Record: Could not access lore discussion. Patch was accepted by ALSA
+maintainer Takashi Iwai.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Sunil Khatri is a regular AMD contributor with multiple commits to the
-amdgpu userq subsystem. He authored the refcount userqueues commit and
-multiple input validation fixes.
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-This is patch 3/3 in a series, but it is self-contained. Patch 1/3 deals
-with gem object lookup optimization and patch 2/3 with kvfree usage -
-neither affects the same code or is needed for this fix.
+**Step 5.1-5.5: Functions Modified**
+The changes are all switch case additions:
+- `parse_uac2_sample_rate_range()` - called during USB audio format
+  parsing
+- `snd_usb_mixer_apply_create_quirk()` - called during mixer creation
+- `snd_s1810c_init_mixer_maps()` - called during mixer initialization
+- `snd_sc1810_init_mixer()` - called during mixer initialization
 
----
+All are in the device probe/initialization path. The code paths are only
+triggered when a device with USB ID 0x194f:0x0107 is connected.
+Record: All changes in probe/init path, device-ID gated. No impact on
+any other device.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-Found at: https://lists.freedesktop.org/archives/amd-
-gfx/2026-March/140504.html
+**Step 6.1: Does the Code Exist in Stable Trees?**
+This is for stable tree 7.0.y. The v7.0 tree has all prerequisites. For
+older stable trees (6.12.y, 6.6.y, etc.), the 1824c support may not
+exist, making this patch inapplicable there.
+Record: Applies to 7.0.y. May not apply to older stable trees without
+1824c support (added in v6.15/v6.18).
 
-**Tvrtko Ursulin** (the author of the commit that introduced the bug)
-reviewed the fix, confirmed it's correct, and acknowledged he introduced
-the bug:
-> "I have to say the commit message confused me a bit, but the fix looks
-correct. I say confused because isn't it a simple case of
-amdgpu_userq_wait_ioctl() doing a potential double put? First one when
-the dma_fence_wait() above fails or succeeds, and the second one in the
-unwind loop. Which means it was me who broke it yet again."
+**Step 6.2: Backport Complications**
+The patch would apply cleanly to the 7.0 tree - verified that the
+context lines match exactly.
+Record: Clean apply expected.
 
-He provided: `Fixes: bea29bb0dd29 ("drm/amdgpu/userq: Consolidate wait
-ioctl exit path")` and added his `Reviewed-by`.
+**Step 6.3: Related Fixes Already in Stable**
+No related fixes for Studio 1824 in any stable tree (this is the first
+time this device is supported).
+Record: No prior fixes exist.
 
-### Step 4.2: REVIEWER ANALYSIS
-- **Tvrtko Ursulin** (Reviewed-by) - major DRM contributor and the
-  author of the bug-introducing commit
-- **Christian König** (Reviewed-by) - AMD DRM co-maintainer
-- **Alex Deucher** (Signed-off-by) - amdgpu maintainer who applied the
-  fix
-- All key stakeholders reviewed and approved
+### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 4.3: BUG REPORT
-The commit message includes a full kernel stack trace showing the actual
-crash on real hardware (X570 AORUS ELITE with AMD GPU, running
-6.19.0-amd-staging-drm-next). The bug was found through actual testing,
-not just code review.
+**Step 7.1: Subsystem Criticality**
+- Subsystem: ALSA USB audio (`sound/usb/`)
+- Criticality: IMPORTANT (USB audio is widely used)
+Record: ALSA USB audio, IMPORTANT criticality.
 
-### Step 4.4/4.5: SERIES AND STABLE CONTEXT
-The other patches in the series (1/3 and 2/3) are unrelated
-optimizations. This patch is fully standalone.
+**Step 7.2: Subsystem Activity**
+Active subsystem with frequent device-specific additions and quirk
+updates.
+Record: Active subsystem.
 
----
+### PHASE 8: IMPACT AND RISK ASSESSMENT
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 8.1: Who Is Affected**
+Only users of Presonus Studio 1824 hardware. Without this patch, the
+device would operate as a generic UAC2 device but lack proper mixer
+initialization, sample rate filtering, and control switches.
+Record: Driver-specific, affects Presonus Studio 1824 owners.
 
-### Step 5.1-5.4: FUNCTION AND CALL CHAIN ANALYSIS
-- **Modified function**: `amdgpu_userq_wait_ioctl()` - a DRM ioctl
-  handler
-- **Call chain**: `__se_sys_ioctl` -> `drm_ioctl` -> `amdgpu_drm_ioctl`
-  -> `amdgpu_userq_wait_ioctl`
-- **Reachability**: Directly reachable from userspace via ioctl syscall
-  - any userspace GPU application using userqueues can trigger this
-- **Impact**: The crash occurs in the GPU scheduler workqueue
-  (`drm_sched_run_job_work`) when it encounters the freed fence, and
-  causes a 26-second soft lockup
+**Step 8.2: Trigger Conditions**
+Triggered when a user plugs in a Presonus Studio 1824 USB audio
+interface.
+Record: Device-specific trigger. Common for users of this hardware.
 
----
+**Step 8.3: Failure Mode**
+Without this patch: improper mixer setup, potentially wrong sample
+rates, missing controls. Not a crash or security issue, but a hardware
+enablement gap.
+Record: Severity: MEDIUM (hardware not fully functional without the
+patch)
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+**Step 8.4: Risk-Benefit Ratio**
+- BENEFIT: Enables proper hardware support for Presonus Studio 1824
+  owners on stable kernels.
+- RISK: Essentially zero. 9 lines of device ID additions, affecting only
+  one specific USB device. Cannot regress any other functionality.
+Record: Very high benefit-to-risk ratio.
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-Yes. The buggy "Consolidate wait ioctl exit path" commit was cherry-
-picked into the 7.0 stable tree as `048c1c4e51715`. The double-put is
-confirmed present in the current code at lines 949-977 and 991-995.
+### PHASE 9: FINAL SYNTHESIS
 
-### Step 6.2: BACKPORT COMPLICATIONS
-The diff should apply cleanly or with minimal offset. The code context
-matches the current tree state. The intervening `65b5c326ce410` commit
-modifies different parts of the function.
+**Step 9.1: Evidence Compilation**
+FOR backporting:
+- Classic device ID addition to existing driver (exception category)
+- Trivially small (9 lines) and obviously correct
+- Mirrors existing 1824c entries exactly
+- Author tested on real hardware
+- Accepted by ALSA subsystem maintainer Takashi Iwai
+- Zero regression risk (device-ID gated)
+- All dependencies are in the 7.0 tree
+- Would apply cleanly
 
-### Step 6.3: RELATED FIXES IN STABLE
-No other fix for this specific double-put issue exists in the stable
-tree.
+AGAINST backporting:
+- Not a bug fix; it's new hardware enablement
+- First-time contributor (mitigated by maintainer acceptance)
+- Could not verify mailing list discussion (lore blocked)
 
----
+UNRESOLVED:
+- Could not access lore discussion (Anubis protection)
+- Could not determine if there was a companion patch 1 in the series
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct? YES - identical pattern to existing entries
+2. Fixes a real bug? NO (but falls under Device ID exception)
+3. Important issue? Device enablement for existing hardware family
+4. Small and contained? YES - 9 lines across 3 files
+5. No new features or APIs? Correct - no new APIs, just ID table
+   additions
+6. Can apply to stable? YES - clean apply verified
 
-### Step 7.1: SUBSYSTEM CRITICALITY
-- **Subsystem**: drm/amdgpu (AMD GPU driver) - IMPORTANT
-- **Sub-component**: userqueue fence handling - used by userspace GPU
-  workloads
-- **Impact scope**: All AMD GPU users running userqueue-enabled
-  applications
+**Step 9.3: Exception Categories**
+This is a **Device ID addition** to an existing driver. The Presonus
+Studio 1824 uses USB product ID 0x194f:0x0107, and the existing driver
+already supports its successor (1824c, ID 0x194f:0x010d). The commit
+adds the 1824's ID to the same code paths. This is the textbook
+definition of a stable-eligible device ID addition.
 
-### Step 7.2: SUBSYSTEM ACTIVITY
-The file has 48 commits and is actively developed. The userqueue feature
-is relatively new (introduced late 2024), so this is actively used by
-new GPU workloads.
+**Step 9.4: Decision**
+This is a straightforward device ID addition - one of the explicitly
+allowed exception categories for stable backports. It's trivially small,
+obviously correct, zero regression risk, and enables real hardware for
+real users.
 
----
+### Verification
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: WHO IS AFFECTED
-All users with AMD GPUs that use the userqueue IOCTL path (driver-
-specific, but a major driver).
-
-### Step 8.2: TRIGGER CONDITIONS
-The bug triggers during normal GPU operations - the stack trace shows it
-happening during `glxgears:cs0` workload via the signal ioctl path
-walking reservation fences. Any userspace application exercising the
-wait/signal ioctl path can trigger this.
-
-### Step 8.3: FAILURE MODE SEVERITY
-- **Primary**: `refcount_t: underflow; use-after-free` WARNING
-- **Secondary**: Soft lockup (CPU stuck for 26s) in
-  `dma_resv_iter_walk_unlocked`
-- **Severity**: CRITICAL - system hang/lockup, potential data corruption
-  from use-after-free
-
-### Step 8.4: RISK-BENEFIT RATIO
-- **BENEFIT**: Very high - prevents use-after-free, refcount underflow,
-  and system hangs for AMD GPU users
-- **RISK**: Very low - 4 net lines removed, no new logic, obviously
-  correct, reviewed by the person who introduced the bug and by the
-  subsystem maintainer
-- **Ratio**: Extremely favorable
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: EVIDENCE COMPILATION
-
-**FOR backporting:**
-- Fixes a real, reproducible use-after-free and refcount underflow
-- Causes system soft lockup (26 seconds) - CRITICAL severity
-- Triggered via normal GPU ioctl usage path
-- Extremely small and surgical (-4 net lines)
-- Reviewed by 2 DRM experts (Tvrtko Ursulin, Christian König)
-- Applied by subsystem maintainer (Alex Deucher)
-- Bug-introducing commit (bea29bb0dd29/048c1c4e51715) is already in this
-  stable tree
-- Full stack trace demonstrating the crash on real hardware
-- Standalone fix with no dependencies on other patches
-
-**AGAINST backporting:**
-- None identified
-
-### Step 9.2: STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES - confirmed by author,
-   reviewers, and the person who introduced the bug; tested on real
-   hardware
-2. **Fixes a real bug?** YES - double dma_fence_put causing use-after-
-   free and soft lockup
-3. **Important issue?** YES - system hang (soft lockup), use-after-free,
-   refcount underflow
-4. **Small and contained?** YES - 4 net lines removed in a single
-   file/function
-5. **No new features or APIs?** CORRECT - purely removes erroneous calls
-6. **Can apply to stable trees?** YES - the buggy commit is present in
-   this tree
-
-### Step 9.3: EXCEPTION CATEGORIES
-Not applicable - this is a standard critical bug fix.
-
-### Step 9.4: DECISION
-This is a textbook stable backport candidate: a small, obviously correct
-fix for a critical bug (use-after-free + system hang) that was
-introduced by a commit already present in the stable tree.
-
----
-
-## Verification
-
-- [Phase 1] Parsed commit message: explicit "fix" in subject, refcount
-  underflow description, stack traces showing soft lockup and use-after-
-  free warning
-- [Phase 1] Tags: Reviewed-by Tvrtko Ursulin and Christian König;
-  Signed-off-by Alex Deucher (maintainer)
-- [Phase 2] Diff: removes 3 `dma_fence_put(fences[i])` calls from loop
-  in `amdgpu_userq_wait_ioctl()`, -4 net lines
-- [Phase 2] Cleanup path at `free_fences:` already calls
-  `dma_fence_put()` on all fences, confirmed at lines 991-995
-- [Phase 3] git blame: in-loop puts from commit 15e30a6e479282
-  (2024-10-30); cleanup loop modified by 048c1c4e51715 (consolidation)
-- [Phase 3] Consolidation commit `048c1c4e51715` confirmed present in
-  7.0 tree (cherry-picked from bea29bb0dd29)
-- [Phase 3] Current code at lines 949-977 confirmed still has the
-  double-put (fix not yet applied)
-- [Phase 3] Only one intervening commit (65b5c326ce410, refcount
-  userqueues) which touches different code areas
-- [Phase 4] Mailing list discussion found at
-  https://lists.freedesktop.org/archives/amd-gfx/2026-March/140504.html
-- [Phase 4] Tvrtko Ursulin confirmed the fix is correct and acknowledged
-  he introduced the bug
-- [Phase 4] Tvrtko provided the Fixes tag: `Fixes: bea29bb0dd29`
-- [Phase 4] No NAKs, no objections; unanimous approval from reviewers
-- [Phase 5] `amdgpu_userq_wait_ioctl()` is reachable from userspace
-  ioctl syscall path
-- [Phase 6] Bug-introducing commit IS in this stable tree
-  (048c1c4e51715)
-- [Phase 6] Fix should apply cleanly - code context matches
-- [Phase 7] amdgpu is an IMPORTANT subsystem; userqueue fence code is
-  actively developed
-- [Phase 8] Failure: use-after-free + 26s soft lockup; severity
-  CRITICAL; triggered during normal GPU operations
+- [Phase 1] Parsed tags: SOB from author and maintainer Takashi Iwai,
+  Link to patch submission
+- [Phase 2] Diff analysis: +9 lines across 3 files, all adding
+  USB_ID(0x194f, 0x0107) to existing switch/if chains
+- [Phase 3] git merge-base: confirmed all prerequisite commits
+  (080564558eb13, 0ca29010d426e, 659169c4eb21f, d1d6ad7f6686e) are
+  ancestors of HEAD
+- [Phase 3] git describe: 1810c support in v5.7, 1824c support in
+  v6.15/v6.18
+- [Phase 3] git show 080564558eb13: confirmed 1824c was added via
+  identical pattern
+- [Phase 4] b4 dig: could not find commit (not yet in tree) - EXPECTED
+  for candidate
+- [Phase 4] lore access: blocked by Anubis - UNVERIFIED: mailing list
+  discussion details
+- [Phase 5] Code paths: all changes are device-ID gated, only triggered
+  for USB ID 0x194f:0x0107
+- [Phase 6] Context match verified: diff hunks match current tree state
+  exactly, clean apply expected
+- [Phase 6] No 0x0107 entries exist in sound/usb/ for Presonus vendor ID
+  (confirmed via grep)
+- [Phase 8] Risk: zero (device-ID gated, 9 lines, mirrors existing code
+  exactly)
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ sound/usb/format.c       | 4 ++++
+ sound/usb/mixer_quirks.c | 3 +++
+ sound/usb/mixer_s1810c.c | 2 ++
+ 3 files changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-index 5239b06b9ab03..bb390067c26ef 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-@@ -947,12 +947,9 @@ int amdgpu_userq_wait_ioctl(struct drm_device *dev, void *data,
- 				 * be good for now
- 				 */
- 				r = dma_fence_wait(fences[i], true);
--				if (r) {
--					dma_fence_put(fences[i]);
-+				if (r)
- 					goto free_fences;
--				}
+diff --git a/sound/usb/format.c b/sound/usb/format.c
+index 1207c507882ad..030b4307927a2 100644
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -455,6 +455,10 @@ static int parse_uac2_sample_rate_range(struct snd_usb_audio *chip,
+ 			if (chip->usb_id == USB_ID(0x194f, 0x010d) &&
+ 			    !s1810c_valid_sample_rate(fp, rate))
+ 				goto skip_rate;
++			/* Filter out invalid rates on Presonus Studio 1824 */
++			if (chip->usb_id == USB_ID(0x194f, 0x0107) &&
++			    !s1810c_valid_sample_rate(fp, rate))
++				goto skip_rate;
  
--				dma_fence_put(fences[i]);
- 				continue;
- 			}
+ 			/* Filter out invalid rates on Focusrite devices */
+ 			if (USB_ID_VENDOR(chip->usb_id) == 0x1235 &&
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 11e205da7964d..1d2a74df7ab09 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -4477,6 +4477,9 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
+ 	case USB_ID(0x194f, 0x010d): /* Presonus Studio 1824c */
+ 		err = snd_sc1810_init_mixer(mixer);
+ 		break;
++	case USB_ID(0x194f, 0x0107): /* Presonus Studio 1824 */
++		err = snd_sc1810_init_mixer(mixer);
++		break;
+ 	case USB_ID(0x2a39, 0x3fb0): /* RME Babyface Pro FS */
+ 		err = snd_bbfpro_controls_create(mixer);
+ 		break;
+diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
+index 7eac7d1bce647..2e5a8d37ec578 100644
+--- a/sound/usb/mixer_s1810c.c
++++ b/sound/usb/mixer_s1810c.c
+@@ -362,6 +362,7 @@ static int snd_s1810c_init_mixer_maps(struct snd_usb_audio *chip)
+ 		snd_s1810c_send_ctl_packet(dev, a, 3, 0, 1, MIXER_LEVEL_0DB);
+ 		break;
  
-@@ -974,7 +971,6 @@ int amdgpu_userq_wait_ioctl(struct drm_device *dev, void *data,
- 			fence_info[cnt].va = fence_drv->va;
- 			fence_info[cnt].value = fences[i]->seqno;
++	case USB_ID(0x194f, 0x0107): /* 1824 */
+ 	case USB_ID(0x194f, 0x010d): /* 1824c */
+ 		/* Set all output faders to unity gain */
+ 		a = SC1810C_SEL_OUTPUT;
+@@ -685,6 +686,7 @@ int snd_sc1810_init_mixer(struct usb_mixer_interface *mixer)
+ 			return ret;
  
--			dma_fence_put(fences[i]);
- 			/* Increment the actual userq fence count */
- 			cnt++;
- 		}
+ 		break;
++	case USB_ID(0x194f, 0x0107): /* Presonus Studio 1824 */
+ 	case USB_ID(0x194f, 0x010d): /* Presonus Studio 1824c */
+ 		ret = snd_s1810c_switch_init(mixer, &snd_s1824c_mono_sw);
+ 		if (ret < 0)
 -- 
 2.53.0
 
