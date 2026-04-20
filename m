@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68E2336EE1;
-	Mon, 20 Apr 2026 15:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21573385B6;
+	Mon, 20 Apr 2026 15:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700405; cv=none; b=Il+HVF5w3cDZTe+dDWTteBndZOEqZVEQLcKGsf4FYjXFlmQ38DLPg2zIxBnpVTvnwsFmT2q1QzDxwqS+zhGqSYePFSgVhKd4UdeSnHmAS1W+3lULU4/wSpcOe4BaS4nePIPa4RaRWGcPyIUNXcfrsXZQu7UjNGU2EADgVib+z2A=
+	t=1776700407; cv=none; b=Uft5lNL+LMB/6VheH+enNTrWKQysFpjPX28xVfpbskFSLs882ij1uMQRMWbVlXUgrQnZSTgHwyd9cEIngbmV381/kUH4Eam+hy6dGcgRHeaCDfFzUrMvRcQStg+4DvNuz67dT8c6+wg2OFxVHruovzUob2O42cb9yx62jH1zePQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700405; c=relaxed/simple;
-	bh=BvCuMIUe2R/Jg5QjIKWCscr+B3pbfQceDjopoAz0Geg=;
+	s=arc-20240116; t=1776700407; c=relaxed/simple;
+	bh=oxGvc/032NV3va8tOtDxi+FiI1aHE+6ro/RTn/Q367M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AhqS3mTiBwxGR64mHeEj+nVun5f5XY9fVV9gs8abF0TIEPRxQupMDakynmB2yv2Tul6vGMi95NFn1PnkaBOmS7dZEjazTh3Wmx6OvvvJKNGBI2KGs0B6XhEuujN16sI8s/chvNmXunp5HCKgbp6S+SEHZvYLfFOvUSoxzeZKF6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gngtrglu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E1dSbvOuk1xIMR3f4TXCucnLPeJmHtkAqSqIlom9j3Bu3o9AxlJCFhF0GBJdJdEA5cYmRptvl4PNswMi7JYRPYUT5K4DmQbePYch/CY4YV6FFwJVwHHw8tP/t4z3fsOXmyLfs+7Ve7pi9xfhIcBVd8xxieo4aPcrpOMetUmlrXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5rn/vMx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gngtrglu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C81AC19425;
-	Mon, 20 Apr 2026 15:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5rn/vMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D175C19425;
+	Mon, 20 Apr 2026 15:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700404;
-	bh=BvCuMIUe2R/Jg5QjIKWCscr+B3pbfQceDjopoAz0Geg=;
+	s=korg; t=1776700407;
+	bh=oxGvc/032NV3va8tOtDxi+FiI1aHE+6ro/RTn/Q367M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GngtrgluMlR7zuC6lWdZW7iETRHwdS8he7Ons9TlJb9B1FSfudIcogq6kBQWtUlik
-	 Y9R2QqPBq8z9jNOFrwC7X35KkhMLUIaJYXRAMmEpeYZkYZ0lxzInQ7LkRh0Q4pm/9d
-	 GGh4a5A/5UJwBtG0iZPZognqhs+Uovo7VBDIz91Y=
+	b=d5rn/vMxPPUPNqoZRGeFsZrq3rXG/A2VMw95+MMPRwgZ1oAJdMgFX2O9KltrkdOnW
+	 cVtxjajjhi/KXcLbdUmq5dgM6HTmkyCLaT4Gft/t/HI48i7S67/Zjg/2iAmMv9rtLy
+	 dqAAJ0VMZeBh+y3NLZhk2iFqtrg2iEvqS+4KRNIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.19 142/220] i2c: s3c24xx: check the size of the SMBUS message before using it
-Date: Mon, 20 Apr 2026 17:41:23 +0200
-Message-ID: <20260420153939.141215064@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	stable@kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.19 160/220] ksmbd: fix mechToken leak when SPNEGO decode fails after token alloc
+Date: Mon, 20 Apr 2026 17:41:41 +0200
+Message-ID: <20260420153939.789412836@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153934.013228280@linuxfoundation.org>
 References: <20260420153934.013228280@linuxfoundation.org>
@@ -54,44 +57,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit c0128c7157d639a931353ea344fb44aad6d6e17a upstream.
+commit ad0057fb91218914d6c98268718ceb9d59b388e1 upstream.
 
-The first byte of an i2c SMBUS message is the size, and it should be
-verified to ensure that it is in the range of 0..I2C_SMBUS_BLOCK_MAX
-before processing it.
+The kernel ASN.1 BER decoder calls action callbacks incrementally as it
+walks the input.  When ksmbd_decode_negTokenInit() reaches the mechToken
+[2] OCTET STRING element, ksmbd_neg_token_alloc() allocates
+conn->mechToken immediately via kmemdup_nul().  If a later element in
+the same blob is malformed, then the decoder will return nonzero after
+the allocation is already live.  This could happen if mechListMIC [3]
+overrunse the enclosing SEQUENCE.
 
-This is the same logic that was added in commit a6e04f05ce0b ("i2c:
-tegra: check msg length in SMBUS block read") to the i2c tegra driver.
+decode_negotiation_token() then sets conn->use_spnego = false because
+both the negTokenInit and negTokenTarg grammars failed.  The cleanup at
+the bottom of smb2_sess_setup() is gated on use_spnego:
 
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>
-Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_2000
+	if (conn->use_spnego && conn->mechToken) {
+		kfree(conn->mechToken);
+		conn->mechToken = NULL;
+	}
+
+so the kfree is skipped, causing the mechToken to never be freed.
+
+This codepath is reachable pre-authentication, so untrusted clients can
+cause slow memory leaks on a server without even being properly
+authenticated.
+
+Fix this up by not checking check for use_spnego, as it's not required,
+so the memory will always be properly freed.  At the same time, always
+free the memory in ksmbd_conn_free() incase some other failure path
+forgot to free it.
+
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/2026022314-rely-scrubbed-4839@gregkh
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-s3c2410.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/connection.c |    1 +
+ fs/smb/server/smb2pdu.c    |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-s3c2410.c
-+++ b/drivers/i2c/busses/i2c-s3c2410.c
-@@ -503,8 +503,13 @@ static void i2c_s3c_irq_nextbyte(struct
- 		i2c->msg->buf[i2c->msg_ptr++] = byte;
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -39,6 +39,7 @@ void ksmbd_conn_free(struct ksmbd_conn *
+ 	xa_destroy(&conn->sessions);
+ 	kvfree(conn->request_buf);
+ 	kfree(conn->preauth_info);
++	kfree(conn->mechToken);
+ 	if (atomic_dec_and_test(&conn->refcnt)) {
+ 		conn->transport->ops->free_transport(conn->transport);
+ 		kfree(conn);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1914,7 +1914,7 @@ out_err:
+ 	else if (rc)
+ 		rsp->hdr.Status = STATUS_LOGON_FAILURE;
  
- 		/* Add actual length to read for smbus block read */
--		if (i2c->msg->flags & I2C_M_RECV_LEN && i2c->msg->len == 1)
-+		if (i2c->msg->flags & I2C_M_RECV_LEN && i2c->msg->len == 1) {
-+			if (byte == 0 || byte > I2C_SMBUS_BLOCK_MAX) {
-+				s3c24xx_i2c_stop(i2c, -EPROTO);
-+				break;
-+			}
- 			i2c->msg->len += byte;
-+		}
-  prepare_read:
- 		if (is_msglast(i2c)) {
- 			/* last byte of buffer */
+-	if (conn->use_spnego && conn->mechToken) {
++	if (conn->mechToken) {
+ 		kfree(conn->mechToken);
+ 		conn->mechToken = NULL;
+ 	}
 
 
