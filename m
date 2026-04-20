@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9847ECD9;
-	Mon, 20 Apr 2026 13:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E385E47ECE0;
+	Mon, 20 Apr 2026 13:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691873; cv=none; b=AQs1nSCcXSGObig8094ofTIZ1Il4MtzMYX1+7NxoVS5pwTWN2LMciBbjgkXQOGIlQlIUbLuCRjvasqMiId6DZ4tddcoyVeqyuFUgZ/PIFi3QWr6KHYEmNPxkDZoli/d6F3wWyDaWLT9BaCwmdxCA1NU2A+KW36PKu/F7hOozsC4=
+	t=1776691875; cv=none; b=srPujJl7+sqVviBPTfCd78R5NkJolTySwCeTHFSTdEOdXp4gCH6k9xVepIrZtcruahHRJ6WXPmxztKG2gZNZZOsF+0BZs7VFV+Qv6PSxFxOd8Lyb9c91ufRWkBj3DNt+d2C+ki3oMlvdftH+X++XjFyQgcORbcAIEE/gL56nfDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691873; c=relaxed/simple;
-	bh=Cgg0XfGmdunhBU3i6RDEiNjzSLUimxl+nyzgB/Gf+eY=;
+	s=arc-20240116; t=1776691875; c=relaxed/simple;
+	bh=gvyXCCMJAH//t5bxq4mcivXbyjUIsK1an0vvgrVeBnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mvcan/f2+N9UD3H+oOgh2EHt7YaJlWru2d08C/ZBjpZ4yD+UtVErHRai2kBU5vX0X/UW5qeQXBjlK6rW5wzrApAZI2zKtO0EofYb07a3yi0hHsh1WWx8xQGixuGTvDGCscHoq81EKZj9EOJwwfkv3Bdv9pjni/or3yn/Qplo/ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DoT/Orn5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jjy0GtF8UUQotX1MjZXly5jtT3xHnbcsHfXq3b3E8A36kaPogor3bbnA28e0ChYBH7sRNRhqnK9nQzD58cIa519YfBkvCh5jCBkJUYhxs+zBwaV/Gd7NL+ccZrTfgQwme4aEZLqWjhNpErme1ByM3P515sTmx9dSMDktQU3l/ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o/melf3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DoT/Orn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D4DC2BCB6;
-	Mon, 20 Apr 2026 13:31:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o/melf3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557E4C2BCB4;
+	Mon, 20 Apr 2026 13:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691873;
-	bh=Cgg0XfGmdunhBU3i6RDEiNjzSLUimxl+nyzgB/Gf+eY=;
+	s=k20201202; t=1776691874;
+	bh=gvyXCCMJAH//t5bxq4mcivXbyjUIsK1an0vvgrVeBnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoT/Orn5kD/Sv945vr8pHtFOSZIMIGA3wmKCO/LzdrlYthWbZUDY9IFUCj0Nq6aNj
-	 PKbST6K7cnMEZNPikiojmVa97hiwHOJNsPiPCdsfu/fwXNAHpkh+amjJlmYjzB69PZ
-	 3H8FIlzznHZLGOwB+GyLKNENFQKgDsyhqatQCVdPW4nZQUQPH+3Do7Qq3LiNo615bL
-	 g9B177CWrDRRklV3EM5/dGmWpWk9A6yZwkEwfAskqBIoTi2r5V9Rd+ERKb7VrIQs3O
-	 Sf6ZWRZIzeYjE5rITeCSU988a0dU3QR0HiQK6IgQBz1R5QzKmckbqf5SIC9zq2Puxn
-	 lK71AR0BQY1KA==
+	b=o/melf3fBFQ89Mf2fHjCDkF/ZVQ8I2vOkI2bvtMlCwuBcKXY8504QiHM/xGiakwuA
+	 Tjyysh5xRS2VcyBg+2E7xAISu+IN4qWBQI3ruZkpe5Hk/zI+/9WOwNzC6Jyxo+Psdz
+	 ndRJXznPIK5VjRkZ+S7rnovatHTVefFY9P238d8qFe9KuHTe8WZxb3LLs2pge+IkKB
+	 wi1MZgJEQGN0CnT5Qden5prasKOzxAL6RPipcOjYs9qtTojAPuwIfC38TytWL+9csx
+	 aN1Vaku8IIgrXnIQ9s9w8CvbbD5N31vZxb6Mqx1vlo5S/BeVv8jhhkZyILNFDKiTw8
+	 ZQn8cCvWYJvcg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Palmer <daniel@0x0f.com>,
-	Christoph Plattner <christoph.plattner@gmx.at>,
-	Greg Ungerer <gerg@kernel.org>,
+Cc: Sreekant Somasekharan <Sreekant.Somasekharan@amd.com>,
+	Mukul Joshi <mukul.joshi@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	gerg@linux-m68k.org,
-	geert@linux-m68k.org,
-	linux-m68k@lists.linux-m68k.org,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] m68k: Fix task info flags handling for 68000
-Date: Mon, 20 Apr 2026 09:20:38 -0400
-Message-ID: <20260420132314.1023554-244-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] drm/amdgpu: Revert setting up Retry based Thrashing on GFX 12.1
+Date: Mon, 20 Apr 2026 09:20:39 -0400
+Message-ID: <20260420132314.1023554-245-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -55,385 +57,293 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Palmer <daniel@0x0f.com>
+From: Sreekant Somasekharan <Sreekant.Somasekharan@amd.com>
 
-[ Upstream commit 2c6805145e1605cef39459f78979f7edee251b41 ]
+[ Upstream commit 29756a7535facdaed39d0b5572201068a7746812 ]
 
-The logic for deciding what to do after a syscall should be checking
-if any of the lower byte bits are set and then checking if the reschedule
-bit is set.
+Bug found with retry based thrashing mechanism. Revert to the old
+thrashing method.
 
-Currently we are loading the top word, checking if any bits are set
-(which never seems to be true) and thus jumping over loading the
-whole long and checking if the reschedule bit is set.
-
-We get the thread info in two places so split that logic out in
-a macro and then fix the code so that it loads the byte of the flags
-we need to check, checks if anything is set and then checks if
-the reschedule bit in particular is set.
-
-Reported-by: Christoph Plattner <christoph.plattner@gmx.at>
-Signed-off-by: Daniel Palmer <daniel@0x0f.com>
-Signed-off-by: Greg Ungerer <gerg@kernel.org>
+Signed-off-by: Sreekant Somasekharan <Sreekant.Somasekharan@amd.com>
+Reviewed-by: Mukul Joshi <mukul.joshi@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile the full report.
+Now I have enough information to complete the full analysis. Let me
+compile everything.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 ### Step 1.1: Subject Line
-- **Subsystem:** m68k (68000 variant, non-MMU)
-- **Action verb:** "Fix"
-- **Summary:** Fix incorrect task info flags checking on the 68000
-  return-to-userspace path
+- **Subsystem:** drm/amdgpu (AMD GPU driver)
+- **Action verb:** "Revert" - undoing a previous feature that's buggy
+- **Summary:** Revert the retry-based thrashing prevention mechanism on
+  GFX 12.1 hardware
 
 ### Step 1.2: Tags
-- **Reported-by:** Christoph Plattner <christoph.plattner@gmx.at> — real
-  user report
-- **Signed-off-by:** Daniel Palmer (author), Greg Ungerer (m68k
-  maintainer)
-- No Fixes: tag, no Cc: stable (expected for manual review candidates)
-- Signed by the m68k maintainer (Greg Ungerer), strong trust signal
+- **Signed-off-by:** Sreekant Somasekharan (AMD employee, author)
+- **Reviewed-by:** Mukul Joshi (the original author of the reverted
+  feature)
+- **Signed-off-by:** Alex Deucher (AMD GPU subsystem maintainer)
+- No Fixes:, Reported-by:, Cc: stable, or Link: tags (expected for
+  autosel candidates)
 
 ### Step 1.3: Commit Body
-The message clearly explains the bug mechanism: the code loads the wrong
-portion of `thread_info->flags` (the top word instead of the low byte),
-causing the return-to-userspace check for pending work (rescheduling,
-signals) to **never fire**. The description is detailed and technically
-precise.
+The message says: "Bug found with retry based thrashing mechanism.
+Revert to the old thrashing method." This is terse, but the prior revert
+of the same mechanism (commit `127770bcfccc2`) was more explicit:
+"causing **data mismatch and slowness issues with multiple HIP tests**."
+Data mismatch is a data corruption symptom.
 
 ### Step 1.4: Hidden Bug Fix?
-No — this is explicitly described as a fix with clear symptoms.
-
----
+This is an explicit revert of a buggy hardware feature enablement. No
+hidden fix — it's straightforward.
 
 ## PHASE 2: DIFF ANALYSIS
 
 ### Step 2.1: Inventory
-- **One file changed:** `arch/m68k/68000/entry.S`
-- ~15 effective lines changed (excluding blank/comment lines)
-- **Functions affected:** `system_call` (macro extraction),
-  `Luser_return` / `Lwork_to_do` (the fix itself)
-- **Scope:** Single-file surgical fix
+- **Files:** 1 file modified: `drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c`
+- **Lines:** 0 added, 19 removed (pure deletion)
+- **Functions modified:**
+  - `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl` (entirely removed)
+  - `gfx_v12_1_init_golden_registers` (one call removed)
+- **Scope:** Single-file surgical removal
 
 ### Step 2.2: Code Flow Change
-
-The fix has two parts:
-
-**Part 1: Macro extraction** — The thread_info pointer computation (3
-instructions) is deduplicated into a `getthreadinfo` macro. This is pure
-cleanup with zero semantic change.
-
-**Part 2: The actual bug fix** at `Luser_return`:
-
-BEFORE (buggy):
-
-```103:103:arch/m68k/68000/entry.S
-        move    %a2@(TINFO_FLAGS),%d1   /* thread_info->flags */
-```
-
-On the MC68000, `move` (no size suffix) is a word (16-bit) operation. On
-big-endian m68k, this loads the **upper 16 bits** (bits 31-16) of the
-32-bit `flags` field. The important flags (TIF_NEED_RESCHED=7,
-TIF_SIGPENDING=6, etc.) are all in bits 0-7, so they are **never
-detected**.
-
-AFTER (fixed):
-
-```diff
-moveb   %a2@(TINFO_FLAGS + 3),%d1       /* thread_info->flags (low 8
-bits) */
-```
-
-Loads byte offset +3 (the least significant byte on big-endian), which
-contains the actual important flags.
-
-Also removes the redundant `movel` reload at `Lwork_to_do:` since `d1`
-already has the flags.
+- **Before:** `gfx_v12_1_init_golden_registers()` called
+  `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl()` for each XCC, which
+  programmed the TCP_UTCL0_THRASHING_CTRL register with retry-based
+  thrashing settings (THRASHING_EN=0x2,
+  RETRY_FRAGMENT_THRESHOLD_UP_EN=1, RETRY_FRAGMENT_THRESHOLD_DOWN_EN=1)
+- **After:** That function and its call are removed. The hardware's
+  default (non-retry-based) thrashing prevention is used instead.
 
 ### Step 2.3: Bug Mechanism
-**Logic/correctness bug** — Wrong memory access size and offset, causing
-the kernel to read bits 31-16 of the flags (always zero) instead of bits
-7-0 (where the important flags live).
+This is a **hardware workaround** — the retry-based thrashing mode in
+GFX 12.1's TCP UTCL0 has bugs causing data mismatch and performance
+issues. Reverting to the old thrashing method avoids triggering the
+hardware bug.
 
 ### Step 2.4: Fix Quality
-- **Obviously correct:** YES. The fix makes the 68000 code identical in
-  pattern to the ColdFire entry.S (fixed in 2012) and the MMU
-  kernel/entry.S, both of which use `moveb %aX@(TINFO_FLAGS+3)`.
-- **Minimal/surgical:** YES.
-- **Regression risk:** Essentially none — the current code is completely
-  broken, and the fix is a proven pattern.
-
----
+- Obviously correct: pure deletion of a function and its call site
+- Minimal/surgical: only removes the problematic code, nothing else
+  changes
+- Regression risk: essentially zero — only reverts to the previous
+  (working) behavior
+- Reviewed by the feature's original author
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 ### Step 3.1: Blame
-The buggy `move` instruction traces back to commit `aa4d1f897f6a7f`
-(2011, Greg Ungerer — symbol rename only). The actual instruction was
-present since `^1da177e4c3f41` (Linux 2.6.12, 2005). The bug has existed
-since the code was first written.
+The buggy function `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl` was
+introduced in commit `a41d94a7bb962` ("Setup Retry based thrashing
+prevention on GFX 12.1") by Mukul Joshi. This commit IS in v7.0.
 
-### Step 3.2: Related Fix
-Commit `8b3262c00d6fec` ("m68knommu: fix syscall tracing stuck process",
-Greg Ungerer, 2012) fixed the **exact same bug** for ColdFire:
-
-```diff
-- movel   %a0@(TINFO_FLAGS),%d1   /* get thread_info->flags */
-+       moveb   %a0@(TINFO_FLAGS+3),%d1 /* thread_info->flags (low 8
-bits) */
-```
-
-That 2012 fix missed the 68000 entry.S. This commit fixes the 68000
-variant 13+ years later.
+### Step 3.2: Fixes Tag
+No Fixes: tag present. However, this commit effectively fixes/reverts
+`a41d94a7bb962`.
 
 ### Step 3.3: File History
-Only cosmetic changes to `arch/m68k/68000/entry.S` since v5.15 (one SPDX
-header cleanup). The file is extremely stable — the fix will apply
-cleanly to all stable trees.
+The history reveals a pattern:
+1. An earlier version of retry-based thrashing was in the original file
+2. It was reverted in `127770bcfccc2` due to "data mismatch and slowness
+   issues with multiple HIP tests"
+3. It was re-added with different register settings in `a41d94a7bb962`
+4. This commit (`29756a7535fac`) reverts it again because bugs persist
 
 ### Step 3.4: Author Context
-Daniel Palmer is a known m68k contributor. Greg Ungerer (who signed off)
-is the m68k subsystem maintainer.
+Sreekant Somasekharan is an AMD employee working on the AMDGPU driver.
+The reviewer Mukul Joshi is the author of both the feature and the first
+revert. Alex Deucher is the subsystem maintainer.
 
 ### Step 3.5: Dependencies
-None. This is a completely standalone fix.
-
----
+The revert is standalone — it removes code without requiring any other
+changes. It will apply cleanly to v7.0 as verified by checking the exact
+state of the file in v7.0.
 
 ## PHASE 4: MAILING LIST RESEARCH
 
-### Step 4.1-4.2
-b4 dig could not find the original submission. Web searches did not
-locate the specific mailing list discussion. However, the patch was
-signed off by the m68k maintainer (Greg Ungerer), confirming proper
-review.
+### Step 4.1-4.5
+b4 dig could not find the patch on lore.kernel.org (both for the revert
+and the original commit). This is common for AMD GPU patches that may go
+through internal review or GitLab merge requests. Web searches also did
+not find the specific patch thread.
 
-### Step 4.3: Bug Report
-The Reported-by tag indicates Christoph Plattner hit this in practice.
-The symptoms would be processes never being preempted and never
-receiving signals — the system would be fundamentally broken for any
-real use.
-
----
+The related patch "gfx 12.1 cleanups" (found on spinics.net) confirms
+this file was actively being cleaned up in the same timeframe,
+validating that GFX 12.1 support was being actively refined.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Key Functions
-The fix is in the assembly return-to-userspace path (`Luser_return`),
-which is hit on **every syscall exit and every exception return** to
-userspace.
-
-### Step 5.2-5.4: Callers and Reachability
-`ret_from_exception` is the universal exception return path for the
-68000 platform. It is called from:
-- `system_call` (every syscall)
-- `inthandler1` through `inthandler7` (all hardware interrupts)
-
-This code path is hit **constantly** — every syscall and every interrupt
-that returns to userspace.
+### Step 5.1-5.4
+- `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl` is called from
+  `gfx_v12_1_init_golden_registers`
+- `gfx_v12_1_init_golden_registers` is called from `gfx_v12_1_hw_init` —
+  the hardware initialization path during GPU probe/resume
+- This is a **normal initialization path** hit every time the GPU is
+  initialized (boot, resume, GPU reset)
+- The buggy register programming affects all GFX 12.1 users on every GPU
+  init
 
 ### Step 5.5: Similar Patterns
-Both `arch/m68k/kernel/entry.S` (line 252) and
-`arch/m68k/coldfire/entry.S` (line 134) already use the correct `moveb
-%aX@(TINFO_FLAGS+3)` pattern. The `thread_info.h` header confirms at
-lines 57-59:
-
-```57:60:arch/m68k/include/asm/thread_info.h
-/* entry.S relies on these definitions!
- - bits 0-7 are tested at every exception exit
- - bits 8-15 are also tested at syscall exit
-```
-
----
+The TCP_UTCL0_THRASHING_CTRL register only exists in GFX 12.1 headers.
+No other GFX versions use this specific register in the same way.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Buggy Code in Stable Trees
-The buggy code has been present since Linux 2.6.12 (2005). It exists in
-ALL stable trees. Between v5.15 and HEAD, only one cosmetic change (SPDX
-header) touched this file.
+### Step 6.1: Does the buggy code exist in stable?
+- `gfx_v12_1.c` does **NOT exist** in v6.12, v6.13, or v6.19 (verified
+  via `git show v6.X:...`)
+- The file was introduced during the v7.0-rc1 cycle
+- The buggy commit `a41d94a7bb962` **IS in v7.0** (verified via `git
+  merge-base --is-ancestor`)
+- The revert `29756a7535fac` is **NOT in v7.0** (verified)
+- **Only v7.0.y stable is affected**
 
 ### Step 6.2: Backport Complications
-**None.** The file is extremely stable. The patch will apply cleanly to
-all stable trees.
-
-### Step 6.3: Related Fixes Already in Stable
-No prior fix for the 68000 variant exists in any stable tree.
-
----
+The patch should apply cleanly — the state of
+`gfx_v12_1_init_golden_registers` in v7.0 exactly matches the diff
+context (verified by examining the v7.0 tree).
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: Subsystem Criticality
-**arch/m68k** — architecture-specific, affects 68000 platform users.
-While m68k is not mainstream, the 68000 platform is used in embedded
-systems and retro-computing.
+### Step 7.1
+- **Subsystem:** GPU driver (drm/amdgpu) — IMPORTANT for AMD GPU users
+- GFX 12.1 is new AMD hardware (likely RDNA/CDNA generation)
 
-### Step 7.2: Activity
-Low activity subsystem (very mature), which means the bug has persisted
-unnoticed for a long time.
-
----
+### Step 7.2
+The file has extremely active development (~30 commits since
+introduction), expected for new hardware enablement.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Who is Affected
-All users of the 68000 non-MMU m68k platform.
+### Step 8.1: Who is affected?
+All users with GFX 12.1 AMD GPUs running v7.0.y kernels.
 
-### Step 8.2: Trigger Conditions
-**Every syscall and every interrupt that returns to userspace triggers
-the bug.** The bug is 100% reproducible — it fires on every single
-return to userspace.
+### Step 8.2: Trigger conditions
+The bug triggers on **every GPU initialization** — boot, resume, GPU
+reset. It's not a rare race or edge case.
 
-### Step 8.3: Failure Mode Severity
-**CRITICAL:**
-- Tasks are **never rescheduled** when returning to userspace
-  (TIF_NEED_RESCHED never detected)
-- **Signals are never delivered** to userspace processes (TIF_SIGPENDING
-  never detected)
-- This means cooperative/preemptive scheduling is broken and signals
-  (including SIGKILL) don't work
+### Step 8.3: Failure mode
+Based on the earlier revert message: "data mismatch and slowness issues
+with multiple HIP tests." Data mismatch is effectively **data
+corruption** in GPU compute workloads. Severity: **HIGH** (data
+corruption + performance degradation).
 
 ### Step 8.4: Risk-Benefit
-- **Benefit:** VERY HIGH — fixes fundamental kernel functionality
-  (scheduling + signals)
-- **Risk:** VERY LOW — ~5 effective lines changed, pattern proven by
-  identical ColdFire fix from 2012, consistent with MMU entry.S
-- **Ratio:** Overwhelmingly positive
-
----
+- **Benefit:** HIGH — fixes data corruption and performance issues for
+  all GFX 12.1 users on every GPU init
+- **Risk:** VERY LOW — pure deletion of 19 lines, reverts to known-good
+  previous behavior
+- **Ratio:** Strongly favors backporting
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Compilation
+### Evidence FOR backporting:
+- Fixes real bug: data mismatch (corruption) and slowness in GPU compute
+  workloads
+- Pure code removal (19 lines deleted, 0 added) — zero regression risk
+- Reviewed by the original feature author (Mukul Joshi)
+- Signed off by AMD GPU maintainer (Alex Deucher)
+- The buggy code IS in v7.0 stable tree
+- Triggers on every GPU initialization (not a rare edge case)
+- History shows this feature was already reverted once before for the
+  same class of issues
 
-**FOR backporting:**
-- Fixes a **CRITICAL** bug: scheduling and signal delivery completely
-  broken on 68000
-- Bug present since 2005, affects ALL stable trees
-- Small, surgical fix (~5 effective lines)
-- Pattern proven: identical fix applied to ColdFire in 2012 (commit
-  `8b3262c00d6fec`)
-- Consistent with MMU kernel/entry.S which already uses `moveb ...
-  TINFO_FLAGS+3`
-- Signed off by m68k maintainer
-- Has a Reported-by (real user hit this)
-- No dependencies, applies cleanly
-- No new features or APIs
+### Evidence AGAINST backporting:
+- Terse commit message doesn't detail the specific bug
+- Only applies to v7.0.y (new hardware)
+- No Fixes: tag or explicit stable nomination
 
-**AGAINST backporting:**
-- m68k 68000 is a niche platform (limited user base)
-
-### Step 9.2: Stable Rules Checklist
-1. Obviously correct and tested? **YES** — proven pattern, maintainer
-   sign-off, reported-by
-2. Fixes a real bug? **YES** — scheduling and signals completely broken
-3. Important issue? **YES** — CRITICAL (system fundamentally non-
-   functional)
-4. Small and contained? **YES** — one file, ~5 effective lines
-5. No new features or APIs? **YES**
-6. Can apply to stable? **YES** — file barely changed across stable
-   trees
-
-### Step 9.3: Exception Categories
-Not an exception category — this is a straightforward, serious bug fix.
-
----
+### Stable Rules Checklist:
+1. Obviously correct and tested? **YES** — pure deletion, reviewed by
+   feature author
+2. Fixes a real bug? **YES** — data mismatch/corruption and slowness
+3. Important issue? **YES** — data corruption severity
+4. Small and contained? **YES** — 19 lines in one file
+5. No new features or APIs? **YES** — only removes code
+6. Can apply to stable? **YES** — applies cleanly to v7.0
 
 ## Verification
 
-- [Phase 1] Parsed tags: Found Reported-by: Christoph Plattner, Signed-
-  off-by: Greg Ungerer (m68k maintainer)
-- [Phase 2] Diff analysis: `move` (16-bit) loads wrong half of 32-bit
-  flags on big-endian; fix uses `moveb` at offset +3 for correct byte
-- [Phase 3] git blame: Buggy instruction from `^1da177e4c3f41` (Linux
-  2.6.12, 2005), symbol renamed in `aa4d1f897f6a7f` (2011)
-- [Phase 3] git show `8b3262c00d6fec`: Confirmed identical fix for
-  ColdFire from 2012 — changes `movel %a0@(TINFO_FLAGS)` to `moveb
-  %a0@(TINFO_FLAGS+3)` with same comment
-- [Phase 3] git log: File only had cosmetic changes since v5.15
-- [Phase 4] b4 dig: Could not find original submission
-- [Phase 4] Web search: Found Daniel Palmer is active m68k contributor
-- [Phase 5] Verified `thread_info.h` lines 57-60: Comments explicitly
-  state "bits 0-7 are tested at every exception exit"
-- [Phase 5] Verified TIF_NEED_RESCHED=7, TIF_SIGPENDING=6 — both in low
-  byte (offset +3 on big-endian)
-- [Phase 5] Verified ColdFire entry.S line 134 and kernel/entry.S line
-  252 both use correct `moveb ... TINFO_FLAGS+3`
-- [Phase 6] File identical across stable trees except one SPDX header
-  change — clean apply expected
-- [Phase 8] Trigger: Every syscall/interrupt return to userspace.
-  Severity: CRITICAL (no scheduling, no signals)
-- UNVERIFIED: Could not find the specific mailing list discussion or bug
-  report details from Christoph Plattner
+- [Phase 1] Parsed tags: Reviewed-by Mukul Joshi, Signed-off-by Alex
+  Deucher (maintainer)
+- [Phase 2] Diff analysis: 19 lines removed, 0 added. Function
+  `gfx_v12_1_xcc_setup_tcp_thrashing_ctrl` deleted, call removed from
+  `gfx_v12_1_init_golden_registers`
+- [Phase 3] git show a41d94a7bb962: confirmed original commit added
+  retry thrashing, is in v7.0
+- [Phase 3] git merge-base --is-ancestor a41d94a7bb962 v7.0: YES
+- [Phase 3] git merge-base --is-ancestor 29756a7535fac v7.0: NO (not in
+  v7.0 yet)
+- [Phase 3] git show 127770bcfccc2: earlier revert described "data
+  mismatch and slowness issues with multiple HIP tests"
+- [Phase 3] git tag --contains a41d94a7bb962: confirmed in v7.0,
+  v7.0-rc1 through rc7
+- [Phase 4] b4 dig -c 29756a7535fac: no match found on lore
+- [Phase 4] b4 dig -c a41d94a7bb962: no match found on lore
+- [Phase 5] grep TCP_UTCL0_THRASHING: only in gfx_v12_1.c and register
+  headers
+- [Phase 6] git show v6.12/v6.13/v6.19: file does not exist in any prior
+  stable tree
+- [Phase 6] Verified v7.0 tree state: function exists at line 2632,
+  called at line 2698, patch applies cleanly
+- [Phase 8] Failure mode: data corruption (data mismatch) + performance
+  degradation, severity HIGH
+- UNVERIFIED: Exact nature of the "bug found" in the revert message (but
+  corroborated by the earlier revert's more detailed description)
 
-The fix is small, surgical, obviously correct (proven pattern from 2012
-ColdFire fix), and fixes a critical bug that makes the 68000 kernel
-fundamentally non-functional. It meets all stable kernel criteria.
+The fix is a minimal, zero-risk pure deletion that fixes data corruption
+and performance issues on GFX 12.1 hardware. The buggy code exists in
+v7.0 stable, and the patch applies cleanly.
 
 **YES**
 
- arch/m68k/68000/entry.S | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-diff --git a/arch/m68k/68000/entry.S b/arch/m68k/68000/entry.S
-index 72e95663b62ff..c257cc415c478 100644
---- a/arch/m68k/68000/entry.S
-+++ b/arch/m68k/68000/entry.S
-@@ -18,6 +18,13 @@
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
+index eb9725ae1607a..812de881027b4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
+@@ -2629,24 +2629,6 @@ static void gfx_v12_1_xcc_disable_gpa_mode(struct amdgpu_device *adev,
+ 	WREG32_SOC15(GC, GET_INST(GC, xcc_id), regCPG_PSP_DEBUG, data);
+ }
  
- .text
- 
-+/* get thread_info pointer into a2 */
-+ .macro getthreadinfo
-+	movel	%sp,%d1
-+	andl	#-THREAD_SIZE,%d1
-+	movel	%d1,%a2
-+ .endm
-+
- .globl system_call
- .globl resume
- .globl ret_from_exception
-@@ -70,9 +77,8 @@ ENTRY(system_call)
- 
- 	movel	%sp@(PT_OFF_ORIG_D0),%d0
- 
--	movel	%sp,%d1			/* get thread_info pointer */
--	andl	#-THREAD_SIZE,%d1
--	movel	%d1,%a2
-+	/* Doing a trace ? */
-+	getthreadinfo
- 	btst	#(TIF_SYSCALL_TRACE%8),%a2@(TINFO_FLAGS+(31-TIF_SYSCALL_TRACE)/8)
- 	jne	do_trace
- 	cmpl	#NR_syscalls,%d0
-@@ -96,16 +102,15 @@ Luser_return:
- 	/* heavy interrupt load*/
- 	andw	#ALLOWINT,%sr
- 
--	movel	%sp,%d1			/* get thread_info pointer */
--	andl	#-THREAD_SIZE,%d1
--	movel	%d1,%a2
-+	getthreadinfo
- 1:
--	move	%a2@(TINFO_FLAGS),%d1	/* thread_info->flags */
-+	/* check if any of the flags are set */
-+	moveb	%a2@(TINFO_FLAGS + 3),%d1	/* thread_info->flags (low 8 bits) */
- 	jne	Lwork_to_do
- 	RESTORE_ALL
- 
- Lwork_to_do:
--	movel	%a2@(TINFO_FLAGS),%d1	/* thread_info->flags */
-+	/* check if reschedule needs to be called */
- 	btst	#TIF_NEED_RESCHED,%d1
- 	jne	reschedule
- 
+-static void gfx_v12_1_xcc_setup_tcp_thrashing_ctrl(struct amdgpu_device *adev,
+-					 int xcc_id)
+-{
+-	uint32_t val;
+-
+-	/* Set the TCP UTCL0 register to enable atomics */
+-	val = RREG32_SOC15(GC, GET_INST(GC, xcc_id),
+-					regTCP_UTCL0_THRASHING_CTRL);
+-	val = REG_SET_FIELD(val, TCP_UTCL0_THRASHING_CTRL, THRASHING_EN, 0x2);
+-	val = REG_SET_FIELD(val, TCP_UTCL0_THRASHING_CTRL,
+-					RETRY_FRAGMENT_THRESHOLD_UP_EN, 0x1);
+-	val = REG_SET_FIELD(val, TCP_UTCL0_THRASHING_CTRL,
+-					RETRY_FRAGMENT_THRESHOLD_DOWN_EN, 0x1);
+-
+-	WREG32_SOC15(GC, GET_INST(GC, xcc_id),
+-					regTCP_UTCL0_THRASHING_CTRL, val);
+-}
+-
+ static void gfx_v12_1_xcc_enable_atomics(struct amdgpu_device *adev,
+ 					 int xcc_id)
+ {
+@@ -2695,7 +2677,6 @@ static void gfx_v12_1_init_golden_registers(struct amdgpu_device *adev)
+ 	for (i = 0; i < NUM_XCC(adev->gfx.xcc_mask); i++) {
+ 		gfx_v12_1_xcc_disable_burst(adev, i);
+ 		gfx_v12_1_xcc_enable_atomics(adev, i);
+-		gfx_v12_1_xcc_setup_tcp_thrashing_ctrl(adev, i);
+ 		gfx_v12_1_xcc_disable_early_write_ack(adev, i);
+ 		gfx_v12_1_xcc_disable_tcp_spill_cache(adev, i);
+ 	}
 -- 
 2.53.0
 
