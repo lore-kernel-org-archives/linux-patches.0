@@ -1,49 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCBC4D90B5;
-	Mon, 20 Apr 2026 13:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20EB3AEF52;
+	Mon, 20 Apr 2026 13:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776692014; cv=none; b=LqtBMP9FF51jTScYWCEKc2SW6fIeMQMoPTZR8upy5P1GMe2NqH1ov4DxmLhB1GP8pNLZ6WPaq8K/GIP9LTXq5EItOjNwm8TJnPiHme+rfzue+VMIQoT0ey4h+1+sLa0ehCRHz9eU+3mZb2G/vSVeSPoOD4xKrdRU+mlKWmK+wZE=
+	t=1776692016; cv=none; b=ZnmUl+S3w3UBsiUC9a4eUSfwTEPZKqBLwDKVQLgZEqKIdhxzpdr9ZjkKb+4/WEDwWculprJC+TMHGg4i142qgSIam1qmYxjQsypOcGbG52ZCOj7KzX82dqAftyJFCK57uZIguoJ0KC1kdsyGLDuEah0z1/99hka7QoOSjEwP9kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776692014; c=relaxed/simple;
-	bh=mx3dOkIZBfxT1nQO36SjIqI8eRf8QWZlS456mSUrd5U=;
+	s=arc-20240116; t=1776692016; c=relaxed/simple;
+	bh=s4M4waw6ZN/1VibM+5jzihcPF2zsR7PUNpdnLQZ6PxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ruogb1FPt2Q2EqKiXPlRWU9N4To2cRflEhFCRnHMuVAHYyOJsRKPE2ua2xTuDk8QcTz6vthDcdyuS2nB2ej66qnWwC16pdg4OVkc0b2E8GlixJT+YJwGqsqnvFY4mEBAynrn2IysbB3Y3au4hrxcCIjPExYz+9Xx6Wck1IAYJUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mgGgqR+8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r0nqI5wBgmBe9850VuMXV1RP9zehK6k3l8l8voxKfeZG6aFCkTLO5kHghxUCr7S/SwvjuDD3AawGXGe9/bz9cyMmHP1KjVXBO5q0dgjM/SXNWkZJqUMxUqqHfH6fE8XwzMQoduCAHCjxrPpuTUjJ6Y4xEvYiEeDJJtxImv0cqSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Erj3yWPC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mgGgqR+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9793EC19425;
-	Mon, 20 Apr 2026 13:33:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Erj3yWPC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E69C2BCB9;
+	Mon, 20 Apr 2026 13:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776692014;
-	bh=mx3dOkIZBfxT1nQO36SjIqI8eRf8QWZlS456mSUrd5U=;
+	s=k20201202; t=1776692015;
+	bh=s4M4waw6ZN/1VibM+5jzihcPF2zsR7PUNpdnLQZ6PxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgGgqR+8wRZj+c2ubr3Sl5W6NU2NbXzEhk3REBog+g5MQntbtek4n1rImkOlNGD9h
-	 JrC/D1DJQvoEd899xLc2OGq9go452GI8X+J85uQo/fh+R3+XV6xWe7VNGpA3nqlYfO
-	 KBQ02bgdF7WKt/ViKQ86l+UT9dCChcbL10nR88kchSBstUuJ1i4R5OzmLMdZ45mmcl
-	 R4AM0GQd75BYJbpQN2AMz2Xu2dQJWGk/TO1I08y2XW4RsqP8qk1usY9vhl0MYkVv59
-	 qOWATp5tCBkS/C4KsDGpiaIIdlsPikuDmKZ10Bxuj7Ln8QogYLgcxnsxvgvJobocoN
-	 VwGvK7RiMPDzA==
+	b=Erj3yWPC6OLSA+3LLb2iJYlwhkDpZd4mnBESbKiuYuZBAB3YEcPou0gcEy9deN5G1
+	 Gm+zSG8YZBSZjm6ND9OooOL0fpPA/BpSz+llmj3xY8Gov/tioJDGJRQaQ0oTbCvEBM
+	 529OYkSUA8rJXhNCJfM9paCJO5uvglPIss9+fAu6kIz0y1eMBs9dCg+9LJMGSY2I3/
+	 /eiXJVMgjSSXlI8a/QjfcZFds8jh5CK3CeMAG+hI7Dm/E/0xAxc/a+DF8ipDMFgB3o
+	 BKel16r690aht2PLoHVojlMd9YmAVpeAeQWVOF+StE8kbwJXZ9TkATgDSV2hTK9gGQ
+	 M2HiOrGLCdeVw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Rob Clark <rob.clark@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+Cc: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lumag@kernel.org,
+	neil.armstrong@linaro.org,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
 	airlied@gmail.com,
 	simona@ffwll.ch,
-	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] drm: gpu: msm: forbid mem reclaim from reset
-Date: Mon, 20 Apr 2026 09:21:56 -0400
-Message-ID: <20260420132314.1023554-322-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] drm/panel-edp: Add AUO B116XAT04.1 (HW: 1A)
+Date: Mon, 20 Apr 2026 09:21:57 -0400
+Message-ID: <20260420132314.1023554-323-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -59,401 +58,365 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
 
-[ Upstream commit 4625fe5bbdaccd45be274c30ff0a42e30d4e38cf ]
+[ Upstream commit 2cb217301e0df17f7107a1b0941b28d4053eae8b ]
 
-We sometimes get into a situtation where GPU hangcheck fails to
-recover GPU:
+Add support for the AUO - B116XAT04.1 (HW: 1A) panel.
+This panel is used on MT8186 Chromebooks
 
-[..]
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): hangcheck detected gpu lockup rb 0!
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): completed fence: 7840161
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): submitted fence: 7840162
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): hangcheck detected gpu lockup rb 0!
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): completed fence: 7840162
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): submitted fence: 7840163
-[..]
+The raw EDID:
+00 ff ff ff ff ff ff 00 06 af ba 89 00 00 00 00
+0c 23 01 04 95 1a 0e 78 02 9e a5 96 59 58 96 28
+1b 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 ce 1d 56 ea 50 00 1a 30 30 20
+46 00 00 90 10 00 00 18 df 13 56 ea 50 00 1a 30
+30 20 46 00 00 90 10 00 00 18 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
+00 10 48 ff 0f 3c 7d 0c 0a 2a 7d 20 20 20 00 21
 
-The problem is that msm_job worker is blocked on gpu->lock
-
-INFO: task ring0:155 blocked for more than 122 seconds.
-Not tainted 6.6.99-08727-gaac38b365d2c #1
-task:ring0 state:D stack:0 pid:155 ppid:2 flags:0x00000008
-Call trace:
-__switch_to+0x108/0x208
-schedule+0x544/0x11f0
-schedule_preempt_disabled+0x30/0x50
-__mutex_lock_common+0x410/0x850
-__mutex_lock_slowpath+0x28/0x40
-mutex_lock+0x5c/0x90
-msm_job_run+0x9c/0x140
-drm_sched_main+0x514/0x938
-kthread+0x114/0x138
-ret_from_fork+0x10/0x20
-
-which is owned by recover worker, which is waiting for DMA fences
-from a memory reclaim path, under the very same gpu->lock
-
-INFO: task ring0:155 is blocked on a mutex likely owned by task gpu-worker:154.
-task:gpu-worker state:D stack:0 pid:154 ppid:2 flags:0x00000008
-Call trace:
-__switch_to+0x108/0x208
-schedule+0x544/0x11f0
-schedule_timeout+0x1f8/0x770
-dma_fence_default_wait+0x108/0x218
-dma_fence_wait_timeout+0x6c/0x1c0
-dma_resv_wait_timeout+0xe4/0x118
-active_purge+0x34/0x98
-drm_gem_lru_scan+0x1d0/0x388
-msm_gem_shrinker_scan+0x1cc/0x2e8
-shrink_slab+0x228/0x478
-shrink_node+0x380/0x730
-try_to_free_pages+0x204/0x510
-__alloc_pages_direct_reclaim+0x90/0x158
-__alloc_pages_slowpath+0x1d4/0x4a0
-__alloc_pages+0x9f0/0xc88
-vm_area_alloc_pages+0x17c/0x260
-__vmalloc_node_range+0x1c0/0x420
-kvmalloc_node+0xe8/0x108
-msm_gpu_crashstate_capture+0x1e4/0x280
-recover_worker+0x1c0/0x638
-kthread_worker_fn+0x150/0x2d8
-kthread+0x114/0x138
-
-So no one can make any further progress.
-
-Forbid recover/fault worker to enter memory reclaim (under
-gpu->lock) to address this deadlock scenario.
-
-Cc: Tomasz Figa <tfiga@chromium.org>
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/700978/
-Message-ID: <20260127073341.2862078-1-senozhatsky@chromium.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Signed-off-by: Terry Hsiao <terry_hsiao@compal.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260122032904.3933-1-terry_hsiao@compal.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me compile the final analysis.
+Now I have enough information for a thorough analysis. Let me walk
+through all phases.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `drm: gpu: msm` (Qualcomm MSM GPU driver)
-- Action verb: "forbid" — preventing a dangerous code path
-- Summary: Prevent memory reclaim from GPU reset/fault handlers to avoid
-  deadlock
+### Step 1.1: Subject Line
+- **Subsystem**: `drm/panel-edp`
+- **Action verb**: "Add" — adding a new panel ID entry
+- **Summary**: Adds EDID product ID 0x89ba for the AUO B116XAT04.1 (HW
+  revision 1A) panel used on MT8186 Chromebooks.
 
-**Step 1.2: Tags**
-- `Cc: Tomasz Figa <tfiga@chromium.org>` — ChromeOS stakeholder
-- `Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>` —
-  author, ChromeOS/mm developer
-- `Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>` — MSM subsystem
-  maintainer
-- `Patchwork: https://patchwork.freedesktop.org/patch/700978/`
-- `Message-ID: <20260127073341.2862078-1-senozhatsky@chromium.org>`
-- `Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>` —
-  committer/maintainer
-- No Fixes: tag (expected for manual review candidates)
+Record: [drm/panel-edp] [Add] [New EDID product ID for existing panel
+model, different HW revision]
 
-**Step 1.3: Body Analysis**
-The commit message contains detailed stack traces showing:
-1. A GPU lockup detected by hangcheck, triggering `recover_worker`
-2. `recover_worker` holds `gpu->lock` and is blocked trying to allocate
-   memory
-3. The allocation triggers `__alloc_pages_direct_reclaim` ->
-   `shrink_slab` -> `msm_gem_shrinker_scan` -> `active_purge` ->
-   `dma_fence_default_wait`
-4. The DMA fences cannot complete because the GPU is hung and
-   `gpu->lock` is held
-5. Deadlock: `msm_job_run` needs `gpu->lock` (owned by `recover_worker`)
-   and `recover_worker` is stuck in reclaim waiting on DMA fences that
-   can't signal
+### Step 1.2: Tags
+- **Signed-off-by**: Terry Hsiao (author, Compal/Google partner) and
+  Douglas Anderson (subsystem maintainer)
+- **Reviewed-by**: Douglas Anderson (subsystem maintainer for Chromebook
+  panel-edp)
+- **Link**: patch.msgid.link URL (lore.kernel.org blocked by Anubis)
+- No Fixes: tag (expected — this is a device ID addition, not a
+  traditional bug fix)
+- No Reported-by (expected — hardware enablement, not a bug report)
+- No Cc: stable (expected — that's why it's under review)
 
-**Step 1.4: Hidden Bug Fix Detection**
-This is an explicit deadlock fix, not disguised.
+Record: Reviewed and committed by subsystem maintainer Douglas Anderson.
+Author is a regular contributor (same author as prior 6-panel batch
+commit d4b9b6da5777b).
+
+### Step 1.3: Commit Body
+The body provides the raw EDID hex dump for the panel. The EDID shows
+manufacturer AUO, product ID 0x89ba. The panel is used on MT8186
+Chromebooks. Without this entry, the panel-edp driver cannot match this
+specific panel by its EDID, meaning the panel won't be properly
+initialized.
+
+Record: [Hardware enablement for Chromebook panel] [Without this, panel
+won't be recognized] [MT8186 platform]
+
+### Step 1.4: Hidden Bug Fix Detection
+This is not a disguised bug fix — it's an explicit device ID addition.
+However, missing panel entries cause real user impact: the display won't
+work properly on affected Chromebooks.
+
+Record: [Not a hidden bug fix; straightforward device ID addition with
+real user impact]
+
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Single file: `drivers/gpu/drm/msm/msm_gpu.c`
-- 1 include added, ~10 lines of actual logic across 2 functions
-- Functions modified: `recover_worker()`,
-  `msm_gpu_fault_crashstate_capture()`
+### Step 2.1: Change Inventory
+- **Files changed**: 1 (`drivers/gpu/drm/panel/panel-edp.c`)
+- **Lines added**: 1
+- **Lines removed**: 0
+- **Functions modified**: None (only the `edp_panels[]` static data
+  table)
+- **Scope**: Single-line addition to a data table
 
-**Step 2.2: Code Flow Change**
-In both functions, the pattern is identical:
-- BEFORE: crashstate capture runs with default GFP flags, allowing
-  reclaim
-- AFTER: `memalloc_noreclaim_save()` called before crashstate capture,
-  `memalloc_noreclaim_restore()` called after, preventing the kernel
-  from entering memory reclaim while `gpu->lock` is held
+Record: [1 file, +1 line, no function logic changes, minimal scope]
 
-**Step 2.3: Bug Mechanism**
-Category: **Deadlock**. The mechanism:
-1. `recover_worker` acquires `gpu->lock`
-2. `msm_gpu_crashstate_capture()` calls `kvmalloc()` (line 239 in
-   `msm_gpu_crashstate_get_bo`)
-3. Under memory pressure, `kvmalloc` -> `__alloc_pages_slowpath` ->
-   `try_to_free_pages` -> `shrink_slab`
-4. `msm_gem_shrinker_scan` -> `active_purge` -> `wait_for_idle` ->
-   `dma_resv_wait_timeout`
-5. DMA fences can't signal because the GPU is hung — recovery needs
-   `gpu->lock` which is already held
+### Step 2.2: Code Flow Change
+The single added line:
+```c
+EDP_PANEL_ENTRY('A', 'U', 'O', 0x89ba, &delay_200_500_e50,
+"B116XAT04.1"),
+```
+Inserted in sorted order (between 0x8594 and 0x8bba) into the
+`edp_panels[]` table. This uses the standard `EDP_PANEL_ENTRY` macro
+with the well-established `delay_200_500_e50` timing struct (used by 80+
+other panels).
 
-**Step 2.4: Fix Quality**
-- Minimal and surgical: only adds `memalloc_noreclaim_save/restore`
-  bracketing
-- Well-established kernel pattern (used in amdgpu, i915)
-- Regression risk: extremely low — only changes allocation behavior
-  within a narrow scope
-- Review: accepted by Rob Clark (MSM maintainer)
+Record: [Before: panel ID 0x89ba not recognized. After: panel matched
+and properly initialized with standard timing]
+
+### Step 2.3: Bug Mechanism
+Category: **Hardware enablement / Device ID addition**. Not a bug fix
+per se, but enables hardware that doesn't work without it.
+
+Record: [Device ID addition. Existing entry 0xc4b4 covers one HW
+revision; this adds HW revision 1A with EDID 0x89ba]
+
+### Step 2.4: Fix Quality
+- Obviously correct: single-line table entry using the same macro and
+  timing parameters as ~80 other AUO panels
+- Minimal/surgical: 1 line
+- Regression risk: effectively zero — only affects panels with EDID
+  product ID 0x89ba
+- Reviewed by the subsystem maintainer
+
+Record: [Obviously correct, minimal, zero regression risk]
+
+---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-- `recover_worker` structure dates back to Rob Clark 2013, with
-  gpu->lock added in c28e2f2b417ed7 (v5.16, 2021-11-09)
-- `msm_gpu_crashstate_capture` added in c0fec7f562ec76 (v4.20/v5.0,
-  2018-07-24)
-- `msm_gpu_fault_crashstate_capture` introduced in e25e92e08e32c6
-  (v5.15, 2021-06-10), refactored in 0c5fea1eb0dc2 (v7.0)
-- The deadlock has existed since v5.16 when gpu->lock was introduced
-  alongside crashstate capture
+### Step 3.1: Blame
+The surrounding entries in the table come from various commits dating
+back to 2022 (d049a24b15d8c1, March 2022) through 2025. The `panel-
+edp.c` file and `edp_panels[]` table have existed since at least kernel
+5.18.
 
-**Step 3.2: No Fixes tag to follow**
+Record: [Panel table infrastructure has been in the kernel since at
+least v5.18; file is stable and well-established]
 
-**Step 3.3: Related Changes**
-- Commit 4bea53b9c7c72 "drm/msm: Reduce fallout of fence signaling vs
-  reclaim hangs" (2023-11-17) — Rob Clark reduced shrinker timeout from
-  1000ms to 10ms as a *partial* workaround for this exact class of
-  deadlock. This confirms the issue was known.
+### Step 3.2: No Fixes Tag
+Not applicable — this is a device ID addition, not a bug fix referencing
+an introduced regression.
 
-**Step 3.4: Author**
-- Sergey Senozhatsky is a well-known kernel developer (mm subsystem,
-  compression, ChromeOS)
-- Rob Clark is the MSM subsystem maintainer who reviewed and committed
-  the fix
+### Step 3.3: File History
+The file sees frequent panel ID additions. The last 20 commits are
+almost all panel additions by various authors, showing this is a
+standard, routine operation.
 
-**Step 3.5: Dependencies**
-- Standalone fix, no dependencies on other patches
-- The `#include <linux/sched/mm.h>` header is available in all relevant
-  stable trees
-- `memalloc_noreclaim_save/restore` available since at least v4.x
+Record: [Extremely active file for panel additions; this is a routine
+operation]
 
-## PHASE 4: MAILING LIST
+### Step 3.4: Author History
+Terry Hsiao has at least 2 commits in this file: the earlier 6-panel
+batch (d4b9b6da5777b, July 2024) and a name fix (21e97d3ca814e). This is
+a regular contributor who works on Chromebook panel enablement.
 
-**Step 4.1-4.2:** Patchwork link confirms this was reviewed through the
-freedesktop.org DRM process. Rob Clark (subsystem maintainer) provided
-`Reviewed-by` and committed the patch.
+Record: [Author is a repeat contributor to this file, working on
+Chromebook panel support]
 
-**Step 4.3:** No specific bug report link, but the commit includes real
-stack traces from a production system running kernel 6.6.99, indicating
-this was hit on ChromeOS devices.
+### Step 3.5: Dependencies
+None. The `EDP_PANEL_ENTRY` macro and `delay_200_500_e50` struct exist
+in all stable trees that have `panel-edp.c`. This is a self-contained,
+standalone one-line addition.
 
-**Step 4.4:** Single standalone patch (not part of a series).
+Record: [No dependencies. Fully standalone.]
 
-**Step 4.5:** Could not verify stable-specific discussion due to anti-
-bot protections on lore.kernel.org.
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1–4.5: Mailing List
+The lore.kernel.org site is blocked by Anubis anti-bot protection.
+However, we know:
+- The patch was submitted by Terry Hsiao on 2026-01-22
+- It was reviewed by Douglas Anderson (the panel-edp subsystem
+  maintainer)
+- Douglas Anderson also committed it (Signed-off-by)
+- The patch link is
+  `patch.msgid.link/20260122032904.3933-1-terry_hsiao@...`
+
+Record: [Could not fetch lore discussion due to Anubis protection.
+Reviewed and committed by subsystem maintainer Douglas Anderson.]
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1:** Modified functions: `recover_worker()`,
-`msm_gpu_fault_crashstate_capture()`
+### Step 5.1–5.5: Function Analysis
+No functions are modified. The change is purely data — a new entry in
+the static `edp_panels[]` table. This table is searched by the panel-edp
+driver's probe path to match panels by EDID product ID. When a match is
+found, the corresponding timing delays are applied.
 
-**Step 5.2:** `recover_worker` is queued by `hangcheck_handler` (timer
-callback) whenever a GPU lockup is detected.
-`msm_gpu_fault_crashstate_capture` is called from IOMMU fault handlers.
+The `EDP_PANEL_ENTRY` macro is used 196 times in this file. The
+`delay_200_500_e50` timing struct is used by 80+ entries. This is
+entirely routine.
 
-**Step 5.3:** Both call `msm_gpu_crashstate_capture` which calls
-`kvmalloc` (via `msm_gpu_crashstate_get_bo`), the trigger for the
-deadlock.
+Record: [Data-only change to a well-established lookup table. No logic
+changes.]
 
-**Step 5.4:** Call chain: `hangcheck_timer` -> `hangcheck_handler` ->
-`kthread_queue_work(recover_work)` -> `recover_worker`. This is the
-standard GPU hang recovery path triggered automatically.
+---
 
-**Step 5.5:** Similar pattern exists in amdgpu and i915 where
-`memalloc_noreclaim_save` is used to prevent reclaim deadlocks in GPU
-driver paths.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-## PHASE 6: STABLE TREE ANALYSIS
+### Step 6.1: Buggy Code in Stable
+The `panel-edp.c` file exists in stable trees including 6.6.y (confirmed
+via `git log v6.6..v6.6.80`). The `EDP_PANEL_ENTRY` macro and
+`delay_200_500_e50` struct exist in all active stable trees.
 
-**Step 6.1:** The buggy code exists in all stable trees from v5.16+
-(when `gpu->lock` was introduced). In older trees (v6.6),
-`recover_worker` and `fault_worker` have the same deadlock pattern. The
-code confirmed in v6.6 and v6.12 stable branches.
+Record: [File and infrastructure exist in 6.6.y and all newer stable
+trees]
 
-**Step 6.2:** The patch won't apply cleanly to older trees (v6.6) due
-to:
-- VM_BIND code differences in `recover_worker`
-- `fault_worker` vs `msm_gpu_fault_crashstate_capture` name change
-- `msm_gpu_crashstate_capture` has 4 args in v6.6 vs 5 in v7.0
-But the fix concept is trivially adaptable. For v7.0.y it should apply
-cleanly.
+### Step 6.2: Backport Complications
+This is a one-line addition to a sorted table. It will apply cleanly to
+any stable tree that has the surrounding entries. Minor context
+adjustment might be needed if nearby entries differ, but the table is
+insertion-order agnostic for functionality.
 
-**Step 6.3:** Only the partial workaround (4bea53b9c7c72, timeout
-reduction) has been applied previously.
+Record: [Expected clean apply or trivial context adjustment]
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Step 6.3: Related Fixes Already in Stable
+The earlier entry for the same panel (0xc4b4) from commit d4b9b6da5777b
+may or may not be in stable trees. Even if it isn't, this entry stands
+alone — it matches a different EDID product ID.
 
-**Step 7.1:** `drivers/gpu/drm/msm/` — Qualcomm Adreno GPU driver.
-Criticality: **IMPORTANT** — used on millions of Qualcomm SoC devices
-(Chromebooks, phones, embedded systems).
+Record: [No related fixes needed; this is independent]
 
-**Step 7.2:** Actively developed subsystem with many recent commits.
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: `drm/panel` — Display panel drivers
+- **Criticality**: IMPORTANT — panels are essential for display output.
+  This specifically affects Chromebooks (MT8186 platform), which are
+  widely deployed devices.
+
+Record: [drm/panel, IMPORTANT criticality, Chromebook platform]
+
+### Step 7.2: Activity Level
+Very active — 20+ recent commits are all panel additions. This is a
+well-maintained, high-traffic area.
+
+Record: [Highly active subsystem]
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1:** Affects all Qualcomm Adreno GPU users running with the MSM
-DRM driver.
+### Step 8.1: Who is Affected
+Users of MT8186 Chromebooks with the AUO B116XAT04.1 (HW: 1A) panel.
+Without this entry, the display panel won't be properly initialized,
+meaning the screen won't work correctly.
 
-**Step 8.2:** Trigger: GPU hang + memory pressure. GPU hangs occur in
-real-world usage. Under memory pressure (common on memory-constrained
-mobile/embedded devices), the deadlock triggers. The stack trace shows
-it was reproduced on a ChromeOS device.
+Record: [Users of specific Chromebook hardware]
 
-**Step 8.3:** Failure mode: **DEADLOCK** — the system hangs completely
-(GPU recovery blocked for >122 seconds, tasks blocked indefinitely).
-Severity: **CRITICAL**.
+### Step 8.2: Trigger Conditions
+Triggered at boot time during panel probe. Every boot on affected
+hardware.
 
-**Step 8.4:**
-- **Benefit:** HIGH — prevents complete system deadlock on common
-  hardware
-- **Risk:** VERY LOW — adds ~10 lines of well-established
-  `memalloc_noreclaim_save/restore` pattern, reviewed by subsystem
-  maintainer
+Record: [Every boot on affected Chromebook models. 100% reproducible.]
+
+### Step 8.3: Failure Mode Severity
+Without the panel entry: the display may not initialize properly or may
+fall back to a generic mode with incorrect timing. This is a hardware
+enablement issue.
+
+Record: [Display malfunction on affected hardware. Severity: HIGH for
+affected users.]
+
+### Step 8.4: Risk-Benefit Ratio
+- **BENEFIT**: Enables display on Chromebooks with this specific panel
+  revision. HIGH for affected users.
+- **RISK**: Effectively zero. One-line data table addition using
+  existing macros/timing. Cannot affect any other hardware.
+- **Ratio**: Extremely favorable.
+
+Record: [High benefit, near-zero risk]
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- Fixes a real, documented deadlock with stack traces
-- Observed on production hardware (ChromeOS, kernel 6.6.99)
-- Small, surgical fix (~10 lines of real changes)
-- Uses well-established kernel pattern (`memalloc_noreclaim_save`)
-- Reviewed by Rob Clark (MSM subsystem maintainer)
-- Previous partial workaround (4bea53b9c7c72) confirms the issue was
-  known
-- Affects widely-deployed Qualcomm hardware
-- Bug present in all stable trees since v5.16
+### Step 9.1: Evidence Summary
 
-**Evidence AGAINST backporting:**
-- May need minor adaptation for older stable trees (different function
-  names/signatures)
-- No explicit Cc: stable tag (expected for review candidates)
+**FOR backporting:**
+- Classic device ID addition to existing driver (explicit exception
+  category)
+- Single line added, zero regression risk
+- Uses well-established macro and timing parameters (80+ other panels
+  use same timing)
+- Reviewed and committed by subsystem maintainer (Douglas Anderson)
+- Enables real hardware (MT8186 Chromebooks) for real users
+- No dependencies on other patches
+- Will apply cleanly to stable trees
 
-**Stable rules checklist:**
-1. Obviously correct and tested? YES — well-established pattern,
-   reviewed by maintainer, real stack traces
-2. Fixes a real bug? YES — documented deadlock
-3. Important issue? YES — system deadlock (CRITICAL severity)
-4. Small and contained? YES — single file, ~10 lines of logic
-5. No new features/APIs? YES — purely a fix
-6. Can apply to stable? YES for v7.0.y (clean), needs minor rework for
-   v6.6.y
+**AGAINST backporting:**
+- No evidence against. This is as clean as a backport candidate gets.
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? **YES** — single table entry, reviewed
+   by maintainer
+2. Fixes a real bug? **YES** — enables hardware that doesn't work
+   without it
+3. Important issue? **YES** — display doesn't work on affected
+   Chromebooks
+4. Small and contained? **YES** — 1 line
+5. No new features or APIs? **YES** — only a data table entry
+6. Can apply to stable trees? **YES** — trivially
+
+### Step 9.3: Exception Category
+**Device ID addition to existing driver** — this is explicitly listed as
+a common exception that is almost always YES for stable.
+
+### Step 9.4: Decision
+This is a textbook device ID addition — one line, zero risk, real
+hardware enablement, reviewed by the subsystem maintainer.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Rob Clark (MSM maintainer), Cc
-  Tomasz Figa, Patchwork link
-- [Phase 2] Diff analysis: ~10 lines added across `recover_worker()` and
-  `msm_gpu_fault_crashstate_capture()`, adds
-  `memalloc_noreclaim_save/restore` bracketing around crashstate capture
-- [Phase 3] git blame: `recover_worker` with `gpu->lock` since
-  c28e2f2b417ed7 (v5.16), crashstate capture since c0fec7f562ec76
-  (v4.20)
-- [Phase 3] Related fix 4bea53b9c7c72: Rob Clark acknowledged this
-  deadlock class, applied partial workaround (timeout reduction)
-- [Phase 3] No dependencies found; standalone patch
-- [Phase 4] Patchwork link confirms DRM review process; anti-bot
-  protection prevented lore fetch
-- [Phase 5] `recover_worker` called from hangcheck timer path;
-  `msm_gpu_crashstate_capture` allocates memory via `kvmalloc` in
-  `msm_gpu_crashstate_get_bo`
-- [Phase 6] Confirmed buggy code exists in v6.6 (line 354+, 449+) and
-  v6.12 (line 355+, 478+)
-- [Phase 6] v7.0.y: should apply cleanly; older trees need minor
-  adaptation
-- [Phase 7] MSM GPU driver — IMPORTANT subsystem (Qualcomm Adreno,
-  millions of devices)
-- [Phase 8] Failure mode: system deadlock (CRITICAL), triggered by GPU
-  hang + memory pressure
-- [Phase 8] Stack trace from real ChromeOS device running kernel 6.6.99
+- [Phase 1] Parsed tags: Reviewed-by and Signed-off-by from Douglas
+  Anderson (subsystem maintainer)
+- [Phase 2] Diff analysis: 1 line added to `edp_panels[]` table using
+  `EDP_PANEL_ENTRY` macro with `delay_200_500_e50`
+- [Phase 2] Verified `delay_200_500_e50` is used by 80+ entries;
+  `EDP_PANEL_ENTRY` used 196 times
+- [Phase 3] git blame: surrounding table entries date from 2022–2025,
+  stable infrastructure
+- [Phase 3] git log --author: Terry Hsiao has 2 prior commits in this
+  file (d4b9b6da5777b, 21e97d3ca814e)
+- [Phase 3] Existing entry for same panel model (0xc4b4) exists at line
+  1922, from commit d4b9b6da5777b
+- [Phase 4] b4 dig on related commit d4b9b6da5777b: found lore thread,
+  confirms same author pattern
+- [Phase 4] UNVERIFIED: Could not read lore discussion for this specific
+  commit due to Anubis protection
+- [Phase 5] Data-only change, no function logic modified
+- [Phase 6] File confirmed present in 6.6.y stable tree (6 commits found
+  in v6.6..v6.6.80 range)
+- [Phase 6] `EDP_PANEL_ENTRY` macro exists at line 1859,
+  `delay_200_500_e50` widely used — both in stable
+- [Phase 8] Failure mode: display not recognized on MT8186 Chromebooks;
+  severity HIGH for affected users
+- [Phase 8] Risk: near-zero (data table entry, only matches specific
+  EDID 0x89ba)
 
 **YES**
 
- drivers/gpu/drm/msm/msm_gpu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 84d6c7f50c8df..67033bb01a9b0 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -17,6 +17,7 @@
- #include <linux/string_helpers.h>
- #include <linux/devcoredump.h>
- #include <linux/sched/task.h>
-+#include <linux/sched/mm.h>
- 
- /*
-  * Power Management:
-@@ -468,6 +469,7 @@ static void recover_worker(struct kthread_work *work)
- 	struct msm_gem_submit *submit;
- 	struct msm_ringbuffer *cur_ring = gpu->funcs->active_ring(gpu);
- 	char *comm = NULL, *cmd = NULL;
-+	unsigned int noreclaim_flag;
- 	struct task_struct *task;
- 	int i;
- 
-@@ -505,6 +507,8 @@ static void recover_worker(struct kthread_work *work)
- 			msm_gem_vm_unusable(submit->vm);
- 	}
- 
-+	noreclaim_flag = memalloc_noreclaim_save();
-+
- 	get_comm_cmdline(submit, &comm, &cmd);
- 
- 	if (comm && cmd) {
-@@ -523,6 +527,8 @@ static void recover_worker(struct kthread_work *work)
- 	pm_runtime_get_sync(&gpu->pdev->dev);
- 	msm_gpu_crashstate_capture(gpu, submit, NULL, comm, cmd);
- 
-+	memalloc_noreclaim_restore(noreclaim_flag);
-+
- 	kfree(cmd);
- 	kfree(comm);
- 
-@@ -587,6 +593,7 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
- 	struct msm_gem_submit *submit;
- 	struct msm_ringbuffer *cur_ring = gpu->funcs->active_ring(gpu);
- 	char *comm = NULL, *cmd = NULL;
-+	unsigned int noreclaim_flag;
- 
- 	mutex_lock(&gpu->lock);
- 
-@@ -594,6 +601,8 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
- 	if (submit && submit->fault_dumped)
- 		goto resume_smmu;
- 
-+	noreclaim_flag = memalloc_noreclaim_save();
-+
- 	if (submit) {
- 		get_comm_cmdline(submit, &comm, &cmd);
- 
-@@ -609,6 +618,8 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
- 	msm_gpu_crashstate_capture(gpu, submit, fault_info, comm, cmd);
- 	pm_runtime_put_sync(&gpu->pdev->dev);
- 
-+	memalloc_noreclaim_restore(noreclaim_flag);
-+
- 	kfree(cmd);
- 	kfree(comm);
- 
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 679f4af5246d8..108569490ed59 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1915,6 +1915,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x723c, &delay_200_500_e50, "B140XTN07.2"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x73aa, &delay_200_500_e50, "B116XTN02.3"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8594, &delay_200_500_e50, "B133UAN01.0"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x89ba, &delay_200_500_e50, "B116XAT04.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8bba, &delay_200_500_e50, "B140UAN08.5"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xa199, &delay_200_500_e50, "B116XAN06.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xa7b3, &delay_200_500_e50, "B140UAN04.4"),
 -- 
 2.53.0
 
