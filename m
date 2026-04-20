@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F7C3C4557;
-	Mon, 20 Apr 2026 13:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175DF402BA3;
+	Mon, 20 Apr 2026 13:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691624; cv=none; b=K3l1jKWbILQU+i8hTSHv89xBcPY/Sx/bc7Ta2l7nVth/JNr/BSySpI6syJY+n7UO+PnIB3AUIOl1CFSSwO/oOdAdpMb4rfmbXDQE2reHZrbKs+oCjDe+t/pD/jdFHh2D6hbXBKbEFG5r9yWtjM8U1lHt0gxXH8o9OoMIONJ/EUk=
+	t=1776691626; cv=none; b=T2KiZhda+POh6wpaXJZfdb2bj/MGbVQse9by3uJsWY7DsdarriwEYAP8HHaD5jDHy1gCSv8eFO/JBY4FecZsQETvnwU0/e+KFmvYQgZA0CzPqGzSj++I6ZBBjLYQm8vr4mNTQx//GwEOv34r/cXOmaTjwXf4y8qfO7s3ZZRX8Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691624; c=relaxed/simple;
-	bh=hz57hE/p0A28oIY9p/zSUK6pTcs0E6TaovPB9ItLdg8=;
+	s=arc-20240116; t=1776691626; c=relaxed/simple;
+	bh=xyq8tdZQxla3QOWMCrFM2dP1pwFBccph/GPCkj5ObDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mnSOa8dmP7Rw7a+9T0gMdBFDSeujuNA2stDt8tU1oJk/m73Vw2Q4v4mf9C8w7X6oaV+MO4rx9hyokzvEHQW4Se9eU+q39lH2zBuaVReFpjyLMu42nqWZsjZ43EShKDnjolOkUd+/ATvDFVbT6sezyjN66EMyZy7ELBvcyAFCTLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JRCXTIJB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEuyWd3jdDYtC5Syb2duqDhNVzBTl8AgA4fAUiM9fPhap8LxhOEDLTM7TsF/WSl3w06JG8TtqBi6RiwKIXCGF/z5v4AZ+CKMGKpVACMcSmJCqqh87pxP/z9kMrkQsvTdPO7lifSeWrIHCWCCEfok/0dc2Dba3UTJEEhq8ds3xIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EgVRsRlr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JRCXTIJB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA26C2BCC4;
-	Mon, 20 Apr 2026 13:27:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EgVRsRlr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8177C2BCB7;
+	Mon, 20 Apr 2026 13:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691624;
-	bh=hz57hE/p0A28oIY9p/zSUK6pTcs0E6TaovPB9ItLdg8=;
+	s=k20201202; t=1776691626;
+	bh=xyq8tdZQxla3QOWMCrFM2dP1pwFBccph/GPCkj5ObDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JRCXTIJBMV/iwlBOUURK4R8Iz3FnZzIge2i9H/2F8G0BDVaqUh9Tby6tKozLqgibg
-	 DAVbkfR4egpBKfg8fPxrqO7AXR1AMtkzHErOEzXyXrggUjZLeuMIIjKnAl5SMz9RpY
-	 lRiNQBVOJfvKDm5hwj2y6QJS4DgJIiIE2Ie3LsrwACkdQqFRmS+Ax8JQS491srTmQw
-	 y84ulFh0tNewUU+OXXgYiQb20u6qsA1hmKkjGnRVNMVScsRBMnFqzSZrIqbgwq9pmR
-	 Kx5qnM0flvE7bgJCKzRJTjigyn6ba6sKzf85XvSNVG47G7zI5wpoVbluj596BZcL94
-	 ZLG5SO2lo+Khg==
+	b=EgVRsRlriIEH/iA5sLx/fpKhm19Hjb2vk4+H9pGLWJyi1GxoRrtjVsGS3Jd+YYJ31
+	 MzNEU+VUqy58ruKv+lMXdzHn6XmGE+kngmddAzU8n8L1mJ95stYvKzZXW8VNssv7Ej
+	 1+aLHedaCExr34KiwHXvmIgti6s3PRY7O5A07P3JoBkVyv50UKGYKCYwMymTDTPi8K
+	 3kujgvrx0Xk+MKNRCvckOse2OO0xnQRP2z+zJ0gXlpLx4HhDQnOy3upWMdaNAQjdCs
+	 BvAux0bCkaT4XeK/AiV0XAsRe2UKRwbWaym/SmReUkcU+nMLg5jwLpsZwFr7Ll4/4X
+	 Yu0z1f4x+DYcQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jialin Wang <wjl.linux@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Devang Vyas <devangnayanbhai.vyas@amd.com>,
+	Ramesh Garidapuri <ramesh.garidapuri@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	josef@toxicpanda.com,
-	cgroups@vger.kernel.org,
-	linux-block@vger.kernel.org,
+	linux-edac@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] blk-iocost: fix busy_level reset when no IOs complete
-Date: Mon, 20 Apr 2026 09:18:52 -0400
-Message-ID: <20260420132314.1023554-138-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.19] EDAC/amd64: Add support for family 19h, models 40h-4fh
+Date: Mon, 20 Apr 2026 09:18:53 -0400
+Message-ID: <20260420132314.1023554-139-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -52,552 +51,314 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jialin Wang <wjl.linux@gmail.com>
+From: Devang Vyas <devangnayanbhai.vyas@amd.com>
 
-[ Upstream commit f91ffe89b2016d280995a9c28d73288b02d83615 ]
+[ Upstream commit fbe230a9a79b62be3c6ac55b24d53ce5dd9202d5 ]
 
-When a disk is saturated, it is common for no IOs to complete within a
-timer period. Currently, in this case, rq_wait_pct and missed_ppm are
-calculated as 0, the iocost incorrectly interprets this as meeting QoS
-targets and resets busy_level to 0.
+Add support for Ryzen 6000 Zen3-based CPUs in the V3000 AMD Embedded SoC
+platform which uses ECC memory and would need RAS handling of hardware errors.
 
-This reset prevents busy_level from reaching the threshold (4) needed
-to reduce vrate. On certain cloud storage, such as Azure Premium SSD,
-we observed that iocost may fail to reduce vrate for tens of seconds
-during saturation, failing to mitigate noisy neighbor issues.
-
-Fix this by tracking the number of IO completions (nr_done) in a period.
-If nr_done is 0 and there are lagging IOs, the saturation status is
-unknown, so we keep busy_level unchanged.
-
-The issue is consistently reproducible on Azure Standard_D8as_v5 (Dasv5)
-VMs with 512GB Premium SSD (P20) using the script below. It was not
-observed on GCP n2d VMs (with 100G pd-ssd and 1.5T local-ssd), and no
-regressions were found with this patch. In this script, cgA performs
-large IOs with iodepth=128, while cgB performs small IOs with iodepth=1
-rate_iops=100 rw=randrw. With iocost enabled, we expect it to throttle
-cgA, the submission latency (slat) of cgA should be significantly higher,
-cgB can reach 200 IOPS and the completion latency (clat) should below.
-
-  BLK_DEVID="8:0"
-  MODEL="rbps=173471131 rseqiops=3566 rrandiops=3566 wbps=173333269 wseqiops=3566 wrandiops=3566"
-  QOS="rpct=90 rlat=3500 wpct=90 wlat=3500 min=80 max=10000"
-
-  echo "$BLK_DEVID ctrl=user model=linear $MODEL" > /sys/fs/cgroup/io.cost.model
-  echo "$BLK_DEVID enable=1 ctrl=user $QOS" > /sys/fs/cgroup/io.cost.qos
-
-  CG_A="/sys/fs/cgroup/cgA"
-  CG_B="/sys/fs/cgroup/cgB"
-
-  FILE_A="/path/to/sda/A.fio.testfile"
-  FILE_B="/path/to/sda/B.fio.testfile"
-  RESULT_DIR="./iocost_results_$(date +%Y%m%d_%H%M%S)"
-
-  mkdir -p "$CG_A" "$CG_B" "$RESULT_DIR"
-
-  get_result() {
-    local file=$1
-    local label=$2
-
-    local results=$(jq -r '
-    .jobs[0].mixed |
-    ( .iops | tonumber | round ) as $iops |
-    ( .bw_bytes / 1024 / 1024 ) as $bps |
-    ( .slat_ns.mean / 1000000 ) as $slat |
-    ( .clat_ns.mean / 1000000 ) as $avg |
-    ( .clat_ns.max / 1000000 ) as $max |
-    ( .clat_ns.percentile["90.000000"] / 1000000 ) as $p90 |
-    ( .clat_ns.percentile["99.000000"] / 1000000 ) as $p99 |
-    ( .clat_ns.percentile["99.900000"] / 1000000 ) as $p999 |
-    ( .clat_ns.percentile["99.990000"] / 1000000 ) as $p9999 |
-    "\($iops)|\($bps)|\($slat)|\($avg)|\($max)|\($p90)|\($p99)|\($p999)|\($p9999)"
-    ' "$file")
-
-    IFS='|' read -r iops bps slat avg max p90 p99 p999 p9999 <<<"$results"
-    printf "%-8s %-6s %-7.2f %-8.2f %-8.2f %-8.2f %-8.2f %-8.2f %-8.2f %-8.2f\n" \
-           "$label" "$iops" "$bps" "$slat" "$avg" "$max" "$p90" "$p99" "$p999" "$p9999"
-  }
-
-  run_fio() {
-    local cg_path=$1
-    local filename=$2
-    local name=$3
-    local bs=$4
-    local qd=$5
-    local out=$6
-    shift 6
-    local extra=$@
-
-    (
-      pid=$(sh -c 'echo $PPID')
-      echo $pid >"${cg_path}/cgroup.procs"
-      fio --name="$name" --filename="$filename" --direct=1 --rw=randrw --rwmixread=50 \
-          --ioengine=libaio --bs="$bs" --iodepth="$qd" --size=4G --runtime=10 \
-          --time_based --group_reporting --unified_rw_reporting=mixed \
-          --output-format=json --output="$out" $extra >/dev/null 2>&1
-    ) &
-  }
-
-  echo "Starting Test ..."
-
-  for bs_b in "4k" "32k" "256k"; do
-    echo "Running iteration: BS=$bs_b"
-    out_a="${RESULT_DIR}/cgA_1m.json"
-    out_b="${RESULT_DIR}/cgB_${bs_b}.json"
-
-    # cgA: Heavy background (BS 1MB, QD 128)
-    run_fio "$CG_A" "$FILE_A" "cgA" "1m" 128 "$out_a"
-    # cgB: Latency sensitive (Variable BS, QD 1, Read/Write IOPS limit 100)
-    run_fio "$CG_B" "$FILE_B" "cgB" "$bs_b" 1 "$out_b" "--rate_iops=100"
-
-    wait
-    SUMMARY_DATA+="$(get_result "$out_a" "cgA-1m")"$'\n'
-    SUMMARY_DATA+="$(get_result "$out_b" "cgB-$bs_b")"$'\n\n'
-  done
-
-  echo -e "\nFinal Results Summary:\n"
-
-  printf "%-8s %-6s %-7s %-8s %-8s %-8s %-8s %-8s %-8s %-8s\n" \
-          "" "" "" "slat" "clat" "clat" "clat" "clat" "clat" "clat"
-  printf "%-8s %-6s %-7s %-8s %-8s %-8s %-8s %-8s %-8s %-8s\n\n" \
-          "CGROUP" "IOPS" "MB/s" "avg(ms)" "avg(ms)" "max(ms)" "P90(ms)" "P99" "P99.9" "P99.99"
-  echo "$SUMMARY_DATA"
-
-  echo "Results saved in $RESULT_DIR"
-
-Before:
-                          slat     clat     clat     clat     clat     clat     clat
-  CGROUP   IOPS   MB/s    avg(ms)  avg(ms)  max(ms)  P90(ms)  P99      P99.9    P99.99
-
-  cgA-1m   166    166.37  3.44     748.95   1298.29  977.27   1233.13  1300.23  1300.23
-  cgB-4k   5      0.02    0.02     181.74   761.32   742.39   759.17   759.17   759.17
-
-  cgA-1m   167    166.51  1.98     748.68   1549.41  809.50   1451.23  1551.89  1551.89
-  cgB-32k  6      0.18    0.02     169.98   761.76   742.39   759.17   759.17   759.17
-
-  cgA-1m   166    165.55  2.89     750.89   1540.37  851.44   1451.23  1535.12  1535.12
-  cgB-256k 5      1.30    0.02     191.35   759.51   750.78   759.17   759.17   759.17
-
-After:
-                          slat     clat     clat     clat     clat     clat     clat
-  CGROUP   IOPS   MB/s    avg(ms)  avg(ms)  max(ms)  P90(ms)  P99      P99.9    P99.99
-
-  cgA-1m   162    162.48  6.14     749.69   850.02   826.28   834.67   843.06   851.44
-  cgB-4k   199    0.78    0.01     1.95     42.12    2.57     7.50     34.87    42.21
-
-  cgA-1m   146    146.20  6.83     833.04   908.68   893.39   901.78   910.16   910.16
-  cgB-32k  200    6.25    0.01     2.32     31.40    3.06     7.50     16.58    31.33
-
-  cgA-1m   110    110.46  9.04     1082.67  1197.91  1182.79  1199.57  1199.57  1199.57
-  cgB-256k 200    49.98   0.02     3.69     22.20    4.88     9.11     20.05    22.15
-
-Signed-off-by: Jialin Wang <wjl.linux@gmail.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260331100509.182882-1-wjl.linux@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-developed-by: Ramesh Garidapuri <ramesh.garidapuri@amd.com>
+Signed-off-by: Ramesh Garidapuri <ramesh.garidapuri@amd.com>
+Signed-off-by: Devang Vyas <devangnayanbhai.vyas@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Link: https://patch.msgid.link/20260317183453.3556588-1-devangnayanbhai.vyas@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have all the information needed for a comprehensive analysis. Let
-me compile the findings.
+Now I have all the key information. Here's the complete analysis:
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject Line
-- **Subsystem:** `blk-iocost` (block layer IO cost controller)
-- **Action verb:** "fix"
-- **Summary:** Fix incorrect busy_level reset when no IO completions
-  occur within a timer period
-- Record: [blk-iocost] [fix] [busy_level incorrectly reset to 0 when no
-  IOs complete, preventing vrate reduction during saturation]
+**Step 1.1: Subject Line**
+- Subsystem: `EDAC/amd64`
+- Action verb: "Add support for" - this is adding **new hardware
+  support**, not fixing a bug
+- Summary: Adds model 40h-4fh support for family 19h (Ryzen 6000 Zen3,
+  V3000 AMD Embedded SoC)
+- Record: [EDAC/amd64] [Add support] [New CPU model ID range for
+  existing driver]
 
-### Step 1.2: Tags
-- **Signed-off-by:** Jialin Wang <wjl.linux@gmail.com> (author)
-- **Acked-by:** Tejun Heo <tj@kernel.org> (blk-iocost creator and
-  maintainer)
-- **Link:**
-  https://patch.msgid.link/20260331100509.182882-1-wjl.linux@gmail.com
-- **Signed-off-by:** Jens Axboe <axboe@kernel.dk> (block layer
-  maintainer)
-- No Fixes: tag (expected for AUTOSEL candidates)
-- No Cc: stable (expected for AUTOSEL candidates)
-- Record: Acked by the subsystem maintainer (Tejun Heo) and merged by
-  the block layer maintainer (Jens Axboe). Strong quality signals.
+**Step 1.2: Tags**
+- Co-developed-by: Ramesh Garidapuri (AMD employee)
+- Signed-off-by: Ramesh Garidapuri, Devang Vyas, Borislav Petkov (AMD,
+  EDAC maintainer)
+- Reviewed-by: Yazen Ghannam (AMD, regular EDAC contributor)
+- Link: patch.msgid.link URL
+- No Fixes: tag, no Reported-by:, no Cc: stable
+- Record: Reviewed by key EDAC/AMD developers, signed off by subsystem
+  maintainer (Borislav Petkov)
 
-### Step 1.3: Commit Body Analysis
-- **Bug description:** When a disk is saturated, no IOs may complete
-  within a timer period. When this happens, rq_wait_pct=0 and
-  missed_ppm=0, which iocost incorrectly interprets as "meeting QoS
-  targets."
-- **Symptom:** busy_level gets reset to 0, preventing it from reaching
-  threshold (4) needed to reduce vrate. On certain cloud storage (Azure
-  Premium SSD), iocost can fail to reduce vrate for tens of seconds
-  during saturation, breaking cgroup IO isolation.
-- **Failure mode:** Noisy neighbor problem - heavy IO from one cgroup is
-  not properly throttled, causing high latency for latency-sensitive
-  workloads in other cgroups.
-- **Testing:** Detailed benchmark script provided with before/after
-  results showing dramatic improvement (cgB: 5 IOPS -> 200 IOPS; clat:
-  181ms -> 1.95ms).
-- Record: Clear real-world bug with concrete impact on cloud
-  environments. Reproducible with specific test setup.
+**Step 1.3: Commit Body**
+- Claims to add support for Ryzen 6000 Zen3-based CPUs in V3000 AMD
+  Embedded SoC platform
+- These CPUs use ECC memory and need RAS (Reliability, Availability,
+  Serviceability) handling
+- No bug description, no crash, no error report
+- Record: This is a hardware enablement commit, not a bug fix
 
-### Step 1.4: Hidden Bug Fix Detection
-This is explicitly labeled as "fix" - no hidden nature. The commit
-message clearly explains the bug mechanism and the fix approach.
-
----
+**Step 1.4: Hidden Bug Fix Detection**
+- This is not a disguised bug fix. It's straightforwardly adding a new
+  CPU model range to an existing switch statement.
+- Record: Not a hidden bug fix.
 
 ## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-- **Files changed:** 1 (`block/blk-iocost.c`)
-- **Lines added/removed:** ~15 lines of actual code (plus comments)
-- **Functions modified:** `ioc_lat_stat()` (signature + 1 line),
-  `ioc_timer_fn()` (variable + call site + new branch)
-- **Scope:** Single-file, surgical fix
-- Record: Minimal change in a single file affecting two functions in the
-  same subsystem.
+**Step 2.1: Inventory**
+- Files changed: 1 (`drivers/edac/amd64_edac.c`)
+- Lines added: 3 lines (`case 0x40 ... 0x4f:`, `pvt->max_mcs = 4;`,
+  `break;`)
+- Lines removed: 0
+- Function modified: `per_family_init()`
+- Record: Extremely small, single-file, 3-line addition inside existing
+  switch block
 
-### Step 2.2: Code Flow Change
-**Hunk 1 - `ioc_lat_stat()` signature:**
-- Before: `ioc_lat_stat(ioc, missed_ppm_ar, rq_wait_pct_p)` - 2 output
-  params
-- After: `ioc_lat_stat(ioc, missed_ppm_ar, rq_wait_pct_p, nr_done)` - 3
-  output params
-- Adds computation: `*nr_done = nr_met[READ] + nr_met[WRITE] +
-  nr_missed[READ] + nr_missed[WRITE]`
+**Step 2.2: Code Flow Change**
+- Before: Family 19h models 40h-4fh would fall through the inner switch
+  without matching, using defaults (`max_mcs = 2`, no special flags)
+- After: Family 19h models 40h-4fh set `max_mcs = 4`
+- The default `max_mcs = 2` is set at line 3771 before the switch;
+  without this case, the V3000 SoC would get a wrong max_mcs value
 
-**Hunk 2 - `ioc_timer_fn()` variable:**
-- Adds `u32 nr_done` variable and passes `&nr_done` to `ioc_lat_stat()`.
+**Step 2.3: Bug Mechanism**
+- Category: Hardware ID / model addition to existing driver
+- Without this patch, the EDAC driver will still load for these CPUs
+  (family 19h is already matched at the outer switch), but it will use
+  `max_mcs = 2` instead of the correct `max_mcs = 4`
+- This means 2 of the 4 memory controllers would not be monitored for
+  ECC errors
+- Record: This is a device model addition to an existing driver, setting
+  the correct number of memory controllers
 
-**Hunk 3 - busy_level decision logic:**
-- Before: Directly checks `rq_wait_pct > RQ_WAIT_BUSY_PCT ||
-  missed_ppm...`
-- After: First checks `if (!nr_done && nr_lagging)` - if no completions
-  and lagging IOs exist, skip all busy_level changes (keep unchanged).
-  Otherwise, proceed with existing logic.
+**Step 2.4: Fix Quality**
+- The fix is trivially correct - identical pattern to other model ranges
+  in the same switch
+- Extremely minimal - 3 lines, no risk of regression
+- The pattern mirrors `case 0x70 ... 0x7f` which also sets `max_mcs = 4`
+- Record: Obviously correct, zero regression risk
 
-### Step 2.3: Bug Mechanism
-This is a **logic/correctness fix**. When no IOs complete during a timer
-period:
-1. `nr_met` and `nr_missed` are both 0 → `missed_ppm = 0`
-2. `rq_wait_ns = 0` → `rq_wait_pct = 0`
-3. All metrics being 0 falls into the "UNBUSY" branch (second condition)
-4. If `nr_shortages = 0`: `busy_level` is reset to 0 (the bug)
-5. This prevents `busy_level` from ever reaching 4, which is required to
-   trigger vrate reduction
+## PHASE 3: GIT HISTORY
 
-The fix adds a guard: when `nr_done == 0 && nr_lagging > 0`, the
-saturation status is truly unknown, so busy_level is preserved
-unchanged.
+**Step 3.1: Blame**
+- Family 19h case block added in commit `2eb61c91c3e273` (Yazen Ghannam,
+  2020-01-10) - present since ~v5.6
+- Various model ranges were added over time (models 10-1f, 30-3f, 60-7f,
+  90-9f, a0-af)
+- Record: Family 19h support has been in the tree since v5.6; model
+  additions are routine
 
-### Step 2.4: Fix Quality
-- Obviously correct: if we have zero completions, we have zero data to
-  make QoS decisions
-- Minimal/surgical: only adds a new guard condition before the existing
-  logic
-- Regression risk: Very low. The new code path only triggers when
-  `nr_done == 0 && nr_lagging > 0`, and it preserves the previous state
-  rather than making any change.
-- The existing logic is completely unchanged in all other cases.
+**Step 3.2: No Fixes: tag** - expected for hardware enablement
 
----
+**Step 3.3: File History**
+- Recent commits show routine EDAC changes (format cleanup, macro
+  removal, etc.)
+- Similar prior commits: "Add support for family 19h, models 50h-5fh"
+  (commit `0b8bf9cb142da`), "Add support for ECC on family 19h model
+  60h-7Fh" (commit `6c79e42169fe1`)
+- This is a standalone commit, not part of a series
+- Record: Standalone, follows established pattern of model additions
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.4: Author**
+- Devang Vyas appears to be an AMD engineer. The commit was reviewed by
+  Yazen Ghannam (AMD EDAC regular) and signed off by Borislav Petkov
+  (EDAC maintainer).
 
-### Step 3.1: Blame
-The buggy busy_level decision logic was introduced by:
-- `7caa47151ab2e6` (Tejun Heo, 2019-08-28): Original blk-iocost
-  implementation (v5.4)
-- `81ca627a933063` (Tejun Heo, 2019-10-14): "iocost: don't let vrate run
-  wild while there's no saturation signal" - This commit restructured
-  the busy_level logic and added the `else { ioc->busy_level = 0; }`
-  branch for "Nobody is being throttled." This is the commit that
-  introduced the specific behavior this fix addresses. Present since
-  v5.8.
+**Step 3.5: Dependencies**
+- No dependencies. The family 19h framework already exists. This just
+  adds a new case.
 
-### Step 3.2: Fixes Tag
-No explicit Fixes: tag. However, the buggy behavior was introduced by
-81ca627a933063, which is present in v5.8+ (including all currently
-active stable trees: v5.10, v5.15, v6.1, v6.6, v6.12).
+## PHASE 4: MAILING LIST
 
-### Step 3.3: File History
-Recent blk-iocost changes are mostly unrelated (hrtimer_setup, min_t
-cleanup, treewide conversions). No conflicting changes. The busy_level
-decision logic has been stable since 81ca627a933063 with only one minor
-change (065655c862fedf removed `nr_surpluses` check).
-
-### Step 3.4: Author
-Jialin Wang is not the regular blk-iocost maintainer, but the fix was
-acked by Tejun Heo (creator and maintainer of blk-iocost) and merged by
-Jens Axboe (block layer maintainer).
-
-### Step 3.5: Dependencies
-No dependencies. The patch is self-contained and the code it modifies is
-identical across all stable trees (v5.10 through current mainline,
-verified by comparing `ioc_lat_stat()` and `ioc_timer_fn()` busy_level
-logic).
-
----
-
-## PHASE 4: MAILING LIST RESEARCH
-
-### Step 4.1-4.5
-Lore.kernel.org was blocked by bot protection. Web search found limited
-direct results. However, the commit has strong signals:
-- **Acked-by: Tejun Heo** - the creator and primary maintainer of blk-
-  iocost
-- **Merged by: Jens Axboe** - the block layer maintainer
-- The commit was merged via the standard block tree path
-
----
+**Step 4.1-4.5:**
+- Lore is behind Anubis protection; could not fetch discussion
+- b4 dig could not find this specific commit (likely too new for cached
+  index)
+- No indication of stable nomination in the commit tags
+- Record: Could not verify mailing list discussion due to lore
+  protection
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: Functions Modified
-- `ioc_lat_stat()`: Collects per-CPU IO latency statistics
-- `ioc_timer_fn()`: The main timer callback that evaluates QoS and
-  adjusts vrate
-
-### Step 5.2: Callers
-- `ioc_lat_stat()` is called only from `ioc_timer_fn()` (single call
-  site)
-- `ioc_timer_fn()` is the periodic timer callback for the IO cost
-  controller, runs once per period
-
-### Step 5.3: Impact Surface
-The `ioc_timer_fn()` timer runs periodically for every block device with
-iocost enabled. The busy_level directly controls vrate adjustment, which
-governs IO throttling for cgroups. This is the core feedback loop of the
-entire iocost controller.
-
-### Step 5.4: Call Chain
-`timer_list callback` → `ioc_timer_fn()` → evaluates QoS → adjusts
-`busy_level` → calls `ioc_adjust_base_vrate()` → adjusts
-`vtime_base_rate`. This path is always active when iocost is enabled.
-
----
+**Step 5.1-5.4:**
+- `per_family_init()` is called from the module's probe path at line
+  4016
+- Called once per detected AMD CPU node during EDAC initialization
+- The function sets up per-family and per-model parameters for the EDAC
+  memory controller
+- Without correct `max_mcs`, the driver will only see 2 of 4 memory
+  controllers, meaning ECC errors on controllers 3 and 4 would not be
+  detected/reported
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-### Step 6.1: Code Existence in Stable Trees
-Verified the exact busy_level decision logic is **byte-for-byte
-identical** in:
-- v5.10 (line 2272-2310)
-- v5.15 (line 2348-2390)
-- v6.1 (line 2354-2396)
-- v6.6 (line 2381-2420)
-- v7.0 mainline (line 2399-2435)
+**Step 6.1:**
+- Family 19h support exists since v5.6, so the outer `case 0x19:` exists
+  in all active stable trees (6.1.y, 6.6.y, etc.)
+- The patch would apply cleanly to any stable tree that has the family
+  19h switch block
+- Record: Code exists in all active stable trees
 
-The `ioc_lat_stat()` function is also identical across all these
-versions.
+**Step 6.2:**
+- The file has had some refactoring (e.g., `e9abd990aefd7` for
+  `ctl_name` generation), so minor conflicts are possible in older
+  stable trees, but the specific hunk (adding a case between 0x3f and
+  0x60) should apply cleanly.
 
-### Step 6.2: Backport Complications
-The patch should apply **cleanly** to all active stable trees. The code
-context is identical. In v5.10, `ioc_adjust_base_vrate()` is inline
-rather than a separate function, but the busy_level decision logic
-(where the patch applies) is identical.
-
-### Step 6.3: No Related Fixes Already in Stable
-No prior fix for this specific issue was found in stable trees.
-
----
+**Step 6.3:** No related fixes already in stable for this model range.
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: Subsystem
-- **Subsystem:** Block layer - IO cost controller (blk-iocost)
-- **Criticality:** IMPORTANT - affects all users of cgroup v2 IO
-  control, widely used in cloud environments (systemd, container
-  orchestrators, cloud VMs)
+**Step 7.1:**
+- Subsystem: EDAC (Error Detection and Correction) - memory error
+  handling
+- Criticality: IMPORTANT - affects users of specific AMD embedded
+  hardware (V3000 platform with Ryzen 6000)
+- Record: [EDAC/AMD driver] [IMPORTANT for V3000 users]
 
-### Step 7.2: Activity
-The subsystem is mature with occasional fixes. The busy_level logic
-hasn't changed since 2020, indicating this is a long-standing bug.
-
----
+**Step 7.2:** Active subsystem with regular model additions.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: Affected Users
-- All users of cgroup v2 IO cost control during disk saturation
-- Particularly cloud users on virtualized block devices (Azure, etc.)
-- Container environments using IO throttling (Kubernetes, Docker with
-  cgroup v2)
+**Step 8.1: Who is affected?**
+- Users of AMD V3000 embedded SoC platform (Ryzen 6000 Zen3, family 19h
+  models 40h-4fh)
+- This is an embedded platform - likely used in industrial/commercial
+  applications where ECC matters
+- Record: Platform-specific - V3000 embedded users only
 
-### Step 8.2: Trigger Conditions
-- Disk saturated with large IOs (e.g., 1MB writes at high queue depth)
-- Timer period passes with zero IO completions
-- **Common trigger:** Any scenario where IO completion time exceeds the
-  timer period (~10ms-100ms typically)
-- Reproducible consistently on certain cloud storage types
+**Step 8.2: Trigger conditions**
+- The driver loads on any AMD system with family 19h. Without this
+  patch, models 40h-4fh get incorrect `max_mcs` (2 instead of 4), so
+  half the memory controllers go unmonitored.
+- Record: Triggered automatically on boot for affected hardware
 
-### Step 8.3: Severity
-- **Failure mode:** IO isolation failure - a noisy neighbor cgroup
-  cannot be properly throttled during saturation
-- **Impact:** Latency-sensitive workloads experience 100x+ higher
-  latency than expected (181ms vs 1.95ms in the benchmark)
-- **Severity:** HIGH - not a crash, but a significant functional failure
-  of the IO controller that defeats its core purpose
+**Step 8.3: Failure severity**
+- Without this: EDAC doesn't properly monitor all memory controllers.
+  ECC errors on 2 of 4 controllers would go undetected/unreported.
+- This is NOT a crash - the system still works, but RAS monitoring is
+  incomplete.
+- Severity: MEDIUM - missing error reporting rather than
+  crash/corruption
+- Record: [Incomplete ECC monitoring] [MEDIUM severity]
 
-### Step 8.4: Risk-Benefit
-- **Benefit:** HIGH - Fixes IO isolation during saturation, critical for
-  cloud multi-tenant environments
-- **Risk:** VERY LOW - ~15 lines, only adds a "preserve state" guard
-  condition, all existing paths unchanged
-- **Ratio:** Strongly favorable for backporting
-
----
+**Step 8.4: Risk-Benefit**
+- BENEFIT: Enables proper ECC monitoring on V3000 platform (important
+  for embedded/industrial users relying on stable kernels)
+- RISK: Extremely low - 3-line addition to existing pattern in a switch
+  statement, zero chance of regression for any other hardware
+- Record: [Medium benefit for niche audience] [Very low risk]
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: Evidence Summary
+**Step 9.1: Evidence Compilation**
 
-**FOR backporting:**
-- Fixes a real, reproducible bug with concrete user impact
-- Affects IO isolation in cloud/container environments (high-value use
-  case)
-- Small, surgical fix (~15 lines actual code in 1 file)
-- Obviously correct (no completions = no data = preserve state)
-- Acked by subsystem creator (Tejun Heo)
-- Merged by block maintainer (Jens Axboe)
-- Detailed testing with before/after benchmarks showing 40x improvement
-- Code is identical across all stable trees - clean apply expected
-- Bug present since v5.8 (81ca627a933063), affects v5.10+ stable trees
-- No regression found in testing (including GCP which worked before)
+FOR backporting:
+- Trivially small change (3 lines), obviously correct
+- Follows well-established pattern (identical to other model additions)
+- Falls into the "device ID / model addition to existing driver"
+  exception category
+- Enables hardware monitoring for real embedded platform users
+- Zero regression risk - only affects models 40h-4fh within family 19h
+- Reviewed by subsystem experts (Yazen Ghannam) and merged by maintainer
+  (Borislav Petkov)
 
-**AGAINST backporting:**
-- No explicit Cc: stable or Fixes: tag (expected for AUTOSEL)
-- Not a crash/panic - it's a performance/isolation failure
-- The commit message is long (includes test script), but the actual diff
-  is small
+AGAINST backporting:
+- This is new hardware enablement, not a bug fix
+- No crash, no data corruption, no security issue
+- The system still functions without it - just incomplete ECC monitoring
+- Niche audience (AMD V3000 embedded platform)
+- No Fixes: tag (expected, but also reflects that there's no bug being
+  fixed)
 
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct?** YES - if zero IOs completed, QoS metrics are
-   meaningless
-2. **Fixes real bug?** YES - IO throttling fails during saturation,
-   breaking cgroup isolation
-3. **Important issue?** YES - significant performance isolation failure
-   in cloud environments
-4. **Small and contained?** YES - ~15 lines in 1 file
-5. **No new features?** CORRECT - only fixes existing logic
-6. **Can apply to stable?** YES - code is identical across all stable
-   trees
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? YES - trivial 3-line pattern addition
+2. Fixes a real bug? BORDERLINE - it's hardware enablement; without it,
+   max_mcs defaults to 2 instead of 4, which means incomplete monitoring
+3. Important issue? NO - no crash, security, or corruption. Missing ECC
+   monitoring is concerning for embedded users but not critical
+4. Small and contained? YES - 3 lines, single file
+5. No new features or APIs? This IS arguably a new feature (new hardware
+   support)
+6. Can apply to stable? YES - should apply cleanly
 
-### Step 9.3: Exception Categories
-Not an exception category - this is a standard important bug fix.
-
----
+**Step 9.3: Exception Categories**
+- This falls under "New Device IDs" exception: adding a CPU model range
+  to an existing driver. The driver already exists; only the model-
+  specific configuration is new. This is analogous to adding a PCI/USB
+  device ID.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Acked-by Tejun Heo (blk-iocost maintainer),
-  Signed-off-by Jens Axboe (block maintainer)
-- [Phase 2] Diff analysis: ~15 lines added in `ioc_lat_stat()` and
-  `ioc_timer_fn()`, adds nr_done tracking and guard condition
-- [Phase 3] git blame: buggy code introduced in 81ca627a933063 (v5.8,
-  "iocost: don't let vrate run wild"), verified present in all stable
-  trees
-- [Phase 3] git show 81ca627a933063: confirmed it added the `else {
-  busy_level = 0 }` branch that causes the bug
-- [Phase 3] git merge-base: confirmed 81ca627a933063 is in v5.8+,
-  present in v5.10, v5.15, v6.1, v6.6
-- [Phase 3] git log --oneline -20: no conflicting or prerequisite
-  changes found
-- [Phase 4] b4 dig: could not find commit (not yet in tree);
-  lore.kernel.org blocked by bot protection
-- [Phase 5] Grep for callers: `ioc_lat_stat()` called only from
-  `ioc_timer_fn()`, single call site
-- [Phase 5] Grep for busy_level: 20 references in file, all consistent
-  with this fix
-- [Phase 6] Compared ioc_lat_stat() across v5.10, v5.15, v6.1, v6.6,
-  v7.0: byte-for-byte identical
-- [Phase 6] Compared busy_level decision logic across v5.10, v5.15,
-  v6.1, v6.6, v7.0: structurally identical
-- [Phase 6] No prior fix for this issue found in any stable tree
-- [Phase 8] Failure mode: IO isolation failure, 40x latency increase for
-  latency-sensitive workloads, severity HIGH
-- UNVERIFIED: Mailing list discussion (lore blocked), but commit has
-  strong trust signals (Acked-by maintainer, merged via standard path)
+- [Phase 1] Parsed tags: Signed-off-by Borislav Petkov (maintainer),
+  Reviewed-by Yazen Ghannam
+- [Phase 2] Diff analysis: 3 lines added, new `case 0x40 ... 0x4f` in
+  per_family_init() switch, sets max_mcs=4
+- [Phase 2] Verified default max_mcs=2 at line 3771, so without this
+  patch models 40h-4fh get wrong value
+- [Phase 3] git blame: family 19h support since commit 2eb61c91c3e273
+  (v5.6 era, 2020-01-10)
+- [Phase 3] git log: confirmed similar prior model additions (50h-5fh,
+  60h-7fh)
+- [Phase 4] b4 dig: could not find this specific commit; lore blocked by
+  Anubis
+- [Phase 5] per_family_init() called at line 4016 during driver probe
+- [Phase 6] Family 19h case exists in all active stable trees (v5.6+)
+- [Phase 8] Failure mode: incomplete ECC monitoring (2/4 controllers),
+  severity MEDIUM
+- UNVERIFIED: Mailing list discussion content (lore blocked)
 
-The fix is small, surgical, obviously correct, acked by the subsystem
-maintainer, fixes a real-world IO isolation failure affecting cloud
-environments, and applies cleanly to all active stable trees. The risk
-is very low (adds only a "preserve state" guard) while the benefit is
-high (restores IO throttling during disk saturation).
+## Decision
+
+This commit adds a new CPU model range (40h-4fh) to an existing EDAC
+driver. While it's technically a "new hardware support" addition, it
+fits squarely into the **device ID / model addition exception** for
+stable trees. The change is:
+- 3 lines, trivially correct, zero regression risk
+- Follows an identical pattern to dozens of prior model additions in
+  this switch
+- Enables ECC error detection for a real embedded platform (V3000)
+- Users of stable kernels on this platform would have incomplete memory
+  error monitoring without it
+
+However, this is ultimately **new hardware enablement** rather than a
+bug fix. The system doesn't crash, corrupt data, or have a security
+issue without it. The V3000 platform is a relatively niche embedded SoC.
+While device ID additions are generally acceptable for stable, the
+stable kernel rules primarily target fixes for real bugs. This is
+enabling hardware that was never supported before - not fixing broken
+support for already-supported hardware.
+
+The balance tips toward YES given the device ID exception, the trivial
+size, and zero risk, but this is a borderline case. Given the extremely
+low risk and that it enables proper RAS functionality for embedded users
+who rely on stable kernels, this merits inclusion.
 
 **YES**
 
- block/blk-iocost.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ drivers/edac/amd64_edac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index d145db61e5c31..0cca88a366dc9 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -1596,7 +1596,8 @@ static enum hrtimer_restart iocg_waitq_timer_fn(struct hrtimer *timer)
- 	return HRTIMER_NORESTART;
- }
- 
--static void ioc_lat_stat(struct ioc *ioc, u32 *missed_ppm_ar, u32 *rq_wait_pct_p)
-+static void ioc_lat_stat(struct ioc *ioc, u32 *missed_ppm_ar, u32 *rq_wait_pct_p,
-+			 u32 *nr_done)
- {
- 	u32 nr_met[2] = { };
- 	u32 nr_missed[2] = { };
-@@ -1633,6 +1634,8 @@ static void ioc_lat_stat(struct ioc *ioc, u32 *missed_ppm_ar, u32 *rq_wait_pct_p
- 
- 	*rq_wait_pct_p = div64_u64(rq_wait_ns * 100,
- 				   ioc->period_us * NSEC_PER_USEC);
-+
-+	*nr_done = nr_met[READ] + nr_met[WRITE] + nr_missed[READ] + nr_missed[WRITE];
- }
- 
- /* was iocg idle this period? */
-@@ -2250,12 +2253,12 @@ static void ioc_timer_fn(struct timer_list *timer)
- 	u64 usage_us_sum = 0;
- 	u32 ppm_rthr;
- 	u32 ppm_wthr;
--	u32 missed_ppm[2], rq_wait_pct;
-+	u32 missed_ppm[2], rq_wait_pct, nr_done;
- 	u64 period_vtime;
- 	int prev_busy_level;
- 
- 	/* how were the latencies during the period? */
--	ioc_lat_stat(ioc, missed_ppm, &rq_wait_pct);
-+	ioc_lat_stat(ioc, missed_ppm, &rq_wait_pct, &nr_done);
- 
- 	/* take care of active iocgs */
- 	spin_lock_irq(&ioc->lock);
-@@ -2397,9 +2400,17 @@ static void ioc_timer_fn(struct timer_list *timer)
- 	 * and should increase vtime rate.
- 	 */
- 	prev_busy_level = ioc->busy_level;
--	if (rq_wait_pct > RQ_WAIT_BUSY_PCT ||
--	    missed_ppm[READ] > ppm_rthr ||
--	    missed_ppm[WRITE] > ppm_wthr) {
-+	if (!nr_done && nr_lagging) {
-+		/*
-+		 * When there are lagging IOs but no completions, we don't
-+		 * know if the IO latency will meet the QoS targets. The
-+		 * disk might be saturated or not. We should not reset
-+		 * busy_level to 0 (which would prevent vrate from scaling
-+		 * up or down), but rather to keep it unchanged.
-+		 */
-+	} else if (rq_wait_pct > RQ_WAIT_BUSY_PCT ||
-+		   missed_ppm[READ] > ppm_rthr ||
-+		   missed_ppm[WRITE] > ppm_wthr) {
- 		/* clearly missing QoS targets, slow down vrate */
- 		ioc->busy_level = max(ioc->busy_level, 0);
- 		ioc->busy_level++;
+diff --git a/drivers/edac/amd64_edac.c b/drivers/edac/amd64_edac.c
+index 8908ab881c855..c6aa69dbd9fb1 100644
+--- a/drivers/edac/amd64_edac.c
++++ b/drivers/edac/amd64_edac.c
+@@ -3863,6 +3863,9 @@ static int per_family_init(struct amd64_pvt *pvt)
+ 				pvt->max_mcs		= 8;
+ 			}
+ 			break;
++		case 0x40 ... 0x4f:
++			pvt->max_mcs			= 4;
++			break;
+ 		case 0x60 ... 0x6f:
+ 			pvt->flags.zn_regs_v2		= 1;
+ 			break;
 -- 
 2.53.0
 
