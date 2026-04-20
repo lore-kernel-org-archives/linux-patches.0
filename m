@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D34D2853F3;
-	Mon, 20 Apr 2026 16:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FFD1FB1;
+	Mon, 20 Apr 2026 16:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776701534; cv=none; b=AFnzyg349YmgjmuAycmbsMCa6f9cARqWVMumjhiKML8dP9zvYD9VJ2YCzHRzxhMXltbBfgSrwfbe6KqIOuH9YgS99hwxw4WOLTXQ7ecMq4VEUpD4Ef8oOJiK3G+IueUMYIeCkKrIQ1L6kg0Pcp0rPwDfps7JyrANRr+uALUyPmc=
+	t=1776701537; cv=none; b=FBU5Di+vZ/49qabBjzESRYpKAuxGP/VlzQvKNcIiFcD4ysOKkDUMObJBYSriB5fYiWxWbd4l4z8xIX5P1fstyUblRKAAEYZKlawVLdTSITRS26DYTmObuomkbElrCWHjHjXxSsreRuEsQ7zRNzx7prL0OMAW/D5Ns7gsIyPBJGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776701534; c=relaxed/simple;
-	bh=XcVsjhWOOLbMQIRO9M6ohd1xEEoI+1uHBwV0iXlkVg4=;
+	s=arc-20240116; t=1776701537; c=relaxed/simple;
+	bh=O7t8f/nHFfX20XKnwy6TORonLO1rqZTXotZ96ZZMo+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTnhMif4DwlbaaMzTLdW+8jRJ1uTTLwO5DwL5YwrbZdCdu346wYqY7w9044LFhYgvxetSNMTLiVTCX8oSVM50T7G5aX88G3dyh97C/noxAiKLxGh9i6laIG8pvQIyb03S72q8d5hwg3XSHO0WUAzK29PpB++02pOhgDl1v3/PzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1VLQpEb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OJECC/nJrpzavJA++g1t8gM4K4LNUE7NEdFfvUJzfQRlp8N+ta7ky/5HA3X6NTMmn+kAyP1zHYgZYLfnyo8RlXKxrM7IllM3g8gYQvC3gOL3tP6Ty9eiIf4dmsYRoU9q8L6Jk7dlearIXil87uDwgE1uSh4jAqpdZZXrMkGrp2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1PN983p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1VLQpEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13631C19425;
-	Mon, 20 Apr 2026 16:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1PN983p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E8FC19425;
+	Mon, 20 Apr 2026 16:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776701534;
-	bh=XcVsjhWOOLbMQIRO9M6ohd1xEEoI+1uHBwV0iXlkVg4=;
+	s=korg; t=1776701537;
+	bh=O7t8f/nHFfX20XKnwy6TORonLO1rqZTXotZ96ZZMo+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1VLQpEb2747URtdhN5C++TQUUXVKLLexRMSS6BfbRzlepRY3LsAihh4FMAj6j3lt
-	 vrw33Y0Kwh6f5jC9UyoWq0CmiQp0dEGHfReB7e3dGcj9o4YGmwmz/rsDNUFOfH+fgi
-	 UAswbyRisRywni10GrXwX9ihcNTphLOkO/mHyGcQ=
+	b=A1PN983p12eQqp6zGfgSNQeOnrApU0jpE4ttqX3zNRKukL07zokjibvzUzZJTw9Uv
+	 zHHaQ0eHTYspf9zLhU6BUXG3hf8BafNZCUmAq3bQFzrQ4CmvD+Qc0pT8EWyiI62ZmO
+	 CdZVH/XoqbJj1HS4bZi3kyp9BHCTExzb45p5NgyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Berk Cem Goksel <berkcgoksel@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 150/162] ALSA: 6fire: fix use-after-free on disconnect
-Date: Mon, 20 Apr 2026 17:43:02 +0200
-Message-ID: <20260420153932.483112066@linuxfoundation.org>
+	Mingzhe Zou <mingzhe.zou@easystack.cn>,
+	Coly Li <colyli@fnnas.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 151/162] bcache: fix cached_dev.sb_bio use-after-free and crash
+Date: Mon, 20 Apr 2026 17:43:03 +0200
+Message-ID: <20260420153932.518950873@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153927.006696811@linuxfoundation.org>
 References: <20260420153927.006696811@linuxfoundation.org>
@@ -51,82 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Berk Cem Goksel <berkcgoksel@gmail.com>
+From: Mingzhe Zou <mingzhe.zou@easystack.cn>
 
-commit b9c826916fdce6419b94eb0cd8810fdac18c2386 upstream.
+commit fec114a98b8735ee89c75216c45a78e28be0f128 upstream.
 
-In usb6fire_chip_abort(), the chip struct is allocated as the card's
-private data (via snd_card_new with sizeof(struct sfire_chip)).  When
-snd_card_free_when_closed() is called and no file handles are open, the
-card and embedded chip are freed synchronously.  The subsequent
-chip->card = NULL write then hits freed slab memory.
+In our production environment, we have received multiple crash reports
+regarding libceph, which have caught our attention:
 
-Call trace:
-  usb6fire_chip_abort sound/usb/6fire/chip.c:59 [inline]
-  usb6fire_chip_disconnect+0x348/0x358 sound/usb/6fire/chip.c:182
-  usb_unbind_interface+0x1a8/0x88c drivers/usb/core/driver.c:458
-  ...
-  hub_event+0x1a04/0x4518 drivers/usb/core/hub.c:5953
+```
+[6888366.280350] Call Trace:
+[6888366.280452]  blk_update_request+0x14e/0x370
+[6888366.280561]  blk_mq_end_request+0x1a/0x130
+[6888366.280671]  rbd_img_handle_request+0x1a0/0x1b0 [rbd]
+[6888366.280792]  rbd_obj_handle_request+0x32/0x40 [rbd]
+[6888366.280903]  __complete_request+0x22/0x70 [libceph]
+[6888366.281032]  osd_dispatch+0x15e/0xb40 [libceph]
+[6888366.281164]  ? inet_recvmsg+0x5b/0xd0
+[6888366.281272]  ? ceph_tcp_recvmsg+0x6f/0xa0 [libceph]
+[6888366.281405]  ceph_con_process_message+0x79/0x140 [libceph]
+[6888366.281534]  ceph_con_v1_try_read+0x5d7/0xf30 [libceph]
+[6888366.281661]  ceph_con_workfn+0x329/0x680 [libceph]
+```
 
-Fix by moving the card lifecycle out of usb6fire_chip_abort() and into
-usb6fire_chip_disconnect().  The card pointer is saved in a local
-before any teardown, snd_card_disconnect() is called first to prevent
-new opens, URBs are aborted while chip is still valid, and
-snd_card_free_when_closed() is called last so chip is never accessed
-after the card may be freed.
+After analyzing the coredump file, we found that the address of
+dc->sb_bio has been freed. We know that cached_dev is only freed when it
+is stopped.
 
-Fixes: a0810c3d6dd2 ("ALSA: 6fire: Release resources at card release")
-Cc: stable@vger.kernel.org
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
-Link: https://patch.msgid.link/20260410051341.1069716-1-berkcgoksel@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Since sb_bio is a part of struct cached_dev, rather than an alloc every
+time.  If the device is stopped while writing to the superblock, the
+released address will be accessed at endio.
+
+This patch hopes to wait for sb_write to complete in cached_dev_free.
+
+It should be noted that we analyzed the cause of the problem, then tell
+all details to the QWEN and adopted the modifications it made.
+
+Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
+Fixes: cafe563591446 ("bcache: A block layer cache")
+Cc: stable@vger.kernel.org # 3.10+
+Signed-off-by: Coly Li <colyli@fnnas.com>
+Link: https://patch.msgid.link/20260322134102.480107-1-colyli@fnnas.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/6fire/chip.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/md/bcache/super.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/sound/usb/6fire/chip.c
-+++ b/sound/usb/6fire/chip.c
-@@ -53,11 +53,6 @@ static void usb6fire_chip_abort(struct s
- 			usb6fire_comm_abort(chip);
- 		if (chip->control)
- 			usb6fire_control_abort(chip);
--		if (chip->card) {
--			snd_card_disconnect(chip->card);
--			snd_card_free_when_closed(chip->card);
--			chip->card = NULL;
--		}
- 	}
- }
+--- a/drivers/md/bcache/super.c
++++ b/drivers/md/bcache/super.c
+@@ -1373,6 +1373,13 @@ static CLOSURE_CALLBACK(cached_dev_free)
  
-@@ -170,6 +165,7 @@ destroy_chip:
- static void usb6fire_chip_disconnect(struct usb_interface *intf)
- {
- 	struct sfire_chip *chip;
-+	struct snd_card *card;
+ 	mutex_unlock(&bch_register_lock);
  
- 	chip = usb_get_intfdata(intf);
- 	if (chip) { /* if !chip, fw upload has been performed */
-@@ -180,8 +176,19 @@ static void usb6fire_chip_disconnect(str
- 			chips[chip->regidx] = NULL;
- 			mutex_unlock(&register_mutex);
++	/*
++	 * Wait for any pending sb_write to complete before free.
++	 * The sb_bio is embedded in struct cached_dev, so we must
++	 * ensure no I/O is in progress.
++	 */
++	closure_sync(&dc->sb_write);
++
+ 	if (dc->sb_disk)
+ 		put_page(virt_to_page(dc->sb_disk));
  
-+			/*
-+			 * Save card pointer before teardown.
-+			 * snd_card_free_when_closed() may free card (and
-+			 * the embedded chip) immediately, so it must be
-+			 * called last and chip must not be accessed after.
-+			 */
-+			card = chip->card;
- 			chip->shutdown = true;
-+			if (card)
-+				snd_card_disconnect(card);
- 			usb6fire_chip_abort(chip);
-+			if (card)
-+				snd_card_free_when_closed(card);
- 		}
- 	}
- }
 
 
