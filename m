@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5F13BD62C;
-	Mon, 20 Apr 2026 13:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A288C3BD63F;
+	Mon, 20 Apr 2026 13:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691029; cv=none; b=O5Wq4RaelXhbPPwRmG388m+Aqm46t06GqMmy5mtQ6X9dkaTGPLcsFPFggqde1NKpqQXWjpJ0O368pIlm8dy4v1yew/cR3Zcswnso1i8TNWHjokQ6VzOjC88PoKTjXgqDBILoN7a+7wuLVjQEi6dfo+TLp5DtEtoB1q7oLLmkuag=
+	t=1776691030; cv=none; b=sN1T5K41MM9fPouJIwfxN3/4PU5M3N3MY+GuYLG64ti14BZC5G2FUWMgeRTUEDg9SxmhxbGCDNXOW2xcc0q5zbf6agx1Q3WY1rHGHm6NAKvGhxw4gpTHxFPE22WRm2euDGk+CvS0aTvWJxkc8Vue8HKhjj1Y6c4FgJKB126iihA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691029; c=relaxed/simple;
-	bh=DZpahuMZuqCNd1jPzatGrPOZ6xoX1xfgs8kTTvQ4FCY=;
+	s=arc-20240116; t=1776691030; c=relaxed/simple;
+	bh=+5PzIcn1PPhKL0i3+4TDAICDhlT1NTy16K4bjiv9JVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xyt+gH9q4rrDv/1V11Bth0YYTznlOzO1l5Fid4MNwtl8R7ndT0jQe3gNjOBUzdlwdftJWLO36k1YGIjKAhmxfbqeJhhMD0y/6skXcceTWm2xT3SeGnB5fRRIoqse0uPA4YESV3jJLJ/Df/dmtFlYJcL7D66fGqr754xIGo+lz1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=llYjXabH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TxPcut+a3lRXsDNSKrvYoqf7U+dH3VuKZxiVEH2hVaCLcWFjxaHT8xGggOi2ap3l1AzvHftM6qQF84nCuZxTx5b0z6isLTftXjqTn0hGe2djZ4+8oT7X5H3IQ/GCjLYj0qou6VV4d6rTQRb09Hbg1WOCW+QLWxDXZ0qNZnRF1N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JP0V59Jr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="llYjXabH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3893C2BCB7;
-	Mon, 20 Apr 2026 13:17:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JP0V59Jr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C61DC2BCB9;
+	Mon, 20 Apr 2026 13:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691029;
-	bh=DZpahuMZuqCNd1jPzatGrPOZ6xoX1xfgs8kTTvQ4FCY=;
+	s=k20201202; t=1776691030;
+	bh=+5PzIcn1PPhKL0i3+4TDAICDhlT1NTy16K4bjiv9JVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=llYjXabHDskLhCbjyt9SsLoJD/RT91NY5yvJwD7Yo1Z5qRudNzlyZ5whtb2v2hmif
-	 q/662MZE6KP7Sfm/Hc9lLV6yGJPjpMbMJiDIfTkBK/gPq5ZASMM+SPIH6kxqVrXL3W
-	 rqOhUxxBRNpuY2RnAKGrcbVgNZB0mGM0tya+vdvgOV1hpNjidhCk6S0dWprwXj2u6X
-	 H7K6cTxObAP5emlbNN7X1051e+9HCdby1WwvoWZj/6K76dJuZL0m3zD/3a6lgJNhbY
-	 Y9SaPXyxdOirSIf4D0uECRa78XaJ4Gz+6dmQEbhYcTA1+9oPk9Os336gFWboaCWDIb
-	 cejOkaVGCqgrA==
+	b=JP0V59JrxYH4+Xy3LHWdm2PVjpHVPsoc/dxroUGsO2bVlvNjazYdM15yfHDyKB6cB
+	 kuN0jiZP6vqLXObDmnEtUKhRAn7YHbIMv06/XTgjZrB7UHqAAipRJEbYADXzLb8c/l
+	 AEp/PaRhTsyr9dYc/AsA7Os3lqDQ/KDUws0DZE3RE1zM4SedX0xvFFBedJlHYhWo8j
+	 TTz4WtviA9SeC0ZNyyfLUXHbQo+6nMg0SkEtDrjXBvQn8Cr5bM9HxU455Qkg1uu5PZ
+	 8nRdjXRt4gDsLMOR6bH89/hEAimSqmTFz6YeHnrWDy+CfzOYodTMlmRHKaQV5bctL7
+	 1JXtz1UzMcgLg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sunil Khatri <sunil.khatri@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Florian Fainelli <florian.fainelli@broadcom.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/amdgpu/userq: remove queue from doorbell xarray
-Date: Mon, 20 Apr 2026 09:08:38 -0400
-Message-ID: <20260420131539.986432-52-sashal@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 7.0-6.1] memory: brcmstb_memc: Expand LPDDR4 check to cover for LPDDR5
+Date: Mon, 20 Apr 2026 09:08:39 -0400
+Message-ID: <20260420131539.986432-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
 References: <20260420131539.986432-1-sashal@kernel.org>
@@ -50,277 +46,431 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sunil Khatri <sunil.khatri@amd.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit f0e46fd06c3f7590b0f06aea3c877f441c2cbccc ]
+[ Upstream commit a969a0835152984a0f556434eafdee0b84213670 ]
 
-In case of failure in xa_alloc, remove the queue during
-clean up from the userq_doorbell_xa.
+The same limitations that apply to LPDDR4 also apply to LPDDR5. Expand
+the check and rename accordingly.
 
-Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260122003501.1191059-1-florian.fainelli@broadcom.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Here is my complete analysis:
+Now I have enough information to complete the full analysis. Let me
+compile my findings.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `drm/amdgpu/userq`
-- Action verb: "remove" (corrective: removing a stale entry from data
-  structure on error path)
-- Summary: Remove queue from doorbell xarray during cleanup when
-  xa_alloc fails
+### Step 1.1: PARSE THE SUBJECT LINE
+- **Subsystem**: `memory: brcmstb_memc:` (Broadcom STB memory controller
+  driver)
+- **Action verb**: "Expand" (extending an existing check)
+- **Summary**: Expand LPDDR4 check to also cover LPDDR5 memory types
 
-**Step 1.2: Tags**
-- `Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>` - author, regular
-  AMD GPU contributor
-- `Reviewed-by: Christian König <christian.koenig@amd.com>` - AMD GPU
-  subsystem co-maintainer
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` - AMD GPU
-  subsystem maintainer
-- No Fixes: tag (expected for manual review candidates)
-- No Cc: stable tag
+Record: [memory/brcmstb_memc] [expand] [Extend existing LPDDR4 hardware
+limitation check to also apply to LPDDR5]
 
-**Step 1.3: Commit Body Analysis**
-The message says: "In case of failure in xa_alloc, remove the queue
-during clean up from the userq_doorbell_xa." This clearly describes a
-missing cleanup in an error path: the queue gets stored in
-`userq_doorbell_xa` but is not removed if the subsequent `xa_alloc`
-fails.
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Signed-off-by**: Florian Fainelli <florian.fainelli@broadcom.com>
+  (author, Broadcom employee, original driver author)
+- **Link**: https://patch.msgid.link/20260122003501.1191059-1-
+  florian.fainelli@broadcom.com
+- **Signed-off-by**: Krzysztof Kozlowski <krzk@kernel.org> (subsystem
+  maintainer who applied it)
+- No Fixes: tag, no Cc: stable, no Reported-by, no Tested-by, no
+  Reviewed-by
 
-**Step 1.4: Hidden Bug Fix Detection**
-This is not hidden - it's straightforwardly described as an error path
-cleanup fix. However, the severity is greater than the commit message
-suggests. It's actually a **use-after-free**: the queue is freed
-(`kfree(queue)`) but its pointer remains in the doorbell xarray.
+Record: Author is the original driver author (Florian Fainelli at
+Broadcom). Applied by memory subsystem maintainer Krzysztof Kozlowski.
 
-## PHASE 2: DIFF ANALYSIS
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The message says: "The same limitations that apply to LPDDR4 also apply
+to LPDDR5. Expand the check and rename accordingly."
 
-**Step 2.1: Inventory**
-- Single file: `drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c`
-- 1 line added: `xa_erase_irq(&adev->userq_doorbell_xa, index);`
-- Function modified: `amdgpu_userq_create()`
-- Scope: Single-file surgical fix, error path only
+The limitation in question: On LPDDR4 chips, the inactivity timeout for
+Self-Refresh Power Down (SRPD) cannot be changed because the dynamic
+tuning process is affected by the inactivity timeout, making it non-
+functional. This same limitation applies to LPDDR5.
 
-**Step 2.2: Code Flow Change**
-In `amdgpu_userq_create()`:
+Without this fix, on LPDDR5 hardware, a user writing to the `srpd` sysfs
+attribute would successfully change the SRPD inactivity timeout, which
+would break the dynamic tuning process, making the memory controller
+non-functional.
 
-1. Line 863: `xa_store_irq(&adev->userq_doorbell_xa, index, queue,
-   GFP_KERNEL)` - stores queue in global doorbell xarray
-2. Line 870: `xa_alloc(&uq_mgr->userq_xa, &qid, queue, ...)` - attempts
-   to allocate a queue ID
-3. If xa_alloc fails (line 872): error path calls
-   `amdgpu_userq_fence_driver_free()`, `mqd_destroy()`, `kfree(queue)` -
-   but did NOT remove the entry from `userq_doorbell_xa`
-4. Fix adds `xa_erase_irq(&adev->userq_doorbell_xa, index)` before the
-   kfree
+Record: [Bug: missing LPDDR5 check allows dangerous SRPD timeout
+modification on LPDDR5 hardware] [Symptom: dynamic memory tuning becomes
+non-functional on LPDDR5 systems] [Root cause: original code only
+checked for LPDDR4, not LPDDR5]
 
-**Step 2.3: Bug Mechanism**
-This is a **use-after-free** caused by a missing cleanup on error path.
-After `kfree(queue)`, the freed pointer remains in `userq_doorbell_xa`.
-Six functions in the same file iterate `userq_doorbell_xa` with
-`xa_for_each()` and dereference the queue pointer:
-- `amdgpu_userq_suspend()` (line 1445)
-- `amdgpu_userq_resume()` (line 1471)
-- `amdgpu_userq_stop_sched_for_enforce_isolation()` (line 1501)
-- `amdgpu_userq_start_sched_for_enforce_isolation()` (line 1535)
-- `amdgpu_userq_pre_reset()` (line 1589)
-- `amdgpu_userq_post_reset()` (line 1617)
+### Step 1.4: DETECT HIDDEN BUG FIXES
+This IS a real bug fix disguised as "expand." The keyword "expand" masks
+the fact that without this change, LPDDR5 users can corrupt their memory
+controller tuning through the sysfs interface.
 
-All would crash or corrupt memory by accessing `queue->userq_mgr`,
-`queue->state`, etc.
+Record: [Yes, this is a hidden bug fix. It prevents a user from making
+the dynamic tuning process non-functional on LPDDR5 hardware.]
 
-**Step 2.4: Fix Quality**
-The fix is obviously correct: it mirrors the cleanup in the normal
-destroy path (`amdgpu_userq_cleanup()` at line 463 already calls
-`xa_erase_irq(&adev->userq_doorbell_xa, queue->doorbell_index)`). The
-fix uses `xa_erase_irq()` matching the `xa_store_irq()` used during
-insertion. No regression risk.
+---
 
-## PHASE 3: GIT HISTORY
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-**Step 3.1: Blame**
-The buggy error path (xa_alloc failure without doorbell cleanup) was
-introduced by commit `f18719ef4bb7b` (Jesse.Zhang, October 2025) which
-converted IDR to XArray. When the XArray conversion added
-`xa_store_irq(&adev->userq_doorbell_xa, ...)` before `xa_alloc`, the
-error cleanup for `xa_alloc` failure was not updated to remove the
-doorbell entry.
+### Step 2.1: INVENTORY THE CHANGES
+- **File**: `drivers/memory/brcmstb_memc.c`
+- **Lines added**: ~4 (new define, extra condition, rename)
+- **Lines removed**: ~3 (old function name, old single condition)
+- **Functions modified**: `brcmstb_memc_uses_lpddr4` renamed to
+  `brcmstb_memc_uses_lpddr45`, `srpd_store` (caller updated)
+- **Scope**: Single-file, surgical fix
 
-**Step 3.2: Fixes Target**
-No Fixes: tag present. The bug was introduced by f18719ef4bb7b.
+Record: [1 file changed, ~4 lines added, ~3 removed] [Functions:
+brcmstb_memc_uses_lpddr4→brcmstb_memc_uses_lpddr45, srpd_store] [Single-
+file surgical fix]
 
-**Step 3.3: Related Changes**
-The companion commit `65b5c326ce410` ("refcount userqueues to avoid race
-conditions") was cherry-picked with `Cc: stable@vger.kernel.org`,
-showing this area is actively being stabilized for stable trees.
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+**Hunk 1** - Define addition:
+- Before: Only `CNTRLR_CONFIG_LPDDR4_SHIFT` (value 5) defined
+- After: Also defines `CNTRLR_CONFIG_LPDDR5_SHIFT` (value 6)
 
-**Step 3.4: Author**
-Sunil Khatri is a regular AMD GPU contributor with 11 commits to this
-file alone. He also authored the refcount fix.
+**Hunk 2** - Function logic change:
+- Before: `brcmstb_memc_uses_lpddr4()` returns true only if register
+  value == 5 (LPDDR4)
+- After: `brcmstb_memc_uses_lpddr45()` returns true if register value ==
+  5 (LPDDR4) OR == 6 (LPDDR5)
 
-**Step 3.5: Dependencies**
-This fix is standalone - it requires only that the doorbell xarray code
-(from f18719ef4bb7b) exists, which it does in 7.0.
+**Hunk 3** - Caller update:
+- Before: `srpd_store()` calls `brcmstb_memc_uses_lpddr4()`
+- After: `srpd_store()` calls `brcmstb_memc_uses_lpddr45()`
 
-## PHASE 4: MAILING LIST RESEARCH
+The change affects the `srpd_store` sysfs path. When a user writes to
+`/sys/.../srpd`, the check now correctly blocks the write for both
+LPDDR4 and LPDDR5.
 
-The exact commit "remove queue from doorbell xarray" was not found
-independently on lore.kernel.org. However, the v2 series of the refcount
-patchset (20260302180852) was a 2-patch series that included related
-doorbell cleanup work. The patch was reviewed by Christian König (AMD
-GPU co-maintainer) and committed through Alex Deucher (AMD GPU
-maintainer).
+Record: [Before: LPDDR5 memory allowed dangerous SRPD timeout change.
+After: LPDDR5 correctly blocked like LPDDR4.]
+
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+This is a **hardware workaround/limitation enforcement** fix. Category
+(h) - Hardware workarounds. The hardware has a limitation (LPDDR5
+dynamic tuning breaks with SRPD timeout changes) that wasn't enforced in
+software.
+
+Record: [Hardware workaround - extending existing HW limitation check to
+cover LPDDR5]
+
+### Step 2.4: ASSESS THE FIX QUALITY
+- Obviously correct: Yes. The author is the Broadcom engineer who wrote
+  the driver and knows the hardware limitations.
+- Minimal/surgical: Yes. Adds one define, one condition, renames a
+  function.
+- Regression risk: Extremely low. The only change is that LPDDR5 systems
+  now return `-EOPNOTSUPP` from `srpd_store`, which is the correct
+  behavior. LPDDR4 and other memory types are unaffected.
+
+Record: [Fix is obviously correct, minimal, and low regression risk]
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: BLAME THE CHANGED LINES
+From git blame, all the relevant code was introduced by Florian Fainelli
+in commit `a4be90ff7a7d2` ("memory: brcmstb_memc: Add Broadcom STB
+memory controller driver"), first appearing in v6.1-rc1. The buggy code
+(missing LPDDR5 check) has been present since the driver was introduced.
+
+Record: [Buggy code introduced in a4be90ff7a7d2, merged in v6.1-rc1.
+Present in all stable trees from 6.1 onward.]
+
+### Step 3.2: FOLLOW THE FIXES TAG
+No Fixes: tag present. This is expected.
+
+### Step 3.3: CHECK FILE HISTORY
+The file has had minimal changes: initial addition in v6.1, then a few
+minor cleanups and build fixes. No major refactoring. The patch should
+apply cleanly or with trivial adjustments to stable trees.
+
+Record: [File has minimal history - 6 commits total. No conflicting
+changes.]
+
+### Step 3.4: CHECK THE AUTHOR
+Florian Fainelli is the original author of this driver and a Broadcom
+employee who is the de facto maintainer. His fix carries maximum
+authority for this driver.
+
+Record: [Author is the original driver author and de facto maintainer at
+Broadcom]
+
+### Step 3.5: CHECK FOR DEPENDENCIES
+This is a standalone single-commit fix. No dependencies on other
+commits.
+
+Record: [Standalone fix, no dependencies]
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+b4 dig failed to find the commit by message-id (the commit may not be in
+the local repo since we're on 7.0 and the commit isn't present in HEAD
+yet). Lore is behind a challenge page. The Link tag points to `patch.msg
+id.link/20260122003501.1191059-1-florian.fainelli@broadcom.com`.
+
+Record: [Could not access lore discussion due to anti-bot protection.
+The patch was accepted by maintainer Krzysztof Kozlowski.]
+
+### Step 4.2-4.5: MAILING LIST RESEARCH
+Unable to verify via lore due to access restrictions. However, the patch
+was accepted by the memory subsystem maintainer with no modifications.
+
+Record: [UNVERIFIED: Could not access mailing list discussion. Accepted
+by maintainer.]
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Modified Function**
-`amdgpu_userq_create()` - creates usermode queues for AMD GPU userspace
-queue submission.
+### Step 5.1: KEY FUNCTIONS
+- `brcmstb_memc_uses_lpddr4` (renamed to `brcmstb_memc_uses_lpddr45`)
+- `srpd_store` (caller)
 
-**Step 5.2: Callers**
-`amdgpu_userq_create()` is called from `amdgpu_userq_ioctl()` via
-`AMDGPU_USERQ_OP_CREATE`, which is a DRM IOCTL callable from userspace.
-This is a user-triggerable code path.
+### Step 5.2: TRACE CALLERS
+`brcmstb_memc_uses_lpddr4` is called only from `srpd_store`, which is
+the sysfs write handler for the `srpd` attribute. This is user-
+accessible.
 
-**Step 5.3-5.4: Impact Surface**
-The stale entry in `userq_doorbell_xa` will be accessed by any
-subsequent suspend, resume, reset, or isolation enforcement operation on
-the GPU device. These are triggered by:
-- System suspend/resume (S3, S0ix) - common laptop operation
-- GPU reset (triggered by hang detection)
-- Enforce isolation mode changes
+Record: [Called from srpd_store sysfs handler - user-triggered path]
 
-## PHASE 6: STABLE TREE ANALYSIS
+### Step 5.3-5.4: CALL CHAIN
+User writes to `/sys/devices/.../srpd` → `srpd_store()` →
+`brcmstb_memc_uses_lpddr45()` reads hardware register → if LPDDR4/5,
+returns -EOPNOTSUPP.
 
-**Step 6.1: Code in Stable Trees**
-The file `amdgpu_userq.c` was first added in the v6.16/6.17 timeframe.
-The `userq_doorbell_xa` was introduced by f18719ef4bb7b in the kernel
-7.0 development cycle. This code exists in the 7.0 stable tree.
+Record: [User-triggered via sysfs write. Direct path.]
 
-**Step 6.2: Backport Complexity**
-This is a clean 1-line addition with no context conflicts expected.
+### Step 5.5: SIMILAR PATTERNS
+No similar patterns elsewhere - this is the only LPDDR type check in
+this driver.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+Record: [Unique check in this driver]
 
-- Subsystem: `drivers/gpu/drm/amd/amdgpu` - AMD GPU driver
-- Criticality: IMPORTANT - widely used GPU driver on desktop/laptop
-  systems
-- Actively developed subsystem with heavy recent churn
+---
+
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+
+### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
+The driver was introduced in v6.1-rc1 (commit `a4be90ff7a7d2`). It
+exists in:
+- 6.1.y (LTS) ✓
+- 6.6.y (LTS) ✓
+- 6.12.y ✓
+- 7.0 ✓
+
+Record: [Buggy code exists in all active stable trees: 6.1.y, 6.6.y,
+6.12.y]
+
+### Step 6.2: BACKPORT COMPLICATIONS
+The file has had only minor changes across versions. The patch should
+apply cleanly or with trivial context adjustments.
+
+Record: [Expected clean apply across all stable trees]
+
+### Step 6.3: RELATED FIXES ALREADY IN STABLE
+No related fixes for LPDDR5 exist.
+
+Record: [No prior fix for this issue in stable]
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: IDENTIFY SUBSYSTEM CRITICALITY
+- **Subsystem**: drivers/memory - memory controller drivers
+- **Criticality**: PERIPHERAL (specific Broadcom STB hardware) but the
+  consequences of the bug (making dynamic tuning non-functional) are
+  significant for affected users.
+
+Record: [drivers/memory, PERIPHERAL - Broadcom STB specific, but real
+hardware impact]
+
+### Step 7.2: SUBSYSTEM ACTIVITY
+Only 6 commits to this file over its entire existence (since 6.1).
+Mature and stable code.
+
+Record: [Mature, stable codebase with minimal changes]
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Who is Affected**
-Users with AMD GPUs using the usermode queue feature (GFX/Compute/DMA
-queues).
+### Step 8.1: WHO IS AFFECTED
+Users of Broadcom STB SoCs with LPDDR5 memory. This is primarily
+embedded/set-top-box devices.
 
-**Step 8.2: Trigger Conditions**
-The bug requires:
-1. A userqueue creation attempt where `xa_store_irq` succeeds but
-   `xa_alloc` fails (e.g., hitting `AMDGPU_MAX_USERQ_COUNT` limit or
-   memory pressure)
-2. Followed by any suspend, resume, reset, or isolation operation
+Record: [Driver-specific: Broadcom STB users with LPDDR5 memory]
 
-The `xa_alloc` failure can be triggered by resource exhaustion or
-concurrent queue creation under memory pressure.
+### Step 8.2: TRIGGER CONDITIONS
+Triggered when a user (or system script) writes to the `srpd` sysfs
+attribute on a system with LPDDR5 memory. On affected systems, the write
+succeeds (should fail with -EOPNOTSUPP) and the SRPD configuration
+change breaks the dynamic tuning process.
 
-**Step 8.3: Failure Mode Severity**
-- **CRITICAL**: Use-after-free on freed queue pointer leads to kernel
-  crash (oops/panic), potential memory corruption, or security
-  vulnerability. The freed pointer is dereferenced to access
-  `queue->userq_mgr`, `queue->state`, etc.
+Record: [Triggered by sysfs write on LPDDR5 systems. Could be triggered
+by power management scripts.]
 
-**Step 8.4: Risk-Benefit Ratio**
-- BENEFIT: Very high - prevents UAF crash on a common GPU driver
-- RISK: Very low - single line addition, mirrors existing cleanup
-  pattern, obviously correct
-- Ratio: Strongly favorable
+### Step 8.3: FAILURE MODE SEVERITY
+When triggered, the dynamic tuning process becomes "non-functional" (per
+the existing code comment). This affects the memory controller's dynamic
+tuning, which could lead to system instability or incorrect memory
+timing. Severity: **MEDIUM-HIGH** for affected hardware.
+
+Record: [Memory controller dynamic tuning becomes non-functional.
+Severity: MEDIUM-HIGH]
+
+### Step 8.4: RISK-BENEFIT RATIO
+- **BENEFIT**: Prevents memory controller misconfiguration on LPDDR5
+  Broadcom STB systems. Real hardware fix for real users.
+- **RISK**: Extremely low. Only adds one additional condition to an
+  existing check. The only behavioral change is that LPDDR5 systems now
+  correctly return -EOPNOTSUPP on SRPD write, matching the existing
+  LPDDR4 behavior.
+- **Ratio**: Very favorable. Minimal risk, meaningful benefit for
+  affected hardware.
+
+Record: [High benefit for affected users, minimal risk. Very favorable
+ratio.]
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- Fixes a real use-after-free bug (stale pointer in xarray after kfree)
-- Single-line fix, surgically targeted to one error path
-- Reviewed by Christian König (AMD GPU co-maintainer)
-- Obviously correct (mirrors cleanup in normal destroy path)
-- Related refcount commit already tagged Cc: stable
-- User-triggerable code path (IOCTL)
-- Failure mode is kernel crash or memory corruption
+### Step 9.1: COMPILE THE EVIDENCE
 
-**Evidence AGAINST backporting:**
-- Relatively new code (userq feature added in v6.16-7.0 timeframe)
-- Trigger requires specific failure condition (xa_alloc failure)
+**FOR backporting:**
+- Fixes a real hardware limitation enforcement bug on LPDDR5 systems
+- Without the fix, users can break dynamic memory tuning on LPDDR5
+  Broadcom STB hardware
+- Extremely small and surgical (adds 1 define, 1 condition, renames
+  function)
+- Written by the original driver author (Florian Fainelli at Broadcom)
+- Accepted by subsystem maintainer
+- Applies cleanly to stable trees (minimal file history)
+- Driver exists in all active LTS trees (6.1+)
+- Falls into the "hardware quirk/workaround" exception category
+- Zero regression risk to existing LPDDR4 or other memory type users
 
-**Stable Rules Checklist:**
-1. Obviously correct and tested? YES - mirrors existing cleanup,
-   reviewed by maintainer
-2. Fixes a real bug? YES - use-after-free
-3. Important issue? YES - potential crash, memory corruption, security
-4. Small and contained? YES - 1 line added
-5. No new features? YES - pure bug fix
-6. Can apply to stable? YES - clean 1-line addition
+**AGAINST backporting:**
+- Affects only Broadcom STB users with LPDDR5 memory (narrow user base)
+- No Fixes: tag, no Reported-by (but this is expected for the review
+  pipeline)
+- The commit message uses "expand" rather than "fix" language
+
+### Step 9.2: STABLE RULES CHECKLIST
+1. **Obviously correct and tested?** YES - single condition addition, by
+   driver author
+2. **Fixes a real bug?** YES - allows dangerous SRPD modification on
+   LPDDR5
+3. **Important issue?** MEDIUM-HIGH - memory controller misconfiguration
+4. **Small and contained?** YES - ~4 lines changed in 1 file
+5. **No new features or APIs?** CORRECT - only extends an existing check
+6. **Can apply to stable trees?** YES - driver exists since 6.1
+
+### Step 9.3: EXCEPTION CATEGORIES
+This falls into the **hardware quirk/workaround** category - extending
+an existing hardware limitation check to cover newly-recognized
+hardware.
+
+### Step 9.4: DECISION
+The fix is small, surgical, obviously correct, written by the driver
+author, and prevents real hardware misconfiguration on LPDDR5 Broadcom
+STB systems. The risk is negligible and the benefit is real for affected
+users.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Christian König, Signed-off-by Alex
-  Deucher and Sunil Khatri
-- [Phase 2] Diff analysis: 1 line added in xa_alloc error path of
-  amdgpu_userq_create(), adds missing xa_erase_irq() for doorbell xarray
-- [Phase 3] git blame: buggy code introduced in f18719ef4bb7b (Oct
-  2025), XArray conversion commit
-- [Phase 3] git show f18719ef4bb7b: confirmed it added xa_store_irq to
-  doorbell_xa without corresponding xa_erase_irq in xa_alloc failure
-  path
-- [Phase 3] Related commit 65b5c326ce410 already has Cc: stable
-  (confirmed via git show)
-- [Phase 4] b4 dig -c 65b5c326ce410: found patch at
-  https://patch.msgid.link/20260303120849.2583663-1-sunil.khatri@amd.com
-- [Phase 4] Mailing list archive: found v2 series and review discussion,
-  Christian König reviewed
-- [Phase 5] Grep for userq_doorbell_xa: found 6 xa_for_each iteration
-  sites that would dereference the freed pointer
-- [Phase 5] amdgpu_userq_create called from amdgpu_userq_ioctl (user-
-  triggerable via DRM IOCTL)
-- [Phase 6] amdgpu_userq.c first added around v6.16, doorbell_xa added
-  in v7.0 cycle
-- [Phase 8] Failure mode: UAF -> kernel crash/memory corruption,
-  severity CRITICAL
-
-This is a small, surgical, obviously correct fix for a real use-after-
-free bug in the AMD GPU driver's error handling path. It was reviewed by
-the subsystem co-maintainer and carries essentially zero regression
-risk.
+- [Phase 1] Parsed tags: Signed-off-by by Florian Fainelli (driver
+  author), accepted by Krzysztof Kozlowski (maintainer). No
+  Fixes/Reported-by tags.
+- [Phase 2] Diff analysis: 1 new #define, 1 additional condition in
+  existing check function, 1 function rename, 1 caller update. Total ~4
+  lines changed.
+- [Phase 3] git blame: All code introduced in commit a4be90ff7a7d2
+  (v6.1-rc1) by same author (Florian Fainelli).
+- [Phase 3] git describe --contains: confirmed driver first appeared in
+  v6.1-rc1.
+- [Phase 3] git log v6.1..v6.6..v6.12: confirmed driver exists in all
+  active stable trees.
+- [Phase 3] git log --author="Florian Fainelli": confirmed author is
+  original driver author and active maintainer.
+- [Phase 3] File history: only 6 commits total, minimal churn, clean
+  backport expected.
+- [Phase 5] Code analysis: brcmstb_memc_uses_lpddr4 called only from
+  srpd_store (sysfs write handler), user-triggerable path.
+- [Phase 6] Driver exists in 6.1.y, 6.6.y, 6.12.y stable trees.
+- [Phase 8] Failure mode: dynamic tuning becomes non-functional on
+  LPDDR5 systems. Severity MEDIUM-HIGH.
+- UNVERIFIED: Could not access lore.kernel.org discussion due to anti-
+  bot protection. Relied on maintainer acceptance and commit tags.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/memory/brcmstb_memc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-index 0a1b93259887a..819c4c26416c3 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -872,6 +872,7 @@ amdgpu_userq_create(struct drm_file *filp, union drm_amdgpu_userq *args)
- 	if (r) {
- 		drm_file_err(uq_mgr->file, "Failed to allocate a queue id\n");
- 		amdgpu_userq_fence_driver_free(queue);
-+		xa_erase_irq(&adev->userq_doorbell_xa, index);
- 		uq_funcs->mqd_destroy(queue);
- 		kfree(queue);
- 		r = -ENOMEM;
+diff --git a/drivers/memory/brcmstb_memc.c b/drivers/memory/brcmstb_memc.c
+index ba73470b1b134..c28fe90936168 100644
+--- a/drivers/memory/brcmstb_memc.c
++++ b/drivers/memory/brcmstb_memc.c
+@@ -14,6 +14,7 @@
+ 
+ #define REG_MEMC_CNTRLR_CONFIG		0x00
+ #define  CNTRLR_CONFIG_LPDDR4_SHIFT	5
++#define  CNTRLR_CONFIG_LPDDR5_SHIFT	6
+ #define  CNTRLR_CONFIG_MASK		0xf
+ #define REG_MEMC_SRPD_CFG_21		0x20
+ #define REG_MEMC_SRPD_CFG_20		0x34
+@@ -34,14 +35,15 @@ struct brcmstb_memc {
+ 	u32 srpd_offset;
+ };
+ 
+-static int brcmstb_memc_uses_lpddr4(struct brcmstb_memc *memc)
++static int brcmstb_memc_uses_lpddr45(struct brcmstb_memc *memc)
+ {
+ 	void __iomem *config = memc->ddr_ctrl + REG_MEMC_CNTRLR_CONFIG;
+ 	u32 reg;
+ 
+ 	reg = readl_relaxed(config) & CNTRLR_CONFIG_MASK;
+ 
+-	return reg == CNTRLR_CONFIG_LPDDR4_SHIFT;
++	return reg == CNTRLR_CONFIG_LPDDR4_SHIFT ||
++	       reg == CNTRLR_CONFIG_LPDDR5_SHIFT;
+ }
+ 
+ static int brcmstb_memc_srpd_config(struct brcmstb_memc *memc,
+@@ -95,7 +97,7 @@ static ssize_t srpd_store(struct device *dev, struct device_attribute *attr,
+ 	 * dynamic tuning process will also get affected by the inactivity
+ 	 * timeout, thus making it non functional.
+ 	 */
+-	if (brcmstb_memc_uses_lpddr4(memc))
++	if (brcmstb_memc_uses_lpddr45(memc))
+ 		return -EOPNOTSUPP;
+ 
+ 	ret = kstrtouint(buf, 10, &val);
 -- 
 2.53.0
 
