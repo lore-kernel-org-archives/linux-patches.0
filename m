@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E3D48BD48;
-	Mon, 20 Apr 2026 13:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F5C48BD5D;
+	Mon, 20 Apr 2026 13:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691927; cv=none; b=WoMLtEdArYa+4ydv4ZYUtAOERopxznQ8UrYsAe6KSoalAgLD5PzTvYTG3gIacW+OYMRnKXZEqVX0KUjmjebwM0Mb97MAecJcd3WgmwBQ00tebVUNfXl7+tjF/cUtWMPsyKTA5m62dXZyrVuXjj7SneczTznw7owCIJpRTEdY/+A=
+	t=1776691928; cv=none; b=QJzxfpO3QO0B1oeA/6QdkQpW2i8MwjoU1+JyXJqJ5Oi4lXdgzG0gE061q0MLjShMGRSXJITFpMbWE7UWpLID2PvIRrsi0PYUT48BKvJd1taizoAwgg6VGV1y+liTeN0Vj6uRLEfibsOPpD4mMs85DRql48BjdLCVSaSVT4Aral8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691927; c=relaxed/simple;
-	bh=h9tjCZoVldCf5QqHQiQrVeBhiBHOghvULaEsYcChqyg=;
+	s=arc-20240116; t=1776691928; c=relaxed/simple;
+	bh=SXDq7jTu5wSPdVSajHBdhavLJFyfzR8Zka0VyZuuoL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lkkUHWGhHFPaMy50Rxu5+gLhogVxRFp5DDsU5nc8CELuON6rBXl85QMDyaigcEmBlBdXWRricw9Uvqal0WHFdS2CGTxNtx+yl3NdCPoAcRr6/KxoYmAI0Mchxer0H63eeY1IIjiXR2TX4TyQZrfnPzHV31OJV9ttBCA2InFB6Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LWoulMZn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HmRMMfDd4lHZfCgIX5rUgW6KImOpwlRpiI2mIn7EeAPrNLC9BSzCBHB6zGkP45TjskyOR0C8Zk8mRLmtlrkEP9Y2DesHjJoLuSy0aZmbHz3bVhRHOV2n6qAPNlZ++3EtW8meJxxdOB2vqS5cXMCxDKP9qudjdIEMiyQ9nCM9bJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vKVjP89x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LWoulMZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D45EC19425;
-	Mon, 20 Apr 2026 13:32:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vKVjP89x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526D9C2BCB4;
+	Mon, 20 Apr 2026 13:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691927;
-	bh=h9tjCZoVldCf5QqHQiQrVeBhiBHOghvULaEsYcChqyg=;
+	s=k20201202; t=1776691928;
+	bh=SXDq7jTu5wSPdVSajHBdhavLJFyfzR8Zka0VyZuuoL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWoulMZnSnqLl37Jc7jfViwe2zPgBn25RlD8wrt0CwR4yZrSj7ygAMJURUrPBXEbq
-	 LSR5HmgyrKHs7Kc7QfsSeORCgEkSPHCTxrz3LFaUre3VenpS3TlbyxBW6m+dJfByOR
-	 d/zOw9be1PKwkj35oPxTPHO0+vVrIcRwseFcFJm/Zt5ocIBKWvODPxIwi+a8RirsDT
-	 Jb8RGdOqx1HK1D8KwCGQ+hIfV0LczMgj4QAxZyt//diJ8P3X+pxKtmqMjcXm/WHz9P
-	 VXIZEYSTh+8weH2Nv8B+pJ1Mur+9+H8ulba/So5ShTk79L2OQYgvXMAlvUJCCwzda+
-	 p4SjAn0eUKEyA==
+	b=vKVjP89xhinnBP4y8RJ/EmSIZ/aRsw+GPU46QAbDRQyKEdsC9k5FNwTC4zUoQqGlD
+	 131VlNtt9a6Vy7CN0EaWIkoB2DUETO6iVuZmLDAdVRu332FnSceZjncOoUKHF5pXl9
+	 QpALayZuU05MIHorkj0LPHnNOWNHXljk/c8nGJI8TPx/ERGRMW9JDlaFtE+ippBeF8
+	 rWKtFxlJD47nATqa6tN8WTLAht5zZOxfF64+8gmn7ilbwxJeGDm/MYpOD+bAIsREDE
+	 rZtC7zDviAetO/VanzSItcV3OM7RJQzHxusRbmHmvFkV36WAIjgEcAdFR1neWtwj0m
+	 e+1vFMXqFT+qw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Weixie Cui <cuiweixie@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	eddyz87@gmail.com,
-	memxor@gmail.com,
-	bpf@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] bpf: propagate kvmemdup_bpfptr errors from bpf_prog_verify_signature
-Date: Mon, 20 Apr 2026 09:21:07 -0400
-Message-ID: <20260420132314.1023554-273-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] wifi: rtw88: TX QOS Null data the same way as Null data
+Date: Mon, 20 Apr 2026 09:21:08 -0400
+Message-ID: <20260420132314.1023554-274-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -57,285 +52,305 @@ X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Weixie Cui <cuiweixie@gmail.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit ad2f7ed0ee91d63792cbe52f2b38325918ae3daa ]
+[ Upstream commit 737e980e12983bb7420a2c00b981a1e607079a84 ]
 
-kvmemdup_bpfptr() returns -EFAULT when the user pointer cannot be
-copied, and -ENOMEM on allocation failure. The error path always
-returned -ENOMEM, misreporting bad addresses as out-of-memory.
+When filling out the TX descriptor, Null data frames are treated like
+management frames, but QOS Null data frames are treated like normal
+data frames. Somehow this causes a problem for the firmware.
 
-Return PTR_ERR(sig) so user space gets the correct errno.
+When connected to a network in the 2.4 GHz band, wpa_supplicant (or
+NetworkManager?) triggers a scan every five minutes. During these scans
+mac80211 transmits many QOS Null frames in quick succession. Because
+these frames are marked with IEEE80211_TX_CTL_REQ_TX_STATUS, rtw88
+asks the firmware to report the TX ACK status for each of these frames.
+Sometimes the firmware can't process the TX status requests quickly
+enough, they add up, it only processes some of them, and then marks
+every subsequent TX status report with the wrong number.
 
-Signed-off-by: Weixie Cui <cuiweixie@gmail.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/tencent_C9C5B2B28413D6303D505CD02BFEA4708C07@qq.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The symptom is that after a while the warning "failed to get tx report
+from firmware" appears every five minutes.
+
+This problem apparently happens only with the older RTL8723D, RTL8821A,
+RTL8812A, and probably RTL8703B chips.
+
+Treat QOS Null data frames the same way as Null data frames. This seems
+to avoid the problem.
+
+Tested with RTL8821AU, RTL8723DU, RTL8811CU, and RTL8812BU.
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/2b53fb0d-b1ed-47b6-8caa-2bb9ae2acb80@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed. Let me compile the full analysis.
+Now I have all the information needed for a thorough analysis. Let me
+compile the complete assessment.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-- Subsystem: `bpf`
-- Action verb: "propagate" (indicating a correctness fix for error
-  handling)
-- Summary: Propagate correct errno from `kvmemdup_bpfptr()` in
-  `bpf_prog_verify_signature()`
+- Subsystem: `wifi: rtw88:`
+- Action: "TX QOS Null data the same way as Null data" — implies
+  correcting inconsistent behavior, which is a bug fix
+- Summary: QoS Null data frames should be treated like regular Null data
+  frames during TX descriptor setup
 
 **Step 1.2: Tags**
-- `Signed-off-by: Weixie Cui <cuiweixie@gmail.com>` - author
-- `Acked-by: Jiri Olsa <jolsa@kernel.org>` - well-known BPF developer,
-  regular contributor
-- `Link:` to lore.kernel.org
-- `Signed-off-by: Alexei Starovoitov <ast@kernel.org>` - BPF co-
-  maintainer applied the patch
-- No `Fixes:` tag, no `Cc: stable`, no `Reported-by:` (all expected for
-  autosel review)
+- `Signed-off-by: Bitterblue Smith` — author, active rtw88 contributor
+- `Acked-by: Ping-Ke Shih` — rtw88 subsystem maintainer explicitly
+  acknowledged
+- `Signed-off-by: Ping-Ke Shih` — maintainer merged it
+- `Link: https://patch.msgid.link/...` — patch submission link
+- No Fixes: tag (expected for this review pipeline)
+- No Cc: stable (expected)
 
 **Step 1.3: Body Text**
-The commit message clearly describes: `kvmemdup_bpfptr()` can return
-either `-EFAULT` (bad user pointer) or `-ENOMEM` (allocation failure),
-but the error path always returned `-ENOMEM`, misreporting bad addresses
-as out-of-memory. The fix returns `PTR_ERR(sig)` to propagate the
-correct errno.
+The commit describes:
+- **Bug**: QoS Null frames are treated as normal data frames, while
+  plain Null frames go through the management path. This causes firmware
+  misbehavior.
+- **Trigger**: On 2.4 GHz, wpa_supplicant/NetworkManager triggers scans
+  every 5 minutes. During scans, many QoS Null frames with
+  `IEEE80211_TX_CTL_REQ_TX_STATUS` are sent. Firmware can't keep up with
+  TX status reports.
+- **Symptom**: "failed to get tx report from firmware" warning every 5
+  minutes.
+- **Affected chips**: RTL8723D, RTL8821A, RTL8812A, RTL8703B (older
+  chips).
+- **Tested with**: RTL8821AU, RTL8723DU, RTL8811CU, RTL8812BU.
 
 **Step 1.4: Hidden Bug Fix?**
-This is an explicit correctness fix for error reporting. Not hidden.
-
-Record: [bpf] [propagate/correct] [fixes incorrect errno returned to
-userspace from kvmemdup_bpfptr failure]
+This is clearly a bug fix, not disguised. The commit explicitly explains
+the incorrect behavior and the symptom.
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-- Single file: `kernel/bpf/syscall.c`
-- 1 line changed: `-ENOMEM` → `PTR_ERR(sig)`
-- Function modified: `bpf_prog_verify_signature()`
-- Classification: single-file, single-line surgical fix
+- Single file: `drivers/net/wireless/realtek/rtw88/tx.c`
+- 1 line changed: `ieee80211_is_nullfunc(fc)` →
+  `ieee80211_is_any_nullfunc(fc)`
+- Function modified: `rtw_tx_pkt_info_update()`
+- Scope: absolute minimal — single token change
 
 **Step 2.2: Code Flow Change**
-Before: When `kvmemdup_bpfptr()` returns an error (either `-EFAULT` or
-`-ENOMEM`), the function unconditionally returns `-ENOMEM`.
-After: The function returns the actual error code from the failed call.
+Before: QoS Null frames (subtype `IEEE80211_STYPE_QOS_NULLFUNC`) don't
+match `ieee80211_is_nullfunc()` but DO match `ieee80211_is_data()`, so
+they go through `rtw_tx_data_pkt_info_update()` which sets MCS rates,
+software sequencing, and potential AMPDU.
+
+After: QoS Null frames match `ieee80211_is_any_nullfunc()`, so they go
+through `rtw_tx_mgmt_pkt_info_update()` which sets basic rates, hardware
+sequencing, and `dis_qselseq = true`.
 
 **Step 2.3: Bug Mechanism**
-Category: Logic/correctness fix - incorrect error code returned to
-userspace. When a user passes a bad pointer for the BPF program
-signature, they get `ENOMEM` instead of `EFAULT`.
-
-Verified from `include/linux/bpfptr.h`:
-
-```68:79:include/linux/bpfptr.h
-static inline void *kvmemdup_bpfptr_noprof(bpfptr_t src, size_t len)
-{
-        void *p = kvmalloc_node_align_noprof(len, 1, GFP_USER |
-__GFP_NOWARN, NUMA_NO_NODE);
-
-        if (!p)
-                return ERR_PTR(-ENOMEM);
-        if (copy_from_bpfptr(p, src, len)) {
-                kvfree(p);
-                return ERR_PTR(-EFAULT);
-        }
-        return p;
-}
-```
-
-Other call sites in the same file (`___bpf_copy_key` at line 1700,
-`map_update_elem` at line 1806-1808) already correctly propagate
-`PTR_ERR()`. This fix brings `bpf_prog_verify_signature` into
-consistency.
+Category: **Logic/correctness fix**. QoS Null frames are
+control/management-like frames that should not be treated as normal data
+traffic. Being processed as data frames causes the firmware to choke on
+rapid TX status report requests.
 
 **Step 2.4: Fix Quality**
-- Obviously correct: trivial `PTR_ERR()` idiom, standard kernel pattern
-- Minimal: 1 line
-- Zero regression risk: only changes which errno is returned, cannot
-  break any functionality
-- No API changes, no structure changes
+- Obviously correct: `ieee80211_is_any_nullfunc()` is the standard
+  helper for this exact pattern (introduced in commit 30b2f0be23fb
+  precisely for cases where both Null and QoS Null need matching)
+- Minimal: 1 token change
+- Regression risk: very low — QoS Null frames will now use basic rates
+  and hardware sequencing, same as plain Null frames, which is the
+  expected behavior
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## PHASE 3: GIT HISTORY
 
 **Step 3.1: Blame**
-The buggy line was introduced by commit `34927156830369` (KP Singh,
-2025-09-21) - "bpf: Implement signature verification for BPF programs".
-This was a v7 patch series for signed BPF programs. The incorrect
-`-ENOMEM` has been present since the function's introduction.
+The buggy line was introduced in `e3037485c68ec1` ("rtw88: new Realtek
+802.11ac driver") from v5.2-rc1 (April 2019). The bug has existed since
+the driver was first written.
 
-**Step 3.2: Fixes tag**
-No Fixes: tag present. The bug was introduced in `34927156830369`
-(v6.18).
+**Step 3.2: Fixes target**
+No Fixes: tag, but the root cause is in `e3037485c68ec1` — the initial
+driver commit. This means ALL stable trees that contain rtw88 have the
+bug.
 
-**Step 3.3: File History**
-The file is actively maintained (many recent commits). No related fixes
-for this specific issue found.
+**Step 3.3: Related commits**
+The same author has addressed this "failed to get tx report from
+firmware" issue from multiple angles:
+- `57289d30cd2ae3` — beacon loss detection (v6.13) — works around the
+  symptom
+- `28818b4d871bc9` — USB disconnection fix after beacon loss (v6.11) —
+  separate but related bug
+- `c7706b1173c77` — data rate fallback for older chips — same set of
+  affected chips
+This commit appears to be the **root cause fix** rather than a
+workaround.
 
 **Step 3.4: Author**
-Weixie Cui is not a frequent BPF contributor (no other commits found in
-the tree). However, the patch was acked by Jiri Olsa (major BPF
-developer) and applied by Alexei Starovoitov (BPF co-maintainer).
+Bitterblue Smith is a prolific rtw88 contributor with 20+ commits to the
+driver. Not the subsystem maintainer but a trusted regular contributor,
+especially for USB variants of Realtek chips.
 
 **Step 3.5: Dependencies**
-None. This is a completely standalone one-line fix.
+None. `ieee80211_is_any_nullfunc()` was added in v5.7-rc1 (commit
+30b2f0be23fb40). Verified it exists in v5.10, v5.15, v6.1, and v6.6
+trees. The patch applies cleanly to all stable trees.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST
 
-**Step 4.1-4.2:** Lore.kernel.org is behind Anubis PoW protection, so
-WebFetch fails. b4 dig found the original series that introduced the
-function (v1 through v7 of the "Signed BPF programs" series). The fix
-commit itself is not yet in the tree being analyzed (it's a candidate
-for backport).
-
-**Step 4.3:** No Reported-by tag. This is a code-review-found bug
-(author noticed incorrect error propagation).
-
-**Step 4.4-4.5:** Could not access lore due to bot protection. No series
-dependencies for the fix.
+Lore.kernel.org was not accessible due to bot protection. However:
+- The commit has `Acked-by: Ping-Ke Shih` (subsystem maintainer)
+- The commit was merged by Ping-Ke Shih
+- Testing was done on 4 different devices
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1-5.4: Call Chain**
-`__sys_bpf()` (syscall handler) → `bpf_prog_load()` →
-`bpf_prog_verify_signature()` → `kvmemdup_bpfptr()`
+**Step 5.1: Modified function**
+`rtw_tx_pkt_info_update()` — the central TX path function.
 
-This is directly reachable from the BPF syscall (`BPF_PROG_LOAD`
-command) when `attr->signature` is set. Any userspace program loading a
-signed BPF program can trigger this code path.
+**Step 5.2: Callers**
+- `rtw_tx()` (line 556) — main TX entry point from mac80211
+- `rtw_txq_push_skb()` (line 613) — TX queue push path
+Both are hot paths executed for every transmitted frame.
 
-**Step 5.5: Similar Patterns**
-The other two `kvmemdup_bpfptr()` callsites in the same file correctly
-use `PTR_ERR()`. This is the only inconsistent callsite.
+**Step 5.3-5.4: Call chain**
+This is directly reachable from mac80211's TX path — every WiFi frame
+goes through this function. The QoS Null frames are triggered
+automatically by mac80211 during scans.
+
+**Step 5.5: Similar patterns**
+The `ieee80211_is_any_nullfunc()` helper was specifically created
+because multiple places in mac80211 had the same bug of only checking
+for non-QoS nullfunc. Other drivers (iwlwifi, ath, rtw89) already use
+`ieee80211_is_any_nullfunc()` correctly.
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1:** The `bpf_prog_verify_signature` function was introduced in
-commit `34927156830369` which first appeared in v6.18. Verified:
-- NOT in v6.12, v6.13, v6.14, v6.15 (exit code 1 from `merge-base --is-
-  ancestor`)
-- IS in v6.18, v6.19, v7.0
+**Step 6.1: Buggy code in stable trees?**
+YES. Verified the exact buggy line `ieee80211_is_nullfunc(fc)` exists in
+v5.10, v5.15, v6.1, and v6.6 trees.
 
-So only 6.18.y, 6.19.y, and 7.0.y stable trees are affected (if active).
+**Step 6.2: Backport complications**
+None. The patch applies with zero context conflicts. The surrounding
+code is identical across all stable trees.
 
-**Step 6.2:** The fix would apply cleanly to 7.0.y. For 6.18.y/6.19.y,
-the context differs slightly (missing the `KMALLOC_MAX_CACHE_SIZE` check
-from `ea1535e28bb377` which is only in v7.0), but the changed line
-itself is identical.
+**Step 6.3: Related fixes in stable**
+No. This specific fix has not been applied to any stable tree.
 
-**Step 6.3:** No related fixes already in stable.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 7.1: Subsystem**
+WiFi driver (rtw88) — IMPORTANT category. RTL8723D, RTL8821A, RTL8812A
+are common consumer WiFi chips used in USB dongles and embedded systems.
 
-**Step 7.1:** BPF subsystem (`kernel/bpf/`) - IMPORTANT level. BPF is
-widely used for networking, security, tracing, etc. The signature
-verification feature specifically serves security use cases.
+**Step 7.2: Activity**
+Actively developed with regular fixes from multiple contributors.
 
-**Step 7.2:** Actively maintained subsystem with frequent commits.
+## PHASE 8: IMPACT AND RISK
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 8.1: Affected users**
+Users of RTL8723D, RTL8821A, RTL8812A, RTL8703B WiFi chips connected to
+2.4 GHz networks. These are popular budget WiFi chips.
 
-**Step 8.1:** Affected users: those loading signed BPF programs
-(security-conscious environments using BPF program signature
-verification).
+**Step 8.2: Trigger**
+Automatic — triggered every 5 minutes during background scans by
+wpa_supplicant/NetworkManager. No user action required.
 
-**Step 8.2:** Trigger: pass an invalid signature pointer via
-`BPF_PROG_LOAD`. Unprivileged users can trigger this (if they have BPF
-access). Not a crash path - just wrong errno.
+**Step 8.3: Severity**
+MEDIUM — the "failed to get tx report from firmware" warning floods logs
+periodically. While not a crash, it indicates firmware state
+desynchronization that can lead to further issues. The related commits
+show this same symptom can escalate to disconnections.
 
-**Step 8.3:** Failure mode: Incorrect errno returned to userspace
-(`ENOMEM` instead of `EFAULT`). Severity: **LOW**. No crash, no data
-corruption, no security vulnerability. But misleading error codes can
-cause tools to take incorrect recovery actions (e.g., backing off for
-memory pressure instead of reporting a programming error).
+**Step 8.4: Risk-Benefit**
+- **Benefit**: HIGH — fixes a recurring warning every 5 minutes for
+  users of popular hardware, prevents potential firmware state
+  corruption
+- **Risk**: VERY LOW — single token change using a well-established
+  kernel helper, tested on 4 devices, acked by maintainer
 
-**Step 8.4:**
-- Benefit: LOW-MEDIUM (correct errno for BPF signature verification
-  users)
-- Risk: NEAR-ZERO (1 line, standard `PTR_ERR()` pattern, cannot regress)
-- Ratio: Favorable - benefit > risk
+## PHASE 9: SYNTHESIS
 
-## PHASE 9: FINAL SYNTHESIS
+**Evidence FOR:**
+- Fixes a real, user-visible bug (recurring firmware warnings every 5
+  minutes)
+- Affects popular WiFi hardware (RTL8723D/RTL8821A/RTL8812A/RTL8703B)
+- Trivial one-line change — absolute minimal scope
+- Uses standard kernel helper (`ieee80211_is_any_nullfunc`) available in
+  all stable trees
+- Bug exists since the driver was created (v5.2) — all stable trees
+  affected
+- Acked by subsystem maintainer
+- Tested on 4 different hardware variants
+- No dependencies, clean apply to all stable trees
+- Same class of bug (missing QoS Null check) was fixed in mac80211 core
+  via the same helper
 
-**Evidence FOR backporting:**
-- Fixes a real bug (incorrect errno to userspace)
-- Trivially correct one-line fix using standard kernel idiom
-- Zero regression risk
-- Acked by major BPF developer (Jiri Olsa), applied by BPF maintainer
-  (Alexei Starovoitov)
-- Brings code into consistency with other `kvmemdup_bpfptr()` callsites
-- Directly reachable from syscall path
-- Standalone, no dependencies
-
-**Evidence AGAINST backporting:**
-- Low severity: incorrect errno, not a crash/corruption/security issue
-- Only affects relatively new code (v6.18+), limited to a few stable
-  trees
-- No Reported-by, no evidence users have been affected in practice
-- Stable rules ask for "important issues" - wrong errno is debatable
+**Evidence AGAINST:**
+- No Fixes: tag (expected for review pipeline)
+- Symptom is a warning, not a crash (but related to firmware state
+  desync that can escalate)
 
 **Stable Rules Checklist:**
-1. Obviously correct and tested? YES
-2. Fixes a real bug? YES (incorrect errno)
-3. Important issue? BORDERLINE - incorrect errno is a real bug but low
-   severity
-4. Small and contained? YES (1 line)
-5. No new features or APIs? YES
-6. Can apply to stable trees? YES (clean apply to 7.0.y)
+1. Obviously correct? YES — standard helper for this exact pattern
+2. Fixes a real bug? YES — recurring firmware desync warning
+3. Important issue? YES (firmware interaction bug, periodic warning,
+   potential escalation)
+4. Small and contained? YES — 1 line in 1 file
+5. No new features? Correct — pure bug fix
+6. Can apply to stable? YES — verified helper exists in all stable trees
 
 ## Verification
 
-- [Phase 1] Parsed tags: Acked-by Jiri Olsa, SOB by Alexei Starovoitov
-- [Phase 2] Diff analysis: 1 line changed, `-ENOMEM` -> `PTR_ERR(sig)`
-  in `bpf_prog_verify_signature()`
-- [Phase 2] Verified `kvmemdup_bpfptr` returns `-EFAULT` or `-ENOMEM`
-  from `include/linux/bpfptr.h:68-79`
-- [Phase 2] Verified other callsites (lines 1700, 1806-1808) already use
-  `PTR_ERR()` correctly
-- [Phase 3] git blame: buggy code introduced in `34927156830369` (KP
-  Singh, 2025-09-21, v6.18)
-- [Phase 3] Verified `34927156830369` NOT in v6.12 (exit 1), IS in v6.18
-  (exit 0)
-- [Phase 4] b4 dig found original series at lore (v7, "Signed BPF
-  programs" series)
-- [Phase 4] lore.kernel.org inaccessible via WebFetch (Anubis
-  protection)
-- [Phase 5] Call chain: `__sys_bpf()` -> `bpf_prog_load()` (line 6249)
-  -> `bpf_prog_verify_signature()` (line 3034) - verified via grep
-- [Phase 6] Bug exists only in v6.18+, NOT in v6.12 or earlier LTS trees
-- [Phase 8] Severity: LOW (incorrect errno, no crash/corruption)
-- UNVERIFIED: Could not access lore discussion to check if stable was
-  discussed by reviewers
-
-This is a borderline case. The fix is a trivially correct one-line
-change with zero regression risk, fixing a genuine incorrect errno bug
-in the BPF syscall path. While the severity is low (wrong error code,
-not a crash), the near-zero risk makes the risk-benefit ratio favorable.
-The incorrect errno could mislead BPF tools into treating a bad pointer
-as a memory pressure issue.
+- [Phase 1] Parsed tags: Acked-by Ping-Ke Shih (maintainer), tested with
+  4 devices
+- [Phase 2] Diff: 1 token change in `rtw_tx_pkt_info_update()`:
+  `ieee80211_is_nullfunc` → `ieee80211_is_any_nullfunc`
+- [Phase 3] git blame: buggy code from `e3037485c68ec1` (v5.2-rc1, rtw88
+  driver creation), present in all stable trees
+- [Phase 3] git describe: `v5.2-rc1~133^2~37^2~8` confirmed for original
+  commit
+- [Phase 3] git show v6.6/v6.1/v5.15: verified identical buggy line
+  exists
+- [Phase 3] git log author: Bitterblue Smith has 20+ rtw88 commits,
+  trusted contributor
+- [Phase 3] Related commits: `57289d30cd2ae3` (beacon loss workaround)
+  and `28818b4d871bc9` (USB disconnection fix) address same symptom
+  family
+- [Phase 4] Lore inaccessible due to bot protection; maintainer ack
+  verified in commit tags
+- [Phase 5] `rtw_tx_pkt_info_update()` called from `rtw_tx()` and
+  `rtw_txq_push_skb()` — main TX paths
+- [Phase 5] `ieee80211_is_any_nullfunc()` already used by iwlwifi, ath,
+  rtw89 for same purpose
+- [Phase 6] `ieee80211_is_any_nullfunc()` verified present in v5.10
+  (line 735), v5.15 (line 732), v6.1 (line 769)
+- [Phase 6] Patch applies cleanly — surrounding code identical across
+  stable trees
+- [Phase 8] Trigger: automatic every 5 minutes on 2.4 GHz; severity
+  MEDIUM (firmware desync)
 
 **YES**
 
- kernel/bpf/syscall.c | 2 +-
+ drivers/net/wireless/realtek/rtw88/tx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 700938782bed2..cbb8696c04b59 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2832,7 +2832,7 @@ static int bpf_prog_verify_signature(struct bpf_prog *prog, union bpf_attr *attr
- 	sig = kvmemdup_bpfptr(usig, attr->signature_size);
- 	if (IS_ERR(sig)) {
- 		bpf_key_put(key);
--		return -ENOMEM;
-+		return PTR_ERR(sig);
+diff --git a/drivers/net/wireless/realtek/rtw88/tx.c b/drivers/net/wireless/realtek/rtw88/tx.c
+index 2ab440cb2d67b..3106edb84fb47 100644
+--- a/drivers/net/wireless/realtek/rtw88/tx.c
++++ b/drivers/net/wireless/realtek/rtw88/tx.c
+@@ -421,7 +421,7 @@ void rtw_tx_pkt_info_update(struct rtw_dev *rtwdev,
+ 		pkt_info->mac_id = rtwvif->mac_id;
  	}
  
- 	bpf_dynptr_init(&sig_ptr, sig, BPF_DYNPTR_TYPE_LOCAL, 0,
+-	if (ieee80211_is_mgmt(fc) || ieee80211_is_nullfunc(fc))
++	if (ieee80211_is_mgmt(fc) || ieee80211_is_any_nullfunc(fc))
+ 		rtw_tx_mgmt_pkt_info_update(rtwdev, pkt_info, sta, skb);
+ 	else if (ieee80211_is_data(fc))
+ 		rtw_tx_data_pkt_info_update(rtwdev, pkt_info, sta, skb);
 -- 
 2.53.0
 
