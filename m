@@ -1,51 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5554DD6C2;
-	Mon, 20 Apr 2026 13:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B734DD6E6;
+	Mon, 20 Apr 2026 13:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776692033; cv=none; b=TgLobpaGG50aKjy6U2/m8c/g22fCBnBvntvDkxadMtQpDygPXm9HHZlcpAoVUkO+x0cRLwnFD5Z48wyv/0KDtNPkQhoegtJchM+gCZzamYFz34LheK6TeMOvwal77TIvhfMHl55cn1a0pVNFXvEUsz89fWYYyiXeN8FS2vKFHRc=
+	t=1776692035; cv=none; b=FWWZYQsmGEzGCtcNCEbqxXrngDbqkLFtDkUice4IXb/wpTo2d/to64Q9wsJq/KvCS+4Q/eQ8vTSs3tN3AUoQd5RZHnxF7INx6yzzSiWAFuNxT7NPswKAFAaPYIkjWDD6MWeP6KwdB5g0DuefT1Dup4OrsKiZXHCrhKp7ZEEntWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776692033; c=relaxed/simple;
-	bh=XrLkG7SvQztRlxCgLryK0uHbrxctmkqjcERdJExA110=;
+	s=arc-20240116; t=1776692035; c=relaxed/simple;
+	bh=i3rhWaKMYSrIbCXhEhMYTiNtIcwSGsFJBwm31q++mJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZA6IdpBAAnagTPV8wVbN7DSMzc/+yCn69W83yr1ZEqeTs0aiXRzQT5h537mOK3c/hbPqSlEiZZFATuWXWo9+KKVaar3VGFk93MzCOYJOfSxpHpJGQzU2EriT2JpNVElMPSfLH04jlFElpert8Fyj/8FC+wufoKhlhMcCJW9Hhrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X+wOa5VQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OzQ0hCKSEnIrrEWs5NPxtUVUEeQPigoaFxteLOtwHa38EBY6BZR+bHXBB1kDWXeJ5+n7Y6d+JiY51yB/MCn+V6nFcEtck2ghjedeyx0d1LNP3g2J8Scs3H6TiCqFPq4oH3gG/27EfXax8EHd6ohYLTpMnFjWcIsNR945RVsMfAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SO8niLhR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X+wOa5VQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07FAC19425;
-	Mon, 20 Apr 2026 13:33:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SO8niLhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8263C2BCB6;
+	Mon, 20 Apr 2026 13:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776692033;
-	bh=XrLkG7SvQztRlxCgLryK0uHbrxctmkqjcERdJExA110=;
+	s=k20201202; t=1776692035;
+	bh=i3rhWaKMYSrIbCXhEhMYTiNtIcwSGsFJBwm31q++mJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X+wOa5VQAUTwWgbYRyykkA019oxLDiotijMb/jVT57sdDpYY+ieJgADyFeGEY8601
-	 qcSIgzmi3Ri3tCS52XjiANa91CpokT50kP5ZTpZ7k4wdeV7t8YUS3oa1t3XfcOv1/u
-	 j2bPn9LxCyQSUa/pF+hcATCUsqF6UjUN0AGNGq3icGyRgUzJbRPCq5pH7d8Zjjuzs8
-	 loXWbtMgUNMyP3U11uAZxmDjUaQNmGap5ALwMbgnYCN15PBoL4c8qMgYp/EeHGTzQd
-	 3zXfz31uFCCZpOCpyO5M88cy0SGZs3LgW6jcT5vUb2bQVlbzfej827vL3GuII8scHs
-	 5HVH9EnJziNlA==
+	b=SO8niLhRl4/p2u024WoM113oBgra7Xun4h8QLhr0rqQ9bh34YcGR611Pu01jqRNBN
+	 XVBRQMdV7Xd7LBmlfWhGqPP7Y32KH8joxiGxMqVZCdTTi9+a1Ume7Ou9osBK89ZoEc
+	 FcJHNyx8DlR8lH83SHwU11WSDS3ECH1sLIqLL6Z9wzPokibUO0MTHuaZAGwKfrrDr0
+	 kCBB3S3XBR/X7iKYcx5E4UCIustFJYzTtTwxyB8gNLe1y8AYgVTywOpk7iphb5Pcyc
+	 K3NqBtECZfRGdvgvTDLZ9V+Ap3UPMzRzDDwZ2OBNBAyLJqs85hPkZafHq55pFXHXCL
+	 X+7FQgoN384XA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	syzbot+d8c285748fa7292580a9@syzkaller.appspotmail.com,
-	Martin Schiller <ms@dev.tdt.de>,
+Cc: Lorenzo Bianconi <lorenzo@kernel.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	andrew+netdev@lunn.ch,
 	davem@davemloft.net,
+	edumazet@google.com,
 	pabeni@redhat.com,
-	jeff@garzik.org,
-	fubar@us.ibm.com,
-	linux-x25@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] net: lapbether: handle NETDEV_PRE_TYPE_CHANGE
-Date: Mon, 20 Apr 2026 09:22:09 -0400
-Message-ID: <20260420132314.1023554-335-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18] net: airoha: Fix memory leak in airoha_qdma_rx_process()
+Date: Mon, 20 Apr 2026 09:22:10 -0400
+Message-ID: <20260420132314.1023554-336-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -60,23 +58,24 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.23
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit b120e4432f9f56c7103133d6a11245e617695adb ]
+[ Upstream commit 285fa6b1e03cff78ead0383e1b259c44b95faf90 ]
 
-lapbeth_data_transmit() expects the underlying device type
-to be ARPHRD_ETHER.
+If an error occurs on the subsequents buffers belonging to the
+non-linear part of the skb (e.g. due to an error in the payload length
+reported by the NIC or if we consumed all the available fragments for
+the skb), the page_pool fragment will not be linked to the skb so it will
+not return to the pool in the airoha_qdma_rx_process() error path. Fix the
+memory leak partially reverting commit 'd6d2b0e1538d ("net: airoha: Fix
+page recycling in airoha_qdma_rx_process()")' and always running
+page_pool_put_full_page routine in the airoha_qdma_rx_process() error
+path.
 
-Returning NOTIFY_BAD from lapbeth_device_event() makes sure
-bonding driver can not break this expectation.
-
-Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
-Reported-by: syzbot+d8c285748fa7292580a9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/69cd22a1.050a0220.70c3a.0002.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Martin Schiller <ms@dev.tdt.de>
+Fixes: d6d2b0e1538d ("net: airoha: Fix page recycling in airoha_qdma_rx_process()")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260402103519.1201565-1-edumazet@google.com
+Link: https://patch.msgid.link/20260402-airoha_qdma_rx_process-mem-leak-fix-v1-1-b5706f402d3c@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -85,55 +84,24 @@ LLM Generated explanations, may be completely bogus:
 
 Error: Failed to generate final synthesis
 
- drivers/net/wan/lapbether.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
-index f357a7ac70ac4..9861c99ea56c4 100644
---- a/drivers/net/wan/lapbether.c
-+++ b/drivers/net/wan/lapbether.c
-@@ -446,33 +446,36 @@ static void lapbeth_free_device(struct lapbethdev *lapbeth)
- static int lapbeth_device_event(struct notifier_block *this,
- 				unsigned long event, void *ptr)
- {
--	struct lapbethdev *lapbeth;
- 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
-+	struct lapbethdev *lapbeth;
- 
- 	if (dev_net(dev) != &init_net)
- 		return NOTIFY_DONE;
- 
--	if (!dev_is_ethdev(dev) && !lapbeth_get_x25_dev(dev))
-+	lapbeth = lapbeth_get_x25_dev(dev);
-+	if (!dev_is_ethdev(dev) && !lapbeth)
- 		return NOTIFY_DONE;
- 
- 	switch (event) {
- 	case NETDEV_UP:
- 		/* New ethernet device -> new LAPB interface	 */
--		if (!lapbeth_get_x25_dev(dev))
-+		if (!lapbeth)
- 			lapbeth_new_device(dev);
- 		break;
- 	case NETDEV_GOING_DOWN:
- 		/* ethernet device closes -> close LAPB interface */
--		lapbeth = lapbeth_get_x25_dev(dev);
- 		if (lapbeth)
- 			dev_close(lapbeth->axdev);
- 		break;
- 	case NETDEV_UNREGISTER:
- 		/* ethernet device disappears -> remove LAPB interface */
--		lapbeth = lapbeth_get_x25_dev(dev);
- 		if (lapbeth)
- 			lapbeth_free_device(lapbeth);
- 		break;
-+	case NETDEV_PRE_TYPE_CHANGE:
-+		/* Our underlying device type must not change. */
-+		if (lapbeth)
-+			return NOTIFY_BAD;
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index 4fc6bd282b465..bdf600fea9508 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -709,9 +709,8 @@ static int airoha_qdma_rx_process(struct airoha_queue *q, int budget)
+ 		if (q->skb) {
+ 			dev_kfree_skb(q->skb);
+ 			q->skb = NULL;
+-		} else {
+-			page_pool_put_full_page(q->page_pool, page, true);
+ 		}
++		page_pool_put_full_page(q->page_pool, page, true);
  	}
+ 	airoha_qdma_fill_rx_queue(q);
  
- 	return NOTIFY_DONE;
 -- 
 2.53.0
 
