@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2529A342510;
-	Mon, 20 Apr 2026 16:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAE433E377;
+	Mon, 20 Apr 2026 16:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700998; cv=none; b=mZw9PdnY+uQZ7yfTMP1wrPpclmuENNVJiJi2nQngj84BCaeLRJlWcc0nmZk9OwJQj9llinXWzRwHjow4cwNjtHLf5pZK4wYm6L0079GR5w5OSJLKj8rJ/UjUfSb+f+25Fulk5IZpcEMlmjbxjIXN74RtO9a3Cbd8++99QKVy1Y4=
+	t=1776701000; cv=none; b=Jz5pwWGorhM7dnb040pGlk0iCUyLuVuY4uNsV1zODSDO3hachX6DKt2Su0AtSRQpc3PdcQhLGifbwTwmudzPQvUPJ6EtjVyoTn3nqWjaEUZpMwHhmuw1CB/qY3G/Zlk39mHO1k9OzuaD56IdxNqJjUauOBO7UuW2Mp0BDJAMoM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700998; c=relaxed/simple;
-	bh=JqKIT+ym+jtU59yV2c0par+zqPD/lqqZDkTgqshQkks=;
+	s=arc-20240116; t=1776701000; c=relaxed/simple;
+	bh=JSJIU2d0JNPo40IoZpmLqZPYHWB6t6epXvMi5+QIiH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxuYHhxgn46wCa+Rw9ELElF8hTHx3gFF989/4FGqo4b8ugehiVidbCZzlb2KuAnOuzhn6YIcvKX+JLKC6F2k9bwiZB2oDjFKZ4YxUIUoqu/JGdgph2StChkh91W+hmtKQ0B/83Sf2TQlysk7/K++VLnVGb0tDE466SviC1AlQJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n81K+9e9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SR6yfpDdIkfbSw3HJ33i+8tb5CrcXALrpF7GwnQDVVb6HS/1ZNd0P9YcdtcMU99sOuOVD98k+J0aHu8IMIq65NlAlRL/CJHHwlroPTpXxNGql0aUMt6uKcWbWmG0BluM6HqgC+vfX32x+/1c9IZwMrUlutWYO+M2wzuLdHGATF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exmDfI24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n81K+9e9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF5A5C19425;
-	Mon, 20 Apr 2026 16:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exmDfI24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AD1C2BCB6;
+	Mon, 20 Apr 2026 16:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700998;
-	bh=JqKIT+ym+jtU59yV2c0par+zqPD/lqqZDkTgqshQkks=;
+	s=korg; t=1776701000;
+	bh=JSJIU2d0JNPo40IoZpmLqZPYHWB6t6epXvMi5+QIiH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n81K+9e9AczdPEk/TY6ElZf3eNsxLI9tT367JjxogpW9dN5mx2N6KiCZZsK757wfe
-	 SSseihhMCfYqvm2gmKYzVi17qpCB0syFsYVFznSK6B+X/hGGhoJ9nRdymAXAgGbE5/
-	 P4s7QkHM3nIJgzyG/kYVQ/SvrLlfsb+wGU7oLQO4=
+	b=exmDfI24TK/Rg979x0hiL8jqPDB7QGfL6wt/N5YDw+/2daMnfM2lu/ZG2bom6C03J
+	 MuBsaiRkF7SPLBQUuXK4vyjhWUqV6ny/QZpDr+PE002uP6g0amdrCjqee2bx+ZEDnh
+	 8+GAhjZ8QTVeqeg4DWfzsBpf0K83yQKDMGbaxpEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	stable@kernel.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 140/198] ksmbd: require 3 sub-authorities before reading sub_auth[2]
-Date: Mon, 20 Apr 2026 17:41:59 +0200
-Message-ID: <20260420153940.647660902@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 109/198] af_unix: read UNIX_DIAG_VFS data under unix_state_lock
+Date: Mon, 20 Apr 2026 17:41:28 +0200
+Message-ID: <20260420153939.528976911@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -55,51 +58,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-commit 53370cf9090777774e07fd9a8ebce67c6cc333ab upstream.
+[ Upstream commit 39897df386376912d561d4946499379effa1e7ef ]
 
-parse_dacl() compares each ACE SID against sid_unix_NFS_mode and on
-match reads sid.sub_auth[2] as the file mode.  If sid_unix_NFS_mode is
-the prefix S-1-5-88-3 with num_subauth = 2 then compare_sids() compares
-only min(num_subauth, 2) sub-authorities so a client SID with
-num_subauth = 2 and sub_auth = {88, 3} will match.
+Exact UNIX diag lookups hold a reference to the socket, but not to
+u->path. Meanwhile, unix_release_sock() clears u->path under
+unix_state_lock() and drops the path reference after unlocking.
 
-If num_subauth = 2 and the ACE is placed at the very end of the security
-descriptor, sub_auth[2] will be  4 bytes past end_of_acl.  The
-out-of-band bytes will then be masked to the low 9 bits and applied as
-the file's POSIX mode, probably not something that is good to have
-happen.
+Read the inode and device numbers for UNIX_DIAG_VFS while holding
+unix_state_lock(), then emit the netlink attribute after dropping the
+lock.
 
-Fix this up by forcing the SID to actually carry a third sub-authority
-before reading it at all.
+This keeps the VFS data stable while the reply is being built.
 
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5f7b0569460b ("unix_diag: Unix inode info NLA")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260407080015.1744197-1-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/unix/diag.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -451,7 +451,8 @@ static void parse_dacl(struct mnt_idmap
- 		ppace[i]->access_req =
- 			smb_map_generic_desired_access(ppace[i]->access_req);
+diff --git a/net/unix/diag.c b/net/unix/diag.c
+index ca34730261510..c9c1e51c44196 100644
+--- a/net/unix/diag.c
++++ b/net/unix/diag.c
+@@ -28,18 +28,23 @@ static int sk_diag_dump_name(struct sock *sk, struct sk_buff *nlskb)
  
--		if (!(compare_sids(&ppace[i]->sid, &sid_unix_NFS_mode))) {
-+		if (ppace[i]->sid.num_subauth >= 3 &&
-+		    !(compare_sids(&ppace[i]->sid, &sid_unix_NFS_mode))) {
- 			fattr->cf_mode =
- 				le32_to_cpu(ppace[i]->sid.sub_auth[2]);
- 			break;
+ static int sk_diag_dump_vfs(struct sock *sk, struct sk_buff *nlskb)
+ {
+-	struct dentry *dentry = unix_sk(sk)->path.dentry;
++	struct unix_diag_vfs uv;
++	struct dentry *dentry;
++	bool have_vfs = false;
+ 
++	unix_state_lock(sk);
++	dentry = unix_sk(sk)->path.dentry;
+ 	if (dentry) {
+-		struct unix_diag_vfs uv = {
+-			.udiag_vfs_ino = d_backing_inode(dentry)->i_ino,
+-			.udiag_vfs_dev = dentry->d_sb->s_dev,
+-		};
+-
+-		return nla_put(nlskb, UNIX_DIAG_VFS, sizeof(uv), &uv);
++		uv.udiag_vfs_ino = d_backing_inode(dentry)->i_ino;
++		uv.udiag_vfs_dev = dentry->d_sb->s_dev;
++		have_vfs = true;
+ 	}
++	unix_state_unlock(sk);
+ 
+-	return 0;
++	if (!have_vfs)
++		return 0;
++
++	return nla_put(nlskb, UNIX_DIAG_VFS, sizeof(uv), &uv);
+ }
+ 
+ static int sk_diag_dump_peer(struct sock *sk, struct sk_buff *nlskb)
+-- 
+2.53.0
+
 
 
