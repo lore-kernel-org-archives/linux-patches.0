@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9165933B975;
-	Mon, 20 Apr 2026 15:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F29C33AD9A;
+	Mon, 20 Apr 2026 15:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700654; cv=none; b=WaUUGC83fAVzeMX0c/8oYrzWztkPqGj52+YEpGD+3X+Y7ijuBJ6oM1/dIhXNQhY0aadnhmp22jSu9YshPKSys5PlQ7V53Ewhwljg0poybRblKz6x/FIFCEqeWi85wFOE9CIGY7qBqMBsyTrwdhuRb2od8YV/L3+M3LpdAYHGhw8=
+	t=1776700657; cv=none; b=d8KPfmtMXPR4m+K9uzQYfm5k8jMBW629mR6FTLh6M3T7Au7RHb2A8woee0WDKyisqx9vwoxXGq7uY/2bGZQKI3Xhx4jWHi5vgJQhbTKsPSVn8GJ8rbRteEEbmIJ+DzSRarh92kgpvW3qQpP1+GESKGRqpF+Z26Oq/akuKgoeakQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700654; c=relaxed/simple;
-	bh=7BXnMer3JHthG6VPN1l8HNu9XKmgwBQBP5kxKF9564c=;
+	s=arc-20240116; t=1776700657; c=relaxed/simple;
+	bh=j9YH13FvaPsJUGpEUWwgRO49jUXjqo1Kb0l/RTIgEqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E33VC5jEIQpo2IXAAVsiM38sHrjBVH7AUYwlwcEAp4iBk/RF1wh0tudcs8d29F5mQjW1ygEyroENGgO+RSCdsyNNF4nw3IkTJT1PhR+pny3pPmsW3MuImsz2lFRJS4qQhy1VGWFOy23cBVrqH94ySHNigX0pTw9HUqjUtSn0bjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdRRvfsR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9Q6sq5mPPp2FY9HVVqQD7xs99aVIZkz3TNQK03q8smgSPCwtrNvYolLb+pxHWTMxSOgNSOS45LznlYSUJbUNyoiol0zFhJ+3wTcoDWCkyytvZdqM5HKUrQS/G3d53pQvHow733FBRgaIjuYYc7QvkuHanWpGJOQ9ORkinhtHE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/L8uEKK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdRRvfsR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EB0C2BCB4;
-	Mon, 20 Apr 2026 15:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/L8uEKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6632C19425;
+	Mon, 20 Apr 2026 15:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700654;
-	bh=7BXnMer3JHthG6VPN1l8HNu9XKmgwBQBP5kxKF9564c=;
+	s=korg; t=1776700657;
+	bh=j9YH13FvaPsJUGpEUWwgRO49jUXjqo1Kb0l/RTIgEqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdRRvfsR4DiTl1Fn9vCcl1KjuqyfYYayzOVDmINUJscsA8Yo6zm3IASScQzfewfmM
-	 iWuXTG9m8JjWzgzrOm+GMXm5LzwFXdZ340jmeOxgqQUAPcWVsKzr2+G3ojB2uqUbD/
-	 XFpGnoXaEc9Fg2NQYO297C2XHWPwG3hwSHK1UDwg=
+	b=H/L8uEKKBzp3aKlDWmUF4Y4BXHbEr0E6TXWYFQvR3/qjIw5MthpQfJaoi6wPiR0RW
+	 734zIzOrCQkDFB5wNAZHA6gEKUc9tgNy1km5jBIOAPZUZ6S1JeOLqaMf+wKJ3wHHrc
+	 4kzgIrZJkv/6NmDmXphDBeEWurgEQre4OO4GehmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Kovalchuk <coderpy4@proton.me>,
+	Zhang Heng <zhangheng@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 004/198] ALSA: hda/realtek: Add HP ENVY Laptop 13-ba0xxx quirk
-Date: Mon, 20 Apr 2026 17:39:43 +0200
-Message-ID: <20260420153935.769874400@linuxfoundation.org>
+Subject: [PATCH 6.18 005/198] ALSA: hda/realtek: add quirk for Lenovo Yoga 7 2-in-1 16AKP10
+Date: Mon, 20 Apr 2026 17:39:44 +0200
+Message-ID: <20260420153935.805495978@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153935.605963767@linuxfoundation.org>
 References: <20260420153935.605963767@linuxfoundation.org>
@@ -51,16 +51,18 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Kovalchuk <coderpy4@proton.me>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 793b008cd39516385791a1d1d223d817e947a471 ]
+[ Upstream commit 7bae956cac0433c4d41aac9f1d04e42694e0b706 ]
 
-Add a PCI quirk for HP ENVY Laptop 13-ba0xxx (PCI device ID 0x8756)
-to enable proper mute LED and mic mute behavior using the
-ALC245_FIXUP_HP_X360_MUTE_LEDS fixup.
+This machine is equipped with ALC287 and requires the quirk
+ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN to fix the issue
+where the bass speakers are not configured and the speaker
+volume cannot be controlled.
 
-Signed-off-by: Andrii Kovalchuk <coderpy4@proton.me>
-Link: https://patch.msgid.link/u0s-uRVegF9BN0t-4JnOUwsIAR-mVc4U4FJfJHdEHX7ro_laErHD9y35NebWybcN16gVaVHPJo1ap3AoJ1a2gqJImPvThgeNt_SYVY1KaDw=@proton.me
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221210
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260313080624.1395362-1-zhangheng@kylinos.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -68,17 +70,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 0654850687447..1b64292220ac8 100644
+index 1b64292220ac8..4b06cb48252e2 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6732,6 +6732,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8730, "HP ProBook 445 G7", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8735, "HP ProBook 435 G7", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8736, "HP", ALC285_FIXUP_HP_GPIO_AMP_INIT),
-+	SND_PCI_QUIRK(0x103c, 0x8756, "HP ENVY Laptop 13-ba0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8760, "HP EliteBook 8{4,5}5 G7", ALC285_FIXUP_HP_BEEP_MICMUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x876e, "HP ENVY x360 Convertible 13-ay0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x877a, "HP", ALC285_FIXUP_HP_MUTE_LED),
+@@ -7429,6 +7429,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	HDA_CODEC_QUIRK(0x17aa, 0x391c, "Lenovo Yoga 7 2-in-1 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	HDA_CODEC_QUIRK(0x17aa, 0x391d, "Lenovo Yoga 7 2-in-1 16AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38b7, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.53.0
 
