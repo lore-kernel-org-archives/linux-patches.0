@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8E8329C6D;
-	Mon, 20 Apr 2026 15:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28853368B2;
+	Mon, 20 Apr 2026 15:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776700001; cv=none; b=PbyfUeya0UCuVqkJhpPwlSORRaFUDN9wQ+oYhnJz85ORo3lzl2Wkh7CJsN9mNCBZMJh5/bTRXUOFYIq7o8KS4VwbNxgqjCfLZvcAogxKJkjlIQ4gxuVVT1q3+4RT6gPYVWMifHSJ9hdrJVToVIAaSF0haJwYUDlKIps3jPTOzB8=
+	t=1776700004; cv=none; b=JkfQKSP2bd37B7lV8+pKqVqiK80+CUz2jID6CV1EcnXQtII6zj76RoVk5GL9Rzz95VAjZlEANaevuaVTa1QyCxP3tVsxzlxBMyCaDDt6rGM3Wl951SM05kt0urDF/U9C/sdXp8PC/A3htMGxjs8CixQYixdVjMGiGoO5NV2iJh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776700001; c=relaxed/simple;
-	bh=klC3EL89ascz/L8DGQF2JkjwJT929ab9Si8afFgnW2c=;
+	s=arc-20240116; t=1776700004; c=relaxed/simple;
+	bh=SQshGYj147SFs0/dlGEWdHVuzOxhiZhAjpzGyMqMuDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ue9OUMEKSBueo0/Qq8mpU+FtnOFHj3t4aNZqLWstTaRBusJjfYA5H6iU8/4ExC/f7TJIC9Lo66Uu1ydtU0b2iA+xLQZkCy5JlbmuZw5snBp4MYtADUq59+hIXzKgmTb7Sa0GFUPouaLR3VySvZyO79A2h/NQvnWxZ3ObjErqlpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrIZkyhQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f+gd7/VfMM75IlnqzH0AwXgetGxqA+bCrpmrxTgjW86RxtdvWAnOJNYEANPkM7J5grj14iyCQiRoxxqsoWwUb8ArtTBRLQBqEjvgkjtKMIv4SLwFOccD08Sv2NmhWfqEAMrZ9qkB48CpZhvtdI8bVIs2pRbHoF2/BxOFPgYYoFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmYaU46P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrIZkyhQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039E6C19425;
-	Mon, 20 Apr 2026 15:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmYaU46P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89807C19425;
+	Mon, 20 Apr 2026 15:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776700001;
-	bh=klC3EL89ascz/L8DGQF2JkjwJT929ab9Si8afFgnW2c=;
+	s=korg; t=1776700003;
+	bh=SQshGYj147SFs0/dlGEWdHVuzOxhiZhAjpzGyMqMuDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrIZkyhQO8bEkgEaaWi8bRSb0pYrdtk6+FUtJqn9zXOX7CI9h952vJ7WYfL/LGf4D
-	 c5nRqN3No4wA0hg3MK0IGh6Lq3Fdkh3CVOvU5qhuhCFRKZmeU1vKA5t7uEzUSY6WDQ
-	 N1dytPvyVasZCvs4ZYmsObsLgnee7Vn/0pb4Sx/M=
+	b=dmYaU46P+dkI9ELfn0kvL3t9Py5p1sxUxYZmIqKKZpAhAzAu53SdMjzNuNvrJxXVL
+	 TXxYO5oFp3OTMXKXt/kytv1znBbRAjCoRjx41cVPyNp5PJ1GwAJSmd7uT10ppWCrWv
+	 wYpCHjBZsTw8gCAFLBysse1eL+Yj60Zvhsg/nUYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+47321e8fd5a4c84088db@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 72/76] media: as102: fix to not free memory after the device is registered in as102_usb_probe()
-Date: Mon, 20 Apr 2026 17:42:23 +0200
-Message-ID: <20260420153913.438407170@linuxfoundation.org>
+	syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 7.0 73/76] nilfs2: fix NULL i_assoc_inode dereference in nilfs_mdt_save_to_shadow_map
+Date: Mon, 20 Apr 2026 17:42:24 +0200
+Message-ID: <20260420153913.474623905@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420153910.810034134@linuxfoundation.org>
 References: <20260420153910.810034134@linuxfoundation.org>
@@ -51,70 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 8bd29dbe03fc5b0f039ab2395ff37b64236d2f0c upstream.
+commit 4a4e0328edd9e9755843787d28f16dd4165f8b48 upstream.
 
-In as102_usb driver, the following race condition occurs:
-```
-		CPU0						CPU1
-as102_usb_probe()
-  kzalloc(); // alloc as102_dev_t
-  ....
-  usb_register_dev();
-						fd = sys_open("/path/to/dev"); // open as102 fd
-						....
-  usb_deregister_dev();
-  ....
-  kfree(); // free as102_dev_t
-  ....
-						sys_close(fd);
-						  as102_release() // UAF!!
-						    as102_usb_release()
-						      kfree(); // DFB!!
-```
+The DAT inode's btree node cache (i_assoc_inode) is initialized lazily
+during btree operations. However, nilfs_mdt_save_to_shadow_map()
+assumes i_assoc_inode is already initialized when copying dirty pages
+to the shadow map during GC.
 
-When a USB character device registered with usb_register_dev() is later
-unregistered (via usb_deregister_dev() or disconnect), the device node is
-removed so new open() calls fail. However, file descriptors that are
-already open do not go away immediately: they remain valid until the last
-reference is dropped and the driver's .release() is invoked.
+If NILFS_IOCTL_CLEAN_SEGMENTS is called immediately after mount before
+any btree operation has occurred on the DAT inode, i_assoc_inode is
+NULL leading to a general protection fault.
 
-In as102, as102_usb_probe() calls usb_register_dev() and then, on an
-error path, does usb_deregister_dev() and frees as102_dev_t right away.
-If userspace raced a successful open() before the deregistration, that
-open FD will later hit as102_release() --> as102_usb_release() and access
-or free as102_dev_t again, occur a race to use-after-free and
-double-free vuln.
+Fix this by calling nilfs_attach_btree_node_cache() on the DAT inode
+in nilfs_dat_read() at mount time, ensuring i_assoc_inode is always
+initialized before any GC operation can use it.
 
-The fix is to never kfree(as102_dev_t) directly once usb_register_dev()
-has succeeded. After deregistration, defer freeing memory to .release().
-
-In other words, let release() perform the last kfree when the final open
-FD is closed.
-
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+47321e8fd5a4c84088db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=47321e8fd5a4c84088db
-Fixes: cd19f7d3e39b ("[media] as102: fix leaks at failure paths in as102_usb_probe()")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b4093b1f24ad789bf37
+Tested-by: syzbot+4b4093b1f24ad789bf37@syzkaller.appspotmail.com
+Fixes: e897be17a441 ("nilfs2: fix lockdep warnings in page operations for btree nodes")
+Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/as102/as102_usb_drv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nilfs2/dat.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/usb/as102/as102_usb_drv.c
-+++ b/drivers/media/usb/as102/as102_usb_drv.c
-@@ -403,7 +403,9 @@ static int as102_usb_probe(struct usb_in
- failed_dvb:
- 	as102_free_usb_stream_buffer(as102_dev);
- failed_stream:
-+	usb_set_intfdata(intf, NULL);
- 	usb_deregister_dev(intf, &as102_usb_class_driver);
-+	return ret;
- failed:
- 	usb_put_dev(as102_dev->bus_adap.usb_dev);
- 	usb_set_intfdata(intf, NULL);
+--- a/fs/nilfs2/dat.c
++++ b/fs/nilfs2/dat.c
+@@ -524,6 +524,9 @@ int nilfs_dat_read(struct super_block *s
+ 	if (err)
+ 		goto failed;
+ 
++	err = nilfs_attach_btree_node_cache(dat);
++	if (err)
++		goto failed;
+ 	err = nilfs_read_inode_common(dat, raw_inode);
+ 	if (err)
+ 		goto failed;
 
 
