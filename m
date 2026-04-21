@@ -1,34 +1,34 @@
-Received: from n169-114.mail.139.com (n169-114.mail.139.com [120.232.169.114])
+Received: from n169-112.mail.139.com (n169-112.mail.139.com [120.232.169.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D729285072
-	for <patches@lists.linux.dev>; Tue, 21 Apr 2026 02:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6E127EFEE
+	for <patches@lists.linux.dev>; Tue, 21 Apr 2026 02:44:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.112
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776739449; cv=none; b=O2wg3cQGNeMZSpeu9Rufok0Y6W2PFfauSDOWjeHWwQ3VVTIaRYXzAKFKP/xj3JtfRm1dWeuEvxEDXRnZNG7LBw3jzHbnb3aIHvU0M60zGC4PSo681WpnDzJMgdHTWPr3as5+n7C7s+Y3+XxjztTgjMMJZ7sDqcAZ2H6plAq9PGU=
+	t=1776739471; cv=none; b=byHlWe6RIve7A/7XYAOquBCJGlonJkNVDCx/PKxkU8/2yw9bCysfPTglD6SG6+8NvPmPAN+16lfyN/Azp9xriIdV6Qs41O3bR6Un12PdNdrwK9XSOnNRnx4g6fswIatyOMA1rk/7NkN4SOGJT074SKTomTQvyPIQ3qs01W5S640=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776739449; c=relaxed/simple;
-	bh=ihITWfqXfIkk0NFbWJBcLQXGoDTNPLYoU41UBKUhINU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BGoDaF5ESCI6YYscqu0mzHgZZ10yPAqujCsl/jrYwK5o9tX568cShpqQ6IRfxV6csela68jqzrUI+WB4AmOid6SFunnSezIPCHqvSZjR+/1c4XSS7AOUofwwZnwRNQyhIv07hoUOJejtFxdTvo/o7ACRFkZ41Ix1E/GO2xXa1BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=S0QxaR/e; arc=none smtp.client-ip=120.232.169.114
+	s=arc-20240116; t=1776739471; c=relaxed/simple;
+	bh=mUs1vF9eqk+D7+IZ4R8oddL6sf7eMJULCmOr6/g/GGE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=tfYhBphyNSM4UScsR3aUY/aV2DoULwdfGaKWrviHNmj2EzUvDxy7wvNq/5am20CGDor0QSYm8f4Rn8V2RzyDxMycAC8uC1hOHRbc0eXGc6w6hia1ta7F+mvfqieP+Oc0TaKuzWtgqFRsydhMFGjtVv1YN4TqNClkUXsVaxMUZrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=nv0pVy81; arc=none smtp.client-ip=120.232.169.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="S0QxaR/e"
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="nv0pVy81"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=139.com; s=dkim; l=0;
 	h=from:subject:message-id:to:cc:mime-version;
 	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=S0QxaR/eNJwnL3w8zyw75/l9Qj1R0GKAFiSP7qAcRyeNDm2nlsxruQcD5R/1EkmGIB9o8M15xfqCI
-	 AUCXU3ogr+r78ism7oTxw9Ob73b6M7qabJ0xCA2cCrKS3Ww8EyIzqw5e6OR1giqihtIRBPcTfzrxxL
-	 GgYdA2wZdRrDr5fw=
+	b=nv0pVy81nB8ijr8fH/wOse2fCi/ONoInZF85o3Fb1jlrQymUSl4NbDzKock5oHcGJqGHQm8DOy1Wd
+	 VYxRttoC2UAM95932WAvYz2D+x8a5JUcB3Xxo7TcZNsl/M9o8lmRHBLfJu+gHZPfYogpgc8N1lb9Sa
+	 9BSTmHVrH/WLE9AU=
 X-RM-TagInfo: emlType=0                                       
 X-RM-SPAM:                                                                                        
 X-RM-SPAM-FLAG:00000000
 Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-37-12051 (RichMail) with SMTP id 2f1369e6e472e59-03ea6;
-	Tue, 21 Apr 2026 10:44:05 +0800 (CST)
-X-RM-TRANSID:2f1369e6e472e59-03ea6
+	by rmsmtp-lg-appmail-20-12023 (RichMail) with SMTP id 2ef769e6e487384-013a1;
+	Tue, 21 Apr 2026 10:44:26 +0800 (CST)
+X-RM-TRANSID:2ef769e6e487384-013a1
 From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -45,9 +45,9 @@ Cc: patches@lists.linux.dev,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mediatek@lists.infradead.org,
 	johannes.berg@intel.com
-Subject: [PATCH 5.15.y] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
-Date: Tue, 21 Apr 2026 10:44:03 +0800
-Message-Id: <20260421024403.3132486-1-1468888505@139.com>
+Subject: [PATCH 5.10.y] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
+Date: Tue, 21 Apr 2026 10:44:25 +0800
+Message-Id: <20260421024425.3133110-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -113,10 +113,10 @@ index 6cf087522157..31b7921bf34f 100644
  	default:
  		return false;
 diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
-index 7d7350258683..ed4d83775fe7 100644
+index 037358606a51..865bbe029343 100644
 --- a/drivers/net/wireless/mac80211_hwsim.c
 +++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -2347,7 +2347,6 @@ static void hw_scan_work(struct work_struct *work)
+@@ -2275,7 +2275,6 @@ static void hw_scan_work(struct work_struct *work)
  						      hwsim->tmp_chan->band,
  						      NULL)) {
  				rcu_read_unlock();
@@ -125,10 +125,10 @@ index 7d7350258683..ed4d83775fe7 100644
  			}
  
 diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index f101ef4a1fd6..a4ef9f93a53c 100644
+index 8f91609f928c..70ee982f08d9 100644
 --- a/include/net/mac80211.h
 +++ b/include/net/mac80211.h
-@@ -6454,6 +6454,10 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
+@@ -6337,6 +6337,10 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
   * @band: the band to transmit on
   * @sta: optional pointer to get the station to send the frame to
   *
@@ -140,10 +140,10 @@ index f101ef4a1fd6..a4ef9f93a53c 100644
   */
  bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
 diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index a5be5fe5c6b4..054493161376 100644
+index 30ad46cfcad8..b923cd755a68 100644
 --- a/net/mac80211/tx.c
 +++ b/net/mac80211/tx.c
-@@ -1882,8 +1882,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
+@@ -1869,8 +1869,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
  	struct ieee80211_tx_data tx;
  	struct sk_buff *skb2;
  
