@@ -1,34 +1,34 @@
 Received: from n169-110.mail.139.com (n169-110.mail.139.com [120.232.169.110])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D8D26B2DA
-	for <patches@lists.linux.dev>; Tue, 21 Apr 2026 02:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFD9279DC3
+	for <patches@lists.linux.dev>; Tue, 21 Apr 2026 02:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.110
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776739385; cv=none; b=tOiHRTpd1YdL6H54sf7bj5Wwzr7Uo31c1Oe1I9z95NmwA9keH3cqtadDpycjvgJFmwftSEIUB0fvWlathC5H5epeJejsEmIvqcegyF3S3pHnpoAJJcVCUjI0w36UJf3HOiTgZOIbBRfuyEJJuXb4yBlunb0n/VpQ6X1vW8kgtEs=
+	t=1776739396; cv=none; b=Kud7IdtwnB78VBgyq8vPNwn0TFGq83k1jIqhGw+boLhwhRCQzFRJAGRLAD+AxdFHmpZoy5VLPfM8LTrLiHvHXV1fmnyOApjheX1Xq0kLaGaU0C/S7goDb8j1AbiySOHK7/P1VjxK5oq5NuMf8ttdFruW6zv25VTwJ6wlP9RNBcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776739385; c=relaxed/simple;
-	bh=QmsI2skiR7QloU3+nPFJ1aSON/VzP7Ma5pCrMjyKf+w=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=MQzAbqY4PC6IFIpzdk2Ut0VSbd1cLAVVIGuMt1ZV5tDoAPEdogTCZSl1XeYXJNj+NYrrLSCgQByf6K5EVynHe+Mp5yoTTRQJ90A6r87amfp47KE+ssq2A73W2YsImfaqFMkf3tEj2+GymVbLTQG34gMFcVLtTx1h56hXp+Schyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=SuSaCyV4; arc=none smtp.client-ip=120.232.169.110
+	s=arc-20240116; t=1776739396; c=relaxed/simple;
+	bh=nQlA5oloE69vE2YHeBxLDmuVKy01qwmMu0Wmqd+a0Ok=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RVWPvwcjspyjjD7iQB1byaVknavx9MLiMgduzeCftWJJvTaUET+mBtTKNXnX0btWFT7l2iZHQdvKmE/SYVGkmu9smkJ/KvEvdjw62lfsQr8F0a9W7EtJ7KYnqrx1lI+Q1cW8tcvmcnEObKYLGggnUQYkaYKM3Yy9d/k6bfh7nMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=f0/dCLKb; arc=none smtp.client-ip=120.232.169.110
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="SuSaCyV4"
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="f0/dCLKb"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=139.com; s=dkim; l=0;
 	h=from:subject:message-id:to:cc:mime-version;
 	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=SuSaCyV4S/tuN8H23/Gt8wor8egO/mlnWyP0o6hsBtiUNeS8oCWk7L5TDnTI2W7+V3A+u38WTebL3
-	 KRtIHPF6p/e+mLTE24tmf3rLz1ZubtjwGqo7oy+liv91ABuOBjgFalH2rHKmK3MYzUQZySkGOitLe/
-	 4PxNAJQCRQzW/sCI=
+	b=f0/dCLKbJKv/5v2fSglsOneBu4l8pLH1zeC9oV/STwAfNX3R5Cp/gKhAL1eFp11j4iMpDngooajhu
+	 j80Oc89m2rAC/2bYKjdiVFXT+mOCXCPC0QL9p/hUsalrM6zcyRamvcStBulKIjczKUrln1LeJOM1Yg
+	 VP7PZdN04rrMg9dE=
 X-RM-TagInfo: emlType=0                                       
 X-RM-SPAM:                                                                                        
 X-RM-SPAM-FLAG:00000000
 Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-03-12081 (RichMail) with SMTP id 2f3169e6e429f8a-00f9d;
-	Tue, 21 Apr 2026 10:42:51 +0800 (CST)
-X-RM-TRANSID:2f3169e6e429f8a-00f9d
+	by rmsmtp-lg-appmail-08-12086 (RichMail) with SMTP id 2f3669e6e4383ec-07482;
+	Tue, 21 Apr 2026 10:43:09 +0800 (CST)
+X-RM-TRANSID:2f3669e6e4383ec-07482
 From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -45,9 +45,9 @@ Cc: patches@lists.linux.dev,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mediatek@lists.infradead.org,
 	johannes.berg@intel.com
-Subject: [PATCH 6.12.y] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
-Date: Tue, 21 Apr 2026 10:42:50 +0800
-Message-Id: <20260421024250.3130332-1-1468888505@139.com>
+Subject: [PATCH 6.6.y] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
+Date: Tue, 21 Apr 2026 10:43:09 +0800
+Message-Id: <20260421024309.3131840-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -83,9 +83,9 @@ Signed-off-by: Li hongliang <1468888505@139.com>
 ---
  drivers/net/wireless/ath/ath9k/channel.c      | 6 ++----
  drivers/net/wireless/virtual/mac80211_hwsim.c | 1 -
- include/net/mac80211.h                        | 4 +++-
+ include/net/mac80211.h                        | 4 ++++
  net/mac80211/tx.c                             | 4 +++-
- 4 files changed, 8 insertions(+), 7 deletions(-)
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath9k/channel.c b/drivers/net/wireless/ath/ath9k/channel.c
 index 571062f2e82a..ba8ec5112afe 100644
@@ -113,10 +113,10 @@ index 571062f2e82a..ba8ec5112afe 100644
  	default:
  		return false;
 diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 8b4fd5fd11b0..e992e59b5918 100644
+index 1214e7dcc812..bf12ff0ab06a 100644
 --- a/drivers/net/wireless/virtual/mac80211_hwsim.c
 +++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -2977,7 +2977,6 @@ static void hw_scan_work(struct work_struct *work)
+@@ -2892,7 +2892,6 @@ static void hw_scan_work(struct work_struct *work)
  						      hwsim->tmp_chan->band,
  						      NULL)) {
  				rcu_read_unlock();
@@ -125,25 +125,25 @@ index 8b4fd5fd11b0..e992e59b5918 100644
  			}
  
 diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 80259a37e724..7d71a4149cdf 100644
+index adaa1b2323d2..85d785060e76 100644
 --- a/include/net/mac80211.h
 +++ b/include/net/mac80211.h
-@@ -7208,7 +7208,9 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
+@@ -7032,6 +7032,10 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
   * @band: the band to transmit on
   * @sta: optional pointer to get the station to send the frame to
   *
-- * Return: %true if the skb was prepared, %false otherwise
 + * Return: %true if the skb was prepared, %false otherwise.
 + * On failure, the skb is freed by this function; callers must not
 + * free it again.
-  *
++ *
   * Note: must be called under RCU lock
   */
+ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
 diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 9142d748a6a7..0458cbba232e 100644
+index 7eddcb6f9645..2a708132320c 100644
 --- a/net/mac80211/tx.c
 +++ b/net/mac80211/tx.c
-@@ -1897,8 +1897,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
+@@ -1911,8 +1911,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
  	struct ieee80211_tx_data tx;
  	struct sk_buff *skb2;
  
