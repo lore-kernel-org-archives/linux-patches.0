@@ -1,123 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F75432861E;
-	Tue, 21 Apr 2026 15:02:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0303D88F6
+	for <patches@lists.linux.dev>; Tue, 21 Apr 2026 15:02:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776783741; cv=none; b=U67J2REIXqlh5j/l6kHTtocy/lrLrscdiwUlsweqhh6Hk80qIzpbZZDgldP1VmCJ2EZQF0nhftnceoR0aWKcs8uWrx4O6KlwKJjryNOtlyNwdPEgNCeTVt2MnGQ7pMRiGi2ko/QXWXzTXTnsOUTUG7BHNdd31/oOneWphjk/w+4=
+	t=1776783749; cv=none; b=fjsInrpD7+r4K1it3pheHDyNnqjTZu5w8TJ3/6PjVnrk+MBX23pLIT9EtHz/KKNfExqdx05kizbX3xADVPXV6cNukjpABcf+1kBnVKu33oml3jmYNHhfq4PW3mWiwn56QDV+XSIdXPTxad/2IrsOFJ7HV5SGylnw9asdvfa3PeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776783741; c=relaxed/simple;
-	bh=Mpbkj6yOe1GN3X5YpgKdXjzi0Cn1sKwaB2ZCYJvR0x0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IB5g0DcBnmpFhcLB8XOEQ+taOx0RMz1OZesOZtSv7LZOQRe0bwImrisEEzyPeeuTFFKdu6/xL1m4ynP8zLt/sIpLDEy3D78t8pyPXDFEo4Bacb/4LIZyIHUh3oQ56+04w0vgx+hBKOUzp+8i9MKjXZUzrB5sUGn+D2CkWCvZBtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmXxT4bq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776783749; c=relaxed/simple;
+	bh=Z3it1FnYZTdpjrbn0d8gzlThq0L4CYKV1R0qQlDNB2I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Xi2k1nJpuZlCea8C1s7xzpu+1MIEdhHqJyxPNvA7CRaMuEXfZx4vm7T0pWuTSvfMO63x5qvTViDsKYmnfC7rUk0KYVhlLPlnrJFBIU9ChsAWrs4tUAmIaGa813qmEw9Zpr8wPiCA88SrfXhUQPY8wT1anNZ8z/QvUofOiGUpR+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jrslfA4Z; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmXxT4bq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D904C2BCB0;
-	Tue, 21 Apr 2026 15:02:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776783740;
-	bh=Mpbkj6yOe1GN3X5YpgKdXjzi0Cn1sKwaB2ZCYJvR0x0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WmXxT4bq/jdUGylFLv9mGVtoKFbMm7IOdxmOVuBB4b28dU69dWhDMkm+T9Q+DWJ0r
-	 CVQJzqTUXa6/q+rkvq9bnfrBbUn2y7JSgNuJU5z3RSSkWOMVzFV2Dpkzi03eVVa2xx
-	 3K1hHh/TFZ0xkeDU+lUw3kmjwigck9NeVyuP/fWA=
-Date: Tue, 21 Apr 2026 17:02:18 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org,
-	conor@kernel.org, f.fainelli@gmail.com, hargar@microsoft.com,
-	jonathanh@nvidia.com, linux-kernel@vger.kernel.org,
-	linux@roeck-us.net, lkft-triage@lists.linaro.org,
-	patches@kernelci.org, patches@lists.linux.dev, pavel@nabladev.com,
-	rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com,
-	stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun@kernel.org>, Sasha Levin <sashal@kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Uladzislau Rezki <urezki@gmail.com>, Zqiang <qiang.zhang@linux.dev>,
-	rcu@vger.kernel.org, Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	linux-um@lists.infradead.org
-Subject: Re: [PATCH 6.18 000/198] 6.18.24-rc1 review
-Message-ID: <2026042155-handcuff-stunner-1318@gregkh>
-References: <20260420153935.605963767@linuxfoundation.org>
- <20260421095549.47476-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jrslfA4Z"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1776783748; x=1808319748;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Z3it1FnYZTdpjrbn0d8gzlThq0L4CYKV1R0qQlDNB2I=;
+  b=jrslfA4ZB9JP6Gvbs3/Yq/2D5gcHb0bR+HyC9nX78oGCIIXJnrIx02+x
+   yH4U/Wd3EUUDR7b1nED+FMSt4R+TE+VIAivKsPUlTop0GWI+7Eaar0EaZ
+   G2nGLTErG0Dns5Ey1UjiVpj+o9ybgwgAmPHRGivon0l9O3J9Q2JeLbojf
+   3meknzStjnIsxnwwb3XI8ttTuku6WJNNgkdsvFKpn1Fk8DU/1GP7zALjX
+   hEONLqXQEabMH7QFNjSeHmtLf4zbn9NIXtc/EtjuWMfAxMBoFYwPFqHU7
+   j6j75M+m+YxOMyxA3TyynczuNUKXmfhhBnPzsatj/6KzAd5Tg1zAmdbbb
+   w==;
+X-CSE-ConnectionGUID: 9dFa0E/lQpy2/RDoJ4KTzQ==
+X-CSE-MsgGUID: Lb3dg3MaTce+9D53jMWhvg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11763"; a="100375996"
+X-IronPort-AV: E=Sophos;i="6.23,191,1770624000"; 
+   d="scan'208";a="100375996"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2026 08:02:27 -0700
+X-CSE-ConnectionGUID: CpxWwhRDSz2ZgJTlJpPQvQ==
+X-CSE-MsgGUID: wUO+gUeISpyQPnN7+9JxHw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,191,1770624000"; 
+   d="scan'208";a="227731223"
+Received: from inaky-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.220])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2026 08:02:26 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Cc: Herman Li <herman.li@intel.com>,
+	"Lai, Yi1" <yi1.lai@intel.com>,
+	Zaid Alali <zaidal@os.amperecomputing.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
+	linux-acpi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v4 0/2] ACPI: APEI: EINJ: Fix EINJV2 memory error injection
+Date: Tue, 21 Apr 2026 08:02:14 -0700
+Message-ID: <20260421150216.11666-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260421095549.47476-1-ojeda@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 21, 2026 at 11:55:49AM +0200, Miguel Ojeda wrote:
-> On Mon, 20 Apr 2026 17:39:39 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.18.24 release.
-> > There are 198 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 22 Apr 2026 15:38:57 +0000.
-> > Anything received after that time might be too late.
-> 
-> Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-> for loongarch64:
-> 
-> Tested-by: Miguel Ojeda <ojeda@kernel.org>
-> 
-> For UML (x86_64) I am seeing:
-> 
->     In file included from arch/um/kernel/asm-offsets.c:3:
->     In file included from ./arch/x86/um/shared/sysdep/kernel-offsets.h:5:
->     In file included from ./include/linux/crypto.h:18:
->     In file included from ./include/linux/slab.h:16:
->     In file included from ./include/linux/gfp.h:7:
->     In file included from ./include/linux/mmzone.h:1538:
->     In file included from ./include/linux/memory_hotplug.h:7:
->     In file included from ./include/linux/notifier.h:16:
->     In file included from ./include/linux/srcu.h:59:
->     ./include/linux/srcutiny.h:14:10: fatal error: 'linux/irq_work_types.h' file not found
->        14 | #include <linux/irq_work_types.h>
->           |          ^~~~~~~~~~~~~~~~~~~~~~~~
->     1 error generated.
-> 
-> Caused by commit 95721c9fb3a1 ("srcu: Use irq_work to start GP in tiny
-> SRCU"). The header seems to simply not be there, i.e. either the
-> `#include` is changed or commit c809f081fe40 ("irqwork: Move data struct
-> to a types header") is backported.
-> 
-> Cc: Joel Fernandes <joelagnelf@nvidia.com>
-> Cc: Paul E. McKenney <paulmck@kernel.org>
-> Cc: Boqun Feng <boqun@kernel.org>
-> Cc: Sasha Levin <sashal@kernel.org>
-> Cc: Josh Triplett <josh@joshtriplett.org>
-> Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-> Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-> Cc: Peter Zijlstra (Intel) <peterz@infradead.org>
-> Cc: Steven Rostedt <rostedt@goodmis.org>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: Uladzislau Rezki <urezki@gmail.com>
-> Cc: Zqiang <qiang.zhang@linux.dev>
-> Cc: rcu@vger.kernel.org
-> 
-> Cc: Richard Weinberger <richard@nod.at>
-> Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-> Cc: Johannes Berg <johannes@sipsolutions.net>
-> Cc: linux-um@lists.infradead.org
+EINJV2 (introduced in version 6.5 of the ACPI specification) uses
+different values for the "type" of injection. Two places in the
+Linux driver need patching to take account of the new type values.
 
-Thanks, I'll just drop this commit from 6.18 and older trees for now.
+Changes since V3:
 
-greg k-h
+* Moved the #defines for EINV2 types to <acpi/actbl1.h> [Change submitted
+  through ACPICA tree with duplicate in patch 1 of this series]
+
+* Sashiko noted that I'd dropped the test for "flags & SETWA_FLAGS_MEM"
+  from my is_memory_injection() helper.
+
+Tony Luck (2):
+  ACPICA: Provide #defines for EINJV2 error types
+  ACPI: APEI: EINJ: Fix EINJV2 memory error injection
+
+ include/acpi/actbl1.h         |  6 +++++
+ drivers/acpi/apei/einj-core.c | 45 +++++++++++++++++++----------------
+ 2 files changed, 31 insertions(+), 20 deletions(-)
+
+
+base-commit: 028ef9c96e96197026887c0f092424679298aae8
+-- 
+2.53.0
+
