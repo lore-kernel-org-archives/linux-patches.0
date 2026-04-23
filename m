@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B503E95BB;
-	Thu, 23 Apr 2026 11:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A3338758E;
+	Thu, 23 Apr 2026 11:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776945085; cv=none; b=LVZQjrB5tmOR5nK6+3ImuJkTa3WFFOH+839LpdKH/jfj99uaDMuTBhV5SmLf42X7jhwe7V2ux+3qCKtesg/GRqw+MFz3T4UsC/wi5Os7hRsVsqubnDz2qK/ip9uX8h0uo/xCUJBe6TfpMJgztA0Xk5ddzF/lA6AadRwG0TmSubw=
+	t=1776945346; cv=none; b=cJ3gg+ZoHOpCinixjW3gYSE3eWj89xPcohbUJlg+Bu6d8yzhqu6R45gE3CmlNxvfusQ7RjjELTgAFIcn3Pgm/Q0S1Gt8T1Px47zA0BAF9xHOsPevJIHBN15SO+3MvhcSk5EUnNIbTdBjkEeB8LGp+rHESTw5RrSIx+mf9i5VAUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776945085; c=relaxed/simple;
-	bh=L3Q5VPMztsV9GBzSWkMb6+TPPb7Z0NFRrMXcdl12PMk=;
+	s=arc-20240116; t=1776945346; c=relaxed/simple;
+	bh=cdsOCklTT/PxvPeGALZZPuklO2JZGvHdJXiPUOI0vqs=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=n3ZCPxXsQq5j5+uu5fVO0ssy4ml+QV9Oq3eobMSlbcEzwlzSXPXuXV7srtCO6N49oUrDHe4qw2FfbeCbTGZFfTUnBFUHWOw9/7nHph3so4ZdIA5YonJj+bawqBsoADycgwCLy6I9HqFT5+xUv7gsa9KKSBCPgAo0v73zQXhbFG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmWjt7WD; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=YZppfbM68YR9bWhMqzG7eQuGKvRHTjgYeAmkEEEbEh03JDwEwrXVpDJ6nmdvYSAN1Yj8lqKZcbSTxym7Ophm55Q04S5KXokgL3alD84z9b0UAKc257l3F0UJ8OcPzeg3avDqxa7DpalTUQ/XJbXfut/uccy1Y8q/zCJpA3QSM+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jc0DwMDU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmWjt7WD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7CDC2BCAF;
-	Thu, 23 Apr 2026 11:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jc0DwMDU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E7AC2BCB4;
+	Thu, 23 Apr 2026 11:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776945085;
-	bh=L3Q5VPMztsV9GBzSWkMb6+TPPb7Z0NFRrMXcdl12PMk=;
+	s=korg; t=1776945346;
+	bh=cdsOCklTT/PxvPeGALZZPuklO2JZGvHdJXiPUOI0vqs=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=NmWjt7WDtcwkjmHhKPRgs5oOQOVhYQwRIDfgbvIDXikAsTNWFKiIBAYfCIQb18mYE
-	 HNvhJTgZnLy2LtQm52BHsZjQSZZzYCYWyAWCSeupsn0TwrxHYiWOmbY2oFkk2keY5U
-	 PvlCwpRDU8RXOL4XGV+aSefD3s4xzNm4wchWTuBE=
-Subject: Patch "fs: dlm: fix use after free in midcomms commit" has been added to the 5.15-stable tree
-To: aahringo@redhat.com,ccaulfie@redhat.com,cluster-devel@redhat.com,gregkh@linuxfoundation.org,jianqkang@sina.cn,patches@lists.linux.dev,teigland@redhat.com
+	b=jc0DwMDUs10jSqXZJZXzEKsycVRD6N4W3OUQKWzhX8yxRRC7NgyL07S5/Eenk+oea
+	 W55BmkGq4tZP6Tw3TbUPyCYp1SUaZDzmaWh08itU20bjAJo0N1TnpqXjqHeAYAdmeW
+	 gwuOgzE42AQhLpHK1ekVTMvGeaagY/ApKSxxoTVw=
+Subject: Patch "drivers: base: Free devm resources when unregistering a device" has been added to the 5.15-stable tree
+To: 1468888505@139.com,davidgow@google.com,gregkh@linuxfoundation.org,mripard@kernel.org,patches@lists.linux.dev,rafael@kernel.org,tom.leiming@gmail.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Thu, 23 Apr 2026 13:50:43 +0200
-In-Reply-To: <20260302061435.2670935-1-jianqkang@sina.cn>
-Message-ID: <2026042343-morbidity-skyrocket-4abb@gregkh>
+Date: Thu, 23 Apr 2026 13:55:28 +0200
+In-Reply-To: <20260324081438.1182050-1-1468888505@139.com>
+Message-ID: <2026042328-distance-bok-09db@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,204 +44,91 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    fs: dlm: fix use after free in midcomms commit
+    drivers: base: Free devm resources when unregistering a device
 
 to the 5.15-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     fs-dlm-fix-use-after-free-in-midcomms-commit.patch
+     drivers-base-free-devm-resources-when-unregistering-a-device.patch
 and it can be found in the queue-5.15 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-222516-greg=kroah.com@vger.kernel.org Mon Mar  2 07:15:41 2026
-From: Jianqiang kang <jianqkang@sina.cn>
-Date: Mon,  2 Mar 2026 14:14:35 +0800
-Subject: fs: dlm: fix use after free in midcomms commit
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, aahringo@redhat.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, ccaulfie@redhat.com, teigland@redhat.com, cluster-devel@redhat.com
-Message-ID: <20260302061435.2670935-1-jianqkang@sina.cn>
+From 1468888505@139.com Tue Mar 24 09:14:43 2026
+From: Li hongliang <1468888505@139.com>
+Date: Tue, 24 Mar 2026 16:14:38 +0800
+Subject: drivers: base: Free devm resources when unregistering a device
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, davidgow@google.com
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, rafael@kernel.org, tom.leiming@gmail.com, mripard@kernel.org
+Message-ID: <20260324081438.1182050-1-1468888505@139.com>
 
-From: Alexander Aring <aahringo@redhat.com>
+From: David Gow <davidgow@google.com>
 
-[ Upstream commit 724b6bab0d75f1dc01fdfbf7fe8d4217a5cb90ba ]
+[ Upstream commit 699fb50d99039a50e7494de644f96c889279aca3 ]
 
-While working on processing dlm message in softirq context I experienced
-the following KASAN use-after-free warning:
+In the current code, devres_release_all() only gets called if the device
+has a bus and has been probed.
 
-[  151.760477] ==================================================================
-[  151.761803] BUG: KASAN: use-after-free in dlm_midcomms_commit_mhandle+0x19d/0x4b0
-[  151.763414] Read of size 4 at addr ffff88811a980c60 by task lock_torture/1347
+This leads to issues when using bus-less or driver-less devices where
+the device might never get freed if a managed resource holds a reference
+to the device. This is happening in the DRM framework for example.
 
-[  151.765284] CPU: 7 PID: 1347 Comm: lock_torture Not tainted 6.1.0-rc4+ #2828
-[  151.766778] Hardware name: Red Hat KVM/RHEL-AV, BIOS 1.16.0-3.module+el8.7.0+16134+e5908aa2 04/01/2014
-[  151.768726] Call Trace:
-[  151.769277]  <TASK>
-[  151.769748]  dump_stack_lvl+0x5b/0x86
-[  151.770556]  print_report+0x180/0x4c8
-[  151.771378]  ? kasan_complete_mode_report_info+0x7c/0x1e0
-[  151.772241]  ? dlm_midcomms_commit_mhandle+0x19d/0x4b0
-[  151.773069]  kasan_report+0x93/0x1a0
-[  151.773668]  ? dlm_midcomms_commit_mhandle+0x19d/0x4b0
-[  151.774514]  __asan_load4+0x7e/0xa0
-[  151.775089]  dlm_midcomms_commit_mhandle+0x19d/0x4b0
-[  151.775890]  ? create_message.isra.29.constprop.64+0x57/0xc0
-[  151.776770]  send_common+0x19f/0x1b0
-[  151.777342]  ? remove_from_waiters+0x60/0x60
-[  151.778017]  ? lock_downgrade+0x410/0x410
-[  151.778648]  ? __this_cpu_preempt_check+0x13/0x20
-[  151.779421]  ? rcu_lockdep_current_cpu_online+0x88/0xc0
-[  151.780292]  _convert_lock+0x46/0x150
-[  151.780893]  convert_lock+0x7b/0xc0
-[  151.781459]  dlm_lock+0x3ac/0x580
-[  151.781993]  ? 0xffffffffc0540000
-[  151.782522]  ? torture_stop+0x120/0x120 [dlm_locktorture]
-[  151.783379]  ? dlm_scan_rsbs+0xa70/0xa70
-[  151.784003]  ? preempt_count_sub+0xd6/0x130
-[  151.784661]  ? is_module_address+0x47/0x70
-[  151.785309]  ? torture_stop+0x120/0x120 [dlm_locktorture]
-[  151.786166]  ? 0xffffffffc0540000
-[  151.786693]  ? lockdep_init_map_type+0xc3/0x360
-[  151.787414]  ? 0xffffffffc0540000
-[  151.787947]  torture_dlm_lock_sync.isra.3+0xe9/0x150 [dlm_locktorture]
-[  151.789004]  ? torture_stop+0x120/0x120 [dlm_locktorture]
-[  151.789858]  ? 0xffffffffc0540000
-[  151.790392]  ? lock_torture_cleanup+0x20/0x20 [dlm_locktorture]
-[  151.791347]  ? delay_tsc+0x94/0xc0
-[  151.791898]  torture_ex_iter+0xc3/0xea [dlm_locktorture]
-[  151.792735]  ? torture_start+0x30/0x30 [dlm_locktorture]
-[  151.793606]  lock_torture+0x177/0x270 [dlm_locktorture]
-[  151.794448]  ? torture_dlm_lock_sync.isra.3+0x150/0x150 [dlm_locktorture]
-[  151.795539]  ? lock_torture_stats+0x80/0x80 [dlm_locktorture]
-[  151.796476]  ? do_raw_spin_lock+0x11e/0x1e0
-[  151.797152]  ? mark_held_locks+0x34/0xb0
-[  151.797784]  ? _raw_spin_unlock_irqrestore+0x30/0x70
-[  151.798581]  ? __kthread_parkme+0x79/0x110
-[  151.799246]  ? trace_preempt_on+0x2a/0xf0
-[  151.799902]  ? __kthread_parkme+0x79/0x110
-[  151.800579]  ? preempt_count_sub+0xd6/0x130
-[  151.801271]  ? __kasan_check_read+0x11/0x20
-[  151.801963]  ? __kthread_parkme+0xec/0x110
-[  151.802630]  ? lock_torture_stats+0x80/0x80 [dlm_locktorture]
-[  151.803569]  kthread+0x192/0x1d0
-[  151.804104]  ? kthread_complete_and_exit+0x30/0x30
-[  151.804881]  ret_from_fork+0x1f/0x30
-[  151.805480]  </TASK>
+We should thus call devres_release_all() in the device_del() function to
+make sure that the device-managed actions are properly executed when the
+device is unregistered, even if it has neither a bus nor a driver.
 
-[  151.806111] Allocated by task 1347:
-[  151.806681]  kasan_save_stack+0x26/0x50
-[  151.807308]  kasan_set_track+0x25/0x30
-[  151.807920]  kasan_save_alloc_info+0x1e/0x30
-[  151.808609]  __kasan_slab_alloc+0x63/0x80
-[  151.809263]  kmem_cache_alloc+0x1ad/0x830
-[  151.809916]  dlm_allocate_mhandle+0x17/0x20
-[  151.810590]  dlm_midcomms_get_mhandle+0x96/0x260
-[  151.811344]  _create_message+0x95/0x180
-[  151.811994]  create_message.isra.29.constprop.64+0x57/0xc0
-[  151.812880]  send_common+0x129/0x1b0
-[  151.813467]  _convert_lock+0x46/0x150
-[  151.814074]  convert_lock+0x7b/0xc0
-[  151.814648]  dlm_lock+0x3ac/0x580
-[  151.815199]  torture_dlm_lock_sync.isra.3+0xe9/0x150 [dlm_locktorture]
-[  151.816258]  torture_ex_iter+0xc3/0xea [dlm_locktorture]
-[  151.817129]  lock_torture+0x177/0x270 [dlm_locktorture]
-[  151.817986]  kthread+0x192/0x1d0
-[  151.818518]  ret_from_fork+0x1f/0x30
+This is effectively the same change than commit 2f8d16a996da ("devres:
+release resources on device_del()") that got reverted by commit
+a525a3ddeaca ("driver core: free devres in device_release") over
+memory leaks concerns.
 
-[  151.819369] Freed by task 1336:
-[  151.819890]  kasan_save_stack+0x26/0x50
-[  151.820514]  kasan_set_track+0x25/0x30
-[  151.821128]  kasan_save_free_info+0x2e/0x50
-[  151.821812]  __kasan_slab_free+0x107/0x1a0
-[  151.822483]  kmem_cache_free+0x204/0x5e0
-[  151.823152]  dlm_free_mhandle+0x18/0x20
-[  151.823781]  dlm_mhandle_release+0x2e/0x40
-[  151.824454]  rcu_core+0x583/0x1330
-[  151.825047]  rcu_core_si+0xe/0x20
-[  151.825594]  __do_softirq+0xf4/0x5c2
+This patch effectively combines the two commits mentioned above to
+release the resources both on device_del() and device_release() and get
+the best of both worlds.
 
-[  151.826450] Last potentially related work creation:
-[  151.827238]  kasan_save_stack+0x26/0x50
-[  151.827870]  __kasan_record_aux_stack+0xa2/0xc0
-[  151.828609]  kasan_record_aux_stack_noalloc+0xb/0x20
-[  151.829415]  call_rcu+0x4c/0x760
-[  151.829954]  dlm_mhandle_delete+0x97/0xb0
-[  151.830718]  dlm_process_incoming_buffer+0x2fc/0xb30
-[  151.831524]  process_dlm_messages+0x16e/0x470
-[  151.832245]  process_one_work+0x505/0xa10
-[  151.832905]  worker_thread+0x67/0x650
-[  151.833507]  kthread+0x192/0x1d0
-[  151.834046]  ret_from_fork+0x1f/0x30
-
-[  151.834900] The buggy address belongs to the object at ffff88811a980c30
-                which belongs to the cache dlm_mhandle of size 88
-[  151.836894] The buggy address is located 48 bytes inside of
-                88-byte region [ffff88811a980c30, ffff88811a980c88)
-
-[  151.839007] The buggy address belongs to the physical page:
-[  151.839904] page:0000000076cf5d62 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x11a980
-[  151.841378] flags: 0x8000000000000200(slab|zone=2)
-[  151.842141] raw: 8000000000000200 0000000000000000 dead000000000122 ffff8881089b43c0
-[  151.843401] raw: 0000000000000000 0000000000220022 00000001ffffffff 0000000000000000
-[  151.844640] page dumped because: kasan: bad access detected
-
-[  151.845822] Memory state around the buggy address:
-[  151.846602]  ffff88811a980b00: fb fb fb fb fc fc fc fc fa fb fb fb fb fb fb fb
-[  151.847761]  ffff88811a980b80: fb fb fb fc fc fc fc fa fb fb fb fb fb fb fb fb
-[  151.848921] >ffff88811a980c00: fb fb fc fc fc fc fa fb fb fb fb fb fb fb fb fb
-[  151.850076]                                                        ^
-[  151.851085]  ffff88811a980c80: fb fc fc fc fc fa fb fb fb fb fb fb fb fb fb fb
-[  151.852269]  ffff88811a980d00: fc fc fc fc fa fb fb fb fb fb fb fb fb fb fb fc
-[  151.853428] ==================================================================
-[  151.855618] Disabling lock debugging due to kernel taint
-
-It is accessing a mhandle in dlm_midcomms_commit_mhandle() and the mhandle
-was freed by a call_rcu() call in dlm_process_incoming_buffer(),
-dlm_mhandle_delete(). It looks like it was freed because an ack of
-this message was received. There is a short race between committing the
-dlm message to be transmitted and getting an ack back. If the ack is
-faster than returning from dlm_midcomms_commit_msg_3_2(), then we run
-into a use-after free because we still need to reference the mhandle when
-calling srcu_read_unlock().
-
-To avoid that, we don't allow that mhandle to be freed between
-dlm_midcomms_commit_msg_3_2() and srcu_read_unlock() by using rcu read
-lock. We can do that because mhandle is protected by rcu handling.
-
-Cc: stable@vger.kernel.org
-Fixes: 489d8e559c65 ("fs: dlm: add reliable connection if reconnect")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-[ Minor conflict resolved. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Fixes: a525a3ddeaca ("driver core: free devres in device_release")
+Signed-off-by: David Gow <davidgow@google.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://lore.kernel.org/r/20230720-kunit-devm-inconsistencies-test-v3-3-6aa7e074f373@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/midcomms.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/base/core.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/fs/dlm/midcomms.c
-+++ b/fs/dlm/midcomms.c
-@@ -1131,8 +1131,15 @@ void dlm_midcomms_commit_mhandle(struct
- 		kfree(mh);
- 		break;
- 	case DLM_VERSION_3_2:
-+		/* held rcu read lock here, because we sending the
-+		 * dlm message out, when we do that we could receive
-+		 * an ack back which releases the mhandle and we
-+		 * get a use after free.
-+		 */
-+		rcu_read_lock();
- 		dlm_midcomms_commit_msg_3_2(mh);
- 		srcu_read_unlock(&nodes_srcu, mh->idx);
-+		rcu_read_unlock();
- 		break;
- 	default:
- 		srcu_read_unlock(&nodes_srcu, mh->idx);
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3604,9 +3604,21 @@ void device_del(struct device *dev)
+ 	device_remove_properties(dev);
+ 	device_links_purge(dev);
+ 
++	/*
++	 * If a device does not have a driver attached, we need to clean
++	 * up any managed resources. We do this in device_release(), but
++	 * it's never called (and we leak the device) if a managed
++	 * resource holds a reference to the device. So release all
++	 * managed resources here, like we do in driver_detach(). We
++	 * still need to do so again in device_release() in case someone
++	 * adds a new resource after this point, though.
++	 */
++	devres_release_all(dev);
++
+ 	if (dev->bus)
+ 		blocking_notifier_call_chain(&dev->bus->p->bus_notifier,
+ 					     BUS_NOTIFY_REMOVED_DEVICE, dev);
++
+ 	kobject_uevent(&dev->kobj, KOBJ_REMOVE);
+ 	glue_dir = get_glue_dir(dev);
+ 	kobject_del(&dev->kobj);
 
 
-Patches currently in stable-queue which might be from jianqkang@sina.cn are
+Patches currently in stable-queue which might be from 1468888505@139.com are
 
-queue-5.15/fs-dlm-fix-use-after-free-in-midcomms-commit.patch
+queue-5.15/drivers-base-free-devm-resources-when-unregistering-a-device.patch
+queue-5.15/nf_tables-nft_dynset-fix-possible-stateful-expressio.patch
+queue-5.15/wifi-mac80211-always-free-skb-on-ieee80211_tx_prepar.patch
+queue-5.15/ipv6-add-null-checks-for-idev-in-srv6-paths.patch
