@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2AF3563D4;
-	Fri, 24 Apr 2026 13:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211413D6CC8;
+	Fri, 24 Apr 2026 13:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037947; cv=none; b=SoanF1KYU6Pa9r+BmoKaeR8jLMBRnZUVpgj4NyiWMRNGn/yV6xEbOzLB0NG2vWkNJ7ZIvAEJYNTFBg+L+pCFRLn7vFqtEHi2hVh80vBtXNMrvnZI1d4eSCjH1wLbWcMh1abbMJ+S2zfijiXgowDqzUCSsemUudw2vw0IMPVWqCE=
+	t=1777037950; cv=none; b=ZVGu9LoFXZISjBopxSqLoLZnc6/m2c4osQRbDhNSjl/Yo1ztFFCBBQFRClTKwFkcj6mHV+1+D4ECZmQy4VoLklfkfAj7xzMozp+fwCGLCn+1KKijCx4L/jyhmmVBFCO4n1cqaiXNZ9heNX73p1RmT36pHWBmbGOOlTFSlEks7wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037947; c=relaxed/simple;
-	bh=xrZplwLbjp7afcyNpDD7g/vbLyWCaDs2S6yjbQdjRKQ=;
+	s=arc-20240116; t=1777037950; c=relaxed/simple;
+	bh=QT85TAwTZWbgE6UGvSytyxuWUIHqrZvt4XP+CdYbRuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uhj9SabCFdilsk2KU7efsuocTjZ4eXinCRhzprgZZM1yyKxqkKooTr0QqlrJ1IimTnVT0386PJimE9NW2YzS6W0OQvVBNYEQC31rxRWdgAmDWGq8+KvE2GUYVyrxrIHWTVYIXoeNMwzISZJo93nnBTgJITE4GNLUJs30QWQU1Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqRnp5ve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LItCMFi+641PIDI+9fsiZ09l4lMiPqmUfP7pnd6/wRZRmRmtIgtT9OGR1Lh80O8HlDjvqiSoQ4eKfsaB9VnOgEOlFkhgviSBjCBCfbRNr1SvAvYmu+V0Jw2V6tShrNE9m6h4dgX5/Uhao2Q+oGCFz+0DECG60QkS5zyXvuhcOWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPrPs8I8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqRnp5ve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19104C2BCB2;
-	Fri, 24 Apr 2026 13:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPrPs8I8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AF9C19425;
+	Fri, 24 Apr 2026 13:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037947;
-	bh=xrZplwLbjp7afcyNpDD7g/vbLyWCaDs2S6yjbQdjRKQ=;
+	s=korg; t=1777037950;
+	bh=QT85TAwTZWbgE6UGvSytyxuWUIHqrZvt4XP+CdYbRuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqRnp5vewbueWqH6DFyYBpvIw78+LzJUSW2FUes8/W7W9600TIgIPcrXkHG+DsY7R
-	 Zo5UjzR2U5vOUjIx8Y0qG0C9mDSh660otc2bqw2GOigcBusHvmIlMy65XXzPPZwNtv
-	 VjnYE8R/5lxCRVq1uW+hBwUgp8tpXhpL2J7Ir9wo=
+	b=sPrPs8I8UfTcN6uR9zvToOU4szxr5yLGzKEUhdTXHwxdHwO0TCOe6ZbrmAukKOf4A
+	 lYTfHy6dgyX6N0lDvXMnL3oYLU6rGLIQkfwTWjWWQSKnJTSOjPaSoTT+JNKTiH1vYV
+	 1OFYDaHn5EGSzmlADLt5L57bCex0k5b/TKJbWsPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	intel-wired-lan@lists.osuosl.org,
-	netdev@vger.kernel.org,
-	Joe Damato <joe@dama.to>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Charles Xu <charles_xu@189.cn>,
+	syzbot+87f770387a9e5dc6b79b@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Leon Chen <leonchen.oss@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 132/166] i40e: Fix preempt count leak in napi poll tracepoint
-Date: Fri, 24 Apr 2026 15:30:46 +0200
-Message-ID: <20260424132600.532894958@linuxfoundation.org>
+Subject: [PATCH 6.6 133/166] net: annotate data-races around sk->sk_{data_ready,write_space}
+Date: Fri, 24 Apr 2026 15:30:47 +0200
+Message-ID: <20260424132600.743840582@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -57,47 +58,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4b3d54a85bd37ebf2d9836f0d0de775c0ff21af9 ]
+[ Upstream commit 2ef2b20cf4e04ac8a6ba68493f8780776ff84300 ]
 
-Using get_cpu() in the tracepoint assignment causes an obvious preempt
-count leak because nothing invokes put_cpu() to undo it:
+skmsg (and probably other layers) are changing these pointers
+while other cpus might read them concurrently.
 
-  softirq: huh, entered softirq 3 NET_RX with preempt_count 00000100, exited with 00000101?
+Add corresponding READ_ONCE()/WRITE_ONCE() annotations
+for UDP, TCP and AF_UNIX.
 
-This clearly has seen a lot of testing in the last 3+ years...
-
-Use smp_processor_id() instead.
-
-Fixes: 6d4d584a7ea8 ("i40e: Add i40e_napi_poll tracepoint")
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
-Cc: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Cc: intel-wired-lan@lists.osuosl.org
-Cc: netdev@vger.kernel.org
-Reviewed-by: Joe Damato <joe@dama.to>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Charles Xu <charles_xu@189.cn>
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Reported-by: syzbot+87f770387a9e5dc6b79b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/699ee9fc.050a0220.1cd54b.0009.GAE@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: Jakub Sitnicki <jakub@cloudflare.com>
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260225131547.1085509-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Leon Chen <leonchen.oss@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_trace.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skmsg.c         | 14 +++++++-------
+ net/ipv4/tcp.c           |  4 ++--
+ net/ipv4/tcp_bpf.c       |  2 +-
+ net/ipv4/tcp_input.c     | 14 ++++++++------
+ net/ipv4/tcp_minisocks.c |  2 +-
+ net/ipv4/udp.c           |  3 ++-
+ net/ipv4/udp_bpf.c       |  2 +-
+ net/unix/af_unix.c       |  8 ++++----
+ 8 files changed, 26 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_trace.h b/drivers/net/ethernet/intel/i40e/i40e_trace.h
-index 33b4e30f5e004..9b735a9e21140 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_trace.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_trace.h
-@@ -88,7 +88,7 @@ TRACE_EVENT(i40e_napi_poll,
- 		__entry->rx_clean_complete = rx_clean_complete;
- 		__entry->tx_clean_complete = tx_clean_complete;
- 		__entry->irq_num = q->irq_num;
--		__entry->curr_cpu = get_cpu();
-+		__entry->curr_cpu = smp_processor_id();
- 		__assign_str(qname, q->name);
- 		__assign_str(dev_name, napi->dev ? napi->dev->name : NO_DEV);
- 		__assign_bitmask(irq_affinity, cpumask_bits(&q->affinity_mask),
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index e2bba1e86752e..14208d32eeaf3 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1204,8 +1204,8 @@ void sk_psock_start_strp(struct sock *sk, struct sk_psock *psock)
+ 		return;
+ 
+ 	psock->saved_data_ready = sk->sk_data_ready;
+-	sk->sk_data_ready = sk_psock_strp_data_ready;
+-	sk->sk_write_space = sk_psock_write_space;
++	WRITE_ONCE(sk->sk_data_ready, sk_psock_strp_data_ready);
++	WRITE_ONCE(sk->sk_write_space, sk_psock_write_space);
+ }
+ 
+ void sk_psock_stop_strp(struct sock *sk, struct sk_psock *psock)
+@@ -1215,8 +1215,8 @@ void sk_psock_stop_strp(struct sock *sk, struct sk_psock *psock)
+ 	if (!psock->saved_data_ready)
+ 		return;
+ 
+-	sk->sk_data_ready = psock->saved_data_ready;
+-	psock->saved_data_ready = NULL;
++	WRITE_ONCE(sk->sk_data_ready, psock->saved_data_ready);
++	WRITE_ONCE(psock->saved_data_ready, NULL);
+ 	strp_stop(&psock->strp);
+ }
+ 
+@@ -1298,8 +1298,8 @@ void sk_psock_start_verdict(struct sock *sk, struct sk_psock *psock)
+ 		return;
+ 
+ 	psock->saved_data_ready = sk->sk_data_ready;
+-	sk->sk_data_ready = sk_psock_verdict_data_ready;
+-	sk->sk_write_space = sk_psock_write_space;
++	WRITE_ONCE(sk->sk_data_ready, sk_psock_verdict_data_ready);
++	WRITE_ONCE(sk->sk_write_space, sk_psock_write_space);
+ }
+ 
+ void sk_psock_stop_verdict(struct sock *sk, struct sk_psock *psock)
+@@ -1310,6 +1310,6 @@ void sk_psock_stop_verdict(struct sock *sk, struct sk_psock *psock)
+ 	if (!psock->saved_data_ready)
+ 		return;
+ 
+-	sk->sk_data_ready = psock->saved_data_ready;
++	WRITE_ONCE(sk->sk_data_ready, psock->saved_data_ready);
+ 	psock->saved_data_ready = NULL;
+ }
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 021e1bdbddcb8..33b724dcde6ed 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1333,7 +1333,7 @@ int tcp_sendmsg_locked(struct sock *sk, struct msghdr *msg, size_t size)
+ 	err = sk_stream_error(sk, flags, err);
+ 	/* make sure we wake any epoll edge trigger waiter */
+ 	if (unlikely(tcp_rtx_and_write_queues_empty(sk) && err == -EAGAIN)) {
+-		sk->sk_write_space(sk);
++		READ_ONCE(sk->sk_write_space)(sk);
+ 		tcp_chrono_stop(sk, TCP_CHRONO_SNDBUF_LIMITED);
+ 	}
+ 	return err;
+@@ -3709,7 +3709,7 @@ int do_tcp_setsockopt(struct sock *sk, int level, int optname,
+ 		break;
+ 	case TCP_NOTSENT_LOWAT:
+ 		WRITE_ONCE(tp->notsent_lowat, val);
+-		sk->sk_write_space(sk);
++		READ_ONCE(sk->sk_write_space)(sk);
+ 		break;
+ 	case TCP_INQ:
+ 		if (val > 1 || val < 0)
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 06a185bb1e35c..da5e14ec8ed6d 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -725,7 +725,7 @@ int tcp_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool restore)
+ 			WRITE_ONCE(sk->sk_prot->unhash, psock->saved_unhash);
+ 			tcp_update_ulp(sk, psock->sk_proto, psock->saved_write_space);
+ 		} else {
+-			sk->sk_write_space = psock->saved_write_space;
++			WRITE_ONCE(sk->sk_write_space, psock->saved_write_space);
+ 			/* Pairs with lockless read in sk_clone_lock() */
+ 			sock_replace_proto(sk, psock->sk_proto);
+ 		}
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index bec3bbf57a4f1..359d36be04829 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4936,7 +4936,7 @@ static void tcp_data_queue_ofo(struct sock *sk, struct sk_buff *skb)
+ 
+ 	if (unlikely(tcp_try_rmem_schedule(sk, skb, skb->truesize))) {
+ 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPOFODROP);
+-		sk->sk_data_ready(sk);
++		READ_ONCE(sk->sk_data_ready)(sk);
+ 		tcp_drop_reason(sk, skb, SKB_DROP_REASON_PROTO_MEM);
+ 		return;
+ 	}
+@@ -5143,7 +5143,7 @@ int tcp_send_rcvq(struct sock *sk, struct msghdr *msg, size_t size)
+ void tcp_data_ready(struct sock *sk)
+ {
+ 	if (tcp_epollin_ready(sk, sk->sk_rcvlowat) || sock_flag(sk, SOCK_DONE))
+-		sk->sk_data_ready(sk);
++		READ_ONCE(sk->sk_data_ready)(sk);
+ }
+ 
+ static void tcp_data_queue(struct sock *sk, struct sk_buff *skb)
+@@ -5189,7 +5189,7 @@ static void tcp_data_queue(struct sock *sk, struct sk_buff *skb)
+ 			inet_csk(sk)->icsk_ack.pending |=
+ 					(ICSK_ACK_NOMEM | ICSK_ACK_NOW);
+ 			inet_csk_schedule_ack(sk);
+-			sk->sk_data_ready(sk);
++			READ_ONCE(sk->sk_data_ready)(sk);
+ 
+ 			if (skb_queue_len(&sk->sk_receive_queue)) {
+ 				reason = SKB_DROP_REASON_PROTO_MEM;
+@@ -5626,7 +5626,9 @@ static void tcp_new_space(struct sock *sk)
+ 		tp->snd_cwnd_stamp = tcp_jiffies32;
+ 	}
+ 
+-	INDIRECT_CALL_1(sk->sk_write_space, sk_stream_write_space, sk);
++	INDIRECT_CALL_1(READ_ONCE(sk->sk_write_space),
++			sk_stream_write_space,
++			sk);
+ }
+ 
+ /* Caller made space either from:
+@@ -5832,7 +5834,7 @@ static void tcp_urg(struct sock *sk, struct sk_buff *skb, const struct tcphdr *t
+ 				BUG();
+ 			WRITE_ONCE(tp->urg_data, TCP_URG_VALID | tmp);
+ 			if (!sock_flag(sk, SOCK_DEAD))
+-				sk->sk_data_ready(sk);
++				READ_ONCE(sk->sk_data_ready)(sk);
+ 		}
+ 	}
+ }
+@@ -7216,7 +7218,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 			sock_put(fastopen_sk);
+ 			goto drop_and_free;
+ 		}
+-		sk->sk_data_ready(sk);
++		READ_ONCE(sk->sk_data_ready)(sk);
+ 		bh_unlock_sock(fastopen_sk);
+ 		sock_put(fastopen_sk);
+ 	} else {
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index ddb90b9057e75..2eea9672ca01e 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -876,7 +876,7 @@ int tcp_child_process(struct sock *parent, struct sock *child,
+ 		ret = tcp_rcv_state_process(child, skb);
+ 		/* Wakeup parent, send SIGIO */
+ 		if (state == TCP_SYN_RECV && child->sk_state != state)
+-			parent->sk_data_ready(parent);
++			READ_ONCE(parent->sk_data_ready)(parent);
+ 	} else {
+ 		/* Alas, it is possible again, because we do lookup
+ 		 * in main socket hash table and lock on listening
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index f301871fa2b1a..3bc1ba937a212 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -1560,7 +1560,8 @@ int __udp_enqueue_schedule_skb(struct sock *sk, struct sk_buff *skb)
+ 	spin_unlock(&list->lock);
+ 
+ 	if (!sock_flag(sk, SOCK_DEAD))
+-		INDIRECT_CALL_1(sk->sk_data_ready, sock_def_readable, sk);
++		INDIRECT_CALL_1(READ_ONCE(sk->sk_data_ready),
++				sock_def_readable, sk);
+ 
+ 	busylock_release(busy);
+ 	return 0;
+diff --git a/net/ipv4/udp_bpf.c b/net/ipv4/udp_bpf.c
+index 91233e37cd97a..779a3a03762f1 100644
+--- a/net/ipv4/udp_bpf.c
++++ b/net/ipv4/udp_bpf.c
+@@ -158,7 +158,7 @@ int udp_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool restore)
+ 	int family = sk->sk_family == AF_INET ? UDP_BPF_IPV4 : UDP_BPF_IPV6;
+ 
+ 	if (restore) {
+-		sk->sk_write_space = psock->saved_write_space;
++		WRITE_ONCE(sk->sk_write_space, psock->saved_write_space);
+ 		sock_replace_proto(sk, psock->sk_proto);
+ 		return 0;
+ 	}
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index f89cd01247f6b..6bc7aef06a5be 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1678,7 +1678,7 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
+ 	__skb_queue_tail(&other->sk_receive_queue, skb);
+ 	spin_unlock(&other->sk_receive_queue.lock);
+ 	unix_state_unlock(other);
+-	other->sk_data_ready(other);
++	READ_ONCE(other->sk_data_ready)(other);
+ 	sock_put(other);
+ 	return 0;
+ 
+@@ -2138,7 +2138,7 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
+ 	scm_stat_add(other, skb);
+ 	skb_queue_tail(&other->sk_receive_queue, skb);
+ 	unix_state_unlock(other);
+-	other->sk_data_ready(other);
++	READ_ONCE(other->sk_data_ready)(other);
+ 	sock_put(other);
+ 	scm_destroy(&scm);
+ 	return len;
+@@ -2206,7 +2206,7 @@ static int queue_oob(struct socket *sock, struct msghdr *msg, struct sock *other
+ 
+ 	sk_send_sigurg(other);
+ 	unix_state_unlock(other);
+-	other->sk_data_ready(other);
++	READ_ONCE(other->sk_data_ready)(other);
+ 
+ 	return err;
+ }
+@@ -2317,7 +2317,7 @@ static int unix_stream_sendmsg(struct socket *sock, struct msghdr *msg,
+ 		scm_stat_add(other, skb);
+ 		skb_queue_tail(&other->sk_receive_queue, skb);
+ 		unix_state_unlock(other);
+-		other->sk_data_ready(other);
++		READ_ONCE(other->sk_data_ready)(other);
+ 		sent += size;
+ 	}
+ 
 -- 
 2.53.0
 
