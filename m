@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271F93290A5;
-	Fri, 24 Apr 2026 13:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED0A3D75C6;
+	Fri, 24 Apr 2026 13:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037986; cv=none; b=AO4O53ZsZJl3BW57dZNvBQeS5u/lfH59KAD+WEbsxQvyt5aKWoxX8GoIqndUzkrUqsCW1Dtu51GN/FPDmJl/Zg8iywjMZBhHOuAJIVz3AiJEWW9+RRkelTKaFQvH9LdphG8MU0f0XsM/K7DrLMJySYkcqNg/HEFUIFJpEp6p4RE=
+	t=1777037988; cv=none; b=fljc8UI8TZ6hu5wiMS6xBkH8r1sZUZ2TY9wRRRKGqOr4aHbRMw58dxAUZeyFmdJDJMSKp8F8veE13qAfZhC4pDjo0blBgg3UJnn2ydII9DRPNHiZYUi4HV/iwprlS7XrtFb7j5bkG5zzjPhe8kv0xmcmAH9JEAlgs66C6Bangqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037986; c=relaxed/simple;
-	bh=alehJjcUMwfPDhEen7LCqXcZoFlkOfsz6EbvTf/6r5g=;
+	s=arc-20240116; t=1777037988; c=relaxed/simple;
+	bh=N1MIzopuj5vOKhCOb7r1cnrHGkN+EFatqbltbsBs4AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VpCLow+M6gJ2ulsKDv3pTpHAmz9h5oAwQnTVFh0Ey05Npl2e380VQKFYTk2egCjydUS8H7dU+PCr25NFQBZzTOZnSUmUC0GxexIiD9l3TR72N0zRNKBgB/XPc0QdLVtd3WWlYouvRxQkJqfO9AM9+2KsriD0XLvwvokP33rHBnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tJ0AOEM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TH+QZ1AMt5P9laSJQSxV3y6r9ZjmTXXYNvXUVbgFpzz9WiXKTgWBez7wp7O5JjAX/Ze2Cyh7ncm3xxESbPzvtbKmveaG2YZb3GdWpCSuKH9oTZ45KuH8vWcwwJ7yFeP491kDKgrA0rGoK2veKnUmIppMX58UnyAASQDSjEvoUBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcTm9n/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tJ0AOEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B040FC19425;
-	Fri, 24 Apr 2026 13:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcTm9n/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D756C19425;
+	Fri, 24 Apr 2026 13:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037986;
-	bh=alehJjcUMwfPDhEen7LCqXcZoFlkOfsz6EbvTf/6r5g=;
+	s=korg; t=1777037988;
+	bh=N1MIzopuj5vOKhCOb7r1cnrHGkN+EFatqbltbsBs4AM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1tJ0AOEMgfiIRqqpTR/qbz1kEUMQwVMGG0XgWCGFr/Ir0PVlxSeJpjvDc3iOliOxN
-	 N9HyPk6CIloJ9pa7CqClF7R5MjTg0kg2t56KlOmj1KI8Nl8IT7z4ks3P7zUYvg+yo9
-	 xEluumr2e0SRn3oIXKwts1SCEZ732pHt+BTLZ+14=
+	b=UcTm9n/7+78TiarGRDvo4bPSnzd8xYdgShXKZ/yRlSYpD7wKohucRzdwGM0Dy85cQ
+	 b1JVMUh5ACq1dgeyh0wg8odCrmRHSqe5NkNawRNjX83jVGzfktOX6Aj4DR0R+2jeJO
+	 7Q3tFlxC//ygIsjde2rxd8wLIcWndab97B+mdth4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+cf7946ab25b21abc4b66@syzkaller.appspotmail.com,
-	Eric Biggers <ebiggers@kernel.org>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 146/166] f2fs: fix to avoid memory leak in f2fs_rename()
-Date: Fri, 24 Apr 2026 15:31:00 +0200
-Message-ID: <20260424132603.637329005@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 120/166] ALSA: 6fire: fix use-after-free on disconnect
+Date: Fri, 24 Apr 2026 15:30:34 +0200
+Message-ID: <20260424132557.920552779@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -53,63 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit 3cf11e6f36c170050c12171dd6fd3142711478fc upstream.
+commit b9c826916fdce6419b94eb0cd8810fdac18c2386 upstream.
 
-syzbot reported a f2fs bug as below:
+In usb6fire_chip_abort(), the chip struct is allocated as the card's
+private data (via snd_card_new with sizeof(struct sfire_chip)).  When
+snd_card_free_when_closed() is called and no file handles are open, the
+card and embedded chip are freed synchronously.  The subsequent
+chip->card = NULL write then hits freed slab memory.
 
-BUG: memory leak
-unreferenced object 0xffff888127f70830 (size 16):
-  comm "syz.0.23", pid 6144, jiffies 4294943712
-  hex dump (first 16 bytes):
-    3c af 57 72 5b e6 8f ad 6e 8e fd 33 42 39 03 ff  <.Wr[...n..3B9..
-  backtrace (crc 925f8a80):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
-    slab_post_alloc_hook mm/slub.c:4520 [inline]
-    slab_alloc_node mm/slub.c:4844 [inline]
-    __do_kmalloc_node mm/slub.c:5237 [inline]
-    __kmalloc_noprof+0x3bd/0x560 mm/slub.c:5250
-    kmalloc_noprof include/linux/slab.h:954 [inline]
-    fscrypt_setup_filename+0x15e/0x3b0 fs/crypto/fname.c:364
-    f2fs_setup_filename+0x52/0xb0 fs/f2fs/dir.c:143
-    f2fs_rename+0x159/0xca0 fs/f2fs/namei.c:961
-    f2fs_rename2+0xd5/0xf20 fs/f2fs/namei.c:1308
-    vfs_rename+0x7ff/0x1250 fs/namei.c:6026
-    filename_renameat2+0x4f4/0x660 fs/namei.c:6144
-    __do_sys_renameat2 fs/namei.c:6173 [inline]
-    __se_sys_renameat2 fs/namei.c:6168 [inline]
-    __x64_sys_renameat2+0x59/0x80 fs/namei.c:6168
-    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-    do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Call trace:
+  usb6fire_chip_abort sound/usb/6fire/chip.c:59 [inline]
+  usb6fire_chip_disconnect+0x348/0x358 sound/usb/6fire/chip.c:182
+  usb_unbind_interface+0x1a8/0x88c drivers/usb/core/driver.c:458
+  ...
+  hub_event+0x1a04/0x4518 drivers/usb/core/hub.c:5953
 
-The root cause is in commit 40b2d55e0452 ("f2fs: fix to create selinux
-label during whiteout initialization"), we added a call to
-f2fs_setup_filename() without a matching call to f2fs_free_filename(),
-fix it.
+Fix by moving the card lifecycle out of usb6fire_chip_abort() and into
+usb6fire_chip_disconnect().  The card pointer is saved in a local
+before any teardown, snd_card_disconnect() is called first to prevent
+new opens, URBs are aborted while chip is still valid, and
+snd_card_free_when_closed() is called last so chip is never accessed
+after the card may be freed.
 
-Fixes: 40b2d55e0452 ("f2fs: fix to create selinux label during whiteout initialization")
-Cc: stable@kernel.org
-Reported-by: syzbot+cf7946ab25b21abc4b66@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/69a75fe1.a70a0220.b118c.0014.GAE@google.com
-Suggested-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: a0810c3d6dd2 ("ALSA: 6fire: Release resources at card release")
+Cc: stable@vger.kernel.org
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260410051341.1069716-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/6fire/chip.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -940,6 +940,7 @@ static int f2fs_rename(struct mnt_idmap
- 			return err;
- 
- 		err = f2fs_create_whiteout(idmap, old_dir, &whiteout, &fname);
-+		f2fs_free_filename(&fname);
- 		if (err)
- 			return err;
+--- a/sound/usb/6fire/chip.c
++++ b/sound/usb/6fire/chip.c
+@@ -53,11 +53,6 @@ static void usb6fire_chip_abort(struct s
+ 			usb6fire_comm_abort(chip);
+ 		if (chip->control)
+ 			usb6fire_control_abort(chip);
+-		if (chip->card) {
+-			snd_card_disconnect(chip->card);
+-			snd_card_free_when_closed(chip->card);
+-			chip->card = NULL;
+-		}
  	}
+ }
+ 
+@@ -170,6 +165,7 @@ destroy_chip:
+ static void usb6fire_chip_disconnect(struct usb_interface *intf)
+ {
+ 	struct sfire_chip *chip;
++	struct snd_card *card;
+ 
+ 	chip = usb_get_intfdata(intf);
+ 	if (chip) { /* if !chip, fw upload has been performed */
+@@ -180,8 +176,19 @@ static void usb6fire_chip_disconnect(str
+ 			chips[chip->regidx] = NULL;
+ 			mutex_unlock(&register_mutex);
+ 
++			/*
++			 * Save card pointer before teardown.
++			 * snd_card_free_when_closed() may free card (and
++			 * the embedded chip) immediately, so it must be
++			 * called last and chip must not be accessed after.
++			 */
++			card = chip->card;
+ 			chip->shutdown = true;
++			if (card)
++				snd_card_disconnect(card);
+ 			usb6fire_chip_abort(chip);
++			if (card)
++				snd_card_free_when_closed(card);
+ 		}
+ 	}
+ }
 
 
