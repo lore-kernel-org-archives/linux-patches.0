@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262EC3D75A5;
-	Fri, 24 Apr 2026 13:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F383290A5;
+	Fri, 24 Apr 2026 13:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038120; cv=none; b=VPPQaNMHEl/oNESg3Y6r662fQMAhbohasCWcVwf6+uHPWx2Hg7sSvHMPNwB6woaNk01h3BNyJ2Pp2XAxG23Tlz1VhzdQnlIuHiN9mpxqYMVECGDBD1d8VRQfqI3eb2xZ8IU8IPKEu0Hwy4tqdN1vgMOvrCA27Chw2CUJJmfwCfU=
+	t=1777038122; cv=none; b=GBY4WZ+D0FuK3md3bN/afTTTDf3KS9eStpQa3WjA88dhApo7QIYWO0961aPnkKfFNLHkwXLUezSnU3jCQ1EqPNrbOD6vbo3d1/VaOEeJ39IDDp1GV0r0nazoj9kAYdqnd9UcPs7G3zkm1coQxjo9THxKg7Xv+Eg3F4w+3ltDo/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038120; c=relaxed/simple;
-	bh=DRXe4mKAeP/BGxr5PKD4VPlPEkh/AqJQqoHom4NGan8=;
+	s=arc-20240116; t=1777038122; c=relaxed/simple;
+	bh=4XNgBZMtRgy7nRUqR2fU4fpeIiTGM9TRLNmi84nyOV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uUsoCoUYjaByJmZB92Ypy4Y9gEDBbLMATuQnMlY7lGheoJtSwtuVduQ5PsCpoehEYihzYacBvPvYgLxtrMJIebhR0tLcDCWUFxv1vJ1UGybeHCOWNh8p5z7sJHTzQw4pcoAwgWBTKIRTpg3hLAN+A6E2eEt15xxnYWRAFrZcYWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcbPS6xH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgPJ5P35TGWYTg0ap94QX+zi2lDecWu+E0L0bv+NBDsw/jbjjz04lQzU3xXQvh/RbWxxX2bkDQKS0DldOlBmKlVsnEDa54O0Ssi2CSIZn/Skms6CbgSbgqzqRTRWw+SdmRm0jdxgcXmQisvzqAM49uke8biWuIyTIvYHkDEDTuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUn/WDlm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcbPS6xH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63D7C2BCB2;
-	Fri, 24 Apr 2026 13:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUn/WDlm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C04C19425;
+	Fri, 24 Apr 2026 13:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038120;
-	bh=DRXe4mKAeP/BGxr5PKD4VPlPEkh/AqJQqoHom4NGan8=;
+	s=korg; t=1777038122;
+	bh=4XNgBZMtRgy7nRUqR2fU4fpeIiTGM9TRLNmi84nyOV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PcbPS6xHLkaFWhMbLvGP5pcXzrYyfhZAfcwqF82KbfuYi4rVDmtm5PuuzgV+UkC1K
-	 KVnAGu0/fayy9QbGDS/9jOOCMuM/loaZD1O2CKyLvSsyZHXj9kCvAaCXKTdYaUTRtS
-	 necuJJ6cpfa7/kufIMAog5LymENE53LBr1hFjJW0=
+	b=HUn/WDlmJ5E65HnSxzPp+Pz1kunW8UHyCrD2HnCn2d2TDWzD7rypbWFQRMdWnOjrF
+	 xPiKn/zEcI79iHk6cYQU1ChDyIljXDSE0RL3q5udhATB5QpXzatSHLK58IFLlyRIgL
+	 fBB5vGZMVpejiRUXIZfy0ksvwsspdH+6bh7EjdJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Bernd Schubert <bernd@bsbernd.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	Bernd Schubert <bschubert@ddn.com>,
+	Horst Birthelmer <hbirthelmer@ddn.com>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.18 32/55] fuse: abort on fatal signal during sync init
-Date: Fri, 24 Apr 2026 15:31:11 +0200
-Message-ID: <20260424132436.693789698@linuxfoundation.org>
+Subject: [PATCH 6.18 33/55] fuse: Check for large folio with SPLICE_F_MOVE
+Date: Fri, 24 Apr 2026 15:31:12 +0200
+Message-ID: <20260424132436.893746180@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132430.006424517@linuxfoundation.org>
 References: <20260424132430.006424517@linuxfoundation.org>
@@ -52,75 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Bernd Schubert <bschubert@ddn.com>
 
-commit 204aa22a686bfee48daca7db620c1e017615f2ff upstream.
+commit 59ba47b6be9cd0146ef9a55c6e32e337e11e7625 upstream.
 
-When sync init is used and the server exits for some reason (error, crash)
-while processing FUSE_INIT, the filesystem creation will hang.  The reason
-is that while all other threads will exit, the mounting thread (or process)
-will keep the device fd open, which will prevent an abort from happening.
+xfstest generic/074 and generic/075 complain result in kernel
+warning messages / page dumps.
+This is easily reproducible (on 6.19) with
+CONFIG_TRANSPARENT_HUGEPAGE_SHMEM_HUGE_ALWAYS=y
+CONFIG_TRANSPARENT_HUGEPAGE_TMPFS_HUGE_ALWAYS=y
 
-This is a regression from the async mount case, where the mount was done
-first, and the FUSE_INIT processing afterwards, in which case there's no
-such recursive syscall keeping the fd open.
+This just adds a test for large folios fuse_try_move_folio
+with the same page copy fallback, but to avoid the warnings
+from fuse_check_folio().
 
-Fixes: dfb84c330794 ("fuse: allow synchronous FUSE_INIT")
-Cc: stable@vger.kernel.org # v6.18
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bernd Schubert <bschubert@ddn.com>
+Signed-off-by: Horst Birthelmer <hbirthelmer@ddn.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c    |    8 +++++++-
- fs/fuse/fuse_i.h |    1 +
- fs/fuse/inode.c  |    1 +
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ fs/fuse/dev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/fs/fuse/dev.c
 +++ b/fs/fuse/dev.c
-@@ -570,6 +570,11 @@ static void request_wait_answer(struct f
- 		if (!err)
- 			return;
+@@ -1017,6 +1017,9 @@ static int fuse_try_move_folio(struct fu
+ 	folio_clear_uptodate(newfolio);
+ 	folio_clear_mappedtodisk(newfolio);
  
-+		if (req->args->abort_on_kill) {
-+			fuse_abort_conn(fc);
-+			return;
-+		}
++	if (folio_test_large(newfolio))
++		goto out_fallback_unlock;
 +
- 		if (test_bit(FR_URING, &req->flags))
- 			removed = fuse_uring_remove_pending_req(req);
- 		else
-@@ -676,7 +681,8 @@ ssize_t __fuse_simple_request(struct mnt
- 			fuse_force_creds(req);
+ 	if (fuse_check_folio(newfolio) != 0)
+ 		goto out_fallback_unlock;
  
- 		__set_bit(FR_WAITING, &req->flags);
--		__set_bit(FR_FORCE, &req->flags);
-+		if (!args->abort_on_kill)
-+			__set_bit(FR_FORCE, &req->flags);
- 	} else {
- 		WARN_ON(args->nocreds);
- 		req = fuse_get_req(idmap, fm, false);
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -333,6 +333,7 @@ struct fuse_args {
- 	bool is_ext:1;
- 	bool is_pinned:1;
- 	bool invalidate_vmap:1;
-+	bool abort_on_kill:1;
- 	struct fuse_in_arg in_args[4];
- 	struct fuse_arg out_args[2];
- 	void (*end)(struct fuse_mount *fm, struct fuse_args *args, int error);
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -1548,6 +1548,7 @@ int fuse_send_init(struct fuse_mount *fm
- 	int err;
- 
- 	if (fm->fc->sync_init) {
-+		ia->args.abort_on_kill = true;
- 		err = fuse_simple_request(fm, &ia->args);
- 		/* Ignore size of init reply */
- 		if (err > 0)
 
 
