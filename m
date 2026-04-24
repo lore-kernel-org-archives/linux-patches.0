@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3433519A288;
-	Fri, 24 Apr 2026 13:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BD53290A5;
+	Fri, 24 Apr 2026 13:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038053; cv=none; b=epRYy7yJECmFGNRavAuqBQpV9+UL1bpPvLBEyTyHld8oXjvetUXBVOFpMM4nzI0lDYzcWgKUF+8VIIPjZ0wQd09P4cpy5PwEC3PuD4K3N0pxntQIvFFANhxFMk9xu7I2jpk2RNNiFylm6gyO0a/aO+Wj6TVrVbZh71oZCab6/w8=
+	t=1777038056; cv=none; b=eEFWqBX9HUQ62BEhTR4swu4JVbjSg53LKJuEgEBM1gPABEaUhA2UC4mBf403jmY+yf6FFtb3i5q9IvdO+P9C6fCxamvxq+od/rtyzbvZrpZ/nc/Au4w0nW1aZuFFTrlvztOW1gHsDQKc3NJI8HGHfqp63ZkAdnkPi2hTrgT5QQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038053; c=relaxed/simple;
-	bh=Zm4s1oFs5kM+LBxhOu971tawV6Ow4haRwUQP4Za6vCI=;
+	s=arc-20240116; t=1777038056; c=relaxed/simple;
+	bh=5ziXFRuq4KWUoBfixT5OEjRUhIeHiRv5OYOoiZBYdWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGl4SyLiOG7uSCHG2Gh1eUAzMjgh1TVU+arZ5N7Gawt8oQf+1S/uuGwd7y/VRVDC/W7y7cZAEHtWZUEBPH+MjZOBDjE5xl3hpXb+W6s/ovKvViPFc5TMWLHmrVDwVvjtPIgy4vu5VIP+j4f5WKZ/V9zesxAJs7qkJdoDipAv/OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8dzLj2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FbEPjfUJjMdKioBVweXNFjnZYtffYUrzIu/kpNrK0D7+exjqT1vsjJ7wZcZuvuZk+2EHmEPJPa54WE9Dw1o2G6dfDS8nyYZcQWYGuQL4tER1uBDdRquENvGg/rKqgLok2lwE4wr+utjYq5ZQx8yXV5Lpy9i4zfW0u9fWom6f/7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WgvMLzR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8dzLj2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4C4C19425;
-	Fri, 24 Apr 2026 13:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WgvMLzR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F18C19425;
+	Fri, 24 Apr 2026 13:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038053;
-	bh=Zm4s1oFs5kM+LBxhOu971tawV6Ow4haRwUQP4Za6vCI=;
+	s=korg; t=1777038055;
+	bh=5ziXFRuq4KWUoBfixT5OEjRUhIeHiRv5OYOoiZBYdWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8dzLj2x0IJ3UGfZURAvDxCfZGkV7gfskXzo6RNRsB8flia9qC4nkxosgwkQPkl+6
-	 eY4lHQTN+cJYxVfQ4b1MGaUQ/WxesqU5piE3sQxop+klSgzDWlAeIBH+j5/qPiYFYg
-	 oZqaTfz4EcOVCXcv8MGu2bYpkbz+KjHZj9CIKpxU=
+	b=2WgvMLzRV+PuAJbAT/G4KO6ktujjMi36sWuoaqjr6VflJ+HuChoki5MVGh/Ja2QAH
+	 msKB24CbzD1M6PfnZoPTn6m0IkYkITqPHcgKvHOzvTp6s0/hLzEHmjS7D4zj/fhYFF
+	 o+HRTYFfiPCV3RgLiI7uaoGfFW+Y4Niv02UtWE4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Subject: [PATCH 6.6 161/166] crypto: testmgr - Hide ENOENT errors better
-Date: Fri, 24 Apr 2026 15:31:15 +0200
-Message-ID: <20260424132606.737126228@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Sebastian Alba Vives <sebasjosue84@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 162/166] crypto: ccp: Dont attempt to copy CSR to userspace if PSP command failed
+Date: Fri, 24 Apr 2026 15:31:16 +0200
+Message-ID: <20260424132606.936761393@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -50,122 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 6318fbe26e67f9c27a1917fe63936b0fc6000373 upstream.
+commit abe4a6d6f606113251868c2c4a06ba904bb41eed upstream.
 
-The previous patch removed the ENOENT warning at the point of
-allocation, but the overall self-test warning is still there.
+When retrieving the PEK CSR, don't attempt to copy the blob to userspace
+if the firmware command failed.  If the failure was due to an invalid
+length, i.e. the userspace buffer+length was too small, copying the number
+of bytes _firmware_ requires will overflow the kernel-allocated buffer and
+leak data to userspace.
 
-Fix all of them by returning zero as the test result.  This is
-safe because if the algorithm has gone away, then it cannot be
-marked as tested.
+  BUG: KASAN: slab-out-of-bounds in instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
+  BUG: KASAN: slab-out-of-bounds in _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
+  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
+  Read of size 2084 at addr ffff898144612e20 by task syz.9.219/21405
 
-Fixes: 4eded6d14f5b ("crypto: testmgr - Hide ENOENT errors")
+  CPU: 14 UID: 0 PID: 21405 Comm: syz.9.219 Tainted: G     U     O        7.0.0-smp-DEV #28 PREEMPTLAZY
+  Tainted: [U]=USER, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.62.0-0 11/19/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xc5/0x110 ../lib/dump_stack.c:120
+   print_address_description ../mm/kasan/report.c:378 [inline]
+   print_report+0xbc/0x260 ../mm/kasan/report.c:482
+   kasan_report+0xa2/0xe0 ../mm/kasan/report.c:595
+   check_region_inline ../mm/kasan/generic.c:-1 [inline]
+   kasan_check_range+0x264/0x2c0 ../mm/kasan/generic.c:200
+   instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
+   _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
+   _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
+   copy_to_user ../include/linux/uaccess.h:236 [inline]
+   sev_ioctl_do_pek_csr+0x31f/0x590 ../drivers/crypto/ccp/sev-dev.c:1872
+   sev_ioctl+0x3a4/0x490 ../drivers/crypto/ccp/sev-dev.c:2562
+   vfs_ioctl ../fs/ioctl.c:51 [inline]
+   __do_sys_ioctl ../fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0x11d/0x1b0 ../fs/ioctl.c:583
+   do_syscall_x64 ../arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xe0/0x800 ../arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
+
+WARN if the driver says the command succeeded, but the firmware error code
+says otherwise, as __sev_do_cmd_locked() is expected to return -EIO on any
+firwmware error.
+
+Reported-by: Alexander Potapenko <glider@google.com>
+Reported-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Fixes: e799035609e1 ("crypto: ccp: Implement SEV_PEK_CSR ioctl command")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/testmgr.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/crypto/testmgr.c
-+++ b/crypto/testmgr.c
-@@ -1917,7 +1917,7 @@ static int __alg_test_hash(const struct
- 	atfm = crypto_alloc_ahash(driver, type, mask);
- 	if (IS_ERR(atfm)) {
- 		if (PTR_ERR(atfm) == -ENOENT)
--			return -ENOENT;
-+			return 0;
- 		pr_err("alg: hash: failed to allocate transform for %s: %ld\n",
- 		       driver, PTR_ERR(atfm));
- 		return PTR_ERR(atfm);
-@@ -2683,7 +2683,7 @@ static int alg_test_aead(const struct al
- 	tfm = crypto_alloc_aead(driver, type, mask);
- 	if (IS_ERR(tfm)) {
- 		if (PTR_ERR(tfm) == -ENOENT)
--			return -ENOENT;
-+			return 0;
- 		pr_err("alg: aead: failed to allocate transform for %s: %ld\n",
- 		       driver, PTR_ERR(tfm));
- 		return PTR_ERR(tfm);
-@@ -3262,7 +3262,7 @@ static int alg_test_skcipher(const struc
- 	tfm = crypto_alloc_skcipher(driver, type, mask);
- 	if (IS_ERR(tfm)) {
- 		if (PTR_ERR(tfm) == -ENOENT)
--			return -ENOENT;
-+			return 0;
- 		pr_err("alg: skcipher: failed to allocate transform for %s: %ld\n",
- 		       driver, PTR_ERR(tfm));
- 		return PTR_ERR(tfm);
-@@ -3677,7 +3677,7 @@ static int alg_test_cipher(const struct
- 	tfm = crypto_alloc_cipher(driver, type, mask);
- 	if (IS_ERR(tfm)) {
- 		if (PTR_ERR(tfm) == -ENOENT)
--			return -ENOENT;
-+			return 0;
- 		printk(KERN_ERR "alg: cipher: Failed to load transform for "
- 		       "%s: %ld\n", driver, PTR_ERR(tfm));
- 		return PTR_ERR(tfm);
-@@ -3703,7 +3703,7 @@ static int alg_test_comp(const struct al
- 		acomp = crypto_alloc_acomp(driver, type, mask);
- 		if (IS_ERR(acomp)) {
- 			if (PTR_ERR(acomp) == -ENOENT)
--				return -ENOENT;
-+				return 0;
- 			pr_err("alg: acomp: Failed to load transform for %s: %ld\n",
- 			       driver, PTR_ERR(acomp));
- 			return PTR_ERR(acomp);
-@@ -3717,7 +3717,7 @@ static int alg_test_comp(const struct al
- 		comp = crypto_alloc_comp(driver, type, mask);
- 		if (IS_ERR(comp)) {
- 			if (PTR_ERR(comp) == -ENOENT)
--				return -ENOENT;
-+				return 0;
- 			pr_err("alg: comp: Failed to load transform for %s: %ld\n",
- 			       driver, PTR_ERR(comp));
- 			return PTR_ERR(comp);
-@@ -3795,7 +3795,7 @@ static int alg_test_cprng(const struct a
- 	rng = crypto_alloc_rng(driver, type, mask);
- 	if (IS_ERR(rng)) {
- 		if (PTR_ERR(rng) == -ENOENT)
--			return -ENOENT;
-+			return 0;
- 		printk(KERN_ERR "alg: cprng: Failed to load transform for %s: "
- 		       "%ld\n", driver, PTR_ERR(rng));
- 		return PTR_ERR(rng);
-@@ -3823,12 +3823,11 @@ static int drbg_cavs_test(const struct d
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -674,7 +674,10 @@ cmd:
  
- 	drng = crypto_alloc_rng(driver, type, mask);
- 	if (IS_ERR(drng)) {
-+		kfree_sensitive(buf);
- 		if (PTR_ERR(drng) == -ENOENT)
--			goto out_no_rng;
-+			return 0;
- 		printk(KERN_ERR "alg: drbg: could not allocate DRNG handle for "
- 		       "%s\n", driver);
--out_no_rng:
--		kfree_sensitive(buf);
- 		return PTR_ERR(drng);
+ 	ret = __sev_do_cmd_locked(SEV_CMD_PEK_CSR, &data, &argp->error);
+ 
+-	 /* If we query the CSR length, FW responded with expected data. */
++	/*
++	 * Firmware will returns the length of the CSR blob (either the minimum
++	 * required length or the actual length written), return it to the user.
++	 */
+ 	input.length = data.len;
+ 
+ 	if (copy_to_user((void __user *)argp->data, &input, sizeof(input))) {
+@@ -682,6 +685,9 @@ cmd:
+ 		goto e_free_blob;
  	}
  
-@@ -4072,7 +4071,7 @@ static int alg_test_kpp(const struct alg
- 	tfm = crypto_alloc_kpp(driver, type, mask);
- 	if (IS_ERR(tfm)) {
- 		if (PTR_ERR(tfm) == -ENOENT)
--			return -ENOENT;
-+			return 0;
- 		pr_err("alg: kpp: Failed to load tfm for %s: %ld\n",
- 		       driver, PTR_ERR(tfm));
- 		return PTR_ERR(tfm);
-@@ -4302,7 +4301,7 @@ static int alg_test_akcipher(const struc
- 	tfm = crypto_alloc_akcipher(driver, type, mask);
- 	if (IS_ERR(tfm)) {
- 		if (PTR_ERR(tfm) == -ENOENT)
--			return -ENOENT;
-+			return 0;
- 		pr_err("alg: akcipher: Failed to load tfm for %s: %ld\n",
- 		       driver, PTR_ERR(tfm));
- 		return PTR_ERR(tfm);
++	if (ret || WARN_ON_ONCE(argp->error))
++		goto e_free_blob;
++
+ 	if (blob) {
+ 		if (copy_to_user(input_address, blob, input.length))
+ 			ret = -EFAULT;
 
 
