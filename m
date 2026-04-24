@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B0D3D6CC2;
-	Fri, 24 Apr 2026 13:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D773D3CEE;
+	Fri, 24 Apr 2026 13:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037547; cv=none; b=l02o5vlPEFXk3wfxbh+l7/j4ky7QFbObmb01YaPRsU0QOgg44N4bqerA6jj+GsTwg6e6+fl6eNJWoRKLlI6AVI9zDrM5PFGcSoDKRXvJ7TqRoOBrg10Kw63co24yaSsJKGPQFYuie+aqL8ZSvjXXDNI0xS3erXd6pWXqIHyKcd0=
+	t=1777037549; cv=none; b=IQJS/qvXxceqpxNeQ8FnBQKMMKZWXdKf5npooKS53F924+/R1g6M00657IpO3aDbod/BeeJqRBv/e9lRj6mD/XMZFLh8zrg1Yx97J5cTGbRjEx2lC8ae0MADQTr0bE/M9IVCaF/z7RgMIXb2aLJs0zufbkCG9lHjrvMBa28QnxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037547; c=relaxed/simple;
-	bh=bmMF0PxciaZMfnlDWjao9Xmw33ya6ol9CqplpYcwbac=;
+	s=arc-20240116; t=1777037549; c=relaxed/simple;
+	bh=wiiAXhgqAzpMBOVBNe5M2yfYGYQVvzYpNc5l4VsrmaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=buuIa+Hjq+/UHUbzDwvcumzdDyRkhVk+X6vHXnAaZ+154o8DgmGDIYNYraha94fZ++NFon+p9RPtPhGjDkgiEhq6fro/69+3sF19h2pvJPQ3X4eaRBDWw3RdIUVsABN5XwoS3gDWCZ/2+D1p/Z7kCrXzY9m6Sk/v4DTeIo+aWN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spqTXqBW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lugQjkjJ6Phhg4wUSqejS44CDhjnst+hmzLJ1gNbUw0wFgQpo/Eh1nFyN9j9MlOFqgOkHyYS+1WbC0QzxABO6IRNkXrPNJAcR+sG8KPucQBb4I+axz6wrA3S2CNGBhRXIH3Y3j5bhR7zz1DqcAeO4iSZ6+4fmJFd3sdzchuebuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ze+LZwt7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spqTXqBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6DAC2BCB6;
-	Fri, 24 Apr 2026 13:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ze+LZwt7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F8CC19425;
+	Fri, 24 Apr 2026 13:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037546;
-	bh=bmMF0PxciaZMfnlDWjao9Xmw33ya6ol9CqplpYcwbac=;
+	s=korg; t=1777037549;
+	bh=wiiAXhgqAzpMBOVBNe5M2yfYGYQVvzYpNc5l4VsrmaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spqTXqBWZjD7vLnAyrL884+3vAWV7WWRtC1VqMFRDWXbnk61XrhoaMHCgau+AS1FM
-	 IBbskFT9KjlxT+sfMKg28lvHlu1h6olDNMK4db1lwUMrL/MXJLuFCGLrkoOgTfK1a4
-	 0xB2tOv1qCFWWZZaZIWMeA02ADgRRX1040nyQ+3E=
+	b=ze+LZwt7EvCfh9R4ylgowjT81GMs984bp/DnYNeqTlmqWZBZl9HySVeznKE3fBt5x
+	 BqzaLUnHiZ+nOnRdmNhDd7SbUM5bAJEAQu9KPcAubQqUcKEUV0BXmqRWT/0RY9gW2n
+	 mOlodw3txyoN63D/ALAYExMc3c8sEud0sUwZCjdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Michal Wilczynski <m.wilczynski@samsung.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 02/42] pwm: th1520: fix `CLIPPY=1` warning
-Date: Fri, 24 Apr 2026 15:30:27 +0200
-Message-ID: <20260424132420.891656628@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.0 20/42] ksmbd: require minimum ACE size in smb_check_perm_dacl()
+Date: Fri, 24 Apr 2026 15:30:45 +0200
+Message-ID: <20260424132424.707064238@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132420.410310336@linuxfoundation.org>
 References: <20260424132420.410310336@linuxfoundation.org>
@@ -47,79 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit aa8f35172ab66c57d4355a8c4e28d05b44c938e3 ]
+commit d07b26f39246a82399661936dd0c853983cfade7 upstream.
 
-The Rust kernel code should be kept `CLIPPY=1`-clean [1].
+Both ACE-walk loops in smb_check_perm_dacl() only guard against an
+under-sized remaining buffer, not against an ACE whose declared
+`ace->size` is smaller than the struct it claims to describe:
 
-Clippy reports:
+  if (offsetof(struct smb_ace, access_req) > aces_size)
+      break;
+  ace_size = le16_to_cpu(ace->size);
+  if (ace_size > aces_size)
+      break;
 
-    error: this pattern reimplements `Option::unwrap_or`
-      --> drivers/pwm/pwm_th1520.rs:64:5
-       |
-    64 | /     (match ns.checked_mul(rate_hz) {
-    65 | |         Some(product) => product,
-    66 | |         None => u64::MAX,
-    67 | |     }) / NSEC_PER_SEC_U64
-       | |______^ help: replace with: `ns.checked_mul(rate_hz).unwrap_or(u64::MAX)`
-       |
-       = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.92.0/index.html#manual_unwrap_or
-       = note: `-D clippy::manual-unwrap-or` implied by `-D warnings`
-       = help: to override `-D warnings` add `#[allow(clippy::manual_unwrap_or)]`
+The first check only requires the 4-byte ACE header to be in bounds;
+it does not require access_req (4 bytes at offset 4) to be readable.
+An attacker who has set a crafted DACL on a file they own can declare
+ace->size == 4 with aces_size == 4, pass both checks, and then
 
-Applying the suggestion then triggers:
+  granted |= le32_to_cpu(ace->access_req);               /* upper loop */
+  compare_sids(&sid, &ace->sid);                         /* lower loop */
 
-    error: manual saturating arithmetic
-      --> drivers/pwm/pwm_th1520.rs:64:5
-       |
-    64 |     ns.checked_mul(rate_hz).unwrap_or(u64::MAX) / NSEC_PER_SEC_U64
-       |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: consider using `saturating_mul`: `ns.saturating_mul(rate_hz)`
-       |
-       = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.92.0/index.html#manual_saturating_arithmetic
-       = note: `-D clippy::manual-saturating-arithmetic` implied by `-D warnings`
-       = help: to override `-D warnings` add `#[allow(clippy::manual_saturating_arithmetic)]`
+reads access_req at offset 4 (OOB by up to 4 bytes) and ace->sid at
+offset 8 (OOB by up to CIFS_SID_BASE_SIZE + SID_MAX_SUB_AUTHORITIES
+* 4 bytes).
 
-Thus fix it by using saturating arithmetic, which simplifies the code
-as well.
+Tighten both loops to require
 
-Link: https://rust-for-linux.com/contributing#submit-checklist-addendum [1]
-Fixes: e03724aac758 ("pwm: Add Rust driver for T-HEAD TH1520 SoC")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Michal Wilczynski <m.wilczynski@samsung.com>
-Link: https://patch.msgid.link/20260121183719.71659-1-ojeda@kernel.org
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  ace_size >= offsetof(struct smb_ace, sid) + CIFS_SID_BASE_SIZE
+
+which is the smallest valid on-wire ACE layout (4-byte header +
+4-byte access_req + 8-byte sid base with zero sub-auths).  Also
+reject ACEs whose sid.num_subauth exceeds SID_MAX_SUB_AUTHORITIES
+before letting compare_sids() dereference sub_auth[] entries.
+
+parse_sec_desc() already enforces an equivalent check (lines 441-448);
+smb_check_perm_dacl() simply grew weaker validation over time.
+
+Reachability: authenticated SMB client with permission to set an ACL
+on a file.  On a subsequent CREATE against that file, the kernel
+walks the stored DACL via smb_check_perm_dacl() and triggers the
+OOB read.  Not pre-auth, and the OOB read is not reflected to the
+attacker, but KASAN reports and kernel state corruption are
+possible.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm_th1520.rs | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/smb/server/smbacl.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pwm/pwm_th1520.rs b/drivers/pwm/pwm_th1520.rs
-index b0e24ee724e45..36567fc17dcc8 100644
---- a/drivers/pwm/pwm_th1520.rs
-+++ b/drivers/pwm/pwm_th1520.rs
-@@ -64,10 +64,7 @@ const fn th1520_pwm_fp(n: u32) -> usize {
- fn ns_to_cycles(ns: u64, rate_hz: u64) -> u64 {
-     const NSEC_PER_SEC_U64: u64 = time::NSEC_PER_SEC as u64;
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1342,10 +1342,13 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 		ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+ 		aces_size = acl_size - sizeof(struct smb_acl);
+ 		for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
+-			if (offsetof(struct smb_ace, access_req) > aces_size)
++			if (offsetof(struct smb_ace, sid) +
++			    aces_size < CIFS_SID_BASE_SIZE)
+ 				break;
+ 			ace_size = le16_to_cpu(ace->size);
+-			if (ace_size > aces_size)
++			if (ace_size > aces_size ||
++			    ace_size < offsetof(struct smb_ace, sid) +
++				       CIFS_SID_BASE_SIZE)
+ 				break;
+ 			aces_size -= ace_size;
+ 			granted |= le32_to_cpu(ace->access_req);
+@@ -1360,13 +1363,19 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 	ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+ 	aces_size = acl_size - sizeof(struct smb_acl);
+ 	for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
+-		if (offsetof(struct smb_ace, access_req) > aces_size)
++		if (offsetof(struct smb_ace, sid) +
++		    aces_size < CIFS_SID_BASE_SIZE)
+ 			break;
+ 		ace_size = le16_to_cpu(ace->size);
+-		if (ace_size > aces_size)
++		if (ace_size > aces_size ||
++		    ace_size < offsetof(struct smb_ace, sid) +
++			       CIFS_SID_BASE_SIZE)
+ 			break;
+ 		aces_size -= ace_size;
  
--    (match ns.checked_mul(rate_hz) {
--        Some(product) => product,
--        None => u64::MAX,
--    }) / NSEC_PER_SEC_U64
-+    ns.saturating_mul(rate_hz) / NSEC_PER_SEC_U64
- }
- 
- fn cycles_to_ns(cycles: u64, rate_hz: u64) -> u64 {
--- 
-2.53.0
-
++		if (ace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES)
++			break;
++
+ 		if (!compare_sids(&sid, &ace->sid) ||
+ 		    !compare_sids(&sid_unix_NFS_mode, &ace->sid)) {
+ 			found = 1;
 
 
