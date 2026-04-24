@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335E33C1976;
-	Fri, 24 Apr 2026 13:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9125419A288;
+	Fri, 24 Apr 2026 13:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038030; cv=none; b=QZMg/1P/HiVqS1QingtEis/7IEpwPM6M5am6jABJnDnXV+HffKIRMCTbwUfA/hebJL1NBojhxbaO0siX9S+W1BC3arTLu74WlFvQruoJwDJMlcANMD8v4i/t3DUK8r61Clt7oc165p0yjoY3mhGWCYTwbGYVx1ASAwF+cYcVR/w=
+	t=1777038032; cv=none; b=lbKho3POCUt3bOLL3OAK4zZf0Pb6jY1+AkEG233Wgv32FZaXSxs4uqUhMJwlyCms/HUcRFb34Yi4Dpl6NNBK+izigbIEMMn/BvI59a8eClohZoUzRKXeAU2t9VS27txv+eshscDkR5/1Kux4cUoGIWDr2rNkP4FYqGghRr/NS8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038030; c=relaxed/simple;
-	bh=KwLJpwpNcIstCNqAQLD+7Rk/3pGPnT3qqpxNvuvXowI=;
+	s=arc-20240116; t=1777038032; c=relaxed/simple;
+	bh=YBhw0Xu6MQED94xu0Ejsc1Q6KpfE+ZrQf1ZUPSkJzo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KP4Dx9aUtQRwvUnq5g3yb1z/uUoqMr4Y1SjSnxUYHg8mFE9cq9f1R2N088DDFB0SsykNCcC4boPaKrUYE/oZCvnr+xLTahWiET8OX58JT5CCc2ALZTQVOGuWgt/SpaX+/jbqI1YxwczjSVovp3zfL+VEnvh7WZSqCJLPV0W4ilE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfe7Ww1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YV6yr3t+pyUavvQV7K/4jNWMPFFBJyZmQ2MXBRksdf26v68HayOmzw/tV3gNh7DXKnbWbg76vMZKJezt0nt7Ly+nTKmex7sqdhylTex3bWkX7LmA7W2hHmTMOxTeILgx29bA+dEVPmUGSRAylbLjzTk3i43RGI7zn+aM6awtvj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oT578Oxd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfe7Ww1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0E4C19425;
-	Fri, 24 Apr 2026 13:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oT578Oxd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE84C19425;
+	Fri, 24 Apr 2026 13:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038029;
-	bh=KwLJpwpNcIstCNqAQLD+7Rk/3pGPnT3qqpxNvuvXowI=;
+	s=korg; t=1777038032;
+	bh=YBhw0Xu6MQED94xu0Ejsc1Q6KpfE+ZrQf1ZUPSkJzo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfe7Ww1T0SKQ7Wv9j9AX/QzVgBtXHMBa3lun4pS712skT8VNczvmG+oin2JtOg5l9
-	 3MgyUXHEu9uq4JbHkfre+191os6qgsWMLX9O07lHoVpwDDLh1Up0mMUDlUiBCmPk9N
-	 6sqkGTjUUFvbCUttjA46t7HVCgczw2lKBoL2o8cs=
+	b=oT578OxdQ+x2846RitZCYCTbTo2T6M/N7z1h9AdrjpFXaUJbVD8cl7Ys8bVR3/wpq
+	 aHdCdTR+zXOzpv674M/FByzv382SNLnY8mP6wrcXdUkySoBfgE6HbcqZrjYPUTA3+/
+	 1H5mM7AWk9B86vIVStUj4ZxTz/BWtfEzSNYvDYXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Sebastian Alba Vives <sebasjosue84@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 164/166] crypto: ccp: Dont attempt to copy ID to userspace if PSP command failed
-Date: Fri, 24 Apr 2026 15:31:18 +0200
-Message-ID: <20260424132607.359726993@linuxfoundation.org>
+	Anderson Nascimento <anderson@allelesecurity.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 165/166] rxrpc: Fix missing validation of ticket length in non-XDR key preparsing
+Date: Fri, 24 Apr 2026 15:31:19 +0200
+Message-ID: <20260424132607.605269735@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -52,72 +56,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Anderson Nascimento <anderson@allelesecurity.com>
 
-commit 4f685dbfa87c546e51d9dc6cab379d20f275e114 upstream.
+commit ac33733b10b484d666f97688561670afd5861383 upstream.
 
-When retrieving the ID for the CPU, don't attempt to copy the ID blob to
-userspace if the firmware command failed.  If the failure was due to an
-invalid length, i.e. the userspace buffer+length was too small, copying
-the number of bytes _firmware_ requires will overflow the kernel-allocated
-buffer and leak data to userspace.
+In rxrpc_preparse(), there are two paths for parsing key payloads: the
+XDR path (for large payloads) and the non-XDR path (for payloads <= 28
+bytes). While the XDR path (rxrpc_preparse_xdr_rxkad()) correctly
+validates the ticket length against AFSTOKEN_RK_TIX_MAX, the non-XDR
+path fails to do so.
 
-  BUG: KASAN: slab-out-of-bounds in instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
-  BUG: KASAN: slab-out-of-bounds in _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
-  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
-  Read of size 64 at addr ffff8881867f5960 by task syz.0.906/24388
+This allows an unprivileged user to provide a very large ticket length.
+When this key is later read via rxrpc_read(), the total
+token size (toksize) calculation results in a value that exceeds
+AFSTOKEN_LENGTH_MAX, triggering a WARN_ON().
 
-  CPU: 130 UID: 0 PID: 24388 Comm: syz.0.906 Tainted: G     U     O        7.0.0-smp-DEV #28 PREEMPTLAZY
-  Tainted: [U]=USER, [O]=OOT_MODULE
-  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.62.0-0 11/19/2025
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0xc5/0x110 ../lib/dump_stack.c:120
-   print_address_description ../mm/kasan/report.c:378 [inline]
-   print_report+0xbc/0x260 ../mm/kasan/report.c:482
-   kasan_report+0xa2/0xe0 ../mm/kasan/report.c:595
-   check_region_inline ../mm/kasan/generic.c:-1 [inline]
-   kasan_check_range+0x264/0x2c0 ../mm/kasan/generic.c:200
-   instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
-   _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
-   _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
-   copy_to_user ../include/linux/uaccess.h:236 [inline]
-   sev_ioctl_do_get_id2+0x361/0x490 ../drivers/crypto/ccp/sev-dev.c:2222
-   sev_ioctl+0x25f/0x490 ../drivers/crypto/ccp/sev-dev.c:2575
-   vfs_ioctl ../fs/ioctl.c:51 [inline]
-   __do_sys_ioctl ../fs/ioctl.c:597 [inline]
-   __se_sys_ioctl+0x11d/0x1b0 ../fs/ioctl.c:583
-   do_syscall_x64 ../arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xe0/0x800 ../arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   </TASK>
+[ 2001.302904] WARNING: CPU: 2 PID: 2108 at net/rxrpc/key.c:778 rxrpc_read+0x109/0x5c0 [rxrpc]
 
-WARN if the driver says the command succeeded, but the firmware error code
-says otherwise, as __sev_do_cmd_locked() is expected to return -EIO on any
-firwmware error.
+Fix this by adding a check in the non-XDR parsing path of rxrpc_preparse()
+to ensure the ticket length does not exceed AFSTOKEN_RK_TIX_MAX,
+bringing it into parity with the XDR parsing logic.
 
-Reported-by: Alexander Potapenko <glider@google.com>
-Reported-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
-Fixes: d6112ea0cb34 ("crypto: ccp - introduce SEV_GET_ID2 command")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
+Fixes: 84924aac08a4 ("rxrpc: Fix checker warning")
+Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
+Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-7-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/rxrpc/key.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -932,6 +932,9 @@ static int sev_ioctl_do_get_id2(struct s
- 		goto e_free;
- 	}
+--- a/net/rxrpc/key.c
++++ b/net/rxrpc/key.c
+@@ -340,6 +340,10 @@ static int rxrpc_preparse(struct key_pre
+ 	if (v1->security_index != RXRPC_SECURITY_RXKAD)
+ 		goto error;
  
-+	if (ret || WARN_ON_ONCE(argp->error))
-+		goto e_free;
++	ret = -EKEYREJECTED;
++	if (v1->ticket_length > AFSTOKEN_RK_TIX_MAX)
++		goto error;
 +
- 	if (id_blob) {
- 		if (copy_to_user(input_address, id_blob, data.len)) {
- 			ret = -EFAULT;
+ 	plen = sizeof(*token->kad) + v1->ticket_length;
+ 	prep->quotalen += plen + sizeof(*token);
+ 
 
 
