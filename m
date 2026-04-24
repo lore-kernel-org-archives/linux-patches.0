@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EAA179A3;
-	Fri, 24 Apr 2026 13:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EC63563D4;
+	Fri, 24 Apr 2026 13:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037888; cv=none; b=k0PISuQoNLguIg/KOvDOEzDBfzAcwq4Lr1CArju/PLv6XBcq0iYK2lxfqWjCzwr6rfJPWSX/hT2IK4WEmrmpwWk1hdPJUYhYv3uSWc7j3OwlavN9l83tL0mGIJZhQx82qjWS/nhv+sSOy5u3xk6697+mewB+XXMGN5MSqEmpQk4=
+	t=1777037891; cv=none; b=VIL6aDWn4v6Ei1AEsWSEiz28U3DywjeNP7XXkGQ1Od4zDphhynvpi+CwlnaNwaT9/Z82UduxSPuMV5stgbaY7DGMTlKhkF7p3h8JFLq8qM31tJlwT3KpOcS0LXpB333T9BtilCTFQT6QO3ShGrgC4CGwg9RqmeH2QfI/1OXXeYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037888; c=relaxed/simple;
-	bh=4xs9W+hF20+D6leBYXKym3uZssBJDL/YV1Jjb5EX3SE=;
+	s=arc-20240116; t=1777037891; c=relaxed/simple;
+	bh=3J5epikscuQCoHhk3PQ/TOFbLPUP4u+aCiKmLvtKchI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdBVA9V9+q8st7dw90dAWapG5SkIv9yt29O6zpTQcyw9R6xeN0oOs8O0/hJ+q7y7nf5yHTw4udOvPdf4e7vc/5UpSVj2kxm2MeRJew8ZdSkM4tlTqGGaG6VJfA2d+KfXRTLr7BEJbJ6yHQVSCFrUkh29mgWs6RwlBUTu3GkKLp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdPxgPr0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fQKP2XSLeThV3nBUK6hOnqvvHiYt7YKSnJ8fDyK67OG/ulXHJCDP7mPWunJUn+SsZlXzt+i4/tyM80au+/5aAW0FgQ1QJWJV48dHI16SMpVo7R/xQk1GmMIyAKuK3/lLSp5qykk0Re9iEFQh3UAPXbB1Htvc2JnQv9Wk0NhG/RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhYIdjp1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdPxgPr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF933C2BCB5;
-	Fri, 24 Apr 2026 13:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhYIdjp1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC0BC2BCB5;
+	Fri, 24 Apr 2026 13:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037888;
-	bh=4xs9W+hF20+D6leBYXKym3uZssBJDL/YV1Jjb5EX3SE=;
+	s=korg; t=1777037890;
+	bh=3J5epikscuQCoHhk3PQ/TOFbLPUP4u+aCiKmLvtKchI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdPxgPr05uj4e0wZzXLVuMcxid5R6dWhCce4eLqIaylYgIWHmbNaqAqP9zBtMbafb
-	 3hea/xDTgVG0eAVi4xZ6n2yseaJMb2wNJGXQI61CC3oDQ1Uk7/zry5+waVUKQnylAR
-	 kPihsk5SrN8KbnHmYiq7rcuYWIxTUP3SoJsM0zy4=
+	b=DhYIdjp1pFDGhcrFiybBgIfgXYgoyxEGyOSuRFQeMIKQc1D3O0vV4P8xQ98X7c3vt
+	 vpyVm10Bb+fh5zMiQREzmkyiQvp08gSiHtuzfR17XV5nVlXen4CmT9HgbSwZqYnyjH
+	 NEfQJGiHY1smVnYSwweEvDB2tbm9lmA+qFZviTwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Rajani Kantha <681739313@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/166] nfc: nci: complete pending data exchange on device close
-Date: Fri, 24 Apr 2026 15:30:22 +0200
-Message-ID: <20260424132555.362932751@linuxfoundation.org>
+Subject: [PATCH 6.6 109/166] blktrace: fix __this_cpu_read/write in preemptible context
+Date: Fri, 24 Apr 2026 15:30:23 +0200
+Message-ID: <20260424132555.576208841@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -52,70 +54,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit 66083581945bd5b8e99fe49b5aeb83d03f62d053 ]
+[ Upstream commit da46b5dfef48658d03347cda21532bcdbb521e67 ]
 
-In nci_close_device(), complete any pending data exchange before
-closing. The data exchange callback (e.g.
-rawsock_data_exchange_complete) holds a socket reference.
+tracing_record_cmdline() internally uses __this_cpu_read() and
+__this_cpu_write() on the per-CPU variable trace_cmdline_save, and
+trace_save_cmdline() explicitly asserts preemption is disabled via
+lockdep_assert_preemption_disabled(). These operations are only safe
+when preemption is off, as they were designed to be called from the
+scheduler context (probe_wakeup_sched_switch() / probe_wakeup()).
 
-NIPA occasionally hits this leak:
+__blk_add_trace() was calling tracing_record_cmdline(current) early in
+the blk_tracer path, before ring buffer reservation, from process
+context where preemption is fully enabled. This triggers the following
+using blktests/blktrace/002:
 
-unreferenced object 0xff1100000f435000 (size 2048):
-  comm "nci_dev", pid 3954, jiffies 4295441245
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    27 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  '..@............
-  backtrace (crc ec2b3c5):
-    __kmalloc_noprof+0x4db/0x730
-    sk_prot_alloc.isra.0+0xe4/0x1d0
-    sk_alloc+0x36/0x760
-    rawsock_create+0xd1/0x540
-    nfc_sock_create+0x11f/0x280
-    __sock_create+0x22d/0x630
-    __sys_socket+0x115/0x1d0
-    __x64_sys_socket+0x72/0xd0
-    do_syscall_64+0x117/0xfc0
-    entry_SYSCALL_64_after_hwframe+0x4b/0x53
+blktrace/002 (blktrace ftrace corruption with sysfs trace)   [failed]
+    runtime  0.367s  ...  0.437s
+    something found in dmesg:
+    [   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
+    [   81.239580] null_blk: disk nullb1 created
+    [   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
+    [   81.362842] caller is tracing_record_cmdline+0x10/0x40
+    [   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
+    [   81.362877] Tainted: [N]=TEST
+    [   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+    [   81.362881] Call Trace:
+    [   81.362884]  <TASK>
+    [   81.362886]  dump_stack_lvl+0x8d/0xb0
+    ...
+    (See '/mnt/sda/blktests/results/nodev/blktrace/002.dmesg' for the entire message)
 
-Fixes: 38f04c6b1b68 ("NFC: protect nci_data_exchange transactions")
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260303162346.2071888-4-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
+[   81.239580] null_blk: disk nullb1 created
+[   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
+[   81.362842] caller is tracing_record_cmdline+0x10/0x40
+[   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
+[   81.362877] Tainted: [N]=TEST
+[   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[   81.362881] Call Trace:
+[   81.362884]  <TASK>
+[   81.362886]  dump_stack_lvl+0x8d/0xb0
+[   81.362895]  check_preemption_disabled+0xce/0xe0
+[   81.362902]  tracing_record_cmdline+0x10/0x40
+[   81.362923]  __blk_add_trace+0x307/0x5d0
+[   81.362934]  ? lock_acquire+0xe0/0x300
+[   81.362940]  ? iov_iter_extract_pages+0x101/0xa30
+[   81.362959]  blk_add_trace_bio+0x106/0x1e0
+[   81.362968]  submit_bio_noacct_nocheck+0x24b/0x3a0
+[   81.362979]  ? lockdep_init_map_type+0x58/0x260
+[   81.362988]  submit_bio_wait+0x56/0x90
+[   81.363009]  __blkdev_direct_IO_simple+0x16c/0x250
+[   81.363026]  ? __pfx_submit_bio_wait_endio+0x10/0x10
+[   81.363038]  ? rcu_read_lock_any_held+0x73/0xa0
+[   81.363051]  blkdev_read_iter+0xc1/0x140
+[   81.363059]  vfs_read+0x20b/0x330
+[   81.363083]  ksys_read+0x67/0xe0
+[   81.363090]  do_syscall_64+0xbf/0xf00
+[   81.363102]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   81.363106] RIP: 0033:0x7f281906029d
+[   81.363111] Code: 31 c0 e9 c6 fe ff ff 50 48 8d 3d 66 63 0a 00 e8 59 ff 01 00 66 0f 1f 84 00 00 00 00 00 80 3d 41 33 0e 00 00 74 17 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 5b c3 66 2e 0f 1f 84 00 00 00 00 00 48 83 ec
+[   81.363113] RSP: 002b:00007ffca127dd48 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[   81.363120] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f281906029d
+[   81.363122] RDX: 0000000000001000 RSI: 0000559f8bfae000 RDI: 0000000000000000
+[   81.363123] RBP: 0000000000001000 R08: 0000002863a10a81 R09: 00007f281915f000
+[   81.363124] R10: 00007f2818f77b60 R11: 0000000000000246 R12: 0000559f8bfae000
+[   81.363126] R13: 0000000000000000 R14: 0000000000000000 R15: 000000000000000a
+[   81.363142]  </TASK>
+
+The same BUG fires from blk_add_trace_plug(), blk_add_trace_unplug(),
+and blk_add_trace_rq() paths as well.
+
+The purpose of tracing_record_cmdline() is to cache the task->comm for
+a given PID so that the trace can later resolve it. It is only
+meaningful when a trace event is actually being recorded. Ring buffer
+reservation via ring_buffer_lock_reserve() disables preemption, and
+preemption remains disabled until the event is committed :-
+
+__blk_add_trace()
+       	__trace_buffer_lock_reserve()
+       		__trace_buffer_lock_reserve()
+       			ring_buffer_lock_reserve()
+       				preempt_disable_notrace();  <---
+
+With this fix blktests for blktrace pass:
+
+  blktests (master) # ./check blktrace
+  blktrace/001 (blktrace zone management command tracing)      [passed]
+      runtime  3.650s  ...  3.647s
+  blktrace/002 (blktrace ftrace corruption with sysfs trace)   [passed]
+      runtime  0.411s  ...  0.384s
+
+Fixes: 7ffbd48d5cab ("tracing: Cache comms only after an event occurred")
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/trace/blktrace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index e2ffdb06bf9aa..fb81d9909500f 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -567,6 +567,10 @@ static int nci_close_device(struct nci_dev *ndev)
- 		flush_workqueue(ndev->cmd_wq);
- 		del_timer_sync(&ndev->cmd_timer);
- 		del_timer_sync(&ndev->data_timer);
-+		if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
-+			nci_data_exchange_complete(ndev, NULL,
-+						   ndev->cur_conn_id,
-+						   -ENODEV);
- 		mutex_unlock(&ndev->req_lock);
- 		return 0;
- 	}
-@@ -597,6 +601,11 @@ static int nci_close_device(struct nci_dev *ndev)
- 	flush_workqueue(ndev->cmd_wq);
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index d5d94510afd3f..ce797d8dd451c 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -251,8 +251,6 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
+ 	cpu = raw_smp_processor_id();
  
- 	del_timer_sync(&ndev->cmd_timer);
-+	del_timer_sync(&ndev->data_timer);
+ 	if (blk_tracer) {
+-		tracing_record_cmdline(current);
+-
+ 		buffer = blk_tr->array_buffer.buffer;
+ 		trace_ctx = tracing_gen_ctx_flags(0);
+ 		event = trace_buffer_lock_reserve(buffer, TRACE_BLK,
+@@ -260,6 +258,8 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
+ 						  trace_ctx);
+ 		if (!event)
+ 			return;
 +
-+	if (test_bit(NCI_DATA_EXCHANGE, &ndev->flags))
-+		nci_data_exchange_complete(ndev, NULL, ndev->cur_conn_id,
-+					   -ENODEV);
- 
- 	/* Clear flags except NCI_UNREG */
- 	ndev->flags &= BIT(NCI_UNREG);
++		tracing_record_cmdline(current);
+ 		t = ring_buffer_event_data(event);
+ 		goto record_it;
+ 	}
 -- 
 2.53.0
 
