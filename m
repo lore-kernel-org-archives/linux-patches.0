@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B30C3C1976;
-	Fri, 24 Apr 2026 13:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690333D5236;
+	Fri, 24 Apr 2026 13:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038007; cv=none; b=acnq9otI2Scod27I6i5Zq5rG4rVRhCFhs3jjiTyvtBmzJkVh0vaPHXz0QhSXS6Vb6ctIaqtGn62zuHp0y90oImai0rItxhmoCXycI5+IeOlb/t9tO9Z6XOmmOJNmFXbX0bqN1c6ZRCimrReL4U/qp0Nq26n8Dyn8bqBQJLI+NrY=
+	t=1777038009; cv=none; b=Qo+/OlITdAIppgTfpratahnMNkH7/5deUf9U7d6vZI7FR5FwpXSJL3Tkx/uRg40iaMw3cMdTcztPX9eIT6pvckoF4IXprlnNur9rj68xe4lefxGBG6FT1Yn0GCLkQSb2ui0t4fvStqTATrhnBwvUG6exWqdSTGVmxM5nQJnX0k8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038007; c=relaxed/simple;
-	bh=QRrgYW9vx81BgQKxj8rMk3Ltmrpy4BYZwF371BJWSAQ=;
+	s=arc-20240116; t=1777038009; c=relaxed/simple;
+	bh=eqHJXHiR4HY96dxa3kaoBnwwXNimPhP7ryD1NZWe8lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfBJzWs0b5IZIA3QrwGK3t4to3iyUqPHpruUCAXPrXUcDhe/GvCmiS90lH6nlCfADbzNrzH/O0xXz8w1BMdr6UMN81T452Bllk7Yd5KiegLYUVjtkLbTtUHhylugm+GqxqiKNaone6+87AySYNy/CeMtvmNg1tM6O+0XF824X64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lsoyka37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kt5ijPBVx40OYMjxOQPeB+jWAcDFKwMPCsvj23HAgNov5ToQNE+U4dSy2aXSXTnDMD+DjobMO/vycyBG0Ty/uiPTzFIQfOdqPoYMu3IDFbiG/5r1Ez8B8Z5DuVyW/PLQDjbZ3S0R4+RhTXrA76GNe4MdAOpxq1uuhzx4vO3FmPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNlVW00J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lsoyka37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7214CC19425;
-	Fri, 24 Apr 2026 13:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNlVW00J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28A1C19425;
+	Fri, 24 Apr 2026 13:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038006;
-	bh=QRrgYW9vx81BgQKxj8rMk3Ltmrpy4BYZwF371BJWSAQ=;
+	s=korg; t=1777038009;
+	bh=eqHJXHiR4HY96dxa3kaoBnwwXNimPhP7ryD1NZWe8lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lsoyka37z1M/C/vMgWOpKOGjXFmm9Lz6/hod/a5ao6ZPZEIGLaoPRto0woiqB2iZR
-	 M7lHgmgzFmY+whVaDL+Q9qOkeqz1eMV4/EZ4yayusZe6vhNWDScq+n0mDgIXsaHLto
-	 P6MBkHqljc3r1/Jw3lNniv/tC9ETcXpWDuMAsDFo=
+	b=DNlVW00Jqe3zuwJ26Rb+30RuFJWNrzB4AQBybVeqk1joRnVwCBlrZ42nrowvTCAbm
+	 ZnHK62F37pHOP83aDv6UkTpYvbutYb1aWsZp/oas3YrdLHIMPbsqz8fhu5mZ/d9XOS
+	 PlW5pKN3BvxZ347WRv/MRQ3JS1reBBF3m1bYAP0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 121/166] bcache: fix cached_dev.sb_bio use-after-free and crash
-Date: Fri, 24 Apr 2026 15:30:35 +0200
-Message-ID: <20260424132558.107018879@linuxfoundation.org>
+	syzbot+47321e8fd5a4c84088db@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 122/166] media: as102: fix to not free memory after the device is registered in as102_usb_probe()
+Date: Fri, 24 Apr 2026 15:30:36 +0200
+Message-ID: <20260424132558.379230934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,67 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit fec114a98b8735ee89c75216c45a78e28be0f128 upstream.
+commit 8bd29dbe03fc5b0f039ab2395ff37b64236d2f0c upstream.
 
-In our production environment, we have received multiple crash reports
-regarding libceph, which have caught our attention:
-
+In as102_usb driver, the following race condition occurs:
 ```
-[6888366.280350] Call Trace:
-[6888366.280452]  blk_update_request+0x14e/0x370
-[6888366.280561]  blk_mq_end_request+0x1a/0x130
-[6888366.280671]  rbd_img_handle_request+0x1a0/0x1b0 [rbd]
-[6888366.280792]  rbd_obj_handle_request+0x32/0x40 [rbd]
-[6888366.280903]  __complete_request+0x22/0x70 [libceph]
-[6888366.281032]  osd_dispatch+0x15e/0xb40 [libceph]
-[6888366.281164]  ? inet_recvmsg+0x5b/0xd0
-[6888366.281272]  ? ceph_tcp_recvmsg+0x6f/0xa0 [libceph]
-[6888366.281405]  ceph_con_process_message+0x79/0x140 [libceph]
-[6888366.281534]  ceph_con_v1_try_read+0x5d7/0xf30 [libceph]
-[6888366.281661]  ceph_con_workfn+0x329/0x680 [libceph]
+		CPU0						CPU1
+as102_usb_probe()
+  kzalloc(); // alloc as102_dev_t
+  ....
+  usb_register_dev();
+						fd = sys_open("/path/to/dev"); // open as102 fd
+						....
+  usb_deregister_dev();
+  ....
+  kfree(); // free as102_dev_t
+  ....
+						sys_close(fd);
+						  as102_release() // UAF!!
+						    as102_usb_release()
+						      kfree(); // DFB!!
 ```
 
-After analyzing the coredump file, we found that the address of
-dc->sb_bio has been freed. We know that cached_dev is only freed when it
-is stopped.
+When a USB character device registered with usb_register_dev() is later
+unregistered (via usb_deregister_dev() or disconnect), the device node is
+removed so new open() calls fail. However, file descriptors that are
+already open do not go away immediately: they remain valid until the last
+reference is dropped and the driver's .release() is invoked.
 
-Since sb_bio is a part of struct cached_dev, rather than an alloc every
-time.  If the device is stopped while writing to the superblock, the
-released address will be accessed at endio.
+In as102, as102_usb_probe() calls usb_register_dev() and then, on an
+error path, does usb_deregister_dev() and frees as102_dev_t right away.
+If userspace raced a successful open() before the deregistration, that
+open FD will later hit as102_release() --> as102_usb_release() and access
+or free as102_dev_t again, occur a race to use-after-free and
+double-free vuln.
 
-This patch hopes to wait for sb_write to complete in cached_dev_free.
+The fix is to never kfree(as102_dev_t) directly once usb_register_dev()
+has succeeded. After deregistration, defer freeing memory to .release().
 
-It should be noted that we analyzed the cause of the problem, then tell
-all details to the QWEN and adopted the modifications it made.
+In other words, let release() perform the last kfree when the final open
+FD is closed.
 
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Fixes: cafe563591446 ("bcache: A block layer cache")
-Cc: stable@vger.kernel.org # 3.10+
-Signed-off-by: Coly Li <colyli@fnnas.com>
-Link: https://patch.msgid.link/20260322134102.480107-1-colyli@fnnas.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+47321e8fd5a4c84088db@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=47321e8fd5a4c84088db
+Fixes: cd19f7d3e39b ("[media] as102: fix leaks at failure paths in as102_usb_probe()")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/super.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/usb/as102/as102_usb_drv.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1367,6 +1367,13 @@ static void cached_dev_free(struct closu
- 
- 	mutex_unlock(&bch_register_lock);
- 
-+	/*
-+	 * Wait for any pending sb_write to complete before free.
-+	 * The sb_bio is embedded in struct cached_dev, so we must
-+	 * ensure no I/O is in progress.
-+	 */
-+	closure_sync(&dc->sb_write);
-+
- 	if (dc->sb_disk)
- 		put_page(virt_to_page(dc->sb_disk));
- 
+--- a/drivers/media/usb/as102/as102_usb_drv.c
++++ b/drivers/media/usb/as102/as102_usb_drv.c
+@@ -403,7 +403,9 @@ static int as102_usb_probe(struct usb_in
+ failed_dvb:
+ 	as102_free_usb_stream_buffer(as102_dev);
+ failed_stream:
++	usb_set_intfdata(intf, NULL);
+ 	usb_deregister_dev(intf, &as102_usb_class_driver);
++	return ret;
+ failed:
+ 	usb_put_dev(as102_dev->bus_adap.usb_dev);
+ 	usb_set_intfdata(intf, NULL);
 
 
