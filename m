@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637BD33E347;
-	Fri, 24 Apr 2026 13:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331713D47B0;
+	Fri, 24 Apr 2026 13:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037942; cv=none; b=BLtrY7TBwW2KR0CsTgYW5ELKT22WlBsaWKZmZ8HBo+FQwsBxGt/r5Cv/0xL7WHJ4Yp/7EBa/2Dw3nG9G/2JVBjQQQJP/8HSnW7NcKB+ZzNxO7IpoCkMJegH5ikoeurpzJjbVoQE+O+ONFHKbZbML7UnaQe+vxTDxAh7HlgW7vj0=
+	t=1777037945; cv=none; b=X5Djt+fEVV7HR1/lI10ZFKlEW6u+p2LHHZnvWxynSj0kb2NZHxRrdwNThhhcTKcQlyxOimR+ageH5q7DsAHhT68YTmi6mBkMY98FuNrU92Sy21yQ4yg1RAN6BjsdscCPHxuZq3OBCgOzshARLtQmhxP066LQN5rcmlBQAD2N7JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037942; c=relaxed/simple;
-	bh=g4hi8mzWjRaiI84Gma+5B5Rb0F1ckTsMdl9iV2frB8M=;
+	s=arc-20240116; t=1777037945; c=relaxed/simple;
+	bh=7bV7oExWtZalEKrFDlVHsqtTMOTMu03CRgsmygFrNAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W70lHlCxWVOPBigcEaYQ772+Uk9lsW7GsC4aPCwLQPeIPKn/WQfTXSk5eJQ+fgoKIYDuvOFxu3lTTY0+SZvk5CVAbtde+q2oZWODsvwKB1w790JUO/QsyQ4eqUnQiBfYisfPqwCYwxqLMiP4wN8ynVFmkxDwAwPMQYiGeDg2eKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuTkK689; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U2ry4hXc5N9NlgTwYMvh8eAMWZWdItGbdIFCZco2ZYNUQacmx3GLg8HxQbC63EP01iCGgJyiDs4Q8HsWYELh/PaHuj/Kf68W8OrnQ5bqlJp1hO9eQeJbdgQ606mPSNPTh6YDfmOph2uUKr5wzn4Xpbru2SHbzLwk33rlGnIH20s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=serdd83I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuTkK689"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB16C19425;
-	Fri, 24 Apr 2026 13:39:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="serdd83I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A16C19425;
+	Fri, 24 Apr 2026 13:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037942;
-	bh=g4hi8mzWjRaiI84Gma+5B5Rb0F1ckTsMdl9iV2frB8M=;
+	s=korg; t=1777037944;
+	bh=7bV7oExWtZalEKrFDlVHsqtTMOTMu03CRgsmygFrNAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xuTkK689F0GLWXwrVaoV7fZ1Q8kstWHZwk+7Jx5sinGJTbJHEuTnV3MYEL9mKZgOY
-	 3zQnRtuB1sVwwG75BnWTvBXguDuZm2OzVYQWtvxJf5cCh7ggPFrpuuKeBNvZnFJIEp
-	 bNSIGsLgSyW+HWSU0gMhquFM4yOqUcj6Jn/tIrwg=
+	b=serdd83IG6Qo1M7LmTlV6cA209aKJsgNHE4TlBDjLv/xbYIZJOGz9PllLj4r1havc
+	 94Z0fk6Q0fxGMshQxOUp4/QOxObtRpBQpllaX0MZ3U/qNULf+nNudtrfysoeF7TlsD
+	 Ds60q/L8RXzVqg/q9h+hMYR7d1iisdMf2aXlesWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Li hongliang <1468888505@139.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/166] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
-Date: Fri, 24 Apr 2026 15:30:44 +0200
-Message-ID: <20260424132600.130441339@linuxfoundation.org>
+Subject: [PATCH 6.6 131/166] net: ethernet: mtk_eth_soc: initialize PPE per-tag-layer MTU registers
+Date: Fri, 24 Apr 2026 15:30:45 +0200
+Message-ID: <20260424132600.336933910@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -52,105 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit d5ad6ab61cbd89afdb60881f6274f74328af3ee9 ]
+commit 2dddb34dd0d07b01fa770eca89480a4da4f13153 upstream.
 
-ieee80211_tx_prepare_skb() has three error paths, but only two of them
-free the skb. The first error path (ieee80211_tx_prepare() returning
-TX_DROP) does not free it, while invoke_tx_handlers() failure and the
-fragmentation check both do.
+The PPE enforces output frame size limits via per-tag-layer VLAN_MTU
+registers that the driver never initializes. The hardware defaults do
+not account for PPPoE overhead, causing the PPE to punt encapsulated
+frames back to the CPU instead of forwarding them.
 
-Add kfree_skb() to the first error path so all three are consistent,
-and remove the now-redundant frees in callers (ath9k, mt76,
-mac80211_hwsim) to avoid double-free.
+Initialize the registers at PPE start and on MTU changes using the
+maximum GMAC MTU. This is a conservative approximation -- the actual
+per-PPE requirement depends on egress path, but using the global
+maximum ensures the limits are never too small.
 
-Document the skb ownership guarantee in the function's kdoc.
-
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260314065455.2462900-1-nbd@nbd.name
-Fixes: 06be6b149f7e ("mac80211: add ieee80211_tx_prepare_skb() helper function")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ Exclude changes to drivers/net/wireless/mediatek/mt76/scan.c as this file is first
- introduced by commit 31083e38548f("wifi: mt76: add code for emulating hardware scanning")
- after linux-6.14.]
-Signed-off-by: Li hongliang <1468888505@139.com>
+Fixes: ba37b7caf1ed ("net: ethernet: mtk_eth_soc: add support for initializing the PPE")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/ec995ab8ce8be423267a1cc093147a74d2eb9d82.1775789829.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/channel.c      | 6 ++----
- drivers/net/wireless/virtual/mac80211_hwsim.c | 1 -
- include/net/mac80211.h                        | 4 ++++
- net/mac80211/tx.c                             | 4 +++-
- 4 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 22 ++++++++++++++-
+ drivers/net/ethernet/mediatek/mtk_ppe.c     | 30 +++++++++++++++++++++
+ drivers/net/ethernet/mediatek/mtk_ppe.h     |  1 +
+ 3 files changed, 52 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/channel.c b/drivers/net/wireless/ath/ath9k/channel.c
-index 571062f2e82a7..ba8ec5112afe8 100644
---- a/drivers/net/wireless/ath/ath9k/channel.c
-+++ b/drivers/net/wireless/ath/ath9k/channel.c
-@@ -1011,7 +1011,7 @@ static void ath_scan_send_probe(struct ath_softc *sc,
- 	skb_set_queue_mapping(skb, IEEE80211_AC_VO);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index e2d3bda1dc923..74cb96dbff9ee 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3368,11 +3368,22 @@ static int mtk_device_event(struct notifier_block *n, unsigned long event, void
+ 	return NOTIFY_DONE;
+ }
  
- 	if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, NULL))
--		goto error;
++static int mtk_max_gmac_mtu(struct mtk_eth *eth)
++{
++	int i, max_mtu = ETH_DATA_LEN;
++
++	for (i = 0; i < ARRAY_SIZE(eth->netdev); i++)
++		if (eth->netdev[i] && eth->netdev[i]->mtu > max_mtu)
++			max_mtu = eth->netdev[i]->mtu;
++
++	return max_mtu;
++}
++
+ static int mtk_open(struct net_device *dev)
+ {
+ 	struct mtk_mac *mac = netdev_priv(dev);
+ 	struct mtk_eth *eth = mac->hw;
+-	int i, err;
++	int i, err, mtu;
+ 
+ 	err = phylink_of_phy_connect(mac->phylink, mac->of_node, 0);
+ 	if (err) {
+@@ -3400,6 +3411,10 @@ static int mtk_open(struct net_device *dev)
+ 						  : MTK_GDMA_TO_PDMA;
+ 		mtk_gdm_config(eth, gdm_config);
+ 
++		mtu = mtk_max_gmac_mtu(eth);
++		for (i = 0; i < ARRAY_SIZE(eth->ppe); i++)
++			mtk_ppe_update_mtu(eth->ppe[i], mtu);
++
+ 		napi_enable(&eth->tx_napi);
+ 		napi_enable(&eth->rx_napi);
+ 		mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
+@@ -4088,6 +4103,7 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
+ 	int length = new_mtu + MTK_RX_ETH_HLEN;
+ 	struct mtk_mac *mac = netdev_priv(dev);
+ 	struct mtk_eth *eth = mac->hw;
++	int max_mtu, i;
+ 
+ 	if (rcu_access_pointer(eth->prog) &&
+ 	    length > MTK_PP_MAX_BUF_SIZE) {
+@@ -4098,6 +4114,10 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
+ 	mtk_set_mcr_max_rx(mac, length);
+ 	dev->mtu = new_mtu;
+ 
++	max_mtu = mtk_max_gmac_mtu(eth);
++	for (i = 0; i < ARRAY_SIZE(eth->ppe); i++)
++		mtk_ppe_update_mtu(eth->ppe[i], max_mtu);
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
+index 6e222a000bf7e..1e033d63b4510 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe.c
++++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
+@@ -971,6 +971,36 @@ static void mtk_ppe_init_foe_table(struct mtk_ppe *ppe)
+ 	}
+ }
+ 
++void mtk_ppe_update_mtu(struct mtk_ppe *ppe, int mtu)
++{
++	int base;
++	u32 val;
++
++	if (!ppe)
 +		return;
++
++	/* The PPE checks output frame size against per-tag-layer MTU limits,
++	 * treating PPPoE and DSA tags just like 802.1Q VLAN tags. The Linux
++	 * device MTU already accounts for PPPoE (PPPOE_SES_HLEN) and DSA tag
++	 * overhead, but 802.1Q VLAN tags are handled transparently without
++	 * being reflected by the lower device MTU being increased by 4.
++	 * Use the maximum MTU across all GMAC interfaces so that PPE output
++	 * frame limits are sufficiently high regardless of which port a flow
++	 * egresses through.
++	 */
++	base = ETH_HLEN + mtu;
++
++	val = FIELD_PREP(MTK_PPE_VLAN_MTU0_NONE, base) |
++	      FIELD_PREP(MTK_PPE_VLAN_MTU0_1TAG, base + VLAN_HLEN);
++	ppe_w32(ppe, MTK_PPE_VLAN_MTU0, val);
++
++	val = FIELD_PREP(MTK_PPE_VLAN_MTU1_2TAG,
++			 base + 2 * VLAN_HLEN) |
++	      FIELD_PREP(MTK_PPE_VLAN_MTU1_3TAG,
++			 base + 3 * VLAN_HLEN);
++	ppe_w32(ppe, MTK_PPE_VLAN_MTU1, val);
++}
++
+ void mtk_ppe_start(struct mtk_ppe *ppe)
+ {
+ 	u32 val;
+diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.h b/drivers/net/ethernet/mediatek/mtk_ppe.h
+index e3d0ec72bc699..11c76fb8289ac 100644
+--- a/drivers/net/ethernet/mediatek/mtk_ppe.h
++++ b/drivers/net/ethernet/mediatek/mtk_ppe.h
+@@ -346,6 +346,7 @@ struct mtk_ppe {
+ struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base, int index);
  
- 	txctl.txq = sc->tx.txq_map[IEEE80211_AC_VO];
- 	if (ath_tx_start(sc->hw, skb, &txctl))
-@@ -1124,10 +1124,8 @@ ath_chanctx_send_vif_ps_frame(struct ath_softc *sc, struct ath_vif *avp,
- 
- 		skb->priority = 7;
- 		skb_set_queue_mapping(skb, IEEE80211_AC_VO);
--		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta)) {
--			dev_kfree_skb_any(skb);
-+		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta))
- 			return false;
--		}
- 		break;
- 	default:
- 		return false;
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 1214e7dcc8124..bf12ff0ab06ab 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -2892,7 +2892,6 @@ static void hw_scan_work(struct work_struct *work)
- 						      hwsim->tmp_chan->band,
- 						      NULL)) {
- 				rcu_read_unlock();
--				kfree_skb(probe);
- 				continue;
- 			}
- 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index adaa1b2323d2c..85d785060e761 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -7032,6 +7032,10 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
-  * @band: the band to transmit on
-  * @sta: optional pointer to get the station to send the frame to
-  *
-+ * Return: %true if the skb was prepared, %false otherwise.
-+ * On failure, the skb is freed by this function; callers must not
-+ * free it again.
-+ *
-  * Note: must be called under RCU lock
-  */
- bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 7eddcb6f96455..2a708132320c4 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -1911,8 +1911,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
- 	struct ieee80211_tx_data tx;
- 	struct sk_buff *skb2;
- 
--	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP)
-+	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP) {
-+		kfree_skb(skb);
- 		return false;
-+	}
- 
- 	info->band = band;
- 	info->control.vif = vif;
+ void mtk_ppe_deinit(struct mtk_eth *eth);
++void mtk_ppe_update_mtu(struct mtk_ppe *ppe, int mtu);
+ void mtk_ppe_start(struct mtk_ppe *ppe);
+ int mtk_ppe_stop(struct mtk_ppe *ppe);
+ int mtk_ppe_prepare_reset(struct mtk_ppe *ppe);
 -- 
 2.53.0
 
