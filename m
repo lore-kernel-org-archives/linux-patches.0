@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A476E3D6690;
-	Fri, 24 Apr 2026 13:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ACE179A3;
+	Fri, 24 Apr 2026 13:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037880; cv=none; b=Xhk8Mwa6jdpUXhxa0LZwTEweLV0NDx/mWKgyv+WJh/+azrurPn3Q5Oh/6Dr7EQ/iE5XS9F8bGsfiOYae5jF44VQy9ZXb4+IKhVaf0xx7550uXea5Wm6PkX78wwg36MTz0vQIx/QLPwiHAuPNlQWDF0qfG7ABh1H2x8u+RUcP16o=
+	t=1777037883; cv=none; b=bvNxKbCsibdCQ96/S2jvDiIfmSc22IJX9fyM7A0k91gkSs1YmGzeBhvFtNxPZELaO+L4k5mQdSL0Jid6WPvksdMjaPXZGbwmK+xJEqJa4KAEVBGinJ7hAkNYlKDBWvXcCzUlf+o/mozdLONrTcsXJVkpHxs/7wJ6rOIrRtFT+74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037880; c=relaxed/simple;
-	bh=5cFpHjt3yKTYaMOOBL9XnHuMBCWAVqopZULaDOLeW/4=;
+	s=arc-20240116; t=1777037883; c=relaxed/simple;
+	bh=jO3IGyf/3f6iM77+s4fxbldi3cnR1IUyrqX9wV4ljaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3OpjIhST4QvNRL+FQHQMA2hjO/6hoHniM9ddR6dmBM/KmRPMjs2/tTA6ZFH3GZv4AGwHqeFugwMK9knAGh8ys+3jVSTv8JIZKCDBRejCnSrSCtIbdUlX+QwRyoGHBulETE0mmrrUH7bvgTdNLPLVAjbOc/lHBTlM7OkjHRsjvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJ1uGIZD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gpidDSF/TAOyVx37lSy7hZxV4XycatDGx5dngfjOWrwXoEwsR4NN5p+EivMVPDD9RcmZL2fwrwbp9cV5Qe7W7TNkvCgEC2qumK+mBl5vZVidjAdU3+VhtOdaALHDYg1+IwfXHZgncvWtiIsScr96PSD3PlMgdXT/cZTBUoqxYKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSnZZgVP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJ1uGIZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12150C19425;
-	Fri, 24 Apr 2026 13:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSnZZgVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36EFC19425;
+	Fri, 24 Apr 2026 13:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037880;
-	bh=5cFpHjt3yKTYaMOOBL9XnHuMBCWAVqopZULaDOLeW/4=;
+	s=korg; t=1777037883;
+	bh=jO3IGyf/3f6iM77+s4fxbldi3cnR1IUyrqX9wV4ljaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJ1uGIZDuwh9f2s6NKTPgk0o96D3ZhIrC6M5rTeIG8Fl//QeESiyy3MlkTjW6EWGD
-	 Dy25H//Ihbp2q8RJvl4cg9iRs+U1A88IKU04Yo8ESnzrK9NuunNFzci8a5+uCdlRBL
-	 UZ0MsPF5Pv/mtGpj1j+8a5ROfYFWY2eAWdWbJRzY=
+	b=CSnZZgVPRaUGLeL42AdPy3xLavZELr5kuy14WyW032FGZiJ9r1k8GBQrfKukF4n9O
+	 ueEF8zPDZR1ywIBsSyBg/sT9H0wMlvRjEdbgXnPtdVYMFfgdDLLcgl2lnCEz1/dP2v
+	 e6JFS59hx/TJ9cbixH6FACuBHwCnS2raE6WQ9Zsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yin Fengwei <fengwei_yin@linux.alibaba.com>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	XiaoHua Wang <561399680@139.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Taeyang Lee <0wn@theori.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/166] net: add proper RCU protection to /proc/net/ptype
-Date: Fri, 24 Apr 2026 15:30:19 +0200
-Message-ID: <20260424132554.721062117@linuxfoundation.org>
+Subject: [PATCH 6.6 106/166] KVM: nVMX: Fold requested virtual interrupt check into has_nested_events()
+Date: Fri, 24 Apr 2026 15:30:20 +0200
+Message-ID: <20260424132554.896346527@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -55,188 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit f613e8b4afea0cd17c7168e8b00e25bc8d33175d ]
+[ Upstream commit 321ef62b0c5f6f57bb8500a2ca5986052675abbf ]
 
-Yin Fengwei reported an RCU stall in ptype_seq_show() and provided
-a patch.
+Check for a Requested Virtual Interrupt, i.e. a virtual interrupt that is
+pending delivery, in vmx_has_nested_events() and drop the one-off
+kvm_x86_ops.guest_apic_has_interrupt() hook.
 
-Real issue is that ptype_seq_next() and ptype_seq_show() violate
-RCU rules.
+In addition to dropping a superfluous hook, this fixes a bug where KVM
+would incorrectly treat virtual interrupts _for L2_ as always enabled due
+to kvm_arch_interrupt_allowed(), by way of vmx_interrupt_blocked(),
+treating IRQs as enabled if L2 is active and vmcs12 is configured to exit
+on IRQs, i.e. KVM would treat a virtual interrupt for L2 as a valid wake
+event based on L1's IRQ blocking status.
 
-ptype_seq_show() runs under rcu_read_lock(), and reads pt->dev
-to get device name without any barrier.
-
-At the same time, concurrent writers can remove a packet_type structure
-(which is correctly freed after an RCU grace period) and clear pt->dev
-without an RCU grace period.
-
-Define ptype_iter_state to carry a dev pointer along seq_net_private:
-
-struct ptype_iter_state {
-	struct seq_net_private	p;
-	struct net_device	*dev; // added in this patch
-};
-
-We need to record the device pointer in ptype_get_idx() and
-ptype_seq_next() so that ptype_seq_show() is safe against
-concurrent pt->dev changes.
-
-We also need to add full RCU protection in ptype_seq_next().
-(Missing READ_ONCE() when reading list.next values)
-
-Many thanks to Dong Chenchen for providing a repro.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 1d10f8a1f40b ("net-procfs: show net devices bound packet types")
-Fixes: c353e8983e0d ("net: introduce per netns packet chains")
-Reported-by: Yin Fengwei <fengwei_yin@linux.alibaba.com>
-Reported-by: Dong Chenchen <dongchenchen2@huawei.com>
-Closes: https://lore.kernel.org/netdev/CANn89iKRRKPnWjJmb-_3a=sq+9h6DvTQM4DBZHT5ZRGPMzQaiA@mail.gmail.com/T/#m7b80b9fc9b9267f90e0b7aad557595f686f9c50d
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Tested-by: Yin Fengwei <fengwei_yin@linux.alibaba.com>
-Link: https://patch.msgid.link/20260202205217.2881198-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Some adjustments have been made. ]
-Signed-off-by: XiaoHua Wang <561399680@139.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240607172609.3205077-6-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Cc: Taeyang Lee <0wn@theori.io>
+[sean: deal with lack of vmx/main.c and vmx/x86_ops.h]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/net-procfs.c | 49 +++++++++++++++++++++++++++++--------------
- 1 file changed, 33 insertions(+), 16 deletions(-)
+ arch/x86/include/asm/kvm-x86-ops.h |  1 -
+ arch/x86/include/asm/kvm_host.h    |  1 -
+ arch/x86/kvm/vmx/nested.c          |  4 ++++
+ arch/x86/kvm/vmx/vmx.c             | 21 ---------------------
+ arch/x86/kvm/x86.c                 | 10 +---------
+ 5 files changed, 5 insertions(+), 32 deletions(-)
 
-diff --git a/net/core/net-procfs.c b/net/core/net-procfs.c
-index 09f7ed1a04e8a..d6d139b49384b 100644
---- a/net/core/net-procfs.c
-+++ b/net/core/net-procfs.c
-@@ -200,8 +200,14 @@ static const struct seq_operations softnet_seq_ops = {
- 	.show  = softnet_seq_show,
- };
+diff --git a/arch/x86/include/asm/kvm-x86-ops.h b/arch/x86/include/asm/kvm-x86-ops.h
+index a0a4fc684e63b..3d00c2444a757 100644
+--- a/arch/x86/include/asm/kvm-x86-ops.h
++++ b/arch/x86/include/asm/kvm-x86-ops.h
+@@ -83,7 +83,6 @@ KVM_X86_OP_OPTIONAL(update_cr8_intercept)
+ KVM_X86_OP(refresh_apicv_exec_ctrl)
+ KVM_X86_OP_OPTIONAL(hwapic_irr_update)
+ KVM_X86_OP_OPTIONAL(hwapic_isr_update)
+-KVM_X86_OP_OPTIONAL_RET0(guest_apic_has_interrupt)
+ KVM_X86_OP_OPTIONAL(load_eoi_exitmap)
+ KVM_X86_OP_OPTIONAL(set_virtual_apic_mode)
+ KVM_X86_OP_OPTIONAL(set_apic_access_page_addr)
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index df950c184c597..d79b8f7a39913 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1671,7 +1671,6 @@ struct kvm_x86_ops {
+ 	void (*refresh_apicv_exec_ctrl)(struct kvm_vcpu *vcpu);
+ 	void (*hwapic_irr_update)(struct kvm_vcpu *vcpu, int max_irr);
+ 	void (*hwapic_isr_update)(struct kvm_vcpu *vcpu, int isr);
+-	bool (*guest_apic_has_interrupt)(struct kvm_vcpu *vcpu);
+ 	void (*load_eoi_exitmap)(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap);
+ 	void (*set_virtual_apic_mode)(struct kvm_vcpu *vcpu);
+ 	void (*set_apic_access_page_addr)(struct kvm_vcpu *vcpu);
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index fb274bae41e2c..377b30212c191 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -4007,6 +4007,10 @@ static bool vmx_has_nested_events(struct kvm_vcpu *vcpu, bool for_injection)
  
-+struct ptype_iter_state {
-+	struct seq_net_private	p;
-+	struct net_device	*dev;
-+};
+ 	vppr = *((u32 *)(vapic + APIC_PROCPRI));
+ 
++	max_irr = vmx_get_rvi();
++	if ((max_irr & 0xf0) > (vppr & 0xf0))
++		return true;
 +
- static void *ptype_get_idx(struct seq_file *seq, loff_t pos)
- {
-+	struct ptype_iter_state *iter = seq->private;
- 	struct list_head *ptype_list = NULL;
- 	struct packet_type *pt = NULL;
- 	struct net_device *dev;
-@@ -211,12 +217,16 @@ static void *ptype_get_idx(struct seq_file *seq, loff_t pos)
- 	for_each_netdev_rcu(seq_file_net(seq), dev) {
- 		ptype_list = &dev->ptype_all;
- 		list_for_each_entry_rcu(pt, ptype_list, list) {
--			if (i == pos)
-+			if (i == pos) {
-+				iter->dev = dev;
- 				return pt;
-+			}
- 			++i;
- 		}
+ 	if (vmx->nested.pi_pending && vmx->nested.pi_desc &&
+ 	    pi_test_on(vmx->nested.pi_desc)) {
+ 		max_irr = pi_find_highest_vector(vmx->nested.pi_desc);
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index b68fb5329a13e..4a45e86c5e2fc 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -4127,26 +4127,6 @@ void pt_update_intercept_for_msr(struct kvm_vcpu *vcpu)
  	}
+ }
  
-+	iter->dev = NULL;
-+
- 	list_for_each_entry_rcu(pt, &ptype_all, list) {
- 		if (i == pos)
- 			return pt;
-@@ -242,6 +252,7 @@ static void *ptype_seq_start(struct seq_file *seq, loff_t *pos)
- 
- static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- {
-+	struct ptype_iter_state *iter = seq->private;
- 	struct net_device *dev;
- 	struct packet_type *pt;
- 	struct list_head *nxt;
-@@ -252,20 +263,21 @@ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- 		return ptype_get_idx(seq, 0);
- 
- 	pt = v;
--	nxt = pt->list.next;
--	if (pt->dev) {
--		if (nxt != &pt->dev->ptype_all)
-+	nxt = READ_ONCE(pt->list.next);
-+	dev = iter->dev;
-+	if (dev) {
-+		if (nxt != &dev->ptype_all)
- 			goto found;
- 
--		dev = pt->dev;
- 		for_each_netdev_continue_rcu(seq_file_net(seq), dev) {
--			if (!list_empty(&dev->ptype_all)) {
--				nxt = dev->ptype_all.next;
-+			nxt = READ_ONCE(dev->ptype_all.next);
-+			if (nxt != &dev->ptype_all) {
-+				iter->dev = dev;
- 				goto found;
- 			}
- 		}
+-static bool vmx_guest_apic_has_interrupt(struct kvm_vcpu *vcpu)
+-{
+-	struct vcpu_vmx *vmx = to_vmx(vcpu);
+-	void *vapic_page;
+-	u32 vppr;
+-	int rvi;
 -
--		nxt = ptype_all.next;
-+		iter->dev = NULL;
-+		nxt = READ_ONCE(ptype_all.next);
- 		goto ptype_all;
- 	}
- 
-@@ -274,14 +286,14 @@ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- 		if (nxt != &ptype_all)
- 			goto found;
- 		hash = 0;
--		nxt = ptype_base[0].next;
-+		nxt = READ_ONCE(ptype_base[0].next);
- 	} else
- 		hash = ntohs(pt->type) & PTYPE_HASH_MASK;
- 
- 	while (nxt == &ptype_base[hash]) {
- 		if (++hash >= PTYPE_HASH_SIZE)
- 			return NULL;
--		nxt = ptype_base[hash].next;
-+		nxt = READ_ONCE(ptype_base[hash].next);
- 	}
- found:
- 	return list_entry(nxt, struct packet_type, list);
-@@ -295,19 +307,24 @@ static void ptype_seq_stop(struct seq_file *seq, void *v)
- 
- static int ptype_seq_show(struct seq_file *seq, void *v)
+-	if (WARN_ON_ONCE(!is_guest_mode(vcpu)) ||
+-		!nested_cpu_has_vid(get_vmcs12(vcpu)) ||
+-		WARN_ON_ONCE(!vmx->nested.virtual_apic_map.gfn))
+-		return false;
+-
+-	rvi = vmx_get_rvi();
+-
+-	vapic_page = vmx->nested.virtual_apic_map.hva;
+-	vppr = *((u32 *)(vapic_page + APIC_PROCPRI));
+-
+-	return ((rvi & 0xf0) > (vppr & 0xf0));
+-}
+-
+ static void vmx_msr_filter_changed(struct kvm_vcpu *vcpu)
  {
-+	struct ptype_iter_state *iter = seq->private;
- 	struct packet_type *pt = v;
-+	struct net_device *dev;
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+@@ -8390,7 +8370,6 @@ static struct kvm_x86_ops vmx_x86_ops __initdata = {
+ 	.required_apicv_inhibits = VMX_REQUIRED_APICV_INHIBITS,
+ 	.hwapic_irr_update = vmx_hwapic_irr_update,
+ 	.hwapic_isr_update = vmx_hwapic_isr_update,
+-	.guest_apic_has_interrupt = vmx_guest_apic_has_interrupt,
+ 	.sync_pir_to_irr = vmx_sync_pir_to_irr,
+ 	.deliver_interrupt = vmx_deliver_interrupt,
+ 	.dy_apicv_has_pending_interrupt = pi_has_pending_interrupt,
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index ac0b458582c38..485c1820e65a9 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -12906,12 +12906,6 @@ void kvm_arch_commit_memory_region(struct kvm *kvm,
+ 		kvm_arch_free_memslot(kvm, old);
+ }
  
--	if (v == SEQ_START_TOKEN)
-+	if (v == SEQ_START_TOKEN) {
- 		seq_puts(seq, "Type Device      Function\n");
--	else if ((!pt->af_packet_net || net_eq(pt->af_packet_net, seq_file_net(seq))) &&
--		 (!pt->dev || net_eq(dev_net(pt->dev), seq_file_net(seq)))) {
-+		return 0;
-+	}
-+	dev = iter->dev;
-+	if ((!pt->af_packet_net || net_eq(pt->af_packet_net, seq_file_net(seq))) &&
-+		 (!dev || net_eq(dev_net(dev), seq_file_net(seq)))) {
- 		if (pt->type == htons(ETH_P_ALL))
- 			seq_puts(seq, "ALL ");
- 		else
- 			seq_printf(seq, "%04x", ntohs(pt->type));
+-static inline bool kvm_guest_apic_has_interrupt(struct kvm_vcpu *vcpu)
+-{
+-	return (is_guest_mode(vcpu) &&
+-		static_call(kvm_x86_guest_apic_has_interrupt)(vcpu));
+-}
+-
+ static inline bool kvm_vcpu_has_events(struct kvm_vcpu *vcpu)
+ {
+ 	if (!list_empty_careful(&vcpu->async_pf.done))
+@@ -12942,9 +12936,7 @@ static inline bool kvm_vcpu_has_events(struct kvm_vcpu *vcpu)
+ 	if (kvm_test_request(KVM_REQ_PMI, vcpu))
+ 		return true;
  
- 		seq_printf(seq, " %-8s %ps\n",
--			   pt->dev ? pt->dev->name : "", pt->func);
-+			   dev ? dev->name : "", pt->func);
- 	}
+-	if (kvm_arch_interrupt_allowed(vcpu) &&
+-	    (kvm_cpu_has_interrupt(vcpu) ||
+-	    kvm_guest_apic_has_interrupt(vcpu)))
++	if (kvm_arch_interrupt_allowed(vcpu) && kvm_cpu_has_interrupt(vcpu))
+ 		return true;
  
- 	return 0;
-@@ -331,7 +348,7 @@ static int __net_init dev_proc_net_init(struct net *net)
- 			 &softnet_seq_ops))
- 		goto out_dev;
- 	if (!proc_create_net("ptype", 0444, net->proc_net, &ptype_seq_ops,
--			sizeof(struct seq_net_private)))
-+			sizeof(struct ptype_iter_state)))
- 		goto out_softnet;
- 
- 	if (wext_proc_init(net))
+ 	if (kvm_hv_has_stimer_pending(vcpu))
 -- 
 2.53.0
 
