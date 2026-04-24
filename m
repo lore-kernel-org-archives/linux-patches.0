@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1A4179A3;
-	Fri, 24 Apr 2026 13:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2ADA3D5241;
+	Fri, 24 Apr 2026 13:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037847; cv=none; b=i8Vpu/n2kgHYSlNkux28lyW70Zjv6ztYWLmwTlKQfxNUUheMjVhZfwUrO2kZfLAJ6gdC+jykn+xe09vjdNqfl8kuiUdV2szG7xMfmLSeLp8L0EkedoVPSfUaY+rgFX2LswLyCVX3IZiby8CQfJqWx3olE66q5ldG37zUKU9swDI=
+	t=1777037849; cv=none; b=gw4WSGR7kcDsfZCndg/adyzVPCiyziTNhqMzjrhlh2Js7ZKGUQ9Ha2MwS1tDoLWaaP3UNkEj5u7xQWOK8DQ7KiF4IXL+OfZI1x/JP+G87dpyMxG0328uo4K+D6sJlUIrK30gYGd11tnZT/k3xhRzhpljWKvtw3PvLMQlapFADNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037847; c=relaxed/simple;
-	bh=s+Zo2IVvWuw+PCbLe73C9jOUbxIALayXX+tb/1DvtS4=;
+	s=arc-20240116; t=1777037849; c=relaxed/simple;
+	bh=bq1XKSmkl+U7zPO1KpV6PGFYYrNYVcnPT+Ptw9Wqrm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFbQSRuZhKoHNvUcduqLnNhrmezaOYmViQpFGclHXfsxdkBqCYqfdGTWQTZowWTC7Y/CKB2hRmy+/YbUgcy7y9MjV1CBhuBkzIQ18Ep6/eIdLeFhiRZgnOnE07AT1NXJCaFMO2qKowcMJLLnUNyEtyM2QfOMyG4a1J3iHrIQjeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6OZwEPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lfzxhY82Z0P/IplAoHqfhr9/ieN33Tj+kICmZA6rPCigw5aROIrmoD/J3nKuMsQVbwPgmJNCRUydHpgrpYBlDFVeEyFYc7PhvcFZAolAWeb8uMYjo0IDSEI3JAsMR+NfJ7pgzLlNc1zXKxmq+y/YNReN8s9wRl1O63uPUVcI+Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Av8mVOa2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6OZwEPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11C1C2BCB2;
-	Fri, 24 Apr 2026 13:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Av8mVOa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3954FC19425;
+	Fri, 24 Apr 2026 13:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037847;
-	bh=s+Zo2IVvWuw+PCbLe73C9jOUbxIALayXX+tb/1DvtS4=;
+	s=korg; t=1777037849;
+	bh=bq1XKSmkl+U7zPO1KpV6PGFYYrNYVcnPT+Ptw9Wqrm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6OZwEPpdXtLnwAzYV+JpQHUzL/Wg+5UUOSy5WlvvM4yXym8N/z1a3yVRd/OnBCRA
-	 AVWxI3uOLze72xTrm42hLEyovvnr3kinGwCiQhHe6+dUF273+8xufHbQsyCxbmNQcZ
-	 P/kcbYSPz332BHDEHUu/Cxasi7zKnepS42Ppw/+I=
+	b=Av8mVOa2EfIb4UFE7r+M4bfUaLIl9XydBCFOeU67x4Gs/bcEUPNN4XjzLZwwLiwyj
+	 BzAJ1IX4qZ8FSfESJ32q2A6BvDFkpl/s35rWIc3fgDKt0fuomZnPI2GuTD6aA7ADWG
+	 CuRDxrRIfgDyweE3J9KABB/4wDXQ4FcHdVDT4xfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 093/166] USB: serial: option: add Telit Cinterion FN990A MBIM composition
-Date: Fri, 24 Apr 2026 15:30:07 +0200
-Message-ID: <20260424132552.100125646@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 094/166] Docs/admin-guide/mm/damon/reclaim: warn commit_inputs vs param updates race
+Date: Fri, 24 Apr 2026 15:30:08 +0200
+Message-ID: <20260424132552.353611342@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -50,66 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit f8cc59ecc22841be5deb07b549c0c6a2657cd5f9 upstream.
+commit 0beba407d4585a15b0dc09f2064b5b3ddcb0e857 upstream.
 
-Add the following Telit Cinterion FN990A MBIM composition:
+Patch series "Docs/admin-guide/mm/damon: warn commit_inputs vs other
+params race".
 
-0x1074: MBIM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (diag) +
-        DPL (Data Packet Logging) + adb
+Writing 'Y' to the commit_inputs parameter of DAMON_RECLAIM and
+DAMON_LRU_SORT, and writing other parameters before the commit_inputs
+request is completely processed can cause race conditions.  While the
+consequence can be bad, the documentation is not clearly describing that.
+Add clear warnings.
 
-T:  Bus=01 Lev=01 Prnt=04 Port=06 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1074 Rev=05.04
-S:  Manufacturer=Telit Wireless Solutions
-S:  Product=FN990
-S:  SerialNumber=70628d0c
-C:  #Ifs= 8 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+The issue was discovered [1,2] by sashiko.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+
+This patch (of 2):
+
+DAMON_RECLAIM handles commit_inputs request inside kdamond thread,
+reading the module parameters.  If the user updates the module
+parameters while the kdamond thread is reading those, races can happen.
+To avoid this, the commit_inputs parameter shows whether it is still in
+the progress, assuming users wouldn't update parameters in the middle of
+the work.  Some users might ignore that.  Add a warning about the
+behavior.
+
+The issue was discovered in [1] by sashiko.
+
+Link: https://lore.kernel.org/20260329153052.46657-2-sj@kernel.org
+Link: https://lore.kernel.org/20260319161620.189392-3-objecting@objecting.org [1]
+Link: https://lore.kernel.org/20260319161620.189392-2-objecting@objecting.org [3]
+Fixes: 81a84182c343 ("Docs/admin-guide/mm/damon/reclaim: document 'commit_inputs' parameter")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.19.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/admin-guide/mm/damon/reclaim.rst |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1383,6 +1383,8 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990A (ECM) */
- 	  .driver_info = NCTRL(0) | RSVD(1) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1074, 0xff),	/* Telit FN990A (MBIM) */
-+	  .driver_info = NCTRL(5) | RSVD(6) | RSVD(7) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990A (PCIe) */
- 	  .driver_info = RSVD(0) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1077, 0xff),	/* Telit FN990A (rmnet + audio) */
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -71,6 +71,10 @@ of parametrs except ``enabled`` again.
+ parameter is set as ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_RECLAIM will be disabled.
+ 
++Once ``Y`` is written to this parameter, the user must not write to any
++parameters until reading ``commit_inputs`` again returns ``N``.  If users
++violate this rule, the kernel may exhibit undefined behavior.
++
+ min_age
+ -------
+ 
 
 
