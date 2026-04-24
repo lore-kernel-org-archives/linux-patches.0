@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52FE179A3;
-	Fri, 24 Apr 2026 13:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7D03D47B0;
+	Fri, 24 Apr 2026 13:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037916; cv=none; b=Oqa+0Njs8aRBmU/fE9J5fyUt9SqI7xhYPQAcgDSqhYZattqrrP2rNW5qLI6SCY3p7Z5aMOUyMOe1l7k7ObhHPjd4m8g2sP+Z5SgXssn+owCZMhnQEH6efeYcX6cf9m13tUclbwfQeBbRySWGdxIV3EL7y1qD4KpJG8xW9jvrudw=
+	t=1777037919; cv=none; b=DsXd6fwO+wDXblXc0PinhWmAguoFE8uXElD/8wXsu2FD2SNH6a0LGVzz4aqUY6FD6U/r44W3kcAkJA/JA4Dp2mtxwwue373fSj89pXROuctHK684NQJpIGpN7yo5jHzq3zEuySy+hoRljDBNKhvoJTlYN2uvFH8NvRjHge3ZKGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037916; c=relaxed/simple;
-	bh=eoVdxVjsnZmfkL4tDSN3cXYVGmd9RgfOlShBDTXI9DM=;
+	s=arc-20240116; t=1777037919; c=relaxed/simple;
+	bh=0BEM6KfPNhAy2+bF7GOtjxhuFF4xFUEzZktX3CTcSd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bM5j9RkZ4xTAIoU43ATRdxq/tLCe0Nz270HP+phSInv/q+0gAAPud+vwBvlBNa4kFVc6vd1PjFYyOGHnge8yMtmiCuHMkfzzbBn7ZzUaC2RoInS8ghBZm8CTghU4wAnQV4a9hI0Q36OxCPkA2MhbVhbRWjsNGN4Idm03+LiM27Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ekHXIGL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s/t9xKg+AgoL3kXDCiNlUuvSWPyy8m13x+LEF6uPKVTWw1zpH9+qoD6+RQWFhnONmwdEJLtP3ADRh97VHs6KkSc7G1nn3nGF+hMW5pbmiuMCoJwhU9zLYIGRqBjpF5tFyU9fGiJXCqT+2RHMfYTw30dEm8GRDZ8AC5OJYfjMt/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZH7Rd8F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ekHXIGL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380B1C19425;
-	Fri, 24 Apr 2026 13:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZH7Rd8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C748DC19425;
+	Fri, 24 Apr 2026 13:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037916;
-	bh=eoVdxVjsnZmfkL4tDSN3cXYVGmd9RgfOlShBDTXI9DM=;
+	s=korg; t=1777037919;
+	bh=0BEM6KfPNhAy2+bF7GOtjxhuFF4xFUEzZktX3CTcSd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ekHXIGLFPd6hrs8ZlTTGnQeJFgi7wRuS+r4ktFa+ZSms8lBG3wN7L4/HvrvHTjsF
-	 tYUouc5udMlBtHZlCTB43ltJ1gBs+5tg8knuAlOD/Og0AZnV6iZeKYuL1hd+suR0tU
-	 5SOgLpd0A/bG15IhxcCpKrJZDY4LAI3w3SFB6LVc=
+	b=lZH7Rd8F/rCSjY+PMwdSZJQctX4OHvhl68fO82f3lVPsoHz5vkyGnYSxsk7LTh8b/
+	 XKjIgJ26ve58N28HHXpsG1lz0FX5JKNDJGwRdng2D+cqvYGky7Z7wyN7F9+pD5MNfQ
+	 IsUqR1k9OHLlrh11maOcq6MO+YUx9wB8lF6qGFd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Carey <carvsdriver@gmail.com>,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 6.6 087/166] USB: cdc-acm: Add quirks for Yoga Book 9 14IAH10 INGENIC touchscreen
-Date: Fri, 24 Apr 2026 15:30:01 +0200
-Message-ID: <20260424132550.930195335@linuxfoundation.org>
+	stable@kernel.org,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.6 088/166] usb: port: add delay after usb_hub_set_port_power()
+Date: Fri, 24 Apr 2026 15:30:02 +0200
+Message-ID: <20260424132551.134605301@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -45,165 +44,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Carey <carvsdriver@gmail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit f58752ebcb35e156c85cd1a82d6579c7af3b9023 upstream.
+commit b84cc80610a8ce036deb987f056ce3196ead7f1e upstream.
 
-The Lenovo Yoga Book 9 14IAH10 (83KJ) has a composite USB device
-(17EF:6161) that controls both touchscreens via a CDC ACM interface.
-Interface 0 is a standard CDC ACM control interface, but interface 1
-(the data interface) incorrectly declares vendor-specific class (0xFF)
-instead of USB_CLASS_CDC_DATA. cdc-acm rejects the device at probe with
--EINVAL, leaving interface 0 unbound and EP 0x82 never polled.
+When a port is disabled, an attached device will be disconnected.  This
+causes a port-status-change event, which will race with hub autosuspend
+(if the disabled port was the only connected port on its hub), causing
+an immediate resume and a second autosuspend.  Both of these can be
+avoided by adding a short delay after the call to
+usb_hub_set_port_power().
 
-With no consumer polling EP 0x82, the firmware's watchdog fires every
-~20 seconds and resets the USB bus, producing a continuous disconnect/
-reconnect loop that prevents the touchscreens from ever initialising.
+Below log shows what is happening:
 
-Add two new quirk flags:
+$ echo 1 > usb1-port1/disable
+[   37.958239] usb 1-1: USB disconnect, device number 2
+[   37.964101] usb 1-1: unregistering device
+[   37.970070] hub 1-0:1.0: hub_suspend
+[   37.971305] hub 1-0:1.0: state 7 ports 1 chg 0000 evt 0002
+[   37.974412] usb usb1: bus auto-suspend, wakeup 1
+[   37.988175] usb usb1: suspend raced with wakeup event         <---
+[   37.993947] usb usb1: usb auto-resume
+[   37.998401] hub 1-0:1.0: hub_resume
+[   38.105688] usb usb1-port1: status 0000, change 0000, 12 Mb/s
+[   38.112399] hub 1-0:1.0: state 7 ports 1 chg 0000 evt 0000
+[   38.118645] hub 1-0:1.0: hub_suspend
+[   38.122963] usb usb1: bus auto-suspend, wakeup 1
+[   38.200368] usb usb1: usb wakeup-resume
+[   38.204982] usb usb1: usb auto-resume
+[   38.209376] hub 1-0:1.0: hub_resume
+[   38.213676] usb usb1-port1: status 0101 change 0001
+[   38.321552] hub 1-0:1.0: state 7 ports 1 chg 0002 evt 0000
+[   38.327978] usb usb1-port1: status 0101, change 0000, 12 Mb/s
+[   38.457429] usb 1-1: new high-speed USB device number 3 using ci_hdrc
 
-VENDOR_CLASS_DATA_IFACE: Bypasses the bInterfaceClass check in
-acm_probe() that would otherwise reject the vendor-class data
-interface with -EINVAL.
+Then, port change bit will be fixed to the final state and
+usb_clear_port_feature() can correctly clear it after this period. This
+will also avoid usb runtime suspend routine to run because
+usb_autopm_put_interface() not run yet.
 
-ALWAYS_POLL_CTRL: Submits the notification URB at probe() rather than
-waiting for a TTY open. This keeps EP 0x82 polled at all times,
-permanently suppressing the firmware watchdog. The URB is resubmitted
-after port_shutdown() and on system resume. SET_CONTROL_LINE_STATE
-(DTR|RTS) is sent at probe and after port_shutdown() to complete
-firmware handshake.
-
-Note: the firmware performs exactly 4 USB connect/disconnect cycles
-(~19 s each) on every cold boot before stabilising. This is a fixed
-firmware property; touch is available ~75-80 s after power-on.
-
-Signed-off-by: Dave Carey <carvsdriver@gmail.com>
-Cc: stable <stable@kernel.org>
-Tested-by: Dave Carey <carvsdriver@gmail.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260402182950.389016-1-carvsdriver@gmail.com
+Fixes: f061f43d7418 ("usb: hub: port: add sysfs entry to switch port power")
+Cc: stable@kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260316095042.1559882-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   53 ++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 46 insertions(+), 7 deletions(-)
+ drivers/usb/core/port.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -114,6 +114,8 @@ static int acm_ctrl_msg(struct acm *acm,
- 	int retval;
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -138,6 +138,7 @@ static ssize_t disable_store(struct devi
+ 		usb_disconnect(&port_dev->child);
  
- 	retval = usb_autopm_get_interface(acm->control);
-+#define VENDOR_CLASS_DATA_IFACE		BIT(9)  /* data interface uses vendor-specific class */
-+#define ALWAYS_POLL_CTRL		BIT(10) /* keep ctrl URB active even without an open TTY */
- 	if (retval)
- 		return retval;
+ 	rc = usb_hub_set_port_power(hdev, hub, port1, !disabled);
++	msleep(2 * hub_power_on_good_delay(hub));
  
-@@ -710,12 +712,14 @@ static int acm_port_activate(struct tty_
- 	set_bit(TTY_NO_WRITE_SPLIT, &tty->flags);
- 	acm->control->needs_remote_wakeup = 1;
- 
--	acm->ctrlurb->dev = acm->dev;
--	retval = usb_submit_urb(acm->ctrlurb, GFP_KERNEL);
--	if (retval) {
--		dev_err(&acm->control->dev,
--			"%s - usb_submit_urb(ctrl irq) failed\n", __func__);
--		goto error_submit_urb;
-+	if (!(acm->quirks & ALWAYS_POLL_CTRL)) {
-+		acm->ctrlurb->dev = acm->dev;
-+		retval = usb_submit_urb(acm->ctrlurb, GFP_KERNEL);
-+		if (retval) {
-+			dev_err(&acm->control->dev,
-+				"%s - usb_submit_urb(ctrl irq) failed\n", __func__);
-+			goto error_submit_urb;
-+		}
- 	}
- 
- 	acm_tty_set_termios(tty, NULL);
-@@ -788,6 +792,14 @@ static void acm_port_shutdown(struct tty
- 
- 	acm_unpoison_urbs(acm);
- 
-+	if (acm->quirks & ALWAYS_POLL_CTRL) {
-+		acm->ctrlurb->dev = acm->dev;
-+		if (usb_submit_urb(acm->ctrlurb, GFP_KERNEL))
-+			dev_dbg(&acm->control->dev,
-+				"ctrl polling restart failed after port close\n");
-+		/* port_shutdown() cleared DTR/RTS; restore them */
-+		acm_set_control(acm, USB_CDC_CTRL_DTR | USB_CDC_CTRL_RTS);
-+	}
- }
- 
- static void acm_tty_cleanup(struct tty_struct *tty)
-@@ -1328,6 +1340,9 @@ skip_normal_probe:
- 			dev_dbg(&intf->dev,
- 				"Your device has switched interfaces.\n");
- 			swap(control_interface, data_interface);
-+		} else if (quirks & VENDOR_CLASS_DATA_IFACE) {
-+			dev_dbg(&intf->dev,
-+				"Vendor-specific data interface class, continuing.\n");
- 		} else {
- 			return -EINVAL;
- 		}
-@@ -1522,6 +1537,9 @@ skip_countries:
- 	acm->line.bDataBits = 8;
- 	acm_set_line(acm, &acm->line);
- 
-+	if (quirks & ALWAYS_POLL_CTRL)
-+		acm_set_control(acm, USB_CDC_CTRL_DTR | USB_CDC_CTRL_RTS);
-+
- 	if (!acm->combined_interfaces) {
- 		rv = usb_driver_claim_interface(&acm_driver, data_interface, acm);
- 		if (rv)
-@@ -1543,6 +1561,13 @@ skip_countries:
- 
- 	dev_info(&intf->dev, "ttyACM%d: USB ACM device\n", minor);
- 
-+	if (acm->quirks & ALWAYS_POLL_CTRL) {
-+		acm->ctrlurb->dev = acm->dev;
-+		if (usb_submit_urb(acm->ctrlurb, GFP_KERNEL))
-+			dev_warn(&intf->dev,
-+				 "failed to start persistent ctrl polling\n");
-+	}
-+
- 	return 0;
- 
- err_release_data_interface:
-@@ -1669,7 +1694,7 @@ static int acm_resume(struct usb_interfa
- 
- 	acm_unpoison_urbs(acm);
- 
--	if (tty_port_initialized(&acm->port)) {
-+	if (tty_port_initialized(&acm->port) || (acm->quirks & ALWAYS_POLL_CTRL)) {
- 		rv = usb_submit_urb(acm->ctrlurb, GFP_ATOMIC);
- 
- 		for (;;) {
-@@ -2016,6 +2041,20 @@ static const struct usb_device_id acm_id
- 	/* CH343 supports CAP_BRK, but doesn't advertise it */
- 	{ USB_DEVICE(0x1a86, 0x55d3), .driver_info = MISSING_CAP_BRK, },
- 
-+	/*
-+	 * Lenovo Yoga Book 9 14IAH10 (83KJ) — INGENIC 17EF:6161 touchscreen
-+	 * composite device.  The CDC ACM control interface (0) uses a standard
-+	 * Union descriptor, but the data interface (1) is declared as vendor-
-+	 * specific class (0xff) with no CDC data descriptors, so cdc-acm would
-+	 * normally reject it.  The firmware also requires continuous polling of
-+	 * the notification endpoint (EP 0x82) to suppress a 20-second watchdog
-+	 * reset; ALWAYS_POLL_CTRL keeps the ctrlurb active even when no TTY is
-+	 * open.  Match only the control interface by class to avoid probing the
-+	 * vendor-specific data interface.
-+	 */
-+	{ USB_DEVICE_INTERFACE_CLASS(0x17ef, 0x6161, USB_CLASS_COMM),
-+	  .driver_info = VENDOR_CLASS_DATA_IFACE | ALWAYS_POLL_CTRL },
-+
- 	/* control interfaces without any protocol set */
- 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ACM,
- 		USB_CDC_PROTO_NONE) },
+ 	if (disabled) {
+ 		usb_clear_port_feature(hdev, port1, USB_PORT_FEAT_C_CONNECTION);
 
 
