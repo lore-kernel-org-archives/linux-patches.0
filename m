@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75A23290A5;
-	Fri, 24 Apr 2026 13:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE823D3D04;
+	Fri, 24 Apr 2026 13:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038045; cv=none; b=W25gZnMzM+wwaHQrnX0TQpLbZL9iMK9x1F9fSnB2nDFkh4HWAwSlMLKmP0GM/qFpNZ37kJUGHQaWsN2yX9o0fvdHUtE+Xk03uowntbmjYFaJGTaRa4t6IEn0ExwnKHJxHzh2uZ+H/6hNzTsA/2Flk9m8dq+KXABivMHcPAQYaic=
+	t=1777038048; cv=none; b=X78N+VYny1mDdsr1Ruq6+EbQn8VllCOgwiFnqrxiF4h6exZvXNv84ZFxZipJy7ZSZrVg9fA/QspIXm9IVNx/WSb9LKJ/bZ6wZgrdsz0o87W9tOImjgMcAKvfDLGgbeINpu2wzZe6OEpLYi7xCxsSxzSt9IwpT0wWBzKT2IWZREw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038045; c=relaxed/simple;
-	bh=alJDQ/T3ghPjNNkE8xR6G9UgQfDQxIVxi01TUX8qPW0=;
+	s=arc-20240116; t=1777038048; c=relaxed/simple;
+	bh=HbnkUhdA1gFf/c7TvzPb/BJElqX3GPCKPjJEAb6QN3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2+iMRDtP8c9Ksb7doXi3y/F0xclR+7ItqCwinIeK0jGuoQ8QkZlidbo0B4FoMvGrR3vn6VM7JO/gXfjZXJEptswqPdu1ArL19wktb6kOrW6jfvioOjpZ50PlHLimwAXMLN1LW/oYvJgXKGk5mNT4HEKnd2INcs3E98xd/thaHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Id3EAtiX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shq/IXb/QDpGp5puYRQxp/bJu3Kn+K6W57iwXpPmtGrHJLGiwQzmalogKJsGIpkZ0sM/OoKxTXBYOUa3wzxb1sPRghJspVyoYT8FUV3K6mQOJQuLOj32SK61a88pxp3nCfJ3maDMErbEerpPbgZ8QZzScOkfESYDlFRg9EfQMik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKPuwQjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Id3EAtiX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E20C19425;
-	Fri, 24 Apr 2026 13:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKPuwQjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F17C2BCB5;
+	Fri, 24 Apr 2026 13:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038045;
-	bh=alJDQ/T3ghPjNNkE8xR6G9UgQfDQxIVxi01TUX8qPW0=;
+	s=korg; t=1777038047;
+	bh=HbnkUhdA1gFf/c7TvzPb/BJElqX3GPCKPjJEAb6QN3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Id3EAtiXlD6BXbjLYG//BBQAqPdyaaKMkav2MB1XNDnGv74A+8erOqGn4c+O1XJS0
-	 +AG8GSUAwxsLa99m52ghW0TEX8+uhcK+okcbwGW6GzC+9QInPf8raxe3XdRj63h8Tj
-	 GenTguibK83MKlpHbjNWZiUYs70VfF1eglvO4Tuw=
+	b=tKPuwQjteiW/7l/YjsRgf3hF5ah1mgkmPGse/cNqFnMv4KlQLO1LvH2DDrwiMJ1Qh
+	 wigsa8uGLfhEehVIIVMEcfVRvk31+IFJ5bLuiQ7sii7xR6H0W/FwDZUS8GD+QzWDfp
+	 stSlO+0o4eP3HRvjcygWys/WcLL77V8A+ggHoZPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Berk Cem Goksel <berkcgoksel@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 158/166] ALSA: caiaq: take a reference on the USB device in create_card()
-Date: Fri, 24 Apr 2026 15:31:12 +0200
-Message-ID: <20260424132606.132598371@linuxfoundation.org>
+	Bingquan Chen <patzilla007@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 159/166] net/packet: fix TOCTOU race on mmapd vnet_hdr in tpacket_snd()
+Date: Fri, 24 Apr 2026 15:31:13 +0200
+Message-ID: <20260424132606.306965345@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,57 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Berk Cem Goksel <berkcgoksel@gmail.com>
+From: Bingquan Chen <patzilla007@gmail.com>
 
-commit 80bb50e2d459213cccff3111d5ef98ed4238c0d5 upstream.
+commit 2c054e17d9d41f1020376806c7f750834ced4dc5 upstream.
 
-The caiaq driver stores a pointer to the parent USB device in
-cdev->chip.dev but never takes a reference on it. The card's
-private_free callback, snd_usb_caiaq_card_free(), can run
-asynchronously via snd_card_free_when_closed() after the USB
-device has already been disconnected and freed, so any access to
-cdev->chip.dev in that path dereferences a freed usb_device.
+In tpacket_snd(), when PACKET_VNET_HDR is enabled, vnet_hdr points
+directly into the mmap'd TX ring buffer shared with userspace. The
+kernel validates the header via __packet_snd_vnet_parse() but then
+re-reads all fields later in virtio_net_hdr_to_skb(). A concurrent
+userspace thread can modify the vnet_hdr fields between validation
+and use, bypassing all safety checks.
 
-On top of the refcounting issue, the current card_free implementation
-calls usb_reset_device(cdev->chip.dev). A reset in a free callback
-is inappropriate: the device is going away, the call takes the
-device lock in a teardown context, and the reset races with the
-disconnect path that the callback is already cleaning up after.
+The non-TPACKET path (packet_snd()) already correctly copies vnet_hdr
+to a stack-local variable. All other vnet_hdr consumers in the kernel
+(tun.c, tap.c, virtio_net.c) also use stack copies. The TPACKET TX
+path is the only caller of virtio_net_hdr_to_skb() that reads directly
+from user-controlled shared memory.
 
-Take a reference on the USB device in create_card() with
-usb_get_dev(), drop it with usb_put_dev() in the free callback,
-and remove the usb_reset_device() call.
+Fix this by copying vnet_hdr from the mmap'd ring buffer to a
+stack-local variable before validation and use, consistent with the
+approach used in packet_snd() and all other callers.
 
-Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
-Cc: stable@vger.kernel.org
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
-Link: https://patch.msgid.link/20260413034941.1131465-3-berkcgoksel@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1d036d25e560 ("packet: tpacket_snd gso and checksum offload")
+Signed-off-by: Bingquan Chen <patzilla007@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260418112006.78823-1-patzilla007@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -384,7 +384,7 @@ static void card_free(struct snd_card *c
- 	snd_usb_caiaq_input_free(cdev);
- #endif
- 	snd_usb_caiaq_audio_free(cdev);
--	usb_reset_device(cdev->chip.dev);
-+	usb_put_dev(cdev->chip.dev);
- }
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2777,7 +2777,8 @@ static int tpacket_snd(struct packet_soc
+ {
+ 	struct sk_buff *skb = NULL;
+ 	struct net_device *dev;
+-	struct virtio_net_hdr *vnet_hdr = NULL;
++	struct virtio_net_hdr vnet_hdr;
++	bool has_vnet_hdr = false;
+ 	struct sockcm_cookie sockc;
+ 	__be16 proto;
+ 	int err, reserve = 0;
+@@ -2878,16 +2879,20 @@ static int tpacket_snd(struct packet_soc
+ 		hlen = LL_RESERVED_SPACE(dev);
+ 		tlen = dev->needed_tailroom;
+ 		if (vnet_hdr_sz) {
+-			vnet_hdr = data;
+ 			data += vnet_hdr_sz;
+ 			tp_len -= vnet_hdr_sz;
+-			if (tp_len < 0 ||
+-			    __packet_snd_vnet_parse(vnet_hdr, tp_len)) {
++			if (tp_len < 0) {
++				tp_len = -EINVAL;
++				goto tpacket_error;
++			}
++			memcpy(&vnet_hdr, data - vnet_hdr_sz, sizeof(vnet_hdr));
++			if (__packet_snd_vnet_parse(&vnet_hdr, tp_len)) {
+ 				tp_len = -EINVAL;
+ 				goto tpacket_error;
+ 			}
+ 			copylen = __virtio16_to_cpu(vio_le(),
+-						    vnet_hdr->hdr_len);
++						    vnet_hdr.hdr_len);
++			has_vnet_hdr = true;
+ 		}
+ 		copylen = max_t(int, copylen, dev->hard_header_len);
+ 		skb = sock_alloc_send_skb(&po->sk,
+@@ -2924,12 +2929,12 @@ tpacket_error:
+ 			}
+ 		}
  
- static int create_card(struct usb_device *usb_dev,
-@@ -410,7 +410,7 @@ static int create_card(struct usb_device
- 		return err;
+-		if (vnet_hdr_sz) {
+-			if (virtio_net_hdr_to_skb(skb, vnet_hdr, vio_le())) {
++		if (has_vnet_hdr) {
++			if (virtio_net_hdr_to_skb(skb, &vnet_hdr, vio_le())) {
+ 				tp_len = -EINVAL;
+ 				goto tpacket_error;
+ 			}
+-			virtio_net_hdr_set_proto(skb, vnet_hdr);
++			virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 		}
  
- 	cdev = caiaqdev(card);
--	cdev->chip.dev = usb_dev;
-+	cdev->chip.dev = usb_get_dev(usb_dev);
- 	cdev->chip.card = card;
- 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
- 				  le16_to_cpu(usb_dev->descriptor.idProduct));
+ 		skb->destructor = tpacket_destruct_skb;
 
 
