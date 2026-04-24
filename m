@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0531D3D47B0;
-	Fri, 24 Apr 2026 13:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637BD33E347;
+	Fri, 24 Apr 2026 13:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037940; cv=none; b=fHpHXvpwALOe2fz1x6INqBBuGZH0xqxWAA7IvFEgrfUwugqK1IxF7QI3p8tZ6m1hnsJ/qD/RKBxR/Wlf3qGUnFJoA7M/ulgpPQikASfvhjb0lA8HGg94m927H9K6Eu/MiP33CdIOmiOdYj074NYqROMuS1weCL6wG3lQ0GDLAeE=
+	t=1777037942; cv=none; b=BLtrY7TBwW2KR0CsTgYW5ELKT22WlBsaWKZmZ8HBo+FQwsBxGt/r5Cv/0xL7WHJ4Yp/7EBa/2Dw3nG9G/2JVBjQQQJP/8HSnW7NcKB+ZzNxO7IpoCkMJegH5ikoeurpzJjbVoQE+O+ONFHKbZbML7UnaQe+vxTDxAh7HlgW7vj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037940; c=relaxed/simple;
-	bh=gl8ium2TS9En5dmXUvAAiNRUeAMv3DN/bF5djcZcZEA=;
+	s=arc-20240116; t=1777037942; c=relaxed/simple;
+	bh=g4hi8mzWjRaiI84Gma+5B5Rb0F1ckTsMdl9iV2frB8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oEeHyMaeQBmhlhEMiLQwMzh3cmXw+uB0LjglrSg7ZcFi2BSM+P3T/eJB5uLBYzMCqnmDMQ4XSq/8fp1E045CdUfZBMtur0ekziqAfukcxMYYO7aEYcJ2NBGHaI2JvXEeH37/6kZVfiaEiX4Kh+SakMpckXMwIeWWZNm4TCKDuyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arwYmMJP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W70lHlCxWVOPBigcEaYQ772+Uk9lsW7GsC4aPCwLQPeIPKn/WQfTXSk5eJQ+fgoKIYDuvOFxu3lTTY0+SZvk5CVAbtde+q2oZWODsvwKB1w790JUO/QsyQ4eqUnQiBfYisfPqwCYwxqLMiP4wN8ynVFmkxDwAwPMQYiGeDg2eKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuTkK689; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arwYmMJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9D4C2BCB2;
-	Fri, 24 Apr 2026 13:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuTkK689"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB16C19425;
+	Fri, 24 Apr 2026 13:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037939;
-	bh=gl8ium2TS9En5dmXUvAAiNRUeAMv3DN/bF5djcZcZEA=;
+	s=korg; t=1777037942;
+	bh=g4hi8mzWjRaiI84Gma+5B5Rb0F1ckTsMdl9iV2frB8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arwYmMJPr6RjNp8iSabnMhEPx3Y8+67+LPmPbHPHeDN2Rz0ceI5Hsg4rh893qw1VD
-	 HOBZYIgEx66786C43AmmOC8jWs8ixK/1MBQz+2VpElScvFD91upHcj56aZwTVY974e
-	 OrppI+BT3QstylDSxP6jZCrT7Z3CpJwu4fYPhapE=
+	b=xuTkK689F0GLWXwrVaoV7fZ1Q8kstWHZwk+7Jx5sinGJTbJHEuTnV3MYEL9mKZgOY
+	 3zQnRtuB1sVwwG75BnWTvBXguDuZm2OzVYQWtvxJf5cCh7ggPFrpuuKeBNvZnFJIEp
+	 bNSIGsLgSyW+HWSU0gMhquFM4yOqUcj6Jn/tIrwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Charles Xu <charles_xu@189.cn>,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Li hongliang <1468888505@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/166] md/raid1,raid10: dont ignore IO flags
-Date: Fri, 24 Apr 2026 15:30:43 +0200
-Message-ID: <20260424132559.926975788@linuxfoundation.org>
+Subject: [PATCH 6.6 130/166] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
+Date: Fri, 24 Apr 2026 15:30:44 +0200
+Message-ID: <20260424132600.130441339@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -52,109 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit e879a0d9cb086c8e52ce6c04e5bfa63825a6213c upstream.
+[ Upstream commit d5ad6ab61cbd89afdb60881f6274f74328af3ee9 ]
 
-If blk-wbt is enabled by default, it's found that raid write performance
-is quite bad because all IO are throttled by wbt of underlying disks,
-due to flag REQ_IDLE is ignored. And turns out this behaviour exist since
-blk-wbt is introduced.
+ieee80211_tx_prepare_skb() has three error paths, but only two of them
+free the skb. The first error path (ieee80211_tx_prepare() returning
+TX_DROP) does not free it, while invoke_tx_handlers() failure and the
+fragmentation check both do.
 
-Other than REQ_IDLE, other flags should not be ignored as well, for
-example REQ_META can be set for filesystems, clearing it can cause priority
-reverse problems; And REQ_NOWAIT should not be cleared as well, because
-io will wait instead of failing directly in underlying disks.
+Add kfree_skb() to the first error path so all three are consistent,
+and remove the now-redundant frees in callers (ath9k, mt76,
+mac80211_hwsim) to avoid double-free.
 
-Fix those problems by keep IO flags from master bio.
+Document the skb ownership guarantee in the function's kdoc.
 
-Fises: f51d46d0e7cb ("md: add support for REQ_NOWAIT")
-Fixes: e34cbd307477 ("blk-wbt: add general throttling mechanism")
-Fixes: 5404bc7a87b9 ("[PATCH] Allow file systems to differentiate between data and meta reads")
-Link: https://lore.kernel.org/linux-raid/20250227121657.832356-1-yukuai1@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-[ Harshit: Resolve conflicts due to missing commit: f2a38abf5f1c
-  ("md/raid1: Atomic write support") and  commit: a1d9b4fd42d9
-  ("md/raid10: Atomic write support") in 6.12.y, we don't have Atomic
-  writes feature in 6.12.y ]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Based on Harshit's backport for 6.12, fixed minor conflicts for 6.6. ]
-Signed-off-by: Charles Xu <charles_xu@189.cn>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20260314065455.2462900-1-nbd@nbd.name
+Fixes: 06be6b149f7e ("mac80211: add ieee80211_tx_prepare_skb() helper function")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ Exclude changes to drivers/net/wireless/mediatek/mt76/scan.c as this file is first
+ introduced by commit 31083e38548f("wifi: mt76: add code for emulating hardware scanning")
+ after linux-6.14.]
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c  | 4 ----
- drivers/md/raid10.c | 7 -------
- 2 files changed, 11 deletions(-)
+ drivers/net/wireless/ath/ath9k/channel.c      | 6 ++----
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 1 -
+ include/net/mac80211.h                        | 4 ++++
+ net/mac80211/tx.c                             | 4 +++-
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 4c1f86ca55208..d313e9834d447 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1214,8 +1214,6 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	struct raid1_info *mirror;
- 	struct bio *read_bio;
- 	struct bitmap *bitmap = mddev->bitmap;
--	const enum req_op op = bio_op(bio);
--	const blk_opf_t do_sync = bio->bi_opf & REQ_SYNC;
- 	int max_sectors;
- 	int rdisk;
- 	bool r1bio_existed = !!r1_bio;
-@@ -1315,7 +1313,6 @@ static void raid1_read_request(struct mddev *mddev, struct bio *bio,
- 	read_bio->bi_iter.bi_sector = r1_bio->sector +
- 		mirror->rdev->data_offset;
- 	read_bio->bi_end_io = raid1_end_read_request;
--	read_bio->bi_opf = op | do_sync;
- 	if (test_bit(FailFast, &mirror->rdev->flags) &&
- 	    test_bit(R1BIO_FailFast, &r1_bio->state))
- 	        read_bio->bi_opf |= MD_FAILFAST;
-@@ -1537,7 +1534,6 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
+diff --git a/drivers/net/wireless/ath/ath9k/channel.c b/drivers/net/wireless/ath/ath9k/channel.c
+index 571062f2e82a7..ba8ec5112afe8 100644
+--- a/drivers/net/wireless/ath/ath9k/channel.c
++++ b/drivers/net/wireless/ath/ath9k/channel.c
+@@ -1011,7 +1011,7 @@ static void ath_scan_send_probe(struct ath_softc *sc,
+ 	skb_set_queue_mapping(skb, IEEE80211_AC_VO);
  
- 		mbio->bi_iter.bi_sector	= (r1_bio->sector + rdev->data_offset);
- 		mbio->bi_end_io	= raid1_end_write_request;
--		mbio->bi_opf = bio_op(bio) | (bio->bi_opf & (REQ_SYNC | REQ_FUA));
- 		if (test_bit(FailFast, &rdev->flags) &&
- 		    !test_bit(WriteMostly, &rdev->flags) &&
- 		    conf->raid_disks - mddev->degraded > 1)
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 8546ef98bfa7e..6bcf6852c2000 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1168,8 +1168,6 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- {
- 	struct r10conf *conf = mddev->private;
- 	struct bio *read_bio;
--	const enum req_op op = bio_op(bio);
--	const blk_opf_t do_sync = bio->bi_opf & REQ_SYNC;
- 	int max_sectors;
- 	struct md_rdev *rdev;
- 	char b[BDEVNAME_SIZE];
-@@ -1250,7 +1248,6 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 	read_bio->bi_iter.bi_sector = r10_bio->devs[slot].addr +
- 		choose_data_offset(r10_bio, rdev);
- 	read_bio->bi_end_io = raid10_end_read_request;
--	read_bio->bi_opf = op | do_sync;
- 	if (test_bit(FailFast, &rdev->flags) &&
- 	    test_bit(R10BIO_FailFast, &r10_bio->state))
- 	        read_bio->bi_opf |= MD_FAILFAST;
-@@ -1267,9 +1264,6 @@ static void raid10_write_one_disk(struct mddev *mddev, struct r10bio *r10_bio,
- 				  struct bio *bio, bool replacement,
- 				  int n_copy)
- {
--	const enum req_op op = bio_op(bio);
--	const blk_opf_t do_sync = bio->bi_opf & REQ_SYNC;
--	const blk_opf_t do_fua = bio->bi_opf & REQ_FUA;
- 	unsigned long flags;
- 	struct r10conf *conf = mddev->private;
- 	struct md_rdev *rdev;
-@@ -1295,7 +1289,6 @@ static void raid10_write_one_disk(struct mddev *mddev, struct r10bio *r10_bio,
- 	mbio->bi_iter.bi_sector	= (r10_bio->devs[n_copy].addr +
- 				   choose_data_offset(r10_bio, rdev));
- 	mbio->bi_end_io	= raid10_end_write_request;
--	mbio->bi_opf = op | do_sync | do_fua;
- 	if (!replacement && test_bit(FailFast,
- 				     &conf->mirrors[devnum].rdev->flags)
- 			 && enough(conf, devnum))
+ 	if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, NULL))
+-		goto error;
++		return;
+ 
+ 	txctl.txq = sc->tx.txq_map[IEEE80211_AC_VO];
+ 	if (ath_tx_start(sc->hw, skb, &txctl))
+@@ -1124,10 +1124,8 @@ ath_chanctx_send_vif_ps_frame(struct ath_softc *sc, struct ath_vif *avp,
+ 
+ 		skb->priority = 7;
+ 		skb_set_queue_mapping(skb, IEEE80211_AC_VO);
+-		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta)) {
+-			dev_kfree_skb_any(skb);
++		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta))
+ 			return false;
+-		}
+ 		break;
+ 	default:
+ 		return false;
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index 1214e7dcc8124..bf12ff0ab06ab 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -2892,7 +2892,6 @@ static void hw_scan_work(struct work_struct *work)
+ 						      hwsim->tmp_chan->band,
+ 						      NULL)) {
+ 				rcu_read_unlock();
+-				kfree_skb(probe);
+ 				continue;
+ 			}
+ 
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index adaa1b2323d2c..85d785060e761 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -7032,6 +7032,10 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
+  * @band: the band to transmit on
+  * @sta: optional pointer to get the station to send the frame to
+  *
++ * Return: %true if the skb was prepared, %false otherwise.
++ * On failure, the skb is freed by this function; callers must not
++ * free it again.
++ *
+  * Note: must be called under RCU lock
+  */
+ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 7eddcb6f96455..2a708132320c4 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -1911,8 +1911,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
+ 	struct ieee80211_tx_data tx;
+ 	struct sk_buff *skb2;
+ 
+-	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP)
++	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP) {
++		kfree_skb(skb);
+ 		return false;
++	}
+ 
+ 	info->band = band;
+ 	info->control.vif = vif;
 -- 
 2.53.0
 
