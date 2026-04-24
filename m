@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378B73D75C1;
-	Fri, 24 Apr 2026 13:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AAC3563D4;
+	Fri, 24 Apr 2026 13:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037994; cv=none; b=GFZMeGTPOmX27XPx5D3YdBtyihEy/Gd+atV+xqDfNQaC/GaDH3uAZqJ5XKlNcsPKzYH1G28BFnjAc5Do6BcvT0pQeVvZJ/ce5AqLAqzHqxrTsu9Q3IiHqSORwxMNVvptOk/EcpN18rkdXoSiav1M35CwhPi0w5ADdAkGo/nXQiU=
+	t=1777037996; cv=none; b=EiAFBa1WA17nQDzVxCKnJms/bGhaSEoBkDp7cNY7FRva44lcFul96GifossaxzimPbiYjMxBO27Qdo9az26nn+ZyCtM8t+tzV+ZSZQe9dPuBB/84KDoo2P0GBzlj1+8q6lkeFN4vxFx9IthMzaKRZF9CBVg7HaISnHneiAKQ2eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037994; c=relaxed/simple;
-	bh=Tf3xFCkTaVlSBAG8MYtOn+FGgNTU2OHT6GzLUC7419U=;
+	s=arc-20240116; t=1777037996; c=relaxed/simple;
+	bh=t61bCouD3zE7Nfp/g0tB9B0uHp0j3oN9nbXDIygSkvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/lsxaW4Z6/1dCKjV3D6ufqcmiKRowZ1ZbSXVOhVsxVasl1fmw4A6PLfcGdDX6rpGhay07P7I/JJVKY/s3hG6ih9DShTTHdjMCE/7dyWR/vLGyIeDgLbh8tDuYYGDl+sT10mqO9uIwi1Lw+9Z98OtdycT1C2eT/jXeDdVMYrwDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnCETz3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AsPE3maR/mM/YYhDSw0OKcziku3Gx+22qpFK5aDiuyYL7ys2prmwPj7Zvt7LbWjssTMIbb+ylDvjW0NMXCZADP3xquVQ5gDpAIgiTqLuYYTd3D4oVj+4JKB4Hbi2N0CFwe4+Ypd8Oc4W+ZcppdYbRFAtQVYoCAe2/fLzfNcJkO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIzlc8P/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnCETz3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A99EC2BCB6;
-	Fri, 24 Apr 2026 13:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIzlc8P/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC25C2BCB6;
+	Fri, 24 Apr 2026 13:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037993;
-	bh=Tf3xFCkTaVlSBAG8MYtOn+FGgNTU2OHT6GzLUC7419U=;
+	s=korg; t=1777037996;
+	bh=t61bCouD3zE7Nfp/g0tB9B0uHp0j3oN9nbXDIygSkvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tnCETz3oLjHbQ9BpagEXsOcB32KJx9JpVZqrEQPK/T0hjjBxnp/IFFFokcrY6lPN7
-	 q7U21lVY1VpNwqQPs+Bw2aBC4j4r+340FbIwq+dDGndKC33c29/ALA9l13XvDcAU4s
-	 LxBSfu5hZZ9El2ShnvH2ctZ/r7ZdgFnwxHN4Fj5o=
+	b=lIzlc8P/6zZI5ReMJX+gKRBs44nv5S09CPhMFTjU5gkohsYsFcFjm7xQMj8xZnezB
+	 jmVUOK0gSsfz6hlAKFLP9WvJGkfEqYmBWEiC8TnSF0dYk3bx7Af3Lqht9boKm6bNHN
+	 jOqpMpo2NzBxV3YkU/lADMnvKu9//cT52xDlywVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Schubert <bschubert@ddn.com>,
-	Horst Birthelmer <hbirthelmer@ddn.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.6 148/166] fuse: Check for large folio with SPLICE_F_MOVE
-Date: Fri, 24 Apr 2026 15:31:02 +0200
-Message-ID: <20260424132604.130673069@linuxfoundation.org>
+Subject: [PATCH 6.6 149/166] fuse: quiet down complaints in fuse_conn_limit_write
+Date: Fri, 24 Apr 2026 15:31:03 +0200
+Message-ID: <20260424132604.360304624@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -45,46 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bernd Schubert <bschubert@ddn.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 59ba47b6be9cd0146ef9a55c6e32e337e11e7625 upstream.
+commit 129a45f9755a89f573c6a513a6b9e3d234ce89b0 upstream.
 
-xfstest generic/074 and generic/075 complain result in kernel
-warning messages / page dumps.
-This is easily reproducible (on 6.19) with
-CONFIG_TRANSPARENT_HUGEPAGE_SHMEM_HUGE_ALWAYS=y
-CONFIG_TRANSPARENT_HUGEPAGE_TMPFS_HUGE_ALWAYS=y
+gcc 15 complains about an uninitialized variable val that is passed by
+reference into fuse_conn_limit_write:
 
-This just adds a test for large folios fuse_try_move_folio
-with the same page copy fallback, but to avoid the warnings
-from fuse_check_folio().
+ control.c: In function ‘fuse_conn_congestion_threshold_write’:
+ include/asm-generic/rwonce.h:55:37: warning: ‘val’ may be used uninitialized [-Wmaybe-uninitialized]
+    55 |         *(volatile typeof(x) *)&(x) = (val);                            \
+       |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~
+ include/asm-generic/rwonce.h:61:9: note: in expansion of macro ‘__WRITE_ONCE’
+    61 |         __WRITE_ONCE(x, val);                                           \
+       |         ^~~~~~~~~~~~
+ control.c:178:9: note: in expansion of macro ‘WRITE_ONCE’
+   178 |         WRITE_ONCE(fc->congestion_threshold, val);
+       |         ^~~~~~~~~~
+ control.c:166:18: note: ‘val’ was declared here
+   166 |         unsigned val;
+       |                  ^~~
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Bernd Schubert <bschubert@ddn.com>
-Signed-off-by: Horst Birthelmer <hbirthelmer@ddn.com>
+Unfortunately there's enough macro spew involved in kstrtoul_from_user
+that I think gcc gives up on its analysis and sprays the above warning.
+AFAICT it's not actually a bug, but we could just zero-initialize the
+variable to enable using -Wmaybe-uninitialized to find real problems.
+
+Previously we would use some weird uninitialized_var annotation to quiet
+down the warnings, so clearly this code has been like this for quite
+some time.
+
+Cc: stable@vger.kernel.org # v5.9
+Fixes: 3f649ab728cda8 ("treewide: Remove uninitialized_var() usage")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/fuse/control.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -823,6 +823,9 @@ static int fuse_try_move_page(struct fus
+--- a/fs/fuse/control.c
++++ b/fs/fuse/control.c
+@@ -120,7 +120,7 @@ static ssize_t fuse_conn_max_background_
+ 					      const char __user *buf,
+ 					      size_t count, loff_t *ppos)
+ {
+-	unsigned val;
++	unsigned int val = 0;
+ 	ssize_t ret;
  
- 	folio_clear_mappedtodisk(newfolio);
- 
-+	if (folio_test_large(newfolio))
-+		goto out_fallback_unlock;
-+
- 	if (fuse_check_folio(newfolio) != 0)
- 		goto out_fallback_unlock;
+ 	ret = fuse_conn_limit_write(file, buf, count, ppos, &val,
+@@ -162,7 +162,7 @@ static ssize_t fuse_conn_congestion_thre
+ 						    const char __user *buf,
+ 						    size_t count, loff_t *ppos)
+ {
+-	unsigned val;
++	unsigned int val = 0;
+ 	struct fuse_conn *fc;
+ 	ssize_t ret;
  
 
 
