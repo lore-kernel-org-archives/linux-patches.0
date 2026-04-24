@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9E23D5241;
-	Fri, 24 Apr 2026 13:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECCD3D6CB0;
+	Fri, 24 Apr 2026 13:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037525; cv=none; b=Z7VSdZEPzJcWjrFjLSudJWUqDuLU3D4N3chAXiHmcNUR7hEHNpRaGqnkYyRsSG3wL6ks0X/qmjF5Ol02i5+KL6N0G2bBui4bqSC3xdX0hnLer2h8nBbzuGnxafrpjd3xlQAIvkraF67Qt7jg+ZsCQ252jxChlO/WVLkpX5Qiga8=
+	t=1777037528; cv=none; b=dIo+KBqrLbojMdOSJF9nYXlXrrMIlhPZu4rXdiEXGdNzHtagB00+aFL81AZHK43S5qlOJ+4nGyL5MhYkKPJlgFzuxHB5Lhi7dHTfij1s0spR1knu5gHspTQifT8ptXYKGbRkfiVsMLTuukhKyKVXn7/VTtx1voE8w6TTvJGGksM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037525; c=relaxed/simple;
-	bh=Lkf+VAwZX5TikFG2irmCaN9kQAg33GGjFkif9gmHr4s=;
+	s=arc-20240116; t=1777037528; c=relaxed/simple;
+	bh=PCa8cNnN0lNp9cMvMMgsTGrXznKmPtFvYYEXpquSk7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8pfbS6znfHUYJf+ietIGP2I8zEpK9PFSWrVjPcjIL+AlewBvOBJyeDr8tg04zn9IyzDOAF/FYiTltpUHWe9FlJJHPBbeptC0PFY/Szcq00UX3Cd49cnZxJdRVt4Az8GbzJx69AVn60HfQ2pF8/1i0wnmEy6LyUaklU4uZeeqH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3bL9hwt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ae9Dk4gCnvnc8QfAZcRz8WxWl9an8TQlgj2j+EM3HS8+WaCACPpi53RzeQkSqsFUKINEG+gHjABARBZ4X2H8cpYM26ESAjXmicQ1vFhLWlRg5d5gTlT4AK4uKhq3hqIE54Oetd7p7Ggn1JX1ho6vyKutCwhei94Gg2xyzpxv0Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fkv4Fqu5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3bL9hwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AD7C19425;
-	Fri, 24 Apr 2026 13:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fkv4Fqu5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65E1C19425;
+	Fri, 24 Apr 2026 13:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037525;
-	bh=Lkf+VAwZX5TikFG2irmCaN9kQAg33GGjFkif9gmHr4s=;
+	s=korg; t=1777037528;
+	bh=PCa8cNnN0lNp9cMvMMgsTGrXznKmPtFvYYEXpquSk7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N3bL9hwtIQsRs8w/xTbKda6HMRxtQIpAhX5UxI6j4nRjP2x7FbX/522C9lucMILqn
-	 Q0Ji7sZ+y0JU0jl3OGSHu85sGx/xerCnXGv8FkEQtsTYtuv8oIooKI29XGJ0vH9YcH
-	 fx3fjiVClCMTStMS0uCzE31DPEvydf3zboWxSLnA=
+	b=Fkv4Fqu5uNyYVSa4hSfWHzA3X+PynpQSwr0sDPQrUPhk3cGT+Ic2gCza6qrIgzwRQ
+	 RznuGggzZZzA0wEwtj7f+ggtuiUCL1NdwoUJxvPB+ZO3PtdNHV/tIeuucKg4fpg2Mj
+	 qhGJ+1MpDONwREPmkTiS+3J156yfZxxMV4uC9tlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	syzbot+cf7946ab25b21abc4b66@syzkaller.appspotmail.com,
+	Eric Biggers <ebiggers@kernel.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.0 12/42] f2fs: fix UAF caused by decrementing sbi->nr_pages[] in f2fs_write_end_io()
-Date: Fri, 24 Apr 2026 15:30:37 +0200
-Message-ID: <20260424132423.010310567@linuxfoundation.org>
+Subject: [PATCH 7.0 13/42] f2fs: fix to avoid memory leak in f2fs_rename()
+Date: Fri, 24 Apr 2026 15:30:38 +0200
+Message-ID: <20260424132423.280599395@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132420.410310336@linuxfoundation.org>
 References: <20260424132420.410310336@linuxfoundation.org>
@@ -53,71 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 2d9c4a4ed4eef1f82c5b16b037aee8bad819fd53 upstream.
+commit 3cf11e6f36c170050c12171dd6fd3142711478fc upstream.
 
-The xfstests case "generic/107" and syzbot have both reported a NULL
-pointer dereference.
+syzbot reported a f2fs bug as below:
 
-The concurrent scenario that triggers the panic is as follows:
+BUG: memory leak
+unreferenced object 0xffff888127f70830 (size 16):
+  comm "syz.0.23", pid 6144, jiffies 4294943712
+  hex dump (first 16 bytes):
+    3c af 57 72 5b e6 8f ad 6e 8e fd 33 42 39 03 ff  <.Wr[...n..3B9..
+  backtrace (crc 925f8a80):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+    slab_post_alloc_hook mm/slub.c:4520 [inline]
+    slab_alloc_node mm/slub.c:4844 [inline]
+    __do_kmalloc_node mm/slub.c:5237 [inline]
+    __kmalloc_noprof+0x3bd/0x560 mm/slub.c:5250
+    kmalloc_noprof include/linux/slab.h:954 [inline]
+    fscrypt_setup_filename+0x15e/0x3b0 fs/crypto/fname.c:364
+    f2fs_setup_filename+0x52/0xb0 fs/f2fs/dir.c:143
+    f2fs_rename+0x159/0xca0 fs/f2fs/namei.c:961
+    f2fs_rename2+0xd5/0xf20 fs/f2fs/namei.c:1308
+    vfs_rename+0x7ff/0x1250 fs/namei.c:6026
+    filename_renameat2+0x4f4/0x660 fs/namei.c:6144
+    __do_sys_renameat2 fs/namei.c:6173 [inline]
+    __se_sys_renameat2 fs/namei.c:6168 [inline]
+    __x64_sys_renameat2+0x59/0x80 fs/namei.c:6168
+    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+    do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-F2FS_WB_CP_DATA write callback          umount
-                                        - f2fs_write_checkpoint
-                                         - f2fs_wait_on_all_pages(sbi, F2FS_WB_CP_DATA)
-- blk_mq_end_request
- - bio_endio
-  - f2fs_write_end_io
-   : dec_page_count(sbi, F2FS_WB_CP_DATA)
-   : wake_up(&sbi->cp_wait)
-                                        - kill_f2fs_super
-                                         - kill_block_super
-                                          - f2fs_put_super
-                                           : iput(sbi->node_inode)
-                                           : sbi->node_inode = NULL
-   : f2fs_in_warm_node_list
-    - is_node_folio // sbi->node_inode is NULL and panic
+The root cause is in commit 40b2d55e0452 ("f2fs: fix to create selinux
+label during whiteout initialization"), we added a call to
+f2fs_setup_filename() without a matching call to f2fs_free_filename(),
+fix it.
 
-The root cause is that f2fs_put_super() calls iput(sbi->node_inode) and
-sets sbi->node_inode to NULL after sbi->nr_pages[F2FS_WB_CP_DATA] is
-decremented to zero. As a result, f2fs_in_warm_node_list() may
-dereference a NULL node_inode when checking whether a folio belongs to
-the node inode, leading to a panic.
-
-This patch fixes the issue by calling f2fs_in_warm_node_list() before
-decrementing sbi->nr_pages[F2FS_WB_CP_DATA], thus preventing the
-use-after-free condition.
-
+Fixes: 40b2d55e0452 ("f2fs: fix to create selinux label during whiteout initialization")
 Cc: stable@kernel.org
-Fixes: 50fa53eccf9f ("f2fs: fix to avoid broken of dnode block list")
-Reported-by: syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Reported-by: syzbot+cf7946ab25b21abc4b66@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/69a75fe1.a70a0220.b118c.0014.GAE@google.com
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/namei.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -386,6 +386,8 @@ static void f2fs_write_end_io(struct bio
- 				folio->index, NODE_TYPE_REGULAR, true);
- 			f2fs_bug_on(sbi, folio->index != nid_of_node(folio));
- 		}
-+		if (f2fs_in_warm_node_list(sbi, folio))
-+			f2fs_del_fsync_node_entry(sbi, folio);
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -964,6 +964,7 @@ static int f2fs_rename(struct mnt_idmap
+ 			return err;
  
- 		dec_page_count(sbi, type);
- 
-@@ -397,8 +399,6 @@ static void f2fs_write_end_io(struct bio
- 				wq_has_sleeper(&sbi->cp_wait))
- 			wake_up(&sbi->cp_wait);
- 
--		if (f2fs_in_warm_node_list(sbi, folio))
--			f2fs_del_fsync_node_entry(sbi, folio);
- 		folio_clear_f2fs_gcing(folio);
- 		folio_end_writeback(folio);
+ 		err = f2fs_create_whiteout(idmap, old_dir, &whiteout, &fname);
++		f2fs_free_filename(&fname);
+ 		if (err)
+ 			return err;
  	}
 
 
