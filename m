@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A5C179A3;
-	Fri, 24 Apr 2026 13:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A833D6CCE;
+	Fri, 24 Apr 2026 13:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037754; cv=none; b=WvjfRf3sLA6b9gBxGcCtO6BzHfiDE4vAWBcMxnk3dyhs4CJnlJyBOuMB0o4rxn/6LazNvbsl7HoGRJq+F+sbBEMWlkJfo/mDgHd+Y/x0cn+lq04A1Qi8riqdq/Z3zhkFnCqoHCoFNRFu0JPRLXlswCfsj15xm0Ib79KaL7JAnxQ=
+	t=1777037757; cv=none; b=m8Jhr0H7f2BKkNfvHWW8YSdQ853itU21CQu58rH55h9+dravKVJRqGjIMbpGntqGFUAYcWun27w0/DEnl2YcaCt3lvb4TyUvr8YoHkEZQ1zO1SeSoR+WGZzEe3p1tGdA2bHVRMBR1ZgtCiYtDzql3BXx7736zVnfAxiMax1lc54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037754; c=relaxed/simple;
-	bh=BFO4rO7FJGxVrNlyv2OxH3uFI7SYjTHcouasZ18o008=;
+	s=arc-20240116; t=1777037757; c=relaxed/simple;
+	bh=oEKuqSovpedAa82Og0h1gepDWiDFBOncZiFE48YLHws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fVWU3nsQQq62xdVWH7tj6XTAqNwDA3lhWxMuBdfE8bXczvgHqAFZyKp2I7LwM+uyM3SP4SOMU/eI7eW3kM+Ggj4JZ9Z3feW5b/S4P88Xfa7KFV7brmSCddvuzYS7cLVduNrzJxCaBcWTlWYAXSQv8TDATQMaQ/o5ucpU7mH4198=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFuVMcd8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emsU32Il4gkFZ9C7yeieoLr7V4u8BoRf3JBCV3YalJIBhxHKaHMSZ0cQOHlcMdsLUj61z+GIEYomsw0RoVXj6hQqouMEfSrapkEI9YfOzPlg2kj+whPUcr56YW/r53R8MRMjTBMNVlB27YkvG1N3OEy9oxMpaTvUItxDuCb0GRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unyQ5WPd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFuVMcd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30B5C19425;
-	Fri, 24 Apr 2026 13:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unyQ5WPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD63C19425;
+	Fri, 24 Apr 2026 13:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037754;
-	bh=BFO4rO7FJGxVrNlyv2OxH3uFI7SYjTHcouasZ18o008=;
+	s=korg; t=1777037756;
+	bh=oEKuqSovpedAa82Og0h1gepDWiDFBOncZiFE48YLHws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BFuVMcd80RzwsnEU2qO1Pd9a6a/h2yqq4s+hLhpjjppUrA7kmmPZW8S2cLPi+P8L5
-	 GyXQ4fU2o3/5/o0hfn3MXYcaxH+SdI6IZk8H2mniIYspOwEJj5QTds81kMY1g6CQAA
-	 g5DRVJZwonbghLaTxklQB/KjujrxpJaFJ1Aplu2k=
+	b=unyQ5WPdiHHfaLHp/zPq85S8WUpjRqjfcV/a8/cGeGCk6dcYq/ovIGM5dKwpoWyan
+	 z8qZn1TipQwgrY47apVej3u+NwPjOms4D+OQ5HRs++riUo8hV9XkkuEm2JVbznWylC
+	 S1SOOMUd2cUq+ljhCzsM9+uMJAKvFWmO0UsKk7vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/166] net: ipa: fix GENERIC_CMD register field masks for IPA v5.0+
-Date: Fri, 24 Apr 2026 15:29:31 +0200
-Message-ID: <20260424132544.740433345@linuxfoundation.org>
+Subject: [PATCH 6.6 058/166] net: ipa: fix event ring index not programmed for IPA v5.0+
+Date: Fri, 24 Apr 2026 15:29:32 +0200
+Message-ID: <20260424132544.935742409@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -55,43 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Koskovich <akoskovich@pm.me>
 
-[ Upstream commit 9709b56d908acc120fe8b4ae250b3c9d749ea832 ]
+[ Upstream commit 56007972c0b1e783ca714d6f1f4d6e66e531d21f ]
 
-Fix the field masks to match the hardware layout documented in
-downstream GSI (GSI_V3_0_EE_n_GSI_EE_GENERIC_CMD_*).
+For IPA v5.0+, the event ring index field moved from CH_C_CNTXT_0 to
+CH_C_CNTXT_1. The v5.0 register definition intended to define this
+field in the CH_C_CNTXT_1 fmask array but used the old identifier of
+ERINDEX instead of CH_ERINDEX.
 
-Notably this fixes a WARN I was seeing when I tried to send "stop"
-to the MPSS remoteproc while IPA was up.
+Without a valid event ring, GSI channels could never signal transfer
+completions. This caused gsi_channel_trans_quiesce() to block
+forever in wait_for_completion().
+
+At least for IPA v5.2 this resolves an issue seen where runtime
+suspend, system suspend, and remoteproc stop all hanged forever. It
+also meant the IPA data path was completely non functional.
 
 Fixes: faf0678ec8a0 ("net: ipa: add IPA v5.0 GSI register definitions")
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260403-milos-ipa-v1-1-01e9e4e03d3e@fairphone.com
+Link: https://patch.msgid.link/20260403-milos-ipa-v1-2-01e9e4e03d3e@fairphone.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/reg/gsi_reg-v5.0.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ipa/reg/gsi_reg-v5.0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ipa/reg/gsi_reg-v5.0.c b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-index 145eb0bd096d6..eac3913297c27 100644
+index eac3913297c27..cbc7cd5b34f31 100644
 --- a/drivers/net/ipa/reg/gsi_reg-v5.0.c
 +++ b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-@@ -154,9 +154,10 @@ REG_FIELDS(EV_CH_CMD, ev_ch_cmd, 0x00025010 + 0x12000 * GSI_EE_AP);
+@@ -28,7 +28,7 @@ REG_STRIDE_FIELDS(CH_C_CNTXT_0, ch_c_cntxt_0,
  
- static const u32 reg_generic_cmd_fmask[] = {
- 	[GENERIC_OPCODE]				= GENMASK(4, 0),
--	[GENERIC_CHID]					= GENMASK(9, 5),
--	[GENERIC_EE]					= GENMASK(13, 10),
--						/* Bits 14-31 reserved */
-+	[GENERIC_CHID]					= GENMASK(12, 5),
-+	[GENERIC_EE]					= GENMASK(16, 13),
-+						/* Bits 17-23 reserved */
-+	[GENERIC_PARAMS]				= GENMASK(31, 24),
+ static const u32 reg_ch_c_cntxt_1_fmask[] = {
+ 	[CH_R_LENGTH]					= GENMASK(23, 0),
+-	[ERINDEX]					= GENMASK(31, 24),
++	[CH_ERINDEX]					= GENMASK(31, 24),
  };
  
- REG_FIELDS(GENERIC_CMD, generic_cmd, 0x00025018 + 0x12000 * GSI_EE_AP);
+ REG_STRIDE_FIELDS(CH_C_CNTXT_1, ch_c_cntxt_1,
 -- 
 2.53.0
 
