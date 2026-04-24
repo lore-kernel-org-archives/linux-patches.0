@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3163AC00;
-	Fri, 24 Apr 2026 13:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620863AC00;
+	Fri, 24 Apr 2026 13:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037556; cv=none; b=DtkRue1E8pfNy9/xu2xowDd26WImprRBIm2kkgkiPQP7187up2daFB2iCI6RFGt5G02/K2U41aE5DuJ4Ed2clUhpznEDLmoxzPnR2E0YlqlVZzTrkGE9zLpykeiM0KlY8IHeInuLkRfR227p6WdmZIqRuHdRy/l7W7wRkuS7xrE=
+	t=1777037559; cv=none; b=SPXkGscC8ibxGXmQzrZFiUBRyaJpdO7H621PlB9cFdmnWJMuPJlP6fAxj+m6v1BtftNygYSiMcO05BfcVH/zYgoSC62FF0UjKhvWCzvmIBulg3i99oLyI3/M0CFO6wvzVRZuSVEH56MsCGEYH6i9+0ygvuj7TS8GUYF2P6+7xlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037556; c=relaxed/simple;
-	bh=DIX8V0UyzkN1b0/ZDjch99ctXQTP/VokOK73tY9dCQU=;
+	s=arc-20240116; t=1777037559; c=relaxed/simple;
+	bh=qGxRQ5cdByIfQFa2xfpKvP5t5ULfECZFDavwu8oFnzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7YWLDJv5Rpbosb6ArFuq7MPEsXx2k/zPs8b1Tv666ukhrBy7ZNN+EAlEoSmXyQTPF9FBSN1ZL/h+zIvju+FDHTJPUpcPJimJVlO/ZYwLLQROfYu4xUDua/7v/fok4pv5mdKXfmMxTBYc+L3JHx8urb1eX7QP0aNAhdoMN0Ch1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdF37OAx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gZly5OrS3Rs7MGgfaV8e00QriJbUYZnmLp+hO9VU/cita4EnuVRaJutK7ZP84DBdm3ep7hx4yKh+WuF4xIwlNkrbd5VhgWJwkfsRQ6JKvSrZVWD8APV+SquIZSCGzypakPw9Ob/1u984TysNvfLJx5UALDCj3dUxWDnnjmZY3cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoyjyTks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdF37OAx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68391C19425;
-	Fri, 24 Apr 2026 13:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoyjyTks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED22DC19425;
+	Fri, 24 Apr 2026 13:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037556;
-	bh=DIX8V0UyzkN1b0/ZDjch99ctXQTP/VokOK73tY9dCQU=;
+	s=korg; t=1777037559;
+	bh=qGxRQ5cdByIfQFa2xfpKvP5t5ULfECZFDavwu8oFnzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdF37OAxtjI9owrY8G4eEjUZgJIq5C1MhkDKVv8FlcR1vFCDvEbwP55DDEKLCG1sL
-	 iP66ThOAA7VSjLArjT9Y59qPvZWofSsZxddGm+D83CA3ve0JaffKrN0gO/OPCtcwiY
-	 9Jzs6o0UxWQyu7sbPhlTpBuP4pLFfIPNWCXngSto=
+	b=AoyjyTksgI7u1c/dxgH4E/Lqux70JxrCHDWw+2ikf5ZFNYOwXybelL0wj8BiYl83p
+	 MAsg1m2DOeGZ6pY2uktef+pvFmSRTqS53C7qw3LuTNIxCKTCs/Afki4VR0LtPhhx9W
+	 fTH2VlBltGrSn5qaoE3mQHp/9z488vCyx04mosfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.0 23/42] smb: server: fix max_connections off-by-one in tcp accept path
-Date: Fri, 24 Apr 2026 15:30:48 +0200
-Message-ID: <20260424132425.263660044@linuxfoundation.org>
+Subject: [PATCH 7.0 24/42] smb: client: require a full NFS mode SID before reading mode bits
+Date: Fri, 24 Apr 2026 15:30:49 +0200
+Message-ID: <20260424132425.455671886@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132420.410310336@linuxfoundation.org>
 References: <20260424132420.410310336@linuxfoundation.org>
@@ -51,52 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit ce23158bfe584bd90d1918f279fdf9de57802012 upstream.
+commit 2757ad3e4b6f9e0fed4c7739594e702abc5cab21 upstream.
 
-The global max_connections check in ksmbd's TCP accept path counts
-the newly accepted connection with atomic_inc_return(), but then
-rejects the connection when the result is greater than or equal to
-server_conf.max_connections.
+parse_dacl() treats an ACE SID matching sid_unix_NFS_mode as an NFS
+mode SID and reads sid.sub_auth[2] to recover the mode bits.
 
-That makes the effective limit one smaller than configured. For
-example:
+That assumes the ACE carries three subauthorities, but compare_sids()
+only compares min(a, b) subauthorities.  A malicious server can return
+an ACE with num_subauth = 2 and sub_auth[] = {88, 3}, which still
+matches sid_unix_NFS_mode and then drives the sub_auth[2] read four
+bytes past the end of the ACE.
 
-- max_connections=1 rejects the first connection
-- max_connections=2 allows only one connection
+Require num_subauth >= 3 before treating the ACE as an NFS mode SID.
+This keeps the fix local to the special-SID mode path without changing
+compare_sids() semantics for the rest of cifsacl.
 
-The per-IP limit in the same function uses <= correctly because it
-counts only pre-existing connections. The global limit instead checks
-the post-increment total, so it should reject only when that total
-exceeds the configured maximum.
-
-Fix this by changing the comparison from >= to >, so exactly
-max_connections simultaneous connections are allowed and the next one
-is rejected. This matches the documented meaning of max_connections
-in fs/smb/server/ksmbd_netlink.h as the "Number of maximum simultaneous
-connections".
-
-Fixes: 0d0d4680db22 ("ksmbd: add max connections parameter")
+Fixes: e2f8fbfb8d09 ("cifs: get mode bits from special sid on stat")
 Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_tcp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifsacl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -281,7 +281,7 @@ static int ksmbd_kthread_fn(void *p)
- 
- skip_max_ip_conns_limit:
- 		if (server_conf.max_connections &&
--		    atomic_inc_return(&active_num_conn) >= server_conf.max_connections) {
-+		    atomic_inc_return(&active_num_conn) > server_conf.max_connections) {
- 			pr_info_ratelimited("Limit the maximum number of connections(%u)\n",
- 					    atomic_read(&active_num_conn));
- 			atomic_dec(&active_num_conn);
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -831,6 +831,7 @@ static void parse_dacl(struct smb_acl *p
+ 			dump_ace(ppace[i], end_of_acl);
+ #endif
+ 			if (mode_from_special_sid &&
++			    ppace[i]->sid.num_subauth >= 3 &&
+ 			    (compare_sids(&(ppace[i]->sid),
+ 					  &sid_unix_NFS_mode) == 0)) {
+ 				/*
 
 
