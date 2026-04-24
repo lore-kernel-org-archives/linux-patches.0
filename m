@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993A123E356;
-	Fri, 24 Apr 2026 13:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB1D179A3;
+	Fri, 24 Apr 2026 13:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037867; cv=none; b=IEXRDxOuAqdp+bQwh8QfdNf8jwE/5vB8TwlGv9SPkJebalKwJwAiyHtKy3Spw8ZeQDjaHTzabnhPwHzUe+iGUC3WIXG6IwKGcG+XHv1GpvJ3bC9RBWWZS86EKz6ctFtfS26NY5scLBlBnNh90+IAWT6eB1cg0CLLL01A825cgmk=
+	t=1777037870; cv=none; b=PdMgqyktIgLKxS/uBsE2UJ7vc4kOtcBh0cr6YAOWIT1iUKmi8XSBWDpwOrufgXxbxlLrCLqe8JipByp7wPi5NUnktAiRDC9JNgkfoqZDj0n7qjQUPHqUNfe7jcYXG+9xhXiT8iBQ+KE3Vo0oW2hY6U5q4HWpcNSkOPum3bn+E5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037867; c=relaxed/simple;
-	bh=NciLK6LDSBTsoREjyxPxtKZPzAGesLom2ProovyqbQI=;
+	s=arc-20240116; t=1777037870; c=relaxed/simple;
+	bh=w/OFTXUJilIgJcRaNDr644fBhgBZRYR//M3uJji6EnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIcjymUEcUUqnBT+ycNc5etYhenut9B+ohyk0sKzccLAsN7XnzWJzMeysl+VByJRRaZs03OJQ9SrZe1fgxjpn8RBKvBqrWlRdbSF6UX1787pAoZACFZFyDIRqfMZcOTm8NnTZYyoJKPsn+d3bonZg6Pke0tz1VAtEpO1amtPvck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPsi3JcN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KF6yl6kDBdGP6g69woPiIZfNrnu5BEcOKnj67ADQVdcQ005uagLNqAWkA145REd8hJ9x4q1AQ3WyidMabyRn7NxkDhaEnXpfZoTwRWOibV84lPoTKslEYmCV/8Qsyu7XAWLOVApLb7qoAElTyXhAKE8vb541zN6BKU1TdxO4tSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uv2fRNSX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPsi3JcN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F850C19425;
-	Fri, 24 Apr 2026 13:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uv2fRNSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FA3C19425;
+	Fri, 24 Apr 2026 13:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037867;
-	bh=NciLK6LDSBTsoREjyxPxtKZPzAGesLom2ProovyqbQI=;
+	s=korg; t=1777037870;
+	bh=w/OFTXUJilIgJcRaNDr644fBhgBZRYR//M3uJji6EnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WPsi3JcN+l4Uc7jbM/6KcD2D/ukHBEuOO9/WBWvr40SMo+MwJJ7798yrr+uEta3Hz
-	 Gcy4nEapTdIruQWH1MNAKiAZ05UKm1EwrCCGN9qLhdoRIW/HhuSgVGSaoImbBrm0Mn
-	 gaeFLpkShSmo7evSX/lddmrEngoFq6fC37P0Vzqc=
+	b=Uv2fRNSXfCftczu+J0TDZ9loACvOhKp9ak6qROylONamYolqvu24HmcMYrlJdgC48
+	 RAmO/umABhzj2WsSxRf3WYDIrAPsaEmpfdioyY8EJlBdf+TRhAz0yftShrKGjw6Ugm
+	 jrwtWQOln6VTfSsQvfdY8+Wjsg2r3LAzJi0PFu0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Merwick <liam.merwick@oracle.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 101/166] KVM: SEV: Drop WARN on large size for KVM_MEMORY_ENCRYPT_REG_REGION
-Date: Fri, 24 Apr 2026 15:30:15 +0200
-Message-ID: <20260424132553.826675491@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	stable@kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 084/166] ksmbd: fix mechToken leak when SPNEGO decode fails after token alloc
+Date: Fri, 24 Apr 2026 15:29:58 +0200
+Message-ID: <20260424132550.343994907@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -50,71 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 8acffeef5ef720c35e513e322ab08e32683f32f2 upstream.
+commit ad0057fb91218914d6c98268718ceb9d59b388e1 upstream.
 
-Drop the WARN in sev_pin_memory() on npages overflowing an int, as the
-WARN is comically trivially to trigger from userspace, e.g. by doing:
+The kernel ASN.1 BER decoder calls action callbacks incrementally as it
+walks the input.  When ksmbd_decode_negTokenInit() reaches the mechToken
+[2] OCTET STRING element, ksmbd_neg_token_alloc() allocates
+conn->mechToken immediately via kmemdup_nul().  If a later element in
+the same blob is malformed, then the decoder will return nonzero after
+the allocation is already live.  This could happen if mechListMIC [3]
+overrunse the enclosing SEQUENCE.
 
-  struct kvm_enc_region range = {
-          .addr = 0,
-          .size = -1ul,
-  };
+decode_negotiation_token() then sets conn->use_spnego = false because
+both the negTokenInit and negTokenTarg grammars failed.  The cleanup at
+the bottom of smb2_sess_setup() is gated on use_spnego:
 
-  __vm_ioctl(vm, KVM_MEMORY_ENCRYPT_REG_REGION, &range);
+	if (conn->use_spnego && conn->mechToken) {
+		kfree(conn->mechToken);
+		conn->mechToken = NULL;
+	}
 
-Note, the checks in sev_mem_enc_register_region() that presumably exist to
-verify the incoming address+size are completely worthless, as both "addr"
-and "size" are u64s and SEV is 64-bit only, i.e. they _can't_ be greater
-than ULONG_MAX.  That wart will be cleaned up in the near future.
+so the kfree is skipped, causing the mechToken to never be freed.
 
-	if (range->addr > ULONG_MAX || range->size > ULONG_MAX)
-		return -EINVAL;
+This codepath is reachable pre-authentication, so untrusted clients can
+cause slow memory leaks on a server without even being properly
+authenticated.
 
-Opportunistically add a comment to explain why the code calculates the
-number of pages the "hard" way, e.g. instead of just shifting @ulen.
+Fix this up by not checking check for use_spnego, as it's not required,
+so the memory will always be properly freed.  At the same time, always
+free the memory in ksmbd_conn_free() incase some other failure path
+forgot to free it.
 
-Fixes: 78824fabc72e ("KVM: SVM: fix svn_pin_memory()'s use of get_user_pages_fast()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
-Tested-by: Liam Merwick <liam.merwick@oracle.com>
-Link: https://patch.msgid.link/20260313003302.3136111-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/smb/server/connection.c |    1 +
+ fs/smb/server/smb2pdu.c    |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -414,10 +414,16 @@ static struct page **sev_pin_memory(stru
- 	if (ulen == 0 || uaddr + ulen < uaddr)
- 		return ERR_PTR(-EINVAL);
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -39,6 +39,7 @@ void ksmbd_conn_free(struct ksmbd_conn *
+ 	xa_destroy(&conn->sessions);
+ 	kvfree(conn->request_buf);
+ 	kfree(conn->preauth_info);
++	kfree(conn->mechToken);
+ 	if (atomic_dec_and_test(&conn->refcnt)) {
+ 		conn->transport->ops->free_transport(conn->transport);
+ 		kfree(conn);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1901,7 +1901,7 @@ out_err:
+ 	else if (rc)
+ 		rsp->hdr.Status = STATUS_LOGON_FAILURE;
  
--	/* Calculate number of pages. */
-+	/*
-+	 * Calculate the number of pages that need to be pinned to cover the
-+	 * entire range.  Note!  This isn't simply ulen >> PAGE_SHIFT, as KVM
-+	 * doesn't require the incoming address+size to be page aligned!
-+	 */
- 	first = (uaddr & PAGE_MASK) >> PAGE_SHIFT;
- 	last = ((uaddr + ulen - 1) & PAGE_MASK) >> PAGE_SHIFT;
- 	npages = (last - first + 1);
-+	if (npages > INT_MAX)
-+		return ERR_PTR(-EINVAL);
- 
- 	locked = sev->pages_locked + npages;
- 	lock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
-@@ -426,9 +432,6 @@ static struct page **sev_pin_memory(stru
- 		return ERR_PTR(-ENOMEM);
+-	if (conn->use_spnego && conn->mechToken) {
++	if (conn->mechToken) {
+ 		kfree(conn->mechToken);
+ 		conn->mechToken = NULL;
  	}
- 
--	if (WARN_ON_ONCE(npages > INT_MAX))
--		return ERR_PTR(-EINVAL);
--
- 	/* Avoid using vmalloc for smaller buffers. */
- 	size = npages * sizeof(struct page *);
- 	if (size > PAGE_SIZE)
 
 
