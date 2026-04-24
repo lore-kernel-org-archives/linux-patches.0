@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652B83290A5;
-	Fri, 24 Apr 2026 13:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335E33C1976;
+	Fri, 24 Apr 2026 13:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038027; cv=none; b=lMCp2El7HZquKJVXCdhEwe0Cr67vBuRf/a96TovB2pIB8RbDdXCJfRaPzab06K7psFXsB+KZpvbae2rJwtZrCWZgUYsy92TFM7zilCXnCk3zIlf5sM4G7eQgUs1dh1iEwiuzNC0QYwgohbD59qR6RZNkPzKKF4qjWo1Ye62ZURg=
+	t=1777038030; cv=none; b=QZMg/1P/HiVqS1QingtEis/7IEpwPM6M5am6jABJnDnXV+HffKIRMCTbwUfA/hebJL1NBojhxbaO0siX9S+W1BC3arTLu74WlFvQruoJwDJMlcANMD8v4i/t3DUK8r61Clt7oc165p0yjoY3mhGWCYTwbGYVx1ASAwF+cYcVR/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038027; c=relaxed/simple;
-	bh=lEJqyb6f6O6TzvaqpYRvpXtQfw2ps98Aj42z+DOwbyI=;
+	s=arc-20240116; t=1777038030; c=relaxed/simple;
+	bh=KwLJpwpNcIstCNqAQLD+7Rk/3pGPnT3qqpxNvuvXowI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zy5Yb8Qx0RycK9HVTEoslTtceLs7zP6h8tEDau61K1RAkpIPKqxcEjO1FdihL2s8JhXAwfgaJUamgjcrhdzu0/cHBUr379YPqsYLh5oz5WKpCiHyAvxOt1v5rb3l5uvE5SxKn8FMzXATCFV1D73DJdhg053BawOqneNj54DHEKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W85fV1zL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KP4Dx9aUtQRwvUnq5g3yb1z/uUoqMr4Y1SjSnxUYHg8mFE9cq9f1R2N088DDFB0SsykNCcC4boPaKrUYE/oZCvnr+xLTahWiET8OX58JT5CCc2ALZTQVOGuWgt/SpaX+/jbqI1YxwczjSVovp3zfL+VEnvh7WZSqCJLPV0W4ilE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfe7Ww1T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W85fV1zL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01C4C2BCB2;
-	Fri, 24 Apr 2026 13:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfe7Ww1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0E4C19425;
+	Fri, 24 Apr 2026 13:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038027;
-	bh=lEJqyb6f6O6TzvaqpYRvpXtQfw2ps98Aj42z+DOwbyI=;
+	s=korg; t=1777038029;
+	bh=KwLJpwpNcIstCNqAQLD+7Rk/3pGPnT3qqpxNvuvXowI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W85fV1zLdvqbtqs3/KaHEvt7hkH/xkKMu9grpfA6OSs2VhLmHFswMDhA73KM6QjTl
-	 wZNXHf6jXZimqigUGaR/YwVOugnWYNj98GUIYcHycJR7/6Dhd/90bQcl9bn27G9thR
-	 dBIoPZSzbSo76IPusMaLaJ48kFQJFxSjoFk0UlCQ=
+	b=yfe7Ww1T0SKQ7Wv9j9AX/QzVgBtXHMBa3lun4pS712skT8VNczvmG+oin2JtOg5l9
+	 3MgyUXHEu9uq4JbHkfre+191os6qgsWMLX9O07lHoVpwDDLh1Up0mMUDlUiBCmPk9N
+	 6sqkGTjUUFvbCUttjA46t7HVCgczw2lKBoL2o8cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Alba Vives <sebasjosue84@gmail.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 163/166] crypto: ccp: Dont attempt to copy PDH cert to userspace if PSP command failed
-Date: Fri, 24 Apr 2026 15:31:17 +0200
-Message-ID: <20260424132607.149766463@linuxfoundation.org>
+Subject: [PATCH 6.6 164/166] crypto: ccp: Dont attempt to copy ID to userspace if PSP command failed
+Date: Fri, 24 Apr 2026 15:31:18 +0200
+Message-ID: <20260424132607.359726993@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -54,22 +54,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit e76239fed3cffd6d304d8ca3ce23984fd24f57d3 upstream.
+commit 4f685dbfa87c546e51d9dc6cab379d20f275e114 upstream.
 
-When retrieving the PDH cert, don't attempt to copy the blobs to userspace
-if the firmware command failed.  If the failure was due to an invalid
-length, i.e. the userspace buffer+length was too small, copying the number
-of bytes _firmware_ requires will overflow the kernel-allocated buffer and
-leak data to userspace.
+When retrieving the ID for the CPU, don't attempt to copy the ID blob to
+userspace if the firmware command failed.  If the failure was due to an
+invalid length, i.e. the userspace buffer+length was too small, copying
+the number of bytes _firmware_ requires will overflow the kernel-allocated
+buffer and leak data to userspace.
 
   BUG: KASAN: slab-out-of-bounds in instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
   BUG: KASAN: slab-out-of-bounds in _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
   BUG: KASAN: slab-out-of-bounds in _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
-  Read of size 2084 at addr ffff8885c4ab8aa0 by task syz.0.186/21033
+  Read of size 64 at addr ffff8881867f5960 by task syz.0.906/24388
 
-  CPU: 51 UID: 0 PID: 21033 Comm: syz.0.186 Tainted: G     U     O        7.0.0-smp-DEV #28 PREEMPTLAZY
+  CPU: 130 UID: 0 PID: 24388 Comm: syz.0.906 Tainted: G     U     O        7.0.0-smp-DEV #28 PREEMPTLAZY
   Tainted: [U]=USER, [O]=OOT_MODULE
-  Hardware name: Google, Inc.                                                       Arcadia_IT_80/Arcadia_IT_80, BIOS 34.84.12-0 11/17/2025
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.62.0-0 11/19/2025
   Call Trace:
    <TASK>
    dump_stack_lvl+0xc5/0x110 ../lib/dump_stack.c:120
@@ -82,8 +82,8 @@ leak data to userspace.
    _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
    _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
    copy_to_user ../include/linux/uaccess.h:236 [inline]
-   sev_ioctl_do_pdh_export+0x3d3/0x7c0 ../drivers/crypto/ccp/sev-dev.c:2347
-   sev_ioctl+0x2a2/0x490 ../drivers/crypto/ccp/sev-dev.c:2568
+   sev_ioctl_do_get_id2+0x361/0x490 ../drivers/crypto/ccp/sev-dev.c:2222
+   sev_ioctl+0x25f/0x490 ../drivers/crypto/ccp/sev-dev.c:2575
    vfs_ioctl ../fs/ioctl.c:51 [inline]
    __do_sys_ioctl ../fs/ioctl.c:597 [inline]
    __se_sys_ioctl+0x11d/0x1b0 ../fs/ioctl.c:583
@@ -98,38 +98,26 @@ firwmware error.
 
 Reported-by: Alexander Potapenko <glider@google.com>
 Reported-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
-Fixes: 76a2b524a4b1 ("crypto: ccp: Implement SEV_PDH_CERT_EXPORT ioctl command")
+Fixes: d6112ea0cb34 ("crypto: ccp - introduce SEV_GET_ID2 command")
 Cc: stable@vger.kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/crypto/ccp/sev-dev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/crypto/ccp/sev-dev.c
 +++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1046,7 +1046,10 @@ static int sev_ioctl_do_pdh_export(struc
- cmd:
- 	ret = __sev_do_cmd_locked(SEV_CMD_PDH_CERT_EXPORT, &data, &argp->error);
- 
--	/* If we query the length, FW responded with expected data. */
-+	/*
-+	 * Firmware will return the length of the blobs (either the minimum
-+	 * required length or the actual length written), return 'em to the user.
-+	 */
- 	input.cert_chain_len = data.cert_chain_len;
- 	input.pdh_cert_len = data.pdh_cert_len;
- 
-@@ -1055,6 +1058,9 @@ cmd:
- 		goto e_free_cert;
+@@ -932,6 +932,9 @@ static int sev_ioctl_do_get_id2(struct s
+ 		goto e_free;
  	}
  
 +	if (ret || WARN_ON_ONCE(argp->error))
-+		goto e_free_cert;
++		goto e_free;
 +
- 	if (pdh_blob) {
- 		if (copy_to_user(input_pdh_cert_address,
- 				 pdh_blob, input.pdh_cert_len)) {
+ 	if (id_blob) {
+ 		if (copy_to_user(input_address, id_blob, data.len)) {
+ 			ret = -EFAULT;
 
 
