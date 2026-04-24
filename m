@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78FA19A288;
-	Fri, 24 Apr 2026 13:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1603D19A288;
+	Fri, 24 Apr 2026 13:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037929; cv=none; b=lxlqlymdK3TD2jsYLvlN8xfWXAFKV/MIVi8WujQFMHh4xiMvCwz361yLE+zQibl3SDwQ9BZ4HUbpzMTccahH+R+dFh11us7cnIPykfGJTHGe/CMEWO1uPAgfEiT8z/c44ar2sX26NzPd6Ja0/CTHxnl+iMyobvezuimSKuj9fEc=
+	t=1777037932; cv=none; b=DxJDmVsqiOh+ktNmC9AG6kMRFu8WywdZZ+KKKFEkvWJKyA3MP5cXvdlQsarK+4XF61rpJiXwSMeI5E7WJ35RxcWd+GcyM7ObAwa5sRfhNcWdexOiUpMOiONJ9L9fmnwQtnyVL+2bsuOz2spLxmiI94ytYxTMlf7eUq78hxW9fgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037929; c=relaxed/simple;
-	bh=Ua/ALm9A9GarjXHckxsD8hTsLUda4YJSltnLyhejMeM=;
+	s=arc-20240116; t=1777037932; c=relaxed/simple;
+	bh=Cevt5Spy2rrqXMZl3b6R5X3gI23Pp0NGd8IJCN+7BtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/8Cc7n6SFtFLHXO97XRN8lBpGVvsyN1RSBwG2XXy5xrZPT6Ctsc7lDZUrgQIkQ1mTVFahgEcn3eOxjKxVysiUuVxAaQqaTv+Q2sez27GuuoZ+QmHvpVb3QALLQGpkQJanJ7nl5mNtaDB5f5vx3xqX+Zcys/nO2TZXFBitGAJv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej7M6EPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lSC0StCLVej3LLE0Gcj3hF1O5l6rWTBDWpwOOtcuraMINm9kXpPsEg68rTGSIF01xEY+rZ67LVsxdCX+/d8WNXyKw1R5vq8Rd+L0XZ7kDOymtwyHQ53Ljt+sEWSNravccIf1Cr6MmjikBbYvVfsIF31kLb0CF5PjSqN1lIVD7Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VG3SFr66; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej7M6EPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0B2C19425;
-	Fri, 24 Apr 2026 13:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VG3SFr66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BB3C19425;
+	Fri, 24 Apr 2026 13:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037929;
-	bh=Ua/ALm9A9GarjXHckxsD8hTsLUda4YJSltnLyhejMeM=;
+	s=korg; t=1777037932;
+	bh=Cevt5Spy2rrqXMZl3b6R5X3gI23Pp0NGd8IJCN+7BtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ej7M6EPEI2UAkbLRjGGEztaW0XJNkN4uCgVqWH8+F+oahyl3Dnk558ZOkBSW0YlRQ
-	 Lhgxktl4ulWmdRnpkj4gQa8yC4q42TQ+DdP1sPym3W1II99YYmw2CHrM/XtFWFQyyf
-	 1upIyoLGx2UZ31GAD0Y8TnMAfTFfARQXKqW62me0=
+	b=VG3SFr66btPG0GvdCP9YR3IYmUpdA8prW7WwBriImfYKxboIJ1ZfQvMvf3wphLg0m
+	 zYE6bS6CFOqO82HedxdIm/165+oitiqnqfkb9P2NEhOAgy6N71BTbRQTH3AY0SosD6
+	 bv0CkT7pqt6Kp5se4BO6LJPTy9nSdTXqKHBP/TyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	stable@kernel.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 082/166] ksmbd: validate EaNameLength in smb2_get_ea()
-Date: Fri, 24 Apr 2026 15:29:56 +0200
-Message-ID: <20260424132549.980479730@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 118/166] media: mediatek: vcodec: fix use-after-free in encoder release path
+Date: Fri, 24 Apr 2026 15:30:32 +0200
+Message-ID: <20260424132557.563371082@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -55,49 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 66751841212c2cc196577453c37f7774ff363f02 upstream.
+commit 76e35091ffc722ba39b303e48bc5d08abb59dd56 upstream.
 
-smb2_get_ea() reads ea_req->EaNameLength from the client request and
-passes it directly to strncmp() as the comparison length without
-verifying that the length of the name really is the size of the input
-buffer received.
+The fops_vcodec_release() function frees the context structure (ctx)
+without first cancelling any pending or running work in ctx->encode_work.
+This creates a race window where the workqueue handler (mtk_venc_worker)
+may still be accessing the context memory after it has been freed.
 
-Fix this up by properly checking the size of the name based on the value
-received and the overall size of the request, to prevent a later
-strncmp() call to use the length as a "trusted" size of the buffer.
-Without this check, uninitialized heap values might be slowly leaked to
-the client.
+Race condition:
 
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+    CPU 0 (release path)               CPU 1 (workqueue)
+    ---------------------               ------------------
+    fops_vcodec_release()
+      v4l2_m2m_ctx_release()
+        v4l2_m2m_cancel_job()
+        // waits for m2m job "done"
+                                        mtk_venc_worker()
+                                          v4l2_m2m_job_finish()
+                                          // m2m job "done"
+                                          // BUT worker still running!
+                                          // post-job_finish access:
+                                        other ctx dereferences
+                                          // UAF if ctx already freed
+        // returns (job "done")
+      kfree(ctx)  // ctx freed
+
+Root cause: The v4l2_m2m_ctx_release() only waits for the m2m job
+lifecycle (via TRANS_RUNNING flag), not the workqueue lifecycle.
+After v4l2_m2m_job_finish() is called, the m2m framework considers
+the job complete and v4l2_m2m_ctx_release() returns, but the worker
+function continues executing and may still access ctx.
+
+The work is queued during encode operations via:
+  queue_work(ctx->dev->encode_workqueue, &ctx->encode_work)
+The worker function accesses ctx->m2m_ctx, ctx->dev, and other ctx
+fields even after calling v4l2_m2m_job_finish().
+
+This vulnerability was confirmed with KASAN by running an instrumented
+test module that widens the post-job_finish race window. KASAN detected:
+
+  BUG: KASAN: slab-use-after-free in mtk_venc_worker+0x159/0x180
+  Read of size 4 at addr ffff88800326e000 by task kworker/u8:0/12
+
+  Workqueue: mtk_vcodec_enc_wq mtk_venc_worker
+
+  Allocated by task 47:
+    __kasan_kmalloc+0x7f/0x90
+    fops_vcodec_open+0x85/0x1a0
+
+  Freed by task 47:
+    __kasan_slab_free+0x43/0x70
+    kfree+0xee/0x3a0
+    fops_vcodec_release+0xb7/0x190
+
+Fix this by calling cancel_work_sync(&ctx->encode_work) before kfree(ctx).
+This ensures the workqueue handler is both cancelled (if pending) and
+synchronized (waits for any running handler to complete) before the
+context is freed.
+
+Placement rationale: The fix is placed after v4l2_ctrl_handler_free()
+and before list_del_init(&ctx->list). At this point, all m2m operations
+are done (v4l2_m2m_ctx_release() has returned), and we need to ensure
+the workqueue is synchronized before removing ctx from the list and
+freeing it.
+
+Note: The open error path does NOT need cancel_work_sync() because
+INIT_WORK() only initializes the work structure - it does not schedule
+it. Work is only scheduled later during device_run() operations.
+
+Fixes: 0934d3759615 ("media: mediatek: vcodec: separate decoder and encoder")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4702,6 +4702,11 @@ static int smb2_get_ea(struct ksmbd_work
+--- a/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/mtk_vcodec_enc_drv.c
+@@ -216,6 +216,15 @@ static int fops_vcodec_release(struct fi
+ 	v4l2_fh_exit(&ctx->fh);
+ 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
  
- 		ea_req = (struct smb2_ea_info_req *)((char *)req +
- 						     le16_to_cpu(req->InputBufferOffset));
++	/*
++	 * Cancel any pending encode work before freeing the context.
++	 * Although v4l2_m2m_ctx_release() waits for m2m job completion,
++	 * the workqueue handler (mtk_venc_worker) may still be accessing
++	 * the context after v4l2_m2m_job_finish() returns. Without this,
++	 * a use-after-free occurs when the worker accesses ctx after kfree.
++	 */
++	cancel_work_sync(&ctx->encode_work);
 +
-+		if (le32_to_cpu(req->InputBufferLength) <
-+		    offsetof(struct smb2_ea_info_req, name) +
-+		    ea_req->EaNameLength)
-+			return -EINVAL;
- 	} else {
- 		/* need to send all EAs, if no specific EA is requested*/
- 		if (le32_to_cpu(req->Flags) & SL_RETURN_SINGLE_ENTRY)
+ 	spin_lock_irqsave(&dev->dev_ctx_lock, flags);
+ 	list_del_init(&ctx->list);
+ 	spin_unlock_irqrestore(&dev->dev_ctx_lock, flags);
 
 
