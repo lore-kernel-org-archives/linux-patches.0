@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF82F19A288;
-	Fri, 24 Apr 2026 13:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1803D6CCE;
+	Fri, 24 Apr 2026 13:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037746; cv=none; b=b4QHTOqwnafC9ejhzjcROgeMX6VCGWz2L+MuTh4eY9H3h05JgWfKQDa3BWZj1pCaNhJyDzdNEwW3GXqWFEjoP2gC4ibmN4/fmdEyfyGx5eOnB5hT2ewkOQCPStN/pvzJ8spfIe7Dkocga+KI+V+hD1aDOFQ8PVUx0gfmGV4PjH0=
+	t=1777037749; cv=none; b=bd6Y0A7XhyycA8ccIiUNZD/1GE/db2VoQPDLYl5rZsCcWuP9mp7YZH5+j/TAYFRs91+NBayCnOm4/BtTe4IukZDDX65ztFW+K/6Ex/37JzpACUEglmC/0WGy5VI6zGE658B8GnFsXWmocDvJJ/1q0XFfbY4YL0XFq6PkMgHJxYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037746; c=relaxed/simple;
-	bh=eqMEKDlxzgQmeRGvH4wXypgWdzfLxcikGypZgWlXszM=;
+	s=arc-20240116; t=1777037749; c=relaxed/simple;
+	bh=IEIPgBwZlgHr1Z5YN4Km0n+18HV1JyXpp21FWw2DHT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JUEM7sxgteON+v0rKaJq05JIIQNFAsD4RHpPsS4a3gVAzlqqTtufSJYyu8vOPWgi5eR7egxqpN2E7iXCw/RWXAgZ+OZ6NdhjjYqHyf2WVkI543agXlPQkqgB6ZGTYU//y2mNcf0X/El/32ZpUmAjxv5hDslsgqe0LHGvhfM+3Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aA2mafBR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NMEsL9HXxMDDtnaZlNuPO/NE7j3A1Juya9MdOU7W8Hb4TSmSTvaw+kExpwMbqnWdkpAqTrVFiWeH9kjl8Bu0kHwoJeGJi46f/l6W9t+5huZMNL8AAHomHzHePmMkwI75pa8pwQ8PLNhNWh0HAJNxrzhD5+0bjxQOE3oE9dUDv8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qu7yfcU4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aA2mafBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CD2C19425;
-	Fri, 24 Apr 2026 13:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qu7yfcU4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE27DC19425;
+	Fri, 24 Apr 2026 13:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037746;
-	bh=eqMEKDlxzgQmeRGvH4wXypgWdzfLxcikGypZgWlXszM=;
+	s=korg; t=1777037749;
+	bh=IEIPgBwZlgHr1Z5YN4Km0n+18HV1JyXpp21FWw2DHT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aA2mafBRze4aFPPZYuj1p6ESg0gL6og3NP5nMfCtxU0z2QE4toEJPXN0UazqNMG2S
-	 JGGwDv3bB62qSwEUIfPA/XZpKiTuJGpvAMWBR5unGkfr1p35YA1+DxXD9KS/tJSi95
-	 R8lIG/2C3D/DEOObvHqgjubRyKzPCzn7a0f2UDRs=
+	b=qu7yfcU4IecBrzmqDO5/oySjg4UlknJyt41fdbBUSuCqxf9EOeIB9556FOBw/jURz
+	 QB68wWEI2aRGIRjYEru2h/cyaCBkjNA0qS7QkHfBsI8Yx5sGTBIGDT6k5s0IJUxjpW
+	 AwangLc2o/c6diXJ6e5jgw3LpnhyYj5dmfpR9ZpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imrane <ihalim.me@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	=?UTF-8?q?C=C3=A9sar=20Montoya?= <sprit152009@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/166] platform/x86/amd: pmc: Add Thinkpad L14 Gen3 to quirk_s2idle_bug
-Date: Fri, 24 Apr 2026 15:28:54 +0200
-Message-ID: <20260424132537.029497143@linuxfoundation.org>
+Subject: [PATCH 6.6 011/166] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 15-eg0xxx
+Date: Fri, 24 Apr 2026 15:28:45 +0200
+Message-ID: <20260424132535.276314623@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -53,47 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: César Montoya <sprit152009@gmail.com>
 
-[ Upstream commit 1a9452c428a6b76f0b797bae21daa454fccef1a2 ]
+[ Upstream commit 2f388b4e8fdd6b0f27cafd281658daacfd85807e ]
 
-This platform is a similar vintage of platforms that had a BIOS bug
-leading to a 10s delay at resume from s0i3.
+The HP Pavilion 15-eg0xxx with subsystem ID 0x103c87cb uses a Realtek
+ALC287 codec with a mute LED wired to GPIO pin 4 (mask 0x10). The
+existing ALC287_FIXUP_HP_GPIO_LED fixup already handles this correctly,
+but the subsystem ID was missing from the quirk table.
 
-Add a quirk for it.
+GPIO pin confirmed via manual hda-verb testing:
+  hda-verb SET_GPIO_MASK 0x10
+  hda-verb SET_GPIO_DIRECTION 0x10
+  hda-verb SET_GPIO_DATA 0x10
 
-Reported-by: Imrane <ihalim.me@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221273
-Tested-by: Imrane <ihalim.me@gmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260324211647.357924-1-mario.limonciello@amd.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: César Montoya <sprit152009@gmail.com>
+Link: https://patch.msgid.link/20260321153603.12771-1-sprit152009@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index a6006b4ec2cc0..a3921f8106c12 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -197,6 +197,15 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82XQ"),
- 		}
- 	},
-+	/* https://bugzilla.kernel.org/show_bug.cgi?id=221273 */
-+	{
-+		.ident = "Thinkpad L14 Gen3",
-+		.driver_data = &quirk_s2idle_bug,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21C6"),
-+		}
-+	},
- 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4434 */
- 	{
- 		.ident = "Lenovo Yoga 6 13ALC6",
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index cd30f749c79b4..0efc2b8aedb4a 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10108,6 +10108,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87cb, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.53.0
 
