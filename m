@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1803D6CCE;
-	Fri, 24 Apr 2026 13:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C5023E356;
+	Fri, 24 Apr 2026 13:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037749; cv=none; b=bd6Y0A7XhyycA8ccIiUNZD/1GE/db2VoQPDLYl5rZsCcWuP9mp7YZH5+j/TAYFRs91+NBayCnOm4/BtTe4IukZDDX65ztFW+K/6Ex/37JzpACUEglmC/0WGy5VI6zGE658B8GnFsXWmocDvJJ/1q0XFfbY4YL0XFq6PkMgHJxYo=
+	t=1777037752; cv=none; b=BDmfhhu4s32WLhDuzV/mmGpnTKGTnRbRA/8c70mbwG03T7zd/aMGjdJ6Rt1g6O4SOVsvo9Hr4pk3WzHA1yZm7JS506CodBLtcCOkVBF91Dt9kuC5vXQAta8HEgWxVUeCux3bsivZc4ElPmleoczL21AxwO1SLX1RAs8Z8OJ0F8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037749; c=relaxed/simple;
-	bh=IEIPgBwZlgHr1Z5YN4Km0n+18HV1JyXpp21FWw2DHT0=;
+	s=arc-20240116; t=1777037752; c=relaxed/simple;
+	bh=UzuUsf7cdqZYc4R16imisgCz3ml362Z9NVnoiVnD0O0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NMEsL9HXxMDDtnaZlNuPO/NE7j3A1Juya9MdOU7W8Hb4TSmSTvaw+kExpwMbqnWdkpAqTrVFiWeH9kjl8Bu0kHwoJeGJi46f/l6W9t+5huZMNL8AAHomHzHePmMkwI75pa8pwQ8PLNhNWh0HAJNxrzhD5+0bjxQOE3oE9dUDv8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qu7yfcU4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYfh1YlvYJ9qt6mwNfKnPXiNXxmMzMKAl1Ti9wUWGi3yx/5ke2o93Gv4dPfVfkRDSQrcCbu8IX+ALG0ICq87Q+BfcPDdsLMRtk1mcPi9gWhi78R5VPcpw+BLbBjmzwPRb7Aw+UuiTWNBqY78Guiih3KQEDHC9mzCocYAvIZV4GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeSseSQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qu7yfcU4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE27DC19425;
-	Fri, 24 Apr 2026 13:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeSseSQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673D8C19425;
+	Fri, 24 Apr 2026 13:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037749;
-	bh=IEIPgBwZlgHr1Z5YN4Km0n+18HV1JyXpp21FWw2DHT0=;
+	s=korg; t=1777037751;
+	bh=UzuUsf7cdqZYc4R16imisgCz3ml362Z9NVnoiVnD0O0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qu7yfcU4IecBrzmqDO5/oySjg4UlknJyt41fdbBUSuCqxf9EOeIB9556FOBw/jURz
-	 QB68wWEI2aRGIRjYEru2h/cyaCBkjNA0qS7QkHfBsI8Yx5sGTBIGDT6k5s0IJUxjpW
-	 AwangLc2o/c6diXJ6e5jgw3LpnhyYj5dmfpR9ZpY=
+	b=jeSseSQyWvZ68aM5DoPby9yoHgv0rhJvlUvnwuK+Xz5EWDX8FOTsccZMNyuj1jtKB
+	 GEn4gMdhlUJg9Me9V49gsWlZ6fK4RaCrXkR2yipW/mss9ze1eBJXuWo0A6SJeiuJ3c
+	 P27BjRavxy6hBFLtTzeGSf1IiL+XyKnV6IoQeJh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A9sar=20Montoya?= <sprit152009@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/166] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion 15-eg0xxx
-Date: Fri, 24 Apr 2026 15:28:45 +0200
-Message-ID: <20260424132535.276314623@linuxfoundation.org>
+Subject: [PATCH 6.6 048/166] xfrm: Wait for RCU readers during policy netns exit
+Date: Fri, 24 Apr 2026 15:29:22 +0200
+Message-ID: <20260424132542.886327661@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -45,47 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: César Montoya <sprit152009@gmail.com>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-[ Upstream commit 2f388b4e8fdd6b0f27cafd281658daacfd85807e ]
+[ Upstream commit 069daad4f2ae9c5c108131995529d5f02392c446 ]
 
-The HP Pavilion 15-eg0xxx with subsystem ID 0x103c87cb uses a Realtek
-ALC287 codec with a mute LED wired to GPIO pin 4 (mask 0x10). The
-existing ALC287_FIXUP_HP_GPIO_LED fixup already handles this correctly,
-but the subsystem ID was missing from the quirk table.
+xfrm_policy_fini() frees the policy_bydst hash tables after flushing the
+policy work items and deleting all policies, but it does not wait for
+concurrent RCU readers to leave their read-side critical sections first.
 
-GPIO pin confirmed via manual hda-verb testing:
-  hda-verb SET_GPIO_MASK 0x10
-  hda-verb SET_GPIO_DIRECTION 0x10
-  hda-verb SET_GPIO_DATA 0x10
+The policy_bydst tables are published via rcu_assign_pointer() and are
+looked up through rcu_dereference_check(), so netns teardown must also
+wait for an RCU grace period before freeing the table memory.
 
-Signed-off-by: César Montoya <sprit152009@gmail.com>
-Link: https://patch.msgid.link/20260321153603.12771-1-sprit152009@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this by adding synchronize_rcu() before freeing the policy hash tables.
+
+Fixes: e1e551bc5630 ("xfrm: policy: prepare policy_bydst hash for rcu lookups")
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/xfrm/xfrm_policy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index cd30f749c79b4..0efc2b8aedb4a 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10108,6 +10108,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x87cb, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87cc, "HP Pavilion 15-eg0xxx", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x87df, "HP ProBook 430 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 45851f822ec4a..82854aa258ea6 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -4215,6 +4215,8 @@ static void xfrm_policy_fini(struct net *net)
+ #endif
+ 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_MAIN, false);
+ 
++	synchronize_rcu();
++
+ 	WARN_ON(!list_empty(&net->xfrm.policy_all));
+ 
+ 	for (dir = 0; dir < XFRM_POLICY_MAX; dir++) {
 -- 
 2.53.0
 
