@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651953D6CAC;
-	Fri, 24 Apr 2026 13:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB96278F4A;
+	Fri, 24 Apr 2026 13:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037585; cv=none; b=QAEWniBifJzeA4EYXGLrD0Kx8wkiDOF8UjD2uYoQ1ziIjw04M9M5ZeDlYS45Nt5AhrcKCtCOpejlnmB1Ral6z9h5PDE+wG6+O0RgxC4eerVkHlRr+UQlcEOA+hUwO0N9T2hLlMauYR8uqmwtqeNBTzk51t6ZV101GY21wBlWLxI=
+	t=1777037587; cv=none; b=gIJTRYnhA0vwt+vn6hqQ2Kopv3CsLkmx5KMEkpXcMHgMezhUt6cHYynU7U+A70mveAQsZhuqceCsPLT7U5YP0rwxJLqxsYONB29gdJZyATrvFkDmX6HqKL7xqz/L+KeaReEsErj3NjaHbLKH4JbwYFq/6BVioEIDIlgL8SilW6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037585; c=relaxed/simple;
-	bh=/f7dCbdv8ERmPss5SnrdoMyPL2ZgrgbwURWBHX2cXoI=;
+	s=arc-20240116; t=1777037587; c=relaxed/simple;
+	bh=zuaswbwwNpzcAxCr9GfgyuzymsHxbnunj1s4GENfpmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tObFPqtm57On3mVnayhlzQ14c1QUxWKy3UcbInpA/NJ8c+Qz10PapW9rScIg1y84OliAMaFl0DrAoB1qlekqCRAKX05RcKB2+avRkSxg1cTHXnQtV4lW5pIijVn/mA5MAzPMScYscFeo5vl1nqhGOZWZcdJQyIqBDUm4CoGNLTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmGGgpK7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZDB7tSxo4WYl9z5Qofj3Mg6+6vAySQmB15etGGPBH33/n0QTnHkDWm/qr5t9EYGS6CTBJfyeVnI8p1kWpmeFl1E6bwnWoX0ZP1R+bq+jcf5PVjE39LvSfRC/c/xG9IlczI4WybALds6TQBmhSHmEgcLMq0+9LQe6avj5GCU3GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mz8aZ/5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmGGgpK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA782C19425;
-	Fri, 24 Apr 2026 13:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mz8aZ/5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CB7C2BCB2;
+	Fri, 24 Apr 2026 13:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037585;
-	bh=/f7dCbdv8ERmPss5SnrdoMyPL2ZgrgbwURWBHX2cXoI=;
+	s=korg; t=1777037587;
+	bh=zuaswbwwNpzcAxCr9GfgyuzymsHxbnunj1s4GENfpmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xmGGgpK7lX6VoeSbL31RdVmjHDpfCKIvtDOXbLno6+rUpuZahJMWB6zbEdxZ8BHXL
-	 qviaS+qnUdPW/ciYhcIBLF5IHDTgK1b7L4H9OR1Qe0mnqMwtPzwrX3hTfWj+5cSH5j
-	 od8A7hpH4sJiyYbd16SluWyq2DkDpwK4P47uN2Fg=
+	b=mz8aZ/5iy5paw9fO3pfObMZUb73xvSw9pF5CNb9uLJA1oZy9X52GEE+bv+NkoGMnm
+	 2WbRTBCRaiGAyuK3iO4XRYP1vuEBUCyN07yR4MJF85CEKt3bOSVBN8GLVp9m/Sv2Hw
+	 8lrDUs/IgKeCqdICdKMC2qrlqDgB2WcbD4KjBRYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.0 27/42] ksmbd: validate response sizes in ipc_validate_msg()
-Date: Fri, 24 Apr 2026 15:30:52 +0200
-Message-ID: <20260424132426.040332215@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.0 36/42] ALSA: caiaq: take a reference on the USB device in create_card()
+Date: Fri, 24 Apr 2026 15:31:01 +0200
+Message-ID: <20260424132428.040392455@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132420.410310336@linuxfoundation.org>
 References: <20260424132420.410310336@linuxfoundation.org>
@@ -51,122 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit d6a6aa81eac2c9bff66dc6e191179cb69a14426b upstream.
+commit 80bb50e2d459213cccff3111d5ef98ed4238c0d5 upstream.
 
-ipc_validate_msg() computes the expected message size for each
-response type by adding (or multiplying) attacker-controlled fields
-from the daemon response to a fixed struct size in unsigned int
-arithmetic.  Three cases can overflow:
+The caiaq driver stores a pointer to the parent USB device in
+cdev->chip.dev but never takes a reference on it. The card's
+private_free callback, snd_usb_caiaq_card_free(), can run
+asynchronously via snd_card_free_when_closed() after the USB
+device has already been disconnected and freed, so any access to
+cdev->chip.dev in that path dereferences a freed usb_device.
 
-  KSMBD_EVENT_RPC_REQUEST:
-      msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
-  KSMBD_EVENT_SHARE_CONFIG_REQUEST:
-      msg_sz = sizeof(struct ksmbd_share_config_response) +
-               resp->payload_sz;
-  KSMBD_EVENT_LOGIN_REQUEST_EXT:
-      msg_sz = sizeof(struct ksmbd_login_response_ext) +
-               resp->ngroups * sizeof(gid_t);
+On top of the refcounting issue, the current card_free implementation
+calls usb_reset_device(cdev->chip.dev). A reset in a free callback
+is inappropriate: the device is going away, the call takes the
+device lock in a teardown context, and the reset races with the
+disconnect path that the callback is already cleaning up after.
 
-resp->payload_sz is __u32 and resp->ngroups is __s32.  Each addition
-can wrap in unsigned int; the multiplication by sizeof(gid_t) mixes
-signed and size_t, so a negative ngroups is converted to SIZE_MAX
-before the multiply.  A wrapped value of msg_sz that happens to
-equal entry->msg_sz bypasses the size check on the next line, and
-downstream consumers (smb2pdu.c:6742 memcpy using rpc_resp->payload_sz,
-kmemdup in ksmbd_alloc_user using resp_ext->ngroups) then trust the
-unverified length.
+Take a reference on the USB device in create_card() with
+usb_get_dev(), drop it with usb_put_dev() in the free callback,
+and remove the usb_reset_device() call.
 
-Use check_add_overflow() on the RPC_REQUEST and SHARE_CONFIG_REQUEST
-paths to detect integer overflow without constraining functional
-payload size; userspace ksmbd-tools grows NDR responses in 4096-byte
-chunks for calls like NetShareEnumAll, so a hard transport cap is
-unworkable on the response side.  For LOGIN_REQUEST_EXT, reject
-resp->ngroups outside the signed [0, NGROUPS_MAX] range up front and
-report the error from ipc_validate_msg() so it fires at the IPC
-boundary; with that bound the subsequent multiplication and addition
-stay well below UINT_MAX.  The now-redundant ngroups check and
-pr_err in ksmbd_alloc_user() are removed.
-
-This is the response-side analogue of aab98e2dbd64 ("ksmbd: fix
-integer overflows on 32 bit systems"), which hardened the request
-side.
-
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Fixes: a77e0e02af1c ("ksmbd: add support for supplementary groups")
+Fixes: b04dcbb7f7b1 ("ALSA: caiaq: Use snd_card_free_when_closed() at disconnection")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260413034941.1131465-3-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_config.c |    6 ------
- fs/smb/server/transport_ipc.c    |   16 +++++++++++++---
- 2 files changed, 13 insertions(+), 9 deletions(-)
+ sound/usb/caiaq/device.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/mgmt/user_config.c
-+++ b/fs/smb/server/mgmt/user_config.c
-@@ -56,12 +56,6 @@ struct ksmbd_user *ksmbd_alloc_user(stru
- 		goto err_free;
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -384,7 +384,7 @@ static void card_free(struct snd_card *c
+ 	snd_usb_caiaq_input_free(cdev);
+ #endif
+ 	snd_usb_caiaq_audio_free(cdev);
+-	usb_reset_device(cdev->chip.dev);
++	usb_put_dev(cdev->chip.dev);
+ }
  
- 	if (resp_ext) {
--		if (resp_ext->ngroups > NGROUPS_MAX) {
--			pr_err("ngroups(%u) from login response exceeds max groups(%d)\n",
--					resp_ext->ngroups, NGROUPS_MAX);
--			goto err_free;
--		}
--
- 		user->sgid = kmemdup(resp_ext->____payload,
- 				     resp_ext->ngroups * sizeof(gid_t),
- 				     KSMBD_DEFAULT_GFP);
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -13,6 +13,7 @@
- #include <net/genetlink.h>
- #include <linux/socket.h>
- #include <linux/workqueue.h>
-+#include <linux/overflow.h>
+ static int create_card(struct usb_device *usb_dev,
+@@ -410,7 +410,7 @@ static int create_card(struct usb_device
+ 		return err;
  
- #include "vfs_cache.h"
- #include "transport_ipc.h"
-@@ -497,7 +498,9 @@ static int ipc_validate_msg(struct ipc_m
- 	{
- 		struct ksmbd_rpc_command *resp = entry->response;
- 
--		msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
-+		if (check_add_overflow(sizeof(struct ksmbd_rpc_command),
-+				       resp->payload_sz, &msg_sz))
-+			return -EINVAL;
- 		break;
- 	}
- 	case KSMBD_EVENT_SPNEGO_AUTHEN_REQUEST:
-@@ -516,8 +519,9 @@ static int ipc_validate_msg(struct ipc_m
- 			if (resp->payload_sz < resp->veto_list_sz)
- 				return -EINVAL;
- 
--			msg_sz = sizeof(struct ksmbd_share_config_response) +
--					resp->payload_sz;
-+			if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
-+					       resp->payload_sz, &msg_sz))
-+				return -EINVAL;
- 		}
- 		break;
- 	}
-@@ -526,6 +530,12 @@ static int ipc_validate_msg(struct ipc_m
- 		struct ksmbd_login_response_ext *resp = entry->response;
- 
- 		if (resp->ngroups) {
-+			if (resp->ngroups < 0 ||
-+			    resp->ngroups > NGROUPS_MAX) {
-+				pr_err("ngroups(%d) from login response exceeds max groups(%d)\n",
-+				       resp->ngroups, NGROUPS_MAX);
-+				return -EINVAL;
-+			}
- 			msg_sz = sizeof(struct ksmbd_login_response_ext) +
- 					resp->ngroups * sizeof(gid_t);
- 		}
+ 	cdev = caiaqdev(card);
+-	cdev->chip.dev = usb_dev;
++	cdev->chip.dev = usb_get_dev(usb_dev);
+ 	cdev->chip.card = card;
+ 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
+ 				  le16_to_cpu(usb_dev->descriptor.idProduct));
 
 
