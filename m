@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2208F3290A5;
-	Fri, 24 Apr 2026 13:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC64F3B38AE;
+	Fri, 24 Apr 2026 13:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038035; cv=none; b=dvtPq3fKKP1qeVHJa26S0OJsP9S1ed/9CiXtSudAgMBuRpSH0S4gBfTHBhNBfGSUdkwiqofsatcjiO7GGOaoIM0YO1VAaWabeOeC9fj2KTh13rP52WjNkhp3vUMS1crLeEYzSNWpNL4Aqleg17FibS47Yf2KPXk395jXXa/1coQ=
+	t=1777038037; cv=none; b=EsMvKhs3zr29/f6422o+XDVrAvX74AUS28X3Z9RWk9p8lpiDpP6obOWl9JmPCCzL/edQtPCTh7q/TXIE4wnT2kcU1+s0wTjeVUoDGFQbGIZZVoGXjsdIbqcwL1H5/ZDk/iGeOooIfwZBgsjfV0yZL0ve3jlcgWLA5Rqi4ryepTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038035; c=relaxed/simple;
-	bh=ndJsUsSwYirsRIkSg6jmyNl+aU4SoSI9NhQzmDo5GnI=;
+	s=arc-20240116; t=1777038037; c=relaxed/simple;
+	bh=ODi3MGJDOkl4+GIOtGTP2SknFoZ3azUekFmU9NiTatM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzuG2QdIUwT/Gt9BcHif5kJdAArBxl3pSYhCdcmRDp7DfD3IyfHR1JkfzIPYK/VB+A2R0KsTzpm3Kr8OaawXyxSXqnZe6th+TuLuNQT+FbnW3AFvgGEcy4M3rODKFTkhp4g1gfZcSo697hz44i2rkcXQtxa+EZWYE6t34+APv/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzfDl73M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mj3PUwGnphYRR1L0AicQLWd8VY89/T8sCr8HFlVXqz//GF6n3WoEb56om1eXpq4DYkTgumqaEGQBtTpHF9zutJ0JOTuQRNxSQgVjGUde+oaZC3SmKxMscCSpSxR4EeTG3hRU+Eqc/N9uNKDG+KzemI0uxDO4yqgJfuoN0g6MuC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJJ/WZEH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzfDl73M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1AEC19425;
-	Fri, 24 Apr 2026 13:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJJ/WZEH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42605C19425;
+	Fri, 24 Apr 2026 13:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038035;
-	bh=ndJsUsSwYirsRIkSg6jmyNl+aU4SoSI9NhQzmDo5GnI=;
+	s=korg; t=1777038037;
+	bh=ODi3MGJDOkl4+GIOtGTP2SknFoZ3azUekFmU9NiTatM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzfDl73M3PSFf65Qz7efr2ycbDgMNC/cZudjwEpIZ+sX+dsRzrMYdJhZBgtHhIjtb
-	 lluJKxu0XOG5fE7XA4JN1921Pc363PrNQ8pHfyzGPFNIrZNdNmDcNVN02VU7UkfRwP
-	 oNKluT4+glaAJbVdo5QAn8eENHbggbxQZKyalRdY=
+	b=qJJ/WZEHFP14548z9SF3cjsRzdTLeFS/NpD5/SIsnOjHdS7Rpza51qgIgiHS0Rce+
+	 0z90Hl+BvZZurZakuhFpc5uzsS3jItk5JZcl+G30gQxHvWvXeNm0H3qsdfRsHmn0ZF
+	 SapF4Xr+e4+5DxQ2DcU4LC2XZRuW0GxbYd1ykf3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Li Nan <linan122@huawei.com>,
-	Ian Dall <ian@beware.dropbear.id.au>
-Subject: [PATCH 6.6 166/166] md/raid1: fix data lost for writemostly rdev
-Date: Fri, 24 Apr 2026 15:31:20 +0200
-Message-ID: <20260424132607.802962503@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 155/166] ksmbd: use check_add_overflow() to prevent u16 DACL size overflow
+Date: Fri, 24 Apr 2026 15:31:09 +0200
+Message-ID: <20260424132605.587102818@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,39 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 93dec51e716db88f32d770dc9ab268964fff320b upstream.
+commit 299f962c0b02d048fb45d248b4da493d03f3175d upstream.
 
-If writemostly is enabled, alloc_behind_master_bio() will allocate a new
-bio for rdev, with bi_opf set to 0. Later, raid1_write_request() will
-clone from this bio, hence bi_opf is still 0 for the cloned bio. Submit
-this cloned bio will end up to be read, causing write data lost.
+set_posix_acl_entries_dacl() and set_ntacl_dacl() accumulate ACE sizes
+in u16 variables. When a file has many POSIX ACL entries, the
+accumulated size can wrap past 65535, causing the pointer arithmetic
+(char *)pndace + *size to land within already-written ACEs. Subsequent
+writes then overwrite earlier entries, and pndacl->size gets a
+truncated value.
 
-Fix this problem by inheriting bi_opf from original bio for
-behind_mast_bio.
+Use check_add_overflow() at each accumulation point to detect the
+wrap before it corrupts the buffer, consistent with existing
+check_mul_overflow() usage elsewhere in smbacl.c.
 
-Fixes: e879a0d9cb08 ("md/raid1,raid10: don't ignore IO flags")
-Reported-and-tested-by: Ian Dall <ian@beware.dropbear.id.au>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220507
-Link: https://lore.kernel.org/linux-raid/20250903014140.3690499-1-yukuai1@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
+Cc: stable@vger.kernel.org
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid1.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smbacl.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1119,7 +1119,7 @@ static void alloc_behind_master_bio(stru
- 	int i = 0;
- 	struct bio *behind_bio = NULL;
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -596,6 +596,7 @@ static void set_posix_acl_entries_dacl(s
+ 	struct smb_sid *sid;
+ 	struct smb_ace *ntace;
+ 	int i, j;
++	u16 ace_sz;
  
--	behind_bio = bio_alloc_bioset(NULL, vcnt, 0, GFP_NOIO,
-+	behind_bio = bio_alloc_bioset(NULL, vcnt, bio->bi_opf, GFP_NOIO,
- 				      &r1_bio->mddev->bio_set);
- 	if (!behind_bio)
- 		return;
+ 	if (!fattr->cf_acls)
+ 		goto posix_default_acl;
+@@ -640,8 +641,10 @@ static void set_posix_acl_entries_dacl(s
+ 			flags = 0x03;
+ 
+ 		ntace = (struct smb_ace *)((char *)pndace + *size);
+-		*size += fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
++		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
+ 				pace->e_perm, 0777);
++		if (check_add_overflow(*size, ace_sz, size))
++			break;
+ 		(*num_aces)++;
+ 		if (pace->e_tag == ACL_USER)
+ 			ntace->access_req |=
+@@ -650,8 +653,10 @@ static void set_posix_acl_entries_dacl(s
+ 		if (S_ISDIR(fattr->cf_mode) &&
+ 		    (pace->e_tag == ACL_USER || pace->e_tag == ACL_GROUP)) {
+ 			ntace = (struct smb_ace *)((char *)pndace + *size);
+-			*size += fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
++			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
+ 					0x03, pace->e_perm, 0777);
++			if (check_add_overflow(*size, ace_sz, size))
++				break;
+ 			(*num_aces)++;
+ 			if (pace->e_tag == ACL_USER)
+ 				ntace->access_req |=
+@@ -691,8 +696,10 @@ posix_default_acl:
+ 		}
+ 
+ 		ntace = (struct smb_ace *)((char *)pndace + *size);
+-		*size += fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
++		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
+ 				pace->e_perm, 0777);
++		if (check_add_overflow(*size, ace_sz, size))
++			break;
+ 		(*num_aces)++;
+ 		if (pace->e_tag == ACL_USER)
+ 			ntace->access_req |=
+@@ -728,7 +735,8 @@ static void set_ntacl_dacl(struct mnt_id
+ 				break;
+ 
+ 			memcpy((char *)pndace + size, ntace, nt_ace_size);
+-			size += nt_ace_size;
++			if (check_add_overflow(size, nt_ace_size, &size))
++				break;
+ 			aces_size -= nt_ace_size;
+ 			ntace = (struct smb_ace *)((char *)ntace + nt_ace_size);
+ 			num_aces++;
 
 
