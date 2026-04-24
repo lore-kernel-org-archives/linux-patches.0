@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796B43D6CDF;
-	Fri, 24 Apr 2026 13:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1256F23E356;
+	Fri, 24 Apr 2026 13:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037772; cv=none; b=lRIyf7VaIy33BI3xD8+i+fVxQ996utkokp3l9mbACHQfGYH6SBkUT0vybXzEQXpz8WID8zNJbSFz6QuzYQJetMU5POS8QIeQRdTAC7181KJzSh6TVV8HNiK2EmTkkHP8q1hVIseaXosB1Y8cI96fMnzsRR4nE8W20zc/zAO/qyM=
+	t=1777037775; cv=none; b=SQmqSIObUN8uhJY+REUcCvcNEM9mw7tiPE48RvXNInp+gs4v2v8Co+Ay/mYbI4tvIgUfVVzaj80w4j6Jzhl+uWUprImUuEuIo7m5bsOfc6FdEhnLY0jm/vtCiqkV6z3U/La66yYD74+zGkFJCsIihwUp/g44hr5X7c8KUaA72rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037772; c=relaxed/simple;
-	bh=EbnHB4KhgNXKf/WwT40FQoTlTSBO4qvFz9sNUFOCgQA=;
+	s=arc-20240116; t=1777037775; c=relaxed/simple;
+	bh=WwBj3svLU4tmQpdCQ9u2i/J6TZG7gpRXI0kCx/lfj+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6lIz5oJg8a9+/85uyh1IvL+YxsRDzpQzmx5bsirAdzLrO+ZhWzwGBGUhCJ+UHPdxWOZtTnxe6voybJeWU8g94l+ktzCqbqhrUY74u1ft+qo4yndRC/SBpWv64/k6PsmqOIDItLwOtoz6rLSPcpRRhNuTQxPT4uq7gzM/l1A1uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RzEe7D/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTxd5CIncF0UvqATlwa6zT2RLsmyPtN92HH8dKIwsNmsQWo8csAft/niyiedqCLSj7I7Tfh36zU86Q0gqAjFaCA00RXYBddzdc+7J2uR1+QVl/5qsoFlZJqQfwtnjr4SgiASfkQ0vtoHSLqbI22QfS+VOPo87+QbPIlmZbceB8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkE9AahG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RzEe7D/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF9AC19425;
-	Fri, 24 Apr 2026 13:36:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkE9AahG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A898C2BCB2;
+	Fri, 24 Apr 2026 13:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037772;
-	bh=EbnHB4KhgNXKf/WwT40FQoTlTSBO4qvFz9sNUFOCgQA=;
+	s=korg; t=1777037775;
+	bh=WwBj3svLU4tmQpdCQ9u2i/J6TZG7gpRXI0kCx/lfj+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0RzEe7D/rLYe9agKJkfYu1gQgXNbKPRbMy+uxs5j8CM0rcttB729vcloLvEafD5du
-	 lN2zFIpcnHQdcXXNJtG5bWkNiZ0H308UD5FvSPM/WlIvJCSQUtZ/CBYlLxJLen0GK+
-	 V2cLhFw+gxsGVorhnjw4fVYw0uPQgI7AXn2Z3oTU=
+	b=SkE9AahGS8MrV+9206uadOFCdfHaepR7XsHx3E10X0CJWChxBZjiAkC4lFSmynnr/
+	 7iWRZG5j1nf1JJpl5ClZCG8Fnxqg9UJNRQS0oYmAi7D7SKxfIP8J1eeF9o9/rzlVFv
+	 YvL9ybmjS+6ZiQj/1qqV7PmfEqM0Xs4KbM7CXF4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Aaron Plattner <aplattner@nvidia.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/166] ALSA: usb-audio: Improve Focusrite sample rate filtering
-Date: Fri, 24 Apr 2026 15:29:38 +0200
-Message-ID: <20260424132546.152901063@linuxfoundation.org>
+Subject: [PATCH 6.6 065/166] objtool: Remove max symbol name length limitation
+Date: Fri, 24 Apr 2026 15:29:39 +0200
+Message-ID: <20260424132546.373642736@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,161 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Aaron Plattner <aplattner@nvidia.com>
 
-[ Upstream commit 24d2d3c5f94007a5a0554065ab7349bb69e28bcb ]
+[ Upstream commit f404a58dcf0c862b05602f641ce5fdd8b98fbc3a ]
 
-Replace the bLength == 10 max_rate check in
-focusrite_valid_sample_rate() with filtering that also examines the
-bmControls VAL_ALT_SETTINGS bit.
+If one of the symbols processed by read_symbols() happens to have a
+.cold variant with a name longer than objtool's MAX_NAME_LEN limit, the
+build fails.
 
-When VAL_ALT_SETTINGS is readable, the device uses strict
-per-altsetting rate filtering (only the highest rate pair for that
-altsetting is valid). When it is not readable, all rates up to
-max_rate are valid.
+Avoid this problem by just using strndup() to copy the parent function's
+name, rather than strncpy()ing it onto the stack.
 
-For devices without the bLength == 10 Format Type descriptor extension
-but with VAL_ALT_SETTINGS readable and multiple altsettings (only seen
-in Scarlett 18i8 3rd Gen playback), fall back to the Focusrite
-convention: alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
-
-This produces correct rate tables for all tested Focusrite devices
-(all Scarlett 2nd, 3rd, and 4th Gen, Clarett+, and Vocaster) using
-only USB descriptors, allowing QUIRK_FLAG_VALIDATE_RATES to be removed
-for Focusrite in the next commit.
-
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/7e18c1f393a6ecb6fc75dd867a2c4dbe135e3e22.1771594828.git.g@b4.vu
+Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
+Link: https://lore.kernel.org/r/41e94cfea1d9131b758dd637fecdeacd459d4584.1696355111.git.aplattner@nvidia.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/format.c | 86 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 74 insertions(+), 12 deletions(-)
+ tools/objtool/elf.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/sound/usb/format.c b/sound/usb/format.c
-index f33d25a4e4cc7..682adbdf7ee79 100644
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -304,9 +304,37 @@ static bool s1810c_valid_sample_rate(struct audioformat *fp,
- }
+diff --git a/tools/objtool/elf.c b/tools/objtool/elf.c
+index 797507a90251b..19021f9755ac7 100644
+--- a/tools/objtool/elf.c
++++ b/tools/objtool/elf.c
+@@ -22,8 +22,6 @@
+ #include <objtool/elf.h>
+ #include <objtool/warn.h>
  
- /*
-- * Many Focusrite devices supports a limited set of sampling rates per
-- * altsetting. Maximum rate is exposed in the last 4 bytes of Format Type
-- * descriptor which has a non-standard bLength = 10.
-+ * Focusrite devices use rate pairs: 44100/48000, 88200/96000, and
-+ * 176400/192000. Return true if rate is in the pair for max_rate.
-+ */
-+static bool focusrite_rate_pair(unsigned int rate,
-+				unsigned int max_rate)
-+{
-+	switch (max_rate) {
-+	case 48000:  return rate == 44100 || rate == 48000;
-+	case 96000:  return rate == 88200 || rate == 96000;
-+	case 192000: return rate == 176400 || rate == 192000;
-+	default:     return true;
-+	}
-+}
-+
-+/*
-+ * Focusrite devices report all supported rates in a single clock
-+ * source but only a subset is valid per altsetting.
-+ *
-+ * Detection uses two descriptor features:
-+ *
-+ * 1. Format Type descriptor bLength == 10: non-standard extension
-+ *    with max sample rate in bytes 6..9.
-+ *
-+ * 2. bmControls VAL_ALT_SETTINGS readable bit: when set, the device
-+ *    only supports the highest rate pair for that altsetting, and when
-+ *    clear, all rates up to max_rate are valid.
-+ *
-+ * For devices without the bLength == 10 extension but with
-+ * VAL_ALT_SETTINGS readable and multiple altsettings (only seen in
-+ * Scarlett 18i8 3rd Gen playback), fall back to the Focusrite
-+ * convention: alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
-  */
- static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
- 					struct audioformat *fp,
-@@ -314,8 +342,10 @@ static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
+-#define MAX_NAME_LEN 128
+-
+ static inline u32 str_hash(const char *str)
  {
- 	struct usb_interface *iface;
- 	struct usb_host_interface *alts;
-+	struct uac2_as_header_descriptor *as;
- 	unsigned char *fmt;
- 	unsigned int max_rate;
-+	bool val_alt;
+ 	return jhash(str, strlen(str), 0);
+@@ -515,7 +513,7 @@ static int read_symbols(struct elf *elf)
+ 	/* Create parent/child links for any cold subfunctions */
+ 	list_for_each_entry(sec, &elf->sections, list) {
+ 		sec_for_each_sym(sec, sym) {
+-			char pname[MAX_NAME_LEN + 1];
++			char *pname;
+ 			size_t pnamelen;
+ 			if (sym->type != STT_FUNC)
+ 				continue;
+@@ -531,15 +529,15 @@ static int read_symbols(struct elf *elf)
+ 				continue;
  
- 	iface = usb_ifnum_to_if(chip->dev, fp->iface);
- 	if (!iface)
-@@ -327,26 +357,58 @@ static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
- 	if (!fmt)
- 		return true;
+ 			pnamelen = coldstr - sym->name;
+-			if (pnamelen > MAX_NAME_LEN) {
+-				WARN("%s(): parent function name exceeds maximum length of %d characters",
+-				     sym->name, MAX_NAME_LEN);
++			pname = strndup(sym->name, pnamelen);
++			if (!pname) {
++				WARN("%s(): failed to allocate memory",
++				     sym->name);
+ 				return -1;
+ 			}
  
-+	as = snd_usb_find_csint_desc(alts->extra, alts->extralen,
-+				     NULL, UAC_AS_GENERAL);
-+	if (!as)
-+		return true;
-+
-+	val_alt = uac_v2v3_control_is_readable(as->bmControls,
-+					       UAC2_AS_VAL_ALT_SETTINGS);
-+
- 	if (fmt[0] == 10) { /* bLength */
- 		max_rate = combine_quad(&fmt[6]);
+-			strncpy(pname, sym->name, pnamelen);
+-			pname[pnamelen] = '\0';
+ 			pfunc = find_symbol_by_name(elf, pname);
++			free(pname);
  
--		/* Validate max rate */
--		if (max_rate != 48000 &&
--		    max_rate != 96000 &&
--		    max_rate != 192000 &&
--		    max_rate != 384000) {
--
-+		if (val_alt)
-+			return focusrite_rate_pair(rate, max_rate);
-+
-+		/* No val_alt: rates fall through from higher */
-+		switch (max_rate) {
-+		case 192000:
-+			if (rate == 176400 || rate == 192000)
-+				return true;
-+			fallthrough;
-+		case 96000:
-+			if (rate == 88200 || rate == 96000)
-+				return true;
-+			fallthrough;
-+		case 48000:
-+			return (rate == 44100 || rate == 48000);
-+		default:
- 			usb_audio_info(chip,
- 				"%u:%d : unexpected max rate: %u\n",
- 				fp->iface, fp->altsetting, max_rate);
--
- 			return true;
- 		}
-+	}
- 
--		return rate <= max_rate;
-+	if (!val_alt)
-+		return true;
-+
-+	/* Multi-altsetting device with val_alt but no max_rate
-+	 * in the format descriptor. Use Focusrite convention:
-+	 * alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
-+	 */
-+	if (iface->num_altsetting <= 2)
-+		return true;
-+
-+	switch (fp->altsetting) {
-+	case 1:		max_rate = 48000; break;
-+	case 2:		max_rate = 96000; break;
-+	case 3:		max_rate = 192000; break;
-+	default:	return true;
- 	}
- 
--	return true;
-+	return focusrite_rate_pair(rate, max_rate);
- }
- 
- /*
+ 			if (!pfunc) {
+ 				WARN("%s(): can't find parent function",
 -- 
 2.53.0
 
