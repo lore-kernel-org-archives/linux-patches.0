@@ -1,32 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763E43D5643;
-	Fri, 24 Apr 2026 13:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB233563D4;
+	Fri, 24 Apr 2026 13:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037978; cv=none; b=Fee7DwXAID6pusv2anDVS4qzswu7hzUtVV51grMzVzmPVSmLsxJ4Iw/hCpj5ehFi9NcbDBnhGneXNT1bpHJh8S518GoLl6IZvRxzQ/b6xLmEKl0htpOf/vH/pQqyq7ofoFzqqJle0mgwMam1lJTmUKqwnpV8RcFrAiHhNuR7p0M=
+	t=1777037981; cv=none; b=t1H4ItTvOe2caJ2JKyCTdGhlL6gmzrx5gR8hR6cvdw6OoVw34ly4niXNT4cZIHKApZG+NjBtDltq87zT9p3YO9aoY0i/TEnOFlRXoy6zu7u7H5Vn44/F7zSII0sNjnGC52O3sjgAsuHRU9TOrkQdsTJo1tEjPL9/bGG3hLdyT1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037978; c=relaxed/simple;
-	bh=VmW6Vn6rFZywdZ+8fcPzEmfwf5e+9mMV71E0uaBEFr8=;
+	s=arc-20240116; t=1777037981; c=relaxed/simple;
+	bh=UAlGdRkbUuPCM7YGhC7fxCPx7mK8fhRmfioolHk5ElE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKcMf0y89bCf1BPf1nhRV7vLDzEW1LKTCYWr9B06F6065Igz7xMGKHkUCZxCtBgLxGu5rYOJ9f/5d1dgbVY3KP47xtK9/WrIb67z8wQpJnRZMs2O2XoJQXarbSAWTa3SZkyX/4+kJN5rv0qWL5Ksmu+RSp90e2crC14BrsCp+iA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eur8WDoV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z8EcWKcz6kRuxDc8yueIv8JFRDBMZ6dcMA4V9UixC/8JJ0RjGzKmMx/PmhqPvuOzHWbvdKNrj8MqX5WJ6IeTA/0bYKZMxaoCAEzz4ZluP+7fKUemFhe/C8AU4gENSKJY5JTKkAB890QVELdm87YBb0GYpVqCuSV3mZ0z8J76n4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCuPQVey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eur8WDoV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035ABC19425;
-	Fri, 24 Apr 2026 13:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCuPQVey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F973C19425;
+	Fri, 24 Apr 2026 13:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037978;
-	bh=VmW6Vn6rFZywdZ+8fcPzEmfwf5e+9mMV71E0uaBEFr8=;
+	s=korg; t=1777037980;
+	bh=UAlGdRkbUuPCM7YGhC7fxCPx7mK8fhRmfioolHk5ElE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eur8WDoVenji+3Gng3XPVHoZvfXepPIsS318FkI2eyEYgA5MtILTWTjk+eZaxaW1w
-	 w5HZHI85nYikhrvfsyJ2CBenRdwX/Rmfd2DmR/pS762FS6sFg+1zvyGLyBL83i+ZsR
-	 IA0BPI7rQPOQypAHxm1NbP/wphdDInSuB9VQj7II=
+	b=NCuPQVeyPa3KRERYU7lSOBsFJ76hTi90jUrlegAF2/7IzASaPSfRVdOcNrEKEMqsr
+	 984bIcqQIyrkf6XXEYCYw9kBHqQqqKQsP/Z2oSQbVlaKm0/373AZNiwGH67MEcEgpM
+	 UOtbA7Qnt74S6jehXzIYqTw5BlIUlqbImHHhi+gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Jie Wang <jiewang2024@lzu.edu.cn>,
+	Yang Yang <n05ec@lzu.edu.cn>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	Jeffrey Altman <jaltman@auristor.com>,
@@ -35,9 +41,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 143/166] rxrpc: Fix anonymous key handling
-Date: Fri, 24 Apr 2026 15:30:57 +0200
-Message-ID: <20260424132602.967081354@linuxfoundation.org>
+Subject: [PATCH 6.6 144/166] rxrpc: only handle RESPONSE during service challenge
+Date: Fri, 24 Apr 2026 15:30:58 +0200
+Message-ID: <20260424132603.213393793@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -56,51 +62,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Wang Jie <jiewang2024@lzu.edu.cn>
 
-[ Upstream commit 6a59d84b4fc2f27f7b40e348506cc686712e260b ]
+[ Upstream commit c43ffdcfdbb5567b1f143556df8a04b4eeea041c ]
 
-In rxrpc_new_client_call_for_sendmsg(), a key with no payload is meant to
-be substituted for a NULL key pointer, but the variable this is done with
-is subsequently not used.
+Only process RESPONSE packets while the service connection is still in
+RXRPC_CONN_SERVICE_CHALLENGING. Check that state under state_lock before
+running response verification and security initialization, then use a local
+secured flag to decide whether to queue the secured-connection work after
+the state transition. This keeps duplicate or late RESPONSE packets from
+re-running the setup path and removes the unlocked post-transition state
+test.
 
-Fix this by using "key" rather than "rx->key" when filling in the
-connection parameters.
-
-Note that this only affects direct use of AF_RXRPC; the kAFS filesystem
-doesn't use sendmsg() directly and so bypasses the issue.  Further,
-AF_RXRPC passes a NULL key in if no key is set, so using an anonymous key
-in that manner works.  Since this hasn't been noticed to this point, it
-might be better just to remove the "key" variable and the code that sets it
-- and, arguably, rxrpc_init_client_call_security() would be a better place
-to handle it.
-
-Fixes: 19ffa01c9c45 ("rxrpc: Use structs to hold connection params and protocol info")
-Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Jie Wang <jiewang2024@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-4-dhowells@redhat.com
+Link: https://patch.msgid.link/20260408121252.2249051-21-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted spin_lock_irq/spin_unlock_irq calls to spin_lock/spin_unlock ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/sendmsg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rxrpc/conn_event.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -590,7 +590,7 @@ rxrpc_new_client_call_for_sendmsg(struct
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -233,6 +233,7 @@ static int rxrpc_process_event(struct rx
+ 			       struct sk_buff *skb)
+ {
+ 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
++	bool secured = false;
+ 	int ret;
  
- 	memset(&cp, 0, sizeof(cp));
- 	cp.local		= rx->local;
--	cp.key			= rx->key;
-+	cp.key			= key;
- 	cp.security_level	= rx->min_sec_level;
- 	cp.exclusive		= rx->exclusive | p->exclusive;
- 	cp.upgrade		= p->upgrade;
+ 	if (conn->state == RXRPC_CONN_ABORTED)
+@@ -245,6 +246,13 @@ static int rxrpc_process_event(struct rx
+ 		return conn->security->respond_to_challenge(conn, skb);
+ 
+ 	case RXRPC_PACKET_TYPE_RESPONSE:
++		spin_lock(&conn->state_lock);
++		if (conn->state != RXRPC_CONN_SERVICE_CHALLENGING) {
++			spin_unlock(&conn->state_lock);
++			return 0;
++		}
++		spin_unlock(&conn->state_lock);
++
+ 		ret = conn->security->verify_response(conn, skb);
+ 		if (ret < 0)
+ 			return ret;
+@@ -255,11 +263,13 @@ static int rxrpc_process_event(struct rx
+ 			return ret;
+ 
+ 		spin_lock(&conn->state_lock);
+-		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING)
++		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING) {
+ 			conn->state = RXRPC_CONN_SERVICE;
++			secured = true;
++		}
+ 		spin_unlock(&conn->state_lock);
+ 
+-		if (conn->state == RXRPC_CONN_SERVICE) {
++		if (secured) {
+ 			/* Offload call state flipping to the I/O thread.  As
+ 			 * we've already received the packet, put it on the
+ 			 * front of the queue.
 
 
