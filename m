@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CA733E347;
-	Fri, 24 Apr 2026 13:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A783519A288;
+	Fri, 24 Apr 2026 13:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037921; cv=none; b=ollD4c5yBw4j3pNyqi5dqy3CIvpFjRNyZZ9smhA3ktopzKoT3WpN/HQE2zR1P0QQSgYqxWpMaY87JptetAPtJJGhw8YBQS3nip9mCqL7aHSxcLK6nNJwjhFZkOWep+xIDiVt9LMz9ScHXac6JHGdvd72u+reLbc6eVIFsJITClI=
+	t=1777037924; cv=none; b=D/dvQ3BwkqOSz4BOYuARoB3PdspItmO9KdxppdGW44rs6FXpDEeQWQsN4pTWs8WlzFsFKOtuJkDF6QFE2LnE5s5G/lrulamQ6UuQkCSNlw+AWxwahK4z/HUEZzj7rdxs5igD+JEiAmmVC68QthU1Q8CMmeqd8T6mh/WRBLRwwTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037921; c=relaxed/simple;
-	bh=+1LGcMuDZLawLRhJnahPYqzlwo/Bem9gbiFnfmLjLZA=;
+	s=arc-20240116; t=1777037924; c=relaxed/simple;
+	bh=QF+379hpvxX6v7OPKhkdGb2zs04PuPYQWHk6v+v/O8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2PcwXlJN8slPYckk09IeWaw1Nxc4Lg6Txt+SBpEef3uVKvGEtYGl0FOLkqd6tXGsDTRbVLUYIB2zf237tvY0sIgvHWAupVdgdvf0elvU00X2mO3alIdB0AERJfclVj8Y09aklSi2H9wwxp+w0j51YLcLQiGSTReW2Ax1fRkFS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9nTYtoN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r0eGTOo4npWU2PTjUYlQleh8NVS1IOsO+plMSb0MJmE1VjS1qx3iu71y9FHRwq5PtQdTYhbSz4aOeMuMBHurbddP6E+c7/VKJT6XtyqslrzjpzHAGsRttpS5FqBxsjtUB2UZhHjvsyRSzul7dHwJ7D0fbUDcs2r27jWz6NDolF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REylkVVU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9nTYtoN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6935CC19425;
-	Fri, 24 Apr 2026 13:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REylkVVU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0073CC19425;
+	Fri, 24 Apr 2026 13:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037921;
-	bh=+1LGcMuDZLawLRhJnahPYqzlwo/Bem9gbiFnfmLjLZA=;
+	s=korg; t=1777037924;
+	bh=QF+379hpvxX6v7OPKhkdGb2zs04PuPYQWHk6v+v/O8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9nTYtoNOXECafjtrTJJqaNzn96fIxPHIHC08TNnGfp1Smw7CCK8VBqfW+LAdF1Zz
-	 kNIckfOJ5/8hl6QkyQNaEnmg8REH6yfl1WmCmJVxTcEL04nlqffHlVSmsMujKQ7qb8
-	 UC7Sug4mMcADLM/YgF6JkiQ/Q7D6scmQemt8Ns/U=
+	b=REylkVVUj7FEokSNrGNqj3JsQjbX0JnQpv53rOjXeE+Ey39cipJe+aqyQ1dlSGCKK
+	 I9ww0Ecqil5rV9PZjaTXGhg/Gki18LxP1v+/WWAdAQmpsEb4tTXmfcoqAqybqf7RJY
+	 lJO4ORm0ingtAN6ALWMnN8gLoG3EQy+mFjfldd9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernie Thompson <bernie@plugable.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 089/166] fbdev: udlfb: avoid divide-by-zero on FBIOPUT_VSCREENINFO
-Date: Fri, 24 Apr 2026 15:30:03 +0200
-Message-ID: <20260424132551.363050405@linuxfoundation.org>
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Fiona Behrens <me@kloenk.dev>,
+	Trevor Gross <tmgross@umich.edu>,
+	Tamir Duberstein <tamird@kernel.org>
+Subject: [PATCH 6.6 090/166] scripts: generate_rust_analyzer.py: avoid FD leak
+Date: Fri, 24 Apr 2026 15:30:04 +0200
+Message-ID: <20260424132551.586892837@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -50,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Tamir Duberstein <tamird@kernel.org>
 
-commit a31e4518bec70333a0a98f2946a12b53b45fe5b9 upstream.
+commit 9b4744d8eda2824041064a5639ccbb079850914d upstream.
 
-Much like commit 19f953e74356 ("fbdev: fb_pm2fb: Avoid potential divide
-by zero error"), we also need to prevent that same crash from happening
-in the udlfb driver as it uses pixclock directly when dividing, which
-will crash.
+Use `pathlib.Path.read_text()` to avoid leaking file descriptors.
 
-Cc: Bernie Thompson <bernie@plugable.com>
-Cc: Helge Deller <deller@gmx.de>
-Fixes: 59277b679f8b ("Staging: udlfb: add dynamic modeset support")
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
+Cc: stable@vger.kernel.org
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Reviewed-by: Fiona Behrens <me@kloenk.dev>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Link: https://patch.msgid.link/20260127-rust-analyzer-fd-leak-v2-1-1bb55b9b6822@kernel.org
+Signed-off-by: Tamir Duberstein <tamird@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ scripts/generate_rust_analyzer.py |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1078,6 +1078,9 @@ static int dlfb_ops_check_var(struct fb_
- 	struct fb_videomode mode;
- 	struct dlfb_data *dlfb = info->par;
+--- a/scripts/generate_rust_analyzer.py
++++ b/scripts/generate_rust_analyzer.py
+@@ -121,9 +121,10 @@ def generate_crates(srctree, objtree, sy
  
-+	if (!var->pixclock)
-+		return -EINVAL;
-+
- 	/* set device-specific elements of var unrelated to mode */
- 	dlfb_var_color_format(var);
+     def is_root_crate(build_file, target):
+         try:
+-            return f"{target}.o" in open(build_file).read()
++            contents = build_file.read_text()
+         except FileNotFoundError:
+             return False
++        return f"{target}.o" in contents
  
+     # Then, the rest outside of `rust/`.
+     #
 
 
