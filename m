@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB58F19A288;
-	Fri, 24 Apr 2026 13:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EBE3563D4;
+	Fri, 24 Apr 2026 13:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038189; cv=none; b=uc/5QRtjppbSiMJWzsYAS89oMpAErmfKM6WZBzhbFNEqgpcWW0DptpOqJHjyurYlDD0mG2RTAnvjDHvBPqPHI45jOd7d+resuXumRFymeo9iwBYh7xb0uc/y0eEtblALLWhDhNLtoRqtmXVsDA72k70QNszmvdBHVW7H1P9Ww/8=
+	t=1777038192; cv=none; b=q/wggQkgIJOUcO8OoSb9AC517d9/tX274IV+rygqws7nti3DiNsfGNvrCs6fbnaClIfziJQVoO/NMTydXCjlpZWUVaR4rawzrdXQMH+1jJD03Zps+yhwk3ps7x7yvAIr9V0ucSDOiIK0tEDVYJURZrZuWhDz16zr8lJV+Oi7yeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038189; c=relaxed/simple;
-	bh=T6v0uC1OJw/qaD+fHF5DkUZjfQjZX9lLBNEn4HdGpXA=;
+	s=arc-20240116; t=1777038192; c=relaxed/simple;
+	bh=dwFhy7mJI28lYmA1bU4x3DrfJ6vlmWmCG1lwVzSohCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/veL0rS5FMOi5uY16BibAjG6vR8CpqnTQabwN+Np5IJyU5wbMdGrjsWFW+uvOAhi1qsoLxtLcTGwtTaGB0x0lfAkIt9GlAtPhebfAOyQyETqKexxpVMTa6zj5dDbQesTK8nEi+Rlbu5A2MaEh589j+yjg6qCl2ACWAEHdcCSfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVzdaXF+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqGJobaM6TBgfkwqKwQ0Nx439QVXdM48uRmFYD8j877/Ou0qFGYQiBFos2kcPlACsmfKEFxrT8wan8Tx7dSxTFyyBtkt1hNraYS59upFqwfudnMmkqfMiirkORSWUik8Y6S3cMDA1Qba5ajaqZl99H0wWwqhrkyDVFZzpyUNdCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAzrnGXf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVzdaXF+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF82C19425;
-	Fri, 24 Apr 2026 13:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAzrnGXf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB15AC19425;
+	Fri, 24 Apr 2026 13:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038189;
-	bh=T6v0uC1OJw/qaD+fHF5DkUZjfQjZX9lLBNEn4HdGpXA=;
+	s=korg; t=1777038192;
+	bh=dwFhy7mJI28lYmA1bU4x3DrfJ6vlmWmCG1lwVzSohCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVzdaXF+dvkz9JQUWPBX+lkgB7sOf8+feRkKpI/qgkcjdJBSx7n6xC1kbd9dIsd2b
-	 S/WbMpltHpqnDpvNbaKGOB8paSFxrUj+j0jsilzrd7NYMULJjdrLamkVu4OZlf6MAY
-	 u1eJItBjsn5mtnC7ucAH5fMVrNpZYZ257RGoD48g=
+	b=kAzrnGXfxGUc58qkecmybzehub3vnpWua4dwL7F7kVOh6K0/Ful3270ZJjI/9mnnX
+	 UbvOYEEz7FPxvi3KeP+iTHokQhlLn+nkUmFztOgVVL3aMjWGxl/xGy+vsEOf5gGJfP
+	 B1m4nkf81rGGGEo67apsPuIYvrIQM7DPXBLT7oEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+62538b67389ee582837a@syzkaller.appspotmail.com,
+	syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.18 27/55] f2fs: fix to do sanity check on dcc->discard_cmd_cnt conditionally
-Date: Fri, 24 Apr 2026 15:31:06 +0200
-Message-ID: <20260424132435.686937652@linuxfoundation.org>
+Subject: [PATCH 6.18 28/55] f2fs: fix UAF caused by decrementing sbi->nr_pages[] in f2fs_write_end_io()
+Date: Fri, 24 Apr 2026 15:31:07 +0200
+Message-ID: <20260424132435.863868097@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132430.006424517@linuxfoundation.org>
 References: <20260424132430.006424517@linuxfoundation.org>
@@ -52,153 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit 6af249c996f7d73a3435f9e577956fa259347d18 upstream.
+commit 2d9c4a4ed4eef1f82c5b16b037aee8bad819fd53 upstream.
 
-Syzbot reported a f2fs bug as below:
+The xfstests case "generic/107" and syzbot have both reported a NULL
+pointer dereference.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/segment.c:1900!
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 1 UID: 0 PID: 6527 Comm: syz.5.110 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
-RIP: 0010:f2fs_issue_discard_timeout+0x59b/0x5a0 fs/f2fs/segment.c:1900
-Code: d9 80 e1 07 80 c1 03 38 c1 0f 8c d6 fe ff ff 48 89 df e8 a8 5e fa fd e9 c9 fe ff ff e8 4e 46 94 fd 90 0f 0b e8 46 46 94 fd 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
-RSP: 0018:ffffc9000494f940 EFLAGS: 00010283
-RAX: ffffffff843009ca RBX: 0000000000000001 RCX: 0000000000080000
-RDX: ffffc9001ca78000 RSI: 00000000000029f3 RDI: 00000000000029f4
-RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-R10: dffffc0000000000 R11: ffffed100893a431 R12: 1ffff1100893a430
-R13: 1ffff1100c2b702c R14: dffffc0000000000 R15: ffff8880449d2160
-FS:  00007ffa35fed6c0(0000) GS:ffff88812643d000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f2b68634000 CR3: 0000000039f62000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __f2fs_remount fs/f2fs/super.c:2960 [inline]
- f2fs_reconfigure+0x108a/0x1710 fs/f2fs/super.c:5443
- reconfigure_super+0x227/0x8a0 fs/super.c:1080
- do_remount fs/namespace.c:3391 [inline]
- path_mount+0xdc5/0x10e0 fs/namespace.c:4151
- do_mount fs/namespace.c:4172 [inline]
- __do_sys_mount fs/namespace.c:4361 [inline]
- __se_sys_mount+0x31d/0x420 fs/namespace.c:4338
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7ffa37dbda0a
+The concurrent scenario that triggers the panic is as follows:
 
-The root cause is there will be race condition in between f2fs_ioc_fitrim()
-and f2fs_remount():
+F2FS_WB_CP_DATA write callback          umount
+                                        - f2fs_write_checkpoint
+                                         - f2fs_wait_on_all_pages(sbi, F2FS_WB_CP_DATA)
+- blk_mq_end_request
+ - bio_endio
+  - f2fs_write_end_io
+   : dec_page_count(sbi, F2FS_WB_CP_DATA)
+   : wake_up(&sbi->cp_wait)
+                                        - kill_f2fs_super
+                                         - kill_block_super
+                                          - f2fs_put_super
+                                           : iput(sbi->node_inode)
+                                           : sbi->node_inode = NULL
+   : f2fs_in_warm_node_list
+    - is_node_folio // sbi->node_inode is NULL and panic
 
-- f2fs_remount			- f2fs_ioc_fitrim
- - f2fs_issue_discard_timeout
-  - __issue_discard_cmd
-  - __drop_discard_cmd
-  - __wait_all_discard_cmd
-				 - f2fs_trim_fs
-				  - f2fs_write_checkpoint
-				   - f2fs_clear_prefree_segments
-				    - f2fs_issue_discard
-				     - __issue_discard_async
-				      - __queue_discard_cmd
-				       - __update_discard_tree_range
-				        - __insert_discard_cmd
-				         - __create_discard_cmd
-				         : atomic_inc(&dcc->discard_cmd_cnt);
-  - sanity check on dcc->discard_cmd_cnt (expect discard_cmd_cnt to be zero)
+The root cause is that f2fs_put_super() calls iput(sbi->node_inode) and
+sets sbi->node_inode to NULL after sbi->nr_pages[F2FS_WB_CP_DATA] is
+decremented to zero. As a result, f2fs_in_warm_node_list() may
+dereference a NULL node_inode when checking whether a folio belongs to
+the node inode, leading to a panic.
 
-This will only happen when fitrim races w/ remount rw, if we remount to
-readonly filesystem, remount will wait until mnt_pcp.mnt_writers to zero,
-that means fitrim is not in process at that time.
+This patch fixes the issue by calling f2fs_in_warm_node_list() before
+decrementing sbi->nr_pages[F2FS_WB_CP_DATA], thus preventing the
+use-after-free condition.
 
 Cc: stable@kernel.org
-Fixes: 2482c4325dfe ("f2fs: detect bug_on in f2fs_wait_discard_bios")
-Reported-by: syzbot+62538b67389ee582837a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/69b07d7c.050a0220.8df7.09a1.GAE@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
+Fixes: 50fa53eccf9f ("f2fs: fix to avoid broken of dnode block list")
+Reported-by: syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h    |    2 +-
- fs/f2fs/segment.c |    6 +++---
- fs/f2fs/super.c   |   11 ++++++++---
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ fs/f2fs/data.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3930,7 +3930,7 @@ bool f2fs_is_checkpointed_data(struct f2
- int f2fs_start_discard_thread(struct f2fs_sb_info *sbi);
- void f2fs_drop_discard_cmd(struct f2fs_sb_info *sbi);
- void f2fs_stop_discard_thread(struct f2fs_sb_info *sbi);
--bool f2fs_issue_discard_timeout(struct f2fs_sb_info *sbi);
-+bool f2fs_issue_discard_timeout(struct f2fs_sb_info *sbi, bool need_check);
- void f2fs_clear_prefree_segments(struct f2fs_sb_info *sbi,
- 					struct cp_control *cpc);
- void f2fs_dirty_to_prefree(struct f2fs_sb_info *sbi);
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -1895,7 +1895,7 @@ void f2fs_stop_discard_thread(struct f2f
-  *
-  * Return true if issued all discard cmd or no discard cmd need issue, otherwise return false.
-  */
--bool f2fs_issue_discard_timeout(struct f2fs_sb_info *sbi)
-+bool f2fs_issue_discard_timeout(struct f2fs_sb_info *sbi, bool need_check)
- {
- 	struct discard_cmd_control *dcc = SM_I(sbi)->dcc_info;
- 	struct discard_policy dpolicy;
-@@ -1912,7 +1912,7 @@ bool f2fs_issue_discard_timeout(struct f
- 	/* just to make sure there is no pending discard commands */
- 	__wait_all_discard_cmd(sbi, NULL);
- 
--	f2fs_bug_on(sbi, atomic_read(&dcc->discard_cmd_cnt));
-+	f2fs_bug_on(sbi, need_check && atomic_read(&dcc->discard_cmd_cnt));
- 	return !dropped;
- }
- 
-@@ -2382,7 +2382,7 @@ static void destroy_discard_cmd_control(
- 	 * Recovery can cache discard commands, so in error path of
- 	 * fill_super(), it needs to give a chance to handle them.
- 	 */
--	f2fs_issue_discard_timeout(sbi);
-+	f2fs_issue_discard_timeout(sbi, true);
- 
- 	kfree(dcc);
- 	SM_I(sbi)->dcc_info = NULL;
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1961,7 +1961,7 @@ static void f2fs_put_super(struct super_
- 	}
- 
- 	/* be sure to wait for any on-going discard commands */
--	done = f2fs_issue_discard_timeout(sbi);
-+	done = f2fs_issue_discard_timeout(sbi, true);
- 	if (f2fs_realtime_discard_enable(sbi) && !sbi->discard_blks && done) {
- 		struct cp_control cpc = {
- 			.reason = CP_UMOUNT | CP_TRIMMED,
-@@ -2104,7 +2104,7 @@ static int f2fs_unfreeze(struct super_bl
- 	 * will recover after removal of snapshot.
- 	 */
- 	if (test_opt(sbi, DISCARD) && !f2fs_hw_support_discard(sbi))
--		f2fs_issue_discard_timeout(sbi);
-+		f2fs_issue_discard_timeout(sbi, true);
- 
- 	clear_sbi_flag(F2FS_SB(sb), SBI_IS_FREEZING);
- 	return 0;
-@@ -2884,7 +2884,12 @@ static int __f2fs_remount(struct fs_cont
- 			need_stop_discard = true;
- 		} else {
- 			f2fs_stop_discard_thread(sbi);
--			f2fs_issue_discard_timeout(sbi);
-+			/*
-+			 * f2fs_ioc_fitrim() won't race w/ "remount ro"
-+			 * so it's safe to check discard_cmd_cnt in
-+			 * f2fs_issue_discard_timeout().
-+			 */
-+			f2fs_issue_discard_timeout(sbi, flags & SB_RDONLY);
- 			need_restart_discard = true;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -363,6 +363,8 @@ static void f2fs_write_end_io(struct bio
+ 				folio->index, NODE_TYPE_REGULAR, true);
+ 			f2fs_bug_on(sbi, folio->index != nid_of_node(folio));
  		}
++		if (f2fs_in_warm_node_list(sbi, folio))
++			f2fs_del_fsync_node_entry(sbi, folio);
+ 
+ 		dec_page_count(sbi, type);
+ 
+@@ -374,8 +376,6 @@ static void f2fs_write_end_io(struct bio
+ 				wq_has_sleeper(&sbi->cp_wait))
+ 			wake_up(&sbi->cp_wait);
+ 
+-		if (f2fs_in_warm_node_list(sbi, folio))
+-			f2fs_del_fsync_node_entry(sbi, folio);
+ 		folio_clear_f2fs_gcing(folio);
+ 		folio_end_writeback(folio);
  	}
 
 
