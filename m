@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC803D75D2;
-	Fri, 24 Apr 2026 13:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955BF3563D4;
+	Fri, 24 Apr 2026 13:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038248; cv=none; b=qx6AIrctWW2dCV3ASC7QHjxepBI0Vp/GJMu1WJckk2XR2QvLr/DbaFl1NiJ1cJgMFId9MKDjDVenC77pxltwYwk6aBSxc3rBfStf5nLlZKa6Vlhj1dbLpwzR8rvlVY7569l7toCAdmXWYgn9NxoszfA58RLrq5p2qlX/hvGab2o=
+	t=1777038251; cv=none; b=k2W4f77Z4f9ZInQ94iVX2RIiTxRYt2KTCSok0pR5+0iUUZzaslpNkKjoTOZFGkkF4LqOu2kNgouPzjf3F3+4T8nWzu2oTyLC8tdP9qttRdA181HLX56sBUYpoxWHB9fUaMl8Q9Von0aB8Bc0fXatKszXNOb9Qk4/Y7Q2O0uC1VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038248; c=relaxed/simple;
-	bh=Ajrt9kDRSFnLLW0CYy1SSA+lyrPY8NFLM+pgnNha7EU=;
+	s=arc-20240116; t=1777038251; c=relaxed/simple;
+	bh=TJcQR2KYc3oF/JPhnWVECkHtiw0P4pwAG+XhrLr05MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=beflXHSUmFdSJL+2HwFlcloLczybej0SFYWbb5BIsfnLxF4QpqhkIR7L4WyrVKIErtOufTTyx8907Ws9Ii+tK0UqBMj0icZVfQiJCn9qyYTuEkXGYc6rijbm6FSg1Ccko+XEJyvXaHumOQ2Cd+Sj+7Z2zyf8BfNhv6TL+qekAks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxNJ7lj4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pa9QHCnA7c+zUl6GxopAreL3vb5e1l7IW/HHhEnoQyUWb+UmmlLrSkjEtiWhbHCnXSrwpZX3YT4tkYXoOxoPaTIR3nHi87+jw1VCVcdk0361u4mhpKNetxOitfcIb1SYwFvqZ0Uoui1vPYFRTxepei/4mYuXfFIGKHcarurlno8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVJHKJ4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxNJ7lj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55198C19425;
-	Fri, 24 Apr 2026 13:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVJHKJ4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C65C19425;
+	Fri, 24 Apr 2026 13:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038248;
-	bh=Ajrt9kDRSFnLLW0CYy1SSA+lyrPY8NFLM+pgnNha7EU=;
+	s=korg; t=1777038251;
+	bh=TJcQR2KYc3oF/JPhnWVECkHtiw0P4pwAG+XhrLr05MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxNJ7lj4SfgwPkVOHKj9V3XRDZrWp/zw2hW2GO0ViOgUZxpVwFyUoT3GSCtVIUc+2
-	 NHuQOc1Vde6Bva7SRpIAX3N0vYzdSyUKByxkD7wLltQYL60lHIHF67em4a+LgxaD2X
-	 b/dzF/EjYHg4YfBOvcYXbe/Y02gvqsdt6nQdr2Mk=
+	b=xVJHKJ4zlzz6tQvBnHlSNlrKwO5vs15CU0GMVKpAF1xkmyRN4DRv/dOgc+ONq4KLH
+	 SkVd4UD3dgU+rqpwnAnCKUAOcgPvqTIEXwE97jZHQQigp+sjn8fKj1KctnjnpaTmqS
+	 fjd/XMpyS/8DQmxtLvEl4/r/V+5uU4RkdJ8XrOFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 08/35] drm/amdgpu: replace PASID IDR with XArray
-Date: Fri, 24 Apr 2026 15:31:15 +0200
-Message-ID: <20260424132413.380139638@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 26/35] ksmbd: fix out-of-bounds write in smb2_get_ea() EA alignment
+Date: Fri, 24 Apr 2026 15:31:33 +0200
+Message-ID: <20260424132417.223622735@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
 References: <20260424132411.427029259@linuxfoundation.org>
@@ -46,143 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 3c863ff920b45fa7a9b7d4cb932f466488a87a58 upstream.
+commit 30010c952077a1c89ecdd71fc4d574c75a8f5617 upstream.
 
-Replace the PASID IDR + spinlock with XArray as noted in the TODO
-left by commit ea56aa262570 ("drm/amdgpu: fix the idr allocation
-flags").
+smb2_get_ea() applies 4-byte alignment padding via memset() after
+writing each EA entry. The bounds check on buf_free_len is performed
+before the value memcpy, but the alignment memset fires unconditionally
+afterward with no check on remaining space.
 
-The IDR conversion still has an IRQ safety issue:
-amdgpu_pasid_free() can be called from hardirq context via the fence
-signal path, but amdgpu_pasid_idr_lock is taken with plain spin_lock()
-in process context, creating a potential deadlock:
+When the EA value exactly fills the remaining buffer (buf_free_len == 0
+after value subtraction), the alignment memset writes 1-3 NUL bytes
+past the buf_free_len boundary. In compound requests where the response
+buffer is shared across commands, the first command (e.g., READ) can
+consume most of the buffer, leaving a tight remainder for the QUERY_INFO
+EA response. The alignment memset then overwrites past the physical
+kvmalloc allocation into adjacent kernel heap memory.
 
-     CPU0
-     ----
-     spin_lock(&amdgpu_pasid_idr_lock)   // process context, IRQs on
-     <Interrupt>
-       spin_lock(&amdgpu_pasid_idr_lock) // deadlock
+Add a bounds check before the alignment memset to ensure buf_free_len
+can accommodate the padding bytes.
 
-   The hardirq call chain is:
+This is the same bug pattern fixed by commit beef2634f81f ("ksmbd: fix
+potencial OOB in get_file_all_info() for compound requests") and
+commit fda9522ed6af ("ksmbd: fix OOB write in QUERY_INFO for compound
+requests"), both of which added bounds checks before unconditional
+writes in QUERY_INFO response handlers.
 
-     sdma_v6_0_process_trap_irq
-      -> amdgpu_fence_process
-       -> dma_fence_signal
-        -> drm_sched_job_done
-         -> dma_fence_signal
-          -> amdgpu_pasid_free_cb
-           -> amdgpu_pasid_free
-
-Use XArray with XA_FLAGS_LOCK_IRQ (all xa operations use IRQ-safe
-locking internally) and XA_FLAGS_ALLOC1 (zero is not a valid PASID).
-Both xa_alloc_cyclic() and xa_erase() then handle locking
-consistently, fixing the IRQ safety issue and removing the need for
-an explicit spinlock.
-
-v8: squash in irq safe fix
-
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Fixes: ea56aa262570 ("drm/amdgpu: fix the idr allocation flags")
-Fixes: 8f1de51f49be ("drm/amdgpu: prevent immediate PASID reuse case")
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c |   39 +++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+ fs/smb/server/smb2pdu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
-@@ -22,7 +22,7 @@
-  */
- #include "amdgpu_ids.h"
- 
--#include <linux/idr.h>
-+#include <linux/xarray.h>
- #include <linux/dma-fence-array.h>
- 
- 
-@@ -40,8 +40,8 @@
-  * VMs are looked up from the PASID per amdgpu_device.
-  */
- 
--static DEFINE_IDR(amdgpu_pasid_idr);
--static DEFINE_SPINLOCK(amdgpu_pasid_idr_lock);
-+static DEFINE_XARRAY_FLAGS(amdgpu_pasid_xa, XA_FLAGS_LOCK_IRQ | XA_FLAGS_ALLOC1);
-+static u32 amdgpu_pasid_xa_next;
- 
- /* Helper to free pasid from a fence callback */
- struct amdgpu_pasid_cb {
-@@ -62,36 +62,37 @@ struct amdgpu_pasid_cb {
-  */
- int amdgpu_pasid_alloc(unsigned int bits)
- {
--	int pasid;
-+	u32 pasid;
-+	int r;
- 
- 	if (bits == 0)
- 		return -EINVAL;
- 
--	spin_lock(&amdgpu_pasid_idr_lock);
--	/* TODO: Need to replace the idr with an xarry, and then
--	 * handle the internal locking with ATOMIC safe paths.
--	 */
--	pasid = idr_alloc_cyclic(&amdgpu_pasid_idr, NULL, 1,
--				 1U << bits, GFP_ATOMIC);
--	spin_unlock(&amdgpu_pasid_idr_lock);
--
--	if (pasid >= 0)
--		trace_amdgpu_pasid_allocated(pasid);
-+	r = xa_alloc_cyclic_irq(&amdgpu_pasid_xa, &pasid, xa_mk_value(0),
-+			    XA_LIMIT(1, (1U << bits) - 1),
-+			    &amdgpu_pasid_xa_next, GFP_KERNEL);
-+	if (r < 0)
-+		return r;
- 
-+	trace_amdgpu_pasid_allocated(pasid);
- 	return pasid;
- }
- 
- /**
-  * amdgpu_pasid_free - Free a PASID
-  * @pasid: PASID to free
-+ *
-+ * Called in IRQ context.
-  */
- void amdgpu_pasid_free(u32 pasid)
- {
-+	unsigned long flags;
-+
- 	trace_amdgpu_pasid_freed(pasid);
- 
--	spin_lock(&amdgpu_pasid_idr_lock);
--	idr_remove(&amdgpu_pasid_idr, pasid);
--	spin_unlock(&amdgpu_pasid_idr_lock);
-+	xa_lock_irqsave(&amdgpu_pasid_xa, flags);
-+	__xa_erase(&amdgpu_pasid_xa, pasid);
-+	xa_unlock_irqrestore(&amdgpu_pasid_xa, flags);
- }
- 
- static void amdgpu_pasid_free_cb(struct dma_fence *fence,
-@@ -653,7 +654,5 @@ void amdgpu_vmid_mgr_fini(struct amdgpu_
-  */
- void amdgpu_pasid_mgr_cleanup(void)
- {
--	spin_lock(&amdgpu_pasid_idr_lock);
--	idr_destroy(&amdgpu_pasid_idr);
--	spin_unlock(&amdgpu_pasid_idr_lock);
-+	xa_destroy(&amdgpu_pasid_xa);
- }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4833,6 +4833,8 @@ static int smb2_get_ea(struct ksmbd_work
+ 		/* align next xattr entry at 4 byte bundary */
+ 		alignment_bytes = ((next_offset + 3) & ~3) - next_offset;
+ 		if (alignment_bytes) {
++			if (buf_free_len < alignment_bytes)
++				break;
+ 			memset(ptr, '\0', alignment_bytes);
+ 			ptr += alignment_bytes;
+ 			next_offset += alignment_bytes;
 
 
