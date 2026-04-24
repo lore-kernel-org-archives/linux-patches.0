@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80637386C0A;
-	Fri, 24 Apr 2026 13:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251B419A288;
+	Fri, 24 Apr 2026 13:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038184; cv=none; b=P67FyClMM+8EZ05x/pQ3NhC3ZpRkUHS+I6XqgER0XAdjC6hRr80idOeMxp5GFa0xFC6VhT7OcwNdAkQ+Y8kJcYtCz8jwS/vvcCYODcRF39ZaeedIG9cRpuWsdk1Kl92lZyxrCVYVMsMtSt/1Tfy6+I0WJ7g8twhHgTbryntVhVc=
+	t=1777038187; cv=none; b=giRZN44GL4gxMEUjopecdCMD3p4W/LhwyQR21Vz/NPiK5Fmd3hlIaulrSu6yOqXkji5RhfVfX5EXnmvtCtPj1HTvI+jQZWD0ibkWiompDPhUb1uQ9TnTYDLkcqLLcScqMEcPTMfOnsrKhOb9whZOMcBrB0U4abZw96XLGBsRWT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038184; c=relaxed/simple;
-	bh=gosEfxKv7AOmqWcO8PtA2q5T0+5otDxGQPFxXw8d95w=;
+	s=arc-20240116; t=1777038187; c=relaxed/simple;
+	bh=aBise1O3I8jXQiPnlST0GVizZDJlIvJeH6r4wqLc4TE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgXcezbJVNaRFw9n9zZ+O5MHTSxXw4TRH/y0yemCvt48xTBr9m+cy+JTZpRN7iJflQ9Fe3WUZhPKfF1IARwkohlG8fEJCLODd4rXNfrcp4EVXD8ZBD/EKkdL/Tb4Fzr/xrsP3LtOZYfmbqyhMytowBmjr3BX/uq+yZtw7wSlhHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJo3gnEn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6HKnhnPLb71YOWGh2nme8ykjL/EDPA+dHEB+3fIWlkN4dgZZrhK+/8XFJbvK8eYE6PwWFBysk5+TZbtaiqzx4cRKIars7OqKDX/ccHA3j+aEQ6lbx/t52eMa1UZiSbjDuVJm/3iGAu3C21uxJKGIaBQQyH2K1Mmk4v5XZA9ZsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0mkvAsgc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJo3gnEn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C0EC19425;
-	Fri, 24 Apr 2026 13:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0mkvAsgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A694CC19425;
+	Fri, 24 Apr 2026 13:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038184;
-	bh=gosEfxKv7AOmqWcO8PtA2q5T0+5otDxGQPFxXw8d95w=;
+	s=korg; t=1777038187;
+	bh=aBise1O3I8jXQiPnlST0GVizZDJlIvJeH6r4wqLc4TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJo3gnEnoa3wICLQz2mupr/rf1o9rseYLtTVBBQFWG3BBXrIPkkSkIwmPn5LfBds6
-	 0i7h3w1ecNUWx2aDbdWkvMDw/HJKUvrhjdDPORvHyMVjOkPeimybymylwBU0US7ua+
-	 /AUmX8f3RUbdTAap+c6qpd1cANm8BSpnTqY8dGZM=
+	b=0mkvAsgcxebI9X+IpCpNYXrRl1Q3getDQaVKIS6QJPzF5jiQORKdDxKlLlkdbJtl7
+	 JIhHprAU0zG/3AVUazUmWjDNNVZGSw3poY5o6HW7C3OadjEFu9CraWmXsABXT+6Fjq
+	 hs2xNTDSr2Aw9VS9RiLDJI2/HCL3YRVjtQ/VZq+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 55/55] rxrpc: Fix missing validation of ticket length in non-XDR key preparsing
-Date: Fri, 24 Apr 2026 15:31:34 +0200
-Message-ID: <20260424132441.513432271@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 26/55] fs/ntfs3: validate rec->used in journal-replay file record check
+Date: Fri, 24 Apr 2026 15:31:05 +0200
+Message-ID: <20260424132435.484651206@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132430.006424517@linuxfoundation.org>
 References: <20260424132430.006424517@linuxfoundation.org>
@@ -56,56 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anderson Nascimento <anderson@allelesecurity.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit ac33733b10b484d666f97688561670afd5861383 upstream.
+commit 0ca0485e4b2e837ebb6cbd4f2451aba665a03e4b upstream.
 
-In rxrpc_preparse(), there are two paths for parsing key payloads: the
-XDR path (for large payloads) and the non-XDR path (for payloads <= 28
-bytes). While the XDR path (rxrpc_preparse_xdr_rxkad()) correctly
-validates the ticket length against AFSTOKEN_RK_TIX_MAX, the non-XDR
-path fails to do so.
+check_file_record() validates rec->total against the record size but
+never validates rec->used.  The do_action() journal-replay handlers read
+rec->used from disk and use it to compute memmove lengths:
 
-This allows an unprivileged user to provide a very large ticket length.
-When this key is later read via rxrpc_read(), the total
-token size (toksize) calculation results in a value that exceeds
-AFSTOKEN_LENGTH_MAX, triggering a WARN_ON().
+  DeleteAttribute:    memmove(attr, ..., used - asize - roff)
+  CreateAttribute:    memmove(..., attr, used - roff)
+  change_attr_size:   memmove(..., used - PtrOffset(rec, next))
 
-[ 2001.302904] WARNING: CPU: 2 PID: 2108 at net/rxrpc/key.c:778 rxrpc_read+0x109/0x5c0 [rxrpc]
+When rec->used is smaller than the offset of a validated attribute, or
+larger than the record size, these subtractions can underflow allowing
+us to copy huge amounts of memory in to a 4kb buffer, generally
+considered a bad idea overall.
 
-Fix this by adding a check in the non-XDR parsing path of rxrpc_preparse()
-to ensure the ticket length does not exceed AFSTOKEN_RK_TIX_MAX,
-bringing it into parity with the XDR parsing logic.
+This requires a corrupted filesystem, which isn't a threat model the
+kernel really needs to worry about, but checking for such an obvious
+out-of-bounds value is good to keep things robust, especially on journal
+replay
 
-Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
-Fixes: 84924aac08a4 ("rxrpc: Fix checker warning")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-7-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this up by bounding rec->used correctly.
+
+This is much like commit b2bc7c44ed17 ("fs/ntfs3: Fix slab-out-of-bounds
+read in DeleteIndexEntryRoot") which checked different values in this
+same switch statement.
+
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Cc: stable <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/key.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ntfs3/fslog.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -502,6 +502,10 @@ static int rxrpc_preparse(struct key_pre
- 	if (v1->security_index != RXRPC_SECURITY_RXKAD)
- 		goto error;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2789,13 +2789,14 @@ static inline bool check_file_record(con
+ 	u16 fn = le16_to_cpu(rec->rhdr.fix_num);
+ 	u16 ao = le16_to_cpu(rec->attr_off);
+ 	u32 rs = sbi->record_size;
++	u32 used = le32_to_cpu(rec->used);
  
-+	ret = -EKEYREJECTED;
-+	if (v1->ticket_length > AFSTOKEN_RK_TIX_MAX)
-+		goto error;
+ 	/* Check the file record header for consistency. */
+ 	if (rec->rhdr.sign != NTFS_FILE_SIGNATURE ||
+ 	    fo > (SECTOR_SIZE - ((rs >> SECTOR_SHIFT) + 1) * sizeof(short)) ||
+ 	    (fn - 1) * SECTOR_SIZE != rs || ao < MFTRECORD_FIXUP_OFFSET_1 ||
+ 	    ao > sbi->record_size - SIZEOF_RESIDENT || !is_rec_inuse(rec) ||
+-	    le32_to_cpu(rec->total) != rs) {
++	    le32_to_cpu(rec->total) != rs || used > rs || used < ao) {
+ 		return false;
+ 	}
+ 
+@@ -2807,6 +2808,15 @@ static inline bool check_file_record(con
+ 		return false;
+ 	}
+ 
++	/*
++	 * The do_action() handlers compute memmove lengths as
++	 * "rec->used - <offset of validated attr>", which underflows when
++	 * rec->used is smaller than the attribute walk reached.  At this
++	 * point attr is the ATTR_END marker; rec->used must cover it.
++	 */
++	if (used < PtrOffset(rec, attr) + sizeof(attr->type))
++		return false;
 +
- 	plen = sizeof(*token->kad) + v1->ticket_length;
- 	prep->quotalen += plen + sizeof(*token);
+ 	return true;
+ }
  
 
 
