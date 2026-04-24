@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DC23537DF;
-	Fri, 24 Apr 2026 13:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC803D75D2;
+	Fri, 24 Apr 2026 13:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038246; cv=none; b=LqhJ6KXdPCbYH8eb+pG2pR5F/41D2Zj0nBNS6Rk85m2Zay8456fo4fEEMQLjzKxgx++pyCuvZGZy31XUNhZZ/KTKHIQlM9pgSrzX/ng1BaNuOdgCh+UocL1RDrHjqp61Q8Sf35qp55POu0cesHNtZ498gTGIHyIApvwYgUCntJ8=
+	t=1777038248; cv=none; b=qx6AIrctWW2dCV3ASC7QHjxepBI0Vp/GJMu1WJckk2XR2QvLr/DbaFl1NiJ1cJgMFId9MKDjDVenC77pxltwYwk6aBSxc3rBfStf5nLlZKa6Vlhj1dbLpwzR8rvlVY7569l7toCAdmXWYgn9NxoszfA58RLrq5p2qlX/hvGab2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038246; c=relaxed/simple;
-	bh=FyQJHT12OacelHIrjJMzJoYyYUK/FhzMYk10wLoEI6U=;
+	s=arc-20240116; t=1777038248; c=relaxed/simple;
+	bh=Ajrt9kDRSFnLLW0CYy1SSA+lyrPY8NFLM+pgnNha7EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCMpCl7kwWQNZ4Mb+oS2oNggHZCWpf0FFahKGkp6gomHNVh4YYkQJBiBhTtJ8dp5F0+DTbdaVCdnrPUM7taroVU+blJRX/p+Z3fkFmT7rfOq6ENZ5LV9+sEHt+OwHaYdEld09728seyaAWZNr6Nz4mCHGXOYb8zG7xUYv/ryB58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9e9h5w1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=beflXHSUmFdSJL+2HwFlcloLczybej0SFYWbb5BIsfnLxF4QpqhkIR7L4WyrVKIErtOufTTyx8907Ws9Ii+tK0UqBMj0icZVfQiJCn9qyYTuEkXGYc6rijbm6FSg1Ccko+XEJyvXaHumOQ2Cd+Sj+7Z2zyf8BfNhv6TL+qekAks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxNJ7lj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9e9h5w1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A73C19425;
-	Fri, 24 Apr 2026 13:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxNJ7lj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55198C19425;
+	Fri, 24 Apr 2026 13:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038246;
-	bh=FyQJHT12OacelHIrjJMzJoYyYUK/FhzMYk10wLoEI6U=;
+	s=korg; t=1777038248;
+	bh=Ajrt9kDRSFnLLW0CYy1SSA+lyrPY8NFLM+pgnNha7EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U9e9h5w1trz5cycdonrBkYEVwmTLAFr21dohmFXvbv09+XpOfU+kjvlHDhUwGLscw
-	 E2mlLB/zhPsD7azvG4/SEcTccnDjcT3sE18XdM3hRwXAYs0ON/tE8UAIA6wk4PkLA/
-	 LfwZ23S22yhP7M0NgtON+JQy96vetYhlNdthzdRg=
+	b=JxNJ7lj4SfgwPkVOHKj9V3XRDZrWp/zw2hW2GO0ViOgUZxpVwFyUoT3GSCtVIUc+2
+	 NHuQOc1Vde6Bva7SRpIAX3N0vYzdSyUKByxkD7wLltQYL60lHIHF67em4a+LgxaD2X
+	 b/dzF/EjYHg4YfBOvcYXbe/Y02gvqsdt6nQdr2Mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 25/35] ksmbd: validate num_aces and harden ACE walk in smb_inherit_dacl()
-Date: Fri, 24 Apr 2026 15:31:32 +0200
-Message-ID: <20260424132417.023714293@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 08/35] drm/amdgpu: replace PASID IDR with XArray
+Date: Fri, 24 Apr 2026 15:31:15 +0200
+Message-ID: <20260424132413.380139638@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
 References: <20260424132411.427029259@linuxfoundation.org>
@@ -45,145 +46,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit 3e4e2ea2a781018ed5d75f969e3e5606beb66e48 upstream.
+commit 3c863ff920b45fa7a9b7d4cb932f466488a87a58 upstream.
 
-smb_inherit_dacl() trusts the on-disk num_aces value from the parent
-directory's DACL xattr and uses it to size a heap allocation:
+Replace the PASID IDR + spinlock with XArray as noted in the TODO
+left by commit ea56aa262570 ("drm/amdgpu: fix the idr allocation
+flags").
 
-  aces_base = kmalloc(sizeof(struct smb_ace) * num_aces * 2, ...);
+The IDR conversion still has an IRQ safety issue:
+amdgpu_pasid_free() can be called from hardirq context via the fence
+signal path, but amdgpu_pasid_idr_lock is taken with plain spin_lock()
+in process context, creating a potential deadlock:
 
-num_aces is a u16 read from le16_to_cpu(parent_pdacl->num_aces)
-without checking that it is consistent with the declared pdacl_size.
-An authenticated client whose parent directory's security.NTACL is
-tampered (e.g. via offline xattr corruption or a concurrent path that
-bypasses parse_dacl()) can present num_aces = 65535 with minimal
-actual ACE data.  This causes a ~8 MB allocation (not kzalloc, so
-uninitialized) that the subsequent loop only partially populates, and
-may also overflow the three-way size_t multiply on 32-bit kernels.
+     CPU0
+     ----
+     spin_lock(&amdgpu_pasid_idr_lock)   // process context, IRQs on
+     <Interrupt>
+       spin_lock(&amdgpu_pasid_idr_lock) // deadlock
 
-Additionally, the ACE walk loop uses the weaker
-offsetof(struct smb_ace, access_req) minimum size check rather than
-the minimum valid on-wire ACE size, and does not reject ACEs whose
-declared size is below the minimum.
+   The hardirq call chain is:
 
-Reproduced on UML + KASAN + LOCKDEP against the real ksmbd code path.
-A legitimate mount.cifs client creates a parent directory over SMB
-(ksmbd writes a valid security.NTACL xattr), then the NTACL blob on
-the backing filesystem is rewritten to set num_aces = 0xFFFF while
-keeping the posix_acl_hash bytes intact so ksmbd_vfs_get_sd_xattr()'s
-hash check still passes.  A subsequent SMB2 CREATE of a child under
-that parent drives smb2_open() into smb_inherit_dacl() (share has
-"vfs objects = acl_xattr" set), which fails the page allocator:
+     sdma_v6_0_process_trap_irq
+      -> amdgpu_fence_process
+       -> dma_fence_signal
+        -> drm_sched_job_done
+         -> dma_fence_signal
+          -> amdgpu_pasid_free_cb
+           -> amdgpu_pasid_free
 
-  WARNING: mm/page_alloc.c:5226 at __alloc_frozen_pages_noprof+0x46c/0x9c0
-  Workqueue: ksmbd-io handle_ksmbd_work
-   __alloc_frozen_pages_noprof+0x46c/0x9c0
-   ___kmalloc_large_node+0x68/0x130
-   __kmalloc_large_node_noprof+0x24/0x70
-   __kmalloc_noprof+0x4c9/0x690
-   smb_inherit_dacl+0x394/0x2430
-   smb2_open+0x595d/0xabe0
-   handle_ksmbd_work+0x3d3/0x1140
+Use XArray with XA_FLAGS_LOCK_IRQ (all xa operations use IRQ-safe
+locking internally) and XA_FLAGS_ALLOC1 (zero is not a valid PASID).
+Both xa_alloc_cyclic() and xa_erase() then handle locking
+consistently, fixing the IRQ safety issue and removing the need for
+an explicit spinlock.
 
-With the patch applied the added guard rejects the tampered value
-with -EINVAL before any large allocation runs, smb2_open() falls back
-to smb2_create_sd_buffer(), and the child is created with a default
-SD.  No warning, no splat.
+v8: squash in irq safe fix
 
-Fix by:
-
-  1. Validating num_aces against pdacl_size using the same formula
-     applied in parse_dacl().
-
-  2. Replacing the raw kmalloc(sizeof * num_aces * 2) with
-     kmalloc_array(num_aces * 2, sizeof(...)) for overflow-safe
-     allocation.
-
-  3. Tightening the per-ACE loop guard to require the minimum valid
-     ACE size (offsetof(smb_ace, sid) + CIFS_SID_BASE_SIZE) and
-     rejecting under-sized ACEs, matching the hardening in
-     smb_check_perm_dacl() and parse_dacl().
-
-v1 -> v2:
-  - Replace the synthetic test-module splat in the changelog with a
-    real-path UML + KASAN reproduction driven through mount.cifs and
-    SMB2 CREATE; Namjae flagged the kcifs3_test_inherit_dacl_old name
-    in v1 since it does not exist in ksmbd.
-  - Drop the commit-hash citation from the code comment per Namjae's
-    review; keep the parse_dacl() pointer.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Fixes: ea56aa262570 ("drm/amdgpu: fix the idr allocation flags")
+Fixes: 8f1de51f49be ("drm/amdgpu: prevent immediate PASID reuse case")
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |   28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c |   39 +++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1106,8 +1106,24 @@ int smb_inherit_dacl(struct ksmbd_conn *
- 		goto free_parent_pntsd;
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ids.c
+@@ -22,7 +22,7 @@
+  */
+ #include "amdgpu_ids.h"
  
--	aces_base = kmalloc(sizeof(struct smb_ace) * num_aces * 2,
--			    KSMBD_DEFAULT_GFP);
-+	aces_size = pdacl_size - sizeof(struct smb_acl);
+-#include <linux/idr.h>
++#include <linux/xarray.h>
+ #include <linux/dma-fence-array.h>
+ 
+ 
+@@ -40,8 +40,8 @@
+  * VMs are looked up from the PASID per amdgpu_device.
+  */
+ 
+-static DEFINE_IDR(amdgpu_pasid_idr);
+-static DEFINE_SPINLOCK(amdgpu_pasid_idr_lock);
++static DEFINE_XARRAY_FLAGS(amdgpu_pasid_xa, XA_FLAGS_LOCK_IRQ | XA_FLAGS_ALLOC1);
++static u32 amdgpu_pasid_xa_next;
+ 
+ /* Helper to free pasid from a fence callback */
+ struct amdgpu_pasid_cb {
+@@ -62,36 +62,37 @@ struct amdgpu_pasid_cb {
+  */
+ int amdgpu_pasid_alloc(unsigned int bits)
+ {
+-	int pasid;
++	u32 pasid;
++	int r;
+ 
+ 	if (bits == 0)
+ 		return -EINVAL;
+ 
+-	spin_lock(&amdgpu_pasid_idr_lock);
+-	/* TODO: Need to replace the idr with an xarry, and then
+-	 * handle the internal locking with ATOMIC safe paths.
+-	 */
+-	pasid = idr_alloc_cyclic(&amdgpu_pasid_idr, NULL, 1,
+-				 1U << bits, GFP_ATOMIC);
+-	spin_unlock(&amdgpu_pasid_idr_lock);
+-
+-	if (pasid >= 0)
+-		trace_amdgpu_pasid_allocated(pasid);
++	r = xa_alloc_cyclic_irq(&amdgpu_pasid_xa, &pasid, xa_mk_value(0),
++			    XA_LIMIT(1, (1U << bits) - 1),
++			    &amdgpu_pasid_xa_next, GFP_KERNEL);
++	if (r < 0)
++		return r;
+ 
++	trace_amdgpu_pasid_allocated(pasid);
+ 	return pasid;
+ }
+ 
+ /**
+  * amdgpu_pasid_free - Free a PASID
+  * @pasid: PASID to free
++ *
++ * Called in IRQ context.
+  */
+ void amdgpu_pasid_free(u32 pasid)
+ {
++	unsigned long flags;
 +
-+	/*
-+	 * Validate num_aces against the DACL payload before allocating.
-+	 * Each ACE must be at least as large as its fixed-size header
-+	 * (up to the SID base), so num_aces cannot exceed the payload
-+	 * divided by the minimum ACE size.  This mirrors the existing
-+	 * check in parse_dacl().
-+	 */
-+	if (num_aces > aces_size / (offsetof(struct smb_ace, sid) +
-+				    offsetof(struct smb_sid, sub_auth) +
-+				    sizeof(__le16))) {
-+		rc = -EINVAL;
-+		goto free_parent_pntsd;
-+	}
-+
-+	aces_base = kmalloc_array(num_aces * 2, sizeof(struct smb_ace),
-+				  KSMBD_DEFAULT_GFP);
- 	if (!aces_base) {
- 		rc = -ENOMEM;
- 		goto free_parent_pntsd;
-@@ -1116,7 +1132,6 @@ int smb_inherit_dacl(struct ksmbd_conn *
- 	aces = (struct smb_ace *)aces_base;
- 	parent_aces = (struct smb_ace *)((char *)parent_pdacl +
- 			sizeof(struct smb_acl));
--	aces_size = acl_len - sizeof(struct smb_acl);
+ 	trace_amdgpu_pasid_freed(pasid);
  
- 	if (pntsd_type & DACL_AUTO_INHERITED)
- 		inherited_flags = INHERITED_ACE;
-@@ -1124,11 +1139,14 @@ int smb_inherit_dacl(struct ksmbd_conn *
- 	for (i = 0; i < num_aces; i++) {
- 		int pace_size;
+-	spin_lock(&amdgpu_pasid_idr_lock);
+-	idr_remove(&amdgpu_pasid_idr, pasid);
+-	spin_unlock(&amdgpu_pasid_idr_lock);
++	xa_lock_irqsave(&amdgpu_pasid_xa, flags);
++	__xa_erase(&amdgpu_pasid_xa, pasid);
++	xa_unlock_irqrestore(&amdgpu_pasid_xa, flags);
+ }
  
--		if (offsetof(struct smb_ace, access_req) > aces_size)
-+		if (aces_size < offsetof(struct smb_ace, sid) +
-+		    CIFS_SID_BASE_SIZE)
- 			break;
- 
- 		pace_size = le16_to_cpu(parent_aces->size);
--		if (pace_size > aces_size)
-+		if (pace_size > aces_size ||
-+		    pace_size < offsetof(struct smb_ace, sid) +
-+				CIFS_SID_BASE_SIZE)
- 			break;
- 
- 		aces_size -= pace_size;
+ static void amdgpu_pasid_free_cb(struct dma_fence *fence,
+@@ -653,7 +654,5 @@ void amdgpu_vmid_mgr_fini(struct amdgpu_
+  */
+ void amdgpu_pasid_mgr_cleanup(void)
+ {
+-	spin_lock(&amdgpu_pasid_idr_lock);
+-	idr_destroy(&amdgpu_pasid_idr);
+-	spin_unlock(&amdgpu_pasid_idr_lock);
++	xa_destroy(&amdgpu_pasid_xa);
+ }
 
 
