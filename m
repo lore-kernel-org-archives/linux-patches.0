@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793BD3D75C2;
-	Fri, 24 Apr 2026 13:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F773537DF;
+	Fri, 24 Apr 2026 13:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038264; cv=none; b=Vh6OS5ytiXS1W0KgdS1isd7zX6dWlyjq+UGJXKGhuUdePhhEv3xncwpycLXxdj7OJDGlziYKATq0rdKgvi5R30vbHRs2ES786xNoAaU/ppxlv8k7DHYPVZYKOlgcqGYlpiKpVbQ19Ja3QMwdYgQM1jqKO86ZryxCR0E93W144eg=
+	t=1777038267; cv=none; b=h/VlhLisbS5zwRfg2W4XHDQr2V4fmRVQAM4Eth1q4zjMTcaJ2/MpuPp1tPQaBMDCarkfmdNc9FcYF7Zrup2P54E/Sny0Zu6Lyiib0Clz25kVVt2HPL8t6b5ppdtojhHCTxKgvu9Venvero0iSjGL2hN/N4FcqALH1BFmey16OR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038264; c=relaxed/simple;
-	bh=XmDkEOHwjdYBLAEMKq7rbPG0JoTZmV0pqeISfyUrd2c=;
+	s=arc-20240116; t=1777038267; c=relaxed/simple;
+	bh=tcXUIxXKvZg/B9y24aorLS/Fgw0foX+57uZfF7PUv7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fw99ZYGpYXmFV/e4HGoWFTxP3WTpgAI1oIOAufrFEONtWXq7NhbiWSPEB4BMgcNNST7qr4PconOzXBiOFhu1ZU3HXQaPOVL/cyH8+7epq6FuvALpVYjg6Wb+puwXknea2MQhbwwfKMWtM62Sic8ekSgfe5us2+vFTOTLj4We2TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfj5xCyF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WmbzxnQJ1+lWx9mODBGcucR2E/eV69NEuw2gzAC5Mz7KQPZ9f4g2fRamZhaGegjGt9ddv3liVt+u9Jsy6osAowKTi422DrJnAGKPVV1GEfpYoekRDzSdUFJTiypIY9746sh0jfx+IWToccapKwGnoWiFfNtElFEwwDuNOJpBnU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adCzJ8m0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfj5xCyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A60C19425;
-	Fri, 24 Apr 2026 13:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adCzJ8m0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E25C19425;
+	Fri, 24 Apr 2026 13:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038264;
-	bh=XmDkEOHwjdYBLAEMKq7rbPG0JoTZmV0pqeISfyUrd2c=;
+	s=korg; t=1777038266;
+	bh=tcXUIxXKvZg/B9y24aorLS/Fgw0foX+57uZfF7PUv7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfj5xCyFHxi/dra1nGDE+XLPbJ5+SHZpwwj+3Haauf1prNQflgzgCWsXS2debS6mM
-	 TBA1b/tob9oC1nR7c7NMOEKXk538l8gQ0OCOW27xoRzN0FUIJVuKp6OpVroYod7yO1
-	 GD8uxX3JvfBtKpA7q6jF47qWhdhCMlNu0lSY5v+U=
+	b=adCzJ8m0V1qTg3qO8ofJxhPkmveTzX3c9BnnXBfkK72QVLPftQPcQrxXOPblfqiL7
+	 wADtooj1VqMOK1kG4A8K8mMSs4cPK4PYZ/3vkFr3Al/oepnnGj9TFCr4Ep8cF3FXRu
+	 xvKNSg3vu8jExe2Cg2nfGzf8fI0mVhz1oNDd374k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bingquan Chen <patzilla007@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 31/35] net/packet: fix TOCTOU race on mmapd vnet_hdr in tpacket_snd()
-Date: Fri, 24 Apr 2026 15:31:38 +0200
-Message-ID: <20260424132418.323892323@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Sebastian Alba Vives <sebasjosue84@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 32/35] crypto: ccp: Dont attempt to copy CSR to userspace if PSP command failed
+Date: Fri, 24 Apr 2026 15:31:39 +0200
+Message-ID: <20260424132418.538758211@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
 References: <20260424132411.427029259@linuxfoundation.org>
@@ -51,89 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingquan Chen <patzilla007@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 2c054e17d9d41f1020376806c7f750834ced4dc5 upstream.
+commit abe4a6d6f606113251868c2c4a06ba904bb41eed upstream.
 
-In tpacket_snd(), when PACKET_VNET_HDR is enabled, vnet_hdr points
-directly into the mmap'd TX ring buffer shared with userspace. The
-kernel validates the header via __packet_snd_vnet_parse() but then
-re-reads all fields later in virtio_net_hdr_to_skb(). A concurrent
-userspace thread can modify the vnet_hdr fields between validation
-and use, bypassing all safety checks.
+When retrieving the PEK CSR, don't attempt to copy the blob to userspace
+if the firmware command failed.  If the failure was due to an invalid
+length, i.e. the userspace buffer+length was too small, copying the number
+of bytes _firmware_ requires will overflow the kernel-allocated buffer and
+leak data to userspace.
 
-The non-TPACKET path (packet_snd()) already correctly copies vnet_hdr
-to a stack-local variable. All other vnet_hdr consumers in the kernel
-(tun.c, tap.c, virtio_net.c) also use stack copies. The TPACKET TX
-path is the only caller of virtio_net_hdr_to_skb() that reads directly
-from user-controlled shared memory.
+  BUG: KASAN: slab-out-of-bounds in instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
+  BUG: KASAN: slab-out-of-bounds in _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
+  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
+  Read of size 2084 at addr ffff898144612e20 by task syz.9.219/21405
 
-Fix this by copying vnet_hdr from the mmap'd ring buffer to a
-stack-local variable before validation and use, consistent with the
-approach used in packet_snd() and all other callers.
+  CPU: 14 UID: 0 PID: 21405 Comm: syz.9.219 Tainted: G     U     O        7.0.0-smp-DEV #28 PREEMPTLAZY
+  Tainted: [U]=USER, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.62.0-0 11/19/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xc5/0x110 ../lib/dump_stack.c:120
+   print_address_description ../mm/kasan/report.c:378 [inline]
+   print_report+0xbc/0x260 ../mm/kasan/report.c:482
+   kasan_report+0xa2/0xe0 ../mm/kasan/report.c:595
+   check_region_inline ../mm/kasan/generic.c:-1 [inline]
+   kasan_check_range+0x264/0x2c0 ../mm/kasan/generic.c:200
+   instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
+   _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
+   _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
+   copy_to_user ../include/linux/uaccess.h:236 [inline]
+   sev_ioctl_do_pek_csr+0x31f/0x590 ../drivers/crypto/ccp/sev-dev.c:1872
+   sev_ioctl+0x3a4/0x490 ../drivers/crypto/ccp/sev-dev.c:2562
+   vfs_ioctl ../fs/ioctl.c:51 [inline]
+   __do_sys_ioctl ../fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0x11d/0x1b0 ../fs/ioctl.c:583
+   do_syscall_x64 ../arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xe0/0x800 ../arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
 
-Fixes: 1d036d25e560 ("packet: tpacket_snd gso and checksum offload")
-Signed-off-by: Bingquan Chen <patzilla007@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260418112006.78823-1-patzilla007@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+WARN if the driver says the command succeeded, but the firmware error code
+says otherwise, as __sev_do_cmd_locked() is expected to return -EIO on any
+firwmware error.
+
+Reported-by: Alexander Potapenko <glider@google.com>
+Reported-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Fixes: e799035609e1 ("crypto: ccp: Implement SEV_PEK_CSR ioctl command")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2770,7 +2770,8 @@ static int tpacket_snd(struct packet_soc
- {
- 	struct sk_buff *skb = NULL;
- 	struct net_device *dev;
--	struct virtio_net_hdr *vnet_hdr = NULL;
-+	struct virtio_net_hdr vnet_hdr;
-+	bool has_vnet_hdr = false;
- 	struct sockcm_cookie sockc;
- 	__be16 proto;
- 	int err, reserve = 0;
-@@ -2871,16 +2872,20 @@ static int tpacket_snd(struct packet_soc
- 		hlen = LL_RESERVED_SPACE(dev);
- 		tlen = dev->needed_tailroom;
- 		if (vnet_hdr_sz) {
--			vnet_hdr = data;
- 			data += vnet_hdr_sz;
- 			tp_len -= vnet_hdr_sz;
--			if (tp_len < 0 ||
--			    __packet_snd_vnet_parse(vnet_hdr, tp_len)) {
-+			if (tp_len < 0) {
-+				tp_len = -EINVAL;
-+				goto tpacket_error;
-+			}
-+			memcpy(&vnet_hdr, data - vnet_hdr_sz, sizeof(vnet_hdr));
-+			if (__packet_snd_vnet_parse(&vnet_hdr, tp_len)) {
- 				tp_len = -EINVAL;
- 				goto tpacket_error;
- 			}
- 			copylen = __virtio16_to_cpu(vio_le(),
--						    vnet_hdr->hdr_len);
-+						    vnet_hdr.hdr_len);
-+			has_vnet_hdr = true;
- 		}
- 		copylen = max_t(int, copylen, dev->hard_header_len);
- 		skb = sock_alloc_send_skb(&po->sk,
-@@ -2917,12 +2922,12 @@ tpacket_error:
- 			}
- 		}
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1541,7 +1541,10 @@ cmd:
  
--		if (vnet_hdr_sz) {
--			if (virtio_net_hdr_to_skb(skb, vnet_hdr, vio_le())) {
-+		if (has_vnet_hdr) {
-+			if (virtio_net_hdr_to_skb(skb, &vnet_hdr, vio_le())) {
- 				tp_len = -EINVAL;
- 				goto tpacket_error;
- 			}
--			virtio_net_hdr_set_proto(skb, vnet_hdr);
-+			virtio_net_hdr_set_proto(skb, &vnet_hdr);
- 		}
+ 	ret = __sev_do_cmd_locked(SEV_CMD_PEK_CSR, &data, &argp->error);
  
- 		skb->destructor = tpacket_destruct_skb;
+-	 /* If we query the CSR length, FW responded with expected data. */
++	/*
++	 * Firmware will returns the length of the CSR blob (either the minimum
++	 * required length or the actual length written), return it to the user.
++	 */
+ 	input.length = data.len;
+ 
+ 	if (copy_to_user((void __user *)argp->data, &input, sizeof(input))) {
+@@ -1549,6 +1552,9 @@ cmd:
+ 		goto e_free_blob;
+ 	}
+ 
++	if (ret || WARN_ON_ONCE(argp->error))
++		goto e_free_blob;
++
+ 	if (blob) {
+ 		if (copy_to_user(input_address, blob, input.length))
+ 			ret = -EFAULT;
 
 
