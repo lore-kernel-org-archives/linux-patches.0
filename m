@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD6619A288;
-	Fri, 24 Apr 2026 13:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E9723645D;
+	Fri, 24 Apr 2026 13:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037842; cv=none; b=IfwLtI3xdZb6SV36jm2r+d06V1bdYFdpqKEEK/FdcIsnk3pXqo/xBIUeasvSSHfWYJXQA7dqpYR7FIABEE6NPBPc3czII2a9+qRIUqoaEtk1vjONH+5ahzOo8+XOi7o3aZDM8WbvUXM4i8ZfDCz2ucfdyBPOm4++9nNGxqB7NR4=
+	t=1777037844; cv=none; b=VY7r+SCaS2sunQvORRbI6YN0d9rMbvxfb/0HhaLWw7Sz00rpBRFDjKcdhNez+JwQumjIhgZ2cASex4rjNFudHdUR+KeKm48gBaffmwaoHbnD3nEUMdCWabIUdFtHmDiPg5VhDJL9sj0oF8iiOkYNdDYQrONYQiH96vdIX2/CzKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037842; c=relaxed/simple;
-	bh=rqmVwOEas/cQ6fdD3E9gSlZJu6Jh+l8JtAA+c7lEyAo=;
+	s=arc-20240116; t=1777037844; c=relaxed/simple;
+	bh=uaeoTksckU5DnBonlmsG5eBQVTDCVrbWttkm+W5ESsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZXMVQyMS2OAazN28+xcjaklmRq3tbGH0iWeFATM4sEIi9Nl/6SGNmgzqv3C5OKNU6SbqoafaoWpC5YHXmB+eo29+nmLZSkt9ZGtJGnC8gxFGuWvCE14yupB0s6hLhura8FCQb4jKSwJDYQer0LeP5vND2vZzveCviYpP2KsNUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/njlZk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YuTgcLre+aKMnv7zGFbEFGqSZOvkRssYynaNeZT7a3Vmi+1QIgfyEI525UgJQ9MAfV1U8b7VxzCN1XK6iH+HYriS6O/DSzgl76zvlKf/nH3rVg8b3q/ZtEA/6Hh7kl7VCmX8jEY3N2ReHis/fQ/gyXxhntav8jodKWKWeuJI/Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0D3q1jL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/njlZk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EB3C19425;
-	Fri, 24 Apr 2026 13:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0D3q1jL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166DCC2BCB5;
+	Fri, 24 Apr 2026 13:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037841;
-	bh=rqmVwOEas/cQ6fdD3E9gSlZJu6Jh+l8JtAA+c7lEyAo=;
+	s=korg; t=1777037844;
+	bh=uaeoTksckU5DnBonlmsG5eBQVTDCVrbWttkm+W5ESsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/njlZk2y56YnxydJ0GDsfYXwD5X0ah9KMHBhnAQV2x4XFuhGprQHVLB28jU5+eEJ
-	 zuHiZ1pp4bXNv9YdgYOPcPLqE43m34cbEFMdt0nOI9T7Pn5emsCczbE2K0z1FLFu5O
-	 itf1lv7migT7HxVWR02mP7Bv/xOP61xATe6wmGd0=
+	b=z0D3q1jLNY0Ov8Xd0WmDM1EVK8oWRZzQ43w/In1NSDgHXJbaimxstDlOdYXVcIVrK
+	 H2URFz7BLb9rOV7D4ch4EO3rLwc3sgPly8F1Dd8qGcy4SL0EJrJaWE2zdN2c83IUvc
+	 GFwhrHQW34egc/kUDeaFSg2bcmCBNYAW0ptNcqd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	stable@kernel.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 083/166] ksmbd: require 3 sub-authorities before reading sub_auth[2]
-Date: Fri, 24 Apr 2026 15:29:57 +0200
-Message-ID: <20260424132550.195699606@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>
+Subject: [PATCH 6.6 092/166] staging: sm750fb: fix division by zero in ps_to_hz()
+Date: Fri, 24 Apr 2026 15:30:06 +0200
+Message-ID: <20260424132551.928846952@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -55,51 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 53370cf9090777774e07fd9a8ebce67c6cc333ab upstream.
+commit 75a1621e4f91310673c9acbcbb25c2a7ff821cd3 upstream.
 
-parse_dacl() compares each ACE SID against sid_unix_NFS_mode and on
-match reads sid.sub_auth[2] as the file mode.  If sid_unix_NFS_mode is
-the prefix S-1-5-88-3 with num_subauth = 2 then compare_sids() compares
-only min(num_subauth, 2) sub-authorities so a client SID with
-num_subauth = 2 and sub_auth = {88, 3} will match.
+ps_to_hz() is called from hw_sm750_crtc_set_mode() without validating
+that pixclock is non-zero. A zero pixclock passed via FBIOPUT_VSCREENINFO
+causes a division by zero.
 
-If num_subauth = 2 and the ACE is placed at the very end of the security
-descriptor, sub_auth[2] will be  4 bytes past end_of_acl.  The
-out-of-band bytes will then be masked to the low 9 bits and applied as
-the file's POSIX mode, probably not something that is good to have
-happen.
+Fix by rejecting zero pixclock in lynxfb_ops_check_var(), consistent
+with other framebuffer drivers.
 
-Fix this up by forcing the SID to actually carry a third sub-authority
-before reading it at all.
-
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 81dee67e215b ("staging: sm750fb: add sm750 to staging")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881AFBFCE28CCF528B35D0CAF4BA@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/staging/sm750fb/sm750.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -451,7 +451,8 @@ static void parse_dacl(struct mnt_idmap
- 		ppace[i]->access_req =
- 			smb_map_generic_desired_access(ppace[i]->access_req);
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -483,6 +483,9 @@ static int lynxfb_ops_check_var(struct f
+ 	struct lynxfb_crtc *crtc;
+ 	resource_size_t request;
  
--		if (!(compare_sids(&ppace[i]->sid, &sid_unix_NFS_mode))) {
-+		if (ppace[i]->sid.num_subauth >= 3 &&
-+		    !(compare_sids(&ppace[i]->sid, &sid_unix_NFS_mode))) {
- 			fattr->cf_mode =
- 				le32_to_cpu(ppace[i]->sid.sub_auth[2]);
- 			break;
++	if (!var->pixclock)
++		return -EINVAL;
++
+ 	ret = 0;
+ 	par = info->par;
+ 	crtc = &par->crtc;
 
 
