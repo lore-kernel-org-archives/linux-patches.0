@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377FC19A288;
-	Fri, 24 Apr 2026 13:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56E73D5241;
+	Fri, 24 Apr 2026 13:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037780; cv=none; b=uImxICvJi/AR7M4o0DufeZUQ4GUd8uS1lkz3cLF6TnxdxP5jfqE1sO63Vt5PSNyyiKqau+oyP063UrVP2ndE30esqr+/tweAREyngm7jYd8DxQWeO1OI94TGrkGn5Dve6tag76vRWT1EOMbMQ71y75meS89/0x0zwwP8mI/JUJU=
+	t=1777037782; cv=none; b=kop8QB8gFF6UE/MQ6hVT3ZnLdIJ50TBR4N0DpUYIyCC4+NurnoWsEMLlSCEC1SVQmmVBl1/ODeekvdbzBL3E12MYNSjtoXMrXn+LmKvnjBF1u0/DJe/ea1fMUTEA6/mn28fJFNhgJ9+4/5LcLPHahhAySFN+JhOWuTS6Gi1SqkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037780; c=relaxed/simple;
-	bh=dxQl+qFx2CD1WoEMG3JjHAIYS7dyLOv+cF0HLQv6zfQ=;
+	s=arc-20240116; t=1777037782; c=relaxed/simple;
+	bh=VkrAaVG2GtiZ7XscxBe32fLf6co/mjLlLK9FKLWS+aE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHCLDhYa7vcgIxKM7Z1geBcGj3KNwxEaMcRB1hk5+oP/bXeOBbskve7VdXfzFQLSiPi/8ZoI2MNpshIdTmKalSa7GyWiRhzv6BLY3taDVYgTjqccvoccS981afVF47u7zvD4cJfcM58+xBuMeLZ67q4Mp2KJ7Y0eGEPWYpaLQ0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRe33FZO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nttVdFuCkve3i0b+b/osjK4DWThq15LKDlR6FPb0ElxYWHOFkZfQ0OXAU91TjsezQ3ZJjkfob4n3kJ20dptVDXP3dBGLGLa7NXzanHNtOL0TXDN4bru96ZGUjnA394n69aqlEogCki9P/ufg7vzNpqMM46CJUtTOI92quCn/haw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQiUmTY2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRe33FZO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0392C2BCB6;
-	Fri, 24 Apr 2026 13:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQiUmTY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB7FC19425;
+	Fri, 24 Apr 2026 13:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037780;
-	bh=dxQl+qFx2CD1WoEMG3JjHAIYS7dyLOv+cF0HLQv6zfQ=;
+	s=korg; t=1777037782;
+	bh=VkrAaVG2GtiZ7XscxBe32fLf6co/mjLlLK9FKLWS+aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RRe33FZO3gQd9/l2XZRBroKl+/vkHb0mmQLQ0ibAb+ZpaZFK/vF/Na/ch7xjRW0MN
-	 rR0ncBfC1VhYbnJp+7CBeXZNXWXHQ/sgYLgYN1Eau+I9vuMDG/4sbPk1ur91n+YRie
-	 n0E3GL56tpXQCfHSwYmjo5RlZw74wExNafwVYim8=
+	b=pQiUmTY2E+SK+CZ31VtSPFjoDk8fcm4KP/+8Zu5X9O4lkDEGRAKduA+KVTxJCeEY0
+	 K60mR138RdEqTIX90nQYQkPBbeG/+HVphAF3O3UmlNSz8vFMeQ0OHsFl4bvyQtFFsf
+	 mDRU/Qd/3MlpDtbXZLe55JjPtVrw20KlpRYmyVsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
+	Junxi Qian <qjx1298677004@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/166] xfrm_user: fix info leak in build_mapping()
-Date: Fri, 24 Apr 2026 15:29:23 +0200
-Message-ID: <20260424132543.079536627@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 067/166] nfc: llcp: add missing return after LLCP_CLOSED checks
+Date: Fri, 24 Apr 2026 15:29:41 +0200
+Message-ID: <20260424132546.807072682@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -56,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Junxi Qian <qjx1298677004@gmail.com>
 
-[ Upstream commit 1beb76b2053b68c491b78370794b8ff63c8f8c02 ]
+commit 2b5dd4632966c39da6ba74dbc8689b309065e82c upstream.
 
-struct xfrm_usersa_id has a one-byte padding hole after the proto
-field, which ends up never getting set to zero before copying out to
-userspace.  Fix that up by zeroing out the whole structure before
-setting individual variables.
+In nfc_llcp_recv_hdlc() and nfc_llcp_recv_disc(), when the socket
+state is LLCP_CLOSED, the code correctly calls release_sock() and
+nfc_llcp_sock_put() but fails to return. Execution falls through to
+the remainder of the function, which calls release_sock() and
+nfc_llcp_sock_put() again. This results in a double release_sock()
+and a refcount underflow via double nfc_llcp_sock_put(), leading to
+a use-after-free.
 
-Fixes: 3a2dfbe8acb1 ("xfrm: Notify changes in UDP encapsulation via netlink")
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>
-Assisted-by: gregkh_clanker_t1000
+Add the missing return statements after the LLCP_CLOSED branches
+in both functions to prevent the fall-through.
+
+Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260408081006.3723-1-qjx1298677004@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/nfc/llcp_core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 74bee718573db..fd6330984f881 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -3790,6 +3790,7 @@ static int build_mapping(struct sk_buff *skb, struct xfrm_state *x,
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -1089,6 +1089,7 @@ static void nfc_llcp_recv_hdlc(struct nf
+ 	if (sk->sk_state == LLCP_CLOSED) {
+ 		release_sock(sk);
+ 		nfc_llcp_sock_put(llcp_sock);
++		return;
+ 	}
  
- 	um = nlmsg_data(nlh);
+ 	/* Pass the payload upstream */
+@@ -1180,6 +1181,7 @@ static void nfc_llcp_recv_disc(struct nf
+ 	if (sk->sk_state == LLCP_CLOSED) {
+ 		release_sock(sk);
+ 		nfc_llcp_sock_put(llcp_sock);
++		return;
+ 	}
  
-+	memset(&um->id, 0, sizeof(um->id));
- 	memcpy(&um->id.daddr, &x->id.daddr, sizeof(um->id.daddr));
- 	um->id.spi = x->id.spi;
- 	um->id.family = x->props.family;
--- 
-2.53.0
-
+ 	if (sk->sk_state == LLCP_CONNECTED) {
 
 
