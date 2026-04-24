@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9273A3563D4;
-	Fri, 24 Apr 2026 13:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271F93290A5;
+	Fri, 24 Apr 2026 13:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037983; cv=none; b=cxmv1j+Vu5XK8lZlViKKHmY0m1MFk+9RkUJy8c4oFtVUnCDOgYKDJan10EVToUD0lHjVd4Fr+YLVMgGBBQFJiXijlFkvLIl1TLCDbFAx6qO+0iMUN8CK9GRWo5YEXlKnBpfR8ZchrxsDo/9HhDEVoQCToGOkSqz3lmkIYbLTyA8=
+	t=1777037986; cv=none; b=AO4O53ZsZJl3BW57dZNvBQeS5u/lfH59KAD+WEbsxQvyt5aKWoxX8GoIqndUzkrUqsCW1Dtu51GN/FPDmJl/Zg8iywjMZBhHOuAJIVz3AiJEWW9+RRkelTKaFQvH9LdphG8MU0f0XsM/K7DrLMJySYkcqNg/HEFUIFJpEp6p4RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037983; c=relaxed/simple;
-	bh=R4a5R6E8mEh4EK3KTagrYZ8cJOUsoRVo4beMRu7Jj4k=;
+	s=arc-20240116; t=1777037986; c=relaxed/simple;
+	bh=alehJjcUMwfPDhEen7LCqXcZoFlkOfsz6EbvTf/6r5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEsUIJNK/nBqqFLFKL+PkKDzCWsM9Q1by9f5wwPT9+ioVYZKwRAUgstX2arvMwBXGbDEPjPshOFM5hve0T3sGylUpyzpMVn6OtM58AqFvfFiFFYeKRmaEllWvXOpQtZ3Nj2BexZsTGqkx68/RWyYwj6o1GWi6++zhgFArawDOKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVkyOqJb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VpCLow+M6gJ2ulsKDv3pTpHAmz9h5oAwQnTVFh0Ey05Npl2e380VQKFYTk2egCjydUS8H7dU+PCr25NFQBZzTOZnSUmUC0GxexIiD9l3TR72N0zRNKBgB/XPc0QdLVtd3WWlYouvRxQkJqfO9AM9+2KsriD0XLvwvokP33rHBnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tJ0AOEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVkyOqJb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28939C19425;
-	Fri, 24 Apr 2026 13:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tJ0AOEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B040FC19425;
+	Fri, 24 Apr 2026 13:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037983;
-	bh=R4a5R6E8mEh4EK3KTagrYZ8cJOUsoRVo4beMRu7Jj4k=;
+	s=korg; t=1777037986;
+	bh=alehJjcUMwfPDhEen7LCqXcZoFlkOfsz6EbvTf/6r5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVkyOqJbFTZwjrXnMZPwpaIMnUWuFnbtQW3EmqWw7FSty0IRddDUb+rM6qf9/0tzA
-	 62AhOg9bSXDmKP49jkT6vxie29lLsw80JithpAVWgsSk392ZcM+AdKtoaBUPHAJc3r
-	 C2Bkdsp9ceA0+X+fWgcBr+Kw/0e8gd4pg0DlCQZg=
+	b=1tJ0AOEMgfiIRqqpTR/qbz1kEUMQwVMGG0XgWCGFr/Ir0PVlxSeJpjvDc3iOliOxN
+	 N9HyPk6CIloJ9pa7CqClF7R5MjTg0kg2t56KlOmj1KI8Nl8IT7z4ks3P7zUYvg+yo9
+	 xEluumr2e0SRn3oIXKwts1SCEZ732pHt+BTLZ+14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 145/166] fs/ntfs3: validate rec->used in journal-replay file record check
-Date: Fri, 24 Apr 2026 15:30:59 +0200
-Message-ID: <20260424132603.423782030@linuxfoundation.org>
+	stable@kernel.org,
+	syzbot+cf7946ab25b21abc4b66@syzkaller.appspotmail.com,
+	Eric Biggers <ebiggers@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 146/166] f2fs: fix to avoid memory leak in f2fs_rename()
+Date: Fri, 24 Apr 2026 15:31:00 +0200
+Message-ID: <20260424132603.637329005@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -50,78 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Chao Yu <chao@kernel.org>
 
-commit 0ca0485e4b2e837ebb6cbd4f2451aba665a03e4b upstream.
+commit 3cf11e6f36c170050c12171dd6fd3142711478fc upstream.
 
-check_file_record() validates rec->total against the record size but
-never validates rec->used.  The do_action() journal-replay handlers read
-rec->used from disk and use it to compute memmove lengths:
+syzbot reported a f2fs bug as below:
 
-  DeleteAttribute:    memmove(attr, ..., used - asize - roff)
-  CreateAttribute:    memmove(..., attr, used - roff)
-  change_attr_size:   memmove(..., used - PtrOffset(rec, next))
+BUG: memory leak
+unreferenced object 0xffff888127f70830 (size 16):
+  comm "syz.0.23", pid 6144, jiffies 4294943712
+  hex dump (first 16 bytes):
+    3c af 57 72 5b e6 8f ad 6e 8e fd 33 42 39 03 ff  <.Wr[...n..3B9..
+  backtrace (crc 925f8a80):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+    slab_post_alloc_hook mm/slub.c:4520 [inline]
+    slab_alloc_node mm/slub.c:4844 [inline]
+    __do_kmalloc_node mm/slub.c:5237 [inline]
+    __kmalloc_noprof+0x3bd/0x560 mm/slub.c:5250
+    kmalloc_noprof include/linux/slab.h:954 [inline]
+    fscrypt_setup_filename+0x15e/0x3b0 fs/crypto/fname.c:364
+    f2fs_setup_filename+0x52/0xb0 fs/f2fs/dir.c:143
+    f2fs_rename+0x159/0xca0 fs/f2fs/namei.c:961
+    f2fs_rename2+0xd5/0xf20 fs/f2fs/namei.c:1308
+    vfs_rename+0x7ff/0x1250 fs/namei.c:6026
+    filename_renameat2+0x4f4/0x660 fs/namei.c:6144
+    __do_sys_renameat2 fs/namei.c:6173 [inline]
+    __se_sys_renameat2 fs/namei.c:6168 [inline]
+    __x64_sys_renameat2+0x59/0x80 fs/namei.c:6168
+    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+    do_syscall_64+0xe2/0xf80 arch/x86/entry/syscall_64.c:94
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-When rec->used is smaller than the offset of a validated attribute, or
-larger than the record size, these subtractions can underflow allowing
-us to copy huge amounts of memory in to a 4kb buffer, generally
-considered a bad idea overall.
+The root cause is in commit 40b2d55e0452 ("f2fs: fix to create selinux
+label during whiteout initialization"), we added a call to
+f2fs_setup_filename() without a matching call to f2fs_free_filename(),
+fix it.
 
-This requires a corrupted filesystem, which isn't a threat model the
-kernel really needs to worry about, but checking for such an obvious
-out-of-bounds value is good to keep things robust, especially on journal
-replay
-
-Fix this up by bounding rec->used correctly.
-
-This is much like commit b2bc7c44ed17 ("fs/ntfs3: Fix slab-out-of-bounds
-read in DeleteIndexEntryRoot") which checked different values in this
-same switch statement.
-
-Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Cc: stable <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 40b2d55e0452 ("f2fs: fix to create selinux label during whiteout initialization")
+Cc: stable@kernel.org
+Reported-by: syzbot+cf7946ab25b21abc4b66@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/69a75fe1.a70a0220.b118c.0014.GAE@google.com
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/f2fs/namei.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2789,13 +2789,14 @@ static inline bool check_file_record(con
- 	u16 fn = le16_to_cpu(rec->rhdr.fix_num);
- 	u16 ao = le16_to_cpu(rec->attr_off);
- 	u32 rs = sbi->record_size;
-+	u32 used = le32_to_cpu(rec->used);
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -940,6 +940,7 @@ static int f2fs_rename(struct mnt_idmap
+ 			return err;
  
- 	/* Check the file record header for consistency. */
- 	if (rec->rhdr.sign != NTFS_FILE_SIGNATURE ||
- 	    fo > (SECTOR_SIZE - ((rs >> SECTOR_SHIFT) + 1) * sizeof(short)) ||
- 	    (fn - 1) * SECTOR_SIZE != rs || ao < MFTRECORD_FIXUP_OFFSET_1 ||
- 	    ao > sbi->record_size - SIZEOF_RESIDENT || !is_rec_inuse(rec) ||
--	    le32_to_cpu(rec->total) != rs) {
-+	    le32_to_cpu(rec->total) != rs || used > rs || used < ao) {
- 		return false;
+ 		err = f2fs_create_whiteout(idmap, old_dir, &whiteout, &fname);
++		f2fs_free_filename(&fname);
+ 		if (err)
+ 			return err;
  	}
- 
-@@ -2807,6 +2808,15 @@ static inline bool check_file_record(con
- 		return false;
- 	}
- 
-+	/*
-+	 * The do_action() handlers compute memmove lengths as
-+	 * "rec->used - <offset of validated attr>", which underflows when
-+	 * rec->used is smaller than the attribute walk reached.  At this
-+	 * point attr is the ATTR_END marker; rec->used must cover it.
-+	 */
-+	if (used < PtrOffset(rec, attr) + sizeof(attr->type))
-+		return false;
-+
- 	return true;
- }
- 
 
 
