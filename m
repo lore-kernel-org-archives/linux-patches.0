@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C5023E356;
-	Fri, 24 Apr 2026 13:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A5C179A3;
+	Fri, 24 Apr 2026 13:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037752; cv=none; b=BDmfhhu4s32WLhDuzV/mmGpnTKGTnRbRA/8c70mbwG03T7zd/aMGjdJ6Rt1g6O4SOVsvo9Hr4pk3WzHA1yZm7JS506CodBLtcCOkVBF91Dt9kuC5vXQAta8HEgWxVUeCux3bsivZc4ElPmleoczL21AxwO1SLX1RAs8Z8OJ0F8c=
+	t=1777037754; cv=none; b=WvjfRf3sLA6b9gBxGcCtO6BzHfiDE4vAWBcMxnk3dyhs4CJnlJyBOuMB0o4rxn/6LazNvbsl7HoGRJq+F+sbBEMWlkJfo/mDgHd+Y/x0cn+lq04A1Qi8riqdq/Z3zhkFnCqoHCoFNRFu0JPRLXlswCfsj15xm0Ib79KaL7JAnxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037752; c=relaxed/simple;
-	bh=UzuUsf7cdqZYc4R16imisgCz3ml362Z9NVnoiVnD0O0=;
+	s=arc-20240116; t=1777037754; c=relaxed/simple;
+	bh=BFO4rO7FJGxVrNlyv2OxH3uFI7SYjTHcouasZ18o008=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AYfh1YlvYJ9qt6mwNfKnPXiNXxmMzMKAl1Ti9wUWGi3yx/5ke2o93Gv4dPfVfkRDSQrcCbu8IX+ALG0ICq87Q+BfcPDdsLMRtk1mcPi9gWhi78R5VPcpw+BLbBjmzwPRb7Aw+UuiTWNBqY78Guiih3KQEDHC9mzCocYAvIZV4GA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeSseSQy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fVWU3nsQQq62xdVWH7tj6XTAqNwDA3lhWxMuBdfE8bXczvgHqAFZyKp2I7LwM+uyM3SP4SOMU/eI7eW3kM+Ggj4JZ9Z3feW5b/S4P88Xfa7KFV7brmSCddvuzYS7cLVduNrzJxCaBcWTlWYAXSQv8TDATQMaQ/o5ucpU7mH4198=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFuVMcd8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeSseSQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673D8C19425;
-	Fri, 24 Apr 2026 13:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFuVMcd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30B5C19425;
+	Fri, 24 Apr 2026 13:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037751;
-	bh=UzuUsf7cdqZYc4R16imisgCz3ml362Z9NVnoiVnD0O0=;
+	s=korg; t=1777037754;
+	bh=BFO4rO7FJGxVrNlyv2OxH3uFI7SYjTHcouasZ18o008=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeSseSQyWvZ68aM5DoPby9yoHgv0rhJvlUvnwuK+Xz5EWDX8FOTsccZMNyuj1jtKB
-	 GEn4gMdhlUJg9Me9V49gsWlZ6fK4RaCrXkR2yipW/mss9ze1eBJXuWo0A6SJeiuJ3c
-	 P27BjRavxy6hBFLtTzeGSf1IiL+XyKnV6IoQeJh4=
+	b=BFuVMcd80RzwsnEU2qO1Pd9a6a/h2yqq4s+hLhpjjppUrA7kmmPZW8S2cLPi+P8L5
+	 GyXQ4fU2o3/5/o0hfn3MXYcaxH+SdI6IZk8H2mniIYspOwEJj5QTds81kMY1g6CQAA
+	 g5DRVJZwonbghLaTxklQB/KjujrxpJaFJ1Aplu2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Florian Westphal <fw@strlen.de>,
+	Alexander Koskovich <akoskovich@pm.me>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/166] xfrm: Wait for RCU readers during policy netns exit
-Date: Fri, 24 Apr 2026 15:29:22 +0200
-Message-ID: <20260424132542.886327661@linuxfoundation.org>
+Subject: [PATCH 6.6 057/166] net: ipa: fix GENERIC_CMD register field masks for IPA v5.0+
+Date: Fri, 24 Apr 2026 15:29:31 +0200
+Message-ID: <20260424132544.740433345@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,41 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Klassert <steffen.klassert@secunet.com>
+From: Alexander Koskovich <akoskovich@pm.me>
 
-[ Upstream commit 069daad4f2ae9c5c108131995529d5f02392c446 ]
+[ Upstream commit 9709b56d908acc120fe8b4ae250b3c9d749ea832 ]
 
-xfrm_policy_fini() frees the policy_bydst hash tables after flushing the
-policy work items and deleting all policies, but it does not wait for
-concurrent RCU readers to leave their read-side critical sections first.
+Fix the field masks to match the hardware layout documented in
+downstream GSI (GSI_V3_0_EE_n_GSI_EE_GENERIC_CMD_*).
 
-The policy_bydst tables are published via rcu_assign_pointer() and are
-looked up through rcu_dereference_check(), so netns teardown must also
-wait for an RCU grace period before freeing the table memory.
+Notably this fixes a WARN I was seeing when I tried to send "stop"
+to the MPSS remoteproc while IPA was up.
 
-Fix this by adding synchronize_rcu() before freeing the policy hash tables.
-
-Fixes: e1e551bc5630 ("xfrm: policy: prepare policy_bydst hash for rcu lookups")
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
+Fixes: faf0678ec8a0 ("net: ipa: add IPA v5.0 GSI register definitions")
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260403-milos-ipa-v1-1-01e9e4e03d3e@fairphone.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ipa/reg/gsi_reg-v5.0.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 45851f822ec4a..82854aa258ea6 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -4215,6 +4215,8 @@ static void xfrm_policy_fini(struct net *net)
- #endif
- 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_MAIN, false);
+diff --git a/drivers/net/ipa/reg/gsi_reg-v5.0.c b/drivers/net/ipa/reg/gsi_reg-v5.0.c
+index 145eb0bd096d6..eac3913297c27 100644
+--- a/drivers/net/ipa/reg/gsi_reg-v5.0.c
++++ b/drivers/net/ipa/reg/gsi_reg-v5.0.c
+@@ -154,9 +154,10 @@ REG_FIELDS(EV_CH_CMD, ev_ch_cmd, 0x00025010 + 0x12000 * GSI_EE_AP);
  
-+	synchronize_rcu();
-+
- 	WARN_ON(!list_empty(&net->xfrm.policy_all));
+ static const u32 reg_generic_cmd_fmask[] = {
+ 	[GENERIC_OPCODE]				= GENMASK(4, 0),
+-	[GENERIC_CHID]					= GENMASK(9, 5),
+-	[GENERIC_EE]					= GENMASK(13, 10),
+-						/* Bits 14-31 reserved */
++	[GENERIC_CHID]					= GENMASK(12, 5),
++	[GENERIC_EE]					= GENMASK(16, 13),
++						/* Bits 17-23 reserved */
++	[GENERIC_PARAMS]				= GENMASK(31, 24),
+ };
  
- 	for (dir = 0; dir < XFRM_POLICY_MAX; dir++) {
+ REG_FIELDS(GENERIC_CMD, generic_cmd, 0x00025018 + 0x12000 * GSI_EE_AP);
 -- 
 2.53.0
 
