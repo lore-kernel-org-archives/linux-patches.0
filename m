@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAA6179A3;
-	Fri, 24 Apr 2026 13:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F7F179A3;
+	Fri, 24 Apr 2026 13:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037711; cv=none; b=CYmPHkWDXqb9qDnwQfep44S8yWTUyceOgSgvCxPtmREfDXxSAGnQ8jhdcazJF90QOpP3UxZMMvh9Xy3L2oCzgc5qi7IkUvc2X0EC6GY64qKd89Omamyh3npsOivEY7rvQZxpPDSntj2Wjt8ikDfB8p9PEeeY1Ik7WU30Y4GVvTk=
+	t=1777037714; cv=none; b=Xq4iTgXfKcuxUxpBLFhiNBmUZaFsnDuZwwXxNKdiWms58BS8JhUgK8nBNUpmgIs0B0xVNEcR/UMCKVnGCHmKrrNJG+Hei4LuwLJKsjUSh+rp6SjHGZUSg/Ss1C3+SZy1mB6jPUPBQy7cN39uTlxw16rQVP5bCJIJSX7665B+TIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037711; c=relaxed/simple;
-	bh=dzpwnaus4zHQzUriy2Hb6dZi0uH6SfrdUqi8M3ljj1g=;
+	s=arc-20240116; t=1777037714; c=relaxed/simple;
+	bh=G3hPNXMau6vNdh2wYiAv3fQnXiFf9DJUhK5cu3Ce0v4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=peRDnNkg24hVeaXUFmEwx9J0IHHqfJgdGzZKayWESJix5DtqrGMJHfglaRP+es9JFvbBu6Exll/rJt4f7XNhYXymyd1fQBSMbOCqKIntJdXZ17/Riw9MJo8eYS/TP1HwXU61gdukkV3XV/lbPcTPjFceHv2QYK/0yYef+bPxEJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJHYJgyi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBYIALjV9R4qQnNd+mY5+v+x7M89HkMnmLZVQHtA+TZ2JsFsf4zOil99iTwABF02rfHno9TW7ogA7SpokaanB3qqwlkUsA4gdq0vwwMurl7gz+MTqV7sETkmVKFbukUdJMh7VGvy/C3WufmnI6AoamPXwG0lUjNT2seH2Bf7AXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BiH/NMoC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJHYJgyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C8CC19425;
-	Fri, 24 Apr 2026 13:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BiH/NMoC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A061AC19425;
+	Fri, 24 Apr 2026 13:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037711;
-	bh=dzpwnaus4zHQzUriy2Hb6dZi0uH6SfrdUqi8M3ljj1g=;
+	s=korg; t=1777037714;
+	bh=G3hPNXMau6vNdh2wYiAv3fQnXiFf9DJUhK5cu3Ce0v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJHYJgyiVGQ9DXb8uFGm4QaaMzdzTbVRymql0SBUO0Z0+k9SLCxUJqNcHMn2HDh+h
-	 2DAlHB9p7r6cj3qAVhst2AOXkXGVMhG0iGFKEAkUXfI/xX+iwCXxNe9+8Ul4i02Zhd
-	 Avir/s9rnX5NUX5UjEHblp7DeImmNMfTm4YH1wSE=
+	b=BiH/NMoCl4GBacbUVGIVdiAiWBCHZr3EMQ/hFM4WiJ4vxBLB+yo59NNHIJObNKgto
+	 lWDD9uzH2J/BkiMaSIrU4p5Fv6JzkkwukYqnzgxUemYcDh4Kjm9oiy1J9eVF7TYa2L
+	 DeI5otKu4WbBsJeLHLo4Krw0SCn1oMD3KFUDx1B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/166] dt-bindings: net: Fix Tegra234 MGBE PTP clock
-Date: Fri, 24 Apr 2026 15:29:14 +0200
-Message-ID: <20260424132541.223703664@linuxfoundation.org>
+Subject: [PATCH 6.6 014/166] wifi: wl1251: validate packet IDs before indexing tx_frames
+Date: Fri, 24 Apr 2026 15:28:48 +0200
+Message-ID: <20260424132535.863271591@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -52,57 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit fb22b1fc5bca3c0aad95388933497ceb30f1fb26 ]
+[ Upstream commit 0fd56fad9c56356e7fa7a7c52e7ecbf807a44eb0 ]
 
-The PTP clock for the Tegra234 MGBE device is incorrectly named
-'ptp-ref' and should be 'ptp_ref'. This is causing the following
-warning to be observed on Tegra234 platforms that use this device:
+wl1251_tx_packet_cb() uses the firmware completion ID directly to index
+the fixed 16-entry wl->tx_frames[] array. The ID is a raw u8 from the
+completion block, and the callback does not currently verify that it
+fits the array before dereferencing it.
 
- ERR KERN tegra-mgbe 6800000.ethernet eth0: Invalid PTP clock rate
- WARNING KERN tegra-mgbe 6800000.ethernet eth0: PTP init failed
+Reject completion IDs that fall outside wl->tx_frames[] and keep the
+existing NULL check in the same guard. This keeps the fix local to the
+trust boundary and avoids touching the rest of the completion flow.
 
-Although this constitutes an ABI breakage in the binding for this
-device, PTP support has clearly never worked and so fix this now
-so we can correct the device-tree for this device. Note that the
-MGBE driver still supports the legacy 'ptp-ref' clock name and so
-older/existing device-trees will still work, but given that this
-is not the correct name, there is no point to advertise this in the
-binding.
-
-Fixes: 189c2e5c7669 ("dt-bindings: net: Add Tegra234 MGBE")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260401102941.17466-3-jonathanh@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260323080845.40033-1-pengpeng@iscas.ac.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/net/nvidia,tegra234-mgbe.yaml         | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ti/wl1251/tx.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/net/nvidia,tegra234-mgbe.yaml b/Documentation/devicetree/bindings/net/nvidia,tegra234-mgbe.yaml
-index 2bd3efff2485e..215f14d1897d2 100644
---- a/Documentation/devicetree/bindings/net/nvidia,tegra234-mgbe.yaml
-+++ b/Documentation/devicetree/bindings/net/nvidia,tegra234-mgbe.yaml
-@@ -42,7 +42,7 @@ properties:
-       - const: mgbe
-       - const: mac
-       - const: mac-divider
--      - const: ptp-ref
-+      - const: ptp_ref
-       - const: rx-input-m
-       - const: rx-input
-       - const: tx
-@@ -133,7 +133,7 @@ examples:
-                  <&bpmp TEGRA234_CLK_MGBE0_RX_PCS_M>,
-                  <&bpmp TEGRA234_CLK_MGBE0_RX_PCS>,
-                  <&bpmp TEGRA234_CLK_MGBE0_TX_PCS>;
--        clock-names = "mgbe", "mac", "mac-divider", "ptp-ref", "rx-input-m",
-+        clock-names = "mgbe", "mac", "mac-divider", "ptp_ref", "rx-input-m",
-                       "rx-input", "tx", "eee-pcs", "rx-pcs-input", "rx-pcs-m",
-                       "rx-pcs", "tx-pcs";
-         resets = <&bpmp TEGRA234_RESET_MGBE0_MAC>,
+diff --git a/drivers/net/wireless/ti/wl1251/tx.c b/drivers/net/wireless/ti/wl1251/tx.c
+index 06dc74cc6cb52..2b316c78eefc9 100644
+--- a/drivers/net/wireless/ti/wl1251/tx.c
++++ b/drivers/net/wireless/ti/wl1251/tx.c
+@@ -402,12 +402,14 @@ static void wl1251_tx_packet_cb(struct wl1251 *wl,
+ 	int hdrlen;
+ 	u8 *frame;
+ 
+-	skb = wl->tx_frames[result->id];
+-	if (skb == NULL) {
+-		wl1251_error("SKB for packet %d is NULL", result->id);
++	if (unlikely(result->id >= ARRAY_SIZE(wl->tx_frames) ||
++		     wl->tx_frames[result->id] == NULL)) {
++		wl1251_error("invalid packet id %u", result->id);
+ 		return;
+ 	}
+ 
++	skb = wl->tx_frames[result->id];
++
+ 	info = IEEE80211_SKB_CB(skb);
+ 
+ 	if (!(info->flags & IEEE80211_TX_CTL_NO_ACK) &&
 -- 
 2.53.0
 
