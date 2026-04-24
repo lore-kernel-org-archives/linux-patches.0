@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9125419A288;
-	Fri, 24 Apr 2026 13:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2208F3290A5;
+	Fri, 24 Apr 2026 13:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038032; cv=none; b=lbKho3POCUt3bOLL3OAK4zZf0Pb6jY1+AkEG233Wgv32FZaXSxs4uqUhMJwlyCms/HUcRFb34Yi4Dpl6NNBK+izigbIEMMn/BvI59a8eClohZoUzRKXeAU2t9VS27txv+eshscDkR5/1Kux4cUoGIWDr2rNkP4FYqGghRr/NS8w=
+	t=1777038035; cv=none; b=dvtPq3fKKP1qeVHJa26S0OJsP9S1ed/9CiXtSudAgMBuRpSH0S4gBfTHBhNBfGSUdkwiqofsatcjiO7GGOaoIM0YO1VAaWabeOeC9fj2KTh13rP52WjNkhp3vUMS1crLeEYzSNWpNL4Aqleg17FibS47Yf2KPXk395jXXa/1coQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038032; c=relaxed/simple;
-	bh=YBhw0Xu6MQED94xu0Ejsc1Q6KpfE+ZrQf1ZUPSkJzo8=;
+	s=arc-20240116; t=1777038035; c=relaxed/simple;
+	bh=ndJsUsSwYirsRIkSg6jmyNl+aU4SoSI9NhQzmDo5GnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YV6yr3t+pyUavvQV7K/4jNWMPFFBJyZmQ2MXBRksdf26v68HayOmzw/tV3gNh7DXKnbWbg76vMZKJezt0nt7Ly+nTKmex7sqdhylTex3bWkX7LmA7W2hHmTMOxTeILgx29bA+dEVPmUGSRAylbLjzTk3i43RGI7zn+aM6awtvj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oT578Oxd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZzuG2QdIUwT/Gt9BcHif5kJdAArBxl3pSYhCdcmRDp7DfD3IyfHR1JkfzIPYK/VB+A2R0KsTzpm3Kr8OaawXyxSXqnZe6th+TuLuNQT+FbnW3AFvgGEcy4M3rODKFTkhp4g1gfZcSo697hz44i2rkcXQtxa+EZWYE6t34+APv/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzfDl73M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oT578Oxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE84C19425;
-	Fri, 24 Apr 2026 13:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzfDl73M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1AEC19425;
+	Fri, 24 Apr 2026 13:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038032;
-	bh=YBhw0Xu6MQED94xu0Ejsc1Q6KpfE+ZrQf1ZUPSkJzo8=;
+	s=korg; t=1777038035;
+	bh=ndJsUsSwYirsRIkSg6jmyNl+aU4SoSI9NhQzmDo5GnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oT578OxdQ+x2846RitZCYCTbTo2T6M/N7z1h9AdrjpFXaUJbVD8cl7Ys8bVR3/wpq
-	 aHdCdTR+zXOzpv674M/FByzv382SNLnY8mP6wrcXdUkySoBfgE6HbcqZrjYPUTA3+/
-	 1H5mM7AWk9B86vIVStUj4ZxTz/BWtfEzSNYvDYXQ=
+	b=HzfDl73M3PSFf65Qz7efr2ycbDgMNC/cZudjwEpIZ+sX+dsRzrMYdJhZBgtHhIjtb
+	 lluJKxu0XOG5fE7XA4JN1921Pc363PrNQ8pHfyzGPFNIrZNdNmDcNVN02VU7UkfRwP
+	 oNKluT4+glaAJbVdo5QAn8eENHbggbxQZKyalRdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anderson Nascimento <anderson@allelesecurity.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 165/166] rxrpc: Fix missing validation of ticket length in non-XDR key preparsing
-Date: Fri, 24 Apr 2026 15:31:19 +0200
-Message-ID: <20260424132607.605269735@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Li Nan <linan122@huawei.com>,
+	Ian Dall <ian@beware.dropbear.id.au>
+Subject: [PATCH 6.6 166/166] md/raid1: fix data lost for writemostly rdev
+Date: Fri, 24 Apr 2026 15:31:20 +0200
+Message-ID: <20260424132607.802962503@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -56,56 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anderson Nascimento <anderson@allelesecurity.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit ac33733b10b484d666f97688561670afd5861383 upstream.
+commit 93dec51e716db88f32d770dc9ab268964fff320b upstream.
 
-In rxrpc_preparse(), there are two paths for parsing key payloads: the
-XDR path (for large payloads) and the non-XDR path (for payloads <= 28
-bytes). While the XDR path (rxrpc_preparse_xdr_rxkad()) correctly
-validates the ticket length against AFSTOKEN_RK_TIX_MAX, the non-XDR
-path fails to do so.
+If writemostly is enabled, alloc_behind_master_bio() will allocate a new
+bio for rdev, with bi_opf set to 0. Later, raid1_write_request() will
+clone from this bio, hence bi_opf is still 0 for the cloned bio. Submit
+this cloned bio will end up to be read, causing write data lost.
 
-This allows an unprivileged user to provide a very large ticket length.
-When this key is later read via rxrpc_read(), the total
-token size (toksize) calculation results in a value that exceeds
-AFSTOKEN_LENGTH_MAX, triggering a WARN_ON().
+Fix this problem by inheriting bi_opf from original bio for
+behind_mast_bio.
 
-[ 2001.302904] WARNING: CPU: 2 PID: 2108 at net/rxrpc/key.c:778 rxrpc_read+0x109/0x5c0 [rxrpc]
-
-Fix this by adding a check in the non-XDR parsing path of rxrpc_preparse()
-to ensure the ticket length does not exceed AFSTOKEN_RK_TIX_MAX,
-bringing it into parity with the XDR parsing logic.
-
-Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
-Fixes: 84924aac08a4 ("rxrpc: Fix checker warning")
-Reported-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: Anderson Nascimento <anderson@allelesecurity.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-7-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e879a0d9cb08 ("md/raid1,raid10: don't ignore IO flags")
+Reported-and-tested-by: Ian Dall <ian@beware.dropbear.id.au>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220507
+Link: https://lore.kernel.org/linux-raid/20250903014140.3690499-1-yukuai1@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/key.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/md/raid1.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -340,6 +340,10 @@ static int rxrpc_preparse(struct key_pre
- 	if (v1->security_index != RXRPC_SECURITY_RXKAD)
- 		goto error;
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -1119,7 +1119,7 @@ static void alloc_behind_master_bio(stru
+ 	int i = 0;
+ 	struct bio *behind_bio = NULL;
  
-+	ret = -EKEYREJECTED;
-+	if (v1->ticket_length > AFSTOKEN_RK_TIX_MAX)
-+		goto error;
-+
- 	plen = sizeof(*token->kad) + v1->ticket_length;
- 	prep->quotalen += plen + sizeof(*token);
- 
+-	behind_bio = bio_alloc_bioset(NULL, vcnt, 0, GFP_NOIO,
++	behind_bio = bio_alloc_bioset(NULL, vcnt, bio->bi_opf, GFP_NOIO,
+ 				      &r1_bio->mddev->bio_set);
+ 	if (!behind_bio)
+ 		return;
 
 
