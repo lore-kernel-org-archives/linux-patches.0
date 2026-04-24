@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D522238837E;
-	Fri, 24 Apr 2026 13:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B65C38837E;
+	Fri, 24 Apr 2026 13:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037631; cv=none; b=mbAhngWGhDCBoYiIS6A0YNDqUD2dwjb+FvEnZ6Ei87i3mpf3yNmwZX2usA72I5xlo26tJfB2lf6Mg1MPr8+3cAQj3AoiRkbdVw559Uz66ZkWrtetWJGIDfBTaF90jtw9urOk4BG+b77YtUGs+xzO1uUctp8TVRteF3g9uKr7+O4=
+	t=1777037634; cv=none; b=i3oTQhdCWSgf1mgSg8bXOu97wPawez0yLnrW7ShXFuXYvrRll4GuIK6KXgRWwzv86ri3mAat65NLXczaFCsWFMdio6pqHwXtdNA5NjMK4NT36PMUOP7MExmT9VrlYoPpc1ymmYISn3WmsUZY+RYh/RE612EPfzCZEBoUClYEDFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037631; c=relaxed/simple;
-	bh=WhRLOHwOUJRdCzA4xAw4y5ZRFo+tlTNQrJkQleCQpsM=;
+	s=arc-20240116; t=1777037634; c=relaxed/simple;
+	bh=gCIvdFhD5YzdQ4FNy2Qijg/SUiySjV2vKc+0ORQb8e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNgLSkKrgyVUPxQ0DmOnEsP7+s+3fisHQonZye0TzWVkmmqsA6Yuw/tvWc6KkMdmat2gMiIQgQneIYQGrwfPzopxzAx113i77zNtF2JNb3WhBfhfv06DPF5iVmJ/zZomeN/R8pTUKxj3bH8X4vLdU/udvFUemrS7sHgAqCUvQ/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4SUEe13; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZu84F6diM9n8jvJO8nasipruHbMlPV2JU5WsAxDEUgrWo5Vycgb3AEar6nigMvxMdGyh/G83AhKVnBZ0hOIjTBobmc1FWrwNJLpouOfSkJoawUDSz9KZHVIQbuBUBd2fmBZMsh7fCQtOgdHktwuqnOqDbB8G8bWAl+BeAtinxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6AaUoP3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4SUEe13"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3551BC19425;
-	Fri, 24 Apr 2026 13:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6AaUoP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C432CC19425;
+	Fri, 24 Apr 2026 13:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037631;
-	bh=WhRLOHwOUJRdCzA4xAw4y5ZRFo+tlTNQrJkQleCQpsM=;
+	s=korg; t=1777037634;
+	bh=gCIvdFhD5YzdQ4FNy2Qijg/SUiySjV2vKc+0ORQb8e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t4SUEe13aUv2dpbB39t2EaP4IyKrXsPbKsMJS65vhxLgCMQ/mIH6IfCG9/PZIEMer
-	 2ZTgrSa1+QiPKbcgL4LaFHaCjATEOSK4N4Xil9jT2XuPcIcasxggfrsPAPHPDBXwzb
-	 aKykbqYpbpezmHMkzyC5iH5T99whwKuPZiLkHIoo=
+	b=d6AaUoP3//uGWVkJ+bHpyGrK8fPd4n9oqy+6mn77mh8aRNyiKxdc8VGxh++Y3UIOy
+	 XP9ackXxBymrzLjD7NasflztETRty8rAvDh2+KNqqgPZ7+xmqGjlkPlsGwk9Qhb3d5
+	 81rw9HZrr9AAmVCPaz75/4nZk3rDYtlkXP44WQ9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Goldwyn Rodrigues <rgoldwyn@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Vee Satayamas <vsatayamas@gmail.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/166] btrfs: tracepoints: get correct superblock from dentry in event btrfs_sync_file()
-Date: Fri, 24 Apr 2026 15:28:44 +0200
-Message-ID: <20260424132535.049328709@linuxfoundation.org>
+Subject: [PATCH 6.6 002/166] ASoC: amd: yc: Add DMI quirk for ASUS EXPERTBOOK BM1403CDA
+Date: Fri, 24 Apr 2026 15:28:36 +0200
+Message-ID: <20260424132533.297962517@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -52,47 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Goldwyn Rodrigues <rgoldwyn@suse.de>
+From: Vee Satayamas <vsatayamas@gmail.com>
 
-[ Upstream commit a85b46db143fda5869e7d8df8f258ccef5fa1719 ]
+[ Upstream commit f200b2f9a810c440c6750b56fc647b73337749a1 ]
 
-If overlay is used on top of btrfs, dentry->d_sb translates to overlay's
-super block and fsid assignment will lead to a crash.
+Add a DMI quirk for the Asus Expertbook BM1403CDA to resolve the issue of the
+internal microphone not being detected.
 
-Use file_inode(file)->i_sb to always get btrfs_sb.
-
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221236
+Signed-off-by: Vee Satayamas <vsatayamas@gmail.com>
+Reviewed-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260315142511.66029-2-vsatayamas@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/btrfs.h | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
-index eb762cc7bec53..2364c68df76c4 100644
---- a/include/trace/events/btrfs.h
-+++ b/include/trace/events/btrfs.h
-@@ -789,12 +789,15 @@ TRACE_EVENT(btrfs_sync_file,
- 	),
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index ab75349d1063d..8a666989a8f3d 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -710,6 +710,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "PM1503CDA"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "BM1403CDA"),
++		}
++	},
+ 	{}
+ };
  
- 	TP_fast_assign(
--		const struct dentry *dentry = file->f_path.dentry;
--		const struct inode *inode = d_inode(dentry);
-+		struct dentry *dentry = file_dentry(file);
-+		struct inode *inode = file_inode(file);
-+		struct dentry *parent = dget_parent(dentry);
-+		struct inode *parent_inode = d_inode(parent);
- 
--		TP_fast_assign_fsid(btrfs_sb(file->f_path.dentry->d_sb));
-+		dput(parent);
-+		TP_fast_assign_fsid(btrfs_sb(inode->i_sb));
- 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
--		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
-+		__entry->parent		= btrfs_ino(BTRFS_I(parent_inode));
- 		__entry->datasync	= datasync;
- 		__entry->root_objectid	=
- 				 BTRFS_I(inode)->root->root_key.objectid;
 -- 
 2.53.0
 
