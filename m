@@ -1,40 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9F53537DF;
-	Fri, 24 Apr 2026 13:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4093D5236;
+	Fri, 24 Apr 2026 13:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038202; cv=none; b=DZYHAswyVV/1MAOsosKNvHmPYGlU2/cHl1+jALdH2L5oLMBkV3enA2l3ye9pMDxaccisGRyJAcTYUWa2lPc98/QeAubska36mtN8XXPwXcB6mCkgAEgpOnaGMXHw0eb+4PYmANtOYXn/Fj3gUBy/RHZWnecxrIH+QLu8N3vcWfc=
+	t=1777038205; cv=none; b=nzQzR3epr9wuEwsPKqeeXD6Q8psmngtLKpGG81D3yLKRj80hMY36aA173wn+53zqSjizrDDK2TAtRe7aB2q/1/4UrSQpQk4R7tyiiSXsif3lgqIG736MmTpw5nPTtqjn0kGulm3qTPEPeyQ9tq6IhqoHhCGYEKJBo6RJYekOOz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038202; c=relaxed/simple;
-	bh=cgSVu78WW5hVXtuMsoj9/caHwPgAbcdvQc22um+ywEM=;
+	s=arc-20240116; t=1777038205; c=relaxed/simple;
+	bh=JqWf3n5DOkjUppmwa6nB5QjUHYWR1c6cInaOfcLnG1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViKY0V7zifuSpW/4Ox3IDCAtBpv4kjo9vddveE5K1t68mp3OqzX1RUINfF5PnXHlksfSfFh/rBF7Pbr7iC6MarVLtZ4KYqCBFH6orSs966oKUvtneAUNs9IuwRxV4MxJXukk4KOFTD1a8m5Yc/VLl09ONOmlWJxQc+q4/WYM69A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/yuoEWy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5e0hTuts5batsEe/sMBGdHTYmGCBYb6NqaZzinMD+iLoieCo4zr5N3N1vaapxzOsSEN7gZz+orAiFX+eKoYtGm+sb/3WvUnPiGpARrDvOaB9NDJp9IRD7ajlhv8CEmdmV8Z4dG+b5NjRtAefvCuaLNdoI/KiXORW9VtbK0jFi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXxwMkF6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/yuoEWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36606C19425;
-	Fri, 24 Apr 2026 13:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXxwMkF6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92080C19425;
+	Fri, 24 Apr 2026 13:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038202;
-	bh=cgSVu78WW5hVXtuMsoj9/caHwPgAbcdvQc22um+ywEM=;
+	s=korg; t=1777038205;
+	bh=JqWf3n5DOkjUppmwa6nB5QjUHYWR1c6cInaOfcLnG1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/yuoEWyDPYBZ3dCgxgwvrZRYgSZUh3W6u6R3/N8g84lNYIvgB7d+6yE3RtBkpdb7
-	 6Xn/V7qiF+zOuPdsAyr7XXCL4hGUTKcn04r7Nmywur0sr5A6Tv8S7/7AEMbqLAN7zk
-	 yYH6dsE3QDWfqaCMnW0gdxFfFahVFQhsG4LFF708=
+	b=tXxwMkF6tEgtPdi4xIA7jcM0IOe/aZpQVp3/SUi6P4pZl8Ep6rCH+ojK9gWK/eDco
+	 jD1dFhWeAlaIMzt3qTytuU+l6+/99lhydsQxuiCsnNhe6ihSBGcwpbEn+6x/8AvV65
+	 ESYLRbf3K5lSCqWYMbQ8tS2lcH+ppC6lBAg5j/Y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"linux-crypto@vger.kernel.org, kunit-dev@googlegroups.com, Eric Biggers" <ebiggers@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.18 22/55] lib/crypto: tests: Introduce CRYPTO_LIB_ENABLE_ALL_FOR_KUNIT
-Date: Fri, 24 Apr 2026 15:31:01 +0200
-Message-ID: <20260424132434.687431117@linuxfoundation.org>
+	Jianhui Zhou <jianhuizzzzz@gmail.com>,
+	syzbot+f525fd79634858f478e7@syzkaller.appspotmail.com,
+	SeongJae Park <sj@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Jane Chu <jane.chu@oracle.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	JonasZhou <JonasZhou@zhaoxin.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 01/35] mm/userfaultfd: fix hugetlb fault mutex hash calculation
+Date: Fri, 24 Apr 2026 15:31:08 +0200
+Message-ID: <20260424132411.766378415@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260424132430.006424517@linuxfoundation.org>
-References: <20260424132430.006424517@linuxfoundation.org>
+In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
+References: <20260424132411.427029259@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,85 +59,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Jianhui Zhou <jianhuizzzzz@gmail.com>
 
-commit ed1767442d919f57aaf83d69c33853da2644d902 upstream.
+[ Upstream commit 0217c7fb4de4a40cee667eb21901f3204effe5ac ]
 
-For kunit.py to run all the crypto library tests when passed the
---alltests option, tools/testing/kunit/configs/all_tests.config needs to
-enable options that satisfy the test dependencies.
+In mfill_atomic_hugetlb(), linear_page_index() is used to calculate the
+page index for hugetlb_fault_mutex_hash().  However, linear_page_index()
+returns the index in PAGE_SIZE units, while hugetlb_fault_mutex_hash()
+expects the index in huge page units.  This mismatch means that different
+addresses within the same huge page can produce different hash values,
+leading to the use of different mutexes for the same huge page.  This can
+cause races between faulting threads, which can corrupt the reservation
+map and trigger the BUG_ON in resv_map_release().
 
-This is the same as what lib/crypto/.kunitconfig already does.
-However, the strategy that lib/crypto/.kunitconfig currently uses to
-select all the hidden library options isn't going to scale up well when
-it needs to be repeated in two places.
+Fix this by introducing hugetlb_linear_page_index(), which returns the
+page index in huge page granularity, and using it in place of
+linear_page_index().
 
-Instead let's go ahead and introduce an option
-CRYPTO_LIB_ENABLE_ALL_FOR_KUNIT that depends on KUNIT and selects all
-the crypto library options that have corresponding KUnit tests.
-
-Update lib/crypto/.kunitconfig to use this option.
-
-Link: https://lore.kernel.org/r/20260314035927.51351-2-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20260310110526.335749-1-jianhuizzzzz@gmail.com
+Fixes: a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in filemap.c")
+Signed-off-by: Jianhui Zhou <jianhuizzzzz@gmail.com>
+Reported-by: syzbot+f525fd79634858f478e7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f525fd79634858f478e7
+Acked-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: JonasZhou <JonasZhou@zhaoxin.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ placed new `hugetlb_linear_page_index()` before `hstate_is_gigantic()` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/crypto/.kunitconfig  |   14 +-------------
- lib/crypto/tests/Kconfig |   18 ++++++++++++++++++
- 2 files changed, 19 insertions(+), 13 deletions(-)
+ include/linux/hugetlb.h | 17 +++++++++++++++++
+ mm/userfaultfd.c        |  2 +-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
---- a/lib/crypto/.kunitconfig
-+++ b/lib/crypto/.kunitconfig
-@@ -1,18 +1,6 @@
- CONFIG_KUNIT=y
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index 81b69287ab3b0..32c9bc8c750c5 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -783,6 +783,23 @@ static inline unsigned huge_page_shift(struct hstate *h)
+ 	return h->order + PAGE_SHIFT;
+ }
  
--# These kconfig options select all the CONFIG_CRYPTO_LIB_* symbols that have a
--# corresponding KUnit test.  Those symbols cannot be directly enabled here,
--# since they are hidden symbols.
--CONFIG_CRYPTO=y
--CONFIG_CRYPTO_MD5=y
--CONFIG_CRYPTO_SHA1=y
--CONFIG_CRYPTO_SHA256=y
--CONFIG_CRYPTO_SHA512=y
--CONFIG_INET=y
--CONFIG_IPV6=y
--CONFIG_NET=y
--CONFIG_NETDEVICES=y
--CONFIG_WIREGUARD=y
-+CONFIG_CRYPTO_LIB_ENABLE_ALL_FOR_KUNIT=y
- 
- CONFIG_CRYPTO_LIB_BLAKE2S_KUNIT_TEST=y
- CONFIG_CRYPTO_LIB_CURVE25519_KUNIT_TEST=y
---- a/lib/crypto/tests/Kconfig
-+++ b/lib/crypto/tests/Kconfig
-@@ -66,6 +66,24 @@ config CRYPTO_LIB_SHA512_KUNIT_TEST
- 	  KUnit tests for the SHA-384 and SHA-512 cryptographic hash functions
- 	  and their corresponding HMACs.
- 
-+config CRYPTO_LIB_ENABLE_ALL_FOR_KUNIT
-+	tristate "Enable all crypto library code for KUnit tests"
-+	depends on KUNIT
-+	select CRYPTO_LIB_CURVE25519
-+	select CRYPTO_LIB_MD5
-+	select CRYPTO_LIB_POLY1305
-+	select CRYPTO_LIB_SHA1
-+	select CRYPTO_LIB_SHA256
-+	select CRYPTO_LIB_SHA512
-+	help
-+	  Enable all the crypto library code that has KUnit tests.
++/**
++ * hugetlb_linear_page_index() - linear_page_index() but in hugetlb
++ *				 page size granularity.
++ * @vma: the hugetlb VMA
++ * @address: the virtual address within the VMA
++ *
++ * Return: the page offset within the mapping in huge page units.
++ */
++static inline pgoff_t hugetlb_linear_page_index(struct vm_area_struct *vma,
++		unsigned long address)
++{
++	struct hstate *h = hstate_vma(vma);
 +
-+	  Enable this only if you'd like to test all the crypto library code,
-+	  even code that wouldn't otherwise need to be built.
++	return ((address - vma->vm_start) >> huge_page_shift(h)) +
++		(vma->vm_pgoff >> huge_page_order(h));
++}
 +
-+	  You'll still need to enable the tests themselves, either individually
-+	  or using KUNIT_ALL_TESTS.
-+
- config CRYPTO_LIB_BENCHMARK_VISIBLE
- 	bool
- 
+ static inline bool hstate_is_gigantic(struct hstate *h)
+ {
+ 	return huge_page_order(h) > MAX_PAGE_ORDER;
+diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
+index 904095f69a6e3..9951b4f42c65a 100644
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -573,7 +573,7 @@ static __always_inline ssize_t mfill_atomic_hugetlb(
+ 		 * in the case of shared pmds.  fault mutex prevents
+ 		 * races with other faulting threads.
+ 		 */
+-		idx = linear_page_index(dst_vma, dst_addr);
++		idx = hugetlb_linear_page_index(dst_vma, dst_addr);
+ 		mapping = dst_vma->vm_file->f_mapping;
+ 		hash = hugetlb_fault_mutex_hash(mapping, idx);
+ 		mutex_lock(&hugetlb_fault_mutex_table[hash]);
+-- 
+2.53.0
+
 
 
