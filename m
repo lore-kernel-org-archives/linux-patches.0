@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F38C19A288;
-	Fri, 24 Apr 2026 13:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30D2221DB6;
+	Fri, 24 Apr 2026 13:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038174; cv=none; b=Isp86wfyX/wDq8iAaU4/p62bK//w28W2vkUGevfx2TxVNE8eCshb7xp5xtLSYPzonJkvWWYKtZqtf8mA2a/4fLU5l9ImN+ergl2IOKuidrFn/GfJjN3owUHZPm+twQjOMs6RslIf+LFfJ7FrB4bYEwxg2eGzWgVkcXxfAWTwa5k=
+	t=1777038176; cv=none; b=s7psCjwSsBkGv7Q009l6ja5lr94vtK10CfauBwIZWlbKoDutR3oK5Ju1R77E4xmDA7lXnE2vnDxWYpIMHO2M7Q4kGuP54nHDhNGcmjUiMFPPbaMINGt/00Vb9gqf2/5VhzXVoRYVllSVia7v3+W7yKE5WzsB7igr1WmVw1rvJYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038174; c=relaxed/simple;
-	bh=j4OmY/NPQ2ArpfLgSgUw6+X0knavZVQuBmLXPkPXjGk=;
+	s=arc-20240116; t=1777038176; c=relaxed/simple;
+	bh=XPmEvXaAmA1Su4e/Ik6OB7vGhkyoe4LWVnMMnfJHfNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DfKlGnRMrXwxGWJrgkTgnNXByLetnbHo4U8F+07rhuWrH1d8ZY98hPy0IBgE+hIKzX4f5iTLXidbODkx7B1gI2x0hBiFVpLTkiSKg3cFbQWCLoZ8kA31WoJKUBmEmQxvzvXwGM+zO1a1RvuY011SoWPE9OGkYA+ZQqzlL7k28Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTcaWbdA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NGGlFb/4dpzY8u55wk1rFqXg5YCNtJYNpSG0S9JBQ2Py2kd5A/0YExO8+0Ahq5Ru3lLEId9iPdsdkPYPsj338xbWIcmq0QkUaudh58u8VspF+60d2IUpNy1QpGsXK6k+09++ZGiAh5ynP54Wuf3NIeeYJPgvJP6D8ROjfOI0m4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqwvnZn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTcaWbdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9085C19425;
-	Fri, 24 Apr 2026 13:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqwvnZn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E8DC19425;
+	Fri, 24 Apr 2026 13:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038174;
-	bh=j4OmY/NPQ2ArpfLgSgUw6+X0knavZVQuBmLXPkPXjGk=;
+	s=korg; t=1777038176;
+	bh=XPmEvXaAmA1Su4e/Ik6OB7vGhkyoe4LWVnMMnfJHfNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTcaWbdA95KkRuLIsutMNo+3hWIQpRoChvwahpfxfn3huY5hUgWXEamk9gsMxb62y
-	 niuO+gER84T9wEbgIFSj6ff14z+rIIeoA77sxDVdD6VfvIs3/fbc9bhxpxdQAupa59
-	 wCkaslVNl+AtE3qlNNADriSO01hjhKf01dKceCvk=
+	b=VqwvnZn3VHBdSS3Qiezs9Yv37FArfHBuraBMyakz8agmPc+dK5/RlErTaa7qJQR9D
+	 V15ijtr3g9aVbNMaVN0wD6qUJirCwRSUl80wkh1oV0k/LcMDb3tCwjeMNA3ZW4isfV
+	 sH8FGtDdQqN+UU5bM0BleyGtOqCcnwLEfHna4lvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, devicetree@vger.kernel.org,  Nathan Chancellor" <nathan@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.18 25/55] scripts/dtc: Remove unused dts_version in dtc-lexer.l
-Date: Fri, 24 Apr 2026 15:31:04 +0200
-Message-ID: <20260424132435.250369801@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Sebastian Alba Vives <sebasjosue84@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 52/55] crypto: ccp: Dont attempt to copy CSR to userspace if PSP command failed
+Date: Fri, 24 Apr 2026 15:31:31 +0200
+Message-ID: <20260424132440.924147855@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132430.006424517@linuxfoundation.org>
 References: <20260424132430.006424517@linuxfoundation.org>
@@ -50,52 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
-to upstream version v1.7.2-69-g53373d135579") upstream applied it as
-part of a regular scripts/dtc sync, which may be unsuitable for older
-versions of stable where the warning it fixes is present.
+commit abe4a6d6f606113251868c2c4a06ba904bb41eed upstream.
 
-A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
-in clang under a new subwarning, -Wunused-but-set-global, points out an
-unused static global variable in dtc-lexer.lex.c (compiled from
-dtc-lexer.l):
+When retrieving the PEK CSR, don't attempt to copy the blob to userspace
+if the firmware command failed.  If the failure was due to an invalid
+length, i.e. the userspace buffer+length was too small, copying the number
+of bytes _firmware_ requires will overflow the kernel-allocated buffer and
+leak data to userspace.
 
-  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
-    641 | static int dts_version = 1;
-        |            ^
+  BUG: KASAN: slab-out-of-bounds in instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
+  BUG: KASAN: slab-out-of-bounds in _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
+  BUG: KASAN: slab-out-of-bounds in _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
+  Read of size 2084 at addr ffff898144612e20 by task syz.9.219/21405
 
-Remove it to clear up the warning, as it is truly unused.
+  CPU: 14 UID: 0 PID: 21405 Comm: syz.9.219 Tainted: G     U     O        7.0.0-smp-DEV #28 PREEMPTLAZY
+  Tainted: [U]=USER, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 12.62.0-0 11/19/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xc5/0x110 ../lib/dump_stack.c:120
+   print_address_description ../mm/kasan/report.c:378 [inline]
+   print_report+0xbc/0x260 ../mm/kasan/report.c:482
+   kasan_report+0xa2/0xe0 ../mm/kasan/report.c:595
+   check_region_inline ../mm/kasan/generic.c:-1 [inline]
+   kasan_check_range+0x264/0x2c0 ../mm/kasan/generic.c:200
+   instrument_copy_to_user ../include/linux/instrumented.h:129 [inline]
+   _inline_copy_to_user ../include/linux/uaccess.h:205 [inline]
+   _copy_to_user+0x66/0xa0 ../lib/usercopy.c:26
+   copy_to_user ../include/linux/uaccess.h:236 [inline]
+   sev_ioctl_do_pek_csr+0x31f/0x590 ../drivers/crypto/ccp/sev-dev.c:1872
+   sev_ioctl+0x3a4/0x490 ../drivers/crypto/ccp/sev-dev.c:2562
+   vfs_ioctl ../fs/ioctl.c:51 [inline]
+   __do_sys_ioctl ../fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0x11d/0x1b0 ../fs/ioctl.c:583
+   do_syscall_x64 ../arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xe0/0x800 ../arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
 
-Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+WARN if the driver says the command succeeded, but the firmware error code
+says otherwise, as __sev_do_cmd_locked() is expected to return -EIO on any
+firwmware error.
+
+Reported-by: Alexander Potapenko <glider@google.com>
+Reported-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Fixes: e799035609e1 ("crypto: ccp: Implement SEV_PEK_CSR ioctl command")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-This should apply cleanly to all supported stable branches.
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- scripts/dtc/dtc-lexer.l |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/scripts/dtc/dtc-lexer.l
-+++ b/scripts/dtc/dtc-lexer.l
-@@ -39,8 +39,6 @@ extern bool treesource_error;
- #define DPRINT(fmt, ...)	do { } while (0)
- #endif
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1833,7 +1833,10 @@ cmd:
  
--static int dts_version = 1;
--
- #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
- 				BEGIN(V1); \
+ 	ret = __sev_do_cmd_locked(SEV_CMD_PEK_CSR, &data, &argp->error);
  
-@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(c
+-	 /* If we query the CSR length, FW responded with expected data. */
++	/*
++	 * Firmware will returns the length of the CSR blob (either the minimum
++	 * required length or the actual length written), return it to the user.
++	 */
+ 	input.length = data.len;
  
- <*>"/dts-v1/"	{
- 			DPRINT("Keyword: /dts-v1/\n");
--			dts_version = 1;
- 			BEGIN_DEFAULT();
- 			return DT_V1;
- 		}
+ 	if (copy_to_user((void __user *)argp->data, &input, sizeof(input))) {
+@@ -1841,6 +1844,9 @@ cmd:
+ 		goto e_free_blob;
+ 	}
+ 
++	if (ret || WARN_ON_ONCE(argp->error))
++		goto e_free_blob;
++
+ 	if (blob) {
+ 		if (copy_to_user(input_address, blob, input.length))
+ 			ret = -EFAULT;
 
 
