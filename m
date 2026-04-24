@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C3F3D75C8;
-	Fri, 24 Apr 2026 13:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C22386C0A;
+	Fri, 24 Apr 2026 13:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038220; cv=none; b=Cfl7qS0uYE66QydIJVCxabQKeOrpoh0WTz/iEiwX/8vKlFCjH8tH7BUlxKZpN0JAOmymvz4k7wboPfKVygop8Xxm6IW7cHXM+qZM1C3aEtC3jV8xs0VEPZ2KDToZ2N9L5YNNmYiCjxz/ZpCOuDi89OdzNzlulcsUP+L5haVM0B8=
+	t=1777038223; cv=none; b=diQCB1l5iSzK0Po4dIEGEJc6Jrve9SbzJmgS+WEm49kRaR68w4AT38z7cg9CZnuTJ36wIOs+JHDuRFspN4vsLb8UznRSDic1A2tbLRgwvI5pjf8AyX4sji/lyBFrjdY2O/75B3B3Iw9nx2bXCrBLajESYS99G2BsocHRwtxKbDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038220; c=relaxed/simple;
-	bh=9yaMXBbuLvWtPvUjUsFv6LbGvBWMHElFuzS7ChmcUS8=;
+	s=arc-20240116; t=1777038223; c=relaxed/simple;
+	bh=83tDZxR6FcflMM3g4hiUDk1EKC73XGLYj2abI7am0Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKzQ9VSPfmTPkhuz4Wpgm3+R3CknnBxY8hWpEATr42TQ766/f0xf/uHETmnavrMkRUc+kCVZZ5MJvkKj6f0M4EW929v8VYNShFL+Fetr7+eMj7P5ToJcxKpFlKKD3iaPICtZk/tqxHKOo5mt8ON237WH65jfZdsGaagCf1l8JEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1DCDAFM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z6bEl26j2DtFQptz8/V8Q4/p851DX5t1ZAg6o7uiAIQtmATq1io8eE8Z06cnO97bXsD4/6e5Ya4TWy4rq8FMZUXZrBmYFvlQELLhubYKDpij2lOjQnTadQdWzcXpW9rnc0epahpgAPWuM6Cvo099HhUU0DZ3+MzhRoId9z6C7zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veK8IIvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1DCDAFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215D4C2BCB2;
-	Fri, 24 Apr 2026 13:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veK8IIvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC0FC19425;
+	Fri, 24 Apr 2026 13:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038220;
-	bh=9yaMXBbuLvWtPvUjUsFv6LbGvBWMHElFuzS7ChmcUS8=;
+	s=korg; t=1777038223;
+	bh=83tDZxR6FcflMM3g4hiUDk1EKC73XGLYj2abI7am0Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1DCDAFMPElbNo1L79CMiXVMGOpC9cKKQyQzWKaiXbb5LsGUUCGLcJpMH5EqerHmD
-	 8vSafby17+z5BJkOcFlGw/qCaJjEgjYg/QAB4Hx1Vk0MBjvAZ0J3i3asi2YKvZHY+P
-	 pb0jPszlIZX7fbNlWiEBVO5IetbB669MglYV3uQw=
+	b=veK8IIvDhJN96QnhvNrCtpHCNN+Vc7/GwgjPaejQS/a2mrCHOibHjlw3n9chqPA3F
+	 2WJ6aFsIEsCVyfFCG1fIT49/VBy1DQYwYyutb1gLr/yA9SMQvZluC7Mxa4M1XX6kr4
+	 9Gur7Ve0U8u8mPgoxKYIzWX0NZNO75WvRI0VRR/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 07/35] net: ethernet: mtk_eth_soc: initialize PPE per-tag-layer MTU registers
-Date: Fri, 24 Apr 2026 15:31:14 +0200
-Message-ID: <20260424132413.130423039@linuxfoundation.org>
+	Samuel Page <sam@bynar.io>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Zijun Hu <nightu@northwestern.edu>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 16/35] fuse: reject oversized dirents in page cache
+Date: Fri, 24 Apr 2026 15:31:23 +0200
+Message-ID: <20260424132415.087398761@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
 References: <20260424132411.427029259@linuxfoundation.org>
@@ -51,145 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Samuel Page <sam@bynar.io>
 
-commit 2dddb34dd0d07b01fa770eca89480a4da4f13153 upstream.
+commit 51a8de6c50bf947c8f534cd73da4c8f0a13e7bed upstream.
 
-The PPE enforces output frame size limits via per-tag-layer VLAN_MTU
-registers that the driver never initializes. The hardware defaults do
-not account for PPPoE overhead, causing the PPE to punt encapsulated
-frames back to the CPU instead of forwarding them.
+fuse_add_dirent_to_cache() computes a serialized dirent size from the
+server-controlled namelen field and copies the dirent into a single
+page-cache page. The existing logic only checks whether the dirent fits
+in the remaining space of the current page and advances to a fresh page
+if not. It never checks whether the dirent itself exceeds PAGE_SIZE.
 
-Initialize the registers at PPE start and on MTU changes using the
-maximum GMAC MTU. This is a conservative approximation -- the actual
-per-PPE requirement depends on egress path, but using the global
-maximum ensures the limits are never too small.
+As a result, a malicious FUSE server can return a dirent with
+namelen=4095, producing a serialized record size of 4120 bytes. On 4 KiB
+page systems this causes memcpy() to overflow the cache page by 24 bytes
+into the following kernel page.
 
-Fixes: ba37b7caf1ed ("net: ethernet: mtk_eth_soc: add support for initializing the PPE")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://patch.msgid.link/ec995ab8ce8be423267a1cc093147a74d2eb9d82.1775789829.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reject dirents that cannot fit in a single page before copying them into
+the readdir cache.
+
+Fixes: 69e34551152a ("fuse: allow caching readdir")
+Cc: stable@vger.kernel.org # v6.16+
+Assisted-by: Bynario AI
+Signed-off-by: Samuel Page <sam@bynar.io>
+Reported-by: Qi Tang <tpluszz77@gmail.com>
+Reported-by: Zijun Hu <nightu@northwestern.edu>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://patch.msgid.link/20260420090139.662772-1-mszeredi@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 22 ++++++++++++++-
- drivers/net/ethernet/mediatek/mtk_ppe.c     | 30 +++++++++++++++++++++
- drivers/net/ethernet/mediatek/mtk_ppe.h     |  1 +
- 3 files changed, 52 insertions(+), 1 deletion(-)
+ fs/fuse/readdir.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 45d4bac984a52..7406b706fb753 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3384,12 +3384,23 @@ static int mtk_device_event(struct notifier_block *n, unsigned long event, void
- 	return NOTIFY_DONE;
- }
+--- a/fs/fuse/readdir.c
++++ b/fs/fuse/readdir.c
+@@ -41,6 +41,10 @@ static void fuse_add_dirent_to_cache(str
+ 	unsigned int offset;
+ 	void *addr;
  
-+static int mtk_max_gmac_mtu(struct mtk_eth *eth)
-+{
-+	int i, max_mtu = ETH_DATA_LEN;
-+
-+	for (i = 0; i < ARRAY_SIZE(eth->netdev); i++)
-+		if (eth->netdev[i] && eth->netdev[i]->mtu > max_mtu)
-+			max_mtu = eth->netdev[i]->mtu;
-+
-+	return max_mtu;
-+}
-+
- static int mtk_open(struct net_device *dev)
- {
- 	struct mtk_mac *mac = netdev_priv(dev);
- 	struct mtk_eth *eth = mac->hw;
- 	struct mtk_mac *target_mac;
--	int i, err, ppe_num;
-+	int i, err, ppe_num, mtu;
- 
- 	ppe_num = eth->soc->ppe_num;
- 
-@@ -3436,6 +3447,10 @@ static int mtk_open(struct net_device *dev)
- 			mtk_gdm_config(eth, target_mac->id, gdm_config);
- 		}
- 
-+		mtu = mtk_max_gmac_mtu(eth);
-+		for (i = 0; i < ARRAY_SIZE(eth->ppe); i++)
-+			mtk_ppe_update_mtu(eth->ppe[i], mtu);
-+
- 		napi_enable(&eth->tx_napi);
- 		napi_enable(&eth->rx_napi);
- 		mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
-@@ -4129,6 +4144,7 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
- 	int length = new_mtu + MTK_RX_ETH_HLEN;
- 	struct mtk_mac *mac = netdev_priv(dev);
- 	struct mtk_eth *eth = mac->hw;
-+	int max_mtu, i;
- 
- 	if (rcu_access_pointer(eth->prog) &&
- 	    length > MTK_PP_MAX_BUF_SIZE) {
-@@ -4139,6 +4155,10 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
- 	mtk_set_mcr_max_rx(mac, length);
- 	WRITE_ONCE(dev->mtu, new_mtu);
- 
-+	max_mtu = mtk_max_gmac_mtu(eth);
-+	for (i = 0; i < ARRAY_SIZE(eth->ppe); i++)
-+		mtk_ppe_update_mtu(eth->ppe[i], max_mtu);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
-index ada852adc5f70..fa688a42a22f5 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
-@@ -973,6 +973,36 @@ static void mtk_ppe_init_foe_table(struct mtk_ppe *ppe)
- 	}
- }
- 
-+void mtk_ppe_update_mtu(struct mtk_ppe *ppe, int mtu)
-+{
-+	int base;
-+	u32 val;
-+
-+	if (!ppe)
++	/* Dirent doesn't fit in readdir cache page?  Skip caching. */
++	if (reclen > PAGE_SIZE)
 +		return;
 +
-+	/* The PPE checks output frame size against per-tag-layer MTU limits,
-+	 * treating PPPoE and DSA tags just like 802.1Q VLAN tags. The Linux
-+	 * device MTU already accounts for PPPoE (PPPOE_SES_HLEN) and DSA tag
-+	 * overhead, but 802.1Q VLAN tags are handled transparently without
-+	 * being reflected by the lower device MTU being increased by 4.
-+	 * Use the maximum MTU across all GMAC interfaces so that PPE output
-+	 * frame limits are sufficiently high regardless of which port a flow
-+	 * egresses through.
-+	 */
-+	base = ETH_HLEN + mtu;
-+
-+	val = FIELD_PREP(MTK_PPE_VLAN_MTU0_NONE, base) |
-+	      FIELD_PREP(MTK_PPE_VLAN_MTU0_1TAG, base + VLAN_HLEN);
-+	ppe_w32(ppe, MTK_PPE_VLAN_MTU0, val);
-+
-+	val = FIELD_PREP(MTK_PPE_VLAN_MTU1_2TAG,
-+			 base + 2 * VLAN_HLEN) |
-+	      FIELD_PREP(MTK_PPE_VLAN_MTU1_3TAG,
-+			 base + 3 * VLAN_HLEN);
-+	ppe_w32(ppe, MTK_PPE_VLAN_MTU1, val);
-+}
-+
- void mtk_ppe_start(struct mtk_ppe *ppe)
- {
- 	u32 val;
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.h b/drivers/net/ethernet/mediatek/mtk_ppe.h
-index 223f709e2704f..ba85e39a155bf 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.h
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.h
-@@ -346,6 +346,7 @@ struct mtk_ppe {
- struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base, int index);
- 
- void mtk_ppe_deinit(struct mtk_eth *eth);
-+void mtk_ppe_update_mtu(struct mtk_ppe *ppe, int mtu);
- void mtk_ppe_start(struct mtk_ppe *ppe);
- int mtk_ppe_stop(struct mtk_ppe *ppe);
- int mtk_ppe_prepare_reset(struct mtk_ppe *ppe);
--- 
-2.53.0
-
+ 	spin_lock(&fi->rdc.lock);
+ 	/*
+ 	 * Is cache already completed?  Or this entry does not go at the end of
 
 
