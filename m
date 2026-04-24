@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E963D75CD;
-	Fri, 24 Apr 2026 13:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3532D3D75C4;
+	Fri, 24 Apr 2026 13:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038279; cv=none; b=RY0KHd+rI200jUPDTUcb7ieBvgJKpCFmo1KFOJN25Xkbuk0gmS5xNUGqJoIYLcVLw9zLBevweNch9Iv5WBzCmmEkmukwe4AEP+xhDvWbRNd9fpY3wxJ1T49Ih8rkIZ6D7by3VD5KvpVy8piyrNNq7TevKPIjHvwNyK6E7bBEvLM=
+	t=1777038282; cv=none; b=AhqQzLF0U5OeT7L0LJBZ20DChoeFVmOs1OQs+7DJRhZVWKlKfvCC/Ia76pD0lWFAtVCEDSMtT935ZWMRiHvQtaWV1saWK1WeWww475soV2vhzjhD5DZQChQqoLxNoYOd6HKmMgkG7gr16Qtl/ALaykoXeygZ06Cay2SsO78IdDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038279; c=relaxed/simple;
-	bh=SkFp8Lz+hTM/snLLt5acH2WF0Pwco4FVWhrLWSl3hco=;
+	s=arc-20240116; t=1777038282; c=relaxed/simple;
+	bh=K5QVxvhKDVGza16l2GgGnmXEvqp+eA7l6YDmUl1F6qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATTypNYNYjUEru5XiX91kc8yAqcBNd1tVxkUDgGJbPqj95mNdKDUv/XxJeQ2t0qHBhZKUieR2GOSIYpcZzT+3OuUCo+IOVwVH1TdOFy8zg4kNc+dUWkKfRFQhIvqyhaMEW/ww/jzufgGDqY+969nJHv95b/6odUjWNHYEga2jEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oikI/Vy5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Se/1rur9osNT/SgPa9IkenIGy19OPLRB2IdSIQi9ZTuPvb9m/he29pxPpakZkcKKquYG3o2NeL29klD6eZjCP3/E/FjLjar7+279xbkfAlSfv+vYTBrHnBtGWWyKCykpve0kPcDYwJSoVDz97dFLMIQpg15hoeUDjsrgS0R5+RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLI5WpaP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oikI/Vy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D4CC19425;
-	Fri, 24 Apr 2026 13:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLI5WpaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF001C19425;
+	Fri, 24 Apr 2026 13:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038279;
-	bh=SkFp8Lz+hTM/snLLt5acH2WF0Pwco4FVWhrLWSl3hco=;
+	s=korg; t=1777038282;
+	bh=K5QVxvhKDVGza16l2GgGnmXEvqp+eA7l6YDmUl1F6qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oikI/Vy5ULtC5Ei6uX43veF8lDB/DdfW3gYlYmpqtXI/HEgVxmyYt638gVVmahLsB
-	 91xjUMec8/GLtl4R0/pV+Hg666yutKy9rBuOZKG9iAYKXlpGGlMmlt2qsOMJwi70j3
-	 67ljn1Tjvyzf6qiMyXPU45P5zSnjkchzcILhVPAE=
+	b=CLI5WpaPXqIiUxSAwOxQnjypFjc6F0OFBZrrfpV+EeIliHeiqAu1jfRPq2ELUgAKs
+	 KICzSENN+mOfWlhbuCW2UtIroCzaRASA4OYWyQzh+DXRv+r1lUf+MdHxRAWeNBJ5fb
+	 KENhRiYYEBIKfXO8+YXovJGrIF6wbgsrFK52iR6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Max Boone <mboone@akamai.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	munan Huang <munanevil@gmail.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 10/35] mm/pagewalk: fix race between concurrent split and refault
-Date: Fri, 24 Apr 2026 15:31:17 +0200
-Message-ID: <20260424132413.806354408@linuxfoundation.org>
+Subject: [PATCH 6.12 11/35] ksmbd: fix use-after-free in __ksmbd_close_fd() via durable scavenger
+Date: Fri, 24 Apr 2026 15:31:18 +0200
+Message-ID: <20260424132414.001061703@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
 References: <20260424132411.427029259@linuxfoundation.org>
@@ -58,152 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Boone <mboone@akamai.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 9b25a6e3d243a8ce14eeaf74082c621a9944c776 ]
+[ Upstream commit 235e32320a470fcd3998fb3774f2290a0eb302a1 ]
 
-The splitting of a PUD entry in walk_pud_range() can race with a
-concurrent thread refaulting the PUD leaf entry causing it to try walking
-a PMD range that has disappeared.
+When a durable file handle survives session disconnect (TCP close without
+SMB2_LOGOFF), session_fd_check() sets fp->conn = NULL to preserve the
+handle for later reconnection. However, it did not clean up the byte-range
+locks on fp->lock_list.
 
-An example and reproduction of this is to try reading numa_maps of a
-process while VFIO-PCI is setting up DMA (specifically the
-vfio_pin_pages_remote call) on a large BAR for that process.
+Later, when the durable scavenger thread times out and calls
+__ksmbd_close_fd(NULL, fp), the lock cleanup loop did:
 
-This will trigger a kernel BUG:
-vfio-pci 0000:03:00.0: enabling device (0000 -> 0002)
-BUG: unable to handle page fault for address: ffffa23980000000
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] SMP NOPTI
-...
-RIP: 0010:walk_pgd_range+0x3b5/0x7a0
-Code: 8d 43 ff 48 89 44 24 28 4d 89 ce 4d 8d a7 00 00 20 00 48 8b 4c 24
-28 49 81 e4 00 00 e0 ff 49 8d 44 24 ff 48 39 c8 4c 0f 43 e3 <49> f7 06
-   9f ff ff ff 75 3b 48 8b 44 24 20 48 8b 40 28 48 85 c0 74
-RSP: 0018:ffffac23e1ecf808 EFLAGS: 00010287
-RAX: 00007f44c01fffff RBX: 00007f4500000000 RCX: 00007f44ffffffff
-RDX: 0000000000000000 RSI: 000ffffffffff000 RDI: ffffffff93378fe0
-RBP: ffffac23e1ecf918 R08: 0000000000000004 R09: ffffa23980000000
-R10: 0000000000000020 R11: 0000000000000004 R12: 00007f44c0200000
-R13: 00007f44c0000000 R14: ffffa23980000000 R15: 00007f44c0000000
-FS:  00007fe884739580(0000) GS:ffff9b7d7a9c0000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffa23980000000 CR3: 000000c0650e2005 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- __walk_page_range+0x195/0x1b0
- walk_page_vma+0x62/0xc0
- show_numa_map+0x12b/0x3b0
- seq_read_iter+0x297/0x440
- seq_read+0x11d/0x140
- vfs_read+0xc2/0x340
- ksys_read+0x5f/0xe0
- do_syscall_64+0x68/0x130
- ? get_page_from_freelist+0x5c2/0x17e0
- ? mas_store_prealloc+0x17e/0x360
- ? vma_set_page_prot+0x4c/0xa0
- ? __alloc_pages_noprof+0x14e/0x2d0
- ? __mod_memcg_lruvec_state+0x8d/0x140
- ? __lruvec_stat_mod_folio+0x76/0xb0
- ? __folio_mod_stat+0x26/0x80
- ? do_anonymous_page+0x705/0x900
- ? __handle_mm_fault+0xa8d/0x1000
- ? __count_memcg_events+0x53/0xf0
- ? handle_mm_fault+0xa5/0x360
- ? do_user_addr_fault+0x342/0x640
- ? arch_exit_to_user_mode_prepare.constprop.0+0x16/0xa0
- ? irqentry_exit_to_user_mode+0x24/0x100
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fe88464f47e
-Code: c0 e9 b6 fe ff ff 50 48 8d 3d be 07 0b 00 e8 69 01 02 00 66 0f 1f
-84 00 00 00 00 00 64 8b 04 25 18 00 00 00 85 c0 75 14 0f 05 <48> 3d 00
-   f0 ff ff 77 5a c3 66 0f 1f 84 00 00 00 00 00 48 83 ec 28
-RSP: 002b:00007ffe6cd9a9b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007fe88464f47e
-RDX: 0000000000020000 RSI: 00007fe884543000 RDI: 0000000000000003
-RBP: 00007fe884543000 R08: 00007fe884542010 R09: 0000000000000000
-R10: fffffffffffffbc5 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
- </TASK>
+    spin_lock(&fp->conn->llist_lock);
 
-Fix this by validating the PUD entry in walk_pmd_range() using a stable
-snapshot (pudp_get()).  If the PUD is not present or is a leaf, retry the
-walk via ACTION_AGAIN instead of descending further.  This mirrors the
-retry logic in walk_pte_range(), which lets walk_pmd_range() retry if the
-PTE is not being got by pte_offset_map_lock().
+This caused a slab use-after-free because fp->conn was NULL and the
+original connection object had already been freed by
+ksmbd_tcp_disconnect().
 
-Link: https://lkml.kernel.org/r/20260325-pagewalk-check-pmd-refault-v2-1-707bff33bc60@akamai.com
-Fixes: f9e54c3a2f5b ("vfio/pci: implement huge_fault support")
-Co-developed-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Max Boone <mboone@akamai.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Context ]
+The root cause is asymmetric cleanup: lock entries (smb_lock->clist) were
+left dangling on the freed conn->lock_list while fp->conn was nulled out.
+
+To fix this issue properly, we need to handle the lifetime of
+smb_lock->clist across three paths:
+ - Safely skip clist deletion when list is empty and fp->conn is NULL.
+ - Remove the lock from the old connection's lock_list in
+   session_fd_check()
+ - Re-add the lock to the new connection's lock_list in
+   ksmbd_reopen_durable_fd().
+
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Co-developed-by: munan Huang <munanevil@gmail.com>
+Signed-off-by: munan Huang <munanevil@gmail.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/pagewalk.c |   24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ fs/smb/server/vfs_cache.c |   41 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 30 insertions(+), 11 deletions(-)
 
---- a/mm/pagewalk.c
-+++ b/mm/pagewalk.c
-@@ -78,12 +78,31 @@ static int walk_pte_range(pmd_t *pmd, un
- static int walk_pmd_range(pud_t *pud, unsigned long addr, unsigned long end,
- 			  struct mm_walk *walk)
- {
-+	pud_t pudval = pudp_get(pud);
- 	pmd_t *pmd;
- 	unsigned long next;
- 	const struct mm_walk_ops *ops = walk->ops;
- 	int err = 0;
- 	int depth = real_depth(3);
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -370,9 +370,11 @@ static void __ksmbd_close_fd(struct ksmb
+ 	 * there are not accesses to fp->lock_list.
+ 	 */
+ 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
+-		spin_lock(&fp->conn->llist_lock);
+-		list_del(&smb_lock->clist);
+-		spin_unlock(&fp->conn->llist_lock);
++		if (!list_empty(&smb_lock->clist) && fp->conn) {
++			spin_lock(&fp->conn->llist_lock);
++			list_del(&smb_lock->clist);
++			spin_unlock(&fp->conn->llist_lock);
++		}
  
-+	/*
-+	 * For PTE handling, pte_offset_map_lock() takes care of checking
-+	 * whether there actually is a page table. But it also has to be
-+	 * very careful about concurrent page table reclaim.
-+	 *
-+	 * Similarly, we have to be careful here - a PUD entry that points
-+	 * to a PMD table cannot go away, so we can just walk it. But if
-+	 * it's something else, we need to ensure we didn't race something,
-+	 * so need to retry.
-+	 *
-+	 * A pertinent example of this is a PUD refault after PUD split -
-+	 * we will need to split again or risk accessing invalid memory.
-+	 */
-+	if (!pud_present(pudval) || pud_leaf(pudval)) {
-+		walk->action = ACTION_AGAIN;
-+		return 0;
+ 		list_del(&smb_lock->flist);
+ 		locks_free_lock(smb_lock->fl);
+@@ -902,6 +904,7 @@ static bool session_fd_check(struct ksmb
+ 	struct ksmbd_inode *ci;
+ 	struct oplock_info *op;
+ 	struct ksmbd_conn *conn;
++	struct ksmbd_lock *smb_lock, *tmp_lock;
+ 
+ 	if (!is_reconnectable(fp))
+ 		return false;
+@@ -918,6 +921,12 @@ static bool session_fd_check(struct ksmb
+ 	}
+ 	up_write(&ci->m_lock);
+ 
++	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
++		spin_lock(&fp->conn->llist_lock);
++		list_del_init(&smb_lock->clist);
++		spin_unlock(&fp->conn->llist_lock);
 +	}
 +
- 	pmd = pmd_offset(pud, addr);
- 	do {
- again:
-@@ -172,12 +191,13 @@ static int walk_pud_range(p4d_t *p4d, un
+ 	fp->conn = NULL;
+ 	fp->tcon = NULL;
+ 	fp->volatile_id = KSMBD_NO_FID;
+@@ -996,6 +1005,9 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ {
+ 	struct ksmbd_inode *ci;
+ 	struct oplock_info *op;
++	struct ksmbd_conn *conn = work->conn;
++	struct ksmbd_lock *smb_lock;
++	unsigned int old_f_state;
  
- 		if (walk->vma)
- 			split_huge_pud(walk->vma, pud, addr);
--		if (pud_none(*pud))
--			goto again;
+ 	if (!fp->is_durable || fp->conn || fp->tcon) {
+ 		pr_err("Invalid durable fd [%p:%p]\n", fp->conn, fp->tcon);
+@@ -1007,9 +1019,23 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 		return -EBADF;
+ 	}
  
- 		err = walk_pmd_range(pud, addr, next, walk);
- 		if (err)
- 			break;
+-	fp->conn = work->conn;
++	old_f_state = fp->f_state;
++	fp->f_state = FP_NEW;
++	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
++	if (!has_file_id(fp->volatile_id)) {
++		fp->f_state = old_f_state;
++		return -EBADF;
++	}
 +
-+		if (walk->action == ACTION_AGAIN)
-+			goto again;
- 	} while (pud++, addr = next, addr != end);
++	fp->conn = conn;
+ 	fp->tcon = work->tcon;
  
- 	return err;
++	list_for_each_entry(smb_lock, &fp->lock_list, flist) {
++		spin_lock(&conn->llist_lock);
++		list_add_tail(&smb_lock->clist, &conn->lock_list);
++		spin_unlock(&conn->llist_lock);
++	}
++
+ 	ci = fp->f_ci;
+ 	down_write(&ci->m_lock);
+ 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry) {
+@@ -1020,13 +1046,6 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 	}
+ 	up_write(&ci->m_lock);
+ 
+-	fp->f_state = FP_NEW;
+-	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
+-	if (!has_file_id(fp->volatile_id)) {
+-		fp->conn = NULL;
+-		fp->tcon = NULL;
+-		return -EBADF;
+-	}
+ 	return 0;
+ }
+ 
 
 
