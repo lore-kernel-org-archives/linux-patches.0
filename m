@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CE83537DF;
-	Fri, 24 Apr 2026 13:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209FB3563D4;
+	Fri, 24 Apr 2026 13:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038081; cv=none; b=Ld7mcUVdJ0egwv8jRzRz0+3ErjNp3kzj0jH7YHEk51ZzBKVNksuly7bD8BRwsBNRs2oLBd7Mn4Uu056/EWvZyM59xwKAhlMjEFHBUY8ZhaqLJFBJ54h0jHQcgDvOXjxFP+JZc4I8FNEaMRM/pDzbApMUsTirZDlaURF/CqUxyEg=
+	t=1777038084; cv=none; b=sLcnS/OGuQ1R2813JKNbUbdHDluZd3VHD2fOBYoiYL8G3UaU9Gw6X8ljHDkQyREWnVf/ClKtRXP0JSDGKef39UDKi2mAyMzpbYA9RiDXgUsjlc5KHI9dUnfGDn1KrHXW6MxwzF5B/HQKyxSKmAvr01/5XQl/BS3Iy1lZYVKIuBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038081; c=relaxed/simple;
-	bh=Ty+c2n7dfuaYEuE8fJNC/ARwKmKQMbOf+lYLo8i3TKU=;
+	s=arc-20240116; t=1777038084; c=relaxed/simple;
+	bh=aCPPCWEY6VPZP8ernkiEIARkUiYqormcO6d/E9gYadQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWafNt95OBYXICsyplF22CNuRIFTzSghpn43pN3kWg5lz3WbVFF/YcLmLr2sllvQpLiT/k3NWE02q36bsYWa1s7E3gso4nO0cHzYEDAckwjVFaSLLnEhK03nmtp3VP/dOaSR1l1B/lxZu1sp4CJ+0vdBBto3Px9YPiSdQsjRX10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Urel0Vx8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tjfF6HC3zQMYA5KpNQjEePRQ4JLxlaJBjNFlXhfheePOMXmnehLtuxh4nCOt5WGGhwKmuBqmynjrWg1/bLiDiPIAf3hajbE4slf9dflKggL8HDDB+VAkQCFmjqsThzJbvmVoKQqtxMegWB+FhcDtyY2mrPPNBKG5rMQs0FE8rrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SW20rBiG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Urel0Vx8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAC6C19425;
-	Fri, 24 Apr 2026 13:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SW20rBiG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAE3C19425;
+	Fri, 24 Apr 2026 13:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038081;
-	bh=Ty+c2n7dfuaYEuE8fJNC/ARwKmKQMbOf+lYLo8i3TKU=;
+	s=korg; t=1777038084;
+	bh=aCPPCWEY6VPZP8ernkiEIARkUiYqormcO6d/E9gYadQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Urel0Vx8M2QlOe8kELJ8O1AGIwBUAGZTZJrAUGV8h+ixOH+fUHdNE/zyeP5vdglGv
-	 w1rl6wf/TPDwcOmf6SIWYLRsVHaKV3zmcjRPLt2+U0eMRi567VSrNruQjhCxUF2iGr
-	 YojByLwbzGXLQpGvwC/G7wD9WcH1mbXlW9Q/UplY=
+	b=SW20rBiG3zvW7r5neyGjZhWmRho6LQqpBFPb+uTU95aT8H9W7iskgH0Uq08Aaogxm
+	 Cu8tuKEzvoRTgz7fatZ7PZDmx4mU5jLAwajffhGhHitE/daO9XO2T6feuUcBSsVb44
+	 6N1BKlHSizFNpFQraQKgD5T+wC/Om07NHskLhdkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"linux-crypto@vger.kernel.org, kunit-dev@googlegroups.com, Eric Biggers" <ebiggers@kernel.org>,
 	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.18 17/55] lib/crc: tests: Make crc_kunit test only the enabled CRC variants
-Date: Fri, 24 Apr 2026 15:30:56 +0200
-Message-ID: <20260424132433.709528306@linuxfoundation.org>
+Subject: [PATCH 6.18 18/55] lib/crc: tests: Add CRC_ENABLE_ALL_FOR_KUNIT
+Date: Fri, 24 Apr 2026 15:30:57 +0200
+Message-ID: <20260424132433.903655345@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132430.006424517@linuxfoundation.org>
 References: <20260424132430.006424517@linuxfoundation.org>
@@ -52,142 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit 85c9f3a2b805eb96d899da7bcc38a16459aa3c16 upstream.
+commit cdf22aeaad8430905c3aa3b3d0f2686c65395c22 upstream.
 
-Like commit 4478e8eeb871 ("lib/crypto: tests: Depend on library options
-rather than selecting them") did with the crypto library tests, make
-crc_kunit depend on the code it tests rather than selecting it.  This
-follows the standard convention for KUnit and fixes an issue where
-enabling KUNIT_ALL_TESTS enabled non-test code.
+Now that crc_kunit uses the standard "depends on" pattern, enabling the
+full set of CRC tests is a bit difficult, mainly due to CRC7 being
+rarely used.  Add a kconfig option to make it easier.  It is visible
+only when KUNIT, so hopefully the extra prompt won't be too annoying.
 
-crc_kunit does differ from the crypto library tests in that it
-consolidates the tests for multiple CRC variants, with 5 kconfig
-options, into one KUnit suite.  Since depending on *all* of these
-kconfig options would greatly restrict the ability to enable crc_kunit,
-instead just depend on *any* of these options.  Update crc_kunit
-accordingly to test only the reachable code.
-
-Alternatively we could split crc_kunit into 5 test suites.  But keeping
-it as one is simpler for now.
-
-Fixes: e47d9b1a76ed ("lib/crc_kunit.c: add KUnit test suite for CRC library functions")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20260306033557.250499-2-ebiggers@kernel.org
+Link: https://lore.kernel.org/r/20260306033557.250499-3-ebiggers@kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crc/Kconfig           |    7 +------
- lib/crc/tests/crc_kunit.c |   28 ++++++++++++++++++++++------
- 2 files changed, 23 insertions(+), 12 deletions(-)
+ lib/crc/Kconfig |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/lib/crc/Kconfig
 +++ b/lib/crc/Kconfig
-@@ -99,13 +99,8 @@ config CRC_OPTIMIZATIONS
+@@ -107,6 +107,20 @@ config CRC_KUNIT_TEST
+ 	  This is intended to help people writing architecture-specific
+ 	  optimized versions.  If unsure, say N.
  
- config CRC_KUNIT_TEST
- 	tristate "KUnit tests for CRC functions" if !KUNIT_ALL_TESTS
--	depends on KUNIT
-+	depends on KUNIT && (CRC7 || CRC16 || CRC_T10DIF || CRC32 || CRC64)
- 	default KUNIT_ALL_TESTS
--	select CRC7
--	select CRC16
--	select CRC_T10DIF
--	select CRC32
--	select CRC64
- 	help
- 	  Unit tests for the CRC library functions.
- 
---- a/lib/crc/tests/crc_kunit.c
-+++ b/lib/crc/tests/crc_kunit.c
-@@ -268,8 +268,7 @@ crc_benchmark(struct kunit *test,
- 	}
- }
- 
--/* crc7_be */
--
-+#if IS_REACHABLE(CONFIG_CRC7)
- static u64 crc7_be_wrapper(u64 crc, const u8 *p, size_t len)
- {
- 	/*
-@@ -294,9 +293,9 @@ static void crc7_be_benchmark(struct kun
- {
- 	crc_benchmark(test, crc7_be_wrapper);
- }
-+#endif /* CONFIG_CRC7 */
- 
--/* crc16 */
--
-+#if IS_REACHABLE(CONFIG_CRC16)
- static u64 crc16_wrapper(u64 crc, const u8 *p, size_t len)
- {
- 	return crc16(crc, p, len);
-@@ -318,9 +317,9 @@ static void crc16_benchmark(struct kunit
- {
- 	crc_benchmark(test, crc16_wrapper);
- }
-+#endif /* CONFIG_CRC16 */
- 
--/* crc_t10dif */
--
-+#if IS_REACHABLE(CONFIG_CRC_T10DIF)
- static u64 crc_t10dif_wrapper(u64 crc, const u8 *p, size_t len)
- {
- 	return crc_t10dif_update(crc, p, len);
-@@ -342,6 +341,9 @@ static void crc_t10dif_benchmark(struct
- {
- 	crc_benchmark(test, crc_t10dif_wrapper);
- }
-+#endif /* CONFIG_CRC_T10DIF */
++config CRC_ENABLE_ALL_FOR_KUNIT
++	tristate "Enable all CRC functions for KUnit test"
++	depends on KUNIT
++	select CRC7
++	select CRC16
++	select CRC_T10DIF
++	select CRC32
++	select CRC64
++	help
++	  Enable all CRC functions that have test code in CRC_KUNIT_TEST.
 +
-+#if IS_REACHABLE(CONFIG_CRC32)
- 
- /* crc32_le */
- 
-@@ -414,6 +416,9 @@ static void crc32c_benchmark(struct kuni
- {
- 	crc_benchmark(test, crc32c_wrapper);
- }
-+#endif /* CONFIG_CRC32 */
++	  Enable this only if you'd like the CRC KUnit test suite to test all
++	  the CRC variants, even ones that wouldn't otherwise need to be built.
 +
-+#if IS_REACHABLE(CONFIG_CRC64)
- 
- /* crc64_be */
- 
-@@ -463,24 +468,35 @@ static void crc64_nvme_benchmark(struct
- {
- 	crc_benchmark(test, crc64_nvme_wrapper);
- }
-+#endif /* CONFIG_CRC64 */
- 
- static struct kunit_case crc_test_cases[] = {
-+#if IS_REACHABLE(CONFIG_CRC7)
- 	KUNIT_CASE(crc7_be_test),
- 	KUNIT_CASE(crc7_be_benchmark),
-+#endif
-+#if IS_REACHABLE(CONFIG_CRC16)
- 	KUNIT_CASE(crc16_test),
- 	KUNIT_CASE(crc16_benchmark),
-+#endif
-+#if IS_REACHABLE(CONFIG_CRC_T10DIF)
- 	KUNIT_CASE(crc_t10dif_test),
- 	KUNIT_CASE(crc_t10dif_benchmark),
-+#endif
-+#if IS_REACHABLE(CONFIG_CRC32)
- 	KUNIT_CASE(crc32_le_test),
- 	KUNIT_CASE(crc32_le_benchmark),
- 	KUNIT_CASE(crc32_be_test),
- 	KUNIT_CASE(crc32_be_benchmark),
- 	KUNIT_CASE(crc32c_test),
- 	KUNIT_CASE(crc32c_benchmark),
-+#endif
-+#if IS_REACHABLE(CONFIG_CRC64)
- 	KUNIT_CASE(crc64_be_test),
- 	KUNIT_CASE(crc64_be_benchmark),
- 	KUNIT_CASE(crc64_nvme_test),
- 	KUNIT_CASE(crc64_nvme_benchmark),
-+#endif
- 	{},
- };
- 
+ config CRC_BENCHMARK
+ 	bool "Benchmark for the CRC functions"
+ 	depends on CRC_KUNIT_TEST
 
 
