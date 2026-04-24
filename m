@@ -1,49 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB233563D4;
-	Fri, 24 Apr 2026 13:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9273A3563D4;
+	Fri, 24 Apr 2026 13:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037981; cv=none; b=t1H4ItTvOe2caJ2JKyCTdGhlL6gmzrx5gR8hR6cvdw6OoVw34ly4niXNT4cZIHKApZG+NjBtDltq87zT9p3YO9aoY0i/TEnOFlRXoy6zu7u7H5Vn44/F7zSII0sNjnGC52O3sjgAsuHRU9TOrkQdsTJo1tEjPL9/bGG3hLdyT1w=
+	t=1777037983; cv=none; b=cxmv1j+Vu5XK8lZlViKKHmY0m1MFk+9RkUJy8c4oFtVUnCDOgYKDJan10EVToUD0lHjVd4Fr+YLVMgGBBQFJiXijlFkvLIl1TLCDbFAx6qO+0iMUN8CK9GRWo5YEXlKnBpfR8ZchrxsDo/9HhDEVoQCToGOkSqz3lmkIYbLTyA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037981; c=relaxed/simple;
-	bh=UAlGdRkbUuPCM7YGhC7fxCPx7mK8fhRmfioolHk5ElE=;
+	s=arc-20240116; t=1777037983; c=relaxed/simple;
+	bh=R4a5R6E8mEh4EK3KTagrYZ8cJOUsoRVo4beMRu7Jj4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8EcWKcz6kRuxDc8yueIv8JFRDBMZ6dcMA4V9UixC/8JJ0RjGzKmMx/PmhqPvuOzHWbvdKNrj8MqX5WJ6IeTA/0bYKZMxaoCAEzz4ZluP+7fKUemFhe/C8AU4gENSKJY5JTKkAB890QVELdm87YBb0GYpVqCuSV3mZ0z8J76n4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCuPQVey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEsUIJNK/nBqqFLFKL+PkKDzCWsM9Q1by9f5wwPT9+ioVYZKwRAUgstX2arvMwBXGbDEPjPshOFM5hve0T3sGylUpyzpMVn6OtM58AqFvfFiFFYeKRmaEllWvXOpQtZ3Nj2BexZsTGqkx68/RWyYwj6o1GWi6++zhgFArawDOKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVkyOqJb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCuPQVey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F973C19425;
-	Fri, 24 Apr 2026 13:39:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVkyOqJb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28939C19425;
+	Fri, 24 Apr 2026 13:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037980;
-	bh=UAlGdRkbUuPCM7YGhC7fxCPx7mK8fhRmfioolHk5ElE=;
+	s=korg; t=1777037983;
+	bh=R4a5R6E8mEh4EK3KTagrYZ8cJOUsoRVo4beMRu7Jj4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCuPQVeyPa3KRERYU7lSOBsFJ76hTi90jUrlegAF2/7IzASaPSfRVdOcNrEKEMqsr
-	 984bIcqQIyrkf6XXEYCYw9kBHqQqqKQsP/Z2oSQbVlaKm0/373AZNiwGH67MEcEgpM
-	 UOtbA7Qnt74S6jehXzIYqTw5BlIUlqbImHHhi+gg=
+	b=tVkyOqJbFTZwjrXnMZPwpaIMnUWuFnbtQW3EmqWw7FSty0IRddDUb+rM6qf9/0tzA
+	 62AhOg9bSXDmKP49jkT6vxie29lLsw80JithpAVWgsSk392ZcM+AdKtoaBUPHAJc3r
+	 C2Bkdsp9ceA0+X+fWgcBr+Kw/0e8gd4pg0DlCQZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Jie Wang <jiewang2024@lzu.edu.cn>,
-	Yang Yang <n05ec@lzu.edu.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/166] rxrpc: only handle RESPONSE during service challenge
-Date: Fri, 24 Apr 2026 15:30:58 +0200
-Message-ID: <20260424132603.213393793@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 145/166] fs/ntfs3: validate rec->used in journal-replay file record check
+Date: Fri, 24 Apr 2026 15:30:59 +0200
+Message-ID: <20260424132603.423782030@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -62,80 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jie <jiewang2024@lzu.edu.cn>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit c43ffdcfdbb5567b1f143556df8a04b4eeea041c ]
+commit 0ca0485e4b2e837ebb6cbd4f2451aba665a03e4b upstream.
 
-Only process RESPONSE packets while the service connection is still in
-RXRPC_CONN_SERVICE_CHALLENGING. Check that state under state_lock before
-running response verification and security initialization, then use a local
-secured flag to decide whether to queue the secured-connection work after
-the state transition. This keeps duplicate or late RESPONSE packets from
-re-running the setup path and removes the unlocked post-transition state
-test.
+check_file_record() validates rec->total against the record size but
+never validates rec->used.  The do_action() journal-replay handlers read
+rec->used from disk and use it to compute memmove lengths:
 
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Jie Wang <jiewang2024@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-21-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted spin_lock_irq/spin_unlock_irq calls to spin_lock/spin_unlock ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  DeleteAttribute:    memmove(attr, ..., used - asize - roff)
+  CreateAttribute:    memmove(..., attr, used - roff)
+  change_attr_size:   memmove(..., used - PtrOffset(rec, next))
+
+When rec->used is smaller than the offset of a validated attribute, or
+larger than the record size, these subtractions can underflow allowing
+us to copy huge amounts of memory in to a 4kb buffer, generally
+considered a bad idea overall.
+
+This requires a corrupted filesystem, which isn't a threat model the
+kernel really needs to worry about, but checking for such an obvious
+out-of-bounds value is good to keep things robust, especially on journal
+replay
+
+Fix this up by bounding rec->used correctly.
+
+This is much like commit b2bc7c44ed17 ("fs/ntfs3: Fix slab-out-of-bounds
+read in DeleteIndexEntryRoot") which checked different values in this
+same switch statement.
+
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Cc: stable <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/conn_event.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/ntfs3/fslog.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -233,6 +233,7 @@ static int rxrpc_process_event(struct rx
- 			       struct sk_buff *skb)
- {
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
-+	bool secured = false;
- 	int ret;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2789,13 +2789,14 @@ static inline bool check_file_record(con
+ 	u16 fn = le16_to_cpu(rec->rhdr.fix_num);
+ 	u16 ao = le16_to_cpu(rec->attr_off);
+ 	u32 rs = sbi->record_size;
++	u32 used = le32_to_cpu(rec->used);
  
- 	if (conn->state == RXRPC_CONN_ABORTED)
-@@ -245,6 +246,13 @@ static int rxrpc_process_event(struct rx
- 		return conn->security->respond_to_challenge(conn, skb);
+ 	/* Check the file record header for consistency. */
+ 	if (rec->rhdr.sign != NTFS_FILE_SIGNATURE ||
+ 	    fo > (SECTOR_SIZE - ((rs >> SECTOR_SHIFT) + 1) * sizeof(short)) ||
+ 	    (fn - 1) * SECTOR_SIZE != rs || ao < MFTRECORD_FIXUP_OFFSET_1 ||
+ 	    ao > sbi->record_size - SIZEOF_RESIDENT || !is_rec_inuse(rec) ||
+-	    le32_to_cpu(rec->total) != rs) {
++	    le32_to_cpu(rec->total) != rs || used > rs || used < ao) {
+ 		return false;
+ 	}
  
- 	case RXRPC_PACKET_TYPE_RESPONSE:
-+		spin_lock(&conn->state_lock);
-+		if (conn->state != RXRPC_CONN_SERVICE_CHALLENGING) {
-+			spin_unlock(&conn->state_lock);
-+			return 0;
-+		}
-+		spin_unlock(&conn->state_lock);
+@@ -2807,6 +2808,15 @@ static inline bool check_file_record(con
+ 		return false;
+ 	}
+ 
++	/*
++	 * The do_action() handlers compute memmove lengths as
++	 * "rec->used - <offset of validated attr>", which underflows when
++	 * rec->used is smaller than the attribute walk reached.  At this
++	 * point attr is the ATTR_END marker; rec->used must cover it.
++	 */
++	if (used < PtrOffset(rec, attr) + sizeof(attr->type))
++		return false;
 +
- 		ret = conn->security->verify_response(conn, skb);
- 		if (ret < 0)
- 			return ret;
-@@ -255,11 +263,13 @@ static int rxrpc_process_event(struct rx
- 			return ret;
+ 	return true;
+ }
  
- 		spin_lock(&conn->state_lock);
--		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING)
-+		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING) {
- 			conn->state = RXRPC_CONN_SERVICE;
-+			secured = true;
-+		}
- 		spin_unlock(&conn->state_lock);
- 
--		if (conn->state == RXRPC_CONN_SERVICE) {
-+		if (secured) {
- 			/* Offload call state flipping to the I/O thread.  As
- 			 * we've already received the packet, put it on the
- 			 * front of the queue.
 
 
