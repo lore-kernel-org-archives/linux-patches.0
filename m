@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C22386C0A;
-	Fri, 24 Apr 2026 13:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FE03563D4;
+	Fri, 24 Apr 2026 13:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038223; cv=none; b=diQCB1l5iSzK0Po4dIEGEJc6Jrve9SbzJmgS+WEm49kRaR68w4AT38z7cg9CZnuTJ36wIOs+JHDuRFspN4vsLb8UznRSDic1A2tbLRgwvI5pjf8AyX4sji/lyBFrjdY2O/75B3B3Iw9nx2bXCrBLajESYS99G2BsocHRwtxKbDY=
+	t=1777038225; cv=none; b=NSYhMAQV28G6T2giv3u7pNVmYOsbqU4juxVJE0e5rtbQxMFrtLA76oPqe39qowEoQUYxItG8jeOyG9VKe1v93MkB1/ZZRSKaVQpqKaoH65TaXzjmA1JDPX6fcrZm1WtfPPgZLnczsDo6N/KUtN+D4DEzVVzPvGHjzBt0DJDVhLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038223; c=relaxed/simple;
-	bh=83tDZxR6FcflMM3g4hiUDk1EKC73XGLYj2abI7am0Gc=;
+	s=arc-20240116; t=1777038225; c=relaxed/simple;
+	bh=6ICwo3dYVBwbPwKHWNuqsx3TizMxnoKeZZaecBVUt1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6bEl26j2DtFQptz8/V8Q4/p851DX5t1ZAg6o7uiAIQtmATq1io8eE8Z06cnO97bXsD4/6e5Ya4TWy4rq8FMZUXZrBmYFvlQELLhubYKDpij2lOjQnTadQdWzcXpW9rnc0epahpgAPWuM6Cvo099HhUU0DZ3+MzhRoId9z6C7zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veK8IIvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o+/ugDiHkcN+xOlctqb4J9kF3v7I5WhLM5vo5BwEj++Wp5V4bIoUKCcKA5Hrw7lIbjsolDs1ge6TAsJREQlzpzX4wX4zbjBExPn8IDVhsg/NxwNiDO2XdI3aztVgIsi8HK4wMRjR9NpB9ry9YJotq5ijkd8R0/ER31etyNMf214=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROxtj1dI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veK8IIvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC0FC19425;
-	Fri, 24 Apr 2026 13:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROxtj1dI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8DCC19425;
+	Fri, 24 Apr 2026 13:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038223;
-	bh=83tDZxR6FcflMM3g4hiUDk1EKC73XGLYj2abI7am0Gc=;
+	s=korg; t=1777038225;
+	bh=6ICwo3dYVBwbPwKHWNuqsx3TizMxnoKeZZaecBVUt1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=veK8IIvDhJN96QnhvNrCtpHCNN+Vc7/GwgjPaejQS/a2mrCHOibHjlw3n9chqPA3F
-	 2WJ6aFsIEsCVyfFCG1fIT49/VBy1DQYwYyutb1gLr/yA9SMQvZluC7Mxa4M1XX6kr4
-	 9Gur7Ve0U8u8mPgoxKYIzWX0NZNO75WvRI0VRR/E=
+	b=ROxtj1dIlwS98eqWC51il/9ieWs+iaPchMLW/GiSKGLXucwuyRmo+o7IQPiBb0z3l
+	 5LaOhLkuva9J9JAnYt8dogSlP6IUlsGek3aWcCcS/6dmgWBd1eZrWoi89oO+2ZCM88
+	 /qQvCus2HpJkV8x3aLBkxJPV2HwBepsQhbtdPdSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	Qi Tang <tpluszz77@gmail.com>,
-	Zijun Hu <nightu@northwestern.edu>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 16/35] fuse: reject oversized dirents in page cache
-Date: Fri, 24 Apr 2026 15:31:23 +0200
-Message-ID: <20260424132415.087398761@linuxfoundation.org>
+	Bernd Schubert <bschubert@ddn.com>,
+	Horst Birthelmer <hbirthelmer@ddn.com>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.12 17/35] fuse: Check for large folio with SPLICE_F_MOVE
+Date: Fri, 24 Apr 2026 15:31:24 +0200
+Message-ID: <20260424132415.293575004@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
 References: <20260424132411.427029259@linuxfoundation.org>
@@ -53,50 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Bernd Schubert <bschubert@ddn.com>
 
-commit 51a8de6c50bf947c8f534cd73da4c8f0a13e7bed upstream.
+commit 59ba47b6be9cd0146ef9a55c6e32e337e11e7625 upstream.
 
-fuse_add_dirent_to_cache() computes a serialized dirent size from the
-server-controlled namelen field and copies the dirent into a single
-page-cache page. The existing logic only checks whether the dirent fits
-in the remaining space of the current page and advances to a fresh page
-if not. It never checks whether the dirent itself exceeds PAGE_SIZE.
+xfstest generic/074 and generic/075 complain result in kernel
+warning messages / page dumps.
+This is easily reproducible (on 6.19) with
+CONFIG_TRANSPARENT_HUGEPAGE_SHMEM_HUGE_ALWAYS=y
+CONFIG_TRANSPARENT_HUGEPAGE_TMPFS_HUGE_ALWAYS=y
 
-As a result, a malicious FUSE server can return a dirent with
-namelen=4095, producing a serialized record size of 4120 bytes. On 4 KiB
-page systems this causes memcpy() to overflow the cache page by 24 bytes
-into the following kernel page.
+This just adds a test for large folios fuse_try_move_folio
+with the same page copy fallback, but to avoid the warnings
+from fuse_check_folio().
 
-Reject dirents that cannot fit in a single page before copying them into
-the readdir cache.
-
-Fixes: 69e34551152a ("fuse: allow caching readdir")
-Cc: stable@vger.kernel.org # v6.16+
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
-Reported-by: Qi Tang <tpluszz77@gmail.com>
-Reported-by: Zijun Hu <nightu@northwestern.edu>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bernd Schubert <bschubert@ddn.com>
+Signed-off-by: Horst Birthelmer <hbirthelmer@ddn.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://patch.msgid.link/20260420090139.662772-1-mszeredi@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/readdir.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/fuse/dev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/fuse/readdir.c
-+++ b/fs/fuse/readdir.c
-@@ -41,6 +41,10 @@ static void fuse_add_dirent_to_cache(str
- 	unsigned int offset;
- 	void *addr;
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -871,6 +871,9 @@ static int fuse_try_move_page(struct fus
+ 	folio_clear_uptodate(newfolio);
+ 	folio_clear_mappedtodisk(newfolio);
  
-+	/* Dirent doesn't fit in readdir cache page?  Skip caching. */
-+	if (reclen > PAGE_SIZE)
-+		return;
++	if (folio_test_large(newfolio))
++		goto out_fallback_unlock;
 +
- 	spin_lock(&fi->rdc.lock);
- 	/*
- 	 * Is cache already completed?  Or this entry does not go at the end of
+ 	if (fuse_check_folio(newfolio) != 0)
+ 		goto out_fallback_unlock;
+ 
 
 
