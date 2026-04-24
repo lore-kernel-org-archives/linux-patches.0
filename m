@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6B93B38AE;
-	Fri, 24 Apr 2026 13:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8DC19A288;
+	Fri, 24 Apr 2026 13:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038022; cv=none; b=Xfy+PBvHsKEHUqH2991F88+/a+FJypvMxCZWZZulRmDrb6FjujLSiiBEbQ+HwDBqtcE+ETqguMeDJ7vPa62qkRPhQ8PjidqBYIx/s4ye9TfBzHxAIlmrQQGzjIeNhBYVK4p0sXMHs0JE5wLHCgu9IgNfTMPZlP43wjaogKulXDY=
+	t=1777038024; cv=none; b=PBQEvUdGe2SmhaQksIBBxD4/AL+thRJlr+hxsu+NuxN4c71fZi7VKm+GaQLsdTyYU41W0+j5MUsHE/W+/vihX4xDjDf800wiJGVHeQkciKr25aX9TI+eMznXRHDDuQD3/zGadsEt3X/AKFtvRdxVuz2ShLNrBm4bSmU1+b2WqqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038022; c=relaxed/simple;
-	bh=UsaZ6rh4qzx6fIXT6M7zQiWXfakhM2Lq7UZyWDTbvGE=;
+	s=arc-20240116; t=1777038024; c=relaxed/simple;
+	bh=C9TYRpx/xo4wmyOBEGlaaMNucvatYRtyKj15vE7ufzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2vg8dy/+c3BhHTFgUc9NizYnSgDnnL0xrJJgV51IurCbK+0DiBQBANUJZM6g+nVpL6pG2SfFEv+6CwL9dqYP2lU/hkhlt4I2qSZsU3MeZDIinxQj9pf3v6Wy/L+bXHXPCC077rNrog2LifLQ4+rEaFACic3TaY/V9Ezdt6EukA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tC93hNjy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSobOwsfddT20/nQLKGhHIFGgR7Shv/tcCRF8aw5C71AByAkmz+SGCyxV8i1uJqo7Sx29wB9416v81s9GQvOmYOGuy5ZV3r/t2sfGnROqRMj+L8LRxtnC5SyYl7YNmkn+SJZt5YupGRm91kJ8tWflIZR6HKFVeMROol+KkLT1Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Djs5tK6a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tC93hNjy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2438C19425;
-	Fri, 24 Apr 2026 13:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Djs5tK6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657F0C19425;
+	Fri, 24 Apr 2026 13:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038022;
-	bh=UsaZ6rh4qzx6fIXT6M7zQiWXfakhM2Lq7UZyWDTbvGE=;
+	s=korg; t=1777038024;
+	bh=C9TYRpx/xo4wmyOBEGlaaMNucvatYRtyKj15vE7ufzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tC93hNjyf+5avv2aqsZ9bdhZrU1PZiPwMne0G1acYovvjfVO+U9GAWZ6zIdf8NJ1E
-	 OFk81DMeil4x6/gXeg7EgW7fMB5Ku94lfz2i3Q9IGsTGyWsQ06gFW6iBOxB4j61jcG
-	 xbS2Pnw50hcNj00YUPKyFtMUZ0MwYOtf0AQG3UEE=
+	b=Djs5tK6a8+TRTqfDniMNWhyuK2nf1Lsk9ukT/zZhyNfDw4PgTSn6R/x8j6PqngpBy
+	 btnHBnNGH1DmnUvM/SRRDMZes1yCiFwKsYsHk+O5J1MjapI1gih97XETXxgoZelacS
+	 DraASxoE+u25sXpnNqFtvErKczYe61cGFXopoK0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 117/166] media: vidtv: fix nfeeds state corruption on start_streaming failure
-Date: Fri, 24 Apr 2026 15:30:31 +0200
-Message-ID: <20260424132557.334935329@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 154/166] ksmbd: fix out-of-bounds write in smb2_get_ea() EA alignment
+Date: Fri, 24 Apr 2026 15:31:08 +0200
+Message-ID: <20260424132605.359824248@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,62 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit a0e5a598fe9a4612b852406b51153b881592aede upstream.
+commit 30010c952077a1c89ecdd71fc4d574c75a8f5617 upstream.
 
-syzbot reported a memory leak in vidtv_psi_service_desc_init [1].
+smb2_get_ea() applies 4-byte alignment padding via memset() after
+writing each EA entry. The bounds check on buf_free_len is performed
+before the value memcpy, but the alignment memset fires unconditionally
+afterward with no check on remaining space.
 
-When vidtv_start_streaming() fails inside vidtv_start_feed(), the
-nfeeds counter is left incremented even though no feed was actually
-started. This corrupts the driver state: subsequent start_feed calls
-see nfeeds > 1 and skip starting the mux, while stop_feed calls
-eventually try to stop a non-existent stream.
+When the EA value exactly fills the remaining buffer (buf_free_len == 0
+after value subtraction), the alignment memset writes 1-3 NUL bytes
+past the buf_free_len boundary. In compound requests where the response
+buffer is shared across commands, the first command (e.g., READ) can
+consume most of the buffer, leaving a tight remainder for the QUERY_INFO
+EA response. The alignment memset then overwrites past the physical
+kvmalloc allocation into adjacent kernel heap memory.
 
-This state corruption can also lead to memory leaks, since the mux
-and channel resources may be partially allocated during a failed
-start_streaming but never cleaned up, as the stop path finds
-dvb->streaming == false and returns early.
+Add a bounds check before the alignment memset to ensure buf_free_len
+can accommodate the padding bytes.
 
-Fix by decrementing nfeeds back when start_streaming fails, keeping
-the counter in sync with the actual number of active feeds.
+This is the same bug pattern fixed by commit beef2634f81f ("ksmbd: fix
+potencial OOB in get_file_all_info() for compound requests") and
+commit fda9522ed6af ("ksmbd: fix OOB write in QUERY_INFO for compound
+requests"), both of which added bounds checks before unconditional
+writes in QUERY_INFO response handlers.
 
-[1]
-BUG: memory leak
-unreferenced object 0xffff888145b50820 (size 32):
- comm "syz.0.17", pid 6068, jiffies 4294944486
- backtrace (crc 90a0c7d4):
-  vidtv_psi_service_desc_init+0x74/0x1b0 drivers/media/test-drivers/vidtv/vidtv_psi.c:288
-  vidtv_channel_s302m_init+0xb1/0x2a0 drivers/media/test-drivers/vidtv/vidtv_channel.c:83
-  vidtv_channels_init+0x1b/0x40 drivers/media/test-drivers/vidtv/vidtv_channel.c:524
-  vidtv_mux_init+0x516/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:518
-  vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
-  vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
-
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+639ebc6ec75e96674741@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=639ebc6ec75e96674741
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_bridge.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -237,8 +237,10 @@ static int vidtv_start_feed(struct dvb_d
- 
- 	if (dvb->nfeeds == 1) {
- 		ret = vidtv_start_streaming(dvb);
--		if (ret < 0)
-+		if (ret < 0) {
-+			dvb->nfeeds--;
- 			rc = ret;
-+		}
- 	}
- 
- 	mutex_unlock(&dvb->feed_lock);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4807,6 +4807,8 @@ static int smb2_get_ea(struct ksmbd_work
+ 		/* align next xattr entry at 4 byte bundary */
+ 		alignment_bytes = ((next_offset + 3) & ~3) - next_offset;
+ 		if (alignment_bytes) {
++			if (buf_free_len < alignment_bytes)
++				break;
+ 			memset(ptr, '\0', alignment_bytes);
+ 			ptr += alignment_bytes;
+ 			next_offset += alignment_bytes;
 
 
