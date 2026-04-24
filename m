@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCB433E347;
-	Fri, 24 Apr 2026 13:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78FA19A288;
+	Fri, 24 Apr 2026 13:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037927; cv=none; b=XSp31BNI7KgIWDzaXgU6sKt8h26kmCJauE4HLioNr2M0+hxRVAmxGF5jAbMHMVn9cTffyGr66eKK6CAMBA128cwavn6CfAbIQq7Cnhihaj4q4oJ9dPBw11jKHYalKnn9xPvDSKMK/FeZR3hLd70steIybWv1+xkavkjI9xp4MIY=
+	t=1777037929; cv=none; b=lxlqlymdK3TD2jsYLvlN8xfWXAFKV/MIVi8WujQFMHh4xiMvCwz361yLE+zQibl3SDwQ9BZ4HUbpzMTccahH+R+dFh11us7cnIPykfGJTHGe/CMEWO1uPAgfEiT8z/c44ar2sX26NzPd6Ja0/CTHxnl+iMyobvezuimSKuj9fEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037927; c=relaxed/simple;
-	bh=1Q5ZzLP4r5WSdfRfJObZ5CtnduigDhiv4kMSipqd90I=;
+	s=arc-20240116; t=1777037929; c=relaxed/simple;
+	bh=Ua/ALm9A9GarjXHckxsD8hTsLUda4YJSltnLyhejMeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yr+70bqWzJl/l0UAl/vKBK9/UTNjI5U6QqY/JIX/9pJ+f9jXITgTSxOdoFj3EnCf09yMHcZpJhfsPSnIOBPj2Qn3/mySpgWDiIo1ozWtfi9A8VGFTbQIUTXxn/Y8mfO0lMnkB6egmJZ5sSnPwAVidfp32I0NPmKKib40425wE1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewWeaiIn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/8Cc7n6SFtFLHXO97XRN8lBpGVvsyN1RSBwG2XXy5xrZPT6Ctsc7lDZUrgQIkQ1mTVFahgEcn3eOxjKxVysiUuVxAaQqaTv+Q2sez27GuuoZ+QmHvpVb3QALLQGpkQJanJ7nl5mNtaDB5f5vx3xqX+Zcys/nO2TZXFBitGAJv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej7M6EPE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewWeaiIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DA5C19425;
-	Fri, 24 Apr 2026 13:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej7M6EPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0B2C19425;
+	Fri, 24 Apr 2026 13:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037926;
-	bh=1Q5ZzLP4r5WSdfRfJObZ5CtnduigDhiv4kMSipqd90I=;
+	s=korg; t=1777037929;
+	bh=Ua/ALm9A9GarjXHckxsD8hTsLUda4YJSltnLyhejMeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewWeaiInZMH9oRWg0hOpPbY0k5yC0q5s4s4zIYCLPZxaM9xptjfeCtAc3EcMwzt8P
-	 3CZ1tBIiJJPMQo1lccAgnU/9BofPPFm3BzGXvfcUH7Uv7kmUgO1PaN75iQo1JBpktu
-	 dyf/TVQb1UPd4gaMFNMIMMXJ1v29v3JlO1/KZWmM=
+	b=ej7M6EPEI2UAkbLRjGGEztaW0XJNkN4uCgVqWH8+F+oahyl3Dnk558ZOkBSW0YlRQ
+	 Lhgxktl4ulWmdRnpkj4gQa8yC4q42TQ+DdP1sPym3W1II99YYmw2CHrM/XtFWFQyyf
+	 1upIyoLGx2UZ31GAD0Y8TnMAfTFfARQXKqW62me0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Johan Hovold <johan@kernel.org>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.6 091/166] wifi: rtw88: fix device leak on probe failure
-Date: Fri, 24 Apr 2026 15:30:05 +0200
-Message-ID: <20260424132551.760113690@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	stable@kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 082/166] ksmbd: validate EaNameLength in smb2_get_ea()
+Date: Fri, 24 Apr 2026 15:29:56 +0200
+Message-ID: <20260424132549.980479730@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,54 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit bbb15e71156cd9f5e1869eee7207a06ea8e96c39 upstream.
+commit 66751841212c2cc196577453c37f7774ff363f02 upstream.
 
-Driver core holds a reference to the USB interface and its parent USB
-device while the interface is bound to a driver and there is no need to
-take additional references unless the structures are needed after
-disconnect.
+smb2_get_ea() reads ea_req->EaNameLength from the client request and
+passes it directly to strncmp() as the comparison length without
+verifying that the length of the name really is the size of the input
+buffer received.
 
-This driver takes a reference to the USB device during probe but does
-not to release it on all probe errors (e.g. when descriptor parsing
-fails).
+Fix this up by properly checking the size of the name based on the value
+received and the overall size of the request, to prevent a later
+strncmp() call to use the length as a "trusted" size of the buffer.
+Without this check, uninitialized heap values might be slowly leaked to
+the client.
 
-Drop the redundant device reference to fix the leak, reduce cargo
-culting, make it easier to spot drivers where an extra reference is
-needed, and reduce the risk of further memory leaks.
-
-Fixes: a82dfd33d123 ("wifi: rtw88: Add common USB chip support")
-Reported-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/netdev/2026022319-turbofan-darkened-206d@gregkh/
-Cc: stable@vger.kernel.org	# 6.2
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260306085144.12064-19-johan@kernel.org
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -811,7 +811,7 @@ static int rtw_usb_intf_init(struct rtw_
- 			     struct usb_interface *intf)
- {
- 	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
--	struct usb_device *udev = usb_get_dev(interface_to_usbdev(intf));
-+	struct usb_device *udev = interface_to_usbdev(intf);
- 	int ret;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4702,6 +4702,11 @@ static int smb2_get_ea(struct ksmbd_work
  
- 	rtwusb->udev = udev;
-@@ -837,7 +837,6 @@ static void rtw_usb_intf_deinit(struct r
- {
- 	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
- 
--	usb_put_dev(rtwusb->udev);
- 	kfree(rtwusb->usb_data);
- 	usb_set_intfdata(intf, NULL);
- }
+ 		ea_req = (struct smb2_ea_info_req *)((char *)req +
+ 						     le16_to_cpu(req->InputBufferOffset));
++
++		if (le32_to_cpu(req->InputBufferLength) <
++		    offsetof(struct smb2_ea_info_req, name) +
++		    ea_req->EaNameLength)
++			return -EINVAL;
+ 	} else {
+ 		/* need to send all EAs, if no specific EA is requested*/
+ 		if (le32_to_cpu(req->Flags) & SL_RETURN_SINGLE_ENTRY)
 
 
