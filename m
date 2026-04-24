@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262003D6690;
-	Fri, 24 Apr 2026 13:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763E43D5643;
+	Fri, 24 Apr 2026 13:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037976; cv=none; b=Sy8QY/i1Qf9vgCqvKvGixhL0GJNDDbisf+KEGRQW9lyC1b1mB2mMcJpmo3+GG7uiITy1B2/kCI8tn9wWZrMvRm64wXt1SW/5sRwdzoMctBgmSczEc+q2mpsfdvO5TpqoqBy3sS+fJYkR6BzlorDt7AxJMcndaBCEHw7HlAXiDMg=
+	t=1777037978; cv=none; b=Fee7DwXAID6pusv2anDVS4qzswu7hzUtVV51grMzVzmPVSmLsxJ4Iw/hCpj5ehFi9NcbDBnhGneXNT1bpHJh8S518GoLl6IZvRxzQ/b6xLmEKl0htpOf/vH/pQqyq7ofoFzqqJle0mgwMam1lJTmUKqwnpV8RcFrAiHhNuR7p0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037976; c=relaxed/simple;
-	bh=2HidbOtiYWbAPjfcJy9khzSWkYjDCeu4a9rLyHspG0E=;
+	s=arc-20240116; t=1777037978; c=relaxed/simple;
+	bh=VmW6Vn6rFZywdZ+8fcPzEmfwf5e+9mMV71E0uaBEFr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TvpnjSuIFYm60xxmG2/xjBhGVqGuxb21itY58SNNZOH2r1mgBQC2E4C3mCtdJPgrhsieC4tvwzq8WOX6VOy00RpT2MMQgZdRqCAwP5vBl3f7eoDbRmvF8cIXYzZWnVdAbGlad7sBZdp6VQ3ArmTSrpLBKK+cGxUe/jvMceuf4uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eC3Fepxn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sKcMf0y89bCf1BPf1nhRV7vLDzEW1LKTCYWr9B06F6065Igz7xMGKHkUCZxCtBgLxGu5rYOJ9f/5d1dgbVY3KP47xtK9/WrIb67z8wQpJnRZMs2O2XoJQXarbSAWTa3SZkyX/4+kJN5rv0qWL5Ksmu+RSp90e2crC14BrsCp+iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eur8WDoV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eC3Fepxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69094C19425;
-	Fri, 24 Apr 2026 13:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eur8WDoV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035ABC19425;
+	Fri, 24 Apr 2026 13:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037975;
-	bh=2HidbOtiYWbAPjfcJy9khzSWkYjDCeu4a9rLyHspG0E=;
+	s=korg; t=1777037978;
+	bh=VmW6Vn6rFZywdZ+8fcPzEmfwf5e+9mMV71E0uaBEFr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eC3FepxnAUg2FmJQu/6t56Ikl1jn9S1JKH2oXKW+71aAL51WKhVZVjvRtxEgr0WUu
-	 b4fp0qjmvyYRMlB9lMFB/sfAhxceRfBrWc5SDd113RdREkeNsa8jITHj4L3oa30ora
-	 2OUn2IPvryQYp5xUt5XAlSgMlFAyQtxZR9jrA7Dg=
+	b=eur8WDoVenji+3Gng3XPVHoZvfXepPIsS318FkI2eyEYgA5MtILTWTjk+eZaxaW1w
+	 w5HZHI85nYikhrvfsyJ2CBenRdwX/Rmfd2DmR/pS762FS6sFg+1zvyGLyBL83i+ZsR
+	 IA0BPI7rQPOQypAHxm1NbP/wphdDInSuB9VQj7II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, devicetree@vger.kernel.org,  Nathan Chancellor" <nathan@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.6 142/166] scripts/dtc: Remove unused dts_version in dtc-lexer.l
-Date: Fri, 24 Apr 2026 15:30:56 +0200
-Message-ID: <20260424132602.740952666@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 143/166] rxrpc: Fix anonymous key handling
+Date: Fri, 24 Apr 2026 15:30:57 +0200
+Message-ID: <20260424132602.967081354@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -50,52 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
-to upstream version v1.7.2-69-g53373d135579") upstream applied it as
-part of a regular scripts/dtc sync, which may be unsuitable for older
-versions of stable where the warning it fixes is present.
+[ Upstream commit 6a59d84b4fc2f27f7b40e348506cc686712e260b ]
 
-A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
-in clang under a new subwarning, -Wunused-but-set-global, points out an
-unused static global variable in dtc-lexer.lex.c (compiled from
-dtc-lexer.l):
+In rxrpc_new_client_call_for_sendmsg(), a key with no payload is meant to
+be substituted for a NULL key pointer, but the variable this is done with
+is subsequently not used.
 
-  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
-    641 | static int dts_version = 1;
-        |            ^
+Fix this by using "key" rather than "rx->key" when filling in the
+connection parameters.
 
-Remove it to clear up the warning, as it is truly unused.
+Note that this only affects direct use of AF_RXRPC; the kAFS filesystem
+doesn't use sendmsg() directly and so bypasses the issue.  Further,
+AF_RXRPC passes a NULL key in if no key is set, so using an anonymous key
+in that manner works.  Since this hasn't been noticed to this point, it
+might be better just to remove the "key" variable and the code that sets it
+- and, arguably, rxrpc_init_client_call_security() would be a better place
+to handle it.
 
-Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 19ffa01c9c45 ("rxrpc: Use structs to hold connection params and protocol info")
+Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-4-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-This should apply cleanly to all supported stable branches.
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- scripts/dtc/dtc-lexer.l |    3 ---
- 1 file changed, 3 deletions(-)
+ net/rxrpc/sendmsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/dtc/dtc-lexer.l
-+++ b/scripts/dtc/dtc-lexer.l
-@@ -39,8 +39,6 @@ extern bool treesource_error;
- #define DPRINT(fmt, ...)	do { } while (0)
- #endif
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -590,7 +590,7 @@ rxrpc_new_client_call_for_sendmsg(struct
  
--static int dts_version = 1;
--
- #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
- 				BEGIN(V1); \
- 
-@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(c
- 
- <*>"/dts-v1/"	{
- 			DPRINT("Keyword: /dts-v1/\n");
--			dts_version = 1;
- 			BEGIN_DEFAULT();
- 			return DT_V1;
- 		}
+ 	memset(&cp, 0, sizeof(cp));
+ 	cp.local		= rx->local;
+-	cp.key			= rx->key;
++	cp.key			= key;
+ 	cp.security_level	= rx->min_sec_level;
+ 	cp.exclusive		= rx->exclusive | p->exclusive;
+ 	cp.upgrade		= p->upgrade;
 
 
