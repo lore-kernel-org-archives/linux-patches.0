@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1052C23E356;
-	Fri, 24 Apr 2026 13:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993A123E356;
+	Fri, 24 Apr 2026 13:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037865; cv=none; b=E/smQznO29UGvA/mXuiCqCgL/sC9cTiyYkIA+1QyjLGLjdyiUqIoyx6pSwc99RIRbKstIe3ZIm5uFHb+A7YApAQHMFltlZ8C/IDaGF24f4Va4Gz8Hsznvg06bSQkC3ikssZK7QP6100w4qiOcyBXGjTUciGTu04fOBgy5nzfzR0=
+	t=1777037867; cv=none; b=IEXRDxOuAqdp+bQwh8QfdNf8jwE/5vB8TwlGv9SPkJebalKwJwAiyHtKy3Spw8ZeQDjaHTzabnhPwHzUe+iGUC3WIXG6IwKGcG+XHv1GpvJ3bC9RBWWZS86EKz6ctFtfS26NY5scLBlBnNh90+IAWT6eB1cg0CLLL01A825cgmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037865; c=relaxed/simple;
-	bh=UXTPbM5rylIqs/DnZqZB8ESy/LbbmsNDiCwUiVzhNz4=;
+	s=arc-20240116; t=1777037867; c=relaxed/simple;
+	bh=NciLK6LDSBTsoREjyxPxtKZPzAGesLom2ProovyqbQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2d0t24QROR51wIpTz5o6mYDH986k2jB8KCHRvTGG7LctYATAbyGP5fHD1eezZw3BB/WXz99GmnOSF+9+51RHscLWJk6o6DKIAbk9qvqbdOuxffS+RPdImfBs3bzfID+SreVIsX+JZxJbH3lWCVDH2dc+xygMBuKiEXkmVlgp0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K90O9PNs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIcjymUEcUUqnBT+ycNc5etYhenut9B+ohyk0sKzccLAsN7XnzWJzMeysl+VByJRRaZs03OJQ9SrZe1fgxjpn8RBKvBqrWlRdbSF6UX1787pAoZACFZFyDIRqfMZcOTm8NnTZYyoJKPsn+d3bonZg6Pke0tz1VAtEpO1amtPvck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPsi3JcN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K90O9PNs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2CCC19425;
-	Fri, 24 Apr 2026 13:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPsi3JcN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F850C19425;
+	Fri, 24 Apr 2026 13:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037864;
-	bh=UXTPbM5rylIqs/DnZqZB8ESy/LbbmsNDiCwUiVzhNz4=;
+	s=korg; t=1777037867;
+	bh=NciLK6LDSBTsoREjyxPxtKZPzAGesLom2ProovyqbQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K90O9PNspscZGmDbzbx3p6Qpfy0BdSUd64BiYoXDw4F/mzd8xMkLY1FysqIA6C6r8
-	 /WeXAFNnvWjdfKyTEZQUQcQixRZXE4M9j3/lxivm4eTTuwuWh4Fw/M5yCCZHF1qll5
-	 3c1QDWwanubW80JmimMFbwScwvk2HcALhJMquGKU=
+	b=WPsi3JcN+l4Uc7jbM/6KcD2D/ukHBEuOO9/WBWvr40SMo+MwJJ7798yrr+uEta3Hz
+	 Gcy4nEapTdIruQWH1MNAKiAZ05UKm1EwrCCGN9qLhdoRIW/HhuSgVGSaoImbBrm0Mn
+	 gaeFLpkShSmo7evSX/lddmrEngoFq6fC37P0Vzqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 100/166] ocfs2: handle invalid dinode in ocfs2_group_extend
-Date: Fri, 24 Apr 2026 15:30:14 +0200
-Message-ID: <20260424132553.631279940@linuxfoundation.org>
+	Liam Merwick <liam.merwick@oracle.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 101/166] KVM: SEV: Drop WARN on large size for KVM_MEMORY_ENCRYPT_REG_REGION
+Date: Fri, 24 Apr 2026 15:30:15 +0200
+Message-ID: <20260424132553.826675491@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -57,77 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 4a1c0ddc6e7bcf2e9db0eeaab9340dcfe97f448f upstream.
+commit 8acffeef5ef720c35e513e322ab08e32683f32f2 upstream.
 
-[BUG]
-kernel BUG at fs/ocfs2/resize.c:308!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-RIP: 0010:ocfs2_group_extend+0x10aa/0x1ae0 fs/ocfs2/resize.c:308
-Code: 8b8520ff ffff83f8 860f8580 030000e8 5cc3c1fe
-Call Trace:
- ...
- ocfs2_ioctl+0x175/0x6e0 fs/ocfs2/ioctl.c:869
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x197/0x1e0 fs/ioctl.c:583
- x64_sys_call+0x1144/0x26a0 arch/x86/include/generated/asm/syscalls_64.h:17
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x93/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
- ...
+Drop the WARN in sev_pin_memory() on npages overflowing an int, as the
+WARN is comically trivially to trigger from userspace, e.g. by doing:
 
-[CAUSE]
-ocfs2_group_extend() assumes that the global bitmap inode block
-returned from ocfs2_inode_lock() has already been validated and
-BUG_ONs when the signature is not a dinode. That assumption is too
-strong for crafted filesystems because the JBD2-managed buffer path
-can bypass structural validation and return an invalid dinode to the
-resize ioctl.
+  struct kvm_enc_region range = {
+          .addr = 0,
+          .size = -1ul,
+  };
 
-[FIX]
-Validate the dinode explicitly in ocfs2_group_extend(). If the global
-bitmap buffer does not contain a valid dinode, report filesystem
-corruption with ocfs2_error() and fail the resize operation instead of
-crashing the kernel.
+  __vm_ioctl(vm, KVM_MEMORY_ENCRYPT_REG_REGION, &range);
 
-Link: https://lkml.kernel.org/r/20260401092303.3709187-1-gality369@gmail.com
-Fixes: 10995aa2451a ("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.")
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Note, the checks in sev_mem_enc_register_region() that presumably exist to
+verify the incoming address+size are completely worthless, as both "addr"
+and "size" are u64s and SEV is 64-bit only, i.e. they _can't_ be greater
+than ULONG_MAX.  That wart will be cleaned up in the near future.
+
+	if (range->addr > ULONG_MAX || range->size > ULONG_MAX)
+		return -EINVAL;
+
+Opportunistically add a comment to explain why the code calculates the
+number of pages the "hard" way, e.g. instead of just shifting @ulen.
+
+Fixes: 78824fabc72e ("KVM: SVM: fix svn_pin_memory()'s use of get_user_pages_fast()")
+Cc: stable@vger.kernel.org
+Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
+Tested-by: Liam Merwick <liam.merwick@oracle.com>
+Link: https://patch.msgid.link/20260313003302.3136111-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/resize.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/sev.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/resize.c
-+++ b/fs/ocfs2/resize.c
-@@ -295,9 +295,13 @@ int ocfs2_group_extend(struct inode * in
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -414,10 +414,16 @@ static struct page **sev_pin_memory(stru
+ 	if (ulen == 0 || uaddr + ulen < uaddr)
+ 		return ERR_PTR(-EINVAL);
  
- 	fe = (struct ocfs2_dinode *)main_bm_bh->b_data;
+-	/* Calculate number of pages. */
++	/*
++	 * Calculate the number of pages that need to be pinned to cover the
++	 * entire range.  Note!  This isn't simply ulen >> PAGE_SHIFT, as KVM
++	 * doesn't require the incoming address+size to be page aligned!
++	 */
+ 	first = (uaddr & PAGE_MASK) >> PAGE_SHIFT;
+ 	last = ((uaddr + ulen - 1) & PAGE_MASK) >> PAGE_SHIFT;
+ 	npages = (last - first + 1);
++	if (npages > INT_MAX)
++		return ERR_PTR(-EINVAL);
  
--	/* main_bm_bh is validated by inode read inside ocfs2_inode_lock(),
--	 * so any corruption is a code bug. */
--	BUG_ON(!OCFS2_IS_VALID_DINODE(fe));
-+	/* JBD-managed buffers can bypass validation, so treat this as corruption. */
-+	if (!OCFS2_IS_VALID_DINODE(fe)) {
-+		ret = ocfs2_error(main_bm_inode->i_sb,
-+				  "Invalid dinode #%llu\n",
-+				  (unsigned long long)OCFS2_I(main_bm_inode)->ip_blkno);
-+		goto out_unlock;
-+	}
+ 	locked = sev->pages_locked + npages;
+ 	lock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
+@@ -426,9 +432,6 @@ static struct page **sev_pin_memory(stru
+ 		return ERR_PTR(-ENOMEM);
+ 	}
  
- 	if (le16_to_cpu(fe->id2.i_chain.cl_cpg) !=
- 		ocfs2_group_bitmap_size(osb->sb, 0,
+-	if (WARN_ON_ONCE(npages > INT_MAX))
+-		return ERR_PTR(-EINVAL);
+-
+ 	/* Avoid using vmalloc for smaller buffers. */
+ 	size = npages * sizeof(struct page *);
+ 	if (size > PAGE_SIZE)
 
 
