@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EC63563D4;
-	Fri, 24 Apr 2026 13:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8463D6494;
+	Fri, 24 Apr 2026 13:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037891; cv=none; b=VIL6aDWn4v6Ei1AEsWSEiz28U3DywjeNP7XXkGQ1Od4zDphhynvpi+CwlnaNwaT9/Z82UduxSPuMV5stgbaY7DGMTlKhkF7p3h8JFLq8qM31tJlwT3KpOcS0LXpB333T9BtilCTFQT6QO3ShGrgC4CGwg9RqmeH2QfI/1OXXeYA=
+	t=1777037893; cv=none; b=m1qfvBTlwWjc88iJBOepgeSSC2GMbN9nWrWDFy9Qf0DG2imo/qziXCxV3tV3mTgxCLHA3TLVX+lO04bTN+Jsygb7lEa0C46GDmm5AxU1aIVA/TBnisJcWgZ3wOEy6RmBa23bgXIOKgbAZ+ts8X7+mekzxZ8Mnu2rKHj6rx67KJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037891; c=relaxed/simple;
-	bh=3J5epikscuQCoHhk3PQ/TOFbLPUP4u+aCiKmLvtKchI=;
+	s=arc-20240116; t=1777037893; c=relaxed/simple;
+	bh=gbLML9T3dZa/5s97av5JIRMgo71kMlL10sSwSOmHBXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQKP2XSLeThV3nBUK6hOnqvvHiYt7YKSnJ8fDyK67OG/ulXHJCDP7mPWunJUn+SsZlXzt+i4/tyM80au+/5aAW0FgQ1QJWJV48dHI16SMpVo7R/xQk1GmMIyAKuK3/lLSp5qykk0Re9iEFQh3UAPXbB1Htvc2JnQv9Wk0NhG/RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhYIdjp1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VtUuJonftjAtqVX8aN5WkmTBESPol726hvTvTK3Inx/LYWG5LmQ/OX/+HNudUTvMeZjQAhoGqkxEicPQXDeO21mdT3fQHHpavQmUrnyJd2fk1DI8+UzmWb3fS2I3tprWYK8/3zJVuUvJZofVAHyEuli8DnZuYaDKHyggY9u/9zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyvoGNv4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhYIdjp1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC0BC2BCB5;
-	Fri, 24 Apr 2026 13:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyvoGNv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1167AC19425;
+	Fri, 24 Apr 2026 13:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037890;
-	bh=3J5epikscuQCoHhk3PQ/TOFbLPUP4u+aCiKmLvtKchI=;
+	s=korg; t=1777037893;
+	bh=gbLML9T3dZa/5s97av5JIRMgo71kMlL10sSwSOmHBXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhYIdjp1pFDGhcrFiybBgIfgXYgoyxEGyOSuRFQeMIKQc1D3O0vV4P8xQ98X7c3vt
-	 vpyVm10Bb+fh5zMiQREzmkyiQvp08gSiHtuzfR17XV5nVlXen4CmT9HgbSwZqYnyjH
-	 NEfQJGiHY1smVnYSwweEvDB2tbm9lmA+qFZviTwk=
+	b=WyvoGNv46VEi4upl8TpcRn9SGdOb/Bf9cunYG39p/CO11osq21ipuKk9FoyA9KPY/
+	 CVg6oEZv1fvW5MyNZN5MYFNiovkosYG0yFf7Xbmc36e6hVxQGhAJ/4vXmzmz/ZUkTf
+	 2ilOAIQecwAYm7jcCBXuVHDow+Ko8Abqy7jl5KQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Rajani Kantha <681739313@139.com>,
+	Gurpreet Shergill <giki.shergill@proton.me>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Li hongliang <1468888505@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 109/166] blktrace: fix __this_cpu_read/write in preemptible context
-Date: Fri, 24 Apr 2026 15:30:23 +0200
-Message-ID: <20260424132555.576208841@linuxfoundation.org>
+Subject: [PATCH 6.6 110/166] nf_tables: nft_dynset: fix possible stateful expression memleak in error path
+Date: Fri, 24 Apr 2026 15:30:24 +0200
+Message-ID: <20260424132555.763485014@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -48,138 +47,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit da46b5dfef48658d03347cda21532bcdbb521e67 ]
+[ Upstream commit 0548a13b5a145b16e4da0628b5936baf35f51b43 ]
 
-tracing_record_cmdline() internally uses __this_cpu_read() and
-__this_cpu_write() on the per-CPU variable trace_cmdline_save, and
-trace_save_cmdline() explicitly asserts preemption is disabled via
-lockdep_assert_preemption_disabled(). These operations are only safe
-when preemption is off, as they were designed to be called from the
-scheduler context (probe_wakeup_sched_switch() / probe_wakeup()).
+If cloning the second stateful expression in the element via GFP_ATOMIC
+fails, then the first stateful expression remains in place without being
+released.
 
-__blk_add_trace() was calling tracing_record_cmdline(current) early in
-the blk_tracer path, before ring buffer reservation, from process
-context where preemption is fully enabled. This triggers the following
-using blktests/blktrace/002:
+   unreferenced object (percpu) 0x607b97e9cab8 (size 16):
+     comm "softirq", pid 0, jiffies 4294931867
+     hex dump (first 16 bytes on cpu 3):
+       00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+     backtrace (crc 0):
+       pcpu_alloc_noprof+0x453/0xd80
+       nft_counter_clone+0x9c/0x190 [nf_tables]
+       nft_expr_clone+0x8f/0x1b0 [nf_tables]
+       nft_dynset_new+0x2cb/0x5f0 [nf_tables]
+       nft_rhash_update+0x236/0x11c0 [nf_tables]
+       nft_dynset_eval+0x11f/0x670 [nf_tables]
+       nft_do_chain+0x253/0x1700 [nf_tables]
+       nft_do_chain_ipv4+0x18d/0x270 [nf_tables]
+       nf_hook_slow+0xaa/0x1e0
+       ip_local_deliver+0x209/0x330
 
-blktrace/002 (blktrace ftrace corruption with sysfs trace)   [failed]
-    runtime  0.367s  ...  0.437s
-    something found in dmesg:
-    [   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
-    [   81.239580] null_blk: disk nullb1 created
-    [   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
-    [   81.362842] caller is tracing_record_cmdline+0x10/0x40
-    [   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
-    [   81.362877] Tainted: [N]=TEST
-    [   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-    [   81.362881] Call Trace:
-    [   81.362884]  <TASK>
-    [   81.362886]  dump_stack_lvl+0x8d/0xb0
-    ...
-    (See '/mnt/sda/blktests/results/nodev/blktrace/002.dmesg' for the entire message)
-
-[   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
-[   81.239580] null_blk: disk nullb1 created
-[   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
-[   81.362842] caller is tracing_record_cmdline+0x10/0x40
-[   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
-[   81.362877] Tainted: [N]=TEST
-[   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-[   81.362881] Call Trace:
-[   81.362884]  <TASK>
-[   81.362886]  dump_stack_lvl+0x8d/0xb0
-[   81.362895]  check_preemption_disabled+0xce/0xe0
-[   81.362902]  tracing_record_cmdline+0x10/0x40
-[   81.362923]  __blk_add_trace+0x307/0x5d0
-[   81.362934]  ? lock_acquire+0xe0/0x300
-[   81.362940]  ? iov_iter_extract_pages+0x101/0xa30
-[   81.362959]  blk_add_trace_bio+0x106/0x1e0
-[   81.362968]  submit_bio_noacct_nocheck+0x24b/0x3a0
-[   81.362979]  ? lockdep_init_map_type+0x58/0x260
-[   81.362988]  submit_bio_wait+0x56/0x90
-[   81.363009]  __blkdev_direct_IO_simple+0x16c/0x250
-[   81.363026]  ? __pfx_submit_bio_wait_endio+0x10/0x10
-[   81.363038]  ? rcu_read_lock_any_held+0x73/0xa0
-[   81.363051]  blkdev_read_iter+0xc1/0x140
-[   81.363059]  vfs_read+0x20b/0x330
-[   81.363083]  ksys_read+0x67/0xe0
-[   81.363090]  do_syscall_64+0xbf/0xf00
-[   81.363102]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   81.363106] RIP: 0033:0x7f281906029d
-[   81.363111] Code: 31 c0 e9 c6 fe ff ff 50 48 8d 3d 66 63 0a 00 e8 59 ff 01 00 66 0f 1f 84 00 00 00 00 00 80 3d 41 33 0e 00 00 74 17 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 5b c3 66 2e 0f 1f 84 00 00 00 00 00 48 83 ec
-[   81.363113] RSP: 002b:00007ffca127dd48 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-[   81.363120] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f281906029d
-[   81.363122] RDX: 0000000000001000 RSI: 0000559f8bfae000 RDI: 0000000000000000
-[   81.363123] RBP: 0000000000001000 R08: 0000002863a10a81 R09: 00007f281915f000
-[   81.363124] R10: 00007f2818f77b60 R11: 0000000000000246 R12: 0000559f8bfae000
-[   81.363126] R13: 0000000000000000 R14: 0000000000000000 R15: 000000000000000a
-[   81.363142]  </TASK>
-
-The same BUG fires from blk_add_trace_plug(), blk_add_trace_unplug(),
-and blk_add_trace_rq() paths as well.
-
-The purpose of tracing_record_cmdline() is to cache the task->comm for
-a given PID so that the trace can later resolve it. It is only
-meaningful when a trace event is actually being recorded. Ring buffer
-reservation via ring_buffer_lock_reserve() disables preemption, and
-preemption remains disabled until the event is committed :-
-
-__blk_add_trace()
-       	__trace_buffer_lock_reserve()
-       		__trace_buffer_lock_reserve()
-       			ring_buffer_lock_reserve()
-       				preempt_disable_notrace();  <---
-
-With this fix blktests for blktrace pass:
-
-  blktests (master) # ./check blktrace
-  blktrace/001 (blktrace zone management command tracing)      [passed]
-      runtime  3.650s  ...  3.647s
-  blktrace/002 (blktrace ftrace corruption with sysfs trace)   [passed]
-      runtime  0.411s  ...  0.384s
-
-Fixes: 7ffbd48d5cab ("tracing: Cache comms only after an event occurred")
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Rajani Kantha <681739313@139.com>
+Fixes: 563125a73ac3 ("netfilter: nftables: generalize set extension to support for several expressions")
+Reported-by: Gurpreet Shergill <giki.shergill@proton.me>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/blktrace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c     |  4 ++--
+ net/netfilter/nft_dynset.c        | 10 +++++++++-
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
-index d5d94510afd3f..ce797d8dd451c 100644
---- a/kernel/trace/blktrace.c
-+++ b/kernel/trace/blktrace.c
-@@ -251,8 +251,6 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
- 	cpu = raw_smp_processor_id();
- 
- 	if (blk_tracer) {
--		tracing_record_cmdline(current);
--
- 		buffer = blk_tr->array_buffer.buffer;
- 		trace_ctx = tracing_gen_ctx_flags(0);
- 		event = trace_buffer_lock_reserve(buffer, TRACE_BLK,
-@@ -260,6 +258,8 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
- 						  trace_ctx);
- 		if (!event)
- 			return;
-+
-+		tracing_record_cmdline(current);
- 		t = ring_buffer_event_data(event);
- 		goto record_it;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 000ae2900f8c3..ab0567951e310 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -861,6 +861,8 @@ void *nft_set_elem_init(const struct nft_set *set,
+ 			u64 timeout, u64 expiration, gfp_t gfp);
+ int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+ 			    struct nft_expr *expr_array[]);
++void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
++			       struct nft_set_elem_expr *elem_expr);
+ void nft_set_elem_destroy(const struct nft_set *set, void *elem,
+ 			  bool destroy_expr);
+ void nf_tables_set_elem_destroy(const struct nft_ctx *ctx,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 0aaddc1131c65..a0914a92e07dd 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6464,8 +6464,8 @@ static void __nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
  	}
+ }
+ 
+-static void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+-				      struct nft_set_elem_expr *elem_expr)
++void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
++			       struct nft_set_elem_expr *elem_expr)
+ {
+ 	struct nft_expr *expr;
+ 	u32 size;
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index 9a0aaeed23602..87c6a02675ba3 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -30,18 +30,26 @@ static int nft_dynset_expr_setup(const struct nft_dynset *priv,
+ 				 const struct nft_set_ext *ext)
+ {
+ 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
++	struct nft_ctx ctx = {
++		.net	= read_pnet(&priv->set->net),
++		.family	= priv->set->table->family,
++	};
+ 	struct nft_expr *expr;
+ 	int i;
+ 
+ 	for (i = 0; i < priv->num_exprs; i++) {
+ 		expr = nft_setelem_expr_at(elem_expr, elem_expr->size);
+ 		if (nft_expr_clone(expr, priv->expr_array[i], GFP_ATOMIC) < 0)
+-			return -1;
++			goto err_out;
+ 
+ 		elem_expr->size += priv->expr_array[i]->ops->size;
+ 	}
+ 
+ 	return 0;
++err_out:
++	nft_set_elem_expr_destroy(&ctx, elem_expr);
++
++	return -1;
+ }
+ 
+ static void *nft_dynset_new(struct nft_set *set, const struct nft_expr *expr,
 -- 
 2.53.0
 
