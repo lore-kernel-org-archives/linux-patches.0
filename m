@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B6233E347;
-	Fri, 24 Apr 2026 13:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4906533E347;
+	Fri, 24 Apr 2026 13:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037903; cv=none; b=GclmWAYw8qNuXeUMNEPmoh7v3KEsrQfs4JJZxy95alMfxSTikW/qjo3Z7JWQixW1WTWLML3QrQUYlvQTNvLWcmzaTSTmlJKqCvkyw9BtBdaK3TMXW0A6bPNEq8UzWNe0OE3SJB8iRasSMzMXzu9Jb60/r/LwO6oFf0lJbgioMBU=
+	t=1777037906; cv=none; b=m5rWKUxBjiBwZwljI6SuSzSu0nHqMAyTAMc8oKeJurBG7Ff1bgwxvEnjM/6YWClJrkeaQVs/RjDhFoooryZtIBJENQ/UhpRYEASilyY5N7sAg2Vtm+oxr8ycdKRMyg61McxuQGFTCcjGw3AGvdOKvGVhtIqnEbtZAvU9kU1OsVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037903; c=relaxed/simple;
-	bh=fTNJ9vtKjeDwUSuMa2qDHOenbZV1Ctb1gCoX46nkVuQ=;
+	s=arc-20240116; t=1777037906; c=relaxed/simple;
+	bh=o23iiZ72Tzsb5+PJtjc9exUwLkGWmZPYYwGgoRsLCk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJ3nz72bhGJkrxODhvQVjheGxqDfY20vV8esHtOmKGCEdTQeG+ve17QN3HpkT2QIgcR+1Uu7hGYA3AYE9lgGSu4nMVWNZ+fIYU3VjFEA1yfJdbUZuNeEo59OOo2OQ3uhJ4AuY0jmxVZsI14/NViJ7i/zfqARF551YeqzAlXB/Mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfO/ekPP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jA++N+vP4lelwu79OhRZFlOl2HI//hEPIwNT3gC5Y2svvOd7GjUrICzKDd52qUDseZ6er0tczxjZ2NDasUkHrBvGom191u5OoW0x2ritVqe98C7tttgCL/olQuci7eKRfXUNKZ6cU16IsnctKXGLsvm6IalK5q9ho+Q7RQ6ECh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wB0rRm4V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfO/ekPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADBAC2BCB2;
-	Fri, 24 Apr 2026 13:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wB0rRm4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D326FC19425;
+	Fri, 24 Apr 2026 13:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037903;
-	bh=fTNJ9vtKjeDwUSuMa2qDHOenbZV1Ctb1gCoX46nkVuQ=;
+	s=korg; t=1777037906;
+	bh=o23iiZ72Tzsb5+PJtjc9exUwLkGWmZPYYwGgoRsLCk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HfO/ekPPa6WVc59iVvtVzIha8NiP8SzeL4WBZtNFwNIRTIYfqR7wTeQ4kcRk1m9u8
-	 KyBo/CLNSd9TxyCzbkgZGjwbub/BvnpO9FrA4AHXUe78Y3AVsOx0RCMR0dcNpGcMQq
-	 naOCkB8JYn28m/C5h9rMWjLWUV1POPmlp4qNoMMQ=
+	b=wB0rRm4VA7vJjPonTSDtfc+/K8VMG2PhGCuThoYmbMWQ6yQx+yjhpelQGdyPMrBkk
+	 NNBxMLhgYnpOF+aA+oyutmPBIC8GiZCQSELjKySw95ie/5POMvZM9bLAJk/sb2D9xr
+	 QWRddcwle4nLa5HnK6jMLAbTLKSmDcBpxsJ2VFgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yashu Zhang <zhangjiaji1@huawei.com>,
-	Tom Lendacky <thomas.lendacky@gmail.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 113/166] KVM: x86: Use scratch field in MMIO fragment to hold small write values
-Date: Fri, 24 Apr 2026 15:30:27 +0200
-Message-ID: <20260424132556.440909073@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 114/166] ASoC: qcom: q6apm: move component registration to unmanaged version
+Date: Fri, 24 Apr 2026 15:30:28 +0200
+Message-ID: <20260424132556.681568108@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -52,157 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 0b16e69d17d8c35c5c9d5918bf596c75a44655d3 upstream.
+commit 6ec1235fc941dac6c011b30ee01d9220ff87e0cd upstream.
 
-When exiting to userspace to service an emulated MMIO write, copy the
-to-be-written value to a scratch field in the MMIO fragment if the size
-of the data payload is 8 bytes or less, i.e. can fit in a single chunk,
-instead of pointing the fragment directly at the source value.
+q6apm component registers dais dynamically from ASoC toplology, which
+are allocated using device managed version apis. Allocating both
+component and dynamic dais using managed version could lead to incorrect
+free ordering, dai will be freed while component still holding references
+to it.
 
-This fixes a class of use-after-free bugs that occur when the emulator
-initiates a write using an on-stack, local variable as the source, the
-write splits a page boundary, *and* both pages are MMIO pages.  Because
-KVM's ABI only allows for physically contiguous MMIO requests, accesses
-that split MMIO pages are separated into two fragments, and are sent to
-userspace one at a time.  When KVM attempts to complete userspace MMIO in
-response to KVM_RUN after the first fragment, KVM will detect the second
-fragment and generate a second userspace exit, and reference the on-stack
-variable.
+Fix this issue by moving component to unmanged version so
+that the dai pointers are only freeded after the component is removed.
 
-The issue is most visible if the second KVM_RUN is performed by a separate
-task, in which case the stack of the initiating task can show up as truly
-freed data.
+==================================================================
+BUG: KASAN: slab-use-after-free in snd_soc_del_component_unlocked+0x3d4/0x400 [snd_soc_core]
+Read of size 8 at addr ffff00084493a6e8 by task kworker/u48:0/3426
+Tainted: [W]=WARN
+Hardware name: LENOVO 21N2ZC5PUS/21N2ZC5PUS, BIOS N42ET57W (1.31 ) 08/08/2024
+Workqueue: pdr_notifier_wq pdr_notifier_work [pdr_interface]
+Call trace:
+ show_stack+0x28/0x7c (C)
+ dump_stack_lvl+0x60/0x80
+ print_report+0x160/0x4b4
+ kasan_report+0xac/0xfc
+ __asan_report_load8_noabort+0x20/0x34
+ snd_soc_del_component_unlocked+0x3d4/0x400 [snd_soc_core]
+ snd_soc_unregister_component_by_driver+0x50/0x88 [snd_soc_core]
+ devm_component_release+0x30/0x5c [snd_soc_core]
+ devres_release_all+0x13c/0x210
+ device_unbind_cleanup+0x20/0x190
+ device_release_driver_internal+0x350/0x468
+ device_release_driver+0x18/0x30
+ bus_remove_device+0x1a0/0x35c
+ device_del+0x314/0x7f0
+ device_unregister+0x20/0xbc
+ apr_remove_device+0x5c/0x7c [apr]
+ device_for_each_child+0xd8/0x160
+ apr_pd_status+0x7c/0xa8 [apr]
+ pdr_notifier_work+0x114/0x240 [pdr_interface]
+ process_one_work+0x500/0xb70
+ worker_thread+0x630/0xfb0
+ kthread+0x370/0x6c0
+ ret_from_fork+0x10/0x20
 
-  ==================================================================
-  BUG: KASAN: use-after-free in complete_emulated_mmio+0x305/0x420
-  Read of size 1 at addr ffff888009c378d1 by task syz-executor417/984
+Allocated by task 77:
+ kasan_save_stack+0x40/0x68
+ kasan_save_track+0x20/0x40
+ kasan_save_alloc_info+0x44/0x58
+ __kasan_kmalloc+0xbc/0xdc
+ __kmalloc_node_track_caller_noprof+0x1f4/0x620
+ devm_kmalloc+0x7c/0x1c8
+ snd_soc_register_dai+0x50/0x4f0 [snd_soc_core]
+ soc_tplg_pcm_elems_load+0x55c/0x1eb8 [snd_soc_core]
+ snd_soc_tplg_component_load+0x4f8/0xb60 [snd_soc_core]
+ audioreach_tplg_init+0x124/0x1fc [snd_q6apm]
+ q6apm_audio_probe+0x10/0x1c [snd_q6apm]
+ snd_soc_component_probe+0x5c/0x118 [snd_soc_core]
+ soc_probe_component+0x44c/0xaf0 [snd_soc_core]
+ snd_soc_bind_card+0xad0/0x2370 [snd_soc_core]
+ snd_soc_register_card+0x3b0/0x4c0 [snd_soc_core]
+ devm_snd_soc_register_card+0x50/0xc8 [snd_soc_core]
+ x1e80100_platform_probe+0x208/0x368 [snd_soc_x1e80100]
+ platform_probe+0xc0/0x188
+ really_probe+0x188/0x804
+ __driver_probe_device+0x158/0x358
+ driver_probe_device+0x60/0x190
+ __device_attach_driver+0x16c/0x2a8
+ bus_for_each_drv+0x100/0x194
+ __device_attach+0x174/0x380
+ device_initial_probe+0x14/0x20
+ bus_probe_device+0x124/0x154
+ deferred_probe_work_func+0x140/0x220
+ process_one_work+0x500/0xb70
+ worker_thread+0x630/0xfb0
+ kthread+0x370/0x6c0
+ ret_from_fork+0x10/0x20
 
-  CPU: 1 PID: 984 Comm: syz-executor417 Not tainted 5.10.0-182.0.0.95.h2627.eulerosv2r13.x86_64 #3
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014 Call Trace:
-  dump_stack+0xbe/0xfd
-  print_address_description.constprop.0+0x19/0x170
-  __kasan_report.cold+0x6c/0x84
-  kasan_report+0x3a/0x50
-  check_memory_region+0xfd/0x1f0
-  memcpy+0x20/0x60
-  complete_emulated_mmio+0x305/0x420
-  kvm_arch_vcpu_ioctl_run+0x63f/0x6d0
-  kvm_vcpu_ioctl+0x413/0xb20
-  __se_sys_ioctl+0x111/0x160
-  do_syscall_64+0x30/0x40
-  entry_SYSCALL_64_after_hwframe+0x67/0xd1
-  RIP: 0033:0x42477d
-  Code: <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-  RSP: 002b:00007faa8e6890e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 00000000004d7338 RCX: 000000000042477d
-  RDX: 0000000000000000 RSI: 000000000000ae80 RDI: 0000000000000005
-  RBP: 00000000004d7330 R08: 00007fff28d546df R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004d733c
-  R13: 0000000000000000 R14: 000000000040a200 R15: 00007fff28d54720
+Freed by task 3426:
+ kasan_save_stack+0x40/0x68
+ kasan_save_track+0x20/0x40
+ __kasan_save_free_info+0x4c/0x80
+ __kasan_slab_free+0x78/0xa0
+ kfree+0x100/0x4a4
+ devres_release_all+0x144/0x210
+ device_unbind_cleanup+0x20/0x190
+ device_release_driver_internal+0x350/0x468
+ device_release_driver+0x18/0x30
+ bus_remove_device+0x1a0/0x35c
+ device_del+0x314/0x7f0
+ device_unregister+0x20/0xbc
+ apr_remove_device+0x5c/0x7c [apr]
+ device_for_each_child+0xd8/0x160
+ apr_pd_status+0x7c/0xa8 [apr]
+ pdr_notifier_work+0x114/0x240 [pdr_interface]
+ process_one_work+0x500/0xb70
+ worker_thread+0x630/0xfb0
+ kthread+0x370/0x6c0
+ ret_from_fork+0x10/0x20
 
-  The buggy address belongs to the page:
-  page:0000000029f6a428 refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9c37
-  flags: 0xfffffc0000000(node=0|zone=1|lastcpupid=0x1fffff)
-  raw: 000fffffc0000000 0000000000000000 ffffea0000270dc8 0000000000000000
-  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000 page dumped because: kasan: bad access detected
-
-  Memory state around the buggy address:
-  ffff888009c37780: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  ffff888009c37800: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  >ffff888009c37880: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                                                   ^
-  ffff888009c37900: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  ffff888009c37980: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-  ==================================================================
-
-The bug can also be reproduced with a targeted KVM-Unit-Test by hacking
-KVM to fill a large on-stack variable in complete_emulated_mmio(), i.e. by
-overwrite the data value with garbage.
-
-Limit the use of the scratch fields to 8-byte or smaller accesses, and to
-just writes, as larger accesses and reads are not affected thanks to
-implementation details in the emulator, but add a sanity check to ensure
-those details don't change in the future.  Specifically, KVM never uses
-on-stack variables for accesses larger that 8 bytes, e.g. uses an operand
-in the emulator context, and *all* reads are buffered through the mem_read
-cache.
-
-Note!  Using the scratch field for reads is not only unnecessary, it's
-also extremely difficult to handle correctly.  As above, KVM buffers all
-reads through the mem_read cache, and heavily relies on that behavior when
-re-emulating the instruction after a userspace MMIO read exit.  If a read
-splits a page, the first page is NOT an MMIO page, and the second page IS
-an MMIO page, then the MMIO fragment needs to point at _just_ the second
-chunk of the destination, i.e. its position in the mem_read cache.  Taking
-the "obvious" approach of copying the fragment value into the destination
-when re-emulating the instruction would clobber the first chunk of the
-destination, i.e. would clobber the data that was read from guest memory.
-
-Fixes: f78146b0f923 ("KVM: Fix page-crossing MMIO")
-Suggested-by: Yashu Zhang <zhangjiaji1@huawei.com>
-Reported-by: Yashu Zhang <zhangjiaji1@huawei.com>
-Closes: https://lore.kernel.org/all/369eaaa2b3c1425c85e8477066391bc7@huawei.com
-Cc: stable@vger.kernel.org
-Tested-by: Tom Lendacky <thomas.lendacky@gmail.com>
-Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Link: https://patch.msgid.link/20260225012049.920665-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260402081118.348071-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c       |   14 +++++++++++++-
- include/linux/kvm_host.h |    3 ++-
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -7713,7 +7713,13 @@ static int emulator_read_write_onepage(u
- 	WARN_ON(vcpu->mmio_nr_fragments >= KVM_MAX_MMIO_FRAGMENTS);
- 	frag = &vcpu->mmio_fragments[vcpu->mmio_nr_fragments++];
- 	frag->gpa = gpa;
--	frag->data = val;
-+	if (write && bytes <= 8u) {
-+		frag->val = 0;
-+		frag->data = &frag->val;
-+		memcpy(&frag->val, val, bytes);
-+	} else {
-+		frag->data = val;
-+	}
- 	frag->len = bytes;
- 	return X86EMUL_CONTINUE;
+--- a/sound/soc/qcom/qdsp6/q6apm.c
++++ b/sound/soc/qcom/qdsp6/q6apm.c
+@@ -764,13 +764,22 @@ static int apm_probe(gpr_device_t *gdev)
+ 
+ 	q6apm_get_apm_state(apm);
+ 
+-	ret = devm_snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
++	ret = snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to register q6apm: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	return of_platform_populate(dev->of_node, NULL, NULL, dev);
++	ret = of_platform_populate(dev->of_node, NULL, NULL, dev);
++	if (ret)
++		snd_soc_unregister_component(dev);
++
++	return ret;
++}
++
++static void apm_remove(gpr_device_t *gdev)
++{
++	snd_soc_unregister_component(&gdev->dev);
  }
-@@ -7728,6 +7734,9 @@ static int emulator_read_write(struct x8
- 	gpa_t gpa;
- 	int rc;
  
-+	if (WARN_ON_ONCE((bytes > 8u || !ops->write) && object_is_on_stack(val)))
-+		return X86EMUL_UNHANDLEABLE;
-+
- 	if (ops->read_write_prepare &&
- 		  ops->read_write_prepare(vcpu, val, bytes))
- 		return X86EMUL_CONTINUE;
-@@ -11136,6 +11145,9 @@ static int complete_emulated_mmio(struct
- 		frag++;
- 		vcpu->mmio_cur_fragment++;
- 	} else {
-+		if (WARN_ON_ONCE(frag->data == &frag->val))
-+			return -EIO;
-+
- 		/* Go forward to the next mmio piece. */
- 		frag->data += len;
- 		frag->gpa += len;
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -316,7 +316,8 @@ static inline bool kvm_vcpu_can_poll(kti
- struct kvm_mmio_fragment {
- 	gpa_t gpa;
- 	void *data;
--	unsigned len;
-+	u64 val;
-+	unsigned int len;
- };
+ struct audioreach_module *q6apm_find_module_by_mid(struct q6apm_graph *graph, uint32_t mid)
+@@ -837,6 +846,7 @@ MODULE_DEVICE_TABLE(of, apm_device_id);
  
- struct kvm_vcpu {
+ static gpr_driver_t apm_driver = {
+ 	.probe = apm_probe,
++	.remove = apm_remove,
+ 	.gpr_callback = apm_callback,
+ 	.driver = {
+ 		.name = "qcom-apm",
 
 
