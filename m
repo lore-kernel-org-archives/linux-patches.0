@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A964F78F4A;
-	Fri, 24 Apr 2026 13:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1456D3D6CCE;
+	Fri, 24 Apr 2026 13:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037603; cv=none; b=qv5zi/Pg4c3nlY+g4cPfwaq5PHTsonUw+fabr9GmqMCATnUVQ2K+YA7PAY6iFYK0sdfjoEgE1uQyL3HPNBaafPvapXomMYs32If0vbdJUBGbiHqUPfPhqjhxJ8MaIcVqr5O/MbEH8MYRnNFzfP4wRsEAMZRlT3W41mYbi4HS13A=
+	t=1777037606; cv=none; b=PgRjAr03O4iym3umv+JuRnz1jKlIh0ya3yJ+W91zy/CtYUDmM+AG2n/wKPiO2hjCi1uIg8wHUhF37+oHCpjRE4i5jCOB3gLR5R26OTJIFEyeKJMwKbwAjM9Nz4GTPe7iHvEmidknCTB/yPPVZQe/bP83U8nm/RDLYVXDfinA8NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037603; c=relaxed/simple;
-	bh=87Ra6/+lT8PcCJeem1ZKrLHxst43dAsB4dLTgMKf1os=;
+	s=arc-20240116; t=1777037606; c=relaxed/simple;
+	bh=EFvSPkaPGY4Z7bsIoKqBmNgwaXefVKHzdhy4ZvBT2vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iZFpYLEFXrRS/SaBB/eCnQQB/8GhBE/0JWb3CmITjsipcJToQTRtuqUbGSz+eRKqJ7UtIi5dAxBcQNMX5CaW+gWRxdx25ZI2QuaucdQQZYErwWPuCfjV1yHc7ZtglRvc0L3drN9ANDwd60QO4WpVoY96zRM8iNU3lA2a/xH1E8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KG4MPUB2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HGcrJ5GtbXvKNBvsQz9449DqT+xkPwdIySoGG5qrT2ryBvT6J3raLbMw/IWFQQRU7QWvd2RDtGFG83qAluvKXucvRcQ2NDsnkxL8qabo94ELqRgIkaw3qjSw0l4rxfjvy2J8ckh1G0ZoFvCPR4Y847ujTM8XEgwAdxMePzXg10E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQ7SX0sf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KG4MPUB2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E1FC19425;
-	Fri, 24 Apr 2026 13:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQ7SX0sf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77673C2BCB5;
+	Fri, 24 Apr 2026 13:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037603;
-	bh=87Ra6/+lT8PcCJeem1ZKrLHxst43dAsB4dLTgMKf1os=;
+	s=korg; t=1777037605;
+	bh=EFvSPkaPGY4Z7bsIoKqBmNgwaXefVKHzdhy4ZvBT2vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KG4MPUB23RG9f+Zm806UMAaegE98WXGZGS5MpAJ8vpyLdwJzCc+HcdY/ZD7j4w9kt
-	 WIs1A6CAZrtyKPcQstYEB7gfOvDl+KFcPhWA6KvLFqWAYS/+zohx1IZROUUvO9DEi9
-	 i9lJFe+ypT0N6zCkVH8WT/FuV2hz3EJqsPcHvCHw=
+	b=cQ7SX0sfni8Z6icGyk80bJVmKdGxQGnFgqI9cupihLPB1795t36U589HOb0XGD4w1
+	 u5lnhiOwnrhiFYfK+HyWLaTfKsOTCcHx0uBVm5AbH8u+MXaRWf4IyqKzeuOB7p9Nbo
+	 Bj2EpvjhpX4HhFkcI+znr38P3DGHnHF68mFScoGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 7.0 42/42] mshv_vtl: Fix vmemmap_shift exceeding MAX_FOLIO_ORDER
-Date: Fri, 24 Apr 2026 15:31:07 +0200
-Message-ID: <20260424132429.327746311@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.0 28/42] ksmbd: validate num_aces and harden ACE walk in smb_inherit_dacl()
+Date: Fri, 24 Apr 2026 15:30:53 +0200
+Message-ID: <20260424132426.245133806@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132420.410310336@linuxfoundation.org>
 References: <20260424132420.410310336@linuxfoundation.org>
@@ -51,100 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 404cd6bffe17e25e0f94ed2775ffdd6cd10ac3fd upstream.
+commit 3e4e2ea2a781018ed5d75f969e3e5606beb66e48 upstream.
 
-When registering VTL0 memory via MSHV_ADD_VTL0_MEMORY, the kernel
-computes pgmap->vmemmap_shift as the number of trailing zeros in the
-OR of start_pfn and last_pfn, intending to use the largest compound
-page order both endpoints are aligned to.
+smb_inherit_dacl() trusts the on-disk num_aces value from the parent
+directory's DACL xattr and uses it to size a heap allocation:
 
-However, this value is not clamped to MAX_FOLIO_ORDER, so a
-sufficiently aligned range (e.g. physical range
-[0x800000000000, 0x800080000000), corresponding to start_pfn=0x800000000
-with 35 trailing zeros) can produce a shift larger than what
-memremap_pages() accepts, triggering a WARN and returning -EINVAL:
+  aces_base = kmalloc(sizeof(struct smb_ace) * num_aces * 2, ...);
 
-  WARNING: ... memremap_pages+0x512/0x650
-  requested folio size unsupported
+num_aces is a u16 read from le16_to_cpu(parent_pdacl->num_aces)
+without checking that it is consistent with the declared pdacl_size.
+An authenticated client whose parent directory's security.NTACL is
+tampered (e.g. via offline xattr corruption or a concurrent path that
+bypasses parse_dacl()) can present num_aces = 65535 with minimal
+actual ACE data.  This causes a ~8 MB allocation (not kzalloc, so
+uninitialized) that the subsequent loop only partially populates, and
+may also overflow the three-way size_t multiply on 32-bit kernels.
 
-The MAX_FOLIO_ORDER check was added by
-commit 646b67d57589 ("mm/memremap: reject unreasonable folio/compound
-page sizes in memremap_pages()").
+Additionally, the ACE walk loop uses the weaker
+offsetof(struct smb_ace, access_req) minimum size check rather than
+the minimum valid on-wire ACE size, and does not reject ACEs whose
+declared size is below the minimum.
 
-Fix this by clamping vmemmap_shift to MAX_FOLIO_ORDER so we always
-request the largest order the kernel supports, in those cases, rather
-than an out-of-range value.
+Reproduced on UML + KASAN + LOCKDEP against the real ksmbd code path.
+A legitimate mount.cifs client creates a parent directory over SMB
+(ksmbd writes a valid security.NTACL xattr), then the NTACL blob on
+the backing filesystem is rewritten to set num_aces = 0xFFFF while
+keeping the posix_acl_hash bytes intact so ksmbd_vfs_get_sd_xattr()'s
+hash check still passes.  A subsequent SMB2 CREATE of a child under
+that parent drives smb2_open() into smb_inherit_dacl() (share has
+"vfs objects = acl_xattr" set), which fails the page allocator:
 
-Also fix the error path to propagate the actual error code from
-devm_memremap_pages() instead of hard-coding -EFAULT, which was
-masking the real -EINVAL return.
+  WARNING: mm/page_alloc.c:5226 at __alloc_frozen_pages_noprof+0x46c/0x9c0
+  Workqueue: ksmbd-io handle_ksmbd_work
+   __alloc_frozen_pages_noprof+0x46c/0x9c0
+   ___kmalloc_large_node+0x68/0x130
+   __kmalloc_large_node_noprof+0x24/0x70
+   __kmalloc_noprof+0x4c9/0x690
+   smb_inherit_dacl+0x394/0x2430
+   smb2_open+0x595d/0xabe0
+   handle_ksmbd_work+0x3d3/0x1140
 
-Fixes: 7bfe3b8ea6e3 ("Drivers: hv: Introduce mshv_vtl driver")
+With the patch applied the added guard rejects the tampered value
+with -EINVAL before any large allocation runs, smb2_open() falls back
+to smb2_create_sd_buffer(), and the child is created with a default
+SD.  No warning, no splat.
+
+Fix by:
+
+  1. Validating num_aces against pdacl_size using the same formula
+     applied in parse_dacl().
+
+  2. Replacing the raw kmalloc(sizeof * num_aces * 2) with
+     kmalloc_array(num_aces * 2, sizeof(...)) for overflow-safe
+     allocation.
+
+  3. Tightening the per-ACE loop guard to require the minimum valid
+     ACE size (offsetof(smb_ace, sid) + CIFS_SID_BASE_SIZE) and
+     rejecting under-sized ACEs, matching the hardening in
+     smb_check_perm_dacl() and parse_dacl().
+
+v1 -> v2:
+  - Replace the synthetic test-module splat in the changelog with a
+    real-path UML + KASAN reproduction driven through mount.cifs and
+    SMB2 CREATE; Namjae flagged the kcifs3_test_inherit_dacl_old name
+    in v1 since it does not exist in ksmbd.
+  - Drop the commit-hash citation from the code comment per Namjae's
+    review; keep the parse_dacl() pointer.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/mshv_vtl_main.c |   12 +++++++++---
- include/uapi/linux/mshv.h  |    2 +-
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ fs/smb/server/smbacl.c |   28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
---- a/drivers/hv/mshv_vtl_main.c
-+++ b/drivers/hv/mshv_vtl_main.c
-@@ -386,7 +386,6 @@ static int mshv_vtl_ioctl_add_vtl0_mem(s
- 
- 	if (copy_from_user(&vtl0_mem, arg, sizeof(vtl0_mem)))
- 		return -EFAULT;
--	/* vtl0_mem.last_pfn is excluded in the pagemap range for VTL0 as per design */
- 	if (vtl0_mem.last_pfn <= vtl0_mem.start_pfn) {
- 		dev_err(vtl->module_dev, "range start pfn (%llx) > end pfn (%llx)\n",
- 			vtl0_mem.start_pfn, vtl0_mem.last_pfn);
-@@ -397,6 +396,10 @@ static int mshv_vtl_ioctl_add_vtl0_mem(s
- 	if (!pgmap)
- 		return -ENOMEM;
- 
-+	/*
-+	 * vtl0_mem.last_pfn is excluded in the pagemap range for VTL0 as per design.
-+	 * last_pfn is not reserved or wasted, and reflects 'start_pfn + size' of pagemap range.
-+	 */
- 	pgmap->ranges[0].start = PFN_PHYS(vtl0_mem.start_pfn);
- 	pgmap->ranges[0].end = PFN_PHYS(vtl0_mem.last_pfn) - 1;
- 	pgmap->nr_range = 1;
-@@ -405,8 +408,11 @@ static int mshv_vtl_ioctl_add_vtl0_mem(s
- 	/*
- 	 * Determine the highest page order that can be used for the given memory range.
- 	 * This works best when the range is aligned; i.e. both the start and the length.
-+	 * Clamp to MAX_FOLIO_ORDER to avoid a WARN in memremap_pages() when the range
-+	 * alignment exceeds the maximum supported folio order for this kernel config.
- 	 */
--	pgmap->vmemmap_shift = count_trailing_zeros(vtl0_mem.start_pfn | vtl0_mem.last_pfn);
-+	pgmap->vmemmap_shift = min(count_trailing_zeros(vtl0_mem.start_pfn | vtl0_mem.last_pfn),
-+				   MAX_FOLIO_ORDER);
- 	dev_dbg(vtl->module_dev,
- 		"Add VTL0 memory: start: 0x%llx, end_pfn: 0x%llx, page order: %lu\n",
- 		vtl0_mem.start_pfn, vtl0_mem.last_pfn, pgmap->vmemmap_shift);
-@@ -415,7 +421,7 @@ static int mshv_vtl_ioctl_add_vtl0_mem(s
- 	if (IS_ERR(addr)) {
- 		dev_err(vtl->module_dev, "devm_memremap_pages error: %ld\n", PTR_ERR(addr));
- 		kfree(pgmap);
--		return -EFAULT;
-+		return PTR_ERR(addr);
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1106,8 +1106,24 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 		goto free_parent_pntsd;
  	}
  
- 	/* Don't free pgmap, since it has to stick around until the memory
---- a/include/uapi/linux/mshv.h
-+++ b/include/uapi/linux/mshv.h
-@@ -357,7 +357,7 @@ struct mshv_vtl_sint_post_msg {
+-	aces_base = kmalloc(sizeof(struct smb_ace) * num_aces * 2,
+-			    KSMBD_DEFAULT_GFP);
++	aces_size = pdacl_size - sizeof(struct smb_acl);
++
++	/*
++	 * Validate num_aces against the DACL payload before allocating.
++	 * Each ACE must be at least as large as its fixed-size header
++	 * (up to the SID base), so num_aces cannot exceed the payload
++	 * divided by the minimum ACE size.  This mirrors the existing
++	 * check in parse_dacl().
++	 */
++	if (num_aces > aces_size / (offsetof(struct smb_ace, sid) +
++				    offsetof(struct smb_sid, sub_auth) +
++				    sizeof(__le16))) {
++		rc = -EINVAL;
++		goto free_parent_pntsd;
++	}
++
++	aces_base = kmalloc_array(num_aces * 2, sizeof(struct smb_ace),
++				  KSMBD_DEFAULT_GFP);
+ 	if (!aces_base) {
+ 		rc = -ENOMEM;
+ 		goto free_parent_pntsd;
+@@ -1116,7 +1132,6 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 	aces = (struct smb_ace *)aces_base;
+ 	parent_aces = (struct smb_ace *)((char *)parent_pdacl +
+ 			sizeof(struct smb_acl));
+-	aces_size = acl_len - sizeof(struct smb_acl);
  
- struct mshv_vtl_ram_disposition {
- 	__u64 start_pfn;
--	__u64 last_pfn;
-+	__u64 last_pfn; /* last_pfn is excluded from the range [start_pfn, last_pfn) */
- };
+ 	if (pntsd_type & DACL_AUTO_INHERITED)
+ 		inherited_flags = INHERITED_ACE;
+@@ -1124,11 +1139,14 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 	for (i = 0; i < num_aces; i++) {
+ 		int pace_size;
  
- struct mshv_vtl_set_poll_file {
+-		if (offsetof(struct smb_ace, access_req) > aces_size)
++		if (aces_size < offsetof(struct smb_ace, sid) +
++		    CIFS_SID_BASE_SIZE)
+ 			break;
+ 
+ 		pace_size = le16_to_cpu(parent_aces->size);
+-		if (pace_size > aces_size)
++		if (pace_size > aces_size ||
++		    pace_size < offsetof(struct smb_ace, sid) +
++				CIFS_SID_BASE_SIZE)
+ 			break;
+ 
+ 		aces_size -= pace_size;
 
 
