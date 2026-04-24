@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED4223E356;
-	Fri, 24 Apr 2026 13:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8EF3D47B0;
+	Fri, 24 Apr 2026 13:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037857; cv=none; b=QkyehUaLIen2m02AHJCmG/5Y27Rd5DGzaj4pgu+ysevHZL0vzcdQz3XSbViqU/23Njw+Blt4wUP4DAjNqWauADUNdOs4t5t3NlrOVdJJHwvdtbxmGKKhY09E1dW/41/VJwIaDFD5aXdP3z6GRRYes+TwUzkRhW6OAAHjk+ciLpY=
+	t=1777037859; cv=none; b=RKey5fEbLf77+BT9C9gj0sxhuAWf6TQQpIAkPjDY21HEKFUpSQkCXf1W7f0cCr+pb5vOilROJO+2HRRuNg6xbXIVStdGlpc3oucZ7bkeMj/N9MSmHuo9Gqw7l/mnO0TeDFSVV9MS7sJPZvtG3hrhqlZB+ag8WEp6s1B0nRCnb2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037857; c=relaxed/simple;
-	bh=qdVYOjP/5iVEE5ZW/0ODB3PJB2NHYlAgm4hp8OLigj0=;
+	s=arc-20240116; t=1777037859; c=relaxed/simple;
+	bh=od3kGaMhwgkk8/gFqQDpPWK3nyFblV1lEZlqA9E3XlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ki6pxJmQ1AX7QEP0UyO4FGWUDauvZ3439/WxIF8Cjfno3657KS3Ct1tl+cnoGnvKSFHthkHVFBMoZDNDSJ74ToBL7LoyzQhiaRaII9YriFgnQUX0NzouApcOiItm5kRP8X6/mdrsn06TKqDCtIVUuqpTQkxEYY4a/GoxQNk4Y7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBtkpjI4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KLndmyjX286z/b9azhieiDf2RA7BFtxPSgr4bPSe04TOmBBE3jggzCNlx26j9/9PR18lJenWSYBw7Jubal9R7xfaNRP/OR6nIB9Rct9UujZdL6OUc+O2DRfTo4o08AHS7maxAszHTj4xTKjRPmkzvcGVQ/N19Pi0AZ3bVIv5nJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbSjNh5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBtkpjI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC04EC19425;
-	Fri, 24 Apr 2026 13:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbSjNh5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B423C19425;
+	Fri, 24 Apr 2026 13:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037857;
-	bh=qdVYOjP/5iVEE5ZW/0ODB3PJB2NHYlAgm4hp8OLigj0=;
+	s=korg; t=1777037859;
+	bh=od3kGaMhwgkk8/gFqQDpPWK3nyFblV1lEZlqA9E3XlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBtkpjI4ntDXUu3+94WPA7pFtyCVoWORSaZ0g+VbVniV0dnlfD7FwcXuZ5/UzDMCi
-	 y+Z6MMHo77lOWfvMuQG1+0cQ7s2JGXJUVe5B6Zg/esYtZYajzoMgfWJ+02sDe+au0Z
-	 PdNgPVTUiSwNxKNQKes6K4v5lCtsaMOZ0rxpyA7Y=
+	b=jbSjNh5h08VJTyPBkx7yYftinXPTw9XLSNNTrw03OunnVFLBrFoYr6gA4JjUWPL6m
+	 XCOCX51LjhWnN0rZc0SU2LWvI9QPeVWLQRDAgKvprf51RDn2SMEVKxbHqsxrP3HxrA
+	 iZIJjOTPPwsXbiUKtyZtKBey6WWTbirCLL6Ls0t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 097/166] media: vidtv: fix NULL pointer dereference in vidtv_channel_pmt_match_sections
-Date: Fri, 24 Apr 2026 15:30:11 +0200
-Message-ID: <20260424132552.979946374@linuxfoundation.org>
+	syzbot+67b90111784a3eac8c04@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Joseph Qi <jiangqi903@gmail.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 098/166] ocfs2: fix possible deadlock between unlink and dio_end_io_write
+Date: Fri, 24 Apr 2026 15:30:12 +0200
+Message-ID: <20260424132553.207110016@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,56 +58,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit f8e1fc918a9fe67103bcda01d20d745f264d00a7 upstream.
+commit b02da26a992db0c0e2559acbda0fc48d4a2fd337 upstream.
 
-syzbot reported a general protection fault in vidtv_psi_desc_assign [1].
+ocfs2_unlink takes orphan dir inode_lock first and then ip_alloc_sem,
+while in ocfs2_dio_end_io_write, it acquires these locks in reverse order.
+This creates an ABBA lock ordering violation on lock classes
+ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE] and
+ocfs2_file_ip_alloc_sem_key.
 
-vidtv_psi_pmt_stream_init() can return NULL on memory allocation
-failure, but vidtv_channel_pmt_match_sections() does not check for
-this. When tail is NULL, the subsequent call to
-vidtv_psi_desc_assign(&tail->descriptor, desc) dereferences a NULL
-pointer offset, causing a general protection fault.
+Lock Chain #0 (orphan dir inode_lock -> ip_alloc_sem):
+ocfs2_unlink
+  ocfs2_prepare_orphan_dir
+    ocfs2_lookup_lock_orphan_dir
+      inode_lock(orphan_dir_inode) <- lock A
+    __ocfs2_prepare_orphan_dir
+      ocfs2_prepare_dir_for_insert
+        ocfs2_extend_dir
+	  ocfs2_expand_inline_dir
+	    down_write(&oi->ip_alloc_sem) <- Lock B
 
-Add a NULL check after vidtv_psi_pmt_stream_init(). On failure, clean
-up the already-allocated stream chain and return.
+Lock Chain #1 (ip_alloc_sem -> orphan dir inode_lock):
+ocfs2_dio_end_io_write
+  down_write(&oi->ip_alloc_sem) <- Lock B
+  ocfs2_del_inode_from_orphan()
+    inode_lock(orphan_dir_inode) <- Lock A
 
-[1]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-RIP: 0010:vidtv_psi_desc_assign+0x24/0x90 drivers/media/test-drivers/vidtv/vidtv_psi.c:629
-Call Trace:
- <TASK>
- vidtv_channel_pmt_match_sections drivers/media/test-drivers/vidtv/vidtv_channel.c:349 [inline]
- vidtv_channel_si_init+0x1445/0x1a50 drivers/media/test-drivers/vidtv/vidtv_channel.c:479
- vidtv_mux_init+0x526/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:519
- vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
- vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+Deadlock Scenario:
+  CPU0 (unlink)                     CPU1 (dio_end_io_write)
+  ------                            ------
+  inode_lock(orphan_dir_inode)
+                                    down_write(ip_alloc_sem)
+  down_write(ip_alloc_sem)
+                                    inode_lock(orphan_dir_inode)
 
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1f5bcc7c919ec578777a
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Since ip_alloc_sem is to protect allocation changes, which is unrelated
+with operations in ocfs2_del_inode_from_orphan.  So move
+ocfs2_del_inode_from_orphan out of ip_alloc_sem to fix the deadlock.
+
+Link: https://lkml.kernel.org/r/20260306032211.1016452-1-joseph.qi@linux.alibaba.com
+Reported-by: syzbot+67b90111784a3eac8c04@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=67b90111784a3eac8c04
+Fixes: a86a72a4a4e0 ("ocfs2: take ip_alloc_sem in ocfs2_dio_get_block & ocfs2_dio_end_io_write")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Joseph Qi <jiangqi903@gmail.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_channel.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ocfs2/aops.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_channel.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_channel.c
-@@ -341,6 +341,10 @@ vidtv_channel_pmt_match_sections(struct
- 					tail = vidtv_psi_pmt_stream_init(tail,
- 									 s->type,
- 									 e_pid);
-+					if (!tail) {
-+						vidtv_psi_pmt_stream_destroy(head);
-+						return;
-+					}
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -2322,8 +2322,6 @@ static int ocfs2_dio_end_io_write(struct
+ 		goto out;
+ 	}
  
- 					if (!head)
- 						head = tail;
+-	down_write(&oi->ip_alloc_sem);
+-
+ 	/* Delete orphan before acquire i_rwsem. */
+ 	if (dwc->dw_orphaned) {
+ 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
+@@ -2336,6 +2334,7 @@ static int ocfs2_dio_end_io_write(struct
+ 			mlog_errno(ret);
+ 	}
+ 
++	down_write(&oi->ip_alloc_sem);
+ 	di = (struct ocfs2_dinode *)di_bh->b_data;
+ 
+ 	ocfs2_init_dinode_extent_tree(&et, INODE_CACHE(inode), di_bh);
 
 
