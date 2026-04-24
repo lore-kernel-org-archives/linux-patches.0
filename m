@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D5733E347;
-	Fri, 24 Apr 2026 13:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA35F3D3D04;
+	Fri, 24 Apr 2026 13:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037960; cv=none; b=h7At2oSHMfA41W7UsvWYBRHU/1YMUqnxf+b29iO3mWo5P+hFN5AJuNezKSBqhkJ6P32bLFcUKbFYMixJ3gpc7jLm4ticWPQn9+rtLJaDtgYv8gFdS26kOwduDLBJx9chjx6RG9GWoWHs1EtV+cM93JqqkgstjP/wWCTi8uR28mM=
+	t=1777037963; cv=none; b=VvMiLkXkjlYhbnDovJRu+GF9dlTyA37wlLXIs3xkLbblvLX3NXhrr4iEzfS8oGGVTI4nTSGFlZC2/mCyDImUt5bANXqzJCyKOrS9cqUU6P4DkMhKStcKO8PMssh43T15SWT1mCjM6z76PHUQyQYP9iXUEMzj5suR0VXfziOpQ8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037960; c=relaxed/simple;
-	bh=p/kf/v/uh1jXkOh1cFa75Pev1MJShiPdhQJ80vViZSY=;
+	s=arc-20240116; t=1777037963; c=relaxed/simple;
+	bh=ehkrljvn0z3vksHX/yjZUmbzbqAItAOGbuhA41OYTmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IyE9WmLQQX8xtmLdcbRF/gkZS2tMbmqXHtwdc29cvrz9HXhPgwiMrRAqygi+ytZ0svU6bAA27/l6AdPN5sD/BEs5oFHXD2OFSpLfQimp+QE/Pnz/43+HeAKwD/2GhrJLYvnWnPsjQebsnbdl/cKH7rcBKgY0s0BBQ6Rt9zRhl2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnd0dfYJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ufxueGQ863+DXi5ey13pKzWWLx3Xls1+WAoZaAK8HcR4jprJeGFzJiypBVdxQGN9uZkc6ctx6V/wbSh1nrEmZ78XHKuiA/lUbXA9eyNtZ2U0QSJoqj+uqZZnMaIDs9EAjJ4n4peAIsP/Pf76b1IvaFN+DDb+I6BynuqsF480FKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whk45Hle; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnd0dfYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC39CC19425;
-	Fri, 24 Apr 2026 13:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whk45Hle"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F638C19425;
+	Fri, 24 Apr 2026 13:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037960;
-	bh=p/kf/v/uh1jXkOh1cFa75Pev1MJShiPdhQJ80vViZSY=;
+	s=korg; t=1777037962;
+	bh=ehkrljvn0z3vksHX/yjZUmbzbqAItAOGbuhA41OYTmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnd0dfYJtQrNerh1TJIS0u3v8m2dYn4EhhTaGIa7ov+mTsDmjgI2oSCT4A4Tj9sB1
-	 omBSwcImugLdaJuuDRwTuPPlSwqmGD130F/9jzXvYz7ulA0+72tGBrk989tiBapYV8
-	 MD7aoD41E5cgeGAEHuWFdlBslA4+ptgq7J0yKqqo=
+	b=whk45HlelrDItz7dDfGuRrpRfxxPB7tr+mCig9ay0h3iawTS8LMtsIRDFwDqucS8N
+	 snes1alt3VLciSgu0RK++ounKJLwPrke+MJOG344ueIB03P1iI836wsaW+4CuYlC0B
+	 EJmkTuWMg3FaTsQekZnraKKtxuHU3xmD4pvXIqPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com,
-	Abhishek Kumar <abhishek_sts8@yahoo.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 119/166] media: em28xx: fix use-after-free in em28xx_v4l2_open()
-Date: Fri, 24 Apr 2026 15:30:33 +0200
-Message-ID: <20260424132557.743902279@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 137/166] rxrpc: Fix key quota calculation for multitoken keys
+Date: Fri, 24 Apr 2026 15:30:51 +0200
+Message-ID: <20260424132601.670240601@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,68 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Kumar <abhishek_sts8@yahoo.com>
+From: David Howells <dhowells@redhat.com>
 
-commit a66485a934c7187ae8e36517d40615fa2e961cff upstream.
+[ Upstream commit bdbfead6d38979475df0c2f4bad2b19394fe9bdc ]
 
-em28xx_v4l2_open() reads dev->v4l2 without holding dev->lock,
-creating a race with em28xx_v4l2_init()'s error path and
-em28xx_v4l2_fini(), both of which free the em28xx_v4l2 struct
-and set dev->v4l2 to NULL under dev->lock.
+In the rxrpc key preparsing, every token extracted sets the proposed quota
+value, but for multitoken keys, this will overwrite the previous proposed
+quota, losing it.
 
-This race leads to two issues:
- - use-after-free in v4l2_fh_init() when accessing vdev->ctrl_handler,
-   since the video_device is embedded in the freed em28xx_v4l2 struct.
- - NULL pointer dereference in em28xx_resolution_set() when accessing
-   v4l2->norm, since dev->v4l2 has been set to NULL.
+Fix this by adding to the proposed quota instead.
 
-Fix this by moving the mutex_lock() before the dev->v4l2 read and
-adding a NULL check for dev->v4l2 under the lock.
-
-Reported-by: syzbot+c025d34b8eaa54c571b8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c025d34b8eaa54c571b8
-Fixes: 8139a4d583ab ("[media] em28xx: move v4l2 user counting fields from struct em28xx to struct v4l2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abhishek Kumar <abhishek_sts8@yahoo.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
+Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-2-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ dropped hunk for rxrpc_preparse_xdr_yfs_rxgk() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/em28xx/em28xx-video.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/rxrpc/key.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/em28xx/em28xx-video.c
-+++ b/drivers/media/usb/em28xx/em28xx-video.c
-@@ -2126,7 +2126,7 @@ static int em28xx_v4l2_open(struct file
- {
- 	struct video_device *vdev = video_devdata(filp);
- 	struct em28xx *dev = video_drvdata(filp);
--	struct em28xx_v4l2 *v4l2 = dev->v4l2;
-+	struct em28xx_v4l2 *v4l2;
- 	enum v4l2_buf_type fh_type = 0;
- 	int ret;
+--- a/net/rxrpc/key.c
++++ b/net/rxrpc/key.c
+@@ -72,7 +72,7 @@ static int rxrpc_preparse_xdr_rxkad(stru
+ 		return -EKEYREJECTED;
  
-@@ -2143,13 +2143,19 @@ static int em28xx_v4l2_open(struct file
- 		return -EINVAL;
- 	}
+ 	plen = sizeof(*token) + sizeof(*token->kad) + tktlen;
+-	prep->quotalen = datalen + plen;
++	prep->quotalen += datalen + plen;
  
-+	if (mutex_lock_interruptible(&dev->lock))
-+		return -ERESTARTSYS;
-+
-+	v4l2 = dev->v4l2;
-+	if (!v4l2) {
-+		mutex_unlock(&dev->lock);
-+		return -ENODEV;
-+	}
-+
- 	em28xx_videodbg("open dev=%s type=%s users=%d\n",
- 			video_device_node_name(vdev), v4l2_type_names[fh_type],
- 			v4l2->users);
+ 	plen -= sizeof(*token);
+ 	token = kzalloc(sizeof(*token), GFP_KERNEL);
+@@ -303,6 +303,7 @@ static int rxrpc_preparse(struct key_pre
+ 	memcpy(&kver, prep->data, sizeof(kver));
+ 	prep->data += sizeof(kver);
+ 	prep->datalen -= sizeof(kver);
++	prep->quotalen = 0;
  
--	if (mutex_lock_interruptible(&dev->lock))
--		return -ERESTARTSYS;
--
- 	ret = v4l2_fh_open(filp);
- 	if (ret) {
- 		dev_err(&dev->intf->dev,
+ 	_debug("KEY I/F VERSION: %u", kver);
+ 
+@@ -340,7 +341,7 @@ static int rxrpc_preparse(struct key_pre
+ 		goto error;
+ 
+ 	plen = sizeof(*token->kad) + v1->ticket_length;
+-	prep->quotalen = plen + sizeof(*token);
++	prep->quotalen += plen + sizeof(*token);
+ 
+ 	ret = -ENOMEM;
+ 	token = kzalloc(sizeof(*token), GFP_KERNEL);
 
 
