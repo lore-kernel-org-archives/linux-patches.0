@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE823D3D04;
-	Fri, 24 Apr 2026 13:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED1A3B38AE;
+	Fri, 24 Apr 2026 13:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038048; cv=none; b=X78N+VYny1mDdsr1Ruq6+EbQn8VllCOgwiFnqrxiF4h6exZvXNv84ZFxZipJy7ZSZrVg9fA/QspIXm9IVNx/WSb9LKJ/bZ6wZgrdsz0o87W9tOImjgMcAKvfDLGgbeINpu2wzZe6OEpLYi7xCxsSxzSt9IwpT0wWBzKT2IWZREw=
+	t=1777038050; cv=none; b=rJyqrAMo82woE+IKNhriSWj96ra4pRUh7JzAnaiEU8i89hp0rfUrnNxTq/TqFmxeZv7zi3RYO6Wa1uvYM14Mv+6qntIynZXkV/b59sRP1GaViV4FaVzz1iCQ99puyvrLvQAJxm5iguD9KjzmJSepPZOV4Tf1T1MivMkRyA38mQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038048; c=relaxed/simple;
-	bh=HbnkUhdA1gFf/c7TvzPb/BJElqX3GPCKPjJEAb6QN3s=;
+	s=arc-20240116; t=1777038050; c=relaxed/simple;
+	bh=sLpiuWJAvF+F5pjrqiFGvJVH+b6UPCbeTWvJ/C8BV8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shq/IXb/QDpGp5puYRQxp/bJu3Kn+K6W57iwXpPmtGrHJLGiwQzmalogKJsGIpkZ0sM/OoKxTXBYOUa3wzxb1sPRghJspVyoYT8FUV3K6mQOJQuLOj32SK61a88pxp3nCfJ3maDMErbEerpPbgZ8QZzScOkfESYDlFRg9EfQMik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKPuwQjt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CbOaOJ5p6LvlVyhAFnr9vDRJPu4UP5GVrGqhyd6ePXLUg44U3WOcQVYicV5cRGR0C6NqCj6Fn2Uwlv2RFbjnHQ+DN8x9y7+aTjzxzqvfZ82rSqv3M3dnM12IbbQfLb0FIOVF2sDiyfTIy7TB0RjARki3SC+untbYG37BWvAMUl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1d/mMbyE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKPuwQjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F17C2BCB5;
-	Fri, 24 Apr 2026 13:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1d/mMbyE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34230C19425;
+	Fri, 24 Apr 2026 13:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038047;
-	bh=HbnkUhdA1gFf/c7TvzPb/BJElqX3GPCKPjJEAb6QN3s=;
+	s=korg; t=1777038050;
+	bh=sLpiuWJAvF+F5pjrqiFGvJVH+b6UPCbeTWvJ/C8BV8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tKPuwQjteiW/7l/YjsRgf3hF5ah1mgkmPGse/cNqFnMv4KlQLO1LvH2DDrwiMJ1Qh
-	 wigsa8uGLfhEehVIIVMEcfVRvk31+IFJ5bLuiQ7sii7xR6H0W/FwDZUS8GD+QzWDfp
-	 stSlO+0o4eP3HRvjcygWys/WcLL77V8A+ggHoZPM=
+	b=1d/mMbyEHT2d23KU9V3y5B5dBi99OO0i40uAIPC3yw2hYWP2Ri1PPyccSCLnagc5Y
+	 oFR2CFtZD9VlTuURM1walHj4qL+QGhmVy74Qh2dIjiXSc5Tim9vgLHoGxfP4G2haWr
+	 mrCd7PBtnbVMEu1MIrp9vPAAE2dsI0nIs09gOYC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bingquan Chen <patzilla007@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 159/166] net/packet: fix TOCTOU race on mmapd vnet_hdr in tpacket_snd()
-Date: Fri, 24 Apr 2026 15:31:13 +0200
-Message-ID: <20260424132606.306965345@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Subject: [PATCH 6.6 160/166] crypto: testmgr - Hide ENOENT errors
+Date: Fri, 24 Apr 2026 15:31:14 +0200
+Message-ID: <20260424132606.533695847@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,89 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingquan Chen <patzilla007@gmail.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 2c054e17d9d41f1020376806c7f750834ced4dc5 upstream.
+commit 4eded6d14f5b7bb857b68872970a40cf3105c015 upstream.
 
-In tpacket_snd(), when PACKET_VNET_HDR is enabled, vnet_hdr points
-directly into the mmap'd TX ring buffer shared with userspace. The
-kernel validates the header via __packet_snd_vnet_parse() but then
-re-reads all fields later in virtio_net_hdr_to_skb(). A concurrent
-userspace thread can modify the vnet_hdr fields between validation
-and use, bypassing all safety checks.
+When a crypto algorithm with a higher priority is registered, it
+kills the spawns of all lower-priority algorithms.  Thus it is to
+be expected for an algorithm to go away at any time, even during
+a self-test.  This is now much more common with asynchronous testing.
 
-The non-TPACKET path (packet_snd()) already correctly copies vnet_hdr
-to a stack-local variable. All other vnet_hdr consumers in the kernel
-(tun.c, tap.c, virtio_net.c) also use stack copies. The TPACKET TX
-path is the only caller of virtio_net_hdr_to_skb() that reads directly
-from user-controlled shared memory.
+Remove the printk when an ENOENT is encountered during a self-test.
+This is not really an error since the algorithm being tested is no
+longer there (i.e., it didn't fail the test which is what we care
+about).
 
-Fix this by copying vnet_hdr from the mmap'd ring buffer to a
-stack-local variable before validation and use, consistent with the
-approach used in packet_snd() and all other callers.
-
-Fixes: 1d036d25e560 ("packet: tpacket_snd gso and checksum offload")
-Signed-off-by: Bingquan Chen <patzilla007@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260418112006.78823-1-patzilla007@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ crypto/testmgr.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2777,7 +2777,8 @@ static int tpacket_snd(struct packet_soc
- {
- 	struct sk_buff *skb = NULL;
- 	struct net_device *dev;
--	struct virtio_net_hdr *vnet_hdr = NULL;
-+	struct virtio_net_hdr vnet_hdr;
-+	bool has_vnet_hdr = false;
- 	struct sockcm_cookie sockc;
- 	__be16 proto;
- 	int err, reserve = 0;
-@@ -2878,16 +2879,20 @@ static int tpacket_snd(struct packet_soc
- 		hlen = LL_RESERVED_SPACE(dev);
- 		tlen = dev->needed_tailroom;
- 		if (vnet_hdr_sz) {
--			vnet_hdr = data;
- 			data += vnet_hdr_sz;
- 			tp_len -= vnet_hdr_sz;
--			if (tp_len < 0 ||
--			    __packet_snd_vnet_parse(vnet_hdr, tp_len)) {
-+			if (tp_len < 0) {
-+				tp_len = -EINVAL;
-+				goto tpacket_error;
-+			}
-+			memcpy(&vnet_hdr, data - vnet_hdr_sz, sizeof(vnet_hdr));
-+			if (__packet_snd_vnet_parse(&vnet_hdr, tp_len)) {
- 				tp_len = -EINVAL;
- 				goto tpacket_error;
- 			}
- 			copylen = __virtio16_to_cpu(vio_le(),
--						    vnet_hdr->hdr_len);
-+						    vnet_hdr.hdr_len);
-+			has_vnet_hdr = true;
- 		}
- 		copylen = max_t(int, copylen, dev->hard_header_len);
- 		skb = sock_alloc_send_skb(&po->sk,
-@@ -2924,12 +2929,12 @@ tpacket_error:
- 			}
- 		}
+--- a/crypto/testmgr.c
++++ b/crypto/testmgr.c
+@@ -1916,6 +1916,8 @@ static int __alg_test_hash(const struct
  
--		if (vnet_hdr_sz) {
--			if (virtio_net_hdr_to_skb(skb, vnet_hdr, vio_le())) {
-+		if (has_vnet_hdr) {
-+			if (virtio_net_hdr_to_skb(skb, &vnet_hdr, vio_le())) {
- 				tp_len = -EINVAL;
- 				goto tpacket_error;
- 			}
--			virtio_net_hdr_set_proto(skb, vnet_hdr);
-+			virtio_net_hdr_set_proto(skb, &vnet_hdr);
- 		}
+ 	atfm = crypto_alloc_ahash(driver, type, mask);
+ 	if (IS_ERR(atfm)) {
++		if (PTR_ERR(atfm) == -ENOENT)
++			return -ENOENT;
+ 		pr_err("alg: hash: failed to allocate transform for %s: %ld\n",
+ 		       driver, PTR_ERR(atfm));
+ 		return PTR_ERR(atfm);
+@@ -2680,6 +2682,8 @@ static int alg_test_aead(const struct al
  
- 		skb->destructor = tpacket_destruct_skb;
+ 	tfm = crypto_alloc_aead(driver, type, mask);
+ 	if (IS_ERR(tfm)) {
++		if (PTR_ERR(tfm) == -ENOENT)
++			return -ENOENT;
+ 		pr_err("alg: aead: failed to allocate transform for %s: %ld\n",
+ 		       driver, PTR_ERR(tfm));
+ 		return PTR_ERR(tfm);
+@@ -3257,6 +3261,8 @@ static int alg_test_skcipher(const struc
+ 
+ 	tfm = crypto_alloc_skcipher(driver, type, mask);
+ 	if (IS_ERR(tfm)) {
++		if (PTR_ERR(tfm) == -ENOENT)
++			return -ENOENT;
+ 		pr_err("alg: skcipher: failed to allocate transform for %s: %ld\n",
+ 		       driver, PTR_ERR(tfm));
+ 		return PTR_ERR(tfm);
+@@ -3670,6 +3676,8 @@ static int alg_test_cipher(const struct
+ 
+ 	tfm = crypto_alloc_cipher(driver, type, mask);
+ 	if (IS_ERR(tfm)) {
++		if (PTR_ERR(tfm) == -ENOENT)
++			return -ENOENT;
+ 		printk(KERN_ERR "alg: cipher: Failed to load transform for "
+ 		       "%s: %ld\n", driver, PTR_ERR(tfm));
+ 		return PTR_ERR(tfm);
+@@ -3694,6 +3702,8 @@ static int alg_test_comp(const struct al
+ 	if (algo_type == CRYPTO_ALG_TYPE_ACOMPRESS) {
+ 		acomp = crypto_alloc_acomp(driver, type, mask);
+ 		if (IS_ERR(acomp)) {
++			if (PTR_ERR(acomp) == -ENOENT)
++				return -ENOENT;
+ 			pr_err("alg: acomp: Failed to load transform for %s: %ld\n",
+ 			       driver, PTR_ERR(acomp));
+ 			return PTR_ERR(acomp);
+@@ -3706,6 +3716,8 @@ static int alg_test_comp(const struct al
+ 	} else {
+ 		comp = crypto_alloc_comp(driver, type, mask);
+ 		if (IS_ERR(comp)) {
++			if (PTR_ERR(comp) == -ENOENT)
++				return -ENOENT;
+ 			pr_err("alg: comp: Failed to load transform for %s: %ld\n",
+ 			       driver, PTR_ERR(comp));
+ 			return PTR_ERR(comp);
+@@ -3782,6 +3794,8 @@ static int alg_test_cprng(const struct a
+ 
+ 	rng = crypto_alloc_rng(driver, type, mask);
+ 	if (IS_ERR(rng)) {
++		if (PTR_ERR(rng) == -ENOENT)
++			return -ENOENT;
+ 		printk(KERN_ERR "alg: cprng: Failed to load transform for %s: "
+ 		       "%ld\n", driver, PTR_ERR(rng));
+ 		return PTR_ERR(rng);
+@@ -3809,10 +3823,13 @@ static int drbg_cavs_test(const struct d
+ 
+ 	drng = crypto_alloc_rng(driver, type, mask);
+ 	if (IS_ERR(drng)) {
++		if (PTR_ERR(drng) == -ENOENT)
++			goto out_no_rng;
+ 		printk(KERN_ERR "alg: drbg: could not allocate DRNG handle for "
+ 		       "%s\n", driver);
++out_no_rng:
+ 		kfree_sensitive(buf);
+-		return -ENOMEM;
++		return PTR_ERR(drng);
+ 	}
+ 
+ 	test_data.testentropy = &testentropy;
+@@ -4054,6 +4071,8 @@ static int alg_test_kpp(const struct alg
+ 
+ 	tfm = crypto_alloc_kpp(driver, type, mask);
+ 	if (IS_ERR(tfm)) {
++		if (PTR_ERR(tfm) == -ENOENT)
++			return -ENOENT;
+ 		pr_err("alg: kpp: Failed to load tfm for %s: %ld\n",
+ 		       driver, PTR_ERR(tfm));
+ 		return PTR_ERR(tfm);
+@@ -4282,6 +4301,8 @@ static int alg_test_akcipher(const struc
+ 
+ 	tfm = crypto_alloc_akcipher(driver, type, mask);
+ 	if (IS_ERR(tfm)) {
++		if (PTR_ERR(tfm) == -ENOENT)
++			return -ENOENT;
+ 		pr_err("alg: akcipher: Failed to load tfm for %s: %ld\n",
+ 		       driver, PTR_ERR(tfm));
+ 		return PTR_ERR(tfm);
 
 
