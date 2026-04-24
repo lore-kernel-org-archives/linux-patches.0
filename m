@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A554D3D6CA9;
-	Fri, 24 Apr 2026 13:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9A523645D;
+	Fri, 24 Apr 2026 13:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037831; cv=none; b=TrzmJG7VtTsltSPMefMGalev0giJCPCRCWSo8GN41x6eChhCKgOV5XUFieBDIYtjWLXbOW7rdEMC3jBAKPk2phiL/8/fliRnjvEuecIjHsQT5buv2GWYve6DmxEkgLX70/M8RQbWBFhygRi0MQ+MA1LjXXGCqcFP6BtG/veSng8=
+	t=1777037834; cv=none; b=DkWRG7v2+QPVODdmrs34RLGZlC7VXVCV30QouDQGSoRsDGzsqdhz8LK7YP4lZksKQq9mZcJFjHVXv6baIPGTUxBD2C0AMSYJKvYa/1YabFpsvDGZvywlaJmksJYNjHNa9EE2uOdbPmdFL+uYQqASixs/eoH2SNDtnovjwLz27gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037831; c=relaxed/simple;
-	bh=oxMuBjiYTEVe496KLRQd4fs0CTmhx+88MMVp0zLYPHU=;
+	s=arc-20240116; t=1777037834; c=relaxed/simple;
+	bh=0zI5gsNyUcSV0TZ0aueWgUgQBh9cdb7qtzh75c344Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y6HthAhqLBlUbhCTX2CnuT5Pjs+f1a4Z9bF0BoVqdYXBTNdsfypU1nLuQscWVP6aQmiPN6MHKmpXyGr6rjT7BRoTxbMZpT5LLyqpc7gFYr46u5d7Hexspxo0ZCD4yCttHqxDeTPC2w0IGNMx4KeO53wc1AEoUhn+XCCOcqMGv7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCAeuxxu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X5JAIBammXUE3f5C1o4pKYZglk+ml7BmSxCOtD5u/Ie74ojFLjHaTZwax/lEFZQTE407NAymyyfOWoURTsbWm/b6fqwegzxv5uosn+li1+6MUQkS489ea86M2nd7ifbfcitPWWYYuuxAEb1R4YwJ8phD2eTEyMCvDuQmI8qLgiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHPedUHJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCAeuxxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7C8C19425;
-	Fri, 24 Apr 2026 13:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHPedUHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5E2C2BCB2;
+	Fri, 24 Apr 2026 13:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037831;
-	bh=oxMuBjiYTEVe496KLRQd4fs0CTmhx+88MMVp0zLYPHU=;
+	s=korg; t=1777037834;
+	bh=0zI5gsNyUcSV0TZ0aueWgUgQBh9cdb7qtzh75c344Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCAeuxxu3SmNmGWByIg9LIxUcyGADlAz42fZzfPROV4XJeOcLe3nAZcuLpMP1iui2
-	 Uk25q3Vut4x6bAqg+PaBatBSii0ye54qD2tbDJD+272rvXL3TQ+eC32x5PFJVmFezu
-	 1dFuE++UFKCsO9Xh+8vc3fue6aPOhZ8bzOMQqVCQ=
+	b=jHPedUHJYc42/K+sq9wC8YhEqlk1yEI+b5zvw2nqQheH7yHgWopOa74QpAWAxbSuz
+	 GPjbc+XA6b8hFRgIPfBR85vF0MkWAal2FALqLDhcMS8YqTC/LzSR3aMbzjzMG4U8SC
+	 X5G7vHfSZGc4hHhqN3kxWaZAHgXUM3PTMMyC/grQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
+	Fabio Baltieri <fabio.baltieri@gmail.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/166] netfilter: ip6t_eui64: reject invalid MAC header for all packets
-Date: Fri, 24 Apr 2026 15:29:28 +0200
-Message-ID: <20260424132544.152867945@linuxfoundation.org>
+Subject: [PATCH 6.6 055/166] net: txgbe: leave space for null terminators on property_entry
+Date: Fri, 24 Apr 2026 15:29:29 +0200
+Message-ID: <20260424132544.352665470@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -57,49 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Fabio Baltieri <fabio.baltieri@gmail.com>
 
-[ Upstream commit fdce0b3590f724540795b874b4c8850c90e6b0a8 ]
+[ Upstream commit 5a37d228799b0ec2c277459c83c814a59d310bc3 ]
 
-`eui64_mt6()` derives a modified EUI-64 from the Ethernet source address
-and compares it with the low 64 bits of the IPv6 source address.
+Lists of struct property_entry are supposed to be terminated with an
+empty property, this driver currently seems to be allocating exactly the
+amount of entry used.
 
-The existing guard only rejects an invalid MAC header when
-`par->fragoff != 0`. For packets with `par->fragoff == 0`, `eui64_mt6()`
-can still reach `eth_hdr(skb)` even when the MAC header is not valid.
+Change the struct definition to leave an extra element for all
+property_entry.
 
-Fix this by removing the `par->fragoff != 0` condition so that packets
-with an invalid MAC header are rejected before accessing `eth_hdr(skb)`.
-
-Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: c3e382ad6d15 ("net: txgbe: Add software nodes to support phylink")
+Signed-off-by: Fabio Baltieri <fabio.baltieri@gmail.com>
+Tested-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/20260405222013.5347-1-fabio.baltieri@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6t_eui64.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_type.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/netfilter/ip6t_eui64.c b/net/ipv6/netfilter/ip6t_eui64.c
-index d704f7ed300c2..da69a27e8332c 100644
---- a/net/ipv6/netfilter/ip6t_eui64.c
-+++ b/net/ipv6/netfilter/ip6t_eui64.c
-@@ -22,8 +22,7 @@ eui64_mt6(const struct sk_buff *skb, struct xt_action_param *par)
- 	unsigned char eui64[8];
- 
- 	if (!(skb_mac_header(skb) >= skb->head &&
--	      skb_mac_header(skb) + ETH_HLEN <= skb->data) &&
--	    par->fragoff != 0) {
-+	      skb_mac_header(skb) + ETH_HLEN <= skb->data)) {
- 		par->hotdrop = true;
- 		return false;
- 	}
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+index 51199c355f95c..b0554c8f25213 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+@@ -161,10 +161,10 @@ struct txgbe_nodes {
+ 	char i2c_name[32];
+ 	char sfp_name[32];
+ 	char phylink_name[32];
+-	struct property_entry gpio_props[1];
+-	struct property_entry i2c_props[3];
+-	struct property_entry sfp_props[8];
+-	struct property_entry phylink_props[2];
++	struct property_entry gpio_props[2];
++	struct property_entry i2c_props[4];
++	struct property_entry sfp_props[9];
++	struct property_entry phylink_props[3];
+ 	struct software_node_ref_args i2c_ref[1];
+ 	struct software_node_ref_args gpio0_ref[1];
+ 	struct software_node_ref_args gpio1_ref[1];
 -- 
 2.53.0
 
