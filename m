@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D0A3D5251;
-	Fri, 24 Apr 2026 13:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D13179A3;
+	Fri, 24 Apr 2026 13:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037790; cv=none; b=mJ3DeOVPI3SRnq7B7oItv68oTrJTX23y2RK+6ttQ9/O0M5DPiPN/odrZeMx36mkk1YtZsc4I4AE/T1Yc+XLUtKg69lh3FYZeTsBcrssicACWoCHFdJ1S0df53Q0KHsPt6KirQZFBvIhLCmf26J61g1nnNZWMNmHYh/LtpkHBxYg=
+	t=1777037793; cv=none; b=jhmISSohKj1l+WoB4IBJ+Hrlss2sMV1eEhRlglSxcWsv2d4UdGMsEHWIfFgck/736sREuqNddXkDZHIi1ZUXG4sRi8l6RNBdd/f0xCzsfLqBj62AWaIRJa90AYz1UbmnHJc7S3rh+OaT2CYM5/Ow9SVhBs5awqApg7BnreQBQD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037790; c=relaxed/simple;
-	bh=oDc9JQ19FNH2futpxAcTcOfl7REzv+Q+z0zzJJXS8zA=;
+	s=arc-20240116; t=1777037793; c=relaxed/simple;
+	bh=6rWWcA2PdXPZvDE6fNano6XkxTPEAHGpcFn2xrjGsCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RF84IQIOXsUvq0ZuuUWaXUHt9aBrlipfrkeBKG72ErOkXmgn7GQGiDblkGaAoGh0mhhwT4CWAo2utvwHLTFfEjBFMMJlEStuaimEn/W9LArmzwGszDeUz0Uu4udjsHVmQb0XhmaEjeWoRttUjHQpZ8N7aXRJoLX+VlAWYfgJ25A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZr4mvuI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AO45EOGNJBtkfvh0POKE1VlPMlIcTEDLLXZnHHcnITuSP4FVe6FwfDQgRJCOqf1OVl73bZZSG+QKI+994A4oAcTGg6mMBQNRDY19JgvWW+8uTNcvmO922v0yFOHuKfIbNBpV2h8CG2+syoRJtgcSH/V39gMxVQ110D4CWRC5xJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmQ86qh2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZr4mvuI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BA1C19425;
-	Fri, 24 Apr 2026 13:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmQ86qh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7612C19425;
+	Fri, 24 Apr 2026 13:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037790;
-	bh=oDc9JQ19FNH2futpxAcTcOfl7REzv+Q+z0zzJJXS8zA=;
+	s=korg; t=1777037793;
+	bh=6rWWcA2PdXPZvDE6fNano6XkxTPEAHGpcFn2xrjGsCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZr4mvuIePkBXngHOUd217Z05va5e5FuawHF1/5PD8nzIa5ruRjZNGu9Nz5sylZCj
-	 YZmparRe9ojc9Y8cIOmXa22PC8dnJH6F9RCbzpOkAy43phO+1aWrXZzepZc6kOPkCN
-	 zu+sQsTgLTw7YPp9HnuaBuln5Xya3EoVQcUkVRXA=
+	b=zmQ86qh2xcutTsERkaJJEsGu+CKh66Yyb9MBBsIXbLtu3iY0XX7zJpZim+H9HboV5
+	 ic6T5RypB4f9NvL8w+qtgh/Cb0CooIga47Dxwp5iBgUczKWobksItUGKO4hCg+yYdG
+	 ApSrO/zrkPkOyHPJg127SW0HBan/mWdnZndtk5qY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Lin YuChen <starpt.official@gmail.com>
-Subject: [PATCH 6.6 070/166] staging: rtl8723bs: initialize le_tmp64 in rtw_BIP_verify()
-Date: Fri, 24 Apr 2026 15:29:44 +0200
-Message-ID: <20260424132547.450512768@linuxfoundation.org>
+	Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Masaki Ota <masaki.ota@jp.alps.com>,
+	linux-input@vger.kernel.org,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 071/166] HID: alps: fix NULL pointer dereference in alps_raw_event()
+Date: Fri, 24 Apr 2026 15:29:45 +0200
+Message-ID: <20260424132547.622435389@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -51,44 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin YuChen <starpt.official@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 8c964b82a4e97ec7f25e17b803ee196009b38a57 upstream.
+commit 1badfc4319224820d5d890f8eab6aa52e4e83339 upstream.
 
-Initialize le_tmp64 to zero in rtw_BIP_verify() to prevent using
-uninitialized data.
+Commit ecfa6f34492c ("HID: Add HID_CLAIMED_INPUT guards in raw_event
+callbacks missing them") attempted to fix up the HID drivers that had
+missed the previous fix that was done in 2ff5baa9b527 ("HID: appleir:
+Fix potential NULL dereference at raw event handle"), but the alps
+driver was missed.
 
-Smatch warns that only 6 bytes are copied to this 8-byte (u64)
-variable, leaving the last two bytes uninitialized:
+Fix this up by properly checking in the hid-alps driver that it had been
+claimed correctly before attempting to process the raw event.
 
-drivers/staging/rtl8723bs/core/rtw_security.c:1308 rtw_BIP_verify()
-warn: not copying enough bytes for '&le_tmp64' (8 vs 6 bytes)
-
-Initializing the variable at the start of the function fixes this
-warning and ensures predictable behavior.
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Fixes: 73196ebe134d ("HID: alps: add support for Alps T4 Touchpad device")
 Cc: stable <stable@kernel.org>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-staging/abvwIQh0CHTp4wNJ@stanley.mountain/
-Signed-off-by: Lin YuChen <starpt.official@gmail.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20260320172502.167332-1-starpt.official@gmail.com
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Masaki Ota <masaki.ota@jp.alps.com>
+Cc: linux-input@vger.kernel.org
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_security.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-alps.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/staging/rtl8723bs/core/rtw_security.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_security.c
-@@ -1364,7 +1364,7 @@ u32 rtw_BIP_verify(struct adapter *padap
- 	u8 mic[16];
- 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
- 	__le16 le_tmp;
--	__le64 le_tmp64;
-+	__le64 le_tmp64 = 0;
+--- a/drivers/hid/hid-alps.c
++++ b/drivers/hid/hid-alps.c
+@@ -437,6 +437,9 @@ static int alps_raw_event(struct hid_dev
+ 	int ret = 0;
+ 	struct alps_dev *hdata = hid_get_drvdata(hdev);
  
- 	ori_len = pattrib->pkt_len-WLAN_HDR_A3_LEN+BIP_AAD_SIZE;
- 	BIP_AAD = rtw_zmalloc(ori_len);
++	if (!(hdev->claimed & HID_CLAIMED_INPUT) || !hdata->input)
++		return 0;
++
+ 	switch (hdev->product) {
+ 	case HID_PRODUCT_ID_T4_BTNLESS:
+ 		ret = t4_raw_event(hdata, data, size);
 
 
