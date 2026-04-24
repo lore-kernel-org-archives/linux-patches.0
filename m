@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82B43537DF;
-	Fri, 24 Apr 2026 13:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DC23537DF;
+	Fri, 24 Apr 2026 13:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038243; cv=none; b=JpL2YXFSHC3GPQ9AjoemSvex6s7oCW8sYV6MyHprmtJtHwQyGnoYbfBG47VSPa7PxDZiA3Lj3sfcgHuBTL9yQ/driA+i+F4WGJnQuxUtqMnOpMSjU91X8+va1mvHPMI8SNQ400Up8z+oC50hqNUENJcSctLKjxo8zWfKnZFmDCU=
+	t=1777038246; cv=none; b=LqhJ6KXdPCbYH8eb+pG2pR5F/41D2Zj0nBNS6Rk85m2Zay8456fo4fEEMQLjzKxgx++pyCuvZGZy31XUNhZZ/KTKHIQlM9pgSrzX/ng1BaNuOdgCh+UocL1RDrHjqp61Q8Sf35qp55POu0cesHNtZ498gTGIHyIApvwYgUCntJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038243; c=relaxed/simple;
-	bh=OGlFK7tI9ckvhK1CGOc5ZDWVgfo7ePpiM4/W1RVQJ6o=;
+	s=arc-20240116; t=1777038246; c=relaxed/simple;
+	bh=FyQJHT12OacelHIrjJMzJoYyYUK/FhzMYk10wLoEI6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCSepDLZ7Zc1WFgiVgWLBWGZGqiubDMehAn6eXaIoGw+YJNNI0MXE8ry/rSwhRF9GALgsRxdX4Uvogro6tarvdH/8dmuy2dvZsvNoJZO7teEZ0c7FsH33ajvkPe79+p+iqi69JjE5j8NTW2mSSTT8U5BWlCvrvkhqZmWP7oTNSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7QJx7oJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XCMpCl7kwWQNZ4Mb+oS2oNggHZCWpf0FFahKGkp6gomHNVh4YYkQJBiBhTtJ8dp5F0+DTbdaVCdnrPUM7taroVU+blJRX/p+Z3fkFmT7rfOq6ENZ5LV9+sEHt+OwHaYdEld09728seyaAWZNr6Nz4mCHGXOYb8zG7xUYv/ryB58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9e9h5w1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7QJx7oJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E350C19425;
-	Fri, 24 Apr 2026 13:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9e9h5w1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A73C19425;
+	Fri, 24 Apr 2026 13:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038243;
-	bh=OGlFK7tI9ckvhK1CGOc5ZDWVgfo7ePpiM4/W1RVQJ6o=;
+	s=korg; t=1777038246;
+	bh=FyQJHT12OacelHIrjJMzJoYyYUK/FhzMYk10wLoEI6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7QJx7oJM9SiNrdm7e7xXWpuqwYx5XAeKjt0xJSDpP0xghXdJ9FFh4RKzw6kaeU3L
-	 c1KIS3gEIdOKKnDv0IYPOyIbLN9KMe2qqRnk35i7cewrry3MXRF7VVtJjHCbim+Y0O
-	 ZbkOCjCBtoWrVQmJEKM7JmOPf70gEjLWRZr+JNnw=
+	b=U9e9h5w1trz5cycdonrBkYEVwmTLAFr21dohmFXvbv09+XpOfU+kjvlHDhUwGLscw
+	 E2mlLB/zhPsD7azvG4/SEcTccnDjcT3sE18XdM3hRwXAYs0ON/tE8UAIA6wk4PkLA/
+	 LfwZ23S22yhP7M0NgtON+JQy96vetYhlNdthzdRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 24/35] ksmbd: validate response sizes in ipc_validate_msg()
-Date: Fri, 24 Apr 2026 15:31:31 +0200
-Message-ID: <20260424132416.806358220@linuxfoundation.org>
+Subject: [PATCH 6.12 25/35] ksmbd: validate num_aces and harden ACE walk in smb_inherit_dacl()
+Date: Fri, 24 Apr 2026 15:31:32 +0200
+Message-ID: <20260424132417.023714293@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
 References: <20260424132411.427029259@linuxfoundation.org>
@@ -53,120 +53,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit d6a6aa81eac2c9bff66dc6e191179cb69a14426b upstream.
+commit 3e4e2ea2a781018ed5d75f969e3e5606beb66e48 upstream.
 
-ipc_validate_msg() computes the expected message size for each
-response type by adding (or multiplying) attacker-controlled fields
-from the daemon response to a fixed struct size in unsigned int
-arithmetic.  Three cases can overflow:
+smb_inherit_dacl() trusts the on-disk num_aces value from the parent
+directory's DACL xattr and uses it to size a heap allocation:
 
-  KSMBD_EVENT_RPC_REQUEST:
-      msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
-  KSMBD_EVENT_SHARE_CONFIG_REQUEST:
-      msg_sz = sizeof(struct ksmbd_share_config_response) +
-               resp->payload_sz;
-  KSMBD_EVENT_LOGIN_REQUEST_EXT:
-      msg_sz = sizeof(struct ksmbd_login_response_ext) +
-               resp->ngroups * sizeof(gid_t);
+  aces_base = kmalloc(sizeof(struct smb_ace) * num_aces * 2, ...);
 
-resp->payload_sz is __u32 and resp->ngroups is __s32.  Each addition
-can wrap in unsigned int; the multiplication by sizeof(gid_t) mixes
-signed and size_t, so a negative ngroups is converted to SIZE_MAX
-before the multiply.  A wrapped value of msg_sz that happens to
-equal entry->msg_sz bypasses the size check on the next line, and
-downstream consumers (smb2pdu.c:6742 memcpy using rpc_resp->payload_sz,
-kmemdup in ksmbd_alloc_user using resp_ext->ngroups) then trust the
-unverified length.
+num_aces is a u16 read from le16_to_cpu(parent_pdacl->num_aces)
+without checking that it is consistent with the declared pdacl_size.
+An authenticated client whose parent directory's security.NTACL is
+tampered (e.g. via offline xattr corruption or a concurrent path that
+bypasses parse_dacl()) can present num_aces = 65535 with minimal
+actual ACE data.  This causes a ~8 MB allocation (not kzalloc, so
+uninitialized) that the subsequent loop only partially populates, and
+may also overflow the three-way size_t multiply on 32-bit kernels.
 
-Use check_add_overflow() on the RPC_REQUEST and SHARE_CONFIG_REQUEST
-paths to detect integer overflow without constraining functional
-payload size; userspace ksmbd-tools grows NDR responses in 4096-byte
-chunks for calls like NetShareEnumAll, so a hard transport cap is
-unworkable on the response side.  For LOGIN_REQUEST_EXT, reject
-resp->ngroups outside the signed [0, NGROUPS_MAX] range up front and
-report the error from ipc_validate_msg() so it fires at the IPC
-boundary; with that bound the subsequent multiplication and addition
-stay well below UINT_MAX.  The now-redundant ngroups check and
-pr_err in ksmbd_alloc_user() are removed.
+Additionally, the ACE walk loop uses the weaker
+offsetof(struct smb_ace, access_req) minimum size check rather than
+the minimum valid on-wire ACE size, and does not reject ACEs whose
+declared size is below the minimum.
 
-This is the response-side analogue of aab98e2dbd64 ("ksmbd: fix
-integer overflows on 32 bit systems"), which hardened the request
-side.
+Reproduced on UML + KASAN + LOCKDEP against the real ksmbd code path.
+A legitimate mount.cifs client creates a parent directory over SMB
+(ksmbd writes a valid security.NTACL xattr), then the NTACL blob on
+the backing filesystem is rewritten to set num_aces = 0xFFFF while
+keeping the posix_acl_hash bytes intact so ksmbd_vfs_get_sd_xattr()'s
+hash check still passes.  A subsequent SMB2 CREATE of a child under
+that parent drives smb2_open() into smb_inherit_dacl() (share has
+"vfs objects = acl_xattr" set), which fails the page allocator:
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Fixes: a77e0e02af1c ("ksmbd: add support for supplementary groups")
+  WARNING: mm/page_alloc.c:5226 at __alloc_frozen_pages_noprof+0x46c/0x9c0
+  Workqueue: ksmbd-io handle_ksmbd_work
+   __alloc_frozen_pages_noprof+0x46c/0x9c0
+   ___kmalloc_large_node+0x68/0x130
+   __kmalloc_large_node_noprof+0x24/0x70
+   __kmalloc_noprof+0x4c9/0x690
+   smb_inherit_dacl+0x394/0x2430
+   smb2_open+0x595d/0xabe0
+   handle_ksmbd_work+0x3d3/0x1140
+
+With the patch applied the added guard rejects the tampered value
+with -EINVAL before any large allocation runs, smb2_open() falls back
+to smb2_create_sd_buffer(), and the child is created with a default
+SD.  No warning, no splat.
+
+Fix by:
+
+  1. Validating num_aces against pdacl_size using the same formula
+     applied in parse_dacl().
+
+  2. Replacing the raw kmalloc(sizeof * num_aces * 2) with
+     kmalloc_array(num_aces * 2, sizeof(...)) for overflow-safe
+     allocation.
+
+  3. Tightening the per-ACE loop guard to require the minimum valid
+     ACE size (offsetof(smb_ace, sid) + CIFS_SID_BASE_SIZE) and
+     rejecting under-sized ACEs, matching the hardening in
+     smb_check_perm_dacl() and parse_dacl().
+
+v1 -> v2:
+  - Replace the synthetic test-module splat in the changelog with a
+    real-path UML + KASAN reproduction driven through mount.cifs and
+    SMB2 CREATE; Namjae flagged the kcifs3_test_inherit_dacl_old name
+    in v1 since it does not exist in ksmbd.
+  - Drop the commit-hash citation from the code comment per Namjae's
+    review; keep the parse_dacl() pointer.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_config.c |    6 ------
- fs/smb/server/transport_ipc.c    |   16 +++++++++++++---
- 2 files changed, 13 insertions(+), 9 deletions(-)
+ fs/smb/server/smbacl.c |   28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
---- a/fs/smb/server/mgmt/user_config.c
-+++ b/fs/smb/server/mgmt/user_config.c
-@@ -56,12 +56,6 @@ struct ksmbd_user *ksmbd_alloc_user(stru
- 		goto err_free;
- 
- 	if (resp_ext) {
--		if (resp_ext->ngroups > NGROUPS_MAX) {
--			pr_err("ngroups(%u) from login response exceeds max groups(%d)\n",
--					resp_ext->ngroups, NGROUPS_MAX);
--			goto err_free;
--		}
--
- 		user->sgid = kmemdup(resp_ext->____payload,
- 				     resp_ext->ngroups * sizeof(gid_t),
- 				     KSMBD_DEFAULT_GFP);
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -13,6 +13,7 @@
- #include <net/genetlink.h>
- #include <linux/socket.h>
- #include <linux/workqueue.h>
-+#include <linux/overflow.h>
- 
- #include "vfs_cache.h"
- #include "transport_ipc.h"
-@@ -497,7 +498,9 @@ static int ipc_validate_msg(struct ipc_m
- 	{
- 		struct ksmbd_rpc_command *resp = entry->response;
- 
--		msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
-+		if (check_add_overflow(sizeof(struct ksmbd_rpc_command),
-+				       resp->payload_sz, &msg_sz))
-+			return -EINVAL;
- 		break;
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1106,8 +1106,24 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 		goto free_parent_pntsd;
  	}
- 	case KSMBD_EVENT_SPNEGO_AUTHEN_REQUEST:
-@@ -516,8 +519,9 @@ static int ipc_validate_msg(struct ipc_m
- 			if (resp->payload_sz < resp->veto_list_sz)
- 				return -EINVAL;
  
--			msg_sz = sizeof(struct ksmbd_share_config_response) +
--					resp->payload_sz;
-+			if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
-+					       resp->payload_sz, &msg_sz))
-+				return -EINVAL;
- 		}
- 		break;
- 	}
-@@ -526,6 +530,12 @@ static int ipc_validate_msg(struct ipc_m
- 		struct ksmbd_login_response_ext *resp = entry->response;
+-	aces_base = kmalloc(sizeof(struct smb_ace) * num_aces * 2,
+-			    KSMBD_DEFAULT_GFP);
++	aces_size = pdacl_size - sizeof(struct smb_acl);
++
++	/*
++	 * Validate num_aces against the DACL payload before allocating.
++	 * Each ACE must be at least as large as its fixed-size header
++	 * (up to the SID base), so num_aces cannot exceed the payload
++	 * divided by the minimum ACE size.  This mirrors the existing
++	 * check in parse_dacl().
++	 */
++	if (num_aces > aces_size / (offsetof(struct smb_ace, sid) +
++				    offsetof(struct smb_sid, sub_auth) +
++				    sizeof(__le16))) {
++		rc = -EINVAL;
++		goto free_parent_pntsd;
++	}
++
++	aces_base = kmalloc_array(num_aces * 2, sizeof(struct smb_ace),
++				  KSMBD_DEFAULT_GFP);
+ 	if (!aces_base) {
+ 		rc = -ENOMEM;
+ 		goto free_parent_pntsd;
+@@ -1116,7 +1132,6 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 	aces = (struct smb_ace *)aces_base;
+ 	parent_aces = (struct smb_ace *)((char *)parent_pdacl +
+ 			sizeof(struct smb_acl));
+-	aces_size = acl_len - sizeof(struct smb_acl);
  
- 		if (resp->ngroups) {
-+			if (resp->ngroups < 0 ||
-+			    resp->ngroups > NGROUPS_MAX) {
-+				pr_err("ngroups(%d) from login response exceeds max groups(%d)\n",
-+				       resp->ngroups, NGROUPS_MAX);
-+				return -EINVAL;
-+			}
- 			msg_sz = sizeof(struct ksmbd_login_response_ext) +
- 					resp->ngroups * sizeof(gid_t);
- 		}
+ 	if (pntsd_type & DACL_AUTO_INHERITED)
+ 		inherited_flags = INHERITED_ACE;
+@@ -1124,11 +1139,14 @@ int smb_inherit_dacl(struct ksmbd_conn *
+ 	for (i = 0; i < num_aces; i++) {
+ 		int pace_size;
+ 
+-		if (offsetof(struct smb_ace, access_req) > aces_size)
++		if (aces_size < offsetof(struct smb_ace, sid) +
++		    CIFS_SID_BASE_SIZE)
+ 			break;
+ 
+ 		pace_size = le16_to_cpu(parent_aces->size);
+-		if (pace_size > aces_size)
++		if (pace_size > aces_size ||
++		    pace_size < offsetof(struct smb_ace, sid) +
++				CIFS_SID_BASE_SIZE)
+ 			break;
+ 
+ 		aces_size -= pace_size;
 
 
