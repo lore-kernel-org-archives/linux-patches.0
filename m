@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258043D47B0;
-	Fri, 24 Apr 2026 13:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73A23D3CEE;
+	Fri, 24 Apr 2026 13:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037518; cv=none; b=PmngMo1gQze8sWTQuX0K+Ygn++Lgb3aGkmbODNfMA4xZ+FRFCI7T8YLmVih5Sa2V6vjLEp9VePUsJitkBnJTjzDuVNeTfajUR1xXr6NrESEmhYh+AOs8gols4KHXE1vUev+ve/a2CIBRCzwZKCP++7tk6vo2gNUrcwDytzSl95o=
+	t=1777037521; cv=none; b=VKM+TiZ0HEJbUh0JYQX3KmTAn8yHSOGRmGhXdzyaLJ+xGzJlQGlp6KOHV2RTHcnl5AFLtPEYPOD+h78i6JEt6G/7BUahOUg//lCgVTyr6S/yP/8p87CvX+XoWhg58iq6YPEjQja4xpuOfx5NdhXgqjj+4AyBjOjxEA11mvYVQdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037518; c=relaxed/simple;
-	bh=8x7psqwsWrCAMKcIfcB2phTCN73208XJpeDuzhVNqe0=;
+	s=arc-20240116; t=1777037521; c=relaxed/simple;
+	bh=lUOKdkBzArG51/WyNkYBrcP2zIiJ1jF3ySmsXZob7Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUFqRp6as/zCC7sH7EmH0WtSNoM9GlCaWc+Libxu8VpLepz6AMsGQAGOnU+QnSCTSGDHV0/IpBaEOZt50ekQJaexKIWqCTLpOBOWK2Ysj98l/g+lK5Ew9f6IYu0Rq2zywTzQksIkW1+EaK2anLNzswEWVvMytUV2SGqwFPgR28w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDppBb7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+PISaZDzcfl8sekzau9/33wIaARLY4552E90gof16LvkE3Gq/fozaWpC4AZ3pBs1rIu+K1Hw3tGVsYtw55zf9lqY8/b+Qw7L5sQhl4zHYNrZJsWs97yIQMpok+KlhLP0MyuQOaz1GmEnKqQASFAWjhE3TDlbHReM9UD6iUOA1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHdX/53t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDppBb7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD94C19425;
-	Fri, 24 Apr 2026 13:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHdX/53t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C32C2BCB2;
+	Fri, 24 Apr 2026 13:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037517;
-	bh=8x7psqwsWrCAMKcIfcB2phTCN73208XJpeDuzhVNqe0=;
+	s=korg; t=1777037520;
+	bh=lUOKdkBzArG51/WyNkYBrcP2zIiJ1jF3ySmsXZob7Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jDppBb7w3BYGFID1ncLv5r2fOvCvEZoiD295P6tspqk+v1YkcxNr7bzptgmMCo3G0
-	 K8+PYlvhk1OLmWZcItMPFdbCMFMsr6+6QPNYGs7K5t10fwsmUODYqQb594d6xfKV5f
-	 5Ne5zqDii7YDhQhiiNjBD4OYbbYeVIrt8KzMrtuM=
+	b=ZHdX/53t0MsV86AmzS5/1plDbmcKkiJNXylPZiC6kgjHHZnzrzIYAh4N0oY2v4nWP
+	 Awk6Fef7nJL6M/eb3/wkcEvAyPJifdPuCEDBfGaup+rs+UznqnG8b+ju/1RH8YaRGh
+	 6nt1PJjewe5Q/bGGvXOvUOm+vXYwrCjtNhThQ5eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfgang Walter <linux@stwm.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.0 01/42] crypto: authencesn - Fix src offset when decrypting in-place
-Date: Fri, 24 Apr 2026 15:30:26 +0200
-Message-ID: <20260424132420.700264753@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 7.0 10/42] fs/ntfs3: validate rec->used in journal-replay file record check
+Date: Fri, 24 Apr 2026 15:30:35 +0200
+Message-ID: <20260424132422.610163655@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132420.410310336@linuxfoundation.org>
 References: <20260424132420.410310336@linuxfoundation.org>
@@ -50,36 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 1f48ad3b19a9dfc947868edda0bb8e48e5b5a8fa upstream.
+commit 0ca0485e4b2e837ebb6cbd4f2451aba665a03e4b upstream.
 
-The src SG list offset wasn't set properly when decrypting in-place,
-fix it.
+check_file_record() validates rec->total against the record size but
+never validates rec->used.  The do_action() journal-replay handlers read
+rec->used from disk and use it to compute memmove lengths:
 
-Reported-by: Wolfgang Walter <linux@stwm.de>
-Fixes: e02494114ebf ("crypto: authencesn - Do not place hiseq at end of dst for out-of-place decryption")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+  DeleteAttribute:    memmove(attr, ..., used - asize - roff)
+  CreateAttribute:    memmove(..., attr, used - roff)
+  change_attr_size:   memmove(..., used - PtrOffset(rec, next))
+
+When rec->used is smaller than the offset of a validated attribute, or
+larger than the record size, these subtractions can underflow allowing
+us to copy huge amounts of memory in to a 4kb buffer, generally
+considered a bad idea overall.
+
+This requires a corrupted filesystem, which isn't a threat model the
+kernel really needs to worry about, but checking for such an obvious
+out-of-bounds value is good to keep things robust, especially on journal
+replay
+
+Fix this up by bounding rec->used correctly.
+
+This is much like commit b2bc7c44ed17 ("fs/ntfs3: Fix slab-out-of-bounds
+read in DeleteIndexEntryRoot") which checked different values in this
+same switch statement.
+
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Cc: stable <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/authencesn.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ntfs3/fslog.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/crypto/authencesn.c
-+++ b/crypto/authencesn.c
-@@ -228,9 +228,11 @@ static int crypto_authenc_esn_decrypt_ta
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2791,13 +2791,14 @@ static inline bool check_file_record(con
+ 	u16 fn = le16_to_cpu(rec->rhdr.fix_num);
+ 	u16 ao = le16_to_cpu(rec->attr_off);
+ 	u32 rs = sbi->record_size;
++	u32 used = le32_to_cpu(rec->used);
  
- decrypt:
+ 	/* Check the file record header for consistency. */
+ 	if (rec->rhdr.sign != NTFS_FILE_SIGNATURE ||
+ 	    fo > (SECTOR_SIZE - ((rs >> SECTOR_SHIFT) + 1) * sizeof(short)) ||
+ 	    (fn - 1) * SECTOR_SIZE != rs || ao < MFTRECORD_FIXUP_OFFSET_1 ||
+ 	    ao > sbi->record_size - SIZEOF_RESIDENT || !is_rec_inuse(rec) ||
+-	    le32_to_cpu(rec->total) != rs) {
++	    le32_to_cpu(rec->total) != rs || used > rs || used < ao) {
+ 		return false;
+ 	}
  
--	if (src != dst)
--		src = scatterwalk_ffwd(areq_ctx->src, src, assoclen);
- 	dst = scatterwalk_ffwd(areq_ctx->dst, dst, assoclen);
-+	if (req->src == req->dst)
-+		src = dst;
-+	else
-+		src = scatterwalk_ffwd(areq_ctx->src, src, assoclen);
+@@ -2809,6 +2810,15 @@ static inline bool check_file_record(con
+ 		return false;
+ 	}
  
- 	skcipher_request_set_tfm(skreq, ctx->enc);
- 	skcipher_request_set_callback(skreq, flags,
++	/*
++	 * The do_action() handlers compute memmove lengths as
++	 * "rec->used - <offset of validated attr>", which underflows when
++	 * rec->used is smaller than the attribute walk reached.  At this
++	 * point attr is the ATTR_END marker; rec->used must cover it.
++	 */
++	if (used < PtrOffset(rec, attr) + sizeof(attr->type))
++		return false;
++
+ 	return true;
+ }
+ 
 
 
