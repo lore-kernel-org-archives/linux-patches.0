@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F343D6CC7;
-	Fri, 24 Apr 2026 13:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C28123645D;
+	Fri, 24 Apr 2026 13:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037764; cv=none; b=aLP+OPWg0Vh8N9o+EtR2XEwa0LP+yAJViO8MWQ+WD3jzz68+J/a4fBw3+1l6ZtlTGrokzLgx+KD1SIb/15M9hH7NSBDFJdK3fhDG8T2rRwe17SJ4wKxr6r/A3nlnhOSL97019Sk1FoNuzJRqGWvlwwoq6+14ddjmuB88jLPnAGM=
+	t=1777037767; cv=none; b=pFjAnBxPIJe6g0/6MRrv4k8cDyjCrzvOA6XXNHk9K26zjKoWKooljOQVpo4eug4c4dprXNHnb1KBRkxmzKGHQn4Pn4aviKOSeRZ1kntunQO2HsDAxd/WfhmS38S6h4J8XJbdknCKaSFnJt2hh9MQfqh5+SGpLH3KRv5kA4hNXKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037764; c=relaxed/simple;
-	bh=LiI6tvSg7e+6mKPok3f7JepdZfLZ5baeoJjm3q8t1uY=;
+	s=arc-20240116; t=1777037767; c=relaxed/simple;
+	bh=2dO/ZOQ1ga4Bvg0ue3oFZCGl5UAz0jchc24ZP2XkD+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8bVcWHdppMKaiaMAe8jbIjPJUvZ1oZvVxAIgcjV/9M4B3v20VZZ7PrZ7M0E0cIVDMBy/K07oNOojTV2r2az9KMZRWhKoUi/euTOsa6eWYZpATq7ktBjlZJ73rkl4Njy/1/9FI8I/r1hfd7GyPAdovLYsb18Crs7EGGjjU+swAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g80mM31z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KXGoj1d8bWqC7oy8wo9jCS383LkztW/PVzqxT1nKbybAHgyZMnDDPdQ4lj9vMYlLF4PCAQB4dllQwh9/2jaNHv7/zJh6JqfSVswKno1MitMf8LT3549aJ0hW2ri0FnrV5MdPlH+C1Em7EzjCq3E4VrqOdhp3DnJF53B0JN6rVBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFWi0HZ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g80mM31z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D84CC19425;
-	Fri, 24 Apr 2026 13:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFWi0HZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D747DC19425;
+	Fri, 24 Apr 2026 13:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037764;
-	bh=LiI6tvSg7e+6mKPok3f7JepdZfLZ5baeoJjm3q8t1uY=;
+	s=korg; t=1777037767;
+	bh=2dO/ZOQ1ga4Bvg0ue3oFZCGl5UAz0jchc24ZP2XkD+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g80mM31ztZeaQqCUnB5g0NlFWgY3XZOnRC/y4sH+FIQYLloqjgbippdu3vARB/t0Q
-	 h+BbiUkvC/HGSbAHZ3etV1rjWAeEtkONUxgO5yahPDw2LOZkOiMw8x9Pbr3qQRC538
-	 EFZzf/Vbr3IutrAlQnxZi9KpO1/u458VBGF9Pmyw=
+	b=NFWi0HZ6ZMy98D229AsUNVVWPUCCYx+Y+HWePxJ+1EoLmd1a7f2m6fTX3Ndhinqih
+	 UEJdNXObIMHml/ZrpnvTczmt8QV6soC1a0mFR4LP66X95yc5q+k3yqu7T9Ae5lknXa
+	 Q48zUM85dnJYQ2/9QkUcQU9agAGWSMWVZADkPttU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com,
+	Daniel Pouzzner <douzzer@mega.nu>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/166] perf/x86/intel/uncore: Skip discovery table for offline dies
-Date: Fri, 24 Apr 2026 15:29:35 +0200
-Message-ID: <20260424132545.514392925@linuxfoundation.org>
+Subject: [PATCH 6.6 062/166] crypto: algif_aead - Fix minimum RX size check for decryption
+Date: Fri, 24 Apr 2026 15:29:36 +0200
+Message-ID: <20260424132545.699696552@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -53,45 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 7b568e9eba2fad89a696f22f0413d44cf4a1f892 ]
+[ Upstream commit 3d14bd48e3a77091cbce637a12c2ae31b4a1687c ]
 
-This warning can be triggered if NUMA is disabled and the system
-boots with fewer CPUs than the number of CPUs in die 0.
+The check for the minimum receive buffer size did not take the
+tag size into account during decryption.  Fix this by adding the
+required extra length.
 
-WARNING: CPU: 9 PID: 7257 at uncore.c:1157 uncore_pci_pmu_register+0x136/0x160 [intel_uncore]
-
-Currently, the discovery table continues to be parsed even if all CPUs
-in the associated die are offline.  This can lead to an array overflow
-at "pmu->boxes[die] = box" in uncore_pci_pmu_register(), which may
-trigger the warning above or cause other issues.
-
-Fixes: edae1f06c2cd ("perf/x86/intel/uncore: Parse uncore discovery tables")
-Reported-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Tested-by: Steve Wahl <steve.wahl@hpe.com>
-Link: https://patch.msgid.link/20260313174050.171704-3-zide.chen@intel.com
+Reported-by: syzbot+aa11561819dc42ebbc7c@syzkaller.appspotmail.com
+Reported-by: Daniel Pouzzner <douzzer@mega.nu>
+Fixes: d887c52d6ae4 ("crypto: algif_aead - overhaul memory management")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_discovery.c | 2 +-
+ crypto/algif_aead.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_discovery.c b/arch/x86/events/intel/uncore_discovery.c
-index cb488e41807c7..3f6b20fa14eeb 100644
---- a/arch/x86/events/intel/uncore_discovery.c
-+++ b/arch/x86/events/intel/uncore_discovery.c
-@@ -319,7 +319,7 @@ bool intel_uncore_has_discovery_tables(int *ignore)
- 				     (val & UNCORE_DISCOVERY_DVSEC2_BIR_MASK) * UNCORE_DISCOVERY_BIR_STEP;
+diff --git a/crypto/algif_aead.c b/crypto/algif_aead.c
+index 7d58cbbce4af2..481e66f8708bb 100644
+--- a/crypto/algif_aead.c
++++ b/crypto/algif_aead.c
+@@ -170,7 +170,7 @@ static int _aead_recvmsg(struct socket *sock, struct msghdr *msg,
+ 	if (usedpages < outlen) {
+ 		size_t less = outlen - usedpages;
  
- 			die = get_device_die_id(dev);
--			if (die < 0)
-+			if ((die < 0) || (die >= uncore_max_dies()))
- 				continue;
- 
- 			parse_discovery_table(dev, die, bar_offset, &parsed, ignore);
+-		if (used < less) {
++		if (used < less + (ctx->enc ? 0 : as)) {
+ 			err = -EINVAL;
+ 			goto free;
+ 		}
 -- 
 2.53.0
 
