@@ -1,37 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000E03D75B6;
-	Fri, 24 Apr 2026 13:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8093537DF;
+	Fri, 24 Apr 2026 13:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038285; cv=none; b=Q7QcLsFongFxGaSHBH9t5pNPuxfNkcDpVPmI78pHyZI25tOMdvx7S4IE53AQBbK44gzGnFemm41yHu7CSKWZfrroWbTvPRfQTvkg0hN7J6nxLYGZ3hUt4UxdURGw7ooR56ZSUxQoAi7EnYY3S6obCdXvfVmyfJoLld1wWBZsz+0=
+	t=1777038287; cv=none; b=qsXc796fXrEyQPmjaMwsY94X+P8c4Ab5w613m8FZ+Y+JPZb945RBiNunKhx9+K6LQaiWjLf3Vint11n/zeYzLKYADA9sl7J1vZtiL1mzd0ehDCZLYMZC+wv0+9rPE5nmyuYX2ADfhVRxeBue8414hd0ZWI6tLvg4bkPEJWzUcVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038285; c=relaxed/simple;
-	bh=0NhJrTOK6QTSVre/BLYj1F0mz1eTPlgrXbmk14RBnx4=;
+	s=arc-20240116; t=1777038287; c=relaxed/simple;
+	bh=UVkgQpV0lIwiXcYXNd2iR4m9MQNVpbGKntqfaygxYUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFsRnK8clH7sBZXX2QAl35MuK5zzk+leIXMFTxJrU3Ohm8B+qVxiUCsrHmhUlstBK/kGNzJGKe31QHVkdKBWAHu7RNPO/crvu8Ji8ZArpIFdyMPTrV4t5s4nqq2XvwRY8lO/GUaE9+QKWSTQCnB1fCkX639WoCCP/5kD9Wfb3eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8aT/tT3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kdh5IBw5vqq8mx5jrBFdOq0m8ANJ2F7bJl+Dk5rzc97mTYyxUYDXR0Tmkv/vlDvyVhNgv8F2GqUR1QyyYUgPrtCfcnk9srkeV4lCOR9WTfbFNseFUTq3Pqijq7dxtSotb6bbPjVhOJqgR5KX19uTR5YfMEbMajSFT2RgEcpYCV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3NNI1AX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8aT/tT3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D20C19425;
-	Fri, 24 Apr 2026 13:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3NNI1AX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BD0C19425;
+	Fri, 24 Apr 2026 13:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038284;
-	bh=0NhJrTOK6QTSVre/BLYj1F0mz1eTPlgrXbmk14RBnx4=;
+	s=korg; t=1777038287;
+	bh=UVkgQpV0lIwiXcYXNd2iR4m9MQNVpbGKntqfaygxYUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8aT/tT3z4edjqrAR4/Z7LDEpzA808NquzQE2/HmuHgmMYbWTP+P0t3z8tE93WNkw
-	 d92TLtaAuDaMvg/VG17ZtFOAiTJcWaAkxjDCX3BNPuUJBFn4o21I9vUxBDPXIdvwNy
-	 wsMDwIXyTVE+quaPif3wSDQh8qyoGTIIGUOafsow=
+	b=d3NNI1AXBweBHw4knbGi7FS8+cjGmijS58Sur+rZ7Ac6ftQ85PUsyKbU3FUR/Hqql
+	 4lhOVqjKalcbdN5g0hY34Ib6zFNnNwt2j95c5ja2KjsqLlDjoXn2f44z11v4qH5Uwa
+	 KonNColIJMb2ilSJA5/Lx1XVU1Eg/ybZdh4HDusE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, devicetree@vger.kernel.org,  Nathan Chancellor" <nathan@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.12 12/35] scripts/dtc: Remove unused dts_version in dtc-lexer.l
-Date: Fri, 24 Apr 2026 15:31:19 +0200
-Message-ID: <20260424132414.223848631@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Jie Wang <jiewang2024@lzu.edu.cn>,
+	Yang Yang <n05ec@lzu.edu.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 13/35] rxrpc: only handle RESPONSE during service challenge
+Date: Fri, 24 Apr 2026 15:31:20 +0200
+Message-ID: <20260424132414.436666103@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132411.427029259@linuxfoundation.org>
 References: <20260424132411.427029259@linuxfoundation.org>
@@ -50,52 +62,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Wang Jie <jiewang2024@lzu.edu.cn>
 
-This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
-to upstream version v1.7.2-69-g53373d135579") upstream applied it as
-part of a regular scripts/dtc sync, which may be unsuitable for older
-versions of stable where the warning it fixes is present.
+[ Upstream commit c43ffdcfdbb5567b1f143556df8a04b4eeea041c ]
 
-A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
-in clang under a new subwarning, -Wunused-but-set-global, points out an
-unused static global variable in dtc-lexer.lex.c (compiled from
-dtc-lexer.l):
+Only process RESPONSE packets while the service connection is still in
+RXRPC_CONN_SERVICE_CHALLENGING. Check that state under state_lock before
+running response verification and security initialization, then use a local
+secured flag to decide whether to queue the secured-connection work after
+the state transition. This keeps duplicate or late RESPONSE packets from
+re-running the setup path and removes the unlocked post-transition state
+test.
 
-  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
-    641 | static int dts_version = 1;
-        |            ^
-
-Remove it to clear up the warning, as it is truly unused.
-
-Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Jie Wang <jiewang2024@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260408121252.2249051-21-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted spin_lock_irq/spin_unlock_irq calls to spin_lock/spin_unlock ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-This should apply cleanly to all supported stable branches.
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- scripts/dtc/dtc-lexer.l |    3 ---
- 1 file changed, 3 deletions(-)
+ net/rxrpc/conn_event.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/scripts/dtc/dtc-lexer.l
-+++ b/scripts/dtc/dtc-lexer.l
-@@ -39,8 +39,6 @@ extern bool treesource_error;
- #define DPRINT(fmt, ...)	do { } while (0)
- #endif
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -233,6 +233,7 @@ static int rxrpc_process_event(struct rx
+ 			       struct sk_buff *skb)
+ {
+ 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
++	bool secured = false;
+ 	int ret;
  
--static int dts_version = 1;
--
- #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
- 				BEGIN(V1); \
+ 	if (conn->state == RXRPC_CONN_ABORTED)
+@@ -245,6 +246,13 @@ static int rxrpc_process_event(struct rx
+ 		return conn->security->respond_to_challenge(conn, skb);
  
-@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(c
+ 	case RXRPC_PACKET_TYPE_RESPONSE:
++		spin_lock(&conn->state_lock);
++		if (conn->state != RXRPC_CONN_SERVICE_CHALLENGING) {
++			spin_unlock(&conn->state_lock);
++			return 0;
++		}
++		spin_unlock(&conn->state_lock);
++
+ 		ret = conn->security->verify_response(conn, skb);
+ 		if (ret < 0)
+ 			return ret;
+@@ -255,11 +263,13 @@ static int rxrpc_process_event(struct rx
+ 			return ret;
  
- <*>"/dts-v1/"	{
- 			DPRINT("Keyword: /dts-v1/\n");
--			dts_version = 1;
- 			BEGIN_DEFAULT();
- 			return DT_V1;
- 		}
+ 		spin_lock(&conn->state_lock);
+-		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING)
++		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING) {
+ 			conn->state = RXRPC_CONN_SERVICE;
++			secured = true;
++		}
+ 		spin_unlock(&conn->state_lock);
+ 
+-		if (conn->state == RXRPC_CONN_SERVICE) {
++		if (secured) {
+ 			/* Offload call state flipping to the I/O thread.  As
+ 			 * we've already received the packet, put it on the
+ 			 * front of the queue.
 
 
