@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9763D6690;
-	Fri, 24 Apr 2026 13:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B6233E347;
+	Fri, 24 Apr 2026 13:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037901; cv=none; b=F4u7egPeBaWP1WL9zJEvMUQ3giN/cGo4XYb8EcfxBDUd8U2I9XfxXf34R7Rj8eU8oNdVO8VK0vMUjSIlAU3cVUsxHly/zEYncfZplzdHC0/1cgwDcu/K0X1q+Pnh/cAiCeLFDtpPFSGMG+MRdHo5JRmqgvkHvhreRMTivxlwDb4=
+	t=1777037903; cv=none; b=GclmWAYw8qNuXeUMNEPmoh7v3KEsrQfs4JJZxy95alMfxSTikW/qjo3Z7JWQixW1WTWLML3QrQUYlvQTNvLWcmzaTSTmlJKqCvkyw9BtBdaK3TMXW0A6bPNEq8UzWNe0OE3SJB8iRasSMzMXzu9Jb60/r/LwO6oFf0lJbgioMBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037901; c=relaxed/simple;
-	bh=3ZRGVp+lF5jwOd7xa1CpJkoYChp8VQw9z4ME1ADLo2s=;
+	s=arc-20240116; t=1777037903; c=relaxed/simple;
+	bh=fTNJ9vtKjeDwUSuMa2qDHOenbZV1Ctb1gCoX46nkVuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdOapwXgkpQVLDz3vUmKWhlGqTJzN+/GVwAoegXUDF+x+uDcfLD2wYKCVjpseiQ5bO9d+xnBdpj9tC82/tswiI90sJ4Z+Luz5ChWytEx+0UAFOXNU0nhFwoanFIhhhIb2tuYjUZ9OURI8oJSVu73AzGr7hxdK+qj+xGjVs5093g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9rzRqXQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kJ3nz72bhGJkrxODhvQVjheGxqDfY20vV8esHtOmKGCEdTQeG+ve17QN3HpkT2QIgcR+1Uu7hGYA3AYE9lgGSu4nMVWNZ+fIYU3VjFEA1yfJdbUZuNeEo59OOo2OQ3uhJ4AuY0jmxVZsI14/NViJ7i/zfqARF551YeqzAlXB/Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfO/ekPP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9rzRqXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D80C19425;
-	Fri, 24 Apr 2026 13:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfO/ekPP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADBAC2BCB2;
+	Fri, 24 Apr 2026 13:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037901;
-	bh=3ZRGVp+lF5jwOd7xa1CpJkoYChp8VQw9z4ME1ADLo2s=;
+	s=korg; t=1777037903;
+	bh=fTNJ9vtKjeDwUSuMa2qDHOenbZV1Ctb1gCoX46nkVuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S9rzRqXQrBt0JgIHxVo2L9cQJZEGgSBG6ujeZwSvRkAoKKjeE6P14txrGmmokbnz+
-	 8/adCxRzxe2h/ITGANzL7UuawuflkmZ+9BQz7pNPKW4/FtOk/PasKVuBCgsNZX6Pyv
-	 VzrYbMqWyosxkHx8R1Nf/QGFNxMRQnuP0DHnZFEU=
+	b=HfO/ekPPa6WVc59iVvtVzIha8NiP8SzeL4WBZtNFwNIRTIYfqR7wTeQ4kcRk1m9u8
+	 KyBo/CLNSd9TxyCzbkgZGjwbub/BvnpO9FrA4AHXUe78Y3AVsOx0RCMR0dcNpGcMQq
+	 naOCkB8JYn28m/C5h9rMWjLWUV1POPmlp4qNoMMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Joe Perches <joe@perches.com>,
-	Andy Whitcroft <apw@canonical.com>,
-	Dwaipayan Ray <dwaipayanray1@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 112/166] checkpatch: add support for Assisted-by tag
-Date: Fri, 24 Apr 2026 15:30:26 +0200
-Message-ID: <20260424132556.263629356@linuxfoundation.org>
+	Yashu Zhang <zhangjiaji1@huawei.com>,
+	Tom Lendacky <thomas.lendacky@gmail.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 113/166] KVM: x86: Use scratch field in MMIO fragment to hold small write values
+Date: Fri, 24 Apr 2026 15:30:27 +0200
+Message-ID: <20260424132556.440909073@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -56,63 +52,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Levin <sashal@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit d1db4118489fffd2b2f612140b7acbb477880839 upstream.
+commit 0b16e69d17d8c35c5c9d5918bf596c75a44655d3 upstream.
 
-The Assisted-by tag was introduced in
-Documentation/process/coding-assistants.rst for attributing AI tool
-contributions to kernel patches.  However, checkpatch.pl did not recognize
-this tag, causing two issues:
+When exiting to userspace to service an emulated MMIO write, copy the
+to-be-written value to a scratch field in the MMIO fragment if the size
+of the data payload is 8 bytes or less, i.e. can fit in a single chunk,
+instead of pointing the fragment directly at the source value.
 
-  WARNING: Non-standard signature: Assisted-by:
-  ERROR: Unrecognized email address: 'AGENT_NAME:MODEL_VERSION'
+This fixes a class of use-after-free bugs that occur when the emulator
+initiates a write using an on-stack, local variable as the source, the
+write splits a page boundary, *and* both pages are MMIO pages.  Because
+KVM's ABI only allows for physically contiguous MMIO requests, accesses
+that split MMIO pages are separated into two fragments, and are sent to
+userspace one at a time.  When KVM attempts to complete userspace MMIO in
+response to KVM_RUN after the first fragment, KVM will detect the second
+fragment and generate a second userspace exit, and reference the on-stack
+variable.
 
-Fix this by:
-1. Adding Assisted-by to the recognized $signature_tags list
-2. Skipping email validation for Assisted-by lines since they use the
-   AGENT_NAME:MODEL_VERSION format instead of an email address
-3. Warning when the Assisted-by value doesn't match the expected format
+The issue is most visible if the second KVM_RUN is performed by a separate
+task, in which case the stack of the initiating task can show up as truly
+freed data.
 
-Link: https://lkml.kernel.org/r/20260311215818.518930-1-sashal@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Reported-by: Bart Van Assche <bvanassche@acm.org>
-Acked-by: Joe Perches <joe@perches.com>
-Cc: Andy Whitcroft <apw@canonical.com>
-Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  ==================================================================
+  BUG: KASAN: use-after-free in complete_emulated_mmio+0x305/0x420
+  Read of size 1 at addr ffff888009c378d1 by task syz-executor417/984
+
+  CPU: 1 PID: 984 Comm: syz-executor417 Not tainted 5.10.0-182.0.0.95.h2627.eulerosv2r13.x86_64 #3
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014 Call Trace:
+  dump_stack+0xbe/0xfd
+  print_address_description.constprop.0+0x19/0x170
+  __kasan_report.cold+0x6c/0x84
+  kasan_report+0x3a/0x50
+  check_memory_region+0xfd/0x1f0
+  memcpy+0x20/0x60
+  complete_emulated_mmio+0x305/0x420
+  kvm_arch_vcpu_ioctl_run+0x63f/0x6d0
+  kvm_vcpu_ioctl+0x413/0xb20
+  __se_sys_ioctl+0x111/0x160
+  do_syscall_64+0x30/0x40
+  entry_SYSCALL_64_after_hwframe+0x67/0xd1
+  RIP: 0033:0x42477d
+  Code: <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007faa8e6890e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00000000004d7338 RCX: 000000000042477d
+  RDX: 0000000000000000 RSI: 000000000000ae80 RDI: 0000000000000005
+  RBP: 00000000004d7330 R08: 00007fff28d546df R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004d733c
+  R13: 0000000000000000 R14: 000000000040a200 R15: 00007fff28d54720
+
+  The buggy address belongs to the page:
+  page:0000000029f6a428 refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9c37
+  flags: 0xfffffc0000000(node=0|zone=1|lastcpupid=0x1fffff)
+  raw: 000fffffc0000000 0000000000000000 ffffea0000270dc8 0000000000000000
+  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000 page dumped because: kasan: bad access detected
+
+  Memory state around the buggy address:
+  ffff888009c37780: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ffff888009c37800: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  >ffff888009c37880: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                                                   ^
+  ffff888009c37900: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ffff888009c37980: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+  ==================================================================
+
+The bug can also be reproduced with a targeted KVM-Unit-Test by hacking
+KVM to fill a large on-stack variable in complete_emulated_mmio(), i.e. by
+overwrite the data value with garbage.
+
+Limit the use of the scratch fields to 8-byte or smaller accesses, and to
+just writes, as larger accesses and reads are not affected thanks to
+implementation details in the emulator, but add a sanity check to ensure
+those details don't change in the future.  Specifically, KVM never uses
+on-stack variables for accesses larger that 8 bytes, e.g. uses an operand
+in the emulator context, and *all* reads are buffered through the mem_read
+cache.
+
+Note!  Using the scratch field for reads is not only unnecessary, it's
+also extremely difficult to handle correctly.  As above, KVM buffers all
+reads through the mem_read cache, and heavily relies on that behavior when
+re-emulating the instruction after a userspace MMIO read exit.  If a read
+splits a page, the first page is NOT an MMIO page, and the second page IS
+an MMIO page, then the MMIO fragment needs to point at _just_ the second
+chunk of the destination, i.e. its position in the mem_read cache.  Taking
+the "obvious" approach of copying the fragment value into the destination
+when re-emulating the instruction would clobber the first chunk of the
+destination, i.e. would clobber the data that was read from guest memory.
+
+Fixes: f78146b0f923 ("KVM: Fix page-crossing MMIO")
+Suggested-by: Yashu Zhang <zhangjiaji1@huawei.com>
+Reported-by: Yashu Zhang <zhangjiaji1@huawei.com>
+Closes: https://lore.kernel.org/all/369eaaa2b3c1425c85e8477066391bc7@huawei.com
+Cc: stable@vger.kernel.org
+Tested-by: Tom Lendacky <thomas.lendacky@gmail.com>
+Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Link: https://patch.msgid.link/20260225012049.920665-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/checkpatch.pl |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kvm/x86.c       |   14 +++++++++++++-
+ include/linux/kvm_host.h |    3 ++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -621,6 +621,7 @@ our $signature_tags = qr{(?xi:
- 	Reviewed-by:|
- 	Reported-by:|
- 	Suggested-by:|
-+	Assisted-by:|
- 	To:|
- 	Cc:
- )};
-@@ -3069,6 +3070,15 @@ sub process {
- 				}
- 			}
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -7713,7 +7713,13 @@ static int emulator_read_write_onepage(u
+ 	WARN_ON(vcpu->mmio_nr_fragments >= KVM_MAX_MMIO_FRAGMENTS);
+ 	frag = &vcpu->mmio_fragments[vcpu->mmio_nr_fragments++];
+ 	frag->gpa = gpa;
+-	frag->data = val;
++	if (write && bytes <= 8u) {
++		frag->val = 0;
++		frag->data = &frag->val;
++		memcpy(&frag->val, val, bytes);
++	} else {
++		frag->data = val;
++	}
+ 	frag->len = bytes;
+ 	return X86EMUL_CONTINUE;
+ }
+@@ -7728,6 +7734,9 @@ static int emulator_read_write(struct x8
+ 	gpa_t gpa;
+ 	int rc;
  
-+			# Assisted-by uses AGENT_NAME:MODEL_VERSION format, not email
-+			if ($sign_off =~ /^Assisted-by:/i) {
-+				if ($email !~ /^\S+:\S+/) {
-+					WARN("BAD_SIGN_OFF",
-+					     "Assisted-by expects 'AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]' format\n" . $herecurr);
-+				}
-+				next;
-+			}
++	if (WARN_ON_ONCE((bytes > 8u || !ops->write) && object_is_on_stack(val)))
++		return X86EMUL_UNHANDLEABLE;
 +
- 			my ($email_name, $name_comment, $email_address, $comment) = parse_email($email);
- 			my $suggested_email = format_email(($email_name, $name_comment, $email_address, $comment));
- 			if ($suggested_email eq "") {
+ 	if (ops->read_write_prepare &&
+ 		  ops->read_write_prepare(vcpu, val, bytes))
+ 		return X86EMUL_CONTINUE;
+@@ -11136,6 +11145,9 @@ static int complete_emulated_mmio(struct
+ 		frag++;
+ 		vcpu->mmio_cur_fragment++;
+ 	} else {
++		if (WARN_ON_ONCE(frag->data == &frag->val))
++			return -EIO;
++
+ 		/* Go forward to the next mmio piece. */
+ 		frag->data += len;
+ 		frag->gpa += len;
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -316,7 +316,8 @@ static inline bool kvm_vcpu_can_poll(kti
+ struct kvm_mmio_fragment {
+ 	gpa_t gpa;
+ 	void *data;
+-	unsigned len;
++	u64 val;
++	unsigned int len;
+ };
+ 
+ struct kvm_vcpu {
 
 
