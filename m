@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A31D3D5643;
-	Fri, 24 Apr 2026 13:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62173D47B0;
+	Fri, 24 Apr 2026 13:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037896; cv=none; b=Ft01HdLSLz8Epv4sNQF+s1Hd5VDz2upe8byayUXM1ZYC6vvx/0lpxwKhm8udZODpDf1qdWkoeuInjiMHlZPGBZ27kKHPMfe6HJ7dxQXqkYUz/ZnwGOp/u6H8ftEAsfGMDofleatp1jV1L+bz0XYYEcqJaU86fjTIfmRWXcM8UkI=
+	t=1777037898; cv=none; b=lSujlmJjSuunVxl7d2R8ZL6TVPPdculsjfdhoS7wMLp5MTimHZGVLlsMPUyBOXJun5uFy9oAyZnjfi4hxFgIQT3DmJEPwslY35mBpu+Y3FEn/FVyITtsk0QdfhEmaHa1mdRmnstF8zeeTdwxuLATy1HrZSoLmMk3lfc34m9iiI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037896; c=relaxed/simple;
-	bh=myJgHMK+7iXJ+sojBp6GmkQ8JUX9BzPF58xDvlP65ic=;
+	s=arc-20240116; t=1777037898; c=relaxed/simple;
+	bh=EV5bf75tUmDM6QqB46OGhnhT5C7WQVNizlEJKAO2DoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfTfv6rBFA1By/cEBIpjqktaKSq93PE3FsjplYoX3O6T/5lJXvngogvlcYLW5u/m3iz1NS1C44OldGNGQOV55vOCjosMAdh1qrBDvimAEtushOJJHJCvnfjM1sSWeiOFRlXKwpy4amQpylhkJoYlQ/uVki4houD/Gx7lxCHugy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cup2WaiL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MOPXu59D2op+bRRugYAKIpLzcfyZAArnY7waO6ZlSbrYTgeshbBTmRo/b/d5gM9ObcTB5fgLHGLgc8QsqqkPOgYD2VsvUKES2HXGfFkKz1xEUabGD5GgX5rv7RJPJbPg0S64Gu10VAHzbkwI91btKw99MWgjIJwATOAx3WDWFVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlWMs8es; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cup2WaiL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D731C19425;
-	Fri, 24 Apr 2026 13:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlWMs8es"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DF8C2BCB2;
+	Fri, 24 Apr 2026 13:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037896;
-	bh=myJgHMK+7iXJ+sojBp6GmkQ8JUX9BzPF58xDvlP65ic=;
+	s=korg; t=1777037898;
+	bh=EV5bf75tUmDM6QqB46OGhnhT5C7WQVNizlEJKAO2DoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cup2WaiLMmukOwfwziFc2lgeaUDcJiBb+hSxluaJOG225kTKnoMLL7q5c3z09CK8W
-	 LfCGsOASlhYwAVF7Fbb4P7JW9NbDHJpAgbXJ1jR0XB+Y0PWRu+dfbrtHuSO9K1CuI8
-	 xIIhip1ikFiRyg6H7mBEr7ksImIkKTxm0G3nWO50=
+	b=wlWMs8esmR0+1YaDr9IGSC1DSfL1Oei71CD300zXN0peUd+fgUhLREex2APq2Q5dG
+	 hfn/PP1Iz3gj6EHAlAf3uIFSg7JJ5PHGb/EApi66TTD+5ZOaVWS8RxYeZs9wxzxFqD
+	 FLsOauOYiQOSOx0/3O/ft2rPw/fty2JZyFDJfctw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Rajani Kantha <681739313@139.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.6 111/166] ice: Fix memory leak in ice_set_ringparam()
-Date: Fri, 24 Apr 2026 15:30:25 +0200
-Message-ID: <20260424132556.013809668@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Nathan Rebello <nathan.c.rebello@gmail.com>
+Subject: [PATCH 6.6 085/166] usbip: validate number_of_packets in usbip_pack_ret_submit()
+Date: Fri, 24 Apr 2026 15:29:59 +0200
+Message-ID: <20260424132550.545549331@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -55,74 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Nathan Rebello <nathan.c.rebello@gmail.com>
 
-[ Upstream commit fe868b499d16f55bbeea89992edb98043c9de416 ]
+commit 2ab833a16a825373aad2ba7d54b572b277e95b71 upstream.
 
-In ice_set_ringparam, tx_rings and xdp_rings are allocated before
-rx_rings. If the allocation of rx_rings fails, the code jumps to
-the done label leaking both tx_rings and xdp_rings. Furthermore, if
-the setup of an individual Rx ring fails during the loop, the code jumps
-to the free_tx label which releases tx_rings but leaks xdp_rings.
+When a USB/IP client receives a RET_SUBMIT response,
+usbip_pack_ret_submit() unconditionally overwrites
+urb->number_of_packets from the network PDU. This value is
+subsequently used as the loop bound in usbip_recv_iso() and
+usbip_pad_iso() to iterate over urb->iso_frame_desc[], a flexible
+array whose size was fixed at URB allocation time based on the
+*original* number_of_packets from the CMD_SUBMIT.
 
-Fix this by introducing a free_xdp label and updating the error paths to
-ensure both xdp_rings and tx_rings are properly freed if rx_rings
-allocation or setup fails.
+A malicious USB/IP server can set number_of_packets in the response
+to a value larger than what was originally submitted, causing a heap
+out-of-bounds write when usbip_recv_iso() writes to
+urb->iso_frame_desc[i] beyond the allocated region.
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
+KASAN confirmed this with kernel 7.0.0-rc5:
 
-Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
-Fixes: efc2214b6047 ("ice: Add support for XDP")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Rajani Kantha <681739313@139.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  BUG: KASAN: slab-out-of-bounds in usbip_recv_iso+0x46a/0x640
+  Write of size 4 at addr ffff888106351d40 by task vhci_rx/69
+
+  The buggy address is located 0 bytes to the right of
+   allocated 320-byte region [ffff888106351c00, ffff888106351d40)
+
+The server side (stub_rx.c) and gadget side (vudc_rx.c) already
+validate number_of_packets in the CMD_SUBMIT path since commits
+c6688ef9f297 ("usbip: fix stub_rx: harden CMD_SUBMIT path to handle
+malicious input") and b78d830f0049 ("usbip: fix vudc_rx: harden
+CMD_SUBMIT path to handle malicious input"). The server side validates
+against USBIP_MAX_ISO_PACKETS because no URB exists yet at that point.
+On the client side we have the original URB, so we can use the tighter
+bound: the response must not exceed the original number_of_packets.
+
+This mirrors the existing validation of actual_length against
+transfer_buffer_length in usbip_recv_xbuff(), which checks the
+response value against the original allocation size.
+
+Kelvin Mbogo's series ("usb: usbip: fix integer overflow in
+usbip_recv_iso()", v2) hardens the receive-side functions themselves;
+this patch complements that work by catching the bad value at its
+source -- in usbip_pack_ret_submit() before the overwrite -- and
+using the tighter per-URB allocation bound rather than the global
+USBIP_MAX_ISO_PACKETS limit.
+
+Fix this by checking rpdu->number_of_packets against
+urb->number_of_packets in usbip_pack_ret_submit() before the
+overwrite. On violation, clamp to zero so that usbip_recv_iso() and
+usbip_pad_iso() safely return early.
+
+Fixes: 1325f85fa49f ("staging: usbip: bugfix add number of packets for isochronous frames")
+Cc: stable <stable@kernel.org>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Nathan Rebello <nathan.c.rebello@gmail.com>
+Link: https://patch.msgid.link/20260402085259.234-1-nathan.c.rebello@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/usb/usbip/usbip_common.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 448ca855df901..c254484e9b6b2 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -2847,7 +2847,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
- 	rx_rings = kcalloc(vsi->num_rxq, sizeof(*rx_rings), GFP_KERNEL);
- 	if (!rx_rings) {
- 		err = -ENOMEM;
--		goto done;
-+		goto free_xdp;
+--- a/drivers/usb/usbip/usbip_common.c
++++ b/drivers/usb/usbip/usbip_common.c
+@@ -470,6 +470,18 @@ static void usbip_pack_ret_submit(struct
+ 		urb->status		= rpdu->status;
+ 		urb->actual_length	= rpdu->actual_length;
+ 		urb->start_frame	= rpdu->start_frame;
++		/*
++		 * The number_of_packets field determines the length of
++		 * iso_frame_desc[], which is a flexible array allocated
++		 * at URB creation time. A response must never claim more
++		 * packets than originally submitted; doing so would cause
++		 * an out-of-bounds write in usbip_recv_iso() and
++		 * usbip_pad_iso(). Clamp to zero on violation so both
++		 * functions safely return early.
++		 */
++		if (rpdu->number_of_packets < 0 ||
++		    rpdu->number_of_packets > urb->number_of_packets)
++			rpdu->number_of_packets = 0;
+ 		urb->number_of_packets = rpdu->number_of_packets;
+ 		urb->error_count	= rpdu->error_count;
  	}
- 
- 	ice_for_each_rxq(vsi, i) {
-@@ -2877,7 +2877,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
- 			}
- 			kfree(rx_rings);
- 			err = -ENOMEM;
--			goto free_tx;
-+			goto free_xdp;
- 		}
- 	}
- 
-@@ -2928,6 +2928,13 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
- 	}
- 	goto done;
- 
-+free_xdp:
-+	if (xdp_rings) {
-+		ice_for_each_xdp_txq(vsi, i)
-+			ice_free_tx_ring(&xdp_rings[i]);
-+		kfree(xdp_rings);
-+	}
-+
- free_tx:
- 	/* error cleanup if the Rx allocations failed after getting Tx */
- 	if (tx_rings) {
--- 
-2.53.0
-
 
 
