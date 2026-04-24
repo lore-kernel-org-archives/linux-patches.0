@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AAC3563D4;
-	Fri, 24 Apr 2026 13:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299663D6494;
+	Fri, 24 Apr 2026 13:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037996; cv=none; b=EiAFBa1WA17nQDzVxCKnJms/bGhaSEoBkDp7cNY7FRva44lcFul96GifossaxzimPbiYjMxBO27Qdo9az26nn+ZyCtM8t+tzV+ZSZQe9dPuBB/84KDoo2P0GBzlj1+8q6lkeFN4vxFx9IthMzaKRZF9CBVg7HaISnHneiAKQ2eM=
+	t=1777037999; cv=none; b=CfIafziasD5C7TYM3WSdDTQ4a9U4DU5Rk+Q4+xrxKylsflKY2IEIawUCAMpfUql3D64dggkiaw44a8l3vak7nzLYYmBBiN86iNwJ4LDF+DeFTtAC0jKbhV+xUtsJ3p1gwu85SQKcjLHUYjfLgQZXskrRXcHPRT7ox3caoFAocM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037996; c=relaxed/simple;
-	bh=t61bCouD3zE7Nfp/g0tB9B0uHp0j3oN9nbXDIygSkvU=;
+	s=arc-20240116; t=1777037999; c=relaxed/simple;
+	bh=olQkeSaDlokFLybIP9AR0d5AQemlLVoNeg3Go9aklos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AsPE3maR/mM/YYhDSw0OKcziku3Gx+22qpFK5aDiuyYL7ys2prmwPj7Zvt7LbWjssTMIbb+ylDvjW0NMXCZADP3xquVQ5gDpAIgiTqLuYYTd3D4oVj+4JKB4Hbi2N0CFwe4+Ypd8Oc4W+ZcppdYbRFAtQVYoCAe2/fLzfNcJkO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIzlc8P/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nO3Rs0itn6DJ9dJf6vBQIe/tZvQB01rnUoKxqL1myfuEDBXkbdqw6V7oU+SPFReS0R5aRHY1aGi/F6viNiT5DA6C/aPy5RRecOdogOu/1P8ZN9xOl2VezkXaXdseaKBRA1H1+dii3b+x3S4IzLOrGQ60npp83+9ADSZUMJU6OrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAt0bneU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIzlc8P/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC25C2BCB6;
-	Fri, 24 Apr 2026 13:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAt0bneU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3811C2BCB5;
+	Fri, 24 Apr 2026 13:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037996;
-	bh=t61bCouD3zE7Nfp/g0tB9B0uHp0j3oN9nbXDIygSkvU=;
+	s=korg; t=1777037999;
+	bh=olQkeSaDlokFLybIP9AR0d5AQemlLVoNeg3Go9aklos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lIzlc8P/6zZI5ReMJX+gKRBs44nv5S09CPhMFTjU5gkohsYsFcFjm7xQMj8xZnezB
-	 jmVUOK0gSsfz6hlAKFLP9WvJGkfEqYmBWEiC8TnSF0dYk3bx7Af3Lqht9boKm6bNHN
-	 jOqpMpo2NzBxV3YkU/lADMnvKu9//cT52xDlywVY=
+	b=TAt0bneU45UT6qrmfQzms7XypvX6GnbVhl9SBmdQPVDU+9NdBWVORxUYdEGTfXea6
+	 8hTBs/351DOXh1UsZuNppH+2TOa8TX6JOGMpc+LYXymFxgIg9MbGFHM4ZHu1KbprSI
+	 yyO/h0lUgB8rceEfWkNlSCwquC/Wr8/Egl0sXZUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.6 149/166] fuse: quiet down complaints in fuse_conn_limit_write
-Date: Fri, 24 Apr 2026 15:31:03 +0200
-Message-ID: <20260424132604.360304624@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 150/166] smb: server: fix active_num_conn leak on transport allocation failure
+Date: Fri, 24 Apr 2026 15:31:04 +0200
+Message-ID: <20260424132604.583550568@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -44,71 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 129a45f9755a89f573c6a513a6b9e3d234ce89b0 upstream.
+commit 6551300dc452ac16a855a83dbd1e74899542d3b3 upstream.
 
-gcc 15 complains about an uninitialized variable val that is passed by
-reference into fuse_conn_limit_write:
+Commit 77ffbcac4e56 ("smb: server: fix leak of active_num_conn in
+ksmbd_tcp_new_connection()") addressed the kthread_run() failure
+path.  The earlier alloc_transport() == NULL path in the same
+function has the same leak, is reachable pre-authentication via any
+TCP connect to port 445, and was empirically reproduced on UML
+(ARCH=um, v7.0-rc7): a small number of forced allocation failures
+were sufficient to put ksmbd into a state where every subsequent
+connection attempt was rejected for the remainder of the boot.
 
- control.c: In function ‘fuse_conn_congestion_threshold_write’:
- include/asm-generic/rwonce.h:55:37: warning: ‘val’ may be used uninitialized [-Wmaybe-uninitialized]
-    55 |         *(volatile typeof(x) *)&(x) = (val);                            \
-       |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~
- include/asm-generic/rwonce.h:61:9: note: in expansion of macro ‘__WRITE_ONCE’
-    61 |         __WRITE_ONCE(x, val);                                           \
-       |         ^~~~~~~~~~~~
- control.c:178:9: note: in expansion of macro ‘WRITE_ONCE’
-   178 |         WRITE_ONCE(fc->congestion_threshold, val);
-       |         ^~~~~~~~~~
- control.c:166:18: note: ‘val’ was declared here
-   166 |         unsigned val;
-       |                  ^~~
+ksmbd_kthread_fn() increments active_num_conn before calling
+ksmbd_tcp_new_connection() and discards the return value, so when
+alloc_transport() returns NULL the socket is released and -ENOMEM
+returned without decrementing the counter.  Each such failure
+permanently consumes one slot from the max_connections pool; once
+cumulative failures reach the cap, atomic_inc_return() hits the
+threshold on every subsequent accept and every new connection is
+rejected.  The counter is only reset by module reload.
 
-Unfortunately there's enough macro spew involved in kstrtoul_from_user
-that I think gcc gives up on its analysis and sprays the above warning.
-AFAICT it's not actually a bug, but we could just zero-initialize the
-variable to enable using -Wmaybe-uninitialized to find real problems.
+An unauthenticated remote attacker can drive the server toward the
+memory pressure that makes alloc_transport() fail by holding open
+connections with large RFC1002 lengths up to MAX_STREAM_PROT_LEN
+(0x00FFFFFF); natural transient allocation failures on a loaded
+host produce the same drift more slowly.
 
-Previously we would use some weird uninitialized_var annotation to quiet
-down the warnings, so clearly this code has been like this for quite
-some time.
+Mirror the existing rollback pattern in ksmbd_kthread_fn(): on the
+alloc_transport() failure path, decrement active_num_conn gated on
+server_conf.max_connections.
 
-Cc: stable@vger.kernel.org # v5.9
-Fixes: 3f649ab728cda8 ("treewide: Remove uninitialized_var() usage")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Repro details: with the patch reverted, forced alloc_transport()
+NULL returns leaked counter slots and subsequent connection
+attempts -- including legitimate connects issued after the
+forced-fail window had closed -- were all rejected with "Limit the
+maximum number of connections".  With this patch applied, the same
+connect sequence produces no rejections and the counter cycles
+cleanly between zero and one on every accept.
+
+Fixes: 0d0d4680db22 ("ksmbd: add max connections parameter")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/control.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/transport_tcp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/fuse/control.c
-+++ b/fs/fuse/control.c
-@@ -120,7 +120,7 @@ static ssize_t fuse_conn_max_background_
- 					      const char __user *buf,
- 					      size_t count, loff_t *ppos)
- {
--	unsigned val;
-+	unsigned int val = 0;
- 	ssize_t ret;
- 
- 	ret = fuse_conn_limit_write(file, buf, count, ppos, &val,
-@@ -162,7 +162,7 @@ static ssize_t fuse_conn_congestion_thre
- 						    const char __user *buf,
- 						    size_t count, loff_t *ppos)
- {
--	unsigned val;
-+	unsigned int val = 0;
- 	struct fuse_conn *fc;
- 	ssize_t ret;
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -203,6 +203,8 @@ static int ksmbd_tcp_new_connection(stru
+ 	t = alloc_transport(client_sk);
+ 	if (!t) {
+ 		sock_release(client_sk);
++		if (server_conf.max_connections)
++			atomic_dec(&active_num_conn);
+ 		return -ENOMEM;
+ 	}
  
 
 
