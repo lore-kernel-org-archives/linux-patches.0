@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBF833E347;
-	Fri, 24 Apr 2026 13:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF643D5643;
+	Fri, 24 Apr 2026 13:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037934; cv=none; b=SJuIlWuZ5vOfLlX8zhOXWvo/4eslgHMHa7xNC1jOHZQt7fOIuf8phq6mEzUcRb5NjV5BIPWupHgs42UemonFepuk21henN2Nn+zJbBviSFbnFah30Q4gDTt705rVj9eOQEGEEHlZ54nQuvKmQvQp0hyZRaB+QuFM71fUZX1t2/Q=
+	t=1777037937; cv=none; b=gC88zKi8F6DRI+ccHD1+/KOgipg4tIGvodq60QKVVioP7tTfzHf3UdV4FJOXX4ao6Fd/jZxyjjevJYo1NQhz6WAExxDjFojlzcQR0J3ZiFyX1WoAn8ZxU5SpZOcnkpVpTGRfoBEMatRGYEvc4OsizkP1/b2u2Upzy9ZAJdCJA2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037934; c=relaxed/simple;
-	bh=stOyYOgmG7uBmhnQwWr45DYl81NMl5MUKJaTku6T2pc=;
+	s=arc-20240116; t=1777037937; c=relaxed/simple;
+	bh=p62pu+zVV5r+pjF16YzHdwa7CoM2udSjJorQdKccVzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZklBZzlEoZsPMa8oApTmZgHi4Jpqh9p5dmMQACm1DBEpeJ1vwEVAUY3cP+lq1ziK7DZPAraYj1z5Jp8BqhdiGnirj4JNBIrRPAYmkxw7BKmC0cls5pHy4eQmhRUO1f0hEyN8ziU4F3jhx63IyJaNiTtncO+nD7tHp5P5yOOBH3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWaLzhjG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n0IrOjJKH7lbSeul6KEPK9V2A17XOizzhBSMCHe0kHER39S7gJQ0gGvVmXpp5sTv4i/XDJfjAzrzoWS8KMjDRxe5b0QnTLTi3minYYXmn1qCMBPQTsEYd+gOAc56S1vyvTZm64w3EZhgTJTmLIsBLVrP6zIb4Xhcb1qUWvqA3D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQl9Mgoa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWaLzhjG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E90C19425;
-	Fri, 24 Apr 2026 13:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQl9Mgoa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EEAC19425;
+	Fri, 24 Apr 2026 13:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037934;
-	bh=stOyYOgmG7uBmhnQwWr45DYl81NMl5MUKJaTku6T2pc=;
+	s=korg; t=1777037937;
+	bh=p62pu+zVV5r+pjF16YzHdwa7CoM2udSjJorQdKccVzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WWaLzhjGp2adyEtAjPwBKuAte07cci4IkSfSK7XDIiScg36TcgOHBG6TFajM40c9V
-	 Oh8hWgiex2AGnMs1zWLM0SNl8D4pfWb2JfG+2BwmZ17D5DGaO/aiMyD+O8Qf3vODwT
-	 Z6kK7e6/++K+ig4ZckZKU3DMkrUVJ64ZTqk/nrQc=
+	b=XQl9Mgoab6wZYeQnBPiOHOFKW0PNZ2ICoaBgUS+AJmasjUGklgijHgC/GzU2aE9F8
+	 QM9JCLL+Lvi9GUOfCRSVlZNXFRHOwXMYh8OPu/HkvudXSPqdz0PN9+mcuY75ikd1VE
+	 i0py6KaxehKieYr9hXGY98EkeYV4v6vdG0xYqBv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Minhong He <heminhong@kylinos.cn>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Li hongliang <1468888505@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/166] PCI: endpoint: pci-epf-vntb: Remove duplicate resource teardown
-Date: Fri, 24 Apr 2026 15:30:41 +0200
-Message-ID: <20260424132559.513725246@linuxfoundation.org>
+Subject: [PATCH 6.6 128/166] ipv6: add NULL checks for idev in SRv6 paths
+Date: Fri, 24 Apr 2026 15:30:42 +0200
+Message-ID: <20260424132559.719708310@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -52,95 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Minhong He <heminhong@kylinos.cn>
 
-[ Upstream commit 0da63230d3ec1ec5fcc443a2314233e95bfece54 ]
+[ Upstream commit 06413793526251870e20402c39930804f14d59c0 ]
 
-epf_ntb_epc_destroy() duplicates the teardown that the caller is
-supposed to perform later. This leads to an oops when .allow_link fails
-or when .drop_link is performed. The following is an example oops of the
-former case:
+__in6_dev_get() can return NULL when the device has no IPv6 configuration
+(e.g. MTU < IPV6_MIN_MTU or after NETDEV_UNREGISTER).
 
-  Unable to handle kernel paging request at virtual address dead000000000108
-  [...]
-  [dead000000000108] address between user and kernel address ranges
-  Internal error: Oops: 0000000096000044 [#1]  SMP
-  [...]
-  Call trace:
-   pci_epc_remove_epf+0x78/0xe0 (P)
-   pci_primary_epc_epf_link+0x88/0xa8
-   configfs_symlink+0x1f4/0x5a0
-   vfs_symlink+0x134/0x1d8
-   do_symlinkat+0x88/0x138
-   __arm64_sys_symlinkat+0x74/0xe0
-  [...]
+Add NULL checks for idev returned by __in6_dev_get() in both
+seg6_hmac_validate_skb() and ipv6_srh_rcv() to prevent potential NULL
+pointer dereferences.
 
-Remove the helper, and drop pci_epc_put(). EPC device refcounting is
-tied to the configfs EPC group lifetime, and pci_epc_put() in the
-.drop_link path is sufficient.
-
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260226084142.2226875-2-den@valinux.co.jp
-[ adjusted context ]
+Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
+Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
+Signed-off-by: Minhong He <heminhong@kylinos.cn>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260316073301.106643-1-heminhong@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ net/ipv6/exthdrs.c   | 4 ++++
+ net/ipv6/seg6_hmac.c | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 33c3f9b980e68..b0cc081490853 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -673,18 +673,6 @@ static void epf_ntb_mw_bar_clear(struct epf_ntb *ntb, int num_mws)
- 	}
- }
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 676284b6efe8b..a8790163e8b6d 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -378,6 +378,10 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 	hdr = (struct ipv6_sr_hdr *)skb_transport_header(skb);
  
--/**
-- * epf_ntb_epc_destroy() - Cleanup NTB EPC interface
-- * @ntb: NTB device that facilitates communication between HOST and VHOST
-- *
-- * Wrapper for epf_ntb_epc_destroy_interface() to cleanup all the NTB interfaces
-- */
--static void epf_ntb_epc_destroy(struct epf_ntb *ntb)
--{
--	pci_epc_remove_epf(ntb->epf->epc, ntb->epf, 0);
--	pci_epc_put(ntb->epf->epc);
--}
--
- /**
-  * epf_ntb_init_epc_bar() - Identify BARs to be used for each of the NTB
-  * constructs (scratchpad region, doorbell, memorywindow)
-@@ -1328,7 +1316,7 @@ static int epf_ntb_bind(struct pci_epf *epf)
- 	ret = epf_ntb_init_epc_bar(ntb);
- 	if (ret) {
- 		dev_err(dev, "Failed to create NTB EPC\n");
--		goto err_bar_init;
-+		return ret;
- 	}
+ 	idev = __in6_dev_get(skb->dev);
++	if (!idev) {
++		kfree_skb(skb);
++		return -1;
++	}
  
- 	ret = epf_ntb_config_spad_bar_alloc(ntb);
-@@ -1368,9 +1356,6 @@ static int epf_ntb_bind(struct pci_epf *epf)
- err_bar_alloc:
- 	epf_ntb_config_spad_bar_free(ntb);
+ 	accept_seg6 = net->ipv6.devconf_all->seg6_enabled;
+ 	if (accept_seg6 > idev->cnf.seg6_enabled)
+diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
+index 6e15a65faeccd..bf97bf5ac1387 100644
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -244,6 +244,8 @@ bool seg6_hmac_validate_skb(struct sk_buff *skb)
+ 	struct inet6_dev *idev;
  
--err_bar_init:
--	epf_ntb_epc_destroy(ntb);
--
- 	return ret;
- }
+ 	idev = __in6_dev_get(skb->dev);
++	if (!idev)
++		return false;
  
-@@ -1386,7 +1371,6 @@ static void epf_ntb_unbind(struct pci_epf *epf)
+ 	srh = (struct ipv6_sr_hdr *)skb_transport_header(skb);
  
- 	epf_ntb_epc_cleanup(ntb);
- 	epf_ntb_config_spad_bar_free(ntb);
--	epf_ntb_epc_destroy(ntb);
- 
- 	pci_unregister_driver(&vntb_pci_driver);
- }
 -- 
 2.53.0
 
