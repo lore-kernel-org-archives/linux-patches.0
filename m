@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E650023645D;
-	Fri, 24 Apr 2026 13:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A476E3D6690;
+	Fri, 24 Apr 2026 13:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777037878; cv=none; b=XYlMN/sCSZI0hFpz+lK0SvyL1kRR/Ly7SYlNie1BGRg4xhwLLsKOTFejkZ/mUoFl7R58UfLLPoQWkrA/OE/D1vxVUaUAX39zzbs5UZ1+l5/bChQD2K/DAfiHOWiQ8/ujxMG3l3zQIBUKElUcrLcvoQieuwT25NJ9yBl0C2Vxzns=
+	t=1777037880; cv=none; b=Xhk8Mwa6jdpUXhxa0LZwTEweLV0NDx/mWKgyv+WJh/+azrurPn3Q5Oh/6Dr7EQ/iE5XS9F8bGsfiOYae5jF44VQy9ZXb4+IKhVaf0xx7550uXea5Wm6PkX78wwg36MTz0vQIx/QLPwiHAuPNlQWDF0qfG7ABh1H2x8u+RUcP16o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777037878; c=relaxed/simple;
-	bh=GPg6ihD9UvQTawNaYf8mr9uFbJ7uQOJt2+X2YtTEcxQ=;
+	s=arc-20240116; t=1777037880; c=relaxed/simple;
+	bh=5cFpHjt3yKTYaMOOBL9XnHuMBCWAVqopZULaDOLeW/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eo4SxpVTdIRrWvw1JiKKVctjUR/EtkX2Ijgm7Twys5+WPMtUwZsPJloRuXSZfdifCW6yzqJDTRX40fKhQiKwP2CaKEZsmh3USl/c/CjaQD9RFGItaIrbA5Rs+TUrojG6KROBskATmg0ZrXkwCUEE+9IkUmOJNKFvdvittpDeOhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjeN87Mz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3OpjIhST4QvNRL+FQHQMA2hjO/6hoHniM9ddR6dmBM/KmRPMjs2/tTA6ZFH3GZv4AGwHqeFugwMK9knAGh8ys+3jVSTv8JIZKCDBRejCnSrSCtIbdUlX+QwRyoGHBulETE0mmrrUH7bvgTdNLPLVAjbOc/lHBTlM7OkjHRsjvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJ1uGIZD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjeN87Mz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA69C19425;
-	Fri, 24 Apr 2026 13:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJ1uGIZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12150C19425;
+	Fri, 24 Apr 2026 13:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777037877;
-	bh=GPg6ihD9UvQTawNaYf8mr9uFbJ7uQOJt2+X2YtTEcxQ=;
+	s=korg; t=1777037880;
+	bh=5cFpHjt3yKTYaMOOBL9XnHuMBCWAVqopZULaDOLeW/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjeN87Mzd/RkwhdVO74DBVEa0bOBfwc4F9YsrUSr2B0oT5FU6zhiqSnGqLQD3kUE6
-	 MndhNuG3YOUxdM8Nd/FNF9fPCR+Es95nQNhs0CFRKT4utS1mcSJ15eAMC8YiXN8UcO
-	 lTD1JUerY/cc6XhZgD9Mh0Szydc2wtkOCMOdNDWE=
+	b=vJ1uGIZDuwh9f2s6NKTPgk0o96D3ZhIrC6M5rTeIG8Fl//QeESiyy3MlkTjW6EWGD
+	 Dy25H//Ihbp2q8RJvl4cg9iRs+U1A88IKU04Yo8ESnzrK9NuunNFzci8a5+uCdlRBL
+	 UZ0MsPF5Pv/mtGpj1j+8a5ROfYFWY2eAWdWbJRzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maud Spierings <maudspierings@gocontroll.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Fang Wang <32840572@qq.com>,
+	Yin Fengwei <fengwei_yin@linux.alibaba.com>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	XiaoHua Wang <561399680@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/166] iio: common: st_sensors: Fix use of uninitialize device structs
-Date: Fri, 24 Apr 2026 15:30:18 +0200
-Message-ID: <20260424132554.509618877@linuxfoundation.org>
+Subject: [PATCH 6.6 105/166] net: add proper RCU protection to /proc/net/ptype
+Date: Fri, 24 Apr 2026 15:30:19 +0200
+Message-ID: <20260424132554.721062117@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132532.812258529@linuxfoundation.org>
 References: <20260424132532.812258529@linuxfoundation.org>
@@ -53,290 +55,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maud Spierings <maudspierings@gocontroll.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9f92e93e257b33e73622640a9205f8642ec16ddd ]
+[ Upstream commit f613e8b4afea0cd17c7168e8b00e25bc8d33175d ]
 
-Throughout the various probe functions &indio_dev->dev is used before it
-is initialized. This caused a kernel panic in st_sensors_power_enable()
-when the call to devm_regulator_bulk_get_enable() fails and then calls
-dev_err_probe() with the uninitialized device.
+Yin Fengwei reported an RCU stall in ptype_seq_show() and provided
+a patch.
 
-This seems to only cause a panic with dev_err_probe(), dev_err(),
-dev_warn() and dev_info() don't seem to cause a panic, but are fixed
-as well.
+Real issue is that ptype_seq_next() and ptype_seq_show() violate
+RCU rules.
 
-The issue is reported and traced here: [1]
+ptype_seq_show() runs under rcu_read_lock(), and reads pt->dev
+to get device name without any barrier.
 
-Link: https://lore.kernel.org/all/AM7P189MB100986A83D2F28AF3FFAF976E39EA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM/ [1]
-Cc: stable@vger.kernel.org
-Signed-off-by: Maud Spierings <maudspierings@gocontroll.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://... [1]
-Link: https://patch.msgid.link/20250527-st_iio_fix-v4-1-12d89801c761@gocontroll.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fang Wang <32840572@qq.com>
+At the same time, concurrent writers can remove a packet_type structure
+(which is correctly freed after an RCU grace period) and clear pt->dev
+without an RCU grace period.
+
+Define ptype_iter_state to carry a dev pointer along seq_net_private:
+
+struct ptype_iter_state {
+	struct seq_net_private	p;
+	struct net_device	*dev; // added in this patch
+};
+
+We need to record the device pointer in ptype_get_idx() and
+ptype_seq_next() so that ptype_seq_show() is safe against
+concurrent pt->dev changes.
+
+We also need to add full RCU protection in ptype_seq_next().
+(Missing READ_ONCE() when reading list.next values)
+
+Many thanks to Dong Chenchen for providing a repro.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 1d10f8a1f40b ("net-procfs: show net devices bound packet types")
+Fixes: c353e8983e0d ("net: introduce per netns packet chains")
+Reported-by: Yin Fengwei <fengwei_yin@linux.alibaba.com>
+Reported-by: Dong Chenchen <dongchenchen2@huawei.com>
+Closes: https://lore.kernel.org/netdev/CANn89iKRRKPnWjJmb-_3a=sq+9h6DvTQM4DBZHT5ZRGPMzQaiA@mail.gmail.com/T/#m7b80b9fc9b9267f90e0b7aad557595f686f9c50d
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Tested-by: Yin Fengwei <fengwei_yin@linux.alibaba.com>
+Link: https://patch.msgid.link/20260202205217.2881198-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Some adjustments have been made. ]
+Signed-off-by: XiaoHua Wang <561399680@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/st_accel_core.c             | 10 +++---
- .../iio/common/st_sensors/st_sensors_core.c   | 36 +++++++++----------
- .../common/st_sensors/st_sensors_trigger.c    | 20 +++++------
- 3 files changed, 31 insertions(+), 35 deletions(-)
+ net/core/net-procfs.c | 49 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 33 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/iio/accel/st_accel_core.c b/drivers/iio/accel/st_accel_core.c
-index 51d8de18e6d6d..45d2268e042ef 100644
---- a/drivers/iio/accel/st_accel_core.c
-+++ b/drivers/iio/accel/st_accel_core.c
-@@ -1342,6 +1342,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	union acpi_object *ont;
- 	union acpi_object *elements;
- 	acpi_status status;
-+	struct device *parent = indio_dev->dev.parent;
- 	int ret = -EINVAL;
- 	unsigned int val;
- 	int i, j;
-@@ -1360,7 +1361,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	};
+diff --git a/net/core/net-procfs.c b/net/core/net-procfs.c
+index 09f7ed1a04e8a..d6d139b49384b 100644
+--- a/net/core/net-procfs.c
++++ b/net/core/net-procfs.c
+@@ -200,8 +200,14 @@ static const struct seq_operations softnet_seq_ops = {
+ 	.show  = softnet_seq_show,
+ };
  
- 
--	adev = ACPI_COMPANION(indio_dev->dev.parent);
-+	adev = ACPI_COMPANION(parent);
- 	if (!adev)
- 		return -ENXIO;
- 
-@@ -1369,8 +1370,7 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
- 	if (status == AE_NOT_FOUND) {
- 		return -ENXIO;
- 	} else if (ACPI_FAILURE(status)) {
--		dev_warn(&indio_dev->dev, "failed to execute _ONT: %d\n",
--			 status);
-+		dev_warn(parent, "failed to execute _ONT: %d\n", status);
- 		return status;
++struct ptype_iter_state {
++	struct seq_net_private	p;
++	struct net_device	*dev;
++};
++
+ static void *ptype_get_idx(struct seq_file *seq, loff_t pos)
+ {
++	struct ptype_iter_state *iter = seq->private;
+ 	struct list_head *ptype_list = NULL;
+ 	struct packet_type *pt = NULL;
+ 	struct net_device *dev;
+@@ -211,12 +217,16 @@ static void *ptype_get_idx(struct seq_file *seq, loff_t pos)
+ 	for_each_netdev_rcu(seq_file_net(seq), dev) {
+ 		ptype_list = &dev->ptype_all;
+ 		list_for_each_entry_rcu(pt, ptype_list, list) {
+-			if (i == pos)
++			if (i == pos) {
++				iter->dev = dev;
+ 				return pt;
++			}
+ 			++i;
+ 		}
  	}
  
-@@ -1446,12 +1446,12 @@ static int apply_acpi_orientation(struct iio_dev *indio_dev)
++	iter->dev = NULL;
++
+ 	list_for_each_entry_rcu(pt, &ptype_all, list) {
+ 		if (i == pos)
+ 			return pt;
+@@ -242,6 +252,7 @@ static void *ptype_seq_start(struct seq_file *seq, loff_t *pos)
+ 
+ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ {
++	struct ptype_iter_state *iter = seq->private;
+ 	struct net_device *dev;
+ 	struct packet_type *pt;
+ 	struct list_head *nxt;
+@@ -252,20 +263,21 @@ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ 		return ptype_get_idx(seq, 0);
+ 
+ 	pt = v;
+-	nxt = pt->list.next;
+-	if (pt->dev) {
+-		if (nxt != &pt->dev->ptype_all)
++	nxt = READ_ONCE(pt->list.next);
++	dev = iter->dev;
++	if (dev) {
++		if (nxt != &dev->ptype_all)
+ 			goto found;
+ 
+-		dev = pt->dev;
+ 		for_each_netdev_continue_rcu(seq_file_net(seq), dev) {
+-			if (!list_empty(&dev->ptype_all)) {
+-				nxt = dev->ptype_all.next;
++			nxt = READ_ONCE(dev->ptype_all.next);
++			if (nxt != &dev->ptype_all) {
++				iter->dev = dev;
+ 				goto found;
+ 			}
+ 		}
+-
+-		nxt = ptype_all.next;
++		iter->dev = NULL;
++		nxt = READ_ONCE(ptype_all.next);
+ 		goto ptype_all;
  	}
  
- 	ret = 0;
--	dev_info(&indio_dev->dev, "computed mount matrix from ACPI\n");
-+	dev_info(parent, "computed mount matrix from ACPI\n");
+@@ -274,14 +286,14 @@ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ 		if (nxt != &ptype_all)
+ 			goto found;
+ 		hash = 0;
+-		nxt = ptype_base[0].next;
++		nxt = READ_ONCE(ptype_base[0].next);
+ 	} else
+ 		hash = ntohs(pt->type) & PTYPE_HASH_MASK;
  
- out:
- 	kfree(buffer.pointer);
- 	if (ret)
--		dev_dbg(&indio_dev->dev,
-+		dev_dbg(parent,
- 			"failed to apply ACPI orientation data: %d\n", ret);
+ 	while (nxt == &ptype_base[hash]) {
+ 		if (++hash >= PTYPE_HASH_SIZE)
+ 			return NULL;
+-		nxt = ptype_base[hash].next;
++		nxt = READ_ONCE(ptype_base[hash].next);
+ 	}
+ found:
+ 	return list_entry(nxt, struct packet_type, list);
+@@ -295,19 +307,24 @@ static void ptype_seq_stop(struct seq_file *seq, void *v)
  
- 	return ret;
-diff --git a/drivers/iio/common/st_sensors/st_sensors_core.c b/drivers/iio/common/st_sensors/st_sensors_core.c
-index c77d7bdcc1216..78f5728417d5b 100644
---- a/drivers/iio/common/st_sensors/st_sensors_core.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_core.c
-@@ -154,7 +154,7 @@ static int st_sensors_set_fullscale(struct iio_dev *indio_dev, unsigned int fs)
- 	return err;
+ static int ptype_seq_show(struct seq_file *seq, void *v)
+ {
++	struct ptype_iter_state *iter = seq->private;
+ 	struct packet_type *pt = v;
++	struct net_device *dev;
  
- st_accel_set_fullscale_error:
--	dev_err(&indio_dev->dev, "failed to set new fullscale.\n");
-+	dev_err(indio_dev->dev.parent, "failed to set new fullscale.\n");
- 	return err;
- }
+-	if (v == SEQ_START_TOKEN)
++	if (v == SEQ_START_TOKEN) {
+ 		seq_puts(seq, "Type Device      Function\n");
+-	else if ((!pt->af_packet_net || net_eq(pt->af_packet_net, seq_file_net(seq))) &&
+-		 (!pt->dev || net_eq(dev_net(pt->dev), seq_file_net(seq)))) {
++		return 0;
++	}
++	dev = iter->dev;
++	if ((!pt->af_packet_net || net_eq(pt->af_packet_net, seq_file_net(seq))) &&
++		 (!dev || net_eq(dev_net(dev), seq_file_net(seq)))) {
+ 		if (pt->type == htons(ETH_P_ALL))
+ 			seq_puts(seq, "ALL ");
+ 		else
+ 			seq_printf(seq, "%04x", ntohs(pt->type));
  
-@@ -231,8 +231,7 @@ int st_sensors_power_enable(struct iio_dev *indio_dev)
- 					     ARRAY_SIZE(regulator_names),
- 					     regulator_names);
- 	if (err)
--		return dev_err_probe(&indio_dev->dev, err,
--				     "unable to enable supplies\n");
-+		return dev_err_probe(parent, err, "unable to enable supplies\n");
+ 		seq_printf(seq, " %-8s %ps\n",
+-			   pt->dev ? pt->dev->name : "", pt->func);
++			   dev ? dev->name : "", pt->func);
+ 	}
  
  	return 0;
- }
-@@ -241,13 +240,14 @@ EXPORT_SYMBOL_NS(st_sensors_power_enable, IIO_ST_SENSORS);
- static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
- 					struct st_sensors_platform_data *pdata)
- {
-+	struct device *parent = indio_dev->dev.parent;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
+@@ -331,7 +348,7 @@ static int __net_init dev_proc_net_init(struct net *net)
+ 			 &softnet_seq_ops))
+ 		goto out_dev;
+ 	if (!proc_create_net("ptype", 0444, net->proc_net, &ptype_seq_ops,
+-			sizeof(struct seq_net_private)))
++			sizeof(struct ptype_iter_state)))
+ 		goto out_softnet;
  
- 	/* Sensor does not support interrupts */
- 	if (!sdata->sensor_settings->drdy_irq.int1.addr &&
- 	    !sdata->sensor_settings->drdy_irq.int2.addr) {
- 		if (pdata->drdy_int_pin)
--			dev_info(&indio_dev->dev,
-+			dev_info(parent,
- 				 "DRDY on pin INT%d specified, but sensor does not support interrupts\n",
- 				 pdata->drdy_int_pin);
- 		return 0;
-@@ -256,29 +256,27 @@ static int st_sensors_set_drdy_int_pin(struct iio_dev *indio_dev,
- 	switch (pdata->drdy_int_pin) {
- 	case 1:
- 		if (!sdata->sensor_settings->drdy_irq.int1.mask) {
--			dev_err(&indio_dev->dev,
--					"DRDY on INT1 not available.\n");
-+			dev_err(parent, "DRDY on INT1 not available.\n");
- 			return -EINVAL;
- 		}
- 		sdata->drdy_int_pin = 1;
- 		break;
- 	case 2:
- 		if (!sdata->sensor_settings->drdy_irq.int2.mask) {
--			dev_err(&indio_dev->dev,
--					"DRDY on INT2 not available.\n");
-+			dev_err(parent, "DRDY on INT2 not available.\n");
- 			return -EINVAL;
- 		}
- 		sdata->drdy_int_pin = 2;
- 		break;
- 	default:
--		dev_err(&indio_dev->dev, "DRDY on pdata not valid.\n");
-+		dev_err(parent, "DRDY on pdata not valid.\n");
- 		return -EINVAL;
- 	}
- 
- 	if (pdata->open_drain) {
- 		if (!sdata->sensor_settings->drdy_irq.int1.addr_od &&
- 		    !sdata->sensor_settings->drdy_irq.int2.addr_od)
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"open drain requested but unsupported.\n");
- 		else
- 			sdata->int_pin_open_drain = true;
-@@ -336,6 +334,7 @@ EXPORT_SYMBOL_NS(st_sensors_dev_name_probe, IIO_ST_SENSORS);
- int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 					struct st_sensors_platform_data *pdata)
- {
-+	struct device *parent = indio_dev->dev.parent;
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
- 	struct st_sensors_platform_data *of_pdata;
- 	int err = 0;
-@@ -343,7 +342,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 	mutex_init(&sdata->odr_lock);
- 
- 	/* If OF/DT pdata exists, it will take precedence of anything else */
--	of_pdata = st_sensors_dev_probe(indio_dev->dev.parent, pdata);
-+	of_pdata = st_sensors_dev_probe(parent, pdata);
- 	if (IS_ERR(of_pdata))
- 		return PTR_ERR(of_pdata);
- 	if (of_pdata)
-@@ -370,7 +369,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 		if (err < 0)
- 			return err;
- 	} else
--		dev_info(&indio_dev->dev, "Full-scale not possible\n");
-+		dev_info(parent, "Full-scale not possible\n");
- 
- 	err = st_sensors_set_odr(indio_dev, sdata->odr);
- 	if (err < 0)
-@@ -405,7 +404,7 @@ int st_sensors_init_sensor(struct iio_dev *indio_dev,
- 			mask = sdata->sensor_settings->drdy_irq.int2.mask_od;
- 		}
- 
--		dev_info(&indio_dev->dev,
-+		dev_info(parent,
- 			 "set interrupt line to open drain mode on pin %d\n",
- 			 sdata->drdy_int_pin);
- 		err = st_sensors_write_data_with_mask(indio_dev, addr,
-@@ -594,21 +593,20 @@ EXPORT_SYMBOL_NS(st_sensors_get_settings_index, IIO_ST_SENSORS);
- int st_sensors_verify_id(struct iio_dev *indio_dev)
- {
- 	struct st_sensor_data *sdata = iio_priv(indio_dev);
-+	struct device *parent = indio_dev->dev.parent;
- 	int wai, err;
- 
- 	if (sdata->sensor_settings->wai_addr) {
- 		err = regmap_read(sdata->regmap,
- 				  sdata->sensor_settings->wai_addr, &wai);
- 		if (err < 0) {
--			dev_err(&indio_dev->dev,
--				"failed to read Who-Am-I register.\n");
--			return err;
-+			return dev_err_probe(parent, err,
-+					     "failed to read Who-Am-I register.\n");
- 		}
- 
- 		if (sdata->sensor_settings->wai != wai) {
--			dev_err(&indio_dev->dev,
--				"%s: WhoAmI mismatch (0x%x).\n",
--				indio_dev->name, wai);
-+			dev_warn(parent, "%s: WhoAmI mismatch (0x%x).\n",
-+				 indio_dev->name, wai);
- 			return -EINVAL;
- 		}
- 	}
-diff --git a/drivers/iio/common/st_sensors/st_sensors_trigger.c b/drivers/iio/common/st_sensors/st_sensors_trigger.c
-index a0df9250a69ff..b900acd471bd4 100644
---- a/drivers/iio/common/st_sensors/st_sensors_trigger.c
-+++ b/drivers/iio/common/st_sensors/st_sensors_trigger.c
-@@ -127,7 +127,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	sdata->trig = devm_iio_trigger_alloc(parent, "%s-trigger",
- 					     indio_dev->name);
- 	if (sdata->trig == NULL) {
--		dev_err(&indio_dev->dev, "failed to allocate iio trigger.\n");
-+		dev_err(parent, "failed to allocate iio trigger.\n");
- 		return -ENOMEM;
- 	}
- 
-@@ -143,7 +143,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	case IRQF_TRIGGER_FALLING:
- 	case IRQF_TRIGGER_LOW:
- 		if (!sdata->sensor_settings->drdy_irq.addr_ihl) {
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"falling/low specified for IRQ but hardware supports only rising/high: will request rising/high\n");
- 			if (irq_trig == IRQF_TRIGGER_FALLING)
- 				irq_trig = IRQF_TRIGGER_RISING;
-@@ -156,21 +156,19 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 				sdata->sensor_settings->drdy_irq.mask_ihl, 1);
- 			if (err < 0)
- 				return err;
--			dev_info(&indio_dev->dev,
-+			dev_info(parent,
- 				 "interrupts on the falling edge or active low level\n");
- 		}
- 		break;
- 	case IRQF_TRIGGER_RISING:
--		dev_info(&indio_dev->dev,
--			 "interrupts on the rising edge\n");
-+		dev_info(parent, "interrupts on the rising edge\n");
- 		break;
- 	case IRQF_TRIGGER_HIGH:
--		dev_info(&indio_dev->dev,
--			 "interrupts active high level\n");
-+		dev_info(parent, "interrupts active high level\n");
- 		break;
- 	default:
- 		/* This is the most preferred mode, if possible */
--		dev_err(&indio_dev->dev,
-+		dev_err(parent,
- 			"unsupported IRQ trigger specified (%lx), enforce rising edge\n", irq_trig);
- 		irq_trig = IRQF_TRIGGER_RISING;
- 	}
-@@ -179,7 +177,7 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 	if (irq_trig == IRQF_TRIGGER_FALLING ||
- 	    irq_trig == IRQF_TRIGGER_RISING) {
- 		if (!sdata->sensor_settings->drdy_irq.stat_drdy.addr) {
--			dev_err(&indio_dev->dev,
-+			dev_err(parent,
- 				"edge IRQ not supported w/o stat register.\n");
- 			return -EOPNOTSUPP;
- 		}
-@@ -214,13 +212,13 @@ int st_sensors_allocate_trigger(struct iio_dev *indio_dev,
- 					sdata->trig->name,
- 					sdata->trig);
- 	if (err) {
--		dev_err(&indio_dev->dev, "failed to request trigger IRQ.\n");
-+		dev_err(parent, "failed to request trigger IRQ.\n");
- 		return err;
- 	}
- 
- 	err = devm_iio_trigger_register(parent, sdata->trig);
- 	if (err < 0) {
--		dev_err(&indio_dev->dev, "failed to register iio trigger.\n");
-+		dev_err(parent, "failed to register iio trigger.\n");
- 		return err;
- 	}
- 	indio_dev->trig = iio_trigger_get(sdata->trig);
+ 	if (wext_proc_init(net))
 -- 
 2.53.0
 
