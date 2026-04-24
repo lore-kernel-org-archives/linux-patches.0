@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517E3221DB6;
-	Fri, 24 Apr 2026 13:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE85221DB6;
+	Fri, 24 Apr 2026 13:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038143; cv=none; b=X2itjzE3+Fm8RkLqYfBd5fW/RnPH6G5gsaCpUxLU99hly83FALs3bRjXheD6IjOHcreMhRVCzGPxfXwauu152OtSfj66CSZCSKM4aYnKQCDSssmeB/v+Yl8Dn5kqvhPZVM/gspo1RHlON/FqAdyMmpYkK8vj8NwPVBMEWh5DzaY=
+	t=1777038145; cv=none; b=hMG45ljIfU0+lw/V5LmcWbDOtIVoFIH1a/ZiLNyU/6L78Zb4M9s+rkYJWkAXrOnsHmMivRv9EhPqkt44YHs6x64z5u3zvB46r7d9OvXifvO+sdVp2uGA6jfeMvKeZeR+HfTmSMjoSK3M7m3Yb7HLkpA3twSf8BSTuaYcQjeEQo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038143; c=relaxed/simple;
-	bh=B4cMRZ0jSiNQuknMvnIWr5nj+SEV6C85/FumwfLDSFQ=;
+	s=arc-20240116; t=1777038145; c=relaxed/simple;
+	bh=yXWHzGjS4FwSRU11zEyNnNABdYZ8e/jAlVn30kYaS28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMs6txFwaPVO1v7tPCKeALI+/ohQw9LmaCJ2QOzvMQ86D4qByySqgaIHMKDtGL6zjpZLuaAOZA3sCO6/RBkumDplTGaR/aLUF7JWzLzKxeb52Mf1LLQ0Ah9YliRIyogJDZB8AUJ5ZZNfsC9DXQVHKgtOmdewaifP08iWHwJTVL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVoceahB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaoFEc2yfJwcXHo94ji0ooBv34i4P6+x5MNgWGIqQgnIXbGH55p24hjAgHzzvwCo8iFmm3zVLeoIXRor+PmN69cifPwWhWQf64J20cRKiYDISs0t9Gtqiw4XrEtOloAVvbeN6CwqzZAKeIjD/HfsGkfc4ctF1xGWIa3VR39hJ04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLufOlUY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVoceahB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B63C2BCB2;
-	Fri, 24 Apr 2026 13:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLufOlUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74309C19425;
+	Fri, 24 Apr 2026 13:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038143;
-	bh=B4cMRZ0jSiNQuknMvnIWr5nj+SEV6C85/FumwfLDSFQ=;
+	s=korg; t=1777038145;
+	bh=yXWHzGjS4FwSRU11zEyNnNABdYZ8e/jAlVn30kYaS28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVoceahBH1SPZdgBuCQBQUS+lqPRgKYNj8aIceJeAKctPMnvRJ9GB+NMySdcVq/3r
-	 6i6HbEi2cGtsUoLYe+k5ssWERgmAeA7Yj7C+hnacgswRR+A/C6KXDr5LZhjX+MbuaJ
-	 0nPFhqA61Tiif2ZQn8z16XpUbqfg2QU3kTHfkznE=
+	b=bLufOlUYg5u3PH/oXtGZt7Q8/bUj62LGFcAl2HS4SR3OXAK1R7atlZhdme7avGJtL
+	 oeLXvxUGINrnFT1amrsmA08VWBwaq8im4wqWUwlLNtG2+bKNld9nd+QlISLcNXvDDd
+	 cVGzka5bS388UcK8cXjtM82w8d+FQw5fy5evpSNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 41/55] ksmbd: validate response sizes in ipc_validate_msg()
-Date: Fri, 24 Apr 2026 15:31:20 +0200
-Message-ID: <20260424132438.484553517@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.18 24/55] lib/crypto: tests: Drop the default to CRYPTO_SELFTESTS
+Date: Fri, 24 Apr 2026 15:31:03 +0200
+Message-ID: <20260424132435.056190824@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132430.006424517@linuxfoundation.org>
 References: <20260424132430.006424517@linuxfoundation.org>
@@ -51,122 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit d6a6aa81eac2c9bff66dc6e191179cb69a14426b upstream.
+commit 6d80749becf8fc5ffa004194e578f79b558235ef upstream.
 
-ipc_validate_msg() computes the expected message size for each
-response type by adding (or multiplying) attacker-controlled fields
-from the daemon response to a fixed struct size in unsigned int
-arithmetic.  Three cases can overflow:
+Defaulting the crypto KUnit tests to KUNIT_ALL_TESTS || CRYPTO_SELFTESTS
+instead of simply KUNIT_ALL_TESTS was originally intended to make it
+easy to enable all the crypto KUnit tests.  This additional default is
+nonstandard for KUnit tests, though, and it can cause all the KUnit
+tests to be built-in unexpectedly if CRYPTO_SELFTESTS is set.  It also
+constitutes a back-reference to crypto/ from lib/crypto/, which is
+something that we should be avoiding in order to get clean layering.
 
-  KSMBD_EVENT_RPC_REQUEST:
-      msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
-  KSMBD_EVENT_SHARE_CONFIG_REQUEST:
-      msg_sz = sizeof(struct ksmbd_share_config_response) +
-               resp->payload_sz;
-  KSMBD_EVENT_LOGIN_REQUEST_EXT:
-      msg_sz = sizeof(struct ksmbd_login_response_ext) +
-               resp->ngroups * sizeof(gid_t);
+Now that we provide a lib/crypto/.kunitconfig file that enables all
+crypto KUnit tests, let's consider that to be the supported way to
+enable all these tests, and drop the default of CRYPTO_SELFTESTS.
 
-resp->payload_sz is __u32 and resp->ngroups is __s32.  Each addition
-can wrap in unsigned int; the multiplication by sizeof(gid_t) mixes
-signed and size_t, so a negative ngroups is converted to SIZE_MAX
-before the multiply.  A wrapped value of msg_sz that happens to
-equal entry->msg_sz bypasses the size check on the next line, and
-downstream consumers (smb2pdu.c:6742 memcpy using rpc_resp->payload_sz,
-kmemdup in ksmbd_alloc_user using resp_ext->ngroups) then trust the
-unverified length.
-
-Use check_add_overflow() on the RPC_REQUEST and SHARE_CONFIG_REQUEST
-paths to detect integer overflow without constraining functional
-payload size; userspace ksmbd-tools grows NDR responses in 4096-byte
-chunks for calls like NetShareEnumAll, so a hard transport cap is
-unworkable on the response side.  For LOGIN_REQUEST_EXT, reject
-resp->ngroups outside the signed [0, NGROUPS_MAX] range up front and
-report the error from ipc_validate_msg() so it fires at the IPC
-boundary; with that bound the subsequent multiplication and addition
-stay well below UINT_MAX.  The now-redundant ngroups check and
-pr_err in ksmbd_alloc_user() are removed.
-
-This is the response-side analogue of aab98e2dbd64 ("ksmbd: fix
-integer overflows on 32 bit systems"), which hardened the request
-side.
-
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Fixes: a77e0e02af1c ("ksmbd: add support for supplementary groups")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20260317040626.5697-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_config.c |    6 ------
- fs/smb/server/transport_ipc.c    |   16 +++++++++++++---
- 2 files changed, 13 insertions(+), 9 deletions(-)
+ lib/crypto/tests/Kconfig |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/fs/smb/server/mgmt/user_config.c
-+++ b/fs/smb/server/mgmt/user_config.c
-@@ -56,12 +56,6 @@ struct ksmbd_user *ksmbd_alloc_user(stru
- 		goto err_free;
- 
- 	if (resp_ext) {
--		if (resp_ext->ngroups > NGROUPS_MAX) {
--			pr_err("ngroups(%u) from login response exceeds max groups(%d)\n",
--					resp_ext->ngroups, NGROUPS_MAX);
--			goto err_free;
--		}
--
- 		user->sgid = kmemdup(resp_ext->____payload,
- 				     resp_ext->ngroups * sizeof(gid_t),
- 				     KSMBD_DEFAULT_GFP);
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -13,6 +13,7 @@
- #include <net/genetlink.h>
- #include <linux/socket.h>
- #include <linux/workqueue.h>
-+#include <linux/overflow.h>
- 
- #include "vfs_cache.h"
- #include "transport_ipc.h"
-@@ -497,7 +498,9 @@ static int ipc_validate_msg(struct ipc_m
- 	{
- 		struct ksmbd_rpc_command *resp = entry->response;
- 
--		msg_sz = sizeof(struct ksmbd_rpc_command) + resp->payload_sz;
-+		if (check_add_overflow(sizeof(struct ksmbd_rpc_command),
-+				       resp->payload_sz, &msg_sz))
-+			return -EINVAL;
- 		break;
- 	}
- 	case KSMBD_EVENT_SPNEGO_AUTHEN_REQUEST:
-@@ -516,8 +519,9 @@ static int ipc_validate_msg(struct ipc_m
- 			if (resp->payload_sz < resp->veto_list_sz)
- 				return -EINVAL;
- 
--			msg_sz = sizeof(struct ksmbd_share_config_response) +
--					resp->payload_sz;
-+			if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
-+					       resp->payload_sz, &msg_sz))
-+				return -EINVAL;
- 		}
- 		break;
- 	}
-@@ -526,6 +530,12 @@ static int ipc_validate_msg(struct ipc_m
- 		struct ksmbd_login_response_ext *resp = entry->response;
- 
- 		if (resp->ngroups) {
-+			if (resp->ngroups < 0 ||
-+			    resp->ngroups > NGROUPS_MAX) {
-+				pr_err("ngroups(%d) from login response exceeds max groups(%d)\n",
-+				       resp->ngroups, NGROUPS_MAX);
-+				return -EINVAL;
-+			}
- 			msg_sz = sizeof(struct ksmbd_login_response_ext) +
- 					resp->ngroups * sizeof(gid_t);
- 		}
+--- a/lib/crypto/tests/Kconfig
++++ b/lib/crypto/tests/Kconfig
+@@ -3,7 +3,7 @@
+ config CRYPTO_LIB_BLAKE2S_KUNIT_TEST
+ 	tristate "KUnit tests for BLAKE2s" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT
+-	default KUNIT_ALL_TESTS || CRYPTO_SELFTESTS
++	default KUNIT_ALL_TESTS
+ 	select CRYPTO_LIB_BENCHMARK_VISIBLE
+ 	# No need to depend on CRYPTO_LIB_BLAKE2S here, as that option doesn't
+ 	# exist; the BLAKE2s code is always built-in for the /dev/random driver.
+@@ -13,7 +13,7 @@ config CRYPTO_LIB_BLAKE2S_KUNIT_TEST
+ config CRYPTO_LIB_CURVE25519_KUNIT_TEST
+ 	tristate "KUnit tests for Curve25519" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT && CRYPTO_LIB_CURVE25519
+-	default KUNIT_ALL_TESTS || CRYPTO_SELFTESTS
++	default KUNIT_ALL_TESTS
+ 	select CRYPTO_LIB_BENCHMARK_VISIBLE
+ 	help
+ 	  KUnit tests for the Curve25519 Diffie-Hellman function.
+@@ -21,7 +21,7 @@ config CRYPTO_LIB_CURVE25519_KUNIT_TEST
+ config CRYPTO_LIB_MD5_KUNIT_TEST
+ 	tristate "KUnit tests for MD5" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT && CRYPTO_LIB_MD5
+-	default KUNIT_ALL_TESTS || CRYPTO_SELFTESTS
++	default KUNIT_ALL_TESTS
+ 	select CRYPTO_LIB_BENCHMARK_VISIBLE
+ 	help
+ 	  KUnit tests for the MD5 cryptographic hash function and its
+@@ -30,7 +30,7 @@ config CRYPTO_LIB_MD5_KUNIT_TEST
+ config CRYPTO_LIB_POLY1305_KUNIT_TEST
+ 	tristate "KUnit tests for Poly1305" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT && CRYPTO_LIB_POLY1305
+-	default KUNIT_ALL_TESTS || CRYPTO_SELFTESTS
++	default KUNIT_ALL_TESTS
+ 	select CRYPTO_LIB_BENCHMARK_VISIBLE
+ 	help
+ 	  KUnit tests for the Poly1305 library functions.
+@@ -38,7 +38,7 @@ config CRYPTO_LIB_POLY1305_KUNIT_TEST
+ config CRYPTO_LIB_SHA1_KUNIT_TEST
+ 	tristate "KUnit tests for SHA-1" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT && CRYPTO_LIB_SHA1
+-	default KUNIT_ALL_TESTS || CRYPTO_SELFTESTS
++	default KUNIT_ALL_TESTS
+ 	select CRYPTO_LIB_BENCHMARK_VISIBLE
+ 	help
+ 	  KUnit tests for the SHA-1 cryptographic hash function and its
+@@ -49,7 +49,7 @@ config CRYPTO_LIB_SHA1_KUNIT_TEST
+ config CRYPTO_LIB_SHA256_KUNIT_TEST
+ 	tristate "KUnit tests for SHA-224 and SHA-256" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT && CRYPTO_LIB_SHA256
+-	default KUNIT_ALL_TESTS || CRYPTO_SELFTESTS
++	default KUNIT_ALL_TESTS
+ 	select CRYPTO_LIB_BENCHMARK_VISIBLE
+ 	help
+ 	  KUnit tests for the SHA-224 and SHA-256 cryptographic hash functions
+@@ -60,7 +60,7 @@ config CRYPTO_LIB_SHA256_KUNIT_TEST
+ config CRYPTO_LIB_SHA512_KUNIT_TEST
+ 	tristate "KUnit tests for SHA-384 and SHA-512" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT && CRYPTO_LIB_SHA512
+-	default KUNIT_ALL_TESTS || CRYPTO_SELFTESTS
++	default KUNIT_ALL_TESTS
+ 	select CRYPTO_LIB_BENCHMARK_VISIBLE
+ 	help
+ 	  KUnit tests for the SHA-384 and SHA-512 cryptographic hash functions
 
 
