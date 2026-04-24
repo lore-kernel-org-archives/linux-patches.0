@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A775E3D75B1;
-	Fri, 24 Apr 2026 13:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F38C19A288;
+	Fri, 24 Apr 2026 13:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777038171; cv=none; b=S0iWI779pUPYxknrBBla7x8jR6VAv3QPYPN4lLv6CLeKqiqdDPA7L8TfxLTcARxh7mkjM4broW7EO874tBZfhVhEk8IB/HxErm1gsgfy8icKTN08k20PXQSN/L9dwE0IpDCvJKAs9OFYLEnx3BLg+s0PxVQvYe9+FvPhNbasfSA=
+	t=1777038174; cv=none; b=Isp86wfyX/wDq8iAaU4/p62bK//w28W2vkUGevfx2TxVNE8eCshb7xp5xtLSYPzonJkvWWYKtZqtf8mA2a/4fLU5l9ImN+ergl2IOKuidrFn/GfJjN3owUHZPm+twQjOMs6RslIf+LFfJ7FrB4bYEwxg2eGzWgVkcXxfAWTwa5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777038171; c=relaxed/simple;
-	bh=1cikuwMzPN0bXYYeK37d7QNuzmzRpC5JrbN23O0VY6k=;
+	s=arc-20240116; t=1777038174; c=relaxed/simple;
+	bh=j4OmY/NPQ2ArpfLgSgUw6+X0knavZVQuBmLXPkPXjGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCa5l3oLmliaqYA1yd82VbIyqlE1ePS7/avKtWmcOE7sAmp/42GpN647KSvvUGp3hsuZ9InFLPzGLoNGxQ1V3SAjBB0q10V2/kI9NXiXD+reA34X7pdnrZOWvlVSDNWxlHxynQ+7IXEvB2j9DMirR6QaTAOzwHd5OQxBfP7R2+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtjZ0KLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DfKlGnRMrXwxGWJrgkTgnNXByLetnbHo4U8F+07rhuWrH1d8ZY98hPy0IBgE+hIKzX4f5iTLXidbODkx7B1gI2x0hBiFVpLTkiSKg3cFbQWCLoZ8kA31WoJKUBmEmQxvzvXwGM+zO1a1RvuY011SoWPE9OGkYA+ZQqzlL7k28Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTcaWbdA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtjZ0KLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7BBC19425;
-	Fri, 24 Apr 2026 13:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTcaWbdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9085C19425;
+	Fri, 24 Apr 2026 13:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777038171;
-	bh=1cikuwMzPN0bXYYeK37d7QNuzmzRpC5JrbN23O0VY6k=;
+	s=korg; t=1777038174;
+	bh=j4OmY/NPQ2ArpfLgSgUw6+X0knavZVQuBmLXPkPXjGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtjZ0KLefw4PkonRLYjb3iTmGSustCD2gKZSEyyta3PYyCgWUQoLF1NtKNsrFjZYy
-	 00+Y3TDUDcEFUuimoBrbJ6WAcapNtaLavbfqAcruqRFkJ+la1vvof+BwXupwi91HjJ
-	 EXlExxC0bGwHMV43KiSel4dQhfxHqYc0bwmfqPPE=
+	b=RTcaWbdA95KkRuLIsutMNo+3hWIQpRoChvwahpfxfn3huY5hUgWXEamk9gsMxb62y
+	 niuO+gER84T9wEbgIFSj6ff14z+rIIeoA77sxDVdD6VfvIs3/fbc9bhxpxdQAupa59
+	 wCkaslVNl+AtE3qlNNADriSO01hjhKf01dKceCvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bingquan Chen <patzilla007@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 51/55] net/packet: fix TOCTOU race on mmapd vnet_hdr in tpacket_snd()
-Date: Fri, 24 Apr 2026 15:31:30 +0200
-Message-ID: <20260424132440.730158967@linuxfoundation.org>
+	"stable@vger.kernel.org, devicetree@vger.kernel.org,  Nathan Chancellor" <nathan@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.18 25/55] scripts/dtc: Remove unused dts_version in dtc-lexer.l
+Date: Fri, 24 Apr 2026 15:31:04 +0200
+Message-ID: <20260424132435.250369801@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424132430.006424517@linuxfoundation.org>
 References: <20260424132430.006424517@linuxfoundation.org>
@@ -51,89 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingquan Chen <patzilla007@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 2c054e17d9d41f1020376806c7f750834ced4dc5 upstream.
+This patch is for stable only. Commit 5a09df20872c ("scripts/dtc: Update
+to upstream version v1.7.2-69-g53373d135579") upstream applied it as
+part of a regular scripts/dtc sync, which may be unsuitable for older
+versions of stable where the warning it fixes is present.
 
-In tpacket_snd(), when PACKET_VNET_HDR is enabled, vnet_hdr points
-directly into the mmap'd TX ring buffer shared with userspace. The
-kernel validates the header via __packet_snd_vnet_parse() but then
-re-reads all fields later in virtio_net_hdr_to_skb(). A concurrent
-userspace thread can modify the vnet_hdr fields between validation
-and use, bypassing all safety checks.
+A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
+in clang under a new subwarning, -Wunused-but-set-global, points out an
+unused static global variable in dtc-lexer.lex.c (compiled from
+dtc-lexer.l):
 
-The non-TPACKET path (packet_snd()) already correctly copies vnet_hdr
-to a stack-local variable. All other vnet_hdr consumers in the kernel
-(tun.c, tap.c, virtio_net.c) also use stack copies. The TPACKET TX
-path is the only caller of virtio_net_hdr_to_skb() that reads directly
-from user-controlled shared memory.
+  scripts/dtc/dtc-lexer.lex.c:641:12: warning: variable 'dts_version' set but not used [-Wunused-but-set-global]
+    641 | static int dts_version = 1;
+        |            ^
 
-Fix this by copying vnet_hdr from the mmap'd ring buffer to a
-stack-local variable before validation and use, consistent with the
-approach used in packet_snd() and all other callers.
+Remove it to clear up the warning, as it is truly unused.
 
-Fixes: 1d036d25e560 ("packet: tpacket_snd gso and checksum offload")
-Signed-off-by: Bingquan Chen <patzilla007@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260418112006.78823-1-patzilla007@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 658f29a51e98 ("of/flattree: Update dtc to current mainline.")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+This should apply cleanly to all supported stable branches.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ scripts/dtc/dtc-lexer.l |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2717,7 +2717,8 @@ static int tpacket_snd(struct packet_soc
- {
- 	struct sk_buff *skb = NULL;
- 	struct net_device *dev;
--	struct virtio_net_hdr *vnet_hdr = NULL;
-+	struct virtio_net_hdr vnet_hdr;
-+	bool has_vnet_hdr = false;
- 	struct sockcm_cookie sockc;
- 	__be16 proto;
- 	int err, reserve = 0;
-@@ -2818,16 +2819,20 @@ static int tpacket_snd(struct packet_soc
- 		hlen = LL_RESERVED_SPACE(dev);
- 		tlen = dev->needed_tailroom;
- 		if (vnet_hdr_sz) {
--			vnet_hdr = data;
- 			data += vnet_hdr_sz;
- 			tp_len -= vnet_hdr_sz;
--			if (tp_len < 0 ||
--			    __packet_snd_vnet_parse(vnet_hdr, tp_len)) {
-+			if (tp_len < 0) {
-+				tp_len = -EINVAL;
-+				goto tpacket_error;
-+			}
-+			memcpy(&vnet_hdr, data - vnet_hdr_sz, sizeof(vnet_hdr));
-+			if (__packet_snd_vnet_parse(&vnet_hdr, tp_len)) {
- 				tp_len = -EINVAL;
- 				goto tpacket_error;
- 			}
- 			copylen = __virtio16_to_cpu(vio_le(),
--						    vnet_hdr->hdr_len);
-+						    vnet_hdr.hdr_len);
-+			has_vnet_hdr = true;
- 		}
- 		copylen = max_t(int, copylen, dev->hard_header_len);
- 		skb = sock_alloc_send_skb(&po->sk,
-@@ -2864,12 +2869,12 @@ tpacket_error:
- 			}
- 		}
+--- a/scripts/dtc/dtc-lexer.l
++++ b/scripts/dtc/dtc-lexer.l
+@@ -39,8 +39,6 @@ extern bool treesource_error;
+ #define DPRINT(fmt, ...)	do { } while (0)
+ #endif
  
--		if (vnet_hdr_sz) {
--			if (virtio_net_hdr_to_skb(skb, vnet_hdr, vio_le())) {
-+		if (has_vnet_hdr) {
-+			if (virtio_net_hdr_to_skb(skb, &vnet_hdr, vio_le())) {
- 				tp_len = -EINVAL;
- 				goto tpacket_error;
- 			}
--			virtio_net_hdr_set_proto(skb, vnet_hdr);
-+			virtio_net_hdr_set_proto(skb, &vnet_hdr);
- 		}
+-static int dts_version = 1;
+-
+ #define BEGIN_DEFAULT()		DPRINT("<V1>\n"); \
+ 				BEGIN(V1); \
  
- 		skb->destructor = tpacket_destruct_skb;
+@@ -101,7 +99,6 @@ static void PRINTF(1, 2) lexical_error(c
+ 
+ <*>"/dts-v1/"	{
+ 			DPRINT("Keyword: /dts-v1/\n");
+-			dts_version = 1;
+ 			BEGIN_DEFAULT();
+ 			return DT_V1;
+ 		}
 
 
