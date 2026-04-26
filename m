@@ -1,188 +1,105 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484A321256C;
-	Sun, 26 Apr 2026 13:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF0F279329
+	for <patches@lists.linux.dev>; Sun, 26 Apr 2026 18:19:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777211057; cv=none; b=UCtfq5YGVOD8ll4zXhuFXrh4L2ZgRLtBpGQF7u9f4jVmgP7MTxzGovDZRwoYUkZ34GQcedkpbFWvBxpgUM6bQesI7PwShPr4cs7XIAYW984isZYLUjQJzo3T/TCu0nT5Uq4IGUWJKFM0v+3s8nuHEYDIm2vSb2cgGaAUkQuZvho=
+	t=1777227569; cv=none; b=uSOigvRAQtHe+avA92npyAVZO5uyXIXQjhNwIZ/qIZbJ9A+v4GXeAYYmLFJHY6eeNZoHl5RiolLA4mgn91fwrbbh0svJF8MbQrdBxzAhpmjeuQD8tzDR/X+nCzBkjxhLYbzI+WhjosrGCf0ShDsSi8rVn2zB/WZK22PDeaTgiuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777211057; c=relaxed/simple;
-	bh=bDm+/uxPStK/NQbi/eGFHAIX3ZznzOA0ZDXZpddStIE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=CSvumigEDoOX0fxKU/1VCMmeEolYDhIrgSoe7EIh7hHB7Bqfef94HByZ72NTyv3SjZ6NivQyWT/wjmEyAho33AyjLIpYAQ9HXnMIfod0+yAznotpw1wUNcDJ6jNsC4iMgS0julSZZtk9OdTjEU4It/wIK1XeEQsyRX1JIXSJZOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wGzmJ-006ZV0-0j;
-	Sun, 26 Apr 2026 13:44:06 +0000
-Received: from ben by deadeye with local (Exim 4.99.1)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wGzmH-00000006skC-00xY;
-	Sun, 26 Apr 2026 15:44:05 +0200
-Message-ID: <e0f3860e1994351c8627518bd580b590090d0e5b.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 430/491] apparmor: validate DFA start states are in
- bounds in unpack_pdb
-From: Ben Hutchings <ben@decadent.org.uk>
-To: John Johansen <john.johansen@canonical.com>, Greg Kroah-Hartman
-	 <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Qualys Security Advisory <qsa@qualys.com>, 
- Salvatore Bonaccorso	 <carnil@debian.org>, Georgia Garcia
- <georgia.garcia@canonical.com>, Cengiz Can	 <cengiz.can@canonical.com>,
- Massimiliano Pellizzer	 <massimiliano.pellizzer@canonical.com>
-Date: Sun, 26 Apr 2026 15:43:55 +0200
-In-Reply-To: <5c718a4f-b0fe-4b80-8fdd-200871454320@canonical.com>
-References: <20260413155819.042779211@linuxfoundation.org>
-	 <20260413155835.127014179@linuxfoundation.org>
-	 <0d3747dc57d7bfa3c53efcf4d133021ead5bef9d.camel@decadent.org.uk>
-	 <5c718a4f-b0fe-4b80-8fdd-200871454320@canonical.com>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-iryIRH0H4TTNncqYv/s4"
-User-Agent: Evolution 3.56.2-9 
+	s=arc-20240116; t=1777227569; c=relaxed/simple;
+	bh=Sufa3AUzBRL5ViOeMSGiGywtB+U9gCgOODKUTnVXF6Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SB9ABSBSzjtHa8EsP3Lj6br78KjZRqBQ1fxSKlwjLW48viv2cCsxcMnUthmmU7m7nsE9/LR6JEJ5dSfedRCALSi3KcdCyz2xapG0QkrlbAhXXBFZImFL2iFBMP9st28Sw9s8PIDaKAWWVv+fuY3eb5XMsnFTkcxuM/LSytQt9YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=VOnFIcDz; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="VOnFIcDz"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-2ba9c484e5eso9622725eec.1
+        for <patches@lists.linux.dev>; Sun, 26 Apr 2026 11:19:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1777227567; x=1777832367; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d6AlhQMcEATZrtdBECRZUj5Ab+JdiBi4ef57n1ZohOw=;
+        b=VOnFIcDz4K2N5deClWY945bUAzYMkNHGakGgHAFwi23wcTHSVapdoXo9ajPq2120k1
+         4rKP7/cV4BDRhe/KjszdtFv9X0z474hzrop16wHTUdfWfUGphdaBwqrcLhpVis6Dj1sf
+         nobxh0pTTxtyscotjbXcjj+BU4DH95GlY08zY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777227567; x=1777832367;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=d6AlhQMcEATZrtdBECRZUj5Ab+JdiBi4ef57n1ZohOw=;
+        b=rTfhWlTtoazj07ThvMOf//37ivM9aG39BYnmNBhaTweTRKwtZCTTwnSfl+1UNY3+l6
+         jshtv48iDuCyFRCNZaUO6YHEk1Tf/ZSdOu5HsyjQdJFs0rkNB9hJXWSc+zGVnugNW74s
+         4wbGYA4n65tczH9PcW4d1PjkmWIqJ1eWMwr68jzBctnlsSHUB75BVede+j1K/nTI6l6S
+         C4RQPzf6pttJ1y+R3MQE4TfYBkJ9eQTvDD8TCBYsr83WuH2q7i5I8Kh/p6pFX46DTdKx
+         8BOdP87Soetc4IuBXF0x/5UfrUfhHd2MfOONXEZh9VwG5l3guhJnLkydV9lROuehNo6d
+         JnRw==
+X-Forwarded-Encrypted: i=1; AFNElJ9WhwhLpfHAD21TmaGbAN3q5veBGYECKD6BMcu7EzcrJFISvCNqA0ZLdK60bp7DMbZ/wLnLsd+I@lists.linux.dev
+X-Gm-Message-State: AOJu0YwnGLhSF6miEPW4j4wByThLzWgSaT1UTO7cI/FPP0T0vhnXG6I3
+	zkMRuw01otAO8Ap6z948kMUDUO0hus2maS6Rsf0k+RTwwyky7iO7G7ihrIx925KEqg==
+X-Gm-Gg: AeBDieur/gvi6zyi/Sh2Ow/cxPA6r2bBNtkJi51uMLHTjoI6hYj7KVZN29Zeu7/gpLY
+	dahJNNKPdqph32p/r2Wpn4GJ8JzTVPjF1/fXds02CAtZJw5r3SQtA67m/jzLFrtq3NXKU4Pe+cr
+	A0h4l0Y0J7cLmnusB9+4FxlGqNU1CTkEKJyxpNAsR/gVJvvyl6UFPDgL1PMDZ36aYmXL8pzZ1b8
+	qpMgBHLHJbYbP3jER1zwjkKUwLt+k4yeQDqg9pc/kyb2OGD9k9uHI9rDb3UyzmwIofM37F7S20L
+	DDRWwHlqrUZF0j1QngIEqM34yciSWU4TH1qwEL6A0XQ7VFycLWKD5jX/W4Bej3vG1uQIuW4zSBl
+	33WaH4jDwu8inKfUEcas8BUAPqR0XzBduskgegp6N22Vi5rcqQshJkajEJcSuscAG4KTHZIxy06
+	aA+vp1uYRbywqP4zKlKO2i9eQ2XXHlWUIYEXt8Jew6XsWC9hqtv/8W
+X-Received: by 2002:a05:693c:3007:b0:2ea:5057:a2f9 with SMTP id 5a478bee46e88-2ea5057b737mr12408219eec.16.1777227567098;
+        Sun, 26 Apr 2026 11:19:27 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([98.97.107.119])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2e539fa6134sm42213114eec.3.2026.04.26.11.19.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Apr 2026 11:19:26 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Sun, 26 Apr 2026 12:19:23 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.0 00/42] 7.0.2-rc1 review
+Message-ID: <ae5XK38U30GOx1U7@fedora64.linuxtx.org>
+References: <20260424132420.410310336@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260424132420.410310336@linuxfoundation.org>
 
+On Fri, Apr 24, 2026 at 03:30:25PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.2 release.
+> There are 42 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 26 Apr 2026 13:23:22 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.2-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
---=-iryIRH0H4TTNncqYv/s4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-On Tue, 2026-04-21 at 01:42 -0700, John Johansen wrote:
-> On 4/19/26 03:26, Ben Hutchings wrote:
-> > On Mon, 2026-04-13 at 18:01 +0200, Greg Kroah-Hartman wrote:
-> > > 5.10-stable review patch.  If anyone has any objections, please let m=
-e know.
-> > >=20
-> > > ------------------
-> > >=20
-> > > From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-> > >=20
-> > > commit 9063d7e2615f4a7ab321de6b520e23d370e58816 upstream.
-> > >=20
-> > > Backport for conflicts caused by
-> > >    ad596ea74e74 ("apparmor: group dfa policydb unpacking")
-> > >    - rearrange and consolidated the unpack.
-> > >=20
-> > >    b11e51dd7094 ("apparmor: test: make static symbols visible during =
-kunit testing")
-> > >    - rename function and make it visible to kunit tests
-> > >=20
-> > > Start states are read from untrusted data and used as indexes into th=
-e
-> > > DFA state tables. The aa_dfa_next() function call in unpack_pdb() wil=
-l
-> > > access dfa->tables[YYTD_ID_BASE][start], and if the start state excee=
-ds
-> > > the number of states in the DFA, this results in an out-of-bound read=
-.
-> > >=20
-> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > >   BUG: KASAN: slab-out-of-bounds in aa_dfa_next+0x2a1/0x360
-> > >   Read of size 4 at addr ffff88811956fb90 by task su/1097
-> > >   ...
-> > >=20
-> > > Reject policies with out-of-bounds start states during unpacking
-> > > to prevent the issue.
-> > >=20
-> > > Fixes: ad5ff3db53c6 ("AppArmor: Add ability to load extended policy")
-> > > Reported-by: Qualys Security Advisory <qsa@qualys.com>
-> > > Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-> > > Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-> > > Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-> > > Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonic=
-al.com>
-> > > Signed-off-by: John Johansen <john.johansen@canonical.com>
-> > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > ---
-> > >   security/apparmor/policy_unpack.c |   21 +++++++++++++++++++--
-> > >   1 file changed, 19 insertions(+), 2 deletions(-)
-> > >=20
-> > > --- a/security/apparmor/policy_unpack.c
-> > > +++ b/security/apparmor/policy_unpack.c
-> > > @@ -841,9 +841,18 @@ static struct aa_profile *unpack_profile
-> > >   			error =3D -EPROTO;
-> > >   			goto fail;
-> > >   		}
-> > > -		if (!unpack_u32(e, &profile->policy.start[0], "start"))
-> > > +		if (!unpack_u32(e, &profile->policy.start[0], "start")) {
-> > >   			/* default start state */
-> > >   			profile->policy.start[0] =3D DFA_START;
-> > > +		} else {
-> > > +			size_t state_count =3D profile->policy.dfa->tables[YYTD_ID_BASE]-=
->td_lolen;
-> > > +
-> > > +			if (profile->policy.start[0] >=3D state_count) {
-> > > +				info =3D "invalid dfa start state";
-> > > +				goto fail;
-> > > +			}
-> > > +		}
-> > [...]
-> >=20
-> > Isn't this range check needed even if we use the default start state?
-> > unpack_table() only checks that td_tolen > 0, so we could end up with
-> > profile->policy.start[0] =3D DFA_START =3D=3D 1 and
-> > profile->policy.dfa->tables[YYTD_ID_BASE]->td_lolen =3D=3D 1.
-> >=20
-> > (This is specific to the backport as the upstream version didn't put
-> > this check in an else-block.)
-> >=20
->=20
-> Hey Ben,
-> I specifically chose not to make that alteration to the patches sent to
-> stable after reviewing the submission rules. That would be a non-backport
-> related change from what landed upstream and we were referencing as the
-> upstream patch.
-
-But the upstream patch didn't have this problem!  The range check was
-not conditional so it would catch this case.
-
-> Instead I am sending Linus a 2nd patch that addresses
-> the issue by ensure the loaded dfa has at least two states. It will has
-> a fixes tag and will get pulled back.
-
-I think you are talking about adding a check in unpack_table().  I am
-talking about the later check in unpack_profile() (or in unpack_pdb()
-upstream).
-
-Ben.
-
---=20
-Ben Hutchings
-Nothing is ever a complete failure;
-it can always serve as a bad example.
-
---=-iryIRH0H4TTNncqYv/s4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnuFpwACgkQ57/I7JWG
-EQk1OBAAm8wwA53ntd81DAn8VqPtxnJesnjJmsgx6Pwllwko9UWE2dYQSk7DoWfl
-7LZiBHyJL90z+mwHYxf597KIp6zNTKpVnmRnuAEdgCL8KyMqJoPo0WS7PEAV3Czy
-WKAoK051pi8TimAgMZSWHRDzHQiarSujKRp3ho/cyuMZ8DhMqYNkb+vXQchOrtZa
-AqZWpSo+pgjAgbdsuzkgiTW06iOXkiYglqPNyr8elA3GpVP3ETdlcG8/qPpNJ2oU
-PBpYqKIUlf12VD9MLAN2601QaIJ4l9Iwf3LlDp+XZglLFAkW/LYxZarVj7a54Nmv
-9GMa/ydKBctOTPnub7PaUnRNwfm10h78zaLJ8jdrNztiwcom14DAM3ejoU2nNJ1/
-sbvD4SCqls1G8YFY+Wo0gIKNq//6o/+nVtdnhjXjUI9qR7QjciHuNliuWErIx4qO
-WNgjRCNRXh7UTgRvZD3hfUocJSI19p5kV0//ho0Z4kQ2rEgTxZ8PMltyfzagh95L
-yPP23BEi2EhkY0SOf+KNbOuBd4DZeq1r2lUP08GoHzXXFNUXF6fHCCbYF+H5oHqf
-3rRUz90dTQOxlx02zQoTMxo3kESsy3M5yYdP+0Y5n/jAKYvXEPrYaYnqXoc3yaBD
-VZi+V81bUNbSc8zVrDxG8VRAncd3z1RA0fBF0piLNQ6jMgBvNOU=
-=ZTqU
------END PGP SIGNATURE-----
-
---=-iryIRH0H4TTNncqYv/s4--
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
