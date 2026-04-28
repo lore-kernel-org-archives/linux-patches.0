@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA2D3FE669;
-	Tue, 28 Apr 2026 10:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6213FF89E;
+	Tue, 28 Apr 2026 10:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372937; cv=none; b=GnO4ZscVZV6JtrovB2qasxE7JoPHzFQsN0sm8yMYJLPvkwwxO9nf/mdRg1AOvlBr9IXsqbaSVS76N/nOzWS7kWsqjU/oSURZjacGxfiDhJ+zRnPisN2YV2wtohbghka0nLsvgR66l/dWph78JoKPIcEdFSScu7oEShSeF0lxiiw=
+	t=1777372939; cv=none; b=V2szyYv3v/iJVD+whniUXJ3bzEtsTQ58hKckqsTSx2jFxWV40q8Ed+XNpB031YVFhjpfsWbUOgUFqunUahROzrfYmpP3FL03/BQ1KEwPUw0okBlOKQo6V3bLj8NgkO5o91up35t9bJD8jY4OPqYec+yrFPyAbDJYzynswz3n0S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372937; c=relaxed/simple;
-	bh=QKMXF6HsS2rrDkVh5b2vhTRRTqO74YR2YzRVrVHL6nw=;
+	s=arc-20240116; t=1777372939; c=relaxed/simple;
+	bh=kPur6jWe6BvdHYe0RM6/hM1TWbrq+uMmPOxcVVn7tU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YebM/ysdz6L16LQ8flXxk6we2/kpcLopRDizbN/UGFEhbMKZBbp8+Rp7bc1bt1kFi/au7iksr2MLAVsMnWWcjgLwmn9GvrNVzATCn4Zp7dwyJLM6FqYDD3EVCiOz+HbuyTMKo9BsxJWT7T8GBXrrzWkqik5qySi2lkIHrpEgZoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TxT/JqEl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HizMNN8eFDt63VRZQiHTvHu2/PepbXL81MTlSVXnte4hEIZXHe+cLMqp/Jg2xp2TCp1vkWrBT32Vowm1nurs5Pr8IoEMre/3tEzYN1aSlrUTp7h6cDgBE6PvQHK4tSAlSNNYEFCzQeLchqyzp3fao0Wva3s5V4IW0EdvqiUuihk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gB8fmX51; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TxT/JqEl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F27C2BCB7;
-	Tue, 28 Apr 2026 10:42:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gB8fmX51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6877DC2BCC7;
+	Tue, 28 Apr 2026 10:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372937;
-	bh=QKMXF6HsS2rrDkVh5b2vhTRRTqO74YR2YzRVrVHL6nw=;
+	s=k20201202; t=1777372938;
+	bh=kPur6jWe6BvdHYe0RM6/hM1TWbrq+uMmPOxcVVn7tU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxT/JqElCakHPHG9XDtFfJ6ZjV7GYw55xWM4V7/xZliJYu6vR/wo0ad8wc/HMoLI+
-	 /+WiDzmkTVHOGsMevhWEXprdAmPzQRphGGSmCi1OmeerqdlOlBtysofyVBey+htOfU
-	 UC1Gpr4xp9YoQTaACzuv7Uscnu7MDECty8uJW269kHU/A2sPmYgbk6mdvVQjGbg9r3
-	 J03Fz9Hrl6KQSHn7fukb3WXuN5mWvYoY/lGdIVFS7uvcoczSbeei56hLmI8Y66miaS
-	 WmqbRDgygPl425sg/6mC8x3kKEDAG2tHFeMudojh/Oz+ofMNCzx/NaImapYIBHw9g4
-	 Rv/2b7cYfsjkQ==
+	b=gB8fmX51C8i5Ld1o9Znvh0MfxonevAAxXjt1pNUB3xl/GGspzEhc1z27L/POXfn+9
+	 2ARwlrv4Zf1lYOiWMji1RyKduiTD6nH+KsX5HWc55WPmFDZpsHlCo9bmLtkfCymH7I
+	 KpbzuSq/WLe0rc8rcFziU6kooIi6rjgCyGNkOtcaL+C3Zi9ZKUVUW/Btht+XXMmD0G
+	 u9/MC9xyz17RWZuaiNQ2TWBo1cxy+5jdlsVeKMakvIdQvdkMoYY3mX+TNutn3k/zH/
+	 Blnc4AhsFvci2EAiJKYVdigaD9leMIF422NdfVI63e5mKDpPzJwAB892eKwOGmvEHW
+	 VGzk6a+toOF5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Olga Kornievskaia <okorniev@redhat.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+Cc: Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	anna@kernel.org,
-	linux-nfs@vger.kernel.org,
+	a.zummo@towertech.it,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	linux-rtc@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] NFS: fix writeback in presence of errors
-Date: Tue, 28 Apr 2026 06:40:42 -0400
-Message-ID: <20260428104133.2858589-31-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] dt-bindings: rtc: microcrystal,rv3028: Allow to specify vdd-supply
+Date: Tue, 28 Apr 2026 06:40:43 -0400
+Message-ID: <20260428104133.2858589-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -50,603 +55,204 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit 5d3869a41f3608101c00ff9c9c7c2364c555fa65 ]
+[ Upstream commit 10663044bee592ba049a2aa37f4431fbdf93b739 ]
 
-After running xfstest generic/751, in certain conditions, can have
-a writeback IO stuck while experiencing one of the two patterns.
+In case the VDD supply voltage regulator of the RTC needs to be
+specified explicitly, allow to set vdd-supply.
 
-Pattern#1: writeback IO experiences ENOSPC on an offset smaller
-than the filesize. Example,
-write offset=0 len=4096 how=unstable OK
-write offset=8192 len=4096 how=unstable OK
-write offset=12288 len=4096 how=unstable ENOSPC
-write offset=4096 len=4096 how=unstable ENOSPC
-client sends a commit and receives a verifier which is different
-from the last successful write. It marks pages dirty and writeback
-retries. But it again send writes unstable and gets into the same
-pattern, running into the ENOSPC error and sending a commit because
-writes were sent at unstable.
-
-Pattern#2: an unstable write followed by a short write and ENOSPC.
-write offset=0 len=4096 how=unstable OK
-write offset=4096 len=4096 how=unstable returns OK but count=100
-write offset=4197 len=3996 how=stable returns ENOSPC
-client send a commit and receives a verifier different from
-the last unstable write. The same behaviour is retried in a loop.
-
-Instead, this patch proposes to identify those conditions and mark
-requests to be done synchronously instead. Previous solution tried
-to mark it in the nfs_page, however that's not persistent thus
-instead mark it in the nfs_open_context.
-
-Furthermore, the same problem occurs during localio code path so
-recognize that IO needs to be done sync in that case as well.
-
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260309085749.25747-2-frieder@fris.de
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to provide the full analysis.
+## Decision Summary
+Backport this **with the companion DTS fix**. By itself it is a schema-
+only change, but the mailing-list history verifies it was added because
+the runtime DTS fix for Kontron i.MX8MP OSM RTC boot hangs was dropped
+due to `dtb_check` warning: `'vdd-supply' is not allowed`. This patch is
+a 2-line DT binding addition for existing hardware, reviewed by a DT
+maintainer, and has essentially no runtime regression risk.
 
----
+## Phase Walkthrough
+1.1 Record: Subsystem `dt-bindings: rtc: microcrystal,rv3028`; action
+verb `Allow`; intent is to permit `vdd-supply` in the RV3028 RTC
+binding.
 
-# Analysis: NFS: fix writeback in presence of errors
+1.2 Record: Tags found: `Signed-off-by: Frieder Schrempf`, `Reviewed-by:
+Krzysztof Kozlowski`, `Link:
+https://patch.msgid.link/20260309085749.25747-2-frieder@fris.de`,
+`Signed-off-by: Alexandre Belloni`. No `Fixes`, `Reported-by`, `Tested-
+by`, or `Cc: stable`.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+1.3 Record: Commit body says only that explicit VDD regulator
+specification should be allowed. The series and v2 discussion verify the
+concrete issue: the companion DTS fix adds `vdd-supply` so fw_devlink
+orders PMIC before RTC, avoiding sporadic boot hangs.
 
-**Step 1.1: Subject Line**
-- Subsystem prefix: `NFS:`
-- Action verb: `fix`
-- Record: NFS / fix / writeback gets stuck in a loop in presence of
-  errors (ENOSPC, short writes, verifier mismatches).
+1.4 Record: Hidden bug-fix context exists, but not in this patch alone.
+This patch fixes a DT schema gap that blocked a real DTS boot-hang fix.
 
-**Step 1.2: Tags**
-- Signed-off-by: Olga Kornievskaia <okorniev@redhat.com> (Red Hat NFS
-  developer, frequent NFS contributor)
-- Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com> (NFS
-  subsystem maintainer)
-- NO `Fixes:` tag
-- NO `Cc: stable@vger.kernel.org`
-- NO `Reported-by:` (the bug was found internally via xfstests
-  generic/751)
-- NO `Tested-by:` / `Reviewed-by:` / `Acked-by:`
-- NO `Link:` to lore/syzkaller/bugzilla
-- Record: Two SOBs (author + maintainer). Absence of stable/Fixes tags
-  is exactly why this is in the review pipeline. No reviewer trailers
-  but maintainer has SOB indicating he applied it.
+2.1 Record: One file changed,
+`Documentation/devicetree/bindings/rtc/microcrystal,rv3028.yaml`; 2
+lines added; no functions; single-file schema change.
 
-**Step 1.3: Commit Body**
-- Bug description: Writeback IO gets stuck in an endless retry loop in
-  two patterns:
-  - Pattern #1: Unstable write → ENOSPC → COMMIT → verifier mismatch →
-    mark pages dirty → retry as unstable → loop.
-  - Pattern #2: Unstable write returning short (count=100) → stable
-    write at offset 4197 → ENOSPC → COMMIT → verifier mismatch → loop.
-- Reproduction: `xfstest generic/751`.
-- Mechanism explained: After short write/ENOSPC/verifier mismatch, mark
-  `nfs_open_context` so subsequent writes are forced to `NFS_FILE_SYNC`
-  (stable). v1 used a per-page `PG_SYNC` flag, which doesn't survive
-  page reallocation, so design moved to per-open-context flag.
-- Record: Author clearly understands root cause; reproduction via
-  standard xfstests test; same problem in localio path is also fixed.
+2.2 Record: Before, `unevaluatedProperties: false` rejected `vdd-
+supply`. After, `vdd-supply: true` permits the regulator phandle.
 
-**Step 1.4: Hidden Bug Fix Detection**
-- Verb is "fix", not disguised. Ports of this clearly fix a hang.
-- Record: This is an explicit bug fix (writeback livelock).
+2.3 Record: Bug category is DT schema/build-validation fix and
+prerequisite for hardware dependency expression. Not memory safety,
+locking, or runtime driver logic.
 
-## PHASE 2: DIFF ANALYSIS
+2.4 Record: Fix is obviously correct and minimal. Regression risk is
+very low because it only relaxes schema validation for one standard
+supply property.
 
-**Step 2.1: Inventory**
-- `fs/nfs/localio.c`: +14 / -1 (in `nfs_local_call_write`,
-  `nfs_local_do_write`)
-- `fs/nfs/pagelist.c`: +3 (in `__nfs_pageio_add_request`)
-- `fs/nfs/write.c`: +9 (in `nfs_write_completion`,
-  `nfs_writeback_result`, `nfs_commit_release_pages`)
-- `include/linux/nfs_fs.h`: +1 (new `NFS_CONTEXT_WRITE_SYNC` flag)
-- Total: 27 insertions, 1 deletion across 4 files. Surgical, single-
-  subsystem.
-- Record: Small, contained, NFS-only changes touching only error-
-  handling paths.
+3.1 Record: Blame shows the binding file was introduced by
+`c690048ed59b5` in `v6.3-rc1`; `#clock-cells` was added by
+`4015580e983da` in `v6.12-rc1`.
 
-**Step 2.2: Code Flow Change**
-- `nfs_writeback_result` (write.c): on short write, set
-  `NFS_CONTEXT_WRITE_SYNC` on the open context.
-- `nfs_commit_release_pages` (write.c): on verifier mismatch (server
-  lost data), set the flag.
-- `nfs_local_call_write` (localio.c): on short write in localio path,
-  set the flag.
-- `nfs_write_completion` (write.c): clear flag when an unstable write
-  succeeds and needs commit.
-- `__nfs_pageio_add_request` (pagelist.c): when flag set, OR
-  `FLUSH_STABLE` into `pg_ioflags` so future writes go stable.
-- `nfs_local_do_write` (localio.c): when flag set, set `hdr->args.stable
-  = NFS_FILE_SYNC`.
-- Record: Adds a sticky "force stable writes" flag set on error paths
-  and consulted on submission.
+3.2 Record: Candidate has no `Fixes:` tag. Companion DTS patch fixes
+`946ab10e3f40f`, introduced in `v6.13-rc1`.
 
-**Step 2.3: Bug Mechanism Class**
-- Logic / liveness fix (livelock / infinite retry loop in NFS error
-  recovery), with synchronization/state-machine corrective. Not a
-  UAF/leak/race classic.
-- Trigger: server ENOSPC during unstable write OR verifier mismatch on
-  commit (e.g., server crash/reboot or storage commit failure).
-- Record: Liveness/livelock fix in NFS write recovery state machine.
+3.3 Record: Recent binding history only shows the file creation and
+`#clock-cells` addition. The patch is standalone, but its stable value
+is tied to the companion DTS fix.
 
-**Step 2.4: Fix Quality**
-- Reasoning is sound: forcing FILE_SYNC after error eliminates the
-  unstable-write→commit→verifier-mismatch retry cycle.
-- One subtle concern: the flag is per-open-context and is only cleared
-  when `nfs_write_need_commit(hdr)` is true after a write completion.
-  Once the flag is set, all writes go stable; stable writes don't need
-  commit, so they don't clear the flag. The flag effectively persists
-  until a successful unstable write (which only happens if flag is
-  cleared first). This means after a single short-write event, the open
-  context becomes permanently sync. That's intentional fail-safe
-  behavior, but is a behavior change.
-- No locking/memory-management concerns; no new allocations; no API
-  change visible to userspace.
-- Record: Logic appears correct; small regression risk = sustained sync
-  writes after a transient short-write (perf cost only, not
-  correctness).
+3.4 Record: Author has multiple Kontron DTS fixes in local history; not
+the RTC maintainer, but the patch was reviewed by Krzysztof Kozlowski
+and applied by Alexandre Belloni.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+3.5 Record: No code dependencies. For meaningful runtime benefit,
+backport with `arm64: dts: imx8mp-kontron: Fix boot order for PMIC and
+RTC`.
 
-**Step 3.1: Blame**
-- The general `nfs_writeback_result` short-write handling has been
-  present since `6c75dc0d498c` ("NFS: merge _full and _partial write
-  rpc_ops", 2012, v3.5). The buggy retry loop is therefore in
-  essentially every stable kernel.
-- Record: Bug present since 2012/v3.5. Affects all current LTS trees
-  (5.10 through 6.12+).
+4.1 Record: `b4 dig -c 10663044bee5` found the original v3 patch at the
+supplied lore/msgid URL. `b4 dig -a` found v1 and v3 series history; v3
+added the missing binding patch.
 
-**Step 3.2: Fixes Tag**
-- This commit has no `Fixes:` tag.
-- The closely related predecessor `3a06bac55bf56` ("NFS: improve 'Server
-  wrote zero bytes' error") has `Fixes: 6c75dc0d498c` (2012). That
-  predecessor is the change the candidate's diff context (the `&&
-  !list_empty(&hdr->pages)` line) depends on.
-- Record: No Fixes tag. Bug origin best matches `6c75dc0d498c` (2012)
-  per related commit.
+4.2 Record: `b4 dig -w` showed relevant DT/RTC maintainers and lists
+were included.
 
-**Step 3.3: File History / Series**
-- `git log fs-next -- fs/nfs/write.c` shows the immediate predecessors:
-  `3a06bac55bf56` (Feb 2026, "NFS: improve 'Server wrote zero bytes'
-  error") then `5d3869a41f360` (this commit, Apr 2026).
-- The diff shown in the candidate uses the post-`3a06bac` context (`if
-  (resp->count < argp->count && !list_empty(&hdr->pages))`). For a clean
-  apply on stable, `3a06bac55bf56` should also land (it has Fixes: 2012,
-  so likely already auto-selected).
-- Standalone? Mostly. Localio bits depend on localio existing (v6.12+).
-- Record: One reasonable prerequisite (`3a06bac55bf56`) for a clean
-  context match; not a hard logical dependency though - the actual hunk
-  additions only need pre-existing structure.
+4.3 Record: v2 discussion verified Frank Li dropped the DTS fix because
+it caused `dtb_check` warning: `'vdd-supply' is not allowed`; Frieder
+replied that v3 adds the binding patch.
 
-**Step 3.4: Author / Maintainer**
-- Olga Kornievskaia: long-standing NFS client developer at Red Hat, many
-  commits in `fs/nfs/`.
-- Trond Myklebust: NFS subsystem maintainer; he applied and signed off.
-- Record: High-trust authorship.
+4.4 Record: Series context is 2 patches in v3: this binding patch and
+the DTS boot-order fix. Binding was applied by Alexandre Belloni; DTS
+fix later applied by Frank Li.
 
-**Step 3.5: Dependencies**
-- Required field `NFS_CONTEXT_FILE_OPEN` was added in 2021 (commit
-  `e97bc66377bca`, Trond Myklebust); confirmed present in stable 5.15
-  and later.
-- `fs/nfs/localio.c` only exists in v6.12+ (added by `70ba381e1a431` for
-  v6.12).
-- Record: Pre-6.12 stable trees can take only the
-  `write.c`+`pagelist.c`+`nfs_fs.h` portions; `localio.c` portion does
-  not apply there.
+4.5 Record: I found no stable-specific discussion or explicit stable
+nomination.
 
-## PHASE 4: MAILING LIST RESEARCH
+5.1 Record: No functions modified.
 
-**Step 4.1: b4 dig**
-- `b4 dig -c 5d3869a41f360`: matched submission at
-  https://patch.msgid.link/20260413222423.90089-1-okorniev@redhat.com
-  (v3).
-- `b4 dig -c 5d3869a41f360 -a`: three series found:
-  - v1 (RFC) 2026-03-12:
-    https://patch.msgid.link/20260312171526.85759-1-okorniev@redhat.com
-  - v2 2026-03-25:
-    https://patch.msgid.link/20260325180050.55186-1-okorniev@redhat.com
-  - v3 2026-04-13: applied version
-- `b4 am` for v3 thread: `Analyzing 1 messages in the thread` /
-  `Analyzing 0 code-review messages` — no public review feedback, no
-  reviewer-suggested `Cc: stable`.
-- Major design change between v1 and v2: v1 used a per-page `PG_SYNC`
-  bit; v2/v3 moved to per-open-context `NFS_CONTEXT_WRITE_SYNC` (because
-  per-page flag is not persistent through page recycling) and added the
-  localio path.
-- v2 → v3 was a minor cleanup (compute `iov_iter_count` once into
-  `icount` variable).
-- Record: Three revisions; significant design rework v1→v2; v3
-  essentially same as v2 with small refactor; no reviewer feedback
-  visible on lore.
+5.2 Record: No callers. Semantic impact is DT schema validation.
 
-**Step 4.2: b4 dig -w (Recipients)**
-- To: trondmy@kernel.org, anna@kernel.org. Cc: linux-
-  nfs@vger.kernel.org.
-- Both NFS maintainers (Trond Myklebust, Anna Schumaker) and the NFS
-  list were addressed.
-- Record: Correct maintainer audience; Trond's SOB shows he
-  reviewed/applied.
+5.3 Record: Verified runtime relevance through OF supplier parsing:
+`drivers/of/property.c` has `DEFINE_SUFFIX_PROP(regulators, "-supply",
+NULL)` and includes `parse_regulators` in supplier bindings.
 
-**Step 4.3 / 4.4 / 4.5: Bug report / Series / Stable history**
-- No external bug report / Reported-by / Link tags.
-- Standalone fix; no patch series.
-- Could not reach lore.kernel.org search interactively (Anubis bot
-  protection). Relying on b4 dig output.
-- Record: No external bug report references; no public stable discussion
-  located.
+5.4 Record: Companion DTS path is reachable during device probing on
+Kontron i.MX8MP OSM. PMIC driver enables the I2C level translator when
+`nxp,i2c-lt-enable` is present; RTC node sits on the same I2C bus.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+5.5 Record: Similar `vdd-supply: true` properties exist in many
+bindings, including another RTC binding, `amlogic,meson6-rtc.yaml`.
 
-**Step 5.1: Modified Functions**
-- `nfs_local_call_write`, `nfs_local_do_write` (localio path)
-- `__nfs_pageio_add_request` (write submission/coalescing path)
-- `nfs_write_completion`, `nfs_writeback_result`,
-  `nfs_commit_release_pages` (write/commit completion)
+6.1 Record: Binding exists from `v6.3+`; Kontron OSM DTS exists from
+`v6.13+`. `v6.1` lacks the binding file.
 
-**Step 5.2: Callers / Reachability**
-- `nfs_writeback_result` is invoked as `rw_result` in `nfs_rw_write_ops`
-  — runs on every NFS WRITE RPC completion. Universal NFS write path.
-- `nfs_commit_release_pages` runs on every NFS COMMIT completion.
-- `nfs_write_completion` runs on completion of a `nfs_pgio_header` group
-  of writes.
-- `__nfs_pageio_add_request` runs on every page added to a pageio
-  descriptor — the core write submission coalescer.
-- `nfs_local_call_write` runs in the localio (loopback NFS-on-same-host)
-  write path.
-- Record: All hot paths in NFS write submission and completion.
-  Reachable on every NFS write from userspace.
+6.2 Record: `git apply --check` succeeded on existing `v6.6` and `v6.12`
+worktrees and current `v7.0.1`; `v6.1` fails because the file does not
+exist. A separate v6.19 temporary worktree attempt ran out of space
+before testing, so direct v6.19 apply was not verified.
 
-**Step 5.3 / 5.4: Reachability**
-- Trigger: NFS server returns ENOSPC, short write, or different verifier
-  on commit. All are realistic in production (filling disk, quota,
-  server reboot).
-- Record: Reachable from any unprivileged write(2) over NFS once disk
-  fills up.
+6.3 Record: No related stable fix already found in local history.
 
-**Step 5.5: Similar Patterns**
-- The flag is consulted in two places (pagelist + localio); set in three
-  places (writeback_result, commit_release_pages, local_call_write);
-  cleared in one place (write_completion). Consistent design.
-- Record: No other writeback retry logic relies on the same pattern;
-  this is a fresh mechanism.
+7.1 Record: Subsystem is DT binding documentation for RTC hardware;
+criticality is peripheral, but it supports a board boot-hang fix.
 
-## PHASE 6: STABLE TREE ANALYSIS
+7.2 Record: Subsystem/file is low churn: only binding creation and
+`#clock-cells` addition before this patch.
 
-**Step 6.1: Code in stable trees?**
-- `nfs_writeback_result` and the unstable-write retry logic exist in
-  essentially all currently-supported LTS (5.10, 5.15, 6.1, 6.6, 6.12+).
-  Verified for v6.1 and v6.6 directly.
-- The bug pattern (server ENOSPC + verifier mismatch loop) thus exists
-  in all of them.
-- `NFS_CONTEXT_FILE_OPEN` exists from v5.15+ — adding
-  `NFS_CONTEXT_WRITE_SYNC` next to it is safe.
-- Record: Bug present in 5.10 onward; flag header location compatible
-  with 5.15+; for 5.10 a manual placement check would be needed.
+8.1 Record: Affected population is users/builders of RV3028 DTs,
+especially Kontron i.MX8MP OSM users when paired with the DTS fix.
 
-**Step 6.2: Backport Difficulty**
-- 6.12+ trees: Should mostly apply; the `nfs_writeback_result` hunk has
-  a context dependency on `3a06bac55bf56` (also a stable candidate, has
-  its own Fixes tag). Either land both, or fuzz/adapt one line of
-  context.
-- Pre-6.12 trees: No `fs/nfs/localio.c` — the localio hunks must be
-  dropped. Core fix in `write.c`/`pagelist.c`/`nfs_fs.h` still applies.
-- Record: Minor adjustment needed; not a clean-apply for all trees but
-  conceptually portable.
+8.2 Record: Trigger for the companion bug is boot/probe ordering where
+RTC is accessed before PMIC enables the I2C level shifter. Trigger for
+this patch alone is DT schema validation with `vdd-supply`.
 
-**Step 6.3: Already in stable?**
-- Not in any stable backport branch (`for-greg/*`); `git branch --all
-  --contains 5d3869a41f360` returns only origin/master (mainline) and
-  the upstream repo.
-- Record: Not yet backported.
+8.3 Record: Candidate alone fixes a build/validation warning. Companion
+failure mode is sporadic boot hang, which is critical for affected
+hardware.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+8.4 Record: Benefit is high when paired with the companion DTS fix, low
+if isolated. Risk is very low: two schema lines, no runtime code.
 
-**Step 7.1: Subsystem Criticality**
-- `fs/nfs/` (NFS client) — IMPORTANT: very widely used (every distro,
-  enterprise, container/cloud workloads with NFS storage).
-- Record: IMPORTANT / widespread use.
+9.1 Record: For backporting: tiny, reviewed, applies cleanly to relevant
+trees, enables a verified hardware boot-hang fix, standard DT supply
+property. Against: schema-only and no standalone runtime fix.
 
-**Step 7.2: Activity**
-- NFS client is actively maintained; Olga and Trond have been pushing
-  many fixes recently.
-- Record: Active subsystem.
+9.2 Record: Stable rules: obviously correct yes; real user bug
+indirectly yes via companion DTS fix; important issue yes when paired,
+boot hang; small yes; no runtime API/new driver yes; applies to
+v6.6/v6.12/current, not v6.1.
 
-## PHASE 8: IMPACT AND RISK
+9.3 Record: Exception category applies: DT binding addition for existing
+hardware / build-validation support.
 
-**Step 8.1: Affected Users**
-- Any NFS client user where the server can return ENOSPC, short writes,
-  or replays a different verifier (server reboot/crash mid-commit). That
-  is essentially all production NFS deployments.
-- Record: NFS users — broad.
-
-**Step 8.2: Trigger Conditions**
-- Server-side disk full, quota hit, or NFS server reboot/commit-retry.
-  Common in real environments. Reproducer: xfstests generic/751.
-- Triggered by unprivileged user writes.
-- Record: Realistic and triggerable by any NFS user.
-
-**Step 8.3: Severity**
-- Failure mode: writeback `kworker` enters infinite retry loop. This
-  means: dirty pages never clear, fsync(2) never returns, eventually the
-  system exhibits hang task warnings, dirty memory accumulates,
-  balance_dirty_pages-style throttling stalls all writers, application-
-  level data is never reported back to userspace as failed.
-- Severity: HIGH (effective hang of writeback, eventual OOM-class
-  behavior, application data loss/incorrect error semantics; no kernel
-  oops but a livelock that operators notice as a hung NFS).
-- Record: HIGH severity (livelock in writeback / data loss-class
-  symptoms).
-
-**Step 8.4: Risk vs Benefit**
-- BENEFIT: Eliminates a real, reproducible writeback livelock affecting
-  all NFS users hitting ENOSPC or commit-verifier mismatch — high
-  benefit.
-- RISK:
-  - Scope is medium (4 files / ~27 lines).
-  - Touches hot paths (every NFS write/commit completion).
-  - Behavior change: once a short-write/verifier-mismatch event happens
-    on a file, the open context becomes "sticky-sync" until a successful
-    unstable write+commit happens (which by construction can't happen
-    until the flag is cleared, so realistically until the file is
-    reopened). This is a permanent perf regression for the lifetime of
-    that open fd after a single transient error.
-  - The patch went through 3 iterations with a notable design change
-    v1→v2 — author had to redesign once. v3 vs v2 is trivial.
-  - No `Reviewed-by`/`Tested-by` from external parties on lore (only
-    maintainer SOB).
-- Net: Benefit clearly outweighs risk: livelock is severe; perf
-  regression after error is acceptable; mechanism is contained to error
-  paths.
-- Record: HIGH benefit, LOW–MEDIUM risk, ratio favors backport.
-
-## PHASE 9: SYNTHESIS
-
-**Step 9.1: Evidence**
-
-FOR:
-- Real, severe, reproducible bug (xfstests generic/751).
-- Concrete two-pattern description with offsets/lengths/return codes.
-- Maintainer (Trond Myklebust) signed off and applied directly.
-- Bug exists in essentially all current stable trees (logic since 2012).
-- Authoritative author/maintainer pair.
-- Single subsystem; small line count.
-
-AGAINST:
-- No `Fixes:` tag.
-- No `Cc: stable` tag.
-- No public reviewer trailers / Tested-by.
-- v1→v2 design change indicates the design space was non-trivial.
-- The flag is sticky-sync once set (intentional but a behavior change).
-- Localio portion only relevant for v6.12+; pre-6.12 needs manual trim.
-- One contextual prerequisite (`3a06bac55bf56`) for mechanical clean-
-  apply on the `write.c` hunk near `nfs_writeback_result` — that
-  prerequisite has its own `Fixes:` tag and is itself a likely stable
-  candidate.
-
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct? Mostly — design is straightforward; no public
-   review evidence to confirm "obvious", but maintainer applied it.
-   Acceptable.
-2. Real bug? YES — xfstests generic/751 reproducer.
-3. Important? YES — writeback livelock, applies to NFS users hitting
-   ENOSPC / server commit failures (= many production NFS users).
-4. Small/contained? YES — 27 insertions / 1 deletion across 4 files in
-   one subsystem.
-5. No new features/APIs? No userspace API; adds an internal-only flag
-   bit (NFS_CONTEXT_WRITE_SYNC). Acceptable.
-6. Applies to stable? Mostly — needs context fuzz / drop of localio
-   hunks for pre-6.12.
-
-**Step 9.3: Exception Categories** Not applicable (not device ID, quirk,
-DT, build, or doc fix).
-
-**Step 9.4: Decision**
-
-This is a real fix for a serious, reproducible NFS writeback livelock
-that has existed for years in all current stable kernels. The change is
-bounded to NFS error-handling paths, comes from the NFS subsystem
-maintainer, and has a clear root-cause explanation tied to a standard
-xfstests reproducer. The principal downsides — sticky sync after an
-error, multi-revision design history, no Fixes/stable tag — are real but
-do not outweigh the benefit of breaking an infinite writeback retry loop
-for end users. Pre-6.12 backports require dropping the localio hunks;
-otherwise the core fix is portable.
+9.4 Record: Decision is YES, but it should be treated as a
+prerequisite/companion to the DTS boot-order fix, not as a standalone
+runtime fix.
 
 ## Verification
-
-- [Phase 1] Parsed subject/body from the commit message provided and
-  from `git show 5d3869a41f360` — confirmed reproducer is xfstests
-  generic/751; two failure patterns with offsets/return codes; author =
-  Olga Kornievskaia, applied by Trond Myklebust. No Fixes/Cc-
-  stable/Reported-by/Tested-by/Reviewed-by/Link tags.
-- [Phase 2] Diff inventory verified via `git show 5d3869a41f360 --stat`:
-  `fs/nfs/localio.c | 15 ++++++++++++++- ; fs/nfs/pagelist.c | 3 +++ ;
-  fs/nfs/write.c | 9 +++++++++ ; include/linux/nfs_fs.h | 1 + ; 4 files
-  changed, 27 insertions(+), 1 deletion(-)`.
-- [Phase 2] Read current `fs/nfs/write.c` (lines 909–946 and 1545–1596)
-  and `fs/nfs/localio.c` (lines 848–920) to confirm pre-patch behavior
-  and where each hunk lands.
-- [Phase 3] `git log master --oneline 5d3869a41f360 -2` confirms
-  predecessor `3a06bac55bf56` ("NFS: improve 'Server wrote zero bytes'
-  error"). `git show 3a06bac55bf56` shows it adds `&&
-  !list_empty(&hdr->pages)` and has `Fixes: 6c75dc0d498c` (2012, v3.5).
-- [Phase 3] `git tag --contains e97bc66377bca` shows
-  `NFS_CONTEXT_FILE_OPEN` is in v5.15+ (and corresponding p-* internal
-  tags).
-- [Phase 3] `git tag --contains 70ba381e1a431` shows `fs/nfs/localio.c`
-  was added in v6.12 only.
-- [Phase 3] `git branch --all --contains 5d3869a41f360` shows the commit
-  is only on origin/master and stable/master (mainline) — not in any
-  backport branch.
-- [Phase 4] `b4 dig -c 5d3869a41f360` returned the v3 lore URL:
-  https://patch.msgid.link/20260413222423.90089-1-okorniev@redhat.com.
-- [Phase 4] `b4 dig -c 5d3869a41f360 -a` returned three series (v1 RFC
-  2026-03-12, v2 2026-03-25, v3 2026-04-13).
-- [Phase 4] `b4 dig -c 5d3869a41f360 -w` confirmed To:
-  trondmy@kernel.org, anna@kernel.org; Cc: linux-nfs@vger.kernel.org.
-- [Phase 4] Read v1 mbox (`/tmp/analysis/v1/...`) — uses `PG_SYNC` per-
-  page bit, no localio handling.
-- [Phase 4] Read v2 mbox (`/tmp/analysis/v2/...`) — uses
-  `NFS_CONTEXT_WRITE_SYNC`, includes localio handling. v2→v3 only
-  difference is computing `iov_iter_count` into `icount` once.
-- [Phase 4] `b4 am` of v3: 0 code-review messages on lore. Could not
-  browse lore directly (Anubis bot wall) — relied on b4's mbox fetch.
-- [Phase 5] Hunks inspected directly in `fs/nfs/write.c`,
-  `fs/nfs/pagelist.c`, `fs/nfs/localio.c`; confirmed
-  `nfs_writeback_result` is the standard `rw_result` callback for NFS
-  write RPC completion (universal write path).
-- [Phase 6] `git show v6.6:fs/nfs/write.c` and `git show
-  v6.1:fs/nfs/write.c` confirm `nfs_writeback_result` and
-  `nfs_commit_release_pages` use the same pattern as mainline (so the
-  bug exists there).
-- [Phase 6] `git show v6.6:fs/nfs/pagelist.c` confirms
-  `__nfs_pageio_add_request` is structurally the same in v6.6.
-- [Phase 6] `git log for-greg/7.0-200 --oneline -- fs/nfs/write.c` does
-  not include `5d3869a41f360` or `3a06bac55bf56` — neither has been
-  backported yet.
-- [Phase 8] Severity assessment: livelock in writeback is verified by
-  the reproducer described in the commit (xfstests generic/751) and by
-  reading the loop logic in `nfs_writeback_result` /
-  `nfs_commit_release_pages` showing how the retry path returns to the
-  same state.
-- UNVERIFIED: I could not directly confirm a public Tested-by
-  (lore.kernel.org Anubis blocked manual browsing). b4 dig found no
-  review trailers, but I cannot rule out off-list/Hammerspace internal
-  testing. This does not drive my decision either way.
-- UNVERIFIED: I did not separately verify that `3a06bac55bf56` will be
-  selected for stable; that affects only the cleanness of context match,
-  not correctness of the candidate's logic.
-
-The fix addresses a serious writeback livelock with a concrete
-reproducer, comes from the NFS maintainer, is bounded to the NFS
-subsystem, and the bug exists across current stable trees. Risks are
-modest (modest perf cost after errors, minor backport adjustments for
-pre-6.12). On balance, this is appropriate stable material.
+- Phase 1: Parsed supplied commit message and local b4 mbox; confirmed
+  tags and absence of `Fixes`/stable tags.
+- Phase 2: Read diff and current binding file; confirmed only `vdd-
+  supply: true` is added.
+- Phase 3: Used `git blame`, `git describe --contains`, and file
+  history; confirmed binding introduction in `v6.3-rc1`, `#clock-cells`
+  in `v6.12-rc1`, board DTS in `v6.13-rc1`.
+- Phase 4: Used `b4 am`, `b4 mbox`, `b4 diff`, `b4 dig -a`, and `b4 dig
+  -w`; verified v2 rejection due dtb_check warning and v3 addition of
+  this binding patch.
+- Phase 5: Searched/read OF supplier parsing and PCA9450 code; verified
+  `*-supply` creates supplier links and PMIC `nxp,i2c-lt-enable` enables
+  the I2C level translator.
+- Phase 6: Checked stable tags/worktrees; apply check passes on v6.6,
+  v6.12, and current tree; v6.1 lacks the file.
+- Phase 7/8: Verified affected paths in Kontron DTS and binding; no
+  runtime code touched.
+- Unverified: Direct apply check on v6.19 due temporary worktree
+  checkout failure, though v6.19 file contents were inspected and match
+  the expected context.
 
 **YES**
 
- fs/nfs/localio.c       | 15 ++++++++++++++-
- fs/nfs/pagelist.c      |  3 +++
- fs/nfs/write.c         |  9 +++++++++
- include/linux/nfs_fs.h |  1 +
- 4 files changed, 27 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/rtc/microcrystal,rv3028.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 4c7d16a99ed61..e55c5977fcc3a 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -865,6 +865,8 @@ static void nfs_local_call_write(struct work_struct *work)
- 	file_start_write(filp);
- 	n_iters = atomic_read(&iocb->n_iters);
- 	for (int i = 0; i < n_iters ; i++) {
-+		size_t icount;
+diff --git a/Documentation/devicetree/bindings/rtc/microcrystal,rv3028.yaml b/Documentation/devicetree/bindings/rtc/microcrystal,rv3028.yaml
+index cda8ad7c12037..2ea3b40419530 100644
+--- a/Documentation/devicetree/bindings/rtc/microcrystal,rv3028.yaml
++++ b/Documentation/devicetree/bindings/rtc/microcrystal,rv3028.yaml
+@@ -32,6 +32,8 @@ properties:
+       - 9000
+       - 15000
+ 
++  vdd-supply: true
 +
- 		if (iocb->iter_is_dio_aligned[i]) {
- 			iocb->kiocb.ki_flags |= IOCB_DIRECT;
- 			/* Only use AIO completion if DIO-aligned segment is last */
-@@ -881,8 +883,16 @@ static void nfs_local_call_write(struct work_struct *work)
- 		if (status == -EIOCBQUEUED)
- 			continue;
- 		/* Break on completion, errors, or short writes */
-+		icount = iov_iter_count(&iocb->iters[i]);
- 		if (nfs_local_pgio_done(iocb, status) || status < 0 ||
--		    (size_t)status < iov_iter_count(&iocb->iters[i])) {
-+		    (size_t)status < icount) {
-+			if ((size_t)status < icount) {
-+				struct nfs_lock_context *ctx =
-+					iocb->hdr->req->wb_lock_context;
-+
-+				set_bit(NFS_CONTEXT_WRITE_SYNC,
-+					&ctx->open_context->flags);
-+			}
- 			nfs_local_write_iocb_done(iocb);
- 			break;
- 		}
-@@ -901,6 +911,9 @@ static void nfs_local_do_write(struct nfs_local_kiocb *iocb,
- 		__func__, hdr->args.count, hdr->args.offset,
- 		(hdr->args.stable == NFS_UNSTABLE) ?  "unstable" : "stable");
- 
-+	if (test_bit(NFS_CONTEXT_WRITE_SYNC,
-+		     &hdr->req->wb_lock_context->open_context->flags))
-+		hdr->args.stable = NFS_FILE_SYNC;
- 	switch (hdr->args.stable) {
- 	default:
- 		break;
-diff --git a/fs/nfs/pagelist.c b/fs/nfs/pagelist.c
-index a9373de891c98..4a87b2fdb2e6e 100644
---- a/fs/nfs/pagelist.c
-+++ b/fs/nfs/pagelist.c
-@@ -1186,6 +1186,9 @@ static int __nfs_pageio_add_request(struct nfs_pageio_descriptor *desc,
- 
- 	nfs_page_group_lock(req);
- 
-+	if (test_bit(NFS_CONTEXT_WRITE_SYNC,
-+		     &req->wb_lock_context->open_context->flags))
-+		desc->pg_ioflags |= FLUSH_STABLE;
- 	subreq = req;
- 	subreq_size = subreq->wb_bytes;
- 	for(;;) {
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index 1ed4b3590b1ac..ddae197d2d3f9 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -927,9 +927,13 @@ static void nfs_write_completion(struct nfs_pgio_header *hdr)
- 			goto remove_req;
- 		}
- 		if (nfs_write_need_commit(hdr)) {
-+			struct nfs_open_context *ctx =
-+				hdr->req->wb_lock_context->open_context;
-+
- 			/* Reset wb_nio, since the write was successful. */
- 			req->wb_nio = 0;
- 			memcpy(&req->wb_verf, &hdr->verf.verifier, sizeof(req->wb_verf));
-+			clear_bit(NFS_CONTEXT_WRITE_SYNC, &ctx->flags);
- 			nfs_mark_request_commit(req, hdr->lseg, &cinfo,
- 				hdr->ds_commit_idx);
- 			goto next;
-@@ -1553,7 +1557,10 @@ static void nfs_writeback_result(struct rpc_task *task,
- 
- 	if (resp->count < argp->count) {
- 		static unsigned long    complain;
-+		struct nfs_open_context *ctx =
-+			hdr->req->wb_lock_context->open_context;
- 
-+		set_bit(NFS_CONTEXT_WRITE_SYNC, &ctx->flags);
- 		/* This a short write! */
- 		nfs_inc_stats(hdr->inode, NFSIOS_SHORTWRITE);
- 
-@@ -1837,6 +1844,8 @@ static void nfs_commit_release_pages(struct nfs_commit_data *data)
- 		/* We have a mismatch. Write the page again */
- 		dprintk(" mismatch\n");
- 		nfs_mark_request_dirty(req);
-+		set_bit(NFS_CONTEXT_WRITE_SYNC,
-+			&req->wb_lock_context->open_context->flags);
- 		atomic_long_inc(&NFS_I(data->inode)->redirtied_pages);
- 	next:
- 		nfs_unlock_and_release_request(req);
-diff --git a/include/linux/nfs_fs.h b/include/linux/nfs_fs.h
-index 8dd79a3f3d662..4623262da3c09 100644
---- a/include/linux/nfs_fs.h
-+++ b/include/linux/nfs_fs.h
-@@ -109,6 +109,7 @@ struct nfs_open_context {
- #define NFS_CONTEXT_BAD			(2)
- #define NFS_CONTEXT_UNLOCK	(3)
- #define NFS_CONTEXT_FILE_OPEN		(4)
-+#define NFS_CONTEXT_WRITE_SYNC		(5)
- 
- 	struct nfs4_threshold	*mdsthreshold;
- 	struct list_head list;
+ required:
+   - compatible
+   - reg
 -- 
 2.53.0
 
