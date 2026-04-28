@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BD03FCB35;
-	Tue, 28 Apr 2026 10:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446A43FD140;
+	Tue, 28 Apr 2026 10:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372930; cv=none; b=BeUDtb+M1EdoGx/AfPhHAbgwuefq+/r4I5MFjVoFUzm7p0/vmQwrviU+FCKQiSg6NUtY74Yj7igOsewH0E8CATpnFDZU6zhQkLSfmeTOe+watlqI2GHkOYXTsN6h2beNDATVobkAHPhdRD5f+40vZoSisF7ybocZPcWNtBeFmO0=
+	t=1777372932; cv=none; b=HNdL7jY7X5/f9YFzNv83F4fPW/vljjLGTfz/JuZ8UCuiMDsl1nCzsT7c8rVjZv98u4DYZjuW9lND7lA6HLonNOVtXe16z0HjaHk/YT1Ma2WmyL3Y2tln4vmzFimG1tqkljV+Hu8wemsPZK1ryyMJD77Zvup5ALdPYSnaLo+mjI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372930; c=relaxed/simple;
-	bh=3mn45ZoRanBLRBbFpAnldLw8IwPma1aTJ6SK1DCHZnw=;
+	s=arc-20240116; t=1777372932; c=relaxed/simple;
+	bh=iCCgW4S8zxtaNC8rTtz8QyO5SNyyj2MfQZLDbDz9Y+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pLqg7Q3bchEYaxAzSZIeLbalVupdVDI9UacPR3q4wFdUdedbcbVN4PId5ML6vx8O/ohz+TQrHvwU8P5s1eDdd0JroNB314iQDL4FYOzduUObq/Ccl9FSh6b4dWwb8aUoGNs4bBBFomWRnok9nUeYG1BVF6jjwOsjvRBdtucZRxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pEINo8xe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBImTlNI1t7H7soz+EDl4o3A2DOF5fQ/V80nd+5E02jM0u1DGpJkwDNr34e/YPDOzi4MQSUB/hQ5Kt7q4URqwaF9KxGCR8xfbpALFpcPhMQfcPMJg8Hj/A6w4Q7ovg3jZceaYisk554qINczaDGCrH3LD4RasrnJIC7NE4L/ZRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pvGs8ih7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pEINo8xe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECE6C2BCB5;
-	Tue, 28 Apr 2026 10:42:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pvGs8ih7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C658DC2BCF6;
+	Tue, 28 Apr 2026 10:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372930;
-	bh=3mn45ZoRanBLRBbFpAnldLw8IwPma1aTJ6SK1DCHZnw=;
+	s=k20201202; t=1777372931;
+	bh=iCCgW4S8zxtaNC8rTtz8QyO5SNyyj2MfQZLDbDz9Y+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEINo8xecmLm0xi6IsXlQbRpA+9IEt63inidbUxO3ZmGfZxcg6LBJdSBNIK/hZdfQ
-	 pULhwqYPamCMstyPptQs79gIfj0C9IcWovrZfFvXU1fySrwRGbhwQKUaTs6J86oMp/
-	 z2AAz5jl5F5cmB0KSXuWf3TxAr5/YakhLUxECpprpb3mtxzuw/oOU9S8D1c+L97uan
-	 5S6MAO4DzsjtMzb8INiZnpgy25gBHty2+SbYtN1mnvGT+dXgZW37JfKonf7ZWRZA1N
-	 S+M6kJvWsbTfJEwVbK2splTVz5Uzp5TsHX6A3CofPM/pyd+LQSuZxSGQ/lh27F7f7v
-	 P2eqiihEodSsA==
+	b=pvGs8ih7u9DZqtcuYSBFUdHAzvl0eySDbyxLEQvvlZ+L3KinxHm2ShvyoFykXI0YD
+	 h8nPfKQsc1Pw+Rzr1yuvH2BVDGEp1gxO3YvqQeo4qClHHA68wWRlSWeUK0qGvVyrgb
+	 jnSSonGjsbOwGgNTFoAsdQxUQ2++fEKV7HUqq4nKSsYHyQFh6Zl+H+CCdkZMZQmFyZ
+	 0+ECYHCeXyzeOsHgSaGcHrXZkH5FLIpX/4q2Qa5L6lPy40jM3r1xEp9CgZWQaD5ybB
+	 8nxd73ehDs1U4iHNLQ9jvjvjVYIXURZr6r+taaUn7dtjnPCs4TAyajkhMVuVxn7Jm3
+	 lKATB9M6MBxNw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kelvin Mbogo <addcontent08@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	valentina.manea.m@gmail.com,
-	shuah@kernel.org,
-	linux-usb@vger.kernel.org,
+	james.smart@broadcom.com,
+	dick.kennedy@broadcom.com,
+	jejb@linux.ibm.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] usb: usbip: fix OOB read/write in usbip_pad_iso()
-Date: Tue, 28 Apr 2026 06:40:37 -0400
-Message-ID: <20260428104133.2858589-26-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] scsi: lpfc: Remove unnecessary ndlp kref get in lpfc_check_nlp_post_devloss
+Date: Tue, 28 Apr 2026 06:40:38 -0400
+Message-ID: <20260428104133.2858589-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -51,353 +52,350 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kelvin Mbogo <addcontent08@gmail.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 74a2287209a858470d15e2996ead2337bd293ff4 ]
+[ Upstream commit f6bfb8d149336661bb80e62980da9a45b920403c ]
 
-usbip_pad_iso() repositions ISO frame data within the transfer buffer
-via memmove().  Neither the source offset (actualoffset, derived by
-subtracting wire-supplied actual_length values) nor the destination
-offset (iso_frame_desc[i].offset, taken directly from the wire) is
-bounds-checked.
+When NLP_IN_RECOV_POST_DEV_LOSS is set, the initial node reference
+remains held while recovery is in progress.  Taking a reference when
+NLP_IN_RECOV_POST_DEV_LOSS is cleared results in an additional reference
+being held.  This causes an extra reference when cleaning up lpfc_vport
+instances.  Thus, remove the extraneous ndlp kref get in
+lpfc_check_nlp_post_devloss.
 
-If a crafted actual_length wraps actualoffset negative through the
-subtraction (see patch 2/3 for the root cause), the memmove source
-points before the allocation - slab OOB read, data returned to
-userspace.
-
-Independently, iso_frame_desc[i].offset is never validated against
-transfer_buffer_length.  Setting offset past the end of the buffer
-gives a fully controlled OOB write into whatever sits next in the
-slab - confirmed with offset=400 on a 392-byte buffer, 64-byte write.
-
-Add bounds checks for both the source and destination ranges before
-each memmove call.  Use unsigned comparisons after the sign check on
-actualoffset to avoid signed/unsigned conversion surprises.
-
-Signed-off-by: Kelvin Mbogo <addcontent08@gmail.com>
-Link: https://patch.msgid.link/20260325103640.8090-3-addcontent08@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://patch.msgid.link/20260212213008.149873-7-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my extensive investigation, I have enough information to
-provide a complete analysis.
+Based on my thorough investigation, I can now complete my analysis.
 
-## Phase 1: Commit Message Forensics
+---
 
-**Step 1.1 Subject:** `usb: usbip: fix OOB read/write in
-usbip_pad_iso()` — subsystem `usb:usbip`, verb **fix**, claim: bounds-
-check the source/destination offsets used inside `usbip_pad_iso()`'s
-`memmove()`.
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2 Tags:**
-- `Signed-off-by: Kelvin Mbogo <addcontent08@gmail.com>` (author)
-- `Link:
-  https://patch.msgid.link/20260325103640.8090-3-addcontent08@gmail.com`
-  (v2 3/3)
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (USB
-  maintainer applied it)
-- No `Fixes:`, no explicit `Cc: stable` (expected for this review
-  pipeline)
+**Step 1.1: Parse the Subject Line**
+- Record: Subsystem `scsi: lpfc:`, action verb `Remove`, summary:
+  removes an unnecessary `ndlp` kref get in
+  `lpfc_check_nlp_post_devloss` that was leaving an extra reference
+  after device-loss recovery.
 
-**Step 1.3 Body:** Two distinct attacks documented:
-1. Crafted `actual_length` makes `actualoffset` go negative (subtraction
-   underflow) → `memmove()` source points **before** the slab allocation
-   → slab OOB read whose bytes are returned to userspace via
-   `USBDEVFS_REAPURB`.
-2. Wire-supplied `iso_frame_desc[i].offset` is never validated against
-   `transfer_buffer_length`. Setting offset past buffer end → fully
-   controlled OOB write — **confirmed by the author with offset=400 on a
-   392-byte buffer producing a 64-byte OOB write**. Record: both an
-   info-leak and a controlled heap write, triggered by a malicious
-   USB/IP peer.
+**Step 1.2: Parse All Commit Message Tags**
+- Record: `Signed-off-by: Justin Tee <justin.tee@broadcom.com>` (author
+  is a Broadcom lpfc maintainer). `Link: https://patch.msgid.link/202602
+  12213008.149873-7-justintee8345@gmail.com`. `Signed-off-by: Martin K.
+  Petersen <martin.petersen@oracle.com>` (SCSI maintainer). NO `Fixes:`
+  tag, NO `Reported-by:` tag, NO `Cc: stable`, NO `Reviewed-by`.
 
-**Step 1.4 Hidden fix?** Not hidden at all — "fix OOB read/write" is a
-textbook security bug-fix phrasing.
+**Step 1.3: Analyze the Commit Body Text**
+- Record: The commit describes a refcount leak - when
+  `NLP_IN_RECOV_POST_DEV_LOSS` is set, the initial ndlp reference is
+  *still held* (because current `lpfc_dev_loss_tmo_handler` does *not*
+  put in the recovering path anymore). Taking another reference via
+  `lpfc_nlp_get` in the "reverse" path therefore *adds* an extra
+  reference. Symptom: "extra reference when cleaning up lpfc_vport
+  instances". No crash/stack trace given.
 
-## Phase 2: Diff Analysis
+**Step 1.4: Detect Hidden Bug Fixes**
+- Record: Subject begins with "Remove unnecessary" (cleanup wording) but
+  commit body explicitly says "extra reference when cleaning up
+  lpfc_vport instances" - this IS a real bug fix for a ref leak (pattern
+  7: reference counting bug).
 
-**Step 2.1 Inventory:** Single file `drivers/usb/usbip/usbip_common.c`,
-+36 lines, 0 removed. One function: `usbip_pad_iso()`.
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.2 Flow change:** Before — `memmove(transfer_buffer +
-iso_frame_desc[i].offset, transfer_buffer + actualoffset,
-iso_frame_desc[i].actual_length)` runs unconditionally on wire-supplied
-values. After — two guard blocks reject negative/out-of-range source and
-any destination offset that exceeds the buffer, logging and returning
-early.
+**Step 2.1: Inventory the Changes**
+- Record: One file changed: `drivers/scsi/lpfc/lpfc_hbadisc.c`. One line
+  removed (`lpfc_nlp_get(ndlp);`). Scope: single-function surgical fix.
 
-**Step 2.3 Bug mechanism:** (d) memory-safety bounds check + (f)
-mitigates signed/unsigned conversion via explicit `actualoffset < 0`
-check before the `(unsigned int)` casts. It is categories (a) (input
-validation) and (d) (bounds check before `memmove`).
+**Step 2.2: Understand the Code Flow Change**
+- Record: Before - `lpfc_check_nlp_post_devloss` cleared the
+  `NLP_IN_RECOV_POST_DEV_LOSS` flag, cleared `NLP_DROPPED`, then called
+  `lpfc_nlp_get(ndlp)` to "restore" a put supposedly performed in
+  `lpfc_dev_loss_tmo_handler`. After - the get is gone; the flag bits
+  are still cleared; no refcount change is performed.
 
-**Step 2.4 Quality:** Fix is surgical, arithmetic is written without
-overflow risk (`length > buf - off` pattern, not `off + length > buf`).
-Return is early (`void` function), no lock/state changes. Regression
-risk: very low — a malformed frame simply skips padding restoration,
-which would have corrupted the kernel anyway.
+**Step 2.3: Identify the Bug Mechanism**
+- Record: Category (c) reference counting fix - removing an extra
+  `lpfc_nlp_get()`. The reason the get is wrong: commit `d1a2ef63fc8b3`
+  ("scsi: lpfc: Fix kref imbalance on fabric ndlps from dev_loss_tmo
+  handler", merged in v6.12) added an early `return fcf_inuse;` in the
+  `recovering` branch, so `lpfc_nlp_put(ndlp)` is no longer executed
+  when `NLP_IN_RECOV_POST_DEV_LOSS` is set. The matching `lpfc_nlp_get`
+  in `lpfc_check_nlp_post_devloss` was left behind and now grabs an
+  extra reference every time a fabric ndlp transiently hits dev_loss and
+  recovers.
 
-## Phase 3: Git History
+**Step 2.4: Assess the Fix Quality**
+- Record: Minimal 1-line removal. Obvious correctness - just removes the
+  stale counterpart of a no-longer-happening put. No new regression
+  risk: removing an unbalanced get can only reduce references, it cannot
+  cause a UAF (the ndlp reference held before dev_loss remains held
+  because the put never happens in the recovering path).
 
-**Step 3.1 Blame:** `git blame` shows the vulnerable loop was introduced
-in **2011** by `28276a28d8b3cd ("staging: usbip: bugfix for isochronous
-packets and optimization")` (Arjan Mels). That commit itself was `Cc:
-stable` in 2011, landed in 3.0. Bug has existed in every LTS since then.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.2 Fixes: tag:** None declared in the message body, but the
-offending code = 28276a28d8b3cd (2011, v3.0).
+**Step 3.1: Blame the Changed Lines**
+- Record: The `lpfc_nlp_get(ndlp);` being removed was originally
+  introduced by `af984c87293b1` (Oct 2021, v5.17) as part of "scsi:
+  lpfc: Allow fabric node recovery if recovery is in progress before
+  devloss". At that time it was *correct* (paired with a put in the
+  handler). The bug was introduced by `d1a2ef63fc8b3` (Sep 2024, v6.12)
+  "scsi: lpfc: Fix kref imbalance on fabric ndlps from dev_loss_tmo
+  handler", which added the early `return fcf_inuse;` that skips the
+  `lpfc_nlp_put` in the recovering path but left the `lpfc_nlp_get` in
+  `lpfc_check_nlp_post_devloss` dangling.
 
-**Step 3.3 Related changes:** This commit is **patch 3/3** of Kelvin
-Mbogo's v2 series. Upstream, the three patches are:
-- `1897852293fac` — patch 1/3: integer overflow in `np * sizeof(*iso)`
-- `591c1d972d8f1` — patch 2/3: validate per-frame `actual_length`
-- `74a2287209a85` — patch 3/3: THIS commit (OOB in `usbip_pad_iso()`)
+**Step 3.2: Follow the Fixes: Tag**
+- Record: No `Fixes:` tag given. Based on code analysis, the actual
+  Fixes: target is `d1a2ef63fc8b3`, present in v6.12 and forward.
 
-A related, independent fix by Nathan Rebello — `2ab833a16a825` ("usbip:
-validate number_of_packets in `usbip_pack_ret_submit()`") — closed a
-fourth related hole; it carried `Cc: stable` and is already backported
-as `d374421fc6889` on `pending-7.0`, plus into 6.12/6.6/6.1 pending
-branches.
+**Step 3.3: Check File History for Related Changes**
+- Record: Related recent commits: `07caedc6a3887` (Nov 2025) added the
+  `clear_bit(NLP_DROPPED, ...);` to `lpfc_check_nlp_post_devloss`;
+  `3f8f9f16f844a` converted save_flags to bitmask; `e07ac2d2aa5fc`
+  removed unnecessary relocking. This is a standalone patch, part of a
+  13-patch lpfc-14.4.0.14 update series (PATCH 6/13).
 
-**Step 3.4 Author:** Kelvin Mbogo is a new contributor; fix was applied
-by USB maintainer Greg KH. Series acknowledged by `Shuah Khan` (usbip
-maintainer) for the parallel Nathan patch.
+**Step 3.4: Check the Author's Other Commits**
+- Record: Justin Tee (Broadcom) is the primary lpfc
+  maintainer/contributor. Wrote `d1a2ef63fc8b3` (which introduced this
+  bug) and has 30+ lpfc commits recently. Subject-matter expert.
 
-**Step 3.5 Dependencies:** The commit message references "see patch 2/3
-for the root cause" of negative `actualoffset`. Critically, patch 3/3
-contains its own `actualoffset < 0` check, so it stands alone; the OOB
-write via `iso_frame_desc[i].offset` is **wholly independent** of
-patches 1 and 2. Ideally patches 1 and 2 are backported together, but
-3/3 still removes a user-triggerable heap OOB write even standalone.
+**Step 3.5: Check for Dependent/Prerequisite Commits**
+- Record: This fix is completely standalone for trees that contain
+  `d1a2ef63fc8b3` (v6.12+). The only dependency is that the buggy commit
+  is present. Can apply standalone.
 
-## Phase 4: Mailing-list Research
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1 b4 dig / b4 am:** Ran `b4 am -o /tmp/usbip_v3/
-20260325103640.8090-3-addcontent08@gmail.com` — lore thread contains v2
-patches 1/3, 2/3, 3/3; 4 thread messages + 6 code-review replies. The
-committed version is v2, applies cleanly on current tree per b4.
+**Step 4.1: Find the Original Patch Discussion**
+- Record: `b4 am` located the patch series at lore.kernel.org. Patch is
+  "PATCH 6/13 lpfc: Remove unnecessary ndlp kref get in
+  lpfc_check_nlp_post_devloss" from series "Update lpfc to revision
+  14.4.0.14" posted 2026-02-12 against Martin's 6.20/scsi-queue tree. No
+  review discussion found on this specific patch (no `Reviewed-by`, no
+  NAKs, no stable suggestions).
 
-**Step 4.2 Reviewers/CC:** `linux-usb@vger.kernel.org`,
-`gregkh@linuxfoundation.org`, `skhan@linuxfoundation.org`. Applied
-directly by Greg KH.
+**Step 4.2: Check Who Reviewed the Patch**
+- Record: Series is a typical Broadcom/lpfc driver update going through
+  SCSI maintainer Martin K. Petersen. No explicit per-patch review
+  comments retrieved.
 
-**Step 4.3 Bug origin:** Not a syzbot report — found by manual source
-audit by the author and independently by Sebastián Alba Vives (spinics
-stable-list [SECURITY] post Mar 29 2026: "[SECURITY] usbip:
-iso_frame_desc OOB memmove via crafted offset/length"). Two independent
-auditors flagging the same class of bug is a strong real-world signal.
+**Step 4.3: Search for the Bug Report**
+- Record: No `Reported-by:` tag. The bug was author-discovered via code
+  analysis, not a user report.
 
-**Step 4.4 Series context:** The three-patch series + Nathan Rebello's
-complementary patch form a coordinated hardening of the USB/IP receive
-path against malicious remote servers.
+**Step 4.4: Check for Related Patches and Series**
+- Record: This is patch 6 of a 13-patch series. Other patches include
+  logging improvements, typecast changes, cleanup of `lpfc_fdmi_cmd`
+  error paths, `txcmplq_cnt` fixes, NVMe abort cleanup on PCI reset, and
+  version bump. This specific patch is self-contained.
 
-**Step 4.5 Stable list:** Sebastián's [SECURITY] post on 2026-03-29
-proposed validating offset/length for the same issue, targeting stable
-explicitly. The class has clear stable-maintainer awareness.
+**Step 4.5: Check Stable Mailing List History**
+- Record: No prior discussion found.
 
-## Phase 5: Code Semantic Analysis
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1 Functions modified:** `usbip_pad_iso()` only.
+**Step 5.1: Identify Key Functions in the Diff**
+- Record: `lpfc_check_nlp_post_devloss()` only.
 
-**Step 5.2 Callers:** `grep` shows exactly one caller:
-`vhci_recv_ret_submit()` in `drivers/usb/usbip/vhci_rx.c` line 92 — the
-vhci (client) receive path. That function runs in the vhci_rx kthread
-processing `USBIP_RET_SUBMIT` responses from the remote server over TCP.
+**Step 5.2: Trace Callers**
+- Record: Callers verified via grep - 5 total call sites:
+  `lpfc_mbx_cmpl_fc_reg_login`, `lpfc_nlp_reg_node` (in
+  `lpfc_hbadisc.c`), and 3 sites in `lpfc_els.c` around FLOGI handling.
+  These are mainline FC discovery/login completion paths - called
+  routinely during normal operation, particularly after link events.
 
-**Step 5.3 Callees:** `memmove()`, `dev_err()` — minimal.
+**Step 5.3: Trace Callees**
+- Record: The function calls `test_and_clear_bit`, `clear_bit`,
+  `lpfc_nlp_get` (being removed), and `lpfc_printf_vlog` (logging). No
+  I/O, no complex state changes.
 
-**Step 5.4 Reachability:** Path is `vhci_rx_loop → vhci_rx_pdu →
-vhci_recv_ret_submit → usbip_recv_xbuff → usbip_recv_iso →
-usbip_pad_iso`. Every byte fed into `iso_frame_desc[i].offset` /
-`actual_length` comes directly from the TCP stream via
-`usbip_pack_iso()` (ref: `usbip_common.c:619-632`). **Fully reachable
-from a network peer — no local privilege required on the vhci side.**
+**Step 5.4: Follow the Call Chain**
+- Record: Reachable from any FC link-bounce/devloss path. Real-world
+  triggered every time a fabric ndlp (Fabric_DID, FDMI_DID,
+  NameServer_DID, Fabric_Cntl_DID) dev_loss_tmo-fires while recovery is
+  still in progress - a common event on FC fabrics.
 
-**Step 5.5 Similar patterns:** Patches 1 and 2 of same series handle
-related missing bounds checks; Nathan's commit (already in
-pending-6.1/6.6/6.12/7.0) handles the `number_of_packets` OOB. No other
-sibling drivers need this fix.
+**Step 5.5: Search for Similar Patterns**
+- Record: N/A - this is a specific function.
 
-## Phase 6: Stable Tree Analysis
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 6.1 Buggy code in stable?** Verified by reading
-`stable/linux-5.4.y`, `stable/linux-5.10.y`, `stable/linux-6.1.y`:
-`usbip_pad_iso()` body is character-for-character identical to mainline
-pre-fix. Bug exists in **every active LTS** (5.4.y, 5.10.y, 5.15.y,
-6.1.y, 6.6.y, 6.12.y, 7.0.y).
+**Step 6.1: Does the Buggy Code Exist in Stable Trees?**
+- Record: Verified via `git show
+  <branch>:drivers/scsi/lpfc/lpfc_hbadisc.c`:
+  - stable/linux-6.12.y: HAS BUG - `recovering` path has `return
+    fcf_inuse;` (no put); `lpfc_check_nlp_post_devloss` has
+    `lpfc_nlp_get(ndlp)` (extra ref).
+  - stable/linux-6.17.y, 6.18.y, 6.19.y: HAS BUG - same pattern.
+  - stable/linux-6.6.y: NO BUG - the `recovering` path in 6.6.y does NOT
+    have the early return; the `lpfc_nlp_put(ndlp)` still executes at
+    the end of fabric-node handling, so the `lpfc_nlp_get` correctly
+    balances it. Fix must NOT be backported to 6.6.y.
 
-**Step 6.2 Backport difficulty:** The surrounding context (comments,
-loop) is unchanged for 15 years. Patch will apply with at most line-
-offset fuzz. Zero rework expected.
+**Step 6.2: Check for Backport Complications**
+- Record: For 6.18.y and 6.19.y: patch applies cleanly (same surrounding
+  context with `clear_bit(NLP_DROPPED, ...)`). For 6.17.y: needs minor
+  context adjustment (no `clear_bit(NLP_DROPPED, ...)` line above). For
+  6.12.y: function still uses the older `spin_lock_irqsave`/`save_flags
+  &=` form; a manual adjustment (simply removing the
+  `lpfc_nlp_get(ndlp);` line amidst different surrounding context) is
+  needed but trivial.
 
-**Step 6.3 Related fix already in stable?** Nathan's `2ab833a16a825` is
-in pending-6.1/6.6/6.12/7.0 already, explicitly marked `Cc: stable`.
-This Kelvin patch is the complement that closes the remaining
-offset/length-derived OOB.
+**Step 6.3: Check If Related Fixes Are Already in Stable**
+- Record: None. Buggy commit `d1a2ef63fc8b3` went into v6.12 directly
+  (not backported). No alternate fix present.
 
-## Phase 7: Subsystem Context
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1 Subsystem:** `drivers/usb/usbip` — networked USB
-virtualization. PERIPHERAL in user-count, but *security-critical*
-because untrusted network bytes reach kernel memory operations.
+**Step 7.1: Identify the Subsystem and Its Criticality**
+- Record: `drivers/scsi/lpfc/` - Broadcom/Emulex Fibre Channel HBA
+  driver. Criticality: IMPORTANT - used in enterprise storage/SAN
+  setups. Reference leaks in a driver of this size matter to enterprise
+  users running long-lived systems.
 
-**Step 7.2 Activity:** USB/IP is actively maintained; recent commits in
-2025-2026 include multiple hardening fixes for the same receive path
-(Nathan Rebello's commit, Kelvin's series).
+**Step 7.2: Assess Subsystem Activity**
+- Record: Actively maintained (regular version bumps, multiple patches
+  per quarter). Justin Tee / Broadcom are responsive maintainers.
 
-## Phase 8: Impact & Risk
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1 Affected users:** Anyone running a USB/IP client (vhci-hcd)
-and attaching to a remote `usbipd`. Linux distributions ship this
-(`CONFIG_USBIP_CORE`, `CONFIG_USBIP_VHCI_HCD`); cloud test labs, VDI
-setups, IoT dev boards, and Android-on-x86 all use it.
+**Step 8.1: Determine Who Is Affected**
+- Record: Affected population - users of lpfc-driven FC HBAs running
+  v6.12+ stable kernels who experience fabric link bounces,
+  zoning/fabric reconfiguration, or transient device-loss events on
+  Fabric_DID/FDMI/NameServer/Fabric_Cntl ndlps.
 
-**Step 8.2 Trigger:** A malicious or compromised USB/IP server sends a
-crafted `USBIP_RET_SUBMIT` response with a valid number_of_packets but
-poisoned `iso_frame_desc[i].offset` (> transfer_buffer_length) or
-manufactured `actual_length` values that wrap `actualoffset` negative.
-**No authentication; no local privilege needed on the client.**
+**Step 8.2: Determine the Trigger Conditions**
+- Record: Triggered every time a fabric ndlp enters dev_loss_tmo while
+  still in a recovering discovery state. On busy fabrics with many
+  vports, this can happen repeatedly; each occurrence leaks one ndlp
+  reference.
 
-**Step 8.3 Severity:** CRITICAL — slab-level OOB **write** of attacker-
-controlled size at attacker-controlled offset in kernel heap memory;
-plus OOB **read** that leaks kernel heap content back to userspace. This
-is the classic "exploit primitive" class of bug.
+**Step 8.3: Determine the Failure Mode Severity**
+- Record: Failure mode - ndlp kref leak; ndlp objects cannot be freed
+  during `lpfc_vport` cleanup; potential memory accumulation over time;
+  can cause WARN messages or stuck/hang behavior on vport
+  teardown/module unload. Severity: MEDIUM-HIGH - not an immediate crash
+  or security issue but a persistent resource leak in a commonly-
+  triggered code path in enterprise storage workloads.
 
-**Step 8.4 Risk/benefit:**
-- Benefit: very high — kernel heap corruption from network is among the
-  highest-severity bug classes.
-- Risk: very low — adds only input validation with early `return;`; the
-  only possible regression is that previously-broken malformed frames
-  now fail silently instead of corrupting kernel memory, which is the
-  desired behavior.
+**Step 8.4: Calculate Risk-Benefit Ratio**
+- Record: Benefit - fixes a real ref leak introduced by a previous "fix"
+  commit, benefit is MEDIUM-HIGH for lpfc users. Risk - 1-line removal,
+  obvious correctness, no possibility of new UAF since we're only
+  reducing (not adding) puts; risk VERY LOW. Ratio: clearly favorable
+  for backport.
 
-## Phase 9: Synthesis
+## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backport:** Remote OOB read (info leak) + remote OOB
-write (controlled heap write) with confirmed reproducer; 15-year-old bug
-in every stable tree; minimal surgical diff; USB maintainer SOB; part of
-a coordinated hardening series whose companion Nathan patch is already
-marked for stable and accepted into pending branches; two independent
-security researchers flagged the same class.
+**Step 9.1: Compile Evidence**
+- FOR: Real kref leak bug in common code path; trivially small/obvious
+  fix; author is subsystem maintainer who introduced the original bug;
+  bug confirmed to exist in 6.12.y, 6.17.y, 6.18.y, 6.19.y via direct
+  inspection; code analysis is unambiguous.
+- AGAINST: No `Fixes:`, `Reported-by:`, `Cc: stable`; no user report of
+  symptoms; a similar comment language ("put the initial ref count
+  back") now stale but not updated.
+- UNRESOLVED: Whether this is already in linux-next / scsi-queue for
+  v6.21 (not verified directly, but the cover letter says it targets
+  6.20/scsi-queue so likely on its way to mainline imminently).
 
-**Evidence AGAINST:** Commit message mentions "see patch 2/3 for the
-root cause" suggesting a small dependency on patch 2/3 for one of two
-attack vectors; however patch 3/3 contains its own `actualoffset < 0`
-check so it mitigates that vector standalone, and the
-`iso_frame_desc[i].offset` OOB write is fully independent. Best practice
-would be to backport the full 3-patch series together, but the
-standalone 3/3 is still clearly beneficial.
+**Step 9.2: Apply Stable Rules Checklist**
+1. Obviously correct and tested? YES - trivial to verify by reading the
+   two functions together; author has build/test history.
+2. Fixes real bug affecting users? YES - refcount leak on every fabric-
+   ndlp recovery event.
+3. Important issue? MEDIUM-HIGH (resource leak in enterprise storage
+   driver).
+4. Small and contained? YES - one line removal.
+5. No new features or APIs? YES - pure bug fix.
+6. Applies to stable? YES for 6.12.y (with trivial manual adjustment)
+   and 6.17.y+; must NOT go to 6.6.y and earlier.
 
-**Stable rules checklist:** (1) Obviously correct — YES, read of 10
-lines; (2) Fixes real bug — YES, OOB read+write; (3) Important — YES,
-remote-triggerable memory corruption; (4) Small — YES, 36 lines one
-function; (5) No new features — YES, input validation only; (6) Applies
-— YES, identical context in every stable tree.
+**Step 9.3: Check for Exception Categories**
+- N/A - normal bug fix, not a quirk/device ID/DT update/build fix.
 
-**Exception category:** Security fix, not listed in "exceptions" but
-strongly supported by stable rules.
+**Step 9.4: Decision**
+- This is a genuine reference-counting bug fix for a regression
+  introduced by `d1a2ef63fc8b3` in v6.12. The fix is minimal, obviously
+  correct, and affects a common code path in the lpfc FC driver used by
+  enterprise storage. Risk is essentially zero; benefit prevents a real
+  ref leak. Should be backported to 6.12+ stable trees (NOT to 6.6.y and
+  earlier where the bug does not exist).
 
 ## Verification
-- [Phase 1] Parsed tags in candidate commit message: author SOB, Greg KH
-  SOB, patch.msgid.link Link.
-- [Phase 2] Read full diff; verified guard structure uses underflow-safe
-  form `length > buf - off`.
-- [Phase 3] `git blame -L 750,760` → loop introduced by `28276a28d8b3cd`
-  in 2011 (v3.0).
-- [Phase 3] `git show 28276a28d8b3cd` → original commit is `Cc: stable`
-  and landed in every LTS.
-- [Phase 3] `git log --grep` + `git log pending-{6.1,6.6,6.12,7.0}` →
-  confirmed Nathan's `2ab833a16a825` / `d374421fc6889` is companion fix
-  already on all stable pending branches.
-- [Phase 3] `git branch --contains 74a2287209a85` → commit is on
-  `origin/master` and `linux-next/master`, merged via `usb-7.1-rc1`.
-- [Phase 4] `b4 am -o /tmp/usbip_v3
-  20260325103640.8090-3-addcontent08@gmail.com` → retrieved thread,
-  confirmed this is v2 3/3, applies cleanly.
-- [Phase 4] Read `/tmp/usbip_patch.mbox` /
-  `20260325103640.8090-3-addcontent08@gmail.com.mbx` → reviewer feedback
-  by Greg KH, patch accepted.
-- [Phase 4] WebSearch confirmed independent [SECURITY] report on spinics
-  stable list by Sebastián Alba Vives on 2026-03-29.
-- [Phase 5] `Grep "usbip_pad_iso"` → exactly one caller
-  `vhci_recv_ret_submit` in `drivers/usb/usbip/vhci_rx.c:92`; confirmed
-  the trigger path begins at TCP input.
-- [Phase 5] Read `usbip_recv_iso()` + `usbip_pack_iso()` → verified
-  `iso_frame_desc[i].offset/actual_length` are copied verbatim from the
-  wire.
-- [Phase 6] `git show stable/linux-5.4.y:... | sed -n '647,680p'`,
-  `linux-5.10.y`, `linux-6.1.y` → confirmed identical pre-fix code in
-  every LTS.
-- [Phase 8] Failure mode: OOB read into userspace + OOB write of
-  attacker-controlled bytes → CRITICAL, remote, unauthenticated.
-- UNVERIFIED: Whether a public CVE number has been assigned to this
-  specific OOB in `usbip_pad_iso()` (not required for decision).
 
-The fix is small, clearly correct, reproduced by the author, addresses
-remote kernel-heap OOB read/write in code that has been present in every
-stable tree since 2011, was accepted by the USB maintainer, and is part
-of a series whose companion fix was already nominated and accepted for
-stable. This is exactly what stable trees exist to carry.
+- [Phase 1] Parsed tags on the supplied commit message: Signed-off-by
+  Justin Tee / Martin K. Petersen, Link to patch.msgid.link. No
+  Fixes/Reported-by/Cc-stable/Reviewed-by.
+- [Phase 2] Read the diff: single 1-line removal of
+  `lpfc_nlp_get(ndlp);` in `lpfc_check_nlp_post_devloss` within
+  `drivers/scsi/lpfc/lpfc_hbadisc.c`.
+- [Phase 3] `git log -L:lpfc_check_nlp_post_devloss` confirmed the get
+  was introduced in `af984c87293b1` (v5.17) where it was correct (paired
+  with a put).
+- [Phase 3] `git show d1a2ef63fc8b3` - confirmed this commit added the
+  early `return fcf_inuse;` in the recovering branch, breaking the
+  get/put pairing.
+- [Phase 3] `git log --author="Justin Tee"` - confirmed author is active
+  lpfc maintainer.
+- [Phase 3] `git tag --contains d1a2ef63fc8b3` - buggy commit is in
+  v6.12 and beyond.
+- [Phase 4] `b4 am 20260212213008.149873-7-justintee8345@gmail.com` -
+  downloaded the series, confirmed it is patch 6/13 in "Update lpfc to
+  revision 14.4.0.14" against 6.20/scsi-queue. No per-patch review
+  discussion.
+- [Phase 5] `grep lpfc_check_nlp_post_devloss` - 5 callers:
+  `lpfc_mbx_cmpl_fc_reg_login`, `lpfc_nlp_reg_node`, 3 in `lpfc_els.c`
+  FLOGI paths - all routine discovery paths.
+- [Phase 6] `git show stable/linux-6.12.y:...lpfc_hbadisc.c` - confirmed
+  bug exists (function has lpfc_nlp_get, recovering path has `return
+  fcf_inuse;`).
+- [Phase 6] `git show
+  stable/linux-6.17.y/6.18.y/6.19.y:...lpfc_hbadisc.c` - same bug
+  pattern confirmed in each.
+- [Phase 6] `git show stable/linux-6.6.y:...lpfc_hbadisc.c` - confirmed
+  bug does NOT exist (recovering path has no early return; put still
+  fires).
+- [Phase 8] Failure mode: ndlp kref leak on every fabric-ndlp dev_loss
+  recovery event, MEDIUM-HIGH severity.
+- UNVERIFIED: Whether any user has reported hangs/OOM from this specific
+  leak - no such report exists, but the mechanism is clear from code
+  analysis.
+- UNVERIFIED: Exact mainline SHA of the commit (not yet in my local
+  `master`), but the patch content matches what is on lore/in the
+  14.4.0.14 series.
+
+The fix is small, surgical, and addresses a real regression that exists
+in multiple active stable trees (6.12+). Meets all stable kernel rules.
+The adaptation for 6.12.y requires a trivial manual edit (different
+surrounding context) but the change itself is a single-line removal.
 
 **YES**
 
- drivers/usb/usbip/usbip_common.c | 36 ++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/scsi/lpfc/lpfc_hbadisc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
-index fd620e9600394..8ebaaeaf848e5 100644
---- a/drivers/usb/usbip/usbip_common.c
-+++ b/drivers/usb/usbip/usbip_common.c
-@@ -770,6 +770,42 @@ void usbip_pad_iso(struct usbip_device *ud, struct urb *urb)
- 	 */
- 	for (i = np-1; i > 0; i--) {
- 		actualoffset -= urb->iso_frame_desc[i].actual_length;
-+
-+		/*
-+		 * Validate source range: actualoffset can go negative
-+		 * via crafted actual_length values from the wire.
-+		 */
-+		if (actualoffset < 0 ||
-+		    (unsigned int)actualoffset >
-+				(unsigned int)urb->transfer_buffer_length ||
-+		    urb->iso_frame_desc[i].actual_length >
-+				(unsigned int)urb->transfer_buffer_length -
-+				(unsigned int)actualoffset) {
-+			dev_err(&urb->dev->dev,
-+				"pad_iso: bad src off=%d len=%u bufsz=%d\n",
-+				actualoffset,
-+				urb->iso_frame_desc[i].actual_length,
-+				urb->transfer_buffer_length);
-+			return;
-+		}
-+
-+		/*
-+		 * Validate destination range: iso_frame_desc[i].offset
-+		 * is wire-supplied and must not exceed the buffer.
-+		 */
-+		if (urb->iso_frame_desc[i].offset >
-+				(unsigned int)urb->transfer_buffer_length ||
-+		    urb->iso_frame_desc[i].actual_length >
-+				(unsigned int)urb->transfer_buffer_length -
-+				urb->iso_frame_desc[i].offset) {
-+			dev_err(&urb->dev->dev,
-+				"pad_iso: bad dst off=%u len=%u bufsz=%d\n",
-+				urb->iso_frame_desc[i].offset,
-+				urb->iso_frame_desc[i].actual_length,
-+				urb->transfer_buffer_length);
-+			return;
-+		}
-+
- 		memmove(urb->transfer_buffer + urb->iso_frame_desc[i].offset,
- 			urb->transfer_buffer + actualoffset,
- 			urb->iso_frame_desc[i].actual_length);
+diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
+index 8aaf05d7bb0af..d42b911a0aee1 100644
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -425,7 +425,6 @@ lpfc_check_nlp_post_devloss(struct lpfc_vport *vport,
+ {
+ 	if (test_and_clear_bit(NLP_IN_RECOV_POST_DEV_LOSS, &ndlp->save_flags)) {
+ 		clear_bit(NLP_DROPPED, &ndlp->nlp_flag);
+-		lpfc_nlp_get(ndlp);
+ 		lpfc_printf_vlog(vport, KERN_INFO, LOG_DISCOVERY | LOG_NODE,
+ 				 "8438 Devloss timeout reversed on DID x%x "
+ 				 "refcnt %d ndlp %p flag x%lx "
 -- 
 2.53.0
 
