@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCCB3F7AB3;
-	Tue, 28 Apr 2026 10:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CEC3F9F5D;
+	Tue, 28 Apr 2026 10:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372916; cv=none; b=ecuNII636yHNv7+DwHKDnflHMm+PjZJdy4HK2gGOcwF3Bv2FoVrnz4jBDUMKXb7IiFLyxWOvLY2ag0edzxEwe46gBfClnBwAdtC2bf4++t77XJWLEsNPcD1JbbAhtcF2hZMHKbxFwSZwx+xZjAeKkj/ebvqlzN8g98BQ5lpPsDg=
+	t=1777372917; cv=none; b=shMfEfPcEZWICLlGRtTubPKG0cs/kbixE2ptCE6R8B7r1zQjrqvITV3QNQRm2kgLc0oXJEc/WlTPDJn9MLWtmRxNwenn1kbAHSOedUmiYrKH5i2rIuTh610uSaEAPYfVlg4PX9w4s5nfP+WEAPUNwRrHH1IgTtW2QdB0p6GEdW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372916; c=relaxed/simple;
-	bh=xOQhvTSWQ6gIx9DqleNJ3v6jwcJQnbebJT1dEWP3NZo=;
+	s=arc-20240116; t=1777372917; c=relaxed/simple;
+	bh=jqLL9PMWQLPxYzTigBKojWpIaxGpzTrfi+7oTZFBti8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Icaj2wMgWfDdIbv6u/6C7ZJaDKqVQ47kyPHBFErUN32uxm5yHPaWQ684U0kWzPAApOqwFaT8Th31UnKl79PzaURn+DyhZWGtyBes8YBhMw/5xWqh6o5CeFFkvCJis/0H6qyWEIQn1ORV3q9qu9M13d1JjneLUtoQZAG+VAgpatY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L0FkNfhy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PIpE/ptL2LeFuhqv5VJh/8PApXzK9bV2sZBRprsVHsAbIUJiJM2XR+2mBoW3dAk6IiVpNhFnvk4ozQyt7J7FjaZMIuizjgBnLGosRDfGX+CQCqlN/ucI4M5/pBo3w2IBZ487LASeNa7DCy5w8Gg0k/NT1TKsfhADqlmDI1FJt64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iL8p3xlH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L0FkNfhy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463C5C2BCB5;
-	Tue, 28 Apr 2026 10:41:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iL8p3xlH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900A6C2BCB5;
+	Tue, 28 Apr 2026 10:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372916;
-	bh=xOQhvTSWQ6gIx9DqleNJ3v6jwcJQnbebJT1dEWP3NZo=;
+	s=k20201202; t=1777372917;
+	bh=jqLL9PMWQLPxYzTigBKojWpIaxGpzTrfi+7oTZFBti8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L0FkNfhyjboOqUZG1yTF6aLNvY3uVOaJayjBlAgt+wAxpEt85lA8HuFmHmKhVVBuK
-	 jO2VVmti8chWZFO37m66P1/RLVXhnkMUuQ+cJ9QSYNsNnEW/9Cf4CWXCKVAgDbL1OQ
-	 muj6YZMBg00vBhDpD0APA2MRSNK1eaCVfoZW2OdC5pAbMPqK6GZ8gLrbs8R0vVUJDJ
-	 1C5zLTV9UFxAAratg1OCY/Bp+BbqSEpOMHD2BcXBa4FRIJMLO2jufWsCX+7GFGsMq6
-	 W3PUBkvDKx8n3ienHKjC9hbJCMedV0sWpggKrriyhCZUaFrHS5OOa2jmj6cxQimmbb
-	 q4HtR5Ck2gSkA==
+	b=iL8p3xlHYp2DBXLC11N35f7WM5g+yQ3PMBb+VkwZpi3Vqf7Y26w6lo9H+Y0+EEJZZ
+	 xQz69TL6iMhXmjJiygNL5rjv6DWPhfxArJWQRkqrDrOHMcNPwSdY+VzxoY71J3dLPm
+	 jKjcuFNd68Z4g9vW5H/CgO1SUmTJtZRPR4FsGhKWmB61pEjYYwmaaZqdLD8PwuO2VU
+	 2UUFd07+rvQ+iGjlxGn1jrelh08JXiFcpu3e7kBqfrRlEZGKtRKWT7AXkEiYkdw1AV
+	 3QC2OVexfiJNEYmbd+TcMd/uFpe7NklNHJLO1kb2G85kW63Z7PrAc18zq53wfao829
+	 t5KMwsdL8fNHA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Enzo Matsumiya <ematsumiya@suse.de>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Akari Tsuyukusa <akkun11.open@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sfrench@samba.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] smb: client: compress: fix counting in LZ77 match finding
-Date: Tue, 28 Apr 2026 06:40:27 -0400
-Message-ID: <20260428104133.2858589-16-sashal@kernel.org>
+	matthias.bgg@gmail.com,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 7.0-6.18] mfd: mt6397: Properly fix CID of MT6328, MT6331 and MT6332
+Date: Tue, 28 Apr 2026 06:40:28 -0400
+Message-ID: <20260428104133.2858589-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -54,447 +55,449 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Akari Tsuyukusa <akkun11.open@gmail.com>
 
-[ Upstream commit 20d4f9efe008be1b673f43d38d3d99fb1fd4cd68 ]
+[ Upstream commit a09506820afa391e0a8ecc4b05c954f21e50b1de ]
 
-- lz77_match_len() increments @cur before checking for equality,
-  leading to off-by-one match len in some cases.
+CIDs set for MT6328, MT6331 and MT6332 are not appropriate.
+Many Android downstream kernels define CID as below,
 
-  Fix by moving pointers increment to inside the loop.
-  Also rename @wnd arg to @match (more accurate name).
-- both lz77_match_len() and lz77_compress() checked for
-  "buf + step < end" when the correct is "<=" for such cases.
+MT6328:
 
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+    #define PMIC6328_E1_CID_CODE    0x2810
+    #define PMIC6328_E2_CID_CODE    0x2820
+    #define PMIC6328_E3_CID_CODE    0x2830
+
+MT6331/MT6332:
+
+    #define PMIC6331_E1_CID_CODE    0x3110
+    #define PMIC6331_E2_CID_CODE    0x3120
+    #define PMIC6331_E3_CID_CODE    0x3130
+
+    #define PMIC6332_E1_CID_CODE    0x3210
+    #define PMIC6332_E2_CID_CODE    0x3220
+    #define PMIC6332_E3_CID_CODE    0x3230
+
+The current configuration incorrectly uses the revision code as the CID.
+Therefore, the driver cannot detect the same PMIC of different revisions.
+(E1/E2 for MT6328, E1/E3 for MT6331/MT6332)
+Based on these, the CID of MT6328, MT6331 and MT6332 should be corrected.
+
+Additionally, the incorrect MT6331/MT6332 CID overlaps with the MT6320's
+actual CID:
+
+    #define PMIC6320_E1_CID_CODE    0x1020
+    #define PMIC6320_E2_CID_CODE    0x2020
+
+This causes a conflict in the switch-case statement of mt6397-irq.c,
+this prevents adding support for MT6320.
+
+Signed-off-by: Akari Tsuyukusa <akkun11.open@gmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260302140045.651727-1-akkun11.open@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to perform the analysis. Let me structure
-my response covering all 9 phases.
+Now I have all the information I need. Let me provide the complete
+analysis.
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-- Subsystem: `smb: client: compress:` (SMB 3.1.1 client-side
-  compression)
-- Action verb: "fix"
-- Summary: fix counting in LZ77 match finding
-- **Record:** `[smb/client/compress]` `[fix]` `[off-by-one in LZ77 match
-  length counting]`
+**Step 1.1: Subject Line**
+- Subsystem prefix: `mfd: mt6397`
+- Action verb: "Properly fix" — explicit bug-fix language
+- One-line summary: Corrects wrongly configured CID values for MT6328,
+  MT6331, and MT6332 PMICs
+- **Record:** `[mfd/mt6397]` `[fix]` — Properly fix CID values for
+  MT6328/MT6331/MT6332 PMICs so they get correctly recognized
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- `Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>` (author)
-- `Signed-off-by: Steve French <stfrench@microsoft.com>` (subsystem
-  maintainer)
-- NO `Fixes:` tag, NO `Cc: stable`, NO `Reported-by:`, NO `Link:`, NO
-  `Tested-by:`, NO `Reviewed-by:`, NO `Acked-by:`
-- **Record:** Minimal tag set - only author + maintainer SOBs. No
-  explicit stable/reviewer endorsements.
+**Step 1.2: Tags**
+- `Signed-off-by:` Akari Tsuyukusa (author)
+- `Reviewed-by:` AngeloGioacchino Del Regno
+  <angelogioacchino.delregno@collabora.com>
+- `Link:` https://patch.msgid.link/20260302140045.651727-1-
+  akkun11.open@gmail.com
+- `Signed-off-by:` Lee Jones <lee@kernel.org> (MFD maintainer)
+- No `Fixes:` tag, no `Cc: stable` — expected, and why the commit is
+  under review
+- **Record:** Reviewed by the subsystem expert who authored the original
+  MT6331 support (AngeloGioacchino Del Regno) and committed by the
+  subsystem maintainer (Lee Jones).
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-Two distinct bugs described:
-1. `lz77_match_len()` byte-by-byte fallback increments `@cur` before
-   equality check, over-counting match length by 1 on mismatch.
-2. Both `lz77_match_len()` do-while and `lz77_compress()` do-while use
-   `<` where `<=` is correct for the 8-byte window check, causing early
-   exit to slow byte-by-byte fallback.
-- **Record:** Bug: off-by-one in match length produces incorrect LZ77
-  compressed output. Failure mode: decompressed data mismatches original
-  (data corruption) on SMB3.1.1 compressed writes.
+**Step 1.3: Body Analysis**
+- Bug description: The values previously assigned to `MT6328_CHIP_ID`,
+  `MT6331_CHIP_ID`, and `MT6332_CHIP_ID` were revision codes (E3 in the
+  MT6328 case, E2 in the MT6331/MT6332 case), not the actual chip
+  identifiers. The `cid_shift=0` for these chips extracts the lower byte
+  (= revision), so only one specific revision matches.
+- Symptom: Same PMIC of a different revision is not detected; driver
+  probe fails.
+- Secondary effect: The old (incorrect) MT6331/MT6332 CID value 0x20
+  collides with the real MT6320 CID, blocking future MT6320 support.
+- Explicit reference to downstream Android kernels that document the
+  real CID layout: E-revision occupies bits 0-7, PMIC model occupies
+  bits 8-15.
+- **Record:** Clear explanation of a correctness bug with concrete
+  hardware consequences.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-- This is explicitly labeled as a fix ("fix counting"). Not hidden.
-- **Record:** Explicit bug fix with clear root cause described.
+**Step 1.4: Hidden Bug Fix Detection**
+Not hidden — the title uses "Properly fix". This is a straightforward
+correctness fix for a mis-identified register layout.
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
-- 1 file: `fs/smb/client/compress/lz77.c`
-- +10/-7 (17 lines changed)
-- Functions: `lz77_match_len()`, `lz77_compress()`
-- Scope: single-file surgical fix
-- **Record:** Minimal-scope single-file fix.
+**Step 2.1: Inventory**
+- `drivers/mfd/mt6397-core.c`: 2 lines changed (cid_shift 0→8 for
+  mt6328_core and mt6331_mt6332_core)
+- `include/linux/mfd/mt6397/core.h`: 3 enum values changed
+  (MT6328=0x30→0x28, MT6331=0x20→0x31, MT6332=0x20→0x32)
+- Total: 5 insertions, 5 deletions, 2 files — extremely small, surgical
+- **Record:** 2 files, ~5 effective lines of value changes, no logic
+  changes.
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-Three hunks:
-1. Rename parameter `wnd` → `match` (cosmetic, all occurrences).
-2. Change `cur + LZ77_STEP_SIZE < end` → `<= end` in `lz77_match_len()`
-   do-while.
-3. Restructure byte-by-byte fallback: was `while(cur<end &&
-   lz77_read8(cur++)==lz77_read8(wnd++))` — post-increment executes even
-   on mismatch. Now moves increments inside the body after the match is
-   confirmed.
-4. Change `srcp + LZ77_STEP_SIZE < end` → `<= end` in `lz77_compress()`
-   do-while.
-- **Record:** Before: byte-by-byte loop advances pointers even on
-  mismatch (off-by-one over-count). After: advances only when bytes
-  match.
+**Step 2.2: Code Flow Change**
+In `mt6397_probe()`:
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-- Logic/correctness fix (off-by-one counting)
-- Traced: when actual match is N bytes in the byte-by-byte tail,
-  function returns N+1 if the (N+1)th byte is a mismatch. This produces
-  a match token with length N+1 that, upon decompression by the server,
-  copies N+1 bytes of which the last byte doesn't match the original
-  source - **silent data corruption** in the decompressed write payload.
-- **Record:** Category: logic/off-by-one. Mechanism: byte-by-byte
-  fallback over-counts match length by 1 on mismatch, producing corrupt
-  LZ77 stream.
+```346:398:/home/sasha/linux-autosel-7.0/drivers/mfd/mt6397-core.c
+static int mt6397_probe(struct platform_device *pdev)
+{
+        ...
+        ret = regmap_read(pmic->regmap, pmic_core->cid_addr, &id);
+        ...
+        pmic->chip_id = (id >> pmic_core->cid_shift) & 0xff;
+        ...
+```
 
-### Step 2.4: ASSESS THE FIX QUALITY
-- Obviously correct (standard idiom of "check, then advance").
-- Minimal (10/7 lines, plus a rename).
-- No regression risk: `<=` change is safe because `srcp+8 == end` reads
-  bytes `[srcp, srcp+7]` which are valid (end is exclusive bound).
-- **Record:** Low regression risk; changes are local and obviously
-  correct.
+The chip_id is read from the hardware CID register (MT6328_HWCID=0x200,
+MT6331_HWCID=0x100), then shifted and masked.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+- Before fix (`cid_shift=0`): reads low byte = revision code (e.g.,
+  0x10, 0x20, 0x30)
+- After fix (`cid_shift=8`): reads high byte = actual chip model (0x28,
+  0x31, 0x32), same across all revisions
 
-### Step 3.1: BLAME THE CHANGED LINES
-- `git blame` shows lines 70, 72-75, 203 were introduced by
-  `94ae8c3fee94a` ("smb: client: compress: LZ77 code improvements
-  cleanup"), dated 2024-09-06.
-- `git describe --contains 94ae8c3fee94a` → `v6.12-rc1~139^2~11`
-- **Record:** Buggy code introduced in v6.12. Present in all stable
-  branches ≥ 6.12.
+The enum values are updated correspondingly so that the old "only
+revision X works" behavior is preserved for revision X, and the new
+behavior additionally supports all revisions.
+- **Record:** The fix changes what portion of the 16-bit HWCID register
+  is used for chip identification.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-- No `Fixes:` tag present, but blame confirms the target commit is
-  `94ae8c3fee94a`.
-- **Record:** Implicit Fixes: 94ae8c3fee94a ("smb: client: compress:
-  LZ77 code improvements cleanup"). Original commit is in stable 6.12.y
-  and later.
+**Step 2.3: Bug Mechanism**
+Category (g) Logic / correctness fix — specifically, wrong bit-field
+extraction from a hardware register.
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-`git log -- fs/smb/client/compress/lz77.c` on origin/master shows a
-series of 6 commits around this fix:
-- `4c221711b2374` "fix buffer overrun in lz77_compress()" (Patch 1/8 –
-  separate fix)
-- `a13e942a03fee` "fix bad encoding on last LZ77 flag" (Patch 2/8 –
-  separate fix)
-- `20d4f9efe008b` **our commit** (Patch 3/8)
-- `fca46b0e68c5d`, `4460e9c68d1a8`, `71179a5ee916d` (Patches 4/8, 5/8,
-  6/8 – tuning/optimizations/docs)
-- **Record:** Part of 8-patch series; patches 1-3 are bug fixes, patches
-  4+ are improvements. This patch (3/8) does NOT depend on patches 1/8
-  or 2/8.
+Concretely, MT6328 HWCID returns e.g. 0x2810 (E1), 0x2820 (E2), 0x2830
+(E3):
+- Old: chip_id = 0x2810 & 0xff = 0x10 / 0x20 / 0x30 — only E3 matches
+  MT6328_CHIP_ID=0x30
+- New: chip_id = (0x28XX >> 8) & 0xff = 0x28 for all revisions → matches
+  MT6328_CHIP_ID=0x28
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-- Enzo Matsumiya is the author of the original LZ77 cleanup
-  (94ae8c3fee94a) and many other SMB client fixes in 6.12.y stable
-  (e.g., `5ac1f99fdd09d` - compression heuristic fix).
-- **Record:** Author is the main maintainer/developer of this
-  compression code.
+Same analysis for MT6331 (only E2=0x3120 matches old 0x20) and MT6332
+(only E2=0x3220 matches old 0x20).
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-- Verified: `git apply --check -3` against stable/linux-6.12.y through
-  7.0.y: **all apply cleanly**.
-- The changes touch lines that exist unchanged in the stable branches
-  (stable does not have patches 1 or 2 from the series either, but patch
-  3/8 doesn't conflict with them).
-- **Record:** Standalone, no prerequisites needed.
+When chip_id doesn't match in `mt6397_irq_init()`'s switch statement:
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+```207:210:/home/sasha/linux-autosel-7.0/drivers/mfd/mt6397-irq.c
+        default:
+                dev_err(chip->dev, "unsupported chip: 0x%x\n",
+chip->chip_id);
+                return -ENODEV;
+```
 
-### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
-- `b4 dig -c 20d4f9efe008b` found the submission at https://lore.kernel.
-  org/all/20260413190713.283939-3-ematsumiya@suse.de/
-- `b4 dig -a`: only a v1 posted, applied as-is. No revisions.
-- The entire thread was saved to mbox and searched: **no** `Cc: stable`,
-  **no** `Fixes:`, **no** `Reviewed-by:`, **no** `Tested-by:`, **no**
-  NAKs.
-- Steve French's only reply is "merged into cifs-2.6.git for-next"
-  (applied without reviewer feedback).
-- **Record:** v1 only, minimal discussion, no stable nomination by
-  reviewers.
+→ probe fails → entire MFD (regulators, RTC, keys) is absent → device
+unbootable/unusable.
 
-### Step 4.2: CHECK WHO REVIEWED THE PATCH
-- `b4 dig -w`: Cc list included Steve French (maintainer), Paulo
-  Alcantara, Ronnie Sahlberg, Shyam Prasad, Tom Talpey, Bharath SM,
-  Henrique Carvalho, and linux-cifs list.
-- No explicit Reviewed-by received — applied by maintainer directly.
-- **Record:** Appropriate maintainers CC'd; maintainer applied with no
-  public review feedback.
+**Step 2.4: Fix Quality**
+- Obviously correct given the documented hardware register layout.
+- Pure value change; no new control flow.
+- The fix preserves the previous working behavior: hardware that matched
+  before (MT6328 E3, MT6331/MT6332 E2) still matches after, because the
+  enum value is updated in lockstep with the shift.
+- No API change, no locking change, no memory operations touched.
+- **Record:** High-quality fix, zero added regression surface.
 
-### Step 4.3: SEARCH FOR THE BUG REPORT
-- No Reported-by/Link tags. No bug report referenced.
-- **Record:** No external bug report; bug found by code inspection by
-  the author.
+## PHASE 3: GIT HISTORY
 
-### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
-- This is patch 3/8. Patches 1 (buffer overrun) and 2 (UB fix) are also
-  bug fixes in the same file.
-- Patches 4-8 are optimizations/docs/preparations.
-- **Record:** Part of a bug-fix + improvements series. Our patch is
-  self-contained.
+**Step 3.1: Blame**
+- MT6328 chip_data and enum entry introduced in `6e31bb8d3a63b` ("mfd:
+  mt6397: Add initial support for MT6328") — kernel v6.13.
+- MT6331/MT6332 chip_data and enum entries introduced in `d9cd0bc604705`
+  ("mfd: mt6397: Add basic support for MT6331+MT6332 PMIC") — kernel
+  v6.0.
+- **Record:** Buggy code has been present since v6.0 (MT6331/MT6332) and
+  v6.13 (MT6328).
 
-### Step 4.5: CHECK STABLE MAILING LIST HISTORY
-- No prior stable discussion about this specific bug.
-- **Record:** No prior stable-specific discussion.
+**Step 3.2: Fixes: Tag**
+No Fixes: tag provided. The natural "Fixes:" targets would be the two
+commits above. Both are in mainline and in stable trees (since v6.0 /
+v6.13).
+
+**Step 3.3: File History** — recent `mt6397-core.c` history shows only
+incremental PMIC additions and minor cleanups; no concurrent refactors
+that would block a backport.
+
+**Step 3.4: Author's Other Commits** — First-time author; the Reviewed-
+by is from AngeloGioacchino Del Regno (Collabora), the original author
+of the MT6331/MT6332 support and a prolific MediaTek-platform developer.
+
+**Step 3.5: Dependencies** — Standalone, self-contained. No other
+commits needed.
+
+## PHASE 4: MAILING LIST RESEARCH
+
+**Step 4.1: Original Patch Discussion**
+Retrieved the full thread via b4
+(lore.kernel.org/all/20260302140045.651727-1-akkun11.open@gmail.com/):
+- v1 posted 2026-02-28 by Akari Tsuyukusa
+- AngeloGioacchino Del Regno reviewed v1 on 2026-03-02, asked for GitHub
+  links to be removed, gave Reviewed-by.
+- v2 posted 2026-03-02 with Reviewed-by, no code changes.
+- Lee Jones applied v2 as commit
+  `f59b2bc3e6dbcd75c53f1881c1f08a6d3c2a72e5` on 2026-03-06.
+- **Record:** Latest version applied; no objections, no stable-specific
+  discussion either way, no NAKs.
+
+**Step 4.2: Reviewers** — Correct subsystem parties included: Lee Jones
+(MFD maintainer), Matthias Brugger (MediaTek), AngeloGioacchino Del
+Regno (MediaTek expert), Yassine Oudjana (original MT6328 author), and
+the linux-mediatek/arm/kernel lists.
+
+**Step 4.3–4.5: Bug Report Links** — No external bug report; the
+reporter is also the author who likely hit this on their own hardware.
+No prior stable-list discussion found.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-- `lz77_match_len()` (static inline helper)
-- `lz77_compress()` (exported entry)
-- **Record:** Two functions modified.
+**Step 5.1: Key Entities Modified**
+- `struct chip_data mt6328_core` (initializer constant)
+- `struct chip_data mt6331_mt6332_core` (initializer constant)
+- `enum chip_id` members MT6328_CHIP_ID, MT6331_CHIP_ID, MT6332_CHIP_ID
 
-### Step 5.2: TRACE CALLERS
-- `lz77_compress` is called from `smb_compress` in
-  `fs/smb/client/compress.c:343`.
-- `smb_compress` is called from `smb_send_rqst` in
-  `fs/smb/client/transport.c:398` when `CIFS_COMPRESS_REQ` flag is set.
-- `CIFS_COMPRESS_REQ` is set in `fs/smb/client/smb2pdu.c:5201` when
-  `should_compress(tcon, &rqst)` is true (SMB2_WRITE of appropriate
-  size, compression negotiated, etc.).
-- **Record:** Reachable from userspace write(2)→SMB2_WRITE path when
-  CIFS_COMPRESSION=y AND mount has compress option AND server negotiated
-  compression.
+**Step 5.2: Callers/Use sites**
+- `mt6328_core` / `mt6331_mt6332_core` referenced as `.data` in the
+  of_device_id table → consumed once per probe by `mt6397_probe()`.
+- `MT6328_CHIP_ID` / `MT6331_CHIP_ID` used in the `switch
+  (chip->chip_id)` inside `mt6397_irq_init()`
+  (drivers/mfd/mt6397-irq.c).
+- `MT6332_CHIP_ID` is only defined; not referenced in switch (MT6332 is
+  dispatched through MT6331's IRQ path per the combination comment in
+  mt6397-core.c line 185).
+- No users outside the driver — confirmed via repository-wide search.
+- **Record:** Very small impact surface; isolated to mt6397 MFD driver.
 
-### Step 5.3: TRACE CALLEES
-- `lz77_match_len` is called internally by `lz77_compress`'s main loop
-  (line 163 in stable 6.12.y).
-- **Record:** `lz77_match_len` is a hot inner-loop helper.
+**Step 5.3–5.4: Call chain** — Only reachable at device probe
+(`mt6397_probe`), triggered by the PMIC node in device tree. User impact
+path is: boot → PMIC probe reads HWCID → chip_id mismatch → ENODEV → no
+regulators/RTC/keys.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-Call chain: `sys_write()` → ... → `cifs_strict_writev()` → SMB2_WRITE
-rqst → `smb_send_rqst()` → `smb_compress()` → `lz77_compress()` →
-`lz77_match_len()`.
-Gated by: `CONFIG_CIFS_COMPRESSION=y` AND `mount -o compress` AND
-server-negotiated compression AND write size ≥ PAGE_SIZE AND data is
-compressible per heuristic.
-- **Record:** Reachable from userspace but behind multiple opt-in gates.
-
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-- The fix removes a classic C idiom bug (`*(p++) == *(q++)` advancing on
-  mismatch). No other instances of this pattern found in the file.
-- **Record:** No duplicate patterns found.
+**Step 5.5: Similar patterns** — Other PMICs in the same file
+(mt6357/mt6358/mt6359) already use `cid_shift = 8` with their SWCID
+addresses. The fix brings the three broken entries into line with the
+rest of the driver.
 
 ## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-- Verified via `git ls-tree` and `git show` on 5 stable branches:
-  `stable/linux-6.12.y`, `6.17.y`, `6.18.y`, `6.19.y`, `7.0.y` — all
-  have the identical buggy `lz77.c` (blob SHA
-  `96e8a8057a7721233dc49d3388d5e40b8a1bab5b`).
-- Not in 6.6.y or earlier (file didn't exist).
-- **Record:** Bug exists in 6.12.y, 6.17.y, 6.18.y, 6.19.y, 7.0.y.
+**Step 6.1: Buggy Code in Stable Trees**
+Verified directly against local tracked branches:
+- `for-greg/6.6-200` (6.6.y): contains MT6331/MT6332 with `cid_shift =
+  0` and MT6331/MT6332 CHIP_ID = 0x20. MT6328 not present. →
+  MT6331/MT6332 part of the fix is needed.
+- `for-greg/6.12-200` (6.12.y): same state as 6.6.y. → MT6331/MT6332
+  part needed.
+- `for-greg/6.18-200` (6.18.y): has MT6328=0x30 present plus
+  MT6331/MT6332=0x20. → Full fix applies.
+- `for-greg/6.19-200` and `stable/linux-7.0.y`: have both; full fix
+  applies.
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-- Tested `git apply --check -3` against all 5 affected stable branches:
-  **clean apply** everywhere.
-- **Record:** Clean apply, no backport adjustments needed.
+**Step 6.2: Backport Complications**
+- 6.6.y and 6.12.y: need a minor adaptation — drop the MT6328 hunks (2
+  lines) and the MT6328_CHIP_ID enum line. The rest applies cleanly.
+  Trivial adjustment.
+- 6.18.y+: applies cleanly.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
-- Three prior compression-related fixes are already in 6.12.y stable:
-  `5ac1f99fdd09d` (heuristic functions), `9b4af913465cc` (illegal
-  accesses), `590efcd3c75f0` (invalid free pointer).
-- This establishes a clear pattern of stable maintainers accepting
-  compression fixes despite EXPERIMENTAL status.
-- **Record:** Precedent exists for backporting fixes to this exact
-  file/feature.
+**Step 6.3: Related Fixes in Stable** — None; this is the first and only
+fix for this issue.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+## PHASE 7: SUBSYSTEM CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-- Subsystem: SMB client (network filesystem), specifically
-  CIFS_COMPRESSION (EXPERIMENTAL, default N).
-- Criticality: **PERIPHERAL** for kernel as a whole (opt-in experimental
-  feature), but **IMPORTANT** for users who enable it (fixes data
-  integrity).
-- **Record:** PERIPHERAL scope but data-integrity class.
-
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-- `git log -20 -- fs/smb/client/compress/` shows low but steady
-  activity, mainly by Enzo Matsumiya.
-- **Record:** Low-activity experimental feature.
+**Step 7.1–7.2:** `drivers/mfd/` is an important subsystem but this
+particular driver is device-specific (MediaTek PMIC companion chips for
+specific SoCs). Criticality: IMPORTANT for owners of affected MediaTek
+hardware (MT6735, MT6795 Helio X10 phones like Sony Xperia M5). Mature
+code with steady activity (new PMIC support added periodically).
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-- Users with `CONFIG_CIFS_COMPRESSION=y` kernel AND `mount -o compress`
-  AND SMB 3.1.1 server that negotiates compression.
-- **Record:** Narrow audience — opt-in at both build and mount time.
+**Step 8.1: Affected Users**
+Driver-specific: users of MediaTek SoCs paired with MT6328 (MT6735-based
+devices), MT6331/MT6332 (MT6795 Helio X10, e.g. Sony Xperia M5 — present
+as `mt6795-sony-xperia-m5.dts` and `mt6795-xperia-m5.dts` upstream).
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-- Trigger: write of ≥ PAGE_SIZE compressible data where a potential
-  match exists in the final <8 bytes of the input and the match does not
-  extend to the very end.
-- Cannot be triggered by unprivileged user without the opt-in
-  configuration.
-- **Record:** Specific but realistic trigger on any compressed write
-  whose tail contains a partial match.
+**Step 8.2: Trigger Conditions**
+Every boot on an affected hardware revision (any MT6328 E1/E2, any
+MT6331/MT6332 E1/E3). The revision shipped in each product is fixed by
+manufacturing, so a given user will either always hit or never hit the
+bug.
 
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-- Wrong match length → decompressed data at the server differs from
-  original → **silent data corruption** in the file written over SMB.
-- Severity per standard rubric: **HIGH** (data corruption), but
-  mitigated by the opt-in nature.
-- **Record:** Failure mode: silent data corruption. Severity: HIGH when
-  triggered, but narrow audience.
+**Step 8.3: Failure Mode**
+When triggered: `mt6397_irq_init` returns -ENODEV → `mt6397_probe` fails
+→ regulator/RTC/keys sub-devices never register → platform effectively
+non-functional (no voltage rails programmed, no RTC, no power button).
+Severity: HIGH (device unbootable for affected revisions).
 
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-- BENEFIT: Fixes a silent data corruption for users who opt into CIFS
-  compression. Consistent with previously accepted compression fixes.
-- RISK: Very low. 10/7-line change. Obviously correct idiom fix. Applies
-  cleanly. No API changes. The `<=` change is provably safe (8-byte read
-  at `end-8` stays in-bounds).
-- **Record:** Benefit level: moderate (narrow but data-integrity). Risk
-  level: very low. Ratio favors backporting.
+**Step 8.4: Risk-Benefit**
+- BENEFIT: HIGH — enables full PMIC support for a population of MediaTek
+  devices that currently cannot boot properly.
+- RISK: VERY LOW — 5-line pure value change; the behavior for
+  previously-working revisions (MT6328 E3, MT6331/MT6332 E2) is
+  preserved exactly because both the `cid_shift` and enum value move in
+  lockstep; no new code paths, no locking/memory changes.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
-FOR:
-- Real bug confirmed by diff analysis (byte-by-byte post-increment over-
-  counts on mismatch)
-- Failure mode is silent data corruption on compressed SMB writes
-- Small, surgical, obviously-correct fix
-- Applies cleanly to all 5 affected stable trees (6.12.y–7.0.y)
-- Precedent: similar compression fixes already in stable (5ac1f99fdd09d,
-  9b4af913465cc, 590efcd3c75f0)
-- Author is the primary maintainer of this code
+**Evidence FOR:**
+- Fixes real, user-visible bug preventing PMIC probe on non-matching
+  hardware revisions.
+- Failure mode is severe (device boot regression).
+- Fix is small (5 effective lines), obviously correct, and aligns with
+  all other PMIC entries in the same driver.
+- Reviewed and Acked by subsystem expert (original MT6331 author);
+  applied by subsystem maintainer.
+- Buggy code has been in mainline since v6.0 (MT6331/MT6332) and v6.13
+  (MT6328), so stable users have been exposed for a long time.
+- Preserves backward-compatibility for revisions that previously
+  happened to work.
 
-AGAINST:
-- No Cc: stable, no Fixes: tag, no Reported-by
-- Feature is EXPERIMENTAL and default N
-- Narrow real-world audience
-- Part of series with mixed fix/improvement content (but this patch is
-  self-contained)
+**Evidence AGAINST:**
+- Minor: requires dropping two MT6328 hunks for pre-6.13 stable trees
+  (trivial adaptation).
+- Not accompanied by `Cc: stable` (expected; that's why it's under
+  review).
 
-UNRESOLVED: None.
+**Stable Rules Check:**
+1. Obviously correct: YES (pure value change, documented hardware
+   register layout).
+2. Fixes real bug that affects users: YES (broken probe on specific
+   revisions).
+3. Important issue: YES (device unusable without PMIC).
+4. Small and contained: YES (5 effective lines).
+5. No new features/APIs: YES.
+6. Applies to stable: YES (clean on 6.18+/7.0; trivial hunk drop on
+   6.6/6.12).
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. Obviously correct and tested? **Yes** — simple idiom fix; applied in
-   Torvalds' tree (7.1-rc1).
-2. Fixes a real bug that affects users? **Yes** — data corruption for
-   compression users.
-3. Important issue? **Yes** — data integrity class.
-4. Small and contained? **Yes** — 10/-7 in one file.
-5. No new features/APIs? **Yes** (no new API).
-6. Applies to stable? **Yes** — verified clean apply on 6.12.y–7.0.y.
-
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-- Not an exception category; stands on its merits as a data-correctness
-  fix.
-
-### Step 9.4: MAKE DECISION
-Evidence supports backporting. The fix addresses a genuine data-
-integrity bug, is minimal and obviously correct, applies cleanly, and is
-consistent with previously-accepted fixes to this same file.
-
----
+**Exception categories:** Not a device-ID/quirk/DT/doc/build-fix per se,
+but is a narrow hardware-identification correctness fix — equivalent
+spirit to a quirk/device-ID update.
 
 ## Verification
-- [Phase 1] Parsed tags: only author + maintainer SOBs, no
-  stable/Fixes/Reported-by — verified by reading full commit message.
-- [Phase 2] Diff analysis: 10/-7 lines in
-  `fs/smb/client/compress/lz77.c`; two functions touched
-  (`lz77_match_len`, `lz77_compress`).
-- [Phase 2] Semantic correctness: traced byte-by-byte loop manually —
-  confirmed over-count by 1 on mismatch; `<=` change verified safe
-  (8-byte read at `end-8` in-bounds).
-- [Phase 3] `git blame` on changed lines: introduced by `94ae8c3fee94a`
-  ("smb: client: compress: LZ77 code improvements cleanup").
-- [Phase 3] `git describe --contains 94ae8c3fee94a` →
-  `v6.12-rc1~139^2~11` (present since v6.12).
-- [Phase 3] `git log -- fs/smb/client/compress/lz77.c` on origin/master:
-  confirmed 8-patch series, this is patch 3/8, independent of patches
-  1/8 and 2/8.
-- [Phase 4] `b4 dig -c 20d4f9efe008b`: found lore submission at https://
-  lore.kernel.org/all/20260413190713.283939-3-ematsumiya@suse.de/
-- [Phase 4] `b4 dig -a`: only v1, no other revisions.
-- [Phase 4] `b4 dig -w`: maintainer Steve French + linux-cifs list +
-  related developers CC'd.
-- [Phase 4] Full thread mbox saved to `/tmp/lz77_thread.mbox`: confirmed
-  no `Cc: stable`, no `Fixes:`, no `Reviewed-by/Tested-by`, only "merged
-  into cifs-2.6.git for-next" from maintainer.
-- [Phase 5] `grep` for `lz77_compress` callers: `smb_compress`
-  (transport.c:398 and compress.c:343); `should_compress` gates call in
-  smb2pdu.c:5201.
-- [Phase 5] Reachable from userspace write(2) only when
-  CIFS_COMPRESSION=y and `mount -o compress`.
-- [Phase 6] `git ls-tree` on 5 stable branches: identical blob
-  `96e8a8057a7721233dc49d3388d5e40b8a1bab5b` — buggy code in
-  6.12.y/6.17.y/6.18.y/6.19.y/7.0.y.
-- [Phase 6] `git apply --check -3` on all 5 stable branches: clean apply
-  on all.
-- [Phase 6] Precedent fixes already in 6.12.y stable: `5ac1f99fdd09d`,
-  `9b4af913465cc`, `590efcd3c75f0` — all compression-related fixes to
-  same file/feature.
-- [Phase 7] `Kconfig` read: `CIFS_COMPRESSION` is `bool "SMB message
-  compression (Experimental)"` default n; confirmed in both mainline and
-  6.12.y stable.
-- [Phase 8] Severity assessment: silent data corruption in compressed
-  writes; narrow audience due to opt-in nature.
 
-The fix addresses a real data-integrity bug with a minimal, obviously-
-correct change that applies cleanly to all affected stable trees, and it
-is consistent with previously accepted compression fixes. The
-EXPERIMENTAL/opt-in nature narrows the audience but does not negate the
-value of the fix.
+- [Phase 1] Parsed tags: Signed-off-by Akari Tsuyukusa, Reviewed-by
+  AngeloGioacchino Del Regno, Link to patch.msgid.link, Signed-off-by
+  Lee Jones (MFD maintainer). No stable tag, no Fixes tag.
+- [Phase 2] Diff analysis: 2 files, 5 insertions, 5 deletions — verified
+  by reading the diff; matches b4-retrieved v2 mbox.
+- [Phase 2] Verified code flow: read `drivers/mfd/mt6397-core.c` lines
+  280–398 and confirmed `pmic->chip_id = (id >> pmic_core->cid_shift) &
+  0xff;`.
+- [Phase 2] Verified failure path: read `drivers/mfd/mt6397-irq.c`
+  switch 178–210; unmatched chip_id returns -ENODEV.
+- [Phase 2] Verified enum collision claim: `MT6331/MT6332_CHIP_ID =
+  0x20` in `include/linux/mfd/mt6397/core.h`.
+- [Phase 3] git log on `drivers/mfd/mt6397-core.c`: `6e31bb8d3a63b`
+  added MT6328 support, `d9cd0bc604705` added MT6331/MT6332 support.
+- [Phase 3] `git tag --contains 6e31bb8d3a63b | sort -V` shows v6.13 as
+  earliest tag.
+- [Phase 3] `git tag --contains d9cd0bc604705 | sort -V` shows v6.0 as
+  earliest tag.
+- [Phase 4] `b4 am` retrieved patch thread (4 messages): v1 submitted
+  2026-02-28, v2 submitted 2026-03-02 with Reviewed-by added and GitHub
+  links removed, applied as `f59b2bc3e6dbcd75c53f1881c1f08a6d3c2a72e5`
+  by Lee Jones 2026-03-06.
+- [Phase 4] Full thread read at `/tmp/mt6397_mbox/...mbx`; only review
+  feedback was to remove GitHub links; no NAK, no stable nomination, no
+  concerns raised.
+- [Phase 5] Searched the whole repo for
+  `MT6328_CHIP_ID|MT6331_CHIP_ID|MT6332_CHIP_ID` — only appear in the
+  header and `mt6397-irq.c` switch statement.
+- [Phase 5] `drivers/mfd/mt6397-core.c` verified: other PMICs
+  (mt6357/58/59) already use `cid_shift = 8` pattern.
+- [Phase 6] `git show for-greg/6.6-200:include/linux/mfd/mt6397/core.h`
+  — MT6331/MT6332=0x20 present, MT6328 absent.
+- [Phase 6] `git show for-greg/6.12-200:include/linux/mfd/mt6397/core.h`
+  — same as 6.6.y.
+- [Phase 6] `git show for-greg/6.18-200:include/linux/mfd/mt6397/core.h`
+  — MT6328=0x30 and MT6331/MT6332=0x20 present.
+- [Phase 6] `git show for-greg/6.6-200:drivers/mfd/mt6397-core.c` —
+  `mt6331_mt6332_core` with `cid_shift = 0`. Patch hunk for
+  MT6331/MT6332 applies identically.
+- [Phase 8] Device tree usage verified:
+  `arch/arm64/boot/dts/mediatek/mt6331.dtsi` and
+  `arch/arm64/boot/dts/mediatek/mt6795-sony-xperia-m5.dts` use these
+  compatibles.
+- UNVERIFIED: exact distribution of revisions in shipping devices (E1 vs
+  E2 vs E3) — claim about which specific revisions fail is taken from
+  commit message and is consistent with the bit-field math, which I
+  verified.
+
+This is a correctness fix for a mis-decoded PMIC identification register
+that makes the driver unable to probe on specific hardware revisions
+shipping in real products (MT6735-based phones, MT6795 Helio X10 phones
+including Sony Xperia M5). The change is tiny and preserves behavior for
+revisions that happened to work before. It has been reviewed by the
+MediaTek PMIC expert and landed by the MFD maintainer. Buggy code has
+been in stable since v6.0 (MT6331/MT6332) and v6.13 (MT6328).
+Backporting is low risk and high benefit; pre-6.13 trees need only to
+drop the MT6328 hunks.
 
 **YES**
 
- fs/smb/client/compress/lz77.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/mfd/mt6397-core.c       | 4 ++--
+ include/linux/mfd/mt6397/core.h | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/compress/lz77.c b/fs/smb/client/compress/lz77.c
-index c1e7fada6e61c..61cdf1c146127 100644
---- a/fs/smb/client/compress/lz77.c
-+++ b/fs/smb/client/compress/lz77.c
-@@ -48,17 +48,17 @@ static __always_inline void lz77_write32(u32 *ptr, u32 v)
- 	put_unaligned_le32(v, ptr);
- }
+diff --git a/drivers/mfd/mt6397-core.c b/drivers/mfd/mt6397-core.c
+index 3e58d0764c7e0..1bdacda9a933f 100644
+--- a/drivers/mfd/mt6397-core.c
++++ b/drivers/mfd/mt6397-core.c
+@@ -297,7 +297,7 @@ static const struct chip_data mt6323_core = {
  
--static __always_inline u32 lz77_match_len(const void *wnd, const void *cur, const void *end)
-+static __always_inline u32 lz77_match_len(const void *match, const void *cur, const void *end)
- {
- 	const void *start = cur;
- 	u64 diff;
+ static const struct chip_data mt6328_core = {
+ 	.cid_addr = MT6328_HWCID,
+-	.cid_shift = 0,
++	.cid_shift = 8,
+ 	.cells = mt6328_devs,
+ 	.cell_size = ARRAY_SIZE(mt6328_devs),
+ 	.irq_init = mt6397_irq_init,
+@@ -313,7 +313,7 @@ static const struct chip_data mt6357_core = {
  
- 	/* Safe for a do/while because otherwise we wouldn't reach here from the main loop. */
- 	do {
--		diff = lz77_read64(cur) ^ lz77_read64(wnd);
-+		diff = lz77_read64(cur) ^ lz77_read64(match);
- 		if (!diff) {
- 			cur += LZ77_STEP_SIZE;
--			wnd += LZ77_STEP_SIZE;
-+			match += LZ77_STEP_SIZE;
+ static const struct chip_data mt6331_mt6332_core = {
+ 	.cid_addr = MT6331_HWCID,
+-	.cid_shift = 0,
++	.cid_shift = 8,
+ 	.cells = mt6331_mt6332_devs,
+ 	.cell_size = ARRAY_SIZE(mt6331_mt6332_devs),
+ 	.irq_init = mt6397_irq_init,
+diff --git a/include/linux/mfd/mt6397/core.h b/include/linux/mfd/mt6397/core.h
+index b774c3a4bb62e..340fc72e22aa6 100644
+--- a/include/linux/mfd/mt6397/core.h
++++ b/include/linux/mfd/mt6397/core.h
+@@ -12,9 +12,9 @@
  
- 			continue;
- 		}
-@@ -67,10 +67,13 @@ static __always_inline u32 lz77_match_len(const void *wnd, const void *cur, cons
- 		cur += count_trailing_zeros(diff) >> 3;
- 
- 		return (cur - start);
--	} while (likely(cur + LZ77_STEP_SIZE < end));
-+	} while (likely(cur + LZ77_STEP_SIZE <= end));
- 
--	while (cur < end && lz77_read8(cur++) == lz77_read8(wnd++))
--		;
-+	/* Fallback to byte-by-byte comparison for last <8 bytes. */
-+	while (cur < end && lz77_read8(cur) == lz77_read8(match)) {
-+		cur++;
-+		match++;
-+	}
- 
- 	return (cur - start);
- }
-@@ -195,7 +198,7 @@ noinline int lz77_compress(const void *src, u32 slen, void *dst, u32 *dlen)
- 			flag_pos = dstp;
- 			dstp += 4;
- 		}
--	} while (likely(srcp + LZ77_STEP_SIZE < end));
-+	} while (likely(srcp + LZ77_STEP_SIZE <= end));
- 
- 	while (srcp < end) {
- 		u32 c = umin(end - srcp, 32 - flag_count);
+ enum chip_id {
+ 	MT6323_CHIP_ID = 0x23,
+-	MT6328_CHIP_ID = 0x30,
+-	MT6331_CHIP_ID = 0x20,
+-	MT6332_CHIP_ID = 0x20,
++	MT6328_CHIP_ID = 0x28,
++	MT6331_CHIP_ID = 0x31,
++	MT6332_CHIP_ID = 0x32,
+ 	MT6357_CHIP_ID = 0x57,
+ 	MT6358_CHIP_ID = 0x58,
+ 	MT6359_CHIP_ID = 0x59,
 -- 
 2.53.0
 
