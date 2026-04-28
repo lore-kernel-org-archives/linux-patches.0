@@ -1,47 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826F33FBEA5;
-	Tue, 28 Apr 2026 10:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378813FBED4;
+	Tue, 28 Apr 2026 10:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372926; cv=none; b=Frkkc6rpx9t3NYkaeewJtQ+S0jEdK6gzBRMIKHB4FnuQjrlyAdrGXiakpPudFt1E5thGD1/1GzchkPVLLzxB928resAYrbU4LFEHvPgT6Vnwh97i4SvH4Nv45Ad1FVrl/tDbVKhXwRQ5XGExfu3WfNTELGRjvu+rHKptIDpOPO4=
+	t=1777372928; cv=none; b=RBVWrUhppIm7TaLJjS0B+Avgn4GExJLzibLHvXsSzo+V+JzjSKRax/JyMNbB9hcmVuHEw3PuQFsOR39yknSpBg3QOqfHajldNrmVCvFzS9aOBgw/Vw1gnus0XYdjUj418ThEm8xcKssBj0pKDPhLu39WTdfUJ/HCxIjoWWDVUZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372926; c=relaxed/simple;
-	bh=8ng4dot3qiCc7ux6lPau8GDpfH70KFn1x3Azyx4Tj/M=;
+	s=arc-20240116; t=1777372928; c=relaxed/simple;
+	bh=32abhNWO89cs2JwkXa0XH5ZqG1v/L7wT581ifHEbNSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2uviH44LY/7PAyxjvJOk77fbOPHJIr5plx0c90WVESdT7+ZcQjzBj17ReWGCqPm7K6csKMOLmCPZBDbJWp8Qid53UfZGyCbmr/z0pKwdknQVpg0h7AaJ6VvnujKPyp1ChRQRl4kdcXVBP9gnahtZQ9Q+1mJHeKhynxOaGW7UeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y5FuVDiM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LjrsCNBHqsLvd8HSbjng4/z6JSnBRbdI/EBEZhfK7bWSbJsHAty47obEPLiV0rtNBliSlCK1OreoA2D1zQgKphbjBeDFbbWAThcdEAypUp8KTPWMM3Z2+H/2KlW50A40taM1TDtplJSSVqHEeitbxJKGwDuAm9UCK0hJWcR0ahk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CNEOdlEV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y5FuVDiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA87C2BCB5;
-	Tue, 28 Apr 2026 10:42:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CNEOdlEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E26C2BCB5;
+	Tue, 28 Apr 2026 10:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372926;
-	bh=8ng4dot3qiCc7ux6lPau8GDpfH70KFn1x3Azyx4Tj/M=;
+	s=k20201202; t=1777372928;
+	bh=32abhNWO89cs2JwkXa0XH5ZqG1v/L7wT581ifHEbNSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5FuVDiMhmkyZ3nIxDcTS6xkxWyloWmeSf23lrgQ2fp1tnb1fIzv69qAVzhyQWrlG
-	 APaFUnjF18QdCdH07o6SlRjGyh9FRQZgdvXokN2lFYEuT6xGhlEzMyd7o4CBbQziyR
-	 O82gh4cO2HF6suPPYObmo3ss3IZu3PzeywdWBU3ZdKEoGBOYsqlru3RHRL3RXVx4dp
-	 S1PdwdEfu7g/c8lVNXZv32pmPxSc2oJJiP5bS6Li4t5guDvkBMuTtqWaMI7lX4qUCP
-	 G+RIdfzb1ViBIhyfXzUzQ/sUW8ieWaFWhKhS0ezC6Ut6QhSqrfN92+GWebFJtar5js
-	 uRowlWTEqHcuA==
+	b=CNEOdlEVV/wPN8bR5EDj70Aue0OASPmqHvdUgczIC5vNRxxkLsoMwatdqGnVni72S
+	 BMps/zP9GzQMd2Ux57sTlW7hsuvJ1Huw+vhutOwvz4iK7rmGmwII68WUjipr0Tk5Ke
+	 uXuVgkeQ9eztfK2c5nCMB+oHh7wvnAg31YaPa2Ckqej/o93PBWRAfpC9THUbv00+Z4
+	 Hr7u3u0sogQflfmDd9hgfyGrKO1225cE9Fd42H2L84pHZM/uLrrtLZsCEVQ8xfCPaD
+	 yw96a5xdd54Jiscghmdg6jfCbWW/H2uOORqmdddokXi2TK9G1Dun7jHDFsTzeSigF8
+	 FHbql6Q6j2l8A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zizhi Wo <wozizhi@huawei.com>,
-	Zizhi Wo <wozizhi@huaweicloud.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Elad Nachman <enachman@marvell.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	bcrl@kvack.org,
-	viro@zeniv.linux.org.uk,
-	linux-aio@kvack.org,
-	linux-fsdevel@vger.kernel.org,
+	andrew@lunn.ch,
+	sebastian.hesselbarth@gmail.com,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] fs: aio: set VMA_DONTCOPY_BIT in mmap to fix NULL-pointer-dereference error
-Date: Tue, 28 Apr 2026 06:40:34 -0400
-Message-ID: <20260428104133.2858589-23-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] dt-bindings: arm64: add Marvell 7k COMe boards
+Date: Tue, 28 Apr 2026 06:40:35 -0400
+Message-ID: <20260428104133.2858589-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -54,418 +56,336 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Elad Nachman <enachman@marvell.com>
 
-[ Upstream commit c03ce4173c7bffe1e7477f905a09b015d4000d3c ]
+[ Upstream commit 283822a64d6bd9aca55b5e2718bc63e9815b443d ]
 
-[BUG]
-Recently, our internal syzkaller testing uncovered a null pointer
-dereference issue:
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-...
-[   51.111664]  filemap_read_folio+0x25/0xe0
-[   51.112410]  filemap_fault+0xad7/0x1250
-[   51.113112]  __do_fault+0x4b/0x460
-[   51.113699]  do_pte_missing+0x5bc/0x1db0
-[   51.114250]  ? __pte_offset_map+0x23/0x170
-[   51.114822]  __handle_mm_fault+0x9f8/0x1680
-[   51.115408]  handle_mm_fault+0x24c/0x570
-[   51.115958]  do_user_addr_fault+0x226/0xa50
-...
-Crash analysis showed the file involved was an AIO ring file.
+Add dt bindings for:
+Armada 7020 COM Express CPU module
+Falcon DB-98CX85x0 COM Express type 7 Carrier board
+Falcon DB-98CX85x0 COM Express type 7 Carrier board
+with an Armada 7020 COM Express CPU module
 
-[CAUSE]
-	PARENT process		CHILD process
-t=0	io_setup(1, &ctx)
-	[access ctx addr]
-	fork()
-	io_destroy
-	  vm_munmap // not affect child vma
-	  percpu_ref_put
-	  ...
-	    put_aio_ring_file
-t=1				[access ctx addr]	// pagefault
-				...
-				  __do_fault
-				    filemap_fault
-				      max_idx = DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE)
-t=2	      truncate_setsize
-	        truncate_pagecache
-t=3				      filemap_get_folio	// no folio, create folio
-				      __filemap_get_folio(..., FGP_CREAT, ...)	// page_not_uptodate
-				      filemap_read_folio(file, mapping->a_ops->read_folio, folio) // oops!
-
-At t=0, the parent process calls io_setup and then fork. The child process
-gets its own VMA but without any PTEs. The parent then calls io_destroy.
-Before i_size is truncated to 0, at t=1 the child process accesses this AIO
-ctx address and triggers a pagefault. After the max_idx check passes, at
-t=2 the parent calls truncate_setsize and truncate_pagecache. At t=3 the
-child fails to obtain the folio, falls into the "page_not_uptodate" path,
-and hits this problem because AIO does not implement "read_folio".
-
-[Fix]
-Fix this by marking the AIO ring buffer VMA with VM_DONTCOPY so
-that fork()'s dup_mmap() skips it entirely. This is the correct
-semantic because:
-
-1) The child's ioctx_table is already reset to NULL by mm_init_aio() during
-fork(), so the child has no AIO context and no way to perform any AIO
-operations on this mapping.
-2) The AIO ring VMA is only meaningful in conjunction with its associated
-kioctx, which is never inherited across fork(). So child process with no
-AIO context has no legitimate reason to access the ring buffer. Delivering
-SIGSEGV on such an erroneous access is preferable to a kernel crash.
-
-Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
-Link: https://patch.msgid.link/20260413010814.548568-1-wozizhi@huawei.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Elad Nachman <enachman@marvell.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my investigation, I now have enough information to provide a
-comprehensive analysis.
+Based on my investigation, I have enough information to complete the
+analysis.
 
-## Complete Phase-by-Phase Analysis
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.1: Subject Line**
+Record: Subsystem `dt-bindings: arm64`, action verb `add`, summary: "Add
+DT binding descriptions for the Marvell Falcon DB-98CX85x0 COM Express
+carrier board and Armada 7020 CPU module."
 
-**Step 1.1 - Subject Line:**
-- Record: `[fs: aio]` `[set VMA_DONTCOPY_BIT]` - indicates fix; title
-  explicitly says "to fix NULL-pointer-dereference error"
+**Step 1.2: Tags**
+Record: `Signed-off-by: Elad Nachman` (author), `Acked-by: Rob Herring
+(Arm) <robh@kernel.org>` (DT maintainer), `Signed-off-by: Gregory
+CLEMENT <gregory.clement@bootlin.com>` (mvebu maintainer). No `Fixes:`,
+no `Cc: stable`, no `Reported-by:`, no `Link:`.
 
-**Step 1.2 - Tags:**
-- Record:
-  - Signed-off-by: Zizhi Wo (author from Huawei)
-  - Link:
-    https://patch.msgid.link/20260413010814.548568-1-wozizhi@huawei.com
-  - Reviewed-by: Jan Kara (SUSE, MM/filesystems reviewer)
-  - Signed-off-by: Christian Brauner (VFS maintainer)
-  - No explicit Cc: stable, no Fixes: tag (expected for this evaluation
-    pipeline)
+**Step 1.3: Commit Body**
+Record: The commit body lists the three binding descriptions added but
+provides no bug description or symptom. However, the subject does not
+use "fix" and reads as a feature addition. Body does not discuss impact.
 
-**Step 1.3 - Commit Body:**
-- Record: The body describes an internal syzkaller-discovered NULL
-  pointer deref reproducible by a fork()+io_destroy race. A detailed
-  timing diagram shows 4 time steps (t=0..t=3) explaining the race
-  between parent's io_destroy() teardown and child's page fault on the
-  inherited AIO ring VMA. The kernel crash stack trace shows:
-  `do_user_addr_fault -> handle_mm_fault -> __handle_mm_fault ->
-  do_pte_missing -> __do_fault -> filemap_fault -> filemap_read_folio` -
-  oops at `a_ops->read_folio` (NULL).
+**Step 1.4: Hidden Bug Fix Detection**
+Record: Based on subject alone, looks like pure feature addition.
+However, based on mailing list discussion (see Phase 4), this is a fix
+for a binding/DTS mismatch where the DTS files reference compatibles not
+documented in the bindings.
 
-**Step 1.4 - Hidden bug fixes:**
-- Record: Not hidden - the subject explicitly says "to fix NULL-pointer-
-  dereference error". This is a clear bug fix.
+## PHASE 2: DIFF ANALYSIS
 
-### PHASE 2: DIFF ANALYSIS
+**Step 2.1: Inventory**
+Record: 1 file changed
+(`Documentation/devicetree/bindings/arm/marvell/armada-7k-8k.yaml`), +11
+lines, -0 lines. Single surgical YAML addition.
 
-**Step 2.1 - Inventory:**
-- Record: One file modified (`fs/aio.c`), 1 line changed (+1/-1), single
-  function `aio_ring_mmap_prepare()`. Surgical, minimal scope.
+**Step 2.2: Code Flow**
+Record: Before: Binding file did not describe the
+`marvell,armada7020-cpu-module`, `marvell,db-falcon-carrier`, or
+`marvell,armada7020-falcon-carrier` compatibles. After: New `oneOf`
+entry documents this 6-level compatible stack. No runtime code affected.
 
-**Step 2.2 - Code flow:**
-- Record: Before: VMA created with `VMA_DONTEXPAND_BIT` only. After: VMA
-  created with both `VMA_DONTEXPAND_BIT` and `VMA_DONTCOPY_BIT`. Affects
-  fork()'s `dup_mmap()` behavior: child will not inherit this VMA.
+**Step 2.3: Bug Mechanism**
+Record: This falls in category (h) Hardware workarounds/documentation
+additions - DT binding additions for board compatibles. The "bug" is
+that the DTS files already in the tree (b3370479a5f7e) reference
+compatibles that are undocumented, causing `make CHECK_DTBS=y` to
+produce schema validation warnings.
 
-**Step 2.3 - Bug mechanism:**
-- Record: Category (h) Hardware-semantic fix / (d) Memory safety.
-  Mechanism: Preventing fork()-time VMA duplication of the AIO ring
-  buffer, eliminating the race window where child holds a VMA to a ring
-  file while parent tears it down.
+**Step 2.4: Fix Quality**
+Record: Obviously correct - YAML schema change only. Zero runtime risk.
+Minimal and surgical. Cannot introduce regression as DT schema is not
+used at runtime.
 
-**Step 2.4 - Fix quality:**
-- Record: Obviously correct, minimal, surgical. Risk of regression
-  extremely low - the only behavioral change is that child processes
-  cannot access the parent's AIO ring (which was never semantically
-  valid - see `mm_init_aio()` which already zeros `ioctx_table` in
-  child).
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-### PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.1: Blame**
+Record: The existing "Armada 7020 SoC" entry that precedes the added
+block was present from file creation. New entry inserted after it.
 
-**Step 3.1 - Blame the buggy code:**
-- Record: The AIO ring mmap hook is ancient (pre-2.6.12). The `.fault =
-  filemap_fault` vm_op was added in mid-2010s. The fundamental bug (fork
-  copies VMA but child has no AIO context) has existed essentially since
-  AIO ring was made mappable. Verified via `git log --follow fs/aio.c`
-  showing AIO predates the current git history (from Linux-2.6.12-rc2).
+**Step 3.2: Fixes Tag**
+Record: No `Fixes:` tag. However, the related DTS commit `b3370479a5f7e`
+("arm64: dts: a7k: add COM Express boards", Jan 22 2026) is the commit
+that introduced the DTS files referencing the new compatibles, and is
+already present in HEAD.
 
-**Step 3.2 - Follow Fixes: tag:**
-- Record: No Fixes: tag. The bug is essentially inherent to the AIO ring
-  design from the start.
+**Step 3.3: File History**
+Record: Recent related file history: `4c9bc78fa22d6` (missing 7040/8040
+compatibles), `242aa69df6ed8` (8KPlus schema move), `099e1d034f009`
+(solidrun cn9132), `5f5eb24090bec` (solidrun cn9130), `c604a4d1833c1`
+(earlier Marvell COM Express boards). Part of a typical incremental
+binding maintenance flow.
 
-**Step 3.3 - Related changes:**
-- Record: Previously, commit `81e9d6f864765` ("aio: fix mremap after
-  fork null-deref", 2023, in v6.3) fixed an adjacent fork+AIO NULL-
-  deref. That commit was `Cc: stable` tagged and backported. A follow-up
-  commit `3adf7ae18bf42` ("fs: aio: reject partial mremap...") by the
-  same author fixes yet another NULL-deref in the same family (also
-  reviewed by Jan Kara). These demonstrate a pattern of fork+AIO race
-  bugs.
+**Step 3.4: Author**
+Record: Author Elad Nachman from Marvell has been contributing
+Armada/CN913x and ac5 patches. Gregory Clement (mvebu subsystem
+maintainer) handled the commit. Rob Herring (top-level DT maintainer)
+Acked it.
 
-**Step 3.4 - Author:**
-- Record: Zizhi Wo is a regular Huawei kernel contributor, working on
-  filesystem issues. Also authored the related `3adf7ae18bf42` mremap
-  fix.
+**Step 3.5: Dependencies**
+Record: Standalone binding addition, no code dependencies. However,
+contextually linked to DTS commit `b3370479a5f7e` (already in
+HEAD/v7.0).
 
-**Step 3.5 - Dependencies:**
-- Record: None. The fix is self-contained. The `VM_DONTCOPY` flag has
-  been part of `dup_mmap()` logic for many years (mm/mmap.c), checked
-  via `mpnt->vm_flags & VM_DONTCOPY`.
+## PHASE 4: MAILING LIST RESEARCH
 
-### PHASE 4: MAILING LIST RESEARCH
+**Step 4.1: Lore Discussion**
+Record: Found via `b4 dig`: https://lore.kernel.org/all/20260122165923.2
+316510-2-enachman@marvell.com/ — Patch 1/3 of series "arm64: dts: a7k:
+add COM Express boards". Crucial reviewer feedback found:
 
-**Step 4.1 - Original discussion:**
-- Record: `b4 dig -c c03ce4173c7bf` found the original submission at htt
-  ps://lore.kernel.org/all/20260413010814.548568-1-wozizhi@huawei.com/ -
-  v1 only (no later revisions needed). Jan Kara's review comment
-  (retrieved via b4 dig -m): "*I agree it would have to be a rather
-  contrived setup to rely on AIO ringbuffer being inherited by
-  fork(2)... AIO ringbuffer is mostly a legacy thing these days... So
-  I'm OK with trying this simple fix and seeing whether somebody
-  complains.*" - No NAKs, no stable nomination but no objection to the
-  approach.
+- Rob Herring (Mar 6, 2026): *"It seems the .dts files are in 7.0 and
+  the binding is only in next. The binding needs to go into 7.0 too.
+  Please pay attention to the warnings."*
+- Gregory Clement (Mar 13, 2026): *"Sorry for this. I have now applied
+  the binding, and it will be included in my next fixes PR."*
 
-**Step 4.2 - Reviewers:**
-- Record: CC'd: viro (VFS), jack (Jan Kara - MM/FS), brauner (VFS
-  maintainer), bcrl (AIO original maintainer), linux-fsdevel, linux-aio,
-  yangerkun, chengzhihao1. Plus Jan Kara added Jens Axboe for awareness.
-  Appropriate review coverage.
+This is an **explicit stable nomination from the DT maintainer** for
+7.0.y.
 
-**Step 4.3 - Bug report:**
-- Record: Found by Huawei internal syzkaller (fuzzer). Reproducible
-  kernel NULL pointer dereference - not theoretical.
+**Step 4.2: Reviewers**
+Record: Rob Herring (DT maintainer) Acked it, Gregory Clement (mvebu
+maintainer) applied and explicitly targeted 7.0 fixes. Proper subsystem
+review occurred.
 
-**Step 4.4 - Related patches:**
-- Record: Follow-up `3adf7ae18bf42` ("fs: aio: reject partial
-  mremap...") addresses a related but different NULL-deref in the same
-  subsystem. Independent fix.
+**Step 4.3: Bug Report**
+Record: Rob's dt-schema bot flagged "new warnings" on the series.
+Warnings are DT validation errors produced by the DTS files without
+matching bindings.
 
-**Step 4.5 - Stable list history:**
-- Record: No explicit stable mailing list discussion found. However, the
-  precedent (81e9d6f864765) of fork-related AIO fix being backported
-  supports that this is stable material.
+**Step 4.4: Series**
+Record: Part of a 3-patch series. Patch 2 (DTS) already merged to 7.0.
+Patch 3 (MAINTAINERS) has its own destiny. This patch 1 (bindings) is
+the reviewer-requested sync.
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.5: Stable Mailing List**
+Record: Not discussed on stable list; this is being handled as a 7.0
+fixes path.
 
-**Step 5.1 - Key functions:**
-- Record: `aio_ring_mmap_prepare()` is the only function modified.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.2 - Callers:**
-- Record: Called by VFS mmap logic via `f_op->mmap_prepare` during
-  `mmap()` on the AIO ring file. Reachable from `io_setup(2)` syscall
-  via `aio_setup_ring() -> do_mmap(aio_ring_file, ...)`. Reachable by
-  any unprivileged process that can do io_setup().
+Not applicable — no code functions involved, only DT YAML schema. DT
+binding files have no runtime callers; they are consumed only by `dt-
+schema` validation tools (`make dt_binding_check`, `make CHECK_DTBS=y`).
 
-**Step 5.3 - Callees:**
-- Record: `vma_desc_set_flags()` - setting VMA flags during mmap
-  preparation. No side effects other than flag setting.
+Record: Zero runtime call paths, zero runtime consumers. Binding file
+affects only build-time validation.
 
-**Step 5.4 - Call chain:**
-- Record: Bug path reachable from userspace:
-  1. User calls `io_setup(2)` -> mmap of AIO ring VMA
-  2. User calls `fork(2)` -> child inherits VMA (before this fix)
-  3. User (child) touches the VMA address -> triggers fault
-  4. User (parent) calls `io_destroy(2)` concurrently -> race triggers
-     NULL deref
-  All reachable by unprivileged userspace.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 5.5 - Similar patterns:**
-- Record: Verified via Grep that `VM_DONTCOPY` is used in several kernel
-  subsystems (android/binder.c, KFD, xen, infiniband, etc.) for VMAs
-  that shouldn't be inherited by fork. The AIO ring is semantically the
-  same class - it's associated with parent-specific kernel state.
+**Step 6.1: Buggy Code in Stable**
+Record: Verified with `git merge-base --is-ancestor b3370479a5f7e HEAD`
+-> IN HEAD. The DTS files (`db-falcon-carrier-a7k.dts`, `db-falcon-
+carrier.dtsi`, `armada-7020-comexpress.dtsi`) are present in
+stable/linux-7.0.y via mvebu-dt64-6.20-1 merge. The mismatched bindings
+cause the validation gap in 7.0.y. Not in older stable trees (6.6.y,
+6.1.y etc.), so they aren't affected.
 
-### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+**Step 6.2: Backport Complications**
+Record: Binding file in HEAD matches the pre-patch state from mainline.
+Patch should apply cleanly to 7.0.y. Verified file context still has the
+"Armada 7040 SoC" entry right after the "Armada 7020 SoC" entry -
+insertion point unchanged.
 
-**Step 6.1 - Buggy code in stable trees:**
-- Record: Verified by examining `fs/aio.c` in each stable tree:
-  - `stable/linux-5.10.y`: Uses `vma->vm_flags |= VM_DONTEXPAND;` (no
-    VM_DONTCOPY)
-  - `stable/linux-5.15.y`: Uses `vma->vm_flags |= VM_DONTEXPAND;`
-  - `stable/linux-6.1.y`: Uses `vma->vm_flags |= VM_DONTEXPAND;`
-  - `stable/linux-6.6.y`: Uses `vm_flags_set(vma, VM_DONTEXPAND);`
-  - `stable/linux-6.12.y`: Uses `vm_flags_set(vma, VM_DONTEXPAND);`
-  - `stable/linux-6.17.y`, `6.18.y`, `6.19.y`: Uses `desc->vm_flags |=
-    VM_DONTEXPAND;`
+**Step 6.3: Related Fixes in Stable**
+Record: No related binding fixes already in stable.
 
-  All stable trees are missing VM_DONTCOPY and vulnerable to the bug.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 6.2 - Backport complications:**
-- Record: The upstream patch uses `vma_desc_set_flags(desc,
-  VMA_DONTEXPAND_BIT, VMA_DONTCOPY_BIT)` which was introduced in 7.0
-  (master). For each stable tree, the fix needs adaptation:
-  - 5.10-6.1: `vma->vm_flags |= VM_DONTEXPAND | VM_DONTCOPY;`
-  - 6.6-6.12: `vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY);`
-  - 6.17-6.19: `desc->vm_flags |= VM_DONTEXPAND | VM_DONTCOPY;`
+**Step 7.1: Subsystem Criticality**
+Record: Subsystem = `Documentation/devicetree/bindings/arm/marvell/`, DT
+binding documentation. Criticality: PERIPHERAL (affects only DT schema
+validators, not any runtime path).
 
-  Minor textual adjustment needed but semantically identical.
+**Step 7.2: Activity Level**
+Record: Moderately active file, typical maintenance pace.
 
-**Step 6.3 - Related fixes in stable:**
-- Record: Commit `81e9d6f864765` ("aio: fix mremap after fork null-
-  deref") was backported to stable (verified present in
-  stable/linux-5.10.y as `c261f798f7baa` and in stable/linux-6.6.y as
-  `81e9d6f864765`). That confirms the AIO+fork class of bugs has been
-  considered stable-worthy before.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 8.1: Who is Affected**
+Record: Developers/testers running `make dt_binding_check` or `make
+CHECK_DTBS=y` on the arm64 marvell DTS tree. No end users affected (DT
+schema files are not compiled into the kernel or used at runtime).
 
-**Step 7.1 - Subsystem:**
-- Record: `fs/aio.c` - AIO filesystem interface. IMPORTANT criticality -
-  not in the hot path for most users (io_uring is newer), but AIO is
-  widely used by legacy applications, databases (Oracle, MySQL), and
-  libaio consumers. Still heavily supported.
+**Step 8.2: Trigger Conditions**
+Record: The "bug" (validation warning) triggers only when someone runs
+DT schema validation against the shipped DTS files. Not runtime
+reachable.
 
-**Step 7.2 - Activity:**
-- Record: AIO is mature/stable subsystem. Low activity (mostly
-  maintenance) - the bug has likely been present for years without being
-  hit due to the unusual trigger (fork after io_setup is uncommon).
+**Step 8.3: Failure Mode Severity**
+Record: LOW - generates `CHECK_DTBS` warnings/failures for validator
+users; no crashes, no data corruption, no security impact, no runtime
+behavior change.
 
-### PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 8.4: Risk vs Benefit**
+Record:
+- Benefit: LOW severity, fixes validation inconsistency explicitly
+  requested by the DT maintainer; keeps 7.0.y internally consistent.
+- Risk: Near-zero. 11-line YAML file touching schema metadata only;
+  cannot affect compile or runtime.
+- Ratio: LOW/near-zero = favorable.
 
-**Step 8.1 - Affected users:**
-- Record: Any system using AIO where a process that called io_setup()
-  then forks (e.g., databases, async I/O applications with forking). The
-  fork+AIO combination is unusual but legitimate.
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 8.2 - Trigger conditions:**
-- Record: Race between parent's io_destroy() and child's page fault on
-  inherited ring. Triggerable by unprivileged userspace. Timing-
-  dependent but demonstrated via syzkaller (reproducible). No special
-  privileges needed.
+**Step 9.1: Evidence**
 
-**Step 8.3 - Failure mode severity:**
-- Record: Kernel NULL pointer dereference - CRITICAL. System crash
-  (oops), potential panic depending on config. Triggerable by
-  unprivileged userspace - this borders on security concern (DoS).
+FOR backport:
+- DT maintainer (Rob Herring) explicitly stated: "The binding needs to
+  go into 7.0 too."
+- Companion DTS commit `b3370479a5f7e` is already in stable/linux-7.0.y
+  (verified)
+- Fixes DT schema validation warnings against the already-shipped DTS
+- Zero runtime risk (YAML metadata only)
+- Acked-by DT maintainer, applied to mvebu/fixes (7.0 fixes) by mvebu
+  maintainer
+- Small (11 lines), contained, obviously correct
+- Falls under the "Documentation" and "DT updates for existing hardware
+  (in tree)" exception categories
 
-**Step 8.4 - Risk-benefit:**
-- Record:
-  - BENEFIT: Prevents kernel NULL deref crash triggerable by
-    unprivileged userspace. HIGH benefit.
-  - RISK: 1-line flag change. VM_DONTCOPY means child doesn't inherit
-    parent's AIO ring - semantically correct since `mm_init_aio()`
-    already clears the child's `ioctx_table`. Verified in kernel/fork.c:
-    `mm_init_aio() { mm->ioctx_table = NULL; }`. Very low risk.
+AGAINST backport:
+- Subject reads as feature addition ("add Marvell 7k COMe boards")
+- No `Fixes:` tag, no `Cc: stable` tag
+- Technically describes new boards not previously documented
+- Doesn't fix any runtime behavior
 
-### PHASE 9: FINAL SYNTHESIS
+Unresolved: None — the mailing list discussion resolves the intent.
 
-**Step 9.1 - Evidence:**
-- FOR: Fixes real kernel NULL deref; found by syzkaller (reproducible);
-  reviewed by Jan Kara; 1-line surgical change; semantically correct
-  (child has no AIO context); precedent of similar fork+AIO fix being
-  backported (`81e9d6f864765`); triggerable by unprivileged userspace
-  (crash = DoS).
-- AGAINST: Requires backport adjustment for older stable trees (API
-  evolved from `vma->vm_flags |=` to `vm_flags_set()` to
-  `desc->vm_flags` to `vma_desc_set_flags()`). However this is a trivial
-  textual adjustment.
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? YES (YAML schema addition, acked by DT
+   maintainer)
+2. Fixes a real bug affecting users? BORDERLINE - fixes validator bug
+   for shipped DTS
+3. Important issue? LOW severity (validation warnings, not runtime)
+4. Small and contained? YES (11 lines, one file)
+5. No new features? YES (no runtime features, binding matches DTS
+   already in tree)
+6. Can apply to stable? YES (applies cleanly to 7.0.y)
 
-**Step 9.2 - Stable rules checklist:**
-1. Obviously correct and tested? YES - reviewed by Jan Kara, logic
-   verified
-2. Fixes a real bug? YES - syzkaller-reproducible NULL deref
-3. Important issue? YES - CRITICAL: NULL pointer deref = kernel crash
-4. Small and contained? YES - 1 line
-5. No new features? YES - just adds a flag
-6. Can apply to stable? YES with minor textual adjustment per kernel
-   version
+**Step 9.3: Exception Categories**
+Applicable exceptions:
+- "DEVICE TREE (DT) UPDATES: DT binding additions for existing hardware,
+  DT fixes for incorrect hardware descriptions, enabling already-
+  supported hardware on new boards - Usually safe because they only
+  affect specific ARM/embedded platforms."
+- "DOCUMENTATION and COMMENT FIXES: Fixing incorrect documentation,
+  updating obsolete comments - Zero risk of runtime regression"
 
-**Step 9.3 - Exception categories:**
-- Not applicable - this is a direct bug fix for a kernel NULL deref.
+The DTS files for this hardware are already present in 7.0; adding the
+matching bindings is a documentation sync.
 
-**Step 9.4 - Decision:** The fix clearly meets all stable criteria:
-obviously correct, fixes a real (syzkaller-reproducible) kernel crash,
-very small (1 line), no new APIs. The bug is triggerable by unprivileged
-userspace via fork+io_setup/io_destroy race, making it a serious issue
-worthy of backport. The only complication is the 4 slightly different
-forms needed for different stable trees, but each is a trivial
-adaptation.
+**Step 9.4: Decision**
+For 7.0.y specifically, the DTS files exist in the tree, the DT
+maintainer explicitly asked for this to land in 7.0, and the risk is
+zero. This matches the exception for DT updates / documentation fixes.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Jan Kara, Signed-off-by Christian
-  Brauner (VFS maintainer), Link to lore patch submission
-- [Phase 2] Diff analysis: verified via `git show c03ce4173c7bf` -
-  single 1-line change in `aio_ring_mmap_prepare()` adding
-  VMA_DONTCOPY_BIT
-- [Phase 3] Checked file history `git log --oneline -- fs/aio.c` - aio.c
-  is pre-2.6.12 (ancient), the ring mmap code has existed for over a
-  decade
-- [Phase 3] Found related earlier fix `81e9d6f864765` "aio: fix mremap
-  after fork null-deref" with explicit `Cc: <stable@vger.kernel.org>` -
-  established precedent
-- [Phase 4] `b4 dig -c c03ce4173c7bf -a`: single version (v1) - applied
-  as-is, no revisions needed
-- [Phase 4] `b4 dig -c c03ce4173c7bf -w`: verified maintainers CC'd
-  (viro, jack, brauner, bcrl, linux-fsdevel, linux-aio)
-- [Phase 4] `b4 dig -m /tmp/aio_patch.mbox`: Jan Kara's review approved
-  the approach, called AIO ring "mostly a legacy thing", no NAKs
-- [Phase 5] Verified `VMA_DONTCOPY_BIT` = 17 via
-  `DECLARE_VMA_BIT(DONTCOPY, 17)` in include/linux/mm.h;
-  `vma_desc_set_flags` expands to `vma_desc_set_flags_mask(desc,
-  mk_vma_flags(__VA_ARGS__))`
-- [Phase 5] Verified `mm_init_aio` in kernel/fork.c: `mm->ioctx_table =
-  NULL;` - child has no AIO context, confirming semantic correctness
-- [Phase 5] Verified `VM_DONTCOPY` handling in mm/mmap.c dup_mmap: `if
-  (mpnt->vm_flags & VM_DONTCOPY) { ... continue; }` - VMA is skipped
-  during fork
-- [Phase 6] Read code from each stable tree's `fs/aio.c`:
-  - 5.10.y line 369-373: `vma->vm_flags |= VM_DONTEXPAND`
-  - 5.15.y line 368-373: `vma->vm_flags |= VM_DONTEXPAND`
-  - 6.1.y line 395-400: `vma->vm_flags |= VM_DONTEXPAND`
-  - 6.6.y line 395-400: `vm_flags_set(vma, VM_DONTEXPAND)`
-  - 6.12.y line 395-400: `vm_flags_set(vma, VM_DONTEXPAND)`
-  - 6.17.y/6.18.y/6.19.y line 395-400: `desc->vm_flags |= VM_DONTEXPAND`
-  None have VM_DONTCOPY - all are vulnerable.
-- [Phase 6] Verified related `81e9d6f864765` is in stable via `git log
-  stable/linux-5.10.y` (as `c261f798f7baa`) and stable/linux-6.6.y
-- [Phase 7] Subsystem identified as fs/aio (filesystem, async I/O) -
-  IMPORTANT criticality level
-- [Phase 8] Failure mode: NULL deref at `filemap_read_folio` when
-  accessing `a_ops->read_folio` (not implemented by AIO) - confirmed
-  from stack trace in commit message
-- UNVERIFIED: Whether the original syzkaller reproducer is public
-  (Huawei internal testing, report not public)
-- UNVERIFIED: Exact date when the bug first became exploitable (depends
-  on when filemap_fault path was used for this VMA, which has been
-  present since aio ring was mappable - approximately since 2013)
+- [Phase 1] Parsed tags: `Acked-by: Rob Herring`, `Signed-off-by:
+  Gregory CLEMENT`, no `Fixes:`/`Cc: stable`.
+- [Phase 2] Diff analysis: +11 lines of YAML added to
+  `armada-7k-8k.yaml`, single file, new `oneOf` entry for the Falcon
+  carrier + Armada 7020 CPU module compatible stack.
+- [Phase 3] `git log --oneline -- <file>`: file churn is typical
+  incremental binding maintenance.
+- [Phase 3] `git log -1 --format="%H %ci %s" edb7efa767da8` -> March 13,
+  2026; `b3370479a5f7e` -> January 23, 2026 (DTS, earlier).
+- [Phase 3] `git merge-base --is-ancestor b3370479a5f7e HEAD` -> **IN
+  HEAD** (DTS already in 7.0.y).
+- [Phase 3] `git merge-base --is-ancestor edb7efa767da8 HEAD` -> **NOT
+  IN HEAD** (binding not yet in 7.0.y).
+- [Phase 3] `git tag --contains b3370479a5f7e` -> `v7.0` confirms DTS is
+  in the 7.0 release.
+- [Phase 4] `b4 dig -c edb7efa767da8` -> found thread at
+  lore.kernel.org/all/20260122165923.2316510-2-enachman@marvell.com/.
+- [Phase 4] `b4 dig -c edb7efa767da8 -w` -> recipients include robh+dt,
+  krzysztof.kozlowski+dt, conor+dt, andrew@lunn.ch,
+  gregory.clement@bootlin.com (all relevant DT/maintainer parties).
+- [Phase 4] `b4 dig -c edb7efa767da8 -m /tmp/thread.mbox` -> saved full
+  thread; confirmed Rob Herring's explicit "The binding needs to go into
+  7.0 too" and Gregory Clement's response "I have now applied the
+  binding, and it will be included in my next fixes PR."
+- [Phase 4] Rob's dt-bot reported DTB warnings on the series
+  (`arch/arm64/boot/dts/marvell/db-falcon-carrier-a7k.dtb: ...phy-
+  mode:0: '10gbase-kr' is not one of [...]`), a separate phy-mode issue,
+  but confirms validation is run.
+- [Phase 5] Not applicable (YAML schema file has no runtime callers).
+- [Phase 6] Verified DTS files (`db-falcon-carrier-a7k.dts`, `db-falcon-
+  carrier.dtsi`, `armada-7020-comexpress.dtsi`) exist in HEAD via `git
+  show b3370479a5f7e:...` - confirmed they use the compatibles added in
+  this binding commit.
+- [Phase 7] File path: `Documentation/devicetree/bindings/arm/marvell/`
+  - DT binding docs for Marvell Armada platforms.
+- [Phase 8] Severity determined by examining what consumes DT binding
+  YAMLs (dt-schema validators only); verified no runtime code path uses
+  these YAML files.
 
-## Conclusion
-
-This is a small, surgical bug fix for a kernel NULL pointer dereference
-that can be triggered by unprivileged userspace via a fork+AIO race. The
-fix is semantically correct (child has no AIO context, so the VMA
-shouldn't be inherited), was reviewed by Jan Kara, and has an
-established precedent of related fork+AIO fixes being backported to
-stable. The only caveat is that each stable tree needs a minor textual
-adaptation due to API evolution (from `vma->vm_flags |=` to
-`vm_flags_set()` to `vma_desc_set_flags()`), but the one-line semantic
-change applies cleanly in every case.
+The mailing list evidence is unambiguous: the DT maintainer explicitly
+flagged that the DTS files landed in v7.0 but the matching bindings did
+not, and requested they go into 7.0 to fix the CHECK_DTBS validation
+warnings. The mvebu maintainer applied it to the fixes branch
+accordingly. The change is 11 lines of YAML with zero runtime risk,
+acked by the DT maintainer, matching already-shipped DTS files in the
+7.0 tree.
 
 **YES**
 
- fs/aio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/arm/marvell/armada-7k-8k.yaml | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/aio.c b/fs/aio.c
-index a07bdd1aaaa60..6d436f8b3f349 100644
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -394,7 +394,7 @@ static const struct vm_operations_struct aio_ring_vm_ops = {
+diff --git a/Documentation/devicetree/bindings/arm/marvell/armada-7k-8k.yaml b/Documentation/devicetree/bindings/arm/marvell/armada-7k-8k.yaml
+index 4bc7454a5d3ac..7e77310da626f 100644
+--- a/Documentation/devicetree/bindings/arm/marvell/armada-7k-8k.yaml
++++ b/Documentation/devicetree/bindings/arm/marvell/armada-7k-8k.yaml
+@@ -21,6 +21,17 @@ properties:
+           - const: marvell,armada-ap806-dual
+           - const: marvell,armada-ap806
  
- static int aio_ring_mmap_prepare(struct vm_area_desc *desc)
- {
--	vma_desc_set_flags(desc, VMA_DONTEXPAND_BIT);
-+	vma_desc_set_flags(desc, VMA_DONTEXPAND_BIT, VMA_DONTCOPY_BIT);
- 	desc->vm_ops = &aio_ring_vm_ops;
- 	return 0;
- }
++      - description:
++          Falcon (DB-98CX85x0) Development board COM Express Carrier plus
++          Armada 7020 SoC COM Express CPU module
++        items:
++          - const: marvell,armada7020-falcon-carrier
++          - const: marvell,db-falcon-carrier
++          - const: marvell,armada7020-cpu-module
++          - const: marvell,armada7020
++          - const: marvell,armada-ap806-dual
++          - const: marvell,armada-ap806
++
+       - description: Armada 7040 SoC
+         items:
+           - enum:
 -- 
 2.53.0
 
