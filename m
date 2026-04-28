@@ -1,44 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E393F54AD;
-	Tue, 28 Apr 2026 10:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCA43F20E5;
+	Tue, 28 Apr 2026 10:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372912; cv=none; b=tuCFY7O7IIIC91AfcVxAZcol0/TM92HZ9iO/jErGjEQ+vdQUy+u35x5PT+sPLClogDMepTMrFVedNSNuqvQ2DRkVf2A5peN8V17Di1GuDcskc26kC/3tAO3msPPA8WOvDiOnu2LyamR9OiSTXtuLvdfiUT/Xs0GlKBDwiYJXF34=
+	t=1777372913; cv=none; b=hO7DVIoGZ4utevhqnUQMwo7nJZh1vEQLNGZDffNqvO1LfhwzA1jfLSfI08F0psT1Q3KT2ZBvJqHjmxNcD8HKhFAGI9mIkdagvbAk3uiR45MrKdoeCp6Hu/wQebt8DJtHGUkqxM6u2yP6vVYJ6lKFSl8cK6J22p8JwzwYs9QilGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372912; c=relaxed/simple;
-	bh=KM8CvkVf9KhC9tS6FGNy0JB1gj2gl8LbhL0+oO30XSE=;
+	s=arc-20240116; t=1777372913; c=relaxed/simple;
+	bh=/vq2AcbHo4qV4YUOeFckuoWszLHfZN6gWj0tMUvaB20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u7afD1HhsIs6dpa7O7eoH9+CXliZTW93BQpdi9Wr9S0rd8J4v+RkzWjnC2HvNS1P23L1oGpXoqOqWVogqkJEd9al0nsznVmjlHuCiIHfPZMHM3AGypBfq91jn996bkEYK+oooxrXx/VURjBaxe7Ri1nPyCnjxZ0lLCVyrnJf7X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KvA5UzLk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rgMZWtAzWDxqsZr4FTVMyTPKANibSdtITpTmJeDLsAPRsDu8jG33Ep5TKIdOouFKapCMuojopYGcXu/VzTuDghznUv48ECvcuTptz6f2DwD7VpH5l+UtPrbOMRRRrRXdDiQudhxWZJImhJMSYS8dteJ6FHGkNt6Lmpla9PKkLHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pNwmNjFi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KvA5UzLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B676CC2BCAF;
-	Tue, 28 Apr 2026 10:41:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pNwmNjFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D63C2BCB6;
+	Tue, 28 Apr 2026 10:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372911;
-	bh=KM8CvkVf9KhC9tS6FGNy0JB1gj2gl8LbhL0+oO30XSE=;
+	s=k20201202; t=1777372913;
+	bh=/vq2AcbHo4qV4YUOeFckuoWszLHfZN6gWj0tMUvaB20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KvA5UzLku9jnYm1QCzLTu14qCOaLxY/yl5HZ13iBD5PZWHAbEsmqoRjMfxelzxW1D
-	 baB7MoX4A9Qwr3M0mriKnQ1aUIHOODC27HYAFyO16fs0zMD5/6cPjFRvqx7TJTEkYc
-	 xeTQWUJS6534W0Fn50MacbqbbneaazXy2sRTkmkGvCPpEEwBwNbAcTs3apa3Bt5jxb
-	 iQRnvIxzuBL3v4y7B6mku7QZefJTKLgU1l3TExXV+nJ29mz9SgZisgakGx2Gf8mrRl
-	 fS0sgLGT0DKlTWkDLaqwD+sftJg+BUPGVD4nZ1lS9FvZMenLRe28wxB5gGs4gCzItz
-	 skNgl9ozX0YQw==
+	b=pNwmNjFiDkPymI8sU4K1a/5JtrHAUXix4AwiABeW929S3a8w3wxgAkX31ZlLA3BX6
+	 JIDRtSCQTmxbGCdJjXM7oA+NncSajqMwCJ6UFBldiKHNOIS2dcVUQejG/G0pb2kgql
+	 p2dj2AKS1uFFbKwOUH7ZX6P3OSB7gTndzIPVSak9yrRkj6XHtoDdsnLTQ6rIWRwakH
+	 jB021vlWoGEmJYReBkrwrVmypp+O6Sy8oMjFK+gNIgDeVunzjz/bAEVlAOcnR11wp1
+	 f+gS2WhAd0oOCigaaiZIChWSm6Jt3473ea7BsXKbb+Et5qsUImlf5NLWNWj1uVNixu
+	 idXIK5HQyujqw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Enzo Matsumiya <ematsumiya@suse.de>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sfrench@samba.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	Rodrigo.Siqueira@amd.com,
+	christian.koenig@amd.com,
+	Xinhui.Pan@amd.com,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] smb: client: compress: fix buffer overrun in lz77_compress()
-Date: Tue, 28 Apr 2026 06:40:24 -0400
-Message-ID: <20260428104133.2858589-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] drm/amd/display: Pass min page size from SOC BB to dml2_1 plane config
+Date: Tue, 28 Apr 2026 06:40:25 -0400
+Message-ID: <20260428104133.2858589-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -54,434 +63,414 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 4c221711b23745e2fb961ee517e9ed96ce76f9cb ]
+[ Upstream commit 07ac59230d5fd603d56af2363dae80d3e973e4bc ]
 
-@dst buffer is allocated with same size as @src, which, for good
-compression cases, works fine.
+[Why]
+Like dml2_0 this isn't guaranteed to be constant for every ASIC.
 
-However, when compression goes bad (e.g. random bytes payloads), the
-compressed size can increase significantly, and even by stopping the
-main loop at 7/8 of @slen, writing leftover literals could write past
-the end of @dst because of LZ77 metadata.
+This can cause corruption or underflow for linear surfaces due to a
+wrong PTE_ROW_HEIGHT_LINEAR value if not correctly specified.
 
-To fix this, add lz77_compressed_alloc_size() helper to compute the
-correct allocation size for @dst, accounting for metadata and worst
-cast scenario (all literals).
+[How]
+Like dml2_0 pass in the SOC bb into the plane configuration population
+functions.
 
-While this is overprovisioning memory, it's not only correct, but also
-allows lz77_compress() main loop to run without ever checking @dst
-limits (i.e. a perf improvement).
+Set both GPUVM and HostVM page sizes in the overrides.
 
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have sufficient context to produce the analysis.
+Based on my forensic investigation, here is my detailed analysis:
 
-## Phase 1: Commit Message Forensics
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 — Subject line**
-Record: subsystem `smb: client: compress:`, verb `fix`, summary: buffer
-overrun in `lz77_compress()`.
+**Step 1.1: Subject Line**
+- Subsystem prefix: `drm/amd/display:`
+- Action verb: "Pass" (descriptive of the fix; effectively a bug fix)
+- Record: drm/amd/display, action verb "Pass" (corrective), summary:
+  ensures DML2.1 plane configuration uses SOC bounding box values for
+  min page size instead of hardcoded 256
 
-**Step 1.2 — Tags**
-Record: Only `Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>` and
-`Signed-off-by: Steve French <stfrench@microsoft.com>` (subsystem
-maintainer). NO `Fixes:`, NO `Cc: stable`, NO `Reported-by`, NO
-`Reviewed-by`, NO `Tested-by`, NO `Link:`. Reference on lore:
-`<20260413190713.283939-1-ematsumiya@suse.de>` — this is patch **1/8**
-of a series.
+**Step 1.2: Commit Message Tags**
+- Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+- Signed-off-by: Nicholas Kazlauskas (author, AMD)
+- Signed-off-by: Roman Li (AMD display submaintainer)
+- Tested-by: Dan Wheeler <daniel.wheeler@amd.com> (AMD QA tester)
+- Signed-off-by: Alex Deucher (AMD GPU maintainer)
+- No Fixes:/Cc:stable tags (expected per instructions)
+- Record: Strong AMD internal review chain - reviewed, tested by AMD QA,
+  signed by maintainers
 
-**Step 1.3 — Body text**
-Record: Bug = `@dst` is allocated same size as `@src`. When compression
-expands the payload (random/incompressible data), the existing 7/8
-bailout in the main loop is insufficient because (a) it only runs in the
-match branch, not on the per-literal path and per-flag-word path, and
-(b) the trailing-literals loop and final flag-word write at function end
-have no bounds check. Failure mode: heap write past `@dst` end. No stack
-traces, no reporter. Author explains the root cause clearly.
+**Step 1.3: Commit Body Analysis**
+- Bug: `gpuvm_min_page_size_kbytes` is hardcoded to 256, but SOC-
+  provided values can differ per ASIC
+- Symptom: "corruption or underflow for linear surfaces due to a wrong
+  PTE_ROW_HEIGHT_LINEAR value if not correctly specified"
+- Mechanism: Wrong page size causes wrong PTE row height, which causes
+  incorrect PTE prefetching
+- Author understands root cause and explicitly notes this mirrors the
+  dml2_0 fix
+- Record: Hardware corruption/underflow on linear surfaces; explicit
+  reference to prior dml2_0 fix
 
-**Step 1.4 — Hidden bug?**
-Record: Not hidden — "fix buffer overrun" is explicit; this is a real
-memory-safety fix.
+**Step 1.4: Hidden Bug Fix Detection**
+- "Pass min page size from SOC BB" is corrective phrasing
+- Commit explicitly says "can cause corruption or underflow"
+- Record: This IS a bug fix despite verb-only-language ("Pass")
 
-## Phase 2: Diff Analysis
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 — Inventory**
-Record: 3 files, +33/-15. `fs/smb/client/compress.c` (caller),
-`fs/smb/client/compress/lz77.c` (the compressor),
-`fs/smb/client/compress/lz77.h` (new helper). Functions touched:
-`smb_compress()`, `lz77_compress()`. Scope: single-file contained
-subsystem fix (within new `compress/` subdir).
+**Step 2.1: Inventory**
+- 1 file: `drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_translation
+  _helper.c`
+- 15 insertions, 6 deletions
+- 3 functions modified: `populate_dml21_dummy_plane_cfg`,
+  `populate_dml21_plane_config_from_plane_state`,
+  `dml21_map_dc_state_into_dml_display_cfg`
+- Record: Single-file surgical fix, very small scope
 
-**Step 2.2 — Code flow before/after**
-Record:
-- Before: `dlen = slen` ⇒ buffer is `slen` bytes; loop has an in-loop
-  `if (dstp - dst >= slen - (slen >> 3))` that only fires on the match
-  path; tail literal loop + final `lz77_write32(flag_pos, flag)` run
-  with no bounds check.
-- After: `dlen = lz77_compressed_alloc_size(slen)` which returns `size +
-  (size >> 3) + 8`, providing worst-case all-literal headroom (12.5% + 8
-  bytes of flag metadata). The 7/8 in-loop check is deleted. A
-  `WARN_ON_ONCE(*dlen < lz77_compressed_alloc_size(slen))` at function
-  entry validates the caller provided adequate space.
+**Step 2.2: Code Flow Change**
+- BEFORE: `plane->overrides.gpuvm_min_page_size_kbytes = 256;`
+  (hardcoded)
+- AFTER: `plane->overrides.gpuvm_min_page_size_kbytes =
+  soc_bb->gpuvm_min_page_size_kbytes;` (from SOC bb)
+- Also adds: `plane->overrides.hostvm_min_page_size_kbytes =
+  soc_bb->hostvm_min_page_size_kbytes;`
+- Function signatures extended to accept `struct dml2_soc_bb *soc_bb`
+  parameter
+- Caller updated to pass `&dml_ctx->v21.dml_init.soc_bb`
+- Record: Replaces hardcoded values with SOC-provided values; added
+  missing hostvm setting
 
-**Step 2.3 — Bug mechanism**
-Record: Memory-safety fix (buffer overrun) = category (d) above. Worst-
-case all-literals path writes 1 byte per input byte + 4 bytes per 32
-input bytes (flag word) + up to 4 extra trailing bytes for the final
-flag write = `slen + slen/8 + ~8` bytes. Old allocation of `slen` is
-insufficient.
+**Step 2.3: Bug Mechanism**
+- Category: Logic/correctness fix (hardware programming)
+- Root cause: hardcoded constant where ASIC-specific value should be
+  used
+- Specific impact: Wrong gpuvm_min_page_size affects
+  PTE_ROW_HEIGHT_LINEAR HW register programming on DCN401 hardware
+- Record: Hardware programming correctness bug; can cause display
+  corruption
 
-**Step 2.4 — Quality**
-Record: Fix is obviously correct; the helper is a simple inline, and
-removing the guard is safe because the buffer is now sized for the worst
-case. The WARN provides a safety net. No regressions expected. Caller
-semantics preserved: `-EMSGSIZE` is still returned when compression
-isn't beneficial (`*dlen >= slen` at the end), and `smb_compress()`
-already handles that by falling back to uncompressed send.
+**Step 2.4: Fix Quality**
+- Obviously correct: just propagates existing SOC bb values
+- Minimal/surgical: 21-line diff, no unrelated changes
+- Regression risk: very low - just replaces hardcoded values with
+  structured access; for DCN401 default SOC bb, values are identical
+  (256/0)
+- Record: High quality, low-risk fix
 
-## Phase 3: Git History Investigation
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 — Blame**
-Record: The buggy allocation and 7/8-bailout loop were introduced in
-`94ae8c3fee94a` ("smb: client: compress: LZ77 code improvements
-cleanup", dated 2024-09-15, merged into v6.12). Notably that commit's
-message even says: *"Known bugs: This implementation currently works
-fine in general, but breaks with some payloads used during testing.
-Investigation ongoing, to be fixed in a next commit."* The original SMB
-compression infrastructure came in `d14bbfff259ca` (also v6.12).
+**Step 3.1: Blame**
+- Hardcoded `= 256` lines have been present since the dml21 directory
+  was first added
+- The dml21 file itself was renamed from `dml2/dml21/` to
+  `dml2_0/dml21/` in commit `e6a8a000cfe6a` (v6.19)
+- Original creation: commit `70839da636050` ("Add new DCN401 sources")
+  from April 2024, first appeared in v6.11
+- Record: Buggy code present since v6.11
 
-**Step 3.2 — Fixes: follow-up**
-Record: No `Fixes:` tag, but the de-facto target is `94ae8c3fee94a` (in
-v6.12+).
+**Step 3.2: Fixes: Tag**
+- No Fixes: tag, but the commit explicitly references "Like dml2_0"
+  referring to commit `31663521ede2e` ("Use gpuvm_min_page_size_kbytes
+  for DML2 surfaces", July 2024)
+- The dml2_0 fix WAS selected for stable trees: backported to 6.10.y
+  (54877301a7551), 6.11.y (291c87fd3abe1), 6.12.y, 6.18.y, 6.19.y
+- Record: Direct precedent for backporting this class of fix
 
-**Step 3.3 — File history**
-Record: `fs/smb/client/compress/lz77.c` has had almost no churn between
-v6.12 and v7.0 (only the generic `move asm/unaligned.h ->
-linux/unaligned.h` touched it). All stable trees v6.12.y through v6.18.y
-carry essentially the same buggy implementation.
+**Step 3.3: Related Recent Changes**
+- Adjacent commit `5721b5b9c9c79` (Mar 24, 2026): "Fix HostVMMinPageSize
+  unit mismatch in DML2.1" - related but independent (fixes core
+  calculation, not override population)
+- Adjacent commit `5a89553231833` (Mar 24, 2026): DCN42 SOC bb
+  correction
+- Record: Part of a series of DML2.1 hardening fixes; this commit is
+  self-contained
 
-**Step 3.4 — Author**
-Record: Author (Enzo Matsumiya) is the original implementor of the SMB
-LZ77 code. Co-signed by subsystem maintainer (Steve French). Author
-credibility: high.
+**Step 3.4: Author Context**
+- Nicholas Kazlauskas: AMD display engineer, primary author of DML logic
+- Roman Li: AMD display maintainer
+- Alex Deucher: AMD GPU subsystem maintainer
+- Record: Author has full subsystem authority
 
-**Step 3.5 — Dependencies**
-Record: Patch 1/8 of an 8-patch series. Patches 2/8 and 3/8 are also
-fixes (UB in final flag, off-by-one in match length). Patch 1/8 is
-**self-contained** — it only calls the new inline helper and the
-callsite update in `smb_compress()`; it does not depend on patches 2–8
-to be functional or correct. Patches 5–8 are optimizations/docs/new
-header.
+**Step 3.5: Dependencies**
+- The override field `hostvm_min_page_size_kbytes` was added to the
+  `plane->overrides` struct in commit `76468055069ce` ("DML21
+  Reintegration"), first appearing in v6.16
+- For stable trees < 6.16, the hostvm field doesn't exist in the
+  override struct → backport adjustment needed
+- The gpuvm portion can apply to all stable trees with the dml21
+  directory
+- Record: Partial dependency on field availability; gpuvm portion
+  universally applicable
 
-## Phase 4: Mailing List Research
+## PHASE 4: MAILING LIST INVESTIGATION
 
-**Step 4.1 — b4 dig**
-Record: `b4 dig -c 4c221711b23745e2fb961ee517e9ed96ce76f9cb` → `https://
-lore.kernel.org/all/20260413190713.283939-1-ematsumiya@suse.de/`. Single
-revision (v1); no re-spins, no NAKs on this particular patch.
+**Step 4.1: b4 dig**
+- `b4 dig -c 07ac59230d5fd`: returned "Could not find anything matching"
+  - typical for AMD display patches that go through the internal `amd-
+  staging-drm-next` tree before mainline (not posted directly to lkml)
+- Record: Patch went through AMD internal pipeline; no public list
+  discussion to investigate
 
-**Step 4.2 — Reviewers**
-Record: Original Cc: linux-cifs, Steve French, Paulo Alcantara, Ronnie
-Sahlberg, Shyam Prasad, Tom Talpey, Bharath Naik, Henrique Carvalho. No
-explicit `Reviewed-by`/`Tested-by`/`Acked-by` replies for patch 1/8 in
-the thread.
+**Step 4.2: Reviewers**
+- Verified through commit message: AMD internal review (Dillon Varone,
+  Roman Li, Alex Deucher all involved)
+- Tested by AMD QA (Dan Wheeler)
 
-**Step 4.3 — Bug report**
-Record: No `Link:` or `Reported-by`. Author describes the failure as
-found during testing with random payloads.
+**Step 4.3-4.5: External Research**
+- No bug report links; no Reported-by tags
+- No syzbot involvement
+- The commit was developed proactively after dml2_0 fix to address
+  parallel bug
 
-**Step 4.4 — Series context**
-Record: 8-patch series; patches 2/8 and 7/8 received replies. Patch 7/8
-(unrelated `common.h`) had a 32-bit build breakage reported by Nathan
-Chancellor and was dropped from for-next. The remaining patches
-including 1/8 were merged. Patch 1/8 is not entangled with 7/8.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 4.5 — Stable list**
-Record: No stable-specific discussion found; no prior attempt to send
-this to stable.
+**Step 5.1-5.4: Functions and Reachability**
+- `populate_dml21_dummy_plane_cfg`: called when stream has no planes
+  (e.g., display blanked/initial state)
+- `populate_dml21_plane_config_from_plane_state`: called for every plane
+  on every mode-set
+- Caller: `dml21_map_dc_state_into_dml_display_cfg` invoked from
+  `dml21_validate`/`dml21_compute_subvp_state`
+- Reachable from: every atomic commit / mode-set on DCN401 hardware
+- Record: HIGHLY reachable - any display configuration change on DCN401
 
-## Phase 5: Code Semantic Analysis
+**Step 5.5: Similar Patterns**
+- The same fix was already done for dml2_0
+  (`populate_dummy_dml_plane_cfg`,
+  `populate_dml_plane_cfg_from_plane_state`)
+- DCN401 uses `using_dml21 = true` (verified in `dcn401_resource.c`), so
+  dml2_1 path is the active one for this hardware
+- Record: Direct parallel to previously-fixed dml2_0 bug
 
-**Step 5.1 — Key functions**
-Record: `lz77_compress()` (the buggy function), `smb_compress()` (the
-sole caller), new helper `lz77_compressed_alloc_size()`.
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 5.2 — Callers**
-Record: `grep "lz77_compress("` shows exactly one caller:
-`fs/smb/client/compress.c:343` in `smb_compress()`. `smb_compress()` is
-invoked from the SMB2 write send path when `should_compress()` returns
-true.
+**Step 6.1: Code Existence**
+- 6.6.y: file does NOT exist (no DCN401 support, dml21 dir absent)
+- 6.11.y - 6.18.y: file exists at
+  `drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_translation_helper.c`
+- 6.19.y - 7.0.y: file exists at `drivers/gpu/drm/amd/display/dc/dml2_0/
+  dml21/dml21_translation_helper.c` (renamed)
+- Record: Bug exists in 6.11.y onward; not applicable to 6.6.y and
+  earlier
 
-**Step 5.3 — Callees**
-Record: `lz77_compress()` uses `kvcalloc()` for a hash table,
-`kvfree()`, `memcpy()`, a few internal helpers. No locks, no blocking
-I/O directly.
+**Step 6.2: Backport Difficulty**
+- 7.0.y, 6.19.y: clean apply
+- 6.18.y: needs path adjustment (dml2 vs dml2_0)
+- 6.16.y - 6.17.y: needs path adjustment; both fields available
+- 6.12.y, 6.15.y: needs path adjustment AND hostvm field doesn't exist
+  in override struct → drop the hostvm override line
+- 6.11.y: similar to 6.12.y (needs adjustment)
+- Record: Trivial path adjustment for older trees; hostvm portion may
+  need dropping for 6.15.y and earlier
 
-**Step 5.4 — Reachability**
-Record: Reachable from userspace via `write(2)`/`writev(2)`/mmap
-writeback on a CIFS mount **when**: (a) `CONFIG_CIFS_COMPRESSION=y`, (b)
-the SMB 3.1.1 server negotiated compression, (c) the share has
-`SMB2_SHAREFLAG_COMPRESS_DATA`, (d) the payload passes
-`is_compressible()` heuristics. Data content is user-controlled; an
-attacker (or merely unlucky workload) who gets a payload through
-`is_compressible()` but that produces expanding LZ77 output reaches the
-overrun. Triggering requires all the config/negotiation stars to align,
-but once they do the buggy path is data-driven and realistic.
+**Step 6.3: Related Fixes Already in Stable**
+- The dml2_0 equivalent IS already in stable from 6.10.y onward
+- The dml2_1 specific fix is NOT yet in any stable tree
+- Record: This commit fills a gap left by the prior dml2_0 fix
 
-**Step 5.5 — Similar patterns**
-Record: Not applicable — single in-tree LZ77 implementation.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-## Phase 6: Stable Tree Analysis
+**Step 7.1: Subsystem**
+- `drivers/gpu/drm/amd/display/` - AMD DC display driver
+- Affects: DCN401 hardware (RX 9000 / RDNA4 GPUs, gfx12.0.0/12.0.1)
+- Criticality: IMPORTANT - affects users of new AMD GPUs
 
-**Step 6.1 — Does the buggy code exist in stable?**
-Record: Yes. `v6.12:fs/smb/client/compress/lz77.c` and `.../compress.c`
-confirm identical `dlen = slen;` allocation and identical 7/8 bailout.
-All active stable trees v6.12.y, v6.13.y/maintained extends, v6.14.y,
-v6.15.y, v6.16.y, v6.17.y, v6.18.y carry the bug.
+**Step 7.2: Activity**
+- Highly active subsystem; frequent fixes flow to stable
+- Record: Active; AMD regularly submits display fixes to stable
 
-**Step 6.2 — Backport complications**
-Record: `git log v6.12.. -- fs/smb/client/compress.c
-fs/smb/client/compress/lz77.c fs/smb/client/compress/lz77.h` shows
-almost no churn (only `asm/unaligned.h` rename). Expect a clean cherry-
-pick. (`v6.12` tree uses `asm/unaligned.h` in lz77.c — irrelevant to
-this diff.)
+## PHASE 8: IMPACT AND RISK
 
-**Step 6.3 — Related fixes already in stable?**
-Record: None found.
+**Step 8.1: Affected Users**
+- DCN401 hardware users (AMD RX 9000 / RDNA 4)
+- Triggered on every mode-set/atomic commit
+- Record: Driver-specific (DCN401), but on every display config change
 
-## Phase 7: Subsystem Context
+**Step 8.2: Trigger Conditions**
+- Per-ASIC dependent: only triggers visible corruption when SOC bb has
+  non-default values
+- For DCN401 default SOC bb, values are identical (gpuvm=256, hostvm=0),
+  so the fix is a no-op functionally
+- For DCN42 (in master, not yet stable) and other future ASICs with
+  different values, this prevents corruption
+- Record: Latent bug; impact varies per ASIC
 
-**Step 7.1 — Criticality**
-Record: `fs/smb/client` — IMPORTANT (network filesystem, widely used for
-Windows interop). Feature itself (CIFS_COMPRESSION) is PERIPHERAL
-because marked "Experimental" and default-N.
+**Step 8.3: Failure Mode Severity**
+- Per commit message: "corruption or underflow for linear surfaces"
+- HIGH severity: visible display corruption is user-visible
+- Record: HIGH for affected ASICs
 
-**Step 7.2 — Activity**
-Record: fs/smb/client is actively maintained; this specific `compress/`
-subdir had minimal churn until this v7.1-rc1 batch of fixes.
+**Step 8.4: Risk-Benefit**
+- Benefit: prevents a documented hardware programming bug; mirrors
+  approved dml2_0 fix
+- Risk: very low - structural change replacing constant with same-value
+  lookup; for current DCN401 default, no behavior change
+- Record: Favorable risk-benefit ratio
 
-## Phase 8: Impact and Risk
+## PHASE 9: SYNTHESIS
 
-**Step 8.1 — Who is affected**
-Record: Users with `CONFIG_CIFS_COMPRESSION=y` mounting SMB3.1.1 shares
-that negotiate compression and issue writes ≥ PAGE_SIZE with
-incompressible payloads. Narrow but non-empty user population; distro
-default is N, so few production setups, but developers and people
-experimenting with the feature are exposed.
+**Evidence FOR backport:**
+- Direct precedent: the dml2_0 equivalent was selected for stable
+  (6.10-6.19+)
+- Small surgical fix (~15 lines)
+- Low regression risk; for default DCN401 SOC bb the values are
+  identical
+- Reviewed and tested by AMD
+- Hardware corruption potential explicitly stated by author
+- Affects DCN401 users on every mode-set
 
-**Step 8.2 — Trigger conditions**
-Record: Data-dependent (random/encrypted-looking payloads). Does not
-require privilege beyond write access to the CIFS mount. Not timing-
-dependent.
+**Evidence AGAINST backport:**
+- For older stable trees (<6.16), the hostvm override field doesn't
+  exist - needs backport adjustment
+- For DCN401's default SOC bb, this is essentially a structural fix
+  without functional change in practice
+- Bug is latent for default configurations on current hardware
 
-**Step 8.3 — Failure mode severity**
-Record: Kernel heap buffer overrun → memory corruption, potential crash,
-potential exploitability. Severity: HIGH (would be CRITICAL if the
-feature were enabled by default).
+**Stable Rules Checklist:**
+1. Obviously correct and tested? YES (Reviewed-by, Tested-by AMD QA)
+2. Real bug? YES (per commit message: corruption/underflow potential)
+3. Important issue? YES (display corruption is HIGH severity)
+4. Small and contained? YES (1 file, 21 lines)
+5. No new features? YES (just propagates existing SOC bb values)
+6. Applies cleanly? PARTIALLY - clean for 6.19+, needs path/feature
+   adjustments for older
 
-**Step 8.4 — Benefit/Risk**
-Record: Benefit = eliminates a real heap overrun in an enabled-by-config
-CIFS path. Risk = very low; the fix is tiny, adds headroom, removes a
-guard that is no longer needed, and keeps caller semantics (the
-`-EMSGSIZE` fallback). Net: favorable for stable.
-
-## Phase 9: Synthesis
-
-**For backporting:** real buffer overrun (category: memory safety),
-small surgical patch (~48 lines, 3 files, same subsystem), fix logic is
-obviously correct, author is the original implementor, maintainer signed
-it off, bug present in all stable trees v6.12+, applies cleanly, self-
-contained (does not require the rest of the 8-patch series).
-
-**Against backporting:** feature is `CONFIG_EXPERIMENTAL`, default N; no
-`Fixes:`, no `Cc: stable`, no `Reported-by`, no `Reviewed-by`/`Tested-
-by`; commit is only ~10 days old at time of review (little mainline soak
-time); part of a broader cleanup series.
-
-**Stable rules checklist:**
-1. Obviously correct — yes, math on allocation size is direct.
-2. Fixes a real bug — yes, documented overrun.
-3. Important (memory corruption) — yes.
-4. Small and contained — yes.
-5. No new features/APIs — the new helper is internal (file-private
-   style) and used solely to fix this bug.
-6. Applies to stable — yes, the code is unchanged in stable trees.
-
-**Exception categories:** none needed; it qualifies directly as a
-memory-safety fix.
-
-**Decision:** despite the experimental gating and thin review metadata,
-this is a textbook stable candidate: a heap buffer overrun in a kernel
-path reachable from userspace, fixed by a minimal, self-evident patch.
-The right call is YES.
+This commit follows the established pattern: the dml2_0 equivalent fix
+was an AUTOSEL stable backport, and this fixes the parallel bug in
+dml2_1. While the impact on the current DCN401 default configuration is
+minimal (values match), it is the correct structural fix that prevents
+corruption on ASICs with different SOC bb values, including upcoming
+DCN42 hardware. The fix is small, well-reviewed, and low-risk.
 
 ## Verification
 
-- [Phase 1] Parsed tags from commit message: only two `Signed-off-by`
-  lines; no `Fixes:`/`Cc: stable`/`Reported-by`/`Reviewed-by`/`Tested-
-  by` — confirmed by `git show 4c221711b2374 --format='%B' -s | grep -E
-  "^(Fixes|Cc:|Reported-by|Reviewed-by|Tested-by|Acked-by|Signed-off-
-  by):"`.
-- [Phase 2] Diff analysis: verified by reading the full diff and
-  `fs/smb/client/compress/lz77.c` at HEAD. Confirmed the pre-fix 7/8
-  check is only reached after the match-path branch and that the
-  trailing literals loop + final `lz77_write32(flag_pos, flag)` have no
-  bounds check.
-- [Phase 2] Verified caller semantics: `smb_compress()` in
-  `fs/smb/client/compress.c` treats `-EMSGSIZE` or `dlen >= slen` as a
-  reason to fall back to uncompressed send — preserved after the fix.
-- [Phase 3] `git log --oneline fs/smb/client/compress.c
-  fs/smb/client/compress/lz77.c fs/smb/client/compress/lz77.h`
-  identified introduction in `d14bbfff259ca` and rewrite in
-  `94ae8c3fee94a`.
-- [Phase 3] `git describe --contains d14bbfff259ca` →
-  `v6.12-rc1~139^2~13`; `git tag --contains d14bbfff259ca | grep
-  "^v[0-9]+\.[0-9]+$"` → first release tag is `v6.12`.
-- [Phase 3] `git show v6.12:fs/smb/client/compress.c | grep -n "dlen =
-  slen"` → line 350 confirms identical buggy allocation in v6.12 stable.
-- [Phase 3] `git show v6.12:fs/smb/client/compress/lz77.c | grep -n
-  "dstp - dst >= slen"` → line 187 confirms identical 7/8 bailout in
-  v6.12 stable.
-- [Phase 3] `git show v6.12:fs/smb/client/Kconfig | grep -A10
-  CIFS_COMPRESSION` → confirmed `bool "SMB message compression
-  (Experimental)" ... default n`.
-- [Phase 4] `b4 dig -c 4c221711b2374` → returned lore URL `https://lore.
-  kernel.org/all/20260413190713.283939-1-ematsumiya@suse.de/`, which is
-  "[PATCH 1/8]".
-- [Phase 4] `b4 dig -c 4c221711b2374 -a` → single revision (v1), no re-
-  spins.
-- [Phase 4] `b4 dig -c 4c221711b2374 -w` → recipients include linux-
-  cifs, Steve French, Paulo Alcantara, Ronnie Sahlberg, Shyam Prasad,
-  Tom Talpey, Bharath Naik, Henrique Carvalho.
-- [Phase 4] Thread mbox (`/tmp/b4-lz77/thread.mbox`) scanned: no
-  `Reviewed-by`, `Tested-by`, `Acked-by`, or stable-nomination reply to
-  patch 1/8. Build-break comment from Nathan Chancellor targeted patch
-  7/8 only.
-- [Phase 5] `grep "lz77_compress("` across the repo confirmed only one
-  external caller (`fs/smb/client/compress.c:343`) and the prototype in
-  lz77.h.
-- [Phase 6] `git log --oneline v6.12.. -- fs/smb/client/compress.c
-  fs/smb/client/compress/lz77.c fs/smb/client/compress/lz77.h` shows
-  only `asm/unaligned.h` rename plus subsequent fixes — indicates clean
-  backport.
-- [Phase 8] Failure mode inferred from code inspection (heap write past
-  `@dst`); confirmed path in `lz77_compress()` tail loop and final flag
-  write. Severity HIGH.
-- UNVERIFIED: Could not fetch the lore URL directly (Anubis anti-bot
-  page); relied on `b4 dig` output and the saved mbox for thread
-  contents.
-- UNVERIFIED: No independent Tested-by on this specific patch; author's
-  claim of triggering via random payloads is not reproducible from the
-  commit alone, though the code analysis supports the described bug.
+- [Phase 1] Parsed tags: confirmed Reviewed-by Dillon Varone, Tested-by
+  Dan Wheeler, signed by Roman Li and Alex Deucher
+- [Phase 2] Diff analysis: 15 insertions, 6 deletions in single file;
+  verified function signature changes via diff
+- [Phase 3] git log on file: dml21 dir created in commit `70839da636050`
+  (April 2024); confirmed via `git tag --contains` it first appeared in
+  v6.11
+- [Phase 3] git log/show `31663521ede2e`: confirmed dml2_0 equivalent
+  exists, was authored July 2024 by same author Nicholas Kazlauskas
+- [Phase 3] Confirmed dml2_0 fix backported to stable: 54877301a7551
+  (6.10.y), 291c87fd3abe1 (6.11.y), 31663521ede2e (6.12.y, 6.18.y,
+  6.19.y)
+- [Phase 3] git show `5721b5b9c9c79`: verified adjacent independent fix
+  for HostVMMinPageSize unit mismatch
+- [Phase 4] b4 dig -c 07ac59230d5fd: returned "Could not find anything
+  matching" - typical for AMD internal pipeline
+- [Phase 5] grep verified `using_dml21 = true` in dcn401_resource.c
+  (line 731), confirming dml2_1 path is active for DCN401
+- [Phase 5] grep verified callers of populate functions trace back to
+  mode-set/atomic commit paths
+- [Phase 6] git ls-tree on stable trees: confirmed file presence per
+  branch (6.6.y absent, 6.11+ present, renamed at 6.19)
+- [Phase 6] git show on 6.12.y soc_parameter_types.h: confirmed
+  `hostvm_min_page_size_kbytes` exists in dml2_soc_bb but verified the
+  dml_top_display_cfg_types.h plane override only had
+  `gpuvm_min_page_size_kbytes` (not hostvm) until v6.16
+- [Phase 6] git show on 6.18.y/6.19.y override struct: confirmed both
+  fields present
+- [Phase 7] Verified subsystem activity via recent commit log
+- [Phase 8] Verified default DCN4 SOC bb values:
+  `gpuvm_min_page_size_kbytes = 256`, `hostvm_min_page_size_kbytes = 0`
+  in `dcn4_soc_bb.h` - identical to previous hardcoding for default case
+- [Phase 8] Verified `display_config` is memset to 0 before population
+  in `dml21_wrapper.c` (line 210), so hostvm starts at 0 effectively
+  even before fix
+- UNVERIFIED: Could not find the patch on lore.kernel.org (b4 dig and
+  direct lore search both failed); typical for AMD internal pipeline
+  patches that don't get posted to public lists before merge
+
+The fix matches a previously-approved stable backport pattern, is small
+and surgical, addresses a documented hardware programming concern
+(PTE_ROW_HEIGHT_LINEAR causing corruption/underflow), and has negligible
+regression risk.
 
 **YES**
 
- fs/smb/client/compress.c      |  6 +-----
- fs/smb/client/compress/lz77.c | 14 ++++----------
- fs/smb/client/compress/lz77.h | 28 ++++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+), 15 deletions(-)
+ .../dml2_0/dml21/dml21_translation_helper.c   | 21 +++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/compress.c b/fs/smb/client/compress.c
-index 3d1e73f5d9af9..be9023f841e69 100644
---- a/fs/smb/client/compress.c
-+++ b/fs/smb/client/compress.c
-@@ -329,11 +329,7 @@ int smb_compress(struct TCP_Server_Info *server, struct smb_rqst *rq, compress_s
- 		goto err_free;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_translation_helper.c b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_translation_helper.c
+index bf5e7f4e04167..a64c0407ad515 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_translation_helper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_translation_helper.c
+@@ -381,7 +381,9 @@ static void populate_dml21_dummy_surface_cfg(struct dml2_surface_cfg *surface, c
+ 	surface->tiling = dml2_sw_64kb_2d;
+ }
  
--	/*
--	 * This is just overprovisioning, as the algorithm will error out if @dst reaches 7/8
--	 * of @slen.
--	 */
--	dlen = slen;
-+	dlen = lz77_compressed_alloc_size(slen);
- 	dst = kvzalloc(dlen, GFP_KERNEL);
- 	if (!dst) {
- 		ret = -ENOMEM;
-diff --git a/fs/smb/client/compress/lz77.c b/fs/smb/client/compress/lz77.c
-index cdd6b53766b0a..c1e7fada6e61c 100644
---- a/fs/smb/client/compress/lz77.c
-+++ b/fs/smb/client/compress/lz77.c
-@@ -137,6 +137,10 @@ noinline int lz77_compress(const void *src, u32 slen, void *dst, u32 *dlen)
- 	long flag = 0;
- 	u64 *htable;
+-static void populate_dml21_dummy_plane_cfg(struct dml2_plane_parameters *plane, const struct dc_stream_state *stream)
++static void populate_dml21_dummy_plane_cfg(struct dml2_plane_parameters *plane,
++					   const struct dc_stream_state *stream,
++					   const struct dml2_soc_bb *soc_bb)
+ {
+ 	unsigned int width, height;
  
-+	/* This is probably a bug, so throw a warning. */
-+	if (WARN_ON_ONCE(*dlen < lz77_compressed_alloc_size(slen)))
-+		return -EINVAL;
-+
- 	srcp = src;
- 	end = src + slen;
- 	dstp = dst;
-@@ -180,15 +184,6 @@ noinline int lz77_compress(const void *src, u32 slen, void *dst, u32 *dlen)
- 			continue;
- 		}
+@@ -425,7 +427,8 @@ static void populate_dml21_dummy_plane_cfg(struct dml2_plane_parameters *plane,
+ 	plane->pixel_format = dml2_444_32;
  
--		/*
--		 * Bail out if @dstp reached >= 7/8 of @slen -- already compressed badly, not worth
--		 * going further.
--		 */
--		if (unlikely(dstp - dst >= slen - (slen >> 3))) {
--			*dlen = slen;
--			goto out;
--		}
--
- 		dstp = lz77_write_match(dstp, &nib, dist, len);
- 		srcp += len;
+ 	plane->dynamic_meta_data.enable = false;
+-	plane->overrides.gpuvm_min_page_size_kbytes = 256;
++	plane->overrides.gpuvm_min_page_size_kbytes = soc_bb->gpuvm_min_page_size_kbytes;
++	plane->overrides.hostvm_min_page_size_kbytes = soc_bb->hostvm_min_page_size_kbytes;
+ }
  
-@@ -225,7 +220,6 @@ noinline int lz77_compress(const void *src, u32 slen, void *dst, u32 *dlen)
- 	lz77_write32(flag_pos, flag);
+ static void populate_dml21_surface_config_from_plane_state(
+@@ -495,7 +498,7 @@ static const struct scaler_data *get_scaler_data_for_plane(
  
- 	*dlen = dstp - dst;
--out:
- 	kvfree(htable);
+ static void populate_dml21_plane_config_from_plane_state(struct dml2_context *dml_ctx,
+ 		struct dml2_plane_parameters *plane, const struct dc_plane_state *plane_state,
+-		const struct dc_state *context, unsigned int stream_index)
++		const struct dc_state *context, unsigned int stream_index, const struct dml2_soc_bb *soc_bb)
+ {
+ 	const struct scaler_data *scaler_data = get_scaler_data_for_plane(dml_ctx, plane_state, context);
+ 	struct dc_stream_state *stream = context->streams[stream_index];
+@@ -631,7 +634,8 @@ static void populate_dml21_plane_config_from_plane_state(struct dml2_context *dm
+ 	plane->composition.rotation_angle = (enum dml2_rotation_angle) plane_state->rotation;
+ 	plane->stream_index = stream_index;
  
- 	if (*dlen < slen)
-diff --git a/fs/smb/client/compress/lz77.h b/fs/smb/client/compress/lz77.h
-index cdcb191b48a23..2603eab9e071c 100644
---- a/fs/smb/client/compress/lz77.h
-+++ b/fs/smb/client/compress/lz77.h
-@@ -11,5 +11,33 @@
+-	plane->overrides.gpuvm_min_page_size_kbytes = 256;
++	plane->overrides.gpuvm_min_page_size_kbytes = soc_bb->gpuvm_min_page_size_kbytes;
++	plane->overrides.hostvm_min_page_size_kbytes = soc_bb->hostvm_min_page_size_kbytes;
  
- #include <linux/kernel.h>
+ 	plane->immediate_flip = plane_state->flip_immediate;
  
-+/**
-+ * lz77_compressed_alloc_size() - Compute compressed buffer size.
-+ * @size:	uncompressed (src) size
-+ *
-+ * Compute allocation size for the compressed buffer based on uncompressed size.
-+ * Accounts for metadata and overprovision for the worst case scenario.
-+ *
-+ * LZ77 metadata is a 4-byte flag that is written:
-+ * - on dst begin (pos 0)
-+ * - every 32 literals or matches
-+ * - on end-of-stream (possibly, if last write was another flag)
-+ *
-+ * Worst case scenario is an all-literal compression, which means:
-+ * metadata bytes = 4 + ((@size / 32) * 4) + 4, or, simplified, (@size >> 3) + 8
-+ *
-+ * The worst case scenario rarely happens, but such overprovisioning also allows lz77_compress()
-+ * main loop to run without ever bound checking dst, which is a huge perf improvement, while also
-+ * being safe when compression goes bad.
-+ *
-+ * Return: required (*) allocation size for compressed buffer.
-+ *
-+ * (*) checked once in the beginning of lz77_compress()
-+ */
-+static __always_inline u32 lz77_compressed_alloc_size(const u32 size)
-+{
-+	return size + (size >> 3) + 8;
-+}
-+
- int lz77_compress(const void *src, u32 slen, void *dst, u32 *dlen);
- #endif /* _SMB_COMPRESS_LZ77_H */
+@@ -765,7 +769,9 @@ bool dml21_map_dc_state_into_dml_display_cfg(const struct dc *in_dc, struct dc_s
+ 		if (context->stream_status[stream_index].plane_count == 0) {
+ 			disp_cfg_plane_location = dml_dispcfg->num_planes++;
+ 			populate_dml21_dummy_surface_cfg(&dml_dispcfg->plane_descriptors[disp_cfg_plane_location].surface, context->streams[stream_index]);
+-			populate_dml21_dummy_plane_cfg(&dml_dispcfg->plane_descriptors[disp_cfg_plane_location], context->streams[stream_index]);
++			populate_dml21_dummy_plane_cfg(
++				&dml_dispcfg->plane_descriptors[disp_cfg_plane_location],
++				context->streams[stream_index], &dml_ctx->v21.dml_init.soc_bb);
+ 			dml_dispcfg->plane_descriptors[disp_cfg_plane_location].stream_index = disp_cfg_stream_location;
+ 		} else {
+ 			for (plane_index = 0; plane_index < context->stream_status[stream_index].plane_count; plane_index++) {
+@@ -777,7 +783,10 @@ bool dml21_map_dc_state_into_dml_display_cfg(const struct dc *in_dc, struct dc_s
+ 				ASSERT(disp_cfg_plane_location >= 0 && disp_cfg_plane_location < __DML2_WRAPPER_MAX_STREAMS_PLANES__);
+ 
+ 				populate_dml21_surface_config_from_plane_state(in_dc, &dml_dispcfg->plane_descriptors[disp_cfg_plane_location].surface, context->stream_status[stream_index].plane_states[plane_index]);
+-				populate_dml21_plane_config_from_plane_state(dml_ctx, &dml_dispcfg->plane_descriptors[disp_cfg_plane_location], context->stream_status[stream_index].plane_states[plane_index], context, stream_index);
++				populate_dml21_plane_config_from_plane_state(
++					dml_ctx, &dml_dispcfg->plane_descriptors[disp_cfg_plane_location],
++					context->stream_status[stream_index].plane_states[plane_index],
++					context, stream_index, &dml_ctx->v21.dml_init.soc_bb);
+ 				dml_dispcfg->plane_descriptors[disp_cfg_plane_location].stream_index = disp_cfg_stream_location;
+ 
+ 				if (dml21_wrapper_get_plane_id(context, context->streams[stream_index]->stream_id, context->stream_status[stream_index].plane_states[plane_index], &dml_ctx->v21.dml_to_dc_pipe_mapping.disp_cfg_to_plane_id[disp_cfg_plane_location]))
 -- 
 2.53.0
 
