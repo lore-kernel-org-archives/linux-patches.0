@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187A93F0A9F;
-	Tue, 28 Apr 2026 10:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCCB3F7AB3;
+	Tue, 28 Apr 2026 10:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372915; cv=none; b=JEd98pCPpN5TZ48NSav9zjrtVwV0Fsk+VX9bgx2He9OD4mZuHJGUDSEXvcjzZ8vJ2+2fnFRUkDZpDnjchpjy+WlqXzIc6tgfCOhT1jjDvenuuIEOPYl8hJb7+c8nHUXbgu3sN9JxDAWkswnruKYwjsqJpz+rJ3vpKEpOUACud64=
+	t=1777372916; cv=none; b=ecuNII636yHNv7+DwHKDnflHMm+PjZJdy4HK2gGOcwF3Bv2FoVrnz4jBDUMKXb7IiFLyxWOvLY2ag0edzxEwe46gBfClnBwAdtC2bf4++t77XJWLEsNPcD1JbbAhtcF2hZMHKbxFwSZwx+xZjAeKkj/ebvqlzN8g98BQ5lpPsDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372915; c=relaxed/simple;
-	bh=8rDn52k5i7AdEtw+uSk9xJGT9Vfuz1AEri/r6JeOEMs=;
+	s=arc-20240116; t=1777372916; c=relaxed/simple;
+	bh=xOQhvTSWQ6gIx9DqleNJ3v6jwcJQnbebJT1dEWP3NZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gca6Yh7qBLlBu/BaTUocY4LYZgPiBkXWlS0Lfqxt49jlfGGkRoL/sCX8DmvQUMmJ1rbVR5tWfy6xj6FiPwxYkCQQ3M2HFEStk0MlrVzsqSTlKBeG8uI60roxY9M9YuhxAYO+pMqj1NL1KXCoS4IqAVfNWQ7NdaZU+cC8ssjG5QQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g+6UM30V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Icaj2wMgWfDdIbv6u/6C7ZJaDKqVQ47kyPHBFErUN32uxm5yHPaWQ684U0kWzPAApOqwFaT8Th31UnKl79PzaURn+DyhZWGtyBes8YBhMw/5xWqh6o5CeFFkvCJis/0H6qyWEIQn1ORV3q9qu9M13d1JjneLUtoQZAG+VAgpatY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L0FkNfhy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g+6UM30V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1258CC2BCAF;
-	Tue, 28 Apr 2026 10:41:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L0FkNfhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463C5C2BCB5;
+	Tue, 28 Apr 2026 10:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372914;
-	bh=8rDn52k5i7AdEtw+uSk9xJGT9Vfuz1AEri/r6JeOEMs=;
+	s=k20201202; t=1777372916;
+	bh=xOQhvTSWQ6gIx9DqleNJ3v6jwcJQnbebJT1dEWP3NZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+6UM30VpS3UCgJvZF4fyWrmCNBNYF2qE2mXXVOrytiW/hfdFhpmxqGSPFhS4MyGs
-	 yr/XO4PNr1nMjXTfgSCCrJ5YYZimCayl7B6tcxybw84C8e+4vJwqT/xaHGWjGkpHDr
-	 hbqVl+coPod+F5nzppYy9Mn7u8IvatbNg2K2FWLzpmSSVO6+elG/hsvF1pDbvZJjum
-	 X0Wb2UQCLHbwLQyweU7Lcg73DZg00IB9ZepybdeCWKCkySSN10x/ATy9WUW6pAcOLd
-	 bqj3+gz5eL28h2KULAqcc5crKyVo9NAWQ+hQ2R4LVeQmIY/fk9WSNJ87k1S0/Hlr4t
-	 37vqyIkDDn9Tw==
+	b=L0FkNfhyjboOqUZG1yTF6aLNvY3uVOaJayjBlAgt+wAxpEt85lA8HuFmHmKhVVBuK
+	 jO2VVmti8chWZFO37m66P1/RLVXhnkMUuQ+cJ9QSYNsNnEW/9Cf4CWXCKVAgDbL1OQ
+	 muj6YZMBg00vBhDpD0APA2MRSNK1eaCVfoZW2OdC5pAbMPqK6GZ8gLrbs8R0vVUJDJ
+	 1C5zLTV9UFxAAratg1OCY/Bp+BbqSEpOMHD2BcXBa4FRIJMLO2jufWsCX+7GFGsMq6
+	 W3PUBkvDKx8n3ienHKjC9hbJCMedV0sWpggKrriyhCZUaFrHS5OOa2jmj6cxQimmbb
+	 q4HtR5Ck2gSkA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ingo Rohloff <ingo.rohloff@lauterbach.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Enzo Matsumiya <ematsumiya@suse.de>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-usb@vger.kernel.org,
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] usb: dwc3: Support USB3340x ULPI PHY high-speed negotiation.
-Date: Tue, 28 Apr 2026 06:40:26 -0400
-Message-ID: <20260428104133.2858589-15-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] smb: client: compress: fix counting in LZ77 match finding
+Date: Tue, 28 Apr 2026 06:40:27 -0400
+Message-ID: <20260428104133.2858589-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -53,532 +54,447 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ingo Rohloff <ingo.rohloff@lauterbach.com>
+From: Enzo Matsumiya <ematsumiya@suse.de>
 
-[ Upstream commit a28de63356575612954d4e5d5f48a2488f50e16d ]
+[ Upstream commit 20d4f9efe008be1b673f43d38d3d99fb1fd4cd68 ]
 
-The Microchip USB3340x ULPI PHY requires a delay when switching to the
-high-speed transmitter. See:
-    http://ww1.microchip.com/downloads/en/DeviceDoc/80000645A.pdf
-    Module 2 "Device Enumeration Failure with Link IP Systems"
+- lz77_match_len() increments @cur before checking for equality,
+  leading to off-by-one match len in some cases.
 
-For details on the behavior and fix, refer to the AMD (formerly Xilinx)
-forum post: "USB stuck in full speed mode with USB3340 ULPI PHY, ZynqMP."
+  Fix by moving pointers increment to inside the loop.
+  Also rename @wnd arg to @match (more accurate name).
+- both lz77_match_len() and lz77_compress() checked for
+  "buf + step < end" when the correct is "<=" for such cases.
 
-This patch uses the USB PHY Vendor-ID and Product-ID to detect the
-USB3340 PHY and then applies the necessary fix if this PHY is found.
-
-Signed-off-by: Ingo Rohloff <ingo.rohloff@lauterbach.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260305121452.54082-2-ingo.rohloff@lauterbach.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to complete the full phase-by-phase
-analysis.
-
-# Full 9-Phase Analysis
+Now I have enough information to perform the analysis. Let me structure
+my response covering all 9 phases.
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject line parsing**
-- Subsystem: `usb: dwc3:` (DesignWare USB3 controller driver)
-- Action verb: "Support" (often hides a bug fix – here it is supporting
-  HS negotiation that is broken)
-- Record: `usb: dwc3` – "Support" – one-line: enable HS chirp delay
-  workaround for Microchip USB3340x ULPI PHY
+### Step 1.1: PARSE THE SUBJECT LINE
+- Subsystem: `smb: client: compress:` (SMB 3.1.1 client-side
+  compression)
+- Action verb: "fix"
+- Summary: fix counting in LZ77 match finding
+- **Record:** `[smb/client/compress]` `[fix]` `[off-by-one in LZ77 match
+  length counting]`
 
-**Step 1.2: Tag parsing**
-- Fixes: (absent – expected for candidate review)
-- Reported-by: (absent)
-- Tested-by: (absent)
-- Reviewed-by: (absent)
-- Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com> (the DWC3 subsystem
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- `Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>` (author)
+- `Signed-off-by: Steve French <stfrench@microsoft.com>` (subsystem
   maintainer)
-- Link: patch.msgid.link to v5 submission
-- Cc: stable: absent
-- Signed-off-by: author Ingo Rohloff + Greg KH (USB subsystem
-  maintainer)
-- Record: The dwc3 maintainer explicitly Acked this; Greg KH merged it.
-  Strong quality signal.
+- NO `Fixes:` tag, NO `Cc: stable`, NO `Reported-by:`, NO `Link:`, NO
+  `Tested-by:`, NO `Reviewed-by:`, NO `Acked-by:`
+- **Record:** Minimal tag set - only author + maintainer SOBs. No
+  explicit stable/reviewer endorsements.
 
-**Step 1.3: Body analysis**
-- Bug described: Microchip USB3340x ULPI PHY fails HS negotiation – USB
-  stays stuck in full-speed
-- References Microchip erratum doc 80000645A.pdf, Module 2 "Device
-  Enumeration Failure with Link IP Systems"
-- References AMD/Xilinx forum post "USB stuck in full speed mode with
-  USB3340 ULPI PHY, ZynqMP"
-- Mechanism: delay needed when switching to the high-speed transmitter
-  (TxValid during HS Chirp)
-- Record: Real hardware-level bug documented by silicon vendor, with
-  user-visible symptom (USB devices don't work at high speed on ZynqMP +
-  USB3340 boards).
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+Two distinct bugs described:
+1. `lz77_match_len()` byte-by-byte fallback increments `@cur` before
+   equality check, over-counting match length by 1 on mismatch.
+2. Both `lz77_match_len()` do-while and `lz77_compress()` do-while use
+   `<` where `<=` is correct for the 8-byte window check, causing early
+   exit to slow byte-by-byte fallback.
+- **Record:** Bug: off-by-one in match length produces incorrect LZ77
+  compressed output. Failure mode: decompressed data mismatches original
+  (data corruption) on SMB3.1.1 compressed writes.
 
-**Step 1.4: Hidden bug fix detection**
-- "Support" often hides a functional fix – the PHY doesn't work without
-  this patch on affected boards
-- Record: This IS a bug fix presented as hardware enablement. The
-  underlying bug is a hardware silicon erratum that requires a software
-  workaround (controller-side XCVRDLY bit).
+### Step 1.4: DETECT HIDDEN BUG FIXES
+- This is explicitly labeled as a fix ("fix counting"). Not hidden.
+- **Record:** Explicit bug fix with clear root cause described.
 
-## PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-**Step 2.1: Inventory**
-- `drivers/usb/dwc3/core.c`: +20 lines (new `dwc3_ulpi_setup()` helper +
-  one call site)
-- `drivers/usb/dwc3/core.h`: +4 lines (new `DWC3_GUSB2PHYCFG_XCVRDLY
-  BIT(9)`, new struct field `enable_usb2_transceiver_delay:1`,
-  kerneldoc)
-- `drivers/usb/dwc3/ulpi.c`: +25 lines (new `dwc3_ulpi_detect_config()`,
-  `#include <linux/ulpi/driver.h>`, `USB_VENDOR_MICROCHIP` macro, call
-  in `dwc3_ulpi_init()`)
-- Total: +49 / -0, contained in 3 files of one driver subdir
-- Record: Single-driver surgical change, no cross-subsystem impact.
+### Step 2.1: INVENTORY THE CHANGES
+- 1 file: `fs/smb/client/compress/lz77.c`
+- +10/-7 (17 lines changed)
+- Functions: `lz77_match_len()`, `lz77_compress()`
+- Scope: single-file surgical fix
+- **Record:** Minimal-scope single-file fix.
 
-**Step 2.2: Code flow**
-- `dwc3_ulpi_init()`: after registering ULPI interface, now calls
-  `dwc3_ulpi_detect_config()` which reads the ULPI PHY vendor/product
-  IDs and sets `dwc->enable_usb2_transceiver_delay` only when it sees
-  Microchip (0x0424) product 0x0009.
-- `dwc3_core_init()`: after ULPI init, calls new `dwc3_ulpi_setup()`
-  which, for the specific PHY only, sets `DWC3_GUSB2PHYCFG_XCVRDLY`
-  (BIT(9)) on every USB2 port's GUSB2PHYCFG register.
-- Record: Default behavior is completely unchanged; the new code path is
-  gated by a specific vendor/product ID and by presence of an ULPI PHY
-  (`if (!dwc->ulpi) return;`).
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Three hunks:
+1. Rename parameter `wnd` → `match` (cosmetic, all occurrences).
+2. Change `cur + LZ77_STEP_SIZE < end` → `<= end` in `lz77_match_len()`
+   do-while.
+3. Restructure byte-by-byte fallback: was `while(cur<end &&
+   lz77_read8(cur++)==lz77_read8(wnd++))` — post-increment executes even
+   on mismatch. Now moves increments inside the body after the match is
+   confirmed.
+4. Change `srcp + LZ77_STEP_SIZE < end` → `<= end` in `lz77_compress()`
+   do-while.
+- **Record:** Before: byte-by-byte loop advances pointers even on
+  mismatch (off-by-one over-count). After: advances only when bytes
+  match.
 
-**Step 2.3: Bug mechanism class**
-- Category (h) Hardware workaround: quirk activated via ULPI
-  vendor/product match, writes a controller-side delay bit per the
-  Microchip erratum.
-- Record: Pure hardware quirk – no locking, no refcount, no allocation
-  changes.
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+- Logic/correctness fix (off-by-one counting)
+- Traced: when actual match is N bytes in the byte-by-byte tail,
+  function returns N+1 if the (N+1)th byte is a mismatch. This produces
+  a match token with length N+1 that, upon decompression by the server,
+  copies N+1 bytes of which the last byte doesn't match the original
+  source - **silent data corruption** in the decompressed write payload.
+- **Record:** Category: logic/off-by-one. Mechanism: byte-by-byte
+  fallback over-counts match length by 1 on mismatch, producing corrupt
+  LZ77 stream.
 
-**Step 2.4: Fix quality**
-- Obviously correct: reads the register, ORs the bit, writes back (per
-  erratum's documented workaround)
-- Minimal/surgical and tightly gated by vendor+product ID
-- Regression risk for any other hardware is essentially zero
-  (`enable_usb2_transceiver_delay` only becomes true for one specific
-  ULPI PHY)
-- Record: Low risk, high confidence.
+### Step 2.4: ASSESS THE FIX QUALITY
+- Obviously correct (standard idiom of "check, then advance").
+- Minimal (10/7 lines, plus a rename).
+- No regression risk: `<=` change is safe because `srcp+8 == end` reads
+  bytes `[srcp, srcp+7]` which are valid (end is exclusive bound).
+- **Record:** Low regression risk; changes are local and obviously
+  correct.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame**
-- The `dwc3_hs_phy_setup()` / `dwc3_phy_setup()` loop structure using
-  `num_usb2_ports` was introduced by `921e109c62007` ("usb: dwc3: core:
-  Access XHCI address space temporarily to read port info") which is in
-  `v6.10-rc1`.
-- Record: The per-port iteration model, and therefore the patch's `for
-  (index = 0; index < dwc->num_usb2_ports; index++)` construct, cleanly
-  matches v6.10.y and newer.
+### Step 3.1: BLAME THE CHANGED LINES
+- `git blame` shows lines 70, 72-75, 203 were introduced by
+  `94ae8c3fee94a` ("smb: client: compress: LZ77 code improvements
+  cleanup"), dated 2024-09-06.
+- `git describe --contains 94ae8c3fee94a` → `v6.12-rc1~139^2~11`
+- **Record:** Buggy code introduced in v6.12. Present in all stable
+  branches ≥ 6.12.
 
-**Step 3.2: Fixes: tag follow-up**
-- No Fixes: tag; the bug is a silicon erratum, not a prior kernel commit
-- Record: N/A (expected).
+### Step 3.2: FOLLOW THE FIXES: TAG
+- No `Fixes:` tag present, but blame confirms the target commit is
+  `94ae8c3fee94a`.
+- **Record:** Implicit Fixes: 94ae8c3fee94a ("smb: client: compress:
+  LZ77 code improvements cleanup"). Original commit is in stable 6.12.y
+  and later.
 
-**Step 3.3: Related history**
-- Prior dwc3 ulpi history (`e5f4ca3fce90a`, `fca3f13810572`,
-  `ce722da66d3e9`, `e0082698b6898`, `98112041bcca1`, `88bc9d194ff69`)
-  shows the ULPI infrastructure has been in place since v4.x, with the
-  `dwc->ulpi_ready` / `dwc3_core_ulpi_init()` flow in place since v4.16.
-- Record: Standalone patch – no unlanded prerequisites outside the dwc3
-  driver itself.
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+`git log -- fs/smb/client/compress/lz77.c` on origin/master shows a
+series of 6 commits around this fix:
+- `4c221711b2374` "fix buffer overrun in lz77_compress()" (Patch 1/8 –
+  separate fix)
+- `a13e942a03fee` "fix bad encoding on last LZ77 flag" (Patch 2/8 –
+  separate fix)
+- `20d4f9efe008b` **our commit** (Patch 3/8)
+- `fca46b0e68c5d`, `4460e9c68d1a8`, `71179a5ee916d` (Patches 4/8, 5/8,
+  6/8 – tuning/optimizations/docs)
+- **Record:** Part of 8-patch series; patches 1-3 are bug fixes, patches
+  4+ are improvements. This patch (3/8) does NOT depend on patches 1/8
+  or 2/8.
 
-**Step 3.4: Author**
-- Ingo Rohloff (Lauterbach) – embedded/debug tools vendor, not a dwc3
-  regular; patch went through 5 revisions to get maintainer acceptance.
-- Record: External contributor, but maintainer Ack and Greg KH merge
-  provides the quality signal.
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+- Enzo Matsumiya is the author of the original LZ77 cleanup
+  (94ae8c3fee94a) and many other SMB client fixes in 6.12.y stable
+  (e.g., `5ac1f99fdd09d` - compression heuristic fix).
+- **Record:** Author is the main maintainer/developer of this
+  compression code.
 
-**Step 3.5: Dependencies**
-- Relies on `dwc->num_usb2_ports` (added v6.10) and the per-port HS PHY
-  setup model.
-- On the current 7.0 tree it uses `dwc3_readl(dwc->regs, ...)` – this is
-  the legacy API; commit `9accc68b1cf0a` renamed the first arg to `dwc`.
-  Both forms are functionally identical; any merge conflict with that
-  rename is trivial (one-arg swap).
-- Record: Applies cleanly to 6.10.y+ stable trees; for 6.1.y/6.6.y
-  backport would need to be rewritten to use single-port indexing (not
-  just the XHCI-port probing).
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+- Verified: `git apply --check -3` against stable/linux-6.12.y through
+  7.0.y: **all apply cleanly**.
+- The changes touch lines that exist unchanged in the stable branches
+  (stable does not have patches 1 or 2 from the series either, but patch
+  3/8 doesn't conflict with them).
+- **Record:** Standalone, no prerequisites needed.
 
-## PHASE 4: MAILING LIST / EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1: b4 dig**
-- `b4 dig -c a28de63356575` → matched thread at `https://lore.kernel.org
-  /all/20260305121452.54082-2-ingo.rohloff@lauterbach.com/`
-- `b4 dig -a` shows v1 (Feb 24) → v2 (Feb 25) → v3 (Feb 27) → v4 (Mar 3)
-  → v5 (Mar 5 — applied)
-- v1/v2 used a DT property (`snps,enable_xcvrdly_quirk`) but reviewers
-  asked for autodetection; v3 switched to vendor/product-ID detection.
-- Record: 5 revisions, significant review feedback addressed, applied
-  version is the latest.
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+- `b4 dig -c 20d4f9efe008b` found the submission at https://lore.kernel.
+  org/all/20260413190713.283939-3-ematsumiya@suse.de/
+- `b4 dig -a`: only a v1 posted, applied as-is. No revisions.
+- The entire thread was saved to mbox and searched: **no** `Cc: stable`,
+  **no** `Fixes:`, **no** `Reviewed-by:`, **no** `Tested-by:`, **no**
+  NAKs.
+- Steve French's only reply is "merged into cifs-2.6.git for-next"
+  (applied without reviewer feedback).
+- **Record:** v1 only, minimal discussion, no stable nomination by
+  reviewers.
 
-**Step 4.2: b4 dig -w / recipients**
-- Thread recipients include Thinh Nguyen (dwc3 maintainer), Greg KH,
-  linux-usb
-- Record: Correct maintainers and list involved; Ack came from the
-  maintainer.
+### Step 4.2: CHECK WHO REVIEWED THE PATCH
+- `b4 dig -w`: Cc list included Steve French (maintainer), Paulo
+  Alcantara, Ronnie Sahlberg, Shyam Prasad, Tom Talpey, Bharath SM,
+  Henrique Carvalho, and linux-cifs list.
+- No explicit Reviewed-by received — applied by maintainer directly.
+- **Record:** Appropriate maintainers CC'd; maintainer applied with no
+  public review feedback.
 
-**Step 4.3: Bug report**
-- External reports referenced in the commit message:
-  - Microchip erratum 80000645A ("Device Enumeration Failure with Link
-    IP Systems")
-  - AMD/Xilinx forum thread about USB stuck in full-speed on ZynqMP
-- Record: Verified documented hardware issue affecting a real shipping
-  platform (Xilinx/AMD ZynqMP with USB3340 PHY).
+### Step 4.3: SEARCH FOR THE BUG REPORT
+- No Reported-by/Link tags. No bug report referenced.
+- **Record:** No external bug report; bug found by code inspection by
+  the author.
 
-**Step 4.4: Series context**
-- Mbox shows this is the only patch in the v5 series (1/1); earlier
-  versions had a DT binding patch (2/2) that was dropped when approach
-  changed to autodetection
-- Record: Standalone patch, no missing prerequisites.
+### Step 4.4: CHECK FOR RELATED PATCHES AND SERIES
+- This is patch 3/8. Patches 1 (buffer overrun) and 2 (UB fix) are also
+  bug fixes in the same file.
+- Patches 4-8 are optimizations/docs/preparations.
+- **Record:** Part of a bug-fix + improvements series. Our patch is
+  self-contained.
 
-**Step 4.5: Stable-list discussion**
-- No explicit Cc: stable in the patch, and the maintainer's Ack ("Acked-
-  by: Thinh Nguyen ... Thanks, Thinh") did not discuss stable
-- Record: No explicit stable nomination, but none is required for
-  candidate review.
+### Step 4.5: CHECK STABLE MAILING LIST HISTORY
+- No prior stable discussion about this specific bug.
+- **Record:** No prior stable-specific discussion.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Key functions**
-- New: `dwc3_ulpi_setup()`, `dwc3_ulpi_detect_config()`
-- Modified call sites: `dwc3_core_init()`, `dwc3_ulpi_init()`
+### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
+- `lz77_match_len()` (static inline helper)
+- `lz77_compress()` (exported entry)
+- **Record:** Two functions modified.
 
-**Step 5.2: Callers**
-- `dwc3_core_init()` is called from `dwc3_probe()` and from runtime
-  resume paths – core device bring-up path
-- `dwc3_ulpi_init()` is called from `dwc3_core_ulpi_init()` which is
-  called from `dwc3_core_init()` only when the HW params indicate a ULPI
-  interface
-- Record: New code runs only during dwc3 init; not in hot data paths,
-  IRQ context, or sleep paths.
+### Step 5.2: TRACE CALLERS
+- `lz77_compress` is called from `smb_compress` in
+  `fs/smb/client/compress.c:343`.
+- `smb_compress` is called from `smb_send_rqst` in
+  `fs/smb/client/transport.c:398` when `CIFS_COMPRESS_REQ` flag is set.
+- `CIFS_COMPRESS_REQ` is set in `fs/smb/client/smb2pdu.c:5201` when
+  `should_compress(tcon, &rqst)` is true (SMB2_WRITE of appropriate
+  size, compression negotiated, etc.).
+- **Record:** Reachable from userspace write(2)→SMB2_WRITE path when
+  CIFS_COMPRESSION=y AND mount has compress option AND server negotiated
+  compression.
 
-**Step 5.3: Callees**
-- `dwc3_readl`/`dwc3_writel` (MMIO) – bounded, no allocation, no lock
-- Record: Minimal side effects; just register writes.
+### Step 5.3: TRACE CALLEES
+- `lz77_match_len` is called internally by `lz77_compress`'s main loop
+  (line 163 in stable 6.12.y).
+- **Record:** `lz77_match_len` is a hot inner-loop helper.
 
-**Step 5.4: Reachability**
-- Path: user boots board → dwc3 probe → `dwc3_core_init()` → (if ULPI)
-  `dwc3_ulpi_init()` → register PHY → read vendor/product ID → set flag;
-  then `dwc3_ulpi_setup()` applies XCVRDLY bit
-- Reachable on every boot on affected ZynqMP/USB3340 boards; inert on
-  every other board
-- Record: Trigger is "boot with USB3340 ULPI PHY", which is exactly the
-  affected population.
+### Step 5.4: FOLLOW THE CALL CHAIN
+Call chain: `sys_write()` → ... → `cifs_strict_writev()` → SMB2_WRITE
+rqst → `smb_send_rqst()` → `smb_compress()` → `lz77_compress()` →
+`lz77_match_len()`.
+Gated by: `CONFIG_CIFS_COMPRESSION=y` AND `mount -o compress` AND
+server-negotiated compression AND write size ≥ PAGE_SIZE AND data is
+compressible per heuristic.
+- **Record:** Reachable from userspace but behind multiple opt-in gates.
 
-**Step 5.5: Similar patterns**
-- The dwc3 driver already has many per-quirk bitfields
-  (`ulpi_ext_vbus_drv`, `dis_enblslpm_quirk`,
-  `dis_u2_freeclk_exists_quirk`, etc.)
-- Record: New `enable_usb2_transceiver_delay` fits the existing quirk-
-  flag pattern.
+### Step 5.5: SEARCH FOR SIMILAR PATTERNS
+- The fix removes a classic C idiom bug (`*(p++) == *(q++)` advancing on
+  mismatch). No other instances of this pattern found in the file.
+- **Record:** No duplicate patterns found.
 
 ## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 6.1: Stable trees containing buggy code**
-- The underlying "bug" is a PHY silicon defect that exists in the
-  hardware regardless of kernel version. The affected kernel construct
-  (`num_usb2_ports`, per-port HS setup) has been present since v6.10.
-- Record: 6.10.y, 6.12.y (LTS), 6.14+, 6.16+, 6.17+ are applicable
-  targets.
+### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
+- Verified via `git ls-tree` and `git show` on 5 stable branches:
+  `stable/linux-6.12.y`, `6.17.y`, `6.18.y`, `6.19.y`, `7.0.y` — all
+  have the identical buggy `lz77.c` (blob SHA
+  `96e8a8057a7721233dc49d3388d5e40b8a1bab5b`).
+- Not in 6.6.y or earlier (file didn't exist).
+- **Record:** Bug exists in 6.12.y, 6.17.y, 6.18.y, 6.19.y, 7.0.y.
 
-**Step 6.2: Backport complications**
-- v6.10.y+: patch applies essentially as-is (minor textual offset
-  likely)
-- v6.6.y and older: the per-port `num_usb2_ports` model does not exist;
-  would need the single-port form (just GUSB2PHYCFG(0)). Still trivially
-  doable but requires an adjusted patch.
-- The `dwc3_readl` API rename (`9accc68b1cf0a`) is only in 7.0-stream;
-  any stable tree older than that uses the same `(dwc->regs, reg)`
-  signature this patch writes, so no conflict there.
-- Record: Clean apply to recent stable trees; minor rewrite needed for
-  older ones.
+### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
+- Tested `git apply --check -3` against all 5 affected stable branches:
+  **clean apply** everywhere.
+- **Record:** Clean apply, no backport adjustments needed.
 
-**Step 6.3: Related fixes already in stable**
-- No prior fix for this specific USB3340 issue exists in stable; this is
-  the first/only fix
-- Record: No duplication concern.
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
+- Three prior compression-related fixes are already in 6.12.y stable:
+  `5ac1f99fdd09d` (heuristic functions), `9b4af913465cc` (illegal
+  accesses), `590efcd3c75f0` (invalid free pointer).
+- This establishes a clear pattern of stable maintainers accepting
+  compression fixes despite EXPERIMENTAL status.
+- **Record:** Precedent exists for backporting fixes to this exact
+  file/feature.
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: Subsystem/criticality**
-- Subsystem: `drivers/usb/dwc3/` – DWC3 USB controller driver (used on
-  Qualcomm, Xilinx/AMD ZynqMP, Rockchip, Intel, i.MX, TI, etc.)
-- Criticality: IMPORTANT (widely deployed, but the fix only affects
-  boards with USB3340 ULPI PHY – primarily ZynqMP-based systems)
-- Record: Important driver, narrow board-specific impact.
+### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
+- Subsystem: SMB client (network filesystem), specifically
+  CIFS_COMPRESSION (EXPERIMENTAL, default N).
+- Criticality: **PERIPHERAL** for kernel as a whole (opt-in experimental
+  feature), but **IMPORTANT** for users who enable it (fixes data
+  integrity).
+- **Record:** PERIPHERAL scope but data-integrity class.
 
-**Step 7.2: Activity**
-- Very active subsystem – many recent commits in drivers/usb/dwc3 in the
-  past year
-- Record: Actively maintained, maintainer is engaged.
+### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
+- `git log -20 -- fs/smb/client/compress/` shows low but steady
+  activity, mainly by Enzo Matsumiya.
+- **Record:** Low-activity experimental feature.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Who is affected**
-- Users of boards combining a DWC3 controller with a Microchip USB3340
-  ULPI PHY (notably AMD/Xilinx ZynqMP UltraScale+ platforms)
-- Record: Driver-specific / hardware-specific population; but a real,
-  shipping HW combination.
+### Step 8.1: DETERMINE WHO IS AFFECTED
+- Users with `CONFIG_CIFS_COMPRESSION=y` kernel AND `mount -o compress`
+  AND SMB 3.1.1 server that negotiates compression.
+- **Record:** Narrow audience — opt-in at both build and mount time.
 
-**Step 8.2: Trigger conditions**
-- Every boot on affected hardware
-- No special privilege needed; just plugging in any USB device
-  reproduces the symptom (full-speed instead of high-speed)
-- Record: Easy to reproduce – it is the default behavior on affected HW
-  without the fix.
+### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
+- Trigger: write of ≥ PAGE_SIZE compressible data where a potential
+  match exists in the final <8 bytes of the input and the match does not
+  extend to the very end.
+- Cannot be triggered by unprivileged user without the opt-in
+  configuration.
+- **Record:** Specific but realistic trigger on any compressed write
+  whose tail contains a partial match.
 
-**Step 8.3: Failure mode**
-- Functional degradation: USB stuck at 12 Mbit/s full-speed instead of
-  480 Mbit/s high-speed, plus outright "device enumeration failure" per
-  Microchip erratum
-- Severity: HIGH (functional breakage of USB HS on affected boards; not
-  a crash, but USB effectively doesn't work properly).
+### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
+- Wrong match length → decompressed data at the server differs from
+  original → **silent data corruption** in the file written over SMB.
+- Severity per standard rubric: **HIGH** (data corruption), but
+  mitigated by the opt-in nature.
+- **Record:** Failure mode: silent data corruption. Severity: HIGH when
+  triggered, but narrow audience.
 
-**Step 8.4: Risk/benefit**
-- Benefit: Restores proper USB HS operation on real shipping hardware
-  (ZynqMP + USB3340) — HIGH for affected users, NONE for others.
-- Risk: Writes happen only when vendor+product match exactly →
-  effectively zero regression risk elsewhere. The new code path is well-
-  guarded (`if (!dwc->ulpi) return;` + `if
-  (dwc->enable_usb2_transceiver_delay)`).
-- Scope: +49 lines, 3 files, one driver.
-- Record: Very favorable benefit/risk ratio for the affected population.
+### Step 8.4: CALCULATE RISK-BENEFIT RATIO
+- BENEFIT: Fixes a silent data corruption for users who opt into CIFS
+  compression. Consistent with previously accepted compression fixes.
+- RISK: Very low. 10/7-line change. Obviously correct idiom fix. Applies
+  cleanly. No API changes. The `<=` change is provably safe (8-byte read
+  at `end-8` stays in-bounds).
+- **Record:** Benefit level: moderate (narrow but data-integrity). Risk
+  level: very low. Ratio favors backporting.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence compilation**
+### Step 9.1: COMPILE THE EVIDENCE
+FOR:
+- Real bug confirmed by diff analysis (byte-by-byte post-increment over-
+  counts on mismatch)
+- Failure mode is silent data corruption on compressed SMB writes
+- Small, surgical, obviously-correct fix
+- Applies cleanly to all 5 affected stable trees (6.12.y–7.0.y)
+- Precedent: similar compression fixes already in stable (5ac1f99fdd09d,
+  9b4af913465cc, 590efcd3c75f0)
+- Author is the primary maintainer of this code
 
-Evidence FOR:
-- Fixes a documented silicon erratum (Microchip 80000645A) with a user-
-  visible symptom (USB stuck in full-speed)
-- Narrowly gated by ULPI vendor+product ID – zero risk to other hardware
-- Well-reviewed (5 versions), Acked by subsystem maintainer, merged by
-  Greg KH
-- Small contained patch (+49 lines, 3 files in one driver)
-- Matches the stable rules' explicit "QUIRKS and WORKAROUNDS" exception
-- Addresses a real shipping platform (AMD/Xilinx ZynqMP) — not
-  theoretical
+AGAINST:
+- No Cc: stable, no Fixes: tag, no Reported-by
+- Feature is EXPERIMENTAL and default N
+- Narrow real-world audience
+- Part of series with mixed fix/improvement content (but this patch is
+  self-contained)
 
-Evidence AGAINST:
-- No Fixes: tag (but: hardware bug, no kernel commit to fix – expected)
-- No Cc: stable (expected for candidate review)
-- Not described with "fix" language in the subject (author framed it as
-  "Support")
-- Adds new infrastructure (`dwc3_ulpi_setup`, `dwc3_ulpi_detect_config`,
-  new quirk flag) rather than a trivial one-line ID add; some consider
-  this "feature-shaped"
-- Requires `num_usb2_ports` (v6.10+) for clean apply to older stable
-  trees
+UNRESOLVED: None.
 
-Unresolved: None material.
+### Step 9.2: APPLY THE STABLE RULES CHECKLIST
+1. Obviously correct and tested? **Yes** — simple idiom fix; applied in
+   Torvalds' tree (7.1-rc1).
+2. Fixes a real bug that affects users? **Yes** — data corruption for
+   compression users.
+3. Important issue? **Yes** — data integrity class.
+4. Small and contained? **Yes** — 10/-7 in one file.
+5. No new features/APIs? **Yes** (no new API).
+6. Applies to stable? **Yes** — verified clean apply on 6.12.y–7.0.y.
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? YES (small, gated by exact
-   vendor/product ID; controller register bit is the vendor-prescribed
-   workaround)
-2. Real bug? YES (documented silicon erratum, real user reports)
-3. Important issue? YES (USB HS broken on affected platforms)
-4. Small/contained? YES (+49 lines, 3 files, one driver)
-5. No new features/APIs? Borderline – it adds a quirk-detection
-   mechanism, but no userspace-visible API or new module parameter;
-   internal-only.
-6. Applies to stable trees? YES for 6.10+; would need trivial adjustment
-   for older
+### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
+- Not an exception category; stands on its merits as a data-correctness
+  fix.
 
-**Step 9.3: Exception category**
-- Hardware quirk/workaround for broken device → this is explicitly an
-  allowed exception per the stable rules.
+### Step 9.4: MAKE DECISION
+Evidence supports backporting. The fix addresses a genuine data-
+integrity bug, is minimal and obviously correct, applies cleanly, and is
+consistent with previously-accepted fixes to this same file.
 
-**Step 9.4: Decision**
-This is a hardware-quirk fix for a real, documented silicon erratum
-affecting shipping AMD/Xilinx ZynqMP platforms. The change is strictly
-additive, gated by a specific vendor/product ID match, carries
-essentially zero regression risk for unaffected systems, was reviewed
-through five revisions, and has the DWC3 maintainer's Ack. It directly
-fits the "QUIRKS and WORKAROUNDS" exception in the stable kernel rules.
+---
 
 ## Verification
+- [Phase 1] Parsed tags: only author + maintainer SOBs, no
+  stable/Fixes/Reported-by — verified by reading full commit message.
+- [Phase 2] Diff analysis: 10/-7 lines in
+  `fs/smb/client/compress/lz77.c`; two functions touched
+  (`lz77_match_len`, `lz77_compress`).
+- [Phase 2] Semantic correctness: traced byte-by-byte loop manually —
+  confirmed over-count by 1 on mismatch; `<=` change verified safe
+  (8-byte read at `end-8` in-bounds).
+- [Phase 3] `git blame` on changed lines: introduced by `94ae8c3fee94a`
+  ("smb: client: compress: LZ77 code improvements cleanup").
+- [Phase 3] `git describe --contains 94ae8c3fee94a` →
+  `v6.12-rc1~139^2~11` (present since v6.12).
+- [Phase 3] `git log -- fs/smb/client/compress/lz77.c` on origin/master:
+  confirmed 8-patch series, this is patch 3/8, independent of patches
+  1/8 and 2/8.
+- [Phase 4] `b4 dig -c 20d4f9efe008b`: found lore submission at https://
+  lore.kernel.org/all/20260413190713.283939-3-ematsumiya@suse.de/
+- [Phase 4] `b4 dig -a`: only v1, no other revisions.
+- [Phase 4] `b4 dig -w`: maintainer Steve French + linux-cifs list +
+  related developers CC'd.
+- [Phase 4] Full thread mbox saved to `/tmp/lz77_thread.mbox`: confirmed
+  no `Cc: stable`, no `Fixes:`, no `Reviewed-by/Tested-by`, only "merged
+  into cifs-2.6.git for-next" from maintainer.
+- [Phase 5] `grep` for `lz77_compress` callers: `smb_compress`
+  (transport.c:398 and compress.c:343); `should_compress` gates call in
+  smb2pdu.c:5201.
+- [Phase 5] Reachable from userspace write(2) only when
+  CIFS_COMPRESSION=y and `mount -o compress`.
+- [Phase 6] `git ls-tree` on 5 stable branches: identical blob
+  `96e8a8057a7721233dc49d3388d5e40b8a1bab5b` — buggy code in
+  6.12.y/6.17.y/6.18.y/6.19.y/7.0.y.
+- [Phase 6] `git apply --check -3` on all 5 stable branches: clean apply
+  on all.
+- [Phase 6] Precedent fixes already in 6.12.y stable: `5ac1f99fdd09d`,
+  `9b4af913465cc`, `590efcd3c75f0` — all compression-related fixes to
+  same file/feature.
+- [Phase 7] `Kconfig` read: `CIFS_COMPRESSION` is `bool "SMB message
+  compression (Experimental)"` default n; confirmed in both mainline and
+  6.12.y stable.
+- [Phase 8] Severity assessment: silent data corruption in compressed
+  writes; narrow audience due to opt-in nature.
 
-- [Phase 1] Parsed tags and body of commit a28de63356575; confirmed
-  Acked-by: Thinh Nguyen and Signed-off-by: Greg KH; confirmed
-  references to Microchip erratum and Xilinx/AMD forum post.
-- [Phase 2] Read the diff and current
-  `drivers/usb/dwc3/{core.c,core.h,ulpi.c}`; confirmed only-+ scope
-  (+49/0) and gating by `if (!dwc->ulpi)` and `if
-  (dwc->enable_usb2_transceiver_delay)`.
-- [Phase 3] `git log --oneline master -- drivers/usb/dwc3/ulpi.c` showed
-  ULPI infrastructure dates back to v4.16 (`88bc9d194ff69`); `git
-  describe --contains 921e109c62007` = `v6.10-rc1~48^2~50` →
-  `num_usb2_ports` first appeared in 6.10.
-- [Phase 3] `git describe --contains 9accc68b1cf0a` confirmed
-  `dwc3_readl` API rename is only in `next-20260205`/7.0-stream, so
-  older stable trees still use the signature this patch writes.
-- [Phase 4] `b4 dig -c a28de63356575` → found lore thread `https://lore.
-  kernel.org/all/20260305121452.54082-2-ingo.rohloff@lauterbach.com/`.
-- [Phase 4] `b4 dig -c a28de63356575 -a` → listed v1..v5 with lore URLs;
-  v5 is the applied revision.
-- [Phase 4] Read `/tmp/thread.mbox` (saved via `b4 dig -m`): verified
-  Acked-by from Thinh Nguyen (dwc3 maintainer) and the changelog v1→v5
-  switching from DT property to vendor/product-ID autodetection.
-- [Phase 5] Read `dwc3_ulpi_init()` in `drivers/usb/dwc3/ulpi.c` and its
-  caller `dwc3_core_ulpi_init()` at `drivers/usb/dwc3/core.c:651-665`;
-  confirmed reachability from `dwc3_core_init()` only on ULPI-capable
-  HW.
-- [Phase 6] `git branch --contains a28de63356575` shows the commit is in
-  `bus-next` (linux-next branch for 7.1), not yet in `master` (7.0),
-  matching its status as a backport candidate.
-- [Phase 8] Severity HIGH verified via the Microchip erratum title
-  "Device Enumeration Failure with Link IP Systems" cited in commit
-  message and the Xilinx/AMD forum title "USB stuck in full speed mode
-  with USB3340 ULPI PHY".
-- UNVERIFIED: Exact port counts affected on ZynqMP deployments – not
-  needed for decision.
-- UNVERIFIED: Whether the patch has been tested on multiple HW variants
-  – only author's testing environment implied.
-
-The patch is a well-bounded hardware quirk for a documented silicon bug
-on a real, shipping platform; it fits the stable rules' explicit
-quirk/workaround exception, carries essentially zero regression risk to
-unaffected systems, and is maintainer-Acked. For stable branches v6.10
-and newer it should apply cleanly; older branches would need a small
-adjustment to the port-iteration model.
+The fix addresses a real data-integrity bug with a minimal, obviously-
+correct change that applies cleanly to all affected stable trees, and it
+is consistent with previously accepted compression fixes. The
+EXPERIMENTAL/opt-in nature narrows the audience but does not negate the
+value of the fix.
 
 **YES**
 
- drivers/usb/dwc3/core.c | 20 ++++++++++++++++++++
- drivers/usb/dwc3/core.h |  4 ++++
- drivers/usb/dwc3/ulpi.c | 25 +++++++++++++++++++++++++
- 3 files changed, 49 insertions(+)
+ fs/smb/client/compress/lz77.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 161a4d58b2cec..6047ae280c602 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -782,6 +782,24 @@ static int dwc3_hs_phy_setup(struct dwc3 *dwc, int index)
- 	return 0;
+diff --git a/fs/smb/client/compress/lz77.c b/fs/smb/client/compress/lz77.c
+index c1e7fada6e61c..61cdf1c146127 100644
+--- a/fs/smb/client/compress/lz77.c
++++ b/fs/smb/client/compress/lz77.c
+@@ -48,17 +48,17 @@ static __always_inline void lz77_write32(u32 *ptr, u32 v)
+ 	put_unaligned_le32(v, ptr);
  }
  
-+static void dwc3_ulpi_setup(struct dwc3 *dwc)
-+{
-+	int index;
-+	u32 reg;
-+
-+	/* Don't do anything if there is no ULPI PHY */
-+	if (!dwc->ulpi)
-+		return;
-+
-+	if (dwc->enable_usb2_transceiver_delay) {
-+		for (index = 0; index < dwc->num_usb2_ports; index++) {
-+			reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(index));
-+			reg |= DWC3_GUSB2PHYCFG_XCVRDLY;
-+			dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(index), reg);
-+		}
-+	}
-+}
-+
- /**
-  * dwc3_phy_setup - Configure USB PHY Interface of DWC3 Core
-  * @dwc: Pointer to our controller context structure
-@@ -1363,6 +1381,8 @@ int dwc3_core_init(struct dwc3 *dwc)
- 		dwc->ulpi_ready = true;
- 	}
- 
-+	dwc3_ulpi_setup(dwc);
-+
- 	if (!dwc->phys_ready) {
- 		ret = dwc3_core_get_phy(dwc);
- 		if (ret)
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index a35b3db1f9f3e..a39bf284c763f 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -302,6 +302,7 @@
- #define DWC3_GUSB2PHYCFG_SUSPHY		BIT(6)
- #define DWC3_GUSB2PHYCFG_ULPI_UTMI	BIT(4)
- #define DWC3_GUSB2PHYCFG_ENBLSLPM	BIT(8)
-+#define DWC3_GUSB2PHYCFG_XCVRDLY	BIT(9)
- #define DWC3_GUSB2PHYCFG_PHYIF(n)	(n << 3)
- #define DWC3_GUSB2PHYCFG_PHYIF_MASK	DWC3_GUSB2PHYCFG_PHYIF(1)
- #define DWC3_GUSB2PHYCFG_USBTRDTIM(n)	(n << 10)
-@@ -1161,6 +1162,8 @@ struct dwc3_glue_ops {
-  *	3	- Reserved
-  * @dis_metastability_quirk: set to disable metastability quirk.
-  * @dis_split_quirk: set to disable split boundary.
-+ * @enable_usb2_transceiver_delay: Set to insert a delay before the
-+ *			assertion of the TxValid signal during a HS Chirp.
-  * @sys_wakeup: set if the device may do system wakeup.
-  * @wakeup_configured: set if the device is configured for remote wakeup.
-  * @suspended: set to track suspend event due to U3/L2.
-@@ -1403,6 +1406,7 @@ struct dwc3 {
- 	unsigned		dis_metastability_quirk:1;
- 
- 	unsigned		dis_split_quirk:1;
-+	unsigned		enable_usb2_transceiver_delay:1;
- 	unsigned		async_callbacks:1;
- 	unsigned		sys_wakeup:1;
- 	unsigned		wakeup_configured:1;
-diff --git a/drivers/usb/dwc3/ulpi.c b/drivers/usb/dwc3/ulpi.c
-index 57daad15f502d..a256b7f5d78b4 100644
---- a/drivers/usb/dwc3/ulpi.c
-+++ b/drivers/usb/dwc3/ulpi.c
-@@ -10,10 +10,13 @@
- #include <linux/delay.h>
- #include <linux/time64.h>
- #include <linux/ulpi/regs.h>
-+#include <linux/ulpi/driver.h>
- 
- #include "core.h"
- #include "io.h"
- 
-+#define USB_VENDOR_MICROCHIP 0x0424
-+
- #define DWC3_ULPI_ADDR(a) \
- 		((a >= ULPI_EXT_VENDOR_SPECIFIC) ? \
- 		DWC3_GUSB2PHYACC_ADDR(ULPI_ACCESS_EXTENDED) | \
-@@ -83,6 +86,26 @@ static const struct ulpi_ops dwc3_ulpi_ops = {
- 	.write = dwc3_ulpi_write,
- };
- 
-+static void dwc3_ulpi_detect_config(struct dwc3 *dwc)
-+{
-+	struct ulpi *ulpi = dwc->ulpi;
-+
-+	switch (ulpi->id.vendor) {
-+	case USB_VENDOR_MICROCHIP:
-+		switch (ulpi->id.product) {
-+		case 0x0009:
-+			/* Microchip USB3340 ULPI PHY */
-+			dwc->enable_usb2_transceiver_delay = true;
-+			break;
-+		default:
-+			break;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+}
-+
- int dwc3_ulpi_init(struct dwc3 *dwc)
+-static __always_inline u32 lz77_match_len(const void *wnd, const void *cur, const void *end)
++static __always_inline u32 lz77_match_len(const void *match, const void *cur, const void *end)
  {
- 	/* Register the interface */
-@@ -92,6 +115,8 @@ int dwc3_ulpi_init(struct dwc3 *dwc)
- 		return PTR_ERR(dwc->ulpi);
- 	}
+ 	const void *start = cur;
+ 	u64 diff;
  
-+	dwc3_ulpi_detect_config(dwc);
-+
- 	return 0;
+ 	/* Safe for a do/while because otherwise we wouldn't reach here from the main loop. */
+ 	do {
+-		diff = lz77_read64(cur) ^ lz77_read64(wnd);
++		diff = lz77_read64(cur) ^ lz77_read64(match);
+ 		if (!diff) {
+ 			cur += LZ77_STEP_SIZE;
+-			wnd += LZ77_STEP_SIZE;
++			match += LZ77_STEP_SIZE;
+ 
+ 			continue;
+ 		}
+@@ -67,10 +67,13 @@ static __always_inline u32 lz77_match_len(const void *wnd, const void *cur, cons
+ 		cur += count_trailing_zeros(diff) >> 3;
+ 
+ 		return (cur - start);
+-	} while (likely(cur + LZ77_STEP_SIZE < end));
++	} while (likely(cur + LZ77_STEP_SIZE <= end));
+ 
+-	while (cur < end && lz77_read8(cur++) == lz77_read8(wnd++))
+-		;
++	/* Fallback to byte-by-byte comparison for last <8 bytes. */
++	while (cur < end && lz77_read8(cur) == lz77_read8(match)) {
++		cur++;
++		match++;
++	}
+ 
+ 	return (cur - start);
  }
+@@ -195,7 +198,7 @@ noinline int lz77_compress(const void *src, u32 slen, void *dst, u32 *dlen)
+ 			flag_pos = dstp;
+ 			dstp += 4;
+ 		}
+-	} while (likely(srcp + LZ77_STEP_SIZE < end));
++	} while (likely(srcp + LZ77_STEP_SIZE <= end));
  
+ 	while (srcp < end) {
+ 		u32 c = umin(end - srcp, 32 - flag_count);
 -- 
 2.53.0
 
