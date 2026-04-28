@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8513FCB13;
-	Tue, 28 Apr 2026 10:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BD03FCB35;
+	Tue, 28 Apr 2026 10:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372929; cv=none; b=nDLCsDKw/Ix+pPA9/e0Dzzi7aPzHFkZd7AQN0MoufmGLeL3oylB2rLUuGKguYEzbtl92kbjKx+tJO9y3cI49o7V2W57fyB/7ixtOKNnlj5T9MVAtpv7fVtf5rdQl8moDlxVm+UfVNxGTqLSywpBJPMwlpKs1e2xSxQv9src2120=
+	t=1777372930; cv=none; b=BeUDtb+M1EdoGx/AfPhHAbgwuefq+/r4I5MFjVoFUzm7p0/vmQwrviU+FCKQiSg6NUtY74Yj7igOsewH0E8CATpnFDZU6zhQkLSfmeTOe+watlqI2GHkOYXTsN6h2beNDATVobkAHPhdRD5f+40vZoSisF7ybocZPcWNtBeFmO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372929; c=relaxed/simple;
-	bh=m7hbplM/0Zg40fqwDSGu12h0MMvtrRfSGZuNkF5d9mw=;
+	s=arc-20240116; t=1777372930; c=relaxed/simple;
+	bh=3mn45ZoRanBLRBbFpAnldLw8IwPma1aTJ6SK1DCHZnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bmewPIt+sJZZThaK+ScZmUa7BuVH4PJeVGdO9Rn63+E3PGqD2chKtkquN09USnuPKj0tyKnFS3x0tFprx7k38oGcmP8NqxrCqGFllFgWBIPCeAEMkHPhVyncY+dlQdkfNqYVkQimUKWpN2+P9F1lStTbhsk5Mv8K1wghKuUJn/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dw8BrzbB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pLqg7Q3bchEYaxAzSZIeLbalVupdVDI9UacPR3q4wFdUdedbcbVN4PId5ML6vx8O/ohz+TQrHvwU8P5s1eDdd0JroNB314iQDL4FYOzduUObq/Ccl9FSh6b4dWwb8aUoGNs4bBBFomWRnok9nUeYG1BVF6jjwOsjvRBdtucZRxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pEINo8xe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dw8BrzbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7237EC2BCB7;
-	Tue, 28 Apr 2026 10:42:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pEINo8xe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECE6C2BCB5;
+	Tue, 28 Apr 2026 10:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372929;
-	bh=m7hbplM/0Zg40fqwDSGu12h0MMvtrRfSGZuNkF5d9mw=;
+	s=k20201202; t=1777372930;
+	bh=3mn45ZoRanBLRBbFpAnldLw8IwPma1aTJ6SK1DCHZnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dw8BrzbBhByXMwuTfBlYpcdI+luthnuBgt4GyOHhoGs4YUUdovOHaf4/1c7Fy2q4J
-	 71iiRD8a8xoNV3Kah12uolS2nQslypfAcu57lQ3btcJFxGXPSGWqneaiP9xeHlMPO1
-	 JdvzkjrSfLZMeX1XP0KmhZzp0cTG7c95tmm6/O6uBiWF/ijlClMexvxjAMes++/oCw
-	 8gfHvR/olKhiR31wXpD2tamnaCxGd/5FNZCcsSp4iZJo2cDnjg7sv27TU0YJ62TPn+
-	 FdfDPM6qs8iwCNAPaJjjTih8JlDLjSd3QwM+4Huv2NSN5PPuvn1llIw1EoEDFNq0qu
-	 A83CeBh1ueOrQ==
+	b=pEINo8xecmLm0xi6IsXlQbRpA+9IEt63inidbUxO3ZmGfZxcg6LBJdSBNIK/hZdfQ
+	 pULhwqYPamCMstyPptQs79gIfj0C9IcWovrZfFvXU1fySrwRGbhwQKUaTs6J86oMp/
+	 z2AAz5jl5F5cmB0KSXuWf3TxAr5/YakhLUxECpprpb3mtxzuw/oOU9S8D1c+L97uan
+	 5S6MAO4DzsjtMzb8INiZnpgy25gBHty2+SbYtN1mnvGT+dXgZW37JfKonf7ZWRZA1N
+	 S+M6kJvWsbTfJEwVbK2splTVz5Uzp5TsHX6A3CofPM/pyd+LQSuZxSGQ/lh27F7f7v
+	 P2eqiihEodSsA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Frank=20Hsiao=20=E8=95=AD=E6=B3=95=E5=AE=A3?= <frankhsiao@qnap.com>,
-	Tyler Hicks <code@tyhicks.com>,
+Cc: Kelvin Mbogo <addcontent08@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ecryptfs@vger.kernel.org,
+	valentina.manea.m@gmail.com,
+	shuah@kernel.org,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ecryptfs: Set s_time_gran to get correct time granularity
-Date: Tue, 28 Apr 2026 06:40:36 -0400
-Message-ID: <20260428104133.2858589-25-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] usb: usbip: fix OOB read/write in usbip_pad_iso()
+Date: Tue, 28 Apr 2026 06:40:37 -0400
+Message-ID: <20260428104133.2858589-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -46,352 +48,356 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Hsiao 蕭法宣 <frankhsiao@qnap.com>
+From: Kelvin Mbogo <addcontent08@gmail.com>
 
-[ Upstream commit 7d9ebf33d85317f3f258c627de51701e2bf7642d ]
+[ Upstream commit 74a2287209a858470d15e2996ead2337bd293ff4 ]
 
-Set the eCryptfs superblock time granularity, using the lower
-filesystem's s_time_gran value, to prevent unnecessary inode timestamp
-truncation to the granularity of a full second.
+usbip_pad_iso() repositions ISO frame data within the transfer buffer
+via memmove().  Neither the source offset (actualoffset, derived by
+subtracting wire-supplied actual_length values) nor the destination
+offset (iso_frame_desc[i].offset, taken directly from the wire) is
+bounds-checked.
 
-The use of utimensat(2) to set a timestamp with nanosecond precision
-would trigger this bug. That occurred when using the following utilities
-to update timestamps of a file:
-  * cp -p: copy a file and preserve its atime and mtime
-  * touch -r: touch a file and use a reference file's timestamps
+If a crafted actual_length wraps actualoffset negative through the
+subtraction (see patch 2/3 for the root cause), the memmove source
+points before the allocation - slab OOB read, data returned to
+userspace.
 
-Closes: https://bugs.launchpad.net/ecryptfs/+bug/1890486
-Signed-off-by: Frank Hsiao 蕭法宣 <frankhsiao@qnap.com>
-[tyhicks: Partially rewrite the commit message]
-Signed-off-by: Tyler Hicks <code@tyhicks.com>
+Independently, iso_frame_desc[i].offset is never validated against
+transfer_buffer_length.  Setting offset past the end of the buffer
+gives a fully controlled OOB write into whatever sits next in the
+slab - confirmed with offset=400 on a 392-byte buffer, 64-byte write.
+
+Add bounds checks for both the source and destination ranges before
+each memmove call.  Use unsigned comparisons after the sign check on
+actualoffset to avoid signed/unsigned conversion surprises.
+
+Signed-off-by: Kelvin Mbogo <addcontent08@gmail.com>
+Link: https://patch.msgid.link/20260325103640.8090-3-addcontent08@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: ecryptfs s_time_gran Fix
+Based on my extensive investigation, I have enough information to
+provide a complete analysis.
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit Message Forensics
 
-**Step 1.1: Subject line parsing**
-- Subsystem: `ecryptfs:` (fs/ecryptfs)
-- Verb: "Set" (describes a missing initialization -> classic hidden bug
-  fix)
-- Record: **ecryptfs** - **Set** - initialize superblock time
-  granularity from the lower filesystem to avoid second-granularity
-  timestamp truncation.
+**Step 1.1 Subject:** `usb: usbip: fix OOB read/write in
+usbip_pad_iso()` — subsystem `usb:usbip`, verb **fix**, claim: bounds-
+check the source/destination offsets used inside `usbip_pad_iso()`'s
+`memmove()`.
 
-**Step 1.2: Tags**
-- Signed-off-by: Frank Hsiao (author, QNAP)
-- [tyhicks: Partially rewrite the commit message]
-- Signed-off-by: Tyler Hicks (ecryptfs maintainer)
-- `Closes:` https://bugs.launchpad.net/ecryptfs/+bug/1890486 (6-year-old
-  user bug report with 3 affected users)
-- No Fixes: tag, no Cc: stable (expected for candidates)
-- Record: Closes launchpad bug #1890486; accepted by the subsystem
-  maintainer.
+**Step 1.2 Tags:**
+- `Signed-off-by: Kelvin Mbogo <addcontent08@gmail.com>` (author)
+- `Link:
+  https://patch.msgid.link/20260325103640.8090-3-addcontent08@gmail.com`
+  (v2 3/3)
+- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>` (USB
+  maintainer applied it)
+- No `Fixes:`, no explicit `Cc: stable` (expected for this review
+  pipeline)
 
-**Step 1.3: Commit body**
-- Bug: eCryptfs superblock `s_time_gran` is never set, so it keeps the
-  VFS default of 1 second (`NSEC_PER_SEC` = 10^9 ns). When
-  `utimensat(2)` (via `cp -p`, `touch -r`, etc.) sets nanosecond
-  timestamps, VFS `timestamp_truncate()` rounds them to the second
-  before passing the change down to the lower fs.
-- Symptom: sub-second timestamps lost when updated through eCryptfs.
-- Fix: propagate `s_time_gran` from the lower superblock, mirroring the
-  value the underlying fs actually supports.
+**Step 1.3 Body:** Two distinct attacks documented:
+1. Crafted `actual_length` makes `actualoffset` go negative (subtraction
+   underflow) → `memmove()` source points **before** the slab allocation
+   → slab OOB read whose bytes are returned to userspace via
+   `USBDEVFS_REAPURB`.
+2. Wire-supplied `iso_frame_desc[i].offset` is never validated against
+   `transfer_buffer_length`. Setting offset past buffer end → fully
+   controlled OOB write — **confirmed by the author with offset=400 on a
+   392-byte buffer producing a 64-byte OOB write**. Record: both an
+   info-leak and a controlled heap write, triggered by a malicious
+   USB/IP peer.
 
-**Step 1.4: Hidden bug fix?**
-- Yes — "Set X" describes a missing initialization. Functionally this IS
-  a bug fix (data-integrity for timestamps).
+**Step 1.4 Hidden fix?** Not hidden at all — "fix OOB read/write" is a
+textbook security bug-fix phrasing.
 
-### PHASE 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-**Step 2.1: Inventory**
-- Files: `fs/ecryptfs/main.c` (+1/-0).
-- Function: `ecryptfs_get_tree()` (the new fs_context-based mount
-  helper; pre-6.13 equivalent is `ecryptfs_mount()`).
-- Scope: single-line surgical fix.
+**Step 2.1 Inventory:** Single file `drivers/usb/usbip/usbip_common.c`,
++36 lines, 0 removed. One function: `usbip_pad_iso()`.
 
-**Step 2.2: Code flow**
-- Before: superblock allocated by VFS (default `s_time_gran =
-  1000000000`, see `fs/super.c:376`). eCryptfs copies several fields
-  (`s_maxbytes`, `s_blocksize`, `s_magic`, `s_stack_depth`) from the
-  lower sb but NOT `s_time_gran`.
-- After: `s_time_gran` is copied along with the siblings.
-- Path: mount-time initialization only.
+**Step 2.2 Flow change:** Before — `memmove(transfer_buffer +
+iso_frame_desc[i].offset, transfer_buffer + actualoffset,
+iso_frame_desc[i].actual_length)` runs unconditionally on wire-supplied
+values. After — two guard blocks reject negative/out-of-range source and
+any destination offset that exceeds the buffer, logging and returning
+early.
 
-**Step 2.3: Bug mechanism**
-- Category: Logic/correctness (missing initialization) leading to data
-  loss of sub-second timestamp precision.
-- Root cause: `fs/attr.c` `setattr_prepare()` calls
-  `timestamp_truncate()` using `inode->i_sb->s_time_gran`. With eCryptfs
-  using the default (1 s), `timestamp_truncate()` zeroes the nanosecond
-  portion (see `fs/inode.c:2805-2806`) before the change is forwarded
-  via `notify_change()` to the lower filesystem. The fix makes
-  eCryptfs's granularity match the lower fs — exactly what overlayfs
-  does (`fs/overlayfs/super.c:1461: sb->s_time_gran =
-  upper_sb->s_time_gran;`) and similarly FUSE's submount
-  (`fs/fuse/inode.c:1736`).
+**Step 2.3 Bug mechanism:** (d) memory-safety bounds check + (f)
+mitigates signed/unsigned conversion via explicit `actualoffset < 0`
+check before the `(unsigned int)` casts. It is categories (a) (input
+validation) and (d) (bounds check before `memmove`).
 
-**Step 2.4: Fix quality**
-- Obviously correct: copies a value guaranteed to be valid (`0 <
-  s_time_gran <= NSEC_PER_SEC`) from the already-mounted lower sb.
-- Minimal/surgical, mount-path only, no runtime hot paths touched.
-- Regression risk: effectively zero — timestamps gain precision they
-  should always have had. The matching pattern is already proven in
-  overlayfs.
+**Step 2.4 Quality:** Fix is surgical, arithmetic is written without
+overflow risk (`length > buf - off` pattern, not `off + length > buf`).
+Return is early (`void` function), no lock/state changes. Regression
+risk: very low — a malformed frame simply skips padding restoration,
+which would have corrupted the kernel anyway.
 
-### PHASE 3: GIT HISTORY
+## Phase 3: Git History
 
-**Step 3.1: Blame**
-- The surrounding lines (`s_maxbytes`, `s_blocksize`, `s_magic`,
-  `s_stack_depth`) have been there since eCryptfs's initial merge.
-  `s_time_gran` was simply never added. The VFS default of 1 second
-  became problematic when v5.4 introduced timestamp clamping via
-  `s_time_gran`/`s_time_min`/`s_time_max`; the launchpad report is dated
-  2020-08-05 against 5.4 for exactly that reason.
+**Step 3.1 Blame:** `git blame` shows the vulnerable loop was introduced
+in **2011** by `28276a28d8b3cd ("staging: usbip: bugfix for isochronous
+packets and optimization")` (Arjan Mels). That commit itself was `Cc:
+stable` in 2011, landed in 3.0. Bug has existed in every LTS since then.
 
-**Step 3.2: Fixes: tag**
-- None present. Root cause is a pre-existing missing init, not a
-  regression from a specific commit.
+**Step 3.2 Fixes: tag:** None declared in the message body, but the
+offending code = 28276a28d8b3cd (2011, v3.0).
 
-**Step 3.3: File history**
-- `92f3da0d9276f` (Nov 2024) converted eCryptfs to the new mount API,
-  renaming `ecryptfs_mount` -> `ecryptfs_get_tree`. The commit under
-  review is the first to touch the new `ecryptfs_get_tree` body; nothing
-  else in the recent series is a prerequisite for this fix.
-- Earlier ecryptfs changes in fs-next (`bf4afc53b77ae`, `69050f8d6d075`,
-  `0529a804095b2`, etc.) are unrelated.
+**Step 3.3 Related changes:** This commit is **patch 3/3** of Kelvin
+Mbogo's v2 series. Upstream, the three patches are:
+- `1897852293fac` — patch 1/3: integer overflow in `np * sizeof(*iso)`
+- `591c1d972d8f1` — patch 2/3: validate per-frame `actual_length`
+- `74a2287209a85` — patch 3/3: THIS commit (OOB in `usbip_pad_iso()`)
 
-**Step 3.4: Author**
-- Frank Hsiao (QNAP, first-time fix contributor here); shepherded by
-  Tyler Hicks, the eCryptfs maintainer — he personally rewrote the
-  message and applied it to his `next` branch. Authoritative for the
-  subsystem.
+A related, independent fix by Nathan Rebello — `2ab833a16a825` ("usbip:
+validate number_of_packets in `usbip_pack_ret_submit()`") — closed a
+fourth related hole; it carried `Cc: stable` and is already backported
+as `d374421fc6889` on `pending-7.0`, plus into 6.12/6.6/6.1 pending
+branches.
 
-**Step 3.5: Dependencies**
-- Standalone. Nothing in the diff depends on other pending patches. For
-  pre-6.13 stable trees the only adjustment needed is targeting
-  `ecryptfs_mount()` instead of `ecryptfs_get_tree()`; the surrounding
-  context (below `s_stack_depth = ... + 1;`) is verbatim identical in
-  5.4/5.10/5.15/6.1/6.6/6.12.
+**Step 3.4 Author:** Kelvin Mbogo is a new contributor; fix was applied
+by USB maintainer Greg KH. Series acknowledged by `Shuah Khan` (usbip
+maintainer) for the parallel Nathan patch.
 
-### PHASE 4: MAILING LIST RESEARCH
+**Step 3.5 Dependencies:** The commit message references "see patch 2/3
+for the root cause" of negative `actualoffset`. Critically, patch 3/3
+contains its own `actualoffset < 0` check, so it stands alone; the OOB
+write via `iso_frame_desc[i].offset` is **wholly independent** of
+patches 1 and 2. Ideally patches 1 and 2 are backported together, but
+3/3 still removes a user-triggerable heap OOB write even standalone.
 
-**Step 4.1: Original submission**
-- `b4 dig` could not match the patch-id (the committed version differs
-  from the submission due to the mount-API rebase and message rewrite),
-  but it did locate the thread via author+subject: lore message-id `SEZP
-  R04MB6972A94B302FC6AC528823FAB7EE2@SEZPR04MB6972.apcprd04.prod.outlook
-  .com`.
-- Thread timeline (from downloaded mbox):
-  - 2024-05-17 — Frank Hsiao: original patch.
-  - 2024-12-06 — Bert Wesarg: "I came to the same conclusion," no
-    objections.
-  - 2026-02-23 — Bert: requests that the patch be applied "for a next
-    cycle."
-  - 2026-03-26 — Tyler Hicks: applies it to `tyhicks/ecryptfs.git#next`,
-    rewrites the message, keeps Frank's authorship.
-- No NAKs, no objections, only encouragement. Only one version of the
-  fix; applied as-is semantically.
+## Phase 4: Mailing-list Research
 
-**Step 4.2: Recipients**
-- The patch was sent to the ecryptfs list and the maintainer; it was
-  reviewed/acked in substance by a second developer (Bert Wesarg) and
-  applied by the maintainer.
+**Step 4.1 b4 dig / b4 am:** Ran `b4 am -o /tmp/usbip_v3/
+20260325103640.8090-3-addcontent08@gmail.com` — lore thread contains v2
+patches 1/3, 2/3, 3/3; 4 thread messages + 6 code-review replies. The
+committed version is v2, applies cleanly on current tree per b4.
 
-**Step 4.3: Bug report**
-- Launchpad #1890486 (2020-08-05 by Stephan Wacker). Explicitly "affects
-  3 people"; additional breakage reports cite: `rclone` sync, Rust
-  `cargo` rebuild detection (rust-lang/cargo#7775), and ble.sh
-  (akinomyoga/ble.sh#347). Users see silent breakage of mtime-based
-  incremental tools.
+**Step 4.2 Reviewers/CC:** `linux-usb@vger.kernel.org`,
+`gregkh@linuxfoundation.org`, `skhan@linuxfoundation.org`. Applied
+directly by Greg KH.
 
-**Step 4.4: Related patches**
-- None — single-patch submission, standalone.
+**Step 4.3 Bug origin:** Not a syzbot report — found by manual source
+audit by the author and independently by Sebastián Alba Vives (spinics
+stable-list [SECURITY] post Mar 29 2026: "[SECURITY] usbip:
+iso_frame_desc OOB memmove via crafted offset/length"). Two independent
+auditors flagging the same class of bug is a strong real-world signal.
 
-**Step 4.5: Stable-list discussion**
-- No separate stable nomination found. Not raised to stable@
-  historically because the patch languished for two years.
+**Step 4.4 Series context:** The three-patch series + Nathan Rebello's
+complementary patch form a coordinated hardening of the USB/IP receive
+path against malicious remote servers.
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.5 Stable list:** Sebastián's [SECURITY] post on 2026-03-29
+proposed validating offset/length for the same issue, targeting stable
+explicitly. The class has clear stable-maintainer awareness.
 
-**Step 5.1/5.2/5.3: Functions**
-- Only `ecryptfs_get_tree()` is changed. It runs once per mount(2) call
-  for eCryptfs. Not in any hot path.
+## Phase 5: Code Semantic Analysis
 
-**Step 5.4: Reachability**
-- Triggered on every `mount -t ecryptfs …`. Any subsequent
-  `utimensat(2)`/`cp -p`/`touch -r`/`rsync -a`/`rclone` on the mounted
-  tree then benefits. Reachable from unprivileged userspace
-  (CAP_SYS_ADMIN needed for the mount, but the benefit is for
-  unprivileged users of the mounted filesystem).
+**Step 5.1 Functions modified:** `usbip_pad_iso()` only.
 
-**Step 5.5: Similar patterns**
-- `fs/overlayfs/super.c:1461: sb->s_time_gran = upper_sb->s_time_gran;`
-  — identical pattern in the other major Linux stacked filesystem.
-- `fs/fuse/inode.c:1736: sb->s_time_gran = parent_sb->s_time_gran;` —
-  submount case.
-- These precedents strengthen the "obviously correct" claim.
+**Step 5.2 Callers:** `grep` shows exactly one caller:
+`vhci_recv_ret_submit()` in `drivers/usb/usbip/vhci_rx.c` line 92 — the
+vhci (client) receive path. That function runs in the vhci_rx kthread
+processing `USBIP_RET_SUBMIT` responses from the remote server over TCP.
 
-### PHASE 6: CROSS-REFERENCING STABLE TREES
+**Step 5.3 Callees:** `memmove()`, `dev_err()` — minimal.
 
-**Step 6.1: Bug presence in stable**
-- Verified in 5.4, 5.10, 5.15, 6.1, 6.6, and 6.12: none of those
-  branches sets `s_time_gran`; the surrounding lines match verbatim. Bug
-  present in every active LTS.
+**Step 5.4 Reachability:** Path is `vhci_rx_loop → vhci_rx_pdu →
+vhci_recv_ret_submit → usbip_recv_xbuff → usbip_recv_iso →
+usbip_pad_iso`. Every byte fed into `iso_frame_desc[i].offset` /
+`actual_length` comes directly from the TCP stream via
+`usbip_pack_iso()` (ref: `usbip_common.c:619-632`). **Fully reachable
+from a network peer — no local privilege required on the vhci side.**
 
-**Step 6.2: Backport difficulty**
-- 6.13+ stable trees (once they exist) and fs-next: clean apply.
-- Older stable trees (≤6.12): one-line change needs to be placed in
-  `ecryptfs_mount()` rather than `ecryptfs_get_tree()`. The insertion
-  anchor (`s->s_stack_depth = path.dentry->d_sb->s_stack_depth + 1;`) is
-  identical, so this is a trivial mechanical rebase, not a re-
-  engineering.
+**Step 5.5 Similar patterns:** Patches 1 and 2 of same series handle
+related missing bounds checks; Nathan's commit (already in
+pending-6.1/6.6/6.12/7.0) handles the `number_of_packets` OOB. No other
+sibling drivers need this fix.
 
-**Step 6.3: Prior related fixes**
-- None. No partial fix already shipped.
+## Phase 6: Stable Tree Analysis
 
-### PHASE 7: SUBSYSTEM CONTEXT
+**Step 6.1 Buggy code in stable?** Verified by reading
+`stable/linux-5.4.y`, `stable/linux-5.10.y`, `stable/linux-6.1.y`:
+`usbip_pad_iso()` body is character-for-character identical to mainline
+pre-fix. Bug exists in **every active LTS** (5.4.y, 5.10.y, 5.15.y,
+6.1.y, 6.6.y, 6.12.y, 7.0.y).
 
-**Step 7.1: Subsystem**
-- `fs/ecryptfs` — stacked encrypted filesystem. Still actively used on
-  older Ubuntu LTS systems (ecryptfs-home) and by QNAP NAS firmware.
-  Criticality: IMPORTANT for affected users (no universal impact;
-  filesystem-specific).
+**Step 6.2 Backport difficulty:** The surrounding context (comments,
+loop) is unchanged for 15 years. Patch will apply with at most line-
+offset fuzz. Zero rework expected.
 
-**Step 7.2: Activity**
-- Low but nonzero; maintainer is re-engaging. Many of the historical
-  fixes are themselves tiny one-liners, consistent with stable-friendly
-  maintenance.
+**Step 6.3 Related fix already in stable?** Nathan's `2ab833a16a825` is
+in pending-6.1/6.6/6.12/7.0 already, explicitly marked `Cc: stable`.
+This Kelvin patch is the complement that closes the remaining
+offset/length-derived OOB.
 
-### PHASE 8: IMPACT AND RISK
+## Phase 7: Subsystem Context
 
-**Step 8.1: Affected users**
-- Anyone using eCryptfs (Ubuntu encrypted-home users, NAS appliances,
-  legacy deployments).
+**Step 7.1 Subsystem:** `drivers/usb/usbip` — networked USB
+virtualization. PERIPHERAL in user-count, but *security-critical*
+because untrusted network bytes reach kernel memory operations.
 
-**Step 8.2: Trigger**
-- Any tool that sets a non-current timestamp: `cp -p`, `cp -a`, `touch
-  -r`, `rsync -a`, `rclone`, `cargo`. Extremely common workflows.
+**Step 7.2 Activity:** USB/IP is actively maintained; recent commits in
+2025-2026 include multiple hardening fixes for the same receive path
+(Nathan Rebello's commit, Kelvin's series).
 
-**Step 8.3: Failure mode**
-- Silent timestamp loss of nanosecond fraction -> broken mtime-based
-  sync/build tools. Severity: MEDIUM (data-integrity issue, not a
-  crash/security/corruption beyond timestamps). Not CRITICAL, but
-  clearly user-visible and persistent.
+## Phase 8: Impact & Risk
 
-**Step 8.4: Risk/benefit**
-- Benefit: fixes a known, long-reported bug impacting many real tools.
-- Risk: 1 line, mirrors existing behavior of overlayfs/FUSE, copies a
-  VFS-guaranteed valid value. As close to zero as patches get.
-- Ratio: high benefit / very low risk — classic stable material.
+**Step 8.1 Affected users:** Anyone running a USB/IP client (vhci-hcd)
+and attaching to a remote `usbipd`. Linux distributions ship this
+(`CONFIG_USBIP_CORE`, `CONFIG_USBIP_VHCI_HCD`); cloud test labs, VDI
+setups, IoT dev boards, and Android-on-x86 all use it.
 
-### PHASE 9: FINAL SYNTHESIS
+**Step 8.2 Trigger:** A malicious or compromised USB/IP server sends a
+crafted `USBIP_RET_SUBMIT` response with a valid number_of_packets but
+poisoned `iso_frame_desc[i].offset` (> transfer_buffer_length) or
+manufactured `actual_length` values that wrap `actualoffset` negative.
+**No authentication; no local privilege needed on the client.**
 
-**Evidence FOR**: real bug with multiple reporters across 6 years;
-affects common userspace tools; fix is a 1-line mount-time init; pattern
-already proven in overlayfs/FUSE; maintainer-applied; no review
-objections; bug present in all active stable trees; clean or trivially-
-rebased apply.
+**Step 8.3 Severity:** CRITICAL — slab-level OOB **write** of attacker-
+controlled size at attacker-controlled offset in kernel heap memory;
+plus OOB **read** that leaks kernel heap content back to userspace. This
+is the classic "exploit primitive" class of bug.
 
-**Evidence AGAINST**: not a crash/security/data-corruption issue; no
-explicit Cc: stable; commit is currently only in fs-next, not yet in
-Linus's tree (pipeline normally requires mainline before stable).
+**Step 8.4 Risk/benefit:**
+- Benefit: very high — kernel heap corruption from network is among the
+  highest-severity bug classes.
+- Risk: very low — adds only input validation with early `return;`; the
+  only possible regression is that previously-broken malformed frames
+  now fail silently instead of corrupting kernel memory, which is the
+  desired behavior.
 
-**Stable rules checklist**:
-1. Obviously correct & tested: YES (trivial; reporters confirm fix
-   works).
-2. Real bug affecting users: YES (documented since 2020).
-3. Important: MEDIUM (data integrity for timestamps, user-facing tool
-   breakage).
-4. Small & contained: YES (1 line).
-5. No new features/APIs: YES.
-6. Applies to stable: YES (clean on 6.13+; trivial target-function
-   rename for ≤6.12).
+## Phase 9: Synthesis
 
-**Exception category**: none required — straightforward bug fix.
+**Evidence FOR backport:** Remote OOB read (info leak) + remote OOB
+write (controlled heap write) with confirmed reproducer; 15-year-old bug
+in every stable tree; minimal surgical diff; USB maintainer SOB; part of
+a coordinated hardening series whose companion Nathan patch is already
+marked for stable and accepted into pending branches; two independent
+security researchers flagged the same class.
 
-**Decision**: The fix is exactly the kind of small, obviously-correct,
-long-pending user-visible fix that belongs in stable once it reaches
-mainline. Any concern about mainline status is procedural, not
-technical; the technical merits are strong.
+**Evidence AGAINST:** Commit message mentions "see patch 2/3 for the
+root cause" suggesting a small dependency on patch 2/3 for one of two
+attack vectors; however patch 3/3 contains its own `actualoffset < 0`
+check so it mitigates that vector standalone, and the
+`iso_frame_desc[i].offset` OOB write is fully independent. Best practice
+would be to backport the full 3-patch series together, but the
+standalone 3/3 is still clearly beneficial.
 
----
+**Stable rules checklist:** (1) Obviously correct — YES, read of 10
+lines; (2) Fixes real bug — YES, OOB read+write; (3) Important — YES,
+remote-triggerable memory corruption; (4) Small — YES, 36 lines one
+function; (5) No new features — YES, input validation only; (6) Applies
+— YES, identical context in every stable tree.
 
-### Verification
-- [Phase 1] Parsed tags via `git show
-  7d9ebf33d85317f3f258c627de51701e2bf7642d` — confirmed two SoBs and the
-  `Closes:` launchpad link; no Fixes:/Cc: stable.
-- [Phase 2] Diff confirms single added line `s->s_time_gran =
-  path.dentry->d_sb->s_time_gran;` in `ecryptfs_get_tree()`.
-- [Phase 2] VFS default verified: `fs/super.c:376: s->s_time_gran =
-  1000000000;`.
-- [Phase 2] Truncation mechanism verified: `fs/inode.c:2793-2811
-  timestamp_truncate()`; `fs/attr.c:465-478` applies it to
-  ATTR_ATIME/CTIME/MTIME_SET; so utimensat-with-nsec -> ecryptfs inode
-  -> truncated to 1 s before `notify_change()` to lower fs.
-- [Phase 3] `git show 92f3da0d9276f` — mount API conversion dated
-  2024-11-15; pre-6.13 stable trees still use `ecryptfs_mount`.
-- [Phase 3] `git show <stable-branch>:fs/ecryptfs/main.c` confirmed no
-  `s_time_gran` set in 5.4.y, 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y, and
-  that anchor lines are identical.
-- [Phase 4] `b4 am` downloaded the original patch
-  (`/tmp/20240517_frankhsiao_…mbx`); mbox thread fetched from lore and
-  read: confirmed no NAKs, confirmed Tyler Hicks applied it, confirmed
-  Bert Wesarg independently agreed.
-- [Phase 4] WebFetch of launchpad 1890486 — confirmed 3-person impact,
-  2020 origin, and real-world breakage of `touch -r`, `cp -a`, `rsync
-  -a`, `rclone`, `cargo`.
-- [Phase 5] Grep of `s_time_gran =` across `fs/` — confirmed overlayfs
-  (`fs/overlayfs/super.c:1461`) and FUSE (`fs/fuse/inode.c:1736`) do the
-  same thing for stacking.
-- [Phase 6] `git merge-base --is-ancestor` — confirmed commit is in `fs-
-  next` and `crypto-next` only; NOT in `master` or `stable/linux-7.0.y`
-  yet.
-- [Phase 7] Maintainer identity confirmed via `git show` committer
-  metadata (Tyler Hicks, eCryptfs maintainer).
-- [Phase 8] Failure-mode assessment grounded in the verified VFS
-  truncation path; severity is MEDIUM (silent data loss of timestamp
-  precision), not CRITICAL.
-- UNVERIFIED: the exact first kernel version where the bug became user-
-  visible (the launchpad bug attributes it to 5.4 VFS timestamp
-  clamping, which is consistent with the code reading but I did not
-  bisect mainline to confirm). This does not affect the decision.
-- UNVERIFIED: whether lore's scraping protection hid any later reviewer
-  replies not present in the `t.mbox.gz` I downloaded. The downloaded
-  mbox contained 5 messages and a complete-looking exchange ending with
-  the maintainer applying the patch.
+**Exception category:** Security fix, not listed in "exceptions" but
+strongly supported by stable rules.
 
-The commit fixes a long-standing, reproducible, user-visible data-
-integrity bug with a one-line change that mirrors established VFS
-stacking patterns; risk is negligible, benefit is real, backport is
-trivial.
+## Verification
+- [Phase 1] Parsed tags in candidate commit message: author SOB, Greg KH
+  SOB, patch.msgid.link Link.
+- [Phase 2] Read full diff; verified guard structure uses underflow-safe
+  form `length > buf - off`.
+- [Phase 3] `git blame -L 750,760` → loop introduced by `28276a28d8b3cd`
+  in 2011 (v3.0).
+- [Phase 3] `git show 28276a28d8b3cd` → original commit is `Cc: stable`
+  and landed in every LTS.
+- [Phase 3] `git log --grep` + `git log pending-{6.1,6.6,6.12,7.0}` →
+  confirmed Nathan's `2ab833a16a825` / `d374421fc6889` is companion fix
+  already on all stable pending branches.
+- [Phase 3] `git branch --contains 74a2287209a85` → commit is on
+  `origin/master` and `linux-next/master`, merged via `usb-7.1-rc1`.
+- [Phase 4] `b4 am -o /tmp/usbip_v3
+  20260325103640.8090-3-addcontent08@gmail.com` → retrieved thread,
+  confirmed this is v2 3/3, applies cleanly.
+- [Phase 4] Read `/tmp/usbip_patch.mbox` /
+  `20260325103640.8090-3-addcontent08@gmail.com.mbx` → reviewer feedback
+  by Greg KH, patch accepted.
+- [Phase 4] WebSearch confirmed independent [SECURITY] report on spinics
+  stable list by Sebastián Alba Vives on 2026-03-29.
+- [Phase 5] `Grep "usbip_pad_iso"` → exactly one caller
+  `vhci_recv_ret_submit` in `drivers/usb/usbip/vhci_rx.c:92`; confirmed
+  the trigger path begins at TCP input.
+- [Phase 5] Read `usbip_recv_iso()` + `usbip_pack_iso()` → verified
+  `iso_frame_desc[i].offset/actual_length` are copied verbatim from the
+  wire.
+- [Phase 6] `git show stable/linux-5.4.y:... | sed -n '647,680p'`,
+  `linux-5.10.y`, `linux-6.1.y` → confirmed identical pre-fix code in
+  every LTS.
+- [Phase 8] Failure mode: OOB read into userspace + OOB write of
+  attacker-controlled bytes → CRITICAL, remote, unauthenticated.
+- UNVERIFIED: Whether a public CVE number has been assigned to this
+  specific OOB in `usbip_pad_iso()` (not required for decision).
+
+The fix is small, clearly correct, reproduced by the author, addresses
+remote kernel-heap OOB read/write in code that has been present in every
+stable tree since 2011, was accepted by the USB maintainer, and is part
+of a series whose companion fix was already nominated and accepted for
+stable. This is exactly what stable trees exist to carry.
 
 **YES**
 
- fs/ecryptfs/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/usbip/usbip_common.c | 36 ++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/fs/ecryptfs/main.c b/fs/ecryptfs/main.c
-index f4ab387eb4ed2..5f37cddb956fb 100644
---- a/fs/ecryptfs/main.c
-+++ b/fs/ecryptfs/main.c
-@@ -531,6 +531,7 @@ static int ecryptfs_get_tree(struct fs_context *fc)
- 	s->s_blocksize = path.dentry->d_sb->s_blocksize;
- 	s->s_magic = ECRYPTFS_SUPER_MAGIC;
- 	s->s_stack_depth = path.dentry->d_sb->s_stack_depth + 1;
-+	s->s_time_gran = path.dentry->d_sb->s_time_gran;
- 
- 	rc = -EINVAL;
- 	if (s->s_stack_depth > FILESYSTEM_MAX_STACK_DEPTH) {
+diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
+index fd620e9600394..8ebaaeaf848e5 100644
+--- a/drivers/usb/usbip/usbip_common.c
++++ b/drivers/usb/usbip/usbip_common.c
+@@ -770,6 +770,42 @@ void usbip_pad_iso(struct usbip_device *ud, struct urb *urb)
+ 	 */
+ 	for (i = np-1; i > 0; i--) {
+ 		actualoffset -= urb->iso_frame_desc[i].actual_length;
++
++		/*
++		 * Validate source range: actualoffset can go negative
++		 * via crafted actual_length values from the wire.
++		 */
++		if (actualoffset < 0 ||
++		    (unsigned int)actualoffset >
++				(unsigned int)urb->transfer_buffer_length ||
++		    urb->iso_frame_desc[i].actual_length >
++				(unsigned int)urb->transfer_buffer_length -
++				(unsigned int)actualoffset) {
++			dev_err(&urb->dev->dev,
++				"pad_iso: bad src off=%d len=%u bufsz=%d\n",
++				actualoffset,
++				urb->iso_frame_desc[i].actual_length,
++				urb->transfer_buffer_length);
++			return;
++		}
++
++		/*
++		 * Validate destination range: iso_frame_desc[i].offset
++		 * is wire-supplied and must not exceed the buffer.
++		 */
++		if (urb->iso_frame_desc[i].offset >
++				(unsigned int)urb->transfer_buffer_length ||
++		    urb->iso_frame_desc[i].actual_length >
++				(unsigned int)urb->transfer_buffer_length -
++				urb->iso_frame_desc[i].offset) {
++			dev_err(&urb->dev->dev,
++				"pad_iso: bad dst off=%u len=%u bufsz=%d\n",
++				urb->iso_frame_desc[i].offset,
++				urb->iso_frame_desc[i].actual_length,
++				urb->transfer_buffer_length);
++			return;
++		}
++
+ 		memmove(urb->transfer_buffer + urb->iso_frame_desc[i].offset,
+ 			urb->transfer_buffer + actualoffset,
+ 			urb->iso_frame_desc[i].actual_length);
 -- 
 2.53.0
 
