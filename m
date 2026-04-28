@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BD740F8C5;
-	Tue, 28 Apr 2026 10:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5EC40FD80;
+	Tue, 28 Apr 2026 10:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372960; cv=none; b=nXEGoIrjaUn7Vs+KkLlG5bhDq4vP6MWe6hLl2LPPjIuK+b5Vf8lQgTKvhPJ/K/uwhjYR72vMJw/3UGseBhh12yZv19JnipDPrmbFPPKf2U7pin46sHVpVXGSdhrcnFF+VuBR2XYBDGKK4085l6/7LmTuZb/yYXRiS57SIbeBEQ8=
+	t=1777372961; cv=none; b=o2r+6LWqqqgcb9s0E4zRvhJyO/iU+hC30f0AOPBpYRazoNxlr3163Vd7xBMcZASoZUysI5BITLHDRYMVRcHkHMmfumHW2w+8MGb8gRoHKgK+po4iGcYSiq0yrZSfNC7gzw947SjLjBRfcbZ1LPSm65Yjq/r0TMqNjl+sqLHtdts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372960; c=relaxed/simple;
-	bh=LRJrmMyuTktkzkaPZwISotTL2EmtTHfhnpRTWMpYmzE=;
+	s=arc-20240116; t=1777372961; c=relaxed/simple;
+	bh=twOlHH7KrcmO14xpMu62cZV8X4eA4YZRUPc+K8pXitY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EWKq3fs82vQW0LmbKzaId6eCGh/fxI9HuN11tkRR9BzacmNURlBIE45TDiLhS+A8DyUvY7PJCyhfiiLyA31nwMWOe37UlGDe8pdWYFLnYb0B/BchVBr9ksP6481YLR2OPjjfURmtvRhPk7KxPHtgVYVgj7aflLiQV9JUEnBJNDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qejSsBxy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SLodn4ub8+3DN6ECNshYOWOEso7HxNQ7chRblygfyOk6OX2jeRDxpWIAc96nuQ17y0PdK7lWp+X5LPPmeF1dKt9Tlgf/5rYtdF8ElmGguTuzEk+caBSdkDTSD81Ezfb12VNrtvQLngfc03LSrlaLrYl7hWN/Sz9GNxnA+I+qKJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n9giBUEQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qejSsBxy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0128EC2BCB7;
-	Tue, 28 Apr 2026 10:42:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n9giBUEQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4B3C2BCAF;
+	Tue, 28 Apr 2026 10:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372959;
-	bh=LRJrmMyuTktkzkaPZwISotTL2EmtTHfhnpRTWMpYmzE=;
+	s=k20201202; t=1777372961;
+	bh=twOlHH7KrcmO14xpMu62cZV8X4eA4YZRUPc+K8pXitY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qejSsBxyBYttUVX6y+7dQtb4z+sIZrfi/53kPuujRpkot7VjGEWZ/n8QDSUv1s/4q
-	 N04SyD+f3RvKtJ8EGKvfVpbPGxr8Gbal5q0Fbwlc9RZUFz4TELZRsf99wAjFoGpQQZ
-	 TpCvS3P1r0e4PjmYvhpF7kgAJ0D39gRrnwBqaWm56HHqeyfxtOfU4Qc1rjagPlZb7Q
-	 F3VDUlAHVcneAKnd9IUAJ/iRHV8Tbiz+TL6CUM4kyrkm2xMLhzk27l7oBGjsYi/3R1
-	 78kH8b/jt6IaHZ9zdkx1bGdXyEnXV2Lq0iT1BM1zYLQrTIv970k4bhrcLJPIwteKxy
-	 LiV5HHh+FX5xw==
+	b=n9giBUEQgSc+6HD5OZub/GfOa57U3xAE2Pdv5HtyzZFRVD/9ZHbcgipmTK1F45QWn
+	 WM3AtT2nI+7jgx26UYW89+bnxrbhTe9dbuVdtHrZus0xcF4sAJQ1gem1y0k8ce/RgI
+	 bG6+ecj302G49b3orT/ickvts4ZqLC2MzpesfQcHWBnVDNsSs1/UULnzBiJYbA3vgF
+	 gMww6Xpr4lYfiAcjNRUCd3hNlmy7kE2biEuBNilaOIokvyEy3bwzQ1pCL5k5p7F/Jk
+	 igdz7io/aDULguQ75bXrtSqzt4IUpw6dwo6xeJGe/NH3AOKRtfTGfDHK+56vyoRP8t
+	 3mgSSVNgVeAVg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
+Cc: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johan@kernel.org,
-	elder@kernel.org,
-	greybus-dev@lists.linaro.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] greybus: beagleplay: bound bootloader RX buffer copy
-Date: Tue, 28 Apr 2026 06:40:58 -0400
-Message-ID: <20260428104133.2858589-47-sashal@kernel.org>
+	agross@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	jirislaby@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-5.10] serial: qcom-geni: Fix RTS behavior with flow control
+Date: Tue, 28 Apr 2026 06:40:59 -0400
+Message-ID: <20260428104133.2858589-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -54,337 +57,413 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>
 
-[ Upstream commit cbc96a916b1a3be7039b0166c0fc56ec1632ba01 ]
+[ Upstream commit 0b1837c04d2335ec50b9a55b0282dcde7bc12439 ]
 
-When `flashing_mode` is set, `gb_tty_receive()` routes incoming bytes to
-`cc1352_bootloader_rx()`. That helper appends the new bytes to the shared
-`rx_buffer` with `memcpy()` but does not check that the chunk fits in the
-remaining space first. The normal HDLC receive path already enforces
-`MAX_RX_HDLC`, so do the same here before appending bootloader data.
+When userspace enables flow control (CRTSCTS), the driver
+deasserts RTS even when the receive buffer has space. This prevents the
+peer device from transmitting, causing communication to stall.
 
-If a packet would overflow the receive buffer, drop it and reset the
-bootloader receive state instead of copying past the end of `rx_buffer`.
+The root cause is that the driver unconditionally uses manual RTS control
+regardless of flow control mode. When CRTSCTS is set, the hardware should
+automatically manage RTS based on buffer status, but the driver overrides
+this by setting manual control.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260322031923.58013-1-pengpeng@iscas.ac.cn
+Fix this by introducing port->manual_flow flag. In set_termios(), disable
+manual flow when CRTSCTS is set. In set_mctrl(), only assert
+SE_UART_MANUAL_RFR when manual_flow is active. Verified by enabling and
+disabling hardware flow control with stty.
+
+Signed-off-by: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260310104155.339010-1-anup.kulkarni@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough information to write the full analysis.
+Now I have enough information to complete the full analysis.
 
-# Analysis: greybus: beagleplay: bound bootloader RX buffer copy
+## Analysis
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 - Subject parsing**
-Record: subsystem=`greybus/beagleplay`, action=`bound` (i.e. add bounds
-check), summary=add a bounds check to bootloader RX path before `memcpy`
-into a fixed-size buffer.
+**Step 1.1: Subject line parse**
+- Record: [serial: qcom-geni:] [fix] [RTS behavior with hardware flow
+  control (CRTSCTS)]
 
-**Step 1.2 - Tags**
-Record:
-- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
-- `Link:
-  https://patch.msgid.link/20260322031923.58013-1-pengpeng@iscas.ac.cn`
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
-  (greybus maintainer)
-- No `Fixes:`, no `Cc: stable`, no `Reported-by:`, no `Reviewed-by:`.
-  Absence is expected.
+**Step 1.2: Tag inventory**
+- Record: Signed-off-by: Anup Kulkarni (author, @oss.qualcomm.com),
+  Signed-off-by: Greg KH (applied to tty tree). Link: patch.msgid.link
+  URL. NO Fixes: tag, NO Cc: stable, NO Reported-by, NO Tested-by, NO
+  Reviewed-by, NO Acked-by. Only v1 of patch, no reviewer replies on
+  thread.
 
-**Step 1.3 - Body analysis**
-Record: Bug = `cc1352_bootloader_rx()` does `memcpy(rx_buffer +
-rx_buffer_len, data, count)` without verifying `count` fits the
-remaining space; the HDLC sibling path already enforces `MAX_RX_HDLC`.
-Failure mode = write past end of `rx_buffer` (heap buffer overflow).
+**Step 1.3: Commit body analysis**
+- Record: Bug: "driver deasserts RTS even when the receive buffer has
+  space" when CRTSCTS is enabled, causing "communication to stall". Root
+  cause: driver unconditionally uses manual RTS control via
+  `UART_MANUAL_RFR_EN`, which overrides hardware's auto-flow control. No
+  stack trace or reproducer. Author verified fix "by enabling and
+  disabling hardware flow control with stty".
 
-**Step 1.4 - Hidden bug fix detection**
-Record: Subject says "bound" rather than "fix", but body explicitly
-describes a buffer-overflow gap and the fix mirrors a guard that already
-exists on the parallel HDLC path. This is unambiguously a bug fix.
+**Step 1.4: Hidden bug fix detection**
+- Record: Not hidden - commit message explicitly says "Fix RTS behavior"
+  and describes the bug clearly.
 
-## PHASE 2: DIFF ANALYSIS
+### PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 - Inventory**
-Record: 1 file (`drivers/greybus/gb-beagleplay.c`), +6/-0 lines, 1 hunk,
-single function `cc1352_bootloader_rx()`. Surgical single-file fix.
+**Step 2.1: Inventory**
+- Record: Single file `drivers/tty/serial/qcom_geni_serial.c`. +15/-4
+  lines. Modifies `qcom_geni_serial_set_mctrl()` (1 line guard added)
+  and `qcom_geni_serial_set_termios()` (restructured CRTSCTS branch).
+  Adds `bool manual_flow` to `struct qcom_geni_serial_port`. Scope:
+  surgical single-driver fix.
 
-**Step 2.2 - Code flow change**
-Record: Before — copy unconditionally into `bg->rx_buffer +
-bg->rx_buffer_len`. After — if `count > sizeof(rx_buffer) -
-rx_buffer_len`, log a rate-limited error, reset `rx_buffer_len`, return
-`count` (consume the chunk). Otherwise the original path runs.
+**Step 2.2: Code flow change**
+- Record:
+  - set_mctrl BEFORE: `if (!(mctrl & TIOCM_RTS) && !uport->suspended)` →
+    enable manual RFR (`UART_MANUAL_RFR_EN | UART_RFR_NOT_READY`) then
+    unconditionally write.
+  - set_mctrl AFTER: Only enables manual RFR when `port->manual_flow` is
+    true AND RTS not set AND not suspended.
+  - set_termios BEFORE: Only toggles `UART_CTS_MASK` bit in TX config.
+  - set_termios AFTER: Also sets `port->manual_flow = false` when
+    CRTSCTS set (HW manages), `true` otherwise.
 
-**Step 2.3 - Bug mechanism**
-Record: Category = memory-safety / out-of-bounds write. Mechanism:
-`rx_buffer` is `u8 rx_buffer[MAX_RX_HDLC]` (1 + 256 + 2 = 259 bytes)
-embedded in `struct gb_beagleplay`. Without the check, an inbound serdev
-chunk plus stale `rx_buffer_len` could write past 259 bytes into heap
-memory adjacent to subsequent fields (`fwl`, `flashing_mode`,
-completions, etc.).
+**Step 2.3: Bug mechanism**
+- Record: Category (g) Logic/correctness fix. The mechanism: when
+  CRTSCTS is enabled, hardware should automatically drive RTS based on
+  RX FIFO fullness. But any call to `set_mctrl` with `!TIOCM_RTS` (which
+  happens during resume: `ops->set_mctrl(uport, 0)` at
+  serial_core.c:2421, at B0 baud transitions serial_core.c:1685, or on
+  ioctl TIOCMBIC) would cause the driver to write `UART_MANUAL_RFR_EN |
+  UART_RFR_NOT_READY`, forcing manual RTS deassertion and preventing the
+  peer from transmitting.
 
-**Step 2.4 - Fix quality**
-Record: 5 lines, mirrors the existing `MAX_RX_HDLC` guard in
-`hdlc_rx()`. Resetting `rx_buffer_len` on overflow drops staged data,
-which is acceptable here because the fix path is being exercised under
-fault conditions; bootloader sync/transfers will retry. No new
-regression vectors. Returning `count` correctly tells the serdev core
-that the bytes were consumed.
+**Step 2.4: Fix quality**
+- Record: Simple, easy to verify by reading. Logic is correct: when
+  hardware flow control is enabled, never override with manual mode. The
+  `manual_flow` flag is BSS-initialized to `false`, which matches
+  "hardware controls RTS" default. Small regression risk: before the
+  first `set_termios` call, any `set_mctrl(!TIOCM_RTS)` path now writes
+  0 instead of enabling manual mode; this is arguably more correct but
+  changes initial state. No public API changes, no lock changes.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 - Blame**
-Record: `git log -S "cc1352_bootloader_rx" -- drivers/greybus/gb-
-beagleplay.c` shows the function (and bug) was introduced by
-`0cf7befa3ea2e` ("greybus: gb-beagleplay: Add firmware upload API").
+**Step 3.1: Blame the changed lines**
+- Record: The manual RFR logic in `set_mctrl` was added in
+  `8a8a66a1a18a1` (v4.19, July 2018) "tty: serial: qcom_geni_serial: Add
+  support for flow control". The early-return guard
+  `!uart_cts_enabled(uport)` was removed in `e8a6ca808c5ed` (v5.0) "tty:
+  serial: qcom_geni_serial: Allow mctrl when flow control is disabled" —
+  which actually made the bug more exposed (before that change, the
+  manual-mode code path was unreachable when CRTSCTS was off, but still
+  buggy when on).
 
-**Step 3.2 - Fixes target**
-Record: No explicit `Fixes:` tag here, but the introducing commit
-`0cf7befa3ea2e` is in `v6.12-rc1` (`git describe --contains` =
-`v6.12-rc1~39^2`), so the bug exists in v6.12 and later.
+**Step 3.2: Follow the Fixes: tag**
+- Record: No Fixes: tag in this commit. Most likely should reference
+  `8a8a66a1a18a1` (v4.19) as the origin — the bug has existed since flow
+  control support was added to this driver.
 
-**Step 3.3 - File history & related changes**
-Record: A near-identical follow-up patch `1214bf28965ce` ("greybus: gb-
-beagleplay: bound bootloader receive buffering") by the same author,
-dated 2026-04-02, was applied later to the same function with explicit
-`Fixes: 0cf7befa3ea2` and `Cc: stable@kernel.org`. It adds a second,
-redundant copy of the same bound check; in current `origin/master` both
-checks exist back-to-back. The second commit confirms the
-maintainer/author both view this as a real, stable-worthy bug.
+**Step 3.3: File history for related changes**
+- Record: Recent related fix `947cc4ecc06cb` "serial: qcom-geni: fix
+  soft lockup on sw flow control and suspend" (July 2024) was tagged
+  `Cc: stable # 4.17` — shows that flow-control-related bugs in this
+  driver have been deemed stable-worthy. Also `23f5f5debcaac` "serial:
+  qcom-geni: fix shutdown race" exists. No overlap/conflict with this
+  fix.
 
-**Step 3.4 - Author**
-Record: Pengpeng Hou — submitter, not subsystem maintainer. Patch was
-applied directly by Greg KH (greybus maintainer). The same author
-followed up with a stable-tagged version when the first lacked tags.
+**Step 3.4: Author commits**
+- Record: `git log --author="Anup Kulkarni"` shows only 1 other commit
+  (`4fcc287f3c692` "serial: qcom-geni: Enable support for half-duplex
+  mode"). Newer contributor but from @oss.qualcomm.com - this is the
+  vendor (Qualcomm) whose hardware this driver supports. Patch went
+  through Greg KH's tty tree.
 
-**Step 3.5 - Dependencies**
-Record: Self-contained. Does not depend on any other unmerged work. The
-function and `rx_buffer` field have been unchanged since `0cf7befa3ea2e`
-was merged in v6.12.
+**Step 3.5: Dependencies**
+- Record: No dependencies found. The fix is self-contained and
+  references only symbols that exist since the original flow control
+  support commit (v4.19).
 
-## PHASE 4: MAILING LIST RESEARCH
+### PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1 - Lore discussion**
-Record: `b4 dig -c cbc96a916b1a3` matched by patch-id, returned `https:/
-/lore.kernel.org/all/20260322031923.58013-1-pengpeng@iscas.ac.cn/`. `b4
-dig -a` shows v1 only — no other revisions.
+**Step 4.1: b4 dig**
+- Record: Single revision (v1) at https://patch.msgid.link/2026031010415
+  5.339010-1-anup.kulkarni@oss.qualcomm.com. Thread mbox retrieved. Only
+  one message in thread - just the patch itself, no replies, no NAK, no
+  explicit stable nomination.
 
-**Step 4.2 - Reviewers**
-Record: Cc list (per the mbox): Ayush Singh (driver author), Johan
-Hovold, Alex Elder, Greg KH, plus greybus-dev. No replies in the thread;
-Greg merged it as v1.
+**Step 4.2: Who reviewed**
+- Record: `b4 dig -w` shows to/cc: gregkh, jirislaby (tty maintainers),
+  praveen.talari/viken.dadhaniya/zongjian/jseerapu (Qualcomm),
+  bryan.odonoghue (linaro), krzk (Krzysztof Kozlowski), linux-serial,
+  linux-arm-msm, linux-kernel. Appropriate maintainers were CC'd but no
+  one publicly replied on lore before Greg applied it.
 
-**Step 4.3 - Bug report**
-Record: No `Reported-by:` or external bug-tracker link. Bug found by
-code inspection. No syzbot or sanitizer reference.
+**Step 4.3: Bug report search**
+- Record: No Reported-by or bug link in commit. Web search did not
+  surface a specific user report for this stall.
 
-**Step 4.4 - Related patches**
-Record: The same author submitted a duplicate fix
-`20260402054016.38587-1-pengpeng@iscas.ac.cn` ("greybus: gb-beagleplay:
-bound bootloader receive buffering") containing `Fixes: 0cf7befa3ea2`
-and `Cc: stable@vger.kernel.org`. That confirms the author's intent that
-the fix go to stable.
+**Step 4.4: Related patches/series**
+- Record: `b4 dig -a` shows v1 only; standalone single-patch submission.
 
-**Step 4.5 - Stable list**
-Record: Not applicable — checked recent file history, the explicit
-stable nomination is in the duplicate follow-up rather than this commit.
+**Step 4.5: Stable list history**
+- Record: Nothing found discussing this specific fix on stable@.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1 - Modified function**
-Record: `cc1352_bootloader_rx()`.
+**Step 5.1: Functions modified**
+- Record: `qcom_geni_serial_set_mctrl`, `qcom_geni_serial_set_termios`.
 
-**Step 5.2 - Callers**
-Record: Single caller — `gb_tty_receive()`, which is the `.receive_buf`
-member of `gb_beagleplay_ops` registered with the serdev framework
-(`drivers/greybus/gb-beagleplay.c:556-578`). The serdev core invokes it
-whenever the underlying UART (cc1352p7) hands up received bytes. The
-branch into `cc1352_bootloader_rx` triggers when `bg->flashing_mode` is
-true.
+**Step 5.2: Callers**
+- Record: Both are `uart_ops` callbacks registered in
+  `qcom_geni_console_pops`/`qcom_geni_uart_pops`. Called indirectly
+  through `port->ops->set_mctrl(...)` and `uport->ops->set_termios(...)`
+  from `drivers/tty/serial/serial_core.c`. Key caller sites for
+  `set_mctrl`: startup/shutdown, suspend/resume (lines 2333/2421), RS485
+  disable path (1483), B0 transitions (1685/1692), throttle/unthrottle
+  (with AUTORTS — not used here). This makes the bug reachable on every
+  resume and on any baud change to/from B0 when CRTSCTS is active — very
+  common paths.
 
-**Step 5.3 - Callees**
-Record: `memcpy`, `memmove`, and `cc1352_bootloader_pkt_rx()`. The buggy
-line is the `memcpy` — pre-fix, the destination pointer can advance past
-the 259-byte array.
+**Step 5.3: Callees**
+- Record: set_mctrl only calls `writel(...)` to SE_UART_MANUAL_RFR. No
+  locking, no allocation. Minimal side effects.
 
-**Step 5.4 - Reachability**
-Record: `flashing_mode` is set in `cc1352_prepare()`
-(`drivers/greybus/gb-beagleplay.c:882`), invoked through the kernel
-firmware-upload framework (sysfs `/sys/class/firmware/...`). A
-privileged user-space firmware update on a BeaglePlay board makes the
-buggy path reachable. The attacker/triggerer is therefore root-
-equivalent, but the consequence (heap corruption from data the cc1352
-sends back, batched by the UART driver into chunks > 259 bytes) is
-severe.
+**Step 5.4: Call chain reachability**
+- Record: Reachable from any userspace UART open with CRTSCTS, stty
+  changes, system suspend/resume, and B0 transitions. Definitely user-
+  reachable, exercised on every device with hardware flow control
+  enabled.
 
-**Step 5.5 - Similar patterns**
-Record: The HDLC receive path (`hdlc_rx()` at line 399) already guards
-with `bg->rx_buffer_len < MAX_RX_HDLC`. The patch makes the bootloader
-path consistent with this established sibling.
+**Step 5.5: Similar patterns**
+- Record: Verified driver does NOT advertise `UPSTAT_AUTORTS` (no hits
+  for that flag) - so auto-RTS tty layer logic doesn't apply; the driver
+  relies entirely on hardware register-level RFR management when CRTSCTS
+  is on. This confirms the issue: the driver's set_mctrl was silently
+  overriding hardware-managed RTS.
 
-## PHASE 6: STABLE TREE ANALYSIS
+### PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1 - Buggy code in stable**
-Record: Verified via `git merge-base --is-ancestor 0cf7befa3ea2e
-<stable-branch>`:
-- 5.10.y / 5.15.y / 6.1.y / 6.6.y → bug NOT present (driver predates
-  `cc1352_bootloader_rx`).
-- 6.12.y / 6.17.y / 6.18.y / 6.19.y → bug PRESENT.
+**Step 6.1: Does buggy code exist in stable?**
+- Record: Verified the identical buggy `set_mctrl` body exists in stable
+  6.17.y, 6.12.y, 6.6.y, 6.1.y, and 5.15.y. The same CRTSCTS branch `if
+  (termios->c_cflag & CRTSCTS) tx_trans_cfg &= ~UART_CTS_MASK; else
+  tx_trans_cfg |= UART_CTS_MASK;` is present in all of them. Bug has
+  existed since v4.19 → affects ALL currently supported stable trees.
 
-**Step 6.2 - Backport difficulty**
-Record: The hunk lands in `cc1352_bootloader_rx()` whose body has been
-unchanged since v6.12. Patch should apply cleanly to all affected stable
-trees. (The duplicate follow-up `1214bf28965ce` was generated against
-the same parent, confirming this.)
+**Step 6.2: Backport complications**
+- Record: Low complexity backport. The struct has `bool cts_rts_swap` in
+  every stable branch (verified). Both hunks context-match. Minor
+  difference: 5.15 uses legacy `to_dev_port(uport, uport)` macro
+  (irrelevant to the hunk). Expected: clean apply or minor context
+  rewrap.
 
-**Step 6.3 - Related fixes already in stable**
-Record: Verified via `git show <branch>:drivers/greybus/gb-beagleplay.c
-| rg "count > sizeof|overflow|oversized"` — neither the current commit
-nor the duplicate is present in any stable branch yet. No prior fix
-exists for this bug in stable.
+**Step 6.3: Related fixes already in stable**
+- Record: `947cc4ecc06cb` (flow control soft lockup fix) is already in
+  stable and addresses a different flow-control issue. No conflict with
+  this fix.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1 - Subsystem & criticality**
-Record: `drivers/greybus` — niche subsystem, but this driver supports a
-real shipped product (BeaglePlay). PERIPHERAL criticality (only affects
-users of that specific board).
+**Step 7.1: Subsystem criticality**
+- Record: Subsystem: `drivers/tty/serial/` — Qualcomm GENI serial
+  driver. Criticality: PERIPHERAL (driver-specific) but IMPORTANT for
+  the affected platforms (Qualcomm SoCs used in Chromebooks, embedded
+  devices, Android phones, etc., where hardware flow control to
+  Bluetooth/GPS/modem peripherals is critical).
 
-**Step 7.2 - Subsystem activity**
-Record: Low churn — `git log` on the file shows ~10 changes since 2024.
-The function being fixed has been unchanged since its introduction in
-v6.12.
+**Step 7.2: Subsystem activity**
+- Record: Driver is actively maintained, with regular fixes going in.
+  This suggests real users.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+### PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1 - Affected population**
-Record: Users of the BeaglePlay board running v6.12+ kernels who
-exercise the cc1352p7 firmware-update path.
+**Step 8.1: Who is affected**
+- Record: Users of Qualcomm SoCs running Linux that use UART with
+  `CRTSCTS` enabled — commonly Bluetooth HCI over UART, GPS modules,
+  baseband modems. Affects Android devices, Chromebooks, embedded
+  Qualcomm platforms.
 
-**Step 8.2 - Trigger conditions**
-Record: Requires `flashing_mode` true (firmware upload in progress;
-needs root) AND `count` (size of a single serdev receive chunk plus
-already-staged bytes) exceeding 259 bytes. UART subsystems can batch
-incoming bytes, so this is realistic during a firmware flash, not just
-under attacker control.
+**Step 8.2: Trigger conditions**
+- Record: Trigger is any invocation of set_mctrl with RTS cleared while
+  CRTSCTS is active. Concrete triggers:
+  1. System suspend/resume cycle (very common on mobile/laptop)
+  2. B0 baud transitions (modem hangup)
+  3. Any direct ioctl(TIOCMBIC, &TIOCM_RTS)
+  Unprivileged? Root access to the tty device is typical for the
+trigger.
 
-**Step 8.3 - Failure mode severity**
-Record: Heap out-of-bounds write inside `struct gb_beagleplay`. Likely
-outcomes: kernel oops/panic, slab corruption, KASAN splat, potential
-local privilege/info leak. Severity = HIGH.
+**Step 8.3: Failure mode severity**
+- Record: Functional failure — communication stalls because RTS is stuck
+  deasserted and peer stops transmitting. No kernel crash, no data
+  corruption, no security hole. Severity: MEDIUM-HIGH — "communication
+  stall" is a real stability issue for devices depending on this UART
+  (e.g., Bluetooth dropouts, serial session lockups). Not a crash, but
+  noticeable and disruptive.
 
-**Step 8.4 - Risk-benefit**
-Record: Benefit = closes a kernel heap OOB write reachable during a
-normal product workflow. Risk = very low — 5 lines, mirror of existing
-guard, only consequence is dropping a malformed/oversized chunk during
-firmware flash (already an error condition). Strong net positive.
+**Step 8.4: Risk-benefit**
+- Record:
+  - Benefit: MEDIUM — fixes a real functional bug on actively-used
+    hardware (Qualcomm platforms) with a clear reproduction path,
+    especially after resume.
+  - Risk: LOW — 15 lines, single file, trivial to audit, no
+    locking/memory changes, no API changes. The `manual_flow` field
+    defaults to `false` which aligns with hardware-managed mode (safe
+    default).
+  - Ratio: Favorable for backport. Very low risk of regression for
+    benefit of fixing real-world stalls.
 
-## PHASE 9: SYNTHESIS
+### PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1 - Evidence**
-For:
-- Real out-of-bounds write in `cc1352_bootloader_rx()` confirmed by
-  reading current code.
-- Buggy code present in v6.12.y, v6.17.y, v6.18.y, v6.19.y.
-- Tiny, surgical fix (5 lines), mirrors an existing guard.
-- Same author submitted a follow-up explicitly tagged `Fixes:` + `Cc:
-  stable@vger.kernel.org` for the same bug — strong confirmation of
-  stable-worthiness.
-- Applies cleanly to affected stable trees.
+**Step 9.1: Evidence**
+- FOR: Real user-visible bug clearly described; present since v4.19 in
+  all stable trees; small surgical fix; touches only a driver callback;
+  correct logical direction (CRTSCTS means HW controls, manual mode
+  should be off); fix verified by author with stty; applies cleanly; no
+  API/feature additions; author is Qualcomm, i.e., the hardware vendor.
+- AGAINST: No Fixes: tag; no Cc: stable; no reviewer Ack/Reviewed-by; no
+  user bug report linked; single-revision patch with no lore discussion;
+  reachable in common paths but severity is functional (not
+  crash/security/corruption).
+- UNRESOLVED: Could not directly observe the reproduction trace (no
+  stack trace in commit).
 
-Against:
-- Niche driver (limited user population).
-- No `Reported-by:` / `Cc: stable` on this specific commit (expected per
-  instructions).
-- Trigger requires root (firmware upload).
-- Cosmetic concern: if both this and `1214bf28965ce` reach stable, you
-  get a duplicate bound check (still functionally correct).
+**Step 9.2: Stable rules checklist**
+1. Obviously correct? YES — straightforward logic; author tested.
+2. Fixes a real bug? YES — stated reproducer via stty.
+3. Important? MEDIUM — functional stall on Qualcomm platforms using flow
+   control (BT/GPS/modem), not a crash/security/corruption.
+4. Small and contained? YES — 15 lines, 1 file, 1 driver.
+5. No new features/APIs? YES — internal bool field only.
+6. Applies to stable? YES — verified code exists unchanged in 5.15.y
+   through 6.17.y.
 
-**Step 9.2 - Stable rules checklist**
-1. Obviously correct & tested? Yes — minimal logic, mirrors existing
-   pattern; merged to mainline.
-2. Real bug? Yes — reachable kernel-heap OOB write.
-3. Important? Yes — heap corruption.
-4. Small & contained? Yes — 6 lines, one file, one function.
-5. No new features/APIs? Correct.
-6. Applies to stable? Yes — file unchanged since the bug was introduced.
+**Step 9.3: Exception categories**
+- Not strictly an exception, but closely aligned with a hardware
+  workaround in a mature driver.
 
-**Step 9.3 - Exception category**
-Memory safety / OOB write fix.
-
-**Step 9.4 - Decision**
-Backport.
+**Step 9.4: Decision**
+This is a real, reproducible bug fix in a driver used on widely-deployed
+Qualcomm hardware (Chromebooks, Android, embedded). The fix is tiny,
+purely internal, doesn't introduce APIs or affect other subsystems, and
+the logic is clearly correct (hardware flow control should not be
+overridden by manual RTS assertion). The bug is reachable in common
+operational paths (resume, B0 transitions). Backport risk is minimal.
 
 ## Verification
-- [Phase 1] Read full commit message; tags inventoried — no
-  `Fixes:`/`Cc: stable` (expected).
-- [Phase 2] Read current `cc1352_bootloader_rx()` (lines 532–554) and
-  confirmed `rx_buffer` is `u8[MAX_RX_HDLC]=259`.
-- [Phase 2] Confirmed sibling `hdlc_rx()` already enforces `MAX_RX_HDLC`
-  (line 399).
-- [Phase 3] `git log -S "cc1352_bootloader_rx" -- drivers/greybus/gb-
-  beagleplay.c` → introduced by `0cf7befa3ea2e`.
-- [Phase 3] `git describe --contains 0cf7befa3ea2e` → `v6.12-rc1~39^2`.
-- [Phase 3] `git log origin/master --oneline -- drivers/greybus/gb-
-  beagleplay.c` revealed duplicate follow-up `1214bf28965ce` with
-  `Fixes:` + `Cc: stable`.
-- [Phase 3] `git show origin/master:drivers/greybus/gb-beagleplay.c`
-  shows two consecutive bound-check blocks at lines 620 and 626 in
-  master (cosmetic duplication after both commits).
-- [Phase 4] `b4 dig -c cbc96a916b1a3` returned the lore thread (v1 only,
-  no replies).
-- [Phase 4] `b4 dig -c 1214bf28965ce -m` confirmed the follow-up patch
-  carries `Fixes: 0cf7befa3ea2` and `Cc: stable@vger.kernel.org`.
-- [Phase 5] Read `gb_tty_receive` and `gb_beagleplay_ops` to confirm the
-  call path: serdev `.receive_buf` → `gb_tty_receive` →
-  `cc1352_bootloader_rx` when `flashing_mode` is set.
-- [Phase 5] Read `cc1352_prepare()` (lines 860–929) to confirm
-  `flashing_mode` is set during user-initiated firmware upload via the
-  fw_upload framework.
-- [Phase 6] `git merge-base --is-ancestor 0cf7befa3ea2e` against each
-  stable-push branch — bug present in 6.12.y, 6.17.y, 6.18.y, 6.19.y;
-  absent in 6.6.y and earlier.
-- [Phase 6] Searched stable branches for the bound-check string — not
-  present anywhere yet.
-- [Phase 8] `rx_buffer` size = `1 + 256 + 2 = 259` (`MAX_RX_HDLC`);
-  confirmed by reading the macro definitions at lines 23–25.
-- UNVERIFIED: I did not measure how often a real BeaglePlay UART chunk
-  exceeds 259 bytes during firmware flash; treating this as a defense-
-  in-depth fix even if the trigger is rare. Doesn't change the YES
-  decision because the OOB write itself is real.
 
-This commit is a small, contained memory-safety fix for a real kernel-
-heap OOB write that exists in 6.12.y/6.17.y/6.18.y/6.19.y. The same
-author already submitted a duplicate version explicitly tagged `Cc:
-stable`, which directly corroborates that the bug is stable-material. It
-applies cleanly and meets every stable-kernel rule.
+- [Phase 1] Parsed tags from commit: only Signed-off-by (author + Greg
+  KH) and Link. No Fixes:, no Cc: stable, no Reported-by, no Reviewed-
+  by/Acked-by.
+- [Phase 2] Diff analysis confirmed on the actual patch text: 1-line
+  guard in set_mctrl, 2 branches expanded to set `manual_flow`, 1 new
+  struct field.
+- [Phase 3] `git log` on file showed history; `git show 8a8a66a1a18a1`
+  and `git show e8a6ca808c5ed` confirmed the code origin (v4.19 via git
+  describe) and the removal of the CTS-enabled guard (v5.0).
+- [Phase 3] `git describe --contains 8a8a66a1a18a1` →
+  v4.19-rc1~102^2~33; `e8a6ca808c5ed` → v5.0-rc4~20^2~1. Bug has been
+  present since v4.19.
+- [Phase 3] `git log --author="Anup Kulkarni"` → 2 commits total (this
+  one plus half-duplex mode). Relatively new contributor, Qualcomm
+  vendor author.
+- [Phase 3] `git log --grep="serial.*qcom.*flow"` → confirmed
+  `947cc4ecc06cb` (previous flow control fix, tagged `Cc: stable #
+  4.17`) is a precedent.
+- [Phase 4] `b4 dig -c 0b1837c04d233` → found single lore thread, v1
+  only, single message, no replies.
+- [Phase 4] `b4 dig -c 0b1837c04d233 -w` → recipients confirmed: gregkh,
+  jirislaby, Qualcomm team, bryan.odonoghue, krzk, linux-serial, linux-
+  arm-msm, linux-kernel.
+- [Phase 4] `b4 dig -c 0b1837c04d233 -a` → only v1 exists; went direct
+  to Greg's tree.
+- [Phase 4] Saved thread to /tmp/qcom_geni_thread.mbox; read contents -
+  confirmed no replies, no reviewer feedback.
+- [Phase 5] Grepped `UPSTAT_AUTORTS|UPSTAT_AUTOCTS` in
+  qcom_geni_serial.c → no matches. Driver does NOT use UPSTAT_AUTORTS,
+  so throttle/unthrottle don't clear RTS through set_mctrl path.
+- [Phase 5] Grepped `SE_UART_MANUAL_RFR|UART_MANUAL_RFR_EN` → only 2
+  writers: `qcom_geni_set_rs485_mode()` (only when RS485 enabled) and
+  `qcom_geni_serial_set_mctrl()` (the fixed function). No other paths
+  touch this register.
+- [Phase 5] Read `serial_core.c:2320-2451` → confirmed
+  `ops->set_mctrl(uport, 0)` is called at resume (2421) with
+  `uport->suspended` already 0, directly triggering the bug path when
+  CRTSCTS is active.
+- [Phase 5] Read `serial_core.c:1680-1694` → confirmed B0 transition
+  logic can cause set_mctrl with !TIOCM_RTS while CRTSCTS is active.
+- [Phase 6] `git show stable/linux-
+  {6.17,6.12,6.6,6.1,5.15}.y:drivers/tty/serial/qcom_geni_serial.c` →
+  verified identical buggy `set_mctrl` body and identical CRTSCTS
+  handling in set_termios in all five stable trees. Struct has
+  `cts_rts_swap` in all of them, so the `manual_flow` addition will fit
+  cleanly.
+- [Phase 8] Failure mode: communication stall (peer cannot transmit). No
+  crash. Severity: MEDIUM-HIGH functional. Trigger: common (resume, B0).
+- UNVERIFIED: Could not obtain a literal crash/stall reproducer from
+  commit message; the author's claim of verification via stty is the
+  only direct test evidence. Did not independently reproduce the bug.
+
+The fix is small, narrowly scoped, logically sound, and addresses a real
+functional bug that is triggered on common paths (resume, B0) in a
+driver used on widely-deployed hardware. It meets the stable kernel
+rules.
 
 **YES**
 
- drivers/greybus/gb-beagleplay.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/tty/serial/qcom_geni_serial.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/greybus/gb-beagleplay.c b/drivers/greybus/gb-beagleplay.c
-index 87186f891a6ac..bca3132adacde 100644
---- a/drivers/greybus/gb-beagleplay.c
-+++ b/drivers/greybus/gb-beagleplay.c
-@@ -535,6 +535,12 @@ static size_t cc1352_bootloader_rx(struct gb_beagleplay *bg, const u8 *data,
- 	int ret;
- 	size_t off = 0;
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index e6b0a55f0cfb2..9854bb2406e3f 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -146,6 +146,7 @@ struct qcom_geni_serial_port {
+ 	int wakeup_irq;
+ 	bool rx_tx_swap;
+ 	bool cts_rts_swap;
++	bool manual_flow;
  
-+	if (count > sizeof(bg->rx_buffer) - bg->rx_buffer_len) {
-+		dev_err_ratelimited(&bg->sd->dev, "Bootloader RX buffer overflow");
-+		bg->rx_buffer_len = 0;
-+		return count;
-+	}
+ 	struct qcom_geni_private_data private_data;
+ 	const struct qcom_geni_device_data *dev_data;
+@@ -250,7 +251,7 @@ static void qcom_geni_serial_set_mctrl(struct uart_port *uport,
+ 	if (mctrl & TIOCM_LOOP)
+ 		port->loopback = RX_TX_CTS_RTS_SORTED;
+ 
+-	if (!(mctrl & TIOCM_RTS) && !uport->suspended)
++	if (port->manual_flow && !(mctrl & TIOCM_RTS) && !uport->suspended)
+ 		uart_manual_rfr = UART_MANUAL_RFR_EN | UART_RFR_NOT_READY;
+ 	writel(uart_manual_rfr, uport->membase + SE_UART_MANUAL_RFR);
+ }
+@@ -1401,11 +1402,21 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
+ 	else
+ 		stop_bit_len = TX_STOP_BIT_LEN_1;
+ 
+-	/* flow control, clear the CTS_MASK bit if using flow control. */
+-	if (termios->c_cflag & CRTSCTS)
++	/* Configure flow control based on CRTSCTS flag.
++	 * When CRTSCTS is set, use HW/auto flow control mode, where HW
++	 * controls the RTS/CTS pin based FIFO state.
++	 * When CRTSCTS is clear, the CTS pin value is ignored for TX
++	 * path and RTS pin can be set/cleared using registers, for RX
++	 * path.
++	 */
 +
- 	memcpy(bg->rx_buffer + bg->rx_buffer_len, data, count);
- 	bg->rx_buffer_len += count;
++	if (termios->c_cflag & CRTSCTS) {
+ 		tx_trans_cfg &= ~UART_CTS_MASK;
+-	else
++		port->manual_flow = false;
++	} else {
+ 		tx_trans_cfg |= UART_CTS_MASK;
++		port->manual_flow = true;
++	}
  
+ 	if (baud) {
+ 		uart_update_timeout(uport, termios->c_cflag, baud);
 -- 
 2.53.0
 
