@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24B03EF678;
-	Tue, 28 Apr 2026 10:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C90D3F0A84;
+	Tue, 28 Apr 2026 10:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372896; cv=none; b=FHSMu4nMAzxXHe045T8OiXny8FBfm5pgRwswmfemCFUEZcEpQhcQiD+EhHYkxb88wN78dfeexXuvwAAa+4lJr8ZhRuXQ07Zbi+u69wavFBLx5HEzvHKqY8TgxApIllFQO45li5cUGPegJY75KQ/g19pWmrVTax9eCIPYeBWqHtY=
+	t=1777372897; cv=none; b=onZPBEdhS6sWvWIJ8uiptbGQ84qNhEq0c3v+EGjr0gBKaGRkxglYQtyS+aa128syMHxvAsk9XcR1XmQ0RnY4SKQ5KPGkEx4drEA3YQJqvfvJMe2ipNxa/vM+2UfrUG5Cl+Qw/ZGFX7kC9fa5DMI5xT/yplw/f8XKKNo2HO/VYIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372896; c=relaxed/simple;
-	bh=0TvWbBh4U/QB9F2vsPBTvPWiuHyPhPtd5/8TwgA8YEg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d3xH0oQXdmC37pJpzrf+i0/ejHOTawnM7wfZGKgiMwOt/YOq/p7594G5/qN2ekoWnvScMVPniEYhE3JewAKhZ83QQnidIHlVbcwjaAUMIDGrsVrCkHgPkwuOLMT3opgtvmAk/RUCZWBWqRdXMeQ5s037lXKQDzHzvko05qJGthI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qJb/NE1w; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777372897; c=relaxed/simple;
+	bh=maBGhwV59MpCNfpFOozJJQbqErBR3v4jZTQJgF9+4kA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sHscG3kzcIDhReDjqG7rfzbQ1H8qPKZy701qhIxa+xn236WX27v+yt5agLYUjkANzV63UHjoS9PpbXkQ+mdURIcUrMVFmu91P4oviWMKbR1Rqbep2gPInQb6N1wdqeZJ18Wg2IS++xTs9/d/CJSPebOx2ldAHQGVvFoDGSvantg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eqtcdhtG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qJb/NE1w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535A1C2BCAF;
-	Tue, 28 Apr 2026 10:41:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eqtcdhtG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93391C2BCB7;
+	Tue, 28 Apr 2026 10:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372896;
-	bh=0TvWbBh4U/QB9F2vsPBTvPWiuHyPhPtd5/8TwgA8YEg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=qJb/NE1wnyYMhoh1DLllF8ecDlSdwQ1lEnGwAAgsTfT3pG7dOVhr7jZJJev4vEYPI
-	 t3MvdiUT+JDh9kAurv89KX9roXZeJh9rYw8I4R4Lm2rPhTwGS44YN6utpHthN4lDM8
-	 Dcrqph94rLN2VvwXBYGzfwkfbM3th3wX38ckqIKqc/jB6DvTccx7c5PLPS3m3mJXdI
-	 fKaYnBTn+qZkbV6AHVheshdx/vlmfDShCKJaT5SKZkQjcNmA43JbfZATYs3jsJ6nRd
-	 RH3yIEDkSNGL6VkdE/AnROB+mCN8xnEbieboj/BiZO1drFNqF6RHQLzILpTgOT0dng
-	 Dixbx8LqTclmg==
+	s=k20201202; t=1777372897;
+	bh=maBGhwV59MpCNfpFOozJJQbqErBR3v4jZTQJgF9+4kA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=eqtcdhtGHwlS8UKV6ilgBfpLJNaTTGaKL6tG6Eh9CpgFQ4PPGPC+f9JlKFwYlcixd
+	 OVAYoJoybMcA9xTZtB9AfqM43m3XcriRYoPWTltKmR8emjB71x4E7rlv60qq61zQra
+	 fECX2JofVqU9ur+CYBwHIHVlkG8hudWA9/cnYfkCP5ZOYM1pmhxcqYz2UKIWAh1aaU
+	 std5ChyL3UXbha4xjpYvHuvLfYoNk6bvffvJFrKU03Ld/OgMwalwVFjRpMLLV9yiuu
+	 AfWqAcj4jw4Rdk7oUmCtv8WfFsYLXrKiG3CQ7xAmfLsBoExceVSqhhSklVcR7Vufrp
+	 +T6olB6SvLPwA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Timofey Tarasenko <timka.tarasen@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] ALSA: hda/realtek: add quirk for HONOR MRB-XXX M1020
-Date: Tue, 28 Apr 2026 06:40:12 -0400
-Message-ID: <20260428104133.2858589-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] tools/power/x86/intel-speed-select: Avoid current base freq as maximum
+Date: Tue, 28 Apr 2026 06:40:13 -0400
+Message-ID: <20260428104133.2858589-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
+References: <20260428104133.2858589-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,381 +48,458 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Timofey Tarasenko <timka.tarasen@gmail.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit d9448dca423543c6c0a9890d3ff53a5d51895318 ]
+[ Upstream commit ae67f582398611b9f67c06961e292e3a2612346d ]
 
-Adds pin fixups to enable subwoofer and JACK functionality
-on Honor Magicbook Art 14 2025 (HONOR MRB-XXX M1020)
+SST-PP level change results in online/offline of CPUs with -o option.
+The Linux intel-pstate driver internally stores the current HWP_REQ MSR
+value during offline and restores them during online.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221147
-Signed-off-by: Timofey Tarasenko <timka.tarasen@gmail.com>
-Link: https://patch.msgid.link/20260415074657.1217862-1-timka.tarasen@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+It is possible that during SST-PP level change, the new HWP_CAP limits
+can be updated. So, when a CPU is online, the HWP_REQ MSR should be
+updated to new values based on HWP_CAP values.
+
+This is particularly problematic when either turbo is disabled or the
+current HWP_REQ value (stored before online) is less than the base
+frequency from the updated HWP_CAP MSR guaranteed value. If the HWP_REQ
+MSR is not updated, then the performance will be limited to the value
+before perf level change.
+
+Hence the tool updates cpufreq scaling_max_freq to the newer
+base_frequency value in this case. This step is not required when HWP
+interrupts are enabled, as the perf level change should result in a new
+interrupt with HWP_GUARANTEED_PERF_CHANGE_STATUS and the intel_pstate
+driver will update to new limits.
+
+But the tool needs to handle the case when HWP interrupts are not
+enabled but there is no way for the tool to know that HWP interrupts are
+enabled or not. So, it has to still update the scaling_max_freq.
+
+With the QOS changes in the kernel, user space writes to scaling_max_freq
+are treated as hard limits. So, when base frequency is increased with
+SST-BF enabled, the cpufreq subsystem will still not allow setting to the
+SST-BF high priority core frequency. So, the HWP_REQ MSR will still be
+capped to the user-set scaling_max_freq after SST-PP level change.
+
+To address this, instead of setting scaling_max_freq to the current HWP_CAP
+highest frequency, set it to the maximum integer value to set the QOS limit
+as unconstrained. In this case, the actual HWP_REQ maximum frequency will
+still be capped to HWP_CAP highest performance by the intel-pstate driver.
+So, it will not result in invalid HWP_REQ values.
+
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to make a thorough analysis.
+Now I have enough information to provide a comprehensive analysis.
 
-## Phase 1: COMMIT MESSAGE FORENSICS
+## Analysis: tools/power/x86/intel-speed-select: Avoid current base freq
+as maximum
 
-**Step 1.1: Subject line parsing**
-- Subsystem: `ALSA: hda/realtek:`
-- Action verb: "add quirk"
-- Summary: Add audio quirk for HONOR Magicbook Art 14 2025 (HONOR MRB-
-  XXX M1020)
-- Record: `[ALSA: hda/realtek] [add quirk] [enable subwoofer and JACK on
-  Honor Magicbook Art 14 2025]`
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2: Commit tags**
-- `Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221147` - real
-  user bug report
-- `Signed-off-by: Timofey Tarasenko` (author)
-- `Link: https://patch.msgid.link/...` - mailing list submission link
-- `Signed-off-by: Takashi Iwai` (maintainer) - the ALSA HDA maintainer
-- No `Fixes:` tag (expected - this is hardware enablement, not a
-  regression fix)
-- No `Cc: stable` (expected for review pipeline - per problem statement,
-  absence isn't negative)
-- Record: `[Bugzilla closed by patch] [Signed off by ALSA maintainer
-  Takashi Iwai]`
+**Step 1.1: Parse the subject line**
+Record: Subsystem: `tools/power/x86/intel-speed-select` (userspace
+tool). Action verb: "Avoid" (indicates behavior fix). Summary: Don't use
+current base frequency as maximum when writing to cpufreq
+scaling_max_freq.
 
-**Step 1.3: Commit body analysis**
-- Bug: subwoofer and JACK functionality don't work out-of-the-box on
-  HONOR Magicbook Art 14 2025
-- Symptom: hardware features non-functional without correct pin
-  configuration
-- Mechanism: HDA codec auto-config does not produce correct pin
-  defaults; explicit pin config needed
-- Record: `[Subwoofer + headset jack non-functional] [Failure mode:
-  missing audio output and jack detection] [Root cause: BIOS pin
-  defaults inadequate, override needed]`
+**Step 1.2: Parse all commit message tags**
+Record:
+- No `Fixes:` tag
+- No `Reported-by:` tag
+- No `Tested-by:` tag
+- No `Reviewed-by:` tag
+- No `Acked-by:` tag
+- No `Link:` tag
+- No `Cc: stable@vger.kernel.org`
+- Only author `Signed-off-by: Srinivas Pandruvada
+  <srinivas.pandruvada@linux.intel.com>` (the tool maintainer)
 
-**Step 1.4: Hidden bug fix detection**
-- This is overtly hardware enablement via quirk, not disguised as a fix
-- Without it the laptop's audio hardware is partially non-functional
-- Record: `[Not disguised cleanup - it is an explicit hardware-enabling
-  quirk]`
+Notable: no user-facing bug report, no reviewer feedback, no explicit
+stable nomination. This is a solo fix by the maintainer.
 
-## Phase 2: DIFF ANALYSIS
+**Step 1.3: Analyze the commit body text**
+Record: Bug: When SST-PP level change triggers CPU online/offline
+cycling (via `-o` option), intel_pstate saves HWP_REQ MSR on offline and
+restores on online. But the new HWP_CAP limits may be different than
+before; if turbo is disabled or stored HWP_REQ value is less than new
+base_frequency, performance is limited. The tool's fix was to update
+`scaling_max_freq` to the new `base_frequency`. However, kernel QoS
+changes treat userspace writes to `scaling_max_freq` as HARD LIMITS.
+When SST-BF is enabled and base_freq increases, SST-BF high priority
+cores can no longer reach their high frequency because the
+scaling_max_freq QoS limit is too low. The fix writes S32_MAX
+(effectively unconstrained) so intel_pstate's actual HWP_CAP highest
+performance acts as the cap.
 
-**Step 2.1: Inventory**
-- 1 file: `sound/hda/codecs/realtek/alc269.c` (+13/-0 net)
-- 4 small additions: enum entry, fixup definition, SND_PCI_QUIRK entry,
-  model name entry
-- Scope: Single-file, additive-only, surgical
-- Record: `[1 file, ~13 lines added, 0 removed] [Functions touched: none
-  - data tables only] [Scope: surgical, additive only]`
+**Step 1.4: Detect hidden bug fixes**
+Record: Title uses "Avoid" which is the pattern indicator for a bug fix.
+This IS fixing a real functional bug where SST-BF performance is limited
+after SST-PP level transitions.
 
-**Step 2.2: Code flow change**
-- Before: PCI ID 0x1ee7:0x2081 (HONOR MRB-XXX M1020) hits the alc269
-  driver but no specific fixup applies, leaving BIOS-default pin
-  configuration
-- After: The driver's quirk table matches this PCI ID and applies pin
-  overrides for nodes 0x14 (speaker, 0x90170111), 0x19 (mic-in headset
-  jack, 0x03a1113c), 0x1a (subwoofer, 0x22a190a0), 0x1b (speaker,
-  0x90170110)
-- Record: `[Before: BIOS pin defaults wrong -> sub/jack don't work] ->
-  [After: explicit pin config applied at probe -> hardware fully works]`
+### PHASE 2: DIFF ANALYSIS
 
-**Step 2.3: Bug mechanism**
-- Category: Hardware workaround / quirk (item h in the bug categories)
-- Mechanism: BIOS/firmware reports incorrect pin defaults; the patch
-  overrides them via the standard HDA_FIXUP_PINS mechanism, which is the
-  canonical method for these problems
-- Record: `[Bug category: hardware quirk for incorrect BIOS pin
-  defaults] [Mechanism: pintbl override of 4 widget pin configurations]`
+**Step 2.1: Inventory the changes**
+Record: 1 file modified: `tools/power/x86/intel-speed-select/isst-
+config.c`. ~4 lines added (2 `#define`s + blank line), 1 line changed.
+Total scope: ~5 lines. Single-file, surgical fix.
 
-**Step 2.4: Fix quality**
-- Identical pattern to dozens of existing quirks in the same file (e.g.,
-  line 7755 `HONOR BRB-X M1010`, the touchpad quirk for the same laptop
-  family in HID)
-- The pin values follow standard Realtek pin defaults format (0x90170110
-  = internal speaker, 0x03a1113c = headset jack, 0x22a190a0 = subwoofer-
-  style internal speaker)
-- Cannot regress: applies only to the specific PCI ID 0x1ee7:0x2081
-- Record: `[Fix quality: high, follows established patterns] [Regression
-  risk: zero for users without this exact device]`
+**Step 2.2: Understand the code flow change**
+Record: In `adjust_scaling_max_from_base_freq()`: when `scaling_max_freq
+< base_freq || no_turbo()`, BEFORE the fix it wrote `base_freq` to
+cpufreq sysfs; AFTER the fix it writes `S32_MAX`. Kernel QoS interprets
+this as "no userspace limit", allowing intel_pstate to cap at HWP_CAP
+instead.
 
-## Phase 3: GIT HISTORY INVESTIGATION
+**Step 2.3: Identify the bug mechanism**
+Record: Category: Logic/correctness fix (g). Mechanism: The tool was
+capping CPU frequency at base_freq, but this was interacting with kernel
+QoS semantics to prevent SST-BF high priority cores from reaching their
+higher frequency. Fix: Use INT_MAX to indicate "unconstrained" QoS
+request.
 
-**Step 3.1: blame the changed lines**
-- The neighbouring entries (HONOR BRB-X M1010 at line 7755) were added
-  by `b26e2afb3834d` ("ALSA: hda/realtek: Fix headset mic on HONOR
-  BRB-X" - Aug 11 2025)
-- The enum scaffolding has existed since the file was created
-- Record: `[The quirk infrastructure has been stable for years; HONOR-
-  style quirks are an established pattern]`
+**Step 2.4: Assess the fix quality**
+Record: Fix is obviously correct on reading — writing INT_MAX sets QoS
+to default (unconstrained). Cannot cause regression because the kernel's
+intel_pstate driver will still cap to HWP_CAP.highest_performance. One
+minor note: the file defines U32_MAX/S32_MAX locally rather than using
+`<limits.h>` (INT_MAX), but this is a stylistic choice not a correctness
+concern.
 
-**Step 3.2: Fixes: tag**
-- Not applicable: hardware enablement, not a regression fix
-- Record: `[No Fixes: tag - hardware never worked correctly without this
-  quirk]`
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.3: File history of related changes**
-- The HONOR BRB-X M1010 quirk (`b26e2afb3834d`) was explicitly tagged
-  `Cc: <stable@vger.kernel.org>` and went to stable
-- Similar recent quirks: `dd9b99b822684` (Acer Swift SFG14-73 - Cc:
-  stable), `1fbf85dbf02c9` (HP Victus - Cc: stable), `0bdf27abaf894`
-  (ASUS Strix G16 - Cc: stable)
-- Record: `[Pattern established: similar HONOR quirk b26e2afb3834d was
-  Cc:stable; multiple recent peer quirks Cc:stable]`
+**Step 3.1: Blame the changed lines**
+Record: `adjust_scaling_max_from_base_freq` was introduced by
+`f981dc171c04c` ("tools/power/x86/intel-speed-select: Set
+scaling_max_freq to base_frequency", 2020-12-20) and later touched by
+`bbaa2e95e23e7` ("Set higher of cpuinfo_max_freq or base_frequency",
+2020-12-20). The function has existed since v5.11.
 
-**Step 3.4: Author's other commits**
-- Author Timofey Tarasenko has no other commits in this tree (first-time
-  contributor closing a bugzilla)
-- The patch was reviewed and signed-off by Takashi Iwai, the actual ALSA
-  HDA maintainer
-- Record: `[Author: bug reporter / first-time contributor] [Vetted by
-  maintainer Takashi Iwai]`
+**Step 3.2: Follow the Fixes: tag**
+Record: No Fixes: tag. However, the "original commit that made this
+broken" can be inferred: the conflict arose when kernel QoS changes
+(da5c504c7aae9 "cpufreq: intel_pstate: Implement QoS supported freq
+constraints" v5.4, and 3000ce3c52f8b "cpufreq: Use per-policy frequency
+QoS" v5.5) made scaling_max_freq writes become hard QoS limits. This
+means the tool's original behavior has been subtly broken since the QoS
+infrastructure landed. Alternatively, the tool's own commit
+f981dc171c04c added the problematic logic assuming old behavior.
 
-**Step 3.5: Dependencies**
-- The fixup uses only HDA_FIXUP_PINS infrastructure that has existed for
-  over a decade
-- No prerequisite commits required
-- Record: `[Standalone] [Zero prerequisites - HDA_FIXUP_PINS is core
-  infrastructure]`
+**Step 3.3: Check file history for related changes**
+Record: Related history shows `adjust_scaling_max_from_base_freq` was
+last substantively modified in 2020. No intermediate fixes. This is not
+part of a patch series — verified via lore mailing list pull request
+showing it as one of two Srinivas patches (the other being v1.26 version
+bump).
 
-## Phase 4: MAILING LIST RESEARCH
+**Step 3.4: Check the author's other commits**
+Record: Srinivas Pandruvada is the primary maintainer of intel-speed-
+select and intel_pstate. He has authored dozens of commits to this file.
+Highly authoritative source for the fix.
 
-**Step 4.1-4.5:**
-- Direct fetches to lore.kernel.org and bugzilla.kernel.org are blocked
-  by Anubis anti-bot challenge from this environment
-- The commit message itself contains the Bugzilla and lore links
-- The commit was applied with the maintainer's Signed-off-by, indicating
-  maintainer approval after review
-- The HONOR MagicBook Art 14 family already has companion quirks merged
-  elsewhere (HID touchpad, HONOR BRB-X audio)
-- Record: `[lore/bugzilla unreachable from this environment due to
-  Anubis] [Maintainer SOB present] [Companion HONOR-family quirks
-  already accepted to stable]`
+**Step 3.5: Check for dependent/prerequisite commits**
+Record: The fix is standalone. It doesn't reference new APIs or
+structures. The kernel-side QoS behavior it depends on (treating
+scaling_max_freq as hard limit) has been in place since v5.5, well
+before any active stable tree's branch point.
 
-## Phase 5: CODE SEMANTIC ANALYSIS
+### PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 5.1: Key functions**
-- No function changes - data table additions only
-- Affected logic: `snd_hda_pick_fixup()` matching at codec probe time
+**Step 4.1: Find the original patch discussion**
+Record: `b4 dig -c ae67f58239861` returned "Nothing matching that query"
+— patch was apparently committed to the maintainer's tree without
+posting as a separate patch submission on lore. Manual lore.kernel.org
+search for "Avoid current base freq as maximum" found only the Pull
+Request messages (not a submission thread). This confirms this commit
+was NOT posted to a public mailing list for review — it went directly
+through the maintainer's github branch into the pdx86 pull request.
 
-**Step 5.2-5.4: Reachability**
-- The quirk table is consulted during `alc269_fixup_tbl` lookup at HDA
-  codec probe (boot/resume/module-load)
-- Triggered exclusively when the HDA controller exposes subsystem ID
-  0x1ee7:0x2081
-- For all other systems, the new entries are inert (the SND_PCI_QUIRK
-  arrays are matched by SSID, the fixup is referenced only by enum
-  index)
-- Record: `[Reachability: only when matching SSID 0x1ee7:0x2081 is
-  present] [No impact on any other system]`
+**Step 4.2: Check who reviewed the patch**
+Record: No public review. Found the pull request from Srinivas to Ilpo
+Järvinen (pdx86 maintainer) on lore.kernel.org: `https://lore.kernel.org
+/all/0b288f7a7024f896a1699ac3609c7da39c588d03.camel@intel.com/`, which
+went into `review-ilpo-next` then to 7.1-rc1. Pull request lists it as
+one of two Srinivas patches for v1.26 release. No review comments, no
+stable nomination in the pull request.
 
-**Step 5.5: Similar patterns**
-- The same line block contains hundreds of analogous SND_PCI_QUIRK
-  entries; the immediate predecessor is the HONOR BRB-X entry (line
-  7755) which was Cc: stable
-- Record: `[Identical pattern repeated across the entire
-  alc269_fixup_tbl - this is the canonical way to add device-specific
-  audio quirks]`
+**Step 4.3: Search for the bug report**
+Record: No Reported-by tag. No syzbot, bugzilla, or user bug report
+linked. No evidence this was discovered through a user report or
+automated tooling.
 
-## Phase 6: STABLE TREE ANALYSIS
+**Step 4.4: Check for related patches and series**
+Record: This is a standalone patch, not part of a series. Pull request
+shows only 2 patches from Srinivas (this + version bump).
 
-**Step 6.1: Code in stable trees?**
-- ALC269/ALC256 driver and `alc269_fixup_tbl` exist in every active
-  stable tree (5.4+)
-- The HDA_FIXUP_PINS framework is decade+ old
-- Record: `[Driver and quirk table present in all active stable trees:
-  5.4, 5.10, 5.15, 6.1, 6.6, 6.12]`
+**Step 4.5: Check stable mailing list history**
+Record: No discussion found on lore.kernel.org/stable for this fix.
+However, historical precedent: `f981dc171c04c` (the commit that
+introduced this same function) WAS backported to stable 5.10.14. This
+establishes that fixes to this tool function have been considered
+stable-worthy before.
 
-**Step 6.2: Backport complications**
-- File path differs between stable trees: in 6.17+ the file is
-  `sound/hda/codecs/realtek/alc269.c` (after splits `aeeb85f26c3bb` and
-  `6014e9021b28e` in July 2025); in 6.16 and earlier it is
-  `sound/pci/hda/patch_realtek.c`
-- The four hunks add new enum entries / new struct entries / a new
-  SND_PCI_QUIRK row / a new model name; they apply cleanly with only
-  path adjustment because no surrounding code was modified
-- Record: `[Backport difficulty: trivial - same content, only path
-  differs for stable < 6.17]`
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 6.3: Already in stable?**
-- Not yet present in stable trees; the new SSID 0x1ee7:0x2081 has no
-  entry
-- Record: `[Not in stable; nothing already addresses this device]`
+**Step 5.1: Identify key functions in the diff**
+Record: `adjust_scaling_max_from_base_freq(int cpu)` — the modified
+function.
 
-## Phase 7: SUBSYSTEM CONTEXT
+**Step 5.2: Trace callers**
+Record: Called from 3 sites:
+- Line 1581: In SST-PP `set_tdp_level` path when bringing CPUs online
+  after level change (`use_offline:` label)
+- Line 1864: In `set_scaling_max_to_cpuinfo_max`
+- Line 1884: In `set_scaling_min_to_cpuinfo_min`
+All are in the main SST-PP/SST-BF configuration code paths invoked when
+user runs `intel-speed-select` commands.
 
-**Step 7.1: Subsystem criticality**
-- ALSA HDA realtek driver - widely-used audio codec driver shipped with
-  most x86 laptops
-- Criticality classification: PERIPHERAL (specific hardware) but with
-  high user count
-- Record: `[Subsystem: sound/hda] [Criticality: peripheral but
-  ubiquitous - applies only to one specific laptop SKU]`
+**Step 5.3: Trace callees**
+Record: Calls `parse_int_file()`, `get_cpufreq_base_freq()`,
+`no_turbo()`, `set_cpufreq_scaling_min_max()` — standard sysfs
+operations.
 
-**Step 7.2: Subsystem activity**
-- High activity - dozens of similar quirks added per release
-- Record: `[High activity, well-maintained, quirk additions are
-  routine]`
+**Step 5.4: Follow the call chain**
+Record: Reachable from: user running `intel-speed-select perf-profile
+set-config-level -o` (SST-PP level change with CPU online/offline).
+Triggered specifically when SST-BF is enabled and new level has
+different HWP_CAP.
 
-## Phase 8: IMPACT AND RISK
+**Step 5.5: Search for similar patterns**
+Record: The function `adjust_scaling_min_from_base_freq` follows a
+similar pattern but for minimum freq and was NOT modified (the min-freq
+case doesn't have the same hard-limit issue because minimum is supposed
+to be set).
 
-**Step 8.1: Affected users**
-- Owners of HONOR Magicbook Art 14 2025 laptops (HONOR MRB-XXX M1020)
-- Quirk is keyed off SSID 0x1ee7:0x2081, so only this exact device is
-  affected
-- Record: `[Affected: HONOR Magicbook Art 14 2025 owners only; zero
-  impact on others]`
+### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 8.2: Trigger conditions**
-- Triggered every probe (boot/resume/module reload) on the matching
-  laptop
-- Record: `[Trigger: 100% of boots on the affected device, no impact
-  otherwise]`
+**Step 6.1: Does the buggy code exist in stable trees?**
+Record: VERIFIED — the identical function exists in stable trees: 5.10,
+5.15, 6.1, 6.6, 6.12, 6.18. The code has been unchanged since 2020.
 
-**Step 8.3: Failure mode without fix**
-- Subwoofer not driven, headset jack mic input/detection broken on the
-  laptop
-- Severity: MEDIUM - functional regression for the user but not a
-  crash/security issue
-- Record: `[Failure mode: missing audio output (subwoofer) and broken
-  headset functionality] [Severity: MEDIUM - usability/functionality]`
+**Step 6.2: Check for backport complications**
+Record: Applies cleanly. The function signature and surrounding code are
+identical in all stable trees. Verified by showing the function in for-
+greg/5.10-200, 5.15-200, 6.6-200, 6.12-200 — all have exactly the same
+body as mainline before this fix.
 
-**Step 8.4: Risk-benefit**
-- Benefit: real hardware works on stable kernels for affected users
-- Risk: virtually zero - additive change, gated by exact SSID
-- Record: `[Benefit: medium (per-device, but real)] [Risk: minimal]
-  [Ratio: strongly favors backport]`
+**Step 6.3: Check if related fixes are already in stable**
+Record: The original function-introducing commit `f981dc171c04c` is in
+stable (backported to 5.10.14). No different fix for this same bug has
+been applied. The kernel-side QoS behavior is present in all stable
+trees.
 
-## Phase 9: SYNTHESIS
+### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 9.1: Evidence**
-- FOR: Real user bug (Bugzilla 221147), maintainer SOB by Takashi Iwai,
-  identical pattern to peer HONOR quirk that went to stable, additive-
-  only, gated by exact SSID, fits the "AUDIO CODEC QUIRKS" exception
-  explicitly listed as stable-eligible
-- AGAINST: Path differs between mainline and stable (cosmetic backport
-  hurdle only)
-- Unresolved: Cannot directly fetch lore for the original review thread
-  (Anubis challenge)
+**Step 7.1: Identify the subsystem and its criticality**
+Record: `tools/power/x86/intel-speed-select/` — Intel Speed Select
+Technology userspace utility. Criticality: PERIPHERAL. This is a
+userspace tool, not kernel code. Affects only users of specific Intel
+server CPUs (Xeon Scalable) using SST-PP/SST-BF features. Not a core
+subsystem.
 
-**Step 9.2: Stable rules**
-1. Obviously correct? Yes - data table additions, no logic
-2. Real bug? Yes - bugzilla user report
-3. Important? Functional hardware enablement (audio HW partly broken
-   without it)
-4. Small? Yes - ~13 lines, 1 file
-5. No new features/APIs? Correct - reuses existing HDA fixup framework
-6. Applies to stable? Yes with trivial path change for trees <6.17
+**Step 7.2: Assess subsystem activity**
+Record: Active subsystem. The tool is regularly updated (v1.26 release
+just announced). Srinivas is an active maintainer.
 
-**Step 9.3: Exception category**
-- Falls into "AUDIO CODEC QUIRKS (sound/pci/hda/patch_realtek.c)" - the
-  policy explicitly states "These are all YES for stable - they fix real
-  hardware for real users."
+### PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1: Determine who is affected**
+Record: Narrow user population: users of Intel Xeon Scalable CPUs with
+SST-BF enabled who run `intel-speed-select` to change SST-PP levels with
+`-o` (online/offline) option. Enterprise server administrators. Not
+universal, not common consumer kernels.
+
+**Step 8.2: Determine the trigger conditions**
+Record: Specific conditions must all be met: (1) supported Intel CPU,
+(2) user invokes SST-PP level change with `-o` option, (3) SST-BF
+enabled, (4) HWP interrupts are NOT enabled, (5) new level has different
+HWP_CAP values. User-initiated configuration tool, not triggered
+spontaneously.
+
+**Step 8.3: Determine the failure mode severity**
+Record: Failure mode = CPU performance limited to base frequency (SST-BF
+high priority cores cannot reach their intended higher frequency after
+SST-PP level change). Severity: LOW-MEDIUM. No crash, no data
+corruption, no security issue. It's a "feature doesn't work correctly"
+bug.
+
+**Step 8.4: Risk-benefit ratio**
+Record:
+- BENEFIT: LOW-MEDIUM. Fixes functional issue for SST-BF users. Affects
+  only specific user scenarios.
+- RISK: VERY LOW. 5-line change to a userspace tool. No kernel changes.
+  Writing INT_MAX to scaling_max_freq is the documented way to indicate
+  "no limit" in the QoS system. Cannot cause crashes.
+- Ratio: Favorable. Low risk + some benefit = reasonable candidate.
+
+### PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1: Compile the evidence**
+
+Evidence FOR backporting:
+- Fixes a real user-visible functional bug (SST-BF performance
+  limitation)
+- Very small, contained fix (5 lines, 1 file, userspace tool)
+- From the authoritative tool maintainer (Srinivas)
+- Applies cleanly to all active stable trees
+- Function exists unmodified in all stable trees (5.10, 5.15, 6.1, 6.6,
+  6.12, 6.18)
+- Low regression risk (cannot cause crash since it's a userspace tool
+  change)
+- Precedent: the commit that introduced this function was backported to
+  5.10.14
+- intel-speed-select historically has many fixes backported to stable
+
+Evidence AGAINST backporting:
+- No `Fixes:` tag
+- No `Cc: stable@vger.kernel.org`
+- No `Reported-by:` (no user bug report evidence)
+- No public review — went directly through maintainer tree
+- Userspace tool, not kernel code
+- Narrow use case (specific hardware + specific tool invocation)
+- Failure mode is performance limitation, not crash/security/corruption
+- The kernel QoS behavior it adapts to has been present for years, so
+  this isn't a recent regression
+
+Unresolved questions:
+- UNVERIFIED: Whether any actual users have hit this (no user reports
+  cited)
+- UNVERIFIED: Whether the commit author considered stable backporting
+  (no evidence either way)
+
+**Step 9.2: Apply the stable rules checklist**
+1. Obviously correct and tested? Correct by inspection. Testing unknown
+   but from the maintainer.
+2. Fixes a real bug? Yes — SST-BF performance not reaching target
+   frequency after SST-PP level change.
+3. Important issue? Borderline — not crash/security/corruption.
+   Performance limitation in specific scenarios.
+4. Small and contained? Yes — ~5 lines, single file.
+5. No new features or APIs? Correct — fixes existing functionality.
+6. Can apply to stable trees? Yes — verified clean apply across
+   5.10-6.18.
+
+**Step 9.3: Exception categories**
+Not a device ID addition, quirk, DT update, build fix, or documentation
+fix. It's a plain bug fix.
 
 **Step 9.4: Decision**
-- Strong YES - textbook stable-worthy hardware quirk
 
-## Verification
+This is a borderline case. The fix is small, safe, from the maintainer,
+applies cleanly, and addresses a real functional issue. On the other
+hand, it's a userspace tool with no explicit stable nomination, no
+Fixes: tag, no Reported-by, and the failure mode is performance (not
+crash/corruption/security). The narrow use case and lack of stable
+markers argue against.
 
-- [Phase 1] Parsed the commit message: confirmed Closes: bugzilla,
-  maintainer SOB by Takashi Iwai, no Fixes: or Cc:stable (expected)
-- [Phase 2] Read `sound/hda/codecs/realtek/alc269.c` lines 4090-6669 and
-  7740-7755: verified the diff inserts cleanly into existing tables; pin
-  values match standard Realtek pintbl format (verified via existing
-  entries 0x90170110 in many other fixups)
-- [Phase 3] `git log --oneline --grep=HONOR -- sound/`: found
-  `b26e2afb3834d` peer quirk; `git show b26e2afb3834d`: confirmed Cc:
-  stable in similar HONOR BRB-X quirk
-- [Phase 3] `git show` on 7 recent peer quirks (`dd9b99b822684`,
-  `720460722310c`, `1fbf85dbf02c9`, `bac1e57adf08c`, `0bdf27abaf894`,
-  `7bae956cac043`, `0d3429f12133c`): three explicit Cc:stable, others
-  not - confirms maintainer treats device quirks as stable-eligible on a
-  per-device basis
-- [Phase 3] `git log --oneline --grep="quirk for HONOR"`: found
-  `7a5ab80711143` HID quirk for same HONOR MagicBook Art 14 family -
-  confirms real product family with multiple needed quirks
-- [Phase 4] WebFetch lore.kernel.org and bugzilla.kernel.org: BLOCKED by
-  Anubis anti-bot, marked UNVERIFIED for direct review thread content;
-  commit message links are recorded though
-- [Phase 5] Grep for `0x1ee7` in current tree: confirmed only one
-  existing entry (HONOR BRB-X M1010) - the new SSID 0x2081 is not yet
-  present
-- [Phase 6] `git log --diff-filter=A --
-  sound/hda/codecs/realtek/alc269.c` and `git show aeeb85f26c3bb` and
-  `git show 6014e9021b28e`: confirmed the file was created via
-  split+move in July 2025 (mainline 6.17), so older stable trees use
-  `sound/pci/hda/patch_realtek.c`
-- [Phase 8] Reachability: pin fixup applies only when subsystem ID
-  0x1ee7:0x2081 matches at codec probe - confirmed via `SND_PCI_QUIRK`
-  macro semantics in the same file
-- UNVERIFIED: Direct read of lore.kernel.org thread (b4 dig fallback not
-  run due to environment limits, but the patch is already applied with
-  maintainer SOB so review presumably occurred)
-- UNVERIFIED: Exact stable trees the maintainer would target - but the
-  policy in the prompt explicitly classifies audio codec quirks as YES
+Weighing the factors: the fix is very low risk and fixes a real
+functional issue for SST-BF users. Historically, intel-speed-select
+fixes get backported. The code path exists in all stable trees and the
+fix applies cleanly. The author is the maintainer.
 
-## Decision
+### Verification:
+- [Phase 1] Parsed tags: NO Fixes, NO Cc stable, NO Reported-by, NO
+  Link, NO Reviewed-by — only author SoB (verified via `git show`)
+- [Phase 2] Diff analysis: 4 lines added (U32_MAX/S32_MAX defines), 1
+  line changed (base_freq → S32_MAX) in
+  `adjust_scaling_max_from_base_freq()` (verified via `git show
+  ae67f58239861`)
+- [Phase 3] git log on file history: `adjust_scaling_max_from_base_freq`
+  introduced by `f981dc171c04c` in Dec 2020 (verified via `git log
+  --oneline --follow`)
+- [Phase 3] kernel QoS commits traced: `da5c504c7aae9` (Aug 2019),
+  `3000ce3c52f8b` (Oct 2019), `521223d8b3ec0` (Dec 2021) — QoS
+  infrastructure in kernel for years (verified via `git log --format`)
+- [Phase 3] Author is Srinivas Pandruvada, primary maintainer of intel-
+  speed-select and intel_pstate (verified via `git log --author`
+  history)
+- [Phase 4] `b4 dig -c ae67f58239861`: returned "Nothing matching" — no
+  public patch submission on lore
+- [Phase 4] lore search found pull request from Srinivas to pdx86
+  maintainer
+  (`0b288f7a7024f896a1699ac3609c7da39c588d03.camel@intel.com`) dated
+  2026-04-05 — grouped with v1.26 version bump, no explicit stable
+  nomination
+- [Phase 4] lore search confirmed `f981dc171c04c` was backported to
+  stable 5.10.14 (found in Linux 5.10.14 announcement)
+- [Phase 5] find_callers: 3 call sites in isst-config.c (lines 1581,
+  1864, 1884), all in SST configuration paths invoked by user commands
+  (verified via grep)
+- [Phase 6] Function body verified unchanged in stable trees 5.10, 5.15,
+  6.1, 6.6, 6.12, 6.18 (verified via `git show for-greg/X:tools/...`)
+- [Phase 6] No Fixes: tag, so no "introduced by" commit to verify is in
+  stable
+- [Phase 7] Subsystem: intel-speed-select userspace tool, PERIPHERAL
+  criticality
+- [Phase 8] Failure mode: performance limitation (CPU capped at
+  base_freq), not crash/corruption
+- UNVERIFIED: Whether real users have reported hitting this bug (no
+  Reported-by in commit)
+- UNVERIFIED: Whether Srinivas consciously chose not to Cc stable
 
-This is a textbook hardware quirk addition - small, surgical, gated by a
-unique SSID, fixing real hardware (subwoofer + headset jack) for real
-users on a shipping laptop with a Bugzilla report. It matches the
-explicit "AUDIO CODEC QUIRKS" exception that the stable rules allow,
-follows the same pattern as the peer `HONOR BRB-X M1010` quirk that was
-Cc: stable, and is signed off by the ALSA HDA maintainer. Backport
-requires only a trivial path change for stable trees older than 6.17.
+### Summary
+
+This is a legitimate small bug fix for a userspace tool that addresses a
+real functional issue: when using SST-PP level changes with SST-BF
+enabled, the `intel-speed-select` tool was writing `base_freq` to
+`scaling_max_freq`, which (due to kernel QoS semantics treating this as
+a hard limit) prevented SST-BF high-priority cores from reaching their
+target frequency. The fix changes to `INT_MAX` so the kernel's
+intel_pstate driver (which caps at HWP_CAP.highest_performance) is the
+effective limiter.
+
+The fix is minimal (~5 lines), from the tool maintainer, and applies
+cleanly to all active stable trees where the function exists unchanged
+since 2020. The kernel QoS behavior it adapts to is present in all
+stable trees. Precedent exists: the commit that introduced this function
+(`f981dc171c04c`) was backported to 5.10.14.
+
+Arguments against include: no Fixes: tag, no stable Cc, no Reported-by,
+userspace tool (not kernel), narrow use case (SST-BF + SST-PP change +
+no HWP interrupts), and the failure mode is performance rather than
+crash/corruption/security. The patch also went directly through the
+maintainer's tree without a public mailing list review.
+
+On balance, the fix is surgical, correct, safe, addresses a real
+functional bug, and stable trees have historically accepted intel-speed-
+select fixes with similar characteristics. The very low risk combined
+with concrete (if narrow) benefit favors backporting.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ tools/power/x86/intel-speed-select/isst-config.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 45f9d64873885..d35932b46267f 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -4124,6 +4124,7 @@ enum {
- 	ALC245_FIXUP_ACER_MICMUTE_LED,
- 	ALC245_FIXUP_CS35L41_I2C_2_MUTE_LED,
- 	ALC236_FIXUP_HP_DMIC,
-+	ALC256_FIXUP_HONOR_MRB_XXX_M1020_AUDIO,
- };
+diff --git a/tools/power/x86/intel-speed-select/isst-config.c b/tools/power/x86/intel-speed-select/isst-config.c
+index dd9056ddb016e..652ef1f567ad8 100644
+--- a/tools/power/x86/intel-speed-select/isst-config.c
++++ b/tools/power/x86/intel-speed-select/isst-config.c
+@@ -1744,6 +1744,9 @@ static int no_turbo(void)
+ 	return parse_int_file(0, "/sys/devices/system/cpu/intel_pstate/no_turbo");
+ }
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -6666,6 +6667,16 @@ static const struct hda_fixup alc269_fixups[] = {
- 			{ 0x12, 0x90a60160 }, /* use as internal mic */
- 			{ }
- 		},
-+	},
-+	[ALC256_FIXUP_HONOR_MRB_XXX_M1020_AUDIO] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x14, 0x90170111 },
-+			{ 0x19, 0x03a1113c },
-+			{ 0x1a, 0x22a190a0 },
-+			{ 0x1b, 0x90170110 },
-+			{ }
-+		}
- 	}
- };
++#define U32_MAX		((unsigned int)~0U)
++#define S32_MAX		((int)(U32_MAX >> 1))
++
+ static void adjust_scaling_max_from_base_freq(int cpu)
+ {
+ 	int base_freq, scaling_max_freq;
+@@ -1751,7 +1754,7 @@ static void adjust_scaling_max_from_base_freq(int cpu)
+ 	scaling_max_freq = parse_int_file(0, "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_max_freq", cpu);
+ 	base_freq = get_cpufreq_base_freq(cpu);
+ 	if (scaling_max_freq < base_freq || no_turbo())
+-		set_cpufreq_scaling_min_max(cpu, 1, base_freq);
++		set_cpufreq_scaling_min_max(cpu, 1, S32_MAX);
+ }
  
-@@ -7753,6 +7764,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1e39, 0xca14, "MEDION NM14LNL", ALC233_FIXUP_MEDION_MTL_SPK),
- 	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1ee7, 0x2081, "HONOR MRB-XXX M1020", ALC256_FIXUP_HONOR_MRB_XXX_M1020_AUDIO),
- 	SND_PCI_QUIRK(0x1f4c, 0xe001, "Minisforum V3 (SE)", ALC245_FIXUP_BASS_HP_DAC),
- 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-@@ -7973,6 +7985,7 @@ static const struct hda_model_fixup alc269_fixup_models[] = {
- 	{.id = ALC236_FIXUP_LENOVO_INV_DMIC, .name = "alc236-fixup-lenovo-inv-mic"},
- 	{.id = ALC2XX_FIXUP_HEADSET_MIC, .name = "alc2xx-fixup-headset-mic"},
- 	{.id = ALC245_FIXUP_BASS_HP_DAC, .name = "alc245-fixup-bass-hp-dac"},
-+	{.id = ALC256_FIXUP_HONOR_MRB_XXX_M1020_AUDIO, .name = "alc256-honor-mrb-xxx-m1020-audio"},
- 	{}
- };
- #define ALC225_STANDARD_PINS \
+ static void adjust_scaling_min_from_base_freq(int cpu)
 -- 
 2.53.0
 
