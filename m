@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB603F65EA;
-	Tue, 28 Apr 2026 10:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A27D3F6612;
+	Tue, 28 Apr 2026 10:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372908; cv=none; b=g8FKa1pwpVf7dp5M7rvxmPSVR5dJWvYBrVQjBxva+JRiNiUyUqQAH61UA+bvnHygi7C5ttYO3QTmAbcuLYbGxLX69PnwPcmQFkI349/+KWu5m/rudP++n2DkoI2x4MYg01DBonuPWUIZycd7pDBLG5wSVDsCDG+82xorjxBojF8=
+	t=1777372909; cv=none; b=YnegReBNoF07aacgG1MTi/xIiTaajdGsT96ulUDD4uSA79AeAZTFzizR0Uv8z97Rb56xX6zm+LId0uYYeUM8nxPYcTzsatmcFhXI4e0iKDpiijzdZ9duci9uem8bHRuxWNYAk8au6DvWdOswv38beODi42lzc/zom+l6lCXN+Mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372908; c=relaxed/simple;
-	bh=28H3QED5diOYDEZms+DhgAqauRgZpWHVwGC8rmqcsPs=;
+	s=arc-20240116; t=1777372909; c=relaxed/simple;
+	bh=MrijHnSukrGEA7lvsUJDFJZkv206sKWIDXoibZ3pi54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JaojJfJektPyVT78PUmxhbqG+PiJi91wK8J4yxpSo47jcdZquHtJPliFRy1utdZuWHu/4icwCL55PLlf083oUizhPqseMzHCk18d/2DuK+EwQGy1MCQszKfgeqgxH2gvvfDIbRHYeG5vNv3dK2jyy2iSZZfTHxGh1EkpYyg4MCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lkLrcwaF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jcbtUJSLe/o7uNuc6Ulht3rLP0lqLwU6dqAnCPaL39mMzA6zeKMAtgtSSCNa5Vs3P7g0igxSNhh3QNh5ZLs7RtnrBCgEdYtSONF+JVhKZNTR8d7CTcIH5UN/DaQznbHz/XDgl456cAs9DnOd/z2o6rOlXk0AyNP0DHbt7dYvaXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QAC3yDVz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lkLrcwaF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67EAC2BCC9;
-	Tue, 28 Apr 2026 10:41:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QAC3yDVz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C0DC2BCB6;
+	Tue, 28 Apr 2026 10:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372907;
-	bh=28H3QED5diOYDEZms+DhgAqauRgZpWHVwGC8rmqcsPs=;
+	s=k20201202; t=1777372909;
+	bh=MrijHnSukrGEA7lvsUJDFJZkv206sKWIDXoibZ3pi54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkLrcwaFaHUMZsrpVio9gqNa1dX/z40+GdkdaAbLsOBqBiCPLVgnsJRJEM7X9r94/
-	 TiMVsJNnDAkqnJ7BpQe8NLMLcGvCjS5IOwhN2d5oWCBCICsQCmizJMOfr7zE5Vfmk2
-	 v+2G6ajDtvEayK63BEONq9lLnPz/G+mUr51kyJEX53HoxSsQhY7yss6aPo8zr4xVXY
-	 +GjmmdEo3mnpDBOFzxE00C2cTJymvheedEDWR02etljR5spBLFnSs+6PwkC8cY4otC
-	 iqqm+/RHIzqrHJCmDdfAkDqlPjg2jtlwWWDaOIi/kIBuKpM8jDBduETAuhYPgY27Ku
-	 /EZnYC6enGwWg==
+	b=QAC3yDVz57Z3meDtVxo9vPLbl/9sjM5vBy7XfSfIKzwluGou1FFgRqXf+k+q+knoZ
+	 /iVDjXrsL2bera6KqRlPa1ej3rS4Qb/8f2jGGnioR2yFCLJ/CkudAlspcUavcgLiCK
+	 tOnX87OGn3jXKh2WLxxKiNEZ1QHeykrAp+4FB7WG31ugkj+P7z0MJnGZS4ovLsn3AE
+	 fSGmQxTiu1YY97kNhLUjeAcyh1O7tiQoDtJYpZVacG0I9gzwArbefGvMOwJQ8teJJD
+	 u3kZgL977QTgGoJ/IXrPnf8OlfpLQZGOg4/Jbxh9ttNndEDHCWb9ydk0XbVany64Nd
+	 g0Z0kJsVg2hig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Rene Sapiens <rene.sapiens@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sfrench@samba.org,
-	linux-cifs@vger.kernel.org,
+	andreas.noever@gmail.com,
+	michael.jamet@intel.com,
+	YehezkelShB@gmail.com,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] ksmbd: fix CreateOptions sanitization clobbering the whole field
-Date: Tue, 28 Apr 2026 06:40:21 -0400
-Message-ID: <20260428104133.2858589-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] thunderbolt: Disable CLx on Titan Ridge-based devices with old firmware
+Date: Tue, 28 Apr 2026 06:40:22 -0400
+Message-ID: <20260428104133.2858589-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -54,387 +55,404 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Rene Sapiens <rene.sapiens@linux.intel.com>
 
-[ Upstream commit 5d115fa84027e4b999c3d3c7b1294849cf35cdb2 ]
+[ Upstream commit 59b03d12b1f6d14d936a3ebec225f8d914dc3b70 ]
 
-smb2_open() attempts to clear conflicting CreateOptions bits
-(FILE_SEQUENTIAL_ONLY_LE together with FILE_RANDOM_ACCESS_LE, and
-FILE_NO_COMPRESSION_LE on a directory open), but uses a plain
-assignment of the bitwise negation of the target flag:
+Thunderbolt 3 devices based on Titan Ridge routers with NVM firmware
+version < 0x65 have been observed to become unstable when CL states are
+enabled. This can lead to link disconnect events and the device failing
+to enumerate.
 
-	req->CreateOptions = ~(FILE_SEQUENTIAL_ONLY_LE);
-	req->CreateOptions = ~(FILE_NO_COMPRESSION_LE);
+Enable CLx on Titan Ridge only when the running NVM firmware version
+is >= 0x65.
 
-This replaces the entire field with 0xFFFFFFFB / 0xFFFFFFEF rather
-than clearing a single bit. With the SEQUENTIAL/RANDOM case, the
-next check for FILE_OPEN_BY_FILE_ID_LE | CREATE_TREE_CONNECTION |
-FILE_RESERVE_OPFILTER_LE then trivially matches and a legitimate
-request is rejected with -EOPNOTSUPP. With the NO_COMPRESSION case,
-every downstream test (FILE_DELETE_ON_CLOSE, etc.) operates on a
-corrupted CreateOptions value.
-
-Use &= ~FLAG to clear only the intended bit in both places.
-
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Rene Sapiens <rene.sapiens@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed to complete the full analysis.
+Now I have all the information needed. Let me compile the analysis.
 
-## Phase 1: Commit Message Forensics
+---
 
-**Step 1.1: Subject line parsing**
-- Record: Subsystem prefix `ksmbd:` (kernel SMB3 server), action verb
-  `fix`, one-line summary: "CreateOptions sanitization clobbering the
-  whole field"
+# Analysis: thunderbolt: Disable CLx on Titan Ridge-based devices with
+old firmware
 
-**Step 1.2: Tags**
-- Signed-off-by: DaeMyung Kang (community contributor who authored the
-  fix)
-- **Acked-by: Namjae Jeon** (the ksmbd maintainer and original author of
-  the buggy code)
-- Signed-off-by: Steve French (VFS/SMB maintainer, committed the patch)
-- No `Fixes:` tag (expected - this is a candidate under review)
-- No `Reported-by:` / `Link:` / `Cc: stable` tags
-- Record: Author + ksmbd maintainer Acked + SMB subsystem maintainer
-  committed
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.3: Commit body analysis**
-- Record: Author clearly explains the bug mechanism: two lines use `=`
-  (assignment) instead of `&=` (bit-clear). `req->CreateOptions = ~FLAG`
-  replaces the ENTIRE field with `0xFFFFFFFB` (sequential case) or
-  `0xFFFF7FFF`-ish (no-compression case, message says 0xFFFFFFEF -
-  slight discrepancy but point stands). Consequence 1: immediately next
-  `EOPNOTSUPP` check trivially matches → legitimate client requests
-  rejected. Consequence 2: every downstream test (FILE_DELETE_ON_CLOSE,
-  etc.) operates on corrupted value.
+**Step 1.1 - Subject line parsed:**
+Record: [thunderbolt (subsystem)] [Disable (action verb - indicates a
+bug workaround)] [CLx on Titan Ridge-based devices with old NVM
+firmware]
 
-**Step 1.4: Hidden bug detection**
-- Record: Not hidden — commit subject explicitly says "fix".
+**Step 1.2 - Tags parsed:**
+Record: Two `Signed-off-by:` tags — Rene Sapiens (author) and Mika
+Westerberg (subsystem maintainer). NO `Fixes:`, NO `Cc: stable`, NO
+`Reported-by:`, NO `Link:`, NO `Reviewed-by:`, NO `Tested-by:`.
+(Expected — that's why this commit needs review.)
 
-## Phase 2: Diff Analysis
+**Step 1.3 - Commit body:**
+Record: Bug description: "Thunderbolt 3 devices based on Titan Ridge
+routers with NVM firmware version < 0x65 have been observed to become
+unstable when CL states are enabled." Symptoms: "link disconnect events
+and the device failing to enumerate." Failure mode: link instability,
+device enumeration failure (user-visible — Thunderbolt device doesn't
+work). Author's mechanism: old NVM firmware has a hardware/firmware bug
+triggered when CL (low-power link) states are entered.
 
-**Step 2.1: Inventory**
-- Record: 1 file changed (`fs/smb/server/smb2pdu.c`), +2/-2 lines, 1
-  function touched (`smb2_open()`), single-file surgical fix.
+**Step 1.4 - Hidden bug fix detection:**
+Record: Not hidden — the commit is clearly a bug-triggered hardware
+workaround/quirk. "Disable" here means "disable the broken low-power
+states on broken hardware/firmware combinations."
 
-**Step 2.2: Code flow change**
-- Record:
-  - Hunk 1 (line ~3064): Before: `req->CreateOptions =
-    ~(FILE_SEQUENTIAL_ONLY_LE);` writes `0xFFFFFFFB` to the field.
-    After: `req->CreateOptions &= ~FILE_SEQUENTIAL_ONLY_LE;` clears only
-    bit 0x00000004.
-  - Hunk 2 (line ~3078, inside DIRECTORY_FILE branch): Before:
-    `req->CreateOptions = ~(FILE_NO_COMPRESSION_LE);` writes ~`0x8000`
-    into the field. After: `req->CreateOptions &=
-    ~FILE_NO_COMPRESSION_LE;` clears only bit 0x00008000.
+## PHASE 2: DIFF ANALYSIS - LINE BY LINE
 
-**Step 2.3: Bug mechanism**
-- Record: Category (g) "Logic / correctness fix" — classic missing `&`
-  in `&=`, making assignment clobber the field. Two independent sites,
-  same root cause.
+**Step 2.1 - Inventory:**
+Record: 1 file changed: `drivers/thunderbolt/quirks.c`, +7 / -0.
+Functions modified: `quirk_clx_disable()` (3 lines added); table
+`tb_quirks[]` (1 new entry, 4 lines including blank and comment). Scope:
+single-file surgical fix.
 
-**Step 2.4: Fix quality**
-- Record: Obviously correct, minimal and idiomatic (`&= ~FLAG` is the
-  standard kernel pattern). Zero regression risk — the fix makes the
-  code do exactly what the surrounding check clearly intends. In both
-  sites the value was already mangled post-change by the buggy line;
-  restoring correct semantics cannot introduce a new failure mode.
+**Step 2.2 - Code flow change:**
+Record:
+- Before: `quirk_clx_disable()` was only invoked from AMD Yellow Carp /
+  Pink Sardine table entries. When invoked, it unconditionally set
+  `QUIRK_NO_CLX`.
+- After: A new table entry matches Intel Titan Ridge DD bridge
+  (0x8086:0x15ef) and invokes `quirk_clx_disable()`. Inside, if the
+  switch is Titan Ridge AND `sw->nvm->major >= 0x65`, the function
+  returns early without applying `QUIRK_NO_CLX`; otherwise it applies it
+  as before. AMD path behavior is preserved
+  (`tb_switch_is_titan_ridge(sw)` returns false for AMD parts).
 
-## Phase 3: Git History Investigation
+**Step 2.3 - Bug mechanism:**
+Record: Category (h) Hardware workaround — a vendor-identified firmware
+bug on the device causes link instability under CL states. Fix adds a
+device-specific quirk table entry plus a firmware-version guard.
 
-**Step 3.1: Blame**
-- Record: `git blame -L 3055,3075 fs/smb/server/smb2pdu.c` shows both
-  buggy lines come from commit `e2f34481b24db2` ("cifsd: add server-side
-  procedures for SMB3", Namjae Jeon, 2021) — the very first commit that
-  added ksmbd to the kernel. `git describe --contains e2f34481b24db2`
-  returns `v5.15-rc1~183^2~93` → present since **v5.15-rc1**.
+**Step 2.4 - Fix quality:**
+Record: Small, contained, obviously correct IF `sw->nvm` is populated at
+`tb_check_quirks()` time. The fix itself cannot cause regressions on AMD
+devices or non-Titan-Ridge Intel devices, since the new check is guarded
+by `tb_switch_is_titan_ridge(sw)`. Key concern: whether `sw->nvm` is
+populated when this runs — see Phase 3.5.
 
-**Step 3.2: Fixes: tag**
-- Record: No `Fixes:` tag in the commit, but blame unambiguously
-  identifies the introducing commit. That commit (ksmbd initial merge)
-  is present in every ksmbd-capable stable tree (5.15.y and later).
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.3: Related file changes**
-- Record: `git log --oneline -- fs/smb/server/smb2pdu.c | head -30`
-  shows a steady stream of ksmbd CVE / bug fixes (UAF, OOB, refcount
-  leaks) in the file — an actively maintained, churn-prone area. No
-  prerequisite commit is implied by the diff hunks.
+**Step 3.1 - Blame:**
+Record: CLx support on Titan Ridge was introduced by `43f977bc60b1c`
+("thunderbolt: Enable CL0s for Intel Titan Ridge") in v5.17-rc1 and
+expanded by `b017a46d486cd` ("thunderbolt: Add CL1 support for USB4 and
+Titan Ridge routers") in v6.0-rc1. So the bug window (CLx enabled with
+no firmware guard on Titan Ridge DD) is v5.17+.
 
-**Step 3.4: Author's other commits**
-- Record: `git log --author="DaeMyung Kang"` shows 4 related ksmbd fixes
-  (durable fd leak, async_ida destroy, tree_conn_ida destroy, and this
-  one). Regular ksmbd contributor, not a one-off submitter.
+**Step 3.2 - Fixes: tag:**
+Record: No `Fixes:` tag. Implicit target would be `43f977bc60b1c` /
+`b017a46d486cd` (v5.17 / v6.0). The `QUIRK_NO_CLX` infrastructure itself
+came from `7af9da8ce8f9a` ("thunderbolt: Add quirk to disable CLx") in
+v6.3-rc1 and was explicitly tagged `Cc: stable@vger.kernel.org`.
 
-**Step 3.5: Dependencies**
-- Record: Patch is `[PATCH 2/2]` of a series. Patch 1/2
-  (`804054d19886a`, durable fd leak) touches
-  `parse_durable_handle_context()` at line ~2844, completely independent
-  from this patch's changes at lines ~3064/3078. `git show
-  804054d19886a` confirms zero textual/semantic overlap → **this patch
-  is fully standalone**, no dependency on 1/2.
+**Step 3.3 - Related file history:**
+Record: Recent `quirks.c` changes (`a75e0684`, `0c35ac18`, `f2bfa944`,
+`ccdb0900`, `f14d177e`, `f0a57dd3`, `7af9da8c`) are all similar tiny
+additions of hardware quirks/logging — the file has low churn and stable
+structure.
 
-## Phase 4: Mailing List Research
+**Step 3.4 - Author context:**
+Record: Rene Sapiens (author) has recent thunderbolt work (margining,
+structure cleanups). Mika Westerberg (co-Signed-off-by) is the
+Thunderbolt subsystem maintainer and applied the patch directly to
+`thunderbolt.git/next`. Strong authority signal.
 
-**Step 4.1: b4 dig**
-- Record: `b4 dig -c 5d115fa84027e` found match by patch-id at https://l
-  ore.kernel.org/all/20260420175125.3341090-1-charsyam@gmail.com/
+**Step 3.5 - Dependencies (CRITICAL):**
+Record: This commit is PART 2 of a 2-patch series. The prerequisite is
+commit `4573add760b8d` ("thunderbolt: Read router NVM version before
+applying quirks"). That prerequisite splits `tb_switch_nvm_add()` into
+`tb_switch_nvm_init()` (populates `sw->nvm` / reads version) and
+`tb_switch_nvm_add()` (registers nvmem), and calls
+`tb_switch_nvm_init()` from `tb_switch_add()` BEFORE
+`tb_check_quirks()`. Without the prerequisite, `sw->nvm` is NULL when
+`tb_check_quirks()` runs, so the new guard `sw->nvm && sw->nvm->major >=
+0x65` is always false, and `QUIRK_NO_CLX` is applied to ALL Titan Ridge
+DD devices regardless of firmware version. The commit still fixes the
+bug (pessimistically) but loses power-savings on newer firmware.
 
-**Step 4.2: Reviewers (b4 dig -w)**
-- Record: Originally sent to ksmbd maintainer Namjae Jeon, Steve French
-  (SMB maintainer), Sergey Senozhatsky, Tom Talpey, linux-cifs, LKML.
-  The right audience was included.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.3: Revisions (b4 dig -a)**
-- Record: Only v1, no rework needed — the fix was straightforward enough
-  to be accepted on first submission.
+**Step 4.1 - b4 dig:**
+Record: `b4 dig -c 59b03d12b1f6d` could not find a match (lore search
+returned nothing). Manual search via `yhbt.net/lore/linux-usb`
+succeeded: cover letter at
+`20260224070150.3320641-1-mika.westerberg@linux.intel.com`, patch 2/2 at
+`20260224070150.3320641-3-...`, patch 1/2 at
+`20260224070150.3320641-2-...`. Only v1 was submitted — no v2/v3.
 
-**Step 4.4: Thread content**
-- Record: `b4 dig -m /tmp/ksmbd_createopts_thread.mbox` retrieved the
-  full thread. The only reply is from Namjae Jeon: *"Applied it to
-  #ksmbd-for-next-next. Note that I have added the missing signed-off-by
-  tag..."* — no NAKs, no concerns, no revision requests, no explicit
-  stable nomination, but unambiguous maintainer approval.
+**Step 4.2 - Reviewers:**
+Record: CC list: Yehezkel Bernat, Lukas Wunner, Andreas Noever (past
+Thunderbolt co-maintainers), Rene Sapiens (author). Mailing list: linux-
+usb@vger.kernel.org. Mika Westerberg (current Thunderbolt maintainer)
+submitted and applied. No Reviewed-by/Acked-by/Tested-by tags were added
+in the mailing-list discussion before application, but the maintainer
+applied it directly.
 
-**Step 4.5: Stable ML**
-- Record: No prior stable mailing-list discussion found; the bug has
-  been latent since v5.15 but only now diagnosed.
+**Step 4.3 - Bug report:**
+Record: No public Link: tag. Cover letter: "There is known issue on
+Titan Ridge with older firmware that makes the link unstable if CL
+states are enabled." Phrasing indicates this is a vendor-known hardware
+issue (Intel internal knowledge), not a user-reported bug traceable via
+lore.
 
-## Phase 5: Code Semantic Analysis
+**Step 4.4 - Related patches / series:**
+Record: 2-patch series. Patch 1/2 (prerequisite) is `4573add760b8d` —
+refactor making NVM version available early. Patch 2/2 is this commit.
+Both applied as the series by Mika on 2026-03-02.
 
-**Step 5.1: Key functions**
-- Record: `smb2_open()` in `fs/smb/server/smb2pdu.c`
+**Step 4.5 - Stable ML:**
+Record: No prior stable@ discussion found for this fix. No explicit
+stable nomination by reviewers (thread only has cover-letter "Applied"
+reply).
 
-**Step 5.2: Callers**
-- Record: `fs/smb/server/smb2ops.c:181` registers `smb2_open` as the
-  handler for `SMB2_CREATE_HE` in the `smb2_0_server_cmds[]` dispatch
-  table. This means **every SMB2 CREATE request** (file/directory open —
-  the bread-and-butter operation of an SMB server) enters `smb2_open()`.
-  The buggy code executes unconditionally whenever the client sets the
-  relevant CreateOptions flags.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.3: Callees**
-- Record: Downstream, `req->CreateOptions` is tested against
-  `FILE_DELETE_ON_CLOSE_LE` at lines 3159, 3216, 3240, 3317, and 3537
-  (per grep). Line 3537 is especially consequential — it calls
-  `ksmbd_fd_set_delete_on_close(fp, file_info)`, which marks the newly
-  opened file/dir for deletion on close.
+**Step 5.1 - Key functions:**
+Record: `quirk_clx_disable()` (modified), and the `tb_quirks[]` table
+(new entry).
 
-**Step 5.4: Reachability**
-- Record: CreateOptions is attacker/client-controlled and reaches
-  `smb2_open()` from an authenticated SMB session (or guest, depending
-  on server config). Both trigger paths are reachable from any connected
-  SMB client — trivially triggerable by sending a crafted SMB2 CREATE
-  request.
+**Step 5.2 - Callers:**
+Record: `quirk_clx_disable` is called by `tb_check_quirks()` in
+`drivers/thunderbolt/quirks.c` at line 135 via the table dispatch.
+`tb_check_quirks()` is called once by `tb_switch_add()` at
+`drivers/thunderbolt/switch.c:3341`. `tb_switch_add()` is the mandatory
+router-addition path — reachable on every Thunderbolt device
+enumeration.
 
-**Step 5.5: Similar patterns**
-- Record: Only these two sites in ksmbd use `req->CreateOptions =
-  ~FLAG`; no other copies of this pattern exist in the tree (confirmed
-  by reading the surrounding hunk — the rest of the file uses
-  `&=`/`|=`/masking correctly).
+**Step 5.3 - Callees:**
+Record: `tb_switch_is_titan_ridge(sw)` (inline predicate on
+vendor/device IDs). Access to `sw->nvm->major`. `tb_sw_dbg()` for the
+debug message. No locking / no allocation / no I/O — safe.
 
-## Phase 6: Stable Tree Analysis
+**Step 5.4 - Call chain reachability:**
+Record: User plugs a Thunderbolt device → PCI enumeration →
+`tb_switch_add()` → `tb_check_quirks()` → this quirk. Reachable on every
+plug/unplug and on every boot for integrated routers. Universal trigger
+for affected hardware.
 
-**Step 6.1: Code existence in stable**
-- Record: Verified buggy code exists verbatim in: `stable-
-  push/linux-5.15.y` (at `fs/ksmbd/smb2pdu.c`), `linux-6.1.y`,
-  `linux-6.6.y`, `linux-6.12.y`, `linux-6.18.y`, `linux-6.19.y` (all at
-  `fs/smb/server/smb2pdu.c`). Confirmed with `git show <branch>:<path> |
-  grep ~(FILE_SEQUENTIAL_ONLY_LE)`.
+**Step 5.5 - Similar patterns:**
+Record: The same `quirk_clx_disable` is already used for AMD Yellow Carp
+/ Pink Sardine (by `7af9da8ce8f9a`, which was tagged `Cc:
+stable@vger.kernel.org`) — direct precedent of this exact quirk being
+stable-worthy.
 
-**Step 6.2: Backport complications**
-- Record: Surrounding context lines are IDENTICAL in 6.1.y through
-  6.19.y — the mainline patch applies cleanly. For 5.15.y the file was
-  renamed from `fs/ksmbd/` to `fs/smb/server/` in v6.1, so the patch
-  needs a trivial path rewrite but the code context is the same.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 6.3: Related fixes in stable**
-- Record: No prior fix of the same bug in any stable tree. The buggy
-  code has been shipping since v5.15.
+**Step 6.1 - Code in stable:**
+Record: `quirks.c` with `quirk_clx_disable()` exists in stable since 6.3
+(7af9da8ce8f9a). Titan Ridge CLx support in tree since 5.17. All active
+stable trees (6.1.y, 6.6.y, 6.12.y, 6.16.y, etc.) have both the CLx-
+enablement code AND the `quirk_clx_disable` infrastructure needed to
+apply this patch.
 
-## Phase 7: Subsystem Context
+**Step 6.2 - Backport difficulty:**
+Record: The `quirks.c` hunk will apply cleanly to all modern stable
+trees — the file's structure is unchanged in the surrounding context.
+HOWEVER, the fix depends on `sw->nvm` being populated at
+`tb_check_quirks()` time, which requires the prerequisite
+`4573add760b8d` to be applied as well. If only this commit is
+backported, `sw->nvm` will be NULL and the firmware-version guard will
+always be false, causing the quirk to apply to ALL Titan Ridge DD
+devices (over-aggressive but functionally safe — bug is still fixed for
+affected users).
 
-**Step 7.1: Criticality**
-- Record: `fs/smb/server/` = ksmbd = in-kernel SMB3 server. Network-
-  facing, security-sensitive, used for file sharing. Classification:
-  **IMPORTANT** (not quite CORE, but exposed to remote input and used in
-  real deployments — many ksmbd fixes have been CVE-class in the last
-  year).
+**Step 6.3 - Related fixes already in stable:**
+Record: No earlier form of this fix exists in stable. The related
+`quirk_clx_disable` for AMD is in stable trees.
 
-**Step 7.2: Activity**
-- Record: ksmbd receives frequent fixes (UAF, OOB, refcount, memory leak
-  fixes in recent history — see Step 3.3). Active subsystem, fixes are
-  expected to land in stable.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-## Phase 8: Impact and Risk Assessment
+**Step 7.1 - Subsystem/criticality:**
+Record: `drivers/thunderbolt/` — PERIPHERAL driver. Affects users with
+Thunderbolt 3 hardware based on Intel Titan Ridge DD bridge (0x15ef).
+Users include many Intel-based laptops, eGPU docks, Thunderbolt 3 AICs
+with older shipped firmware.
 
-**Step 8.1: Who is affected**
-- Record: Anyone running ksmbd (Linux as SMB file server). Bug is
-  triggered purely from client-side input → every ksmbd instance is
-  potentially affected.
+**Step 7.2 - Subsystem activity:**
+Record: Thunderbolt is moderately active — regular fixes, hardware
+quirks. Mature enough that a firmware-specific quirk is plausible long-
+term.
 
-**Step 8.2: Trigger conditions**
-- Record:
-  - Case 1 (SEQUENTIAL+RANDOM): client sends CREATE with both
-    `FILE_SEQUENTIAL_ONLY` and `FILE_RANDOM_ACCESS` flags → server
-    wrongly rejects with `-EOPNOTSUPP`. Some SMB clients/workloads do
-    set both hints; the rejection is an interop bug.
-  - Case 2 (DIRECTORY+NO_COMPRESSION): client issues directory open with
-    `FILE_NO_COMPRESSION` → `CreateOptions` is set to
-    `~FILE_NO_COMPRESSION_LE` (approximately `0xFFFF7FFF`), which has
-    the `FILE_DELETE_ON_CLOSE_LE` bit set plus many other unintended
-    bits. Every subsequent test in `smb2_open()` (lines 3159, 3216,
-    3240, 3317, 3537) operates on wrong data. In particular line 3537
-    may call `ksmbd_fd_set_delete_on_close()`, silently marking an
-    opened directory for deletion when the handle closes. Triggered by
-    unprivileged (authenticated) SMB client.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.3: Failure mode severity**
-- Record: Case 1 = functional/interop failure (user-visible: "can't open
-  file through SMB"). Case 2 = logic corruption, potentially including
-  unintended delete-on-close marking on directory opens → **potential
-  data loss / unexpected state**. Combined severity: MEDIUM-HIGH. Not a
-  crash, not a classic security UAF, but a real, reachable, client-
-  controllable behavioral corruption bug in a file server.
+**Step 8.1 - Affected users:**
+Record: Hardware-specific — owners of Thunderbolt 3 devices that use the
+Intel Titan Ridge DD bridge (0x15ef) variant with NVM firmware < 0x65.
+Also affected: host controllers that haven't had their NVM updated.
 
-**Step 8.4: Risk-benefit**
-- Record: **Benefit** = fixes wrong behavior / potential data-affecting
-  logic on every SMB client CREATE that sets the relevant bits, across
-  every ksmbd deployment since v5.15. **Risk** = negligible: 2 lines,
-  corrects `=` to `&=`, cannot regress anything (the pre-patch code
-  demonstrably clobbers the field). Textbook stable candidate.
+**Step 8.2 - Trigger conditions:**
+Record: Triggered whenever CL states are entered on an affected Titan
+Ridge DD device. Does not require privileges — user just needs to have
+affected hardware plugged in.
 
-## Phase 9: Final Synthesis
+**Step 8.3 - Failure mode:**
+Record: "Link disconnect events and the device failing to enumerate."
+Severity: HIGH — the Thunderbolt device becomes unusable. Not a
+crash/security issue, but data-path failure for peripheral connectivity
+(including storage/display/networking that goes over Thunderbolt).
 
-**Step 9.1: Evidence summary**
-- FOR: (1) Obvious typo fix — `=` → `&=`; (2) 2-line diff, zero
-  regression risk; (3) Bug reachable via client-supplied CreateOptions
-  in every SMB2 CREATE; (4) Both failure modes matter — one breaks
-  interop, the other corrupts downstream semantics including potential
-  unintended DELETE_ON_CLOSE marking; (5) Acked by ksmbd maintainer,
-  committed by SMB subsystem maintainer; (6) Bug present since v5.15 —
-  all active stable trees affected; (7) Patch applies cleanly to
-  6.1.y–6.19.y, needs only path rename for 5.15.y.
-- AGAINST: No Fixes: tag, no explicit stable nomination, no Reported-by
-  (expected for a code-inspection find). None of these outweigh the
-  above.
-- UNVERIFIED: I did not reproduce the bug with a live ksmbd server;
-  analysis is based on code reading and the commit author's explanation,
-  which is consistent with the code.
+**Step 8.4 - Risk-benefit:**
+Record: Benefit = medium-high (fixes device-unusable bug for real Titan
+Ridge users). Risk = very low (7-line hardware quirk, guarded by a
+device-ID match, cannot affect non-matching devices; already-existing
+`quirk_clx_disable` precedent is in stable). Net: favorable.
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct and tested — YES (typo fix, trivial to verify by
-   reading; maintainer Ack)
-2. Fixes real bug affecting users — YES (every ksmbd CREATE path)
-3. Important issue — YES (client-triggerable behavioral corruption)
-4. Small and contained — YES (2 lines, 1 function)
-5. No new features/APIs — YES (pure bug fix)
-6. Applies to stable — YES (clean in 6.1+, trivial path rename for 5.15)
+## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.3: Exception category**
-- Record: N/A — this is a straightforward bug fix, not an exception-
-  class change.
+**Step 9.1 - Evidence compiled:**
 
-**Step 9.4: Decision**
-- Clear YES. Textbook stable material: tiny, obviously correct, fixes a
-  real client-reachable bug in a maintained subsystem, present in every
-  active stable tree since v5.15.
+FOR:
+- Fixes real hardware-exposed bug causing device enumeration failure on
+  TB3 hardware.
+- Hardware-quirk exception category — standard stable-worthy class.
+- Extremely small (7 lines), device-ID guarded, cannot affect non-
+  matching devices.
+- Applied by subsystem maintainer (Mika Westerberg) directly.
+- Direct precedent in stable (7af9da8ce8f9a used same
+  `quirk_clx_disable` pattern, tagged `Cc: stable`).
+- The bug has existed since v5.17 (CLx enabled on Titan Ridge) — broad
+  stable-tree applicability.
+
+AGAINST / Concerns:
+- No `Cc: stable`, no `Fixes:`, no Reported-by — maintainer chose not to
+  nominate explicitly.
+- Depends on prerequisite `4573add760b8d` (refactor) to realize the
+  intended firmware-version selectivity. Without it, the commit still
+  fixes the bug but applies the quirk more broadly than intended (loses
+  CLx power savings on new-firmware Titan Ridge DD; not a correctness
+  regression).
+
+**Step 9.2 - Stable rules checklist:**
+1. Obviously correct and tested? Yes — logic is trivial; tested and
+   applied to thunderbolt tree; build-tested by kernel test robot.
+2. Real bug affecting users? Yes — link disconnects and enumeration
+   failures on affected hardware.
+3. Important issue? Yes — device-unusable issue for affected hardware
+   (HIGH severity for those users).
+4. Small and contained? Yes — 7 lines in one file.
+5. No new features/APIs? Yes — just a quirk-table entry plus a guard.
+6. Applies to stable? The quirks.c hunk itself applies cleanly; the
+   intended semantics require the prerequisite to also be backported.
+   Without the prerequisite the fix degrades gracefully to "always
+   disable CLx on Titan Ridge DD" — still a functional fix.
+
+**Step 9.3 - Exception category:**
+Record: Hardware quirk/workaround for buggy firmware/hardware —
+explicitly allowed exception for stable.
+
+**Step 9.4 - Decision:**
+YES — this is a hardware quirk for a real, device-unusable firmware bug
+on Thunderbolt 3 Titan Ridge DD hardware. It is small, surgical, applied
+by the subsystem maintainer, and has direct precedent (the identical
+`quirk_clx_disable` mechanism was already backported to stable with `Cc:
+stable` for AMD CLx-incompatible hardware). Note for the selection
+pipeline: the prerequisite `4573add760b8d` should also be backported to
+get the intended selective behavior; without it the fix still works but
+applies more broadly than intended.
 
 ## Verification
-- [Phase 1] Parsed tags: DaeMyung Kang (author), Namjae Jeon (ksmbd
-  maintainer, Acked), Steve French (SMB maintainer, signed-off). No
-  Fixes/Reported-by/Link/Cc: stable.
-- [Phase 1] Parsed body: author's description of `=` vs `&=` bug and
-  downstream consequences is accurate (verified by inspecting the code).
-- [Phase 2] Diff: `git show 5d115fa84027e` → 2 lines changed, both in
-  `smb2_open()`, in `fs/smb/server/smb2pdu.c`.
-- [Phase 2] Flag values confirmed via `fs/smb/common/smb2pdu.h`:
-  `FILE_SEQUENTIAL_ONLY_LE=0x4`, `FILE_RANDOM_ACCESS_LE=0x800`,
-  `FILE_NO_COMPRESSION_LE=0x8000`, `FILE_DELETE_ON_CLOSE_LE=0x1000`,
-  `FILE_OPEN_BY_FILE_ID_LE=0x2000`, `FILE_DIRECTORY_FILE_LE=0x1`. Commit
-  message's `0xFFFFFFEF` for the NO_COMPRESSION case is slightly off
-  (actual `~0x8000` ≈ `0xFFFF7FFF`), but the core claim (entire field
-  clobbered and `FILE_DELETE_ON_CLOSE_LE` wrongly set) is correct.
-- [Phase 3] `git blame -L 3055,3075 fs/smb/server/smb2pdu.c` → buggy
-  lines come from commit `e2f34481b24db2`.
-- [Phase 3] `git describe --contains e2f34481b24db2` →
-  `v5.15-rc1~183^2~93`, i.e., ksmbd initial merge in v5.15.
-- [Phase 3] `git show 804054d19886a`: patch 1/2 edits
-  `parse_durable_handle_context()` around line 2844, unrelated to this
-  patch's edits around line 3064/3078 — confirms standalone
-  applicability.
-- [Phase 4] `b4 dig -c 5d115fa84027e`: matched on patch-id, lore URL htt
-  ps://lore.kernel.org/all/20260420175125.3341090-1-charsyam@gmail.com/
-  returned.
-- [Phase 4] `b4 dig -c ... -w`: recipients include Namjae Jeon
-  (maintainer), Steve French, linux-cifs, LKML.
-- [Phase 4] `b4 dig -c ... -a`: only v1, no revisions.
-- [Phase 4] `b4 dig -c ... -m /tmp/ksmbd_createopts_thread.mbox`: thread
-  contents read — only reply from Namjae Jeon says "Applied it to
-  #ksmbd-for-next-next"; no NAKs, no concerns.
-- [Phase 5] `fs/smb/server/smb2ops.c:181` confirms `smb2_open` is
-  dispatched for SMB2_CREATE_HE — every CREATE request path.
-- [Phase 5] `grep 'CreateOptions.*FILE_DELETE_ON_CLOSE_LE'
-  fs/smb/server`: 5 downstream sites at lines 3159/3216/3240/3317/3537
-  depend on `CreateOptions`, and line 3537 calls
-  `ksmbd_fd_set_delete_on_close()`.
-- [Phase 6] `git show stable-
-  push/linux-{5.15,6.1,6.6,6.12,6.18,6.19}.y:<path>`: buggy lines
-  present in every listed stable tree.
-- [Phase 6] Context around buggy lines in 6.1.y–6.19.y is textually
-  identical to mainline → patch applies cleanly.
-- [Phase 6] 5.15.y file path is `fs/ksmbd/smb2pdu.c` (not
-  `fs/smb/server/...`) — trivial path rename required for that tree, no
-  content rework.
-- [Phase 7] `fs/smb/server/` is ksmbd (in-kernel SMB3 server); subsystem
-  is active, has received many CVE-class fixes recently.
-- [Phase 8] Failure mode: (1) legitimate CREATE requests rejected with
-  `-EOPNOTSUPP`, (2) directory opens with NO_COMPRESSION corrupt
-  CreateOptions including wrongly setting `FILE_DELETE_ON_CLOSE_LE` for
-  line 3537. Severity MEDIUM-HIGH.
-- UNVERIFIED: Did not run ksmbd and craft a CREATE packet to observe the
-  bug at runtime; analysis relies on static reading of the code which
-  matches the commit message and is unambiguous.
+- [Phase 1] Parsed tags from `git show 59b03d12b1f6d`: only Signed-off-
+  by (Rene Sapiens, Mika Westerberg). No Fixes:, Cc: stable, Reported-
+  by, Link:.
+- [Phase 2] Diff analysis: confirmed 1 file
+  (`drivers/thunderbolt/quirks.c`) +7/-0. Read current file — confirmed
+  table entry uses `0x8086, PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE`.
+- [Phase 2] Verified `tb_switch_is_titan_ridge()` definition in
+  `drivers/thunderbolt/tb.h:982-993` uses `PCI_VENDOR_ID_INTEL` (0x8086)
+  and matches TITAN_RIDGE 2C/4C/DD bridges — confirms AMD path
+  unaffected.
+- [Phase 2] Verified `PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE` =
+  0x15ef in `drivers/thunderbolt/nhi.h:75`.
+- [Phase 2] Verified test code (`drivers/thunderbolt/test.c:201-202`)
+  uses `sw->config.vendor_id = 0x8086; sw->config.device_id = 0x15ef;`
+  for Titan Ridge DD — confirms quirk-table vendor ID 0x8086 is correct.
+- [Phase 3.1] `git describe --contains 43f977bc60b1c` → v5.17-rc1; `git
+  describe --contains b017a46d486cd` → v6.0-rc1: confirms CLx on Titan
+  Ridge has been in kernel since v5.17.
+- [Phase 3.2] `git show 7af9da8ce8f9a` confirms the `quirk_clx_disable`
+  / `QUIRK_NO_CLX` infrastructure came with explicit `Cc:
+  stable@vger.kernel.org` — direct precedent.
+- [Phase 3.3] `git log --oneline v6.1..v6.6 --
+  drivers/thunderbolt/quirks.c` and `v6.6..v7.0` show low churn and
+  stable structure.
+- [Phase 3.5] Verified prerequisite: `git show 4573add760b8d` confirms
+  `tb_switch_nvm_init()` is a NEW function split off from
+  `tb_switch_nvm_add()` and a new call site was added in
+  `tb_switch_add()` before `tb_check_quirks()`. Verified current `HEAD`
+  (`Linux 7.0`) still has only `tb_switch_nvm_add()` (no
+  `tb_switch_nvm_init()`) — confirms the dependency.
+- [Phase 3.5] Read `switch.c:3297-3407` to confirm ordering:
+  `tb_check_quirks()` at line 3341 runs BEFORE `tb_switch_nvm_add()` at
+  line 3384, so `sw->nvm` is NULL at quirk time without the
+  prerequisite.
+- [Phase 4.1] `b4 dig -c 59b03d12b1f6d` → no match; fell back to
+  yhbt.net/lore search which returned the series (cover + 2 patches +
+  Mika's "Applied" reply + kernel-test-robot build success).
+- [Phase 4.1/4.4] Fetched raw mbox of cover letter
+  (`20260224070150.3320641-1-...`), patch 1/2 (`-2-`), patch 2/2
+  (`-3-`), and Mika's apply-reply
+  (`20260302065244.GP2275908@black.igk.intel.com`) — confirmed only v1
+  was submitted, applied as-is.
+- [Phase 5.2] `rg tb_check_quirks` → single caller `tb_switch_add()`;
+  single definition in quirks.c.
+- [Phase 6.1] Verified `quirk_clx_disable()` and `QUIRK_NO_CLX` came
+  with `7af9da8ce8f9a` tagged `Cc: stable`, so the infrastructure is
+  present in stable trees 6.1.y and later.
+- [Phase 8.3] Failure mode taken directly from commit message: "link
+  disconnect events and the device failing to enumerate."
+- UNVERIFIED: Could not independently confirm the exact user-reporting
+  trail for this bug (the mailing-list thread doesn't reference a
+  specific user report or syzkaller); relied on maintainer and cover-
+  letter wording ("known issue").
+- UNVERIFIED: Could not test whether the commit applies cleanly to each
+  stable branch without actually running `git cherry-pick` on each
+  stable tree (only a HEAD worktree is present).
 
-The patch is a 2-line, obviously-correct typo fix (`=` → `&=`) in
-`smb2_open()` that corrects a client-reachable sanitization bug present
-in ksmbd since v5.15. It is Acked by the ksmbd maintainer, affects every
-active stable tree, and applies cleanly with at most a trivial path
-rename for 5.15.y. It meets every stable-kernel-rules criterion and
-introduces essentially zero regression risk.
+The commit is a small, targeted hardware quirk that fixes a real device-
+usability bug on Thunderbolt 3 Titan Ridge DD hardware with old
+firmware, applied by the subsystem maintainer, and directly analogous to
+a previously-stable-tagged quirk for AMD CLx-incompatible parts.
 
 **YES**
 
- fs/smb/server/smb2pdu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/quirks.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e21c6c22355b1..ad5559d48975b 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3061,7 +3061,7 @@ int smb2_open(struct ksmbd_work *work)
- 	} else {
- 		if (req->CreateOptions & FILE_SEQUENTIAL_ONLY_LE &&
- 		    req->CreateOptions & FILE_RANDOM_ACCESS_LE)
--			req->CreateOptions = ~(FILE_SEQUENTIAL_ONLY_LE);
-+			req->CreateOptions &= ~FILE_SEQUENTIAL_ONLY_LE;
+diff --git a/drivers/thunderbolt/quirks.c b/drivers/thunderbolt/quirks.c
+index e81de9c30eac9..9f7914ac2f48c 100644
+--- a/drivers/thunderbolt/quirks.c
++++ b/drivers/thunderbolt/quirks.c
+@@ -23,6 +23,9 @@ static void quirk_dp_credit_allocation(struct tb_switch *sw)
  
- 		if (req->CreateOptions &
- 		    (FILE_OPEN_BY_FILE_ID_LE | CREATE_TREE_CONNECTION |
-@@ -3075,7 +3075,7 @@ int smb2_open(struct ksmbd_work *work)
- 				rc = -EINVAL;
- 				goto err_out2;
- 			} else if (req->CreateOptions & FILE_NO_COMPRESSION_LE) {
--				req->CreateOptions = ~(FILE_NO_COMPRESSION_LE);
-+				req->CreateOptions &= ~FILE_NO_COMPRESSION_LE;
- 			}
- 		}
- 	}
+ static void quirk_clx_disable(struct tb_switch *sw)
+ {
++	if (tb_switch_is_titan_ridge(sw) && sw->nvm && sw->nvm->major >= 0x65)
++		return;
++
+ 	sw->quirks |= QUIRK_NO_CLX;
+ 	tb_sw_dbg(sw, "disabling CL states\n");
+ }
+@@ -61,6 +64,10 @@ static const struct tb_quirk tb_quirks[] = {
+ 	/* Dell WD19TB supports self-authentication on unplug */
+ 	{ 0x0000, 0x0000, 0x00d4, 0xb070, quirk_force_power_link },
+ 	{ 0x0000, 0x0000, 0x00d4, 0xb071, quirk_force_power_link },
++
++	/* Intel Titan Ridge CLx is unstable on early firmware versions */
++	{ 0x8086, PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE, 0x0000, 0x0000,
++		  quirk_clx_disable },
+ 	/*
+ 	 * Intel Goshen Ridge NVM 27 and before report wrong number of
+ 	 * DP buffers.
 -- 
 2.53.0
 
