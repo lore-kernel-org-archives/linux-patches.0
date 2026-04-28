@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E303F7A8A;
-	Tue, 28 Apr 2026 10:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0BD42668B;
+	Tue, 28 Apr 2026 10:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372985; cv=none; b=UVgOPDjQwzI115SJfduqzQS+myqKNTotM/X4WG+Fz+JyOrvsNPJjs8C2fuiaRAztna9oQ7gqTGoNIZpE9IgEjvkOzy6ts5VxIwbHAXQ1Ea+x7YtKzTLa5PnNiW4bP04AhSblttPSwnH3UTEBioJU7KbAeFTEdpNOW5kuajyWnQI=
+	t=1777372986; cv=none; b=KSaK03MyNi/e5S9meTyHuxOvkGXf2T+5dE0lLWFWSHe+xqglFDloM7Rgi4jFTgkaU3JFfnJ2CrXegzO54evPCXJg9HLwAk2MutOUrQMLQ6VsOCfVDk1eLSOZahi6f/kMjAc48cVtYir1vwb5NtJmf9k8AoU6dr41FoKeQs/v4jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372985; c=relaxed/simple;
-	bh=IXqp27RY7rXo8SpZ9XP8azILoF0q9oEW5FuTsim8Myc=;
+	s=arc-20240116; t=1777372986; c=relaxed/simple;
+	bh=7h0htGL/PgzGwtzF3RJ112VpCA39Mricf2ZhIFLCSSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ujy+npO3h19VV3x9MaNZ1+L5eDC2EwObfM3r/9q9LKcEnXRBp3IiizejRbjGVB9UXT8ULA/JcDFJ0Vq7rRc90P1WmsjHvYgyrezLr+in2GgRaYQbXaT0cfn7FSnY+cjKjAPrGIAArqmCnx33E6rfq9x0IQSFFGlTHj9+hcTxc1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UWWdGQUp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rC6ANQp3npIB0UdN0QhV4Yxzpe0S/99iBArAaaacYnxI65d6nACc463Oxzh8nbL7go5O0RZcy0sxKxzwYPwvzuDfuL+ZZ01fEZ4Owx5ldjRwopZIywe3+i0NzkOn0DDkCz4gDjKanUJ8a86jxQdL0KBirFxl1dupTMLJLtv8mTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SEA7yYMU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UWWdGQUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C41C2BCB7;
-	Tue, 28 Apr 2026 10:43:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SEA7yYMU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC55C2BCB8;
+	Tue, 28 Apr 2026 10:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372985;
-	bh=IXqp27RY7rXo8SpZ9XP8azILoF0q9oEW5FuTsim8Myc=;
+	s=k20201202; t=1777372986;
+	bh=7h0htGL/PgzGwtzF3RJ112VpCA39Mricf2ZhIFLCSSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWWdGQUp8tcconSH6O8ZDjoTSn/bO4PyxfRLEFjBpPJoAvRGwXCFLzFe1HouoVyEc
-	 Iel1rRlck5P4WUeEfYfsh+cJcdP+5SgM3li9ESrFfejYszi/tefIq2lLJCukh3Hay6
-	 6bRDhI4l4oRo/s/kgbUoKRen03iPy9mEBBuQsaaYlXKBd7WUDscdDjpD5l8cZI70cQ
-	 VfIRSvgRLV0VaV+zEAODkHDhAoSuQLhUi8GTU1T0ve3I80lWotZ+IsLF2+GZ740OIF
-	 vnyUlpulds6U5DHWaPMqexhTRbF43wAuc4bvu4+zslTOcqXh/emCleZwK+gssVFHba
-	 74xAF2gqZNZEw==
+	b=SEA7yYMUsKkLoALS9J9UsYh0twlfCZ3yfq3Rs0OpSLQVOh3e1VMn4fgc6kKv7KAEC
+	 RlGnocOyWnlilenHlJeGLqtdDKHF1+BiVezGW2PfYFi25JVpb3Xbjuv6m/LESPmRqu
+	 7y51Hs/xIG0/CXcjaDtheFBCmsE8kNqSFDbLTWJOzWlINIpEPY3i6mcFwsETGSqY1r
+	 WjDWH+jFi8U/6VEVfHwFpdLg+a+LaChBAvly5fjIp/SFOlnnFALVYF+Ekrx8uMFykC
+	 27ATi3//A5b0KnkggXvj27iH3xYA/apTo8BM4aornh7LC6fwDrvtXc6QBFi4F2o4pZ
+	 PRt9wV1+QjbUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kelvin Mbogo <addcontent08@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	valentina.manea.m@gmail.com,
-	shuah@kernel.org,
-	linux-usb@vger.kernel.org,
+	mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] usb: usbip: validate iso frame actual_length in usbip_recv_iso()
-Date: Tue, 28 Apr 2026 06:41:14 -0400
-Message-ID: <20260428104133.2858589-63-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] bus: mhi: host: pci_generic: Add Qualcomm SDX35 modem
+Date: Tue, 28 Apr 2026 06:41:15 -0400
+Message-ID: <20260428104133.2858589-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -54,473 +53,320 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kelvin Mbogo <addcontent08@gmail.com>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-[ Upstream commit 591c1d972d8f19862ecd7279c7ef4df48b0a9b33 ]
+[ Upstream commit 6a7084102bb9659f699005c420eb59eade6d3b4f ]
 
-usbip_recv_iso() sums each frame's actual_length into an int
-accumulator without checking the individual values first:
+Add support for sdx35 modem. Similar to SDX75, SDX35 can take longer to
+transition to ready during power up, so use modem_qcom_v2_mhiv_config
+configurations.
 
-    total_length += urb->iso_frame_desc[i].actual_length;
+01:00.0 Unassigned class [ff00]: Qualcomm Device 011a
+            Subsystem: Qualcomm Device 011a
 
-A malicious server can send actual_length = 0xFFFFFFFC for one frame
-and a small value for the other, making the signed sum wrap around to
-match urb->actual_length.  The sanity check passes, and usbip_pad_iso()
-later computes a negative actualoffset, feeding it to memmove() as a
-source pointer - reads before the allocation, leaked to userspace via
-USBDEVFS_REAPURB.
-
-Reject any frame whose actual_length exceeds transfer_buffer_length
-(one frame can't carry more data than the whole buffer), and widen the
-accumulator to u32 so that many moderately-large frames can't wrap it
-either.
-
-Signed-off-by: Kelvin Mbogo <addcontent08@gmail.com>
-Link: https://patch.msgid.link/20260325103640.8090-2-addcontent08@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260123-mhi_sdx35-v1-1-79440abf0c92@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I have enough information to make an informed decision. Let me now
-compile the comprehensive analysis.
+I have all the information needed. Let me now write the full analysis.
 
-## Phase 1: Commit Message Forensics
+---
 
-**Step 1.1 - Subject Line**
-- Subsystem: `usb: usbip` (USB/IP driver)
-- Action verb: `validate` (strong bug-fix indicator, even without "fix")
-- Record: `[usb/usbip] [validate/harden] ISO frame actual_length in
-  usbip_recv_iso() to prevent integer wraparound and downstream OOB
-  read`
+## Complete Analysis
 
-**Step 1.2 - Tags Present**
-- `Signed-off-by: Kelvin Mbogo` (author)
-- `Link:
-  https://patch.msgid.link/20260325103640.8090-2-addcontent08@gmail.com`
-  (patch 2 of a series)
-- `Signed-off-by: Greg Kroah-Hartman` (USB maintainer – strong trust
-  signal)
-- No `Fixes:` tag (expected for pre-git-era code in staging origin)
-- No `Cc: stable` (expected; that's why it's under review)
-- Record: Greg KH SOB confirms maintainer applied it; Link shows this is
-  patch "-2" of the series.
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.3 - Body Analysis**
-- Bug mechanism: `total_length` is `int` (signed) accumulator; per-frame
-  `actual_length` is from the wire (attacker-controlled `unsigned int`)
-- Exploit: server sends `actual_length = 0xFFFFFFFC` + small value;
-  signed sum wraps to match `urb->actual_length`, passing the sanity
-  check
-- Downstream impact: `usbip_pad_iso()` computes negative `actualoffset`
-  → `memmove()` reads before allocation → data leaked to userspace via
-  `USBDEVFS_REAPURB`
-- Fix approach: (1) reject any frame whose `actual_length >
-  transfer_buffer_length`; (2) widen accumulator from `int` to `u32`
-- Record: Concrete, reproducible kernel info-leak from malicious USBIP
-  server; commit body explains both root cause and fix clearly.
+**Step 1.1: Subject line parsing**
+- Record: subsystem=`bus: mhi: host: pci_generic`, action=`Add`,
+  summary=`Qualcomm SDX35 modem support`
 
-**Step 1.4 - Hidden Fix Detection**
-- "validate" = adds missing input validation = bug fix
-- Record: Not hidden - this is an explicit security hardening fix.
+**Step 1.2: Tag parsing**
+- Record: Signed-off-by: Krishna Chaitanya Chundru (author); Signed-off-
+  by: Manivannan Sadhasivam (MHI maintainer, who applied the patch);
+  Link: to patch.msgid.link. No Fixes:, no Cc: stable, no Reported-by:,
+  no syzbot references. Single-version patch (v1), applied directly by
+  the maintainer.
 
-## Phase 2: Diff Analysis
+**Step 1.3: Commit body analysis**
+- Record: Body states SDX35 (like SDX75) can take longer to transition
+  to ready during power up, hence using the existing
+  `modem_qcom_v2_mhiv_config` which has `ready_timeout_ms = 50000`.
+  Provides `lspci` output showing the device signature (vendor 0x17cb /
+  PID 0x011a). No stack traces, no bug symptoms — this is hardware
+  enablement, not a bug fix.
 
-**Step 2.1 - Inventory**
-- Single file: `drivers/usb/usbip/usbip_common.c`
-- +12 / -3 (15 changed lines total)
-- Single function modified: `usbip_recv_iso()`
-- Classification: small, single-file surgical fix
-- Record: Minimal scope; textbook stable-appropriate patch size.
+**Step 1.4: Hidden bug fix detection**
+- Record: Not a hidden bug fix. Pure hardware enablement — new device
+  support for an existing driver. No "handle", "ensure", "initialize",
+  or "balance" language.
 
-**Step 2.2 - Code-Flow Change**
-- Before: `int total_length = 0; ... total_length +=
-  urb->iso_frame_desc[i].actual_length;` then `if (total_length !=
-  urb->actual_length)`
-- After: `u32 total_length = 0;` + per-iteration `if
-  (iso_frame_desc[i].actual_length > transfer_buffer_length) return
-  -EPROTO;` + cast comparison to u32
-- Affected path: RET_SUBMIT handling in vhci-hcd receive path (network-
-  sourced data)
-- Record: Hardens the receive path for untrusted network input.
+### PHASE 2: DIFF ANALYSIS
 
-**Step 2.3 - Bug Mechanism Category**
-- (d) Memory safety + integer overflow: `u32` widening prevents signed
-  accumulator wrap; bounds check prevents any single-frame value from
-  being > buffer capacity
-- Secondary: (g) Logic correctness — format specifier `%d` → `%u` and
-  explicit `(u32)` cast make the comparison semantically correct
-- Record: Classic "validate untrusted input from the wire" pattern —
-  same class as the 2016 commit `b348d7dddb6c4` in the same file.
+**Step 2.1: Inventory**
+- Record: Single file `drivers/bus/mhi/host/pci_generic.c`, +12/-0
+  lines. Adds one static `struct mhi_pci_dev_info mhi_qcom_sdx35_info`
+  (10 lines) and one entry in `mhi_pci_id_table[]` (2 lines). No
+  existing code modified. Single-file, purely additive.
 
-**Step 2.4 - Fix Quality**
-- Obviously correct: bounds check is simple (`actual_length >
-  transfer_buffer_length → reject`), u32 widening cannot introduce new
-  overflow behavior in a non-negative accumulation
-- No regression risk: rejects only genuinely malformed input; legitimate
-  clients never produce frames larger than the whole buffer
-- Record: High-quality, minimal, safe fix.
+**Step 2.2: Code flow change**
+- Record: Before: PID 0x011a only matched specifically via
+  `PCI_DEVICE_SUB` for Telit FN920C04 (subvendor 0x1c5d, subdevice
+  0x2020); other SDX35 boards did not bind. After: the specific Telit
+  match stays (first in table → takes precedence), and any other
+  0x17cb:0x011a modem binds to a new generic SDX35 config that uses the
+  already-existing `modem_qcom_v2_mhiv_config`.
 
-## Phase 3: Git History Investigation
+**Step 2.3: Bug mechanism**
+- Record: Category (h) — hardware workaround / new device ID. No
+  locking, memory, refcount, or error-path changes.
 
-**Step 3.1 - Blame**
-- `usbip_recv_iso()` was introduced by `05a1f28e879e3` ("Staging:
-  USB/IP: add common functions needed", July 2008)
-- Record: Vulnerable code present since 2.6.28 — affects every single
-  active stable tree.
+**Step 2.4: Fix quality**
+- Record: Obviously correct — follows the same pattern used for every
+  other MHI modem (SDX55, SDX65, SDX75, SDX72). Match ordering preserves
+  existing FN920C04 binding because `pci_match_id()` returns the first
+  matching entry. Zero risk to existing devices; only affects previously
+  unbound 0x011a hardware. Uses an already-upstream config
+  (`modem_qcom_v2_mhiv_config`, present since commit `5571519009d09` in
+  v6.8).
 
-**Step 3.2 - Fixes: Tag**
-- No Fixes: tag present; the buggy pattern dates to the original 2008
-  import (pre-git staging era for USBIP)
-- Record: N/A — but effectively "Fixes: 05a1f28e879e3" which predates
-  all stable branches.
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.3 - File History**
-Recent commits touching `drivers/usb/usbip/usbip_common.c`:
-- `2ab833a16a825` usbip: validate number_of_packets in
-  usbip_pack_ret_submit() **[has `Cc: stable`]**
-- `74a2287209a85` usb: usbip: fix OOB read/write in usbip_pad_iso()
-  (patch 3/3 of series)
-- `591c1d972d8f1` **← TARGET** (patch 2/3)
-- `1897852293fac` usb: usbip: fix integer overflow in usbip_recv_iso()
-  (patch 1/3)
-- Record: Part of a 3-patch hardening series against malicious USBIP
-  server. Companion patch from Nathan Rebello (`2ab833a16a825`)
-  explicitly has `Cc: stable`, confirming maintainers view this cluster
-  of bugs as stable-worthy.
+**Step 3.1: git blame**
+- Record: The `modem_qcom_v2_mhiv_config` that this patch consumes was
+  introduced in `5571519009d09` ("bus: mhi: host: pci_generic: Add SDX75
+  based modem support", v6.8). The table and struct patterns being
+  extended are long-standing.
 
-**Step 3.4 - Author Context**
-- Kelvin Mbogo: new contributor sending hardening patches; patches
-  vetted by Greg KH with v1→v2 rework
-- Greg KH (USB maintainer) applied all three patches
-- Record: Proper maintainer review chain, v2 addressed review feedback.
+**Step 3.2: Fixes: tag follow-up**
+- Record: N/A — no Fixes: tag. This is hardware enablement, not a bug
+  fix.
 
-**Step 3.5 - Prerequisite Check**
-- The diff hunks in `591c1d972d8f1` (the target) only touch:
-  1. `int total_length = 0;` → `u32 total_length = 0;`
-  2. Add per-frame actual_length bounds check
-  3. Cast/format the comparison
-- I verified that stable/linux-6.19.y (and all older stable branches)
-  still contain `int total_length = 0;` and the unmodified loop/check —
-  so the patch hunks CAN apply standalone without patch 1/3
-- However, this patch is part of a security cluster; ideally patches
-  1/3, 2/3, 3/3 + Nathan's `2ab833a16a825` all get backported together
-- Record: Patch applies cleanly to stable without dependencies, though
-  full cluster is the complete fix.
+**Step 3.3: File history**
+- Record: Recent `pci_generic.c` changes show a steady cadence of device
+  ID additions (Foxconn T99W760 `ac35e04f8000a`, FN990B40
+  `00559ba3ae740`, FE990B40 `6eaee77923ddf`, FN920C04 `6348f62ef7ecc`,
+  T99W696 `0d63055e1406c`, etc.). Each follows the same pattern: new
+  `mhi_pci_dev_info` struct + new PCI ID table entry. Self-contained,
+  standalone — no series.
 
-## Phase 4: Mailing List Research
+**Step 3.4: Author history**
+- Record: Krishna Chaitanya Chundru (Qualcomm) is a regular contributor
+  to MHI / Qcom PCIe subsystems. Co-signed and applied by Manivannan
+  Sadhasivam, the MHI maintainer. Authorial credibility is high.
 
-**Step 4.1 - Original Thread (b4 dig)**
-- `b4 dig -c 591c1d972d8f1` found match at `https://lore.kernel.org/all/
-  20260325103640.8090-2-addcontent08@gmail.com/`
-- `b4 dig -a` confirmed series evolution: v1 → v2 (applied version is
-  v2)
-- v2 changes per Kelvin: "Drop Reported-by (author is signer)"
-- Record: v2 is the applied version, v1 received feedback from Greg KH
-  and was refined.
+**Step 3.5: Dependencies**
+- Record: Depends only on `modem_qcom_v2_mhiv_config` (present since
+  v6.8). Applies standalone. No series prerequisites.
 
-**Step 4.2 - Reviewers (b4 dig -w)**
-- Originally CC'd: `linux-usb@vger.kernel.org`,
-  `gregkh@linuxfoundation.org`, `skhan@linuxfoundation.org` (USBIP
-  maintainer)
-- Both the USB subsystem maintainer (Greg KH) and the USBIP subsystem
-  maintainer (Shuah Khan) were in loop
-- Record: Proper maintainer review coverage.
+### PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.3 - Bug Report**
-- No explicit Reported-by/syzbot on v2 (author is signer)
-- Exploit scenario clearly described in commit message with concrete
-  payload (`0xFFFFFFFC`) and path to userspace via `USBDEVFS_REAPURB`
-- Record: Author-discovered security issue; mechanism is well-documented
-  in commit body.
+**Step 4.1: b4 dig**
+- Record: `b4 dig -c 6a7084102bb96` matched by patch-id and returned `ht
+  tps://lore.kernel.org/all/20260123-mhi_sdx35-v1-1-
+  79440abf0c92@oss.qualcomm.com/`. Single revision (v1). Read the full
+  thread via mbox.
 
-**Step 4.4 - Related Patches**
-- Thread shows all three patches of the series (patches 1/3, 2/3, 3/3 by
-  Kelvin)
-- Companion patch from Nathan Rebello posted in same thread got `Acked-
-  by: Shuah Khan` and `Cc: stable@vger.kernel.org`, submitted separately
-  as `2ab833a16a825`
-- Greg KH explicitly asked Nathan to "submit it separately, on top of
-  that series, to make it easier to review and apply"
-- Record: Maintainers treat this as a coordinated security cluster;
-  Nathan's companion patch explicitly nominated for stable.
+**Step 4.2: Review history**
+- Record: Only one reviewer comment — Konrad Dybcio noted the
+  "Unassigned class" in the lspci output looks like a separate issue;
+  Mani replied that this is a well-known Qcom-modem endpoint class issue
+  and he had posted a separate PCI quirk patch for it. No NAKs, no
+  concerns raised about this patch. No stable-tree nomination by any
+  reviewer. Maintainer applied as-is.
 
-**Step 4.5 - Stable List**
-- Not individually discussed on stable list (fix flew under radar of
-  formal stable nomination process for 1/3, 2/3, 3/3 — only the
-  separately-submitted Nathan patch has Cc: stable)
-- Record: This is exactly the kind of fix that SHOULD be caught by
-  autosel review.
+**Step 4.3: Bug reports**
+- Record: N/A — no Reported-by, no bug-report Link.
 
-## Phase 5: Code Semantic Analysis
+**Step 4.4: Series**
+- Record: Standalone single patch (v1-1-1).
 
-**Step 5.1 - Functions Modified**
-- `usbip_recv_iso()` (single function changed)
+**Step 4.5: Stable ML**
+- Record: No stable@ list discussion relevant to this patch.
 
-**Step 5.2 - Callers**
-- `drivers/usb/usbip/vhci_rx.c:86` → called from
-  `vhci_recv_ret_submit()` (vhci-hcd RX path, client side)
-- `drivers/usb/usbip/stub_rx.c:605` → stub_rx RET_SUBMIT handling
-  (server side)
-- `drivers/usb/usbip/vudc_rx.c:173` → VUDC receive path
-- Record: Called from every USBIP RET_SUBMIT receive path. Critical path
-  for any USBIP user.
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.3 - Callees**
-- `usbip_pack_iso()` — deserialize ISO frame descriptor
-- `usbip_iso_packet_correct_endian()` — byte-order conversion
-- `usbip_recv()` — TCP socket recv
-- Record: Pure data-processing function for wire-format data.
+**Step 5.1-5.5:**
+- Record: No functions are modified. The change is data-only (two static
+  structures). `modem_qcom_v2_mhiv_config` is consumed by existing MHI
+  init paths (`mhi_register_controller()` via `mhi_pci_probe()`), which
+  are unchanged. No call-chain impact — the new data only activates the
+  existing, stable driver code paths for a previously-unbound PID.
 
-**Step 5.4 - Reachability**
-- Call chain: user runs `usbip attach` (CAP_SYS_ADMIN) → vhci-hcd
-  connects to USBIP server → kernel RX thread `vhci_rx_loop` →
-  `vhci_recv_ret_submit` → `usbip_recv_iso` → on return, `usbip_pad_iso`
-  → memmove into user-readable buffer → userspace `USBDEVFS_REAPURB`
-  reads kernel memory
-- Record: Directly reachable from the network when connected to a
-  malicious USBIP server — all the leaked data then reaches userspace.
+### PHASE 6: STABLE-TREE CROSS-REFERENCING
 
-**Step 5.5 - Similar Patterns**
-- `usbip_recv_xbuff()` already validates `size >
-  urb->transfer_buffer_length` (from commit `b348d7dddb6c4`, 2016) —
-  this patch applies the same defensive pattern to ISO frames
-- Record: Patch extends an established validation pattern already
-  accepted in the same file.
+**Step 6.1: Does the code exist in stable?**
+- Record: `pci_generic.c` and `modem_qcom_v2_mhiv_config` exist in
+  6.6.y, 6.12.y, 6.16.y, 6.17.y, and 7.0.y. The SDX75 commit that
+  introduced the v2 config entered mainline in v6.8, so trees at or
+  beyond 6.8 can apply this. For trees older than 6.8 (e.g. 6.6.y,
+  6.1.y, 5.15.y), `modem_qcom_v2_mhiv_config` does not exist and this
+  patch does not apply without additional backports.
 
-## Phase 6: Cross-Referencing Stable Trees
+**Step 6.2: Backport complications**
+- Record: Clean apply expected for 6.12.y, 6.16.y, 6.17.y (the
+  `mhi_qcom_sdx55_info` anchor and the 0x011a table entry context both
+  exist in recent stable trees per `4e3297ec0c469` in 6.12.y which
+  backported the FN920C04 context). For trees before v6.8, would require
+  backporting the v2 config first — not worth it.
 
-**Step 6.1 - Vulnerable Code in Stable**
-- Verified via `git show
-  stable/linux-6.19.y:drivers/usb/usbip/usbip_common.c` that the
-  unpatched vulnerable code (`int total_length`, no per-frame bounds
-  check) is present
-- Code unchanged since 2008 staging import → present in 5.10.y, 5.15.y,
-  6.1.y, 6.6.y, 6.12.y, 6.17.y (if active), 6.18.y, 6.19.y
-- Record: All active stable trees contain the bug.
+**Step 6.3: Related fixes in stable**
+- Record: Similar device-ID additions in this exact file have routinely
+  been picked into stable via AUTOSEL: `4e3297ec0c469` (FN920C04 →
+  6.12.y), `bcaec58996672` (FN990B40 → 6.16.y), `df42e29132596` (T99W696
+  variants → 6.17.y), etc. Consistent precedent.
 
-**Step 6.2 - Backport Complications**
-- None of prerequisite patch 1/3 (`1897852293fac`) or companion 3/3
-  (`74a2287209a85`) is in any stable tree yet
-- The specific hunks of this patch do not depend on 1/3 — they modify
-  `int total_length` which exists in all stable trees
-- Expected: clean apply
-- Record: Should apply cleanly to all stable branches; the full security
-  benefit requires also backporting 1/3 and 3/3.
+### PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 6.3 - Related Fixes in Stable**
-- None yet — this entire USBIP security cluster is fresh (March-April
-  2026)
-- Record: No conflicting/duplicate fixes in stable.
+**Step 7.1: Subsystem / criticality**
+- Record: `drivers/bus/mhi/host/pci_generic.c` — MHI host stack, used by
+  Qualcomm PCIe modems (WWAN). PERIPHERAL in the sense that it affects
+  users of specific hardware, but popular hardware (laptops, routers, 5G
+  WWAN cards).
 
-## Phase 7: Subsystem Context
+**Step 7.2: Activity**
+- Record: Actively developed. The file receives multiple device-ID
+  additions per release cycle.
 
-**Step 7.1 - Criticality**
-- `drivers/usb/usbip/` = USB/IP driver (used in VM environments, remote
-  USB access, Android development, CI with USB test devices)
-- Criticality: IMPORTANT (affects users who use USB/IP; not CORE but not
-  obscure)
-- Record: IMPORTANT criticality — specific user population but real
-  attack surface.
+### PHASE 8: IMPACT AND RISK
 
-**Step 7.2 - Activity**
-- USBIP has periodic maintenance with multiple historical security fixes
-  (race conditions, shift OOB, buffer validation); active subsystem
-- Record: Maintained subsystem with history of similar stable-worthy
-  hardening patches.
+**Step 8.1: Affected users**
+- Record: Users of SDX35-based modems that are NOT the Telit FN920C04.
+  Examples: Qcom reference designs, SDX35-based 5G/LTE cards from
+  various OEMs. Without this patch, those boards don't bind to the
+  driver at all.
 
-## Phase 8: Impact & Risk
+**Step 8.2: Trigger conditions**
+- Record: Device probe on the affected PCI card. Common, normal-path
+  code.
 
-**Step 8.1 - Who's Affected**
-- Any user who runs `usbip attach` to connect to a remote USBIP server
-  (then connection to a compromised/malicious server exposes the client)
-- Record: USBIP client users — real user population, not a theoretical
-  risk.
+**Step 8.3: Failure mode severity**
+- Record: WITHOUT patch: SDX35 modem does not bind → no WWAN
+  connectivity on affected hardware (functional loss for those users).
+  Not a crash/corruption — severity MEDIUM (feature not working), but it
+  is a real user-visible loss of function. WITH patch: existing devices
+  unaffected (FN920C04 keeps its specific entry first), new hardware
+  starts working.
 
-**Step 8.2 - Trigger**
-- Attacker runs malicious USBIP server; user attaches to it; server
-  returns crafted RET_SUBMIT
-- Attach requires privileged operation, but once attached, reading data
-  via `USBDEVFS_REAPURB` is accessible to any process with access to the
-  virtual device
-- Record: Trigger is "connect to malicious USBIP server" — a very
-  realistic scenario (VM escapes, supply-chain USBIP servers,
-  compromised networks).
+**Step 8.4: Risk vs benefit**
+- Record: Benefit = hardware enablement for SDX35 modems. Risk =
+  essentially zero: additive-only change, reuses an existing config,
+  match ordering keeps existing Telit FN920C04 behavior, no code paths
+  modified. Classic device-ID-add exception to stable rules.
 
-**Step 8.3 - Failure Severity**
-- OOB slab read → kernel memory leaked to userspace = **information
-  disclosure** (potential leak of sensitive data: kernel pointers,
-  credentials, keys)
-- Could be chained with other bugs for KASLR bypass or further
-  exploitation
-- Severity: **HIGH** (info leak, security-relevant)
-- Record: HIGH — kernel info leak to userspace via crafted network
-  input.
+### PHASE 9: SYNTHESIS
 
-**Step 8.4 - Risk/Benefit**
-- Benefit: HIGH — closes a security-relevant info leak in untrusted-
-  network parsing path
-- Risk: VERY LOW — adds a bounds check and a type widening; cannot
-  produce false rejections on legitimate data (no legitimate frame can
-  be larger than the whole buffer); u32 widening is semantically
-  equivalent for non-overflowing cases
-- Record: Excellent benefit/risk ratio.
+**Step 9.1: Evidence**
+- FOR: Exception category (new device ID to existing driver); tiny
+  additive change (+12 lines); reuses existing upstream infrastructure;
+  applied by the subsystem maintainer; no concerns raised in review;
+  consistent with precedent of similar MHI modem additions being picked
+  into stable (FN920C04, FN990B40, FE990B40, T99W696 variants).
+- AGAINST: No Fixes:/Cc: stable (expected per task instructions —
+  absence is not a negative signal); not a bug fix in the traditional
+  sense; won't apply to trees older than v6.8.
+- Unresolved: None of material weight.
 
-## Phase 9: Final Synthesis
+**Step 9.2: Stable-rules checklist**
+1. Obviously correct? YES — trivial additive data.
+2. Fixes a real issue? YES — enables hardware that currently does not
+   work.
+3. Important? MEDIUM — feature enablement (functional, not
+   catastrophic).
+4. Small and contained? YES — 12 lines, one file.
+5. No new features/APIs? YES — no new exported symbols, no new userspace
+   ABI.
+6. Applies to stable? YES for recent trees (v6.8+); NO for older trees.
 
-**Step 9.1 - Evidence Summary**
+**Step 9.3: Exception category**
+- Record: DEVICE ID ADDITION to an existing driver — explicit stable-
+  rules exception.
 
-FOR backporting:
-- Security fix: kernel info leak from attacker-controlled network input
-  to userspace
-- Small (+12/-3), single-file, single-function, surgical
-- Obviously correct: simple bounds check + type widening
-- Vulnerable code present since 2008 — every active stable affected
-- Signed off by USB maintainer Greg KH; reviewed through v1→v2 cycle
-- Follows established pattern (`b348d7dddb6c4`, 2016) accepted in same
-  file for `usbip_recv_xbuff`
-- Companion patch in the same security cluster has explicit `Cc: stable`
-- Applies cleanly to stable trees even without prerequisite patch 1/3
+**Step 9.4: Decision**
+- The change meets the device-ID-addition exception. It uses
+  infrastructure already present in 6.8+, is minimal, is applied by the
+  maintainer, has no regression risk, and has strong precedent among
+  sibling MHI modem additions that have routinely been picked up by
+  stable.
 
-AGAINST backporting:
-- Patch 2/3 of a series; ideally 1/3 and 3/3 should also be backported
-  for complete defense-in-depth
-- No explicit `Cc: stable` (but absence is expected — that's the autosel
-  context)
+---
 
-Unresolved:
-- No CVE assigned yet (not a blocker — many pre-CVE security fixes are
-  backported)
+### Verification
 
-**Step 9.2 - Stable Rules Checklist**
-1. Obviously correct? ✅ Yes
-2. Fixes real bug? ✅ Yes (kernel info leak)
-3. Important? ✅ HIGH — security issue
-4. Small & contained? ✅ +12/-3, single function
-5. No new features? ✅ Pure input validation
-6. Applies to stable? ✅ Verified: hunks match stable code
+- [Phase 1] Parsed tags from commit body: found Signed-off-by author +
+  MHI maintainer, Link: to lore, no Fixes:/Reported-by:/Cc: stable.
+- [Phase 2] Read the diff in the file context at
+  `drivers/bus/mhi/host/pci_generic.c` lines 900–948: confirmed the new
+  `PCI_DEVICE(0x17cb, 0x011a)` entry is placed AFTER the specific
+  `PCI_DEVICE_SUB(..., 0x1c5d, 0x2020)` for FN920C04, preserving
+  existing match.
+- [Phase 3] `git log -S "modem_qcom_v2_mhiv_config"`: confirmed config
+  introduced in `5571519009d09` (SDX75, v6.8).
+- [Phase 3] `git log -- drivers/bus/mhi/host/pci_generic.c`: confirmed
+  steady cadence of similar device-ID additions.
+- [Phase 4] `b4 dig -c 6a7084102bb96`: matched single-revision thread at
+  lore.kernel.org/all/20260123-mhi_sdx35-v1-1-
+  79440abf0c92@oss.qualcomm.com.
+- [Phase 4] Read full mbox thread: one review comment (Konrad re:
+  unrelated class quirk), Mani applied as-is. No NAKs, no stable
+  nomination.
+- [Phase 6] `git log stable/linux-6.12.y --grep=FN920C04`: confirmed
+  `4e3297ec0c469` backport present (precedent).
+- [Phase 6] `git log stable/linux-6.16.y --grep="Add Telit FN990B40"`:
+  confirmed `bcaec58996672` backport present (precedent).
+- [Phase 6] `git log stable/linux-6.17.y --grep="mhi.*pci_generic"`:
+  confirmed `df42e29132596` (T99W696 variants) backport present.
+- [Phase 6] Confirmed file exists in all active stable trees;
+  `modem_qcom_v2_mhiv_config` specifically requires v6.8+.
+- [Phase 7] File path `drivers/bus/mhi/host/pci_generic.c` → MHI host /
+  PCIe modem bus — peripheral hardware driver.
+- UNVERIFIED: Exact match behavior on every stable tree — presumed clean
+  apply for 6.12+ based on file structure; unverified for pre-6.8 trees
+  (but not applicable since v2 config doesn't exist there).
 
-**Step 9.3 - Exception Category**
-- Hardening / security validation of untrusted network input — fits
-  under "fixes a real bug" (not strictly an exception category, but
-  textbook stable material)
-
-**Step 9.4 - Decision**
-YES. The benefit (closing a kernel info-leak attackable by a malicious
-USBIP server) significantly outweighs the risk (near-zero — the change
-is input validation + type widening).
-
-## Verification
-
-- **[Phase 1]** Parsed subject and tags: Verified Link to lore, Greg KH
-  SOB (USB maintainer), absence of Fixes/Cc:stable expected for review
-  candidate.
-- **[Phase 1]** Body analysis: commit explains `0xFFFFFFFC + small =
-  wraparound` mechanism, path to `USBDEVFS_REAPURB` info leak.
-- **[Phase 2]** Ran `git show 591c1d972d8f1`: confirmed +12/-3 in single
-  file, single function `usbip_recv_iso()`.
-- **[Phase 2]** Read `include/linux/usb.h`: verified
-  `iso_frame_desc[i].actual_length` is `unsigned int` (line 1418),
-  `urb->actual_length` is `u32` (line 1655),
-  `urb->transfer_buffer_length` is `u32` (line 1654) — confirms signed-
-  wrap bug is real.
-- **[Phase 3]** `git log --follow` traced `usbip_common.c` back to
-  `05a1f28e879e3` (July 2008, staging import) — bug predates all stable
-  branches.
-- **[Phase 3]** `git log origin/master --
-  drivers/usb/usbip/usbip_common.c`: found the 3-patch series
-  (1897852293fac, 591c1d972d8f1, 74a2287209a85) plus companion
-  `2ab833a16a825` which has `Cc: stable`.
-- **[Phase 3]** Read
-  `stable/linux-6.19.y:drivers/usb/usbip/usbip_common.c`: confirmed
-  unpatched code (`int total_length`, no bounds check) is present.
-- **[Phase 4]** `b4 dig -c 591c1d972d8f1`: found `https://lore.kernel.or
-  g/all/20260325103640.8090-2-addcontent08@gmail.com/`.
-- **[Phase 4]** `b4 dig -c 591c1d972d8f1 -a`: confirmed series went v1 →
-  v2 (applied version is v2 after Greg's feedback).
-- **[Phase 4]** `b4 dig -c 591c1d972d8f1 -w`: confirmed Greg KH and
-  Shuah Khan (USBIP maintainer) were CC'd.
-- **[Phase 4]** Read thread mbox: confirmed Greg KH directed Nathan to
-  submit his companion patch separately, and that companion got `Acked-
-  by: Shuah Khan` + `Cc: stable`.
-- **[Phase 5]** Grep on usbip directory: verified `usbip_recv_iso` is
-  called from `vhci_rx.c:86`, `stub_rx.c:605`, `vudc_rx.c:173`;
-  `usbip_pad_iso` called from `vhci_rx.c:92`.
-- **[Phase 5]** Read `vhci_rx.c`: confirmed the exploit path
-  `usbip_recv_iso → usbip_pad_iso → memmove into transfer_buffer` that
-  later reaches userspace.
-- **[Phase 5]** Verified precedent commit `b348d7dddb6c4` (2016) applied
-  exactly the same "validate untrusted length" pattern to
-  `usbip_recv_xbuff` in the same file.
-- **[Phase 6]** Checked `stable-rc-push/linux-*.y` branches: no USBIP
-  security series patches applied yet.
-- **[Phase 6]** Inspected hunks vs stable code: the three hunks only
-  touch `int total_length = 0`, the iso-decode loop, and the post-loop
-  comparison — all present in all stable trees. Expected clean apply
-  independent of patch 1/3.
-- **[Phase 7]** Context: `drivers/usb/usbip/` — IMPORTANT criticality
-  (VM/remote USB users).
-- **[Phase 8]** Severity: HIGH — kernel slab OOB read → info leak to
-  userspace via USBDEVFS_REAPURB, triggered by crafted USBIP server
-  replies.
-- UNVERIFIED: Exact minor versions of 5.10.y/5.15.y/etc. weren't walked
-  line-by-line, but mainline unpatched state in 6.19.y + unchanged code
-  since 2008 staging import reliably implies bug exists in all active
-  stable branches.
-
-The fix is a small, surgical, obviously-correct validation of attacker-
-controlled network input that prevents a kernel information leak. It
-applies cleanly to all active stable trees, is signed off by the USB
-subsystem maintainer, and follows an established pattern already
-accepted in the same file. The companion fix in the same security
-cluster is already explicitly nominated for stable. This is textbook
-stable material.
+This is a textbook device-ID addition to an existing driver — explicit
+stable-kernel-rules exception, minimal scope, zero regression risk,
+maintainer-applied, with clear precedent for sibling commits being
+backported.
 
 **YES**
 
- drivers/usb/usbip/usbip_common.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/bus/mhi/host/pci_generic.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
-index a2b2da1255dda..29d776fbeef74 100644
---- a/drivers/usb/usbip/usbip_common.c
-+++ b/drivers/usb/usbip/usbip_common.c
-@@ -665,7 +665,7 @@ int usbip_recv_iso(struct usbip_device *ud, struct urb *urb)
- 	int size = np * sizeof(*iso);
- 	int i;
- 	int ret;
--	int total_length = 0;
-+	u32 total_length = 0;
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 0884a384b77fc..425362037830e 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -407,6 +407,16 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+ 	.sideband_wake = false,
+ };
  
- 	if (!usb_pipeisoc(urb->pipe))
- 		return 0;
-@@ -696,14 +696,23 @@ int usbip_recv_iso(struct usbip_device *ud, struct urb *urb)
- 	for (i = 0; i < np; i++) {
- 		usbip_iso_packet_correct_endian(&iso[i], 0);
- 		usbip_pack_iso(&iso[i], &urb->iso_frame_desc[i], 0);
-+		if (urb->iso_frame_desc[i].actual_length >
-+				(unsigned int)urb->transfer_buffer_length) {
-+			dev_err(&urb->dev->dev,
-+				"recv iso: frame actual_length %u exceeds buffer %d\n",
-+				urb->iso_frame_desc[i].actual_length,
-+				urb->transfer_buffer_length);
-+			kfree(buff);
-+			return -EPROTO;
-+		}
- 		total_length += urb->iso_frame_desc[i].actual_length;
- 	}
- 
- 	kfree(buff);
- 
--	if (total_length != urb->actual_length) {
-+	if (total_length != (u32)urb->actual_length) {
- 		dev_err(&urb->dev->dev,
--			"total length of iso packets %d not equal to actual length of buffer %d\n",
-+			"total length of iso packets %u not equal to actual length of buffer %d\n",
- 			total_length, urb->actual_length);
- 
- 		if (ud->side == USBIP_STUB || ud->side == USBIP_VUDC)
++static const struct mhi_pci_dev_info mhi_qcom_sdx35_info = {
++	.name = "qcom-sdx35m",
++	.config = &modem_qcom_v2_mhiv_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.mru_default = 32768,
++	.sideband_wake = false,
++	.edl_trigger = true,
++};
++
+ static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
+ 	.name = "qcom-sdx24",
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+@@ -909,6 +919,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* Telit FN920C04 (sdx35) */
+ 	{PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2020),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fn920c04_info },
++	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x011a),
++		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx35_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, 0x010c),
 -- 
 2.53.0
 
