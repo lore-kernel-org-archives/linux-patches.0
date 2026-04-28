@@ -1,44 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592F5413221;
-	Tue, 28 Apr 2026 10:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C797C407583;
+	Tue, 28 Apr 2026 10:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372966; cv=none; b=OJ1cCE8jKLjzEVfAoxF5qPOz5QJ4M9wrqEo9AUCvMWdCN3ZJF4Mj0g3xaQYvTVf9DpwBd8nq9QopAh26wuhcsgEtmfDJCkxDoCNq97nORXEhTfu5SUcHnGfJx1hn4Ts9WsurSBjEI7u1F/29Iw5AwmFNECHnvtcPTVOFAoqg3x4=
+	t=1777372968; cv=none; b=uzsY6I86m19XNxjNrRI0oJTCwH3tCPzGUsBLsdX5YRcbGSm6fwmbgPUTwglJPcI8iWw8eYYaCa5aAG0s/gfA38rA0w4nznQ72TsciSjL+ieP5iSfMQ0iGngqSwbpYmZlx+cdRMIYLurs0ELnAhXlPaqjUS/aS5od9dfauhDe4B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372966; c=relaxed/simple;
-	bh=uf48M6ssr2e3/OlM34n2zZGdKklLA9fPaoNUW5aAYSw=;
+	s=arc-20240116; t=1777372968; c=relaxed/simple;
+	bh=ftFBoeUNo9XvxtsYcnDiXdJCUTvZ3/oDkUO0Odx4Rr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NMG6YL98NnY0yMmDQiJfVG6utTPIEWJbawon/OEtcemGXMun9vXq05kLUD+nBmooUJQM8Ieh7qE5op1p++RmJ76+d1Gf1/j/zy3ibuBVzSDXf5mvLe6hMzrOmaVaTLLiHv2+7M9WqT7WIOHc3R7LttIA93hSEXwddJYkdHyCpBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bxSRm3im; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LlDDxXVDyLkZjWFehjJL941xozHIfraxJSXbv02akA0PKDqUvL9T4fEIQR4ItQ6zuYYWcU6Idtq8OmaUN9Mk+1vP1+L89REc8vsl1BCBck7E7rwgT3VOka2JhT9ImpuAciFixXWRsZkc6iSUvBGXaH2eaVsuHcL0BvKt45ZRhGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t6TdL7Xe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bxSRm3im"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A62DC2BCAF;
-	Tue, 28 Apr 2026 10:42:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t6TdL7Xe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C818C2BCAF;
+	Tue, 28 Apr 2026 10:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372966;
-	bh=uf48M6ssr2e3/OlM34n2zZGdKklLA9fPaoNUW5aAYSw=;
+	s=k20201202; t=1777372968;
+	bh=ftFBoeUNo9XvxtsYcnDiXdJCUTvZ3/oDkUO0Odx4Rr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxSRm3imITFfPCu4urQ88btbPyquFQPgThoIsirBFK0F2pCZZGR724yRX3Aqficuj
-	 92KNo7UJ/fnQmkpeU3DN9ag2tgyBdb730uwVHb7WunWMFlCw6KHI4TAQSSNgQnocaa
-	 IKG4EP/eQi4T5YFXi4gDKtbVq/QUlIASAetVO9zrM7t192Qf0bhbOwYXAADsI//onw
-	 pHIoiR7r9hzd7PO49bXP//GrA6Ln9ffrELLWCzgIE7NnvDBJ2Rvn5yfSTfC08qXMVt
-	 3UTg4o6WBRa5yoxo18xISwceHqkiVKdjl8JNWUaApwTKtaaJuyOZiwBaEAxrDyooBa
-	 ZfGgQbuekXb1A==
+	b=t6TdL7XeQ0c6Jskuz/zrPlQc3z/Msb1czQ8OiQQ307k3m4ZkE0/yDiLxgxtJW4ztp
+	 S10L8fcKzTqBZ+Atpo+jSlo4YaSJoR5AZYHMTOgDrJlxIn3IrkGaZIr7V03cWto6hJ
+	 fjE90uLPbCp2MuZk7q1XC0JuNuSj9oSCGJQizxi6OVRN0WGXB0Noa45KyWX7vWY9No
+	 a/90s17kxx2JhlVtUZv2y642dpqfp+OLV+5RFMWLA9lObvcMR3J2VwxHgKYK44fKLI
+	 VZdkIDgX/s3drxIQObDxpveqD7xFXYvcwld/QKr7OK7bKnjTyggDDJoWEQXRnmSO4Y
+	 VzU1OVgpmbKvw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
-	James Morse <james.morse@arm.com>,
+Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Austin Zheng <austin.zheng@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	Rodrigo.Siqueira@amd.com,
+	christian.koenig@amd.com,
+	Xinhui.Pan@amd.com,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] arm64: cputype: Add C1-Pro definitions
-Date: Tue, 28 Apr 2026 06:41:02 -0400
-Message-ID: <20260428104133.2858589-51-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] drm/amd/display: Fix HostVMMinPageSize unit mismatch in DML2.1
+Date: Tue, 28 Apr 2026 06:41:03 -0400
+Message-ID: <20260428104133.2858589-52-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -51,392 +60,396 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 2c99561016c591f4c3d5ad7d22a61b8726e79735 ]
+[ Upstream commit 5721b5b9c9c792233d7817239bd81925fb3ad9d1 ]
 
-Add cputype definitions for C1-Pro. These will be used for errata
-detection in subsequent patches.
+[Why]
+This was found back on DML2 but was missed when creating DML2.1.
 
-These values can be found in "Table A-303: MIDR_EL1 bit descriptions" in
-issue 07 of the C1-Pro TRM:
+The bottom layer calculation (CalculateHostVMDynamicLevels) expects
+a value in bytes, not KB, but we pass in the value in KB (eg. 4).
 
-  https://documentation-service.arm.com/static/6930126730f8f55a656570af
+This causes an extra page table level to be required in the prefetch
+bytes which can be significant overhead - preventing some modes
+from being supported that should otherwise be.
 
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: James Morse <james.morse@arm.com>
-Reviewed-by: Will Deacon <will@kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[How]
+Correct the units by multiplying the input and override values by 1024.
+
+Reviewed-by: Austin Zheng <austin.zheng@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me write up the analysis.
+Based on my comprehensive analysis, I have enough information to make a
+decision. Let me compile my findings.
 
-## Analysis
+## Phase 1: Commit Message Forensics
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.1:** Subject parsing
+Record: [drm/amd/display] [Fix] [HostVMMinPageSize unit mismatch in
+DML2.1]
 
-**Step 1.1: Subject Line Parsing**
-- Subsystem prefix: `arm64: cputype:`
-- Action verb: "Add"
-- Record: `[arm64/cputype] [Add] [CPU part/MIDR definitions for ARM
-  C1-Pro CPU]`
+**Step 1.2:** Tags
+Record:
+- Reviewed-by: Austin Zheng (AMD)
+- Signed-off-by: Nicholas Kazlauskas (author, AMD), Roman Li (AMD DC
+  submaintainer), Alex Deucher (AMD GPU maintainer)
+- Tested-by: Dan Wheeler (AMD test engineer)
+- No Fixes: tag, no Cc: stable tag (expected for review candidates)
 
-**Step 1.2: Tag Analysis**
-- `Acked-by: Mark Rutland <mark.rutland@arm.com>` — ARM kernel engineer
-  reviewer
-- `Reviewed-by: Will Deacon <will@kernel.org>` — arm64 co-maintainer
-  review
-- `Cc: Will Deacon`, `Cc: James Morse` — arm64 maintainers
-- `Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>` — arm64
-  maintainer (author and committer)
-- No `Fixes:` tag (expected for autoselect candidates)
-- No `Cc: stable@vger.kernel.org` (expected for autoselect candidates)
-- Record: Top-tier maintainer/reviewer approval chain; no bug-report
-  tags.
+**Step 1.3:** Body analysis
+Record: The bug is that `CalculateHostVMDynamicLevels` expects
+HostVMMinPageSize in bytes (thresholds 2048 and 1048576 = 2KB and 1MB),
+but DML2.1 passes the value in KB (e.g., 4 for 4KB). This causes wrong
+branch selection and adds an extra page table level to prefetch
+overhead, "preventing some modes from being supported that should
+otherwise be." Failure mode = display mode unnecessarily rejected by
+validator.
 
-**Step 1.3: Commit Body Analysis**
-- States purpose: "These will be used for errata detection in subsequent
-  patches."
-- Cites ARM C1-Pro TRM (Table A-303) as the authoritative source.
-- Does NOT describe a bug, crash, or symptom.
-- Does NOT list kernel versions affected (no code actually uses these
-  values in this commit).
-- Record: Explicitly a preparatory commit adding constants; no bug
-  mechanism described in the message itself.
+**Step 1.4:** Hidden bug fix detection
+Record: Not hidden - clearly described as a fix for a unit mismatch. The
+verb "Fix" is explicit.
 
-**Step 1.4: Hidden Bug Fix Detection**
-- The wording "will be used for errata detection in subsequent patches"
-  indicates this is preparation for a workaround series.
-- The series in question is `arm64: Work around C1-Pro erratum 4193714
-  (CVE-2026-0995)` (verified via `b4 am`).
-- Record: Not a hidden fix — genuinely a prerequisite commit.
+## Phase 2: Diff Analysis
 
-### PHASE 2: DIFF ANALYSIS
+**Step 2.1:** Inventory
+Record: Single file `dml2_core_dcn4_calcs.c`, 6 lines changed (+6/-6), 6
+hunks. All in `dml_core_ms_prefetch_check`, `dml_core_mode_support`,
+`dml_core_mode_programming`. Scope: surgical single-file fix.
 
-**Step 2.1: Inventory**
-- Files changed: `arch/arm64/include/asm/cputype.h` (+2 lines, no
-  removals)
-- Scope: single-file, header-only, pure macro additions.
-- Record: 2 lines added, 0 removed, 0 functions modified.
+**Step 2.2:** Code flow
+Record: Each hunk replaces `hostvm_min_page_size_kbytes` (a value in KB)
+with `hostvm_min_page_size_kbytes * 1024` (converting to bytes). Affects
+calls to `CalculateExtraLatency`,
+`CalculatePrefetchSchedule_params->HostVMMinPageSize`, and
+`CalculateVMRowAndSwath_params->HostVMMinPageSize`.
 
-**Step 2.2: Code Flow Change**
-- Hunk 1: adds `#define ARM_CPU_PART_C1_PRO 0xD8B` among other ARM part
-  IDs.
-- Hunk 2: adds `#define MIDR_C1_PRO MIDR_CPU_MODEL(ARM_CPU_IMP_ARM,
-  ARM_CPU_PART_C1_PRO)` among other MIDR entries.
-- Before: no symbol existed; after: symbols exist but have zero callers
-  in this commit.
-- Record: Pure identifier addition; no runtime behavior change.
+**Step 2.3:** Bug mechanism
+Record: Type/unit bug. The receiving function checks `< 2048`, `>= 2048
+&& < 1048576`, `>= 1048576` (bytes thresholds). With KB input (e.g., 4),
+every value falls into the first branch, causing maximum page table
+levels to be added incorrectly, which inflates prefetch bandwidth
+requirements.
 
-**Step 2.3: Bug Mechanism**
-- Category (h): Hardware workaround — device-ID-like additions. Here the
-  "device IDs" are CPU part identifiers, analogous to PCI IDs for
-  drivers.
-- Record: Preparation for a hardware quirk/workaround; no bug fixed in
-  isolation.
+**Step 2.4:** Fix quality
+Record: Trivially correct - just multiplying by a constant. No
+regression risk from the fix itself. Same fix pattern was historically
+applied to DML2.0 (commit 22136ff27c4e0/dcf6cd7f35de5) with `Cc:
+stable`.
 
-**Step 2.4: Fix Quality**
-- Obviously correct: yes — values taken from the authoritative ARM TRM
-  and are namespaced constants.
-- Surgical: yes — 2 lines, no unrelated changes.
-- Regression risk: essentially zero — adding unused `#define`s cannot
-  break anything.
-- Record: Trivially correct, zero regression risk.
+## Phase 3: Git History Investigation
 
-### PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.1:** File history
+Record: File introduced in commit `70839da636050` (2024-04-19, v6.11)
+"drm/amd/display: Add new DCN401 sources". Bug present since v6.11.
 
-**Step 3.1: Blame**
-- The `cputype.h` file has a long history with many similar `MIDR_*`
-  additions.
-- Each hunk is touched adjacent to existing definitions (last additions:
-  `ARM_CPU_PART_NEOVERSE_N3`, `MIDR_NEOVERSE_N3`).
-- Record: Following an established pattern of additions to this header.
+**Step 3.2:** Fixes: tag follow-up
+Record: No Fixes: tag, but commit message references DML2 history. Found
+related history:
+- `22136ff27c4e0`/`dcf6cd7f35de5` (Nov 2023): Original DML2 fix with Cc:
+  stable - did exactly this multiplication
+- `d0f639c586939`/`a409c053b0b0c` (Dec 2023): Reverted, claimed spec
+  said KB
+- `bf282eb92b8` (Dec 2023): Re-applied the *1024 fix because revert
+  "causes failure to light up for 1080p eDP + 8k HDMI panel combo"
+This proves the *1024 IS the correct value.
 
-**Step 3.2: Fixes Tag**
-- No `Fixes:` tag. Not applicable.
+**Step 3.3:** File history for related changes
+Record: Related patches in same April 2 patch series include:
+- Patch 13: `df9228624afde` "Pass min page size from SOC BB to dml2_1
+  plane config" - related fix but independent
+- Patch 14: `90b05672b7f0e` "Fix DCN42 gpuvm_min_page_size_kbytes in SOC
+  BB" - related but independent
+This patch (11) is self-contained.
 
-**Step 3.3: File History**
-- `git log -- arch/arm64/include/asm/cputype.h` recent entries include:
-  - `3bbf004c4808e arm64: cputype: Add Neoverse-V3AE definitions`
-  - `e185c8a0d8423 arm64: cputype: Add NVIDIA Olympus definitions`
-  - `f38c2c3e572ce arm64: cputype: Add Cortex-A720AE definitions`
-- Record: Same pattern repeated multiple times in recent history.
+**Step 3.4:** Author context
+Record: Nicholas Kazlauskas is a regular DC contributor and authored the
+related DCN35/DCN401 fixes. Reviewer Austin Zheng is also DC
+contributor. Submitter Roman Li is DC submaintainer.
 
-**Step 3.4: Author Context**
-- Author Catalin Marinas = arm64 maintainer.
-- Reviewer Will Deacon = arm64 co-maintainer.
-- Record: Top subsystem authority authored and reviewed this.
+**Step 3.5:** Dependencies
+Record: Standalone fix. Multiplication by 1024 is purely a numeric
+correction at call sites. No dependencies.
 
-**Step 3.5: Dependencies**
-- Standalone compile-wise (adding `#define`s has no dependency).
-- Semantically, these symbols are consumed by the follow-up "arm64:
-  errata: Work around early CME DVMSync acknowledgement" patch (PATCH v5
-  4/4 of the same series).
-- Record: Part of a 4-patch series; compiles independently but
-  semantically part of series.
+## Phase 4: Mailing List Research
 
-### PHASE 4: MAILING LIST RESEARCH
+**Step 4.1:** b4 dig
+Record: b4 dig could not find a match (commit too recent / not yet
+indexed). Found via direct lore search at
+`https://lists.freedesktop.org/archives/amd-gfx/2026-April/142246.html`.
+Posted as PATCH 11/22 of "DC Patches April 02, 2026" by Roman Li on Thu
+Apr 2 18:33:03 UTC 2026.
 
-**Step 4.1: Original Submission**
-- Cover letter thread found: `https://lore.kernel.org/all/20260302165801
-  .3014607-1-catalin.marinas@arm.com/` (v1, 4 patches). In v1, the
-  cputype additions were embedded inside patch 3/4 (the errata
-  workaround), not split out.
-- Latest revision identified via web search: v5 —
-  `https://yhbt.net/lore/linux-arm-kernel/adjo1Kuwu7v5dhqB@willie-the-
-  truck/T/`
-- In v5, the cputype additions were split into their own patch: "[PATCH
-  v5 3/4] arm64: cputype: Add C1-Pro definitions" — matching exactly the
-  commit under review (same tags, same two-line diff).
-- Cover letter of the series ("arm64: Work around C1-Pro erratum 4193714
-  (CVE-2026-0995)") states:
+**Step 4.2:** Reviewers
+Record: Reviewed by Austin Zheng (AMD DC). Sent to amd-gfx list with
+appropriate maintainer CC.
 
-> Backports available here (no stable-6.12.y since SME is not
-supported):
-> `errata/c1-pro-erratum-4193714-stable-6.19.y`
-> `errata/c1-pro-erratum-4193714-stable-6.18.y`
-> `errata/c1-pro-erratum-4193714-android16-6.12-lts`
+**Step 4.3:** Bug reports
+Record: No specific Reported-by, no syzbot link, no bugzilla link. Bug
+found internally by AMD when reviewing DML2.1 vs DML2 differences.
 
-- Record: Stable backport branches explicitly prepared by the arm64
-  maintainer; patch v5 evolved from v1 after review.
+**Step 4.4:** Series context
+Record: Part of "DC Patches April 02, 2026" with 22 patches. The
+Nicholas Kazlauskas DML2.1 cluster (patches 11-15) addresses related but
+independent issues. This patch (11) does not depend on the others.
 
-**Step 4.2: Reviewers**
-- `b4 am` output shows Acked-by: Mark Rutland confirmed via DKIM;
-  Reviewed-by: Will Deacon (arm64 co-maintainer).
-- Record: Both arm64 maintainers plus a senior ARM engineer
-  acked/reviewed.
+**Step 4.5:** Stable history
+Record: No discussion on stable@vger.kernel.org. Original DML2 fix was
+Cc'd to stable; this DML2.1 version was not.
 
-**Step 4.3: Bug Report**
-- CVE-2026-0995 assigned:
-  https://developer.arm.com/documentation/111823/latest/
-- Phoronix article confirms: "Linux 7.1 Lands Workaround For Arm C1-Pro
-  Erratum" (CVE-2026-0995).
-- Record: Public CVE with documented memory-corruption-class consequence
-  (pages reused while SME accesses are in-flight).
+## Phase 5: Code Semantic Analysis
 
-**Step 4.4: Related Patches**
-- 4-patch series; this is patch 3/4.
-- Patches 1/4 and 2/4: TLB infrastructure refactoring (prerequisites).
-- Patch 4/4: actual errata workaround that consumes `MIDR_C1_PRO`.
-- Record: Part of a 4-patch series for CVE-2026-0995; all 4 needed
-  together in stable.
+**Step 5.1:** Functions modified
+Record: 3 functions: `dml_core_ms_prefetch_check`,
+`dml_core_mode_support`, `dml_core_mode_programming`. All are core mode
+validation/programming entry points called from DML2.1.
 
-**Step 4.5: Stable Discussion**
-- Stable backport branches announced in cover letter for 6.18.y and
-  6.19.y.
-- Record: Maintainer has already prepared stable backports.
+**Step 5.2:** Callers
+Record: Called from `dml21_create`/`dml21_reinit`, which are called when
+`using_dml21=true && dce_version >= DCN_VERSION_4_01`. This means:
+DCN401 (RDNA4 / RX 9000 series GPUs) and DCN42 hardware. Reachable from
+every display mode validation.
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 5.3:** Callees
+Record: `CalculateExtraLatency` and via params,
+`CalculateHostVMDynamicLevels` (line 1565) which has the byte-threshold
+checks (`< 2048`, `< 1048576`).
 
-**Step 5.1: Key Functions**
-- No functions — only macro additions.
-- Record: Pure preprocessor additions.
+**Step 5.4:** Reachability
+Record: Every kernel modeset path on DCN401/DCN42 hardware. Highly
+reachable from userspace via DRM modeset ioctls.
 
-**Step 5.2/5.3/5.4: Callers/Callees/Callchain**
-- No callers in the committed tree yet (`MIDR_C1_PRO` is not referenced
-  in the current repo state).
-- Intended consumer per the series: `arch/arm64/kernel/cpu_errata.c` —
-  `ERRATA_MIDR_RANGE(MIDR_C1_PRO, 0, 0, 1, 2)` in the errata entry for
-  `ARM64_WORKAROUND_4193714`.
-- Record: No existing callers; future errata table entry is the only
-  consumer.
+**Step 5.5:** Similar patterns
+Record: Same fix pattern was previously applied to DML2.0 in current
+mainline (`drivers/gpu/drm/amd/display/dc/dml2_0/display_mode_core.c`
+has `* 1024` at the same kind of call sites).
 
-**Step 5.5: Similar Patterns**
-- Several recent analogous commits exist:
-  - `3bbf004c4808e arm64: cputype: Add Neoverse-V3AE definitions`
-  - `e185c8a0d8423 arm64: cputype: Add NVIDIA Olympus definitions`
-  - `f38c2c3e572ce arm64: cputype: Add Cortex-A720AE definitions`
-- Record: Well-established pattern.
+## Phase 6: Cross-Referencing
 
-### PHASE 6: CROSS-REFERENCING AND STABLE TREES
+**Step 6.1:** Code in stable trees
+Record: Buggy code present in v6.11 through v6.18 (and v7.0). Verified
+with `git show v6.18:drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_
+core/dml2_core_dcn4_calcs.c | grep "soc.hostvm_min_page_size_kbytes,"` -
+bug exists.
 
-**Step 6.1: Code in Stable Trees?**
-- The `cputype.h` header exists in all active stable trees (6.1.y,
-  6.6.y, 6.12.y, 6.17.y, 6.18.y, 6.19.y).
-- C1-Pro definitions themselves don't exist in any stable tree yet.
-- Record: File exists everywhere; definitions need adding where
-  SME/errata fix is applied.
+**Step 6.2:** Backport complications
+Record: Path was renamed from `dml2/dml21/` to `dml2_0/dml21/` in commit
+`e6a8a000cfe6a` (2025-10-21). For stable trees v6.11-v6.18, the file is
+at `drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dc
+n4_calcs.c`. Each `* 1024` change applies cleanly with path translation
+- line numbers vary by tree but contexts are stable. Minor manual rework
+needed for path.
 
-**Step 6.2: Backport Complications**
-- Pure additions; clean apply essentially everywhere (context lines
-  `ARM_CPU_PART_NEOVERSE_N3` and `MIDR_NEOVERSE_N3` are present in 6.6.y
-  onward after backports, but position may shift — trivial resolution).
-- Record: Clean/trivial apply expected.
+**Step 6.3:** Related fixes already in stable
+Record: No, the DML2.1 version of this fix has not been backported to
+any stable tree.
 
-**Step 6.3: Related Stable Fixes Already Present?**
-- No — no C1-Pro errata workaround exists in stable yet.
-- Verified precedent of same pattern being backported:
-  - `f139af04f60d5 arm64: cputype: Add Neoverse-V3AE definitions` in
-    6.17.y
-  - `6de6d315f34c5 arm64: cputype: Add Neoverse-V3AE definitions` in
-    6.12.y
-  - `d9d3e9ff1e2a5 arm64: cputype: Add Neoverse-V3AE definitions` in
-    6.6.y
-- Each backport paired with its errata workaround.
-- Record: Strong precedent — cputype definition commits are routinely
-  backported alongside their errata fixes.
+## Phase 7: Subsystem Context
 
-### PHASE 7: SUBSYSTEM CONTEXT
+**Step 7.1:** Subsystem criticality
+Record: drivers/gpu/drm/amd/display - PERIPHERAL (driver-specific) but
+affects display output, which is user-visible. Users of DCN401 (Navi 4x
+discrete GPUs) and DCN42 (newer APUs) can lose display mode
+availability.
 
-**Step 7.1: Subsystem Criticality**
-- `arch/arm64/` core CPU identification — CORE.
-- Record: Core arm64 infrastructure, but this specific header only holds
-  constants.
+**Step 7.2:** Subsystem activity
+Record: Highly active subsystem with frequent DC patch series.
 
-**Step 7.2: Subsystem Activity**
-- Highly active (many recent commits touching `cputype.h`).
-- Record: Active subsystem.
+## Phase 8: Impact and Risk
 
-### PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 8.1:** Affected population
+Record: DRIVER-SPECIFIC: Users with AMD DCN401 (RX 9070, RX 9060XT etc.)
+or DCN42 hardware running v6.11+. As DCN401 is the Navi 4x architecture
+(recent consumer GPU), this is a meaningful but smaller user base than
+core fixes.
 
-**Step 8.1: Who Is Affected**
-- In isolation: nobody — the constants are unused.
-- As part of the CVE-2026-0995 fix series: owners of ARM C1-Pro
-  (r0p0-r1p2) CPUs running SME workloads.
-- Record: Zero direct impact; indirect enabler for CVE fix on C1-Pro
-  hardware.
+**Step 8.2:** Trigger conditions
+Record: Triggered on every display mode validation when
+`using_dml21=true` (default). Bug manifests as "mode rejected" only when
+the actual page table level overhead matters, i.e., for high-bandwidth
+modes (high resolution + high refresh rate, multi-display). The DML2
+history shows real-world failure with "1080p eDP + 8k HDMI" combo.
 
-**Step 8.2: Trigger Conditions**
-- This commit triggers nothing by itself.
-- The erratum it prepares for: pages may be reused while SME accesses
-  are in flight → memory corruption class, unprivileged-user-triggerable
-  on affected silicon running SME apps.
-- Record: No direct trigger; CVE-class failure once the errata patch is
-  present.
+**Step 8.3:** Failure mode severity
+Record: MEDIUM-HIGH. Failure mode is display modes being rejected that
+should work. Not a crash or data corruption, but user-visible feature
+loss (e.g., user cannot enable their monitor's native resolution/refresh
+rate). On laptops with eDP + external display, may prevent multi-monitor
+configurations.
 
-**Step 8.3: Failure Mode**
-- This commit: none.
-- Series: memory corruption / UAF on page reuse → CRITICAL once the
-  series is enabled.
-- Record: Severity CRITICAL for the series; NONE for this isolated
-  patch.
+**Step 8.4:** Risk-benefit
+Record:
+- BENEFIT: enables previously-rejected display modes for DCN401/DCN42
+  users (real-world impact demonstrated in DML2 history)
+- RISK: very low - 6 lines of arithmetic correction, well-tested in
+  mainline, identical pattern proven correct in DML2.0
+- Ratio: clearly favors backport
 
-**Step 8.4: Risk/Benefit**
-- Benefit: Enables CVE-2026-0995 backport (required header symbols).
-  Without it, the errata fix won't compile.
-- Risk: Extremely low — adds two unused `#define`s; cannot regress
-  anything.
-- Record: Essentially zero risk, high enabling benefit.
+## Phase 9: Final Synthesis
 
-### PHASE 9: FINAL SYNTHESIS
+**Step 9.1:** Evidence
+FOR backporting:
+- Small, surgical, obviously correct fix (just `* 1024`)
+- Bug present in stable trees v6.11+
+- Same fix pattern proven correct via DML2.0 history (revert/re-apply
+  cycle confirmed `*1024` is right)
+- Tested-by, Reviewed-by from AMD team
+- Real user-visible impact demonstrated historically (modes failing to
+  light up)
+- Bug already in mainline since April 2026
+- Fix is mathematical - no behavioral risk
 
-**Step 9.1: Evidence**
-- FOR: Zero regression risk; required by CVE-2026-0995 fix; maintainer
-  explicitly prepared 6.18.y/6.19.y backports; strong precedent
-  (Neoverse-V3AE, Cortex-A720AE, NVIDIA Olympus cputype commits all
-  backported to stable); reviewed by arm64 co-maintainer; acked by Mark
-  Rutland.
-- AGAINST: Does not fix a bug on its own; commit message literally says
-  "will be used for errata detection in subsequent patches" (pure prep).
+AGAINST:
+- No Cc: stable tag from authors
+- Smaller user base (DCN401/DCN42 specific hardware)
+- Path requires translation for older stable trees (`dml2_0/dml21/` ->
+  `dml2/dml21/`)
+- The DML2 version of this fix had a turbulent revert history (though
+  ultimately confirmed correct)
 
-**Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? YES (trivially — values from the ARM
-   TRM; reviewed by maintainers).
-2. Fixes a real bug? Not standalone, but is a strict prerequisite for
-   the CVE-2026-0995 fix in the same series.
-3. Important issue? Only as enabler; the enabled fix addresses CVE-class
-   memory corruption on C1-Pro.
-4. Small and contained? YES (2 lines).
-5. No new features/APIs? Adds identifier macros (no API, no user-visible
-   behavior — matches the accepted "new device ID" exception style).
-6. Applies to stable? YES (clean apply; maintainer-prepared branches
-   exist).
+UNRESOLVED:
+- Could not run b4 dig successfully (patch too recent for indexing)
+- Could not verify whether AMD will explicitly nominate this for stable
+  in a follow-up
 
-**Step 9.3: Exception Category**
-- Closest analogue: "NEW DEVICE IDs" — adding PCI/USB/etc. IDs to
-  existing drivers. Here the analog is adding a CPU-part/MIDR identifier
-  so existing arm64 errata infrastructure can match the chip. The
-  precedent of backporting similar commits (Neoverse-V3AE,
-  Cortex-A720AE) confirms this treatment.
+**Step 9.2:** Stable rules checklist
+1. Obviously correct? YES - simple multiplication, function clearly
+   expects bytes (thresholds in bytes)
+2. Fixes real bug affecting users? YES - mode validation incorrectly
+   rejects valid modes
+3. Important issue? MEDIUM - prevents some display modes from working,
+   similar pattern caused 1080p+8k failure in DML2
+4. Small and contained? YES - 6 lines, single file
+5. No new features/APIs? YES - pure fix
+6. Applies to stable? YES with minor path translation for v6.11-v6.18
 
-**Step 9.4: Decision**
-- The commit has zero risk, is the textbook prerequisite that
-  accompanies every errata-workaround backport in arm64, and is part of
-  a maintainer-announced stable backport for CVE-2026-0995.
-- Without it, a CVE fix cannot be backported (won't compile).
-- Strong, consistent precedent in stable for this exact pattern.
+**Step 9.3:** Exception categories
+Not in special exception categories, but qualifies as a regular bug fix.
+
+**Step 9.4:** Decision
+The fix is small, surgical, obviously correct, well-tested, and
+addresses a real bug that affects users of recent AMD GPU/APU hardware.
+The historical precedent in DML2.0 (where the same `*1024` correction
+was eventually applied to stable after extensive testing confirmed it
+was right) strengthens confidence. The risk of regression is minimal
+given the trivial nature of the change.
 
 ## Verification
-- [Phase 1] Parsed tags: Acked-by Mark Rutland, Reviewed-by Will Deacon,
-  Cc Will Deacon/James Morse, Signed-off-by Catalin Marinas. No Fixes:,
-  no Cc: stable (expected).
-- [Phase 2] Diff analysis via provided diff: +2 lines, 0 removed, single
-  file `arch/arm64/include/asm/cputype.h`; confirmed by reading the file
-  header layout.
-- [Phase 3] `git log --oneline -- arch/arm64/include/asm/cputype.h`
-  showed the three sibling "Add X definitions" commits (`3bbf004c4808e`,
-  `e185c8a0d8423`, `f38c2c3e572ce`).
-- [Phase 3] `git show --stat` on each sibling confirmed the same +2-line
-  shape and same preparation-commit pattern.
-- [Phase 4] `b4 am` retrieved the v1 series cover at `lore.kernel.org/al
-  l/20260302165801.3014607-1-catalin.marinas@arm.com/` — confirmed
-  series subject "arm64: Work around C1-Pro erratum 4193714
-  (CVE-2026-0995)" and explicit stable backport branch announcements.
-- [Phase 4] WebSearch + Phoronix article corroborated CVE-2026-0995
-  assignment and that Linux 7.1 merged the workaround.
-- [Phase 4] Web-fetched v5 thread at
-  `yhbt.net/lore/.../adjo1Kuwu7v5dhqB@willie-the-truck/T/` showed the
-  exact split-out patch "[PATCH v5 3/4] arm64: cputype: Add C1-Pro
-  definitions" matching the diff and tags under review.
-- [Phase 5] `Grep` for `ARM_CPU_PART_C1_PRO`/`MIDR_C1_PRO` in the repo:
-  no existing consumers in current tree (zero callers; purely additive).
-- [Phase 6] `git log stable/linux-6.17.y --oneline --grep=Neoverse-V3AE`
-  -> `f139af04f60d5 arm64: cputype: Add Neoverse-V3AE definitions` and
-  `7ca3d45e36a74 arm64: errata: Apply workarounds for Neoverse-V3AE`
-  both present.
-- [Phase 6] `git log stable/linux-6.12.y` -> `8fdd0ad43977c` and
-  `d9d3e9ff1e2a5` (cputype + errata pair) confirming backport pattern.
-- [Phase 6] `git log stable/linux-6.6.y` -> `f3ccb49186541` and
-  `6de6d315f34c5` (cputype + errata pair).
-- [Phase 8] Cover letter text retrieved via `b4 am` states memory-reuse
-  consequence of erratum; CVE identifier confirms severity class.
-- UNVERIFIED: I could not programmatically reach lore.kernel.org
-  directly due to Anubis bot challenges; relied on `b4 am` (which
-  succeeded) plus a yhbt.net mirror for the v5 thread. This does not
-  affect the decision — the v5 thread content matches the commit under
-  review exactly.
 
-Decision: The commit itself adds only two `#define`s, but it is a
-textbook-format prerequisite for a CVE-2026-0995 errata workaround
-series that the arm64 maintainer has explicitly prepared stable
-backports for. Identical sibling commits (Neoverse-V3AE, Cortex-A720AE)
-have been consistently backported to 6.6.y / 6.12.y / 6.17.y alongside
-their errata fixes. Risk is effectively zero, and the errata-fix
-backport cannot compile without it. This matches the stable "device-ID /
-hardware-quirk infrastructure" exception.
+- [Phase 1] Parsed tags: Reviewed-by (Austin Zheng), Tested-by (Dan
+  Wheeler), no Fixes/Cc:stable - verified by reading commit message
+- [Phase 2] Diff analysis: confirmed 6 hunks, all `* 1024` multiplier
+  additions in single file - verified by reading patch
+- [Phase 3] git log + git show: bug code present since `70839da636050`
+  (v6.11, 2024-04-19) - verified
+- [Phase 3] git show 22136ff27c4e0: original DML2 fix with `Cc:
+  stable@vger.kernel.org` did same `*1024` change - verified
+- [Phase 3] git show bf282eb92b8: revert-of-revert for DML2 because
+  *1024 absence broke "1080p eDP + 8k HDMI" - verified
+- [Phase 3] git show e6a8a000cfe6a: path renamed `dml2/dml21/` ->
+  `dml2_0/dml21/` in 2025-10-21 - verified
+- [Phase 3] Local file read at line 1565: `CalculateHostVMDynamicLevels`
+  checks `< 2048`, `< 1048576` (bytes thresholds) - verified
+- [Phase 4] WebFetch lore archive: found patch 11/22 of "DC Patches
+  April 02, 2026" thread - verified
+- [Phase 4] b4 dig -c bd8001acfa62b: failed to find (patch too recent) -
+  acknowledged
+- [Phase 5] Grep for using_dml21: confirmed DML2.1 active for
+  DCN401/DCN42 with `dce_version >= DCN_VERSION_4_01` - verified
+- [Phase 6] git show
+  v6.18:.../dml2/dml21/src/.../dml2_core_dcn4_calcs.c: bug present in
+  v6.18 - verified
+- [Phase 6] git show
+  v6.12:.../dml2/dml21/src/.../dml2_core_dcn4_calcs.c: bug present in
+  v6.12 - verified
+- [Phase 6] dml2_0/display_mode_core.c grep: confirmed `*1024` already
+  applied for DML2.0 - verified
+- [Phase 7] DCN_VERSION_4_01 grep: confirmed dce_version usage gates
+  DML2.1 to DCN401+ hardware - verified
+- UNVERIFIED: Exact mailing list discussion URL - the patch is indexed
+  at lists.freedesktop.org (got the patch text), but lore.kernel.org has
+  not yet indexed it (b4 dig failure)
+- UNVERIFIED: Whether reviewers explicitly suggested stable backport -
+  did not find direct discussion
+
+The fix meets all stable kernel criteria: it is obviously correct, fixes
+a real bug affecting users of recent AMD hardware, is small and
+contained (6 lines, one file), introduces no new features, and applies
+to stable with only minor path translation. The historical DML2
+precedent strongly supports correctness and the user-visible impact.
 
 **YES**
 
- arch/arm64/include/asm/cputype.h | 2 ++
- 1 file changed, 2 insertions(+)
+ .../dml21/src/dml2_core/dml2_core_dcn4_calcs.c       | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index 08860d482e600..7b518e81dd15b 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -98,6 +98,7 @@
- #define ARM_CPU_PART_CORTEX_A725	0xD87
- #define ARM_CPU_PART_CORTEX_A720AE	0xD89
- #define ARM_CPU_PART_NEOVERSE_N3	0xD8E
-+#define ARM_CPU_PART_C1_PRO		0xD8B
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+index ca5ac3c0deb56..cdd7c771afff9 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
+@@ -7381,7 +7381,7 @@ static noinline_for_stack void dml_core_ms_prefetch_check(struct dml2_core_inter
+ 		s->tdlut_bytes_per_group,
+ 		s->HostVMInefficiencyFactor,
+ 		s->HostVMInefficiencyFactorPrefetch,
+-		mode_lib->soc.hostvm_min_page_size_kbytes,
++		mode_lib->soc.hostvm_min_page_size_kbytes * 1024,
+ 		mode_lib->soc.qos_parameters.qos_type,
+ 		!(display_cfg->overrides.max_outstanding_when_urgent_expected_disable),
+ 		mode_lib->soc.max_outstanding_reqs,
+@@ -7477,7 +7477,7 @@ static noinline_for_stack void dml_core_ms_prefetch_check(struct dml2_core_inter
+ 			CalculatePrefetchSchedule_params->OutputFormat = display_cfg->stream_descriptors[display_cfg->plane_descriptors[k].stream_index].output.output_format;
+ 			CalculatePrefetchSchedule_params->MaxInterDCNTileRepeaters = mode_lib->ip.max_inter_dcn_tile_repeaters;
+ 			CalculatePrefetchSchedule_params->VStartup = s->MaximumVStartup[k];
+-			CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->soc.hostvm_min_page_size_kbytes;
++			CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->soc.hostvm_min_page_size_kbytes * 1024;
+ 			CalculatePrefetchSchedule_params->DynamicMetadataEnable = display_cfg->plane_descriptors[k].dynamic_meta_data.enable;
+ 			CalculatePrefetchSchedule_params->DynamicMetadataVMEnabled = mode_lib->ip.dynamic_metadata_vm_enabled;
+ 			CalculatePrefetchSchedule_params->DynamicMetadataLinesBeforeActiveRequired = display_cfg->plane_descriptors[k].dynamic_meta_data.lines_before_active_required;
+@@ -8965,7 +8965,7 @@ static bool dml_core_mode_support(struct dml2_core_calcs_mode_support_ex *in_out
+ 	CalculateVMRowAndSwath_params->MALLAllocatedForDCN = mode_lib->soc.mall_allocated_for_dcn_mbytes;
+ 	CalculateVMRowAndSwath_params->SwathWidthY = mode_lib->ms.SwathWidthY;
+ 	CalculateVMRowAndSwath_params->SwathWidthC = mode_lib->ms.SwathWidthC;
+-	CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->soc.hostvm_min_page_size_kbytes;
++	CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->soc.hostvm_min_page_size_kbytes * 1024;
+ 	CalculateVMRowAndSwath_params->DCCMetaBufferSizeBytes = mode_lib->ip.dcc_meta_buffer_size_bytes;
+ 	CalculateVMRowAndSwath_params->mrq_present = mode_lib->ip.dcn_mrq_present;
  
- #define APM_CPU_PART_XGENE		0x000
- #define APM_CPU_VAR_POTENZA		0x00
-@@ -189,6 +190,7 @@
- #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
- #define MIDR_CORTEX_A720AE MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720AE)
- #define MIDR_NEOVERSE_N3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N3)
-+#define MIDR_C1_PRO MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_PRO)
- #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
- #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
- #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
+@@ -10755,7 +10755,7 @@ static bool dml_core_mode_programming(struct dml2_core_calcs_mode_programming_ex
+ 	CalculateVMRowAndSwath_params->MALLAllocatedForDCN = mode_lib->soc.mall_allocated_for_dcn_mbytes;
+ 	CalculateVMRowAndSwath_params->SwathWidthY = mode_lib->mp.SwathWidthY;
+ 	CalculateVMRowAndSwath_params->SwathWidthC = mode_lib->mp.SwathWidthC;
+-	CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->soc.hostvm_min_page_size_kbytes;
++	CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->soc.hostvm_min_page_size_kbytes * 1024;
+ 	CalculateVMRowAndSwath_params->DCCMetaBufferSizeBytes = mode_lib->ip.dcc_meta_buffer_size_bytes;
+ 	CalculateVMRowAndSwath_params->mrq_present = mode_lib->ip.dcn_mrq_present;
+ 
+@@ -10971,7 +10971,7 @@ static bool dml_core_mode_programming(struct dml2_core_calcs_mode_programming_ex
+ 		s->tdlut_bytes_per_group,
+ 		s->HostVMInefficiencyFactor,
+ 		s->HostVMInefficiencyFactorPrefetch,
+-		mode_lib->soc.hostvm_min_page_size_kbytes,
++		mode_lib->soc.hostvm_min_page_size_kbytes * 1024,
+ 		mode_lib->soc.qos_parameters.qos_type,
+ 		!(display_cfg->overrides.max_outstanding_when_urgent_expected_disable),
+ 		mode_lib->soc.max_outstanding_reqs,
+@@ -11264,7 +11264,7 @@ static bool dml_core_mode_programming(struct dml2_core_calcs_mode_programming_ex
+ 			CalculatePrefetchSchedule_params->OutputFormat = display_cfg->stream_descriptors[display_cfg->plane_descriptors[k].stream_index].output.output_format;
+ 			CalculatePrefetchSchedule_params->MaxInterDCNTileRepeaters = mode_lib->ip.max_inter_dcn_tile_repeaters;
+ 			CalculatePrefetchSchedule_params->VStartup = s->MaxVStartupLines[k];
+-			CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->soc.hostvm_min_page_size_kbytes;
++			CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->soc.hostvm_min_page_size_kbytes * 1024;
+ 			CalculatePrefetchSchedule_params->DynamicMetadataEnable = display_cfg->plane_descriptors[k].dynamic_meta_data.enable;
+ 			CalculatePrefetchSchedule_params->DynamicMetadataVMEnabled = mode_lib->ip.dynamic_metadata_vm_enabled;
+ 			CalculatePrefetchSchedule_params->DynamicMetadataLinesBeforeActiveRequired = display_cfg->plane_descriptors[k].dynamic_meta_data.lines_before_active_required;
 -- 
 2.53.0
 
