@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446A43FD140;
-	Tue, 28 Apr 2026 10:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3D13FE350;
+	Tue, 28 Apr 2026 10:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372932; cv=none; b=HNdL7jY7X5/f9YFzNv83F4fPW/vljjLGTfz/JuZ8UCuiMDsl1nCzsT7c8rVjZv98u4DYZjuW9lND7lA6HLonNOVtXe16z0HjaHk/YT1Ma2WmyL3Y2tln4vmzFimG1tqkljV+Hu8wemsPZK1ryyMJD77Zvup5ALdPYSnaLo+mjI0=
+	t=1777372933; cv=none; b=Y9b3OD+lLBeDJJ48rjLeMvafzqA7FW53pfFSEL3x3H7LqETtu3xGMHciOUxZ42LsTx69U80RxhUYx7rkAyM8UTJuOuoY30n3pYzaEq3NJl/Kktpyp0wKCdBDx7Yi4t0F+58k5KRUFn4a0PEceMLf7fHNvu2rOJwwBF1tto22bX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372932; c=relaxed/simple;
-	bh=iCCgW4S8zxtaNC8rTtz8QyO5SNyyj2MfQZLDbDz9Y+k=;
+	s=arc-20240116; t=1777372933; c=relaxed/simple;
+	bh=PsFsicZF8LO/wwF+hIneruUq34uFUhSIcZFHEpZSb84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBImTlNI1t7H7soz+EDl4o3A2DOF5fQ/V80nd+5E02jM0u1DGpJkwDNr34e/YPDOzi4MQSUB/hQ5Kt7q4URqwaF9KxGCR8xfbpALFpcPhMQfcPMJg8Hj/A6w4Q7ovg3jZceaYisk554qINczaDGCrH3LD4RasrnJIC7NE4L/ZRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pvGs8ih7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cP9NRhn17rafZlnC64TNHK21RWHj4EYFSATsO1p+nmnE+8Nr8/+ukbsZtGAJ0fgR7XwgQNbs9RQ6TXPsyYOnOAI3RQ0xf3T/djwwRPSBqDmdyi/ais4TUjO9k+whpsgQ8c8vclnIpVem+KYjDrOofTToLipAOtwBpCX3i5Gfbzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=geLV98Ow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pvGs8ih7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C658DC2BCF6;
-	Tue, 28 Apr 2026 10:42:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="geLV98Ow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFE2C2BCAF;
+	Tue, 28 Apr 2026 10:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372931;
-	bh=iCCgW4S8zxtaNC8rTtz8QyO5SNyyj2MfQZLDbDz9Y+k=;
+	s=k20201202; t=1777372933;
+	bh=PsFsicZF8LO/wwF+hIneruUq34uFUhSIcZFHEpZSb84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvGs8ih7u9DZqtcuYSBFUdHAzvl0eySDbyxLEQvvlZ+L3KinxHm2ShvyoFykXI0YD
-	 h8nPfKQsc1Pw+Rzr1yuvH2BVDGEp1gxO3YvqQeo4qClHHA68wWRlSWeUK0qGvVyrgb
-	 jnSSonGjsbOwGgNTFoAsdQxUQ2++fEKV7HUqq4nKSsYHyQFh6Zl+H+CCdkZMZQmFyZ
-	 0+ECYHCeXyzeOsHgSaGcHrXZkH5FLIpX/4q2Qa5L6lPy40jM3r1xEp9CgZWQaD5ybB
-	 8nxd73ehDs1U4iHNLQ9jvjvjVYIXURZr6r+taaUn7dtjnPCs4TAyajkhMVuVxn7Jm3
-	 lKATB9M6MBxNw==
+	b=geLV98Ow0aFcqR7IRN+UhH1nvIiGwphIfIw/jmikOECXTIngFGztx8HvHsX4iUhIL
+	 Ut9UEhqpXwy8ZJEBH62kDDQfAxtfHIjNFx6svRHNWoavRrHa/KS25w4qYQX/+ewo4x
+	 kDCN9S6P1sfyanWcb9YIfOWcB1vh/1KL4FKIXfmgDAK5RpaYVmclKJXyzgWwbEzy9D
+	 zIkh08mxXohamye/EZCs5I1DdTfZ6da0eNgLZO63b9BQ+mdNij/PXSbacGVNOty8R+
+	 Mc680UV/ioc5i7RAeIBtIpz7Ouwyu5h/8P3RAl0Frg4z5AxFCYOKKelqdeCqtGePuR
+	 Bu0zG0b84hqqg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	james.smart@broadcom.com,
-	dick.kennedy@broadcom.com,
-	jejb@linux.ibm.com,
-	linux-scsi@vger.kernel.org,
+	pavel@ucw.cz,
+	linux-leds@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] scsi: lpfc: Remove unnecessary ndlp kref get in lpfc_check_nlp_post_devloss
-Date: Tue, 28 Apr 2026 06:40:38 -0400
-Message-ID: <20260428104133.2858589-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] leds: core: Implement fallback to software node name for LED names
+Date: Tue, 28 Apr 2026 06:40:39 -0400
+Message-ID: <20260428104133.2858589-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -52,350 +50,390 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit f6bfb8d149336661bb80e62980da9a45b920403c ]
+[ Upstream commit 4f530c65487636dc1536b3fa1041f9a877a66a7f ]
 
-When NLP_IN_RECOV_POST_DEV_LOSS is set, the initial node reference
-remains held while recovery is in progress.  Taking a reference when
-NLP_IN_RECOV_POST_DEV_LOSS is cleared results in an additional reference
-being held.  This causes an extra reference when cleaning up lpfc_vport
-instances.  Thus, remove the extraneous ndlp kref get in
-lpfc_check_nlp_post_devloss.
+If a software node defining an LED is missing explicit 'label', 'color',
+or 'function' properties, led_compose_name() currently fails with
+-EINVAL, because fallback to using node name in place of LED name/label
+is only implemented for OF nodes.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://patch.msgid.link/20260212213008.149873-7-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Implement similar fallback for software nodes. Unlike OF nodes, which
+use the short 'name' attribute of the device tree node to avoid
+including the address block, use fwnode_get_name() directly since
+swnodes do not include an address block and always have a valid name.
+
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://patch.msgid.link/20260311-led-swnode-name-v1-1-798a49e041c6@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my thorough investigation, I can now complete my analysis.
+Now I have enough information for a complete analysis.
 
----
+# Analysis: leds: core: Implement fallback to software node name for LED
+names
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Parse the Subject Line**
-- Record: Subsystem `scsi: lpfc:`, action verb `Remove`, summary:
-  removes an unnecessary `ndlp` kref get in
-  `lpfc_check_nlp_post_devloss` that was leaving an extra reference
-  after device-loss recovery.
+### Step 1.1: Subject line
+Record: `[leds: core]` `[Implement]` `[fallback to software node name
+for LED names]`. The verb "Implement" suggests adding missing
+functionality, but the commit body describes fixing an -EINVAL failure,
+making this a bug fix in substance.
 
-**Step 1.2: Parse All Commit Message Tags**
-- Record: `Signed-off-by: Justin Tee <justin.tee@broadcom.com>` (author
-  is a Broadcom lpfc maintainer). `Link: https://patch.msgid.link/202602
-  12213008.149873-7-justintee8345@gmail.com`. `Signed-off-by: Martin K.
-  Petersen <martin.petersen@oracle.com>` (SCSI maintainer). NO `Fixes:`
-  tag, NO `Reported-by:` tag, NO `Cc: stable`, NO `Reviewed-by`.
+### Step 1.2: Tags
+Record:
+- Signed-off-by: Dmitry Torokhov (author)
+- Signed-off-by: Lee Jones (LED subsystem maintainer)
+- Link: `https://patch.msgid.link/20260311-led-swnode-
+  name-v1-1-798a49e041c6@gmail.com`
+- No `Fixes:` tag
+- No `Cc: stable` tag
+- No `Reported-by` / `Tested-by` / `Reviewed-by` tags
 
-**Step 1.3: Analyze the Commit Body Text**
-- Record: The commit describes a refcount leak - when
-  `NLP_IN_RECOV_POST_DEV_LOSS` is set, the initial ndlp reference is
-  *still held* (because current `lpfc_dev_loss_tmo_handler` does *not*
-  put in the recovering path anymore). Taking another reference via
-  `lpfc_nlp_get` in the "reverse" path therefore *adds* an extra
-  reference. Symptom: "extra reference when cleaning up lpfc_vport
-  instances". No crash/stack trace given.
+### Step 1.3: Body text
+Record: Bug description: "If a software node defining an LED is missing
+explicit 'label', 'color', or 'function' properties,
+`led_compose_name()` currently fails with -EINVAL." Author explicitly
+describes a failure mode. Root cause: OF-only fallback. Fix: use
+`fwnode_get_name()` for software nodes.
 
-**Step 1.4: Detect Hidden Bug Fixes**
-- Record: Subject begins with "Remove unnecessary" (cleanup wording) but
-  commit body explicitly says "extra reference when cleaning up
-  lpfc_vport instances" - this IS a real bug fix for a ref leak (pattern
-  7: reference counting bug).
+### Step 1.4: Hidden bug fix
+Record: The verb "Implement" reads like a feature addition, but the
+commit body explicitly says the existing code "fails with -EINVAL" -
+this is a bug fix disguised as a feature implementation. Pattern "Handle
+X properly" / missing error-path fallback.
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory the Changes**
-- Record: One file changed: `drivers/scsi/lpfc/lpfc_hbadisc.c`. One line
-  removed (`lpfc_nlp_get(ndlp);`). Scope: single-function surgical fix.
+### Step 2.1: Inventory
+Record: 1 file changed (`drivers/leds/led-core.c`), 3 lines added, 0
+removed. Single function modified: `led_compose_name()`. Scope: single-
+file surgical fix.
 
-**Step 2.2: Understand the Code Flow Change**
-- Record: Before - `lpfc_check_nlp_post_devloss` cleared the
-  `NLP_IN_RECOV_POST_DEV_LOSS` flag, cleared `NLP_DROPPED`, then called
-  `lpfc_nlp_get(ndlp)` to "restore" a put supposedly performed in
-  `lpfc_dev_loss_tmo_handler`. After - the get is gone; the flag bits
-  are still cleared; no refcount change is performed.
+### Step 2.2: Code flow change
+Record: Before: if fwnode is software_node (not OF) and lacks
+label/color/function properties → return -EINVAL. After: if
+software_node, use `fwnode_get_name(fwnode)` as the LED classdev name
+(same fallback pattern as OF nodes).
 
-**Step 2.3: Identify the Bug Mechanism**
-- Record: Category (c) reference counting fix - removing an extra
-  `lpfc_nlp_get()`. The reason the get is wrong: commit `d1a2ef63fc8b3`
-  ("scsi: lpfc: Fix kref imbalance on fabric ndlps from dev_loss_tmo
-  handler", merged in v6.12) added an early `return fcf_inuse;` in the
-  `recovering` branch, so `lpfc_nlp_put(ndlp)` is no longer executed
-  when `NLP_IN_RECOV_POST_DEV_LOSS` is set. The matching `lpfc_nlp_get`
-  in `lpfc_check_nlp_post_devloss` was left behind and now grabs an
-  extra reference every time a fabric ndlp transiently hits dev_loss and
-  recovers.
+### Step 2.3: Bug mechanism
+Record: Category (h) hardware-workaround-ish / (g) logic-correctness.
+The `led_compose_name` fallback chain was incomplete: it handled OF-node
+fallback (`to_of_node(fwnode)->name`) but didn't handle the
+`is_software_node()` case, causing LED registration to fail for drivers
+that describe LEDs via software nodes with only a `.name` field. Fix
+adds the missing `else if (is_software_node(fwnode))` branch.
 
-**Step 2.4: Assess the Fix Quality**
-- Record: Minimal 1-line removal. Obvious correctness - just removes the
-  stale counterpart of a no-longer-happening put. No new regression
-  risk: removing an unbalanced get can only reduce references, it cannot
-  cause a UAF (the ndlp reference held before dev_loss remains held
-  because the put never happens in the recovering path).
+### Step 2.4: Quality
+Record: Obviously correct - mirrors the OF pattern. Uses
+`fwnode_get_name()` which for swnodes resolves to
+`kobject_name(&swnode->kobj)` (always valid for registered swnodes). No
+regression risk: only affects a path that previously returned -EINVAL.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame the Changed Lines**
-- Record: The `lpfc_nlp_get(ndlp);` being removed was originally
-  introduced by `af984c87293b1` (Oct 2021, v5.17) as part of "scsi:
-  lpfc: Allow fabric node recovery if recovery is in progress before
-  devloss". At that time it was *correct* (paired with a put in the
-  handler). The bug was introduced by `d1a2ef63fc8b3` (Sep 2024, v6.12)
-  "scsi: lpfc: Fix kref imbalance on fabric ndlps from dev_loss_tmo
-  handler", which added the early `return fcf_inuse;` that skips the
-  `lpfc_nlp_put` in the recovering path but left the `lpfc_nlp_get` in
-  `lpfc_check_nlp_post_devloss` dangling.
+### Step 3.1: git blame
+Record: The `is_of_node(fwnode)` OF fallback was added by
+`bb4e9af0348df` (Jun 2019, v5.4-rc1) - "leds: core: Add support for
+composing LED class device names". The swnode gap has existed since 2019
+but was latent until drivers began using swnodes for LEDs without a
+"label" property.
 
-**Step 3.2: Follow the Fixes: Tag**
-- Record: No `Fixes:` tag given. Based on code analysis, the actual
-  Fixes: target is `d1a2ef63fc8b3`, present in v6.12 and forward.
+### Step 3.2: Fixes: tag
+Record: No Fixes: tag. Most relevant trigger commit: `4e0bcbd270e88`
+("platform/x86: barco-p50-gpio: use software nodes for gpio-leds/keys")
+merged in v6.18-rc1, which defined an LED swnode with only `.name =
+"identify"` and no label/color/function properties. Verified via `git
+describe --contains 4e0bcbd270e88` → `v6.18-rc1~82^2~2`.
 
-**Step 3.3: Check File History for Related Changes**
-- Record: Related recent commits: `07caedc6a3887` (Nov 2025) added the
-  `clear_bit(NLP_DROPPED, ...);` to `lpfc_check_nlp_post_devloss`;
-  `3f8f9f16f844a` converted save_flags to bitmask; `e07ac2d2aa5fc`
-  removed unnecessary relocking. This is a standalone patch, part of a
-  13-patch lpfc-14.4.0.14 update series (PATCH 6/13).
+### Step 3.3: Related recent changes
+Record: `git log --oneline -- drivers/leds/led-core.c` shows last change
+was `ee44a1def7ee4` in v6.16-rc1 ("leds: core: Bail out when composed
+name can't fit the buffer"). No conflicting changes in stable range.
 
-**Step 3.4: Check the Author's Other Commits**
-- Record: Justin Tee (Broadcom) is the primary lpfc
-  maintainer/contributor. Wrote `d1a2ef63fc8b3` (which introduced this
-  bug) and has 30+ lpfc commits recently. Subject-matter expert.
+### Step 3.4: Author
+Record: Dmitry Torokhov is a prolific input/driver maintainer; has
+landed other swnode conversions recently (`4e0bcbd270e88` barco,
+`b8754092dfed4` pcengines-apuv2). Strong familiarity with swnode
+plumbing. Applied by Lee Jones (LED subsystem maintainer).
 
-**Step 3.5: Check for Dependent/Prerequisite Commits**
-- Record: This fix is completely standalone for trees that contain
-  `d1a2ef63fc8b3` (v6.12+). The only dependency is that the buggy commit
-  is present. Can apply standalone.
+### Step 3.5: Dependencies
+Record: `is_software_node()` and `fwnode_get_name()` have been stable
+APIs in the fwnode infrastructure for years. No prerequisite patches.
+Standalone fix.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1: Find the Original Patch Discussion**
-- Record: `b4 am` located the patch series at lore.kernel.org. Patch is
-  "PATCH 6/13 lpfc: Remove unnecessary ndlp kref get in
-  lpfc_check_nlp_post_devloss" from series "Update lpfc to revision
-  14.4.0.14" posted 2026-02-12 against Martin's 6.20/scsi-queue tree. No
-  review discussion found on this specific patch (no `Reviewed-by`, no
-  NAKs, no stable suggestions).
+### Step 4.1-4.2: Thread investigation
+Record: Used `b4 mbox -o /tmp/b4-dig 20260311-led-swnode-
+name-v1-1-798a49e041c6@gmail.com` to retrieve the thread (8 messages).
+Patch is [PATCH 1/2] of "Fall back to using software node name as LED
+name" series. Maintainer Lee Jones applied both patches: "Applied,
+thanks! [1/2] commit: 4f530c65487636dc1536b3fa1041f9a877a66a7f [2/2]
+commit: 91dc0c2a152373c4004df7e36de45190b82089ab". No NAKs. Initial
+application failed due to conflict with patch 2/2 formatting changes -
+author resent after rebase. No stable nomination in thread. Cover letter
+motivation: "helpful when converting old boards using bespoke platform
+data to software nodes/static device properties."
 
-**Step 4.2: Check Who Reviewed the Patch**
-- Record: Series is a typical Broadcom/lpfc driver update going through
-  SCSI maintainer Martin K. Petersen. No explicit per-patch review
-  comments retrieved.
-
-**Step 4.3: Search for the Bug Report**
-- Record: No `Reported-by:` tag. The bug was author-discovered via code
-  analysis, not a user report.
-
-**Step 4.4: Check for Related Patches and Series**
-- Record: This is patch 6 of a 13-patch series. Other patches include
-  logging improvements, typecast changes, cleanup of `lpfc_fdmi_cmd`
-  error paths, `txcmplq_cnt` fixes, NVMe abort cleanup on PCI reset, and
-  version bump. This specific patch is self-contained.
-
-**Step 4.5: Check Stable Mailing List History**
-- Record: No prior discussion found.
+### Step 4.3-4.5: Bug report / stable discussion
+Record: No `Reported-by:` tag, no linked syzbot/bugzilla. No explicit
+stable discussion observed in the thread.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Identify Key Functions in the Diff**
-- Record: `lpfc_check_nlp_post_devloss()` only.
+### Step 5.1: Functions modified
+Record: `led_compose_name()` only.
 
-**Step 5.2: Trace Callers**
-- Record: Callers verified via grep - 5 total call sites:
-  `lpfc_mbx_cmpl_fc_reg_login`, `lpfc_nlp_reg_node` (in
-  `lpfc_hbadisc.c`), and 3 sites in `lpfc_els.c` around FLOGI handling.
-  These are mainline FC discovery/login completion paths - called
-  routinely during normal operation, particularly after link events.
+### Step 5.2: Callers
+Record: `led_compose_name` is called by:
+- `drivers/leds/led-class.c:498` (`led_classdev_register_ext`) - the
+  main registration path used by dozens of LED drivers
+- `drivers/pci/npem.c:498` - PCI NPEM LED registration
 
-**Step 5.3: Trace Callees**
-- Record: The function calls `test_and_clear_bit`, `clear_bit`,
-  `lpfc_nlp_get` (being removed), and `lpfc_printf_vlog` (logging). No
-  I/O, no complex state changes.
+`led_classdev_register_ext` is called from ~70+ LED drivers via
+`devm_led_classdev_register_ext`, including `drivers/leds/leds-
+gpio.c:create_gpio_led` which is the specific path exercised by
+barco-p50-gpio.
 
-**Step 5.4: Follow the Call Chain**
-- Record: Reachable from any FC link-bounce/devloss path. Real-world
-  triggered every time a fabric ndlp (Fabric_DID, FDMI_DID,
-  NameServer_DID, Fabric_Cntl_DID) dev_loss_tmo-fires while recovery is
-  still in progress - a common event on FC fabrics.
+### Step 5.3: Callees
+Record: `is_software_node()`, `fwnode_get_name()`, `snprintf()` - all
+well-established.
 
-**Step 5.5: Search for Similar Patterns**
-- Record: N/A - this is a specific function.
+### Step 5.4: Call chain / reachability
+Record: Reachable from platform device probe paths. Specifically: `leds-
+gpio` probe → `gpio_leds_create()` → `create_gpio_led()` (with
+`template->name = NULL`) → `devm_led_classdev_register_ext()` →
+`led_classdev_register_ext()` → `led_compose_name()`. Triggered on every
+boot for affected hardware.
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+### Step 5.5: Similar patterns
+Record: Verified `drivers/platform/x86/barco-p50-gpio.c` at v7.0 has
+`identify_led_node` with `.name = "identify"` and `identify_led_props`
+containing only `PROPERTY_ENTRY_GPIO` (no label/color/function). Other
+swnode LED users (`meraki-mx100`, `pcengines-apuv2`, `x86-android-
+tablets`) include `PROPERTY_ENTRY_STRING("label", ...)` so they work
+without this fix.
 
-**Step 6.1: Does the Buggy Code Exist in Stable Trees?**
-- Record: Verified via `git show
-  <branch>:drivers/scsi/lpfc/lpfc_hbadisc.c`:
-  - stable/linux-6.12.y: HAS BUG - `recovering` path has `return
-    fcf_inuse;` (no put); `lpfc_check_nlp_post_devloss` has
-    `lpfc_nlp_get(ndlp)` (extra ref).
-  - stable/linux-6.17.y, 6.18.y, 6.19.y: HAS BUG - same pattern.
-  - stable/linux-6.6.y: NO BUG - the `recovering` path in 6.6.y does NOT
-    have the early return; the `lpfc_nlp_put(ndlp)` still executes at
-    the end of fabric-node handling, so the `lpfc_nlp_get` correctly
-    balances it. Fix must NOT be backported to 6.6.y.
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.2: Check for Backport Complications**
-- Record: For 6.18.y and 6.19.y: patch applies cleanly (same surrounding
-  context with `clear_bit(NLP_DROPPED, ...)`). For 6.17.y: needs minor
-  context adjustment (no `clear_bit(NLP_DROPPED, ...)` line above). For
-  6.12.y: function still uses the older `spin_lock_irqsave`/`save_flags
-  &=` form; a manual adjustment (simply removing the
-  `lpfc_nlp_get(ndlp);` line amidst different surrounding context) is
-  needed but trivial.
+### Step 6.1: Code in stable trees
+Record: The `led_compose_name()` function exists in all active stable
+branches. Verified `git show v6.12:drivers/leds/led-core.c` and
+`v6.6:drivers/leds/led-core.c` both have identical `else if
+(is_of_node(fwnode)) { ... } else return -EINVAL;` pattern. The bug
+(swnode fallback gap) exists in every version since v5.4. However, the
+practical USER-VISIBLE bug (barco-p50-gpio LED not registering) only
+appears starting in v6.18 (via `4e0bcbd270e88`). Before v6.18, barco
+used `gpio_led_platform_data` with `.name = "identify"`, which bypasses
+`led_compose_name` entirely (via the `if (template->name)` branch in
+`create_gpio_led`).
 
-**Step 6.3: Check If Related Fixes Are Already in Stable**
-- Record: None. Buggy commit `d1a2ef63fc8b3` went into v6.12 directly
-  (not backported). No alternate fix present.
+### Step 6.2: Backport difficulty
+Record: `git log --oneline v6.19..v7.0 -- drivers/leds/led-core.c` →
+empty. File is stable. Clean apply expected for v6.18.y+ (where the
+regression exists). For older stable trees (6.6, 6.12), the fix is a no-
+op improvement (no driver there triggers the path) but still applies
+cleanly.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### Step 6.3: Related fixes in stable
+Record: None found. No other approach to the same bug observed.
 
-**Step 7.1: Identify the Subsystem and Its Criticality**
-- Record: `drivers/scsi/lpfc/` - Broadcom/Emulex Fibre Channel HBA
-  driver. Criticality: IMPORTANT - used in enterprise storage/SAN
-  setups. Reference leaks in a driver of this size matter to enterprise
-  users running long-lived systems.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.2: Assess Subsystem Activity**
-- Record: Actively maintained (regular version bumps, multiple patches
-  per quarter). Justin Tee / Broadcom are responsive maintainers.
+### Step 7.1: Subsystem
+Record: `drivers/leds/` - LED class core. Criticality: IMPORTANT (common
+driver infrastructure used by many hardware drivers). Failure mode here
+is driver-specific rather than core-kernel.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+### Step 7.2: Activity
+Record: `drivers/leds/led-core.c` receives only a handful of changes per
+release. Mature, stable code.
 
-**Step 8.1: Determine Who Is Affected**
-- Record: Affected population - users of lpfc-driven FC HBAs running
-  v6.12+ stable kernels who experience fabric link bounces,
-  zoning/fabric reconfiguration, or transient device-loss events on
-  Fabric_DID/FDMI/NameServer/Fabric_Cntl ndlps.
+## PHASE 8: IMPACT AND RISK
 
-**Step 8.2: Determine the Trigger Conditions**
-- Record: Triggered every time a fabric ndlp enters dev_loss_tmo while
-  still in a recovering discovery state. On busy fabrics with many
-  vports, this can happen repeatedly; each occurrence leaks one ndlp
-  reference.
+### Step 8.1: Affected users
+Record: Users of hardware whose drivers describe LEDs via software nodes
+without `label`/`color`/`function` properties. Concretely: Barco P50
+board (`barco-p50-gpio`) in v6.18+ - identify LED fails to register.
+Platform-specific (niche hardware).
 
-**Step 8.3: Determine the Failure Mode Severity**
-- Record: Failure mode - ndlp kref leak; ndlp objects cannot be freed
-  during `lpfc_vport` cleanup; potential memory accumulation over time;
-  can cause WARN messages or stuck/hang behavior on vport
-  teardown/module unload. Severity: MEDIUM-HIGH - not an immediate crash
-  or security issue but a persistent resource leak in a commonly-
-  triggered code path in enterprise storage workloads.
+### Step 8.2: Trigger conditions
+Record: Triggered every boot on affected hardware. No privilege needed -
+happens automatically during probe.
 
-**Step 8.4: Calculate Risk-Benefit Ratio**
-- Record: Benefit - fixes a real ref leak introduced by a previous "fix"
-  commit, benefit is MEDIUM-HIGH for lpfc users. Risk - 1-line removal,
-  obvious correctness, no possibility of new UAF since we're only
-  reducing (not adding) puts; risk VERY LOW. Ratio: clearly favorable
-  for backport.
+### Step 8.3: Failure severity
+Record: LED fails to register (returns -EINVAL during probe). Severity:
+LOW-MEDIUM. No crash, no data loss, no security issue. Functional
+regression: identify LED on Barco P50 doesn't appear in /sys/class/leds.
+For most users this is a minor annoyance; for Barco P50 appliance users,
+the identify-button LED feature is broken.
+
+### Step 8.4: Risk-benefit
+Record:
+- Benefit: LOW-MEDIUM (fixes functional regression on specific hardware,
+  v6.18+ only)
+- Risk: VERY LOW (3-line mirror of existing OF logic, only affects a
+  path that previously returned -EINVAL)
+- Ratio: Favorable - very cheap fix for real regression
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Compile Evidence**
-- FOR: Real kref leak bug in common code path; trivially small/obvious
-  fix; author is subsystem maintainer who introduced the original bug;
-  bug confirmed to exist in 6.12.y, 6.17.y, 6.18.y, 6.19.y via direct
-  inspection; code analysis is unambiguous.
-- AGAINST: No `Fixes:`, `Reported-by:`, `Cc: stable`; no user report of
-  symptoms; a similar comment language ("put the initial ref count
-  back") now stale but not updated.
-- UNRESOLVED: Whether this is already in linux-next / scsi-queue for
-  v6.21 (not verified directly, but the cover letter says it targets
-  6.20/scsi-queue so likely on its way to mainline imminently).
+### Step 9.1: Evidence
+FOR backporting:
+- Commit body explicitly describes an -EINVAL failure (bug fix in
+  substance)
+- Fixes a functional regression in v6.18+ (barco-p50-gpio identify LED)
+- Small (3 lines), surgical, single file
+- Mirrors existing OF-node fallback logic (obviously correct)
+- Applied by the LED subsystem maintainer after review on the list
+- Very low regression risk - only affects paths that previously returned
+  -EINVAL
+- Trigger is deterministic (boot-time probe) so any affected users hit
+  it every boot
 
-**Step 9.2: Apply Stable Rules Checklist**
-1. Obviously correct and tested? YES - trivial to verify by reading the
-   two functions together; author has build/test history.
-2. Fixes real bug affecting users? YES - refcount leak on every fabric-
-   ndlp recovery event.
-3. Important issue? MEDIUM-HIGH (resource leak in enterprise storage
-   driver).
-4. Small and contained? YES - one line removal.
-5. No new features or APIs? YES - pure bug fix.
-6. Applies to stable? YES for 6.12.y (with trivial manual adjustment)
-   and 6.17.y+; must NOT go to 6.6.y and earlier.
+AGAINST backporting:
+- No `Fixes:` tag linking to `4e0bcbd270e88`
+- No `Cc: stable` tag
+- No `Reported-by:` (no cited user complaint)
+- Commit message framed as "helpful" for future conversions rather than
+  "fix"
+- Affected hardware is niche (Barco P50 appliance)
+- Non-critical failure (no crash/corruption/security)
 
-**Step 9.3: Check for Exception Categories**
-- N/A - normal bug fix, not a quirk/device ID/DT update/build fix.
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested: YES - trivial mirror of existing OF
+   branch, accepted by LED maintainer.
+2. Fixes real bug: YES - barco-p50-gpio LED registration fails in
+   v6.18+.
+3. Important issue: BORDERLINE - functional regression but not
+   crash/security/corruption.
+4. Small and contained: YES - 3 lines, one file, one function.
+5. No new features/APIs: YES - no new interfaces; fills a missing
+   fallback.
+6. Applies cleanly to stable: YES - the file is stable across recent
+   versions.
 
-**Step 9.4: Decision**
-- This is a genuine reference-counting bug fix for a regression
-  introduced by `d1a2ef63fc8b3` in v6.12. The fix is minimal, obviously
-  correct, and affects a common code path in the lpfc FC driver used by
-  enterprise storage. Risk is essentially zero; benefit prevents a real
-  ref leak. Should be backported to 6.12+ stable trees (NOT to 6.6.y and
-  earlier where the bug does not exist).
+### Step 9.3: Exception category
+Record: Partial match to "hardware enablement / driver fix for existing
+hardware". The fix makes an in-tree driver (barco-p50-gpio, present
+since v5.16, swnode-converted in v6.18) actually work.
+
+### Step 9.4: Decision
+The commit fixes a real, deterministic functional regression introduced
+into v6.18 by commit `4e0bcbd270e88`. Although the failure is not a
+crash or security issue, it is a clean-cut boot-time driver probe
+failure that users will hit every boot on affected hardware. The fix is
+minimal (3 lines), obviously correct (mirrors the existing OF-node
+fallback), safe (cannot break previously-working configurations since it
+only covers a path that previously returned -EINVAL), and was accepted
+by the subsystem maintainer.
+
+The absence of `Fixes:`/`Cc: stable` tags is exactly what AUTOSEL exists
+to catch. Weight of evidence favors backport, particularly to v6.18.y
+and v6.19.y where the regression actually manifests. For earlier trees
+the fix is a safe no-op improvement that still applies cleanly.
 
 ## Verification
+- [Phase 1] Parsed tags from commit message: no `Fixes:`, no `Cc:
+  stable`, no `Reported-by:`; only `Signed-off-by:` from author (Dmitry
+  Torokhov) and LED maintainer (Lee Jones); `Link:` to
+  `patch.msgid.link` for `20260311-led-swnode-
+  name-v1-1-798a49e041c6@gmail.com`.
+- [Phase 2] Read `drivers/leds/led-core.c` (617 lines, current v7.0):
+  confirmed `led_compose_name` structure - `is_of_node(fwnode)` branch
+  (line 581) falls back to `to_of_node(fwnode)->name`, `else return
+  -EINVAL` (line 585). Diff adds 3 lines of `else if
+  (is_software_node(fwnode))` branch using `fwnode_get_name(fwnode)`.
+- [Phase 3] `git blame drivers/leds/led-core.c -L 574,592`: `is_of_node`
+  fallback dates to `bb4e9af0348dfe` (2019, Jacek Anaszewski) - "leds:
+  core: Add support for composing LED class device names".
+- [Phase 3] `git describe --contains 4e0bcbd270e88` →
+  `v6.18-rc1~82^2~2`: confirms barco swnode conversion landed in v6.18.
+- [Phase 3] `git show
+  4e0bcbd270e88^:drivers/platform/x86/barco-p50-gpio.c`: confirmed
+  pre-v6.18 barco used `gpio_led_platform_data` with `.name =
+  "identify"`, bypassing `led_compose_name`.
+- [Phase 3] `git show v6.6:drivers/platform/x86/barco-p50-gpio.c`: still
+  uses `gpio_led_platform_data`, not swnodes - so regression does NOT
+  exist in v6.6.y.
+- [Phase 3] `git log --oneline -- drivers/leds/led-core.c`: last change
+  `ee44a1def7ee4` in v6.16-rc1; no churn in v6.18..v7.0.
+- [Phase 4] `b4 mbox -o /tmp/b4-dig 20260311-led-swnode-name-v1-1-...`:
+  retrieved 8-message thread. Lee Jones replied "Applied, thanks!" and
+  listed commit hash `4f530c65487636dc1536b3fa1041f9a877a66a7f` for
+  patch 1/2. Initial application failed (conflict with patch 2/2
+  formatting), author re-submitted.
+- [Phase 4] Read thread: no `Cc: stable` suggestion, no NAKs, no
+  Reported-by reference; author frames the change as "helpful when
+  converting old boards."
+- [Phase 5] Read `drivers/leds/leds-gpio.c`: confirmed
+  `gpio_leds_create()` passes `struct gpio_led led = {}` (name == NULL)
+  into `create_gpio_led`, forcing the fwnode path with `init_data =
+  {.fwnode = fwnode}` - the exact path that hits `led_compose_name` and
+  fails without this fix.
+- [Phase 5] Read `drivers/platform/x86/barco-p50-gpio.c` lines 83-101
+  (v7.0): confirmed `identify_led_node` has `.name = "identify"` with
+  `identify_led_props` containing ONLY `PROPERTY_ENTRY_GPIO("gpios",
+  ...)` - no `label`/`color`/`function`.
+- [Phase 5] Examined other swnode LED users: `pcengines-apuv2`, `meraki-
+  mx100`, `x86-android-tablets/other.c` all include
+  `PROPERTY_ENTRY_STRING("label", ...)` → unaffected by the bug.
+- [Phase 5] Read `drivers/base/swnode.c` line 423-427 and
+  `drivers/base/property.c` line 654-658: `fwnode_get_name(swnode)`
+  returns `kobject_name(&swnode->kobj)`, always valid for registered
+  swnodes. Safe to use here.
+- [Phase 6] `git show v6.12:drivers/leds/led-core.c` and
+  `v6.6:drivers/leds/led-core.c`: confirmed identical `is_of_node`
+  fallback structure with `else return -EINVAL` - fix applies cleanly.
+- [Phase 6] `git diff v6.17:...led-core.c v7.0:...led-core.c`: no
+  difference → file is stable in the 6.18-6.19-7.0 range where the
+  regression exists.
+- [Phase 8] Trigger reachability: boot-time probe path, deterministic
+  every boot on affected hardware.
+- UNVERIFIED: Could not verify the patch's upstream commit SHA
+  `4f530c65487636dc1536b3fa1041f9a877a66a7f` in the local 7.0 tree (tree
+  HEAD is `028ef9c96e961 Linux 7.0`, likely predates the leds-next merge
+  for this commit). This matches the AUTOSEL candidate context.
+- UNVERIFIED: Did not confirm by dynamic test that barco-p50-gpio
+  actually fails without this fix; conclusion based on code inspection
+  of `leds-gpio` + `led_compose_name` + the barco swnode definition.
 
-- [Phase 1] Parsed tags on the supplied commit message: Signed-off-by
-  Justin Tee / Martin K. Petersen, Link to patch.msgid.link. No
-  Fixes/Reported-by/Cc-stable/Reviewed-by.
-- [Phase 2] Read the diff: single 1-line removal of
-  `lpfc_nlp_get(ndlp);` in `lpfc_check_nlp_post_devloss` within
-  `drivers/scsi/lpfc/lpfc_hbadisc.c`.
-- [Phase 3] `git log -L:lpfc_check_nlp_post_devloss` confirmed the get
-  was introduced in `af984c87293b1` (v5.17) where it was correct (paired
-  with a put).
-- [Phase 3] `git show d1a2ef63fc8b3` - confirmed this commit added the
-  early `return fcf_inuse;` in the recovering branch, breaking the
-  get/put pairing.
-- [Phase 3] `git log --author="Justin Tee"` - confirmed author is active
-  lpfc maintainer.
-- [Phase 3] `git tag --contains d1a2ef63fc8b3` - buggy commit is in
-  v6.12 and beyond.
-- [Phase 4] `b4 am 20260212213008.149873-7-justintee8345@gmail.com` -
-  downloaded the series, confirmed it is patch 6/13 in "Update lpfc to
-  revision 14.4.0.14" against 6.20/scsi-queue. No per-patch review
-  discussion.
-- [Phase 5] `grep lpfc_check_nlp_post_devloss` - 5 callers:
-  `lpfc_mbx_cmpl_fc_reg_login`, `lpfc_nlp_reg_node`, 3 in `lpfc_els.c`
-  FLOGI paths - all routine discovery paths.
-- [Phase 6] `git show stable/linux-6.12.y:...lpfc_hbadisc.c` - confirmed
-  bug exists (function has lpfc_nlp_get, recovering path has `return
-  fcf_inuse;`).
-- [Phase 6] `git show
-  stable/linux-6.17.y/6.18.y/6.19.y:...lpfc_hbadisc.c` - same bug
-  pattern confirmed in each.
-- [Phase 6] `git show stable/linux-6.6.y:...lpfc_hbadisc.c` - confirmed
-  bug does NOT exist (recovering path has no early return; put still
-  fires).
-- [Phase 8] Failure mode: ndlp kref leak on every fabric-ndlp dev_loss
-  recovery event, MEDIUM-HIGH severity.
-- UNVERIFIED: Whether any user has reported hangs/OOM from this specific
-  leak - no such report exists, but the mechanism is clear from code
-  analysis.
-- UNVERIFIED: Exact mainline SHA of the commit (not yet in my local
-  `master`), but the patch content matches what is on lore/in the
-  14.4.0.14 series.
-
-The fix is small, surgical, and addresses a real regression that exists
-in multiple active stable trees (6.12+). Meets all stable kernel rules.
-The adaptation for 6.12.y requires a trivial manual edit (different
-surrounding context) but the change itself is a single-line removal.
+The fix is a small, surgical 3-line fallback that mirrors well-
+established OF-node handling. It addresses a real regression introduced
+in v6.18 (Barco P50 identify LED fails to register) and cannot cause
+regressions because it only covers a previously-failing path. Accepted
+by the LED subsystem maintainer. This is the kind of low-risk driver-
+enablement fix that AUTOSEL is designed to pick up for recent stable
+trees.
 
 **YES**
 
- drivers/scsi/lpfc/lpfc_hbadisc.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/leds/led-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/lpfc/lpfc_hbadisc.c b/drivers/scsi/lpfc/lpfc_hbadisc.c
-index 8aaf05d7bb0af..d42b911a0aee1 100644
---- a/drivers/scsi/lpfc/lpfc_hbadisc.c
-+++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
-@@ -425,7 +425,6 @@ lpfc_check_nlp_post_devloss(struct lpfc_vport *vport,
- {
- 	if (test_and_clear_bit(NLP_IN_RECOV_POST_DEV_LOSS, &ndlp->save_flags)) {
- 		clear_bit(NLP_DROPPED, &ndlp->nlp_flag);
--		lpfc_nlp_get(ndlp);
- 		lpfc_printf_vlog(vport, KERN_INFO, LOG_DISCOVERY | LOG_NODE,
- 				 "8438 Devloss timeout reversed on DID x%x "
- 				 "refcnt %d ndlp %p flag x%lx "
+diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
+index 59473f286b31f..8ce41b36c6455 100644
+--- a/drivers/leds/led-core.c
++++ b/drivers/leds/led-core.c
+@@ -581,6 +581,9 @@ int led_compose_name(struct device *dev, struct led_init_data *init_data,
+ 	} else if (is_of_node(fwnode)) {
+ 		n = snprintf(led_classdev_name, LED_MAX_NAME_SIZE, "%s",
+ 			     to_of_node(fwnode)->name);
++	} else if (is_software_node(fwnode)) {
++		n = snprintf(led_classdev_name, LED_MAX_NAME_SIZE, "%s",
++			     fwnode_get_name(fwnode));
+ 	} else
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
