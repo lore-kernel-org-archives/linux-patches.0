@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533C8427A13;
-	Tue, 28 Apr 2026 10:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146F242846D;
+	Tue, 28 Apr 2026 10:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372996; cv=none; b=qeKKhknVhkMHLnqqQWxCWOR2A1unlbXZKyJfQHbjH+6ahrPWt8kI6nWb3DmMqOufgjquVaKHC6RYt4YYCt4Ick37OsZvK0qs4FS4WsQ+1PQ1jGRWCnEokkXs5Xj12Ra+1xd54bt9Ud8ZHRmkiXzny9HkcBjwT5X4cwQ0pm2GY3g=
+	t=1777372998; cv=none; b=tGy8hLUO1TAMUk2zKhPTuxk/3RJr3Aj3r8/uOvMdvJW487m4ckuEc2hqjcW9UHy5DwsGu7AhyDEksI+xvnovBBjdfU9LHeXggZXuOnSHstyOqmRWqHvj1StOLGzqaq1ycEPdaxJhISWqNzCMf+Wl1emSNWLXSx8EtWYvY0S6o0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372996; c=relaxed/simple;
-	bh=qP+aiH73KAS9rGA/suTGV6A/5fjfYgjPpjuIMd0CXG4=;
+	s=arc-20240116; t=1777372998; c=relaxed/simple;
+	bh=GDqpqBZ0aaPdKXbVkb4HW156HRKwRtK+VRmGjNeJYzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sPPk5m9+7KVIMv5Se4F1cdKnBWpB0ZFQvm94OGatbeDhu4WGsJ+BM3cDDv+bfDMwaJKR5Aqyxm/3BwrCLoQ2VQ4mJJkWTWPpiHuIwxGusJuwBFiqh7H1WX3BjFi5m42hCxuNPDS6KcivylDyNrdVcT477u1sI48I7WP/06DtST0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SBuZ0dhK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MuBTirH9b4qgP47m2xvuBRidjpSkcsCRhBNqBzE21Vzd5/O7W64XL8vzS608y35K8mxDfS7gRuMiP4QVPTAyz4bvKeVvW36yqETVFzGbhXoHn6jfQyGGpvX/Q1Jzm6ek9inbMEnL7W9cnAj5+2WKMml1I1Gwz7io3IeuSC6/hHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e0L95YoZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SBuZ0dhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2A3C2BCB8;
-	Tue, 28 Apr 2026 10:43:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e0L95YoZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A43EC2BCB5;
+	Tue, 28 Apr 2026 10:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372996;
-	bh=qP+aiH73KAS9rGA/suTGV6A/5fjfYgjPpjuIMd0CXG4=;
+	s=k20201202; t=1777372997;
+	bh=GDqpqBZ0aaPdKXbVkb4HW156HRKwRtK+VRmGjNeJYzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBuZ0dhKeI4Tu7WBT+IZQ9oP1oQIE9H01QnAPyebtY0s6tYKCCwcsI6VoKT/mqm7H
-	 iek47dE8W/olyPVkk1cmYPRUAC495h8+LZe8y25dnXFH5OD+rZRQI46HGEGdiF6u1a
-	 NNGUQo8qfzuLknKiGLZXT+M4U7ntsuDbOFHNbLcHVUNXJO9zr60d6moLsVHNvhdF/m
-	 KT2Hg9rbREw6CepTk/BCZ/QE51TzNJ8uurK03i0TwoAijyTguceGFCuU5WC7MUXO9t
-	 vTZAPYd9jAiCvY0RgIWoA5HPXT9KXu/DLru2pmHmNHYy0tdbDKsLs1vNjdcw01iKnZ
-	 o7lCjoU3J60Xw==
+	b=e0L95YoZzRrLvrkeqtlzegPzHlafDFGfeuq76f/su/RA14hMegTHpDLJrDtP8drPz
+	 K56ISFxXxTrJ6F/4UFwPxc1UG32xfhiQ+3uRMbsmsYJEvBZw6gAr/izu22t4ag1Il/
+	 5Dhb6qrauO5ExkVS/FQWmxHNaUMje7/Ji17W09v9dnVl4ETq7s8zciQVPW6GN85UHg
+	 TjNhMNl5Y9Uo0bT4+ZEFmzm7gLT+OWogaYMNv+ND+e8U9MHit+MckfKadtRVoLQ3rS
+	 F6a1WK6F0hIwboJ6eZtVvfbaFlMJBX7qixqBC9PW9oivBqpneP94vxjKr0utBkOTsh
+	 U3tSA9CQ8sA5A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Borkmann <daniel@iogearbox.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	dsahern@kernel.org,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	james.smart@broadcom.com,
+	dick.kennedy@broadcom.com,
+	jejb@linux.ibm.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ipv6: Cap TLV scan in ip6_tnl_parse_tlv_enc_lim
-Date: Tue, 28 Apr 2026 06:41:22 -0400
-Message-ID: <20260428104133.2858589-71-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] scsi: lpfc: Add PCI ID support for LPe42100 series adapters
+Date: Tue, 28 Apr 2026 06:41:23 -0400
+Message-ID: <20260428104133.2858589-72-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -58,448 +55,380 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 076b8cad77aa96557719fb5effe8703bfb64df00 ]
+[ Upstream commit 49b9f31e52b2125125318cb60fe9f5e7fa9c6755 ]
 
-Commit 47d3d7ac656a ("ipv6: Implement limits on Hop-by-Hop and
-Destination options") added net.ipv6.max_{hbh,dst}_opts_{cnt,len}
-and applied them in ip6_parse_tlv(), the generic TLV walker
-invoked from ipv6_destopt_rcv() and ipv6_parse_hopopts().
+Update supported pci_device_id table to include the values for the G8 ASIC
+Device ID utilized by LPe42100 series of adapters.  The default reporting
+string will be "LPe42100".
 
-ip6_tnl_parse_tlv_enc_lim() does not go through ip6_parse_tlv();
-it has its own hand-rolled TLV scanner inside its NEXTHDR_DEST
-branch which looks for IPV6_TLV_TNL_ENCAP_LIMIT. That inner
-loop is bounded only by optlen, which can be up to 2048 bytes.
-Stuffing the Destination Options header with 2046 Pad1 (type=0)
-entries advances the scanner a single byte at a time, yielding
-~2000 TLV iterations per extension header.
-
-Reusing max_dst_opts_cnt to bound the TLV iterations, matching
-the semantics from 47d3d7ac656a, would require duplicating
-ip6_parse_tlv() to also validate Pad1/PadN payload. It would
-also mandate enforcing max_dst_opts_len, since otherwise an
-attacker shifts the axis to few options with a giant PadN and
-recovers the original DoS. Allowing up to 8 options before the
-tunnel encapsulation limit TLV is liberal enough; in practice
-encap limit is the first TLV. Thus, go with a hard-coded limit
-IP6_TUNNEL_MAX_DEST_TLVS (8).
-
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://patch.msgid.link/20260331205928.119833-10-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need. Let me compile the comprehensive
-analysis.
+Now I have enough information to compile a complete analysis.
 
-# Phase-by-Phase Analysis
+## Phase 1: Commit Message Forensics
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.1: Subject line parsing**
+Record: Subsystem `scsi: lpfc:`. Action verb "Add" (hardware
+enablement). Summary: Adds PCI device ID 0xd300 for the new LPe42100
+Fibre Channel adapter (G8 ASIC).
 
-**Step 1.1 - Subject Line Parse:**
-- Subsystem prefix: `ipv6:`
-- Action verb: "Cap" (limit/bound) — implicit bug fix verb
-- Summary: Add a hard cap on TLV iterations in
-  `ip6_tnl_parse_tlv_enc_lim()`
-- Record: `[ipv6] [Cap] [Bound the TLV scan loop to prevent excessive
-  iterations]`
+**Step 1.2: Tag inventory**
+Record: Tags present:
+- `Signed-off-by: Justin Tee <justin.tee@broadcom.com>` (author,
+  Broadcom developer for lpfc)
+- `Link: https://patch.msgid.link/20260331205928.119833-10-
+  justintee8345@gmail.com` (mailing list reference)
+- `Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>` (SCSI
+  subsystem maintainer)
+- No `Cc: stable`, no `Fixes:`, no `Reported-by`, no `Reviewed-by`, no
+  `Tested-by`, no syzbot, no `Link` to any bug report.
 
-**Step 1.2 - Tag Parsing:**
-- Signed-off-by: Daniel Borkmann <daniel@iogearbox.net> (author)
-- Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-- Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-- Signed-off-by: Jakub Kicinski <kuba@kernel.org> (netdev maintainer)
-- No explicit Fixes: tag, no Cc: stable, no Reported-by, no Link:
-- References commit `47d3d7ac656a` ("ipv6: Implement limits on Hop-by-
-  Hop and Destination options") in message body
-- Record: Two independent Reviewed-by tags, applied by subsystem
-  maintainer Kicinski. Pedigree is strong.
+**Step 1.3: Body text analysis**
+Record: Short three-sentence message. No bug description. No stack
+trace. No symptom. No reproducer. Explicitly framed as hardware
+enablement: "Update supported pci_device_id table to include the values
+for the G8 ASIC Device ID utilized by LPe42100 series of adapters."
+States the model name reported will be "LPe42100".
 
-**Step 1.3 - Commit Body Analysis:**
-- Describes bug: `ip6_tnl_parse_tlv_enc_lim()` has a hand-rolled TLV
-  scanner in its `NEXTHDR_DEST` branch, bounded only by `optlen` (up to
-  2048 bytes)
-- Attack: "Stuffing the Destination Options header with 2046 Pad1
-  (type=0) entries advances the scanner a single byte at a time,
-  yielding ~2000 TLV iterations per extension header"
-- Symptom: CPU-consuming DoS — an attacker can force ~2000 iterations
-  per IPv6 extension header in a received packet
-- Mentions that commit `47d3d7ac656a` already fixed the same class of
-  bug in `ip6_parse_tlv()` (the generic TLV walker), but this separate
-  hand-rolled scanner was missed
-- Record: Clear DoS vector description, author's understanding of the
-  bug mechanism is thorough
+**Step 1.4: Hidden bug fix detection**
+Record: Not a hidden fix. No "cleanup"/"improve"/"handle"/"ensure"
+wording. This is explicitly and exclusively hardware enablement — a new
+PCI ID addition.
 
-**Step 1.4 - Hidden Bug Fix Detection:**
-- Subject says "Cap" rather than "Fix" but body makes explicit that this
-  is a DoS fix
-- This is NOT a hidden fix — the DoS mechanism is described openly
-- Record: Commit is a clear bug fix despite neutral-sounding subject
-  verb
+## Phase 2: Diff Analysis
 
-## PHASE 2: DIFF ANALYSIS
+**Step 2.1: Change inventory**
+Record: 3 files, 8 meaningful lines added (plus 2 copyright year bumps):
+- `drivers/scsi/lpfc/lpfc_hw.h`: +1 line (`#define
+  PCI_DEVICE_ID_LANCER_G8_FC 0xd300`)
+- `drivers/scsi/lpfc/lpfc_ids.h`: +2 lines (entry in `lpfc_id_table[]`)
+- `drivers/scsi/lpfc/lpfc_init.c`: +3 lines (new `case` in
+  `lpfc_get_hba_model_desc()` returning model string "LPe42100")
 
-**Step 2.1 - Inventory:**
-- Single file: `net/ipv6/ip6_tunnel.c`
-- +6 lines, 0 removed
-- Function modified: `ip6_tnl_parse_tlv_enc_lim()`
-- Scope: single-file surgical fix
-- Record: 6 lines in 1 file, 1 function — minimal scope
+Scope: single-driver, surgical addition following exact pattern of
+existing G6/G7/G7P entries.
 
-**Step 2.2 - Code Flow:**
-- Before: `while (1)` loop with break only when `i + sizeof(*tel) >
-  optlen` — can iterate up to ~optlen/1 times when all entries are Pad1
-  (type=0 advances `i` by 1 byte)
-- After: new local `int tlv_cnt = 0;` declared; `if (unlikely(tlv_cnt++
-  >= IP6_TUNNEL_MAX_DEST_TLVS)) break;` added at top of loop
-- New macro `#define IP6_TUNNEL_MAX_DEST_TLVS 8` at file scope
-- Record: Loop now breaks after at most 8 TLVs scanned per extension
-  header
+**Step 2.2: Code flow change**
+Record: Before: `lpfc_id_table[]` did not match 0x10df:0xd300 → lpfc
+driver would not bind to LPe42100 hardware. `lpfc_get_hba_model_desc()`
+would emit "Unknown" for such a device. After: lpfc binds to
+0x10df:0xd300, model string populated as "LPe42100".
 
-**Step 2.3 - Bug Mechanism Classification:**
-- Category: (h) Hardware workarounds? No. This is category close to
-  "bounds check" / DoS prevention — fits between logic/correctness (g)
-  and memory safety (d)
-- Specific: A counter-based upper bound on a while loop prevents
-  attacker-controlled iteration count from causing excessive CPU use per
-  received packet
-- Record: DoS/CPU-exhaustion fix via iteration bound
+**Step 2.3: Bug mechanism**
+Record: Category (h) — Hardware workaround / device ID addition. No bug
+being fixed; new hardware enablement.
 
-**Step 2.4 - Fix Quality:**
-- Obviously correct: the counter is incremented unconditionally,
-  compared with constant 8
-- Minimal: 6 lines, self-contained inside existing function
-- Regression risk: In practice the encap limit TLV is the first TLV. 8
-  is generous. Legitimate traffic never hits this cap. Extremely low
-  risk.
-- Record: High-quality, obviously-correct, minimal fix
+**Step 2.4: Fix quality**
+Record: Obviously correct. Pattern-identical to the existing
+LANCER_G6_FC / LANCER_G7_FC / LANCER_G7P_FC entries. No new code paths,
+no API change, no behavioural change for any existing device.
+Essentially zero regression risk — new table entry and new switch case
+are only reached when a 0xd300 device is present in the system.
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-**Step 3.1 - Git Blame:**
-- Ran `git blame -L 430,456 net/ipv6/ip6_tunnel.c`
-- Core `while (1)` loop and TLV scanning logic attributed to
-  `1da177e4c3f4` ("Linux-2.6.12-rc2", 2005-04-16) — the very beginning
-  of git history
-- Surrounding `nexthdr == NEXTHDR_DEST` check modified by
-  `d375b98e024898` (Eric Dumazet, 2024-01-05)
-- Earlier pointer-math/bounds fixes: `fbfa743a9d2a0f` (2017),
-  `63117f09c768be` (2017)
-- Record: **Buggy code present since git epoch (2005). Bug exists in all
-  supported stable trees.**
+**Step 3.1: Blame**
+Record: The `lpfc_id_table[]` and `lpfc_get_hba_model_desc()` code has
+been in the tree since the lpfc driver's early days. Neighbouring G7P
+entry was added by commit f449a3d7a1530 (James Smart, Jul 2021, "scsi:
+lpfc: Add PCI ID support for LPe37000/LPe38000 series adapters") which
+first appeared in v5.15. So the surrounding code exists in every active
+stable tree from 5.15.y through 7.0.y.
 
-**Step 3.2 - Follow Fixes: Tag:**
-- No Fixes: tag. In the lore discussion, Ido Schimmel explicitly
-  suggested: "Fixes: 1da177e4c3f4 ('Linux-2.6.12-rc2')"
-- Referenced commit `47d3d7ac656a` (Tom Herbert, 2017-10-30) addressed
-  the same DoS in `ip6_parse_tlv()` by adding
-  `max_dst_opts_cnt`/`max_dst_opts_len` sysctls. It did not cover this
-  hand-rolled scanner.
-- Record: Bug is as old as git history; the analogous fix for the
-  generic path is already in stable.
+**Step 3.2: Fixes tag follow-up**
+Record: No `Fixes:` tag. Not applicable — this is a hardware enablement,
+not a fix.
 
-**Step 3.3 - File History:**
-- Recent changes in this file are unrelated (DSCP handling, netns
-  conversion, GRO fixes, skb_vlan_inet_prepare, etc.) — no prerequisite
-  or competing fix
-- `d375b98e024898` ("ip6_tunnel: fix NEXTHDR_FRAGMENT handling in
-  ip6_tnl_parse_tlv_enc_lim()", 2024) is the most recent change in this
-  function — itself a fix that went to stable
-- Record: Standalone fix; no dependencies identified
+**Step 3.3: File history / series context**
+Record: Part of the 10-patch series "Update lpfc to revision 15.0.0.0".
+Adjacent commits in the series:
+- 39d1d94166da3 — "scsi: lpfc: Introduce 128G link speed selection and
+  support" (immediately before)
+- 7f1e2c1cce1ca — "scsi: lpfc: Update lpfc version to 15.0.0.0"
+  (immediately after)
 
-**Step 3.4 - Author's Background:**
-- Daniel Borkmann: networking/BPF maintainer, extensive
-  ipv6/netfilter/BPF history
-- Not a new contributor
-- Record: Author has deep kernel/networking expertise
+The 128G commit is a feature addition (not a fix) that enables the
+highest link speed the LPe42100 supports. **However**, I verified that
+no other code in lpfc mainline references `PCI_DEVICE_ID_LANCER_G8_FC` —
+only the three sites this commit touches — so binding and operation at
+supported lower speeds does not require the 128G patch.
 
-**Step 3.5 - Dependencies:**
-- Patch only adds a local counter and a new macro — no external symbol
-  dependencies
-- Applies to the existing while loop that has been stable for decades
-- Record: Standalone, self-contained
+**Step 3.4: Author context**
+Record: Justin Tee (Broadcom) is a regular lpfc contributor. SCSI
+maintainer Martin K. Petersen signed off, indicating maintainer review.
 
-## PHASE 4: MAILING LIST RESEARCH
+**Step 3.5: Dependencies**
+Record: No strict dependency on other patches in the series. G8 ASIC
+reuses the existing LANCER_G6/G7/G7P code paths; there is no G8-specific
+behaviour anywhere else in the driver. Full 128G link speed would
+require the 128G patch, but the adapter binds, probes, and operates at
+<=64G without it.
 
-**Step 4.1 - b4 dig:**
-- `b4 dig -c 076b8cad77aa9` found the original submission at `https://lo
-  re.kernel.org/all/20260421202406.717885-1-daniel@iogearbox.net/`
-- Subject: **[PATCH net v3]** — "net" tree tag signals this is a bug fix
-  targeting the current release cycle (not "net-next"), which is where
-  stable-candidate fixes go
-- `b4 dig -a`: the v3 that was applied is the latest revision; changelog
-  in the patch shows v1->v2 (use abs(), remove unlikely), v2->v3 (hard
-  code limit of 8 vs max_dst_opts_cnt, per Ido)
-- Record: Three-revision evolution; reviewers addressed; applied version
-  is final
+## Phase 4: Mailing List Research
 
-**Step 4.2 - Reviewers (b4 dig -w):**
-- To: kuba@kernel.org (Jakub Kicinski — netdev maintainer)
-- Cc: edumazet@google.com (Eric Dumazet — networking maintainer),
-  dsahern@kernel.org (David Ahern — ipv6 maintainer),
-  tom@herbertland.com (Tom Herbert — author of the related 2017 fix),
-  willemdebruijn.kernel@gmail.com, idosch@nvidia.com,
-  justin.iurman@gmail.com, pabeni@redhat.com (Paolo Abeni — networking
-  maintainer), netdev@vger.kernel.org
-- Record: All major networking maintainers included. Reviewed by Ido
-  Schimmel and Justin Iurman (IPv6 extension header reviewer)
+**Step 4.1: Original submission**
+Record: `b4 dig -c 49b9f31e52b21` located the original patch at https://
+lore.kernel.org/all/20260331205928.119833-10-justintee8345@gmail.com/.
+Part of series "[PATCH 00/10] Update lpfc to revision 15.0.0.0"
+submitted 2026-03-31.
 
-**Step 4.3 - Bug Report:**
-- No Reported-by/Link: tag — the DoS was likely identified by the author
-  through code review (he explicitly analyzed the disparity with the
-  already-patched `ip6_parse_tlv()`)
-- Record: Proactive DoS discovery rather than user-reported
+**Step 4.2: Reviewers**
+Record: `b4 dig -a` shows only v1 of the series exists (no v2/v3
+needed). Thread contains no Reviewed-by / Acked-by / Tested-by tags, no
+NAKs, no `Cc: stable` suggestion. Martin K. Petersen accepted the
+series.
 
-**Step 4.4 - Related Patches:**
-- Single patch, not a series
-- Record: Standalone
+**Step 4.3: Bug report**
+Record: Not applicable — no bug report; new-hardware enablement.
 
-**Step 4.5 - Stable Discussion:**
-- In the lore mbox: Ido Schimmel said "Given that you are targeting net
-  and that the issue was always present, I would use: Fixes:
-  1da177e4c3f4 ('Linux-2.6.12-rc2')"
-- This strongly implies the fix is intended for stable (Fixes: tag is
-  the trigger for stable-autoselect)
-- Record: Reviewer explicitly suggested adding a Fixes: tag pointing to
-  kernel epoch — a clear stable-backport signal
+**Step 4.4: Related series patches**
+Record: The relevant companion is patch 08/10 (128G support, not a fix
+and not for stable). Patch 10/10 is a version bump. No other companion
+needed for the PCI ID to function.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.5: Stable mailing list history**
+Record: No stable list discussion about this commit (it is too recent —
+merged early April 2026, well after v7.0).
 
-**Step 5.1 - Key Functions:** `ip6_tnl_parse_tlv_enc_lim()` — the only
-function modified.
+## Phase 5: Code Semantic Analysis
 
-**Step 5.2 - Callers (via `git grep`):**
-- `net/ipv6/ip6_tunnel.c`:
-  - `ip6_tnl_err()` — ICMPv6 error handler for IPv6-over-IPv6 tunnels
-  - `__ip6_tnl_xmit()` — the transmit path (when protocol ==
-    IPPROTO_IPV6)
-- `net/ipv6/ip6_gre.c`:
-  - `ip6gre_err()` — ICMPv6 error handler for GRE-over-IPv6
-  - `prepare_ip6gre_xmit_ipv6()` — GRE transmit path
-- Record: Called from both transmit path and ICMPv6 error handling for
-  ip6 and ip6gre tunnels — network-reachable data paths on any system
-  using IPv6 tunnels
+**Step 5.1–5.4: Impact surface**
+Record: Three touched sites:
+- `lpfc_id_table[]` — consumed by the PCI core for driver match; no new
+  code paths, just a new entry.
+- `PCI_DEVICE_ID_LANCER_G8_FC` macro — used only in the new switch case
+  in `lpfc_get_hba_model_desc()`.
+- `lpfc_get_hba_model_desc()` — called during probe/ioctl to format a
+  model string. Reached only when a device with the new ID is present.
 
-**Step 5.3 - Callees:** Reads `skb->data`, uses `pskb_may_pull`. No
-external state changes inside the scanner.
+`grep PCI_DEVICE_ID_LANCER_G8` across origin/master returns exactly
+those three sites — no hidden dependencies.
 
-**Step 5.4 - Call Chain / Reachability:**
-- `__ip6_tnl_xmit()` is part of `ip6_tnl_start_xmit` / `ip6_tnl_rcv_ctl`
-  infrastructure — runs on every packet sent over an IPv6 tunnel when
-  the inner packet has Destination Options
-- `ip6_tnl_err()` is invoked from `ip6_tnl_err_proto`, called by icmpv6
-  when an IPv6 tunnel packet triggers an error
-- An attacker over the network can craft packets to exploit this as long
-  as the target has an IPv6 tunnel configured (ip6tnl, ip6gre modules)
-- Record: Data path function, reachable from remote attacker when IPv6
-  tunnel is configured
+**Step 5.5: Similar patterns**
+Record: Existing LANCER_G6/G7/G7P entries are structurally identical.
+This patch is a literal template-follow-up.
 
-**Step 5.5 - Similar Patterns:**
-- The generic `ip6_parse_tlv()` in `net/ipv6/exthdrs.c` already has this
-  protection via `max_hbh_opts_cnt/max_dst_opts_cnt` (commit
-  47d3d7ac656a, 2017)
-- This commit closes the last remaining scanner that didn't have such a
-  cap
-- Record: This is the final instance; other instances already protected
+## Phase 6: Cross-Referencing and Stable Tree Analysis
 
-## PHASE 6: CROSS-REFERENCING STABLE TREES
+**Step 6.1: Does the buggy code exist in stable?**
+Record: There is no buggy code. The driver and surrounding structures
+(`lpfc_id_table[]`, `lpfc_get_hba_model_desc()` switch) are present in
+every active stable tree:
+- 5.15.y: confirmed `PCI_DEVICE_ID_LANCER_G7P_FC` at lpfc_ids.h:121,
+  lpfc_init.c:2608 — full context present
+- 6.1.y: confirmed at lpfc_ids.h:119, lpfc_init.c:2741
+- 6.6.y: confirmed at lpfc_ids.h:119, lpfc_init.c:2743
+- 6.12.y: confirmed at lpfc_ids.h:119, lpfc_init.c:2732
+- 5.10.y: no G7P present; driver older, backport would likely still
+  apply but requires verification
 
-**Step 6.1 - Buggy code in stable trees?**
-- The loop structure is in the codebase since `1da177e4c3f4`
-  (2.6.12-rc2)
-- Present in 5.4, 5.10, 5.15, 6.1, 6.6, 6.12 and every other supported
-  stable tree
-- Record: All supported stable trees contain the vulnerable code
+**Step 6.2: Backport complications**
+Record: Expected clean apply on 5.15.y, 6.1.y, 6.6.y, 6.12.y, 6.18.y,
+6.19.y, 7.0.y. The three hunks anchor on G7P/SKYHAWK lines that are
+unchanged in all those trees. Copyright bumps may need trivial
+adjustment.
 
-**Step 6.2 - Backport Complications:**
-- The function is modified by `d375b98e024898` (Jan 2024) — this is in
-  6.7+; older stable trees (5.4, 5.10, 5.15, 6.1) may have a slightly
-  different surrounding context (no `nexthdr ==
-  NEXTHDR_FRAGMENT`/`NEXTHDR_AUTH` branching exactly as today)
-- However, the key hunk — the `if (nexthdr == NEXTHDR_DEST) { ...
-  while(1) { ... }}` block — is structurally unchanged since 2005
-- The patch adds a new local variable and a new `if` inside the while
-  loop; this should apply cleanly or with trivial offset fuzzing
-- Record: Expected to apply cleanly to all active stable trees; at worst
-  a trivial context adjustment
+**Step 6.3: Related fixes in stable**
+Record: N/A — no related fix.
 
-**Step 6.3 - Related fixes already in stable?**
-- `47d3d7ac656a` is in stable trees (it was the original DoS hardening,
-  merged 2017)
-- No previous fix for this specific hand-rolled scanner exists
-- Record: No overlap; this closes a gap left by the 2017 fix
+## Phase 7: Subsystem Context
 
-## PHASE 7: SUBSYSTEM CONTEXT
+**Step 7.1: Criticality**
+Record: `drivers/scsi/lpfc` — Emulex/Broadcom enterprise Fibre Channel
+HBA driver. IMPORTANT (used in data-centre storage deployments, often
+via enterprise distros that track LTS stable trees).
 
-**Step 7.1 - Subsystem:** `net/ipv6/` — core IPv6 networking. Affects
-users of IPv6 tunnels (ip6tnl, ip6gre). IMPORTANT criticality.
+**Step 7.2: Activity**
+Record: Actively maintained by Broadcom with quarterly "Update lpfc to
+revision X" series, and many bug fixes are routinely backported to all
+recent stable trees.
 
-**Step 7.2 - Activity:** Very active subsystem, but the specific scanner
-has been stable for 20+ years. Record: Mature code, long-lived bug.
+## Phase 8: Impact and Risk Assessment
 
-## PHASE 8: IMPACT AND RISK
+**Step 8.1: Affected users**
+Record: Users of LPe42100 (and compatible LPe421xx) Fibre Channel HBAs
+running a stable/LTS kernel. Without this patch, the HBA does not bind
+to the `lpfc` driver — hardware is effectively unusable on those
+kernels. Enterprise/distro users often run 6.1.y / 6.6.y / 6.12.y LTS.
 
-**Step 8.1 - Affected Users:** All users running IPv6 tunnel drivers
-(ip6tnl, ip6gre modules loaded) — common on IPv6 dual-stack routers,
-tunnel endpoints, mobile backhauls, cloud overlay networks.
+**Step 8.2: Trigger**
+Record: Device present → driver should bind. Without the patch: driver
+does not claim the device on stable kernels. Unprivileged trigger: N/A
+(hardware presence is the trigger).
 
-**Step 8.2 - Trigger Conditions:**
-- Attacker sends IPv6 packet with Destination Options header containing
-  2046 Pad1 entries
-- Per extension header, ~2000 CPU iterations in the scanner
-- Can be triggered remotely without authentication — any reachable IPv6
-  tunnel endpoint
-- Record: Unprivileged remote attacker can trigger; realistic DoS
+**Step 8.3: Failure mode severity**
+Record: On stable kernels lacking this patch, a correctly installed
+LPe42100 is unsupported (device is recognized by PCI subsystem but
+`lpfc` declines it). User-visible symptom: no FC connectivity. Severity
+category: hardware enablement — MEDIUM-HIGH for affected users (full
+feature loss of the purchased adapter).
 
-**Step 8.3 - Failure Mode Severity:**
-- CPU exhaustion in softirq context — affects packet processing
-  throughput
-- With pipelined attack traffic, can starve other network processing
-- Not a crash but a performance DoS — **MEDIUM-HIGH** severity
-- Record: Remote DoS / CPU exhaustion, medium-high severity
+**Step 8.4: Risk-benefit**
+Record: Benefit — enables new hardware for stable users (distro
+customers). Risk — essentially zero: all new code paths are gated on
+matching the new PCI ID; no existing device can reach the added code. 8
+lines, trivial content, maintainer-signed.
 
-**Step 8.4 - Risk-Benefit:**
-- Benefit: Closes a 20-year-old remote DoS vector on IPv6 tunnel
-  endpoints; completes the hardening started by the 2017 fix
-- Risk: Very low — 6-line cap at value 8, legitimate traffic never
-  approaches this limit (encap limit is typically the first TLV)
-- Record: Strongly favorable benefit/risk ratio
+## Phase 9: Final Synthesis
 
-## PHASE 9: SYNTHESIS
+**Step 9.1: Evidence**
+For: (a) Small, contained, obviously correct. (b) Follows the stable
+rules' "NEW DEVICE IDs" exception verbatim. (c) Applies cleanly to all
+active stable trees. (d) Near-zero regression risk. (e) Broadcom-signed
+and maintainer-signed. (f) Strong historical precedent — smartpqi,
+iwlwifi, arcmsr, k10temp, hid wacom, etc. all regularly get new-PCI-ID
+additions into stable.
 
-**Step 9.1 - Evidence:**
-- FOR backport:
-  - Closes a known class of remote DoS (same class as 47d3d7ac656a,
-    which is in stable)
-  - Bug present since 2.6.12-rc2 (2005) — affects every supported stable
-    tree
-  - 6-line surgical fix, no new APIs, no functional change for
-    legitimate traffic
-  - Reviewed by two independent reviewers (Ido Schimmel, Justin Iurman),
-    applied by netdev maintainer to the `net` tree
-  - Reviewer explicitly suggested Fixes: 1da177e4c3f4 (signaling stable
-    relevance)
-  - Reachable from remote unauthenticated attacker on any IPv6 tunnel
-    endpoint
-  - Author (Borkmann) is a senior networking developer, patch went
-    through 3 review iterations
-- AGAINST backport:
-  - No Fixes: tag in the applied commit (reviewer suggested one but it
-    was not added)
-  - No Cc: stable tag — but absence is expected per the prompt
-  - No user-filed bug report / CVE — the DoS is based on code analysis
-    of an analogous, already-fixed vector
+Against: (a) Not a bug fix. (b) Not tagged `Cc: stable`. (c) No reviewer
+explicitly nominated for stable. (d) 128G link speed support is a
+separate (non-stable) feature patch — but the adapter remains functional
+at supported lower speeds without it.
 
-**Step 9.2 - Stable Rules Checklist:**
-1. Obviously correct and tested? YES — trivial counter, 2 Reviewed-by,
-   merged to net
-2. Fixes a real bug? YES — remote DoS via crafted IPv6 Destination
-   Options
-3. Important issue? YES — remote CPU exhaustion in softirq path
-   (security-relevant)
-4. Small and contained? YES — 6 lines in one function, one file
-5. No new features/APIs? YES — purely defensive counter
-6. Applies to stable? YES (likely clean; minor context fuzz possible on
-   very old trees)
+**Step 9.2: Stable checklist**
+1. Obviously correct and tested: YES (pattern-identical to 3 prior
+   entries).
+2. Fixes a real bug: NO — but falls under stable's explicit hardware-
+   enablement exception.
+3. Important issue: MEDIUM-HIGH for LPe42100 owners (no adapter
+   operation without it).
+4. Small and contained: YES (8 lines, 3 files).
+5. No new features/APIs: Adds hardware support only — no new UAPI,
+   sysfs, or module param.
+6. Can apply to stable trees: YES, clean apply expected on 5.15.y
+   through 7.0.y.
 
-**Step 9.3 - Exception Category:** Not applicable by name, but fits the
-spirit of "security hardening for known DoS class" — a strong stable
-candidate on its own merits.
+**Step 9.3: Exception category**
+Record: YES — matches the "NEW DEVICE IDs" exception explicitly
+documented in the stable rules. The `lpfc` driver already exists in
+every active stable tree; only the ID and a model-string case are new.
 
-**Step 9.4 - Decision:** YES.
+**Step 9.4: Decision**
+The commit meets the stable "new device ID for existing driver"
+exception cleanly: driver pre-exists in all active stable trees, diff is
+minimal and template-matches the G6/G7/G7P predecessors, regression risk
+for non-G8 users is zero, and affected users (data-centre LPe42100
+owners on LTS kernels) genuinely cannot use their hardware without it.
 
-# Verification
+## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by: Ido Schimmel, Reviewed-by: Justin
-  Iurman, Signed-off-by: Daniel Borkmann, Signed-off-by: Jakub Kicinski.
-  No Fixes:, no Cc: stable, no Reported-by, no Link: — verified from
-  commit message and `git show 076b8cad77aa9 --format=fuller`
-- [Phase 2] Diff analysis: `git diff 076b8cad77aa9^ 076b8cad77aa9` —
-  confirmed +6 lines (1 macro, 1 local var, 1 conditional break) in
-  `net/ipv6/ip6_tunnel.c`
-- [Phase 3] `git blame -L 430,456 net/ipv6/ip6_tunnel.c`: core loop
-  attributed to `1da177e4c3f4` (2.6.12-rc2, 2005); surrounding context
-  modified by `d375b98e024898` (2024)
-- [Phase 3] `git show 47d3d7ac656a`: confirmed the referenced prior
-  commit added `max_hbh/dst_opts_cnt/len` to `ip6_parse_tlv()` for an
-  identical DoS class in 2017
-- [Phase 3] `git log --oneline --author="Daniel Borkmann" -- net/ipv6/`:
-  confirmed author has prior ipv6 work (e.g., `47e27d5e92c46`,
-  `e41b0bedba029`, `a824d0b83109e`)
-- [Phase 4] `b4 dig -c 076b8cad77aa9`: found lore thread `https://lore.k
-  ernel.org/all/20260421202406.717885-1-daniel@iogearbox.net/`
-- [Phase 4] `b4 dig -a`: confirmed v3 is the applied/final revision;
-  changelog shows v1->v2 dropping unlikely and using abs(), v2->v3 hard-
-  coding 8 instead of max_dst_opts_cnt per Ido's suggestion
-- [Phase 4] `b4 dig -w`: confirmed Kicinski, Dumazet, Ahern, Herbert,
-  Abeni and netdev were recipients — proper maintainer review
-- [Phase 4] mbox content (`/tmp/tlv_thread.mbox`) lines 340-347: Ido
-  Schimmel wrote "Given that you are targeting net and that the issue
-  was always present, I would use: Fixes: 1da177e4c3f4
-  ('Linux-2.6.12-rc2')" — confirms bug is as old as git history and
-  stable-worthy
-- [Phase 4] mbox lines 53-80: patchwork bot confirms patch was applied
-  to netdev/net.git (main) by Kicinski
-- [Phase 5] `git grep "ip6_tnl_parse_tlv_enc_lim"`: confirmed 4 call
-  sites (ip6_tnl_err, __ip6_tnl_xmit, ip6gre_err,
-  prepare_ip6gre_xmit_ipv6) — all in data/error paths
-- [Phase 6] Code since 2.6.12-rc2 → present in all active stable trees
-  (5.4, 5.10, 5.15, 6.1, 6.6, 6.12)
-- [Phase 8] Failure mode: remote-triggerable CPU exhaustion (~2000
-  scanner iterations per extension header) — severity medium-high (DoS),
-  quoted directly from the commit message's documented attack
-- UNVERIFIED: Exact patch-apply cleanliness on pre-6.7 stable branches
-  (the function body was restructured by d375b98e024898 in early 2024).
-  The hunk target is the inner `if (nexthdr == NEXTHDR_DEST)` block
-  which has been structurally unchanged since 2005, so clean apply is
-  expected, but I did not run `git apply` against the individual stable
-  branches.
-- UNVERIFIED: Whether a CVE has been assigned for this specific scanner
-  (no public CVE reference in the commit message or lore thread).
+- [Phase 1] Parsed commit message: confirmed no Fixes/Reported-by/Cc-
+  stable/Reviewed-by/Tested-by tags; only author SOB, Link to
+  patch.msgid.link, and maintainer SOB.
+- [Phase 2] Counted diff hunks: `git show 49b9f31e52b21` — 3 files, 8
+  meaningful lines + copyright bumps.
+- [Phase 3] `git log --oneline -- drivers/scsi/lpfc/lpfc_ids.h` —
+  confirmed f449a3d7a1530 (G7P addition, 2021) as nearest precedent.
+- [Phase 3] `git log --oneline 49b9f31e52b21~3..49b9f31e52b21` —
+  confirmed series context (128G link speed is the immediate
+  predecessor).
+- [Phase 3] `git grep PCI_DEVICE_ID_LANCER_G8 origin/master --
+  drivers/scsi/lpfc/` — exactly 3 hits, matching the 3 diff sites; no
+  hidden dependencies on other G8-specific code.
+- [Phase 3] `git merge-base HEAD 49b9f31e52b21` → 6de23f81a5e08 (Linux
+  7.0-rc1) — commit is post-7.0 (targeting 7.1 window) and not yet in
+  any stable tree.
+- [Phase 4] `b4 dig -c 49b9f31e52b21` — found thread at
+  lore.kernel.org/all/20260331205928.119833-10-justintee8345@gmail.com.
+- [Phase 4] `b4 dig -c 49b9f31e52b21 -a` — confirmed only v1 exists (no
+  v2/v3).
+- [Phase 4] Downloaded thread via `b4 dig -m`; grep for
+  "stable@|NAK|Reviewed-by|Tested-by" → none beyond maintainer SOB.
+- [Phase 6] `git grep PCI_DEVICE_ID_LANCER_G7P_FC` on
+  stable/linux-5.15.y, 6.1.y, 6.6.y, 6.12.y — all contain the anchor
+  lines the diff applies against; 5.10.y does not have G7P (pre-dates
+  it).
+- [Phase 6] Verified context around `lpfc_get_hba_model_desc()` and
+  `lpfc_id_table[]` is identical in 6.12.y to HEAD (sed -n '110,130p' on
+  stable/linux-6.12.y copy) → clean apply expected.
+- [Phase 8] Verified that full 128G operation depends on commit
+  39d1d94166da3, but basic bind/operation at ≤64G does not — confirmed
+  by absence of any other G8 reference in the driver.
+- UNVERIFIED: Did not actually run the backport against each stable
+  branch; clean-apply assertion is based on source-line comparison, not
+  `git cherry-pick` dry-runs.
+- UNVERIFIED: Did not confirm whether 5.10.y is still actively
+  maintained enough to warrant backport (LPe42100 is new enough that
+  users on very old LTS likely aren't the target).
 
-The fix is small, surgical, fixes a real remote DoS, is well-reviewed,
-affects a long-present bug in all stable trees, and was applied to the
-`net` (bug-fix) tree by the netdev maintainer.
+The commit is a textbook application of the stable "new device IDs to
+existing drivers" exception: small, surgical, maintainer-signed, zero
+regression risk for existing users, and enables real hardware for stable
+kernel users. The absence of `Cc: stable` is expected (this is the whole
+reason for the review). The companion 128G feature patch would be nice
+for full performance but is not required for the device to function.
 
 **YES**
 
- net/ipv6/ip6_tunnel.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/scsi/lpfc/lpfc_hw.h   | 3 ++-
+ drivers/scsi/lpfc/lpfc_ids.h  | 4 +++-
+ drivers/scsi/lpfc/lpfc_init.c | 3 +++
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 0b53488a92290..b9d41b5d1853b 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -62,6 +62,8 @@ MODULE_LICENSE("GPL");
- MODULE_ALIAS_RTNL_LINK("ip6tnl");
- MODULE_ALIAS_NETDEV("ip6tnl0");
- 
-+#define IP6_TUNNEL_MAX_DEST_TLVS    8
-+
- #define IP6_TUNNEL_HASH_SIZE_SHIFT  5
- #define IP6_TUNNEL_HASH_SIZE (1 << IP6_TUNNEL_HASH_SIZE_SHIFT)
- 
-@@ -428,11 +430,15 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
- 				break;
- 		}
- 		if (nexthdr == NEXTHDR_DEST) {
-+			int tlv_cnt = 0;
- 			u16 i = 2;
- 
- 			while (1) {
- 				struct ipv6_tlv_tnl_enc_lim *tel;
- 
-+				if (unlikely(tlv_cnt++ >= IP6_TUNNEL_MAX_DEST_TLVS))
-+					break;
-+
- 				/* No more room for encapsulation limit */
- 				if (i + sizeof(*tel) > optlen)
- 					break;
+diff --git a/drivers/scsi/lpfc/lpfc_hw.h b/drivers/scsi/lpfc/lpfc_hw.h
+index b2e353590ebb5..6326f7353dd68 100644
+--- a/drivers/scsi/lpfc/lpfc_hw.h
++++ b/drivers/scsi/lpfc/lpfc_hw.h
+@@ -1,7 +1,7 @@
+ /*******************************************************************
+  * This file is part of the Emulex Linux Device Driver for         *
+  * Fibre Channel Host Bus Adapters.                                *
+- * Copyright (C) 2017-2025 Broadcom. All Rights Reserved. The term *
++ * Copyright (C) 2017-2026 Broadcom. All Rights Reserved. The term *
+  * “Broadcom” refers to Broadcom Inc. and/or its subsidiaries.     *
+  * Copyright (C) 2004-2016 Emulex.  All rights reserved.           *
+  * EMULEX and SLI are trademarks of Emulex.                        *
+@@ -1771,6 +1771,7 @@ struct lpfc_fdmi_reg_portattr {
+ #define PCI_DEVICE_ID_LANCER_G6_FC  0xe300
+ #define PCI_DEVICE_ID_LANCER_G7_FC  0xf400
+ #define PCI_DEVICE_ID_LANCER_G7P_FC 0xf500
++#define PCI_DEVICE_ID_LANCER_G8_FC  0xd300
+ #define PCI_DEVICE_ID_SAT_SMB       0xf011
+ #define PCI_DEVICE_ID_SAT_MID       0xf015
+ #define PCI_DEVICE_ID_RFLY          0xf095
+diff --git a/drivers/scsi/lpfc/lpfc_ids.h b/drivers/scsi/lpfc/lpfc_ids.h
+index 0b1616e93cf47..a0a6e2d379b86 100644
+--- a/drivers/scsi/lpfc/lpfc_ids.h
++++ b/drivers/scsi/lpfc/lpfc_ids.h
+@@ -1,7 +1,7 @@
+ /*******************************************************************
+  * This file is part of the Emulex Linux Device Driver for         *
+  * Fibre Channel Host Bus Adapters.                                *
+- * Copyright (C) 2017-2022 Broadcom. All Rights Reserved. The term *
++ * Copyright (C) 2017-2026 Broadcom. All Rights Reserved. The term *
+  * “Broadcom” refers to Broadcom Inc. and/or its subsidiaries.     *
+  * Copyright (C) 2004-2016 Emulex.  All rights reserved.           *
+  * EMULEX and SLI are trademarks of Emulex.                        *
+@@ -118,6 +118,8 @@ const struct pci_device_id lpfc_id_table[] = {
+ 		PCI_ANY_ID, PCI_ANY_ID, },
+ 	{PCI_VENDOR_ID_EMULEX, PCI_DEVICE_ID_LANCER_G7P_FC,
+ 		PCI_ANY_ID, PCI_ANY_ID, },
++	{PCI_VENDOR_ID_EMULEX, PCI_DEVICE_ID_LANCER_G8_FC,
++		PCI_ANY_ID, PCI_ANY_ID, },
+ 	{PCI_VENDOR_ID_EMULEX, PCI_DEVICE_ID_SKYHAWK,
+ 		PCI_ANY_ID, PCI_ANY_ID, },
+ 	{PCI_VENDOR_ID_EMULEX, PCI_DEVICE_ID_SKYHAWK_VF,
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index e9d9ac7da485b..f29e4b8fd02f4 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -2752,6 +2752,9 @@ lpfc_get_hba_model_desc(struct lpfc_hba *phba, uint8_t *mdp, uint8_t *descp)
+ 	case PCI_DEVICE_ID_LANCER_G7P_FC:
+ 		m = (typeof(m)){"LPe38000", "PCIe", "Fibre Channel Adapter"};
+ 		break;
++	case PCI_DEVICE_ID_LANCER_G8_FC:
++		m = (typeof(m)){"LPe42100", "PCIe", "Fibre Channel Adapter"};
++		break;
+ 	case PCI_DEVICE_ID_SKYHAWK:
+ 	case PCI_DEVICE_ID_SKYHAWK_VF:
+ 		oneConnect = 1;
 -- 
 2.53.0
 
