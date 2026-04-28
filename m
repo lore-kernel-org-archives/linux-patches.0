@@ -1,151 +1,196 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011001.outbound.protection.outlook.com [40.93.194.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8E140627F
-	for <patches@lists.linux.dev>; Tue, 28 Apr 2026 18:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777400834; cv=none; b=KwNyxjuQr2a51tcazuji/jKXKCw/Hyzqx9DOz0WFnJh2zKfhPytIkREQAH9hsj9GDtwBAJ3IMS3+qr833+c9nKVsvm3aXecsOjTdAbrnCB2P0qpjixUpAMK5TEywFWR3XZFL8yvg1pGn9JZdNvirBnmwZCMYF/KRezjZXRWadjs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777400834; c=relaxed/simple;
-	bh=Qgs4VKe6aa4WyJBdEkeJSC4dGYTWRhPAU+v9n/d2wxk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I91dJGgBSD9+aCG3ma5ZsiY8OTnq/GS3aUVfl/6Wo13p4a4pSe//ZsPdZPZ5bapXnWPtkrYi1n7p8E8vxWhE0jr2KAymJEA7dSSrTw3A1PBo+8byKN6T61k50ch+1Q+Dhi3etuNbNTOo05OIj0fhRtn1lMcqIo2Tt3SYigoJB08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nYrk+WnV; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A413644CB
+	for <patches@lists.linux.dev>; Tue, 28 Apr 2026 19:04:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.1
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777403090; cv=fail; b=OYfYnEfwo78irvxojbtOmLg1mahogftFEAXf/Qp2kFIZIHpBwxVcdFhG4oAyrHHA0EeTpUzKv6fav9EkDQTLRYqjgZSYcrejk8kz3WO+upMY7hljFnuApTZIKe8U1HrD8PuddFjUmxCwlXOgSSLCSBiEx0HRTp7USCLnGeIb87o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777403090; c=relaxed/simple;
+	bh=zIf0x2hRze70nR4gw0e6K4Ny+08TVxyNo2S29kivlOU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=cFVCLquh/CqLV5qqL1zVlYVyg2xoXUn/ZZXpnPKEjrBf2AKnMpuUfuttsBCMJAO6rRZohbigqWhM67e53VJ+514kyJSe3r45zTYAq5ydjWjeZ/Ddum+OccpcUlJoCdIGUcC2x47MSsHvXHw4X3DGOCLq1lqKDXklwYUpXlkDat4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=UD4V8Kly; arc=fail smtp.client-ip=40.93.194.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nYrk+WnV"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-35da2d35eccso8129258a91.0
-        for <patches@lists.linux.dev>; Tue, 28 Apr 2026 11:27:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1777400833; x=1778005633; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y0UGTjzT1o8VOQ2X8VCxDZk9yTiALK5gtuUuVtTpZzQ=;
-        b=nYrk+WnVJN1cLyD9qOm90f3cmNqcYl0LcRLo2HuO4byGmR4tH/LuuHrDAVvaxSorYg
-         CTFBoVn+7/pzAAoT+axfKpz1xfVgA2YauEdCyQS+9AvuSEfsCsO8XFI4bQPerfLATxIa
-         yrPkJ6nYJX35nscK5UtS60P4knUZLPqMFSgbu7CWxA8ey1x37AipLaCJZ8KEzVmpSwcP
-         dVgWAcah9XGAumZYAcoxVrydEBUwuDBIlzwzlNrAY2k1kAbO838iIdqtm/Xs+hYuhGKr
-         YR/G/PxX8wBk1tNKv+U5OZBi4UO/lrU9/U46qYe8bnhx8wDEh9GcJxNhFX1wf748Lr6y
-         xnDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777400833; x=1778005633;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y0UGTjzT1o8VOQ2X8VCxDZk9yTiALK5gtuUuVtTpZzQ=;
-        b=B2aVAhfTuvsvuRp6lHSC0ZKq06jXwaVVsSA54YwAJrCpYbLPJ6WQyj29M1H0RxXiMP
-         McReGOzzm7SloGfUTFvPy+mxffHhSm+qiOul8aX6D7LQpufHp/b5IZqoetUr44lJlIxL
-         a/I8b1lxcw0FiWrql1d3Kjst7k8bTiyCiDhVwdDqZlaXCqUcHS9OsGGKLgPs/JHTbygn
-         yn7i+shbCn/HpCQyO4AFR01OjSRYseQ31RwEppllqH24t3PaBkoyKV27Y1zZtSIiKecn
-         Bq443maFeW6qqmziIfNF2TXRSEZ399MZ4qXxNwgwqsPBRtqhi60+tQq4rzFOzMXV29Qg
-         3WoQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/lAdXF+NtIlgbmgwZym4rnqtZkzZXujtdWyySw8AH3SZMpCUkjA+j46CXh0xHS43PlvWr6OST/@lists.linux.dev
-X-Gm-Message-State: AOJu0YzQnjMNSbFKMKRyuH1INdafNGAiWBjdqBu0rj2l9GZlOvHzj/zD
-	3DalJIrzLJkVtZoap8NSrOztXRgNa1cZMB12W5NOa2/30mSxrwu0ec0FZsph75CxfA==
-X-Gm-Gg: AeBDiesLKwem9Gmk1tTsRDuvo3puJLoOzmif/YTIM3ktOYUyk6H8UY2M+aXevr5s+9t
-	KcBRLqVfiJx8Ka6nKnFMdQ9wwZzuVVwwKJSXvP5tHrVV5t48CTZei7yS4y6aWBdgZdZ3qda2p6y
-	GBgURV3Kepc3lAjUTcUt9riYyrr7PaI8SN0cFnHS7ecMiqrDfE63Re/mmKwIBdhKogx5rI9d+qq
-	sZHEVCy83MfYRRE+9ebmFiAdYGRj9csV3v6dP+emjZjY716HfM08TI8Xoal0fFZYIhYvIB7qu9d
-	pjnAobjwpgyiFbGjee8UvUD/gskpoD4r05mksHrb3kP5nkRtQicNUKaap/6MQeudoGPlAgTYkMU
-	uFUTu5AicoBOzM4xXS/cCK1WKV+AZX9P3iDjXiFhw5RPkxr6+iHQS8nFrDI/DKtKPaj/23pBEug
-	pXVp6KgG97QS3s2O3DBNJuTMtoj2zd4us1KotlXCHSld/zqMx3BqmZLAkfJkkni+s0toe6UCAnP
-	kWBcQ==
-X-Received: by 2002:a17:90b:268f:b0:359:87a8:e65c with SMTP id 98e67ed59e1d1-3649202ea13mr4377890a91.17.1777400832390;
-        Tue, 28 Apr 2026 11:27:12 -0700 (PDT)
-Received: from google.com (76.9.127.34.bc.googleusercontent.com. [34.127.9.76])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-364a119e0b4sm76522a91.5.2026.04.28.11.27.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2026 11:27:11 -0700 (PDT)
-Date: Tue, 28 Apr 2026 18:27:06 +0000
-From: David Matlack <dmatlack@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="UD4V8Kly"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=D2lSkQZzxxPXmHjhG1oWMc9i5wCFvCYKZJV3njgSVpjMKrfgwAaMQTRXCpGI5m6P1NwBbaHxnpu5yDGHPx/2y4go9AEFC/9nqK+AgOEfRv5mFg71Q8127XuVL3NQUamiQWU7/03zuM9QjgQCBLCWixfBH3lhWy0cw3BhqHxyNQgINu620rdNs9ke93sCKs79HKvpG2ffTFo0IlVJqB95nTr7ZvZttDv7G1NCvkZ1WBYQQ5Dv2eIL3VVmCuD/FHLxlUoPXtCdwfHmJgq50A7QZSMmpbmhUet4lyn5m+EyyND472f2cETfFX5CHA22sI+UkuxZl0ay5nVAzQARQrnpgQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/NXozzkOG/c7V/R1DJi0SOcwl6gy7uSDzemh553nd20=;
+ b=y4X5mr2/9DF+Mf+guaep5G9W/VllqzEN8zY6FnBXWnh5DPPdF/48hwcLb2X6gS1WLL0SHIAh6JcPIkfDHDtG4hqERJmbWv5vd7/nSkAtv3O3jZUqgEONKil1pIdQhmUuArg9mGS8JO/78nYYd0xZNCbHZVXRpbrXIpTOzdnRnCaFs7OWjXlPX1ruF8n45f7uDuuQqe96v87zRk0AjvpoGwyuncdExU+REUf+4EQHeh6fcyFo4i2S5wvPRIzb0f+p0ns7wN80HF6W5ngq8w/Beg4bOHhB17VrkscHP4uPyOvsn4drM1O+PzU8LDJoafZ7NoV2f8Mu0IOgMuI4Sf5HPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/NXozzkOG/c7V/R1DJi0SOcwl6gy7uSDzemh553nd20=;
+ b=UD4V8Klyd15Uy2izdC1rLHZRJyc1wsKJfU2P14IK6eOr3rWyqqOVrF9aJwerhJ4pGnDRGPv8qv1VO2MGcI8pTVym7lXGFNZi1XVN//j3hQS3FWowXEPFIV2ABMgqdkjLCGMIabx0lNrviM06QbLvUA29CBsnggqwjBCXxmz5UURAm5RSMR0EzOBPnjWSj/1U/8n5Ku39TcqKav4QJiqy7VrTzaU0HAHZdm8iD/bninqX4r0dSzkRfO9tn9F8EueT+pXvTkfb88W949kosHthydihu73iWAC8jVXGcWGzv+Rrikqmh0drMUuie2cjXTUZuPlStTN/eqqcugwtQDRCSw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by CH3PR12MB7500.namprd12.prod.outlook.com (2603:10b6:610:148::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.17; Tue, 28 Apr
+ 2026 19:04:39 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9870.013; Tue, 28 Apr 2026
+ 19:04:38 +0000
+Date: Tue, 28 Apr 2026 16:04:37 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: David Matlack <dmatlack@google.com>
 Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
 	linux-kselftest@vger.kernel.org, Shuah Khan <shuah@kernel.org>,
 	Alex Williamson <alex.williamson@redhat.com>,
 	patches@lists.linux.dev, Shuah Khan <skhan@linuxfoundation.org>
 Subject: Re: [PATCH] vfio: selftests: Fix out-of-tree build with make O=
-Message-ID: <afD7-rg58XvqRJpD@google.com>
+Message-ID: <20260428190437.GE718365@nvidia.com>
 References: <0-v1-79f29139180b+8e-vfio_st_make_o_jgg@nvidia.com>
+ <afD7-rg58XvqRJpD@google.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <afD7-rg58XvqRJpD@google.com>
+X-ClientProxiedBy: BN1PR12CA0022.namprd12.prod.outlook.com
+ (2603:10b6:408:e1::27) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v1-79f29139180b+8e-vfio_st_make_o_jgg@nvidia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CH3PR12MB7500:EE_
+X-MS-Office365-Filtering-Correlation-Id: bb5f268d-2396-4a9a-a602-08dea558ff04
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|1800799024|56012099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	WUvO+NRAahHcn/rxbUB5yInLAT/fULQlJ25awbXpPq2UblUz9beMKWzzfVMk3SVIsfRmnGf0YRmqOlEUi2aqLW2lprn7z5bi/IYdmjUEGz/R2YjJGcq7MjZ0PYlBTu/YK3uhw56TGbZNYPX57kPj3j+jfgu1atGOi45XrcEMoU16J0tyUR4Y+fuwG00mpoZVRlcyrUAfw4nT+UvL80lC34IRHSiDKSNN/0t9HR7R/0CBDodr1pRYIGVI2Cj/5utgD5CXnsASjGvUoqEL3foHOwUszgs1PNUNhzx8FypqYsNLhvThFC5ovzPvypQHqhSr5e+OlE+EAPpDEm5B/BmYYlXikd87wbbRu1D9orVY38O/UHZ8gBj03g7TqiOQP0B/jhrddJe4uzup7GdBbNiQye9eNcVs3NA+l1o9uOvumNlsM1DBZCnTE/Ht/caFzyQJv08U8ax+uxLWBaJusbhA5Y14rJ/Iedoyk/Ea0PEqfYMpNWn+nrlg/z1aJyg2NITmV0BngHKhICX/Tv1ZsMgybDK4xFyOBKSqcy+YwwNFrXQytm1vnamauu3h9+qIBiUHIuCoQ0gIF8czRc2x2bQtlTpNyryOmE6W+a9I7/2Vp0cV1823M7mNCLJ2D5Rp/MvFHliOI41cu8YO84jwow46SMF3Dm8Z38CrJR3MDQvgh7kzSNPEqoXr5N5s0KhuQP0km+Enlokvh+i6mQUQ5B32x6qHqeGXINnOw7jxNwAA/4w=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?e2vlSgP8HDCLkE3F9Bw2Kuav2tcWDIkC3V1yoy7iiIb1nw5vC2zuP84lw+gH?=
+ =?us-ascii?Q?Lx5hsTqZaGioqF22egDVuPjkTEsrcO2zmsT2rVC0RT8WvyjxLldhcLbhK3pM?=
+ =?us-ascii?Q?jA0RK/r47ojWhze1io8FrXampZrwdDH4d14wnMahDhQSojn+OtZjpFBAN6Z5?=
+ =?us-ascii?Q?BARst2plBq2804uHJVOUY876hIur4lLhMPxxcBoJ4mY0mBJVvOqhcZt6J0EU?=
+ =?us-ascii?Q?YmptYZLwpnqIm6pPyHJ998d/8ZKdyAWIKjUgXEDcR1Q9l8sQREfpfkFcz/zf?=
+ =?us-ascii?Q?idbHscQ45rNo7hjadBvIl4JjfCrj3QmbciBKS+N57j2KPYUpOsAFWrxSB2i+?=
+ =?us-ascii?Q?/VgnCr1e5QunsC/75HZP3yde3c+27yyljFvwYzZ6BpeGx22dHMp7vZk4EZSW?=
+ =?us-ascii?Q?lY9VdBnuw08ZqxyCSyWW109sHxok5WZ1ZjSmePiXk8+2ItWWtWaIPn8eyS6b?=
+ =?us-ascii?Q?IpYkCg6hDaUvor9+Q70yR+S7l78Gh1tgOdm5qKTmCQDZvA2pbLbpew/mM6d5?=
+ =?us-ascii?Q?kMCU2jPYwRZQ50s1BtCoPb4j13hmt39nLe8lt5vtBIj3ZP/vMW1xiMPa/4RB?=
+ =?us-ascii?Q?mpzEZrfjN8aJ2I6z40BZFwPg794cPpiAN4LTiovVZ9hQnnZ+VnJjp0qEm7tK?=
+ =?us-ascii?Q?4nmBEnKNCQqniUlGMNOtxinXivp+LUsXTc+XF2tOdKOVnTd0rPJRFZ1p5ZcC?=
+ =?us-ascii?Q?escX1YUK4mUhJrLrhVRsVY2/DbhNu0sub524OgmHGKvhDPeRX6Ng+ZbZ7d4a?=
+ =?us-ascii?Q?AvCdl1EcyJzfrS+u3wa6WNLADcclu0EwXkC480KQeqGzs0Xxezd0MFOdgrC/?=
+ =?us-ascii?Q?2I+ugEgYx8sHnEWUZk1Nm0IQIR0vrn1yrQbFDmaSPmrHBHEQ28ntf1VrWBVz?=
+ =?us-ascii?Q?iq4vU9KUcWGmrTxneCXIV/ROtY3nE++3Q3KUtR9z58kgkqXI7G1UcfHCS9eF?=
+ =?us-ascii?Q?BPTf1xilDOVsKrSA1hCvikJrJWFX1tyIj+qXER5TytaV5Zhwq0ev9rmF3kNB?=
+ =?us-ascii?Q?/t2uGCEct4/cEcPuFSAP7T+URslhi+yt7uo9rltjKGmCgP4PkfXePAzRTvS9?=
+ =?us-ascii?Q?QJXyeirRlx2iyGLx5iBha/1VOvzA/0eo2DjCT/5W4e2BuyCzgZW2UjH6F29L?=
+ =?us-ascii?Q?TmShfEr9oaNrHi55ol0WAahb71kfxu9wjqHJw6c4bCuUbwFMiH3bCFJcdEcP?=
+ =?us-ascii?Q?oC9NHpuEqcP1uzNN0P8vz3e6Efp5PRSSd/EB4+DiCOK/s1TfDIdU2345xPNt?=
+ =?us-ascii?Q?HFIWEGWEP6cF8os2BV+N1Rdd/I99sdDvGCCWu4vue6LQTlFN+ch9mCEXmPyT?=
+ =?us-ascii?Q?UR2gSRcGMm7l+Y3a+blPlBvL0ffQWDkoNlXOEKS72iawTcIRm0nOkCIjJD3w?=
+ =?us-ascii?Q?v96okKR8X5e4zpF29/RLv5SFuIxYQGPhi4yvdRdKB9PZ3yAVP8XKc+OlpPP8?=
+ =?us-ascii?Q?CvSqNEBM2coVrFvJJtNM2pruvp3oCzeKjytHHutY4/AfGmOfyKvdC95DhApu?=
+ =?us-ascii?Q?3zuSAg73pRwK7+Et1fc/1h5OW3Z1gnmnTEstLrlHmqJsSq18eLZ+64H7N+UW?=
+ =?us-ascii?Q?b2V9+Wv6DefCJmNzZJJnEPZEFKMBLHspASJFT7nRDWXqJzpCZ5cCmn/UI+Ak?=
+ =?us-ascii?Q?WvTWHwpc4fzMd6TH1ILIHL47kPsFlKPM4MTZKxfwJOZlcFk1gKPa8lbVuPqo?=
+ =?us-ascii?Q?SO+pj1H+2C9zmlJq5XHKilii9Iaj+bVhx1p7VY++gAmlK1gV?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bb5f268d-2396-4a9a-a602-08dea558ff04
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Apr 2026 19:04:38.8799
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /DYSdAInv0wOI+a708+dHBUpNvVKfsfdjm2k4OwTz24cmWQiGpNUnl9txK4kGTeu
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7500
 
-On 2026-04-27 08:07 PM, Jason Gunthorpe wrote:
-> The test programs are compiled via a static pattern rule that requires
-> intermediate .o files:
+On Tue, Apr 28, 2026 at 06:27:06PM +0000, David Matlack wrote:
+> On 2026-04-27 08:07 PM, Jason Gunthorpe wrote:
+> > The test programs are compiled via a static pattern rule that requires
+> > intermediate .o files:
+> > 
+> >   $(TEST_GEN_PROGS): %: %.o $(LIBVFIO_O)
+> > 
+> > After lib.mk prefixes TEST_GEN_PROGS with $(OUTPUT), this creates
+> > dependencies on .o files in the output directory (e.g.
+> > $(OUTPUT)/vfio_dma_mapping_test.o). However, there is no rule to compile
+> > these .o files from the source directory .c files when OUTPUT differs
+> > from the source directory.
+> > 
+> > Add an explicit chain of pattern rules:
+> >   $(OUTPUT)/% -> $(OUTPUT)/%.o -> %.c
+> > 
+> > Following the same pattern already used in libvfio.mk for the library
+> > objects.
+> > 
+> > Fixes: 19faf6fd969c ("vfio: selftests: Add a helper library for VFIO selftests")
+> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> > ---
+> >  tools/testing/selftests/vfio/Makefile | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/tools/testing/selftests/vfio/Makefile b/tools/testing/selftests/vfio/Makefile
+> > index 40165d087a0bc4..81c3be8298fdc2 100644
+> > --- a/tools/testing/selftests/vfio/Makefile
+> > +++ b/tools/testing/selftests/vfio/Makefile
+> > @@ -27,10 +27,13 @@ CFLAGS += $(EXTRA_CFLAGS)
+> >  
+> >  LDFLAGS += -pthread
+> >  
+> > -$(TEST_GEN_PROGS): %: %.o $(LIBVFIO_O)
+> > +$(TEST_GEN_PROGS): $(OUTPUT)/%: %(OUTPUT)/%.o $(LIBVFIO_O)
 > 
->   $(TEST_GEN_PROGS): %: %.o $(LIBVFIO_O)
+> Changing this line (with the fix you replied with) is not actually
+> needed right? I tried the following without it and was able to build:
 > 
-> After lib.mk prefixes TEST_GEN_PROGS with $(OUTPUT), this creates
-> dependencies on .o files in the output directory (e.g.
-> $(OUTPUT)/vfio_dma_mapping_test.o). However, there is no rule to compile
-> these .o files from the source directory .c files when OUTPUT differs
-> from the source directory.
+>   $ make OUTPUT=/tmp -C tools/testing/selftests/vfio
 > 
-> Add an explicit chain of pattern rules:
->   $(OUTPUT)/% -> $(OUTPUT)/%.o -> %.c
+> $(TEST_GEN_PROGS) has already been prefixed with $(OUTPUT), so %
+> in the original pattern already included $(OUTPUT).
 > 
-> Following the same pattern already used in libvfio.mk for the library
-> objects.
+> Is this for readability?
+
+Yes, it makes more sense to explicitly match the stems through the
+flow than to have the implicit $(TEST_GEN_PROGS) == XXX/$(OUTPUT)
+
+> >  	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $< $(LIBVFIO_O) $(LDLIBS) -o $@
+> >  
+> >  TEST_GEN_PROGS_O = $(patsubst %, %.o, $(TEST_GEN_PROGS))
+> > +$(TEST_GEN_PROGS_O): $(OUTPUT)/%.o: %.c
+> > +	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
 > 
-> Fixes: 19faf6fd969c ("vfio: selftests: Add a helper library for VFIO selftests")
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  tools/testing/selftests/vfio/Makefile | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tools/testing/selftests/vfio/Makefile b/tools/testing/selftests/vfio/Makefile
-> index 40165d087a0bc4..81c3be8298fdc2 100644
-> --- a/tools/testing/selftests/vfio/Makefile
-> +++ b/tools/testing/selftests/vfio/Makefile
-> @@ -27,10 +27,13 @@ CFLAGS += $(EXTRA_CFLAGS)
->  
->  LDFLAGS += -pthread
->  
-> -$(TEST_GEN_PROGS): %: %.o $(LIBVFIO_O)
-> +$(TEST_GEN_PROGS): $(OUTPUT)/%: %(OUTPUT)/%.o $(LIBVFIO_O)
+> Looking at this commit made me confused how this was even working before
+> and I learned that make has built-in rules to build .o files that
+> assumes the .c is in the same directory. 
 
-Changing this line (with the fix you replied with) is not actually
-needed right? I tried the following without it and was able to build:
+Yes
 
-  $ make OUTPUT=/tmp -C tools/testing/selftests/vfio
+> I see now that we were reying
+> on those built-in rules to build $(TEST_GEN_PROGS_O). It makes sense to
+> have an explicit rule to handle the directory mismatch between .c and
+> .o.
 
-$(TEST_GEN_PROGS) has already been prefixed with $(OUTPUT), so %
-in the original pattern already included $(OUTPUT).
+Hmm now that I think about it, I wonder if it used the right flags..
 
-Is this for readability?
+> This also got me thinking it might be a nice cleanup to use the
+> predefined macros $(COMPILE.c) and $(LINK.c) in these rules instead of
+> $(CC) $(CFLAGS) ... etc. No need to attach that to this fix though.
 
->  	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $< $(LIBVFIO_O) $(LDLIBS) -o $@
->  
->  TEST_GEN_PROGS_O = $(patsubst %, %.o, $(TEST_GEN_PROGS))
-> +$(TEST_GEN_PROGS_O): $(OUTPUT)/%.o: %.c
-> +	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
+Yeah probably
 
-Looking at this commit made me confused how this was even working before
-and I learned that make has built-in rules to build .o files that
-assumes the .c is in the same directory. I see now that we were reying
-on those built-in rules to build $(TEST_GEN_PROGS_O). It makes sense to
-have an explicit rule to handle the directory mismatch between .c and
-.o.
-
-This also got me thinking it might be a nice cleanup to use the
-predefined macros $(COMPILE.c) and $(LINK.c) in these rules instead of
-$(CC) $(CFLAGS) ... etc. No need to attach that to this fix though.
-
-> +
->  TEST_DEP_FILES = $(patsubst %.o, %.d, $(TEST_GEN_PROGS_O) $(LIBVFIO_O))
->  -include $(TEST_DEP_FILES)
->  
-> 
-> base-commit: 681b35420592a2e072d9759254185e72d2e914c8
-> -- 
-> 2.43.0
-> 
+Jason
