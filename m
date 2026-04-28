@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6EC3FCB21;
-	Tue, 28 Apr 2026 10:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36303FE369;
+	Tue, 28 Apr 2026 10:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372934; cv=none; b=JeahWS9r6MQeG3fZLyrj5xAdLinL8LXkbQFr0LwX2yHOCKy9AKBxjJdUNf8Othkc3dwClNMvz+BIlzyPCBIhS/zUByZYt0wezx0A4Fo95OsvuqfV2rhLEXHs7BHp82r4Rn/rcddS7kdngZRjJzhrSrFgBW2WCG7YFIs69LUhpAk=
+	t=1777372935; cv=none; b=Q1DRw17MxnLQRradPGqo587vyeRhNAMoQpWRzWcqy+aSUfLbzOd4eGsNXJbhXfnEqWYBuZZWkgKXWhigwrFS23qr1DkZZJQl319Tu5giiIfqZUG1kExXc8rGY9QMPANV6C1L9xoBMuByEhqzWO5Y186l1H3IpVGhNUuNgn7h4eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372934; c=relaxed/simple;
-	bh=gmKEEq+Q4TJt+EvN1ei9MyLA41JpySIjVno7v3Cfwp8=;
+	s=arc-20240116; t=1777372935; c=relaxed/simple;
+	bh=MBrOsObmFc7XibG6V+hMrHPinF/bUwb7BtC8HRIaKOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ACvu6bDIH592gd9MVMnozRI9Wpk7DLU644dqOx6xQ/qXlm2MN7f/mAOsRskdO9cvjgcQa3AfGP9/cBp8wlTnDUgY/rUxTPMpsZZYN4VLV47EsHoECIuMKm01K9l6u9jZsa9P2qkOXsGjjzx62uwXbsBd5GjqnvnWvRO9WqLmqEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IJLD1t5C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AyNxahQ4YL0rJ1SFvaJ/3EM11kw57nAQo8/7504mYbnScRDKVwb/bn8h/lN+tsra4BY1otiSMs4T4lwST4DQq1IFt9AtvLsQyODR4ZHp0VfZ8ec5pvJT89mw06wSzQNnDWP8Xo9k34tMd4SsTeaQtnQJTMO4sKaWwgBd0/nA/oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eCEcB9Ig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IJLD1t5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BB2C2BCF5;
-	Tue, 28 Apr 2026 10:42:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eCEcB9Ig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E737C2BCAF;
+	Tue, 28 Apr 2026 10:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372934;
-	bh=gmKEEq+Q4TJt+EvN1ei9MyLA41JpySIjVno7v3Cfwp8=;
+	s=k20201202; t=1777372935;
+	bh=MBrOsObmFc7XibG6V+hMrHPinF/bUwb7BtC8HRIaKOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJLD1t5COAuxzwqM5YRhQ1lk7jSvx6B2tExBF0qeRphAHrXaRmJcMpMsyLUwUhYM2
-	 eG6Ck2Mj3Mvdtps6o+pIeAm7RJurNV1oslP3afx9UIrdhIaIn0WCf7PooB1UBAwzpf
-	 ItcgFuB6MNxWozsKQj1gaXe7a/+R1MhL3jfA5ygsrrhVyuH3QlvV0H4X6Cr+pDA7fn
-	 cJBlLjDFEMae0oPCqajvDp0M881nrgKNbqfvm18BmkwrunVIXS/33aXbDIBABR0xXo
-	 o4O5nl4mcRiFq3uSlYQCPHZgC9yD7EXMCZYENU+fy3wlQeHCKT56YzEgcl7FtqlFE9
-	 QiqAyT3Yas74A==
+	b=eCEcB9IgcPZBEl5POXQCX+J6Hw7cjJoyoEjtJ3MkzI/1W8qdiEwqbrAHHpSBOLia3
+	 bwCTa8HWHfwDLRMtOcUyefSXYN4K8Bn4LyLcuBBXZzhIWJ8X6OwKuO+ai+qaVDBka2
+	 hYO1u3ZDYfsqUHR2aMuowukLRNCtbDGb+xw/3r/zhFO6lQa6pKCZRZ9OXgqN6ep/l2
+	 su4Qp3p74usYVGzb5DLXvZKm1fSuhedlU0HjncEt4GmByIMdSZuVTr9LBWJPfKp6Rk
+	 Lei8lXS+cFqd7SjNOY3SRwIJVMtuQG3lk3AjISHYU3vFDLfrs29ZwMu2VEzYHH57fL
+	 Ch4fFh1NXITzg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	linux-f2fs-devel@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] ntfs3: reject inodes with zero non-DOS link count
-Date: Tue, 28 Apr 2026 06:40:40 -0400
-Message-ID: <20260428104133.2858589-29-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] f2fs: fix to skip empty sections in f2fs_get_victim
+Date: Tue, 28 Apr 2026 06:40:41 -0400
+Message-ID: <20260428104133.2858589-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -52,357 +53,355 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit e10e72f69734a90c8719d160e8efb164ce5d9e26 ]
+[ Upstream commit dccd324fa9bd1a2907a63fa4cc2651f687b2b5d0 ]
 
-ntfs_read_mft() counts file name attributes into two variables:
-names (all names including DOS 8.3) and links (non-DOS names
-only). The validation at line 424 checks names but set_nlink()
-at line 436 uses links. A corrupted NTFS image where all file
-name attributes have type FILE_NAME_DOS passes the names check
-but results in set_nlink(inode, 0).
+In age-based victim selection (ATGC, AT_SSR, or GC_CB), f2fs_get_victim
+can encounter sections with zero valid blocks. This situation often
+arises when checkpoint is disabled or due to race conditions between
+SIT updates and dirty list management.
 
-When such an inode is loaded via a code path that passes name=NULL
-to ntfs_iget5() and the nlink=0 inode enters the VFS. The subsequent
-unlink, rmdir, or rename targeting this inode calls drop_nlink()
-which triggers WARN_ON(inode->i_nlink == 0) in fs/inode.c.
+In such cases, f2fs_get_section_mtime() returns INVALID_MTIME, which
+subsequently triggers a fatal f2fs_bug_on(sbi, mtime == INVALID_MTIME)
+in add_victim_entry() or get_cb_cost().
 
-An all-DOS-name MFT record cannot exist on a valid NTFS volume.
-Reject such records by checking for links == 0 before
-calling set_nlink().
+This patch adds a check in f2fs_get_victim's selection loop to skip
+sections with no valid blocks. This prevents unnecessary age
+calculations for empty sections and avoids the associated kernel panic.
+This change also allows removing redundant checks in add_victim_entry().
 
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to write the analysis. Let me finalize my
-review.
+Now I have enough information to make a thorough decision. Let me
+compile my complete analysis.
 
-## Analysis
+## Complete 9-Phase Analysis
 
 ### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 — Subject line parse**
-Record: subsystem `ntfs3`, verb `reject`, intent: reject inodes with
-zero non-DOS link count (validation check).
+**Step 1.1 - Parse Subject Line:**
+Record: `[fs: f2fs]` `[fix]` - Fix to skip empty sections in
+`f2fs_get_victim` to avoid kernel panic from `f2fs_bug_on(mtime ==
+INVALID_MTIME)`.
 
-**Step 1.2 — Tags**
-Record: Only two SoBs (Ziyi Guo, Konstantin Komarov). No Fixes:, no Cc:
-stable, no Reported-by:, no Link:, no Reviewed-by:. Absence is expected
-per the rules.
+**Step 1.2 - Parse Tags:**
+Record:
+- Author: `Daeho Jeong <daehojeong@google.com>` (Google Android kernel
+  engineer)
+- `Reviewed-by: Chao Yu <chao@kernel.org>` (F2FS subsystem maintainer)
+- `Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>` (F2FS maintainer)
+- NO `Fixes:` tag, NO `Cc: stable` tag, NO `Reported-by:` tag, NO
+  `Link:` tag
 
-**Step 1.3 — Body text**
-Record: Author explains a precise bug mechanism: `names` counts all file
-name attrs (incl. FILE_NAME_DOS) while `links` counts only non-DOS. The
-existing guard `if (!names)` can pass while `set_nlink(inode, links)`
-still sets nlink=0 when every ATTR_NAME is DOS-type. Subsequent
-unlink/rmdir/rename of such an inode hits `drop_nlink()` which fires
-`WARN_ON(inode->i_nlink == 0)` in `fs/inode.c`. Trigger:
-corrupted/malicious NTFS image; no version info given.
+**Step 1.3 - Analyze Commit Body:**
+Record:
+- Bug description: In age-based victim selection (ATGC, AT_SSR, GC_CB),
+  `f2fs_get_victim` can encounter sections with zero valid blocks
+- Failure mode: `f2fs_get_section_mtime()` returns `INVALID_MTIME`,
+  triggering `f2fs_bug_on(sbi, mtime == INVALID_MTIME)` in
+  `add_victim_entry()` or `get_cb_cost()` → kernel panic (with
+  `CONFIG_F2FS_CHECK_FS`) or WARN + `SBI_NEED_FSCK` flag
+- Root cause claim: "checkpoint is disabled or due to race conditions
+  between SIT updates and dirty list management"
+- Commit says "This change also allows removing redundant checks in
+  `add_victim_entry()`" — but the final v2 does NOT remove those checks
+  (they remain)
 
-**Step 1.4 — Hidden fix detection**
-Record: Explicitly a fix ("reject"). Not hidden.
+**Step 1.4 - Hidden Bug Fix Detection:**
+Record: Not hidden — explicitly a "fix" commit preventing a kernel
+panic.
 
 ### PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 — Inventory**
-Record: 1 file `fs/ntfs3/inode.c`, +5/-0, one function
-`ntfs_read_mft()`. Single-file surgical fix.
+**Step 2.1 - Inventory Changes:**
+Record: 1 file (`fs/f2fs/gc.c`), 3 lines added, 0 lines removed. Single-
+function change within `f2fs_get_victim()`.
 
-**Step 2.2 — Code flow**
-Record: Before: after `names` validation, code falls through to
-`set_nlink(inode, links)`. After: additional `if (!links) { err =
--EINVAL; goto out; }` short-circuits before `set_nlink` for records
-whose only names are DOS 8.3.
+**Step 2.2 - Code Flow Change:**
+Record:
+- Before: Under `SBI_CP_DISABLED`, only LFS-mode checked
+  `get_ckpt_valid_blocks` and SSR-mode checked
+  `f2fs_segment_has_free_slot`. Sections with zero valid blocks could
+  proceed to `add_victim_entry()` / `get_gc_cost()`.
+- After: Added `if (!get_valid_blocks(sbi, segno, true)) goto next;`
+  after both LFS/SSR branches — skips empty sections in CP_DISABLED mode
+  before they hit the BUG_ON.
 
-**Step 2.3 — Bug mechanism**
-Record: Category (g) Logic/correctness + defensive validation for on-
-disk corruption. Closes an inconsistency between the validator (`names`)
-and the consumer (`links`). Prevents VFS invariant violation
-(inode->i_nlink==0 for a living inode), which is what the WARN_ON in
-`drop_nlink()` guards.
+**Step 2.3 - Bug Mechanism:**
+Record: Category (d) memory safety / sanity-check, specifically avoiding
+a `BUG_ON` trip in age-based victim selection when large sections have
+all zero valid blocks (→ `f2fs_get_section_mtime` returns
+`INVALID_MTIME`).
 
-**Step 2.4 — Quality**
-Record: Obviously correct; the branch targets the existing `out:` which
-does `iget_failed(inode)` and returns `ERR_PTR(err)`. Adds no lock
-changes, no allocation changes. Zero regression risk on valid NTFS
-(valid records have `links >= 1`, author states an all-DOS-name MFT
-record cannot exist on a valid NTFS volume).
+**Step 2.4 - Fix Quality:**
+Record: Obviously correct — sections with zero valid blocks contain no
+data to migrate, so skipping them is semantically correct. Zero
+regression risk: just bypasses useless work. Fix is minimal (3 lines)
+and localized.
 
 ### PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 — Blame**
-Record: `git blame` on the area around the fix shows `set_nlink(inode,
-links)` was introduced by `110b24eb1a749b` ("fs/ntfs3: Taking DOS names
-into account during link counting", Apr 17 2024, Konstantin Komarov).
+**Step 3.1 - Blame:**
+Record: The `f2fs_bug_on(sbi, mtime == INVALID_MTIME)` and
+`INVALID_MTIME` machinery were introduced by `b19ee7272208` ("f2fs:
+introduce f2fs_get_section_mtime") in v6.13-rc1.
 
-**Step 3.2 — Fixes: target**
-Record: No Fixes: tag in the commit, but the root cause (splitting
-`names` vs `links` and using `links` for nlink while validating `names`)
-was introduced by `110b24eb1a749b`. That commit had `Cc:
-stable@vger.kernel.org` and `Fixes: 82cae269cfa95 ("fs/ntfs3: Add
-initialization of super block")`.
+**Step 3.2 - Follow Fixes Tag:**
+Record: No `Fixes:` tag. The underlying issue originated in
+`b19ee7272208` (v6.13-rc1). An earlier related fix `207764e5d6f19`
+("f2fs: fix to avoid return invalid mtime from
+f2fs_get_section_mtime()") handled mtime fuzzing via syzbot report; it's
+in stable 6.14.y, 6.15.y, 6.16.y, 6.17.y, 6.18.y, 6.19.y but not 6.13.y.
 
-**Step 3.3 — File history**
-Record: Standalone commit; not part of any series. Close neighbors in
-ntfs3 are independent fixes (e.g. `06909b2549d63`, `4b90f16e4bb56`
-handling corrupted metadata).
+**Step 3.3 - Related Recent Changes:**
+Record: `d625a2b08c089` ("f2fs: fix to avoid migrating empty section")
+in Sep 2025 is thematically related — both deal with empty sections
+during GC.
 
-**Step 3.4 — Author history**
-Record: Ziyi Guo has 17 commits in the tree, all small defensive
-validation / lock fixes across drivers (net, wifi, USB, ASoC, power) —
-typical profile of a researcher/fuzzer-finder. Not the subsystem
-maintainer, but the patch was applied by maintainer Konstantin Komarov.
+**Step 3.4 - Author's Other Commits:**
+Record: Daeho Jeong is a regular f2fs contributor from Google working
+extensively on f2fs GC logic and Android kernel integration. Multiple
+GC-related commits.
 
-**Step 3.5 — Dependencies**
-Record: No dependency. Uses existing locals `links`/`names`, the
-existing `out:` label, and `err = -EINVAL`. Self-contained.
+**Step 3.5 - Dependencies:**
+Record: Standalone — calls only `get_valid_blocks()` which exists in all
+stable trees. No dependencies on newer code.
 
-### PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+### PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1 — b4 dig / thread**
-Record: `b4 dig -c e10e72f69734a` → thread at `https://lore.kernel.org/a
-ll/20260210155634.380168-1-n7l8m4@u.northwestern.edu/`. Single revision
-(v1). Maintainer Konstantin Komarov replied Feb 24 2026: "Patch looks
-good — applied. Thanks." No NAK, no stable nomination, no concerns.
+**Step 4.1 - Original Patch Discussion:**
+Record: `b4 dig -c dccd324fa9bd1` found `https://lore.kernel.org/all/202
+60316185922.2184759-1-daeho43@gmail.com/`. Patch went through v1 → v2.
+v2 changelog: "changed the check position." v1 placed the check
+unconditionally (before CP_DISABLED) AND removed redundant check from
+`add_victim_entry()`. v2 narrowed scope to only run under CP_DISABLED
+and kept redundant check.
 
-**Step 4.2 — Reviewers**
-Record: `b4 dig -w` shows the patch was sent to Konstantin Komarov
-(maintainer), ntfs3@lists.linux.dev, linux-kernel@vger.kernel.org.
-Appropriate recipients.
+**Step 4.2 - Reviewers:**
+Record: Reviewed by Chao Yu (F2FS co-maintainer). Mailing lists: linux-
+kernel, linux-f2fs-devel, kernel-team@android.com.
 
-**Step 4.3 — Bug report**
-Record: No Reported-by:/Link: tags. The commit wording ("A corrupted
-NTFS image") and the author's fuzzer-style track record strongly suggest
-this was found via fuzzing, though not attributed to syzbot on the list.
+**Step 4.3 - Bug Report:**
+Record: No explicit Reported-by or Link. The language "race conditions
+between SIT updates and dirty list management" suggests it was observed
+(possibly internally at Google/Android).
 
-**Step 4.4 — Related patches**
-Record: No series. Standalone.
+**Step 4.4 - Related Patches:**
+Record: Not part of a series.
 
-**Step 4.5 — Stable discussion**
-Record: None found.
+**Step 4.5 - Stable Mailing List:**
+Record: No explicit stable nomination by reviewers in thread. Patchwork-
+bot confirmed application to `jaegeuk/f2fs.git (dev)`.
 
 ### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1 — Key function**
-Record: `ntfs_read_mft()`.
+**Step 5.1 - Key Functions:**
+Record: `f2fs_get_victim()`, which calls `add_victim_entry()` (for
+is_atgc) and `get_gc_cost()` → `get_cb_cost()` (for GC_CB).
 
-**Step 5.2 — Callers**
-Record: `ntfs_read_mft` is only called from `ntfs_iget5()`. `ntfs_iget5`
-is called with `name=NULL` from many user-reachable paths:
-`fs/ntfs3/dir.c:265` (lookup via `indx_find`), `dir.c:337` (readdir /
-`ntfs_dir_emit`), `fs/ntfs3/namei.c:371` (`ntfs3_get_parent` — NFS
-export / open-by-handle), `fs/ntfs3/frecord.c:2945,3064`, plus super-
-block metadata loads. In particular the dir.c:337 readdir path and the
-namei.c:371 get_parent path exactly match the commit description's
-"name=NULL to ntfs_iget5()".
+**Step 5.2 - Callers:**
+Record: `f2fs_get_victim` is called from `__get_victim` which is called
+from `f2fs_gc`. `f2fs_gc` is called from GC background thread and from
+ioctl `F2FS_IOC_GC` (user triggerable).
 
-**Step 5.3 — Callees affected by fix**
-Record: Only `set_nlink(inode, links)` is gated behind the new check.
-The `out:` path was already correct.
+**Step 5.3 - Callees:**
+Record: `get_valid_blocks()` reads section metadata; quick, safe call.
 
-**Step 5.4 — Reachability**
-Record: Reachable from userspace via mount + readdir/lookup on a crafted
-NTFS image. `drop_nlink()` path reachable via `ntfs_unlink()` and
-`ntfs3_rmdir()` in `fs/ntfs3/namei.c` / `fs/ntfs3/inode.c:1838`. End-to-
-end chain confirmed.
+**Step 5.4 - Reachability:**
+Record: Reachable from userspace via `ioctl(F2FS_IOC_GC)` as
+demonstrated by the earlier syzbot reproducer for the related bug. Also
+reached via background GC thread.
 
-**Step 5.5 — Similar patterns**
-Record: Many recent ntfs3 commits follow the same pattern of hardening
-against corrupted on-disk structures (`0dc7117da8f92`, `06909b2549d63`,
-`4b90f16e4bb56`, `1732053c8a6b3`, `7443753436620`). Community actively
-accepts and backports these.
+**Step 5.5 - Similar Patterns:**
+Record: `add_victim_entry()` already has a similar check (`p->gc_mode ==
+GC_AT && get_valid_blocks == 0`) — but it's narrower. This commit
+extends the protection to all modes under CP_DISABLED.
 
 ### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 6.1 — Bug present in stable?**
-Record: The faulty `set_nlink(inode, links)` (without the `!links`
-guard) was backported to:
-- `stable/linux-5.15.y` as `7ab0c256964ef`
-- `stable/linux-6.1.y` as `df40783dc3773`
-- `stable/linux-6.6.y` as `e4fd2dce71fbd`
-- `stable/linux-6.12.y` as `110b24eb1a749` (same SHA)
-So the bug exists in 5.15+, 6.1+, 6.6+, 6.12+ stable trees.
+**Step 6.1 - Code in Stable:**
+Record: `f2fs_get_section_mtime` exists in 6.13.y, 6.14.y, 6.15.y,
+6.16.y, 6.17.y, 6.18.y, 6.19.y. Does NOT exist in 6.12.y (introduced in
+v6.13-rc1). Therefore bug only affects 6.13.y+.
 
-**Step 6.2 — Backport complications**
-Record: Verified the code context in `stable/linux-5.15.y` and
-`stable/linux-6.6.y` — the surrounding lines (`names !=
-le16_to_cpu(rec->hard_links)` block and `set_nlink(inode, links)`) are
-identical to mainline. Patch applies cleanly; no rework expected for
-5.15.y/6.1.y/6.6.y/6.12.y and newer active LTS branches. Branches
-without 110b24eb's equivalent (older than 5.15 or before the April 2024
-backport) do not have the bug and do not need this fix.
+**Step 6.2 - Backport Complications:**
+Record: The surrounding code (CP_DISABLED block with LFS/SSR branches)
+is identical in all stable branches from 6.13.y to 6.19.y. Patch applies
+cleanly.
 
-**Step 6.3 — Existing related stable fixes**
-Record: None — no other "reject inodes with zero links" fix exists.
+**Step 6.3 - Related Fixes Already in Stable:**
+Record: `207764e5d6f19` (related INVALID_MTIME fix) already in 6.14.y,
+6.15.y, 6.16.y, 6.17.y, 6.18.y, 6.19.y. This commit is complementary,
+not duplicative — handles the `total_valid_blocks == 0` path that
+`207764e5d6f19` left intact.
 
-### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1 — Subsystem criticality**
-Record: `fs/ntfs3` — filesystem. IMPORTANT. Users of NTFS read-write
-support (Windows dual-boot, removable media), plus security surface for
-mountable filesystem images.
+**Step 7.1 - Subsystem Criticality:**
+Record: `fs/f2fs/` — IMPORTANT. Widely used on Android devices,
+ChromeOS, and some embedded flash-storage systems.
 
-**Step 7.2 — Activity**
-Record: Very active. Multiple corruption-hardening fixes in every recent
-merge window.
+**Step 7.2 - Subsystem Activity:**
+Record: Very active subsystem with regular stable backports. Many
+similar small fixes get backported routinely.
 
 ### PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1 — Affected users**
-Record: Users of ntfs3 who can mount attacker-controlled (or naturally
-corrupted) NTFS images. Also anyone who auto-mounts removable media.
-Filesystem-specific, not universal.
+**Step 8.1 - Affected Population:**
+Record: Users of f2fs (Android, ChromeOS, embedded) running large
+sections (zoned devices, some flash) with age-based GC modes, especially
+when using `checkpoint=disable` mount option.
 
-**Step 8.2 — Trigger**
-Record: Crafted NTFS image where an MFT record has only FILE_NAME_DOS
-attributes (and no non-DOS name). Valid NTFS never produces this, so the
-trigger requires a malformed image. On systems allowing unprivileged
-mounting (user namespaces + fuse-style setups, some distros' udisks
-configs) the trigger can be reached without root.
+**Step 8.2 - Trigger Conditions:**
+Record: Requires all of: (a) large section mode
+(`__is_large_section(sbi)`), (b) `SBI_CP_DISABLED` flag set, (c) victim
+selection in `is_atgc` or `GC_CB` mode, (d) a section with zero valid
+blocks reaching this code path via SIT/dirty-list race. User-triggerable
+via `ioctl(F2FS_IOC_GC)` or naturally during background GC.
 
-**Step 8.3 — Failure mode severity**
-Record: `WARN_ON(inode->i_nlink == 0)` → kernel warning with stack. On
-`panic_on_warn` systems (common in hardened / KASAN / fuzzing
-environments) it becomes a panic / DoS. Also a reliable way to trigger
-VFS invariants violation for further exploration. Severity: MEDIUM-HIGH
-(DoS via crafted FS image, security-relevant).
+**Step 8.3 - Failure Mode Severity:**
+Record:
+- With `CONFIG_F2FS_CHECK_FS=y` (dev builds, debug distros): kernel
+  panic via `BUG_ON` — CRITICAL
+- Without: `WARN_ON` + sets `SBI_NEED_FSCK` flag (filesystem marked
+  needing repair, user-facing disruption) — MEDIUM
+- Also, `INVALID_MTIME` (= ULLONG_MAX) then fed into age calculations
+  produces wildly wrong GC cost → suboptimal GC decisions.
 
-**Step 8.4 — Risk/benefit**
-Record: Benefit: prevents a WARN/panic on malformed NTFS images, closes
-a small attack surface. Risk: extremely low — 5 additional lines on the
-error path, using the same `out:` cleanup already there; impossible to
-affect a valid NTFS volume per the filesystem semantics described.
+**Step 8.4 - Risk-Benefit:**
+Record:
+- Benefit: Prevents panic on debug builds; avoids FS-needs-fsck flag and
+  bogus GC cost on production.
+- Risk: Very low. 3 lines added, inside an `unlikely(CP_DISABLED)`
+  branch. The skipped work is legitimately unnecessary (empty sections
+  have nothing to migrate). No locking changes, no allocation changes.
 
 ### PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1 — Evidence compile**
+**Step 9.1 - Evidence Compilation:**
 
 FOR:
-- Small (5 lines), surgical, single-function, no lock/alloc churn.
-- Fixes a concrete bug mechanism with clear reachability from user-
-  triggerable paths (readdir, lookup, NFS get_parent).
-- Bug introduced by `110b24eb1a749b` (already in
-  5.15.y/6.1.y/6.6.y/6.12.y stable), so active LTS trees are vulnerable.
-- Maintainer applied it with explicit approval ("Patch looks good —
-  applied").
-- Same pattern (corrupted-FS validation) is standard stable material for
-  ntfs3.
-- Failure mode is a WARN (or panic with panic_on_warn), security-
-  relevant for mountable FS images.
-- Applies cleanly to stable branches (verified identical context in
-  5.15.y and 6.6.y).
+- Prevents kernel panic (w/ `F2FS_CHECK_FS`) or FS-needs-fsck (w/o)
+- Small, obvious 3-line fix
+- Reviewed by F2FS subsystem maintainer (Chao Yu)
+- Went through v1→v2 review cycle; narrowed scope based on feedback
+- Zero regression risk (skipping empty sections is semantically correct)
+- Bug exists in every stable branch from 6.13.y through 6.19.y
+- Patch applies cleanly to all affected stable branches
+- Previous related INVALID_MTIME fix (`207764e5d6f19`) already in stable
+- Applicable to Android's `checkpoint=disable` usage pattern
+- Reaches via user-triggerable `ioctl(F2FS_IOC_GC)` (syscall-reachable)
 
 AGAINST:
-- No Fixes: / Cc: stable tags, no Reported-by:/Link:, no syzbot
-  attribution in message (absence of tags is expected per rules and not
-  a negative signal).
+- No `Fixes:` tag
+- No `Cc: stable` tag from author/maintainer
+- No explicit `Reported-by:` or `Link:` to a bug report
+- Trigger conditions are specific (CP_DISABLED + large section + age-
+  based GC + race)
+- Commit message mentions removing checks that v2 didn't remove (minor
+  inconsistency)
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct & tested? Yes — maintainer-applied, trivial gate
-   check before existing code path.
-2. Real bug? Yes — WARN triggers on documented code path.
-3. Important? Yes — corrupted/malicious FS image → kernel WARN,
-   potential DoS; security-relevant.
-4. Small/contained? Yes — 5 LOC, one function.
-5. No new features/APIs? Correct.
-6. Applies to stable? Yes — verified identical context in 5.15.y /
-   6.6.y.
+**Step 9.2 - Stable Rules Checklist:**
+1. Obviously correct and tested? YES — empty sections have nothing to
+   migrate; reviewed by maintainer
+2. Fixes a real bug? YES — documented panic path via `f2fs_bug_on(mtime
+   == INVALID_MTIME)`
+3. Important issue? YES — kernel panic on debug kernels, FS corruption
+   flagging on production
+4. Small and contained? YES — 3 lines, single function
+5. No new features/APIs? YES
+6. Applies to stable trees? YES — clean apply to 6.13.y through 6.19.y
 
-**Step 9.3 — Exception**
-Record: Fits the "corruption hardening" pattern commonly accepted for
-filesystems.
+**Step 9.3 - Exception Categories:**
+Not applicable (not a device ID / quirk / DT / build / doc fix).
+Standard bug-fix commit.
 
-**Step 9.4 — Decision**
-The fix is an obvious, minimal validation that prevents a VFS invariant
-violation reachable via a crafted NTFS image on all LTS trees that have
-commit `110b24eb1a749b` backported (5.15, 6.1, 6.6, 6.12). Benefit
-clearly outweighs negligible risk.
+**Step 9.4 - Decision:**
+This is a small, surgical bug fix preventing a legitimate kernel
+panic/warn-and-flag-for-fsck condition, reviewed by the subsystem
+maintainer, with zero regression risk. The trigger window (CP_DISABLED +
+race) is uncommon but realistic on Android/ChromeOS workloads. Similar
+small f2fs sanity-check fixes are routinely backported. The absence of
+Fixes:/Cc:stable is expected per the instructions — this is why it needs
+review.
 
 ## Verification
 
-- [Phase 1] Parsed commit message and tags directly from the commit
-  body; confirmed no Fixes:/Cc: stable/Reported-by: tags. No hidden
-  framing — patch explicitly says "reject".
-- [Phase 2] Read the relevant portion of `fs/ntfs3/inode.c` (lines
-  140–230 and 400–500) to confirm `names` is incremented for every
-  ATTR_NAME, `links` only for non-DOS names, and the fix goto-targets
-  the existing `out:` handler.
-- [Phase 3] `git blame` on `fs/ntfs3/inode.c` lines 420–440:
-  `set_nlink(inode, links)` originates in `110b24eb1a749b` ("fs/ntfs3:
-  Taking DOS names into account during link counting", 2024-04-17); that
-  commit has `Cc: stable@vger.kernel.org` and `Fixes: 82cae269cfa95`.
-- [Phase 3] `git show 110b24eb1a749b`: confirmed the stable-tagged
-  commit that introduced the vulnerability pattern.
-- [Phase 3] `git log --author="Ziyi Guo"`: 17 small validation / locking
-  fixes across subsystems; not subsystem maintainer.
-- [Phase 4] `b4 dig -c e10e72f69734a`: found single-revision thread at `
-  https://lore.kernel.org/all/20260210155634.380168-1-
-  n7l8m4@u.northwestern.edu/`; saved mbox to `/tmp/thread.mbox` and read
-  the maintainer's "applied" reply.
-- [Phase 4] `b4 dig -c e10e72f69734a -w`: confirmed recipients
-  (Konstantin Komarov, ntfs3@lists.linux.dev, linux-
-  kernel@vger.kernel.org).
-- [Phase 4] Verified via spinics mirror that only one version was sent
-  and only one reply ("applied") was received.
-- [Phase 5] `rg ntfs_iget5` in `fs/ntfs3`: enumerated all callers and
-  confirmed multiple user-reachable paths pass `name=NULL` (dir.c:337,
-  namei.c:371, frecord.c:2945/3064).
-- [Phase 5] Read `drop_nlink()` at `fs/inode.c:416-422` to confirm the
-  exact `WARN_ON(inode->i_nlink == 0)` location.
-- [Phase 5] Located `drop_nlink(inode)` call sites in ntfs3
-  (`namei.c:155`, `inode.c:1838`), confirming user unlink/rmdir/rename →
-  `drop_nlink` chain.
-- [Phase 6] Queried each stable branch directly for the "Taking DOS
-  names" backport: found `7ab0c256964ef` in 5.15.y, `df40783dc3773` in
-  6.1.y, `e4fd2dce71fbd` in 6.6.y, `110b24eb1a749` in 6.12.y — the buggy
-  change is in those stables.
-- [Phase 6] `git show stable/linux-6.6.y:fs/ntfs3/inode.c` and
-  `stable/linux-5.15.y:fs/ntfs3/inode.c` around the target lines:
-  context is identical to mainline, confirming clean application.
-- [Phase 6] Searched each stable branch for the fix ("reject inodes" /
-  "non-DOS link" in inode.c); not present in any stable, so no
-  duplicate.
-- [Phase 7] File path identifies subsystem as `fs/ntfs3`; `git log
-  --oneline fs/ntfs3` shows active subsystem with frequent corruption-
-  hardening fixes.
-- [Phase 8] Failure mode verified by reading `drop_nlink()` source and
-  tracing the reachable ntfs3 call chain; severity assessed as MEDIUM-
-  HIGH (WARN → panic_on_warn).
-- UNVERIFIED: Whether a syzbot report specifically mentions this
-  signature (no Reported-by in the commit; could not confirm a direct
-  syzkaller report link). This does not affect the decision because the
-  mechanism is verified by code reading.
+- [Phase 1] Read full commit message from `git show dccd324fa9bd1` —
+  confirmed tags (Reviewed-by Chao Yu, Signed-off-by Daeho/Jaegeuk), no
+  Fixes:/Cc:stable/Reported-by:/Link:
+- [Phase 2] Read `fs/f2fs/gc.c` lines 850-950 and diff — confirmed
+  3-line addition inside the `SBI_CP_DISABLED` block of
+  `f2fs_get_victim`
+- [Phase 2] Read `get_cb_cost` (line 367) and `add_victim_entry` (line
+  520) — confirmed both have `f2fs_bug_on(mtime == INVALID_MTIME)`
+- [Phase 2] Read `f2fs_get_section_mtime` in `fs/f2fs/segment.c:5637` —
+  confirmed returns `INVALID_MTIME` when `total_valid_blocks == 0`
+- [Phase 2] Read `f2fs_bug_on` macro in `f2fs.h:33-41` — confirmed
+  BUG_ON with CONFIG_F2FS_CHECK_FS, WARN+SBI_NEED_FSCK without
+- [Phase 3] `git log -S INVALID_MTIME` — identified introduction in
+  `b19ee7272208`, partial fix `207764e5d6f19`
+- [Phase 3] `git describe --contains b19ee7272208` → `v6.13-rc1~77^2~39`
+  (bug introduced in v6.13)
+- [Phase 3] `git describe --contains 207764e5d6f19` → `v6.14-rc1~63^2~4`
+  (prior fix in v6.14)
+- [Phase 3] `git branch --contains dccd324fa9bd1` — confirmed only in
+  `linux-next/master` and `fs-next` (not in any stable tag yet)
+- [Phase 4] `b4 dig -c dccd324fa9bd1` — found submission at
+  `lore.kernel.org/all/20260316185922.2184759-1-daeho43@gmail.com`
+- [Phase 4] `b4 dig -a` — confirmed v1→v2 evolution; v2 is what was
+  applied
+- [Phase 4] Read `/tmp/f2fs_thread.mbox` — confirmed Chao Yu Reviewed-
+  by, patchwork-bot applied to `jaegeuk/f2fs.git (dev)`
+- [Phase 4] Read `/tmp/20260310_daeho43_...mbx` (v1) — confirmed v1 had
+  unconditional check + removed redundant `add_victim_entry` check; v2
+  narrowed to CP_DISABLED only
+- [Phase 6] `git grep -l f2fs_get_section_mtime` on each stable branch —
+  confirmed bug exists in 6.13.y through 6.19.y, not in 6.12.y
+- [Phase 6] Inspected CP_DISABLED block in each stable branch —
+  confirmed identical code, patch would apply cleanly
+- [Phase 6] `git log --grep "avoid return invalid mtime"` on stable
+  branches — confirmed `207764e5d6f19` present in 6.14.y through 6.19.y
+- [Phase 8] Verified `f2fs_get_victim` reachable via `F2FS_IOC_GC` ioctl
+  from the stack trace in `207764e5d6f19` commit message
+- UNVERIFIED: Exact frequency/reproducibility of the race condition
+  between SIT updates and dirty list management — commit message asserts
+  this but provides no reproducer
+- UNVERIFIED: Whether the commit message's claim "allows removing
+  redundant checks in add_victim_entry()" is still meaningful for v2 (v2
+  doesn't actually remove them; likely leftover from v1 description)
 
-The fix is small, obviously correct, fixes a real reachable bug, is
-already applied by the maintainer, and applies cleanly to LTS trees that
-have the buggy precursor commit. It meets all stable-kernel criteria.
+The fix is small, surgical, reviewed by the subsystem maintainer,
+prevents a real panic/filesystem-flagging bug present in all active
+stable trees from 6.13.y onward, and carries negligible regression risk.
+This matches the profile of f2fs fixes routinely backported to stable.
 
 **YES**
 
- fs/ntfs3/inode.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/f2fs/gc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 6e65066ebcc1a..398913595a551 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -432,6 +432,11 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 		ni->mi.dirty = true;
- 	}
- 
-+	if (!links) {
-+		err = -EINVAL;
-+		goto out;
-+	}
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index f46b2673d31f5..5c355d3da23bf 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -909,6 +909,9 @@ int f2fs_get_victim(struct f2fs_sb_info *sbi, unsigned int *result,
+ 				if (!f2fs_segment_has_free_slot(sbi, segno))
+ 					goto next;
+ 			}
 +
- 	set_nlink(inode, links);
++			if (!get_valid_blocks(sbi, segno, true))
++				goto next;
+ 		}
  
- 	if (S_ISDIR(mode)) {
+ 		if (gc_type == BG_GC && test_bit(secno, dirty_i->victim_secmap))
 -- 
 2.53.0
 
