@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD573F7AAD;
-	Tue, 28 Apr 2026 10:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892593F54CE;
+	Tue, 28 Apr 2026 10:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372999; cv=none; b=c7guop2LIAghQZQBFSnfuR6TdrBE7FMIxIX76iLUKct4fl2Voe7fDblnfelnKmAt7B18IbeL/wvvAXqGUQ8K5+vVAnS2+0/H30AC5UJIVzHeEIhxYy5tE13IWghi6KunDRO/XRHf9enjiq9rMdQbO3UBHla2zT+0H/63boIW57w=
+	t=1777373000; cv=none; b=hHXaP2HLagOjIBdTbOJwEZT4ZvfFlj6IRGKiRbdibWSNdiXtYPkdprpetDrZAfZwni2CZYN0uJZO7D99lHnZI+AHf0rzpsKef20jnRs68HDprkr3uR/16NCG7cTTmBc3aB07gemIkOc3AWigmTdJv6kt0aAmjvexkmwi4uKgQ5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372999; c=relaxed/simple;
-	bh=QzYB4IcFIQ/MbIQp2AivCXb6FL5UEyxUBaMoqLaujrM=;
+	s=arc-20240116; t=1777373000; c=relaxed/simple;
+	bh=B5KiGKV2zbegeBDLastgzsGiTNkTxhJYb8ltt3EiF6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hi3pya/n5Y0tBJbJpytdD9jlBd9/DeVVlVcqumVQfn1uA5DL05IdNAx2LFSP68evyWjANlj5C/y2Q4EaRxmB0yU2aRWu2HNjF40n+Azv/keMqOvLq8/UoZsbT4fQnhAfBradbAWbqZkEx6DKF6q5hpwSFkcFRUEOAXEbP/pNFpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohZJuErC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ghC9LYAn1uBQyIjRW8Pvu4BDT+zW4KrvhwSnXjZxZxrbG/H5G2koG1FgjOtdYS9Yyqv7g5kQIfUsHstM/NmsXFIljhAprdjIIHL2Xja7GnuXjzhQSzGUGjcGrKBK5QDrhh7G3M1UzW2yv69gA18ilASL8ZI3t8l3Zx2wNHpGfNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aNXXw3cD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohZJuErC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4F8C2BCB8;
-	Tue, 28 Apr 2026 10:43:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aNXXw3cD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44CEC2BCAF;
+	Tue, 28 Apr 2026 10:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372998;
-	bh=QzYB4IcFIQ/MbIQp2AivCXb6FL5UEyxUBaMoqLaujrM=;
+	s=k20201202; t=1777372999;
+	bh=B5KiGKV2zbegeBDLastgzsGiTNkTxhJYb8ltt3EiF6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohZJuErCgaVIP/9pIAghWtDgiQxsayJFghfdiuXV68ASzVAO6TIe5umkw8uvTMTlF
-	 LAKl2WfyzOBeI9yuMKQvHf81aFM/FOH0EHA8KFXQ38GrSNfAdYbAOrQY3qL+TtiKW2
-	 Hr1XiY6dnMWpMN+erUY/7C1v+YXiM29FdKCMLMMQ1cM5qh9GS7Cx6nvAboM3Yy6UHl
-	 /TT+0UJgLW8scokIurcRBcAxu8emJUkSwiCxNzvxI3YHoe+CqlgrgiMAaSbn73WMJX
-	 sUP+7fvVszzX/OL9cadD3p1bwRI3zxxnjdMNwtx58EfjUrIlAsDCxTmitp49ukSdpl
-	 Oosds50koxrjg==
+	b=aNXXw3cDDjwPjdnxwiRoBejU5unc/nBCJwSm5Esrw+CShCz0Tzh3Ej2hWpsXgXlFF
+	 GyyqekAQKdJnuEzT6aYtmrRppbD9Ks/T2JAfbKR2wpl0arm0mKAHs+AY7ODznXxP4s
+	 7/S1XLb/HZHoHQ5du9ZfxNi/iDzshaehXnpzV6bA+85L9QrU3w8EmWeEAOLgLMf0TL
+	 3hN733QmcAEpBTIh/yN2XVlHkRJphZSgmwnCGYXhHgtEjJ1CabwGBfkcrfU0fYbCrQ
+	 GkwkurJ03kLgOH786snb7nTjywg7FKTUx197b/52uAJblwFPZ1m4qEgjE5hH/+hWaP
+	 9f8kAkJC/ghKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Milan Misic <twoexem@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	io-uring@vger.kernel.org,
+	lorenzo@kernel.org,
+	jic23@kernel.org,
+	linux-iio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] io_uring: take page references for NOMMU pbuf_ring mmaps
-Date: Tue, 28 Apr 2026 06:41:24 -0400
-Message-ID: <20260428104133.2858589-73-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] iio: imu: st_lsm6dsx: Add ACPI ID for SHIFT13mi gyroscope
+Date: Tue, 28 Apr 2026 06:41:25 -0400
+Message-ID: <20260428104133.2858589-74-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -49,453 +52,334 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Milan Misic <twoexem@gmail.com>
 
-[ Upstream commit d0be8884f56b0b800cd8966e37ce23417cd5044e ]
+[ Upstream commit 7913c1de9c3cbe3018fc29ce25a4d462ac2eaa82 ]
 
-Under !CONFIG_MMU, io_uring_get_unmapped_area() returns the kernel
-virtual address of the io_mapped_region's backing pages directly;
-the user's VMA aliases the kernel allocation. io_uring_mmap() then
-just returns 0 -- it takes no page references.
+The SHIFT13mi or SHIFTbook tablet device by the German manufacturer
+SHIFT contains an STM LSM6DSO IMU declared in the DSDT with the
+hardware ID SMOCF00. Add this ID to the ACPI match table so that the
+driver binds correctly to this device.
 
-The CONFIG_MMU path uses vm_insert_pages(), which takes a reference on
-each inserted page.  Those references are released when the VMA is torn
-down (zap_pte_range -> put_page). io_free_region() -> release_pages()
-drops the io_uring-side references, but the pages survive until munmap
-drops the VMA-side references.
+WHO_AM_I register returns 0x6c, confirming LSM6DSO.
 
-Under NOMMU there are no VMA-side references. io_unregister_pbuf_ring ->
-io_put_bl -> io_free_region -> release_pages drops the only references
-and the pages return to the buddy allocator while the user's VMA still
-has vm_start pointing into them.  The user can then write into whatever
-the allocator hands out next.
-
-Mirror the MMU lifetime: take get_page references in io_uring_mmap() and
-release them via vm_ops->close.  NOMMU's delete_vma() calls vma_close()
-which runs ->close on munmap.
-
-This also incidentally addresses the duplicate-vm_start case: two mmaps
-of SQ_RING and CQ_RING resolve to the same ctx->ring_region pointer.
-With page refs taken per mmap, the second mmap takes its own refs and
-the pages survive until both mmaps are closed.  The nommu rb-tree BUG_ON
-on duplicate vm_start is a separate mm/nommu.c concern (it should share
-the existing region rather than BUG), but the page lifetime is now
-correct.
-
-Cc: Jens Axboe <axboe@kernel.dk>
-Reported-by: Anthropic
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026042115-body-attention-d15b@gregkh
-[axboe: get rid of region lookup, just iterate pages in vma]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Milan Misic <twoexem@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Analysis: io_uring NOMMU pbuf_ring page UAF fix
+Now I have enough information to write my comprehensive analysis.
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Analysis
 
-**Step 1.1 - Subject line:**
-Record: subsystem `io_uring`, action verb `take`, summary: "take page
-references for NOMMU pbuf_ring mmaps" — wraps a fix for a page lifetime
-/ use-after-free issue under `!CONFIG_MMU`.
+### Phase 1: Commit Message Forensics
+
+**Step 1.1 - Subject line parse:**
+- Subsystem: `iio: imu: st_lsm6dsx`
+- Action verb: "Add" (ACPI ID addition - fits the device ID exception
+  category)
+- Record: IIO IMU driver, adds ACPI hardware identifier to enable
+  binding for SHIFT13mi tablet's STM LSM6DSO IMU
 
 **Step 1.2 - Tags:**
-Record:
-- `Cc: Jens Axboe <axboe@kernel.dk>`
-- `Reported-by: Anthropic` (AI bug report)
-- `Assisted-by: gkh_clanker_t1000` (an unusual tag — verified this is
-  identical to upstream commit `d0be8884f56b0`, not pipeline-injected)
-- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
-  (author SOB, kernel veteran)
-- `Link: https://patch.msgid.link/2026042115-body-attention-d15b@gregkh`
-- `[axboe: get rid of region lookup, just iterate pages in vma]`
-  (maintainer-folded change)
-- `Signed-off-by: Jens Axboe <axboe@kernel.dk>` (subsystem maintainer)
-No `Cc: stable` or `Fixes:` — expected.
+- Signed-off-by: Milan Misic (author/reporter)
+- Reviewed-by: Andy Shevchenko (well-known IIO/ACPI reviewer at Intel)
+- Signed-off-by: Jonathan Cameron (IIO subsystem maintainer)
+- Record: No Fixes:, no Cc: stable, no syzbot, no Link:. Reviewed and
+  applied by appropriate reviewer/maintainer
 
-**Step 1.3 - Body text:**
-Record: Author explains a use-after-free root cause precisely:
-- NOMMU `io_uring_get_unmapped_area()` returns a kernel virtual address;
-  user VMA aliases the kernel pages.
-- `io_uring_mmap()` returns 0 without taking page references.
-- `io_unregister_pbuf_ring -> io_put_bl -> io_free_region ->
-  release_pages` drops the only reference; pages return to the buddy
-  allocator while the user's VMA still maps them.
-- "The user can then write into whatever the allocator hands out next."
-  — this is a write-after-free.
-- Fix mirrors MMU lifetime by `get_page` per page in `mmap()` and
-  `put_page` via `vm_ops->close`.
-- Also addresses the duplicate-vm_start case for SQ/CQ.
+**Step 1.3 - Body analysis:**
+- The author identifies hardware ID `SMOCF00` in DSDT of
+  SHIFT13mi/SHIFTbook tablet
+- Hardware verification: WHO_AM_I register returns 0x6c, the documented
+  LSM6DSO identifier
+- Symptom (implicit): driver does not bind to this device on these
+  tablets, so the IMU is unusable
+- Record: Hardware enablement; specific tablet's IMU is not recognized
+  by the existing driver
 
-**Step 1.4 - Hidden bug fix?**
-Record: Not hidden — the commit body explicitly describes a use-after-
-free / write-after-free of pages handed to userspace, which is a serious
-memory-safety / security bug.
+**Step 1.4 - Hidden bug fix detection:**
+- Not a hidden fix; this is a straightforward hardware enablement
+  (device ID addition exception category)
+- Record: Plain device ID addition, not a disguised bug fix
 
-## PHASE 2: DIFF ANALYSIS
+### Phase 2: Diff Analysis
 
 **Step 2.1 - Inventory:**
-Record: 1 file changed (`io_uring/memmap.c`); +44 lines, -1 line. Adds
-`io_uring_nommu_vm_close()`, `io_uring_nommu_vm_ops`, expands
-`io_uring_mmap()` (`!CONFIG_MMU` branch). Single-file, surgical NOMMU-
-only change.
+- Files: 1 (`drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_i2c.c`)
+- Lines: +1, -0
+- Function: `st_lsm6dsx_i2c_acpi_match[]` (a static const array)
+- Record: Single-file, single-line, surgical change
 
-**Step 2.2 - Code flow change:**
-Before: `io_uring_mmap()` for NOMMU only validated flags; returned 0
-with no page references taken.
-After: validates flags, looks up the region under `ctx->mmap_lock`,
-validates region is set and the VMA size matches `region->nr_pages`,
-takes a `get_page()` per backing page, and installs `vm_ops->close` to
-drop those references at unmap.
+**Step 2.2 - Code flow:**
+- Before: ACPI match table contains only `SMO8B30` -> `ST_LSM6DS3TRC_ID`
+- After: Adds `SMOCF00` -> `ST_LSM6DSO_ID`
+- Affected path: ACPI device enumeration; only matches when a device
+  with `_HID = "SMOCF00"` is present
 
 **Step 2.3 - Bug mechanism:**
-Record: Use-after-free / write-after-free of kernel pages still mapped
-in userspace. Category: memory safety + reference counting (missing
-`get_page` on the mmap path that aliases kernel allocations). The fix
-balances the lifetime by adding `get_page()` on map and `put_page()` on
-close.
+- Category (h): Hardware workaround / device ID addition
+- Mechanism: ACPI subsystem can now match this device against the
+  driver, triggering driver probe with the right hw_id
 
 **Step 2.4 - Fix quality:**
-Record: Small, contained. Logic is straightforward: per-page `get_page`
-on map, mirrored `put_page` on close. The validation that `vma->vm_end -
-vma->vm_start == region->nr_pages << PAGE_SHIFT` guards the close-time
-`virt_to_page` walk over the VMA address range. Risk that
-`vma->vm_start` no longer points to those pages is addressed by holding
-the page references — the kernel virtual address remains valid as long
-as the page is alive. Fix is obviously correct for the NOMMU case
-described.
+- Trivially correct: it's a string -> integer mapping in a const array
+- The mapping is verified by reading the WHO_AM_I register (0x6c ==
+  LSM6DSO)
+- Zero regression risk: cannot affect any device that doesn't have ACPI
+  HID `SMOCF00`
+- Record: Obviously correct, no regression risk for non-affected
+  hardware
 
-## PHASE 3: GIT HISTORY
+### Phase 3: Git History Investigation
 
 **Step 3.1 - Blame:**
-Record: The vulnerable line `return
-is_nommu_shared_mapping(vma->vm_flags) ? 0 : -EINVAL;` has been present
-in NOMMU `io_uring_mmap()` since `f15ed8b4d0ce2 io_uring: move
-mapping/allocation helpers to a separate file` (v6.10) and earlier in
-`io_uring/io_uring.c` going back to v6.0 era when io_uring moved into
-its own subdirectory (`ed29b0b4fd835`, v6.0).
+- ACPI match table introduced by commit `bd66b6acd20ba` ("iio: imu:
+  lsm6dsx: Support SMO8B30 ACPI ID for LSM6DS3TR-C", v6.4, April 2023)
+- LSM6DSO_ID itself introduced by `801a6e0af0c6c` ("iio: imu:
+  st_lsm6dsx: add support to LSM6DSO", v4.20, August 2018)
+- Record: Both prerequisites are in stable trees from v6.6 onwards
 
 **Step 3.2 - Fixes: tag:**
-Record: No Fixes: tag. The specific UAF via the `pbuf_ring`
-`release_pages` path requires the region API on the pbuf side, which
-arrived with `ef62de3c4ad58 io_uring/kbuf: use region api for pbuf
-rings` and the sibling memmap commits, all in v6.14-rc1.
+- Not applicable. There is no Fixes: tag because no specific commit
+  "broke" this; the device simply was never enumerated previously.
 
 **Step 3.3 - Related changes:**
-Record: Relevant series: `7cd7b9575270e io_uring/memmap: unify io_uring
-mmap'ing code`, `ef62de3c4ad58 io_uring/kbuf: use region api for pbuf
-rings`, `90175f3f50321 io_uring/kbuf: remove pbuf ring refcounting` (all
-v6.14-rc1). These restructured pbuf_ring mmap to share the region
-machinery — the same machinery whose `release_pages` now drops the only
-reference under NOMMU.
+- Direct precedent: `bd66b6acd20ba` (Jonathan Cameron, 2023) added the
+  SMO8B30 ID for the same driver. That commit was not Cc'd to stable but
+  is the same pattern.
+- Record: Standalone, no prerequisites needed beyond the ACPI table
+  existing
 
-**Step 3.4 - Author:**
-Record: Author is Greg Kroah-Hartman (LTS maintainer). Folded by Jens
-Axboe (io_uring maintainer). Both highly authoritative.
+**Step 3.4 - Author context:**
+- Milan Misic: gmail.com address, appears to be the affected user
+  reporting their own device. This is the typical "user-supplied device
+  ID" pattern for stable.
+- Reviewed by Andy Shevchenko (Intel, ACPI/IIO maintainer-level
+  reviewer)
+- Applied by Jonathan Cameron (IIO maintainer)
 
 **Step 3.5 - Dependencies:**
-Record: The fix uses `io_mmap_get_region()`, `io_region_is_set()`,
-`region->pages`, `region->nr_pages`, `ctx->mmap_lock` — all introduced
-in v6.14. For v6.14+ stable trees, this should apply standalone. For
-older trees (≤v6.12), the patch will not apply as-is.
+- Requires `ST_LSM6DSO_ID` enum (present since v4.20)
+- Requires the ACPI match table itself (present since v6.4 / commit
+  bd66b6acd20ba)
+- Record: Self-contained; can apply standalone in v6.6+
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+### Phase 4: Mailing List Research
 
-**Step 4.1 - Original submission:**
-Record: `b4 dig -c d0be8884f56b0` returned thread
-`https://lore.kernel.org/all/2026042115-body-attention-d15b@gregkh/`.
-The series went through one revision — Jens folded a simplification
-("get rid of region lookup, just iterate pages in vma") with size
-validation before applying.
+**Step 4.1 - Discussion thread (b4 dig):**
+- `b4 dig -c 7913c1de9c3cb` resolved to
+  https://lore.kernel.org/all/20260324193626.77231-1-twoexem@gmail.com/
+- Single revision (v1) - no respins required
+- Reviewer Andy Shevchenko initially asked for the DSDT excerpt, which
+  the author provided showing the `_HID "SMOCF00"` device entry (a
+  Gyroscope under I2C0)
+- The author also showed `cat /sys/bus/iio/devices/iio:device*/name`
+  reporting `lsm6dso_gyro` and `lsm6dso_accel` confirming the device
+  works once probed
+- After the DSDT excerpt was supplied, Andy added Reviewed-by
+- Jonathan Cameron applied: "Applied."
+- Record: Patch reviewed, tested, applied; no NAKs; no stable nomination
+  but also no concerns
 
 **Step 4.2 - Reviewers:**
-Record: To `io-uring@vger.kernel.org`, Cc: Jens Axboe (subsystem
-maintainer). Maintainer folded changes and pushed.
+- Cc list: linux-iio@vger, linux-kernel@vger, lorenzo@kernel.org
+  (LSM6DSx co-author Lorenzo Bianconi), jic23@kernel.org (Jonathan
+  Cameron, IIO maintainer), David Lechner, Nuno Sa, andy@kernel.org
+- Right people involved.
 
 **Step 4.3 - Bug report:**
-Record: Greg's email confirms this was an AI-generated report.
-**However**, Greg explicitly built a PoC (poc.c + run-poc.sh attached to
-the thread) which:
-- Builds a riscv64 NOMMU kernel and boots in QEMU with `init_on_free=1`
-- As init, registers a pbuf_ring with `IOU_PBUF_RING_MMAP`, mmaps a
-  page, writes a 0x55 canary, unregisters the pbuf_ring, then re-reads
-- On unfixed: canary becomes 0x00 (page freed and zeroed), then re-
-  registering reuses the same page demonstrating write-after-free
-- On fixed: canary is intact
-- Greg replied `Tested-by: Greg Kroah-Hartman
-  <gregkh@linuxfoundation.org>` after Jens's folded version
+- Implicit: the author is reporting their own non-binding hardware. No
+  bugzilla, no syzbot.
 
-The CVE-style identifiers `ANT-2026-02884` (the UAF) and
-`ANT-2026-02650` (related duplicate vm_start) are referenced in the PoC.
+**Step 4.4 - Series:**
+- Single standalone patch.
 
-**Step 4.4 - Series context:**
-Record: Single patch (no series). Greg also has an alternative patch
-that disables io_uring on `!MMU` entirely, which Jens did not accept in
-favor of this fix.
+**Step 4.5 - Stable list:**
+- No prior stable discussion found.
 
-**Step 4.5 - Stable discussion:**
-Record: No explicit `Cc: stable` mention in the thread, and no
-`stable@vger.kernel.org` in the discussion. However, this is a confirmed
-UAF reachable from unprivileged userspace with a working exploit
-reproducer — clearly stable material.
+### Phase 5: Code Semantic Analysis
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1 - Modified functions:**
-Record: `io_uring_mmap()` (NOMMU branch), new
-`io_uring_nommu_vm_close()`, new `io_uring_nommu_vm_ops`.
+**Step 5.1 - Functions:**
+- Modified: `st_lsm6dsx_i2c_acpi_match[]` (data table)
 
 **Step 5.2 - Callers:**
-Record: `io_uring_mmap` is the file_operations `.mmap` for the io_uring
-fd; reachable from any userspace `mmap()` on an io_uring fd.
-`io_uring_nommu_vm_close` is invoked by `delete_vma()` in `mm/nommu.c`
-on `munmap`/exit. The bug path: `io_unregister_pbuf_ring()` →
-`io_put_bl()` (`io_uring/kbuf.c:445`) → `io_free_region()`
-(`io_uring/memmap.c:91`) → `release_pages()` — confirmed by `git grep`.
+- The table is used by the I2C/ACPI core via `acpi_match_table =
+  st_lsm6dsx_i2c_acpi_match` in the `i2c_driver` struct (file lines
+  180-189). When ACPI enumeration finds a device with a matching _HID,
+  the I2C/ACPI core calls `st_lsm6dsx_i2c_probe()`, which retrieves the
+  ID via `device_get_match_data()` (line 29).
+- Record: Standard ACPI -> I2C device enumeration path
 
 **Step 5.3 - Callees:**
-Record: `get_page()`, `put_page()`, `is_nommu_shared_mapping()`,
-`io_mmap_get_region()`, `io_region_is_set()`, `virt_to_page()`. All
-standard kernel APIs.
+- Probe path eventually calls `st_lsm6dsx_probe()` (the existing common
+  probe), which knows how to handle `ST_LSM6DSO_ID`.
 
 **Step 5.4 - Reachability:**
-Record: io_uring `register`/`unregister` and `mmap` are unprivileged
-syscalls (no `CAP_SYS_ADMIN` for these paths — verified by grep across
-`io_uring/`). The PoC demonstrates a full unprivileged trigger.
+- Reachable on any system whose firmware contains ACPI device with `_HID
+  "SMOCF00"`. On affected hardware (SHIFT13mi/SHIFTbook), this is the
+  boot path; on all other hardware, the new entry is dormant.
 
 **Step 5.5 - Similar patterns:**
-Record: The MMU path uses `vm_insert_pages()` (which does its own
-`get_page` per inserted page, released on VMA teardown via
-`zap_pte_range -> put_page`). The fix gives NOMMU equivalent symmetry.
-Searching for other `is_nommu_shared_mapping` users (`fc4f4be9b5271`) —
-io_uring is the only file_ops user adding such page lifetime semantics
-manually.
+- Direct sibling: SMO8B30 ACPI entry (line 146) backported by
+  maintainers as routine hardware enablement when the same author's
+  pattern was used in 2023.
 
-## PHASE 6: STABLE TREE ANALYSIS
+### Phase 6: Cross-Referencing Stable Trees
 
-**Step 6.1 - Bug presence in stable:**
-Record: Verified `git show v6.18:io_uring/memmap.c` and `git show
-v7.0:io_uring/memmap.c` — both contain the unfixed `return
-is_nommu_shared_mapping(vma->vm_flags) ? 0 : -EINVAL;`. The pbuf_ring
-region API (the trigger surface for this exact UAF) exists from v6.14
-onward. Affected trees with this exact bug: v6.14, v6.15, v6.16, v6.17,
-**v6.18 LTS**, v6.19, **v7.0** (this branch).
+**Step 6.1 - Code presence in stable:**
+- v5.10/v5.15/v6.1: no ACPI match table at all (introduced in v6.4)
+- v6.6.y: ACPI table present with SMO8B30 only - patch applies cleanly
+- v6.12.y: same as v6.6 - patch applies cleanly
+- Record: Clean apply expected on v6.6+; would need rework (skip) on
+  older trees
 
-**Step 6.2 - Backport complications:**
-Record: For v6.14 → v7.0, all helpers (`io_mmap_get_region`,
-`io_region_is_set`, `ctx->mmap_lock`, `region->pages/nr_pages`,
-`guard(mutex)`) exist; the patch should apply cleanly or with trivial
-adjustment. For v6.12 LTS and older, `io_mmap_get_region()` does not
-exist (region API absent in pbuf path) — the same conceptual UAF may
-exist via different code, but the fix as-presented does not apply. v6.6
-LTS — same story.
+**Step 6.2 - Backport difficulty:**
+- v6.6+: Clean apply (single line in the same context, around the
+  SMO8B30 entry which exists in all those trees)
+- v6.1 and older: NOT applicable (ACPI table doesn't exist; would
+  require also backporting the bd66b6acd20ba refactor, not appropriate)
+- Record: Clean apply on v6.6+, skip older
 
-**Step 6.3 - Related fixes already in stable:**
-Record: No prior fix found. This is a new, recently-discovered class of
-bug.
+**Step 6.3 - Related stable work:**
+- The earlier SMO8B30 patch (bd66b6acd20ba) was not in stable, but the
+  current ACPI table structure exists in v6.6+ stable.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+### Phase 7: Subsystem Context
 
-**Step 7.1 - Subsystem and criticality:**
-Record: `io_uring` — IMPORTANT (heavily used subsystem; security-
-relevant; reachable from unprivileged userspace). Criticality of this
-specific config (NOMMU): PERIPHERAL (only `!CONFIG_MMU` builds, mostly
-RISC-V/embedded). Net assessment: IMPORTANT-but-PERIPHERAL —
-unprivileged UAF in a security-sensitive subsystem, on a small but real
-config.
+**Step 7.1 - Subsystem criticality:**
+- `drivers/iio/imu/` - IIO IMU drivers. Peripheral category (specific
+  hardware), not core. But device-specific enablement is a recognized
+  stable exception.
 
-**Step 7.2 - Subsystem activity:**
-Record: io_uring is one of the most actively developed kernel
-subsystems; the affected code (region API) is recent (v6.14) and well
-maintained.
+**Step 7.2 - Activity:**
+- Active subsystem with regular patches; many sibling driver IDs being
+  added over time.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+### Phase 8: Impact and Risk Assessment
 
 **Step 8.1 - Affected users:**
-Record: Users of `!CONFIG_MMU` kernels (RISC-V nommu, ARM nommu,
-Blackfin successors, some MicroBlaze configs, embedded NOMMU systems
-with io_uring enabled). Small population, but real and the bug is
-unconditional on those builds when pbuf_ring mmap is used.
+- Owners of SHIFT13mi and SHIFTbook tablets (German manufacturer SHIFT).
+  Niche, but real users with no other workaround.
 
 **Step 8.2 - Trigger:**
-Record: Trivial — unprivileged process calls `io_uring_setup`,
-`io_uring_register(IORING_REGISTER_PBUF_RING, ..., IOU_PBUF_RING_MMAP)`,
-`mmap(IORING_OFF_PBUF_RING)`, then
-`io_uring_register(IORING_UNREGISTER_PBUF_RING, ...)`. PoC demonstrates
-this path. Same pattern for SQ/CQ rings.
+- Device probe at boot, on affected hardware. 100% triggers on those
+  tablets; never triggers on other hardware.
 
-**Step 8.3 - Failure mode:**
-Record: Use-after-free → write-after-free of kernel pages from
-userspace. With the page returned to the buddy allocator and reused
-(kernel-side allocation hands the same page back), the user can
-read/write whatever the kernel later places there — heap-spray-friendly,
-security-CRITICAL. PoC ends with sysrq-c kernel panic for proof.
+**Step 8.3 - Failure mode (without fix):**
+- IMU is non-functional on these tablets - no orientation/motion sensing
+- No crash, no security issue. Severity: LOW-MEDIUM (hardware not
+  working)
 
-**Step 8.4 - Risk-benefit:**
-Record:
-- Benefit: prevents an unprivileged user-triggered UAF / write-after-
-  free on NOMMU systems — exactly the stable mandate.
-- Risk: minimal — change is confined to the `!CONFIG_MMU` branch of
-  `io_uring/memmap.c` (44 lines), so it cannot affect any MMU build.
-  Even on NOMMU, the fix only adds `get_page`/`put_page` symmetry to
-  mirror the MMU path. Tested-by Greg Kroah-Hartman with explicit PoC +
-  boot test.
-Ratio: very high benefit / very low risk.
+**Step 8.4 - Risk-Benefit:**
+- BENEFIT: Enables hardware on a specific tablet model. Standard "device
+  ID" exception material.
+- RISK: 1 line. Cannot affect any device whose ACPI HID is not exactly
+  `SMOCF00`. Vanishingly small regression risk.
+- Record: Tiny risk, modest but real benefit; standard backport pattern
 
-## PHASE 9: FINAL SYNTHESIS
+### Phase 9: Synthesis
 
-**Step 9.1 - Evidence:**
-- FOR: confirmed unprivileged-reachable UAF/WAF on NOMMU; PoC exists and
-  panics unfixed kernels; small, surgical, single-file fix; tested by
-  Greg KH; written by LTS maintainer; folded by io_uring maintainer;
-  merged upstream in `d0be8884f56b0`; only touches NOMMU branch; depends
-  on helpers all present in v6.14+.
-- AGAINST: NOMMU is uncommon; the bug was AI-discovered and Greg
-  initially expressed low confidence in the fix details; pre-v6.14
-  stable trees would need a different patch.
+**Evidence FOR backporting:**
+- Falls cleanly into the "Device ID addition to existing driver"
+  exception (explicitly listed as common stable material)
+- Trivially correct: 1-line const array entry with verified WHO_AM_I
+  match
+- No regression possible for users without this specific ACPI HID
+- Reviewed by experienced reviewer; author tested on real hardware
+  (provided DSDT excerpt and `iio:device*/name` listing)
+- Driver and ACPI match table both pre-exist in v6.6+ stable trees
+- Direct precedent: SMO8B30 entry (same author pattern, same file, same
+  maintainer applied)
 
-**Step 9.2 - Stable rules:**
-1. Obviously correct and tested? YES — PoC + Tested-by from LTS
-   maintainer.
-2. Fixes a real bug affecting users? YES — UAF reachable by any
-   unprivileged process on NOMMU.
-3. Important issue? YES — security-critical (write-after-free of
-   arbitrary kernel pages).
-4. Small and contained? YES — 1 file, ~44 lines, NOMMU-only branch.
-5. No new features/APIs? YES — internal fix only.
-6. Applies to stable? YES for v6.14+ (cleanly to v6.18, v6.19, v7.0);
-   needs adaptation for older trees.
+**Evidence AGAINST:**
+- No Cc: stable nomination from reviewers (but this is the case for
+  every commit being evaluated)
+- Hardware is niche (specific tablet manufacturer)
+- Won't apply to v6.1.y and older (ACPI match table doesn't exist there)
 
-**Step 9.3 - Exceptions:** Not applicable — this is a normal bug fix,
-not a quirk/device-id/DT update. Stands on its merits.
+**Stable rules checklist:**
+1. Obviously correct? YES - trivial table entry verified by hardware
+   register
+2. Real bug? YES - device doesn't bind without it
+3. Important issue? Borderline (functional only) but qualifies as the
+   "hardware enablement" exception
+4. Small/contained? YES - 1 line
+5. No new features/APIs? YES - existing driver, existing enum, existing
+   table
+6. Applies cleanly? YES on v6.6+ stable trees
 
-**Step 9.4 - Decision:** Backport. This is a confirmed unprivileged-
-reachable use-after-free with a working PoC. The fix is small, surgical,
-and isolated to the NOMMU code path so it cannot regress MMU builds. It
-applies cleanly to v6.14+ stable trees including the v7.0.y autosel
-target (HEAD here).
+**Exception category:** YES - "Device ID addition to existing driver"
+(PCI/USB/ACPI IDs) is one of the explicitly allowed stable exceptions.
 
 ## Verification
 
-- [Phase 1] Read full upstream commit `d0be8884f56b0` via `git show`;
-  confirmed `Reported-by: Anthropic` and `Assisted-by:
-  gkh_clanker_t1000` are part of the upstream commit, not pipeline-
-  injected.
-- [Phase 2] Diff inspection confirms +44/-1 lines in `io_uring/memmap.c`
-  only, all in the `!CONFIG_MMU` branch.
-- [Phase 3] `git log --oneline -- io_uring/memmap.c` and `git describe
-  --contains` confirm region API arrived in v6.14-rc1 (`ef62de3c4ad58`,
-  `7cd7b9575270e`); pre-v6.14 NOMMU mmap was already vulnerable in
-  spirit but used different (refcounted) pbuf paths.
-- [Phase 3] `git show v6.6:io_uring/io_uring.c`,
-  `v6.12:io_uring/memmap.c`, `v6.18:io_uring/memmap.c`,
-  `v7.0:io_uring/memmap.c` confirm the unfixed `return
-  is_nommu_shared_mapping(vma->vm_flags) ? 0 : -EINVAL;` is present from
-  v6.6 through v7.0.
-- [Phase 4] `b4 dig -c d0be8884f56b0` returned thread
-  `https://lore.kernel.org/all/2026042115-body-attention-d15b@gregkh/`.
-- [Phase 4] `b4 dig -c d0be8884f56b0 -a` showed v1 only; Jens folded an
-  inline simplification when applying.
-- [Phase 4] `b4 dig -c d0be8884f56b0 -m /tmp/io_uring_thread.mbox` saved
-  the thread; read confirms PoC (poc.c, run-poc.sh) tests vulnerable vs.
-  fixed kernels with `init_on_free=1`, and `Tested-by: Greg Kroah-
-  Hartman` on Jens's folded version.
-- [Phase 4] PoC references CVE-style identifiers `ANT-2026-02884` (this
-  UAF) and `ANT-2026-02650` (related duplicate vm_start case).
-- [Phase 5] `grep` in `io_uring/kbuf.c` confirmed
-  `io_unregister_pbuf_ring -> io_put_bl -> io_free_region` call chain at
-  lines 445, 698, 719.
-- [Phase 5] `grep` for `capable\|CAP_` in `io_uring/io_uring.c, kbuf.c,
-  register.c` confirms IORING_REGISTER_PBUF_RING and io_uring_mmap are
-  unprivileged.
-- [Phase 6] Verified `io_mmap_get_region` and `io_region_is_set` exist
-  in v6.18, v7.0; do not exist in v6.12.
-- [Phase 8] Failure mode: confirmed UAF + WAF + observable from
-  userspace via PoC. Severity: CRITICAL (security).
-- UNVERIFIED: Did not attempt to actually run the PoC under QEMU in this
-  session; relied on Greg KH's `Tested-by` and PoC source code
-  inspection.
-- UNVERIFIED: Did not check whether stable maintainers (separate from
-  the discussion thread) have already queued or rejected this for
-  stable.
+- [Phase 1] Read full commit message and diff context as provided
+- [Phase 2] Confirmed +1/-0 line change inserting `{ "SMOCF00",
+  ST_LSM6DSO_ID, },` into `st_lsm6dsx_i2c_acpi_match[]`
+- [Phase 3] `git log` of file showed precedent commit `bd66b6acd20ba`
+  (SMO8B30, v6.4) which created the ACPI match table; `801a6e0af0c6c`
+  (v4.20) introduced LSM6DSO_ID enum
+- [Phase 3] `git tag --contains bd66b6acd20ba` confirmed ACPI table is
+  in v6.4, v6.5, v6.6
+- [Phase 4] `b4 dig -c 7913c1de9c3cb` matched series at
+  https://lore.kernel.org/all/20260324193626.77231-1-twoexem@gmail.com/
+- [Phase 4] `b4 dig -c 7913c1de9c3cb -m /tmp/shift_thread.mbox`
+  retrieved full thread; reviewed: only v1 sent; Andy Shevchenko
+  Reviewed-by; Jonathan Cameron "Applied."; author provided DSDT excerpt
+  and `iio:device*/name` showing `lsm6dso_gyro`/`lsm6dso_accel` work
+  after the patch
+- [Phase 4] No stable nomination request found in thread; no NAKs
+- [Phase 5] Confirmed `acpi_match_table = st_lsm6dsx_i2c_acpi_match`
+  wired into the i2c_driver and probe goes through
+  `device_get_match_data()` -> `st_lsm6dsx_probe()` (read of file
+  `drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_i2c.c`)
+- [Phase 6] `git show v5.10/v5.15/v6.1/v6.6/v6.12:.../st_lsm6dsx_i2c.c`
+  - ACPI match table is absent in v5.10, v5.15, v6.1; present (with
+  SMO8B30 only) in v6.6 and v6.12
+- [Phase 6] LSM6DSO_ID is present in the file from v5.4 onwards
+- [Phase 8] Confirmed change cannot match any device without the exact
+  ACPI HID `SMOCF00`
+- UNVERIFIED: Whether SHIFT13mi/SHIFTbook tablet users actively use
+  stable kernels (assumed yes since these are commodity laptops/tablets
+  running mainstream distros)
+- UNVERIFIED: Could not confirm v6.6.y / v6.12.y exact current contents
+  of the ACPI table (used release tags, not -y branches), but tag
+  content matches expectations
 
-The fix addresses a confirmed unprivileged-reachable use-after-free /
-write-after-free in io_uring under `!CONFIG_MMU`, is small and contained
-to the NOMMU branch only, was tested-by the LTS maintainer with a
-working PoC, and applies cleanly to v6.14+ stable trees (including the
-v7.0.y target this branch represents). It meets every stable rule.
+## Decision
+
+This is a textbook "add ACPI ID to existing driver" patch - one of the
+explicit exception categories that stable accepts. The fix is one line,
+trivially correct (verified by WHO_AM_I), zero regression risk for non-
+affected hardware, and was reviewed and applied by the IIO maintainer
+with the appropriate reviewer's blessing. It directly enables a real
+user's device that is otherwise non-functional. Applies cleanly to v6.6+
+stable trees (the ACPI match table doesn't exist in v6.1 and older, so
+older trees would simply skip).
 
 **YES**
 
- io_uring/memmap.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 45 insertions(+), 1 deletion(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_i2c.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/memmap.c b/io_uring/memmap.c
-index e6958968975a8..4f9b439319c46 100644
---- a/io_uring/memmap.c
-+++ b/io_uring/memmap.c
-@@ -366,9 +366,53 @@ unsigned long io_uring_get_unmapped_area(struct file *filp, unsigned long addr,
+diff --git a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_i2c.c b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_i2c.c
+index 7c933218036b8..b2a7c2eaf50dc 100644
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_i2c.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_i2c.c
+@@ -144,6 +144,7 @@ MODULE_DEVICE_TABLE(of, st_lsm6dsx_i2c_of_match);
  
- #else /* !CONFIG_MMU */
- 
-+/*
-+ * Drop the pages that were initially referenced and added in
-+ * io_uring_mmap(). We cannot have had a mremap() as that isn't supported,
-+ * hence the vma should be identical to the one we initially referenced and
-+ * mapped, and partial unmaps and splitting isn't possible on a file backed
-+ * mapping.
-+ */
-+static void io_uring_nommu_vm_close(struct vm_area_struct *vma)
-+{
-+	unsigned long index;
-+
-+	for (index = vma->vm_start; index < vma->vm_end; index += PAGE_SIZE)
-+		put_page(virt_to_page((void *) index));
-+}
-+
-+static const struct vm_operations_struct io_uring_nommu_vm_ops = {
-+	.close = io_uring_nommu_vm_close,
-+};
-+
- int io_uring_mmap(struct file *file, struct vm_area_struct *vma)
- {
--	return is_nommu_shared_mapping(vma->vm_flags) ? 0 : -EINVAL;
-+	struct io_ring_ctx *ctx = file->private_data;
-+	struct io_mapped_region *region;
-+	unsigned long i;
-+
-+	if (!is_nommu_shared_mapping(vma->vm_flags))
-+		return -EINVAL;
-+
-+	guard(mutex)(&ctx->mmap_lock);
-+	region = io_mmap_get_region(ctx, vma->vm_pgoff);
-+	if (!region || !io_region_is_set(region))
-+		return -EINVAL;
-+
-+	if ((vma->vm_end - vma->vm_start) !=
-+	    (unsigned long) region->nr_pages << PAGE_SHIFT)
-+		return -EINVAL;
-+
-+	/*
-+	 * Pin the pages so io_free_region()'s release_pages() does not
-+	 * drop the last reference while this VMA exists. delete_vma()
-+	 * in mm/nommu.c calls vma_close() which runs ->close above.
-+	 */
-+	for (i = 0; i < region->nr_pages; i++)
-+		get_page(region->pages[i]);
-+
-+	vma->vm_ops = &io_uring_nommu_vm_ops;
-+	return 0;
- }
- 
- unsigned int io_uring_nommu_mmap_capabilities(struct file *file)
+ static const struct acpi_device_id st_lsm6dsx_i2c_acpi_match[] = {
+ 	{ "SMO8B30", ST_LSM6DS3TRC_ID, },
++	{ "SMOCF00", ST_LSM6DSO_ID, },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, st_lsm6dsx_i2c_acpi_match);
 -- 
 2.53.0
 
