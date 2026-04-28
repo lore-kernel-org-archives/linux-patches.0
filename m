@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039903F789C;
-	Tue, 28 Apr 2026 10:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A10A3F20E2;
+	Tue, 28 Apr 2026 10:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372981; cv=none; b=Y/pJW4DRr4B2eSNjmlpqQvqDzkNR7Ac1vLwFLTny+PR9TS1boIg+UMhpT2RiHHTeTjXlc5C7Cp9LQuDP4Wlu20kVs8QJhZ5DsJUPBiBWwnbBiF4nP4hCRvkQ6ssjSHfqcSf371sZ8nEU7TQafBwXEV+F5dXptkUfLUxbptGAhVQ=
+	t=1777372982; cv=none; b=SE/dVi3D3uIdOrxrnQcOdjKQDZ2EkvFI2UIZeRZsFweF4bGlpdVhmsIrnt67+vEcexU2P5ANnPzb+QJNjKsN1plc6rWa6G9caYrirHOjHMw14huQYo9PQPio5IY4iCECkJpYJ/oAi0jV9HAfuaiaHPjYFlTdw3Aw4+cDpZKL34M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372981; c=relaxed/simple;
-	bh=4nR918EIDXWBQ6yZsT4PSXyTN+JKf8XyCWTAO00oxuU=;
+	s=arc-20240116; t=1777372982; c=relaxed/simple;
+	bh=oxwZ+df9sdj9d8pZqmxa0D9SpL3piJsAkSAjfw5krLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qpyTgFjYWdNhfQx9FzEnU+7M7rXC4XcjA9LRz/FxaLHh2FswujQxsmUSEXIF2rXUgArAk6LwUteDEdLjT/OQp5IJrWUjs0jvOtBMMi0QS0uW0k5mqJVANhTFmhl+y+H07Bp8JxBVUoWXTKeL8+mdUMNBZjBNUVpUBN6y8V7rYlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jSZMOcJl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y4GA66hKwZY8Dwmb2kTASHKbDrgVzO6LkjuqntJDhYbq2t7Lk7w7vMDefhcLvIGZv/NdRadDifR1zAoucSwSPjhfKEynqStoASCM/6Lzs+qAQnDFKVJnx71/cV7WZ84KUOYgyYOVGFjkaGZHwxFRGO41owX5+KtM6sQiu/6jo4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eCniSFWe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jSZMOcJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D35C4AF09;
-	Tue, 28 Apr 2026 10:42:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eCniSFWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A61C2BCAF;
+	Tue, 28 Apr 2026 10:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372980;
-	bh=4nR918EIDXWBQ6yZsT4PSXyTN+JKf8XyCWTAO00oxuU=;
+	s=k20201202; t=1777372981;
+	bh=oxwZ+df9sdj9d8pZqmxa0D9SpL3piJsAkSAjfw5krLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSZMOcJlfUZXchkHdcieRKFkp+ouh+3vi3ww9EnAHRE0JrJ8OEoLlzucj+DtwO4Kf
-	 scrvh8oyEVx7QSPBZmOcunlD9ZWhSXZD9MXFHxWfLVmaEHG9sQ1eiM6m/Shxvyfc2U
-	 0q2G5rQnq92LlDmUpVS9i9CELpRbCs4OkYJq+3/uF7MIPeWaZWSWvAGC13hcKx4WI8
-	 AKbBu5zr/pdJDzheC3BvEk4wSSxCDXd2lZP9/AIt0ZcITP0vGay/niR4V/tiyg05bg
-	 Np+EjzTWkQAnYw0KVZ5E3r8zec9z2GYwI98tQQUn8uNnIpPWfRCocTzheJuqNaq3q7
-	 IxZ3AGoDMUohg==
+	b=eCniSFWeg71Sju8BiB48e4qO6uz7KBCa3Bw/jjW1QDiMiOSBS8UBmvtafhK5GIjvP
+	 VXOrWbDy0LEtEfTvBhOrTnqjk+4Db6fjRxI8T4BAcIA/l7bqS8wWvjUw1SWet23gy7
+	 3lLyg6oLP5X3SADgbBoHsgYyRQVq/2ctKdq8WBRlbbAVqKtj/pms5D9KxqGV3F+eZw
+	 axc51Rvbb10Rb9cyFiOppuXx2J9ACCPcwZFh46hLI6DImoGpF7iFLJaYZcfoZfjyBv
+	 eaaTmj3T1Cm4iftrEzXhoUnJBZRMK2Xa5n/7lklfSM05Cta1tn6HEuJilbbYnurUc1
+	 R/a1xfdSoT2qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniele Palmas <dnlplm@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+Cc: Kelvin Mbogo <addcontent08@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
+	valentina.manea.m@gmail.com,
+	shuah@kernel.org,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] bus: mhi: host: pci_generic: Add Telit FE912C04 modem support
-Date: Tue, 28 Apr 2026 06:41:11 -0400
-Message-ID: <20260428104133.2858589-60-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] usb: usbip: fix integer overflow in usbip_recv_iso()
+Date: Tue, 28 Apr 2026 06:41:12 -0400
+Message-ID: <20260428104133.2858589-61-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -53,302 +54,368 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Kelvin Mbogo <addcontent08@gmail.com>
 
-[ Upstream commit ac12b852b4ead4a586299c8f68cdcbcaf1bf6cbc ]
+[ Upstream commit 1897852293faca4c2be51e0a19f739622f771623 ]
 
-Add SDX35 based modem Telit FE912C04, reusing FN920C04 configuration.
+usbip_recv_iso() computes the iso descriptor buffer size as:
 
-01:00.0 Unassigned class [ff00]: Qualcomm Device 011a
-        Subsystem: Device 1c5d:2045
+    int size = np * sizeof(*iso);
 
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260323122837.3406521-1-dnlplm@gmail.com
+where np comes straight from the wire (urb->number_of_packets, set by
+usbip_pack_ret_submit() before we get here).  With np = 0x10000001 and
+sizeof(*iso) == 16 the product is 0x100000010 which truncates to 16 on
+a 32-bit int.  kzalloc(16) succeeds but the following receive loop
+writes np * 16 bytes into it - game over.
+
+USBIP_MAX_ISO_PACKETS (1024) already exists in usbip_common.h for the
+submit path but was never enforced on the receive side.
+
+Clamp np to [1, USBIP_MAX_ISO_PACKETS] and switch to kcalloc() so
+the allocator itself can catch overflows in the future.  Fold the
+existing np == 0 early return into the new bounds check.
+
+usbip_pack_ret_submit() already copied the bogus np into
+urb->number_of_packets before we run, so just returning -EPROTO is
+not enough - processcompl() in the HCD will still iterate that many
+iso_frame_desc entries when it completes the failed URB.  Zero out
+urb->number_of_packets before bailing to prevent that secondary crash
+(confirmed on 6.12.0, processcompl+0x63 with CR2 in unmapped slab).
+
+Signed-off-by: Kelvin Mbogo <addcontent08@gmail.com>
+Link: https://patch.msgid.link/20260325103640.8090-1-addcontent08@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my analysis, this is a clear device-ID addition to an existing
-driver. Let me provide the comprehensive analysis.
+Based on my investigation, I now have enough information to complete the
+analysis.
 
 ## Phase 1: Commit Message Forensics
 
-**Step 1.1 - Subject line parse:**
-Record: subsystem=`bus: mhi: host: pci_generic`, action verb=`Add`,
-summary=`Add Telit FE912C04 modem support`
+**Step 1.1 - Subject line parsing:**
+Record: Subsystem `usb: usbip:`, action verb `fix`, summary: "fix
+integer overflow in usbip_recv_iso()"
 
-**Step 1.2 - Tag analysis:**
-- Signed-off-by: Daniele Palmas (author, repeat contributor for Telit
-  modems)
-- Signed-off-by: Manivannan Sadhasivam (MHI maintainer)
-- Link: lore.kernel.org thread
-  (`20260323122837.3406521-1-dnlplm@gmail.com`)
-- No Fixes:, no Cc: stable, no Reported-by:, no Tested-by:, no Reviewed-
-  by:, no syzbot
+**Step 1.2 - Tags parsed:**
+Record:
+- `Signed-off-by: Kelvin Mbogo` (author)
+- `Link:
+  https://patch.msgid.link/20260325103640.8090-1-addcontent08@gmail.com`
+- `Signed-off-by: Greg Kroah-Hartman` (subsystem maintainer applied it)
+- No Fixes: tag, no explicit Cc: stable (but mbox shows v2 "Drop
+  security@kernel.org CC" — the author originally reported this as a
+  security issue)
 
-Record: Standard maintainer-applied patch with no fix-related tags.
-
-**Step 1.3 - Commit body:**
-Single-paragraph body: states the device is SDX35-based, will reuse the
-existing FN920C04 configuration, and includes an `lspci` snippet
-confirming the PCI subsystem ID `1c5d:2045`. No bug description, no
-symptom, no crash trace.
-
-Record: This is a hardware enablement commit, not a bug fix.
+**Step 1.3 - Body analysis:**
+Record: Integer overflow in `size = np * sizeof(*iso)` when `np` (wire-
+supplied `urb->number_of_packets`) is large enough. Example: `np =
+0x10000001 * 16 = 0x100000010` truncates to 16 on 32-bit int. Small
+`kzalloc(16)` is followed by a receive loop that writes `np * 16` bytes
+= massive heap overflow. Also mentions secondary crash reproduced on
+6.12.0 at `processcompl+0x63`.
 
 **Step 1.4 - Hidden bug fix detection:**
-The verb is "Add" with "modem support". No "handle", "ensure",
-"prevent", "fix", "clean up". The diff is a textbook device-ID addition
-reusing existing config. Not a hidden bug fix.
-
-Record: Pure hardware enablement - new PCI device ID + descriptor for an
-existing driver.
+Record: Not hidden — explicitly labeled "fix integer overflow". Real
+security bug (heap overflow).
 
 ## Phase 2: Diff Analysis
 
 **Step 2.1 - Inventory:**
-- Files: `drivers/bus/mhi/host/pci_generic.c` only
-- Total: +13 lines, -0 lines
-- Functions modified: none (only adds a static struct and a table entry)
-- Scope: single-file, surgical, additive
+Record: 1 file (`drivers/usb/usbip/usbip_common.c`), +15/-5 lines,
+single function `usbip_recv_iso()`. Classification: surgical single-file
+fix.
 
 **Step 2.2 - Code flow change:**
-- Before: `mhi_pci_id_table[]` did not match PCI VID 0x17cb / SVID
-  `1c5d:2045`
-- After: PCI core probes → matches new entry → loads MHI driver with
-  `mhi_telit_fe912c04_info` (which uses already-existing
-  `modem_telit_fn920c04_config`)
-
-Record: Adds one new PCI table row + one descriptor struct. No
-behavioral change for any existing device.
+Record: Before: `size = np * sizeof(*iso)` computed before any
+validation, with only `np == 0` check. After: clamp `np` to `[1,
+USBIP_MAX_ISO_PACKETS]` range, zero `urb->number_of_packets` on error
+(prevents processcompl from iterating OOB in `iso_frame_desc[]`), switch
+`kzalloc` to `kcalloc` for overflow-safe allocation.
 
 **Step 2.3 - Bug mechanism:**
-Not a bug fix. This is category (h) "Hardware workarounds → Device ID
-additions" from the stable rules exceptions.
+Record: Integer overflow in multiplication → undersized heap allocation
+→ OOB heap write in receive loop (category: buffer overflow / memory
+safety). Also fixes cascading NULL deref in `processcompl()` via
+`urb->number_of_packets` reset.
 
 **Step 2.4 - Fix quality:**
-- Obviously correct: a new struct with same fields as
-  `mhi_telit_fe990b40_info`, reusing `modem_telit_fn920c04_config`
-  already proven for SDX35 hardware
-- Minimal/surgical: 13 lines, contained in tables only
-- Regression risk: nil for any user without that exact 1c5d:2045 device;
-  for users with it, there is no other code path (driver simply wouldn't
-  bind today)
+Record: Fix is obviously correct. Uses already-existing
+`USBIP_MAX_ISO_PACKETS` (1024) from `usbip_common.h` that was already
+enforced on the submit path in `stub_rx.c:381`. Mirrors existing
+validation pattern. No regression risk: bounds check is strictly tighter
+than kzalloc behavior.
 
 ## Phase 3: Git History Investigation
 
-**Step 3.1 - git blame:** Not applicable - no existing buggy code is
-being fixed; only additions.
+**Step 3.1 - Blame:**
+Record: The buggy code (`int size = np * sizeof(*iso)`) has been in
+`usbip_recv_iso()` since the function was first introduced in commit
+`05a1f28e879e3` ("Staging: USB/IP: add common functions needed",
+2008-07-09). The bug has existed for ~18 years.
 
-**Step 3.2 - Fixes: tag:** Not present (and not expected for a device-ID
-addition).
+**Step 3.2 - Follow Fixes: tag:**
+Record: No Fixes: tag in the commit (the bug predates git history
+cleanup). Confirmed original buggy introduction in 2008.
 
-**Step 3.3 - File history (recent same-file commits):**
-```
-ac12b852b4ead Add Telit FE912C04 modem support       <- this commit
-6eaee77923ddf Add Telit FE990B40 modem support
-00559ba3ae740 Add Telit FN990B40 modem support
-6348f62ef7ecc Add Telit FN920C04 modem support
-```
-Record: This is the latest in a steady cadence of Telit modem device-ID
-additions. All prior siblings in this series were backported to stable
-(verified below).
+**Step 3.3 - File history:**
+Record: The follow-up series has three related fixes (`1897852293fac`,
+`591c1d972d8f1`, `74a2287209a85`) plus a later independent fix
+`2ab833a16a825` ("usbip: validate number_of_packets in
+usbip_pack_ret_submit()") which carries **explicit `Cc: stable
+<stable@kernel.org>` and `Acked-by: Shuah Khan` (usbip maintainer)**.
+Commit 2ab833a16a825 explicitly references Kelvin Mbogo's series as
+complementary.
 
-**Step 3.4 - Author history:**
-Daniele Palmas is a long-time Telit modem submitter; Manivannan
-Sadhasivam is the MHI subsystem maintainer who applied it.
+**Step 3.4 - Author's other commits:**
+Record: Author Kelvin Mbogo submitted a 3-patch security series. Patch
+went through v1→v2 with review from Greg KH (USB maintainer). This
+specific commit is self-contained and standalone.
 
 **Step 3.5 - Dependencies:**
-- Requires `modem_telit_fn920c04_config` (introduced by 6348f62ef7ecc,
-  backported to 6.12+).
-- Diff context anchored on `mhi_telit_fe990b40_info` (introduced by
-  6eaee77923ddf, backported to 6.12+).
-Both dependencies exist in stable 6.12.y, 6.18.y, 6.19.y, 7.0.y.
+Record: Uses `USBIP_MAX_ISO_PACKETS` macro which exists in all stable
+trees (verified in 5.10.y through 6.19.y). No dependencies. Standalone.
 
-## Phase 4: Mailing List Investigation
+## Phase 4: Mailing List Research
 
-**Step 4.1 - b4 dig:**
-- `b4 dig -c ac12b852b4ead4a586299c8f68cdcbcaf1bf6cbc` matched by patch-
-  id and resolved to
-  https://lore.kernel.org/all/20260323122837.3406521-1-dnlplm@gmail.com/
-- Single revision (PATCH 1/1), no v2/v3.
-- Maintainer reply: "Applied, thanks!" - no review concerns, no NAKs, no
-  stable nomination requested.
+**Step 4.1 - Original discussion (b4 dig):**
+Record:
+- `b4 dig -c 1897852293faca` → found at `https://lore.kernel.org/all/202
+  60325104841.8282-1-addcontent08@gmail.com/`
+- `b4 dig -a` → patch went through v1→v2; v2 is what was applied
+- v2 changelog mentions: "Drop security@kernel.org CC" — proving the
+  author initially reported this through the security channel
 
-**Step 4.2 - Reviewers:** Patch sent to maintainer Manivannan
-Sadhasivam, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org. Right
-people CC'd. Maintainer applied.
+**Step 4.2 - Reviewers:**
+Record: Greg KH (USB maintainer) reviewed and applied; Shuah Khan (usbip
+maintainer) acked the follow-up patch that explicitly mentions this
+series and is marked for stable.
 
-**Step 4.3 - Bug reports:** Not applicable; no Reported-by/Link to bug
-tracker.
+**Step 4.3 - Bug report:**
+Record: Multiple independent security researchers have reported related
+usbip vulnerabilities in this area (Kelvin Mbogo, Nathan Rebello,
+Sebastián Alba Vives). Nathan Rebello's patch confirms "KASAN confirmed
+this with kernel 7.0.0-rc5: BUG: KASAN: slab-out-of-bounds in
+usbip_recv_iso+0x46a/0x640, Write of size 4 at addr ffff888106351d40".
+The commit message confirms reproduction on 6.12.0.
 
-**Step 4.4 - Series context:** Standalone single-patch.
+**Step 4.4 - Related patches:**
+Record: This is patch 1/3 of a series. Patches 2 and 3 have been applied
+as `591c1d972d8f1` and `74a2287209a85`. The companion commit
+`2ab833a16a825` by Nathan Rebello has explicit `Cc: stable`.
 
-**Step 4.5 - Stable list:** No prior stable discussion (typical for a
-new device ID).
+**Step 4.5 - Stable list:**
+Record: Sebastián Alba Vives posted this category of issue as
+`[SECURITY]` on the stable mailing list
+(spinics.net/lists/stable/msg928028.html), describing the vulnerability
+as causing "OOB memmove that corrupts kernel heap memory. No
+authentication required."
 
 ## Phase 5: Code Semantic Analysis
 
-**Step 5.1 - Functions:** None modified; only data-structure additions.
+**Step 5.1-5.4 - Callers:**
+Record: `usbip_recv_iso()` is called from:
+- `vhci_rx.c:86` (`vhci_recv_ret_submit` → invoked from the vhci_rx
+  kthread)
+- `stub_rx.c:605`
+- `vudc_rx.c:173`
 
-**Step 5.2-5.4 - Reachability:** The new entry is reachable only when
-the PCI core enumerates a device with VID=QCOM(0x17cb), DID=0x011a,
-SVID=0x1c5d, SSID=0x2045. No other code path is affected.
+Call chain from userspace: User creates a VHCI device via sysfs
+(`attach` command), passes a TCP socket, vhci_rx kthread reads PDUs from
+the socket → `vhci_recv_ret_submit()` → `usbip_pack_ret_submit()` copies
+`number_of_packets` from wire → `usbip_recv_iso()` computes size with
+overflow → OOB heap write. **The bug is reachable over the network with
+no authentication.**
 
-**Step 5.5 - Similar patterns:** The same pattern (adding
-`mhi_pci_dev_info` + `pci_device_id`) is used for FN920C04, FN990B40,
-FE990B40 - all backported.
+**Step 5.5 - Similar patterns:**
+Record: `stub_rx.c:379-386` already validates `number_of_packets`
+against `USBIP_MAX_ISO_PACKETS` on the CMD_SUBMIT path. This commit
+applies the symmetric validation that was missing on the RET_SUBMIT
+path.
 
-## Phase 6: Cross-Referencing & Stable Tree Analysis
+## Phase 6: Cross-Referencing Stable Trees
 
-**Step 6.1 - Buggy code in stable:** N/A (no bug being fixed).
+**Step 6.1 - Code exists in stable:**
+Record: Verified identical buggy code in every stable tree:
+`linux-5.10.y`, `linux-5.15.y`, `linux-6.1.y`, `linux-6.6.y`,
+`linux-6.12.y`, `linux-6.18.y`, `linux-6.19.y`. Bug has been present
+since staging era (2008).
 
-**Step 6.2 - Backport feasibility:**
-- 7.0.y, 6.19.y, 6.18.y, 6.12.y: dependencies present → patch should
-  apply cleanly with at most trivial offset.
-- 6.6.y: `modem_telit_fn920c04_config` and `mhi_telit_fe990b40_info` are
-  NOT in `pci_generic.c` → patch will not apply cleanly. Backport for
-  6.6.y would require backporting prerequisites first (which were not
-  selected for 6.6.y).
+**Step 6.2 - Backport complications:**
+Record: `git apply --check --3way` confirms patch applies cleanly to
+current tree. Since all stable branches have identical code, the patch
+will apply cleanly with no conflicts.
 
-**Step 6.3 - Related fixes already in stable:**
-- 6348f62ef7ecc (FN920C04) → backported as 4e3297ec0c469
-- 00559ba3ae740 (FN990B40) → backported as 1ee92e44c3316 / 7bce22989c7b7
-- 6eaee77923ddf (FE990B40) → backported as 9bef8beef1557 / 3a15c519d2b0f
-
-The pattern clearly establishes that every prior Telit/MHI device-ID
-addition in this file has been backported.
+**Step 6.3 - Related fixes in stable:**
+Record: No related fix already in stable. `USBIP_MAX_ISO_PACKETS` exists
+in all stable trees (1024) so the fix uses an already-present constant.
 
 ## Phase 7: Subsystem Context
 
-Subsystem: `drivers/bus/mhi/host/` - host-side MHI bus controllers,
-primarily for Qualcomm SoC modems used as PCIe-attached cellular cards.
-Criticality: PERIPHERAL (hardware-specific) but with real-world users
-(laptops, IoT, M2M deployments).
-Activity: Active and well-maintained.
+**Step 7.1 - Subsystem:**
+Record: `drivers/usb/usbip/` — USB/IP network-attached USB. Criticality:
+IMPORTANT (network-reachable code path, security-sensitive). Used by
+users with USB-over-IP functionality; enabled in many distros.
 
-## Phase 8: Impact and Risk
+**Step 7.2 - Activity:**
+Record: Actively maintained; multiple security fixes in 2026 (this
+series plus independent Nathan Rebello and Sebastián Alba Vives
+contributions).
 
-**Step 8.1 - Affected users:** Owners of Telit FE912C04 modems (a real
-product). Without this patch the device will not bind to any kernel
-driver.
+## Phase 8: Impact and Risk Assessment
 
-**Step 8.2 - Trigger:** Plugging in the specific hardware. No security
-relevance, no unprivileged trigger.
+**Step 8.1 - Who is affected:**
+Record: Any user who runs vhci-hcd (USB/IP client) and attaches to an
+untrusted USB/IP server. Also stub-side and vudc-side code paths.
+Config-dependent on `CONFIG_USBIP_CORE`.
 
-**Step 8.3 - Failure mode without patch:** Device simply doesn't work
-(no driver binds). With patch: device works using existing, tested
-FN920C04 channel/event configuration.
+**Step 8.2 - Trigger conditions:**
+Record: A malicious USB/IP server sends a RET_SUBMIT PDU with crafted
+`number_of_packets = 0x10000001` or similar. **No authentication
+required — reachable entirely from the network peer.**
 
-**Step 8.4 - Risk-benefit:**
-- Benefit: enables hardware on stable users' systems - high for affected
-  users, none for others
-- Risk: ~0 - additive only, scoped to one specific PCI subsystem ID,
-  reuses already-validated config
+**Step 8.3 - Failure mode severity:**
+Record: **CRITICAL.** Heap out-of-bounds write with controlled size and
+partially controlled content (iso descriptor bytes received from
+network). Confirmed by KASAN report. The author reproduced a secondary
+NULL deref crash in `processcompl()` at CR2 in unmapped slab. Security
+vulnerability exploitable over network.
+
+**Step 8.4 - Risk/benefit:**
+Record:
+- Benefit: **Very high** — fixes a network-reachable heap overflow;
+  security vulnerability.
+- Risk: **Very low** — 20-line change using an already-existing
+  constant; bounds checks are strictly tighter than existing behavior;
+  no API changes.
+- Ratio: Strongly favorable for backport.
 
 ## Phase 9: Final Synthesis
 
+**Evidence FOR backporting:**
+- Security vulnerability: integer overflow → heap OOB write, reachable
+  from malicious network peer
+- Small, surgical fix (1 file, +15/-5 lines) using existing
+  `USBIP_MAX_ISO_PACKETS` constant
+- Original submission was sent via `security@kernel.org` (per v2
+  changelog)
+- Reviewed and applied by Greg KH (USB maintainer)
+- Companion patch (2ab833a16a825) has explicit `Cc: stable` and `Acked-
+  by: Shuah Khan` (usbip maintainer) and references this series
+- Independent security researchers (Nathan Rebello, Sebastián Alba
+  Vives) confirmed related vulnerabilities via KASAN and manual audit
+- KASAN confirmed heap OOB write in this exact function
+- Author also fixes a cascading NULL deref in `processcompl()` (verified
+  at kernel 6.12.0)
+- Buggy code is identical in every stable tree (5.10.y – 7.0.y)
+- Patch applies cleanly to stable (verified with `git apply --check`)
+
+**Evidence AGAINST backporting:**
+- None.
+
 **Stable rules checklist:**
-1. Obviously correct? YES - reuses already-validated
-   `modem_telit_fn920c04_config`
-2. Fixes a real bug? Strictly no, but enables real hardware (explicit
-   stable exception)
-3. Important issue? Hardware enablement, qualifies under exception
-4. Small and contained? YES - 13 lines, single file
-5. No new features/APIs? YES - no userspace API change, no new module
-   behavior
-6. Applies to stable? YES for 6.12.y, 6.18.y, 6.19.y, 7.0.y; NO for
-   6.6.y (needs prerequisites)
-
-**Exception category:** "NEW DEVICE IDs" - explicitly listed as an
-allowed addition for stable.
-
-**Precedent:** All three sibling Telit MHI device-ID additions
-(FN920C04, FN990B40, FE990B40) have been backported to stable,
-establishing clear policy for this exact scenario.
+1. Obviously correct and tested? **YES** — clamp to existing limit,
+   kcalloc replaces kzalloc
+2. Real bug affecting users? **YES** — heap OOB write, KASAN-confirmed
+3. Important issue? **YES** — CRITICAL security vulnerability, network-
+   reachable
+4. Small and contained? **YES** — 20 lines in 1 file, 1 function
+5. No new features? **YES** — pure defensive validation
+6. Applies to stable? **YES** — verified clean apply
 
 ## Verification
 
-- [Phase 1] Read commit message: confirmed only Signed-off-by (author +
-  maintainer) and Link tags; no Fixes/Reported-by/Cc:stable/Tested-
-  by/Reviewed-by.
-- [Phase 2] `git show ac12b852b4ead`: confirmed +13/-0 lines, all in
-  `drivers/bus/mhi/host/pci_generic.c`; verified one new
-  `mhi_pci_dev_info` struct and one `pci_device_id` table entry.
-- [Phase 3.3] `git log --oneline -- drivers/bus/mhi/host/pci_generic.c`:
-  confirmed prior commits FN920C04, FN990B40, FE990B40.
-- [Phase 3.5] `grep modem_telit_fn920c04_config pci_generic.c`:
-  confirmed config struct exists at line 846 in current tree (introduced
-  by FN920C04 commit).
-- [Phase 4.1] `b4 dig -c ac12b852b4ead`: matched single-revision thread
-  at lore.kernel.org/all/20260323122837.3406521-1-dnlplm@gmail.com/;
-  saved mbox; read maintainer's "Applied, thanks!" reply with no
-  concerns.
-- [Phase 6.2] `git cat-file -p stable/linux-
-  {6.12,6.18,6.19,7.0}.y:drivers/bus/mhi/host/pci_generic.c`: confirmed
-  `modem_telit_fn920c04_config` and `mhi_telit_fe990b40_info` (anchor
-  lines for the diff) are present in 6.12.y, 6.18.y, 6.19.y, 7.0.y
-  stable trees.
-- [Phase 6.2] `git cat-file -p
-  stable/linux-6.6.y:drivers/bus/mhi/host/pci_generic.c`: confirmed
-  `modem_telit_fn920c04_config` is NOT in 6.6.y (only earlier modem
-  configs present); 6.6.y would need prerequisites.
-- [Phase 6.3] `git show 4e3297ec0c469 / 1ee92e44c3316 / 9bef8beef1557`:
-  confirmed these are stable backports of upstream commits
-  6348f62ef7ecc, 00559ba3ae740, 6eaee77923ddf with "[upstream] commit
-  ... upstream." in the body, signed by Greg KH.
-- [Phase 8] Diff inspection: no new module parameter, no sysfs, no
-  userspace ABI; only additions to two static tables.
-- UNVERIFIED: Could not verify without trying that the patch will apply
-  with zero context conflict on stable 6.12.y - but anchor-line
-  `mhi_telit_fe990b40_info` is present, so a clean apply is highly
-  likely.
+- [Phase 1] `git show 1897852293fac`: confirmed full commit message, no
+  Fixes: tag, no explicit Cc: stable in final version
+- [Phase 2] Read diff in `drivers/usb/usbip/usbip_common.c`: confirmed
+  +15/-5 surgical change in `usbip_recv_iso()`
+- [Phase 3] `git log
+  -L:usbip_recv_iso:drivers/usb/usbip/usbip_common.c`: buggy code traced
+  to original commit `05a1f28e879e3` (2008-07-09, "Staging: USB/IP: add
+  common functions needed")
+- [Phase 3] `git show 2ab833a16a825`: related follow-up has explicit
+  `Cc: stable <stable@kernel.org>` and `Acked-by: Shuah Khan
+  <skhan@linuxfoundation.org>`
+- [Phase 4] `b4 dig -c 1897852293faca`: found lore thread at `https://lo
+  re.kernel.org/all/20260325104841.8282-1-addcontent08@gmail.com/`
+- [Phase 4] `b4 dig -a`: confirmed v1→v2 progression; v2 applied is the
+  latest
+- [Phase 4] mbox thread inspection: v2 changelog says "Drop
+  security@kernel.org CC" — confirming security channel origin; Greg KH
+  reviewed Nathan Rebello's complementary patch
+- [Phase 4] Web search confirmed multiple security researchers (Kelvin
+  Mbogo, Nathan Rebello, Sebastián Alba Vives) reported related
+  vulnerabilities; Nathan's patch cites KASAN slab-out-of-bounds report
+- [Phase 5] `rg usbip_recv_iso`: confirmed 3 call sites (vhci_rx.c,
+  stub_rx.c, vudc_rx.c), all invoked from kthread loops reading network
+  PDUs
+- [Phase 5] Read `vhci_rx.c:vhci_rx_pdu`: confirmed trigger path from
+  TCP socket → `vhci_recv_ret_submit` → `usbip_recv_iso`, no
+  authentication required
+- [Phase 5] `rg USBIP_MAX_ISO_PACKETS`: confirmed constant exists in
+  `usbip_common.h:130` and is used symmetrically in `stub_rx.c:381`
+- [Phase 6] Verified buggy code is identical in stable-
+  push/linux-{5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y, 6.18.y, 6.19.y} and
+  `USBIP_MAX_ISO_PACKETS` exists in all of them
+- [Phase 6] `git apply --check`: patch applies cleanly to current HEAD
+  (stable/linux-7.0.y)
+- [Phase 8] Failure mode verified as heap OOB write, KASAN-confirmed by
+  Nathan Rebello on kernel 7.0.0-rc5; secondary NULL deref in
+  `processcompl()` confirmed on 6.12.0
 
-The change is a textbook PCI device-ID addition for an existing driver,
-reusing already-validated configuration, with strong precedent that all
-three sibling device-ID additions in the same file have been accepted to
-stable. Risk is essentially nil; the benefit is enabling real hardware
-for stable users. It falls squarely under the explicitly documented "NEW
-DEVICE IDs" exception.
+This commit is a textbook YES for stable: it fixes a network-reachable,
+unauthenticated heap buffer overflow present in every supported stable
+tree. The fix is minimal, uses an already-existing constant, was vetted
+by the USB maintainer, and has been reproduced with KASAN by independent
+researchers. The companion patch in the same area explicitly carries
+`Cc: stable`.
 
 **YES**
 
- drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/usb/usbip/usbip_common.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 425362037830e..5db3df20088fd 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -892,6 +892,16 @@ static const struct mhi_pci_dev_info mhi_telit_fe990b40_info = {
- 	.edl_trigger = true,
- };
+diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
+index 29d776fbeef74..fd620e9600394 100644
+--- a/drivers/usb/usbip/usbip_common.c
++++ b/drivers/usb/usbip/usbip_common.c
+@@ -662,7 +662,7 @@ int usbip_recv_iso(struct usbip_device *ud, struct urb *urb)
+ 	void *buff;
+ 	struct usbip_iso_packet_descriptor *iso;
+ 	int np = urb->number_of_packets;
+-	int size = np * sizeof(*iso);
++	int size;
+ 	int i;
+ 	int ret;
+ 	u32 total_length = 0;
+@@ -670,11 +670,21 @@ int usbip_recv_iso(struct usbip_device *ud, struct urb *urb)
+ 	if (!usb_pipeisoc(urb->pipe))
+ 		return 0;
  
-+static const struct mhi_pci_dev_info mhi_telit_fe912c04_info = {
-+	.name = "telit-fe912c04",
-+	.config = &modem_telit_fn920c04_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.sideband_wake = false,
-+	.mru_default = 32768,
-+	.edl_trigger = true,
-+};
+-	/* my Bluetooth dongle gets ISO URBs which are np = 0 */
+-	if (np == 0)
+-		return 0;
++	if (np <= 0 || np > USBIP_MAX_ISO_PACKETS) {
++		dev_err(&urb->dev->dev,
++			"recv iso: invalid number_of_packets %d\n", np);
++		/*
++		 * usbip_pack_ret_submit() already set urb->number_of_packets
++		 * from the wire.  Zero it so processcompl() does not iterate
++		 * OOB descriptors on the way out.
++		 */
++		urb->number_of_packets = 0;
++		return -EPROTO;
++	}
 +
- static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
- 	.name = "netprisma-lcur57",
- 	.edl = "qcom/prog_firehose_sdx24.mbn",
-@@ -919,6 +929,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* Telit FN920C04 (sdx35) */
- 	{PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2020),
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn920c04_info },
-+	/* Telit FE912C04 (sdx35) */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2045),
-+		.driver_data = (kernel_ulong_t) &mhi_telit_fe912c04_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x011a),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx35_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
++	size = np * sizeof(*iso);
+ 
+-	buff = kzalloc(size, GFP_KERNEL);
++	buff = kcalloc(np, sizeof(*iso), GFP_KERNEL);
+ 	if (!buff)
+ 		return -ENOMEM;
+ 
 -- 
 2.53.0
 
