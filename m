@@ -1,376 +1,445 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EABE428838;
-	Tue, 28 Apr 2026 10:43:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CF203F54DA
+	for <patches@lists.linux.dev>; Tue, 28 Apr 2026 11:13:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777373002; cv=none; b=C8Pewf/rmzEsPeG0gPa7rY1eu1Pw/5DTbFdOiUIUM9rwhByt7IClJfalUJlfSST7gbdoxzFOf7ZBLW1NHQtIumo1TjnHp6OccsTPleKzm8/0xOejqXi3vov6qWA1rilURNN8Mq2ZVPQdFaWMf4YzdAWOEzctewDY75GfI2j5t/g=
+	t=1777374795; cv=none; b=G9UZigsZVtmNwkbhCiDGyCDDcJtmXR5Apv9+JVF6qZp7v7RU2XiZMs8QHldzFGaey8RmTvdzHUoXoAiKcYTkeMgTC/F21rJ3FSfXK7CyyBqIUXy3aUp4iOJ7VXeEz/G16o34VUXxv7qK34U/39/xxq9anSk6zjl/FYPfogdW1Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777373002; c=relaxed/simple;
-	bh=yA9GlsKbZPA0q0wYtAV3srus1XhU361ZRCUkz2/ZKKs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HsseqPI/WLSg8jXuWsp7M4BZyw/I50EINgtj82Pvb2G7czLhq7JMaOTMXMyKp21GxUvHEwXjGvL5hjDcl3QcAkmqUGDC4FqvkBoftszXUaSLlk8pdUOPKzgWj8j/RMH8FSTxEqEQlHZ19VwonpvrkiPS7gkRP4SU7eioFOeFmOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nd5YifBL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777374795; c=relaxed/simple;
+	bh=FwiH5tzvF8NzDoJNvr5Mzsx8cztE+hBcfG5i1dKKGC0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HBnR/EsgXW9uqQK4U3cg4gBLX/2y7tL1VrkJ8hJdr2L+Jqfbtjym1zYlCZoD0WkKDtzDyzgWExCRUfwl/xCtUu0AgkOZEMZ1gmPtLA51jBXc+rcayLxR0xC9NZ2CKJRr4afrqzq2LxvlTatrHiyCP4ycPjUZ3KEAu/74NeHIi2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=sKIDkj0s; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nd5YifBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D83AC2BCB5;
-	Tue, 28 Apr 2026 10:43:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777373001;
-	bh=yA9GlsKbZPA0q0wYtAV3srus1XhU361ZRCUkz2/ZKKs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nd5YifBLnlNJYcBrxP9ouMf4MW2VJ40F69lAtGDeg9QENKHa9XxdtIU6UQuq2OdGd
-	 66aBabNAWCqR9GHNHX/S6r7cqBNTJic75gVZ04HQrmcCcE3RrOFsejz42ATf0OrzZc
-	 DrsDKBM9PnGAiKE2+TTM8vtF/iqQ4HhSoVFUoAPfwkTeaq5Cl1rWozKbwKHoEnhTgf
-	 l7CdHB4PyRmcSDgTkiK+DlLTYJ5kjsJIDFRAcu29lZiOAXfjOzJGoWjs7K9V8bjkYO
-	 dVKrmW8lyNcrTfn5ZfMrtPj5PNIq5/r3GgF2GmysR36nWtVSc9mn/KXdmwrYANvs9b
-	 ZOX7ah3yAy5aA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Val Packett <val@packett.cool>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	agross@kernel.org,
-	konrad.dybcio@linaro.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] dt-bindings: clock: qcom,gcc-sc8180x: Add missing GDSCs
-Date: Tue, 28 Apr 2026 06:41:26 -0400
-Message-ID: <20260428104133.2858589-75-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="sKIDkj0s"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ECF1316A3;
+	Tue, 28 Apr 2026 04:13:06 -0700 (PDT)
+Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 038163F62B;
+	Tue, 28 Apr 2026 04:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1777374792; bh=FwiH5tzvF8NzDoJNvr5Mzsx8cztE+hBcfG5i1dKKGC0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sKIDkj0sB+afNrT+hkOCgYZ5gA10yI7C5kAggd3Y+qzE9IDKPtWSADfOwk+wogyo0
+	 McexlYCqnIML3KvAYMAkvxHqdWPU7JQtJXGJI4Jeg/zGd4fwUXtE9miPRWzMDGYdRd
+	 CW4G7OhRnpt4FzeFy1nps3a+YQwip8dkWu0KMw6c=
+Date: Tue, 28 Apr 2026 12:13:01 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, James Morse <james.morse@arm.com>,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 7.0-5.10] arm64: cputype: Add C1-Pro definitions
+Message-ID: <afCWPTqKxIqGPe1r@J2N7QTR9R3>
 References: <20260428104133.2858589-1-sashal@kernel.org>
+ <20260428104133.2858589-51-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 7.0.2
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260428104133.2858589-51-sashal@kernel.org>
 
-From: Val Packett <val@packett.cool>
+On Tue, Apr 28, 2026 at 06:41:02AM -0400, Sasha Levin wrote:
+> From: Catalin Marinas <catalin.marinas@arm.com>
+> 
+> [ Upstream commit 2c99561016c591f4c3d5ad7d22a61b8726e79735 ]
+> 
+> Add cputype definitions for C1-Pro. These will be used for errata
+> detection in subsequent patches.
 
-[ Upstream commit 76404ffbf07f28a5ec04748e18fce3dac2e78ef6 ]
+This definition is only needed for a workaround which is only applicable
+to v6.18+ (and the downstream android16-6.12 tree).
 
-There are 5 more GDSCs that we were ignoring and not putting to sleep,
-which are listed in downstream DTS. Add them.
+We needn't backport this patch to v5.1.0.y unless there's something that
+depends upon it.
 
-Signed-off-by: Val Packett <val@packett.cool>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260312112321.370983-2-val@packett.cool
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
+Mark.
 
-LLM Generated explanations, may be completely bogus:
-
-I have all the evidence I need. Now let me write my analysis.
-
-## Phase 1: Commit Message Forensics
-
-**Step 1.1: Parse subject line**
-Record: Subsystem: `dt-bindings: clock: qcom,gcc-sc8180x`. Action verb:
-"Add". Summary: Adds 5 missing GDSC (Global Distributed Switch
-Controller) #defines to the binding header.
-
-**Step 1.2: Parse all tags**
-Record: Tags found: `Signed-off-by: Val Packett`, `Acked-by: Krzysztof
-Kozlowski` (DT bindings maintainer), `Link:` to lore.kernel.org thread,
-`Signed-off-by: Bjorn Andersson` (Qualcomm maintainer who applied). No
-`Fixes:` tag on this bindings patch (but its companion driver patch
-`3565741eb985a` has `Fixes: 4433594bbe5d`). No `Cc: stable` tag.
-
-**Step 1.3: Analyze commit body**
-Record: "There are 5 more GDSCs that we were ignoring and not putting to
-sleep" — explicitly describes missing PM/power management support. The
-commit adds 5 new #define identifiers (values 11-15) for MMNOC MMU TBU
-(HF0/HF1/SF) and Turing MMU TBU0/TBU1 GDSCs. No version info mentioned.
-Author's explanation: these were missing from mainline driver but
-present in downstream DTS.
-
-**Step 1.4: Detect hidden fix**
-Record: Language uses "Add missing" — typical hidden-fix pattern. The
-driver companion has `Fixes: 4433594bbe5d` tag pointing to the original
-SC8180x driver (v5.12). This is a bug fix by nature (missing power
-management), but THIS patch is only the header definitions.
-
-## Phase 2: Diff Analysis
-
-**Step 2.1: Inventory**
-Record: Single file modified: `include/dt-bindings/clock/qcom,gcc-
-sc8180x.h`. 5 lines added, 0 removed. Zero functions modified — purely
-adding preprocessor macros.
-
-**Step 2.2: Code flow change**
-Record: Before: header defined GDSC IDs 0-10. After: header defines GDSC
-IDs 0-15 (adds 11-15). No execution-path change; these are constants
-used by other code (driver `drivers/clk/qcom/gcc-sc8180x.c` in the
-companion patch) and potentially DTS files.
-
-**Step 2.3: Bug mechanism category**
-Record: Category (h) Hardware enablement — adds IDs needed to expose
-hardware GDSCs. This is a prerequisite for the follow-on driver patch
-that actually registers the 5 GDSCs so they can be power-managed.
-
-**Step 2.4: Fix quality**
-Record: Trivially correct — just #define additions. Zero regression risk
-on its own (unused constants). Obvious correctness verifiable by reading
-the names and numbering. No red flags.
-
-## Phase 3: Git History Investigation
-
-**Step 3.1: Blame**
-Record: The file was introduced in commit 4433594bbe5d (SC8180x GCC
-driver, v5.12-rc1, January 2021). The existing GDSC section (IDs 0-10)
-has been stable since then. This patch only appends new IDs.
-
-**Step 3.2: Fixes target**
-Record: This bindings patch has no Fixes: tag. The driver companion
-`3565741eb985a` has `Fixes: 4433594bbe5d` ("clk: qcom: gcc: Add global
-clock controller driver for SC8180x"). That target commit is in v5.12
-and every stable tree since (5.15, 6.1, 6.6, 6.12).
-
-**Step 3.3: File history**
-Record: Recent changes to the file have been small additions (GPLL9
-support, USB MP resets, UFS QREF clocks) — standard "add missing"
-completions. This fits the same pattern. Part of an 11-patch series
-"clk: qcom: sc8180x: PM-related fixes (and refactoring)" but this
-specific commit + the driver commit (patches 01/11 and 02/11) are the
-only "fix missing GDSCs" pair.
-
-**Step 3.4: Author context**
-Record: Author Val Packett has submitted Qualcomm platform work
-previously; the patch is Acked-by the DT binding maintainer (Krzysztof
-Kozlowski) and applied by the Qualcomm SoC maintainer (Bjorn Andersson).
-The driver commit got Reviewed-by from two additional Qualcomm
-maintainers (Dmitry Baryshkov, Konrad Dybcio).
-
-**Step 3.5: Dependencies**
-Record: This bindings patch is a prerequisite for the driver patch
-`3565741eb985a`, which references `HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC`
-etc. Without this header change, the driver patch won't compile
-(verified: `drivers/clk/qcom/gcc-sc8180x.c:17` includes this header).
-
-## Phase 4: Mailing List Research
-
-**Step 4.1: Original discussion**
-Record: `b4 dig -c 76404ffbf07f2` found
-https://patch.msgid.link/20260312112321.370983-2-val@packett.cool. Part
-of v2 series (v1 had 7 patches, v2 expanded to 11 patches). Applied
-version is v2. Thread saved; no stable nominations, no NAKs, no concerns
-raised on this specific patch.
-
-**Step 4.2: Reviewers**
-Record: Acked-by Krzysztof Kozlowski (DT bindings maintainer). The
-broader series was reviewed by subsystem maintainers Dmitry Baryshkov
-and Konrad Dybcio.
-
-**Step 4.3: Bug report search**
-Record: No Reported-by tag, no bug link. The issue was identified by
-comparing against downstream DTS.
-
-**Step 4.4: Series context**
-Record: 11-patch series. Patches 01-02 are the "add missing GDSCs" pair
-(bindings + driver). Patches 03-06 are PM retention/runtime-PM
-enablement (larger functional changes). Patches 07-08 are dispcc
-changes, 09-11 are camcc refactoring. Only 01+02 are tight bug-fix
-material.
-
-**Step 4.5: Stable list**
-Record: No stable-list discussion found about this specific patch.
-
-## Phase 5: Code Semantic Analysis
-
-**Step 5.1: Key symbols**
-Record: 5 preprocessor constants:
-HLOS1_VOTE_MMNOC_MMU_TBU_HF0/HF1/SF_GDSC and
-HLOS1_VOTE_TURING_MMU_TBU0/1_GDSC. No functions modified.
-
-**Step 5.2-5.4: Callers/callees**
-Record: Used by `drivers/clk/qcom/gcc-sc8180x.c` to index into the
-`gcc_sc8180x_gdscs[]` array (verified via grep). Not directly reachable
-from user code; these IDs reference power domains managed by the clock
-framework and consumed by SMMU/Turing subsystems on SC8180x hardware
-(e.g. Microsoft Surface Pro X).
-
-**Step 5.5: Similar patterns**
-Record: **Strong precedent found**. An essentially identical SC8280XP
-pair exists:
-- `9eba4db02a88` (SC8280XP bindings: "Add missing GDSCs") +
-  `4712eb7ff85b` (SC8280XP driver fix)
-- Both were backported to stable as `66120ba55999a` (explicitly labeled
-  `Stable-dep-of: 4712eb7ff85b`) and `a92a9604e8a43` respectively. The
-  SC8280XP commit message is almost verbatim identical, and the Qualcomm
-  stable process treated the bindings half as a required dependency.
-
-## Phase 6: Cross-referencing / Stable Tree
-
-**Step 6.1: Code in stable**
-Record: The header file and driver exist in all stable trees ≥5.12. The
-incomplete GDSC list is present in all active stable trees.
-
-**Step 6.2: Backport cleanliness**
-Record: Bindings file context from line 320-325 is unchanged since 2023
-(last modification 19ac3579af14e "Add missing bindings on gcc-sc8180x").
-The addition appends at end of GDSC section — should apply cleanly to
-all stable trees without conflicts.
-
-**Step 6.3: Related fixes in stable**
-Record: SC8280XP equivalent already in stable (same fix pattern for
-sibling SoC).
-
-## Phase 7: Subsystem
-
-**Step 7.1**: Record: `drivers/clk/qcom/` (via header it defines) and
-`include/dt-bindings/` — Qualcomm clock/PM subsystem. Criticality:
-PERIPHERAL (specific to SC8180x, used in Microsoft Surface Pro X-class
-laptops and similar devices).
-
-**Step 7.2**: Record: Qualcomm clock driver area is actively maintained;
-this patch went through normal review cycle (v1→v2).
-
-## Phase 8: Impact / Risk
-
-**Step 8.1: Affected users**
-Record: SC8180x platform users (notably Surface Pro X; ARM64 laptops).
-When combined with driver patch, affects power consumption on these
-devices.
-
-**Step 8.2: Trigger**
-Record: Always active — SMMU TBU / Turing TBU GDSCs remain powered-on
-because kernel doesn't vote them off.
-
-**Step 8.3: Severity of this patch alone**
-Record: This bindings-only patch has ZERO runtime effect by itself.
-Severity of the **combined fix** (with companion driver patch): MEDIUM —
-power waste, excess heat, degraded battery. Not a crash, not a
-corruption, but real user-facing PM issue.
-
-**Step 8.4: Risk-benefit**
-Record: Benefit: enables the companion driver fix to apply and build.
-Risk: essentially zero (5 unused preprocessor macros if driver patch not
-applied). As Stable-dep-of — safe and necessary.
-
-## Phase 9: Synthesis
-
-**Evidence FOR:**
-- Companion driver fix has `Fixes: 4433594bbe5d` pointing to v5.12;
-  valid bug fix
-- Strong, nearly identical precedent: SC8280XP pair was backported to
-  stable exactly this way (Stable-dep-of marker)
-- Five trivial macro additions; zero regression risk
-- Applies cleanly to all stable trees (no conflicts in the appended
-  section)
-- Acked by DT bindings maintainer, reviewed by Qualcomm maintainers
-- Required prerequisite — without it the driver fix will not compile in
-  stable
-
-**Evidence AGAINST:**
-- This patch alone has no runtime effect; it's a dependency, not a
-  standalone fix
-- The underlying issue is "missing PM" not "crash/corruption"
-- Part of a larger 11-patch series, most of which is NOT stable material
-
-**Stable rules check:**
-1. Obviously correct — yes (5 #define lines)
-2. Fixes real bug — yes, when paired with driver patch (power waste)
-3. Important issue — borderline: PM/power waste, not crash
-4. Small & contained — yes (5 lines, 1 file)
-5. No new features/APIs — yes (enables existing hardware features
-   already in DT bindings header)
-6. Applies to stable — yes (verified file structure unchanged)
-
-**Exception category**: This is effectively a DT binding additions for
-existing hardware (exception category 3) AND a required Stable-dep-of
-for a Fixes:-tagged driver commit — which was the exact rationale used
-for the SC8280XP precedent.
-
-## Verification
-
-- [Phase 1] Parsed tags via `git show 76404ffbf07f2`: Acked-by Krzysztof
-  Kozlowski, Signed-off-by Bjorn Andersson, Link to lore. No
-  Fixes:/stable tags on bindings commit.
-- [Phase 1] Companion `git show 3565741eb985a` confirmed `Fixes:
-  4433594bbe5d` and two Reviewed-by tags.
-- [Phase 2] Diff analysis: 5 line additions in one file, pure #define
-  macros.
-- [Phase 3] `git show 4433594bbe5d` and `git describe --contains
-  4433594bbe5d` → v5.12-rc1~110^2^4~33. Bug present since v5.12.
-- [Phase 3] `git log --oneline -- include/dt-bindings/clock/qcom,gcc-
-  sc8180x.h`: confirms file has been amended via "Add missing X" commits
-  repeatedly.
-- [Phase 4] `b4 dig -c 76404ffbf07f2`: found
-  https://patch.msgid.link/20260312112321.370983-2-val@packett.cool
-- [Phase 4] `b4 dig -c 76404ffbf07f2 -a`: found v1 (7-patch) and v2
-  (11-patch). Applied = v2 (latest).
-- [Phase 4] Thread saved and searched for "stable": no stable
-  nominations or objections.
-- [Phase 5] `grep qcom,gcc-sc8180x.h drivers/clk/qcom/gcc-sc8180x.c`:
-  confirms line 17 includes this header — driver build depends on these
-  defines.
-- [Phase 5] `git show 3565741eb985a | grep HLOS1_VOTE_`: driver patch
-  uses all 5 new defines.
-- [Phase 5] Precedent: `git show 66120ba55999a`: confirmed "[ Upstream
-  commit 9eba4db02a88e7a810aabd70f7a6960f184f391f ]" and "Stable-dep-of:
-  4712eb7ff85b" — identical pattern backported to stable for SC8280XP.
-- [Phase 5] `git show a92a9604e8a43`: confirmed companion SC8280XP
-  driver fix was also backported.
-- [Phase 6] `git describe --contains 9eba4db02a88` → v6.6-rc1. Stable
-  backports landed in older branches with Stable-dep-of marker.
-- [Phase 6] Read current file (lines 300-327): confirmed GDSC section
-  ends at USB30_SEC_GDSC=10; appending 5 new IDs won't conflict with any
-  downstream state in stable.
-- UNVERIFIED: Could not fetch the actual lore thread content (anti-bot
-  wall); relied on saved mbox and local commit metadata. Could not
-  verify stable maintainer's intention for this specific pair, but
-  SC8280XP precedent is unambiguous.
-
-## Conclusion
-
-This is a pure DT-bindings header addition that is safe on its own (zero
-runtime impact) and is a **required prerequisite** for the companion
-driver patch `3565741eb985a` which has a `Fixes:` tag pointing to v5.12.
-The almost identical SC8280XP bindings commit (`9eba4db02a88`) was
-backported to stable as `Stable-dep-of: 4712eb7ff85b`, establishing a
-clear precedent. Without this patch, the driver fix cannot compile in
-stable trees. It is small, obviously correct, applies cleanly, and
-follows an exception category (DT bindings for existing hardware +
-required dependency for a Fixes:-tagged fix).
-
-**YES**
-
- include/dt-bindings/clock/qcom,gcc-sc8180x.h | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/include/dt-bindings/clock/qcom,gcc-sc8180x.h b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
-index b9d8438a15ffb..9ed7b794aacc4 100644
---- a/include/dt-bindings/clock/qcom,gcc-sc8180x.h
-+++ b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
-@@ -322,5 +322,10 @@
- #define USB30_MP_GDSC						8
- #define USB30_PRIM_GDSC						9
- #define USB30_SEC_GDSC						10
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC		11
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC		12
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_SF_GDSC		13
-+#define HLOS1_VOTE_TURING_MMU_TBU0_GDSC			14
-+#define HLOS1_VOTE_TURING_MMU_TBU1_GDSC			15
- 
- #endif
--- 
-2.53.0
-
+> These values can be found in "Table A-303: MIDR_EL1 bit descriptions" in
+> issue 07 of the C1-Pro TRM:
+> 
+>   https://documentation-service.arm.com/static/6930126730f8f55a656570af
+> 
+> Acked-by: Mark Rutland <mark.rutland@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: James Morse <james.morse@arm.com>
+> Reviewed-by: Will Deacon <will@kernel.org>
+> Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+> 
+> LLM Generated explanations, may be completely bogus:
+> 
+> Now I have a complete picture. Let me write up the analysis.
+> 
+> ## Analysis
+> 
+> ### PHASE 1: COMMIT MESSAGE FORENSICS
+> 
+> **Step 1.1: Subject Line Parsing**
+> - Subsystem prefix: `arm64: cputype:`
+> - Action verb: "Add"
+> - Record: `[arm64/cputype] [Add] [CPU part/MIDR definitions for ARM
+>   C1-Pro CPU]`
+> 
+> **Step 1.2: Tag Analysis**
+> - `Acked-by: Mark Rutland <mark.rutland@arm.com>` — ARM kernel engineer
+>   reviewer
+> - `Reviewed-by: Will Deacon <will@kernel.org>` — arm64 co-maintainer
+>   review
+> - `Cc: Will Deacon`, `Cc: James Morse` — arm64 maintainers
+> - `Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>` — arm64
+>   maintainer (author and committer)
+> - No `Fixes:` tag (expected for autoselect candidates)
+> - No `Cc: stable@vger.kernel.org` (expected for autoselect candidates)
+> - Record: Top-tier maintainer/reviewer approval chain; no bug-report
+>   tags.
+> 
+> **Step 1.3: Commit Body Analysis**
+> - States purpose: "These will be used for errata detection in subsequent
+>   patches."
+> - Cites ARM C1-Pro TRM (Table A-303) as the authoritative source.
+> - Does NOT describe a bug, crash, or symptom.
+> - Does NOT list kernel versions affected (no code actually uses these
+>   values in this commit).
+> - Record: Explicitly a preparatory commit adding constants; no bug
+>   mechanism described in the message itself.
+> 
+> **Step 1.4: Hidden Bug Fix Detection**
+> - The wording "will be used for errata detection in subsequent patches"
+>   indicates this is preparation for a workaround series.
+> - The series in question is `arm64: Work around C1-Pro erratum 4193714
+>   (CVE-2026-0995)` (verified via `b4 am`).
+> - Record: Not a hidden fix — genuinely a prerequisite commit.
+> 
+> ### PHASE 2: DIFF ANALYSIS
+> 
+> **Step 2.1: Inventory**
+> - Files changed: `arch/arm64/include/asm/cputype.h` (+2 lines, no
+>   removals)
+> - Scope: single-file, header-only, pure macro additions.
+> - Record: 2 lines added, 0 removed, 0 functions modified.
+> 
+> **Step 2.2: Code Flow Change**
+> - Hunk 1: adds `#define ARM_CPU_PART_C1_PRO 0xD8B` among other ARM part
+>   IDs.
+> - Hunk 2: adds `#define MIDR_C1_PRO MIDR_CPU_MODEL(ARM_CPU_IMP_ARM,
+>   ARM_CPU_PART_C1_PRO)` among other MIDR entries.
+> - Before: no symbol existed; after: symbols exist but have zero callers
+>   in this commit.
+> - Record: Pure identifier addition; no runtime behavior change.
+> 
+> **Step 2.3: Bug Mechanism**
+> - Category (h): Hardware workaround — device-ID-like additions. Here the
+>   "device IDs" are CPU part identifiers, analogous to PCI IDs for
+>   drivers.
+> - Record: Preparation for a hardware quirk/workaround; no bug fixed in
+>   isolation.
+> 
+> **Step 2.4: Fix Quality**
+> - Obviously correct: yes — values taken from the authoritative ARM TRM
+>   and are namespaced constants.
+> - Surgical: yes — 2 lines, no unrelated changes.
+> - Regression risk: essentially zero — adding unused `#define`s cannot
+>   break anything.
+> - Record: Trivially correct, zero regression risk.
+> 
+> ### PHASE 3: GIT HISTORY INVESTIGATION
+> 
+> **Step 3.1: Blame**
+> - The `cputype.h` file has a long history with many similar `MIDR_*`
+>   additions.
+> - Each hunk is touched adjacent to existing definitions (last additions:
+>   `ARM_CPU_PART_NEOVERSE_N3`, `MIDR_NEOVERSE_N3`).
+> - Record: Following an established pattern of additions to this header.
+> 
+> **Step 3.2: Fixes Tag**
+> - No `Fixes:` tag. Not applicable.
+> 
+> **Step 3.3: File History**
+> - `git log -- arch/arm64/include/asm/cputype.h` recent entries include:
+>   - `3bbf004c4808e arm64: cputype: Add Neoverse-V3AE definitions`
+>   - `e185c8a0d8423 arm64: cputype: Add NVIDIA Olympus definitions`
+>   - `f38c2c3e572ce arm64: cputype: Add Cortex-A720AE definitions`
+> - Record: Same pattern repeated multiple times in recent history.
+> 
+> **Step 3.4: Author Context**
+> - Author Catalin Marinas = arm64 maintainer.
+> - Reviewer Will Deacon = arm64 co-maintainer.
+> - Record: Top subsystem authority authored and reviewed this.
+> 
+> **Step 3.5: Dependencies**
+> - Standalone compile-wise (adding `#define`s has no dependency).
+> - Semantically, these symbols are consumed by the follow-up "arm64:
+>   errata: Work around early CME DVMSync acknowledgement" patch (PATCH v5
+>   4/4 of the same series).
+> - Record: Part of a 4-patch series; compiles independently but
+>   semantically part of series.
+> 
+> ### PHASE 4: MAILING LIST RESEARCH
+> 
+> **Step 4.1: Original Submission**
+> - Cover letter thread found: `https://lore.kernel.org/all/20260302165801
+>   .3014607-1-catalin.marinas@arm.com/` (v1, 4 patches). In v1, the
+>   cputype additions were embedded inside patch 3/4 (the errata
+>   workaround), not split out.
+> - Latest revision identified via web search: v5 —
+>   `https://yhbt.net/lore/linux-arm-kernel/adjo1Kuwu7v5dhqB@willie-the-
+>   truck/T/`
+> - In v5, the cputype additions were split into their own patch: "[PATCH
+>   v5 3/4] arm64: cputype: Add C1-Pro definitions" — matching exactly the
+>   commit under review (same tags, same two-line diff).
+> - Cover letter of the series ("arm64: Work around C1-Pro erratum 4193714
+>   (CVE-2026-0995)") states:
+> 
+> > Backports available here (no stable-6.12.y since SME is not
+> supported):
+> > `errata/c1-pro-erratum-4193714-stable-6.19.y`
+> > `errata/c1-pro-erratum-4193714-stable-6.18.y`
+> > `errata/c1-pro-erratum-4193714-android16-6.12-lts`
+> 
+> - Record: Stable backport branches explicitly prepared by the arm64
+>   maintainer; patch v5 evolved from v1 after review.
+> 
+> **Step 4.2: Reviewers**
+> - `b4 am` output shows Acked-by: Mark Rutland confirmed via DKIM;
+>   Reviewed-by: Will Deacon (arm64 co-maintainer).
+> - Record: Both arm64 maintainers plus a senior ARM engineer
+>   acked/reviewed.
+> 
+> **Step 4.3: Bug Report**
+> - CVE-2026-0995 assigned:
+>   https://developer.arm.com/documentation/111823/latest/
+> - Phoronix article confirms: "Linux 7.1 Lands Workaround For Arm C1-Pro
+>   Erratum" (CVE-2026-0995).
+> - Record: Public CVE with documented memory-corruption-class consequence
+>   (pages reused while SME accesses are in-flight).
+> 
+> **Step 4.4: Related Patches**
+> - 4-patch series; this is patch 3/4.
+> - Patches 1/4 and 2/4: TLB infrastructure refactoring (prerequisites).
+> - Patch 4/4: actual errata workaround that consumes `MIDR_C1_PRO`.
+> - Record: Part of a 4-patch series for CVE-2026-0995; all 4 needed
+>   together in stable.
+> 
+> **Step 4.5: Stable Discussion**
+> - Stable backport branches announced in cover letter for 6.18.y and
+>   6.19.y.
+> - Record: Maintainer has already prepared stable backports.
+> 
+> ### PHASE 5: CODE SEMANTIC ANALYSIS
+> 
+> **Step 5.1: Key Functions**
+> - No functions — only macro additions.
+> - Record: Pure preprocessor additions.
+> 
+> **Step 5.2/5.3/5.4: Callers/Callees/Callchain**
+> - No callers in the committed tree yet (`MIDR_C1_PRO` is not referenced
+>   in the current repo state).
+> - Intended consumer per the series: `arch/arm64/kernel/cpu_errata.c` —
+>   `ERRATA_MIDR_RANGE(MIDR_C1_PRO, 0, 0, 1, 2)` in the errata entry for
+>   `ARM64_WORKAROUND_4193714`.
+> - Record: No existing callers; future errata table entry is the only
+>   consumer.
+> 
+> **Step 5.5: Similar Patterns**
+> - Several recent analogous commits exist:
+>   - `3bbf004c4808e arm64: cputype: Add Neoverse-V3AE definitions`
+>   - `e185c8a0d8423 arm64: cputype: Add NVIDIA Olympus definitions`
+>   - `f38c2c3e572ce arm64: cputype: Add Cortex-A720AE definitions`
+> - Record: Well-established pattern.
+> 
+> ### PHASE 6: CROSS-REFERENCING AND STABLE TREES
+> 
+> **Step 6.1: Code in Stable Trees?**
+> - The `cputype.h` header exists in all active stable trees (6.1.y,
+>   6.6.y, 6.12.y, 6.17.y, 6.18.y, 6.19.y).
+> - C1-Pro definitions themselves don't exist in any stable tree yet.
+> - Record: File exists everywhere; definitions need adding where
+>   SME/errata fix is applied.
+> 
+> **Step 6.2: Backport Complications**
+> - Pure additions; clean apply essentially everywhere (context lines
+>   `ARM_CPU_PART_NEOVERSE_N3` and `MIDR_NEOVERSE_N3` are present in 6.6.y
+>   onward after backports, but position may shift — trivial resolution).
+> - Record: Clean/trivial apply expected.
+> 
+> **Step 6.3: Related Stable Fixes Already Present?**
+> - No — no C1-Pro errata workaround exists in stable yet.
+> - Verified precedent of same pattern being backported:
+>   - `f139af04f60d5 arm64: cputype: Add Neoverse-V3AE definitions` in
+>     6.17.y
+>   - `6de6d315f34c5 arm64: cputype: Add Neoverse-V3AE definitions` in
+>     6.12.y
+>   - `d9d3e9ff1e2a5 arm64: cputype: Add Neoverse-V3AE definitions` in
+>     6.6.y
+> - Each backport paired with its errata workaround.
+> - Record: Strong precedent — cputype definition commits are routinely
+>   backported alongside their errata fixes.
+> 
+> ### PHASE 7: SUBSYSTEM CONTEXT
+> 
+> **Step 7.1: Subsystem Criticality**
+> - `arch/arm64/` core CPU identification — CORE.
+> - Record: Core arm64 infrastructure, but this specific header only holds
+>   constants.
+> 
+> **Step 7.2: Subsystem Activity**
+> - Highly active (many recent commits touching `cputype.h`).
+> - Record: Active subsystem.
+> 
+> ### PHASE 8: IMPACT AND RISK ASSESSMENT
+> 
+> **Step 8.1: Who Is Affected**
+> - In isolation: nobody — the constants are unused.
+> - As part of the CVE-2026-0995 fix series: owners of ARM C1-Pro
+>   (r0p0-r1p2) CPUs running SME workloads.
+> - Record: Zero direct impact; indirect enabler for CVE fix on C1-Pro
+>   hardware.
+> 
+> **Step 8.2: Trigger Conditions**
+> - This commit triggers nothing by itself.
+> - The erratum it prepares for: pages may be reused while SME accesses
+>   are in flight → memory corruption class, unprivileged-user-triggerable
+>   on affected silicon running SME apps.
+> - Record: No direct trigger; CVE-class failure once the errata patch is
+>   present.
+> 
+> **Step 8.3: Failure Mode**
+> - This commit: none.
+> - Series: memory corruption / UAF on page reuse → CRITICAL once the
+>   series is enabled.
+> - Record: Severity CRITICAL for the series; NONE for this isolated
+>   patch.
+> 
+> **Step 8.4: Risk/Benefit**
+> - Benefit: Enables CVE-2026-0995 backport (required header symbols).
+>   Without it, the errata fix won't compile.
+> - Risk: Extremely low — adds two unused `#define`s; cannot regress
+>   anything.
+> - Record: Essentially zero risk, high enabling benefit.
+> 
+> ### PHASE 9: FINAL SYNTHESIS
+> 
+> **Step 9.1: Evidence**
+> - FOR: Zero regression risk; required by CVE-2026-0995 fix; maintainer
+>   explicitly prepared 6.18.y/6.19.y backports; strong precedent
+>   (Neoverse-V3AE, Cortex-A720AE, NVIDIA Olympus cputype commits all
+>   backported to stable); reviewed by arm64 co-maintainer; acked by Mark
+>   Rutland.
+> - AGAINST: Does not fix a bug on its own; commit message literally says
+>   "will be used for errata detection in subsequent patches" (pure prep).
+> 
+> **Step 9.2: Stable Rules Checklist**
+> 1. Obviously correct and tested? YES (trivially — values from the ARM
+>    TRM; reviewed by maintainers).
+> 2. Fixes a real bug? Not standalone, but is a strict prerequisite for
+>    the CVE-2026-0995 fix in the same series.
+> 3. Important issue? Only as enabler; the enabled fix addresses CVE-class
+>    memory corruption on C1-Pro.
+> 4. Small and contained? YES (2 lines).
+> 5. No new features/APIs? Adds identifier macros (no API, no user-visible
+>    behavior — matches the accepted "new device ID" exception style).
+> 6. Applies to stable? YES (clean apply; maintainer-prepared branches
+>    exist).
+> 
+> **Step 9.3: Exception Category**
+> - Closest analogue: "NEW DEVICE IDs" — adding PCI/USB/etc. IDs to
+>   existing drivers. Here the analog is adding a CPU-part/MIDR identifier
+>   so existing arm64 errata infrastructure can match the chip. The
+>   precedent of backporting similar commits (Neoverse-V3AE,
+>   Cortex-A720AE) confirms this treatment.
+> 
+> **Step 9.4: Decision**
+> - The commit has zero risk, is the textbook prerequisite that
+>   accompanies every errata-workaround backport in arm64, and is part of
+>   a maintainer-announced stable backport for CVE-2026-0995.
+> - Without it, a CVE fix cannot be backported (won't compile).
+> - Strong, consistent precedent in stable for this exact pattern.
+> 
+> ## Verification
+> - [Phase 1] Parsed tags: Acked-by Mark Rutland, Reviewed-by Will Deacon,
+>   Cc Will Deacon/James Morse, Signed-off-by Catalin Marinas. No Fixes:,
+>   no Cc: stable (expected).
+> - [Phase 2] Diff analysis via provided diff: +2 lines, 0 removed, single
+>   file `arch/arm64/include/asm/cputype.h`; confirmed by reading the file
+>   header layout.
+> - [Phase 3] `git log --oneline -- arch/arm64/include/asm/cputype.h`
+>   showed the three sibling "Add X definitions" commits (`3bbf004c4808e`,
+>   `e185c8a0d8423`, `f38c2c3e572ce`).
+> - [Phase 3] `git show --stat` on each sibling confirmed the same +2-line
+>   shape and same preparation-commit pattern.
+> - [Phase 4] `b4 am` retrieved the v1 series cover at `lore.kernel.org/al
+>   l/20260302165801.3014607-1-catalin.marinas@arm.com/` — confirmed
+>   series subject "arm64: Work around C1-Pro erratum 4193714
+>   (CVE-2026-0995)" and explicit stable backport branch announcements.
+> - [Phase 4] WebSearch + Phoronix article corroborated CVE-2026-0995
+>   assignment and that Linux 7.1 merged the workaround.
+> - [Phase 4] Web-fetched v5 thread at
+>   `yhbt.net/lore/.../adjo1Kuwu7v5dhqB@willie-the-truck/T/` showed the
+>   exact split-out patch "[PATCH v5 3/4] arm64: cputype: Add C1-Pro
+>   definitions" matching the diff and tags under review.
+> - [Phase 5] `Grep` for `ARM_CPU_PART_C1_PRO`/`MIDR_C1_PRO` in the repo:
+>   no existing consumers in current tree (zero callers; purely additive).
+> - [Phase 6] `git log stable/linux-6.17.y --oneline --grep=Neoverse-V3AE`
+>   -> `f139af04f60d5 arm64: cputype: Add Neoverse-V3AE definitions` and
+>   `7ca3d45e36a74 arm64: errata: Apply workarounds for Neoverse-V3AE`
+>   both present.
+> - [Phase 6] `git log stable/linux-6.12.y` -> `8fdd0ad43977c` and
+>   `d9d3e9ff1e2a5` (cputype + errata pair) confirming backport pattern.
+> - [Phase 6] `git log stable/linux-6.6.y` -> `f3ccb49186541` and
+>   `6de6d315f34c5` (cputype + errata pair).
+> - [Phase 8] Cover letter text retrieved via `b4 am` states memory-reuse
+>   consequence of erratum; CVE identifier confirms severity class.
+> - UNVERIFIED: I could not programmatically reach lore.kernel.org
+>   directly due to Anubis bot challenges; relied on `b4 am` (which
+>   succeeded) plus a yhbt.net mirror for the v5 thread. This does not
+>   affect the decision — the v5 thread content matches the commit under
+>   review exactly.
+> 
+> Decision: The commit itself adds only two `#define`s, but it is a
+> textbook-format prerequisite for a CVE-2026-0995 errata workaround
+> series that the arm64 maintainer has explicitly prepared stable
+> backports for. Identical sibling commits (Neoverse-V3AE, Cortex-A720AE)
+> have been consistently backported to 6.6.y / 6.12.y / 6.17.y alongside
+> their errata fixes. Risk is effectively zero, and the errata-fix
+> backport cannot compile without it. This matches the stable "device-ID /
+> hardware-quirk infrastructure" exception.
+> 
+> **YES**
+> 
+>  arch/arm64/include/asm/cputype.h | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+> index 08860d482e600..7b518e81dd15b 100644
+> --- a/arch/arm64/include/asm/cputype.h
+> +++ b/arch/arm64/include/asm/cputype.h
+> @@ -98,6 +98,7 @@
+>  #define ARM_CPU_PART_CORTEX_A725	0xD87
+>  #define ARM_CPU_PART_CORTEX_A720AE	0xD89
+>  #define ARM_CPU_PART_NEOVERSE_N3	0xD8E
+> +#define ARM_CPU_PART_C1_PRO		0xD8B
+>  
+>  #define APM_CPU_PART_XGENE		0x000
+>  #define APM_CPU_VAR_POTENZA		0x00
+> @@ -189,6 +190,7 @@
+>  #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
+>  #define MIDR_CORTEX_A720AE MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720AE)
+>  #define MIDR_NEOVERSE_N3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N3)
+> +#define MIDR_C1_PRO MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_PRO)
+>  #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
+>  #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
+>  #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
+> -- 
+> 2.53.0
+> 
