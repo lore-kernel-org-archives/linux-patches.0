@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04F3413221;
-	Tue, 28 Apr 2026 10:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9F442189A;
+	Tue, 28 Apr 2026 10:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372972; cv=none; b=sJt7Lir+GTfv1bWZRdbJhLcIH0/FteQLy4bINKsvCNK004KXKnD79YreGARx7xnLZnSKXck+Qk2hsYIsxH3OjUhTdMCRQTZjkAui7lv0IlN1VUghiNiUb2vzBLomLOJoW/ZGjRujdT2HVLa0cWpMxp6dTfcyLpuP0lhhhLYN53w=
+	t=1777372974; cv=none; b=HvFuWFlhLbPZ5iZJLmN12XMENvfwYw+bPLy/T3z8PTSTSKbcyYR/2cSE/iwiv0f1QybVolrKhD2COpEFWX6Tmw/8fAS7ds6fnzS1ptvj+B62N9eRUz/v7snNv5uJLCRhhij0vtToNHMeyayWttFkfpWmJbnCkciNbEzpKpsEXjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372972; c=relaxed/simple;
-	bh=WG1aZEtlaChURH5tQWWR04QdRV9xU25WVloCetGhuL8=;
+	s=arc-20240116; t=1777372974; c=relaxed/simple;
+	bh=vNicz05PIwfMs/DzX4ATEA7r/SFhjcVyFiC7PaDXSG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=keWK5L1tgElOKvqE7OdV0djVl6End60S9Kh4Fdn/VibW25ad+Lif+c08Odf/lswszRwzVVXeF6g2iJaMdi3JixkXLLvtoyOqdsVib62OW1yQNrCoGyqdH/ZFNmkdMdL5KBIMA9mqhmj9ATrMvHd2ggU7nzYjmO6EiTBJhnshk7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e0wt0I0j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KuUGLhPb24I4mP48PQ2KQBNYOH3DoMW7KkHvBW3MPIRmAvD/ynqpT2s7204ej1Z9huEyCN2WKFNW+Bva0zZdbNEdLGhp+ft3i9tCo5VD0m6AEiVLNi8egVK8sKbADPleYh6ZsVV2H1AYgc6IzgieAMnSPTbwtm56S87OGSY1Ekc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=elcYA15j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e0wt0I0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F6DC2BCF5;
-	Tue, 28 Apr 2026 10:42:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="elcYA15j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5C2C2BCFB;
+	Tue, 28 Apr 2026 10:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372972;
-	bh=WG1aZEtlaChURH5tQWWR04QdRV9xU25WVloCetGhuL8=;
+	s=k20201202; t=1777372973;
+	bh=vNicz05PIwfMs/DzX4ATEA7r/SFhjcVyFiC7PaDXSG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0wt0I0j7aZU4QAarex/bWcy2UXt4vgzfrhza72LFswEcF4WLIKRgQtX5nf3eRx1M
-	 9FLInTzplEKqvITiNXX6hdMoAEIfWkLmX2wjFYIb/ZC0xN7hEKhrtYHphprK3CEMif
-	 5AyhjcYw4kDqVRnVsTf2920Tmh6VJubCjnlCg4S5D9L/4rhENUruP4n2EUA1OVj76p
-	 zjzhAKdu/AThDrOyVnnEwpBtb7gNtDsYYYo1RSv+XyYOgReH6K+u7tcGO1hxxRssZF
-	 A9opYpi6fHNUvGQ40Asx/TF/26Z71dcjpu4nFauIgTKGDAg1ERU1uaEKSZh1929opS
-	 4ygRu+rmuWwog==
+	b=elcYA15ju5iF/a0yuLjnRvh0Di5jVXSMXFlELAVQMWwGo7z3IXlxfuA4aSKyIX5f2
+	 R4rGw8Gbowcu+MC/DvnqEVPFGqAZ+mcuRHe0wDwOJLnrcsklnrucPAJH9hdO16Gdpt
+	 KBs00LRgFkIFNopxpAm+LYPDYTSi0opEVIJAFfPH9J/pZhKyaXsp1wvr66dWUV0hQ0
+	 iAomikr98jOCUk5UeZ5RpkF6RvTt+2dqDM3CB0yUDqrmU3BldQhUl5UgckWSvRTIM/
+	 F8oLeYum8iX++LQ5DcjyWe0KtAJj0gK+H81KdH+dNt2OE3D0Cpq7ub2er9nc/RALUW
+	 lFQrmkp2ZOCaA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Siwei He <siwei.he@amd.com>,
-	Philip Yang <philip.yang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Aaron Kling <webgeek1234@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	Xinhui.Pan@amd.com,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	jejb@linux.ibm.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/amdgpu: OR init_pte_flags into invalid leaf PTE updates
-Date: Tue, 28 Apr 2026 06:41:05 -0400
-Message-ID: <20260428104133.2858589-54-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] scsi: ufs: core: Disable timestamp for Kioxia THGJFJT0E25BAIP
+Date: Tue, 28 Apr 2026 06:41:06 -0400
+Message-ID: <20260428104133.2858589-55-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -58,364 +54,352 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siwei He <siwei.he@amd.com>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 778bf584f2fb0a2b09594f568faf400bf6858091 ]
+[ Upstream commit e423f1c7195645e18945fba0bd8f0a32e39286e7 ]
 
-Invalid leaf clears that only set AMDGPU_PTE_EXECUTABLE match the old
-GMC9 fault-priority workaround but omit adev->gmc.init_pte_flags.
-On GFX12 that includes AMDGPU_PTE_IS_PTE; without it, some cleared
-PTEs can fault as no-retry and bypass the SVM/XNACK handler when a
-VA is reused after a BO unmap.
+Kioxia has another product that does not support the qTimestamp
+attribute.
 
-Apply init_pte_flags in amdgpu_vm_pte_update_flags() alongside
-EXECUTABLE so range-driven clears (e.g. amdgpu_vm_clear_freed) match
-amdgpu_vm_pt_clear() for leaf templates.
-
-Signed-off-by: Siwei He <siwei.he@amd.com>
-Reviewed-by: Philip Yang <philip.yang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9d47b2c36b9a6c6b844c33cab407a5d7ad102234)
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260403-thgjfjt0e25baip-no-timestamp-v1-1-1ddb34225133@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Based on my investigation, I'll now write up the complete analysis.
 
-## Phase 1: Commit Message Forensics
+## Analysis
 
-**Step 1.1 - Subject Line Parse**
-- Subsystem: `drm/amdgpu` (AMD GPU driver, virtual memory page table
-  code)
-- Action verb: "OR" (operator), implies a missing flag combination → bug
-  fix
-- Record: `drm/amdgpu` adds `init_pte_flags` to invalid leaf PTE updates
-  to match `amdgpu_vm_pt_clear()` behavior
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2 - Tags Inventory**
-- Signed-off-by: Siwei He (author)
-- Reviewed-by: Philip Yang (AMD/amdkfd maintainer)
-- Signed-off-by: Alex Deucher (DRM/amdgpu maintainer)
-- `(cherry picked from commit 9d47b2c36b9a6c6b844c33cab407a5d7ad102234)`
-  — already merged upstream
-- No Fixes:, no Cc: stable, no syzbot/Reported-by (expected per pipeline
-  rules)
-- Record: Reviewed and signed by relevant subsystem maintainers; cherry
-  pick from upstream
+**Step 1.1: Subject Line Parse**
+- Record: Subsystem = `scsi: ufs: core`; action verb = "Disable"; intent
+  = "Disable timestamp for Kioxia THGJFJT0E25BAIP" — adds a device quirk
+  entry to disable qTimestamp handling for a specific Kioxia UFS device
+  model.
 
-**Step 1.3 - Commit Body Analysis**
-- Bug description: leaf PTE clears that only set `AMDGPU_PTE_EXECUTABLE`
-  omit `adev->gmc.init_pte_flags`
-- Affected hardware: GFX12 (where `init_pte_flags` includes
-  `AMDGPU_PTE_IS_PTE`)
-- Symptom: cleared PTEs can fault as no-retry and bypass SVM/XNACK
-  handler when VA is reused after BO unmap
-- Root cause: code template inconsistency between `amdgpu_vm_pt_clear()`
-  (already updated) and `amdgpu_vm_pte_update_flags()` (range-driven
-  clear path used by e.g., `amdgpu_vm_clear_freed`)
-- Record: clearly states bug mechanism; affects real GFX12 hardware
-  running SVM/XNACK after BO unmap → VA reuse
+**Step 1.2: Commit Message Tags**
+- Record:
+  - Author: Aaron Kling <webgeek1234@gmail.com>
+  - Reviewed-by: Bart Van Assche <bvanassche@acm.org> (SCSI/UFS core
+    reviewer who authored the original quirk infrastructure)
+  - Link: https://patch.msgid.link/20260403-thgjfjt0e25baip-no-
+    timestamp-v1-1-1ddb34225133@gmail.com
+  - Signed-off-by: Martin K. Petersen (SCSI maintainer)
+  - No Fixes:, no Reported-by, no Cc: stable. (Absence of stable tag is
+    expected.)
 
-**Step 1.4 - Hidden Bug Fix Detection**
-- Although not titled "fix", the body explicitly describes a fault-
-  handler bypass on GFX12 — this IS a bug fix
-- Record: explicit bug fix (not hidden)
+**Step 1.3: Commit Body**
+- Record: Very short body — "Kioxia has another product that does not
+  support the qTimestamp attribute." The parent commit (fb1f4568346153)
+  introduced `UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT` to avoid log-error
+  spam when the device rejects the SET_TIMESTAMP query; this commit just
+  adds another affected device model.
 
-## Phase 2: Diff Analysis
+**Step 1.4: Hidden Bug Fix Detection**
+- Record: This IS effectively a bug fix — on the THGJFJT0E25BAIP, the
+  current kernel calls `ufshcd_set_timestamp_attr()` periodically and at
+  init. The device returns an error, which produces `dev_err()` log spam
+  ("failed to set timestamp %d" / "Failed to update rtc %d"). The quirk
+  bypasses the query entirely. Hidden-fix category: hardware workaround
+  / quirk.
 
-**Step 2.1 - Inventory**
-- Single file: `drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c`
-- Hunks: 1; lines: net +1 (statement extended), comment expanded
-- Function modified: `amdgpu_vm_pte_update_flags()`
-- Scope: surgical, single-line semantic change in one function
-- Record: tiny single-file fix, ~2 lines of logic change
+### PHASE 2: DIFF ANALYSIS
 
-**Step 2.2 - Code Flow Change**
-- Before: when handling an invalid leaf clear (`level==PTB && !VALID &&
-  !PRT`), `flags |= AMDGPU_PTE_EXECUTABLE`
-- After: `flags |= AMDGPU_PTE_EXECUTABLE | adev->gmc.init_pte_flags`
-- On GFX12.1, `init_pte_flags = AMDGPU_PTE_IS_PTE`; on GMC9 it's 0 (no
-  behavior change there)
-- Record: aligns the leaf-clear template with `amdgpu_vm_pt_clear()`
-  (line 416 already does the same)
+**Step 2.1: Inventory**
+- Record: 1 file modified (`drivers/ufs/core/ufshcd.c`), +3/-0 lines.
+  One function touched: the static `ufs_fixups[]` table (data-only
+  change). Scope: trivial, surgical.
 
-**Step 2.3 - Bug Mechanism**
-- Category: Logic/correctness fix → consistency between two clear paths
-- Mechanism: template mismatch on GFX12 page table clears caused PTEs to
-  be marked without `IS_PTE`, leading to no-retry faults that bypass the
-  SVM/XNACK fault handler
-- Record: same template now used in both leaf-clear sites; this is a
-  hardware-correctness fix
+**Step 2.2: Code Flow Change**
+- Record: Before — only `THGLF2G9C8KBADG`, `THGLF2G9D8KBADG`
+  (PA_TACTIVATE) and `THGJFJT1E45BATP` (NO_TIMESTAMP_SUPPORT) were
+  matched for Toshiba-ID devices. After — `THGJFJT0E25BAIP` is also
+  matched and gets `UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT` bit set via
+  `ufshcd_fixup_dev_quirks()` at device probe. At runtime
+  `ufshcd_set_timestamp_attr()` exits early (verified
+  `ufshcd.c:8966-8968`).
 
-**Step 2.4 - Fix Quality**
-- Obviously correct: mirrors existing pattern at line 416 of same file
-  (`amdgpu_vm_pt_clear`)
-- Minimal/surgical: a single OR with a per-ASIC field that defaults to 0
-- Regression risk: very low — on non-GFX12 hardware `init_pte_flags ==
-  0`, so behavior is unchanged
-- Record: high quality, low regression risk
+**Step 2.3: Bug Mechanism**
+- Record: Category (h) — Hardware workaround, device-ID/quirk-table
+  addition. No logic changes, no synchronization change, no refcount
+  change.
 
-## Phase 3: Git History Investigation
+**Step 2.4: Fix Quality**
+- Record: Obviously correct. Zero risk for any non-matching device
+  (quirk table is a prefix-match on manufacturer+model, so only the
+  Kioxia THGJFJT0E25BAIP is affected). Cannot regress any other device.
 
-**Step 3.1 - Blame**
-- The buggy line existed before, but the *omission* was created by
-  `db29ddf6505f3` ("drm/amdgpu: Add per-ASIC PTE init flag", Apr 24,
-  2025) which added `init_pte_flags` and applied it in
-  `amdgpu_vm_pt_clear()` only — not in `amdgpu_vm_pte_update_flags()`
-- Record: bug introduced by db29ddf6505f3
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.2 - Fixes Target**
-- No explicit `Fixes:` tag in this commit, but the underlying fault-
-  handler-bypass bug requires `init_pte_flags` to exist, which only
-  appeared in `db29ddf6505f3`
-- That commit lands in v7.0-rc1 (verified: `git tag --contains
-  db29ddf6505f3` shows v7.0-rc1+ only)
-- Record: bug only exists in v7.0+; older stable trees do not have
-  `init_pte_flags`
+**Step 3.1: Blame**
+- Record: The table surrounding the addition was introduced over time;
+  the specifically-referenced quirk
+  `UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT` was introduced by commit
+  `fb1f4568346153d2f80fdb4ffcfa0cf4fb257d3c` ("scsi: ufs: core: Disable
+  timestamp functionality if not supported", Bart Van Assche,
+  2025-09-09), which also added the first device entry
+  `THGJFJT1E45BATP`.
 
-**Step 3.3 - File History**
-- Last commit on `amdgpu_vm_pt.c`: `db29ddf6505f3` (the very commit that
-  introduced the inconsistency)
-- Record: this fix immediately follows the bug-introducing commit;
-  standalone, no prerequisite missing
+**Step 3.2: Fixes: Tag**
+- Record: No Fixes: tag. Not applicable. The conceptual "Fixes" target
+  is fb1f4568346153, already backported to stable (see Step 6.3).
 
-**Step 3.4 - Author**
-- Siwei He (AMD developer) — the upstream cherry-pick is reviewed by
-  Philip Yang and signed by Alex Deucher (amdgpu maintainer)
-- Record: properly vetted by amdgpu maintainership
+**Step 3.3: Related File Changes**
+- Record: Recent ufshcd.c traffic is mostly core refactors/fixes. Only
+  two prior NO_TIMESTAMP-related commits (fb1f4568346153 and
+  cb7cc0cfb38cf). This addition is standalone — no series, no
+  prerequisites beyond fb1f4568346153 which already exists in stable.
 
-**Step 3.5 - Dependencies**
-- Requires `adev->gmc.init_pte_flags` — present in v7.0+ via
-  `db29ddf6505f3`
-- No other dependency
-- Record: standalone fix in v7.0; not applicable to pre-v7.0 stable
-  trees
+**Step 3.4: Author**
+- Record: Aaron Kling is a known Tegra/ARM contributor (`git log
+  --author="Aaron Kling"` shows cpufreq, PCI tegra, irqdomain,
+  arm64/tegra DT work). He almost certainly hit this on a Tegra board
+  shipping with the Kioxia THGJFJT0E25BAIP. Reviewed-by comes from the
+  original quirk author (Bart Van Assche) — ideal reviewer.
 
-## Phase 4: Mailing List / External Research
+**Step 3.5: Dependencies**
+- Record: Depends on commit fb1f4568346153 (defines the quirk macro and
+  the dispatch in `ufshcd_set_timestamp_attr()`). Confirmed present in
+  stable — see Phase 6.
 
-- `b4 dig -c 9d47b2c36b9a6c6b844c33cab407a5d7ad102234` — SHA not present
-  in local repo (cherry-pick hash from a tree this repo doesn't have)
-- `b4 dig -c db29ddf6505f3` — no lore match found
-- `lore.kernel.org` direct fetch blocked by Anubis bot challenge / 403
-  from raw curl — could not retrieve discussion
-- Record: UNVERIFIED — could not retrieve the original lore discussion
-  thread; relying on the in-tree review trail (Reviewed-by Philip Yang,
-  Signed-off-by Alex Deucher)
+### PHASE 4: MAILING LIST RESEARCH
 
-## Phase 5: Code Semantic Analysis
+**Step 4.1: Original Submission**
+- Record: `b4 dig -c e423f1c719564` found the series at
+  https://lore.kernel.org/all/20260403-thgjfjt0e25baip-no-
+  timestamp-v1-1-1ddb34225133@gmail.com/ . Single version (v1), no
+  respins.
 
-**Step 5.1 - Functions in Diff**
-- `amdgpu_vm_pte_update_flags()`
+**Step 4.2: Reviewers**
+- Record: Patch went to Alim Akhtar, Avri Altman, Bart Van Assche, James
+  Bottomley, Martin K. Petersen, linux-scsi. Bart Van Assche explicitly
+  replied with `Reviewed-by:` (he is the author of the quirk
+  infrastructure, so he is the domain expert on this). No NAKs, no
+  concerns raised, no requests for changes. No explicit stable
+  nomination in thread.
 
-**Step 5.2 - Callers**
-- Called from `amdgpu_vm_update_ptes()` (line 909 in the same file)
-- That is called from `amdgpu_vm_update_range()` in `amdgpu_vm.c`
-- `amdgpu_vm_update_range()` is called from many sites:
-  `amdgpu_vm_clear_freed` (line 1573, with flags=0 → exact bug path),
-  `amdgpu_vm_bo_update`, `amdgpu_gem_va_ioctl`, etc.
-- Record: the buggy path is reached on EVERY BO unmap that places
-  mappings on `vm->freed`
+**Step 4.3: Bug Report**
+- Record: No Reported-by, no external bug report cited. User-facing
+  symptom is log-error spam on boot/resume/periodic RTC update — the
+  kind of thing an engineer notices when bringing up the board and files
+  a patch directly.
 
-**Step 5.3 - Callees**
-- Calls `update_funcs->update()` to write PTEs
-- Record: writes the actual page table entries — direct hardware effect
+**Step 4.4: Series Context**
+- Record: Single standalone patch. Not part of a larger series.
 
-**Step 5.4 - Reachability**
-- `amdgpu_vm_clear_freed` runs from normal GEM unmap/CS paths and from
-  KFD memory paths
-- Triggerable by any user/process unmapping a GPU buffer with a VA that
-  gets reused
-- Record: trivially reachable from userspace via standard amdgpu/KFD
-  ioctls
+**Step 4.5: Stable Discussion**
+- Record: No stable-list discussion specific to this commit. The
+  precedent is well-established from the prior patch.
 
-**Step 5.5 - Similar Patterns**
-- Only two leaf-clear template sites; the other one
-  (`amdgpu_vm_pt_clear` line 416) was already updated to use
-  `init_pte_flags`. This patch makes the second site consistent.
-- Record: closes the only remaining inconsistent site
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-## Phase 6: Cross-Referencing & Stable Tree Analysis
+**Step 5.1: Key Functions**
+- Record: No function added/modified — only a data entry in the static
+  `ufs_fixups[]` array.
 
-**Step 6.1 - Bug Presence in Stable Trees**
-- `init_pte_flags` field exists only in v7.0+ — verified by `git tag
-  --contains db29ddf6505f3` showing earliest tag `v7.0-rc1`
-- Pre-v7.0 stable trees (6.6.y, 6.1.y, 5.15.y, 5.10.y) do NOT have this
-  field, so this fix does not apply there and the specific bug being
-  addressed does not exist in that form there
-- Record: target stable tree for this fix is v7.0.y (matches workspace
-  path `linux-autosel-7.0`)
+**Step 5.2: Callers**
+- Record: `ufs_fixups[]` is consumed by `ufshcd_fixup_dev_quirks(hba,
+  ufs_fixups)` called from `ufs_fixup_device_setup()` at `ufshcd.c:8666`
+  during normal device probe. Quirk bit
+  (`UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT`) is consumed at
+  `ufshcd.c:8966-8968` inside `ufshcd_set_timestamp_attr()`, which is
+  called from `ufshcd_add_lus()` (init) and `ufshcd.c:10225` (resume
+  path).
 
-**Step 6.2 - Backport Difficulty**
-- `amdgpu_vm_pte_update_flags()` exists unchanged in v7.0.y; the diff
-  applies cleanly
-- Record: clean apply to 7.0.y
+**Step 5.3: Callees**
+- Record: N/A (data entry only).
 
-**Step 6.3 - Related Fixes Already In Stable**
-- The companion fix at `amdgpu_vm_pt_clear()` (line 416) is part of
-  `db29ddf6505f3` which is in v7.0
-- This commit is the second half of that fix
-- Record: 7.0.y already has half of the pattern; this patch completes it
+**Step 5.4: Reachability**
+- Record: Any boot or resume of a system with this Kioxia UFS storage
+  triggers the code path. Fully reachable, real users.
 
-## Phase 7: Subsystem Context
+**Step 5.5: Similar Patterns**
+- Record: Entire `ufs_fixups[]` table is this pattern. The adjacent
+  entry (THGJFJT1E45BATP) is the exact same fix for a sibling Kioxia
+  product.
 
-**Step 7.1 - Subsystem Criticality**
-- `drivers/gpu/drm/amd/amdgpu` — important driver subsystem (large user
-  base for AMD GPUs)
-- This specific code path: GFX12 (RDNA4 / RX 9000 series) SVM/XNACK —
-  real shipping consumer hardware
-- Record: IMPORTANT (driver-specific, affects current AMD hardware)
+### PHASE 6: STABLE TREE ANALYSIS
 
-**Step 7.2 - Activity**
-- amdgpu is a very active subsystem with frequent fixes
-- Record: highly active; fixes-quickly-integrated subsystem
+**Step 6.1: Code Exists in Stable?**
+- Record: `ufshcd_set_timestamp_attr()` exists in all modern stable
+  trees. The `UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT` macro exists in
+  6.6.y, 6.12.y, 6.18.y (verified by inspecting
+  `include/ufs/ufs_quirks.h` on each branch — macro is defined as `(1 <<
+  13)`). Not present in 6.17.y (EOL) or 6.1.y (infrastructure commit not
+  backported).
 
-## Phase 8: Impact and Risk Assessment
+**Step 6.2: Backport Complications**
+- Record: None. Trivial 3-line text addition to a stable table. Will
+  apply cleanly to 6.6.y, 6.12.y, 6.18.y. Cannot apply to 6.1.y because
+  the quirk macro and `ufshcd_set_timestamp_attr()` gating do not exist
+  there — the patch would be a no-op there anyway.
 
-**Step 8.1 - Affected Users**
-- GFX12.1 (RDNA4 / RX 9000 series) hardware users running compute
-  workloads with SVM/XNACK enabled (ROCm, HIP, OpenCL, etc.)
-- Record: driver-specific (GFX12 only with SVM); on other ASICs
-  `init_pte_flags == 0` so no behavior change
+**Step 6.3: Related Fixes in Stable**
+- Record: Parent commit `fb1f4568346153` was backported (by the autosel
+  pipeline) to:
+  - 6.18.y as `fb1f456834615`
+  - 6.12.y as `c6e1e2135d004`
+  - 6.6.y as `88ac95b17a038`
+  This establishes the precedent: the sibling "add Kioxia timestamp
+quirk" patch is already deemed stable-worthy.
 
-**Step 8.2 - Trigger**
-- Trigger: any unmap of a GPU buffer where the VA later gets reused
-- Reachable from unprivileged user code via standard amdgpu/KFD ioctls
-- Common in compute workloads that allocate/free buffers
-- Record: easily triggered from userspace; common in real workloads
+### PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 8.3 - Severity**
-- Failure mode: PTEs faulting as no-retry that bypass the SVM/XNACK
-  handler — the handler is what makes SVM-on-demand actually work, so
-  its bypass leads to incorrect fault behavior on GPU memory accesses
-- Severity: HIGH for affected users (broken SVM/XNACK semantics on new
-  HW); MEDIUM-CRITICAL depending on workload (silent incorrect access
-  vs. application failure)
-- Record: HIGH severity for GFX12 SVM users
+**Step 7.1: Subsystem / Criticality**
+- Record: drivers/ufs/core — UFS (Universal Flash Storage) subsystem —
+  the primary storage on most modern Android/Tegra/Snapdragon/MediaTek
+  devices. Criticality: IMPORTANT (affects a specific storage device,
+  not universal, but affects real deployed hardware).
 
-**Step 8.4 - Risk/Benefit**
-- Benefit: high — fixes broken SVM on current shipping AMD hardware
-- Risk: very low — single OR with a field that is 0 on every other ASIC;
-  mirrors a sibling site already in the tree
-- Record: clear net positive for backport
+**Step 7.2: Activity**
+- Record: Active subsystem with regular fixes landing.
 
-## Phase 9: Final Synthesis
+### PHASE 8: IMPACT AND RISK
 
-**Evidence FOR backport**
-- Real bug on real shipping GFX12 hardware (RX 9000 / RDNA4) with
-  SVM/XNACK
-- Trivial 2-line fix; mirrors existing pattern (`amdgpu_vm_pt_clear`) at
-  line 416 of the same file
-- Reviewed by Philip Yang (amdkfd) and signed by Alex Deucher (amdgpu
-  maintainer)
-- Buggy template inconsistency was introduced in v7.0-rc1 by
-  `db29ddf6505f3`; lands cleanly in v7.0.y
-- On non-GFX12 ASICs `init_pte_flags == 0` → guaranteed no behavior
-  change there
-- Reachable via standard userspace ioctls (BO unmap → VA reuse)
+**Step 8.1: Who Is Affected**
+- Record: Users of devices with Kioxia THGJFJT0E25BAIP UFS storage (a
+  specific hardware quirk — likely used in particular Tegra-based
+  boards, given Aaron Kling's affiliation).
 
-**Evidence AGAINST backport**
-- No `Fixes:` or `Cc: stable` tag (expected per pipeline rules; not a
-  negative signal)
-- Lore discussion could not be fetched for further verification
-  (UNVERIFIED)
-- Does NOT apply to pre-v7.0 stable trees (no `init_pte_flags` field
-  there); only relevant to 7.0.y
+**Step 8.2: Trigger Conditions**
+- Record: Every boot of an affected system triggers one "failed to set
+  timestamp" dev_err. The periodic RTC update work (`ufshcd_rtc_work()`)
+  also triggers "Failed to update rtc" repeatedly (every
+  `rtc_update_period` ms). Also triggers on resume. No userspace trigger
+  required.
 
-**Stable Rules Checklist**
-1. Obviously correct & tested: yes — mirrors a sibling site, very small
-   change, signed off by maintainers
-2. Fixes a real bug: yes — fault-handler bypass on GFX12 SVM/XNACK
-3. Important issue: yes — broken VA-reuse semantics on shipping hardware
-4. Small and contained: yes — single hunk, ~2 lines logic
-5. No new features/APIs: yes — pure consistency fix
-6. Applies to stable: yes for 7.0.y (clean), N/A for older
+**Step 8.3: Failure Mode Severity**
+- Record: LOW severity — the UFS device rejects the query gracefully,
+  nothing crashes, no data is lost. But dev_err output is continuous
+  (RTC update work loop). Severity: LOW (log noise), no functional
+  impact.
 
-**Decision**
-This is a small, surgical, maintainer-reviewed fix that closes a
-hardware-correctness gap on shipping AMD GPUs (GFX12 SVM/XNACK) by
-mirroring an already-applied pattern in the same file. The matching
-companion fix is already in 7.0, so this completes that work. Risk is
-essentially nil on non-GFX12 hardware (zero OR'd in).
+**Step 8.4: Risk-Benefit**
+- Record:
+  - Benefit: Silences dev_err spam on a specific Kioxia product; affects
+    only matching devices.
+  - Risk: Essentially zero. Literal 3-line data entry. Prefix matching
+    in `ufshcd_fixup_dev_quirks()` (`STR_PRFX_EQUAL`) only triggers on
+    Toshiba-manufactured devices whose model starts with
+    "THGJFJT0E25BAIP"; no other device is touched.
+  - Ratio: Favorable.
+
+### PHASE 9: SYNTHESIS
+
+**Step 9.1: Evidence**
+- FOR: Textbook hardware quirk / device-ID-table addition; explicitly
+  listed as an "IMPORTANT EXCEPTION" for stable; trivial 3-line change;
+  reviewed by the subsystem expert who authored the underlying quirk;
+  the precedent commit adding the same quirk for a different Kioxia
+  model was auto-backported to 6.6.y, 6.12.y, 6.18.y; infrastructure is
+  already present in those trees; zero regression risk to non-matching
+  hardware.
+- AGAINST: Low severity (log noise, not functional); no Reported-by from
+  multiple users.
+- UNRESOLVED: None relevant.
+
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested — YES (static data entry, reviewed by
+   core expert)
+2. Fixes a real bug affecting users — YES (produces repeated dev_err on
+   affected hardware)
+3. Important — borderline, but falls into explicitly-allowed
+   quirk/hardware-workaround category
+4. Small and contained — YES (3 lines, one file)
+5. No new features or APIs — YES
+6. Applies to stable — YES to 6.6.y/6.12.y/6.18.y; N/A to 6.1.y
+   (infrastructure missing)
+
+**Step 9.3: Exception Category**
+- Falls under the "HARDWARE QUIRK / DEVICE-ID ADDITION TO EXISTING
+  DRIVER" exception. This is exactly the pattern the stable rules call
+  out as acceptable.
+
+**Step 9.4: Decision**
+- This is a tiny hardware-quirk addition that matches a clear precedent
+  already in stable trees. Zero regression risk. Should be backported.
 
 ## Verification
 
-- [Phase 1] Parsed commit message tags and body: identified Reviewed-by
-  Philip Yang, Signed-off-by Alex Deucher; no syzbot, no Fixes
-  (expected)
-- [Phase 2] Read diff and surrounding code at `amdgpu_vm_pt.c:679-721`:
-  confirmed single hunk in `amdgpu_vm_pte_update_flags()`, change is
-  `flags |= AMDGPU_PTE_EXECUTABLE | adev->gmc.init_pte_flags`
-- [Phase 2] Read `amdgpu_vm_pt.c:361-418` to verify the sibling site
-  `amdgpu_vm_pt_clear()` already uses the same template at line 416
-  (`flags = AMDGPU_PTE_EXECUTABLE | adev->gmc.init_pte_flags`)
-- [Phase 3] `git log --oneline --grep="PTE init flag" master` → found
-  `db29ddf6505f3`
-- [Phase 3] `git show db29ddf6505f3` → confirmed it added
-  `init_pte_flags` field, set `init_pte_flags = AMDGPU_PTE_IS_PTE` for
-  GFX12.1, and updated only `amdgpu_vm_pt_clear()` (not
-  `amdgpu_vm_pte_update_flags()`)
-- [Phase 3] `git tag --contains db29ddf6505f3` → earliest tag `v7.0-rc1`
-  — confirms bug lives in v7.0+ only
-- [Phase 3] `git log --oneline --
-  drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c` → no other intermediate
-  fixes between `db29ddf6505f3` and HEAD
-- [Phase 4] `b4 dig -c 9d47b2c36b9a6c6b844c33cab407a5d7ad102234` → SHA
-  not in this repo (cherry-pick hash from elsewhere)
-- [Phase 4] `b4 dig -c db29ddf6505f3` → no lore match found
-- [Phase 4] WebFetch / curl to lore.kernel.org → blocked by Anubis bot
-  challenge / 403 — UNVERIFIED for original mailing list discussion
-  content
-- [Phase 5] `Grep AMDGPU_PTE_EXECUTABLE` and `Grep AMDGPU_PTE_IS_PTE`
-  and `Grep init_pte_flags` across `drivers/gpu/drm/amd` → confirmed
-  only two leaf-clear template sites; `init_pte_flags` is only set non-
-  zero for GFX12.1 (`gmc_v12_0.c:643`)
-- [Phase 5] Read `amdgpu_vm_pt.c:880-921` → verified caller chain:
-  `amdgpu_vm_update_ptes` → `amdgpu_vm_pte_update_flags`
-- [Phase 5] `Grep amdgpu_vm_clear_freed` and read
-  `amdgpu_vm.c:1548-1577` → confirmed `amdgpu_vm_clear_freed` calls
-  `amdgpu_vm_update_range` with flags=0, hitting the patched `else if`
-  branch
-- [Phase 6] `git tag --contains db29ddf6505f3` → confirms
-  `init_pte_flags` only in v7.0+; older stable trees lack the field, fix
-  is not applicable to them
-- [Phase 6] Read of HEAD source confirms `amdgpu_vm_pte_update_flags`
-  exists unchanged in v7.0.1 → diff applies cleanly
-- [Phase 8] Bug mechanism verified via commit body + code: leaf-clear
-  template inconsistency on GFX12 → no-retry faults bypass SVM/XNACK
-  handler on VA reuse
-- UNVERIFIED: original lore discussion (lore blocked by anti-bot)
-- UNVERIFIED: independent reproduction reports / bug-report links (none
-  in commit body)
+- [Phase 1] Read `git show e423f1c7195645e18945fba0bd8f0a32e39286e7` —
+  confirmed commit details, Reviewed-by: Bart Van Assche, Link tag,
+  Martin K. Petersen SOB.
+- [Phase 2] Read the diff and `ufs_fixups[]` in
+  `drivers/ufs/core/ufshcd.c` (lines 292-322) — confirmed pure data-
+  entry addition, 3 lines, 1 file.
+- [Phase 2] Read `ufshcd_fixup_dev_quirks()` at `ufshcd.c:8430-8448` —
+  confirmed strict manufacturer-ID + prefix model matching so only
+  THGJFJT0E25BAIP-prefix Toshiba devices are affected.
+- [Phase 2] Read `ufshcd_set_timestamp_attr()` at `ufshcd.c:8958-8988` —
+  confirmed gate on `UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT`.
+- [Phase 3] `git show fb1f4568346153` — confirmed this is the commit
+  introducing the quirk macro and the first Kioxia THGJFJT1E45BATP
+  entry.
+- [Phase 3] `git log --author="Aaron Kling" --oneline -10` — confirmed
+  author is a long-time Tegra contributor.
+- [Phase 4] `b4 dig -c e423f1c719564` — found lore thread
+  https://lore.kernel.org/all/20260403-thgjfjt0e25baip-no-
+  timestamp-v1-1-1ddb34225133@gmail.com/ .
+- [Phase 4] `b4 dig -c e423f1c719564 -a` — confirmed only a v1 exists,
+  no respins.
+- [Phase 4] `b4 dig -c e423f1c719564 -m /tmp/thread_timestamp.mbox` and
+  read mbox — confirmed Bart Van Assche gave Reviewed-by, Martin K.
+  Petersen applied it to 7.1/scsi-staging then 7.1/scsi-queue. No NAKs,
+  no stable discussion, no requested changes.
+- [Phase 5] `grep ufshcd_fixup_dev_quirks` — confirmed `ufs_fixups[]` is
+  consumed during normal device probe at `ufshcd.c:8666`.
+- [Phase 5] Re-read call sites of `ufshcd_set_timestamp_attr` —
+  confirmed called from init (`ufshcd_add_lus`) and resume
+  (`ufshcd.c:10225`).
+- [Phase 6] `git show stable-push/linux-6.18.y:include/ufs/ufs_quirks.h`
+  — confirmed `UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT (1<<13)` exists.
+- [Phase 6] Same for `stable-push/linux-6.12.y` and `stable-
+  push/linux-6.6.y` — both contain the macro.
+- [Phase 6] Same for `stable-push/linux-6.17.y` and `stable-
+  push/linux-6.1.y` — macro NOT present; either EOL or infrastructure
+  not backported.
+- [Phase 6] `git show stable-
+  push/linux-6.18.y:drivers/ufs/core/ufshcd.c` | grep THGJFJT —
+  confirmed existing `THGJFJT1E45BATP` entry in stable, so the new entry
+  will apply cleanly.
+- [Phase 6] `git log --grep="Disable timestamp functionality" stable-
+  push/linux-6.6.y` — found `88ac95b17a038` (backported by Sasha Levin
+  autosel pipeline, marked `[ Upstream commit fb1f45683461… ]`),
+  confirming the parent/infrastructure commit was deemed stable-worthy.
+- UNVERIFIED: Whether 6.17.y is still receiving updates (treated as EOL
+  based on no matching commit); this does not affect the decision since
+  6.18.y, 6.12.y, 6.6.y are the active targets.
 
-The fix is small, obviously correct, addresses a real hardware-
-correctness bug on current AMD GPUs, mirrors a sibling site already in
-v7.0, and is essentially a no-op on non-GFX12 ASICs. It is appropriate
-for the v7.0.y stable tree.
+This commit adds a hardware-specific device quirk entry — a textbook
+stable-tree exception. The fix is three lines, cannot affect other
+hardware, was reviewed by the subsystem expert who wrote the underlying
+quirk, and directly mirrors a sibling commit that is already in
+6.6.y/6.12.y/6.18.y.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-index 31a437ce95704..a930f1522f962 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-@@ -693,8 +693,11 @@ static void amdgpu_vm_pte_update_flags(struct amdgpu_vm_update_params *params,
- 		   !(flags & AMDGPU_PTE_VALID) &&
- 		   !(flags & AMDGPU_PTE_PRT_FLAG(params->adev))) {
- 
--		/* Workaround for fault priority problem on GMC9 */
--		flags |= AMDGPU_PTE_EXECUTABLE;
-+		/* Workaround for fault priority problem on GMC9 and GFX12,
-+		 * EXECUTABLE for GMC9 fault priority and init_pte_flags
-+		 * (e.g. AMDGPU_PTE_IS_PTE on GFX12)
-+		 */
-+		flags |= AMDGPU_PTE_EXECUTABLE | adev->gmc.init_pte_flags;
- 	}
- 
- 	/*
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 9ceb6d6d479d0..9b77639f04535 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -315,6 +315,9 @@ static const struct ufs_dev_quirk ufs_fixups[] = {
+ 	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
+ 	  .model = "THGLF2G9D8KBADG",
+ 	  .quirk = UFS_DEVICE_QUIRK_PA_TACTIVATE },
++	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
++	  .model = "THGJFJT0E25BAIP",
++	  .quirk = UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT },
+ 	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
+ 	  .model = "THGJFJT1E45BATP",
+ 	  .quirk = UFS_DEVICE_QUIRK_NO_TIMESTAMP_SUPPORT },
 -- 
 2.53.0
 
