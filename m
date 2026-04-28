@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920643F54AD;
-	Tue, 28 Apr 2026 10:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDFA3F54D2;
+	Tue, 28 Apr 2026 10:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372905; cv=none; b=fu4dDkYn65hDucp4SMfb6/yWEcKaR+lY66TfJmUPUcnTiiKICc0qhmjpcLVzZQUF5U05ICXRVZiMwePMuUsekpRj8ts7/FRn/206OEAIJUw0047v3KVX2H8GUtnTePzNAYdkiJzFCnbU2JSESamGLjdjVrxQA2UrWFUdgpoahe8=
+	t=1777372907; cv=none; b=nXkVo1xewnHRzPddOZGMu01sDudmxNI6V3AkbuYWIA8dtEUDZtUjOa9HL2wlHTCmqkow9zln/mkq/vpru/BEChHOqf/mmDGfhw3DeI37S33ZE/CCbMD0KMdx8/RYtee41F/i2oJYGbfaZynkcA/ah4EyaQNIc3IdewjdGJAQB8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372905; c=relaxed/simple;
-	bh=UJEiywJu4TgdPsL2ia5AJpskby7pS/0abowLF4EVvqE=;
+	s=arc-20240116; t=1777372907; c=relaxed/simple;
+	bh=AXRho5msvG4K0H7cOuH6JUNxG4lakdUdkAW5p2Ev8Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IZg9DjmmayVuCTHhTpMcPsZqYl8y+drorsFuYDVZFC+uwdFjYeLkNqz9S7OLa1/VjgStwiCJ4lp29gOm7hc/CZnlKjMgJ3mYDvsM5GPK1ZoTirxbVoQMSmCEE1x5+H5bHwtH2d0PGpmjiQ59Gn3L2gwVYeL9kRUDGa/xXsj4GGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hyQD/A/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pWRr7oQs0p2F/S1BWsDc3Q91eIoMVqSFC2euNMwl3qk/vELoDM4HJ5Ugv+9/kgPIaIc53xaMq4m14C70A0C73xVoUkRrUrHQz0vnvtzeV+977MyEmNjxqhvIz+v0zQNPc2j2gxX2ix0f5zZEkRS9pGDXpQO8zpgHAdFaFMq/t6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p+cfoIHt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hyQD/A/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63FCC2BCB8;
-	Tue, 28 Apr 2026 10:41:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p+cfoIHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B6CC2BCB8;
+	Tue, 28 Apr 2026 10:41:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372905;
-	bh=UJEiywJu4TgdPsL2ia5AJpskby7pS/0abowLF4EVvqE=;
+	s=k20201202; t=1777372906;
+	bh=AXRho5msvG4K0H7cOuH6JUNxG4lakdUdkAW5p2Ev8Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hyQD/A/cx7949Mq2eNfwbSEppxl1xIg+2O/nOB41X56POBaxxDq8SKxKXbHgx/k5h
-	 X2y7DHDpg167QKFm2U4hP4ZYK9P5IpLeD2MwbEVErQtKXl9ewLZuCImt+yqmz108ya
-	 h/COto9bJJ4zYvo85Lz6tYyME2Nvli3sXUGnKbOn/VCBPnbL7QmhVbypTlLbCby1zI
-	 C18zSouei24ZzpMv9PsY2B0XzYF9BCcbwaefX7iSo3dgHVeuRbCxt24vvGA05SzD1z
-	 m5Zd+XrvcQq2N1S938OcH3ErQUaFioB8Q9Ck2QzxmN1SnCe31L/sNeea8oepJ3a7Dq
-	 Rk3HN1i0VTsfg==
+	b=p+cfoIHtvecBMv7Kjvlf/0p8d2z5V822Dngvw/R8zjzBtnUAS8kKAvlH7RzuMaFQc
+	 leGkyls1jpabW7e1RarjtHXWF6sQbGVHe1SprhIPe61H0cT/vfEvxnuWDWMHRLxkuM
+	 zK782OvQM/8kt7VDbSxyQZAbkcpaZykDVYrQeqVQOiinxJ04HxswxjGQQGenDQ5hNY
+	 Eju0gXPb40gVS6iVLucDuL6J6IivCus/0FD9UGyEl9UVGZ2xhrvlQczP9oUJlshg/Z
+	 L58ODFpX5yP/JV0x2ao8A8jHwoI97lXnT7hxK2mM7G7FkWIxe8X/Magvd9UA7EAB6Z
+	 vpjtbHUDYbbvg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lukas Kraft <rebootrequired42@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	rtm@csail.mit.edu,
 	Sasha Levin <sashal@kernel.org>,
-	pavel@ucw.cz,
-	linux-leds@vger.kernel.org,
+	ntfs3@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] leds: lgm-sso: Fix typo in macro for src offset
-Date: Tue, 28 Apr 2026 06:40:19 -0400
-Message-ID: <20260428104133.2858589-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] fs/ntfs3: increase CLIENT_REC name field size
+Date: Tue, 28 Apr 2026 06:40:20 -0400
+Message-ID: <20260428104133.2858589-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -53,350 +52,402 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Kraft <rebootrequired42@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 0e2287999f0432b51a54c235db660789ca657f53 ]
+[ Upstream commit 81ad9e67eccc0b094a6eef55a19ee56c761416dc ]
 
-Replace unused argument pinc with used argument pin.
+This patch increases the size of the CLIENT_REC name field from 32 utf-16
+chars to 64 utf-16 chars. It fixes the buffer overflow problem in
+log_replay() reported by Robbert Morris.
 
-Signed-off-by: Lukas Kraft <rebootrequired42@gmail.com>
-Link: https://patch.msgid.link/20260312210958.48467-1-rebootrequired42@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Reported-by: <rtm@csail.mit.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to do a complete analysis. Let me write it
-up.
+Based on my investigation, let me compose the full analysis.
 
-## Commit Analysis
+---
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject line parse**
-Record: Subsystem: `leds/lgm-sso`; Action verb: "Fix"; Summary: Fix typo
-in macro parameter name (`pinc` -> `pin`).
+**Step 1.1 - Subject line parsing:**
+Record: Subsystem `fs/ntfs3`; action verb "increase" (which supports a
+fix per body text); summary: enlarges CLIENT_REC.name to fix a buffer
+overflow in log_replay().
 
-**Step 1.2: Tags**
+**Step 1.2 - Tags:**
 Record:
-- Signed-off-by: Lukas Kraft (author - first-time contributor based on
-  git log)
-- Link: https://patch.msgid.link/20260312210958.48467-1-
-  rebootrequired42@gmail.com
-- Signed-off-by: Lee Jones (subsystem maintainer, committer)
-- No `Fixes:` tag (expected - that's why it needs review)
-- No `Cc: stable@vger.kernel.org`
-- No `Reported-by:`, `Tested-by:`, or `Reviewed-by:`
+- `Reported-by: <rtm@csail.mit.edu>` — Robert (Robbert) Morris, MIT
+  CSAIL; a researcher who regularly reports filesystem memory-safety
+  bugs (he has multiple previous ntfs3 reports landed: `1b7dd28e14c47`
+  and `652cfeb43d6b9`, both credited to him).
+- `Signed-off-by: Konstantin Komarov <...paragon-software.com>` — author
+  is the ntfs3 subsystem maintainer.
+- No Fixes:, no Cc: stable (expected — that's why we review).
 
-**Step 1.3: Commit body**
-Record: Minimal message: "Replace unused argument pinc with used
-argument pin." No explanation of user-visible impact, no reproduction
-steps, no stack traces. Author appears to have noticed this through code
-inspection.
+**Step 1.3 - Body analysis:**
+Record: Bug description is explicit — "fixes the buffer overflow problem
+in log_replay()". Failure mode: memory corruption when mounting a
+malicious NTFS image (confirmed by KASAN). The on-disk Windows
+`$LogFile` CLIENT_REC truly has `name[64]` (not 32); Linux's undersized
+struct causes the size check in `is_rst_area_valid()` to under-reject a
+crafted restart area.
 
-**Step 1.4: Hidden bug fix detection**
-Record: The subject explicitly says "Fix typo". The body describes it as
-replacing "unused argument pinc with used argument pin" - this IS a real
-bug fix (not hidden), but the commit undersells the impact. The typo
-means the macro body references `pin` from the caller's scope instead of
-the macro argument, producing incorrect register bit positions.
+**Step 1.4 - Hidden fix detection:**
+Record: Not hidden — commit message openly says "buffer overflow". No
+disguise.
 
-### PHASE 2: DIFF ANALYSIS
+---
 
-**Step 2.1: Inventory**
-Record: 1 file (`drivers/leds/blink/leds-lgm-sso.c`), 1 line changed (1
-deletion, 1 addition). Surgical, minimal scope.
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.2: Code flow change**
+**Step 2.1 - Inventory:**
+Record: 1 file (`fs/ntfs3/fslog.c`), +2/-2 lines. Only `struct
+CLIENT_REC` and the `static_assert` on its size change. Scope: single-
+file surgical fix.
+
+**Step 2.2 - Code-flow change:**
 Record:
-- Before: `#define GET_SRC_OFFSET(pinc)    (((pin) * 6) + 4)` —
-  parameter `pinc` is unused; `pin` in body is resolved from the
-  enclosing scope at macro expansion time.
-- After: `#define GET_SRC_OFFSET(pin)    (((pin) * 6) + 4)` — parameter
-  `pin` now matches the identifier in the body, so the macro argument is
-  used.
+- Before: `__le16 name[32]` → `sizeof(CLIENT_REC) == 0x60`.
+- After: `__le16 name[64]` → `sizeof(CLIENT_REC) == 0xa0`.
 
-**Step 2.3: Bug mechanism**
-Record: Category (g) "Logic / correctness fix." The macro has a single
-call site at line 226: `low = GET_SRC_OFFSET(off);` inside
-`sso_led_freq_set(struct sso_led_priv *priv, u32 pin, int freq_idx)`.
-The function has a local parameter named `pin`. With the buggy macro,
-`(((pin) * 6) + 4)` captures the function's `pin` parameter instead of
-the macro argument `off`. This produces completely different values:
-- Buggy: for pin=25, computes 25*6+4 = 154
-- Fixed: for off=1 (pin 25 in group 1), computes 1*6+4 = 10
+The struct is used (1) as the on-disk client record stride in
+`$LogFile`, and (2) in the validator `is_rst_area_valid()` at
+`fs/ntfs3/fslog.c:487`:
 
-The `low`/`high` values feed into `GENMASK(high, low)` and `freq_src <<
-high` at lines 228-229, used by `regmap_update_bits()` to set clock-
-source bits in the LED_BLINK_H8_0/1 register. With `low > 32` the
-shift/GENMASK produce undefined/wrong values, so the clock source for
-hardware LED blinking is written to wrong register bits (or not written
-at all).
+```464:529:fs/ntfs3/fslog.c
+        off = le16_to_cpu(ra->client_off);
+        if (!IS_ALIGNED(off, 8) || ro + off > SECTOR_SIZE -
+sizeof(short))
+                return false;
 
-**Step 2.4: Fix quality**
-Record: Trivial correctness fix. Zero regression risk - the old macro
-parameter `pinc` was unused, so no caller relied on its name. The
-callsite passes `off`, and the fix makes the macro correctly use that
-argument.
+        off += cl * sizeof(struct CLIENT_REC);
 
-### PHASE 3: GIT HISTORY INVESTIGATION
+        if (off > sys_page)
+                return false;
+        ...
+        if (le16_to_cpu(rhdr->ra_off) + le16_to_cpu(ra->ra_len) >
+sys_page ||
+            off > le16_to_cpu(ra->ra_len)) {
+                return false;
+        }
+```
 
-**Step 3.1: Blame**
-Record: The buggy line was introduced in commit `c3987cd2bca34` ("leds:
-lgm: Add LED controller driver for LGM SoC") by Amireddy Mallikarjuna
-reddy, dated 2020-12-10, first appearing in **v5.12-rc1**. Bug has been
-present for ~5 years in all stable trees.
+With the new size, malformed RAs that pack `client_off + cl*0x60 <=
+ra_len` but would still overflow the target buffer are now rejected
+(`off = client_off + cl*0xa0 > ra_len`).
 
-**Step 3.2: Follow Fixes: tag**
-Record: No `Fixes:` tag in commit, but blame identifies introducing
-commit as `c3987cd2bca34ddfec69027acedb2fae5ffcf7a0` - present in v5.12
-and every subsequent release including all active LTS trees.
+**Step 2.3 - Bug mechanism:**
+Record: Memory-safety fix (h: struct size / validation, with (d)
+downstream memory safety). Root cause: incorrect on-disk layout
+definition caused `is_rst_area_valid()` to under-validate, letting a
+crafted log file reach the overflowing `memcpy` in `log_replay()`:
 
-**Step 3.3: File history**
-Record: Recent changes are unrelated refactors (GPIO callback renames,
-error-code propagation, clock-handling fixes). The macro has been
-untouched since the initial driver commit.
+```4033:4048:fs/ntfs3/fslog.c
+        t16 = le16_to_cpu(ra2->client_off);
+        if (t16 == offsetof(struct RESTART_AREA, clients)) {
+                memcpy(ra, ra2, log->ra_size);
+        } else {
+                memcpy(ra, ra2, offsetof(struct RESTART_AREA, clients));
+                memcpy(ra->clients, Add2Ptr(ra2, t16),
+                       le16_to_cpu(ra2->ra_len) - t16);
+```
 
-**Step 3.4: Author context**
-Record: Lukas Kraft is apparently a first-time contributor (no other
-commits under this email in the repo). The committer/maintainer Lee
-Jones applied it directly via b4 tooling (see the "Applied, thanks!"
-reply in the mbox).
+Concretely (from the reporter's reproducer): attacker sets `ra_len=112,
+client_off=16, log_clients=1`. Old size: `16 + 1*0x60 = 112` not `>
+112`, check passes. Then the memcpy writes 64 + 96 = 160 bytes into a
+112-byte `ra`, smashing 48 bytes past it. New size: `16 + 1*0xa0 = 176 >
+112`, so `is_rst_area_valid()` rejects the RA; `ra2` becomes NULL
+(`fslog.c:3885–3888`) and `log_replay()` returns `-EINVAL` at line
+3919-3921 before the unsafe memcpy runs.
 
-**Step 3.5: Dependencies**
-Record: No dependencies. Standalone, single-line change.
+**Step 2.4 - Fix quality:**
+Record: Very small, obviously correct structural change. Risk from the
+fix itself is low: `is_rst_area_valid()` becomes *stricter*; the only
+regression surface is rejecting a restart area formerly written by buggy
+Linux ntfs3 (which had `ra_len = 0x40 + 0x60 = 0xa0`). But that path is
+only hit when a log is *dirty* (`client_idx[1] != LFS_NO_CLIENT_LE`);
+cleanly unmounted volumes skip the memcpy path entirely
+(`fslog.c:3890-3916`). Windows-written logs already use 0xa0 records, so
+the new size matches the genuine on-disk format. This is a net positive.
 
-### PHASE 4: MAILING LIST RESEARCH
+---
 
-**Step 4.1: Original submission**
-Record: `b4 dig -c 0e2287999f04` resolved to https://lore.kernel.org/all
-/20260312210958.48467-1-rebootrequired42@gmail.com/. Single revision
-(v1). The maintainer (Lee Jones) replied with "Applied, thanks!"
-directly via `b4-ty`. No review comments or feedback.
+## PHASE 3: GIT HISTORY
 
-**Step 4.2: Reviewers**
-Record: Thread shows submission to `lee@kernel.org` (Lee Jones, LED
-maintainer) and `pavel@kernel.org` (Pavel Machek, LED maintainer), CC to
-linux-leds and linux-kernel. Applied by Lee Jones.
+**Step 3.1 - Blame:**
+Record: The `name[32]` / `static_assert(... == 0x60)` lines were
+introduced by `b46acd6a6a627 ("fs/ntfs3: Add NTFS journal")` authored
+2021-08-13 by Konstantin Komarov. `git describe --contains` reports
+`v5.15-rc1~94^2~29`, i.e. present since v5.15 (the very commit that
+introduced ntfs3). Thus the bug affects every stable tree that ships
+ntfs3.
 
-**Step 4.3: Bug report**
-Record: No `Reported-by:` or bug report linked. Author discovered via
-code inspection.
+**Step 3.2 - Fixes: tag:**
+Record: No explicit Fixes: tag, but by content the bug traces to
+`b46acd6a6a627` (v5.15).
 
-**Step 4.4: Related patches**
-Record: Standalone patch, not part of a series.
+**Step 3.3 - File history:**
+Record: Other related security-hardening fixes in `fslog.c` from the
+same reporter (`rtm@csail.mit.edu`): `1b7dd28e14c47 ("fs/ntfs3: Correct
+function is_rst_area_valid")` and the journal-replay series. This commit
+is standalone; not part of a dependent series (confirmed by `b4 dig -a`:
+only v1, 1 patch).
 
-**Step 4.5: Stable mailing list**
-Record: No prior stable discussion found.
+**Step 3.4 - Author:**
+Record: Konstantin Komarov is the ntfs3 maintainer; routinely lands
+fixes for rtm's reports. Strong authority signal.
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 3.5 - Dependencies:**
+Record: None. Diff only changes a struct and a static_assert. No new
+functions referenced.
 
-**Step 5.1: Key functions**
-Record: `GET_SRC_OFFSET` macro; used only in `sso_led_freq_set()`.
+---
 
-**Step 5.2: Callers of affected code**
-Record: `sso_led_freq_set()` is called from:
-- `sso_led_blink_set()` (line 315) - the LED class `.blink_set`
-  callback, invoked from userspace via
-  `/sys/class/leds/*/delay_on|delay_off`
-- `sso_led_hw_cfg()` (line 331) - called from `sso_create_led()` during
-  probe, only if `desc->hw_blink` is set (DT property `intel,sso-hw-
-  blink`)
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 5.3: Callees**
-Record: The function calls `regmap_update_bits()` to set bits in the
-LED_BLINK_H8_0/LED_BLINK_H8_1 hardware registers.
-
-**Step 5.4: Call chain reachability**
-Record: Reachable from userspace via sysfs if `intel,sso-hw-blink` DT
-property is set. Also executed at probe time for every LED configured
-with hw_blink. Triggers on pins 24-31 only (group 0 returns early at
-line 205).
-
-**Step 5.5: Similar patterns**
-Record: The adjacent macro `GET_FREQ_OFFSET(pin, src)` is correct,
-making the typo in `GET_SRC_OFFSET` clearly a one-off error. I confirmed
-the bug with a small C test program: `GET_SRC_OFFSET(off=1)` returns 154
-(buggy, using pin=25) vs. 10 (fixed). The fixed value is coherent with
-`GET_FREQ_OFFSET`'s result of 8 - they sit next to each other in the
-register bitmap.
-
-### PHASE 6: CROSS-REFERENCING STABLE TREES
-
-**Step 6.1: Does buggy code exist in stable?**
-Record: Verified bug present in v5.15, v6.1, v6.6, v6.12 (all active LTS
-trees) - the macro has identical buggy form. The file path
-`drivers/leds/blink/leds-lgm-sso.c` has been stable since introduction.
-
-**Step 6.2: Backport complications**
-Record: File structure in the area of the patch is unchanged across
-stable trees. The fix should apply cleanly to all active LTS trees
-(5.15.y through 6.12.y) and current 6.17+/6.18+ trees.
-
-**Step 6.3: Related fixes in stable**
-Record: No related fix is already in stable for this issue.
-
-### PHASE 7: SUBSYSTEM CONTEXT
-
-**Step 7.1: Subsystem criticality**
-Record: `drivers/leds/blink/` - LED blink drivers. PERIPHERAL
-criticality. Affects only systems using Intel Lightning Mountain (LGM)
-SoC, a networking SoC used primarily in home routers and gateway
-devices.
-
-**Step 7.2: Subsystem activity**
-Record: Low-to-moderate activity. Recent changes are treewide refactors
-affecting this driver as a bystander (GPIO callback renames, platform
-driver API changes).
-
-### PHASE 8: IMPACT AND RISK
-
-**Step 8.1: Affected population**
-Record: DRIVER-SPECIFIC. Only systems with CONFIG_LEDS_LGM=y (or =m) AND
-Intel LGM SoC AND `intel,sso-hw-blink` set for LEDs on pins 24-31. A
-narrow but real user population (Intel LGM-based routers/gateways).
-
-**Step 8.2: Trigger conditions**
-Record: Triggered at LED probe (hw_cfg path) if hw_blink is enabled in
-DT, or at runtime when userspace writes to
-`/sys/class/leds/*/delay_on|delay_off` for an LED with hw_blink. No
-privilege required for the sysfs path. Not a race - deterministic
-behavior.
-
-**Step 8.3: Failure mode severity**
-Record: MEDIUM (low). Incorrect register bits are programmed for clock-
-source selection of hardware LED blink, meaning LEDs may blink at the
-wrong rate, wrong clock source, or fail to blink via the hardware path.
-No crash, no data corruption, no security issue. Purely
-functional/hardware-correctness issue.
-
-**Step 8.4: Risk-benefit**
+**Step 4.1 - b4 dig:**
 Record:
-- BENEFIT: Low-to-medium. Fixes real hardware register miscalculation on
-  LGM systems. Narrow user base but real correctness fix.
-- RISK: Very low. 1-line macro parameter rename; the old parameter was
-  unused; call site is single and clearly correct with the fix.
-- Ratio: Benefit >> risk, but benefit is not high in absolute terms.
+- `b4 dig -c 81ad9e67eccc0` found: https://lore.kernel.org/all/202603191
+  35855.15200-1-almaz.alexandrovich@paragon-software.com/
+- `b4 dig -c ... -a`: single revision (v1), applied as-is.
+- Thread content (via mbox): plain PATCH, no review comments, went
+  straight into the maintainer tree.
 
-### PHASE 9: SYNTHESIS
+**Step 4.2 - Recipients:**
+Record (b4 dig -w): `ntfs3@lists.linux.dev`, `linux-
+kernel@vger.kernel.org`, `linux-fsdevel@vger.kernel.org`,
+`rtm@csail.mit.edu`. Right lists, right reporter.
 
-**Step 9.1: Evidence**
-- FOR: Clear, obvious bug fix; fixes a real register-computation error;
-  trivial 1-line change; zero regression risk; applies cleanly to all
-  stable trees; confirmed with a reproduction test; bug has existed
-  since v5.12 in all LTS trees.
-- AGAINST: No user reports; no Cc: stable; no Fixes: tag; narrow
-  hardware (Intel LGM SoC); severity is "functional correctness" not
-  crash/security/corruption; commit message undersells/doesn't explain
-  the real user impact; single-line commit with no Reviewed-by.
-- UNRESOLVED: None material.
+**Step 4.3 - Bug report:**
+Record: Found original report at
+`https://lore.kernel.org/ntfs3/42774.1769379272@localhost/`
+(2026-01-25). It is a detailed reproducer with:
+- A downloadable crafted image
+  (`http://www.rtmrtm.org/rtm/ntfs30a.img.gz`)
+- A KASAN SLUB trace: "Right Redzone overwritten ... BUG kmalloc-128
+  (Not tainted): Object corrupt"
+- Exact pointer math matching `log_replay()`'s memcpy path.
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct? YES - trivial typo fix, verified by reproduction
-2. Fixes real bug? YES - macro silently uses wrong value
-3. Important issue (crash/security/corruption/deadlock)? NO - only
-   incorrect LED hardware blink programming
-4. Small and contained? YES - 1 line
-5. No new features/APIs? YES
-6. Applies cleanly? YES
+Konstantin replied (Feb 9 2026) confirming he'd reproduce and fix. Patch
+appeared ~6 weeks later.
 
-**Step 9.3: Exception categories**
-Record: Could qualify as a "build/correctness fix" for a specific
-driver, similar to a hardware quirk fix. Not a pure exception category,
-but a trivially correct bug fix.
+**Step 4.4 - Series context:**
+Record: Single-patch fix, not part of a larger series.
 
-**Step 9.4: Decision**
-This is a genuine, trivially-correct bug fix for incorrect register-bit
-computation affecting hardware LED blink on Intel LGM SoCs. The fix is 1
-line with zero regression risk, applies cleanly to all stable trees, and
-has been in a buggy state since v5.12. The user-visible impact is narrow
-(LGM-based networking hardware with hw_blink) and the failure mode is
-non-critical (wrong LED blink behavior, not
-crashes/corruption/security). It doesn't meet the "important issue"
-threshold strictly, but it is exactly the category of "small, obvious
-bug fixes" that stable rules welcome.
+**Step 4.5 - Stable-specific discussion:**
+Record: Not found. Also on Apr 20 2026, Konstantin's `[GIT PULL] ntfs3:
+bugfixes for 7.1` explicitly lists this commit under **"Fixed: ...
+increase CLIENT_REC name field size to prevent buffer overflow"** — the
+maintainer classifies it as a bug fix.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1 - Key functions:** `struct CLIENT_REC` size (used by
+`is_rst_area_valid`, `log_replay`, `log_create_ra`, array indexing
+everywhere the stride appears).
+
+**Step 5.2 - Callers / reachability:**
+Record: `log_replay()` is invoked during `ntfs_fill_super()` mount path
+(`fs/ntfs3/super.c`). Triggered on every `mount -t ntfs3` with a dirty
+log. Trigger condition: need CAP_SYS_ADMIN (or equivalent) to mount, but
+this is a common vector (auto-mount of USB drives, containers with mount
+caps, etc.).
+
+**Step 5.3 - Callees:** `is_rst_area_valid()` is called from
+`log_read_rst()` before any RA data is trusted; with the new sizeof it
+now rejects the pathological `client_off + cl*sizeof` combinations.
+
+**Step 5.4 - Call chain:** `mount` → `ntfs_fill_super` → `log_replay` →
+`log_read_rst` → `is_rst_area_valid` / memcpy path. Entirely reachable
+from user-triggerable mount.
+
+**Step 5.5 - Similar patterns:** Several sibling checks
+(`is_client_area_valid`, `check_client_area`) also iterate with
+`sizeof(CLIENT_REC)` stride; the fix corrects all of them simultaneously
+because they all reference the same type.
+
+---
+
+## PHASE 6: STABLE TREES
+
+**Step 6.1 - Code presence:**
+Record: `git grep "name\[32\]" stable/linux-{5.15,6.1,6.6,6.12,6.19}.y
+-- fs/ntfs3/fslog.c` confirms the buggy `__le16 name[32]` and
+`static_assert(... == 0x60)` are present in every active stable tree.
+ntfs3 was added in v5.15.
+
+**Step 6.2 - Backport complications:**
+Record: The 2-line struct edit applies cleanly to every stable branch. I
+verified the surrounding struct definition is byte-identical across
+5.15.y, 6.1.y, 6.6.y, 6.12.y, 6.19.y.
+
+**Step 6.3 - Existing stable fix?**
+Record: No prior fix for this bug exists in any stable branch (no
+`CLIENT_REC` commits on any of the stable branches checked).
+
+---
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1 - Subsystem/criticality:**
+Record: `fs/ntfs3` — IMPORTANT. Default NTFS driver since v5.15, used by
+countless distros to mount Windows-format media (USB drives, external
+disks, dual-boot partitions).
+
+**Step 7.2 - Activity:**
+Record: Active — many fixes land per cycle, and this commit is in the
+7.1 pull request alongside ~16 other ntfs3 fixes.
+
+---
+
+## PHASE 8: IMPACT AND RISK
+
+**Step 8.1 - Who is affected:**
+Record: Anyone mounting an untrusted NTFS image on a kernel with ntfs3
+compiled in. This includes desktop Linux, NAS devices, embedded systems,
+containers with mount privileges, and auto-mount frameworks that honor
+USB insertion.
+
+**Step 8.2 - Trigger conditions:**
+Record: A single `mount -t ntfs3` of a crafted image is sufficient.
+Reporter supplied a working reproducer. Requires root/mount cap but this
+is a standard attack surface for local privilege escalation via
+malicious removable media.
+
+**Step 8.3 - Failure mode:**
+Record: CRITICAL — heap out-of-bounds write (48 bytes past a kmalloc-128
+slab object, as KASAN demonstrates). Consequences range from kernel
+panic to targeted memory corruption / potential privilege escalation
+depending on what sits next to that slab.
+
+**Step 8.4 - Risk/benefit:**
+Record:
+- Benefit: very high — closes a reachable heap buffer overflow with a
+  public reproducer in the default Linux NTFS driver.
+- Risk: very low — two-line struct-size change; only potential side
+  effect is stricter validation that can reject RA headers previously
+  written by the same buggy Linux driver on dirty logs, which is far
+  better than memory corruption.
+
+---
+
+## PHASE 9: SYNTHESIS
+
+**Step 9.1 - Evidence:**
+FOR:
+- KASAN-confirmed heap buffer overflow with a publicly reproducible
+  image.
+- Reported by an external security researcher; acknowledged and fixed by
+  the subsystem maintainer.
+- Bug exists in every active stable tree (5.15.y and later).
+- Maintainer's pull request explicitly labels this as "prevent buffer
+  overflow."
+- 2-line structural change, no dependencies.
+
+AGAINST: None of substance.
+
+UNRESOLVED: Whether kernels written with old Linux ntfs3 will fail to
+replay a *dirty* log after upgrading. This edge case is (a) narrow
+(dirty logs only) and (b) acceptable given the severity of the bug.
+
+**Step 9.2 - Stable rules checklist:**
+1. Obviously correct and tested: yes — trivial struct size change,
+   upstream-tested, matches Windows on-disk layout.
+2. Real bug: yes — KASAN trace, public reproducer.
+3. Important: yes — heap OOB via mount.
+4. Small/contained: yes — +2/-2 in one file.
+5. No new features: yes — corrects existing layout.
+6. Applies to stable: yes — clean apply confirmed for 5.15.y through
+   6.19.y.
+
+**Step 9.3 - Exception category:** Not needed; this meets core stable-
+kernel-rules on its own merits (security / memory-corruption fix).
+
+**Step 9.4 - Decision:** YES.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed subject/tags: single `Signed-off-by: Lukas Kraft` +
-  committer Lee Jones; no Reported-by/Tested-by/Fixes/Cc: stable.
-  Confirmed by reading the commit header.
-- [Phase 2] Diff analysis: confirmed single 1-line change to macro
-  parameter name in `drivers/leds/blink/leds-lgm-sso.c` line 28.
-- [Phase 2] Semantic analysis: compiled a small C test
-  `/tmp/test_macro.c` demonstrating that the buggy macro produces 154
-  (using the captured `pin=25`) while the fixed macro produces 10 (using
-  argument `off=1`).
-- [Phase 3] git blame -L 28,28: buggy macro introduced by
-  `c3987cd2bca34` ("leds: lgm: Add LED controller driver for LGM SoC"),
-  2020-12-10, first release v5.12-rc1.
-- [Phase 3] git describe --contains c3987cd2bca34 → `v5.12-rc1~17^2~9` -
-  confirmed v5.12 is the origin.
-- [Phase 3] git log --author="rebootrequired42@gmail.com": no prior
-  commits by this author - first-time contributor.
-- [Phase 3] git log on file: no dependencies; standalone patch.
-- [Phase 4] b4 dig -c 0e2287999f04: found original submission at https:/
-  /lore.kernel.org/all/20260312210958.48467-1-
-  rebootrequired42@gmail.com/
-- [Phase 4] b4 dig -a: v1 only, no evolution.
-- [Phase 4] Read /tmp/leds-lgm/thread.mbox: confirmed Lee Jones (LED
-  subsystem maintainer) applied it directly via b4-ty without additional
-  review comments; no reviewer objections or stable suggestions.
-- [Phase 5] grep GET_SRC_OFFSET in the file: single caller at line 226
-  inside `sso_led_freq_set`, which has `u32 pin` as function parameter
-  (confirming the macro body references this parameter in the buggy
-  form).
-- [Phase 5] Traced call chain: `sso_led_freq_set` → called from
-  `sso_led_blink_set` (sysfs blink_set callback) and `sso_led_hw_cfg`
-  (probe-time setup when hw_blink is set).
-- [Phase 6] git show v5.15:drivers/leds/blink/leds-lgm-sso.c | grep
-  GET_SRC_OFFSET: confirmed bug present in v5.15 with identical form.
-- [Phase 6] Same verification for v6.1, v6.6, v6.12 - all have the
-  identical buggy macro and file location.
-- [Phase 8] Failure mode: `GENMASK(h, l)` with l > BITS_PER_LONG is
-  undefined; `val << high` with high > 31 on u32 is also undefined per C
-  standard. Verified the computed low/high values are out of 32-bit
-  register range for all LGM-valid pins (24-31) via my test program.
-- UNVERIFIED: I did not build and boot on LGM hardware to confirm the
-  LED blink misbehavior in practice; my assessment relies on code
-  analysis of the register interactions.
+- [Phase 1] Parsed tags from commit message: found `Reported-by:
+  rtm@csail.mit.edu`, `Signed-off-by: Konstantin Komarov`. Commit
+  message explicitly mentions "buffer overflow in log_replay()".
+- [Phase 2] Diff: +2/-2, changes only `CLIENT_REC.name[32]→[64]` and
+  `static_assert(==0x60)→(==0xa0)` in `fs/ntfs3/fslog.c`.
+- [Phase 2] Read `fs/ntfs3/fslog.c` lines 464-529 and 4026-4048 to trace
+  how the struct size feeds `is_rst_area_valid()` and the subsequent
+  memcpy; verified that the attacker-controlled `client_off` + `ra_len`
+  combination from the bug report passes the old check and fails the new
+  one.
+- [Phase 3] `git describe --contains b46acd6a6a627` returned
+  `v5.15-rc1~94^2~29`, confirming the bug has been present since ntfs3
+  was introduced in v5.15.
+- [Phase 3] `git log --grep="rtm@csail" -- fs/ntfs3` showed prior fixes
+  by the same maintainer for reports from this reporter
+  (`1b7dd28e14c47`, `652cfeb43d6b9`).
+- [Phase 4] `b4 dig -c 81ad9e67eccc0` resolved to https://lore.kernel.or
+  g/all/20260319135855.15200-1-almaz.alexandrovich@paragon-
+  software.com/.
+- [Phase 4] `b4 dig -c 81ad9e67eccc0 -a` shows only v1; patch applied
+  as-submitted.
+- [Phase 4] `b4 dig -c 81ad9e67eccc0 -w` showed correct recipients:
+  ntfs3@lists.linux.dev, linux-fsdevel, linux-kernel, rtm.
+- [Phase 4] Fetched and read original bug report at
+  `lore.kernel.org/ntfs3/42774.1769379272@localhost/raw`: KASAN "Right
+  Redzone overwritten" report, reproducer image URL, exact line-number
+  match with the memcpy overflow.
+- [Phase 4] Fetched maintainer reply at
+  `lore.kernel.org/ntfs3/f9e6330b-.../raw` confirming acknowledgment
+  (Feb 9, 2026).
+- [Phase 4] Fetched 7.1 pull request (`20260420150756.6058-1-...`):
+  commit listed under "Fixed: ... to prevent buffer overflow".
+- [Phase 6] `git grep` on each active stable branch (5.15.y, 6.1.y,
+  6.6.y, 6.12.y, 6.19.y) confirmed all still have `name[32]` and `sizeof
+  == 0x60`.
+- [Phase 6] `git log --grep="CLIENT_REC" -- fs/ntfs3/fslog.c` on each
+  stable branch returned empty — no prior fix in stable.
+- [Phase 7] Confirmed `fs/ntfs3` is the default NTFS driver since v5.15
+  (same commit that introduced the bug).
+- [Phase 8] Verified `log_replay()` is called from the mount path; the
+  `memcpy` overflow is reached on a *dirty* log with attacker-controlled
+  `client_off` and `ra_len`; reporter provided a working image.
+- UNVERIFIED: I did not personally run the provided malicious image
+  against pre-fix and post-fix kernels to independently confirm
+  behavior; I relied on the KASAN trace, the pointer arithmetic in the
+  public source, and the maintainer's agreement.
 
-## Summary
-
-This is a real, trivially-correct 1-line bug fix for a 5-year-old macro
-typo in the Intel LGM SoC LED driver. The macro parameter name (`pinc`)
-didn't match the identifier in its body (`pin`), so the macro silently
-captured the function's `pin` parameter instead of the argument passed.
-This causes incorrect register-bit computation in `regmap_update_bits()`
-during hardware LED blink setup, affecting LEDs on pins 24-31 of the
-Intel Lightning Mountain SoC.
-
-The fix is obviously correct, zero-risk, applies cleanly to all stable
-trees (5.15.y, 6.1.y, 6.6.y, 6.12.y), and the bug exists in all of them.
-The impact is narrow (specific SoC hardware) and severity is moderate
-(incorrect hardware register programming, not
-crashes/security/corruption), but the patch is exactly the small,
-obviously correct fix that stable policy welcomes.
+This is a small, obviously correct memory-corruption fix with a public
+reproducer and maintainer acknowledgement, affecting all stable trees
+that carry ntfs3. Textbook stable material.
 
 **YES**
 
- drivers/leds/blink/leds-lgm-sso.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/fslog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/blink/leds-lgm-sso.c b/drivers/leds/blink/leds-lgm-sso.c
-index 8923d2df47049..99cfb8c1bb3f8 100644
---- a/drivers/leds/blink/leds-lgm-sso.c
-+++ b/drivers/leds/blink/leds-lgm-sso.c
-@@ -25,7 +25,7 @@
- #define LED_BLINK_H8_0			0x0
- #define LED_BLINK_H8_1			0x4
- #define GET_FREQ_OFFSET(pin, src)	(((pin) * 6) + ((src) * 2))
--#define GET_SRC_OFFSET(pinc)		(((pin) * 6) + 4)
-+#define GET_SRC_OFFSET(pin) 		(((pin) * 6) + 4)
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 272e452761436..10dbe9922bf13 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -45,10 +45,10 @@ struct CLIENT_REC {
+ 	__le16 seq_num;     // 0x14:
+ 	u8 align[6];        // 0x16:
+ 	__le32 name_bytes;  // 0x1C: In bytes.
+-	__le16 name[32];    // 0x20: Name of client.
++	__le16 name[64];    // 0x20: Name of client.
+ };
  
- #define DUTY_CYCLE(x)			(0x8 + ((x) * 4))
- #define SSO_CON0			0x2B0
+-static_assert(sizeof(struct CLIENT_REC) == 0x60);
++static_assert(sizeof(struct CLIENT_REC) == 0xa0);
+ 
+ /* Two copies of these will exist at the beginning of the log file */
+ struct RESTART_AREA {
 -- 
 2.53.0
 
