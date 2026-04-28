@@ -1,224 +1,151 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11022125.outbound.protection.outlook.com [40.107.209.125])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C1044D023
-	for <patches@lists.linux.dev>; Tue, 28 Apr 2026 17:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.125
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777398933; cv=fail; b=sv9Vl8gEoRJv0fJjLjVrD6oCpOOqKC1gMZtUGwpA/wkWvu7nMwNzmwhY/wOWoXKAg+TleLZ+g2lJ/J5wmPpNXgfMJod5bFeEZg38JxTrXmkKJ7FH6rTcT7Tb6Rjxv+58YresSp1awh/NJmw6GcuA7V9Nga02rCU5NTjcTd6FjLg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777398933; c=relaxed/simple;
-	bh=/6uugVYJQWYKYbuDqsdX7FUY3a6k1u0cv7UIIOSuA90=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=mzRt/XvCuJXo07Au/Ku9k9hEUBjMrw1eNAwaO7K6pHGBFUCPt2GfH+RSB7w6YgBGmpcz/c1PWpEJvHayozj+KzorFbsgmjQ6bTft/eMbuzjy67nOirZ981vTfhR4zKWAW9Wrz27Y+k2/lv+sK4HTcCBA/NhIP/c7PwjC8l8BQZU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=Tpcgt/kh; arc=fail smtp.client-ip=40.107.209.125
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8E140627F
+	for <patches@lists.linux.dev>; Tue, 28 Apr 2026 18:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777400834; cv=none; b=KwNyxjuQr2a51tcazuji/jKXKCw/Hyzqx9DOz0WFnJh2zKfhPytIkREQAH9hsj9GDtwBAJ3IMS3+qr833+c9nKVsvm3aXecsOjTdAbrnCB2P0qpjixUpAMK5TEywFWR3XZFL8yvg1pGn9JZdNvirBnmwZCMYF/KRezjZXRWadjs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777400834; c=relaxed/simple;
+	bh=Qgs4VKe6aa4WyJBdEkeJSC4dGYTWRhPAU+v9n/d2wxk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I91dJGgBSD9+aCG3ma5ZsiY8OTnq/GS3aUVfl/6Wo13p4a4pSe//ZsPdZPZ5bapXnWPtkrYi1n7p8E8vxWhE0jr2KAymJEA7dSSrTw3A1PBo+8byKN6T61k50ch+1Q+Dhi3etuNbNTOo05OIj0fhRtn1lMcqIo2Tt3SYigoJB08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nYrk+WnV; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="Tpcgt/kh"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VwZfKsADkWbweueEgrDdjeEj7CzgaiqjPOJtFNVxVTjXEI0qkAxZZBDIThW2F2uCDiDcv2G5DBeTFiKVE26BOJX9/FhQ9ys/H+FMp50GgzBBiCIdyrKn+n9jTOcLZBp41gT4NE3NCC9mQYBExFxlDR+f02NQW2yjuaKLNGQ3G76FivsomVwKu42PGMQQrWz75qM/P3ckWqoRsPH0W705VqECHFI0l26aNJbVW4TuNte+SFsMKBgCkfvuD4v0/p0/5uvkdQ+wKMCdlp8BCTp/JLYaqR/jI2XRpR1LbOp5wg6DhsolnhJxhhMUUJG1+PpTzW+MWsm6Ks7Vu8uBFEBhhA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v6e8iCEpmylY7gZ7Uw7/99850Vb1dFQCJR2CgMW7IhA=;
- b=F9qfw/6pfthi9Do6Nrdba7MiapKIl8275JeP5RdEVq42Cz3pTavUb9s30JezMtIgPI/8XxJJATkw4xrWNbuXgedjEX/fHPQwvdu4OVcSKx0TIJNrgbfXAO10IuYGo8zQjrw0BAYvxFVhJPQ/9RCHtzUGbd5+I7k3VvN4jx40qpHefankw/z1K619MMo872xPo7vd02bunLv/4dJj3XY8sHbk7USToPXVZZdla6OzTRsw7RfoqFL3oTdoktTqFG6wi9jPydqXo6X2vwwDlkfegDpxEX8fyN4V4rwiVvrp2jNiJIDOLc/+AKjfwIUpin8z05VC6AmU8Zu+AimBHK2UXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v6e8iCEpmylY7gZ7Uw7/99850Vb1dFQCJR2CgMW7IhA=;
- b=Tpcgt/khIUpO+//bDg7mA3uu6lW93RlZMKgxuj7bN/6QwLBbnSIFA3Ak1Ea2+o0OdzO1WaxXfMvhJgmDzFy66jd3saxtDfrFoT+dlujt0Wf38xTTQqLwj4dSUPzcZADbOF4WoBHq3Uj6cZTfLq++d6KxZc8nL1RR/L5nehrkpiI=
-Received: from SA1PR21MB6683.namprd21.prod.outlook.com (2603:10b6:806:4a4::6)
- by SA1PR21MB6874.namprd21.prod.outlook.com (2603:10b6:806:4a4::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.3; Tue, 28 Apr
- 2026 17:55:25 +0000
-Received: from SA1PR21MB6683.namprd21.prod.outlook.com
- ([fe80::879f:eec1:ca0e:d219]) by SA1PR21MB6683.namprd21.prod.outlook.com
- ([fe80::879f:eec1:ca0e:d219%6]) with mapi id 15.20.9870.013; Tue, 28 Apr 2026
- 17:55:25 +0000
-From: Long Li <longli@microsoft.com>
-To: Jason Gunthorpe <jgg@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>, Eric Dumazet <edumazet@google.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>, Konstantin Taranov
-	<kotaranov@microsoft.com>, Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky
-	<leon@kernel.org>, "linux-hyperv@vger.kernel.org"
-	<linux-hyperv@vger.kernel.org>, "linux-rdma@vger.kernel.org"
-	<linux-rdma@vger.kernel.org>, "netdev@vger.kernel.org"
-	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Selvin Xavier
-	<selvin.xavier@broadcom.com>, Chengchang Tang <tangchengchang@huawei.com>,
-	Tariq Toukan <tariqt@nvidia.com>, Vishnu Dasa <vishnu.dasa@broadcom.com>,
-	Yishai Hadas <yishaih@nvidia.com>
-CC: Abhijit Gangurde <abhijit.gangurde@amd.com>, Adit Ranadive
-	<aditr@vmware.com>, Allen Hubbe <allen.hubbe@amd.com>, Andrew Boyer
-	<andrew.boyer@amd.com>, Aditya Sarwade <asarwade@vmware.com>, Brad Spengler
-	<brad.spengler@opensrcsec.com>, Bryan Tan <bryantan@vmware.com>, "David S.
- Miller" <davem@davemloft.net>, Dexuan Cui <DECUI@microsoft.com>, Doug Ledford
-	<dledford@redhat.com>, George Zhang <georgezhang@vmware.com>, Jorgen Hansen
-	<jhansen@vmware.com>, Jianbo Liu <jianbol@nvidia.com>, Kai Aizen
-	<kai.aizen.dev@gmail.com>, Leon Romanovsky <leonro@mellanox.com>, Leon
- Romanovsky <leonro@nvidia.com>, Yixian Liu <liuyixian@huawei.com>, Lijun Ou
-	<oulijun@huawei.com>, Parav Pandit <parav.pandit@emulex.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, Roland Dreier
-	<roland@purestorage.com>, Roland Dreier <rolandd@cisco.com>, Sagi Grimberg
-	<sagi@grimberg.me>, Ajay Sharma <sharmaajay@microsoft.com>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>, Tariq Toukan
-	<tariqt@mellanox.com>, "Wei Hu (Xavier)" <xavier.huwei@huawei.com>, Shaobo Xu
-	<xushaobo2@huawei.com>, Nenglong Zhao <zhaonenglong@hisilicon.com>
-Subject: RE: [EXTERNAL] [PATCH rc 06/15] RDMA/mana: Fix mana_destroy_wq_obj()
- cleanup in mana_ib_create_qp_rss()
-Thread-Topic: [EXTERNAL] [PATCH rc 06/15] RDMA/mana: Fix mana_destroy_wq_obj()
- cleanup in mana_ib_create_qp_rss()
-Thread-Index: AQHc1yqXt+tCE1mErUioma/r0y9rb7X0wfVw
-Date: Tue, 28 Apr 2026 17:55:25 +0000
-Message-ID:
- <SA1PR21MB6683F8A67D926FDF24CE1969CE372@SA1PR21MB6683.namprd21.prod.outlook.com>
-References: <0-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com>
- <6-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com>
-In-Reply-To: <6-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=fc4b9580-3ba7-4646-8b16-0b95fecd40ed;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-04-28T17:55:06Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
- 3, 0, 1;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA1PR21MB6683:EE_|SA1PR21MB6874:EE_
-x-ms-office365-filtering-correlation-id: e62f3930-4dee-4722-9f00-08dea54f5391
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|7416014|376014|366016|1800799024|56012099003|18002099003|22082099003|38070700021|921020;
-x-microsoft-antispam-message-info:
- 5I2Xl9d1eezSCUORAyAYxHNlqtlJftpffj7bcRyGydweb2KIx/bbdW0rCqKYoLE7dM/LOBH/tqTwqNVgB/djiZmSqzINHGOk0H4zCzlZXmcfQgU0xECmw3A/5cWjCbmOoZdvsm7DQ6CYrtG1BlxKDBJ4kZndgUjYlK06jU8v1iyLsY07Kx/mqPke1VWBvegz4SeiR3HSYRYQo7gCMPRk9X5uCRyJmXLJFGoV3OAfbJv7I95iXenmWgKW8mdRwp5Uh4gCOjQb3Rp8SshUh6JS/1wfjkUgyX2pfP5sAFnpN8kDkBSyEmlovrjGCHn6wdaQqWsNidrovd2KavH6WpNb5NHpVhz3x8jqbbWvlNsigD7cbYqdXCrXKn8ISv7aWZaGL4f142UQ/W6X49Z3ovpVTQBFb7F3o35S3/GnXK34MUhFvl/+1rVWVmAu52B2yHKX9T70rQA7GrW915j0El8rabrpA63rXVczCO4w1b7FzlT3lCgGw2yvHPAJXfTdN0wyfGIQaF6zLxsi+ZkA4KcVtXe/ZOZbpHAa0zpFwJff+Kj0qIYVDJ6+KqQLTjqMbwT+OTTFhxp4b3jpqwVwZw01noV3ehcVURVgC5I5NEJM8ei9Lq7SoDANvqFCzZCs6G2Yi//n3N5w+AFAvWbx/bWhHjNyaxuzAE/tSuq4Cwho878N8h83mBM8uT/HJJmij4XBb38H9Cdo7LGOWMOHxIn1teDhbZRMT7J5z8YL+sQb6xBxi93sx0auFD8cAn/fbAfl
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR21MB6683.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(56012099003)(18002099003)(22082099003)(38070700021)(921020);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?8GpuCNgdcgxdbH7sOOTW+qGuCOUkSho1fMpExzVlT723BghseMODokJCTBNG?=
- =?us-ascii?Q?i88fl3eYKrPhzW+NKP67sb2nYhAp8hFEL39HCysSey5kr26PpPhUYIwKdZ3T?=
- =?us-ascii?Q?UGvOqkTWXZB311QriJ1EXS6rHOCN6YOjPShOEv646yOzGJcMpdvrT7xebbPN?=
- =?us-ascii?Q?kkjIt57TZG2z3iB3qRxygS08arOLMjC6S6wS40HFjf0z8MtBuj1VOTwgxlV6?=
- =?us-ascii?Q?IfE4d44T/SBRyMcsd3u0DlUTCnip/PleX+aKxbU9nSMg8g5tEXFhlKeKJ9s5?=
- =?us-ascii?Q?X/77OzxS8qTLt4RSVKjRDoMvqCatSgCAsYCaYrnogInQZPV2t1Qh0+VK/UoC?=
- =?us-ascii?Q?WsN93kqxwCDeoJ+5wN/tusZHp6mjeBIT+JW3TADhmiEJTcCRW+KARHkurm5C?=
- =?us-ascii?Q?SaAu5QPPso5miViz0p+/KhH3qlR6nmbChdxLXpC897G0ld8F63qDmP7xq+Du?=
- =?us-ascii?Q?Pwy0DcrtrrcoQcF3m3HCNCzbRsACPhyJykKAOLMYgtdD5L25tIg9mZr8UP/0?=
- =?us-ascii?Q?B5F3+XGxQ3Z/k+w7/gYPf9N4XzOxa9Jh75Nk9FCKAzZXunMV96per/hOL9I+?=
- =?us-ascii?Q?dAv3T8WRuk84d/YT/x/SffBjRWYuXH4x5SyBSTBuv0E04CScW9TPR7RhiPn0?=
- =?us-ascii?Q?lxJ9XukExIO5KukwrSNG58LfJmdkfvZzV1y7F7D78YHZwaIgC1rtFiUqUJrQ?=
- =?us-ascii?Q?3CDhAh6h5T6FdEzSIyiA3Q2K/n5FgWitNQCD8BhieLnkWCmtB4ftRQp43IOe?=
- =?us-ascii?Q?DOLtzRu8j5+jRb/ATMQVxb+L0CbUUgWD9jIlf4RvkJNFEh88Lsq4MPC836jt?=
- =?us-ascii?Q?EmC4XhKdhGOyLmDZSwAiknOYAa9LdcFasex1gdqmxDeu3QjfmM22vJMD5F8W?=
- =?us-ascii?Q?UfMwV/01gS0vj1B1MXJm/8Oq4p4jStu/7hvdOL5gcA3C1qU8ShqNxxQCcM6B?=
- =?us-ascii?Q?Zzs+IQf+9EkGbJt0/3T9m9E5jgQuo2Z0ZukyMQN5irMnIaDOKEw3kvj52cFm?=
- =?us-ascii?Q?zpZfjgSxG6yENpj4pbUfoUOFq9BbEVVKqrS0jd7iTnFK+OHqBRVW9LiA6Ria?=
- =?us-ascii?Q?p5jpptmSI3IsMjgLJrboCVX13i3Q9KMuuY+iIArX9WIwgJDbx6WT7gYQrqHa?=
- =?us-ascii?Q?YzGzdQFRmt/yhhkMhsW/sAC/TnnLv7ZxtglMYn2yv73f1mxussareFlnkgBS?=
- =?us-ascii?Q?Zru76zBCF7YcNRZHw0Z/fkdUzrS/14UeaDcchx9dO7r2dTSJTyOIeJY7APEz?=
- =?us-ascii?Q?jvcheQEzuFq3u0C4BqJ2gcqIahsbDiZU7gqcrHmRHl7Zj+cS39Q5z71sRiqw?=
- =?us-ascii?Q?9GIV8OuUnV8PGBcf5/eBrF8zusX4Pk4U6eb3JhSS2X91A8fbPp+A/gGL8ofz?=
- =?us-ascii?Q?A1tvugUNa+wMODzHUVxC/jF5uBk6nL5YADL5Qut6d3sBairywiq+digZgPNG?=
- =?us-ascii?Q?oyfhOLfj6aYwUGHmwijM2uNMWLRBiyg0Jw3OhwiF+qsvfk8uB8AwzoYkcz4d?=
- =?us-ascii?Q?vuQxLCKBQ7GbnsUxxdI1ZQWq43S5rdX36MU8uYSCyeCDrkCaAkZ4oXZANC/F?=
- =?us-ascii?Q?a4xZs/SJlGGUEL+g9BkusVQpCq64728s5+nUsHlbhD6+bDgaM3HJKVOo3FIV?=
- =?us-ascii?Q?/+eYaqq2PTXM5legDFxlH3sgw5IsWIkp4XKBuiHU/rULOTv6szXdn1P0vxLH?=
- =?us-ascii?Q?Pua37e3OS8pM5e3yOzZlNAtcsuNhxwgRxtnr65wdTfYbN3Nq?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nYrk+WnV"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-35da2d35eccso8129258a91.0
+        for <patches@lists.linux.dev>; Tue, 28 Apr 2026 11:27:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1777400833; x=1778005633; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y0UGTjzT1o8VOQ2X8VCxDZk9yTiALK5gtuUuVtTpZzQ=;
+        b=nYrk+WnVJN1cLyD9qOm90f3cmNqcYl0LcRLo2HuO4byGmR4tH/LuuHrDAVvaxSorYg
+         CTFBoVn+7/pzAAoT+axfKpz1xfVgA2YauEdCyQS+9AvuSEfsCsO8XFI4bQPerfLATxIa
+         yrPkJ6nYJX35nscK5UtS60P4knUZLPqMFSgbu7CWxA8ey1x37AipLaCJZ8KEzVmpSwcP
+         dVgWAcah9XGAumZYAcoxVrydEBUwuDBIlzwzlNrAY2k1kAbO838iIdqtm/Xs+hYuhGKr
+         YR/G/PxX8wBk1tNKv+U5OZBi4UO/lrU9/U46qYe8bnhx8wDEh9GcJxNhFX1wf748Lr6y
+         xnDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777400833; x=1778005633;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y0UGTjzT1o8VOQ2X8VCxDZk9yTiALK5gtuUuVtTpZzQ=;
+        b=B2aVAhfTuvsvuRp6lHSC0ZKq06jXwaVVsSA54YwAJrCpYbLPJ6WQyj29M1H0RxXiMP
+         McReGOzzm7SloGfUTFvPy+mxffHhSm+qiOul8aX6D7LQpufHp/b5IZqoetUr44lJlIxL
+         a/I8b1lxcw0FiWrql1d3Kjst7k8bTiyCiDhVwdDqZlaXCqUcHS9OsGGKLgPs/JHTbygn
+         yn7i+shbCn/HpCQyO4AFR01OjSRYseQ31RwEppllqH24t3PaBkoyKV27Y1zZtSIiKecn
+         Bq443maFeW6qqmziIfNF2TXRSEZ399MZ4qXxNwgwqsPBRtqhi60+tQq4rzFOzMXV29Qg
+         3WoQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/lAdXF+NtIlgbmgwZym4rnqtZkzZXujtdWyySw8AH3SZMpCUkjA+j46CXh0xHS43PlvWr6OST/@lists.linux.dev
+X-Gm-Message-State: AOJu0YzQnjMNSbFKMKRyuH1INdafNGAiWBjdqBu0rj2l9GZlOvHzj/zD
+	3DalJIrzLJkVtZoap8NSrOztXRgNa1cZMB12W5NOa2/30mSxrwu0ec0FZsph75CxfA==
+X-Gm-Gg: AeBDiesLKwem9Gmk1tTsRDuvo3puJLoOzmif/YTIM3ktOYUyk6H8UY2M+aXevr5s+9t
+	KcBRLqVfiJx8Ka6nKnFMdQ9wwZzuVVwwKJSXvP5tHrVV5t48CTZei7yS4y6aWBdgZdZ3qda2p6y
+	GBgURV3Kepc3lAjUTcUt9riYyrr7PaI8SN0cFnHS7ecMiqrDfE63Re/mmKwIBdhKogx5rI9d+qq
+	sZHEVCy83MfYRRE+9ebmFiAdYGRj9csV3v6dP+emjZjY716HfM08TI8Xoal0fFZYIhYvIB7qu9d
+	pjnAobjwpgyiFbGjee8UvUD/gskpoD4r05mksHrb3kP5nkRtQicNUKaap/6MQeudoGPlAgTYkMU
+	uFUTu5AicoBOzM4xXS/cCK1WKV+AZX9P3iDjXiFhw5RPkxr6+iHQS8nFrDI/DKtKPaj/23pBEug
+	pXVp6KgG97QS3s2O3DBNJuTMtoj2zd4us1KotlXCHSld/zqMx3BqmZLAkfJkkni+s0toe6UCAnP
+	kWBcQ==
+X-Received: by 2002:a17:90b:268f:b0:359:87a8:e65c with SMTP id 98e67ed59e1d1-3649202ea13mr4377890a91.17.1777400832390;
+        Tue, 28 Apr 2026 11:27:12 -0700 (PDT)
+Received: from google.com (76.9.127.34.bc.googleusercontent.com. [34.127.9.76])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-364a119e0b4sm76522a91.5.2026.04.28.11.27.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Apr 2026 11:27:11 -0700 (PDT)
+Date: Tue, 28 Apr 2026 18:27:06 +0000
+From: David Matlack <dmatlack@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, Shuah Khan <shuah@kernel.org>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	patches@lists.linux.dev, Shuah Khan <skhan@linuxfoundation.org>
+Subject: Re: [PATCH] vfio: selftests: Fix out-of-tree build with make O=
+Message-ID: <afD7-rg58XvqRJpD@google.com>
+References: <0-v1-79f29139180b+8e-vfio_st_make_o_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR21MB6683.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e62f3930-4dee-4722-9f00-08dea54f5391
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Apr 2026 17:55:25.6031
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 7gu2zaJtokpdiYsnsaTWfK8TLJ+cW08QzlnRZ2sKFYSaG0kgfiyadXFzYZPnVIMLkeBk1yUW5tfmQKaMUG7vRw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR21MB6874
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-79f29139180b+8e-vfio_st_make_o_jgg@nvidia.com>
 
->
-> Sashiko points out there are two bugs here in the error unwind flow, both=
- related
-> to how the WQ table is unwound.
->
-> First there is a double i-- on the first failure path due to the while lo=
-op having a i--,
-> remove it.
->
-> Second if mana_ib_install_cq_cb() fails then mana_create_wq_obj() is not =
-undone
-> due to the above i--.
->
-> Cc: stable@vger.kernel.org
-> Fixes: c15d7802a424 ("RDMA/mana_ib: Add CQ interrupt support for RAW QP")
-> Link:
-> https://sashiko.d/
-> ev%2F%23%2Fpatchset%2F0-v2-1c49eeb88c48%252B91-
-> rdma_udata_rep_jgg%2540nvidia.com%3Fpart%3D1&data=3D05%7C02%7Clongli%
-> 40microsoft.com%7Cd4d57c89064d4cc1781e08dea541b72a%7C72f988bf86f141
-> af91ab2d7cd011db47%7C1%7C0%7C639129898849523924%7CUnknown%7CT
-> WFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4
-> zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DhbczVL%2F
-> QTqw5zawJJPpSNkjtDrBOJNkV5Qn9vGGYbhE%3D&reserved=3D0
+On 2026-04-27 08:07 PM, Jason Gunthorpe wrote:
+> The test programs are compiled via a static pattern rule that requires
+> intermediate .o files:
+> 
+>   $(TEST_GEN_PROGS): %: %.o $(LIBVFIO_O)
+> 
+> After lib.mk prefixes TEST_GEN_PROGS with $(OUTPUT), this creates
+> dependencies on .o files in the output directory (e.g.
+> $(OUTPUT)/vfio_dma_mapping_test.o). However, there is no rule to compile
+> these .o files from the source directory .c files when OUTPUT differs
+> from the source directory.
+> 
+> Add an explicit chain of pattern rules:
+>   $(OUTPUT)/% -> $(OUTPUT)/%.o -> %.c
+> 
+> Following the same pattern already used in libvfio.mk for the library
+> objects.
+> 
+> Fixes: 19faf6fd969c ("vfio: selftests: Add a helper library for VFIO selftests")
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-
-Reviewed-by: Long Li <longli@microsoft.com>
-
-
 > ---
->  drivers/infiniband/hw/mana/qp.c | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/infiniband/hw/mana/qp.c b/drivers/infiniband/hw/mana=
-/qp.c
-> index f7bb0d1f0f8034..8e1f052d0ec976 100644
-> --- a/drivers/infiniband/hw/mana/qp.c
-> +++ b/drivers/infiniband/hw/mana/qp.c
-> @@ -176,11 +176,8 @@ static int mana_ib_create_qp_rss(struct ib_qp *ibqp,
-> struct ib_pd *pd,
->
->               ret =3D mana_create_wq_obj(mpc, mpc->port_handle, GDMA_RQ,
->                                        &wq_spec, &cq_spec, &wq-
-> >rx_object);
-> -             if (ret) {
-> -                     /* Do cleanup starting with index i-1 */
-> -                     i--;
-> +             if (ret)
->                       goto fail;
-> -             }
->
->               /* The GDMA regions are now owned by the WQ object */
->               wq->queue.gdma_region =3D GDMA_INVALID_DMA_REGION; @@
-> -200,8 +197,10 @@ static int mana_ib_create_qp_rss(struct ib_qp *ibqp, st=
-ruct
-> ib_pd *pd,
->
->               /* Create CQ table entry */
->               ret =3D mana_ib_install_cq_cb(mdev, cq);
-> -             if (ret)
-> +             if (ret) {
-> +                     mana_destroy_wq_obj(mpc, GDMA_RQ, wq-
-> >rx_object);
->                       goto fail;
-> +             }
->       }
->       resp.num_entries =3D i;
->
-> --
-> 2.43.0
+>  tools/testing/selftests/vfio/Makefile | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tools/testing/selftests/vfio/Makefile b/tools/testing/selftests/vfio/Makefile
+> index 40165d087a0bc4..81c3be8298fdc2 100644
+> --- a/tools/testing/selftests/vfio/Makefile
+> +++ b/tools/testing/selftests/vfio/Makefile
+> @@ -27,10 +27,13 @@ CFLAGS += $(EXTRA_CFLAGS)
+>  
+>  LDFLAGS += -pthread
+>  
+> -$(TEST_GEN_PROGS): %: %.o $(LIBVFIO_O)
+> +$(TEST_GEN_PROGS): $(OUTPUT)/%: %(OUTPUT)/%.o $(LIBVFIO_O)
 
+Changing this line (with the fix you replied with) is not actually
+needed right? I tried the following without it and was able to build:
+
+  $ make OUTPUT=/tmp -C tools/testing/selftests/vfio
+
+$(TEST_GEN_PROGS) has already been prefixed with $(OUTPUT), so %
+in the original pattern already included $(OUTPUT).
+
+Is this for readability?
+
+>  	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $< $(LIBVFIO_O) $(LDLIBS) -o $@
+>  
+>  TEST_GEN_PROGS_O = $(patsubst %, %.o, $(TEST_GEN_PROGS))
+> +$(TEST_GEN_PROGS_O): $(OUTPUT)/%.o: %.c
+> +	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
+
+Looking at this commit made me confused how this was even working before
+and I learned that make has built-in rules to build .o files that
+assumes the .c is in the same directory. I see now that we were reying
+on those built-in rules to build $(TEST_GEN_PROGS_O). It makes sense to
+have an explicit rule to handle the directory mismatch between .c and
+.o.
+
+This also got me thinking it might be a nice cleanup to use the
+predefined macros $(COMPILE.c) and $(LINK.c) in these rules instead of
+$(CC) $(CFLAGS) ... etc. No need to attach that to this fix though.
+
+> +
+>  TEST_DEP_FILES = $(patsubst %.o, %.d, $(TEST_GEN_PROGS_O) $(LIBVFIO_O))
+>  -include $(TEST_DEP_FILES)
+>  
+> 
+> base-commit: 681b35420592a2e072d9759254185e72d2e914c8
+> -- 
+> 2.43.0
+> 
