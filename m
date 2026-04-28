@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF13240B6E4;
-	Tue, 28 Apr 2026 10:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BD740F8C5;
+	Tue, 28 Apr 2026 10:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372959; cv=none; b=Z5JrZkmlxdVxYLB73HyTrRn1IJ6J/oGr84Z3y6x9hAHOV2U1lKeee8rN52XUD1Bj0gzxeXWev6iT9QQOkNHgWc+NX298U44Gm6AGzDJwoEeX+3vitn9B6y7wKnGp0IcEtJ1hFLbuWk2kPmnJOQJ8NWS6vNfFU2i/8MhfZf970pk=
+	t=1777372960; cv=none; b=nXEGoIrjaUn7Vs+KkLlG5bhDq4vP6MWe6hLl2LPPjIuK+b5Vf8lQgTKvhPJ/K/uwhjYR72vMJw/3UGseBhh12yZv19JnipDPrmbFPPKf2U7pin46sHVpVXGSdhrcnFF+VuBR2XYBDGKK4085l6/7LmTuZb/yYXRiS57SIbeBEQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372959; c=relaxed/simple;
-	bh=5LYiZP7vYO+EkpvWWqnnAIKaqH/Us9EyYCZBmb881ck=;
+	s=arc-20240116; t=1777372960; c=relaxed/simple;
+	bh=LRJrmMyuTktkzkaPZwISotTL2EmtTHfhnpRTWMpYmzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jVCDLP1ap6635fU9QTI3E07B6IXWqALUE0ig+DkJlhxyIPfLWJdsOtPtcYuQu47wb2o7rVvwh/4gWnUHsxt7/6s0dNbNuK24KAwNLo0dCxMq2bXPCdywzWyK1c7y2Hxf4ymmaHfSd2Wu9CUPADSIi1FRw1Weob+xjdWGGY91J20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e/73hPMN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EWKq3fs82vQW0LmbKzaId6eCGh/fxI9HuN11tkRR9BzacmNURlBIE45TDiLhS+A8DyUvY7PJCyhfiiLyA31nwMWOe37UlGDe8pdWYFLnYb0B/BchVBr9ksP6481YLR2OPjjfURmtvRhPk7KxPHtgVYVgj7aflLiQV9JUEnBJNDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qejSsBxy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e/73hPMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D3EC2BCB9;
-	Tue, 28 Apr 2026 10:42:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qejSsBxy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0128EC2BCB7;
+	Tue, 28 Apr 2026 10:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372958;
-	bh=5LYiZP7vYO+EkpvWWqnnAIKaqH/Us9EyYCZBmb881ck=;
+	s=k20201202; t=1777372959;
+	bh=LRJrmMyuTktkzkaPZwISotTL2EmtTHfhnpRTWMpYmzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/73hPMN9EdgomwVzHukJJtlts/ilSsZCdw7CvRy9Q5xKAZ8Oi6WnUU5onmkySA3Y
-	 uM18PWKu07LehJ3ax/Za9nB+svFBp7gdIE8Wm8dQElC/qj6KU+Oiy/aN14KSTs8azu
-	 Jiwd2f1mYQHCktyTeprduzEbIqWGUgv/hDgP8YN/RlzViRAFdfnOwPp4y+nlL40pR0
-	 Ta0IsuFS4NwCOeloYa7NRyDF6Li83fOa44GN0aJPTfvihhtrPjtIwdwqgl3iIdBZsu
-	 GpoZmLgeDTbyMySYBP8Wll8ETHPIT1F1qrjWdE1v3JpK9f2wYmRUbcp5koRuNUhjQA
-	 2crRS/qguvxnA==
+	b=qejSsBxyBYttUVX6y+7dQtb4z+sIZrfi/53kPuujRpkot7VjGEWZ/n8QDSUv1s/4q
+	 N04SyD+f3RvKtJ8EGKvfVpbPGxr8Gbal5q0Fbwlc9RZUFz4TELZRsf99wAjFoGpQQZ
+	 TpCvS3P1r0e4PjmYvhpF7kgAJ0D39gRrnwBqaWm56HHqeyfxtOfU4Qc1rjagPlZb7Q
+	 F3VDUlAHVcneAKnd9IUAJ/iRHV8Tbiz+TL6CUM4kyrkm2xMLhzk27l7oBGjsYi/3R1
+	 78kH8b/jt6IaHZ9zdkx1bGdXyEnXV2Lq0iT1BM1zYLQrTIv970k4bhrcLJPIwteKxy
+	 LiV5HHh+FX5xw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Robin Gong <yibin.gong@nxp.com>,
-	Sherry Sun <sherry.sun@nxp.com>,
+Cc: Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jirislaby@kernel.org,
-	shawnguo@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 7.0-5.10] tty: serial: imx: keep dma request disabled before dma transfer setup
-Date: Tue, 28 Apr 2026 06:40:57 -0400
-Message-ID: <20260428104133.2858589-46-sashal@kernel.org>
+	johan@kernel.org,
+	elder@kernel.org,
+	greybus-dev@lists.linaro.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-6.12] greybus: beagleplay: bound bootloader RX buffer copy
+Date: Tue, 28 Apr 2026 06:40:58 -0400
+Message-ID: <20260428104133.2858589-47-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -56,339 +54,337 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Gong <yibin.gong@nxp.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 74e0c9f0528bcd597cb1299a027d7be27d1c27d9 ]
+[ Upstream commit cbc96a916b1a3be7039b0166c0fc56ec1632ba01 ]
 
-Since sdma hardware configure postpone to transfer phase, have to
-disable dma request before dma transfer setup because there is a
-hardware limitation on sdma event enable(ENBLn) as below.
+When `flashing_mode` is set, `gb_tty_receive()` routes incoming bytes to
+`cc1352_bootloader_rx()`. That helper appends the new bytes to the shared
+`rx_buffer` with `memcpy()` but does not check that the chunk fits in the
+remaining space first. The normal HDLC receive path already enforces
+`MAX_RX_HDLC`, so do the same here before appending bootloader data.
 
-Refer SDMA 2.6.28 Channel Enable RAM (SDMAARMx_CHNENBLn) section:
-"It is thus essential for the Arm platform to program them before any
-DMA request is triggered to the SDMA, otherwise an unpredictable
-combination of channels may be started."
+If a packet would overflow the receive buffer, drop it and reset the
+bootloader receive state instead of copying past the end of `rx_buffer`.
 
-Signed-off-by: Robin Gong <yibin.gong@nxp.com>
-Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
-Link: https://patch.msgid.link/20260312094526.297348-1-sherry.sun@nxp.com
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260322031923.58013-1-pengpeng@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to provide the full analysis.
+I have enough information to write the full analysis.
 
-## Analysis: tty: serial: imx: keep dma request disabled before dma
-transfer setup
+# Analysis: greybus: beagleplay: bound bootloader RX buffer copy
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject line**
-Record: `tty: serial: imx:` subsystem, action verb "keep" (implies
-correcting improper state), one-line summary: "ensure UART DMA request
-stays disabled until SDMA channel is fully configured."
+**Step 1.1 - Subject parsing**
+Record: subsystem=`greybus/beagleplay`, action=`bound` (i.e. add bounds
+check), summary=add a bounds check to bootloader RX path before `memcpy`
+into a fixed-size buffer.
 
-**Step 1.2: Tags**
+**Step 1.2 - Tags**
 Record:
-- Signed-off-by: Robin Gong (author, NXP), Sherry Sun (submitter, NXP),
-  Greg Kroah-Hartman (tty maintainer)
-- Link:
-  https://patch.msgid.link/20260312094526.297348-1-sherry.sun@nxp.com
-- NO Fixes: tag (expected)
-- NO Cc: stable tag (expected)
-- NO Reported-by/Tested-by/Reviewed-by
+- `Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>` (author)
+- `Link:
+  https://patch.msgid.link/20260322031923.58013-1-pengpeng@iscas.ac.cn`
+- `Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>`
+  (greybus maintainer)
+- No `Fixes:`, no `Cc: stable`, no `Reported-by:`, no `Reviewed-by:`.
+  Absence is expected.
 
-**Step 1.3: Commit body analysis**
-Record: Commit explains a hardware limitation documented in the SDMA
-reference manual (section 2.6.28, "Channel Enable RAM /
-SDMAARMx_CHNENBLn"). When UART asserts a DMA request before the SDMA
-channel script has been properly configured, "unpredictable combination
-of channels may be started." No stack trace/reproducer, but cites an
-authoritative NXP/Freescale hardware reference manual. Root cause: SDMA
-configuration is postponed to the transfer phase, so starting the UART
-DMA request before `dma_async_issue_pending()` on the corresponding
-channel is a hardware-level ordering violation.
+**Step 1.3 - Body analysis**
+Record: Bug = `cc1352_bootloader_rx()` does `memcpy(rx_buffer +
+rx_buffer_len, data, count)` without verifying `count` fits the
+remaining space; the HDLC sibling path already enforces `MAX_RX_HDLC`.
+Failure mode = write past end of `rx_buffer` (heap buffer overflow).
 
-**Step 1.4: Hidden bug fix detection**
-Record: Yes — "keep disabled before setup" is a classic disguised bug
-fix. This corrects an improper ordering that leads to undefined hardware
-behavior.
+**Step 1.4 - Hidden bug fix detection**
+Record: Subject says "bound" rather than "fix", but body explicitly
+describes a buffer-overflow gap and the fix mirrors a guard that already
+exists on the parallel HDLC path. This is unambiguously a bug fix.
 
-### PHASE 2: DIFF ANALYSIS
+## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-Record: 1 file (`drivers/tty/serial/imx.c`), 3 lines modified + 2
-comment lines changed, 1 line added net. Two functions touched:
-`imx_uart_enable_dma()` and `imx_uart_startup()`. Scope: single-file
-surgical fix.
+**Step 2.1 - Inventory**
+Record: 1 file (`drivers/greybus/gb-beagleplay.c`), +6/-0 lines, 1 hunk,
+single function `cc1352_bootloader_rx()`. Surgical single-file fix.
 
-**Step 2.2: Code flow change**
+**Step 2.2 - Code flow change**
+Record: Before — copy unconditionally into `bg->rx_buffer +
+bg->rx_buffer_len`. After — if `count > sizeof(rx_buffer) -
+rx_buffer_len`, log a rate-limited error, reset `rx_buffer_len`, return
+`count` (consume the chunk). Otherwise the original path runs.
 
-```1438:1451:drivers/tty/serial/imx.c
-static void imx_uart_enable_dma(struct imx_port *sport)
-{
-        u32 ucr1;
+**Step 2.3 - Bug mechanism**
+Record: Category = memory-safety / out-of-bounds write. Mechanism:
+`rx_buffer` is `u8 rx_buffer[MAX_RX_HDLC]` (1 + 256 + 2 = 259 bytes)
+embedded in `struct gb_beagleplay`. Without the check, an inbound serdev
+chunk plus stale `rx_buffer_len` could write past 259 bytes into heap
+memory adjacent to subsequent fields (`fwl`, `flashing_mode`,
+completions, etc.).
 
-        imx_uart_setup_ufcr(sport, TXTL_DMA, RXTL_DMA);
+**Step 2.4 - Fix quality**
+Record: 5 lines, mirrors the existing `MAX_RX_HDLC` guard in
+`hdlc_rx()`. Resetting `rx_buffer_len` on overflow drops staged data,
+which is acceptable here because the fix path is being exercised under
+fault conditions; bootloader sync/transfers will retry. No new
+regression vectors. Returning `count` correctly tells the serdev core
+that the bytes were consumed.
 
-        /* set UCR1 */
-        ucr1 = imx_uart_readl(sport, UCR1);
-        ucr1 |= UCR1_RXDMAEN | UCR1_TXDMAEN | UCR1_ATDMAEN;
-        imx_uart_writel(sport, ucr1, UCR1);
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-        sport->dma_is_enabled = 1;
-}
-```
+**Step 3.1 - Blame**
+Record: `git log -S "cc1352_bootloader_rx" -- drivers/greybus/gb-
+beagleplay.c` shows the function (and bug) was introduced by
+`0cf7befa3ea2e` ("greybus: gb-beagleplay: Add firmware upload API").
 
-Record:
-- Hunk 1 (`imx_uart_enable_dma`): BEFORE sets `UCR1_RXDMAEN |
-  UCR1_TXDMAEN | UCR1_ATDMAEN` atomically; AFTER sets only `UCR1_RXDMAEN
-  | UCR1_ATDMAEN` (TXDMAEN now enabled later in `imx_uart_dma_tx`).
-- Hunk 2 (`imx_uart_startup`): BEFORE calls `imx_uart_enable_dma()` THEN
-  `imx_uart_start_rx_dma()`; AFTER calls `imx_uart_start_rx_dma()` THEN
-  `imx_uart_enable_dma()`. The RX DMA channel is configured/submitted
-  BEFORE the UART starts asserting DMA requests.
+**Step 3.2 - Fixes target**
+Record: No explicit `Fixes:` tag here, but the introducing commit
+`0cf7befa3ea2e` is in `v6.12-rc1` (`git describe --contains` =
+`v6.12-rc1~39^2`), so the bug exists in v6.12 and later.
 
-**Step 2.3: Bug mechanism**
-Record: Category (h) Hardware workaround + ordering/correctness fix. The
-mechanism: UART asserting DMA requests on UCR1 before SDMA has a valid
-descriptor/channel configuration can trigger an ill-defined SDMA
-channel, leading to corrupted/misrouted transfers. Confirmed by
-verifying that `imx_uart_dma_tx()` at line 662-664 already sets
-`UCR1_TXDMAEN` just before
-`dmaengine_submit()/dma_async_issue_pending()` — so removing it from
-`imx_uart_enable_dma()` is safe (TXDMAEN will still be set when actually
-needed).
+**Step 3.3 - File history & related changes**
+Record: A near-identical follow-up patch `1214bf28965ce` ("greybus: gb-
+beagleplay: bound bootloader receive buffering") by the same author,
+dated 2026-04-02, was applied later to the same function with explicit
+`Fixes: 0cf7befa3ea2` and `Cc: stable@kernel.org`. It adds a second,
+redundant copy of the same bound check; in current `origin/master` both
+checks exist back-to-back. The second commit confirms the
+maintainer/author both view this as a real, stable-worthy bug.
 
-**Step 2.4: Fix quality**
-Record: Obviously correct. The fix preserves exact functionality
-(TXDMAEN still ends up set before TX transfer, RX DMA still starts
-before UART DMA requests flow). No regression risk in the fix itself —
-just reorders two well-defined function calls and defers one register
-bit. No locking changes, no API changes.
+**Step 3.4 - Author**
+Record: Pengpeng Hou — submitter, not subsystem maintainer. Patch was
+applied directly by Greg KH (greybus maintainer). The same author
+followed up with a stable-tagged version when the first lacked tags.
 
-### PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.5 - Dependencies**
+Record: Self-contained. Does not depend on any other unmerged work. The
+function and `rx_buffer` field have been unchanged since `0cf7befa3ea2e`
+was merged in v6.12.
 
-**Step 3.1: Blame**
-Record: `imx_uart_enable_dma` and UART DMA support originated from
-commit `b4cdc8f61beb2` ("serial: imx: add DMA support for imx6q", July
-2013). The `temp |= UCR1_RDMAEN | UCR1_TDMAEN | UCR1_ATDMAEN` line was
-set together from day one — the buggy ordering has been present since
-2013 (kernel v3.11). All active stable trees inherit it.
+## PHASE 4: MAILING LIST RESEARCH
 
-**Step 3.2: Fixes: tag** — Not present. The bug is a long-standing
-hardware sequencing violation.
+**Step 4.1 - Lore discussion**
+Record: `b4 dig -c cbc96a916b1a3` matched by patch-id, returned `https:/
+/lore.kernel.org/all/20260322031923.58013-1-pengpeng@iscas.ac.cn/`. `b4
+dig -a` shows v1 only — no other revisions.
 
-**Step 3.3: Related file changes**
-Record: Recent changes to `drivers/tty/serial/imx.c` (wake event
-reporting, hrtimer, nbcon, etc.) do not touch the DMA init/enable paths
-— no conflicts expected.
+**Step 4.2 - Reviewers**
+Record: Cc list (per the mbox): Ayush Singh (driver author), Johan
+Hovold, Alex Elder, Greg KH, plus greybus-dev. No replies in the thread;
+Greg merged it as v1.
 
-**Step 3.4: Author's relationship**
-Record: Robin Gong is an NXP engineer and has authored the equivalent
-fix in the SDMA driver itself (commit `107d06441b709` in 2018) which
-changed where `sdma_event_enable()` is called. He's an authority on SDMA
-hardware semantics.
+**Step 4.3 - Bug report**
+Record: No `Reported-by:` or external bug-tracker link. Bug found by
+code inspection. No syzbot or sanitizer reference.
 
-**Step 3.5: Dependencies**
-Record: No prerequisite commits needed. The fix depends only on
-`imx_uart_dma_tx()` already containing `ucr1 |= UCR1_TXDMAEN`, which I
-verified exists in v5.4, v5.10, v5.15, v6.1, v6.6, v6.12.
+**Step 4.4 - Related patches**
+Record: The same author submitted a duplicate fix
+`20260402054016.38587-1-pengpeng@iscas.ac.cn` ("greybus: gb-beagleplay:
+bound bootloader receive buffering") containing `Fixes: 0cf7befa3ea2`
+and `Cc: stable@vger.kernel.org`. That confirms the author's intent that
+the fix go to stable.
 
-### PHASE 4: MAILING LIST RESEARCH
+**Step 4.5 - Stable list**
+Record: Not applicable — checked recent file history, the explicit
+stable nomination is in the duplicate follow-up rather than this commit.
 
-**Step 4.1: Original submission**
-Record: `b4 dig -c 74e0c9f0528bc` found
-https://lore.kernel.org/all/20260312094526.297348-1-sherry.sun@nxp.com/.
-Single-revision v1 patch. Thread contains only the patch submission — no
-review replies, no NAKs, no stable nominations. Greg KH applied it
-directly.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 4.2: Recipients**
-Record: Sent to gregkh, jirislaby (tty maintainers), Frank.Li@nxp.com,
-s.hauer@pengutronix.de, kernel@pengutronix.de, festevam, tglx, mingo.
-Appropriate maintainers CC'd.
+**Step 5.1 - Modified function**
+Record: `cc1352_bootloader_rx()`.
 
-**Step 4.3: Bug report** — No explicit report linked; the fix cites the
-SoC reference manual.
+**Step 5.2 - Callers**
+Record: Single caller — `gb_tty_receive()`, which is the `.receive_buf`
+member of `gb_beagleplay_ops` registered with the serdev framework
+(`drivers/greybus/gb-beagleplay.c:556-578`). The serdev core invokes it
+whenever the underlying UART (cc1352p7) hands up received bytes. The
+branch into `cc1352_bootloader_rx` triggers when `bg->flashing_mode` is
+true.
 
-**Step 4.4: Related series (CRITICAL)**
-Record: The SAME hardware-sequencing fix was previously applied to the
-SPI driver in commit `86d57d9c07d54` ("spi: imx: keep dma request
-disabled before dma transfer setup", Oct 2025). That SPI fix has already
-been backported to stable branches 5.10, 5.15, 6.1, 6.6, 6.12, and 6.17
-(verified via `git branch --contains`). This establishes a clear
-precedent that the stable maintainers consider this exact SDMA-ordering
-issue worth backporting.
+**Step 5.3 - Callees**
+Record: `memcpy`, `memmove`, and `cc1352_bootloader_pkt_rx()`. The buggy
+line is the `memcpy` — pre-fix, the destination pointer can advance past
+the 259-byte array.
 
-**Step 4.5: Stable ML** — The SPI equivalent already flowed into stable
-via AUTOSEL.
+**Step 5.4 - Reachability**
+Record: `flashing_mode` is set in `cc1352_prepare()`
+(`drivers/greybus/gb-beagleplay.c:882`), invoked through the kernel
+firmware-upload framework (sysfs `/sys/class/firmware/...`). A
+privileged user-space firmware update on a BeaglePlay board makes the
+buggy path reachable. The attacker/triggerer is therefore root-
+equivalent, but the consequence (heap corruption from data the cc1352
+sends back, batched by the UART driver into chunks > 259 bytes) is
+severe.
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 5.5 - Similar patterns**
+Record: The HDLC receive path (`hdlc_rx()` at line 399) already guards
+with `bg->rx_buffer_len < MAX_RX_HDLC`. The patch makes the bootloader
+path consistent with this established sibling.
 
-**Step 5.1-5.4: Call chain**
-Record: `imx_uart_enable_dma()` is called exclusively from
-`imx_uart_startup()`. `imx_uart_startup()` is the `uart_ops::startup`
-callback, invoked every time a UART port is opened. This is a common,
-user-triggerable path — every process opening `/dev/ttymxcN` hits it. So
-the buggy sequencing is exercised on every UART open with DMA enabled.
+## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 5.5: Similar patterns**
-Record: The same bug pattern exists in `drivers/spi/spi-imx.c` and was
-fixed by commit `86d57d9c07d54`, already backported broadly. The SDMA
-driver itself carries a comment "Set ENBLn earlier to make sure dma
-request triggered after that" (`drivers/dma/imx-sdma.c:1859`),
-corroborating that this ordering requirement is well-established
-hardware lore.
+**Step 6.1 - Buggy code in stable**
+Record: Verified via `git merge-base --is-ancestor 0cf7befa3ea2e
+<stable-branch>`:
+- 5.10.y / 5.15.y / 6.1.y / 6.6.y → bug NOT present (driver predates
+  `cc1352_bootloader_rx`).
+- 6.12.y / 6.17.y / 6.18.y / 6.19.y → bug PRESENT.
 
-### PHASE 6: STABLE TREE ANALYSIS
+**Step 6.2 - Backport difficulty**
+Record: The hunk lands in `cc1352_bootloader_rx()` whose body has been
+unchanged since v6.12. Patch should apply cleanly to all affected stable
+trees. (The duplicate follow-up `1214bf28965ce` was generated against
+the same parent, confirming this.)
 
-**Step 6.1: Buggy code exists in stable?**
-Record: YES. Verified `imx_uart_enable_dma()` and the buggy
-`imx_uart_enable_dma(); imx_uart_start_rx_dma();` ordering is present in
-v5.4, v5.10, v5.15, v6.1, v6.6, v6.12. `imx_uart_dma_tx()` also already
-contains the `ucr1 |= UCR1_TXDMAEN` statement (the dependency for the
-fix).
+**Step 6.3 - Related fixes already in stable**
+Record: Verified via `git show <branch>:drivers/greybus/gb-beagleplay.c
+| rg "count > sizeof|overflow|oversized"` — neither the current commit
+nor the duplicate is present in any stable branch yet. No prior fix
+exists for this bug in stable.
 
-**Step 6.2: Backport complications**
-Record: Patch applies CLEANLY (`git apply --check` succeeded with no
-output) against v5.4, v5.10, v5.15, v6.1, v6.6, v6.12. No backport
-adjustments needed.
+## PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 6.3: Related fixes already in stable**
-Record: No — this particular fix has not yet flowed to stable for the
-UART driver. The sibling SPI fix is already in stable trees.
+**Step 7.1 - Subsystem & criticality**
+Record: `drivers/greybus` — niche subsystem, but this driver supports a
+real shipped product (BeaglePlay). PERIPHERAL criticality (only affects
+users of that specific board).
 
-### PHASE 7: SUBSYSTEM CONTEXT
+**Step 7.2 - Subsystem activity**
+Record: Low churn — `git log` on the file shows ~10 changes since 2024.
+The function being fixed has been unchanged since its introduction in
+v6.12.
 
-Record: `drivers/tty/serial/imx.c` — IMX UART driver. Used by millions
-of embedded/industrial iMX-based systems. Criticality: IMPORTANT
-(driver-specific but widely deployed). Active subsystem (recent
-wakeup/RXTL fixes show ongoing maintenance).
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 8.1 - Affected population**
+Record: Users of the BeaglePlay board running v6.12+ kernels who
+exercise the cc1352p7 firmware-update path.
 
-**Step 8.1: Affected users**
-Record: iMX SoC users (iMX6, iMX7, iMX8, iMX9 families) using UART with
-DMA (typical when hardware flow control is enabled for high-throughput
-serial communication).
+**Step 8.2 - Trigger conditions**
+Record: Requires `flashing_mode` true (firmware upload in progress;
+needs root) AND `count` (size of a single serdev receive chunk plus
+already-staged bytes) exceeding 259 bytes. UART subsystems can batch
+incoming bytes, so this is realistic during a firmware flash, not just
+under attacker control.
 
-**Step 8.2: Triggering conditions**
-Record: Every time a DMA-capable iMX UART port is opened (uart startup
-path). Whether the race window actually causes misbehavior depends on:
-whether the TX FIFO happens to fall below the watermark immediately
-after TXDMAEN is set but before a descriptor is prepared; whether the RX
-line has incoming data arriving before start_rx_dma finishes. Easily
-reachable on active serial links.
+**Step 8.3 - Failure mode severity**
+Record: Heap out-of-bounds write inside `struct gb_beagleplay`. Likely
+outcomes: kernel oops/panic, slab corruption, KASAN splat, potential
+local privilege/info leak. Severity = HIGH.
 
-**Step 8.3: Failure mode**
-Record: "unpredictable combination of channels may be started" per SDMA
-hardware docs. In practice this can manifest as: lost/corrupted UART
-data, spurious channel activation that may corrupt memory (SDMA writing
-to stale addresses), or flaky DMA behavior that's hard to debug.
-Severity: HIGH (data integrity + potential silent memory corruption on a
-DMA engine).
+**Step 8.4 - Risk-benefit**
+Record: Benefit = closes a kernel heap OOB write reachable during a
+normal product workflow. Risk = very low — 5 lines, mirror of existing
+guard, only consequence is dropping a malformed/oversized chunk during
+firmware flash (already an error condition). Strong net positive.
 
-**Step 8.4: Risk-benefit**
-Record: BENEFIT: prevents documented hardware misbehavior on a widely-
-deployed SoC family; consistency with SPI driver fix already in stable.
-RISK: very low — 3-line reordering, no new locks/APIs, dependency
-(TXDMAEN in dma_tx) verified present in all stable trees, patch applies
-cleanly, identical fix pattern already tested in production via SPI
-backport.
+## PHASE 9: SYNTHESIS
 
-### PHASE 9: FINAL SYNTHESIS
+**Step 9.1 - Evidence**
+For:
+- Real out-of-bounds write in `cc1352_bootloader_rx()` confirmed by
+  reading current code.
+- Buggy code present in v6.12.y, v6.17.y, v6.18.y, v6.19.y.
+- Tiny, surgical fix (5 lines), mirrors an existing guard.
+- Same author submitted a follow-up explicitly tagged `Fixes:` + `Cc:
+  stable@vger.kernel.org` for the same bug — strong confirmation of
+  stable-worthiness.
+- Applies cleanly to affected stable trees.
 
-**Evidence FOR:** Fixes documented SoC hardware limitation; tiny
-surgical change; author is SDMA subject-matter expert; same fix pattern
-already accepted into stable (5.10→6.17) for spi-imx; code path is very
-common (uart_startup); patch applies cleanly to all stable trees; falls
-into the "Hardware Quirk/Workaround" exception category.
+Against:
+- Niche driver (limited user population).
+- No `Reported-by:` / `Cc: stable` on this specific commit (expected per
+  instructions).
+- Trigger requires root (firmware upload).
+- Cosmetic concern: if both this and `1214bf28965ce` reach stable, you
+  get a duplicate bound check (still functionally correct).
 
-**Evidence AGAINST:** No explicit Reported-by/Tested-by (but the fix
-cites authoritative SoC docs); no explicit stable nomination (but
-absence is expected).
+**Step 9.2 - Stable rules checklist**
+1. Obviously correct & tested? Yes — minimal logic, mirrors existing
+   pattern; merged to mainline.
+2. Real bug? Yes — reachable kernel-heap OOB write.
+3. Important? Yes — heap corruption.
+4. Small & contained? Yes — 6 lines, one file, one function.
+5. No new features/APIs? Correct.
+6. Applies to stable? Yes — file unchanged since the bug was introduced.
 
-**Stable rules checklist:**
-1. Obviously correct and tested? YES — TXDMAEN placement verified,
-   reorder is semantically equivalent.
-2. Fixes a real bug? YES — documented hardware sequencing violation.
-3. Important issue? YES — data corruption / unpredictable DMA behavior.
-4. Small and contained? YES — 3 lines of actual code change.
-5. No new features? YES — pure correctness/reorder fix.
-6. Applies to stable trees? YES — clean apply verified.
+**Step 9.3 - Exception category**
+Memory safety / OOB write fix.
 
-**Exception category:** Hardware workaround for SDMA ENBLn sequencing
-requirement.
+**Step 9.4 - Decision**
+Backport.
 
-### Verification
-- [Phase 1] Parsed tags: no Fixes/Cc-stable/Reported-by; Link to lore
-  verified
-- [Phase 2] Diff shows `imx_uart_enable_dma` drops TXDMAEN;
-  `imx_uart_startup` swaps call order of `start_rx_dma` and `enable_dma`
-- [Phase 2] Verified `imx_uart_dma_tx()` in current tree and all stable
-  trees contains `ucr1 |= UCR1_TXDMAEN` at lines
-  ~658/657/666/660/682/637 respectively — the fix's dependency is met
-- [Phase 3] `git log -S"imx_enable_dma"` identified original DMA commit
-  `b4cdc8f61beb2` (Jul 2013)
-- [Phase 3] `git blame` on `sdma_event_enable` call in imx-sdma.c
-  corroborates the hardware ordering requirement
-- [Phase 4] `b4 dig -c 74e0c9f0528bc` found lore URL; `-a` shows only
-  v1; mbox inspection shows no replies/NAKs
-- [Phase 4] `b4 dig -c 86d57d9c07d54` for sibling SPI fix confirmed it
-  went through review (Frank Li, Mark Brown)
-- [Phase 4] `git branch --contains` for multiple SPI backport commits
-  confirmed backport to 5.10/5.15/6.1/6.6/6.12/6.17
-- [Phase 5] Confirmed `imx_uart_enable_dma` has a single caller
-  (`imx_uart_startup`) via `Grep`
-- [Phase 6] `git show vX:drivers/tty/serial/imx.c` for v5.4, v5.10,
-  v5.15, v6.1, v6.6, v6.12 all show identical buggy ordering
-- [Phase 6] `git apply --check /tmp/fix.patch` succeeded on v5.4, v5.10,
-  v5.15, v6.1, v6.6, v6.12 (no output = success)
-- [Phase 8] Failure mode per SoC reference manual — cited directly in
-  commit message
-- UNVERIFIED: No user bug report could be located; severity inferred
-  from SoC documentation only. The exact race-window probability on a
-  specific board is not quantified.
+## Verification
+- [Phase 1] Read full commit message; tags inventoried — no
+  `Fixes:`/`Cc: stable` (expected).
+- [Phase 2] Read current `cc1352_bootloader_rx()` (lines 532–554) and
+  confirmed `rx_buffer` is `u8[MAX_RX_HDLC]=259`.
+- [Phase 2] Confirmed sibling `hdlc_rx()` already enforces `MAX_RX_HDLC`
+  (line 399).
+- [Phase 3] `git log -S "cc1352_bootloader_rx" -- drivers/greybus/gb-
+  beagleplay.c` → introduced by `0cf7befa3ea2e`.
+- [Phase 3] `git describe --contains 0cf7befa3ea2e` → `v6.12-rc1~39^2`.
+- [Phase 3] `git log origin/master --oneline -- drivers/greybus/gb-
+  beagleplay.c` revealed duplicate follow-up `1214bf28965ce` with
+  `Fixes:` + `Cc: stable`.
+- [Phase 3] `git show origin/master:drivers/greybus/gb-beagleplay.c`
+  shows two consecutive bound-check blocks at lines 620 and 626 in
+  master (cosmetic duplication after both commits).
+- [Phase 4] `b4 dig -c cbc96a916b1a3` returned the lore thread (v1 only,
+  no replies).
+- [Phase 4] `b4 dig -c 1214bf28965ce -m` confirmed the follow-up patch
+  carries `Fixes: 0cf7befa3ea2` and `Cc: stable@vger.kernel.org`.
+- [Phase 5] Read `gb_tty_receive` and `gb_beagleplay_ops` to confirm the
+  call path: serdev `.receive_buf` → `gb_tty_receive` →
+  `cc1352_bootloader_rx` when `flashing_mode` is set.
+- [Phase 5] Read `cc1352_prepare()` (lines 860–929) to confirm
+  `flashing_mode` is set during user-initiated firmware upload via the
+  fw_upload framework.
+- [Phase 6] `git merge-base --is-ancestor 0cf7befa3ea2e` against each
+  stable-push branch — bug present in 6.12.y, 6.17.y, 6.18.y, 6.19.y;
+  absent in 6.6.y and earlier.
+- [Phase 6] Searched stable branches for the bound-check string — not
+  present anywhere yet.
+- [Phase 8] `rx_buffer` size = `1 + 256 + 2 = 259` (`MAX_RX_HDLC`);
+  confirmed by reading the macro definitions at lines 23–25.
+- UNVERIFIED: I did not measure how often a real BeaglePlay UART chunk
+  exceeds 259 bytes during firmware flash; treating this as a defense-
+  in-depth fix even if the trigger is rare. Doesn't change the YES
+  decision because the OOB write itself is real.
 
-Small, well-contained hardware-sequencing fix; same issue already
-accepted into stable trees for the sister SPI driver; dependency
-verified; applies cleanly. Meets all stable criteria.
+This commit is a small, contained memory-safety fix for a real kernel-
+heap OOB write that exists in 6.12.y/6.17.y/6.18.y/6.19.y. The same
+author already submitted a duplicate version explicitly tagged `Cc:
+stable`, which directly corroborates that the bug is stable-material. It
+applies cleanly and meets every stable-kernel rule.
 
 **YES**
 
- drivers/tty/serial/imx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/greybus/gb-beagleplay.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/tty/serial/imx.c b/drivers/tty/serial/imx.c
-index c488e5d372ffd..251a50c8aa387 100644
---- a/drivers/tty/serial/imx.c
-+++ b/drivers/tty/serial/imx.c
-@@ -1442,9 +1442,9 @@ static void imx_uart_enable_dma(struct imx_port *sport)
+diff --git a/drivers/greybus/gb-beagleplay.c b/drivers/greybus/gb-beagleplay.c
+index 87186f891a6ac..bca3132adacde 100644
+--- a/drivers/greybus/gb-beagleplay.c
++++ b/drivers/greybus/gb-beagleplay.c
+@@ -535,6 +535,12 @@ static size_t cc1352_bootloader_rx(struct gb_beagleplay *bg, const u8 *data,
+ 	int ret;
+ 	size_t off = 0;
  
- 	imx_uart_setup_ufcr(sport, TXTL_DMA, RXTL_DMA);
++	if (count > sizeof(bg->rx_buffer) - bg->rx_buffer_len) {
++		dev_err_ratelimited(&bg->sd->dev, "Bootloader RX buffer overflow");
++		bg->rx_buffer_len = 0;
++		return count;
++	}
++
+ 	memcpy(bg->rx_buffer + bg->rx_buffer_len, data, count);
+ 	bg->rx_buffer_len += count;
  
--	/* set UCR1 */
-+	/* set UCR1 except TXDMAEN which would be enabled in imx_uart_dma_tx */
- 	ucr1 = imx_uart_readl(sport, UCR1);
--	ucr1 |= UCR1_RXDMAEN | UCR1_TXDMAEN | UCR1_ATDMAEN;
-+	ucr1 |= UCR1_RXDMAEN | UCR1_ATDMAEN;
- 	imx_uart_writel(sport, ucr1, UCR1);
- 
- 	sport->dma_is_enabled = 1;
-@@ -1567,8 +1567,9 @@ static int imx_uart_startup(struct uart_port *port)
- 	imx_uart_enable_ms(&sport->port);
- 
- 	if (dma_is_inited) {
--		imx_uart_enable_dma(sport);
-+		/* Note: enable dma request after transfer start! */
- 		imx_uart_start_rx_dma(sport);
-+		imx_uart_enable_dma(sport);
- 	} else {
- 		ucr1 = imx_uart_readl(sport, UCR1);
- 		ucr1 |= UCR1_RRDYEN;
 -- 
 2.53.0
 
