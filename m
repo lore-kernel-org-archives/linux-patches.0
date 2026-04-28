@@ -1,50 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8993FB7DE;
-	Tue, 28 Apr 2026 10:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826F33FBEA5;
+	Tue, 28 Apr 2026 10:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372925; cv=none; b=tvOZpJGeZ03VJ5cjaGavRgaDv8PZTNwRh3FDffQMYjFwKhbsLXKeDaZtChIPofaHernx3WZ+Nl2AKPWfbNaf4sdlkqLQaDGksYwaWyqGBYAWgvW8gqmU63GFqDqyuFmeQOg3q/CxYEmjPJ5Vkmoo8lRC20DDzBSTpyXEFz+I7co=
+	t=1777372926; cv=none; b=Frkkc6rpx9t3NYkaeewJtQ+S0jEdK6gzBRMIKHB4FnuQjrlyAdrGXiakpPudFt1E5thGD1/1GzchkPVLLzxB928resAYrbU4LFEHvPgT6Vnwh97i4SvH4Nv45Ad1FVrl/tDbVKhXwRQ5XGExfu3WfNTELGRjvu+rHKptIDpOPO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372925; c=relaxed/simple;
-	bh=vA373YL3h68bLTYYCHuZBVlqlW2rLVoK7vXWdxBy1xU=;
+	s=arc-20240116; t=1777372926; c=relaxed/simple;
+	bh=8ng4dot3qiCc7ux6lPau8GDpfH70KFn1x3Azyx4Tj/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uXfkxw2H30G455Rnh+gzXHtI7NMyTzDCrYd5iXuYi+lukbTVl/ESA5/Hn8FpDCDNJ5PQ5zumn9stlzvLUNL0U/yCc0413rXIHjACL47872leaxB48U2Pav8Ly8GBlKhSAvLU04xcC/Q4jUPeiTHE1F5UTnhHp5KXjt7DdOpc7Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gnZDS58u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o2uviH44LY/7PAyxjvJOk77fbOPHJIr5plx0c90WVESdT7+ZcQjzBj17ReWGCqPm7K6csKMOLmCPZBDbJWp8Qid53UfZGyCbmr/z0pKwdknQVpg0h7AaJ6VvnujKPyp1ChRQRl4kdcXVBP9gnahtZQ9Q+1mJHeKhynxOaGW7UeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y5FuVDiM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gnZDS58u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB72C2BCC7;
-	Tue, 28 Apr 2026 10:42:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y5FuVDiM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA87C2BCB5;
+	Tue, 28 Apr 2026 10:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372924;
-	bh=vA373YL3h68bLTYYCHuZBVlqlW2rLVoK7vXWdxBy1xU=;
+	s=k20201202; t=1777372926;
+	bh=8ng4dot3qiCc7ux6lPau8GDpfH70KFn1x3Azyx4Tj/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnZDS58u/LHARZgs2R66E1ZNmZHjlFj2/OsJGzjKv3ga+ttcAP55C415QbTAatMxm
-	 eDKquV0mnBjiQGG2yZjX3mqReFlLZiqqyRxZf1xyBRKJKuFl5hV0fxiqPkW6MVQyMr
-	 XHC3MQz7AYSrQaUqPkXFFJswPzaPML+sGYztQWz8YCwVcWC+CdrfAYpb1U02Xw+Eyj
-	 +OqRE/pru4prS0uv3CF5ts+o738uJ5AzGNqzUiXDcQmSc6HGhwqQFGoSHgryNiLE73
-	 FIRMz2KMiUkkFS9S13HUZljwwiLZbosWYtwXvnB4pfHPdC+02Xj+PTXQCBLP8wDwOx
-	 /OMpfR9LNR9Rw==
+	b=Y5FuVDiMhmkyZ3nIxDcTS6xkxWyloWmeSf23lrgQ2fp1tnb1fIzv69qAVzhyQWrlG
+	 APaFUnjF18QdCdH07o6SlRjGyh9FRQZgdvXokN2lFYEuT6xGhlEzMyd7o4CBbQziyR
+	 O82gh4cO2HF6suPPYObmo3ss3IZu3PzeywdWBU3ZdKEoGBOYsqlru3RHRL3RXVx4dp
+	 S1PdwdEfu7g/c8lVNXZv32pmPxSc2oJJiP5bS6Li4t5guDvkBMuTtqWaMI7lX4qUCP
+	 G+RIdfzb1ViBIhyfXzUzQ/sUW8ieWaFWhKhS0ezC6Ut6QhSqrfN92+GWebFJtar5js
+	 uRowlWTEqHcuA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Tian <litian@redhat.com>,
-	Long Li <longli@microsoft.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Zizhi Wo <wozizhi@huawei.com>,
+	Zizhi Wo <wozizhi@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kys@microsoft.com,
-	haiyangz@microsoft.com,
-	wei.liu@kernel.org,
-	decui@microsoft.com,
-	jejb@linux.ibm.com,
-	linux-hyperv@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
+	bcrl@kvack.org,
+	viro@zeniv.linux.org.uk,
+	linux-aio@kvack.org,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] scsi: storvsc: Handle PERSISTENT_RESERVE_IN truncation for Hyper-V vFC
-Date: Tue, 28 Apr 2026 06:40:33 -0400
-Message-ID: <20260428104133.2858589-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] fs: aio: set VMA_DONTCOPY_BIT in mmap to fix NULL-pointer-dereference error
+Date: Tue, 28 Apr 2026 06:40:34 -0400
+Message-ID: <20260428104133.2858589-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -57,418 +54,418 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Tian <litian@redhat.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 9cf351b289fb2be22491fa3964f99126db67aa08 ]
+[ Upstream commit c03ce4173c7bffe1e7477f905a09b015d4000d3c ]
 
-The storvsc driver has become stricter in handling SRB status codes
-returned by the Hyper-V host. When using Virtual Fibre Channel (vFC)
-passthrough, the host may return SRB_STATUS_DATA_OVERRUN for
-PERSISTENT_RESERVE_IN commands if the allocation length in the CDB does
-not match the host's expected response size.
+[BUG]
+Recently, our internal syzkaller testing uncovered a null pointer
+dereference issue:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+...
+[   51.111664]  filemap_read_folio+0x25/0xe0
+[   51.112410]  filemap_fault+0xad7/0x1250
+[   51.113112]  __do_fault+0x4b/0x460
+[   51.113699]  do_pte_missing+0x5bc/0x1db0
+[   51.114250]  ? __pte_offset_map+0x23/0x170
+[   51.114822]  __handle_mm_fault+0x9f8/0x1680
+[   51.115408]  handle_mm_fault+0x24c/0x570
+[   51.115958]  do_user_addr_fault+0x226/0xa50
+...
+Crash analysis showed the file involved was an AIO ring file.
 
-Currently, this status is treated as a fatal error, propagating
-Host_status=0x07 [DID_ERROR] to the SCSI mid-layer. This causes
-userspace storage utilities (such as sg_persist) to fail with transport
-errors, even when the host has actually returned the requested
-reservation data in the buffer.
+[CAUSE]
+	PARENT process		CHILD process
+t=0	io_setup(1, &ctx)
+	[access ctx addr]
+	fork()
+	io_destroy
+	  vm_munmap // not affect child vma
+	  percpu_ref_put
+	  ...
+	    put_aio_ring_file
+t=1				[access ctx addr]	// pagefault
+				...
+				  __do_fault
+				    filemap_fault
+				      max_idx = DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE)
+t=2	      truncate_setsize
+	        truncate_pagecache
+t=3				      filemap_get_folio	// no folio, create folio
+				      __filemap_get_folio(..., FGP_CREAT, ...)	// page_not_uptodate
+				      filemap_read_folio(file, mapping->a_ops->read_folio, folio) // oops!
 
-Refactor the existing command-specific workarounds into a new helper
-function, storvsc_host_mishandles_cmd(), and add PERSISTENT_RESERVE_IN
-to the list of commands where SRB status errors should be suppressed for
-vFC devices. This ensures that the SCSI mid-layer processes the returned
-data buffer instead of terminating the command.
+At t=0, the parent process calls io_setup and then fork. The child process
+gets its own VMA but without any PTEs. The parent then calls io_destroy.
+Before i_size is truncated to 0, at t=1 the child process accesses this AIO
+ctx address and triggers a pagefault. After the max_idx check passes, at
+t=2 the parent calls truncate_setsize and truncate_pagecache. At t=3 the
+child fails to obtain the folio, falls into the "page_not_uptodate" path,
+and hits this problem because AIO does not implement "read_folio".
 
-Signed-off-by: Li Tian <litian@redhat.com>
-Reviewed-by: Long Li <longli@microsoft.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260406015344.12566-1-litian@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[Fix]
+Fix this by marking the AIO ring buffer VMA with VM_DONTCOPY so
+that fork()'s dup_mmap() skips it entirely. This is the correct
+semantic because:
+
+1) The child's ioctx_table is already reset to NULL by mm_init_aio() during
+fork(), so the child has no AIO context and no way to perform any AIO
+operations on this mapping.
+2) The AIO ring VMA is only meaningful in conjunction with its associated
+kioctx, which is never inherited across fork(). So child process with no
+AIO context has no legitimate reason to access the ring buffer. Delivering
+SIGSEGV on such an erroneous access is preferable to a kernel crash.
+
+Signed-off-by: Zizhi Wo <wozizhi@huaweicloud.com>
+Link: https://patch.msgid.link/20260413010814.548568-1-wozizhi@huawei.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information. Let me synthesize the full analysis.
+Based on my investigation, I now have enough information to provide a
+comprehensive analysis.
 
----
+## Complete Phase-by-Phase Analysis
 
-## Phase 1: Commit Message Forensics
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 — Subject line parse**
-Record: Subsystem `scsi: storvsc`, verb "Handle" (bug-fix indicator),
-summary: treat SRB_STATUS_DATA_OVERRUN for PERSISTENT_RESERVE_IN on
-Hyper-V vFC as success instead of DID_ERROR.
+**Step 1.1 - Subject Line:**
+- Record: `[fs: aio]` `[set VMA_DONTCOPY_BIT]` - indicates fix; title
+  explicitly says "to fix NULL-pointer-dereference error"
 
-**Step 1.2 — Tags**
-Record:
-- Signed-off-by: Li Tian (Red Hat, author)
-- Reviewed-by: Long Li (Microsoft, storvsc maintainer/co-maintainer)
-- Reviewed-by: Laurence Oberman (Red Hat, storage expert)
-- Link: patch.msgid.link (lore)
-- Signed-off-by: Martin K. Petersen (SCSI maintainer)
-- No Fixes:, no Cc: stable (expected for manual review candidates)
+**Step 1.2 - Tags:**
+- Record:
+  - Signed-off-by: Zizhi Wo (author from Huawei)
+  - Link:
+    https://patch.msgid.link/20260413010814.548568-1-wozizhi@huawei.com
+  - Reviewed-by: Jan Kara (SUSE, MM/filesystems reviewer)
+  - Signed-off-by: Christian Brauner (VFS maintainer)
+  - No explicit Cc: stable, no Fixes: tag (expected for this evaluation
+    pipeline)
 
-**Step 1.3 — Body analysis**
-Record: Bug is concrete and user-visible. When the storvsc driver became
-stricter (SRB_STATUS_DATA_OVERRUN treated as error), Hyper-V vFC started
-failing PERSISTENT_RESERVE_IN with `Host_status=0x07 [DID_ERROR]`, which
-causes `sg_persist` and other SCSI-3 PR utilities to fail with transport
-errors even though the reservation data was correctly returned in the
-buffer. Root cause: the host echoes SRB_STATUS_DATA_OVERRUN when the
-CDB's allocation length does not match the host's expected response
-size.
+**Step 1.3 - Commit Body:**
+- Record: The body describes an internal syzkaller-discovered NULL
+  pointer deref reproducible by a fork()+io_destroy race. A detailed
+  timing diagram shows 4 time steps (t=0..t=3) explaining the race
+  between parent's io_destroy() teardown and child's page fault on the
+  inherited AIO ring VMA. The kernel crash stack trace shows:
+  `do_user_addr_fault -> handle_mm_fault -> __handle_mm_fault ->
+  do_pte_missing -> __do_fault -> filemap_fault -> filemap_read_folio` -
+  oops at `a_ops->read_folio` (NULL).
 
-**Step 1.4 — Hidden bug-fix detection**
-Record: "Handle ... truncation" = explicit bug fix; the refactor is
-incidental.
+**Step 1.4 - Hidden bug fixes:**
+- Record: Not hidden - the subject explicitly says "to fix NULL-pointer-
+  dereference error". This is a clear bug fix.
 
----
+### PHASE 2: DIFF ANALYSIS
 
-## Phase 2: Diff Analysis
+**Step 2.1 - Inventory:**
+- Record: One file modified (`fs/aio.c`), 1 line changed (+1/-1), single
+  function `aio_ring_mmap_prepare()`. Surgical, minimal scope.
 
-**Step 2.1 — Inventory**
-Record: Single file `drivers/scsi/storvsc_drv.c`, +21/-11, scope: one
-new static helper (`storvsc_host_mishandles_cmd`) and a rewrite of one
-`if` expression in `storvsc_on_io_completion`.
+**Step 2.2 - Code flow:**
+- Record: Before: VMA created with `VMA_DONTEXPAND_BIT` only. After: VMA
+  created with both `VMA_DONTEXPAND_BIT` and `VMA_DONTCOPY_BIT`. Affects
+  fork()'s `dup_mmap()` behavior: child will not inherit this VMA.
 
-**Step 2.2 — Code flow change**
-Record:
-- BEFORE: `if ((cdb[0]==INQUIRY) || (cdb[0]==MODE_SENSE) ||
-  (cdb[0]==MODE_SENSE_10) || (cdb[0]==MAINTENANCE_IN &&
-  hv_dev_is_fc(device)))` → mask status to success
-- AFTER: `if (storvsc_host_mishandles_cmd(cdb[0], device))` → same mask;
-  helper adds `PERSISTENT_RESERVE_IN` under the FC-gated arm
+**Step 2.3 - Bug mechanism:**
+- Record: Category (h) Hardware-semantic fix / (d) Memory safety.
+  Mechanism: Preventing fork()-time VMA duplication of the AIO ring
+  buffer, eliminating the race window where child holds a VMA to a ring
+  file while parent tears it down.
 
-**Step 2.3 — Bug mechanism**
-Record: Hardware-workaround / status-filtering bug. Adds
-PERSISTENT_RESERVE_IN to the same whitelist used for MAINTENANCE_IN —
-i.e., commands for which Hyper-V vFC returns SRB_STATUS_DATA_OVERRUN
-despite the data being correct.
+**Step 2.4 - Fix quality:**
+- Record: Obviously correct, minimal, surgical. Risk of regression
+  extremely low - the only behavioral change is that child processes
+  cannot access the parent's AIO ring (which was never semantically
+  valid - see `mm_init_aio()` which already zeros `ioctx_table` in
+  child).
 
-**Step 2.4 — Fix quality**
-Record: Obviously correct: the new `switch` is semantically identical to
-the old `if` for existing opcodes; it only adds PERSISTENT_RESERVE_IN
-under `hv_dev_is_fc(device)`. Minimal, surgical. Refactor into a helper
-is cosmetic but slightly expands diff; no functional change for non-vFC
-devices or for other opcodes.
+### PHASE 3: GIT HISTORY INVESTIGATION
 
----
+**Step 3.1 - Blame the buggy code:**
+- Record: The AIO ring mmap hook is ancient (pre-2.6.12). The `.fault =
+  filemap_fault` vm_op was added in mid-2010s. The fundamental bug (fork
+  copies VMA but child has no AIO context) has existed essentially since
+  AIO ring was made mappable. Verified via `git log --follow fs/aio.c`
+  showing AIO predates the current git history (from Linux-2.6.12-rc2).
 
-## Phase 3: Git History Investigation
+**Step 3.2 - Follow Fixes: tag:**
+- Record: No Fixes: tag. The bug is essentially inherent to the AIO ring
+  design from the start.
 
-**Step 3.1 — Blame**
-Record: The stricter handling of SRB_STATUS_DATA_OVERRUN was introduced
-by commit `812fe6420a6e7` ("scsi: storvsc: Handle additional SRB status
-values"), which went into **v6.6-rc1**. Before that, unknown SRB
-statuses were simply ignored, so the bug did not manifest.
+**Step 3.3 - Related changes:**
+- Record: Previously, commit `81e9d6f864765` ("aio: fix mremap after
+  fork null-deref", 2023, in v6.3) fixed an adjacent fork+AIO NULL-
+  deref. That commit was `Cc: stable` tagged and backported. A follow-up
+  commit `3adf7ae18bf42` ("fs: aio: reject partial mremap...") by the
+  same author fixes yet another NULL-deref in the same family (also
+  reviewed by Jan Kara). These demonstrate a pattern of fork+AIO race
+  bugs.
 
-**Step 3.2 — Fixes: follow-up**
-Record: There is no Fixes: tag, but the root-cause commit is clearly
-`812fe6420a6e7` (v6.6). That commit IS present in all stable trees from
-6.6.y onward, so the bug it introduced is present in all those trees.
+**Step 3.4 - Author:**
+- Record: Zizhi Wo is a regular Huawei kernel contributor, working on
+  filesystem issues. Also authored the related `3adf7ae18bf42` mremap
+  fix.
 
-**Step 3.3 — File history / related commits**
-Record:
-- `b1aee7f034615` ("scsi: storvsc: Do not flag MAINTENANCE_IN return of
-  SRB_STATUS_DATA_OVERRUN as an error", v6.13-rc2, Cathy Avery) —
-  parallel fix for MAINTENANCE_IN/RTPG. **Confirmed via web search this
-  was AUTOSEL'd to 6.6.y stable (`[PATCH AUTOSEL 6.6 17/23]` on lkml).**
-- `9eacec5d18f98` ("scsi: storvsc: Process unsupported MODE_SENSE_10",
-  2026) — also had `Cc: stable@kernel.org` and `Fixes:`.
-- The current commit is effectively "MAINTENANCE_IN fix, part 2" for a
-  different opcode.
+**Step 3.5 - Dependencies:**
+- Record: None. The fix is self-contained. The `VM_DONTCOPY` flag has
+  been part of `dup_mmap()` logic for many years (mm/mmap.c), checked
+  via `mpnt->vm_flags & VM_DONTCOPY`.
 
-**Step 3.4 — Author context**
-Record: Li Tian (Red Hat) — regular contributor of Hyper-V /
-virtualization fixes. Reviewed by Long Li (Microsoft), who is the
-storvsc maintainer. Strong review signal.
+### PHASE 4: MAILING LIST RESEARCH
 
-**Step 3.5 — Dependencies**
-Record: Uses `hv_dev_is_fc(device)`, `INQUIRY`, `MODE_SENSE`,
-`MODE_SENSE_10`, `MAINTENANCE_IN`, `PERSISTENT_RESERVE_IN`, all of which
-exist in every stable tree 6.6+. Patch is self-contained.
+**Step 4.1 - Original discussion:**
+- Record: `b4 dig -c c03ce4173c7bf` found the original submission at htt
+  ps://lore.kernel.org/all/20260413010814.548568-1-wozizhi@huawei.com/ -
+  v1 only (no later revisions needed). Jan Kara's review comment
+  (retrieved via b4 dig -m): "*I agree it would have to be a rather
+  contrived setup to rely on AIO ringbuffer being inherited by
+  fork(2)... AIO ringbuffer is mostly a legacy thing these days... So
+  I'm OK with trying this simple fix and seeing whether somebody
+  complains.*" - No NAKs, no stable nomination but no objection to the
+  approach.
 
----
+**Step 4.2 - Reviewers:**
+- Record: CC'd: viro (VFS), jack (Jan Kara - MM/FS), brauner (VFS
+  maintainer), bcrl (AIO original maintainer), linux-fsdevel, linux-aio,
+  yangerkun, chengzhihao1. Plus Jan Kara added Jens Axboe for awareness.
+  Appropriate review coverage.
 
-## Phase 4: Mailing List and External Research
+**Step 4.3 - Bug report:**
+- Record: Found by Huawei internal syzkaller (fuzzer). Reproducible
+  kernel NULL pointer dereference - not theoretical.
 
-**Step 4.1 — b4 dig**
-Record: `b4 dig -c 9cf351b289fb2` matched by patch-id, single series,
-only v1, URL
-`https://lore.kernel.org/all/20260406015344.12566-1-litian@redhat.com`.
-No v2 or further revisions — applied as submitted.
+**Step 4.4 - Related patches:**
+- Record: Follow-up `3adf7ae18bf42` ("fs: aio: reject partial
+  mremap...") addresses a related but different NULL-deref in the same
+  subsystem. Independent fix.
 
-**Step 4.2 — b4 dig -w**
-Record: Recipients included linux-scsi, linux-hyperv, Microsoft
-maintainers (K. Y. Srinivasan, Haiyang Zhang, Wei Liu, Dexuan Cui, Long
-Li), James Bottomley, and Martin K. Petersen. The right audience
-reviewed it.
+**Step 4.5 - Stable list history:**
+- Record: No explicit stable mailing list discussion found. However, the
+  precedent (81e9d6f864765) of fork-related AIO fix being backported
+  supports that this is stable material.
 
-**Step 4.3 — Thread contents (saved mbox)**
-Record: Thread contains:
-- Reviewed-by: Long Li: "Reviewed-by: Long Li <longli@microsoft.com>"
-- Reviewed-by: Laurence Oberman: "Looks good, rewrite of how it was done
-  before but will achieve the same behavior we wanted for the new
-  addition for PR. Reviewed-by: Laurence Oberman."
-- Martin K. Petersen applied to 7.1/scsi-staging and later 7.1/scsi-
-  queue.
-No NAKs, no stable-suitability concerns raised. No explicit `Cc: stable`
-nomination, but also no objections.
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 4.4 — Series**
-Record: Standalone single-patch series, no dependencies.
+**Step 5.1 - Key functions:**
+- Record: `aio_ring_mmap_prepare()` is the only function modified.
 
-**Step 4.5 — Stable list history**
-Record: Could not access lore.kernel.org/stable (bot protection). Web
-search confirms the sibling MAINTENANCE_IN fix `b1aee7f034615` was
-selected by AUTOSEL for 6.6.y, validating the pattern for stable
-backport.
+**Step 5.2 - Callers:**
+- Record: Called by VFS mmap logic via `f_op->mmap_prepare` during
+  `mmap()` on the AIO ring file. Reachable from `io_setup(2)` syscall
+  via `aio_setup_ring() -> do_mmap(aio_ring_file, ...)`. Reachable by
+  any unprivileged process that can do io_setup().
 
----
+**Step 5.3 - Callees:**
+- Record: `vma_desc_set_flags()` - setting VMA flags during mmap
+  preparation. No side effects other than flag setting.
 
-## Phase 5: Code Semantic Analysis
+**Step 5.4 - Call chain:**
+- Record: Bug path reachable from userspace:
+  1. User calls `io_setup(2)` -> mmap of AIO ring VMA
+  2. User calls `fork(2)` -> child inherits VMA (before this fix)
+  3. User (child) touches the VMA address -> triggers fault
+  4. User (parent) calls `io_destroy(2)` concurrently -> race triggers
+     NULL deref
+  All reachable by unprivileged userspace.
 
-**Step 5.1–5.2 — Callers**
-Record: `storvsc_on_io_completion` is called from `storvsc_on_receive`
-for `VSTOR_OPERATION_COMPLETE_IO`, which is the primary completion path
-for every SCSI command issued through storvsc. Every `sg_persist` or
-other userspace PR issuer for a vFC LUN reaches this code.
+**Step 5.5 - Similar patterns:**
+- Record: Verified via Grep that `VM_DONTCOPY` is used in several kernel
+  subsystems (android/binder.c, KFD, xen, infiniband, etc.) for VMAs
+  that shouldn't be inherited by fork. The AIO ring is semantically the
+  same class - it's associated with parent-specific kernel state.
 
-**Step 5.3 — Callees**
-Record: `hv_dev_is_fc()` is a trivial GUID comparison
-(`HV_SYNTHFC_GUID`); no side effects.
+### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 5.4 — Reachability**
-Record: Yes, trivially reachable from userspace: `/dev/sgN` ioctl →
-PERSISTENT_RESERVE_IN CDB → storvsc → this completion path. Used by
-`sg_persist`, `multipath`, cluster software.
+**Step 6.1 - Buggy code in stable trees:**
+- Record: Verified by examining `fs/aio.c` in each stable tree:
+  - `stable/linux-5.10.y`: Uses `vma->vm_flags |= VM_DONTEXPAND;` (no
+    VM_DONTCOPY)
+  - `stable/linux-5.15.y`: Uses `vma->vm_flags |= VM_DONTEXPAND;`
+  - `stable/linux-6.1.y`: Uses `vma->vm_flags |= VM_DONTEXPAND;`
+  - `stable/linux-6.6.y`: Uses `vm_flags_set(vma, VM_DONTEXPAND);`
+  - `stable/linux-6.12.y`: Uses `vm_flags_set(vma, VM_DONTEXPAND);`
+  - `stable/linux-6.17.y`, `6.18.y`, `6.19.y`: Uses `desc->vm_flags |=
+    VM_DONTEXPAND;`
 
-**Step 5.5 — Similar patterns**
-Record: Same pattern already applied for INQUIRY (pre-2014),
-MODE_SENSE/MODE_SENSE_10 (`9eacec5d18f98`, Cc: stable), and
-MAINTENANCE_IN (`b1aee7f034615`, AUTOSEL to 6.6.y).
+  All stable trees are missing VM_DONTCOPY and vulnerable to the bug.
 
----
+**Step 6.2 - Backport complications:**
+- Record: The upstream patch uses `vma_desc_set_flags(desc,
+  VMA_DONTEXPAND_BIT, VMA_DONTCOPY_BIT)` which was introduced in 7.0
+  (master). For each stable tree, the fix needs adaptation:
+  - 5.10-6.1: `vma->vm_flags |= VM_DONTEXPAND | VM_DONTCOPY;`
+  - 6.6-6.12: `vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY);`
+  - 6.17-6.19: `desc->vm_flags |= VM_DONTEXPAND | VM_DONTCOPY;`
 
-## Phase 6: Stable Tree Analysis
+  Minor textual adjustment needed but semantically identical.
 
-**Step 6.1 — Bug presence in stable**
-Record: Stricter SRB_STATUS_DATA_OVERRUN handling (812fe6420a6e7) is in
-v6.6+. Therefore the PERSISTENT_RESERVE_IN regression exists in 6.6.y,
-6.12.y, 6.15.y, 6.18.y and current trees.
+**Step 6.3 - Related fixes in stable:**
+- Record: Commit `81e9d6f864765` ("aio: fix mremap after fork null-
+  deref") was backported to stable (verified present in
+  stable/linux-5.10.y as `c261f798f7baa` and in stable/linux-6.6.y as
+  `81e9d6f864765`). That confirms the AIO+fork class of bugs has been
+  considered stable-worthy before.
 
-**Step 6.2 — Backport complications**
-Record: On stable trees that already have the MAINTENANCE_IN fix
-(`b1aee7f034615`), the diff context matches exactly and should apply
-cleanly with minor refactor. On any tree missing the MAINTENANCE_IN fix,
-the refactor-into-helper form may need trivial adjustment. Given that
-`b1aee7f034615` was AUTOSEL'd to 6.6.y, most 6.6+ stable trees should
-have it.
+### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 6.3 — Related fixes already in stable**
-Record: `b1aee7f034615` (MAINTENANCE_IN) and `9eacec5d18f98`
-(MODE_SENSE_10) are already in stable. This completes the triad for vFC
-command-mishandle workarounds.
+**Step 7.1 - Subsystem:**
+- Record: `fs/aio.c` - AIO filesystem interface. IMPORTANT criticality -
+  not in the hot path for most users (io_uring is newer), but AIO is
+  widely used by legacy applications, databases (Oracle, MySQL), and
+  libaio consumers. Still heavily supported.
 
----
+**Step 7.2 - Activity:**
+- Record: AIO is mature/stable subsystem. Low activity (mostly
+  maintenance) - the bug has likely been present for years without being
+  hit due to the unusual trigger (fork after io_setup is uncommon).
 
-## Phase 7: Subsystem Context
+### PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 7.1 — Criticality**
-Record: `drivers/scsi/storvsc_drv.c` — Hyper-V synthetic SCSI/FC driver.
-IMPORTANT (used by every Linux VM running on Hyper-V/Azure that uses vFC
-for storage — enterprise and cloud).
+**Step 8.1 - Affected users:**
+- Record: Any system using AIO where a process that called io_setup()
+  then forks (e.g., databases, async I/O applications with forking). The
+  fork+AIO combination is unusual but legitimate.
 
-**Step 7.2 — Activity**
-Record: Actively maintained; recent commits (MODE_SENSE_10,
-MAINTENANCE_IN, queue/channel work). Not a stale subsystem.
+**Step 8.2 - Trigger conditions:**
+- Record: Race between parent's io_destroy() and child's page fault on
+  inherited ring. Triggerable by unprivileged userspace. Timing-
+  dependent but demonstrated via syzkaller (reproducible). No special
+  privileges needed.
 
----
+**Step 8.3 - Failure mode severity:**
+- Record: Kernel NULL pointer dereference - CRITICAL. System crash
+  (oops), potential panic depending on config. Triggerable by
+  unprivileged userspace - this borders on security concern (DoS).
 
-## Phase 8: Impact and Risk
+**Step 8.4 - Risk-benefit:**
+- Record:
+  - BENEFIT: Prevents kernel NULL deref crash triggerable by
+    unprivileged userspace. HIGH benefit.
+  - RISK: 1-line flag change. VM_DONTCOPY means child doesn't inherit
+    parent's AIO ring - semantically correct since `mm_init_aio()`
+    already clears the child's `ioctx_table`. Verified in kernel/fork.c:
+    `mm_init_aio() { mm->ioctx_table = NULL; }`. Very low risk.
 
-**Step 8.1 — Affected population**
-Record: Linux VMs on Hyper-V/Azure using vFC passthrough with SCSI-3
-persistent reservations (HA clusters, shared-storage coordination,
-`sg_persist` consumers). Significant enterprise user base; not a niche
-driver.
+### PHASE 9: FINAL SYNTHESIS
 
-**Step 8.2 — Trigger**
-Record: Any userspace call issuing PERSISTENT_RESERVE_IN (service action
-READ_KEYS, READ_RESERVATION, REPORT_CAPABILITIES, READ_FULL_STATUS) to a
-vFC LUN. Reproduces via `sg_persist -k /dev/sdX`. Unprivileged trigger:
-limited by device permissions, but not a kernel-level security issue.
+**Step 9.1 - Evidence:**
+- FOR: Fixes real kernel NULL deref; found by syzkaller (reproducible);
+  reviewed by Jan Kara; 1-line surgical change; semantically correct
+  (child has no AIO context); precedent of similar fork+AIO fix being
+  backported (`81e9d6f864765`); triggerable by unprivileged userspace
+  (crash = DoS).
+- AGAINST: Requires backport adjustment for older stable trees (API
+  evolved from `vma->vm_flags |=` to `vm_flags_set()` to
+  `desc->vm_flags` to `vma_desc_set_flags()`). However this is a trivial
+  textual adjustment.
 
-**Step 8.3 — Failure mode severity**
-Record: User-visible I/O failure (sg_persist returns transport error,
-multipath/cluster software fails to query/modify reservations). Severity
-MEDIUM — no crash, no corruption, but broken functionality that blocks
-clustering on Hyper-V vFC.
+**Step 9.2 - Stable rules checklist:**
+1. Obviously correct and tested? YES - reviewed by Jan Kara, logic
+   verified
+2. Fixes a real bug? YES - syzkaller-reproducible NULL deref
+3. Important issue? YES - CRITICAL: NULL pointer deref = kernel crash
+4. Small and contained? YES - 1 line
+5. No new features? YES - just adds a flag
+6. Can apply to stable? YES with minor textual adjustment per kernel
+   version
 
-**Step 8.4 — Risk/benefit**
-Record:
-- Benefit: restores working SCSI-3 PR on Hyper-V vFC for all stable
-  users on 6.6+.
-- Risk: very low — change is gated on opcode == PERSISTENT_RESERVE_IN
-  AND device is vFC. Non-vFC storvsc devices and non-PR opcodes are
-  unaffected. The refactor is semantically equivalent for existing
-  cases.
-Ratio: favorable.
+**Step 9.3 - Exception categories:**
+- Not applicable - this is a direct bug fix for a kernel NULL deref.
 
----
+**Step 9.4 - Decision:** The fix clearly meets all stable criteria:
+obviously correct, fixes a real (syzkaller-reproducible) kernel crash,
+very small (1 line), no new APIs. The bug is triggerable by unprivileged
+userspace via fork+io_setup/io_destroy race, making it a serious issue
+worthy of backport. The only complication is the 4 slightly different
+forms needed for different stable trees, but each is a trivial
+adaptation.
 
-## Phase 9: Final Synthesis
+## Verification
 
-**Step 9.1 — Evidence**
-FOR: real user-visible bug (sg_persist failure), subsystem-maintainer +
-independent reviewer sign-off, small single-file diff, follows
-established pattern (MAINTENANCE_IN fix was AUTOSEL'd to 6.6.y), bug
-present in all 6.6+ stable trees, no dependencies, low regression
-surface.
-AGAINST: includes a refactor-into-helper along with the fix (minor
-cosmetic); missing explicit `Cc: stable` tag (but that's expected for
-manually-reviewed candidates and also absent from the already-backported
-MAINTENANCE_IN fix).
+- [Phase 1] Parsed tags: Reviewed-by Jan Kara, Signed-off-by Christian
+  Brauner (VFS maintainer), Link to lore patch submission
+- [Phase 2] Diff analysis: verified via `git show c03ce4173c7bf` -
+  single 1-line change in `aio_ring_mmap_prepare()` adding
+  VMA_DONTCOPY_BIT
+- [Phase 3] Checked file history `git log --oneline -- fs/aio.c` - aio.c
+  is pre-2.6.12 (ancient), the ring mmap code has existed for over a
+  decade
+- [Phase 3] Found related earlier fix `81e9d6f864765` "aio: fix mremap
+  after fork null-deref" with explicit `Cc: <stable@vger.kernel.org>` -
+  established precedent
+- [Phase 4] `b4 dig -c c03ce4173c7bf -a`: single version (v1) - applied
+  as-is, no revisions needed
+- [Phase 4] `b4 dig -c c03ce4173c7bf -w`: verified maintainers CC'd
+  (viro, jack, brauner, bcrl, linux-fsdevel, linux-aio)
+- [Phase 4] `b4 dig -m /tmp/aio_patch.mbox`: Jan Kara's review approved
+  the approach, called AIO ring "mostly a legacy thing", no NAKs
+- [Phase 5] Verified `VMA_DONTCOPY_BIT` = 17 via
+  `DECLARE_VMA_BIT(DONTCOPY, 17)` in include/linux/mm.h;
+  `vma_desc_set_flags` expands to `vma_desc_set_flags_mask(desc,
+  mk_vma_flags(__VA_ARGS__))`
+- [Phase 5] Verified `mm_init_aio` in kernel/fork.c: `mm->ioctx_table =
+  NULL;` - child has no AIO context, confirming semantic correctness
+- [Phase 5] Verified `VM_DONTCOPY` handling in mm/mmap.c dup_mmap: `if
+  (mpnt->vm_flags & VM_DONTCOPY) { ... continue; }` - VMA is skipped
+  during fork
+- [Phase 6] Read code from each stable tree's `fs/aio.c`:
+  - 5.10.y line 369-373: `vma->vm_flags |= VM_DONTEXPAND`
+  - 5.15.y line 368-373: `vma->vm_flags |= VM_DONTEXPAND`
+  - 6.1.y line 395-400: `vma->vm_flags |= VM_DONTEXPAND`
+  - 6.6.y line 395-400: `vm_flags_set(vma, VM_DONTEXPAND)`
+  - 6.12.y line 395-400: `vm_flags_set(vma, VM_DONTEXPAND)`
+  - 6.17.y/6.18.y/6.19.y line 395-400: `desc->vm_flags |= VM_DONTEXPAND`
+  None have VM_DONTCOPY - all are vulnerable.
+- [Phase 6] Verified related `81e9d6f864765` is in stable via `git log
+  stable/linux-5.10.y` (as `c261f798f7baa`) and stable/linux-6.6.y
+- [Phase 7] Subsystem identified as fs/aio (filesystem, async I/O) -
+  IMPORTANT criticality level
+- [Phase 8] Failure mode: NULL deref at `filemap_read_folio` when
+  accessing `a_ops->read_folio` (not implemented by AIO) - confirmed
+  from stack trace in commit message
+- UNVERIFIED: Whether the original syzkaller reproducer is public
+  (Huawei internal testing, report not public)
+- UNVERIFIED: Exact date when the bug first became exploitable (depends
+  on when filemap_fault path was used for this VMA, which has been
+  present since aio ring was mappable - approximately since 2013)
 
-**Step 9.2 — Stable rules checklist**
-1. Obviously correct & tested? YES (reviewed by MS + RH; switch is
-   semantically equivalent for existing opcodes).
-2. Fixes a real bug affecting users? YES (sg_persist on vFC).
-3. Important issue? YES — breaks clustering/PR on a widely-used
-   virtualization platform (MEDIUM-HIGH severity).
-4. Small & contained? YES (+21/-11, one file).
-5. No new features/APIs? YES (workaround only).
-6. Applies to stable? YES (clean on 6.13+; likely clean on 6.6.y–6.12.y
-   which already have the sibling MAINTENANCE_IN fix).
+## Conclusion
 
-**Step 9.3 — Exception category**
-Record: Falls under "hardware workaround / quirk" exception — the host-
-side mishandling is effectively a device bug the driver compensates for.
-
-**Step 9.4 — Decision**
-YES.
-
----
-
-### Verification
-- [Phase 1] Parsed tags via Read of commit message: found 2 Reviewed-by,
-  Link:, Signed-off-by chain. No Fixes/Cc:stable.
-- [Phase 2] `git show 9cf351b289fb2`: confirmed +21/-11, single file,
-  refactor + PERSISTENT_RESERVE_IN addition gated on
-  `hv_dev_is_fc(device)`.
-- [Phase 3] `git log --oneline --grep="MAINTENANCE_IN" --
-  drivers/scsi/storvsc_drv.c`: found sibling fix `b1aee7f034615`.
-- [Phase 3] `git show 812fe6420a6e`: confirmed this is the commit that
-  introduced the stricter handling. `git describe --contains
-  812fe6420a6e` → `v6.6-rc1~11^2~9^2` (v6.6).
-- [Phase 3] `git describe --contains b1aee7f034615` → v6.13-rc2~7^2~1
-  (MAINTENANCE_IN fix landed in v6.13).
-- [Phase 3] `git show 9eacec5d18f98`: confirmed MODE_SENSE_10 handling
-  fix explicitly had `Cc: stable@kernel.org` and `Fixes:` tag (similar
-  hardware-mishandling pattern).
-- [Phase 4] `b4 dig -c 9cf351b289fb2`: matched by patch-id, single
-  version v1, lore URL obtained.
-- [Phase 4] `b4 dig -c 9cf351b289fb2 -a`: only v1 exists (no v2/v3;
-  applied as submitted).
-- [Phase 4] `b4 dig -c 9cf351b289fb2 -w`: correct recipients (Microsoft
-  storvsc maintainers + linux-scsi + linux-hyperv + MKP).
-- [Phase 4] Saved thread to /tmp/thread.mbox and read it: found Long
-  Li's Reviewed-by, Laurence Oberman's Reviewed-by ("Looks good, rewrite
-  of how it was done before..."), and Martin K. Petersen's "Applied to
-  7.1/scsi-queue". No NAKs, no concerns.
-- [Phase 4] WebSearch confirmed `b1aee7f034615` was listed as "[PATCH
-  AUTOSEL 6.6 17/23]" on lkml, validating that the AUTOSEL process
-  already backported the sibling fix.
-- [Phase 5] Grep for `storvsc_on_io_completion`: confirmed it is called
-  from `storvsc_on_receive` on `VSTOR_OPERATION_COMPLETE_IO`, i.e.,
-  every SCSI completion path.
-- [Phase 5] Read `hv_dev_is_fc` (line 1928): trivial GUID match against
-  `HV_SYNTHFC_GUID` — zero side effects.
-- [Phase 6] v6.6 contains 812fe6420a6e (bug root cause is present in
-  6.6.y, 6.12.y, 6.15.y, 6.18.y).
-- [Phase 8] Failure mode: sg_persist returns DID_ERROR even when host
-  returned data; breaks SCSI-3 PR on vFC — MEDIUM severity, broad impact
-  on enterprise Hyper-V users.
-- UNVERIFIED: Could not fetch lore.kernel.org/stable directly (Anubis
-  bot protection), so I could not confirm whether this specific commit
-  is already under stable discussion. This does not change the YES
-  decision; it is based on technical merit.
-- UNVERIFIED: Did not run an actual `git am` against linux-stable
-  branches to confirm clean apply, but the code context (lines 1131–1180
-  in storvsc_drv.c) matches the upstream base `ae1abab97835` (index in
-  diff) and all referenced symbols (`INQUIRY`, `MODE_SENSE_10`,
-  `MAINTENANCE_IN`, `PERSISTENT_RESERVE_IN`, `hv_dev_is_fc`) exist in
-  6.13+ trees with the MAINTENANCE_IN fix already present.
-
-This is a small, well-reviewed hardware-workaround fix for a real user-
-visible regression (sg_persist/SCSI-3 PR broken on Hyper-V vFC since
-v6.6), following an established pattern whose sibling was already
-AUTOSEL'd to stable. Benefit clearly outweighs risk.
+This is a small, surgical bug fix for a kernel NULL pointer dereference
+that can be triggered by unprivileged userspace via a fork+AIO race. The
+fix is semantically correct (child has no AIO context, so the VMA
+shouldn't be inherited), was reviewed by Jan Kara, and has an
+established precedent of related fork+AIO fixes being backported to
+stable. The only caveat is that each stable tree needs a minor textual
+adaptation due to API evolution (from `vma->vm_flags |=` to
+`vm_flags_set()` to `vma_desc_set_flags()`), but the one-line semantic
+change applies cleanly in every case.
 
 **YES**
 
- drivers/scsi/storvsc_drv.c | 32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ fs/aio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index ae1abab97835b..6977ca8a06582 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1131,6 +1131,26 @@ static void storvsc_command_completion(struct storvsc_cmd_request *cmd_request,
- 		kfree(payload);
+diff --git a/fs/aio.c b/fs/aio.c
+index a07bdd1aaaa60..6d436f8b3f349 100644
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -394,7 +394,7 @@ static const struct vm_operations_struct aio_ring_vm_ops = {
+ 
+ static int aio_ring_mmap_prepare(struct vm_area_desc *desc)
+ {
+-	vma_desc_set_flags(desc, VMA_DONTEXPAND_BIT);
++	vma_desc_set_flags(desc, VMA_DONTEXPAND_BIT, VMA_DONTCOPY_BIT);
+ 	desc->vm_ops = &aio_ring_vm_ops;
+ 	return 0;
  }
- 
-+/*
-+ * The current SCSI handling on the host side does not correctly handle:
-+ * INQUIRY with page code 0x80, MODE_SENSE / MODE_SENSE_10 with cmd[2] == 0x1c,
-+ * and (for FC) MAINTENANCE_IN / PERSISTENT_RESERVE_IN passthrough.
-+ */
-+static bool storvsc_host_mishandles_cmd(u8 opcode, struct hv_device *device)
-+{
-+	switch (opcode) {
-+	case INQUIRY:
-+	case MODE_SENSE:
-+	case MODE_SENSE_10:
-+		return true;
-+	case MAINTENANCE_IN:
-+	case PERSISTENT_RESERVE_IN:
-+		return hv_dev_is_fc(device);
-+	default:
-+		return false;
-+	}
-+}
-+
- static void storvsc_on_io_completion(struct storvsc_device *stor_device,
- 				  struct vstor_packet *vstor_packet,
- 				  struct storvsc_cmd_request *request)
-@@ -1141,22 +1161,12 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
- 	stor_pkt = &request->vstor_packet;
- 
- 	/*
--	 * The current SCSI handling on the host side does
--	 * not correctly handle:
--	 * INQUIRY command with page code parameter set to 0x80
--	 * MODE_SENSE and MODE_SENSE_10 command with cmd[2] == 0x1c
--	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
--	 *
- 	 * Setup srb and scsi status so this won't be fatal.
- 	 * We do this so we can distinguish truly fatal failues
- 	 * (srb status == 0x4) and off-line the device in that case.
- 	 */
- 
--	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
--	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
--	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE_10) ||
--	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
--	   hv_dev_is_fc(device))) {
-+	if (storvsc_host_mishandles_cmd(stor_pkt->vm_srb.cdb[0], device)) {
- 		vstor_packet->vm_srb.scsi_status = 0;
- 		vstor_packet->vm_srb.srb_status = SRB_STATUS_SUCCESS;
- 	}
 -- 
 2.53.0
 
