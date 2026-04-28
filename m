@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C90D3F0A84;
-	Tue, 28 Apr 2026 10:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFDA3F1651;
+	Tue, 28 Apr 2026 10:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372897; cv=none; b=onZPBEdhS6sWvWIJ8uiptbGQ84qNhEq0c3v+EGjr0gBKaGRkxglYQtyS+aa128syMHxvAsk9XcR1XmQ0RnY4SKQ5KPGkEx4drEA3YQJqvfvJMe2ipNxa/vM+2UfrUG5Cl+Qw/ZGFX7kC9fa5DMI5xT/yplw/f8XKKNo2HO/VYIE=
+	t=1777372898; cv=none; b=q65yswJxMF8BrNtcziAjZ7Sy7k4iofeuqfYEI/BwzZ7MXTC/G5WODZ/YQq2ckSv5UOvB8ISfNJDNnek29zYDLh28hLFsGNEVkGN5OnJ0nThnBPGCDOwHm6zIzJpdawXMikH56bb8NF0KQgePn2lQE9hIh1yyhAsQiAnwImkyeSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372897; c=relaxed/simple;
-	bh=maBGhwV59MpCNfpFOozJJQbqErBR3v4jZTQJgF9+4kA=;
+	s=arc-20240116; t=1777372898; c=relaxed/simple;
+	bh=AU8iZLEwSA2y2k1MIvnLTa00lMtRpKahe1DlX8rEntY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sHscG3kzcIDhReDjqG7rfzbQ1H8qPKZy701qhIxa+xn236WX27v+yt5agLYUjkANzV63UHjoS9PpbXkQ+mdURIcUrMVFmu91P4oviWMKbR1Rqbep2gPInQb6N1wdqeZJ18Wg2IS++xTs9/d/CJSPebOx2ldAHQGVvFoDGSvantg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eqtcdhtG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V4H1uE7aCfAB+KXzEvAy/igcV/qjKyhLCzv6bkid+JOJlDiZ7yLjHSvmO4fb9cy0UST/O3Jbpt6MFdBf1FGEhTVOUWBSFBfHTXl8RV0FfC3O454NtXn8Mo8ceXoqlkon3BaECTQmLtVy6dzLAgjQuHnpaRHU3+VK7qsJ4KZox8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fUDUw/QW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eqtcdhtG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93391C2BCB7;
-	Tue, 28 Apr 2026 10:41:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fUDUw/QW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5BCC2BCAF;
+	Tue, 28 Apr 2026 10:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372897;
-	bh=maBGhwV59MpCNfpFOozJJQbqErBR3v4jZTQJgF9+4kA=;
+	s=k20201202; t=1777372898;
+	bh=AU8iZLEwSA2y2k1MIvnLTa00lMtRpKahe1DlX8rEntY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqtcdhtGHwlS8UKV6ilgBfpLJNaTTGaKL6tG6Eh9CpgFQ4PPGPC+f9JlKFwYlcixd
-	 OVAYoJoybMcA9xTZtB9AfqM43m3XcriRYoPWTltKmR8emjB71x4E7rlv60qq61zQra
-	 fECX2JofVqU9ur+CYBwHIHVlkG8hudWA9/cnYfkCP5ZOYM1pmhxcqYz2UKIWAh1aaU
-	 std5ChyL3UXbha4xjpYvHuvLfYoNk6bvffvJFrKU03Ld/OgMwalwVFjRpMLLV9yiuu
-	 AfWqAcj4jw4Rdk7oUmCtv8WfFsYLXrKiG3CQ7xAmfLsBoExceVSqhhSklVcR7Vufrp
-	 +T6olB6SvLPwA==
+	b=fUDUw/QWR+SYyRngKv33qnKY3vZBoAW5qnea2RnBFCjSV4na4neKw9zigImzF2MCL
+	 0YIBKmPrpHOBsxQ1gwqyHHNvKQLkLieSTjxKfwoY9I0tMIaYqN7Z2OmBQZ1qKFnRG6
+	 uxLk9pm5LVTVJWobdhPxPQRmFQNg7uLdG+TGyA7VxVwB8PlzQwkRTscjHd8IhTGUqI
+	 KDGzdd6Fm3MCxmNbHbTT84Luo5pr5vMqL2nM3CT3GrFDkc80/nlcFolwtXyBCsAdf7
+	 7yMVivZHalge8VojVWIfpDeJrvN5/tcnwCT2E9OMOuS+eRv9Z1lNilQ+gum+ENJxya
+	 NbbrzMhbFRA3A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+Cc: "Marcel W. Wysocki" <maci.stgn@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	platform-driver-x86@vger.kernel.org,
+	richard@nod.at,
+	anton.ivanov@cambridgegreys.com,
+	johannes@sipsolutions.net,
+	linux-um@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] tools/power/x86/intel-speed-select: Avoid current base freq as maximum
-Date: Tue, 28 Apr 2026 06:40:13 -0400
-Message-ID: <20260428104133.2858589-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] um: fix address-of CMSG_DATA() rvalue in stub
+Date: Tue, 28 Apr 2026 06:40:14 -0400
+Message-ID: <20260428104133.2858589-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -51,455 +55,344 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: "Marcel W. Wysocki" <maci.stgn@gmail.com>
 
-[ Upstream commit ae67f582398611b9f67c06961e292e3a2612346d ]
+[ Upstream commit 4076f7329832074196e050def49d22265fce2021 ]
 
-SST-PP level change results in online/offline of CPUs with -o option.
-The Linux intel-pstate driver internally stores the current HWP_REQ MSR
-value during offline and restores them during online.
+The UML stub takes the address of CMSG_DATA(fd_msg):
 
-It is possible that during SST-PP level change, the new HWP_CAP limits
-can be updated. So, when a CPU is online, the HWP_REQ MSR should be
-updated to new values based on HWP_CAP values.
+    fd_map = (void *)&CMSG_DATA(fd_msg);
 
-This is particularly problematic when either turbo is disabled or the
-current HWP_REQ value (stored before online) is less than the base
-frequency from the updated HWP_CAP MSR guaranteed value. If the HWP_REQ
-MSR is not updated, then the performance will be limited to the value
-before perf level change.
+CMSG_DATA() is specified by POSIX to return unsigned char *.  Taking
+its address is semantically wrong -- the intent is to get a pointer
+to the control message data, which is exactly what CMSG_DATA()
+already returns.
 
-Hence the tool updates cpufreq scaling_max_freq to the newer
-base_frequency value in this case. This step is not required when HWP
-interrupts are enabled, as the perf level change should result in a new
-interrupt with HWP_GUARANTEED_PERF_CHANGE_STATUS and the intel_pstate
-driver will update to new limits.
+This happens to compile with glibc because glibc's primary
+CMSG_DATA definition accesses a flexible array member:
 
-But the tool needs to handle the case when HWP interrupts are not
-enabled but there is no way for the tool to know that HWP interrupts are
-enabled or not. So, it has to still update the scaling_max_freq.
+    #define CMSG_DATA(cmsg) ((cmsg)->__cmsg_data)
 
-With the QOS changes in the kernel, user space writes to scaling_max_freq
-are treated as hard limits. So, when base frequency is increased with
-SST-BF enabled, the cpufreq subsystem will still not allow setting to the
-SST-BF high priority core frequency. So, the HWP_REQ MSR will still be
-capped to the user-set scaling_max_freq after SST-PP level change.
+An array lvalue can have its address taken, and &array yields the
+same address as array.  However, glibc also has an alternative
+definition that uses pointer arithmetic (returning an rvalue), and
+musl's definition always uses pointer arithmetic:
 
-To address this, instead of setting scaling_max_freq to the current HWP_CAP
-highest frequency, set it to the maximum integer value to set the QOS limit
-as unconstrained. In this case, the actual HWP_REQ maximum frequency will
-still be capped to HWP_CAP highest performance by the intel-pstate driver.
-So, it will not result in invalid HWP_REQ values.
+    /* musl */
+    #define CMSG_DATA(cmsg) \
+        ((unsigned char *)(((struct cmsghdr *)(cmsg)) + 1))
 
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Taking the address of an rvalue is a hard error in C, so the
+current code fails to compile with musl libc.
+
+Remove the erroneous & operator.  The resulting code is correct
+regardless of the CMSG_DATA implementation -- it simply assigns the
+data pointer, which is what the subsequent code (fd_map[--num_fds])
+expects.
+
+No functional change with glibc; fixes the build with musl.
+
+Signed-off-by: Marcel W. Wysocki <maci.stgn@gmail.com>
+Link: https://patch.msgid.link/20260215142803.1455757-1-maci.stgn@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to provide a comprehensive analysis.
+Now I have enough information to provide a thorough analysis.
 
-## Analysis: tools/power/x86/intel-speed-select: Avoid current base freq
-as maximum
+## Phase 1: COMMIT MESSAGE FORENSICS
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+### Step 1.1: Parse the Subject Line
+Record: [arch/um] [fix] Fixes address-of operator applied to CMSG_DATA()
+macro which is an rvalue under musl libc, breaking UML build with musl.
 
-**Step 1.1: Parse the subject line**
-Record: Subsystem: `tools/power/x86/intel-speed-select` (userspace
-tool). Action verb: "Avoid" (indicates behavior fix). Summary: Don't use
-current base frequency as maximum when writing to cpufreq
-scaling_max_freq.
-
-**Step 1.2: Parse all commit message tags**
+### Step 1.2: Parse All Commit Message Tags
 Record:
-- No `Fixes:` tag
-- No `Reported-by:` tag
-- No `Tested-by:` tag
-- No `Reviewed-by:` tag
-- No `Acked-by:` tag
-- No `Link:` tag
-- No `Cc: stable@vger.kernel.org`
-- Only author `Signed-off-by: Srinivas Pandruvada
-  <srinivas.pandruvada@linux.intel.com>` (the tool maintainer)
+- `Signed-off-by: Marcel W. Wysocki <maci.stgn@gmail.com>` (author)
+- `Link:
+  https://patch.msgid.link/20260215142803.1455757-1-maci.stgn@gmail.com`
+  (lore link)
+- `Signed-off-by: Johannes Berg <johannes.berg@intel.com>` (UML
+  maintainer applied)
+- No `Fixes:` tag, no `Reported-by:`, no `Reviewed-by:`, no explicit
+  `Cc: stable` (expected)
 
-Notable: no user-facing bug report, no reviewer feedback, no explicit
-stable nomination. This is a solo fix by the maintainer.
+### Step 1.3: Analyze the Commit Body
+Record: The commit explains in depth:
+- Bug: UML stub does `fd_map = (void *)&CMSG_DATA(fd_msg);`
+- Root cause: POSIX specifies `CMSG_DATA()` returns `unsigned char *`;
+  the `&` operator applied to an rvalue is a hard C error
+- Why it compiles with glibc: glibc's primary macro accesses a flexible
+  array member (lvalue)
+- Why it fails with musl: musl always uses pointer arithmetic (rvalue)
+- Fix: Remove the `&` operator - result is correct for any `CMSG_DATA()`
+  implementation
+- Impact: "No functional change with glibc; fixes the build with musl."
 
-**Step 1.3: Analyze the commit body text**
-Record: Bug: When SST-PP level change triggers CPU online/offline
-cycling (via `-o` option), intel_pstate saves HWP_REQ MSR on offline and
-restores on online. But the new HWP_CAP limits may be different than
-before; if turbo is disabled or stored HWP_REQ value is less than new
-base_frequency, performance is limited. The tool's fix was to update
-`scaling_max_freq` to the new `base_frequency`. However, kernel QoS
-changes treat userspace writes to `scaling_max_freq` as HARD LIMITS.
-When SST-BF is enabled and base_freq increases, SST-BF high priority
-cores can no longer reach their high frequency because the
-scaling_max_freq QoS limit is too low. The fix writes S32_MAX
-(effectively unconstrained) so intel_pstate's actual HWP_CAP highest
-performance acts as the cap.
+### Step 1.4: Detect Hidden Bug Fixes
+Record: Not hidden - this is explicitly stated as a build fix. It also
+has semantic merit (even under glibc's primary definition,
+`&array_member` followed by a void* cast is nonsensical - you get the
+array address, same as without `&`).
 
-**Step 1.4: Detect hidden bug fixes**
-Record: Title uses "Avoid" which is the pattern indicator for a bug fix.
-This IS fixing a real functional bug where SST-BF performance is limited
-after SST-PP level transitions.
+## Phase 2: DIFF ANALYSIS
 
-### PHASE 2: DIFF ANALYSIS
+### Step 2.1: Inventory the Changes
+Record: 1 file changed, 1 insertion, 1 deletion. Single character
+removal (`&`) in `arch/um/kernel/skas/stub.c` inside
+`stub_signal_interrupt()`. Classification: minimal surgical fix.
 
-**Step 2.1: Inventory the changes**
-Record: 1 file modified: `tools/power/x86/intel-speed-select/isst-
-config.c`. ~4 lines added (2 `#define`s + blank line), 1 line changed.
-Total scope: ~5 lines. Single-file, surgical fix.
-
-**Step 2.2: Understand the code flow change**
-Record: In `adjust_scaling_max_from_base_freq()`: when `scaling_max_freq
-< base_freq || no_turbo()`, BEFORE the fix it wrote `base_freq` to
-cpufreq sysfs; AFTER the fix it writes `S32_MAX`. Kernel QoS interprets
-this as "no userspace limit", allowing intel_pstate to cap at HWP_CAP
-instead.
-
-**Step 2.3: Identify the bug mechanism**
-Record: Category: Logic/correctness fix (g). Mechanism: The tool was
-capping CPU frequency at base_freq, but this was interacting with kernel
-QoS semantics to prevent SST-BF high priority cores from reaching their
-higher frequency. Fix: Use INT_MAX to indicate "unconstrained" QoS
-request.
-
-**Step 2.4: Assess the fix quality**
-Record: Fix is obviously correct on reading — writing INT_MAX sets QoS
-to default (unconstrained). Cannot cause regression because the kernel's
-intel_pstate driver will still cap to HWP_CAP.highest_performance. One
-minor note: the file defines U32_MAX/S32_MAX locally rather than using
-`<limits.h>` (INT_MAX), but this is a stylistic choice not a correctness
-concern.
-
-### PHASE 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1: Blame the changed lines**
-Record: `adjust_scaling_max_from_base_freq` was introduced by
-`f981dc171c04c` ("tools/power/x86/intel-speed-select: Set
-scaling_max_freq to base_frequency", 2020-12-20) and later touched by
-`bbaa2e95e23e7` ("Set higher of cpuinfo_max_freq or base_frequency",
-2020-12-20). The function has existed since v5.11.
-
-**Step 3.2: Follow the Fixes: tag**
-Record: No Fixes: tag. However, the "original commit that made this
-broken" can be inferred: the conflict arose when kernel QoS changes
-(da5c504c7aae9 "cpufreq: intel_pstate: Implement QoS supported freq
-constraints" v5.4, and 3000ce3c52f8b "cpufreq: Use per-policy frequency
-QoS" v5.5) made scaling_max_freq writes become hard QoS limits. This
-means the tool's original behavior has been subtly broken since the QoS
-infrastructure landed. Alternatively, the tool's own commit
-f981dc171c04c added the problematic logic assuming old behavior.
-
-**Step 3.3: Check file history for related changes**
-Record: Related history shows `adjust_scaling_max_from_base_freq` was
-last substantively modified in 2020. No intermediate fixes. This is not
-part of a patch series — verified via lore mailing list pull request
-showing it as one of two Srinivas patches (the other being v1.26 version
-bump).
-
-**Step 3.4: Check the author's other commits**
-Record: Srinivas Pandruvada is the primary maintainer of intel-speed-
-select and intel_pstate. He has authored dozens of commits to this file.
-Highly authoritative source for the fix.
-
-**Step 3.5: Check for dependent/prerequisite commits**
-Record: The fix is standalone. It doesn't reference new APIs or
-structures. The kernel-side QoS behavior it depends on (treating
-scaling_max_freq as hard limit) has been in place since v5.5, well
-before any active stable tree's branch point.
-
-### PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-**Step 4.1: Find the original patch discussion**
-Record: `b4 dig -c ae67f58239861` returned "Nothing matching that query"
-— patch was apparently committed to the maintainer's tree without
-posting as a separate patch submission on lore. Manual lore.kernel.org
-search for "Avoid current base freq as maximum" found only the Pull
-Request messages (not a submission thread). This confirms this commit
-was NOT posted to a public mailing list for review — it went directly
-through the maintainer's github branch into the pdx86 pull request.
-
-**Step 4.2: Check who reviewed the patch**
-Record: No public review. Found the pull request from Srinivas to Ilpo
-Järvinen (pdx86 maintainer) on lore.kernel.org: `https://lore.kernel.org
-/all/0b288f7a7024f896a1699ac3609c7da39c588d03.camel@intel.com/`, which
-went into `review-ilpo-next` then to 7.1-rc1. Pull request lists it as
-one of two Srinivas patches for v1.26 release. No review comments, no
-stable nomination in the pull request.
-
-**Step 4.3: Search for the bug report**
-Record: No Reported-by tag. No syzbot, bugzilla, or user bug report
-linked. No evidence this was discovered through a user report or
-automated tooling.
-
-**Step 4.4: Check for related patches and series**
-Record: This is a standalone patch, not part of a series. Pull request
-shows only 2 patches from Srinivas (this + version bump).
-
-**Step 4.5: Check stable mailing list history**
-Record: No discussion found on lore.kernel.org/stable for this fix.
-However, historical precedent: `f981dc171c04c` (the commit that
-introduced this same function) WAS backported to stable 5.10.14. This
-establishes that fixes to this tool function have been considered
-stable-worthy before.
-
-### PHASE 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1: Identify key functions in the diff**
-Record: `adjust_scaling_max_from_base_freq(int cpu)` — the modified
-function.
-
-**Step 5.2: Trace callers**
-Record: Called from 3 sites:
-- Line 1581: In SST-PP `set_tdp_level` path when bringing CPUs online
-  after level change (`use_offline:` label)
-- Line 1864: In `set_scaling_max_to_cpuinfo_max`
-- Line 1884: In `set_scaling_min_to_cpuinfo_min`
-All are in the main SST-PP/SST-BF configuration code paths invoked when
-user runs `intel-speed-select` commands.
-
-**Step 5.3: Trace callees**
-Record: Calls `parse_int_file()`, `get_cpufreq_base_freq()`,
-`no_turbo()`, `set_cpufreq_scaling_min_max()` — standard sysfs
-operations.
-
-**Step 5.4: Follow the call chain**
-Record: Reachable from: user running `intel-speed-select perf-profile
-set-config-level -o` (SST-PP level change with CPU online/offline).
-Triggered specifically when SST-BF is enabled and new level has
-different HWP_CAP.
-
-**Step 5.5: Search for similar patterns**
-Record: The function `adjust_scaling_min_from_base_freq` follows a
-similar pattern but for minimum freq and was NOT modified (the min-freq
-case doesn't have the same hard-limit issue because minimum is supposed
-to be set).
-
-### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
-
-**Step 6.1: Does the buggy code exist in stable trees?**
-Record: VERIFIED — the identical function exists in stable trees: 5.10,
-5.15, 6.1, 6.6, 6.12, 6.18. The code has been unchanged since 2020.
-
-**Step 6.2: Check for backport complications**
-Record: Applies cleanly. The function signature and surrounding code are
-identical in all stable trees. Verified by showing the function in for-
-greg/5.10-200, 5.15-200, 6.6-200, 6.12-200 — all have exactly the same
-body as mainline before this fix.
-
-**Step 6.3: Check if related fixes are already in stable**
-Record: The original function-introducing commit `f981dc171c04c` is in
-stable (backported to 5.10.14). No different fix for this same bug has
-been applied. The kernel-side QoS behavior is present in all stable
-trees.
-
-### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-**Step 7.1: Identify the subsystem and its criticality**
-Record: `tools/power/x86/intel-speed-select/` — Intel Speed Select
-Technology userspace utility. Criticality: PERIPHERAL. This is a
-userspace tool, not kernel code. Affects only users of specific Intel
-server CPUs (Xeon Scalable) using SST-PP/SST-BF features. Not a core
-subsystem.
-
-**Step 7.2: Assess subsystem activity**
-Record: Active subsystem. The tool is regularly updated (v1.26 release
-just announced). Srinivas is an active maintainer.
-
-### PHASE 8: IMPACT AND RISK ASSESSMENT
-
-**Step 8.1: Determine who is affected**
-Record: Narrow user population: users of Intel Xeon Scalable CPUs with
-SST-BF enabled who run `intel-speed-select` to change SST-PP levels with
-`-o` (online/offline) option. Enterprise server administrators. Not
-universal, not common consumer kernels.
-
-**Step 8.2: Determine the trigger conditions**
-Record: Specific conditions must all be met: (1) supported Intel CPU,
-(2) user invokes SST-PP level change with `-o` option, (3) SST-BF
-enabled, (4) HWP interrupts are NOT enabled, (5) new level has different
-HWP_CAP values. User-initiated configuration tool, not triggered
-spontaneously.
-
-**Step 8.3: Determine the failure mode severity**
-Record: Failure mode = CPU performance limited to base frequency (SST-BF
-high priority cores cannot reach their intended higher frequency after
-SST-PP level change). Severity: LOW-MEDIUM. No crash, no data
-corruption, no security issue. It's a "feature doesn't work correctly"
-bug.
-
-**Step 8.4: Risk-benefit ratio**
+### Step 2.2: Code Flow Change
 Record:
-- BENEFIT: LOW-MEDIUM. Fixes functional issue for SST-BF users. Affects
-  only specific user scenarios.
-- RISK: VERY LOW. 5-line change to a userspace tool. No kernel changes.
-  Writing INT_MAX to scaling_max_freq is the documented way to indicate
-  "no limit" in the QoS system. Cannot cause crashes.
-- Ratio: Favorable. Low risk + some benefit = reasonable candidate.
+- Before: `fd_map = (void *)&CMSG_DATA(fd_msg);` - takes address of
+  expression returned by `CMSG_DATA()`
+- After: `fd_map = (void *)CMSG_DATA(fd_msg);` - uses the pointer
+  returned by `CMSG_DATA()` directly
+- With glibc's primary macro (flexible array): `&array` == `array`, so
+  result is identical
+- With musl (or glibc alternative): before = build error; after = works
+- Path: normal path (FD handling during stub signal interrupt)
 
-### PHASE 9: FINAL SYNTHESIS
+### Step 2.3: Identify the Bug Mechanism
+Record: Build fix / portability issue (category h - hardware workarounds
+is not a match; this is a build fix category). The existing code uses a
+macro in a way that violates POSIX's return-type contract and fails on
+conforming implementations.
 
-**Step 9.1: Compile the evidence**
+### Step 2.4: Fix Quality
+Record: Fix is trivially correct. Since `CMSG_DATA()` already returns
+`unsigned char *`, casting that to `(void *)` is exactly what's needed.
+Zero regression risk on glibc - the resulting pointer value is
+identical.
 
-Evidence FOR backporting:
-- Fixes a real user-visible functional bug (SST-BF performance
-  limitation)
-- Very small, contained fix (5 lines, 1 file, userspace tool)
-- From the authoritative tool maintainer (Srinivas)
-- Applies cleanly to all active stable trees
-- Function exists unmodified in all stable trees (5.10, 5.15, 6.1, 6.6,
-  6.12, 6.18)
-- Low regression risk (cannot cause crash since it's a userspace tool
-  change)
-- Precedent: the commit that introduced this function was backported to
-  5.10.14
-- intel-speed-select historically has many fixes backported to stable
+## Phase 3: GIT HISTORY INVESTIGATION
 
-Evidence AGAINST backporting:
-- No `Fixes:` tag
-- No `Cc: stable@vger.kernel.org`
-- No `Reported-by:` (no user bug report evidence)
-- No public review — went directly through maintainer tree
-- Userspace tool, not kernel code
-- Narrow use case (specific hardware + specific tool invocation)
-- Failure mode is performance limitation, not crash/security/corruption
-- The kernel QoS behavior it adapts to has been present for years, so
-  this isn't a recent regression
+### Step 3.1: Blame the Changed Lines
+Record: The buggy line was introduced in commit `e92e2552858142b` ("um:
+pass FD for memory operations when needed", June 2, 2025), which landed
+in v6.16.
 
-Unresolved questions:
-- UNVERIFIED: Whether any actual users have hit this (no user reports
-  cited)
-- UNVERIFIED: Whether the commit author considered stable backporting
-  (no evidence either way)
+### Step 3.2: Follow the Fixes: Tag
+Record: No Fixes: tag, but git blame identifies `e92e2552858142b` as the
+introducing commit. That commit is in v6.16 and all subsequent stable
+trees (6.16.y, 6.17.y, 6.18.y, 6.19.y).
 
-**Step 9.2: Apply the stable rules checklist**
-1. Obviously correct and tested? Correct by inspection. Testing unknown
-   but from the maintainer.
-2. Fixes a real bug? Yes — SST-BF performance not reaching target
-   frequency after SST-PP level change.
-3. Important issue? Borderline — not crash/security/corruption.
-   Performance limitation in specific scenarios.
-4. Small and contained? Yes — ~5 lines, single file.
-5. No new features or APIs? Correct — fixes existing functionality.
-6. Can apply to stable trees? Yes — verified clean apply across
-   5.10-6.18.
+### Step 3.3: Check File History
+Record: `git log v6.16..v7.0 -- arch/um/kernel/skas/stub.c` returns
+empty - no intervening changes between v6.16 and v7.0 in this file. This
+means the fix will apply cleanly to every stable tree from 6.16.y
+onward.
 
-**Step 9.3: Exception categories**
-Not a device ID addition, quirk, DT update, build fix, or documentation
-fix. It's a plain bug fix.
+### Step 3.4: Author's Other Commits
+Record: Author Marcel W. Wysocki has 2 commits in linux-next, both musl
+compatibility fixes for UML. First-time contributor in this area.
+Maintainer Johannes Berg (UML maintainer) applied the patch.
 
-**Step 9.4: Decision**
+### Step 3.5: Dependent/Prerequisite Commits
+Record: Standalone fix. Part of a 2-patch musl series, but patch 2/2
+(struct sigcontext redefinition) is independent - they don't depend on
+each other.
 
-This is a borderline case. The fix is small, safe, from the maintainer,
-applies cleanly, and addresses a real functional issue. On the other
-hand, it's a userspace tool with no explicit stable nomination, no
-Fixes: tag, no Reported-by, and the failure mode is performance (not
-crash/corruption/security). The narrow use case and lack of stable
-markers argue against.
+## Phase 4: MAILING LIST RESEARCH
 
-Weighing the factors: the fix is very low risk and fixes a real
-functional issue for SST-BF users. Historically, intel-speed-select
-fixes get backported. The code path exists in all stable trees and the
-fix applies cleanly. The author is the maintainer.
+### Step 4.1: Original Patch Discussion
+Record: Found via `b4 dig`: https://lore.kernel.org/all/20260215142803.1
+455757-1-maci.stgn@gmail.com/
+- Series: v1 only (no revisions)
+- No reviewer comments captured in the mbox thread (only the 2 patches
+  themselves)
+- Patch applied as-is by Johannes Berg
 
-### Verification:
-- [Phase 1] Parsed tags: NO Fixes, NO Cc stable, NO Reported-by, NO
-  Link, NO Reviewed-by — only author SoB (verified via `git show`)
-- [Phase 2] Diff analysis: 4 lines added (U32_MAX/S32_MAX defines), 1
-  line changed (base_freq → S32_MAX) in
-  `adjust_scaling_max_from_base_freq()` (verified via `git show
-  ae67f58239861`)
-- [Phase 3] git log on file history: `adjust_scaling_max_from_base_freq`
-  introduced by `f981dc171c04c` in Dec 2020 (verified via `git log
-  --oneline --follow`)
-- [Phase 3] kernel QoS commits traced: `da5c504c7aae9` (Aug 2019),
-  `3000ce3c52f8b` (Oct 2019), `521223d8b3ec0` (Dec 2021) — QoS
-  infrastructure in kernel for years (verified via `git log --format`)
-- [Phase 3] Author is Srinivas Pandruvada, primary maintainer of intel-
-  speed-select and intel_pstate (verified via `git log --author`
-  history)
-- [Phase 4] `b4 dig -c ae67f58239861`: returned "Nothing matching" — no
-  public patch submission on lore
-- [Phase 4] lore search found pull request from Srinivas to pdx86
-  maintainer
-  (`0b288f7a7024f896a1699ac3609c7da39c588d03.camel@intel.com`) dated
-  2026-04-05 — grouped with v1.26 version bump, no explicit stable
-  nomination
-- [Phase 4] lore search confirmed `f981dc171c04c` was backported to
-  stable 5.10.14 (found in Linux 5.10.14 announcement)
-- [Phase 5] find_callers: 3 call sites in isst-config.c (lines 1581,
-  1864, 1884), all in SST configuration paths invoked by user commands
-  (verified via grep)
-- [Phase 6] Function body verified unchanged in stable trees 5.10, 5.15,
-  6.1, 6.6, 6.12, 6.18 (verified via `git show for-greg/X:tools/...`)
-- [Phase 6] No Fixes: tag, so no "introduced by" commit to verify is in
-  stable
-- [Phase 7] Subsystem: intel-speed-select userspace tool, PERIPHERAL
-  criticality
-- [Phase 8] Failure mode: performance limitation (CPU capped at
-  base_freq), not crash/corruption
-- UNVERIFIED: Whether real users have reported hitting this bug (no
-  Reported-by in commit)
-- UNVERIFIED: Whether Srinivas consciously chose not to Cc stable
+### Step 4.2: Who Reviewed
+Record: Originally addressed to UML maintainers Richard Weinberger,
+Anton Ivanov, Johannes Berg, linux-um@lists.infradead.org, linux-
+kernel@vger.kernel.org. Applied by Johannes Berg (subsystem maintainer).
 
-### Summary
+### Step 4.3: Bug Report
+Record: No syzbot, no external bug report. Bug is self-evident: UML
+simply doesn't build under musl.
 
-This is a legitimate small bug fix for a userspace tool that addresses a
-real functional issue: when using SST-PP level changes with SST-BF
-enabled, the `intel-speed-select` tool was writing `base_freq` to
-`scaling_max_freq`, which (due to kernel QoS semantics treating this as
-a hard limit) prevented SST-BF high-priority cores from reaching their
-target frequency. The fix changes to `INT_MAX` so the kernel's
-intel_pstate driver (which caps at HWP_CAP.highest_performance) is the
-effective limiter.
+### Step 4.4: Related Patches
+Record: Part of a 2-patch series for musl compatibility; patch 2/2 is an
+independent header conflict fix. Prior historical patch series exist
+(e.g., `5e1121cd43d4d` "um: Some fixes to build UML with musl" from
+2020).
 
-The fix is minimal (~5 lines), from the tool maintainer, and applies
-cleanly to all active stable trees where the function exists unchanged
-since 2020. The kernel QoS behavior it adapts to is present in all
-stable trees. Precedent exists: the commit that introduced this function
-(`f981dc171c04c`) was backported to 5.10.14.
+### Step 4.5: Stable Mailing List History
+Record: Not separately discussed in stable context. No NAKs or stable
+nominations captured.
 
-Arguments against include: no Fixes: tag, no stable Cc, no Reported-by,
-userspace tool (not kernel), narrow use case (SST-BF + SST-PP change +
-no HWP interrupts), and the failure mode is performance rather than
-crash/corruption/security. The patch also went directly through the
-maintainer's tree without a public mailing list review.
+## Phase 5: CODE SEMANTIC ANALYSIS
 
-On balance, the fix is surgical, correct, safe, addresses a real
-functional bug, and stable trees have historically accepted intel-speed-
-select fixes with similar characteristics. The very low risk combined
-with concrete (if narrow) benefit favors backporting.
+### Step 5.1: Key Functions
+Record: `stub_signal_interrupt()` in `arch/um/kernel/skas/stub.c`.
+
+### Step 5.2: Callers
+Record: `stub_signal_interrupt` is the signal handler installed by UML
+for the userspace stub process (SECCOMP-based). It's invoked via signal
+delivery - not directly called by normal C code. Entry is from the
+SECCOMP trap handler in the userspace stub.
+
+### Step 5.3: Callees
+Record: Uses `stub_syscall3(__NR_recvmsg, ...)`, `CMSG_DATA()`,
+`syscall_handler(fd_map)`, `stub_syscall2(__NR_close, ...)`.
+
+### Step 5.4: Call Chain / Reachability
+Record: This is core UML stub code - runs in every UML process when
+handling signals/syscalls. For glibc: change produces the same runtime
+behavior. For musl: fixes the build so it runs at all.
+
+### Step 5.5: Similar Patterns
+Record: Prior musl compatibility patches exist (e.g., `5e1121cd43d4d`).
+This is a continuation of making UML buildable under non-glibc C
+libraries.
+
+## Phase 6: STABLE TREE ANALYSIS
+
+### Step 6.1: Buggy Code in Stable?
+Record: Verified via `git grep` on tags - `fd_map = (void
+*)&CMSG_DATA(fd_msg);` is present verbatim in v6.16, v6.17, v6.18,
+v6.19. Introduced in v6.16 via commit `e92e2552858142b`.
+
+### Step 6.2: Backport Complications
+Record: No churn in the file between v6.16 and v7.0 (the diff is against
+identical context). Fix applies cleanly to all affected stable trees
+with zero modification required.
+
+### Step 6.3: Related Fixes in Stable
+Record: None - this is the first fix for this specific issue.
+
+## Phase 7: SUBSYSTEM CONTEXT
+
+### Step 7.1: Subsystem Criticality
+Record: arch/um (User-Mode Linux). Niche but real users (CI testing,
+isolation, security research). Criticality for affected users: CORE (UML
+doesn't build at all with musl).
+
+### Step 7.2: Subsystem Activity
+Record: Active - UML gets regular updates, with musl support being
+periodically improved (2020 series, 2026 series).
+
+## Phase 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who Is Affected
+Record: UML users on musl-based distributions (Alpine Linux, Void Linux
+musl variant, embedded systems). Anyone attempting to build UML with a
+non-glibc libc. Glibc users: unaffected.
+
+### Step 8.2: Trigger Conditions
+Record: Trigger = attempting to build arch/um with musl libc. 100% of
+musl build attempts fail at this line in v6.16+.
+
+### Step 8.3: Failure Mode Severity
+Record: Build failure → UML cannot be built at all on affected
+configurations. Severity: HIGH for affected users (blocker), NONE for
+glibc users.
+
+### Step 8.4: Risk-Benefit Ratio
+Record:
+- BENEFIT: Enables UML build for musl libc users. Build fix category,
+  explicitly allowed.
+- RISK: Near-zero. With glibc's primary definition, `&array == array`,
+  so the cast to `(void *)` produces the identical pointer value. No
+  runtime change.
+- Ratio: Clearly favorable.
+
+## Phase 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence Compilation
+FOR backport:
+- One-character build fix with zero runtime impact for glibc users
+- Falls under explicit "BUILD FIXES" stable exception category
+- Buggy code exists in all active stable trees (6.16.y through 6.19.y)
+- Applied cleanly (no file churn since introduction)
+- Applied by subsystem maintainer
+- The semantic argument is also correct: taking `&` of `CMSG_DATA()`'s
+  return is wrong per POSIX
+
+AGAINST backport:
+- No explicit `Cc: stable` (expected, not disqualifying)
+- No `Fixes:` tag (expected, not disqualifying)
+- Niche subsystem (UML + musl) - but still real users
+
+### Step 9.2: Stable Rules Checklist
+1. Obviously correct and tested? YES - trivial one-char removal,
+   semantically correct
+2. Fixes a real bug? YES - build failure
+3. Important issue? YES - build fix (explicit stable exception category)
+4. Small and contained? YES - 1 line
+5. No new features or APIs? YES
+6. Apply to stable trees? YES - clean apply to all affected trees
+
+### Step 9.3: Exception Category
+Record: BUILD FIX - explicitly allowed in stable per guidelines: "Fixes
+for compilation errors or warnings... These are critical for users who
+need to build the kernel."
+
+### Step 9.4: Decision
+YES - classic build fix with:
+- Trivial, obviously correct change (1 char)
+- Zero regression risk for glibc users (unchanged pointer value)
+- Enables musl libc builds which are currently broken
+- Buggy code in v6.16.y through v6.19.y
+- Clean apply to all affected stable trees
+
+## Verification
+
+- [Phase 1] Parsed commit message: author Marcel W. Wysocki, applied by
+  Johannes Berg (UML maintainer), lore Link present, no Fixes:/Reported-
+  by:/stable tags (expected for review pipeline)
+- [Phase 2] Diff analysis: 1 file, +1/-1, removes `&` from `fd_map =
+  (void *)&CMSG_DATA(fd_msg);` in `stub_signal_interrupt()`
+- [Phase 3] `git log --oneline -- arch/um/kernel/skas/stub.c`: buggy
+  line introduced in commit `e92e2552858142b` ("um: pass FD for memory
+  operations when needed")
+- [Phase 3] `git tag --contains e92e2552858142b`: confirmed present in
+  v6.16 through v7.0 (all active stable trees)
+- [Phase 3] `git log v6.16..v7.0 -- arch/um/kernel/skas/stub.c`: empty -
+  no intervening changes, clean apply guaranteed
+- [Phase 3] `git log --author="Marcel W. Wysocki"`: 2 commits total,
+  both musl compatibility fixes for UML
+- [Phase 4] `b4 dig -c 4076f73298320`: found at https://lore.kernel.org/
+  all/20260215142803.1455757-1-maci.stgn@gmail.com/
+- [Phase 4] `b4 dig -a`: only v1 exists, no revisions
+- [Phase 4] `b4 dig -w`: addressed to UML maintainers (Richard
+  Weinberger, Anton Ivanov, Johannes Berg) and linux-um/linux-kernel
+  lists
+- [Phase 4] `b4 dig -m /tmp/thread.mbox`: mbox contains the 2 patches of
+  the series; no reviewer replies present
+- [Phase 6] `git grep -n "fd_map = (void \*)&CMSG_DATA" v6.16 v6.17
+  v6.18 v6.19 -- arch/um/kernel/skas/stub.c`: buggy code confirmed
+  present in all four stable release tags at line 149
+- [Phase 6] Same line count (149) in all versions confirms no contextual
+  drift, fix applies cleanly
+- [Phase 8] Failure mode: compilation error when building UML with musl
+  libc - blocks build entirely
+- UNVERIFIED: Exact range of glibc versions that use the alternative
+  (rvalue) `CMSG_DATA` definition - commit message asserts both
+  definitions exist but did not verify personally; however this does not
+  affect the decision (the fix is correct in either case).
 
 **YES**
 
- tools/power/x86/intel-speed-select/isst-config.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/um/kernel/skas/stub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/intel-speed-select/isst-config.c b/tools/power/x86/intel-speed-select/isst-config.c
-index dd9056ddb016e..652ef1f567ad8 100644
---- a/tools/power/x86/intel-speed-select/isst-config.c
-+++ b/tools/power/x86/intel-speed-select/isst-config.c
-@@ -1744,6 +1744,9 @@ static int no_turbo(void)
- 	return parse_int_file(0, "/sys/devices/system/cpu/intel_pstate/no_turbo");
- }
+diff --git a/arch/um/kernel/skas/stub.c b/arch/um/kernel/skas/stub.c
+index 67cab46a602cf..e09216a20cb57 100644
+--- a/arch/um/kernel/skas/stub.c
++++ b/arch/um/kernel/skas/stub.c
+@@ -146,7 +146,7 @@ stub_signal_interrupt(int sig, siginfo_t *info, void *p)
+ 		/* Receive the FDs */
+ 		num_fds = 0;
+ 		fd_msg = msghdr.msg_control;
+-		fd_map = (void *)&CMSG_DATA(fd_msg);
++		fd_map = (void *)CMSG_DATA(fd_msg);
+ 		if (res == iov.iov_len && msghdr.msg_controllen > sizeof(struct cmsghdr))
+ 			num_fds = (fd_msg->cmsg_len - CMSG_LEN(0)) / sizeof(int);
  
-+#define U32_MAX		((unsigned int)~0U)
-+#define S32_MAX		((int)(U32_MAX >> 1))
-+
- static void adjust_scaling_max_from_base_freq(int cpu)
- {
- 	int base_freq, scaling_max_freq;
-@@ -1751,7 +1754,7 @@ static void adjust_scaling_max_from_base_freq(int cpu)
- 	scaling_max_freq = parse_int_file(0, "/sys/devices/system/cpu/cpu%d/cpufreq/scaling_max_freq", cpu);
- 	base_freq = get_cpufreq_base_freq(cpu);
- 	if (scaling_max_freq < base_freq || no_turbo())
--		set_cpufreq_scaling_min_max(cpu, 1, base_freq);
-+		set_cpufreq_scaling_min_max(cpu, 1, S32_MAX);
- }
- 
- static void adjust_scaling_min_from_base_freq(int cpu)
 -- 
 2.53.0
 
