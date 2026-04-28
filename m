@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF583402B81;
-	Tue, 28 Apr 2026 10:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7DE402BA3;
+	Tue, 28 Apr 2026 10:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372950; cv=none; b=G8ONPiRAr1ntbMzPERs3/elDPqkI1jDMWF2SO1XfmT+pDE0GsBNZKYlguadtngt+q5zxc11O43H0gwky1PvhaIiOMX2zmPlGZHCbABgfoZ4O4Ho4Qf9NYzPH0FCLPFc9/4l8LYKQz/tn4Ts3KQyWx96TZ5xwCH4CGfUxndvE9zQ=
+	t=1777372952; cv=none; b=p9+a4sDbXso/8j4lmj/pQ0Gn+92hfRwKhEm/0uejO7AxisGBEVBl3r2DXTUbVv/JwhbzN0jhVOLd66Oo2amg3zDc9jYsusReZfkZI3j7tBy2axHwbqKXrbQ5axcJieaXrk8adRZ0LEzEDPI2MzxY1CtqxBSTAzi/k2NuNfqCJyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372950; c=relaxed/simple;
-	bh=JWAIoKg/Cr1lfraiiSe1c5jzVlDYbauvtYBwYcJIuwE=;
+	s=arc-20240116; t=1777372952; c=relaxed/simple;
+	bh=VbCd9suTkAq0QTyiaF+WctXyADNMKX2UwVQqlIBS9ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pD6YjcP/JeUFx5ivKwZ4bkTyEJh87zH8cJoQwFXpnhv2UH37vjK7JMcAfTAzw4Cuo1rfHzuhwUIvGvPLvscqGLe6/FSLmiy7Mvp/lsXH+mb2ECUAE7nJUo6Vr4Hx3TWfPkOJ47XrpUrn+7PungKmH+3Ecvg/tcCGiHbTCvU0YrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LPybdSBb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UkguVUU9gCMB56vaGxwhCEnaG7mtt47GA1OkIfgvEcKHBBlL4SiMGnV640d56+AGt6XjcHFbnj55dIBQY3c/erkB67kT2+hpXZC5MQYQwJsPNLKpZiHUDTa9cFEsJLlzLT9RCSDnAb1rDEy3LhwT46x0mOYVZJPWrWO0F0WT0lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QUqY/J5U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LPybdSBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6293BC2BCF4;
-	Tue, 28 Apr 2026 10:42:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QUqY/J5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4DCC2BCAF;
+	Tue, 28 Apr 2026 10:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372950;
-	bh=JWAIoKg/Cr1lfraiiSe1c5jzVlDYbauvtYBwYcJIuwE=;
+	s=k20201202; t=1777372951;
+	bh=VbCd9suTkAq0QTyiaF+WctXyADNMKX2UwVQqlIBS9ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LPybdSBbVzyHBtOXEtGibSrhgW54PwBho97LaVy1PHkNLZcY4uyEG2ZL2lKVNBW4D
-	 sLoKnHZF0+o0TajhUz2d0zfSG4PPk+0O4F/2DlDikquBZsRTBb2mZ+dSNwae38n+S7
-	 rA59hlMScbYFUbZ8gSwS7OVIrlxMkqs4Z3wmR+eMx7O/EsD0Tys91ZmwLymT1xNVao
-	 JKfniaJU67Acq1WRkC3JlWjEUz/TAWW3QUbwgE80AHwkoNSwCvsUHI1bgPoMzLbalR
-	 J1B8+50qeVQJBFg/6rikWnxFxZODSWSD0/g7Zard5a+eaWzQzFHLdwNkK+hIR6vjxd
-	 BpyYa82HTLAaQ==
+	b=QUqY/J5UE/I0cXMxImdEMMq81tVUpP8i6xo1j08H/KYvAkD1b+1gjRykoWssb72Gn
+	 ut8M/8hsyC7OAgQr/gO40z6fn9R+Fy9byWQtJPgM1jVzg0TgcD/j1JtLjmGejamcB/
+	 70bmzgwARXme9Moc/Sg3/6HMm4DfVXGqXBnMPA9eVtdtwRv/2c9bYKVnAt9NmKfJDN
+	 x5kD9U7cRd2PVCnSF4sCpG2m+A/KWc9sF8LRDtMlpb1WEgghoKeCc768XW/8LJbCpK
+	 CfXsUR70VpHVR4s9JOALCYO4zKjwjbXJNdUEy7/+WigVPfulNfB/v4nrVK1qbTxcP1
+	 RZPiYNdhTYY6Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Al Viro <viro@zeniv.linux.org.uk>,
+Cc: Yuho Choi <dbgh9129@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Taegyu Kim <tmk5904@psu.edu>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>,
-	jaharkes@cs.cmu.edu,
-	coda@cs.cmu.edu,
-	codalist@coda.cs.cmu.edu,
+	adaplas@gmail.com,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] coda_flag_children(): fix a UAF
-Date: Tue, 28 Apr 2026 06:40:51 -0400
-Message-ID: <20260428104133.2858589-40-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] fbdev: savage: fix probe-path EDID cleanup leaks
+Date: Tue, 28 Apr 2026 06:40:52 -0400
+Message-ID: <20260428104133.2858589-41-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -53,379 +57,247 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit e252ed8988578f01da5a4f5aa4c2269f96f03951 ]
+[ Upstream commit 9b8a9a3a6f57edd02b7c8db14a316e6fab7fa772 ]
 
-if de goes negative right under us, there's nothing to prevent inode
-getting freed just as we call coda_flag_inode().  We are not holding
-->d_lock, so it's not impossible.  Not going to be reproducible on
-bare hardware unless it's a realtime config, but it could happen on KVM.
+When CONFIG_FB_SAVAGE_I2C is enabled, savagefb_probe() can build both an
+EDID-derived monspecs.modedb and a modelist from it before later failing.
 
-Trivial to fix - just hold rcu_read_lock() over that loop.
+The normal success path frees monspecs.modedb after the initial mode selection,
+but the probe error path only deletes the I2C busses and misses the
+EDID-derived allocations.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Free both the modelist and monspecs.modedb on the failed: unwind path.
+
+Co-developed-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Co-developed-by: Taegyu Kim <tmk5904@psu.edu>
+Signed-off-by: Taegyu Kim <tmk5904@psu.edu>
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Based on my investigation, here's my full analysis:
-
 ## Phase 1: Commit Message Forensics
+Step 1.1 Record: subsystem `fbdev: savage`; action verb `fix`; claimed
+intent is to free EDID-derived probe-path allocations on
+`savagefb_probe()` failure.
 
-**Step 1.1 — Subject line parsing**
-- Subsystem: `fs/coda`
-- Action verb: "fix" (explicit UAF fix)
-- Record: [coda] [fix] [UAF in `coda_flag_children()` when dentries go
-  negative concurrently]
+Step 1.2 Record: tags present: `Co-developed-by` Myeonghun Pak, Ijae
+Kim, Taegyu Kim; `Signed-off-by` Myeonghun Pak, Ijae Kim, Taegyu Kim,
+Yuho Choi, Helge Deller. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+`Reviewed-by:`, `Acked-by:`, `Link:`, or `Cc: stable@vger.kernel.org`
+tag in the supplied message.
 
-**Step 1.2 — Tags**
-- Signed-off-by: Al Viro (VFS maintainer / dcache expert)
-- No Fixes:, Cc: stable, Reported-by:, Tested-by:, or Link: tags
-- Record: Only author SOB. No formal stable nomination, no reporter, no
-  test witness.
+Step 1.3 Record: the body describes a real resource leak when
+`CONFIG_FB_SAVAGE_I2C=y`, EDID parsing creates `info->monspecs.modedb`
+and modelist entries, and later probe failure reaches `failed:` without
+freeing those allocations. Symptom is leaked kernel memory on failed
+probe. No explicit affected kernel versions or user report are provided.
 
-**Step 1.3 — Body text**
-- Bug: iterating parent's children under parent's `->d_lock`; child's
-  `d_inode` can be cleared (go negative) concurrently and then freed; we
-  may dereference a freed inode in `coda_flag_inode()`.
-- Author states: "not reproducible on bare hardware unless it's a
-  realtime config, but it could happen on KVM"
-- Symptom: UAF on `struct inode` accessed via `ITOC(inode)` inside
-  `coda_flag_inode()`.
-
-**Step 1.4 — Hidden fix detection**
-- The subject explicitly uses "fix" and names "UAF". This is an explicit
-  memory-safety fix.
+Step 1.4 Record: not hidden; this is explicitly a probe error-path
+cleanup leak fix.
 
 ## Phase 2: Diff Analysis
+Step 2.1 Record: one file changed,
+`drivers/video/fbdev/savage/savagefb_driver.c`; 2 lines added, 0
+removed; function modified: `savagefb_probe()`; scope is a single-file
+surgical error-path fix.
 
-**Step 2.1 — Inventory**
-- 1 file, 2 lines added (rcu_read_lock/rcu_read_unlock), 0 removed. Pure
-  surgical diff.
+Step 2.2 Record: before, `failed:` under `CONFIG_FB_SAVAGE_I2C` only
+deleted I2C busses. After, it also calls
+`fb_destroy_modelist(&info->modelist)` and
+`fb_destroy_modedb(info->monspecs.modedb)`. This affects probe unwind
+paths after EDID/modelist setup.
 
-**Step 2.2 — Code flow**
-- Before: `spin_lock(parent->d_lock); iterate children; access
-  de->d_inode via d_inode_rcu(); call coda_flag_inode(); spin_unlock;`
-- After: same, but with an explicit
-  `rcu_read_lock()`/`rcu_read_unlock()` wrapping the iteration.
+Step 2.3 Record: bug category is resource leak. Verified allocation
+sources: `fb_edid_to_monspecs()` stores `specs->modedb =
+fb_create_modedb(...)`; `fb_create_modedb()` allocates with
+`kzalloc_objs()`/`kmalloc_objs()`; `fb_videomode_to_modelist()` calls
+`fb_add_videomode()`, which allocates `struct fb_modelist`. Verified
+cleanup helpers free those objects.
 
-**Step 2.3 — Bug mechanism**
-- Classification: (b) synchronization / (d) memory-safety — adds RCU
-  read-side critical section over a loop that reads an RCU-published
-  pointer (`d_inode_rcu()` returns `READ_ONCE(dentry->d_inode)`), and
-  dereferences the returned inode via `coda_flag_inode()`.
-- The parent's `d_lock` stabilizes the children list, but does NOT hold
-  the children's own `d_lock`, so the child's `->d_inode` can transition
-  to NULL and the inode be released to RCU.
-- Record: Claimed UAF closed by explicit RCU read-side critical section.
-
-**Step 2.4 — Fix quality**
-- Adding rcu_read_lock around existing code is strictly additive /
-  defensive; zero regression surface. No new APIs, no lock ordering
-  change, no allocations.
+Step 2.4 Record: fix quality is good: minimal, uses existing fbdev
+cleanup APIs, no new feature/API. Regression risk is very low.
+`fb_destroy_modedb(NULL)` is just `kfree(NULL)`, and
+`fb_destroy_modelist()` safely iterates an initialized empty list.
 
 ## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the EDID/modelist setup and missing
+`failed:` cleanup originate from very old code, much of it from the
+initial imported history; the local EDID pointer handling was adjusted
+by `0f8a1cae923670` in v5.18-rc1, but the leak pattern existed before
+that with `par->edid`.
 
-**Step 3.1 — blame / when was this code introduced**
-- `d_inode_rcu(de)`-based form introduced by `b31559f8e471f`
-  ("coda_flag_children(): cope with dentries turning negative", Nov
-  2023, v6.8-rc1).
-- Hlist form (`d_children` / `d_sib`) introduced by `da549bdd15c29`
-  ("dentry: switch the lists of children to hlist", v6.8-rc1).
-- Older kernels (≤ v6.7) used `list_for_each_entry(&parent->d_subdirs,
-  d_child)` with plain `d_inode(de)`; they have the same underlying UAF
-  potential but via a different expression.
+Step 3.2 Record: no `Fixes:` tag is present, so no target commit to
+follow.
 
-**Step 3.2 — Follow Fixes: tag**
-- None supplied. Logically, the referent would be `b31559f8e471f` (v6.8)
-  which introduced the current form that this patch hardens. That commit
-  is in all stable trees ≥ 6.8.
+Step 3.3 Record: recent file history includes related probe fixes:
+`e8d35898a78e3` fixed a savage probe leak in 2020, `04e5eac8f3ab`
+handled zero pixclock, and `6ad959b6703e` fixed error handling for
+`savagefb_check_var()`. No prerequisite was found for this cleanup,
+because the failed label and cleanup helpers exist independently.
 
-**Step 3.3 — File history**
-- Very low churn. Only dcache-wide mechanical conversions touched it
-  since 2023.
+Step 3.4 Record: local history has no commits by Yuho Choi under
+`drivers/video/fbdev`; Helge Deller signed off the supplied commit and
+is verified in `MAINTAINERS` as framebuffer layer maintainer. The S3
+Savage driver entry lists Antonino Daplas as maintainer.
 
-**Step 3.4 — Author**
-- Al Viro = the VFS / dcache maintainer. Extremely high authority on
-  dentry locking and RCU.
+Step 3.5 Record: dependency risk is low. The patch only uses
+`fb_destroy_modelist()` and `fb_destroy_modedb()`, both verified present
+in v5.15, v6.1, and v6.6 tags.
 
-**Step 3.5 — Dependencies**
-- None in the series that affect this hunk. The cover letter confirms:
-  patches 1 and 2 touch `fs/coda/dir.c` only and are independent
-  cleanups.
+## Phase 4: Mailing List And External Research
+Step 4.1 Record: no local commit hash was found with `git log --grep`,
+so `b4 dig -c <hash>` could not be performed on a real commit object.
+Attempts to use `b4 dig` with the subject failed: “Cannot find a commit
+matching ...”. Lore `WebFetch` searches were blocked by Anubis; web
+search found no exact subject match.
 
-## Phase 4: Mailing List / External Research
+Step 4.2 Record: `b4 dig -w` could not identify recipients for the same
+reason: no commit object found.
 
-**Step 4.1 — Original submission**
-- b4 dig failed because lore.kernel.org is currently behind an anti-bot
-  page. Fell back to yhbt.net mirror.
-- Found posting: "[PATCH 3/3] coda_flag_children(): fix a UAF", Al Viro,
-  2026-04-05, linux-fsdevel. No v2/later revisions; single post, merged
-  as-is in vfs.git `#work.coda`, pulled via "[git pull] coda dcache-
-  related cleanups and fixes" on 2026-04-21.
-- Cover letter: "coda_flag_children() is holding ->d_lock on parent
-  while iterating through the list of its children; that's fine, but
-  that does not protect ->d_inode of individual children. Hold
-  rcu_read_lock() over the entire loop to prevent UAF there..."
+Step 4.3 Record: no `Link:` or `Reported-by:` tags were supplied; no
+external bug report was verified.
 
-**Step 4.2 — Reviewers**
-- CC list: linux-fsdevel, Christian Brauner (VFS co-maintainer), Jan
-  Kara (VFS reviewer), Jan Harkes (Coda maintainer). No recorded NAK or
-  objection in the archive; series was subsequently pulled into Linus's
-  tree via Al's pull request.
+Step 4.4 Record: no patch series context was verified. Local git history
+suggests this is standalone.
 
-**Step 4.3 — Bug report**
-- No Reported-by, no Link, no syzbot, no bugzilla. This is a maintainer-
-  initiated audit fix, not a response to a user report.
-
-**Step 4.4 — Related patches**
-- Sibling patches 1/3 and 2/3 are independent dcache cleanups; this
-  patch is self-contained.
-
-**Step 4.5 — Historical context (IMPORTANT)**
-- The prior commit `b31559f8e471f` originally included
-  rcu_read_lock/unlock (v3 posting, lkml 2023/11/24). Linus Torvalds
-  requested the rcu_read_lock be dropped, arguing spinlocks are implied
-  RCU read-side critical sections. Paul E. McKenney confirmed ("Yes,
-  spinlocks are implied RCU read-side critical sections. Even in -rt,
-  where non-raw spinlocks are preemptible, courtesy of ...
-  __rt_spin_lock ... rcu_read_lock()"). The
-  Documentation/RCU/rcu_dereference.rst was later updated by McKenney to
-  spell this out.
-- The 2026 patch re-adds the rcu_read_lock Al originally wanted. Per the
-  commit message, the concern is reproducibility on realtime / KVM
-  configurations. Even under Paul McKenney's rule, the fix is strictly
-  redundant-but-correct on all configs and defensive against future
-  changes in that area.
+Step 4.5 Record: stable-specific lore search could not be verified
+because lore fetch was blocked; web search found no exact stable
+discussion.
 
 ## Phase 5: Code Semantic Analysis
+Step 5.1 Record: modified function: `savagefb_probe()`.
 
-**Step 5.1 — Key functions**
-- Modified function: `coda_flag_children()` (static, in
-  fs/coda/cache.c).
+Step 5.2 Record: `savagefb_probe()` is assigned as `.probe` in
+`savagefb_driver`; `savagefb_init()` calls
+`pci_register_driver(&savagefb_driver)`; `pci_register_driver` maps to
+`__pci_register_driver()`, which registers the driver with the PCI core.
+Impact is limited to S3 Savage PCI/AGP devices.
 
-**Step 5.2 — Callers**
-- `coda_flag_children()` → called only from `coda_flag_inode_children()`
-  (static caller in same file).
-- `coda_flag_inode_children()` called from:
-  - `fs/coda/dir.c::coda_revalidate_inode()` (invalidation path on
-    attribute revalidation)
-  - `fs/coda/upcall.c::coda_process_downcall()` under `CODA_ZAPDIR` and
-    `CODA_PURGEFID` cases — invoked when the Coda userspace cache
-    manager (Venus) issues downcalls to invalidate cached entries.
-- Reachability: triggered any time Venus sends a ZAPDIR/PURGEFID
-  downcall, or on attribute revalidation. For systems actually running
-  Coda, this is a normal, frequently-exercised path.
+Step 5.3 Record: relevant callees are `savagefb_create_i2c_busses()`,
+`savagefb_probe_i2c_connector()`, `fb_edid_to_monspecs()`,
+`fb_videomode_to_modelist()`, `register_framebuffer()`, and the cleanup
+helpers. Verified `savagefb_probe_i2c_connector()` can obtain EDID via
+DDC or firmware copy.
 
-**Step 5.3 — Callees**
-- `coda_flag_inode()` (inline) accesses `ITOC(inode)->c_lock` and
-  modifies `cii->c_flags`. It derefs `inode` via container_of arithmetic
-  for the lock access.
+Step 5.4 Record: reachable during PCI device probe at boot, module load,
+hotplug, or driver bind. I did not verify an unprivileged direct
+trigger; this appears hardware/config/probe-path reachable, not syscall-
+hot-path reachable.
 
-**Step 5.4 — Call chain reachability**
-- Reachable from userspace Coda client requests and from VFS
-  revalidation. Requires Coda filesystem to be mounted.
-
-**Step 5.5 — Similar patterns**
-- No other sites in fs/coda iterating children without rcu_read_lock
-  (it's the only such loop in this filesystem).
+Step 5.5 Record: similar cleanup patterns exist in other fbdev drivers:
+`udlfb`, `smscufx`, and `uvesafb` free both `monspecs.modedb` and
+`modelist` on teardown/error paths.
 
 ## Phase 6: Stable Tree Analysis
+Step 6.1 Record: buggy pattern verified in v4.14, v4.19, v5.10, v5.15,
+v6.1, v6.6, v6.10, and v6.12 tags: EDID/modelist are created, normal
+path destroys `monspecs.modedb`, but `failed:` only deletes I2C busses.
 
-**Step 6.1 — Code existence in stable**
-- The hlist-based, `d_inode_rcu`-based form that this patch modifies
-  exists in 6.8+ (including LTS 6.12.y+). The UAF window itself
-  conceptually exists all the way back to when `coda_flag_children()`
-  was first written, but the textual diff needs 6.8+ for a clean apply.
-- For older stable branches (6.6.y, 6.1.y, etc.) the context would need
-  manual adjustment (different list/member names, different inode-
-  accessor), but the logical fix (wrap in rcu_read_lock) still applies.
+Step 6.2 Record: expected backport difficulty is clean or minor line-
+offset adjustment. For older trees, EDID is stored as `par->edid`, but
+the new cleanup lines only reference `info`, so no semantic dependency
+on the v5.18 local-variable cleanup.
 
-**Step 6.2 — Backport complications**
-- Clean apply on any stable branch with hlist_children form (6.8+). For
-  older (6.6, 6.1) would require a contextual port.
-
-**Step 6.3 — Related fixes in stable**
-- None.
+Step 6.3 Record: no related fix for this exact EDID/modelist failed-path
+leak found in local history.
 
 ## Phase 7: Subsystem Context
+Step 7.1 Record: subsystem is fbdev driver code, specifically S3 Savage
+framebuffer. Criticality is peripheral/driver-specific, but kernel
+memory leaks in probe error paths are still real bugs for affected
+hardware/configurations.
 
-**Step 7.1 — Subsystem & criticality**
-- `fs/coda/` — Coda distributed filesystem client. PERIPHERAL — niche,
-  used in research/academic contexts, rarely in production.
+Step 7.2 Record: `drivers/video/fbdev` is active, but
+`drivers/video/fbdev/savage` has low churn. Recent changes are mostly
+small fixes and cleanups.
 
-**Step 7.2 — Activity**
-- Low churn subsystem; a handful of commits per release and almost all
-  are mechanical treewide changes by VFS.
+## Phase 8: Impact And Risk
+Step 8.1 Record: affected users are systems with `CONFIG_FB_SAVAGE` and
+`CONFIG_FB_SAVAGE_I2C` using S3 Savage hardware or matching devices.
 
-## Phase 8: Impact and Risk
+Step 8.2 Record: trigger requires successful EDID-derived allocation
+followed by later `savagefb_probe()` failure, such as mode
+validation/geometry failure or framebuffer registration failure.
+Repeated privileged probe attempts could accumulate leaks; no
+unprivileged trigger was verified.
 
-**Step 8.1 — Who is affected**
-- Only users who actually mount a Coda filesystem. Very small
-  population.
+Step 8.3 Record: failure mode is kernel memory/resource leak, severity
+medium: not a crash or corruption, but real unreclaimed kernel memory on
+failed probe.
 
-**Step 8.2 — Trigger conditions**
-- Race window: (a) Coda is mounted and active; (b) Venus issues a
-  ZAPDIR/PURGEFID or attribute revalidation happens; (c) a child dentry
-  is transitioning to negative concurrently; (d) its inode is the last
-  reference and gets queued for RCU free.
-- Per author: NOT reproducible on bare hardware outside PREEMPT_RT;
-  possibly reproducible on KVM.
-- In practice, the prior Linus/McKenney analysis argues the implicit RCU
-  read-side critical section of `spin_lock()` (including the explicit
-  `rcu_read_lock()` inside `__rt_spin_lock()` on PREEMPT_RT) already
-  provides the needed protection. So this fix is arguably
-  defensive/redundant, though explicitly correct.
+Step 8.4 Record: benefit is moderate for affected systems because it
+fixes a verified leak across many stable versions. Risk is very low: two
+cleanup calls in an existing unwind path, using established helpers.
 
-**Step 8.3 — Failure mode severity**
-- If the race were actually exploitable: UAF on `struct inode` → memory
-  corruption / crash. Severity CRITICAL in principle. But the actual
-  exploitability is uncertain (see Phase 4.5).
+## Phase 9: Final Synthesis
+Step 9.1 Record: evidence for backporting: verified real leak, tiny
+scoped patch, existing helper APIs, same buggy pattern present in many
+stable tags, no feature/API change, low regression risk. Evidence
+against: driver-specific old hardware, only a probe failure path, no
+verified user report/test/lore review. Unresolved: exact upstream commit
+hash and mailing-list discussion could not be verified.
 
-**Step 8.4 — Benefit / risk**
-- Benefit: LOW-MEDIUM. Strictly defensive hardening of an RCU-protected
-  loop; may be redundant given spinlock ↔ RCU semantics. Affects only
-  Coda users.
-- Risk: VERY LOW. +2 lines (rcu_read_lock/unlock), no new allocations,
-  no new locks, can't introduce deadlock or perf issue in a cold path.
-- Ratio: Fine to include (risk ≈ 0), but with limited user-visible
-  benefit.
+Step 9.2 Record: stable rules checklist: obviously correct by code
+inspection: yes; fixes a real bug: yes, leaked `modedb` and modelist
+allocations; important issue: medium, resource leak rather than crash;
+small and contained: yes, 2 lines in one function; no new features/APIs:
+yes; can apply to stable: likely yes, helpers and buggy code verified in
+stable tags.
 
-## Phase 9: Synthesis
+Step 9.3 Record: not a device-ID, quirk, DT, build, or documentation
+exception. It is a standard resource-leak fix.
 
-**Step 9.1 — Evidence**
-- FOR: Al Viro's explicit "fix a UAF" label; tiny, surgical diff; author
-  is VFS maintainer; trivially safe; even if the implicit-RCU argument
-  holds, the explicit form is more defensive.
-- AGAINST: No Fixes/Cc-stable/Reported-by tags; no syzbot, no bugzilla,
-  no crash report; author admits "not reproducible on bare hardware
-  unless it's a realtime config"; prior discussion (Linus + McKenney,
-  Nov 2023) concluded rcu_read_lock is redundant on this exact code
-  because spinlocks imply RCU read-side critical sections; Coda is a
-  niche filesystem.
-- UNRESOLVED: I could not verify whether a real crash was observed in
-  KVM/RT that motivated this re-addition; the commit message provides
-  only an analytical argument.
+Step 9.4 Decision: backport. The issue is not high severity, but the fix
+is minimal, correct, uses existing cleanup APIs, and addresses a
+verified kernel memory leak present across stable trees.
 
-**Step 9.2 — Stable rules**
-1. Obviously correct and tested: YES (trivially correct)
-2. Fixes a real bug: BORDERLINE — labeled UAF, but author himself
-   qualifies it as only realistic under RT/KVM; prior maintainer
-   discussion argued it's already covered
-3. Important issue: Only if the bug is genuinely exploitable; UAF label
-   means yes in principle
-4. Small and contained: YES (+2 lines)
-5. No new features/APIs: YES
-6. Applies to stable: Clean apply on 6.8+; would need contextual port on
-   older
-
-**Step 9.3 — Exception category**
-- Doesn't cleanly fit a hard "auto-YES" exception (not a device ID, not
-  a DT update, not a build fix, not a pure doc fix). It is a memory-
-  safety hardening marked UAF by the author.
-
-**Step 9.4 — Decision**
-- The commit is explicitly marked as a UAF fix by the VFS maintainer, is
-  minimal and strictly safe, and touches a well-understood RCU pattern.
-  The backport cost is essentially zero, and if the author's hazard
-  analysis is correct (even for the narrow RT/KVM case), having it in
-  stable prevents a real memory-safety issue for those configurations.
-  Stable maintainers generally err on the side of taking trivially-safe
-  memory-safety patches from trusted maintainers.
-
-## Verification
-
-- [Phase 1] Parsed subject and body: explicit UAF fix; no Fixes/Cc-
-  stable/Reported-by/Link tags; only author SOB.
-- [Phase 2] Read `fs/coda/cache.c` current source (lines 91-103)
-  confirming the pre-patch loop uses `spin_lock(&parent->d_lock)` with
-  `d_inode_rcu(de)` only.
-- [Phase 2] Read `fs/coda/coda_linux.h:82-93` to confirm
-  `coda_flag_inode()` dereferences the inode via `ITOC(inode)`; a freed
-  inode here would be a real UAF.
-- [Phase 3] git log on `fs/coda/cache.c`: found the two relevant
-  predecessor commits `b31559f8e471f` (Nov 2023) and `da549bdd15c29`
-  (Nov 2023).
-- [Phase 3] `git describe --contains b31559f8e471f` → `v6.8-rc1~...`,
-  confirming the hlist/d_inode_rcu form lives in v6.8+.
-- [Phase 3] `git show v6.7:fs/coda/cache.c` confirmed the older list-
-  based form in 6.7.y and earlier.
-- [Phase 3] Confirmed e252ed8988578 is on the local `fs-next` branch
-  only; not yet in v7.0.
-- [Phase 4] b4 dig failed (lore anti-bot); fell back to
-  https://yhbt.net/lore/linux-fsdevel/, found the exact [PATCH 3/3]
-  submission and [PATCH 0/3] cover letter dated 2026-04-05; found the
-  pull request dated 2026-04-21 containing this commit going to Linus.
-- [Phase 4] Retrieved full thread of the 2023 predecessor
-  (lkml.rescloud.iu.edu/2311.3/00022.html, /01035.html, /01094.html)
-  showing Linus + Paul McKenney concluding spinlocks imply RCU read-side
-  critical sections (even PREEMPT_RT).
-- [Phase 4] Read `kernel/locking/spinlock_rt.c` lines 46-52 confirming
-  `__rt_spin_lock()` explicitly calls `rcu_read_lock()`.
-- [Phase 4] Read `include/linux/dcache.h:544` confirming `d_inode_rcu()`
-  is a plain `READ_ONCE()` (no rcu lockdep check).
-- [Phase 5] grep `coda_flag_inode_children` → called from
-  `fs/coda/dir.c` (revalidation) and `fs/coda/upcall.c`
-  (CODA_ZAPDIR/CODA_PURGEFID downcalls).
-- [Phase 5] Confirmed `coda_flag_children` is static with a single
-  caller inside this file.
-- [Phase 6] Patch context (`hlist_for_each_entry` on
-  `&parent->d_children`, `d_sib`) only exists in 6.8+. Clean apply to ≥
-  6.8; older stable would need contextual port.
-- [Phase 6] `fs/inode.c::destroy_inode` uses `call_rcu(&inode->i_rcu,
-  i_callback)` — standard RCU free path, so rcu_read_lock does protect
-  against it.
-- [Phase 7] `fs/coda/` identified as PERIPHERAL/niche filesystem.
-- [Phase 8] Failure mode if race triggers: UAF on inode accessed from
-  `coda_flag_inode()` — CRITICAL severity if triggerable; per Paul
-  McKenney 2023 analysis, likely not actually triggerable; per Al Viro
-  2026, possibly triggerable on KVM/RT.
-- UNVERIFIED: Whether any real-world crash was observed that motivated
-  re-adding rcu_read_lock; no syzbot, no bugzilla link, no Reported-by.
-- UNVERIFIED: Whether Paul McKenney's 2023 rule has any corner-case
-  exception that would actually leave a UAF window here.
-
-## Summary
-
-This is a two-line, strictly additive hardening that the VFS maintainer
-explicitly labels as a UAF fix. The underlying hazard (dereferencing an
-inode after the child dentry goes negative and the inode is freed via
-call_rcu) is real in principle. A prior mailing-list discussion
-concluded the existing `spin_lock(&parent->d_lock)` already provides
-implicit RCU read-side protection, and Al Viro accepted that in 2023. Al
-is now re-adding the explicit rcu_read_lock, motivated by hard-to-
-reproduce scenarios on PREEMPT_RT / KVM. The fix is trivially safe,
-cannot regress anything, and applies cleanly to 6.8+ stable trees. Given
-the explicit UAF label from a core maintainer, the extremely low risk,
-and stable's general policy of accepting small, safe memory-safety
-hardenings, this is appropriate for stable.
+Verification:
+- [Phase 1] Parsed supplied subject/body/tags; confirmed no
+  Fixes/Reported/Tested/Reviewed/Acked/Link/Cc stable tags in the
+  supplied message.
+- [Phase 2] Read `savagefb_probe()` and helper implementations;
+  confirmed missing failed-path cleanup and verified allocation/free
+  behavior.
+- [Phase 3] Ran `git blame`, `git log`, `git show`, and ancestry checks
+  without `--all`; found related savage probe/error-path history and no
+  local candidate commit.
+- [Phase 4] Ran `b4 dig` attempts, web search, and lore fetch attempts;
+  no exact commit/thread verified, lore fetch blocked by Anubis.
+- [Phase 5] Traced `savagefb_probe()` registration through the PCI
+  driver structure and `pci_register_driver()`.
+- [Phase 6] Used tag-scoped `git grep` on v4.14, v4.19, v5.10, v5.15,
+  v6.1, v6.6, v6.10, and v6.12; confirmed the buggy pattern exists.
+- [Phase 7] Checked `MAINTAINERS`; verified fbdev and S3 Savage
+  maintainer entries.
+- [Phase 8] Verified trigger and severity from code paths; unprivileged
+  trigger remains unverified and did not drive the decision.
 
 **YES**
 
- fs/coda/cache.c | 2 ++
+ drivers/video/fbdev/savage/savagefb_driver.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/fs/coda/cache.c b/fs/coda/cache.c
-index 970f0022ec528..2451312963004 100644
---- a/fs/coda/cache.c
-+++ b/fs/coda/cache.c
-@@ -93,12 +93,14 @@ static void coda_flag_children(struct dentry *parent, int flag)
- 	struct dentry *de;
- 
- 	spin_lock(&parent->d_lock);
-+	rcu_read_lock();
- 	hlist_for_each_entry(de, &parent->d_children, d_sib) {
- 		struct inode *inode = d_inode_rcu(de);
- 		/* don't know what to do with negative dentries */
- 		if (inode)
- 			coda_flag_inode(inode, flag);
- 	}
-+	rcu_read_unlock();
- 	spin_unlock(&parent->d_lock);
- }
- 
+diff --git a/drivers/video/fbdev/savage/savagefb_driver.c b/drivers/video/fbdev/savage/savagefb_driver.c
+index ac41f8f37589f..c2f79357c8da0 100644
+--- a/drivers/video/fbdev/savage/savagefb_driver.c
++++ b/drivers/video/fbdev/savage/savagefb_driver.c
+@@ -2322,6 +2322,8 @@ static int savagefb_probe(struct pci_dev *dev, const struct pci_device_id *id)
+  failed:
+ #ifdef CONFIG_FB_SAVAGE_I2C
+ 	savagefb_delete_i2c_busses(info);
++	fb_destroy_modelist(&info->modelist);
++	fb_destroy_modedb(info->monspecs.modedb);
+ #endif
+ 	fb_alloc_cmap(&info->cmap, 0, 0);
+ 	savage_unmap_video(info);
 -- 
 2.53.0
 
