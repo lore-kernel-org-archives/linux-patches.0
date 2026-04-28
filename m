@@ -1,49 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C8C423A9A;
-	Tue, 28 Apr 2026 10:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E303F7A8A;
+	Tue, 28 Apr 2026 10:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372983; cv=none; b=uZVa0SrSzNBdUT29PR2IQlob1wa2FZc69i8YfDkRitSSVFPnvw7+2hznJCs2+YaKy9Eds02YMGnGEkjIidl3ZM5eQB4PhbRS2Z8rijCi408HHAeTgnG3fMT656jERy33H6qleEkPlwAM/Ncq7nioRWdv8LeeqnN8KMq2ubXT2RE=
+	t=1777372985; cv=none; b=UVgOPDjQwzI115SJfduqzQS+myqKNTotM/X4WG+Fz+JyOrvsNPJjs8C2fuiaRAztna9oQ7gqTGoNIZpE9IgEjvkOzy6ts5VxIwbHAXQ1Ea+x7YtKzTLa5PnNiW4bP04AhSblttPSwnH3UTEBioJU7KbAeFTEdpNOW5kuajyWnQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372983; c=relaxed/simple;
-	bh=+ZRNSpMxbtL6pi+004vKl0lGTMAHazGZBWSYX+mLXR0=;
+	s=arc-20240116; t=1777372985; c=relaxed/simple;
+	bh=IXqp27RY7rXo8SpZ9XP8azILoF0q9oEW5FuTsim8Myc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WCJhcGF8ncNAo5ltQG4KXy8KiwI3ggb3Up+uUYknR8FyzmJkKnF7OpkB7v5I6IEM5kBkfrM4weaenpiCOuSGgyp/VyA4N7xIfWvHPCE/Trgff+SVK/TO1U+bUVb5O+kSf3TpgTJfvLqRQSEL0Gi+lw9G/TyRxUQTeEExkdMuskM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qwfN6GIu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ujy+npO3h19VV3x9MaNZ1+L5eDC2EwObfM3r/9q9LKcEnXRBp3IiizejRbjGVB9UXT8ULA/JcDFJ0Vq7rRc90P1WmsjHvYgyrezLr+in2GgRaYQbXaT0cfn7FSnY+cjKjAPrGIAArqmCnx33E6rfq9x0IQSFFGlTHj9+hcTxc1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UWWdGQUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qwfN6GIu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495F7C2BCB7;
-	Tue, 28 Apr 2026 10:43:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UWWdGQUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C41C2BCB7;
+	Tue, 28 Apr 2026 10:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372983;
-	bh=+ZRNSpMxbtL6pi+004vKl0lGTMAHazGZBWSYX+mLXR0=;
+	s=k20201202; t=1777372985;
+	bh=IXqp27RY7rXo8SpZ9XP8azILoF0q9oEW5FuTsim8Myc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwfN6GIuenPNQYzZ38EI2quHWFLfR8Eqvu20YmsSn1X9U3z4iK1LxIjPOBfUoFXAe
-	 6YJwtOW/MK1fcXT9SmrllL7zPC9XKk+8ZgpS6ko7aQCz/qxXhu7EaareypFmkDv/KB
-	 J4dYX68yNg9ChNdvtWZ6d/w9QO+kw/MgScedRxTuFUudbsYVSgV12yKZP0wCCh+ohw
-	 605Vem7+MfIa/PmPMiTtzrRQXCKM6bcS34N3K+vl9636LkKX7cnkOBwsXOKK8Hwp7P
-	 QPp8vbD3ZXxsC01VqcJc3vuVHmcbQhz2C6aeouV0GXUpf7JVoapr2hevH6hhIXGOJn
-	 hy4D2QRNW/v3g==
+	b=UWWdGQUp8tcconSH6O8ZDjoTSn/bO4PyxfRLEFjBpPJoAvRGwXCFLzFe1HouoVyEc
+	 Iel1rRlck5P4WUeEfYfsh+cJcdP+5SgM3li9ESrFfejYszi/tefIq2lLJCukh3Hay6
+	 6bRDhI4l4oRo/s/kgbUoKRen03iPy9mEBBuQsaaYlXKBd7WUDscdDjpD5l8cZI70cQ
+	 VfIRSvgRLV0VaV+zEAODkHDhAoSuQLhUi8GTU1T0ve3I80lWotZ+IsLF2+GZ740OIF
+	 vnyUlpulds6U5DHWaPMqexhTRbF43wAuc4bvu4+zslTOcqXh/emCleZwK+gssVFHba
+	 74xAF2gqZNZEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengyu Luo <mitltlatltl@gmail.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Kelvin Mbogo <addcontent08@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	agross@kernel.org,
-	konrad.dybcio@linaro.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
+	valentina.manea.m@gmail.com,
+	shuah@kernel.org,
+	linux-usb@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] clk: qcom: rcg2: expand frac table for mdss_pixel_clk_src
-Date: Tue, 28 Apr 2026 06:41:13 -0400
-Message-ID: <20260428104133.2858589-62-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] usb: usbip: validate iso frame actual_length in usbip_recv_iso()
+Date: Tue, 28 Apr 2026 06:41:14 -0400
+Message-ID: <20260428104133.2858589-63-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -59,328 +54,473 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Kelvin Mbogo <addcontent08@gmail.com>
 
-[ Upstream commit 0f5c8f03d990f9be9908a08a701c324e113554d2 ]
+[ Upstream commit 591c1d972d8f19862ecd7279c7ef4df48b0a9b33 ]
 
-Recently, when testing 10-bit dsi C-PHY panel, clks are different
-from the usual. (dsi0_phy_pll_out_dsiclk's parent is dsi0_pll_bit_clk
-now (dsiclk_sel = 0)) And we failed to set dsiclk's children.
+usbip_recv_iso() sums each frame's actual_length into an int
+accumulator without checking the individual values first:
 
-dsi_link_clk_set_rate_6g: Set clk rates: pclk=172992000, byteclk=108120000
+    total_length += urb->iso_frame_desc[i].actual_length;
 
-byteclk was set first to 108120000, so the vco rate was set to
-108120000 * 7 * 1 * 1 = 756840000. When we was trying to set
-172992000 on mdss_pixel_clk_src later.
+A malicious server can send actual_length = 0xFFFFFFFC for one frame
+and a small value for the other, making the signed sum wrap around to
+match urb->actual_length.  The sanity check passes, and usbip_pad_iso()
+later computes a negative actualoffset, feeding it to memmove() as a
+source pointer - reads before the allocation, leaked to userspace via
+USBDEVFS_REAPURB.
 
-Since there was no matched ratio, we failed to set it. And dsiclk
-divider ratio was set to 15:1 (wrong cached register value 0xf and
-didn't update), we finally got 50455997, apparently wrong.
+Reject any frame whose actual_length exceeds transfer_buffer_length
+(one frame can't carry more data than the whole buffer), and widen the
+accumulator to u32 so that many moderately-large frames can't wrap it
+either.
 
-  dsi0vco_clk                1       1        0        756839941
-     dsi0_pll_out_div_clk    1       1        0        756839941
-        dsi0_pll_post_out_div_clk 0       0        0        216239983
-        dsi0_pll_bit_clk     2       2        0        756839941
-           dsi0_phy_pll_out_dsiclk 2       2        0        50455997
-              disp_cc_mdss_pclk1_clk_src 1       1        0        50455997
-           dsi0_pll_by_2_bit_clk 0       0        0        378419970
-           dsi0_phy_pll_out_byteclk 2       2        0        108119991
-              disp_cc_mdss_byte1_clk_src 2       2        0        108119991
-
-Downstream clk_summary shows the mdss_pixel_clk_src support the
-ratio(35:16)
-
- dsi0_phy_pll_out_dsiclk             2       2        0        378420000
-     disp_cc_mdss_pclk1_clk_src       1       1        0        172992000
- dsi0_phy_pll_out_byteclk            2       2        0        108120000
-     disp_cc_mdss_byte1_clk_src       2       2        0        108120000
-
-After checking downstream source, 15:4 also seems to be supported,
-add them two.
-
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260321095029.2259489-1-mitltlatltl@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Kelvin Mbogo <addcontent08@gmail.com>
+Link: https://patch.msgid.link/20260325103640.8090-2-addcontent08@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need to complete this analysis.
+I have enough information to make an informed decision. Let me now
+compile the comprehensive analysis.
 
-## Phase 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit Message Forensics
 
-**Step 1.1 - Parse subject line:**
-- Subsystem: `clk: qcom: rcg2:`
-- Action verb: "expand" (non-standard fix verb, but describes adding
-  entries)
-- Record: Qualcomm Root Clock Generator 2 driver - expand fractional
-  ratio table for MDSS pixel clock source
+**Step 1.1 - Subject Line**
+- Subsystem: `usb: usbip` (USB/IP driver)
+- Action verb: `validate` (strong bug-fix indicator, even without "fix")
+- Record: `[usb/usbip] [validate/harden] ISO frame actual_length in
+  usbip_recv_iso() to prevent integer wraparound and downstream OOB
+  read`
 
-**Step 1.2 - Parse tags:**
-- Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com> (Qualcomm clock
-  expert, original author of prior frac-table update b527358cb4cd5)
-- Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> (msm
-  subsystem maintainer)
-- Link: lore.kernel.org reference to discussion
-- Signed-off-by: Bjorn Andersson <andersson@kernel.org> (Qualcomm SoC
-  maintainer, applied it)
-- **NO** Fixes: tag (expected absence - this is why it's being reviewed)
-- **NO** Cc: stable (expected absence)
-- **NO** Reported-by: (author found it while testing)
+**Step 1.2 - Tags Present**
+- `Signed-off-by: Kelvin Mbogo` (author)
+- `Link:
+  https://patch.msgid.link/20260325103640.8090-2-addcontent08@gmail.com`
+  (patch 2 of a series)
+- `Signed-off-by: Greg Kroah-Hartman` (USB maintainer – strong trust
+  signal)
+- No `Fixes:` tag (expected for pre-git-era code in staging origin)
+- No `Cc: stable` (expected; that's why it's under review)
+- Record: Greg KH SOB confirms maintainer applied it; Link shows this is
+  patch "-2" of the series.
 
-**Step 1.3 - Analyze commit body:**
-- Bug: When using a 10-bit DSI C-PHY panel with `pclk=172992000,
-  byteclk=108120000`, `mdss_pixel_clk_src` fails to find a matching
-  ratio in `frac_table_pixel[]`.
-- Failure mode: `clk_pixel_determine_rate()` returns `-EINVAL`, the
-  divider register keeps a stale cached value (0xf = 15:1), so actual
-  pclk becomes ~50.4 MHz instead of required ~173 MHz — a ~3.4x wrong
-  clock rate. Display output is corrupted/broken.
-- Root cause: Table lacks the 16/35 and 4/15 ratios that downstream
-  Qualcomm driver supports.
-- Record: concrete runtime bug on real hardware; downstream driver
-  carries the needed ratios.
+**Step 1.3 - Body Analysis**
+- Bug mechanism: `total_length` is `int` (signed) accumulator; per-frame
+  `actual_length` is from the wire (attacker-controlled `unsigned int`)
+- Exploit: server sends `actual_length = 0xFFFFFFFC` + small value;
+  signed sum wraps to match `urb->actual_length`, passing the sanity
+  check
+- Downstream impact: `usbip_pad_iso()` computes negative `actualoffset`
+  → `memmove()` reads before allocation → data leaked to userspace via
+  `USBDEVFS_REAPURB`
+- Fix approach: (1) reject any frame whose `actual_length >
+  transfer_buffer_length`; (2) widen accumulator from `int` to `u32`
+- Record: Concrete, reproducible kernel info-leak from malicious USBIP
+  server; commit body explains both root cause and fix clearly.
 
-**Step 1.4 - Hidden fix detection:** Subject says "expand" but the body
-clearly documents a failure mode. This is a bug fix disguised as an
-enhancement. The "expand" verb hides that `clk_set_rate()` completely
-fails without it.
+**Step 1.4 - Hidden Fix Detection**
+- "validate" = adds missing input validation = bug fix
+- Record: Not hidden - this is an explicit security hardening fix.
 
-## Phase 2: DIFF ANALYSIS
+## Phase 2: Diff Analysis
 
-**Step 2.1 - Inventory:** 1 file (`drivers/clk/qcom/clk-rcg2.c`), +2 /
--0 lines. Single-file surgical change.
+**Step 2.1 - Inventory**
+- Single file: `drivers/usb/usbip/usbip_common.c`
+- +12 / -3 (15 changed lines total)
+- Single function modified: `usbip_recv_iso()`
+- Classification: small, single-file surgical fix
+- Record: Minimal scope; textbook stable-appropriate patch size.
 
-**Step 2.2 - Code flow:**
-- Before: `frac_table_pixel[] = { {3,8}, {2,9}, {4,9}, {1,1}, {2,3}, {}
-  }`
-- After: adds `{16,35}` and `{4,15}` before the sentinel
-- Only affects `clk_pixel_determine_rate()` and `clk_pixel_set_rate()`
-  iteration logic
+**Step 2.2 - Code-Flow Change**
+- Before: `int total_length = 0; ... total_length +=
+  urb->iso_frame_desc[i].actual_length;` then `if (total_length !=
+  urb->actual_length)`
+- After: `u32 total_length = 0;` + per-iteration `if
+  (iso_frame_desc[i].actual_length > transfer_buffer_length) return
+  -EPROTO;` + cast comparison to u32
+- Affected path: RET_SUBMIT handling in vhci-hcd receive path (network-
+  sourced data)
+- Record: Hardens the receive path for untrusted network input.
 
-**Step 2.3 - Bug mechanism:** Hardware workaround/enablement category.
-The table defines numerator/denominator pairs used to compute parent
-rate requests. Without the new entries, the iteration loop falls off the
-end and returns `-EINVAL` for specific legitimate hardware
-configurations.
+**Step 2.3 - Bug Mechanism Category**
+- (d) Memory safety + integer overflow: `u32` widening prevents signed
+  accumulator wrap; bounds check prevents any single-frame value from
+  being > buffer capacity
+- Secondary: (g) Logic correctness — format specifier `%d` → `%u` and
+  explicit `(u32)` cast make the comparison semantically correct
+- Record: Classic "validate untrusted input from the wire" pattern —
+  same class as the 2016 commit `b348d7dddb6c4` in the same file.
 
-**Step 2.4 - Fix quality:**
-- Obviously correct: pure data table addition, cannot affect previously
-  working cases.
-- Cannot cause regression: iteration checks each entry in order, new
-  entries only kick in when existing ones don't match.
-- No risk of deadlock, UAF, etc.
+**Step 2.4 - Fix Quality**
+- Obviously correct: bounds check is simple (`actual_length >
+  transfer_buffer_length → reject`), u32 widening cannot introduce new
+  overflow behavior in a non-negative accumulation
+- No regression risk: rejects only genuinely malformed input; legitimate
+  clients never produce frames larger than the whole buffer
+- Record: High-quality, minimal, safe fix.
 
-## Phase 3: GIT HISTORY INVESTIGATION
+## Phase 3: Git History Investigation
 
-**Step 3.1 - Blame:**
-- `frac_table_pixel[]` was introduced by `99cbd064b059f` ("clk: qcom:
-  Support display RCG clocks", May 2014)
-- Entry `{2, 3}` was added by `b527358cb4cd5` (Feb 2022, Taniya Das)
-  with a `Fixes:` tag
+**Step 3.1 - Blame**
+- `usbip_recv_iso()` was introduced by `05a1f28e879e3` ("Staging:
+  USB/IP: add common functions needed", July 2008)
+- Record: Vulnerable code present since 2.6.28 — affects every single
+  active stable tree.
 
-**Step 3.2 - No Fixes: tag to follow.** The missing ratios have
-effectively been absent since original commit `99cbd064b059f` (2014,
-v3.17-era). Code exists in every active stable tree.
+**Step 3.2 - Fixes: Tag**
+- No Fixes: tag present; the buggy pattern dates to the original 2008
+  import (pre-git staging era for USBIP)
+- Record: N/A — but effectively "Fixes: 05a1f28e879e3" which predates
+  all stable branches.
 
-**Step 3.3 - Related file history:** Prior similar fix (`b527358cb4cd5`,
-"Update the frac table for pixel clock") added a single entry and was
-backported broadly. Same author context (Taniya Das reviewed both).
+**Step 3.3 - File History**
+Recent commits touching `drivers/usb/usbip/usbip_common.c`:
+- `2ab833a16a825` usbip: validate number_of_packets in
+  usbip_pack_ret_submit() **[has `Cc: stable`]**
+- `74a2287209a85` usb: usbip: fix OOB read/write in usbip_pad_iso()
+  (patch 3/3 of series)
+- `591c1d972d8f1` **← TARGET** (patch 2/3)
+- `1897852293fac` usb: usbip: fix integer overflow in usbip_recv_iso()
+  (patch 1/3)
+- Record: Part of a 3-patch hardening series against malicious USBIP
+  server. Companion patch from Nathan Rebello (`2ab833a16a825`)
+  explicitly has `Cc: stable`, confirming maintainers view this cluster
+  of bugs as stable-worthy.
 
-**Step 3.4 - Author:** Pengyu Luo is a regular contributor to qcom
-subsystem with multiple DSI-related fixes (`e4eb11b34d6c8`,
-`ac47870fd7955`, `fd941c787cbb4`). Patch reviewed by actual subsystem
-experts.
+**Step 3.4 - Author Context**
+- Kelvin Mbogo: new contributor sending hardening patches; patches
+  vetted by Greg KH with v1→v2 rework
+- Greg KH (USB maintainer) applied all three patches
+- Record: Proper maintainer review chain, v2 addressed review feedback.
 
-**Step 3.5 - Dependencies:** Standalone, self-contained. No
-prerequisites.
+**Step 3.5 - Prerequisite Check**
+- The diff hunks in `591c1d972d8f1` (the target) only touch:
+  1. `int total_length = 0;` → `u32 total_length = 0;`
+  2. Add per-frame actual_length bounds check
+  3. Cast/format the comparison
+- I verified that stable/linux-6.19.y (and all older stable branches)
+  still contain `int total_length = 0;` and the unmodified loop/check —
+  so the patch hunks CAN apply standalone without patch 1/3
+- However, this patch is part of a security cluster; ideally patches
+  1/3, 2/3, 3/3 + Nathan's `2ab833a16a825` all get backported together
+- Record: Patch applies cleanly to stable without dependencies, though
+  full cluster is the complete fix.
 
-## Phase 4: MAILING LIST RESEARCH
+## Phase 4: Mailing List Research
 
-**Step 4.1 - `b4 dig -c 0f5c8f03d990f`:** Found thread at `https://lore.
-kernel.org/all/20260321095029.2259489-1-mitltlatltl@gmail.com/`. Single-
-patch, v1 only, applied as-is by Bjorn Andersson with "Applied,
-thanks!".
+**Step 4.1 - Original Thread (b4 dig)**
+- `b4 dig -c 591c1d972d8f1` found match at `https://lore.kernel.org/all/
+  20260325103640.8090-2-addcontent08@gmail.com/`
+- `b4 dig -a` confirmed series evolution: v1 → v2 (applied version is
+  v2)
+- v2 changes per Kelvin: "Drop Reported-by (author is signer)"
+- Record: v2 is the applied version, v1 received feedback from Greg KH
+  and was refined.
 
-**Step 4.2 - Reviewers:** Taniya Das (Qualcomm clock expert), Dmitry
-Baryshkov (msm maintainer), Konrad Dybcio (Qualcomm engineer). Proper
-maintainer review.
+**Step 4.2 - Reviewers (b4 dig -w)**
+- Originally CC'd: `linux-usb@vger.kernel.org`,
+  `gregkh@linuxfoundation.org`, `skhan@linuxfoundation.org` (USBIP
+  maintainer)
+- Both the USB subsystem maintainer (Greg KH) and the USBIP subsystem
+  maintainer (Shuah Khan) were in loop
+- Record: Proper maintainer review coverage.
 
-**Step 4.3 - Discussion:** Konrad asked a clarifying question about
-whether these divider pairs are needed at all; Dmitry pointed to the
-Qualcomm downstream commit `f7aec4359448d25c8a8d21ad8e8733d61f6b69ab`
-confirming the ratios come from the vendor reference code. No NAK, no
-concerns about stability.
+**Step 4.3 - Bug Report**
+- No explicit Reported-by/syzbot on v2 (author is signer)
+- Exploit scenario clearly described in commit message with concrete
+  payload (`0xFFFFFFFC`) and path to userspace via `USBDEVFS_REAPURB`
+- Record: Author-discovered security issue; mechanism is well-documented
+  in commit body.
 
-**Step 4.4 - Series context:** Not part of a series.
+**Step 4.4 - Related Patches**
+- Thread shows all three patches of the series (patches 1/3, 2/3, 3/3 by
+  Kelvin)
+- Companion patch from Nathan Rebello posted in same thread got `Acked-
+  by: Shuah Khan` and `Cc: stable@vger.kernel.org`, submitted separately
+  as `2ab833a16a825`
+- Greg KH explicitly asked Nathan to "submit it separately, on top of
+  that series, to make it easier to review and apply"
+- Record: Maintainers treat this as a coordinated security cluster;
+  Nathan's companion patch explicitly nominated for stable.
 
-**Step 4.5 - Stable discussion:** None found in the thread.
+**Step 4.5 - Stable List**
+- Not individually discussed on stable list (fix flew under radar of
+  formal stable nomination process for 1/3, 2/3, 3/3 — only the
+  separately-submitted Nathan patch has Cc: stable)
+- Record: This is exactly the kind of fix that SHOULD be caught by
+  autosel review.
 
-## Phase 5: CODE SEMANTIC ANALYSIS
+## Phase 5: Code Semantic Analysis
 
-**Step 5.1 - Key data:** `frac_table_pixel[]` array only.
+**Step 5.1 - Functions Modified**
+- `usbip_recv_iso()` (single function changed)
 
-**Step 5.2 - Callers:** `clk_pixel_ops` (set via `.set_rate =
-clk_pixel_set_rate` and `.determine_rate = clk_pixel_determine_rate`) is
-used by 17+ Qualcomm dispcc drivers: SDM845, SM6350, SM7150, SM8250,
-SM8450, SM8550, SM8750, X1E80100, SC7180, SC7280, SC8280XP, QCM2290,
-SM4450, SM6375, SA8775P (dispcc0/1), etc. This is a HIGH IMPACT SURFACE
-— affects display on almost every modern Qualcomm SoC.
+**Step 5.2 - Callers**
+- `drivers/usb/usbip/vhci_rx.c:86` → called from
+  `vhci_recv_ret_submit()` (vhci-hcd RX path, client side)
+- `drivers/usb/usbip/stub_rx.c:605` → stub_rx RET_SUBMIT handling
+  (server side)
+- `drivers/usb/usbip/vudc_rx.c:173` → VUDC receive path
+- Record: Called from every USBIP RET_SUBMIT receive path. Critical path
+  for any USBIP user.
 
-**Step 5.3 - Callees:** Pure table lookup.
+**Step 5.3 - Callees**
+- `usbip_pack_iso()` — deserialize ISO frame descriptor
+- `usbip_iso_packet_correct_endian()` — byte-order conversion
+- `usbip_recv()` — TCP socket recv
+- Record: Pure data-processing function for wire-format data.
 
-**Step 5.4 - Reachability:** Reached from `clk_set_rate()` on any MDSS
-pixel clock → userspace-triggerable via normal display driver operations
-(DRM probe, panel enable, mode set).
+**Step 5.4 - Reachability**
+- Call chain: user runs `usbip attach` (CAP_SYS_ADMIN) → vhci-hcd
+  connects to USBIP server → kernel RX thread `vhci_rx_loop` →
+  `vhci_recv_ret_submit` → `usbip_recv_iso` → on return, `usbip_pad_iso`
+  → memmove into user-readable buffer → userspace `USBDEVFS_REAPURB`
+  reads kernel memory
+- Record: Directly reachable from the network when connected to a
+  malicious USBIP server — all the leaked data then reaches userspace.
 
-**Step 5.5 - Similar patterns:** The `b527358cb4cd5` commit is the exact
-same pattern (add ratio to `frac_table_pixel`) and was backported to 8
-stable trees.
+**Step 5.5 - Similar Patterns**
+- `usbip_recv_xbuff()` already validates `size >
+  urb->transfer_buffer_length` (from commit `b348d7dddb6c4`, 2016) —
+  this patch applies the same defensive pattern to ISO frames
+- Record: Patch extends an established validation pattern already
+  accepted in the same file.
 
-## Phase 6: STABLE TREE ANALYSIS
+## Phase 6: Cross-Referencing Stable Trees
 
-**Step 6.1 - Code exists in stable:** Verified `frac_table_pixel[]` is
-identical (`{3,8}, {2,9}, {4,9}, {1,1}, {2,3}`) on 5.10, 5.15, 6.1, 6.6,
-6.12, 6.18, 6.19. Every active stable tree has the same buggy state.
+**Step 6.1 - Vulnerable Code in Stable**
+- Verified via `git show
+  stable/linux-6.19.y:drivers/usb/usbip/usbip_common.c` that the
+  unpatched vulnerable code (`int total_length`, no per-frame bounds
+  check) is present
+- Code unchanged since 2008 staging import → present in 5.10.y, 5.15.y,
+  6.1.y, 6.6.y, 6.12.y, 6.17.y (if active), 6.18.y, 6.19.y
+- Record: All active stable trees contain the bug.
 
-**Step 6.2 - Backport complexity:** The `frac_table_pixel[]` array is in
-the same place across all trees. Will apply cleanly or with trivial
-context adjustment.
+**Step 6.2 - Backport Complications**
+- None of prerequisite patch 1/3 (`1897852293fac`) or companion 3/3
+  (`74a2287209a85`) is in any stable tree yet
+- The specific hunks of this patch do not depend on 1/3 — they modify
+  `int total_length` which exists in all stable trees
+- Expected: clean apply
+- Record: Should apply cleanly to all stable branches; the full security
+  benefit requires also backporting 1/3 and 3/3.
 
-**Step 6.3 - Related fixes in stable:** `b527358cb4cd5` (adding `{2,3}`)
-is in all stable trees. This new commit is the continuation.
+**Step 6.3 - Related Fixes in Stable**
+- None yet — this entire USBIP security cluster is fresh (March-April
+  2026)
+- Record: No conflicting/duplicate fixes in stable.
 
-## Phase 7: SUBSYSTEM CONTEXT
+## Phase 7: Subsystem Context
 
-**Step 7.1 - Subsystem:** `drivers/clk/qcom/` - Qualcomm clock driver.
-Level: IMPORTANT (affects many SoC families, any user with a Qualcomm
-device using `clk_pixel_ops`).
+**Step 7.1 - Criticality**
+- `drivers/usb/usbip/` = USB/IP driver (used in VM environments, remote
+  USB access, Android development, CI with USB test devices)
+- Criticality: IMPORTANT (affects users who use USB/IP; not CORE but not
+  obscure)
+- Record: IMPORTANT criticality — specific user population but real
+  attack surface.
 
-**Step 7.2 - Activity:** Actively maintained subsystem; regular flow of
-fixes.
+**Step 7.2 - Activity**
+- USBIP has periodic maintenance with multiple historical security fixes
+  (race conditions, shift OOB, buffer validation); active subsystem
+- Record: Maintained subsystem with history of similar stable-worthy
+  hardening patches.
 
-## Phase 8: IMPACT & RISK
+## Phase 8: Impact & Risk
 
-**Step 8.1 - Affected users:** Users of Qualcomm SoCs with DSI panels
-requiring the specific pixel clock ratios — explicitly 10-bit DSI C-PHY
-panels and other configurations where pclk/byteclk combinations force a
-16:35 or 4:15 ratio.
+**Step 8.1 - Who's Affected**
+- Any user who runs `usbip attach` to connect to a remote USBIP server
+  (then connection to a compromised/malicious server exposes the client)
+- Record: USBIP client users — real user population, not a theoretical
+  risk.
 
-**Step 8.2 - Trigger conditions:** Normal display operation with
-affected panels. No special privileges needed (display usage is common).
+**Step 8.2 - Trigger**
+- Attacker runs malicious USBIP server; user attaches to it; server
+  returns crafted RET_SUBMIT
+- Attach requires privileged operation, but once attached, reading data
+  via `USBDEVFS_REAPURB` is accessible to any process with access to the
+  virtual device
+- Record: Trigger is "connect to malicious USBIP server" — a very
+  realistic scenario (VM escapes, supply-chain USBIP servers,
+  compromised networks).
 
-**Step 8.3 - Failure mode severity:** HIGH — pixel clock is set to
-completely wrong rate (e.g., 50 MHz instead of 173 MHz, a 3.4x error).
-This causes visible display corruption / non-functional display on
-affected hardware. Not a crash, but user-visible broken functionality
-with no workaround.
+**Step 8.3 - Failure Severity**
+- OOB slab read → kernel memory leaked to userspace = **information
+  disclosure** (potential leak of sensitive data: kernel pointers,
+  credentials, keys)
+- Could be chained with other bugs for KASLR bypass or further
+  exploitation
+- Severity: **HIGH** (info leak, security-relevant)
+- Record: HIGH — kernel info leak to userspace via crafted network
+  input.
 
-**Step 8.4 - Risk/benefit:**
-- Benefit: HIGH (fixes display for a class of panels across many SoCs)
-- Risk: VERY LOW (2 lines of data, table iteration is in-order; existing
-  ratios still match first)
-- Ratio: Strongly favors backport.
+**Step 8.4 - Risk/Benefit**
+- Benefit: HIGH — closes a security-relevant info leak in untrusted-
+  network parsing path
+- Risk: VERY LOW — adds a bounds check and a type widening; cannot
+  produce false rejections on legitimate data (no legitimate frame can
+  be larger than the whole buffer); u32 widening is semantically
+  equivalent for non-overflowing cases
+- Record: Excellent benefit/risk ratio.
 
-## Phase 9: SYNTHESIS
+## Phase 9: Final Synthesis
 
-**Evidence FOR backporting:**
-- Fixes real observed runtime failure with detailed clk_summary evidence
-- Same pattern (adding ratio to `frac_table_pixel`) was previously
-  backported to 8 stable trees (`b527358cb4cd5` went to 4.9.y, 4.14.y,
-  4.19.y, 5.4.y, 5.10.y, 5.15.y, 5.16.y, 5.17.y)
-- Minimal 2-line change in a const data table
-- Zero functional risk (iteration is ordered; additions cannot break
-  existing cases)
-- Reviewed by two subsystem experts + applied by Qualcomm SoC maintainer
-- Falls into "hardware quirk/workaround" exception category (analogous
-  to device ID addition)
-- Code exists identically in all active stable trees
-- Used by 17+ SoC drivers → broad user impact
+**Step 9.1 - Evidence Summary**
 
-**Evidence AGAINST backporting:**
-- No explicit Fixes: tag (though prior identical-pattern fix had one,
-  and absence of tag is explicitly not a signal per the guidelines)
-- Commit message uses "expand" instead of "fix" (but body describes
-  concrete failure)
-- No Cc: stable from the author
+FOR backporting:
+- Security fix: kernel info leak from attacker-controlled network input
+  to userspace
+- Small (+12/-3), single-file, single-function, surgical
+- Obviously correct: simple bounds check + type widening
+- Vulnerable code present since 2008 — every active stable affected
+- Signed off by USB maintainer Greg KH; reviewed through v1→v2 cycle
+- Follows established pattern (`b348d7dddb6c4`, 2016) accepted in same
+  file for `usbip_recv_xbuff`
+- Companion patch in the same security cluster has explicit `Cc: stable`
+- Applies cleanly to stable trees even without prerequisite patch 1/3
 
-**Stable rules check:**
-1. Obviously correct? YES — pure data addition
-2. Fixes real bug? YES — pixel clock misprogrammed to ~3.4x wrong rate
-3. Important? YES — broken display on affected hardware
-4. Small and contained? YES — 2 lines in one file
-5. No new features/APIs? YES — extends internal lookup table, not
-   exposed
-6. Applies to stable? YES — verified identical state across stable trees
+AGAINST backporting:
+- Patch 2/3 of a series; ideally 1/3 and 3/3 should also be backported
+  for complete defense-in-depth
+- No explicit `Cc: stable` (but absence is expected — that's the autosel
+  context)
 
-**Exception category:** Fits "hardware quirks/workarounds" — enables
-specific hardware configurations (10-bit DSI C-PHY panels) that were
-previously non-functional due to missing table entries, directly
-analogous to adding PCI/USB device IDs or codec quirks.
+Unresolved:
+- No CVE assigned yet (not a blocker — many pre-CVE security fixes are
+  backported)
+
+**Step 9.2 - Stable Rules Checklist**
+1. Obviously correct? ✅ Yes
+2. Fixes real bug? ✅ Yes (kernel info leak)
+3. Important? ✅ HIGH — security issue
+4. Small & contained? ✅ +12/-3, single function
+5. No new features? ✅ Pure input validation
+6. Applies to stable? ✅ Verified: hunks match stable code
+
+**Step 9.3 - Exception Category**
+- Hardening / security validation of untrusted network input — fits
+  under "fixes a real bug" (not strictly an exception category, but
+  textbook stable material)
+
+**Step 9.4 - Decision**
+YES. The benefit (closing a kernel info-leak attackable by a malicious
+USBIP server) significantly outweighs the risk (near-zero — the change
+is input validation + type widening).
 
 ## Verification
 
-- [Phase 1] Parsed tags: two Reviewed-by from Qualcomm experts, Link to
-  lore, no Fixes:/Cc:stable (expected)
-- [Phase 2] Diff analysis: 2-line const data addition to
-  `frac_table_pixel[]` before sentinel; no control-flow change
-- [Phase 3] `git log -- drivers/clk/qcom/clk-rcg2.c` + `git show
-  b527358cb4cd5`: confirmed precedent commit adding `{2,3}` was accepted
-  with Fixes: tag
-- [Phase 3] `git log --author="Pengyu Luo"`: confirmed author has
-  multiple legitimate DSI/Qualcomm fixes
-- [Phase 4] `b4 dig -c 0f5c8f03d990f`: returned
-  `lore.kernel.org/all/20260321095029.2259489-1-mitltlatltl@gmail.com/`
-- [Phase 4] `b4 dig -c 0f5c8f03d990f -a`: single v1, no revisions
-- [Phase 4] Thread contents via mbox: Taniya Das, Dmitry Baryshkov
-  Reviewed-by; Konrad asked a non-blocking question; Bjorn applied with
-  "Applied, thanks!"; no NAKs; no stable discussion
-- [Phase 5] `grep -rln "clk_pixel_ops" drivers/clk/qcom/`: 17+
-  dispcc/gcc drivers use the affected ops (SDM845, SM8250, SM8450,
-  SM8550, SM8750, X1E80100, SC7180, SC7280, SC8280XP, QCM2290, SM4450,
-  SM6350, SM6375, SM7150, SA8775P, etc.)
-- [Phase 6] Examined `drivers/clk/qcom/clk-rcg2.c` at for-greg/5.10-200,
-  5.15-200, 6.1-200, 6.6-200, 6.12-200, 6.18-200, 6.19-200:
-  `frac_table_pixel[]` identical across all trees — will apply cleanly
-- [Phase 6] `grep -rl "b527358cb4cd" /home/sasha/stable-
-  queue/releases/`: confirmed prior similar commit was backported to
-  4.9.311, 4.14.276, 4.19.238, 5.4.189, 5.10.110, 5.15.33, 5.16.19,
-  5.17.2
-- [Phase 8] Failure mode from commit body: pclk set to 50455997 Hz
-  instead of 172992000 Hz (3.4x off) on 10-bit DSI C-PHY panels — user-
-  visible display failure
+- **[Phase 1]** Parsed subject and tags: Verified Link to lore, Greg KH
+  SOB (USB maintainer), absence of Fixes/Cc:stable expected for review
+  candidate.
+- **[Phase 1]** Body analysis: commit explains `0xFFFFFFFC + small =
+  wraparound` mechanism, path to `USBDEVFS_REAPURB` info leak.
+- **[Phase 2]** Ran `git show 591c1d972d8f1`: confirmed +12/-3 in single
+  file, single function `usbip_recv_iso()`.
+- **[Phase 2]** Read `include/linux/usb.h`: verified
+  `iso_frame_desc[i].actual_length` is `unsigned int` (line 1418),
+  `urb->actual_length` is `u32` (line 1655),
+  `urb->transfer_buffer_length` is `u32` (line 1654) — confirms signed-
+  wrap bug is real.
+- **[Phase 3]** `git log --follow` traced `usbip_common.c` back to
+  `05a1f28e879e3` (July 2008, staging import) — bug predates all stable
+  branches.
+- **[Phase 3]** `git log origin/master --
+  drivers/usb/usbip/usbip_common.c`: found the 3-patch series
+  (1897852293fac, 591c1d972d8f1, 74a2287209a85) plus companion
+  `2ab833a16a825` which has `Cc: stable`.
+- **[Phase 3]** Read
+  `stable/linux-6.19.y:drivers/usb/usbip/usbip_common.c`: confirmed
+  unpatched code (`int total_length`, no bounds check) is present.
+- **[Phase 4]** `b4 dig -c 591c1d972d8f1`: found `https://lore.kernel.or
+  g/all/20260325103640.8090-2-addcontent08@gmail.com/`.
+- **[Phase 4]** `b4 dig -c 591c1d972d8f1 -a`: confirmed series went v1 →
+  v2 (applied version is v2 after Greg's feedback).
+- **[Phase 4]** `b4 dig -c 591c1d972d8f1 -w`: confirmed Greg KH and
+  Shuah Khan (USBIP maintainer) were CC'd.
+- **[Phase 4]** Read thread mbox: confirmed Greg KH directed Nathan to
+  submit his companion patch separately, and that companion got `Acked-
+  by: Shuah Khan` + `Cc: stable`.
+- **[Phase 5]** Grep on usbip directory: verified `usbip_recv_iso` is
+  called from `vhci_rx.c:86`, `stub_rx.c:605`, `vudc_rx.c:173`;
+  `usbip_pad_iso` called from `vhci_rx.c:92`.
+- **[Phase 5]** Read `vhci_rx.c`: confirmed the exploit path
+  `usbip_recv_iso → usbip_pad_iso → memmove into transfer_buffer` that
+  later reaches userspace.
+- **[Phase 5]** Verified precedent commit `b348d7dddb6c4` (2016) applied
+  exactly the same "validate untrusted length" pattern to
+  `usbip_recv_xbuff` in the same file.
+- **[Phase 6]** Checked `stable-rc-push/linux-*.y` branches: no USBIP
+  security series patches applied yet.
+- **[Phase 6]** Inspected hunks vs stable code: the three hunks only
+  touch `int total_length = 0`, the iso-decode loop, and the post-loop
+  comparison — all present in all stable trees. Expected clean apply
+  independent of patch 1/3.
+- **[Phase 7]** Context: `drivers/usb/usbip/` — IMPORTANT criticality
+  (VM/remote USB users).
+- **[Phase 8]** Severity: HIGH — kernel slab OOB read → info leak to
+  userspace via USBDEVFS_REAPURB, triggered by crafted USBIP server
+  replies.
+- UNVERIFIED: Exact minor versions of 5.10.y/5.15.y/etc. weren't walked
+  line-by-line, but mainline unpatched state in 6.19.y + unchanged code
+  since 2008 staging import reliably implies bug exists in all active
+  stable branches.
 
----
-
-This is a well-reviewed, minimal hardware-enablement fix (analogous to a
-hardware quirk) that addresses a documented, reproducible runtime
-failure on real hardware. The fix is a 2-line data-table extension with
-zero regression risk. There is strong precedent: a commit with the exact
-same pattern (`b527358cb4cd5`) was backported broadly to stable. The
-affected code is used by 17+ Qualcomm SoC drivers, giving wide user
-impact.
+The fix is a small, surgical, obviously-correct validation of attacker-
+controlled network input that prevents a kernel information leak. It
+applies cleanly to all active stable trees, is signed off by the USB
+subsystem maintainer, and follows an established pattern already
+accepted in the same file. The companion fix in the same security
+cluster is already explicitly nominated for stable. This is textbook
+stable material.
 
 **YES**
 
- drivers/clk/qcom/clk-rcg2.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/usbip/usbip_common.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index fc696b66ccda9..6064a0e17d519 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1117,6 +1117,8 @@ static const struct frac_entry frac_table_pixel[] = {
- 	{ 4, 9 },
- 	{ 1, 1 },
- 	{ 2, 3 },
-+	{ 16, 35},
-+	{ 4, 15},
- 	{ }
- };
+diff --git a/drivers/usb/usbip/usbip_common.c b/drivers/usb/usbip/usbip_common.c
+index a2b2da1255dda..29d776fbeef74 100644
+--- a/drivers/usb/usbip/usbip_common.c
++++ b/drivers/usb/usbip/usbip_common.c
+@@ -665,7 +665,7 @@ int usbip_recv_iso(struct usbip_device *ud, struct urb *urb)
+ 	int size = np * sizeof(*iso);
+ 	int i;
+ 	int ret;
+-	int total_length = 0;
++	u32 total_length = 0;
  
+ 	if (!usb_pipeisoc(urb->pipe))
+ 		return 0;
+@@ -696,14 +696,23 @@ int usbip_recv_iso(struct usbip_device *ud, struct urb *urb)
+ 	for (i = 0; i < np; i++) {
+ 		usbip_iso_packet_correct_endian(&iso[i], 0);
+ 		usbip_pack_iso(&iso[i], &urb->iso_frame_desc[i], 0);
++		if (urb->iso_frame_desc[i].actual_length >
++				(unsigned int)urb->transfer_buffer_length) {
++			dev_err(&urb->dev->dev,
++				"recv iso: frame actual_length %u exceeds buffer %d\n",
++				urb->iso_frame_desc[i].actual_length,
++				urb->transfer_buffer_length);
++			kfree(buff);
++			return -EPROTO;
++		}
+ 		total_length += urb->iso_frame_desc[i].actual_length;
+ 	}
+ 
+ 	kfree(buff);
+ 
+-	if (total_length != urb->actual_length) {
++	if (total_length != (u32)urb->actual_length) {
+ 		dev_err(&urb->dev->dev,
+-			"total length of iso packets %d not equal to actual length of buffer %d\n",
++			"total length of iso packets %u not equal to actual length of buffer %d\n",
+ 			total_length, urb->actual_length);
+ 
+ 		if (ud->side == USBIP_STUB || ud->side == USBIP_VUDC)
 -- 
 2.53.0
 
