@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317E03F54BB;
-	Tue, 28 Apr 2026 10:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8879B401484;
+	Tue, 28 Apr 2026 10:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372942; cv=none; b=VgwHrgRJXg7SDXcub8qBNprAL9GTtrh+fxQZ6heA8eRdFVIU4Fr97NVC3P1hVb7QjxEr3QbcphD8O0Fxzxl7bIf9n5kj7BBTR1DAo7pnQtzT+i2N1cYF2Y9jSpbj/BKwQ61JCHg6aG3NmHasqY2sscBhw/owE/snY4Ddpgm9cSE=
+	t=1777372943; cv=none; b=ERY6Gjtyvt2DQ5H4zKfONyYp9SCdUmnsEFej/w57peKFbGEDuYdSYzCq2ru4bmCw4rMfwh8JvniD5uPe12K59CxdTvQdn4ytACP7in3kXM2vAEbFVi/2NlINvmFR5a6SJ49WY3g1P8vGJ3+GcbLr6YVY7nApcrbllzivvcCsTvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372942; c=relaxed/simple;
-	bh=j/TzdqBcLtZkvc+ZZXuxANgusDVdXkuUKurqgbt2RC0=;
+	s=arc-20240116; t=1777372943; c=relaxed/simple;
+	bh=gIV688uBFlsXlTT0uLql82n27evJwhecVjf4GCACkks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XK+FWNpy8Fp4MQWlLi0+9ihnWKqH33kfKXQjLP/mnYotocPD53wqbvOqEoCOlDziNM/IbmcBP8DhL5o0SGbKfqpt/VyKfn7NsXDoqssXct5041JL62WnQE21yeFbbBE9hNSlpc1LHtKmmVqrUWLwDQJ8VnW8Pv3x6YEcmmujjnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uWQXTdRM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bupkD06cvU4yrBP5dG25/i5PeJhgqL4aDbBGQPi+ypyW7TUOGSaQTU77WY4ks/wq23wHOkUu+j9sYA7Ecg4S8M2f2yYfItIu5w4g4gH+Vp9cbxOoPPQKxA2Iw17dI8pBJfrSnYwACOfBrjjyOmSwXlH8ecwTHDWqt+bz4xGpDHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dVjXBWxH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uWQXTdRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBAB2C2BCB7;
-	Tue, 28 Apr 2026 10:42:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dVjXBWxH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFA5C2BCB8;
+	Tue, 28 Apr 2026 10:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372941;
-	bh=j/TzdqBcLtZkvc+ZZXuxANgusDVdXkuUKurqgbt2RC0=;
+	s=k20201202; t=1777372943;
+	bh=gIV688uBFlsXlTT0uLql82n27evJwhecVjf4GCACkks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWQXTdRMQ09QPAoHOsCh0rd3acyZVVozerk/XtE6Uc4r+3iXF+bx+ADoyvuVgCE27
-	 C7tBqxDRNSzdQ5QatlXdXKBnRr2e77w48Gj/Mi+iJcnV6HdgRXn0W8c3GFEZ2rSBJ/
-	 C5nFLyqZJddomLZEQiZJpLiFm4LAXMnei0RGl/bv5uSFkm+howa97DbyJAjoTQWlbP
-	 Viia6qxP87uaJ96pFc9bkkIOgGqn9ApL3OnQbY+Ui0NXKiNCNfL0xxfR0NFrwT/p3c
-	 aTZmGu77nyqThk2M35mQKsNznC8FLXt0nklzAFQjHZ8P3FQgfrwD7oMXUmzy7UJrpF
-	 j/jmBnlCfbQnQ==
+	b=dVjXBWxHm+zHlJoH/blcc+TrCd2An7ZaAYi1h09JpnS7E0Yc8yCmi0/iywi/Uh+d9
+	 VkRhDi9Nfj0yJaKXpyYCW2LQbxDxof+gB8yhoABS7UpFh1IbRrC+4tn2zliy6IXu6A
+	 PR+ggk2oZhSIPjnFPwPF6xsh2TSrp1xWaRT6FWo2yfKbNeHfZTJNr/soaC6fny4PTm
+	 E4aYhfh7pBr/kLPGvBN0QLeyf/YX+ohQwu+HNvs9JhizeQipTXSORL2xGLFaXFbtqX
+	 v+n9z2Q1vxDxoKXq2eTTfeiXtUl79+D//nr8XH5l2HtFxgCY8xGNbriHgH0+u7ehqs
+	 Z1Uubzg5YDSKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhan Xusheng <zhanxusheng1024@gmail.com>,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Adrian Hunter <adrian.hunter@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	jejb@linux.ibm.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] fs/ntfs3: fix $LXDEV xattr lookup
-Date: Tue, 28 Apr 2026 06:40:45 -0400
-Message-ID: <20260428104133.2858589-34-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] scsi: ufs: ufs-pci: Add support for Intel Nova Lake
+Date: Tue, 28 Apr 2026 06:40:46 -0400
+Message-ID: <20260428104133.2858589-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -53,331 +54,298 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit bb82fe0872de867f87fd4f64c9cb157903ac78db ]
+[ Upstream commit 096cd6b7adf21791827a045d464242d93a6fd54e ]
 
-Use correct xattr name ("$LXDEV") and buffer size when calling
-ntfs_get_ea(), otherwise the attribute may not be read.
+Add PCI ID to support Intel Nova Lake, same as Intel Meteor Lake (MTL).
 
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260309085815.55216-1-adrian.hunter@intel.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to make a thorough assessment. Let me
-compile the analysis.
+Now I have enough information to complete the analysis.
 
-## Analysis: fs/ntfs3: fix $LXDEV xattr lookup
+## Phase 1: Commit Message Forensics
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.1: Parse Subject Line**
+- Record: subsystem `scsi: ufs: ufs-pci:`, action verb `Add`, summary:
+  "Add support for Intel Nova Lake" — hardware enablement via PCI ID
 
-**Step 1.1 (Subject):**
-Record: Subsystem `fs/ntfs3:`, action verb `fix`, summary: fix $LXDEV
-extended attribute lookup failing due to wrong name_len passed to
-`ntfs_get_ea()`.
+**Step 1.2: Parse All Commit Message Tags**
+- Record:
+  - Signed-off-by: Adrian Hunter (Intel, author, UFS PCI driver
+    maintainer-level contributor)
+  - Reviewed-by: Bart Van Assche (prolific SCSI/UFS reviewer)
+  - Link: https://patch.msgid.link/20260309085815.55216-1-
+    adrian.hunter@intel.com
+  - Signed-off-by: Martin K. Petersen (SCSI subsystem maintainer)
+  - No `Fixes:` tag, no `Cc: stable` (absence is expected per
+    guidelines)
+  - No `Reported-by:`, no syzbot
 
-**Step 1.2 (Tags):**
-Record: Present tags:
-- `Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>` (author)
-- `Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-
-  software.com>` (ntfs3 maintainer)
-- No `Fixes:`, no `Reported-by:`, no `Link:`, no `Cc: stable`, no
-  `Reviewed-by:`, no `Tested-by:`, no syzbot.
+**Step 1.3: Analyze Commit Body**
+- Record: The body is one sentence: "Add PCI ID to support Intel Nova
+  Lake, same as Intel Meteor Lake (MTL)." Explicitly states the new
+  platform reuses the existing MTL variant ops. No bug described — this
+  is hardware enablement.
 
-**Step 1.3 (Body):**
-Record: Commit body states two things: (a) wrong xattr *name* is used
-via `sizeof("$$LXDEV") - 1`; (b) this may cause the attribute not to be
-read. No crash/stack trace, no version info, no reproducer;
-straightforward bug description.
+**Step 1.4: Detect Hidden Bug Fixes**
+- Record: Not a hidden bug fix. This is a straightforward new-hardware-
+  enablement PCI ID addition — which is an explicit exception category
+  in the stable rules.
 
-**Step 1.4 (Hidden fix check):**
-Record: Not hidden — verb is "fix" and described as a correctness bug.
-Confirmed by diff.
+## Phase 2: Diff Analysis
 
-### PHASE 2: DIFF ANALYSIS
+**Step 2.1: Inventory**
+- Record: 1 file changed (`drivers/ufs/host/ufshcd-pci.c`), +1/-0 lines.
+  Scope: single-file, single-line surgical addition. Modified table:
+  `ufshcd_pci_tbl[]`.
 
-**Step 2.1 (Inventory):**
-Record: One file `fs/ntfs3/xattr.c`, one function `ntfs_get_wsl_perm`, 1
-line changed (+1/-1). Single-file, single-char surgical fix.
+**Step 2.2: Code Flow Change**
+- Record: Before: PCI device 0xD335 (INTEL) not matched → driver would
+  not bind. After: PCI device 0xD335 matches and uses
+  `ufs_intel_mtl_hba_vops`. Only affects the specific new device.
 
-**Step 2.2 (Flow change):**
-Record: Before: `ntfs_get_ea(inode, "$LXDEV", sizeof("$$LXDEV") - 1, …)`
-passed `name_len = 7` to `ntfs_get_ea()`. After: `sizeof("$LXDEV") - 1 =
-6`. Only the name-length argument is altered; everything else (name
-pointer, buffer, size, return check) remains identical.
+**Step 2.3: Bug Mechanism**
+- Record: Category (h) Hardware workarounds — device ID addition. No bug
+  mechanism; enables existing driver logic for a new SKU.
 
-**Step 2.3 (Bug mechanism):**
-Record: Category = logic/correctness bug (typo). `find_ea()`
-(fs/ntfs3/xattr.c:45-66) matches entries by:
-```45:62:fs/ntfs3/xattr.c
-static inline bool find_ea(const struct EA_FULL *ea_all, u32 bytes,
-                           const char *name, u8 name_len, u32 *off, u32
-*ea_sz)
-{
-        ...
-                if (ea->name_len == name_len &&
-                    !memcmp(ea->name, name, name_len)) {
-```
-`ntfs_save_wsl_perm()` stores `$LXDEV` with `name_len = 6`
-(fs/ntfs3/xattr.c:1001), but `ntfs_get_wsl_perm()` was querying with
-`name_len = 7`. Since the first check (`ea->name_len == name_len`)
-requires exact equality, the lookup **always fails**. Consequence:
-`inode->i_rdev` is never populated from the `$LXDEV` xattr for WSL-
-created character/block device nodes on NTFS.
+**Step 2.4: Fix Quality**
+- Record: Trivially correct — simply matches the vendor/device pair to
+  an existing, tested vops struct (`ufs_intel_mtl_hba_vops`). Zero
+  regression risk: entries are only evaluated for matching vendor/device
+  PCI IDs, so no non-Nova-Lake system can be affected.
 
-**Step 2.4 (Quality):**
-Record: Obviously correct — the other three `$LXUID/$LXGID/$LXMOD` calls
-and the corresponding `ntfs_set_ea(…, "$LXDEV", sizeof("$LXDEV") - 1,
-…)` all use the correct form. The fix makes the read path consistent
-with the write path. No risk of regression: the old path was a
-guaranteed miss; the new path can only succeed more often. Not touching
-locks, memory mgmt, or any hot path.
+## Phase 3: Git History Investigation
 
-### PHASE 3: GIT HISTORY INVESTIGATION
+**Step 3.1: Blame**
+- Record: The MTL vops struct `ufs_intel_mtl_hba_vops` was introduced by
+  commit `4049f7acef3eb` ("scsi: ufs: ufs-pci: Add support for Intel
+  MTL", Apr 2022, v5.18), which carried `Cc: stable@vger.kernel.org #
+  v5.15+`. The MTL infrastructure is therefore in every active stable
+  tree (5.15.y and later).
 
-**Step 3.1 (Blame):**
-Record: `git blame` on lines 1034-1036 shows the exact line was
-introduced by `be71b5cba2e64` ("fs/ntfs3: Add attrib operations",
-Konstantin Komarov, 2021-08-13). `git log -S '"$$LXDEV"'` confirms this
-is the single origin. The bug is a birth defect of the ntfs3 xattr code.
+**Step 3.2: Follow Fixes: Tag**
+- Record: No Fixes: tag — N/A. This is an enablement, not a fix.
 
-**Step 3.2 (Fixes: tag):**
-Record: No `Fixes:` tag in the commit. Based on blame, the logical Fixes
-target is `be71b5cba2e64` (pre-upstream). First kernel version that
-contains the bug: **v5.15** (verified via `git tag --contains
-be71b5cba2e64` returning `v5.15`, `v5.15-rc1`, etc.).
+**Step 3.3: File History / Prerequisites**
+- Record: The surrounding PCI table has accumulated several similar
+  single-line additions: Arrow Lake (`51031cc3f903e`, v6.5), Lunar Lake
+  (`0a07d3c7a1d20`, v6.4), Panther Lake (`bdee2f1dcd84d`, v6.11),
+  Wildcat Lake (`823f95575d854`, 2025). Each is identical in structure:
+  one PCI ID reusing MTL ops. This commit is self-contained and has no
+  prerequisites.
 
-**Step 3.3 (File history):**
-Record: Recent commits to `fs/ntfs3/xattr.c` in 7.0 tree are unrelated
-(delalloc support, d_compare fixes, posix_acl changes, ACL-mode
-reduction). No prerequisite refactoring is required.
+**Step 3.4: Author's Other Commits**
+- Record: Adrian Hunter (Intel) is the long-time author/maintainer of
+  the Intel UFS PCI support code. All past Intel PCI ID additions for
+  this driver are his. Strong authority signal.
 
-**Step 3.4 (Author):**
-Record: First patch by `zhanxusheng1024@gmail.com` /
-`zhanxusheng@xiaomi.com` — not a maintainer, but the patch goes through
-Konstantin Komarov, the ntfs3 maintainer, who applied it (second SoB).
+**Step 3.5: Dependencies**
+- Record: The only dependency is `ufs_intel_mtl_hba_vops`, which has
+  existed in stable since v5.15+.
 
-**Step 3.5 (Dependencies):**
-Record: No dependencies — the changed function `ntfs_get_ea()` has the
-same signature across all stable trees with ntfs3 (v5.15+).
+## Phase 4: Mailing List Research
 
-### PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 4.1: Find Original Discussion**
+- Record: `b4 dig -c 096cd6b7adf21` matched by patch-id and returned htt
+  ps://lore.kernel.org/all/20260309085815.55216-1-
+  adrian.hunter@intel.com/ (only a single v1, no iterations).
 
-**Step 4.1 / 4.2 / 4.4 (b4 dig):**
-Record:
-- `b4 dig -c bb82fe0872de8` → found submission at https://lore.kernel.or
-  g/all/20260327032454.101579-1-zhanxusheng@xiaomi.com/
-- `b4 dig -a` → only **v1** exists; the applied version is the latest.
-- `b4 dig -w` → recipients: Konstantin Komarov (maintainer), linux-
-  kernel@vger.kernel.org, Zhan Xusheng.
-- Full thread (saved via `-m`) shows Konstantin Komarov replied on 7 Apr
-  2026: "Thanks, your patch is applied." No stable nomination was
-  requested, no NAKs or concerns raised.
+**Step 4.2: Reviewers**
+- Record: Bart Van Assche reviewed (Reviewed-by), Martin K. Petersen
+  applied (SCSI maintainer). Addressed to linux-scsi@vger.kernel.org.
+  Appropriate maintainer chain.
 
-**Step 4.3 (Bug reports):**
-Record: No Link: tags, no Reported-by, no bugzilla. No syzbot report.
-The author evidently found this by reading code or hitting WSL-created
-device nodes on NTFS.
+**Step 4.3: Bug Report**
+- Record: No Reported-by/bug report — N/A (enablement).
 
-**Step 4.5 (Stable ML):**
-Record: No stable-list discussion was found; not relevant here.
+**Step 4.4: Related Patches**
+- Record: `b4 dig -a` confirmed only v1; no multi-patch series.
+  Standalone.
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.5: Stable-Specific Discussion**
+- Record: No explicit Cc: stable request in thread, but thread is clean
+  and contains an Reviewed-by from Bart and a clean apply message from
+  Martin. No objections.
 
-**Step 5.1 (Functions):**
-Record: Only `ntfs_get_wsl_perm()` is modified.
+## Phase 5: Code Semantic Analysis
 
-**Step 5.2 (Callers):**
-Record: `ntfs_get_wsl_perm()` is called once, from
-`fs/ntfs3/inode.c:381` inside MFT attribute processing:
-```373:384:fs/ntfs3/inode.c
-        case ATTR_EA_INFO:
-                if (!attr->name_len &&
-                    resident_data_ex(attr, sizeof(struct EA_INFO))) {
-                        ni->ni_flags |= NI_FLAG_EA;
-                        /*
-    - ntfs_get_wsl_perm updates inode->i_uid, inode->i_gid,
-      inode->i_mode
-                         */
-                        inode->i_mode = mode;
-                        ntfs_get_wsl_perm(inode);
-```
-Triggered whenever ntfs3 loads an inode that carries EA_INFO (any NTFS
-inode with extended attributes, typical for WSL-managed files).
+**Step 5.1: Functions Modified**
+- Record: No functions modified — only the PCI device ID table
+  `ufshcd_pci_tbl[]`.
 
-**Step 5.3 (Callees):**
-Record: Calls `ntfs_get_ea()` (and through it `find_ea()` → `memcmp`).
-No locking/memory-management changes.
+**Step 5.2–5.4: Callers / Callees / Call Chain**
+- Record: The table is consumed by the PCI core (`pci_match_id`) for
+  driver binding. Reachability: only when a Nova Lake host with PCI ID
+  8086:D335 is present. With no such device, the added row is dead data.
 
-**Step 5.4 (Reachability):**
-Record: Reachable from `ntfs_iget5 -> ntfs_read_mft` — the standard
-inode-read path. Any open/stat/readdir of a WSL-special file on NTFS
-triggers the buggy code. Fully reachable from unprivileged userspace
-with an NTFS mount.
+**Step 5.5: Similar Patterns**
+- Record: Five identical prior commits add single MTL-compatible IDs
+  (MTL itself, ARL, LNL, PTL, WCL). Consistent, well-established
+  pattern.
 
-**Step 5.5 (Similar patterns):**
-Record: `sizeof("$LXUID")`, `sizeof("$LXGID")`, `sizeof("$LXMOD")` calls
-are correct. The `ntfs_set_ea(… "$LXDEV", sizeof("$LXDEV") - 1 …)` at
-line 1001 is also correct. The `$$LXDEV` typo is unique to this one
-`get_ea` call — no other instances.
+## Phase 6: Cross-Referencing / Stable Tree Analysis
 
-### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+**Step 6.1: Buggy Code in Stable?**
+- Record: The underlying driver + `ufs_intel_mtl_hba_vops` exist in all
+  active stable trees (5.15.y and later, since v5.18 with Cc: stable #
+  v5.15+).
 
-**Step 6.1 (Code exists in stable?):**
-Record: Yes, the buggy code exists identically in all active stable
-branches — verified by `git show`:
-- `stable/linux-5.15.y` line 1024
-- `stable/linux-6.6.y` line 1012
-- `stable/linux-6.12.y` line 1013
-- `stable/linux-6.19.y` line 1038
-All contain `sizeof("$$LXDEV") - 1`.
+**Step 6.2: Backport Complications**
+- Record: Trivial clean apply expected — single-line addition to a table
+  that exists in all active stable trees. Minor possibility of context
+  fuzz if the table has slightly fewer entries in older branches (e.g.,
+  pre-Wildcat Lake), but still trivial.
 
-**Step 6.2 (Backport complications):**
-Record: None. The context around the change is essentially identical
-across all stable trees; only the line number varies. Patch applies
-cleanly (or with trivial offset).
+**Step 6.3: Related Fixes Already in Stable?**
+- Record: Panther Lake and Wildcat Lake PCI ID additions already made it
+  to autosel stable branches (per `git branch --contains`), confirming
+  the stable trees routinely accept this class of single-line Intel UFS
+  PCI ID enablement.
 
-**Step 6.3 (Related stable fixes):**
-Record: No prior `$LXDEV` fix has landed in stable — the bug has existed
-unmodified since v5.15.
+## Phase 7: Subsystem Context
 
-### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 7.1: Subsystem Criticality**
+- Record: `drivers/ufs/host/` — device driver for UFS (Universal Flash
+  Storage). Criticality: IMPORTANT — UFS is the primary storage on
+  modern Intel mobile/client platforms, so without this ID the system's
+  main storage doesn't work at all on Nova Lake.
 
-**Step 7.1 (Subsystem):**
-Record: fs/ntfs3 — filesystem driver. Criticality: **IMPORTANT**
-(filesystem affecting data correctness for NTFS users, particularly
-those using NTFS cross-booted with Windows/WSL).
+**Step 7.2: Activity**
+- Record: Actively maintained; multiple commits per release. Mature,
+  stable interfaces.
 
-**Step 7.2 (Activity):**
-Record: ntfs3 is actively maintained by Paragon Software; steady trickle
-of small fixes.
+## Phase 8: Impact and Risk Assessment
 
-### PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 8.1: Affected Users**
+- Record: Users of Intel Nova Lake systems running a stable kernel.
+  Without this patch, the UFS controller simply won't bind → the system
+  cannot use its UFS storage.
 
-**Step 8.1 (Who is affected):**
-Record: Users of ntfs3 who have NTFS volumes containing WSL-created
-character/block device special files. Niche but real (WSL users who
-mount the same NTFS on Linux).
+**Step 8.2: Trigger Conditions**
+- Record: Universally triggered on Nova Lake hardware at boot/probe. No
+  special conditions. For all other hardware the code is inert.
 
-**Step 8.2 (Trigger):**
-Record: Triggers whenever an ntfs3 inode for a special device file with
-WSL attributes is loaded. No privilege needed beyond access to a mounted
-NTFS volume. Deterministic (not a race).
+**Step 8.3: Failure Mode Severity**
+- Record: Without the patch: UFS storage inoperative on Nova Lake. With
+  the patch: storage works. Severity for affected platform: HIGH (no
+  storage = unusable system); for all other systems: zero impact.
 
-**Step 8.3 (Severity):**
-Record: No crash; no data corruption of on-disk data. The user-visible
-symptom is that `S_ISCHR`/`S_ISBLK` files have `i_rdev = 0` (or
-uninitialized) — device nodes are effectively broken. **Severity:
-LOW–MEDIUM** (functional correctness bug, not a safety bug).
+**Step 8.4: Benefit / Risk**
+- Record: BENEFIT: High for target hardware users, zero-cost for others.
+  RISK: Essentially zero — only a PCI ID entry with a pointer to an
+  existing, heavily-tested vops struct already in stable. Ratio strongly
+  favors backport.
 
-**Step 8.4 (Risk-Benefit):**
-Record:
-- Benefit: LOW-MEDIUM — fixes functional correctness for a specific
-  interop feature (WSL<->Linux on NTFS).
-- Risk: VERY LOW — 1-character fix, obviously correct, cannot make the
-  read path worse; write path is unchanged.
-- Ratio: clearly favorable for stable.
+## Phase 9: Final Synthesis
 
-### PHASE 9: FINAL SYNTHESIS
+**Step 9.1: Evidence**
+- FOR: One-line PCI ID addition (exception category #1 in stable rules);
+  reuses existing in-tree and in-stable `ufs_intel_mtl_hba_vops`;
+  reviewed by Bart Van Assche; applied by Martin K. Petersen; obvious
+  correctness; zero regression risk for non-matching hardware; matches
+  the pattern of prior backported Intel UFS PCI ID additions (Arrow
+  Lake, Lunar Lake, Panther Lake, Wildcat Lake).
+- AGAINST: None substantive. No explicit Cc: stable (but that's expected
+  — would not be in review otherwise).
 
-**Step 9.1 (Evidence):**
-- FOR: Genuine bug with zero controversy; obvious typo; present since
-  v5.15 in all stable trees; maintainer-accepted; minimal scope (1
-  char); fix makes read symmetric with write; trivial backport.
-- AGAINST: Low user impact (niche WSL interop); no `Cc: stable` /
-  `Fixes:`; no Reported-by/syzbot; no crash or data corruption.
-- Unresolved: None material.
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? YES — reviewed and applied by the
+   maintainer; trivial addition.
+2. Fixes a real problem for users? YES — UFS storage non-functional on
+   Nova Lake without it.
+3. Important? YES — primary storage on target platform.
+4. Small & contained? YES — 1 line.
+5. No new features/APIs? Correct — no user-visible API or new behavior;
+   enables existing code path for a new device.
+6. Applies to stable? YES — clean apply expected.
 
-**Step 9.2 (Stable rules):**
-1. Obviously correct and tested? **Yes** — one-character change, read
-   symmetry with the write path proves correctness.
-2. Fixes a real bug? **Yes** — `$LXDEV` xattr lookup is guaranteed to
-   fail.
-3. Important issue (crash/security/corruption/deadlock)? **No** —
-   functional correctness only, no crash or data loss.
-4. Small and contained? **Yes** — 1 line, 1 character.
-5. No new features or APIs? **Correct — no new features.**
-6. Applies to stable trees? **Yes** — verified identical context in
-   5.15.y..6.19.y.
+**Step 9.3: Exception Category**
+- Record: Falls squarely under Exception Category #1 "NEW DEVICE IDs" —
+  adding a PCI ID to an existing driver where the driver and the reused
+  vops are already in stable.
 
-**Step 9.3 (Exceptions):**
-Not an exception category, but the fix is a trivial, obvious correctness
-fix (closest to "correctness typo fix") — a class the stable tree
-routinely accepts.
+**Step 9.4: Decision**
+- YES. This is a textbook hardware enablement PCI ID addition that meets
+  the explicit stable rule exception.
 
-**Step 9.4 (Decision):**
-The only soft point against is that this is not an obvious "important"
-crash/security/corruption fix per rule #3. However, stable *does*
-routinely take obviously-correct, low-risk functional fixes,
-particularly when they restore feature functionality broken since a
-feature's introduction. The risk of regression is essentially nil (the
-fix cannot make the read path fail *more* often than it already does —
-it fails 100% of the time today). Benefit is concrete: WSL device-node
-interop on NTFS begins working. Given extreme simplicity and clarity, I
-lean YES.
+---
 
-### Verification
-- [Phase 1] Parsed commit message and tags: no Fixes:, no Cc: stable, no
-  Reported-by, two SoBs (author + ntfs3 maintainer).
-- [Phase 2] Diff inspection: 1 line changed; argument `name_len` goes
-  from 7 → 6.
-- [Phase 2] Read `find_ea` at `fs/ntfs3/xattr.c:45-66` confirming exact
-  `ea->name_len == name_len` comparison that guarantees miss with wrong
-  length.
-- [Phase 2] Read `ntfs_save_wsl_perm` at `fs/ntfs3/xattr.c:1001` —
-  storage side correctly uses `sizeof("$LXDEV") - 1` (=6), confirming
-  asymmetry.
-- [Phase 3] `git log -S '"$$LXDEV"'` → buggy code introduced in
-  `be71b5cba2e64` (2021-08-13, "fs/ntfs3: Add attrib operations").
-- [Phase 3] `git blame` confirms the single origin commit.
-- [Phase 3] `git tag --contains be71b5cba2e64 | rg '^v'` → first kernel
-  is v5.15.
-- [Phase 4] `b4 dig -c bb82fe0872de8` → lore URL `https://lore.kernel.or
-  g/all/20260327032454.101579-1-zhanxusheng@xiaomi.com/`.
-- [Phase 4] `b4 dig -a` → only v1, which is the applied version.
-- [Phase 4] `b4 dig -w` → recipients: Konstantin Komarov, linux-
-  kernel@vger.kernel.org.
-- [Phase 4] Read full thread mbox: maintainer reply "Thanks, your patch
-  is applied"; no stable nomination, no NAKs, no concerns.
-- [Phase 5] Grepped `ntfs_get_wsl_perm` → single caller at
-  `fs/ntfs3/inode.c:381` in MFT processing; reachable from every inode
-  load that has EA_INFO.
-- [Phase 6] Verified stable branches 5.15.y, 6.6.y, 6.12.y, 6.19.y all
-  contain `sizeof("$$LXDEV") - 1` — fix applies cleanly everywhere.
-- [Phase 8] Reasoned failure mode from code structure: `find_ea` always
-  returns false → `ntfs_get_ea` returns -ENODATA → `i_rdev` never set
-  for WSL char/block nodes.
-- UNVERIFIED: No runtime reproducer was executed; impact inferred from
-  code reading. Author cites no user-visible trace, but the code path is
-  deterministic.
+## Verification
 
-Summary: a small, obviously-correct typo fix to ntfs3 that has been
-dormant since v5.15. Not a crash/security fix, but functionally restores
-WSL device-node metadata on NTFS with negligible regression risk. On
-balance, this fits the class of tiny, safe correctness fixes that are
-appropriate for stable.
+- [Phase 1] Parsed tags from commit message: Signed-off-by (Adrian
+  Hunter, Martin K. Petersen), Reviewed-by (Bart Van Assche), Link to
+  patch.msgid.link. No Fixes:, no Cc: stable, no Reported-by.
+- [Phase 2] `git show 096cd6b7adf21` confirmed: 1 file, +1/-0 line,
+  single new entry `{ PCI_VDEVICE(INTEL, 0xD335),
+  (kernel_ulong_t)&ufs_intel_mtl_hba_vops }` in `ufshcd_pci_tbl[]`.
+- [Phase 3] `git log -- drivers/ufs/host/ufshcd-pci.c` showed history of
+  prior Intel PCI ID additions (MTL, ADL, ARL, LNL, PTL, WCL).
+- [Phase 3] `git show 4049f7acef3eb` confirmed the MTL support
+  (introducing `ufs_intel_mtl_hba_vops`) carried `Cc:
+  stable@vger.kernel.org # v5.15+`, so the vops exist in every active
+  stable tree.
+- [Phase 3] `git branch --contains 823f95575d854` and `git branch
+  --contains bdee2f1dcd84d` showed Wildcat Lake and Panther Lake PCI ID
+  patches already in `for-greg/*-200` autosel branches — precedent for
+  backporting this exact class of patch.
+- [Phase 3] Read `drivers/ufs/host/ufshcd-pci.c` lines 510–719:
+  confirmed `ufs_intel_mtl_hba_vops` is defined at line 525 and already
+  used by multiple MTL-family device IDs.
+- [Phase 4] `b4 dig -c 096cd6b7adf21`: matched by patch-id to https://lo
+  re.kernel.org/all/20260309085815.55216-1-adrian.hunter@intel.com/.
+- [Phase 4] `b4 dig -c 096cd6b7adf21 -a`: confirmed only v1, no
+  subsequent revisions.
+- [Phase 4] Mbox inspection: Martin K. Petersen applied ("Applied to
+  7.1/scsi-queue"), Bart Van Assche provided Reviewed-by. No NAKs, no
+  objections.
+- [Phase 5] Inspection of `ufshcd_pci_tbl[]` surroundings: no functions
+  modified, only table data; table is consumed by PCI core during driver
+  binding.
+- [Phase 6] Confirmed `ufs_intel_mtl_hba_vops` is present in stable
+  trees via the v5.15+ stable tag on commit 4049f7acef3eb.
+- [Phase 8] Failure mode analysis: without patch, Nova Lake UFS
+  controller does not bind → no storage on that platform; with patch, it
+  binds using the already-in-stable MTL vops. No risk to unrelated
+  systems because the PCI core only dispatches to this driver on
+  matching vendor:device.
+- UNVERIFIED: Did not fetch the lore.kernel.org thread via WebFetch
+  (Anubis challenge page returned); mitigated by reading the thread
+  contents directly from the b4-saved mbox
+  (`/tmp/nova_lake_thread.mbox`), which contains the maintainer apply
+  message and Bart's Reviewed-by.
+
+The commit is a minimal, low-risk, standards-compliant PCI device ID
+addition that enables UFS storage on a new Intel platform and reuses
+infrastructure already in all active stable trees. It fits the explicit
+"Adding PCI/USB/ACPI IDs to existing drivers" exception listed in the
+stable kernel rules, and matches the precedent of prior autosel-ed Intel
+UFS PCI ID additions (Panther Lake, Wildcat Lake).
 
 **YES**
 
- fs/ntfs3/xattr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/host/ufshcd-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index 3fffda7848922..9eeac0ab2b714 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -1031,7 +1031,7 @@ void ntfs_get_wsl_perm(struct inode *inode)
- 		i_gid_write(inode, (gid_t)le32_to_cpu(value[1]));
- 		inode->i_mode = le32_to_cpu(value[2]);
+diff --git a/drivers/ufs/host/ufshcd-pci.c b/drivers/ufs/host/ufshcd-pci.c
+index 5f65dfad1a71a..63f6b36b912fc 100644
+--- a/drivers/ufs/host/ufshcd-pci.c
++++ b/drivers/ufs/host/ufshcd-pci.c
+@@ -695,6 +695,7 @@ static const struct pci_device_id ufshcd_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x7747), (kernel_ulong_t)&ufs_intel_mtl_hba_vops },
+ 	{ PCI_VDEVICE(INTEL, 0xE447), (kernel_ulong_t)&ufs_intel_mtl_hba_vops },
+ 	{ PCI_VDEVICE(INTEL, 0x4D47), (kernel_ulong_t)&ufs_intel_mtl_hba_vops },
++	{ PCI_VDEVICE(INTEL, 0xD335), (kernel_ulong_t)&ufs_intel_mtl_hba_vops },
+ 	{ }	/* terminate list */
+ };
  
--		if (ntfs_get_ea(inode, "$LXDEV", sizeof("$$LXDEV") - 1,
-+		if (ntfs_get_ea(inode, "$LXDEV", sizeof("$LXDEV") - 1,
- 				&value[0], sizeof(value),
- 				&sz) == sizeof(value[0])) {
- 			inode->i_rdev = le32_to_cpu(value[0]);
 -- 
 2.53.0
 
