@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DBD426EC5;
-	Tue, 28 Apr 2026 10:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF90A4279EC;
+	Tue, 28 Apr 2026 10:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372993; cv=none; b=FNYV6OkEeLCg7wLLOfUbq1cinVAH4dczLw11bDFVTf6bSGsLF+Iii/KcPjtfT+mxpfVidRbV+eHAElvigQ65dQ0DGvi/U4Hm0HiC4jJ6XErDsEOLPqUxoiglbWRQiyQHdVZttyEDrmIskrJD2xqjdu58SDYMBGquMgyxcPNakwo=
+	t=1777372994; cv=none; b=B58spRc1bGpTpgY5HB6lMzV9CS/AtEZgumKkKqG9NwR4EbW96QtuvW0UuTxkTKdMnpogIjI11IH68lm/zP/fFdhMt3Bl49TLXZKD4+tGr9jvq6hkCeJgD0MUSBOYb7DBX577BZkyoTNHsQwGqAw+AiM8amvbfoGFdFHligB71i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372993; c=relaxed/simple;
-	bh=bn9BG1xFIwrKA9cgpSumkeRJ223KThOF7nGz7UGmzE8=;
+	s=arc-20240116; t=1777372994; c=relaxed/simple;
+	bh=Znrx21NGU17OdZVXSWf/ORE426dIdVD8RmoYWbTq1oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=etn9fvABP9rStLZTPKXfu5z2SIN8lG6Jwm+4Pm7F1/1QNuz/LruwL8y9Y21zipNBdA5mrLuMyM0dH8cmsMvFGNK8ZTNGJkwDogu8oEr7rSUoKTdpFrc2tbD3hf7OhbTOTS2w30AYhRtja4EyU7l7HrmMU1x+6ZpBZIppI4N+Bx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uHsGBr4P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NT9w8SLufyuo810TMNKBvbROe1bKnDryO8yGnvDtnXCOGjIL+lFisJkUOAoAeMvXVsboW0SxV2R4X9bzpE6xhin6xVr7g7VgXw8jlXZyXg56QEYl/ThPOABkscwmcSMwpDs4o1QC1VIdrdW7idnlPS98HDoTv4aEb7Jm8786aw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hsyESaeA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uHsGBr4P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464ADC2BCB6;
-	Tue, 28 Apr 2026 10:43:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hsyESaeA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B373C2BCAF;
+	Tue, 28 Apr 2026 10:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372993;
-	bh=bn9BG1xFIwrKA9cgpSumkeRJ223KThOF7nGz7UGmzE8=;
+	s=k20201202; t=1777372994;
+	bh=Znrx21NGU17OdZVXSWf/ORE426dIdVD8RmoYWbTq1oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uHsGBr4PbhAfiFSSa7iNfOUhcT8JMtwWFCVhcDwriGIOQEjZLF/3/6Zb2i0Mg3ayb
-	 Mxb4Wsdi6uSLgbTy96ARXNlZ1uWoalh7pac/XxEpd+C2BlpcYcrcg6dXxSyLrPcz3d
-	 t++E4BFy4549DDkwH0rsIQBTruOw/4MA5JG137bGGL4hw3UGJEa4Py8SwdRQiumF8J
-	 MAEtBmEQH8Yg35h3ShnTTlVWqh3HnerUeGsLELsndr/nBQUAUz6ttDvPkbV6UaSvRW
-	 B2ptrpEXrFkqbUXbsx4JtIQBMOQhURJHdqBWswE9q/RBnPA66W4fUa3iorHC52Soxk
-	 yDUoz6nIB+2nw==
+	b=hsyESaeARlgFxb+wOfumQ+uYkYC+DVEkciPkGHEKRDnosf24vNbAi56U50dOi2gyk
+	 KlApiijcfGzrjytDKOOJ5w6aDi+xzfHVoIi68jKvgl+/KrVP+2OmiSnN3keAzx0rL0
+	 FWJEroWieuKDjiOAm76QlOyyws3iqpprw/Ld8d3Wbq9BTeNTM9oBeCaWpTRErB2PIl
+	 pA35yg6sSAyk1ettYBoIsycci8BJUFgCVmUsgITLMJokWouCKwD2TesgjRHYckiuVD
+	 xx1A44RLz9BuGnifyeYuOki9R8UBq7Q24lqxfQAo3RSQTviNoaGxk9fVO0VFdicFb5
+	 fpFhkwsCVBHGQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+7adcddaeeb860e5d3f2f@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <Kartikey406@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Artem Lytkin <iprintercanon@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev,
+	dri-devel@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
+	linux-staging@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] ntfs3: fix memory leak in indx_create_allocate()
-Date: Tue, 28 Apr 2026 06:41:20 -0400
-Message-ID: <20260428104133.2858589-69-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] staging: fbtft: fix unchecked write return value in fb_agm1264k-fl
+Date: Tue, 28 Apr 2026 06:41:21 -0400
+Message-ID: <20260428104133.2858589-70-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -54,373 +55,346 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Artem Lytkin <iprintercanon@gmail.com>
 
-[ Upstream commit 87ac077d6ea8613b7c1debdf3b5e92c78618fd23 ]
+[ Upstream commit f80760f5fc02c1ab384a974097964aa8e6720331 ]
 
-When indx_create_allocate() fails after
-attr_allocate_clusters() succeeds, run_deallocate()
-frees the disk clusters but never frees the memory
-allocated by run_add_entry() via kvmalloc() for the
-runs_tree structure.
+The second call to par->fbtftops.write() does not capture the return
+value, so the subsequent error check tests a stale value from the
+first write call. Add the missing assignment so the error check
+applies to the correct write operation.
 
-Fix this by adding run_close() at the out: label to
-free the run.runs memory on all error paths. The
-success path is unaffected as it returns 0 directly
-without going through out:, transferring ownership
-of the run memory to indx->alloc_run via memcpy().
-
-Reported-by: syzbot+7adcddaeeb860e5d3f2f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7adcddaeeb860e5d3f2f
-Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Artem Lytkin <iprintercanon@gmail.com>
+Acked-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Link: https://patch.msgid.link/20260207220523.3816-1-iprintercanon@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to provide the complete analysis.
+Now I have enough information to complete the analysis.
 
-## Complete 9-Phase Analysis
+## Analysis
 
 ### PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1 - Subject Line**
-- Record: `[ntfs3]` `[fix]` memory leak in `indx_create_allocate()`.
-  Clear, unambiguous fix language.
+**Step 1.1** - Subject parsing:
+Record: Subsystem `staging: fbtft:`, action verb `fix`, summary:
+"unchecked write return value in fb_agm1264k-fl"
 
-**Step 1.2 - Commit Message Tags**
-- Record:
-  - Reported-by: `syzbot+7adcddaeeb860e5d3f2f@syzkaller.appspotmail.com`
-    (syzkaller fuzzer-found, reproducible)
-  - Closes:
-    `https://syzkaller.appspot.com/bug?extid=7adcddaeeb860e5d3f2f`
-    (syzbot link)
-  - Signed-off-by: Deepanshu Kartikey (author) and Konstantin Komarov
-    (ntfs3 maintainer)
-  - No Fixes: tag (noted as expected for review candidates)
-  - No Cc: stable (noted as expected for review candidates)
+**Step 1.2** - Tags:
+Record:
+- `Signed-off-by: Artem Lytkin <iprintercanon@gmail.com>` (author)
+- `Acked-by: Andy Shevchenko <andriy.shevchenko@intel.com>` (senior
+  reviewer, knowledgeable in staging/fbtft)
+- `Link: https://patch.msgid.link/20260207220523.3816-1-
+  iprintercanon@gmail.com`
+- `Signed-off-by: Greg Kroah-Hartman` (staging maintainer merged it)
+- NO `Fixes:` tag, NO `Reported-by:`, NO `Cc: stable`, NO `Tested-by:`
 
-**Step 1.3 - Commit Body Analysis**
-- Record: Bug description: When `indx_create_allocate()` fails after
-  `attr_allocate_clusters()` has succeeded, `run_deallocate()` only
-  frees the on-disk clusters but NOT the memory that `run_add_entry()`
-  allocated via `kvmalloc()` for the `runs_tree.runs` array. Failure
-  mode: kernel memory leak (reachable via unprivileged syscall). Author
-  correctly identifies the root cause and explains why the success path
-  is unaffected.
+**Step 1.3** - Commit body analysis:
+Record: Author explains that the second `par->fbtftops.write()` call
+does not assign its return to `ret`. The subsequent `if (ret < 0)` check
+therefore tests a stale value from the first write. Fix adds the missing
+assignment. Clear mechanism explanation, no stack trace, no version
+info.
 
-**Step 1.4 - Hidden Bug Fix Detection**
-- Record: Not a hidden fix - explicitly labeled "fix memory leak".
+**Step 1.4** - Hidden bug detection:
+Record: Not hidden; the commit is explicitly a "fix" and the title says
+so. The mechanism description is honest and clear.
 
 ### PHASE 2: DIFF ANALYSIS
 
-**Step 2.1 - Inventory**
-- Record: 1 file, 1 line added, 0 lines removed. Single-file surgical
-  fix. Only `indx_create_allocate()` is modified.
+**Step 2.1** - Inventory:
+Record: Single file `drivers/staging/fbtft/fb_agm1264k-fl.c`, +1/-1
+line, single function `write_vmem()`, scope: surgical one-line fix.
 
-**Step 2.2 - Code Flow Change**
-- Record: Before: The `out:` label only contained `return err;`. After:
-  `run_close(&run);` is invoked before return. `run_close()` does
-  `kvfree(run->runs); memset(run, 0, sizeof(*run));` - this frees the
-  allocated runs array. The success path returns via `return 0` at line
-  1475 BEFORE the `out:` label, after doing `memcpy(&indx->alloc_run,
-  &run, sizeof(run));` to transfer ownership.
+**Step 2.2** - Code flow change:
+Record: BEFORE: `par->fbtftops.write(par, buf, len);` — return value
+discarded. The following `if (ret < 0)` tests stale `ret` from the prior
+left-half write performed earlier in the same loop iteration.
+AFTER: `ret = par->fbtftops.write(par, buf, len);` — return captured,
+error check now applies to the correct call.
 
-**Step 2.3 - Bug Mechanism**
-- Record: Category (a) + (c): error path / resource leak fix,
-  specifically a missing deallocation. `run_add_entry()` at
-  `fs/ntfs3/run.c:390` calls `kvmalloc(bytes, GFP_KERNEL)` storing
-  pointer in `run->runs`. `run_deallocate()` at `fs/ntfs3/fsntfs.c:2550`
-  only frees on-disk clusters via `mark_as_free_ex()` - verified it does
-  NOT touch `run->runs`. Therefore every error path that goes through
-  `out:` (3 of them: the direct `attr_allocate_clusters` failure plus
-  the `out1` and `out2` fallthroughs) leaks the kvmalloc allocation.
-  `run_close()` is safe on a `run_init`'d (all-zero) run because
-  `kvfree(NULL)` is a no-op.
+**Step 2.3** - Bug mechanism:
+Record: Category (g) Logic/correctness fix — wrong variable (stale)
+used; silent swallowing of errors returned by the write hook. If left
+half succeeds (ret ≥ 0) and right half fails, the error is silently
+ignored and `write_vmem()` returns 0 (success), causing the caller
+`fbtft_update_display()` to also not log its error. Silent write failure
+for the right half of the 128×64 LCD.
 
-**Step 2.4 - Fix Quality**
-- Record: Fix quality is excellent. Obviously correct: `run_close` is
-  idempotent/safe on NULL, so adding it unconditionally at `out:` cannot
-  introduce regressions. No API changes, no new locking, no new
-  allocations. Zero regression risk.
+**Step 2.4** - Fix quality:
+Record: Fix is obviously correct; zero chance of regression. It is
+purely an error-reporting/propagation correction — no new branches, no
+new locking, no ABI change.
 
 ### PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1 - Blame**
-- Record: The `out:` label with `return err;` structure and the
-  `runs_tree run; run_init(&run);` pattern are from commit
-  `f7464060f7ab9a` (Linus Torvalds, 2021-09-04) - the initial ntfs3
-  merge for v5.15-rc1. Thus the bug has existed since v5.15 and affects
-  every stable tree that includes ntfs3.
+**Step 3.1** - git blame on the buggy line:
+Record: The buggy line (379) was introduced by commit `b2ebd4be6fa1d2`
+("staging: fbtft: add fb_agm1264k-fl driver") by Thomas Petazzoni,
+2014-12-31 — first appearing in `v4.0-rc1`. Andy Shevchenko confirmed on
+list: "it was like that from the day 1." The bug has been present for
+~11 years in all stable trees that include this driver.
 
-**Step 3.2 - Fixes: tag**
-- Record: No Fixes: tag in the commit. Root-cause commit (first ntfs3
-  merge) is `f7464060f7ab9a`, which is v5.15-rc1~94 and obviously
-  present in all stable trees ≥ 5.15.
+**Step 3.2** - Follow Fixes: tag:
+Record: No Fixes: tag. Manually identified introducing commit
+`b2ebd4be6fa1d2` via git blame. That commit is present in all stable
+kernels since 4.0.
 
-**Step 3.3 - File History**
-- Record: `fs/ntfs3/index.c` has 37 commits since v5.15. Immediate prior
-  change was `3a2141b2f1c34 fs/ntfs3: resolve compare function in public
-  index APIs` (unrelated). The `out:` sequence itself has been untouched
-  since initial merge. Related historical fixes include `b8155e95de38b
-  fs/ntfs3: Fix error handling in indx_insert_into_root()` (different
-  function, similar class of bug) and `ccc4e86d1c242 fs/ntfs3: Prevent
-  memory leaks in add sub record` (another recent syzbot memory leak
-  fix). This is a standalone patch, NOT part of a series.
+**Step 3.3** - File history:
+Record: Recent changes to the file are almost all cleanups (BIT macro,
+gpio descriptors, style). The line in question has been untouched since
+2014. No series dependencies.
 
-**Step 3.4 - Author's Other Commits**
-- Record: Deepanshu Kartikey has submitted multiple fuzzer-found bug
-  fixes across ntfs3, ext4, gfs2, netfs, mac80211, atm, comedi, etc. A
-  regular kernel contributor who focuses on bug fixes rather than new
-  features. Patch was applied by Konstantin Komarov - the ntfs3
-  maintainer.
+**Step 3.4** - Author context:
+Record: Artem Lytkin has one other commit (`sm750fb: add missing
+pci_release_region`) — also a staging bug fix. Not a maintainer; a
+newcomer fixing real bugs. The Acked-by comes from Andy Shevchenko who
+is the de facto staging/fbtft reviewer.
 
-**Step 3.5 - Dependencies**
-- Record: Standalone, no dependencies. The fix uses `run_close()` which
-  is a stable inline helper in `fs/ntfs3/ntfs_fs.h` from the initial
-  ntfs3 merge. No new APIs used.
+**Step 3.5** - Dependencies:
+Record: None. `par->fbtftops.write` and `ret` exist unchanged in all
+stable trees. Completely standalone, applies cleanly.
 
 ### PHASE 4: MAILING LIST RESEARCH
 
-**Step 4.1 - Original Patch Discussion**
-- Record: b4 dig found submission at `https://lore.kernel.org/all/202603
-  21050143.1117500-1-kartikey406@gmail.com`. v1 is the only revision;
-  the committed version is unchanged from v1 (same diff). Submission
-  2026-03-21, committed 2026-03-23.
+**Step 4.1** - b4 dig -c f80760f5fc02c:
+Record: Matched by patch-id. Lore URL: https://lore.kernel.org/all/20260
+207220523.3816-1-iprintercanon@gmail.com/. Only v1 of the patch was
+submitted; no revisions.
 
-**Step 4.2 - Recipients**
-- Record: Original recipients per b4 dig -w: Konstantin Komarov
-  (almaz.alexandrovich@paragon-software.com - ntfs3 maintainer),
-  ntfs3@lists.linux.dev, linux-kernel@vger.kernel.org, syzbot reporter.
-  Correct audience.
+**Step 4.2** - b4 dig -w (recipients):
+Record: Artem Lytkin, Andy Shevchenko, Greg Kroah-Hartman, dri-devel,
+linux-fbdev, linux-staging, linux-kernel — appropriate maintainer/list
+coverage.
 
-**Step 4.3 - Bug Report**
-- Record: Syzbot report at
-  https://syzkaller.appspot.com/bug?extid=7adcddaeeb860e5d3f2f confirms:
-  - Title: "memory leak in run_add_entry (2)"
-  - Has syz repro AND C repro
-  - Reproducible stack: `__x64_sys_link -> filename_linkat -> vfs_link
-    -> ntfs_link -> ntfs_link_inode -> ni_add_name -> indx_insert_entry
-    -> indx_insert_into_root -> indx_create_allocate ->
-    attr_allocate_clusters -> run_add_entry`
-  - Syzbot marks this commit as the fix and confirms it's patched
-  - Reachable via `link(2)` syscall → unprivileged userspace trigger
+**Step 4.3** - Bug report search:
+Record: No bug report link; no Reported-by; no syzbot. Bug was found by
+code inspection.
 
-**Step 4.4 - Series Context**
-- Record: b4 dig -a shows only one revision (v1) - single standalone
-  patch, not a series.
+**Step 4.4** - Series context:
+Record: Single standalone patch. No series.
 
-**Step 4.5 - Stable Discussion**
-- Record: Thread discussion (from saved mbox): Konstantin's reply on
-  2026-04-01 "Your patch is being tested internally. I'll follow up" and
-  on 2026-04-02 "Your patch is applied, thanks for your work." No
-  reviewer asked for Cc: stable explicitly, but no objections or
-  concerns were raised either. No NAKs. Maintainer tested before
-  applying.
+**Step 4.5** - Stable list:
+Record: No stable mailing list discussion found. No reviewer explicitly
+suggested Cc:stable; no one objected either. Andy's comment "it was like
+that from the day 1" is an observation of longevity, not a NAK or
+objection to stable.
 
 ### PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1 - Key Functions**
-- Record: `indx_create_allocate()` is the only function modified.
+**Step 5.1** - Modified function:
+Record: `write_vmem()` in `drivers/staging/fbtft/fb_agm1264k-fl.c`.
 
-**Step 5.2 - Callers**
-- Record: `indx_create_allocate()` called from exactly one place:
-  `indx_insert_into_root()` at `fs/ntfs3/index.c:1705`.
-  `indx_insert_into_root()` is called from `indx_insert_entry()`, which
-  is called from directory operations including `ni_add_name()` (from
-  link/rename/create operations). Thus this code is reachable from
-  common filesystem syscalls on any ntfs3-mounted volume.
+**Step 5.2** - Callers:
+Record: `write_vmem` is the driver's `fbtftops.write_vmem` callback
+(registered at line 432), called from `fbtft-core.c:272` in
+`fbtft_update_display()` which in turn is called from the deferred-IO
+workqueue when the framebuffer is dirtied by userspace writes.
 
-**Step 5.3 - Callees**
-- Record: Key callees: `run_init`, `attr_allocate_clusters` (calls
-  `run_add_entry` which does the `kvmalloc`), `ni_insert_nonresident`,
-  `ni_insert_resident`, `run_deallocate`, `run_close` (the newly added
-  fix).
+**Step 5.3** - Callees:
+Record: `par->fbtftops.write` → `write()` local function → bit-bangs
+data onto GPIO lines. Failure path returns negative errno to
+`write_vmem()`.
 
-**Step 5.4 - Call Chain (Reachability)**
-- Record: Confirmed userspace reachable: `link(2)` → `__x64_sys_link` →
-  `vfs_link` → `ntfs_link` → ... → `indx_create_allocate()`. Syzbot's C
-  reproducer triggers the leak from an unprivileged process. Memory
-  exhaustion attack vector exists.
+**Step 5.4** - Call chain / reachability:
+Record: Userspace mmap/write to /dev/fb* → deferred IO →
+`fbtft_update_display()` → `write_vmem()` → `par->fbtftops.write()`. The
+buggy path is reached for every display refresh whenever `addr_win.xe >=
+xres/2`, i.e. almost every update of any non-empty region.
 
-**Step 5.5 - Similar Patterns**
-- Record: Several recent ntfs3 memory leak fixes follow the same pattern
-  (e.g., `ccc4e86d1c242 fs/ntfs3: Prevent memory leaks in add sub
-  record` - another syzbot-reported ntfs3 leak). The ntfs3 driver has a
-  history of these error-path resource leak fixes, which is common in
-  newer filesystems.
+**Step 5.5** - Similar patterns:
+Record: Inspected sibling fbtft drivers (fb_uc1611, fb_ssd1306,
+fb_pcd8544, etc.) — they call the central `fbtft_write_vmem16_bus8/9/16`
+helpers and don't have this specific split-half bug. The bug is unique
+to `fb_agm1264k-fl` because the AGM1264K-FL has two physically separate
+64-column halves that must be written independently.
 
-### PHASE 6: STABLE TREE ANALYSIS
+### PHASE 6: CROSS-REFERENCING STABLE TREES
 
-**Step 6.1 - Code in Stable**
-- Record: ntfs3 was merged in v5.15 (`f7464060f7ab9a`). The buggy
-  `indx_create_allocate()` exists in ALL stable trees from 5.15.y
-  onward: 5.15.y, 6.1.y, 6.6.y, 6.12.y, etc.
+**Step 6.1** - Code in stable:
+Record: The driver was added in v4.0 (commit b2ebd4be6fa1d2, Dec 2014)
+with the bug present. The buggy line has been textually unchanged since
+then. Every stable tree that contains this driver (5.4, 5.10, 5.15, 6.1,
+6.6, 6.12) has the bug.
 
-**Step 6.2 - Backport Difficulty**
-- Record: The `out:` block `run_deallocate(sbi, &run, false); out:
-  return err;` has been unchanged since initial merge. The patch adds
-  one line at the out: label. Expected clean application to all stable
-  trees with no adjustments needed. Minor surrounding line-number
-  differences are possible but the hunk context (`run_deallocate(...)`
-  just above `out:` above `return err`) is stable.
+**Step 6.2** - Backport complications:
+Record: The file has had only cosmetic/stylistic changes since 2014. The
+1-line change applies cleanly to all stable trees with no adjustments.
+Expected: clean apply.
 
-**Step 6.3 - Related Fixes in Stable**
-- Record: No earlier/alternative fix for this specific bug exists - the
-  syzbot report is fresh (first crash 31 days before patched per the
-  syzbot dashboard).
+**Step 6.3** - Related fixes already in stable:
+Record: No prior fix for this specific bug exists in stable.
 
 ### PHASE 7: SUBSYSTEM CONTEXT
 
-**Step 7.1 - Subsystem**
-- Record: fs/ntfs3/ - Read-Write NTFS filesystem driver. Criticality:
-  IMPORTANT (used by many dual-boot setups, external NTFS-formatted
-  drives). Filesystem bugs especially leaks/corruptions directly impact
-  users.
+**Step 7.1** - Subsystem & criticality:
+Record: `drivers/staging/fbtft/` — a staging framebuffer driver for
+obscure small LCDs. Criticality: PERIPHERAL (used mainly by hobbyists
+with the specific AGM1264K-FL 128×64 LCD).
 
-**Step 7.2 - Subsystem Activity**
-- Record: ntfs3 is actively developed and receives regular fixes
-  (including security/fuzzer-found issues). 37 commits to index.c alone
-  since v5.15.
+**Step 7.2** - Activity:
+Record: Moderately active — mostly cleanups, occasional real bug fixes
+(e.g. `47d3949a9b04c` memory-leak fix in probe, `be26a07c61af5` build
+failure fix). Staging/fbtft sees a steady trickle of commits.
 
-### PHASE 8: IMPACT AND RISK
+### PHASE 8: IMPACT & RISK ASSESSMENT
 
-**Step 8.1 - Who is Affected**
-- Record: All ntfs3 users on stable kernels 5.15+. Trigger requires a
-  mounted ntfs3 filesystem plus the ability to create/link files that
-  trigger index allocation.
+**Step 8.1** - Affected users:
+Record: Only users of the `fb_agm1264k-fl` driver
+(CONFIG_FB_TFT_AGM1264K_FL), i.e., those with the AGM1264K-FL monochrome
+LCD connected via GPIO. Niche hardware, likely a small number of users.
 
-**Step 8.2 - Trigger Conditions**
-- Record: Syzbot reproducer uses `link(2)` syscall on an ntfs3
-  filesystem; bug triggers when `indx_create_allocate()` takes any of
-  its three error paths after `run_add_entry` has allocated memory.
-  Unprivileged user on a system with ntfs3 mounted (e.g., USB drive) can
-  trigger. Repeated triggering leaks kernel memory → potential DoS.
+**Step 8.2** - Trigger conditions:
+Record: Triggered whenever the underlying `par->fbtftops.write()` fails
+on the right half of the display (I/O error on GPIO/SPI bus, allocation
+failure in bit-bang helper, etc.). Failures of the write hook are rare
+but real — they happen on transient hardware issues. No privilege
+required (userspace framebuffer write eventually drives this).
 
-**Step 8.3 - Failure Mode Severity**
-- Record: Failure mode: kernel memory leak. Severity: MEDIUM (kmemleak
-  report, no immediate crash, but exploitable for kernel-memory
-  exhaustion DoS from unprivileged user on systems with writable ntfs3
-  mounts). Not critical per-trigger but real security relevance.
+**Step 8.3** - Failure mode severity:
+Record: When a right-half write fails: (a) no dev_err logged, (b)
+`write_vmem()` returns 0 falsely indicating success, (c)
+`fbtft_update_display()` also suppresses the error. Net effect is silent
+display corruption with no diagnostic trail. No crash, no memory
+corruption, no security impact, no hang. Severity: LOW — pure error-
+reporting/propagation bug; user-visible only as incorrect display output
+without explanation.
 
-**Step 8.4 - Risk/Benefit**
-- Record:
-  - Benefit: Fixes a syzbot-confirmed, reproducible leak triggerable
-    from userspace. Medium-to-high benefit for stable users (especially
-    those with ntfs3 mounted by default, like many distros).
-  - Risk: Very low. 1-line addition of `kvfree` helper at error-path
-    return. Fix cannot regress because `run_close` on a zero-initialized
-    run is a no-op. No locking changes, no allocation, no behavioral
-    differences on the success path.
-  - Ratio: Strongly favors backporting.
+**Step 8.4** - Risk-benefit:
+Record: BENEFIT — low-moderate. Real users of this specific hardware
+gain proper error diagnostics when writes fail. RISK — essentially zero.
+The change is a one-line variable assignment in an error path; it cannot
+introduce new behavior when writes succeed (ret still starts 0), and it
+can only improve diagnostics when writes fail. No locking, no memory, no
+ABI changes. Ratio strongly favors backporting.
 
-### PHASE 9: SYNTHESIS
+### PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- Reported by syzbot with a C reproducer (fuzzer-confirmed,
-  reproducible)
-- Reachable from unprivileged userspace via `link(2)` syscall
-- Buggy code present since v5.15 (affects all active stable branches)
-- Fix is 1 line, obviously correct, maintainer-tested before apply
-- Fix path (`run_close` on init'd/NULL run) is trivially safe
-- Clean applies expected across all stable trees (stable hunk context)
-- Fits the "resource leak in error paths" pattern that's classic stable
-  material
-- Reviewed/applied by subsystem maintainer (Konstantin Komarov)
+**Step 9.1** - Evidence:
 
-**Evidence AGAINST backporting:**
-- No Fixes: tag or Cc: stable in original submission (expected - this is
-  precisely the review-candidate category)
-- Leak is not catastrophic per-event (gradual kernel memory consumption)
-- No Reviewed-by/Tested-by tags in-tree (but syzbot confirmed the fix
-  works, and maintainer stated it was internally tested)
+FOR:
+- Obviously correct 1-line fix
+- Fixes a real bug (silent write failure, false success return)
+- Acked by knowledgeable reviewer (Andy Shevchenko)
+- Zero regression risk
+- Applies cleanly to all stable trees back to v4.0
+- Clear "fix" language in subject; mechanism explained in commit message
+- Accepted by staging maintainer (Greg KH)
 
-**Stable Rules Checklist:**
-1. Obviously correct and tested: YES (trivial fix; syzbot confirmed;
-   maintainer tested)
-2. Fixes a real bug affecting users: YES (syzbot reproducible from
-   unprivileged syscall)
-3. Important issue: YES (kernel memory leak exploitable by unprivileged
-   user = DoS vector)
-4. Small and contained: YES (1 line, 1 file)
-5. No new features/APIs: YES (uses existing `run_close` helper)
-6. Applies to stable: YES (clean apply expected)
+AGAINST:
+- Staging driver (lower priority by convention)
+- Obscure hardware (small user base)
+- Bug is low severity (no crash/corruption/security)
+- No Fixes: tag, no Reported-by:, no Cc: stable
+- Bug has been dormant for 11 years with no user reports, indicating
+  hardware failures that reach this path are extremely rare
 
-**Exception category:** Not needed - this is a straightforward bug fix.
+UNRESOLVED: None.
+
+**Step 9.2** - Stable rules checklist:
+1. Obviously correct and tested? YES — trivially correct; tested
+   implicitly by Acked-by and staging tree merge
+2. Fixes a real bug? YES — silent error swallowing in driver error path
+3. Important issue? MARGINAL — not a crash/corruption/security bug, just
+   bad diagnostics and a false success return
+4. Small and contained? YES — 1 line, 1 file, 1 function
+5. No new features/APIs? YES
+6. Applies cleanly? YES — verified 11-year-unchanged context
+
+**Step 9.3** - Exception category:
+Not strictly an exception category (not a device ID, quirk, DT update,
+build, or docs fix), so must stand on merits of being a legitimate bug
+fix.
+
+**Step 9.4** - Decision:
+The fix is obviously correct, minimal (1 line), has zero regression
+risk, and fixes a real if low-severity bug. The absence of
+crash/security/corruption severity pushes this into borderline territory
+for a staging driver; however, the "do no harm" principle of stable
+(conservative about regressions) strongly favors inclusion because there
+is literally no way this change can regress anything — it only changes
+behavior when the write hook actually returns an error, and in that case
+the new behavior is unambiguously better. This matches the profile of
+fixes that AUTOSEL routinely accepts for staging subsystems.
 
 ## Verification
 
-- [Phase 1] Parsed tags: confirmed Reported-by: syzbot, Closes link to
-  syzkaller. No Fixes/Cc:stable tags (expected).
-- [Phase 2] Read diff via `git show 87ac077d6ea86`: confirmed +1 line
-  (`run_close(&run);`) at `out:` label, nothing else.
-- [Phase 2] Read `fs/ntfs3/ntfs_fs.h:1002-1006`: verified `run_close` =
-  `kvfree(run->runs); memset(run,0,...);` - safe on init'd run.
-- [Phase 2] Read `fs/ntfs3/run.c:310-403`: verified `run_add_entry` at
-  line 390 calls `kvmalloc(bytes, GFP_KERNEL)` into `run->runs`.
-- [Phase 2] Read `fs/ntfs3/fsntfs.c:2550-2564`: verified
-  `run_deallocate` only frees on-disk clusters, does NOT free
-  `run->runs`.
-- [Phase 3] `git blame` on `fs/ntfs3/index.c` lines 1430-1485: buggy
-  structure present since `f7464060f7ab9a` (Linus, 2021-09-04).
-- [Phase 3] `git describe --contains f7464060f7ab9a`: confirmed
-  v5.15-rc1~94 → bug present from v5.15 onward.
-- [Phase 3] `git log --author="Deepanshu Kartikey"`: confirmed author is
-  a prolific bug-fix contributor.
-- [Phase 4] `b4 dig -c 87ac077d6ea86`: found submission at
-  `lore.kernel.org/all/20260321050143.1117500-1-kartikey406@gmail.com`.
-- [Phase 4] `b4 dig -a`: only 1 revision (v1).
-- [Phase 4] `b4 dig -w`: recipients include ntfs3 maintainer and ML.
-- [Phase 4] WebFetch syzkaller dashboard: confirmed reproducible (C
-  repro), commit is marked as the fix, patched across all syzbot
-  managers.
-- [Phase 4] Read saved mbox thread: confirmed maintainer tested
-  internally and applied; no NAKs, no stable nomination requests.
-- [Phase 5] `grep indx_create_allocate` in fs/ntfs3: only 1 caller
-  (`indx_insert_into_root` at line 1705).
-- [Phase 5] Syzkaller stack trace confirms reachability:
-  `__x64_sys_link` → ... → `run_add_entry`.
-- [Phase 6] `git log -- fs/ntfs3/index.c`: `out:` block unchanged since
-  initial merge → clean stable backport expected.
-- [Phase 6] Similar fixes in `ccc4e86d1c242` and `b8155e95de38b` show
-  this class of patch is routinely accepted.
-- [Phase 8] Severity assessment grounded in: syzbot kmemleak reporter,
-  unprivileged-user reachability, repeatable trigger.
-- UNVERIFIED: Did not test actual `git am` of the patch onto each stable
-  branch; assessed clean-apply by context analysis only.
-- UNVERIFIED: Exact behavior of per-distro ntfs3 default-mount policy
-  (minor impact on "who's affected" scope).
+- [Phase 1] Read full commit message; confirmed tags: Artem Lytkin SOB,
+  Andy Shevchenko Acked-by, GKH SOB, Link to patch.msgid.link. No
+  Fixes/Reported-by/Cc:stable.
+- [Phase 2] Read `drivers/staging/fbtft/fb_agm1264k-fl.c` lines 280-392;
+  confirmed `ret` initialized to 0 at line 283; left-half assigns `ret
+  =` (line 356); right-half lacks assignment (line 379); check on line
+  380 uses stale `ret`; function returns `ret` on line 391.
+- [Phase 3.1] `git blame` on lines 370-390: line 379 (buggy code)
+  introduced in `b2ebd4be6fa1d2` on 2014-12-31.
+- [Phase 3.1] `git describe --contains b2ebd4be6fa1d2` →
+  `v4.0-rc1~82^2~274`, confirming bug present since v4.0.
+- [Phase 3.2] `git show b2ebd4be6fa1d2 --stat`: confirmed it is the
+  original driver add of 471 lines.
+- [Phase 3.3] `git log --oneline --
+  drivers/staging/fbtft/fb_agm1264k-fl.c` showed only cosmetic changes
+  since 2014; line 379 untouched by any intermediate fix.
+- [Phase 3.4] `git log --author="Artem Lytkin" --oneline` returned one
+  other commit (sm750fb pci_release_region fix) — author is a bug-hunter
+  in staging.
+- [Phase 4.1] `b4 dig -c f80760f5fc02c` matched patch-id `a8ded4803c...`
+  → lore thread https://lore.kernel.org/all/20260207220523.3816-1-
+  iprintercanon@gmail.com/.
+- [Phase 4.1] `b4 dig -c f80760f5fc02c -a`: confirmed only v1 submitted;
+  no revisions.
+- [Phase 4.1] Read the saved mbox at `/tmp/fbtft_thread.mbox`: confirmed
+  Andy Shevchenko's reply "Sounds about right, but it was like that from
+  the day 1. Acked-by: Andy Shevchenko". No NAKs, no stable nomination
+  request, no objections.
+- [Phase 4.2] `b4 dig -c f80760f5fc02c -w`: confirmed CC list includes
+  Andy, GKH, dri-devel, linux-fbdev, linux-staging, LKML.
+- [Phase 5] Grep for `write_vmem` across staging/fbtft: confirmed caller
+  is `fbtft-core.c:272` (`fbtft_update_display`), confirmed the callback
+  is registered as `.write_vmem = write_vmem` at line 432 of the driver.
+- [Phase 5] Read `fbtft-core.c:270-276`: confirmed return value is only
+  used for dev_err logging; no propagation to userspace.
+- [Phase 6] Confirmed via blame that the buggy line has been unchanged
+  since 2014; file is present and structurally similar across all stable
+  trees (5.4+).
+- [Phase 7] Read Kconfig help: driver is "FB driver for the AGM1264K-FL
+  LCD display (two Samsung KS0108 compatible chips)" — confirmed two-
+  halves architecture that is the root cause of the split-write bug.
+- [Phase 8] Failure mode verified by code inspection: silent error
+  swallowing + false success return; no crash/corruption/security
+  consequence.
+- UNVERIFIED: The exact number of users running this driver in
+  production (unknowable); did not test runtime behavior on actual
+  hardware.
 
-## Decision Rationale
-
-This is a textbook stable-tree candidate: a one-line fix for a syzbot-
-reproducible memory leak that is reachable from an unprivileged
-`link(2)` syscall on ntfs3. The bug is present in every stable tree from
-v5.15 forward, the fix is obviously correct (adds a safe idempotent
-cleanup call on the error path while leaving the success path
-untouched), it was applied by the subsystem maintainer after internal
-testing, and the risk of regression is essentially zero. These are
-exactly the criteria the stable rules prioritize: small, contained,
-fixes a real bug, and obviously correct.
+The commit is a trivial, obviously-correct, zero-risk one-line fix to a
+real (if low-severity) bug present in every stable tree. It meets stable
+kernel rules modulo the "important issue" criterion which is only weakly
+satisfied, but the risk-benefit ratio overwhelmingly favors inclusion
+because the fix cannot regress any working system.
 
 **YES**
 
- fs/ntfs3/index.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/fbtft/fb_agm1264k-fl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 97f06c26fe1a6..11f59d7b9ea45 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1481,6 +1481,7 @@ static int indx_create_allocate(struct ntfs_index *indx, struct ntfs_inode *ni,
- 	run_deallocate(sbi, &run, false);
+diff --git a/drivers/staging/fbtft/fb_agm1264k-fl.c b/drivers/staging/fbtft/fb_agm1264k-fl.c
+index af2dbebefc72b..6fc8f4e9c814d 100644
+--- a/drivers/staging/fbtft/fb_agm1264k-fl.c
++++ b/drivers/staging/fbtft/fb_agm1264k-fl.c
+@@ -376,7 +376,7 @@ static int write_vmem(struct fbtft_par *par, size_t offset, size_t len)
  
- out:
-+	run_close(&run);
- 	return err;
- }
- 
+ 			/* write bitmap */
+ 			gpiod_set_value(par->RS, 1); /* RS->1 (data mode) */
+-			par->fbtftops.write(par, buf, len);
++			ret = par->fbtftops.write(par, buf, len);
+ 			if (ret < 0)
+ 				dev_err(par->info->device,
+ 					"write failed and returned: %d\n",
 -- 
 2.53.0
 
