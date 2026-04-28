@@ -1,52 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7832D426D02;
-	Tue, 28 Apr 2026 10:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADD5426D27;
+	Tue, 28 Apr 2026 10:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372988; cv=none; b=IofZyokVW2mob2P+y/0xnB7lRFhQ0/TfmLkygLZ6ZPkvFgFHR1uMmpLxD7PiLdtXDn+OJo+a9+w5SbsjDLQpJMWLzM13NCuxmQmIPgCJ05P/faRY14WvwryfCa6Y/cyZzWYGZtONy4LCUEEsSeQCAcRb9W7f8Wf3hLtH/mQz0B8=
+	t=1777372989; cv=none; b=Q0N1PmWComRQZd8NrromCVJoke0Od20t2uHRenlSbEaX+2XQqBHwsPcoyhATm6Sp0HfMx5+ky/ICXOz/8UHFjvPddCH/jajCjmZBA+yVnSCEMgpxRf7S9nmZswanqBvzDICjvtMbFHEm41Eku9n5pHEKqwr0GZZNdoVPL75NclY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372988; c=relaxed/simple;
-	bh=z+ubNEiGkyTvzeK84mlK5De1vxwPNmN3CCbIYOlyWaE=;
+	s=arc-20240116; t=1777372989; c=relaxed/simple;
+	bh=bOGZzxn7Sj3EcN54zE9zeI6CWug8E/poxJX5+V2dZCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRnJ4QB0oPelyIYzYPz8cMrYEFCmbeBnuBmzhE1E0f5tHcABY7QFXgC+3Kj79n1eJQacLYk0A/DutN1yVW7OaxjT4LRc7RLD5Z5OOYoN83koW9DjZgqOccIngVaWnmfJOI3WeaGrnm9FVK6+e/FNYyFPtSQMtNfrdEH057QoJCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c4jthecS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XWQSyhqBpaE4iD4jNzn4N4PP7DGKG7lsuSqPw20n3MXIGZ0AU84sN7h1WYCAoqY5eifU6ki1vausRf0GcSBaePBPYW0GsOdbZetj1C764X5yQBT4AA0rgMIHF2ifxzS70PtkF8P9+cwFHBZTMDdiSiz3Edui01Hdd843yzWUU1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lrxEST3r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c4jthecS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C8EC2BCB5;
-	Tue, 28 Apr 2026 10:43:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lrxEST3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A392C2BCC6;
+	Tue, 28 Apr 2026 10:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372988;
-	bh=z+ubNEiGkyTvzeK84mlK5De1vxwPNmN3CCbIYOlyWaE=;
+	s=k20201202; t=1777372989;
+	bh=bOGZzxn7Sj3EcN54zE9zeI6CWug8E/poxJX5+V2dZCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4jthecS94mhXjzorhQRDoB6Lc3gquagydnFHUhJv8mcNsYFHrPWQ7V3E9D9OlRdk
-	 kyq87+nN/Xzvi1GYv+rE+muLjgUblU4nY4paGXNt2rnV/YI71ocmyk4ff04VyjqhDe
-	 GZs/I7rKbvC9ZlssFivPZiCEAoUUyk3umpTgaYgnJFRBHtlg24DjG5AeNsE4QpAz+1
-	 egX3ZioUOXL+rh3lXrNJhXvROouWtNh9ffJzNW9l+4tFvjPPseMGPY10ALe3s3WiEt
-	 bRRQ7y6ET3BX1V+wW/iBJvywhqp/tGK4eNb/4YoCRQY4oQyiveDAnGV+FiDG9iXMkn
-	 BU4u0Mwy3wG1w==
+	b=lrxEST3rhauO85XheMvUPfHHMryCv2qXwPGjDqJfnzkgtt27pDLWFqGhT8AT6vlIB
+	 F9XKI2fqIiutPi4/TCcIfSTTOjA550juLb5CkQ4362+ICUFhZ9U9i2vJb9SYAXq/qo
+	 gHw8unfE4jQ9IL1YD+TFCFVi8+Yc9mrHEG85zoyefNiGvanPiGkAUJujHxEr/eH09/
+	 Naisg+GJbRbMOcicM5gRvK+V3z6SyT8jncQvKnS0FQg9Vi3bad5GTCa0CaXUJ5R1dz
+	 Jtsy9VzgGJMvvVGpwj2eRvUaCo4d/YjQcs/q3QS5REt1jL2hTMajZ6bNLcZ8ZOps+7
+	 XTA8lET8f3nOQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Hung <alex.hung@amd.com>,
-	"Sun peng (Leo) Li" <sunpeng.li@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Krishna Chomal <krishna.chomal108@gmail.com>,
+	Thomas Arici <absolute3d86@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	harry.wentland@amd.com,
-	Rodrigo.Siqueira@amd.com,
-	christian.koenig@amd.com,
-	Xinhui.Pan@amd.com,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	hdegoede@redhat.com,
+	markgross@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/amd/display: Use overlay cursor when color pipeline is active
-Date: Tue, 28 Apr 2026 06:41:16 -0400
-Message-ID: <20260428104133.2858589-65-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] platform/x86: hp-wmi: Add support for Omen 16-wf1xxx (8C77)
+Date: Tue, 28 Apr 2026 06:41:17 -0400
+Message-ID: <20260428104133.2858589-66-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -56,484 +49,349 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
 Content-Transfer-Encoding: 8bit
 
-From: Alex Hung <alex.hung@amd.com>
+From: Krishna Chomal <krishna.chomal108@gmail.com>
 
-[ Upstream commit d3a549f4df7864bca8612c8bcfce1ec72b2874fb ]
+[ Upstream commit 344bf523d441d44c75c429ea6cdcfa8f12efde4d ]
 
-Force overlay cursor mode when an underlying plane has a non-bypassed
-color pipeline to avoid incorrect cursor transformation.
+The HP Omen 16-wf1xxx (board ID: 8C77) has the same WMI interface as
+other Victus S boards, but requires quirks for correctly switching
+thermal profile.
 
-Reviewed-by: Sun peng (Leo) Li <sunpeng.li@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Add the DMI board name to victus_s_thermal_profile_boards[] table and
+map it to omen_v1_thermal_params.
+
+Testing on board 8C77 confirmed that platform profile is registered
+successfully and fan RPMs are readable and controllable.
+
+Tested-by: Thomas Arici <absolute3d86@gmail.com>
+Reported-by: Thomas Arici <absolute3d86@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221300
+Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
+Link: https://patch.msgid.link/20260410191039.125659-5-krishna.chomal108@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information for a comprehensive analysis.
+Now I have enough information to complete my analysis.
 
 ## Phase 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject line parsing**
-- Subsystem: `drm/amd/display`
-- Action verb: "Use" (implicit "fix" through "to avoid incorrect cursor
-  transformation")
-- Record: drm/amd/display - changes cursor mode selection logic when
-  underlying plane has active color pipeline
+- Record: Subsystem `platform/x86: hp-wmi:`, action verb `Add`, summary
+  = adding DMI board ID quirk for HP Omen 16-wf1xxx board 8C77.
 
-**Step 1.2: Tag parsing**
-- Reviewed-by: Sun peng (Leo) Li <sunpeng.li@amd.com> (AMD display
-  maintainer)
-- Signed-off-by: Alex Hung <alex.hung@amd.com> (author)
-- Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com> (AMD)
-- Tested-by: Dan Wheeler <daniel.wheeler@amd.com> (AMD)
-- Signed-off-by: Alex Deucher <alexander.deucher@amd.com> (subsystem
-  maintainer)
-- NO Fixes: tag, NO Cc: stable, NO Reported-by, NO Link
-- Record: Standard AMD development chain, reviewed and tested
-  internally, no external bug report references
+**Step 1.2: Commit message tags**
+- Record:
+  - `Reported-by: Thomas Arici <absolute3d86@gmail.com>` — real user
+    reported the issue
+  - `Tested-by: Thomas Arici <absolute3d86@gmail.com>` — tested by the
+    reporter on actual hardware
+  - `Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221300` —
+    bugzilla report
+  - `Link: https://patch.msgid.link/20260410191039.125659-5-...` — lore
+    reference (PATCH v2 4/4)
+  - `Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>` —
+    subsystem maintainer reviewed
+  - `Signed-off-by: Ilpo Järvinen` — same maintainer committed it
+  - No Fixes:/Cc:stable (expected for this review)
 
 **Step 1.3: Commit body analysis**
-- Bug described: Cursor in NATIVE mode is subjected to color pipeline
-  transformation of underlying plane, causing "incorrect cursor
-  transformation"
-- Solution: Force OVERLAY cursor mode (which uses dedicated DCN pipe)
-  when underlying plane has non-bypassed color pipeline
-- No version info, no stack traces, no reproduction steps
-- Record: Bug = visual incorrectness in cursor color rendering when
-  color pipeline is active. Symptom is described conceptually, not
-  concretely.
+- Record: Body explains HP Omen 16-wf1xxx (board 8C77) uses the same WMI
+  interface as other Victus S boards but needs thermal profile quirks.
+  Without this entry, the laptop's platform profile won't register
+  correctly and fan RPMs won't be readable/controllable. Tester
+  confirmed platform profile registers and fan RPMs work after fix.
 
 **Step 1.4: Hidden bug fix detection**
-- "Use overlay cursor when..." -> "to avoid incorrect cursor
-  transformation" reveals this IS a fix, but described as enhancement
-- Record: Fixes a real correctness issue, but framed as adding new code
-  path rather than emergency fix.
+- Record: This isn't disguised; it's explicitly a quirk/device
+  enablement for a specific laptop model. Per stable rules, DMI/device-
+  ID/quirk additions to existing drivers are an EXCEPTION category
+  that's allowed for stable.
 
 ## Phase 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- Single file: `drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c`
-- ~49 lines added, ~4 lines deleted
-- Functions modified: `dm_crtc_get_cursor_mode()`,
-  `amdgpu_dm_atomic_check()` (debug message)
-- New helper: `dm_plane_color_pipeline_active()` (static)
-- Adds `#include <drm/drm_colorop.h>`
-- Record: Surgical, single-file fix, contained.
+**Step 2.1: Change inventory**
+- Record: One file changed — `drivers/platform/x86/hp/hp-wmi.c`, +4
+  lines, -0 lines, single `dmi_system_id` entry added to
+  `victus_s_thermal_profile_boards[]` table. Single-file surgical
+  change.
 
 **Step 2.2: Code flow change**
-- Before: `dm_crtc_get_cursor_mode()` only checked YUV format and scale
-  differences for overlay cursor decision
-- After: Also checks if any plane in z-order has an active (non-
-  bypassed) color pipeline
-- Two checks added: (1) trigger consider_mode_change if color pipeline
-  activity changes between old/new, (2) force OVERLAY mode when
-  underlying plane has active pipeline
-- Record: Adds new condition for selecting OVERLAY cursor mode.
+- Record: Before: board `8C77` was not in the DMI match table →
+  `dmi_first_match()` in `setup_active_thermal_profile_params()`
+  returned NULL → `is_victus_s_board` stayed false → thermal profile/fan
+  quirk paths never activated. After: `8C77` matches →
+  `is_victus_s_board=true`, `active_thermal_profile_params =
+  omen_v1_thermal_params` → full thermal/fan support works.
 
 **Step 2.3: Bug mechanism**
-- Category: Logic/correctness fix - missing condition check
-- The native cursor (integrated in DCN hw plane) was being subjected to
-  color pipeline transformations meant for the underlying plane; this
-  corrupts cursor visual rendering
-- Fix forces overlay (separate DCN pipe) which is not subject to
-  underlying plane's color pipeline
-- Record: Visual correctness bug; not a crash/UAF/race/leak
+- Record: Hardware workaround (category h from checklist). Adds DMI
+  match entry for a specific board, analogous to adding a PCI/USB ID or
+  an entry to a DMI quirk table.
 
 **Step 2.4: Fix quality**
-- Obviously correct: Yes, mirrors existing YUV/scaling check pattern
-- Minimal/surgical: Yes
-- Regression risk: Low - only changes cursor mode selection on a
-  specific narrow condition (active color pipeline)
-- Record: High quality, well-contained.
+- Record: Obviously correct - table entry inserted in sorted order
+  between 8C76 and 8C78; driver_data points to `omen_v1_thermal_params`
+  (same as sibling boards 8C76, 8C78). Zero risk to any board that
+  doesn't match `8C77`; DMI match is exact-string, so no spillover.
+  Tested by the hardware owner.
 
 ## Phase 3: GIT HISTORY INVESTIGATION
 
-**Step 3.1: Blame analysis**
-- The `dm_crtc_get_cursor_mode()` function was introduced in commit
-  `1b04dcca4fb1` (drm/amd/display: Introduce overlay cursor mode),
-  pre-v6.18
-- The drm_colorop infrastructure was introduced in commit
-  `cfc27680ee208` (Nov 26, 2025), present from v6.19
-- Record: The function exists since pre-6.18, but the bug only triggers
-  when color pipeline (v6.19+) is active.
+**Step 3.1: blame the changed lines**
+- Record: The `victus_s_thermal_profile_boards[]` table was restructured
+  to use `struct dmi_system_id` and `driver_data` in recent commits
+  (appeared in the mainline around v6.18-era development). The table has
+  been actively extended.
 
-**Step 3.2: Fixes: tag - N/A, no Fixes: tag**
+**Step 3.2: Fixes: tag follow-up**
+- Record: No Fixes: tag (expected for hardware enablement; this is not a
+  regression from a specific commit).
 
-**Step 3.3: Recent file history**
-- Active development on color pipeline in AMD display driver
-- Several recent color pipeline fixes: `b49814033cb52` (Fix gamma 2.2
-  colorop TFs), `a4fa2355e0add` (Enable DEGAMMA and reject
-  COLOR_PIPELINE+DEGAMMA_LUT), `18a4127e93156` (Disable CRTC degamma
-  when color pipeline is enabled)
-- Standalone fix; not part of an explicit X/Y series
-- Record: Standalone correctness fix in actively developed area
+**Step 3.3: File history / series**
+- Record: `git log -- drivers/platform/x86/hp/hp-wmi.c` shows a steady
+  stream of similar board-ID additions: 8A4D, 8C76, 8BCA, 8E41,
+  16-d0xxx, 16-wf0xxx, 16-xd0xxx, 16-wf1xxx fan support, etc. This
+  commit is part of series "PATCH v2 0/4 platform/x86: hp-wmi: Improve
+  support for some HP boards" but the 8C77 entry is self-contained.
 
-**Step 3.4: Author**
-- Alex Hung is a regular AMD display contributor; numerous recent
-  commits in this area
-- Record: Trusted developer, area maintainer chain present
+**Step 3.4: Author's other commits**
+- Record: Krishna Chomal is an active hp-wmi contributor (8C76 in Feb
+  2026, 8BCA earlier, and now the 4/4 series in April 2026). Maintainer
+  Ilpo Järvinen routinely reviews these.
 
 **Step 3.5: Dependencies**
-- Requires: `<drm/drm_colorop.h>`, `for_each_oldnew_colorop_in_state`
-  macro, `drm_colorop_state` struct with `colorop`/`bypass` fields,
-  `drm_colorop` struct with `plane` field
-- All present in v6.19.14 and v7.0.1 stable trees - verified by direct
-  inspection
-- Record: All dependencies present in v6.19.y and v7.0.y; will apply
-  cleanly.
+- Record: Self-contained. `omen_v1_thermal_params` already exists in
+  stable trees (referenced by 8BCA, 8BCD, 8C78, etc.). No dependency on
+  any sibling patch in the v2 series.
 
-## Phase 4: MAILING LIST RESEARCH
+## Phase 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1: b4 dig results**
-- `b4 dig -c d3a549f4df786`: "Could not find anything matching commit"
-- `b4 dig -c 5d09aac12d5be`: "Could not find anything matching commit"
-- Manual lore search via search engine: did not find direct submission
-  of this exact patch
-- BUT found relevant prior discussion: lists.freedesktop.org dri-devel
-  April 2025 thread - Harry Wentland confirmed: "Yes, AMD driver is
-  using the overlay cursor (entire dedicated HW pipe) for the cursor
-  when the cursor scaling doesn't match the underlying plane. **The same
-  thing can be done for color operations but it's not implemented
-  yet.**"
-- Record: This commit IMPLEMENTS the missing functionality identified
-  during the original color pipeline patch series review.
+**Step 4.1: Find original patch discussion**
+- Record: `b4 dig -c 344bf523d441d` found the submission at https://lore
+  .kernel.org/all/20260410191039.125659-5-krishna.chomal108@gmail.com/ —
+  this is PATCH v2 4/4 of the series "platform/x86: hp-wmi: Improve
+  support for some HP boards".
 
-**Step 4.2: Reviewers**
-- Reviewed-by: Leo Li (AMD display maintainer)
-- Tested-by: Dan Wheeler (AMD QA)
-- Record: Properly reviewed by relevant maintainer.
+**Step 4.2: Patch evolution**
+- Record: `b4 dig -a` shows v1 (April 1, 2026) and v2 (April 11, 2026);
+  the applied commit corresponds to v2, the latest revision. No dangling
+  newer revision.
 
-**Step 4.3: Bug report - N/A** (no Reported-by, no Link)
+**Step 4.3: Recipients**
+- Record: `b4 dig -w` shows patch was sent to Ilpo Järvinen
+  (maintainer), Hans de Goede (maintainer), platform-
+  driver-x86@vger.kernel.org, linux-kernel@vger.kernel.org, plus the
+  reporter/tester Thomas Arici. Proper audience.
 
-**Step 4.4: Series context**
-- Standalone patch (not part of X/Y series)
-- Builds upon entire color pipeline infrastructure already in v6.19+
-- Record: Self-contained; depends only on v6.19+ infrastructure.
+**Step 4.4: Thread contents**
+- Record: Saved full thread to mbox; grep for
+  "stable@|NAK|objection|regression|concern" showed none — no NAKs, no
+  stable nominations, no concerns raised.
 
-**Step 4.5: Stable list - no specific discussion found**
+**Step 4.5: Bug report**
+- Record: bugzilla.kernel.org/show_bug.cgi?id=221300 is referenced
+  (Anubis protection prevented fetch content, but the Closes: tag
+  confirms a real user-filed bug). Reporter is also the tester — real-
+  world impact verified.
 
 ## Phase 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Key functions**
-- New: `dm_plane_color_pipeline_active(state, plane, use_old)` - checks
-  for non-bypassed colorops on a plane
-- Modified: `dm_crtc_get_cursor_mode()` - cursor mode selection
-- Modified: debug message in `amdgpu_dm_atomic_check()`
-
-**Step 5.2: Callers**
-- `dm_crtc_get_cursor_mode()` is called from `amdgpu_dm_atomic_check()`
-  for every atomic commit when cursor configuration may change on AMD
-  DCN hardware
-- Affects: Every modeset/cursor update path on supported AMD DCN
-  hardware
-- Record: Reachable from userspace via DRM atomic commit syscalls
-
-**Step 5.3: Callees**
-- `for_each_oldnew_colorop_in_state` (DRM core macro from v6.19+)
-- `drm_atomic_get_plane_state`, `drm_atomic_plane_enabling/disabling`
-- Record: Standard DRM atomic helpers
-
-**Step 5.4: Reachability**
-- User triggers: opt-in to `DRM_CLIENT_CAP_PLANE_COLOR_PIPELINE` AND
-  configure non-bypassed colorop on a primary plane
-- Modern Wayland compositors are adopting color pipeline API
-- Record: Reachable but requires opt-in to relatively new API
+**Step 5.1-5.4: Key functions**
+- Record: The only code affected is the
+  `victus_s_thermal_profile_boards[]` table, consumed by
+  `setup_active_thermal_profile_params()` (line 2605 of hp-wmi.c), which
+  is invoked from `hp_wmi_init()`. On any board not named `8C77`,
+  behavior is identical to before.
 
 **Step 5.5: Similar patterns**
-- Existing YUV format check and scaling check follow same pattern
-- The fix is the third "underlying plane property" check, parallel to
-  the existing two
-- Record: Consistent with established pattern.
+- Record: The table currently has 13 sibling entries (8A4D, 8BAB, 8BBE,
+  8BCA, 8BCD, 8BD4, 8BD5, 8C76, 8C78, 8C99, 8C9C, 8D41, 8D87), each a
+  4-line addition. Pattern is well-established.
 
 ## Phase 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-**Step 6.1: Code in stable trees**
-- `drm_colorop` infrastructure: NOT in v6.18 or earlier; PRESENT in
-  v6.19.14 and v7.0.1 (verified by `git cat-file -e`)
-- `dm_crtc_get_cursor_mode()`: present in v6.18, v6.19.14, v7.0.1
-  (verified by direct inspection)
-- The bug only manifests in v6.19+ (where colorop is operational on AMD)
-- Record: Stable trees affected: v6.19.y and v7.0.y only. Older stables
-  (v6.18, v6.12, v6.6, v6.1, v5.15, v5.10) DO NOT have the buggy code
-  path because color pipeline didn't exist.
+**Step 6.1: Buggy code in stable?**
+- Record:
+  - `stable/linux-6.19.y`: `victus_s_thermal_profile_boards[]` is
+    present with identical `struct dmi_system_id` format; 8C77 missing
+    (as is 8C76). HP Omen 16-wf1xxx (8C77) owners running 6.19.y lack
+    working thermal/fan support.
+  - `stable/linux-6.18.y`: Same as 6.19.y — table format matches, 8C77
+    missing.
+  - `stable/linux-6.17.y`: Table exists but uses older string-only array
+    format — would need trivial adaptation to backport.
+  - `stable/linux-6.12.y`, `6.6.y`: Table doesn't exist — not
+    applicable.
 
-**Step 6.2: Backport difficulty**
-- `dm_crtc_get_cursor_mode()` structure identical between mainline and
-  v6.19.14/v7.0.1
-- All required infrastructure (`for_each_oldnew_colorop_in_state`,
-  `drm_colorop_state.colorop`, `drm_colorop_state.bypass`,
-  `drm_colorop.plane`) is present in v6.19.14 - verified
-- Record: Expected clean apply to v6.19.y and v7.0.y stable trees.
+**Step 6.2: Backport complications**
+- Record: For 6.18.y and 6.19.y the diff applies cleanly (modulo the
+  absence of the 8C76 entry — the insertion point is just between 8BD5
+  and 8C78 or wherever sorted order dictates). For 6.17.y would need
+  format conversion. Difficulty: trivial.
 
 **Step 6.3: Related fixes already in stable**
-- `e180b2af2725c` (drm/amd/display: Fix gamma 2.2 colorop TFs)
-  backported to 6.19.y
-- `083f1f71a9291` (drm/amd/display: Enable DEGAMMA and reject
-  COLOR_PIPELINE+DEGAMMA_LUT) backported to 6.19.y
-- `0b26c7e819c40` (drm/atomic: convert drm_atomic_get_{old,
-  new}_colorop_state() into proper functions) backported to 6.19.y
-- Record: Strong precedent of color pipeline correctness fixes
-  backported to 6.19.y stable.
+- Record: Multiple sibling commits (Add Omen 16-xd0xxx, Add Omen
+  16-wf0xxx, fix platform profile values for Omen 16-wf1xxx, Add Omen
+  MAX 16-ah0xx, Fn+P hotkey, Add Victus 16-d0xxx, Omen 14-fb1xxx, mark
+  Victus 16-r0/s0) are already in `stable/linux-6.17.y`, `6.18.y`,
+  and/or `6.19.y`. This establishes a clear precedent for backporting
+  hp-wmi board-ID additions.
 
 ## Phase 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-**Step 7.1: Subsystem**
-- DRM/AMD display - graphics driver
-- Criticality: PERIPHERAL/IMPORTANT - affects many AMD GPU users but
-  only those using new color pipeline feature
-- Record: AMD display driver - impacts user-visible rendering for users
-  who opt-in to color pipeline
+**Step 7.1: Subsystem criticality**
+- Record: `drivers/platform/x86/hp/` — PERIPHERAL (driver-specific), but
+  affects real users of HP Omen/Victus laptops. Fan control and thermal
+  profile are user-visible features.
 
 **Step 7.2: Activity**
-- Heavy activity on color pipeline area; multiple recent fixes
-- Record: Very active subsystem; AMD display team actively maintaining
-  color pipeline
+- Record: Actively developed; maintainer routinely accepts board-ID
+  additions.
 
 ## Phase 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected users**
-- AMD GPU users with DCN hardware (DCN1+, except DCN401/420 which are
-  exempt)
-- Who use compositors that opt-in to
-  `DRM_CLIENT_CAP_PLANE_COLOR_PIPELINE`
-- Modern Wayland compositors increasingly use the new API
-- Record: Driver-specific (AMD) AND opt-in feature dependent
+**Step 8.1: Who is affected**
+- Record: Owners of HP Omen 16-wf1xxx laptops with board 8C77.
 
 **Step 8.2: Trigger conditions**
-- Userspace must enable `DRM_CLIENT_CAP_PLANE_COLOR_PIPELINE`
-- A non-cursor plane must have an active (non-bypassed) colorop
-- Cursor must be enabled on the same CRTC
-- Triggerable by unprivileged users via DRM atomic commit
-- Record: Relatively narrow but reachable from userspace
+- Record: Triggered on every boot on matching hardware: thermal profile
+  doesn't register, fan RPM readback/control unavailable. Not a security
+  issue.
 
-**Step 8.3: Failure mode severity**
-- Cursor undergoes incorrect color transformation -> cursor renders with
-  wrong colors/visual artifacts
-- No crash, no data corruption, no security implications, no system hang
-- Severity: MEDIUM (visual correctness only)
-- Record: Visual bug only - severity MEDIUM
+**Step 8.3: Failure mode**
+- Record: Missing functionality (no thermal profile switching, no
+  controllable fan) on the specific laptop model. Severity: MEDIUM
+  (functional defect, not a crash/corruption).
 
 **Step 8.4: Risk-benefit**
-- BENEFIT: Correct cursor rendering for users of color pipeline; small
-  but real correctness improvement
-- RISK: Very low - single file, ~50 lines, well-contained, reviewed by
-  AMD maintainer, tested
-- Ratio: Low-risk, moderate-benefit fix
-- Record: Favorable risk/benefit for a correctness fix
+- Record:
+  - Benefit: Enables working thermal/fan control for owners of a
+    specific HP laptop model — a real user confirmed it fixes their
+    system.
+  - Risk: Near-zero. The change only runs on boards matching the exact
+    DMI string `8C77`, which is currently a no-op entry. Cannot regress
+    any other hardware. 4-line addition to a well-understood table.
 
 ## Phase 9: FINAL SYNTHESIS
 
 **Step 9.1: Evidence compilation**
 
-Evidence FOR backporting:
-- Real bug fix (incorrect cursor color rendering when color pipeline
-  active)
-- Small (~49 lines), single file, surgical change
-- Reviewed-by AMD display maintainer (Leo Li)
-- Tested-by AMD QA (Dan Wheeler)
-- Clean apply to v6.19.y and v7.0.y stable (all dependencies verified
-  present)
-- Strong precedent: similar color pipeline correctness fixes already
-  backported to 6.19.y
-- Reachable from userspace via standard DRM atomic API
-- Implements functionality explicitly identified as missing during
-  original color pipeline review
+FOR:
+- Pure hardware quirk/DMI match addition — a documented stable exception
+  category
+- 4-line change, surgical, no logic modification
+- Tested on actual hardware by the reporter
+- Reviewed and committed by subsystem maintainer
+- Real user-facing bug (bugzilla 221300)
+- Patchwork precedent: many similar hp-wmi board additions already in
+  stable 6.17.y / 6.18.y / 6.19.y
+- Zero regression risk (only activates on exact-string DMI match of
+  "8C77")
 
-Evidence AGAINST backporting:
-- No Fixes: tag, no Cc: stable
-- No Reported-by from external users (only AMD internal Tested-by)
-- Color pipeline is documented under Documentation/gpu/rfc/ (RFC status)
-- Opt-in feature requiring `DRM_CLIENT_CAP_PLANE_COLOR_PIPELINE`
-- Bug is visual-only (no crash, corruption, security)
-- Commit reads as feature enhancement rather than fix
+AGAINST:
+- The sibling 8C76 commit isn't yet in stable 6.19.y (easily resolved —
+  8C77 can be inserted between 8BD5 and 8C78 on backport)
+- Older stable branches (6.17.y, 6.12.y, 6.6.y) may need adaptation or
+  the hardware is simply newer than the tree
 
 **Step 9.2: Stable rules checklist**
-1. Obviously correct and tested? YES (Reviewed/Tested by AMD)
-2. Fixes a real bug affecting users? YES (visual correctness)
-3. Important issue? BORDERLINE (visual only, but real)
-4. Small and contained? YES (single file, ~50 lines)
-5. No new features/APIs? YES (uses existing APIs)
-6. Can apply to stable trees? YES (verified for v6.19.y and v7.0.y)
+1. Obviously correct & tested? YES (tested on hardware, maintainer-
+   reviewed)
+2. Fixes real bug affecting users? YES (user-reported via bugzilla)
+3. Important issue? MEDIUM (broken fan/thermal on a specific laptop)
+4. Small and contained? YES (4 lines, 1 file)
+5. No new features/APIs? YES (no new API; DMI quirk addition, explicitly
+   allowed)
+6. Applies to stable trees? YES for 6.18.y/6.19.y cleanly; minor
+   adaptation for 6.17.y
 
-**Step 9.3: Exception categories - N/A**
+**Step 9.3: Exception category**
+- Record: Matches the "QUIRKS and WORKAROUNDS" and "NEW DEVICE IDs"
+  exception categories — adding DMI match entry to an existing driver's
+  quirk table.
 
 **Step 9.4: Decision**
-The patch represents a small, well-reviewed correctness fix for cursor
-rendering on AMD hardware when the color pipeline feature is in use.
-While the bug is visual-only (no crashes/corruption/security), the fix
-is exactly the type that has been backported to v6.19.y stable for the
-same color pipeline area (e180b2af2725c, 083f1f71a9291). The fix applies
-cleanly, has appropriate review/test signoffs, and implements a behavior
-that was explicitly identified as needed during the original color
-pipeline review. Affected stable trees are limited to v6.19.y and v7.0.y
-where the colorop infrastructure exists.
+- Record: Clear YES — stable-appropriate hardware enablement matching
+  established backport precedent.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by (AMD maintainer), Tested-by (AMD),
-  Signed-off-by chain through AMD maintainers; NO Fixes:, NO Cc: stable,
-  NO Reported-by, NO Link
-- [Phase 1] Commit body: describes "incorrect cursor transformation" -
-  confirms this is a fix despite enhancement-style subject
-- [Phase 2] Diff inventory verified: 1 file, ~49 insertions, ~4
-  deletions, adds `dm_plane_color_pipeline_active()` helper and modifies
-  `dm_crtc_get_cursor_mode()`
-- [Phase 2] Bug mechanism: native cursor subject to underlying plane's
-  color pipeline transformation -> wrong cursor colors; fix forces
-  overlay mode (separate DCN pipe)
-- [Phase 3] git log on file: confirmed `dm_crtc_get_cursor_mode()`
-  exists in v6.18 and forward
-- [Phase 3] git log search: identified colorop infra introduced by
-  `cfc27680ee208` (Nov 26, 2025), tagged v6.19+
-- [Phase 4] b4 dig -c d3a549f4df786: did not find lore submission
-  directly
-- [Phase 4] Web search: found prior discussion on dri-devel April 2025
-  confirming this functionality was deferred during original color
-  pipeline review
-- [Phase 5] Modified function `dm_crtc_get_cursor_mode()` callable via
-  amdgpu_dm_atomic_check from DRM atomic commit syscall
-- [Phase 6] git cat-file -e v6.19.14:include/drm/drm_colorop.h: EXISTS
-  (bug applicable)
-- [Phase 6] git cat-file -e v7.0.1:include/drm/drm_colorop.h: EXISTS
-  (bug applicable)
-- [Phase 6] git cat-file -e v6.18.24:include/drm/drm_colorop.h: NOT
-  EXISTS (bug N/A for older stables)
-- [Phase 6] Verified `for_each_oldnew_colorop_in_state` macro and
-  `drm_colorop_state.{colorop,bypass}`, `drm_colorop.plane` all present
-  in v6.19.14
-- [Phase 6] git log v6.19..v6.19.14: found e180b2af2725c, 083f1f71a9291,
-  0b26c7e819c40 already backported (precedent for color pipeline fixes)
-- [Phase 8] Failure mode: visual cursor color rendering incorrect; no
-  crash/corruption/security
-- UNVERIFIED: Could not find direct lore submission via b4 dig (commit
-  has not yet appeared in lore search index, possibly because it is a
-  recent merge)
+- [Phase 1] Parsed tags: Reported-by/Tested-by same person (Thomas
+  Arici), Closes: bugzilla 221300, Reviewed-by/SOB from maintainer Ilpo
+  Järvinen. No Fixes:/Cc:stable (expected).
+- [Phase 2] Diff: +4 lines, 1 file, a single `dmi_system_id` entry
+  between `8C76` and `8C78`. Verified with `git show 344bf523d441d
+  --stat`.
+- [Phase 3] Author history: `git log` shows Krishna Chomal has authored
+  similar additions (8C76, 8BCA). Verified via `git log --oneline --
+  drivers/platform/x86/hp/hp-wmi.c`.
+- [Phase 4] `b4 dig -c 344bf523d441d` found thread at lore.kernel.org/al
+  l/20260410191039.125659-5-krishna.chomal108@gmail.com/
+- [Phase 4] `b4 dig -a`: v1 (2026-04-01) → v2 (2026-04-11); applied
+  version is v2 (latest).
+- [Phase 4] `b4 dig -w`: maintainers Ilpo Järvinen, Hans de Goede, and
+  platform-driver-x86 list were recipients.
+- [Phase 4] `b4 dig -m /tmp/8c77_thread.mbox` + grep confirmed no NAK,
+  no concerns, no stable nomination in thread.
+- [Phase 5] `rg victus_s_thermal_profile_boards` in hp-wmi.c: referenced
+  only at lines 184 (table) and 2613 (consumed in
+  `setup_active_thermal_profile_params()`).
+- [Phase 6] `git show stable/linux-6.18.y:drivers/platform/x86/hp/hp-
+  wmi.c` and `stable/linux-6.19.y`: both have the `struct dmi_system_id`
+  table format — backport applies cleanly. `stable/linux-6.17.y` uses
+  older string-array format — needs trivial adaptation.
+- [Phase 6] `git log stable/linux-6.18.y -- drivers/platform/x86/hp/hp-
+  wmi.c`: many sibling hp-wmi board additions are already backported
+  (Fn+P, 16-wf0xxx, 16-xd0xxx, 16-ah0xx, fix platform profile values,
+  Victus 16-r0/s0, Victus 16-r1, etc.).
+- [Phase 8] Failure mode: confirmed via reading
+  `setup_active_thermal_profile_params()` at lines 2605-2627 — without a
+  match, `is_victus_s_board` stays false and
+  `active_thermal_profile_params` is NULL, disabling thermal/fan
+  functionality.
+- UNVERIFIED: bugzilla.kernel.org/show_bug.cgi?id=221300 content (Anubis
+  protection blocked WebFetch); Closes: tag and Reported-by/Tested-by
+  confirm the bug is real.
+- UNVERIFIED: Whether the sibling 8C76 commit is already queued for
+  autosel in 6.19.y (doesn't affect this commit's decision — 8C77 can be
+  applied independently).
 
-The fix targets a real correctness issue limited to v6.19+ stable trees,
-applies cleanly, follows the same pattern as previously backported color
-pipeline fixes, and has appropriate review/test signoffs from AMD
-maintainers.
+The change is a textbook hardware-quirk / DMI match-table addition,
+which is one of the explicit stable exception categories. It is tiny,
+maintainer-reviewed, user-tested, has zero collateral risk, and follows
+a strong precedent of similar hp-wmi board-enablement commits already
+accepted in stable trees.
 
 **YES**
 
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 53 +++++++++++++++++--
- 1 file changed, 49 insertions(+), 4 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 2328c1aa0ead1..853e62c67375e 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -94,6 +94,7 @@
- #include <drm/drm_utils.h>
- #include <drm/drm_vblank.h>
- #include <drm/drm_audio_component.h>
-+#include <drm/drm_colorop.h>
- #include <drm/drm_gem_atomic_helper.h>
- 
- #include <media/cec-notifier.h>
-@@ -12278,6 +12279,38 @@ static int add_affected_mst_dsc_crtcs(struct drm_atomic_state *state, struct drm
-  * available.
-  */
- 
-+/**
-+ * dm_plane_color_pipeline_active() - Check if a plane's color pipeline active.
-+ * @state: DRM atomic state
-+ * @plane: DRM plane to check
-+ * @use_old: if true, inspect the old colorop states; otherwise the new ones
-+ *
-+ * A color pipeline may be selected (color_pipeline != NULL) but still is
-+ * inactive if every colorop in the chain is bypassed.  Only return
-+ * true when at least one colorop has bypass == false, meaning the cursor
-+ * would be subjected to the transformation in native mode.
-+ *
-+ * Return: true if the pipeline modifies pixels, false otherwise.
-+ */
-+static bool dm_plane_color_pipeline_active(struct drm_atomic_state *state,
-+					   struct drm_plane *plane,
-+					   bool use_old)
-+{
-+	struct drm_colorop *colorop;
-+	struct drm_colorop_state *old_colorop_state, *new_colorop_state;
-+	int i;
-+
-+	for_each_oldnew_colorop_in_state(state, colorop, old_colorop_state, new_colorop_state, i) {
-+		struct drm_colorop_state *cstate = use_old ? old_colorop_state : new_colorop_state;
-+
-+		if (cstate->colorop->plane != plane)
-+			continue;
-+		if (!cstate->bypass)
-+			return true;
-+	}
-+	return false;
-+}
-+
- /**
-  * dm_crtc_get_cursor_mode() - Determine the required cursor mode on crtc
-  * @adev: amdgpu device
-@@ -12289,8 +12322,8 @@ static int add_affected_mst_dsc_crtcs(struct drm_atomic_state *state, struct drm
-  * the dm_crtc_state.
-  *
-  * The cursor should be enabled in overlay mode if there exists an underlying
-- * plane - on which the cursor may be blended - that is either YUV formatted, or
-- * scaled differently from the cursor.
-+ * plane - on which the cursor may be blended - that is either YUV formatted,
-+ * scaled differently from the cursor, or has a color pipeline active.
-  *
-  * Since zpos info is required, drm_atomic_normalize_zpos must be called before
-  * calling this function.
-@@ -12327,7 +12360,7 @@ static int dm_crtc_get_cursor_mode(struct amdgpu_device *adev,
- 
- 	/*
- 	 * Cursor mode can change if a plane's format changes, scale changes, is
--	 * enabled/disabled, or z-order changes.
-+	 * enabled/disabled, z-order changes, or color management properties change.
- 	 */
- 	for_each_oldnew_plane_in_state(state, plane, old_plane_state, plane_state, i) {
- 		int new_scale_w, new_scale_h, old_scale_w, old_scale_h;
-@@ -12352,6 +12385,12 @@ static int dm_crtc_get_cursor_mode(struct amdgpu_device *adev,
- 			consider_mode_change = true;
- 			break;
- 		}
-+
-+		if (dm_plane_color_pipeline_active(state, plane, true) !=
-+		    dm_plane_color_pipeline_active(state, plane, false)) {
-+			consider_mode_change = true;
-+			break;
-+		}
- 	}
- 
- 	if (!consider_mode_change && !crtc_state->zpos_changed)
-@@ -12392,6 +12431,12 @@ static int dm_crtc_get_cursor_mode(struct amdgpu_device *adev,
- 			return 0;
- 		}
- 
-+		/* Underlying plane has an active color pipeline - cursor would be transformed */
-+		if (dm_plane_color_pipeline_active(state, plane, false)) {
-+			*cursor_mode = DM_CURSOR_OVERLAY_MODE;
-+			return 0;
-+		}
-+
- 		dm_get_plane_scale(plane_state,
- 				   &underlying_scale_w, &underlying_scale_h);
- 		dm_get_plane_scale(cursor_state,
-@@ -12770,7 +12815,7 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
- 			goto fail;
- 		} else if (required_cursor_mode == DM_CURSOR_OVERLAY_MODE) {
- 			drm_dbg_driver(crtc->dev,
--				       "[CRTC:%d:%s] Cannot enable native cursor due to scaling or YUV restrictions\n",
-+				       "[CRTC:%d:%s] Cannot enable native cursor due to scaling, YUV, or color pipeline restrictions\n",
- 				       crtc->base.id, crtc->name);
- 			ret = -EINVAL;
- 			goto fail;
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 988a0acc9622b..c1dcc1e9038b7 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -214,6 +214,10 @@ static const struct dmi_system_id victus_s_thermal_profile_boards[] __initconst
+ 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8C76") },
+ 		.driver_data = (void *)&omen_v1_thermal_params,
+ 	},
++	{
++		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8C77") },
++		.driver_data = (void *)&omen_v1_thermal_params,
++	},
+ 	{
+ 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8C78") },
+ 		.driver_data = (void *)&omen_v1_thermal_params,
 -- 
 2.53.0
 
