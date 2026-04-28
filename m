@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3D13FE350;
-	Tue, 28 Apr 2026 10:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6EC3FCB21;
+	Tue, 28 Apr 2026 10:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372933; cv=none; b=Y9b3OD+lLBeDJJ48rjLeMvafzqA7FW53pfFSEL3x3H7LqETtu3xGMHciOUxZ42LsTx69U80RxhUYx7rkAyM8UTJuOuoY30n3pYzaEq3NJl/Kktpyp0wKCdBDx7Yi4t0F+58k5KRUFn4a0PEceMLf7fHNvu2rOJwwBF1tto22bX8=
+	t=1777372934; cv=none; b=JeahWS9r6MQeG3fZLyrj5xAdLinL8LXkbQFr0LwX2yHOCKy9AKBxjJdUNf8Othkc3dwClNMvz+BIlzyPCBIhS/zUByZYt0wezx0A4Fo95OsvuqfV2rhLEXHs7BHp82r4Rn/rcddS7kdngZRjJzhrSrFgBW2WCG7YFIs69LUhpAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372933; c=relaxed/simple;
-	bh=PsFsicZF8LO/wwF+hIneruUq34uFUhSIcZFHEpZSb84=;
+	s=arc-20240116; t=1777372934; c=relaxed/simple;
+	bh=gmKEEq+Q4TJt+EvN1ei9MyLA41JpySIjVno7v3Cfwp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cP9NRhn17rafZlnC64TNHK21RWHj4EYFSATsO1p+nmnE+8Nr8/+ukbsZtGAJ0fgR7XwgQNbs9RQ6TXPsyYOnOAI3RQ0xf3T/djwwRPSBqDmdyi/ais4TUjO9k+whpsgQ8c8vclnIpVem+KYjDrOofTToLipAOtwBpCX3i5Gfbzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=geLV98Ow; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ACvu6bDIH592gd9MVMnozRI9Wpk7DLU644dqOx6xQ/qXlm2MN7f/mAOsRskdO9cvjgcQa3AfGP9/cBp8wlTnDUgY/rUxTPMpsZZYN4VLV47EsHoECIuMKm01K9l6u9jZsa9P2qkOXsGjjzx62uwXbsBd5GjqnvnWvRO9WqLmqEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IJLD1t5C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="geLV98Ow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFE2C2BCAF;
-	Tue, 28 Apr 2026 10:42:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IJLD1t5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BB2C2BCF5;
+	Tue, 28 Apr 2026 10:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372933;
-	bh=PsFsicZF8LO/wwF+hIneruUq34uFUhSIcZFHEpZSb84=;
+	s=k20201202; t=1777372934;
+	bh=gmKEEq+Q4TJt+EvN1ei9MyLA41JpySIjVno7v3Cfwp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=geLV98Ow0aFcqR7IRN+UhH1nvIiGwphIfIw/jmikOECXTIngFGztx8HvHsX4iUhIL
-	 Ut9UEhqpXwy8ZJEBH62kDDQfAxtfHIjNFx6svRHNWoavRrHa/KS25w4qYQX/+ewo4x
-	 kDCN9S6P1sfyanWcb9YIfOWcB1vh/1KL4FKIXfmgDAK5RpaYVmclKJXyzgWwbEzy9D
-	 zIkh08mxXohamye/EZCs5I1DdTfZ6da0eNgLZO63b9BQ+mdNij/PXSbacGVNOty8R+
-	 Mc680UV/ioc5i7RAeIBtIpz7Ouwyu5h/8P3RAl0Frg4z5AxFCYOKKelqdeCqtGePuR
-	 Bu0zG0b84hqqg==
+	b=IJLD1t5COAuxzwqM5YRhQ1lk7jSvx6B2tExBF0qeRphAHrXaRmJcMpMsyLUwUhYM2
+	 eG6Ck2Mj3Mvdtps6o+pIeAm7RJurNV1oslP3afx9UIrdhIaIn0WCf7PooB1UBAwzpf
+	 ItcgFuB6MNxWozsKQj1gaXe7a/+R1MhL3jfA5ygsrrhVyuH3QlvV0H4X6Cr+pDA7fn
+	 cJBlLjDFEMae0oPCqajvDp0M881nrgKNbqfvm18BmkwrunVIXS/33aXbDIBABR0xXo
+	 o4O5nl4mcRiFq3uSlYQCPHZgC9yD7EXMCZYENU+fy3wlQeHCKT56YzEgcl7FtqlFE9
+	 QiqAyT3Yas74A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pavel@ucw.cz,
-	linux-leds@vger.kernel.org,
+	ntfs3@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] leds: core: Implement fallback to software node name for LED names
-Date: Tue, 28 Apr 2026 06:40:39 -0400
-Message-ID: <20260428104133.2858589-28-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] ntfs3: reject inodes with zero non-DOS link count
+Date: Tue, 28 Apr 2026 06:40:40 -0400
+Message-ID: <20260428104133.2858589-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -53,387 +52,357 @@ X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-[ Upstream commit 4f530c65487636dc1536b3fa1041f9a877a66a7f ]
+[ Upstream commit e10e72f69734a90c8719d160e8efb164ce5d9e26 ]
 
-If a software node defining an LED is missing explicit 'label', 'color',
-or 'function' properties, led_compose_name() currently fails with
--EINVAL, because fallback to using node name in place of LED name/label
-is only implemented for OF nodes.
+ntfs_read_mft() counts file name attributes into two variables:
+names (all names including DOS 8.3) and links (non-DOS names
+only). The validation at line 424 checks names but set_nlink()
+at line 436 uses links. A corrupted NTFS image where all file
+name attributes have type FILE_NAME_DOS passes the names check
+but results in set_nlink(inode, 0).
 
-Implement similar fallback for software nodes. Unlike OF nodes, which
-use the short 'name' attribute of the device tree node to avoid
-including the address block, use fwnode_get_name() directly since
-swnodes do not include an address block and always have a valid name.
+When such an inode is loaded via a code path that passes name=NULL
+to ntfs_iget5() and the nlink=0 inode enters the VFS. The subsequent
+unlink, rmdir, or rename targeting this inode calls drop_nlink()
+which triggers WARN_ON(inode->i_nlink == 0) in fs/inode.c.
 
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://patch.msgid.link/20260311-led-swnode-name-v1-1-798a49e041c6@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+An all-DOS-name MFT record cannot exist on a valid NTFS volume.
+Reject such records by checking for links == 0 before
+calling set_nlink().
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information for a complete analysis.
+Now I have enough information to write the analysis. Let me finalize my
+review.
 
-# Analysis: leds: core: Implement fallback to software node name for LED
-names
+## Analysis
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+### PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: Subject line
-Record: `[leds: core]` `[Implement]` `[fallback to software node name
-for LED names]`. The verb "Implement" suggests adding missing
-functionality, but the commit body describes fixing an -EINVAL failure,
-making this a bug fix in substance.
+**Step 1.1 — Subject line parse**
+Record: subsystem `ntfs3`, verb `reject`, intent: reject inodes with
+zero non-DOS link count (validation check).
 
-### Step 1.2: Tags
-Record:
-- Signed-off-by: Dmitry Torokhov (author)
-- Signed-off-by: Lee Jones (LED subsystem maintainer)
-- Link: `https://patch.msgid.link/20260311-led-swnode-
-  name-v1-1-798a49e041c6@gmail.com`
-- No `Fixes:` tag
-- No `Cc: stable` tag
-- No `Reported-by` / `Tested-by` / `Reviewed-by` tags
+**Step 1.2 — Tags**
+Record: Only two SoBs (Ziyi Guo, Konstantin Komarov). No Fixes:, no Cc:
+stable, no Reported-by:, no Link:, no Reviewed-by:. Absence is expected
+per the rules.
 
-### Step 1.3: Body text
-Record: Bug description: "If a software node defining an LED is missing
-explicit 'label', 'color', or 'function' properties,
-`led_compose_name()` currently fails with -EINVAL." Author explicitly
-describes a failure mode. Root cause: OF-only fallback. Fix: use
-`fwnode_get_name()` for software nodes.
+**Step 1.3 — Body text**
+Record: Author explains a precise bug mechanism: `names` counts all file
+name attrs (incl. FILE_NAME_DOS) while `links` counts only non-DOS. The
+existing guard `if (!names)` can pass while `set_nlink(inode, links)`
+still sets nlink=0 when every ATTR_NAME is DOS-type. Subsequent
+unlink/rmdir/rename of such an inode hits `drop_nlink()` which fires
+`WARN_ON(inode->i_nlink == 0)` in `fs/inode.c`. Trigger:
+corrupted/malicious NTFS image; no version info given.
 
-### Step 1.4: Hidden bug fix
-Record: The verb "Implement" reads like a feature addition, but the
-commit body explicitly says the existing code "fails with -EINVAL" -
-this is a bug fix disguised as a feature implementation. Pattern "Handle
-X properly" / missing error-path fallback.
+**Step 1.4 — Hidden fix detection**
+Record: Explicitly a fix ("reject"). Not hidden.
 
-## PHASE 2: DIFF ANALYSIS
+### PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: Inventory
-Record: 1 file changed (`drivers/leds/led-core.c`), 3 lines added, 0
-removed. Single function modified: `led_compose_name()`. Scope: single-
-file surgical fix.
+**Step 2.1 — Inventory**
+Record: 1 file `fs/ntfs3/inode.c`, +5/-0, one function
+`ntfs_read_mft()`. Single-file surgical fix.
 
-### Step 2.2: Code flow change
-Record: Before: if fwnode is software_node (not OF) and lacks
-label/color/function properties → return -EINVAL. After: if
-software_node, use `fwnode_get_name(fwnode)` as the LED classdev name
-(same fallback pattern as OF nodes).
+**Step 2.2 — Code flow**
+Record: Before: after `names` validation, code falls through to
+`set_nlink(inode, links)`. After: additional `if (!links) { err =
+-EINVAL; goto out; }` short-circuits before `set_nlink` for records
+whose only names are DOS 8.3.
 
-### Step 2.3: Bug mechanism
-Record: Category (h) hardware-workaround-ish / (g) logic-correctness.
-The `led_compose_name` fallback chain was incomplete: it handled OF-node
-fallback (`to_of_node(fwnode)->name`) but didn't handle the
-`is_software_node()` case, causing LED registration to fail for drivers
-that describe LEDs via software nodes with only a `.name` field. Fix
-adds the missing `else if (is_software_node(fwnode))` branch.
+**Step 2.3 — Bug mechanism**
+Record: Category (g) Logic/correctness + defensive validation for on-
+disk corruption. Closes an inconsistency between the validator (`names`)
+and the consumer (`links`). Prevents VFS invariant violation
+(inode->i_nlink==0 for a living inode), which is what the WARN_ON in
+`drop_nlink()` guards.
 
-### Step 2.4: Quality
-Record: Obviously correct - mirrors the OF pattern. Uses
-`fwnode_get_name()` which for swnodes resolves to
-`kobject_name(&swnode->kobj)` (always valid for registered swnodes). No
-regression risk: only affects a path that previously returned -EINVAL.
+**Step 2.4 — Quality**
+Record: Obviously correct; the branch targets the existing `out:` which
+does `iget_failed(inode)` and returns `ERR_PTR(err)`. Adds no lock
+changes, no allocation changes. Zero regression risk on valid NTFS
+(valid records have `links >= 1`, author states an all-DOS-name MFT
+record cannot exist on a valid NTFS volume).
 
-## PHASE 3: GIT HISTORY INVESTIGATION
+### PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: git blame
-Record: The `is_of_node(fwnode)` OF fallback was added by
-`bb4e9af0348df` (Jun 2019, v5.4-rc1) - "leds: core: Add support for
-composing LED class device names". The swnode gap has existed since 2019
-but was latent until drivers began using swnodes for LEDs without a
-"label" property.
+**Step 3.1 — Blame**
+Record: `git blame` on the area around the fix shows `set_nlink(inode,
+links)` was introduced by `110b24eb1a749b` ("fs/ntfs3: Taking DOS names
+into account during link counting", Apr 17 2024, Konstantin Komarov).
 
-### Step 3.2: Fixes: tag
-Record: No Fixes: tag. Most relevant trigger commit: `4e0bcbd270e88`
-("platform/x86: barco-p50-gpio: use software nodes for gpio-leds/keys")
-merged in v6.18-rc1, which defined an LED swnode with only `.name =
-"identify"` and no label/color/function properties. Verified via `git
-describe --contains 4e0bcbd270e88` → `v6.18-rc1~82^2~2`.
+**Step 3.2 — Fixes: target**
+Record: No Fixes: tag in the commit, but the root cause (splitting
+`names` vs `links` and using `links` for nlink while validating `names`)
+was introduced by `110b24eb1a749b`. That commit had `Cc:
+stable@vger.kernel.org` and `Fixes: 82cae269cfa95 ("fs/ntfs3: Add
+initialization of super block")`.
 
-### Step 3.3: Related recent changes
-Record: `git log --oneline -- drivers/leds/led-core.c` shows last change
-was `ee44a1def7ee4` in v6.16-rc1 ("leds: core: Bail out when composed
-name can't fit the buffer"). No conflicting changes in stable range.
+**Step 3.3 — File history**
+Record: Standalone commit; not part of any series. Close neighbors in
+ntfs3 are independent fixes (e.g. `06909b2549d63`, `4b90f16e4bb56`
+handling corrupted metadata).
 
-### Step 3.4: Author
-Record: Dmitry Torokhov is a prolific input/driver maintainer; has
-landed other swnode conversions recently (`4e0bcbd270e88` barco,
-`b8754092dfed4` pcengines-apuv2). Strong familiarity with swnode
-plumbing. Applied by Lee Jones (LED subsystem maintainer).
+**Step 3.4 — Author history**
+Record: Ziyi Guo has 17 commits in the tree, all small defensive
+validation / lock fixes across drivers (net, wifi, USB, ASoC, power) —
+typical profile of a researcher/fuzzer-finder. Not the subsystem
+maintainer, but the patch was applied by maintainer Konstantin Komarov.
 
-### Step 3.5: Dependencies
-Record: `is_software_node()` and `fwnode_get_name()` have been stable
-APIs in the fwnode infrastructure for years. No prerequisite patches.
-Standalone fix.
+**Step 3.5 — Dependencies**
+Record: No dependency. Uses existing locals `links`/`names`, the
+existing `out:` label, and `err = -EINVAL`. Self-contained.
 
-## PHASE 4: MAILING LIST RESEARCH
+### PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-### Step 4.1-4.2: Thread investigation
-Record: Used `b4 mbox -o /tmp/b4-dig 20260311-led-swnode-
-name-v1-1-798a49e041c6@gmail.com` to retrieve the thread (8 messages).
-Patch is [PATCH 1/2] of "Fall back to using software node name as LED
-name" series. Maintainer Lee Jones applied both patches: "Applied,
-thanks! [1/2] commit: 4f530c65487636dc1536b3fa1041f9a877a66a7f [2/2]
-commit: 91dc0c2a152373c4004df7e36de45190b82089ab". No NAKs. Initial
-application failed due to conflict with patch 2/2 formatting changes -
-author resent after rebase. No stable nomination in thread. Cover letter
-motivation: "helpful when converting old boards using bespoke platform
-data to software nodes/static device properties."
+**Step 4.1 — b4 dig / thread**
+Record: `b4 dig -c e10e72f69734a` → thread at `https://lore.kernel.org/a
+ll/20260210155634.380168-1-n7l8m4@u.northwestern.edu/`. Single revision
+(v1). Maintainer Konstantin Komarov replied Feb 24 2026: "Patch looks
+good — applied. Thanks." No NAK, no stable nomination, no concerns.
 
-### Step 4.3-4.5: Bug report / stable discussion
-Record: No `Reported-by:` tag, no linked syzbot/bugzilla. No explicit
-stable discussion observed in the thread.
+**Step 4.2 — Reviewers**
+Record: `b4 dig -w` shows the patch was sent to Konstantin Komarov
+(maintainer), ntfs3@lists.linux.dev, linux-kernel@vger.kernel.org.
+Appropriate recipients.
 
-## PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.3 — Bug report**
+Record: No Reported-by:/Link: tags. The commit wording ("A corrupted
+NTFS image") and the author's fuzzer-style track record strongly suggest
+this was found via fuzzing, though not attributed to syzbot on the list.
 
-### Step 5.1: Functions modified
-Record: `led_compose_name()` only.
+**Step 4.4 — Related patches**
+Record: No series. Standalone.
 
-### Step 5.2: Callers
-Record: `led_compose_name` is called by:
-- `drivers/leds/led-class.c:498` (`led_classdev_register_ext`) - the
-  main registration path used by dozens of LED drivers
-- `drivers/pci/npem.c:498` - PCI NPEM LED registration
+**Step 4.5 — Stable discussion**
+Record: None found.
 
-`led_classdev_register_ext` is called from ~70+ LED drivers via
-`devm_led_classdev_register_ext`, including `drivers/leds/leds-
-gpio.c:create_gpio_led` which is the specific path exercised by
-barco-p50-gpio.
+### PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.3: Callees
-Record: `is_software_node()`, `fwnode_get_name()`, `snprintf()` - all
-well-established.
+**Step 5.1 — Key function**
+Record: `ntfs_read_mft()`.
 
-### Step 5.4: Call chain / reachability
-Record: Reachable from platform device probe paths. Specifically: `leds-
-gpio` probe → `gpio_leds_create()` → `create_gpio_led()` (with
-`template->name = NULL`) → `devm_led_classdev_register_ext()` →
-`led_classdev_register_ext()` → `led_compose_name()`. Triggered on every
-boot for affected hardware.
+**Step 5.2 — Callers**
+Record: `ntfs_read_mft` is only called from `ntfs_iget5()`. `ntfs_iget5`
+is called with `name=NULL` from many user-reachable paths:
+`fs/ntfs3/dir.c:265` (lookup via `indx_find`), `dir.c:337` (readdir /
+`ntfs_dir_emit`), `fs/ntfs3/namei.c:371` (`ntfs3_get_parent` — NFS
+export / open-by-handle), `fs/ntfs3/frecord.c:2945,3064`, plus super-
+block metadata loads. In particular the dir.c:337 readdir path and the
+namei.c:371 get_parent path exactly match the commit description's
+"name=NULL to ntfs_iget5()".
 
-### Step 5.5: Similar patterns
-Record: Verified `drivers/platform/x86/barco-p50-gpio.c` at v7.0 has
-`identify_led_node` with `.name = "identify"` and `identify_led_props`
-containing only `PROPERTY_ENTRY_GPIO` (no label/color/function). Other
-swnode LED users (`meraki-mx100`, `pcengines-apuv2`, `x86-android-
-tablets`) include `PROPERTY_ENTRY_STRING("label", ...)` so they work
-without this fix.
+**Step 5.3 — Callees affected by fix**
+Record: Only `set_nlink(inode, links)` is gated behind the new check.
+The `out:` path was already correct.
 
-## PHASE 6: STABLE TREE ANALYSIS
+**Step 5.4 — Reachability**
+Record: Reachable from userspace via mount + readdir/lookup on a crafted
+NTFS image. `drop_nlink()` path reachable via `ntfs_unlink()` and
+`ntfs3_rmdir()` in `fs/ntfs3/namei.c` / `fs/ntfs3/inode.c:1838`. End-to-
+end chain confirmed.
 
-### Step 6.1: Code in stable trees
-Record: The `led_compose_name()` function exists in all active stable
-branches. Verified `git show v6.12:drivers/leds/led-core.c` and
-`v6.6:drivers/leds/led-core.c` both have identical `else if
-(is_of_node(fwnode)) { ... } else return -EINVAL;` pattern. The bug
-(swnode fallback gap) exists in every version since v5.4. However, the
-practical USER-VISIBLE bug (barco-p50-gpio LED not registering) only
-appears starting in v6.18 (via `4e0bcbd270e88`). Before v6.18, barco
-used `gpio_led_platform_data` with `.name = "identify"`, which bypasses
-`led_compose_name` entirely (via the `if (template->name)` branch in
-`create_gpio_led`).
+**Step 5.5 — Similar patterns**
+Record: Many recent ntfs3 commits follow the same pattern of hardening
+against corrupted on-disk structures (`0dc7117da8f92`, `06909b2549d63`,
+`4b90f16e4bb56`, `1732053c8a6b3`, `7443753436620`). Community actively
+accepts and backports these.
 
-### Step 6.2: Backport difficulty
-Record: `git log --oneline v6.19..v7.0 -- drivers/leds/led-core.c` →
-empty. File is stable. Clean apply expected for v6.18.y+ (where the
-regression exists). For older stable trees (6.6, 6.12), the fix is a no-
-op improvement (no driver there triggers the path) but still applies
-cleanly.
+### PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
 
-### Step 6.3: Related fixes in stable
-Record: None found. No other approach to the same bug observed.
+**Step 6.1 — Bug present in stable?**
+Record: The faulty `set_nlink(inode, links)` (without the `!links`
+guard) was backported to:
+- `stable/linux-5.15.y` as `7ab0c256964ef`
+- `stable/linux-6.1.y` as `df40783dc3773`
+- `stable/linux-6.6.y` as `e4fd2dce71fbd`
+- `stable/linux-6.12.y` as `110b24eb1a749` (same SHA)
+So the bug exists in 5.15+, 6.1+, 6.6+, 6.12+ stable trees.
 
-## PHASE 7: SUBSYSTEM CONTEXT
+**Step 6.2 — Backport complications**
+Record: Verified the code context in `stable/linux-5.15.y` and
+`stable/linux-6.6.y` — the surrounding lines (`names !=
+le16_to_cpu(rec->hard_links)` block and `set_nlink(inode, links)`) are
+identical to mainline. Patch applies cleanly; no rework expected for
+5.15.y/6.1.y/6.6.y/6.12.y and newer active LTS branches. Branches
+without 110b24eb's equivalent (older than 5.15 or before the April 2024
+backport) do not have the bug and do not need this fix.
 
-### Step 7.1: Subsystem
-Record: `drivers/leds/` - LED class core. Criticality: IMPORTANT (common
-driver infrastructure used by many hardware drivers). Failure mode here
-is driver-specific rather than core-kernel.
+**Step 6.3 — Existing related stable fixes**
+Record: None — no other "reject inodes with zero links" fix exists.
 
-### Step 7.2: Activity
-Record: `drivers/leds/led-core.c` receives only a handful of changes per
-release. Mature, stable code.
+### PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-## PHASE 8: IMPACT AND RISK
+**Step 7.1 — Subsystem criticality**
+Record: `fs/ntfs3` — filesystem. IMPORTANT. Users of NTFS read-write
+support (Windows dual-boot, removable media), plus security surface for
+mountable filesystem images.
 
-### Step 8.1: Affected users
-Record: Users of hardware whose drivers describe LEDs via software nodes
-without `label`/`color`/`function` properties. Concretely: Barco P50
-board (`barco-p50-gpio`) in v6.18+ - identify LED fails to register.
-Platform-specific (niche hardware).
+**Step 7.2 — Activity**
+Record: Very active. Multiple corruption-hardening fixes in every recent
+merge window.
 
-### Step 8.2: Trigger conditions
-Record: Triggered every boot on affected hardware. No privilege needed -
-happens automatically during probe.
+### PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.3: Failure severity
-Record: LED fails to register (returns -EINVAL during probe). Severity:
-LOW-MEDIUM. No crash, no data loss, no security issue. Functional
-regression: identify LED on Barco P50 doesn't appear in /sys/class/leds.
-For most users this is a minor annoyance; for Barco P50 appliance users,
-the identify-button LED feature is broken.
+**Step 8.1 — Affected users**
+Record: Users of ntfs3 who can mount attacker-controlled (or naturally
+corrupted) NTFS images. Also anyone who auto-mounts removable media.
+Filesystem-specific, not universal.
 
-### Step 8.4: Risk-benefit
-Record:
-- Benefit: LOW-MEDIUM (fixes functional regression on specific hardware,
-  v6.18+ only)
-- Risk: VERY LOW (3-line mirror of existing OF logic, only affects a
-  path that previously returned -EINVAL)
-- Ratio: Favorable - very cheap fix for real regression
+**Step 8.2 — Trigger**
+Record: Crafted NTFS image where an MFT record has only FILE_NAME_DOS
+attributes (and no non-DOS name). Valid NTFS never produces this, so the
+trigger requires a malformed image. On systems allowing unprivileged
+mounting (user namespaces + fuse-style setups, some distros' udisks
+configs) the trigger can be reached without root.
 
-## PHASE 9: FINAL SYNTHESIS
+**Step 8.3 — Failure mode severity**
+Record: `WARN_ON(inode->i_nlink == 0)` → kernel warning with stack. On
+`panic_on_warn` systems (common in hardened / KASAN / fuzzing
+environments) it becomes a panic / DoS. Also a reliable way to trigger
+VFS invariants violation for further exploration. Severity: MEDIUM-HIGH
+(DoS via crafted FS image, security-relevant).
 
-### Step 9.1: Evidence
-FOR backporting:
-- Commit body explicitly describes an -EINVAL failure (bug fix in
-  substance)
-- Fixes a functional regression in v6.18+ (barco-p50-gpio identify LED)
-- Small (3 lines), surgical, single file
-- Mirrors existing OF-node fallback logic (obviously correct)
-- Applied by the LED subsystem maintainer after review on the list
-- Very low regression risk - only affects paths that previously returned
-  -EINVAL
-- Trigger is deterministic (boot-time probe) so any affected users hit
-  it every boot
+**Step 8.4 — Risk/benefit**
+Record: Benefit: prevents a WARN/panic on malformed NTFS images, closes
+a small attack surface. Risk: extremely low — 5 additional lines on the
+error path, using the same `out:` cleanup already there; impossible to
+affect a valid NTFS volume per the filesystem semantics described.
 
-AGAINST backporting:
-- No `Fixes:` tag linking to `4e0bcbd270e88`
-- No `Cc: stable` tag
-- No `Reported-by:` (no cited user complaint)
-- Commit message framed as "helpful" for future conversions rather than
-  "fix"
-- Affected hardware is niche (Barco P50 appliance)
-- Non-critical failure (no crash/corruption/security)
+### PHASE 9: FINAL SYNTHESIS
 
-### Step 9.2: Stable rules checklist
-1. Obviously correct and tested: YES - trivial mirror of existing OF
-   branch, accepted by LED maintainer.
-2. Fixes real bug: YES - barco-p50-gpio LED registration fails in
-   v6.18+.
-3. Important issue: BORDERLINE - functional regression but not
-   crash/security/corruption.
-4. Small and contained: YES - 3 lines, one file, one function.
-5. No new features/APIs: YES - no new interfaces; fills a missing
-   fallback.
-6. Applies cleanly to stable: YES - the file is stable across recent
-   versions.
+**Step 9.1 — Evidence compile**
 
-### Step 9.3: Exception category
-Record: Partial match to "hardware enablement / driver fix for existing
-hardware". The fix makes an in-tree driver (barco-p50-gpio, present
-since v5.16, swnode-converted in v6.18) actually work.
+FOR:
+- Small (5 lines), surgical, single-function, no lock/alloc churn.
+- Fixes a concrete bug mechanism with clear reachability from user-
+  triggerable paths (readdir, lookup, NFS get_parent).
+- Bug introduced by `110b24eb1a749b` (already in
+  5.15.y/6.1.y/6.6.y/6.12.y stable), so active LTS trees are vulnerable.
+- Maintainer applied it with explicit approval ("Patch looks good —
+  applied").
+- Same pattern (corrupted-FS validation) is standard stable material for
+  ntfs3.
+- Failure mode is a WARN (or panic with panic_on_warn), security-
+  relevant for mountable FS images.
+- Applies cleanly to stable branches (verified identical context in
+  5.15.y and 6.6.y).
 
-### Step 9.4: Decision
-The commit fixes a real, deterministic functional regression introduced
-into v6.18 by commit `4e0bcbd270e88`. Although the failure is not a
-crash or security issue, it is a clean-cut boot-time driver probe
-failure that users will hit every boot on affected hardware. The fix is
-minimal (3 lines), obviously correct (mirrors the existing OF-node
-fallback), safe (cannot break previously-working configurations since it
-only covers a path that previously returned -EINVAL), and was accepted
-by the subsystem maintainer.
+AGAINST:
+- No Fixes: / Cc: stable tags, no Reported-by:/Link:, no syzbot
+  attribution in message (absence of tags is expected per rules and not
+  a negative signal).
 
-The absence of `Fixes:`/`Cc: stable` tags is exactly what AUTOSEL exists
-to catch. Weight of evidence favors backport, particularly to v6.18.y
-and v6.19.y where the regression actually manifests. For earlier trees
-the fix is a safe no-op improvement that still applies cleanly.
+**Step 9.2 — Stable rules checklist**
+1. Obviously correct & tested? Yes — maintainer-applied, trivial gate
+   check before existing code path.
+2. Real bug? Yes — WARN triggers on documented code path.
+3. Important? Yes — corrupted/malicious FS image → kernel WARN,
+   potential DoS; security-relevant.
+4. Small/contained? Yes — 5 LOC, one function.
+5. No new features/APIs? Correct.
+6. Applies to stable? Yes — verified identical context in 5.15.y /
+   6.6.y.
+
+**Step 9.3 — Exception**
+Record: Fits the "corruption hardening" pattern commonly accepted for
+filesystems.
+
+**Step 9.4 — Decision**
+The fix is an obvious, minimal validation that prevents a VFS invariant
+violation reachable via a crafted NTFS image on all LTS trees that have
+commit `110b24eb1a749b` backported (5.15, 6.1, 6.6, 6.12). Benefit
+clearly outweighs negligible risk.
 
 ## Verification
-- [Phase 1] Parsed tags from commit message: no `Fixes:`, no `Cc:
-  stable`, no `Reported-by:`; only `Signed-off-by:` from author (Dmitry
-  Torokhov) and LED maintainer (Lee Jones); `Link:` to
-  `patch.msgid.link` for `20260311-led-swnode-
-  name-v1-1-798a49e041c6@gmail.com`.
-- [Phase 2] Read `drivers/leds/led-core.c` (617 lines, current v7.0):
-  confirmed `led_compose_name` structure - `is_of_node(fwnode)` branch
-  (line 581) falls back to `to_of_node(fwnode)->name`, `else return
-  -EINVAL` (line 585). Diff adds 3 lines of `else if
-  (is_software_node(fwnode))` branch using `fwnode_get_name(fwnode)`.
-- [Phase 3] `git blame drivers/leds/led-core.c -L 574,592`: `is_of_node`
-  fallback dates to `bb4e9af0348dfe` (2019, Jacek Anaszewski) - "leds:
-  core: Add support for composing LED class device names".
-- [Phase 3] `git describe --contains 4e0bcbd270e88` →
-  `v6.18-rc1~82^2~2`: confirms barco swnode conversion landed in v6.18.
-- [Phase 3] `git show
-  4e0bcbd270e88^:drivers/platform/x86/barco-p50-gpio.c`: confirmed
-  pre-v6.18 barco used `gpio_led_platform_data` with `.name =
-  "identify"`, bypassing `led_compose_name`.
-- [Phase 3] `git show v6.6:drivers/platform/x86/barco-p50-gpio.c`: still
-  uses `gpio_led_platform_data`, not swnodes - so regression does NOT
-  exist in v6.6.y.
-- [Phase 3] `git log --oneline -- drivers/leds/led-core.c`: last change
-  `ee44a1def7ee4` in v6.16-rc1; no churn in v6.18..v7.0.
-- [Phase 4] `b4 mbox -o /tmp/b4-dig 20260311-led-swnode-name-v1-1-...`:
-  retrieved 8-message thread. Lee Jones replied "Applied, thanks!" and
-  listed commit hash `4f530c65487636dc1536b3fa1041f9a877a66a7f` for
-  patch 1/2. Initial application failed (conflict with patch 2/2
-  formatting), author re-submitted.
-- [Phase 4] Read thread: no `Cc: stable` suggestion, no NAKs, no
-  Reported-by reference; author frames the change as "helpful when
-  converting old boards."
-- [Phase 5] Read `drivers/leds/leds-gpio.c`: confirmed
-  `gpio_leds_create()` passes `struct gpio_led led = {}` (name == NULL)
-  into `create_gpio_led`, forcing the fwnode path with `init_data =
-  {.fwnode = fwnode}` - the exact path that hits `led_compose_name` and
-  fails without this fix.
-- [Phase 5] Read `drivers/platform/x86/barco-p50-gpio.c` lines 83-101
-  (v7.0): confirmed `identify_led_node` has `.name = "identify"` with
-  `identify_led_props` containing ONLY `PROPERTY_ENTRY_GPIO("gpios",
-  ...)` - no `label`/`color`/`function`.
-- [Phase 5] Examined other swnode LED users: `pcengines-apuv2`, `meraki-
-  mx100`, `x86-android-tablets/other.c` all include
-  `PROPERTY_ENTRY_STRING("label", ...)` → unaffected by the bug.
-- [Phase 5] Read `drivers/base/swnode.c` line 423-427 and
-  `drivers/base/property.c` line 654-658: `fwnode_get_name(swnode)`
-  returns `kobject_name(&swnode->kobj)`, always valid for registered
-  swnodes. Safe to use here.
-- [Phase 6] `git show v6.12:drivers/leds/led-core.c` and
-  `v6.6:drivers/leds/led-core.c`: confirmed identical `is_of_node`
-  fallback structure with `else return -EINVAL` - fix applies cleanly.
-- [Phase 6] `git diff v6.17:...led-core.c v7.0:...led-core.c`: no
-  difference → file is stable in the 6.18-6.19-7.0 range where the
-  regression exists.
-- [Phase 8] Trigger reachability: boot-time probe path, deterministic
-  every boot on affected hardware.
-- UNVERIFIED: Could not verify the patch's upstream commit SHA
-  `4f530c65487636dc1536b3fa1041f9a877a66a7f` in the local 7.0 tree (tree
-  HEAD is `028ef9c96e961 Linux 7.0`, likely predates the leds-next merge
-  for this commit). This matches the AUTOSEL candidate context.
-- UNVERIFIED: Did not confirm by dynamic test that barco-p50-gpio
-  actually fails without this fix; conclusion based on code inspection
-  of `leds-gpio` + `led_compose_name` + the barco swnode definition.
 
-The fix is a small, surgical 3-line fallback that mirrors well-
-established OF-node handling. It addresses a real regression introduced
-in v6.18 (Barco P50 identify LED fails to register) and cannot cause
-regressions because it only covers a previously-failing path. Accepted
-by the LED subsystem maintainer. This is the kind of low-risk driver-
-enablement fix that AUTOSEL is designed to pick up for recent stable
-trees.
+- [Phase 1] Parsed commit message and tags directly from the commit
+  body; confirmed no Fixes:/Cc: stable/Reported-by: tags. No hidden
+  framing — patch explicitly says "reject".
+- [Phase 2] Read the relevant portion of `fs/ntfs3/inode.c` (lines
+  140–230 and 400–500) to confirm `names` is incremented for every
+  ATTR_NAME, `links` only for non-DOS names, and the fix goto-targets
+  the existing `out:` handler.
+- [Phase 3] `git blame` on `fs/ntfs3/inode.c` lines 420–440:
+  `set_nlink(inode, links)` originates in `110b24eb1a749b` ("fs/ntfs3:
+  Taking DOS names into account during link counting", 2024-04-17); that
+  commit has `Cc: stable@vger.kernel.org` and `Fixes: 82cae269cfa95`.
+- [Phase 3] `git show 110b24eb1a749b`: confirmed the stable-tagged
+  commit that introduced the vulnerability pattern.
+- [Phase 3] `git log --author="Ziyi Guo"`: 17 small validation / locking
+  fixes across subsystems; not subsystem maintainer.
+- [Phase 4] `b4 dig -c e10e72f69734a`: found single-revision thread at `
+  https://lore.kernel.org/all/20260210155634.380168-1-
+  n7l8m4@u.northwestern.edu/`; saved mbox to `/tmp/thread.mbox` and read
+  the maintainer's "applied" reply.
+- [Phase 4] `b4 dig -c e10e72f69734a -w`: confirmed recipients
+  (Konstantin Komarov, ntfs3@lists.linux.dev, linux-
+  kernel@vger.kernel.org).
+- [Phase 4] Verified via spinics mirror that only one version was sent
+  and only one reply ("applied") was received.
+- [Phase 5] `rg ntfs_iget5` in `fs/ntfs3`: enumerated all callers and
+  confirmed multiple user-reachable paths pass `name=NULL` (dir.c:337,
+  namei.c:371, frecord.c:2945/3064).
+- [Phase 5] Read `drop_nlink()` at `fs/inode.c:416-422` to confirm the
+  exact `WARN_ON(inode->i_nlink == 0)` location.
+- [Phase 5] Located `drop_nlink(inode)` call sites in ntfs3
+  (`namei.c:155`, `inode.c:1838`), confirming user unlink/rmdir/rename →
+  `drop_nlink` chain.
+- [Phase 6] Queried each stable branch directly for the "Taking DOS
+  names" backport: found `7ab0c256964ef` in 5.15.y, `df40783dc3773` in
+  6.1.y, `e4fd2dce71fbd` in 6.6.y, `110b24eb1a749` in 6.12.y — the buggy
+  change is in those stables.
+- [Phase 6] `git show stable/linux-6.6.y:fs/ntfs3/inode.c` and
+  `stable/linux-5.15.y:fs/ntfs3/inode.c` around the target lines:
+  context is identical to mainline, confirming clean application.
+- [Phase 6] Searched each stable branch for the fix ("reject inodes" /
+  "non-DOS link" in inode.c); not present in any stable, so no
+  duplicate.
+- [Phase 7] File path identifies subsystem as `fs/ntfs3`; `git log
+  --oneline fs/ntfs3` shows active subsystem with frequent corruption-
+  hardening fixes.
+- [Phase 8] Failure mode verified by reading `drop_nlink()` source and
+  tracing the reachable ntfs3 call chain; severity assessed as MEDIUM-
+  HIGH (WARN → panic_on_warn).
+- UNVERIFIED: Whether a syzbot report specifically mentions this
+  signature (no Reported-by in the commit; could not confirm a direct
+  syzkaller report link). This does not affect the decision because the
+  mechanism is verified by code reading.
+
+The fix is small, obviously correct, fixes a real reachable bug, is
+already applied by the maintainer, and applies cleanly to LTS trees that
+have the buggy precursor commit. It meets all stable-kernel criteria.
 
 **YES**
 
- drivers/leds/led-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/inode.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/leds/led-core.c b/drivers/leds/led-core.c
-index 59473f286b31f..8ce41b36c6455 100644
---- a/drivers/leds/led-core.c
-+++ b/drivers/leds/led-core.c
-@@ -581,6 +581,9 @@ int led_compose_name(struct device *dev, struct led_init_data *init_data,
- 	} else if (is_of_node(fwnode)) {
- 		n = snprintf(led_classdev_name, LED_MAX_NAME_SIZE, "%s",
- 			     to_of_node(fwnode)->name);
-+	} else if (is_software_node(fwnode)) {
-+		n = snprintf(led_classdev_name, LED_MAX_NAME_SIZE, "%s",
-+			     fwnode_get_name(fwnode));
- 	} else
- 		return -EINVAL;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 6e65066ebcc1a..398913595a551 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -432,6 +432,11 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		ni->mi.dirty = true;
+ 	}
  
++	if (!links) {
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	set_nlink(inode, links);
+ 
+ 	if (S_ISDIR(mode)) {
 -- 
 2.53.0
 
