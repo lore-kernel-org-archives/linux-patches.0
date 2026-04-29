@@ -1,89 +1,114 @@
-Received: from canpmsgout01.his.huawei.com (canpmsgout01.his.huawei.com [113.46.200.216])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD0435C1B6
-	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 07:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E11E32ED3A
+	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 15:06:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777449367; cv=none; b=sD3DrkXUwfAh1EgkiGorVZCNmhfHtsSs1YY7uTjv/8T+Bks9/Fmub4XTyorpBxxBCD6GpX6aveBBIfxDJLO54o3uMjnAIWQpVbh6i0qUGlQRMH2foyI7vQq1Tm17/LttYvR8jZloMLdjO2/cDdUWoxQSoAFKCl/Vg8RX0ARWOdw=
+	t=1777475209; cv=none; b=q+/3UXGNiViKV83A4Ow0jTQgZPwcGKA9pS+H8FEoFPIaG23BJa8Psn5fisS0xr7AOrtCR6IFgHQEabBG5D2JF1TMtddiZbQqCl4z95qWItryqArZG5CsNM/mAWr4kdfwBX/REUeonjHEbrIwf8bYYvPmqFcq/5/GhSsG8UJjtH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777449367; c=relaxed/simple;
-	bh=Kkv97VMnztmelRWbOIZlO1gcT+e2sRBJ+LEZugPERUg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Ef67MGDvz0zAGoJF9IBVbCxicNZeERQu1j7Agjm+lUc6VG8vAmDO7qOkIaXwOp0GBBus40ez1TcNLQ/i0VcNvyy/uiLftoDy574KvA0OQnqhYf9ZpSZPofbUZ0leUAPZyDtwhkxakZnEGjF1tbNYxG0d4zEflQo56Px1u1RciDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com; spf=pass smtp.mailfrom=hisilicon.com; arc=none smtp.client-ip=113.46.200.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hisilicon.com
-Received: from mail.maildlp.com (unknown [172.19.162.140])
-	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4g58b35J6Rz1T4G8;
-	Wed, 29 Apr 2026 15:49:35 +0800 (CST)
-Received: from kwepemf100018.china.huawei.com (unknown [7.202.181.17])
-	by mail.maildlp.com (Postfix) with ESMTPS id 091A320226;
-	Wed, 29 Apr 2026 15:55:56 +0800 (CST)
-Received: from [10.67.120.168] (10.67.120.168) by
- kwepemf100018.china.huawei.com (7.202.181.17) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.36; Wed, 29 Apr 2026 15:55:47 +0800
-Message-ID: <ff248023-a367-3561-1c04-77da1b1f3794@hisilicon.com>
-Date: Wed, 29 Apr 2026 15:55:45 +0800
+	s=arc-20240116; t=1777475209; c=relaxed/simple;
+	bh=dxMeQSQAI9H8hX2jXObajzEdPFMeYDHhhrSWJaEFRwc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FuK8BROTb78iiQrBK7FY16/qCtyWyHGDepRpdVfncCjienxH37sPg8HrwFBoCz17v1/0MDRtI/g+bcSq/QykWjrUoOXR9IrnMiL5Gw3xSBe656j0WK0OBUOHizToT/FDPjiZTW9ln6gf1/ckBbpwbf/qOAzSl/L9p5GYQif1Llc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZZ5RszXQ; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZZ5RszXQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1777475208; x=1809011208;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=dxMeQSQAI9H8hX2jXObajzEdPFMeYDHhhrSWJaEFRwc=;
+  b=ZZ5RszXQz1tCmfBU50JlQtmZec9T1EojpjkyVk00OT1LWnOPEzriVXev
+   ds0F5fkEht/ltCkWEKH/KS5xMLZsI/yTplHw3JLlnRG/cAjBT4CWUm3Gs
+   47Y75hBFoFnmRXqZOIlTsUzKMO13qJMiSbcxsiqWTAcRpnPn2CY5tpLZZ
+   +eRZ3y51bBKEH7Z02Qr7sNWnmO8+TSucDAfjR7qnbD/zbwhl2By8pA1RC
+   vYhp25cREKr+YpWIqug7qJgJqPt5m3ZaBom6nUI6jIXszLioSIBbcwW4s
+   k84zOJlcKYsS118Kh/GHmIU9JQaGXWBkWAQZWplmEZulW+iEZgDV/v47l
+   g==;
+X-CSE-ConnectionGUID: vw+e1E3OSQCBc2ZdoqeyGA==
+X-CSE-MsgGUID: 4SzMZHCeR4G3MVdv4VZFzA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="78424330"
+X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
+   d="scan'208";a="78424330"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 08:06:47 -0700
+X-CSE-ConnectionGUID: 2jPG30dGTtCWUIVVtWuQEA==
+X-CSE-MsgGUID: Clb9BXYzTbSLagFaLO7T8w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
+   d="scan'208";a="233445000"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 08:06:46 -0700
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: tony.luck@intel.com,
+	james.morse@arm.com,
+	Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	bp@alien8.de,
+	tglx@linutronix.de,
+	dave.hansen@linux.intel.com
+Cc: x86@kernel.org,
+	hpa@zytor.com,
+	ben.horgan@arm.com,
+	fustini@kernel.org,
+	fenghuay@nvidia.com,
+	peternewman@google.com,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	reinette.chatre@intel.com
+Subject: [PATCH v4 01/10] fs/resctrl: Use correct format specifier for printing error pointers
+Date: Wed, 29 Apr 2026 08:06:31 -0700
+Message-ID: <79af88624ae8f8bf2d7103f52874851583a419af.1777419024.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <cover.1777419024.git.reinette.chatre@intel.com>
+References: <cover.1777419024.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH rc 00/15] Various bug fixes for RDMA drivers in the uapi
- functions
-To: Jason Gunthorpe <jgg@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>, Eric Dumazet <edumazet@google.com>,
-	Konstantin Taranov <kotaranov@microsoft.com>, Jakub Kicinski
-	<kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
-	<linux-hyperv@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
-	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Selvin Xavier
-	<selvin.xavier@broadcom.com>, Chengchang Tang <tangchengchang@huawei.com>,
-	Tariq Toukan <tariqt@nvidia.com>, Vishnu Dasa <vishnu.dasa@broadcom.com>,
-	Yishai Hadas <yishaih@nvidia.com>
-CC: Abhijit Gangurde <abhijit.gangurde@amd.com>, Adit Ranadive
-	<aditr@vmware.com>, Allen Hubbe <allen.hubbe@amd.com>, Andrew Boyer
-	<andrew.boyer@amd.com>, Aditya Sarwade <asarwade@vmware.com>, Brad Spengler
-	<brad.spengler@opensrcsec.com>, Bryan Tan <bryantan@vmware.com>, "David S.
- Miller" <davem@davemloft.net>, Dexuan Cui <decui@microsoft.com>, Doug Ledford
-	<dledford@redhat.com>, George Zhang <georgezhang@vmware.com>, Jorgen Hansen
-	<jhansen@vmware.com>, Jianbo Liu <jianbol@nvidia.com>, Kai Aizen
-	<kai.aizen.dev@gmail.com>, Leon Romanovsky <leonro@mellanox.com>, Leon
- Romanovsky <leonro@nvidia.com>, Yixian Liu <liuyixian@huawei.com>, Long Li
-	<longli@microsoft.com>, Lijun Ou <oulijun@huawei.com>, Parav Pandit
-	<parav.pandit@emulex.com>, <patches@lists.linux.dev>, Roland Dreier
-	<roland@purestorage.com>, Roland Dreier <rolandd@cisco.com>, Sagi Grimberg
-	<sagi@grimberg.me>, Ajay Sharma <sharmaajay@microsoft.com>,
-	<stable@vger.kernel.org>, Tariq Toukan <tariqt@mellanox.com>, "Wei Hu
- (Xavier)" <xavier.huwei@huawei.com>, Shaobo Xu <xushaobo2@huawei.com>,
-	Nenglong Zhao <zhaonenglong@hisilicon.com>
-References: <0-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com>
-Content-Language: en-US
-From: Junxian Huang <huangjunxian6@hisilicon.com>
-In-Reply-To: <0-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- kwepemf100018.china.huawei.com (7.202.181.17)
+Content-Transfer-Encoding: 8bit
 
+Use correct format specifier for error pointer as coccinelle suggests:
+    .../fs/resctrl/monitor.c:148:8-15: WARNING: Consider using %pe to print PTR_ERR()
+    .../fs/resctrl/monitor.c:760:9-16: WARNING: Consider using %pe to print PTR_ERR()
 
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+ fs/resctrl/monitor.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-On 2026/4/29 0:17, Jason Gunthorpe wrote:
-> All were found by Sashiko or Claude AI tools. They vary in severity, but
-> are all things that shouldn't be present.
-> 
-> Jason Gunthorpe (15):
->   RDMA/hns: Fix xarray race in hns_roce_create_srq()
->   RDMA/hns: Fix xarray race in hns_roce_create_qp_common()
->   RDMA/hns: Fix unlocked call to hns_roce_qp_remove()
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 9fd901c78dc6..8194fdfbea81 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -144,8 +144,8 @@ void __check_limbo(struct rdt_l3_mon_domain *d, bool force_free)
+ 	arch_priv = mon_event_all[QOS_L3_OCCUP_EVENT_ID].arch_priv;
+ 	arch_mon_ctx = resctrl_arch_mon_ctx_alloc(r, QOS_L3_OCCUP_EVENT_ID);
+ 	if (IS_ERR(arch_mon_ctx)) {
+-		pr_warn_ratelimited("Failed to allocate monitor context: %ld",
+-				    PTR_ERR(arch_mon_ctx));
++		pr_warn_ratelimited("Failed to allocate monitor context: %pe",
++				    arch_mon_ctx);
+ 		return;
+ 	}
+ 
+@@ -752,8 +752,8 @@ static void mbm_update_one_event(struct rdt_resource *r, struct rdt_l3_mon_domai
+ 	} else {
+ 		rr.arch_mon_ctx = resctrl_arch_mon_ctx_alloc(rr.r, evtid);
+ 		if (IS_ERR(rr.arch_mon_ctx)) {
+-			pr_warn_ratelimited("Failed to allocate monitor context: %ld",
+-					    PTR_ERR(rr.arch_mon_ctx));
++			pr_warn_ratelimited("Failed to allocate monitor context: %pe",
++					    rr.arch_mon_ctx);
+ 			return;
+ 		}
+ 	}
+-- 
+2.50.1
 
-For hns patches:
-Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
-
-Thanks,
-Junxian
