@@ -1,71 +1,67 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B668537AA8E
-	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 15:06:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5C4421EF5
+	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 18:49:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777475216; cv=none; b=Md05oDCFNZP5TC522K5NLT4ONqD9p0ogQKGiz3kX9AEeDx5TXHLNEBGpxaGbHwTa5w+VXbtEsclR3pr2d0eZ00ycyJXVZtmui+IiIxL1w92kNH/mnxdxdZOMkGQn3DSYd2xGK6r6nk/6ktDhuS33+rGX4gTlDU9yUh7LqneKuhw=
+	t=1777488551; cv=none; b=HWAF57ArJI+krHSJPtYPfvtL3xkMSIIoC+JQXD9w81UyjJDA0wMGTdkDkYTP8+cDIcZwblPvh5VwSWUfDLp++dKIur0C5TRZWK5Y9ot6dqMp4eQ0Q9qtRYbhiR/ifCkXiKdw5YlK3qayDHFKnXdej3PYh2fa21n1Ds0N5m1mikg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777475216; c=relaxed/simple;
-	bh=3Adg0a/ffzd9vkO8eZLWDW54/0mR9Ia0jl60u5Zyr/s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5k2vuEFkt+1sZxgGWFjRNifqX5Wek1dGOGSrR5ha9yq9nk3+fwPG2oxv9GzN9faMWKuiFN2HUcpcxWr0PLjJ+3nC4lEANb9NM0WeOsvk1dK+TAW7h+xPIy93o3VyRqxQ38pZpSQ7kb4lsXoZYcse3CFeWay4rHmaF2nz8UBocM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ebRBAyHr; arc=none smtp.client-ip=198.175.65.18
+	s=arc-20240116; t=1777488551; c=relaxed/simple;
+	bh=W2c9Hu+pqWRrHN7USQaMAcmpQJ6J+2cXLxOZi6sXM8c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CnmqsDM32La6C93tClFZ3V/66Qj6TZ2wmx+7p10dXh1Q3FWM0X8LlZZ2vOhSAhGRlJ/1sOgO5Qd4lIkMKT6EayyKVAa8z1AoJOTGnjRZELaks7tjj8vwRjt2g1C+oOgeZvhLQ+WFNF7p5asT0goFAi1v12LmGR+b8P0RFo0JEgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=O1iyGWF3; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ebRBAyHr"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="O1iyGWF3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1777475214; x=1809011214;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=3Adg0a/ffzd9vkO8eZLWDW54/0mR9Ia0jl60u5Zyr/s=;
-  b=ebRBAyHrQ7esYl0V79oEPO/fEHOozR0GMyKnUIThpQa/6ZQ0lzhXSjW7
-   yTI4fbkLfUzzppHNVFhezlyjzbPZdwwLcEw6gw7MVBbb5MklJL1Bqowq7
-   MM1ZdoPb2po+n/56XjmI4kVasa6T+YLTPlAD9ZkVI3srlyG3ctPejEckP
-   3/YYIfpjClMRSlLudBrQoyM+m9ji8P58Mk7tQTDdAKOydcw1tKdhP6CC4
-   VMtogvMDwf8Wxxc+o1EXrlCDaZlT2TZ1i+NPdnetny6hruxTSu9G2Kb3X
-   Ibf5YeXqJ9hezqxFnr4KL78OM1CDwLWsFcSzVv5WRp4mAIjBOOUDWjwCV
-   A==;
-X-CSE-ConnectionGUID: QuRSr077QLee6jgRqKcJAQ==
-X-CSE-MsgGUID: nBfcoIxwRE6vONK57jywUg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="78424408"
+  t=1777488547; x=1809024547;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=W2c9Hu+pqWRrHN7USQaMAcmpQJ6J+2cXLxOZi6sXM8c=;
+  b=O1iyGWF3qhKuz1Q09Ls2HzVtHPoYV03c8C0fOUnAlF5ilr5TaodyxhQe
+   A5P3MoUbw4G2BkvxyE/b1lQCaPnEyu/5VChuk0+JUzjMjxTjXiGEpSy2K
+   SRKvPjB+KZOtVIfMKG9kYtTM8X+MRcWUsdZpj7rWkK/AliDTi9uh+uKnO
+   aksBx28C/AFoVFxgLiDPRxXoX0gI1gJS+iHPMc1S1QXHZUOMt/m6e8uhS
+   /zE+Pe/Qzk+83t2QhzgAVBOmj0pRWsVt4dkeE+ZlOpriQCfQzGCKWMHlG
+   2FgPNXpesi3onrCdd+adUEHCbljdPUCl82pIiB3F1X79x3MmhqXXM5ryL
+   w==;
+X-CSE-ConnectionGUID: DytwEsQFQWOrHsRmuqaBvA==
+X-CSE-MsgGUID: LokMF7lxQ72neZAovmD5gg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="89890670"
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="78424408"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 08:06:47 -0700
-X-CSE-ConnectionGUID: yfKmjQ7USK22n0i0MiQYMg==
-X-CSE-MsgGUID: RvC6EU9sT6KfEWZVFoK3dA==
+   d="scan'208";a="89890670"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:05 -0700
+X-CSE-ConnectionGUID: gOFSaHfKTwahBFxpPSvbcQ==
+X-CSE-MsgGUID: bjBPzikVSIy16wyKec6veA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="233445025"
-Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 08:06:47 -0700
-From: Reinette Chatre <reinette.chatre@intel.com>
-To: tony.luck@intel.com,
-	james.morse@arm.com,
-	Dave.Martin@arm.com,
-	babu.moger@amd.com,
-	bp@alien8.de,
-	tglx@linutronix.de,
-	dave.hansen@linux.intel.com
-Cc: x86@kernel.org,
-	hpa@zytor.com,
-	ben.horgan@arm.com,
-	fustini@kernel.org,
-	fenghuay@nvidia.com,
-	peternewman@google.com,
+   d="scan'208";a="238322979"
+Received: from mjruhl-desk.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.13])
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:05 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	David E Box <david.e.box@intel.com>,
+	x86@kernel.org
+Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	reinette.chatre@intel.com
-Subject: [PATCH v4 09/10] fs/resctrl: Communicate resource group deleted error via last_cmd_status
-Date: Wed, 29 Apr 2026 08:06:39 -0700
-Message-ID: <9b55e2f83f4f779f02ae991da0859ae4b2b8df5d.1777419024.git.reinette.chatre@intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <cover.1777419024.git.reinette.chatre@intel.com>
-References: <cover.1777419024.git.reinette.chatre@intel.com>
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v6 00/10] Allow AET to use PMT as loadable module
+Date: Wed, 29 Apr 2026 11:48:48 -0700
+Message-ID: <20260429184858.36423-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -74,162 +70,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-User space expects last_cmd_status to contain additional information if
-any resctrl command fails.
+Requiring INTEL_PMT_TELEMETRY=y to enable AET is a functional workaround
+to enable enumeration of Application Energy Telemetry (AET) events, but
+unacceptable to many users. It results in increased configration complexity,
+increased kernel memory footprint and inability to patch problems by unloading
+a module and loading an updated version.
 
-A resctrl command may be blocked waiting on the rdtgroup_mutex waiting for
-another command to finish and find that once the mutex is available that
-the resource group has since been deleted. In this scenario the command
-will fail while last_cmd_status contains either "ok" if the last_cmd_status
-buffer is empty or an outdated error from a previous command failure if
-last_cmd_status buffer has content.
+Add a registration function to the AET code that can be used by
+INTEL_PMT_TELEMETRY to provide the enumeration functions.
 
-Include clearing of last_cmd_status buffer as part of
-rdtgroup_kn_lock_live() that is used to obtain access and needed locking
-to a resource group before attempting a command on the group. With the
-last_cmd_status buffer ready, provide an appropriate message to user space
-if the resource group has been deleted.
+INTEL_PMT_TELEMETRY can be loaded/unloaded independently of
+resctrl file system mount/unmount. Perform enumeration on
+every mount and cleanup on every unmount.
 
-No last_cmd_status treatment is needed for the remaining failure of
-rdtgroup_kn_lock_live() encountering a non-existent resource group since
-that could only occur during an attempt to obtain a resource group lock
-on a file in info/ which is an invalid usage.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
-Changes since v1:
-- Add snippet about why it is safe to dereference the kn to get
-  to resource group name when resource group is deleted.
----
- fs/resctrl/ctrlmondata.c |  3 ---
- fs/resctrl/monitor.c     |  2 --
- fs/resctrl/rdtgroup.c    | 20 +++++++++++---------
- 3 files changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index 5d5e844429df..26bbf4ecdbca 100644
---- a/fs/resctrl/ctrlmondata.c
-+++ b/fs/resctrl/ctrlmondata.c
-@@ -317,7 +317,6 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
- 		rdtgroup_kn_unlock(of->kn);
- 		return -ENOENT;
- 	}
--	rdt_last_cmd_clear();
- 
- 	/* Valid input requires a trailing newline */
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
-@@ -434,7 +433,6 @@ int rdtgroup_schemata_show(struct kernfs_open_file *of,
- 			}
- 		} else if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
- 			if (!rdtgrp->plr->d) {
--				rdt_last_cmd_clear();
- 				rdt_last_cmd_puts("Cache domain offline\n");
- 				ret = -ENODEV;
- 			} else {
-@@ -475,7 +473,6 @@ ssize_t rdtgroup_mba_mbps_event_write(struct kernfs_open_file *of,
- 		rdtgroup_kn_unlock(of->kn);
- 		return -ENOENT;
- 	}
--	rdt_last_cmd_clear();
- 
- 	/* Valid input requires a trailing newline */
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 1a38f3b6a1f1..88f1fa0b9d8d 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -1632,7 +1632,6 @@ int mbm_L3_assignments_show(struct kernfs_open_file *of, struct seq_file *s, voi
- 		goto out_unlock;
- 	}
- 
--	rdt_last_cmd_clear();
- 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
- 		rdt_last_cmd_puts("mbm_event counter assignment mode is not enabled\n");
- 		ret = -EINVAL;
-@@ -1772,7 +1771,6 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
- 		rdtgroup_kn_unlock(of->kn);
- 		return -ENOENT;
- 	}
--	rdt_last_cmd_clear();
- 
- 	/* Valid input requires a trailing newline */
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 755a46ef5bdb..0677e6e4102e 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -360,7 +360,6 @@ static int rdtgroup_cpus_show(struct kernfs_open_file *of,
- 	if (rdtgrp) {
- 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
- 			if (!rdtgrp->plr->d) {
--				rdt_last_cmd_clear();
- 				rdt_last_cmd_puts("Cache domain offline\n");
- 				ret = -ENODEV;
- 			} else {
-@@ -523,8 +522,6 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
- 		goto out_unlock;
- 	}
- 
--	rdt_last_cmd_clear();
--
- 	if (!buf) {
- 		rdt_last_cmd_puts("Invalid input\n");
- 		ret = -EINVAL;
-@@ -781,7 +778,6 @@ static ssize_t rdtgroup_tasks_write(struct kernfs_open_file *of,
- 		rdtgroup_kn_unlock(of->kn);
- 		return -ENOENT;
- 	}
--	rdt_last_cmd_clear();
- 
- 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED ||
- 	    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
-@@ -1459,7 +1455,6 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
- 		return -ENOENT;
- 	}
- 
--	rdt_last_cmd_clear();
- 	/* Valid input requires a trailing newline */
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
- 		rdt_last_cmd_puts("Invalid input\n");
-@@ -1596,7 +1591,6 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
- 
- 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
- 		if (!rdtgrp->plr->d) {
--			rdt_last_cmd_clear();
- 			rdt_last_cmd_puts("Cache domain offline\n");
- 			ret = -ENODEV;
- 		} else {
-@@ -2634,10 +2628,20 @@ struct rdtgroup *rdtgroup_kn_lock_live(struct kernfs_node *kn)
- 
- 	cpus_read_lock();
- 	mutex_lock(&rdtgroup_mutex);
-+	rdt_last_cmd_clear();
- 
- 	/* Was this group deleted while we waited? */
--	if (rdtgrp->flags & RDT_DELETED)
-+	if (rdtgrp->flags & RDT_DELETED) {
-+		/*
-+		 * It is safe to dereference kn to obtain the resource group's
-+		 * name because one extra reference to kn is obtained
-+		 * during resource group creation that will be released by
-+		 * rdtgroup_remove() called by rdtgroup_kn_put().
-+		 */
-+		rdt_last_cmd_printf("Resource group %s deleted. No commands possible.\n",
-+				    rdt_kn_name(rdtgrp->kn));
- 		return NULL;
-+	}
- 
- 	return rdtgrp;
- }
-@@ -3760,8 +3764,6 @@ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
- 		goto out_unlock;
- 	}
- 
--	rdt_last_cmd_clear();
--
- 	/*
- 	 * Check that the parent directory for a monitor group is a "mon_groups"
- 	 * directory.
+Changes since v5:
+Link: https://lore.kernel.org/all/20260410200532.58602-1-tony.luck@intel.com/
+
+Moved locking around mount/unmount out of file system layer and into
+x86 architecture code.
+
+Fixed unmount cleanup to avoid empty mon_data directories if there is
+no L3 monitoring and AET is enabled, then disabled on a subsequent
+mount.
+
+Fixed RMID allocation to cope with changed number of RMIDs from mount to
+mount.
+
+Added footnote to resctrl documentation warning user that AET may not be
+enabled if the file system is mounted before enumeration completes.
+
+Drop X86_CPU_RESCTRL_INTEL_AET from Kconfig.
+
+FYI: Seems like no conflicts with Reinette's resctrl cleanup series:
+Link: https://lore.kernel.org/all/cover.1777419024.git.reinette.chatre@intel.com/
+This series applies cleanly on top of Reinette's patches, builds cleanly,
+and passes resctrl selftests.
+
+Tony Luck (10):
+  x86/resctrl: Stop setting event_group::force_off on RMID shortage
+  fs/resctrl: Add interface to disable a monitor event
+  x86/resctrl: Maintain a count of enabled monitor features
+  fs,x86,mpam/resctrl: Handle change in number of RMIDs on each mount
+  x86/resctrl: x86/resctrl: Add PMT registration API for AET enumeration
+    callbacks
+  platform/x86/intel/pmt: Register enumeration functions with resctrl
+  x86/resctrl: Resolve INTEL_PMT_TELEMETRY symbols at runtime
+  fs/resctrl: Call architecture hooks for every mount/unmount
+  x86/resctrl: Simplify Kconfig options for resctrl
+  Documentation/filesystems/resctrl: Add footnote for telemetry fstab
+    mount caveat
+
+ Documentation/filesystems/resctrl.rst      |  7 +-
+ include/linux/resctrl.h                    | 43 +++++++++++-
+ arch/x86/include/asm/resctrl.h             | 17 ++++-
+ arch/x86/kernel/cpu/resctrl/internal.h     | 19 +-----
+ arch/x86/kernel/cpu/resctrl/core.c         | 77 ++++++++++++++++++----
+ arch/x86/kernel/cpu/resctrl/intel_aet.c    | 67 ++++++++++++++++---
+ arch/x86/kernel/cpu/resctrl/monitor.c      | 11 +---
+ drivers/platform/x86/intel/pmt/telemetry.c | 17 ++++-
+ drivers/resctrl/mpam_resctrl.c             |  5 ++
+ fs/resctrl/monitor.c                       | 59 ++++++++++++-----
+ fs/resctrl/rdtgroup.c                      | 11 +++-
+ arch/x86/Kconfig                           | 16 +----
+ arch/x86/kernel/cpu/resctrl/Makefile       |  2 +-
+ 13 files changed, 264 insertions(+), 87 deletions(-)
+
+
+base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
 -- 
-2.50.1
+2.53.0
 
