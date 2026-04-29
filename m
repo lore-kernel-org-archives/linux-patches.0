@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF32742316C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0137423170
 	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 18:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777488566; cv=none; b=ltFx4HXZPmSxiayythlbJw+3gdRsbXSKjtbUaI8rK4VzmQ0bIvinZsnEFiK5qUAuCWLsY9qk8Xio7VH7dE8YbeYqQobg+sRYT0OIWr7xmvToib/eOxQgifQgkmhEgW1RHqSxdx1b5XLSgh+g8V7f8R8LSHGOmjxaI8/Pn5zUr8U=
+	t=1777488566; cv=none; b=QFQp2OSWfTQ1PBfjTHFCvhz6p0hKd0PK1Ux0mw1AaOjSC/Ux1eI2tk1STDbfYgGMGZEqH2KP9lRL3payOtv/g6NbWzdNFaB7N/4DQyE7pnp1N7YKbfex770j9nTIv45yGCJSL2mJuWsuqb1g027XO/Zsrnv+FMZBBbrtutYzjWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777488566; c=relaxed/simple;
-	bh=gDithhGK9/jeLzYM5a2BxEcbR65W2GtKgeDaTht9ynM=;
+	bh=xNTNK/75KML/j4U9TRC6Wx+YLGkaG8GrlGihkDxsK+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eFZn4I0QR2FkqPxlY+zj0LegvKy8Ieq/IvJfuNbx3pOcbDyhLsrWzM1EWipaEzXE7cy91mqxjoA+odl0kDATemyUqls3ysARUxpwjWsy89WLWnCrscKF1szdkEugftjkz8ABy9gWeX8/wqcuSHctqMZW6cqEdNwADs5Ruy5xHtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=U0Hyqdck; arc=none smtp.client-ip=198.175.65.12
+	 MIME-Version; b=DouxOY/dmqirZsVsjr/t6xIPGQQdBStaCs0Zzbbi71ZbIX57fhVGPf+65fVe3cjK7Fxy094rW4uqB5Xqtxvoy5y2KqPNp9h2eX5mbxsPdXpITZAE91OCuW3HkSfOM0lVu7YdMfcOoLOiDUjDtW+0loIq5suR4amDkmbCCdwUz0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FEVVFPNs; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U0Hyqdck"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FEVVFPNs"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1777488561; x=1809024561;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=gDithhGK9/jeLzYM5a2BxEcbR65W2GtKgeDaTht9ynM=;
-  b=U0HyqdckLrfLohdvaeF3b6owAhom6wXpzbjXksGkWKQToEXwItw3zN/s
-   8yni8pYmLq5HegpEo3sVvCD7O+cmubZwLQ9Pvhj4T0DbdcA3CFNA0oFFs
-   B/LfvX2AbT12vecoY7Qh2sDBGikuv0JjfDZtWSgHLgczZsMbuE3weIDLQ
-   kN9BYZd2gJS7yijRi78uNO6JJiRgy6HrBH3TiOVvEYiDgsc9z1/eSz1Xq
-   4nM0r/pBUEPe6mi6VbsDRqS65dbHyC0tZOaZiBMJzz0F1iUkzW0fbPfQG
-   M4KGjtvThEByvHl5HjT+eNE+x0JJladIbwuuhFERdMlFT8PBv+ofHHksd
-   A==;
-X-CSE-ConnectionGUID: Lv6sn3bsSGCOBecbZDFd8A==
-X-CSE-MsgGUID: 2EwrqIVAQkybREvGRvfU2w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="89890743"
+  bh=xNTNK/75KML/j4U9TRC6Wx+YLGkaG8GrlGihkDxsK+8=;
+  b=FEVVFPNskkGWDGl5PddTLFybS953oWGV+lIC4S3CqNazdKOHWBarAkNq
+   KQP/CJV7h4hWuxsrx05Ul6YjJwD6OR1y+pxV/SzMZ03D2UbxFXBRt6p9d
+   REoKoYqTA5UqFhPqweKqqVjtcnHUjuOqp40QW23oKFejfhQ0Y+qZCfy9T
+   5hoQJMDJ/aWJpY4e+el0oRvSqW/5jv87+/UXrD+W0SEyCG0OpC2UVBuPz
+   w3y4Aj5PVAgNlqb11le1eRArFgRMDloUUs5uEiGQm8nRIv3UDSeqPWFfu
+   96uVoWWyI75JRCUwRnIePhkYNynjmZtkz4vPGIUzfnRhf9ASwdCFYifzd
+   w==;
+X-CSE-ConnectionGUID: z1DwkRIGTyG9qY4neuxG3A==
+X-CSE-MsgGUID: 9PvqyIf7Q5eJu2CZdFfcdg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="89890755"
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="89890743"
+   d="scan'208";a="89890755"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:08 -0700
-X-CSE-ConnectionGUID: lkKQ2L09RS6D/oGh+GlxkA==
-X-CSE-MsgGUID: B5rmDV8pT3iJT7ROA80J/g==
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:09 -0700
+X-CSE-ConnectionGUID: wFpEGzeURE6/rw7YT1dcfg==
+X-CSE-MsgGUID: 9ubC7sEHRl2OQPcNGkR1/A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="238323029"
+   d="scan'208";a="238323040"
 Received: from mjruhl-desk.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.13])
   by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:08 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v6 07/10] x86/resctrl: Resolve INTEL_PMT_TELEMETRY symbols at runtime
-Date: Wed, 29 Apr 2026 11:48:55 -0700
-Message-ID: <20260429184858.36423-8-tony.luck@intel.com>
+Subject: [PATCH v6 08/10] fs/resctrl: Call architecture hooks for every mount/unmount
+Date: Wed, 29 Apr 2026 11:48:56 -0700
+Message-ID: <20260429184858.36423-9-tony.luck@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260429184858.36423-1-tony.luck@intel.com>
 References: <20260429184858.36423-1-tony.luck@intel.com>
@@ -73,225 +73,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl is always built-in, but INTEL_PMT_TELEMETRY and INTEL_TPMI are
-logically independent and should be loadable modules.  Switch AET to use
-the function-pointer registration API (introduced in the preceding patch)
-instead of direct link-time references to PMT symbols.
+Architecture code for AET needs to acquire INTEL_PMT_TELEMETRY module
+references on mount and release them on unmount.
 
-Move AET enumeration into resctrl_arch_pre_mount() and cleanup into
-resctrl_arch_unmount() so the PMT module can be unloaded whenever the
-filesystem is not mounted.  Because all cleanup now happens in the unmount
-path, intel_aet_exit() is no longer needed and is removed.
-
-Note that the Linux file system code does not serialize calls to
-fs_context_operations::get_tree(), so there may be arbitrarily many
-parallel calls if users invoke mount(2) multiple times.
-
-Add locking and state (resctrl_arch_mount_entries) to only perform enumeration
-of first mount, and cleanup on last unmount.
-
-event_group::num_rmid may be reset (reduced) during enumeration. This is
-not worth resetting on unmount because the same reduction would occur on
-each subsequent mount.
+Add hooks for every mount/unmount of the resctrl file system so that
+architecture code can allocate on mount and free on unmount.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- include/linux/resctrl.h                 |  3 ++
- arch/x86/kernel/cpu/resctrl/internal.h  |  8 ++---
- arch/x86/kernel/cpu/resctrl/core.c      | 41 +++++++++++++++++++++++--
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 26 ++++++++++++----
- 4 files changed, 65 insertions(+), 13 deletions(-)
+ include/linux/resctrl.h | 7 +++++--
+ fs/resctrl/rdtgroup.c   | 9 +++++++--
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 3705f0214fa6..9534d42e0c57 100644
+index 9534d42e0c57..e8a87c3664db 100644
 --- a/include/linux/resctrl.h
 +++ b/include/linux/resctrl.h
-@@ -557,6 +557,9 @@ void resctrl_offline_cpu(unsigned int cpu);
+@@ -552,12 +552,15 @@ void resctrl_online_cpu(unsigned int cpu);
+ void resctrl_offline_cpu(unsigned int cpu);
+ 
+ /*
+- * Architecture hook called at beginning of first file system mount attempt.
++ * Architecture hook called before attempting to mount the file system.
+  * No locks are held.
   */
  void resctrl_arch_pre_mount(void);
  
-+/* Called to report unmount. */
-+void resctrl_arch_unmount(void);
-+
+-/* Called to report unmount. */
++/*
++ * Architecture hook called when mount fails, or on unmount.
++ * No locks are held.
++ */
+ void resctrl_arch_unmount(void);
+ 
  /**
-  * resctrl_arch_rmid_read() - Read the eventid counter corresponding to rmid
-  *			      for this resource and domain.
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 3b09cfe9a046..017a19143ec9 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -234,15 +234,15 @@ void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
- void resctrl_arch_mbm_cntr_assign_set_one(struct rdt_resource *r);
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 2e31ff753114..134ad69de194 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -18,7 +18,6 @@
+ #include <linux/fs_parser.h>
+ #include <linux/sysfs.h>
+ #include <linux/kernfs.h>
+-#include <linux/once.h>
+ #include <linux/resctrl.h>
+ #include <linux/seq_buf.h>
+ #include <linux/seq_file.h>
+@@ -2790,7 +2789,7 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	struct rdt_resource *r;
+ 	int ret;
  
- #ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
--bool intel_aet_get_events(void);
--void __exit intel_aet_exit(void);
-+bool intel_aet_pre_mount(void);
-+void intel_aet_unmount(void);
- int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val);
- void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 				struct list_head *add_pos);
- bool intel_handle_aet_option(bool force_off, char *tok);
- #else
--static inline bool intel_aet_get_events(void) { return false; }
--static inline void __exit intel_aet_exit(void) { }
-+static inline bool intel_aet_pre_mount(void) { return false; }
-+static inline void intel_aet_unmount(void) { }
- static inline int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val)
- {
- 	return -EINVAL;
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 934492c7e643..9336299b9647 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -16,10 +16,12 @@
+-	DO_ONCE_SLEEPABLE(resctrl_arch_pre_mount);
++	resctrl_arch_pre_mount();
  
- #define pr_fmt(fmt)	"resctrl: " fmt
- 
-+#include <linux/cleanup.h>
- #include <linux/cpu.h>
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/cpuhotplug.h>
-+#include <linux/mutex.h>
- 
- #include <asm/cpu_device_id.h>
- #include <asm/msr.h>
-@@ -776,12 +778,20 @@ static int resctrl_arch_offline_cpu(unsigned int cpu)
- 	return 0;
- }
- 
-+static DEFINE_MUTEX(resctrl_arch_mount_lock);
-+static int resctrl_arch_mount_entries;
-+
- void resctrl_arch_pre_mount(void)
- {
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
- 	int cpu;
- 
--	if (!intel_aet_get_events())
-+	guard(mutex)(&resctrl_arch_mount_lock);
-+
-+	if (++resctrl_arch_mount_entries > 1)
-+		return;
-+
-+	if (!intel_aet_pre_mount())
- 		return;
- 
- 	/*
-@@ -798,6 +808,33 @@ void resctrl_arch_pre_mount(void)
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+@@ -2899,6 +2898,10 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	rdt_last_cmd_clear();
+ 	mutex_unlock(&rdtgroup_mutex);
  	cpus_read_unlock();
++
++	if (ret)
++		resctrl_arch_unmount();
++
+ 	return ret;
  }
  
-+void resctrl_arch_unmount(void)
-+{
-+	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
-+	int cpu;
+@@ -3191,6 +3194,8 @@ static void rdt_kill_sb(struct super_block *sb)
+ 	kernfs_kill_sb(sb);
+ 	mutex_unlock(&rdtgroup_mutex);
+ 	cpus_read_unlock();
 +
-+	guard(mutex)(&resctrl_arch_mount_lock);
-+
-+	if (--resctrl_arch_mount_entries > 0)
-+		return;
-+
-+	WARN_ON(resctrl_arch_mount_entries < 0);
-+
-+	intel_aet_unmount();
-+
-+	if (!r->mon_capable)
-+		return;
-+
-+	cpus_read_lock();
-+	mutex_lock(&domain_list_lock);
-+	for_each_online_cpu(cpu)
-+		domain_remove_cpu_mon(cpu, r);
-+	r->mon_capable = false;
-+	rdt_mon_feature_count--;
-+	mutex_unlock(&domain_list_lock);
-+	cpus_read_unlock();
-+}
-+
- enum {
- 	RDT_FLAG_CMT,
- 	RDT_FLAG_MBM_TOTAL,
-@@ -1174,8 +1211,6 @@ late_initcall(resctrl_arch_late_init);
- 
- static void __exit resctrl_arch_exit(void)
- {
--	intel_aet_exit();
--
- 	cpuhp_remove_state(rdt_online);
- 
- 	resctrl_exit();
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 2b3677783427..6e7458a722f9 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -25,8 +25,8 @@
- #include <linux/intel_vsec.h>
- #include <linux/io.h>
- #include <linux/minmax.h>
--#include <linux/mutex.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/printk.h>
- #include <linux/rculist.h>
- #include <linux/rcupdate.h>
-@@ -307,7 +307,7 @@ static void (*put_feature)(struct pmt_feature_group *p);
-  * struct pmt_feature_group to indicate that its events are successfully
-  * enabled.
-  */
--bool intel_aet_get_events(void)
-+static bool aet_get_events(void)
- {
- 	struct pmt_feature_group *p;
- 	enum pmt_feature_id pfid;
-@@ -316,14 +316,14 @@ bool intel_aet_get_events(void)
- 
- 	for_each_event_group(peg) {
- 		pfid = lookup_pfid((*peg)->pfname);
--		p = intel_pmt_get_regions_by_feature(pfid);
-+		p = get_feature(pfid);
- 		if (IS_ERR_OR_NULL(p))
- 			continue;
- 		if (enable_events(*peg, p)) {
- 			(*peg)->pfg = p;
- 			ret = true;
- 		} else {
--			intel_pmt_put_feature_group(p);
-+			put_feature(p);
- 		}
- 	}
- 
-@@ -349,13 +349,27 @@ void intel_aet_unregister_enumeration(void)
++	resctrl_arch_unmount();
  }
- EXPORT_SYMBOL_GPL(intel_aet_unregister_enumeration);
  
--void __exit intel_aet_exit(void)
-+bool intel_aet_pre_mount(void)
-+{
-+	guard(mutex)(&aet_register_lock);
-+	if (!get_feature || !put_feature)
-+		return false;
-+
-+	return aet_get_events();
-+}
-+
-+void intel_aet_unmount(void)
- {
- 	struct event_group **peg;
- 
-+	guard(mutex)(&aet_register_lock);
- 	for_each_event_group(peg) {
- 		if ((*peg)->pfg) {
--			intel_pmt_put_feature_group((*peg)->pfg);
-+			struct event_group *e = *peg;
-+
-+			for (int j = 0; j < e->num_events; j++)
-+				resctrl_disable_mon_event(e->evts[j].id);
-+			put_feature((*peg)->pfg);
- 			(*peg)->pfg = NULL;
- 		}
- 	}
+ static struct file_system_type rdt_fs_type = {
 -- 
 2.53.0
 
