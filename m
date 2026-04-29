@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFFE3EAC75
-	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 18:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE44413259
+	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 18:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777488560; cv=none; b=bhiIiapmasCO6NfMUsLZqRf3poH84dloNdcWQXkAdYwlcnrr6YFvUrWBeU8sb+XXWypi1FYi7DjHxJIp1UxTChq8eBUCgZS5121f9755VsgB3FBTYwWCH7P0SiUf3vwwoYUoLZYSqHsjS0QF5RqpBMdj5+YruxI4v2wUFO2vs94=
+	t=1777488561; cv=none; b=VPz1BDu/bcwvMa8Lg9x1+2QQaDLuscFqaCkTNWhzo956k5MdMn9Vcp/1CQtG+sqoFochjxMlCE3H6xc+ujdpMgbyiQslOjIGqxRGdKFHVE1FMEODdos0ZCZ288bwPpCcvCgq5xCAXq/lJwvdyivVWVcjRLw85aOF92yFv/l1BYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777488560; c=relaxed/simple;
-	bh=N/XAKokrqJPiBUHTtzoQkOQddXV1yuiXsu0rQQcXcoE=;
+	s=arc-20240116; t=1777488561; c=relaxed/simple;
+	bh=R5ipzQsFGiwFF2x8vYufOfcDSE3QnQ50EK420XzTosg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEgCaT+PRCHo6g/3gO4mMzpviIGAF63jeH6kwhxcIksJc31I2//QkxiaqmZ37l0GvMHW6rRjceP9cca1IpJEZrVmOsTtzp7ugjo3WmioM0dv2I0skfCfMpTf3bP9ayFGH2aY41/nWyfPeQpcAtpfsb7Y/J89LKMtNuBGNSjBLC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kz7A+Irx; arc=none smtp.client-ip=198.175.65.12
+	 MIME-Version; b=qOKocKD8n1GbQeQSLFVKyk7F2IWobBCz3Dkf6EEOqnZkwsHuy2GBdwb4yzb4a65lRecw1RX9m2cuPFdk98rBoTScvyNP7zZhg1BTJIvp0gwIPrp1T96EpGugKDgm5inWmipbBP/uTbYm48tC5D0MUNKEtZXp8XIa0bA4jcxeo4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JcQW/vhS; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kz7A+Irx"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JcQW/vhS"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1777488555; x=1809024555;
+  t=1777488559; x=1809024559;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=N/XAKokrqJPiBUHTtzoQkOQddXV1yuiXsu0rQQcXcoE=;
-  b=kz7A+IrxU09xObrdcUGuoAj1FXzDcxADqmPJFkBl159ppSYlPYr2Vfa7
-   XgToPcAnyoWaWIHRsZxyS+y75BpffHcyay5B0WX0AG1HeaPlZVFyreNCf
-   bP0ejwEiS2Dm80BteRs0xlWZi+yk7wrHdGVhhzVD0qd1ImweHMMFx8bV/
-   dQxNk2O6sWyDYokf8+RTM4L7vHjvkb/OpfZ3IzGoFy8/o6CUL14BDJ7gE
-   KWuN/fz8uKAPjTYfVa2y4bCqo+oSS20SFM7ay7FeTT2ZZjDAY4Zp9T3u/
-   UovBhDvr553GHnypkpvfns4ER9v91c3dVo7KtjxLeIbyG05i7QDY+wXXr
-   w==;
-X-CSE-ConnectionGUID: f0sAWLneQi21TRoft9kyyg==
-X-CSE-MsgGUID: YlEwuiFQSVGceVX1S2z/xQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="89890713"
+  bh=R5ipzQsFGiwFF2x8vYufOfcDSE3QnQ50EK420XzTosg=;
+  b=JcQW/vhSncMR9eBfqq+NCLbaP4r6TR7aSrqZPJEcezNSE3MsW5TzxL5W
+   V+BqYvIH10+ife86zWg7woE0Q4SBpI0qXm4cqMJjD2DKgC3uzel3Bsg5x
+   BRrSl8kJH6v6kT/bpdiY/Lgv/lsgmNgw97JUB9RCnKaXLJSPCm9dD7NBh
+   BmHL8GEhsTMLbk14WTaugmDWMg0800NbPLuyqgxh+yg6wQp/tPt9c9O9Z
+   1bZ1dw+6+ZgPFKT2ldcB/On4GgUvUJNrWjBySg3d52pjEVLUUtEpA3gfq
+   79s6mYSNLlsFJ+9p2/hIJAJPz05BAmSwvwX0Z6D/1LLQJiBRUKIFPBe9X
+   g==;
+X-CSE-ConnectionGUID: WeGy5PC6SYGROFR+4tEWYw==
+X-CSE-MsgGUID: xLf4R9e0RiuhdUoSyCLtTw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="89890733"
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="89890713"
+   d="scan'208";a="89890733"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:07 -0700
-X-CSE-ConnectionGUID: v2Y7P5SRThu9vsL2OlJDsA==
-X-CSE-MsgGUID: tEaKDgqJS4yHIAQbn+eVjw==
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:08 -0700
+X-CSE-ConnectionGUID: YqhGi1EFSM+O7dun9m0YEw==
+X-CSE-MsgGUID: KTlQ7q1xQ8Ks5RLKnmijLw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="238323005"
+   d="scan'208";a="238323022"
 Received: from mjruhl-desk.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.13])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:07 -0700
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 11:49:08 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v6 04/10] fs,x86,mpam/resctrl: Handle change in number of RMIDs on each mount
-Date: Wed, 29 Apr 2026 11:48:52 -0700
-Message-ID: <20260429184858.36423-5-tony.luck@intel.com>
+Subject: [PATCH v6 06/10] platform/x86/intel/pmt: Register enumeration functions with resctrl
+Date: Wed, 29 Apr 2026 11:48:54 -0700
+Message-ID: <20260429184858.36423-7-tony.luck@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260429184858.36423-1-tony.luck@intel.com>
 References: <20260429184858.36423-1-tony.luck@intel.com>
@@ -73,198 +73,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Application Energy Telemetry (AET) event enumeration takes place
-asynchronously. Linux builds the pmt_telemetry module into the kernel to
-kick of enumeration early enough that it completes before first mount of
-the resctrl file system.
+INTEL_PMT_TELEMETRY is a loadable module, but resctrl is built-in and cannot
+call PMT functions directly.  Register the telemetry enumeration function
+pointers at pmt_telemetry module init, and unregister them at module exit.
 
-Allowing pmt_telemetry to be a loadable module means that it is possible
-for different numbers of RMIDs to be supported on each mount, depending
-on whether pmt_telemetry module is loaded.
+Add module_{get,put} calls to the PMT get/put functions to ensure that
+INTEL_PMT_TELEMETRY cannot be unloaded while resctrl is mounted and
+referencing the MMIO register space mapped by INTEL_PMT_TELEMETRY.
 
-Add resctrl_arch_system_max_rmid_idx() interface to provide the maximum
-supported number of RMIDs on a system. For x86 this is RDT_RESOURCE_L3
-rdt_resource::mon.num_rmid (if L3 monitoring is enabled).
+Note that checkpatch complains about the #include of <asm/resctrl.h>.
+This is needed rather than <linux/resctrl.h> to get the function stub
+definitions when CONFIG_X86_CPU_RESCTRL=n.
 
-Allocate the rmid_ptrs, rdt_l3_mon_domain::rmid_busy_llc, and
-rdt_l3_mon_domain::mbm_states based on the maximum possible.
-
-Initialize rmid_free_lru based on the number of RMIDs available for
-this mount.
-
-Note that some RMIDs may still be marked busy from a previous mount.
-Don't add these to the free list. Check current RMID limit in
-limbo_release_entry() and do not add out of range RMIDs to the
-free list.
-
+Suggested-by: Christoph Hellwig <hch@infradead.org>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- include/linux/resctrl.h            |  1 +
- arch/x86/kernel/cpu/resctrl/core.c | 12 ++++++++
- drivers/resctrl/mpam_resctrl.c     |  5 ++++
- fs/resctrl/monitor.c               | 47 ++++++++++++++++++++----------
- fs/resctrl/rdtgroup.c              |  2 +-
- 5 files changed, 50 insertions(+), 17 deletions(-)
+ drivers/platform/x86/intel/pmt/telemetry.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index a8338656f836..3705f0214fa6 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -412,6 +412,7 @@ static inline u32 resctrl_get_default_ctrl(struct rdt_resource *r)
- /* The number of closid supported by this resource regardless of CDP */
- u32 resctrl_arch_get_num_closid(struct rdt_resource *r);
- u32 resctrl_arch_system_num_rmid_idx(void);
-+u32 resctrl_arch_system_max_rmid_idx(void);
- int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid);
+diff --git a/drivers/platform/x86/intel/pmt/telemetry.c b/drivers/platform/x86/intel/pmt/telemetry.c
+index bdc7c24a3678..0088027c1b15 100644
+--- a/drivers/platform/x86/intel/pmt/telemetry.c
++++ b/drivers/platform/x86/intel/pmt/telemetry.c
+@@ -25,6 +25,8 @@
+ #include <linux/uaccess.h>
+ #include <linux/xarray.h>
  
- /**
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 1af8f965fdd0..934492c7e643 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -129,6 +129,18 @@ u32 resctrl_arch_system_num_rmid_idx(void)
- 	return num_rmids == U32_MAX ? 0 : num_rmids;
- }
- 
-+/**
-+ * resctrl_arch_system_max_rmid_idx - Largest possible number of RMIDs
-+ *
-+ * Return: If L3 monitoring is supported, largest possible comes from L3.
-+ */
-+u32 resctrl_arch_system_max_rmid_idx(void)
-+{
-+	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
++#include <asm/resctrl.h>
 +
-+	return r->mon_capable ? r->mon.num_rmid : resctrl_arch_system_num_rmid_idx();
-+}
-+
- struct rdt_resource *resctrl_arch_get_resource(enum resctrl_res_level l)
- {
- 	if (l >= RDT_NUM_RESOURCES)
-diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-index 226ff6f532fa..7079870ca894 100644
---- a/drivers/resctrl/mpam_resctrl.c
-+++ b/drivers/resctrl/mpam_resctrl.c
-@@ -272,6 +272,11 @@ u32 resctrl_arch_system_num_rmid_idx(void)
- 	return (mpam_pmg_max + 1) * (mpam_partid_max + 1);
- }
+ #include "class.h"
  
-+u32 resctrl_arch_system_max_rmid_idx(void)
-+{
-+	return resctrl_arch_system_num_rmid_idx();
-+}
-+
- u32 resctrl_arch_rmid_idx_encode(u32 closid, u32 rmid)
- {
- 	return closid * (mpam_pmg_max + 1) + rmid;
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 327e7a863614..cabf59afd39e 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -115,10 +115,17 @@ static inline struct rmid_entry *__rmid_entry(u32 idx)
- 
- static void limbo_release_entry(struct rmid_entry *entry)
- {
-+	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
- 	lockdep_assert_held(&rdtgroup_mutex);
- 
- 	rmid_limbo_count--;
--	list_add_tail(&entry->list, &rmid_free_lru);
-+
-+	/*
-+	 * Limbo may be freeing an RMID from a previous mount where there
-+	 * were more RMIDs available.
-+	 */
-+	if (resctrl_arch_rmid_idx_encode(entry->closid, entry->rmid) < idx_limit)
-+		list_add_tail(&entry->list, &rmid_free_lru);
- 
- 	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID))
- 		closid_num_dirty_rmid[entry->closid]--;
-@@ -133,7 +140,7 @@ static void limbo_release_entry(struct rmid_entry *entry)
- void __check_limbo(struct rdt_l3_mon_domain *d, bool force_free)
- {
- 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
--	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
-+	u32 idx_limit = resctrl_arch_system_max_rmid_idx();
- 	struct rmid_entry *entry;
- 	u32 idx, cur_idx = 1;
- 	void *arch_mon_ctx;
-@@ -192,7 +199,7 @@ void __check_limbo(struct rdt_l3_mon_domain *d, bool force_free)
- 
- bool has_busy_rmid(struct rdt_l3_mon_domain *d)
- {
--	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
-+	u32 idx_limit = resctrl_arch_system_max_rmid_idx();
- 
- 	return find_first_bit(d->rmid_busy_llc, idx_limit) != idx_limit;
- }
-@@ -916,24 +923,32 @@ int setup_rmid_lru_list(void)
- 		return 0;
- 
- 	/*
--	 * Called on every mount, but the number of RMIDs cannot change
--	 * after the first mount, so keep using the same set of rmid_ptrs[]
--	 * until resctrl_exit(). Note that the limbo handler continues to
--	 * access rmid_ptrs[] after resctrl is unmounted.
-+	 * Allocate the largest number of RMIDs that this system will ever
-+	 * need. These cannot be freed until resctrl_exit() because the limbo
-+	 * handler  continues to access rmid_ptrs[] after resctrl is unmounted.
- 	 */
--	if (rmid_ptrs)
--		return 0;
-+	if (!rmid_ptrs) {
-+		idx_limit = resctrl_arch_system_max_rmid_idx();
-+		rmid_ptrs = kzalloc_objs(struct rmid_entry, idx_limit);
-+		if (!rmid_ptrs)
-+			return -ENOMEM;
-+
-+		for (i = 0; i < idx_limit; i++) {
-+			entry = &rmid_ptrs[i];
-+			INIT_LIST_HEAD(&entry->list);
-+
-+			resctrl_arch_rmid_idx_decode(i, &entry->closid, &entry->rmid);
-+		}
-+	}
- 
-+	/* Find how many RMIDs are needed for this mount */
- 	idx_limit = resctrl_arch_system_num_rmid_idx();
--	rmid_ptrs = kzalloc_objs(struct rmid_entry, idx_limit);
--	if (!rmid_ptrs)
--		return -ENOMEM;
- 
-+	INIT_LIST_HEAD(&rmid_free_lru);
- 	for (i = 0; i < idx_limit; i++) {
- 		entry = &rmid_ptrs[i];
--		INIT_LIST_HEAD(&entry->list);
--
--		resctrl_arch_rmid_idx_decode(i, &entry->closid, &entry->rmid);
-+		if (i && entry->busy)
-+			continue;
- 		list_add_tail(&entry->list, &rmid_free_lru);
+ #define TELEM_SIZE_OFFSET	0x0
+@@ -284,6 +286,9 @@ struct pmt_feature_group *intel_pmt_get_regions_by_feature(enum pmt_feature_id i
+ 		region++;
  	}
  
-@@ -1156,7 +1171,7 @@ static void mbm_cntr_free_all(struct rdt_resource *r, struct rdt_l3_mon_domain *
-  */
- static void resctrl_reset_rmid_all(struct rdt_resource *r, struct rdt_l3_mon_domain *d)
- {
--	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
-+	u32 idx_limit = resctrl_arch_system_max_rmid_idx();
- 	enum resctrl_event_id evt;
- 	int idx;
++	if (!try_module_get(THIS_MODULE))
++		return ERR_PTR(-EINVAL);
++
+ 	kref_init(&feature_group->kref);
  
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 5dfdaa6f9d8f..2e31ff753114 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -4373,7 +4373,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
-  */
- static int domain_setup_l3_mon_state(struct rdt_resource *r, struct rdt_l3_mon_domain *d)
+ 	return no_free_ptr(feature_group);
+@@ -293,6 +298,7 @@ EXPORT_SYMBOL(intel_pmt_get_regions_by_feature);
+ void intel_pmt_put_feature_group(struct pmt_feature_group *feature_group)
  {
--	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
-+	u32 idx_limit = resctrl_arch_system_max_rmid_idx();
- 	size_t tsize = sizeof(*d->mbm_states[0]);
- 	enum resctrl_event_id eventid;
- 	int idx;
+ 	kref_put(&feature_group->kref, pmt_feature_group_release);
++	module_put(THIS_MODULE);
+ }
+ EXPORT_SYMBOL(intel_pmt_put_feature_group);
+ 
+@@ -425,7 +431,15 @@ static struct auxiliary_driver pmt_telem_aux_driver = {
+ 
+ static int __init pmt_telem_init(void)
+ {
+-	return auxiliary_driver_register(&pmt_telem_aux_driver);
++	int ret;
++
++	ret = auxiliary_driver_register(&pmt_telem_aux_driver);
++	if (ret)
++		return ret;
++
++	intel_aet_register_enumeration(intel_pmt_get_regions_by_feature,
++				       intel_pmt_put_feature_group);
++	return 0;
+ }
+ module_init(pmt_telem_init);
+ 
+@@ -433,6 +447,7 @@ static void __exit pmt_telem_exit(void)
+ {
+ 	auxiliary_driver_unregister(&pmt_telem_aux_driver);
+ 	xa_destroy(&telem_array);
++	intel_aet_unregister_enumeration();
+ }
+ module_exit(pmt_telem_exit);
+ 
 -- 
 2.53.0
 
