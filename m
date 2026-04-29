@@ -1,98 +1,89 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from canpmsgout01.his.huawei.com (canpmsgout01.his.huawei.com [113.46.200.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB5A39D6E6
-	for <patches@lists.linux.dev>; Tue, 28 Apr 2026 23:27:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD0435C1B6
+	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 07:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777418828; cv=none; b=aF6iyS9bopuzcfZrsSuGOOVv6C3zq7dIDAD8dOU+2RfXnwLivZFAiQyIV1rt2G/CZvv3h0pk7RUgt4EhshknGWDznPgRCGZUXasfBWGIpBtmI6toPV1rJjLKNRzh3k8nmZHLbOvQfv7FtRXfSzUWiMt5zRcaifCs2EtQRmY+INs=
+	t=1777449367; cv=none; b=sD3DrkXUwfAh1EgkiGorVZCNmhfHtsSs1YY7uTjv/8T+Bks9/Fmub4XTyorpBxxBCD6GpX6aveBBIfxDJLO54o3uMjnAIWQpVbh6i0qUGlQRMH2foyI7vQq1Tm17/LttYvR8jZloMLdjO2/cDdUWoxQSoAFKCl/Vg8RX0ARWOdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777418828; c=relaxed/simple;
-	bh=rhrho0fYIOx9Mfp8xxBrs+hLDcUtfpXmHRvUgrwN4cA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=A6CY5ULVoXuJzJThU+WCeBJKfz6uInn40YlHhpmSZd1pC4rirZMBW3a3ED7IXKBDC3CGIHeKQ4Yq3ZCeimHSVcfJP086su0yK/tWG2r0sjZx4yzQ/tn4YeSLTJ120EC4pkQlFfIDnOWoWV/mBldcrfhkzMrhHX84gmkjFXAOkWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nYBScJ0S; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nYBScJ0S"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1777418826; x=1808954826;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=rhrho0fYIOx9Mfp8xxBrs+hLDcUtfpXmHRvUgrwN4cA=;
-  b=nYBScJ0SszwR5JNmIpNNITCGRByxJe5qKCEmI8ebfqohL4uvTX3UYxjR
-   cKOBLKKsJH7IoDqo/Moj4deZzc27w453TYWHgDwko/X1WY7O0r/GUH7qW
-   KKmyxdE34gPPTQWe9RGUekQ19mrY0DL50mVjrCs3yOL0YGcBn+c1F1sUd
-   6YaVuU9sKfqXLYjNPa2WSxJeGU6ltRwY2OJPTXOozy4ZJn7kob7sVducm
-   cMEx5n/ZS5n+TgJyFU1QBta7UoIgyeN/LIEkx+G7QH51GvB4UO2vGZcbu
-   8zPHoZ8h9Tyhbg3kjc39JFn72y2k/ppfad2L7Jz947KHGaJK+or1BpOqb
-   A==;
-X-CSE-ConnectionGUID: oyp7SrBCTMuUavbvZ3od1A==
-X-CSE-MsgGUID: 1KlWhMt/TxyvB3Vv2jgKSw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11770"; a="89431929"
-X-IronPort-AV: E=Sophos;i="6.23,205,1770624000"; 
-   d="scan'208";a="89431929"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2026 16:27:05 -0700
-X-CSE-ConnectionGUID: xkJvdjWZQCGq8d3Vcy2blQ==
-X-CSE-MsgGUID: i3vp6W+dQSihyZEsEotJUQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,205,1770624000"; 
-   d="scan'208";a="233071123"
-Received: from jjgreens-desk20.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.158])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Apr 2026 16:27:05 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>,
-	Babu Moger <babu.moger@amd.com>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] x86/resctrl: Only check Intel systems for SNC
-Date: Tue, 28 Apr 2026 16:26:57 -0700
-Message-ID: <20260428232657.107381-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1777449367; c=relaxed/simple;
+	bh=Kkv97VMnztmelRWbOIZlO1gcT+e2sRBJ+LEZugPERUg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ef67MGDvz0zAGoJF9IBVbCxicNZeERQu1j7Agjm+lUc6VG8vAmDO7qOkIaXwOp0GBBus40ez1TcNLQ/i0VcNvyy/uiLftoDy574KvA0OQnqhYf9ZpSZPofbUZ0leUAPZyDtwhkxakZnEGjF1tbNYxG0d4zEflQo56Px1u1RciDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com; spf=pass smtp.mailfrom=hisilicon.com; arc=none smtp.client-ip=113.46.200.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hisilicon.com
+Received: from mail.maildlp.com (unknown [172.19.162.140])
+	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4g58b35J6Rz1T4G8;
+	Wed, 29 Apr 2026 15:49:35 +0800 (CST)
+Received: from kwepemf100018.china.huawei.com (unknown [7.202.181.17])
+	by mail.maildlp.com (Postfix) with ESMTPS id 091A320226;
+	Wed, 29 Apr 2026 15:55:56 +0800 (CST)
+Received: from [10.67.120.168] (10.67.120.168) by
+ kwepemf100018.china.huawei.com (7.202.181.17) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.36; Wed, 29 Apr 2026 15:55:47 +0800
+Message-ID: <ff248023-a367-3561-1c04-77da1b1f3794@hisilicon.com>
+Date: Wed, 29 Apr 2026 15:55:45 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH rc 00/15] Various bug fixes for RDMA drivers in the uapi
+ functions
+To: Jason Gunthorpe <jgg@nvidia.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Bryan Tan <bryan-bt.tan@broadcom.com>, Eric Dumazet <edumazet@google.com>,
+	Konstantin Taranov <kotaranov@microsoft.com>, Jakub Kicinski
+	<kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
+	<linux-hyperv@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
+	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Selvin Xavier
+	<selvin.xavier@broadcom.com>, Chengchang Tang <tangchengchang@huawei.com>,
+	Tariq Toukan <tariqt@nvidia.com>, Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Yishai Hadas <yishaih@nvidia.com>
+CC: Abhijit Gangurde <abhijit.gangurde@amd.com>, Adit Ranadive
+	<aditr@vmware.com>, Allen Hubbe <allen.hubbe@amd.com>, Andrew Boyer
+	<andrew.boyer@amd.com>, Aditya Sarwade <asarwade@vmware.com>, Brad Spengler
+	<brad.spengler@opensrcsec.com>, Bryan Tan <bryantan@vmware.com>, "David S.
+ Miller" <davem@davemloft.net>, Dexuan Cui <decui@microsoft.com>, Doug Ledford
+	<dledford@redhat.com>, George Zhang <georgezhang@vmware.com>, Jorgen Hansen
+	<jhansen@vmware.com>, Jianbo Liu <jianbol@nvidia.com>, Kai Aizen
+	<kai.aizen.dev@gmail.com>, Leon Romanovsky <leonro@mellanox.com>, Leon
+ Romanovsky <leonro@nvidia.com>, Yixian Liu <liuyixian@huawei.com>, Long Li
+	<longli@microsoft.com>, Lijun Ou <oulijun@huawei.com>, Parav Pandit
+	<parav.pandit@emulex.com>, <patches@lists.linux.dev>, Roland Dreier
+	<roland@purestorage.com>, Roland Dreier <rolandd@cisco.com>, Sagi Grimberg
+	<sagi@grimberg.me>, Ajay Sharma <sharmaajay@microsoft.com>,
+	<stable@vger.kernel.org>, Tariq Toukan <tariqt@mellanox.com>, "Wei Hu
+ (Xavier)" <xavier.huwei@huawei.com>, Shaobo Xu <xushaobo2@huawei.com>,
+	Nenglong Zhao <zhaonenglong@hisilicon.com>
+References: <0-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com>
+Content-Language: en-US
+From: Junxian Huang <huangjunxian6@hisilicon.com>
+In-Reply-To: <0-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ kwepemf100018.china.huawei.com (7.202.181.17)
 
-topology_num_nodes_per_package() reports values greater than one on
-certain AMD systems resulting in snc_get_config() printing the confusing
-message "CoD enabled system? Resctrl not supported".
 
-Add a check for Intel systems before looking at topology.
 
-Fixes: 59674fc9d0bf ("x86/resctrl: Fix SNC detection")
-Reported-by: Babu Moger Babu <babu.moger@amd.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: Babu Moger Babu <babu.moger@amd.com>
----
- arch/x86/kernel/cpu/resctrl/monitor.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+On 2026/4/29 0:17, Jason Gunthorpe wrote:
+> All were found by Sashiko or Claude AI tools. They vary in severity, but
+> are all things that shouldn't be present.
+> 
+> Jason Gunthorpe (15):
+>   RDMA/hns: Fix xarray race in hns_roce_create_srq()
+>   RDMA/hns: Fix xarray race in hns_roce_create_qp_common()
+>   RDMA/hns: Fix unlocked call to hns_roce_qp_remove()
 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 9bd87bae4983..59215fef3924 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -377,7 +377,12 @@ static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
- 
- static __init int snc_get_config(void)
- {
--	int ret = topology_num_nodes_per_package();
-+	int ret;
-+
-+	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
-+		return 1;
-+
-+	ret = topology_num_nodes_per_package();
- 
- 	if (ret > 1 && !x86_match_cpu(snc_cpu_ids)) {
- 		pr_warn("CoD enabled system? Resctrl not supported\n");
--- 
-2.53.0
+For hns patches:
+Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
 
+Thanks,
+Junxian
