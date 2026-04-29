@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B535E37AA87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438B7379960
 	for <patches@lists.linux.dev>; Wed, 29 Apr 2026 15:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777475215; cv=none; b=Tw5FlZG6jHprFucknbS2Tqq7VTz4HDoCVkiTWJ8b8g67BHjEH/nENGOM1SFalJD5xO4ntADmO3N7MiRH7zioSXsGnc7UY5946qKVd8LffC6kzpDlNrLbQwvvChNT4wzubTSSjSIccQB/8imi/rHT2qOvyNBzSX5rd58Ru6pzzhI=
+	t=1777475215; cv=none; b=cL7EvIOcFRpX+qVqdGErmg2Es43Y99hH4IQJk2Ki7TlxSfgN/VB4953jOschxXd3gy/BLZjBji9NMNKaA45pSuvWwkSQ91w324no326SLvNK4BlopGAWLNnULJqIk6URNMZPPwqwiWfuuuAaojMJegRiN+c5pOzSFCJuc/rA578=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777475215; c=relaxed/simple;
-	bh=kmpz5ziyeYgyjq9BX9vfAEaKU1VXDjgMSNyT/xCR9+Q=;
+	bh=ClrkB0PcIBu61gvXQBQnJibsI5pxz5caod8xkzFYwTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhEaEX4Yt9judouqnE7eJ7kKKcFi/pggi8TaR4odV+JxwcBA75oG7dvejLUQ38CYSsIBsZ7c3VdHGFLfwuhUTwkVGyX/JPLOHv1Ip9VUvjFC8k2WYE/Su/R43LWE8QspkV7ta31LG/REt75J+U7kodpkwOHTSSSVQqUz5ERhmaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XY4sGwHi; arc=none smtp.client-ip=198.175.65.18
+	 MIME-Version; b=FZo7Zq721egyn7GY5vxcPmOvYRkyNUmuviOC0OaZ4Ee6tVbF3fyiC0zmbdilQEQr8nNY8uhWWT3nzP9giMG/Zz5DttxXYd+sEQMIjNj5jBDFCx+4rqteMT9HHZ+90EuCEU71R8RG5YwNPzeu5OD3Qsq86NnhK6OxGzTOx7ltW/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Un5UNAZF; arc=none smtp.client-ip=198.175.65.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XY4sGwHi"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Un5UNAZF"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1777475214; x=1809011214;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=kmpz5ziyeYgyjq9BX9vfAEaKU1VXDjgMSNyT/xCR9+Q=;
-  b=XY4sGwHiKoxsgbobKfInFH+jVRqxlMCbMTlC8P+JBvUOTuraBMSCUlV6
-   /Lpw13VljskVSYCaFc89L0OHzT1kS8H5LTZbjEsK39xbcE4B/41TlRCkS
-   rtmHNbKvVMtB8Ha2i8uwgZtDqKO1nAWwue39VneUoM4ja9DJjqADS6ccq
-   QZgDv+kr3r2uYY+ktSLwuJ2YuCRx2lOJIZVW6muoZ7GJykXJ5LLRVkXVK
-   Yz9s0rm72v92/rqbQrhmCJvFEFqe078d7ihFqfvFRXQ2V6PvAkn7HAQ5x
-   Y02/gfau8yWnbLRAAXsYBYnff51AaQQW8ZQqxQn5ZdM6NxjjlKMwDDWic
+  bh=ClrkB0PcIBu61gvXQBQnJibsI5pxz5caod8xkzFYwTI=;
+  b=Un5UNAZF18yqYlfdELhENuC+Py4ayKXsRQmBSA8W24oW6/vWZzKKyCFJ
+   +8WpSoxkIYp5E5ZMGG7DZyIgNqNWRnICp5IPUQdB0mWi83nJu3H4OyGyI
+   Y6ikVYlFghdltt4LbS0IpXqi4uSV+dS9gdPsWZlv6NPsZo/x8p3I4vh56
+   29QfSZPg7bMxWKZGW3G1DO0e8oEsuNn5sAlK0dFQvmlPdeBCWT4wc84hn
+   /H1HaVTAYmNflKur1n3OyPQ3ViqV+HiXT4koTzzgOGF6L+27BM8fDUydH
+   utIHiYTTQGn/f4YaITOB6jUn9zRNY3QjohTF4m/rdXctfkPOzOIQ2I1Ns
    Q==;
-X-CSE-ConnectionGUID: FiuoiBJOQMmms3f1H8JbyQ==
-X-CSE-MsgGUID: 1PrIwVXGTtKU3Hr+mSMhPA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="78424418"
+X-CSE-ConnectionGUID: nd+a9OQEQoOxoeXwl0Q9DQ==
+X-CSE-MsgGUID: M8/9UqwlQYGuZrn3rQUSOw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="78424398"
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="78424418"
+   d="scan'208";a="78424398"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 08:06:48 -0700
-X-CSE-ConnectionGUID: bTNca9elQA2lKiXJoYjVVw==
-X-CSE-MsgGUID: s7ltYqU/THGPC5/H0bRN/g==
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 08:06:47 -0700
+X-CSE-ConnectionGUID: iNvCqRa+T5OjSPhCQ7H0gA==
+X-CSE-MsgGUID: Q7ACg+p/SFi4LQjilfk/gA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="233445028"
+   d="scan'208";a="233445022"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 08:06:47 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -60,9 +60,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v4 10/10] fs/resctrl: Inform user space when status buffer overflowed
-Date: Wed, 29 Apr 2026 08:06:40 -0700
-Message-ID: <be4a4fe14602a19c237c270aab722fad3307aeed.1777419024.git.reinette.chatre@intel.com>
+Subject: [PATCH v4 08/10] fs/resctrl: Change last_cmd_status custom during input parsing
+Date: Wed, 29 Apr 2026 08:06:38 -0700
+Message-ID: <4efad346b8e4dde0b84ff3e87c635852b6575aa2.1777419024.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1777419024.git.reinette.chatre@intel.com>
 References: <cover.1777419024.git.reinette.chatre@intel.com>
@@ -74,46 +74,472 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl fs commands are becoming more powerful with, for example, a user
-able to use syntax like '*' to make broad configuration changes. Such
-commands that span multiple domains may result in more than one message
-printed to the last_cmd_status buffer with more planned.
+A pattern of usage of last_cmd_status was introduced during its enabling in
+commit
 
-Display "[truncated]" to user space when displaying the last_cmd_status
-buffer to communicate if it overflowed. Upon encountering this user space
-is expected to combine details about the failure found in info/last_cmd_status
-with related resctrl files to learn the accurate system state after the
-command failure.
+c377dcfbee80 ("x86/intel_rdt: Add diagnostics when writing the schemata file")
+
+and since copied throughout resctrl to result in the following custom:
+
+	..._write()
+	{
+		/* Early parsing of input, exit on failure. */
+
+		/* Obtain rdtgroup_mutex */
+		rdt_last_cmd_clear(); /* Clear last_cmd_status buffer */
+
+		/*
+		 * Act on user command, failures result in detail
+		 * error message in last_cmd_status buffer via
+		 * rdt_last_cmd_puts()/rdt_last_cmd_printf().
+		 */
+
+		/* Release rdtgroup_mutex */
+	}
+
+If resctrl exits with failure during early parsing of input there are two
+possible scenarios:
+ - The last_cmd_status buffer is empty and a user's read of
+   info/last_cmd_status returns "ok".
+ - The last_cmd_status buffer contains details from an earlier ...write()
+   failure and a user's read of info/last_cmd_status returns this outdated
+   error description.
+
+Writing to a resctrl file is considered a "resctrl command" and the
+resctrl documentation states the following about the last_cmd_status file:
+   "If the command failed, it will provide more information that can be
+    conveyed in the error returns from file operations."
+Neither of the current scenarios is correct behavior.
+
+Move early input parsing to be done with rdtgroup_mutex held after the
+last_cmd_status buffer is cleared. Let info/last_cmd_status be accurate
+when an error is encountered during parsing of user command.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 ---
-Changes since v2:
+Changes since v1:
 - Add Ben's RB tag.
 ---
- fs/resctrl/rdtgroup.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/resctrl/ctrlmondata.c | 54 ++++++++++++++++----------
+ fs/resctrl/monitor.c     | 60 +++++++++++++++++------------
+ fs/resctrl/rdtgroup.c    | 82 +++++++++++++++++++++++-----------------
+ 3 files changed, 117 insertions(+), 79 deletions(-)
 
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index 8a43efe67a95..5d5e844429df 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -312,11 +312,6 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 	char *tok, *resname;
+ 	int ret = 0;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-	buf[nbytes - 1] = '\0';
+-
+ 	rdtgrp = rdtgroup_kn_lock_live(of->kn);
+ 	if (!rdtgrp) {
+ 		rdtgroup_kn_unlock(of->kn);
+@@ -324,6 +319,15 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 	}
+ 	rdt_last_cmd_clear();
+ 
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	buf[nbytes - 1] = '\0';
++
+ 	/*
+ 	 * No changes to pseudo-locked region allowed. It has to be removed
+ 	 * and re-created instead.
+@@ -466,11 +470,6 @@ ssize_t rdtgroup_mba_mbps_event_write(struct kernfs_open_file *of,
+ 	struct rdtgroup *rdtgrp;
+ 	int ret = 0;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-	buf[nbytes - 1] = '\0';
+-
+ 	rdtgrp = rdtgroup_kn_lock_live(of->kn);
+ 	if (!rdtgrp) {
+ 		rdtgroup_kn_unlock(of->kn);
+@@ -478,6 +477,15 @@ ssize_t rdtgroup_mba_mbps_event_write(struct kernfs_open_file *of,
+ 	}
+ 	rdt_last_cmd_clear();
+ 
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	buf[nbytes - 1] = '\0';
++
+ 	if (!strcmp(buf, "mbm_local_bytes")) {
+ 		if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
+ 			rdtgrp->mba_mbps_event = QOS_L3_MBM_LOCAL_EVENT_ID;
+@@ -495,6 +503,7 @@ ssize_t rdtgroup_mba_mbps_event_write(struct kernfs_open_file *of,
+ 	if (ret)
+ 		rdt_last_cmd_printf("Unsupported event id '%s'\n", buf);
+ 
++out_unlock:
+ 	rdtgroup_kn_unlock(of->kn);
+ 
+ 	return ret ?: nbytes;
+@@ -854,15 +863,17 @@ ssize_t resctrl_io_alloc_write(struct kernfs_open_file *of, char *buf,
+ 	bool enable;
+ 	int ret;
+ 
+-	ret = kstrtobool(buf, &enable);
+-	if (ret)
+-		return ret;
+-
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	rdt_last_cmd_clear();
+ 
++	ret = kstrtobool(buf, &enable);
++	if (ret) {
++		rdt_last_cmd_puts("Invalid input\n");
++		goto out_unlock;
++	}
++
+ 	if (!r->cache.io_alloc_capable) {
+ 		rdt_last_cmd_printf("io_alloc is not supported on %s\n", s->name);
+ 		ret = -ENODEV;
+@@ -1018,16 +1029,19 @@ ssize_t resctrl_io_alloc_cbm_write(struct kernfs_open_file *of, char *buf,
+ 	u32 io_alloc_closid;
+ 	int ret = 0;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-
+-	buf[nbytes - 1] = '\0';
+-
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 	rdt_last_cmd_clear();
+ 
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	buf[nbytes - 1] = '\0';
++
+ 	if (!r->cache.io_alloc_capable) {
+ 		rdt_last_cmd_printf("io_alloc is not supported on %s\n", s->name);
+ 		ret = -ENODEV;
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 101b2911d582..1a38f3b6a1f1 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -1112,13 +1112,15 @@ ssize_t resctrl_mbm_assign_on_mkdir_write(struct kernfs_open_file *of, char *buf
+ 	bool value;
+ 	int ret;
+ 
+-	ret = kstrtobool(buf, &value);
+-	if (ret)
+-		return ret;
+-
+ 	mutex_lock(&rdtgroup_mutex);
+ 	rdt_last_cmd_clear();
+ 
++	ret = kstrtobool(buf, &value);
++	if (ret) {
++		rdt_last_cmd_puts("Invalid input\n");
++		goto out_unlock;
++	}
++
+ 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
+ 		rdt_last_cmd_puts("mbm_event counter assignment mode is not enabled\n");
+ 		ret = -EINVAL;
+@@ -1409,17 +1411,20 @@ ssize_t event_filter_write(struct kernfs_open_file *of, char *buf, size_t nbytes
+ 	u32 evt_cfg = 0;
+ 	int ret = 0;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-
+-	buf[nbytes - 1] = '\0';
+-
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	rdt_last_cmd_clear();
+ 
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	buf[nbytes - 1] = '\0';
++
+ 	r = resctrl_arch_get_resource(mevt->rid);
+ 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
+ 		rdt_last_cmd_puts("mbm_event counter assignment mode is not enabled\n");
+@@ -1478,17 +1483,20 @@ ssize_t resctrl_mbm_assign_mode_write(struct kernfs_open_file *of, char *buf,
+ 	int ret = 0;
+ 	bool enable;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-
+-	buf[nbytes - 1] = '\0';
+-
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	rdt_last_cmd_clear();
+ 
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	buf[nbytes - 1] = '\0';
++
+ 	if (!strcmp(buf, "default")) {
+ 		enable = 0;
+ 	} else if (!strcmp(buf, "mbm_event")) {
+@@ -1759,12 +1767,6 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
+ 	char *token, *event;
+ 	int ret = 0;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-
+-	buf[nbytes - 1] = '\0';
+-
+ 	rdtgrp = rdtgroup_kn_lock_live(of->kn);
+ 	if (!rdtgrp) {
+ 		rdtgroup_kn_unlock(of->kn);
+@@ -1772,10 +1774,19 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
+ 	}
+ 	rdt_last_cmd_clear();
+ 
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	buf[nbytes - 1] = '\0';
++
+ 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
+ 		rdt_last_cmd_puts("mbm_event mode is not enabled\n");
+-		rdtgroup_kn_unlock(of->kn);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out_unlock;
+ 	}
+ 
+ 	while ((token = strsep(&buf, "\n")) != NULL) {
+@@ -1791,6 +1802,7 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
+ 			break;
+ 	}
+ 
++out_unlock:
+ 	rdtgroup_kn_unlock(of->kn);
+ 
+ 	return ret ?: nbytes;
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 0677e6e4102e..5413a625ff32 100644
+index 5e3ea92cc243..755a46ef5bdb 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -971,10 +971,13 @@ static int rdt_last_cmd_status_show(struct kernfs_open_file *of,
+@@ -512,38 +512,38 @@ static int cpus_ctrl_write(struct rdtgroup *rdtgrp, cpumask_var_t newmask,
+ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
+ 				   char *buf, size_t nbytes, loff_t off)
+ {
+-	cpumask_var_t tmpmask, newmask, tmpmask1;
++	cpumask_var_t tmpmask = CPUMASK_VAR_NULL, newmask = CPUMASK_VAR_NULL;
++	cpumask_var_t tmpmask1 = CPUMASK_VAR_NULL;
+ 	struct rdtgroup *rdtgrp;
+ 	int ret;
  
- 	mutex_lock(&rdtgroup_mutex);
- 	len = seq_buf_used(&last_cmd_status);
--	if (len)
-+	if (len) {
- 		seq_printf(seq, "%.*s", len, last_cmd_status_buf);
--	else
-+		if (seq_buf_has_overflowed(&last_cmd_status))
-+			seq_puts(seq, "[truncated]\n");
-+	} else {
- 		seq_puts(seq, "ok\n");
+-	if (!buf)
+-		return -EINVAL;
+-
+-	if (!zalloc_cpumask_var(&tmpmask, GFP_KERNEL))
+-		return -ENOMEM;
+-	if (!zalloc_cpumask_var(&newmask, GFP_KERNEL)) {
+-		free_cpumask_var(tmpmask);
+-		return -ENOMEM;
+-	}
+-	if (!zalloc_cpumask_var(&tmpmask1, GFP_KERNEL)) {
+-		free_cpumask_var(tmpmask);
+-		free_cpumask_var(newmask);
+-		return -ENOMEM;
+-	}
+-
+ 	rdtgrp = rdtgroup_kn_lock_live(of->kn);
+ 	if (!rdtgrp) {
+ 		ret = -ENOENT;
+-		goto unlock;
++		goto out_unlock;
+ 	}
+ 
+ 	rdt_last_cmd_clear();
+ 
++	if (!buf) {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
 +	}
- 	mutex_unlock(&rdtgroup_mutex);
- 	return 0;
++
++	if (!zalloc_cpumask_var(&tmpmask, GFP_KERNEL) ||
++	    !zalloc_cpumask_var(&newmask, GFP_KERNEL) ||
++	    !zalloc_cpumask_var(&tmpmask1, GFP_KERNEL)) {
++		rdt_last_cmd_puts("Kernel allocation failure\n");
++		ret = -ENOMEM;
++		goto out_free;
++	}
++
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED ||
+ 	    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
+ 		ret = -EINVAL;
+ 		rdt_last_cmd_puts("Pseudo-locking in progress\n");
+-		goto unlock;
++		goto out_free;
+ 	}
+ 
+ 	if (is_cpu_list(of))
+@@ -553,7 +553,7 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
+ 
+ 	if (ret) {
+ 		rdt_last_cmd_puts("Bad CPU list/mask\n");
+-		goto unlock;
++		goto out_free;
+ 	}
+ 
+ 	/* check that user didn't specify any offline cpus */
+@@ -561,7 +561,7 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
+ 	if (!cpumask_empty(tmpmask)) {
+ 		ret = -EINVAL;
+ 		rdt_last_cmd_puts("Can only assign online CPUs\n");
+-		goto unlock;
++		goto out_free;
+ 	}
+ 
+ 	if (rdtgrp->type == RDTCTRL_GROUP)
+@@ -571,11 +571,12 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
+ 	else
+ 		ret = -EINVAL;
+ 
+-unlock:
+-	rdtgroup_kn_unlock(of->kn);
++out_free:
+ 	free_cpumask_var(tmpmask);
+ 	free_cpumask_var(newmask);
+ 	free_cpumask_var(tmpmask1);
++out_unlock:
++	rdtgroup_kn_unlock(of->kn);
+ 
+ 	return ret ?: nbytes;
  }
+@@ -1452,11 +1453,6 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
+ 	enum rdtgrp_mode mode;
+ 	int ret = 0;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-	buf[nbytes - 1] = '\0';
+-
+ 	rdtgrp = rdtgroup_kn_lock_live(of->kn);
+ 	if (!rdtgrp) {
+ 		rdtgroup_kn_unlock(of->kn);
+@@ -1464,6 +1460,14 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
+ 	}
+ 
+ 	rdt_last_cmd_clear();
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out;
++	}
++
++	buf[nbytes - 1] = '\0';
+ 
+ 	mode = rdtgrp->mode;
+ 
+@@ -1789,19 +1793,23 @@ static ssize_t mbm_total_bytes_config_write(struct kernfs_open_file *of,
+ 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
+ 	int ret;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	rdt_last_cmd_clear();
+ 
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
+ 	buf[nbytes - 1] = '\0';
+ 
+ 	ret = mon_config_write(r, buf, QOS_L3_MBM_TOTAL_EVENT_ID);
+ 
++out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
+ 	cpus_read_unlock();
+ 
+@@ -1815,19 +1823,23 @@ static ssize_t mbm_local_bytes_config_write(struct kernfs_open_file *of,
+ 	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
+ 	int ret;
+ 
+-	/* Valid input requires a trailing newline */
+-	if (nbytes == 0 || buf[nbytes - 1] != '\n')
+-		return -EINVAL;
+-
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	rdt_last_cmd_clear();
+ 
++	/* Valid input requires a trailing newline */
++	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
++		rdt_last_cmd_puts("Invalid input\n");
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
+ 	buf[nbytes - 1] = '\0';
+ 
+ 	ret = mon_config_write(r, buf, QOS_L3_MBM_LOCAL_EVENT_ID);
+ 
++out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
+ 	cpus_read_unlock();
+ 
 -- 
 2.50.1
 
