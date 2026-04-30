@@ -1,86 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f202.google.com (mail-dy1-f202.google.com [74.125.82.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B07237CD34;
-	Thu, 30 Apr 2026 03:26:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87259353ED9
+	for <patches@lists.linux.dev>; Thu, 30 Apr 2026 22:54:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777519572; cv=none; b=GPURpYR7R6ufM5FnKgAuFOHY7NgByHGhIyA2uRwwNE3ktXpZXZRryQ36moxTcNR97u0O6z4rrj+bJ90Br7uVFMLwQRGdhfKPGPs3KMV6q/5RvFNCxvns5Zdfi69TaiyUZ4rkqste2UG7mtPBowoVsfUMq67xib0IX0UJb+VprPc=
+	t=1777589659; cv=none; b=JY7hCnHA3ke151nHUYxaCKvPu5JaM40mggY547zGLjQ9gh38Xz/uaDbzXCtfy2Yk3lV8fAFDSYV5F325R9PIwwFjPx6XqaXonVeOmJ01DhPfY4Eed0LHrWR2+8Ap/3HikCUKMsWK8MYa6PBL7mHYA03xLAhki3wecrJR0uHBovw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777519572; c=relaxed/simple;
-	bh=YfC1QZZ/UU6y93F8yKnC0I+PiZBznMVQxb/ENiqO8b8=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=uFdsQtept1AlQsT642gljeCsUVOLN5bXbS25DCuw4wMqaKCHyriubc54LjaKplN5CkjLgUnmR5euot6H2YzccNGalrkb1dlTDEH5pD8FuxPXAOAw5/1y1RU8DiyHLhtRbf7jztx6S+t55Ma6cVQ/ZeQq8QP3Ot+92mJDLgEqpeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uwbKJYTR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777589659; c=relaxed/simple;
+	bh=m5Oa9xrjs93ypR2Ul+XH1avEWXnt5/WG1koUdy/DN8w=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=Sk+zlNxh6JnhbtHn3jvV0wKfVuMfGJtMc19Qo4lM48/ZYKt6/x6jwW8O+Efv6cWolvI9yx0cnYsMHWdttPquTdTWokq7giXbn5SI0mWnUZ//gSALMSUO1+8h7Dy8ZkaDJJlp14Rpq9B0GXq+JKuz4JEyJsRpS7gtsZMrDcvrllk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--wnliu.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bMVoMpZe; arc=none smtp.client-ip=74.125.82.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--wnliu.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uwbKJYTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22F8C2BCB8;
-	Thu, 30 Apr 2026 03:26:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777519571;
-	bh=YfC1QZZ/UU6y93F8yKnC0I+PiZBznMVQxb/ENiqO8b8=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=uwbKJYTRnPuHgHvmKVgiZN5bsbZmlaIPFFlBoSY4hQQVZt2jEssn+r90LgoJKtfVh
-	 KYwquO77vUHjYWVQseqKU/ZfPgsvJjnuLok91FGW3PAAStr4I8xkw75ZrLomu6rkW8
-	 ZG0ICIO9l8v8ED7E7mUYB4z1+rfgqGIIa92KGoNojnIg6dlrwbekebnofjiZ40Ux6s
-	 byVyqhPJXTDD9DZLw0KyoTnPGOpkYrUM3wXgQywkg3pYdcAeUceTsrtQaMdEfovI/R
-	 dM3t1lhgAWs7oL8wzCHEhHxEKE0R1jWI7QqtVJQw2jbsuZ15B2PXSOITwn/RMBSQuE
-	 6mc9GOTRHcSTQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 3FDDC3809A07;
-	Thu, 30 Apr 2026 03:25:28 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bMVoMpZe"
+Received: by mail-dy1-f202.google.com with SMTP id 5a478bee46e88-2ee34588671so723227eec.0
+        for <patches@lists.linux.dev>; Thu, 30 Apr 2026 15:54:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1777589658; x=1778194458; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gZHidt1m0JlvpU+VvYCM2F4O0JmyQBeuxJIN2gPX9og=;
+        b=bMVoMpZeBXf/gI+Njs5lnR8WC5Rz1JXrI70DGUt71tszJ0SmF09HhDEOED5iJK8YtZ
+         892gnPvH+GDCxaXyWGSOk/FuCEVOCPB9JFwZI9HiFZO3Tl81O4jUibgVPHf3iv1QadP/
+         et614JXBJmCrIqDC7ucXqKPzL3mzokWohLeae3pL9liEZ4QIbPEU0cg2ZJvtqWU6mgrM
+         giy+fWnjeBS7I6UmXa/W3Mq/yxcnX3fjiTagS1QzuddyXaHA6lI5MyN0ncRm6Mz0xx/m
+         UL1zO5xxodft7N4Fk8oJHpVTCRhh8lMf/6FBndRsDQiEwAiTsWZoJS0jRGZTT4qhhrBI
+         EA8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777589658; x=1778194458;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gZHidt1m0JlvpU+VvYCM2F4O0JmyQBeuxJIN2gPX9og=;
+        b=e0kKo1PSHlFAbmwkv5NhW1REQTDWHizXVKlTKTkLXC61lUw6xIR82kj4UGkc606DNS
+         OtMWzLXfgJdiMMQCOf2PfR7HAwCmZeOcq8fmogxYB7Pz1zl6nIyGlfM69eeK7wwhPh+2
+         s2kq3DcXYDFzKGtwM0ghigH4FwjF3+4e+4T6rjSGsaHfV3EwwjE7Tru/ettxGHqDjnFB
+         1aZ4PHkoeKRiRjqFpL/kLMlMco1dTjooI1w170otiVLpD9vUJ1zhWqQTddgH12yonyA9
+         lGLVZX3Vba1nl3TQFcg6kGhrfJz1J1oU2PV/ALlOEIYJU33SiOWb83AHZaM7lPLhtdCn
+         vaaw==
+X-Forwarded-Encrypted: i=1; AFNElJ9fAQf0I5Vsk0Fas2OUounQ29Eah8qlxbSV3bBf2gY9QYK/eIk57jkcYr/cpda9RjCs3H9cekyG@lists.linux.dev
+X-Gm-Message-State: AOJu0YxqJj6KqjXcsVFpNKo+E4aP3N3b0/2cpZ3SbL62x3DcqDLYD8Zo
+	77z8eU+aRrq8077R/yqvacUrU/0FVVwm6dJWl7aJAKe+0GHwIULD2HsAtaLXfYm6+fLuIDZO77F
+	ZBA==
+X-Received: from dybod18.prod.google.com ([2002:a05:7301:3f92:b0:2ed:a84e:18d3])
+ (user=wnliu job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7301:901:b0:2ed:f791:3417
+ with SMTP id 5a478bee46e88-2edf7a08036mr1180335eec.25.1777589657332; Thu, 30
+ Apr 2026 15:54:17 -0700 (PDT)
+Date: Thu, 30 Apr 2026 22:54:14 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/5] Convert riscv to use the generic iommu page table
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <177751952688.2274119.13814163549347100067.git-patchwork-notify@kernel.org>
-Date: Thu, 30 Apr 2026 03:25:26 +0000
-References: <0-v1-d3317b0ee398+50-iommu_pt_riscv_jgg@nvidia.com>
-In-Reply-To: <0-v1-d3317b0ee398+50-iommu_pt_riscv_jgg@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: linux-riscv@lists.infradead.org, alex@ghiti.fr, aou@eecs.berkeley.edu,
- iommu@lists.linux.dev, joro@8bytes.org, palmer@dabbelt.com, pjw@kernel.org,
- robin.murphy@arm.com, tjeznach@rivosinc.com, will@kernel.org,
- lihangjing@bytedance.com, luxu.kernel@bytedance.com, patches@lists.linux.dev,
- xieyongji@bytedance.com
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.54.0.545.g6539524ca2-goog
+Message-ID: <20260430225414.205094-1-wnliu@google.com>
+Subject: [PATCH] iommu/amd: Fix precedence order in set_dte_passthrough()
+From: Weinan Liu <wnliu@google.com>
+To: iommu@lists.linux.dev, jgg@nvidia.com, joro@8bytes.org, 
+	suravee.suthikulpanit@amd.com
+Cc: will@kernel.org, patches@lists.linux.dev, robin.murphy@arm.com, 
+	vasant.hegde@amd.com, santosh.shukla@amd.com, chrisl@kernel.org, 
+	Weinan Liu <wnliu@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hello:
+Bitwise OR | operator has a higher precedence than the ternary ?:
+operatior. It will be incorrectly evaluated as:
 
-This series was applied to riscv/linux.git (fixes)
-by Joerg Roedel <joerg.roedel@amd.com>:
+new->data[1] |= (FIELD_PREP(...) | dev_data->ats_enabled) ? DTE_FLAG_IOTLB : 0;
 
-On Tue,  4 Nov 2025 15:00:39 -0400 you wrote:
-> [ It looks like the precursor series will be merged, along with VTD. If
-> someone from riscv can test and review this it can likely go this cycle
-> too. I couldn't even slightly test it. ]
-> 
-> This is a fairly straightforward conversion of the RISC-V iommu driver to
-> use the generic iommu page table code.
-> 
-> [...]
+Wrap the conditional operation in parentheses to enforce the
+correct evaluation order.
 
-Here is the summary with links:
-  - [1/5] iommupt: Add the RISC-V page table format
-    (no matching commit)
-  - [2/5] iommu/riscv: Disable SADE
-    https://git.kernel.org/riscv/c/e93e4a6363b8
-  - [3/5] iommu/riscv: Use the generic iommu page table
-    (no matching commit)
-  - [4/5] iommu/riscv: Enable SVNAPOT support for contiguous ptes
-    (no matching commit)
-  - [5/5] iommu/riscv: Allow RISC_VIOMMU to COMPILE_TEST
-    (no matching commit)
+Fixes: 93eee2a49c1b ("iommu/amd: Refactor logic to program the host page table in DTE")
+Signed-off-by: Weinan Liu <wnliu@google.com>
+---
+ drivers/iommu/amd/iommu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-You are awesome, thank you!
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 01171361f9bc..ccffbecb15c2 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2149,7 +2149,8 @@ static void set_dte_passthrough(struct iommu_dev_data *dev_data,
+ 	new->data[0] |= DTE_FLAG_TV | DTE_FLAG_IR | DTE_FLAG_IW;
+ 
+ 	new->data[1] |= FIELD_PREP(DTE_DOMID_MASK, domain->id) |
+-			(dev_data->ats_enabled) ? DTE_FLAG_IOTLB : 0;
++			(dev_data->ats_enabled ? DTE_FLAG_IOTLB : 0);
++
+ }
+ 
+ static void set_dte_entry(struct amd_iommu *iommu,
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.54.0.545.g6539524ca2-goog
 
