@@ -1,43 +1,43 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011012.outbound.protection.outlook.com [52.101.57.12])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010050.outbound.protection.outlook.com [52.101.193.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A6E3F9FB
-	for <patches@lists.linux.dev>; Fri,  1 May 2026 00:08:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01D1175A8F
+	for <patches@lists.linux.dev>; Fri,  1 May 2026 00:08:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777594131; cv=fail; b=mKkoZkx220ukxeEXV9Z2FJH2ps5eIxV4THE8HDhOviHNdYK5Q2UX0cSB/YVqrbyPuG8to80wSsBg+ln8PUKlZpdA4Vaj75drJyMpJu8i5g+GbeUgLD8lRhhK7vqUt7f5+otCYWDL5CVzTWOzGhiCylxsA0D2TMKjRUJIkW6Gwpk=
+	t=1777594135; cv=fail; b=RAH/QpTz1x73mW/dQa2lsTAKwGPTRwR7Jl7iQ+D9jpzT6bYfUHRqwNyUQemdayW2BP9ZFldMn3OPeWcY52cIsoBQxjvL1qKfLnLzDc9jRbveGg8tVkGbXQR4Zkt7hzyI3yncPlSS74R7JqaKCBL7DJbC8FAVRG0gpqNThsawDGQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777594131; c=relaxed/simple;
-	bh=E8Y22OXWk/W9Z4t/wVjnLmHo2kV3n0qBr44bEXVNQak=;
+	s=arc-20240116; t=1777594135; c=relaxed/simple;
+	bh=jPtcJEny00JETsh2WIAML6GY3epHdTvDTM8hS+KS/D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=DzQENdN8pQmbcZ+MrqsANufWW0/XErGtL6ffAy8LP70/DgIoqJHit9x1Dw1plDqmIhQffn7kETp6K9QBXirRsrGIZHK+18noqhYLDWYjDup8pnWjQipLK+ubQs04qIJopQroNyAfa3o7xtmrffxmTLEf99zljTnhSAuvl1k4yCk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cqJZ3Mpy; arc=fail smtp.client-ip=52.101.57.12
+	 Content-Type:MIME-Version; b=MPIqfa+XswDTOtwEsg4o2X7iOcwn40Hs8tACt4w56nyhz18q46ZUAwGgzVTTC1qXyCdnX1ykCrh8Gx9CoXtHmyYVLcPPyX2oe6bXG5ZmZNxq/FAj2zloN13jTtnjn8ZYfNSRRlLrtBZDnM5W4Gu3eDkk3sRTUG3zh2Zr1w9c8CQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=XmfQcuQg; arc=fail smtp.client-ip=52.101.193.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cqJZ3Mpy"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="XmfQcuQg"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IeojazlYbXJfWxpTzU4jqyOHNr5LpQ/5FZIRzAi570HYOOt+Ea8z5QCVqDF1Y6esI15QNz6m3QU2tIaEqGH3cSyOTzpeR/P3mxVZQ3elZ94F+qAIuESqoKty9udOO6dZmy1xeAMR1x/Fa0AAy9+3LIhW+4/WHmKrhI6bzhW76M21FyPwI5j5CO69fHlEOT18QIiOFtlFtDTerMj61szr7wB16bcf1DO4zwGUKk3QvkRxKR85Lc6SBKi985uRGIO7hV1lCOw6i7Ir2huaAIOOdyQRtBsmNT7eP69LE3L8nMhBOgLtBDtAtoDgLWgDXE1cJR56gX9OuVLl5T8vUy2coA==
+ b=UuFBdYWXV4yrwQ4s+f2YqcZbzLh85mTlOp/TgqpUvDv0s58mXZv432FRSMeZXSf4Q95zeS/fDQgFEvx/x2zx5iLcssDrkSJFOUb9rBDw3JOIDtIJzBHo30E6BXOn0dZ7vLG9yL+g+hJbGpP464qRyx4atq2I9kvmPDjXqIA/qPmWDagCXxPT5H0sy9c9CNNz4vFF5gqwm0OI8PiaTlV0rDEsP5l/twHx5ryhGtZzLMjiKbAd+vaoOZIfmh1QCEyf9xkeDe+dFHU9zHLG9OmwHDhdqMcTI9YVHGdttm4xEZdxy2tiFyWrgnHyCW3nWN5eIQxBqcT64x6vzn4tr898Dw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BgNR8JKn3caYPqzLozD+4F7DAdvQW4I7IRDZEnhYpIo=;
- b=zAoCePwd6BmTT511rFEtX8wqxINgldMl38eoM4WfHYKdIqimHmOHt24damzXFdKtITrzUcH5X7XNK2K9oWQLfNmaboMz8Ej2fezsdA3OWahufL94jRFOMHmGyxFv5y8orwEXPmckFQ9L7WDT58MVh5oR259gdPupHiOt6qS9xs6s32hS/j+bty0JMsEZN3heodHqSXMnI31RA4lLjRa+UmIInsimybvTc8zlbso4eVcwL6tGCgGm1od2qtwcVqk0RfVFwbEsZKQvdKQyv/tb2XUWJdSZphZ46o0PIxsOEGzd55z4VJqPJXqkuT75PGWREg3Z0HyDxaxXr8lpTBNe/g==
+ bh=6JZRDS5dEbrYkWtjv6mM1oK1IM3sheDdgJm3RvIYq9k=;
+ b=Fjq++hXuhNWwODzF7u2zkgV2uUybA8fVvb/nSMYvonG3af85ypcM8lE49jLG17ZuNM0aCfkKnupTSr0igaLghAdftW2saw6UBpfzwi/DuIx3ijCg2mdkv+mEhEEbwPRj5C713xP+JJ0sVQxsV3IQVpOXZQPZ/r2gzmVI1kWdVIRMemYjlFmOwdtsKvkDOLROm0arzghFa9GgEa6VXs2paNvgBrbROPQOi0qtT8YoeNqk6AxBZwysKo7UxsH5bWeEoEt8ZLJDVsV+Npg/ReoYfHQ8ERfa9i0XI/OpkRh6XjU+jDVcFVIaaU5TOI3Su/S0yey7QpRR64Kw8i/CCLHkbA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BgNR8JKn3caYPqzLozD+4F7DAdvQW4I7IRDZEnhYpIo=;
- b=cqJZ3Mpy+/o5IOUSasX7OHiyhxiE9DHjOYMQocANI/V3oU7XSJVx95qk5/ALoxvtTEn2o4qqAqz5P8iKQUrDqWSDT3JClrNNttuntsMHLmgH5LOD6C86TI0TepWGmBKVsvFZvpgg2VNxOqH9oR7Cq0fSdwZaZHz83GsWf4alQE5ZF7bzDZJj48g/02YV4zHcLyC3n8tdSfotGjHuAdUvMExFslhV/h9wED50HWNivcUSrhOWav5W+7UTg/xcRM0qqaZk5Un0lmsCP9oGoCJZPio+tiTDj8px3p287nkCBoD8mjKIkkv5sn+Av29fLFCA1/TrVl7Do9Zdo3uIFNvCuQ==
+ bh=6JZRDS5dEbrYkWtjv6mM1oK1IM3sheDdgJm3RvIYq9k=;
+ b=XmfQcuQgiKCtBALXcGqZTIRPb1tntAPccVdD489pTjHvmV0ILZMhn/v9N4+jc+FBkQEzm4ZEeE4cOFHtIsYDGdYAM0FwwXpqXdKAfOT90QMP3QQmm9+vJILU+JEf/K5UjsQa5BxLO+YaE3W4ccluSuB99E0kw00SsCDtFADOihw1L5um/BXAqHu90PnR00++MwXsrSonmhHHe/JtBQcc16ruCgufxr3Kaz6B7clyD1SrVrvRxjZSz+Qd1mPhRXVuIEOavJm4YWkCB6LVPwyOLuU9oKxz6wK+p67r6mKSBohU3jw0pxUIA0W9Znk2fzuDk3DIL8m/7q+gPtZ1zaQWAQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by PH0PR12MB8008.namprd12.prod.outlook.com (2603:10b6:510:26f::11) with
+ by SAVPR12MB999167.namprd12.prod.outlook.com (2603:10b6:806:4e5::19) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.21; Fri, 1 May
- 2026 00:08:42 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.19; Fri, 1 May
+ 2026 00:08:41 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9870.013; Fri, 1 May 2026
@@ -55,15 +55,15 @@ To: Alex Williamson <alex@shazbot.org>,
 	Shuah Khan <shuah@kernel.org>,
 	Tariq Toukan <tariqt@nvidia.com>
 Cc: patches@lists.linux.dev
-Subject: [PATCH 03/11] net/mlx5: Extract MLX5_SET/GET macros into mlx5_ifc_macros.h
-Date: Thu, 30 Apr 2026 21:08:29 -0300
-Message-ID: <3-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+Subject: [PATCH 07/11] vfio: selftests: Allow drivers to specify required region size
+Date: Thu, 30 Apr 2026 21:08:33 -0300
+Message-ID: <7-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
 In-Reply-To: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BL1PR13CA0082.namprd13.prod.outlook.com
- (2603:10b6:208:2b8::27) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL1PR13CA0061.namprd13.prod.outlook.com
+ (2603:10b6:208:2b8::6) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -72,359 +72,99 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH0PR12MB8008:EE_
-X-MS-Office365-Filtering-Correlation-Id: fbbf043b-b3af-47db-202f-08dea715cceb
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SAVPR12MB999167:EE_
+X-MS-Office365-Filtering-Correlation-Id: 832d0314-f222-4305-cea8-08dea715cc34
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|1800799024|366016|921020|18002099003|22082099003|56012099003;
 X-Microsoft-Antispam-Message-Info:
-	0BbT15eCcK0bI0N4Ua5Wyc0BoS78SPHz+HoytLPpIpH27E5XTrvbaOY2AVXnf38PdAJ47js5njlmOFWaOHSRhuxdonqHr3OaoKVjsiH3NuPOMq8aHcqXZni/RHrUfXu3y4b7nSwOENdbstaquFkhkv9C5lOJN1/dWOaLQqzqd2sTF5JMxNFMWqSMrDMnGSI5bgi57NLGLU4PUsg3DlnUovULBE4ioyaf3y5V0TCIFbE3t7j/oK2m+2H/PwIG5vQ6o7ZQQSYrhisLSalfNyPBAM9NOpKGAMrGSt7RjSAq9B9FXWEE2I3PNZC7PEOOKeXgXYzm0Pp6VD/iJMgUVl6dX3wE9JqN1uGZ089aT6jwGKiQRzWXVQatsIcV15JvrPDh3kpc/dRF1BkCiGEngiU97DYildRkvtezMRzQ8k8zQ5fs8NHm24Z5DMOWqZNfpKVmUxC1iS3WXEBQ6Zc0LZky/SEd6KH9gZhTY86dPkmyYVL2JKMenzEd8nJXIOQQ4fDn1btbY97vc4zuRvBGKXjEIdzbgXCSNAK3SFbf0GTjHxZWJf769KY06K5BxtkprZljIOVZDmEXEQ1v4BuxSbOAGxXsqRPm2oKUE4WTX9W+dw9NgO/cPd+6Rvzy4U8dmrJvzb22gZ026/nU1TFnaIHgP84HMOeNkfN9PvyjoUWJjEpbx83ska6y5nwYIYoMkb5BCMT4nhybuOa2y4U10+hJFXLTQ/vZoXUm49qiZEGsnY4=
+	V7cte1WwbSHsEHkxOVADPMRi6iLF1wEzlp3o2Z8O+0HSfPf3oVr26r8NwQpurIt18nMfcVAoYUcD6dJY5ZETKjM/E7O5j0+dg6jVRdYLqeaHCZ5bOMPFb95EvPmJ5mkyyxG1lx27gQdSc9/HIX8SgF0Z5OQoA2OYq1w7EsIeIIvynoWqLORC9153TT8oUBftpU9Jztp8jTXEsSVt+rrY8eLP5/vUizQ7c3njIzMYGfIDk7mMPkKX1dTJ2uB75aR1sBS6HfMOttY/GlahjuNCjH5MPnohGa45Ty4a75nbdtutwWgQnAz8QuJhN0XaMX6IQywm76QD57wbNak1XSJCZImgBO5HHFHVqUE50RwdVODFxchcb+R23oC6IObWXeX9QxBa1cIBlNo0Ax2Thjo08YLm6VW9lVJ2TktQ1/zWNg/E19QDT9ZgNH2fh3Wy2KDR5uLXvS0vXJxQVUlq2ACyCBSIrgm7ouzPAe8R/9EEL9HsWcxgV4xWecJcMF7SSPzdcIUyopwDZ1zCakR/98eHS8WDdDO96dICPzE0OmfkgVnFwq0nHXBAcVAW/yBaDd51vjKO03q5toWmytOI/YceCodr3s/fmHiU8eEU71oRXXzDqI68D3LFqkHm2L7vJs5N/gmvo1SfWmVNR8Vz3m9eOd9i6Agix89xYqN3XiOrv1yGkOIMKqF9hYW2H6gCQl8uicUB9rllpJJBR9q9Mjr+wMtCatjSTl8eKKvD0jcZTgo=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(921020)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?gZt+obZfuGkn3GZP9DtQBm90oIjvOMPOFzFGi2dSsyO7fHEYdBFNKAqdxsXI?=
- =?us-ascii?Q?wrCX+SmAzjg5ly6ZkYwxvn5/WpQqoTjqStur6XaFMLoe8SeXrKE2yxoSne6C?=
- =?us-ascii?Q?RuO1w34gDcwJjIMTraxBH6cXO2SchGcqu7MuhOejMvYuWmVMmbPTNskPz6M8?=
- =?us-ascii?Q?/Vghup/LXdALxbxrq3ogT/NsWyxjTckLNHj9IDhmNFpmjuWsRjxxiN8U+BLE?=
- =?us-ascii?Q?yNYhOPt7iG6YwZIvyaVPfmtjRIEHK1Q3Lzy9D87QAiLYLPYQR/vwEQk8bzgq?=
- =?us-ascii?Q?i77V58TRQqK2oyk/Ii29H049Bw8WFw/CFMUMMXpsQOMIzmOJlxxzHXUdemp9?=
- =?us-ascii?Q?oNZqMMBtnVEyd6UMlXCChwZoQ0hS6cGUhbg1iFUFrQQLwSEl/hnP9WHN6KCZ?=
- =?us-ascii?Q?GXcmnR1kClU2DCT5YQ4Nj1VGN3/HdrFnksNtlhl2W4+AwFkRKjTq9rBatY4X?=
- =?us-ascii?Q?Ki6i8yK7yv95CA7ogEqI+Wx2FAvLForqnCW/HotKURp9aBPnx5FoMkggDzgE?=
- =?us-ascii?Q?gz6XGP3ejYCTiipRKSIhYQw/EEHxVZOHswypETY6YCYlBSOEpHEOJA4lrE1J?=
- =?us-ascii?Q?M2d/NNO05TGWnooJTbq9KQlFAlwnlo4eEwnjgqxMWEfO8c1G+Oj/1xR3eObB?=
- =?us-ascii?Q?eIJ1L479mN7VBash9f6oXU7ey7En4K3R9Iu2b5AsY7D6M6fpNeBC6L0Tg9Rz?=
- =?us-ascii?Q?UnqnFEIgoNZoGtasvDpnhu7ZqI2lzcAhoaMtNjUxPumTpHT7ZA/Tx6VCmloS?=
- =?us-ascii?Q?CxwTPNGmrGl9F7BQnf94Pad5YtuzcL6N6AXSIh6Tq92zAeEmhKaX4EffG+tx?=
- =?us-ascii?Q?kk4M4BgxfksX1upSe39+4TTe/5QSVIfSzvP4SHJbCLYFdQ1lz80v18yKFUZe?=
- =?us-ascii?Q?Xcl4pBDa5Xcq+tvL4+LHuPV2FP5/V0xmsyD+tsftiOZ/7qn/siGQujfn2F/x?=
- =?us-ascii?Q?MwYsUDkO9pX0zXCJ4hFuzGW9Por2p14cUAWCtVkKZlRsuadtUD+K1taLLKWX?=
- =?us-ascii?Q?qZXRrEvHoiM087gRaVWgUm9l0bX7Op76Jr1C2BvBEHdlRSIjz6Wn4TVOyl4g?=
- =?us-ascii?Q?a7tv0hq4Wk4FgASaTRL7vfL45pIHozFlS7k8kzxGTNFHw3izhnK8g1duLitJ?=
- =?us-ascii?Q?5CBqMHI00me8iB3SKz8BG8MozPApyZqvuLO7qGe9EhVNLvDvEn+6/GJUSds1?=
- =?us-ascii?Q?uy371uDB4C6X+w5V9zwmjoZxSelKZCRyC8vTZAmG1qAxdD17y/rbw2IHgo6U?=
- =?us-ascii?Q?sakDFPwEVRyTK9NsKj0E7n92gcHkN/CG1BlOAO7L/aO4+MT0KraptyypQUXQ?=
- =?us-ascii?Q?zhjD0pTz3pmO8syoOCGs1DLiZk6V55DMoizUmjXjnZwR+t+Cr8xGZiIZkrU5?=
- =?us-ascii?Q?eJFm7IvE8Rtv5R1Gf8kwZEhdasgIa76GiEHB4Q9cRuYKstIXjjEULPVM+/OF?=
- =?us-ascii?Q?OrD5JaCV9sD+dEx7QBznu70t09ZkZ5FIxYp0Rg+LhnK2ZI0POB+3Y44YIPmf?=
- =?us-ascii?Q?knkpVxbVljJK0Fj/r4yoduoYCQRMzwKTEwZzCug80vtA6LINCmsNPDwVR/NI?=
- =?us-ascii?Q?FaUrRjCbOahHNZivdmBAGZ3gWz6hHBm9fjPOklxfX2KrLEOgWTnXu3kn8zJR?=
- =?us-ascii?Q?WBvJVi5ZLlhLlF26veJt9QyEM8EgJZUAEHq+sT8FRMBCH12OADi+7QMbMvfy?=
- =?us-ascii?Q?yEj8KfpIkfqvalZ5fVV+5TvJknPyMFjFy1R0X6C7Uca3jd9D?=
+	=?us-ascii?Q?SwEkcP7WUSGH+gkO6wOucfKVEZgI+rnaPrp8kDSdUwQwrsBeiHDvIPvF0xiF?=
+ =?us-ascii?Q?QKtzcht/4PFfHbWwH315XHBSbEymvQ+wgQM97vtsUFoDs6jj9Gy5y7r/2Cyb?=
+ =?us-ascii?Q?F9JyXPYjtpPNzysm7qGUCR84CLDuL4NAySvwCrhno1DKSGNyQS+hz35R+Q9Y?=
+ =?us-ascii?Q?T5Oo3fP2Jxb2ydVeiTXiJy3KeXfAZybLUPSCi5JX8kg09CPUK+Wt8ktZD5lh?=
+ =?us-ascii?Q?K5p2zlyx15CXM26rxkr6CsL5dk4KaYq2ugPs+KXwZ0QJ1gzISoLjJTiOZZHU?=
+ =?us-ascii?Q?1A1y/Uj6yhOC3yiZkJwX5Tuqn7OKvW8lD3ZgKqLicvSXW6kVhJY0Es2/BTyF?=
+ =?us-ascii?Q?orynbfg55JI+McWi0xyFnnZIJkMx7NAr4ZGRPjjia/lCLbi3xsOA6mHvAC6b?=
+ =?us-ascii?Q?BPlMjjpePyvgM8BrkbV6ztbb++uadqNrmSjGrkS+gr7nWQBPRZlUQP1zXu3F?=
+ =?us-ascii?Q?WZce8I58m3EhV8OMvmtnxftr7Kxe7KBMzYUjGJGN7GvbjBJJKrlSXYFGbdsf?=
+ =?us-ascii?Q?OJ5Il06wBMZuzxUz3vncs9fb4BqANFneOqw9PaGPhTqQTn0b1OpRHdRZKfZb?=
+ =?us-ascii?Q?+N5xM1qzKE1O0Dt4mlAcwfVUoe4wDOC7c9ywoFiHFtnzSqODJydpIZM8BSGt?=
+ =?us-ascii?Q?quuEoQ3CNQ+hgV3OKw79egHW75w3+dbzVimSOnv3YVzzUUBtlcQBsRJVEyp4?=
+ =?us-ascii?Q?pyVfbV+CIYjnh8cCtoFZD2eZqJMmh8h4IpeWgSNMZMHrJ2PybRjZU7anSpxo?=
+ =?us-ascii?Q?d7fLmhTiYWLCR7b2s1pFjdlOXb8OIboQ33kQtgzd8z/d1GYA3GwBueL899mk?=
+ =?us-ascii?Q?G7f3RStWGQw3fh+Kdtkdb58Za8GVRlqbEGUmh8TZe4Em9DgPxCRtQvSl6pO8?=
+ =?us-ascii?Q?JeM0nnrvEShN7f6pUCdSIMgKsIPVZ/bzzw0Po7ZuDPiDjKd1oRag656FYiJf?=
+ =?us-ascii?Q?YPXUdLOBReiBBx5uVAxMz2RCHLZT6k0UzER2PnJLgCjvWiXjYDzaRs5O3OcI?=
+ =?us-ascii?Q?A5w2gufmxl6aqEWpYDAvt9kyu2tx0dcyZ9YKcpvQ0JClo1JT3W1QH/Z2Sgb+?=
+ =?us-ascii?Q?rRklasxqRY7MPnLXjFYvFGjB/CVQZNfqQMWb5Q0/xBUtpbBbrT9noGZts22F?=
+ =?us-ascii?Q?28tIhojHk386Zc7sjFAQCxFJ8ANQ+fi8dIvdfjH3hHYbsd4mZpYIc5tIeL9r?=
+ =?us-ascii?Q?3/jBkNRZ4ih81tz8hA0QfcEeK2EhwcAZAKZaqOLZAoJSsUuuzMxSxoFStLgc?=
+ =?us-ascii?Q?/AYr1ROdqTe4T5SZ6/QQp+x/RAWDGCGnB+W0OS0LHHUF/9lFXcy5V0PCpEjP?=
+ =?us-ascii?Q?EGc8N1m7XOmFAichrx9Ovcmxx7ndODzRPJCOVx6KiYL5Ee+VlsCVzYcfCqob?=
+ =?us-ascii?Q?IHyPbiuqTqyjwqiYar6QcgriDj0cyucSKozXvDwsAKzvtG87ALsZ78aGhOgR?=
+ =?us-ascii?Q?ASf8CmFF4OKkWaCxVe5lE3mQl7DaDDYGJYBGAVLl107d7h49+TDGJGuMdEQ1?=
+ =?us-ascii?Q?YJ4bDjxKmfXicaGugFJsKeD5b67VHIUTUCrPuMnsjmxo39VAAB9C7UWHNpwU?=
+ =?us-ascii?Q?4qm3DBTFECd6GIhKIgEocjYsSvwMLRLcEpmvOREac6B5QVBUq3HZ5Dmxv+Pk?=
+ =?us-ascii?Q?kwNtQCjcY0k/YXT6l2fFCoW5MqzwVvMY5Sxxm11HnFIkpGXvB6HloTucnWZu?=
+ =?us-ascii?Q?wawTF0sb+vARRG3jgil3jL2EQIJ8OidRxd62ssiUBM4oiyAH?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fbbf043b-b3af-47db-202f-08dea715cceb
+X-MS-Exchange-CrossTenant-Network-Message-Id: 832d0314-f222-4305-cea8-08dea715cc34
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2026 00:08:40.9475
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2026 00:08:39.8933
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: y0ATzuqQXvV5t3c9hedf0uqZD6FnWaYLNv2wUF6unmek3L/Y7uZOfLu8O2CAnnSO
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8008
+X-MS-Exchange-CrossTenant-UserPrincipalName: ra/+xMzyNHEPy5NMs4nS4vzEsQ42L8ytjtzfZqdXKYnmAPe/Ebwkd9cDMPVLy1PJ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAVPR12MB999167
 
-Extract the entire MLX5_SET/GET macro family and their internal
-helpers from device.h into a new lightweight header
-(include/linux/mlx5/mlx5_ifc_macros.h).  device.h cannot be
-included by the VFIO selftest because it pulls in rdma/ib_verbs.h;
-the macros themselves depend only on endian helpers, BUILD_BUG_ON,
-and basic C types.
-
-The moved macros include the internal helpers (__mlx5_nullp through
-__mlx5_st_sz_bits), all size/address macros (MLX5_ST_SZ_BYTES,
-MLX5_BYTE_OFF, MLX5_ADDR_OF, etc.), the 32-bit accessors (MLX5_SET,
-MLX5_GET, MLX5_SET_TO_ONES, MLX5_ARRAY_SET, MLX5_GET_PR), the
-64-bit accessors (MLX5_SET64, MLX5_GET64, MLX5_ARRAY_SET64,
-MLX5_GET64_PR), the 16-bit accessors (MLX5_GET16, MLX5_SET16), and
-the big-endian getters (MLX5_GET64_BE, MLX5_GET_BE).
-
-device.h includes the new header so existing kernel code is
-unchanged.
+Add a region_size field to struct vfio_pci_driver_ops so drivers can
+declare how much DMA-mapped region they need. The mlx5 driver will
+need ~18MB for firmware pages. Existing drivers leave region_size as
+0 and get the current default of SZ_2M.
 
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- include/linux/mlx5/device.h          | 117 +----------------------
- include/linux/mlx5/mlx5_ifc_macros.h | 133 +++++++++++++++++++++++++++
- 2 files changed, 134 insertions(+), 116 deletions(-)
- create mode 100644 include/linux/mlx5/mlx5_ifc_macros.h
+ .../selftests/vfio/lib/include/libvfio/vfio_pci_driver.h       | 3 +++
+ tools/testing/selftests/vfio/vfio_pci_driver_test.c            | 3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/mlx5/device.h b/include/linux/mlx5/device.h
-index c739a1f578dc44..2de2640d830bd6 100644
---- a/include/linux/mlx5/device.h
-+++ b/include/linux/mlx5/device.h
-@@ -36,6 +36,7 @@
- #include <linux/types.h>
- #include <rdma/ib_verbs.h>
- #include <linux/mlx5/mlx5_ifc.h>
-+#include <linux/mlx5/mlx5_ifc_macros.h>
- #include <linux/bitfield.h>
+diff --git a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
+index e5ada209b1d102..fa172635632453 100644
+--- a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
++++ b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
+@@ -9,6 +9,9 @@ struct vfio_pci_device;
+ struct vfio_pci_driver_ops {
+ 	const char *name;
  
- #if defined(__LITTLE_ENDIAN)
-@@ -46,122 +47,6 @@
- #error Host endianness not defined
- #endif
++	/* Minimum driver region size, 0 = default SZ_2M */
++	u64 region_size;
++
+ 	/**
+ 	 * @probe() - Check if the driver supports the given device.
+ 	 *
+diff --git a/tools/testing/selftests/vfio/vfio_pci_driver_test.c b/tools/testing/selftests/vfio/vfio_pci_driver_test.c
+index 761bf117d624f8..97eea34825f88b 100644
+--- a/tools/testing/selftests/vfio/vfio_pci_driver_test.c
++++ b/tools/testing/selftests/vfio/vfio_pci_driver_test.c
+@@ -87,7 +87,8 @@ FIXTURE_SETUP(vfio_pci_driver_test)
+ 	driver = &self->device->driver;
  
--/* helper macros */
--#define __mlx5_nullp(typ) ((struct mlx5_ifc_##typ##_bits *)0)
--#define __mlx5_bit_sz(typ, fld) sizeof(__mlx5_nullp(typ)->fld)
--#define __mlx5_bit_off(typ, fld) (offsetof(struct mlx5_ifc_##typ##_bits, fld))
--#define __mlx5_16_off(typ, fld) (__mlx5_bit_off(typ, fld) / 16)
--#define __mlx5_dw_off(typ, fld) (__mlx5_bit_off(typ, fld) / 32)
--#define __mlx5_64_off(typ, fld) (__mlx5_bit_off(typ, fld) / 64)
--#define __mlx5_16_bit_off(typ, fld) (16 - __mlx5_bit_sz(typ, fld) - (__mlx5_bit_off(typ, fld) & 0xf))
--#define __mlx5_dw_bit_off(typ, fld) (32 - __mlx5_bit_sz(typ, fld) - (__mlx5_bit_off(typ, fld) & 0x1f))
--#define __mlx5_mask(typ, fld) ((u32)((1ull << __mlx5_bit_sz(typ, fld)) - 1))
--#define __mlx5_dw_mask(typ, fld) (__mlx5_mask(typ, fld) << __mlx5_dw_bit_off(typ, fld))
--#define __mlx5_mask16(typ, fld) ((u16)((1ull << __mlx5_bit_sz(typ, fld)) - 1))
--#define __mlx5_16_mask(typ, fld) (__mlx5_mask16(typ, fld) << __mlx5_16_bit_off(typ, fld))
--#define __mlx5_st_sz_bits(typ) sizeof(struct mlx5_ifc_##typ##_bits)
--
--#define MLX5_FLD_SZ_BYTES(typ, fld) (__mlx5_bit_sz(typ, fld) / 8)
--#define MLX5_ST_SZ_BYTES(typ) (sizeof(struct mlx5_ifc_##typ##_bits) / 8)
--#define MLX5_ST_SZ_DW(typ) (sizeof(struct mlx5_ifc_##typ##_bits) / 32)
--#define MLX5_ST_SZ_QW(typ) (sizeof(struct mlx5_ifc_##typ##_bits) / 64)
--#define MLX5_UN_SZ_BYTES(typ) (sizeof(union mlx5_ifc_##typ##_bits) / 8)
--#define MLX5_UN_SZ_DW(typ) (sizeof(union mlx5_ifc_##typ##_bits) / 32)
--#define MLX5_BYTE_OFF(typ, fld) (__mlx5_bit_off(typ, fld) / 8)
--#define MLX5_ADDR_OF(typ, p, fld) ((void *)((u8 *)(p) + MLX5_BYTE_OFF(typ, fld)))
--
--/* insert a value to a struct */
--#define MLX5_SET(typ, p, fld, v) do { \
--	u32 _v = v; \
--	BUILD_BUG_ON(__mlx5_st_sz_bits(typ) % 32);             \
--	*((__be32 *)(p) + __mlx5_dw_off(typ, fld)) = \
--	cpu_to_be32((be32_to_cpu(*((__be32 *)(p) + __mlx5_dw_off(typ, fld))) & \
--		     (~__mlx5_dw_mask(typ, fld))) | (((_v) & __mlx5_mask(typ, fld)) \
--		     << __mlx5_dw_bit_off(typ, fld))); \
--} while (0)
--
--#define MLX5_ARRAY_SET(typ, p, fld, idx, v) do { \
--	BUILD_BUG_ON(__mlx5_bit_off(typ, fld) % 32); \
--	MLX5_SET(typ, p, fld[idx], v); \
--} while (0)
--
--#define MLX5_SET_TO_ONES(typ, p, fld) do { \
--	BUILD_BUG_ON(__mlx5_st_sz_bits(typ) % 32);             \
--	*((__be32 *)(p) + __mlx5_dw_off(typ, fld)) = \
--	cpu_to_be32((be32_to_cpu(*((__be32 *)(p) + __mlx5_dw_off(typ, fld))) & \
--		     (~__mlx5_dw_mask(typ, fld))) | ((__mlx5_mask(typ, fld)) \
--		     << __mlx5_dw_bit_off(typ, fld))); \
--} while (0)
--
--#define MLX5_GET(typ, p, fld) ((be32_to_cpu(*((__be32 *)(p) +\
--__mlx5_dw_off(typ, fld))) >> __mlx5_dw_bit_off(typ, fld)) & \
--__mlx5_mask(typ, fld))
--
--#define MLX5_GET_PR(typ, p, fld) ({ \
--	u32 ___t = MLX5_GET(typ, p, fld); \
--	pr_debug(#fld " = 0x%x\n", ___t); \
--	___t; \
--})
--
--#define __MLX5_SET64(typ, p, fld, v) do { \
--	BUILD_BUG_ON(__mlx5_bit_sz(typ, fld) != 64); \
--	*((__be64 *)(p) + __mlx5_64_off(typ, fld)) = cpu_to_be64(v); \
--} while (0)
--
--#define MLX5_SET64(typ, p, fld, v) do { \
--	BUILD_BUG_ON(__mlx5_bit_off(typ, fld) % 64); \
--	__MLX5_SET64(typ, p, fld, v); \
--} while (0)
--
--#define MLX5_ARRAY_SET64(typ, p, fld, idx, v) do { \
--	BUILD_BUG_ON(__mlx5_bit_off(typ, fld) % 64); \
--	__MLX5_SET64(typ, p, fld[idx], v); \
--} while (0)
--
--#define MLX5_GET64(typ, p, fld) be64_to_cpu(*((__be64 *)(p) + __mlx5_64_off(typ, fld)))
--
--#define MLX5_GET64_PR(typ, p, fld) ({ \
--	u64 ___t = MLX5_GET64(typ, p, fld); \
--	pr_debug(#fld " = 0x%llx\n", ___t); \
--	___t; \
--})
--
--#define MLX5_GET16(typ, p, fld) ((be16_to_cpu(*((__be16 *)(p) +\
--__mlx5_16_off(typ, fld))) >> __mlx5_16_bit_off(typ, fld)) & \
--__mlx5_mask16(typ, fld))
--
--#define MLX5_SET16(typ, p, fld, v) do { \
--	u16 _v = v; \
--	BUILD_BUG_ON(__mlx5_st_sz_bits(typ) % 16);             \
--	*((__be16 *)(p) + __mlx5_16_off(typ, fld)) = \
--	cpu_to_be16((be16_to_cpu(*((__be16 *)(p) + __mlx5_16_off(typ, fld))) & \
--		     (~__mlx5_16_mask(typ, fld))) | (((_v) & __mlx5_mask16(typ, fld)) \
--		     << __mlx5_16_bit_off(typ, fld))); \
--} while (0)
--
--/* Big endian getters */
--#define MLX5_GET64_BE(typ, p, fld) (*((__be64 *)(p) +\
--	__mlx5_64_off(typ, fld)))
--
--#define MLX5_GET_BE(type_t, typ, p, fld) ({				  \
--		type_t tmp;						  \
--		switch (sizeof(tmp)) {					  \
--		case sizeof(u8):					  \
--			tmp = (__force type_t)MLX5_GET(typ, p, fld);	  \
--			break;						  \
--		case sizeof(u16):					  \
--			tmp = (__force type_t)cpu_to_be16(MLX5_GET(typ, p, fld)); \
--			break;						  \
--		case sizeof(u32):					  \
--			tmp = (__force type_t)cpu_to_be32(MLX5_GET(typ, p, fld)); \
--			break;						  \
--		case sizeof(u64):					  \
--			tmp = (__force type_t)MLX5_GET64_BE(typ, p, fld); \
--			break;						  \
--			}						  \
--		tmp;							  \
--		})
--
- enum mlx5_inline_modes {
- 	MLX5_INLINE_MODE_NONE,
- 	MLX5_INLINE_MODE_L2,
-diff --git a/include/linux/mlx5/mlx5_ifc_macros.h b/include/linux/mlx5/mlx5_ifc_macros.h
-new file mode 100644
-index 00000000000000..d357acfd351de2
---- /dev/null
-+++ b/include/linux/mlx5/mlx5_ifc_macros.h
-@@ -0,0 +1,133 @@
-+/* SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB */
-+/*
-+ * Copyright (c) 2013-2026, Mellanox Technologies. All rights reserved.
-+ *
-+ * Accessor macros for mlx5 IFC structures.
-+ *
-+ * Extracted from device.h so that code which cannot include device.h
-+ * (e.g. selftests) can still use the MLX5_SET/GET family directly.
-+ */
-+
-+#ifndef MLX5_IFC_MACROS_H
-+#define MLX5_IFC_MACROS_H
-+
-+/* Internal helpers -- 32-bit */
-+#define __mlx5_nullp(typ) ((struct mlx5_ifc_##typ##_bits *)0)
-+#define __mlx5_bit_sz(typ, fld) sizeof(__mlx5_nullp(typ)->fld)
-+#define __mlx5_bit_off(typ, fld) (offsetof(struct mlx5_ifc_##typ##_bits, fld))
-+#define __mlx5_16_off(typ, fld) (__mlx5_bit_off(typ, fld) / 16)
-+#define __mlx5_dw_off(typ, fld) (__mlx5_bit_off(typ, fld) / 32)
-+#define __mlx5_64_off(typ, fld) (__mlx5_bit_off(typ, fld) / 64)
-+#define __mlx5_16_bit_off(typ, fld) (16 - __mlx5_bit_sz(typ, fld) - (__mlx5_bit_off(typ, fld) & 0xf))
-+#define __mlx5_dw_bit_off(typ, fld) (32 - __mlx5_bit_sz(typ, fld) - (__mlx5_bit_off(typ, fld) & 0x1f))
-+#define __mlx5_mask(typ, fld) ((u32)((1ull << __mlx5_bit_sz(typ, fld)) - 1))
-+#define __mlx5_dw_mask(typ, fld) (__mlx5_mask(typ, fld) << __mlx5_dw_bit_off(typ, fld))
-+#define __mlx5_mask16(typ, fld) ((u16)((1ull << __mlx5_bit_sz(typ, fld)) - 1))
-+#define __mlx5_16_mask(typ, fld) (__mlx5_mask16(typ, fld) << __mlx5_16_bit_off(typ, fld))
-+#define __mlx5_st_sz_bits(typ) sizeof(struct mlx5_ifc_##typ##_bits)
-+
-+/* Size and address macros */
-+#define MLX5_FLD_SZ_BYTES(typ, fld) (__mlx5_bit_sz(typ, fld) / 8)
-+#define MLX5_ST_SZ_BYTES(typ) (sizeof(struct mlx5_ifc_##typ##_bits) / 8)
-+#define MLX5_ST_SZ_DW(typ) (sizeof(struct mlx5_ifc_##typ##_bits) / 32)
-+#define MLX5_ST_SZ_QW(typ) (sizeof(struct mlx5_ifc_##typ##_bits) / 64)
-+#define MLX5_UN_SZ_BYTES(typ) (sizeof(union mlx5_ifc_##typ##_bits) / 8)
-+#define MLX5_UN_SZ_DW(typ) (sizeof(union mlx5_ifc_##typ##_bits) / 32)
-+#define MLX5_BYTE_OFF(typ, fld) (__mlx5_bit_off(typ, fld) / 8)
-+#define MLX5_ADDR_OF(typ, p, fld) ((void *)((u8 *)(p) + MLX5_BYTE_OFF(typ, fld)))
-+
-+/* insert a value to a struct */
-+#define MLX5_SET(typ, p, fld, v) do { \
-+	u32 _v = v; \
-+	BUILD_BUG_ON(__mlx5_st_sz_bits(typ) % 32);             \
-+	*((__be32 *)(p) + __mlx5_dw_off(typ, fld)) = \
-+	cpu_to_be32((be32_to_cpu(*((__be32 *)(p) + __mlx5_dw_off(typ, fld))) & \
-+		     (~__mlx5_dw_mask(typ, fld))) | (((_v) & __mlx5_mask(typ, fld)) \
-+		     << __mlx5_dw_bit_off(typ, fld))); \
-+} while (0)
-+
-+#define MLX5_ARRAY_SET(typ, p, fld, idx, v) do { \
-+	BUILD_BUG_ON(__mlx5_bit_off(typ, fld) % 32); \
-+	MLX5_SET(typ, p, fld[idx], v); \
-+} while (0)
-+
-+#define MLX5_SET_TO_ONES(typ, p, fld) do { \
-+	BUILD_BUG_ON(__mlx5_st_sz_bits(typ) % 32);             \
-+	*((__be32 *)(p) + __mlx5_dw_off(typ, fld)) = \
-+	cpu_to_be32((be32_to_cpu(*((__be32 *)(p) + __mlx5_dw_off(typ, fld))) & \
-+		     (~__mlx5_dw_mask(typ, fld))) | ((__mlx5_mask(typ, fld)) \
-+		     << __mlx5_dw_bit_off(typ, fld))); \
-+} while (0)
-+
-+#define MLX5_GET(typ, p, fld) ((be32_to_cpu(*((__be32 *)(p) +\
-+__mlx5_dw_off(typ, fld))) >> __mlx5_dw_bit_off(typ, fld)) & \
-+__mlx5_mask(typ, fld))
-+
-+#define MLX5_GET_PR(typ, p, fld) ({ \
-+	u32 ___t = MLX5_GET(typ, p, fld); \
-+	pr_debug(#fld " = 0x%x\n", ___t); \
-+	___t; \
-+})
-+
-+/* 64-bit field accessors */
-+#define __MLX5_SET64(typ, p, fld, v) do { \
-+	BUILD_BUG_ON(__mlx5_bit_sz(typ, fld) != 64); \
-+	*((__be64 *)(p) + __mlx5_64_off(typ, fld)) = cpu_to_be64(v); \
-+} while (0)
-+
-+#define MLX5_SET64(typ, p, fld, v) do { \
-+	BUILD_BUG_ON(__mlx5_bit_off(typ, fld) % 64); \
-+	__MLX5_SET64(typ, p, fld, v); \
-+} while (0)
-+
-+#define MLX5_ARRAY_SET64(typ, p, fld, idx, v) do { \
-+	BUILD_BUG_ON(__mlx5_bit_off(typ, fld) % 64); \
-+	__MLX5_SET64(typ, p, fld[idx], v); \
-+} while (0)
-+
-+#define MLX5_GET64(typ, p, fld) be64_to_cpu(*((__be64 *)(p) + __mlx5_64_off(typ, fld)))
-+
-+#define MLX5_GET64_PR(typ, p, fld) ({ \
-+	u64 ___t = MLX5_GET64(typ, p, fld); \
-+	pr_debug(#fld " = 0x%llx\n", ___t); \
-+	___t; \
-+})
-+
-+/* 16-bit field accessors */
-+#define MLX5_GET16(typ, p, fld) ((be16_to_cpu(*((__be16 *)(p) +\
-+__mlx5_16_off(typ, fld))) >> __mlx5_16_bit_off(typ, fld)) & \
-+__mlx5_mask16(typ, fld))
-+
-+#define MLX5_SET16(typ, p, fld, v) do { \
-+	u16 _v = v; \
-+	BUILD_BUG_ON(__mlx5_st_sz_bits(typ) % 16);             \
-+	*((__be16 *)(p) + __mlx5_16_off(typ, fld)) = \
-+	cpu_to_be16((be16_to_cpu(*((__be16 *)(p) + __mlx5_16_off(typ, fld))) & \
-+		     (~__mlx5_16_mask(typ, fld))) | (((_v) & __mlx5_mask16(typ, fld)) \
-+		     << __mlx5_16_bit_off(typ, fld))); \
-+} while (0)
-+
-+/* Big endian getters */
-+#define MLX5_GET64_BE(typ, p, fld) (*((__be64 *)(p) +\
-+	__mlx5_64_off(typ, fld)))
-+
-+#define MLX5_GET_BE(type_t, typ, p, fld) ({				  \
-+		type_t tmp;						  \
-+		switch (sizeof(tmp)) {					  \
-+		case sizeof(u8):					  \
-+			tmp = (__force type_t)MLX5_GET(typ, p, fld);	  \
-+			break;						  \
-+		case sizeof(u16):					  \
-+			tmp = (__force type_t)cpu_to_be16(MLX5_GET(typ, p, fld)); \
-+			break;						  \
-+		case sizeof(u32):					  \
-+			tmp = (__force type_t)cpu_to_be32(MLX5_GET(typ, p, fld)); \
-+			break;						  \
-+		case sizeof(u64):					  \
-+			tmp = (__force type_t)MLX5_GET64_BE(typ, p, fld); \
-+			break;						  \
-+			}						  \
-+		tmp;							  \
-+		})
-+
-+#endif /* MLX5_IFC_MACROS_H */
+ 	region_setup(self->iommu, self->iova_allocator, &self->memcpy_region, SZ_1G);
+-	region_setup(self->iommu, self->iova_allocator, &driver->region, SZ_2M);
++	region_setup(self->iommu, self->iova_allocator, &driver->region,
++		     driver->ops->region_size ?: SZ_2M);
+ 
+ 	/* Any IOVA that doesn't overlap memcpy_region and driver->region. */
+ 	self->unmapped_iova = iova_allocator_alloc(self->iova_allocator, SZ_1G);
 -- 
 2.43.0
 
