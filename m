@@ -1,47 +1,47 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011012.outbound.protection.outlook.com [52.101.57.12])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010002.outbound.protection.outlook.com [52.101.85.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254733594A
-	for <patches@lists.linux.dev>; Fri,  1 May 2026 00:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65726189F43
+	for <patches@lists.linux.dev>; Fri,  1 May 2026 00:08:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.2
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777594142; cv=fail; b=CHsMA4RbuYNay7RSFrIS+KmIOG499ZijVg1hkLjy1NcT3y+mvMIzIqEXA/7Jrg0CbP3C3M9f1EJ17GN1/ybB7ppmL4WKWYZ5OPwtoyg4JjTaKlJ5D0HIZzI1O8KGgJki5YWbmQlrBz4iPKjMKR5Vb7x1NL+4Cxs/iLq+pUYIt+w=
+	t=1777594145; cv=fail; b=mUkDgPYvq6ToM8JT+yfEMGi6SAHHifLj16IRW5/YHvNHIxhUbIGSiRcyvElxGv0YJhHo4/f/m74Y6RQgEXPaNuQMy6vzKuCghK5lSLONU8tyWNQNPVQeWaTFcI2t299R3pAxoW6EbhhYwwpX1mVHYBndBZAPpyLVs6pN+rSbmcE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777594142; c=relaxed/simple;
-	bh=0LP2z+xOWOZyqcniogbbmCcafb827GhVfc2PpurE3XA=;
+	s=arc-20240116; t=1777594145; c=relaxed/simple;
+	bh=FbSzKnpi+TdlR0r3Ggm/ja+2dwvUEWP8OKKcrjoph9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=YaGjKWG2W8Mx5qmHoe473ArLxe6M+LQ0kYW5OizdYNyI+YdL0zve+7fyKLzobsRT1rQrWovpOB2P5bgHZfS8LG1IaLqsQx3Kfb0PWdwYScYpJMbyB9eFN/gCQzrNdb/+86ykGLIiKs+tGaK4okjGdeYroq0Nj3cAr6l6C9JyBfI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kl8do1sH; arc=fail smtp.client-ip=52.101.57.12
+	 Content-Type:MIME-Version; b=iRmJ8dpGB04Skf9KmHn4SsJ/QEHdMwfLhy5J6n3JdOK3cBc2nGlkc/ryWth2nqfWjjUzkTzeuWGatjT4p/zAvmrXGgo4Q+kLVZ7XJzhrmlBsCAIDX9wkYYR5Mm9DjgI6UzSxPa2l5z46iuHY7jiLL0W6XULEiINI2QrXbRaE0xY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DXakp2Dk; arc=fail smtp.client-ip=52.101.85.2
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kl8do1sH"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DXakp2Dk"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DlsYlbBGM5kYGVDnoLKOH9FJ5CLLpXeM6jY/ep9kc0GxetkrW2iwoHOAMHmfr1HSJ1TPKCbY4bFVG/sWRDVhW8dbx7Wk/K4jPXknmAe7gXEgjrO02UzapEi2V44ZSk9SjZEsoxQCE+sS7UTTEu2H0ovunzJOeOnxBxh0/Evkw5X5OyGl+fSnErnWqdLSo4MN/Od7rK167NFrEBiNxkorRT2yg17jl4UUCEUbSmEMy+yFKFZy4RSLrauHl49f0wqcHzvm1WM8wDcP1n0Pbp+EG3LIOPBtK3dDrXMRg678Lt8bADiddRMXBDLsgWyrp+c5kPJ79a5u/sq2Xu59qxTNEQ==
+ b=atLyoQwTy+SRcohjiX+VmMe4Mrby/OUTIzTDXqIS9iECXMcvWOxs+0/iNnpKE0tapVbmG/CwMnNm8JQrfqSkI2SOfIx5J9Gs4Rn8lKZT+r7451yK/2Z26HFK/beUKTwIlQL3z59CXPV6w7pND6s9AEBLYtrqtRueMleVxVj68Gk2dxpJqgnw+l1Srcscss9C1msrLr2Kp2pM07SmoiwIFDt3Ed+r42pF1j3O07hB/57Okp3bxN+g1GbKoVJW+L2Zg5I7Ts5QGqCJFBpjoM2r+zMVwvd41xxBAgP41EdRVLrqK19HV3LEhaFE+7BZxcstLPwrfM6ajcVfux+y5x4qmg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=idxx0sOW2jDAzunM8BtnfSE47qawcM/8bv+SQmPiIFo=;
- b=ejckCD2GGwzmoL71WJMwYpr78I155/QS1WAoco65LSeFJYpB7kO1mx/yWqIqEUkoXn4/UqfrUyDBIHqMa6XcmlmWD5rBdbJVn+63+ixN0M0qF9DAlLBM3TuOGw3Vr1Ypq/7Fv1X6lYbQcnllVHUpMlCsMLmf+IrOJD4KCmvCKVnkZA3iihTS6NjWupcxY/+NwbQ1sgTM+TjfrsTSfdmnqmnMxxmJoE+XR0chfHJDSCxF3AIpGSQ3KHS+IQltB2k01BHonwgMXaLTGfsTz9xUoXoI+1ojiBP25SM0ahHcNdF3YThOegqWfGHqzjSFFCCAb614n5PURSvcvToHzRNILA==
+ bh=OFMhLJAAKsIY+u0VB9k519kGqhUfXzAngIEAp0ZGujw=;
+ b=WcXiBflEFvFdMRHViYKT7bL3ZvMjopCx7Ru0gqcA0h8Sv52nlu+QKKo+Nly/wKwJjep/NalXWcFNYDMkTX3rnNDc3BBNKQijn0IxH3KLGMtKl4u4q5/QRMST1j3bA3vYceQAnRtOAEinZZA0Sq4CXWCh63Ws5m8wG0V0Nbe3tuj9huhRlGy3OnJ1shYdrXqbVaxSMbO6btjrZUIvHYuDuWYv7vRAKucxnJt+OBbOKP9vwQHFuLHNUBjPAYcMCh/BJzHMRswB7GJgmwMDHNTIv9QrugRBU+H60WQNSqrHuhSt3TMH6EaE6NL0BMc6vfp5hztIN73qOHgzr1ov5cvrSg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=idxx0sOW2jDAzunM8BtnfSE47qawcM/8bv+SQmPiIFo=;
- b=kl8do1sHBlf4ytGiPqWsimEj65JrSw+uJqUawJu+TnidY/5zgwXOUaNHd9jSwprhHvvUbBDjfesPQctKa6/1JrTK3NJeQYe8YY3qepq521FnQAGI7uCQn9pFXafN3Ax7c5VjBusnIigCIotyU6hPNCeVFL3fMqCgQUbubUr26dbMfCeDrTfnt951PcQyFfRoozA+63vHxWV/R0ANRl5s9F8KVK1UcjtvS2zq+IKWPgPOwF0KtYeuolO5RBWrL5cHcjVf7Ki21n1gkXzizqa6Nx+CbWFse3tuKSgHbyGmaOr3JU/oRtDZbk+PTrHfahUFywBvMq45c6FDyKkqaQ5o6Q==
+ bh=OFMhLJAAKsIY+u0VB9k519kGqhUfXzAngIEAp0ZGujw=;
+ b=DXakp2DkaU7ZrQsDY4Wv6UzMfW1s9Qv/fIrp4kncYqbsttH5uckluM0rRdJ17dP9wa+s8UwJKS4XfAMI2RC+O/fy9dKkhkh93HQ+eUfJepXlMe4Nsh2B6L9Z2+V/O48iEraeMWDcbsh9S47FeCr1177YB4+keZSEfIDVxEzvjCLTW9eVDqJqnncQVnzcbkAW7s6dJvXDIwqTMWR5JNnCpGEtZS3axw62xt3lyDqp4Ml0TFE+oWYrxQwyz9JsHMbn4OPoNEoLoj+JMyut8hY65O3C6X+jlQBKtb3b4+9g14y7CfV1q533oxCQjrODkY50OwSEyK7hUe7t73+vPYQCMw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by PH0PR12MB8008.namprd12.prod.outlook.com (2603:10b6:510:26f::11) with
+ by SAVPR12MB999167.namprd12.prod.outlook.com (2603:10b6:806:4e5::19) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.21; Fri, 1 May
- 2026 00:08:43 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.19; Fri, 1 May
+ 2026 00:08:40 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9870.013; Fri, 1 May 2026
- 00:08:43 +0000
+ 00:08:40 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Alex Williamson <alex@shazbot.org>,
 	David Matlack <dmatlack@google.com>,
@@ -55,15 +55,15 @@ To: Alex Williamson <alex@shazbot.org>,
 	Shuah Khan <shuah@kernel.org>,
 	Tariq Toukan <tariqt@nvidia.com>
 Cc: patches@lists.linux.dev
-Subject: [PATCH 08/11] vfio: selftests: Add dev_dbg
-Date: Thu, 30 Apr 2026 21:08:34 -0300
-Message-ID: <8-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+Subject: [PATCH 10/11] vfio: selftests: Add mlx5 driver - data path and memcpy ops
+Date: Thu, 30 Apr 2026 21:08:36 -0300
+Message-ID: <10-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
 In-Reply-To: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MN2PR03CA0003.namprd03.prod.outlook.com
- (2603:10b6:208:23a::8) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL1PR13CA0156.namprd13.prod.outlook.com
+ (2603:10b6:208:2bd::11) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -72,86 +72,464 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH0PR12MB8008:EE_
-X-MS-Office365-Filtering-Correlation-Id: 90f0c97c-6758-4e74-01dc-08dea715cdb4
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SAVPR12MB999167:EE_
+X-MS-Office365-Filtering-Correlation-Id: 98f6e38e-6ca5-4ed1-5199-08dea715cc2b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|1800799024|366016|921020|18002099003|22082099003|56012099003;
 X-Microsoft-Antispam-Message-Info:
-	KDZLhxaNawG3T6K1RRE/UoSGF0Grfj7mL2oufA4Z3r/pKEywwrl3VfsApjRFf+u6rq7o7Q45GBzjZdyg7EJ/SQKVhHo2XUlx4KzEPQo3xp/etf5+7gUdSwk7f3dzY4/t0G79Ql4uza5bLO5kLPZibauD6rMhSR6hcVG4K2WHKVqebcDaBVx3XbEfeoBf25CP5efMasuKJJIpXNO1UzYVhSttO0dIyk8vjwcVC2Db5avAChePuGwCBuADu1rOsjjZxOsHRb4T3f6WsJzN8ON+hY4lGuoJjtjo7/j1nNWZIHegvP/joSbLyVbqJyVzcblLW6GyPm4x1aCN2uWVndO7wasxdkiNNfB96Cl9j8ksmCZLX2VXn3E5dzurXM3XK1tIzSS9FgT1K3zu4qQADQkE77FU+cPw+J0kLlUrT5moZXv6DQSWmCPmA8Ffw+OF1Qse3iJbyhWPtaBWnpVtBYs/shzlzkHyea8iQDJR3/zud0O87SDSiWLQ7OD7GymOUzXU8Za3UPVvUJmbPO14URBMSs8OJb5Hz1mn8e8WDLbSwbmunIqVatbx3Ed2Ifn+d7iTj6XFW72KIFJKsi8fUnW/+wtTkFiiJrjP2fsdmj3MVT1cbG8IxwRqw282bBzYUTvPy21mvcIDvcD4MUd8gYabSbp0fdLyWV7i8o87wdrKgvf4+iiPSe+phvQOD8fcnXLCRrk87WomnqZ+NUyS6HSQDtR/JBZtaVyO8Mt1fg05fww=
+	+mo2i7VelEjyDL+8o8ka9+Q0QPxVduhGRsjChN3bvvD7VFb8xOTFUWkITA9GDKKD21u/urOZWjdDFIn/GbsS5AMVkDZI5CiVgn8mwqb5Oc7RbTQq9OsqYnD0a//muBkjbTA1VMZns+qMreVlUvkRW/U6HI7RE8FX5V6vVGjECbSD1eu1PVwZVymiB8qWL4lMU0gIIwOI0YbxlfN3pzoguUfrgWdS5QakMAe2LPzA0abXd8Zb07x/jEHo0vh1+d4FThhCHew3bi5peP6X5QPUHVEckKa0Ghv4txzJrEcwpTirtTs0UkCxB4t4GA2LIU7KNVn1oEZzc23hJj83fcvv9LWlhH/6H+NW0hd27KojG+3XkISZVasvgCA1mTj1GaZxB8/st2utgmuccR0u5PP3kkWBJxdbx4cy79mPM43Zfi0uSIcQmH3LP295suzFTgTwXmii8rM//pLZ8hJL0+0jq5aBWY7TuOmBWHomW9ZWj0I+eKbIxGga6wYfjV/RaIAtE39wbkTx+2VSOPcDM/+xQLw2kLzREYEo/y1Q/cdppl2WPTxRRrBEpYZSYNjSJNVmM3Xr8UifRU5derTqN8hJ3Gu3NId3Puwa9u0Hg/Ffy16tpjq37M2YXsfxZN+Z/cTZjHhctHfm1jl5UARC33lCi49wHYnaXM2c+DWepcQozsJToueuzksB/TxZyJHW/JmbUETTpL6LDlncYF6Y8WeT/7DwybqWebJXuBIXFsaIjLA=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(921020)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?SWV7KTqAzgNzQKj7yvIUaJJ1r5xiwtIRqIECDKdL/oVIHKCBO1T80DemQNL8?=
- =?us-ascii?Q?bl4GQmm8qrx1pU8awkEZIKiySMaqhNd870sKKbV1pK8lu0oyDUUxNF9u2Via?=
- =?us-ascii?Q?05Zy1FSXLBHkwzVe2lk8Y82T2X+uB1VOptqQPyx0F6MbT4EgfUQK4np+w4IR?=
- =?us-ascii?Q?lE8HaEhdg6O+kcQjSOVpjacIX4aa08RyuIEhUL3PvBLWDPRl2H8c1dxXo7JC?=
- =?us-ascii?Q?x/ku7aJkFO7KDFE9VurHzehZjg6xdMZMdxBGkJgtC0+PYr+4DEhTNIdQlbjX?=
- =?us-ascii?Q?O2GdcbYTCW1LZHNJ610C+59W/n0106mdJoNLHmKhQBwQRHB1rPcXoEvPs98K?=
- =?us-ascii?Q?6oO5k+zPMaMIj/z5HKZCj/bNBgubdzktCo+Srly1tfU//V9iAOt5rmYt21mp?=
- =?us-ascii?Q?mC6aWhARyVUQh9lXadvOKbcrBfYWC+whZIbSjb5x3vJ/QZiN+UIJpAFLEDMP?=
- =?us-ascii?Q?O/bH6PE7b/1bbqb3EezMZgYZMKqCw/whUwpHl89bFxIoM3JFX9gUjuP23kuI?=
- =?us-ascii?Q?TymeWkHtmdzG8zK/ZxLnihbvtsAsw3r+NiCrfLm7qpTS9rp8ZKf7asWZ/Wlh?=
- =?us-ascii?Q?5gIv1paGmsuOZKftucqLdZJavbU1cpKP1WO9zE9700kdSD5Nw4mYSKayy/0h?=
- =?us-ascii?Q?TqBVJroa95qhNv+dzH8x4H7Z6wc+Hd60DqkoxQsjc18Lb0i1f0WYqgvJ29jm?=
- =?us-ascii?Q?jnGpzx+OFHyauGSXj7/HQB+w4ntJ1AAybGRQeS18QoL3wSYJqEBcelzEaDd8?=
- =?us-ascii?Q?pfwGg1WiCgqBbdlKUsvWaWzxeE01zE9V+IsU9eC7toMxXoX3++YWmMlrr4W6?=
- =?us-ascii?Q?CF3iukFNhYAboUVZEPXqWsWeoahgCZWmuyfIQ8190oKC24dPi/tEpiyh/Xgm?=
- =?us-ascii?Q?ejI4SLR5VFx7f4W6PPcZzHHflj2GHhcXWANxpF3v3OiN9YYUmq37JySV2We0?=
- =?us-ascii?Q?oyUtpQrIwUCnD+9b6z5dOH48MvpHz48DVUZDJwP8POD4Hbd3AhULjl+9qGnP?=
- =?us-ascii?Q?BDW81HtdqhppdamAof8RGMhm8ZeXtCwIgGKRrBYLlGJOdiUtgABFvctO3RNO?=
- =?us-ascii?Q?EyH8sOlqVCE7xManKoDqnt1JfWCRY4YFLISQxXrbvO0aPX0p9kJapqE8fj5i?=
- =?us-ascii?Q?83VHqANo/Nk289ftIdvOzPK42e7iMDL9gMKuiEKPx+nXRnTro/AadDYclZ64?=
- =?us-ascii?Q?X3V1uxVCNXFz0SUh2MwL3KydJONacwDMPbNhxUW8R4RZ2wLPaLRazEH0Hezo?=
- =?us-ascii?Q?hBck1ou1iuEFIYvVUcaI/UHCdzmuITAVNvDgr0HC+U0RNrY7zzna3oUGyLA0?=
- =?us-ascii?Q?wc/SqG6JDOEj9Po2/QTz2LMguZ6Y/RN97+EcE/2zS36cIQVNVDx3Zh7zDGOx?=
- =?us-ascii?Q?+hYc7w5CuewxO+0xtD4Kje5NP1UvU2G0laM0vKhbZZ5zA0rKQwyqGYoeUTmx?=
- =?us-ascii?Q?AaUq+VPpGnlxEUi5XkKTl2R6/2N+QR1eL2BzQD4+4Twrz1iHjIF8oXMlcKfS?=
- =?us-ascii?Q?V58HRPtT5IGQLnHdDdEZkVH9wJspFWFOmes/oYeKnX5nUmqmTiIGvlZqXsZL?=
- =?us-ascii?Q?BVhwtbx684AZUQY+MkttMTtLF8IqDEkxKZbVgJlNAUazoIxOxLvKvtUqqvWd?=
- =?us-ascii?Q?cqs66PQ9zLcJ/DFEFxfZoXAt5irglhPBj7JJ7rbrZD75DNCnAu/Iz4u9XgZ4?=
- =?us-ascii?Q?RhAuvw2GoIAE9kMU/hX5hxYiYwOTUjR4Gv2X5301QoIDfmc+?=
+	=?us-ascii?Q?pS/nIQzLKyQzpXvtret+KNcq2yrO8Pk/bseJRjiS+XaXtAtMLlVuvDowrGCA?=
+ =?us-ascii?Q?A9nPn4AOmKj/PGhgvdjOu/TFyjp7q3HHU2JvO7bPrQe7nIWdLG1Svf6oHc3g?=
+ =?us-ascii?Q?V1fK0a4F85tM3SvTFBlkD3Aj6VKJn9JytHqfKTELOt0OEBv762R1OTfHRu/2?=
+ =?us-ascii?Q?xIr3V9Gmc6TpXLGKKonh0qjPyEkz0AWTYX8G4ksFpo19RNiNNKY91V0hZPFH?=
+ =?us-ascii?Q?sqf3i7xXk3UJX7m9znW6CEzFxZ89wxlS7bPZ0jLhw/cMwreUC4jPZyO2Yuqs?=
+ =?us-ascii?Q?hJNuXFeRPb72ZGuyAD9yO+MdzI4QZPR+xEKUFCGy1GUtChtO7gVTLd6uizXx?=
+ =?us-ascii?Q?sYMbITW7HB3tGk2i0JXrrs0ffLhfXcNkta2sjr0ZihZ8dEV8albUjkdwftJR?=
+ =?us-ascii?Q?y+KMQqbCwWVh4tojXmqiRfKyAJK8sEZuSmG8WEUEzIrlj8LZKFOYlx+BvgPr?=
+ =?us-ascii?Q?RDGI4JIrT9PhinFyl4eAucoRj61XD5t0a8InSI29N8q47i2RJmrkz/bsI7SX?=
+ =?us-ascii?Q?mn+nvhegclc7Dk9VyZr68ENeEfESh+OAvPRPCuJxx+dxuhuzGjgcyNjPPhEE?=
+ =?us-ascii?Q?R/9lkLkumGhuWCq3u3jAUBwV64oc8FXCxC8Xw//72WjpGRGCBhMY+uRIG32L?=
+ =?us-ascii?Q?OUZ4OUHXVAYbYgNf5KzpcDjL+C2Ckg8b4xP7SP1Xt1o9lNedWyCDQXB/+IW0?=
+ =?us-ascii?Q?pF7McyQlao1xPfCGCQxckPVUhE2inwIilCRGbrIlsVZ1nizS4/ZbUaVhTAnJ?=
+ =?us-ascii?Q?ptkmaPs62+dedokw650qlRq5jR4BGue0GTJQZb3CnrdzOOdyGBMHRny7s/9V?=
+ =?us-ascii?Q?VaNXhyfxUBVl0qo2qAIu1ZxD6pKNZOSEa99ClvnoVZM3myB22Oq6pZ/JjaiX?=
+ =?us-ascii?Q?F5SOIByJUPdW9xpp6chAPhu5teKTiwMrQGcCU57LN+xkkwYOTBZEH8di0UlH?=
+ =?us-ascii?Q?qnQfE9edg5MB7co0SYgK0Ge6yFaHfLk/Oejd7OwdUoe+t72DcN+RYyHyv6fI?=
+ =?us-ascii?Q?Z1Xclc0JoKzeK71PPkVnDfJNIXLzX2CvWCTNJbaFpftCAo9TZ2WEo4SCGZGQ?=
+ =?us-ascii?Q?WVTYUoTdCXO1dLrJQ3zCoZYvaV0q9ddRwEO/08CH3bhSr7KxtbM+iPHsUCSD?=
+ =?us-ascii?Q?ZPdir4MaS5TsVxbihAI/lSqBpgeo8Gtp9SBAbw2DSUKwUZWCcnGNNwiW0nKx?=
+ =?us-ascii?Q?XzH0dmI98u/hU2VOipP8jr8cm4fyNvrW6LxiCnqYwT7FI+r5w4xdElfYgqSz?=
+ =?us-ascii?Q?PsPq73Fjxtl7bQHkrg06D8GSIv0nkZMSPgn3WeD3Zoq3Zc1NgLveh1WTA9lm?=
+ =?us-ascii?Q?mBEifvsHXBuRyd4E6bglOrgfPRJqyVN6yertXO2QA0ECgmWCt5UzGH4uVj8u?=
+ =?us-ascii?Q?sqRP9E7gh6AwU/NPbYF5VgqVgGoL4nQ29BgUsO1eFOBMpyJfEGfLsr7fRUiz?=
+ =?us-ascii?Q?QFfNXQDikjKzNG/pz2AnHVtwjeM6rt0S3vZHoYFkVPQuLB3ahCRhCd01yPrt?=
+ =?us-ascii?Q?LGBv0WtFqYcCBnxfbfVVyP7hZt1UBM/zrW22wMoPbKAyWwNDmQk9FiCDWw1Y?=
+ =?us-ascii?Q?1eZ4I3Ejb1rkBJNT0nuxRNImxdVZm1ZyQIkpvSFPpokdg3oHHBgVTcqaE/gI?=
+ =?us-ascii?Q?J3m/o/U2p6yufxj+az4Q5OERnTxTkpwy6QKen9v2AWe9SqWWv3y7bZcTmwsI?=
+ =?us-ascii?Q?jQxby2hsGl4C9WRBfXgUKzGlx4aoJ6sLub8HsDEQXwkp2IS2?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 90f0c97c-6758-4e74-01dc-08dea715cdb4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98f6e38e-6ca5-4ed1-5199-08dea715cc2b
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2026 00:08:42.1700
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2026 00:08:39.7673
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TPGEn5ehgXNj1D8cWPiBoTkjaPM5Dly5tWzAmGXk3waOEqTLmaeAMMNa6IJPIrYm
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8008
+X-MS-Exchange-CrossTenant-UserPrincipalName: /YyZYGzRliaSvKyI7vV+/D0sAy+efa3Ny0yn6py4RkjIzqbNSlWrUznoJWlJm8Dj
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAVPR12MB999167
 
-Enable it with a #define DEBUG at the top of the file. Allows leaving
-behind debugging prints that are useful in case future changes are
-required.
+Complete the mlx5 driver by adding CQ/QP creation, QP state
+transitions, WQE posting, CQ polling, and the
+memcpy_start/memcpy_wait callbacks. After this patch the driver is
+functional for DMA tests.
+
+The data path implements RDMA Write self-loopback via an RC QP with
+force-loopback.  WQEs are posted to a 16-entry send queue with an
+NC doorbell, and completions are polled from a 16-entry CQ.
 
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- .../selftests/vfio/lib/include/libvfio/vfio_pci_device.h    | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../selftests/vfio/lib/drivers/mlx5/mlx5.c    | 359 +++++++++++++++++-
+ 1 file changed, 357 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-index bb4525abd01a22..2d587b988c09fa 100644
---- a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-+++ b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-@@ -38,6 +38,12 @@ struct vfio_pci_device {
- #define dev_info(_dev, _fmt, ...) printf("%s: " _fmt, (_dev)->bdf, ##__VA_ARGS__)
- #define dev_err(_dev, _fmt, ...) fprintf(stderr, "%s: " _fmt, (_dev)->bdf, ##__VA_ARGS__)
+diff --git a/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c b/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c
+index 0ab941bad7a66c..39c5414e2c743c 100644
+--- a/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c
++++ b/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c
+@@ -1340,6 +1340,354 @@ static void mlx5st_destroy_mkey(struct mlx5st_device *dev)
+ 	mlx5st_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
+ }
  
-+#ifdef DEBUG
-+#define dev_dbg dev_info
-+#else
-+#define dev_dbg(_dev, _fmt, ...) do { } while (0)
-+#endif
++/*
++ * CQ create/destroy
++ */
 +
- struct vfio_pci_device *vfio_pci_device_init(const char *bdf, struct iommu *iommu);
- void vfio_pci_device_cleanup(struct vfio_pci_device *device);
++static void mlx5st_create_cq(struct mlx5st_device *dev)
++{
++	struct vfio_pci_device *device = dev->device;
++	u64 in[MLX5_ST_SZ_QW(create_cq_in) + 1] = {};
++	u32 out[MLX5_ST_SZ_DW(create_cq_out)] = {};
++	struct mlx5_ifc_cqc_bits *cqc;
++	unsigned int i;
++	__be64 *pas;
++
++	/* Initialize CQEs before CREATE_CQ: opcode=0xF, owner=1 */
++	for (i = 0; i < CQ_CQE_CNT; i++) {
++		struct mlx5st_cqe64 *cqe = &dev->cq_buf[i];
++
++		MLX5_SET(cqe64, cqe, opcode, 0xF);
++		MLX5_SET_ONCE(cqe64, cqe, owner, 1);
++	}
++
++	MLX5_SET(create_cq_in, in, opcode, MLX5_CMD_OP_CREATE_CQ);
++
++	cqc = MLX5_ADDR_OF(create_cq_in, in, cq_context);
++	MLX5_SET(cqc, cqc, log_cq_size, LOG_CQ_SIZE);
++	MLX5_SET(cqc, cqc, uar_page, dev->uar_page);
++	MLX5_SET(cqc, cqc, c_eqn_or_apu_element, dev->eqn);
++	MLX5_SET(cqc, cqc, cqe_sz, 0);
++	pas = MLX5_ADDR_OF(create_cq_in, in, pas);
++	MLX5_SET(cqc, cqc, page_offset, mlx5st_fill_pas(device, dev->cq_buf, pas));
++	MLX5_SET(cqc, cqc, log_page_size, 0);
++	MLX5_SET64(cqc, cqc, dbr_addr, to_iova(device, &dev->cq_dbrec));
++
++	mlx5st_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
++
++	dev->cqn = MLX5_GET(create_cq_out, out, cqn);
++	dev->cq_ci = 0;
++	dev_dbg(device, "Created CQ: cqn=%u, %d entries\n", dev->cqn,
++		 CQ_CQE_CNT);
++}
++
++static void mlx5st_destroy_cq(struct mlx5st_device *dev)
++{
++	u32 out[MLX5_ST_SZ_DW(destroy_cq_out)] = {};
++	u32 in[MLX5_ST_SZ_DW(destroy_cq_in)] = {};
++
++	MLX5_SET(destroy_cq_in, in, opcode, MLX5_CMD_OP_DESTROY_CQ);
++	MLX5_SET(destroy_cq_in, in, cqn, dev->cqn);
++	mlx5st_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
++}
++
++/*
++ * QP create/destroy
++ */
++
++static void mlx5st_create_qp(struct mlx5st_device *dev)
++{
++	struct vfio_pci_device *device = dev->device;
++	u64 in[MLX5_ST_SZ_QW(create_qp_in) + 1] = {};
++	u32 out[MLX5_ST_SZ_DW(create_qp_out)] = {};
++	struct mlx5_ifc_qpc_bits *qpc;
++	__be64 *pas;
++
++	MLX5_SET(create_qp_in, in, opcode, MLX5_CMD_OP_CREATE_QP);
++
++	qpc = MLX5_ADDR_OF(create_qp_in, in, qpc);
++	MLX5_SET(qpc, qpc, st, MLX5_QPC_ST_RC);
++	MLX5_SET(qpc, qpc, pm_state, MLX5_QPC_PM_STATE_MIGRATED);
++	MLX5_SET(qpc, qpc, pd, dev->pdn);
++	MLX5_SET(qpc, qpc, uar_page, dev->uar_page);
++	MLX5_SET(qpc, qpc, cqn_snd, dev->cqn);
++	MLX5_SET(qpc, qpc, cqn_rcv, dev->cqn);
++	MLX5_SET(qpc, qpc, log_sq_size, LOG_SQ_SIZE);
++	MLX5_SET(qpc, qpc, log_msg_max, 20);
++	MLX5_SET(qpc, qpc, rq_type, 0x3);
++	MLX5_SET(qpc, qpc, ts_format, 1);
++	pas = MLX5_ADDR_OF(create_qp_in, in, pas);
++	MLX5_SET(qpc, qpc, page_offset,
++		 mlx5st_fill_pas(device, dev->sq_buf, pas));
++	MLX5_SET(qpc, qpc, log_page_size, 0);
++	MLX5_SET64(qpc, qpc, dbr_addr, to_iova(device, &dev->qp_dbrec));
++
++	mlx5st_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
++
++	dev->qpn = MLX5_GET(create_qp_out, out, qpn);
++	dev->sq_pi = 0;
++	dev_dbg(device, "Created QP: qpn=%u, RC, sq=%d wqes\n", dev->qpn,
++		 SQ_WQE_CNT);
++}
++
++static void mlx5st_destroy_qp(struct mlx5st_device *dev)
++{
++	u32 out[MLX5_ST_SZ_DW(destroy_qp_out)] = {};
++	u32 in[MLX5_ST_SZ_DW(destroy_qp_in)] = {};
++
++	MLX5_SET(destroy_qp_in, in, opcode, MLX5_CMD_OP_DESTROY_QP);
++	MLX5_SET(destroy_qp_in, in, qpn, dev->qpn);
++	mlx5st_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
++}
++
++/*
++ * QP state transitions
++ */
++
++static void mlx5st_qp_rst2init(struct mlx5st_device *dev)
++{
++	u32 out[MLX5_ST_SZ_DW(rst2init_qp_out)] = {};
++	u32 in[MLX5_ST_SZ_DW(rst2init_qp_in)] = {};
++	struct mlx5_ifc_qpc_bits *qpc = MLX5_ADDR_OF(rst2init_qp_in, in, qpc);
++
++	MLX5_SET(rst2init_qp_in, in, opcode, MLX5_CMD_OP_RST2INIT_QP);
++	MLX5_SET(rst2init_qp_in, in, qpn, dev->qpn);
++
++	MLX5_SET(qpc, qpc, primary_address_path.vhca_port_num, 1);
++	MLX5_SET(qpc, qpc, pm_state, MLX5_QPC_PM_STATE_MIGRATED);
++	MLX5_SET(qpc, qpc, rre, 1);
++	MLX5_SET(qpc, qpc, rwe, 1);
++
++	mlx5st_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
++	dev_dbg(dev->device, "QP RST->INIT\n");
++}
++
++static void mlx5st_qp_init2rtr(struct mlx5st_device *dev)
++{
++	u32 out[MLX5_ST_SZ_DW(init2rtr_qp_out)] = {};
++	u32 in[MLX5_ST_SZ_DW(init2rtr_qp_in)] = {};
++	struct mlx5_ifc_qpc_bits *qpc = MLX5_ADDR_OF(init2rtr_qp_in, in, qpc);
++
++	MLX5_SET(init2rtr_qp_in, in, opcode, MLX5_CMD_OP_INIT2RTR_QP);
++	MLX5_SET(init2rtr_qp_in, in, qpn, dev->qpn);
++
++	MLX5_SET(qpc, qpc, mtu, 3);
++	MLX5_SET(qpc, qpc, log_msg_max, 20);
++	MLX5_SET(qpc, qpc, remote_qpn, dev->qpn);
++	MLX5_SET(qpc, qpc, min_rnr_nak, 12);
++	MLX5_SET(qpc, qpc, primary_address_path.vhca_port_num, 1);
++	MLX5_SET(qpc, qpc, primary_address_path.fl, 1);
++
++	mlx5st_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
++	dev_dbg(dev->device, "QP INIT->RTR (fl=1)\n");
++}
++
++static void mlx5st_qp_rtr2rts(struct mlx5st_device *dev)
++{
++	u32 out[MLX5_ST_SZ_DW(rtr2rts_qp_out)] = {};
++	u32 in[MLX5_ST_SZ_DW(rtr2rts_qp_in)] = {};
++	struct mlx5_ifc_qpc_bits *qpc = MLX5_ADDR_OF(rtr2rts_qp_in, in, qpc);
++
++	MLX5_SET(rtr2rts_qp_in, in, opcode, MLX5_CMD_OP_RTR2RTS_QP);
++	MLX5_SET(rtr2rts_qp_in, in, qpn, dev->qpn);
++
++	MLX5_SET(qpc, qpc, log_ack_req_freq, 0);
++	MLX5_SET(qpc, qpc, retry_count, 7);
++	MLX5_SET(qpc, qpc, rnr_retry, 7);
++	MLX5_SET(qpc, qpc, primary_address_path.ack_timeout, 14);
++
++	mlx5st_cmd_exec(dev, in, sizeof(in), out, sizeof(out));
++	dev_dbg(dev->device, "QP RTR->RTS\n");
++}
++
++/*
++ * Post RDMA Write WQE
++ */
++static void mlx5st_post_rdma_write(struct mlx5st_device *dev, u64 src_addr,
++				    u32 src_lkey, u64 dst_addr, u32 dst_rkey,
++				    u32 length, bool signaled)
++{
++	struct mlx5st_send_wqe *wqe;
++	unsigned int idx;
++
++	idx = dev->sq_pi % SQ_WQE_CNT;
++	wqe = &dev->sq_buf[idx];
++
++	memset(wqe, 0, sizeof(*wqe));
++	MLX5_SET(wqe_ctrl_seg, &wqe->ctrl, opcode, MLX5_OPCODE_RDMA_WRITE);
++	MLX5_SET(wqe_ctrl_seg, &wqe->ctrl, wqe_index, dev->sq_pi);
++	MLX5_SET(wqe_ctrl_seg, &wqe->ctrl, qp_or_sq, dev->qpn);
++	MLX5_SET(wqe_ctrl_seg, &wqe->ctrl, ds, MLX5_RDMA_WRITE_DS);
++	if (signaled)
++		MLX5_SET(wqe_ctrl_seg, &wqe->ctrl, ce, MLX5_WQE_CE_CQE_ALWAYS);
++
++	MLX5_SET64(wqe_raddr_seg, &wqe->raddr, raddr, dst_addr);
++	MLX5_SET(wqe_raddr_seg, &wqe->raddr, rkey, dst_rkey);
++
++	MLX5_SET(wqe_data_seg, &wqe->data, byte_count, length);
++	MLX5_SET(wqe_data_seg, &wqe->data, lkey, src_lkey);
++	MLX5_SET64(wqe_data_seg, &wqe->data, addr, src_addr);
++
++	dev->sq_pi++;
++
++	/* Ensure WQE is visible to device before doorbell record */
++	dma_wmb();
++
++	WRITE_ONCE(dev->qp_dbrec.send_counter,
++		   cpu_to_be32(dev->sq_pi & 0xffff));
++
++	/*
++	 * Ring doorbell: write first 8 bytes of ctrl to UAR BF register,
++	 * iowrite has an internal dma_wmb() so the doorbell record will be
++	 * visible.
++	 */
++	iowrite64be(be64_to_cpu(*(__be64 *)wqe),
++		    (u8 __iomem *)dev->uar_base + dev->uar_bf_offset);
++	dev->uar_bf_offset ^= MLX5_BF_SIZE;
++}
++
++/*
++ * Poll CQ
++ */
++static int mlx5st_poll_cq_batch(struct mlx5st_device *dev,
++				unsigned int max_cqe)
++{
++	unsigned int polled = 0;
++
++	while (polled < max_cqe) {
++		unsigned int idx = dev->cq_ci % CQ_CQE_CNT;
++		struct mlx5st_cqe64 *cqe = &dev->cq_buf[idx];
++		u8 owner, opcode;
++
++		owner = MLX5_GET_ONCE(cqe64, cqe, owner);
++		if (owner != ((dev->cq_ci >> LOG_CQ_SIZE) & 1))
++			break;
++
++		dma_rmb();
++
++		opcode = MLX5_GET(cqe64, cqe, opcode);
++
++		dev->cq_ci++;
++		WRITE_ONCE(dev->cq_dbrec.recv_counter,
++			   cpu_to_be32(dev->cq_ci & 0xffffff));
++
++		if (opcode == MLX5_CQE_REQ) {
++			dev->sq_ci =
++				(u16)(MLX5_GET(cqe64, cqe, wqe_counter) + 1);
++			polled++;
++			continue;
++		}
++		if (opcode == MLX5_CQE_REQ_ERR ||
++		    opcode == MLX5_CQE_RESP_ERR) {
++			dev_dbg(dev->device,
++				"CQE error: opcode=0x%x syndrome=0x%x vendor=0x%x\n",
++				opcode,
++				MLX5_GET(cqe64, cqe, error_syndrome.syndrome),
++				MLX5_GET(cqe64, cqe,
++					 error_syndrome.vendor_error_syndrome));
++			return -1;
++		}
++		dev_err(dev->device, "CQE unexpected opcode=0x%x\n", opcode);
++		return -1;
++	}
++
++	return polled;
++}
++
++static int mlx5st_poll_cq(struct mlx5st_device *dev, unsigned int timeout_ms)
++{
++	struct timespec start, now;
++	unsigned int elapsed;
++	int ret;
++
++	clock_gettime(CLOCK_MONOTONIC, &start);
++	for (;;) {
++		ret = mlx5st_poll_cq_batch(dev, 1);
++		if (ret < 0)
++			return -1;
++		if (ret > 0)
++			return 0;
++
++		if (dev->have_eq)
++			mlx5st_process_events(dev);
++
++		clock_gettime(CLOCK_MONOTONIC, &now);
++		elapsed = (now.tv_sec - start.tv_sec) * 1000 +
++			  (now.tv_nsec - start.tv_nsec) / 1000000;
++		if (elapsed > timeout_ms) {
++			dev_err(dev->device, "CQ poll timeout after %u ms\n",
++				timeout_ms);
++			return -1;
++		}
++	}
++}
++
++/*
++ * Data path setup/teardown helpers
++ */
++
++static void mlx5st_setup_datapath(struct mlx5st_device *dev)
++{
++	mlx5st_create_cq(dev);
++	mlx5st_create_qp(dev);
++	mlx5st_qp_rst2init(dev);
++	mlx5st_qp_init2rtr(dev);
++	mlx5st_qp_rtr2rts(dev);
++}
++
++static void mlx5st_teardown_datapath(struct mlx5st_device *dev)
++{
++	if (dev->qpn) {
++		mlx5st_destroy_qp(dev);
++		dev->qpn = 0;
++	}
++	if (dev->cqn) {
++		mlx5st_destroy_cq(dev);
++		dev->cqn = 0;
++	}
++	dev->sq_pi = 0;
++	dev->sq_ci = 0;
++	memset(&dev->qp_dbrec, 0, sizeof(dev->qp_dbrec));
++	memset(&dev->cq_dbrec, 0, sizeof(dev->cq_dbrec));
++}
++
++/*
++ * memcpy callbacks
++ */
++
++#define MLX5ST_MEMCPY_TIMEOUT_MS 60000
++
++static void mlx5st_memcpy_start(struct vfio_pci_device *device,
++				 iova_t src, iova_t dst, u64 size, u64 count)
++{
++	struct mlx5st_device *dev = to_mlx5st(device);
++	u64 i;
++
++	for (i = 0; i < count; i++) {
++		bool signaled = (i == count - 1);
++
++		mlx5st_post_rdma_write(dev, src, dev->global_lkey, dst,
++				       dev->global_rkey, size, signaled);
++	}
++}
++
++static int mlx5st_memcpy_wait(struct vfio_pci_device *device)
++{
++	struct mlx5st_device *dev = to_mlx5st(device);
++	int ret;
++
++	ret = mlx5st_poll_cq(dev, MLX5ST_MEMCPY_TIMEOUT_MS);
++	if (ret) {
++		/*
++		 * CQE error puts the QP in error state.  Rebuild the data path
++		 * so subsequent operations can succeed.
++		 */
++		mlx5st_teardown_datapath(dev);
++		mlx5st_setup_datapath(dev);
++	}
++	return ret;
++}
++
+ /*
+  * Driver ops callbacks
+  */
+@@ -1368,6 +1716,11 @@ static void mlx5st_init(struct vfio_pci_device *device)
+ 	mlx5st_alloc_pd(dev);
+ 	mlx5st_create_mkey(dev);
  
++	mlx5st_setup_datapath(dev);
++
++	device->driver.max_memcpy_size = 1 << 20;
++	device->driver.max_memcpy_count = SQ_WQE_CNT - 1;
++
+ 	dev_dbg(device, "mlx5 driver initialized\n");
+ }
+ 
+@@ -1375,6 +1728,8 @@ static void mlx5st_remove(struct vfio_pci_device *device)
+ {
+ 	struct mlx5st_device *dev = to_mlx5st(device);
+ 
++	mlx5st_teardown_datapath(dev);
++
+ 	dev_dbg(device, "teardown: destroy_mkey\n");
+ 	if (dev->mkey_index) {
+ 		mlx5st_destroy_mkey(dev);
+@@ -1400,7 +1755,7 @@ struct vfio_pci_driver_ops mlx5st_ops = {
+ 	.probe = mlx5st_probe,
+ 	.init = mlx5st_init,
+ 	.remove = mlx5st_remove,
+-	.memcpy_start = NULL,
+-	.memcpy_wait = NULL,
++	.memcpy_start = mlx5st_memcpy_start,
++	.memcpy_wait = mlx5st_memcpy_wait,
+ 	.send_msi = NULL,
+ };
 -- 
 2.43.0
 
