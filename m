@@ -1,285 +1,274 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23873213E89
-	for <patches@lists.linux.dev>; Fri,  1 May 2026 21:33:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED23B31F9A3
+	for <patches@lists.linux.dev>; Fri,  1 May 2026 21:36:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777671194; cv=none; b=l/wyyEfvex21iGDnI88vam9cEWjc4wKizDQhH9glsdfT63B8GB7Lfnkb5oE8MdtITN4JFiK3EOEjsSRf3KKOFjQCqolJbjVqYXff1Rf2b40900W4jFUY1xJ8KWADXmXZaWlndSj5N+wUkkcLEwrG01mFKZ82lRm0nn9Fiej6CQ4=
+	t=1777671381; cv=none; b=GBQPIJwcZ/ZgKZ9yNfc6fldfeDmi9NrCA9EsTn7i5PNqH2muvuuVpMvPw1KRNnFvF06cPrGUFSwI0/5B0C6AoFTv88vZti1lyPg55q/FPP18jDA+7zbCIPR095Wt2dcgSSg27/AqOkmdyiUFhJt5Rf3Glj1Y9dPoqq7cpUxZVgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777671194; c=relaxed/simple;
-	bh=Mj0E3J34d5phtM5sQPs3cAukaXDcoxZZzTYXSlBZlgg=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To; b=ZAmBC+LjkcVWBEIG1gqBoFjG29ZbQDZaulav8J6RyvJ+zMZGdZFyqB9h22/1xO+EQZlN8olziCp0YXxeBNfnxxNdmnIQG1XMTJBy0GllP0jKvMxCz9kxLco7/in5ZtTh0wSWhrgJWn3AzxOyRFIPBliaixBfoC08exf9fp/fSio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk; spf=pass smtp.mailfrom=kernel.dk; dkim=pass (2048-bit key) header.d=kernel-dk.20251104.gappssmtp.com header.i=@kernel-dk.20251104.gappssmtp.com header.b=CVM9GWh1; arc=none smtp.client-ip=209.85.161.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel.dk
+	s=arc-20240116; t=1777671381; c=relaxed/simple;
+	bh=g870jxe0uzIT6MVe48utoxZZQMBkbyKmBC9T+BZ++jQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ImcqCa5O0BsoAnjTXcAILdNHMls5l43q5FWXOYZkCWoIO+1lb46oUNEE+qis7w9nsZMtURtZHTFBAU0Sn3vBod02NDCOsVVSCG9ABfdBJchaGm5i+Wj+Zx/aGPHVdiQYNn3iVFYUhFLM3CoAeWp6EAZNCcDTD2QVT3sOzSdb07Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=isJJSQ86; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel-dk.20251104.gappssmtp.com header.i=@kernel-dk.20251104.gappssmtp.com header.b="CVM9GWh1"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-6967080e6beso737653eaf.2
-        for <patches@lists.linux.dev>; Fri, 01 May 2026 14:33:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kernel-dk.20251104.gappssmtp.com; s=20251104; t=1777671191; x=1778275991; darn=lists.linux.dev;
-        h=in-reply-to:from:content-language:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jqo/S64QjQ2tROyU1wOybG/D2kuxZ6ciFJ7oklmPXqw=;
-        b=CVM9GWh1xwkoItmTXbAbTwHly6v9yEYwD8+1YUh94NM4LhLpLbojy93z2Lp4iU9UZb
-         3G7vdEXjy2gqaM5ggVx/CakKCaASc60QBXqknA1yxp5x7oU+/FsQkZSVNFXDv08mpdp0
-         1eYVZTOF8uOmmoBY/sYmI69aaiJMFfCYSJB86H226aUEE6h8klGSXzg54g0XiGtgcDOd
-         BO88iWZF5GDu8/busTVBMiU4pBymMsS7PQnLKyFVIF1B3/uybzAGzZUl3Uq8gFX6bYQE
-         an/92EwKgHSm3v0ZaIGV4pUtBYdl8BCJ8pkAjO00POrx1zp7amGnB4O+W90S2PpJXNGC
-         eG0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777671191; x=1778275991;
-        h=in-reply-to:from:content-language:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jqo/S64QjQ2tROyU1wOybG/D2kuxZ6ciFJ7oklmPXqw=;
-        b=lPinydT5cXL97WAWps5uypxzJnydKTL2kaumsF51Dl8ckdB61aWPheo4X7UOKWLdCJ
-         DRDh3+uHdLcBbxqMOgnBkp9BcL5mCkG3z8jHIEE9eMIDNnmDWEU/txsr8/fGMjuLSuWu
-         oI+4Mq+xw1/aBt3r16zxf1FUtxgRB1zdgbIwHiW9DhVRJ8hSPxDSnfWTnu1+yS1tgANS
-         qC4TlwF65/ACFBpX2D/0sSRY6FoEIhEq5SgbgmQfaPfu5qomeAz1pqwT3pRdPYq7upds
-         mdxFMYlOpYgUtRGu+4hEYfrbqJKZA4Wlr/1YV0J2KyeYzpD7NbzB0Ddn6DethOOqJWcO
-         Agdg==
-X-Forwarded-Encrypted: i=1; AFNElJ8+MNIAlYhYJoG68K4Lj1Yq5sdaZlTHBa9xE7u87u/wqziSLxLLredkCD2q9mkTidIpSsy5p769@lists.linux.dev
-X-Gm-Message-State: AOJu0YwksAIn6+uqgTIBkWNlqTNNIiWL5B5MwYZ/CalgmRgRDrrLLkb/
-	R/mfAnFHSmD3wvl0yblSYep1A57HAmhb/5Yk6AUjSdAiVT3+isTIGBx5mvUkxpqX4uc=
-X-Gm-Gg: AeBDieuknOSMD6R1k9lcqU5IkPy1JStSF9SWu202kyY+ju4JtTEfGB4S4BVc2fgmuJa
-	iRcmqHjOhd9RTxhCD96hrMlpO5fYdiKl894NzKOI8MCedfvSLb3HuZ5M37Alsd+WFoTGoi4mTR0
-	T+VKbUKu9+Fs8DqkjXz3pIf8C1Jdt35pakS1fDjyjSJIdXcFdX1h8stZvifCU/7+eXffM1KxVwv
-	ToQ77HmhPsvirfI7GlzLw2tk9R62kfiYWI60gO9UwC3BitSeJPRGNx3KyK99vxe551qYce6eEr0
-	Rkk5yLWldilGQnjSTQXWEd9qvs+a9vCakoVAJ8FnH1+ozJv/O6PzZI5JFGJITLZCSN73rLmX+uC
-	Z9glqyPubcU4q/VtePJqgwfBGTRt7Xm2lvyxZ8KX4EXN8UgWfAkRcV+qLUOjKKG5nkWe2vF+eQl
-	ERuVLpt3GYfJgMcnLcePC2XH65oCUP81XTo0bC0eAxufZxe9muB+1Axl94TDwQTjq0hHetM1X1u
-	7PRwLcOdM4DRLyYNDNb
-X-Received: by 2002:a05:6820:88f:b0:696:702f:6172 with SMTP id 006d021491bc7-696979f6c9amr452210eaf.24.1777671191071;
-        Fri, 01 May 2026 14:33:11 -0700 (PDT)
-Received: from [192.168.1.150] ([198.8.77.157])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-6968945d4fbsm2043932eaf.5.2026.05.01.14.33.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 May 2026 14:33:10 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="------------j5tERgBqSLXJJAxTmFu7xhnp"
-Message-ID: <58103791-4c19-441c-9d4f-7ae5f9c6151a@kernel.dk>
-Date: Fri, 1 May 2026 15:33:09 -0600
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="isJJSQ86"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1777671380; x=1809207380;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=g870jxe0uzIT6MVe48utoxZZQMBkbyKmBC9T+BZ++jQ=;
+  b=isJJSQ86sMEWD/ultJDMs9uyqUQyo/N/2whik2/jPKStnQ1WFto4p+jo
+   ACltfwDwS2o3LUcK4P9g0XtzrXjwRTXYJGjcfbc+tP4yGG44Elmj/1HWp
+   FHJK+bgAT4nA0NQfWw4muaeMlFjWt8HnklgYBPztYWahdRDtIpwNXUHas
+   fMsV78yDsXvX/3ZXzrlp/1z0xEun8RhlHohN7j0SYi2jsqihjF4WdvzOB
+   BAfrk56g6RCRSm/gbqDTwT0Rpa+SSDDn8d9eRXnoChGRkx2eKR2ebh6LL
+   m9kuKrNs8E6ExWHsfQMn/UgTzCRd3HETl2x3oAmtul/+R8W0mCncfiK7V
+   w==;
+X-CSE-ConnectionGUID: FQ6Umo5HRLuCwUJRxesc/w==
+X-CSE-MsgGUID: 6oq4pG5EQSqOhlYNcbsHhw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11773"; a="104084692"
+X-IronPort-AV: E=Sophos;i="6.23,210,1770624000"; 
+   d="scan'208";a="104084692"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 May 2026 14:36:20 -0700
+X-CSE-ConnectionGUID: iujQy4F0QIuWEI6jkn9O9Q==
+X-CSE-MsgGUID: 1ZsobNbmQ9Cal336nawGBA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,210,1770624000"; 
+   d="scan'208";a="258574195"
+Received: from aschofie-mobl2.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.222.155])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 May 2026 14:36:19 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>,
+	x86@kernel.org
+Cc: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] fs/resctrl: Fix use-after-free in resctrl_offline_mon_domain()
+Date: Fri,  1 May 2026 14:36:11 -0700
+Message-ID: <20260501213611.25600-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 491/491] io_uring/poll: correctly handle
- io_poll_add() return value on update
-To: Fedor Pchelkin <pchelkin@ispras.ru>
-Cc: Ben Hutchings <ben@decadent.org.uk>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev,
- syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com,
- lvc-project@linuxtesting.org
-References: <20260501111233-b371eac52cd006bfddfbd9e5-pchelkin@ispras>
-Content-Language: en-US
-From: Jens Axboe <axboe@kernel.dk>
-In-Reply-To: <20260501111233-b371eac52cd006bfddfbd9e5-pchelkin@ispras>
+Content-Transfer-Encoding: 8bit
 
-This is a multi-part message in MIME format.
---------------j5tERgBqSLXJJAxTmFu7xhnp
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Sashiko noticed[1] a user-after-free in the resctrl worker thread code.
 
-On 5/1/26 2:54 AM, Fedor Pchelkin wrote:
-> Hi Jens,
-> 
-> the patch has some issues even after "[PATCH 2/2] io_uring/poll: fix
-> backport of io_poll_add() changes" has been applied.  Please see below.
-> 
-> Jens Axboe wrote:
->> From: Jens Axboe <axboe@kernel.dk>
->>
->> Commit 84230ad2d2afbf0c44c32967e525c0ad92e26b4e upstream.
->>
->> When the core of io_uring was updated to handle completions
->> consistently and with fixed return codes, the POLL_REMOVE opcode
->> with updates got slightly broken. If a POLL_ADD is pending and
->> then POLL_REMOVE is used to update the events of that request, if that
->> update causes the POLL_ADD to now trigger, then that completion is lost
->> and a CQE is never posted.
->>
->> Additionally, ensure that if an update does cause an existing POLL_ADD
->> to complete, that the completion value isn't always overwritten with
->> -ECANCELED. For that case, whatever io_poll_add() set the value to
->> should just be retained.
->>
->> Cc: stable@vger.kernel.org
->> Fixes: 97b388d70b53 ("io_uring: handle completions in the core")
-> 
-> This commit is not present in 5.10/5.15 in any form, to my mind.  That
-> is, io_uring changes were imported in big chunks there without preserving
-> upstream git history in some places but still I can't find whether the
-> changes of the mentioned Fixes-commit are present in those old kernels.
-> 
-> So either the Fixes tag is not completely correct or this patch can just
-> be reverted from 5.10/5.15 stables.
+resctrl_offline_mon_domain() acquires rdtgroup_mutex and calls
+cancel_delayed_work() (non-synchronous) on the per-domain mbm_over and
+cqm_limbo delayed_work items, then calls domain_destroy_l3_mon_state()
+which frees d->rmid_busy_llc and d->mbm_states[]. After it returns, the
+caller (e.g. domain_remove_cpu_mon() in arch/x86 or the mpam equivalent)
+deletes the domain from its list and frees the domain itself.
 
-The fixes tag is wrong.
+cancel_delayed_work() does not wait for a handler that is already
+running. mbm_handle_overflow() and cqm_handle_limbo() each acquire
+rdtgroup_mutex before touching the domain, so a handler that started
+just before resctrl_offline_mon_domain() runs will block on the mutex.
+When resctrl_offline_mon_domain() drops the mutex, the handler wakes
+up with a stale 'd' obtained via container_of() and dereferences memory
+that has just been freed.
 
->> Reported-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
->> Tested-by: syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com
->> Signed-off-by: Jens Axboe <axboe@kernel.dk>
->> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->> ---
->>  io_uring/io_uring.c |   26 +++++++++++++++++++-------
->>  1 file changed, 19 insertions(+), 7 deletions(-)
->>
->> --- a/io_uring/io_uring.c
->> +++ b/io_uring/io_uring.c
->> @@ -5980,7 +5980,7 @@ static int io_poll_add_prep(struct io_ki
->>  	return 0;
->>  }
->>  
->> -static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
->> +static int __io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
->>  {
->>  	struct io_poll_iocb *poll = &req->poll;
->>  	struct io_poll_table ipt;
->> @@ -5992,11 +5992,21 @@ static int io_poll_add(struct io_kiocb *
->>  	if (!ret && ipt.error)
->>  		req_set_fail(req);
->>  	ret = ret ?: ipt.error;
->> -	if (ret)
->> +	if (ret > 0) {
->>  		__io_req_complete(req, issue_flags, ret, 0);
->> +		return ret;
->> +	}
->>  	return 0;
->>  }
->>  
->> +static int io_poll_add(struct io_kiocb *req, unsigned int issue_flags)
->> +{
->> +	int ret;
->> +
->> +	ret = __io_poll_add(req, issue_flags);
->> +	return ret < 0 ? ret : 0;
->> +}
->> +
->>  static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
->>  {
->>  	struct io_ring_ctx *ctx = req->ctx;
->> @@ -6012,6 +6022,7 @@ static int io_poll_update(struct io_kioc
->>  		ret = preq ? -EALREADY : -ENOENT;
->>  		goto out;
->>  	}
->> +	preq->result = -ECANCELED;
->>  	spin_unlock(&ctx->completion_lock);
->>  
->>  	if (req->poll_update.update_events || req->poll_update.update_user_data) {
->> @@ -6024,16 +6035,17 @@ static int io_poll_update(struct io_kioc
->>  		if (req->poll_update.update_user_data)
->>  			preq->user_data = req->poll_update.new_user_data;
->>  
->> -		ret2 = io_poll_add(preq, issue_flags);
->> +		ret2 = __io_poll_add(preq, issue_flags);
->>  		/* successfully updated, don't complete poll request */
->>  		if (!ret2)
->>  			goto out;
->> +		preq->result = ret2;
->> +
->>  	}
->> -	req_set_fail(preq);
->> -	io_req_complete(preq, -ECANCELED);
->> +	if (preq->result < 0)
->> +		req_set_fail(preq);
->> +	io_req_complete(preq, preq->result);
+Drain the handlers with cancel_delayed_work_sync() so no handler can be
+running or pending against the domain when its state is freed:
 
-This should all be handled in the fixup patch - yes this one ended up
-being broken, but that's why there's the followup fix.
+  - Add an 'offlining' flag to struct rdt_l3_mon_domain. Under
+    rdtgroup_mutex, resctrl_offline_mon_domain() sets it before
+    dropping the mutex; the handlers test it after acquiring the
+    mutex and exit without rescheduling. This guarantees that
+    cancel_delayed_work_sync() does not race with the handler
+    re-arming itself.
 
-Now this is all pretty broken because some patches ended up in 5.15 and
-some in 5.10 and honestly I've almost lost track at this point. Sasha
-spotted some that were dropped in some broken commit from Greg. For
-5.15, the two attached are what I recently asked for to be added. 5.10
-should ALWAYS get the exact same patches as 5.15, because of the whole
-sale backport that was done years ago. I always ask for that explicitly
-in the emails. But looks like that wasn't always done...
+  - Drop cpus_read_lock() from mbm_handle_overflow() and
+    cqm_handle_limbo(). resctrl_offline_mon_domain() can be invoked
+    from a CPU hotplug callback that holds the hotplug write lock;
+    a handler blocked on cpus_read_lock() in that window would
+    deadlock cancel_delayed_work_sync(). The data the handlers
+    examine is protected by rdtgroup_mutex, and
+    schedule_delayed_work_on() copes with a target CPU that is going
+    offline by migrating the work, so the cpus_read_lock() was not
+    required for correctness.
 
-5.10 doesn't look like it ever got what is sha
-349ef5d2e7bfb292e7000e6041a984ab56eccf28 in 5.15-stable, hence the fixup
-can be merged with queueing that backport.
+  - Restructure resctrl_offline_mon_domain() to: set ->offlining and
+    remove the mondata directories under rdtgroup_mutex; drop the
+    mutex; cancel_delayed_work_sync() both handlers; reacquire the
+    mutex to do the final force __check_limbo() and free the
+    per-domain monitor state. The cancel must run with the mutex
+    released because the handlers acquire it. Cancel both handlers
+    unconditionally on the L3 path (subject to the feature being
+    enabled) rather than gating cqm_limbo on has_busy_rmid(): a
+    handler may already be executing __check_limbo() with no busy
+    RMIDs left, and that invocation must be drained before its 'd'
+    is freed.
 
-Sigh...
+Fixes: 24247aeeabe9 ("x86/intel_rdt/cqm: Improve limbo list processing")
+Assisted-by: Copilot:claude-opus-4.7
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com [1]
+---
+ include/linux/resctrl.h |  1 +
+ fs/resctrl/monitor.c    | 18 ++++++++++--------
+ fs/resctrl/rdtgroup.c   | 38 ++++++++++++++++++++++++++++++++++----
+ 3 files changed, 45 insertions(+), 12 deletions(-)
 
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 006e57fd7ca5..73f2638b96ad 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -203,6 +203,7 @@ struct rdt_l3_mon_domain {
+ 	int				mbm_work_cpu;
+ 	int				cqm_work_cpu;
+ 	struct mbm_cntr_cfg		*cntr_cfg;
++	bool				offlining;
+ };
+ 
+ /**
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 9fd901c78dc6..e68eec83306e 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -794,11 +794,14 @@ void cqm_handle_limbo(struct work_struct *work)
+ 	unsigned long delay = msecs_to_jiffies(CQM_LIMBOCHECK_INTERVAL);
+ 	struct rdt_l3_mon_domain *d;
+ 
+-	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	d = container_of(work, struct rdt_l3_mon_domain, cqm_limbo.work);
+ 
++	/*  If this domain is being deleted this work no longer needs to run. */
++	if (d->offlining)
++		goto out_unlock;
++
+ 	__check_limbo(d, false);
+ 
+ 	if (has_busy_rmid(d)) {
+@@ -808,8 +811,8 @@ void cqm_handle_limbo(struct work_struct *work)
+ 					 delay);
+ 	}
+ 
++out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
+-	cpus_read_unlock();
+ }
+ 
+ /**
+@@ -841,18 +844,18 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	struct list_head *head;
+ 	struct rdt_resource *r;
+ 
+-	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 
++	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
++
+ 	/*
+-	 * If the filesystem has been unmounted this work no longer needs to
+-	 * run.
++	 * If this domain is being deleted, or the filesystem has been
++	 * unmounted this work no longer needs to run.
+ 	 */
+-	if (!resctrl_mounted || !resctrl_arch_mon_capable())
++	if (d->offlining || !resctrl_mounted || !resctrl_arch_mon_capable())
+ 		goto out_unlock;
+ 
+ 	r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+-	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
+ 
+ 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+ 		mbm_update(r, d, prgrp);
+@@ -875,7 +878,6 @@ void mbm_handle_overflow(struct work_struct *work)
+ 
+ out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
+-	cpus_read_unlock();
+ }
+ 
+ /**
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 8544020ef420..c883149fa373 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -4323,7 +4323,7 @@ void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain
+ 
+ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
+ {
+-	struct rdt_l3_mon_domain *d;
++	struct rdt_l3_mon_domain *d = NULL;
+ 
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+@@ -4341,8 +4341,39 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ 		goto out_unlock;
+ 
+ 	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
++
++	/*
++	 * Tell mbm_handle_overflow() and cqm_handle_limbo() that this
++	 * domain is going away.
++	 */
++	d->offlining = true;
++
++out_unlock:
++	mutex_unlock(&rdtgroup_mutex);
++
++	if (!d)
++		return;
++
++	/*
++	 * Drain any pending or in-flight overflow / limbo handlers before
++	 * freeing per-domain monitor state (and before the caller frees the
++	 * domain itself). cancel_delayed_work_sync() must be called with
++	 * rdtgroup_mutex released because the handlers acquire it; the
++	 * handlers no longer take cpus_read_lock(), so this is safe to call
++	 * from a CPU hotplug callback that holds the hotplug write lock.
++	 *
++	 * Without the synchronous cancel, a handler that was already running
++	 * and blocked on rdtgroup_mutex when this function was entered could
++	 * wake after the mutex is dropped and dereference d->rmid_busy_llc,
++	 * d->mbm_states[] or the domain itself after they have been freed.
++	 */
+ 	if (resctrl_is_mbm_enabled())
+-		cancel_delayed_work(&d->mbm_over);
++		cancel_delayed_work_sync(&d->mbm_over);
++	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID))
++		cancel_delayed_work_sync(&d->cqm_limbo);
++
++	mutex_lock(&rdtgroup_mutex);
++
+ 	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
+ 		/*
+ 		 * When a package is going down, forcefully
+@@ -4353,11 +4384,10 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ 		 * package never comes back.
+ 		 */
+ 		__check_limbo(d, true);
+-		cancel_delayed_work(&d->cqm_limbo);
+ 	}
+ 
+ 	domain_destroy_l3_mon_state(d);
+-out_unlock:
++
+ 	mutex_unlock(&rdtgroup_mutex);
+ }
+ 
 -- 
-Jens Axboe
---------------j5tERgBqSLXJJAxTmFu7xhnp
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-io_uring-poll-fix-EPOLL_URING_WAKE-sometimes-not-bei.patch"
-Content-Disposition: attachment;
- filename*0="0001-io_uring-poll-fix-EPOLL_URING_WAKE-sometimes-not-bei.pa";
- filename*1="tch"
-Content-Transfer-Encoding: base64
+2.54.0
 
-RnJvbSA3ZmRmZmZjZTUwOGYzOGQ4OTMzOGU4YmJlZDQyMWRkOTFkZGZjYjNmIE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKZW5zIEF4Ym9lIDxheGJvZUBrZXJuZWwuZGs+CkRh
-dGU6IFR1ZSwgMjEgQXByIDIwMjYgMTY6NDE6MzIgLTA2MDAKU3ViamVjdDogW1BBVENIIDEv
-Ml0gaW9fdXJpbmcvcG9sbDogZml4IEVQT0xMX1VSSU5HX1dBS0Ugc29tZXRpbWVzIG5vdCBi
-ZWluZwogbWFza2VkIGluCgpSYXRoZXIgdGhhbiBkbyBpdCBvbmx5IHdoZW4gd2UganVtcCBz
-dHJhaWdodCB0byBleGVjdXRpb24sIG1hcmsgaXQKcmVnYXJkbGVzcy4gVGhpcyBlbnN1cmVz
-IGl0IGRvZXNuJ3QgZ2V0IGxvc3QuCgpGaXhlczogY2NmMDZiNWE5ODFjICgiaW9fdXJpbmc6
-IHBhc3MgaW4gRVBPTExfVVJJTkdfV0FLRSBmb3IgZXZlbnRmZCBzaWduYWxpbmcgYW5kIHdh
-a2V1cHMiKQpTaWduZWQtb2ZmLWJ5OiBKZW5zIEF4Ym9lIDxheGJvZUBrZXJuZWwuZGs+Ci0t
-LQogaW9fdXJpbmcvaW9fdXJpbmcuYyB8IDE3ICsrKysrKysrLS0tLS0tLS0tCiAxIGZpbGUg
-Y2hhbmdlZCwgOCBpbnNlcnRpb25zKCspLCA5IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBh
-L2lvX3VyaW5nL2lvX3VyaW5nLmMgYi9pb191cmluZy9pb191cmluZy5jCmluZGV4IDM4ZGVj
-ZmMxYTkxNC4uZGI1YzlmYmRlYzNiIDEwMDY0NAotLS0gYS9pb191cmluZy9pb191cmluZy5j
-CisrKyBiL2lvX3VyaW5nL2lvX3VyaW5nLmMKQEAgLTU3OTQsMTcgKzU3OTQsMTYgQEAgc3Rh
-dGljIGludCBpb19wb2xsX3dha2Uoc3RydWN0IHdhaXRfcXVldWVfZW50cnkgKndhaXQsIHVu
-c2lnbmVkIG1vZGUsIGludCBzeW5jLAogCWlmIChtYXNrICYmICEobWFzayAmIHBvbGwtPmV2
-ZW50cykpCiAJCXJldHVybiAwOwogCi0JaWYgKGlvX3BvbGxfZ2V0X293bmVyc2hpcChyZXEp
-KSB7Ci0JCS8qCi0JCSAqIElmIHdlIHRyaWdnZXIgYSBtdWx0aXNob3QgcG9sbCBvZmYgb3Vy
-IG93biB3YWtldXAgcGF0aCwKLQkJICogZGlzYWJsZSBtdWx0aXNob3QgYXMgdGhlcmUgaXMg
-YSBjaXJjdWxhciBkZXBlbmRlbmN5IGJldHdlZW4KLQkJICogQ1EgcG9zdGluZyBhbmQgdHJp
-Z2dlcmluZyB0aGUgZXZlbnQuCi0JCSAqLwotCQlpZiAobWFzayAmIEVQT0xMX1VSSU5HX1dB
-S0UpCi0JCQlwb2xsLT5ldmVudHMgfD0gRVBPTExPTkVTSE9UOworCS8qCisJICogSWYgd2Ug
-dHJpZ2dlciBhIG11bHRpc2hvdCBwb2xsIG9mZiBvdXIgb3duIHdha2V1cCBwYXRoLAorCSAq
-IGRpc2FibGUgbXVsdGlzaG90IGFzIHRoZXJlIGlzIGEgY2lyY3VsYXIgZGVwZW5kZW5jeSBi
-ZXR3ZWVuCisJICogQ1EgcG9zdGluZyBhbmQgdHJpZ2dlcmluZyB0aGUgZXZlbnQuCisJICov
-CisJaWYgKG1hc2sgJiBFUE9MTF9VUklOR19XQUtFKQorCQlwb2xsLT5ldmVudHMgfD0gRVBP
-TExPTkVTSE9UOwogCisJaWYgKGlvX3BvbGxfZ2V0X293bmVyc2hpcChyZXEpKQogCQlfX2lv
-X3BvbGxfZXhlY3V0ZShyZXEsIG1hc2spOwotCX0KIAlyZXR1cm4gMTsKIH0KIAotLSAKMi41
-My4wCgo=
---------------j5tERgBqSLXJJAxTmFu7xhnp
-Content-Type: text/x-patch; charset=UTF-8;
- name="0002-io_uring-poll-fix-backport-of-io_poll_add-changes.patch"
-Content-Disposition: attachment;
- filename*0="0002-io_uring-poll-fix-backport-of-io_poll_add-changes.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA3YTYxYzM4YzRkNmFlM2Q1Y2JlNmVmYTA2ODg1YjFjYTgyMWExMjljIE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKZW5zIEF4Ym9lIDxheGJvZUBrZXJuZWwuZGs+CkRh
-dGU6IFR1ZSwgMjEgQXByIDIwMjYgMTY6NDQ6MDYgLTA2MDAKU3ViamVjdDogW1BBVENIIDIv
-Ml0gaW9fdXJpbmcvcG9sbDogZml4IGJhY2twb3J0IG9mIGlvX3BvbGxfYWRkKCkgY2hhbmdl
-cwoKVGhlIDUuMTUvNS4xMCBiYWNrcG9ydCBvZiA4NDIzMGFkMmQyYWYgaGFkIGEgZmV3IGlz
-c3VlcywgZHVlIHRvIHRoZQpvbGRlciBwb2xsIGJhc2UuIE5vdGFibHkgcmV0dXJuIHZhbHVl
-IGhhbmRsaW5nIF9faW9fYXJtX3BvbGxfaGFuZGxlcigpCmFuZCBpbiByZXR1cm4gX19pb19w
-b2xsX2FkZCgpIGFzIHdlbGwuIEZpeCB0aGVtIHVwLgoKUmVwb3J0ZWQtYnk6IEJlbiBIdXRj
-aGluZ3MgPGJlbkBkZWNhZGVudC5vcmcudWs+CkZpeGVzOiAzNDllZjVkMmU3YmYgKCJpb191
-cmluZy9wb2xsOiBjb3JyZWN0bHkgaGFuZGxlIGlvX3BvbGxfYWRkKCkgcmV0dXJuIHZhbHVl
-IG9uIHVwZGF0ZSIpClNpZ25lZC1vZmYtYnk6IEplbnMgQXhib2UgPGF4Ym9lQGtlcm5lbC5k
-az4KLS0tCiBpb191cmluZy9pb191cmluZy5jIHwgMTIgKysrKy0tLS0tLS0tCiAxIGZpbGUg
-Y2hhbmdlZCwgNCBpbnNlcnRpb25zKCspLCA4IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBh
-L2lvX3VyaW5nL2lvX3VyaW5nLmMgYi9pb191cmluZy9pb191cmluZy5jCmluZGV4IGRiNWM5
-ZmJkZWMzYi4uMDc1MTllOWE2OTVjIDEwMDY0NAotLS0gYS9pb191cmluZy9pb191cmluZy5j
-CisrKyBiL2lvX3VyaW5nL2lvX3VyaW5nLmMKQEAgLTYxMzgsMTkgKzYxMzgsMTUgQEAgc3Rh
-dGljIGludCBfX2lvX3BvbGxfYWRkKHN0cnVjdCBpb19raW9jYiAqcmVxLCB1bnNpZ25lZCBp
-bnQgaXNzdWVfZmxhZ3MpCiAJaWYgKCFyZXQgJiYgaXB0LmVycm9yKQogCQlyZXFfc2V0X2Zh
-aWwocmVxKTsKIAlyZXQgPSByZXQgPzogaXB0LmVycm9yOwotCWlmIChyZXQgPiAwKSB7CisJ
-aWYgKHJldCkKIAkJX19pb19yZXFfY29tcGxldGUocmVxLCBpc3N1ZV9mbGFncywgcmV0LCAw
-KTsKLQkJcmV0dXJuIHJldDsKLQl9Ci0JcmV0dXJuIDA7CisJcmV0dXJuIHJldDsKIH0KIAog
-c3RhdGljIGludCBpb19wb2xsX2FkZChzdHJ1Y3QgaW9fa2lvY2IgKnJlcSwgdW5zaWduZWQg
-aW50IGlzc3VlX2ZsYWdzKQogewotCWludCByZXQ7Ci0KLQlyZXQgPSBfX2lvX3BvbGxfYWRk
-KHJlcSwgaXNzdWVfZmxhZ3MpOwotCXJldHVybiByZXQgPCAwID8gcmV0IDogMDsKKwlfX2lv
-X3BvbGxfYWRkKHJlcSwgaXNzdWVfZmxhZ3MpOworCXJldHVybiAwOwogfQogCiBzdGF0aWMg
-aW50IGlvX3BvbGxfdXBkYXRlKHN0cnVjdCBpb19raW9jYiAqcmVxLCB1bnNpZ25lZCBpbnQg
-aXNzdWVfZmxhZ3MpCi0tIAoyLjUzLjAKCg==
-
---------------j5tERgBqSLXJJAxTmFu7xhnp--
