@@ -1,136 +1,109 @@
-Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E3537A481
-	for <patches@lists.linux.dev>; Fri,  1 May 2026 22:26:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9178537B00C
+	for <patches@lists.linux.dev>; Fri,  1 May 2026 22:29:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777674377; cv=none; b=Bmuwf7U7QKGD5y9kkQxEe7vEowVhmtfGVxcZbCBaEkDXbY1uK1HN7oxkwXNE5UU0Y+fbF1Af4KTZKF9upZny8jMaTm6ofOFLDV1Qxh/U1P+QmgFNr4WqrRnvmj7LZZOruo0lqPG8W4cT8A/xVa1Bfvjgk6+vqCdnymvOZUgUCk4=
+	t=1777674601; cv=none; b=qz9lvWzlCDJwWsKIKPx7ulxnjY+b5pQk8qdkDb0XMGEvxbjftwg9y8xmhpAROvtRbSar2HeCq2Yey+9OR9CrNb1lMXGf9i1BAIK5G55ivu/CFy6Fn90K9TIbysO+ayMvJz7JyYxny9AnvfGoshB0w6/x7XVmnMq800weg9RFuCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777674377; c=relaxed/simple;
-	bh=EKLMt3AmP0XqAlXm1PJDP+Unfv6n9jw1H8yuE5tgibk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vs2ksERfqT19DaP5JAhvCM1D2t47UCo2wRJEuaY0HQTQTILSo7HJ78MKVBu+EPXbm8ufoO5Ixib3zzpgOzX6URvXS2x8x6O4csuWOYzpEa39q34UuCsyLHF5PK8AxC8ksSalS0MhuzA6bIMYl+ssAzf7RFScfPCB5mkYU0gwZog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=pwscRpmn; arc=none smtp.client-ip=83.149.199.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
+	s=arc-20240116; t=1777674601; c=relaxed/simple;
+	bh=Z3j5m16RyC3CmIGajJ+/IS7X3Sf+kvHFHVY1AUGZqKs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cjULDgByI+HTQX2sIx6kUYuXq4TuWXDU7jMZT9CkC9rn0Wx5oT40GsuZF1W2XwA9HKd2iBLG9MDEcWuTU3OMMulD76Xxj0qJm1hzDVA4NsXkK6e6pDujRQo9m5DC84VzEpR6BIdwBn2pRAIH2WPQV4EnWkDl2rjtAw4KHiAI8vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk; spf=pass smtp.mailfrom=kernel.dk; dkim=pass (2048-bit key) header.d=kernel-dk.20251104.gappssmtp.com header.i=@kernel-dk.20251104.gappssmtp.com header.b=wcSgtOjY; arc=none smtp.client-ip=209.85.167.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel.dk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="pwscRpmn"
-Received: from localhost (unknown [10.10.165.6])
-	by mail.ispras.ru (Postfix) with ESMTPSA id 7249945F798B;
-	Fri,  1 May 2026 22:26:13 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 7249945F798B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
-	s=default; t=1777674373;
-	bh=gqRzleIGhv9m+GK1nBa8FDeo3kK1lqfnBQn7Gl26vT0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pwscRpmnWuWN1mmLHYnq0U4AZHA+hMOLCVLtIABMpXajyaA3TincKVCFcoQNvclPi
-	 idkbOvFpCPi5hU97iatyE5BCdoFSO4gaBCYhpktKhBzVubqJdfDSi+tFgYwDUi2onT
-	 C8ZhPEG0ZEN58I7OhtOgaOPPYMuK0E1rHf21jOA8=
-Date: Sat, 2 May 2026 01:26:13 +0300
-From: Fedor Pchelkin <pchelkin@ispras.ru>
-To: Jens Axboe <axboe@kernel.dk>
-Cc: Ben Hutchings <ben@decadent.org.uk>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, patches@lists.linux.dev, 
-	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com, lvc-project@linuxtesting.org
-Subject: Re: [PATCH 5.10 491/491] io_uring/poll: correctly handle
- io_poll_add() return value on update
-Message-ID: <20260502011444-849ff2d3f8fe48b07f48d496-pchelkin@ispras>
-References: <20260501111233-b371eac52cd006bfddfbd9e5-pchelkin@ispras>
- <58103791-4c19-441c-9d4f-7ae5f9c6151a@kernel.dk>
- <20260502003658-e04f382bc8ed201a99b573e0-pchelkin@ispras>
- <20260502005417-671675fb5906578c85c3fb4f-pchelkin@ispras>
- <fb26a75a-cb2c-4ee6-92b9-4c488a2c7ba5@kernel.dk>
+	dkim=pass (2048-bit key) header.d=kernel-dk.20251104.gappssmtp.com header.i=@kernel-dk.20251104.gappssmtp.com header.b="wcSgtOjY"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-479fc1fc048so1725142b6e.1
+        for <patches@lists.linux.dev>; Fri, 01 May 2026 15:29:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kernel-dk.20251104.gappssmtp.com; s=20251104; t=1777674597; x=1778279397; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8v4XgkEv5i+0WUPhCFMBoQrOJeR7PhB+65tYSb0JbY8=;
+        b=wcSgtOjYLHYrVDWPtZ3zp9Vy0wQ78tbpafXdldWANwqnwwu8WTYUImxcKU0YyRf5sa
+         AUIac+W/Xmm/RNgaQfWrtJkMrNNvxaTWuNlVr/r5dBF03NumAmevvlbjFkHvbFIdE4FW
+         7qCVNEvgqwVfro7PSfUlPWDe0PscCbprbOqdhJ7lNppHxMRVNhLFC16GAMXs/1xuvWlH
+         5TEM5OmVuTqOy3tJwAoNN0gpmSNLhI74KFHS0MS3CDKfKlDhqYotdTTaW/Xped6sliZ1
+         7J1qkRjby36S45oEx9K6HYt82h2EuD3qc+KNePtnbFs26QYrMR8N7VOAu8j180UQSy+F
+         hD2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777674597; x=1778279397;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8v4XgkEv5i+0WUPhCFMBoQrOJeR7PhB+65tYSb0JbY8=;
+        b=nUISvCym3vvZ4Bx1Z178DCCPn2520A1+SuDFr+MHPqQ2js+cWRyqNup+CW+lTaxBYb
+         7IaFKR0jXPlowm8+9/kaQ+g4UJgNhfMyv6nF1aIzWqfXHtFBEOtYFuvALSrxOQwXHT4Y
+         5SleJgoutVRFgqwnjhbrw1QW2U51GBkK5m+ld1f6W7DjqHQiD6L49YtsbdIpJOVQtS0z
+         uGd98MhN7KzsozE2Jcl9jPhVRiMTVtaMxAPK5zHl10Z+qE9GOx6DGW/L5kNQU1mZEe2a
+         4bK/u6bk5mD2OA6Dw93prg7U0RubUXh+eXvgAtnny5MRn27TmgZthk4CSMJh1aCXsCGY
+         gTVg==
+X-Forwarded-Encrypted: i=1; AFNElJ/RdPZSxA+FTkhCISfoWuofevPVe9qOW8zOx/cOxL1DulbqKI41c7HlMskn45X+MdBy9QqWyScw@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywz3DtOHC7PgtZQBkESo3/SBezeB7Y4mA/Uh093LveqeQSQW3WM
+	xT5W8hKI10iqzyc8El9//fUyRtMvKgzRH+kDsFdj5GzL96o7/Tt2IPzmeOmhzkTR264=
+X-Gm-Gg: AeBDieuB18xYEskwPeo+403F692QrP0PJuq699rkPEi+nx3PYHBT0Y5GBnl3ho3ApDn
+	t87J4QDPq1iNkzBgylZCC+mjbaTKFMENIqgXmF4IqztHlWr/kvoqnt6SH//9WQaiKfSIjzlJ2Gs
+	Dd0Qe3NiZD6iG1WF8ZAy7LaUCvEh/JW6jTdMR/mxn8c74CZOkuLEG1Cew1oRZVv2fonaTTZUqzL
+	i01vJOAMG/q82Y4AFMVRVUbm8Yn3Z7iRHdymBpFvVIvtjDXC6b7gYo/yRtBAg6i7Ls0wkpi2Zir
+	3ty6CFCtsccrB3vTySPFuC64hMThsUL/l50MHYqi0ztUAErYtF/e5Bpne1fr4NzRRWGmEzjMhs8
+	Omlkjb6GHJ41t5xvjsnj+Q7zvKhyt7wbPuXuCnuBj49e28YiPIY3Knm+tWL+31xf4huky7yoWjb
+	SrEZDX/Mfh00+/n4lWiNhf0coRjxVGE9QuSZO289+zx1efyask/V7mhtKU/PuQpjNwwfb5z8xLD
+	nB8A+Hx9mCTzn6kFYJn
+X-Received: by 2002:a05:6808:2e4f:b0:479:fca7:4663 with SMTP id 5614622812f47-47c88fb014bmr860868b6e.9.1777674597608;
+        Fri, 01 May 2026 15:29:57 -0700 (PDT)
+Received: from [192.168.1.150] ([198.8.77.157])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-47c76935904sm2049268b6e.11.2026.05.01.15.29.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 May 2026 15:29:56 -0700 (PDT)
+Message-ID: <5794c5cd-ff76-428a-830b-6aaff9d36089@kernel.dk>
+Date: Fri, 1 May 2026 16:29:54 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fb26a75a-cb2c-4ee6-92b9-4c488a2c7ba5@kernel.dk>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 491/491] io_uring/poll: correctly handle
+ io_poll_add() return value on update
+To: Fedor Pchelkin <pchelkin@ispras.ru>
+Cc: Ben Hutchings <ben@decadent.org.uk>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev,
+ syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com,
+ lvc-project@linuxtesting.org
+References: <20260501111233-b371eac52cd006bfddfbd9e5-pchelkin@ispras>
+ <58103791-4c19-441c-9d4f-7ae5f9c6151a@kernel.dk>
+ <20260502003658-e04f382bc8ed201a99b573e0-pchelkin@ispras>
+ <20260502005417-671675fb5906578c85c3fb4f-pchelkin@ispras>
+ <fb26a75a-cb2c-4ee6-92b9-4c488a2c7ba5@kernel.dk>
+ <20260502011444-849ff2d3f8fe48b07f48d496-pchelkin@ispras>
+Content-Language: en-US
+From: Jens Axboe <axboe@kernel.dk>
+In-Reply-To: <20260502011444-849ff2d3f8fe48b07f48d496-pchelkin@ispras>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, 01. May 16:07, Jens Axboe wrote:
-> On 5/1/26 3:55 PM, Fedor Pchelkin wrote:
-> >> diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-> >> index 8b0dfea96ee0..b17a26b1b5e1 100644
-> >> --- a/io_uring/io_uring.c
-> >> +++ b/io_uring/io_uring.c
-> >> @@ -6006,7 +6006,7 @@ static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
-> >>  {
-> >>         struct io_ring_ctx *ctx = req->ctx;
-> >>         struct io_kiocb *preq;
-> >> -       int ret2, ret = 0;
-> >> +       int ret2 = -ECANCELED, ret = 0;
-> >>  
-> >>         io_ring_submit_lock(ctx, !(issue_flags & IO_URING_F_NONBLOCK));
-> >>  
-> >> @@ -6037,7 +6037,7 @@ static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
-> >>                 preq->result = ret2;
-> >>  
-> >>         }
-> >> -       if (preq->result < 0)
-> >> +       if (ret2 < 0)
-> >>                 req_set_fail(preq);
-> >>         io_req_complete(preq, preq->result);
-> >>  out:
-> >>
-> >>
-> >> The fixup patch may be updated with this if the changes look OK.
-> >>
-> > 
-> > Or maybe this one which is less hassle:
-> > 
-> > diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-> > index 8b0dfea96ee0..bb01eaa9761f 100644
-> > --- a/io_uring/io_uring.c
-> > +++ b/io_uring/io_uring.c
-> > @@ -6037,7 +6037,7 @@ static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
-> >                 preq->result = ret2;
-> >  
-> >         }
-> > -       if (preq->result < 0)
-> > +       if (preq->result)
-> >                 req_set_fail(preq);
-> >         io_req_complete(preq, preq->result);
-> >  out:
+On 5/1/26 4:26 PM, Fedor Pchelkin wrote:
+>> @@ -6188,7 +6184,7 @@ static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
+>>  		preq->result = ret2;
+>>  
+>>  	}
+>> -	if (preq->result < 0)
+>> +	if (ret2 < 0)
+>>  		req_set_fail(preq);
+>>  	io_req_complete(preq, preq->result);
+>>  out:
 > 
-> That'd be fine. Note that both your patches are white space damaged. I
+> I'm really uncomfortable to raise this but - ret2 should be initialized in
+> beginning of the function io_poll_update().
 
-Argh, my fault.
+It's your second version... I'll send out a new set.
 
-> can send out updated fixup patches, the above does improve them. But at
-> this point I don't even know what is queued up where. As far as I can
-> tell neither 5.10-stable or 5.15-stable have the fixup queued up yet,
-> even though I asked for it 10 days ago. Neither the fixup, nor the
-> EPOLL_URING_WAKE patch.
-
-They've been queued up to 5.10 and 5.15.  The queues are available at [1,2]
-from the official kernel git web urls. 
-
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/
-[2]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/
-
-While being in queue, the patches may be fixed up by stable maintainers if
-I'm correct.
-
-> From 8f1a401b0fce5a46935153f8572b0681d5b9a00d Mon Sep 17 00:00:00 2001
-> From: Jens Axboe <axboe@kernel.dk>
-> Date: Tue, 21 Apr 2026 16:44:06 -0600
-> Subject: [PATCH 2/2] io_uring/poll: fix backport of io_poll_add() changes
-
-[...]
-
-> @@ -6188,7 +6184,7 @@ static int io_poll_update(struct io_kiocb *req, unsigned int issue_flags)
->  		preq->result = ret2;
->  
->  	}
-> -	if (preq->result < 0)
-> +	if (ret2 < 0)
->  		req_set_fail(preq);
->  	io_req_complete(preq, preq->result);
->  out:
-
-I'm really uncomfortable to raise this but - ret2 should be initialized in
-beginning of the function io_poll_update().
+-- 
+Jens Axboe
