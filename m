@@ -1,154 +1,169 @@
-Received: from mail-dl1-f52.google.com (mail-dl1-f52.google.com [74.125.82.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011008.outbound.protection.outlook.com [40.93.194.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499363FB074
-	for <patches@lists.linux.dev>; Fri,  1 May 2026 16:11:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A2340242C
+	for <patches@lists.linux.dev>; Fri,  1 May 2026 16:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777651911; cv=pass; b=msdzsWPnVb9W0sRhtORMDrhiKLoMqTA3CuU7A7GNe6DKBFI6cqmEXoJEt8TBtnSow36H57usDjfn9/XQ2w9OlsYlQ+nAOM6ER23A6QyngtcfAz0C16AJu8YA2ayfcFBkwgpYGdcZmtFvfiJkHK0fr7C50ABYloza1nuAkRCiqRQ=
+	t=1777653808; cv=fail; b=JS7w/sJHKLFqlC/l1SUv9iaZz7xuuAqNGNDo9wMeF0zR3g6fRU88okWc4r+AS3QGjgF72w+Y+mWZRxBlXubi/auWOaARAT4uR+vOxLZHBqdFNVuvqV6qVxByIfBugBtm3aYDMbV2wRCObMFL/HYbbKX0mUd+eZNZWQ5E/qSBLKM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777651911; c=relaxed/simple;
-	bh=Lg3I4a5CVSLmEfFpzSrc+IJ6RbdpOOFMUy6frdtkKdg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cd3LyxnBnolhtxiP+MgUaVi1i23dPOFrVeLSSy8QXQJLmmqrGwHvbhrHwnCOdXSTWEE7l2i5/zP8V3bJBz9itYvG1PpAdN/xlLlleapUwsxQRQLYskXHLFbcHsXzftn5eBLPMd+QIxj7usm6LR/wMRuLsuyFSfO3FfVEbMi6Yb0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qmxFMD9/; arc=pass smtp.client-ip=74.125.82.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1777653808; c=relaxed/simple;
+	bh=sk9aaABRQd5AAVhOEJYhmL+auYmTV8efAXWsZPGB8Kg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=EkZzHTMjr+bW1BN5nJAE0cPQ2SN55sPo2FcOrCC4CjX8bIhgWgEjiGpqaqatzi48EunqapoB3Lml10Jg1Rwg4+ZZg5zHV1WO6xwtfGVSlCj1aBNeqelNhVTcS05d6UFjT7CMItd8q5l8wK1hseTcHP5dgNQZSRxN2iMRGBGaBFo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=gI7ZC8qe; arc=fail smtp.client-ip=40.93.194.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qmxFMD9/"
-Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-12c565dd3a7so2914425c88.1
-        for <patches@lists.linux.dev>; Fri, 01 May 2026 09:11:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777651899; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kjqbcRtgkWEna9FmNrHfwSA9ntvLRlNCkz0BXTgCsHlxz/3N0Xzoq/z1TlLSEZ0ZJG
-         gvoEx5PBFP0/8jGucJpq0UnnGCtMvFuV5UPlXRI+3gAElUeLaQ3h2IsHmvdXnobH6sdx
-         h6sNVES9rFMRtrUkdDBeFfgbukytLwg51Y1JRHpA3LR8/G1mYB4SFZPtBLub4dEzb9eI
-         WqoPYl263g6TrqPePdeGEhmv3pnPBScesyLYE9uGNXCLurjqjADRZ8QkGnhN08+WEDSm
-         3H+s3gApKphVWCBjKS6DAoJKLH97Vyk7VJW86GxfDOvIGQYVYbik8aT40VzKo5biKBg+
-         FMFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=qUtLnk45BiKrXHINpVcyMQeBwCn16A0KrBFa2QFTWtI=;
-        fh=NAEk+2gMjQmRD+tz1tjVRhiIJOuzBFyuWeDPV5y7iTs=;
-        b=lyc1MrstvQ9cKePOiNQQzZiMY1nfzTjo/FH+MVwKpGQ7TMCct36q1HQsTxtGo5hoYR
-         uEbxJPoAVrA1Lef+svaoa6q3RcLI3wqu9+9Q5letQwmOwPvfocAb8xbHH2Ky0cmWQaD6
-         qaWnXisD3LWvTnZIYQGH1WuY0mPyNH9Hy9lPOESHTW8Ngr2ffqMvpZo1RjcJPJFAA26t
-         CyC75p3oFI95E21QhCplzaruH/2GYZ+VfxVid4uIPF4OEW2NhkmWw1To1305RNGfMxe7
-         8uM3SArh6u4qb5WFU2tg24Wwvo/gaj0b+JmO8rbUGC1c648x74GczEztoa1exvIrVjaj
-         8AaQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1777651899; x=1778256699; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qUtLnk45BiKrXHINpVcyMQeBwCn16A0KrBFa2QFTWtI=;
-        b=qmxFMD9/u7RhBw0pp1ZEgwIeEKQ9eJmdT+djge39BX4PAuQn2wEEhhWUOBDhpaodET
-         vvFXP5bHj1m4RgqAQ4r2Jp6lEGxKlAiAmh45dHR/2OxcEh+iS3yaOmDPvVRyTjYlatF4
-         7Ji6cFy/RV6irGpXpDN9uTMb64BTK3f3fgCB0gxrlGWY4MT/UWt+hJPBIiENBUnY2tQw
-         TzXRovygnreHjPgJKDvLjd1zBYQStKstA/YXJG2M2ODTa3gsXCvQ14wTZFW7JpyrPgAY
-         uqMlLvuNfoqtEMO+T9c4iHr4r4o7l26ls+UhEj+ReNyd04YpdzDEGrKe8h4Q/YrJ3H5B
-         cVUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777651899; x=1778256699;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qUtLnk45BiKrXHINpVcyMQeBwCn16A0KrBFa2QFTWtI=;
-        b=Bg6IW8+rQRvhb4YxHld92zwemK88D34rdLJMlFd2/z6gG43/7rYT0dwFw7awl0PKoY
-         7V51Sg1E1LLTBnLcriHdL3WKysRwJ4t/3lxmlrynAFCFvtsk/toZp1++Me4/+HDekfL3
-         n/MkaK2Dn5IsFJNt3BIBLKjoAxBja5tRRytiQOvJ6fSgxF8h4wCuDP27aOFsF0aG9O/9
-         Q4gi24qiomR/+5HCm5bbTNCWvq2cVPh80Xw9qDUHvtv1F9U3T8mUs/LoyYWywjTtdvxT
-         O/quiq9/zzhkOyyI84FVy5lyZHmjYKGovC8IcgzbPWB+lP8SBXwbPGrd+hCswZj/beGC
-         +uRA==
-X-Forwarded-Encrypted: i=1; AFNElJ/3PozfSbAjcdc0WtwZoFQ2+vrbvIZNNMSXyANd4RJEzmoD3iXfHlKNUkPpYsRRi5jBBtyuumki@lists.linux.dev
-X-Gm-Message-State: AOJu0Yynm3rjG1G1OBQgvPHLBRTFcldNMSXWVIxPFO0O4kGj/qmqtW6l
-	+KOFrktaPgwrPMAlgWU/RfkvpRp/c466VFSfe8tg/5/Ths9EwIvKIJmjfq3vAYp0F05GLorM4Ta
-	dhzX5C9B08yAmnWhAIIPYL3lEWAlGppYp+lcjqYsO
-X-Gm-Gg: AeBDieu9aAqY9rYw3d/gXfk/i87QUrGLbzyKwmCHi9T2Q9YTsZ/mi/G/1qLjNzoNlyU
-	Sfk9x23R0SW+0JhyIjE0lEV5agXWahq5fI7a5rWa7E9uKgpMtD+kEJZOxwTGqYssWksvYiOQ5Um
-	0166nK1pbhOKiUHqzbzikMab9CWJjH4CMxmnV4wXxsdkBftgahgh8G9HO0uyQ6JoNyKz+CHCsS4
-	ZNzV8qzQDIIKURT/LywilY26qoHAHzXGHgXB0BHf5Zg1/hVIVUIJtEQmXPA4N0ms38Ng5ya14Nh
-	az4iB+zD0NKw43ZeKnh5xRwYWocLGWgw/y7RYMBu
-X-Received: by 2002:a05:7022:423:b0:12d:e126:b7c8 with SMTP id
- a92af1059eb24-12deac411demr3607716c88.13.1777651898369; Fri, 01 May 2026
- 09:11:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="gI7ZC8qe"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YJ+sSv2XQ/7FE43XCGDIWG2pFckhkDcfkWzqo6wJWrKw2sbRd0RUsqSrQ1f3Gv/3fdKeZff9gz3ik2IbYEGLBaSBmN/NA8RadVqxJg5r8Q8usqHtR3Nf6RqYcKGviajLZnIhjkQSds6+igQ2bvnio4EMpj3SEuA80vek5LFh+wwSi6SwZ3Ax37DDoO09/sIEwF7BZVxGYkz7k1EFprwDycOSSVAmPPOvasEazi58SBPINTr7xo6aUWw6wcE0kBSE4/bu1A+RGn8EJmvBBxHBnTmUZjYsD+QwQSzvLwiKa7/S8yBX+g4b2vk8TrCAwnedMFvkFSLiaNURD4YZTXeRAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rVBHX/h2tJHzOIi5eoFpKZibLGe9wiV/sB1WTybCUfk=;
+ b=mGHZ2NHClTrm3mQUp+mHhGy7hvDqmbyrfWrDgPNp5OjTg59S7hdI26mKfb/QAhRqHINM2UGo0d3HP0hi1DY529TxAmFmcCqTb6QODtsGrShbHY18BzvblWy17kvZcOJ61hovBf5B844+TIo+BY5ExFklBhqE/fvcPPSeZ2XFu6+hNjFtZ71MljCAtL92Dwlsuy9/gECPANlwhAk9b1dkGCXCNctJWuth3fsSgS6omA/htH8BUBQNTCwCCUcSEflidHL4B3GRJj2UBSeQS1fnep7QYJdJcGXnwDLKXBEe93p4rdIhAPaeL/q+XkrynAAr5NMkDV++6OTVxnyhQ/cxIw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rVBHX/h2tJHzOIi5eoFpKZibLGe9wiV/sB1WTybCUfk=;
+ b=gI7ZC8qecbQRviWCzbT1BnbaqJ+AfFZ+7qvu0DFlK6jgrNM07KUCb7A/8UbJRRhJcWRld87GxrKHYtLvgsZscw68B50bOPskCSiZw3XDJmQdv11uzLGiXdUZxKT0dbdUjNRM5Q/P6NyF71y4QVFLbtKkG+C6Gl9/Ad1uieYo1LP+hS599+63q8Fyn3T1nwHV9K+VbJduanB9jVyqRpAhTTNH8KBQUMxRLPf/S5xJBAP/qeGn0vBMwKjlQfkbEPJLHLPd0DHapu09v7otsrVqrbC+9zzHXTAWEfjZgPa1RmMRMbDDal2+vfFwgpU/XXCuoZN6TyMve74Qcm51pEcklw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by PH8PR12MB8607.namprd12.prod.outlook.com (2603:10b6:510:1cf::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.23; Fri, 1 May
+ 2026 16:43:16 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9870.022; Fri, 1 May 2026
+ 16:43:16 +0000
+Date: Fri, 1 May 2026 13:43:14 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: David Matlack <dmatlack@google.com>
+Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
+	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
+	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
+	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
+	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
+	patches@lists.linux.dev, Josh Hilke <jrhilke@google.com>
+Subject: Re: [PATCH 00/11] mlx5 support for VFIO self test
+Message-ID: <20260501164314.GA1381708@nvidia.com>
+References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+ <CALzav=ci8bi3=sY+F3HJTB5sOQ_pJ8Lm+kz0CDBBWVXry5P98w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALzav=ci8bi3=sY+F3HJTB5sOQ_pJ8Lm+kz0CDBBWVXry5P98w@mail.gmail.com>
+X-ClientProxiedBy: BLAPR03CA0104.namprd03.prod.outlook.com
+ (2603:10b6:208:32a::19) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
-In-Reply-To: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
-From: David Matlack <dmatlack@google.com>
-Date: Fri, 1 May 2026 09:11:11 -0700
-X-Gm-Features: AVHnY4IcOZBEwRDeFauz0p7wo2ItTFGZpUDr4nDVbee6fBs6NBQ1Q0W5r-m7yp8
-Message-ID: <CALzav=ci8bi3=sY+F3HJTB5sOQ_pJ8Lm+kz0CDBBWVXry5P98w@mail.gmail.com>
-Subject: Re: [PATCH 00/11] mlx5 support for VFIO self test
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org, 
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org, 
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>, netdev@vger.kernel.org, 
-	Saeed Mahameed <saeedm@nvidia.com>, Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>, 
-	patches@lists.linux.dev, Josh Hilke <jrhilke@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH8PR12MB8607:EE_
+X-MS-Office365-Filtering-Correlation-Id: 09414d99-7fb9-4a43-d09c-08dea7a0bdf4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|7416014|1800799024|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	f43ZZUCuXsiqGu9hkkowHDCn/vhLltvEcQV2DNa94WG6QSks5T8nK8VnvaN1B6iFXSr7Q88A6ZUJ2vmdNELKkPkH4EW9rMUpdCmRJPZ2psTRKmvpFLM71G8tDs2xp+MeFsLqoycWoihtEy9T2wMIYoR4f47/RZK1XSlLHmwaKrLK9r5VO2obMwPATQoil1mcmYTjmMdcdtKktJoxV4UkosV1iMuSKw69mrfl6TiH2bJxHHY6bEsGCw1r2uE87RNqc5nHYDCBWGECjC61q4cSmF8vns82/xxE/3r/gXJIlw4w1zXkTxpYbyNGH3BZBKyQrabkP5f8RwJU1XwZ1lkGxdAHPsmEXmXrM04/VudVUaSVpJQ2HVBMJhJT7SDsnX2vz9j9FfAIOCYVUFbcIQIjfqvj1yrZH4v+TBLpuWJ3spX1H84S2lMJ1s+d877GL5TSTgniE9CmwByaGZDm0tvc0orDTAYJDrQahvDybINUiu2NjkkQC+QPKSmlSgiKZrV1AOq4/z4bVnDSPU9fTyBQsXTt11S75QpN5PmOo/6qQVXoaHsKgKGjVWAm32hsjHi6I1iq/6EjnVs4RO+VbLkOi/fpwVd3z1g8o72YR4Gc77PRpRWdvdCbnlg1TwLMX0PpsoAy9F2iRiiEWIuKsY9K7AtAT2KXlapSOMjgGd0/+DS1XSZ9ig8XseyZw/wp+tKRVRhAlyqeiM+IHnYVbJ4zvw==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VE4yL1ppdXIrNWViZFdrUk1PMnpmN2RackkwaW9seExVQmRqWHN2M29SdzBB?=
+ =?utf-8?B?bmFKV3ZnaGhNbHBBb05RTzRXbzVnZTRnS0F0R2xLTHZMMGxkeHBNN01tZ1JE?=
+ =?utf-8?B?b0ZneVV6VGZDMzFUeUVuWGtQMXd6QSswOFROdlNCMGZNUlNtWnFzU3BvT3lC?=
+ =?utf-8?B?NG9tcWlpdUdEekNKci9RRlhXRWUwYy9palZNN2QzWnJqUUI1dHFwZ0ZWc0Fn?=
+ =?utf-8?B?WjhZTUxZRDhIK1A4NkVsV0R6U3VVOVJETjFGdGlkdGIzaUpoTnZjdDlpMU8w?=
+ =?utf-8?B?YjJFcTRhY0ZLWWRPUFI1dHpwQlRBdUl5L041S2NVc3Q5bDJydDRmcHo5cTJr?=
+ =?utf-8?B?U3JMZGx0Vlg5Z3lCUWRLUVNJYUJEei9ERkZDdUlvMVlTemNiMjd1cWs2RUIy?=
+ =?utf-8?B?V0x1RXBTUE5UVVJMVjBXbGZDdWhJQmxzcTVLVVVxelhraVBJcFJBUFlZN2do?=
+ =?utf-8?B?ZUJkYUMzQzRmV3o4YnZyd2tCWU02U3M4VG1wOTh4SENiYVJ3K1NuVnYxS21n?=
+ =?utf-8?B?VU1KVnNHSzZGaTVIelArYUZXTis4cWJXWGNmc1lwMVVXWmtMSnZHMEV3UW1F?=
+ =?utf-8?B?bnlBRnpPb0xnQ3ArdkpwcDlmQTFKUjZPa0J2ZWFWWi9SQnZRa3UvaTJuT2lQ?=
+ =?utf-8?B?U2ZpNzd6MXFMVHV2TmRVUk1WQ3RadlFudmdFZXpWbkNNdUZoSURLZ0kwY3Vo?=
+ =?utf-8?B?YzRFamlpWmRZSU9VUzQyYjcxNDRkd2kyNHVUbkZma080OU9DSlhPMk05b1BS?=
+ =?utf-8?B?N0FRTVJOZk1YOU05d0M4K0pFRDkxL3MwbWpxT1VYN05FYW1LdWI0VUJ0amt6?=
+ =?utf-8?B?SU9LVGlmU1lDVi9sWlRZQWNYeitta3RKa3lQWmJZZ1FVUFFOdzB4NHJ0V2Qy?=
+ =?utf-8?B?Q3RIREhMSGlyTFYvL1J5dWVZYmcrbGFwaC9ZcFlwSXk5d05MMEJKSlpXdHNu?=
+ =?utf-8?B?eEJNaWhHa0M5ZTJWSmpWb1JGKzdKL24rSjBWLzZMQTR2djlsenZZQTIzUmV4?=
+ =?utf-8?B?ejJEdldrOGQvUkpRNzRVWUV2bGN0NFlSRWFGaENpemRQNFJpMEpaeVdXNHh3?=
+ =?utf-8?B?YnhlUDdheU82aVY5em1sbjVoTHZmTGpqUzhiZ3BXdUdTNzJnMXJVS00rUmNO?=
+ =?utf-8?B?ZjFmVmE5S1ZHcUc4TGZicmc5V1lva0xwbkQ5cnJkUVpjRmkvL0NwdFlPVkJs?=
+ =?utf-8?B?R3BZRGNNT1RyRGJNQUliWGE3b3J4aU5BWCtVL0xiNmp0ak9vZ3MrRktGZm5D?=
+ =?utf-8?B?NHMzRmVhdUpZT1NaTURyanR4Y2dDY0VMSXZDb1VtR3dPb3NJSXZOS291MFVW?=
+ =?utf-8?B?dVRNUlhMTnoyb1N3YkRQdVVpZ2hMZmVrYWcxcVBhN1lJRGM3ZTZ2cGtMTTlo?=
+ =?utf-8?B?REFOQlJQZmZVN2RZamRtd2U2OHJ3Z2xuZ3hneGNSMGRqVUFaS2ZPRHNBUFBM?=
+ =?utf-8?B?clBubFVlRno4VUI1QmVSVk55MVlTZnNOdTFHUDJwODJjeE1odFhmOFNrTlFt?=
+ =?utf-8?B?QXd1bVBNT3NtK1E5aG4vWmdpKytRR0NtTXYveDVzMS9PcnFOQVVRbU1aZ3Zw?=
+ =?utf-8?B?UFhpa2J1WXhtalc4cHhVNjJlOXhDTkdkaEV2ekdzaUgyZEJULy9MUGcxSnls?=
+ =?utf-8?B?OUhpQjdCNWlUci9hT3RFQm9SSmdaTjcvYjYzUk1pMjM3ekcvaUkyQ2YydTlJ?=
+ =?utf-8?B?WDlmc2psM3RaTjE4bmNLRTdQdlRFdk5wMnVpMUxZSkxRNVdXTTNZTXFjSlFw?=
+ =?utf-8?B?UGRXNGpJallCMTl5SFcrTGJaSnhGVWxaQ0Yzb3JFNUtybkJWdk1UcEFWKzZj?=
+ =?utf-8?B?TTZRZVJuWHpFOXQvOENCcHNYcEVzWnZObFZWMEZVN3QxVTMzenVrMGI5ZFY3?=
+ =?utf-8?B?MjQzMEVqSXQ1bXYzUSt2MWZBdnRWT3VCYm10Q2pNSEdEalpzdzZoa0VlVUlZ?=
+ =?utf-8?B?OG40ZHZmQ2JsRDRjVkpxSWJZZ2wva0p2Q3ZaSCsvcVZDZTQram1peklQRFA0?=
+ =?utf-8?B?UkxHUGVZbXNSMG5peHVyOWhKajZiNDVlVGVBdWdhK3h3ckk3aTRWRGRnUmJI?=
+ =?utf-8?B?QWxvVkFWY0lnd3I2NGpBVUU3MEhYMjdvUGNDNy9LMXJnMmJXVmxHRXJwWlVy?=
+ =?utf-8?B?c214aWNscXE5K1psTE9Fbm83bWl4M1c0ME1yOGZyYTFiSkl3djNDbUlzUE42?=
+ =?utf-8?B?MUFRNXJtVEdmV3NRTEw4MmUzc3NYSWlhQnN2NFk2SXBnNmhnb3l0eWRDbU15?=
+ =?utf-8?B?RmlLUHZPSExuTnJLRndXOGxnSjYrMnIvWVJwUXRoMlFMTWNQVVovbGJpVEpq?=
+ =?utf-8?Q?UZ/ayMmnw/vatThVbz?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 09414d99-7fb9-4a43-d09c-08dea7a0bdf4
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2026 16:43:15.9719
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +Qp9pH1lKh9ILiB0hCFPLWX3+OdpMvZs8Cpxb80+RVpSvc4FITZwEXyr8SPSTFGH
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB8607
 
-On Thu, Apr 30, 2026 at 5:08=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
-ote:
->
-> Add an mlx5 driver to VFIO self test. This is largely a remix of the
-> existing VFIO mlx5 driver in rdma-core. It uses an RDMA loopback QP
-> to issue RDMA WRITE operations which effectively perform memory
-> copies using DMA. Since mlx5 has a stable programming ABI this
-> should work on devices from CX5 to current HW. The device FW must
-> support the QP loopback configuration.
+On Fri, May 01, 2026 at 09:11:11AM -0700, David Matlack wrote:
+> On Thu, Apr 30, 2026 at 5:08 PM Jason Gunthorpe <jgg@nvidia.com> wrote:
+> >
+> > Add an mlx5 driver to VFIO self test. This is largely a remix of the
+> > existing VFIO mlx5 driver in rdma-core. It uses an RDMA loopback QP
+> > to issue RDMA WRITE operations which effectively perform memory
+> > copies using DMA. Since mlx5 has a stable programming ABI this
+> > should work on devices from CX5 to current HW. The device FW must
+> > support the QP loopback configuration.
+> 
+> > This entire series was coded by Claude Code in about 4 days.
+> 
+> Very exciting. Josh Hilke from Google is also working on using AI to
+> create a selftest driver for Intel IGB NICs so VFIO selftests can run
+> in QEMU [1]. So it's encouraging to see you were able to do it with
+> mlx5.
+> 
+> [1] https://www.qemu.org/docs/master/system/devices/igb.html
 
-> This entire series was coded by Claude Code in about 4 days.
+Yes! I would feed DPDK in as well in this case? Combined with the
+kernel driver it should be doable. It is much easier if you understand
+how the NIC works, of course. This worked out significantly because I
+guided it through sufficiently small steps and knew where to find all
+the quality reference material..
 
-Very exciting. Josh Hilke from Google is also working on using AI to
-create a selftest driver for Intel IGB NICs so VFIO selftests can run
-in QEMU [1]. So it's encouraging to see you were able to do it with
-mlx5.
+> >  - Make it work on a PF too (this is surprisingly hard!).
+> 
+> Can it work on CX VFs? We're interested in continuously performing
+> memory copies across a Live Update using a VF via selftests to
+> demonstrate SR-IOV preservation (when we eventually get there).
 
-[1] https://www.qemu.org/docs/master/system/devices/igb.html
+Yes, I started with VF because it is simpler. The PF support flow
+requires a bunch more complicated stuff.
 
-> For those interested, the flow I used was broadly a prompt sequence
-> sort of like:
->
->  - Hey Claude, go look at the falcon series, VFIO self test, the
->    mlx5 driver, rdma-core and some PDF documentation and make a
->    plan to put mlx5 under the selftest.
->  - Write an rdma-core application using the built-in VFIO provider
->    that can do the required memcpy operations that vfio selftests
->    wants.
->    (This resulted in a 1k loc C file that compiled and ran the
->     first time but had a few bugs related to device programming
->     that the AI resolved.)
->  - Replace the rdma-core components with open-coded versions to
->    create a fully stand-alone program that does the DMA memcpy.
->  - Review and audit the thing.
->  [Pause and de-slop it]
->  - Make it work on a PF too (this is surprisingly hard!).
-
-Can it work on CX VFs? We're interested in continuously performing
-memory copies across a Live Update using a VF via selftests to
-demonstrate SR-IOV preservation (when we eventually get there).
-
->  [Move to a kernel tree and copy all the .md files and .c program
->   it made]
->  - Hey Claude, look at all this stuff and make a broad plan to
->    actually build a VFIO self test.
->  - Here is my 1 sentence advice on what each patch should look
->    like, make a detailed plan to make a patch for every one.
->  [Pause and polish the patch plans]
->  - Execute plan X then commit it [pause and de-slop each patch,
->    repeat].
->  [Review and final polish]
->
-> It is based on a tree with the falcon series applied.
-
-Thanks for sending, I look forward to reviewing!
+Jason
