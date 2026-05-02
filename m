@@ -1,110 +1,103 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE5523ABBE
-	for <patches@lists.linux.dev>; Sat,  2 May 2026 04:32:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88039175A92
+	for <patches@lists.linux.dev>; Sat,  2 May 2026 08:33:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777696334; cv=none; b=G9pKStGuPnWNfQrvpoSyfhnxYBTZnXb0COs4rhMcNLbzTKanAtYVJ/GDxvIR02Q4wI71Om/zFHn1pjU70WiVL9d3NKFGy/txlqMCW+EBB6NCOt+jOMbqop5UcxwgJjUBxV7GsuiprMlzw86NZs3bP9WW7GnXrkJI7olRg849/50=
+	t=1777710836; cv=none; b=ozaEBen69oYMfbspj71Pc7l6Ex99Vyl92BHPbZYsxVnkTvTDGk6+bPS7mBWOcYIf14sBK+4SuS/F7wDncYSWJh6yhyxN5seRLhXcuNZEnpgNc1cYA1WX95c/j4Z4a68Pg2V2bCePQF3HcYdZeYPN0aajZghET7ToLiymbELJn54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777696334; c=relaxed/simple;
-	bh=VvzNqcyWvOSXIgK/Bn248L/jEf6SxdUEYXGuhkZRyNQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=JLc+d0olnn6D6ObZmZsossH6sgrNharysL/X/DL+qYiPljYct4bseCZjS8Grdd5bGlvWRv/2IbxFDVFtxhfIpWAy4u5lEI0gNl1Hb7+72z+BGawVUk6msLHWaBWO3mTHMSsdsWw4keDVnN3Xl72adZYXSoQa3PwEA4N4ukjLly4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=ortqi6uW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HUtDmXXB; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
+	s=arc-20240116; t=1777710836; c=relaxed/simple;
+	bh=AEFWyi1bfUyMJXHWZ66+GWlU4hMQ/K6QVwapHNfEqn8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=O4qWCRiFI0YJcUbb+iJcY/CcObYfLJCcp9+1h0z8wGUtr7yt2AcXI2WPVnRAXE99Z8LMVskwcVYZzEFbFdEN66VJWSSuD6zeJXdAp/eHKsUHjuhCXyiDk3FOhA8iE9+AkcbO8+q1bh1YqWZVC0y8/L7RdDXgh6b54JgRZIZ6QVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=xCARrbXu; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="ortqi6uW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HUtDmXXB"
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 703E51400176;
-	Sat,  2 May 2026 00:32:10 -0400 (EDT)
-Received: from phl-imap-18 ([10.202.2.89])
-  by phl-compute-02.internal (MEProxy); Sat, 02 May 2026 00:32:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1777696330;
-	 x=1777782730; bh=BREJYA/ynimdlvkziKMjJqbroFR4YvUmHC1hcGjm9x8=; b=
-	ortqi6uWikQ8D9//DCJX6HdxN8qFN/wNEWu0GjtX/JPurb0gBkR4R/br/H8uDKTd
-	nmVrg/zHJo0fowP7PEuIKYgTWsjvTn/JdCJtKg4LDUDZerAGHgfF9Wi4dCDnEz/z
-	xo7Cu6HZlvV/3FeDd6e5zuviTb21KWNY546Y37/CojJP/NnsnHd7W6hCdYhaIWB2
-	ArmF0d7GHsn5B6tN9kr+tNJUVJ9hJfLXqTpV2a0cEtPuE1POhSO63SN8Qiz+45JU
-	D8R7mCSTm10le84gZO/UDNJ7N5uJWx1tlUX9FBoTm+TUhhqIbt5kMjahBTcPcbkn
-	JYkoZCpvAl2ZZlRXYr67xg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777696330; x=
-	1777782730; bh=BREJYA/ynimdlvkziKMjJqbroFR4YvUmHC1hcGjm9x8=; b=H
-	UtDmXXBWutpUdoGrBRVkz3b0v9T8jZ9AxD3wms8UA4sCaccGEoiIGJpK176hlCs1
-	++oYIaUXtDgRouEW/wv6KP3LjaKSxpYEltfcSD3oZEfFP6TyMC99JLukz1YL/v4G
-	cjKGQjjPtr33m2OCkT0tTqbHjMzDxnYagJ1qStOR0GFdJeU7amfTXugPKwN62WUq
-	hiyssUkSzOmygpsS8dCbuuyOvMh1Kb5d+dg7nkr6nXgnPKgEUPja215mCA1Cw5S1
-	MsafOhxA8wAd/KM9YBS4Jec6jghW6ceGUIVgYIZwj1gCHRoczHzzL6q0RZXW//VV
-	iH4LIN0H3D4mzXmiHQclQ==
-X-ME-Sender: <xms:Sn71af8e8p1BZAIxzaNAVYGvLu3pfDMXKBpJ5rTpm9xoo5togOtt_A>
-    <xme:Sn71aWggk1gjkF9-EHfQIMZHiV4bsxMT7xaTeKwa00mLlxXLEKvL1_2UxMe9e0Wxv
-    hDOHgv0q7JWKiWysf5stfrURGwhzrGbcofLmOa0cnS1a18WrK_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdelvddufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdetlhgvgicu
-    hghilhhlihgrmhhsohhnfdcuoegrlhgvgiesshhhrgiisghothdrohhrgheqnecuggftrf
-    grthhtvghrnhepgfeffeelgffgffevffetteeivdettdfgvdeiveefjeeffeffveetjeet
-    udffgfevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    eprghlvgigsehshhgriigsohhtrdhorhhgpdhnsggprhgtphhtthhopeduvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepughmrghtlhgrtghksehgohhoghhlvgdrtghomh
-    dprhgtphhtthhopehlvghonheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhuhgr
-    hheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthhgvsheslhhishhtshdrlh
-    hinhhugidruggvvhdprhgtphhtthhopehjghhgsehnvhhiughirgdrtghomhdprhgtphht
-    thhopehmsghlohgthhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepshgrvggvughmse
-    hnvhhiughirgdrtghomhdprhgtphhtthhopehtrghrihhqthesnhhvihguihgrrdgtohhm
-    pdhrtghpthhtohepkhhvmhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Sn71abxKiOXJB7RlQcQ0yz-wxuLtklAZqMqe2BAF8vmaUaUeZEd0oA>
-    <xmx:Sn71af8FJynU3OCbEob14bK3zdFzrZp2mhbGaDRk_tZAmL75iuQH9g>
-    <xmx:Sn71aZOKAri6LW5ABVGBIXnZ0WVwarqNA3Af0NJ3y5SX_iMTF7-AEQ>
-    <xmx:Sn71afoF33idoETcqH1XenMvYie6Fa-e0WkFHEuikluE6lh-pDs1Zw>
-    <xmx:Sn71aeZ3SmnZnKSEnikCL7LK8w_aZoWWQ1OImsJAmIbITGiETqVEP4kj>
-Feedback-ID: i03f14258:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 14AE715C008F; Sat,  2 May 2026 00:32:10 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="xCARrbXu"
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4g71Qf0fv6z9tyN;
+	Sat,  2 May 2026 10:33:46 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1777710826;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Z2iWztUwm+o27y5dNxbgLF4/YL24oMbdNtxNqbeQMfI=;
+	b=xCARrbXuP9oXDZ7MWbmLF4UFkigjkeGeqqH0KcAKvvS2dFJ32ChqDLYi3wQVGGd075y9Tk
+	LFao7tfAX31YHgcilTqyNF+ZQSOMDKSGGzzZi6ym2W/OU5kAgLsEBw/7uyYgLkWlZGABLd
+	OoKW3Z0wwo4bVITtmUcCmK/sVD0QL6ulZ842RewCzPfzQNYxTHKPyd4AvDvYRZlk0HCuNN
+	54FfXr85SfuxlLkOGQ2ZZwcWbKhod265X+4d5nWGbsIvmhMB0eQz+yUOR8PlBYFWFsdMJ4
+	+rPgzerhlbCN9ANeBLo/GWEUEduokIZdqVWJd/BedSH+eLngA5ugNCUI51drqQ==
+Message-ID: <4007d59da564d357261b4ffa9c1daffcf09b5868.camel@mailbox.org>
+Subject: Re: [PATCH 07/11] vfio: selftests: Allow drivers to specify
+ required region size
+From: Manuel Ebner <manuelebner@mailbox.org>
+To: Jason Gunthorpe <jgg@nvidia.com>, Alex Williamson <alex@shazbot.org>, 
+ David Matlack <dmatlack@google.com>, kvm@vger.kernel.org, Leon Romanovsky
+ <leon@kernel.org>,  linux-kselftest@vger.kernel.org,
+ linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
+ netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,  Shuah Khan
+ <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>
+Cc: patches@lists.linux.dev
+Date: Sat, 02 May 2026 10:33:39 +0200
+In-Reply-To: <7-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+References: <7-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: ALXc8_xz--ng
-Date: Fri, 01 May 2026 22:31:49 -0600
-From: "Alex Williamson" <alex@shazbot.org>
-To: "Jason Gunthorpe" <jgg@nvidia.com>, "David Matlack" <dmatlack@google.com>,
- kvm@vger.kernel.org, "Leon Romanovsky" <leon@kernel.org>,
- linux-kselftest@vger.kernel.org, linux-rdma@vger.kernel.org,
- "Mark Bloch" <mbloch@nvidia.com>, netdev@vger.kernel.org,
- "Saeed Mahameed" <saeedm@nvidia.com>, "Shuah Khan" <shuah@kernel.org>,
- "Tariq Toukan" <tariqt@nvidia.com>
-Cc: patches@lists.linux.dev
-Message-Id: <71afd479-71b4-4ab7-bcbe-3f7b53bd11f4@app.fastmail.com>
-In-Reply-To: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
-References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
-Subject: Re: [PATCH 00/11] mlx5 support for VFIO self test
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+X-MBO-RS-META: z4gfwoiygq3ad9gdyib4am31dmz9b8hw
+X-MBO-RS-ID: 59239b2a35230070757
 
-On Thu, Apr 30, 2026, at 6:08 PM, Jason Gunthorpe wrote:
-> Add an mlx5 driver to VFIO self test. This is largely a remix of the
-> existing VFIO mlx5 driver in rdma-core. It uses an RDMA loopback QP
-> to issue RDMA WRITE operations which effectively perform memory
-> copies using DMA. Since mlx5 has a stable programming ABI this
-> should work on devices from CX5 to current HW. The device FW must
-> support the QP loopback configuration.
+Hi,
+On Thu, 2026-04-30 at 21:08 -0300, Jason Gunthorpe wrote:
+> Add a region_size field to struct vfio_pci_driver_ops so drivers can
+> declare how much DMA-mapped region they need. The mlx5 driver will
+> need ~18MB for firmware pages. Existing drivers leave region_size as
+> 0 and get the current default of SZ_2M.
+>=20
+> Assisted-by: Claude:claude-opus-4.6
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+> =C2=A0.../selftests/vfio/lib/include/libvfio/vfio_pci_driver.h=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 3 +++
+> =C2=A0tools/testing/selftests/vfio/vfio_pci_driver_test.c=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 3 ++-
+> =C2=A02 files changed, 5 insertions(+), 1 deletion(-)
+>=20
+> diff --git
+> a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
+> b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
+> index e5ada209b1d102..fa172635632453 100644
+> --- a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
+> +++ b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
+> @@ -9,6 +9,9 @@ struct vfio_pci_device;
+> =C2=A0struct vfio_pci_driver_ops {
+> =C2=A0	const char *name;
+> =C2=A0
+> +	/* Minimum driver region size, 0 =3D default SZ_2M */
+> +	u64 region_size;
 
-Does the PCI ID table in the series need some pruning then?  It includes CX4.
-Thanks,
+i guess i do not understand this comment, but that's no surprise
+because i'm new to the kernel.=20
+would one of my suggestions be better?
 
-Alex
++	/* Minimum driver region size =3D=3D 0 -> default =3D SZ_2M */
+
+or
+
++	/* Minimum driver region size, default SZ_2M =3D 0 */
+
+> [...]
+
+Manuel
