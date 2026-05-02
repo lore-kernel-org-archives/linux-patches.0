@@ -1,63 +1,168 @@
-Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ADB2DEA9B
-	for <patches@lists.linux.dev>; Sat,  2 May 2026 09:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5CF30EF92
+	for <patches@lists.linux.dev>; Sat,  2 May 2026 09:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777712897; cv=none; b=J9vzOxw28Cycru1huqvC/3jkmSPvyRvcmHsf4hgxj2bBojBTY1lCXKaMJIg/da0QwlkPAejqsTETxxlLT4bpWH06hGZ0rHMXmpbVzQBEdv9duP+01NkVSz3sJkPPcs+4xxLXOmxMw1/yq2rsa4DPOwvcdJxZmPQBym59hADKyac=
+	t=1777714541; cv=none; b=K1rSFM1VFZPuF989Hdj3UHbd1s9c40uetbbC2SnfxLoX3CcihJMvpKgLqWPvA0M033GtpRrFIQdIR7cEG6NoqjOrYpW8Qhf+1Y0pEd40fbUdkeCoOinc0nDKwTku0frcJw1J0bHXiFXHkN2ll27xylnP8rGMFrbR+8ayht9Zris=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777712897; c=relaxed/simple;
-	bh=7QbyI59Pdb9sb4X+UFRHx2zieFU5IvzFFR1nTLLWQz4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u8Uasuzunzpe+E+DnvFAGzqQO8Qvd8x6licDyv+Nw0mvSXJRT/z7T6fov7wYdqp0SUQ5A/VEscDryJFZy70O8/oRu2UAEsaunUHLv2vNViRTgM/6wVjshLORaS7Lnjazh/sTAYt1cnAAU8KijxlwnrGg4T0OR8AeXS30uVfOesk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=ntlPKz5u; arc=none smtp.client-ip=83.149.199.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
+	s=arc-20240116; t=1777714541; c=relaxed/simple;
+	bh=Wz4Q/hX6nmO+cFQ0TpRkx6Ettzn+NjVNA6GnTV0eqew=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=HZeLorYEs4e0xzBbIKs1uWbpWH2hru9qryfuMS8S5JJ/ptMWdh/6/oABjglBlxK1gGJDYCtihK+XEHaIN9lWrbtZsCKqcumsiKcEe7OxA6SEUPhkfZhwmG+ipFlQQtMfKm0fcA/MAU9ZSkBUIAhjG8r+BmInvmaCEw1ZcFPXY2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=J45eh6Jr; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="ntlPKz5u"
-Received: from localhost (unknown [95.24.28.48])
-	by mail.ispras.ru (Postfix) with ESMTPSA id 9DCC445A1D1D;
-	Sat,  2 May 2026 09:08:04 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 9DCC445A1D1D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
-	s=default; t=1777712884;
-	bh=UN/fGF5rtznIEbzrab6e8cF2yiO29rw8CfDIHrKPpiY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ntlPKz5uRinzTGQ3s1+sbxR1rW5fxNC7iFgL908YwJ/kn1omowPI+WTiuz4kPHidn
-	 az32c28/gMZykFwZVDJf7aVaX46CZunfjPse3lW/hBvn7n7BO1P4LhIBf5yzFiL7ru
-	 Pa0nL3aDlWCXfedqovDHCaHHRJ1NZkQD6zJIA8Gs=
-Date: Sat, 2 May 2026 12:08:04 +0300
-From: Fedor Pchelkin <pchelkin@ispras.ru>
-To: Jens Axboe <axboe@kernel.dk>
-Cc: Ben Hutchings <ben@decadent.org.uk>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, patches@lists.linux.dev, 
-	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com, lvc-project@linuxtesting.org
-Subject: Re: [PATCH 5.10 491/491] io_uring/poll: correctly handle
- io_poll_add() return value on update
-Message-ID: <20260502120536-82f73a7f6431526a6d4ebcde-pchelkin@ispras>
-References: <20260501111233-b371eac52cd006bfddfbd9e5-pchelkin@ispras>
- <58103791-4c19-441c-9d4f-7ae5f9c6151a@kernel.dk>
- <20260502003658-e04f382bc8ed201a99b573e0-pchelkin@ispras>
- <20260502005417-671675fb5906578c85c3fb4f-pchelkin@ispras>
- <fb26a75a-cb2c-4ee6-92b9-4c488a2c7ba5@kernel.dk>
- <20260502011444-849ff2d3f8fe48b07f48d496-pchelkin@ispras>
- <5794c5cd-ff76-428a-830b-6aaff9d36089@kernel.dk>
- <9b00a03b-ff87-4d09-be2a-5865e555bcd6@kernel.dk>
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="J45eh6Jr"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [10.196.197.102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4g72nz4pppz9tyJ;
+	Sat,  2 May 2026 11:35:35 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1777714535;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YD62FYaG+7ooT7sr2cKJAZ5DvdUXH1HM8sfBS4QoUA8=;
+	b=J45eh6JrrVZdlBu3Wzaiadrr68NgOmaw5yCqFwlRVC4cddiPzQtt631SBsDWhIFUGvkydH
+	1jYIp3FdjNHV/G4D3dB7nbkRu6VpkUUqnd8vCVb+yGpxpINj/3k731k2sCBMZLZmCeEZtk
+	G9pDmSPvPf9nby1A8W77Jcgz+v65v7odnkXVEU5eGBa/q/1m0X0W9v9gOreJnYilpijO3B
+	R+CG2yCVmOgJLqNcONBrll71la4685hmnMcjK8Ajat1x44witE4AXIMLsaAg8sF5CkjugI
+	aMXLhdV5DPdgqKYRN5UvLkSP7Cito6CyHHJoMHYRHC/W+O4uz6LLfydo/SoWnw==
+Message-ID: <a43eea6c80e60351102cd722252b963a1eb7f013.camel@mailbox.org>
+Subject: Re: [PATCH 09/11] vfio: selftests: Add mlx5 driver - HW init and
+ command interface
+From: Manuel Ebner <manuelebner@mailbox.org>
+To: Jason Gunthorpe <jgg@nvidia.com>, Alex Williamson <alex@shazbot.org>, 
+ David Matlack <dmatlack@google.com>, kvm@vger.kernel.org, Leon Romanovsky
+ <leon@kernel.org>,  linux-kselftest@vger.kernel.org,
+ linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
+ netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,  Shuah Khan
+ <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>
+Cc: patches@lists.linux.dev
+Date: Sat, 02 May 2026 11:35:29 +0200
+In-Reply-To: <9-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+References: <9-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9b00a03b-ff87-4d09-be2a-5865e555bcd6@kernel.dk>
+X-MBO-RS-META: uaweiay3waw59qou6hnfz4oty9y3zsb3
+X-MBO-RS-ID: cbc3c8409f818b73279
 
-On Fri, 01. May 17:27, Jens Axboe wrote:
-> OK, here's the new set for both 5.10-stable and 5.15-stable. Ran it through the
-> usual testing.
-> 
-> Let's hope we can put this one to bed now :-)
+Hi Jason,
 
-Hope so as well.  Thank you for the updated patches!
+i've gone through your patch, just some minor and some optional things.
+
+On Thu, 2026-04-30 at 21:08 -0300, Jason Gunthorpe wrote:
+
+> [...]
+> diff --git a/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c
+> b/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c
+> new file mode 100644
+> index 00000000000000..0ab941bad7a66c
+> --- /dev/null
+> +++ b/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5.c
+> @@ -0,0 +1,1406 @@
+> +// SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
+> +/*
+> + * mlx5 VFIO selftest driver
+> + *
+> + * Programs mlx5 ConnectX VFs and PFs through the bare-metal command
+> interface
+> + * and RDMA Write self-loopback to perform DMA.=C2=A0 Implements
+
+Write -> write
+else it feels like there is a new sentence=20
+
+> + * (probe/init/remove) and plugs into the VFIO selftest framework.
+> + */
+> +#include <stdint.h>
+> +#include <stdbool.h>
+> +#include <string.h>
+> +#include <time.h>
+> +#include <sched.h>
+> +#include <unistd.h>
+> +#include <stdlib.h>
+> +
+> +#include <linux/errno.h>
+> +#include <linux/io.h>
+> +#include <linux/log2.h>
+> +#include <linux/pci_regs.h>
+
+sort =C3=A1lphabetically:=20
+
++#include <sched.h>
++#include <stdbool.h>
++#include <stdint.h>
++#include <stdlib.h>~
++#include <string.h>
++#include <time.h>
++#include <unistd.h>
+
++#include <linux/errno.h>
++#include <linux/io.h>
++#include <linux/log2.h>
++#include <linux/pci_regs.h>
+
+> +
+> +#include <libvfio.h>
+> +
+> +#include "mlx5_hw.h"
+
+why are these two lines grouped individually?
+
+
+> +/* Forward declaration =E2=80=94 cmd_exec polls events during command wa=
+it */
+> +static void mlx5st_process_events(struct mlx5st_device *dev);
+> +
+> +static const char *mlx5st_cmd_name(u16 opcode)
+> +{
+> +	switch (opcode) {
+> +	case MLX5_CMD_OP_QUERY_HCA_CAP: return "QUERY_HCA_CAP";
+> +	case MLX5_CMD_OP_INIT_HCA: return "INIT_HCA";
+> +	case MLX5_CMD_OP_TEARDOWN_HCA: return "TEARDOWN_HCA";
+> +	case MLX5_CMD_OP_ENABLE_HCA: return "ENABLE_HCA";
+> +	case MLX5_CMD_OP_DISABLE_HCA: return "DISABLE_HCA";
+> +	[...]
+> +	}
+> +}
+
+Maybe line them up like:
+Depends on your taste.
+
++	switch (opcode) {
++	case MLX5_CMD_OP_QUERY_HCA_CAP:	return "QUERY_HCA_CAP";
++	case MLX5_CMD_OP_INIT_HCA: 	return "INIT_HCA";
++	case MLX5_CMD_OP_TEARDOWN_HCA: 	return "TEARDOWN_HCA";
++	case MLX5_CMD_OP_ENABLE_HCA: 	return "ENABLE_HCA";
++	case MLX5_CMD_OP_DISABLE_HCA: 	return "DISABLE_HCA";
++	case MLX5_CMD_OP_QUERY_PAGES: 	return "QUERY_PAGES";
++ 	[...]
+
+> +
+> +	/*
+> +	 * Compute signatures: mailbox blocks first, then cmd_queue_entry
+> last.
+> +	 * The sig must cover the final state including ownership=3D0x1, but
+> +	 * we must not set ownership until after the sig is in place =E2=80=94
+> +	 * XOR in the 0x1 without storing it to memory.
+> +	 */
+
+- " last"
+
++	/*
++	 * Compute signatures: mailbox blocks first, then cmd_queue_entry.
+
+Thanks
+ Manuel
