@@ -1,103 +1,63 @@
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88039175A92
-	for <patches@lists.linux.dev>; Sat,  2 May 2026 08:33:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ADB2DEA9B
+	for <patches@lists.linux.dev>; Sat,  2 May 2026 09:08:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777710836; cv=none; b=ozaEBen69oYMfbspj71Pc7l6Ex99Vyl92BHPbZYsxVnkTvTDGk6+bPS7mBWOcYIf14sBK+4SuS/F7wDncYSWJh6yhyxN5seRLhXcuNZEnpgNc1cYA1WX95c/j4Z4a68Pg2V2bCePQF3HcYdZeYPN0aajZghET7ToLiymbELJn54=
+	t=1777712897; cv=none; b=J9vzOxw28Cycru1huqvC/3jkmSPvyRvcmHsf4hgxj2bBojBTY1lCXKaMJIg/da0QwlkPAejqsTETxxlLT4bpWH06hGZ0rHMXmpbVzQBEdv9duP+01NkVSz3sJkPPcs+4xxLXOmxMw1/yq2rsa4DPOwvcdJxZmPQBym59hADKyac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777710836; c=relaxed/simple;
-	bh=AEFWyi1bfUyMJXHWZ66+GWlU4hMQ/K6QVwapHNfEqn8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=O4qWCRiFI0YJcUbb+iJcY/CcObYfLJCcp9+1h0z8wGUtr7yt2AcXI2WPVnRAXE99Z8LMVskwcVYZzEFbFdEN66VJWSSuD6zeJXdAp/eHKsUHjuhCXyiDk3FOhA8iE9+AkcbO8+q1bh1YqWZVC0y8/L7RdDXgh6b54JgRZIZ6QVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=xCARrbXu; arc=none smtp.client-ip=80.241.56.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1777712897; c=relaxed/simple;
+	bh=7QbyI59Pdb9sb4X+UFRHx2zieFU5IvzFFR1nTLLWQz4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u8Uasuzunzpe+E+DnvFAGzqQO8Qvd8x6licDyv+Nw0mvSXJRT/z7T6fov7wYdqp0SUQ5A/VEscDryJFZy70O8/oRu2UAEsaunUHLv2vNViRTgM/6wVjshLORaS7Lnjazh/sTAYt1cnAAU8KijxlwnrGg4T0OR8AeXS30uVfOesk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=ntlPKz5u; arc=none smtp.client-ip=83.149.199.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="xCARrbXu"
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [10.196.197.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4g71Qf0fv6z9tyN;
-	Sat,  2 May 2026 10:33:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1777710826;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Z2iWztUwm+o27y5dNxbgLF4/YL24oMbdNtxNqbeQMfI=;
-	b=xCARrbXuP9oXDZ7MWbmLF4UFkigjkeGeqqH0KcAKvvS2dFJ32ChqDLYi3wQVGGd075y9Tk
-	LFao7tfAX31YHgcilTqyNF+ZQSOMDKSGGzzZi6ym2W/OU5kAgLsEBw/7uyYgLkWlZGABLd
-	OoKW3Z0wwo4bVITtmUcCmK/sVD0QL6ulZ842RewCzPfzQNYxTHKPyd4AvDvYRZlk0HCuNN
-	54FfXr85SfuxlLkOGQ2ZZwcWbKhod265X+4d5nWGbsIvmhMB0eQz+yUOR8PlBYFWFsdMJ4
-	+rPgzerhlbCN9ANeBLo/GWEUEduokIZdqVWJd/BedSH+eLngA5ugNCUI51drqQ==
-Message-ID: <4007d59da564d357261b4ffa9c1daffcf09b5868.camel@mailbox.org>
-Subject: Re: [PATCH 07/11] vfio: selftests: Allow drivers to specify
- required region size
-From: Manuel Ebner <manuelebner@mailbox.org>
-To: Jason Gunthorpe <jgg@nvidia.com>, Alex Williamson <alex@shazbot.org>, 
- David Matlack <dmatlack@google.com>, kvm@vger.kernel.org, Leon Romanovsky
- <leon@kernel.org>,  linux-kselftest@vger.kernel.org,
- linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
- netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,  Shuah Khan
- <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>
-Cc: patches@lists.linux.dev
-Date: Sat, 02 May 2026 10:33:39 +0200
-In-Reply-To: <7-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
-References: <7-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="ntlPKz5u"
+Received: from localhost (unknown [95.24.28.48])
+	by mail.ispras.ru (Postfix) with ESMTPSA id 9DCC445A1D1D;
+	Sat,  2 May 2026 09:08:04 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 9DCC445A1D1D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+	s=default; t=1777712884;
+	bh=UN/fGF5rtznIEbzrab6e8cF2yiO29rw8CfDIHrKPpiY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ntlPKz5uRinzTGQ3s1+sbxR1rW5fxNC7iFgL908YwJ/kn1omowPI+WTiuz4kPHidn
+	 az32c28/gMZykFwZVDJf7aVaX46CZunfjPse3lW/hBvn7n7BO1P4LhIBf5yzFiL7ru
+	 Pa0nL3aDlWCXfedqovDHCaHHRJ1NZkQD6zJIA8Gs=
+Date: Sat, 2 May 2026 12:08:04 +0300
+From: Fedor Pchelkin <pchelkin@ispras.ru>
+To: Jens Axboe <axboe@kernel.dk>
+Cc: Ben Hutchings <ben@decadent.org.uk>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, patches@lists.linux.dev, 
+	syzbot+641eec6b7af1f62f2b99@syzkaller.appspotmail.com, lvc-project@linuxtesting.org
+Subject: Re: [PATCH 5.10 491/491] io_uring/poll: correctly handle
+ io_poll_add() return value on update
+Message-ID: <20260502120536-82f73a7f6431526a6d4ebcde-pchelkin@ispras>
+References: <20260501111233-b371eac52cd006bfddfbd9e5-pchelkin@ispras>
+ <58103791-4c19-441c-9d4f-7ae5f9c6151a@kernel.dk>
+ <20260502003658-e04f382bc8ed201a99b573e0-pchelkin@ispras>
+ <20260502005417-671675fb5906578c85c3fb4f-pchelkin@ispras>
+ <fb26a75a-cb2c-4ee6-92b9-4c488a2c7ba5@kernel.dk>
+ <20260502011444-849ff2d3f8fe48b07f48d496-pchelkin@ispras>
+ <5794c5cd-ff76-428a-830b-6aaff9d36089@kernel.dk>
+ <9b00a03b-ff87-4d09-be2a-5865e555bcd6@kernel.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MBO-RS-META: z4gfwoiygq3ad9gdyib4am31dmz9b8hw
-X-MBO-RS-ID: 59239b2a35230070757
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9b00a03b-ff87-4d09-be2a-5865e555bcd6@kernel.dk>
 
-Hi,
-On Thu, 2026-04-30 at 21:08 -0300, Jason Gunthorpe wrote:
-> Add a region_size field to struct vfio_pci_driver_ops so drivers can
-> declare how much DMA-mapped region they need. The mlx5 driver will
-> need ~18MB for firmware pages. Existing drivers leave region_size as
-> 0 and get the current default of SZ_2M.
->=20
-> Assisted-by: Claude:claude-opus-4.6
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
-> =C2=A0.../selftests/vfio/lib/include/libvfio/vfio_pci_driver.h=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 3 +++
-> =C2=A0tools/testing/selftests/vfio/vfio_pci_driver_test.c=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 3 ++-
-> =C2=A02 files changed, 5 insertions(+), 1 deletion(-)
->=20
-> diff --git
-> a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-> b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-> index e5ada209b1d102..fa172635632453 100644
-> --- a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-> +++ b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_driver.h
-> @@ -9,6 +9,9 @@ struct vfio_pci_device;
-> =C2=A0struct vfio_pci_driver_ops {
-> =C2=A0	const char *name;
-> =C2=A0
-> +	/* Minimum driver region size, 0 =3D default SZ_2M */
-> +	u64 region_size;
+On Fri, 01. May 17:27, Jens Axboe wrote:
+> OK, here's the new set for both 5.10-stable and 5.15-stable. Ran it through the
+> usual testing.
+> 
+> Let's hope we can put this one to bed now :-)
 
-i guess i do not understand this comment, but that's no surprise
-because i'm new to the kernel.=20
-would one of my suggestions be better?
-
-+	/* Minimum driver region size =3D=3D 0 -> default =3D SZ_2M */
-
-or
-
-+	/* Minimum driver region size, default SZ_2M =3D 0 */
-
-> [...]
-
-Manuel
+Hope so as well.  Thank you for the updated patches!
