@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA983D6484;
-	Mon,  4 May 2026 14:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F79A3D9DBB;
+	Mon,  4 May 2026 14:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904249; cv=none; b=ij9tw8ve/JNDvyjz1zVKlrRxYBeqmDnqAppP7St2ccJ2y7pVq+8M/f4/4wfIHUoTNC5A7YiFdrds2XBRFaHVtlmtQPg9YCEu4ZFWKURuVMHFm381geWixYckjgTdc2O0UcvxA5U2VghaBLk4Zu/h+mx206iZcptUDSpErh+8CQo=
+	t=1777904252; cv=none; b=ENl5BcmpZ4UOZAzOC0l5etktS7S8krzAcfM1HYIy5iZvr+74n0sExfB4rdDVMxhJmotmemqncZ2vueqZHuiNXUxYXjgGI7Tisc0H+kEG7UCrC879lXf8mzoD8RuRtsu4VZxBke+wxjWZyRM4sirYbGV1nXS3KfCFMgFHlpTdtn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904249; c=relaxed/simple;
-	bh=pa2/rqfsIpwMDQTW2fl2c6fT/aUnSmT9TQLQK1a/FY8=;
+	s=arc-20240116; t=1777904252; c=relaxed/simple;
+	bh=Gn8ZZJvvtuOZlU5nzZPjeoZv56Uj8LofFhfRjTu7kUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdP/4oSJTFcgBnuMmPDecy8I34BN2853MQAZmowyQnSvMNxVqCV5WUkw8YPvzXsXfX1pSNZVRY6aMwXlZFf4ZSvTNnb0oln6O2Dqg94DOPLXG6FvvVgQnPXg+OtcHvn21jN+Prpv1/bsVBXJHupsncUUuTI24pV62tF3KDgu3hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6Ocq1Tn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mjQuooQzSz2+k/Ek81flEX3fi2nrJnNhP2fHBneYbjHEfJLHNGsZwrmSctAZk++/YAIPEwiNxDjePJOt+OMG9EHclfgutZgyvBcAq/F487Fn7MGY2Ej2rATVvhxegXIH2aLgkpsQVrdPwHwgi7Y+9OtkVMuG9D2wFf6B+m9e0+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1jwC/4B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6Ocq1Tn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10575C2BCB8;
-	Mon,  4 May 2026 14:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1jwC/4B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9957EC2BCB8;
+	Mon,  4 May 2026 14:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904249;
-	bh=pa2/rqfsIpwMDQTW2fl2c6fT/aUnSmT9TQLQK1a/FY8=;
+	s=korg; t=1777904251;
+	bh=Gn8ZZJvvtuOZlU5nzZPjeoZv56Uj8LofFhfRjTu7kUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u6Ocq1Tn1Q/PpwDBtexLCIs6GrCpcGB5SDMJLM1pB/HeQrrbx+dTuSJRtBcWm7VMG
-	 AIyeTIEEozRQ6TTs1NeZU1I40qOay+xic4+TPD6/JvwRlWobhvFo0vIPrFCmzxBRJN
-	 cqktU1ltlsM9GsEXjWLgZjpfddCcDkcbnu3inTuA=
+	b=a1jwC/4BPFe2nwqOqBadWxTeG/tdibXNHrAmeWN5v6zTHnc/JhVW6mR9fNkbKcF6Z
+	 vuquUr6l/L1Ux9ungP0XL5oIs9TMrhhXewN2XgWRm+t8CfEpExInshVFZRv7zGafNT
+	 TcmBaQy88FynFyjN0wVAkVn/F0L31Gib30RtE6+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 242/275] rxgk: Fix potential integer overflow in length check
-Date: Mon,  4 May 2026 15:53:02 +0200
-Message-ID: <20260504135152.032395527@linuxfoundation.org>
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.18 243/275] sched_ext: Documentation: Clarify ops.dispatch() role in task lifecycle
+Date: Mon,  4 May 2026 15:53:03 +0200
+Message-ID: <20260504135152.068080324@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -55,57 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Andrea Righi <arighi@nvidia.com>
 
-commit 6929350080f4da292d111a3b33e53138fee51cec upstream.
+commit a313357a346839d40b3a4dec393c71bf30cbb34c upstream.
 
-Fix potential integer overflow in rxgk_extract_token() when checking the
-length of the ticket.  Rather than rounding up the value to be tested
-(which might overflow), round down the size of the available data.
+ops.dispatch() is invoked when a CPU becomes available. This can occur
+when a task voluntarily yields the CPU, exhausts its time slice, or is
+preempted for other reasons.
 
-Fixes: 2429a1976481 ("rxrpc: Fix untrusted unsigned subtract")
-Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-6-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+If the task is still runnable, refilling its time slice in
+ops.dispatch() (either by the BPF scheduler or the sched_ext core)
+allows it to continue running without triggering ops.stopping().
+However, this behavior is not clearly reflected in the current task
+lifecycle diagram.
+
+Update the diagram to better represent this interaction.
+
+Fixes: 9465f44d2df2 ("sched_ext: Documentation: Clarify time slice handling in task lifecycle")
+Cc: stable@vger.kernel.org # v6.17+
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/rxgk_app.c    | 2 +-
- net/rxrpc/rxgk_common.h | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ Documentation/scheduler/sched-ext.rst |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/rxrpc/rxgk_app.c b/net/rxrpc/rxgk_app.c
-index 30275cb5ba3e..5587639d60c5 100644
---- a/net/rxrpc/rxgk_app.c
-+++ b/net/rxrpc/rxgk_app.c
-@@ -214,7 +214,7 @@ int rxgk_extract_token(struct rxrpc_connection *conn, struct sk_buff *skb,
- 	ticket_len	= ntohl(container.token_len);
- 	ticket_offset	= token_offset + sizeof(container);
+--- a/Documentation/scheduler/sched-ext.rst
++++ b/Documentation/scheduler/sched-ext.rst
+@@ -321,13 +321,15 @@ by a sched_ext scheduler:
+                 ops.dispatch(); /* Task is moved to a local DSQ */
+             }
+             ops.running();      /* Task starts running on its assigned CPU */
+-            while (task->scx.slice > 0 && task is runnable)
+-                ops.tick();     /* Called every 1/HZ seconds */
+-            ops.stopping();     /* Task stops running (time slice expires or wait) */
  
--	if (xdr_round_up(ticket_len) > token_len - sizeof(container))
-+	if (ticket_len > xdr_round_down(token_len - sizeof(container)))
- 		goto short_packet;
+-            /* Task's CPU becomes available */
++            while task_is_runnable(p) {
++                while (task->scx.slice > 0 && task_is_runnable(p))
++                    ops.tick();     /* Called every 1/HZ seconds */
++
++                ops.dispatch();     /* task->scx.slice can be refilled */
++            }
  
- 	_debug("KVNO %u", kvno);
-diff --git a/net/rxrpc/rxgk_common.h b/net/rxrpc/rxgk_common.h
-index 80164d89e19c..1e257d7ab8ec 100644
---- a/net/rxrpc/rxgk_common.h
-+++ b/net/rxrpc/rxgk_common.h
-@@ -34,6 +34,7 @@ struct rxgk_context {
- };
+-            ops.dispatch();     /* task->scx.slice can be refilled */
++            ops.stopping();     /* Task stops running (time slice expires or wait) */
+         }
  
- #define xdr_round_up(x) (round_up((x), sizeof(__be32)))
-+#define xdr_round_down(x) (round_down((x), sizeof(__be32)))
- #define xdr_object_len(x) (4 + xdr_round_up(x))
- 
- /*
--- 
-2.54.0
-
+         ops.quiescent();        /* Task releases its assigned CPU (wait) */
 
 
