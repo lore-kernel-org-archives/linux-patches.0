@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288F63DEFFB;
-	Mon,  4 May 2026 14:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACA53DE42E;
+	Mon,  4 May 2026 14:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903573; cv=none; b=EjUzmwOHuefc/W4CdkZauifHdGLH3JSmUw9i56l7JlAbwq1L6HjdjjYu4iROQpl4wBe144J24MQvddjLPRJJRToPhfhtZozEO0B8lEvaMGB2GK9NHZztx3++n6brJURBCgvLCcJYrsUPGrTHwdCqR4/1BqPSImLKQFFkTfCYmLM=
+	t=1777903575; cv=none; b=rourH4HH2qfg8E9RHId8QtW+ibWOBQtEZ26ZIRf+9Ch8Y5RSfypnB2sjGoiCBQtGprQ6RJeKCC6HEOcs/NdvYdBNkXgrUTZbspHzfaSybrdWhzdmtaSvWHIXsUaQK9vDnqWUBDLn0PVlWam8GM0M8oyzjcY3mjH7SfGo3ACgNWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903573; c=relaxed/simple;
-	bh=IeMln9ywmnxktW0VEmJDIAkQ5dvEj4hONl2/Sl+hlAk=;
+	s=arc-20240116; t=1777903575; c=relaxed/simple;
+	bh=UIwEd3M52FxFlJ1H3didHEGTUdPfzk5N2t7AVmCIm30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nLiYTxuXp/D1k0NwpN7mt64sy3ct6JpreHZsRj9sEobP4PICDwy8IovIgvpS3F66WGvvpXaLHGQ6JnFOugeSsp5KxpOIPC9D3XE7sQ+CNmFtd7lyMiNWgjsZKCajHTzn6KiQp0fILQEjODjF3JRFBURIgEAmSk6WKpfyJnx/zMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guvIEKr7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u6pBkz+slKJk6ANh/T2TeFu2iRiRCMEhHbL4NamFvw0hCwrIoH5/HoP0MCJtX+FZKUQM2O+AYOtFufLrtV+9iNfLKQOo1XkH7IA5Ka1RGDKPYUtzP9EJtqZQ72IFQHN/Uz7kbNtb+x+CZhNm7kNte+CbweuSvGv2cbdL7uqNRWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vq9iwhV6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guvIEKr7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70323C2BCF6;
-	Mon,  4 May 2026 14:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vq9iwhV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B1EC2BCB8;
+	Mon,  4 May 2026 14:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903572;
-	bh=IeMln9ywmnxktW0VEmJDIAkQ5dvEj4hONl2/Sl+hlAk=;
+	s=korg; t=1777903575;
+	bh=UIwEd3M52FxFlJ1H3didHEGTUdPfzk5N2t7AVmCIm30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guvIEKr7VAMLfapAWZw1Y38Nb40ORh17KWkomIh74ELNipkbisI9mPeMcn/uM7lo8
-	 8Nw+VnxypEr0HosiGcpe/kccdYGOJCP561KCENoLPsi0ywQgYLE2jHNL6PNUhw034m
-	 yXSFpSuKXOfWToIyXkEoSASJlFbKD5OeOue6L4og=
+	b=Vq9iwhV6Dcuw8nAdceW01GN3LsGkSdBteZvBBuZGaZdouLlQYKU7TbWFv0sc22oYD
+	 8BgNSFk/RzLOmlu5Ed1+IcYX5ey7TnXf1dhED4uESmhZPQQatpSiFJRo7+yHzDBynw
+	 3/wD8sNQbFkoUg1Yplcex14ZqJILpJNYspIq7+vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 287/307] iio: frequency: admv1013: fix NULL pointer dereference on str
-Date: Mon,  4 May 2026 15:52:52 +0200
-Message-ID: <20260504135153.587538227@linuxfoundation.org>
+Subject: [PATCH 7.0 288/307] wifi: mt76: mt792x: describe USB WFSYS reset with a descriptor
+Date: Mon,  4 May 2026 15:52:53 +0200
+Message-ID: <20260504135153.625961503@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -48,137 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit aac0a51b16700b403a55b67ba495de021db78763 ]
+[ Upstream commit e6f48512c1ceebcd1ce6bb83df3b3d56a261507d ]
 
-When device_property_read_string() fails, str is left uninitialized
-but the code falls through to strcmp(str, ...), dereferencing a garbage
-pointer. Replace manual read/strcmp with
-device_property_match_property_string() and consolidate the SE mode
-enums into a single sequential enum, mapping to hardware register
-values via a switch consistent with other bitfields in the driver.
+Prepare mt792xu_wfsys_reset() for chips that share the same USB WFSYS
+reset flow but use different register definitions.
 
-Several cleanup patches have been applied to this driver recently so
-this will need a manual backport.
+This is a pure refactor of the current mt7921u path and keeps the reset
+sequence unchanged.
 
-Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260311002825.15502-1-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 56154fef47d1 ("wifi: mt76: mt792x: fix mt7925u USB WFSYS reset handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/admv1013.c |   67 ++++++++++++++++++++++-----------------
- 1 file changed, 38 insertions(+), 29 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_usb.c |   40 +++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 8 deletions(-)
 
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -85,9 +85,9 @@ enum {
- };
- 
- enum {
--	ADMV1013_SE_MODE_POS = 6,
--	ADMV1013_SE_MODE_NEG = 9,
--	ADMV1013_SE_MODE_DIFF = 12
-+	ADMV1013_SE_MODE_POS,
-+	ADMV1013_SE_MODE_NEG,
-+	ADMV1013_SE_MODE_DIFF,
- };
- 
- struct admv1013_state {
-@@ -470,10 +470,23 @@ static int admv1013_init(struct admv1013
- 	if (ret)
- 		return ret;
- 
--	data = FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, st->quad_se_mode);
-+	switch (st->quad_se_mode) {
-+	case ADMV1013_SE_MODE_POS:
-+		data = 6;
-+		break;
-+	case ADMV1013_SE_MODE_NEG:
-+		data = 9;
-+		break;
-+	case ADMV1013_SE_MODE_DIFF:
-+		data = 12;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
- 
- 	ret = __admv1013_spi_update_bits(st, ADMV1013_REG_QUAD,
--					 ADMV1013_QUAD_SE_MODE_MSK, data);
-+					 ADMV1013_QUAD_SE_MODE_MSK,
-+					 FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, data));
- 	if (ret)
- 		return ret;
- 
-@@ -514,37 +527,33 @@ static void admv1013_powerdown(void *dat
- 	admv1013_spi_update_bits(data, ADMV1013_REG_ENABLE, enable_reg_msk, enable_reg);
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
+@@ -206,6 +206,24 @@ static void mt792xu_epctl_rst_opt(struct
+ 	mt792xu_uhw_wr(&dev->mt76, MT_SSUSB_EPCTL_CSR_EP_RST_OPT, val);
  }
  
-+static const char * const admv1013_input_modes[] = {
-+	[ADMV1013_IQ_MODE] = "iq",
-+	[ADMV1013_IF_MODE] = "if",
++struct mt792xu_wfsys_desc {
++	u32 rst_reg;
++	u32 done_reg;
++	u32 done_mask;
++	u32 done_val;
++	u32 delay_ms;
++	bool need_status_sel;
 +};
 +
-+static const char * const admv1013_quad_se_modes[] = {
-+	[ADMV1013_SE_MODE_POS] = "se-pos",
-+	[ADMV1013_SE_MODE_NEG] = "se-neg",
-+	[ADMV1013_SE_MODE_DIFF] = "diff",
++static const struct mt792xu_wfsys_desc mt7921_wfsys_desc = {
++	.rst_reg = MT_CBTOP_RGU_WF_SUBSYS_RST,
++	.done_reg = MT_UDMA_CONN_INFRA_STATUS,
++	.done_mask = MT_UDMA_CONN_WFSYS_INIT_DONE,
++	.done_val = MT_UDMA_CONN_WFSYS_INIT_DONE,
++	.delay_ms = 0,
++	.need_status_sel = true,
 +};
 +
- static int admv1013_properties_parse(struct admv1013_state *st)
+ int mt792xu_dma_init(struct mt792x_dev *dev, bool resume)
  {
- 	int ret;
--	const char *str;
- 	struct device *dev = &st->spi->dev;
+ 	int err;
+@@ -236,25 +254,31 @@ EXPORT_SYMBOL_GPL(mt792xu_dma_init);
  
- 	st->det_en = device_property_read_bool(dev, "adi,detector-enable");
+ int mt792xu_wfsys_reset(struct mt792x_dev *dev)
+ {
++	const struct mt792xu_wfsys_desc *desc = &mt7921_wfsys_desc;
+ 	u32 val;
+ 	int i;
  
--	ret = device_property_read_string(dev, "adi,input-mode", &str);
--	if (ret)
--		st->input_mode = ADMV1013_IQ_MODE;
--
--	if (!strcmp(str, "iq"))
--		st->input_mode = ADMV1013_IQ_MODE;
--	else if (!strcmp(str, "if"))
--		st->input_mode = ADMV1013_IF_MODE;
--	else
--		return -EINVAL;
--
--	ret = device_property_read_string(dev, "adi,quad-se-mode", &str);
--	if (ret)
--		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
--
--	if (!strcmp(str, "diff"))
--		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
--	else if (!strcmp(str, "se-pos"))
--		st->quad_se_mode = ADMV1013_SE_MODE_POS;
--	else if (!strcmp(str, "se-neg"))
--		st->quad_se_mode = ADMV1013_SE_MODE_NEG;
--	else
--		return -EINVAL;
-+	ret = device_property_match_property_string(dev, "adi,input-mode",
-+						    admv1013_input_modes,
-+						    ARRAY_SIZE(admv1013_input_modes));
-+	st->input_mode = ret >= 0 ? ret : ADMV1013_IQ_MODE;
+ 	mt792xu_epctl_rst_opt(dev, false);
+ 
+-	val = mt792xu_uhw_rr(&dev->mt76, MT_CBTOP_RGU_WF_SUBSYS_RST);
++	val = mt792xu_uhw_rr(&dev->mt76, desc->rst_reg);
+ 	val |= MT_CBTOP_RGU_WF_SUBSYS_RST_WF_WHOLE_PATH;
+-	mt792xu_uhw_wr(&dev->mt76, MT_CBTOP_RGU_WF_SUBSYS_RST, val);
++	mt792xu_uhw_wr(&dev->mt76, desc->rst_reg, val);
+ 
+-	usleep_range(10, 20);
++	if (desc->delay_ms)
++		msleep(desc->delay_ms);
++	else
++		usleep_range(10, 20);
+ 
+-	val = mt792xu_uhw_rr(&dev->mt76, MT_CBTOP_RGU_WF_SUBSYS_RST);
++	val = mt792xu_uhw_rr(&dev->mt76, desc->rst_reg);
+ 	val &= ~MT_CBTOP_RGU_WF_SUBSYS_RST_WF_WHOLE_PATH;
+-	mt792xu_uhw_wr(&dev->mt76, MT_CBTOP_RGU_WF_SUBSYS_RST, val);
++	mt792xu_uhw_wr(&dev->mt76, desc->rst_reg, val);
 +
-+	ret = device_property_match_property_string(dev, "adi,quad-se-mode",
-+						    admv1013_quad_se_modes,
-+						    ARRAY_SIZE(admv1013_quad_se_modes));
-+	st->quad_se_mode = ret >= 0 ? ret : ADMV1013_SE_MODE_DIFF;
++	if (desc->need_status_sel)
++		mt792xu_uhw_wr(&dev->mt76, MT_UDMA_CONN_INFRA_STATUS_SEL, 0);
  
- 	ret = devm_regulator_bulk_get_enable(dev,
- 					     ARRAY_SIZE(admv1013_vcc_regs),
+-	mt792xu_uhw_wr(&dev->mt76, MT_UDMA_CONN_INFRA_STATUS_SEL, 0);
+ 	for (i = 0; i < MT792x_WFSYS_INIT_RETRY_COUNT; i++) {
+-		val = mt792xu_uhw_rr(&dev->mt76, MT_UDMA_CONN_INFRA_STATUS);
+-		if (val & MT_UDMA_CONN_WFSYS_INIT_DONE)
++		val = mt792xu_uhw_rr(&dev->mt76, desc->done_reg);
++		if ((val & desc->done_mask) == desc->done_val)
+ 			break;
+ 
+ 		msleep(100);
 
 
