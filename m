@@ -1,38 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831B13DE45C;
-	Mon,  4 May 2026 14:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A402B3DE45C;
+	Mon,  4 May 2026 14:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904808; cv=none; b=gzJim9iBDiI8velOcxYzGWhli4f+5KK9/2ICMlv5H3bOfBO3jubUMP1NPvnelk7FcPn0I74q0+5IIz6BLmgzCnpTYx/FRElKUZPZSxSdvBr3OBXHwWRycUNqkHlx9T5oAVdUnFOLZPsDzpsKhaRkST7Nazz3uns0oC1dctyRj28=
+	t=1777904811; cv=none; b=h7biNuX0xUxM+hqnCuyZjfILgTzOufCt3TBn2l/qtWAGBQka+Q7yEGW6ua5Y/PQpBS3L5d6FdHVslqerWeoUkdkHqM6opUxuRT46AFGyzQnY5OmiuyCt+Fr7usKUfzc6rbCYnlL2eV3nfiJJOTUJB4VVaGRtaExAYW9Gs3rJmHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904808; c=relaxed/simple;
-	bh=+19UC6W4XD+zwmFBy5oDC87GOrO1khJFaHf39QO6CR8=;
+	s=arc-20240116; t=1777904811; c=relaxed/simple;
+	bh=f9fZa102EULWodbKgpNByy37JWLDisI/2pSqHaBOlKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UyHorZNC8qoase0AqfzxEUyCPo5HvjeO0wiKhTRcuAhkpi4zno9QFSsEyT7iYf7RocWIapQdOtjY+BaHoiiRnPJy8ulEatfXJA8NGUTnhQ7j5lHievGc30NDmFKpx6j019r27IkE/lw3rHY351ctED5sEZjF+8BmEF5+10DknQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlJMbDNE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o+MXYamz0IxBsNS8VBeNe5rq2e3oIAkkAgTG3XSUguJjTVIPN3GeLsXIhRRAkujVY9UllcETkEtJVEdQ5ZJs7o0U8fF80Wh07xuDzY6sb8ZitbzCrTSCDDNIfLxIW4fYhTlvua4lA4CVqB1h4T4JNDH2uJ1LafSQygnmr6nTIV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SP054U3M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlJMbDNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196F8C2BCB8;
-	Mon,  4 May 2026 14:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SP054U3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B590C2BCB8;
+	Mon,  4 May 2026 14:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904808;
-	bh=+19UC6W4XD+zwmFBy5oDC87GOrO1khJFaHf39QO6CR8=;
+	s=korg; t=1777904811;
+	bh=f9fZa102EULWodbKgpNByy37JWLDisI/2pSqHaBOlKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlJMbDNE1DAONBXSkvA2PQfuz6wXhuDYSPlxoPwRbAV/n5GEDLsSWWF//EuIEo9D/
-	 U8YlfLyIipASHmytwRkWch1lEF44/ISRNlDq1BANMdjIUdRFdlUkctug4fDm6HGiTU
-	 ChJ8DXJIOqoOB0NnhdgT1Wwx8Y3btGFqlg0cGPCE=
+	b=SP054U3MQN/DuHflkB7TepqoZ24zw1xR/XOfLehuqtFqO2DsfCT0gVbMVDMef2hMS
+	 MLxt1stu/EpuE4yR7fCErJxKZTpBMUYBKPVuTCh1T4lW8jRkAnXQ4kxXIeUCmGXWrA
+	 cWAcivH3QfECKLzOhmUdoRYT5E5Xav8pxyPKBv/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hodges <git@danielhodges.dev>,
-	Johannes Berg <johannes.berg@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Brendan Jackman <jackmanb@google.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Christian Brauner <brauner@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	=?UTF-8?q?Eugenio=20P=C3=A9=20rez?= <eperezma@redhat.com>,
+	Gregory Price <gourry@gourry.net>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Jason Wang <jasowang@redhat.com>,
+	Jerrin Shaji George <jerrin.shaji-george@broadcom.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Mathew Brost <matthew.brost@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Rik van Riel <riel@surriel.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	xu xin <xu.xin16@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/215] wifi: mwifiex: fix use-after-free in mwifiex_adapter_cleanup()
-Date: Mon,  4 May 2026 15:53:22 +0200
-Message-ID: <20260504135136.900213943@linuxfoundation.org>
+Subject: [PATCH 6.12 184/215] mm/migrate: factor out movable_ops page handling into migrate_movable_ops_page()
+Date: Mon,  4 May 2026 15:53:23 +0200
+Message-ID: <20260504135136.959304501@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -45,52 +90,197 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Hodges <git@danielhodges.dev>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit ae5e95d4157481693be2317e3ffcd84e36010cbb ]
+[ Upstream commit b9ed00483d4cbacca04edb11984d8daf09e9ae22 ]
 
-The mwifiex_adapter_cleanup() function uses timer_delete()
-(non-synchronous) for the wakeup_timer before the adapter structure is
-freed. This is incorrect because timer_delete() does not wait for any
-running timer callback to complete.
+Let's factor it out, simplifying the calling code.
 
-If the wakeup_timer callback (wakeup_timer_fn) is executing when
-mwifiex_adapter_cleanup() is called, the callback will continue to
-access adapter fields (adapter->hw_status, adapter->if_ops.card_reset,
-etc.) which may be freed by mwifiex_free_adapter() called later in the
-mwifiex_remove_card() path.
+Before this change, we would have called flush_dcache_folio() also on
+movable_ops pages.  As documented in Documentation/core-api/cachetlb.rst:
 
-Use timer_delete_sync() instead to ensure any running timer callback has
-completed before returning.
+	"This routine need only be called for page cache pages which can
+	 potentially ever be mapped into the address space of a user
+	 process."
 
-Fixes: 4636187da60b ("mwifiex: add wakeup timer based recovery mechanism")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Hodges <git@danielhodges.dev>
-Link: https://patch.msgid.link/20260206194401.2346-1-git@danielhodges.dev
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ changed `timer_delete_sync()` to `del_timer_sync()` ]
+So don't do it for movable_ops pages.  If there would ever be such a
+movable_ops page user, it should do the flushing itself after performing
+the copy.
+
+Note that we can now change folio_mapping_flags() to folio_test_anon() to
+make it clearer, because movable_ops pages will never take that path.
+
+[akpm@linux-foundation.org: fix kerneldoc]
+Link: https://lkml.kernel.org/r/20250704102524.326966-10-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Eugenio Pé rez <eperezma@redhat.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Harry Yoo <harry.yoo@oracle.com>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Jerrin Shaji George <jerrin.shaji-george@broadcom.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Mathew Brost <matthew.brost@intel.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Cc: xu xin <xu.xin16@zte.com.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: a2e0c0668a34 ("mm: migrate: requeue destination folio on deferred split queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/init.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/migrate.c |   84 +++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 47 insertions(+), 37 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/init.c
-+++ b/drivers/net/wireless/marvell/mwifiex/init.c
-@@ -390,7 +390,7 @@ static void mwifiex_invalidate_lists(str
- static void
- mwifiex_adapter_cleanup(struct mwifiex_adapter *adapter)
- {
--	del_timer(&adapter->wakeup_timer);
-+	del_timer_sync(&adapter->wakeup_timer);
- 	cancel_delayed_work_sync(&adapter->devdump_work);
- 	mwifiex_cancel_all_pending_cmd(adapter);
- 	wake_up_interruptible(&adapter->cmd_wait_q.wait);
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -130,6 +130,47 @@ static void putback_movable_folio(struct
+ 	folio_clear_isolated(folio);
+ }
+ 
++/**
++ * migrate_movable_ops_page - migrate an isolated movable_ops page
++ * @dst: The destination page.
++ * @src: The source page.
++ * @mode: The migration mode.
++ *
++ * Migrate an isolated movable_ops page.
++ *
++ * If the src page was already released by its owner, the src page is
++ * un-isolated (putback) and migration succeeds; the migration core will be the
++ * owner of both pages.
++ *
++ * If the src page was not released by its owner and the migration was
++ * successful, the owner of the src page and the dst page are swapped and
++ * the src page is un-isolated.
++ *
++ * If migration fails, the ownership stays unmodified and the src page
++ * remains isolated: migration may be retried later or the page can be putback.
++ *
++ * TODO: migration core will treat both pages as folios and lock them before
++ * this call to unlock them after this call. Further, the folio refcounts on
++ * src and dst are also released by migration core. These pages will not be
++ * folios in the future, so that must be reworked.
++ *
++ * Returns MIGRATEPAGE_SUCCESS on success, otherwise a negative error
++ * code.
++ */
++static int migrate_movable_ops_page(struct page *dst, struct page *src,
++		enum migrate_mode mode)
++{
++	int rc = MIGRATEPAGE_SUCCESS;
++
++	VM_WARN_ON_ONCE_PAGE(!PageIsolated(src), src);
++	/* If the page was released by it's owner, there is nothing to do. */
++	if (PageMovable(src))
++		rc = page_movable_ops(src)->migrate_page(dst, src, mode);
++	if (rc == MIGRATEPAGE_SUCCESS)
++		ClearPageIsolated(src);
++	return rc;
++}
++
+ /*
+  * Put previously isolated pages back onto the appropriate lists
+  * from where they were once taken off for compaction/migration.
+@@ -1044,51 +1085,20 @@ static int move_to_new_folio(struct foli
+ 								mode);
+ 		else
+ 			rc = fallback_migrate_folio(mapping, dst, src, mode);
+-	} else {
+-		const struct movable_operations *mops;
+ 
+-		/*
+-		 * In case of non-lru page, it could be released after
+-		 * isolation step. In that case, we shouldn't try migration.
+-		 */
+-		VM_BUG_ON_FOLIO(!folio_test_isolated(src), src);
+-		if (!folio_test_movable(src)) {
+-			rc = MIGRATEPAGE_SUCCESS;
+-			folio_clear_isolated(src);
++		if (rc != MIGRATEPAGE_SUCCESS)
+ 			goto out;
+-		}
+-
+-		mops = folio_movable_ops(src);
+-		rc = mops->migrate_page(&dst->page, &src->page, mode);
+-		WARN_ON_ONCE(rc == MIGRATEPAGE_SUCCESS &&
+-				!folio_test_isolated(src));
+-	}
+-
+-	/*
+-	 * When successful, old pagecache src->mapping must be cleared before
+-	 * src is freed; but stats require that PageAnon be left as PageAnon.
+-	 */
+-	if (rc == MIGRATEPAGE_SUCCESS) {
+-		if (__folio_test_movable(src)) {
+-			VM_BUG_ON_FOLIO(!folio_test_isolated(src), src);
+-
+-			/*
+-			 * We clear PG_movable under page_lock so any compactor
+-			 * cannot try to migrate this page.
+-			 */
+-			folio_clear_isolated(src);
+-		}
+-
+ 		/*
+-		 * Anonymous and movable src->mapping will be cleared by
+-		 * free_pages_prepare so don't reset it here for keeping
+-		 * the type to work PageAnon, for example.
++		 * For pagecache folios, src->mapping must be cleared before src
++		 * is freed. Anonymous folios must stay anonymous until freed.
+ 		 */
+-		if (!folio_mapping_flags(src))
++		if (!folio_test_anon(src))
+ 			src->mapping = NULL;
+ 
+ 		if (likely(!folio_is_zone_device(dst)))
+ 			flush_dcache_folio(dst);
++	} else {
++		rc = migrate_movable_ops_page(&dst->page, &src->page, mode);
+ 	}
+ out:
+ 	return rc;
 
 
