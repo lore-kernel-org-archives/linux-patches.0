@@ -1,142 +1,110 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D1D301719
-	for <patches@lists.linux.dev>; Mon,  4 May 2026 21:15:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6CA30149F
+	for <patches@lists.linux.dev>; Mon,  4 May 2026 21:24:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777929347; cv=none; b=OVPGKWV0Y3PBzjOUCSEfaeqSq5/9S+zmxlMmlqHF2AzpJZk55AJcYSYZJhIcFp8WIPgOeXfWEk6GUr1rciRDIiodD3Tr/JWjl/3WpcQcZgJ19tsFQ5as9ztZ4WLMkGD6pUVQDUwngCIrvfbgsLcTLUOScz3GnIc69iTDr2XztlY=
+	t=1777929865; cv=none; b=uQj4kxa1vVszLfsGzyKCaVVvbxiZOgx1Pq87sLM7bzv6dBGk0Eh8fYj+bNs0Zr8hRJfI0xONA1lvXLPstlcnzq52l3u/C1oCJ6/eDEG9HomPKJdTR2w/et8NBihNqhY1rDd1PuNaqRQEXStQ49TrZszSzGwL/bzUJoYvLBYM4OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777929347; c=relaxed/simple;
-	bh=DklPH6/6YJ0p6u4Cf1PUxpd4itLk/dZorR5WDOT5W/8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=crSk5LBiiugIxAam/qQYZXEdrYjJ3uprBbIPm2hbe1JhXFJuPMzCLtzLDBM5oKafZlRjNwJGw1vrNGQujuJVxQEdAxRzuoay0moIfsv7ajKWr4mL2q3C+O7RMVVpjviSmzbzbpyFW2vF2/ge1n/DIStlh4h5Z/N+Jsd3CpSqvDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nRicGUOe; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1777929865; c=relaxed/simple;
+	bh=aXLhzVVDDZVTIAysVaQv57AbFUyuiddQ1N6wPA+Lz/4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hOAjSXMuJgwUSL9OXYeyc4QMw1DXNylIYlr2x/dKM4UGVS3F7aAKs8VJvt5EsS81XrGQBvQJcHjodqMmB1DcnJYZOpAqan81dCxv/o1iUeI2DthvlsG2sGrk8GM7MVY7ud+F1uoP5BcwwL3QkBa8Y/SeQSwKjwAUODh7c3L9u5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NYAxjznH; arc=none smtp.client-ip=74.125.82.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nRicGUOe"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-835c98b659eso1018535b3a.0
-        for <patches@lists.linux.dev>; Mon, 04 May 2026 14:15:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NYAxjznH"
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2ef2a1cc06dso6180493eec.0
+        for <patches@lists.linux.dev>; Mon, 04 May 2026 14:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1777929343; x=1778534143; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JKpE5oRLemYbfg1MRy2f9zZjvjCWWH6F7jRfRxX1jLc=;
-        b=nRicGUOegoqET0P/O5lHNZbJ8wdomSoogcVTYThvDFEDQ4t+crwc2Ysv4M3NU8KrBX
-         6LHVOnzfPtSLLYo9dn7vlTflOvh2oL8WGBNrgPtQvg999FGW5ybSw9KP/XkET4GPF9Ab
-         jLztR/JImCieszAktyuH+dL4vx00kSn9h2hECjmVUprEpdGOvvgTov9EF+eZb/WIWEhv
-         3TsyJTcfnfAr92QUHHO6rloa+cZba51IbembsAo41STYK1p1ROvEDw6JBgrqbFX8xJOD
-         0Q8UOwDnt3oblmgXta5SDiqPHk7aJbmqVcRfK9L2jpAjKK0KAOi95LEhxbCPZ/ao4JpS
-         o/Pg==
+        d=gmail.com; s=20251104; t=1777929863; x=1778534663; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jQyQ7sqWzfJEVFfcsdMCu5sAldv5fbt7DHbnFvMIyu8=;
+        b=NYAxjznHKJC69RfA4LQQLVnSryNbhSWZfX/1SFGLO/nZoafO6l1yP7uhXCthy7D7Cv
+         UKeYinRTYF4YpspWlMNzD8mjd7yDIfG7QJeqSXctr/yH2qtak88dLN7sI1p1yDvaDsSh
+         rnbhrV5EcbLVVgDARaOwkPUU2jhbDVM4XVZUP9kBh8LJA3LFmc9+kHOhfdGrvCgJMa/T
+         NfyV0ygMRzYCuqrKEHsAN5GV9zuTeGUYIjElt0RvZfZCw7hre8ALZ08Scm+LX/sNaG6y
+         gRNv+kQw4lwmQNvXLf94hYIxCKV5uio1RRg4bF03wnIOy9hl+8MtB/YDRX3CDxgdSHur
+         feXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777929343; x=1778534143;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JKpE5oRLemYbfg1MRy2f9zZjvjCWWH6F7jRfRxX1jLc=;
-        b=A+PBHSm3phA90OcCc9qaEKQD2nLbAUzinilmqe37MoULs/Nf1dwm3nnCHZw+12Lr5C
-         eua0SImRFmSvwvSl8THwVL6yTPsRdUVil6bKfj6EOussfebd0qdEh+5WOQbADAVjXjGJ
-         bTt5QWO3YxUAD5PDxaiHHbdaxasfVNvw2csMR0PGF9IUFO878858xGYBg2DcXsvui2lp
-         DYiXDf461onCLrrrnZQ0UNS2UWx4HrNU79muflMV7lvLwpy+wAIT5UGalHl4N4hZ9Ao3
-         T++qM9uxS31plfl17SMxsbjsFy0DQEEdxUbdExJ7F5qgIGfMQZM6U36xMEIpTauxNAjb
-         1AFw==
-X-Forwarded-Encrypted: i=1; AFNElJ8gDtXWGkugKAsAXC9T+0RjkUZQIwip1RgTJ2B9WAi97ynaTN0UlHjaT6vOr3zXbqym/tJ3uH0d@lists.linux.dev
-X-Gm-Message-State: AOJu0YycsgrT886HK5ZhmHvrnP2YQ5H3XmsQBCmUseHXDdrWpq1Y5lVs
-	CJYV88RiTdRpVmjF43lIuDVWd7wvZKRqoSJBRVpfjJRBgBMiyb9rWKjh5n7Qd9tKBMGYd9xDkZf
-	vpTZrKw==
-X-Gm-Gg: AeBDietyTZhCQS5zCwI7/OVeluqo7GRITQmlbDUeKblyzvGDJaQIfxHBvC7az9SWu5g
-	8sKsdG8vRfJXfx6YgOTw/KR2nSzdZ9UcDwf+boUeLkBy5q6f649bJyrrTWObhCN35mpuQjtl11M
-	tPbP2z8qkCpaGi4BHyfGU3l7LHdiu4T7HGcQFTU62+e08YeLhngUXO5zFpw2CKWNPY96ZhCeXhZ
-	V6efbmrsqGPpoETbAsebw6WehdRIqZ1D0gu/lKGTy7+sbxFYH0XgGmP917TmvoSb/oepuJyd/ov
-	1mHgitapcmoZs3PuwxoGpQm7HVbLiWGYnWS515w0AGXqXv+JSaneILLgK3ewgqhqmLKXIqYyBfT
-	nzPVkIo/EjwGmIDhofF/ZSA3Fji9fhmVRgWXLMJJBoUfGSZSiGwixAA0D0BBmPxadIhFoMgiTdD
-	fwOrrZjvKCkZVHySKMPO0C1lEABbjv75uI3lmXUAfQnMcZC4/vjAE4GJ/InTMR27n1lqP8E2t+3
-	/pcZw==
-X-Received: by 2002:a05:6a00:428c:b0:829:9a7b:db84 with SMTP id d2e1a72fcca58-8352d2f425bmr10106522b3a.49.1777929342450;
-        Mon, 04 May 2026 14:15:42 -0700 (PDT)
-Received: from google.com (76.9.127.34.bc.googleusercontent.com. [34.127.9.76])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83943dde006sm41031b3a.10.2026.05.04.14.15.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 14:15:42 -0700 (PDT)
-Date: Mon, 4 May 2026 21:15:38 +0000
-From: David Matlack <dmatlack@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
-	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
-	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 08/11] vfio: selftests: Add dev_dbg
-Message-ID: <afkMenQ_gfmLUJIy@google.com>
-References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
- <8-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+        d=1e100.net; s=20251104; t=1777929863; x=1778534663;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jQyQ7sqWzfJEVFfcsdMCu5sAldv5fbt7DHbnFvMIyu8=;
+        b=C1Q+mXRwWfvgm9RpBYzHsLRgLLT6SlUpf8sOd/UrrCDYYBfB0kCeqeFlSF5uXkNte/
+         yaS614Ch2JQgM7hqqo18du+42v2ITm47RIMP9dr7km9DSZhN3j64rDJSXGlxGgJY8cAk
+         qmIeQffudNPzIXhWPRGS5/jC90417xuq6Kv50jkcLXw2FUas+RpykVWP3De0AESKZXF3
+         G0UPZIacbjukADFtnX/DwcbIT+Rqtmw9qnZnW+Ia/q1iNGlJkfUT/uFUg7m3rTGEt5U8
+         OI0eiRgqSdFyd1RkUz3ihvoChVJGNBKxaVA7sEsIq9HTDdUrH5P/uIAJQ1Dy1O7RZLo8
+         YnNQ==
+X-Gm-Message-State: AOJu0Yy5PiLnP7wi7fsJgklQ2PCn0KH0+8mAKVVrp26Eh2LC0CpnMgzT
+	/etsRKtN2hClrGtjXMUP4wpH5jZlrakvyIidQAkntowIPAfwMqZi42sB
+X-Gm-Gg: AeBDiesikMXVujYtqRncBR3WNww4zZM/JZeqGsjRgfJH+a8hlf0zN00pTmgfVuU3N5b
+	BlbyevHdDnolx1Ntq8UG3clhXIQfZnE4okBHPBX+DuyUERJpcUFVGtLJvRHucXT7oQWdy1a1lMl
+	AzK7BYBHvwrfPfp/jJ0VXsAAVoFEdVbWuNtZkdyEEwyftiyvZcwJRl9NsHs/EG39jXnhvHZAqDG
+	0Dn0JVdj3wKXX/JtSORyuqnyo00LwEYn1Hlbq/U19Qi8doaqK+ZNIYlXX1y9zvskIVBoDlyQAby
+	CAcLnQbVpJYZ0H6TMaFJiSR2Ro+Axt94YgnhLw7rEiG0oi7uALtXFX4Xc094UlaAXiaJ/7LQho6
+	keKQXt36nGtZJ848Qu5R78aFWhb5w3VbMCLWw7iuLnclB9zrdeoue9AR1aY0p5vw7YoCYRvOdcT
+	p+FJJT/1vCklK7frID4X2D52j1qNKTYFy++9iaGJAmqak1oLhIkwnt4mPkzmkg
+X-Received: by 2002:a05:7300:fb96:b0:2dd:6937:79d1 with SMTP id 5a478bee46e88-2efb89a0612mr6059363eec.15.1777929862781;
+        Mon, 04 May 2026 14:24:22 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ee3889d634sm21012510eec.3.2026.05.04.14.24.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 May 2026 14:24:22 -0700 (PDT)
+Message-ID: <fdb726b4-41ff-42f7-87cf-00f308fa27fb@gmail.com>
+Date: Mon, 4 May 2026 14:24:20 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.0 000/307] 7.0.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260504135142.814938198@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2026-04-30 09:08 PM, Jason Gunthorpe wrote:
-> Enable it with a #define DEBUG at the top of the file. Allows leaving
-> behind debugging prints that are useful in case future changes are
-> required.
+On 5/4/26 06:48, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.4 release.
+> There are 307 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Assisted-by: Claude:claude-opus-4.6
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  .../selftests/vfio/lib/include/libvfio/vfio_pci_device.h    | 6 ++++++
->  1 file changed, 6 insertions(+)
+> Responses should be made by Wed, 06 May 2026 13:50:49 +0000.
+> Anything received after that time might be too late.
 > 
-> diff --git a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-> index bb4525abd01a22..2d587b988c09fa 100644
-> --- a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-> +++ b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-> @@ -38,6 +38,12 @@ struct vfio_pci_device {
->  #define dev_info(_dev, _fmt, ...) printf("%s: " _fmt, (_dev)->bdf, ##__VA_ARGS__)
->  #define dev_err(_dev, _fmt, ...) fprintf(stderr, "%s: " _fmt, (_dev)->bdf, ##__VA_ARGS__)
->  
-> +#ifdef DEBUG
-> +#define dev_dbg dev_info
-> +#else
-> +#define dev_dbg(_dev, _fmt, ...) do { } while (0)
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Can you add something to make sure the format strings are still
-validated by the compiler even if DEBUG is not defined? (since it
-will almost never be defined). e.g.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-diff --git a/tools/testing/selftests/vfio/lib/include/libvfio/assert.h b/tools/testing/selftests/vfio/lib/include/libvfio/assert.h
-index f4ebd122d9b6..406c430ef28d 100644
---- a/tools/testing/selftests/vfio/lib/include/libvfio/assert.h
-+++ b/tools/testing/selftests/vfio/lib/include/libvfio/assert.h
-@@ -51,4 +51,9 @@
-        VFIO_ASSERT_EQ(__ret, 0, "ioctl(%s, %s, %s) returned %d\n", #_fd, #_op, #_arg, __ret); \
- } while (0)
-
-+ __attribute__((__format__(__printf__, 1, 2)))
-+static inline void check_format_string(const char *fmt, ...)
-+{
-+}
-+
- #endif /* SELFTESTS_VFIO_LIB_INCLUDE_LIBVFIO_ASSERT_H */
-diff --git a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-index 2d587b988c09..3abfa6ff481c 100644
---- a/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-+++ b/tools/testing/selftests/vfio/lib/include/libvfio/vfio_pci_device.h
-@@ -39,9 +39,9 @@ struct vfio_pci_device {
- #define dev_err(_dev, _fmt, ...) fprintf(stderr, "%s: " _fmt, (_dev)->bdf, ##__VA_ARGS__)
-
- #ifdef DEBUG
--#define dev_dbg dev_info
-+#define dev_dbg(_dev, _fmt, ...) dev_info
- #else
--#define dev_dbg(_dev, _fmt, ...) do { } while (0)
-+#define dev_dbg(_dev, _fmt, ...) check_format_string(_fmt, ##__VA_ARGS__)
- #endif
-
- struct vfio_pci_device *vfio_pci_device_init(const char *bdf, struct iommu *iommu);
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
