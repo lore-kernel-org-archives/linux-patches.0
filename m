@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC77335A3AD;
-	Mon,  4 May 2026 14:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4EE3DE450;
+	Mon,  4 May 2026 14:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904560; cv=none; b=AAEVxTX3vNGp+MC8t7qijgFpCsGjP2qjTKlYjWR5RloboOC6b2Ce44x1czI/cifykOG68dnme7NgnCLL2M6gKHZrfggakqBHxRvEfQCIy20Xv23DWzSbi3M2uDn97axUMvuZIipzu0JXqscE6NLhcCUAOOadyibF5Sq/kRy9Ep8=
+	t=1777904563; cv=none; b=C+oyawKPE7VECEsKcWS3DKQbPNFUG5aN1fBFvY8NV5K/4G04/61g7/3JmnCSvrsjTIIrANnAssS2FA7t33MItDmWIYsiZ4BVVLii+uxqdQekC+APf6yOT67czVg2KZ/PVt3lzUA1mquyOY3nt3/7OxSdkNXbJJXQQFqiTKsN9z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904560; c=relaxed/simple;
-	bh=EbpZ5MssLYnfZz9hEewsxb7jHKBuKb7FVuIn2mf9K9Q=;
+	s=arc-20240116; t=1777904563; c=relaxed/simple;
+	bh=JyWyk2YiKLXg9xy1lPJywczN4zTn8fuTFevqNIuHNYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jv/j2DPozNmbtQbbQ9+q8kz9yO/qGI8ySzI6VhLr1HOfRSi3BNFyI+tdZXEGyo0J96vQMWcb+ly/xdrxQXNv/am4Ciz/ke//+9B4iTrT3hCShvfM6nrhJikIJil4CcVLdjyozS6hbkPCuTKhQg/4NfUYgmWecBjWWAgbwYahJSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+zh3D4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AkUnJ+5cI6hqmkQqzWPFlXZh4rPYFVWO1xHWwYZPyZ2YVMdjWPNFUHqeycdNA3NTVWyetIFy++zYXtivuLLD97+/SukqttjIP2E1tW7c/T8iwi5CTu3aRJCo49L+cFSpfWWZ6uZdMdKcK68ZmeERI1z22V++2eBWJ9+Iz6q4bKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCrjxb9w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+zh3D4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5022FC2BCF4;
-	Mon,  4 May 2026 14:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCrjxb9w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CECC2BCB8;
+	Mon,  4 May 2026 14:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904560;
-	bh=EbpZ5MssLYnfZz9hEewsxb7jHKBuKb7FVuIn2mf9K9Q=;
+	s=korg; t=1777904563;
+	bh=JyWyk2YiKLXg9xy1lPJywczN4zTn8fuTFevqNIuHNYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+zh3D4eGVOM2h6+se9xr2WMeLG5OK46tgy6tSPXZqd3yRsXPJwq5zFOAM8yQVnat
-	 2+EaqrK5WnOFx8ER2NXoPPFcQI1LH73JND2YogoR2LWBD2bU2OE9LIPvLgYTYaU3AK
-	 HygodAYzfXdudfbpEDdFYRHQyrhLuBVTw2kNUffo=
+	b=DCrjxb9wGuR/L7uCQlaye6L1doHKUW/urYtdhqDg5WWB0ZZvQnn0KQylG71w7L3md
+	 4lQ6MtkTehwIVSoFK3rVA03MFLLu3XDfv+f/3w5qJD7wr9GPpRQBu0M75Cbln9tAyU
+	 jzi9D6slmifchB5Fes8IcQXU/jLE/Cpe7ThRV6w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ao Zhou <draw51280@163.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 086/215] net: qrtr: ns: Free the node during ctrl_cmd_bye()
-Date: Mon,  4 May 2026 15:51:45 +0200
-Message-ID: <20260504135133.301934080@linuxfoundation.org>
+Subject: [PATCH 6.12 087/215] net: rds: fix MR cleanup on copy error
+Date: Mon,  4 May 2026 15:51:46 +0200
+Message-ID: <20260504135133.337566732@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -50,73 +57,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Ao Zhou <draw51280@163.com>
 
-commit 68efba36446a7774ea5b971257ade049272a07ac upstream.
+commit 8141a2dc70080eda1aedc0389ed2db2b292af5bd upstream.
 
-A node sends the BYE packet when it is about to go down. So the nameserver
-should advertise the removal of the node to all remote and local observers
-and free the node finally. But currently, the nameserver doesn't free the
-node memory even after processing the BYE packet. This causes the node
-memory to leak.
+__rds_rdma_map() hands sg/pages ownership to the transport after
+get_mr() succeeds. If copying the generated cookie back to user space
+fails after that point, the error path must not free those resources
+again before dropping the MR reference.
 
-Hence, remove the node from Xarray list and free the node memory during
-both success and failure case of ctrl_cmd_bye().
+Remove the duplicate unpin/free from the put_user() failure branch so
+that MR teardown is handled only through the existing final cleanup
+path.
 
-Cc: stable@vger.kernel.org
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-3-00a8a5ff2b51@oss.qualcomm.com
+Fixes: 0d4597c8c5ab ("net/rds: Track user mapped pages through special API")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ao Zhou <draw51280@163.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/79c8ef73ec8e5844d71038983940cc2943099baf.1776764247.git.draw51280@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ net/rds/rdma.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -342,7 +342,7 @@ static int ctrl_cmd_bye(struct sockaddr_
- 	struct qrtr_node *node;
- 	unsigned long index;
- 	struct kvec iv;
--	int ret;
-+	int ret = 0;
+--- a/net/rds/rdma.c
++++ b/net/rds/rdma.c
+@@ -326,10 +326,6 @@ static int __rds_rdma_map(struct rds_soc
  
- 	iv.iov_base = &pkt;
- 	iv.iov_len = sizeof(pkt);
-@@ -357,8 +357,10 @@ static int ctrl_cmd_bye(struct sockaddr_
- 
- 	/* Advertise the removal of this client to all local servers */
- 	local_node = node_get(qrtr_ns.local_node);
--	if (!local_node)
--		return 0;
-+	if (!local_node) {
-+		ret = 0;
-+		goto delete_node;
-+	}
- 
- 	memset(&pkt, 0, sizeof(pkt));
- 	pkt.cmd = cpu_to_le32(QRTR_TYPE_BYE);
-@@ -375,10 +377,18 @@ static int ctrl_cmd_bye(struct sockaddr_
- 		ret = kernel_sendmsg(qrtr_ns.sock, &msg, &iv, 1, sizeof(pkt));
- 		if (ret < 0 && ret != -ENODEV) {
- 			pr_err("failed to send bye cmd\n");
--			return ret;
-+			goto delete_node;
- 		}
+ 	if (args->cookie_addr &&
+ 	    put_user(cookie, (u64 __user *)(unsigned long)args->cookie_addr)) {
+-		if (!need_odp) {
+-			unpin_user_pages(pages, nr_pages);
+-			kfree(sg);
+-		}
+ 		ret = -EFAULT;
+ 		goto out;
  	}
--	return 0;
-+
-+	/* Ignore -ENODEV */
-+	ret = 0;
-+
-+delete_node:
-+	xa_erase(&nodes, from->sq_node);
-+	kfree(node);
-+
-+	return ret;
- }
- 
- static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
 
 
