@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E12140DFD4;
-	Mon,  4 May 2026 13:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B37D3DDDD7;
+	Mon,  4 May 2026 13:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903128; cv=none; b=kHkjBGLfqiAeVSs75RYSbDDIOAh87bQfpbWo3icH8xXXAsGHJDxP+Z2Iw/opqwAbDLKtF/y5JIG/gJijrlwVNXYj7soP6EUPasZ2VI1UheZBMvBjnf9D6qcj5Tut5BtuV7nqLjzdr2zrI6E5Ue4N+b8r+UNLgCyF10bDG3/HkK8=
+	t=1777903131; cv=none; b=GRmv8jCc2+LbKqqzj1CDmRs3l8Ktu7hAKNmlQGpUoef1AXCX7TT+5ojcBs6eEKZE0UGsj+JdPkBjKserbGz3uD2/lD117GBIxS3i3YnkH7UM4kbPus0lHV/8PJyxM+lK087cKAwhPTcHZqPmUFjVhcPd5aVpmfPyMizfJTLWSlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903128; c=relaxed/simple;
-	bh=/aIx+AKRNcddoH2XHBMa0eSOXQTZTJhH3IM/OtaS3ik=;
+	s=arc-20240116; t=1777903131; c=relaxed/simple;
+	bh=1jraNgiHsMlH5L0ot1p3sQgwVJnC4GoEgnKdMcLE06M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1u2A45Ci3u+UQdVvY8FIDQN7k2kdhqE/DRtch5GzLgdR8UKujvkROjq/nYvMc/1ZTLaZrZ284iXeE/3CIfqrgjBbhiuaXrB11rn07xEDDaAUhhw9gINuuXNStqzi++eA6UQKRnYIAPEk14vh+7uSc+Sr8scZx8xYh1OM57fHso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlCINzyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=duJUCCs2z0EvqtZy+QmYnrC6NJG7sIbcTE0MpRPGFp1vTad+GQT6xPP5ZC6OJeL81fe0qgJJOBbpRi1VWnFnnN037hU6z/Z1ziB41vAIbE70qEDHa8jiJPjPyGZyBes/MnHM0X3eMj3BYu7930L60/kn7yyfkXW/8/cTXrmbwYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMYhZTr/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlCINzyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C23DC2BCB8;
-	Mon,  4 May 2026 13:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMYhZTr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B6BC2BCB8;
+	Mon,  4 May 2026 13:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903128;
-	bh=/aIx+AKRNcddoH2XHBMa0eSOXQTZTJhH3IM/OtaS3ik=;
+	s=korg; t=1777903130;
+	bh=1jraNgiHsMlH5L0ot1p3sQgwVJnC4GoEgnKdMcLE06M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GlCINzyNePHVuSmeRSd/EXikthIHe+ElhzMyNi4jShre6VU97vqJnst+wkEyLR6Z/
-	 c6C1AnwM6jAklvCjn3FU7xnFrK/6DraYDheZxDx9WnBLteuO5lmr7SIRkdG0L8gHqZ
-	 0gw2tm3fPl1nBPmwz2PJ8M9U4A/rwc4WuWNyXrU0=
+	b=IMYhZTr/FRCUUHwq/SiShukdM+CdW33nIUxS1vTa8B4OiGzLIWFiXwhpBpFlVo1U0
+	 +7dXQT2GeOAgcKsu29tC862D2hg4vmu2jY8fWuEA58bjeVGt4sYfZVPmC4n8PG6pwi
+	 kZDr387vzYjCQgYGnzslTe5dzJ3aKX7l1WFF7rzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Lawrence <joe.lawrence@redhat.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>
-Subject: [PATCH 7.0 115/307] module.lds,codetag: force 0 sh_addr for sections
-Date: Mon,  4 May 2026 15:50:00 +0200
-Message-ID: <20260504135147.131925794@linuxfoundation.org>
+	Sami Tolvanen <samitolvanen@google.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.0 116/307] module.lds.S: Fix modules on 32-bit parisc architecture
+Date: Mon,  4 May 2026 15:50:01 +0200
+Message-ID: <20260504135147.169772424@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,85 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Lawrence <joe.lawrence@redhat.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 4afc71bba8b7d7841681e7647ae02f5079aaf28f upstream.
+commit 1221365f55281349da4f4ba41c05b57cd15f5c28 upstream.
 
-Commit 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and
-related macros") added .text and made .data, .bss, and .rodata sections
-unconditional in the module linker script, but without an explicit
-address like the other sections in the same file.
+On the 32-bit parisc architecture, we always used the
+-ffunction-sections compiler option to tell the compiler to put the
+functions into seperate text sections. This is necessary, otherwise
+"big" kernel modules like ext4 or ipv6 fail to load because some
+branches won't be able to reach their stubs.
 
-When linking modules with ld.bfd -r, sections defined without an address
-inherit the location counter, resulting in non-zero sh_addr values in
-the .ko.  Relocatable objects are expected to have sh_addr=0 for these
-sections and these non-zero addresses confuse elfutils and have been
-reported to cause segmentation faults in SystemTap [1].
+Commit 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related
+macros") broke this for parisc because all text sections will get
+unconditionally merged now.
 
-Add the 0 address specifier to all sections in module.lds, including the
-.codetag.* sections via MOD_SEPARATE_CODETAG_SECTIONS macro.
+Introduce the ARCH_WANTS_MODULES_TEXT_SECTIONS config option which
+avoids the text section merge for modules, and fix this issue by
+enabling this option by default for 32-bit parisc.
 
-Link: https://sourceware.org/bugzilla/show_bug.cgi?id=33958
 Fixes: 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related macros")
-Signed-off-by: Joe Lawrence <joe.lawrence@redhat.com>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: stable@vger.kernel.org # v6.19+
+Suggested-by: Sami Tolvanen <samitolvanen@google.com>
 Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/codetag.lds.h |    2 +-
- scripts/module.lds.S              |   12 ++++++------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ arch/Kconfig         |    7 +++++++
+ arch/parisc/Kconfig  |    1 +
+ scripts/module.lds.S |    2 ++
+ 3 files changed, 10 insertions(+)
 
---- a/include/asm-generic/codetag.lds.h
-+++ b/include/asm-generic/codetag.lds.h
-@@ -18,7 +18,7 @@
- 	IF_MEM_ALLOC_PROFILING(SECTION_WITH_BOUNDARIES(alloc_tags))
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -1128,6 +1128,13 @@ config ARCH_WANTS_MODULES_DATA_IN_VMALLO
+ 	  For architectures like powerpc/32 which have constraints on module
+ 	  allocation and need to allocate module data outside of module area.
  
- #define MOD_SEPARATE_CODETAG_SECTION(_name)	\
--	.codetag.##_name : {			\
-+	.codetag.##_name 0 : {			\
- 		SECTION_WITH_BOUNDARIES(_name)	\
- 	}
- 
++config ARCH_WANTS_MODULES_TEXT_SECTIONS
++	bool
++	help
++	  For architectures like 32-bit parisc which require that functions in
++	  modules have to keep code in own text sections (-ffunction-sections)
++	  and to avoid merging all text into one big text section,
++
+ config ARCH_WANTS_EXECMEM_LATE
+ 	bool
+ 	help
+--- a/arch/parisc/Kconfig
++++ b/arch/parisc/Kconfig
+@@ -8,6 +8,7 @@ config PARISC
+ 	select HAVE_FUNCTION_GRAPH_TRACER
+ 	select HAVE_SYSCALL_TRACEPOINTS
+ 	select ARCH_WANT_FRAME_POINTERS
++	select ARCH_WANTS_MODULES_TEXT_SECTIONS if !64BIT
+ 	select ARCH_HAS_CPU_CACHE_ALIASING
+ 	select ARCH_HAS_DMA_ALLOC if PA11
+ 	select ARCH_HAS_DMA_OPS
 --- a/scripts/module.lds.S
 +++ b/scripts/module.lds.S
-@@ -32,30 +32,30 @@ SECTIONS {
- 	__jump_table		0 : ALIGN(8) { KEEP(*(__jump_table)) }
- 	__ex_table		0 : ALIGN(4) { KEEP(*(__ex_table)) }
- 
--	__patchable_function_entries : { *(__patchable_function_entries) }
-+	__patchable_function_entries 0 : { *(__patchable_function_entries) }
- 
- 	.init.klp_funcs		0 : ALIGN(8) { KEEP(*(.init.klp_funcs)) }
- 	.init.klp_objects	0 : ALIGN(8) { KEEP(*(.init.klp_objects)) }
- 
- #ifdef CONFIG_ARCH_USES_CFI_TRAPS
--	__kcfi_traps		: { KEEP(*(.kcfi_traps)) }
-+	__kcfi_traps		0 : { KEEP(*(.kcfi_traps)) }
+@@ -41,9 +41,11 @@ SECTIONS {
+ 	__kcfi_traps		0 : { KEEP(*(.kcfi_traps)) }
  #endif
  
--	.text : {
-+	.text			0 : {
++#ifndef CONFIG_ARCH_WANTS_MODULES_TEXT_SECTIONS
+ 	.text			0 : {
  		*(.text .text.[0-9a-zA-Z_]*)
  	}
++#endif
  
--	.bss : {
-+	.bss			0 : {
+ 	.bss			0 : {
  		*(.bss .bss.[0-9a-zA-Z_]*)
- 		*(.bss..L*)
- 	}
- 
--	.data : {
-+	.data			0 : {
- 		*(.data .data.[0-9a-zA-Z_]*)
- 		*(.data..L*)
- 	}
- 
--	.rodata : {
-+	.rodata			0 : {
- 		*(.rodata .rodata.[0-9a-zA-Z_]*)
- 		*(.rodata..L*)
- 	}
 
 
