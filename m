@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45483DE457;
-	Mon,  4 May 2026 13:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEEB3DC4D5;
+	Mon,  4 May 2026 13:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903144; cv=none; b=M2/XjrBdZ4D5mnICgvHPvikFWtqi1yLYVZGoRi8IIjL1Hskmqj2njc6R9U3k7xYYSc1aFpWvtn/+SM+fz9vkYcHgRdVTs4TC8SD0EEJsRaAvpU5oqjSDbIpmfi9qovqF7oBt2dMnnSDxTp/cLQ8sL/cGFkEZRwX6iC7YhQVKf7k=
+	t=1777903146; cv=none; b=poBtqA6GX/ntsstnMTN53LvVPIe8QRsLFeTXKBtnj6RABibagk3AWlrFNMQorbT8osr5s/EwxFB+pnQQYddlEelXnzQEo27pBYHFcNqtlY06r1af8jzY95anuDoU/hVLQYjBbujrrobNxn0GiDkp4IVUXZPa0AKWErELLqkgryA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903144; c=relaxed/simple;
-	bh=/cEzmAxmmk/2upMBqu1Z1UcYp9azEioSJvWZqXroED8=;
+	s=arc-20240116; t=1777903146; c=relaxed/simple;
+	bh=DwQGZBvOpbnX8hnAEWoBLsbydosMp1yyoH2eQyBj37o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qybq0LvCdH9sQ7TzcvtLiN3hXb0GUhLSF60+fHxhguSOjU2/mpzsrJadSyHmZKf+FpiVTuk19lrxlKxV5WEaShot+XHM/1xAEeUd7kDLDXWCCwBh5/eo4TZiwk4WaUDMuyTPNkb5W0DYIae05jkd7wN9C7Wc6RJrRnUQAMuWZUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIgtTldN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MAhG8iUsSE9CRgDgnvEemKyd1Az/YVJyFJ23FG0GLbfW51ltj9hFL/ymUGfn+kv88FL+QnE7tEK31talC5bVZyoQqUxAgrC7nckRmvp4QjlhMwAY1OnQU0hLjFy1+1hsHze/RpYAQgJVPIBvxnvgAijLcQYkut10C1T3KLbthy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nQzK5hl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIgtTldN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3A2C2BCF5;
-	Mon,  4 May 2026 13:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nQzK5hl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFA9C2BCB8;
+	Mon,  4 May 2026 13:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903143;
-	bh=/cEzmAxmmk/2upMBqu1Z1UcYp9azEioSJvWZqXroED8=;
+	s=korg; t=1777903146;
+	bh=DwQGZBvOpbnX8hnAEWoBLsbydosMp1yyoH2eQyBj37o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OIgtTldN1FcXH4W4EjMreBQYnDbtJGAzeRRu+gZoH5ngJ4xpl+9CEliuqmN/GUjE0
-	 qIXVdVjv4CI9H21RgV7jYHPuEn2G1vHdT5EQLverB/WVO3ab1/oCmeeWbL1/RIuSx7
-	 m2vJbegLkhcp25gezSBNMQ6VvQAuyvpHuuviVvoM=
+	b=2nQzK5hl7uzS01r0kkPM5tHMw0ua8uARYnsAP38joASSdOzaKzIWkDMgcc0pWgouk
+	 4DcZtIZDqRqzmzeg1GSD0VTzqsjj7d+rmPVlUXY2+DOUv9CeqZKUH02wyBrD4DAcvZ
+	 Vmyh9zx9l92GIN3gPBreH4OpbAWJxkmdeXF6n/hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Spencer Payton <spayton681@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 120/307] ALSA: 6fire: Fix input volume change detection
-Date: Mon,  4 May 2026 15:50:05 +0200
-Message-ID: <20260504135147.316010276@linuxfoundation.org>
+Subject: [PATCH 7.0 121/307] ALSA: hda/realtek - Add mute LED support for HP Victus 15-fa2xxx
+Date: Mon,  4 May 2026 15:50:06 +0200
+Message-ID: <20260504135147.352018109@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -44,62 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Spencer Payton <spayton681@gmail.com>
 
-commit dc88eef8f55e85e92d016cdf7e291f5560efd79b upstream.
+commit eacda758e3c01db98b5c231f56cf9a6e05ced75c upstream.
 
-usb6fire_control_input_vol_put() stores the analog capture volume
-as a signed offset in rt->input_vol[] (-15..+15), but it compares
-the cached value against the user-visible mixer value (0..30)
-before subtracting 15.
+The mute LED on this laptop uses ALC245 but requires a quirk to work.
+This patch enables the existing ALC245_FIXUP_HP_MUTE_LED_COEFBIT
+quirk for the device.
 
-This mixes two domains in the change detection path. Since the
-runtime is zero-initialized, the visible default is 15; writing 0
-right after probe is ignored, while writing 15 is reported as a
-change even though the cached value remains 0.
+Tested my Victus 15-fa2xxx (PCI SSID 103c:8dcd).
+The LED behaviour works as intended.
 
-Normalize the user value before comparing it with the cached offset.
-
-Fixes: 06bb4e743501 ("ALSA: snd-usb-6fire: add analog input volume control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260416-alsa-6fire-input-volume-change-detection-v1-1-ec78299168df@gmail.com
+Signed-off-by: Spencer Payton <spayton681@gmail.com>
+Link: https://patch.msgid.link/20260421084918.14685-1-spayton681@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/6fire/control.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/6fire/control.c
-+++ b/sound/usb/6fire/control.c
-@@ -290,15 +290,17 @@ static int usb6fire_control_input_vol_pu
- 		struct snd_ctl_elem_value *ucontrol)
- {
- 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
-+	int vol0 = ucontrol->value.integer.value[0] - 15;
-+	int vol1 = ucontrol->value.integer.value[1] - 15;
- 	int changed = 0;
- 
--	if (rt->input_vol[0] != ucontrol->value.integer.value[0]) {
--		rt->input_vol[0] = ucontrol->value.integer.value[0] - 15;
-+	if (rt->input_vol[0] != vol0) {
-+		rt->input_vol[0] = vol0;
- 		rt->ivol_updated &= ~(1 << 0);
- 		changed = 1;
- 	}
--	if (rt->input_vol[1] != ucontrol->value.integer.value[1]) {
--		rt->input_vol[1] = ucontrol->value.integer.value[1] - 15;
-+	if (rt->input_vol[1] != vol1) {
-+		rt->input_vol[1] = vol1;
- 		rt->ivol_updated &= ~(1 << 1);
- 		changed = 1;
- 	}
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7153,6 +7153,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8d90, "HP EliteBook 16 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8d91, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8d92, "HP ZBook Firefly 16 G12", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8dcd, "HP Victus 15-fa2xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9b, "HP 17 Turbine OmniBook 7 UMA", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9c, "HP 17 Turbine OmniBook 7 DIS", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9d, "HP 17 Turbine OmniBook X UMA", ALC287_FIXUP_CS35L41_I2C_2),
 
 
