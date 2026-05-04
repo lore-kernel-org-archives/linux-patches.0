@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A158F3D8129;
-	Mon,  4 May 2026 14:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFA4315785;
+	Mon,  4 May 2026 14:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904496; cv=none; b=MGLwxCy11lLIVxJZ/CClK6+yNCppzwmA21caBd8KW/ZIcfboNqLcEd3Cty9peTatb3MQfnoROZ8JAryByrQqX2rcvfgo4K3LB1jverR/gjO8NCWB6G6UUqhpPZIFW5wxpaqNiK5K9J7NysEf0qNM/Gx6Nw4HEA2TwJPoMdoTr2I=
+	t=1777904499; cv=none; b=bYjhT/UqaIoF1NVlOmDMuWgf/seoOptgsQWHMMWGuCY0G/JO7bTN418YgSNO+jcujcUXk2WySAjnMalgh4Jv+xLdXmb70nDIGTQTmAYJZ95vcf6OHuK1QD7TfJYER8CfwKSy9QoNGmrTyf4QAkPb9YvmLWRzcPnYERXvayGfp9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904496; c=relaxed/simple;
-	bh=yNi5P7hmMKix1Z8qEZMPD2SqmW7eBJkrPISY2QbjMkw=;
+	s=arc-20240116; t=1777904499; c=relaxed/simple;
+	bh=qOsWCpEkM6++30S52srjAbiT72yu9arDEIoMDhWLq8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QnZ5MnqHlLG6LgMEupGcrDYgbH8wAu6OgpH5wyXvFEJkoiWZIRJWQWuctvlRyErgc0sbgBdF9ckuNlupxORpWgkYbKEj9tR814eR5g8VAuj0h5aro5DhpgwpteJ6QERNJ97/Zw6J+5FMvZZoiSPtXWY5nkegUYD2B2jj+7Iirys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOlSpSmk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BxtaZ/Ye4ogJTIJnBKMmEaKyn1Qj7AbOv3+uvfUnDvUBykI9jSgL9mkxm32jcqEuIDd7PsiTDIy8gwRMPljCKnAyp+pAhvA0oUOAlSPbL/1jtX52rSZOJ2lqBY4rEQ/1Neu55Es80FDBANNxH1KoCSGBGAX8sufSyiMETPstCXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIL/KGYA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOlSpSmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DC4C2BCB8;
-	Mon,  4 May 2026 14:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIL/KGYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48FFC2BCB8;
+	Mon,  4 May 2026 14:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904496;
-	bh=yNi5P7hmMKix1Z8qEZMPD2SqmW7eBJkrPISY2QbjMkw=;
+	s=korg; t=1777904499;
+	bh=qOsWCpEkM6++30S52srjAbiT72yu9arDEIoMDhWLq8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOlSpSmk+3bG1vEDe3FwGikru4pLHaHv9qNaL1r8iURA29Mz5LLSCUI/n1bX0cUCT
-	 Lvh90i2o/ixfnqJid8u5c95OH3m97EPySe49Y3eAuLEzIJ/CCzOd43UZvd4mh66Gbd
-	 gz1Q6wkgkU57vsq+X1R5MXIR29qhVKOwTSk2H12E=
+	b=DIL/KGYAKvut8GA5aQEx6AGkAX1eyjOShPu7hjVdWhhn+ymD1njkH3jUTLijjkxUE
+	 nZUEBRYipvSJ+wTTRdI5aCOeq6aDAiIIKmfXVqMvIoE6riC05tmBAEePUPR8rPT1+N
+	 31vPhZHjqwBUX1HGK35G9fCM38laAPjDQxrbn8wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.12 060/215] mtd: docg3: fix use-after-free in docg3_release()
-Date: Mon,  4 May 2026 15:51:19 +0200
-Message-ID: <20260504135132.366731154@linuxfoundation.org>
+	Robert Beckett <bob.beckett@collabora.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.12 061/215] nvme-pci: add NVME_QUIRK_DISABLE_WRITE_ZEROES for Kingston OM3SGP4
+Date: Mon,  4 May 2026 15:51:20 +0200
+Message-ID: <20260504135132.402722742@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -50,48 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Robert Beckett <bob.beckett@collabora.com>
 
-commit ca19808bc6fac7e29420d8508df569b346b3e339 upstream.
+commit a8eebf9699d69987cc49cec4e4fdb4111ab32423 upstream.
 
-In docg3_release(), the docg3 pointer is obtained from
-cascade->floors[0]->priv before the loop that calls
-doc_release_device() on each floor. doc_release_device() frees the
-docg3 struct via kfree(docg3) at line 1881. After the loop,
-docg3->cascade->bch dereferences the already-freed pointer.
+The Kingston OM3SGP42048K2-A00 (PCI ID 2646:502f) firmware has a race
+condition when processing concurrent write zeroes and DSM (discard)
+commands, causing spurious "LBA Out of Range" errors and IOMMU page
+faults at address 0x0.
 
-Fix this by accessing cascade->bch directly, which is equivalent
-since docg3->cascade points back to the same cascade struct, and
-is already available as a local variable. This also removes the
-now-unused docg3 local variable.
+The issue is reliably triggered by running two concurrent mkfs commands
+on different partitions of the same drive, which generates interleaved
+write zeroes and discard operations.
 
-Fixes: c8ae3f744ddc ("lib/bch: Rework a little bit the exported function names")
+Disable write zeroes for this device, matching the pattern used for
+other Kingston OM* drives that have similar firmware issues.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: James Kim <james010kim@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Robert Beckett <bob.beckett@collabora.com>
+Assisted-by: claude-opus-4-6-v1
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/devices/docg3.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/nvme/host/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mtd/devices/docg3.c
-+++ b/drivers/mtd/devices/docg3.c
-@@ -2049,7 +2049,6 @@ err_probe:
- static void docg3_release(struct platform_device *pdev)
- {
- 	struct docg3_cascade *cascade = platform_get_drvdata(pdev);
--	struct docg3 *docg3 = cascade->floors[0]->priv;
- 	int floor;
- 
- 	doc_unregister_sysfs(pdev, cascade);
-@@ -2057,7 +2056,7 @@ static void docg3_release(struct platfor
- 		if (cascade->floors[floor])
- 			doc_release_device(cascade->floors[floor]);
- 
--	bch_free(docg3->cascade->bch);
-+	bch_free(cascade->bch);
- }
- 
- #ifdef CONFIG_OF
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3716,6 +3716,8 @@ static const struct pci_device_id nvme_i
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
+ 	{ PCI_DEVICE(0x2646, 0x501E),   /* KINGSTON OM3PGP4xxxxQ OS21011 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
++	{ PCI_DEVICE(0x2646, 0x502F),   /* KINGSTON OM3SGP4xxxxK NVMe SSD */
++		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
+ 	{ PCI_DEVICE(0x1f40, 0x1202),   /* Netac Technologies Co. NV3000 NVMe SSD */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1f40, 0x5236),   /* Netac Technologies Co. NV7000 NVMe SSD */
 
 
