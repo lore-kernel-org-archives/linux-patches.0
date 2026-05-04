@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1AB3DE450;
-	Mon,  4 May 2026 14:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1962315785;
+	Mon,  4 May 2026 14:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904437; cv=none; b=ntrgleEnkyuIVCoZq+lAE6fcJGDuGdGLPYB0Ej87ki6rg6WPRd07pVULcAjdv3968WcdO++6nnamW1+C1GY3Vvbx8v4F202F53HQkOT9IZIqlqpa7JAlJ7blIyjvlox2geeUMgAB3PExR4faVSuLc4GwAfLmWAHsBtkrLSrT6Ik=
+	t=1777904440; cv=none; b=mw8fMaMiCwDyy8dB5Kq7C/RNCb4C3L1hbLHyexgB/I68VnwPw0JEhCJK98rRTOMQXT8EZXnTwdZ558q6npIezTh3VQfJg6pWPIdvBEZJn2i+FsDiEZ9x/qTN+fQfCaWOUWH8ayKVGfNz4sayp8YDwrV5Q6T4Ak0RR/5FSnNdTm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904437; c=relaxed/simple;
-	bh=uIfo70Q/3W7VBo5FjFsS1hNq25MG6QNYGX0hPsGAQFg=;
+	s=arc-20240116; t=1777904440; c=relaxed/simple;
+	bh=jk2kKMc0GpZJpdQejgURcxm5PWTCQp7z4wUBDz+NxJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bwm9/K3D9eMBwLl9HN1M2kPHkSOh45EjVicuWEmD9u/Ymodm0xwAim+SqAqWUvdWwR3FZpEPJPYyX8Hv2vRQENIDyFRPWYdj55MuBiTl78eeIRfhnOOr4hppIPc9cK7aLYTJVCeV9ndJFEEJ45+o090XqeSuiii3PXZ7li33Nn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wl9pr3+Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X7A/viqdPLPVvzn+ZGiWAU9stbqZKo95Wopy9pagKTO+McpVN77/RnWcY6aS53YgdGT8dqL7ktZbIH77/KofzD0hhD7pqoaVV2o3pBB/dh08KWKwuLrzx0PuOkUl32u2eApc7lC2rOOc6Vv1Fw8/Mj1/ZI+0UYK7JYvkODCCCmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFTwDrdW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wl9pr3+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03EB9C2BCB8;
-	Mon,  4 May 2026 14:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFTwDrdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8788FC2BCC4;
+	Mon,  4 May 2026 14:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904437;
-	bh=uIfo70Q/3W7VBo5FjFsS1hNq25MG6QNYGX0hPsGAQFg=;
+	s=korg; t=1777904439;
+	bh=jk2kKMc0GpZJpdQejgURcxm5PWTCQp7z4wUBDz+NxJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wl9pr3+ZMywPsTKSmzADVfsIcd+8FbLoxe8sGu7SVR2WNdv/8TK2e7WZNplk0j+8m
-	 msue/JAeaweWunBMeyk1K+JpIPNy9W02GexvHi7jQ+T97p4rPYkh5T25m4bh1JnPHr
-	 UtCSYSGSCUIUwA6e4PQu24RfXgMcDp0SyDqkgwfM=
+	b=WFTwDrdWZ6Tn7FnEuz4cSnD5KuaYVI1LksS0b5gjdFfbeMtSDwD52qvgXWoHE36GJ
+	 6ad49nPSCwCKvxYISs0LZ7ICEKbWRnrWui80/c+Kuve/unN+9dN6Xz05CtoHkE6K9B
+	 a9aR33XVBlmeyvyXENYlmmMIlq6V3kAR34EgP4Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 039/215] hwmon: (powerz) Fix missing usb_kill_urb() on signal interrupt
-Date: Mon,  4 May 2026 15:50:58 +0200
-Message-ID: <20260504135131.610085226@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 040/215] media: amphion: Fix race between m2m job_abort and device_run
+Date: Mon,  4 May 2026 15:50:59 +0200
+Message-ID: <20260504135131.646946433@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -50,60 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit b66437cb20a2d9ef201f40b675569f8ea7787c9f upstream.
+commit 8cd35ceadcfc8c5da2eb7f7ce24525ce9d4ee62e upstream.
 
-wait_for_completion_interruptible_timeout() returns -ERESTARTSYS when
-interrupted. This needs to abort the URB and return an error. No data
-has been received from the device so any reads from the transfer
-buffer are invalid.
+Fix kernel panic caused by race condition where v4l2_m2m_ctx_release()
+frees m2m_ctx while v4l2_m2m_try_run() is about to call device_run
+with the same context.
 
-The original code tests !ret, which only catches the timeout case (0).
-On signal delivery (-ERESTARTSYS), !ret is false so the function skips
-usb_kill_urb() and falls through to read from the unfilled transfer
-buffer.
+Race sequence:
+  v4l2_m2m_try_run():           v4l2_m2m_ctx_release():
+    lock/unlock                   v4l2_m2m_cancel_job()
+                                    job_abort()
+                                      v4l2_m2m_job_finish()
+                                  kfree(m2m_ctx)  <- frees ctx
+    device_run()  <- use-after-free crash at 0x538
 
-Fix by capturing the return value into a long (matching the function
-return type) and handling signal (negative) and timeout (zero) cases
-with separate checks that both call usb_kill_urb() before returning.
+Crash trace:
+  Unable to handle kernel read from unreadable memory at virtual address
+  0000000000000538
+  v4l2_m2m_try_run+0x78/0x138
+  v4l2_m2m_device_run_work+0x14/0x20
 
-Fixes: 4381a36abdf1c ("hwmon: add POWER-Z driver")
+The amphion vpu driver does not rely on the m2m framework's device_run
+callback to perform encode/decode operations.
+
+Fix the race by preventing m2m framework job scheduling entirely:
+- Add job_ready callback returning 0 (no jobs ready for m2m framework)
+- Remove job_abort callback to avoid the race condition
+
+Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260410002521.422645-3-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/powerz.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/media/platform/amphion/vpu_v4l2.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/hwmon/powerz.c
-+++ b/drivers/hwmon/powerz.c
-@@ -112,6 +112,7 @@ static void powerz_usb_cmd_complete(stru
- 
- static int powerz_read_data(struct usb_device *udev, struct powerz_priv *priv)
+--- a/drivers/media/platform/amphion/vpu_v4l2.c
++++ b/drivers/media/platform/amphion/vpu_v4l2.c
+@@ -448,17 +448,14 @@ static void vpu_m2m_device_run(void *pri
  {
-+	long rc;
- 	int ret;
+ }
  
- 	if (!priv->urb)
-@@ -133,8 +134,14 @@ static int powerz_read_data(struct usb_d
- 	if (ret)
- 		return ret;
+-static void vpu_m2m_job_abort(void *priv)
++static int vpu_m2m_job_ready(void *priv)
+ {
+-	struct vpu_inst *inst = priv;
+-	struct v4l2_m2m_ctx *m2m_ctx = inst->fh.m2m_ctx;
+-
+-	v4l2_m2m_job_finish(m2m_ctx->m2m_dev, m2m_ctx);
++	return 0;
+ }
  
--	if (!wait_for_completion_interruptible_timeout
--	    (&priv->completion, msecs_to_jiffies(5))) {
-+	rc = wait_for_completion_interruptible_timeout(&priv->completion,
-+						       msecs_to_jiffies(5));
-+	if (rc < 0) {
-+		usb_kill_urb(priv->urb);
-+		return rc;
-+	}
-+
-+	if (rc == 0) {
- 		usb_kill_urb(priv->urb);
- 		return -EIO;
- 	}
+ static const struct v4l2_m2m_ops vpu_m2m_ops = {
+ 	.device_run = vpu_m2m_device_run,
+-	.job_abort = vpu_m2m_job_abort
++	.job_ready = vpu_m2m_job_ready,
+ };
+ 
+ static int vpu_vb2_queue_setup(struct vb2_queue *vq,
 
 
