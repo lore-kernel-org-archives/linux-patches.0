@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2323D5667;
-	Mon,  4 May 2026 14:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4F83D3334;
+	Mon,  4 May 2026 14:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903232; cv=none; b=vArOvegwcDxQT+ynMqVur9GjSmt0p7hEV/L6TczfNsoBiI69661sWfzXhV+6bDz8szO5mvlVijxa0BEu1HPaosnhPTB/B031YB4ieQ+eSg+c14WTHNKul5Xk41ZNPcdvcSu+DHvdQ9u8p24TlJeLbr//qkqoI2JX3RpkxcNnHWU=
+	t=1777903234; cv=none; b=TCz8nP9Iztg0/M8AW6M6dcnV6BauFb47t6Oqx6fNFvwwhX0P9I0oHaIWbaxrheaPDDxla7nq1zgQlhOyAnSl6fCwRt34j9+d8ky0amlmCGLBcv87JvSwnLK7PlonyWOCp/r/tGvDTjLqhLM9t0/7lGrX+1EhTO6lxTOKWt9lO04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903232; c=relaxed/simple;
-	bh=w8p4aIPkvv3tpB1oxPwOjy750NMthCHJXCg2oBPsptw=;
+	s=arc-20240116; t=1777903234; c=relaxed/simple;
+	bh=LFkrb7KTtq7jndwvoPgvtMnSCjbk54w++xdjQIpXo9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1QCSXsEzq/s2bpT1YId38CQrWzUBUqBJBB78baATdu/eFQ3e2Lzw5oZrKlo7dHQWNnzJ7e2SeyYk+4OGeiYx+0MTSfRvFEILwwQdUgT1JamRQH+AMFnH0B+XuDnlG9lultwOdLh/KJwVmYDDZ5pimDUpp6RyQMPwyPp7wyB1m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iu2oX310; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s0mMM+g4jsijXdqXhA5FWif/usZiwJTnWHwHcacbhzLGKn/GcFdcV8M3eyZi3Wp00aJmxatE8y6EcacdYbM47UJ0daYVteJSV1LnPaGtIEWFkakqNaTg9yMuqWHJO2HLqwX/d9QbQbkw/NGaNIK5xCVGYGFWPX0cfSiHzVYex4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxW4bC2b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iu2oX310"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C06C2BCB8;
-	Mon,  4 May 2026 14:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxW4bC2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008E6C2BCB8;
+	Mon,  4 May 2026 14:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903231;
-	bh=w8p4aIPkvv3tpB1oxPwOjy750NMthCHJXCg2oBPsptw=;
+	s=korg; t=1777903234;
+	bh=LFkrb7KTtq7jndwvoPgvtMnSCjbk54w++xdjQIpXo9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iu2oX310RsxCUQ8IczZsEechXjknKusaWKuHz6WkzWG5awzM+QLh8PEfXC6twlGoc
-	 fnfdI0RcQmDbzw29Pv7K3MA/gwtSaXVP+bpfh9w3AMTx/Lekc4m4BK2Hmtjf5xJo7f
-	 5RtyPKdgz+VFU+TvrSiD+ErNnKMRUa02XCCGmgCg=
+	b=HxW4bC2bXk0clPCBBtzC4+2FBVKm2ksJu9qi1Rv/IwXsPBqA/bRY50INOFBRRdASS
+	 XkBbdVI871/btv7we+suWaY6XWsUQIBGxdfzxrbC3bJa23LrlF5lbsKMtux8UCItke
+	 lCl3dkVj4lv3pMreGVgrjxvBvHO3dsZODifHmDJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 154/307] ipv4: icmp: validate reply type before using icmp_pointers
-Date: Mon,  4 May 2026 15:50:39 +0200
-Message-ID: <20260504135148.583557240@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 7.0 155/307] libceph: Prevent potential null-ptr-deref in ceph_handle_auth_reply()
+Date: Mon,  4 May 2026 15:50:40 +0200
+Message-ID: <20260504135148.620606870@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -57,54 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 67bf002a2d7387a6312138210d0bd06e3cf4879b upstream.
+commit 5199c125d25aeae8615c4fc31652cc0fe624338e upstream.
 
-Extended echo replies use ICMP_EXT_ECHOREPLY as the outbound reply type.
-That value is outside the range covered by icmp_pointers[], which only
-describes the traditional ICMP types up to NR_ICMP_TYPES.
+If a message of type CEPH_MSG_AUTH_REPLY contains a zero value for both
+protocol and result, this is currently not treated as an error. In case
+of ac->negotiating == true and ac->protocol > 0, this leads to setting
+ac->protocol = 0 and ac->ops = NULL. Thereafter, the check for
+ac->protocol != protocol returns false, and init_protocol() is not
+called. Subsequently, ac->ops->handle_reply() is called, which leads to
+a null pointer dereference, because ac->ops is still NULL.
 
-Avoid consulting icmp_pointers[] for reply types outside that range, and
-use array_index_nospec() for the remaining in-range lookup. Normal ICMP
-replies keep their existing behavior unchanged.
+This patch changes the check for ac->protocol != protocol to
+!ac->protocol, as this also includes the case when the protocol was set
+to zero in the message. This causes the message to be treated as
+containing a bad auth protocol.
 
-Fixes: d329ea5bd884 ("icmp: add response to RFC 8335 PROBE messages")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0dace90c01a5978e829ca741ef684dbd7304ce62.1776628519.git.caoruide123@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/icmp.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ceph/auth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -64,6 +64,7 @@
- #include <linux/jiffies.h>
- #include <linux/kernel.h>
- #include <linux/fcntl.h>
-+#include <linux/nospec.h>
- #include <linux/socket.h>
- #include <linux/in.h>
- #include <linux/inet.h>
-@@ -373,7 +374,9 @@ static int icmp_glue_bits(void *from, ch
- 				      to, len);
- 
- 	skb->csum = csum_block_add(skb->csum, csum, odd);
--	if (icmp_pointers[icmp_param->data.icmph.type].error)
-+	if (icmp_param->data.icmph.type <= NR_ICMP_TYPES &&
-+	    icmp_pointers[array_index_nospec(icmp_param->data.icmph.type,
-+					     NR_ICMP_TYPES + 1)].error)
- 		nf_ct_attach(skb, icmp_param->skb);
- 	return 0;
- }
+--- a/net/ceph/auth.c
++++ b/net/ceph/auth.c
+@@ -245,7 +245,7 @@ int ceph_handle_auth_reply(struct ceph_a
+ 			ac->protocol = 0;
+ 			ac->ops = NULL;
+ 		}
+-		if (ac->protocol != protocol) {
++		if (!ac->protocol) {
+ 			ret = init_protocol(ac, protocol);
+ 			if (ret) {
+ 				pr_err("auth protocol '%s' init failed: %d\n",
 
 
