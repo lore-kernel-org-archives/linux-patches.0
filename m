@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC00D34753C;
-	Mon,  4 May 2026 13:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6015E34753C;
+	Mon,  4 May 2026 13:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903089; cv=none; b=glZR7qGJMOjzRoe5uynMG+Gjvay3hKUc5J1jFuWQFAvvVescCo1naGqZTvw8AQVSsETAAp8woiMOzLCCI1SAK0HuSALw8yWNhS1dmb1mOrF3VjnpsD2+cn1c7MybiyyUC86g5vOFbN8aJoOBD5fBLY9X1Ctyzw6/ava2bu5OvIc=
+	t=1777903092; cv=none; b=h9zMWP+XaUBgOaEa5S+ExiCiQJYsGZAHqohR4MXhV6Zu7EITvBpALjBN3aZPQRoCQ1wbM0hL4M9bj116jvZOnYSf+hIW+oak4IvyFw+GOz5jbE3foP/+sY/E58GdWJVmlBbH0yO3wp1eX2Kr8NanqbJRKIruWm2zIfBt2vcJpKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903089; c=relaxed/simple;
-	bh=H8AxAdg7Ho++YAuk4nI8VxnbPOttUqqUHOCDhDGAyfM=;
+	s=arc-20240116; t=1777903092; c=relaxed/simple;
+	bh=8PpYteYZLHAFObx0el1xQFKtf9RQQWz+9S+uT84fmNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RFzAsK7ZHyeh5TtObUZqpg3dM1YYVqvhXVLjEaCmA+XzhmT9q99+GyJiGoI07h6hHaXNRVEB2n+zrI2yy22vHHLrm0SIN+19R06nQA6oADwXJgaKkjG8qAfaMTwZMF5QoVITUFdwlaDrhWAuPSL1KiRimwYRZEbruSLauRWsfbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KAlHR1E/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EYlLnDzk+dcHivUfeAXc9mV8bPvIeKggacLh5/wxHEzE/h3beLyMrHHCRTAeDaCPSNaEOvp5fwSUZ+fEYAwfSoGnIOloiYjWlSob08FbXCsMzF2PJZd6sxb0ehGAm33fxVVaK6EIetWGhoeXjmT9pmoz8e75zD3ztLCcq4k4gpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSu5+mT7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAlHR1E/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C799C2BCB8;
-	Mon,  4 May 2026 13:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSu5+mT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA09C2BCB8;
+	Mon,  4 May 2026 13:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903089;
-	bh=H8AxAdg7Ho++YAuk4nI8VxnbPOttUqqUHOCDhDGAyfM=;
+	s=korg; t=1777903092;
+	bh=8PpYteYZLHAFObx0el1xQFKtf9RQQWz+9S+uT84fmNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KAlHR1E/vUoAOTXxWq5pyZ6swIpUnTAF0acsm5gofwXhGSJa1OgKi3uSaZaccPohu
-	 c7fZyovzq4v5tuekqqQuruo5GbpOiebabkE5UYhNf3ZZc6DoFUQZ91D/YF80ggC6bF
-	 uQ5drJtgVQCas4Wywl1BPfkUsxN9C+lf3nIO/dlA=
+	b=NSu5+mT7eDr3OrJnQWPqphj8rBUjc7g97El8w8XG/6AJ/hzdWhvgKt7++UX+BmU+b
+	 ra2aExBE/ccZQWx439LjnwkrDvNHcO+V1kpySstFD1oCIrFeHIMIoYr53XBzu5D5fz
+	 DS1GIC2otItoZMj18c3wauBAjz7m0ZSUtffqnMHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 067/307] ALSA: aoa: i2sbus: clear stale prepared state
-Date: Mon,  4 May 2026 15:49:12 +0200
-Message-ID: <20260504135145.336533207@linuxfoundation.org>
+Subject: [PATCH 7.0 068/307] ALSA: aoa: i2sbus: fix OF node lifetime handling
+Date: Mon,  4 May 2026 15:49:13 +0200
+Message-ID: <20260504135145.373340317@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -54,159 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 5ed060d5491597490fb53ec69da3edc4b1e8c165 upstream.
+commit 4ec93f070eda6b765b62efcaed9241c3b3b0b6ad upstream.
 
-The i2sbus PCM code uses pi->active to constrain the sibling stream to
-an already prepared duplex format and rate in i2sbus_pcm_open().
+i2sbus_add_dev() keeps the matched "sound" child pointer after
+for_each_child_of_node() has dropped the iterator reference. Take an
+extra reference before saving that node and drop it after the
+layout-id/device-id lookup is complete.
 
-That state is set from i2sbus_pcm_prepare(), but the current code only
-clears it on close. As a result, the sibling stream can inherit stale
-constraints after the prepared state has been torn down.
+The function also stores np in dev->sound.ofdev.dev.of_node without
+taking a reference for the embedded soundbus device. Since i2sbus
+overrides the embedded platform device release callback, balance that
+reference explicitly in the local error path and in i2sbus_release_dev().
 
-Clear pi->active when hw_params() or hw_free() tears down the prepared
-state, and set it again only after prepare succeeds.
-
-Replace the stale FIXME in the duplex constraint comment with a description
-of the current driver behavior: i2sbus still programs a single shared
-transport configuration for both directions, so mixed formats are not
-supported in duplex mode.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202604010125.AvkWBYKI-lkp@intel.com/
 Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260331-aoa-i2sbus-clear-stale-active-v2-1-3764ae2889a1@gmail.com
+Link: https://patch.msgid.link/20260330-aoa-i2sbus-ofnode-lifetime-v1-1-51c309f4ff06@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/aoa/soundbus/i2sbus/pcm.c |   55 ++++++++++++++++++++++++++++++++--------
- 1 file changed, 44 insertions(+), 11 deletions(-)
+ sound/aoa/soundbus/i2sbus/core.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/sound/aoa/soundbus/i2sbus/pcm.c
-+++ b/sound/aoa/soundbus/i2sbus/pcm.c
-@@ -165,17 +165,16 @@ static int i2sbus_pcm_open(struct i2sbus
- 	 * currently in use (if any). */
- 	hw->rate_min = 5512;
- 	hw->rate_max = 192000;
--	/* if the other stream is active, then we can only
--	 * support what it is currently using.
--	 * FIXME: I lied. This comment is wrong. We can support
--	 * anything that works with the same serial format, ie.
--	 * when recording 24 bit sound we can well play 16 bit
--	 * sound at the same time iff using the same transfer mode.
-+	/* If the other stream is already prepared, keep this stream
-+	 * on the same duplex format and rate.
-+	 *
-+	 * i2sbus_pcm_prepare() still programs one shared transport
-+	 * configuration for both directions, so mixed duplex formats
-+	 * are not supported here.
- 	 */
- 	if (other->active) {
--		/* FIXME: is this guaranteed by the alsa api? */
- 		hw->formats &= pcm_format_to_bits(i2sdev->format);
--		/* see above, restrict rates to the one we already have */
-+		/* Restrict rates to the one already in use. */
- 		hw->rate_min = i2sdev->rate;
- 		hw->rate_max = i2sdev->rate;
+--- a/sound/aoa/soundbus/i2sbus/core.c
++++ b/sound/aoa/soundbus/i2sbus/core.c
+@@ -84,6 +84,7 @@ static void i2sbus_release_dev(struct de
+ 	for (i = aoa_resource_i2smmio; i <= aoa_resource_rxdbdma; i++)
+ 		free_irq(i2sdev->interrupts[i], i2sdev);
+ 	i2sbus_control_remove_dev(i2sdev->control, i2sdev);
++	of_node_put(i2sdev->sound.ofdev.dev.of_node);
+ 	mutex_destroy(&i2sdev->lock);
+ 	kfree(i2sdev);
+ }
+@@ -147,7 +148,6 @@ static int i2sbus_get_and_fixup_rsrc(str
+ }
+ 
+ /* Returns 1 if added, 0 for otherwise; don't return a negative value! */
+-/* FIXME: look at device node refcounting */
+ static int i2sbus_add_dev(struct macio_dev *macio,
+ 			  struct i2sbus_control *control,
+ 			  struct device_node *np)
+@@ -178,8 +178,9 @@ static int i2sbus_add_dev(struct macio_d
+ 	i = 0;
+ 	for_each_child_of_node(np, child) {
+ 		if (of_node_name_eq(child, "sound")) {
++			of_node_put(sound);
+ 			i++;
+-			sound = child;
++			sound = of_node_get(child);
+ 		}
  	}
-@@ -283,6 +282,23 @@ void i2sbus_wait_for_stop_both(struct i2
- }
- #endif
- 
-+static void i2sbus_pcm_clear_active(struct i2sbus_dev *i2sdev, int in)
-+{
-+	struct pcm_info *pi;
-+
-+	guard(mutex)(&i2sdev->lock);
-+
-+	get_pcm_info(i2sdev, in, &pi, NULL);
-+	pi->active = 0;
-+}
-+
-+static inline int i2sbus_hw_params(struct snd_pcm_substream *substream,
-+				   struct snd_pcm_hw_params *params, int in)
-+{
-+	i2sbus_pcm_clear_active(snd_pcm_substream_chip(substream), in);
-+	return 0;
-+}
-+
- static inline int i2sbus_hw_free(struct snd_pcm_substream *substream, int in)
- {
- 	struct i2sbus_dev *i2sdev = snd_pcm_substream_chip(substream);
-@@ -291,14 +307,27 @@ static inline int i2sbus_hw_free(struct
- 	get_pcm_info(i2sdev, in, &pi, NULL);
- 	if (pi->dbdma_ring.stopping)
- 		i2sbus_wait_for_stop(i2sdev, pi);
-+	i2sbus_pcm_clear_active(i2sdev, in);
+ 	if (i == 1) {
+@@ -205,6 +206,7 @@ static int i2sbus_add_dev(struct macio_d
+ 			}
+ 		}
+ 	}
++	of_node_put(sound);
+ 	/* for the time being, until we can handle non-layout-id
+ 	 * things in some fabric, refuse to attach if there is no
+ 	 * layout-id property or we haven't been forced to attach.
+@@ -219,7 +221,7 @@ static int i2sbus_add_dev(struct macio_d
+ 	mutex_init(&dev->lock);
+ 	spin_lock_init(&dev->low_lock);
+ 	dev->sound.ofdev.archdata.dma_mask = macio->ofdev.archdata.dma_mask;
+-	dev->sound.ofdev.dev.of_node = np;
++	dev->sound.ofdev.dev.of_node = of_node_get(np);
+ 	dev->sound.ofdev.dev.dma_mask = &dev->sound.ofdev.archdata.dma_mask;
+ 	dev->sound.ofdev.dev.parent = &macio->ofdev.dev;
+ 	dev->sound.ofdev.dev.release = i2sbus_release_dev;
+@@ -327,6 +329,7 @@ static int i2sbus_add_dev(struct macio_d
+ 	for (i=0;i<3;i++)
+ 		release_and_free_resource(dev->allocated_resource[i]);
+ 	mutex_destroy(&dev->lock);
++	of_node_put(dev->sound.ofdev.dev.of_node);
+ 	kfree(dev);
  	return 0;
  }
- 
-+static int i2sbus_playback_hw_params(struct snd_pcm_substream *substream,
-+				     struct snd_pcm_hw_params *params)
-+{
-+	return i2sbus_hw_params(substream, params, 0);
-+}
-+
- static int i2sbus_playback_hw_free(struct snd_pcm_substream *substream)
- {
- 	return i2sbus_hw_free(substream, 0);
- }
- 
-+static int i2sbus_record_hw_params(struct snd_pcm_substream *substream,
-+				   struct snd_pcm_hw_params *params)
-+{
-+	return i2sbus_hw_params(substream, params, 1);
-+}
-+
- static int i2sbus_record_hw_free(struct snd_pcm_substream *substream)
- {
- 	return i2sbus_hw_free(substream, 1);
-@@ -335,7 +364,6 @@ static int i2sbus_pcm_prepare(struct i2s
- 		return -EINVAL;
- 
- 	runtime = pi->substream->runtime;
--	pi->active = 1;
- 	if (other->active &&
- 	    ((i2sdev->format != runtime->format)
- 	     || (i2sdev->rate != runtime->rate)))
-@@ -450,9 +478,11 @@ static int i2sbus_pcm_prepare(struct i2s
- 
- 	/* early exit if already programmed correctly */
- 	/* not locking these is fine since we touch them only in this function */
--	if (in_le32(&i2sdev->intfregs->serial_format) == sfr
--	 && in_le32(&i2sdev->intfregs->data_word_sizes) == dws)
-+	if (in_le32(&i2sdev->intfregs->serial_format) == sfr &&
-+	    in_le32(&i2sdev->intfregs->data_word_sizes) == dws) {
-+		pi->active = 1;
- 		return 0;
-+	}
- 
- 	/* let's notify the codecs about clocks going away.
- 	 * For now we only do mastering on the i2s cell... */
-@@ -490,6 +520,7 @@ static int i2sbus_pcm_prepare(struct i2s
- 		if (cii->codec->switch_clock)
- 			cii->codec->switch_clock(cii, CLOCK_SWITCH_SLAVE);
- 
-+	pi->active = 1;
- 	return 0;
- }
- 
-@@ -734,6 +765,7 @@ static snd_pcm_uframes_t i2sbus_playback
- static const struct snd_pcm_ops i2sbus_playback_ops = {
- 	.open =		i2sbus_playback_open,
- 	.close =	i2sbus_playback_close,
-+	.hw_params =	i2sbus_playback_hw_params,
- 	.hw_free =	i2sbus_playback_hw_free,
- 	.prepare =	i2sbus_playback_prepare,
- 	.trigger =	i2sbus_playback_trigger,
-@@ -802,6 +834,7 @@ static snd_pcm_uframes_t i2sbus_record_p
- static const struct snd_pcm_ops i2sbus_record_ops = {
- 	.open =		i2sbus_record_open,
- 	.close =	i2sbus_record_close,
-+	.hw_params =	i2sbus_record_hw_params,
- 	.hw_free =	i2sbus_record_hw_free,
- 	.prepare =	i2sbus_record_prepare,
- 	.trigger =	i2sbus_record_trigger,
 
 
