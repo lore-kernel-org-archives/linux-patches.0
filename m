@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A7F3CEB89;
-	Mon,  4 May 2026 14:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1A4378D8C;
+	Mon,  4 May 2026 14:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903281; cv=none; b=OKfQ1az+PU4nSWSwIXHsxnaWf0Rcwa3e5QTTCceKaN+vUaz+0tMYjaY48khurZc0gt+KI7exKLU8flg+jCQw5+T5FQzqeLcDMmGji5VbXvo8S6IiRCSBgMdwuc3NvkytbQN79qqazHeFoabD14f0zRi+9Jz3cGMb4wEc/XI84yY=
+	t=1777903283; cv=none; b=uRKJDrArg9rYrQM/O4ThdghFp6F3lWyTHd6EU5gN/HpqaL9vyT5+rYGhaeIgTlawYs5+YHJHzcEdGDGHJvrcd32fffJho0AfMdZZKiaq1r1e0i1YA0l0HpASzgfmLynHisgS+xGUVOEZDc4xTBKoEAlxn3nMtCPeunABKSW1VPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903281; c=relaxed/simple;
-	bh=c7GEUQdacdaMlnBWeG2sOiF+neMb6QyUe9Nq0mChWqE=;
+	s=arc-20240116; t=1777903283; c=relaxed/simple;
+	bh=EhCT9zkJOmprtxeoacg1OYeLbB6kUO383SLI4z79+Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l86yrX1aeyRY9cNh0sYy65aYmxAzZZae+qBY14TZYB+dHLNPPuTZHc7KyYqLK+236n1stL1qqmgb1gbDHEeozHtD14V2uXon593REwqmRgU83PsYI6l/mRmlmqa6b3l9umaw62xOTALlEKNj99TSwlT81UADxA74uiGTDNc9dFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okDzokWF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6elK0SjdJkDazzZu8tyjl8aYro+QbsIJqONRXRjw6yPxwdO/mU1RMK4yweSVFE0dT8aPPT6Sgj2s4tTG7l7RoD/ggAt85UV1fc2+uFyG0vle3GlMipcPho0B/PdojHYEEqUpI6697iPeNgw7w4jiK9nF8cz6ue7mvnEruLTg+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbKRv3dS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okDzokWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB42C2BCC4;
-	Mon,  4 May 2026 14:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbKRv3dS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2103CC2BCB8;
+	Mon,  4 May 2026 14:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903280;
-	bh=c7GEUQdacdaMlnBWeG2sOiF+neMb6QyUe9Nq0mChWqE=;
+	s=korg; t=1777903283;
+	bh=EhCT9zkJOmprtxeoacg1OYeLbB6kUO383SLI4z79+Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okDzokWFHuYj0zhiwhxFcOW6cp0KvqGDRzLaPw8Yw3EwCTgY+lDrtTvRHV87d5H2e
-	 eeXddhg9F4d+Cy7Z5ijWduWAKzjSfr85hOjfLkB4bY4Rwwmf9v7er2wNE77sU8xS1y
-	 xRIxIlbZAZ5IrLBXQnrROmEA0WBvVTVp+HD6lPl8=
+	b=TbKRv3dSFwJ+iqkjoR3OUmcopFPVBwhPUWmAKPlMXbiBzNwZa/stPnirupMLkD3cG
+	 DAotDR4OUEShPVj6h17au4y2kEXXUhCMQFeyYqDPNdaJC+j5WQtPooc8XhoC4SriPj
+	 9XU8hm8uGAmPfhTGACfWmk1B75cnixdXTOdGajEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ao Zhou <draw51280@163.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 140/307] net: qrtr: ns: Limit the total number of nodes
-Date: Mon,  4 May 2026 15:50:25 +0200
-Message-ID: <20260504135148.049553948@linuxfoundation.org>
+Subject: [PATCH 7.0 141/307] net: rds: fix MR cleanup on copy error
+Date: Mon,  4 May 2026 15:50:26 +0200
+Message-ID: <20260504135148.086089853@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,77 +57,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Ao Zhou <draw51280@163.com>
 
-commit 27d5e84e810b0849d08b9aec68e48570461ce313 upstream.
+commit 8141a2dc70080eda1aedc0389ed2db2b292af5bd upstream.
 
-Currently, the nameserver doesn't limit the number of nodes it handles.
-This can be an attack vector if a malicious client starts registering
-random nodes, leading to memory exhaustion.
+__rds_rdma_map() hands sg/pages ownership to the transport after
+get_mr() succeeds. If copying the generated cookie back to user space
+fails after that point, the error path must not free those resources
+again before dropping the MR reference.
 
-Hence, limit the maximum number of nodes to 64. Note that, limit of 64 is
-chosen based on the current platform requirements. If requirement changes
-in the future, this limit can be increased.
+Remove the duplicate unpin/free from the put_user() failure branch so
+that MR teardown is handled only through the existing final cleanup
+path.
 
-Cc: stable@vger.kernel.org
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-4-00a8a5ff2b51@oss.qualcomm.com
+Fixes: 0d4597c8c5ab ("net/rds: Track user mapped pages through special API")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ao Zhou <draw51280@163.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/79c8ef73ec8e5844d71038983940cc2943099baf.1776764247.git.draw51280@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/rds/rdma.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -72,12 +72,16 @@ struct qrtr_node {
- 	u32 server_count;
- };
+--- a/net/rds/rdma.c
++++ b/net/rds/rdma.c
+@@ -326,10 +326,6 @@ static int __rds_rdma_map(struct rds_soc
  
--/* Max server, lookup limits are chosen based on the current platform requirements.
-- * If the requirement changes in the future, these values can be increased.
-+/* Max nodes, server, lookup limits are chosen based on the current platform
-+ * requirements. If the requirement changes in the future, these values can be
-+ * increased.
-  */
-+#define QRTR_NS_MAX_NODES   64
- #define QRTR_NS_MAX_SERVERS 256
- #define QRTR_NS_MAX_LOOKUPS 64
- 
-+static u8 node_count;
-+
- static struct qrtr_node *node_get(unsigned int node_id)
- {
- 	struct qrtr_node *node;
-@@ -86,6 +90,11 @@ static struct qrtr_node *node_get(unsign
- 	if (node)
- 		return node;
- 
-+	if (node_count >= QRTR_NS_MAX_NODES) {
-+		pr_err_ratelimited("QRTR clients exceed max node limit!\n");
-+		return NULL;
-+	}
-+
- 	/* If node didn't exist, allocate and insert it to the tree */
- 	node = kzalloc_obj(*node);
- 	if (!node)
-@@ -99,6 +108,8 @@ static struct qrtr_node *node_get(unsign
- 		return NULL;
+ 	if (args->cookie_addr &&
+ 	    put_user(cookie, (u64 __user *)(unsigned long)args->cookie_addr)) {
+-		if (!need_odp) {
+-			unpin_user_pages(pages, nr_pages);
+-			kfree(sg);
+-		}
+ 		ret = -EFAULT;
+ 		goto out;
  	}
- 
-+	node_count++;
-+
- 	return node;
- }
- 
-@@ -405,6 +416,7 @@ static int ctrl_cmd_bye(struct sockaddr_
- delete_node:
- 	xa_erase(&nodes, from->sq_node);
- 	kfree(node);
-+	node_count--;
- 
- 	return ret;
- }
 
 
