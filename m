@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8134B315785;
-	Mon,  4 May 2026 14:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B1315785;
+	Mon,  4 May 2026 14:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904550; cv=none; b=IKZwwzmtLEokt4lSWFsI/BKUQ0MCX2sBYisgeNyNEbnLsYLRfMPZrqm2nHQLKIcH6ub0lG3lQMHrZqMMaCc4NES+hwTZ1Pa2MUSKxGR+/HJHu8CuuCkabw5hnetAznXB/QcmuwKxBWXF5pzzgzLvzuF+XCk99vuF7e4XnnMhCm8=
+	t=1777904553; cv=none; b=cLVRR9e4aboSZhdHUH31Lr/buJS8VeiMVAs+YmXsszaL7pvXIfr4gTZ1uKs5YsHXAIZXFyxWxWaS/rYrbm/g8r3OaEqlWwbIiRrmPpFJPgwZ3Zyj3Gbw7iRmmTjoxsle3kqwZRVxRfrrQ604AW7jfLjigfxrmCP1/+H8aB65Czw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904550; c=relaxed/simple;
-	bh=y+DYwidX/MKQp0Mb+2Rk0eYPrg+y1Eiyd4dKHOz4HJc=;
+	s=arc-20240116; t=1777904553; c=relaxed/simple;
+	bh=DCQ5173DKktPERrhuFdDoZOiiuClXfuLcHQWtjKDnIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yp1bPMQyevYX7TRplvjiST6RdnzaIQidFMXITAeYMhxrA2toBY31293pUG8JoK77BEIJ24EOoTOnFPoEZly7g11F2r9EHpuz6ReRMCkvMX1K9bz/5tfwPsHSQJ62EKIBiKUmuV4rLlKnzyq5TFwViw+M+L0GDh7/AsWWYBe6ZFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmlRMqCK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=av23ozu/gjJJy8mwgyFhKKDladjjzsa34OEWWHt1azbZoxXH0K8TnrkXID7UFkwIRX33Kcs3kFEsDMKuiWQzPR8ypO+mAMF9UjfICLFSG1NHp6AK/eVKgCS5+MzJ+wqMZEVAxRbOTTLMOg0rhOhJHBACk2uci5IMIsjAzzyCLRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEBUAHmr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmlRMqCK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186FFC2BCB8;
-	Mon,  4 May 2026 14:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEBUAHmr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A025EC2BCB8;
+	Mon,  4 May 2026 14:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904550;
-	bh=y+DYwidX/MKQp0Mb+2Rk0eYPrg+y1Eiyd4dKHOz4HJc=;
+	s=korg; t=1777904553;
+	bh=DCQ5173DKktPERrhuFdDoZOiiuClXfuLcHQWtjKDnIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmlRMqCKaa9fLHgL+qaNDYdtyDi2oApM1Nm7xGtVjyFpZb4klvD62OonYbbZ4zHBa
-	 1NanRRZm75yO5UhYgvAg7E4CLL4Ub8yD9Z+KBYkhQ2xN8pW7r7IzG8mzWMm5xlbKTj
-	 WAS++UetssB5V9CWtRkyHT8L8uGGCHygYuRaR9j8=
+	b=cEBUAHmr3ij1UU3zlO56sdDA7bWMkxt7gvnrM0vyn/JaRKKWwhxaY1UJxfFw+MM06
+	 H3hSzcjd/kMODc6gddupMd+oHYUpVPQIeUqC5+iEi4M8bpu5h1D4eyxnmyXfPdktwU
+	 SMPcTpc8AQsu7kW0SE++WHM3EEiBfdmaOR9/PMKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Salisbury <joseph.salisbury@oracle.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 065/215] sched: Use u64 for bandwidth ratio calculations
-Date: Mon,  4 May 2026 15:51:24 +0200
-Message-ID: <20260504135132.545354226@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 083/215] rxrpc: Fix re-decryption of RESPONSE packets
+Date: Mon,  4 May 2026 15:51:42 +0200
+Message-ID: <20260504135133.194027687@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -50,69 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Salisbury <joseph.salisbury@oracle.com>
+From: David Howells <dhowells@redhat.com>
 
-commit c6e80201e057dfb7253385e60bf541121bf5dc33 upstream.
+commit 0422e7a4883f25101903f3e8105c0808aa5f4ce9 upstream.
 
-to_ratio() computes BW_SHIFT-scaled bandwidth ratios from u64 period and
-runtime values, but it returns unsigned long.  tg_rt_schedulable() also
-stores the current group limit and the accumulated child sum in unsigned
-long.
+If a RESPONSE packet gets a temporary failure during processing, it may end
+up in a partially decrypted state - and then get requeued for a retry.
 
-On 32-bit builds, large bandwidth ratios can be truncated and the RT
-group sum can wrap when enough siblings are present.  That can let an
-overcommitted RT hierarchy pass the schedulability check, and it also
-narrows the helper result for other callers.
+Fix this by just discarding the packet; we will send another CHALLENGE
+packet and thereby elicit a further response.  Similarly, discard an
+incoming CHALLENGE packet if we get an error whilst generating a RESPONSE;
+the server will send another CHALLENGE.
 
-Return u64 from to_ratio() and use u64 for the RT group totals so
-bandwidth ratios are preserved and compared at full width on both 32-bit
-and 64-bit builds.
-
-Fixes: b40b2e8eb521 ("sched: rt: multi level group constraints")
-Assisted-by: Codex:GPT-5
-Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260403210014.2713404-1-joseph.salisbury@oracle.com
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Closes: https://sashiko.dev/#/patchset/20260422161438.2593376-4-dhowells@redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260423200909.3049438-3-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c  |    2 +-
- kernel/sched/rt.c    |    2 +-
- kernel/sched/sched.h |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ include/trace/events/rxrpc.h |    1 -
+ net/rxrpc/conn_event.c       |   14 ++------------
+ 2 files changed, 2 insertions(+), 13 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -4794,7 +4794,7 @@ void sched_post_fork(struct task_struct
- 	scx_post_fork(p);
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -236,7 +236,6 @@
+ 	EM(rxrpc_conn_put_unidle,		"PUT unidle  ") \
+ 	EM(rxrpc_conn_put_work,			"PUT work    ") \
+ 	EM(rxrpc_conn_queue_challenge,		"QUE chall   ") \
+-	EM(rxrpc_conn_queue_retry_work,		"QUE retry-wk") \
+ 	EM(rxrpc_conn_queue_rx_work,		"QUE rx-work ") \
+ 	EM(rxrpc_conn_see_new_service_conn,	"SEE new-svc ") \
+ 	EM(rxrpc_conn_see_reap_service,		"SEE reap-svc") \
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -344,7 +344,6 @@ again:
+ static void rxrpc_do_process_connection(struct rxrpc_connection *conn)
+ {
+ 	struct sk_buff *skb;
+-	int ret;
+ 
+ 	if (test_and_clear_bit(RXRPC_CONN_EV_CHALLENGE, &conn->events))
+ 		rxrpc_secure_connection(conn);
+@@ -353,17 +352,8 @@ static void rxrpc_do_process_connection(
+ 	 * connection that each one has when we've finished with it */
+ 	while ((skb = skb_dequeue(&conn->rx_queue))) {
+ 		rxrpc_see_skb(skb, rxrpc_skb_see_conn_work);
+-		ret = rxrpc_process_event(conn, skb);
+-		switch (ret) {
+-		case -ENOMEM:
+-		case -EAGAIN:
+-			skb_queue_head(&conn->rx_queue, skb);
+-			rxrpc_queue_conn(conn, rxrpc_conn_queue_retry_work);
+-			break;
+-		default:
+-			rxrpc_free_skb(skb, rxrpc_skb_put_conn_work);
+-			break;
+-		}
++		rxrpc_process_event(conn, skb);
++		rxrpc_free_skb(skb, rxrpc_skb_put_conn_work);
+ 	}
  }
  
--unsigned long to_ratio(u64 period, u64 runtime)
-+u64 to_ratio(u64 period, u64 runtime)
- {
- 	if (runtime == RUNTIME_INF)
- 		return BW_UNIT;
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2707,7 +2707,7 @@ static int tg_rt_schedulable(struct task
- {
- 	struct rt_schedulable_data *d = data;
- 	struct task_group *child;
--	unsigned long total, sum = 0;
-+	u64 total, sum = 0;
- 	u64 period, runtime;
- 
- 	period = ktime_to_ns(tg->rt_bandwidth.rt_period);
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2698,7 +2698,7 @@ extern void init_dl_entity(struct sched_
- #define MAX_BW_BITS		(64 - BW_SHIFT)
- #define MAX_BW			((1ULL << MAX_BW_BITS) - 1)
- 
--extern unsigned long to_ratio(u64 period, u64 runtime);
-+extern u64 to_ratio(u64 period, u64 runtime);
- 
- extern void init_entity_runnable_average(struct sched_entity *se);
- extern void post_init_entity_util_avg(struct task_struct *p);
 
 
