@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50D13DE443;
-	Mon,  4 May 2026 14:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497CE75801;
+	Mon,  4 May 2026 14:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903385; cv=none; b=aT/R9Z+9n55x1MnVeVkkq9I1/FH1QVhu9+7kxuC/E0O6NKwLwe/ffJu8tmQKqOcQ/HB3F0yqy79Fj0b4bg8dACX7WvaVQ8HnezzLncsGd2sbNCnwZQULe5VBQuaKP2v/zAmQpikhNpy4vVpFejXHOYSn1O/ECSGgAn7Kv+mwm00=
+	t=1777903388; cv=none; b=MuMVs2xSaLnnY0uyWmXB0A/CMT9x3a8pWUbsysQ6b9qrexwJ264lr4LgdVFrAy8MEZqdITcMLdmAbAWQ0Clki1yD6yR+nabwg0TlndfjE93ryuXy5fpESe4PSOpYtQj50A+rAzgPqgd+hpydQQppw/SH2+adKsO91UvugMghNPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903385; c=relaxed/simple;
-	bh=QXIk368q8dN6epkzTJEwKG7woTxdkLzXMxJbCFxlE9A=;
+	s=arc-20240116; t=1777903388; c=relaxed/simple;
+	bh=tR7S/vg5O6L9N/dLvu+YCTCKQImWYHdWzCCF/CJL3OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qitm7OYL6vR0r6lH9Ipj91RWP+S+SBGPE0KOIFlZUUC53GSLuSlQPaqcuct3U3ANNF3j+Edk5wNQg/figyLsXphGZ4j1Q2lRdJBD7VzehHnfF+scwo1pbKsy1N1chZanJJcpULj195fS1sqlL+FR7PG3oG77gaosNsk5ZmX1Bo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wy7/hEph; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VHwtDgIfjh9gRe4VYn44jj0KtFad+yEKm/IXEHf1Sc5q1wNxitEqTD8F2NY2Mi98dtZfJILpfDdLY0xjjsUHmON4LIdakeUQZszLkGyVUQ5p3MB4TI9imUFhvt0tk6xM2E9shyo/7v4mt6E4vdwZxv4IBQF1VglW7L+OnmquyMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBEIAeoc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wy7/hEph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06737C2BCF4;
-	Mon,  4 May 2026 14:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBEIAeoc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90474C2BCB8;
+	Mon,  4 May 2026 14:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903385;
-	bh=QXIk368q8dN6epkzTJEwKG7woTxdkLzXMxJbCFxlE9A=;
+	s=korg; t=1777903387;
+	bh=tR7S/vg5O6L9N/dLvu+YCTCKQImWYHdWzCCF/CJL3OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wy7/hEphOZYI7H5Hi69wx3ph7clq2daptXTp3v3WKjl8DDFJLILlmmA0IS9XFF25F
-	 s5bJYhAhqgWQTPooZ6TT/uD5D4slXxUqkOF644yi/9CwfJp3gSPdPQqxP7Fkr8+kl6
-	 wZ7RlLppG5KnLxtqe5S8EaKWQHs0GYfIEgCQDG0M=
+	b=LBEIAeocI2UTkC99nNtc1N2iUG2tvbBr3vfWns4O+RhU1gci93LWG4mwV5st7PfWo
+	 so0Gx6RsJ1u7th1mfu8UZ4srxXJtZR2BdBpoi+0pKp+XXUdG2krz5vgwuqqyeBBvh2
+	 YxNmT6/3hnXVtEcREiA2L16C5gpNgtF3zbETYyNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jim Mattson <jmattson@google.com>,
 	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.0 214/307] KVM: SVM: Switch svm_copy_lbrs() to a macro
-Date: Mon,  4 May 2026 15:51:39 +0200
-Message-ID: <20260504135150.920885128@linuxfoundation.org>
+Subject: [PATCH 7.0 215/307] KVM: SVM: Add missing save/restore handling of LBR MSRs
+Date: Mon,  4 May 2026 15:51:40 +0200
+Message-ID: <20260504135150.957179987@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,92 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 From: Yosry Ahmed <yosry@kernel.org>
 
-commit 361dbe8173c460a2bf8aee23920f6c2dbdcabb94 upstream.
+commit 3700f0788da6acf73b2df56690f4b201aa4aefd2 upstream.
 
-In preparation for using svm_copy_lbrs() with 'struct vmcb_save_area'
-without a containing 'struct vmcb', and later even 'struct
-vmcb_save_area_cached', make it a macro.
+MSR_IA32_DEBUGCTLMSR and LBR MSRs are currently not enumerated by
+KVM_GET_MSR_INDEX_LIST, and LBR MSRs cannot be set with KVM_SET_MSRS. So
+save/restore is completely broken.
 
-Macros are generally not preferred compared to functions, mainly due to
-type-safety. However, in this case it seems like having a simple macro
-copying a few fields is better than copy-pasting the same 5 lines of
-code in different places.
+Fix it by adding the MSRs to msrs_to_save_base, and allowing writes to
+LBR MSRs from userspace only (as they are read-only MSRs) if LBR
+virtualization is enabled.  Additionally, to correctly restore L1's LBRs
+while L2 is running, make sure the LBRs are copied from the captured
+VMCB01 save area in svm_copy_vmrun_state().
 
+Note, for VMX, this also fixes a flaw where MSR_IA32_DEBUGCTLMSR isn't
+reported as an MSR to save/restore.
+
+Note #2, over-reporting MSR_IA32_LASTxxx on Intel is ok, as KVM already
+handles unsupported reads and writes thanks to commit b5e2fec0ebc3 ("KVM:
+Ignore DEBUGCTL MSRs with no effect") (kvm_do_msr_access() will morph the
+unsupported userspace write into a nop).
+
+Fixes: 24e09cbf480a ("KVM: SVM: enable LBR virtualization")
 Cc: stable@vger.kernel.org
+Reported-by: Jim Mattson <jmattson@google.com>
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-3-yosry@kernel.org
+Link: https://patch.msgid.link/20260303003421.2185681-4-yosry@kernel.org
+[sean: guard with lbrv checks, massage changelog]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    8 ++++----
- arch/x86/kvm/svm/svm.c    |    9 ---------
- arch/x86/kvm/svm/svm.h    |   10 +++++++++-
- 3 files changed, 13 insertions(+), 14 deletions(-)
+ arch/x86/kvm/svm/nested.c |    5 +++++
+ arch/x86/kvm/svm/svm.c    |   42 +++++++++++++++++++++++++++++++++++++-----
+ arch/x86/kvm/x86.c        |    3 +++
+ 3 files changed, 45 insertions(+), 5 deletions(-)
 
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -721,10 +721,10 @@ static void nested_vmcb02_prepare_save(s
- 		 * Reserved bits of DEBUGCTL are ignored.  Be consistent with
- 		 * svm_set_msr's definition of reserved bits.
- 		 */
--		svm_copy_lbrs(vmcb02, vmcb12);
-+		svm_copy_lbrs(&vmcb02->save, &vmcb12->save);
- 		vmcb02->save.dbgctl &= ~DEBUGCTL_RESERVED_BITS;
- 	} else {
--		svm_copy_lbrs(vmcb02, vmcb01);
-+		svm_copy_lbrs(&vmcb02->save, &vmcb01->save);
+@@ -1109,6 +1109,11 @@ void svm_copy_vmrun_state(struct vmcb_sa
+ 		to_save->isst_addr = from_save->isst_addr;
+ 		to_save->ssp = from_save->ssp;
  	}
- 	vmcb_mark_dirty(vmcb02, VMCB_LBR);
- 	svm_update_lbrv(&svm->vcpu);
-@@ -1243,9 +1243,9 @@ int nested_svm_vmexit(struct vcpu_svm *s
++
++	if (kvm_cpu_cap_has(X86_FEATURE_LBRV)) {
++		svm_copy_lbrs(to_save, from_save);
++		to_save->dbgctl &= ~DEBUGCTL_RESERVED_BITS;
++	}
+ }
  
- 	if (unlikely(guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV) &&
- 		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK))) {
--		svm_copy_lbrs(vmcb12, vmcb02);
-+		svm_copy_lbrs(&vmcb12->save, &vmcb02->save);
- 	} else {
--		svm_copy_lbrs(vmcb01, vmcb02);
-+		svm_copy_lbrs(&vmcb01->save, &vmcb02->save);
- 		vmcb_mark_dirty(vmcb01, VMCB_LBR);
- 	}
- 
+ void svm_copy_vmloadsave_state(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
 --- a/arch/x86/kvm/svm/svm.c
 +++ b/arch/x86/kvm/svm/svm.c
-@@ -841,15 +841,6 @@ static void svm_recalc_msr_intercepts(st
- 	 */
- }
+@@ -2788,19 +2788,19 @@ static int svm_get_msr(struct kvm_vcpu *
+ 		msr_info->data = svm->tsc_aux;
+ 		break;
+ 	case MSR_IA32_DEBUGCTLMSR:
+-		msr_info->data = svm->vmcb->save.dbgctl;
++		msr_info->data = lbrv ? svm->vmcb->save.dbgctl : 0;
+ 		break;
+ 	case MSR_IA32_LASTBRANCHFROMIP:
+-		msr_info->data = svm->vmcb->save.br_from;
++		msr_info->data = lbrv ? svm->vmcb->save.br_from : 0;
+ 		break;
+ 	case MSR_IA32_LASTBRANCHTOIP:
+-		msr_info->data = svm->vmcb->save.br_to;
++		msr_info->data = lbrv ? svm->vmcb->save.br_to : 0;
+ 		break;
+ 	case MSR_IA32_LASTINTFROMIP:
+-		msr_info->data = svm->vmcb->save.last_excp_from;
++		msr_info->data = lbrv ? svm->vmcb->save.last_excp_from : 0;
+ 		break;
+ 	case MSR_IA32_LASTINTTOIP:
+-		msr_info->data = svm->vmcb->save.last_excp_to;
++		msr_info->data = lbrv ? svm->vmcb->save.last_excp_to : 0;
+ 		break;
+ 	case MSR_VM_HSAVE_PA:
+ 		msr_info->data = svm->nested.hsave_msr;
+@@ -3075,6 +3075,38 @@ static int svm_set_msr(struct kvm_vcpu *
+ 		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
+ 		svm_update_lbrv(vcpu);
+ 		break;
++	case MSR_IA32_LASTBRANCHFROMIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.br_from = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTBRANCHTOIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.br_to = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTINTFROMIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.last_excp_from = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
++	case MSR_IA32_LASTINTTOIP:
++		if (!lbrv)
++			return KVM_MSR_RET_UNSUPPORTED;
++		if (!msr->host_initiated)
++			return 1;
++		svm->vmcb->save.last_excp_to = data;
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
++		break;
+ 	case MSR_VM_HSAVE_PA:
+ 		/*
+ 		 * Old kernels did not validate the value written to
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -351,6 +351,9 @@ static const u32 msrs_to_save_base[] = {
+ 	MSR_IA32_U_CET, MSR_IA32_S_CET,
+ 	MSR_IA32_PL0_SSP, MSR_IA32_PL1_SSP, MSR_IA32_PL2_SSP,
+ 	MSR_IA32_PL3_SSP, MSR_IA32_INT_SSP_TAB,
++	MSR_IA32_DEBUGCTLMSR,
++	MSR_IA32_LASTBRANCHFROMIP, MSR_IA32_LASTBRANCHTOIP,
++	MSR_IA32_LASTINTFROMIP, MSR_IA32_LASTINTTOIP,
+ };
  
--void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
--{
--	to_vmcb->save.dbgctl		= from_vmcb->save.dbgctl;
--	to_vmcb->save.br_from		= from_vmcb->save.br_from;
--	to_vmcb->save.br_to		= from_vmcb->save.br_to;
--	to_vmcb->save.last_excp_from	= from_vmcb->save.last_excp_from;
--	to_vmcb->save.last_excp_to	= from_vmcb->save.last_excp_to;
--}
--
- static void __svm_enable_lbrv(struct kvm_vcpu *vcpu)
- {
- 	to_svm(vcpu)->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -713,8 +713,16 @@ static inline void *svm_vcpu_alloc_msrpm
- 	return svm_alloc_permissions_map(MSRPM_SIZE, GFP_KERNEL_ACCOUNT);
- }
- 
-+#define svm_copy_lbrs(to, from)					\
-+do {								\
-+	(to)->dbgctl		= (from)->dbgctl;		\
-+	(to)->br_from		= (from)->br_from;		\
-+	(to)->br_to		= (from)->br_to;		\
-+	(to)->last_excp_from	= (from)->last_excp_from;	\
-+	(to)->last_excp_to	= (from)->last_excp_to;		\
-+} while (0)
-+
- void svm_vcpu_free_msrpm(void *msrpm);
--void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb);
- void svm_enable_lbrv(struct kvm_vcpu *vcpu);
- void svm_update_lbrv(struct kvm_vcpu *vcpu);
- 
+ static const u32 msrs_to_save_pmu[] = {
 
 
