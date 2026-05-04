@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36448315785;
-	Mon,  4 May 2026 14:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA483DE443;
+	Mon,  4 May 2026 14:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904329; cv=none; b=YrDf6APsfPDBM3xaTpKkWzDDtJQKzJR0ooINOWGvkGMe4xxCzW6lvrS74Db+PBpA6vicA2vbvMVF6lS55TOhWSZ4klLKmiqRY5hvlEiGeUFt8JlLJweCeSKEXsu2yP4Ni7OTHvrz32AKokjLWE/uKbtmSf0F3BsIkWfzg2bmx3U=
+	t=1777904331; cv=none; b=SGpp1GxK0Ow+/KrrpKQ0VqgFlnr5qGsmMk4XvWomgPoAA0Btjm6Uc06wR8YfibA22s+Z3qq2SUN2OWRCOc3mkxauPdHeHAw20a0q5I/l8m351jgYqc7kNBExH1kCbngZI4ZjXemAc2NqdIlKDUj1BpQhcEugsXGUzqJmWafuqQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904329; c=relaxed/simple;
-	bh=GLSs3PybfFJEkHiLzuhsDQRJJ68//RknywCbVrXZdMY=;
+	s=arc-20240116; t=1777904331; c=relaxed/simple;
+	bh=iilDlDrnxRLVdASVg6Sxvci/cgYCKtPSo2/XsCsmU5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfQt1y6z5hzJdsCUqA9PPr+rl4f6gq87lNSwLxlvYKh8f88V6rY5eW2C7fmrZxYbxSVNEAJo1MwoO0VMTSWCS91gpgOkRzn7kaOUzGFLV0A8B8nLpKx6sosvvJ8N81k2B5AD0rWBzTcK32t9AQj1fORoDSGJCJC8cIMLx4MV70I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSD7rkm/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RoOIyPRGIFX7l5V1miyviA8QJ85ch3CzmSBjCkj48P2sht3IeqHVSlUrWi/2aoEckBQCOlkZ3y8ic10gNad/iEfhKtVL2Akz/VMKIwjc8d1tTP9gFVGgmpL2PgXcjWKY+P6ce3Wvkhe4/5sJmo0kZAPXmMQsreuEustAp9tioTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrfsGOKk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSD7rkm/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18C3C2BCB8;
-	Mon,  4 May 2026 14:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrfsGOKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CE8C2BCB8;
+	Mon,  4 May 2026 14:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904329;
-	bh=GLSs3PybfFJEkHiLzuhsDQRJJ68//RknywCbVrXZdMY=;
+	s=korg; t=1777904331;
+	bh=iilDlDrnxRLVdASVg6Sxvci/cgYCKtPSo2/XsCsmU5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tSD7rkm/737eW65GxABoeDczNE2HSho2jnfw243eg3Aj8MFRow2DthFcldHtxmF/g
-	 K7GbF2USNeMGS9d7jvWn+3avBHtFTnPO07iOrjrsww787/b6Q8SMHyOyaZHLAyt8P8
-	 iQVMhWLsWA0TKe9f8b4gzyjbj4QxohgATcue/tE0=
+	b=GrfsGOKkZmk4qa1sEtMkJWJGD4Rl0GU/0XiT+zHzwd1N5FVbvGTiuZgSN8ORnCT10
+	 l0SQGS+C2OJdf5wypUD1vu3zpY883b5Qo8sfRRu+Tm6BIhOMWAjX/3C961bEopHimH
+	 Y7oDs7fAQ8+reSByQZvSYjo6tkYx5gJgFk6wCso4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 265/275] ALSA: caiaq: Fix potentially leftover ep1_in_urb at error path
-Date: Mon,  4 May 2026 15:53:25 +0200
-Message-ID: <20260504135152.885340177@linuxfoundation.org>
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Simon Horman <horms@kernel.org>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 274/275] net: ipv6: fix NOREF dst use in seg6 and rpl lwtunnels
+Date: Mon,  4 May 2026 15:53:34 +0200
+Message-ID: <20260504135153.208696658@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -49,37 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-commit 0a7b5221b5b51cc798fcfc3be00d02eade149d69 upstream.
+commit f9c52a6ba9780bd27e0bf4c044fd91c13c778b6e upstream.
 
-The previous fix for handling the error from setup_card() missed that
-an internal URB cdev->ep1_in_urb might have been already submitted
-beforehand.  In the normal case, this URB gets killed at the
-disconnection, but in the error path, we didn't do it, hence there can
-be a potential leak.
+seg6_input_core() and rpl_input() call ip6_route_input() which sets a
+NOREF dst on the skb, then pass it to dst_cache_set_ip6() invoking
+dst_hold() unconditionally.
+On PREEMPT_RT, ksoftirqd is preemptible and a higher-priority task can
+release the underlying pcpu_rt between the lookup and the caching
+through a concurrent FIB lookup on a shared nexthop.
+Simplified race sequence:
 
-Fix it in the error path for setup_card(), too.
+  ksoftirqd/X                       higher-prio task (same CPU X)
+  -----------                       --------------------------------
+  seg6_input_core(,skb)/rpl_input(skb)
+    dst_cache_get()
+      -> miss
+    ip6_route_input(skb)
+      -> ip6_pol_route(,skb,flags)
+         [RT6_LOOKUP_F_DST_NOREF in flags]
+        -> FIB lookup resolves fib6_nh
+           [nhid=N route]
+        -> rt6_make_pcpu_route()
+           [creates pcpu_rt, refcount=1]
+             pcpu_rt->sernum = fib6_sernum
+             [fib6_sernum=W]
+           -> cmpxchg(fib6_nh.rt6i_pcpu,
+                      NULL, pcpu_rt)
+              [slot was empty, store succeeds]
+      -> skb_dst_set_noref(skb, dst)
+         [dst is pcpu_rt, refcount still 1]
 
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260427123819.890185-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+                                    rt_genid_bump_ipv6()
+                                      -> bumps fib6_sernum
+                                         [fib6_sernum from W to Z]
+                                    ip6_route_output()
+                                      -> ip6_pol_route()
+                                        -> FIB lookup resolves fib6_nh
+                                           [nhid=N]
+                                        -> rt6_get_pcpu_route()
+                                             pcpu_rt->sernum != fib6_sernum
+                                             [W <> Z, stale]
+                                          -> prev = xchg(rt6i_pcpu, NULL)
+                                          -> dst_release(prev)
+                                             [prev is pcpu_rt,
+                                              refcount 1->0, dead]
+
+    dst = skb_dst(skb)
+    [dst is the dead pcpu_rt]
+    dst_cache_set_ip6(dst)
+      -> dst_hold() on dead dst
+      -> WARN / use-after-free
+
+For the race to occur, ksoftirqd must be preemptible (PREEMPT_RT without
+PREEMPT_RT_NEEDS_BH_LOCK) and a concurrent task must be able to release
+the pcpu_rt. Shared nexthop objects provide such a path, as two routes
+pointing to the same nhid share the same fib6_nh and its rt6i_pcpu
+entry.
+
+Fix seg6_input_core() and rpl_input() by calling skb_dst_force() after
+ip6_route_input() to force the NOREF dst into a refcounted one before
+caching.
+The output path is not affected as ip6_route_output() already returns a
+refcounted dst.
+
+Fixes: af4a2209b134 ("ipv6: sr: use dst_cache in seg6_input")
+Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260421094735.20997-1-andrea.mayer@uniroma2.it
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/rpl_iptunnel.c  |    9 +++++++++
+ net/ipv6/seg6_iptunnel.c |    9 +++++++++
+ 2 files changed, 18 insertions(+)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -514,7 +514,7 @@ static int init_card(struct snd_usb_caia
- 	card->private_free = card_free;
- 	err = setup_card(cdev);
- 	if (err < 0)
--		return err;
-+		goto err_kill_urb;
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -287,7 +287,16 @@ static int rpl_input(struct sk_buff *skb
  
- 	return 0;
+ 	if (!dst) {
+ 		ip6_route_input(skb);
++
++		/* ip6_route_input() sets a NOREF dst; force a refcount on it
++		 * before caching or further use.
++		 */
++		skb_dst_force(skb);
+ 		dst = skb_dst(skb);
++		if (unlikely(!dst)) {
++			err = -ENETUNREACH;
++			goto drop;
++		}
  
+ 		/* cache only if we don't create a dst reference loop */
+ 		if (!dst->error && lwtst != dst->lwtstate) {
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -500,7 +500,16 @@ static int seg6_input_core(struct net *n
+ 
+ 	if (!dst) {
+ 		ip6_route_input(skb);
++
++		/* ip6_route_input() sets a NOREF dst; force a refcount on it
++		 * before caching or further use.
++		 */
++		skb_dst_force(skb);
+ 		dst = skb_dst(skb);
++		if (unlikely(!dst)) {
++			err = -ENETUNREACH;
++			goto drop;
++		}
+ 
+ 		/* cache only if we don't create a dst reference loop */
+ 		if (!dst->error && lwtst != dst->lwtstate) {
 
 
