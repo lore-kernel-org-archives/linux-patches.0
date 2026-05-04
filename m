@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029FF34F483;
-	Mon,  4 May 2026 14:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9110A3B19D1;
+	Mon,  4 May 2026 14:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903237; cv=none; b=MdBEFIo3FIvRNrkrldPoWIbH8mEJIg8UWLXxyqNpjTI/t47peO6Em94LFydlKAy70oJX3hRZJK6U+B5UbN0GIidcMOS1+JO/u7nePaOCod/ZQrHHJVfPlrPWVXmL6f2tR3Z9ZeDCqe9fzCZGAoUv8rw1+kuJo/DOgfNtXLmTIyE=
+	t=1777903239; cv=none; b=J1dTm93b5bcR0ofaWfKz1xtB1DkDUkiy3x+X1bO8dpdEnPPIWkFbsXupB7gEZSwIGfNV2v8eZYFoWzx4GQcBDpaPwsjrqt2W6Zgo9xqL5WbNs1+h5y33+mKFiGvR1cb2CQsZiqKxsuyuyshrFbHhpVdkt7ICJ7PfOiqahDAZkGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903237; c=relaxed/simple;
-	bh=1w5qlGBS34YXaS6WbKPXfHpmJr98AUt5VwzLDAO+1FQ=;
+	s=arc-20240116; t=1777903239; c=relaxed/simple;
+	bh=g9VQ3of46AZBsyud49PAMfRXzcISOCE3tdZV23MPod8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gw62D5aIdnRzWb1LGL3tMxJqfidqRPDTKcRDeBodecp0AVCtY7VU38IWIkaBzUvWbh5bqju/eHxr0hE3tDhysO7R0+fxu6FCkI6V/yzUoGgr9lUkVoTuC9xCFB5BoiOZmzDPIah9B5fZM1swyt9B3YN+uY0fTirX3cJ5R49PR0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdm+XwEH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOJvmmrRcMrxCUv7w7OYKOXhh5/IbckyNxrki2QGfTHqfGJq9m75qTwEf0no8v+ms6+DUjwBotYI30ah0+Gq22rp4WAS8CbPQEgOxH8b+eHSwJgz94Q02q01KcGz/GuEtPqBxts1vq+CEzG+N//7go5+qTRmMwNEVkK69YPOmtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wevn0jLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdm+XwEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C138C2BCB8;
-	Mon,  4 May 2026 14:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wevn0jLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24556C2BCB8;
+	Mon,  4 May 2026 14:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903236;
-	bh=1w5qlGBS34YXaS6WbKPXfHpmJr98AUt5VwzLDAO+1FQ=;
+	s=korg; t=1777903239;
+	bh=g9VQ3of46AZBsyud49PAMfRXzcISOCE3tdZV23MPod8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdm+XwEHwMoZQsKRfxMnjLPjCE0Txw8cqEwNKKSgAsvOexVSD53nwWrNbfXLsr81b
-	 73/jVbWA8lEC9DrTYsUFUA8wZoOZz34zM6ktRJ5om5BzJ9Mw4ueNqpKMcbnp0HRIrw
-	 uQh8SszHRVVCmVKYq45Jr936K9ig5XfWrzAwoVSU=
+	b=Wevn0jLHbPGvdfLkeGhwqIt42Y7pldKPMJHZjFmwfgvay2tJK/im04hYU5qGqyggc
+	 ixCj2CfOCxm0Pn+SQn6W4WGb0glHN//OBuXGaLRBXW4bwYSMGj8AQ5WA9sdfGcA33o
+	 PVxxj7SdhqZq6zS9E2l9/R77fRsdGsLsvELPFw+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 156/307] spi: fix resource leaks on device setup failure
-Date: Mon,  4 May 2026 15:50:41 +0200
-Message-ID: <20260504135148.673250719@linuxfoundation.org>
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	Daniel J Blueman <daniel@quora.org>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 7.0 157/307] apparmor: Fix string overrun due to missing termination
+Date: Mon,  4 May 2026 15:50:42 +0200
+Message-ID: <20260504135148.746705776@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,129 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Daniel J Blueman <daniel@quora.org>
 
-commit db357034f7e0cf23f233f414a8508312dfe8fbbe upstream.
+commit 828bf7929bedcb79b560b5b4e44f22abee07d31b upstream.
 
-Make sure to call controller cleanup() if spi_setup() fails while
-registering a device to avoid leaking any resources allocated by
-setup().
+When booting Ubuntu 26.04 with Linux 7.0-rc4 on an ARM64 Qualcomm
+Snapdragon X1 we see a string buffer overrun:
 
-Fixes: c7299fea6769 ("spi: Fix spi device unregister flow")
-Cc: stable@vger.kernel.org	# 5.13
-Cc: Saravana Kannan <saravanak@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410154907.129248-2-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+BUG: KASAN: slab-out-of-bounds in aa_dfa_match (security/apparmor/match.c:535)
+Read of size 1 at addr ffff0008901cc000 by task snap-update-ns/2120
+
+CPU: 5 UID: 60578 PID: 2120 Comm: snap-update-ns Not tainted 7.0.0-rc4+ #22 PREEMPTLAZY
+Hardware name: LENOVO 83ED/LNVNB161216, BIOS NHCN60WW 09/11/2025
+Call trace:
+show_stack (arch/arm64/kernel/stacktrace.c:501) (C)
+dump_stack_lvl (lib/dump_stack.c:122)
+print_report (mm/kasan/report.c:379 mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:597)
+__asan_report_load1_noabort (mm/kasan/report_generic.c:378)
+aa_dfa_match (security/apparmor/match.c:535)
+match_mnt_path_str (security/apparmor/mount.c:244 security/apparmor/mount.c:336)
+match_mnt (security/apparmor/mount.c:371)
+aa_bind_mount (security/apparmor/mount.c:447 (discriminator 4))
+apparmor_sb_mount (security/apparmor/lsm.c:719 (discriminator 1))
+security_sb_mount (security/security.c:1062 (discriminator 31))
+path_mount (fs/namespace.c:4101)
+__arm64_sys_mount (fs/namespace.c:4172 fs/namespace.c:4361 fs/namespace.c:4338 fs/namespace.c:4338)
+invoke_syscall.constprop.0 (arch/arm64/kernel/syscall.c:35 arch/arm64/kernel/syscall.c:49)
+el0_svc_common.constprop.0 (./include/linux/thread_info.h:142 (discriminator 2) arch/arm64/kernel/syscall.c:140 (discriminator 2))
+do_el0_svc (arch/arm64/kernel/syscall.c:152)
+el0_svc (arch/arm64/kernel/entry-common.c:80 arch/arm64/kernel/entry-common.c:725)
+el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:744)
+el0t_64_sync (arch/arm64/kernel/entry.S:596)
+
+Allocated by task 2120:
+kasan_save_stack (mm/kasan/common.c:58)
+kasan_save_track (./arch/arm64/include/asm/current.h:19 mm/kasan/common.c:70 mm/kasan/common.c:79)
+kasan_save_alloc_info (mm/kasan/generic.c:571)
+__kasan_kmalloc (mm/kasan/common.c:419)
+__kmalloc_noprof (./include/linux/kasan.h:263 mm/slub.c:5260 mm/slub.c:5272)
+aa_get_buffer (security/apparmor/lsm.c:2201)
+aa_bind_mount (security/apparmor/mount.c:442)
+apparmor_sb_mount (security/apparmor/lsm.c:719 (discriminator 1))
+security_sb_mount (security/security.c:1062 (discriminator 31))
+path_mount (fs/namespace.c:4101)
+__arm64_sys_mount (fs/namespace.c:4172 fs/namespace.c:4361 fs/namespace.c:4338 fs/namespace.c:4338)
+invoke_syscall.constprop.0 (arch/arm64/kernel/syscall.c:35 arch/arm64/kernel/syscall.c:49)
+el0_svc_common.constprop.0 (./include/linux/thread_info.h:142 (discriminator 2) arch/arm64/kernel/syscall.c:140 (discriminator 2))
+do_el0_svc (arch/arm64/kernel/syscall.c:152)
+el0_svc (arch/arm64/kernel/entry-common.c:80 arch/arm64/kernel/entry-common.c:725)
+el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:744)
+el0t_64_sync (arch/arm64/kernel/entry.S:596)
+
+The buggy address belongs to the object at ffff0008901ca000
+which belongs to the cache kmalloc-rnd-06-8k of size 8192
+The buggy address is located 0 bytes to the right of
+allocated 8192-byte region [ffff0008901ca000, ffff0008901cc000)
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9101c8
+head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:-1 pincount:0
+flags: 0x8000000000000040(head|zone=2)
+page_type: f5(slab)
+raw: 8000000000000040 ffff000800016c40 fffffdffe2d14e10 ffff000800015c70
+raw: 0000000000000000 0000000800010001 00000000f5000000 0000000000000000
+head: 8000000000000040 ffff000800016c40 fffffdffe2d14e10 ffff000800015c70
+head: 0000000000000000 0000000800010001 00000000f5000000 0000000000000000
+head: 8000000000000003 fffffdffe2407201 fffffdffffffffff 00000000ffffffff
+head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ffff0008901cbf00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ffff0008901cbf80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff0008901cc000: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+^
+ffff0008901cc080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ffff0008901cc100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+
+This was introduced by previous incorrect conversion from strcpy(). Fix it
+by adding the missing terminator.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: Daniel J Blueman <daniel@quora.org>
+Fixes: 93d4dbdc8da0 ("apparmor: Replace deprecated strcpy in d_namespace_path")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   61 ++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 37 insertions(+), 24 deletions(-)
+ security/apparmor/path.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -43,6 +43,8 @@ EXPORT_TRACEPOINT_SYMBOL(spi_transfer_st
- 
- #include "internals.h"
- 
-+static int __spi_setup(struct spi_device *spi, bool initial_setup);
-+
- static DEFINE_IDR(spi_controller_idr);
- 
- static void spidev_release(struct device *dev)
-@@ -729,7 +731,7 @@ static int __spi_add_device(struct spi_d
- 	 * normally rely on the device being setup.  Devices
- 	 * using SPI_CS_HIGH can't coexist well otherwise...
- 	 */
--	status = spi_setup(spi);
-+	status = __spi_setup(spi, true);
- 	if (status < 0) {
- 		dev_err(dev, "can't setup %s, status %d\n",
- 				dev_name(&spi->dev), status);
-@@ -3993,27 +3995,7 @@ static int spi_set_cs_timing(struct spi_
- 	return status;
- }
- 
--/**
-- * spi_setup - setup SPI mode and clock rate
-- * @spi: the device whose settings are being modified
-- * Context: can sleep, and no requests are queued to the device
-- *
-- * SPI protocol drivers may need to update the transfer mode if the
-- * device doesn't work with its default.  They may likewise need
-- * to update clock rates or word sizes from initial values.  This function
-- * changes those settings, and must be called from a context that can sleep.
-- * Except for SPI_CS_HIGH, which takes effect immediately, the changes take
-- * effect the next time the device is selected and data is transferred to
-- * or from it.  When this function returns, the SPI device is deselected.
-- *
-- * Note that this call will fail if the protocol driver specifies an option
-- * that the underlying controller or its driver does not support.  For
-- * example, not all hardware supports wire transfers using nine bit words,
-- * LSB-first wire encoding, or active-high chipselects.
-- *
-- * Return: zero on success, else a negative error code.
-- */
--int spi_setup(struct spi_device *spi)
-+static int __spi_setup(struct spi_device *spi, bool initial_setup)
- {
- 	unsigned	bad_bits, ugly_bits;
- 	int		status;
-@@ -4098,7 +4080,7 @@ int spi_setup(struct spi_device *spi)
- 	status = spi_set_cs_timing(spi);
- 	if (status) {
- 		mutex_unlock(&spi->controller->io_mutex);
--		return status;
-+		goto err_cleanup;
+diff --git a/security/apparmor/path.c b/security/apparmor/path.c
+index 65a0ca5cc1bd..2494e8101538 100644
+--- a/security/apparmor/path.c
++++ b/security/apparmor/path.c
+@@ -164,14 +164,16 @@ static int d_namespace_path(const struct path *path, char *buf, char **name,
  	}
  
- 	if (spi->controller->auto_runtime_pm && spi->controller->set_cs) {
-@@ -4107,7 +4089,7 @@ int spi_setup(struct spi_device *spi)
- 			mutex_unlock(&spi->controller->io_mutex);
- 			dev_err(&spi->controller->dev, "Failed to power device: %d\n",
- 				status);
--			return status;
-+			goto err_cleanup;
- 		}
+ out:
+-	/* Append "/" to directory paths, except for root "/" which
+-	 * already ends in a slash.
++	/* Append "/" to directory paths and reterminate string, except for
++	 * root "/" which already ends in a slash.
+ 	 */
+ 	if (!error && isdir) {
+ 		bool is_root = (*name)[0] == '/' && (*name)[1] == '\0';
  
- 		/*
-@@ -4143,6 +4125,37 @@ int spi_setup(struct spi_device *spi)
- 			status);
+-		if (!is_root)
++		if (!is_root) {
+ 			buf[aa_g_path_max - 2] = '/';
++			buf[aa_g_path_max - 1] = '\0';
++		}
+ 	}
  
- 	return status;
-+
-+err_cleanup:
-+	if (initial_setup)
-+		spi_cleanup(spi);
-+
-+	return status;
-+}
-+
-+/**
-+ * spi_setup - setup SPI mode and clock rate
-+ * @spi: the device whose settings are being modified
-+ * Context: can sleep, and no requests are queued to the device
-+ *
-+ * SPI protocol drivers may need to update the transfer mode if the
-+ * device doesn't work with its default.  They may likewise need
-+ * to update clock rates or word sizes from initial values.  This function
-+ * changes those settings, and must be called from a context that can sleep.
-+ * Except for SPI_CS_HIGH, which takes effect immediately, the changes take
-+ * effect the next time the device is selected and data is transferred to
-+ * or from it.  When this function returns, the SPI device is deselected.
-+ *
-+ * Note that this call will fail if the protocol driver specifies an option
-+ * that the underlying controller or its driver does not support.  For
-+ * example, not all hardware supports wire transfers using nine bit words,
-+ * LSB-first wire encoding, or active-high chipselects.
-+ *
-+ * Return: zero on success, else a negative error code.
-+ */
-+int spi_setup(struct spi_device *spi)
-+{
-+	return __spi_setup(spi, false);
- }
- EXPORT_SYMBOL_GPL(spi_setup);
- 
+ 	return error;
+-- 
+2.54.0
+
 
 
