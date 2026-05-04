@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC2D3A7F4C;
-	Mon,  4 May 2026 13:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAB22E2F0E;
+	Mon,  4 May 2026 13:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903192; cv=none; b=Cg0P6BXz6BoveCTKMNt7ElpYWPZEr3HfxNJGSM5GcPhsNZu497aIrBSn+7/UVFA/FtfZXFmzaSrK+KtKWcqMNd4HEpMhkcKI3oPRbKojpArwB8oxErzdx+5Sb35Tnd81k7YtNLBN1YiCmDRnk2iWT+1TxLhW/A/jl0ruJeX28ms=
+	t=1777903195; cv=none; b=bxUoBg1LiDTpZwrZGpIQ3Tvc/Qg2XyHFRkwFIAk70Z+9SYO4WxBS9yBWufoU9DPggwCSRzHN9F3aDcnYNs8VuNAy6RiKugLVkaIFLYNKft7dBoocPTtG2V/0AW7vMvAW1j+J8Al2TQwTca6E/wcd5fn1P4fUaTW8GHJOf28sbe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903192; c=relaxed/simple;
-	bh=5D7bN/QVMZTTahc/A2Nbv8jUARaIZeu69whFhT4XrHw=;
+	s=arc-20240116; t=1777903195; c=relaxed/simple;
+	bh=Fl2S9k8quxJRnaqSYO0PL5vPIRdUvp4iIqBNcNh6w08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBSNtJAL8ETGE8djou8y3HS4pnP5Dc6nQp43pfQrZBpz+lV6GjBEeVJszekvvo+CQhK53n3LuGfjK7cT07mGfYuTuT0gzvo2yUeStqDSoKgFvAnAjZPkDLPJr491irPFDO9RnSMXoe2QpD9V/YWthABjw9op4peJz+OI4vkW/vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQnl0gZb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=haKl50XY34mE9yfGBunnuUnnrj9tSxi9eRNOTP+H5s00ZE/CKVXmkLMuSFcAdtUn4NmhxsfZQG0c52D9WXsFkcAsbLZGXoyR2rdnj7oQZs9tIexrCQ7WDcFB6FGyCv/UBlz65bFrojJAWd/+0/2SY1AvFrJPcRkqycWhdNVs4SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBMerDLf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQnl0gZb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E99C2BCB8;
-	Mon,  4 May 2026 13:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBMerDLf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD71C2BCB8;
+	Mon,  4 May 2026 13:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903192;
-	bh=5D7bN/QVMZTTahc/A2Nbv8jUARaIZeu69whFhT4XrHw=;
+	s=korg; t=1777903195;
+	bh=Fl2S9k8quxJRnaqSYO0PL5vPIRdUvp4iIqBNcNh6w08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQnl0gZbxDNmzPMEBwqLXlz2aKJAPtorPQ2ahyR4h8Yqs0wyp7Ss86JJvbSlGolgK
-	 8BkAEiJMN2N0hoJee9B9Q3aXVYDTKLXfc8ixVo2jVIHpISpX2TCgbeLgtOEy5T5IEx
-	 /ASVHd0/G8dPCsgiVPjGF/v9sthLJwF115OukBuY=
+	b=qBMerDLfC/RKioxkkgo6JCmc5ufF7ZWgtsTXFqakLEHbVvDuL0LDEk3UIxrW2Ec4r
+	 oi8C0+G9e3Zt7bHpIyUsTmKn1djRhpXEPqv21CSjQNKBAtn7HpNxm9xAO9PWpDr8Io
+	 66NzCqvfj5wOqu3Pj/R7rN0roEMKe8W74fWqappI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Liebold <simonlie@amazon.de>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 7.0 097/307] selftests/mqueue: Fix incorrectly named file
-Date: Mon,  4 May 2026 15:49:42 +0200
-Message-ID: <20260504135146.463940657@linuxfoundation.org>
+	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 7.0 133/307] EDAC/versalnet: Fix memory leak in remove and probe error paths
+Date: Mon,  4 May 2026 15:50:18 +0200
+Message-ID: <20260504135147.792466003@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,41 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Liebold <simonlie@amazon.de>
+From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
 
-commit 64fac99037689020ad97e472ae898e96ea3616dc upstream.
+commit 1b6f292cb94d95c9bc22e1efe592daf62c60bc2e upstream.
 
-Commit 85506aca2eb4 ("selftests/mqueue: Set timeout to 180 seconds")
-intended to increase the timeout for mq_perf_tests from the default
-kselftest limit of 45 seconds to 180 seconds.
+The mcdi object allocated using kzalloc() in the setup_mcdi() is not freed in
+the remove path or in probe's error handling path leading to a memory leak.
+Fix it by freeing the allocated memory.
 
-Unfortunately, the file storing this information was incorrectly named
-`setting` instead of `settings`, causing the kselftest runner not to
-pick up the limit and keep using the default 45 seconds limit.
-
-Fix this by renaming it to `settings` to ensure that the kselftest
-runner uses the increased timeout of 180 seconds for this test.
-
-Fixes: 85506aca2eb4 ("selftests/mqueue: Set timeout to 180 seconds")
-Cc: <stable@vger.kernel.org> # 5.10.y
-Signed-off-by: Simon Liebold <simonlie@amazon.de>
-Link: https://lore.kernel.org/r/20260312140200.2224850-1-simonlie@amazon.de
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: d5fe2fec6c40d ("EDAC: Add a driver for the AMD Versal NET DDR controller")
+Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260322131139.1684716-1-ptsm@linux.microsoft.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mqueue/{setting => settings} | 0
- tools/testing/selftests/mqueue/setting  |    1 -
- tools/testing/selftests/mqueue/settings |    1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename tools/testing/selftests/mqueue/{setting => settings} (100%)
+ drivers/edac/versalnet_edac.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/selftests/mqueue/setting
-+++ /dev/null
-@@ -1 +0,0 @@
--timeout=180
---- /dev/null
-+++ b/tools/testing/selftests/mqueue/settings
-@@ -0,0 +1 @@
-+timeout=180
+--- a/drivers/edac/versalnet_edac.c
++++ b/drivers/edac/versalnet_edac.c
+@@ -917,6 +917,7 @@ static int mc_probe(struct platform_devi
+ 
+ err_init:
+ 	cdx_mcdi_finish(priv->mcdi);
++	kfree(priv->mcdi);
+ 
+ err_unreg:
+ 	unregister_rpmsg_driver(&amd_rpmsg_driver);
+@@ -938,6 +939,7 @@ static void mc_remove(struct platform_de
+ 	remove_versalnet(priv);
+ 	rproc_shutdown(priv->mcdi->r5_rproc);
+ 	cdx_mcdi_finish(priv->mcdi);
++	kfree(priv->mcdi);
+ }
+ 
+ static const struct of_device_id amd_edac_match[] = {
 
 
