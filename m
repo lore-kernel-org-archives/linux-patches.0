@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B883D6489;
-	Mon,  4 May 2026 13:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332DB20DD51;
+	Mon,  4 May 2026 13:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903030; cv=none; b=q1AlWiNv2ky+mZB7wpNbvM/1O4p+F1qd5EHzeZHI+H1CVM8aaZqf3xXfynDDDfGcEAXtJLGrKef2jaerlQ2eVo4Hb71SRE3GIf3BOb2OVgJY7+af/0N12JVu9M9+rMr/7e6PGplwcMt1sAw/Q9HWIKJWobvK/dqcyNphT8cGiBk=
+	t=1777903033; cv=none; b=VQOVepmG9CAgAOozDKPL+Ng3pOq/uz8y9F1ivCPEqBOGi/j51FFoLv7YMhZOs3UZg6LPJwn/SgxNkBLKfhz4oDHs7JqpFr0KfLRGWObPxa+Hlu9TvU9b1S77Bi2lnt+TvD6Fh7OPLcl4D8adKiWCzWeWtV8+Uyr8fsziLucoCUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903030; c=relaxed/simple;
-	bh=mXTL8VZw5Ad+m06X8r0P3a5RG7jjsQ1X6dewpDk2Rig=;
+	s=arc-20240116; t=1777903033; c=relaxed/simple;
+	bh=tQMm1w1KbTqoD/5e0F/q5+607LGY/qVlVx2WwGOouSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idWeBWuk5SESXo/LxmLQczbVZZd8AQK5quU510xhMQYFatXjt1uFIcv9aYUkGXx1maizVoZmHn3M3YBNmdHt7UM11msYNbzTQ6FkY82o/uFsfBYpc7WPNK0yOHQFJ4c6vOL7JTMaGqQUsWtRz+gVTasbgEw6eU0BEs+lY8FYo9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGvetHcO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LfowPY9bBqIrWTPVbdqhc932ci0D2M2Qj+gi+o4xAa/jWjiTqMWOh06H+OLS3fVWNfq1sfFEEsyscYHdMbPP6EOkEncqdO8IT1tIUSwQ7xcb8Wjy6E5JHOnTMFOXHjUhnXpXa4RWPwahlO2ZG3PeiSOkseag4jp5Z3j0+wRM0q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0w/mMxcn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGvetHcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CED2C2BCB8;
-	Mon,  4 May 2026 13:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0w/mMxcn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF52DC2BCB8;
+	Mon,  4 May 2026 13:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903030;
-	bh=mXTL8VZw5Ad+m06X8r0P3a5RG7jjsQ1X6dewpDk2Rig=;
+	s=korg; t=1777903033;
+	bh=tQMm1w1KbTqoD/5e0F/q5+607LGY/qVlVx2WwGOouSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGvetHcOwnQUKCXVOzPSOFpdOv7o/C6fm5zJHv4JfAJxUc9gku4rIvCwvPZgdTYFY
-	 yZstprCO1LiCe1qZ46opZNi/kc6Cw+QHLUk8UEdXo14pceUj59HT6yKSGsnNkscQA1
-	 A4FkFHtWCwrndhY3wwYuh3qKBlY+ZlsuI0k6cjmY=
+	b=0w/mMxcnCVndlEqqTKDUTQ1j1ZR52N4QqfwVWfTs+c1nIM31qLa39WCuVe5I7njX7
+	 zWI+0JG93iXSb2abwWS1ESTyqreG0hZMO2QTMSt6QB5f/vwc3QH5xWBkwYwhHAhduf
+	 tnADbtvZktZnZ2tcK0jreBceWO5cWWhYPBZNQOHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 077/307] media: rc: igorplugusb: heed coherency rules
-Date: Mon,  4 May 2026 15:49:22 +0200
-Message-ID: <20260504135145.711257167@linuxfoundation.org>
+	stable@kernel.org,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Michael Riesch <michael.riesch@collabora.com>,
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 7.0 078/307] media: rockchip: rkcif: fix off by one bugs
+Date: Mon,  4 May 2026 15:49:23 +0200
+Message-ID: <20260504135145.747838042@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,80 +56,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit eac69475b01fe1e861dfe3960b57fa95671c132e upstream.
+commit e4056b84af0fc18c84b4e5741df04ecd8ca17973 upstream.
 
-In a control request, the USB request structure
-can be subject to DMA on some HCs. Hence it must obey
-the rules for DMA coherency. Allocate it separately.
+Change these comparisons from > vs >= to avoid accessing one element
+beyond the end of the arrays.
+While at it, use ARRAY_SIZE instead of the _MAX enum values.
 
-Fixes: b1c97193c6437 ("[media] rc: port IgorPlug-USB to rc-core")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 1f2353f5a1af ("media: rockchip: rkcif: add support for rk3568 vicap mipi capture")
+Cc: stable@kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
+Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Chen-Yu Tsai <wens@kernel.org>
+[fix cosmetic issues]
+Signed-off-by: Michael Riesch <michael.riesch@collabora.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/igorplugusb.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/media/platform/rockchip/rkcif/rkcif-capture-mipi.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/media/rc/igorplugusb.c
-+++ b/drivers/media/rc/igorplugusb.c
-@@ -34,7 +34,7 @@ struct igorplugusb {
- 	struct device *dev;
+--- a/drivers/media/platform/rockchip/rkcif/rkcif-capture-mipi.c
++++ b/drivers/media/platform/rockchip/rkcif/rkcif-capture-mipi.c
+@@ -489,8 +489,8 @@ static inline unsigned int rkcif_mipi_ge
  
- 	struct urb *urb;
--	struct usb_ctrlrequest request;
-+	struct usb_ctrlrequest *request;
+ 	block = interface->index - RKCIF_MIPI_BASE;
  
- 	struct timer_list timer;
+-	if (WARN_ON_ONCE(block > RKCIF_MIPI_MAX - RKCIF_MIPI_BASE) ||
+-	    WARN_ON_ONCE(index > RKCIF_MIPI_REGISTER_MAX))
++	if (WARN_ON_ONCE(block >= ARRAY_SIZE(rkcif->match_data->mipi->blocks)) ||
++	    WARN_ON_ONCE(index >= ARRAY_SIZE(rkcif->match_data->mipi->regs)))
+ 		return RKCIF_REGISTER_NOTSUPPORTED;
  
-@@ -122,7 +122,7 @@ static void igorplugusb_cmd(struct igorp
- {
- 	int ret;
+ 	offset = rkcif->match_data->mipi->blocks[block].offset;
+@@ -510,9 +510,9 @@ static inline unsigned int rkcif_mipi_id
+ 	block = stream->interface->index - RKCIF_MIPI_BASE;
+ 	id = stream->id;
  
--	ir->request.bRequest = cmd;
-+	ir->request->bRequest = cmd;
- 	ir->urb->transfer_flags = 0;
- 	ret = usb_submit_urb(ir->urb, GFP_ATOMIC);
- 	if (ret && ret != -EPERM)
-@@ -164,13 +164,17 @@ static int igorplugusb_probe(struct usb_
- 	if (!ir)
- 		return -ENOMEM;
+-	if (WARN_ON_ONCE(block > RKCIF_MIPI_MAX - RKCIF_MIPI_BASE) ||
+-	    WARN_ON_ONCE(id > RKCIF_ID_MAX) ||
+-	    WARN_ON_ONCE(index > RKCIF_MIPI_ID_REGISTER_MAX))
++	if (WARN_ON_ONCE(block >= ARRAY_SIZE(rkcif->match_data->mipi->blocks)) ||
++	    WARN_ON_ONCE(id >= ARRAY_SIZE(rkcif->match_data->mipi->regs_id)) ||
++	    WARN_ON_ONCE(index >= ARRAY_SIZE(rkcif->match_data->mipi->regs_id[id])))
+ 		return RKCIF_REGISTER_NOTSUPPORTED;
  
-+	ir->request = kzalloc_obj(*ir->request, GFP_KERNEL);
-+	if (!ir->request)
-+		goto fail;
-+
- 	ir->dev = &intf->dev;
- 
- 	timer_setup(&ir->timer, igorplugusb_timer, 0);
- 
--	ir->request.bRequest = GET_INFRACODE;
--	ir->request.bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
--	ir->request.wLength = cpu_to_le16(MAX_PACKET);
-+	ir->request->bRequest = GET_INFRACODE;
-+	ir->request->bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
-+	ir->request->wLength = cpu_to_le16(MAX_PACKET);
- 
- 	ir->urb = usb_alloc_urb(0, GFP_KERNEL);
- 	if (!ir->urb)
-@@ -228,6 +232,7 @@ fail:
- 	usb_free_urb(ir->urb);
- 	rc_free_device(ir->rc);
- 	kfree(ir->buf_in);
-+	kfree(ir->request);
- 
- 	return ret;
- }
-@@ -243,6 +248,7 @@ static void igorplugusb_disconnect(struc
- 	usb_unpoison_urb(ir->urb);
- 	usb_free_urb(ir->urb);
- 	kfree(ir->buf_in);
-+	kfree(ir->request);
- }
- 
- static const struct usb_device_id igorplugusb_table[] = {
+ 	offset = rkcif->match_data->mipi->blocks[block].offset;
 
 
