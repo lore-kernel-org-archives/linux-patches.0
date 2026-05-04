@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D803DE422;
-	Mon,  4 May 2026 13:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6631E34F483;
+	Mon,  4 May 2026 13:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903161; cv=none; b=h55AzSjIAxhEgIAXWEvxlxo+7QuB2e3b9JYW1hOlkPSvPriSiCJFbkp86C0FnrAPxUzw8/e+RbAgZvXpLLc5x8u+gXyjdYepc47Y3BgxmSnzIGmnCeyICbHuX/IWSila0x87qxJltAxDLF6Beic8xZ9s6Z8fshRZgdq04KXUMis=
+	t=1777903164; cv=none; b=aANcAePrSBdoq9oNaLl11/Nn7Lx7ol2bhO7/u/SlklYXAQy2UtIyKgdtrvz6lBdFff4I8msx3MNFpHSbPeo1mlCFzt2yOxdngj/bMdIB3/+6RXWqXj2OGn6LPwrVUaIPE+4lNxcpx37NYL9nOhm+dYsm4bUm8zd7Grz01btyPmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903161; c=relaxed/simple;
-	bh=2OlnaVn5cAuMPyCS0r8yL13pgztFe2ZjOEOheOSSHRs=;
+	s=arc-20240116; t=1777903164; c=relaxed/simple;
+	bh=yCAMFJH6ZVg/BAKYqGw1E9Vox/NGUFrsp79ywrAO4ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zy6FfJyQJN0Vouk0bwZVfQN2uKXeEmECukkchfV7Bj0kYPGICBn/q+zYYAJWa8g65Bdl7oPAgxGpUPNEo/KFs2BVO6yvVoorDTqbeMTs+rKQBkS8jtn5gstadQ5HsRa2KsGRfdNVvmAsyqgls0V9b4i5aECE9Hw8AzNeyijIS0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crnlE7NV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DngwhonK5kgx2jjg/wt+Bb0g1mWomYYmVMuodPgQ8dfq1epXNj+Zyp/l7ED9b9l2HwU9dJkYxWWPJyamT1QYX9Sgi/DzdriW218ZK3wkfsiw1pGPG4ejJ47mlZ8p+nyiTSRwkXytkdhWqOGtHOYnU0o/UXAzHyViamguius76d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDdZ/pNe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crnlE7NV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686BCC2BCB8;
-	Mon,  4 May 2026 13:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDdZ/pNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A61C2BCB8;
+	Mon,  4 May 2026 13:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903161;
-	bh=2OlnaVn5cAuMPyCS0r8yL13pgztFe2ZjOEOheOSSHRs=;
+	s=korg; t=1777903164;
+	bh=yCAMFJH6ZVg/BAKYqGw1E9Vox/NGUFrsp79ywrAO4ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crnlE7NVZATIbu5+XHEcco9y6mvAzDOOH4qceHrdCsJ3/rAvU+EWRWMXQxEeD47nh
-	 uVOjUN9vu0z+J8Gq7kSuJq5sAFFsPPnJzCzVn6Hy9OYwYxiW8wUNvHw9USbWcF62Ap
-	 Etv13Q+J47pX6fnZNd5i/YFJLwxF0f3Z8nQVShiA=
+	b=iDdZ/pNeGMrQyPQx1wBTJuztg9i393UwX3FHQSQGXce0wf5rjnD+DsI77Z6WtpX2i
+	 sA2qyjPZdkojb55EOhbtEe+8dxoH/2OO9nmaYVq7H0+0cqBqdj607AI+B799LeTQDC
+	 ecqN9Q4RKkWewM8+Xg7etpsrFIUr30dySaMrUo50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 7.0 100/307] selftests/landlock: Drain stale audit records on init
-Date: Mon,  4 May 2026 15:49:45 +0200
-Message-ID: <20260504135146.576625327@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 127/307] rxrpc: Fix memory leaks in rxkad_verify_response()
+Date: Mon,  4 May 2026 15:50:12 +0200
+Message-ID: <20260504135147.572883533@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -45,128 +49,237 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: David Howells <dhowells@redhat.com>
 
-commit 3647a4977fb73da385e5a29b9775a4749733470d upstream.
+commit 34f61a07e0cdefaecd3ec03bb5fb22215643678f upstream.
 
-Non-audit Landlock tests generate audit records as side effects when
-audit_enabled is non-zero (e.g. from boot configuration).  These records
-accumulate in the kernel audit backlog while no audit daemon socket is
-open.  When the next test opens a new netlink socket and registers as
-the audit daemon, the stale backlog is delivered, causing baseline
-record count checks to fail spuriously.
+Fix rxkad_verify_response() to free the ticket and the server key under all
+circumstances by initialising the ticket pointer to NULL and then making
+all paths through the function after the first allocation has been done go
+through a single common epilogue that just releases everything - where all
+the releases skip on a NULL pointer.
 
-Fix this by draining all pending records in audit_init() right after
-setting the receive timeout.  The 1-usec SO_RCVTIMEO causes audit_recv()
-to return -EAGAIN once the backlog is empty, naturally terminating the
-drain loop.
-
-Domain deallocation records are emitted asynchronously from a work
-queue, so they may still arrive after the drain.  Remove records.domain
-== 0 checks that are not preceded by audit_match_record() calls, which
-would otherwise consume stale records before the count.  Document this
-constraint above audit_count_records().
-
-Increasing the drain timeout to catch in-flight deallocation records was
-considered but rejected: a longer timeout adds latency to every
-audit_init() call even when no stale record is pending, and any fixed
-timeout is still not guaranteed to catch all records under load.
-Removing the unprotected checks is simpler and avoids the spurious
-failures.
-
-Cc: Günther Noack <gnoack@google.com>
-Cc: stable@vger.kernel.org
-Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20260402192608.1458252-4-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Fixes: 57af281e5389 ("rxrpc: Tidy up abort generation infrastructure")
+Fixes: ec832bd06d6f ("rxrpc: Don't retain the server key in the connection")
+Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-2-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/landlock/audit.h                     |   19 +++++++++++
- tools/testing/selftests/landlock/audit_test.c                |    2 -
- tools/testing/selftests/landlock/ptrace_test.c               |    1 
- tools/testing/selftests/landlock/scoped_abstract_unix_test.c |    1 
- 4 files changed, 19 insertions(+), 4 deletions(-)
+ net/rxrpc/rxkad.c |  103 ++++++++++++++++++++++--------------------------------
+ 1 file changed, 42 insertions(+), 61 deletions(-)
 
---- a/tools/testing/selftests/landlock/audit.h
-+++ b/tools/testing/selftests/landlock/audit.h
-@@ -338,6 +338,15 @@ struct audit_records {
- 	size_t domain;
- };
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -1136,7 +1136,7 @@ static int rxkad_verify_response(struct
+ 	struct rxrpc_crypt session_key;
+ 	struct key *server_key;
+ 	time64_t expiry;
+-	void *ticket;
++	void *ticket = NULL;
+ 	u32 version, kvno, ticket_len, level;
+ 	__be32 csum;
+ 	int ret, i;
+@@ -1162,13 +1162,13 @@ static int rxkad_verify_response(struct
+ 	ret = -ENOMEM;
+ 	response = kzalloc_obj(struct rxkad_response, GFP_NOFS);
+ 	if (!response)
+-		goto temporary_error;
++		goto error;
  
-+/*
-+ * WARNING: Do not assert records.domain == 0 without a preceding
-+ * audit_match_record() call.  Domain deallocation records are emitted
-+ * asynchronously from kworker threads and can arrive after the drain in
-+ * audit_init(), corrupting the domain count.  A preceding audit_match_record()
-+ * call consumes stale records while scanning, making the assertion safe in
-+ * practice because stale deallocation records arrive before the expected access
-+ * records.
-+ */
- static int audit_count_records(int audit_fd, struct audit_records *records)
- {
- 	struct audit_message msg;
-@@ -391,6 +400,16 @@ static int audit_init(void)
- 	if (err)
- 		return -errno;
+ 	if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header),
+ 			  response, sizeof(*response)) < 0) {
+-		rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
+-				 rxkad_abort_resp_short);
+-		goto protocol_error;
++		ret = rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
++				       rxkad_abort_resp_short);
++		goto error;
+ 	}
  
-+	/*
-+	 * Drains stale audit records that accumulated in the kernel backlog
-+	 * while no audit daemon socket was open.  This happens when non-audit
-+	 * Landlock tests generate records while audit_enabled is non-zero (e.g.
-+	 * from boot configuration), or when domain deallocation records arrive
-+	 * asynchronously after a previous test's socket was closed.
-+	 */
-+	while (audit_recv(fd, NULL) == 0)
-+		;
-+
- 	return fd;
+ 	version = ntohl(response->version);
+@@ -1178,62 +1178,62 @@ static int rxkad_verify_response(struct
+ 	trace_rxrpc_rx_response(conn, sp->hdr.serial, version, kvno, ticket_len);
+ 
+ 	if (version != RXKAD_VERSION) {
+-		rxrpc_abort_conn(conn, skb, RXKADINCONSISTENCY, -EPROTO,
+-				 rxkad_abort_resp_version);
+-		goto protocol_error;
++		ret = rxrpc_abort_conn(conn, skb, RXKADINCONSISTENCY, -EPROTO,
++				       rxkad_abort_resp_version);
++		goto error;
+ 	}
+ 
+ 	if (ticket_len < 4 || ticket_len > MAXKRB5TICKETLEN) {
+-		rxrpc_abort_conn(conn, skb, RXKADTICKETLEN, -EPROTO,
+-				 rxkad_abort_resp_tkt_len);
+-		goto protocol_error;
++		ret = rxrpc_abort_conn(conn, skb, RXKADTICKETLEN, -EPROTO,
++				       rxkad_abort_resp_tkt_len);
++		goto error;
+ 	}
+ 
+ 	if (kvno >= RXKAD_TKT_TYPE_KERBEROS_V5) {
+-		rxrpc_abort_conn(conn, skb, RXKADUNKNOWNKEY, -EPROTO,
+-				 rxkad_abort_resp_unknown_tkt);
+-		goto protocol_error;
++		ret = rxrpc_abort_conn(conn, skb, RXKADUNKNOWNKEY, -EPROTO,
++				       rxkad_abort_resp_unknown_tkt);
++		goto error;
+ 	}
+ 
+ 	/* extract the kerberos ticket and decrypt and decode it */
+ 	ret = -ENOMEM;
+ 	ticket = kmalloc(ticket_len, GFP_NOFS);
+ 	if (!ticket)
+-		goto temporary_error_free_resp;
++		goto error;
+ 
+ 	if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header) + sizeof(*response),
+ 			  ticket, ticket_len) < 0) {
+-		rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
+-				 rxkad_abort_resp_short_tkt);
+-		goto protocol_error;
++		ret = rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
++				       rxkad_abort_resp_short_tkt);
++		goto error;
+ 	}
+ 
+ 	ret = rxkad_decrypt_ticket(conn, server_key, skb, ticket, ticket_len,
+ 				   &session_key, &expiry);
+ 	if (ret < 0)
+-		goto temporary_error_free_ticket;
++		goto error;
+ 
+ 	/* use the session key from inside the ticket to decrypt the
+ 	 * response */
+ 	ret = rxkad_decrypt_response(conn, response, &session_key);
+ 	if (ret < 0)
+-		goto temporary_error_free_ticket;
++		goto error;
+ 
+ 	if (ntohl(response->encrypted.epoch) != conn->proto.epoch ||
+ 	    ntohl(response->encrypted.cid) != conn->proto.cid ||
+ 	    ntohl(response->encrypted.securityIndex) != conn->security_ix) {
+-		rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
+-				 rxkad_abort_resp_bad_param);
+-		goto protocol_error_free;
++		ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
++				       rxkad_abort_resp_bad_param);
++		goto error;
+ 	}
+ 
+ 	csum = response->encrypted.checksum;
+ 	response->encrypted.checksum = 0;
+ 	rxkad_calc_response_checksum(response);
+ 	if (response->encrypted.checksum != csum) {
+-		rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
+-				 rxkad_abort_resp_bad_checksum);
+-		goto protocol_error_free;
++		ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
++				       rxkad_abort_resp_bad_checksum);
++		goto error;
+ 	}
+ 
+ 	for (i = 0; i < RXRPC_MAXCALLS; i++) {
+@@ -1241,38 +1241,38 @@ static int rxkad_verify_response(struct
+ 		u32 counter = READ_ONCE(conn->channels[i].call_counter);
+ 
+ 		if (call_id > INT_MAX) {
+-			rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
+-					 rxkad_abort_resp_bad_callid);
+-			goto protocol_error_free;
++			ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
++					       rxkad_abort_resp_bad_callid);
++			goto error;
+ 		}
+ 
+ 		if (call_id < counter) {
+-			rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
+-					 rxkad_abort_resp_call_ctr);
+-			goto protocol_error_free;
++			ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
++					       rxkad_abort_resp_call_ctr);
++			goto error;
+ 		}
+ 
+ 		if (call_id > counter) {
+ 			if (conn->channels[i].call) {
+-				rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
++				ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
+ 						 rxkad_abort_resp_call_state);
+-				goto protocol_error_free;
++				goto error;
+ 			}
+ 			conn->channels[i].call_counter = call_id;
+ 		}
+ 	}
+ 
+ 	if (ntohl(response->encrypted.inc_nonce) != conn->rxkad.nonce + 1) {
+-		rxrpc_abort_conn(conn, skb, RXKADOUTOFSEQUENCE, -EPROTO,
+-				 rxkad_abort_resp_ooseq);
+-		goto protocol_error_free;
++		ret = rxrpc_abort_conn(conn, skb, RXKADOUTOFSEQUENCE, -EPROTO,
++				       rxkad_abort_resp_ooseq);
++		goto error;
+ 	}
+ 
+ 	level = ntohl(response->encrypted.level);
+ 	if (level > RXRPC_SECURITY_ENCRYPT) {
+-		rxrpc_abort_conn(conn, skb, RXKADLEVELFAIL, -EPROTO,
+-				 rxkad_abort_resp_level);
+-		goto protocol_error_free;
++		ret = rxrpc_abort_conn(conn, skb, RXKADLEVELFAIL, -EPROTO,
++				       rxkad_abort_resp_level);
++		goto error;
+ 	}
+ 	conn->security_level = level;
+ 
+@@ -1280,31 +1280,12 @@ static int rxkad_verify_response(struct
+ 	 * this the connection security can be handled in exactly the same way
+ 	 * as for a client connection */
+ 	ret = rxrpc_get_server_data_key(conn, &session_key, expiry, kvno);
+-	if (ret < 0)
+-		goto temporary_error_free_ticket;
+-
+-	kfree(ticket);
+-	kfree(response);
+-	_leave(" = 0");
+-	return 0;
+-
+-protocol_error_free:
+-	kfree(ticket);
+-protocol_error:
+-	kfree(response);
+-	key_put(server_key);
+-	return -EPROTO;
+ 
+-temporary_error_free_ticket:
++error:
+ 	kfree(ticket);
+-temporary_error_free_resp:
+ 	kfree(response);
+-temporary_error:
+-	/* Ignore the response packet if we got a temporary error such as
+-	 * ENOMEM.  We just want to send the challenge again.  Note that we
+-	 * also come out this way if the ticket decryption fails.
+-	 */
+ 	key_put(server_key);
++	_leave(" = %d", ret);
+ 	return ret;
  }
  
---- a/tools/testing/selftests/landlock/audit_test.c
-+++ b/tools/testing/selftests/landlock/audit_test.c
-@@ -733,7 +733,6 @@ TEST_F(audit_flags, signal)
- 		} else {
- 			EXPECT_EQ(1, records.access);
- 		}
--		EXPECT_EQ(0, records.domain);
- 
- 		/* Updates filter rules to match the drop record. */
- 		set_cap(_metadata, CAP_AUDIT_CONTROL);
-@@ -922,7 +921,6 @@ TEST_F(audit_exec, signal_and_open)
- 	/* Tests that there was no denial until now. */
- 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
- 	EXPECT_EQ(0, records.access);
--	EXPECT_EQ(0, records.domain);
- 
- 	/*
- 	 * Wait for the child to do a first denied action by layer1 and
---- a/tools/testing/selftests/landlock/ptrace_test.c
-+++ b/tools/testing/selftests/landlock/ptrace_test.c
-@@ -342,7 +342,6 @@ TEST_F(audit, trace)
- 	/* Makes sure there is no superfluous logged records. */
- 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
- 	EXPECT_EQ(0, records.access);
--	EXPECT_EQ(0, records.domain);
- 
- 	yama_ptrace_scope = get_yama_ptrace_scope();
- 	ASSERT_LE(0, yama_ptrace_scope);
---- a/tools/testing/selftests/landlock/scoped_abstract_unix_test.c
-+++ b/tools/testing/selftests/landlock/scoped_abstract_unix_test.c
-@@ -312,7 +312,6 @@ TEST_F(scoped_audit, connect_to_child)
- 	/* Makes sure there is no superfluous logged records. */
- 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
- 	EXPECT_EQ(0, records.access);
--	EXPECT_EQ(0, records.domain);
- 
- 	ASSERT_EQ(0, pipe2(pipe_child, O_CLOEXEC));
- 	ASSERT_EQ(0, pipe2(pipe_parent, O_CLOEXEC));
 
 
