@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378C540DFD4;
-	Mon,  4 May 2026 14:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF683AA4F8;
+	Mon,  4 May 2026 14:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903745; cv=none; b=WOvjzvOrWyfwijK3pVXoTyy2Jl5bilIoCvbjIpwGE2WxwD3laP9MsuXNyV8Ku5zje7IC6q9jby+ohoxqAujpvCrjzutKcgKPJGWlualkTInCL6Jwj85RU+3uoVhVTXCdoMPrq8l7EopetUjclnuVqzlnBpMHDd0TCLopgZDTIwM=
+	t=1777903747; cv=none; b=o0Q0u83oFXq3++J55uGfajo/HHu5CJxHB+FxMogISa0c8lAqRcA7fS2biOG9OFg4JLQ+SOLaRcenqAsvPGUghBQilbyVXONSbt/wDxVUFHvu4aCAd/em6eC1d1ULEE6RIUUoquZFftNiKP008yp9Bg8jZiAziFWM58B59WgJ514=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903745; c=relaxed/simple;
-	bh=n2woXKzLEH6iAKYo2MkY+cT8JABedyIAgH62Gu5pi3k=;
+	s=arc-20240116; t=1777903747; c=relaxed/simple;
+	bh=RlAn4A+rLoGwxIn4ZKwnAFMRoP6f7As0Jkp6g2qCipU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mT5CwYTe/F5c7HksM8hMzUxbrPiF8mvSiJwRm8xdpMooD26PZNJ19KK52T+AwLXt7XMUN64UY8uNbv1n3W4WJ3l9EcKwVkyHws4pnXpmH3hNNctStXE6tKVSZHKkY2JMZbaqBWua8TZHnNHWAsVffs4i0Fw6KzHsFbTHofLyMDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrV4+nu5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mCSajjEQ7a5HxhAB3Z5Mpk9U8urJ5Ug31oDy7xias3ZFhYEGRgwtTglXpcLshOJcqW4fzV+illiex7gK6JHf9WkGmuFtltZgAZhG0J/up/syMJvYBwoxySbKCAGQaoCfPiAOTXK7gSJnyhlTdK3O5m7YS+XeqI0k3Z1hae3MyEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuKnCqqq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrV4+nu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34E3C2BCB8;
-	Mon,  4 May 2026 14:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuKnCqqq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57921C2BCB8;
+	Mon,  4 May 2026 14:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903745;
-	bh=n2woXKzLEH6iAKYo2MkY+cT8JABedyIAgH62Gu5pi3k=;
+	s=korg; t=1777903747;
+	bh=RlAn4A+rLoGwxIn4ZKwnAFMRoP6f7As0Jkp6g2qCipU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrV4+nu5aBO2eXxKshGkeNnkDnnMRqmPfqSt3NLr8XaQq3deTp3Z6Db8LU9yNcwFN
-	 TaFZJJx0cYCRmLFHCdh+DdF97SJF5dinNDPK/20Jxgv4HjJKeyFLA9C1FM6TUHY0ZK
-	 C48h0HqASDBDhdWurphcnmB8zFmR7+t5lkMxbi0M=
+	b=vuKnCqqqGpQoCnKjgvFDYjEX8Azw/fbAL4ntiUEyc5rdLy50ejq9pDYcvjB0wM1IP
+	 IPiFrv8rWt0xhCF16Zt1O5KbpDC0gaMyNtV6ezNI4j4Y2XOniWvVflhuiNR4QKDqCJ
+	 NhYkC85VHuMsiAod2CH5Q6ZhXvOWoVJMJOyoxLmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.18 045/275] EDAC/versalnet: Fix device_node leak in mc_probe()
-Date: Mon,  4 May 2026 15:49:45 +0200
-Message-ID: <20260504135144.616206928@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Gary Guo <gary@garyguo.net>
+Subject: [PATCH 6.18 019/275] rust: dma: remove DMA_ATTR_NO_KERNEL_MAPPING from public attrs
+Date: Mon,  4 May 2026 15:49:19 +0200
+Message-ID: <20260504135143.652242283@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -52,44 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit 5c709b376460ff322580c41600e31c02f7cc0307 upstream.
+commit 18fb5f1f0289b8217c0c43d54d12bccc201dd640 upstream.
 
-of_parse_phandle() returns a device_node reference that must be released with
-of_node_put(). The original code never freed r5_core_node on any exit path,
-causing a memory leak.
+When DMA_ATTR_NO_KERNEL_MAPPING is passed to dma_alloc_attrs(), the
+returned CPU address is not a pointer to the allocated memory but an
+opaque handle (e.g. struct page *).
 
-Fix this by using the automatic cleanup attribute __free(device_node) which
-ensures of_node_put() is called when the variable goes out of scope.
+Coherent<T> (or CoherentAllocation<T> respectively) stores this value as
+NonNull<T> and exposes methods that dereference it and even modify its
+contents.
 
-Fixes: d5fe2fec6c40 ("EDAC: Add a driver for the AMD Versal NET DDR controller")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260323-versalnet-v1-1-4ab3012635ef@gmail.com
+Remove the flag from the public attrs module such that drivers cannot
+pass it to Coherent<T> (or CoherentAllocation<T> respectively) in the
+first place.
+
+Instead DMA_ATTR_NO_KERNEL_MAPPING can be supported with an additional
+opaque type (e.g. CoherentHandle) which does not provide access to the
+allocated memory.
+
+Cc: stable@vger.kernel.org
+Fixes: ad2907b4e308 ("rust: add dma coherent allocator abstraction")
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260321172749.592387-1-dakr@kernel.org
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/versalnet_edac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/kernel/dma.rs |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/edac/versalnet_edac.c
-+++ b/drivers/edac/versalnet_edac.c
-@@ -868,12 +868,12 @@ static void remove_versalnet(struct mc_p
+--- a/rust/kernel/dma.rs
++++ b/rust/kernel/dma.rs
+@@ -232,9 +232,6 @@ pub mod attrs {
+     /// Specifies that writes to the mapping may be buffered to improve performance.
+     pub const DMA_ATTR_WRITE_COMBINE: Attrs = Attrs(bindings::DMA_ATTR_WRITE_COMBINE);
  
- static int mc_probe(struct platform_device *pdev)
- {
--	struct device_node *r5_core_node;
- 	struct mc_priv *priv;
- 	struct rproc *rp;
- 	int rc;
- 
--	r5_core_node = of_parse_phandle(pdev->dev.of_node, "amd,rproc", 0);
-+	struct device_node *r5_core_node __free(device_node) =
-+		of_parse_phandle(pdev->dev.of_node, "amd,rproc", 0);
- 	if (!r5_core_node) {
- 		dev_err(&pdev->dev, "amd,rproc: invalid phandle\n");
- 		return -EINVAL;
+-    /// Lets the platform to avoid creating a kernel virtual mapping for the allocated buffer.
+-    pub const DMA_ATTR_NO_KERNEL_MAPPING: Attrs = Attrs(bindings::DMA_ATTR_NO_KERNEL_MAPPING);
+-
+     /// Allows platform code to skip synchronization of the CPU cache for the given buffer assuming
+     /// that it has been already transferred to 'device' domain.
+     pub const DMA_ATTR_SKIP_CPU_SYNC: Attrs = Attrs(bindings::DMA_ATTR_SKIP_CPU_SYNC);
 
 
