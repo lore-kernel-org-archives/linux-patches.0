@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76AA35A3AD;
-	Mon,  4 May 2026 14:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457EB315785;
+	Mon,  4 May 2026 14:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904308; cv=none; b=iTxGFvqeem3fnQi9GeY+Nkwjs3Rd9rJqmXHmA4DcJzpAw9KGH5fFnk7xAj3W63r+EDD4ANROeMryGt+ldU3ai01sVSCYbEiKde3Y51hL353/wDrmu1fcCJ+bM23tqPV5Id6F3O3dLTT0PYkqf/fr4rF30eHamOpMnbVmGZX7sW0=
+	t=1777904311; cv=none; b=ZCdtMkDabw6ndskuPTWlZrtS2HH75L/VSyap/byuwjRJdZSuRjwy+kCCvPoZvc1a/7NAJgFw+L7iPIedaamHM5aug+0dfDW29fxmXLp+o9Wh45ToHpTuJTmIu1bfPBekuua7Z7NTDYnnOoc+zniOS/uxmxVmVi9fxrcf0tAa2TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904308; c=relaxed/simple;
-	bh=nP26DNZ+eNp+5sINA8aZUZFnEhu8WahXrhFhEMDy9cU=;
+	s=arc-20240116; t=1777904311; c=relaxed/simple;
+	bh=9ijrQTXBbdPIE+2wSyffitNKagBpFhoCuLD6nNve4wY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=heHk64q2nOL6Kpfplj2DiCyn5eYaw9BCrIzd2tUoMCDSZtTxrn+qTsIPbxCvM2+2vrm/Nw2sYqzL5FbKIv682OR6fkb7XCoQ0zDVU5c8AC5ws8R32vGtXYf4S0bSDDK8U4alwYYdQFcOxgjfGy61cwDiBueei3RNvR5xWjUr33Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB3QMdhn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eu7xmUn30FY3SZ39/L7GTAiKNeblg8tGLnXPsUhLbNVqAHwU/IiP3W5UNr9MNsM5J8b+OknXxCkh/v61eFQdR9MlficHm8uxucfchC3jEIUPEnrkdyNSHV35ZCv+2mDYSw6paulM3Ve2CuGEXCQ7t6iMyCr1dIj+qnNLC3V0v7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2m1/qMLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB3QMdhn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EADFC2BCB8;
-	Mon,  4 May 2026 14:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2m1/qMLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF51C2BCB8;
+	Mon,  4 May 2026 14:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904308;
-	bh=nP26DNZ+eNp+5sINA8aZUZFnEhu8WahXrhFhEMDy9cU=;
+	s=korg; t=1777904311;
+	bh=9ijrQTXBbdPIE+2wSyffitNKagBpFhoCuLD6nNve4wY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JB3QMdhn47mA/0sAJYoyTGED8lgL9RGN3Z3d+eZKEYsQyYqQDcLBKi1M7mZd5AVO2
-	 9xw+W55hSXN+pLMdEBhIb50f8eb/kVSEmZqWLGZ9E6AHnpOyJdAB2ij9ZlPUkHlI/0
-	 0T3PI84Qp9yRiv/9nsYViGcgB14V6K5IPTJtPOu0=
+	b=2m1/qMLCxLLu8TguRad7lbcndqR4uNH0yEPUpVgmJiB1qOYQ2pcU+WiwzZZFUBhlI
+	 QzBAHFrRj72G08C3w8DHPAlWYUMOsAAcMvzcNu7jLz4KT0rv5cfxyl0zfWFITR9UpD
+	 hRtQ3nvCKlXU8nViLXJ7AYOJNJ5sp1O5MNqcOIv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Yucheng Lu <kanolyc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 263/275] crypto: authencesn - reject short ahash digests during instance creation
-Date: Mon,  4 May 2026 15:53:23 +0200
-Message-ID: <20260504135152.812086014@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.18 233/275] dm mirror: fix integer overflow in create_dirty_log()
+Date: Mon,  4 May 2026 15:52:53 +0200
+Message-ID: <20260504135151.708952812@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -58,60 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yucheng Lu <kanolyc@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 5db6ef9847717329f12c5ea8aba7e9f588a980c0 upstream.
+commit 4c788c6f921b22f9b6c3f316c4a071c05683e7de upstream.
 
-authencesn requires either a zero authsize or an authsize of at least
-4 bytes because the ESN encrypt/decrypt paths always move 4 bytes of
-high-order sequence number data at the end of the authenticated data.
+The argument count calculation in create_dirty_log() performs
+`*args_used = 2 + param_count` before validating against argc. When a
+user provides a param_count close to UINT_MAX via the device mapper
+table string, this unsigned addition wraps around to a small value,
+causing the subsequent `argc < *args_used` check to be bypassed.
 
-While crypto_authenc_esn_setauthsize() already rejects explicit
-non-zero authsizes in the range 1..3, crypto_authenc_esn_create()
-still copied auth->digestsize into inst->alg.maxauthsize without
-validating it.  The AEAD core then initialized the tfm's default
-authsize from that value.
+The overflowed param_count is then passed as argc to dm_dirty_log_create(),
+where it can cause out-of-bounds reads on the argv array.
 
-As a result, selecting an ahash with digest size 1..3, such as
-cbcmac(cipher_null), exposed authencesn instances whose default
-authsize was invalid even though setauthsize() would have rejected the
-same value.  AF_ALG could then trigger the ESN tail handling with a
-too-short tag and hit an out-of-bounds access.
+Fix by comparing param_count against argc - 2 before performing the
+addition, following the same pattern used by parse_features() in the
+same file. Since argc >= 2 is already guaranteed, the subtraction is
+safe.
 
-Reject authencesn instances whose ahash digest size is in the invalid
-non-zero range 1..3 so that no tfm can inherit an unsupported default
-authsize.
-
-Fixes: f15f05b0a5de ("crypto: ccm - switch to separate cbcmac driver")
-Cc: stable@kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yuhang Zheng <z1652074432@gmail.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Yucheng Lu <kanolyc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/authencesn.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/md/dm-raid1.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/crypto/authencesn.c
-+++ b/crypto/authencesn.c
-@@ -390,6 +390,11 @@ static int crypto_authenc_esn_create(str
- 	auth = crypto_spawn_ahash_alg(&ctx->auth);
- 	auth_base = &auth->base;
+--- a/drivers/md/dm-raid1.c
++++ b/drivers/md/dm-raid1.c
+@@ -993,13 +993,13 @@ static struct dm_dirty_log *create_dirty
+ 		return NULL;
+ 	}
  
-+	if (auth->digestsize > 0 && auth->digestsize < 4) {
-+		err = -EINVAL;
-+		goto err_free_inst;
-+	}
+-	*args_used = 2 + param_count;
+-
+-	if (argc < *args_used) {
++	if (param_count > argc - 2) {
+ 		ti->error = "Insufficient mirror log arguments";
+ 		return NULL;
+ 	}
+ 
++	*args_used = 2 + param_count;
 +
- 	err = crypto_grab_skcipher(&ctx->enc, aead_crypto_instance(inst),
- 				   crypto_attr_alg_name(tb[2]), 0, mask);
- 	if (err)
+ 	dl = dm_dirty_log_create(argv[0], ti, mirror_flush, param_count,
+ 				 argv + 2);
+ 	if (!dl) {
 
 
