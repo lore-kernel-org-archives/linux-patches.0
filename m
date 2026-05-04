@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502AB378D8C;
-	Mon,  4 May 2026 14:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CB33DD53E;
+	Mon,  4 May 2026 14:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903655; cv=none; b=idM4lAMntt6QaQK2QX2yXT/Ms4P9XP8JrJx6lJWxyFe80B2Z0o2pz5YiL5mHZxS33RU2tMphGcoCQ83+oeNUT44Xjt9wVQvf1uf6Z2JjeSgWz9jd/CZsNJx7kImywOaM4dRSIXX3sebj76jTdG7mfWLsJtOscLy8CzLfpbvCKEY=
+	t=1777903657; cv=none; b=s3fWeJQdon+xYKgINa/Y1JW8H/ojm/dMvLN4SQEQ58Dtmf0MSVPwh8y8YLAP9SimeseVkvDHknda7is+/NCYD7118In+sA3KvsvguAJMP+I+7sC7kyzHFiJsrrZOiMiOyTGzagl8sFbjrcRNTqhya0k75sxPB0YkJYtzusGAwi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903655; c=relaxed/simple;
-	bh=keQ1hEtgWFdr5nKhlKcCLDT+M2ivk7stleKrxDeEhdM=;
+	s=arc-20240116; t=1777903657; c=relaxed/simple;
+	bh=g3pB55vAtj5Cf55SUOZirH4IQaYDXbdmqVpexVFzBic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXigbCpbjplM1dk7w8+xNTVtKVlLJEaPaYqgv0BZxGpgq2RbjpB3gVuNEBL0tf/R17MtHrELo/iOgIqevChwG1YQsBCnrSpGNe9g/2O61O2vTN2M18g0CxjIPEbQs41yNG5Rv5Le8qx65UuPHKqIiaOlUSFWBNwdrV+/Hp3nNgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hK1ivCy1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GNyQmPDqgHSk6sKh+T3C1WE7WNtDARL6bcT16jcS8NHL+dMKAbB4DU2TOw/5KxSfWhZyXoJP8fbh6CCeRQ7akjUYKqVvuriMq0RPuA1m76Vm+r1KFuxfmYvalkGs1dKgbBJBjaV65CYlYP9Q+Cxx0Y5y4ZjTsXVZ9mHGSYrP2iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSYOgXaz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hK1ivCy1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952A5C2BCB8;
-	Mon,  4 May 2026 14:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSYOgXaz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EBBC2BCB8;
+	Mon,  4 May 2026 14:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903654;
-	bh=keQ1hEtgWFdr5nKhlKcCLDT+M2ivk7stleKrxDeEhdM=;
+	s=korg; t=1777903657;
+	bh=g3pB55vAtj5Cf55SUOZirH4IQaYDXbdmqVpexVFzBic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hK1ivCy1DDzq2ISIlXWbqibZOmT7TcCb57mAUKcRkZyZyRY1DG/BZugd2YXyANoaC
-	 c3GJWt73Z7F7zNtn9kZ3tsZMTLSpKsp5c/YeOSh9CHdTU0MBMnr6S5WnkaXdZgpg6X
-	 sfxjKEP0ddwGwD+9VVlVDdGiTb4gS2R2xAKtRaPE=
+	b=FSYOgXazUbdQAxCwaemPZpHhuz1D6DrcgoBgDWnzVBiapX6NZNqlkhOzRVFw+5w/i
+	 /v+AXtklWcQIaXDN2fqDuQvs3WkxI7JV0eFeMcwhyUnLGmc6BgPmaHw8n2me/gQ8Xw
+	 UkZ+HStJXASGr63azCOoQ1C99HLyQ41Bx/AgNr9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>
-Subject: [PATCH 6.18 011/275] greybus: gb-beagleplay: bound bootloader receive buffering
-Date: Mon,  4 May 2026 15:49:11 +0200
-Message-ID: <20260504135143.359578802@linuxfoundation.org>
+	Ayush Singh <ayushdevel1325@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Alex Elder <elder@kernel.org>,
+	Weigang He <geoffreyhe2@gmail.com>
+Subject: [PATCH 6.18 012/275] greybus: gb-beagleplay: fix sleep in atomic context in hdlc_tx_frames()
+Date: Mon,  4 May 2026 15:49:12 +0200
+Message-ID: <20260504135143.395721562@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -44,50 +47,187 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-commit 1214bf28965ceaf584fb20d357731264dd2e10e1 upstream.
+commit 6b526dca0966f2370835765019a54319b78fca8d upstream.
 
-cc1352_bootloader_rx() appends each serdev chunk into the fixed
-rx_buffer before parsing bootloader packets. The helper can keep
-leftover bytes between callbacks and may receive multiple packets in one
-callback, so a single count value is not constrained by one packet
-length.
+hdlc_append() calls usleep_range() to wait for circular buffer space,
+but it is called with tx_producer_lock (a spinlock) held via
+hdlc_tx_frames() -> hdlc_append_tx_frame()/hdlc_append_tx_u8()/etc.
+Sleeping while holding a spinlock is illegal and can trigger
+"BUG: scheduling while atomic".
 
-Check that the incoming chunk fits in the remaining receive buffer space
-before memcpy(). If it does not, drop the staged data and consume the
-bytes instead of overflowing rx_buffer.
+Fix this by moving the buffer-space wait out of hdlc_append() and into
+hdlc_tx_frames(), before the spinlock is acquired.  The new flow:
 
-Fixes: 0cf7befa3ea2 ("greybus: gb-beagleplay: Add firmware upload API")
+ 1. Pre-calculate the worst-case encoded frame length.
+ 2. Wait (with sleep) outside the lock until enough space is available,
+    kicking the TX consumer work to drain the buffer.
+ 3. Acquire the spinlock, re-verify space, and write the entire frame
+    atomically.
+
+This ensures that sleeping only happens without any lock held, and
+that frames are either fully enqueued or not written at all.
+
+This bug is found by CodeQL static analysis tool (interprocedural
+sleep-in-atomic query) and my code review.
+
+Fixes: ec558bbfea67 ("greybus: Add BeaglePlay Linux Driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260402054016.38587-1-pengpeng@iscas.ac.cn
+Cc: Ayush Singh <ayushdevel1325@gmail.com>
+Cc: Johan Hovold <johan@kernel.org>
+Cc: Alex Elder <elder@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Link: https://patch.msgid.link/20260330120801.981506-1-geoffreyhe2@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/greybus/gb-beagleplay.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/greybus/gb-beagleplay.c |  107 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 90 insertions(+), 17 deletions(-)
 
 --- a/drivers/greybus/gb-beagleplay.c
 +++ b/drivers/greybus/gb-beagleplay.c
-@@ -535,6 +535,13 @@ static size_t cc1352_bootloader_rx(struc
- 	int ret;
- 	size_t off = 0;
+@@ -242,30 +242,26 @@ static void hdlc_write(struct gb_beaglep
+ }
  
-+	if (count > sizeof(bg->rx_buffer) - bg->rx_buffer_len) {
-+		dev_warn(&bg->sd->dev,
-+			 "dropping oversized bootloader receive chunk");
-+		bg->rx_buffer_len = 0;
-+		return count;
+ /**
+- * hdlc_append() - Queue HDLC data for sending.
++ * hdlc_append() - Queue a single HDLC byte for sending.
+  * @bg: beagleplay greybus driver
+  * @value: hdlc byte to transmit
+  *
+- * Assumes that producer lock as been acquired.
++ * Caller must hold tx_producer_lock and must have ensured sufficient
++ * space in the circular buffer before calling (see hdlc_tx_frames()).
+  */
+ static void hdlc_append(struct gb_beagleplay *bg, u8 value)
+ {
+-	int tail, head = bg->tx_circ_buf.head;
++	int head = bg->tx_circ_buf.head;
++	int tail = READ_ONCE(bg->tx_circ_buf.tail);
+ 
+-	while (true) {
+-		tail = READ_ONCE(bg->tx_circ_buf.tail);
+-
+-		if (CIRC_SPACE(head, tail, TX_CIRC_BUF_SIZE) >= 1) {
+-			bg->tx_circ_buf.buf[head] = value;
+-
+-			/* Finish producing HDLC byte */
+-			smp_store_release(&bg->tx_circ_buf.head,
+-					  (head + 1) & (TX_CIRC_BUF_SIZE - 1));
+-			return;
+-		}
+-		dev_warn(&bg->sd->dev, "Tx circ buf full");
+-		usleep_range(3000, 5000);
+-	}
++	lockdep_assert_held(&bg->tx_producer_lock);
++	if (WARN_ON_ONCE(CIRC_SPACE(head, tail, TX_CIRC_BUF_SIZE) < 1))
++		return;
++
++	bg->tx_circ_buf.buf[head] = value;
++	/* Ensure buffer write is visible before advancing head. */
++	smp_store_release(&bg->tx_circ_buf.head,
++			  (head + 1) & (TX_CIRC_BUF_SIZE - 1));
+ }
+ 
+ static void hdlc_append_escaped(struct gb_beagleplay *bg, u8 value)
+@@ -313,13 +309,90 @@ static void hdlc_transmit(struct work_st
+ 	spin_unlock_bh(&bg->tx_consumer_lock);
+ }
+ 
++/**
++ * hdlc_encoded_length() - Calculate worst-case encoded length of an HDLC frame.
++ * @payloads: array of payload buffers
++ * @count: number of payloads
++ *
++ * Returns the maximum number of bytes needed in the circular buffer.
++ */
++static size_t hdlc_encoded_length(const struct hdlc_payload payloads[],
++				  size_t count)
++{
++	size_t i, payload_len = 0;
++
++	for (i = 0; i < count; i++)
++		payload_len += payloads[i].len;
++
++	/*
++	 * Worst case: every data byte needs escaping (doubles in size).
++	 * data bytes = address(1) + control(1) + payload + crc(2)
++	 * framing    = opening flag(1) + closing flag(1)
++	 */
++	return 2 + (1 + 1 + payload_len + 2) * 2;
++}
++
++#define HDLC_TX_BUF_WAIT_RETRIES	500
++#define HDLC_TX_BUF_WAIT_US_MIN	3000
++#define HDLC_TX_BUF_WAIT_US_MAX	5000
++
++/**
++ * hdlc_tx_frames() - Encode and queue an HDLC frame for transmission.
++ * @bg: beagleplay greybus driver
++ * @address: HDLC address field
++ * @control: HDLC control field
++ * @payloads: array of payload buffers
++ * @count: number of payloads
++ *
++ * Sleeps outside the spinlock until enough circular-buffer space is
++ * available, then verifies space under the lock and writes the entire
++ * frame atomically.  Either a complete frame is enqueued or nothing is
++ * written, avoiding both sleeping in atomic context and partial frames.
++ */
+ static void hdlc_tx_frames(struct gb_beagleplay *bg, u8 address, u8 control,
+ 			   const struct hdlc_payload payloads[], size_t count)
+ {
++	size_t needed = hdlc_encoded_length(payloads, count);
++	int retries = HDLC_TX_BUF_WAIT_RETRIES;
+ 	size_t i;
++	int head, tail;
++
++	/* Wait outside the lock for sufficient buffer space. */
++	while (retries--) {
++		/* Pairs with smp_store_release() in hdlc_append(). */
++		head = smp_load_acquire(&bg->tx_circ_buf.head);
++		tail = READ_ONCE(bg->tx_circ_buf.tail);
++
++		if (CIRC_SPACE(head, tail, TX_CIRC_BUF_SIZE) >= needed)
++			break;
++
++		/* Kick the consumer and sleep — no lock held. */
++		schedule_work(&bg->tx_work);
++		usleep_range(HDLC_TX_BUF_WAIT_US_MIN, HDLC_TX_BUF_WAIT_US_MAX);
 +	}
 +
- 	memcpy(bg->rx_buffer + bg->rx_buffer_len, data, count);
- 	bg->rx_buffer_len += count;
++	if (retries < 0) {
++		dev_warn_ratelimited(&bg->sd->dev,
++				     "Tx circ buf full, dropping frame\n");
++		return;
++	}
  
+ 	spin_lock(&bg->tx_producer_lock);
+ 
++	/*
++	 * Re-check under the lock.  Should not fail since
++	 * tx_producer_lock serialises all producers and the
++	 * consumer only frees space, but guard against it.
++	 */
++	head = bg->tx_circ_buf.head;
++	tail = READ_ONCE(bg->tx_circ_buf.tail);
++	if (unlikely(CIRC_SPACE(head, tail, TX_CIRC_BUF_SIZE) < needed)) {
++		spin_unlock(&bg->tx_producer_lock);
++		dev_warn_ratelimited(&bg->sd->dev,
++				     "Tx circ buf space lost, dropping frame\n");
++		return;
++	}
++
+ 	hdlc_append_tx_frame(bg);
+ 	hdlc_append_tx_u8(bg, address);
+ 	hdlc_append_tx_u8(bg, control);
 
 
