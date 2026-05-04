@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D34A2E2F0E;
-	Mon,  4 May 2026 13:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C93F3DDDD7;
+	Mon,  4 May 2026 13:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903079; cv=none; b=bfrmHxWuCUzk8jJZBNB/EniP/CR8ugLKhTny1COwQIedmM6wVC8ut58pVdvmiPNcA2/kUptVyrmAdAulX9dRExTSLUOLKfGBRa8L+RpGqpAluwoptst5PLoUekYuVnzOW9tl7sAwcLaSMYUEoLDkTKvfV+qWlWOWHI4PfK7/Pow=
+	t=1777903082; cv=none; b=IQKpe8yX6vX/ldXFpeB8mFjcqz2drBvsOdpLdwx2FbXJMFwJ/sAiElt8yrf2ZGBn0qdb/phO93Nxxc+5sss7TOIFEAVaTBKD3pGYw4w7walUkE1STbG4EZPp6HHpA/umTw9yg9Tdt7dOAGTLWg29/Y6/9vM3Ti4rFzODxocVm1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903079; c=relaxed/simple;
-	bh=J/0rrZDz2ExPEk4oQGgA/blCeSXaPAV8IfmU4v2mO1I=;
+	s=arc-20240116; t=1777903082; c=relaxed/simple;
+	bh=RxQkZuiIc23bZun+OrsR0krxLfiBiSH8BlAwQ8xznKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rsYf7BwlaAMA1dMrztyr5v+FwgYC2Q5c+QRcJtJEIgUXuuhXrCMRmeCbBKWd+WG+SmW3BwJBrpxBs8N3UV7I4zrwFwaspBBOvy2d5hjaq8YcKH6UhtucszV7k9viVb8JlDHDMINDQGWopQk6IuMNlZTBNOY/OH8GX1dlVsm82E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbfKpYJD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HlqqeS//cTcyH5qEOK/CbK+04jluBlerNpBdXb8+C3NFfWdXRWeutlfLeTp2ApOtFq5hDNkajIL1aztHIdBmGZJUiRj/0n3w/OwAWBJCT2FfLlLPzLNzRWLEZngLHNYP8f3DIFytBETgtUpv/6wKU2SRkjbI8d89MGmNnrxtonc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smbyz0y7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbfKpYJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119A2C2BCB8;
-	Mon,  4 May 2026 13:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smbyz0y7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6797C2BCF5;
+	Mon,  4 May 2026 13:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903079;
-	bh=J/0rrZDz2ExPEk4oQGgA/blCeSXaPAV8IfmU4v2mO1I=;
+	s=korg; t=1777903082;
+	bh=RxQkZuiIc23bZun+OrsR0krxLfiBiSH8BlAwQ8xznKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WbfKpYJD1/neOYVBJRO5jZT8D/WTFR0nhVg1XL0mlKocWBkyLFjunDh6R7A4dj1XV
-	 g5QEwX/D1xUk26grtc36qgBiIbJN6B2U8dkGxdnxx3gXKJdJ7H3A8M2/EzsaroPhJJ
-	 ixmQAL5Lri64ZZqEPBR7s3C2a1OY+xjx2sT2Tzyo=
+	b=smbyz0y758nUd2YthVi8s55kMkdBIgUKiNv/PAL6gP22EpGEi7k4iQBG16cCxHRBN
+	 H/gDqnIWPxsxbplSKDW3bzAh6ba3zVfRyQwxbgmCk6eHYL64L87/ikyD570NaIpIDF
+	 1jeUS/7OlQdOvMizjR9lWCx9k0fN76qC8lbdQGEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Levinsky <ben.levinsky@amd.com>,
-	Tanmay Shah <tanmay.shah@amd.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 7.0 094/307] remoteproc: xlnx: Only access buffer information if IPI is buffered
-Date: Mon,  4 May 2026 15:49:39 +0200
-Message-ID: <20260504135146.349572166@linuxfoundation.org>
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Subject: [PATCH 7.0 095/307] reset: rzv2h-usb2phy: Keep PHY clock enabled for entire device lifetime
+Date: Mon,  4 May 2026 15:49:40 +0200
+Message-ID: <20260504135146.389175106@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,54 +50,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Levinsky <ben.levinsky@amd.com>
+From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 
-commit 38dd6ccfdfbbe865569a52fe1ba9fa1478f672e6 upstream.
+commit 8889b289ce1bd11a5102b9617742a1b93bb4843e upstream.
 
-In the receive callback check if message is NULL to prevent
-possibility of crash by NULL pointer dereferencing.
+The driver was disabling the USB2 PHY clock immediately after register
+initialization in probe() and after each reset operation. This left the
+PHY unclocked even though it must remain active for USB functionality.
 
-Signed-off-by: Ben Levinsky <ben.levinsky@amd.com>
-Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
-Fixes: 5dfb28c257b7 ("remoteproc: xilinx: Add mailbox channels for rpmsg")
+The behavior appeared to work only when another driver
+(e.g., USB controller) had already enabled the clock, making operation
+unreliable and hardware-dependent. In configurations where this driver
+is the sole clock user, USB functionality would fail.
+
+Fix this by:
+- Enabling the clock once in probe() via pm_runtime_resume_and_get()
+- Removing all pm_runtime_put() calls from assert/deassert/status
+- Registering a devm cleanup action to release the clock at removal
+- Removed rzv2h_usbphy_assert_helper() and its call in
+  rzv2h_usb2phy_reset_probe()
+
+This ensures the PHY clock remains enabled for the entire device lifetime,
+preventing instability and aligning with hardware requirements.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20260303235127.2317955-3-tanmay.shah@amd.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: e3911d7f865b ("reset: Add USB2PHY port reset driver for Renesas RZ/V2H(P)")
+Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/xlnx_r5_remoteproc.c |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/reset/reset-rzv2h-usb2phy.c |   64 ++++++++++--------------------------
+ 1 file changed, 18 insertions(+), 46 deletions(-)
 
---- a/drivers/remoteproc/xlnx_r5_remoteproc.c
-+++ b/drivers/remoteproc/xlnx_r5_remoteproc.c
-@@ -232,17 +232,19 @@ static void zynqmp_r5_mb_rx_cb(struct mb
+--- a/drivers/reset/reset-rzv2h-usb2phy.c
++++ b/drivers/reset/reset-rzv2h-usb2phy.c
+@@ -49,9 +49,10 @@ static inline struct rzv2h_usb2phy_reset
+ 	return container_of(rcdev, struct rzv2h_usb2phy_reset_priv, rcdev);
+ }
  
- 	ipi = container_of(cl, struct mbox_info, mbox_cl);
+-/* This function must be called only after pm_runtime_resume_and_get() has been called */
+-static void rzv2h_usbphy_assert_helper(struct rzv2h_usb2phy_reset_priv *priv)
++static int rzv2h_usbphy_reset_assert(struct reset_controller_dev *rcdev,
++				     unsigned long id)
+ {
++	struct rzv2h_usb2phy_reset_priv *priv = rzv2h_usbphy_rcdev_to_priv(rcdev);
+ 	const struct rzv2h_usb2phy_reset_of_data *data = priv->data;
  
--	/* copy data from ipi buffer to r5_core */
-+	/* copy data from ipi buffer to r5_core if IPI is buffered. */
- 	ipi_msg = (struct zynqmp_ipi_message *)msg;
--	buf_msg = (struct zynqmp_ipi_message *)ipi->rx_mc_buf;
--	len = ipi_msg->len;
--	if (len > IPI_BUF_LEN_MAX) {
--		dev_warn(cl->dev, "msg size exceeded than %d\n",
--			 IPI_BUF_LEN_MAX);
--		len = IPI_BUF_LEN_MAX;
-+	if (ipi_msg) {
-+		buf_msg = (struct zynqmp_ipi_message *)ipi->rx_mc_buf;
-+		len = ipi_msg->len;
-+		if (len > IPI_BUF_LEN_MAX) {
-+			dev_warn(cl->dev, "msg size exceeded than %d\n",
-+				 IPI_BUF_LEN_MAX);
-+			len = IPI_BUF_LEN_MAX;
-+		}
-+		buf_msg->len = len;
-+		memcpy(buf_msg->data, ipi_msg->data, len);
+ 	scoped_guard(spinlock, &priv->lock) {
+@@ -60,24 +61,6 @@ static void rzv2h_usbphy_assert_helper(s
  	}
--	buf_msg->len = len;
--	memcpy(buf_msg->data, ipi_msg->data, len);
  
- 	/* received and processed interrupt ack */
- 	if (mbox_send_message(ipi->rx_chan, NULL) < 0)
+ 	usleep_range(11, 20);
+-}
+-
+-static int rzv2h_usbphy_reset_assert(struct reset_controller_dev *rcdev,
+-				     unsigned long id)
+-{
+-	struct rzv2h_usb2phy_reset_priv *priv = rzv2h_usbphy_rcdev_to_priv(rcdev);
+-	struct device *dev = priv->dev;
+-	int ret;
+-
+-	ret = pm_runtime_resume_and_get(dev);
+-	if (ret) {
+-		dev_err(dev, "pm_runtime_resume_and_get failed\n");
+-		return ret;
+-	}
+-
+-	rzv2h_usbphy_assert_helper(priv);
+-
+-	pm_runtime_put(dev);
+ 
+ 	return 0;
+ }
+@@ -87,14 +70,6 @@ static int rzv2h_usbphy_reset_deassert(s
+ {
+ 	struct rzv2h_usb2phy_reset_priv *priv = rzv2h_usbphy_rcdev_to_priv(rcdev);
+ 	const struct rzv2h_usb2phy_reset_of_data *data = priv->data;
+-	struct device *dev = priv->dev;
+-	int ret;
+-
+-	ret = pm_runtime_resume_and_get(dev);
+-	if (ret) {
+-		dev_err(dev, "pm_runtime_resume_and_get failed\n");
+-		return ret;
+-	}
+ 
+ 	scoped_guard(spinlock, &priv->lock) {
+ 		writel(data->reset_deassert_val, priv->base + data->reset_reg);
+@@ -102,8 +77,6 @@ static int rzv2h_usbphy_reset_deassert(s
+ 		writel(data->reset_release_val, priv->base + data->reset_reg);
+ 	}
+ 
+-	pm_runtime_put(dev);
+-
+ 	return 0;
+ }
+ 
+@@ -111,20 +84,10 @@ static int rzv2h_usbphy_reset_status(str
+ 				     unsigned long id)
+ {
+ 	struct rzv2h_usb2phy_reset_priv *priv = rzv2h_usbphy_rcdev_to_priv(rcdev);
+-	struct device *dev = priv->dev;
+-	int ret;
+ 	u32 reg;
+ 
+-	ret = pm_runtime_resume_and_get(dev);
+-	if (ret) {
+-		dev_err(dev, "pm_runtime_resume_and_get failed\n");
+-		return ret;
+-	}
+-
+ 	reg = readl(priv->base + priv->data->reset_reg);
+ 
+-	pm_runtime_put(dev);
+-
+ 	return (reg & priv->data->reset_status_bits) == priv->data->reset_status_bits;
+ }
+ 
+@@ -141,6 +104,11 @@ static int rzv2h_usb2phy_reset_of_xlate(
+ 	return 0;
+ }
+ 
++static void rzv2h_usb2phy_reset_pm_runtime_put(void *data)
++{
++	pm_runtime_put(data);
++}
++
+ static int rzv2h_usb2phy_reset_probe(struct platform_device *pdev)
+ {
+ 	const struct rzv2h_usb2phy_reset_of_data *data;
+@@ -175,14 +143,14 @@ static int rzv2h_usb2phy_reset_probe(str
+ 	if (error)
+ 		return dev_err_probe(dev, error, "pm_runtime_resume_and_get failed\n");
+ 
++	error = devm_add_action_or_reset(dev, rzv2h_usb2phy_reset_pm_runtime_put,
++					 dev);
++	if (error)
++		return dev_err_probe(dev, error, "unable to register cleanup action\n");
++
+ 	for (unsigned int i = 0; i < data->init_val_count; i++)
+ 		writel(data->init_vals[i].val, priv->base + data->init_vals[i].reg);
+ 
+-	/* keep usb2phy in asserted state */
+-	rzv2h_usbphy_assert_helper(priv);
+-
+-	pm_runtime_put(dev);
+-
+ 	priv->rcdev.ops = &rzv2h_usbphy_reset_ops;
+ 	priv->rcdev.of_reset_n_cells = 0;
+ 	priv->rcdev.nr_resets = 1;
+@@ -190,7 +158,11 @@ static int rzv2h_usb2phy_reset_probe(str
+ 	priv->rcdev.of_node = dev->of_node;
+ 	priv->rcdev.dev = dev;
+ 
+-	return devm_reset_controller_register(dev, &priv->rcdev);
++	error = devm_reset_controller_register(dev, &priv->rcdev);
++	if (error)
++		return dev_err_probe(dev, error, "could not register reset controller\n");
++
++	return 0;
+ }
+ 
+ /*
 
 
