@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3CC315785;
-	Mon,  4 May 2026 14:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FC635A3AD;
+	Mon,  4 May 2026 14:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904458; cv=none; b=bBkd14D8urZ/W4xpU256op8gMDT1RIol/VEywA3/YpgLppiWAmY7BJpUNeH0/xdfL4WA6d4O2xow3pnnoF//8hW+2Z93b82fXovgcjDh3XLQki8xB6WxDAN9Wr5y6bF6RBB/9aI6jnDfOMqguGHkr4vYeFtz0m/+f4pOxMa3a5U=
+	t=1777904460; cv=none; b=tIdzFRrw07uLr4r99TNlNF+i8XP9s0dFiGJoldrmzBMAHAlIiimdBKgBQopLDnouhfJcRVWabUk6dmoZZWc+sLLqkAqexSQe+BBOKRBH9tSpEmUibkAE/IZsgFpBkZyHGoALqm4QCBTIsKZ4FL9pzktCZmiA0gUr0Kk9GG4xcxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904458; c=relaxed/simple;
-	bh=ekXOpofTjeqO/VjlRPl844EP/LYjEpMGl7A/HOusN9k=;
+	s=arc-20240116; t=1777904460; c=relaxed/simple;
+	bh=mqnKWp7Y9njFv399vCzCHy8L8kDLCZoHypn50SMyUQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5667r/CLNgALtNIR1I5bAsKsgplqrev58KHXYzVEC4Um/zB0/SFI4ZpfIS3wNNgOxDKxEFBUYcXbLrZ0PqRdqrS0m577TIc5fiwIcfhppLdaKCiDVj+KjBMh9FzpktSEcu9SoyOAircPIxsTCW7Jg1Dwny2gjK37Na7GVs1QLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWapd+pU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZC5EGrxYEkAmulWIAsoHmowCqUxS/94yxN3el5NwHB/eUkhH80Uippq3RkpGzIT8zVsuUZZO0lHPa2ICmmEzuZXTrFPCcU5P6KOi3Y+csjRTH42y8b4d6+kaBE77ux9xZbide+YtrCibVYWbAB3BafDbwRwUHJrI6t0O5xx2sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klKNSUYo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWapd+pU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837E0C2BCB8;
-	Mon,  4 May 2026 14:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klKNSUYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD7EC2BCB8;
+	Mon,  4 May 2026 14:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904457;
-	bh=ekXOpofTjeqO/VjlRPl844EP/LYjEpMGl7A/HOusN9k=;
+	s=korg; t=1777904460;
+	bh=mqnKWp7Y9njFv399vCzCHy8L8kDLCZoHypn50SMyUQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DWapd+pURgz3zbueezq1rzWGSF/VeOEIezjlviW6eFoZiX93NFieS5niehMH508RX
-	 GV5ZZJbu4H2hAN6o2t2JdJZHk/n3nf6xaS3mhIS/kG+/KXNUZze/Gp+DB5qiZjoT0r
-	 01r7Kd21qfaUHbJxm0XRtc5Z6XUaknWlGJUKK2EU=
+	b=klKNSUYoKSuHi2jD08eyb5m26HWPCp+d1tiKIr4xRPStupiemsMKhcGArtn32iXAA
+	 mrJ5bOi7oWLM1hOwvW8AuzBsqnSZ8nP5c3TROR4oz7ZPJNdbDyWyySCHsJcZLalnJJ
+	 AfV+hyQSWMtnRWoP0hib6JEyoDTtkyiWW8zRtcRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.12 029/215] wifi: rtw88: check for PCI upstream bridge existence
-Date: Mon,  4 May 2026 15:50:48 +0200
-Message-ID: <20260504135131.241002095@linuxfoundation.org>
+	Rong Zhang <i@rong.moe>,
+	Arun Raghavan <arunr@valvesoftware.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 047/215] Revert "ALSA: usb: Increase volume range that triggers a warning"
+Date: Mon,  4 May 2026 15:51:06 +0200
+Message-ID: <20260504135131.898417296@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -50,44 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Rong Zhang <i@rong.moe>
 
-commit eb101d2abdcccb514ca4fccd3b278dd8267374f6 upstream.
+commit 41d78cb724f4b40b7548af420ccfe524b14023bb upstream.
 
-pci_upstream_bridge() returns NULL if the device is on a root bus.  If
-8821CE is installed in the system with such a PCI topology, the probing
-routine will crash.  This has probably been unnoticed as 8821CE is mostly
-supplied in laptops where there is a PCI-to-PCI bridge located upstream
-from the device.  However the card might be installed on a system with
-different configuration.
+UAC uses 2 bytes to store volume values, so the maximum volume range is
+0xFFFF (65535, val = -32768/32767/1).
 
-Check if the bridge does exist for the specific workaround to be applied.
+The reverted commit bumpped the range of triggering the warning to >
+65535, effectively making the range check a no-op. It didn't fix
+anything but covered any potential problems and deviated from the
+original intention of the range check.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
+This reverts commit 6b971191fcfc9e3c2c0143eea22534f1f48dbb62.
 
-Fixes: 24f5e38a13b5 ("rtw88: Disable PCIe ASPM while doing NAPI poll on 8821CE")
+Fixes: 6b971191fcfc ("ALSA: usb: Increase volume range that triggers a warning")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260220094730.49791-1-pchelkin@ispras.ru
+Signed-off-by: Rong Zhang <i@rong.moe>
+Acked-by: Arun Raghavan <arunr@valvesoftware.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260303194805.266158-2-i@rong.moe
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/mixer.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -1767,7 +1767,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
- 	}
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1814,10 +1814,11 @@ static void __build_feature_ctl(struct u
  
- 	/* Disable PCIe ASPM L1 while doing NAPI poll for 8821CE */
--	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C && bridge->vendor == PCI_VENDOR_ID_INTEL)
-+	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C &&
-+	    bridge && bridge->vendor == PCI_VENDOR_ID_INTEL)
- 		rtwpci->rx_no_aspm = true;
- 
- 	rtw_pci_phy_cfg(rtwdev);
+ 	range = (cval->max - cval->min) / cval->res;
+ 	/*
+-	 * There are definitely devices with a range of ~20,000, so let's be
+-	 * conservative and allow for a bit more.
++	 * Are there devices with volume range more than 255? I use a bit more
++	 * to be sure. 384 is a resolution magic number found on Logitech
++	 * devices. It will definitively catch all buggy Logitech devices.
+ 	 */
+-	if (range > 65535) {
++	if (range > 384) {
+ 		usb_audio_warn(mixer->chip,
+ 			       "Warning! Unlikely big volume range (=%u), cval->res is probably wrong.",
+ 			       range);
 
 
