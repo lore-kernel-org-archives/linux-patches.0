@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118F937881B;
-	Mon,  4 May 2026 14:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6448575801;
+	Mon,  4 May 2026 14:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903455; cv=none; b=Q1RMAgbrLR1yTGanWrSX+u0Ohh7oslbKV5iCekBoryfqjk2tctlmzVljbhCm7/U8u01UNjvoxRgrqM2xQXGMtrn3XodFXGjZLodhIMf8jEYGRY0wlGSu0S2KGpgdvnzTNJRUOoamgIjejPPU5HdfLiCbLlhS26iEpqzrfQF7iFQ=
+	t=1777903457; cv=none; b=cWZpxah2wQhZhbwQMsdoHzembnoCAwG7x1ERUtJC9z4RYNRZMbmlWsZdW2WeZArKpIjttahna1BxfyFSADjhQZwAw9ycI/EK2sb8OoVO7iyMSxKUmtYzCZrkzptHjMPX37Lwo1/9lsG4nVNb3hAXE8kN4hVRCFqBWh1LA8QRk6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903455; c=relaxed/simple;
-	bh=uVKQMOh0/p8AVben/Jp/fcYfMmA3DEgzdeCM04w29Fo=;
+	s=arc-20240116; t=1777903457; c=relaxed/simple;
+	bh=tNzswJ1XESlgnxAralxaaftmc5nsDhCEMLoizpBvAvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Phijzh0TE8xXgKstt6rp3rhnIG5AJqLXYMwIddbjiAQFUzkrrpZVgX7+iy0WuuBnr3MV88tDX70JD18l7Xj4Xi+1np32cbNrIty+mWsbYuNCjPnzp4CdW1M4gjn7NQVtHvgUd4wnbElpi2WEsiC2c1XrZlOKIQh9SQsamiFVku4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXUk3akB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C3n4nLegOxMtGI/mxwbFwJm9R2LwC+KyLSwiMbAUmbem6pKLTuUX7JPI8+O/+81JlQZWw+H0WRiFQrzf+C6ExnTSGe1DQ+sgzmG61zKtQPNmerB+3lh2PY43W8AkpVyFJCS51bRFzQ0hp7sSQ+z7Radk4m0W/crILzh/mlWAwjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzK047U1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXUk3akB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607C4C2BCB8;
-	Mon,  4 May 2026 14:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzK047U1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE594C2BCB8;
+	Mon,  4 May 2026 14:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903454;
-	bh=uVKQMOh0/p8AVben/Jp/fcYfMmA3DEgzdeCM04w29Fo=;
+	s=korg; t=1777903457;
+	bh=tNzswJ1XESlgnxAralxaaftmc5nsDhCEMLoizpBvAvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pXUk3akBlpYajQSysm0f/cZnlyiU/73JKbak+vgxAhw78b8om0mqbMYBBqdHlBLkU
-	 XBPvsWR6UAGqVwQuzMv6fyjge+MnU7I09nBuOtngR9jhMF7WPtm3k7JO+PDnS7gsck
-	 7fh7WkE3NHj43s/pRyRfcB6plXV75ImzhtueyJ2A=
+	b=IzK047U1f7jazvQoqjNNxNpv7MDxIl1zkJQoFBQqRVVZVR3KDIzx/w1bGRYJRfgf+
+	 fzyyML968fbpmvad+oX0mJa0ATEoICaSSAxBvg6ho8HI4jjUAUQpEUUgz70dxJ01Df
+	 1C4bS+3ESyP950fpY0LydpZ+381Tc70ulCZ2750c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.0 207/307] KVM: nSVM: Ensure AVIC is inhibited when restoring a vCPU to guest mode
-Date: Mon,  4 May 2026 15:51:32 +0200
-Message-ID: <20260504135150.663740157@linuxfoundation.org>
+Subject: [PATCH 7.0 208/307] KVM: nSVM: Always use NextRIP as vmcb02s NextRIP after first L2 VMRUN
+Date: Mon,  4 May 2026 15:51:33 +0200
+Message-ID: <20260504135150.701008736@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,40 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Yosry Ahmed <yosry@kernel.org>
 
-commit 24f7d36b824b65cf1a2db3db478059187b2a37b0 upstream.
+commit 8d397582f6b5e9fbcf09781c7c934b4910e94a50 upstream.
 
-On nested VMRUN, KVM ensures AVIC is inhibited by requesting
-KVM_REQ_APICV_UPDATE, triggering a check of inhibit reasons, finding
-APICV_INHIBIT_REASON_NESTED, and disabling AVIC.
+For guests with NRIPS disabled, L1 does not provide NextRIP when running
+an L2 with an injected soft interrupt, instead it advances the current RIP
+before running it. KVM uses the current RIP as the NextRIP in vmcb02 to
+emulate a CPU without NRIPS.
 
-However, when KVM_SET_NESTED_STATE is performed on a vCPU not in guest
-mode with AVIC enabled, KVM_REQ_APICV_UPDATE is not requested, and AVIC
-is not inhibited.
+However, after L2 runs the first time, NextRIP will be updated by the CPU
+and/or KVM, and the current RIP is no longer the correct value to use in
+vmcb02.  Hence, after save/restore, use the current RIP if and only if a
+nested run is pending, otherwise use NextRIP.  Give soft_int_next_rip the
+same treatment, as it's the same logic, just for a narrower use case.
 
-Request KVM_REQ_APICV_UPDATE in the KVM_SET_NESTED_STATE path if AVIC is
-active, similar to the nested VMRUN path.
-
-Fixes: f44509f849fe ("KVM: x86: SVM: allow AVIC to co-exist with a nested guest running")
-Cc: stable@vger.kernel.org
+Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+CC: stable@vger.kernel.org
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260224225017.3303870-1-yosry@kernel.org
+Link: https://patch.msgid.link/20260225005950.3739782-6-yosry@kernel.org
+[sean: give soft_int_next_rip the same treatment]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/svm/nested.c |   28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -1939,6 +1939,9 @@ static int svm_set_nested_state(struct k
+@@ -856,24 +856,32 @@ static void nested_vmcb02_prepare_contro
+ 	vmcb02->control.event_inj_err       = svm->nested.ctl.event_inj_err;
  
- 	svm->nested.force_msr_bitmap_recalc = true;
+ 	/*
+-	 * next_rip is consumed on VMRUN as the return address pushed on the
++	 * NextRIP is consumed on VMRUN as the return address pushed on the
+ 	 * stack for injected soft exceptions/interrupts.  If nrips is exposed
+-	 * to L1, take it verbatim from vmcb12.  If nrips is supported in
+-	 * hardware but not exposed to L1, stuff the actual L2 RIP to emulate
+-	 * what a nrips=0 CPU would do (L1 is responsible for advancing RIP
+-	 * prior to injecting the event).
++	 * to L1, take it verbatim from vmcb12.
++	 *
++	 * If nrips is supported in hardware but not exposed to L1, stuff the
++	 * actual L2 RIP to emulate what a nrips=0 CPU would do (L1 is
++	 * responsible for advancing RIP prior to injecting the event). This is
++	 * only the case for the first L2 run after VMRUN. After that (e.g.
++	 * during save/restore), NextRIP is updated by the CPU and/or KVM, and
++	 * the value of the L2 RIP from vmcb12 should not be used.
+ 	 */
+-	if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
+-		vmcb02->control.next_rip    = svm->nested.ctl.next_rip;
+-	else if (boot_cpu_has(X86_FEATURE_NRIPS))
+-		vmcb02->control.next_rip    = vmcb12_rip;
++	if (boot_cpu_has(X86_FEATURE_NRIPS)) {
++		if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS) ||
++		    !svm->nested.nested_run_pending)
++			vmcb02->control.next_rip    = svm->nested.ctl.next_rip;
++		else
++			vmcb02->control.next_rip    = vmcb12_rip;
++	}
  
-+	if (kvm_vcpu_apicv_active(vcpu))
-+		kvm_make_request(KVM_REQ_APICV_UPDATE, vcpu);
-+
- 	kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
- 	ret = 0;
- out_free:
+ 	svm->nmi_l1_to_l2 = is_evtinj_nmi(vmcb02->control.event_inj);
+ 	if (is_evtinj_soft(vmcb02->control.event_inj)) {
+ 		svm->soft_int_injected = true;
+ 		svm->soft_int_csbase = vmcb12_csbase;
+ 		svm->soft_int_old_rip = vmcb12_rip;
+-		if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
++		if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS) ||
++		    !svm->nested.nested_run_pending)
+ 			svm->soft_int_next_rip = svm->nested.ctl.next_rip;
+ 		else
+ 			svm->soft_int_next_rip = vmcb12_rip;
 
 
