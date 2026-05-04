@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB79F2E2F0E;
-	Mon,  4 May 2026 14:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF06A1ADC83;
+	Mon,  4 May 2026 14:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903537; cv=none; b=mrtdhWHKvALHSkxr3/xvEx5ZxHbg0/0tmXANaRZqxoRZcn+3bOZsIbltMpG9CIScIGhBlQ03I3iybonC/1p4e8UFr/L4Rox6HIbnnY4LkhIj4mz/1soJ2+r6oK8zntp8u/VqLrgVp2CTFjLTswYH2CTA4wniX3LBD3HlZQjZm8s=
+	t=1777903539; cv=none; b=hkanZ1Y3iGFi5ZVkQwaYkx1I39izuPGbiG9/tJx3IBJ1cfBiITjlP/w19MW3AuyRfDXJiA7JAAlyckqiqM7acB96s62J6Kd3PqelcjHNnM8f58xZgS0A3inlFQNNyJhkVhA8fhDKKDX4H1JcjZVNMKZwuMgmXHVznMpuDuzaF6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903537; c=relaxed/simple;
-	bh=bWDFVvKZlkb0VqHYI3d3+Yb/iW0fbZJ4xqLEDfYtjpM=;
+	s=arc-20240116; t=1777903539; c=relaxed/simple;
+	bh=IzA9ou30KLzLCCi/ATmoSIhGVksXepwx0KAqu/OGf6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/gfmyiXeGeV1SBG5FXZa/mvX624ILzgCqiFDBXe5o1kRV4GtLwBklUHms+i8mrwoioVxR7y08R0yr1jvE0QgKgj9P4iXYpTm3kjG/gYmTlRJ90pN3dgSgpMKIX+jqmMVGDpwwRoTQVFuo+YlF3PJkjkP5TT8PPFN5XTSRZkzSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkYcid8J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tpVIhGIRAiaiMf0x5WoN/o0WrS8TazlIrTM4YB+8inJ+qxMUhaddASje9jOealDnPJ292f/ooyBpx+bC9HWTVrwdbuxVF9B+ETo25Qn4jNlhgUa1ivT8DczY2q2jS4VohBLto0MTny1O2KKXUVoK5b3E96UstVV5I2TXmk6CUdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Suhn4zR7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkYcid8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81071C2BCF4;
-	Mon,  4 May 2026 14:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Suhn4zR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15333C2BCC4;
+	Mon,  4 May 2026 14:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903536;
-	bh=bWDFVvKZlkb0VqHYI3d3+Yb/iW0fbZJ4xqLEDfYtjpM=;
+	s=korg; t=1777903539;
+	bh=IzA9ou30KLzLCCi/ATmoSIhGVksXepwx0KAqu/OGf6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bkYcid8JbwHYQ8Hf1F4oOVgviENmC3druQWj8EwUceXvZ9xEiAF9QsM4E75p3aboX
-	 9f4w907pAw1iT5nXRwUqtYZi4regfTSvlIuUHcR+WufhDvo/bX+6QKFNh+0Cd7vMLf
-	 F47FBaaT2bbprMl50LVJDdCww6gTW3qIjw8Ucc/o=
+	b=Suhn4zR7CwjrSiC3ikEDCpRGmzEx5GuO9r5eMCAdDNaw1+0tNJ4kXpLww3P3FeuqN
+	 xml3BZvXFPYHJ08a+jky9U2CkEpNFQLyi94+o2YZaUb+1UkhQLDa26d4gk5NMrUg9F
+	 uqIHF5iGfZYivCbjm+hUwTh9b0sxUhl2fOShqsS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 7.0 271/307] erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()
-Date: Mon,  4 May 2026 15:52:36 +0200
-Message-ID: <20260504135153.003977544@linuxfoundation.org>
+	Sam Edwards <CFSworks@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 7.0 272/307] ceph: fix num_ops off-by-one when crypto allocation fails
+Date: Mon,  4 May 2026 15:52:37 +0200
+Message-ID: <20260504135153.039404965@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,53 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Sam Edwards <cfsworks@gmail.com>
 
-commit 21e161de2dc660b1bb70ef5b156ab8e6e1cca3ab upstream.
+commit a0d9555bf9eaeba34fe6b6bb86f442fe08ba3842 upstream.
 
-Some crafted images can have illegal (!partial_decoding &&
-m_llen < m_plen) extents, and the LZ4 inplace decompression path
-can be wrongly hit, but it cannot handle (outpages < inpages)
-properly: "outpages - inpages" wraps to a large value and
-the subsequent rq->out[] access reads past the decompressed_pages
-array.
+move_dirty_folio_in_page_array() may fail if the file is encrypted, the
+dirty folio is not the first in the batch, and it fails to allocate a
+bounce buffer to hold the ciphertext. When that happens,
+ceph_process_folio_batch() simply redirties the folio and flushes the
+current batch -- it can retry that folio in a future batch.
 
-However, such crafted cases can correctly result in a corruption
-report in the normal LZ4 non-inplace path.
+However, if this failed folio is not contiguous with the last folio that
+did make it into the batch, then ceph_process_folio_batch() has already
+incremented `ceph_wbc->num_ops`; because it doesn't follow through and
+add the discontiguous folio to the array, ceph_submit_write() -- which
+expects that `ceph_wbc->num_ops` accurately reflects the number of
+contiguous ranges (and therefore the required number of "write extent"
+ops) in the writeback -- will panic the kernel:
 
-Let's add an additional check to fix this for backporting.
+    BUG_ON(ceph_wbc->op_idx + 1 != req->r_num_ops);
 
-Reproducible image (base64-encoded gzipped blob):
+This issue can be reproduced on affected kernels by writing to
+fscrypt-enabled CephFS file(s) with a 4KiB-written/4KiB-skipped/repeat
+pattern (total filesize should not matter) and gradually increasing the
+system's memory pressure until a bounce buffer allocation fails.
 
-H4sIAJGR12kCA+3SPUoDQRgG4MkmkkZk8QRbRFIIi9hbpEjrHQI5ghfwCN5BLCzTGtLbBI+g
-dilSJo1CnIm7GEXFxhT6PDDwfrs73/ywIQD/1ePD4r7Ou6ETsrq4mu7XcWfj++Pb58nJU/9i
-PNtbjhan04/9GtX4qVYc814WDqt6FaX5s+ZwXXeq52lndT6IuVvlblytLMvh4Gzwaf90nsvz
-2DF/21+20T/ldgp5s1jXRaN4t/8izsy/OUB6e/Qa79r+JwAAAAAAAL52vQVuGQAAAP6+my1w
-ywAAAAAAAADwu14ATsEYtgBQAAA=
+Fix this crash by decrementing `ceph_wbc->num_ops` back to the correct
+value when move_dirty_folio_in_page_array() fails, but the folio already
+started counting a new (i.e. still-empty) extent.
 
-$ mount -t erofs -o cache_strategy=disabled foo.erofs /mnt
-$ dd if=/mnt/data of=/dev/null bs=4096 count=1
+The defect corrected by this patch has existed since 2022 (see first
+`Fixes:`), but another bug blocked multi-folio encrypted writeback until
+recently (see second `Fixes:`). The second commit made it into 6.18.16,
+6.19.6, and 7.0-rc1, unmasking the panic in those versions. This patch
+therefore fixes a regression (panic) introduced by cac190c7674f.
 
-Fixes: 598162d05080 ("erofs: support decompress big pcluster for lz4 backend")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: d55207717ded ("ceph: add encryption support to writepage and writepages")
+Fixes: cac190c7674f ("ceph: fix write storm on fscrypted files")
+Signed-off-by: Sam Edwards <CFSworks@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ceph/addr.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -145,6 +145,7 @@ static void *z_erofs_lz4_handle_overlap(
- 	oend = rq->pageofs_out + rq->outputsize;
- 	omargin = PAGE_ALIGN(oend) - oend;
- 	if (!rq->partial_decoding && may_inplace &&
-+	    rq->outpages >= rq->inpages &&
- 	    omargin >= LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize)) {
- 		for (i = 0; i < rq->inpages; ++i)
- 			if (rq->out[rq->outpages - rq->inpages + i] !=
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1365,6 +1365,10 @@ void ceph_process_folio_batch(struct add
+ 		rc = move_dirty_folio_in_page_array(mapping, wbc, ceph_wbc,
+ 				folio);
+ 		if (rc) {
++			/* Did we just begin a new contiguous op? Nevermind! */
++			if (ceph_wbc->len == 0)
++				ceph_wbc->num_ops--;
++
+ 			folio_redirty_for_writepage(wbc, folio);
+ 			folio_unlock(folio);
+ 			break;
 
 
