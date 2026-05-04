@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193543DE45A;
-	Mon,  4 May 2026 14:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CCC1ADC83;
+	Mon,  4 May 2026 14:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903532; cv=none; b=Rl9HrITRjQukoTos+Da7Kq0iqWcNNEhdvaepoum9FiLlqEQ3UlIHfPFvWYp+d7AnvFZwLjik0fTp5b/fDnUPq+DOjgt6gjh1tirSzfDPdBbOyXqDNHLyI4KDEwvR7sMtpKEj5QRTly7Dp9vmNDKKOse91C+yx3OEleOlB6NKL98=
+	t=1777903534; cv=none; b=PCAlE6sNTVYJsdFfTkXKCPELApG02MCfWaef/MFJuHVAiD37NObHrg73VxjGj5g4VP/ykYqahPaFyifKF/0eYu9tgfetJKC3WFhlAaDPvgcBosSVhFrdd25AyuGokkZ2vlxnPk/nZ1gwk/RYsKRG14WabMOcZnOfIassCDr5qOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903532; c=relaxed/simple;
-	bh=q62kNxGsAu9VRO0aGREyg0MScNmBLnBtAVrGPY3/Zx8=;
+	s=arc-20240116; t=1777903534; c=relaxed/simple;
+	bh=z+HEB5ObMIO7bcZoGvccKn9bqxJpJbuJEEcd3zevF3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2ofc7wdbcyCCZ+VXbxXQGK2/aDyXOROyrxKbALxlOYFEQqAy1aGzAGQURGextottpFc2fKRZPM8bZht+5S61H1QnXyhUircWQlEJWXlnWrM0TR3oD7KaRviV02EfCZKyLhWL2uNO40pIGhBr5Ot1TRDr+YBNTZRdtbKlUBtu0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtoH8Gh7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gi8chA8W3dLxFFZZHy6dEanazu1bbk55ZTrAxBCVJFczBoTFjOTi2NE5OKp61IGI2oK6hJ1wyGm4rgModRZb/XU9jwmsN3XxwjYhiqXiTZ1lkElj/IePq5n9Ej2qB46sxAkjJSZIOEA3jTryw+c8f+DL/dEHZuk3YhmC8pH8Hxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wV2dToGe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtoH8Gh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F95DC2BCB8;
-	Mon,  4 May 2026 14:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wV2dToGe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEACDC2BCB8;
+	Mon,  4 May 2026 14:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903531;
-	bh=q62kNxGsAu9VRO0aGREyg0MScNmBLnBtAVrGPY3/Zx8=;
+	s=korg; t=1777903534;
+	bh=z+HEB5ObMIO7bcZoGvccKn9bqxJpJbuJEEcd3zevF3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FtoH8Gh7aBviwTNH6VeJU4jisU5Ey5aRgueDp9PWFqBlyX9FJ/nsHF+lETD7YAkQE
-	 dHgAeDdgc1AqwbEeEiGxMFfaUu7mhBCsaglbgO/ZBr84m2wqe1V8L5Su2pkYgzmuNK
-	 3ymAPPk1tFBA5niDixX6ALV0KciGg23SeLEwLchA=
+	b=wV2dToGewAuXCH4zb+LcWxNGzgaFuZPfU6wy5hhTXiRykK5NcTsWME1erVHG0fpD3
+	 V9nvo6xwwcmvkEMhdrEW82KmJ1tlxmeK3tEdNNShdKyDkdzACZDMKf5OUig+msWXM6
+	 IHt2h6u8Jg4TkFnUSzMHrRKaAqenk+tGmiqFEygI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.0 269/307] crypto: nx - Fix packed layout in struct nx842_crypto_header
-Date: Mon,  4 May 2026 15:52:34 +0200
-Message-ID: <20260504135152.930838891@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 7.0 270/307] dm mirror: fix integer overflow in create_dirty_log()
+Date: Mon,  4 May 2026 15:52:35 +0200
+Message-ID: <20260504135152.967036412@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,81 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit b0bfa49c03e3c65737eafa73d8a698eaf55379a6 upstream.
+commit 4c788c6f921b22f9b6c3f316c4a071c05683e7de upstream.
 
-struct nx842_crypto_header is declared with the __packed attribute,
-however	the fields grouped with struct_group_tagged() were not packed.
-This caused the grouped header portion of the structure to lose the
-packed layout guarantees of the containing structure.
+The argument count calculation in create_dirty_log() performs
+`*args_used = 2 + param_count` before validating against argc. When a
+user provides a param_count close to UINT_MAX via the device mapper
+table string, this unsigned addition wraps around to a small value,
+causing the subsequent `argc < *args_used` check to be bypassed.
 
-Fix this by replacing struct_group_tagged() with __struct_group(...,
-..., __packed, ...) so the grouped fields are packed, and the original
-layout is preserved, restoring the intended packed layout of the
-structure.
+The overflowed param_count is then passed as argc to dm_dirty_log_create(),
+where it can cause out-of-bounds reads on the argv array.
 
-Before changes:
-struct nx842_crypto_header {
-	union {
-		struct {
-			__be16     magic;                /*     0     2 */
-			__be16     ignore;               /*     2     2 */
-			u8         groups;               /*     4     1 */
-		};                                       /*     0     6 */
-		struct nx842_crypto_header_hdr hdr;      /*     0     6 */
-	};                                               /*     0     6 */
-	struct nx842_crypto_header_group group[];        /*     6     0 */
+Fix by comparing param_count against argc - 2 before performing the
+addition, following the same pattern used by parse_features() in the
+same file. Since argc >= 2 is already guaranteed, the subtraction is
+safe.
 
-	/* size: 6, cachelines: 1, members: 2 */
-	/* last cacheline: 6 bytes */
-} __attribute__((__packed__));
-
-After changes:
-struct nx842_crypto_header {
-	union {
-		struct {
-			__be16     magic;                /*     0     2 */
-			__be16     ignore;               /*     2     2 */
-			u8         groups;               /*     4     1 */
-		} __attribute__((__packed__));           /*     0     5 */
-		struct nx842_crypto_header_hdr hdr;      /*     0     5 */
-	};                                               /*     0     5 */
-	struct nx842_crypto_header_group group[];        /*     5     0 */
-
-	/* size: 5, cachelines: 1, members: 2 */
-	/* last cacheline: 5 bytes */
-} __attribute__((__packed__));
-
-Fixes: 1e6b251ce175 ("crypto: nx - Avoid -Wflex-array-member-not-at-end warning")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/nx/nx-842.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-raid1.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/crypto/nx/nx-842.h
-+++ b/drivers/crypto/nx/nx-842.h
-@@ -159,7 +159,7 @@ struct nx842_crypto_header_group {
+--- a/drivers/md/dm-raid1.c
++++ b/drivers/md/dm-raid1.c
+@@ -993,13 +993,13 @@ static struct dm_dirty_log *create_dirty
+ 		return NULL;
+ 	}
  
- struct nx842_crypto_header {
- 	/* New members MUST be added within the struct_group() macro below. */
--	struct_group_tagged(nx842_crypto_header_hdr, hdr,
-+	__struct_group(nx842_crypto_header_hdr, hdr, __packed,
- 		__be16 magic;		/* NX842_CRYPTO_MAGIC */
- 		__be16 ignore;		/* decompressed end bytes to ignore */
- 		u8 groups;		/* total groups in this header */
-@@ -167,7 +167,7 @@ struct nx842_crypto_header {
- 	struct nx842_crypto_header_group group[];
- } __packed;
- static_assert(offsetof(struct nx842_crypto_header, group) == sizeof(struct nx842_crypto_header_hdr),
--	      "struct member likely outside of struct_group_tagged()");
-+	      "struct member likely outside of __struct_group()");
+-	*args_used = 2 + param_count;
+-
+-	if (argc < *args_used) {
++	if (param_count > argc - 2) {
+ 		ti->error = "Insufficient mirror log arguments";
+ 		return NULL;
+ 	}
  
- #define NX842_CRYPTO_GROUP_MAX	(0x20)
- 
++	*args_used = 2 + param_count;
++
+ 	dl = dm_dirty_log_create(argv[0], ti, mirror_flush, param_count,
+ 				 argv + 2);
+ 	if (!dl) {
 
 
