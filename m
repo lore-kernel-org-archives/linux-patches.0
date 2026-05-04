@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0DB377575;
-	Mon,  4 May 2026 14:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBBF35A3AD;
+	Mon,  4 May 2026 14:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903951; cv=none; b=J/9fkubZB3CWpcAzv2ZHexm0rMWHSEh22tQZEYCwtO0HdupjNjX3IZLcO08p0d+ABTPPdQRzVHmfRSixGD/JP9KbUFPwERBgGYiTPHaOAMTUoptw65sKOKPdakciswTKqJhc6WwVWcMdi7VI5qWG/tWSdb8v4FOMO+9n8t2qCAY=
+	t=1777903954; cv=none; b=oQ8uJB+B5upY4TtYRq9SoagesigP9/RNrCH3aESbLThc61ovIX8lfOcrLrdNfJ84BmnDRk3mBKG9HxK+tfiWdLsEw1CYGGCyQlZtwemhIxSOVnEN1hyxEa58F2NtlemrjHTat0DudEmcaSXQUSOCApp9UfHs9RFxt7nYP1kzHqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903951; c=relaxed/simple;
-	bh=XYqT5lOCQBrjnqIJHLqPhhg+fA2MjIAuTP+RttybFug=;
+	s=arc-20240116; t=1777903954; c=relaxed/simple;
+	bh=Rox3pwTqQuI+KopRltdVN4gK/RwnHhajuHIZ5pxl1T4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayGevrd9WDGzW1J/t5WFnFvaVSfK5XJJvzVoqVadiSCoRktw+6UoZG3AqcwQwCkfj8icR5WAZgGUWs8YOX6ViXzpBAaA4fhR2nzDB7aYzRLvmG5BwP+d8f8NbH4GT7DCFRCHXyj2XRmaGA9y5zpJwZd/kSHFCQHE1RTYj7Wanek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAY3WFWY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bjw5Ahw3BP3bIjWg+BEA9G4sqNTqWPdr0LN2StuyA28wSm3OlSDoGtUF41Q+rHiG9LQE52b/HAft7DlfPlExgC6JfcVpjf+YfxxEbye6MvX7/YplGdP01yBKEsfOGrOyWsekJ57ycvStdlY5Udf5Tvv8rjrkvDWClUh+8RoSaAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlEaK0L1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAY3WFWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA87C2BCB8;
-	Mon,  4 May 2026 14:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlEaK0L1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B96C2BCB8;
+	Mon,  4 May 2026 14:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903951;
-	bh=XYqT5lOCQBrjnqIJHLqPhhg+fA2MjIAuTP+RttybFug=;
+	s=korg; t=1777903953;
+	bh=Rox3pwTqQuI+KopRltdVN4gK/RwnHhajuHIZ5pxl1T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAY3WFWYkZGuH+TKKWU8I0mLMl3q7ngcZK0aC5DSXJJhaBYOl53HzFCbHlfOu8Qls
-	 fMQ7Xu6e50QdZLg9dmtk2XaHGD42k+nhXln81LEp6ANun7hx6JgM9WRSsFpBcO+O4Q
-	 SyqHvP2e6Vp5aCompBuLXuZRdEjlUJUQzKlU/9zY=
+	b=UlEaK0L1UMZhkSuXdQV/vhJTVE0Rzxwgs86RfENRkYWLGyC5dczEjLDnR5PhyGS4q
+	 QL805UFuXDjqBRT1AIF627e+72hdHP77hu7OV8459sZgsGdE0inPHYl+2jPObjoF/z
+	 f3Z6PNG8prPeJi2asnIuutjOj+OiIdmhE10uAYTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 093/275] block: fix zone write plugs refcount handling in disk_zone_wplug_schedule_bio_work()
-Date: Mon,  4 May 2026 15:50:33 +0200
-Message-ID: <20260504135146.372964884@linuxfoundation.org>
+Subject: [PATCH 6.18 094/275] io_uring/timeout: check unused sqe fields
+Date: Mon,  4 May 2026 15:50:34 +0200
+Message-ID: <20260504135146.410926513@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -53,57 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 0a8b8af896e0ef83e188e1fe20f98f2bbb1c2459 upstream.
+commit 484ae637a3e3d909718de7c07afd3bb34b6b8504 upstream.
 
-The function disk_zone_wplug_schedule_bio_work() always takes a
-reference on the zone write plug of the BIO work being scheduled. This
-ensures that the zone write plug cannot be freed while the BIO work is
-being scheduled but has not run yet. However, this unconditional
-reference taking is fragile since the reference taken is released by the
-BIO work blk_zone_wplug_bio_work() function, which implies that there
-always must be a 1:1 relation between the work being scheduled and the
-work running.
+Zero check unused SQE fields addr3 and pad2 for timeout and timeout
+update requests. They're not needed now, but could be used sometime
+in the future.
 
-Make sure to drop the reference taken when scheduling the BIO work if
-the work is already scheduled, that is, when queue_work() returns false.
-
-Fixes: 9e78c38ab30b ("block: Hold a reference on zone write plugs to schedule submission")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-zoned.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ io_uring/timeout.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/block/blk-zoned.c
-+++ b/block/blk-zoned.c
-@@ -801,13 +801,17 @@ static void disk_zone_wplug_schedule_bio
- 					      struct blk_zone_wplug *zwplug)
- {
- 	/*
--	 * Take a reference on the zone write plug and schedule the submission
--	 * of the next plugged BIO. blk_zone_wplug_bio_work() will release the
--	 * reference we take here.
-+	 * Schedule the submission of the next plugged BIO. Taking a reference
-+	 * to the zone write plug is required as the bio_work belongs to the
-+	 * plug, and thus we must ensure that the write plug does not go away
-+	 * while the work is being scheduled but has not run yet.
-+	 * blk_zone_wplug_bio_work() will release the reference we take here,
-+	 * and we also drop this reference if the work is already scheduled.
- 	 */
- 	WARN_ON_ONCE(!(zwplug->flags & BLK_ZONE_WPLUG_PLUGGED));
- 	refcount_inc(&zwplug->ref);
--	queue_work(disk->zone_wplugs_wq, &zwplug->bio_work);
-+	if (!queue_work(disk->zone_wplugs_wq, &zwplug->bio_work))
-+		disk_put_zone_wplug(zwplug);
- }
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -445,6 +445,8 @@ int io_timeout_remove_prep(struct io_kio
  
- static inline void disk_zone_wplug_add_bio(struct gendisk *disk,
+ 	if (unlikely(req->flags & (REQ_F_FIXED_FILE | REQ_F_BUFFER_SELECT)))
+ 		return -EINVAL;
++	if (sqe->addr3 || sqe->__pad2[0])
++		return -EINVAL;
+ 	if (sqe->buf_index || sqe->len || sqe->splice_fd_in)
+ 		return -EINVAL;
+ 
+@@ -517,6 +519,8 @@ static int __io_timeout_prep(struct io_k
+ 	unsigned flags;
+ 	u32 off = READ_ONCE(sqe->off);
+ 
++	if (sqe->addr3 || sqe->__pad2[0])
++		return -EINVAL;
+ 	if (sqe->buf_index || sqe->len != 1 || sqe->splice_fd_in)
+ 		return -EINVAL;
+ 	if (off && is_timeout_link)
 
 
