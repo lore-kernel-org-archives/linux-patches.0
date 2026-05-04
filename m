@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EA93DF003;
-	Mon,  4 May 2026 14:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D5A1EF09B;
+	Mon,  4 May 2026 14:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904856; cv=none; b=KnrQA5lNeUrl6D1kaEinWgYeUqhDE8IxoEwbyt2MdEQMuvmpSrdt9TdVSul/iuhALVVn9zNcVFFTJKiUWLOv4fdzGzn+k2cZaK5KYiP6D+pl3/hhDLnOMI1gaIuDZK2itjMaGgBXYepBkF19FxUSzv3yasInFN/hhriYhbksiQw=
+	t=1777904858; cv=none; b=KLEuyzB/As9FIIBEXqCehmM+CF6mSd5EEf6px4cjeuMQgR5dSi4Jf9zD1v2rRuIVWd1H8NcncQ0twkqtqohIJA/wtQZx8AohCrVToOjIPAgV/b6qCdHBcZZCtjXQBWx5MWEc2AMz/5z5q46SdvR42HTGYQBFdWAPu4YUI6RQB+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904856; c=relaxed/simple;
-	bh=DVsV35peOphUUyFC4iwuUbGe0inWr0XfFEWOl46DTBQ=;
+	s=arc-20240116; t=1777904858; c=relaxed/simple;
+	bh=3Dbej7ofNEn7L+iaX/C5bYIs0wU8w1l4qnOVUTosjkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GH3VGW/PPKh9SY+5RLX+G1zpqcQd73gJ9aixCggXnFTNbtrR45MOqevD+5DSOg8dJLrWlOOIaeEzoQv3Bc/5tUhdIDD82W5WQWOjyMwFJzC0RfqRX03JPPpwOpuwgml8yuO6xlwQ0TboPBHWL5BqHzYgQjjOXN43lafBTwzS7DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBZnU+SO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g/DOj+yrHjJKbsbk2vivcHJ7TYTxPpWiKSTP3jnRLoDdyXdoK+lhu0U3DNTGuEi6BRAgFle7tdERa/28MqjNvskO6AL6TdJpuBeFIuAPrXrDoy32IgfvyqSlzT8C4m1BXcvMOJzluJ2x1pI4RUuFLkvJLkMSWMyIPTdLQTqZpiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1EJHnhK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBZnU+SO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A32C2BCB8;
-	Mon,  4 May 2026 14:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1EJHnhK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB79DC2BCB8;
+	Mon,  4 May 2026 14:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904855;
-	bh=DVsV35peOphUUyFC4iwuUbGe0inWr0XfFEWOl46DTBQ=;
+	s=korg; t=1777904858;
+	bh=3Dbej7ofNEn7L+iaX/C5bYIs0wU8w1l4qnOVUTosjkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBZnU+SOBKkYIuEyNk6hjq+JVf2r2yPJpYA5KTz0/gQFkkU1AzpTABHP7rKnxcftk
-	 Qq+xw4kkdFioAWDdLaEhKW7FKfHIfZBQkl/S9wZixfgcOsD1B1D6i9Ed0+kSci/ZsC
-	 IP+qWUpZGdxeaI8JCBwqBXGUSc3CqHLALFpox4nA=
+	b=M1EJHnhKpJd+kTf8ZoaMalhGHzK+nYFEHKQUrH/RtTKKfL/QMNwUyzrKSttjOVSur
+	 KvLMrQHIaSmx59PCCv4BPzVRPl+Gm323vHbjNY8/gxqSJsfJktUucazAzNyGTOp7fO
+	 EmJVwMc2nLpTJ/dMBbaiyqTWU47mkjpt4JRiAAPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable@kernel.org,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 199/215] net: qrtr: ns: Limit the maximum number of lookups
-Date: Mon,  4 May 2026 15:53:38 +0200
-Message-ID: <20260504135137.857621888@linuxfoundation.org>
+Subject: [PATCH 6.12 200/215] net: bridge: use a stable FDB dst snapshot in RCU readers
+Date: Mon,  4 May 2026 15:53:39 +0200
+Message-ID: <20260504135137.927367331@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,92 +60,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-[ Upstream commit 5640227d9a21c6a8be249a10677b832e7f40dc55 ]
+[ Upstream commit df4601653201de21b487c3e7fffd464790cab808 ]
 
-Current code does no bound checking on the number of lookups a client can
-perform. Though the code restricts the lookups to local clients, there is
-still a possibility of a malicious local client sending a flood of
-NEW_LOOKUP messages over the same socket.
+Local FDB entries can be rewritten in place by `fdb_delete_local()`, which
+updates `f->dst` to another port or to `NULL` while keeping the entry
+alive. Several bridge RCU readers inspect `f->dst`, including
+`br_fdb_fillbuf()` through the `brforward_read()` sysfs path.
 
-Fix this issue by limiting the maximum number of lookups to 64 globally.
-Since the nameserver allows only atmost one local observer, this global
-lookup count will ensure that the lookups stay within the limit.
+These readers currently load `f->dst` multiple times and can therefore
+observe inconsistent values across the check and later dereference.
+In `br_fdb_fillbuf()`, this means a concurrent local-FDB update can change
+`f->dst` after the NULL check and before the `port_no` dereference,
+leading to a NULL-ptr-deref.
 
-Note that, limit of 64 is chosen based on the current platform
-requirements. If requirement changes in the future, this limit can be
-increased.
+Fix this by taking a single `READ_ONCE()` snapshot of `f->dst` in each
+affected RCU reader and using that snapshot for the rest of the access
+sequence. Also publish the in-place `f->dst` updates in `fdb_delete_local()`
+with `WRITE_ONCE()` so the readers and writer use matching access patterns.
 
-Cc: stable@vger.kernel.org
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-2-00a8a5ff2b51@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted comment block to only mention QRTR_NS_MAX_LOOKUPS and kept kzalloc() instead of kzalloc_obj() due to missing prerequisite commits ]
+Fixes: 960b589f86c7 ("bridge: Properly check if local fdb entry can be deleted in br_fdb_change_mac_address")
+Cc: stable@kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/6570fabb85ecadb8baaf019efe856f407711c7b9.1776043229.git.zcliangcn@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ kept `*idx < cb->args[2]` instead of `*idx < ctx->fdb_idx` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/bridge/br_arp_nd_proxy.c |    8 +++++---
+ net/bridge/br_fdb.c          |   28 ++++++++++++++++++----------
+ 2 files changed, 23 insertions(+), 13 deletions(-)
 
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -22,6 +22,7 @@ static struct {
- 	struct socket *sock;
- 	struct sockaddr_qrtr bcast_sq;
- 	struct list_head lookups;
-+	u32 lookup_count;
- 	struct workqueue_struct *workqueue;
- 	struct work_struct work;
- 	void (*saved_data_ready)(struct sock *sk);
-@@ -76,6 +77,11 @@ struct qrtr_node {
-  */
- #define QRTR_NS_MAX_SERVERS 256
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -199,11 +199,12 @@ void br_do_proxy_suppress_arp(struct sk_
  
-+/* Max lookup limit is chosen based on the current platform requirements. If the
-+ * requirement changes in the future, this value can be increased.
-+ */
-+#define QRTR_NS_MAX_LOOKUPS 64
-+
- static struct qrtr_node *node_get(unsigned int node_id)
+ 		f = br_fdb_find_rcu(br, n->ha, vid);
+ 		if (f) {
++			const struct net_bridge_port *dst = READ_ONCE(f->dst);
+ 			bool replied = false;
+ 
+ 			if ((p && (p->flags & BR_PROXYARP)) ||
+-			    (f->dst && (f->dst->flags & BR_PROXYARP_WIFI)) ||
+-			    br_is_neigh_suppress_enabled(f->dst, vid)) {
++			    (dst && (dst->flags & BR_PROXYARP_WIFI)) ||
++			    br_is_neigh_suppress_enabled(dst, vid)) {
+ 				if (!vid)
+ 					br_arp_send(br, p, skb->dev, sip, tip,
+ 						    sha, n->ha, sha, 0, 0);
+@@ -463,9 +464,10 @@ void br_do_suppress_nd(struct sk_buff *s
+ 
+ 		f = br_fdb_find_rcu(br, n->ha, vid);
+ 		if (f) {
++			const struct net_bridge_port *dst = READ_ONCE(f->dst);
+ 			bool replied = false;
+ 
+-			if (br_is_neigh_suppress_enabled(f->dst, vid)) {
++			if (br_is_neigh_suppress_enabled(dst, vid)) {
+ 				if (vid != 0)
+ 					br_nd_send(br, p, skb, n,
+ 						   skb->vlan_proto,
+--- a/net/bridge/br_fdb.c
++++ b/net/bridge/br_fdb.c
+@@ -243,6 +243,7 @@ struct net_device *br_fdb_find_port(cons
+ 				    const unsigned char *addr,
+ 				    __u16 vid)
  {
- 	struct qrtr_node *node;
-@@ -444,6 +450,7 @@ static int ctrl_cmd_del_client(struct so
- 
- 		list_del(&lookup->li);
- 		kfree(lookup);
-+		qrtr_ns.lookup_count--;
- 	}
- 
- 	/* Remove the server belonging to this port but don't broadcast
-@@ -561,6 +568,11 @@ static int ctrl_cmd_new_lookup(struct so
- 	if (from->sq_node != qrtr_ns.local_node)
- 		return -EINVAL;
- 
-+	if (qrtr_ns.lookup_count >= QRTR_NS_MAX_LOOKUPS) {
-+		pr_err_ratelimited("QRTR client node exceeds max lookup limit!\n");
-+		return -ENOSPC;
++	const struct net_bridge_port *dst;
+ 	struct net_bridge_fdb_entry *f;
+ 	struct net_device *dev = NULL;
+ 	struct net_bridge *br;
+@@ -255,8 +256,11 @@ struct net_device *br_fdb_find_port(cons
+ 	br = netdev_priv(br_dev);
+ 	rcu_read_lock();
+ 	f = br_fdb_find_rcu(br, addr, vid);
+-	if (f && f->dst)
+-		dev = f->dst->dev;
++	if (f) {
++		dst = READ_ONCE(f->dst);
++		if (dst)
++			dev = dst->dev;
 +	}
-+
- 	lookup = kzalloc(sizeof(*lookup), GFP_KERNEL);
- 	if (!lookup)
- 		return -ENOMEM;
-@@ -569,6 +581,7 @@ static int ctrl_cmd_new_lookup(struct so
- 	lookup->service = service;
- 	lookup->instance = instance;
- 	list_add_tail(&lookup->li, &qrtr_ns.lookups);
-+	qrtr_ns.lookup_count++;
+ 	rcu_read_unlock();
  
- 	memset(&filter, 0, sizeof(filter));
- 	filter.service = service;
-@@ -609,6 +622,7 @@ static void ctrl_cmd_del_lookup(struct s
- 
- 		list_del(&lookup->li);
- 		kfree(lookup);
-+		qrtr_ns.lookup_count--;
+ 	return dev;
+@@ -353,7 +357,7 @@ static void fdb_delete_local(struct net_
+ 		vg = nbp_vlan_group(op);
+ 		if (op != p && ether_addr_equal(op->dev->dev_addr, addr) &&
+ 		    (!vid || br_vlan_find(vg, vid))) {
+-			f->dst = op;
++			WRITE_ONCE(f->dst, op);
+ 			clear_bit(BR_FDB_ADDED_BY_USER, &f->flags);
+ 			return;
+ 		}
+@@ -364,7 +368,7 @@ static void fdb_delete_local(struct net_
+ 	/* Maybe bridge device has same hw addr? */
+ 	if (p && ether_addr_equal(br->dev->dev_addr, addr) &&
+ 	    (!vid || (v && br_vlan_should_use(v)))) {
+-		f->dst = NULL;
++		WRITE_ONCE(f->dst, NULL);
+ 		clear_bit(BR_FDB_ADDED_BY_USER, &f->flags);
+ 		return;
  	}
- }
+@@ -827,6 +831,7 @@ int br_fdb_test_addr(struct net_device *
+ int br_fdb_fillbuf(struct net_bridge *br, void *buf,
+ 		   unsigned long maxnum, unsigned long skip)
+ {
++	const struct net_bridge_port *dst;
+ 	struct net_bridge_fdb_entry *f;
+ 	struct __fdb_entry *fe = buf;
+ 	unsigned long delta;
+@@ -843,7 +848,8 @@ int br_fdb_fillbuf(struct net_bridge *br
+ 			continue;
  
+ 		/* ignore pseudo entry for local MAC address */
+-		if (!f->dst)
++		dst = READ_ONCE(f->dst);
++		if (!dst)
+ 			continue;
+ 
+ 		if (skip) {
+@@ -855,8 +861,8 @@ int br_fdb_fillbuf(struct net_bridge *br
+ 		memcpy(fe->mac_addr, f->key.addr.addr, ETH_ALEN);
+ 
+ 		/* due to ABI compat need to split into hi/lo */
+-		fe->port_no = f->dst->port_no;
+-		fe->port_hi = f->dst->port_no >> 8;
++		fe->port_no = dst->port_no;
++		fe->port_hi = dst->port_no >> 8;
+ 
+ 		fe->is_local = test_bit(BR_FDB_LOCAL, &f->flags);
+ 		if (!test_bit(BR_FDB_STATIC, &f->flags)) {
+@@ -981,9 +987,11 @@ int br_fdb_dump(struct sk_buff *skb,
+ 
+ 	rcu_read_lock();
+ 	hlist_for_each_entry_rcu(f, &br->fdb_list, fdb_node) {
++		const struct net_bridge_port *dst = READ_ONCE(f->dst);
++
+ 		if (*idx < cb->args[2])
+ 			goto skip;
+-		if (filter_dev && (!f->dst || f->dst->dev != filter_dev)) {
++		if (filter_dev && (!dst || dst->dev != filter_dev)) {
+ 			if (filter_dev != dev)
+ 				goto skip;
+ 			/* !f->dst is a special case for bridge
+@@ -991,10 +999,10 @@ int br_fdb_dump(struct sk_buff *skb,
+ 			 * Therefore need a little more filtering
+ 			 * we only want to dump the !f->dst case
+ 			 */
+-			if (f->dst)
++			if (dst)
+ 				goto skip;
+ 		}
+-		if (!filter_dev && f->dst)
++		if (!filter_dev && dst)
+ 			goto skip;
+ 
+ 		err = fdb_fill_info(skb, br, f,
 
 
