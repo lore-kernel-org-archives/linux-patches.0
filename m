@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354AC35A3AD;
-	Mon,  4 May 2026 14:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80EB315785;
+	Mon,  4 May 2026 14:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904296; cv=none; b=L6gU2eAdCgQEY9NW5G7GEnZfnnHYrb/8OG+IePXG6NkQPYAJpGjNbJ4P7qVBLi0nHu87jLBbKFuzwuFfkoShmT/c03TSrEHWYgvBbCw4B9xzsTPAA1na9pZjvoERpJn4A1uGN/Po8tjXrUJXcvFKHFpBAaW0Kqw/gfdPlk8VhRw=
+	t=1777904298; cv=none; b=rxd90ALloVQgu8swaRYL+MdcSkaETEzCzUfGafC8rMn8MxEGAG1hZp463InxzdTMsrqD5kxGgJS1seALkkbo37VfmRge2CCuIBFzCWjyjYidwusZupfuDe60toP7qY4Sa/DeYPahCB2Ri2gkhavZKlMWVJQF5HCFTpKX99DVKQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904296; c=relaxed/simple;
-	bh=ZG1kpPpxue3FvgotWAugZ1ajNm885dNEi8kFYQKUf34=;
+	s=arc-20240116; t=1777904298; c=relaxed/simple;
+	bh=qVl9snOokzBYFsd9w1tvACMgXYsZeNkvEb4EQ+846Es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tyxYi9qst9lan8TR6+xI1/iC/JTSoHLl4O8CbwCMSY2Gm4L+mv3qWnyo1HVgysE/VL7z7Egp08In6tOBB1hbdFrR70x2oRMMQFz9DhBh6nyNgbM7IQvGmCNa8tlYpTvb8GltLA2kGVtwXHkgQvQoHlAChFqXF+I26NywQaoA4x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FixCPa0c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l3Zutt71myxkT8ZYRe1M7Zvlp+iRdh97LjCasQq+disGmGs0iOq0RV/lPTUdYgYS0ehSTlMBw3fBbvdbFkdeXrlInqpI7ZZGB8NRxFBYMkxxnBKM2VNM/iJBipwtD/H7Z0HKTy+zatZsOTV/z+qdNdY8YqY2qv8bDgyI0OFOuBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKU2008z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FixCPa0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C8CC2BCB8;
-	Mon,  4 May 2026 14:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKU2008z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7D0C2BCB8;
+	Mon,  4 May 2026 14:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904295;
-	bh=ZG1kpPpxue3FvgotWAugZ1ajNm885dNEi8kFYQKUf34=;
+	s=korg; t=1777904298;
+	bh=qVl9snOokzBYFsd9w1tvACMgXYsZeNkvEb4EQ+846Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FixCPa0cQ82UD+XEJHr8+qDIyg8+4ZidMUnDU3NwhJD4wBhYvosLgawzNUuFjbV1C
-	 JDMemLkROplgb9BqibrVGv60w9QODWtwsfP8ZiGbsPW4zCGo+LjQlnvQy4Yxg5fmp9
-	 L3RQ57jWYNulDnwDaG2OB4JvaxLM07pcwtnnfc9w=
+	b=OKU2008zZoVpSaS46Yr16KS8Cb5PpJ6fKbj4aXeVS6IKk8VTTPWAkClynSzKJe9mk
+	 jOZ4LFO6aIoN1ris2HCjjasqmbnsecR5XBOdZpuhzp2lXddMhWqpYqCNdbJWpYhheL
+	 UiIlPvWMBTMLkTkeiAmRNnqAXnOQuXKpGE5nx/Dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 232/275] crypto: nx - Fix packed layout in struct nx842_crypto_header
-Date: Mon,  4 May 2026 15:52:52 +0200
-Message-ID: <20260504135151.673423813@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 259/275] iio: frequency: admv1013: fix NULL pointer dereference on str
+Date: Mon,  4 May 2026 15:53:19 +0200
+Message-ID: <20260504135152.662578655@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -45,87 +48,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit b0bfa49c03e3c65737eafa73d8a698eaf55379a6 upstream.
+[ Upstream commit aac0a51b16700b403a55b67ba495de021db78763 ]
 
-struct nx842_crypto_header is declared with the __packed attribute,
-however	the fields grouped with struct_group_tagged() were not packed.
-This caused the grouped header portion of the structure to lose the
-packed layout guarantees of the containing structure.
+When device_property_read_string() fails, str is left uninitialized
+but the code falls through to strcmp(str, ...), dereferencing a garbage
+pointer. Replace manual read/strcmp with
+device_property_match_property_string() and consolidate the SE mode
+enums into a single sequential enum, mapping to hardware register
+values via a switch consistent with other bitfields in the driver.
 
-Fix this by replacing struct_group_tagged() with __struct_group(...,
-..., __packed, ...) so the grouped fields are packed, and the original
-layout is preserved, restoring the intended packed layout of the
-structure.
+Several cleanup patches have been applied to this driver recently so
+this will need a manual backport.
 
-Before changes:
-struct nx842_crypto_header {
-	union {
-		struct {
-			__be16     magic;                /*     0     2 */
-			__be16     ignore;               /*     2     2 */
-			u8         groups;               /*     4     1 */
-		};                                       /*     0     6 */
-		struct nx842_crypto_header_hdr hdr;      /*     0     6 */
-	};                                               /*     0     6 */
-	struct nx842_crypto_header_group group[];        /*     6     0 */
-
-	/* size: 6, cachelines: 1, members: 2 */
-	/* last cacheline: 6 bytes */
-} __attribute__((__packed__));
-
-After changes:
-struct nx842_crypto_header {
-	union {
-		struct {
-			__be16     magic;                /*     0     2 */
-			__be16     ignore;               /*     2     2 */
-			u8         groups;               /*     4     1 */
-		} __attribute__((__packed__));           /*     0     5 */
-		struct nx842_crypto_header_hdr hdr;      /*     0     5 */
-	};                                               /*     0     5 */
-	struct nx842_crypto_header_group group[];        /*     5     0 */
-
-	/* size: 5, cachelines: 1, members: 2 */
-	/* last cacheline: 5 bytes */
-} __attribute__((__packed__));
-
-Fixes: 1e6b251ce175 ("crypto: nx - Avoid -Wflex-array-member-not-at-end warning")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/nx/nx-842.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/frequency/admv1013.c |   67 ++++++++++++++++++++++-----------------
+ 1 file changed, 38 insertions(+), 29 deletions(-)
 
---- a/drivers/crypto/nx/nx-842.h
-+++ b/drivers/crypto/nx/nx-842.h
-@@ -159,7 +159,7 @@ struct nx842_crypto_header_group {
+--- a/drivers/iio/frequency/admv1013.c
++++ b/drivers/iio/frequency/admv1013.c
+@@ -85,9 +85,9 @@ enum {
+ };
  
- struct nx842_crypto_header {
- 	/* New members MUST be added within the struct_group() macro below. */
--	struct_group_tagged(nx842_crypto_header_hdr, hdr,
-+	__struct_group(nx842_crypto_header_hdr, hdr, __packed,
- 		__be16 magic;		/* NX842_CRYPTO_MAGIC */
- 		__be16 ignore;		/* decompressed end bytes to ignore */
- 		u8 groups;		/* total groups in this header */
-@@ -167,7 +167,7 @@ struct nx842_crypto_header {
- 	struct nx842_crypto_header_group group[];
- } __packed;
- static_assert(offsetof(struct nx842_crypto_header, group) == sizeof(struct nx842_crypto_header_hdr),
--	      "struct member likely outside of struct_group_tagged()");
-+	      "struct member likely outside of __struct_group()");
+ enum {
+-	ADMV1013_SE_MODE_POS = 6,
+-	ADMV1013_SE_MODE_NEG = 9,
+-	ADMV1013_SE_MODE_DIFF = 12
++	ADMV1013_SE_MODE_POS,
++	ADMV1013_SE_MODE_NEG,
++	ADMV1013_SE_MODE_DIFF,
+ };
  
- #define NX842_CRYPTO_GROUP_MAX	(0x20)
+ struct admv1013_state {
+@@ -470,10 +470,23 @@ static int admv1013_init(struct admv1013
+ 	if (ret)
+ 		return ret;
  
+-	data = FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, st->quad_se_mode);
++	switch (st->quad_se_mode) {
++	case ADMV1013_SE_MODE_POS:
++		data = 6;
++		break;
++	case ADMV1013_SE_MODE_NEG:
++		data = 9;
++		break;
++	case ADMV1013_SE_MODE_DIFF:
++		data = 12;
++		break;
++	default:
++		return -EINVAL;
++	}
+ 
+ 	ret = __admv1013_spi_update_bits(st, ADMV1013_REG_QUAD,
+-					 ADMV1013_QUAD_SE_MODE_MSK, data);
++					 ADMV1013_QUAD_SE_MODE_MSK,
++					 FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, data));
+ 	if (ret)
+ 		return ret;
+ 
+@@ -514,37 +527,33 @@ static void admv1013_powerdown(void *dat
+ 	admv1013_spi_update_bits(data, ADMV1013_REG_ENABLE, enable_reg_msk, enable_reg);
+ }
+ 
++static const char * const admv1013_input_modes[] = {
++	[ADMV1013_IQ_MODE] = "iq",
++	[ADMV1013_IF_MODE] = "if",
++};
++
++static const char * const admv1013_quad_se_modes[] = {
++	[ADMV1013_SE_MODE_POS] = "se-pos",
++	[ADMV1013_SE_MODE_NEG] = "se-neg",
++	[ADMV1013_SE_MODE_DIFF] = "diff",
++};
++
+ static int admv1013_properties_parse(struct admv1013_state *st)
+ {
+ 	int ret;
+-	const char *str;
+ 	struct device *dev = &st->spi->dev;
+ 
+ 	st->det_en = device_property_read_bool(dev, "adi,detector-enable");
+ 
+-	ret = device_property_read_string(dev, "adi,input-mode", &str);
+-	if (ret)
+-		st->input_mode = ADMV1013_IQ_MODE;
+-
+-	if (!strcmp(str, "iq"))
+-		st->input_mode = ADMV1013_IQ_MODE;
+-	else if (!strcmp(str, "if"))
+-		st->input_mode = ADMV1013_IF_MODE;
+-	else
+-		return -EINVAL;
+-
+-	ret = device_property_read_string(dev, "adi,quad-se-mode", &str);
+-	if (ret)
+-		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
+-
+-	if (!strcmp(str, "diff"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
+-	else if (!strcmp(str, "se-pos"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_POS;
+-	else if (!strcmp(str, "se-neg"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_NEG;
+-	else
+-		return -EINVAL;
++	ret = device_property_match_property_string(dev, "adi,input-mode",
++						    admv1013_input_modes,
++						    ARRAY_SIZE(admv1013_input_modes));
++	st->input_mode = ret >= 0 ? ret : ADMV1013_IQ_MODE;
++
++	ret = device_property_match_property_string(dev, "adi,quad-se-mode",
++						    admv1013_quad_se_modes,
++						    ARRAY_SIZE(admv1013_quad_se_modes));
++	st->quad_se_mode = ret >= 0 ? ret : ADMV1013_SE_MODE_DIFF;
+ 
+ 	ret = devm_regulator_bulk_get_enable(dev,
+ 					     ARRAY_SIZE(admv1013_vcc_regs),
 
 
