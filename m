@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D814435A3AD;
-	Mon,  4 May 2026 14:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F8B1ADC83;
+	Mon,  4 May 2026 14:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903819; cv=none; b=GfWZhUz5aJ/bGvfQfR/2yQSC15LRmSStHDECdlUAPmA6bCVVlDuHoTQ2GC9i2SP8Al69tTaZIK+KTFedE21L7PiG4+xpN+zwiA0Kxr2y9b/15MEktKy0NYvkg3Jnfa0csW4kumw1RmLAFKbo+7iK1PnRQsR/nuoRmwu/4Cd00+w=
+	t=1777903822; cv=none; b=Z3xakvYQpaYiORAlMmHb91ygmKv1b2bVOKHtjmaBwuL/hleBA+ryv2JBmSAxpgMfgMC0dYTX60g2xfurCL4/xHI8dk39tZkeTA7z3l8prp0aTZnNM02nFr3vAh/hqv/94sjkye6GIEmjZQ8P/RpULEt4ZKv9juRReNMkbZ7O9Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903819; c=relaxed/simple;
-	bh=U+AgraCsWni7nqmib1FoczlnWcCp4QTRsqOH8wLry7o=;
+	s=arc-20240116; t=1777903822; c=relaxed/simple;
+	bh=2HHmbxcW8v0HWcA1NeN3G1Z8jdN8Ew6d+sxtjeoDmSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okewLzfZz2Gg+rY/aYRco8R0296VMglnaFV0bNT2UKkeijTfUQrimePuXVadtCzTSlI0Olt1ykLCjddvu9xJqHB+lQbm/nqMgrfm9tZd8Fod/+Yga16hSqa3Bbbv9RuQHLOonyVjUrogbJO7wfpEb/0IcNADokA6Cx3tVhsOD6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skP7e0Ez; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V/ar45C4KD0aT/qygSYEUPthVBP9BKVf7Zwtvx5m9J8sSY89f8OCaDOKBe6jprw9QqawfnMv3hGgiSfxKep4xXbdGAZgDAqCL1qla2UKZIgYxdLPVE5fTTJylY5wt4L8+a6f0VQvcNFEuApeJ2cDrV4K8O7OnvXFjQ80cMwQyas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrCgLEo5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skP7e0Ez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E11CC2BCB8;
-	Mon,  4 May 2026 14:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrCgLEo5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09864C2BCB8;
+	Mon,  4 May 2026 14:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903819;
-	bh=U+AgraCsWni7nqmib1FoczlnWcCp4QTRsqOH8wLry7o=;
+	s=korg; t=1777903822;
+	bh=2HHmbxcW8v0HWcA1NeN3G1Z8jdN8Ew6d+sxtjeoDmSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skP7e0Ezl60gH7fc8+H+U0bcRt9/208oEoGDFVt4O9rxPW1mypu/8xzEaGwEeye0G
-	 dEpQUND+wyZ4HxF35cNloM9LN7leu97FdCmkHWIqZLFJ6EwMtZ6EVZ+8DdBZw4Tb4h
-	 AOL4Dp7vO0W/k+Jr7TzsCxzwMmnMXdBcJWA4XbYM=
+	b=CrCgLEo5oSTxnqvtUQvvZaCQkZGmECjQnE0kNuG+tYeIjGCgQcHC/d4ZZZF0BrmUX
+	 1gbB8Lm2Q6J/NZc7aLEHshOmssgLYjTsx/rdkoCz657MTCVmo2cCLd5Wo4OQkMeEHU
+	 5JkuEXqxl88zvY2oEfUVVz/QCDw+F6GS+sJiZGBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Frank van der Linden <fvdl@google.com>,
+	Oscar Salvador <osalvador@suse.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 074/275] mm/damon/core: fix damon_call() vs kdamond_fn() exit race
-Date: Mon,  4 May 2026 15:50:14 +0200
-Message-ID: <20260504135145.676446373@linuxfoundation.org>
+Subject: [PATCH 6.18 075/275] mm/hugetlb: fix early boot crash on parameters without = separator
+Date: Mon,  4 May 2026 15:50:15 +0200
+Message-ID: <20260504135145.714071924@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,166 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 55da81663b9642dd046b26dd6f1baddbcf337c1e upstream.
+commit c45b354911d01565156e38d7f6bc07edb51fc34c upstream.
 
-Patch series "mm/damon/core: fix damon_call()/damos_walk() vs kdmond exit
-race".
+If hugepages, hugepagesz, or default_hugepagesz are specified on the
+kernel command line without the '=' separator, early parameter parsing
+passes NULL to hugetlb_add_param(), which dereferences it in strlen() and
+can crash the system during early boot.
 
-damon_call() and damos_walk() can leak memory and/or deadlock when they
-race with kdamond terminations.  Fix those.
+Reject NULL values in hugetlb_add_param() and return -EINVAL instead.
 
-
-This patch (of 2);
-
-When kdamond_fn() main loop is finished, the function cancels all
-remaining damon_call() requests and unset the damon_ctx->kdamond so that
-API callers and API functions themselves can know the context is
-terminated.  damon_call() adds the caller's request to the queue first.
-After that, it shows if the kdamond of the damon_ctx is still running
-(damon_ctx->kdamond is set).  Only if the kdamond is running, damon_call()
-starts waiting for the kdamond's handling of the newly added request.
-
-The damon_call() requests registration and damon_ctx->kdamond unset are
-protected by different mutexes, though.  Hence, damon_call() could race
-with damon_ctx->kdamond unset, and result in deadlocks.
-
-For example, let's suppose kdamond successfully finished the damon_call()
-requests cancelling.  Right after that, damon_call() is called for the
-context.  It registers the new request, and shows the context is still
-running, because damon_ctx->kdamond unset is not yet done.  Hence the
-damon_call() caller starts waiting for the handling of the request.
-However, the kdamond is already on the termination steps, so it never
-handles the new request.  As a result, the damon_call() caller threads
-infinitely waits.
-
-Fix this by introducing another damon_ctx field, namely
-call_controls_obsolete.  It is protected by the
-damon_ctx->call_controls_lock, which protects damon_call() requests
-registration.  Initialize (unset) it in kdamond_fn() before letting
-damon_start() returns and set it just before the cancelling of remaining
-damon_call() requests is executed.  damon_call() reads the obsolete field
-under the lock and avoids adding a new request.
-
-After this change, only requests that are guaranteed to be handled or
-cancelled are registered.  Hence the after-registration DAMON context
-termination check is no longer needed.  Remove it together.
-
-Note that the deadlock will not happen when damon_call() is called for
-repeat mode request.  In tis case, damon_call() returns instead of waiting
-for the handling when the request registration succeeds and it shows the
-kdamond is running.  However, if the request also has dealloc_on_cancel,
-the request memory would be leaked.
-
-The issue is found by sashiko [1].
-
-Link: https://lore.kernel.org/20260327233319.3528-1-sj@kernel.org
-Link: https://lore.kernel.org/20260327233319.3528-2-sj@kernel.org
-Link: https://lore.kernel.org/20260325141956.87144-1-sj@kernel.org [1]
-Fixes: 42b7491af14c ("mm/damon/core: introduce damon_call()")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.14.x
+Link: https://lore.kernel.org/20260409105437.108686-4-thorsten.blum@linux.dev
+Fixes: 5b47c02967ab ("mm/hugetlb: convert cmdline parameters from setup to early")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Frank van der Linden <fvdl@google.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    1 +
- mm/damon/core.c       |   45 ++++++++++++++-------------------------------
- 2 files changed, 15 insertions(+), 31 deletions(-)
+ mm/hugetlb.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -781,6 +781,7 @@ struct damon_ctx {
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -4787,6 +4787,9 @@ static __init int hugetlb_add_param(char
+ 	size_t len;
+ 	char *p;
  
- 	/* lists of &struct damon_call_control */
- 	struct list_head call_controls;
-+	bool call_controls_obsolete;
- 	struct mutex call_controls_lock;
++	if (!s)
++		return -EINVAL;
++
+ 	if (hugetlb_param_index >= HUGE_MAX_CMDLINE_ARGS)
+ 		return -EINVAL;
  
- 	struct damos_walk_control *walk_control;
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1431,35 +1431,6 @@ bool damon_is_running(struct damon_ctx *
- 	return running;
- }
- 
--/*
-- * damon_call_handle_inactive_ctx() - handle DAMON call request that added to
-- *				      an inactive context.
-- * @ctx:	The inactive DAMON context.
-- * @control:	Control variable of the call request.
-- *
-- * This function is called in a case that @control is added to @ctx but @ctx is
-- * not running (inactive).  See if @ctx handled @control or not, and cleanup
-- * @control if it was not handled.
-- *
-- * Returns 0 if @control was handled by @ctx, negative error code otherwise.
-- */
--static int damon_call_handle_inactive_ctx(
--		struct damon_ctx *ctx, struct damon_call_control *control)
--{
--	struct damon_call_control *c;
--
--	mutex_lock(&ctx->call_controls_lock);
--	list_for_each_entry(c, &ctx->call_controls, list) {
--		if (c == control) {
--			list_del(&control->list);
--			mutex_unlock(&ctx->call_controls_lock);
--			return -EINVAL;
--		}
--	}
--	mutex_unlock(&ctx->call_controls_lock);
--	return 0;
--}
--
- /**
-  * damon_call() - Invoke a given function on DAMON worker thread (kdamond).
-  * @ctx:	DAMON context to call the function for.
-@@ -1477,6 +1448,10 @@ static int damon_call_handle_inactive_ct
-  * synchronization.  The return value of the function will be saved in
-  * &damon_call_control->return_code.
-  *
-+ * Note that this function should be called only after damon_start() with the
-+ * @ctx has succeeded.  Otherwise, this function could fall into an indefinite
-+ * wait.
-+ *
-  * Return: 0 on success, negative error code otherwise.
-  */
- int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
-@@ -1487,10 +1462,12 @@ int damon_call(struct damon_ctx *ctx, st
- 	INIT_LIST_HEAD(&control->list);
- 
- 	mutex_lock(&ctx->call_controls_lock);
-+	if (ctx->call_controls_obsolete) {
-+		mutex_unlock(&ctx->call_controls_lock);
-+		return -ECANCELED;
-+	}
- 	list_add_tail(&control->list, &ctx->call_controls);
- 	mutex_unlock(&ctx->call_controls_lock);
--	if (!damon_is_running(ctx))
--		return damon_call_handle_inactive_ctx(ctx, control);
- 	if (control->repeat)
- 		return 0;
- 	wait_for_completion(&control->completion);
-@@ -2640,6 +2617,9 @@ static int kdamond_fn(void *data)
- 
- 	pr_debug("kdamond (%d) starts\n", current->pid);
- 
-+	mutex_lock(&ctx->call_controls_lock);
-+	ctx->call_controls_obsolete = false;
-+	mutex_unlock(&ctx->call_controls_lock);
- 	complete(&ctx->kdamond_started);
- 	kdamond_init_ctx(ctx);
- 
-@@ -2749,6 +2729,9 @@ done:
- 	if (ctx->ops.cleanup)
- 		ctx->ops.cleanup(ctx);
- 	kfree(ctx->regions_score_histogram);
-+	mutex_lock(&ctx->call_controls_lock);
-+	ctx->call_controls_obsolete = true;
-+	mutex_unlock(&ctx->call_controls_lock);
- 	kdamond_call(ctx, true);
- 
- 	pr_debug("kdamond (%d) finishes\n", current->pid);
 
 
