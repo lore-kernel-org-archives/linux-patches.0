@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCF43DEAC2;
-	Mon,  4 May 2026 14:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29F01A6827;
+	Mon,  4 May 2026 14:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904216; cv=none; b=NPcCD3G8yO7v+YcprMGsdvMy9CMTyWoOdBwwcy1bOy5kx52+124nLIrlnQXgqJV6D16Jkq6YLPi0nKnvOIE54MIVC8jLKz4GiDW6yiewwY5pd1ZPOx3hPpSoG/Ez1q7ply9poW7I+UnvR2+GBQ7MzMBtoZbZzU2GPgRxO05sQ9Q=
+	t=1777904219; cv=none; b=SYzJLNdqh4EsSPe+igynJMLIveWlzDKX0d4sS5LbAB705R0geHdAEDcF6Y/+kkWXkGXefMXzIpICgxieZmdjabNunKNjDy9mr9G3fX6DtuLwFyKthT8TNX86H4af3zRyCgG/ZLq8iTviOWShqjYkugmExFJ3MzWBw215M/75f1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904216; c=relaxed/simple;
-	bh=wj/Cq7DLEGIGQubolADg9ugqVabSruRR5eHyGIwD07U=;
+	s=arc-20240116; t=1777904219; c=relaxed/simple;
+	bh=gH0WOQUKQJUhZ9/YtK947YTsDf7Gx3Bt9oZBv+bc1Sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=am8Gty2DVXNNrkGz11jNirBCELOSoZS9BsM/NP7WdsoTim6h781M28BNwVQEw6lZuacCan2LRSRt+1bviO0a/eGpUvFxu+sy7+7Bg932zDP0sx+/EzTGic+lAMh7+pRZCI5/dqWr0tXDopVCGEGWpdoy5r0sTwWNYLuxavi3qvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZbmTQYL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gIOVg+7/W+FuczJx6hmMDYFTe8D/q4jhiB1pVwT+iZ9AxSG6Gc7EBu6G5gL7KPnOsLuVcmkt8ko45MN8ut9i1E2wLwkvoyn2PxYEnFNthWm/q6SPOcheARUnKGfzBxQQnCqiKCqX/2oDPfZtcQRUunL0f6d7cOkgULKxtkmScpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FO+gw5rD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZbmTQYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6245C2BCB8;
-	Mon,  4 May 2026 14:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FO+gw5rD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D5BC2BCB8;
+	Mon,  4 May 2026 14:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904216;
-	bh=wj/Cq7DLEGIGQubolADg9ugqVabSruRR5eHyGIwD07U=;
+	s=korg; t=1777904218;
+	bh=gH0WOQUKQJUhZ9/YtK947YTsDf7Gx3Bt9oZBv+bc1Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZbmTQYL4wdsACKa2+oraBGvDB0DG5YNwvrHqt6HkSdW46XT8cnDCK4fpJ0HY8A5Q
-	 r0j5gCJxGL4p/qdFFlC8ZuQhUiqmCkzBOmVl4fc46UMvvDXUdf01RIherwn/rGUUVF
-	 VX7yjxpM+nwQZReVz7/2YtpJppQkzgQWXs+gnFJ4=
+	b=FO+gw5rDDO2YurMFpEBrEXzqbIcmE2eYJ8+X3OzE4xayr6y03ce7l2KXmedsB39xd
+	 82knJUWBYp5ZkvJSWTYOkJeFzURuWSuCJYDqSVlIdMnnCPmgb/C4N6C+mY9V7e4Egq
+	 0eFzzPIxnBCt2hpbM892tzpmIF97GrbilMAn52lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thorsten Blum <thorsten.blum@linux.dev>,
-	Lothar Rubusch <l.rubusch@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 227/275] crypto: atmel-sha204a - Fix error codes in OTP reads
-Date: Mon,  4 May 2026 15:52:47 +0200
-Message-ID: <20260504135151.495343936@linuxfoundation.org>
+Subject: [PATCH 6.18 228/275] crypto: atmel-sha204a - Fix potential UAF and memory leak in remove path
+Date: Mon,  4 May 2026 15:52:48 +0200
+Message-ID: <20260504135151.531179940@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -53,64 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 094c276da6a0d4971c3faae09a36b51d096659b2 upstream.
+commit bab1adf3b87e4bfac92c4f5963c63db434d561c1 upstream.
 
-Return -EINVAL from atmel_i2c_init_read_otp_cmd() on invalid addresses
-instead of -1. Since the OTP zone is accessed in 4-byte blocks, valid
-addresses range from 0 to OTP_ZONE_SIZE / 4 - 1. Fix the bounds check
-accordingly.
+Unregister the hwrng to prevent new ->read() calls and flush the Atmel
+I2C workqueue before teardown to prevent a potential UAF if a queued
+callback runs while the device is being removed.
 
-In atmel_sha204a_otp_read(), propagate the actual error code from
-atmel_i2c_init_read_otp_cmd() instead of -1. Also, return -EIO instead
-of -EINVAL when the device is not ready.
+Drop the early return to ensure sysfs entries are removed and
+->hwrng.priv is freed, preventing a memory leak.
 
+Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
 Cc: stable@vger.kernel.org
-Fixes: e05ce444e9e5 ("crypto: atmel-sha204a - add reading from otp zone")
 Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Lothar Rubusch <l.rubusch@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-i2c.c     |    4 ++--
- drivers/crypto/atmel-sha204a.c |    7 ++++---
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/crypto/atmel-sha204a.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/crypto/atmel-i2c.c
-+++ b/drivers/crypto/atmel-i2c.c
-@@ -72,8 +72,8 @@ EXPORT_SYMBOL(atmel_i2c_init_read_config
- 
- int atmel_i2c_init_read_otp_cmd(struct atmel_i2c_cmd *cmd, u16 addr)
- {
--	if (addr < 0 || addr > OTP_ZONE_SIZE)
--		return -1;
-+	if (addr >= OTP_ZONE_SIZE / 4)
-+		return -EINVAL;
- 
- 	cmd->word_addr = COMMAND;
- 	cmd->opcode = OPCODE_READ;
 --- a/drivers/crypto/atmel-sha204a.c
 +++ b/drivers/crypto/atmel-sha204a.c
-@@ -96,9 +96,10 @@ static int atmel_sha204a_rng_read(struct
- static int atmel_sha204a_otp_read(struct i2c_client *client, u16 addr, u8 *otp)
+@@ -194,10 +194,8 @@ static void atmel_sha204a_remove(struct
  {
- 	struct atmel_i2c_cmd cmd;
--	int ret = -1;
-+	int ret;
+ 	struct atmel_i2c_client_priv *i2c_priv = i2c_get_clientdata(client);
  
--	if (atmel_i2c_init_read_otp_cmd(&cmd, addr) < 0) {
-+	ret = atmel_i2c_init_read_otp_cmd(&cmd, addr);
-+	if (ret < 0) {
- 		dev_err(&client->dev, "failed, invalid otp address %04X\n",
- 			addr);
- 		return ret;
-@@ -108,7 +109,7 @@ static int atmel_sha204a_otp_read(struct
+-	if (atomic_read(&i2c_priv->tfm_count)) {
+-		dev_emerg(&client->dev, "Device is busy, will remove it anyhow\n");
+-		return;
+-	}
++	devm_hwrng_unregister(&client->dev, &i2c_priv->hwrng);
++	atmel_i2c_flush_queue();
  
- 	if (cmd.data[0] == 0xff) {
- 		dev_err(&client->dev, "failed, device not ready\n");
--		return -EINVAL;
-+		return -EIO;
- 	}
+ 	sysfs_remove_group(&client->dev.kobj, &atmel_sha204a_groups);
  
- 	memcpy(otp, cmd.data+1, 4);
 
 
