@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9063D5667;
-	Mon,  4 May 2026 14:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0531ADC83;
+	Mon,  4 May 2026 14:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903807; cv=none; b=Ypn5XECvuXbTMaK8u0gOPsdL1oRwMYu89HcSiENNw8yrkqRan8GRn6uen4qG+a0i3zdMZWpBUJOwCur0NduN03Wx5HZb50OM/CJ6xvNGhBPABPpwZo4HhdTDsiZkTgdShRgXZfxyFEYGWTrQr0Bcr6deVUrMRQI4VYvqtno2vgo=
+	t=1777903809; cv=none; b=XW3gMB3GRuFu0fD2qLSoWU1UsdOpzRGc4f+1PtuB3Iij6hdTcp7RPUzPuietvrb1O3NjFzIQ02zbXo3s/Cp5Qw8KnsJNOxiT1E1rI2bHfE+ydOfok0gtnt2YgN1cKdB/G60nXZozAEvhL6qDqQ2NYIwS8pTD4g32I299dF1KWLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903807; c=relaxed/simple;
-	bh=/tJpq+td+Zi+qUI21/oTIPPbsxkEkkp2hilQbUDucds=;
+	s=arc-20240116; t=1777903809; c=relaxed/simple;
+	bh=c2n4UJkfU1jWyzlGNLVXXYcZWpnDMXIpLwSOs19mVC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mO7WklN5n1T1DFORF76sA1gZZB/1xBjyxccmQhT7ckgMR/ldc6w3OAh1LV1RW05YbnEOPI0OZ1+B84gbV6uUp/Ikwbn+RcZJISH3c6ZAiDSzuCaWBRpa2ZHKmMIknjX+nDRPsMo2/Wmn7v612H1AKO5VQFbt4Lceimo7OTytzZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crZw649G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dy+ZrGbhXUcNbdCw6YnxCa0WaMFqYc9HV+zpmnYdmTe9mBMYL6eISrLWUvD7Gmci4sr/Hu8oEGEoizBKD3JM8dw4GFA2Axv/unxOmZU5rzphL1JIv92hQ+b0v+2LF+CThruCr7uY/N2jAcbge47xkax5pXEQi+IhhU+7Qo0/O+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jp5wrKpx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crZw649G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983DAC2BCB8;
-	Mon,  4 May 2026 14:10:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jp5wrKpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E921C2BCB8;
+	Mon,  4 May 2026 14:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903806;
-	bh=/tJpq+td+Zi+qUI21/oTIPPbsxkEkkp2hilQbUDucds=;
+	s=korg; t=1777903809;
+	bh=c2n4UJkfU1jWyzlGNLVXXYcZWpnDMXIpLwSOs19mVC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crZw649GKZ+u+2MuaI4xkZG7HxhZxlIPVmq5vMwlJMsW6kUDS75OXdFydK1dOMdDS
-	 ADexRdNLWYZTutJBhXJlpI1BXt6SZjlta39zXPO/R74zOU1WsjA400bGw2Qajtpmxz
-	 +9iW87julzMicI2ohp2oPbtUNYA/g3Zpn1frSynY=
+	b=jp5wrKpx53AjtByxey9Y0tPLwCqV/BLjLs/FwWIq9L5NFKtJDL+vgGdXMYcDswF6L
+	 LnFy+BT3VWqfGxVfoorxrqbQFCIeM2b3cwGbUhVmF1GvxaDdtV2kIzEHIEkj8FSEVO
+	 yQQ3NVHxFVh0lwycL14uHCtS4ut0HG+7T37Y/I6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Hunt <johunt@akamai.com>,
-	Yu Kuai <yukuai@fnnas.com>
-Subject: [PATCH 6.18 070/275] md/raid10: fix deadlock with check operation and nowait requests
-Date: Mon,  4 May 2026 15:50:10 +0200
-Message-ID: <20260504135145.531249502@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.18 053/275] PCI: endpoint: pci-epf-ntb: Remove duplicate resource teardown
+Date: Mon,  4 May 2026 15:49:53 +0200
+Message-ID: <20260504135144.904763080@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,100 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Hunt <johunt@akamai.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 7d96f3120a7fb7210d21b520c5b6f495da6ba436 upstream.
+commit 3446beddba450c8d6f9aca2f028712ac527fead3 upstream.
 
-When an array check is running it will raise the barrier at which point
-normal requests will become blocked and increment the nr_pending value to
-signal there is work pending inside of wait_barrier(). NOWAIT requests
-do not block and so will return immediately with an error, and additionally
-do not increment nr_pending in wait_barrier(). Upstream change commit
-43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request") added a
-call to raid_end_bio_io() to fix a memory leak when NOWAIT requests hit
-this condition. raid_end_bio_io() eventually calls allow_barrier() and
-it will unconditionally do an atomic_dec_and_test(&conf->nr_pending) even
-though the corresponding increment on nr_pending didn't happen in the
-NOWAIT case.
+epf_ntb_epc_destroy() duplicates the teardown that the caller is
+supposed to do later. This leads to an oops when .allow_link fails or
+when .drop_link is performed. Remove the helper.
 
-This can be easily seen by starting a check operation while an application
-is doing nowait IO on the same array. This results in a deadlocked state
-due to nr_pending value underflowing and so the md resync thread gets stuck
-waiting for nr_pending to == 0.
+Also drop pci_epc_put(). EPC device refcounting is tied to configfs EPC
+group lifetime, and pci_epc_put() in the .drop_link path is sufficient.
 
-Output of r10conf state of the array when we hit this condition:
-
-crash> struct r10conf
-	barrier = 1,
-        nr_pending = {
-          counter = -41
-        },
-        nr_waiting = 15,
-        nr_queued = 0,
-
-Example of md_sync thread stuck waiting on raise_barrier() and other
-requests stuck in wait_barrier():
-
-md1_resync
-[<0>] raise_barrier+0xce/0x1c0
-[<0>] raid10_sync_request+0x1ca/0x1ed0
-[<0>] md_do_sync+0x779/0x1110
-[<0>] md_thread+0x90/0x160
-[<0>] kthread+0xbe/0xf0
-[<0>] ret_from_fork+0x34/0x50
-[<0>] ret_from_fork_asm+0x1a/0x30
-
-kworker/u1040:2+flush-253:4
-[<0>] wait_barrier+0x1de/0x220
-[<0>] regular_request_wait+0x30/0x180
-[<0>] raid10_make_request+0x261/0x1000
-[<0>] md_handle_request+0x13b/0x230
-[<0>] __submit_bio+0x107/0x1f0
-[<0>] submit_bio_noacct_nocheck+0x16f/0x390
-[<0>] ext4_io_submit+0x24/0x40
-[<0>] ext4_do_writepages+0x254/0xc80
-[<0>] ext4_writepages+0x84/0x120
-[<0>] do_writepages+0x7a/0x260
-[<0>] __writeback_single_inode+0x3d/0x300
-[<0>] writeback_sb_inodes+0x1dd/0x470
-[<0>] __writeback_inodes_wb+0x4c/0xe0
-[<0>] wb_writeback+0x18b/0x2d0
-[<0>] wb_workfn+0x2a1/0x400
-[<0>] process_one_work+0x149/0x330
-[<0>] worker_thread+0x2d2/0x410
-[<0>] kthread+0xbe/0xf0
-[<0>] ret_from_fork+0x34/0x50
-[<0>] ret_from_fork_asm+0x1a/0x30
-
-Fixes: 43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request")
+Fixes: 8b821cf76150 ("PCI: endpoint: Add EP function driver to provide NTB functionality")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Josh Hunt <johunt@akamai.com>
-Link: https://lore.kernel.org/linux-raid/20260303005619.1352958-1-johunt@akamai.com
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Link: https://patch.msgid.link/20260226084142.2226875-3-den@valinux.co.jp
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-ntb.c |   56 ---------------------------
+ 1 file changed, 2 insertions(+), 54 deletions(-)
 
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1184,7 +1184,7 @@ static void raid10_read_request(struct m
+--- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+@@ -1495,47 +1495,6 @@ err_alloc_peer_mem:
+ }
+ 
+ /**
+- * epf_ntb_epc_destroy_interface() - Cleanup NTB EPC interface
+- * @ntb: NTB device that facilitates communication between HOST1 and HOST2
+- * @type: PRIMARY interface or SECONDARY interface
+- *
+- * Unbind NTB function device from EPC and relinquish reference to pci_epc
+- * for each of the interface.
+- */
+-static void epf_ntb_epc_destroy_interface(struct epf_ntb *ntb,
+-					  enum pci_epc_interface_type type)
+-{
+-	struct epf_ntb_epc *ntb_epc;
+-	struct pci_epc *epc;
+-	struct pci_epf *epf;
+-
+-	if (type < 0)
+-		return;
+-
+-	epf = ntb->epf;
+-	ntb_epc = ntb->epc[type];
+-	if (!ntb_epc)
+-		return;
+-	epc = ntb_epc->epc;
+-	pci_epc_remove_epf(epc, epf, type);
+-	pci_epc_put(epc);
+-}
+-
+-/**
+- * epf_ntb_epc_destroy() - Cleanup NTB EPC interface
+- * @ntb: NTB device that facilitates communication between HOST1 and HOST2
+- *
+- * Wrapper for epf_ntb_epc_destroy_interface() to cleanup all the NTB interfaces
+- */
+-static void epf_ntb_epc_destroy(struct epf_ntb *ntb)
+-{
+-	enum pci_epc_interface_type type;
+-
+-	for (type = PRIMARY_INTERFACE; type <= SECONDARY_INTERFACE; type++)
+-		epf_ntb_epc_destroy_interface(ntb, type);
+-}
+-
+-/**
+  * epf_ntb_epc_create_interface() - Create and initialize NTB EPC interface
+  * @ntb: NTB device that facilitates communication between HOST1 and HOST2
+  * @epc: struct pci_epc to which a particular NTB interface should be associated
+@@ -1614,15 +1573,8 @@ static int epf_ntb_epc_create(struct epf
+ 
+ 	ret = epf_ntb_epc_create_interface(ntb, epf->sec_epc,
+ 					   SECONDARY_INTERFACE);
+-	if (ret) {
++	if (ret)
+ 		dev_err(dev, "SECONDARY intf: Fail to create NTB EPC\n");
+-		goto err_epc_create;
+-	}
+-
+-	return 0;
+-
+-err_epc_create:
+-	epf_ntb_epc_destroy_interface(ntb, PRIMARY_INTERFACE);
+ 
+ 	return ret;
+ }
+@@ -1887,7 +1839,7 @@ static int epf_ntb_bind(struct pci_epf *
+ 	ret = epf_ntb_init_epc_bar(ntb);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to create NTB EPC\n");
+-		goto err_bar_init;
++		return ret;
  	}
  
- 	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
--		raid_end_bio_io(r10_bio);
-+		free_r10bio(r10_bio);
- 		return;
- 	}
+ 	ret = epf_ntb_config_spad_bar_alloc_interface(ntb);
+@@ -1909,9 +1861,6 @@ static int epf_ntb_bind(struct pci_epf *
+ err_bar_alloc:
+ 	epf_ntb_config_spad_bar_free(ntb);
  
-@@ -1372,7 +1372,7 @@ static void raid10_write_request(struct
+-err_bar_init:
+-	epf_ntb_epc_destroy(ntb);
+-
+ 	return ret;
+ }
  
- 	sectors = r10_bio->sectors;
- 	if (!regular_request_wait(mddev, conf, bio, sectors)) {
--		raid_end_bio_io(r10_bio);
-+		free_r10bio(r10_bio);
- 		return;
- 	}
+@@ -1927,7 +1876,6 @@ static void epf_ntb_unbind(struct pci_ep
  
+ 	epf_ntb_epc_cleanup(ntb);
+ 	epf_ntb_config_spad_bar_free(ntb);
+-	epf_ntb_epc_destroy(ntb);
+ }
+ 
+ #define EPF_NTB_R(_name)						\
 
 
