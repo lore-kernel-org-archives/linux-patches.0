@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BB934753C;
-	Mon,  4 May 2026 13:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B883D6489;
+	Mon,  4 May 2026 13:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903028; cv=none; b=gQw1cK04GE6QcrWN+dUG/0Rd6pChRRTC7hA6u6942jdjGwVXdox5fu543tMsfIedrHVfx3MEypV9wM5tN+N67uRy6k0KOxGOAfgIWPjoE92WHFAR/yp16fDHcX9DZWa5TaqS3T1Y4in2dJCNyMOqE7oK9pepf9eLnA/TpylL7As=
+	t=1777903030; cv=none; b=q1AlWiNv2ky+mZB7wpNbvM/1O4p+F1qd5EHzeZHI+H1CVM8aaZqf3xXfynDDDfGcEAXtJLGrKef2jaerlQ2eVo4Hb71SRE3GIf3BOb2OVgJY7+af/0N12JVu9M9+rMr/7e6PGplwcMt1sAw/Q9HWIKJWobvK/dqcyNphT8cGiBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903028; c=relaxed/simple;
-	bh=501bUnos8n6bV6xacU+EMU5yUTvsODO0pLXAN6vNN6w=;
+	s=arc-20240116; t=1777903030; c=relaxed/simple;
+	bh=mXTL8VZw5Ad+m06X8r0P3a5RG7jjsQ1X6dewpDk2Rig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ab9lxuVAIEDv3Cvirl76T3EeQys3JDOjIGt8dHFrjV4RAAaWQk2GoU7L4JioNyBT2tY8+x0E+8TPdNwkpm1my15BbOoDYAkJBIhrU+Dpwx+gYB99FYFhJ4QK4/1HRyAzmf5Soe71JaAcuHQCF0MuqyaxiMKxZf3dt5JX9M7brSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N82IaxwR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=idWeBWuk5SESXo/LxmLQczbVZZd8AQK5quU510xhMQYFatXjt1uFIcv9aYUkGXx1maizVoZmHn3M3YBNmdHt7UM11msYNbzTQ6FkY82o/uFsfBYpc7WPNK0yOHQFJ4c6vOL7JTMaGqQUsWtRz+gVTasbgEw6eU0BEs+lY8FYo9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGvetHcO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N82IaxwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD013C2BCB8;
-	Mon,  4 May 2026 13:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGvetHcO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CED2C2BCB8;
+	Mon,  4 May 2026 13:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903028;
-	bh=501bUnos8n6bV6xacU+EMU5yUTvsODO0pLXAN6vNN6w=;
+	s=korg; t=1777903030;
+	bh=mXTL8VZw5Ad+m06X8r0P3a5RG7jjsQ1X6dewpDk2Rig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N82IaxwR0ZTEO0KFoR7HCnf1ysh4R0EOm93wCkm7YnBFXV29DkaKgobm9baaPeWWO
-	 CG8oiuqbsCWrRzirOt4WWzFdb305cQ+y3CNHM5PIplTAaxFZFnEt4WR56H0gdLbrR/
-	 bZN+SUKcnnLbBGGR8Jn4RD7TATYmJ4FA2/KzW/C8=
+	b=fGvetHcOwnQUKCXVOzPSOFpdOv7o/C6fm5zJHv4JfAJxUc9gku4rIvCwvPZgdTYFY
+	 yZstprCO1LiCe1qZ46opZNi/kc6Cw+QHLUk8UEdXo14pceUj59HT6yKSGsnNkscQA1
+	 A4FkFHtWCwrndhY3wwYuh3qKBlY+ZlsuI0k6cjmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Hunt <johunt@akamai.com>,
-	Yu Kuai <yukuai@fnnas.com>
-Subject: [PATCH 7.0 076/307] md/raid10: fix deadlock with check operation and nowait requests
-Date: Mon,  4 May 2026 15:49:21 +0200
-Message-ID: <20260504135145.674045191@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 077/307] media: rc: igorplugusb: heed coherency rules
+Date: Mon,  4 May 2026 15:49:22 +0200
+Message-ID: <20260504135145.711257167@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,100 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Hunt <johunt@akamai.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 7d96f3120a7fb7210d21b520c5b6f495da6ba436 upstream.
+commit eac69475b01fe1e861dfe3960b57fa95671c132e upstream.
 
-When an array check is running it will raise the barrier at which point
-normal requests will become blocked and increment the nr_pending value to
-signal there is work pending inside of wait_barrier(). NOWAIT requests
-do not block and so will return immediately with an error, and additionally
-do not increment nr_pending in wait_barrier(). Upstream change commit
-43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request") added a
-call to raid_end_bio_io() to fix a memory leak when NOWAIT requests hit
-this condition. raid_end_bio_io() eventually calls allow_barrier() and
-it will unconditionally do an atomic_dec_and_test(&conf->nr_pending) even
-though the corresponding increment on nr_pending didn't happen in the
-NOWAIT case.
+In a control request, the USB request structure
+can be subject to DMA on some HCs. Hence it must obey
+the rules for DMA coherency. Allocate it separately.
 
-This can be easily seen by starting a check operation while an application
-is doing nowait IO on the same array. This results in a deadlocked state
-due to nr_pending value underflowing and so the md resync thread gets stuck
-waiting for nr_pending to == 0.
-
-Output of r10conf state of the array when we hit this condition:
-
-crash> struct r10conf
-	barrier = 1,
-        nr_pending = {
-          counter = -41
-        },
-        nr_waiting = 15,
-        nr_queued = 0,
-
-Example of md_sync thread stuck waiting on raise_barrier() and other
-requests stuck in wait_barrier():
-
-md1_resync
-[<0>] raise_barrier+0xce/0x1c0
-[<0>] raid10_sync_request+0x1ca/0x1ed0
-[<0>] md_do_sync+0x779/0x1110
-[<0>] md_thread+0x90/0x160
-[<0>] kthread+0xbe/0xf0
-[<0>] ret_from_fork+0x34/0x50
-[<0>] ret_from_fork_asm+0x1a/0x30
-
-kworker/u1040:2+flush-253:4
-[<0>] wait_barrier+0x1de/0x220
-[<0>] regular_request_wait+0x30/0x180
-[<0>] raid10_make_request+0x261/0x1000
-[<0>] md_handle_request+0x13b/0x230
-[<0>] __submit_bio+0x107/0x1f0
-[<0>] submit_bio_noacct_nocheck+0x16f/0x390
-[<0>] ext4_io_submit+0x24/0x40
-[<0>] ext4_do_writepages+0x254/0xc80
-[<0>] ext4_writepages+0x84/0x120
-[<0>] do_writepages+0x7a/0x260
-[<0>] __writeback_single_inode+0x3d/0x300
-[<0>] writeback_sb_inodes+0x1dd/0x470
-[<0>] __writeback_inodes_wb+0x4c/0xe0
-[<0>] wb_writeback+0x18b/0x2d0
-[<0>] wb_workfn+0x2a1/0x400
-[<0>] process_one_work+0x149/0x330
-[<0>] worker_thread+0x2d2/0x410
-[<0>] kthread+0xbe/0xf0
-[<0>] ret_from_fork+0x34/0x50
-[<0>] ret_from_fork_asm+0x1a/0x30
-
-Fixes: 43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request")
+Fixes: b1c97193c6437 ("[media] rc: port IgorPlug-USB to rc-core")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josh Hunt <johunt@akamai.com>
-Link: https://lore.kernel.org/linux-raid/20260303005619.1352958-1-johunt@akamai.com
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/rc/igorplugusb.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1184,7 +1184,7 @@ static void raid10_read_request(struct m
- 	}
+--- a/drivers/media/rc/igorplugusb.c
++++ b/drivers/media/rc/igorplugusb.c
+@@ -34,7 +34,7 @@ struct igorplugusb {
+ 	struct device *dev;
  
- 	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
--		raid_end_bio_io(r10_bio);
-+		free_r10bio(r10_bio);
- 		return;
- 	}
+ 	struct urb *urb;
+-	struct usb_ctrlrequest request;
++	struct usb_ctrlrequest *request;
  
-@@ -1372,7 +1372,7 @@ static void raid10_write_request(struct
+ 	struct timer_list timer;
  
- 	sectors = r10_bio->sectors;
- 	if (!regular_request_wait(mddev, conf, bio, sectors)) {
--		raid_end_bio_io(r10_bio);
-+		free_r10bio(r10_bio);
- 		return;
- 	}
+@@ -122,7 +122,7 @@ static void igorplugusb_cmd(struct igorp
+ {
+ 	int ret;
  
+-	ir->request.bRequest = cmd;
++	ir->request->bRequest = cmd;
+ 	ir->urb->transfer_flags = 0;
+ 	ret = usb_submit_urb(ir->urb, GFP_ATOMIC);
+ 	if (ret && ret != -EPERM)
+@@ -164,13 +164,17 @@ static int igorplugusb_probe(struct usb_
+ 	if (!ir)
+ 		return -ENOMEM;
+ 
++	ir->request = kzalloc_obj(*ir->request, GFP_KERNEL);
++	if (!ir->request)
++		goto fail;
++
+ 	ir->dev = &intf->dev;
+ 
+ 	timer_setup(&ir->timer, igorplugusb_timer, 0);
+ 
+-	ir->request.bRequest = GET_INFRACODE;
+-	ir->request.bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
+-	ir->request.wLength = cpu_to_le16(MAX_PACKET);
++	ir->request->bRequest = GET_INFRACODE;
++	ir->request->bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
++	ir->request->wLength = cpu_to_le16(MAX_PACKET);
+ 
+ 	ir->urb = usb_alloc_urb(0, GFP_KERNEL);
+ 	if (!ir->urb)
+@@ -228,6 +232,7 @@ fail:
+ 	usb_free_urb(ir->urb);
+ 	rc_free_device(ir->rc);
+ 	kfree(ir->buf_in);
++	kfree(ir->request);
+ 
+ 	return ret;
+ }
+@@ -243,6 +248,7 @@ static void igorplugusb_disconnect(struc
+ 	usb_unpoison_urb(ir->urb);
+ 	usb_free_urb(ir->urb);
+ 	kfree(ir->buf_in);
++	kfree(ir->request);
+ }
+ 
+ static const struct usb_device_id igorplugusb_table[] = {
 
 
