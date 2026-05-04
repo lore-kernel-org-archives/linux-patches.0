@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E1C1A6827;
-	Mon,  4 May 2026 14:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1355B35A3AD;
+	Mon,  4 May 2026 14:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904393; cv=none; b=GZPb3EL9Plh70HkrSqg7XgB92/SSaa2uGYhHR1Z6JTO0hm75LTM5Dda4/HGYXo9QLmWBv3QvPBHF+d9aE1pkfKdjMP1dDKBDauhjQNPTStFv1+qi1ixIf/k3VQ4L2Of3lvZX1YTMcw0/XktbwC+RgMF88QOwJLYNo++z3wGnG1w=
+	t=1777904396; cv=none; b=fZhhxCxzdl0Yp9svC9W+UAI2IQnlerNrNZEo2YcdIDdJR+2PT8W3omzMSs5TskcHTylGlhlIDcXHEHSEZWu6EUtuzjWxylYZqVYTJmvQDgp/2+wHRdfmlOUnPd4yE/Rcf6Ied3MggOuSwC2DCIxIoi8cHHH0LrmTO071OhwiNaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904393; c=relaxed/simple;
-	bh=1T0qPA30v4/7Aah4L54kMPeWqC+uTcnnRNB9B7rX/40=;
+	s=arc-20240116; t=1777904396; c=relaxed/simple;
+	bh=mFyBGfVgPCk3t2pOsI9j1//lQtcbieOSG/tqOO3i+KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJ0MvEUnDRFp9RRueZzKrIvNFrCvkMM3VjL33Vk3hURj/XbNXvk5uzcEklGNG4G2s2oNr4TztWNak2lr8UT+ncV57omLIO6fQIO1UkWlVsYStTrS+E3Msv6XGy6lcyakFP9gscA0/eYMBchnEnb1KZOGastKw8ClZxJHRfmp/yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iX1plMqu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gaBPNpQcX+S4hu6jWsJ4U7Sb+PYvsYkj9Vmjt7BzwrRIivBHDrnCLANg9IP20lgYTjdE6ekSP5gTWGW88mjGrXPwrqFpjXwTHOd5HuIhaWizQiyKVGoqt+TtDtOi+7WLMcBNt/JQt0vzUarZv+IF8EnNWIBSA4oDzc3Vbe+PzCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IiXVMBw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iX1plMqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C3AC2BCC4;
-	Mon,  4 May 2026 14:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IiXVMBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6B4C2BCF5;
+	Mon,  4 May 2026 14:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904393;
-	bh=1T0qPA30v4/7Aah4L54kMPeWqC+uTcnnRNB9B7rX/40=;
+	s=korg; t=1777904396;
+	bh=mFyBGfVgPCk3t2pOsI9j1//lQtcbieOSG/tqOO3i+KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iX1plMquwTEd8QI+P3RWMGDSi7Y5vHKnEF7bEFBQ8rYPSFVWLJ0MTLH2niVq5BUJP
-	 3JQGdSAmzvzLVr2HoYxZRsdfRFAQj7uZWALY1mfvUCFX+RXV3wgKdy9b2Rcg2RyIKO
-	 kwVreXXA9uPZSPp0SefC54dxe8qFVhHJwlIWJRMM=
+	b=0IiXVMBw1ggbkxVu2qWUuyx8VVuSIl/Yk/s2wTl9LminSxS3h8MpgiJWDV1ok51Cr
+	 JaYer65k1diEoNtEjPts9Toj9hqf6A/BXfEj2lJpU0qkYRRoKWpqP40MGqUOfKyfxJ
+	 MmMH4Cp87WvIjnMAogPgZFgLZTvvIEcelOcKYda4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Bin Lan <lanbincn@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/215] padata: Fix pd UAF once and for all
-Date: Mon,  4 May 2026 15:50:40 +0200
-Message-ID: <20260504135130.951568888@linuxfoundation.org>
+Subject: [PATCH 6.12 022/215] padata: Remove comment for reorder_work
+Date: Mon,  4 May 2026 15:50:41 +0200
+Message-ID: <20260504135130.987545786@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -53,276 +54,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 71203f68c7749609d7fc8ae6ad054bdedeb24f91 ]
+[ Upstream commit 82a0302e7167d0b7c6cde56613db3748f8dd806d ]
 
-There is a race condition/UAF in padata_reorder that goes back
-to the initial commit.  A reference count is taken at the start
-of the process in padata_do_parallel, and released at the end in
-padata_serial_worker.
+Remove comment for reorder_work which no longer exists.
 
-This reference count is (and only is) required for padata_replace
-to function correctly.  If padata_replace is never called then
-there is no issue.
-
-In the function padata_reorder which serves as the core of padata,
-as soon as padata is added to queue->serial.list, and the associated
-spin lock released, that padata may be processed and the reference
-count on pd would go away.
-
-Fix this by getting the next padata before the squeue->serial lock
-is released.
-
-In order to make this possible, simplify padata_reorder by only
-calling it once the next padata arrives.
-
-Fixes: 16295bec6398 ("padata: Generic parallelization/serialization interface")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Fixes: 71203f68c774 ("padata: Fix pd UAF once and for all")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ Adjust context of padata_find_next(). Replace
-cpumask_next_wrap(cpu, pd->cpumask.pcpu) with
-cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false) in padata_reorder() in
-v6.12 according to dc5bb9b769c9 ("cpumask: deprecate cpumask_next_wrap()") and
-f954a2d37637 ("padata: switch padata_find_next() to using cpumask_next_wrap()")
-. ]
 Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/padata.h |   3 -
- kernel/padata.c        | 136 +++++++++++------------------------------
- 2 files changed, 37 insertions(+), 102 deletions(-)
+ include/linux/padata.h | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/include/linux/padata.h b/include/linux/padata.h
-index 0146daf344306..b486c7359de2b 100644
+index b486c7359de2b..765f2778e264a 100644
 --- a/include/linux/padata.h
 +++ b/include/linux/padata.h
-@@ -91,7 +91,6 @@ struct padata_cpumask {
+@@ -90,7 +90,6 @@ struct padata_cpumask {
+  * @processed: Number of already processed objects.
   * @cpu: Next CPU to be processed.
   * @cpumask: The cpumasks in use for parallel and serial workers.
-  * @reorder_work: work struct for reordering.
-- * @lock: Reorder lock.
+- * @reorder_work: work struct for reordering.
   */
  struct parallel_data {
  	struct padata_shell		*ps;
-@@ -102,8 +101,6 @@ struct parallel_data {
- 	unsigned int			processed;
- 	int				cpu;
- 	struct padata_cpumask		cpumask;
--	struct work_struct		reorder_work;
--	spinlock_t                      ____cacheline_aligned lock;
- };
- 
- /**
-diff --git a/kernel/padata.c b/kernel/padata.c
-index c3810f5bd7156..e61bdc248551f 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -261,20 +261,17 @@ EXPORT_SYMBOL(padata_do_parallel);
-  *   be parallel processed by another cpu and is not yet present in
-  *   the cpu's reorder queue.
-  */
--static struct padata_priv *padata_find_next(struct parallel_data *pd,
--					    bool remove_object)
-+static struct padata_priv *padata_find_next(struct parallel_data *pd, int cpu,
-+					    unsigned int processed)
- {
- 	struct padata_priv *padata;
- 	struct padata_list *reorder;
--	int cpu = pd->cpu;
- 
- 	reorder = per_cpu_ptr(pd->reorder_list, cpu);
- 
- 	spin_lock(&reorder->lock);
--	if (list_empty(&reorder->list)) {
--		spin_unlock(&reorder->lock);
--		return NULL;
--	}
-+	if (list_empty(&reorder->list))
-+		goto notfound;
- 
- 	padata = list_entry(reorder->list.next, struct padata_priv, list);
- 
-@@ -282,101 +279,52 @@ static struct padata_priv *padata_find_next(struct parallel_data *pd,
- 	 * Checks the rare case where two or more parallel jobs have hashed to
- 	 * the same CPU and one of the later ones finishes first.
- 	 */
--	if (padata->seq_nr != pd->processed) {
--		spin_unlock(&reorder->lock);
--		return NULL;
--	}
--
--	if (remove_object) {
--		list_del_init(&padata->list);
--		++pd->processed;
--		/* When sequence wraps around, reset to the first CPU. */
--		if (unlikely(pd->processed == 0))
--			pd->cpu = cpumask_first(pd->cpumask.pcpu);
--		else
--			pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
--	}
-+	if (padata->seq_nr != processed)
-+		goto notfound;
- 
-+	list_del_init(&padata->list);
- 	spin_unlock(&reorder->lock);
- 	return padata;
-+
-+notfound:
-+	pd->processed = processed;
-+	pd->cpu = cpu;
-+	spin_unlock(&reorder->lock);
-+	return NULL;
- }
- 
--static void padata_reorder(struct parallel_data *pd)
-+static void padata_reorder(struct padata_priv *padata)
- {
-+	struct parallel_data *pd = padata->pd;
- 	struct padata_instance *pinst = pd->ps->pinst;
--	int cb_cpu;
--	struct padata_priv *padata;
--	struct padata_serial_queue *squeue;
--	struct padata_list *reorder;
-+	unsigned int processed;
-+	int cpu;
- 
--	/*
--	 * We need to ensure that only one cpu can work on dequeueing of
--	 * the reorder queue the time. Calculating in which percpu reorder
--	 * queue the next object will arrive takes some time. A spinlock
--	 * would be highly contended. Also it is not clear in which order
--	 * the objects arrive to the reorder queues. So a cpu could wait to
--	 * get the lock just to notice that there is nothing to do at the
--	 * moment. Therefore we use a trylock and let the holder of the lock
--	 * care for all the objects enqueued during the holdtime of the lock.
--	 */
--	if (!spin_trylock_bh(&pd->lock))
--		return;
-+	processed = pd->processed;
-+	cpu = pd->cpu;
- 
--	while (1) {
--		padata = padata_find_next(pd, true);
-+	do {
-+		struct padata_serial_queue *squeue;
-+		int cb_cpu;
- 
--		/*
--		 * If the next object that needs serialization is parallel
--		 * processed by another cpu and is still on it's way to the
--		 * cpu's reorder queue, nothing to do for now.
--		 */
--		if (!padata)
--			break;
-+		cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
-+		processed++;
- 
- 		cb_cpu = padata->cb_cpu;
- 		squeue = per_cpu_ptr(pd->squeue, cb_cpu);
- 
- 		spin_lock(&squeue->serial.lock);
- 		list_add_tail(&padata->list, &squeue->serial.list);
--		spin_unlock(&squeue->serial.lock);
--
- 		queue_work_on(cb_cpu, pinst->serial_wq, &squeue->work);
--	}
- 
--	spin_unlock_bh(&pd->lock);
--
--	/*
--	 * The next object that needs serialization might have arrived to
--	 * the reorder queues in the meantime.
--	 *
--	 * Ensure reorder queue is read after pd->lock is dropped so we see
--	 * new objects from another task in padata_do_serial.  Pairs with
--	 * smp_mb in padata_do_serial.
--	 */
--	smp_mb();
--
--	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
--	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
- 		/*
--		 * Other context(eg. the padata_serial_worker) can finish the request.
--		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
-+		 * If the next object that needs serialization is parallel
-+		 * processed by another cpu and is still on it's way to the
-+		 * cpu's reorder queue, end the loop.
- 		 */
--		padata_get_pd(pd);
--		if (!queue_work(pinst->serial_wq, &pd->reorder_work))
--			padata_put_pd(pd);
--	}
--}
--
--static void invoke_padata_reorder(struct work_struct *work)
--{
--	struct parallel_data *pd;
--
--	local_bh_disable();
--	pd = container_of(work, struct parallel_data, reorder_work);
--	padata_reorder(pd);
--	local_bh_enable();
--	/* Pairs with putting the reorder_work in the serial_wq */
--	padata_put_pd(pd);
-+		padata = padata_find_next(pd, cpu, processed);
-+		spin_unlock(&squeue->serial.lock);
-+	} while (padata);
- }
- 
- static void padata_serial_worker(struct work_struct *serial_work)
-@@ -427,6 +375,7 @@ void padata_do_serial(struct padata_priv *padata)
- 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
- 	struct padata_priv *cur;
- 	struct list_head *pos;
-+	bool gotit = true;
- 
- 	spin_lock(&reorder->lock);
- 	/* Sort in ascending order of sequence number. */
-@@ -436,17 +385,14 @@ void padata_do_serial(struct padata_priv *padata)
- 		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
- 			break;
- 	}
--	list_add(&padata->list, pos);
-+	if (padata->seq_nr != pd->processed) {
-+		gotit = false;
-+		list_add(&padata->list, pos);
-+	}
- 	spin_unlock(&reorder->lock);
- 
--	/*
--	 * Ensure the addition to the reorder list is ordered correctly
--	 * with the trylock of pd->lock in padata_reorder.  Pairs with smp_mb
--	 * in padata_reorder.
--	 */
--	smp_mb();
--
--	padata_reorder(pd);
-+	if (gotit)
-+		padata_reorder(padata);
- }
- EXPORT_SYMBOL(padata_do_serial);
- 
-@@ -643,9 +589,7 @@ static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
- 	padata_init_squeues(pd);
- 	pd->seq_nr = -1;
- 	refcount_set(&pd->refcnt, 1);
--	spin_lock_init(&pd->lock);
- 	pd->cpu = cpumask_first(pd->cpumask.pcpu);
--	INIT_WORK(&pd->reorder_work, invoke_padata_reorder);
- 
- 	return pd;
- 
-@@ -1155,12 +1099,6 @@ void padata_free_shell(struct padata_shell *ps)
- 	if (!ps)
- 		return;
- 
--	/*
--	 * Wait for all _do_serial calls to finish to avoid touching
--	 * freed pd's and ps's.
--	 */
--	synchronize_rcu();
--
- 	mutex_lock(&ps->pinst->lock);
- 	list_del(&ps->list);
- 	pd = rcu_dereference_protected(ps->pd, 1);
 -- 
 2.53.0
 
