@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428583DE44F;
-	Mon,  4 May 2026 14:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAA03DEAC3;
+	Mon,  4 May 2026 14:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904517; cv=none; b=F7+zzBFDvp24afUh7yYzvUhHs0PaTuomh4MGEMS0Ui5kor3dKWYHpdWt4lPjt7pD3AT9yJzvOeW4bp8Ni12N09f0VrmelAw2fxU4Am1BbZANjdk6HKRFpGnxkBgbWDDIns5whwoiyn5IYO6Cy5h/VkgQ4es/ZQLgaJnaWIpNmWc=
+	t=1777904519; cv=none; b=e3SGPIyFFsClAKQ2s85nQJD48FvPx7QB+ux8IHObQEIVT2/+4hKv7TWhhKFpYAm7XfI5NZcfnFsNDEEj+TxO+gFdcceAaygir5bPmRVsOnadk4Bu17JdaaTOtIpfS3HAjfcuDrIL+ORJXgLgwjbxa2SQpAixqV1yn1GoYG0iaAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904517; c=relaxed/simple;
-	bh=jj5DOxvbKSbGppUjzauK0MbqwYtPIP16XWARp7k9ol0=;
+	s=arc-20240116; t=1777904519; c=relaxed/simple;
+	bh=irO1ytlZqOFdaSn0MxDW9SHpPcPGmDZnvo44sjckWRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcfG3yxYBhsF8j5HmkTLOYMYoEoFDqmUyn/y/k6YACOAU61yl2+pEb0gMVdU21dfbm7Q9u7CyNkVykGwOQqzEkagYSWMTTgygCn34Gzx5fn5Yr0msdzgTS9iqZZ1fNQZRdn1AhE6oSoLLExI0Qe/u3txZ7KVKzUrPd/ahl8VO5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayPby91B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NUJwvvYkl6oTpfKWIDv/DUxbbS9jrREEb/bnz+GrKLKhTj7JPcqZw1YhOsHC47PVUaH9qyoJfKZHqvXrE120LH6F+6JQQUGiY94XP9+JxCO++zBwq2H9V6rfAebfer5jikLhnw4OWYTOII3Q+P4Rezljo0zLEbrAqTuppsYYwfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIhBeH19; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayPby91B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE372C2BCC4;
-	Mon,  4 May 2026 14:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIhBeH19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE22C2BCF6;
+	Mon,  4 May 2026 14:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904517;
-	bh=jj5DOxvbKSbGppUjzauK0MbqwYtPIP16XWARp7k9ol0=;
+	s=korg; t=1777904519;
+	bh=irO1ytlZqOFdaSn0MxDW9SHpPcPGmDZnvo44sjckWRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayPby91BGAvqvK5GW1MkLR9nfYQ2KS3ifnzW18t7IfB+FgBD1Nu1Dnv7+TLNA6GTk
-	 Qz/WLfVtNiGi3X8mbs9yaQCdozb3AvaDYraq0ykvIc9n3p+gI6WIT90hkFt7pKiA+V
-	 PUTQ61lRK5brrNgvGjzW6UpdMCkJtxgvvtpXgj7k=
+	b=jIhBeH19wpmVUlu8pFCj8xHD/Ns+A0JRrTN4dVmPAXe0qcmOWcgzu772iln0gL7ea
+	 F9k5HgF3g919rLxBFfc9GpCDW5UZFtEkF9Q2oDRNa4xpY+R+VMp3g0M9DBVzVFjP0k
+	 XinfjaxQ2RRWm9wSI/OVtzajCFlWHz4zZdNwd8DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.12 036/215] crypto: pcrypt - Fix handling of MAY_BACKLOG requests
-Date: Mon,  4 May 2026 15:50:55 +0200
-Message-ID: <20260504135131.496711528@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 027/215] ocfs2: split transactions in dio completion to avoid credit exhaustion
+Date: Mon,  4 May 2026 15:50:46 +0200
+Message-ID: <20260504135131.168595066@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,51 +57,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Heming Zhao <heming.zhao@suse.com>
 
-commit 915b692e6cb723aac658c25eb82c58fd81235110 upstream.
+commit d647c5b2fbf81560818dacade360abc8c00a9665 upstream.
 
-MAY_BACKLOG requests can return EBUSY.  Handle them by checking
-for that value and filtering out EINPROGRESS notifications.
+During ocfs2 dio operations, JBD2 may report warnings via following
+call trace:
+ocfs2_dio_end_io_write
+ ocfs2_mark_extent_written
+  ocfs2_change_extent_flag
+   ocfs2_split_extent
+    ocfs2_try_to_merge_extent
+     ocfs2_extend_rotate_transaction
+      ocfs2_extend_trans
+       jbd2__journal_restart
+        start_this_handle
+         output: JBD2: kworker/6:2 wants too many credits credits:5450 rsv_credits:0 max:5449
 
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Fixes: 5a1436beec57 ("crypto: pcrypt - call the complete function on error")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Eric Biggers <ebiggers@kernel.org>
+To prevent exceeding the credits limit, modify ocfs2_dio_end_io_write() to
+handle extents in a batch of transaction.
+
+Additionally, relocate ocfs2_del_inode_from_orphan().  The orphan inode
+should only be removed from the orphan list after the extent tree update
+is complete.  This ensures that if a crash occurs in the middle of extent
+tree updates, we won't leave stale blocks beyond EOF.
+
+This patch also changes the logic for updating the inode size and removing
+orphan, making it similar to ext4_dio_write_end_io().  Both operations are
+performed only when everything looks good.
+
+Finally, thanks to Jans and Joseph for providing the bug fix prototype and
+suggestions.
+
+Link: https://lkml.kernel.org/r/20260402134328.27334-2-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Suggested-by: Jan Kara <jack@suse.cz>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/pcrypt.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/ocfs2/aops.c |   74 ++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 45 insertions(+), 29 deletions(-)
 
---- a/crypto/pcrypt.c
-+++ b/crypto/pcrypt.c
-@@ -69,6 +69,9 @@ static void pcrypt_aead_done(void *data,
- 	struct pcrypt_request *preq = aead_request_ctx(req);
- 	struct padata_priv *padata = pcrypt_request_padata(preq);
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -37,6 +37,8 @@
+ #include "namei.h"
+ #include "sysfile.h"
  
-+	if (err == -EINPROGRESS)
-+		return;
++#define OCFS2_DIO_MARK_EXTENT_BATCH 200
 +
- 	padata->info = err;
+ static int ocfs2_symlink_get_block(struct inode *inode, sector_t iblock,
+ 				   struct buffer_head *bh_result, int create)
+ {
+@@ -2301,7 +2303,7 @@ static int ocfs2_dio_end_io_write(struct
+ 	struct ocfs2_alloc_context *meta_ac = NULL;
+ 	handle_t *handle = NULL;
+ 	loff_t end = offset + bytes;
+-	int ret = 0, credits = 0;
++	int ret = 0, credits = 0, batch = 0;
  
- 	padata_do_serial(padata);
-@@ -82,7 +85,7 @@ static void pcrypt_aead_enc(struct padat
+ 	ocfs2_init_dealloc_ctxt(&dealloc);
  
- 	ret = crypto_aead_encrypt(req);
+@@ -2318,18 +2320,6 @@ static int ocfs2_dio_end_io_write(struct
+ 		goto out;
+ 	}
  
--	if (ret == -EINPROGRESS)
-+	if (ret == -EINPROGRESS || ret == -EBUSY)
- 		return;
+-	/* Delete orphan before acquire i_rwsem. */
+-	if (dwc->dw_orphaned) {
+-		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
+-
+-		end = end > i_size_read(inode) ? end : 0;
+-
+-		ret = ocfs2_del_inode_from_orphan(osb, inode, di_bh,
+-				!!end, end);
+-		if (ret < 0)
+-			mlog_errno(ret);
+-	}
+-
+ 	down_write(&oi->ip_alloc_sem);
+ 	di = (struct ocfs2_dinode *)di_bh->b_data;
  
- 	padata->info = ret;
-@@ -133,7 +136,7 @@ static void pcrypt_aead_dec(struct padat
+@@ -2350,24 +2340,25 @@ static int ocfs2_dio_end_io_write(struct
  
- 	ret = crypto_aead_decrypt(req);
+ 	credits = ocfs2_calc_extend_credits(inode->i_sb, &di->id2.i_list);
  
--	if (ret == -EINPROGRESS)
-+	if (ret == -EINPROGRESS || ret == -EBUSY)
- 		return;
+-	handle = ocfs2_start_trans(osb, credits);
+-	if (IS_ERR(handle)) {
+-		ret = PTR_ERR(handle);
+-		mlog_errno(ret);
+-		goto unlock;
+-	}
+-	ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode), di_bh,
+-				      OCFS2_JOURNAL_ACCESS_WRITE);
+-	if (ret) {
+-		mlog_errno(ret);
+-		goto commit;
+-	}
+-
+ 	list_for_each_entry(ue, &dwc->dw_zero_list, ue_node) {
++		if (!handle) {
++			handle = ocfs2_start_trans(osb, credits);
++			if (IS_ERR(handle)) {
++				ret = PTR_ERR(handle);
++				mlog_errno(ret);
++				goto unlock;
++			}
++			ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode), di_bh,
++					OCFS2_JOURNAL_ACCESS_WRITE);
++			if (ret) {
++				mlog_errno(ret);
++				goto commit;
++			}
++		}
+ 		ret = ocfs2_assure_trans_credits(handle, credits);
+ 		if (ret < 0) {
+ 			mlog_errno(ret);
+-			break;
++			goto commit;
+ 		}
+ 		ret = ocfs2_mark_extent_written(inode, &et, handle,
+ 						ue->ue_cpos, 1,
+@@ -2375,19 +2366,44 @@ static int ocfs2_dio_end_io_write(struct
+ 						meta_ac, &dealloc);
+ 		if (ret < 0) {
+ 			mlog_errno(ret);
+-			break;
++			goto commit;
++		}
++
++		if (++batch == OCFS2_DIO_MARK_EXTENT_BATCH) {
++			ocfs2_commit_trans(osb, handle);
++			handle = NULL;
++			batch = 0;
+ 		}
+ 	}
  
- 	padata->info = ret;
+ 	if (end > i_size_read(inode)) {
++		if (!handle) {
++			handle = ocfs2_start_trans(osb, credits);
++			if (IS_ERR(handle)) {
++				ret = PTR_ERR(handle);
++				mlog_errno(ret);
++				goto unlock;
++			}
++		}
+ 		ret = ocfs2_set_inode_size(handle, inode, di_bh, end);
+ 		if (ret < 0)
+ 			mlog_errno(ret);
+ 	}
++
+ commit:
+-	ocfs2_commit_trans(osb, handle);
++	if (handle)
++		ocfs2_commit_trans(osb, handle);
+ unlock:
+ 	up_write(&oi->ip_alloc_sem);
++
++	/* everything looks good, let's start the cleanup */
++	if (!ret && dwc->dw_orphaned) {
++		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
++
++		ret = ocfs2_del_inode_from_orphan(osb, inode, di_bh, 0, 0);
++		if (ret < 0)
++			mlog_errno(ret);
++	}
+ 	ocfs2_inode_unlock(inode, 1);
+ 	brelse(di_bh);
+ out:
 
 
