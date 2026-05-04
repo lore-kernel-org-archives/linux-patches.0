@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457283A63EC;
-	Mon,  4 May 2026 13:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8573D6489;
+	Mon,  4 May 2026 13:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777902966; cv=none; b=eHNMJx3XSEpzu8vXh+L0h2pY71PvXrKVClzpxq++PIVJo+6Jj47QITaHtHgay/psvtcwqYhuno3GUyk3ly5opC3xw0QQfeLBU7vlh29qmlNcjgMI8yHzmcmn8jVfc9dmRX/tgVrPkCgUUhXpbHPzns+3vJ2jp81QVLUYcwym/t0=
+	t=1777902969; cv=none; b=L3YGJ8Oq7KXN/B909XElsG70Y2rSvaGlPc9fygDTiYKEVtbb5RceDZvXLg/OZSq6R2oZq+UwXl9Dgqa2B2CjONxEYiFQArjbK+XDxPffm459nDwE8G7626iy76VLDe38LkswexfHu+PTSpYAuZwJx0v5frYonunpl7D3jJ95s3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777902966; c=relaxed/simple;
-	bh=OY8nNM2rfqGOdE48ge74kVDiMDcNTN5TLSmZ1/sgdoc=;
+	s=arc-20240116; t=1777902969; c=relaxed/simple;
+	bh=WZ36wMgxrPGxDe8PZKxXSEYLDgVbd2d/aejmFlsaEa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxWJiBtPERyn4lIZCgWN3wFhvorSLQFfVpkSJpYSxhJ4KhsUrIrUWmWHJ77xC8BFOYeX+2FK0m7dxJTUGeevMWvzNR37XTXWYGbCtb78O3Hx/+IwTP/HK/NbsvKwr3CuGrw5ZKJ/8wOnNv7UzEB7KuRL/scojCRkQMKOLySEzsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Up4gBvU8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s7VLFJN+9PHWsDd8QuPDZrnUVMQ8rc8yEXTAm8uUjolg2Afoh6r6nwWLyzeXeRfAv7ZaiRB+9v76U0MmL5AzGousVd5u2JBCCOToNkkb99NntB1tdQZkCnqCM0VReL4PUbNtvRP0TvUssTRoy4pKwwxOKXTv4RiHcl/m6Ps4xes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cztaaxeJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Up4gBvU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE782C2BCB8;
-	Mon,  4 May 2026 13:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cztaaxeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D60CC2BCB8;
+	Mon,  4 May 2026 13:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777902966;
-	bh=OY8nNM2rfqGOdE48ge74kVDiMDcNTN5TLSmZ1/sgdoc=;
+	s=korg; t=1777902968;
+	bh=WZ36wMgxrPGxDe8PZKxXSEYLDgVbd2d/aejmFlsaEa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Up4gBvU8+Rq0eyF9Pgc+/rJANtp9svfOnUcwDPhOv2+Nq8TmjlC2nMdn7dRlBvUQs
-	 zL3AK0LQFMA5VoIP1Dd1YrdLFe16LAon8V/hPi7W1lOVF6oqIaBY8Xr9pN5EOoPI0w
-	 iCkuP0ApwUsiDbrcFGjAeVxlV0YG+gDlwoIJAlbs=
+	b=cztaaxeJO9QIB79xwfgzWC1Q84yVQ3mRUDwu1VVtW7sEVNk3pIW6wWroFF9VF65Oc
+	 DM8Q2KWIQ63Re/oVWPRaV3+2jzCN/1Bdhlv9DX8n+eJw3S1uyIi29YY0LdbtBuKiRC
+	 Wx6UArUAZg/ILlX0+ake9Kz3rKPB7dMjjKFPq+lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 7.0 051/307] PCI: imx6: Skip waiting for L2/L3 Ready on i.MX6SX
-Date: Mon,  4 May 2026 15:48:56 +0200
-Message-ID: <20260504135144.749750664@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 052/307] media: amphion: Fix race between m2m job_abort and device_run
+Date: Mon,  4 May 2026 15:48:57 +0200
+Message-ID: <20260504135144.784590798@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,39 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit 5f73cf1db829c21b7fd44a8d2587cd395b1b2d76 upstream.
+commit 8cd35ceadcfc8c5da2eb7f7ce24525ce9d4ee62e upstream.
 
-On i.MX6SX, the LTSSM registers become inaccessible after the
-PME_Turn_Off message is sent to the link. So there is no way to verify
-whether the link has entered L2/L3 Ready state or not.
+Fix kernel panic caused by race condition where v4l2_m2m_ctx_release()
+frees m2m_ctx while v4l2_m2m_try_run() is about to call device_run
+with the same context.
 
-Hence, set IMX_PCIE_FLAG_SKIP_L23_READY flag for i.MX6SX SoC to skip the
-L2/L3 Ready state polling and let the DWC core wait for 10ms after sending
-the PME_Turn_Off message as per the PCIe spec r6.0, sec 5.3.3.2.1.
+Race sequence:
+  v4l2_m2m_try_run():           v4l2_m2m_ctx_release():
+    lock/unlock                   v4l2_m2m_cancel_job()
+                                    job_abort()
+                                      v4l2_m2m_job_finish()
+                                  kfree(m2m_ctx)  <- frees ctx
+    device_run()  <- use-after-free crash at 0x538
 
-Fixes: a528d1a72597 ("PCI: imx6: Use DWC common suspend resume method")
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-[mani: commit log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Crash trace:
+  Unable to handle kernel read from unreadable memory at virtual address
+  0000000000000538
+  v4l2_m2m_try_run+0x78/0x138
+  v4l2_m2m_device_run_work+0x14/0x20
+
+The amphion vpu driver does not rely on the m2m framework's device_run
+callback to perform encode/decode operations.
+
+Fix the race by preventing m2m framework job scheduling entirely:
+- Add job_ready callback returning 0 (no jobs ready for m2m framework)
+- Remove job_abort callback to avoid the race condition
+
+Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260228080925.1558395-1-hongxing.zhu@nxp.com
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/amphion/vpu_v4l2.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1876,6 +1876,7 @@ static const struct imx_pcie_drvdata drv
- 		.variant = IMX6SX,
- 		.flags = IMX_PCIE_FLAG_IMX_PHY |
- 			 IMX_PCIE_FLAG_SPEED_CHANGE_WORKAROUND |
-+			 IMX_PCIE_FLAG_SKIP_L23_READY |
- 			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND,
- 		.gpr = "fsl,imx6q-iomuxc-gpr",
- 		.ltssm_off = IOMUXC_GPR12,
+--- a/drivers/media/platform/amphion/vpu_v4l2.c
++++ b/drivers/media/platform/amphion/vpu_v4l2.c
+@@ -447,17 +447,14 @@ static void vpu_m2m_device_run(void *pri
+ {
+ }
+ 
+-static void vpu_m2m_job_abort(void *priv)
++static int vpu_m2m_job_ready(void *priv)
+ {
+-	struct vpu_inst *inst = priv;
+-	struct v4l2_m2m_ctx *m2m_ctx = inst->fh.m2m_ctx;
+-
+-	v4l2_m2m_job_finish(m2m_ctx->m2m_dev, m2m_ctx);
++	return 0;
+ }
+ 
+ static const struct v4l2_m2m_ops vpu_m2m_ops = {
+ 	.device_run = vpu_m2m_device_run,
+-	.job_abort = vpu_m2m_job_abort
++	.job_ready = vpu_m2m_job_ready,
+ };
+ 
+ static int vpu_vb2_queue_setup(struct vb2_queue *vq,
 
 
