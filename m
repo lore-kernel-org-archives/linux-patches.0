@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF2C75801;
-	Mon,  4 May 2026 14:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10C22D8DDF;
+	Mon,  4 May 2026 14:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903470; cv=none; b=L3UQiSXBUFkgG2o7l0//QbnCc05g4/p/2qK5K3NYT3jv1KT6oAg9SzGjnn7uM6bmYrXCCmwlQ3NULOmP2qBN80EWCrGnFDtJAMT3cFN25PgKvAZxwPwZ3FS+5bsbeCgfsQwu9oc4mcmqciiLzR1T8/78h0REsQG20O5zQ/2A0Cg=
+	t=1777903472; cv=none; b=hIuPNgkiJiWBMwV1KUt/v+HEajbvZcxzuIFpVYoLnmGZmQKW4UYIohAL5klrUX57oyT5JvJXdtx4pT4MdzIshF+Oj9sSYWFjGLClbLff2Hz/nPgqt5jL5ifpDb3YCC+rpI91BxkXsNGgNkTSOYgd1v4LSkdf8Y6eHcLaeL4MHks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903470; c=relaxed/simple;
-	bh=I3oN7xA1HGrgt+P08ojP3GEQiRxuCpoIaG9fpf4G2+E=;
+	s=arc-20240116; t=1777903472; c=relaxed/simple;
+	bh=WG82fgzq+SwflMl3FE9nmWs1/7yVPNKgXoFHvmHHz64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gExmW4qSS5xAZFBGrPp89Ek7txBuMNxzGLkhHIRqxPQSnGFeSv2PpiVyzgckCGX1uxLrZ7YCQ9v5snMtis91cHcV56GWHpF5bVIvAnxQ4rcgdV51QGKRne0L1hGSvKLm7hQX7QlzcKW+1tPOK9rfXiA0pNlinKMRtlyI6Ai5n5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOBrEVzH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DxjFH3g5gpXtCXOW+cCEHvF7Pc4eu09/CADKSBWPRtGuIbekVeZZKIXCUZQuHQOShn2z/lXw9tXl3ow6ImasLtihGDh1g0F/Q2bKAS8pW9Z6X+h7TJAdLpTYCXdWuHkg/dBgMz5ldmJgL3NoxtB84rrycM1yZtIfiKNuogIi/G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQJfDOnn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOBrEVzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99DDC2BCB8;
-	Mon,  4 May 2026 14:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQJfDOnn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC86C2BCC4;
+	Mon,  4 May 2026 14:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903470;
-	bh=I3oN7xA1HGrgt+P08ojP3GEQiRxuCpoIaG9fpf4G2+E=;
+	s=korg; t=1777903472;
+	bh=WG82fgzq+SwflMl3FE9nmWs1/7yVPNKgXoFHvmHHz64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOBrEVzHPtGrkhbhcxds5Cgw4+J0Trft7fB0TG797u4PvxmS+iY5Gld156fMCGt1G
-	 fydKt272OT7MW0H8/App/fGGMN5QuRhZrF1oRZI0b5yQol8hgfPZxe+FibV9GplAak
-	 sqwHLhspgJWZSsK7jiLUii1EwLDOndSCMJx7ENNM=
+	b=oQJfDOnn7ZgCBS2VfZ0Z/w/FFq2MS5hbafyrPUKZbxPcdx+eD6AjYeKK/EOe+J6ZS
+	 iJswUqtNW93PJDiLx/9SjsF8nT676XmjahdjjpDdJifKceQVOAt8a7PFCylPY7qdm9
+	 XFSoy35FMHH2dGXBZccSZ9iEBG837bJgo4udCf94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.0 203/307] KVM: nSVM: Sync NextRIP to cached vmcb12 after VMRUN of L2
-Date: Mon,  4 May 2026 15:51:28 +0200
-Message-ID: <20260504135150.518299274@linuxfoundation.org>
+	Junrui Luo <moonafterrain@outlook.com>,
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 7.0 240/307] md/raid5: validate payload size before accessing journal metadata
+Date: Mon,  4 May 2026 15:52:05 +0200
+Message-ID: <20260504135151.867629495@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,55 +50,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 778d8c1b2a6ffe622ddcd3bb35b620e6e41f4da0 upstream.
+commit b0cc3ae97e893bf54bbce447f4e9fd2e0b88bff9 upstream.
 
-After VMRUN in guest mode, nested_sync_control_from_vmcb02() syncs
-fields written by the CPU from vmcb02 to the cached vmcb12. This is
-because the cached vmcb12 is used as the authoritative copy of some of
-the controls, and is the payload when saving/restoring nested state.
+r5c_recovery_analyze_meta_block() and
+r5l_recovery_verify_data_checksum_for_mb() iterate over payloads in a
+journal metadata block using on-disk payload size fields without
+validating them against the remaining space in the metadata block.
 
-NextRIP is also written by the CPU (in some cases) after VMRUN, but is
-not sync'd to the cached vmcb12. As a result, it is corrupted after
-save/restore (replaced by the original value written by L1 on nested
-VMRUN). This could cause problems for both KVM (e.g. when injecting a
-soft IRQ) or L1 (e.g. when using NextRIP to advance RIP after emulating
-an instruction).
+A corrupted journal contains payload sizes extending beyond the PAGE_SIZE
+boundary can cause out-of-bounds reads when accessing payload fields or
+computing offsets.
 
-Fix this by sync'ing NextRIP to the cache after VMRUN of L2, but only
-after completing interrupts (not in nested_sync_control_from_vmcb02()),
-as KVM may update NextRIP (e.g. when re-injecting a soft IRQ).
+Add bounds validation for each payload type to ensure the full payload
+fits within meta_size before processing.
 
-Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
-CC: stable@vger.kernel.org
-Co-developed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260225005950.3739782-2-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: b4c625c67362 ("md/r5cache: r5cache recovery: part 1")
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://lore.kernel.org/linux-raid/SYBPR01MB78815E78D829BB86CD7C8015AF5FA@SYBPR01MB7881.ausprd01.prod.outlook.com/
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/md/raid5-cache.c |   48 ++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 33 insertions(+), 15 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4436,6 +4436,16 @@ static __no_kcsan fastpath_t svm_vcpu_ru
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -2002,15 +2002,27 @@ r5l_recovery_verify_data_checksum_for_mb
+ 		return -ENOMEM;
  
- 	svm_complete_interrupts(vcpu);
- 
-+	/*
-+	 * Update the cache after completing interrupts to get an accurate
-+	 * NextRIP, e.g. when re-injecting a soft interrupt.
-+	 *
-+	 * FIXME: Rework svm_get_nested_state() to not pull data from the
-+	 *        cache (except for maybe int_ctl).
-+	 */
-+	if (is_guest_mode(vcpu))
-+		svm->nested.ctl.next_rip = svm->vmcb->control.next_rip;
+ 	while (mb_offset < le32_to_cpu(mb->meta_size)) {
++		sector_t payload_len;
 +
- 	return svm_exit_handlers_fastpath(vcpu);
- }
+ 		payload = (void *)mb + mb_offset;
+ 		payload_flush = (void *)mb + mb_offset;
  
+ 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) {
++			payload_len = sizeof(struct r5l_payload_data_parity) +
++				(sector_t)sizeof(__le32) *
++				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++				goto mismatch;
+ 			if (r5l_recovery_verify_data_checksum(
+ 				    log, ctx, page, log_offset,
+ 				    payload->checksum[0]) < 0)
+ 				goto mismatch;
+ 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_PARITY) {
++			payload_len = sizeof(struct r5l_payload_data_parity) +
++				(sector_t)sizeof(__le32) *
++				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++				goto mismatch;
+ 			if (r5l_recovery_verify_data_checksum(
+ 				    log, ctx, page, log_offset,
+ 				    payload->checksum[0]) < 0)
+@@ -2023,22 +2035,18 @@ r5l_recovery_verify_data_checksum_for_mb
+ 				    payload->checksum[1]) < 0)
+ 				goto mismatch;
+ 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
+-			/* nothing to do for R5LOG_PAYLOAD_FLUSH here */
++			payload_len = sizeof(struct r5l_payload_flush) +
++				(sector_t)le32_to_cpu(payload_flush->size);
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++				goto mismatch;
+ 		} else /* not R5LOG_PAYLOAD_DATA/PARITY/FLUSH */
+ 			goto mismatch;
+ 
+-		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
+-			mb_offset += sizeof(struct r5l_payload_flush) +
+-				le32_to_cpu(payload_flush->size);
+-		} else {
+-			/* DATA or PARITY payload */
++		if (le16_to_cpu(payload->header.type) != R5LOG_PAYLOAD_FLUSH) {
+ 			log_offset = r5l_ring_add(log, log_offset,
+ 						  le32_to_cpu(payload->size));
+-			mb_offset += sizeof(struct r5l_payload_data_parity) +
+-				sizeof(__le32) *
+-				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
+ 		}
+-
++		mb_offset += payload_len;
+ 	}
+ 
+ 	put_page(page);
+@@ -2089,6 +2097,7 @@ r5c_recovery_analyze_meta_block(struct r
+ 	log_offset = r5l_ring_add(log, ctx->pos, BLOCK_SECTORS);
+ 
+ 	while (mb_offset < le32_to_cpu(mb->meta_size)) {
++		sector_t payload_len;
+ 		int dd;
+ 
+ 		payload = (void *)mb + mb_offset;
+@@ -2097,6 +2106,12 @@ r5c_recovery_analyze_meta_block(struct r
+ 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
+ 			int i, count;
+ 
++			payload_len = sizeof(struct r5l_payload_flush) +
++				(sector_t)le32_to_cpu(payload_flush->size);
++			if (mb_offset + payload_len >
++			    le32_to_cpu(mb->meta_size))
++				return -EINVAL;
++
+ 			count = le32_to_cpu(payload_flush->size) / sizeof(__le64);
+ 			for (i = 0; i < count; ++i) {
+ 				stripe_sect = le64_to_cpu(payload_flush->flush_stripes[i]);
+@@ -2110,12 +2125,17 @@ r5c_recovery_analyze_meta_block(struct r
+ 				}
+ 			}
+ 
+-			mb_offset += sizeof(struct r5l_payload_flush) +
+-				le32_to_cpu(payload_flush->size);
++			mb_offset += payload_len;
+ 			continue;
+ 		}
+ 
+ 		/* DATA or PARITY payload */
++		payload_len = sizeof(struct r5l_payload_data_parity) +
++			(sector_t)sizeof(__le32) *
++			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
++		if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++			return -EINVAL;
++
+ 		stripe_sect = (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) ?
+ 			raid5_compute_sector(
+ 				conf, le64_to_cpu(payload->location), 0, &dd,
+@@ -2180,9 +2200,7 @@ r5c_recovery_analyze_meta_block(struct r
+ 		log_offset = r5l_ring_add(log, log_offset,
+ 					  le32_to_cpu(payload->size));
+ 
+-		mb_offset += sizeof(struct r5l_payload_data_parity) +
+-			sizeof(__le32) *
+-			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
++		mb_offset += payload_len;
+ 	}
+ 
+ 	return 0;
 
 
