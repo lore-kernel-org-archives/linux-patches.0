@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355291A9FAF;
-	Mon,  4 May 2026 14:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4AC3AA4F8;
+	Mon,  4 May 2026 14:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904085; cv=none; b=K/pX6i6trqIABzeoGoz6WWJ6QnEWSZkn2FuqchjoSApR52PInbauEm5EER9O22rLGBHvVq3coTAgQckuzML47H44eYPz1fWTnzByW7k5IRA/QJlbp/LDu0OSvzVMgD2TG4QfLQH0S+4Ny/+0Urr0w9whn3VFQBWJYbngtDEue1s=
+	t=1777904087; cv=none; b=LqjKVuGti3tbZsFekiKMVCdHfeWdS3RiTsvdlmZ+rGzAHOrqUK0fCGxKBg6LyXFOC2zA+vrZm61Fcxg2+86aQwLXUZX1WdiyQHI5AXTa+IC+x9Abc4Kz08arN7RS7gLQ+8fqwSK4cOF4pScTN0slwnerZhlsYwNztKFvrLMd7bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904085; c=relaxed/simple;
-	bh=cTcH2z+HORNQ0L/Bc9JfbWCrPQmAiEAWU9WQEM7KNmU=;
+	s=arc-20240116; t=1777904087; c=relaxed/simple;
+	bh=XKZ0HLHYzjeHR+A1AihbW1l3wRfsXoxk8A39HFTEfh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ttmvp2x9Plw3fsVvYQcvdb+mMsGXKPrFWeTlF128kpP6jpzUrIDcTObLryOcWdgDazGnvo1oXKqlVDYGm4T/LJVNcCJ2Xkjuu0W8TgGk9g7BGB1LJnE6PJidqB99J1dxoCtg3lb1XFNINfgqdJkzQthWt95PwRbS1TrRBrcQ4SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GE1UiBQU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+53C+dFte6heNPvajvuL9F+cRHat+4DYfc5HGzwb5yWzpkoGXzLNyM/jUZ5uLFGgnqDJuTwUVaxbvkycn5HTFdeMofzKRCnVn4cKImRHuNbNL7mtGvS8Rj886KV1MV25dQc8G5Z+2a1bbht6uzuCJdHMb/RbXsQY/+zRZ0rkM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQJ6fSfg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GE1UiBQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0359C2BCB8;
-	Mon,  4 May 2026 14:14:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQJ6fSfg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BD1C2BCB8;
+	Mon,  4 May 2026 14:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904085;
-	bh=cTcH2z+HORNQ0L/Bc9JfbWCrPQmAiEAWU9WQEM7KNmU=;
+	s=korg; t=1777904087;
+	bh=XKZ0HLHYzjeHR+A1AihbW1l3wRfsXoxk8A39HFTEfh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GE1UiBQUfOu192E/LVLzTzLLVnlY4xPRuKgSwD1Dqm1d8CN0Guu319ZIHzdMzZipl
-	 WAUHm0IIboxk62Nal/N3CtG8bjJr4GgtkpHsqSqeWbvHgA4wi7H6LMD+17EQ/xFuGu
-	 MDScNualN/onXv6p18+ue9vhxxlyEuLndRoMA6EA=
+	b=FQJ6fSfgmSWJixi5YbVGZRhtgS4i95ofe86MewF8ZJmQUMN7tRmjRKTnzBv3abG4N
+	 QVlBmsKJcQ5BjTQOwcOfF/S74TP1Wtq3kUkfsSU/dSJ1RY+4qPbeNVYjlGmbI9ugbU
+	 75nTP2hP5kFu2dYlrACWTgOLWYNhefMwhnGJxH7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 177/275] KVM: nSVM: Use vcpu->arch.cr2 when updating vmcb12 on nested #VMEXIT
-Date: Mon,  4 May 2026 15:51:57 +0200
-Message-ID: <20260504135149.644888857@linuxfoundation.org>
+Subject: [PATCH 6.18 178/275] KVM: nSVM: Avoid clearing VMCB_LBR in vmcb12
+Date: Mon,  4 May 2026 15:51:58 +0200
+Message-ID: <20260504135149.681918998@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,73 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 5c247d08bc81bbad4c662dcf5654137a2f8483ec upstream.
+commit b53ab5167a81537777ac780bbd93d32613aa3bda upstream.
 
-KVM currently uses the value of CR2 from vmcb02 to update vmcb12 on
-nested #VMEXIT. This value is incorrect in some cases, causing L1 to run
-L2 with a corrupted CR2. This could lead to segfaults or data corruption
-if L2 is in the middle of handling a #PF and reads a corrupted CR2. Use
-the correct value in vcpu->arch.cr2 instead.
+svm_copy_lbrs() always marks VMCB_LBR dirty in the destination VMCB.
+However, nested_svm_vmexit() uses it to copy LBRs to vmcb12, and
+clearing clean bits in vmcb12 is not architecturally defined.
 
-The value in vcpu->arch.cr2 is sync'd to vmcb02 shortly before a VMRUN
-of L2, and sync'd back to vcpu->arch.cr2 shortly after. The value are
-only out-of-sync in two cases: after save+restore, and after a #PF is
-injected into L2. In either case, if a #VMEXIT to L1 is synthesized
-before L2 runs, using the value in vmcb02 would be incorrect.
+Move vmcb_mark_dirty() to callers and drop it for vmcb12.
 
-After save+restore, the value of CR2 is restored by KVM_SET_SREGS into
-vcpu->arch.cr2. It is not reflect in vmcb02 until a VMRUN of L2. Before
-that, it holds whatever was in vmcb02 before restore, which would be
-zero on a new vCPU that never ran nested. If a #VMEXIT to L1 is
-synthesized before L2 ever runs, using vcpu->arch.cr2 to update vmcb12
-is the right thing to do.
+This also facilitates incoming refactoring that does not pass the entire
+VMCB to svm_copy_lbrs().
 
-The #PF injection case is more nuanced.  Although the APM is a bit
-unclear about when CR2 is written during a #PF, the SDM is more clear:
-
-	Processors update CR2 whenever a page fault is detected. If a
-	second page fault occurs while an earlier page fault is being
-	delivered, the faulting linear address of the second fault will
-	overwrite the contents of CR2 (replacing the previous address).
-	These updates to CR2 occur even if the page fault results in a
-	double fault or occurs during the delivery of a double fault.
-
-KVM injecting the exception surely counts as the #PF being "detected".
-More importantly, when an exception is injected into L2 at the time of a
-synthesized #VMEXIT, KVM updates exit_int_info in vmcb12 accordingly,
-such that an L1 hypervisor can re-inject the exception. If CR2 is not
-written at that point, the L1 hypervisor have no way of correctly
-re-injecting the #PF. Hence, if a #VMEXIT to L1 is synthesized after
-the #PF is injected into L2 but before it actually runs, using
-vcpu->arch.cr2 to update vmcb12 is also the right thing to do.
-
-Note that KVM does _not_ update vcpu->arch.cr2 when a #PF is pending for
-L2, only when it is injected. The distinction is important, because only
-injected (but not intercepted) exceptions are propagated to L1 through
-exit_int_info. It would be incorrect to update CR2 in vmcb12 for a
-pending #PF, as L1 would perceive an updated CR2 value with no #PF.
-
+Fixes: d20c796ca370 ("KVM: x86: nSVM: implement nested LBR virtualization")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20260203201010.1871056-1-yosry.ahmed@linux.dev
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260303003421.2185681-2-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/nested.c |    7 +++++--
+ arch/x86/kvm/svm/svm.c    |    2 --
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -1114,7 +1114,7 @@ int nested_svm_vmexit(struct vcpu_svm *s
- 	vmcb12->save.efer   = svm->vcpu.arch.efer;
- 	vmcb12->save.cr0    = kvm_read_cr0(vcpu);
- 	vmcb12->save.cr3    = kvm_read_cr3(vcpu);
--	vmcb12->save.cr2    = vmcb02->save.cr2;
-+	vmcb12->save.cr2    = vcpu->arch.cr2;
- 	vmcb12->save.cr4    = svm->vcpu.arch.cr4;
- 	vmcb12->save.rflags = kvm_get_rflags(vcpu);
- 	vmcb12->save.rip    = kvm_rip_read(vcpu);
+@@ -684,6 +684,7 @@ static void nested_vmcb02_prepare_save(s
+ 	} else {
+ 		svm_copy_lbrs(vmcb02, vmcb01);
+ 	}
++	vmcb_mark_dirty(vmcb02, VMCB_LBR);
+ 	svm_update_lbrv(&svm->vcpu);
+ }
+ 
+@@ -1188,10 +1189,12 @@ int nested_svm_vmexit(struct vcpu_svm *s
+ 		kvm_make_request(KVM_REQ_EVENT, &svm->vcpu);
+ 
+ 	if (unlikely(guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV) &&
+-		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK)))
++		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK))) {
+ 		svm_copy_lbrs(vmcb12, vmcb02);
+-	else
++	} else {
+ 		svm_copy_lbrs(vmcb01, vmcb02);
++		vmcb_mark_dirty(vmcb01, VMCB_LBR);
++	}
+ 
+ 	svm_update_lbrv(vcpu);
+ 
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -811,8 +811,6 @@ void svm_copy_lbrs(struct vmcb *to_vmcb,
+ 	to_vmcb->save.br_to		= from_vmcb->save.br_to;
+ 	to_vmcb->save.last_excp_from	= from_vmcb->save.last_excp_from;
+ 	to_vmcb->save.last_excp_to	= from_vmcb->save.last_excp_to;
+-
+-	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
+ }
+ 
+ static void __svm_enable_lbrv(struct kvm_vcpu *vcpu)
 
 
