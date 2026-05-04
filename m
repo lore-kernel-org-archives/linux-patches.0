@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FC635A3AD;
-	Mon,  4 May 2026 14:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2920C1A6827;
+	Mon,  4 May 2026 14:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904460; cv=none; b=tIdzFRrw07uLr4r99TNlNF+i8XP9s0dFiGJoldrmzBMAHAlIiimdBKgBQopLDnouhfJcRVWabUk6dmoZZWc+sLLqkAqexSQe+BBOKRBH9tSpEmUibkAE/IZsgFpBkZyHGoALqm4QCBTIsKZ4FL9pzktCZmiA0gUr0Kk9GG4xcxI=
+	t=1777904463; cv=none; b=DwJ82HSJN5e4QBxyeGvnLP7+DRZCOZ5UmJszb3BVtE+E35e66AG8lmjFu+bMgZT2hsoQ+7DDqHjxZ/Zroc0kseDZZBsPtWwpgtEnJtsvfdeXzTfcRU1VOh93FdhEGIEbkBW5zs0Xq1vPt3gXZwBDjDVRWriqxICj9ga/L46+qrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904460; c=relaxed/simple;
-	bh=mqnKWp7Y9njFv399vCzCHy8L8kDLCZoHypn50SMyUQE=;
+	s=arc-20240116; t=1777904463; c=relaxed/simple;
+	bh=rWFgWgdBfoQr7h3LDDIDzJUFe7GCNC3U0LgdS9yPRh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZC5EGrxYEkAmulWIAsoHmowCqUxS/94yxN3el5NwHB/eUkhH80Uippq3RkpGzIT8zVsuUZZO0lHPa2ICmmEzuZXTrFPCcU5P6KOi3Y+csjRTH42y8b4d6+kaBE77ux9xZbide+YtrCibVYWbAB3BafDbwRwUHJrI6t0O5xx2sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klKNSUYo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVXVM28tgkvNB8XsrOjhnEb5jMbz5jy8EDhoxXCj0xi7QuWFa0OP1Qm0p73clXa7ZiMJaBVydDpZFfGNk4OkMpbOkc2hmh2mhfG9O/P/gLLDjTxQ0U9DThnelQnentYxhD5aeTqNmvr7Qcfu9X9yn/ENMGjeibJ83Gq0bI/Fc0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJ4PwiF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klKNSUYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD7EC2BCB8;
-	Mon,  4 May 2026 14:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJ4PwiF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1634C2BCB8;
+	Mon,  4 May 2026 14:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904460;
-	bh=mqnKWp7Y9njFv399vCzCHy8L8kDLCZoHypn50SMyUQE=;
+	s=korg; t=1777904463;
+	bh=rWFgWgdBfoQr7h3LDDIDzJUFe7GCNC3U0LgdS9yPRh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klKNSUYoKSuHi2jD08eyb5m26HWPCp+d1tiKIr4xRPStupiemsMKhcGArtn32iXAA
-	 mrJ5bOi7oWLM1hOwvW8AuzBsqnSZ8nP5c3TROR4oz7ZPJNdbDyWyySCHsJcZLalnJJ
-	 AfV+hyQSWMtnRWoP0hib6JEyoDTtkyiWW8zRtcRY=
+	b=nJ4PwiF5lgjHRBBPkd8LWdnT0MdkOQBzowyd19aJYu9WhocjKSHhz97oRrsGRmKl+
+	 0Gx477I5bJBphFAub8rqXBzMtFoHw/tfsVjQBtO8DBo9Dg8h9/fRj/F2GLlq07CeJK
+	 EBm6TLtPb26ksVRBptnt4PijLuXtgVnq4PrVtPc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
-	Arun Raghavan <arunr@valvesoftware.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 047/215] Revert "ALSA: usb: Increase volume range that triggers a warning"
-Date: Mon,  4 May 2026 15:51:06 +0200
-Message-ID: <20260504135131.898417296@linuxfoundation.org>
+	Daniel Hodges <git@danielhodges.dev>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH 6.12 048/215] PCI: epf-mhi: Return 0, not remaining timeout, when eDMA ops complete
+Date: Mon,  4 May 2026 15:51:07 +0200
+Message-ID: <20260504135131.934142157@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,47 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Daniel Hodges <git@danielhodges.dev>
 
-commit 41d78cb724f4b40b7548af420ccfe524b14023bb upstream.
+commit 36bfc3642b19a98f1302aed4437c331df9b481f0 upstream.
 
-UAC uses 2 bytes to store volume values, so the maximum volume range is
-0xFFFF (65535, val = -32768/32767/1).
+pci_epf_mhi_edma_read() and pci_epf_mhi_edma_write() start DMA
+operations and wait for completion with a timeout.
 
-The reverted commit bumpped the range of triggering the warning to >
-65535, effectively making the range check a no-op. It didn't fix
-anything but covered any potential problems and deviated from the
-original intention of the range check.
+On successful completion, they previously returned the remaining
+timeout, which callers may treat as an error.  In particular,
+mhi_ep_ring_add_element(), which calls pci_epf_mhi_edma_write() via
+mhi_cntrl->write_sync(), interprets any non-zero return value as
+failure.
 
-This reverts commit 6b971191fcfc9e3c2c0143eea22534f1f48dbb62.
+Return 0 on success instead of the remaining timeout to prevent
+mhi_ep_ring_add_element() from treating successful completion as an
+error.
 
-Fixes: 6b971191fcfc ("ALSA: usb: Increase volume range that triggers a warning")
+Fixes: 7b99aaaddabb ("PCI: epf-mhi: Add eDMA support")
+Signed-off-by: Daniel Hodges <git@danielhodges.dev>
+[mani: changed commit log as per https://lore.kernel.org/linux-pci/20260227191510.GA3904799@bhelgaas]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Rong Zhang <i@rong.moe>
-Acked-by: Arun Raghavan <arunr@valvesoftware.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260303194805.266158-2-i@rong.moe
+Link: https://patch.msgid.link/20260206200529.10784-1-git@danielhodges.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-mhi.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1814,10 +1814,11 @@ static void __build_feature_ctl(struct u
+--- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
++++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+@@ -367,6 +367,8 @@ static int pci_epf_mhi_edma_read(struct
+ 		dev_err(dev, "DMA transfer timeout\n");
+ 		dmaengine_terminate_sync(chan);
+ 		ret = -ETIMEDOUT;
++	} else {
++		ret = 0;
+ 	}
  
- 	range = (cval->max - cval->min) / cval->res;
- 	/*
--	 * There are definitely devices with a range of ~20,000, so let's be
--	 * conservative and allow for a bit more.
-+	 * Are there devices with volume range more than 255? I use a bit more
-+	 * to be sure. 384 is a resolution magic number found on Logitech
-+	 * devices. It will definitively catch all buggy Logitech devices.
- 	 */
--	if (range > 65535) {
-+	if (range > 384) {
- 		usb_audio_warn(mixer->chip,
- 			       "Warning! Unlikely big volume range (=%u), cval->res is probably wrong.",
- 			       range);
+ err_unmap:
+@@ -438,6 +440,8 @@ static int pci_epf_mhi_edma_write(struct
+ 		dev_err(dev, "DMA transfer timeout\n");
+ 		dmaengine_terminate_sync(chan);
+ 		ret = -ETIMEDOUT;
++	} else {
++		ret = 0;
+ 	}
+ 
+ err_unmap:
 
 
