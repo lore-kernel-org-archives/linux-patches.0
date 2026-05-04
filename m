@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA483DE443;
-	Mon,  4 May 2026 14:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D08D3D8129;
+	Mon,  4 May 2026 14:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904331; cv=none; b=SGpp1GxK0Ow+/KrrpKQ0VqgFlnr5qGsmMk4XvWomgPoAA0Btjm6Uc06wR8YfibA22s+Z3qq2SUN2OWRCOc3mkxauPdHeHAw20a0q5I/l8m351jgYqc7kNBExH1kCbngZI4ZjXemAc2NqdIlKDUj1BpQhcEugsXGUzqJmWafuqQQ=
+	t=1777904334; cv=none; b=dpWUpxP/Y9GNHlUvVvKgJNIaUlqkhYvPNM3VEM7rsz3oul4KARL/5Y8FFuNq5CwFyYjeJXYuiOQejSoObsWt+p3foPTiNGjm2492e9B+MvWz+bL0keqKPrz/s3Rna4iOyvwzlm9moPvqgk6HPnvq3+Y+4B1E9gaaNbgsWN9YvzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904331; c=relaxed/simple;
-	bh=iilDlDrnxRLVdASVg6Sxvci/cgYCKtPSo2/XsCsmU5Q=;
+	s=arc-20240116; t=1777904334; c=relaxed/simple;
+	bh=NAn6CxfUu5iu2xH9FVnhqkGk+LpeU4Ih2gUEsbPRonU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoOIyPRGIFX7l5V1miyviA8QJ85ch3CzmSBjCkj48P2sht3IeqHVSlUrWi/2aoEckBQCOlkZ3y8ic10gNad/iEfhKtVL2Akz/VMKIwjc8d1tTP9gFVGgmpL2PgXcjWKY+P6ce3Wvkhe4/5sJmo0kZAPXmMQsreuEustAp9tioTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrfsGOKk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=essTJCWXbXdYbh9Y0A+dj53lOaumYBUDSXs3wOWlX58ze4zOdFxhEo8KkhVOYPIIAME+qrl93+MyHp+sy28AEIfhbeSSNKpjCLrYBZyOk5ZHIz7uxV2pmEOSjbdw/j5NNIKkR4NgJk28nXWnip4XxCV34yuBOsojhmXSwV+oLP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfT38rcM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrfsGOKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CE8C2BCB8;
-	Mon,  4 May 2026 14:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfT38rcM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86BAC2BCB8;
+	Mon,  4 May 2026 14:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904331;
-	bh=iilDlDrnxRLVdASVg6Sxvci/cgYCKtPSo2/XsCsmU5Q=;
+	s=korg; t=1777904334;
+	bh=NAn6CxfUu5iu2xH9FVnhqkGk+LpeU4Ih2gUEsbPRonU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GrfsGOKkZmk4qa1sEtMkJWJGD4Rl0GU/0XiT+zHzwd1N5FVbvGTiuZgSN8ORnCT10
-	 l0SQGS+C2OJdf5wypUD1vu3zpY883b5Qo8sfRRu+Tm6BIhOMWAjX/3C961bEopHimH
-	 Y7oDs7fAQ8+reSByQZvSYjo6tkYx5gJgFk6wCso4=
+	b=JfT38rcMNJzDWWPqLV0XB79fdhgXt6PyJZknPs1IIClK6mF4MkFpUiPGVi8huJZXX
+	 J7fdM3lSVtWrF/je4AwJzhadMJqP/U8KqPQMHk4+KNK8cgZEIv2ZhvkZy4pZc+zEJ4
+	 kd0ILjtNnIvBjNGaIePMIHCudzGS8hoYrpo71J+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Simon Horman <horms@kernel.org>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 274/275] net: ipv6: fix NOREF dst use in seg6 and rpl lwtunnels
-Date: Mon,  4 May 2026 15:53:34 +0200
-Message-ID: <20260504135153.208696658@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Kai Ma <k4729.23098@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 275/275] netfilter: reject zero shift in nft_bitwise
+Date: Mon,  4 May 2026 15:53:35 +0200
+Message-ID: <20260504135153.244626992@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -52,122 +57,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Kai Ma <k4729.23098@gmail.com>
 
-commit f9c52a6ba9780bd27e0bf4c044fd91c13c778b6e upstream.
+commit fe11e5c40817b84abaa5d83bfb6586d8412bfd07 upstream.
 
-seg6_input_core() and rpl_input() call ip6_route_input() which sets a
-NOREF dst on the skb, then pass it to dst_cache_set_ip6() invoking
-dst_hold() unconditionally.
-On PREEMPT_RT, ksoftirqd is preemptible and a higher-priority task can
-release the underlying pcpu_rt between the lookup and the caching
-through a concurrent FIB lookup on a shared nexthop.
-Simplified race sequence:
+Reject zero shift operands for nft_bitwise left and right shift
+expressions during initialization.
 
-  ksoftirqd/X                       higher-prio task (same CPU X)
-  -----------                       --------------------------------
-  seg6_input_core(,skb)/rpl_input(skb)
-    dst_cache_get()
-      -> miss
-    ip6_route_input(skb)
-      -> ip6_pol_route(,skb,flags)
-         [RT6_LOOKUP_F_DST_NOREF in flags]
-        -> FIB lookup resolves fib6_nh
-           [nhid=N route]
-        -> rt6_make_pcpu_route()
-           [creates pcpu_rt, refcount=1]
-             pcpu_rt->sernum = fib6_sernum
-             [fib6_sernum=W]
-           -> cmpxchg(fib6_nh.rt6i_pcpu,
-                      NULL, pcpu_rt)
-              [slot was empty, store succeeds]
-      -> skb_dst_set_noref(skb, dst)
-         [dst is pcpu_rt, refcount still 1]
+The carry propagation logic computes the carry from the adjacent 32-bit
+word using BITS_PER_TYPE(u32) - shift. A zero shift operand turns this
+into a 32-bit shift, which is undefined behaviour.
 
-                                    rt_genid_bump_ipv6()
-                                      -> bumps fib6_sernum
-                                         [fib6_sernum from W to Z]
-                                    ip6_route_output()
-                                      -> ip6_pol_route()
-                                        -> FIB lookup resolves fib6_nh
-                                           [nhid=N]
-                                        -> rt6_get_pcpu_route()
-                                             pcpu_rt->sernum != fib6_sernum
-                                             [W <> Z, stale]
-                                          -> prev = xchg(rt6i_pcpu, NULL)
-                                          -> dst_release(prev)
-                                             [prev is pcpu_rt,
-                                              refcount 1->0, dead]
+Reject zero shift operands in the control plane, alongside the existing
+check for values greater than or equal to 32, so malformed rules never
+reach the packet path.
 
-    dst = skb_dst(skb)
-    [dst is the dead pcpu_rt]
-    dst_cache_set_ip6(dst)
-      -> dst_hold() on dead dst
-      -> WARN / use-after-free
-
-For the race to occur, ksoftirqd must be preemptible (PREEMPT_RT without
-PREEMPT_RT_NEEDS_BH_LOCK) and a concurrent task must be able to release
-the pcpu_rt. Shared nexthop objects provide such a path, as two routes
-pointing to the same nhid share the same fib6_nh and its rt6i_pcpu
-entry.
-
-Fix seg6_input_core() and rpl_input() by calling skb_dst_force() after
-ip6_route_input() to force the NOREF dst into a refcounted one before
-caching.
-The output path is not affected as ip6_route_output() already returns a
-refcounted dst.
-
-Fixes: af4a2209b134 ("ipv6: sr: use dst_cache in seg6_input")
-Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260421094735.20997-1-andrea.mayer@uniroma2.it
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 567d746b55bc ("netfilter: bitwise: add support for shifts.")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Kai Ma <k4729.23098@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/rpl_iptunnel.c  |    9 +++++++++
- net/ipv6/seg6_iptunnel.c |    9 +++++++++
- 2 files changed, 18 insertions(+)
+ net/netfilter/nft_bitwise.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/rpl_iptunnel.c
-+++ b/net/ipv6/rpl_iptunnel.c
-@@ -287,7 +287,16 @@ static int rpl_input(struct sk_buff *skb
+--- a/net/netfilter/nft_bitwise.c
++++ b/net/netfilter/nft_bitwise.c
+@@ -196,7 +196,8 @@ static int nft_bitwise_init_shift(struct
+ 	if (err < 0)
+ 		return err;
  
- 	if (!dst) {
- 		ip6_route_input(skb);
-+
-+		/* ip6_route_input() sets a NOREF dst; force a refcount on it
-+		 * before caching or further use.
-+		 */
-+		skb_dst_force(skb);
- 		dst = skb_dst(skb);
-+		if (unlikely(!dst)) {
-+			err = -ENETUNREACH;
-+			goto drop;
-+		}
- 
- 		/* cache only if we don't create a dst reference loop */
- 		if (!dst->error && lwtst != dst->lwtstate) {
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -500,7 +500,16 @@ static int seg6_input_core(struct net *n
- 
- 	if (!dst) {
- 		ip6_route_input(skb);
-+
-+		/* ip6_route_input() sets a NOREF dst; force a refcount on it
-+		 * before caching or further use.
-+		 */
-+		skb_dst_force(skb);
- 		dst = skb_dst(skb);
-+		if (unlikely(!dst)) {
-+			err = -ENETUNREACH;
-+			goto drop;
-+		}
- 
- 		/* cache only if we don't create a dst reference loop */
- 		if (!dst->error && lwtst != dst->lwtstate) {
+-	if (priv->data.data[0] >= BITS_PER_TYPE(u32)) {
++	if (!priv->data.data[0] ||
++	    priv->data.data[0] >= BITS_PER_TYPE(u32)) {
+ 		nft_data_release(&priv->data, desc.type);
+ 		return -EINVAL;
+ 	}
 
 
