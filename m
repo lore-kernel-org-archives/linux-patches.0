@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E293D5645;
-	Mon,  4 May 2026 14:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5711D35A3AD;
+	Mon,  4 May 2026 14:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903926; cv=none; b=fLghdGMi1E6VIzo1qq3kkf4UeBzOg/C1kT/kDln/29vKKpohS+aKePLDJ9VNYjRwH4OBI6ny21Ff3gtCNANEX6ejyOB4+vHBQGbkj7LwJaLR5Wli8JQoWZMPVhz7ra9NgPyYKynCbi5eRaJxl3eMTGxU1qA1uIUcU2puv4xSOf0=
+	t=1777903928; cv=none; b=hDgO4qtzXHcY9YBeweaPK/RgNeMnw2GIR6x455OOMBAPhFFAOpFP5WUtHo+F/x9ZhoIy1xS0/Gu+qDvgDb9Sk79rXfiG7TX+vGJffONV4IifF7E0q59Z06qHJO/wHjd+3JLg1rzd5FGbA+mWSei7GlfuY+mG4hvZZrCp6E5WrYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903926; c=relaxed/simple;
-	bh=xCoJ0XT4XH+vjMfB2N9RKug1BDhzTl2e2ecPyYciu58=;
+	s=arc-20240116; t=1777903928; c=relaxed/simple;
+	bh=6b80rH9bwGy5gzdOsWgfOQ8Y1dF5E5nbmQF2LXmGpXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQf3SaWhqkD/5YSEVNYIXV+4d4HvPXbwNiWQuY92g+Bfl4wI99ol6wQ/m/ub6TQSM3rfHe5FGeAP6E2///eU5Fx6umf67gZ7cwXKy9QY44jin9Chx65Z6y+yhxPAinCrLWmbZwYMESoyuTUwzOawqVYEoB9TnJT3ketIFkAncj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mk4bAIZh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ebu5x2SWb3rBM6pq+bnLbCJxQElLCeOcjW68Pmesxdmfo0ycoxaWKlCAUxHRk/oOhkEk5pfNkruzJK27TZJuAYWvAiurutjQZnL+BJMZZUX/RFN8SVRU+7NScdE0/B1mdO8Nkp3+wn/AOT/liiGLw5Ubj0ezMo57bPQ1AQccvLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgAHiNIw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mk4bAIZh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F43EC2BCB8;
-	Mon,  4 May 2026 14:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgAHiNIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90B2C2BCB8;
+	Mon,  4 May 2026 14:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903925;
-	bh=xCoJ0XT4XH+vjMfB2N9RKug1BDhzTl2e2ecPyYciu58=;
+	s=korg; t=1777903928;
+	bh=6b80rH9bwGy5gzdOsWgfOQ8Y1dF5E5nbmQF2LXmGpXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mk4bAIZhSY/KpWkBQitkzX2BeHUGfEoMWLLCnXnF/BH4krQ4A1BIEsxRw7LqzdkFJ
-	 b0bO5JUdKLhJHAS9Ldn/3Bd/ACzdwu9ye8igkY91/K2ZfZXphSjD3ZsnGaUzjsR384
-	 zXSy9hRDokZPvVsxhBjSL6k02JEE/FhF+l2NkaAY=
+	b=ZgAHiNIw2gytsRheg19dEIp0ill35RPZ72eMKDuvkvz6sL64A1CGAr14T1bUqMG6T
+	 RVYd6xLGi3bETZlJ6iI1Rnfb4q2AIxVpx/MQaGmnbwRFoImpR2k8JaHwlfOjxOZt7g
+	 4TN7XQz/hrEl3NjVxRU2xgoPiuIk6eW7ymOugcKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.18 115/275] EDAC/versalnet: Fix memory leak in remove and probe error paths
-Date: Mon,  4 May 2026 15:50:55 +0200
-Message-ID: <20260504135147.182039423@linuxfoundation.org>
+	Yiyang Chen <cyyzero16@gmail.com>,
+	Balbir Singh <bsingharora@gmail.com>,
+	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
+	Fan Yu <fan.yu9@zte.com.cn>,
+	Wang Yaxin <wang.yaxin@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 116/275] tools/accounting: handle truncated taskstats netlink messages
+Date: Mon,  4 May 2026 15:50:56 +0200
+Message-ID: <20260504135147.218445230@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,41 +54,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+From: Yiyang Chen <cyyzero16@gmail.com>
 
-commit 1b6f292cb94d95c9bc22e1efe592daf62c60bc2e upstream.
+commit cc82b3dcc6a8fa259fbda12ab00d6fc00908a49e upstream.
 
-The mcdi object allocated using kzalloc() in the setup_mcdi() is not freed in
-the remove path or in probe's error handling path leading to a memory leak.
-Fix it by freeing the allocated memory.
+procacct and getdelays use a fixed receive buffer for taskstats generic
+netlink messages.  A multi-threaded process exit can emit a single
+PID+TGID notification large enough to exceed that buffer on newer kernels.
 
-Fixes: d5fe2fec6c40d ("EDAC: Add a driver for the AMD Versal NET DDR controller")
-Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260322131139.1684716-1-ptsm@linux.microsoft.com
+Switch to recvmsg() so MSG_TRUNC is detected explicitly, increase the
+message buffer size, and report truncated datagrams clearly instead of
+misparsing them as fatal netlink errors.
+
+Also print the taskstats version in debug output to make version
+mismatches easier to diagnose while inspecting taskstats traffic.
+
+Link: https://lkml.kernel.org/r/520308bb4cbbaf8dc2c7296b5f60f11e12fb30a5.1774810498.git.cyyzero16@gmail.com
+Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
+Cc: Balbir Singh <bsingharora@gmail.com>
+Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
+Cc: Fan Yu <fan.yu9@zte.com.cn>
+Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/versalnet_edac.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/accounting/getdelays.c |   41 +++++++++++++++++++++++++++++++++++++----
+ tools/accounting/procacct.c  |   40 ++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 73 insertions(+), 8 deletions(-)
 
---- a/drivers/edac/versalnet_edac.c
-+++ b/drivers/edac/versalnet_edac.c
-@@ -917,6 +917,7 @@ static int mc_probe(struct platform_devi
+--- a/tools/accounting/getdelays.c
++++ b/tools/accounting/getdelays.c
+@@ -59,7 +59,7 @@ int print_task_context_switch_counts;
+ 	}
  
- err_init:
- 	cdx_mcdi_finish(priv->mcdi);
-+	kfree(priv->mcdi);
+ /* Maximum size of response requested or message sent */
+-#define MAX_MSG_SIZE	1024
++#define MAX_MSG_SIZE	2048
+ /* Maximum number of cpus expected to be specified in a cpumask */
+ #define MAX_CPUS	32
  
- err_unreg:
- 	unregister_rpmsg_driver(&amd_rpmsg_driver);
-@@ -938,6 +939,7 @@ static void mc_remove(struct platform_de
- 	remove_versalnet(priv);
- 	rproc_shutdown(priv->mcdi->r5_rproc);
- 	cdx_mcdi_finish(priv->mcdi);
-+	kfree(priv->mcdi);
+@@ -114,6 +114,32 @@ error:
+ 	return -1;
  }
  
- static const struct of_device_id amd_edac_match[] = {
++static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
++{
++	struct sockaddr_nl nladdr;
++	struct iovec iov = {
++		.iov_base = msg,
++		.iov_len = sizeof(*msg),
++	};
++	struct msghdr hdr = {
++		.msg_name = &nladdr,
++		.msg_namelen = sizeof(nladdr),
++		.msg_iov = &iov,
++		.msg_iovlen = 1,
++	};
++	int ret;
++
++	ret = recvmsg(sd, &hdr, 0);
++	if (ret < 0)
++		return -1;
++	if (hdr.msg_flags & MSG_TRUNC) {
++		errno = EMSGSIZE;
++		return -1;
++	}
++
++	return ret;
++}
++
+ 
+ static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
+ 	     __u8 genl_cmd, __u16 nla_type,
+@@ -515,12 +541,16 @@ int main(int argc, char *argv[])
+ 	}
+ 
+ 	do {
+-		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
++		rep_len = recv_taskstats_msg(nl_sd, &msg);
+ 		PRINTF("received %d bytes\n", rep_len);
+ 
+ 		if (rep_len < 0) {
+-			fprintf(stderr, "nonfatal reply error: errno %d\n",
+-				errno);
++			if (errno == EMSGSIZE)
++				fprintf(stderr,
++					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
++			else
++				fprintf(stderr, "nonfatal reply error: errno %d\n",
++					errno);
+ 			continue;
+ 		}
+ 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
+@@ -562,6 +592,9 @@ int main(int argc, char *argv[])
+ 							printf("TGID\t%d\n", rtid);
+ 						break;
+ 					case TASKSTATS_TYPE_STATS:
++						PRINTF("version %u\n",
++						       ((struct taskstats *)
++							NLA_DATA(na))->version);
+ 						if (print_delays)
+ 							print_delayacct((struct taskstats *) NLA_DATA(na));
+ 						if (print_io_accounting)
+--- a/tools/accounting/procacct.c
++++ b/tools/accounting/procacct.c
+@@ -71,7 +71,7 @@ int print_task_context_switch_counts;
+ 	}
+ 
+ /* Maximum size of response requested or message sent */
+-#define MAX_MSG_SIZE	1024
++#define MAX_MSG_SIZE	2048
+ /* Maximum number of cpus expected to be specified in a cpumask */
+ #define MAX_CPUS	32
+ 
+@@ -121,6 +121,32 @@ error:
+ 	return -1;
+ }
+ 
++static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
++{
++	struct sockaddr_nl nladdr;
++	struct iovec iov = {
++		.iov_base = msg,
++		.iov_len = sizeof(*msg),
++	};
++	struct msghdr hdr = {
++		.msg_name = &nladdr,
++		.msg_namelen = sizeof(nladdr),
++		.msg_iov = &iov,
++		.msg_iovlen = 1,
++	};
++	int ret;
++
++	ret = recvmsg(sd, &hdr, 0);
++	if (ret < 0)
++		return -1;
++	if (hdr.msg_flags & MSG_TRUNC) {
++		errno = EMSGSIZE;
++		return -1;
++	}
++
++	return ret;
++}
++
+ 
+ static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
+ 	     __u8 genl_cmd, __u16 nla_type,
+@@ -239,6 +265,8 @@ void handle_aggr(int mother, struct nlat
+ 			PRINTF("TGID\t%d\n", rtid);
+ 			break;
+ 		case TASKSTATS_TYPE_STATS:
++			PRINTF("version %u\n",
++			       ((struct taskstats *)NLA_DATA(na))->version);
+ 			if (mother == TASKSTATS_TYPE_AGGR_PID)
+ 				print_procacct((struct taskstats *) NLA_DATA(na));
+ 			if (fd) {
+@@ -347,12 +375,16 @@ int main(int argc, char *argv[])
+ 	}
+ 
+ 	do {
+-		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
++		rep_len = recv_taskstats_msg(nl_sd, &msg);
+ 		PRINTF("received %d bytes\n", rep_len);
+ 
+ 		if (rep_len < 0) {
+-			fprintf(stderr, "nonfatal reply error: errno %d\n",
+-				errno);
++			if (errno == EMSGSIZE)
++				fprintf(stderr,
++					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
++			else
++				fprintf(stderr, "nonfatal reply error: errno %d\n",
++					errno);
+ 			continue;
+ 		}
+ 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
 
 
