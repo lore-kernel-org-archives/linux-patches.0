@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83913DE45F;
-	Mon,  4 May 2026 13:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD68F2E2F0E;
+	Mon,  4 May 2026 13:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777902870; cv=none; b=Sxuez+do6Z+wszu88ClhHtkye5uO9knz677PElAUZu0KvwSVOfAZmVbvS7db/PDNt2XPIzyYpo6iJhi96fvtqQ05et80HoW/i7k+ZqOPUKhi83BxvWjPJhQxMao5aG3IzBnTbv8MaTp4RIV16WlvxR/lMwSn2lprzaoHvOsMoRY=
+	t=1777902873; cv=none; b=iTCIYUrwYiadXx6yQJgv7hGGVVevdS76y3LEiIRrPs/5+uG4UskLZnDVC7dhAwxyBG3VGCsEQo36JWZAUxkyDvK/Sp4s9REyyt5NKu3tdx6sl3PjsY6HLUWM27u/pw8EXOdl9hpGk4FrovaXF5Z4soHux/+I+VkUrW5Qs1LFYDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777902870; c=relaxed/simple;
-	bh=H7345oC4D9PeCCn4X8/gnsJthD51BcqZcgvDSnssZ9w=;
+	s=arc-20240116; t=1777902873; c=relaxed/simple;
+	bh=hTtSNHShZurSqhB6u3sH7tw5SY5uf7xlpe889bWNR3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I40L+Mkmk5Ck90SsFcjpr/3RODjV+H4e7/KHjZz611DviYQrjUwgABT6J4nLdrbEmIoYWdBQVZEXC4NlIhk2CCH1q14GQAR193llLS/Nf6D5zMHRB1PIe+HHQhrTtqf5fh+dTzeRlkgpF2mKmDjCM/gYM+If5LSJJBbEcnbXpQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu9GS9NV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jRoWJA4gdqTtfKWWxeG/HEOMNMeYzmNzqFXse2U14eGP0p20WbuOI+IGQM1+15AU3OEj/q/cwNS6Lj2qgD49CwF794jYWWLKDeZp86pxFUCcXTn01l+71QJa4rqljD2X6IQ/ohCfSwPSzh52IDrtrGQhZBsKyPP9f4S1ThwbUgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFNcSg+Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu9GS9NV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2415BC2BCC4;
-	Mon,  4 May 2026 13:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFNcSg+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B767AC2BCB8;
+	Mon,  4 May 2026 13:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777902870;
-	bh=H7345oC4D9PeCCn4X8/gnsJthD51BcqZcgvDSnssZ9w=;
+	s=korg; t=1777902873;
+	bh=hTtSNHShZurSqhB6u3sH7tw5SY5uf7xlpe889bWNR3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fu9GS9NVEjWOVumbsLC78zuIIHJPl2uas2mSlE7S7V/gRb5KsyKwmd48r/t6qHKWk
-	 lrZr/huLwEIkaIjahiGlqn5TEZMWd/svrx+OVXp/TmRUM1b2tOtuW1htBVHxWvnsTr
-	 OMpJ0Th/z+NTs7U9g/7dSy6rxYt8Kic6NcCNfmLQ=
+	b=EFNcSg+QR5XnLge/tLuElCrs3G5tfgICzgaFaxgTnHAOqlHkqHTnHFP7RlfsPXEf0
+	 dMBnLnpxlfLqIQnRzqOwku2CFkSFVxAZOreP04dyNZdBrZLvWcJA+fxjymL08qhke4
+	 fS7dNDrKoN5HovWaT4IFutf2XW0C5fzYhNAI3/Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Tyllis Xu <LivelyCarpet87@gmail.com>
-Subject: [PATCH 7.0 015/307] ibmasm: fix heap over-read in ibmasm_send_i2o_message()
-Date: Mon,  4 May 2026 15:48:20 +0200
-Message-ID: <20260504135143.402620601@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 7.0 016/307] sysfs: attribute_group: Respect is_visible_const() when changing owner
+Date: Mon,  4 May 2026 15:48:21 +0200
+Message-ID: <20260504135143.439020937@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -44,78 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tyllis Xu <livelycarpet87@gmail.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 9aad71144fa3682cca3837a06c8623016790e7ec upstream.
+commit 9ce4a8c07b28cdd70f6ca38b60bf688c27dbbfb9 upstream.
 
-The ibmasm_send_i2o_message() function uses get_dot_command_size() to
-compute the byte count for memcpy_toio(), but this value is derived from
-user-controlled fields in the dot_command_header (command_size: u8,
-data_size: u16) and is never validated against the actual allocation size.
-A root user can write a small buffer with inflated header fields, causing
-memcpy_toio() to read up to ~65 KB past the end of the allocation into
-adjacent kernel heap, which is then forwarded to the service processor
-over MMIO.
+The call to grp->is_visible in sysfs_group_attrs_change_owner() was
+missed when support for is_visible_const() was added.
 
-Silently clamping the copy size is not sufficient: if the header fields
-claim a larger size than the buffer, the SP receives a dot command whose
-own header is inconsistent with the I2O message length, which can cause
-the SP to desynchronize. Reject such commands outright by returning
-failure.
+Check for both is_visible variants there too.
 
-Validate command_size before calling get_mfa_inbound() to avoid leaking
-an I2O message frame: reading INBOUND_QUEUE_PORT dequeues a hardware
-frame from the controller's free pool, and returning without a
-corresponding set_mfa_inbound() call would permanently exhaust it.
-
-Additionally, clamp command_size to I2O_COMMAND_SIZE before the
-memcpy_toio() so the MMIO write stays within the I2O message frame,
-consistent with the clamping already performed by outgoing_message_size()
-for the header field.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Fixes: 7dd9fdb4939b ("sysfs: attribute_group: enable const variants of is_visible()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
-Link: https://patch.msgid.link/20260314165805.548293-1-LivelyCarpet87@gmail.com
+Reported-by: Michael Kelley <mhklinux@outlook.com>
+Closes: https://lore.kernel.org/lkml/SN6PR02MB4157D5F04608E4E3C21AB56ED45EA@SN6PR02MB4157.namprd02.prod.outlook.com/
+Link: https://sashiko.dev/#/patchset/20260403-sysfs-const-hv-v2-0-8932ab8d41db%40weissschuh.net
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/20260403-sysfs-is_visible_const-fix-v1-1-f87f26071d2c@weissschuh.net
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/ibmasm/lowlevel.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/sysfs/group.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/misc/ibmasm/lowlevel.c
-+++ b/drivers/misc/ibmasm/lowlevel.c
-@@ -19,17 +19,21 @@ static struct i2o_header header = I2O_HE
- int ibmasm_send_i2o_message(struct service_processor *sp)
- {
- 	u32 mfa;
--	unsigned int command_size;
-+	size_t command_size;
- 	struct i2o_message *message;
- 	struct command *command = sp->current_command;
+--- a/fs/sysfs/group.c
++++ b/fs/sysfs/group.c
+@@ -517,8 +517,11 @@ static int sysfs_group_attrs_change_owne
+ 		struct attribute *const *attr;
  
-+	command_size = get_dot_command_size(command->buffer);
-+	if (command_size > command->buffer_size)
-+		return 1;
-+	if (command_size > I2O_COMMAND_SIZE)
-+		command_size = I2O_COMMAND_SIZE;
-+
- 	mfa = get_mfa_inbound(sp->base_address);
- 	if (!mfa)
- 		return 1;
- 
--	command_size = get_dot_command_size(command->buffer);
--	header.message_size = outgoing_message_size(command_size);
--
-+	header.message_size = outgoing_message_size((unsigned int)command_size);
- 	message = get_i2o_message(sp->base_address, mfa);
- 
- 	memcpy_toio(&message->header, &header, sizeof(struct i2o_header));
+ 		for (i = 0, attr = grp->attrs; *attr; i++, attr++) {
+-			if (grp->is_visible) {
+-				mode = grp->is_visible(kobj, *attr, i);
++			if (grp->is_visible || grp->is_visible_const) {
++				if (grp->is_visible)
++					mode = grp->is_visible(kobj, *attr, i);
++				else
++					mode = grp->is_visible_const(kobj, *attr, i);
+ 				if (mode & SYSFS_GROUP_INVISIBLE)
+ 					break;
+ 				if (!mode)
 
 
