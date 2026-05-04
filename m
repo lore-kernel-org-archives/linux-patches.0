@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1193DEAC8;
-	Mon,  4 May 2026 14:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379463DE45D;
+	Mon,  4 May 2026 14:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904777; cv=none; b=j4TymwyfUQBkLwF+/B/L+VmeGLml5G+V7jnn894CnaPil4JWkAuxFUlpvxFaiRV6Mazt2xLO3G5PIHD3ldN4Ogs36MFbN6WM0L98wesHvXv+s5jVUX/ct/BdUPDBxpWI3s139NPmXSCu57oGGRSWU3vPbxh8YnyKZclW35K3NQ4=
+	t=1777904780; cv=none; b=IoCjGqc1ouu8IvBfuC0mh40TaeoWeWmx558ZvSvJ4go7Y6pPVa/NggRXuO9WTh6qiL0TFQ5RteAYmP4pt5Q5/nVPvmbqGFt5QhPLhrhQcXSUTXApZT8gU0j0lyzncxBhDcBQfBH/prP7kru1EXFSrYIr2Zh7GwBjQ7LUxKAyHzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904777; c=relaxed/simple;
-	bh=ztQdI9n/sgHVmH5CH1EE0X5ziDncD50T5+ISJlDzdmE=;
+	s=arc-20240116; t=1777904780; c=relaxed/simple;
+	bh=/RPNWn8pZCVyYgZFSyQmB65gCZl0+3cYu+/eKi1nKy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjocymIALK4fy3ymyXq8/CEIsVZ7P8mVs5Zh12ZPebIllybidVRl09sXIXF8/NyLjxSLOzh1NIOIhVQJTyGBz8JGWu4XbQlHiZ1bOybQfb8E69IPziuh4uyVwtFjGyqFw9NVhM8HDwifgadaa3uaM1jPRFlgqNsCKmrAH0bxJ0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3IXjCO0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VzMGeFCZ/S9uqyNj2EOOKvfy49fc6vL+h+/AK1VbRiVfMr552crclpCKhw5QjPRucawdB8Si1hgJ4b4K8BPsuhCT0h0+qX0R8CQpuE8l8QLFEK7nEs2ne8A1jiNQF5w/I69QtMfMfnpeGzo8PCxS6qBLLh4dCpsw6U2PI+76DhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0PfHbSJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3IXjCO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31136C2BCB8;
-	Mon,  4 May 2026 14:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0PfHbSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EDAC2BCC4;
+	Mon,  4 May 2026 14:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904777;
-	bh=ztQdI9n/sgHVmH5CH1EE0X5ziDncD50T5+ISJlDzdmE=;
+	s=korg; t=1777904780;
+	bh=/RPNWn8pZCVyYgZFSyQmB65gCZl0+3cYu+/eKi1nKy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3IXjCO0SB5ZwVTZLqJYnQJxMXmcmEhNuwagAA5HSAQDj2nPCKCkCFB5x+gbhvX0x
-	 BhPnzg1uJMQ41scZ70kRPxM3Jj8lBf9cyYOO8FYHQPuiGstut8gYyeEn47hpWB/ln9
-	 fAUlExnt3782ztRyLrU6d+Y9+zGFxbioDb7OPULw=
+	b=z0PfHbSJCso2Ck1hyG011fi7Q7bwTNHEIlkTSpETFPgg1cVG+HVG6x2CUBRURKN2S
+	 cPH4ECXyQQo7OS9xveJ5fyhfX+SRWJ+qlXR5mMIifasHG6Sw0Qya9NpF06mLJvqDFH
+	 1mhfSY+1JwSFYbcD4It/OATanKdAIV1b6YfIsbNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjaikumar V S <sanjaikumar.vs@dicortech.com>,
-	Hendrik Donner <hd@os-cillation.de>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>
-Subject: [PATCH 6.12 138/215] mtd: spi-nor: sst: Fix write enable before AAI sequence
-Date: Mon,  4 May 2026 15:52:37 +0200
-Message-ID: <20260504135135.195011261@linuxfoundation.org>
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 139/215] amdgpu/jpeg: fix deepsleep register for jpeg 5_0_0 and 5_0_2
+Date: Mon,  4 May 2026 15:52:38 +0200
+Message-ID: <20260504135135.232670380@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,61 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjaikumar V S <sanjaikumar.vs@dicortech.com>
+From: David (Ming Qiang) Wu <David.Wu3@amd.com>
 
-commit a0f64241d3566a49c0a9b33ba7ae458ae22003a9 upstream.
+commit e90dc3b2d73986610476b02c29d0074aa4d92fb0 upstream.
 
-When writing to SST flash starting at an odd address, a single byte is
-first programmed using the byte program (BP) command. After this
-operation completes, the flash hardware automatically clears the Write
-Enable Latch (WEL) bit.
+PCTL0__MMHUB_DEEPSLEEP_IB is 0x69004 on MMHUB 4,1,0 and
+and 0x60804 on MMHUB 4,2,0. 0x62a04 is on MMHUB 1,8,0/1.
 
-If an AAI (Auto Address Increment) word program sequence follows, it
-requires WEL to be set. Without re-enabling writes, the AAI sequence
-fails.
+The DS bits are adjusted to cover more JPEG engines and MMHUB
+version.
 
-Add spi_nor_write_enable() after the odd-address byte program when more
-data needs to be written. Use a local boolean for clarity.
-
-Fixes: b199489d37b2 ("mtd: spi-nor: add the framework for SPI NOR")
+Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanjaikumar V S <sanjaikumar.vs@dicortech.com>
-Tested-by: Hendrik Donner <hd@os-cillation.de>
-Reviewed-by: Hendrik Donner <hd@os-cillation.de>
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/sst.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c |   52 +++++++++++++++++++++++++++----
+ 1 file changed, 46 insertions(+), 6 deletions(-)
 
---- a/drivers/mtd/spi-nor/sst.c
-+++ b/drivers/mtd/spi-nor/sst.c
-@@ -203,6 +203,8 @@ static int sst_nor_write(struct mtd_info
- 
- 	/* Start write from odd address. */
- 	if (to % 2) {
-+		bool needs_write_enable = (len > 1);
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
+@@ -670,15 +670,35 @@ static void jpeg_v4_0_3_dec_ring_set_wpt
+  */
+ void jpeg_v4_0_3_dec_ring_insert_start(struct amdgpu_ring *ring)
+ {
+-	if (!amdgpu_sriov_vf(ring->adev)) {
++	struct amdgpu_device *adev = ring->adev;
 +
- 		/* write one byte. */
- 		ret = sst_nor_write_data(nor, to, 1, buf);
- 		if (ret < 0)
-@@ -210,6 +212,17 @@ static int sst_nor_write(struct mtd_info
- 
- 		to++;
- 		actual++;
++	if (!amdgpu_sriov_vf(adev)) {
++		int jpeg_inst = GET_INST(JPEG, ring->me);
++		uint32_t value = 0x80004000; /* default DS14 */
 +
-+		/*
-+		 * Byte program clears the write enable latch. If more
-+		 * data needs to be written using the AAI sequence,
-+		 * re-enable writes.
-+		 */
-+		if (needs_write_enable) {
-+			ret = spi_nor_write_enable(nor);
-+			if (ret)
-+				goto out;
+ 		amdgpu_ring_write(ring, PACKETJ(regUVD_JRBC_EXTERNAL_REG_INTERNAL_OFFSET,
+ 			0, 0, PACKETJ_TYPE0));
+-		amdgpu_ring_write(ring, 0x62a04); /* PCTL0_MMHUB_DEEPSLEEP_IB */
++
++		/* PCTL0__MMHUB_DEEPSLEEP_IB could be different on different mmhub version */
++		switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
++		case IP_VERSION(4, 1, 0):
++			amdgpu_ring_write(ring, 0x69004);
++			value = 0x80010000;
++			break;
++		case IP_VERSION(4, 2, 0):
++			amdgpu_ring_write(ring, 0x60804);
++			if (jpeg_inst & 1)
++				value = 0x80010000;
++			break;
++		default:
++			amdgpu_ring_write(ring, 0x62a04);
++			break;
 +		}
- 	}
  
- 	/* Write out most of the data here. */
+ 		amdgpu_ring_write(ring,
+ 				  PACKETJ(JRBC_DEC_EXTERNAL_REG_WRITE_ADDR, 0,
+ 					  0, PACKETJ_TYPE0));
+-		amdgpu_ring_write(ring, 0x80004000);
++		amdgpu_ring_write(ring, value);
+ 	}
+ }
+ 
+@@ -691,15 +711,35 @@ void jpeg_v4_0_3_dec_ring_insert_start(s
+  */
+ void jpeg_v4_0_3_dec_ring_insert_end(struct amdgpu_ring *ring)
+ {
+-	if (!amdgpu_sriov_vf(ring->adev)) {
++	struct amdgpu_device *adev = ring->adev;
++
++	if (!amdgpu_sriov_vf(adev)) {
++		int jpeg_inst = GET_INST(JPEG, ring->me);
++		uint32_t value = 0x00004000; /* default DS14 */
++
+ 		amdgpu_ring_write(ring, PACKETJ(regUVD_JRBC_EXTERNAL_REG_INTERNAL_OFFSET,
+ 			0, 0, PACKETJ_TYPE0));
+-		amdgpu_ring_write(ring, 0x62a04);
++
++		/* PCTL0__MMHUB_DEEPSLEEP_IB could be different on different mmhub version */
++		switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
++		case IP_VERSION(4, 1, 0):
++			amdgpu_ring_write(ring, 0x69004);
++			value = 0x00010000;
++			break;
++		case IP_VERSION(4, 2, 0):
++			amdgpu_ring_write(ring, 0x60804);
++			if (jpeg_inst & 1)
++				value = 0x00010000;
++			break;
++		default:
++			amdgpu_ring_write(ring, 0x62a04);
++			break;
++		}
+ 
+ 		amdgpu_ring_write(ring,
+ 				  PACKETJ(JRBC_DEC_EXTERNAL_REG_WRITE_ADDR, 0,
+ 					  0, PACKETJ_TYPE0));
+-		amdgpu_ring_write(ring, 0x00004000);
++		amdgpu_ring_write(ring, value);
+ 	}
+ }
+ 
 
 
