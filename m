@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED47F3DE45C;
-	Mon,  4 May 2026 14:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596A3DF000;
+	Mon,  4 May 2026 14:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904196; cv=none; b=vFbMo+oU/ZwRKhZCoMvR39XBIIaxaVLi8pYNr5YccXQT/fTUoXuY0g3yXCo2sdvcrEEN8YL7P4xkmJqnXT+9y7yODCSKgTlw2Rh7Vu1bAVU7xFwwhmTfe3Gh57rj8re3AouQ1cVGIp+mh4tIhtd0Qo8iqmEHrtDnw3bIlVBYvPk=
+	t=1777904198; cv=none; b=qo4Tr/xx+KnQN5tZiyBoCBz3WbUGaA69Cym66DEFRa4BU2J6n7rbIXX8ELMziJPPIl8Xt9wL/1TtJdXzUZTHESnIhVKOIjXJZ4tcXO7b55d46o2LSy1gJSZD8U8tIHQha9SYsQbz9AnQtMx93WYsr/u1fpl6Y3vqBx0rk1eC8js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904196; c=relaxed/simple;
-	bh=5zkwftGacq1wsJJ9lSiqP0zg1VlBujx0MSp5Z91rz2E=;
+	s=arc-20240116; t=1777904198; c=relaxed/simple;
+	bh=Vs2dZYJ6111ZomRRNPWZ/MGi6ukYFEGeRIA+KDidue4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LopvHPk/r2+Us54Pq43dtsSNRUVOKI4cyL6MeJQhtrYAhmoY8gm9dflgfZe6eauXQH5d6XL0yjHVaTo/dKc6Vmz25fqWRtQD2ZlJx39My1Ki6fOt72YThXhDnoITsHAd4JSMxW/HG5MWJuKZM76yFroSu4yJq6C5RcRXTRCPaxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dals6PTt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GUe8SwOetGJNTVVfMtQTMJH/G5a8Yph+T9z6NOMlrKQop4uf+HW0DrUfOcluhHtp3vKehUCGQyom17pLYPbBMSc+nt0jfxFyVdHqY+dYPDerZOUDfbi5OPXUq3lp82UpK+geSlZ6wKVAG96JA29IfNZ1yskuLTm+iOe/CZW+trg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HegIkIQU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dals6PTt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2FDC2BCC4;
-	Mon,  4 May 2026 14:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HegIkIQU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5447C2BCC4;
+	Mon,  4 May 2026 14:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904195;
-	bh=5zkwftGacq1wsJJ9lSiqP0zg1VlBujx0MSp5Z91rz2E=;
+	s=korg; t=1777904198;
+	bh=Vs2dZYJ6111ZomRRNPWZ/MGi6ukYFEGeRIA+KDidue4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dals6PTtoLaFKFUzK/9mWpLzfb72Xwsd/87livYa7VrtYAq2bvljl/VloKY5sHXvD
-	 /CUbCdHk2IsVY1ivC2Yug/VyMufmxDffhF0F3tDnIvAWE1ynXgSuxg81s3jl8SVtNP
-	 7OmHosDk522HfJLXodD4FNC8AeCOPAVDXPjcWRoI=
+	b=HegIkIQUzQBndfCa/9Ku4hNY1y9JmtV2EFiIjIXVtwzDfnZsj+m+g/GGMJgOsU8q3
+	 uV+I6mmZ9ovxSPF7Rovod8PDXHEj9+gR/Ef8stEd4DLn2riMtkJ597pIy9m2mwMuqZ
+	 d2Kmi5U5MOV/kg8ZNPvV9UvZclYMez2QtJy/iPtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 220/275] crypto: acomp - fix wrong pointer stored by acomp_save_req()
-Date: Mon,  4 May 2026 15:52:40 +0200
-Message-ID: <20260504135151.244474970@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.18 221/275] crypto: arm64/aes - Fix 32-bit aes_mac_update() arg treated as 64-bit
+Date: Mon,  4 May 2026 15:52:41 +0200
+Message-ID: <20260504135151.280603302@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,71 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit d7e20b9bd6c990773cf0c09e2642250b8a70263d upstream.
+commit f8f08d7cc43237e91e3aedf7b67d015d24c38fcc upstream.
 
-acomp_save_req() stores &req->chain in req->base.data. When
-acomp_reqchain_done() is invoked on asynchronous completion, it receives
-&req->chain as the data argument but casts it directly to struct
-acomp_req. Since data points to the chain member, all subsequent field
-accesses are at a wrong offset, resulting in memory corruption.
+Since the 'enc_after' argument to neon_aes_mac_update() and
+ce_aes_mac_update() has type 'int', it needs to be accessed using the
+corresponding 32-bit register, not the 64-bit register.  The upper half
+of the corresponding 64-bit register may contain garbage.
 
-The issue occurs when an asynchronous hardware implementation, such as
-the QAT driver, completes a request that uses the DMA virtual address
-interface (e.g. acomp_request_set_src_dma()). This combination causes
-crypto_acomp_compress() to enter the acomp_do_req_chain() path, which
-sets acomp_reqchain_done() as the completion callback via
-acomp_save_req().
-
-With KASAN enabled, this manifests as a general protection fault in
-acomp_reqchain_done():
-
-  general protection fault, probably for non-canonical address 0xe000040000000000
-  KASAN: probably user-memory-access in range [0x0000400000000000-0x0000400000000007]
-  RIP: 0010:acomp_reqchain_done+0x15b/0x4e0
-  Call Trace:
-   <IRQ>
-   qat_comp_alg_callback+0x5d/0xa0 [intel_qat]
-   adf_ring_response_handler+0x376/0x8b0 [intel_qat]
-   adf_response_handler+0x60/0x170 [intel_qat]
-   tasklet_action_common+0x223/0x820
-   handle_softirqs+0x1ab/0x640
-   </IRQ>
-
-Fix this by storing the request itself in req->base.data instead of
-&req->chain, so that acomp_reqchain_done() receives the correct pointer.
-Simplify acomp_restore_req() accordingly to access req->chain directly.
-
-Fixes: 64929fe8c0a4 ("crypto: acomp - Remove request chaining")
+Fixes: 4860620da7e5 ("crypto: arm64/aes - add NEON/Crypto Extensions CBCMAC/CMAC/XCBC driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20260218213501.136844-4-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/acompress.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ arch/arm64/crypto/aes-modes.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/crypto/acompress.c
-+++ b/crypto/acompress.c
-@@ -171,15 +171,13 @@ static void acomp_save_req(struct acomp_
- 	state->compl = req->base.complete;
- 	state->data = req->base.data;
- 	req->base.complete = cplt;
--	req->base.data = state;
-+	req->base.data = req;
- }
+--- a/arch/arm64/crypto/aes-modes.S
++++ b/arch/arm64/crypto/aes-modes.S
+@@ -838,7 +838,7 @@ AES_FUNC_START(aes_mac_update)
+ 	encrypt_block	v0, w2, x1, x7, w8
+ 	eor		v0.16b, v0.16b, v4.16b
+ 	cmp		w3, wzr
+-	csinv		x5, x6, xzr, eq
++	csinv		w5, w6, wzr, eq
+ 	cbz		w5, .Lmacout
+ 	encrypt_block	v0, w2, x1, x7, w8
+ 	st1		{v0.16b}, [x4]			/* return dg */
+@@ -852,7 +852,7 @@ AES_FUNC_START(aes_mac_update)
+ 	eor		v0.16b, v0.16b, v1.16b		/* ..and xor with dg */
  
- static void acomp_restore_req(struct acomp_req *req)
- {
--	struct acomp_req_chain *state = req->base.data;
--
--	req->base.complete = state->compl;
--	req->base.data = state->data;
-+	req->base.complete = req->chain.compl;
-+	req->base.data = req->chain.data;
- }
+ 	subs		w3, w3, #1
+-	csinv		x5, x6, xzr, eq
++	csinv		w5, w6, wzr, eq
+ 	cbz		w5, .Lmacout
  
- static void acomp_reqchain_virt(struct acomp_req *req)
+ .Lmacenc:
 
 
