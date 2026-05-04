@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B1315785;
-	Mon,  4 May 2026 14:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974F335A3AD;
+	Mon,  4 May 2026 14:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904553; cv=none; b=cLVRR9e4aboSZhdHUH31Lr/buJS8VeiMVAs+YmXsszaL7pvXIfr4gTZ1uKs5YsHXAIZXFyxWxWaS/rYrbm/g8r3OaEqlWwbIiRrmPpFJPgwZ3Zyj3Gbw7iRmmTjoxsle3kqwZRVxRfrrQ604AW7jfLjigfxrmCP1/+H8aB65Czw=
+	t=1777904555; cv=none; b=sfyWcfreVCsK0RkPIuO3xmN8jh3jCaG+c4jWkZLALUn1DVdeu90ECGanlExJDp9wbogd6vvzc/82qbpIDF7dcnUFTL7/s97/QT597Sejw+lEdmCwwlpmOoDhZc4shFiX2Tr/CJB7aM72P9kZzV5EoIgg5HDY3sQ7YtMG13RINf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904553; c=relaxed/simple;
-	bh=DCQ5173DKktPERrhuFdDoZOiiuClXfuLcHQWtjKDnIk=;
+	s=arc-20240116; t=1777904555; c=relaxed/simple;
+	bh=nEW906glEijVT/6W7eyzpCzjL8sXjMoRBKOkOj63gkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=av23ozu/gjJJy8mwgyFhKKDladjjzsa34OEWWHt1azbZoxXH0K8TnrkXID7UFkwIRX33Kcs3kFEsDMKuiWQzPR8ypO+mAMF9UjfICLFSG1NHp6AK/eVKgCS5+MzJ+wqMZEVAxRbOTTLMOg0rhOhJHBACk2uci5IMIsjAzzyCLRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEBUAHmr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxKW0lrgi1fOmmdB59nFZS0VBUvIpBJW31e0GxiHkpPdBCXWtcbMm7Uqer9paaFUwcfNmEcDtyscAP2wXaT366U0K5t7IsqfSRFlMdyOcshfgCdPRLCtQEXoBBPfQDDSj2E7fJQCEbKB4OU3shWjeziOXOQyWXniy1gjDbr4Z6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGnDkHw6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEBUAHmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A025EC2BCB8;
-	Mon,  4 May 2026 14:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGnDkHw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC08C2BCB8;
+	Mon,  4 May 2026 14:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904553;
-	bh=DCQ5173DKktPERrhuFdDoZOiiuClXfuLcHQWtjKDnIk=;
+	s=korg; t=1777904555;
+	bh=nEW906glEijVT/6W7eyzpCzjL8sXjMoRBKOkOj63gkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cEBUAHmr3ij1UU3zlO56sdDA7bWMkxt7gvnrM0vyn/JaRKKWwhxaY1UJxfFw+MM06
-	 H3hSzcjd/kMODc6gddupMd+oHYUpVPQIeUqC5+iEi4M8bpu5h1D4eyxnmyXfPdktwU
-	 SMPcTpc8AQsu7kW0SE++WHM3EEiBfdmaOR9/PMKs=
+	b=YGnDkHw6FZwdYg0Qjc/xBX+jrGiPZbUxAJCQKclvDCGGvzXdFBlOBRb0ksfyH5i8k
+	 YlO5kajY1SM3V/L1OjGzlkhie1z2qr0EjZ+7gJabuXBrf0iAL+Tlc+nFdQWEUhhK4s
+	 Flrx0XznJm7Ichoe9Fttllpt1u1iOiIomVz81M1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 083/215] rxrpc: Fix re-decryption of RESPONSE packets
-Date: Mon,  4 May 2026 15:51:42 +0200
-Message-ID: <20260504135133.194027687@linuxfoundation.org>
+	Yiyang Chen <cyyzero16@gmail.com>,
+	Balbir Singh <bsingharora@gmail.com>,
+	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
+	Fan Yu <fan.yu9@zte.com.cn>,
+	Wang Yaxin <wang.yaxin@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 084/215] tools/accounting: handle truncated taskstats netlink messages
+Date: Mon,  4 May 2026 15:51:43 +0200
+Message-ID: <20260504135133.230388830@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -55,73 +54,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Yiyang Chen <cyyzero16@gmail.com>
 
-commit 0422e7a4883f25101903f3e8105c0808aa5f4ce9 upstream.
+commit cc82b3dcc6a8fa259fbda12ab00d6fc00908a49e upstream.
 
-If a RESPONSE packet gets a temporary failure during processing, it may end
-up in a partially decrypted state - and then get requeued for a retry.
+procacct and getdelays use a fixed receive buffer for taskstats generic
+netlink messages.  A multi-threaded process exit can emit a single
+PID+TGID notification large enough to exceed that buffer on newer kernels.
 
-Fix this by just discarding the packet; we will send another CHALLENGE
-packet and thereby elicit a further response.  Similarly, discard an
-incoming CHALLENGE packet if we get an error whilst generating a RESPONSE;
-the server will send another CHALLENGE.
+Switch to recvmsg() so MSG_TRUNC is detected explicitly, increase the
+message buffer size, and report truncated datagrams clearly instead of
+misparsing them as fatal netlink errors.
 
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Closes: https://sashiko.dev/#/patchset/20260422161438.2593376-4-dhowells@redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260423200909.3049438-3-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Also print the taskstats version in debug output to make version
+mismatches easier to diagnose while inspecting taskstats traffic.
+
+Link: https://lkml.kernel.org/r/520308bb4cbbaf8dc2c7296b5f60f11e12fb30a5.1774810498.git.cyyzero16@gmail.com
+Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
+Cc: Balbir Singh <bsingharora@gmail.com>
+Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
+Cc: Fan Yu <fan.yu9@zte.com.cn>
+Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    1 -
- net/rxrpc/conn_event.c       |   14 ++------------
- 2 files changed, 2 insertions(+), 13 deletions(-)
+ tools/accounting/getdelays.c |   41 +++++++++++++++++++++++++++++++++++++----
+ tools/accounting/procacct.c  |   40 ++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 73 insertions(+), 8 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -236,7 +236,6 @@
- 	EM(rxrpc_conn_put_unidle,		"PUT unidle  ") \
- 	EM(rxrpc_conn_put_work,			"PUT work    ") \
- 	EM(rxrpc_conn_queue_challenge,		"QUE chall   ") \
--	EM(rxrpc_conn_queue_retry_work,		"QUE retry-wk") \
- 	EM(rxrpc_conn_queue_rx_work,		"QUE rx-work ") \
- 	EM(rxrpc_conn_see_new_service_conn,	"SEE new-svc ") \
- 	EM(rxrpc_conn_see_reap_service,		"SEE reap-svc") \
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -344,7 +344,6 @@ again:
- static void rxrpc_do_process_connection(struct rxrpc_connection *conn)
- {
- 	struct sk_buff *skb;
--	int ret;
- 
- 	if (test_and_clear_bit(RXRPC_CONN_EV_CHALLENGE, &conn->events))
- 		rxrpc_secure_connection(conn);
-@@ -353,17 +352,8 @@ static void rxrpc_do_process_connection(
- 	 * connection that each one has when we've finished with it */
- 	while ((skb = skb_dequeue(&conn->rx_queue))) {
- 		rxrpc_see_skb(skb, rxrpc_skb_see_conn_work);
--		ret = rxrpc_process_event(conn, skb);
--		switch (ret) {
--		case -ENOMEM:
--		case -EAGAIN:
--			skb_queue_head(&conn->rx_queue, skb);
--			rxrpc_queue_conn(conn, rxrpc_conn_queue_retry_work);
--			break;
--		default:
--			rxrpc_free_skb(skb, rxrpc_skb_put_conn_work);
--			break;
--		}
-+		rxrpc_process_event(conn, skb);
-+		rxrpc_free_skb(skb, rxrpc_skb_put_conn_work);
+--- a/tools/accounting/getdelays.c
++++ b/tools/accounting/getdelays.c
+@@ -59,7 +59,7 @@ int print_task_context_switch_counts;
  	}
+ 
+ /* Maximum size of response requested or message sent */
+-#define MAX_MSG_SIZE	1024
++#define MAX_MSG_SIZE	2048
+ /* Maximum number of cpus expected to be specified in a cpumask */
+ #define MAX_CPUS	32
+ 
+@@ -114,6 +114,32 @@ error:
+ 	return -1;
  }
  
++static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
++{
++	struct sockaddr_nl nladdr;
++	struct iovec iov = {
++		.iov_base = msg,
++		.iov_len = sizeof(*msg),
++	};
++	struct msghdr hdr = {
++		.msg_name = &nladdr,
++		.msg_namelen = sizeof(nladdr),
++		.msg_iov = &iov,
++		.msg_iovlen = 1,
++	};
++	int ret;
++
++	ret = recvmsg(sd, &hdr, 0);
++	if (ret < 0)
++		return -1;
++	if (hdr.msg_flags & MSG_TRUNC) {
++		errno = EMSGSIZE;
++		return -1;
++	}
++
++	return ret;
++}
++
+ 
+ static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
+ 	     __u8 genl_cmd, __u16 nla_type,
+@@ -465,12 +491,16 @@ int main(int argc, char *argv[])
+ 	}
+ 
+ 	do {
+-		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
++		rep_len = recv_taskstats_msg(nl_sd, &msg);
+ 		PRINTF("received %d bytes\n", rep_len);
+ 
+ 		if (rep_len < 0) {
+-			fprintf(stderr, "nonfatal reply error: errno %d\n",
+-				errno);
++			if (errno == EMSGSIZE)
++				fprintf(stderr,
++					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
++			else
++				fprintf(stderr, "nonfatal reply error: errno %d\n",
++					errno);
+ 			continue;
+ 		}
+ 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
+@@ -512,6 +542,9 @@ int main(int argc, char *argv[])
+ 							printf("TGID\t%d\n", rtid);
+ 						break;
+ 					case TASKSTATS_TYPE_STATS:
++						PRINTF("version %u\n",
++						       ((struct taskstats *)
++							NLA_DATA(na))->version);
+ 						if (print_delays)
+ 							print_delayacct((struct taskstats *) NLA_DATA(na));
+ 						if (print_io_accounting)
+--- a/tools/accounting/procacct.c
++++ b/tools/accounting/procacct.c
+@@ -71,7 +71,7 @@ int print_task_context_switch_counts;
+ 	}
+ 
+ /* Maximum size of response requested or message sent */
+-#define MAX_MSG_SIZE	1024
++#define MAX_MSG_SIZE	2048
+ /* Maximum number of cpus expected to be specified in a cpumask */
+ #define MAX_CPUS	32
+ 
+@@ -121,6 +121,32 @@ error:
+ 	return -1;
+ }
+ 
++static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
++{
++	struct sockaddr_nl nladdr;
++	struct iovec iov = {
++		.iov_base = msg,
++		.iov_len = sizeof(*msg),
++	};
++	struct msghdr hdr = {
++		.msg_name = &nladdr,
++		.msg_namelen = sizeof(nladdr),
++		.msg_iov = &iov,
++		.msg_iovlen = 1,
++	};
++	int ret;
++
++	ret = recvmsg(sd, &hdr, 0);
++	if (ret < 0)
++		return -1;
++	if (hdr.msg_flags & MSG_TRUNC) {
++		errno = EMSGSIZE;
++		return -1;
++	}
++
++	return ret;
++}
++
+ 
+ static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
+ 	     __u8 genl_cmd, __u16 nla_type,
+@@ -239,6 +265,8 @@ void handle_aggr(int mother, struct nlat
+ 			PRINTF("TGID\t%d\n", rtid);
+ 			break;
+ 		case TASKSTATS_TYPE_STATS:
++			PRINTF("version %u\n",
++			       ((struct taskstats *)NLA_DATA(na))->version);
+ 			if (mother == TASKSTATS_TYPE_AGGR_PID)
+ 				print_procacct((struct taskstats *) NLA_DATA(na));
+ 			if (fd) {
+@@ -348,12 +376,16 @@ int main(int argc, char *argv[])
+ 	}
+ 
+ 	do {
+-		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
++		rep_len = recv_taskstats_msg(nl_sd, &msg);
+ 		PRINTF("received %d bytes\n", rep_len);
+ 
+ 		if (rep_len < 0) {
+-			fprintf(stderr, "nonfatal reply error: errno %d\n",
+-				errno);
++			if (errno == EMSGSIZE)
++				fprintf(stderr,
++					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
++			else
++				fprintf(stderr, "nonfatal reply error: errno %d\n",
++					errno);
+ 			continue;
+ 		}
+ 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
 
 
