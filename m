@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379AD3D5667;
-	Mon,  4 May 2026 14:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0863335A3AD;
+	Mon,  4 May 2026 14:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903642; cv=none; b=ryfRnsZODZXbY/aGu/9x2yeNcRRSClB7x4tgNTNJSjNjIUNAkJZePNnebaGXbXKwd0ze/vaR2Vezn9JuCJkVZhiuiVssNXq6NLuUw0Ads8dQLlVwW97yoapy8jSqjO1/d1Z9+9IQtYnZkthwJUqXXLIeLopvnMKaarPs5urxUJQ=
+	t=1777903645; cv=none; b=R/DHKTrfkGSg8bjfonXjigQTo9llRQ6vPgOdVrvKSWESZ7OsGOKUQK+Oamvw3kgxzbGGkqI9OUVmwyPhDZEE4vC35dD0V9LDE83LC0JS6r08QQBDdcrydAHswf0yss2i+KljF1nJHdGTFDCYrTtAFXyzifK+HEGsA19uzMqjkyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903642; c=relaxed/simple;
-	bh=zyXB31vHTu8lvIQcLAEvkrKG2IP9+YWqDK9v/SbDiFs=;
+	s=arc-20240116; t=1777903645; c=relaxed/simple;
+	bh=mWdd5RBq6qzZWLaWFE/XAV6Cj7wXZQVHU9397A7wJNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=un2GIimKao1W265xpluwfiTxTrdpc0Q6yH9d5Cpc6aZwpnL57IpeiIMsXbYMiLkTevXkM4CPvmlxwU73Q3ZYbMuUEnbLPDOjvSt/n83h7AflAcT8BqwTAOyB2HMPSej8X0BRbJ5kAlktUxESwFiVOl2WeKe4kjf0BhJWBxrQwh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJ9YGCmO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q6Mg8r+yEmEQeZmuYaNdom3Pfq1lK9d7jscTTzEUIEOmYvtSTBDucLKXOehxhjptw28pH5T6aAnIsfAs3F/WjFYyWX9EgwofcdwxN6YMUGumQ0Y+TomcyOp3AfbRBejSTfDJuGZ7Lwi+eLwHSW7zTOujrgm7vpSNU+RA1CEkZKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1gdkbA4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJ9YGCmO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB55C2BCB8;
-	Mon,  4 May 2026 14:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1gdkbA4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E5FC2BCB8;
+	Mon,  4 May 2026 14:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903642;
-	bh=zyXB31vHTu8lvIQcLAEvkrKG2IP9+YWqDK9v/SbDiFs=;
+	s=korg; t=1777903644;
+	bh=mWdd5RBq6qzZWLaWFE/XAV6Cj7wXZQVHU9397A7wJNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJ9YGCmOtOYbjCY6qqMHGjqQbLhxtWwXglvCBzdoszOmc6eB6e5FV9hNFL3luOMWG
-	 6ci18AOEJ8s+sOBIukpcS95AtyRkxHkwL2QDaCcPY+aG23lUWV7lSIsPiwVlmxGGME
-	 Z5uFEpln8TuN9mz4tuHYwm9fwCxaoVCN7Zoq8/o8=
+	b=J1gdkbA4r6ub5/Ps9Je/OW4YjNTl1EYz/hxqxI3x+/P/2t5FITExd9A2KE56f5eBY
+	 fXFJjoNW4RKo3hda6TJOX8hZh6rXV3j5schLnfmXkTogWqhYO/T/upsBcyMiR/08hv
+	 uadoVy/nq8sMVTM9zscqweOMCC7kT1uzuzv2uiyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.0 282/307] sched_ext: Documentation: Clarify ops.dispatch() role in task lifecycle
-Date: Mon,  4 May 2026 15:52:47 +0200
-Message-ID: <20260504135153.404911459@linuxfoundation.org>
+	John Garry <john.g.garry@oracle.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 7.0 283/307] scsi: sd: fix missing put_disk() when device_add(&disk_dev) fails
+Date: Mon,  4 May 2026 15:52:48 +0200
+Message-ID: <20260504135153.442418785@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,53 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-commit a313357a346839d40b3a4dec393c71bf30cbb34c upstream.
+commit 1e111c4b3a726df1254670a5cc4868cedb946d37 upstream.
 
-ops.dispatch() is invoked when a CPU becomes available. This can occur
-when a task voluntarily yields the CPU, exhausts its time slice, or is
-preempted for other reasons.
+If device_add(&sdkp->disk_dev) fails, put_device() runs
+scsi_disk_release(), which frees the scsi_disk but leaves the gendisk
+referenced. The device_add_disk() error path in sd_probe() calls
+put_disk(gd); call put_disk(gd) here to mirror that cleanup.
 
-If the task is still runnable, refilling its time slice in
-ops.dispatch() (either by the BPF scheduler or the sched_ext core)
-allows it to continue running without triggering ops.stopping().
-However, this behavior is not clearly reflected in the current task
-lifecycle diagram.
-
-Update the diagram to better represent this interaction.
-
-Fixes: 9465f44d2df2 ("sched_ext: Documentation: Clarify time slice handling in task lifecycle")
-Cc: stable@vger.kernel.org # v6.17+
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 265dfe8ebbab ("scsi: sd: Free scsi_disk device via put_device()")
+Cc: stable@vger.kernel.org
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Link: https://patch.msgid.link/20260330014952.152776-1-yangxiuwei@kylinos.cn
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/scheduler/sched-ext.rst |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/scsi/sd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -320,13 +320,15 @@ by a sched_ext scheduler:
-                 ops.dispatch(); /* Task is moved to a local DSQ */
-             }
-             ops.running();      /* Task starts running on its assigned CPU */
--            while (task->scx.slice > 0 && task is runnable)
--                ops.tick();     /* Called every 1/HZ seconds */
--            ops.stopping();     /* Task stops running (time slice expires or wait) */
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -4018,6 +4018,7 @@ static int sd_probe(struct scsi_device *
+ 	error = device_add(&sdkp->disk_dev);
+ 	if (error) {
+ 		put_device(&sdkp->disk_dev);
++		put_disk(gd);
+ 		goto out;
+ 	}
  
--            /* Task's CPU becomes available */
-+            while task_is_runnable(p) {
-+                while (task->scx.slice > 0 && task_is_runnable(p))
-+                    ops.tick();     /* Called every 1/HZ seconds */
-+
-+                ops.dispatch();     /* task->scx.slice can be refilled */
-+            }
- 
--            ops.dispatch();     /* task->scx.slice can be refilled */
-+            ops.stopping();     /* Task stops running (time slice expires or wait) */
-         }
- 
-         ops.quiescent();        /* Task releases its assigned CPU (wait) */
 
 
