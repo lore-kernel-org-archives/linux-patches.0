@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D483DE422;
-	Mon,  4 May 2026 13:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FFF3DE42C;
+	Mon,  4 May 2026 13:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903156; cv=none; b=CpHsmx39nZMnQpVXKLvhJFcbbRUVNrxmlblV4CrEcsH2vYdwqNnbL3fXTwl4qU9BceKqWPX7Vfx7M2UvcAPvaT7rMJwT+/CtDKRDwUX/sA3FG5LIMUEU+VMwxAbyaIFbhbuzPCLt82dvdMNbAM2LGkMt3sY6aXYgkLzh0MeRl2M=
+	t=1777903159; cv=none; b=DDa7UXo3Ih1wgawtqSCf2WH5EhP7OofaXP98X1YAAgL2ITotP3fAuzT6mU5/LAEMxZDdcF50f3RpM1Ecd7D3gNPKQNNVUxp9aB8iBiiWDhFXS+GzhHV3z4Jsxe6w5NTyJbznjBRkt/LEy5TWcxs4yR0ksoRk96rvPdh/esdnC8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903156; c=relaxed/simple;
-	bh=1v5k0Rj/W2L2y9YiXX10gl2QswdvWSgA5lGPiJM8hu0=;
+	s=arc-20240116; t=1777903159; c=relaxed/simple;
+	bh=GlYAB5mASJEPE25bqvWCZlW8nfG9en9W/43Gli0gPn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFx2jSBFHAGaTtV+hwlFc+imtL6uXV+m6WmUQdrNHkJRu+vZ/b9mWMdxfLF3YcVl5x/b/slgz8jGRV1b6zxMfH3FyLKmwL5Sl2etArGldhZchjd7i3/gx07FHnhN+ABZjI2NtDvdlAOz/lEFAu3WzsM+/T1Xuvcc8skfq94xsMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBtW8+TM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pqRClGLoc3ADK9F7bhWyJqDCRU6Mrvpk9wtf12hbLBFNX6gFsURtc86sUOQbFy+PEVKUjPX9hKpKNHv1dGNxi5C9XzbymJMLLt0oij1idSzwifnZ/S2Onxx1B2vicSVO0EPmUrDrUdoWggT4I3lpOxGLyYdRpZqR0goUU1va2Vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3UTK/ll; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBtW8+TM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E8FC2BCB8;
-	Mon,  4 May 2026 13:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3UTK/ll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE72C2BCB8;
+	Mon,  4 May 2026 13:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903156;
-	bh=1v5k0Rj/W2L2y9YiXX10gl2QswdvWSgA5lGPiJM8hu0=;
+	s=korg; t=1777903159;
+	bh=GlYAB5mASJEPE25bqvWCZlW8nfG9en9W/43Gli0gPn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uBtW8+TM0thMykm1tnAs1R9s0eUdlT8qsdjxLcZTjXMBCNe5cV89xV2UuXyIi1gEw
-	 B7pUiBKBBit+ToIDvStcMi5zjobZpuJezAymmNk7NB1H6SYEabFWRsEDXqXYwe3ql3
-	 Q6uO+DTphu28KejbLn0CrZ9o/HqAKnlOFgXL0Lfk=
+	b=B3UTK/llaDIuEel3jyYZue1d1X7y47EWe2M0B4/v0OkYa1ym6UW/iWlcNDp4Bby7W
+	 Uxm3DtlPANfQs+PzznahdmWqTGXkbh3+5fQkSSdwGhY65eX2HMfgo1263B2fRxg3TD
+	 YFFhOOAgU5M2BwBxMJrthXXjwBp2BKA6sG/yWmrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Santos <Jonathan.Santos@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 7.0 125/307] iio: adc: ad7768-1: remove switch to one-shot mode
-Date: Mon,  4 May 2026 15:50:10 +0200
-Message-ID: <20260504135147.497253231@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 126/307] rxrpc: Fix potential UAF after skb_unshare() failure
+Date: Mon,  4 May 2026 15:50:11 +0200
+Message-ID: <20260504135147.534623968@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,70 +55,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Santos <Jonathan.Santos@analog.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 81fdc3127d013a552465c3bf9829afbed5184406 upstream.
+commit 1f2740150f904bfa60e4bad74d65add3ccb5e7f8 upstream.
 
-wideband low ripple FIR Filter is not available in one-shot mode. In
-order to make direct reads work for all filter options, remove the
-switch for one-shot mode and guarantee device is always in continuous
-conversion mode.
+If skb_unshare() fails to unshare a packet due to allocation failure in
+rxrpc_input_packet(), the skb pointer in the parent (rxrpc_io_thread())
+will be NULL'd out.  This will likely cause the call to
+trace_rxrpc_rx_done() to oops.
 
-Fixes: fb1d3b24ebf5 ("iio: adc: ad7768-1: add filter type and oversampling ratio attributes")
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fix this by moving the unsharing down to where rxrpc_input_call_event()
+calls rxrpc_input_call_packet().  There are a number of places prior to
+that where we ignore DATA packets for a variety of reasons (such as the
+call already being complete) for which an unshare is then avoided.
+
+And with that, rxrpc_input_packet() doesn't need to take a pointer to the
+pointer to the packet, so change that to just a pointer.
+
+Fixes: 2d1faf7a0ca3 ("rxrpc: Simplify skbuff accounting in receive path")
+Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-4-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7768-1.c |   21 ++++-----------------
- 1 file changed, 4 insertions(+), 17 deletions(-)
+ include/trace/events/rxrpc.h |    4 ++--
+ net/rxrpc/ar-internal.h      |    1 -
+ net/rxrpc/call_event.c       |   19 ++++++++++++++++++-
+ net/rxrpc/io_thread.c        |   24 ++----------------------
+ net/rxrpc/skbuff.c           |    9 ---------
+ 5 files changed, 22 insertions(+), 35 deletions(-)
 
---- a/drivers/iio/adc/ad7768-1.c
-+++ b/drivers/iio/adc/ad7768-1.c
-@@ -463,17 +463,8 @@ static int ad7768_scan_direct(struct iio
- 	struct ad7768_state *st = iio_priv(indio_dev);
- 	int readval, ret;
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -161,8 +161,6 @@
+ 	E_(rxrpc_call_poke_timer_now,		"Timer-now")
  
--	ret = ad7768_set_mode(st, AD7768_ONE_SHOT);
--	if (ret < 0)
--		return ret;
--
- 	reinit_completion(&st->completion);
+ #define rxrpc_skb_traces \
+-	EM(rxrpc_skb_eaten_by_unshare,		"ETN unshare  ") \
+-	EM(rxrpc_skb_eaten_by_unshare_nomem,	"ETN unshar-nm") \
+ 	EM(rxrpc_skb_get_call_rx,		"GET call-rx  ") \
+ 	EM(rxrpc_skb_get_conn_secured,		"GET conn-secd") \
+ 	EM(rxrpc_skb_get_conn_work,		"GET conn-work") \
+@@ -189,6 +187,7 @@
+ 	EM(rxrpc_skb_put_purge,			"PUT purge    ") \
+ 	EM(rxrpc_skb_put_purge_oob,		"PUT purge-oob") \
+ 	EM(rxrpc_skb_put_response,		"PUT response ") \
++	EM(rxrpc_skb_put_response_copy,		"PUT resp-cpy ") \
+ 	EM(rxrpc_skb_put_rotate,		"PUT rotate   ") \
+ 	EM(rxrpc_skb_put_unknown,		"PUT unknown  ") \
+ 	EM(rxrpc_skb_see_conn_work,		"SEE conn-work") \
+@@ -197,6 +196,7 @@
+ 	EM(rxrpc_skb_see_recvmsg_oob,		"SEE recvm-oob") \
+ 	EM(rxrpc_skb_see_reject,		"SEE reject   ") \
+ 	EM(rxrpc_skb_see_rotate,		"SEE rotate   ") \
++	EM(rxrpc_skb_see_unshare_nomem,		"SEE unshar-nm") \
+ 	E_(rxrpc_skb_see_version,		"SEE version  ")
  
--	/* One-shot mode requires a SYNC pulse to generate a new sample */
--	ret = ad7768_send_sync_pulse(st);
--	if (ret)
--		return ret;
--
- 	ret = wait_for_completion_timeout(&st->completion,
- 					  msecs_to_jiffies(1000));
- 	if (!ret)
-@@ -492,14 +483,6 @@ static int ad7768_scan_direct(struct iio
- 	if (st->oversampling_ratio == 8)
- 		readval >>= 8;
+ #define rxrpc_local_traces \
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -1486,7 +1486,6 @@ int rxrpc_server_keyring(struct rxrpc_so
+ void rxrpc_kernel_data_consumed(struct rxrpc_call *, struct sk_buff *);
+ void rxrpc_new_skb(struct sk_buff *, enum rxrpc_skb_trace);
+ void rxrpc_see_skb(struct sk_buff *, enum rxrpc_skb_trace);
+-void rxrpc_eaten_skb(struct sk_buff *, enum rxrpc_skb_trace);
+ void rxrpc_get_skb(struct sk_buff *, enum rxrpc_skb_trace);
+ void rxrpc_free_skb(struct sk_buff *, enum rxrpc_skb_trace);
+ void rxrpc_purge_queue(struct sk_buff_head *);
+--- a/net/rxrpc/call_event.c
++++ b/net/rxrpc/call_event.c
+@@ -332,7 +332,24 @@ bool rxrpc_input_call_event(struct rxrpc
  
--	/*
--	 * Any SPI configuration of the AD7768-1 can only be
--	 * performed in continuous conversion mode.
--	 */
--	ret = ad7768_set_mode(st, AD7768_CONTINUOUS);
--	if (ret < 0)
--		return ret;
+ 			saw_ack |= sp->hdr.type == RXRPC_PACKET_TYPE_ACK;
+ 
+-			rxrpc_input_call_packet(call, skb);
++			if (sp->hdr.securityIndex != 0 &&
++			    skb_cloned(skb)) {
++				/* Unshare the packet so that it can be
++				 * modified by in-place decryption.
++				 */
++				struct sk_buff *nskb = skb_copy(skb, GFP_ATOMIC);
++
++				if (nskb) {
++					rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
++					rxrpc_input_call_packet(call, nskb);
++					rxrpc_free_skb(nskb, rxrpc_skb_put_call_rx);
++				} else {
++					/* OOM - Drop the packet. */
++					rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
++				}
++			} else {
++				rxrpc_input_call_packet(call, skb);
++			}
+ 			rxrpc_free_skb(skb, rxrpc_skb_put_call_rx);
+ 			did_receive = true;
+ 		}
+--- a/net/rxrpc/io_thread.c
++++ b/net/rxrpc/io_thread.c
+@@ -192,13 +192,12 @@ static bool rxrpc_extract_abort(struct s
+ /*
+  * Process packets received on the local endpoint
+  */
+-static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff **_skb)
++static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff *skb)
+ {
+ 	struct rxrpc_connection *conn;
+ 	struct sockaddr_rxrpc peer_srx;
+ 	struct rxrpc_skb_priv *sp;
+ 	struct rxrpc_peer *peer = NULL;
+-	struct sk_buff *skb = *_skb;
+ 	bool ret = false;
+ 
+ 	skb_pull(skb, sizeof(struct udphdr));
+@@ -244,25 +243,6 @@ static bool rxrpc_input_packet(struct rx
+ 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_call);
+ 		if (sp->hdr.seq == 0)
+ 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_seq);
 -
- 	return readval;
+-		/* Unshare the packet so that it can be modified for in-place
+-		 * decryption.
+-		 */
+-		if (sp->hdr.securityIndex != 0) {
+-			skb = skb_unshare(skb, GFP_ATOMIC);
+-			if (!skb) {
+-				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare_nomem);
+-				*_skb = NULL;
+-				return just_discard;
+-			}
+-
+-			if (skb != *_skb) {
+-				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare);
+-				*_skb = skb;
+-				rxrpc_new_skb(skb, rxrpc_skb_new_unshared);
+-				sp = rxrpc_skb(skb);
+-			}
+-		}
+ 		break;
+ 
+ 	case RXRPC_PACKET_TYPE_CHALLENGE:
+@@ -494,7 +474,7 @@ int rxrpc_io_thread(void *data)
+ 			switch (skb->mark) {
+ 			case RXRPC_SKB_MARK_PACKET:
+ 				skb->priority = 0;
+-				if (!rxrpc_input_packet(local, &skb))
++				if (!rxrpc_input_packet(local, skb))
+ 					rxrpc_reject_packet(local, skb);
+ 				trace_rxrpc_rx_done(skb->mark, skb->priority);
+ 				rxrpc_free_skb(skb, rxrpc_skb_put_input);
+--- a/net/rxrpc/skbuff.c
++++ b/net/rxrpc/skbuff.c
+@@ -47,15 +47,6 @@ void rxrpc_get_skb(struct sk_buff *skb,
  }
  
-@@ -1257,6 +1240,10 @@ static int ad7768_setup(struct iio_dev *
- 			return ret;
- 	}
- 
-+	ret = ad7768_set_mode(st, AD7768_CONTINUOUS);
-+	if (ret)
-+		return ret;
-+
- 	/* For backwards compatibility, try the adi,sync-in-gpios property */
- 	st->gpio_sync_in = devm_gpiod_get_optional(&st->spi->dev, "adi,sync-in",
- 						   GPIOD_OUT_LOW);
+ /*
+- * Note the dropping of a ref on a socket buffer by the core.
+- */
+-void rxrpc_eaten_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
+-{
+-	int n = atomic_inc_return(&rxrpc_n_rx_skbs);
+-	trace_rxrpc_skb(skb, 0, n, why);
+-}
+-
+-/*
+  * Note the destruction of a socket buffer.
+  */
+ void rxrpc_free_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
 
 
