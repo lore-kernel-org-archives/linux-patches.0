@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5131A6827;
-	Mon,  4 May 2026 14:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4B835A3AD;
+	Mon,  4 May 2026 14:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904507; cv=none; b=NKlnk8/fJ9Q7Tm6/vKKhIpy7OGW6xkrkg+68BdNf9YyzKVQZajNw4iiHNc9u/zV7jOeM5yJXKVHKXTEy+jGEmV94YR1OxY54SP4oNY0WX5+U60Empv9q7CXwSI+0xYw/JxEPl3+nc4703vG5cbCLy8N6tBAI5rpfcmCdhwv4MWE=
+	t=1777904509; cv=none; b=tffXKGiqQPoLX3utqTddzrnH7ZDE5Nis/XjDRoBT2gPh+qCl/24IAvMg/zY2D9Y06sDUL6XqbaKwxBsac1uKojMEIdkpWlNcvVfmiff27/wnc0bT0etN3NsfkVPDlnDLkZMQnNDcXB/0fDO1xm9nqdUnyg4IgIcMZH/79O2/RoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904507; c=relaxed/simple;
-	bh=6abax6E2vDbHtbdYTo7OhpJ0fZ1ilEde8A9afziTe58=;
+	s=arc-20240116; t=1777904509; c=relaxed/simple;
+	bh=Sk6oM56b3r+wg68o4J2VdT4Gb6DJXFH2cECY9d6WdUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgyY0+wdgY7EmK2+Z35UJAKe4joRnVbQ1kbeRULulhTe/9Skrwc/ivx3OUoA4Yf4FWgVPYCKQbyhA4CaPfKq8G9PZVynQ/Gy0A0ZQ13fGHOdVXEiPe2vow8bQRVG/Q5Y9IqZ/sTdlWJDFmQv687y711aherjlmsBHLsL3pIg9+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkCiLxLX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H2LPOgUqF+yb41G7S1mjZ8Vb+9wLH5+z2pCRPjn8N7c6s39f9/HVnk3Sk9ktAY1RrevjPtAh+YwJMIML3eCaTOYWddvH0r/hqn0We16H4LSm2zbNfWc4vHsjVqd76EU7h4vDgZMvYVYBqtqcvweslGSdWGCdiH7ewMDGp0qDXJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlkBsuqE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkCiLxLX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BAFC2BCB8;
-	Mon,  4 May 2026 14:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlkBsuqE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20466C2BCB8;
+	Mon,  4 May 2026 14:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904506;
-	bh=6abax6E2vDbHtbdYTo7OhpJ0fZ1ilEde8A9afziTe58=;
+	s=korg; t=1777904509;
+	bh=Sk6oM56b3r+wg68o4J2VdT4Gb6DJXFH2cECY9d6WdUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkCiLxLXAoOzFB7sgeHi130CsLz+f4lpz3T8J/v8VqaTxEUe80wkhVh8Gvcl5KnJo
-	 Wsy9Oh9R7bmPMnUwcOv6GYiAPLWyiyATZu6GmlEl7HZUcQ1NdtTjb2PGqIIWLukWz1
-	 8mqbJ8MZq1Qbo5ZOu1OhSJMVcgaVjJQ/TQlb8ypk=
+	b=dlkBsuqEBNqbCqHa7CS9I7Jhd48zu1ZNo1FStVOYipExKUhfX1VZR4hSnIDgWRcbI
+	 GmUkhCI/kZvOm1cISiyo0GPDVTrVtNmLxXYkneyHGDQI5gfRAuDD5fUw/sti7Hzk70
+	 ruQPfZ61pQwGxmwe38McCVZ15yMOQYozkAjhyyvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 032/215] um: drivers: call kernel_strrchr() explicitly in cow_user.c
-Date: Mon,  4 May 2026 15:50:51 +0200
-Message-ID: <20260504135131.348480612@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 033/215] spi: imx: fix use-after-free on unbind
+Date: Mon,  4 May 2026 15:50:52 +0200
+Message-ID: <20260504135131.384630586@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,57 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 91e901c65b4da02a6fd543e3f0049829ae9645b7 upstream.
+commit 1c78c2002380a1fe31bfb01a3d5f29809e55a096 upstream.
 
-Building ARCH=um on glibc >= 2.43 fails:
+The SPI subsystem frees the controller and any subsystem allocated
+driver data as part of deregistration (unless the allocation is device
+managed).
 
-  arch/um/drivers/cow_user.c: error: implicit declaration of
-  function 'strrchr' [-Wimplicit-function-declaration]
+Take another reference before deregistering the controller so that the
+driver data is not freed until the driver is done with it.
 
-glibc 2.43's C23 const-preserving strrchr() macro does not survive
-UML's global -Dstrrchr=kernel_strrchr remap from arch/um/Makefile.
-Call kernel_strrchr() directly in cow_user.c so the source no longer
-depends on the -D rewrite.
-
-Fixes: 2c51a4bc0233 ("um: fix strrchr() problems")
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260408070102.2325572-1-michael.bommarito@gmail.com
-[remove unnecessary 'extern']
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 307c897db762 ("spi: spi-imx: replace struct spi_imx_data::bitbang by pointer to struct spi_controller")
+Cc: stable@vger.kernel.org	# 5.19
+Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260324082326.901043-2-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/cow_user.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/spi/spi-imx.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/um/drivers/cow_user.c
-+++ b/arch/um/drivers/cow_user.c
-@@ -15,6 +15,12 @@
- #include "cow.h"
- #include "cow_sys.h"
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -1893,6 +1893,8 @@ static void spi_imx_remove(struct platfo
+ 	struct spi_imx_data *spi_imx = spi_controller_get_devdata(controller);
+ 	int ret;
  
-+/*
-+ * arch/um/Makefile remaps strrchr to kernel_strrchr; call the kernel
-+ * name directly to avoid glibc >= 2.43's C23 strrchr macro.
-+ */
-+char *kernel_strrchr(const char *, int);
++	spi_controller_get(controller);
 +
- #define PATH_LEN_V1 256
+ 	spi_unregister_controller(controller);
  
- /* unsigned time_t works until year 2106 */
-@@ -153,7 +159,7 @@ static int absolutize(char *to, int size
- 			   errno);
- 		return -1;
- 	}
--	slash = strrchr(from, '/');
-+	slash = kernel_strrchr(from, '/');
- 	if (slash != NULL) {
- 		*slash = '\0';
- 		if (chdir(from)) {
+ 	ret = pm_runtime_get_sync(spi_imx->dev);
+@@ -1906,6 +1908,8 @@ static void spi_imx_remove(struct platfo
+ 	pm_runtime_disable(spi_imx->dev);
+ 
+ 	spi_imx_sdma_exit(spi_imx);
++
++	spi_controller_put(controller);
+ }
+ 
+ static int spi_imx_runtime_resume(struct device *dev)
 
 
