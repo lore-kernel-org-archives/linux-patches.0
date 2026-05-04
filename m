@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEA23DEAC3;
-	Mon,  4 May 2026 14:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EF63DEAED;
+	Mon,  4 May 2026 14:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903547; cv=none; b=D/M+OCnuefiX1VzC9+5KOw7L9VWh83DFYrfAIuA0weP+rs5KG1bKt/Qkniv+G31+gdvfBxPgofIs8tfwSnRyiNYhAEIxH+dpPWMJcuHkrxC+PwfPXaL8tPD3UwTRMxOAJfk5cJ0duEg8qdy2TbQ4NLYPf5bhiSsGwFkDiUBNFwY=
+	t=1777903549; cv=none; b=tqAdzv8rAgLNgbPuIeFwPMIJyo0MUc8mh4578VHYF5NjwPoZjfpZQHGq2z95AooMM0Sj+QyqScjxxurhqUmDkrBLGdL9w3pZ8guzbj5VDkeH2SAeuypDeyDshMrbXUu+//0Sz3aKAqHAPV49cGDo3MSmjrlml5eAlWfoGjFtdvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903547; c=relaxed/simple;
-	bh=b/iUfD9Ozl6F73BHvU38QXCQ9hPA9jFJM9SEvbThDNA=;
+	s=arc-20240116; t=1777903549; c=relaxed/simple;
+	bh=VGaKw8sL1qQ0g9NqhRfrxoQDpJwVjvmzB7M5f20j2aI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1PcXaJjxfbF3oOhtUEnACETEXepyu/gm1fOdmsKH9JoS2bLSvx9uGYkpJfVgRkhQSUOd+4thOgcHaLClNhuvXDFME0PzJyQTaoNH6hUUy+FrxF8FQaxW+7U/Uy6FSnZOlOXOb/z9O/pHMNJFYhYoe2Htn8PYnjNbN/FQO1tKiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbJxSSBZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2NcWqYQZDgfo5Q6MutRjfgzrPoj+wxO9KRdJwoIlZn+MJvndid12TAFBRj51DtXHD8URTnNoFLcg6toGusAOqt3fk6ooYCD8gLWq6u581VVAzvDp6Y7NsXJSMj16iGyCiPCEg0hRBMev64UkkuOMPCYz/ZVkHpSb4Tvf6D/X48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxXXdOnd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbJxSSBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD62EC2BCF4;
-	Mon,  4 May 2026 14:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxXXdOnd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB40C2BCB8;
+	Mon,  4 May 2026 14:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903547;
-	bh=b/iUfD9Ozl6F73BHvU38QXCQ9hPA9jFJM9SEvbThDNA=;
+	s=korg; t=1777903549;
+	bh=VGaKw8sL1qQ0g9NqhRfrxoQDpJwVjvmzB7M5f20j2aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbJxSSBZb1JHpJ+F7tr1ri/CkNXwS66NIfIwRHqsCFfU2hi21DOrbIIH+LyLO8bJ2
-	 A7JO/sUjdT8b6ufNE1tCVW63jigrtfUnKsjUSG1P02nLVImD8dgwn9/0ZGFfLSYc+W
-	 I58JgxCMCK7ie3wJM36eEEurQV3BmfM+xUZKW4TM=
+	b=VxXXdOndOmxleLsLqOYB0YJnDe9ftamzlztRlK7o45GwVr2B9DQv7KORrEZTIkFUT
+	 onv8gtay7ATwphhbW7lswpIdDp8q0re+vhm2DcL8eNd17xmP5PPELPvgTEAPhppE3S
+	 usJi1uN/zv8W+BcTENcuaa810fqIvwpXoPeCxeiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-Ming Chang <chiamingc@synology.com>,
-	robbieko <robbieko@synology.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 7.0 244/307] inotify: fix watch count leak when fsnotify_add_inode_mark_locked() fails
-Date: Mon,  4 May 2026 15:52:09 +0200
-Message-ID: <20260504135152.010548549@linuxfoundation.org>
+	Gayatri Kammela <Gayatri.Kammela@amd.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Subject: [PATCH 7.0 245/307] x86/cpu: Disable FRED when PTI is forced on
+Date: Mon,  4 May 2026 15:52:10 +0200
+Message-ID: <20260504135152.048133994@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,45 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Ming Chang <chiamingc@synology.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-commit 6a320935fa4293e9e599ec9f85dc9eb3be7029f8 upstream.
+commit 932d922285ef4d0d655a6f5def2779ae86ca0d73 upstream.
 
-When fsnotify_add_inode_mark_locked() fails in inotify_new_watch(),
-the error path calls inotify_remove_from_idr() but does not call
-dec_inotify_watches() to undo the preceding inc_inotify_watches().
-This leaks a watch count, and repeated failures can exhaust the
-max_user_watches limit with -ENOSPC even when no watches are active.
+FRED and PTI were never intended to work together. No FRED hardware is
+vulnerable to Meltdown and all of it should have LASS anyway.
+Nevertheless, if you boot a system with pti=on and fred=on, the kernel
+tries to do what is asked of it and dies a horrible death on the first
+attempt to run userspace (since it never switches to the user page
+tables).
 
-Prior to commit 1cce1eea0aff ("inotify: Convert to using per-namespace
-limits"), the watch count was incremented after fsnotify_add_mark_locked()
-succeeded, so this path was not affected. The conversion moved
-inc_inotify_watches() before the mark insertion without adding the
-corresponding rollback.
+Disable FRED when PTI is forced on, and print a warning about it.
 
-Add the missing dec_inotify_watches() call in the error path.
+A quick brain dump about what a FRED+PTI implementation would look like
+is below. I'm not sure it would make any sense to do it, but never say
+never. All I know is that it's way too complicated to be worth it today.
 
-Fixes: 1cce1eea0aff ("inotify: Convert to using per-namespace limits")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chia-Ming Chang <chiamingc@synology.com>
-Signed-off-by: robbieko <robbieko@synology.com>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://patch.msgid.link/20260224093442.3076294-1-chiamingc@synology.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+<brain dump>
+The SWITCH_TO_USER/KERNEL_CR3 bits are simple to fix (or at least we
+have the assembly tools to do it already), as is sticking the FRED entry
+text in .entry.text (it's not in there today).
+
+The nasty part is the stacks. Today, the CPU pops into the kernel on
+MSR_IA32_FRED_RSP0 which is normal old kernel memory and not mapped to
+userspace. The hardware pushes gunk on to MSR_IA32_FRED_RSP0, which is
+currently the task stacks. MSR_IA32_FRED_RSP0 would need to point
+elsewhere, probably cpu_entry_stack(). Then, start playing games with
+stacks on entry/exit, including copying gunk to and from the task stack.
+
+While I'd *like* to have PTI everywhere, I'm not sure it's worth mucking
+up the FRED code with PTI kludges. If a user wants fast entry/exit, they
+use FRED. If you want PTI (and sekuritay), you certainly don't care
+about fast entry and FRED isn't going to help you *all* that much, so
+you can just stay with the IDT.
+
+Plus, FRED hardware should have LASS which gives you a similar security
+profile to PTI without the CR3 munging.
+</brain dump>
+
+Reported-by: Gayatri Kammela <Gayatri.Kammela@amd.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://patch.msgid.link/20260421163136.E7C6788A@davehans-spike.ostc.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/inotify/inotify_user.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/mm/pti.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/notify/inotify/inotify_user.c
-+++ b/fs/notify/inotify/inotify_user.c
-@@ -621,6 +621,7 @@ static int inotify_new_watch(struct fsno
- 	if (ret) {
- 		/* we failed to get on the inode, get off the idr */
- 		inotify_remove_from_idr(group, tmp_i_mark);
-+		dec_inotify_watches(group->inotify_data.ucounts);
- 		goto out_err;
+--- a/arch/x86/mm/pti.c
++++ b/arch/x86/mm/pti.c
+@@ -105,6 +105,11 @@ void __init pti_check_boottime_disable(v
+ 		pr_debug("PTI enabled, disabling INVLPGB\n");
+ 		setup_clear_cpu_cap(X86_FEATURE_INVLPGB);
  	}
++
++	if (cpu_feature_enabled(X86_FEATURE_FRED)) {
++		pr_debug("PTI enabled, disabling FRED\n");
++		setup_clear_cpu_cap(X86_FEATURE_FRED);
++	}
+ }
  
+ static int __init pti_parse_cmdline(char *arg)
 
 
