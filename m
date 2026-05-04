@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC12F29E116;
-	Mon,  4 May 2026 14:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF3329E116;
+	Mon,  4 May 2026 14:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904375; cv=none; b=DRjtTKArWZzZf6150cumnP2tOyiXaN2v1W11YDcS71eWnFPAkKxGiAalvoxiO0QEXdtqmhoYvLVV3BLMnJNoAmm3JAJH7sKG5UW2D5SlT0SuaZ+A3at9b8yURVP3UzmNlPhRC6Dp/yxaj6gQRG6A65M39yCcwucH5NJESaAg8IY=
+	t=1777904378; cv=none; b=pbXkH7hbmdvfvYhIW6MpABfkEhhDXtAc58tkvPyqMxC2ZgU1ePgkEpwleB5qIhVK04A01btqwbzvQJSQAGrtngACGDsQbAXQ4lV4NE9QMNr9hKfo1pls7MVAlSSIR2LEs6eFnt16fdAgivxevSkKwwd6ZwaPQx+WwYBM/HeWuJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904375; c=relaxed/simple;
-	bh=0Cb0oZugt4VUs4HxWBlTdXHgoIMEE2R+Lrh9Q++geUU=;
+	s=arc-20240116; t=1777904378; c=relaxed/simple;
+	bh=dMU3DOFK/UMXOBMVMr1zHXVZmhNtGU/yhzqECLr+nRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEd16ozMPEBvT3RRS+TxsHiKqKnhhQ6gGAvWv2q9p4dQWVb/R1FwTtaLPSPYdOpK4swF6sErQE01nPkl3fpQhVdf+d+/TZmGhkib+YXzZd6LjeGuTuNvMjQ5FBqQyQNiuyC6h5sRMS+9Qnif45Q9yknZaJ25KpjXLKtooSsgBls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODkZa806; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C2T9p6bnlH9p88k6jeMJ5nuyNwSeb0tSQ1Ya2LYover6Qiw2uGXSyDNYx7pYVig+4nZzT2roteJSbBW5cYho+F4oKmGne56ORizoXEyjlH8P973+LPfDaBxOgtA7INpN21XwP6P5NYaJm2o6HAn+CYLK9RFEtgLMzisBUYoVtdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUmoQrQd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODkZa806"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FABCC2BCB8;
-	Mon,  4 May 2026 14:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUmoQrQd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42A0C2BCB8;
+	Mon,  4 May 2026 14:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904375;
-	bh=0Cb0oZugt4VUs4HxWBlTdXHgoIMEE2R+Lrh9Q++geUU=;
+	s=korg; t=1777904378;
+	bh=dMU3DOFK/UMXOBMVMr1zHXVZmhNtGU/yhzqECLr+nRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODkZa80629DIkSpThs5lf21LOu7aTrmON26fNXeE9ZLsfwtyo+tCLwWSvpMaL1lsD
-	 qoZdB7DzPRvwFr2v99sAknN8ed/N/ho6S0+Tq+77gd9jQx7ASts2g1fPCvNkRc3lVM
-	 pweOTAJmy+2bzaiE3gHqtVPI77LWDDLtBTRRE/4w=
+	b=TUmoQrQdIYeMlb6W4yMBqPtQmVhm7/dgcU4+FfEU60M8wX1scHPa9E0qiHYXyT4EU
+	 rowmLhNhIc/2CORVXLEttrkXniOefo/YiUxN2/5gfRR52/vIT/MAsSm2lVFmapJTUT
+	 v86RvfFfNqhr1OJa/f6zJXFDTOSZxNwaWwo2vpQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Tyllis Xu <LivelyCarpet87@gmail.com>
-Subject: [PATCH 6.12 015/215] ibmasm: fix heap over-read in ibmasm_send_i2o_message()
-Date: Mon,  4 May 2026 15:50:34 +0200
-Message-ID: <20260504135130.730750816@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 6.12 016/215] driver core: Dont let a device probe until its ready
+Date: Mon,  4 May 2026 15:50:35 +0200
+Message-ID: <20260504135130.767202378@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -50,72 +53,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyllis Xu <livelycarpet87@gmail.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit 9aad71144fa3682cca3837a06c8623016790e7ec upstream.
+commit a2225b6e834a838ae3c93709760edc0a169eb2f2 upstream.
 
-The ibmasm_send_i2o_message() function uses get_dot_command_size() to
-compute the byte count for memcpy_toio(), but this value is derived from
-user-controlled fields in the dot_command_header (command_size: u8,
-data_size: u16) and is never validated against the actual allocation size.
-A root user can write a small buffer with inflated header fields, causing
-memcpy_toio() to read up to ~65 KB past the end of the allocation into
-adjacent kernel heap, which is then forwarded to the service processor
-over MMIO.
+The moment we link a "struct device" into the list of devices for the
+bus, it's possible probe can happen. This is because another thread
+can load the driver at any time and that can cause the device to
+probe. This has been seen in practice with a stack crawl that looks
+like this [1]:
 
-Silently clamping the copy size is not sufficient: if the header fields
-claim a larger size than the buffer, the SP receives a dot command whose
-own header is inconsistent with the I2O message length, which can cause
-the SP to desynchronize. Reject such commands outright by returning
-failure.
+  really_probe()
+  __driver_probe_device()
+  driver_probe_device()
+  __driver_attach()
+  bus_for_each_dev()
+  driver_attach()
+  bus_add_driver()
+  driver_register()
+  __platform_driver_register()
+  init_module() [some module]
+  do_one_initcall()
+  do_init_module()
+  load_module()
+  __arm64_sys_finit_module()
+  invoke_syscall()
 
-Validate command_size before calling get_mfa_inbound() to avoid leaking
-an I2O message frame: reading INBOUND_QUEUE_PORT dequeues a hardware
-frame from the controller's free pool, and returning without a
-corresponding set_mfa_inbound() call would permanently exhaust it.
+As a result of the above, it was seen that device_links_driver_bound()
+could be called for the device before "dev->fwnode->dev" was
+assigned. This prevented __fw_devlink_pickup_dangling_consumers() from
+being called which meant that other devices waiting on our driver's
+sub-nodes were stuck deferring forever.
 
-Additionally, clamp command_size to I2O_COMMAND_SIZE before the
-memcpy_toio() so the MMIO write stays within the I2O message frame,
-consistent with the clamping already performed by outgoing_message_size()
-for the header field.
+It's believed that this problem is showing up suddenly for two
+reasons:
+1. Android has recently (last ~1 year) implemented an optimization to
+   the order it loads modules [2]. When devices opt-in to this faster
+   loading, modules are loaded one-after-the-other very quickly. This
+   is unlike how other distributions do it. The reproduction of this
+   problem has only been seen on devices that opt-in to Android's
+   "parallel module loading".
+2. Android devices typically opt-in to fw_devlink, and the most
+   noticeable issue is the NULL "dev->fwnode->dev" in
+   device_links_driver_bound(). fw_devlink is somewhat new code and
+   also not in use by all Linux devices.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Even though the specific symptom where "dev->fwnode->dev" wasn't
+assigned could be fixed by moving that assignment higher in
+device_add(), other parts of device_add() (like the call to
+device_pm_add()) are also important to run before probe. Only moving
+the "dev->fwnode->dev" assignment would likely fix the current
+symptoms but lead to difficult-to-debug problems in the future.
+
+Fix the problem by preventing probe until device_add() has run far
+enough that the device is ready to probe. If somehow we end up trying
+to probe before we're allowed, __driver_probe_device() will return
+-EPROBE_DEFER which will make certain the device is noticed.
+
+In the race condition that was seen with Android's faster module
+loading, we will temporarily add the device to the deferred list and
+then take it off immediately when device_add() probes the device.
+
+Instead of adding another flag to the bitfields already in "struct
+device", instead add a new "flags" field and use that. This allows us
+to freely change the bit from different thread without worrying about
+corrupting nearby bits (and means threads changing other bit won't
+corrupt us).
+
+[1] Captured on a machine running a downstream 6.6 kernel
+[2] https://cs.android.com/android/platform/superproject/main/+/main:system/core/libmodprobe/libmodprobe.cpp?q=LoadModulesParallel
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
-Link: https://patch.msgid.link/20260314165805.548293-1-LivelyCarpet87@gmail.com
+Fixes: 2023c610dc54 ("Driver core: add new device to bus's list before probing")
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260406162231.v5.1.Id750b0fbcc94f23ed04b7aecabcead688d0d8c17@changeid
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/ibmasm/lowlevel.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/base/core.c    |   15 +++++++++++++++
+ drivers/base/dd.c      |   20 ++++++++++++++++++++
+ include/linux/device.h |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 79 insertions(+)
 
---- a/drivers/misc/ibmasm/lowlevel.c
-+++ b/drivers/misc/ibmasm/lowlevel.c
-@@ -19,17 +19,21 @@ static struct i2o_header header = I2O_HE
- int ibmasm_send_i2o_message(struct service_processor *sp)
- {
- 	u32 mfa;
--	unsigned int command_size;
-+	size_t command_size;
- 	struct i2o_message *message;
- 	struct command *command = sp->current_command;
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3691,6 +3691,21 @@ int device_add(struct device *dev)
+ 		fw_devlink_link_device(dev);
+ 	}
  
-+	command_size = get_dot_command_size(command->buffer);
-+	if (command_size > command->buffer_size)
-+		return 1;
-+	if (command_size > I2O_COMMAND_SIZE)
-+		command_size = I2O_COMMAND_SIZE;
++	/*
++	 * The moment the device was linked into the bus's "klist_devices" in
++	 * bus_add_device() then it's possible that probe could have been
++	 * attempted in a different thread via userspace loading a driver
++	 * matching the device. "ready_to_probe" being unset would have
++	 * blocked those attempts. Now that all of the above initialization has
++	 * happened, unblock probe. If probe happens through another thread
++	 * after this point but before bus_probe_device() runs then it's fine.
++	 * bus_probe_device() -> device_initial_probe() -> __device_attach()
++	 * will notice (under device_lock) that the device is already bound.
++	 */
++	device_lock(dev);
++	dev_set_ready_to_probe(dev);
++	device_unlock(dev);
 +
- 	mfa = get_mfa_inbound(sp->base_address);
- 	if (!mfa)
- 		return 1;
+ 	bus_probe_device(dev);
  
--	command_size = get_dot_command_size(command->buffer);
--	header.message_size = outgoing_message_size(command_size);
--
-+	header.message_size = outgoing_message_size((unsigned int)command_size);
- 	message = get_i2o_message(sp->base_address, mfa);
+ 	/*
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -844,6 +844,26 @@ static int __driver_probe_device(const s
+ 	if (dev->driver)
+ 		return -EBUSY;
  
- 	memcpy_toio(&message->header, &header, sizeof(struct i2o_header));
++	/*
++	 * In device_add(), the "struct device" gets linked into the subsystem's
++	 * list of devices and broadcast to userspace (via uevent) before we're
++	 * quite ready to probe. Those open pathways to driver probe before
++	 * we've finished enough of device_add() to reliably support probe.
++	 * Detect this and tell other pathways to try again later. device_add()
++	 * itself will also try to probe immediately after setting
++	 * "ready_to_probe".
++	 */
++	if (!dev_ready_to_probe(dev))
++		return dev_err_probe(dev, -EPROBE_DEFER, "Device not ready to probe\n");
++
++	/*
++	 * Set can_match = true after calling dev_ready_to_probe(), so
++	 * driver_deferred_probe_add() won't actually add the device to the
++	 * deferred probe list when dev_ready_to_probe() returns false.
++	 *
++	 * When dev_ready_to_probe() returns false, it means that device_add()
++	 * will do another probe() attempt for us.
++	 */
+ 	dev->can_match = true;
+ 	dev_dbg(dev, "bus: '%s': %s: matched device with driver %s\n",
+ 		drv->bus->name, __func__, drv->name);
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -500,6 +500,21 @@ struct device_physical_location {
+ };
+ 
+ /**
++ * enum struct_device_flags - Flags in struct device
++ *
++ * Each flag should have a set of accessor functions created via
++ * __create_dev_flag_accessors() for each access.
++ *
++ * @DEV_FLAG_READY_TO_PROBE: If set then device_add() has finished enough
++ *		initialization that probe could be called.
++ */
++enum struct_device_flags {
++	DEV_FLAG_READY_TO_PROBE = 0,
++
++	DEV_FLAG_COUNT
++};
++
++/**
+  * struct device - The basic device structure
+  * @parent:	The device's "parent" device, the device to which it is attached.
+  * 		In most cases, a parent device is some sort of bus or host
+@@ -594,6 +609,7 @@ struct device_physical_location {
+  * @dma_skip_sync: DMA sync operations can be skipped for coherent buffers.
+  * @dma_iommu: Device is using default IOMMU implementation for DMA and
+  *		doesn't rely on dma_ops structure.
++ * @flags:	DEV_FLAG_XXX flags. Use atomic bitfield operations to modify.
+  *
+  * At the lowest level, every device in a Linux system is represented by an
+  * instance of struct device. The device structure contains the information
+@@ -716,8 +732,36 @@ struct device {
+ #ifdef CONFIG_IOMMU_DMA
+ 	bool			dma_iommu:1;
+ #endif
++
++	DECLARE_BITMAP(flags, DEV_FLAG_COUNT);
+ };
+ 
++#define __create_dev_flag_accessors(accessor_name, flag_name) \
++static inline bool dev_##accessor_name(const struct device *dev) \
++{ \
++	return test_bit(flag_name, dev->flags); \
++} \
++static inline void dev_set_##accessor_name(struct device *dev) \
++{ \
++	set_bit(flag_name, dev->flags); \
++} \
++static inline void dev_clear_##accessor_name(struct device *dev) \
++{ \
++	clear_bit(flag_name, dev->flags); \
++} \
++static inline void dev_assign_##accessor_name(struct device *dev, bool value) \
++{ \
++	assign_bit(flag_name, dev->flags, value); \
++} \
++static inline bool dev_test_and_set_##accessor_name(struct device *dev) \
++{ \
++	return test_and_set_bit(flag_name, dev->flags); \
++}
++
++__create_dev_flag_accessors(ready_to_probe, DEV_FLAG_READY_TO_PROBE);
++
++#undef __create_dev_flag_accessors
++
+ /**
+  * struct device_link - Device link representation.
+  * @supplier: The device on the supplier end of the link.
 
 
