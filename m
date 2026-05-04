@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467943D8129;
-	Mon,  4 May 2026 14:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC39829E116;
+	Mon,  4 May 2026 14:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904450; cv=none; b=X9qOncy9vqsyLSU80xkj5zvJcT+TFvLtMoGv2VJxEueB43qLHQMQcjPVbSweuS2uCnI8pVtgLVfVxqamoofJgTw4Bm/xwYhsb4V8qvw+MSon9wwoypVWVKu3BB/B7k3AABPCGHUB0Q7Eu+nMv46l1qElrbJZ9eYdPraEJqUSZMo=
+	t=1777904452; cv=none; b=jUC4rK8Beo5F4SGTh0Cg3rV/u5hcoeNlR8mV8uswhq0MjVTgQWfQPIrGaJOsTjVj79hxawnyED1kJWWP1yWA6K6YPow6L2NtqHohadTWB9w4eu3+d3jtP5ksixz1LmIP2MwyD1SQLgekKaSNPUfIwApuIRdXMEyCFp9DyRgFoxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904450; c=relaxed/simple;
-	bh=x8aPy2z06RWVhU2c7snE+G4JVlNDPnOOxeIbqAtD79Y=;
+	s=arc-20240116; t=1777904452; c=relaxed/simple;
+	bh=WDO2qFIYjgnFt+z6orL0bCorawLuKWAqgfZYEObl6ec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KASPQDUf5b3D66Aqp2WWwjtS6C35ZEhIZkmsAdtVVPBvaEtf2onb4wqG8VHFQ3nDg6V2TaQlY5LqpTdAaatgy/+aY9FMqzufDsuC3IsdwucmRjgNHM9aqOBZjQOr5G4tGBvMtBDSEEEG3s7FWuBArtiHWxk6lYHd4Dds1CPXGok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPyVSkJg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMyzsfJfCPsXsGY8HJMvTCQ5ch5I/9nkX/fugwWH5Dhgc6MaZgFMtTZNrFGahpg6ee9wVcU4Qc1afGeyJwZ31i6K9InDhoRYcTgCbnCoz4sgrSnOGvdjoclTklmF3pKPe5aBdykvYanUhpSAMY2twFrJHVvCI5Y4Jmywk+LMub0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kirVilhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPyVSkJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF817C2BCB8;
-	Mon,  4 May 2026 14:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kirVilhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A72EC2BCB8;
+	Mon,  4 May 2026 14:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904450;
-	bh=x8aPy2z06RWVhU2c7snE+G4JVlNDPnOOxeIbqAtD79Y=;
+	s=korg; t=1777904452;
+	bh=WDO2qFIYjgnFt+z6orL0bCorawLuKWAqgfZYEObl6ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPyVSkJgNek43cKO4lwc15JtnR0IUQFt9tIblsZz2TgNWL5MCrM65H/9oZw+BDtIy
-	 god0po99k4fkpymkhqIilvzIFK8HyGaGKMqUzrYpkaZiIgWXtxUi9V/1rNvOFT6d4t
-	 yMnbIvD5LKrEKh7Jixt45Nt0jF1lWOsxyiCAv7VA=
+	b=kirVilhAg/9xnPyR3F6CtKtJTC0WJ68c8HZQGGfxTC1AmJnFJ8c7Ns/sxW0tCGK7O
+	 WY2PSDpH/35R1JKz4RtnGlr5jQjv4rfk3RW+2r873m7Xm22ajEghU8mYocmQQ+109+
+	 gjMKKRcwnqKUD8wBThvSDjsqcn71IjoFR9nV1CZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 044/215] media: mtk-jpeg: fix use-after-free in release path due to uncancelled work
-Date: Mon,  4 May 2026 15:51:03 +0200
-Message-ID: <20260504135131.790590904@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 045/215] crypto: atmel-sha204a - Fix OTP sysfs read and error handling
+Date: Mon,  4 May 2026 15:51:04 +0200
+Message-ID: <20260504135131.826760619@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,61 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 34c519feef3e4fcff1078dc8bdb25fbbbd10303f upstream.
+commit 635c3a757a567b2479639237f5f0d4d9439015f1 upstream.
 
-The mtk_jpeg_release() function frees the context structure (ctx) without
-first cancelling any pending or running work in ctx->jpeg_work. This
-creates a race window where the workqueue callback may still be accessing
-the context memory after it has been freed.
+Fix otp_show() to read and print all 64 bytes of the OTP zone.
+Previously, the loop only printed half of the OTP (32 bytes), and
+partial output was returned on read errors.
 
-Race condition:
+Propagate the actual error from atmel_sha204a_otp_read() instead of
+producing partial output.
 
-    CPU 0 (release)                    CPU 1 (workqueue)
-    ----------------                   ------------------
-    close()
-      mtk_jpeg_release()
-                                       mtk_jpegenc_worker()
-                                         ctx = work->data
-                                         // accessing ctx
+Replace sprintf() with sysfs_emit_at(), which is preferred for
+formatting sysfs output because it provides safer bounds checking.
 
-        kfree(ctx)  // freed!
-                                         access ctx  // UAF!
-
-The work is queued via queue_work() during JPEG encode/decode operations
-(via mtk_jpeg_device_run). If the device is closed while work is pending
-or running, the work handler will access freed memory.
-
-Fix this by calling cancel_work_sync() BEFORE acquiring the mutex. This
-ordering is critical: if cancel_work_sync() is called after mutex_lock(),
-and the work handler also tries to acquire the same mutex, it would cause
-a deadlock.
-
-Note: The open error path does NOT need cancel_work_sync() because
-INIT_WORK() only initializes the work structure - it does not schedule
-it. Work is only scheduled later during ioctl operations.
-
-Fixes: 5fb1c2361e56 ("mtk-jpegenc: add jpeg encode worker interface")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 13909a0c8897 ("crypto: atmel-sha204a - provide the otp content")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Lothar Rubusch <l.rubusch@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/atmel-sha204a.c |   20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1213,6 +1213,7 @@ static int mtk_jpeg_release(struct file
- 	struct mtk_jpeg_dev *jpeg = video_drvdata(file);
- 	struct mtk_jpeg_ctx *ctx = mtk_jpeg_fh_to_ctx(file->private_data);
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -15,6 +15,7 @@
+ #include <linux/module.h>
+ #include <linux/scatterlist.h>
+ #include <linux/slab.h>
++#include <linux/sysfs.h>
+ #include <linux/workqueue.h>
+ #include "atmel-i2c.h"
  
-+	cancel_work_sync(&ctx->jpeg_work);
- 	mutex_lock(&jpeg->lock);
- 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
- 	v4l2_ctrl_handler_free(&ctx->ctrl_hdl);
+@@ -120,21 +121,22 @@ static ssize_t otp_show(struct device *d
+ {
+ 	u16 addr;
+ 	u8 otp[OTP_ZONE_SIZE];
+-	char *str = buf;
+ 	struct i2c_client *client = to_i2c_client(dev);
+-	int i;
++	ssize_t len = 0;
++	int i, ret;
+ 
+-	for (addr = 0; addr < OTP_ZONE_SIZE/4; addr++) {
+-		if (atmel_sha204a_otp_read(client, addr, otp + addr * 4) < 0) {
++	for (addr = 0; addr < OTP_ZONE_SIZE / 4; addr++) {
++		ret = atmel_sha204a_otp_read(client, addr, otp + addr * 4);
++		if (ret < 0) {
+ 			dev_err(dev, "failed to read otp zone\n");
+-			break;
++			return ret;
+ 		}
+ 	}
+ 
+-	for (i = 0; i < addr*2; i++)
+-		str += sprintf(str, "%02X", otp[i]);
+-	str += sprintf(str, "\n");
+-	return str - buf;
++	for (i = 0; i < OTP_ZONE_SIZE; i++)
++		len += sysfs_emit_at(buf, len, "%02X", otp[i]);
++	len += sysfs_emit_at(buf, len, "\n");
++	return len;
+ }
+ static DEVICE_ATTR_RO(otp);
+ 
 
 
