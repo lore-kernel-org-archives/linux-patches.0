@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D4135A3AD;
-	Mon,  4 May 2026 14:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF0C40DFD4;
+	Mon,  4 May 2026 14:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903758; cv=none; b=ALXNnxWCW4cDeEkWRUFsv6xbKemy2DCgdb94OGLeJvVAiLyx/NJowWHr3xoyHhRYW2L47wIjzINOzox4wpDPq8TOXB0FaEWtTn4RPMV38sCgOztRaTbhFeVahNuqGCwabE4c2YyeosmbX4WKaEqxlBLj/b5BT//mIFpTdABN8L0=
+	t=1777903760; cv=none; b=Pmm1PAiEVD+JUqYImubaz3QS6x+XHZYI4FkO1nR9ZQn/3/vrO8PuGyWIVKTMvIZoN9g+Oh8gVhJ1DOZUkDlwinTwn4UbeksAgtevk2aMQQ80Cw65/eu1N2IYplLgMDLaOhBGg7J10QCR+8ZjhM0LhCN93psk+6+a4ezkgGnOj4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903758; c=relaxed/simple;
-	bh=3SwAWJXLidYO2x76g5TrNV7iGroDrBqhLGTBOFySX5o=;
+	s=arc-20240116; t=1777903760; c=relaxed/simple;
+	bh=z/mTl0ocST6R86kpZqQxzFXtxUg6Z3tFnDBLsX3/MrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNGUZd2hgEtkovarqTx9B0u+qe+hvlFIkrHyznM2q4kChGa2yhohPWylTgYcY0FrgZciFu9L6+1YAyTZ9jLQSJE8aybzTHVLxMEIOV0gVM8OIH9gZqKuoyZz2TLYW/JjRLw5cm6UBh0WrHiiAat58LIttDl8kbZOahfHaDFMGCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwoJiVOQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pnFDmLqv8hrBXN91l0nKHyzD4uDRz4PyPqQRanVdizQWzAf8hwBGjkY5MbjJ0c7xAEFMTxoBq0k8YCMIKCuaTrzJqCDpZULKDTB8J3VHo8cvHKmJ57V5tD1OdeQIIZ96SW2Dg9/3SpxiUc9um/cpvQ51l2+wLoP9rE3X5sU5s1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adcvdFRg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwoJiVOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECD6C2BCB8;
-	Mon,  4 May 2026 14:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adcvdFRg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3310AC2BCB8;
+	Mon,  4 May 2026 14:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903758;
-	bh=3SwAWJXLidYO2x76g5TrNV7iGroDrBqhLGTBOFySX5o=;
+	s=korg; t=1777903760;
+	bh=z/mTl0ocST6R86kpZqQxzFXtxUg6Z3tFnDBLsX3/MrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HwoJiVOQq9KQPI0beaCkjj8YW2HUbdT66wJDFXEvCOdMe6s3dXoziGcvqi0Ad9Gxs
-	 ZF5pJqv7OSzo9eU1Ej1FR5BcK3zvUWyniQijIBc1NwjJ0laS8T8dARBX5Nffj4pM9t
-	 VEK1e8LFtKCJqKxomjPIq+Ytp+yzeqL/RUUIL+cI=
+	b=adcvdFRgiWZxOz9jqZ713wz+M8KfSIV38V7RaTFCKEqHOywBJWLDjuNOGwB1zCq/n
+	 bQ4XKj1JzWJd3+fgZNyK8t/XXFxLXYAMYlY8t40n1+N5eXO8E+7I8BW7cb/rGa6E63
+	 R89aEcvp5y/Qxj7Bs5bbMbQtOBISY+A0rsCvFEjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,13 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Yuan Tan <yuantan098@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 049/275] net: caif: clear client service pointer on teardown
-Date: Mon,  4 May 2026 15:49:49 +0200
-Message-ID: <20260504135144.758833829@linuxfoundation.org>
+Subject: [PATCH 6.18 050/275] net: strparser: fix skb_head leak in strp_abort_strp()
+Date: Mon,  4 May 2026 15:49:50 +0200
+Message-ID: <20260504135144.795473131@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -57,62 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit f7cf8ece8cee3c1ee361991470cdb1eb65ab02e8 upstream.
+commit fe72340daaf1af588be88056faf98965f39e6032 upstream.
 
-`caif_connect()` can tear down an existing client after remote shutdown by
-calling `caif_disconnect_client()` followed by `caif_free_client()`.
-`caif_free_client()` releases the service layer referenced by
-`adap_layer->dn`, but leaves that pointer stale.
+When the stream parser is aborted, for example after a message assembly timeout,
+it can still hold a reference to a partially assembled message in
+strp->skb_head.
 
-When the socket is later destroyed, `caif_sock_destructor()` calls
-`caif_free_client()` again and dereferences the freed service pointer.
+That skb is not released in strp_abort_strp(), which leaks the partially
+assembled message and can be triggered repeatedly to exhaust memory.
 
-Clear the client/service links before releasing the service object so
-repeated teardown becomes harmless.
+Fix this by freeing strp->skb_head and resetting the parser state in the
+abort path. Leave strp_stop() unchanged so final cleanup still happens in
+strp_done() after the work and timer have been synchronized.
 
-Fixes: 43e369210108 ("caif: Move refcount from service layer to sock and dev.")
+Fixes: 43a0c6751a32 ("strparser: Stream parser for messages")
 Cc: stable@kernel.org
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Co-developed-by: Yuan Tan <yuantan098@gmail.com>
 Signed-off-by: Yuan Tan <yuantan098@gmail.com>
 Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Tested-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/9f3d37847c0037568aae698ca23cd47c6691acb0.1775897577.git.zcliangcn@gmail.com
+Link: https://patch.msgid.link/ade3857a9404999ce9a1c27ec523efc896072678.1775482694.git.rakukuip@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/caif/cfsrvl.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/strparser/strparser.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/caif/cfsrvl.c
-+++ b/net/caif/cfsrvl.c
-@@ -191,10 +191,20 @@ bool cfsrvl_phyid_match(struct cflayer *
+--- a/net/strparser/strparser.c
++++ b/net/strparser/strparser.c
+@@ -45,6 +45,14 @@ static void strp_abort_strp(struct strpa
  
- void caif_free_client(struct cflayer *adap_layer)
- {
-+	struct cflayer *serv_layer;
- 	struct cfsrvl *servl;
--	if (adap_layer == NULL || adap_layer->dn == NULL)
+ 	strp->stopped = 1;
+ 
++	if (strp->skb_head) {
++		kfree_skb(strp->skb_head);
++		strp->skb_head = NULL;
++	}
 +
-+	if (!adap_layer)
-+		return;
++	strp->skb_nextp = NULL;
++	strp->need_bytes = 0;
 +
-+	serv_layer = adap_layer->dn;
-+	if (!serv_layer)
- 		return;
--	servl = container_obj(adap_layer->dn);
-+
-+	layer_set_dn(adap_layer, NULL);
-+	layer_set_up(serv_layer, NULL);
-+
-+	servl = container_obj(serv_layer);
- 	servl->release(&servl->layer);
- }
- EXPORT_SYMBOL(caif_free_client);
+ 	if (strp->sk) {
+ 		struct sock *sk = strp->sk;
+ 
 
 
