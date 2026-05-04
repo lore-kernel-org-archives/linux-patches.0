@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E6E3DEAFF;
-	Mon,  4 May 2026 14:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B783DFC6C;
+	Mon,  4 May 2026 14:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903601; cv=none; b=EoxZKCagh2ifWDaJh8e1A9BNGI04Tm+JnKeC/6o2RuV3JlM0HPWIWI2upcrv3/7v0TCRLLm8aOt2beAmDpuRVuHZ1zM3AHqZrHfZLTmlLEK8XHIzCukrmByfTxzNz2RJg1WbUgwCaq/eqKdoBC088yQNckp2bLJzYA42HWcAV3A=
+	t=1777903603; cv=none; b=e0Ly0TYATSSmvIGCoEj/SQshCjWdXigNUNcPnQuAX82hS9SaQQuYnjWxhBS3QwPelj6SS9OQJVvxP9SAg2WY8ClJvKX7vO7Qd+G8/XDTmRcOfw+qnxZQipneuoyBNbGonFfVSB45Zes/uuQEzSOB9W842DeHIRFlz/4hv3z4xfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903601; c=relaxed/simple;
-	bh=Y7YciMM7tyAYb1cliwhw3iaQZEprmjPa9HtLwvWcw9Q=;
+	s=arc-20240116; t=1777903603; c=relaxed/simple;
+	bh=KkQTA4/rjpEr3f68YbApfRc1xiMoRPUS5q/5tQ7dECg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nTuZ1D+uBxo41HdKbXuNzwqYlEN2oKn4xHQTBfRE7z8Ut4jokjYQWzVoq8PCHxuUxj9bX0vQCJm72F9IEmUjLftH7pfrUPv8wj+hlkh6aDzbWbg7hfBDvGdzumtIEt5n9CYCk4D4M0gxPn0m5gCRdQ0szWyStYivmPWHDcQvCz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQPTFGQO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6INzKdB8VBVlz8znERt+CAOqF8U3hU+MB370seKXKUCMJJWIYiIt7q8TN+AlGEOM3xmKSScr+RDywWO+5pcCGVNydhg2mmUJrCoNdXyh5fVI8g1AVC6/WuebWOfYuVcS+FevGCXY13wPFVglD2mcyn9gBdIk2ALTWzVWgcER2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSB+2/S+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQPTFGQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BB0C2BCB8;
-	Mon,  4 May 2026 14:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSB+2/S+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2D1C2BCC4;
+	Mon,  4 May 2026 14:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903600;
-	bh=Y7YciMM7tyAYb1cliwhw3iaQZEprmjPa9HtLwvWcw9Q=;
+	s=korg; t=1777903603;
+	bh=KkQTA4/rjpEr3f68YbApfRc1xiMoRPUS5q/5tQ7dECg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQPTFGQOrlYC1EVo2eGu3uVS4XWJRcZpWSzo3SNGMYMSFx+uiyorGu6pLtTgNvJbr
-	 R2qrFvCEtXhF85SHg5kaxCe9vhnUh60FDLhDg1K0YUKBVvdjuj3HpvW/xndJndTBZu
-	 4DJXtaXNJ2QEMs7gysZhyCDzz0ry0sUPDvge54RE=
+	b=gSB+2/S+mu6/nunuCZYypoRQeKtPm0uHdZzEX5l7I2hLUtQGo5nI/gAkighcc+dG+
+	 i4Fr4b22gXfhwTznGZ0Sj+zXR2ocCLeDUwb4jH5VIpCriRam5t8e6V3VADzmswKkV8
+	 a1PAu7wkU8ngidkcod6isxTrHTFnajO0EGTdD14M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 297/307] ALSA: caiaq: Dont abort when no input device is available
-Date: Mon,  4 May 2026 15:53:02 +0200
-Message-ID: <20260504135153.960189669@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 298/307] ipv6: rpl: reserve mac_len headroom when recompressed SRH grows
+Date: Mon,  4 May 2026 15:53:03 +0200
+Message-ID: <20260504135153.996299021@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -49,50 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit b32ae47a2b0a1fb4bd4942242847966d9b178222 upstream.
+commit 9e6bf146b55999a095bb14f73a843942456d1adc upstream.
 
-The previous fix to handle the error from setup_card() caused a
-regression for the models that have no dedicated input device;
-snd_usb_caiaq_input_init() just returns -EINVAL, and we treat it as a
-fatal error although it should be ignored.
+ipv6_rpl_srh_rcv() decompresses an RFC 6554 Source Routing Header, swaps
+the next segment into ipv6_hdr->daddr, recompresses, then pulls the old
+header and pushes the new one plus the IPv6 header back.  The
+recompressed header can be larger than the received one when the swap
+reduces the common-prefix length the segments share with daddr (CmprI=0,
+CmprE>0, seg[0][0] != daddr[0] gives the maximum +8 bytes).
 
-As a regression fix, change the error code to -ENODEV, and ignore this
-error in the callee, to continue probing.
+pskb_expand_head() was gated on segments_left == 0, so on earlier
+segments the push consumed unchecked headroom.  Once skb_push() leaves
+fewer than skb->mac_len bytes in front of data,
+skb_mac_header_rebuild()'s call to:
 
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221423
-Link: https://patch.msgid.link/20260427145642.6637-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+	skb_set_mac_header(skb, -skb->mac_len);
+
+will store (data - head) - mac_len into the u16 mac_header field, which
+wraps to ~65530, and the following memmove() writes mac_len bytes ~64KiB
+past skb->head.
+
+A single AF_INET6/SOCK_RAW/IPV6_HDRINCL packet over lo with a two
+segment type-3 SRH (CmprI=0, CmprE=15) reaches headroom 8 after one
+pass; KASAN reports a 14-byte OOB write in ipv6_rthdr_rcv.
+
+Fix this by expanding the head whenever the remaining room is less than
+the push size plus mac_len, and request that much extra so the rebuilt
+MAC header fits afterwards.
+
+Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
+Cc: stable <stable@kernel.org>
+Reported-by: Anthropic
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026042133-gout-unvented-1bd9@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/caiaq/device.c |    2 +-
- sound/usb/caiaq/input.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/exthdrs.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -366,7 +366,7 @@ static int setup_card(struct snd_usb_cai
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -491,6 +491,7 @@ static int ipv6_rpl_srh_rcv(struct sk_bu
+ 	struct net *net = dev_net(skb->dev);
+ 	struct inet6_dev *idev;
+ 	struct ipv6hdr *oldhdr;
++	unsigned int chdr_len;
+ 	unsigned char *buf;
+ 	int accept_rpl_seg;
+ 	int i, err;
+@@ -592,8 +593,10 @@ looped_back:
+ 	skb_pull(skb, ((hdr->hdrlen + 1) << 3));
+ 	skb_postpull_rcsum(skb, oldhdr,
+ 			   sizeof(struct ipv6hdr) + ((hdr->hdrlen + 1) << 3));
+-	if (unlikely(!hdr->segments_left)) {
+-		if (pskb_expand_head(skb, sizeof(struct ipv6hdr) + ((chdr->hdrlen + 1) << 3), 0,
++	chdr_len = sizeof(struct ipv6hdr) + ((chdr->hdrlen + 1) << 3);
++	if (unlikely(!hdr->segments_left ||
++		     skb_headroom(skb) < chdr_len + skb->mac_len)) {
++		if (pskb_expand_head(skb, chdr_len + skb->mac_len, 0,
+ 				     GFP_ATOMIC)) {
+ 			__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_OUTDISCARDS);
+ 			kfree_skb(skb);
+@@ -603,7 +606,7 @@ looped_back:
  
- #ifdef CONFIG_SND_USB_CAIAQ_INPUT
- 	ret = snd_usb_caiaq_input_init(cdev);
--	if (ret < 0) {
-+	if (ret < 0 && ret != -ENODEV) {
- 		dev_err(dev, "Unable to set up input system (ret=%d)\n", ret);
- 		return ret;
+ 		oldhdr = ipv6_hdr(skb);
  	}
---- a/sound/usb/caiaq/input.c
-+++ b/sound/usb/caiaq/input.c
-@@ -804,7 +804,7 @@ int snd_usb_caiaq_input_init(struct snd_
- 
- 	default:
- 		/* no input methods supported on this device */
--		ret = -EINVAL;
-+		ret = -ENODEV;
- 		goto exit_free_idev;
- 	}
- 
+-	skb_push(skb, ((chdr->hdrlen + 1) << 3) + sizeof(struct ipv6hdr));
++	skb_push(skb, chdr_len);
+ 	skb_reset_network_header(skb);
+ 	skb_mac_header_rebuild(skb);
+ 	skb_set_transport_header(skb, sizeof(struct ipv6hdr));
 
 
