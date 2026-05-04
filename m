@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7E43E51D8;
-	Mon,  4 May 2026 14:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAC53E1223;
+	Mon,  4 May 2026 14:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904718; cv=none; b=P/DJwTGbCN5F/tMJ+wjGQt10igOXxCkLEL0lSxx3AvZf3W4vu/So79RAYYbKcBEW0iBO0eKFhwe0rtOb0jYRDPMZq7jJwFtYPmAyndCUVKtxHfOtCMdVYtrkXUh7vHquIJjfFhlW7mCFMrbAL0d66GgxLKJKCjWRf+lIsHFnk8E=
+	t=1777904721; cv=none; b=EvlWJspmpB9moHBAh0ew181jbKLUrPxGFv26Zfi5/Q/ijW+YZBIpqGNzqf233GoUldaz+w7+XiD1YMojRZ61r29b0n4MbX+mvbXKbMzqliZ75mrrA0ifwyqHewLZ+WrRaerfjMu7QQ+M2uJPUDHbbxlgCEag9jHefLjR7lVhjKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904718; c=relaxed/simple;
-	bh=qpQiNoRii1k7uZl9GxaAUxqMc0+DlVucDhYH+I9dlD8=;
+	s=arc-20240116; t=1777904721; c=relaxed/simple;
+	bh=W1dUxmuNK9urUhrUb6VhEaTZVl3O2VTaqZUZ74ntlMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mhNm6uJq9DNXP7wT1WOF077aLlmHDgoaQiie0JGHBuFb4hckmvKifeGk3jlzEX/1PBSjUpFr0Y84MZ3KLepjz52HsMH56cHq+w0OgOeQR8jdfmwROHFbQG5Xtfa3YcXHTIh0JL0aVrC0NOeGR9+a55nRZCwp8z92ta6CIkyVzBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgQZObgd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NyQuaOnz0Ggjz5GOBe6UH+FKI1EtbV6tPiMKpkE3S+16CfuovJG9HTZQw8DZNijY2xL493xtuZeuV9hGQfiV+umPmLOtVnBVLO+dujGoeRBP0TIHm+3dvtppwLEvdDJ4pcsAcfeob5b5FyLahzUPqBGQhHs+NkIItVTwlvKmwL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BP9Z8zPy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgQZObgd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AEBC2BCB8;
-	Mon,  4 May 2026 14:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BP9Z8zPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E95C2BCB8;
+	Mon,  4 May 2026 14:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904718;
-	bh=qpQiNoRii1k7uZl9GxaAUxqMc0+DlVucDhYH+I9dlD8=;
+	s=korg; t=1777904721;
+	bh=W1dUxmuNK9urUhrUb6VhEaTZVl3O2VTaqZUZ74ntlMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zgQZObgdUSYNUMtgriDYtdAGJTeg/yBYQYOLrkU/1zICvgjSzSQ51uANTnuMy+4OE
-	 IQGzzMR3WDY+Ey328fLYXBLuq+kGpw7+DdIFoWGIjMjv+lH5fxI5fr2VdvEpKE4sP/
-	 DRzu8OrS9eAqUVec4vQ6bJmv0Ygu45pNJuwvIgmc=
+	b=BP9Z8zPy+t38Ab7nUbEL83m6uqZh6Wt9OjOJTvJXLmjAHXXpFsjxVxTa4zXCv1hgO
+	 siGXeBKqj6cG5wm915alIrNbs3YGciIlDArjyJsvtiHw6eKp8+GTo9oNPO3d5EDJif
+	 yf4kQ3tieAqB5GO/IAf95YbYjoyT6i7y16TW7zLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <cyyzero16@gmail.com>,
-	Balbir Singh <bsingharora@gmail.com>,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Fan Yu <fan.yu9@zte.com.cn>,
-	Wang Yaxin <wang.yaxin@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 148/215] taskstats: set version in TGID exit notifications
-Date: Mon,  4 May 2026 15:52:47 +0200
-Message-ID: <20260504135135.573202858@linuxfoundation.org>
+	Brian Mak <makb@juniper.net>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 149/215] mfd: core: Preserve OF node when ACPI handle is present
+Date: Mon,  4 May 2026 15:52:48 +0200
+Message-ID: <20260504135135.611250232@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -54,74 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <cyyzero16@gmail.com>
+From: Brian Mak <makb@juniper.net>
 
-commit 16c4f0211aaa1ec1422b11b59f64f1abe9009fc0 upstream.
+commit caa5a5d44d8ae4fd13b744857d66c9313b712d1f upstream.
 
-delay accounting started populating taskstats records with a valid version
-field via fill_pid() and fill_tgid().
+Switch device_set_node to set_primary_fwnode, so that the ACPI fwnode
+does not overwrite the of_node with NULL.
 
-Later, commit ad4ecbcba728 ("[PATCH] delay accounting taskstats interface
-send tgid once") changed the TGID exit path to send the cached
-signal->stats aggregate directly instead of building the outgoing record
-through fill_tgid().  Unlike fill_tgid(), fill_tgid_exit() only
-accumulates accounting data and never initializes stats->version.
+This allows MFD children with both OF nodes and ACPI handles to have OF
+nodes again.
 
-As a result, TGID exit notifications can reach userspace with version == 0
-even though PID exit notifications and TASKSTATS_CMD_GET replies carry a
-valid taskstats version.
-
-This is easy to reproduce with `tools/accounting/getdelays.c`.
-
-I have a small follow-up patch for that tool which:
-
-1. increases the receive buffer/message size so the pid+tgid
-   combined exit notification is not dropped/truncated
-
-2. prints `stats->version`.
-
-With that patch, the reproducer is:
-
-  Terminal 1:
-    ./getdelays -d -v -l -m 0
-
-  Terminal 2:
-    taskset -c 0 python3 -c 'import threading,time; t=threading.Thread(target=time.sleep,args=(0.1,)); t.start(); t.join()'
-
-That produces both PID and TGID exit notifications for the same
-process.  The PID exit record reports a valid taskstats version, while
-the TGID exit record reports `version 0`.
-
-
-This patch (of 2):
-
-Set stats->version = TASKSTATS_VERSION after copying the cached TGID
-aggregate into the outgoing netlink payload so all taskstats records are
-self-describing again.
-
-Link: https://lkml.kernel.org/r/ba83d934e59edd431b693607de573eb9ca059309.1774810498.git.cyyzero16@gmail.com
-Fixes: ad4ecbcba728 ("[PATCH] delay accounting taskstats interface send tgid once")
-Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
-Cc: Balbir Singh <bsingharora@gmail.com>
-Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Cc: Fan Yu <fan.yu9@zte.com.cn>
-Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 51e3b257099d ("mfd: core: Make use of device_set_node()")
+Signed-off-by: Brian Mak <makb@juniper.net>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260325223024.35992-1-makb@juniper.net
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/taskstats.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/mfd-core.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/kernel/taskstats.c
-+++ b/kernel/taskstats.c
-@@ -655,6 +655,7 @@ void taskstats_exit(struct task_struct *
- 		goto err;
+diff --git a/drivers/mfd/mfd-core.c b/drivers/mfd/mfd-core.c
+index 6be58eb5a746..7aa32b90cf1e 100644
+--- a/drivers/mfd/mfd-core.c
++++ b/drivers/mfd/mfd-core.c
+@@ -88,7 +88,17 @@ static void mfd_acpi_add_device(const struct mfd_cell *cell,
+ 		}
+ 	}
  
- 	memcpy(stats, tsk->signal->stats, sizeof(*stats));
-+	stats->version = TASKSTATS_VERSION;
- 
- send:
- 	send_cpu_listeners(rep_skb, listeners);
+-	device_set_node(&pdev->dev, acpi_fwnode_handle(adev ?: parent));
++	/*
++	 * NOTE: The fwnode design doesn't allow proper stacking/sharing. This
++	 * should eventually turn into a device fwnode API call that will allow
++	 * prepending to a list of fwnodes (with ACPI taking precedence).
++	 *
++	 * set_primary_fwnode() is used here, instead of device_set_node(), as
++	 * device_set_node() will overwrite the existing fwnode, which may be an
++	 * OF node that was populated earlier. To support a use case where ACPI
++	 * and OF is used in conjunction, we call set_primary_fwnode() instead.
++	 */
++	set_primary_fwnode(&pdev->dev, acpi_fwnode_handle(adev ?: parent));
+ }
+ #else
+ static inline void mfd_acpi_add_device(const struct mfd_cell *cell,
+-- 
+2.54.0
+
 
 
