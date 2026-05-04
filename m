@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596A3DF000;
-	Mon,  4 May 2026 14:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B348E3DE458;
+	Mon,  4 May 2026 14:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904198; cv=none; b=qo4Tr/xx+KnQN5tZiyBoCBz3WbUGaA69Cym66DEFRa4BU2J6n7rbIXX8ELMziJPPIl8Xt9wL/1TtJdXzUZTHESnIhVKOIjXJZ4tcXO7b55d46o2LSy1gJSZD8U8tIHQha9SYsQbz9AnQtMx93WYsr/u1fpl6Y3vqBx0rk1eC8js=
+	t=1777904200; cv=none; b=T6zm89y82PvC5YqaR5x47v2nV8Y1aAE7Y2pw4efM5gk7aYrC35rE9CgcrX79lYROnzCprEu200Okfb9vlTNyG0nht5Q8yFaLL00da5iiN9mFqZ3oZLF2sVLWXkaAv3bPMWAJJ0qDh2bafseSbY3Z6SC+KMd/n/xQzfTyTxY2kDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904198; c=relaxed/simple;
-	bh=Vs2dZYJ6111ZomRRNPWZ/MGi6ukYFEGeRIA+KDidue4=;
+	s=arc-20240116; t=1777904200; c=relaxed/simple;
+	bh=ghQbuL8R6Md1DCCsJHXaW1t3zSM59Q6h3UDZ4uv9tjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUe8SwOetGJNTVVfMtQTMJH/G5a8Yph+T9z6NOMlrKQop4uf+HW0DrUfOcluhHtp3vKehUCGQyom17pLYPbBMSc+nt0jfxFyVdHqY+dYPDerZOUDfbi5OPXUq3lp82UpK+geSlZ6wKVAG96JA29IfNZ1yskuLTm+iOe/CZW+trg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HegIkIQU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bjb2QC75Ho0o7qM5ErWkkrR5FeC4moG5Bw4D/BSM1KB6sMAU/PvyE/vaHf2imufenfhsRl6QPFIfH4lntVAZzyQmpoeYHlsfX9eeXOhB297gmZQj+03n6Yr4G3ojhbJJrsOdZ5EB25le8+X6zQFxZ2NmbBBwIUFbfXMrAbJVcEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBoIQUDJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HegIkIQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5447C2BCC4;
-	Mon,  4 May 2026 14:16:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBoIQUDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47318C2BCF4;
+	Mon,  4 May 2026 14:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904198;
-	bh=Vs2dZYJ6111ZomRRNPWZ/MGi6ukYFEGeRIA+KDidue4=;
+	s=korg; t=1777904200;
+	bh=ghQbuL8R6Md1DCCsJHXaW1t3zSM59Q6h3UDZ4uv9tjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HegIkIQUzQBndfCa/9Ku4hNY1y9JmtV2EFiIjIXVtwzDfnZsj+m+g/GGMJgOsU8q3
-	 uV+I6mmZ9ovxSPF7Rovod8PDXHEj9+gR/Ef8stEd4DLn2riMtkJ597pIy9m2mwMuqZ
-	 d2Kmi5U5MOV/kg8ZNPvV9UvZclYMez2QtJy/iPtA=
+	b=iBoIQUDJnrxZxWZxbwrE216kMhVrzeiheH81peYjSq4oQVvgwHqiFiC8nMWSgGVq5
+	 /KsQtbIsVyiNYLHu5L1GiYGcgaa+yrfYXHAmeHTvbBqDcK7FW28THj0MNMkJIxMnAp
+	 k9h5K6pLpwxvIvqIy4jGmmkCA5+hTHWSfejzy6LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.18 221/275] crypto: arm64/aes - Fix 32-bit aes_mac_update() arg treated as 64-bit
-Date: Mon,  4 May 2026 15:52:41 +0200
-Message-ID: <20260504135151.280603302@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 222/275] crypto: atmel-aes - Fix 3-page memory leak in atmel_aes_buff_cleanup
+Date: Mon,  4 May 2026 15:52:42 +0200
+Message-ID: <20260504135151.316311589@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,44 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit f8f08d7cc43237e91e3aedf7b67d015d24c38fcc upstream.
+commit 3fcfff4ed35f963380a68741bcd52742baff7f76 upstream.
 
-Since the 'enc_after' argument to neon_aes_mac_update() and
-ce_aes_mac_update() has type 'int', it needs to be accessed using the
-corresponding 32-bit register, not the 64-bit register.  The upper half
-of the corresponding 64-bit register may contain garbage.
+atmel_aes_buff_init() allocates 4 pages using __get_free_pages() with
+ATMEL_AES_BUFFER_ORDER, but atmel_aes_buff_cleanup() frees only the
+first page using free_page(), leaking the remaining 3 pages. Use
+free_pages() with ATMEL_AES_BUFFER_ORDER to fix the memory leak.
 
-Fixes: 4860620da7e5 ("crypto: arm64/aes - add NEON/Crypto Extensions CBCMAC/CMAC/XCBC driver")
+Fixes: bbe628ed897d ("crypto: atmel-aes - improve performances of data transfer")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20260218213501.136844-4-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/crypto/aes-modes.S |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/atmel-aes.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/crypto/aes-modes.S
-+++ b/arch/arm64/crypto/aes-modes.S
-@@ -838,7 +838,7 @@ AES_FUNC_START(aes_mac_update)
- 	encrypt_block	v0, w2, x1, x7, w8
- 	eor		v0.16b, v0.16b, v4.16b
- 	cmp		w3, wzr
--	csinv		x5, x6, xzr, eq
-+	csinv		w5, w6, wzr, eq
- 	cbz		w5, .Lmacout
- 	encrypt_block	v0, w2, x1, x7, w8
- 	st1		{v0.16b}, [x4]			/* return dg */
-@@ -852,7 +852,7 @@ AES_FUNC_START(aes_mac_update)
- 	eor		v0.16b, v0.16b, v1.16b		/* ..and xor with dg */
+--- a/drivers/crypto/atmel-aes.c
++++ b/drivers/crypto/atmel-aes.c
+@@ -2131,7 +2131,7 @@ static int atmel_aes_buff_init(struct at
  
- 	subs		w3, w3, #1
--	csinv		x5, x6, xzr, eq
-+	csinv		w5, w6, wzr, eq
- 	cbz		w5, .Lmacout
+ static void atmel_aes_buff_cleanup(struct atmel_aes_dev *dd)
+ {
+-	free_page((unsigned long)dd->buf);
++	free_pages((unsigned long)dd->buf, ATMEL_AES_BUFFER_ORDER);
+ }
  
- .Lmacenc:
+ static int atmel_aes_dma_init(struct atmel_aes_dev *dd)
 
 
