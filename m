@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E93315785;
-	Mon,  4 May 2026 14:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EDB35A3AD;
+	Mon,  4 May 2026 14:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904185; cv=none; b=tTDgKgV6+nOVnnwfhlxLPS7hBFzH4Myu+b+UT/l6T4yLpiczV3TaEmB6MGbHfYv6YEeARZVZHKd4RfSYMcHwT1AFSm1WOAs/O5uUu6bstU1+hrwcamARDE5sSEL7JYtVLaryE3m4lMp5ixpsk/Nd6fwKgkJWUIOWHTWKX6A5bMw=
+	t=1777904188; cv=none; b=DqeNsvJOefIxH5AefLVn5UTvDV9/RF5bnZ2T2fUGHOSzuHima5WW4zfuyLZYHv9QYxrM5hzjCUYOZpR7I0Poiufe/DrL1K0vnBqABm83bvUs117OY4uKKA+AYzDfLlE+aTtFWERA2ig/X+KH2I0kRK4k9L/91jGhXCTJaGaf6yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904185; c=relaxed/simple;
-	bh=AY2xWGDPR6LXZbfSRCX7QxeS0lR6zS5BgShCw25vfOM=;
+	s=arc-20240116; t=1777904188; c=relaxed/simple;
+	bh=W7kuUgZMpAhax/pVJde5KgFab6yGwdfgWGYcwOjeVH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpUe/NOlhl3m6N1t2F6Zmzdf6UBfn4tb93NAsgL0LMhvOp9xbVf4vUfV4j3GfSJokq/LYUFJWYO+FqHlRCswrk+DdIbFG+bklAECdsvGSvlHnQi9yF70YaedV7hLai+nYvwhXJ9fA7buLd+OX++/HLUmUGeSWoZlDHiqRbC04SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajp4gBDV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G/o/caonCu5B+mKiKYNpKYPzptWHfUUy4YKCKtvg+c6BXU5jB3lWx2NKTUcnskGQmhHnRfsmy1kTHTt6IZ5VsdRb2hPAma9fONTUM86LluooAU5s1DctkizYwde8lfugZ4f8sLT4lxV8d5j8nv0oeRM7I2eLQ5ylEd+8gUE6zbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8VrakDx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajp4gBDV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F044FC2BCB8;
-	Mon,  4 May 2026 14:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8VrakDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831B2C2BCB8;
+	Mon,  4 May 2026 14:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904185;
-	bh=AY2xWGDPR6LXZbfSRCX7QxeS0lR6zS5BgShCw25vfOM=;
+	s=korg; t=1777904187;
+	bh=W7kuUgZMpAhax/pVJde5KgFab6yGwdfgWGYcwOjeVH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ajp4gBDV95odv1hcSnO27scno1Bs2nADOk7YPwmcViBPTCDRiTQE740lJ0LzPeL9a
-	 /vtlir9H/3aASNiK+Jx7ZONnV+ApjD+3oapk20zee/LNsGAHem/U2TJDqG+zAJKT71
-	 AncFRAMupqtFXplugg6akbihhMamBMnXCtd1Nmcc=
+	b=W8VrakDxuuoQ+gM+dlEXvmkLoFGXrnxGSrsTNpHxlvXSqiBhTgL0LAdidZeX98/w8
+	 To7OkLfgP81UGWTP3IEn8noh60je6vPOIQyFKVOozPtaTTjeX2HvyqNgwhTriuSrmp
+	 f2KHRx7Zb01mGaASOa7jlE+eXIA5+7quOBGal7Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qualys Security Advisory <qsa@qualys.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.18 216/275] apparmor: use target tasks context in apparmor_getprocattr()
-Date: Mon,  4 May 2026 15:52:36 +0200
-Message-ID: <20260504135151.096057899@linuxfoundation.org>
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 217/275] Bluetooth: hci_event: fix potential UAF in SSP passkey handlers
+Date: Mon,  4 May 2026 15:52:37 +0200
+Message-ID: <20260504135151.131902774@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,67 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cengiz Can <cengiz.can@canonical.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-commit 4afc61702bdcc3b9b519749ef966cf762a6e7051 upstream.
+commit 85fa3512048793076eef658f66489112dcc91993 upstream.
 
-apparmor_getprocattr() incorrectly calls task_ctx(current) instead of
-task_ctx(task) when retrieving prev and exec attributes, returning the
-caller's labels rather than the target's.
+hci_conn lookup and field access must be covered by hdev lock in
+hci_user_passkey_notify_evt() and hci_keypress_notify_evt(), otherwise
+the connection can be freed concurrently.
 
-Fix by passing task to task_ctx().
+Extend the hci_dev_lock critical section to cover all conn usage in both
+handlers.
 
-The issue can be reproduced when a process with an onexec transition
-(e.g., configured by a container runtime) is inspected via
-/proc/<pid>/attr/apparmor/exec. The reader's own value is returned
-instead of the target's.
+Keep the existing keypress notification behavior unchanged by routing
+the early exits through a common unlock path.
 
-Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Fixes: 3b529a7600d8 ("apparmor: move task domain change info to task security")
+Fixes: 92a25256f142 ("Bluetooth: mgmt: Implement support for passkey notification")
 Cc: stable@vger.kernel.org
-Co-developed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Cengiz Can <cengiz.can@canonical.com>
-Co-developed-by: John Johansen <john.johansen@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/lsm.c |   16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ net/bluetooth/hci_event.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -821,25 +821,23 @@ static int apparmor_getprocattr(struct t
- 				char **value)
- {
- 	int error = -ENOENT;
--	/* released below */
--	const struct cred *cred = get_task_cred(task);
--	struct aa_task_ctx *ctx = task_ctx(current);
- 	struct aa_label *label = NULL;
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -5422,9 +5422,11 @@ static void hci_user_passkey_notify_evt(
  
-+	rcu_read_lock();
- 	if (strcmp(name, "current") == 0)
--		label = aa_get_newest_label(cred_label(cred));
--	else if (strcmp(name, "prev") == 0  && ctx->previous)
--		label = aa_get_newest_label(ctx->previous);
--	else if (strcmp(name, "exec") == 0 && ctx->onexec)
--		label = aa_get_newest_label(ctx->onexec);
-+		label = aa_get_newest_cred_label(__task_cred(task));
-+	else if (strcmp(name, "prev") == 0  && task_ctx(task)->previous)
-+		label = aa_get_newest_label(task_ctx(task)->previous);
-+	else if (strcmp(name, "exec") == 0 && task_ctx(task)->onexec)
-+		label = aa_get_newest_label(task_ctx(task)->onexec);
- 	else
- 		error = -EINVAL;
-+	rcu_read_unlock();
+ 	bt_dev_dbg(hdev, "");
  
- 	if (label)
- 		error = aa_getprocattr(label, value, true);
++	hci_dev_lock(hdev);
++
+ 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &ev->bdaddr);
+ 	if (!conn)
+-		return;
++		goto unlock;
  
- 	aa_put_label(label);
--	put_cred(cred);
- 
- 	return error;
+ 	conn->passkey_notify = __le32_to_cpu(ev->passkey);
+ 	conn->passkey_entered = 0;
+@@ -5433,6 +5435,9 @@ static void hci_user_passkey_notify_evt(
+ 		mgmt_user_passkey_notify(hdev, &conn->dst, conn->type,
+ 					 conn->dst_type, conn->passkey_notify,
+ 					 conn->passkey_entered);
++
++unlock:
++	hci_dev_unlock(hdev);
  }
+ 
+ static void hci_keypress_notify_evt(struct hci_dev *hdev, void *data,
+@@ -5443,14 +5448,16 @@ static void hci_keypress_notify_evt(stru
+ 
+ 	bt_dev_dbg(hdev, "");
+ 
++	hci_dev_lock(hdev);
++
+ 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &ev->bdaddr);
+ 	if (!conn)
+-		return;
++		goto unlock;
+ 
+ 	switch (ev->type) {
+ 	case HCI_KEYPRESS_STARTED:
+ 		conn->passkey_entered = 0;
+-		return;
++		goto unlock;
+ 
+ 	case HCI_KEYPRESS_ENTERED:
+ 		conn->passkey_entered++;
+@@ -5465,13 +5472,16 @@ static void hci_keypress_notify_evt(stru
+ 		break;
+ 
+ 	case HCI_KEYPRESS_COMPLETED:
+-		return;
++		goto unlock;
+ 	}
+ 
+ 	if (hci_dev_test_flag(hdev, HCI_MGMT))
+ 		mgmt_user_passkey_notify(hdev, &conn->dst, conn->type,
+ 					 conn->dst_type, conn->passkey_notify,
+ 					 conn->passkey_entered);
++
++unlock:
++	hci_dev_unlock(hdev);
+ }
+ 
+ static void hci_simple_pair_complete_evt(struct hci_dev *hdev, void *data,
 
 
