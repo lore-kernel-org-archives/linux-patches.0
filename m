@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D5A1EF09B;
-	Mon,  4 May 2026 14:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8313DEAED;
+	Mon,  4 May 2026 14:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904858; cv=none; b=KLEuyzB/As9FIIBEXqCehmM+CF6mSd5EEf6px4cjeuMQgR5dSi4Jf9zD1v2rRuIVWd1H8NcncQ0twkqtqohIJA/wtQZx8AohCrVToOjIPAgV/b6qCdHBcZZCtjXQBWx5MWEc2AMz/5z5q46SdvR42HTGYQBFdWAPu4YUI6RQB+8=
+	t=1777904861; cv=none; b=GljXtsLtcvnROJkCBtgDEmi66xbnWQaj8Pkm2l/1W7MVh5gLyFDcVEoFSRCy9xfDlaSRe/pureksdiVZ1P3YL6cy4V0S0hcZL4lXg5TDq5w8X0d3/MMWm8nE7jtjfIUdgMJ7SzVsLRDVEOs68MIz5i6ghIXfcGtNYyKaeQ939Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904858; c=relaxed/simple;
-	bh=3Dbej7ofNEn7L+iaX/C5bYIs0wU8w1l4qnOVUTosjkA=;
+	s=arc-20240116; t=1777904861; c=relaxed/simple;
+	bh=Rmq/PfEtAFxSAFEn6+iOpG+i2LdKc8WlH9bhM/nqwZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/DOj+yrHjJKbsbk2vivcHJ7TYTxPpWiKSTP3jnRLoDdyXdoK+lhu0U3DNTGuEi6BRAgFle7tdERa/28MqjNvskO6AL6TdJpuBeFIuAPrXrDoy32IgfvyqSlzT8C4m1BXcvMOJzluJ2x1pI4RUuFLkvJLkMSWMyIPTdLQTqZpiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1EJHnhK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KPjfJMpV8E395wDqZPYlP/a+dn5aHbuJ8jJ5e6vQVYDnFiR3blo8Y8npoBmQKSuXBLWqeZNT9M5v1JXwDdkzJDzGGmKZo+yL0QFWatnEMb1En8Ig+6rY48lQkzaD42f60NwB4ll/hlFiiGlT6A/Q65hFlbp1j6XgRuTVZ/fy58E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUctIaD5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1EJHnhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB79DC2BCB8;
-	Mon,  4 May 2026 14:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUctIaD5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B8CC2BCB8;
+	Mon,  4 May 2026 14:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904858;
-	bh=3Dbej7ofNEn7L+iaX/C5bYIs0wU8w1l4qnOVUTosjkA=;
+	s=korg; t=1777904860;
+	bh=Rmq/PfEtAFxSAFEn6+iOpG+i2LdKc8WlH9bhM/nqwZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1EJHnhKpJd+kTf8ZoaMalhGHzK+nYFEHKQUrH/RtTKKfL/QMNwUyzrKSttjOVSur
-	 KvLMrQHIaSmx59PCCv4BPzVRPl+Gm323vHbjNY8/gxqSJsfJktUucazAzNyGTOp7fO
-	 EmJVwMc2nLpTJ/dMBbaiyqTWU47mkjpt4JRiAAPk=
+	b=fUctIaD5qfQ5rc1KUjXsAdqwzrHLW1qo4DYDqgu/nIf0S8TRwCO/DHw9TY4y31k0v
+	 6GW4JAZ6zb7ftb2jaQ/HgTK9L2EkmRZjBvzAg1fH/A3j/xN9ZsOkoRtDH6irzRmqMf
+	 IChFGv9fA2DtmHnKlqKnU54zH3DtSP1ECSLfjreY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yuan Zhaoming <yuanzm2@lenovo.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 200/215] net: bridge: use a stable FDB dst snapshot in RCU readers
-Date: Mon,  4 May 2026 15:53:39 +0200
-Message-ID: <20260504135137.927367331@linuxfoundation.org>
+Subject: [PATCH 6.12 201/215] net: mctp: fix dont require received header reserved bits to be zero
+Date: Mon,  4 May 2026 15:53:40 +0200
+Message-ID: <20260504135138.002194006@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -60,173 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Yuan Zhaoming <yuanzm2@lenovo.com>
 
-[ Upstream commit df4601653201de21b487c3e7fffd464790cab808 ]
+[ Upstream commit a663bac71a2f0b3ac6c373168ca57b2a6e6381aa ]
 
-Local FDB entries can be rewritten in place by `fdb_delete_local()`, which
-updates `f->dst` to another port or to `NULL` while keeping the entry
-alive. Several bridge RCU readers inspect `f->dst`, including
-`br_fdb_fillbuf()` through the `brforward_read()` sysfs path.
+>From the MCTP Base specification (DSP0236 v1.2.1), the first byte of
+the MCTP header contains a 4 bit reserved field, and 4 bit version.
 
-These readers currently load `f->dst` multiple times and can therefore
-observe inconsistent values across the check and later dereference.
-In `br_fdb_fillbuf()`, this means a concurrent local-FDB update can change
-`f->dst` after the NULL check and before the `port_no` dereference,
-leading to a NULL-ptr-deref.
+On our current receive path, we require those 4 reserved bits to be
+zero, but the 9500-8i card is non-conformant, and may set these
+reserved bits.
 
-Fix this by taking a single `READ_ONCE()` snapshot of `f->dst` in each
-affected RCU reader and using that snapshot for the rest of the access
-sequence. Also publish the in-place `f->dst` updates in `fdb_delete_local()`
-with `WRITE_ONCE()` so the readers and writer use matching access patterns.
+DSP0236 states that the reserved bits must be written as zero, and
+ignored when read. While the device might not conform to the former,
+we should accept these message to conform to the latter.
 
-Fixes: 960b589f86c7 ("bridge: Properly check if local fdb entry can be deleted in br_fdb_change_mac_address")
-Cc: stable@kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/6570fabb85ecadb8baaf019efe856f407711c7b9.1776043229.git.zcliangcn@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ kept `*idx < cb->args[2]` instead of `*idx < ctx->fdb_idx` ]
+Relax our check on the MCTP version byte to allow non-zero bits in the
+reserved field.
+
+Fixes: 889b7da23abf ("mctp: Add initial routing framework")
+Signed-off-by: Yuan Zhaoming <yuanzm2@lenovo.com>
+Cc: stable@vger.kernel.org
+Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/20260417141340.5306-1-yuanzhaoming901030@126.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_arp_nd_proxy.c |    8 +++++---
- net/bridge/br_fdb.c          |   28 ++++++++++++++++++----------
- 2 files changed, 23 insertions(+), 13 deletions(-)
+ include/net/mctp.h |    3 +++
+ net/mctp/route.c   |    8 ++++++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -199,11 +199,12 @@ void br_do_proxy_suppress_arp(struct sk_
+--- a/include/net/mctp.h
++++ b/include/net/mctp.h
+@@ -26,6 +26,9 @@ struct mctp_hdr {
+ #define MCTP_VER_MIN	1
+ #define MCTP_VER_MAX	1
  
- 		f = br_fdb_find_rcu(br, n->ha, vid);
- 		if (f) {
-+			const struct net_bridge_port *dst = READ_ONCE(f->dst);
- 			bool replied = false;
- 
- 			if ((p && (p->flags & BR_PROXYARP)) ||
--			    (f->dst && (f->dst->flags & BR_PROXYARP_WIFI)) ||
--			    br_is_neigh_suppress_enabled(f->dst, vid)) {
-+			    (dst && (dst->flags & BR_PROXYARP_WIFI)) ||
-+			    br_is_neigh_suppress_enabled(dst, vid)) {
- 				if (!vid)
- 					br_arp_send(br, p, skb->dev, sip, tip,
- 						    sha, n->ha, sha, 0, 0);
-@@ -463,9 +464,10 @@ void br_do_suppress_nd(struct sk_buff *s
- 
- 		f = br_fdb_find_rcu(br, n->ha, vid);
- 		if (f) {
-+			const struct net_bridge_port *dst = READ_ONCE(f->dst);
- 			bool replied = false;
- 
--			if (br_is_neigh_suppress_enabled(f->dst, vid)) {
-+			if (br_is_neigh_suppress_enabled(dst, vid)) {
- 				if (vid != 0)
- 					br_nd_send(br, p, skb, n,
- 						   skb->vlan_proto,
---- a/net/bridge/br_fdb.c
-+++ b/net/bridge/br_fdb.c
-@@ -243,6 +243,7 @@ struct net_device *br_fdb_find_port(cons
- 				    const unsigned char *addr,
- 				    __u16 vid)
- {
-+	const struct net_bridge_port *dst;
- 	struct net_bridge_fdb_entry *f;
- 	struct net_device *dev = NULL;
- 	struct net_bridge *br;
-@@ -255,8 +256,11 @@ struct net_device *br_fdb_find_port(cons
- 	br = netdev_priv(br_dev);
- 	rcu_read_lock();
- 	f = br_fdb_find_rcu(br, addr, vid);
--	if (f && f->dst)
--		dev = f->dst->dev;
-+	if (f) {
-+		dst = READ_ONCE(f->dst);
-+		if (dst)
-+			dev = dst->dev;
-+	}
- 	rcu_read_unlock();
- 
- 	return dev;
-@@ -353,7 +357,7 @@ static void fdb_delete_local(struct net_
- 		vg = nbp_vlan_group(op);
- 		if (op != p && ether_addr_equal(op->dev->dev_addr, addr) &&
- 		    (!vid || br_vlan_find(vg, vid))) {
--			f->dst = op;
-+			WRITE_ONCE(f->dst, op);
- 			clear_bit(BR_FDB_ADDED_BY_USER, &f->flags);
- 			return;
- 		}
-@@ -364,7 +368,7 @@ static void fdb_delete_local(struct net_
- 	/* Maybe bridge device has same hw addr? */
- 	if (p && ether_addr_equal(br->dev->dev_addr, addr) &&
- 	    (!vid || (v && br_vlan_should_use(v)))) {
--		f->dst = NULL;
-+		WRITE_ONCE(f->dst, NULL);
- 		clear_bit(BR_FDB_ADDED_BY_USER, &f->flags);
- 		return;
- 	}
-@@ -827,6 +831,7 @@ int br_fdb_test_addr(struct net_device *
- int br_fdb_fillbuf(struct net_bridge *br, void *buf,
- 		   unsigned long maxnum, unsigned long skip)
- {
-+	const struct net_bridge_port *dst;
- 	struct net_bridge_fdb_entry *f;
- 	struct __fdb_entry *fe = buf;
- 	unsigned long delta;
-@@ -843,7 +848,8 @@ int br_fdb_fillbuf(struct net_bridge *br
- 			continue;
- 
- 		/* ignore pseudo entry for local MAC address */
--		if (!f->dst)
-+		dst = READ_ONCE(f->dst);
-+		if (!dst)
- 			continue;
- 
- 		if (skip) {
-@@ -855,8 +861,8 @@ int br_fdb_fillbuf(struct net_bridge *br
- 		memcpy(fe->mac_addr, f->key.addr.addr, ETH_ALEN);
- 
- 		/* due to ABI compat need to split into hi/lo */
--		fe->port_no = f->dst->port_no;
--		fe->port_hi = f->dst->port_no >> 8;
-+		fe->port_no = dst->port_no;
-+		fe->port_hi = dst->port_no >> 8;
- 
- 		fe->is_local = test_bit(BR_FDB_LOCAL, &f->flags);
- 		if (!test_bit(BR_FDB_STATIC, &f->flags)) {
-@@ -981,9 +987,11 @@ int br_fdb_dump(struct sk_buff *skb,
- 
- 	rcu_read_lock();
- 	hlist_for_each_entry_rcu(f, &br->fdb_list, fdb_node) {
-+		const struct net_bridge_port *dst = READ_ONCE(f->dst);
++/* Definitions for ver field */
++#define MCTP_HDR_VER_MASK	GENMASK(3, 0)
 +
- 		if (*idx < cb->args[2])
- 			goto skip;
--		if (filter_dev && (!f->dst || f->dst->dev != filter_dev)) {
-+		if (filter_dev && (!dst || dst->dev != filter_dev)) {
- 			if (filter_dev != dev)
- 				goto skip;
- 			/* !f->dst is a special case for bridge
-@@ -991,10 +999,10 @@ int br_fdb_dump(struct sk_buff *skb,
- 			 * Therefore need a little more filtering
- 			 * we only want to dump the !f->dst case
- 			 */
--			if (f->dst)
-+			if (dst)
- 				goto skip;
- 		}
--		if (!filter_dev && f->dst)
-+		if (!filter_dev && dst)
- 			goto skip;
+ /* Definitions for flags_seq_tag field */
+ #define MCTP_HDR_FLAG_SOM	BIT(7)
+ #define MCTP_HDR_FLAG_EOM	BIT(6)
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -388,6 +388,7 @@ static int mctp_route_input(struct mctp_
+ 	unsigned long f;
+ 	u8 tag, flags;
+ 	int rc;
++	u8 ver;
  
- 		err = fdb_fill_info(skb, br, f,
+ 	msk = NULL;
+ 	rc = -EINVAL;
+@@ -411,7 +412,8 @@ static int mctp_route_input(struct mctp_
+ 	netid = mctp_cb(skb)->net;
+ 	skb_pull(skb, sizeof(struct mctp_hdr));
+ 
+-	if (mh->ver != 1)
++	ver = mh->ver & MCTP_HDR_VER_MASK;
++	if (ver < MCTP_VER_MIN || ver > MCTP_VER_MAX)
+ 		goto out;
+ 
+ 	flags = mh->flags_seq_tag & (MCTP_HDR_FLAG_SOM | MCTP_HDR_FLAG_EOM);
+@@ -1197,6 +1199,7 @@ static int mctp_pkttype_receive(struct s
+ 	struct mctp_skb_cb *cb;
+ 	struct mctp_route *rt;
+ 	struct mctp_hdr *mh;
++	u8 ver;
+ 
+ 	rcu_read_lock();
+ 	mdev = __mctp_dev_get(dev);
+@@ -1214,7 +1217,8 @@ static int mctp_pkttype_receive(struct s
+ 
+ 	/* We have enough for a header; decode and route */
+ 	mh = mctp_hdr(skb);
+-	if (mh->ver < MCTP_VER_MIN || mh->ver > MCTP_VER_MAX)
++	ver = mh->ver & MCTP_HDR_VER_MASK;
++	if (ver < MCTP_VER_MIN || ver > MCTP_VER_MAX)
+ 		goto err_drop;
+ 
+ 	/* source must be valid unicast or null; drop reserved ranges and
 
 
