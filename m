@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD123DE434;
-	Mon,  4 May 2026 14:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120A03DE42C;
+	Mon,  4 May 2026 14:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903344; cv=none; b=ifCI7bppSksCXdi02My7V+rPQbrNRygyq8zIXjeYQlxYmFTuzn3pPJ67tyY3aUGO/h56QiC8mUeI9FeXfBcAHCaJtMiy5Ti4dH5r6axiGmNj/4JY8d54gVfiLQObVf5MmD01c0tdPe1TOKHq0a6nR/zhrxddxsxXdCcVlHRQkeg=
+	t=1777903347; cv=none; b=hlFKpGje3NU+EKkxxsLnC/sxZ/IRVcwTQUhmqA8TT3xq6hL6Qe15aVBCy02FYFjIUK9TdjlRqKJLi4uGMcVb5B+UHXez5t7xOlnWEDKNOx2zmwGPKA1DDKT8WhJx7Kpr0Y2KQtPLqk2m2b4WwIEhzoVaQ3hlYAFGipEJF6upvNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903344; c=relaxed/simple;
-	bh=VeJJBFXH74KM/cJSOmb28BjtUrZQfqLHukqyTT+Cxfk=;
+	s=arc-20240116; t=1777903347; c=relaxed/simple;
+	bh=BABEowZs8OErAz7yrdvL3UGaKoysSlVuxlXLvbjXGsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KERUIe6Ar8KD04J9YtP6tXV3uLDnOeWtALeKE89WeovkvC9E7S2fNtmcZz8quZmmC0vDT5v23dLHfOgUJC+cOG9KN9/xU0EwEXT3PkxIcc6kIEfFPpjpF8FRkUTkB8uMweipuwr80e9YmiLzOX3s+njO0qWW/OqJn6UPYtBS8+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsI+ahZ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ewNTMnXp1cYvACYzA6vdpyab2DbEXjyNcRvkbXzXjlxgb7MadcAdPCszGbJQ6Gi8rf7mTvWNXlLc/ZifLMZp65GNWwA2F2s353cEKx0Wc9rxpdUoYo71ojy4XOq69h+w6mwJ0hnfdJkoTXPsjAi7RneL6Ie3XrDJIdZj8/2vbrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqgOtWvs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsI+ahZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDC4C2BCB8;
-	Mon,  4 May 2026 14:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqgOtWvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A9BC2BCB8;
+	Mon,  4 May 2026 14:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903344;
-	bh=VeJJBFXH74KM/cJSOmb28BjtUrZQfqLHukqyTT+Cxfk=;
+	s=korg; t=1777903346;
+	bh=BABEowZs8OErAz7yrdvL3UGaKoysSlVuxlXLvbjXGsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RsI+ahZ9S0b7nn/SPfgYmB7T1nHQXmHvZJ4XzHvb76fG177ePFrlfoVAvSYJ4Ti+J
-	 eEfSeZhxG+AYCPHTF7wG+rFqfmCJ2jhw+QGWdGxYJyN2yh0v8Qi1iWGxRKWqR3dc3e
-	 /U5xU9fOuXs5wgNJKgZ+Chn0OwCuF/nzg9f0IFWM=
+	b=yqgOtWvs09SVl05CY07ERIih0yORJr5cICicHVuS38eqLjB8oPF1TGmHN/r7QIHfP
+	 EkeQIJ3dmqCBiJgePOJzZtnK7s/mJf2ebZ8rdot3n/P8nxneqQG4YOvdpGtgtEhx7H
+	 /As+QVPLwY+kwBxZ8xONFUATwMY0d25WcxPoHh2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 197/307] mm/damon/core: disallow time-quota setting zero esz
-Date: Mon,  4 May 2026 15:51:22 +0200
-Message-ID: <20260504135150.295362087@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 7.0 171/307] hwmon: (pt5161l) Fix bugs in pt5161l_read_block_data()
+Date: Mon,  4 May 2026 15:50:56 +0200
+Message-ID: <20260504135149.298127249@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,88 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 8bbde987c2b84f80da0853f739f0a920386f8b99 upstream.
+commit 24c73e93d6a756e1b8626bb259d2e07c5b89b370 upstream.
 
-When the throughput of a DAMOS scheme is very slow, DAMOS time quota can
-make the effective size quota smaller than damon_ctx->min_region_sz.  In
-the case, damos_apply_scheme() will skip applying the action, because the
-action is tried at region level, which requires >=min_region_sz size.
-That is, the quota is effectively exceeded for the quota charge window.
+Fix two bugs in pt5161l_read_block_data():
 
-Because no action will be applied, the total_charged_sz and
-total_charged_ns are also not updated.  damos_set_effective_quota() will
-try to update the effective size quota before starting the next charge
-window.  However, because the total_charged_sz and total_charged_ns have
-not updated, the throughput and effective size quota are also not changed.
-Since effective size quota can only be decreased, other effective size
-quota update factors including DAMOS quota goals and size quota cannot
-make any change, either.
+1. Buffer overrun: The local buffer rbuf is declared as u8 rbuf[24],
+   but i2c_smbus_read_block_data() can return up to
+   I2C_SMBUS_BLOCK_MAX (32) bytes. The i2c-core copies the data into
+   the caller's buffer before the return value can be checked, so
+   the post-read length validation does not prevent a stack overrun
+   if a device returns more than 24 bytes. Resize the buffer to
+   I2C_SMBUS_BLOCK_MAX.
 
-As a result, the scheme is unexpectedly deactivated until the user notices
-and mitigates the situation.  The users can mitigate this situation by
-changing the time quota online or re-install the scheme.  While the
-mitigation is somewhat straightforward, finding the situation would be
-challenging, because DAMON is not providing good observabilities for that.
-Even if such observability is provided, doing the additional monitoring
-and the mitigation is somewhat cumbersome and not aligned to the intention
-of the time quota.  The time quota was intended to help reduce the user's
-administration overhead.
+2. Unexpected positive return on length mismatch: When all three
+   retries are exhausted because the device returns data with an
+   unexpected length, i2c_smbus_read_block_data() returns a positive
+   byte count. The function returns this directly, and callers treat
+   any non-negative return as success, processing stale or incomplete
+   buffer contents. Return -EIO when retries are exhausted with a
+   positive return value, preserving the negative error code on I2C
+   failure.
 
-Fix the problem by setting time quota-modified effective size quota be at
-least min_region_sz always.
-
-The issue was discovered [1] by sashiko.
-
-Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
-Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
-Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1b2ca93cd0592 ("hwmon: Add driver for Astera Labs PT5161L retimer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260410002549.424162-1-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/hwmon/pt5161l.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2225,7 +2225,8 @@ static unsigned long damos_quota_score(s
- /*
-  * Called only if quota->ms, or quota->sz are set, or quota->goals is not empty
-  */
--static void damos_set_effective_quota(struct damos_quota *quota)
-+static void damos_set_effective_quota(struct damos_quota *quota,
-+		struct damon_ctx *ctx)
- {
- 	unsigned long throughput;
- 	unsigned long esz = ULONG_MAX;
-@@ -2251,6 +2252,7 @@ static void damos_set_effective_quota(st
- 		else
- 			throughput = PAGE_SIZE * 1024;
- 		esz = min(throughput * quota->ms, esz);
-+		esz = max(ctx->min_region_sz, esz);
- 	}
+--- a/drivers/hwmon/pt5161l.c
++++ b/drivers/hwmon/pt5161l.c
+@@ -121,7 +121,7 @@ static int pt5161l_read_block_data(struc
+ 	int ret, tries;
+ 	u8 remain_len = len;
+ 	u8 curr_len;
+-	u8 wbuf[16], rbuf[24];
++	u8 wbuf[16], rbuf[I2C_SMBUS_BLOCK_MAX];
+ 	u8 cmd = 0x08; /* [7]:pec_en, [4:2]:func, [1]:start, [0]:end */
+ 	u8 config = 0x00; /* [6]:cfg_type, [4:1]:burst_len, [0]:address bit16 */
  
- 	if (quota->sz && quota->sz < esz)
-@@ -2287,7 +2289,7 @@ static void damos_adjust_quota(struct da
- 	/* First charge window */
- 	if (!quota->total_charged_sz && !quota->charged_from) {
- 		quota->charged_from = jiffies;
--		damos_set_effective_quota(quota);
-+		damos_set_effective_quota(quota, c);
- 	}
+@@ -151,7 +151,7 @@ static int pt5161l_read_block_data(struc
+ 				break;
+ 		}
+ 		if (tries >= 3)
+-			return ret;
++			return ret < 0 ? ret : -EIO;
  
- 	/* New charge window starts */
-@@ -2301,7 +2303,7 @@ static void damos_adjust_quota(struct da
- 		quota->charged_sz = 0;
- 		if (trace_damos_esz_enabled())
- 			cached_esz = quota->esz;
--		damos_set_effective_quota(quota);
-+		damos_set_effective_quota(quota, c);
- 		if (trace_damos_esz_enabled() && quota->esz != cached_esz)
- 			damos_trace_esz(c, s, quota);
- 	}
+ 		memcpy(val, rbuf, curr_len);
+ 		val += curr_len;
 
 
