@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1233DE452;
-	Mon,  4 May 2026 14:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F711A6827;
+	Mon,  4 May 2026 14:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904108; cv=none; b=lu5TrF9tpvdU1o4MBTcUoDrL3WyZmo6wZyxDO5gukbPiko/M8ZcK14lwq3R8fD9T9JMAT3lCJcLla+e2zr1zOs71vDSBiIIyZlp2jBdfAvqp8sA2ENze7HtJEoEq/kUys4oXjuZFabTEds8X75U2ynll0rV6r3UoCYIYKWLI+qU=
+	t=1777904111; cv=none; b=dX6ekiEtIvD20PHm2SZIt4sD71LjKFmKfpmCgvX8foRWuC1ZPYIdV//AI4zOxqYNIwKO2nZH4iNxQlCmZg1ILvlvvtB3/fsO1PTmlnxGKCqUDR3lL5QliavkOmKydsbSJ2u9ifRRuwiS+8loWb+6TDYknlSvL8ZWrLgykLvPvOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904108; c=relaxed/simple;
-	bh=+iPGufx2KF6TFjQOZXa0/047F0AEQBkWIn26vwzwEOg=;
+	s=arc-20240116; t=1777904111; c=relaxed/simple;
+	bh=HxhPJDyZ4Q1JKtlR2cZoQWIKbjpvFCmPh8f2/x32K1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVS063ycbsMDdl3U8tbchHiwVJ8F4c6pvz/xukcSb8VjEHgj23NKIpsKhCzsIhrWh4tmlU2aw70NebULSlUR382Hr7Efm9VouNh5gPoaDiUE8JanYQkBSkrr3Q8SV/8AyuXyG26Tr4+DQhufzjJhYMyFqQ4GtEnlzH6lSo9EOCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rICZoVVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sQsdajqYruC89MjTCTAcYtz9R+GMLx1bABITgofGRxdp//nH1YR+s5MDW4/UBW4J0A0Fy8HWQVEC78u2MUsk9VxeQEtdz1T5bfuyzesjf3JprhEH7Hrf9ooNzD3iEbvooGym1msn1sqOILX0EwL76WDRyZ5DTFC2VjirFSZdLQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMD616TJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rICZoVVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02066C2BCC4;
-	Mon,  4 May 2026 14:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMD616TJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854A6C2BCF4;
+	Mon,  4 May 2026 14:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904108;
-	bh=+iPGufx2KF6TFjQOZXa0/047F0AEQBkWIn26vwzwEOg=;
+	s=korg; t=1777904110;
+	bh=HxhPJDyZ4Q1JKtlR2cZoQWIKbjpvFCmPh8f2/x32K1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rICZoVVbXfS9SaHjnQ9kMrI+5aaVV/h+kP5IGgh3htwUmn7aECSJxfGobdmoOp/sV
-	 2UV5i5tzEALW/LzAIdGSIuZrJ9WsVdWh5KWEr1b3zFQ0nsqooRKJ207100290nfb3o
-	 XXhDAB73GQzJN4vCfUwVk4RcQbuNkUZYQ8AVws6o=
+	b=pMD616TJjiEqNYut7l/YMHGd79vjXtK3jPKf/A8uawzSAUAKuQjhtBVLIqMCcXtOV
+	 OuvijXOfZO9s11PLGXegTFQRlcCadpURRtlUCIr7+J4dNxp5NlHUa6IGv3VtvXZigz
+	 bVEv1Vs9+hKdxwSqGLy0PgZzfvwRlIw5np+dOpKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 186/275] KVM: nSVM: Clear GIF on nested #VMEXIT(INVALID)
-Date: Mon,  4 May 2026 15:52:06 +0200
-Message-ID: <20260504135149.986934251@linuxfoundation.org>
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Johan Hovold <johan@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.18 160/275] rtc: ntxec: fix OF node reference imbalance
+Date: Mon,  4 May 2026 15:51:40 +0200
+Message-ID: <20260504135148.991486266@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -44,39 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit f85a6ce06e4a0d49652f57967a649ab09e06287c upstream.
+commit 30c4d2f26bb3538c328035cea2e6265c8320539e upstream.
 
-According to the APM, GIF is set to 0 on any #VMEXIT, including
-an #VMEXIT(INVALID) due to failed consistency checks. Clear GIF on
-consistency check failures.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-Fixes: 3d6368ef580a ("KVM: SVM: Add VMRUN handler")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-11-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fix this by using the intended helper for reusing OF nodes.
+
+Fixes: 435af89786c6 ("rtc: New driver for RTC in Netronix embedded controller")
+Cc: stable@vger.kernel.org	# 5.13
+Cc: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260407122717.2676774-1-johan@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-ntxec.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -992,6 +992,7 @@ int nested_svm_vmrun(struct kvm_vcpu *vc
- 		vmcb12->control.exit_code_hi = -1u;
- 		vmcb12->control.exit_info_1  = 0;
- 		vmcb12->control.exit_info_2  = 0;
-+		svm_set_gif(svm, false);
- 		goto out;
- 	}
+--- a/drivers/rtc/rtc-ntxec.c
++++ b/drivers/rtc/rtc-ntxec.c
+@@ -110,7 +110,7 @@ static int ntxec_rtc_probe(struct platfo
+ 	struct rtc_device *dev;
+ 	struct ntxec_rtc *rtc;
  
+-	pdev->dev.of_node = pdev->dev.parent->of_node;
++	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
+ 
+ 	rtc = devm_kzalloc(&pdev->dev, sizeof(*rtc), GFP_KERNEL);
+ 	if (!rtc)
 
 
