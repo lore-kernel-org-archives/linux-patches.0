@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5A83D9029;
-	Mon,  4 May 2026 14:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1914535A3AD;
+	Mon,  4 May 2026 14:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903737; cv=none; b=e1vXfnPlSnQOsUhd7rTl4OZATxSSAm8xVoWPmc2xEKIWuEHSs4DFpd53p4NMHT5twC6eCdxdfZVqtbr/LjX4Nn5yGjU597g6pdM7EQidiSnmrWZCl1/PIc94JA2Rh12q03WiZf/1obGmcvdbKV8P79X60WaWkCAUkrafs9OaSG8=
+	t=1777903740; cv=none; b=n9jBEIYQn+8J6jFO31IcOtUmhP9ye3o1ZLCvYNz8GlvkZqaXAw3LEhst7v7bX4MDqnTay0qdE2QbUtEpY0rcRoL/iB/a4rxn3O7eJJ8AldwgAFxdChlorIf3i7jBg0Pc4PwAMn8dzsaw+I0OS0BQ4yKLVSO7XzvYOS34wHRdiGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903737; c=relaxed/simple;
-	bh=4dPFEwQA/k9Vr4zyyZWu7SvWI4UMbTYfZiYPzM4HPSk=;
+	s=arc-20240116; t=1777903740; c=relaxed/simple;
+	bh=1wjqdvODXZ0FEgY7+hnd53hiIZwywKokvieBLntDNSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i5w2gESh9XeuwiB6dDT2V5YUivD0oBqd01arm7Wr74QltcbMEOeOuWo5oAFlWgswTjPW+oNkq5oLjsXCRQ6nsuvBzZjghszFPCNfkoKC6x2ag4aeAflqdq/FLh7PyaY2zq42m0B49NPzlW9XUOhbZhQlh3RWw8PhKc4GDVqWTYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEhYrKtS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjDV8WmqU4yfagEqXmf24Zzo6+WPizljLafkJOUT9TneUoLGCmpPKufj0a106tz86BTvDhdWoW2S+nlA9zPAhWsQ39D55tpUTWnjLAfi+1xU7pPpfJKi+grgP4FYmHH48SN+H8rg8CmPHorMVM0107AEs7cm83qTS+6mI79xGCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1lW3EV4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEhYrKtS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0436EC2BCB8;
-	Mon,  4 May 2026 14:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1lW3EV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96134C2BCB8;
+	Mon,  4 May 2026 14:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903737;
-	bh=4dPFEwQA/k9Vr4zyyZWu7SvWI4UMbTYfZiYPzM4HPSk=;
+	s=korg; t=1777903739;
+	bh=1wjqdvODXZ0FEgY7+hnd53hiIZwywKokvieBLntDNSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aEhYrKtS9pDdjQgb7RcLnN6tuEypH8OObcgrHTIXbABLuv3RMDKD8XHhqKSiVMyQC
-	 rR7TwB1hgHGQxf5fKhlR1mtHmrQCaO4KmKyxh51s+QpJYNsTSDqv19vPQDxAt3BlGM
-	 vWwIK6YHZp/luLjNUAR6IVCyRKTnRNpe1le3pP/c=
+	b=T1lW3EV4gkMukSS1PLh4EFlMeC9byjghVYmWWuMei/YNgaskyfHDJgRU+etbzQst3
+	 O8Cw1VtC/nSp/P2GHb9hHx7Pb0gcujQAmUdBBkJJl9FChmmVzjf3iFeA9pauTma1wz
+	 VRa56M5Mi2n2ThBBs58lY7AzalAnEE7K/jFxmueM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.18 042/275] of: unittest: fix use-after-free in of_unittest_changeset()
-Date: Mon,  4 May 2026 15:49:42 +0200
-Message-ID: <20260504135144.503833157@linuxfoundation.org>
+Subject: [PATCH 6.18 043/275] of: unittest: fix use-after-free in testdrv_probe()
+Date: Mon,  4 May 2026 15:49:43 +0200
+Message-ID: <20260504135144.542518896@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -52,46 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit faecdd423c27f0d6090156a435ba9dbbac0eaddb upstream.
+commit 07fd339b2c253205794bea5d9b4b7548a4546c56 upstream.
 
-The variable 'parent' is assigned the value of 'nchangeset' earlier in the
-function, meaning both point to the same struct device_node. The call to
-of_node_put(nchangeset) can decrement the reference count to zero and
-free the node if there are no other holders. After that, the code still
-uses 'parent' to check for the presence of a property and to read a
-string property, leading to a use-after-free.
+The function testdrv_probe() retrieves the device_node from the PCI
+device, applies an overlay, and then immediately calls of_node_put(dn).
+This releases the reference held by the PCI core, potentially freeing
+the node if the reference count drops to zero. Later, the same freed
+pointer 'dn' is passed to of_platform_default_populate(), leading to a
+use-after-free.
 
-Fix this by moving the of_node_put() call after the last access to
-'parent', avoiding the UAF.
+The reference to pdev->dev.of_node is owned by the device model and
+should not be released by the driver. Remove the erroneous of_node_put()
+to prevent premature freeing.
 
-Fixes: 1c668ea65506 ("of: unittest: Use of_property_present()")
+Fixes: 26409dd04589 ("of: unittest: Add pci_dt_testdrv pci driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260409022233.418103-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260409034859.429071-1-vulab@iscas.ac.cn
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/unittest.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/of/unittest.c |    1 -
+ 1 file changed, 1 deletion(-)
 
 --- a/drivers/of/unittest.c
 +++ b/drivers/of/unittest.c
-@@ -896,8 +896,6 @@ static void __init of_unittest_changeset
+@@ -4202,7 +4202,6 @@ static int testdrv_probe(struct pci_dev
  
- 	unittest(!of_changeset_apply(&chgset), "apply failed\n");
+ 	size = info->dtbo_end - info->dtbo_begin;
+ 	ret = of_overlay_fdt_apply(info->dtbo_begin, size, &ovcs_id, dn);
+-	of_node_put(dn);
+ 	if (ret)
+ 		return ret;
  
--	of_node_put(nchangeset);
--
- 	/* Make sure node names are constructed correctly */
- 	unittest((np = of_find_node_by_path("/testcase-data/changeset/n2/n21")),
- 		 "'%pOF' not added\n", n21);
-@@ -919,6 +917,7 @@ static void __init of_unittest_changeset
- 	if (!ret)
- 		unittest(strcmp(propstr, "hello") == 0, "original value not in updated property after revert");
- 
-+	of_node_put(nchangeset);
- 	of_changeset_destroy(&chgset);
- 
- 	of_node_put(n1);
 
 
