@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E6D35A3AD;
-	Mon,  4 May 2026 14:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5383D6484;
+	Mon,  4 May 2026 14:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904282; cv=none; b=eEy8AHrDuUojm+WOFMO0wZy6JqRE+dg4CikvOa6baHODUfCb9tAjA5JrbKYzl8cAFt0VnNN6U5Y94WinQ7rkFReR5FGkc/29Ks67/q0c0Y6SwEP6TDr9hQkTg1t6KBBaeWP0zlxTLVXaozheqIWRrgSGq1OrShwDUwYkbAtPhJ0=
+	t=1777904285; cv=none; b=rkCcFkRKlQ+AcFfysZSZd4VmyTE+pO2/i7nf1jxHyskEAo26r9Qes2woA8q1CKHrPOfCe0NiJkylSedcz0xgYKGPuZGmupgcdKbsosJSQ0ufVeyDsORdGGQf1/jEr2yEXMcj3O3YczTyeCZb416EM5YgYbgAqYyDkMfYtbkKNfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904282; c=relaxed/simple;
-	bh=ysV1WmbN7xyJQow60VAwaXhOecoApmj9M7KXl0vEgSE=;
+	s=arc-20240116; t=1777904285; c=relaxed/simple;
+	bh=4RgK1xdhHI9d3lUMTDakvx2j8IEnBo7kJyL76VhS5F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUzTxvqIlNXHeOIcqBaR5CEiC45LBLX/hmWohMLgSW0p0K/CwGGaYDJ4eabPm3kMOPY5HdXJdG++UZkJjSUHAR4wnNVSVL14gMTyIiAkm6g5NexhKiw2nQOP5DOMRRgSt6gAiB8SEO8hyOu8bIc6IT2BscVv0UgRyvvztDYUfPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnvoiCtc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NIwuc36huXTUljAkkcR3ppvgjST3pdolpeMkZuISrjyptxBi/RkpOeEirE3xaBYdSp3wvXiHjJF5uv66NmcZEWS9nJVEMDC1W3dMCi+rhM/YsjxpoMo3Oi2pv19jqK/svYt2lz43Be/L4rjZFrqWBib//bhKDqH7vbvZRf/i6Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zK+y7rTl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnvoiCtc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655E9C2BCB8;
-	Mon,  4 May 2026 14:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zK+y7rTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05341C2BCB8;
+	Mon,  4 May 2026 14:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904282;
-	bh=ysV1WmbN7xyJQow60VAwaXhOecoApmj9M7KXl0vEgSE=;
+	s=korg; t=1777904285;
+	bh=4RgK1xdhHI9d3lUMTDakvx2j8IEnBo7kJyL76VhS5F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnvoiCtcpRWNJ2PlL2EhNUApsRm+dKjLnf31W+WuI8Krs7kQH7eHdjflyslUX5mOa
-	 e3V1r6VdoCoUsKLHKBH/d6WRGHZa5RsE88XX5YjjoiIpgXra1FAwos5wE2l3vJQpRq
-	 HR1OIGb6ugi/Bn7QUaVZmfwM/0+j9kkt8A8bM520=
+	b=zK+y7rTlEOhF2tf7j6q7SDEyW+LS1iPVKf50Hjh6OxORE95SuIT2rsoBd7FCmMckJ
+	 6Yf9VLq0ZAQdyEvaoIiLefq8AH/jUT3RfvP3nBQPR9fIoG7LYVdlZh2IdCoaplk5gL
+	 4uFAL7ETq+FyUAxNWL3SgJ1MUTmGyX+5tbsLGfnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Wang <sean.wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 254/275] wifi: mt76: mt792x: describe USB WFSYS reset with a descriptor
-Date: Mon,  4 May 2026 15:53:14 +0200
-Message-ID: <20260504135152.475190094@linuxfoundation.org>
+Subject: [PATCH 6.18 255/275] wifi: mt76: mt792x: fix mt7925u USB WFSYS reset handling
+Date: Mon,  4 May 2026 15:53:15 +0200
+Message-ID: <20260504135152.512049797@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -53,90 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit e6f48512c1ceebcd1ce6bb83df3b3d56a261507d ]
+[ Upstream commit 56154fef47d104effa9f29ed3db4f805cbc0d640 ]
 
-Prepare mt792xu_wfsys_reset() for chips that share the same USB WFSYS
-reset flow but use different register definitions.
+mt7925u uses different reset/status registers from mt7921u. Reusing the
+mt7921u register set causes the WFSYS reset to fail.
 
-This is a pure refactor of the current mt7921u path and keeps the reset
-sequence unchanged.
+Add a chip-specific descriptor in mt792xu_wfsys_reset() to select the
+correct registers and fix mt7925u failing to initialize after a warm
+reboot.
 
+Fixes: d28e1a48952e ("wifi: mt76: mt792x: introduce mt792x-usb module")
+Cc: stable@vger.kernel.org
 Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20260311002825.15502-1-sean.wang@kernel.org
+Link: https://patch.msgid.link/20260311002825.15502-2-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: 56154fef47d1 ("wifi: mt76: mt792x: fix mt7925u USB WFSYS reset handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt792x_usb.c |   40 +++++++++++++++++++-----
- 1 file changed, 32 insertions(+), 8 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_regs.h |    4 ++++
+ drivers/net/wireless/mediatek/mt76/mt792x_usb.c  |   13 ++++++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_regs.h
+@@ -390,6 +390,10 @@
+ #define MT_CBTOP_RGU_WF_SUBSYS_RST	MT_CBTOP_RGU(0x600)
+ #define MT_CBTOP_RGU_WF_SUBSYS_RST_WF_WHOLE_PATH BIT(0)
+ 
++#define MT7925_CBTOP_RGU_WF_SUBSYS_RST	0x70028600
++#define MT7925_WFSYS_INIT_DONE_ADDR	0x184c1604
++#define MT7925_WFSYS_INIT_DONE		0x00001d1e
++
+ #define MT_HW_BOUND			0x70010020
+ #define MT_HW_CHIPID			0x70010200
+ #define MT_HW_REV			0x70010204
 --- a/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
-@@ -206,6 +206,24 @@ static void mt792xu_epctl_rst_opt(struct
- 	mt792xu_uhw_wr(&dev->mt76, MT_SSUSB_EPCTL_CSR_EP_RST_OPT, val);
- }
+@@ -224,6 +224,15 @@ static const struct mt792xu_wfsys_desc m
+ 	.need_status_sel = true,
+ };
  
-+struct mt792xu_wfsys_desc {
-+	u32 rst_reg;
-+	u32 done_reg;
-+	u32 done_mask;
-+	u32 done_val;
-+	u32 delay_ms;
-+	bool need_status_sel;
-+};
-+
-+static const struct mt792xu_wfsys_desc mt7921_wfsys_desc = {
-+	.rst_reg = MT_CBTOP_RGU_WF_SUBSYS_RST,
-+	.done_reg = MT_UDMA_CONN_INFRA_STATUS,
-+	.done_mask = MT_UDMA_CONN_WFSYS_INIT_DONE,
-+	.done_val = MT_UDMA_CONN_WFSYS_INIT_DONE,
-+	.delay_ms = 0,
-+	.need_status_sel = true,
++static const struct mt792xu_wfsys_desc mt7925_wfsys_desc = {
++	.rst_reg = MT7925_CBTOP_RGU_WF_SUBSYS_RST,
++	.done_reg = MT7925_WFSYS_INIT_DONE_ADDR,
++	.done_mask = U32_MAX,
++	.done_val = MT7925_WFSYS_INIT_DONE,
++	.delay_ms = 20,
++	.need_status_sel = false,
 +};
 +
  int mt792xu_dma_init(struct mt792x_dev *dev, bool resume)
  {
  	int err;
-@@ -236,25 +254,31 @@ EXPORT_SYMBOL_GPL(mt792xu_dma_init);
+@@ -254,7 +263,9 @@ EXPORT_SYMBOL_GPL(mt792xu_dma_init);
  
  int mt792xu_wfsys_reset(struct mt792x_dev *dev)
  {
-+	const struct mt792xu_wfsys_desc *desc = &mt7921_wfsys_desc;
+-	const struct mt792xu_wfsys_desc *desc = &mt7921_wfsys_desc;
++	const struct mt792xu_wfsys_desc *desc = is_mt7925(&dev->mt76) ?
++						&mt7925_wfsys_desc :
++						&mt7921_wfsys_desc;
  	u32 val;
  	int i;
  
- 	mt792xu_epctl_rst_opt(dev, false);
- 
--	val = mt792xu_uhw_rr(&dev->mt76, MT_CBTOP_RGU_WF_SUBSYS_RST);
-+	val = mt792xu_uhw_rr(&dev->mt76, desc->rst_reg);
- 	val |= MT_CBTOP_RGU_WF_SUBSYS_RST_WF_WHOLE_PATH;
--	mt792xu_uhw_wr(&dev->mt76, MT_CBTOP_RGU_WF_SUBSYS_RST, val);
-+	mt792xu_uhw_wr(&dev->mt76, desc->rst_reg, val);
- 
--	usleep_range(10, 20);
-+	if (desc->delay_ms)
-+		msleep(desc->delay_ms);
-+	else
-+		usleep_range(10, 20);
- 
--	val = mt792xu_uhw_rr(&dev->mt76, MT_CBTOP_RGU_WF_SUBSYS_RST);
-+	val = mt792xu_uhw_rr(&dev->mt76, desc->rst_reg);
- 	val &= ~MT_CBTOP_RGU_WF_SUBSYS_RST_WF_WHOLE_PATH;
--	mt792xu_uhw_wr(&dev->mt76, MT_CBTOP_RGU_WF_SUBSYS_RST, val);
-+	mt792xu_uhw_wr(&dev->mt76, desc->rst_reg, val);
-+
-+	if (desc->need_status_sel)
-+		mt792xu_uhw_wr(&dev->mt76, MT_UDMA_CONN_INFRA_STATUS_SEL, 0);
- 
--	mt792xu_uhw_wr(&dev->mt76, MT_UDMA_CONN_INFRA_STATUS_SEL, 0);
- 	for (i = 0; i < MT792x_WFSYS_INIT_RETRY_COUNT; i++) {
--		val = mt792xu_uhw_rr(&dev->mt76, MT_UDMA_CONN_INFRA_STATUS);
--		if (val & MT_UDMA_CONN_WFSYS_INIT_DONE)
-+		val = mt792xu_uhw_rr(&dev->mt76, desc->done_reg);
-+		if ((val & desc->done_mask) == desc->done_val)
- 			break;
- 
- 		msleep(100);
 
 
