@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6753C3A7F4C;
-	Mon,  4 May 2026 14:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F351D3B19D1;
+	Mon,  4 May 2026 14:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903866; cv=none; b=cO2OwR2U81jT+Mm/+nv2uVbNhMm7qxcTNSjiW4uUUTfAE/TtrxU0BnOT4xqtUzW0z57Iy216jbflGV3ngGj4zbNkKI4+GoEPs2u+GtNQ0gmvZhAjKrE9XYGHl/bwb/yHMTkdKe0Kf2sf9Bi8AvqYu1h32ITdK+mTBd88GE2W+SE=
+	t=1777903869; cv=none; b=FR2zjrbJlWOOzAxpy3g0CZstChLLJntNp7NmJyYdZg+ELLQa5/WRroE0hrjQMMgCskEXIwJrAtzsE7Rh9dGWVBa8CSjxzRl/zekULr+iXzhf9w5k+e8/hTZrK+Dbw8hUdGBeCYAxQHe1+EGrdFnyqu+XOcTeGxcURZHQPhuYOoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903866; c=relaxed/simple;
-	bh=RF+3NT09ZcfOmdztAi0yOO58dcng/fyG55nX+kLKFtk=;
+	s=arc-20240116; t=1777903869; c=relaxed/simple;
+	bh=k7pGaJKN+ctqzB5SZ86i3Y1HF0ZK9i4se6jMQ7vCezk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haMQJ8HeeaqwIuNkiEQpzuiUIySzmkKZ+jlAOrT16vUd0P4ih2W9Jvij6MxH6okDNWdnoew6+W9knBDo8A8Q6agt77fZCnMYcJ+RSLCkE0EQtB4eC7qq4XMYBmwWtnZeaoUuFo77SWh4M6VaZ23treNyN6KfJz3T3qXktrpBW3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzOqqwAQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S7zyIzhvcREkS2k05Lj7EwaBXTG1y3x5//RgnF9gNb/0N9vgarZSObxGwKksCJR494ugY/XO3ylt8WfDxhrGc7NU5/4MS9WRKpMqwpEFFX+Dd2b+ia2XHNmsUwguuv/QL2imXuHdnUYUvpiS8BZPa848ftcAftr6cFPvVmO960c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YL8K/VFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzOqqwAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34C7C2BCB8;
-	Mon,  4 May 2026 14:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YL8K/VFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C4FC2BCB8;
+	Mon,  4 May 2026 14:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903866;
-	bh=RF+3NT09ZcfOmdztAi0yOO58dcng/fyG55nX+kLKFtk=;
+	s=korg; t=1777903868;
+	bh=k7pGaJKN+ctqzB5SZ86i3Y1HF0ZK9i4se6jMQ7vCezk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzOqqwAQjAGyLo1vq9oNEh3HfZ13d2adJcdq9B7poWP8y48MY4BqiVu5PCACf3kcw
-	 tHwIe8hhFleZJbjihIfSoov2VxtAO/NCnzCeb+fcqrIo+Or86gd/6uOf4kYLyID9/s
-	 JZm6Vf0E5kW7W/zoSOp5kOEFGOLhMGmHtUI9DmDM=
+	b=YL8K/VFmdUz4Gt8y8iyVumkfA5ctEB/jK6JlrHBp6e6snhU84qldFI9yjcX9o63Ty
+	 VgG2BYurNCtkcXoLVp7fC104kS540y7/HstnNQXNjY6IoJIXPB5UMY0YLCKs5+yIT/
+	 Khz/B9ghuIkxNDNP9idZ1d96R8JFaYio4FPDFcbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.18 059/275] ext2: reject inodes with zero i_nlink and valid mode in ext2_iget()
-Date: Mon,  4 May 2026 15:49:59 +0200
-Message-ID: <20260504135145.125580060@linuxfoundation.org>
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 060/275] mm/zsmalloc: copy KMSAN metadata in zs_page_migrate()
+Date: Mon,  4 May 2026 15:50:00 +0200
+Message-ID: <20260504135145.163005285@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,99 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-commit 25947cc5b2374cd5bf627fe3141496444260d04f upstream.
+commit 4fb61d95ad21c3b6f1c09f357ff49d70abb0535e upstream.
 
-ext2_iget() already rejects inodes with i_nlink == 0 when i_mode is
-zero or i_dtime is set, treating them as deleted. However, the case of
-i_nlink == 0 with a non-zero mode and zero dtime slips through. Since
-ext2 has no orphan list, such a combination can only result from
-filesystem corruption - a legitimate inode deletion always sets either
-i_dtime or clears i_mode before freeing the inode.
+zs_page_migrate() uses copy_page() to copy the contents of a zspage page
+during migration.  However, copy_page() is not instrumented by KMSAN, so
+the shadow and origin metadata of the destination page are not updated.
 
-A crafted image can exploit this gap to present such an inode to the
-VFS, which then triggers WARN_ON inside drop_nlink() (fs/inode.c) via
-ext2_unlink(), ext2_rename() and ext2_rmdir():
+As a result, subsequent accesses to the migrated page are reported as
+use-after-free by KMSAN, despite the data being correctly copied.
 
-WARNING: CPU: 3 PID: 609 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
-CPU: 3 UID: 0 PID: 609 Comm: syz-executor Not tainted 6.12.77+ #1
-Call Trace:
- <TASK>
- inode_dec_link_count include/linux/fs.h:2518 [inline]
- ext2_unlink+0x26c/0x300 fs/ext2/namei.c:295
- vfs_unlink+0x2fc/0x9b0 fs/namei.c:4477
- do_unlinkat+0x53e/0x730 fs/namei.c:4541
- __x64_sys_unlink+0xc6/0x110 fs/namei.c:4587
- do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+Add a kmsan_copy_page_meta() call after copy_page() to propagate the KMSAN
+metadata to the new page, matching what copy_highpage() does internally.
 
-WARNING: CPU: 0 PID: 646 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
-CPU: 0 UID: 0 PID: 646 Comm: syz.0.17 Not tainted 6.12.77+ #1
-Call Trace:
- <TASK>
- inode_dec_link_count include/linux/fs.h:2518 [inline]
- ext2_rename+0x35e/0x850 fs/ext2/namei.c:374
- vfs_rename+0xf2f/0x2060 fs/namei.c:5021
- do_renameat2+0xbe2/0xd50 fs/namei.c:5178
- __x64_sys_rename+0x7e/0xa0 fs/namei.c:5223
- do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-WARNING: CPU: 0 PID: 634 at fs/inode.c:336 drop_nlink+0xad/0xd0 fs/inode.c:336
-CPU: 0 UID: 0 PID: 634 Comm: syz-executor Not tainted 6.12.77+ #1
-Call Trace:
- <TASK>
- inode_dec_link_count include/linux/fs.h:2518 [inline]
- ext2_rmdir+0xca/0x110 fs/ext2/namei.c:311
- vfs_rmdir+0x204/0x690 fs/namei.c:4348
- do_rmdir+0x372/0x3e0 fs/namei.c:4407
- __x64_sys_unlinkat+0xf0/0x130 fs/namei.c:4577
- do_syscall_64+0xf5/0x220 arch/x86/entry/common.c:78
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-Extend the existing i_nlink == 0 check to also catch this case,
-reporting the corruption via ext2_error() and returning -EFSCORRUPTED.
-This rejects the inode at load time and prevents it from reaching any
-of the namei.c paths.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://patch.msgid.link/20260404152011.2590197-1-kovalev@altlinux.org
-Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lkml.kernel.org/r/20260321132912.93434-1-syoshida@redhat.com
+Fixes: afb2d666d025 ("zsmalloc: use copy_page for full page copy")
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext2/inode.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ mm/zsmalloc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ext2/inode.c
-+++ b/fs/ext2/inode.c
-@@ -1430,9 +1430,17 @@ struct inode *ext2_iget (struct super_bl
- 	 * the test is that same one that e2fsck uses
- 	 * NeilBrown 1999oct15
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -1708,6 +1708,7 @@ static int zs_page_migrate(struct page *
  	 */
--	if (inode->i_nlink == 0 && (inode->i_mode == 0 || ei->i_dtime)) {
--		/* this inode is deleted */
--		ret = -ESTALE;
-+	if (inode->i_nlink == 0) {
-+		if (inode->i_mode == 0 || ei->i_dtime) {
-+			/* this inode is deleted */
-+			ret = -ESTALE;
-+		} else {
-+			ext2_error(sb, __func__,
-+				   "inode %lu has zero i_nlink with mode 0%o and no dtime, "
-+				   "filesystem may be corrupt",
-+				   ino, inode->i_mode);
-+			ret = -EFSCORRUPTED;
-+		}
- 		goto bad_inode;
- 	}
- 	inode->i_blocks = le32_to_cpu(raw_inode->i_blocks);
+ 	d_addr = kmap_local_zpdesc(newzpdesc);
+ 	copy_page(d_addr, s_addr);
++	kmsan_copy_page_meta(zpdesc_page(newzpdesc), zpdesc_page(zpdesc));
+ 	kunmap_local(d_addr);
+ 
+ 	for (addr = s_addr + offset; addr < s_addr + PAGE_SIZE;
 
 
