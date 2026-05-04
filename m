@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7AE3DE43C;
-	Mon,  4 May 2026 14:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9E63DEAD3;
+	Mon,  4 May 2026 14:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904793; cv=none; b=RFcFJVZCM8mJGz/D/T0E0T/RBGLrbTMIxl7YQcl00n6X9hISBRhZEF3iruCaOstCBw1yWvdYmbtrUSnZ2xgHfZoTemlj7sV9jqzinR59nm43nz1EA0nKfV8tmnIvOg4a/ZKEx1JEDLKvlITlz59FjdyKxiedLolv5P/PPBnUvk4=
+	t=1777904795; cv=none; b=bZAxzUcxHuReCBmZ8FXxV4RxEc2nceKw12qmZiV49hBQSlzBuXHmVDqGxTtUDe3IR17larvLJYMa9kp8j54jya122jBe5BLZEtyU5IIO+HqBcXTKlZP9dj/f+5gODFJdfQDvxAZoGpUDZK4aIWh61p/yRIWSb26WWMFFa6QApYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904793; c=relaxed/simple;
-	bh=r/ZhZAvVU70nWQI6sCa93kCjkg6JS2xSn3nmRwKw2wY=;
+	s=arc-20240116; t=1777904795; c=relaxed/simple;
+	bh=jXWpQgccxca/1JZ37xyH/8yD+O8bejF4wc5nP7K9/xM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTKlxm8o9CxKrRM36AYZE3uguzIf6nrUH511128CqfrFzspz0IbuVqvrlnu1i/3HaiRS6vN5AoRI6DGJFA31X6aQvSnqeV0w5xhO9xd/872GCbagT/vtCuPglY0N6/0ISymUroZ73CjqRXo35XPYeTWztFYZj1Az/sImMtqcJf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjnRP6cu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H9cixLHgJhtzySwarHfmGRxUU8s1+0nb5l8wk9PraaKWTs1ZIHhrT+XYFdZLAMtZQDuTEY5GXzXpCYssdsXn/cOKd/pdK+lg4XE/E9cFJMQqYFy4D7mISvz4OPX/2OaBS1pZUCtZDsF4h342j6zii2eRsq4fpcWTg8TfFdL5INE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaiwC2DK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjnRP6cu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9804CC2BCB8;
-	Mon,  4 May 2026 14:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaiwC2DK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309CEC2BCB8;
+	Mon,  4 May 2026 14:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904792;
-	bh=r/ZhZAvVU70nWQI6sCa93kCjkg6JS2xSn3nmRwKw2wY=;
+	s=korg; t=1777904795;
+	bh=jXWpQgccxca/1JZ37xyH/8yD+O8bejF4wc5nP7K9/xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjnRP6cuQwl9hIxNe0XWTbACc80up7IO672rXicOxI3UkP8SlUUV8/CLSsZFTJ1pH
-	 KZRRe791rPXP60GDpG8bgBDP+o9dfhYYNbyE5btM8sLkReHCvxrK9ILiR8aodvlKfK
-	 d/tnSL0xXZegqoZ2a2ymu3N4XwBwPyytHP/Gn2xw=
+	b=QaiwC2DKaeeyee2rXWFPNzunkj72X7xMtiJPCKCDxJ3AZfiZVXK+nLcw7lVHbiras
+	 3zWZTROfgGxjLe7l4N1ArNrzh1Gj8LnlsW+YahnyUzIp+ojT619+cIT1UjbJLzM5Zf
+	 wnuhmH8FPlnvAuFUmHAsQOTzdGRQKKgDx8kF4uow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francis Brosseau <francis@malagauche.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 134/215] io_uring/poll: fix multishot recv missing EOF on wakeup race
-Date: Mon,  4 May 2026 15:52:33 +0200
-Message-ID: <20260504135135.045257066@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.12 170/215] rtmutex: Use waiter::task instead of current in remove_waiter()
+Date: Mon,  4 May 2026 15:53:09 +0200
+Message-ID: <20260504135136.394866572@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,79 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Keenan Dong <keenanat2000@gmail.com>
 
-[ Upstream commit a68ed2df72131447d131531a08fe4dfcf4fa4653 ]
+commit 3bfdc63936dd4773109b7b8c280c0f3b5ae7d349 upstream.
 
-When a socket send and shutdown() happen back-to-back, both fire
-wake-ups before the receiver's task_work has a chance to run. The first
-wake gets poll ownership (poll_refs=1), and the second bumps it to 2.
-When io_poll_check_events() runs, it calls io_poll_issue() which does a
-recv that reads the data and returns IOU_RETRY. The loop then drains all
-accumulated refs (atomic_sub_return(2) -> 0) and exits, even though only
-the first event was consumed. Since the shutdown is a persistent state
-change, no further wakeups will happen, and the multishot recv can hang
-forever.
+remove_waiter() is used by the slowlock paths, but it is also used for
+proxy-lock rollback in rt_mutex_start_proxy_lock() when invoked from
+futex_requeue().
 
-Check specifically for HUP in the poll loop, and ensure that another
-loop is done to check for status if more than a single poll activation
-is pending. This ensures we don't lose the shutdown event.
+In the latter case waiter::task is not current, but remove_waiter()
+operates on current for the dequeue operation. That results in several
+problems:
 
-Backport notes for linux-6.12.y:
-  - The do-while body in 6.12.y already places `v &= IO_POLL_REF_MASK;`
-    just before the while-condition; the upstream patch moves it
-    earlier so that `v != 1` in the HUP check refers to the ref-count
-    only.  The backport does the same.
-  - io_poll_issue takes `ts` (struct io_tw_state *) here.
+  1) the rbtree dequeue happens without waiter::task::pi_lock being held
 
-CVE: CVE-2026-23473
-Cc: stable@vger.kernel.org # 6.12.y
-Fixes: dbc2564cfe0f ("io_uring: let fast poll support multishot")
-Reported-by: Francis Brosseau <francis@malagauche.com>
-Link: https://github.com/axboe/liburing/issues/1549
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[backport for linux-6.12.y, verified 2026-05-01]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  2) the waiter task's pi_blocked_on state is not cleared, which leaves a
+     dangling pointer primed for UAF around.
+
+  3) rt_mutex_adjust_prio_chain() operates on the wrong top priority waiter
+     task
+
+Use waiter::task instead of current in all related operations in
+remove_waiter() to cure those problems.
+
+[ tglx: Fixup rt_mutex_adjust_prio_chain(), add a comment and amend the
+  	changelog ]
+
+Fixes: 8161239a8bcc ("rtmutex: Simplify PI algorithm and make highest prio task get lock")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ kernel/locking/rtmutex.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/io_uring/poll.c b/io_uring/poll.c
-index 63c3ce50cb83e..002f1ae830b8a 100644
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -295,6 +295,7 @@ static int io_poll_check_events(struct io_kiocb *req, struct io_tw_state *ts)
- 				atomic_andnot(IO_POLL_RETRY_FLAG, &req->poll_refs);
- 				v &= ~IO_POLL_RETRY_FLAG;
- 			}
-+			v &= IO_POLL_REF_MASK;
- 		}
+--- a/kernel/locking/rtmutex.c
++++ b/kernel/locking/rtmutex.c
+@@ -1531,20 +1531,23 @@ static bool rtmutex_spin_on_owner(struct
+  *
+  * Must be called with lock->wait_lock held and interrupts disabled. It must
+  * have just failed to try_to_take_rt_mutex().
++ *
++ * When invoked from rt_mutex_start_proxy_lock() waiter::task != current !
+  */
+ static void __sched remove_waiter(struct rt_mutex_base *lock,
+ 				  struct rt_mutex_waiter *waiter)
+ {
+ 	bool is_top_waiter = (waiter == rt_mutex_top_waiter(lock));
+ 	struct task_struct *owner = rt_mutex_owner(lock);
++	struct task_struct *waiter_task = waiter->task;
+ 	struct rt_mutex_base *next_lock;
  
- 		/* the mask was stashed in __io_poll_execute */
-@@ -327,7 +328,12 @@ static int io_poll_check_events(struct io_kiocb *req, struct io_tw_state *ts)
- 				return IOU_POLL_REMOVE_POLL_USE_RES;
- 			}
- 		} else {
--			int ret = io_poll_issue(req, ts);
-+			int ret;
-+
-+			/* multiple refs and HUP, ensure we loop once more */
-+			if ((req->cqe.res & (POLLHUP | POLLRDHUP)) && v != 1)
-+				v--;
-+			ret = io_poll_issue(req, ts);
- 			if (ret == IOU_STOP_MULTISHOT)
- 				return IOU_POLL_REMOVE_POLL_USE_RES;
- 			else if (ret == IOU_REQUEUE)
-@@ -343,7 +349,6 @@ static int io_poll_check_events(struct io_kiocb *req, struct io_tw_state *ts)
- 		 * Release all references, retry if someone tried to restart
- 		 * task_work while we were executing it.
- 		 */
--		v &= IO_POLL_REF_MASK;
- 	} while (atomic_sub_return(v, &req->poll_refs) & IO_POLL_REF_MASK);
+ 	lockdep_assert_held(&lock->wait_lock);
  
- 	io_napi_add(req);
--- 
-2.53.0
-
+-	raw_spin_lock(&current->pi_lock);
+-	rt_mutex_dequeue(lock, waiter);
+-	current->pi_blocked_on = NULL;
+-	raw_spin_unlock(&current->pi_lock);
++	scoped_guard(raw_spinlock, &waiter_task->pi_lock) {
++		rt_mutex_dequeue(lock, waiter);
++		waiter_task->pi_blocked_on = NULL;
++	}
+ 
+ 	/*
+ 	 * Only update priority if the waiter was the highest priority
+@@ -1580,7 +1583,7 @@ static void __sched remove_waiter(struct
+ 	raw_spin_unlock_irq(&lock->wait_lock);
+ 
+ 	rt_mutex_adjust_prio_chain(owner, RT_MUTEX_MIN_CHAINWALK, lock,
+-				   next_lock, NULL, current);
++				   next_lock, NULL, waiter_task);
+ 
+ 	raw_spin_lock_irq(&lock->wait_lock);
+ }
 
 
