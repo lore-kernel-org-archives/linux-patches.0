@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FFF3DE42C;
-	Mon,  4 May 2026 13:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D803DE422;
+	Mon,  4 May 2026 13:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903159; cv=none; b=DDa7UXo3Ih1wgawtqSCf2WH5EhP7OofaXP98X1YAAgL2ITotP3fAuzT6mU5/LAEMxZDdcF50f3RpM1Ecd7D3gNPKQNNVUxp9aB8iBiiWDhFXS+GzhHV3z4Jsxe6w5NTyJbznjBRkt/LEy5TWcxs4yR0ksoRk96rvPdh/esdnC8I=
+	t=1777903161; cv=none; b=h55AzSjIAxhEgIAXWEvxlxo+7QuB2e3b9JYW1hOlkPSvPriSiCJFbkp86C0FnrAPxUzw8/e+RbAgZvXpLLc5x8u+gXyjdYepc47Y3BgxmSnzIGmnCeyICbHuX/IWSila0x87qxJltAxDLF6Beic8xZ9s6Z8fshRZgdq04KXUMis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903159; c=relaxed/simple;
-	bh=GlYAB5mASJEPE25bqvWCZlW8nfG9en9W/43Gli0gPn4=;
+	s=arc-20240116; t=1777903161; c=relaxed/simple;
+	bh=2OlnaVn5cAuMPyCS0r8yL13pgztFe2ZjOEOheOSSHRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqRClGLoc3ADK9F7bhWyJqDCRU6Mrvpk9wtf12hbLBFNX6gFsURtc86sUOQbFy+PEVKUjPX9hKpKNHv1dGNxi5C9XzbymJMLLt0oij1idSzwifnZ/S2Onxx1B2vicSVO0EPmUrDrUdoWggT4I3lpOxGLyYdRpZqR0goUU1va2Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3UTK/ll; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Zy6FfJyQJN0Vouk0bwZVfQN2uKXeEmECukkchfV7Bj0kYPGICBn/q+zYYAJWa8g65Bdl7oPAgxGpUPNEo/KFs2BVO6yvVoorDTqbeMTs+rKQBkS8jtn5gstadQ5HsRa2KsGRfdNVvmAsyqgls0V9b4i5aECE9Hw8AzNeyijIS0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crnlE7NV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3UTK/ll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE72C2BCB8;
-	Mon,  4 May 2026 13:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crnlE7NV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686BCC2BCB8;
+	Mon,  4 May 2026 13:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903159;
-	bh=GlYAB5mASJEPE25bqvWCZlW8nfG9en9W/43Gli0gPn4=;
+	s=korg; t=1777903161;
+	bh=2OlnaVn5cAuMPyCS0r8yL13pgztFe2ZjOEOheOSSHRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3UTK/llaDIuEel3jyYZue1d1X7y47EWe2M0B4/v0OkYa1ym6UW/iWlcNDp4Bby7W
-	 Uxm3DtlPANfQs+PzznahdmWqTGXkbh3+5fQkSSdwGhY65eX2HMfgo1263B2fRxg3TD
-	 YFFhOOAgU5M2BwBxMJrthXXjwBp2BKA6sG/yWmrc=
+	b=crnlE7NVZATIbu5+XHEcco9y6mvAzDOOH4qceHrdCsJ3/rAvU+EWRWMXQxEeD47nh
+	 uVOjUN9vu0z+J8Gq7kSuJq5sAFFsPPnJzCzVn6Hy9OYwYxiW8wUNvHw9USbWcF62Ap
+	 Etv13Q+J47pX6fnZNd5i/YFJLwxF0f3Z8nQVShiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 126/307] rxrpc: Fix potential UAF after skb_unshare() failure
-Date: Mon,  4 May 2026 15:50:11 +0200
-Message-ID: <20260504135147.534623968@linuxfoundation.org>
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 7.0 100/307] selftests/landlock: Drain stale audit records on init
+Date: Mon,  4 May 2026 15:49:45 +0200
+Message-ID: <20260504135146.576625327@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -49,182 +45,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit 1f2740150f904bfa60e4bad74d65add3ccb5e7f8 upstream.
+commit 3647a4977fb73da385e5a29b9775a4749733470d upstream.
 
-If skb_unshare() fails to unshare a packet due to allocation failure in
-rxrpc_input_packet(), the skb pointer in the parent (rxrpc_io_thread())
-will be NULL'd out.  This will likely cause the call to
-trace_rxrpc_rx_done() to oops.
+Non-audit Landlock tests generate audit records as side effects when
+audit_enabled is non-zero (e.g. from boot configuration).  These records
+accumulate in the kernel audit backlog while no audit daemon socket is
+open.  When the next test opens a new netlink socket and registers as
+the audit daemon, the stale backlog is delivered, causing baseline
+record count checks to fail spuriously.
 
-Fix this by moving the unsharing down to where rxrpc_input_call_event()
-calls rxrpc_input_call_packet().  There are a number of places prior to
-that where we ignore DATA packets for a variety of reasons (such as the
-call already being complete) for which an unshare is then avoided.
+Fix this by draining all pending records in audit_init() right after
+setting the receive timeout.  The 1-usec SO_RCVTIMEO causes audit_recv()
+to return -EAGAIN once the backlog is empty, naturally terminating the
+drain loop.
 
-And with that, rxrpc_input_packet() doesn't need to take a pointer to the
-pointer to the packet, so change that to just a pointer.
+Domain deallocation records are emitted asynchronously from a work
+queue, so they may still arrive after the drain.  Remove records.domain
+== 0 checks that are not preceded by audit_match_record() calls, which
+would otherwise consume stale records before the count.  Document this
+constraint above audit_count_records().
 
-Fixes: 2d1faf7a0ca3 ("rxrpc: Simplify skbuff accounting in receive path")
-Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-4-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Increasing the drain timeout to catch in-flight deallocation records was
+considered but rejected: a longer timeout adds latency to every
+audit_init() call even when no stale record is pending, and any fixed
+timeout is still not guaranteed to catch all records under load.
+Removing the unprotected checks is simpler and avoids the spurious
+failures.
+
+Cc: Günther Noack <gnoack@google.com>
+Cc: stable@vger.kernel.org
+Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://lore.kernel.org/r/20260402192608.1458252-4-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    4 ++--
- net/rxrpc/ar-internal.h      |    1 -
- net/rxrpc/call_event.c       |   19 ++++++++++++++++++-
- net/rxrpc/io_thread.c        |   24 ++----------------------
- net/rxrpc/skbuff.c           |    9 ---------
- 5 files changed, 22 insertions(+), 35 deletions(-)
+ tools/testing/selftests/landlock/audit.h                     |   19 +++++++++++
+ tools/testing/selftests/landlock/audit_test.c                |    2 -
+ tools/testing/selftests/landlock/ptrace_test.c               |    1 
+ tools/testing/selftests/landlock/scoped_abstract_unix_test.c |    1 
+ 4 files changed, 19 insertions(+), 4 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -161,8 +161,6 @@
- 	E_(rxrpc_call_poke_timer_now,		"Timer-now")
+--- a/tools/testing/selftests/landlock/audit.h
++++ b/tools/testing/selftests/landlock/audit.h
+@@ -338,6 +338,15 @@ struct audit_records {
+ 	size_t domain;
+ };
  
- #define rxrpc_skb_traces \
--	EM(rxrpc_skb_eaten_by_unshare,		"ETN unshare  ") \
--	EM(rxrpc_skb_eaten_by_unshare_nomem,	"ETN unshar-nm") \
- 	EM(rxrpc_skb_get_call_rx,		"GET call-rx  ") \
- 	EM(rxrpc_skb_get_conn_secured,		"GET conn-secd") \
- 	EM(rxrpc_skb_get_conn_work,		"GET conn-work") \
-@@ -189,6 +187,7 @@
- 	EM(rxrpc_skb_put_purge,			"PUT purge    ") \
- 	EM(rxrpc_skb_put_purge_oob,		"PUT purge-oob") \
- 	EM(rxrpc_skb_put_response,		"PUT response ") \
-+	EM(rxrpc_skb_put_response_copy,		"PUT resp-cpy ") \
- 	EM(rxrpc_skb_put_rotate,		"PUT rotate   ") \
- 	EM(rxrpc_skb_put_unknown,		"PUT unknown  ") \
- 	EM(rxrpc_skb_see_conn_work,		"SEE conn-work") \
-@@ -197,6 +196,7 @@
- 	EM(rxrpc_skb_see_recvmsg_oob,		"SEE recvm-oob") \
- 	EM(rxrpc_skb_see_reject,		"SEE reject   ") \
- 	EM(rxrpc_skb_see_rotate,		"SEE rotate   ") \
-+	EM(rxrpc_skb_see_unshare_nomem,		"SEE unshar-nm") \
- 	E_(rxrpc_skb_see_version,		"SEE version  ")
- 
- #define rxrpc_local_traces \
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -1486,7 +1486,6 @@ int rxrpc_server_keyring(struct rxrpc_so
- void rxrpc_kernel_data_consumed(struct rxrpc_call *, struct sk_buff *);
- void rxrpc_new_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_see_skb(struct sk_buff *, enum rxrpc_skb_trace);
--void rxrpc_eaten_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_get_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_free_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_purge_queue(struct sk_buff_head *);
---- a/net/rxrpc/call_event.c
-+++ b/net/rxrpc/call_event.c
-@@ -332,7 +332,24 @@ bool rxrpc_input_call_event(struct rxrpc
- 
- 			saw_ack |= sp->hdr.type == RXRPC_PACKET_TYPE_ACK;
- 
--			rxrpc_input_call_packet(call, skb);
-+			if (sp->hdr.securityIndex != 0 &&
-+			    skb_cloned(skb)) {
-+				/* Unshare the packet so that it can be
-+				 * modified by in-place decryption.
-+				 */
-+				struct sk_buff *nskb = skb_copy(skb, GFP_ATOMIC);
-+
-+				if (nskb) {
-+					rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
-+					rxrpc_input_call_packet(call, nskb);
-+					rxrpc_free_skb(nskb, rxrpc_skb_put_call_rx);
-+				} else {
-+					/* OOM - Drop the packet. */
-+					rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
-+				}
-+			} else {
-+				rxrpc_input_call_packet(call, skb);
-+			}
- 			rxrpc_free_skb(skb, rxrpc_skb_put_call_rx);
- 			did_receive = true;
- 		}
---- a/net/rxrpc/io_thread.c
-+++ b/net/rxrpc/io_thread.c
-@@ -192,13 +192,12 @@ static bool rxrpc_extract_abort(struct s
- /*
-  * Process packets received on the local endpoint
-  */
--static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff **_skb)
-+static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff *skb)
++/*
++ * WARNING: Do not assert records.domain == 0 without a preceding
++ * audit_match_record() call.  Domain deallocation records are emitted
++ * asynchronously from kworker threads and can arrive after the drain in
++ * audit_init(), corrupting the domain count.  A preceding audit_match_record()
++ * call consumes stale records while scanning, making the assertion safe in
++ * practice because stale deallocation records arrive before the expected access
++ * records.
++ */
+ static int audit_count_records(int audit_fd, struct audit_records *records)
  {
- 	struct rxrpc_connection *conn;
- 	struct sockaddr_rxrpc peer_srx;
- 	struct rxrpc_skb_priv *sp;
- 	struct rxrpc_peer *peer = NULL;
--	struct sk_buff *skb = *_skb;
- 	bool ret = false;
+ 	struct audit_message msg;
+@@ -391,6 +400,16 @@ static int audit_init(void)
+ 	if (err)
+ 		return -errno;
  
- 	skb_pull(skb, sizeof(struct udphdr));
-@@ -244,25 +243,6 @@ static bool rxrpc_input_packet(struct rx
- 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_call);
- 		if (sp->hdr.seq == 0)
- 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_seq);
--
--		/* Unshare the packet so that it can be modified for in-place
--		 * decryption.
--		 */
--		if (sp->hdr.securityIndex != 0) {
--			skb = skb_unshare(skb, GFP_ATOMIC);
--			if (!skb) {
--				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare_nomem);
--				*_skb = NULL;
--				return just_discard;
--			}
--
--			if (skb != *_skb) {
--				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare);
--				*_skb = skb;
--				rxrpc_new_skb(skb, rxrpc_skb_new_unshared);
--				sp = rxrpc_skb(skb);
--			}
--		}
- 		break;
- 
- 	case RXRPC_PACKET_TYPE_CHALLENGE:
-@@ -494,7 +474,7 @@ int rxrpc_io_thread(void *data)
- 			switch (skb->mark) {
- 			case RXRPC_SKB_MARK_PACKET:
- 				skb->priority = 0;
--				if (!rxrpc_input_packet(local, &skb))
-+				if (!rxrpc_input_packet(local, skb))
- 					rxrpc_reject_packet(local, skb);
- 				trace_rxrpc_rx_done(skb->mark, skb->priority);
- 				rxrpc_free_skb(skb, rxrpc_skb_put_input);
---- a/net/rxrpc/skbuff.c
-+++ b/net/rxrpc/skbuff.c
-@@ -47,15 +47,6 @@ void rxrpc_get_skb(struct sk_buff *skb,
++	/*
++	 * Drains stale audit records that accumulated in the kernel backlog
++	 * while no audit daemon socket was open.  This happens when non-audit
++	 * Landlock tests generate records while audit_enabled is non-zero (e.g.
++	 * from boot configuration), or when domain deallocation records arrive
++	 * asynchronously after a previous test's socket was closed.
++	 */
++	while (audit_recv(fd, NULL) == 0)
++		;
++
+ 	return fd;
  }
  
- /*
-- * Note the dropping of a ref on a socket buffer by the core.
-- */
--void rxrpc_eaten_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
--{
--	int n = atomic_inc_return(&rxrpc_n_rx_skbs);
--	trace_rxrpc_skb(skb, 0, n, why);
--}
--
--/*
-  * Note the destruction of a socket buffer.
-  */
- void rxrpc_free_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
+--- a/tools/testing/selftests/landlock/audit_test.c
++++ b/tools/testing/selftests/landlock/audit_test.c
+@@ -733,7 +733,6 @@ TEST_F(audit_flags, signal)
+ 		} else {
+ 			EXPECT_EQ(1, records.access);
+ 		}
+-		EXPECT_EQ(0, records.domain);
+ 
+ 		/* Updates filter rules to match the drop record. */
+ 		set_cap(_metadata, CAP_AUDIT_CONTROL);
+@@ -922,7 +921,6 @@ TEST_F(audit_exec, signal_and_open)
+ 	/* Tests that there was no denial until now. */
+ 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
+ 	EXPECT_EQ(0, records.access);
+-	EXPECT_EQ(0, records.domain);
+ 
+ 	/*
+ 	 * Wait for the child to do a first denied action by layer1 and
+--- a/tools/testing/selftests/landlock/ptrace_test.c
++++ b/tools/testing/selftests/landlock/ptrace_test.c
+@@ -342,7 +342,6 @@ TEST_F(audit, trace)
+ 	/* Makes sure there is no superfluous logged records. */
+ 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
+ 	EXPECT_EQ(0, records.access);
+-	EXPECT_EQ(0, records.domain);
+ 
+ 	yama_ptrace_scope = get_yama_ptrace_scope();
+ 	ASSERT_LE(0, yama_ptrace_scope);
+--- a/tools/testing/selftests/landlock/scoped_abstract_unix_test.c
++++ b/tools/testing/selftests/landlock/scoped_abstract_unix_test.c
+@@ -312,7 +312,6 @@ TEST_F(scoped_audit, connect_to_child)
+ 	/* Makes sure there is no superfluous logged records. */
+ 	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
+ 	EXPECT_EQ(0, records.access);
+-	EXPECT_EQ(0, records.domain);
+ 
+ 	ASSERT_EQ(0, pipe2(pipe_child, O_CLOEXEC));
+ 	ASSERT_EQ(0, pipe2(pipe_parent, O_CLOEXEC));
 
 
