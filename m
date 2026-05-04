@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF723A7F4C;
-	Mon,  4 May 2026 14:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D814435A3AD;
+	Mon,  4 May 2026 14:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903817; cv=none; b=ZE39fzKETl3m1g8JXtP5EoaxU+E09mzcTR18gaLRcZUj3RD/Ws7+oER6SRfKbCtYg1kUkPuvHMzS7NIE/tq/zNumsA6fempBPRtYS73dHayG3m0aItTYoRIpf4jAEitVPZxmTw5WNEz02g3iLZR6PybRAh8eP5+diNbd8VkM7AY=
+	t=1777903819; cv=none; b=GfWZhUz5aJ/bGvfQfR/2yQSC15LRmSStHDECdlUAPmA6bCVVlDuHoTQ2GC9i2SP8Al69tTaZIK+KTFedE21L7PiG4+xpN+zwiA0Kxr2y9b/15MEktKy0NYvkg3Jnfa0csW4kumw1RmLAFKbo+7iK1PnRQsR/nuoRmwu/4Cd00+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903817; c=relaxed/simple;
-	bh=Y0YPRYLp3tLy5yqqj2MpHqBZqxaGJuXyb67rHKBdyzU=;
+	s=arc-20240116; t=1777903819; c=relaxed/simple;
+	bh=U+AgraCsWni7nqmib1FoczlnWcCp4QTRsqOH8wLry7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmiedz0UgGknIb5EUHgJ2F6otVMf3Vhi4pnnTxiJ4+63VWgIbIUGC3hC0Jr9LxZJ3YB80jZglNJ9d5tT0im3b2SxTZL5RLhD8JNvtF/AjqoS4cTMhR2NmTvWorbw5+sUsONZdqMHmUoEUxwfxOhGYm3Y0aErC0N45+WVh5eoNA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McO3Oo8y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=okewLzfZz2Gg+rY/aYRco8R0296VMglnaFV0bNT2UKkeijTfUQrimePuXVadtCzTSlI0Olt1ykLCjddvu9xJqHB+lQbm/nqMgrfm9tZd8Fod/+Yga16hSqa3Bbbv9RuQHLOonyVjUrogbJO7wfpEb/0IcNADokA6Cx3tVhsOD6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skP7e0Ez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McO3Oo8y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97C4C2BCB8;
-	Mon,  4 May 2026 14:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skP7e0Ez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E11CC2BCB8;
+	Mon,  4 May 2026 14:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903817;
-	bh=Y0YPRYLp3tLy5yqqj2MpHqBZqxaGJuXyb67rHKBdyzU=;
+	s=korg; t=1777903819;
+	bh=U+AgraCsWni7nqmib1FoczlnWcCp4QTRsqOH8wLry7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=McO3Oo8yYMmNcvaa4/bjeOkwrhHUrVe069CU6rPFQxO8KuCz2TuCdJMi5xIrxtzQK
-	 Hh8Xw7NsVwsx5+IbEhYhPGfwHB3ngHfeUXBPALzrvtohVblpVbVeMeHeWyQ83HcCdr
-	 cx67bW8jGEYTvrQt+zmIJjtDHik7JkS8ZJRQYovo=
+	b=skP7e0Ezl60gH7fc8+H+U0bcRt9/208oEoGDFVt4O9rxPW1mypu/8xzEaGwEeye0G
+	 dEpQUND+wyZ4HxF35cNloM9LN7leu97FdCmkHWIqZLFJ6EwMtZ6EVZ+8DdBZw4Tb4h
+	 AOL4Dp7vO0W/k+Jr7TzsCxzwMmnMXdBcJWA4XbYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Ge <hao.ge@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
+	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 073/275] mm/alloc_tag: clear codetag for pages allocated before page_ext initialization
-Date: Mon,  4 May 2026 15:50:13 +0200
-Message-ID: <20260504135145.639445013@linuxfoundation.org>
+Subject: [PATCH 6.18 074/275] mm/damon/core: fix damon_call() vs kdamond_fn() exit race
+Date: Mon,  4 May 2026 15:50:14 +0200
+Message-ID: <20260504135145.676446373@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -52,282 +50,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Ge <hao.ge@linux.dev>
+From: SeongJae Park <sj@kernel.org>
 
-commit 6b1842775a460245e97d36d3a67d0cfba7c4ff79 upstream.
+commit 55da81663b9642dd046b26dd6f1baddbcf337c1e upstream.
 
-Due to initialization ordering, page_ext is allocated and initialized
-relatively late during boot.  Some pages have already been allocated and
-freed before page_ext becomes available, leaving their codetag
-uninitialized.
+Patch series "mm/damon/core: fix damon_call()/damos_walk() vs kdmond exit
+race".
 
-A clear example is in init_section_page_ext(): alloc_page_ext() calls
-kmemleak_alloc().  If the slab cache has no free objects, it falls back to
-the buddy allocator to allocate memory.  However, at this point page_ext
-is not yet fully initialized, so these newly allocated pages have no
-codetag set.  These pages may later be reclaimed by KASAN, which causes
-the warning to trigger when they are freed because their codetag ref is
-still empty.
+damon_call() and damos_walk() can leak memory and/or deadlock when they
+race with kdamond terminations.  Fix those.
 
-Use a global array to track pages allocated before page_ext is fully
-initialized.  The array size is fixed at 8192 entries, and will emit a
-warning if this limit is exceeded.  When page_ext initialization
-completes, set their codetag to empty to avoid warnings when they are
-freed later.
 
-This warning is only observed with CONFIG_MEM_ALLOC_PROFILING_DEBUG=Y and
-mem_profiling_compressed disabled:
+This patch (of 2);
 
-[    9.582133] ------------[ cut here ]------------
-[    9.582137] alloc_tag was not set
-[    9.582139] WARNING: ./include/linux/alloc_tag.h:164 at __pgalloc_tag_sub+0x40f/0x550, CPU#5: systemd/1
-[    9.582190] CPU: 5 UID: 0 PID: 1 Comm: systemd Not tainted 7.0.0-rc4 #1 PREEMPT(lazy)
-[    9.582192] Hardware name: Red Hat KVM, BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[    9.582194] RIP: 0010:__pgalloc_tag_sub+0x40f/0x550
-[    9.582196] Code: 00 00 4c 29 e5 48 8b 05 1f 88 56 05 48 8d 4c ad 00 48 8d 2c c8 e9 87 fd ff ff 0f 0b 0f 0b e9 f3 fe ff ff 48 8d 3d 61 2f ed 03 <67> 48 0f b9 3a e9 b3 fd ff ff 0f 0b eb e4 e8 5e cd 14 02 4c 89 c7
-[    9.582197] RSP: 0018:ffffc9000001f940 EFLAGS: 00010246
-[    9.582200] RAX: dffffc0000000000 RBX: 1ffff92000003f2b RCX: 1ffff110200d806c
-[    9.582201] RDX: ffff8881006c0360 RSI: 0000000000000004 RDI: ffffffff9bc7b460
-[    9.582202] RBP: 0000000000000000 R08: 0000000000000000 R09: fffffbfff3a62324
-[    9.582203] R10: ffffffff9d311923 R11: 0000000000000000 R12: ffffea0004001b00
-[    9.582204] R13: 0000000000002000 R14: ffffea0000000000 R15: ffff8881006c0360
-[    9.582206] FS:  00007ffbbcf2d940(0000) GS:ffff888450479000(0000) knlGS:0000000000000000
-[    9.582208] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    9.582210] CR2: 000055ee3aa260d0 CR3: 0000000148b67005 CR4: 0000000000770ef0
-[    9.582211] PKRU: 55555554
-[    9.582212] Call Trace:
-[    9.582213]  <TASK>
-[    9.582214]  ? __pfx___pgalloc_tag_sub+0x10/0x10
-[    9.582216]  ? check_bytes_and_report+0x68/0x140
-[    9.582219]  __free_frozen_pages+0x2e4/0x1150
-[    9.582221]  ? __free_slab+0xc2/0x2b0
-[    9.582224]  qlist_free_all+0x4c/0xf0
-[    9.582227]  kasan_quarantine_reduce+0x15d/0x180
-[    9.582229]  __kasan_slab_alloc+0x69/0x90
-[    9.582232]  kmem_cache_alloc_noprof+0x14a/0x500
-[    9.582234]  do_getname+0x96/0x310
-[    9.582237]  do_readlinkat+0x91/0x2f0
-[    9.582239]  ? __pfx_do_readlinkat+0x10/0x10
-[    9.582240]  ? get_random_bytes_user+0x1df/0x2c0
-[    9.582244]  __x64_sys_readlinkat+0x96/0x100
-[    9.582246]  do_syscall_64+0xce/0x650
-[    9.582250]  ? __x64_sys_getrandom+0x13a/0x1e0
-[    9.582252]  ? __pfx___x64_sys_getrandom+0x10/0x10
-[    9.582254]  ? do_syscall_64+0x114/0x650
-[    9.582255]  ? ksys_read+0xfc/0x1d0
-[    9.582258]  ? __pfx_ksys_read+0x10/0x10
-[    9.582260]  ? do_syscall_64+0x114/0x650
-[    9.582262]  ? do_syscall_64+0x114/0x650
-[    9.582264]  ? __pfx_fput_close_sync+0x10/0x10
-[    9.582266]  ? file_close_fd_locked+0x178/0x2a0
-[    9.582268]  ? __x64_sys_faccessat2+0x96/0x100
-[    9.582269]  ? __x64_sys_close+0x7d/0xd0
-[    9.582271]  ? do_syscall_64+0x114/0x650
-[    9.582273]  ? do_syscall_64+0x114/0x650
-[    9.582275]  ? clear_bhb_loop+0x50/0xa0
-[    9.582277]  ? clear_bhb_loop+0x50/0xa0
-[    9.582279]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[    9.582280] RIP: 0033:0x7ffbbda345ee
-[    9.582282] Code: 0f 1f 40 00 48 8b 15 29 38 0d 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff c3 0f 1f 40 00 f3 0f 1e fa 49 89 ca b8 0b 01 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d fa 37 0d 00 f7 d8 64 89 01 48
-[    9.582284] RSP: 002b:00007ffe2ad8de58 EFLAGS: 00000202 ORIG_RAX: 000000000000010b
-[    9.582286] RAX: ffffffffffffffda RBX: 000055ee3aa25570 RCX: 00007ffbbda345ee
-[    9.582287] RDX: 000055ee3aa25570 RSI: 00007ffe2ad8dee0 RDI: 00000000ffffff9c
-[    9.582288] RBP: 0000000000001000 R08: 0000000000000003 R09: 0000000000001001
-[    9.582289] R10: 0000000000001000 R11: 0000000000000202 R12: 0000000000000033
-[    9.582290] R13: 00007ffe2ad8dee0 R14: 00000000ffffff9c R15: 00007ffe2ad8deb0
-[    9.582292]  </TASK>
-[    9.582293] ---[ end trace 0000000000000000 ]---
+When kdamond_fn() main loop is finished, the function cancels all
+remaining damon_call() requests and unset the damon_ctx->kdamond so that
+API callers and API functions themselves can know the context is
+terminated.  damon_call() adds the caller's request to the queue first.
+After that, it shows if the kdamond of the damon_ctx is still running
+(damon_ctx->kdamond is set).  Only if the kdamond is running, damon_call()
+starts waiting for the kdamond's handling of the newly added request.
 
-Link: https://lore.kernel.org/20260331081312.123719-1-hao.ge@linux.dev
-Fixes: dcfe378c81f72 ("lib: introduce support for page allocation tagging")
-Signed-off-by: Hao Ge <hao.ge@linux.dev>
-Suggested-by: Suren Baghdasaryan <surenb@google.com>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: <stable@vger.kernel.org>
+The damon_call() requests registration and damon_ctx->kdamond unset are
+protected by different mutexes, though.  Hence, damon_call() could race
+with damon_ctx->kdamond unset, and result in deadlocks.
+
+For example, let's suppose kdamond successfully finished the damon_call()
+requests cancelling.  Right after that, damon_call() is called for the
+context.  It registers the new request, and shows the context is still
+running, because damon_ctx->kdamond unset is not yet done.  Hence the
+damon_call() caller starts waiting for the handling of the request.
+However, the kdamond is already on the termination steps, so it never
+handles the new request.  As a result, the damon_call() caller threads
+infinitely waits.
+
+Fix this by introducing another damon_ctx field, namely
+call_controls_obsolete.  It is protected by the
+damon_ctx->call_controls_lock, which protects damon_call() requests
+registration.  Initialize (unset) it in kdamond_fn() before letting
+damon_start() returns and set it just before the cancelling of remaining
+damon_call() requests is executed.  damon_call() reads the obsolete field
+under the lock and avoids adding a new request.
+
+After this change, only requests that are guaranteed to be handled or
+cancelled are registered.  Hence the after-registration DAMON context
+termination check is no longer needed.  Remove it together.
+
+Note that the deadlock will not happen when damon_call() is called for
+repeat mode request.  In tis case, damon_call() returns instead of waiting
+for the handling when the request registration succeeds and it shows the
+kdamond is running.  However, if the request also has dealloc_on_cancel,
+the request memory would be leaked.
+
+The issue is found by sashiko [1].
+
+Link: https://lore.kernel.org/20260327233319.3528-1-sj@kernel.org
+Link: https://lore.kernel.org/20260327233319.3528-2-sj@kernel.org
+Link: https://lore.kernel.org/20260325141956.87144-1-sj@kernel.org [1]
+Fixes: 42b7491af14c ("mm/damon/core: introduce damon_call()")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.14.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/alloc_tag.h   |    2 
- include/linux/pgalloc_tag.h |    2 
- lib/alloc_tag.c             |  109 ++++++++++++++++++++++++++++++++++++++++++++
- mm/page_alloc.c             |   10 +++-
- 4 files changed, 121 insertions(+), 2 deletions(-)
+ include/linux/damon.h |    1 +
+ mm/damon/core.c       |   45 ++++++++++++++-------------------------------
+ 2 files changed, 15 insertions(+), 31 deletions(-)
 
---- a/include/linux/alloc_tag.h
-+++ b/include/linux/alloc_tag.h
-@@ -163,9 +163,11 @@ static inline void alloc_tag_sub_check(u
- {
- 	WARN_ONCE(ref && !ref->ct, "alloc_tag was not set\n");
- }
-+void alloc_tag_add_early_pfn(unsigned long pfn);
- #else
- static inline void alloc_tag_add_check(union codetag_ref *ref, struct alloc_tag *tag) {}
- static inline void alloc_tag_sub_check(union codetag_ref *ref) {}
-+static inline void alloc_tag_add_early_pfn(unsigned long pfn) {}
- #endif
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -781,6 +781,7 @@ struct damon_ctx {
  
- /* Caller should verify both ref and tag to be valid */
---- a/include/linux/pgalloc_tag.h
-+++ b/include/linux/pgalloc_tag.h
-@@ -181,7 +181,7 @@ static inline struct alloc_tag *__pgallo
+ 	/* lists of &struct damon_call_control */
+ 	struct list_head call_controls;
++	bool call_controls_obsolete;
+ 	struct mutex call_controls_lock;
  
- 	if (get_page_tag_ref(page, &ref, &handle)) {
- 		alloc_tag_sub_check(&ref);
--		if (ref.ct)
-+		if (ref.ct && !is_codetag_empty(&ref))
- 			tag = ct_to_alloc_tag(ref.ct);
- 		put_page_tag_ref(handle);
- 	}
---- a/lib/alloc_tag.c
-+++ b/lib/alloc_tag.c
-@@ -6,7 +6,9 @@
- #include <linux/kallsyms.h>
- #include <linux/module.h>
- #include <linux/page_ext.h>
-+#include <linux/pgalloc_tag.h>
- #include <linux/proc_fs.h>
-+#include <linux/rcupdate.h>
- #include <linux/seq_buf.h>
- #include <linux/seq_file.h>
- #include <linux/string_choices.h>
-@@ -757,8 +759,115 @@ static __init bool need_page_alloc_taggi
- 	return mem_profiling_support;
+ 	struct damos_walk_control *walk_control;
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1431,35 +1431,6 @@ bool damon_is_running(struct damon_ctx *
+ 	return running;
  }
  
-+#ifdef CONFIG_MEM_ALLOC_PROFILING_DEBUG
-+/*
-+ * Track page allocations before page_ext is initialized.
-+ * Some pages are allocated before page_ext becomes available, leaving
-+ * their codetag uninitialized. Track these early PFNs so we can clear
-+ * their codetag refs later to avoid warnings when they are freed.
+-/*
+- * damon_call_handle_inactive_ctx() - handle DAMON call request that added to
+- *				      an inactive context.
+- * @ctx:	The inactive DAMON context.
+- * @control:	Control variable of the call request.
+- *
+- * This function is called in a case that @control is added to @ctx but @ctx is
+- * not running (inactive).  See if @ctx handled @control or not, and cleanup
+- * @control if it was not handled.
+- *
+- * Returns 0 if @control was handled by @ctx, negative error code otherwise.
+- */
+-static int damon_call_handle_inactive_ctx(
+-		struct damon_ctx *ctx, struct damon_call_control *control)
+-{
+-	struct damon_call_control *c;
+-
+-	mutex_lock(&ctx->call_controls_lock);
+-	list_for_each_entry(c, &ctx->call_controls, list) {
+-		if (c == control) {
+-			list_del(&control->list);
+-			mutex_unlock(&ctx->call_controls_lock);
+-			return -EINVAL;
+-		}
+-	}
+-	mutex_unlock(&ctx->call_controls_lock);
+-	return 0;
+-}
+-
+ /**
+  * damon_call() - Invoke a given function on DAMON worker thread (kdamond).
+  * @ctx:	DAMON context to call the function for.
+@@ -1477,6 +1448,10 @@ static int damon_call_handle_inactive_ct
+  * synchronization.  The return value of the function will be saved in
+  * &damon_call_control->return_code.
+  *
++ * Note that this function should be called only after damon_start() with the
++ * @ctx has succeeded.  Otherwise, this function could fall into an indefinite
++ * wait.
 + *
-+ * Early allocations include:
-+ *   - Base allocations independent of CPU count
-+ *   - Per-CPU allocations (e.g., CPU hotplug callbacks during smp_init,
-+ *     such as trace ring buffers, scheduler per-cpu data)
-+ *
-+ * For simplicity, we fix the size to 8192.
-+ * If insufficient, a warning will be triggered to alert the user.
-+ *
-+ * TODO: Replace fixed-size array with dynamic allocation using
-+ * a GFP flag similar to ___GFP_NO_OBJ_EXT to avoid recursion.
-+ */
-+#define EARLY_ALLOC_PFN_MAX		8192
-+
-+static unsigned long early_pfns[EARLY_ALLOC_PFN_MAX] __initdata;
-+static atomic_t early_pfn_count __initdata = ATOMIC_INIT(0);
-+
-+static void __init __alloc_tag_add_early_pfn(unsigned long pfn)
-+{
-+	int old_idx, new_idx;
-+
-+	do {
-+		old_idx = atomic_read(&early_pfn_count);
-+		if (old_idx >= EARLY_ALLOC_PFN_MAX) {
-+			pr_warn_once("Early page allocations before page_ext init exceeded EARLY_ALLOC_PFN_MAX (%d)\n",
-+				      EARLY_ALLOC_PFN_MAX);
-+			return;
-+		}
-+		new_idx = old_idx + 1;
-+	} while (!atomic_try_cmpxchg(&early_pfn_count, &old_idx, new_idx));
-+
-+	early_pfns[old_idx] = pfn;
-+}
-+
-+typedef void alloc_tag_add_func(unsigned long pfn);
-+static alloc_tag_add_func __rcu *alloc_tag_add_early_pfn_ptr __refdata =
-+	RCU_INITIALIZER(__alloc_tag_add_early_pfn);
-+
-+void alloc_tag_add_early_pfn(unsigned long pfn)
-+{
-+	alloc_tag_add_func *alloc_tag_add;
-+
-+	if (static_key_enabled(&mem_profiling_compressed))
-+		return;
-+
-+	rcu_read_lock();
-+	alloc_tag_add = rcu_dereference(alloc_tag_add_early_pfn_ptr);
-+	if (alloc_tag_add)
-+		alloc_tag_add(pfn);
-+	rcu_read_unlock();
-+}
-+
-+static void __init clear_early_alloc_pfn_tag_refs(void)
-+{
-+	unsigned int i;
-+
-+	if (static_key_enabled(&mem_profiling_compressed))
-+		return;
-+
-+	rcu_assign_pointer(alloc_tag_add_early_pfn_ptr, NULL);
-+	/* Make sure we are not racing with __alloc_tag_add_early_pfn() */
-+	synchronize_rcu();
-+
-+	for (i = 0; i < atomic_read(&early_pfn_count); i++) {
-+		unsigned long pfn = early_pfns[i];
-+
-+		if (pfn_valid(pfn)) {
-+			struct page *page = pfn_to_page(pfn);
-+			union pgtag_ref_handle handle;
-+			union codetag_ref ref;
-+
-+			if (get_page_tag_ref(page, &ref, &handle)) {
-+				/*
-+				 * An early-allocated page could be freed and reallocated
-+				 * after its page_ext is initialized but before we clear it.
-+				 * In that case, it already has a valid tag set.
-+				 * We should not overwrite that valid tag with CODETAG_EMPTY.
-+				 *
-+				 * Note: there is still a small race window between checking
-+				 * ref.ct and calling set_codetag_empty(). We accept this
-+				 * race as it's unlikely and the extra complexity of atomic
-+				 * cmpxchg is not worth it for this debug-only code path.
-+				 */
-+				if (ref.ct) {
-+					put_page_tag_ref(handle);
-+					continue;
-+				}
-+
-+				set_codetag_empty(&ref);
-+				update_page_tag_ref(handle, &ref);
-+				put_page_tag_ref(handle);
-+			}
-+		}
-+
+  * Return: 0 on success, negative error code otherwise.
+  */
+ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
+@@ -1487,10 +1462,12 @@ int damon_call(struct damon_ctx *ctx, st
+ 	INIT_LIST_HEAD(&control->list);
+ 
+ 	mutex_lock(&ctx->call_controls_lock);
++	if (ctx->call_controls_obsolete) {
++		mutex_unlock(&ctx->call_controls_lock);
++		return -ECANCELED;
 +	}
-+}
-+#else /* !CONFIG_MEM_ALLOC_PROFILING_DEBUG */
-+static inline void __init clear_early_alloc_pfn_tag_refs(void) {}
-+#endif /* CONFIG_MEM_ALLOC_PROFILING_DEBUG */
-+
- static __init void init_page_alloc_tagging(void)
- {
-+	clear_early_alloc_pfn_tag_refs();
- }
+ 	list_add_tail(&control->list, &ctx->call_controls);
+ 	mutex_unlock(&ctx->call_controls_lock);
+-	if (!damon_is_running(ctx))
+-		return damon_call_handle_inactive_ctx(ctx, control);
+ 	if (control->repeat)
+ 		return 0;
+ 	wait_for_completion(&control->completion);
+@@ -2640,6 +2617,9 @@ static int kdamond_fn(void *data)
  
- struct page_ext_operations page_alloc_tagging_ops = {
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1289,10 +1289,18 @@ void __pgalloc_tag_add(struct page *page
- 	union pgtag_ref_handle handle;
- 	union codetag_ref ref;
+ 	pr_debug("kdamond (%d) starts\n", current->pid);
  
--	if (get_page_tag_ref(page, &ref, &handle)) {
-+	if (likely(get_page_tag_ref(page, &ref, &handle))) {
- 		alloc_tag_add(&ref, task->alloc_tag, PAGE_SIZE * nr);
- 		update_page_tag_ref(handle, &ref);
- 		put_page_tag_ref(handle);
-+	} else {
-+		/*
-+		 * page_ext is not available yet, record the pfn so we can
-+		 * clear the tag ref later when page_ext is initialized.
-+		 */
-+		alloc_tag_add_early_pfn(page_to_pfn(page));
-+		if (task->alloc_tag)
-+			alloc_tag_set_inaccurate(task->alloc_tag);
- 	}
- }
++	mutex_lock(&ctx->call_controls_lock);
++	ctx->call_controls_obsolete = false;
++	mutex_unlock(&ctx->call_controls_lock);
+ 	complete(&ctx->kdamond_started);
+ 	kdamond_init_ctx(ctx);
  
+@@ -2749,6 +2729,9 @@ done:
+ 	if (ctx->ops.cleanup)
+ 		ctx->ops.cleanup(ctx);
+ 	kfree(ctx->regions_score_histogram);
++	mutex_lock(&ctx->call_controls_lock);
++	ctx->call_controls_obsolete = true;
++	mutex_unlock(&ctx->call_controls_lock);
+ 	kdamond_call(ctx, true);
+ 
+ 	pr_debug("kdamond (%d) finishes\n", current->pid);
 
 
