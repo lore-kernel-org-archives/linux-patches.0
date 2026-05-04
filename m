@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741271ADC83;
-	Mon,  4 May 2026 14:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2301ADC83;
+	Mon,  4 May 2026 14:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903732; cv=none; b=YAqtfo76/wiKA6l+KpQDN2DQgLA8gxmhf5o6cHCbqt1yk6bfRdPKKL5x2Lo9qFCeWcCe6EsjVHTIaTeFrglgpfGvhV283SPZwPUld6WOeRL3BN8zWdYlljwxEeO4tcbdQLh8D38S28M5iBO5YNkja5+6Ex92CKfqDCk8PS2UEbA=
+	t=1777903734; cv=none; b=sL2uJoiN7omL9jPFrhvkNB2hUfHFGzdvYkbO1K81cwlMiPCkr3mVSIUaWyrGvO6zwdvEcasXV4pOFYL4HLoppMc3FOiugGCExoCgRJB4HFhXJEk+yXgaB/HUOdLGN+Tf0znilKaZtwCHDNtJQpoAu6QYEY2URH4iWpcQDxP7k0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903732; c=relaxed/simple;
-	bh=fXCsgON6y0c2Iy/sgyKbZaDRfkLkNoOty+EmV2Dbo4k=;
+	s=arc-20240116; t=1777903734; c=relaxed/simple;
+	bh=f9XQH5k+0y0xWYOF99z04fdWCYU/rETOPQ8MkQhx1xM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZvyv4IS9r8VCapRu62+1JjR/lZ7so2Q3DkaK9Du7Hrr301Ab0ijDKgAG7oa2r/AsVyaOfG2Jp5d6tdMSCLAwnQVY4lkBmlp0Nk8TSyHzu+WyMF8f7e5s4yQ3/d3FgOt5EzbNAEyZ1wSjIgMnYyryDwzxb6cfjaGadqY1gmH6ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIvUmOZy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GwbT/vXtm8TZkU6HBP2Rq0zxXETI7Oo1nhPeSP497ZJJvJ8XZzHw5YXRtsJbVBI0BDYSqw4qXv5cobDOMonD5dMNxtfrDiFQbOJSgNoX6NqUN1/JVS7r155l8sTa9fGmz8tI0wJeHMy9t3Q1L1xZyRLqyUikDoOEFOKfk5rBiUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugBljyk7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIvUmOZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2752C2BCB8;
-	Mon,  4 May 2026 14:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugBljyk7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F047C2BCB8;
+	Mon,  4 May 2026 14:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903732;
-	bh=fXCsgON6y0c2Iy/sgyKbZaDRfkLkNoOty+EmV2Dbo4k=;
+	s=korg; t=1777903734;
+	bh=f9XQH5k+0y0xWYOF99z04fdWCYU/rETOPQ8MkQhx1xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aIvUmOZyFY/pJplpZayGkkGA1YrfRRv6xyUVr1Wp3wIw2Ti6GAF2GCmlknH7ktJIZ
-	 GDohiw1DXljwZNZLtagZHN6vf8HUi1pUZyVI9YunpoI7ykEGZZ0qd5AFHW1aeJHt4R
-	 4swd2mBL6MGnDHykyqmSbCUNKlgd5AnRPJzDOKpU=
+	b=ugBljyk74xX1uC54SWuJg2ErURKQu7lcMC488vWSDndjAVKOim9Bv5rDfiI1k6tna
+	 MeaTvBPlUZGh6ISGjnsFDxvUEMRUfIusG+m17QQ+fi4cLgfXNmdJhXVbZWN9JcorW2
+	 YW3kdTFoxuCJhqsaAsAi+JulQK3Nzw+v/gx1kiq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.18 040/275] crypto: pcrypt - Fix handling of MAY_BACKLOG requests
-Date: Mon,  4 May 2026 15:49:40 +0200
-Message-ID: <20260504135144.428906739@linuxfoundation.org>
+	Swamil Jain <s-jain1@ti.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.18 041/275] dt-bindings: display: ti, am65x-dss: Fix AM62L DSS reg and clock constraints
+Date: Mon,  4 May 2026 15:49:41 +0200
+Message-ID: <20260504135144.468456408@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,51 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Swamil Jain <s-jain1@ti.com>
 
-commit 915b692e6cb723aac658c25eb82c58fd81235110 upstream.
+commit 9c469240997584449cfac51a75d1d3d71968c76f upstream.
 
-MAY_BACKLOG requests can return EBUSY.  Handle them by checking
-for that value and filtering out EINPROGRESS notifications.
+The AM62L DSS [1] support incorrectly used the same register and
+clock constraints as AM65x, but AM62L has a single video port
 
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Fixes: 5a1436beec57 ("crypto: pcrypt - call the complete function on error")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Eric Biggers <ebiggers@kernel.org>
+Fix this by adding conditional constraints that properly define the
+register regions and clocks for AM62L DSS (single video port) versus
+other AM65x variants (dual video port).
+
+[1]: Section 12.7 (Display Subsystem and Peripherals)
+Link : https://www.ti.com/lit/pdf/sprujb4
+
+Fixes: cb8d4323302c ("dt-bindings: display: ti,am65x-dss: Add support for AM62L DSS")
+Cc: stable@vger.kernel.org
+Signed-off-by: Swamil Jain <s-jain1@ti.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260415110409.2577633-1-s-jain1@ti.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/pcrypt.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml |   70 +++++++---
+ 1 file changed, 52 insertions(+), 18 deletions(-)
 
---- a/crypto/pcrypt.c
-+++ b/crypto/pcrypt.c
-@@ -69,6 +69,9 @@ static void pcrypt_aead_done(void *data,
- 	struct pcrypt_request *preq = aead_request_ctx(req);
- 	struct padata_priv *padata = pcrypt_request_padata(preq);
+--- a/Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml
++++ b/Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml
+@@ -36,34 +36,50 @@ properties:
+   reg:
+     description:
+       Addresses to each DSS memory region described in the SoC's TRM.
+-    items:
+-      - description: common DSS register area
+-      - description: VIDL1 light video plane
+-      - description: VID video plane
+-      - description: OVR1 overlay manager for vp1
+-      - description: OVR2 overlay manager for vp2
+-      - description: VP1 video port 1
+-      - description: VP2 video port 2
+-      - description: common1 DSS register area
++    oneOf:
++      - items:
++          - description: common DSS register area
++          - description: VIDL1 light video plane
++          - description: VID video plane
++          - description: OVR1 overlay manager for vp1
++          - description: OVR2 overlay manager for vp2
++          - description: VP1 video port 1
++          - description: VP2 video port 2
++          - description: common1 DSS register area
++      - items:
++          - description: common DSS register area
++          - description: VIDL1 light video plane
++          - description: OVR1 overlay manager for vp1
++          - description: VP1 video port 1
++          - description: common1 DSS register area
  
-+	if (err == -EINPROGRESS)
-+		return;
-+
- 	padata->info = err;
+   reg-names:
+-    items:
+-      - const: common
+-      - const: vidl1
+-      - const: vid
+-      - const: ovr1
+-      - const: ovr2
+-      - const: vp1
+-      - const: vp2
+-      - const: common1
++    oneOf:
++      - items:
++          - const: common
++          - const: vidl1
++          - const: vid
++          - const: ovr1
++          - const: ovr2
++          - const: vp1
++          - const: vp2
++          - const: common1
++      - items:
++          - const: common
++          - const: vidl1
++          - const: ovr1
++          - const: vp1
++          - const: common1
  
- 	padata_do_serial(padata);
-@@ -82,7 +85,7 @@ static void pcrypt_aead_enc(struct padat
+   clocks:
++    minItems: 2
+     items:
+       - description: fck DSS functional clock
+       - description: vp1 Video Port 1 pixel clock
+       - description: vp2 Video Port 2 pixel clock
  
- 	ret = crypto_aead_encrypt(req);
+   clock-names:
++    minItems: 2
+     items:
+       - const: fck
+       - const: vp1
+@@ -180,6 +196,24 @@ allOf:
+         ports:
+           properties:
+             port@1: false
++        reg:
++          maxItems: 5
++        reg-names:
++          maxItems: 5
++        clocks:
++          maxItems: 2
++        clock-names:
++          maxItems: 2
++    else:
++      properties:
++        reg:
++          minItems: 8
++        reg-names:
++          minItems: 8
++        clocks:
++          minItems: 3
++        clock-names:
++          minItems: 3
  
--	if (ret == -EINPROGRESS)
-+	if (ret == -EINPROGRESS || ret == -EBUSY)
- 		return;
- 
- 	padata->info = ret;
-@@ -133,7 +136,7 @@ static void pcrypt_aead_dec(struct padat
- 
- 	ret = crypto_aead_decrypt(req);
- 
--	if (ret == -EINPROGRESS)
-+	if (ret == -EINPROGRESS || ret == -EBUSY)
- 		return;
- 
- 	padata->info = ret;
+   - if:
+       properties:
 
 
