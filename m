@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465FE3E3D8F;
-	Mon,  4 May 2026 14:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52023DEAED;
+	Mon,  4 May 2026 14:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904871; cv=none; b=RzwJg15qgP5n0mupcNWKPNGdyshH6mlzYRijG//XldrcA4LRduT70jlcJY4bkaqe94CY1dEGGaQVi5hJjsD/V459NyCJ6cw5Bg1y9/Ro/HFo5DEXkt5bwWkaRr5ZPZ2UFyb1y7XPTLmkmhQ5yecfDqcmvUYkgUKDVJi4uF939fk=
+	t=1777904873; cv=none; b=OqZRphr/+qxAQrSw6mvCRvYdO9fhTHleH1eEhawyvS4PL4g2l27CGOeHV8hTId4nFpEO+gpfrZ5cAuVnndEm9wUh3VITjRzn9AngU3L9vIhJ+oSL1BCNOmUDkRCZcCbuOR+qrWa0BljXXeKqsLC4uhhmTyIyVXRXbQrQD+H7Ig4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904871; c=relaxed/simple;
-	bh=kPoDmjoyScaVAYznQs9yrP7VRiOZdZ29AMH5AJaL/yI=;
+	s=arc-20240116; t=1777904873; c=relaxed/simple;
+	bh=4ok1S+vS02XiyJBpsMRXMxLqxZyxmQt6XBZTyZEeJck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GR2+Z6SuZ23Fk9KYbYg0t0j/W1R9hZLIdjZJK9uU4/aJprQhcqyjQRq6Jo+5awVA+K6GovAc55ekOQZeF8jdEQZNAUJ3VMuSmh0pKLxHAN+ypZrmzYTC4qwjp3VH+9aneYCP6rOIqrxcRlgesP2opfzKeOli9EdLQhXbKTLmIyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQY14o+x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qRfdmG8E2BNx0ttQQPcCneXajiBEGILADgYluJ4neFGN1+OHqFVBrjSNXmty4z+g8LuqaJz595wLMr+7G77lgBQJvGUyrZGKWNy6EfM0270gCX7YeilN3vjpRmMp4Mmf5es2cPuYwhshLIDUDtJC8VInKOFXrUTV/OR8ocIQwSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zapvcrWg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQY14o+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E88C2BCB8;
-	Mon,  4 May 2026 14:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zapvcrWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B17C2BCB8;
+	Mon,  4 May 2026 14:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904871;
-	bh=kPoDmjoyScaVAYznQs9yrP7VRiOZdZ29AMH5AJaL/yI=;
+	s=korg; t=1777904873;
+	bh=4ok1S+vS02XiyJBpsMRXMxLqxZyxmQt6XBZTyZEeJck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DQY14o+xqnF0cig6hstoyFhv2zDVzetWfDXOTkDFOYyQfO+P3nezVcmmZLlzejvnE
-	 DVuM01j7g7rCnqEdD8V8gCwGfYLNxSiQDo6Mm3u+9eo9GY2bWgY0nT2LlXUAqX3IiK
-	 LRfF2I1YYRIW2Wh9bfM1VaVaO6F3TBon7xwlLWUo=
+	b=zapvcrWglOpG3miswMLDV0o0idWkXgKEx8kMnokZQES3xK0uDZKPN5rnl9w25U0du
+	 P+ZgTIB89O4jyP8ajIkuzeYo83MfZ4QYPE1yut7wItvRlWMWkPbnzXnYjM/TTaoH6u
+	 XKVpMW0yENVx+OvqDaoiePCUULbbscd4MdXZGkwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Balbir Singh <balbirs@nvidia.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Leon Romanovsky <leon@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/215] f2fs: fix UAF caused by decrementing sbi->nr_pages[] in f2fs_write_end_io()
-Date: Mon,  4 May 2026 15:53:13 +0200
-Message-ID: <20260504135136.551763603@linuxfoundation.org>
+Subject: [PATCH 6.12 175/215] lib: test_hmm: evict device pages on file close to avoid use-after-free
+Date: Mon,  4 May 2026 15:53:14 +0200
+Message-ID: <20260504135136.589292274@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -54,73 +62,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Alistair Popple <apopple@nvidia.com>
 
-[ Upstream commit 2d9c4a4ed4eef1f82c5b16b037aee8bad819fd53 ]
+[ Upstream commit 744dd97752ef1076a8d8672bb0d8aa2c7abc1144 ]
 
-The xfstests case "generic/107" and syzbot have both reported a NULL
-pointer dereference.
+Patch series "Minor hmm_test fixes and cleanups".
 
-The concurrent scenario that triggers the panic is as follows:
+Two bugfixes a cleanup for the HMM kernel selftests.  These were mostly
+reported by Zenghui Yu with special thanks to Lorenzo for analysing and
+pointing out the problems.
 
-F2FS_WB_CP_DATA write callback          umount
-                                        - f2fs_write_checkpoint
-                                         - f2fs_wait_on_all_pages(sbi, F2FS_WB_CP_DATA)
-- blk_mq_end_request
- - bio_endio
-  - f2fs_write_end_io
-   : dec_page_count(sbi, F2FS_WB_CP_DATA)
-   : wake_up(&sbi->cp_wait)
-                                        - kill_f2fs_super
-                                         - kill_block_super
-                                          - f2fs_put_super
-                                           : iput(sbi->node_inode)
-                                           : sbi->node_inode = NULL
-   : f2fs_in_warm_node_list
-    - is_node_folio // sbi->node_inode is NULL and panic
+This patch (of 3):
 
-The root cause is that f2fs_put_super() calls iput(sbi->node_inode) and
-sets sbi->node_inode to NULL after sbi->nr_pages[F2FS_WB_CP_DATA] is
-decremented to zero. As a result, f2fs_in_warm_node_list() may
-dereference a NULL node_inode when checking whether a folio belongs to
-the node inode, leading to a panic.
+When dmirror_fops_release() is called it frees the dmirror struct but
+doesn't migrate device private pages back to system memory first.  This
+leaves those pages with a dangling zone_device_data pointer to the freed
+dmirror.
 
-This patch fixes the issue by calling f2fs_in_warm_node_list() before
-decrementing sbi->nr_pages[F2FS_WB_CP_DATA], thus preventing the
-use-after-free condition.
+If a subsequent fault occurs on those pages (eg.  during coredump) the
+dmirror_devmem_fault() callback dereferences the stale pointer causing a
+kernel panic.  This was reported [1] when running mm/ksft_hmm.sh on arm64,
+where a test failure triggered SIGABRT and the resulting coredump walked
+the VMAs faulting in the stale device private pages.
 
-Cc: stable@kernel.org
-Fixes: 50fa53eccf9f ("f2fs: fix to avoid broken of dnode block list")
-Reported-by: syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ folio => page ]
+Fix this by calling dmirror_device_evict_chunk() for each devmem chunk in
+dmirror_fops_release() to migrate all device private pages back to system
+memory before freeing the dmirror struct.  The function is moved earlier
+in the file to avoid a forward declaration.
+
+Link: https://lore.kernel.org/20260331063445.3551404-1-apopple@nvidia.com
+Link: https://lore.kernel.org/20260331063445.3551404-2-apopple@nvidia.com
+Fixes: b2ef9f5a5cb3 ("mm/hmm/test: add selftest driver for HMM")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
+Closes: https://lore.kernel.org/linux-mm/8bd0396a-8997-4d2e-a13f-5aac033083d7@linux.dev/
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Tested-by: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ kept the existing simpler `dmirror_device_evict_chunk()` body instead of the upstream compound-folio version ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/test_hmm.c |   86 ++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 49 insertions(+), 37 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -355,6 +355,8 @@ static void f2fs_write_end_io(struct bio
+--- a/lib/test_hmm.c
++++ b/lib/test_hmm.c
+@@ -183,11 +183,60 @@ static int dmirror_fops_open(struct inod
+ 	return 0;
+ }
  
- 		f2fs_bug_on(sbi, page->mapping == NODE_MAPPING(sbi) &&
- 				page_folio(page)->index != nid_of_node(page));
-+		if (f2fs_in_warm_node_list(sbi, page))
-+			f2fs_del_fsync_node_entry(sbi, page);
++static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
++{
++	unsigned long start_pfn = chunk->pagemap.range.start >> PAGE_SHIFT;
++	unsigned long end_pfn = chunk->pagemap.range.end >> PAGE_SHIFT;
++	unsigned long npages = end_pfn - start_pfn + 1;
++	unsigned long i;
++	unsigned long *src_pfns;
++	unsigned long *dst_pfns;
++
++	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
++	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
++
++	migrate_device_range(src_pfns, start_pfn, npages);
++	for (i = 0; i < npages; i++) {
++		struct page *dpage, *spage;
++
++		spage = migrate_pfn_to_page(src_pfns[i]);
++		if (!spage || !(src_pfns[i] & MIGRATE_PFN_MIGRATE))
++			continue;
++
++		if (WARN_ON(!is_device_private_page(spage) &&
++			    !is_device_coherent_page(spage)))
++			continue;
++		spage = BACKING_PAGE(spage);
++		dpage = alloc_page(GFP_HIGHUSER_MOVABLE | __GFP_NOFAIL);
++		lock_page(dpage);
++		copy_highpage(dpage, spage);
++		dst_pfns[i] = migrate_pfn(page_to_pfn(dpage));
++		if (src_pfns[i] & MIGRATE_PFN_WRITE)
++			dst_pfns[i] |= MIGRATE_PFN_WRITE;
++	}
++	migrate_device_pages(src_pfns, dst_pfns, npages);
++	migrate_device_finalize(src_pfns, dst_pfns, npages);
++	kvfree(src_pfns);
++	kvfree(dst_pfns);
++}
++
+ static int dmirror_fops_release(struct inode *inode, struct file *filp)
+ {
+ 	struct dmirror *dmirror = filp->private_data;
++	struct dmirror_device *mdevice = dmirror->mdevice;
++	int i;
  
- 		dec_page_count(sbi, type);
+ 	mmu_interval_notifier_remove(&dmirror->notifier);
++
++	if (mdevice->devmem_chunks) {
++		for (i = 0; i < mdevice->devmem_count; i++) {
++			struct dmirror_chunk *devmem =
++				mdevice->devmem_chunks[i];
++
++			dmirror_device_evict_chunk(devmem);
++		}
++	}
++
+ 	xa_destroy(&dmirror->pt);
+ 	kfree(dmirror);
+ 	return 0;
+@@ -1214,43 +1263,6 @@ static int dmirror_snapshot(struct dmirr
+ 	return ret;
+ }
  
-@@ -366,8 +368,6 @@ static void f2fs_write_end_io(struct bio
- 				wq_has_sleeper(&sbi->cp_wait))
- 			wake_up(&sbi->cp_wait);
- 
--		if (f2fs_in_warm_node_list(sbi, page))
--			f2fs_del_fsync_node_entry(sbi, page);
- 		clear_page_private_gcing(page);
- 		end_page_writeback(page);
- 	}
+-static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
+-{
+-	unsigned long start_pfn = chunk->pagemap.range.start >> PAGE_SHIFT;
+-	unsigned long end_pfn = chunk->pagemap.range.end >> PAGE_SHIFT;
+-	unsigned long npages = end_pfn - start_pfn + 1;
+-	unsigned long i;
+-	unsigned long *src_pfns;
+-	unsigned long *dst_pfns;
+-
+-	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
+-	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
+-
+-	migrate_device_range(src_pfns, start_pfn, npages);
+-	for (i = 0; i < npages; i++) {
+-		struct page *dpage, *spage;
+-
+-		spage = migrate_pfn_to_page(src_pfns[i]);
+-		if (!spage || !(src_pfns[i] & MIGRATE_PFN_MIGRATE))
+-			continue;
+-
+-		if (WARN_ON(!is_device_private_page(spage) &&
+-			    !is_device_coherent_page(spage)))
+-			continue;
+-		spage = BACKING_PAGE(spage);
+-		dpage = alloc_page(GFP_HIGHUSER_MOVABLE | __GFP_NOFAIL);
+-		lock_page(dpage);
+-		copy_highpage(dpage, spage);
+-		dst_pfns[i] = migrate_pfn(page_to_pfn(dpage));
+-		if (src_pfns[i] & MIGRATE_PFN_WRITE)
+-			dst_pfns[i] |= MIGRATE_PFN_WRITE;
+-	}
+-	migrate_device_pages(src_pfns, dst_pfns, npages);
+-	migrate_device_finalize(src_pfns, dst_pfns, npages);
+-	kvfree(src_pfns);
+-	kvfree(dst_pfns);
+-}
+-
+ /* Removes free pages from the free list so they can't be re-allocated */
+ static void dmirror_remove_free_pages(struct dmirror_chunk *devmem)
+ {
 
 
