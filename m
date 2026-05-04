@@ -1,67 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F7E40DFD4;
-	Mon,  4 May 2026 14:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D92A40DFD4;
+	Mon,  4 May 2026 14:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903765; cv=none; b=iOEpU3cUzeo7VTRbswIOt+uIHl3AlmiOjZh/fCkiURKXie7LTxpJQI4TYL3xKVXX2FUVgbjfnDyH3Rgs+n2Rq5agnabFm8GMuWxJuYY7xn4vzrW99oN2UFB/NASFHm6LY5FeyGoWCNDRRO2zGhqftHfOTiUejtk1yseyVBRWbaA=
+	t=1777903768; cv=none; b=lshp1ubnef4E/KoFR7BRy71AUYoKNzZonRAVywTn2r5zYAp/DVoUJf5wO3SgTDyOEvYrhON8m8GXmmKhAL7R3/7Lwd6itVZ/T+6vmO98Fe2Tjj4WTD5v0V8yvOuRVH8mdDKHf09P8SdAbwPox2U1OO0fXtDtYCjUoCvlZbmPHLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903765; c=relaxed/simple;
-	bh=ySTLiwQZy0i6oGAwOdKsvH5ZKUDe9aisydXA7ybl+IU=;
+	s=arc-20240116; t=1777903768; c=relaxed/simple;
+	bh=vLXErgxVnxIYUtHX8Vj501Mz1gqgF6+c3h6rdGvkoPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j0RIT1TsCwivsZc2K9lmc7fZ34XHxILgxNfGq93Ehmf9yhRAuRX0eEGR0+aECPDvhXnbEOZf9PsLhW2qFKIMGOMmeSeyIvkLJcF1Rg+1I1dE2dNwsYBjw6L0/LWAArcHF+jFPRjHwTaaxD95WFCYFyQstMgD5rbyK5Yfk0ZlE0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xrv9i8Sn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJ1fObeqFs5+Opiak+8CsBu8Ev0NW4YCrg+/3nscsjIiE+J8jlbXyn3YxwJfTma/S0W8OSitazMTWWPub3/GkkSw6bYH4atXys0hGJGrXvNRcTNU9R+F6Or+A2CbWfbqz9aGVolDPB3FR4gIwfr8jPSDDhgmQm3uf6KsA6lK7SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYoWbV1t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xrv9i8Sn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3396AC2BCB8;
-	Mon,  4 May 2026 14:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYoWbV1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66F6C2BCB8;
+	Mon,  4 May 2026 14:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903765;
-	bh=ySTLiwQZy0i6oGAwOdKsvH5ZKUDe9aisydXA7ybl+IU=;
+	s=korg; t=1777903768;
+	bh=vLXErgxVnxIYUtHX8Vj501Mz1gqgF6+c3h6rdGvkoPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xrv9i8SnszLUnMuKd7cI1OgQQsNPxwhXr8wSYakSb1ln7of6KcLTvbFcx2uNHxFPr
-	 gNAUbNC9XmVFFRcrFh4RpCvYGGGM8ZBIQMDDRcWc8WtTEiWDQE+dAFw6Bjolzxbc12
-	 an1N0/llqxWVqfH4K8O8zqZGbHyol9W++JQymkrQ=
+	b=sYoWbV1t5ZVD7A2sXokKYRX6dgIrp4FpM7SKr6/B47fhgJNG75a9aaXf0V+SdAJJ1
+	 8G1B+wg9p+Y7XZ3Kuv8IUR/0+ycxBVyx3bwj71/9VVSvaaVaREYOZZEOcqV1vDUTI5
+	 q28HIe/uFKd6K2k3spLAxV6V1l/J1XRkLxH7GVvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bodo Stroesser <bostroesser@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Clemens Ladisch <clemens@ladisch.de>,
-	David Hildenbrand <david@kernel.org>,
-	David Howells <dhowells@redhat.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Jan Kara <jack@suse.cz>,
-	Jann Horn <jannh@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Long Li <longli@microsoft.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Richard Weinberger <richard@nod.at>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 021/275] fs: afs: revert mmap_prepare() change
-Date: Mon,  4 May 2026 15:49:21 +0200
-Message-ID: <20260504135143.725105434@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Julius Werner <jwerner@chromium.org>,
+	Samuel Holland <samuel@sholland.org>,
+	Brian Norris <briannorris@chromium.org>,
+	chrome-platform@lists.linux.dev
+Subject: [PATCH 6.18 022/275] firmware: google: framebuffer: Do not mark framebuffer as busy
+Date: Mon,  4 May 2026 15:49:22 +0200
+Message-ID: <20260504135143.762785265@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -80,107 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit fbfc6578eaca12daa0c09df1e9ba7f2c657b49da upstream.
+commit f3850d399de3b6142b02315227ef9e772ed0c302 upstream.
 
-Partially reverts commit 9d5403b1036c ("fs: convert most other
-generic_file_*mmap() users to .mmap_prepare()").
+Remove the flag IORESOURCE_BUSY flag from coreboot's framebuffer
+resource. It prevents simpledrm from successfully requesting the
+range for its own use; resulting in errors such as
 
-This is because the .mmap invocation establishes a refcount, but
-.mmap_prepare is called at a point where a merge or an allocation failure
-might happen after the call, which would leak the refcount increment.
+[    2.775430] simple-framebuffer simple-framebuffer.0: [drm] could not acquire memory region [mem 0x80000000-0x80407fff flags 0x80000200]
 
-Functionality is being added to permit the use of .mmap_prepare in this
-case, but in the interim, we need to fix this.
+As with other uses of simple-framebuffer, the simple-framebuffer
+device should only declare it's I/O resources, but not actively use
+them.
 
-Link: https://lkml.kernel.org/r/08804c94e39d9102a3a8fbd12385e8aa079ba1d3.1774045440.git.ljs@kernel.org
-Fixes: 9d5403b1036c ("fs: convert most other generic_file_*mmap() users to .mmap_prepare()")
-Signed-off-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Bodo Stroesser <bostroesser@gmail.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Clemens Ladisch <clemens@ladisch.de>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 851b4c14532d ("firmware: coreboot: Add coreboot framebuffer driver")
+Acked-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Acked-by: Julius Werner <jwerner@chromium.org>
+Cc: Samuel Holland <samuel@sholland.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Haiyang Zhang <haiyangz@microsoft.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: K. Y. Srinivasan <kys@microsoft.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: Marc Dionne <marc.dionne@auristor.com>
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>
-Cc: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Wei Liu <wei.liu@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+Cc: Brian Norris <briannorris@chromium.org>
+Cc: Julius Werner <jwerner@chromium.org>
+Cc: chrome-platform@lists.linux.dev
+Cc: <stable@vger.kernel.org> # v4.18+
+Link: https://patch.msgid.link/20260217155836.96267-3-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/file.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/firmware/google/framebuffer-coreboot.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/afs/file.c b/fs/afs/file.c
-index f609366fd2ac..74d04af51ff4 100644
---- a/fs/afs/file.c
-+++ b/fs/afs/file.c
-@@ -19,7 +19,7 @@
- #include <trace/events/netfs.h>
- #include "internal.h"
+--- a/drivers/firmware/google/framebuffer-coreboot.c
++++ b/drivers/firmware/google/framebuffer-coreboot.c
+@@ -67,7 +67,7 @@ static int framebuffer_probe(struct core
+ 		return -ENODEV;
  
--static int afs_file_mmap_prepare(struct vm_area_desc *desc);
-+static int afs_file_mmap(struct file *file, struct vm_area_struct *vma);
- 
- static ssize_t afs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter);
- static ssize_t afs_file_splice_read(struct file *in, loff_t *ppos,
-@@ -35,7 +35,7 @@ const struct file_operations afs_file_operations = {
- 	.llseek		= generic_file_llseek,
- 	.read_iter	= afs_file_read_iter,
- 	.write_iter	= netfs_file_write_iter,
--	.mmap_prepare	= afs_file_mmap_prepare,
-+	.mmap		= afs_file_mmap,
- 	.splice_read	= afs_file_splice_read,
- 	.splice_write	= iter_file_splice_write,
- 	.fsync		= afs_fsync,
-@@ -492,16 +492,16 @@ static void afs_drop_open_mmap(struct afs_vnode *vnode)
- /*
-  * Handle setting up a memory mapping on an AFS file.
-  */
--static int afs_file_mmap_prepare(struct vm_area_desc *desc)
-+static int afs_file_mmap(struct file *file, struct vm_area_struct *vma)
- {
--	struct afs_vnode *vnode = AFS_FS_I(file_inode(desc->file));
-+	struct afs_vnode *vnode = AFS_FS_I(file_inode(file));
- 	int ret;
- 
- 	afs_add_open_mmap(vnode);
- 
--	ret = generic_file_mmap_prepare(desc);
-+	ret = generic_file_mmap(file, vma);
- 	if (ret == 0)
--		desc->vm_ops = &afs_vm_ops;
-+		vma->vm_ops = &afs_vm_ops;
- 	else
- 		afs_drop_open_mmap(vnode);
- 	return ret;
--- 
-2.54.0
-
+ 	memset(&res, 0, sizeof(res));
+-	res.flags = IORESOURCE_MEM | IORESOURCE_BUSY;
++	res.flags = IORESOURCE_MEM;
+ 	res.name = "Coreboot Framebuffer";
+ 	res.start = fb->physical_address;
+ 	length = PAGE_ALIGN(fb->y_resolution * fb->bytes_per_line);
 
 
