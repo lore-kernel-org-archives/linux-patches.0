@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87A63D9029;
-	Mon,  4 May 2026 14:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6385C2D8DDF;
+	Mon,  4 May 2026 14:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903490; cv=none; b=gjfeG7S0o3zooUYLuLdy8TFmVDngA7dD8vOs+JI2klCn6pLdRHrCSWUhEraBfjdUG9qYTQr2KQwVGR6v29DVbu0CYWtYzeCmU232w4p6MsC2anZO3heb5l24tkTbIo2Crzlbus9Q8pQGNCWXpkHZFI9hzwIRK5ZbPohNPEsyJpE=
+	t=1777903493; cv=none; b=lZNkRfy135jNjHDIsPxNTSbKnALA9aYE/35BpdbsVZwJgAfr03ysSfcEFPGAOdkqZ4hFbK8gXZ9t4iQUhvBSkDbObDGYcXc/9IPs+EvxIMt4aC3holmojoiOSGjGMXokEJx4EdI0UnBrcVu4BxQNfufMulylsLLmccDZJt/SDik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903490; c=relaxed/simple;
-	bh=g6lRKWHY0Yb4Z0HKPXgnyoQgNZIpraq2is38ohic6UE=;
+	s=arc-20240116; t=1777903493; c=relaxed/simple;
+	bh=uQIBGaLqA1+GNVhTbU0UuviEC4AFPkRK7Uz5PpqNOno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eteXuXWLcp0/KXoc6k6jhMnAwKHscJ5kWyhEYmWxYWk3l6WVTW6NOB1ADLws9Fc+Yq+0cslSgTDuZSylka52pkfo/rjlt8XT2laUnYr3sXK7dn2KQ1xqw/cnWalcZ38ajKF+9XE/BK01BCcJeBHyxTLaJgcTnxmsW3ERAfNc0po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xma4nG2Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iABzoF0Nin8qkdac8o8vWOo6u9b5HbvdRY3h8O7NzSCd8osnLuNDwOeNPO4v3+sK3mjeVdr08IUvZcE+++VJVAulV0QNieEGprBnS/59Dd9srITNIDFW5CNZBV77ni4hw4mFB+6zTiEHcooZreooITKpH8zYmYxUfdG5tRVR9sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opODY0aK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xma4nG2Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E69BC2BCB8;
-	Mon,  4 May 2026 14:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opODY0aK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB451C2BCB8;
+	Mon,  4 May 2026 14:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903490;
-	bh=g6lRKWHY0Yb4Z0HKPXgnyoQgNZIpraq2is38ohic6UE=;
+	s=korg; t=1777903493;
+	bh=uQIBGaLqA1+GNVhTbU0UuviEC4AFPkRK7Uz5PpqNOno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xma4nG2Yjo+QQZFo2JHWkr6rdSU9VswAL8eAMgP4OkR+1CH+SIEOylLZihf3Mj7n9
-	 lLig4GD4V2+KiwxngT2VPKrqSFZyhtri3edtLM3eeo5yQI6JQLrwHYZ6fOw/9m0qxi
-	 hiw5sUvDeHgBm6P/6PUQmEQULFS5eNcKzikh+ydE=
+	b=opODY0aK+vyEIfrpwmKTriO2bv18FQlmbU6PTPAQ29pwXjLrcH+6qWt+3cWnCpNsP
+	 r+HamPGGsxkShhMM5I006Ac373AugJMhBkdjPg4RFOyoO+z91qcTDlEPWl22Do2NUh
+	 qSQcp9MUFer3UJ10PjSEFk8AOP3QTHTyt5C4X7tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <qiang.yu@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Subject: [PATCH 7.0 255/307] bus: mhi: host: pci_generic: Switch to async power up to avoid boot delays
-Date: Mon,  4 May 2026 15:52:20 +0200
-Message-ID: <20260504135152.413900292@linuxfoundation.org>
+	Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>,
+	Johan Hovold <johan@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 7.0 256/307] can: ucan: fix devres lifetime
+Date: Mon,  4 May 2026 15:52:21 +0200
+Message-ID: <20260504135152.452222219@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit cfdb41adf1c2822ad1b1791d4d11093edb5582b6 upstream.
+commit fed4626501c871890da287bec62a96e52da1af89 upstream.
 
-Some modem devices can take significant time (up to 20 secs for sdx75) to
-enter mission mode during initialization. Currently, mhi_sync_power_up()
-waits for this entire process to complete, blocking other driver probes
-and delaying system boot.
+USB drivers bind to USB interfaces and any device managed resources
+should have their lifetime tied to the interface rather than parent USB
+device. This avoids issues like memory leaks when drivers are unbound
+without their devices being physically disconnected (e.g. on probe
+deferral or configuration changes).
 
-Switch to mhi_async_power_up() so probe can return immediately while MHI
-initialization continues in the background. This eliminates lengthy boot
-delays and allows other drivers to probe in parallel, improving overall
-system boot performance.
+Fix the control message buffer lifetime so that it is released on driver
+unbind.
 
-Fixes: 5571519009d0 ("bus: mhi: host: pci_generic: Add SDX75 based modem support")
-Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260303-b4-async_power_on-v2-1-d3db81eb457d@oss.qualcomm.com
+Fixes: 9f2d3eae88d2 ("can: ucan: add driver for Theobroma Systems UCAN devices")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260327104520.1310158-1-johan@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/pci_generic.c |    2 +-
+ drivers/net/can/usb/ucan.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -1393,7 +1393,7 @@ static int mhi_pci_probe(struct pci_dev
- 		goto err_unregister;
- 	}
+--- a/drivers/net/can/usb/ucan.c
++++ b/drivers/net/can/usb/ucan.c
+@@ -1397,7 +1397,7 @@ static int ucan_probe(struct usb_interfa
+ 	 */
  
--	err = mhi_sync_power_up(mhi_cntrl);
-+	err = mhi_async_power_up(mhi_cntrl);
- 	if (err) {
- 		dev_err(&pdev->dev, "failed to power up MHI controller\n");
- 		goto err_unprepare;
+ 	/* Prepare Memory for control transfers */
+-	ctl_msg_buffer = devm_kzalloc(&udev->dev,
++	ctl_msg_buffer = devm_kzalloc(&intf->dev,
+ 				      sizeof(union ucan_ctl_payload),
+ 				      GFP_KERNEL);
+ 	if (!ctl_msg_buffer) {
 
 
