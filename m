@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334CC3D3308;
-	Mon,  4 May 2026 14:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3B03D5645;
+	Mon,  4 May 2026 14:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903294; cv=none; b=ql9YnXzbuUT7fB21DzRgJnIfG9HMCm4wSPTfUlQ/04KDHlWhXO46fV08mafbvk3kHV2O+5svp6zSiX0aPNP2meBYBf8TlZuvBnYSswuyVmIIXWAN37v/1K66gDE/vRxhhmJXl0iETPnZceTlO864hOZkq0w63NFIM+yL7VUq/JY=
+	t=1777903296; cv=none; b=ZonVW9FbToHQPEsL6FNHLULKj+jLnhRilb235lnO/wYI32F2lCL4K2RDAT/MkmAwQGSigO3fpznfMEoD4kfMhMCXTteVDDKV7MebxM3z7R7I2nrhRroZ7DaHGh614FhqdJ6UZKvA/Es5Ojsso9mn7YekAol+FFVeQJqIrk7QS5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903294; c=relaxed/simple;
-	bh=1mHt8jksLFQ6LuEJzUYVYZRg/NW1Qi1WWXIhz38pS8A=;
+	s=arc-20240116; t=1777903296; c=relaxed/simple;
+	bh=wg4FwtteHa7+0CCKJrAW5q7N8BjnflUWKPdYty44TGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YlroItKWdmP+EzRzt04GGtDx4LqXBMwo2NPuto0/a2UbW57VxalROfnjBEEgYi9NH8+zj0XP4fK8psRIgCOJDyBqdyPS0WLnJhq4yALZgveuAoA8y48tEruv+Ph+xCw0tidFpxOHDmdAaWUWdcywtWpy7frjMcMTsMz+FhZ7okk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAUP8NDl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXmO2AHWZ/0NuehnDmUxKvYig6wMbAGaQB43ToAoH3L6h81LcFG5HXpxwPIy84JVpj/Yfl8UlGAGhO0k61qwAEYEl9EsHlcIicE7xTtN5S2W+pG9oxznVG3JHBqEt5klRuHjTcCqiUAYZz6ap7fteJIPiLj6Hwuo1uiFLcUQ/io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKNT1Ca2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAUP8NDl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72521C2BCB8;
-	Mon,  4 May 2026 14:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKNT1Ca2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0E4C2BCB8;
+	Mon,  4 May 2026 14:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903293;
-	bh=1mHt8jksLFQ6LuEJzUYVYZRg/NW1Qi1WWXIhz38pS8A=;
+	s=korg; t=1777903296;
+	bh=wg4FwtteHa7+0CCKJrAW5q7N8BjnflUWKPdYty44TGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TAUP8NDlvgUVcZt5PMptpYzcBVfAvCqmKvkG3KqSGAtb6x0fwQV0aBHxuSLecOmMQ
-	 v2wv1fE2Y2hTXFMtjC4so2mFlUelKwnJK4NYOeaaEa2gaKkB98LU6e7ukG4ootMFT8
-	 Ypz3AvM6U2hQf6CJApgjShOv2BY1QAPPJqEPCJi4=
+	b=DKNT1Ca29WVQuiZvtGS2DTnqZFF9Wq/kKZhmlsz1+2LWnn9f/0ALVoR7i9nLadYzD
+	 VlcW8IE+ipyEVwWtJUXp6Kp6Xvg7ywRnUV+Z1rHocQ2XL+3UYY8MAr4oWyMqYy67qZ
+	 Bz+znuhApxyigFzLB2Z8Ef/s4BvrtAsGBvq7g2eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Julius Werner <jwerner@chromium.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Hans de Goede <hansg@kernel.org>,
-	linux-fbdev@vger.kernel.org
-Subject: [PATCH 7.0 179/307] firmware: google: framebuffer: Do not unregister platform device
-Date: Mon,  4 May 2026 15:51:04 +0200
-Message-ID: <20260504135149.608548590@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 7.0 180/307] firmware: exynos-acpm: Drop fake const on handle pointer
+Date: Mon,  4 May 2026 15:51:05 +0200
+Message-ID: <20260504135149.647262820@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -54,69 +50,345 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit 5cd28bd28c8ce426b56ce4230dbd17537181d5ad upstream.
+commit a2be37eedb52ea26938fa4cc9de1ff84963c57ad upstream.
 
-The native driver takes over the framebuffer aperture by removing the
-system- framebuffer platform device. Afterwards the pointer in drvdata
-is dangling. Remove the entire logic around drvdata and let the kernel's
-aperture helpers handle this. The platform device depends on the native
-hardware device instead of the coreboot device anyway.
+All the functions operating on the 'handle' pointer are claiming it is a
+pointer to const thus they should not modify the handle.  In fact that's
+a false statement, because first thing these functions do is drop the
+cast to const with container_of:
 
-When commit 851b4c14532d ("firmware: coreboot: Add coreboot framebuffer
-driver") added the coreboot framebuffer code, the kernel did not support
-device-based aperture management. Instead native driviers only removed
-the conflicting fbdev device. At that point, unregistering the framebuffer
-device most likely worked correctly. It was definitely broken after
-commit d9702b2a2171 ("fbdev/simplefb: Do not use struct
-fb_info.apertures"). So take this commit for the Fixes tag. Earlier
-releases might work depending on the native hardware driver.
+  struct acpm_info *acpm = handle_to_acpm_info(handle);
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: d9702b2a2171 ("fbdev/simplefb: Do not use struct fb_info.apertures")
-Acked-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Acked-by: Julius Werner <jwerner@chromium.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Hans de Goede <hansg@kernel.org>
-Cc: linux-fbdev@vger.kernel.org
-Cc: <stable@vger.kernel.org> # v6.3+
-Link: https://patch.msgid.link/20260217155836.96267-2-tzimmermann@suse.de
+And with such cast the handle is easily writable with simple:
+
+  acpm->handle.ops.pmic_ops.read_reg = NULL;
+
+The code is not correct logically, either, because functions like
+acpm_get_by_node() and acpm_handle_put() are meant to modify the handle
+reference counting, thus they must modify the handle.  Modification here
+happens anyway, even if the reference counting is stored in the
+container which the handle is part of.
+
+The code does not have actual visible bug, but incorrect 'const'
+annotations could lead to incorrect compiler decisions.
+
+Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260224104203.42950-2-krzysztof.kozlowski@oss.qualcomm.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/google/framebuffer-coreboot.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/clk/samsung/clk-acpm.c                        |    4 -
+ drivers/firmware/samsung/exynos-acpm-dvfs.c           |    4 -
+ drivers/firmware/samsung/exynos-acpm-dvfs.h           |    4 -
+ drivers/firmware/samsung/exynos-acpm-pmic.c           |   10 ++--
+ drivers/firmware/samsung/exynos-acpm-pmic.h           |   10 ++--
+ drivers/firmware/samsung/exynos-acpm.c                |   16 ++++---
+ drivers/firmware/samsung/exynos-acpm.h                |    2 
+ drivers/mfd/sec-acpm.c                                |   10 ++--
+ include/linux/firmware/samsung/exynos-acpm-protocol.h |   40 +++++++-----------
+ 9 files changed, 48 insertions(+), 52 deletions(-)
 
---- a/drivers/firmware/google/framebuffer-coreboot.c
-+++ b/drivers/firmware/google/framebuffer-coreboot.c
-@@ -81,19 +81,10 @@ static int framebuffer_probe(struct core
- 						 sizeof(pdata));
- 	if (IS_ERR(pdev))
- 		pr_warn("coreboot: could not register framebuffer\n");
--	else
--		dev_set_drvdata(&dev->dev, pdev);
+--- a/drivers/clk/samsung/clk-acpm.c
++++ b/drivers/clk/samsung/clk-acpm.c
+@@ -20,7 +20,7 @@ struct acpm_clk {
+ 	u32 id;
+ 	struct clk_hw hw;
+ 	unsigned int mbox_chan_id;
+-	const struct acpm_handle *handle;
++	struct acpm_handle *handle;
+ };
  
- 	return PTR_ERR_OR_ZERO(pdev);
+ struct acpm_clk_variant {
+@@ -113,7 +113,7 @@ static int acpm_clk_register(struct devi
+ 
+ static int acpm_clk_probe(struct platform_device *pdev)
+ {
+-	const struct acpm_handle *acpm_handle;
++	struct acpm_handle *acpm_handle;
+ 	struct clk_hw_onecell_data *clk_data;
+ 	struct clk_hw **hws;
+ 	struct device *dev = &pdev->dev;
+--- a/drivers/firmware/samsung/exynos-acpm-dvfs.c
++++ b/drivers/firmware/samsung/exynos-acpm-dvfs.c
+@@ -42,7 +42,7 @@ static void acpm_dvfs_init_set_rate_cmd(
+ 	cmd[3] = ktime_to_ms(ktime_get());
  }
  
--static void framebuffer_remove(struct coreboot_device *dev)
--{
--	struct platform_device *pdev = dev_get_drvdata(&dev->dev);
--
--	platform_device_unregister(pdev);
--}
--
- static const struct coreboot_device_id framebuffer_ids[] = {
- 	{ .tag = CB_TAG_FRAMEBUFFER },
- 	{ /* sentinel */ }
-@@ -102,7 +93,6 @@ MODULE_DEVICE_TABLE(coreboot, framebuffe
+-int acpm_dvfs_set_rate(const struct acpm_handle *handle,
++int acpm_dvfs_set_rate(struct acpm_handle *handle,
+ 		       unsigned int acpm_chan_id, unsigned int clk_id,
+ 		       unsigned long rate)
+ {
+@@ -62,7 +62,7 @@ static void acpm_dvfs_init_get_rate_cmd(
+ 	cmd[3] = ktime_to_ms(ktime_get());
+ }
  
- static struct coreboot_driver framebuffer_driver = {
- 	.probe = framebuffer_probe,
--	.remove = framebuffer_remove,
- 	.drv = {
- 		.name = "framebuffer",
- 	},
+-unsigned long acpm_dvfs_get_rate(const struct acpm_handle *handle,
++unsigned long acpm_dvfs_get_rate(struct acpm_handle *handle,
+ 				 unsigned int acpm_chan_id, unsigned int clk_id)
+ {
+ 	struct acpm_xfer xfer;
+--- a/drivers/firmware/samsung/exynos-acpm-dvfs.h
++++ b/drivers/firmware/samsung/exynos-acpm-dvfs.h
+@@ -11,10 +11,10 @@
+ 
+ struct acpm_handle;
+ 
+-int acpm_dvfs_set_rate(const struct acpm_handle *handle,
++int acpm_dvfs_set_rate(struct acpm_handle *handle,
+ 		       unsigned int acpm_chan_id, unsigned int id,
+ 		       unsigned long rate);
+-unsigned long acpm_dvfs_get_rate(const struct acpm_handle *handle,
++unsigned long acpm_dvfs_get_rate(struct acpm_handle *handle,
+ 				 unsigned int acpm_chan_id,
+ 				 unsigned int clk_id);
+ 
+--- a/drivers/firmware/samsung/exynos-acpm-pmic.c
++++ b/drivers/firmware/samsung/exynos-acpm-pmic.c
+@@ -77,7 +77,7 @@ static void acpm_pmic_init_read_cmd(u32
+ 	cmd[3] = ktime_to_ms(ktime_get());
+ }
+ 
+-int acpm_pmic_read_reg(const struct acpm_handle *handle,
++int acpm_pmic_read_reg(struct acpm_handle *handle,
+ 		       unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 		       u8 *buf)
+ {
+@@ -107,7 +107,7 @@ static void acpm_pmic_init_bulk_read_cmd
+ 		 FIELD_PREP(ACPM_PMIC_VALUE, count);
+ }
+ 
+-int acpm_pmic_bulk_read(const struct acpm_handle *handle,
++int acpm_pmic_bulk_read(struct acpm_handle *handle,
+ 			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 			u8 count, u8 *buf)
+ {
+@@ -150,7 +150,7 @@ static void acpm_pmic_init_write_cmd(u32
+ 	cmd[3] = ktime_to_ms(ktime_get());
+ }
+ 
+-int acpm_pmic_write_reg(const struct acpm_handle *handle,
++int acpm_pmic_write_reg(struct acpm_handle *handle,
+ 			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 			u8 value)
+ {
+@@ -187,7 +187,7 @@ static void acpm_pmic_init_bulk_write_cm
+ 	}
+ }
+ 
+-int acpm_pmic_bulk_write(const struct acpm_handle *handle,
++int acpm_pmic_bulk_write(struct acpm_handle *handle,
+ 			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 			 u8 count, const u8 *buf)
+ {
+@@ -220,7 +220,7 @@ static void acpm_pmic_init_update_cmd(u3
+ 	cmd[3] = ktime_to_ms(ktime_get());
+ }
+ 
+-int acpm_pmic_update_reg(const struct acpm_handle *handle,
++int acpm_pmic_update_reg(struct acpm_handle *handle,
+ 			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 			 u8 value, u8 mask)
+ {
+--- a/drivers/firmware/samsung/exynos-acpm-pmic.h
++++ b/drivers/firmware/samsung/exynos-acpm-pmic.h
+@@ -11,19 +11,19 @@
+ 
+ struct acpm_handle;
+ 
+-int acpm_pmic_read_reg(const struct acpm_handle *handle,
++int acpm_pmic_read_reg(struct acpm_handle *handle,
+ 		       unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 		       u8 *buf);
+-int acpm_pmic_bulk_read(const struct acpm_handle *handle,
++int acpm_pmic_bulk_read(struct acpm_handle *handle,
+ 			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 			u8 count, u8 *buf);
+-int acpm_pmic_write_reg(const struct acpm_handle *handle,
++int acpm_pmic_write_reg(struct acpm_handle *handle,
+ 			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 			u8 value);
+-int acpm_pmic_bulk_write(const struct acpm_handle *handle,
++int acpm_pmic_bulk_write(struct acpm_handle *handle,
+ 			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 			 u8 count, const u8 *buf);
+-int acpm_pmic_update_reg(const struct acpm_handle *handle,
++int acpm_pmic_update_reg(struct acpm_handle *handle,
+ 			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+ 			 u8 value, u8 mask);
+ #endif /* __EXYNOS_ACPM_PMIC_H__ */
+--- a/drivers/firmware/samsung/exynos-acpm.c
++++ b/drivers/firmware/samsung/exynos-acpm.c
+@@ -412,7 +412,7 @@ static int acpm_wait_for_message_respons
+  *
+  * Return: 0 on success, -errno otherwise.
+  */
+-int acpm_do_xfer(const struct acpm_handle *handle, const struct acpm_xfer *xfer)
++int acpm_do_xfer(struct acpm_handle *handle, const struct acpm_xfer *xfer)
+ {
+ 	struct acpm_info *acpm = handle_to_acpm_info(handle);
+ 	struct exynos_mbox_msg msg;
+@@ -674,7 +674,7 @@ static int acpm_probe(struct platform_de
+  * acpm_handle_put() - release the handle acquired by acpm_get_by_phandle.
+  * @handle:	Handle acquired by acpm_get_by_phandle.
+  */
+-static void acpm_handle_put(const struct acpm_handle *handle)
++static void acpm_handle_put(struct acpm_handle *handle)
+ {
+ 	struct acpm_info *acpm = handle_to_acpm_info(handle);
+ 	struct device *dev = acpm->dev;
+@@ -700,9 +700,11 @@ static void devm_acpm_release(struct dev
+  * @np:		ACPM device tree node.
+  *
+  * Return: pointer to handle on success, ERR_PTR(-errno) otherwise.
++ *
++ * Note: handle CANNOT be pointer to const
+  */
+-static const struct acpm_handle *acpm_get_by_node(struct device *dev,
+-						  struct device_node *np)
++static struct acpm_handle *acpm_get_by_node(struct device *dev,
++					    struct device_node *np)
+ {
+ 	struct platform_device *pdev;
+ 	struct device_link *link;
+@@ -743,10 +745,10 @@ static const struct acpm_handle *acpm_ge
+  *
+  * Return: pointer to handle on success, ERR_PTR(-errno) otherwise.
+  */
+-const struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
+-						struct device_node *np)
++struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
++					  struct device_node *np)
+ {
+-	const struct acpm_handle **ptr, *handle;
++	struct acpm_handle **ptr, *handle;
+ 
+ 	ptr = devres_alloc(devm_acpm_release, sizeof(*ptr), GFP_KERNEL);
+ 	if (!ptr)
+--- a/drivers/firmware/samsung/exynos-acpm.h
++++ b/drivers/firmware/samsung/exynos-acpm.h
+@@ -17,7 +17,7 @@ struct acpm_xfer {
+ 
+ struct acpm_handle;
+ 
+-int acpm_do_xfer(const struct acpm_handle *handle,
++int acpm_do_xfer(struct acpm_handle *handle,
+ 		 const struct acpm_xfer *xfer);
+ 
+ #endif /* __EXYNOS_ACPM_H__ */
+--- a/drivers/mfd/sec-acpm.c
++++ b/drivers/mfd/sec-acpm.c
+@@ -367,7 +367,7 @@ static const struct regmap_config s2mpg1
+ };
+ 
+ struct sec_pmic_acpm_shared_bus_context {
+-	const struct acpm_handle *acpm;
++	struct acpm_handle *acpm;
+ 	unsigned int acpm_chan_id;
+ 	u8 speedy_channel;
+ };
+@@ -390,7 +390,7 @@ static int sec_pmic_acpm_bus_write(void
+ 				   size_t count)
+ {
+ 	struct sec_pmic_acpm_bus_context *ctx = context;
+-	const struct acpm_handle *acpm = ctx->shared->acpm;
++	struct acpm_handle *acpm = ctx->shared->acpm;
+ 	const struct acpm_pmic_ops *pmic_ops = &acpm->ops.pmic_ops;
+ 	size_t val_count = count - BITS_TO_BYTES(ACPM_ADDR_BITS);
+ 	const u8 *d = data;
+@@ -410,7 +410,7 @@ static int sec_pmic_acpm_bus_read(void *
+ 				  void *val_buf, size_t val_size)
+ {
+ 	struct sec_pmic_acpm_bus_context *ctx = context;
+-	const struct acpm_handle *acpm = ctx->shared->acpm;
++	struct acpm_handle *acpm = ctx->shared->acpm;
+ 	const struct acpm_pmic_ops *pmic_ops = &acpm->ops.pmic_ops;
+ 	const u8 *r = reg_buf;
+ 	u8 reg;
+@@ -429,7 +429,7 @@ static int sec_pmic_acpm_bus_reg_update_
+ 					     unsigned int val)
+ {
+ 	struct sec_pmic_acpm_bus_context *ctx = context;
+-	const struct acpm_handle *acpm = ctx->shared->acpm;
++	struct acpm_handle *acpm = ctx->shared->acpm;
+ 	const struct acpm_pmic_ops *pmic_ops = &acpm->ops.pmic_ops;
+ 
+ 	return pmic_ops->update_reg(acpm, ctx->shared->acpm_chan_id, ctx->type, reg & 0xff,
+@@ -480,7 +480,7 @@ static int sec_pmic_acpm_probe(struct pl
+ 	struct regmap *regmap_common, *regmap_pmic, *regmap;
+ 	const struct sec_pmic_acpm_platform_data *pdata;
+ 	struct sec_pmic_acpm_shared_bus_context *shared_ctx;
+-	const struct acpm_handle *acpm;
++	struct acpm_handle *acpm;
+ 	struct device *dev = &pdev->dev;
+ 	int ret, irq;
+ 
+--- a/include/linux/firmware/samsung/exynos-acpm-protocol.h
++++ b/include/linux/firmware/samsung/exynos-acpm-protocol.h
+@@ -14,30 +14,24 @@ struct acpm_handle;
+ struct device_node;
+ 
+ struct acpm_dvfs_ops {
+-	int (*set_rate)(const struct acpm_handle *handle,
+-			unsigned int acpm_chan_id, unsigned int clk_id,
+-			unsigned long rate);
+-	unsigned long (*get_rate)(const struct acpm_handle *handle,
++	int (*set_rate)(struct acpm_handle *handle, unsigned int acpm_chan_id,
++			unsigned int clk_id, unsigned long rate);
++	unsigned long (*get_rate)(struct acpm_handle *handle,
+ 				  unsigned int acpm_chan_id,
+ 				  unsigned int clk_id);
+ };
+ 
+ struct acpm_pmic_ops {
+-	int (*read_reg)(const struct acpm_handle *handle,
+-			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+-			u8 *buf);
+-	int (*bulk_read)(const struct acpm_handle *handle,
+-			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+-			 u8 count, u8 *buf);
+-	int (*write_reg)(const struct acpm_handle *handle,
+-			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+-			 u8 value);
+-	int (*bulk_write)(const struct acpm_handle *handle,
+-			  unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+-			  u8 count, const u8 *buf);
+-	int (*update_reg)(const struct acpm_handle *handle,
+-			  unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
+-			  u8 value, u8 mask);
++	int (*read_reg)(struct acpm_handle *handle, unsigned int acpm_chan_id,
++			u8 type, u8 reg, u8 chan, u8 *buf);
++	int (*bulk_read)(struct acpm_handle *handle, unsigned int acpm_chan_id,
++			 u8 type, u8 reg, u8 chan, u8 count, u8 *buf);
++	int (*write_reg)(struct acpm_handle *handle, unsigned int acpm_chan_id,
++			 u8 type, u8 reg, u8 chan, u8 value);
++	int (*bulk_write)(struct acpm_handle *handle, unsigned int acpm_chan_id,
++			  u8 type, u8 reg, u8 chan, u8 count, const u8 *buf);
++	int (*update_reg)(struct acpm_handle *handle, unsigned int acpm_chan_id,
++			  u8 type, u8 reg, u8 chan, u8 value, u8 mask);
+ };
+ 
+ struct acpm_ops {
+@@ -56,12 +50,12 @@ struct acpm_handle {
+ struct device;
+ 
+ #if IS_ENABLED(CONFIG_EXYNOS_ACPM_PROTOCOL)
+-const struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
+-						struct device_node *np);
++struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
++					  struct device_node *np);
+ #else
+ 
+-static inline const struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
+-							      struct device_node *np)
++static inline struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
++							struct device_node *np)
+ {
+ 	return NULL;
+ }
 
 
