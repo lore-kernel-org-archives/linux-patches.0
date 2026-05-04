@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3B03D5645;
-	Mon,  4 May 2026 14:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8103A3822;
+	Mon,  4 May 2026 14:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903296; cv=none; b=ZonVW9FbToHQPEsL6FNHLULKj+jLnhRilb235lnO/wYI32F2lCL4K2RDAT/MkmAwQGSigO3fpznfMEoD4kfMhMCXTteVDDKV7MebxM3z7R7I2nrhRroZ7DaHGh614FhqdJ6UZKvA/Es5Ojsso9mn7YekAol+FFVeQJqIrk7QS5Y=
+	t=1777903299; cv=none; b=nIN/mMrSBf2IDLLKT3d8uBCaMJXKH3WjdGNGllSzsDzLJNwcmA216vCKN8A/Yseky3L3/w4OCO0q6NF+6b1M1I7VOm7B+8TBKDsQG5DB/8wEJQ7L2kVzR54bwpb/aWGlM5/kObsSnenn/e8/x8FM7IA2akdFnEviQTYMlLyqXyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903296; c=relaxed/simple;
-	bh=wg4FwtteHa7+0CCKJrAW5q7N8BjnflUWKPdYty44TGc=;
+	s=arc-20240116; t=1777903299; c=relaxed/simple;
+	bh=+Y8N3aSC3uIspMoRnrb3hXVMq0owxPP928SLhZGGYnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXmO2AHWZ/0NuehnDmUxKvYig6wMbAGaQB43ToAoH3L6h81LcFG5HXpxwPIy84JVpj/Yfl8UlGAGhO0k61qwAEYEl9EsHlcIicE7xTtN5S2W+pG9oxznVG3JHBqEt5klRuHjTcCqiUAYZz6ap7fteJIPiLj6Hwuo1uiFLcUQ/io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKNT1Ca2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jVLZYmSMJoMYlX4Z1oXGv+dQGXgO7Z7VBaZOFbYMlgxH/szcl3ERJILI2K5Z9xTzVkooI0tIkJraIKFdQFJVn0uxa4fEKWGa5BUAaOSrQZ4w1p/4YgfaPFFDdoccL9t6DO6qhWbRzSBaC/Ih4E0ux6AUVsxixD6FsDyzzn2X6ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nY8lBT/l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKNT1Ca2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0E4C2BCB8;
-	Mon,  4 May 2026 14:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nY8lBT/l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6604C2BCB8;
+	Mon,  4 May 2026 14:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903296;
-	bh=wg4FwtteHa7+0CCKJrAW5q7N8BjnflUWKPdYty44TGc=;
+	s=korg; t=1777903299;
+	bh=+Y8N3aSC3uIspMoRnrb3hXVMq0owxPP928SLhZGGYnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DKNT1Ca29WVQuiZvtGS2DTnqZFF9Wq/kKZhmlsz1+2LWnn9f/0ALVoR7i9nLadYzD
-	 VlcW8IE+ipyEVwWtJUXp6Kp6Xvg7ywRnUV+Z1rHocQ2XL+3UYY8MAr4oWyMqYy67qZ
-	 Bz+znuhApxyigFzLB2Z8Ef/s4BvrtAsGBvq7g2eA=
+	b=nY8lBT/lb+OAVp+EX9XW5PZgRw1iG/tDf2sg/vZYaLuDhqACmQ5nHr+SC4+SpW1gD
+	 ui81xY1tSVXcdwQ4FCTQkFy7uDBDryuFPFa2RL0cma7bLW7X8tih7a9WBFxcT5um5B
+	 QbmhfH9cMkcxZor1Mt3uzKESCGlYeSLhvsgWiRQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 7.0 180/307] firmware: exynos-acpm: Drop fake const on handle pointer
-Date: Mon,  4 May 2026 15:51:05 +0200
-Message-ID: <20260504135149.647262820@linuxfoundation.org>
+	Paul Louvel <paul.louvel@bootlin.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.0 181/307] crypto: talitos - fix SEC1 32k ahash request limitation
+Date: Mon,  4 May 2026 15:51:06 +0200
+Message-ID: <20260504135149.684217472@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,345 +50,357 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit a2be37eedb52ea26938fa4cc9de1ff84963c57ad upstream.
+commit 655ef638a2bc3cd0a9eff99a02f83cab94a3a917 upstream.
 
-All the functions operating on the 'handle' pointer are claiming it is a
-pointer to const thus they should not modify the handle.  In fact that's
-a false statement, because first thing these functions do is drop the
-cast to const with container_of:
+Since commit c662b043cdca ("crypto: af_alg/hash: Support
+MSG_SPLICE_PAGES"), the crypto core may pass large scatterlists spanning
+multiple pages to drivers supporting ahash operations. As a result, a
+driver can now receive large ahash requests.
 
-  struct acpm_info *acpm = handle_to_acpm_info(handle);
+The SEC1 engine has a limitation where a single descriptor cannot
+process more than 32k of data. The current implementation attempts to
+handle the entire request within a single descriptor, which leads to
+failures raised by the driver:
 
-And with such cast the handle is easily writable with simple:
+  "length exceeds h/w max limit"
 
-  acpm->handle.ops.pmic_ops.read_reg = NULL;
+Address this limitation by splitting large ahash requests into multiple
+descriptors, each respecting the 32k hardware limit. This allows
+processing arbitrarily large requests.
 
-The code is not correct logically, either, because functions like
-acpm_get_by_node() and acpm_handle_put() are meant to modify the handle
-reference counting, thus they must modify the handle.  Modification here
-happens anyway, even if the reference counting is stored in the
-container which the handle is part of.
-
-The code does not have actual visible bug, but incorrect 'const'
-annotations could lead to incorrect compiler decisions.
-
-Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260224104203.42950-2-krzysztof.kozlowski@oss.qualcomm.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: c662b043cdca ("crypto: af_alg/hash: Support MSG_SPLICE_PAGES")
+Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/samsung/clk-acpm.c                        |    4 -
- drivers/firmware/samsung/exynos-acpm-dvfs.c           |    4 -
- drivers/firmware/samsung/exynos-acpm-dvfs.h           |    4 -
- drivers/firmware/samsung/exynos-acpm-pmic.c           |   10 ++--
- drivers/firmware/samsung/exynos-acpm-pmic.h           |   10 ++--
- drivers/firmware/samsung/exynos-acpm.c                |   16 ++++---
- drivers/firmware/samsung/exynos-acpm.h                |    2 
- drivers/mfd/sec-acpm.c                                |   10 ++--
- include/linux/firmware/samsung/exynos-acpm-protocol.h |   40 +++++++-----------
- 9 files changed, 48 insertions(+), 52 deletions(-)
+ drivers/crypto/talitos.c |  216 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 147 insertions(+), 69 deletions(-)
 
---- a/drivers/clk/samsung/clk-acpm.c
-+++ b/drivers/clk/samsung/clk-acpm.c
-@@ -20,7 +20,7 @@ struct acpm_clk {
- 	u32 id;
- 	struct clk_hw hw;
- 	unsigned int mbox_chan_id;
--	const struct acpm_handle *handle;
-+	struct acpm_handle *handle;
- };
- 
- struct acpm_clk_variant {
-@@ -113,7 +113,7 @@ static int acpm_clk_register(struct devi
- 
- static int acpm_clk_probe(struct platform_device *pdev)
- {
--	const struct acpm_handle *acpm_handle;
-+	struct acpm_handle *acpm_handle;
- 	struct clk_hw_onecell_data *clk_data;
- 	struct clk_hw **hws;
- 	struct device *dev = &pdev->dev;
---- a/drivers/firmware/samsung/exynos-acpm-dvfs.c
-+++ b/drivers/firmware/samsung/exynos-acpm-dvfs.c
-@@ -42,7 +42,7 @@ static void acpm_dvfs_init_set_rate_cmd(
- 	cmd[3] = ktime_to_ms(ktime_get());
- }
- 
--int acpm_dvfs_set_rate(const struct acpm_handle *handle,
-+int acpm_dvfs_set_rate(struct acpm_handle *handle,
- 		       unsigned int acpm_chan_id, unsigned int clk_id,
- 		       unsigned long rate)
- {
-@@ -62,7 +62,7 @@ static void acpm_dvfs_init_get_rate_cmd(
- 	cmd[3] = ktime_to_ms(ktime_get());
- }
- 
--unsigned long acpm_dvfs_get_rate(const struct acpm_handle *handle,
-+unsigned long acpm_dvfs_get_rate(struct acpm_handle *handle,
- 				 unsigned int acpm_chan_id, unsigned int clk_id)
- {
- 	struct acpm_xfer xfer;
---- a/drivers/firmware/samsung/exynos-acpm-dvfs.h
-+++ b/drivers/firmware/samsung/exynos-acpm-dvfs.h
-@@ -11,10 +11,10 @@
- 
- struct acpm_handle;
- 
--int acpm_dvfs_set_rate(const struct acpm_handle *handle,
-+int acpm_dvfs_set_rate(struct acpm_handle *handle,
- 		       unsigned int acpm_chan_id, unsigned int id,
- 		       unsigned long rate);
--unsigned long acpm_dvfs_get_rate(const struct acpm_handle *handle,
-+unsigned long acpm_dvfs_get_rate(struct acpm_handle *handle,
- 				 unsigned int acpm_chan_id,
- 				 unsigned int clk_id);
- 
---- a/drivers/firmware/samsung/exynos-acpm-pmic.c
-+++ b/drivers/firmware/samsung/exynos-acpm-pmic.c
-@@ -77,7 +77,7 @@ static void acpm_pmic_init_read_cmd(u32
- 	cmd[3] = ktime_to_ms(ktime_get());
- }
- 
--int acpm_pmic_read_reg(const struct acpm_handle *handle,
-+int acpm_pmic_read_reg(struct acpm_handle *handle,
- 		       unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 		       u8 *buf)
- {
-@@ -107,7 +107,7 @@ static void acpm_pmic_init_bulk_read_cmd
- 		 FIELD_PREP(ACPM_PMIC_VALUE, count);
- }
- 
--int acpm_pmic_bulk_read(const struct acpm_handle *handle,
-+int acpm_pmic_bulk_read(struct acpm_handle *handle,
- 			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 			u8 count, u8 *buf)
- {
-@@ -150,7 +150,7 @@ static void acpm_pmic_init_write_cmd(u32
- 	cmd[3] = ktime_to_ms(ktime_get());
- }
- 
--int acpm_pmic_write_reg(const struct acpm_handle *handle,
-+int acpm_pmic_write_reg(struct acpm_handle *handle,
- 			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 			u8 value)
- {
-@@ -187,7 +187,7 @@ static void acpm_pmic_init_bulk_write_cm
- 	}
- }
- 
--int acpm_pmic_bulk_write(const struct acpm_handle *handle,
-+int acpm_pmic_bulk_write(struct acpm_handle *handle,
- 			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 			 u8 count, const u8 *buf)
- {
-@@ -220,7 +220,7 @@ static void acpm_pmic_init_update_cmd(u3
- 	cmd[3] = ktime_to_ms(ktime_get());
- }
- 
--int acpm_pmic_update_reg(const struct acpm_handle *handle,
-+int acpm_pmic_update_reg(struct acpm_handle *handle,
- 			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 			 u8 value, u8 mask)
- {
---- a/drivers/firmware/samsung/exynos-acpm-pmic.h
-+++ b/drivers/firmware/samsung/exynos-acpm-pmic.h
-@@ -11,19 +11,19 @@
- 
- struct acpm_handle;
- 
--int acpm_pmic_read_reg(const struct acpm_handle *handle,
-+int acpm_pmic_read_reg(struct acpm_handle *handle,
- 		       unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 		       u8 *buf);
--int acpm_pmic_bulk_read(const struct acpm_handle *handle,
-+int acpm_pmic_bulk_read(struct acpm_handle *handle,
- 			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 			u8 count, u8 *buf);
--int acpm_pmic_write_reg(const struct acpm_handle *handle,
-+int acpm_pmic_write_reg(struct acpm_handle *handle,
- 			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 			u8 value);
--int acpm_pmic_bulk_write(const struct acpm_handle *handle,
-+int acpm_pmic_bulk_write(struct acpm_handle *handle,
- 			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 			 u8 count, const u8 *buf);
--int acpm_pmic_update_reg(const struct acpm_handle *handle,
-+int acpm_pmic_update_reg(struct acpm_handle *handle,
- 			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
- 			 u8 value, u8 mask);
- #endif /* __EXYNOS_ACPM_PMIC_H__ */
---- a/drivers/firmware/samsung/exynos-acpm.c
-+++ b/drivers/firmware/samsung/exynos-acpm.c
-@@ -412,7 +412,7 @@ static int acpm_wait_for_message_respons
-  *
-  * Return: 0 on success, -errno otherwise.
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -12,6 +12,7 @@
+  * All rights reserved.
   */
--int acpm_do_xfer(const struct acpm_handle *handle, const struct acpm_xfer *xfer)
-+int acpm_do_xfer(struct acpm_handle *handle, const struct acpm_xfer *xfer)
- {
- 	struct acpm_info *acpm = handle_to_acpm_info(handle);
- 	struct exynos_mbox_msg msg;
-@@ -674,7 +674,7 @@ static int acpm_probe(struct platform_de
-  * acpm_handle_put() - release the handle acquired by acpm_get_by_phandle.
-  * @handle:	Handle acquired by acpm_get_by_phandle.
-  */
--static void acpm_handle_put(const struct acpm_handle *handle)
-+static void acpm_handle_put(struct acpm_handle *handle)
- {
- 	struct acpm_info *acpm = handle_to_acpm_info(handle);
- 	struct device *dev = acpm->dev;
-@@ -700,9 +700,11 @@ static void devm_acpm_release(struct dev
-  * @np:		ACPM device tree node.
-  *
-  * Return: pointer to handle on success, ERR_PTR(-errno) otherwise.
-+ *
-+ * Note: handle CANNOT be pointer to const
-  */
--static const struct acpm_handle *acpm_get_by_node(struct device *dev,
--						  struct device_node *np)
-+static struct acpm_handle *acpm_get_by_node(struct device *dev,
-+					    struct device_node *np)
- {
- 	struct platform_device *pdev;
- 	struct device_link *link;
-@@ -743,10 +745,10 @@ static const struct acpm_handle *acpm_ge
-  *
-  * Return: pointer to handle on success, ERR_PTR(-errno) otherwise.
-  */
--const struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
--						struct device_node *np)
-+struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
-+					  struct device_node *np)
- {
--	const struct acpm_handle **ptr, *handle;
-+	struct acpm_handle **ptr, *handle;
  
- 	ptr = devres_alloc(devm_acpm_release, sizeof(*ptr), GFP_KERNEL);
- 	if (!ptr)
---- a/drivers/firmware/samsung/exynos-acpm.h
-+++ b/drivers/firmware/samsung/exynos-acpm.h
-@@ -17,7 +17,7 @@ struct acpm_xfer {
- 
- struct acpm_handle;
- 
--int acpm_do_xfer(const struct acpm_handle *handle,
-+int acpm_do_xfer(struct acpm_handle *handle,
- 		 const struct acpm_xfer *xfer);
- 
- #endif /* __EXYNOS_ACPM_H__ */
---- a/drivers/mfd/sec-acpm.c
-+++ b/drivers/mfd/sec-acpm.c
-@@ -367,7 +367,7 @@ static const struct regmap_config s2mpg1
++#include <linux/workqueue.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
+@@ -870,10 +871,18 @@ struct talitos_ahash_req_ctx {
+ 	unsigned int swinit;
+ 	unsigned int first;
+ 	unsigned int last;
++	unsigned int last_request;
+ 	unsigned int to_hash_later;
+ 	unsigned int nbuf;
+ 	struct scatterlist bufsl[2];
+ 	struct scatterlist *psrc;
++
++	struct scatterlist request_bufsl[2];
++	struct ahash_request *areq;
++	struct scatterlist *request_sl;
++	unsigned int remaining_ahash_request_bytes;
++	unsigned int current_ahash_request_bytes;
++	struct work_struct sec1_ahash_process_remaining;
  };
  
- struct sec_pmic_acpm_shared_bus_context {
--	const struct acpm_handle *acpm;
-+	struct acpm_handle *acpm;
- 	unsigned int acpm_chan_id;
- 	u8 speedy_channel;
- };
-@@ -390,7 +390,7 @@ static int sec_pmic_acpm_bus_write(void
- 				   size_t count)
+ struct talitos_export_state {
+@@ -1759,7 +1768,20 @@ static void ahash_done(struct device *de
+ 
+ 	kfree(edesc);
+ 
+-	ahash_request_complete(areq, err);
++	if (err) {
++		ahash_request_complete(areq, err);
++		return;
++	}
++
++	req_ctx->remaining_ahash_request_bytes -=
++		req_ctx->current_ahash_request_bytes;
++
++	if (!req_ctx->remaining_ahash_request_bytes) {
++		ahash_request_complete(areq, 0);
++		return;
++	}
++
++	schedule_work(&req_ctx->sec1_ahash_process_remaining);
+ }
+ 
+ /*
+@@ -1925,60 +1947,7 @@ static struct talitos_edesc *ahash_edesc
+ 				   nbytes, 0, 0, 0, areq->base.flags, false);
+ }
+ 
+-static int ahash_init(struct ahash_request *areq)
+-{
+-	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
+-	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
+-	struct device *dev = ctx->dev;
+-	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
+-	unsigned int size;
+-	dma_addr_t dma;
+-
+-	/* Initialize the context */
+-	req_ctx->buf_idx = 0;
+-	req_ctx->nbuf = 0;
+-	req_ctx->first = 1; /* first indicates h/w must init its context */
+-	req_ctx->swinit = 0; /* assume h/w init of context */
+-	size =	(crypto_ahash_digestsize(tfm) <= SHA256_DIGEST_SIZE)
+-			? TALITOS_MDEU_CONTEXT_SIZE_MD5_SHA1_SHA256
+-			: TALITOS_MDEU_CONTEXT_SIZE_SHA384_SHA512;
+-	req_ctx->hw_context_size = size;
+-
+-	dma = dma_map_single(dev, req_ctx->hw_context, req_ctx->hw_context_size,
+-			     DMA_TO_DEVICE);
+-	dma_unmap_single(dev, dma, req_ctx->hw_context_size, DMA_TO_DEVICE);
+-
+-	return 0;
+-}
+-
+-/*
+- * on h/w without explicit sha224 support, we initialize h/w context
+- * manually with sha224 constants, and tell it to run sha256.
+- */
+-static int ahash_init_sha224_swinit(struct ahash_request *areq)
+-{
+-	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
+-
+-	req_ctx->hw_context[0] = SHA224_H0;
+-	req_ctx->hw_context[1] = SHA224_H1;
+-	req_ctx->hw_context[2] = SHA224_H2;
+-	req_ctx->hw_context[3] = SHA224_H3;
+-	req_ctx->hw_context[4] = SHA224_H4;
+-	req_ctx->hw_context[5] = SHA224_H5;
+-	req_ctx->hw_context[6] = SHA224_H6;
+-	req_ctx->hw_context[7] = SHA224_H7;
+-
+-	/* init 64-bit count */
+-	req_ctx->hw_context[8] = 0;
+-	req_ctx->hw_context[9] = 0;
+-
+-	ahash_init(areq);
+-	req_ctx->swinit = 1;/* prevent h/w initting context with sha256 values*/
+-
+-	return 0;
+-}
+-
+-static int ahash_process_req(struct ahash_request *areq, unsigned int nbytes)
++static int ahash_process_req_one(struct ahash_request *areq, unsigned int nbytes)
  {
- 	struct sec_pmic_acpm_bus_context *ctx = context;
--	const struct acpm_handle *acpm = ctx->shared->acpm;
-+	struct acpm_handle *acpm = ctx->shared->acpm;
- 	const struct acpm_pmic_ops *pmic_ops = &acpm->ops.pmic_ops;
- 	size_t val_count = count - BITS_TO_BYTES(ACPM_ADDR_BITS);
- 	const u8 *d = data;
-@@ -410,7 +410,7 @@ static int sec_pmic_acpm_bus_read(void *
- 				  void *val_buf, size_t val_size)
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
+ 	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
+@@ -1997,12 +1966,12 @@ static int ahash_process_req(struct ahas
+ 
+ 	if (!req_ctx->last && (nbytes + req_ctx->nbuf <= blocksize)) {
+ 		/* Buffer up to one whole block */
+-		nents = sg_nents_for_len(areq->src, nbytes);
++		nents = sg_nents_for_len(req_ctx->request_sl, nbytes);
+ 		if (nents < 0) {
+ 			dev_err(dev, "Invalid number of src SG.\n");
+ 			return nents;
+ 		}
+-		sg_copy_to_buffer(areq->src, nents,
++		sg_copy_to_buffer(req_ctx->request_sl, nents,
+ 				  ctx_buf + req_ctx->nbuf, nbytes);
+ 		req_ctx->nbuf += nbytes;
+ 		return 0;
+@@ -2029,7 +1998,7 @@ static int ahash_process_req(struct ahas
+ 		sg_init_table(req_ctx->bufsl, nsg);
+ 		sg_set_buf(req_ctx->bufsl, ctx_buf, req_ctx->nbuf);
+ 		if (nsg > 1)
+-			sg_chain(req_ctx->bufsl, 2, areq->src);
++			sg_chain(req_ctx->bufsl, 2, req_ctx->request_sl);
+ 		req_ctx->psrc = req_ctx->bufsl;
+ 	} else if (is_sec1 && req_ctx->nbuf && req_ctx->nbuf < blocksize) {
+ 		int offset;
+@@ -2038,26 +2007,26 @@ static int ahash_process_req(struct ahas
+ 			offset = blocksize - req_ctx->nbuf;
+ 		else
+ 			offset = nbytes_to_hash - req_ctx->nbuf;
+-		nents = sg_nents_for_len(areq->src, offset);
++		nents = sg_nents_for_len(req_ctx->request_sl, offset);
+ 		if (nents < 0) {
+ 			dev_err(dev, "Invalid number of src SG.\n");
+ 			return nents;
+ 		}
+-		sg_copy_to_buffer(areq->src, nents,
++		sg_copy_to_buffer(req_ctx->request_sl, nents,
+ 				  ctx_buf + req_ctx->nbuf, offset);
+ 		req_ctx->nbuf += offset;
+-		req_ctx->psrc = scatterwalk_ffwd(req_ctx->bufsl, areq->src,
++		req_ctx->psrc = scatterwalk_ffwd(req_ctx->bufsl, req_ctx->request_sl,
+ 						 offset);
+ 	} else
+-		req_ctx->psrc = areq->src;
++		req_ctx->psrc = req_ctx->request_sl;
+ 
+ 	if (to_hash_later) {
+-		nents = sg_nents_for_len(areq->src, nbytes);
++		nents = sg_nents_for_len(req_ctx->request_sl, nbytes);
+ 		if (nents < 0) {
+ 			dev_err(dev, "Invalid number of src SG.\n");
+ 			return nents;
+ 		}
+-		sg_pcopy_to_buffer(areq->src, nents,
++		sg_pcopy_to_buffer(req_ctx->request_sl, nents,
+ 				   req_ctx->buf[(req_ctx->buf_idx + 1) & 1],
+ 				      to_hash_later,
+ 				      nbytes - to_hash_later);
+@@ -2065,7 +2034,7 @@ static int ahash_process_req(struct ahas
+ 	req_ctx->to_hash_later = to_hash_later;
+ 
+ 	/* Allocate extended descriptor */
+-	edesc = ahash_edesc_alloc(areq, nbytes_to_hash);
++	edesc = ahash_edesc_alloc(req_ctx->areq, nbytes_to_hash);
+ 	if (IS_ERR(edesc))
+ 		return PTR_ERR(edesc);
+ 
+@@ -2087,14 +2056,123 @@ static int ahash_process_req(struct ahas
+ 	if (ctx->keylen && (req_ctx->first || req_ctx->last))
+ 		edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_HMAC;
+ 
+-	return common_nonsnoop_hash(edesc, areq, nbytes_to_hash, ahash_done);
++	return common_nonsnoop_hash(edesc, req_ctx->areq, nbytes_to_hash, ahash_done);
+ }
+ 
+-static int ahash_update(struct ahash_request *areq)
++static void sec1_ahash_process_remaining(struct work_struct *work)
  {
- 	struct sec_pmic_acpm_bus_context *ctx = context;
--	const struct acpm_handle *acpm = ctx->shared->acpm;
-+	struct acpm_handle *acpm = ctx->shared->acpm;
- 	const struct acpm_pmic_ops *pmic_ops = &acpm->ops.pmic_ops;
- 	const u8 *r = reg_buf;
- 	u8 reg;
-@@ -429,7 +429,7 @@ static int sec_pmic_acpm_bus_reg_update_
- 					     unsigned int val)
++	struct talitos_ahash_req_ctx *req_ctx =
++		container_of(work, struct talitos_ahash_req_ctx,
++			     sec1_ahash_process_remaining);
++	int err = 0;
++
++	req_ctx->request_sl = scatterwalk_ffwd(req_ctx->request_bufsl,
++					       req_ctx->request_sl, TALITOS1_MAX_DATA_LEN);
++
++	if (req_ctx->remaining_ahash_request_bytes > TALITOS1_MAX_DATA_LEN)
++		req_ctx->current_ahash_request_bytes = TALITOS1_MAX_DATA_LEN;
++	else {
++		req_ctx->current_ahash_request_bytes =
++			req_ctx->remaining_ahash_request_bytes;
++
++		if (req_ctx->last_request)
++			req_ctx->last = 1;
++	}
++
++	err = ahash_process_req_one(req_ctx->areq,
++				    req_ctx->current_ahash_request_bytes);
++
++	if (err != -EINPROGRESS)
++		ahash_request_complete(req_ctx->areq, err);
++}
++
++static int ahash_process_req(struct ahash_request *areq, unsigned int nbytes)
++{
++	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
++	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
++	struct device *dev = ctx->dev;
++	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
++	struct talitos_private *priv = dev_get_drvdata(dev);
++	bool is_sec1 = has_ftr_sec1(priv);
++
++	req_ctx->areq = areq;
++	req_ctx->request_sl = areq->src;
++	req_ctx->remaining_ahash_request_bytes = nbytes;
++
++	if (is_sec1) {
++		if (nbytes > TALITOS1_MAX_DATA_LEN)
++			nbytes = TALITOS1_MAX_DATA_LEN;
++		else if (req_ctx->last_request)
++			req_ctx->last = 1;
++	}
++
++	req_ctx->current_ahash_request_bytes = nbytes;
++
++	return ahash_process_req_one(req_ctx->areq,
++				     req_ctx->current_ahash_request_bytes);
++}
++
++static int ahash_init(struct ahash_request *areq)
++{
++	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
++	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
++	struct device *dev = ctx->dev;
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
++	unsigned int size;
++	dma_addr_t dma;
+ 
++	/* Initialize the context */
++	req_ctx->buf_idx = 0;
++	req_ctx->nbuf = 0;
++	req_ctx->first = 1; /* first indicates h/w must init its context */
++	req_ctx->swinit = 0; /* assume h/w init of context */
++	size =	(crypto_ahash_digestsize(tfm) <= SHA256_DIGEST_SIZE)
++			? TALITOS_MDEU_CONTEXT_SIZE_MD5_SHA1_SHA256
++			: TALITOS_MDEU_CONTEXT_SIZE_SHA384_SHA512;
++	req_ctx->hw_context_size = size;
++	req_ctx->last_request = 0;
+ 	req_ctx->last = 0;
++	INIT_WORK(&req_ctx->sec1_ahash_process_remaining, sec1_ahash_process_remaining);
++
++	dma = dma_map_single(dev, req_ctx->hw_context, req_ctx->hw_context_size,
++			     DMA_TO_DEVICE);
++	dma_unmap_single(dev, dma, req_ctx->hw_context_size, DMA_TO_DEVICE);
++
++	return 0;
++}
++
++/*
++ * on h/w without explicit sha224 support, we initialize h/w context
++ * manually with sha224 constants, and tell it to run sha256.
++ */
++static int ahash_init_sha224_swinit(struct ahash_request *areq)
++{
++	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
++
++	req_ctx->hw_context[0] = SHA224_H0;
++	req_ctx->hw_context[1] = SHA224_H1;
++	req_ctx->hw_context[2] = SHA224_H2;
++	req_ctx->hw_context[3] = SHA224_H3;
++	req_ctx->hw_context[4] = SHA224_H4;
++	req_ctx->hw_context[5] = SHA224_H5;
++	req_ctx->hw_context[6] = SHA224_H6;
++	req_ctx->hw_context[7] = SHA224_H7;
++
++	/* init 64-bit count */
++	req_ctx->hw_context[8] = 0;
++	req_ctx->hw_context[9] = 0;
++
++	ahash_init(areq);
++	req_ctx->swinit = 1;/* prevent h/w initting context with sha256 values*/
++
++	return 0;
++}
++
++static int ahash_update(struct ahash_request *areq)
++{
++	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
++
++	req_ctx->last_request = 0;
+ 
+ 	return ahash_process_req(areq, areq->nbytes);
+ }
+@@ -2103,7 +2181,7 @@ static int ahash_final(struct ahash_requ
  {
- 	struct sec_pmic_acpm_bus_context *ctx = context;
--	const struct acpm_handle *acpm = ctx->shared->acpm;
-+	struct acpm_handle *acpm = ctx->shared->acpm;
- 	const struct acpm_pmic_ops *pmic_ops = &acpm->ops.pmic_ops;
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
  
- 	return pmic_ops->update_reg(acpm, ctx->shared->acpm_chan_id, ctx->type, reg & 0xff,
-@@ -480,7 +480,7 @@ static int sec_pmic_acpm_probe(struct pl
- 	struct regmap *regmap_common, *regmap_pmic, *regmap;
- 	const struct sec_pmic_acpm_platform_data *pdata;
- 	struct sec_pmic_acpm_shared_bus_context *shared_ctx;
--	const struct acpm_handle *acpm;
-+	struct acpm_handle *acpm;
- 	struct device *dev = &pdev->dev;
- 	int ret, irq;
+-	req_ctx->last = 1;
++	req_ctx->last_request = 1;
  
---- a/include/linux/firmware/samsung/exynos-acpm-protocol.h
-+++ b/include/linux/firmware/samsung/exynos-acpm-protocol.h
-@@ -14,30 +14,24 @@ struct acpm_handle;
- struct device_node;
- 
- struct acpm_dvfs_ops {
--	int (*set_rate)(const struct acpm_handle *handle,
--			unsigned int acpm_chan_id, unsigned int clk_id,
--			unsigned long rate);
--	unsigned long (*get_rate)(const struct acpm_handle *handle,
-+	int (*set_rate)(struct acpm_handle *handle, unsigned int acpm_chan_id,
-+			unsigned int clk_id, unsigned long rate);
-+	unsigned long (*get_rate)(struct acpm_handle *handle,
- 				  unsigned int acpm_chan_id,
- 				  unsigned int clk_id);
- };
- 
- struct acpm_pmic_ops {
--	int (*read_reg)(const struct acpm_handle *handle,
--			unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
--			u8 *buf);
--	int (*bulk_read)(const struct acpm_handle *handle,
--			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
--			 u8 count, u8 *buf);
--	int (*write_reg)(const struct acpm_handle *handle,
--			 unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
--			 u8 value);
--	int (*bulk_write)(const struct acpm_handle *handle,
--			  unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
--			  u8 count, const u8 *buf);
--	int (*update_reg)(const struct acpm_handle *handle,
--			  unsigned int acpm_chan_id, u8 type, u8 reg, u8 chan,
--			  u8 value, u8 mask);
-+	int (*read_reg)(struct acpm_handle *handle, unsigned int acpm_chan_id,
-+			u8 type, u8 reg, u8 chan, u8 *buf);
-+	int (*bulk_read)(struct acpm_handle *handle, unsigned int acpm_chan_id,
-+			 u8 type, u8 reg, u8 chan, u8 count, u8 *buf);
-+	int (*write_reg)(struct acpm_handle *handle, unsigned int acpm_chan_id,
-+			 u8 type, u8 reg, u8 chan, u8 value);
-+	int (*bulk_write)(struct acpm_handle *handle, unsigned int acpm_chan_id,
-+			  u8 type, u8 reg, u8 chan, u8 count, const u8 *buf);
-+	int (*update_reg)(struct acpm_handle *handle, unsigned int acpm_chan_id,
-+			  u8 type, u8 reg, u8 chan, u8 value, u8 mask);
- };
- 
- struct acpm_ops {
-@@ -56,12 +50,12 @@ struct acpm_handle {
- struct device;
- 
- #if IS_ENABLED(CONFIG_EXYNOS_ACPM_PROTOCOL)
--const struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
--						struct device_node *np);
-+struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
-+					  struct device_node *np);
- #else
- 
--static inline const struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
--							      struct device_node *np)
-+static inline struct acpm_handle *devm_acpm_get_by_node(struct device *dev,
-+							struct device_node *np)
+ 	return ahash_process_req(areq, 0);
+ }
+@@ -2112,7 +2190,7 @@ static int ahash_finup(struct ahash_requ
  {
- 	return NULL;
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
+ 
+-	req_ctx->last = 1;
++	req_ctx->last_request = 1;
+ 
+ 	return ahash_process_req(areq, areq->nbytes);
  }
 
 
