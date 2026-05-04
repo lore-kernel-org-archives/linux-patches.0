@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BEE3E1D01;
-	Mon,  4 May 2026 14:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3937B3E1CFB;
+	Mon,  4 May 2026 14:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904828; cv=none; b=J6zPI3MyJfl1GSEe1lq+ftOMc0dXYDieKT6RegFASHs9zuG15/pq/DEDYgcb2MwTb+NjJo3RM4HhEfZsZAZspcLFrRfgTf4ph9BJM7LjYnXePq/jyrKIUOcGZP1B2AxzVJwN3AJqzfgOKXtId2QTD010M7sArykt8EoUS5nY2IE=
+	t=1777904830; cv=none; b=CbBUMGfQE8ycn+SKeZmPjrx7TefSbaIXrmdmtz7ywp9Rbv5yOvUfDQt89DEqiFZb5h5igOJQ4lbS32anrcqTxGUjRjz92lIbwY1YjRHz+jH9tlr1c/dg5Tba0rLAcxZKa8l/fjdhWjJu9UHIdibWVXGXWAIt6aQ/9/s8pUkhi38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904828; c=relaxed/simple;
-	bh=PEYXvB8qIkcH0xE+lkb8P9tlsyZgfdet8PU/UKbSH3A=;
+	s=arc-20240116; t=1777904830; c=relaxed/simple;
+	bh=aJ89LwdJX/tHRtxwPq1CO2UxC9x8gF8x/vvhT+YzBeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5hr0WKaAhQGlmGBX/RjMOapU5FeXVZoLqCxwYHFjFMCH8RTD+jLPrlRvv4Qfp/NlQFkKs3dAYSHNl8t5UeSJHgrLeUMMgZBPXHiatMTK7lzr0pQH6ogge0xnuzFw1PgapW4YyoHCNeNjEUFceaIlqBKyN+69zv+4x8zx+K0W9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUywYJZd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PzPQVxusZyu2eP7tLK0jS7qYoUc+fVVuxZM8maG8Be0+ayFnfyRXPQFAq5Yi+j0F4xupcju6ZzIrYl4y8XUqNq+m4mE4jgfc+/whjMrQblM9pjDkz9skNv7hn/9pITEvDkO0c/ukkun+QdOt4jdOSWox6iSKGpNrROLgJLHveAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsYSOvb2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUywYJZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4085CC2BCF4;
-	Mon,  4 May 2026 14:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsYSOvb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B75C2BCB8;
+	Mon,  4 May 2026 14:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904827;
-	bh=PEYXvB8qIkcH0xE+lkb8P9tlsyZgfdet8PU/UKbSH3A=;
+	s=korg; t=1777904830;
+	bh=aJ89LwdJX/tHRtxwPq1CO2UxC9x8gF8x/vvhT+YzBeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUywYJZdz/Y/xZ5frgNOYYUkTP7V23zVu2Dztb4HeVNNV5oZ1uH3LzILC6A1hGWMZ
-	 ZuTLV4x5LEyy73QXrBLtvGu21Tg2l2oudSK0J4qi8xJbR7Y0/0Cb1tpP5d2QK1vaCD
-	 XO+2dMv9JUMKZuEQH4sZqyA4CmOf4Qdzg9LMMz94=
+	b=XsYSOvb2HhAatg/HV0AJGn6lAswSGBuzutIR8VmKzadQX0bQ2BuWp+0oV71g/kjNu
+	 6EaQNpUzb09bAks3fVpQ8IqVBQPHwWWr9NRxov4xe061qZAU9QFVjc5gS2Hz1n8YXH
+	 K2iQlwrh14axy3ve0hi58BFwxl749zo4MbMPVEJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 189/215] mm/zsmalloc: copy KMSAN metadata in zs_page_migrate()
-Date: Mon,  4 May 2026 15:53:28 +0200
-Message-ID: <20260504135137.264461319@linuxfoundation.org>
+Subject: [PATCH 6.12 190/215] media: rc: ttusbir: respect DMA coherency rules
+Date: Mon,  4 May 2026 15:53:29 +0200
+Message-ID: <20260504135137.302737461@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -54,44 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 4fb61d95ad21c3b6f1c09f357ff49d70abb0535e ]
+[ Upstream commit 50acaad3d202c064779db8dc3d010007347f59c7 ]
 
-zs_page_migrate() uses copy_page() to copy the contents of a zspage page
-during migration.  However, copy_page() is not instrumented by KMSAN, so
-the shadow and origin metadata of the destination page are not updated.
+Buffers must not share a cache line with other data structures.
+Allocate separately.
 
-As a result, subsequent accesses to the migrated page are reported as
-use-after-free by KMSAN, despite the data being correctly copied.
-
-Add a kmsan_copy_page_meta() call after copy_page() to propagate the KMSAN
-metadata to the new page, matching what copy_highpage() does internally.
-
-Link: https://lkml.kernel.org/r/20260321132912.93434-1-syoshida@redhat.com
-Fixes: afb2d666d025 ("zsmalloc: use copy_page for full page copy")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ translated zpdesc_page(newzpdesc/zpdesc) arguments to newpage/page ]
+Fixes: 0938069fa0897 ("[media] rc: Add support for the TechnoTrend USB IR Receiver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ kept kzalloc(sizeof(*tt), GFP_KERNEL) instead of kzalloc_obj() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/zsmalloc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/rc/ttusbir.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/mm/zsmalloc.c
-+++ b/mm/zsmalloc.c
-@@ -1808,6 +1808,7 @@ static int zs_page_migrate(struct page *
- 	 */
- 	d_addr = kmap_atomic(newpage);
- 	copy_page(d_addr, s_addr);
-+	kmsan_copy_page_meta(newpage, page);
- 	kunmap_atomic(d_addr);
+--- a/drivers/media/rc/ttusbir.c
++++ b/drivers/media/rc/ttusbir.c
+@@ -32,7 +32,7 @@ struct ttusbir {
  
- 	for (addr = s_addr + offset; addr < s_addr + PAGE_SIZE;
+ 	struct led_classdev led;
+ 	struct urb *bulk_urb;
+-	uint8_t bulk_buffer[5];
++	u8 *bulk_buffer;
+ 	int bulk_out_endp, iso_in_endp;
+ 	bool led_on, is_led_on;
+ 	atomic_t led_complete;
+@@ -186,13 +186,16 @@ static int ttusbir_probe(struct usb_inte
+ 	struct rc_dev *rc;
+ 	int i, j, ret;
+ 	int altsetting = -1;
++	u8 *buffer;
+ 
+ 	tt = kzalloc(sizeof(*tt), GFP_KERNEL);
++	buffer = kzalloc(5, GFP_KERNEL);
+ 	rc = rc_allocate_device(RC_DRIVER_IR_RAW);
+-	if (!tt || !rc) {
++	if (!tt || !rc || buffer) {
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
++	tt->bulk_buffer = buffer;
+ 
+ 	/* find the correct alt setting */
+ 	for (i = 0; i < intf->num_altsetting && altsetting == -1; i++) {
+@@ -281,8 +284,8 @@ static int ttusbir_probe(struct usb_inte
+ 	tt->bulk_buffer[3] = 0x01;
+ 
+ 	usb_fill_bulk_urb(tt->bulk_urb, tt->udev, usb_sndbulkpipe(tt->udev,
+-		tt->bulk_out_endp), tt->bulk_buffer, sizeof(tt->bulk_buffer),
+-						ttusbir_bulk_complete, tt);
++			  tt->bulk_out_endp), tt->bulk_buffer, 5,
++			  ttusbir_bulk_complete, tt);
+ 
+ 	tt->led.name = "ttusbir:green:power";
+ 	tt->led.default_trigger = "rc-feedback";
+@@ -351,6 +354,7 @@ out:
+ 		kfree(tt);
+ 	}
+ 	rc_free_device(rc);
++	kfree(buffer);
+ 
+ 	return ret;
+ }
+@@ -373,6 +377,7 @@ static void ttusbir_disconnect(struct us
+ 	}
+ 	usb_kill_urb(tt->bulk_urb);
+ 	usb_free_urb(tt->bulk_urb);
++	kfree(tt->bulk_buffer);
+ 	usb_set_intfdata(intf, NULL);
+ 	kfree(tt);
+ }
 
 
