@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BBF3A7F4C;
-	Mon,  4 May 2026 14:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585423AA4F8;
+	Mon,  4 May 2026 14:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904015; cv=none; b=Fjgf1YUaeJNCRBiRDlVIqstVcaasdVXV9FEqh0L6aRDyx3hOq3qgCNmjKm/5Ut6vMlMw7JdI3k7mhOwsmVlzYaJqS/Wc77doSXU44WbelBXbfwUwJEmn/ahpagpajIzZxgh/AN6w7rl4U86WyR8Je4UtZOx8hQ5hwJrbfVoCNfA=
+	t=1777904018; cv=none; b=mY1j5UKe08gaJc/Bgmqw/M9hpwOWfXTGSA1CeeaCRn0Uxl58gb9KwmD0WhGOypib2x8kfjJvil//2/zf4hQTWJHuBret5RMXpInVVsPIfWaYFtE5FQhr+dsOdR0k1F5gRx+wKhNKyDGmt5lW7BLqYqKLS7AFUyMGJU6fmE6dVU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904015; c=relaxed/simple;
-	bh=xMzadajH6GHAJA0IhyR5E6KjOkbWqvt62eoXJzsvq7c=;
+	s=arc-20240116; t=1777904018; c=relaxed/simple;
+	bh=hLcl7R2ZTtN05pxwCmIHLdmy6ua4QQmzONOfisUhQWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRB8/xG2YV0dwatRAhJ/cywXULfwmXomM5UYpxzLqzFF2PWZ/0/j55fCqI8LM8r8U2zUXoFh3e1csfb7O5SbtiJv5gdlRxzySa2cseqgoT79bbDAuj2HvF5Bg05hnsGdHCLGnK5i2Efr6YwhiD81y+QTUi8sO8ChIU4aSoQbosI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7gC4Msp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lxs8q//FbE1/QcYm8ahp71/2LiSXWxT38ORbOthuwYWewTG2YU6UYzaGryObqJhlM1XzncAiKq8DIYtksJe7M0JO3b/Yw76433o+liUhRTil3FtPAJv3cbyfDYrBUiBJ0H4RfTg7JZoabWlHJ2ea2ztkWVERkZT4d+wu5BXx2mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/9Fchfn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7gC4Msp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9E8C2BCF4;
-	Mon,  4 May 2026 14:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/9Fchfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2747C2BCB8;
+	Mon,  4 May 2026 14:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904015;
-	bh=xMzadajH6GHAJA0IhyR5E6KjOkbWqvt62eoXJzsvq7c=;
+	s=korg; t=1777904018;
+	bh=hLcl7R2ZTtN05pxwCmIHLdmy6ua4QQmzONOfisUhQWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E7gC4MspWbCCLlfZfqJ1isA4wHM8XWGBiKgM53STSuzBXNwgZvQhyRephTbqfMNYd
-	 90Tvwz47k8MGkJKe8VxSnruWrAKBDEZnMxj/2SEaCHVeigtebuUgUbePELVTe/3BoK
-	 BSpyXzlGHfx+iuKi9BtZlghHNbDfZ5waXxrZTDR8=
+	b=d/9Fchfn5RboHx4j++HtfDna6g2ZgXEcqbqkDTa4oByl/oFg6B+mdaLKbF4qebwCX
+	 5e+V3/PHkC9nP5CyCS1EjudPwcRGyv1pVFue1RA3U10DnxuTN1FAwZxO/6X9AiGvVY
+	 AVLIam1gQ1vX+zfUB89T7X7ZzQgpWt2My5MEiP9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 150/275] xfs: fix a resource leak in xfs_alloc_buftarg()
-Date: Mon,  4 May 2026 15:51:30 +0200
-Message-ID: <20260504135148.507993506@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Julius Werner <jwerner@chromium.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Hans de Goede <hansg@kernel.org>,
+	linux-fbdev@vger.kernel.org
+Subject: [PATCH 6.18 151/275] firmware: google: framebuffer: Do not unregister platform device
+Date: Mon,  4 May 2026 15:51:31 +0200
+Message-ID: <20260504135148.546551690@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,32 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 29a7b2614357393b176ef06ba5bc3ff5afc8df69 upstream.
+commit 5cd28bd28c8ce426b56ce4230dbd17537181d5ad upstream.
 
-In the error path, call fs_put_dax() to drop the DAX
-device reference.
+The native driver takes over the framebuffer aperture by removing the
+system- framebuffer platform device. Afterwards the pointer in drvdata
+is dangling. Remove the entire logic around drvdata and let the kernel's
+aperture helpers handle this. The platform device depends on the native
+hardware device instead of the coreboot device anyway.
 
-Fixes: 6f643c57d57c ("xfs: implement ->notify_failure() for XFS")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+When commit 851b4c14532d ("firmware: coreboot: Add coreboot framebuffer
+driver") added the coreboot framebuffer code, the kernel did not support
+device-based aperture management. Instead native driviers only removed
+the conflicting fbdev device. At that point, unregistering the framebuffer
+device most likely worked correctly. It was definitely broken after
+commit d9702b2a2171 ("fbdev/simplefb: Do not use struct
+fb_info.apertures"). So take this commit for the Fixes tag. Earlier
+releases might work depending on the native hardware driver.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: d9702b2a2171 ("fbdev/simplefb: Do not use struct fb_info.apertures")
+Acked-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Acked-by: Julius Werner <jwerner@chromium.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Hans de Goede <hansg@kernel.org>
+Cc: linux-fbdev@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v6.3+
+Link: https://patch.msgid.link/20260217155836.96267-2-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_buf.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/google/framebuffer-coreboot.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/fs/xfs/xfs_buf.c
-+++ b/fs/xfs/xfs_buf.c
-@@ -1831,6 +1831,7 @@ xfs_alloc_buftarg(
- 	return btp;
+--- a/drivers/firmware/google/framebuffer-coreboot.c
++++ b/drivers/firmware/google/framebuffer-coreboot.c
+@@ -81,19 +81,10 @@ static int framebuffer_probe(struct core
+ 						 sizeof(pdata));
+ 	if (IS_ERR(pdev))
+ 		pr_warn("coreboot: could not register framebuffer\n");
+-	else
+-		dev_set_drvdata(&dev->dev, pdev);
  
- error_free:
-+	fs_put_dax(btp->bt_daxdev, mp);
- 	kfree(btp);
- 	return ERR_PTR(error);
+ 	return PTR_ERR_OR_ZERO(pdev);
  }
+ 
+-static void framebuffer_remove(struct coreboot_device *dev)
+-{
+-	struct platform_device *pdev = dev_get_drvdata(&dev->dev);
+-
+-	platform_device_unregister(pdev);
+-}
+-
+ static const struct coreboot_device_id framebuffer_ids[] = {
+ 	{ .tag = CB_TAG_FRAMEBUFFER },
+ 	{ /* sentinel */ }
+@@ -102,7 +93,6 @@ MODULE_DEVICE_TABLE(coreboot, framebuffe
+ 
+ static struct coreboot_driver framebuffer_driver = {
+ 	.probe = framebuffer_probe,
+-	.remove = framebuffer_remove,
+ 	.drv = {
+ 		.name = "framebuffer",
+ 	},
 
 
