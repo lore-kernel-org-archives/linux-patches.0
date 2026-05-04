@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA2440DFD4;
-	Mon,  4 May 2026 13:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D2D3DE452;
+	Mon,  4 May 2026 13:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903123; cv=none; b=CZtGLStLZUp78zfngBOHj7JrGAyuuHaFsimBBKRwBmRt9tZ4wyrcCCprYPaGRnBjs2Rvz/wGh3JIh8TA2uNh6uFfqKO2zsZwSV+AT/oDNShj+Xuab4f5pL/8FkhTN6Ov3DwaSuzQt74gL2oO0C/m1ZvvXAIj7PGyylKsZqHYrTw=
+	t=1777903126; cv=none; b=B++NOhFiZdhm9b3SaN2Z9D/fg7EjU0KcwhohJlxfDlvPLLV6nHx71hup8nuJzas9fGwNGGTk4Ounue5UE8emkC4C0We34W9g0H3PU59CIQONYXuQovFqCWg/zhClEL1FgMx+mxCpTkrd8L5h/lUv6LrTUc91K2bl8uXhvd7+L8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903123; c=relaxed/simple;
-	bh=eNC64pxZf2uyBGoiwikcbfSaAFYsqrvTeEdD6vKv034=;
+	s=arc-20240116; t=1777903126; c=relaxed/simple;
+	bh=0QIAOWdaaAHMICltR4wwDYzJUuaH9bNjwZ4pv8n7SfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkwwXP/7JHAO4sTQ0T6TNoLrmxh0KX99kLzs+4r3zqilObR+G9wr+MblotXG2/iq0VLOJ02OTyf7tJn/55o0xR5d9U1U8zvRI9pfkBWEQV2J+KauOyhCq9OtMuuYOsRebciGOtHqv/wQ9Kp8TJECM6+VRSzgMHXviLBhnZAK94M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpahb8Ch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MOulQCq7Et30/W1oAJBifQfDwezlyjRr5zYZFor+4jl5i4YuUKeF7LrihhPrusNEtzUOrnMjFbeZ9C6qeJ6CgqNQFnuZcWDAmp/Ymi8OSveqLDxgDKODlwI8+Dcy3p0z/NRh5+G+ILzglwdSivU9HKh+GFy/uN5IznpFrJ3iBCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5epaBJZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpahb8Ch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CD9C2BCB8;
-	Mon,  4 May 2026 13:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5epaBJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78335C2BCB8;
+	Mon,  4 May 2026 13:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903123;
-	bh=eNC64pxZf2uyBGoiwikcbfSaAFYsqrvTeEdD6vKv034=;
+	s=korg; t=1777903125;
+	bh=0QIAOWdaaAHMICltR4wwDYzJUuaH9bNjwZ4pv8n7SfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpahb8ChYx86teEc7NCR1alPPLlMtbQ2os44saX93CfPTZ64UsNFm8DH+QNug1r0P
-	 6t37zI4d0EZhtA+nGLvePeXL7U4C4uny3urgNplOsH6IO+9W7w2v75hyzkTstEd5Q9
-	 s4Fp8X0LJyGuakN1MZJi1zqdJEGc+gisGqn7ZVus=
+	b=V5epaBJZB6PXoGTrvTqxbrWsIlK8n8Y4uFu0FLgpWFMBDLAXP1NNDvL4PCE3SS/oz
+	 fvNiMl0hvVa0RAZ9K1gjULY/VKO8RzjLeRzqu7YtdlaFCoNO8ECYuIGVUW6UCDlp9L
+	 sAk6fNkWy6qlmrlESIxsX1h00Gy2Dpd2tR4l+DL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Longxuan Yu <ylong030@ucr.edu>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pavel Begunkov <asml.silence@gmail.com>,
+	=?UTF-8?q?Azizcan=20Da=C5=9Ftan?= <azizcan.d@mileniumsec.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.0 113/307] io_uring/poll: fix signed comparison in io_poll_get_ownership()
-Date: Mon,  4 May 2026 15:49:58 +0200
-Message-ID: <20260504135147.058223051@linuxfoundation.org>
+Subject: [PATCH 7.0 114/307] io_uring/poll: ensure EPOLL_ONESHOT is propagated for EPOLL_URING_WAKE
+Date: Mon,  4 May 2026 15:49:59 +0200
+Message-ID: <20260504135147.094980654@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,58 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Longxuan Yu <ylong030@ucr.edu>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 326941b22806cbf2df1fbfe902b7908b368cce42 upstream.
+commit 1967f0b1cafdde37aa9e08e6021c14bcc484b7a5 upstream.
 
-io_poll_get_ownership() uses a signed comparison to check whether
-poll_refs has reached the threshold for the slowpath:
+Commit:
 
-    if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
+aacf2f9f382c ("io_uring: fix req->apoll_events")
 
-atomic_read() returns int (signed). When IO_POLL_CANCEL_FLAG
-(BIT(31)) is set in poll_refs, the value becomes negative in
-signed arithmetic, so the >= 128 comparison always evaluates to
-false and the slowpath is never taken.
+fixed an issue where poll->events and req->apoll_events weren't
+synchronized, but then when the commit referenced in Fixes got added,
+it didn't ensure the same thing.
 
-Fix this by casting the atomic_read() result to unsigned int
-before the comparison, so that the cancel flag is treated as a
-large positive value and correctly triggers the slowpath.
+If we mask in EPOLLONESHOT in the regular EPOLL_URING_WAKE path, then
+ensure it's done for both. Including a link to the original report
+below, even though it's mostly nonsense. But it includes a reproducer
+that does show that IORING_CQE_F_MORE is set in the previous CQE,
+while no more CQEs will be generated for this request. Just ignore
+anything that pretends this is security related in any way, it's just
+the typical AI nonsense.
 
-Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
 Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Longxuan Yu <ylong030@ucr.edu>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://patch.msgid.link/3a3508b08bcd7f1bc3beff848ae6e1d73d355043.1775965597.git.ylong030@ucr.edu
+Link: https://lore.kernel.org/io-uring/CAM0zi7yQzF3eKncgHo4iVM5yFLAjsiob_ucqyWKs=hyd_GqiMg@mail.gmail.com/
+Reported-by: Azizcan Daştan <azizcan.d@mileniumsec.com>
+Fixes: 4464853277d0 ("io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/poll.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/io_uring/poll.c
 +++ b/io_uring/poll.c
-@@ -93,7 +93,7 @@ static bool io_poll_get_ownership_slowpa
-  */
- static inline bool io_poll_get_ownership(struct io_kiocb *req)
- {
--	if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
-+	if (unlikely((unsigned int)atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
- 		return io_poll_get_ownership_slowpath(req);
- 	return !(atomic_fetch_inc(&req->poll_refs) & IO_POLL_REF_MASK);
- }
+@@ -415,8 +415,10 @@ static int io_poll_wake(struct wait_queu
+ 		 * disable multishot as there is a circular dependency between
+ 		 * CQ posting and triggering the event.
+ 		 */
+-		if (mask & EPOLL_URING_WAKE)
++		if (mask & EPOLL_URING_WAKE) {
+ 			poll->events |= EPOLLONESHOT;
++			req->apoll_events |= EPOLLONESHOT;
++		}
+ 
+ 		/* optional, saves extra locking for removal in tw handler */
+ 		if (mask && poll->events & EPOLLONESHOT) {
 
 
