@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB7F3DD53E;
-	Mon,  4 May 2026 14:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D739E3DEACB;
+	Mon,  4 May 2026 14:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903665; cv=none; b=uirX5qHNjGOdVf7/CUvZNGo/OioEfv4I2JyuEyS8O6upwaRG6UeONEXMBqZTJ6Jbn9N3TzjYYvqbcW5lr2EhZt6+VGSn4kGmDn8YYluKYjJyEcRAGVOAyNJhfWU40xfk4Hlfrpc2dSAWGiydbkKlN+NfM5B/44IfxYy4e2ZXYBk=
+	t=1777903667; cv=none; b=VzvvSk1tHzAI3Boa3rWfSWaJd7Y4xSDkDMaDSzYKT3pJ3RyWWobCCoWqO4RVQH6hd4LB9cCeT05lNqxRo1iPtitWZIhwoE1jkmkQTdd31bjBtyV3i4rIcRl+4gNiC8xd6HZrxeXJeDcNsKzzi7vVYcUaD0ihVvvIR0c10UJRg8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903665; c=relaxed/simple;
-	bh=fK/igb9L8WkBU6tPDYWVO88vDpeInKr9l2XPslteAKY=;
+	s=arc-20240116; t=1777903667; c=relaxed/simple;
+	bh=54RD0Fu6TwZvdIu02Qj8FhZb4luekgCH/f5Plr0V0u8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSoX8pHG7MFEwppaGkfDK8KL+6irJNqgHRDHJm84D70cxQPwfWAHb0LhInAAt47g1VvClFU1sS48fVFWUMk+fEs2gkYkbOGmmeTrLSUx57H2SmIXuBeQd19vBLYPC+kyqrpwlaQvVkwkoI2Aln0zxwRbDkUD9TzSiRazZoyCtjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrx+W8Wy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZLOQSgR6phetJ/zeeZ+nAx1nWEckdvlABCAStmcDge0IDZOv44e6dx3U44IbpmgbcTilWUTAWoTLIjzaTQNMda78oYEKW+OK99+3WDmIRN72zQJl7MlVtLi9ETLK3J2m88HqmYFNxH5KAxAWmBaP+sB68Qc83BlEKDleuGGttH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJrgM5hh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrx+W8Wy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7928C2BCB8;
-	Mon,  4 May 2026 14:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJrgM5hh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D05EC2BCB8;
+	Mon,  4 May 2026 14:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903665;
-	bh=fK/igb9L8WkBU6tPDYWVO88vDpeInKr9l2XPslteAKY=;
+	s=korg; t=1777903667;
+	bh=54RD0Fu6TwZvdIu02Qj8FhZb4luekgCH/f5Plr0V0u8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrx+W8WybGeO3LmV74/H/7of8DSqVRxCeI9kMR0z+tAxy6+mpt9t9wXv4wdbVeiig
-	 OZ0dEMAQjVESa68RsdlwH1HLOwsxTWYPpUzE8YcIscFSTo/HKgjxSkShXoWvO7F+7A
-	 PafKadE+lVYtbLRo5Tkyz4JsPxPyDAofMwWLOxo4=
+	b=rJrgM5hh/16n9dM+x1xiw2SVQOK6A3E2xm2U/3Y8KT1VWYInD+BsUFRpO2B69PYEO
+	 d1dhOll/b4p+FNM+oAsz5q//A1GwS85VaiVv7sDjD4Eqg7IqkzLNZ0PGf3YuG/Uyfs
+	 37LHgPhfZDSp2bqGfGpM6EPuVVKljiEekANXUAlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Tyllis Xu <LivelyCarpet87@gmail.com>
-Subject: [PATCH 6.18 015/275] ibmasm: fix heap over-read in ibmasm_send_i2o_message()
-Date: Mon,  4 May 2026 15:49:15 +0200
-Message-ID: <20260504135143.506519441@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 002/275] ALSA: usb-audio: Avoid false E-MU sample-rate notifications
+Date: Mon,  4 May 2026 15:49:02 +0200
+Message-ID: <20260504135143.025217567@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -44,78 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tyllis Xu <livelycarpet87@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 9aad71144fa3682cca3837a06c8623016790e7ec upstream.
+commit fca9c850042a7ab4828ce3a9caa8bc40ea09856a upstream.
 
-The ibmasm_send_i2o_message() function uses get_dot_command_size() to
-compute the byte count for memcpy_toio(), but this value is derived from
-user-controlled fields in the dot_command_header (command_size: u8,
-data_size: u16) and is never validated against the actual allocation size.
-A root user can write a small buffer with inflated header fields, causing
-memcpy_toio() to read up to ~65 KB past the end of the allocation into
-adjacent kernel heap, which is then forwarded to the service processor
-over MMIO.
+snd_emuusb_set_samplerate() unconditionally notifies the E-MU
+SampleRate Extension Unit control after issuing SET_CUR.
 
-Silently clamping the copy size is not sufficient: if the header fields
-claim a larger size than the buffer, the SP receives a dot command whose
-own header is inconsistent with the I2O message length, which can cause
-the SP to desynchronize. Reject such commands outright by returning
-failure.
+If snd_usb_mixer_set_ctl_value() fails, the control value has not
+changed, yet snd_usb_mixer_notify_id() still invalidates the cache and
+emits a value-change event to userspace.
 
-Validate command_size before calling get_mfa_inbound() to avoid leaking
-an I2O message frame: reading INBOUND_QUEUE_PORT dequeues a hardware
-frame from the controller's free pool, and returning without a
-corresponding set_mfa_inbound() call would permanently exhaust it.
+Notify the control only after a successful write.
 
-Additionally, clamp command_size to I2O_COMMAND_SIZE before the
-memcpy_toio() so the MMIO write stays within the I2O message frame,
-consistent with the clamping already performed by outgoing_message_size()
-for the header field.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Fixes: 7d2b451e65d2 ("ALSA: usb-audio - Added functionality for E-mu 0404USB/0202USB/TrackerPre")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
-Link: https://patch.msgid.link/20260314165805.548293-1-LivelyCarpet87@gmail.com
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260421-alsa-emuusb-samplerate-notify-v1-1-8b63bbc1d7f1@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/ibmasm/lowlevel.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ sound/usb/mixer_quirks.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/ibmasm/lowlevel.c
-+++ b/drivers/misc/ibmasm/lowlevel.c
-@@ -19,17 +19,21 @@ static struct i2o_header header = I2O_HE
- int ibmasm_send_i2o_message(struct service_processor *sp)
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -1538,15 +1538,17 @@ void snd_emuusb_set_samplerate(struct sn
  {
- 	u32 mfa;
--	unsigned int command_size;
-+	size_t command_size;
- 	struct i2o_message *message;
- 	struct command *command = sp->current_command;
+ 	struct usb_mixer_interface *mixer;
+ 	struct usb_mixer_elem_info *cval;
++	int err;
+ 	int unitid = 12; /* SampleRate ExtensionUnit ID */
  
-+	command_size = get_dot_command_size(command->buffer);
-+	if (command_size > command->buffer_size)
-+		return 1;
-+	if (command_size > I2O_COMMAND_SIZE)
-+		command_size = I2O_COMMAND_SIZE;
-+
- 	mfa = get_mfa_inbound(sp->base_address);
- 	if (!mfa)
- 		return 1;
- 
--	command_size = get_dot_command_size(command->buffer);
--	header.message_size = outgoing_message_size(command_size);
--
-+	header.message_size = outgoing_message_size((unsigned int)command_size);
- 	message = get_i2o_message(sp->base_address, mfa);
- 
- 	memcpy_toio(&message->header, &header, sizeof(struct i2o_header));
+ 	list_for_each_entry(mixer, &chip->mixer_list, list) {
+ 		if (mixer->id_elems[unitid]) {
+ 			cval = mixer_elem_list_to_info(mixer->id_elems[unitid]);
+-			snd_usb_mixer_set_ctl_value(cval, UAC_SET_CUR,
+-						    cval->control << 8,
+-						    samplerate_id);
+-			snd_usb_mixer_notify_id(mixer, unitid);
++			err = snd_usb_mixer_set_ctl_value(cval, UAC_SET_CUR,
++							  cval->control << 8,
++							  samplerate_id);
++			if (!err)
++				snd_usb_mixer_notify_id(mixer, unitid);
+ 			break;
+ 		}
+ 	}
 
 
