@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6383B7742;
-	Mon,  4 May 2026 14:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0323D5645;
+	Mon,  4 May 2026 14:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903716; cv=none; b=WKIiTzLV1STjDcZJVw/sbrcb83g1zcG9liUY+bl76R9K/DDuUONJHDGJqjL5sap68ygJ66VXR0qWa5lYiUKAULecnWOw3NGB9pxk4tjIfXJzKTk/6tXQw12itYPDyJ+KMsqyQwkTLYsRNIEqNxsnuN87UJZNjnAXDvyFaQO2fBs=
+	t=1777903719; cv=none; b=lXGC0Ri+KeyViVfYEvLqtpHLUIBAPOoaqe1Ds7l3KdLDk2gacffTTNSPlpMemqLyEoDvPttia5IgiZqiJPKMZVtK+cAqH4oBf7fV6B0OEa8fjHHZsRp5d4C324+3TeLoBBsWDANF74xWjd/wgGSiGXWJ7Hv7MSkvUIEuwc6wrU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903716; c=relaxed/simple;
-	bh=k829WgxZKRaEG/RaxEL15Ul4To1wbxALnUYu0dNn488=;
+	s=arc-20240116; t=1777903719; c=relaxed/simple;
+	bh=Ciz0nCafi9Hv/c+hTYQVdIwEtQQjL696qR4a4hUgmr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e16zvsvoqgAyNGZ56PXYJlu+4elBViCX4177Bq/Bd4kUkuDBBB7ynFm49LPSq/9TGmhcvOoJ9WWLUFy2d8mMSBSaMmYY6uCEQddH5EeR0O5w9RwphtWVIUxZcOklSjQDbczp7wNQELFyY7ErP5JToJQcAeFUGiDqgpeSTKbiRHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzCewt3k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LB+zYsr+fX13n1ywfAh/pb+CmUNT6nJ0ybYLCcfG0YQyyg+x7eKdxeI2+iiNaWKIp32dEClLsJQONAhrDvniNMG3h18xkEBjjWuHw3RLWFvKfIBRl1o2HAff+i2d7vCTx31QFYxxX9UOBkQj+eKT+puEVfEGQlhoV0IogXMgSRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqxSo5pd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzCewt3k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718DBC2BCB8;
-	Mon,  4 May 2026 14:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqxSo5pd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050A4C2BCB8;
+	Mon,  4 May 2026 14:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903716;
-	bh=k829WgxZKRaEG/RaxEL15Ul4To1wbxALnUYu0dNn488=;
+	s=korg; t=1777903719;
+	bh=Ciz0nCafi9Hv/c+hTYQVdIwEtQQjL696qR4a4hUgmr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jzCewt3ka4cUi/XuhUf1UkDtahJbZZ2Bha7pdXkIYNYzjDkPcGVJ/ZxkYJwQA8x2m
-	 lpPzgnGqhcdbAVJ0cK6W/FEQE8Ci9wFp52HaGuVfizJBBejhcuT6wYpL+7ph5tP9ED
-	 sgVKxMqH+xm9TxGkTerb5pGdeYOZZajvFZb71NSo=
+	b=eqxSo5pdmuvOi1AyIHB/10zmub++2ry6YaTJjl0gSOZMb2TXtHKsSXZxwnou+AT++
+	 IlUMVpDNFZSkeOrnXs1iV+DE3B6aiUQgbT97pFwe0U5P4QLiSIC7eB5oL3EGWWxh8v
+	 OxERpxQuRrx0vFP1O+u9/JiZ1drOYXsY9Rnn6bxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 035/275] thermal: core: Fix thermal zone governor cleanup issues
-Date: Mon,  4 May 2026 15:49:35 +0200
-Message-ID: <20260504135144.241970685@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.18 018/275] drm/nouveau: fix nvkm_device leak on aperture removal failure
+Date: Mon,  4 May 2026 15:49:18 +0200
+Message-ID: <20260504135143.615997025@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -49,64 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 41ff66baf81c6541f4f985dd7eac4494d03d9440 upstream.
+commit 6597ff1d8de3f583be169587efeafd8af134e138 upstream.
 
-If thermal_zone_device_register_with_trips() fails after adding
-a thermal governor to the thermal zone being registered, the
-governor is not removed from it as appropriate which may lead to
-a memory leak.
+When aperture_remove_conflicting_pci_devices() fails during probe, the
+error path returns directly without unwinding the nvkm_device that was
+just allocated by nvkm_device_pci_new(). This leaks both the device
+wrapper and the pci_enable_device() reference taken inside it.
 
-In turn, thermal_zone_device_unregister() calls thermal_set_governor()
-without acquiring the thermal zone lock beforehand which may race with
-a governor update via sysfs and may lead to a use-after-free in that
-case.
+Jump to the existing fail_nvkm label so nvkm_device_del() runs and
+balances both. The leak was introduced when the intermediate
+nvkm_device_del() between detection and aperture removal was dropped
+in favor of creating the pci device once.
 
-Address these issues by adding two thermal_set_governor() calls, one to
-thermal_release() to remove the governor from the given thermal zone,
-and one to the thermal zone registration error path to cover failures
-preceding the thermal zone device registration.
-
-Fixes: e33df1d2f3a0 ("thermal: let governors have private data for each thermal zone")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5092923.31r3eYUQgx@rafael.j.wysocki
+Fixes: c0bfe34330b5 ("drm/nouveau: create pci device once")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260411062938.22925-1-devnexen@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/thermal_core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_drm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -964,6 +964,7 @@ static void thermal_release(struct devic
- 		     sizeof("thermal_zone") - 1)) {
- 		tz = to_thermal_zone(dev);
- 		thermal_zone_destroy_device_groups(tz);
-+		thermal_set_governor(tz, NULL);
- 		mutex_destroy(&tz->lock);
- 		complete(&tz->removal);
- 	} else if (!strncmp(dev_name(dev), "cooling_device",
-@@ -1607,8 +1608,10 @@ thermal_zone_device_register_with_trips(
- 	/* sys I/F */
- 	/* Add nodes that are always present via .groups */
- 	result = thermal_zone_create_device_groups(tz);
--	if (result)
-+	if (result) {
-+		thermal_set_governor(tz, NULL);
- 		goto remove_id;
-+	}
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -874,7 +874,7 @@ static int nouveau_drm_probe(struct pci_
+ 	/* Remove conflicting drivers (vesafb, efifb etc). */
+ 	ret = aperture_remove_conflicting_pci_devices(pdev, driver_pci.name);
+ 	if (ret)
+-		return ret;
++		goto fail_nvkm;
  
- 	result = device_register(&tz->device);
- 	if (result)
-@@ -1721,8 +1724,6 @@ void thermal_zone_device_unregister(stru
+ 	pci_set_master(pdev);
  
- 	cancel_delayed_work_sync(&tz->poll_queue);
- 
--	thermal_set_governor(tz, NULL);
--
- 	thermal_thresholds_exit(tz);
- 	thermal_remove_hwmon_sysfs(tz);
- 	ida_free(&thermal_tz_ida, tz->id);
 
 
