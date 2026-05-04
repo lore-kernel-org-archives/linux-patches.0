@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D161A6827;
-	Mon,  4 May 2026 14:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D5E1A6827;
+	Mon,  4 May 2026 14:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904316; cv=none; b=hPnBzhdyE3Jfx61codZB06D0FsgVCHRqjJUiR6JAa4iH/B54Bhxkx5qvT9Oz3ledtKFWsCXn4jj6bIP52RshvSLXzURzSzCut8vmVJ5cRn4r6NaSsCbnY2psxfJUp6afXbpSv4GMbml1iJYxK5BP/t4CSF+rDoXdFQrp01EF7VY=
+	t=1777904319; cv=none; b=qe0JpohUEWdbljrz979AQtcb9pzczKMRYqrADvcsyoLIVTUOty5Vu8EMNTVTELqIIIsnV3AyxQX/ardXACDq67tw9VpkePM06kQeSEocdW/hYwgjP94FVzArSa095kuutwQPQDlVvnMm5iiK1B6jiGfF5kb0xIf3GUC9IlqYbqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904316; c=relaxed/simple;
-	bh=UX5uAaauRmUy1vm6UA0qBr1/nJphZtgF20B/fVGEIsM=;
+	s=arc-20240116; t=1777904319; c=relaxed/simple;
+	bh=cIrZMEzut9CRIzqKmoxDmVedgfnWT+Q6KqHn0VoGRSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qG3s6b/0Zgua5VWPD0g/evpLoXt5Xk5Y8K2y36xRKlbv/OhsbAL2gSjv8JYD9lSBnKNbBuadce8dU4ioNx/ZAejibAWsjFcHD8L0QDb/QAOYXH5huvBYRY1GbaSIvanDNU82elfErBHtXgZAOKb/S0fT1R4A5bom6LwfYTVlMNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kulVvjTO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c/RofNZNkVg1xBJm47kd2xgcSdPWs7zUYi9Y82b1KqOFXJxLlfIw4VRvFYNMb695jBkfrY+nYy1FD4egElMyxoHdAypjPkUw2Z3fAeZmhur1P3R9sPGResPxW6NoqTMMSPU+J6nE6Ba2JtHte0SDHUso7tqvD25A2bg3aMa9KaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVJzkQNb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kulVvjTO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8D7C2BCB8;
-	Mon,  4 May 2026 14:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVJzkQNb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D066C2BCB8;
+	Mon,  4 May 2026 14:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904316;
-	bh=UX5uAaauRmUy1vm6UA0qBr1/nJphZtgF20B/fVGEIsM=;
+	s=korg; t=1777904318;
+	bh=cIrZMEzut9CRIzqKmoxDmVedgfnWT+Q6KqHn0VoGRSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kulVvjTOwUuwTNUD/yPYMpP1/aYwI9kZdiQxAvMFmTja58K/EGbK96hRDr9Q3nNUo
-	 YBogje1ldmXOEQZ90kkp2HnGWWmW2Q1bmFY/tngzRXlKp1ULu12uHzf3Cmyg7b5p81
-	 SDMcS/gNXqXX76qKoXT31uH07c/XAHyZFP4Vkoas=
+	b=pVJzkQNbuGE9Hb/I5SldJ/iYjBrbp+hdqLKsLyMUg05LUStAakKiJW0loGCsURkA+
+	 3CE7kPcoc+lLfB6QiSULbv+G2XtNSJ0iAsKDaoBKKyxELXm+z5hm9HkVXK4Lx3YG0T
+	 NMuotWIc47aY1qFzxd28UmdPrFVmTNmXGE+5yhws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 235/275] gtp: disable BH before calling udp_tunnel_xmit_skb()
-Date: Mon,  4 May 2026 15:52:55 +0200
-Message-ID: <20260504135151.780491113@linuxfoundation.org>
+	Chen Zhao <chezhao@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 236/275] IB/core: Fix zero dmac race in neighbor resolution
+Date: Mon,  4 May 2026 15:52:56 +0200
+Message-ID: <20260504135151.817000720@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -44,63 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Chen Zhao <chezhao@nvidia.com>
 
-commit 5638504a2aa9e1b9d72af9060df1a160cce2d379 upstream.
+commit 5e6de34d82b49cab9d8a42063e9cd0f22a4f31e5 upstream.
 
-gtp_genl_send_echo_req() runs as a generic netlink doit handler in
-process context with BH not disabled. It calls udp_tunnel_xmit_skb(),
-which eventually invokes iptunnel_xmit() — that uses __this_cpu_inc/dec
-on softnet_data.xmit.recursion to track the tunnel xmit recursion level.
+dst_fetch_ha() checks nud_state without holding the neighbor lock, then
+copies ha under the seqlock. A race in __neigh_update() where nud_state
+is set to NUD_REACHABLE before ha is written allows dst_fetch_ha() to
+read a zero MAC address while the seqlock reports no concurrent writer.
 
-Without local_bh_disable(), the task may migrate between
-dev_xmit_recursion_inc() and dev_xmit_recursion_dec(), breaking the
-per-CPU counter pairing. The result is stale or negative recursion
-levels that can later produce false-positive
-SKB_DROP_REASON_RECURSION_LIMIT drops on either CPU.
+netevent_callback amplifies this by waking ALL pending addr_req workers
+when ANY neighbor becomes NUD_VALID. At scale (N peers resolving ARP
+concurrently), the hit probability scales as N^2, making it near-certain
+for large RDMA workloads.
 
-The other udp_tunnel_xmit_skb() call sites in gtp.c are unaffected:
-the data path runs under ndo_start_xmit and the echo response handlers
-run from the UDP encap rx softirq, both with BH already disabled.
+N(A): neigh_update(A)                   W(A): addr_resolve(A)
+ |                                       [sleep]
+ | write_lock_bh(&A->lock)               |
+ | A->nud_state = NUD_REACHABLE          |
+ | // A->ha is still 0                   |
+ |                                       [woken by netevent_cb() of
+ |                                         another neighbour]
+ |                                       | dst_fetch_ha(A)
+ |                                       |   A->nud_state & NUD_VALID
+ |                                       |   read_seqbegin(&A->ha_lock)
+ |                                       |   snapshot = A->ha  /* 0 */
+ |                                       |   read_seqretry(&A->ha_lock)
+ |                                       |   return snapshot
+ | seqlock(&A->ha_lock)
+ | A->ha = mac_A     /* too late */
+ | sequnlock(&A->ha_lock)
+ | write_unlock_bh(&A->lock)
 
-Fix it by disabling BH around the udp_tunnel_xmit_skb() call, mirroring
-commit 2cd7e6971fc2 ("sctp: disable BH before calling
-udp_tunnel_xmit_skb()").
+The incorrect/zero mac is read and programmed in the device QP while it
+was not yet updated. This causes silent packet loss and eventual
+RETRY_EXC_ERR.
 
-Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
+Fix by holding the neighbor read lock across the nud_state check and
+ha copy in dst_fetch_ha(), ensuring it synchronizes with
+__neigh_update() which is updating while holding the write lock.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Link: https://patch.msgid.link/20260417055408.4667-1-devnexen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 92ebb6a0a13a ("IB/cm: Remove now useless rcu_lock in dst_fetch_ha")
+Link: https://patch.msgid.link/r/20260405-fix-dmac-race-v1-1-cfa1ec2ce54a@nvidia.com
+Signed-off-by: Chen Zhao <chezhao@nvidia.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/gtp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/core/addr.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -2400,6 +2400,7 @@ static int gtp_genl_send_echo_req(struct
- 		return -ENODEV;
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -321,11 +321,14 @@ static int dst_fetch_ha(const struct dst
+ 	if (!n)
+ 		return -ENODATA;
+ 
++	read_lock_bh(&n->lock);
+ 	if (!(n->nud_state & NUD_VALID)) {
++		read_unlock_bh(&n->lock);
+ 		neigh_event_send(n, NULL);
+ 		ret = -ENODATA;
+ 	} else {
+ 		neigh_ha_snapshot(dev_addr->dst_dev_addr, n, dst->dev);
++		read_unlock_bh(&n->lock);
  	}
  
-+	local_bh_disable();
- 	udp_tunnel_xmit_skb(rt, sk, skb_to_send,
- 			    fl4.saddr, fl4.daddr,
- 			    inet_dscp_to_dsfield(fl4.flowi4_dscp),
-@@ -2409,6 +2410,7 @@ static int gtp_genl_send_echo_req(struct
- 			    !net_eq(sock_net(sk),
- 				    dev_net(gtp->dev)),
- 			    false, 0);
-+	local_bh_enable();
- 	return 0;
- }
- 
+ 	neigh_release(n);
 
 
