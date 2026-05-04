@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2073DC4AB;
-	Mon,  4 May 2026 13:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83913DE45F;
+	Mon,  4 May 2026 13:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777902868; cv=none; b=BuLgCtS4PmtCn0O5GBD+Gy9tZJUjXbVwc4inzO0wjkK2ZvBC8TtFbswF+rNJPSNRYbYaC7oTl3Y8ndp1Q3V9YRvLFgowHuIe6UStTysV85fOolbI98KwesV5b+jThqIF6BBLETD3QtGI3F70zGcFYfUwwdc7Foll1lSyly6ya3o=
+	t=1777902870; cv=none; b=Sxuez+do6Z+wszu88ClhHtkye5uO9knz677PElAUZu0KvwSVOfAZmVbvS7db/PDNt2XPIzyYpo6iJhi96fvtqQ05et80HoW/i7k+ZqOPUKhi83BxvWjPJhQxMao5aG3IzBnTbv8MaTp4RIV16WlvxR/lMwSn2lprzaoHvOsMoRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777902868; c=relaxed/simple;
-	bh=Cu0hQ3Jgk7izEyCkNhl6N5qFtFyrRaARTDWlldx6gEo=;
+	s=arc-20240116; t=1777902870; c=relaxed/simple;
+	bh=H7345oC4D9PeCCn4X8/gnsJthD51BcqZcgvDSnssZ9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxEdyglUN+6rF3opSuxaivXTfmXFrsYHgjPAd5GJSFOsLejbWXv+XnFZ5KM0aTvhKkO+ndGNmfCWUjTY5tsb8OHoSek5G6xVsN6C+Xod7tNKxyAZxOV5RGZTi1s9PPg2Cn5SDILYkez6VvvFAALkrxoQzdcZMFIDc3sxSXLtKfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/kk47Qw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I40L+Mkmk5Ck90SsFcjpr/3RODjV+H4e7/KHjZz611DviYQrjUwgABT6J4nLdrbEmIoYWdBQVZEXC4NlIhk2CCH1q14GQAR193llLS/Nf6D5zMHRB1PIe+HHQhrTtqf5fh+dTzeRlkgpF2mKmDjCM/gYM+If5LSJJBbEcnbXpQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu9GS9NV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/kk47Qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F40C2BCF5;
-	Mon,  4 May 2026 13:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu9GS9NV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2415BC2BCC4;
+	Mon,  4 May 2026 13:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777902867;
-	bh=Cu0hQ3Jgk7izEyCkNhl6N5qFtFyrRaARTDWlldx6gEo=;
+	s=korg; t=1777902870;
+	bh=H7345oC4D9PeCCn4X8/gnsJthD51BcqZcgvDSnssZ9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/kk47QwwaDovg5S4/irgHkDdxrDCbg/wRJI/W9S81ZBQl48Fb1jVrx3R6gDst3Mk
-	 fYUdIdlabfdiWI9MXM5aElvSNXKEpnvQpO7J4w+qUGtX0rwNPuZJesatzJpnwDC3gi
-	 WTTe2zRzQW5YO87YXq4DN94ZpMg20W4Z0GsN71xw=
+	b=Fu9GS9NVEjWOVumbsLC78zuIIHJPl2uas2mSlE7S7V/gRb5KsyKwmd48r/t6qHKWk
+	 lrZr/huLwEIkaIjahiGlqn5TEZMWd/svrx+OVXp/TmRUM1b2tOtuW1htBVHxWvnsTr
+	 OMpJ0Th/z+NTs7U9g/7dSy6rxYt8Kic6NcCNfmLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yuhao Jiang <danisjiang@gmail.com>,
 	Tyllis Xu <LivelyCarpet87@gmail.com>
-Subject: [PATCH 7.0 014/307] ibmasm: fix OOB reads in command_file_write due to missing size checks
-Date: Mon,  4 May 2026 15:48:19 +0200
-Message-ID: <20260504135143.364535594@linuxfoundation.org>
+Subject: [PATCH 7.0 015/307] ibmasm: fix heap over-read in ibmasm_send_i2o_message()
+Date: Mon,  4 May 2026 15:48:20 +0200
+Message-ID: <20260504135143.402620601@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,57 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Tyllis Xu <livelycarpet87@gmail.com>
 
-commit 0eb09f737428e482a32a2e31e5e223f2b35a71d3 upstream.
+commit 9aad71144fa3682cca3837a06c8623016790e7ec upstream.
 
-The command_file_write() handler allocates a kernel buffer of exactly
-count bytes and copies user data into it, but does not validate the
-buffer against the dot command protocol before passing it to
-get_dot_command_size() and get_dot_command_timeout().
+The ibmasm_send_i2o_message() function uses get_dot_command_size() to
+compute the byte count for memcpy_toio(), but this value is derived from
+user-controlled fields in the dot_command_header (command_size: u8,
+data_size: u16) and is never validated against the actual allocation size.
+A root user can write a small buffer with inflated header fields, causing
+memcpy_toio() to read up to ~65 KB past the end of the allocation into
+adjacent kernel heap, which is then forwarded to the service processor
+over MMIO.
 
-Since both the allocation size (count) and the header fields (command_size,
-data_size) are independently user-controlled, an attacker can cause
-get_dot_command_size() to return a value exceeding the allocation,
-triggering OOB reads in get_dot_command_timeout() and an out-of-bounds
-memcpy_toio() that leaks kernel heap memory to the service processor.
+Silently clamping the copy size is not sufficient: if the header fields
+claim a larger size than the buffer, the SP receives a dot command whose
+own header is inconsistent with the I2O message length, which can cause
+the SP to desynchronize. Reject such commands outright by returning
+failure.
 
-Fix with two guards: reject writes smaller than sizeof(struct
-dot_command_header) before allocation, then after copying user data
-reject commands where the buffer is smaller than the total size declared
-by the header (sizeof(header) + command_size + data_size). This ensures
-all subsequent header and payload field accesses stay within the buffer.
+Validate command_size before calling get_mfa_inbound() to avoid leaking
+an I2O message frame: reading INBOUND_QUEUE_PORT dequeues a hardware
+frame from the controller's free pool, and returning without a
+corresponding set_mfa_inbound() call would permanently exhaust it.
+
+Additionally, clamp command_size to I2O_COMMAND_SIZE before the
+memcpy_toio() so the MMIO write stays within the I2O message frame,
+consistent with the clamping already performed by outgoing_message_size()
+for the header field.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
-Link: https://patch.msgid.link/20260314165355.548119-1-LivelyCarpet87@gmail.com
+Link: https://patch.msgid.link/20260314165805.548293-1-LivelyCarpet87@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/ibmasm/ibmasmfs.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/misc/ibmasm/lowlevel.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/ibmasm/ibmasmfs.c
-+++ b/drivers/misc/ibmasm/ibmasmfs.c
-@@ -303,6 +303,8 @@ static ssize_t command_file_write(struct
- 		return -EINVAL;
- 	if (count == 0 || count > IBMASM_CMD_MAX_BUFFER_SIZE)
- 		return 0;
-+	if (count < sizeof(struct dot_command_header))
-+		return -EINVAL;
- 	if (*offset != 0)
- 		return 0;
+--- a/drivers/misc/ibmasm/lowlevel.c
++++ b/drivers/misc/ibmasm/lowlevel.c
+@@ -19,17 +19,21 @@ static struct i2o_header header = I2O_HE
+ int ibmasm_send_i2o_message(struct service_processor *sp)
+ {
+ 	u32 mfa;
+-	unsigned int command_size;
++	size_t command_size;
+ 	struct i2o_message *message;
+ 	struct command *command = sp->current_command;
  
-@@ -319,6 +321,11 @@ static ssize_t command_file_write(struct
- 		return -EFAULT;
- 	}
- 
-+	if (count < get_dot_command_size(cmd->buffer)) {
-+		command_put(cmd);
-+		return -EINVAL;
-+	}
++	command_size = get_dot_command_size(command->buffer);
++	if (command_size > command->buffer_size)
++		return 1;
++	if (command_size > I2O_COMMAND_SIZE)
++		command_size = I2O_COMMAND_SIZE;
 +
- 	spin_lock_irqsave(&command_data->sp->lock, flags);
- 	if (command_data->command) {
- 		spin_unlock_irqrestore(&command_data->sp->lock, flags);
+ 	mfa = get_mfa_inbound(sp->base_address);
+ 	if (!mfa)
+ 		return 1;
+ 
+-	command_size = get_dot_command_size(command->buffer);
+-	header.message_size = outgoing_message_size(command_size);
+-
++	header.message_size = outgoing_message_size((unsigned int)command_size);
+ 	message = get_i2o_message(sp->base_address, mfa);
+ 
+ 	memcpy_toio(&message->header, &header, sizeof(struct i2o_header));
 
 
