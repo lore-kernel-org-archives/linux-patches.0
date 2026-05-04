@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18372E2F0E;
-	Mon,  4 May 2026 13:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352863DDDC1;
+	Mon,  4 May 2026 13:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903067; cv=none; b=JGd3q/vVArl+oIjLkWBwrrBfP2iFdr47M9y+sa9zLU/P71ejjoArKdDo6a8uce8HzdCU3M6/TTcsdCqBJjkMMhPh9TlZfTGyxbQyt+ZqNamDAIMtAyHolGgJdhuG6SiSCkw9KtbaEo494B5GKabw09wuAELtF5s7YYcRKxEStLk=
+	t=1777903069; cv=none; b=axkTlyu0jJT3GwtdlYrhKwYUwyJHG1QoldhEGGILB4gpSNhkD5Bhn8NChOhpWLlVQsXP1hQ91pXkZ+YzRIiQPqcH5tKeeWngSMV8xPWs24a/8wdfWH/tmZ1ACUEUX1dxeUm6uR1cCrqfqGfHs2bagQ3DIzPsOHkNj970xQGtqe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903067; c=relaxed/simple;
-	bh=yFbQYF4G54rBF2G8XCIdaYZIDpJWwf04TaAKMzi9Pvw=;
+	s=arc-20240116; t=1777903069; c=relaxed/simple;
+	bh=B2T/veBEy0ozUy+0kBCJd1IPlxnQGi1Y9ZRSTttDjqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWuE9cE2cdcezJ8I3iYTLnLRdfb5tA/VD6+S/VTvuVfgoNK3O/OKj41GxfCYJDzk9ft1jRfr0OFDBEhAZ1fpAvntbL/Rq0dCE8O722jksy0uq8/AjK3zuyBFqH74ySBQ4urWcb1vWTpG3ivGLptmPUkdpB/OLoiaddwxp8y4syU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cju7FQPP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OV2bNxu7pSsMAFAcyZwJgOQJb2cNu7pmFcLWw724EeRewOgcQHhBFqutSmQOOMTTiPxkF7yOWt6m+VCsTbN1PCLoCfxUdaBZzXbRM8x+9ZUGF7ErY2OlcYHfItxsum32QCK4ZnOprIkuglXoHtiASjut+H0/ZeXuW+BeOQ1IXCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ABUa2Oa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cju7FQPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369C5C2BCC4;
-	Mon,  4 May 2026 13:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ABUa2Oa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02CAC2BCB8;
+	Mon,  4 May 2026 13:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903066;
-	bh=yFbQYF4G54rBF2G8XCIdaYZIDpJWwf04TaAKMzi9Pvw=;
+	s=korg; t=1777903069;
+	bh=B2T/veBEy0ozUy+0kBCJd1IPlxnQGi1Y9ZRSTttDjqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cju7FQPPe2fB1dJeM0LgSG0BGYbDonrV/TDZ+hyhX1oJ542PAOfkWjUQX1mBB8Grh
-	 GSN/ojirZz1YzDoUJShQvlI93p6o2hLSlSBz4e58A8HuTeEY/7GaYT3mj5n7/F8EI/
-	 +7xUTSor8fXhyXtc7fuZX/VWdn1LIAR16v4WcyWs=
+	b=0ABUa2Oa8UctSWWfzSwbmRZr5yHT5cXeUUYCU2BD8DMOf66VJ8oqipKjNoJYy1L3q
+	 lW3UyQ7BP7ceAmsoeyFqpWBmIXNGJtSb1Rpyg8KGngO6GJClOBcdDi8yXkzgx0Xdgh
+	 pMK2/1OJKhxwEmdfiRsdgL7ylO1uby1xtH0I/2Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aksh Garg <a-garg7@ti.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 7.0 090/307] PCI: cadence: Use cdns_pcie_read_sz() for byte or word read access
-Date: Mon,  4 May 2026 15:49:35 +0200
-Message-ID: <20260504135146.201830703@linuxfoundation.org>
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>
+Subject: [PATCH 7.0 091/307] PCI: imx6: Fix reference clock source selection for i.MX95
+Date: Mon,  4 May 2026 15:49:36 +0200
+Message-ID: <20260504135146.237563968@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,104 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aksh Garg <a-garg7@ti.com>
+From: Franz Schnyder <franz.schnyder@toradex.com>
 
-commit d9cf7154deed71a4f23e81101571c79cdc77be00 upstream.
+commit 88cc4cbe08bba27bb58888d25d336774aa0ccab1 upstream.
 
-The commit 18ac51ae9df9 ("PCI: cadence: Implement capability search
-using PCI core APIs") assumed all the platforms using Cadence PCIe
-controller support byte and word register accesses. This is not true
-for all platforms (e.g., TI J721E SoC, which only supports dword
-register accesses).
+In the PCIe PHY init for the i.MX95, the reference clock source selection
+uses a conditional instead of always passing the mask. This currently
+breaks functionality if the internal refclk is used.
 
-This causes capability searches via cdns_pcie_find_capability() to fail
-on such platforms.
+To fix this issue, always pass IMX95_PCIE_REF_USE_PAD as the mask and clear
+bit if external refclk is not used. This essentially swaps the parameters.
 
-Fix this by using cdns_pcie_read_sz() for config read functions, which
-properly handles size-aligned accesses. Remove the now-unused byte and
-word read wrapper functions (cdns_pcie_readw and cdns_pcie_readb).
-
-Fixes: 18ac51ae9df9 ("PCI: cadence: Implement capability search using PCI core APIs")
-Signed-off-by: Aksh Garg <a-garg7@ti.com>
+Fixes: d8574ce57d76 ("PCI: imx6: Add external reference clock input mode support")
+Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Richard Zhu <hongxing.zhu@nxp.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260402085545.284457-1-a-garg7@ti.com
+Link: https://patch.msgid.link/20260325093118.684142-1-fra.schnyder@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence.h |   56 +++++++++++---------------
- 1 file changed, 25 insertions(+), 31 deletions(-)
+ drivers/pci/controller/dwc/pci-imx6.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/cadence/pcie-cadence.h
-+++ b/drivers/pci/controller/cadence/pcie-cadence.h
-@@ -249,37 +249,6 @@ static inline u32 cdns_pcie_hpa_readl(st
- 	return readl(pcie->reg_base + reg);
- }
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -268,8 +268,8 @@ static int imx95_pcie_init_phy(struct im
+ 			IMX95_PCIE_PHY_CR_PARA_SEL);
  
--static inline u16 cdns_pcie_readw(struct cdns_pcie *pcie, u32 reg)
--{
--	return readw(pcie->reg_base + reg);
--}
--
--static inline u8 cdns_pcie_readb(struct cdns_pcie *pcie, u32 reg)
--{
--	return readb(pcie->reg_base + reg);
--}
--
--static inline int cdns_pcie_read_cfg_byte(struct cdns_pcie *pcie, int where,
--					  u8 *val)
--{
--	*val = cdns_pcie_readb(pcie, where);
--	return PCIBIOS_SUCCESSFUL;
--}
--
--static inline int cdns_pcie_read_cfg_word(struct cdns_pcie *pcie, int where,
--					  u16 *val)
--{
--	*val = cdns_pcie_readw(pcie, where);
--	return PCIBIOS_SUCCESSFUL;
--}
--
--static inline int cdns_pcie_read_cfg_dword(struct cdns_pcie *pcie, int where,
--					   u32 *val)
--{
--	*val = cdns_pcie_readl(pcie, where);
--	return PCIBIOS_SUCCESSFUL;
--}
--
- static inline u32 cdns_pcie_read_sz(void __iomem *addr, int size)
- {
- 	void __iomem *aligned_addr = PTR_ALIGN_DOWN(addr, 0x4);
-@@ -320,6 +289,31 @@ static inline void cdns_pcie_write_sz(vo
- 	writel(val, aligned_addr);
- }
- 
-+static inline int cdns_pcie_read_cfg_byte(struct cdns_pcie *pcie, int where,
-+					  u8 *val)
-+{
-+	void __iomem *addr = pcie->reg_base + where;
-+
-+	*val = cdns_pcie_read_sz(addr, 0x1);
-+	return PCIBIOS_SUCCESSFUL;
-+}
-+
-+static inline int cdns_pcie_read_cfg_word(struct cdns_pcie *pcie, int where,
-+					  u16 *val)
-+{
-+	void __iomem *addr = pcie->reg_base + where;
-+
-+	*val = cdns_pcie_read_sz(addr, 0x2);
-+	return PCIBIOS_SUCCESSFUL;
-+}
-+
-+static inline int cdns_pcie_read_cfg_dword(struct cdns_pcie *pcie, int where,
-+					   u32 *val)
-+{
-+	*val = cdns_pcie_readl(pcie, where);
-+	return PCIBIOS_SUCCESSFUL;
-+}
-+
- /* Root Port register access */
- static inline void cdns_pcie_rp_writeb(struct cdns_pcie *pcie,
- 				       u32 reg, u8 value)
+ 	regmap_update_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_PHY_GEN_CTRL,
+-			   ext ? IMX95_PCIE_REF_USE_PAD : 0,
+-			   IMX95_PCIE_REF_USE_PAD);
++			   IMX95_PCIE_REF_USE_PAD,
++			   ext ? IMX95_PCIE_REF_USE_PAD : 0);
+ 	regmap_update_bits(imx_pcie->iomuxc_gpr, IMX95_PCIE_SS_RW_REG_0,
+ 			   IMX95_PCIE_REF_CLKEN,
+ 			   ext ? 0 : IMX95_PCIE_REF_CLKEN);
 
 
