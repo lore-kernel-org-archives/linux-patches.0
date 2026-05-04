@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103A53A63EC;
-	Mon,  4 May 2026 13:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9829C3D9DCF;
+	Mon,  4 May 2026 13:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777902925; cv=none; b=oEWxv4COLaZ5UnVE14pmYUaIw69KiOeCea+0WjZKrW5QWYcizrmxG10wVfOJ4XVTg2NXPllARxu2yGfr2ZL+rEb8is8mDGpFGfWfWTym5sZHU5G6XCO25cEi1+buiEBTr1o855b12ywBwMlaM0BQbYQHfH8qLj/a/LqKQxwiqlQ=
+	t=1777902927; cv=none; b=mRC2QJ6PaARxGZjI7kjdb09eAe57rtp03N4V/WQ6Y4kHJQp7uCs7WdJnPxkOKyYXu9L62AES8DU5lZOz3ktsvuqSaZRcULcST04VSxoJN901wfwm37AaRaJ+NBNT5XNVKSm0/j7bnRGQut8p7lE/2yiUmg2zdaWU5Dz+C4caHtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777902925; c=relaxed/simple;
-	bh=SBQB6OiSAswYQIIh0PQgRKZeDsz0kVfFCQ0Pu4grYsg=;
+	s=arc-20240116; t=1777902927; c=relaxed/simple;
+	bh=S4okUYUSNRewU0uxC2o/P8trTBuQCjsFKAv0YC6zEPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/yi9idkFzibMibpM/+28tpWByAVMZzK8pZRa70sMYAXJkJyDmFtU35+ksVpIJ5Fea/ZxcNq/HpgH+ww19oxrntnBMfO6r5hpBpj5Hwzxji2ufQZgmqOcKcbQOTmSunyI8NBkbDbwu3oK0jxLwMX7EQUEBo7cZe5h7ei1KhfmiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hekm80xI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Je54ZG9/t/5CEG6byM41YXSmeCBdtXknLi1AZP7wJmU0VDufp3gRe1Osjwzju3Jr7J8+2rKNGCER5/5NS+PLZSAJGVLs3R1rE52WJKgAon1HGEheS7u36Dc8pv2a22yGOBM/u+8ddtjcU/QlwfZ3DdIjVHMN8aLg7RDCHpWj+nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEXXW4ef; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hekm80xI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E5CC2BCB8;
-	Mon,  4 May 2026 13:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEXXW4ef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB90C2BCC4;
+	Mon,  4 May 2026 13:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777902924;
-	bh=SBQB6OiSAswYQIIh0PQgRKZeDsz0kVfFCQ0Pu4grYsg=;
+	s=korg; t=1777902927;
+	bh=S4okUYUSNRewU0uxC2o/P8trTBuQCjsFKAv0YC6zEPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hekm80xIJr196Df3xsto3xBTI6Dr0hYWA32j2Q6AqrSUPz3O7T2jWYlFYWOixNvRZ
-	 zTglSMcnKbYTUVY/FolMjQVqsIGV+FKhUu7/rJlhwHsIySUazIoUPctLRzw0wRggWy
-	 dMzkzmkrAr2A9XFv5IXj3nUrUntHA1KJlRPDRMG0=
+	b=GEXXW4efkl7OHQDmkU5qx0D8SQKc1l2ybPigxomOAfFxst7DmrdcVrxx9HC7S0Kv5
+	 7wx2jjXREGZb2HKEBTpyhw3oQgDKMICaID2j14ehc2ie1NJ1Oyj5c+KMaOhGD2HdD2
+	 xvLtsDEPPIH/nJ9UyN76yUeOHAm9F0SFCGUkjaNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Yznaga <anthony.yznaga@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	"Jason A. Donenfeld" <jason@zx2c4.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 028/307] mm: prevent droppable mappings from being locked
-Date: Mon,  4 May 2026 15:48:33 +0200
-Message-ID: <20260504135143.891411157@linuxfoundation.org>
+	Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Alex Williamson <alex.williamson@nvidia.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Alex Williamson <alex@shazbot.org>
+Subject: [PATCH 7.0 037/307] vfio/virtio: Convert list_lock from spinlock to mutex
+Date: Mon,  4 May 2026 15:48:42 +0200
+Message-ID: <20260504135144.218479558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -61,123 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Yznaga <anthony.yznaga@oracle.com>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-commit d239462787b072c78eb19fc1f155c3d411256282 upstream.
+commit 903570835f12b7436ca0edb0a9ed351c0349121e upstream.
 
-Droppable mappings must not be lockable.  There is a check for VMAs with
-VM_DROPPABLE set in mlock_fixup() along with checks for other types of
-unlockable VMAs which ensures this when calling mlock()/mlock2().
+The list_lock spinlock with IRQ disabling was copied from the mlx5
+vfio-pci variant driver, where it is justified by a hardirq async
+command completion callback that accesses the protected lists.  The
+virtio driver has no such interrupt context usage; all list_lock
+acquisitions occur in process context via file read/write operations
+or state transitions under state_mutex.
 
-For mlockall(MCL_FUTURE), the check for unlockable VMAs is different.  In
-apply_mlockall_flags(), if the flags parameter has MCL_FUTURE set, the
-current task's mm's default VMA flag field mm->def_flags has VM_LOCKED
-applied to it.  VM_LOCKONFAULT is also applied if MCL_ONFAULT is also set.
-When these flags are set as default in this manner they are cleared in
-__mmap_complete() for new mappings that do not support mlock.  A check for
-VM_DROPPABLE in __mmap_complete() is missing resulting in droppable
-mappings created with VM_LOCKED set.  To fix this and reduce that chance
-of similar bugs in the future, introduce and use vma_supports_mlock().
+Convert list_lock to a mutex to be consistent with peer vfio-pci
+variant drivers (hisilicon, pds, qat, xe) which all use mutexes for
+equivalent migration data protection.  This also fixes a mismatched
+spin_lock()/spin_unlock_irq() pair in virtiovf_read_device_context_chunk()
+that could incorrectly enable interrupts.
 
-Link: https://lkml.kernel.org/r/20260310155821.17869-1-anthony.yznaga@oracle.com
-Fixes: 9651fcedf7b9 ("mm: add MAP_DROPPABLE for designating always lazily freeable mappings")
-Signed-off-by: Anthony Yznaga <anthony.yznaga@oracle.com>
-Suggested-by: David Hildenbrand <david@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Tested-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jason A. Donenfeld <jason@zx2c4.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Closes: https://lore.kernel.org/all/20260413073603.30538-1-guojinhui.liam@bytedance.com
+Fixes: 0bbc82e4ec79 ("vfio/virtio: Add support for the basic live migration functionality")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://lore.kernel.org/r/20260414200625.3601509-2-alex.williamson@nvidia.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hugetlb_inline.h    |    2 +-
- mm/internal.h                     |   10 ++++++++++
- mm/mlock.c                        |   10 ++++++----
- mm/vma.c                          |    4 +---
- tools/testing/vma/include/stubs.h |    5 +++++
- 5 files changed, 23 insertions(+), 8 deletions(-)
+ drivers/vfio/pci/virtio/common.h  |    2 +-
+ drivers/vfio/pci/virtio/migrate.c |   33 +++++++++++++++++----------------
+ 2 files changed, 18 insertions(+), 17 deletions(-)
 
---- a/include/linux/hugetlb_inline.h
-+++ b/include/linux/hugetlb_inline.h
-@@ -30,7 +30,7 @@ static inline bool is_vma_hugetlb_flags(
+--- a/drivers/vfio/pci/virtio/common.h
++++ b/drivers/vfio/pci/virtio/common.h
+@@ -68,7 +68,7 @@ struct virtiovf_migration_file {
+ 	enum virtiovf_migf_state state;
+ 	enum virtiovf_load_state load_state;
+ 	/* synchronize access to the lists */
+-	spinlock_t list_lock;
++	struct mutex list_lock;
+ 	struct list_head buf_list;
+ 	struct list_head avail_list;
+ 	struct virtiovf_data_buffer *buf;
+--- a/drivers/vfio/pci/virtio/migrate.c
++++ b/drivers/vfio/pci/virtio/migrate.c
+@@ -142,9 +142,9 @@ end:
  
- #endif
- 
--static inline bool is_vm_hugetlb_page(struct vm_area_struct *vma)
-+static inline bool is_vm_hugetlb_page(const struct vm_area_struct *vma)
+ static void virtiovf_put_data_buffer(struct virtiovf_data_buffer *buf)
  {
- 	return is_vm_hugetlb_flags(vma->vm_flags);
+-	spin_lock_irq(&buf->migf->list_lock);
++	mutex_lock(&buf->migf->list_lock);
+ 	list_add_tail(&buf->buf_elm, &buf->migf->avail_list);
+-	spin_unlock_irq(&buf->migf->list_lock);
++	mutex_unlock(&buf->migf->list_lock);
  }
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -1217,6 +1217,16 @@ static inline struct file *maybe_unlock_
+ 
+ static int
+@@ -170,21 +170,21 @@ virtiovf_get_data_buffer(struct virtiovf
+ 
+ 	INIT_LIST_HEAD(&free_list);
+ 
+-	spin_lock_irq(&migf->list_lock);
++	mutex_lock(&migf->list_lock);
+ 	list_for_each_entry_safe(buf, temp_buf, &migf->avail_list, buf_elm) {
+ 		list_del_init(&buf->buf_elm);
+ 		if (buf->allocated_length >= length) {
+-			spin_unlock_irq(&migf->list_lock);
++			mutex_unlock(&migf->list_lock);
+ 			goto found;
+ 		}
+ 		/*
+ 		 * Prevent holding redundant buffers. Put in a free
+-		 * list and call at the end not under the spin lock
++		 * list and call at the end not under the mutex
+ 		 * (&migf->list_lock) to minimize its scope usage.
+ 		 */
+ 		list_add(&buf->buf_elm, &free_list);
  	}
- 	return fpin;
- }
-+
-+static inline bool vma_supports_mlock(const struct vm_area_struct *vma)
-+{
-+	if (vma->vm_flags & (VM_SPECIAL | VM_DROPPABLE))
-+		return false;
-+	if (vma_is_dax(vma) || is_vm_hugetlb_page(vma))
-+		return false;
-+	return vma != get_gate_vma(current->mm);
-+}
-+
- #else /* !CONFIG_MMU */
- static inline void unmap_mapping_folio(struct folio *folio) { }
- static inline void mlock_new_folio(struct folio *folio) { }
---- a/mm/mlock.c
-+++ b/mm/mlock.c
-@@ -472,10 +472,12 @@ static int mlock_fixup(struct vma_iterat
- 	int ret = 0;
- 	vm_flags_t oldflags = vma->vm_flags;
+-	spin_unlock_irq(&migf->list_lock);
++	mutex_unlock(&migf->list_lock);
+ 	buf = virtiovf_alloc_data_buffer(migf, length);
  
--	if (newflags == oldflags || (oldflags & VM_SPECIAL) ||
--	    is_vm_hugetlb_page(vma) || vma == get_gate_vma(current->mm) ||
--	    vma_is_dax(vma) || vma_is_secretmem(vma) || (oldflags & VM_DROPPABLE))
--		/* don't set VM_LOCKED or VM_LOCKONFAULT and don't count */
-+	if (newflags == oldflags || vma_is_secretmem(vma) ||
-+	    !vma_supports_mlock(vma))
-+		/*
-+		 * Don't set VM_LOCKED or VM_LOCKONFAULT and don't count.
-+		 * For secretmem, don't allow the memory to be unlocked.
-+		 */
- 		goto out;
+ found:
+@@ -295,6 +295,7 @@ static int virtiovf_release_file(struct
+ 	struct virtiovf_migration_file *migf = filp->private_data;
  
- 	vma = vma_modify_flags(vmi, *prev, vma, start, end, &newflags);
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -2589,9 +2589,7 @@ static void __mmap_complete(struct mmap_
+ 	virtiovf_disable_fd(migf);
++	mutex_destroy(&migf->list_lock);
+ 	mutex_destroy(&migf->lock);
+ 	kfree(migf);
+ 	return 0;
+@@ -308,7 +309,7 @@ virtiovf_get_data_buff_from_pos(struct v
+ 	bool found = false;
  
- 	vm_stat_account(mm, vma->vm_flags, map->pglen);
- 	if (vm_flags & VM_LOCKED) {
--		if ((vm_flags & VM_SPECIAL) || vma_is_dax(vma) ||
--					is_vm_hugetlb_page(vma) ||
--					vma == get_gate_vma(mm))
-+		if (!vma_supports_mlock(vma))
- 			vm_flags_clear(vma, VM_LOCKED_MASK);
- 		else
- 			mm->locked_vm += map->pglen;
---- a/tools/testing/vma/include/stubs.h
-+++ b/tools/testing/vma/include/stubs.h
-@@ -426,3 +426,8 @@ static inline void vma_adjust_trans_huge
+ 	*end_of_data = false;
+-	spin_lock_irq(&migf->list_lock);
++	mutex_lock(&migf->list_lock);
+ 	if (list_empty(&migf->buf_list)) {
+ 		*end_of_data = true;
+ 		goto end;
+@@ -329,7 +330,7 @@ virtiovf_get_data_buff_from_pos(struct v
+ 	migf->state = VIRTIOVF_MIGF_STATE_ERROR;
+ 
+ end:
+-	spin_unlock_irq(&migf->list_lock);
++	mutex_unlock(&migf->list_lock);
+ 	return found ? buf : NULL;
  }
  
- static inline void hugetlb_split(struct vm_area_struct *, unsigned long) {}
-+
-+static inline bool vma_supports_mlock(const struct vm_area_struct *vma)
-+{
-+	return false;
-+}
+@@ -369,10 +370,10 @@ static ssize_t virtiovf_buf_read(struct
+ 	}
+ 
+ 	if (*pos >= vhca_buf->start_pos + vhca_buf->length) {
+-		spin_lock_irq(&vhca_buf->migf->list_lock);
++		mutex_lock(&vhca_buf->migf->list_lock);
+ 		list_del_init(&vhca_buf->buf_elm);
+ 		list_add_tail(&vhca_buf->buf_elm, &vhca_buf->migf->avail_list);
+-		spin_unlock_irq(&vhca_buf->migf->list_lock);
++		mutex_unlock(&vhca_buf->migf->list_lock);
+ 	}
+ 
+ 	return done;
+@@ -554,9 +555,9 @@ virtiovf_add_buf_header(struct virtiovf_
+ 	header_buf->length = sizeof(header);
+ 	header_buf->start_pos = header_buf->migf->max_pos;
+ 	migf->max_pos += header_buf->length;
+-	spin_lock_irq(&migf->list_lock);
++	mutex_lock(&migf->list_lock);
+ 	list_add_tail(&header_buf->buf_elm, &migf->buf_list);
+-	spin_unlock_irq(&migf->list_lock);
++	mutex_unlock(&migf->list_lock);
+ 	return 0;
+ }
+ 
+@@ -621,9 +622,9 @@ virtiovf_read_device_context_chunk(struc
+ 
+ 	buf->start_pos = buf->migf->max_pos;
+ 	migf->max_pos += buf->length;
+-	spin_lock(&migf->list_lock);
++	mutex_lock(&migf->list_lock);
+ 	list_add_tail(&buf->buf_elm, &migf->buf_list);
+-	spin_unlock_irq(&migf->list_lock);
++	mutex_unlock(&migf->list_lock);
+ 	return 0;
+ 
+ out_header:
+@@ -692,7 +693,7 @@ virtiovf_pci_save_device_data(struct vir
+ 	mutex_init(&migf->lock);
+ 	INIT_LIST_HEAD(&migf->buf_list);
+ 	INIT_LIST_HEAD(&migf->avail_list);
+-	spin_lock_init(&migf->list_lock);
++	mutex_init(&migf->list_lock);
+ 	migf->virtvdev = virtvdev;
+ 
+ 	lockdep_assert_held(&virtvdev->state_mutex);
+@@ -1082,7 +1083,7 @@ virtiovf_pci_resume_device_data(struct v
+ 	mutex_init(&migf->lock);
+ 	INIT_LIST_HEAD(&migf->buf_list);
+ 	INIT_LIST_HEAD(&migf->avail_list);
+-	spin_lock_init(&migf->list_lock);
++	mutex_init(&migf->list_lock);
+ 
+ 	buf = virtiovf_alloc_data_buffer(migf, VIRTIOVF_TARGET_INITIAL_BUF_SIZE);
+ 	if (IS_ERR(buf)) {
 
 
