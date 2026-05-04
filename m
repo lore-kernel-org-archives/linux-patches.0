@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60683BE630;
-	Mon,  4 May 2026 14:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9D23D5254;
+	Mon,  4 May 2026 14:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903997; cv=none; b=gu6kLuZiiDUPWtq3AkLnReQJpqGcb34Z4JIYC7rkldbX9Sr6YGFUQzO/7MCZ3U/9nBj1EV+CQncIXiw86cZoFdVSG1+V1B2Pw/2P5UfNpRKiO4yYQCDAKXQNfX3Ddwo5Fx8kImU1rVXTeb/BForaDd2AoYK+L07d263daoN8Tl8=
+	t=1777904000; cv=none; b=OXNonqnQyMNVlVn1tEqVt95KbDE9SFj/d8eOB7cG9IFOJ3neFxYwDPPyLoFQxGyQf43eve2bEDezGWV0ZWFheNmlIRm6VsQlHiadBG8VTxtUAL6Mx9R1XRbb30ML+WzO+SylBWmO1x2eZSzdxcZlGL6t61xP3vJo2lZd82O4pc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903997; c=relaxed/simple;
-	bh=bi6vVC1aZCIIvm5aZdYszP0nEMFMRXiwSfuv7gjjdtQ=;
+	s=arc-20240116; t=1777904000; c=relaxed/simple;
+	bh=UX/BOTN5O/w/vUkhPB9Vkqy4gKiHjuxuLeyCzdtC8cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TsFIgXgkJ1liOMC8vuBB8tv6NPD4sCvybiAA8R8CL+SMIgRvr0Vvwnec7yUeZSOQy3vsUaIvR4MMLxBl87RcMCPFJaPHK7qsJkeocsOWVnels6DuCAeLGOLa4Fv4dXOapmIDdDRu//NBUWIFkFKoafz+Mo3tOa808fmxLvCwqm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mn28rO+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlgyZTZA5GbVw5hyA7wNRK6uXQgTxFW5iNmXdY2cz42zDRNVqkIIlc4hb5/l2vxVgegHeyed6VExk1gD4+Tx1EeHATK8zZcwF+fg1A6j+wTwtxXlV00ZO6M1Vu4l0Vh7gIPO5C2vZubBbobzprinXLRdfuVxXa1pX5uzATOlQ0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whvhPZyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mn28rO+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A96FC2BCFA;
-	Mon,  4 May 2026 14:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whvhPZyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC76CC2BCC4;
+	Mon,  4 May 2026 14:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903997;
-	bh=bi6vVC1aZCIIvm5aZdYszP0nEMFMRXiwSfuv7gjjdtQ=;
+	s=korg; t=1777904000;
+	bh=UX/BOTN5O/w/vUkhPB9Vkqy4gKiHjuxuLeyCzdtC8cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mn28rO+Qx/bjjEml09Xs5scKXJnxQ5yc6lH/ol6erzWcVDnGM4j4adJb3G3h3fiB5
-	 J/3k5ryFgLnE3pNRFgPK/QZVjY2qzwtnnCdoxe29lmtVqY4plwS7fQdYoDy8Jzpgng
-	 fxq4CsC7bW/MYWq6P8WujVO7dw/AtnLq0SgItS8M=
+	b=whvhPZyNO9dHrjXeNaVFXAz9wdI+zb8apEjAuTAg5dxvvb2Rg9ipaLksE1Y/PNypO
+	 hQcDRcKyIlyHgYBO/GUUyHDZORKk+75e2xAXL6NIGIN0H5+zOR5DkLIU3CST+yvRUL
+	 JQxySWS3qlkMlOiyE6sTzybCk1iE7fjbBf6LqjHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 143/275] hwmon: (pt5161l) Fix bugs in pt5161l_read_block_data()
-Date: Mon,  4 May 2026 15:51:23 +0200
-Message-ID: <20260504135148.213015111@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 6.18 144/275] randomize_kstack: Maintain kstack_offset per task
+Date: Mon,  4 May 2026 15:51:24 +0200
+Message-ID: <20260504135148.272045724@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,58 +51,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 24c73e93d6a756e1b8626bb259d2e07c5b89b370 upstream.
+commit 37beb42560165869838e7d91724f3e629db64129 upstream.
 
-Fix two bugs in pt5161l_read_block_data():
+kstack_offset was previously maintained per-cpu, but this caused a
+couple of issues. So let's instead make it per-task.
 
-1. Buffer overrun: The local buffer rbuf is declared as u8 rbuf[24],
-   but i2c_smbus_read_block_data() can return up to
-   I2C_SMBUS_BLOCK_MAX (32) bytes. The i2c-core copies the data into
-   the caller's buffer before the return value can be checked, so
-   the post-read length validation does not prevent a stack overrun
-   if a device returns more than 24 bytes. Resize the buffer to
-   I2C_SMBUS_BLOCK_MAX.
+Issue 1: add_random_kstack_offset() and choose_random_kstack_offset()
+expected and required to be called with interrupts and preemption
+disabled so that it could manipulate per-cpu state. But arm64, loongarch
+and risc-v are calling them with interrupts and preemption enabled. I
+don't _think_ this causes any functional issues, but it's certainly
+unexpected and could lead to manipulating the wrong cpu's state, which
+could cause a minor performance degradation due to bouncing the cache
+lines. By maintaining the state per-task those functions can safely be
+called in preemptible context.
 
-2. Unexpected positive return on length mismatch: When all three
-   retries are exhausted because the device returns data with an
-   unexpected length, i2c_smbus_read_block_data() returns a positive
-   byte count. The function returns this directly, and callers treat
-   any non-negative return as success, processing stale or incomplete
-   buffer contents. Return -EIO when retries are exhausted with a
-   positive return value, preserving the negative error code on I2C
-   failure.
+Issue 2: add_random_kstack_offset() is called before executing the
+syscall and expands the stack using a previously chosen random offset.
+choose_random_kstack_offset() is called after executing the syscall and
+chooses and stores a new random offset for the next syscall. With
+per-cpu storage for this offset, an attacker could force cpu migration
+during the execution of the syscall and prevent the offset from being
+updated for the original cpu such that it is predictable for the next
+syscall on that cpu. By maintaining the state per-task, this problem
+goes away because the per-task random offset is updated after the
+syscall regardless of which cpu it is executing on.
 
-Fixes: 1b2ca93cd0592 ("hwmon: Add driver for Astera Labs PT5161L retimer")
+Fixes: 39218ff4c625 ("stack: Optionally randomize kernel stack offset each syscall")
+Closes: https://lore.kernel.org/all/dd8c37bc-795f-4c7a-9086-69e584d8ab24@arm.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260410002549.424162-1-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://patch.msgid.link/20260303150840.3789438-2-ryan.roberts@arm.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pt5161l.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/randomize_kstack.h |   26 +++++++++++++++-----------
+ include/linux/sched.h            |    4 ++++
+ init/main.c                      |    1 -
+ kernel/fork.c                    |    2 ++
+ 4 files changed, 21 insertions(+), 12 deletions(-)
 
---- a/drivers/hwmon/pt5161l.c
-+++ b/drivers/hwmon/pt5161l.c
-@@ -121,7 +121,7 @@ static int pt5161l_read_block_data(struc
- 	int ret, tries;
- 	u8 remain_len = len;
- 	u8 curr_len;
--	u8 wbuf[16], rbuf[24];
-+	u8 wbuf[16], rbuf[I2C_SMBUS_BLOCK_MAX];
- 	u8 cmd = 0x08; /* [7]:pec_en, [4:2]:func, [1]:start, [0]:end */
- 	u8 config = 0x00; /* [6]:cfg_type, [4:1]:burst_len, [0]:address bit16 */
+--- a/include/linux/randomize_kstack.h
++++ b/include/linux/randomize_kstack.h
+@@ -9,7 +9,6 @@
  
-@@ -151,7 +151,7 @@ static int pt5161l_read_block_data(struc
- 				break;
- 		}
- 		if (tries >= 3)
--			return ret;
-+			return ret < 0 ? ret : -EIO;
+ DECLARE_STATIC_KEY_MAYBE(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,
+ 			 randomize_kstack_offset);
+-DECLARE_PER_CPU(u32, kstack_offset);
  
- 		memcpy(val, rbuf, curr_len);
- 		val += curr_len;
+ /*
+  * Do not use this anywhere else in the kernel. This is used here because
+@@ -50,15 +49,14 @@ DECLARE_PER_CPU(u32, kstack_offset);
+  * add_random_kstack_offset - Increase stack utilization by previously
+  *			      chosen random offset
+  *
+- * This should be used in the syscall entry path when interrupts and
+- * preempt are disabled, and after user registers have been stored to
+- * the stack. For testing the resulting entropy, please see:
+- * tools/testing/selftests/lkdtm/stack-entropy.sh
++ * This should be used in the syscall entry path after user registers have been
++ * stored to the stack. Preemption may be enabled. For testing the resulting
++ * entropy, please see: tools/testing/selftests/lkdtm/stack-entropy.sh
+  */
+ #define add_random_kstack_offset() do {					\
+ 	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
+ 				&randomize_kstack_offset)) {		\
+-		u32 offset = raw_cpu_read(kstack_offset);		\
++		u32 offset = current->kstack_offset;			\
+ 		u8 *ptr = __kstack_alloca(KSTACK_OFFSET_MAX(offset));	\
+ 		/* Keep allocation even after "ptr" loses scope. */	\
+ 		asm volatile("" :: "r"(ptr) : "memory");		\
+@@ -69,9 +67,9 @@ DECLARE_PER_CPU(u32, kstack_offset);
+  * choose_random_kstack_offset - Choose the random offset for the next
+  *				 add_random_kstack_offset()
+  *
+- * This should only be used during syscall exit when interrupts and
+- * preempt are disabled. This position in the syscall flow is done to
+- * frustrate attacks from userspace attempting to learn the next offset:
++ * This should only be used during syscall exit. Preemption may be enabled. This
++ * position in the syscall flow is done to frustrate attacks from userspace
++ * attempting to learn the next offset:
+  * - Maximize the timing uncertainty visible from userspace: if the
+  *   offset is chosen at syscall entry, userspace has much more control
+  *   over the timing between choosing offsets. "How long will we be in
+@@ -85,14 +83,20 @@ DECLARE_PER_CPU(u32, kstack_offset);
+ #define choose_random_kstack_offset(rand) do {				\
+ 	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
+ 				&randomize_kstack_offset)) {		\
+-		u32 offset = raw_cpu_read(kstack_offset);		\
++		u32 offset = current->kstack_offset;			\
+ 		offset = ror32(offset, 5) ^ (rand);			\
+-		raw_cpu_write(kstack_offset, offset);			\
++		current->kstack_offset = offset;			\
+ 	}								\
+ } while (0)
++
++static inline void random_kstack_task_init(struct task_struct *tsk)
++{
++	tsk->kstack_offset = 0;
++}
+ #else /* CONFIG_RANDOMIZE_KSTACK_OFFSET */
+ #define add_random_kstack_offset()		do { } while (0)
+ #define choose_random_kstack_offset(rand)	do { } while (0)
++#define random_kstack_task_init(tsk)		do { } while (0)
+ #endif /* CONFIG_RANDOMIZE_KSTACK_OFFSET */
+ 
+ #endif
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1614,6 +1614,10 @@ struct task_struct {
+ 	unsigned long			prev_lowest_stack;
+ #endif
+ 
++#ifdef CONFIG_RANDOMIZE_KSTACK_OFFSET
++	u32				kstack_offset;
++#endif
++
+ #ifdef CONFIG_X86_MCE
+ 	void __user			*mce_vaddr;
+ 	__u64				mce_kflags;
+--- a/init/main.c
++++ b/init/main.c
+@@ -830,7 +830,6 @@ static inline void initcall_debug_enable
+ #ifdef CONFIG_RANDOMIZE_KSTACK_OFFSET
+ DEFINE_STATIC_KEY_MAYBE_RO(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,
+ 			   randomize_kstack_offset);
+-DEFINE_PER_CPU(u32, kstack_offset);
+ 
+ static int __init early_randomize_kstack_offset(char *buf)
+ {
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -95,6 +95,7 @@
+ #include <linux/thread_info.h>
+ #include <linux/kstack_erase.h>
+ #include <linux/kasan.h>
++#include <linux/randomize_kstack.h>
+ #include <linux/scs.h>
+ #include <linux/io_uring.h>
+ #include <linux/bpf.h>
+@@ -2191,6 +2192,7 @@ __latent_entropy struct task_struct *cop
+ 	if (retval)
+ 		goto bad_fork_cleanup_io;
+ 
++	random_kstack_task_init(p);
+ 	stackleak_task_init(p);
+ 
+ 	if (pid != &init_struct_pid) {
 
 
