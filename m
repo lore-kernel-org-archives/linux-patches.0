@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CBC3DE455;
-	Mon,  4 May 2026 14:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941883DEAC9;
+	Mon,  4 May 2026 14:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904833; cv=none; b=Hl20oUFBoaYrPKsn7qXv5QHrSZnODK3ZPbdqYaTnBub9hjMbov2WBpU/2SQ4mEkgu3yNYaex8rOax8wIDhj8ZFTKURpTXjbj1NxnBNcIHcUco7CxLIC2pcJh2oXYrPuTQqzySoLGvYxbkrlgAX2CVT8FBnTnIwwy4P83dQbisuM=
+	t=1777904835; cv=none; b=fEAeYKHBxrylK2yxWvmv5HokLgv30pf4d2yNS/rIC6OgcxioUNMJ79nIauR3YOq10Lwx895+MUIZTt1doiqD08zpLtQ4sn8RTHAn/bhz86K/00f3Cq8a0ZhjF7XSeowB3fplessmIyDWtBx1rqO7w5AFQB67yqh8hmQ/jS1ifoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904833; c=relaxed/simple;
-	bh=VyLHp7bhWo1s7jACSHcInRTkwMXsWJVtoILbH8kR/ZE=;
+	s=arc-20240116; t=1777904835; c=relaxed/simple;
+	bh=ArfheiAKMJODpLisNz6rLitiCMg10yRm2YzPbSn6dJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D27DYL4ijwmwTYTuGMqtlKrAg12YP+N8njETv0/MP09iZpErG6p8IYVsAZs0YYlFtmIf7EVxcnlt170EenZnlNfhv+gP1ojWHU5qXC7knHv1PUAWUdwEnnIATwne0RvAkFVaeX8TrOlxTZInDQAvfcUpjlDjwvO78CUaeiuGjgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1owjqLb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L1yjZP39D1ziHWt2JssN5rgaQayUOtqQXi3qyXLl9J/HEBBbaQV4kIA0OxZ4K5mb5xfF5bsPqKf64i/BZtQj2RWcfnqGHePdbp3T/FAUBJISu+XVfbZFz9Tr+9BIy7kGOvpQn3OlBZ6OKnbHoLfIFE/+ZKeTw1JFiCx1Zgiedtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ph8C/haT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1owjqLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57181C2BCB8;
-	Mon,  4 May 2026 14:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ph8C/haT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2E2C2BCB8;
+	Mon,  4 May 2026 14:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904832;
-	bh=VyLHp7bhWo1s7jACSHcInRTkwMXsWJVtoILbH8kR/ZE=;
+	s=korg; t=1777904835;
+	bh=ArfheiAKMJODpLisNz6rLitiCMg10yRm2YzPbSn6dJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f1owjqLbvulbQYuwbGmasv0DPD0fKH//EFiz4fDeRGzXOTa0t7C72BvgWmOODGudz
-	 LARF4fxUvZ/O/f2guEq3qUIwqIulapqxH1yt5Ub4K7LeG8pk1to+cQgnL1rl8z2Yq6
-	 SiWWQTPmLLZRsjYwklMsBvgSfklktPYANn2Uonzo=
+	b=ph8C/haT3Dt/OnsM9yBI4ZboxKoskHs4kg2hg8IibpPwuSMxaCwpdVIr46nTU5VKO
+	 cLywPIljy+NzAhz3B+DrfVTl5X5GtsczkWawF+HNj7Dp2q7lIvPp24Eb+UyB5Nm3zd
+	 kxmn/mJb8zgRHBEirXnH6fAQgKYYvHPb+NLlwDtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Oliver Neukum <oneukum@suse.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 191/215] ALSA: aoa: Skip devices with no codecs in i2sbus_resume()
-Date: Mon,  4 May 2026 15:53:30 +0200
-Message-ID: <20260504135137.388143902@linuxfoundation.org>
+Subject: [PATCH 6.12 192/215] media: rc: igorplugusb: heed coherency rules
+Date: Mon,  4 May 2026 15:53:31 +0200
+Message-ID: <20260504135137.426995447@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,80 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit fd7df93013c5118812e63a52635dc6c3a805a1de ]
+[ Upstream commit eac69475b01fe1e861dfe3960b57fa95671c132e ]
 
-In i2sbus_resume(), skip devices with an empty codec list, which avoids
-using an uninitialized 'sysclock_factor' in the 32-bit format path in
-i2sbus_pcm_prepare().
+In a control request, the USB request structure
+can be subject to DMA on some HCs. Hence it must obey
+the rules for DMA coherency. Allocate it separately.
 
-In i2sbus_pcm_prepare(), replace two list_for_each_entry() loops with a
-single list_first_entry() now that the codec list is guaranteed to be
-non-empty by all callers.
-
-Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
+Fixes: b1c97193c6437 ("[media] rc: port IgorPlug-USB to rc-core")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20260310102921.210109-3-thorsten.blum@linux.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ replaced kzalloc_obj(*ir->request, GFP_KERNEL) with kzalloc(sizeof(*ir->request), GFP_KERNEL) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/aoa/soundbus/i2sbus/core.c |    3 +++
- sound/aoa/soundbus/i2sbus/pcm.c  |   16 +++++-----------
- 2 files changed, 8 insertions(+), 11 deletions(-)
+ drivers/media/rc/igorplugusb.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/sound/aoa/soundbus/i2sbus/core.c
-+++ b/sound/aoa/soundbus/i2sbus/core.c
-@@ -410,6 +410,9 @@ static int i2sbus_resume(struct macio_de
- 	int err, ret = 0;
+--- a/drivers/media/rc/igorplugusb.c
++++ b/drivers/media/rc/igorplugusb.c
+@@ -34,7 +34,7 @@ struct igorplugusb {
+ 	struct device *dev;
  
- 	list_for_each_entry(i2sdev, &control->list, item) {
-+		if (list_empty(&i2sdev->sound.codec_list))
-+			continue;
+ 	struct urb *urb;
+-	struct usb_ctrlrequest request;
++	struct usb_ctrlrequest *request;
+ 
+ 	struct timer_list timer;
+ 
+@@ -122,7 +122,7 @@ static void igorplugusb_cmd(struct igorp
+ {
+ 	int ret;
+ 
+-	ir->request.bRequest = cmd;
++	ir->request->bRequest = cmd;
+ 	ir->urb->transfer_flags = 0;
+ 	ret = usb_submit_urb(ir->urb, GFP_ATOMIC);
+ 	if (ret && ret != -EPERM)
+@@ -164,13 +164,17 @@ static int igorplugusb_probe(struct usb_
+ 	if (!ir)
+ 		return -ENOMEM;
+ 
++	ir->request = kzalloc(sizeof(*ir->request), GFP_KERNEL);
++	if (!ir->request)
++		goto fail;
 +
- 		/* reset i2s bus format etc. */
- 		i2sbus_pcm_prepare_both(i2sdev);
+ 	ir->dev = &intf->dev;
  
---- a/sound/aoa/soundbus/i2sbus/pcm.c
-+++ b/sound/aoa/soundbus/i2sbus/pcm.c
-@@ -411,6 +411,9 @@ static int i2sbus_pcm_prepare(struct i2s
- 	/* set stop command */
- 	command->command = cpu_to_le16(DBDMA_STOP);
+ 	timer_setup(&ir->timer, igorplugusb_timer, 0);
  
-+	cii = list_first_entry(&i2sdev->sound.codec_list,
-+			       struct codec_info_item, list);
-+
- 	/* ok, let's set the serial format and stuff */
- 	switch (runtime->format) {
- 	/* 16 bit formats */
-@@ -418,13 +421,7 @@ static int i2sbus_pcm_prepare(struct i2s
- 	case SNDRV_PCM_FORMAT_U16_BE:
- 		/* FIXME: if we add different bus factors we need to
- 		 * do more here!! */
--		bi.bus_factor = 0;
--		list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
--			bi.bus_factor = cii->codec->bus_factor;
--			break;
--		}
--		if (!bi.bus_factor)
--			return -ENODEV;
-+		bi.bus_factor = cii->codec->bus_factor;
- 		input_16bit = 1;
- 		break;
- 	case SNDRV_PCM_FORMAT_S32_BE:
-@@ -438,10 +435,7 @@ static int i2sbus_pcm_prepare(struct i2s
- 		return -EINVAL;
- 	}
- 	/* we assume all sysclocks are the same! */
--	list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
--		bi.sysclock_factor = cii->codec->sysclock_factor;
--		break;
--	}
-+	bi.sysclock_factor = cii->codec->sysclock_factor;
+-	ir->request.bRequest = GET_INFRACODE;
+-	ir->request.bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
+-	ir->request.wLength = cpu_to_le16(MAX_PACKET);
++	ir->request->bRequest = GET_INFRACODE;
++	ir->request->bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
++	ir->request->wLength = cpu_to_le16(MAX_PACKET);
  
- 	if (clock_and_divisors(bi.sysclock_factor,
- 			       bi.bus_factor,
+ 	ir->urb = usb_alloc_urb(0, GFP_KERNEL);
+ 	if (!ir->urb)
+@@ -228,6 +232,7 @@ fail:
+ 	usb_free_urb(ir->urb);
+ 	rc_free_device(ir->rc);
+ 	kfree(ir->buf_in);
++	kfree(ir->request);
+ 
+ 	return ret;
+ }
+@@ -243,6 +248,7 @@ static void igorplugusb_disconnect(struc
+ 	usb_unpoison_urb(ir->urb);
+ 	usb_free_urb(ir->urb);
+ 	kfree(ir->buf_in);
++	kfree(ir->request);
+ }
+ 
+ static const struct usb_device_id igorplugusb_table[] = {
 
 
