@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F70B36309C;
-	Mon,  4 May 2026 14:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028AE36309C;
+	Mon,  4 May 2026 14:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904848; cv=none; b=BgFASraQtvBKb0nFqjk1SkfphHALXot1SNYle2dJRyoYf5x9cfFyzsvqdZ/7izDBnWC+AfjysV6h0oDJzcjJJ1QtbUDsv5ZNOPqbZDZSoVmAUu1KiRBfbv5xTH+VtPRDkSaRa1jAmRfOceZH50sSfiGrlu4m7unFfl/0+1kqvAk=
+	t=1777904851; cv=none; b=RT8qucBTmwSWWWyA6pG4Gv/OPz9OVL/Ha38HqXYdDhCa7CtC16JOGv7I9gAMwnSKGJTDRjsIHdLXh8KMsWHykNh5PjXcRMt+WLInZ7GMPAOvyaUzKxgf6ZuiRlUsNjJypi2xqg48iXpdaTc6rrDMkqO3eH3RxckGTDC8Co/JIDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904848; c=relaxed/simple;
-	bh=K88QAZuwINKgHCAsU13WlJlt+FLOvvk/2iQo86uTxc8=;
+	s=arc-20240116; t=1777904851; c=relaxed/simple;
+	bh=3jxXWwdeSzyEPNxcC1aq1sH/IEnLYo+NqNtyeZxenYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ln9/as4n0U9jH0ub6R3sDv3bIIG3pEi7Icdm1YtYAnF1T7GK/JLBG5L7qyzWgviTly94zEDDtnOhuW6UhvKynbjXAc92oh+nDz4V7Oi87TrQvhA6XNTwyAKwGW8BtyPkqKqCESD8qZaSksv9Wv/v11OUflRaY21LFaHSALcajsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr14cb07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iUfnom1JMhEY12q3Pi7MMz5MY5nA9c83L2TVbLY2Tj76f2A5SFjwTdw5W3BFG4J7LAOx3TbLBgxxk1CIoXljs19xfZecRwUllKtCQDnmrKq7C6OWb6MLmik5jvX5Q4cMyRluT+7ezaUdTRBXQBO9BeplFXkIji50ocevn9cuk9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3D7+HOt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr14cb07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B40C2BCB8;
-	Mon,  4 May 2026 14:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3D7+HOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0C0C2BCB8;
+	Mon,  4 May 2026 14:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904848;
-	bh=K88QAZuwINKgHCAsU13WlJlt+FLOvvk/2iQo86uTxc8=;
+	s=korg; t=1777904850;
+	bh=3jxXWwdeSzyEPNxcC1aq1sH/IEnLYo+NqNtyeZxenYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vr14cb07Tj5ZDkyaFFGW6Mm1Mv0GpiFH97CQQYRDH5I23cqelD6tyz14d2paL9q1V
-	 z6mu8rZPd7YbT2eczfAIEEuciufIMVGAmY4WQrqWfZlb8Mi0SYVXiHcaccCirhoGW8
-	 zaKDsgGA/VXz4JF0gv+3Mq2L1WKwJiAOf1+0OPe0=
+	b=M3D7+HOtJA9L5v5xPNDl/cIYuNMJbs7LnRZtHBdS0Gl0sGFmC5DrgJ4WD/Pxg1OHd
+	 uCI2n4fjluWh/ckRiOot/yNDUPPEwDDszwNsUMVYz3XczDpvT8k82Czvj8sLJcf42Z
+	 KWkzAIFgm1KWo+9hXuljUa93PzsCZNcNeScOiqd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/215] rxrpc: Fix potential UAF after skb_unshare() failure
-Date: Mon,  4 May 2026 15:53:36 +0200
-Message-ID: <20260504135137.710597208@linuxfoundation.org>
+Subject: [PATCH 6.12 198/215] net: qrtr: ns: Limit the maximum server registration per node
+Date: Mon,  4 May 2026 15:53:37 +0200
+Message-ID: <20260504135137.777287467@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -56,176 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 1f2740150f904bfa60e4bad74d65add3ccb5e7f8 ]
+[ Upstream commit d5ee2ff98322337951c56398e79d51815acbf955 ]
 
-If skb_unshare() fails to unshare a packet due to allocation failure in
-rxrpc_input_packet(), the skb pointer in the parent (rxrpc_io_thread())
-will be NULL'd out.  This will likely cause the call to
-trace_rxrpc_rx_done() to oops.
+Current code does no bound checking on the number of servers added per
+node. A malicious client can flood NEW_SERVER messages and exhaust memory.
 
-Fix this by moving the unsharing down to where rxrpc_input_call_event()
-calls rxrpc_input_call_packet().  There are a number of places prior to
-that where we ignore DATA packets for a variety of reasons (such as the
-call already being complete) for which an unshare is then avoided.
+Fix this issue by limiting the maximum number of server registrations to
+256 per node. If the NEW_SERVER message is received for an old port, then
+don't restrict it as it will get replaced. While at it, also rate limit
+the error messages in the failure path of qrtr_ns_worker().
 
-And with that, rxrpc_input_packet() doesn't need to take a pointer to the
-pointer to the packet, so change that to just a pointer.
+Note that the limit of 256 is chosen based on the current platform
+requirements. If requirement changes in the future, this limit can be
+increased.
 
-Fixes: 2d1faf7a0ca3 ("rxrpc: Simplify skbuff accounting in receive path")
-Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-4-dhowells@redhat.com
+Cc: stable@vger.kernel.org
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260409-qrtr-fix-v3-1-00a8a5ff2b51@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted to per-skb rxrpc_input_call_event() signature ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    4 ++--
- net/rxrpc/ar-internal.h      |    1 -
- net/rxrpc/call_event.c       |   24 ++++++++++++++++++++++--
- net/rxrpc/io_thread.c        |   24 ++----------------------
- net/rxrpc/skbuff.c           |    9 ---------
- 5 files changed, 26 insertions(+), 36 deletions(-)
+ net/qrtr/ns.c |   26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -127,8 +127,7 @@
- 	E_(rxrpc_call_poke_timer_now,		"Timer-now")
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -68,8 +68,14 @@ struct qrtr_server {
+ struct qrtr_node {
+ 	unsigned int id;
+ 	struct xarray servers;
++	u32 server_count;
+ };
  
- #define rxrpc_skb_traces \
--	EM(rxrpc_skb_eaten_by_unshare,		"ETN unshare  ") \
--	EM(rxrpc_skb_eaten_by_unshare_nomem,	"ETN unshar-nm") \
-+	EM(rxrpc_skb_get_call_rx,		"GET call-rx  ") \
- 	EM(rxrpc_skb_get_conn_secured,		"GET conn-secd") \
- 	EM(rxrpc_skb_get_conn_work,		"GET conn-work") \
- 	EM(rxrpc_skb_get_last_nack,		"GET last-nack") \
-@@ -153,6 +152,7 @@
- 	EM(rxrpc_skb_see_recvmsg,		"SEE recvmsg  ") \
- 	EM(rxrpc_skb_see_reject,		"SEE reject   ") \
- 	EM(rxrpc_skb_see_rotate,		"SEE rotate   ") \
-+	EM(rxrpc_skb_see_unshare_nomem,		"SEE unshar-nm") \
- 	E_(rxrpc_skb_see_version,		"SEE version  ")
- 
- #define rxrpc_local_traces \
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -1260,7 +1260,6 @@ int rxrpc_server_keyring(struct rxrpc_so
- void rxrpc_kernel_data_consumed(struct rxrpc_call *, struct sk_buff *);
- void rxrpc_new_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_see_skb(struct sk_buff *, enum rxrpc_skb_trace);
--void rxrpc_eaten_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_get_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_free_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_purge_queue(struct sk_buff_head *);
---- a/net/rxrpc/call_event.c
-+++ b/net/rxrpc/call_event.c
-@@ -342,8 +342,28 @@ bool rxrpc_input_call_event(struct rxrpc
- 	if (skb && skb->mark == RXRPC_SKB_MARK_ERROR)
- 		goto out;
- 
--	if (skb)
--		rxrpc_input_call_packet(call, skb);
-+	if (skb) {
-+		struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
++/* Max server limit is chosen based on the current platform requirements. If the
++ * requirement changes in the future, this value can be increased.
++ */
++#define QRTR_NS_MAX_SERVERS 256
 +
-+		if (sp->hdr.securityIndex != 0 &&
-+		    skb_cloned(skb)) {
-+			/* Unshare the packet so that it can be modified for
-+			 * in-place decryption.
-+			 */
-+			struct sk_buff *nskb = skb_copy(skb, GFP_ATOMIC);
-+
-+			if (nskb) {
-+				rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
-+				rxrpc_input_call_packet(call, nskb);
-+				rxrpc_free_skb(nskb, rxrpc_skb_put_input);
-+			} else {
-+				/* OOM - Drop the packet. */
-+				rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
-+			}
-+		} else {
-+			rxrpc_input_call_packet(call, skb);
-+		}
-+	}
- 
- 	/* If we see our async-event poke, check for timeout trippage. */
- 	now = ktime_get_real();
---- a/net/rxrpc/io_thread.c
-+++ b/net/rxrpc/io_thread.c
-@@ -178,13 +178,12 @@ static bool rxrpc_extract_abort(struct s
- /*
-  * Process packets received on the local endpoint
-  */
--static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff **_skb)
-+static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff *skb)
+ static struct qrtr_node *node_get(unsigned int node_id)
  {
- 	struct rxrpc_connection *conn;
- 	struct sockaddr_rxrpc peer_srx;
- 	struct rxrpc_skb_priv *sp;
- 	struct rxrpc_peer *peer = NULL;
--	struct sk_buff *skb = *_skb;
- 	bool ret = false;
+ 	struct qrtr_node *node;
+@@ -230,6 +236,17 @@ static struct qrtr_server *server_add(un
+ 	if (!service || !port)
+ 		return NULL;
  
- 	skb_pull(skb, sizeof(struct udphdr));
-@@ -230,25 +229,6 @@ static bool rxrpc_input_packet(struct rx
- 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_call);
- 		if (sp->hdr.seq == 0)
- 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_seq);
--
--		/* Unshare the packet so that it can be modified for in-place
--		 * decryption.
--		 */
--		if (sp->hdr.securityIndex != 0) {
--			skb = skb_unshare(skb, GFP_ATOMIC);
--			if (!skb) {
--				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare_nomem);
--				*_skb = NULL;
--				return just_discard;
--			}
--
--			if (skb != *_skb) {
--				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare);
--				*_skb = skb;
--				rxrpc_new_skb(skb, rxrpc_skb_new_unshared);
--				sp = rxrpc_skb(skb);
--			}
--		}
- 		break;
++	node = node_get(node_id);
++	if (!node)
++		return NULL;
++
++	/* Make sure the new servers per port are capped at the maximum value */
++	old = xa_load(&node->servers, port);
++	if (!old && node->server_count >= QRTR_NS_MAX_SERVERS) {
++		pr_err_ratelimited("QRTR client node %u exceeds max server limit!\n", node_id);
++		return NULL;
++	}
++
+ 	srv = kzalloc(sizeof(*srv), GFP_KERNEL);
+ 	if (!srv)
+ 		return NULL;
+@@ -239,10 +256,6 @@ static struct qrtr_server *server_add(un
+ 	srv->node = node_id;
+ 	srv->port = port;
  
- 	case RXRPC_PACKET_TYPE_CHALLENGE:
-@@ -490,7 +470,7 @@ int rxrpc_io_thread(void *data)
- 			switch (skb->mark) {
- 			case RXRPC_SKB_MARK_PACKET:
- 				skb->priority = 0;
--				if (!rxrpc_input_packet(local, &skb))
-+				if (!rxrpc_input_packet(local, skb))
- 					rxrpc_reject_packet(local, skb);
- 				trace_rxrpc_rx_done(skb->mark, skb->priority);
- 				rxrpc_free_skb(skb, rxrpc_skb_put_input);
---- a/net/rxrpc/skbuff.c
-+++ b/net/rxrpc/skbuff.c
-@@ -47,15 +47,6 @@ void rxrpc_get_skb(struct sk_buff *skb,
+-	node = node_get(node_id);
+-	if (!node)
+-		goto err;
+-
+ 	/* Delete the old server on the same port */
+ 	old = xa_store(&node->servers, port, srv, GFP_KERNEL);
+ 	if (old) {
+@@ -253,6 +266,8 @@ static struct qrtr_server *server_add(un
+ 		} else {
+ 			kfree(old);
+ 		}
++	} else {
++		node->server_count++;
+ 	}
+ 
+ 	trace_qrtr_ns_server_add(srv->service, srv->instance,
+@@ -293,6 +308,7 @@ static int server_del(struct qrtr_node *
+ 	}
+ 
+ 	kfree(srv);
++	node->server_count--;
+ 
+ 	return 0;
  }
+@@ -681,7 +697,7 @@ static void qrtr_ns_worker(struct work_s
+ 		}
  
- /*
-- * Note the dropping of a ref on a socket buffer by the core.
-- */
--void rxrpc_eaten_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
--{
--	int n = atomic_inc_return(&rxrpc_n_rx_skbs);
--	trace_rxrpc_skb(skb, 0, n, why);
--}
--
--/*
-  * Note the destruction of a socket buffer.
-  */
- void rxrpc_free_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
+ 		if (ret < 0)
+-			pr_err("failed while handling packet from %d:%d",
++			pr_err_ratelimited("failed while handling packet from %d:%d",
+ 			       sq.sq_node, sq.sq_port);
+ 	}
+ 
 
 
