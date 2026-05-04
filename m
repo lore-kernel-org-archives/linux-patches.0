@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE45E3DBD7F;
-	Mon,  4 May 2026 13:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5E23A63EC;
+	Mon,  4 May 2026 13:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777902932; cv=none; b=P1UzZB2kU3jSDw65zLJbVUx7V9uQqvIegkGDMychHredk2YQ/neG27W9i/6JPK15UP+bfsbQqYEbuiLNPT+lJVGamm05KrqlxolhScCg9Wge+hkW4ESRKl/p8dC3ou3hcg+ZDyRYPNVJv+7C3VXRD78K9KPbJqKtRG+QAt7iZE8=
+	t=1777902935; cv=none; b=jNPnvqW8JXJIW58U7rBXn1BtdPQUzlz9rxQqQt8a+BILiPx9kfRepWoaqqmewmB3kXm15ekYvMkC1aORrIyIA69Kt2aFLMbSHYqMTsctgTq2V6PjmJ/dkLER0muqCZ6XGDPRiACr6Qbe/0URI626Swg0auOjYG6CiCzfaEk9mfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777902932; c=relaxed/simple;
-	bh=Ch4sU7tmAqiNn/pXKUd0KwvTOiAsskxeEMZopibyyuM=;
+	s=arc-20240116; t=1777902935; c=relaxed/simple;
+	bh=BfQMA1A2rPjoElYoEkR6wRISl1dgdAwLDQBnAoIpyqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S7xqC/Pjqu7GcSO7nLFVz4skm9swb8Zp1lVdrfwc6ys9clCuMJEqD5CsJ48OzU0Xq0H51/CEUMCPVBMEr/21jfqbi0/ygv6IeJP38O8CWeBxSooa2iPaZjDzEqo5OyOoUfo6XbUjzzbDj2y27t+NjQ0wOFoWRQG1luAf++sVyaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGOWqC87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tjbNkL9Sb8/sx0z49MDQGuL5DSFmb5rEqfQ6mD+cJE3gtOlV+nTizilIysaMF5oJuptR9SocEgTV9ilkP60rOnRX5K3i1qWXMvLyMJB12tlsu1e2Fpe2FfL5ra02KCWxOc1FBdBndfGWPwy/b0tWE3W12s8MPLBlxRLSWgFdo3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XuHv7LCu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGOWqC87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE31C2BCC4;
-	Mon,  4 May 2026 13:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XuHv7LCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E739AC2BCB8;
+	Mon,  4 May 2026 13:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777902932;
-	bh=Ch4sU7tmAqiNn/pXKUd0KwvTOiAsskxeEMZopibyyuM=;
+	s=korg; t=1777902935;
+	bh=BfQMA1A2rPjoElYoEkR6wRISl1dgdAwLDQBnAoIpyqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGOWqC872mOpfEcLWbN0ifPZ/E/kwWSGqcg8kWVlYySe7Y0RrqsPpRTj531DBK9a7
-	 JG5NHsdDQD/XlUapWuSb+VkDVs7rSCNII/S8GKDHCMowxlFsFu52YVcODTypmahbpB
-	 VT6PPZu9fTJ9iMwex1fwE+4Fb7lqbY4RRvhhR554=
+	b=XuHv7LCuXnIZ/pB0LOsTDFP2PjWvVoaRZYBCwUp/u/6ug6HURpsuSOGKkTe+GHjrL
+	 TsqUpzyTgZAiPUembQ1YnTPFTjR/1pnpXsK1m4j4/P3k8lBei2Tk2wpROMjbsTwyMK
+	 mSie5ESsYtImPmZO9cobWcoT9LF3Zu9RDkpAzWgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
-	Nipun Gupta <nipun.gupta@amd.com>,
-	Alex Williamson <alex.williamson@nvidia.com>,
-	Nikhil Agarwal <nikhil.agarwal@amd.com>,
-	Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 7.0 039/307] vfio/cdx: Fix NULL pointer dereference in interrupt trigger path
-Date: Mon,  4 May 2026 15:48:44 +0200
-Message-ID: <20260504135144.290297062@linuxfoundation.org>
+	Johannes Berg <johannes@sipsolutions.net>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.0 040/307] um: drivers: call kernel_strrchr() explicitly in cow_user.c
+Date: Mon,  4 May 2026 15:48:45 +0200
+Message-ID: <20260504135144.328571787@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -53,49 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 5ea5880764cbb164afb17a62e76ca75dc371409d upstream.
+commit 91e901c65b4da02a6fd543e3f0049829ae9645b7 upstream.
 
-Add validation to ensure MSI is configured before accessing cdx_irqs
-array in vfio_cdx_set_msi_trigger(). Without this check, userspace
-can trigger a NULL pointer dereference by calling VFIO_DEVICE_SET_IRQS
-with VFIO_IRQ_SET_DATA_BOOL or VFIO_IRQ_SET_DATA_NONE flags before
-ever setting up interrupts via VFIO_IRQ_SET_DATA_EVENTFD.
+Building ARCH=um on glibc >= 2.43 fails:
 
-The vfio_cdx_msi_enable() function allocates the cdx_irqs array and
-sets config_msi to 1 only when called through the EVENTFD path. The
-trigger loop (for DATA_BOOL/DATA_NONE) assumed this had already been
-done, but there was no enforcement of this call ordering.
+  arch/um/drivers/cow_user.c: error: implicit declaration of
+  function 'strrchr' [-Wimplicit-function-declaration]
 
-This matches the protection used in the PCI VFIO driver where
-vfio_pci_set_msi_trigger() checks irq_is() before the trigger loop.
+glibc 2.43's C23 const-preserving strrchr() macro does not survive
+UML's global -Dstrrchr=kernel_strrchr remap from arch/um/Makefile.
+Call kernel_strrchr() directly in cow_user.c so the source no longer
+depends on the -D rewrite.
 
-Fixes: 848e447e000c ("vfio/cdx: add interrupt support")
+Fixes: 2c51a4bc0233 ("um: fix strrchr() problems")
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
 Cc: stable@vger.kernel.org
-Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
-Acked-by: Nipun Gupta <nipun.gupta@amd.com>
-Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Acked-by: Nikhil Agarwal <nikhil.agarwal@amd.com>
-Link: https://lore.kernel.org/r/20260417202800.88287-2-alex.williamson@nvidia.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260408070102.2325572-1-michael.bommarito@gmail.com
+[remove unnecessary 'extern']
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/cdx/intr.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/um/drivers/cow_user.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/vfio/cdx/intr.c
-+++ b/drivers/vfio/cdx/intr.c
-@@ -177,6 +177,10 @@ static int vfio_cdx_set_msi_trigger(stru
- 		return ret;
- 	}
+--- a/arch/um/drivers/cow_user.c
++++ b/arch/um/drivers/cow_user.c
+@@ -15,6 +15,12 @@
+ #include "cow.h"
+ #include "cow_sys.h"
  
-+	/* Ensure MSI is configured before accessing cdx_irqs */
-+	if (!vdev->config_msi)
-+		return -EINVAL;
++/*
++ * arch/um/Makefile remaps strrchr to kernel_strrchr; call the kernel
++ * name directly to avoid glibc >= 2.43's C23 strrchr macro.
++ */
++char *kernel_strrchr(const char *, int);
 +
- 	for (i = start; i < start + count; i++) {
- 		if (!vdev->cdx_irqs[i].trigger)
- 			continue;
+ #define PATH_LEN_V1 256
+ 
+ /* unsigned time_t works until year 2106 */
+@@ -153,7 +159,7 @@ static int absolutize(char *to, int size
+ 			   errno);
+ 		return -1;
+ 	}
+-	slash = strrchr(from, '/');
++	slash = kernel_strrchr(from, '/');
+ 	if (slash != NULL) {
+ 		*slash = '\0';
+ 		if (chdir(from)) {
 
 
