@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFD63D9029;
-	Mon,  4 May 2026 14:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186793DEAF2;
+	Mon,  4 May 2026 14:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903629; cv=none; b=egG/GQnv/dvTbmCB846feqRQnJsmEjGqN0WEnkgpaDMHf7xqSZk8dhGQK9Lajljqw2OtC95ydFS49ZTiRkC2Ah2jCJw+LrKnvRDjJ/JsrmpHPgR2xzjXdkDUILUN7bx6g8FSht4NPM4XpZf+0VV0u2PEn/zzb3B57qbQuUKfKac=
+	t=1777903632; cv=none; b=DojCNRp02Z2LSvEhZTYkCly8kjCQ0OUaZZlCF1/Fzvjp3clBgdcJFzln2aUThs+iy9temzo5TTPcQzOmsfw/77o0JWBctN7YV0YFZkavO8HV2UtMnYBboqsmSBOwyfkoa/Dsh8kA1OUWze+bKfshHsW8EAEAMAoloa7PrxACaNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903629; c=relaxed/simple;
-	bh=x2Cdv+aEHfgAARAZrzw6yRIL7QUtQbEP02Qiyiw4Opc=;
+	s=arc-20240116; t=1777903632; c=relaxed/simple;
+	bh=Y/o632ILq4xwgUJuZ3iSv/m6ce8cJl7qjAjHOCUeYOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DKkrKXkRTKmyBoDXSYYyjarFvADCcOjftkdGsLAZNTfAfx0AqReJQF7Qfb7Mogd/uWPthTBuFTdbmPXxGKhzsg4vWNQi7kJHwv7s2XLdY1xMprKHffxG1MqGCZiznhrscsVpfw34FByzhwyGQHqgTP0AfrFkoaeni2NAhYA9vag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGHFJW+M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2j20uVRqvgCZs2ndaTRFuWKwENZAaD7QRBjgFTpwdT9Qp7WcbqGUo4bszZVSzUy0FKv5sOCJK1+ajkej6ESwhDFM8Ia+kI1RkPV9xQVYMErgW98jT+HDi6Dq3D/bsTYMlxxKYkGDEIdeZNAedt94ncTsLuw+I3Z3GZQ2BZUZ9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+WN1qSX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGHFJW+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7302C2BCB8;
-	Mon,  4 May 2026 14:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+WN1qSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D38C2BCB8;
+	Mon,  4 May 2026 14:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903629;
-	bh=x2Cdv+aEHfgAARAZrzw6yRIL7QUtQbEP02Qiyiw4Opc=;
+	s=korg; t=1777903631;
+	bh=Y/o632ILq4xwgUJuZ3iSv/m6ce8cJl7qjAjHOCUeYOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGHFJW+Mj4hRUzxywL/s1egjca0izwGUxeaIj+fHFtMsd41psbTSf0nI7dNzhzgDZ
-	 8PiizEGdc4sLawFuNpLT0nhIw78c1Mfqy6B03xSBYiO0OstX+5g8zSbL7G969FoIrW
-	 rJsgMR0qPfM3p8qzhsHXOn62TP163K6cNBLp/8sA=
+	b=K+WN1qSX+ahoiKrqAwNEKezMs4+w3nI2DmTV05zJaUSxKQgfysTB4cjGqhzshZSU9
+	 IhEbMr+6eUnOZQEeNllprPm4MAjaMdnAvSzGEf9DbDW51hhN7DfeYyh2aP4eLBxNIw
+	 Mc/jc4I/L2XK/aKK8+8c4jFy+R45lhmlqPRsXQgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Kai Ma <k4729.23098@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 7.0 307/307] netfilter: reject zero shift in nft_bitwise
-Date: Mon,  4 May 2026 15:53:12 +0200
-Message-ID: <20260504135154.321404125@linuxfoundation.org>
+	Tobias Gaertner <tob.gaertner@me.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 7.0 278/307] ntfs3: add buffer boundary checks to run_unpack()
+Date: Mon,  4 May 2026 15:52:43 +0200
+Message-ID: <20260504135153.256056740@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -57,47 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Ma <k4729.23098@gmail.com>
+From: Tobias Gaertner <tob.gaertner@me.com>
 
-commit fe11e5c40817b84abaa5d83bfb6586d8412bfd07 upstream.
+commit b62567bca47408e6739dee75f02a2113548af875 upstream.
 
-Reject zero shift operands for nft_bitwise left and right shift
-expressions during initialization.
+run_unpack() checks `run_buf < run_last` at the top of the while loop
+but then reads size_size and offset_size bytes via run_unpack_s64()
+without verifying they fit within the remaining buffer.  A crafted NTFS
+image with truncated run data in an MFT attribute triggers an OOB heap
+read of up to 15 bytes when the filesystem is mounted.
 
-The carry propagation logic computes the carry from the adjacent 32-bit
-word using BITS_PER_TYPE(u32) - shift. A zero shift operand turns this
-into a 32-bit shift, which is undefined behaviour.
+Add boundary checks before each run_unpack_s64() call to ensure the
+declared field size does not exceed the remaining buffer.
 
-Reject zero shift operands in the control plane, alongside the existing
-check for values greater than or equal to 32, so malformed rules never
-reach the packet path.
+Found by fuzzing with a source-patched harness (LibAFL + QEMU).
 
-Fixes: 567d746b55bc ("netfilter: bitwise: add support for shifts.")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Kai Ma <k4729.23098@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tobias Gaertner <tob.gaertner@me.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_bitwise.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ntfs3/run.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/netfilter/nft_bitwise.c
-+++ b/net/netfilter/nft_bitwise.c
-@@ -196,7 +196,8 @@ static int nft_bitwise_init_shift(struct
- 	if (err < 0)
- 		return err;
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -1008,6 +1008,9 @@ int run_unpack(struct runs_tree *run, st
+ 		if (size_size > sizeof(len))
+ 			return -EINVAL;
  
--	if (priv->data.data[0] >= BITS_PER_TYPE(u32)) {
-+	if (!priv->data.data[0] ||
-+	    priv->data.data[0] >= BITS_PER_TYPE(u32)) {
- 		nft_data_release(&priv->data, desc.type);
- 		return -EINVAL;
- 	}
++		if (run_buf + size_size > run_last)
++			return -EINVAL;
++
+ 		len = run_unpack_s64(run_buf, size_size, 0);
+ 		/* Skip size_size. */
+ 		run_buf += size_size;
+@@ -1020,6 +1023,9 @@ int run_unpack(struct runs_tree *run, st
+ 		else if (offset_size <= sizeof(s64)) {
+ 			s64 dlcn;
+ 
++			if (run_buf + offset_size > run_last)
++				return -EINVAL;
++
+ 			/* Initial value of dlcn is -1 or 0. */
+ 			dlcn = (run_buf[offset_size - 1] & 0x80) ? (s64)-1 : 0;
+ 			dlcn = run_unpack_s64(run_buf, offset_size, dlcn);
 
 
