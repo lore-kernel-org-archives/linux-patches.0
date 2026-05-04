@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAB22E2F0E;
-	Mon,  4 May 2026 13:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242303DA5C7;
+	Mon,  4 May 2026 13:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903195; cv=none; b=bxUoBg1LiDTpZwrZGpIQ3Tvc/Qg2XyHFRkwFIAk70Z+9SYO4WxBS9yBWufoU9DPggwCSRzHN9F3aDcnYNs8VuNAy6RiKugLVkaIFLYNKft7dBoocPTtG2V/0AW7vMvAW1j+J8Al2TQwTca6E/wcd5fn1P4fUaTW8GHJOf28sbe0=
+	t=1777903198; cv=none; b=aEPe2si3zR44wHYU8YeoUK8p1pUc2iUOFlYFhPkKyedCYnLDO5b9Yp+scd78zvya0bA9h/kW2o+1GoOgI2k2u4n56AHpjqR599+n9+8y0vIlRUNOra87TvkMZNsEznXcgRNajR7a6P0VJQvWq568Hkh/3Wsr7c2xLmN/miu4tKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903195; c=relaxed/simple;
-	bh=Fl2S9k8quxJRnaqSYO0PL5vPIRdUvp4iIqBNcNh6w08=;
+	s=arc-20240116; t=1777903198; c=relaxed/simple;
+	bh=GHc39W762mOS0KI+Y1vycf1CIq9odIKFod0OpK2Yyi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haKl50XY34mE9yfGBunnuUnnrj9tSxi9eRNOTP+H5s00ZE/CKVXmkLMuSFcAdtUn4NmhxsfZQG0c52D9WXsFkcAsbLZGXoyR2rdnj7oQZs9tIexrCQ7WDcFB6FGyCv/UBlz65bFrojJAWd/+0/2SY1AvFrJPcRkqycWhdNVs4SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBMerDLf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VF4giL8+05VqS9nMbp+YhMBVRG9jA36PUzOqKPmdpJ1UgexinfgIQzmlFY+/QkV6vvw7WX7DXoGB9pOW+ReUpWHAHHE6GWfYBmesZspPo3XEM6pGmMwMklRVeUK8lDqPIS8Eucquq8fdbVsKEeTq1ePeieNaVPjfgRazBJFkeJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+Q3AbGo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBMerDLf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD71C2BCB8;
-	Mon,  4 May 2026 13:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+Q3AbGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6B6C2BCB8;
+	Mon,  4 May 2026 13:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903195;
-	bh=Fl2S9k8quxJRnaqSYO0PL5vPIRdUvp4iIqBNcNh6w08=;
+	s=korg; t=1777903197;
+	bh=GHc39W762mOS0KI+Y1vycf1CIq9odIKFod0OpK2Yyi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBMerDLfC/RKioxkkgo6JCmc5ufF7ZWgtsTXFqakLEHbVvDuL0LDEk3UIxrW2Ec4r
-	 oi8C0+G9e3Zt7bHpIyUsTmKn1djRhpXEPqv21CSjQNKBAtn7HpNxm9xAO9PWpDr8Io
-	 66NzCqvfj5wOqu3Pj/R7rN0roEMKe8W74fWqappI=
+	b=k+Q3AbGoUahejS5dChiN0Mgkc1sZjBNvb2o7qmRqXwHoes0oGq9ACUipl3x8GhKaL
+	 pWOa5vtrlJ6ZAXvIOHIcLPDZx+Vy8PCHo2HQ9umbEJ5TtzABRhGwdSDD4rmogZy3bB
+	 1+dbIY53ccDN7IBLwcPnTvSMuEpVflIs7uAsAM8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasanna Kumar T S M <ptsm@linux.microsoft.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 7.0 133/307] EDAC/versalnet: Fix memory leak in remove and probe error paths
-Date: Mon,  4 May 2026 15:50:18 +0200
-Message-ID: <20260504135147.792466003@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 142/307] net: txgbe: fix firmware version check
+Date: Mon,  4 May 2026 15:50:27 +0200
+Message-ID: <20260504135148.123034145@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,41 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit 1b6f292cb94d95c9bc22e1efe592daf62c60bc2e upstream.
+commit c263f644add3d6ad81f9d62a99284fde408f0caa upstream.
 
-The mcdi object allocated using kzalloc() in the setup_mcdi() is not freed in
-the remove path or in probe's error handling path leading to a memory leak.
-Fix it by freeing the allocated memory.
+For the device SP, the firmware version is a 32-bit value where the
+lower 20 bits represent the base version number. And the customized
+firmware version populates the upper 12 bits with a specific
+identification number.
 
-Fixes: d5fe2fec6c40d ("EDAC: Add a driver for the AMD Versal NET DDR controller")
-Signed-off-by: Prasanna Kumar T S M <ptsm@linux.microsoft.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+For other devices AML 25G and 40G, the upper 12 bits of the firmware
+version is always non-zero, and they have other naming conventions.
+
+Only SP devices need to check this to tell if XPCS will work properly.
+So the judgement of MAC type is added here.
+
+And the original logic compared the entire 32-bit value against 0x20010,
+which caused the outdated base firmwares bypass the version check
+without a warning. Apply a mask 0xfffff to isolate the lower 20 bits for
+an accurate base version comparison.
+
+Fixes: ab928c24e6cd ("net: txgbe: add FW version warning")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260322131139.1684716-1-ptsm@linux.microsoft.com
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/C787AA5C07598B13+20260422071837.372731-1-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/versalnet_edac.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/edac/versalnet_edac.c
-+++ b/drivers/edac/versalnet_edac.c
-@@ -917,6 +917,7 @@ static int mc_probe(struct platform_devi
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
+@@ -867,7 +867,8 @@ static int txgbe_probe(struct pci_dev *p
+ 			 "0x%08x", etrack_id);
+ 	}
  
- err_init:
- 	cdx_mcdi_finish(priv->mcdi);
-+	kfree(priv->mcdi);
+-	if (etrack_id < 0x20010)
++	if (wx->mac.type == wx_mac_sp &&
++	    ((etrack_id & 0xfffff) < 0x20010))
+ 		dev_warn(&pdev->dev, "Please upgrade the firmware to 0x20010 or above.\n");
  
- err_unreg:
- 	unregister_rpmsg_driver(&amd_rpmsg_driver);
-@@ -938,6 +939,7 @@ static void mc_remove(struct platform_de
- 	remove_versalnet(priv);
- 	rproc_shutdown(priv->mcdi->r5_rproc);
- 	cdx_mcdi_finish(priv->mcdi);
-+	kfree(priv->mcdi);
- }
- 
- static const struct of_device_id amd_edac_match[] = {
+ 	err = txgbe_test_hostif(wx);
 
 
