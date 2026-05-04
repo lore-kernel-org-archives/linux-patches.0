@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB3B3DEAC4;
-	Mon,  4 May 2026 13:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0096C3DE440;
+	Mon,  4 May 2026 13:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903110; cv=none; b=SEttq2C7zoUa7ooQuus/jyvD/AhZZXmuuJzIs0mU1qdospmg8vgQe8FiwWmoJvE9jVHJUUyRIfvkJp/kuL4Ymjkr+dezBEdkzCEm1OMQkJH0c+Regpga4uxaYQjTtwVP5xhTBT4BXLeejcBfPFAntdszJBSxVqd6U4c/EHrTbHY=
+	t=1777903113; cv=none; b=N0+YdMR69/9R1/aGU3UA6z37hYYhPwniSmpNPejhCGPtwQsKnk8pZRzXwL+DejktW9eXRuINj7yeBP7B9C8jt+zkpj0RUF3R1s0az+wQjK1iGBbrhXQkpFKCfmVN0w8ZeyS47WU3mIoomojD/Ua28RYfouNhfqrFbfsWE8Lx+No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903110; c=relaxed/simple;
-	bh=A33vXjm09Gh4UwbU0raWqdYSE9Y8TriLzlRhLzaoJFE=;
+	s=arc-20240116; t=1777903113; c=relaxed/simple;
+	bh=/Ms+9hPSrdKmX1PaiR5erZV2qZo2YeD/ajxRVKOELU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jba54AFiZloNHEbNObHlXbGNp1TJ5tsfzh+3bYw5db8sJ41nKCkpx9E4t1neKXZen5bEfvxZtJ3hbYOsfa1rz2EQMAhS3ZYt268qLVVJ0VQw0xOc7tdFuNh2PoCj95jNRO++L8vuGI9ZB15WfZ3YK7v0TFcib4i3ggaMJa6mzik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6zclTh8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/5SpHOK9GwiAge1GN4IywACPRBTgw5npqFjK8ZqDEoU0Yu/4DdIAGWAnCoarIAdxczYCo5mr98+W4u4KEuiPaViY7ft4pfTv2xpVQWMKQZj5rFWR8nDc6aDyUM/9CkZTSMN+fldyDo84qa1TwVDbtNWeC92WJFWqwwptqhQHHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csMEcjWu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6zclTh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D11C2BCB8;
-	Mon,  4 May 2026 13:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csMEcjWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B89EC2BCF7;
+	Mon,  4 May 2026 13:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903110;
-	bh=A33vXjm09Gh4UwbU0raWqdYSE9Y8TriLzlRhLzaoJFE=;
+	s=korg; t=1777903112;
+	bh=/Ms+9hPSrdKmX1PaiR5erZV2qZo2YeD/ajxRVKOELU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r6zclTh8//YUTKekCPMrgYrbxLLTCcu3m1lN+W8run3T0auUWvMVZKhDaWeQ94N/T
-	 Wo6GTiPqTbAm7IyDhJEk6U9HC6LkWOAI73FsN0ZWlr3T2oZ7Qa0UOThO2Npd8NWM81
-	 wgsK7l2OFPZ8iYmvTc2duNWsp0GLspgyJtIZk9Xw=
+	b=csMEcjWuE4lqz+ugn9hyoqnv5D5bA4hnS0dPr2PxOzeWFQU1EW8mvIgPvV62PmcBB
+	 Hk+XqVSTwYdptItPJxrWx+YWnCCs9zTSPQKFwibT8r6dQFunxiRwxQ2oSZkdME6MxT
+	 rhy32jvSpcJ4kzB6ymtd2p1rSS2RkRTOLGS1HgKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.0 108/307] io_uring/timeout: check unused sqe fields
-Date: Mon,  4 May 2026 15:49:53 +0200
-Message-ID: <20260504135146.874658653@linuxfoundation.org>
+Subject: [PATCH 7.0 109/307] block: relax pgmap check in bio_add_page for compatible zone device pages
+Date: Mon,  4 May 2026 15:49:54 +0200
+Message-ID: <20260504135146.911862051@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,41 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-commit 484ae637a3e3d909718de7c07afd3bb34b6b8504 upstream.
+commit 41c665aae2b5dbecddddcc8ace344caf630cc7a4 upstream.
 
-Zero check unused SQE fields addr3 and pad2 for timeout and timeout
-update requests. They're not needed now, but could be used sometime
-in the future.
+bio_add_page() and bio_integrity_add_page() reject pages from different
+dev_pagemaps entirely, returning 0 even when those pages have compatible
+DMA mapping requirements. This forces callers to start a new bio when
+buffers span pgmap boundaries, even though the pages could safely coexist
+as separate bvec entries.
 
+This matters for guests where memory is registered through
+devm_memremap_pages() with MEMORY_DEVICE_GENERIC in multiple calls,
+creating separate dev_pagemaps for each chunk. When a direct I/O buffer
+spans two such chunks, bio_add_page() rejects the second page, forcing an
+unnecessary bio split or I/O failure.
+
+Introduce zone_device_pages_compatible() in blk.h to check whether two
+pages can coexist in the same bio as separate bvec entries. The block DMA
+iterator (blk_dma_map_iter_start) caches the P2PDMA mapping state from the
+first segment and applies it to all others, so P2PDMA pages from different
+pgmaps must not be mixed, and neither must P2PDMA and non-P2PDMA pages.
+All other combinations (MEMORY_DEVICE_GENERIC pages from different pgmaps,
+or MEMORY_DEVICE_GENERIC with normal RAM) use the same dma_map_phys path
+and are safe.
+
+Replace the blanket zone_device_pages_have_same_pgmap() rejection with
+zone_device_pages_compatible(), while keeping
+zone_device_pages_have_same_pgmap() as a merge guard.
+Pages from different pgmaps can be added as separate bvec entries but
+must not be coalesced into the same segment, as that would make
+it impossible to recover the correct pgmap via page_pgmap().
+
+Fixes: 49580e690755 ("block: add check when merging zone device pages")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260410153414.4159050-3-namjain@linux.microsoft.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/timeout.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ block/bio-integrity.c |    6 +++---
+ block/bio.c           |    6 +++---
+ block/blk.h           |   19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+), 6 deletions(-)
 
---- a/io_uring/timeout.c
-+++ b/io_uring/timeout.c
-@@ -449,6 +449,8 @@ int io_timeout_remove_prep(struct io_kio
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -167,10 +167,10 @@ int bio_integrity_add_page(struct bio *b
+ 	if (bip->bip_vcnt > 0) {
+ 		struct bio_vec *bv = &bip->bip_vec[bip->bip_vcnt - 1];
  
- 	if (unlikely(req->flags & (REQ_F_FIXED_FILE | REQ_F_BUFFER_SELECT)))
- 		return -EINVAL;
-+	if (sqe->addr3 || sqe->__pad2[0])
-+		return -EINVAL;
- 	if (sqe->buf_index || sqe->len || sqe->splice_fd_in)
- 		return -EINVAL;
+-		if (!zone_device_pages_have_same_pgmap(bv->bv_page, page))
++		if (!zone_device_pages_compatible(bv->bv_page, page))
+ 			return 0;
+-
+-		if (bvec_try_merge_hw_page(q, bv, page, len, offset)) {
++		if (zone_device_pages_have_same_pgmap(bv->bv_page, page) &&
++		    bvec_try_merge_hw_page(q, bv, page, len, offset)) {
+ 			bip->bip_iter.bi_size += len;
+ 			return len;
+ 		}
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1070,10 +1070,10 @@ int bio_add_page(struct bio *bio, struct
+ 	if (bio->bi_vcnt > 0) {
+ 		struct bio_vec *bv = &bio->bi_io_vec[bio->bi_vcnt - 1];
  
-@@ -521,6 +523,8 @@ static int __io_timeout_prep(struct io_k
- 	unsigned flags;
- 	u32 off = READ_ONCE(sqe->off);
+-		if (!zone_device_pages_have_same_pgmap(bv->bv_page, page))
++		if (!zone_device_pages_compatible(bv->bv_page, page))
+ 			return 0;
+-
+-		if (bvec_try_merge_page(bv, page, len, offset)) {
++		if (zone_device_pages_have_same_pgmap(bv->bv_page, page) &&
++		    bvec_try_merge_page(bv, page, len, offset)) {
+ 			bio->bi_iter.bi_size += len;
+ 			return len;
+ 		}
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -139,6 +139,25 @@ static inline bool biovec_phys_mergeable
+ 	return true;
+ }
  
-+	if (sqe->addr3 || sqe->__pad2[0])
-+		return -EINVAL;
- 	if (sqe->buf_index || sqe->len != 1 || sqe->splice_fd_in)
- 		return -EINVAL;
- 	if (off && is_timeout_link)
++/*
++ * Check if two pages from potentially different zone device pgmaps can
++ * coexist as separate bvec entries in the same bio.
++ *
++ * The block DMA iterator (blk_dma_map_iter_start) caches the P2PDMA mapping
++ * state from the first segment and applies it to all subsequent segments, so
++ * P2PDMA pages from different pgmaps must not be mixed in the same bio.
++ *
++ * Other zone device types (FS_DAX, GENERIC) use the same dma_map_phys() path
++ * as normal RAM.  PRIVATE and COHERENT pages never appear in bios.
++ */
++static inline bool zone_device_pages_compatible(const struct page *a,
++						const struct page *b)
++{
++	if (is_pci_p2pdma_page(a) || is_pci_p2pdma_page(b))
++		return zone_device_pages_have_same_pgmap(a, b);
++	return true;
++}
++
+ static inline bool __bvec_gap_to_prev(const struct queue_limits *lim,
+ 		struct bio_vec *bprv, unsigned int offset)
+ {
 
 
