@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B04737881B;
-	Mon,  4 May 2026 14:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD328347BA9;
+	Mon,  4 May 2026 14:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903375; cv=none; b=k4m3GH9fNzkh70NCxBiJjWk14ed5b/XrJwPTe1QkPmUz89Trw4p5aLMYHGJ7TiKznR1/+nGADKNtr7ltyTzW1P9JmuLcUiwRWw6rpdafvzhjgEyHjmiHu62SCDixpSUJO4XO0/8oeNby1H0PJ/T5AShHReaV5mV+MmejOoIIlv4=
+	t=1777903377; cv=none; b=NknRAwYFGr99whsdN9BquLv5t3rMsHPuLFQoHVxGqxu7ufaMYw/+gX53YMhSrRdIWTz8TFwI1ki4aU0LP/DY4OKSCBXtBeBZwXByIQ1RjyG5Ozcl1xevxx5QqNmeA9SW/QmUK3KKBD2EHso1MevZq4OM8WG1RVh2BzTW1oI3DFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903375; c=relaxed/simple;
-	bh=GhqHvaayTRmz19WIrhcfAAENehDcm2DBO3k0Wr3uPYk=;
+	s=arc-20240116; t=1777903377; c=relaxed/simple;
+	bh=XW27s83QbpkYHYPx44Tj1CSzLwrZk0Ooa/iuY+NtbFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aU0b57JG5/BWLhzGn+GYHhMcVG9R6etunqw3QoL0i9mnBI1sAcw+XpT33iOh9bId6lhHo9VmVHEIN8dBQrgpa0wCdO6ejm7XpP15g7CK6BXdleO2GqVTvc91xWxNWRPy0fz+6BGdOLNouyoyhty0FlKrx+3ucfyjAggwWPXvNMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qf+dEMD/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C43Cn0sti7WJKozT/CJo7A4dp/3Nfmuu4eYoeyETS/eYuvh4My9ItIkbf/XzJZQfCEt4oAuTcDSKmZjXYd07TkrtbJHxJOgOpy9clBJyJ1bmtZ4kRXfX9Tnk5s6dPiu3vtFYllztYgeHyDyxYjfeynHMJ+b4IB2o5Kx7eoh2rM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRAetAll; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qf+dEMD/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89C6C2BCB8;
-	Mon,  4 May 2026 14:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRAetAll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468C6C2BCB8;
+	Mon,  4 May 2026 14:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903375;
-	bh=GhqHvaayTRmz19WIrhcfAAENehDcm2DBO3k0Wr3uPYk=;
+	s=korg; t=1777903377;
+	bh=XW27s83QbpkYHYPx44Tj1CSzLwrZk0Ooa/iuY+NtbFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qf+dEMD/E4TGxvxPZ9/eaMulrNRXWHGAmsTUxws0EaLIqAP7otV4At7+sysCcrgfF
-	 EUEyLwmfVxFDqx6daKLREha5oBJVanLM+AETvOIv3wVxuv3bDdkcq4Cz5xzmqz3Nrg
-	 LQjbdwUmkbgkMLF0tHlfmF1455/MCO3LoTzPEOhA=
+	b=dRAetAllAq+htXcFyETMlDdANG8ftO+M729pXDPsc1QlOlR8ZRkd/5W+r6lCbVU23
+	 6N9cvRzSlVip2qiYfc1eYtI2UyTp4SK5bX7DcqFDJ67zTwJbv4aW+MPTOgPKmdB1Oi
+	 3puzpnRlCsi0tTdo5pyl2Ew/lPIeaurpQ8bYme9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Holmberg <hans.holmberg@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.0 177/307] xfs: start gc on zonegc_low_space attribute updates
-Date: Mon,  4 May 2026 15:51:02 +0200
-Message-ID: <20260504135149.532448701@linuxfoundation.org>
+	linux-fsdevel@vger.kernel.org,
+	linux-unionfs@vger.kernel.org,
+	linux-erofs@lists.ozlabs.org,
+	Amir Goldstein <amir73il@gmail.com>,
+	Serge Hallyn <serge@hallyn.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 7.0 168/307] fs: prepare for adding LSM blob to backing_file
+Date: Mon,  4 May 2026 15:50:53 +0200
+Message-ID: <20260504135149.185981479@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,104 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Holmberg <hans.holmberg@wdc.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 181ea4e2de422aa0a66f355bd59bccccdd169826 upstream.
+commit 880bd496ec72a6dcb00cb70c430ef752ba242ae7 upstream.
 
-Start gc if the agressiveness of zone garbage collection is changed
-by the user (if the file system is not read only).
+In preparation to adding LSM blob to backing_file struct, factor out
+helpers init_backing_file() and backing_file_free().
 
-Without this change, the new setting will not be taken into account
-until the gc thread is woken up by e.g. a write.
-
-Cc: stable@vger.kernel.org # v6.15
-Fixes: 845abeb1f06a8a ("xfs: add tunable threshold parameter for triggering zone GC")
-Signed-off-by: Hans Holmberg <hans.holmberg@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: linux-fsdevel@vger.kernel.org
+Cc: linux-unionfs@vger.kernel.org
+Cc: linux-erofs@lists.ozlabs.org
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Serge Hallyn <serge@hallyn.com>
+[PM: use the term "LSM blob", fix comment style to match file]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_sysfs.c      |    7 ++++++-
- fs/xfs/xfs_zone_alloc.h |    4 ++++
- fs/xfs/xfs_zone_gc.c    |   17 +++++++++++++++++
- 3 files changed, 27 insertions(+), 1 deletion(-)
+ fs/file_table.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/xfs_sysfs.c
-+++ b/fs/xfs/xfs_sysfs.c
-@@ -14,6 +14,7 @@
- #include "xfs_log_priv.h"
- #include "xfs_mount.h"
- #include "xfs_zones.h"
-+#include "xfs_zone_alloc.h"
- 
- struct xfs_sysfs_attr {
- 	struct attribute attr;
-@@ -724,6 +725,7 @@ zonegc_low_space_store(
- 	const char		*buf,
- 	size_t			count)
- {
-+	struct xfs_mount	*mp = zoned_to_mp(kobj);
- 	int			ret;
- 	unsigned int		val;
- 
-@@ -734,7 +736,10 @@ zonegc_low_space_store(
- 	if (val > 100)
- 		return -EINVAL;
- 
--	zoned_to_mp(kobj)->m_zonegc_low_space = val;
-+	if (mp->m_zonegc_low_space != val) {
-+		mp->m_zonegc_low_space = val;
-+		xfs_zone_gc_wakeup(mp);
-+	}
- 
- 	return count;
+--- a/fs/file_table.c
++++ b/fs/file_table.c
+@@ -66,6 +66,12 @@ void backing_file_set_user_path(struct f
  }
---- a/fs/xfs/xfs_zone_alloc.h
-+++ b/fs/xfs/xfs_zone_alloc.h
-@@ -51,6 +51,7 @@ int xfs_mount_zones(struct xfs_mount *mp
- void xfs_unmount_zones(struct xfs_mount *mp);
- void xfs_zone_gc_start(struct xfs_mount *mp);
- void xfs_zone_gc_stop(struct xfs_mount *mp);
-+void xfs_zone_gc_wakeup(struct xfs_mount *mp);
- #else
- static inline int xfs_mount_zones(struct xfs_mount *mp)
- {
-@@ -65,6 +66,9 @@ static inline void xfs_zone_gc_start(str
- static inline void xfs_zone_gc_stop(struct xfs_mount *mp)
- {
- }
-+static inline void xfs_zone_gc_wakeup(struct xfs_mount *mp)
+ EXPORT_SYMBOL_GPL(backing_file_set_user_path);
+ 
++static inline void backing_file_free(struct backing_file *ff)
 +{
-+}
- #endif /* CONFIG_XFS_RT */
- 
- #endif /* _XFS_ZONE_ALLOC_H */
---- a/fs/xfs/xfs_zone_gc.c
-+++ b/fs/xfs/xfs_zone_gc.c
-@@ -1159,6 +1159,23 @@ xfs_zone_gc_stop(
- 		kthread_park(mp->m_zone_info->zi_gc_thread);
- }
- 
-+void
-+xfs_zone_gc_wakeup(
-+	struct xfs_mount	*mp)
-+{
-+	struct super_block      *sb = mp->m_super;
-+
-+	/*
-+	 * If we are unmounting the file system we must not try to
-+	 * wake gc as m_zone_info might have been freed already.
-+	 */
-+	if (down_read_trylock(&sb->s_umount)) {
-+		if (!xfs_is_readonly(mp))
-+			wake_up_process(mp->m_zone_info->zi_gc_thread);
-+		up_read(&sb->s_umount);
-+	}
++	path_put(&ff->user_path);
++	kmem_cache_free(bfilp_cachep, ff);
 +}
 +
- int
- xfs_zone_gc_mount(
- 	struct xfs_mount	*mp)
+ static inline void file_free(struct file *f)
+ {
+ 	security_file_free(f);
+@@ -73,8 +79,7 @@ static inline void file_free(struct file
+ 		percpu_counter_dec(&nr_files);
+ 	put_cred(f->f_cred);
+ 	if (unlikely(f->f_mode & FMODE_BACKING)) {
+-		path_put(backing_file_user_path(f));
+-		kmem_cache_free(bfilp_cachep, backing_file(f));
++		backing_file_free(backing_file(f));
+ 	} else {
+ 		kmem_cache_free(filp_cachep, f);
+ 	}
+@@ -283,6 +288,12 @@ struct file *alloc_empty_file_noaccount(
+ 	return f;
+ }
+ 
++static int init_backing_file(struct backing_file *ff)
++{
++	memset(&ff->user_path, 0, sizeof(ff->user_path));
++	return 0;
++}
++
+ /*
+  * Variant of alloc_empty_file() that allocates a backing_file container
+  * and doesn't check and modify nr_files.
+@@ -305,7 +316,14 @@ struct file *alloc_empty_backing_file(in
+ 		return ERR_PTR(error);
+ 	}
+ 
++	/* The f_mode flags must be set before fput(). */
+ 	ff->file.f_mode |= FMODE_BACKING | FMODE_NOACCOUNT;
++	error = init_backing_file(ff);
++	if (unlikely(error)) {
++		fput(&ff->file);
++		return ERR_PTR(error);
++	}
++
+ 	return &ff->file;
+ }
+ EXPORT_SYMBOL_GPL(alloc_empty_backing_file);
 
 
