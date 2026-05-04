@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E3C377575;
-	Mon,  4 May 2026 14:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBD03A7F4C;
+	Mon,  4 May 2026 14:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903941; cv=none; b=dMnnrBGyQYiH+oAZScB18BixszGbKsjbToGiuDfHRviJRPVwHfb08OE59rDG4RdYteFEt4pTsEdYYACbjuhWu4P9G78eixX2KU8yeDhYXLLFvlnwVYiP/Kuq9XM174VFhIRjZqtK0Xc84qhCaYKhpBMvKapTktAUgaFnz0ReSq8=
+	t=1777903943; cv=none; b=h1cGGOYkTp0zlUfCnFmjn4+hjKmQCrrxNqF+36/pnIjTXhn4AgSFlqZcqO82vnJUdgsQxYmIoRafIsQ9ETLAHzIUbrcCZX7PFbaiPQ3QfDGxTFlcwVT+dEOhTP82PMXY4/wFxZVPyFLuwRNn4kPxEKJSkvJRQ/iE7mYJpyA5irs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903941; c=relaxed/simple;
-	bh=bizZ2Jq91v9qkv1U4NzD6rjRxOlwPJNEOPhIaJzgtTI=;
+	s=arc-20240116; t=1777903943; c=relaxed/simple;
+	bh=tFWG3aFZkwG1kkH7YEok9cW4tyVw1ITsb9Qp7Q5PkTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMaUbWU+4JE+4RMcqTYL7RUFkJ4+VPorRQuYWmv7hUr4qM5y+AyVkE/5dAHCwVU7He0xHkg0iccX8gNfJlvd1RJn0zZKC9+M4fhXqZ0u0BicUabSdbmNeFTjVTE+AiAWkGDkLMQ5rhvQO94jlvnb8L+kJkQNrdR9hvgs5NOLIP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLY0XFeb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QmVVHRuG37NWW0dtFPobpk/AsyR/q+TOOu2jSsF6/sjGd9FIz9eMCsCjmNV4wSlnwSHn/NiJLxe3weZn2+TAHwq2HTC679oWzFzf1kTXfK9C0TyNG2Hm7ZKgS6lPddxbcKKTkBS+Uwux+eE7QGFT0UorTgHDC+DY0CjssfGUTiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcdLnUHr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLY0XFeb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD57C2BCB8;
-	Mon,  4 May 2026 14:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcdLnUHr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D05AC2BCB8;
+	Mon,  4 May 2026 14:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903941;
-	bh=bizZ2Jq91v9qkv1U4NzD6rjRxOlwPJNEOPhIaJzgtTI=;
+	s=korg; t=1777903943;
+	bh=tFWG3aFZkwG1kkH7YEok9cW4tyVw1ITsb9Qp7Q5PkTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cLY0XFebvI1cgDlL8WY/p+Yd1lqDIvrr1xKsfGsGGOIyPyTamupv1ZmMWqBp3Tkpt
-	 gNBsgFPOqGzJJutoS3cU7DNGORWKGRBPYGzBqoalbd7aOm01WhuH7g4+YVSi1jt6gh
-	 SMpkouJeAkxPeizj5c6ftygG70I3A010RJ9+02Ko=
+	b=PcdLnUHr5SqiiQ2OQQR7Ibcfji/QQwVXrbDhY/z+0uHjhA86xIt9IY1nuBeEeNvKj
+	 31UWlRx3F5TF7PA7HhGrJus10pgNnsyNn/UxannVbeAycqCCMDbfHrQU9pKpNZ42O/
+	 fsJ57jvlKeUGy7i1bYzxJ3+p5HtI9M3mfoDQRSu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ao Zhou <draw51280@163.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Allison Henderson <achender@kernel.org>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 120/275] net: rds: fix MR cleanup on copy error
-Date: Mon,  4 May 2026 15:51:00 +0200
-Message-ID: <20260504135147.362844013@linuxfoundation.org>
+Subject: [PATCH 6.18 121/275] net: txgbe: fix firmware version check
+Date: Mon,  4 May 2026 15:51:01 +0200
+Message-ID: <20260504135147.399458188@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -57,47 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ao Zhou <draw51280@163.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit 8141a2dc70080eda1aedc0389ed2db2b292af5bd upstream.
+commit c263f644add3d6ad81f9d62a99284fde408f0caa upstream.
 
-__rds_rdma_map() hands sg/pages ownership to the transport after
-get_mr() succeeds. If copying the generated cookie back to user space
-fails after that point, the error path must not free those resources
-again before dropping the MR reference.
+For the device SP, the firmware version is a 32-bit value where the
+lower 20 bits represent the base version number. And the customized
+firmware version populates the upper 12 bits with a specific
+identification number.
 
-Remove the duplicate unpin/free from the put_user() failure branch so
-that MR teardown is handled only through the existing final cleanup
-path.
+For other devices AML 25G and 40G, the upper 12 bits of the firmware
+version is always non-zero, and they have other naming conventions.
 
-Fixes: 0d4597c8c5ab ("net/rds: Track user mapped pages through special API")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ao Zhou <draw51280@163.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/79c8ef73ec8e5844d71038983940cc2943099baf.1776764247.git.draw51280@163.com
+Only SP devices need to check this to tell if XPCS will work properly.
+So the judgement of MAC type is added here.
+
+And the original logic compared the entire 32-bit value against 0x20010,
+which caused the outdated base firmwares bypass the version check
+without a warning. Apply a mask 0xfffff to isolate the lower 20 bits for
+an accurate base version comparison.
+
+Fixes: ab928c24e6cd ("net: txgbe: add FW version warning")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/C787AA5C07598B13+20260422071837.372731-1-jiawenwu@trustnetic.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/rdma.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/rds/rdma.c
-+++ b/net/rds/rdma.c
-@@ -326,10 +326,6 @@ static int __rds_rdma_map(struct rds_soc
- 
- 	if (args->cookie_addr &&
- 	    put_user(cookie, (u64 __user *)(unsigned long)args->cookie_addr)) {
--		if (!need_odp) {
--			unpin_user_pages(pages, nr_pages);
--			kfree(sg);
--		}
- 		ret = -EFAULT;
- 		goto out;
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_main.c
+@@ -867,7 +867,8 @@ static int txgbe_probe(struct pci_dev *p
+ 			 "0x%08x", etrack_id);
  	}
+ 
+-	if (etrack_id < 0x20010)
++	if (wx->mac.type == wx_mac_sp &&
++	    ((etrack_id & 0xfffff) < 0x20010))
+ 		dev_warn(&pdev->dev, "Please upgrade the firmware to 0x20010 or above.\n");
+ 
+ 	err = txgbe_test_hostif(wx);
 
 
