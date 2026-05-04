@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA2229E116;
-	Mon,  4 May 2026 14:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CF5315785;
+	Mon,  4 May 2026 14:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904380; cv=none; b=YZHi1Q+bHNj5roa/H1S/tW/jouesUqbVN6kDgSUMT8rK/59L8PoGTT5RA+UXl2GO9UmYIe05Qa/pLEV2QvCF3ebCXlvXhd04sW48GJB3cIN8AWiGc+geZbpO2+EwQ/z7inPzPToohElq4E/JnBqZFD7MyoKwOfi6H++zu8z2zkQ=
+	t=1777904383; cv=none; b=By1aZmbWW9CkSJtQNiacA9jvT4b3T1fvp5ErECf1sk4l5RE2JiaN7a7A1nu9dpE5X8FU/QgUbdZng8AEKVG3cM6ZB5sw00K/syWR3Se+AIqh3UZfV1fLF/qfcInus3agbZbpbgWUHLe9TVnsZdpFC49pE9soS+wPm6nTr3bJNsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904380; c=relaxed/simple;
-	bh=sOg49B/qV3F7338ltwLt/DhEwlJ5r2TYbQtkP34wJT8=;
+	s=arc-20240116; t=1777904383; c=relaxed/simple;
+	bh=zU1jOws7vpwhazwW/zcaTiZoOn+HKRqKZQ6pWN8GtS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uFSgaqNDWPzvqf6aRlz3lwHQiWbjG8yyYpbQEG4kyD+Jaf35RykWC/mWlyp3zC2iZxZiUYgKYz1qbBimNKFPtARhouCcRSV1UuAocxjl7L6lFs5TsJLZjm+C/zI2bbf/X+RKwRdVVswfYG3YQQ41YKo9IUG+4rhxwGlZ7D0F814=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUtLdrOy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s2Qd46216bg7i1+hnjrE87WQYLj9rVrMs2eKHYXl36BFd2zSYuAf8SXGMNZudce55wwle+bqm2aZdHCZeMCj91UEFy4nPMEEXJPRlpfV3lt8q66wwiTsmSm35i96w5oDuBO8wgHFO6E9NDx5FhDc7k1XmmgqgpajQNWQXkFxu4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbatHP+O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUtLdrOy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AF3C2BCF4;
-	Mon,  4 May 2026 14:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbatHP+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6BAC2BCF4;
+	Mon,  4 May 2026 14:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904380;
-	bh=sOg49B/qV3F7338ltwLt/DhEwlJ5r2TYbQtkP34wJT8=;
+	s=korg; t=1777904383;
+	bh=zU1jOws7vpwhazwW/zcaTiZoOn+HKRqKZQ6pWN8GtS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CUtLdrOyeE89QaXsqqi2Ano+H/SwXXhelZrCm0Bf64UsB4927Fw7B/0YxPdARuWPV
-	 AHx8Inqgu9lvU1UsBVCQBAlrl4w1HJL/9UDIq2NIe/YYHbBWmPrkJten/i3pvQIySW
-	 B0OsiFfUboh64KEDWRbaLWbIvieAKCOm6pTWtS4w=
+	b=gbatHP+OqjeYh9x+srUmvjpfwUu4DOR/hTk13n+ciVKk5X3/OQ2q1eu9QMPJgJo4z
+	 wdPhRI9Ey0/EeNvwWWKZ/cFV9CIIuYJsx2+pKjxhxhROnexuUsLA4blWg4fhyyS1vV
+	 iLrJly4EEO+tcQcg3iWqV4M2IwtoDS3wC8FZV9Sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.12 017/215] drm/nouveau: fix nvkm_device leak on aperture removal failure
-Date: Mon,  4 May 2026 15:50:36 +0200
-Message-ID: <20260504135130.804017685@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 018/215] kbuild: rust: allow `clippy::uninlined_format_args`
+Date: Mon,  4 May 2026 15:50:37 +0200
+Message-ID: <20260504135130.840131480@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -50,40 +49,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 6597ff1d8de3f583be169587efeafd8af134e138 upstream.
+commit 10eea3c147141c90cf409b8df56d245c9d7f88d9 upstream.
 
-When aperture_remove_conflicting_pci_devices() fails during probe, the
-error path returns directly without unwinding the nvkm_device that was
-just allocated by nvkm_device_pci_new(). This leaks both the device
-wrapper and the pci_enable_device() reference taken inside it.
+Clippy in Rust 1.88.0 (only) reports [1]:
 
-Jump to the existing fail_nvkm label so nvkm_device_del() runs and
-balances both. The leak was introduced when the intermediate
-nvkm_device_del() between detection and aperture removal was dropped
-in favor of creating the pci device once.
+    warning: variables can be used directly in the `format!` string
+       --> rust/macros/module.rs:112:23
+        |
+    112 |         let content = format!("{param}:{content}", param = param, content = content);
+        |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
+        = note: `-W clippy::uninlined-format-args` implied by `-W clippy::all`
+        = help: to override `-W clippy::all` add `#[allow(clippy::uninlined_format_args)]`
+    help: change this to
+        |
+    112 -         let content = format!("{param}:{content}", param = param, content = content);
+    112 +         let content = format!("{param}:{content}");
 
-Fixes: c0bfe34330b5 ("drm/nouveau: create pci device once")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Link: https://patch.msgid.link/20260411062938.22925-1-devnexen@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+    warning: variables can be used directly in the `format!` string
+       --> rust/macros/module.rs:198:14
+        |
+    198 |         t => panic!("Unsupported parameter type {}", t),
+        |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
+        = note: `-W clippy::uninlined-format-args` implied by `-W clippy::all`
+        = help: to override `-W clippy::all` add `#[allow(clippy::uninlined_format_args)]`
+    help: change this to
+        |
+    198 -         t => panic!("Unsupported parameter type {}", t),
+    198 +         t => panic!("Unsupported parameter type {t}"),
+        |
+
+The reason it only triggers in that version is that the lint was moved
+from `pedantic` to `style` in Rust 1.88.0 and then back to `pedantic`
+in Rust 1.89.0 [2][3].
+
+In the first case, the suggestion is fair and a pure simplification, thus
+we will clean it up separately.
+
+To keep the behavior the same across all versions, and since the lint
+does not work for all macros (e.g. custom ones like `pr_info!`), disable
+it globally.
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Link: https://lore.kernel.org/rust-for-linux/CANiq72=drAtf3y_DZ-2o4jb6Az9J3Yj4QYwWnbRui4sm4AJD3Q@mail.gmail.com/ [1]
+Link: https://github.com/rust-lang/rust-clippy/pull/15287 [2]
+Link: https://github.com/rust-lang/rust-clippy/issues/15151 [3]
+Link: https://patch.msgid.link/20260331205849.498295-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_drm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -853,7 +853,7 @@ static int nouveau_drm_probe(struct pci_
- 	/* Remove conflicting drivers (vesafb, efifb etc). */
- 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &driver_pci);
- 	if (ret)
--		return ret;
-+		goto fail_nvkm;
- 
- 	pci_set_master(pdev);
- 
+--- a/Makefile
++++ b/Makefile
+@@ -459,6 +459,7 @@ export rust_common_flags := --edition=20
+ 			    -Aclippy::needless_lifetimes \
+ 			    -Wclippy::no_mangle_with_rust_abi \
+ 			    -Wclippy::undocumented_unsafe_blocks \
++			    -Aclippy::uninlined_format_args \
+ 			    -Wclippy::unnecessary_safety_comment \
+ 			    -Wclippy::unnecessary_safety_doc \
+ 			    -Wrustdoc::missing_crate_level_docs \
 
 
