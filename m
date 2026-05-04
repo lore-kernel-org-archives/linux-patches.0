@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6385C2D8DDF;
-	Mon,  4 May 2026 14:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6653DE431;
+	Mon,  4 May 2026 14:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903493; cv=none; b=lZNkRfy135jNjHDIsPxNTSbKnALA9aYE/35BpdbsVZwJgAfr03ysSfcEFPGAOdkqZ4hFbK8gXZ9t4iQUhvBSkDbObDGYcXc/9IPs+EvxIMt4aC3holmojoiOSGjGMXokEJx4EdI0UnBrcVu4BxQNfufMulylsLLmccDZJt/SDik=
+	t=1777903496; cv=none; b=q/rtrwQSdkpCOGXrRoF9TXIwOAmsy8vAc9xoRA1OCXvU8vzJAwWGl0EhaPq7OrQx9QrTsgQCoQxc2nq1ZP0OiLlp9K+JE03yxfxSXZAp2S+7Yllwnnh6kLNMcIwpBLq4OWIVFLuDJOWAQVspZdNvTj/37QDqfIIUG8p90EqAHPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903493; c=relaxed/simple;
-	bh=uQIBGaLqA1+GNVhTbU0UuviEC4AFPkRK7Uz5PpqNOno=;
+	s=arc-20240116; t=1777903496; c=relaxed/simple;
+	bh=Ym1KwoJ4ANIlW+2oBdJjKd+vhRQpSG3NGkmKH5+AmE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iABzoF0Nin8qkdac8o8vWOo6u9b5HbvdRY3h8O7NzSCd8osnLuNDwOeNPO4v3+sK3mjeVdr08IUvZcE+++VJVAulV0QNieEGprBnS/59Dd9srITNIDFW5CNZBV77ni4hw4mFB+6zTiEHcooZreooITKpH8zYmYxUfdG5tRVR9sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opODY0aK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UJOEio7LbC1I89abs8du6pFTYeXXkYYsmdi+fpfcZv03jgFGEO/URYWt/Lbp7lOVQGAHvYIDHfGn7mWwVumU624RiQf4UCo4QZuPXulFQW3L3V5Qu51PdB1s/e/7DU2SXu9Mr9bfYGfQUzp/pRaVG/oQhiXce00nKPCRB1cFYNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlioqNMo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opODY0aK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB451C2BCB8;
-	Mon,  4 May 2026 14:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlioqNMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C21C2BCB8;
+	Mon,  4 May 2026 14:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903493;
-	bh=uQIBGaLqA1+GNVhTbU0UuviEC4AFPkRK7Uz5PpqNOno=;
+	s=korg; t=1777903495;
+	bh=Ym1KwoJ4ANIlW+2oBdJjKd+vhRQpSG3NGkmKH5+AmE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opODY0aK+vyEIfrpwmKTriO2bv18FQlmbU6PTPAQ29pwXjLrcH+6qWt+3cWnCpNsP
-	 r+HamPGGsxkShhMM5I006Ac373AugJMhBkdjPg4RFOyoO+z91qcTDlEPWl22Do2NUh
-	 qSQcp9MUFer3UJ10PjSEFk8AOP3QTHTyt5C4X7tg=
+	b=KlioqNMoIbADfecmEcjs2rT9wDWdjsuTSvXypeSUef0qiGhzRdYJgyyz8coAs5eN5
+	 GEuW8FX/3+51/ek27n/rWgkz7YQeT2QLR2ymAxsn2/EGG3wP0JE/jJTyMHkIm/8UDZ
+	 RBm0rbO+ZdxaxJR0ZS4l3PTyttIo7tHbFexiJqTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>,
-	Johan Hovold <johan@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 7.0 256/307] can: ucan: fix devres lifetime
-Date: Mon,  4 May 2026 15:52:21 +0200
-Message-ID: <20260504135152.452222219@linuxfoundation.org>
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.0 257/307] crypto: acomp - fix wrong pointer stored by acomp_save_req()
+Date: Mon,  4 May 2026 15:52:22 +0200
+Message-ID: <20260504135152.488730776@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,40 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit fed4626501c871890da287bec62a96e52da1af89 upstream.
+commit d7e20b9bd6c990773cf0c09e2642250b8a70263d upstream.
 
-USB drivers bind to USB interfaces and any device managed resources
-should have their lifetime tied to the interface rather than parent USB
-device. This avoids issues like memory leaks when drivers are unbound
-without their devices being physically disconnected (e.g. on probe
-deferral or configuration changes).
+acomp_save_req() stores &req->chain in req->base.data. When
+acomp_reqchain_done() is invoked on asynchronous completion, it receives
+&req->chain as the data argument but casts it directly to struct
+acomp_req. Since data points to the chain member, all subsequent field
+accesses are at a wrong offset, resulting in memory corruption.
 
-Fix the control message buffer lifetime so that it is released on driver
-unbind.
+The issue occurs when an asynchronous hardware implementation, such as
+the QAT driver, completes a request that uses the DMA virtual address
+interface (e.g. acomp_request_set_src_dma()). This combination causes
+crypto_acomp_compress() to enter the acomp_do_req_chain() path, which
+sets acomp_reqchain_done() as the completion callback via
+acomp_save_req().
 
-Fixes: 9f2d3eae88d2 ("can: ucan: add driver for Theobroma Systems UCAN devices")
-Cc: stable@vger.kernel.org	# 4.19
-Cc: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260327104520.1310158-1-johan@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+With KASAN enabled, this manifests as a general protection fault in
+acomp_reqchain_done():
+
+  general protection fault, probably for non-canonical address 0xe000040000000000
+  KASAN: probably user-memory-access in range [0x0000400000000000-0x0000400000000007]
+  RIP: 0010:acomp_reqchain_done+0x15b/0x4e0
+  Call Trace:
+   <IRQ>
+   qat_comp_alg_callback+0x5d/0xa0 [intel_qat]
+   adf_ring_response_handler+0x376/0x8b0 [intel_qat]
+   adf_response_handler+0x60/0x170 [intel_qat]
+   tasklet_action_common+0x223/0x820
+   handle_softirqs+0x1ab/0x640
+   </IRQ>
+
+Fix this by storing the request itself in req->base.data instead of
+&req->chain, so that acomp_reqchain_done() receives the correct pointer.
+Simplify acomp_restore_req() accordingly to access req->chain directly.
+
+Fixes: 64929fe8c0a4 ("crypto: acomp - Remove request chaining")
+Cc: stable@vger.kernel.org
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/ucan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/acompress.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/net/can/usb/ucan.c
-+++ b/drivers/net/can/usb/ucan.c
-@@ -1397,7 +1397,7 @@ static int ucan_probe(struct usb_interfa
- 	 */
+--- a/crypto/acompress.c
++++ b/crypto/acompress.c
+@@ -169,15 +169,13 @@ static void acomp_save_req(struct acomp_
+ 	state->compl = req->base.complete;
+ 	state->data = req->base.data;
+ 	req->base.complete = cplt;
+-	req->base.data = state;
++	req->base.data = req;
+ }
  
- 	/* Prepare Memory for control transfers */
--	ctl_msg_buffer = devm_kzalloc(&udev->dev,
-+	ctl_msg_buffer = devm_kzalloc(&intf->dev,
- 				      sizeof(union ucan_ctl_payload),
- 				      GFP_KERNEL);
- 	if (!ctl_msg_buffer) {
+ static void acomp_restore_req(struct acomp_req *req)
+ {
+-	struct acomp_req_chain *state = req->base.data;
+-
+-	req->base.complete = state->compl;
+-	req->base.data = state->data;
++	req->base.complete = req->chain.compl;
++	req->base.data = req->chain.data;
+ }
+ 
+ static void acomp_reqchain_virt(struct acomp_req *req)
 
 
