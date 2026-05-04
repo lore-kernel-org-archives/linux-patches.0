@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF06A1ADC83;
-	Mon,  4 May 2026 14:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228953A75B6;
+	Mon,  4 May 2026 14:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903539; cv=none; b=hkanZ1Y3iGFi5ZVkQwaYkx1I39izuPGbiG9/tJx3IBJ1cfBiITjlP/w19MW3AuyRfDXJiA7JAAlyckqiqM7acB96s62J6Kd3PqelcjHNnM8f58xZgS0A3inlFQNNyJhkVhA8fhDKKDX4H1JcjZVNMKZwuMgmXHVznMpuDuzaF6I=
+	t=1777903542; cv=none; b=kHHiYtckg/ecSKXFbQAWLRghlHDJ66vBNfO/K4yoSCA3RMkckbKPPjHGanPZf6eDYbvqNLjUaX95QuvMLZg2GPVTKghUU/I6GeLgOqid6Ytquov+5j6TUE/dzaPQDNWtEfdFi/ZyM74GCS5NHNQnMIooAvx68b80d+AWD3JMGSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903539; c=relaxed/simple;
-	bh=IzA9ou30KLzLCCi/ATmoSIhGVksXepwx0KAqu/OGf6Q=;
+	s=arc-20240116; t=1777903542; c=relaxed/simple;
+	bh=r1QfiikGDzICnr4CbwoL5axl9zMnOQtdxN+mawukSGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpVIhGIRAiaiMf0x5WoN/o0WrS8TazlIrTM4YB+8inJ+qxMUhaddASje9jOealDnPJ292f/ooyBpx+bC9HWTVrwdbuxVF9B+ETo25Qn4jNlhgUa1ivT8DczY2q2jS4VohBLto0MTny1O2KKXUVoK5b3E96UstVV5I2TXmk6CUdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Suhn4zR7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mV0GetaeCRRQGptJQ+1qIVCTD3ebg0F+XgIvVWh53mjjyL9uJGrgQr9cXOxMmv7k6C7AdYzbS09cSA/o2tp3VYz2VyLuc11L8ctQAGIvaiR67p5mBNxRCBtBFAppqQwcT8OrWIw6bnQruVQOxEqCqeAx4gGAXLLslVPVtwS+vmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv8vV6yJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Suhn4zR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15333C2BCC4;
-	Mon,  4 May 2026 14:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv8vV6yJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A596EC2BCB8;
+	Mon,  4 May 2026 14:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903539;
-	bh=IzA9ou30KLzLCCi/ATmoSIhGVksXepwx0KAqu/OGf6Q=;
+	s=korg; t=1777903542;
+	bh=r1QfiikGDzICnr4CbwoL5axl9zMnOQtdxN+mawukSGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Suhn4zR7CwjrSiC3ikEDCpRGmzEx5GuO9r5eMCAdDNaw1+0tNJ4kXpLww3P3FeuqN
-	 xml3BZvXFPYHJ08a+jky9U2CkEpNFQLyi94+o2YZaUb+1UkhQLDa26d4gk5NMrUg9F
-	 uqIHF5iGfZYivCbjm+hUwTh9b0sxUhl2fOShqsS8=
+	b=Zv8vV6yJSAL0yE8pFFy2q+MBsQjDSUdN8AGs20q6txjv8Rovj0b9GFE4ZKfOxJt4v
+	 nb6xo/ZXQjsvdwl930umLx4bnyYND2HXChZRDJYUVy1jlfA+YF93JCgiINZRSDTkUe
+	 5O9d9bQnwxdzFBJ+Ht3BlyDcYNgoBcxHoi/7resI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Edwards <CFSworks@gmail.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
 	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.0 272/307] ceph: fix num_ops off-by-one when crypto allocation fails
-Date: Mon,  4 May 2026 15:52:37 +0200
-Message-ID: <20260504135153.039404965@linuxfoundation.org>
+Subject: [PATCH 7.0 273/307] ceph: only d_add() negative dentries when they are unhashed
+Date: Mon,  4 May 2026 15:52:38 +0200
+Message-ID: <20260504135153.075783214@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,64 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Edwards <cfsworks@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit a0d9555bf9eaeba34fe6b6bb86f442fe08ba3842 upstream.
+commit 803447f93d75ab6e40c85e6d12b5630d281d70d6 upstream.
 
-move_dirty_folio_in_page_array() may fail if the file is encrypted, the
-dirty folio is not the first in the batch, and it fails to allocate a
-bounce buffer to hold the ciphertext. When that happens,
-ceph_process_folio_batch() simply redirties the folio and flushes the
-current batch -- it can retry that folio in a future batch.
+Ceph can call d_add(dentry, NULL) on a negative dentry that is already
+present in the primary dcache hash.
 
-However, if this failed folio is not contiguous with the last folio that
-did make it into the batch, then ceph_process_folio_batch() has already
-incremented `ceph_wbc->num_ops`; because it doesn't follow through and
-add the discontiguous folio to the array, ceph_submit_write() -- which
-expects that `ceph_wbc->num_ops` accurately reflects the number of
-contiguous ranges (and therefore the required number of "write extent"
-ops) in the writeback -- will panic the kernel:
+In the current VFS that is not safe.  d_add() goes through __d_add()
+to __d_rehash(), which unconditionally reinserts dentry->d_hash into
+the hlist_bl bucket.  If the dentry is already hashed, reinserting the
+same node can corrupt the bucket, including creating a self-loop.
+Once that happens, __d_lookup() can spin forever in the hlist_bl walk,
+typically looping only on the d_name.hash mismatch check and
+eventually triggering RCU stall reports like this one:
 
-    BUG_ON(ceph_wbc->op_idx + 1 != req->r_num_ops);
+ rcu: INFO: rcu_sched self-detected stall on CPU
+ rcu:         87-....: (2100 ticks this GP) idle=3a4c/1/0x4000000000000000 softirq=25003319/25003319 fqs=829
+ rcu:         (t=2101 jiffies g=79058445 q=698988 ncpus=192)
+ CPU: 87 UID: 2952868916 PID: 3933303 Comm: php-cgi8.3 Not tainted 6.18.17-i1-amd #950 NONE
+ Hardware name: Dell Inc. PowerEdge R7615/0G9DHV, BIOS 1.6.6 09/22/2023
+ RIP: 0010:__d_lookup+0x46/0xb0
+ Code: c1 e8 07 48 8d 04 c2 48 8b 00 49 89 fc 49 89 f5 48 89 c3 48 83 e3 fe 48 83 f8 01 77 0f eb 2d 0f 1f 44 00 00 48 8b 1b 48 85 db <74> 20 39 6b 18 75 f3 48 8d 7b 78 e8 ba 85 d0 00 4c 39 63 10 74 1f
+ RSP: 0018:ff745a70c8253898 EFLAGS: 00000282
+ RAX: ff26e470054cb208 RBX: ff26e470054cb208 RCX: 000000006e958966
+ RDX: ff26e48267340000 RSI: ff745a70c82539b0 RDI: ff26e458f74655c0
+ RBP: 000000006e958966 R08: 0000000000000180 R09: 9cd08d909b919a89
+ R10: ff26e458f74655c0 R11: 0000000000000000 R12: ff26e458f74655c0
+ R13: ff745a70c82539b0 R14: d0d0d0d0d0d0d0d0 R15: 2f2f2f2f2f2f2f2f
+ FS:  00007f5770896980(0000) GS:ff26e482c5d88000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f5764de50c0 CR3: 000000a72abb5001 CR4: 0000000000771ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  lookup_fast+0x9f/0x100
+  walk_component+0x1f/0x150
+  link_path_walk+0x20e/0x3d0
+  path_lookupat+0x68/0x180
+  filename_lookup+0xdc/0x1e0
+  vfs_statx+0x6c/0x140
+  vfs_fstatat+0x67/0xa0
+  __do_sys_newfstatat+0x24/0x60
+  do_syscall_64+0x6a/0x230
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-This issue can be reproduced on affected kernels by writing to
-fscrypt-enabled CephFS file(s) with a 4KiB-written/4KiB-skipped/repeat
-pattern (total filesize should not matter) and gradually increasing the
-system's memory pressure until a bounce buffer allocation fails.
+This is reachable with reused cached negative dentries.  A Ceph lookup
+or atomic_open can be handed a negative dentry that is already hashed,
+and fs/ceph/dir.c then hits one of two paths that incorrectly assume
+"negative" also means "unhashed":
 
-Fix this crash by decrementing `ceph_wbc->num_ops` back to the correct
-value when move_dirty_folio_in_page_array() fails, but the folio already
-started counting a new (i.e. still-empty) extent.
+  - ceph_finish_lookup():
+      MDS reply is -ENOENT with no trace
+      -> d_add(dentry, NULL)
 
-The defect corrected by this patch has existed since 2022 (see first
-`Fixes:`), but another bug blocked multi-folio encrypted writeback until
-recently (see second `Fixes:`). The second commit made it into 6.18.16,
-6.19.6, and 7.0-rc1, unmasking the panic in those versions. This patch
-therefore fixes a regression (panic) introduced by cac190c7674f.
+  - ceph_lookup():
+      local ENOENT fast path for a complete directory with shared caps
+      -> d_add(dentry, NULL)
+
+Both paths can therefore re-add an already-hashed negative dentry.
+
+Ceph already uses the correct pattern elsewhere: ceph_fill_trace() only
+calls d_add(dn, NULL) for a negative null-dentry reply when d_unhashed(dn)
+is true.
+
+Fix both fs/ceph/dir.c sites the same way: only call d_add() for a
+negative dentry when it is actually unhashed.  If the negative dentry
+is already hashed, leave it in place and reuse it as-is.
+
+This preserves the existing behavior for unhashed dentries while
+avoiding d_hash list corruption for reused hashed negatives.
 
 Cc: stable@vger.kernel.org
-Fixes: d55207717ded ("ceph: add encryption support to writepage and writepages")
-Fixes: cac190c7674f ("ceph: fix write storm on fscrypted files")
-Signed-off-by: Sam Edwards <CFSworks@gmail.com>
+Fixes: 2817b000b02c ("ceph: directory operations")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
 Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/addr.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ceph/dir.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1365,6 +1365,10 @@ void ceph_process_folio_batch(struct add
- 		rc = move_dirty_folio_in_page_array(mapping, wbc, ceph_wbc,
- 				folio);
- 		if (rc) {
-+			/* Did we just begin a new contiguous op? Nevermind! */
-+			if (ceph_wbc->len == 0)
-+				ceph_wbc->num_ops--;
-+
- 			folio_redirty_for_writepage(wbc, folio);
- 			folio_unlock(folio);
- 			break;
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -769,7 +769,8 @@ struct dentry *ceph_finish_lookup(struct
+ 				d_drop(dentry);
+ 				err = -ENOENT;
+ 			} else {
+-				d_add(dentry, NULL);
++				if (d_unhashed(dentry))
++					d_add(dentry, NULL);
+ 			}
+ 		}
+ 	}
+@@ -840,7 +841,8 @@ static struct dentry *ceph_lookup(struct
+ 			spin_unlock(&ci->i_ceph_lock);
+ 			doutc(cl, " dir %llx.%llx complete, -ENOENT\n",
+ 			      ceph_vinop(dir));
+-			d_add(dentry, NULL);
++			if (d_unhashed(dentry))
++				d_add(dentry, NULL);
+ 			di->lease_shared_gen = atomic_read(&ci->i_shared_gen);
+ 			return NULL;
+ 		}
 
 
