@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291083DF015;
-	Mon,  4 May 2026 14:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143043DF01A;
+	Mon,  4 May 2026 14:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904703; cv=none; b=eihfrDfDJyPWtcOXn8hVOjJj73AYT6fU91gaZdaMK6BdUe43IL8Qo3bWzoyzA/wcAZqumX3xb3w/y/DeLHr6X4dEH9vr+IQZE86RbcASiTHK6yW/ucrfeM//kbBCHrAUGo9kk39RiufvLW0hVDRFF6Wh0jp7K4aVR1UTkJ7aq20=
+	t=1777904706; cv=none; b=cUTYethy2IgjSeaSnqj/BHJnPwuEbWt1iZh+rCkEPeF+FGU6fbmXEGrc2gPEjigqeE9qWlWZd0eQh64yGCw8Dqgc1JxpqvbDmXK4P3ribos6aaCPzv/z9PxGgrdC4O7UCq0E0OBifMqQx8uj2o8LO7cTshNeZNgiNApUBiT3Pgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904703; c=relaxed/simple;
-	bh=9PfBiQfLsHtvWwFp2dZ4M1xOq306LNhqbFc+zG9Mi+0=;
+	s=arc-20240116; t=1777904706; c=relaxed/simple;
+	bh=J9ahSR4Ftis2LFwUexMr3cydvP4sqCLQwyv+X60Prqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEbI4xl/TCWe/wqKvJ0n8aRYVAhprYd/QWSmHYeSD52xlSBvLtkJhJ/5pMiuD/97ldM2NnKgAVszQoaZ3juT0j+AiaPwmSNFOte/lgY43YnfPG3DBAPyfdX1Ejjs9x+f/Nc0h9B5zRU5YptHCcmRFTP2V8iydawo+tTpzHzgUcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soNW0ZPd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jO83EkzT8l4EMC4IQM79Py30RiFswMMzevPzEL9IoKMFTM4BMLxeGZDYIkAGY6JAXDN63ncAguBKyCYqANS9JOVBWD6/IoxXBrtDxoIaVBORLHkFid8rUKo6Ysc5VK+shx55oby3HYWnEtydeoF1+01yHL4H7qeB0G27ED/cg9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkFkfGuL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soNW0ZPd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D95C2BCB8;
-	Mon,  4 May 2026 14:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkFkfGuL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8FEC2BCB8;
+	Mon,  4 May 2026 14:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904703;
-	bh=9PfBiQfLsHtvWwFp2dZ4M1xOq306LNhqbFc+zG9Mi+0=;
+	s=korg; t=1777904705;
+	bh=J9ahSR4Ftis2LFwUexMr3cydvP4sqCLQwyv+X60Prqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=soNW0ZPdvsXxshKAlvLKjYtJfatQJtZ0P4UguPPvEzy0AjUuqHkW4Cagsvvu9PT98
-	 qcjp9IqTdZi0ZCGrrcta75Uc2CuOcv+147qETn3oqA792fcD2JlFimU/QFnfvkUw1w
-	 fBwGo97+m4ZCsr/dDojBGMxUKAkyWHATSaUdlaEY=
+	b=lkFkfGuLhR+bM1T+ongnpUiKPZNRH8muWfDaarrGgMcUEZvEiXeJyhNvdjvr+uccP
+	 BL/my/Mb6QWXgPcsYBXOgZE2T7rKRiBQEpz4/PCwfk0grIlBIt9Xt6eUhz9ALn9oMU
+	 bwL4ChrSgtXuqZoG2c7YFxk3SIihLLEiA74WBfY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.12 098/215] tpm: avoid -Wunused-but-set-variable
-Date: Mon,  4 May 2026 15:51:57 +0200
-Message-ID: <20260504135133.734695780@linuxfoundation.org>
+	WANG Rui <wangrui@loongson.cn>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	WANG Xuerui <kernel@xen0n.name>,
+	loongarch@lists.linux.dev,
+	Rong Bao <rong.bao@csmantle.top>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 135/215] perf annotate: Use jump__delete when freeing LoongArch jumps
+Date: Mon,  4 May 2026 15:52:34 +0200
+Message-ID: <20260504135135.084370958@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,52 +55,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Rong Bao <rong.bao@csmantle.top>
 
-commit 6f1d4d2ecfcd1b577dc87350ea965fe81f272e83 upstream.
+[ Upstream commit a355eefc36c4481188249b067832b40a2c45fa5c ]
 
-Outside of the EFI tpm code, the TPM_MEMREMAP()/TPM_MEMUNMAP functions are
-defined as trivial macros, leading to the mapping_size variable ending
-up unused:
+Currently, the initialization of loongarch_jump_ops does not contain an
+assignment to its .free field. This causes disasm_line__free() to fall
+through to ins_ops__delete() for LoongArch jump instructions.
 
-In file included from drivers/char/tpm/tpm-sysfs.c:16:
-In file included from drivers/char/tpm/tpm.h:28:
-include/linux/tpm_eventlog.h:167:6: error: variable 'mapping_size' set but not used [-Werror,-Wunused-but-set-variable]
-  167 |         int mapping_size;
+ins_ops__delete() will free ins_operands.source.raw and
+ins_operands.source.name, and these fields overlaps with
+ins_operands.jump.raw_comment and ins_operands.jump.raw_func_start.
+Since in loongarch_jump__parse(), these two fields are populated by
+strchr()-ing the same buffer, trying to free them will lead to undefined
+behavior.
 
-Turn the stubs into inline functions to avoid this warning.
+This invalid free usually leads to crashes:
 
-Cc: stable@vger.kernel.org # v5.3+
-Fixes: c46f3405692d ("tpm: Reserve the TPM final events table")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+        Process 1712902 (perf) of user 1000 dumped core.
+        Stack trace of thread 1712902:
+        #0  0x00007fffef155c58 n/a (libc.so.6 + 0x95c58)
+        #1  0x00007fffef0f7a94 raise (libc.so.6 + 0x37a94)
+        #2  0x00007fffef0dd6a8 abort (libc.so.6 + 0x1d6a8)
+        #3  0x00007fffef145490 n/a (libc.so.6 + 0x85490)
+        #4  0x00007fffef1646f4 n/a (libc.so.6 + 0xa46f4)
+        #5  0x00007fffef164718 n/a (libc.so.6 + 0xa4718)
+        #6  0x00005555583a6764 __zfree (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x106764)
+        #7  0x000055555854fb70 disasm_line__free (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x2afb70)
+        #8  0x000055555853d618 annotated_source__purge (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x29d618)
+        #9  0x000055555852300c __hist_entry__tui_annotate (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x28300c)
+        #10 0x0000555558526718 do_annotate (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x286718)
+        #11 0x000055555852ed94 evsel__hists_browse (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x28ed94)
+        #12 0x000055555831fdd0 cmd_report (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x7fdd0)
+        #13 0x000055555839b644 handle_internal_command (/home/csmantle/dist/linux-arch/tools/perf/perf + 0xfb644)
+        #14 0x00005555582fe6ac main (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x5e6ac)
+        #15 0x00007fffef0ddd90 n/a (libc.so.6 + 0x1dd90)
+        #16 0x00007fffef0ddf0c __libc_start_main (libc.so.6 + 0x1df0c)
+        #17 0x00005555582fed10 _start (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x5ed10)
+        ELF object binary architecture: LoongArch
+
+... and it can be confirmed with Valgrind:
+
+        ==1721834== Invalid free() / delete / delete[] / realloc()
+        ==1721834==    at 0x4EA9014: free (in /usr/lib/valgrind/vgpreload_memcheck-loongarch64-linux.so)
+        ==1721834==    by 0x4106287: __zfree (zalloc.c:13)
+        ==1721834==    by 0x42ADC8F: disasm_line__free (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x429B737: annotated_source__purge (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x42811EB: __hist_entry__tui_annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x42848D7: do_annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x428CF33: evsel__hists_browse (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==  Address 0x7d34303 is 35 bytes inside a block of size 62 alloc'd
+        ==1721834==    at 0x4EA59B8: malloc (in /usr/lib/valgrind/vgpreload_memcheck-loongarch64-linux.so)
+        ==1721834==    by 0x6B80B6F: strdup (strdup.c:42)
+        ==1721834==    by 0x42AD917: disasm_line__new (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x42AE5A3: symbol__disassemble_objdump (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x42AF0A7: symbol__disassemble (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x429B3CF: symbol__annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x429C233: symbol__annotate2 (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x42804D3: __hist_entry__tui_annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x42848D7: do_annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+        ==1721834==    by 0x428CF33: evsel__hists_browse (in /home/csmantle/dist/linux-arch/tools/perf/perf)
+
+This patch adds the missing free() specialization in loongarch_jump_ops,
+which prevents disasm_line__free() from invoking the default cleanup
+function.
+
+Fixes: fb7fd2a14a503b9a ("perf annotate: Move raw_comment and raw_func_start fields out of 'struct ins_operands'")
+Cc: stable@vger.kernel.org
+Cc: WANG Rui <wangrui@loongson.cn>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Cc: loongarch@lists.linux.dev
+Signed-off-by: Rong Bao <rong.bao@csmantle.top>
+Tested-by: WANG Rui <wangrui@loongson.cn>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tpm_eventlog.h |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/perf/arch/loongarch/annotate/instructions.c | 1 +
+ tools/perf/util/disasm.c                          | 1 +
+ 2 files changed, 2 insertions(+)
 
---- a/include/linux/tpm_eventlog.h
-+++ b/include/linux/tpm_eventlog.h
-@@ -131,11 +131,16 @@ struct tcg_algorithm_info {
+diff --git a/tools/perf/arch/loongarch/annotate/instructions.c b/tools/perf/arch/loongarch/annotate/instructions.c
+index ab43b1ab51e3b..e16350155bf1d 100644
+--- a/tools/perf/arch/loongarch/annotate/instructions.c
++++ b/tools/perf/arch/loongarch/annotate/instructions.c
+@@ -95,6 +95,7 @@ static int loongarch_jump__parse(struct arch *arch, struct ins_operands *ops, st
+ }
+ 
+ static struct ins_ops loongarch_jump_ops = {
++	.free	   = jump__delete,
+ 	.parse	   = loongarch_jump__parse,
+ 	.scnprintf = jump__scnprintf,
  };
+diff --git a/tools/perf/util/disasm.c b/tools/perf/util/disasm.c
+index 8a6f450c6f8e7..8f35232f7f22c 100644
+--- a/tools/perf/util/disasm.c
++++ b/tools/perf/util/disasm.c
+@@ -44,6 +44,7 @@ static int jump__scnprintf(struct ins *ins, char *bf, size_t size,
+ 			   struct ins_operands *ops, int max_ins_name);
+ static int call__scnprintf(struct ins *ins, char *bf, size_t size,
+ 			   struct ins_operands *ops, int max_ins_name);
++static void jump__delete(struct ins_operands *ops);
  
- #ifndef TPM_MEMREMAP
--#define TPM_MEMREMAP(start, size) NULL
-+static inline void *TPM_MEMREMAP(unsigned long start, size_t size)
-+{
-+	return NULL;
-+}
- #endif
- 
- #ifndef TPM_MEMUNMAP
--#define TPM_MEMUNMAP(start, size) do{} while(0)
-+static inline void TPM_MEMUNMAP(void *mapping, size_t size)
-+{
-+}
- #endif
- 
- /**
+ static void ins__sort(struct arch *arch);
+ static int disasm_line__parse(char *line, const char **namep, char **rawp);
+-- 
+2.53.0
+
 
 
