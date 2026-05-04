@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4063D47D0;
-	Mon,  4 May 2026 13:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7EB3DC4D5;
+	Mon,  4 May 2026 13:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777902857; cv=none; b=UUt4Us0Izo+amDYkmj6HyHkHQfp2eB9V/90ZUs+st/UCM+s+cua66m20PKj/srvMt7FmZjK/AQjwqA4F8cGEgEMiLvRnpZVemzvV9RXbpknI4O1LjYS+nGZ5j4teaOiw4WPCS3iYJd5e0rorGZHUiBAa4z/3RyMS5tOq+8BWtUs=
+	t=1777902860; cv=none; b=ueglCRr2cPUr0QZ3s5enFM7rqMvtOd6fqEIseC1qSFJywTGqjJX3wCJk9bHORlumG2uPKii7m3SLqX/sfOsdocbhaX93Qc/e26z8fQy7MV2Mn3iLRnwYwKnU5Gz6u9j+Rfyvq3zb0mii2/cuFwrOMGWWANuhcmk/guvQYAUGaB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777902857; c=relaxed/simple;
-	bh=mhT5S3UIOhhxxVOnXZMFI49pMwV8IT1H7FVz+S8t//c=;
+	s=arc-20240116; t=1777902860; c=relaxed/simple;
+	bh=DjlOx6qAlleHF/VnBGOeKkohQUC3iQvP6hKqO7igyW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=frUFlQeI1PVHC8ovk5vocJ5hhq6n+JkHc/5Y0aaG+TuVrDsNmFlRwsyCOIw2928I3reKZklfGW4qG9aNZPr+3V/2HBc5BZjyUtm/O+i0rVhf6uPT6ppAK5gv93hb7SucsJfAMYFyAXQFalVsnynHzPPAjkThWC/A23dkbJC+yPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+gyk1e9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bwduSWHmU+2XG0SQZgpqEY8sgJMuw3Pkyv7pHH+XzdUIdKgGLGg/ORCRaGDqHFPa8QaKX6Zrq6hCQcgZm6vBKaPZ0/8vIUoROJ9gFOiMUPQdN15+zaxJJHwpCQxTzo5Ie8nd+lqs4PR2vOq4u7IxdIQgrlr33j+mB1CY4rKhVRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdGWRYhE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+gyk1e9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED289C2BCB8;
-	Mon,  4 May 2026 13:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdGWRYhE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0CF1C2BCB8;
+	Mon,  4 May 2026 13:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777902857;
-	bh=mhT5S3UIOhhxxVOnXZMFI49pMwV8IT1H7FVz+S8t//c=;
+	s=korg; t=1777902860;
+	bh=DjlOx6qAlleHF/VnBGOeKkohQUC3iQvP6hKqO7igyW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+gyk1e9nbWxxpdLDDCdIpbQsIZoKrImElKDzeS9/DgHTGrOd7w9oo49g6mpaI8N6
-	 3Utz0JgWBc/lozKA4hrz4g0bKdlTSm9tHGnt1aZlbExOMvOBRwZHHTRjeSXiVSZZCt
-	 ge/50NQ/kCvTaxZkdM9ouCTy1Lov5SaoF+I2zJX4=
+	b=XdGWRYhEx0nT9HwMXbIz9GPhw+yXKGY+9RsuxgWikOEZ8thZB7e6drsk7+SANMPs5
+	 zosElLW+tZxpIN41vVbypYCfE76CTDv/nTkGQ8Z7ys5iycg0y8vouOj39Tu7+Lgqh7
+	 uuRn2lT9zDFnKC98MnUH/MDir62/swCFMRqeYigY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 7.0 010/307] leds: qcom-lpg: Check for array overflow when selecting the high resolution
-Date: Mon,  4 May 2026 15:48:15 +0200
-Message-ID: <20260504135143.217014613@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>
+Subject: [PATCH 7.0 011/307] greybus: gb-beagleplay: bound bootloader receive buffering
+Date: Mon,  4 May 2026 15:48:16 +0200
+Message-ID: <20260504135143.252383121@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,40 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit d45963a93c1495e9f1338fde91d0ebba8fd22474 upstream.
+commit 1214bf28965ceaf584fb20d357731264dd2e10e1 upstream.
 
-When selecting the high resolution values from the array, FIELD_GET() is
-used to pull from a 3 bit register, yet the array being indexed has only
-5 values in it.  Odds are the hardware is sane, but just to be safe,
-properly check before just overflowing and reading random data and then
-setting up chip values based on that.
+cc1352_bootloader_rx() appends each serdev chunk into the fixed
+rx_buffer before parsing bootloader packets. The helper can keep
+leftover bytes between callbacks and may receive multiple packets in one
+callback, so a single count value is not constrained by one packet
+length.
 
+Check that the incoming chunk fits in the remaining receive buffer space
+before memcpy(). If it does not, drop the staged data and consume the
+bytes instead of overflowing rx_buffer.
+
+Fixes: 0cf7befa3ea2 ("greybus: gb-beagleplay: Add firmware upload API")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026021934-nearby-playroom-036b@gregkh
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260402054016.38587-1-pengpeng@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/rgb/leds-qcom-lpg.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/greybus/gb-beagleplay.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -1273,7 +1273,12 @@ static int lpg_pwm_get_state(struct pwm_
- 		return ret;
+--- a/drivers/greybus/gb-beagleplay.c
++++ b/drivers/greybus/gb-beagleplay.c
+@@ -535,6 +535,13 @@ static size_t cc1352_bootloader_rx(struc
+ 	int ret;
+ 	size_t off = 0;
  
- 	if (chan->subtype == LPG_SUBTYPE_HI_RES_PWM) {
--		refclk = lpg_clk_rates_hi_res[FIELD_GET(PWM_CLK_SELECT_HI_RES_MASK, val)];
-+		unsigned int clk_idx = FIELD_GET(PWM_CLK_SELECT_HI_RES_MASK, val);
++	if (count > sizeof(bg->rx_buffer) - bg->rx_buffer_len) {
++		dev_warn(&bg->sd->dev,
++			 "dropping oversized bootloader receive chunk");
++		bg->rx_buffer_len = 0;
++		return count;
++	}
 +
-+		if (clk_idx >= ARRAY_SIZE(lpg_clk_rates_hi_res))
-+			return -EINVAL;
-+
-+		refclk = lpg_clk_rates_hi_res[clk_idx];
- 		resolution = lpg_pwm_resolution_hi_res[FIELD_GET(PWM_SIZE_HI_RES_MASK, val)];
- 	} else {
- 		refclk = lpg_clk_rates[FIELD_GET(PWM_CLK_SELECT_MASK, val)];
+ 	memcpy(bg->rx_buffer + bg->rx_buffer_len, data, count);
+ 	bg->rx_buffer_len += count;
+ 
 
 
