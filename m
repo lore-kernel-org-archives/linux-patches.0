@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAB537D11B;
-	Mon,  4 May 2026 14:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0225F1C68F;
+	Mon,  4 May 2026 14:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904131; cv=none; b=XT+K2aRrY+QwM6rNoJOwN/ZMjj+D09UKqQbt2Nm+QS9+FgmPkNoM6OmwN76arq0ZOUUj2nOzv8tU6SbG6mWFAp4xjwFcZv5wQeRTU768D2uCJlTWsyqjQleXBfcCionT/1urV0uMZ4Qpgevui/2J+p8mTAaDVxBiwe/AsKK21Rg=
+	t=1777904134; cv=none; b=kBq1OMYN8biZ0bMg61gU8gEGX6aUahFfxb/eo0VWfvn6tICeF3gC9Y1FpkDSmolEC9n/k18JTeFmG+mUuhIfyma2OW/bzMVoqhOmzIHumzbcBrDVzXtmcReRdvSMyzsWhFsUTL2wYFGnJXqJJdI/KYx6kym6OjxOlclW3J6SVXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904131; c=relaxed/simple;
-	bh=fCI4jqhH01adjbhNNox9Vv4NlxAGYi86baOL68VW66Q=;
+	s=arc-20240116; t=1777904134; c=relaxed/simple;
+	bh=QjaODudKDB5mX+q+eHnf3ktulcT+sZ/U0yzMxt6UCSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qU7DTG8DLbyWuLHPMjGf3YFsG12SbrgzzQAquin0Fa8k8Mtb3+OmZU8jQOfNBs9CuwbhDTrOaLC9FUHvri/hRHauRvabyEmytFMJseKLQMKjKa7O7Mg90DAaioIc9rsfDAwB87K6XiMeDPn02+dK7RHKfsq+Pc0STnZfpbEd22c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwic7mf4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKrsLljeFaT4OQnMriKv0DCUNnglCKuuPriBBYJQ2ccM6BWzajgmZUu5YhAAkS/9WBbCioc87tQlaW5kd8vnw+i7JAMkm1YU+0/YTb3Vk9FgDPovY7ws400Kt0yS9iGT9G+jeaGJ/0PoZc8Q4Dlp6JiejQu55YONJUcDIHR8EHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3jVcToI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwic7mf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F405FC2BCB8;
-	Mon,  4 May 2026 14:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3jVcToI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D133C2BCB8;
+	Mon,  4 May 2026 14:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904131;
-	bh=fCI4jqhH01adjbhNNox9Vv4NlxAGYi86baOL68VW66Q=;
+	s=korg; t=1777904133;
+	bh=QjaODudKDB5mX+q+eHnf3ktulcT+sZ/U0yzMxt6UCSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwic7mf4SFBlDm+2wH1Zzuvk+sRWY5Uf9jadcPde8D/p7uQHiooZabrJqcRMSmwBk
-	 FT61/jsp2Orc5OjrCCeOl/9ug19LpJ/SsVIrm6ZJSvYMUlXpTBEVl/mn4tVLv+ny3n
-	 BVrvffvDS3hQ58g2Wo6F4+KHfcFeORvc17kVgwUY=
+	b=w3jVcToI/s6fi34w4va3PFv9poUI/HTzdeWtSgbCiGtbQUSR4qUB3SQ51X7m3S9lE
+	 pyASjg29C1ZqriLXwmhBzjblfQJA0P6vcxgg/L0gcVYtng/6l8kluwEXeU56gxbQlH
+	 P6kILZuDwrZYv7i6dGwz8qNFWWy7IWEwS5wPw0ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jackie Liu <liuyun01@kylinos.cn>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Gregory Price <gourry@gourry.net>,
-	Alistair Popple <apopple@nvidia.com>,
-	Byungchul Park <byungchul@sk.com>,
-	David Hildenbrand <david@kernel.org>,
+	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 162/275] mm/mempolicy: fix memory leaks in weighted_interleave_auto_store()
-Date: Mon,  4 May 2026 15:51:42 +0200
-Message-ID: <20260504135149.065364268@linuxfoundation.org>
+Subject: [PATCH 6.18 163/275] mm/damon/stat: fix memory leak on damon_start() failure in damon_stat_start()
+Date: Mon,  4 May 2026 15:51:43 +0200
+Message-ID: <20260504135149.103692514@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -57,74 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jackie Liu <liuyun01@kylinos.cn>
 
-commit 6fae274ce0e3109cbbc4c18b354eaace1f0af7d7 upstream.
+commit e04ed278d25bf15769800bf6e35c6737f137186f upstream.
 
-weighted_interleave_auto_store() fetches old_wi_state inside the if
-(!input) block only.  This causes two memory leaks:
+Destroy the DAMON context and reset the global pointer when damon_start()
+fails.  Otherwise, the context allocated by damon_stat_build_ctx() is
+leaked, and the stale damon_stat_context pointer will be overwritten on
+the next enable attempt, making the old allocation permanently
+unreachable.
 
-1. When a user writes "false" and the current mode is already manual,
-   the function returns early without freeing the freshly allocated
-   new_wi_state.
-
-2. When a user writes "true", old_wi_state stays NULL because the
-   fetch is skipped entirely. The old state is then overwritten by
-   rcu_assign_pointer() but never freed, since the cleanup path is
-   gated on old_wi_state being non-NULL. A user can trigger this
-   repeatedly by writing "1" in a loop.
-
-Fix both leaks by moving the old_wi_state fetch before the input check,
-making it unconditional.  This also allows a unified early return for both
-"true" and "false" when the requested mode matches the current mode.
-
-Link: https://lore.kernel.org/20260401005702.7096-1-liu.yun@linux.dev
-Link: https://sashiko.dev/#/patchset/20260331100740.84906-1-liu.yun@linux.dev
-Fixes: e341f9c3c841 ("mm/mempolicy: Weighted Interleave Auto-tuning")
+Link: https://lore.kernel.org/20260331101553.88422-1-liu.yun@linux.dev
+Fixes: 369c415e6073 ("mm/damon: introduce DAMON_STAT module")
 Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Reviewed by: Donet Tom <donettom@linux.ibm.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: <stable@vger.kernel.org> # v6.16+
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.17.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ mm/damon/stat.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -3636,18 +3636,19 @@ static ssize_t weighted_interleave_auto_
- 		new_wi_state->iw_table[i] = 1;
- 
- 	mutex_lock(&wi_state_lock);
--	if (!input) {
--		old_wi_state = rcu_dereference_protected(wi_state,
--					lockdep_is_held(&wi_state_lock));
--		if (!old_wi_state)
--			goto update_wi_state;
--		if (input == old_wi_state->mode_auto) {
--			mutex_unlock(&wi_state_lock);
--			return count;
--		}
-+	old_wi_state = rcu_dereference_protected(wi_state,
-+				lockdep_is_held(&wi_state_lock));
-+
-+	if (old_wi_state && input == old_wi_state->mode_auto) {
-+		mutex_unlock(&wi_state_lock);
-+		kfree(new_wi_state);
-+		return count;
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -247,8 +247,11 @@ static int damon_stat_start(void)
+ 	if (!damon_stat_context)
+ 		return -ENOMEM;
+ 	err = damon_start(&damon_stat_context, 1, true);
+-	if (err)
++	if (err) {
++		damon_destroy_ctx(damon_stat_context);
++		damon_stat_context = NULL;
+ 		return err;
 +	}
  
--		memcpy(new_wi_state->iw_table, old_wi_state->iw_table,
--					       nr_node_ids * sizeof(u8));
-+	if (!input) {
-+		if (old_wi_state)
-+			memcpy(new_wi_state->iw_table, old_wi_state->iw_table,
-+						       nr_node_ids * sizeof(u8));
- 		goto update_wi_state;
- 	}
- 
+ 	damon_stat_last_refresh_jiffies = jiffies;
+ 	call_control.data = damon_stat_context;
 
 
