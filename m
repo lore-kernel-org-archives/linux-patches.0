@@ -1,99 +1,110 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633F23264FF
-	for <patches@lists.linux.dev>; Mon,  4 May 2026 20:56:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59447345CDC
+	for <patches@lists.linux.dev>; Mon,  4 May 2026 21:15:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777928166; cv=none; b=WEG9DDYkZ4clzo6laG96iOsv2G4L+v47w52yfsv5/MnnfVKJyFb8BL2MuuTo/+neBHciUSxURI8g0XGpjxHqGetTmUBDfucc5JV82+SEDeTfZSA2hgCWFn2ohYbG9ZpZh/Lhvb2YuMz/9xzM/OukpXS1IYw+Onheae3xwPpRMg4=
+	t=1777929318; cv=none; b=pWgTnGBIcL7MZ/xxT4RdVgFm14p0zF01jhUZPq05sVqxQXJWQJSa1gGwtDrGMu1eypI7PdQjbqf9DmDABynNTG62EgZTV3U4u1Y4gF4DQ2qgMFVngJTzmM1QBs4t4JnR5sSvRS3EWt1V0jmp9f7f4Idf6spB3eTj57GEneSgpxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777928166; c=relaxed/simple;
-	bh=6b0uhsWOUueBJikO+3RxwH3ywe4vOaHqBvUoJ1iBG10=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jGTONmj8JHrF1GtfYeukw6WbwNQ1rGbssmF8DOeyrKfCs164oCBQKlDDwygDW3C4zC8Enysj65jWZe6EenkqVvFcP4LlQfTAJ4pFzd0hjwMek6uAy4rstYhKOAf8eQcFpVTWG+WiJnl6z/ldE/vnr5rWGycDP6fLcS9s8HWxdbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eOwEpsBh; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1777929318; c=relaxed/simple;
+	bh=ZcwHhiQBeuto3+aHd1WgPtJBNLW6SzFA30xH3EUIueA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DJgy8Ug59op4ELiI4Z8ko++y+QEB1tX2W0hCaMp1GvSJgDf8oYRKx9vcfYOvhvwm2o/DkGx+hGVRhWmamve9MwsSlq/tnXRSEXwp7QwQh/tPcVhbG1j26cZkx30Sf3w3TWZ5Skr2lyY/31RIEpn2nBwzNshKBRlFh5q9W/1erEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RV+/b1NK; arc=none smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eOwEpsBh"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2ba3e3c4f87so8351215ad.3
-        for <patches@lists.linux.dev>; Mon, 04 May 2026 13:56:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RV+/b1NK"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-2f30a4601bbso1231480eec.1
+        for <patches@lists.linux.dev>; Mon, 04 May 2026 14:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1777928163; x=1778532963; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uAEnOAPj5fUgAFUXnOyePT2fFfy+RA0tHhuCu8Z9sp0=;
-        b=eOwEpsBhIeqDKF4KOwfsBXrua10MCxvaoQqCYhh1soHKw5wGDJ94KhxvyKmtf2pVdW
-         XtOhJd1h3ha9oaSWKCGnubRcZ8MbtEjbPOEAbE87rSPnsNgwgpbpBwD0XORffN1t2UnP
-         13RUhuYGN4fsOgODjT1x1m4obOl3dUfc6fZ3CbPBqIjPu5N1Nj06Oeg5puepAb6FY1uW
-         rS0Uh9XvYQ6jZAIJiPwhk9IkIxgkYX0N94Kbbvd3g3Jq151XgI85S9aKbvRmMXIEVHFd
-         EyJGSL6/4KX2c1nVnEt6MkUnji0bDuR8oLXgDyZQuKGNTYDe2YaS+iFDapVZB1enKB2z
-         2GQw==
+        d=gmail.com; s=20251104; t=1777929316; x=1778534116; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=T6M6O6vS5rinWV9bCog50NLyMYBW362x5+Rc5/13V6w=;
+        b=RV+/b1NKjpQL369UUo/S94rAqDHbt60Q3zV/cKS/tYA15kKjPJIH8Y2O6h9z5YCZpZ
+         UMxp89Dcw/9pKhbmboJhmnYaUw+V++XBzCmyp/VW5Yb+9CpsMSO8j8D+VJ04wrnjjtJI
+         4M5pw978owY5lh7mC/RTnF+5iS+DOdXpO4o1jFxIIkiwyjsggdEmoNqRBhEpcS79SXDN
+         xnx7ju2fiyBiPIE7/ymVQ1fPxGcewY3U/8O3R3vcQWUQW0UG3If8HtcOStHHDsu16WwO
+         b1CnT8xN3oNJRVL4z3x9LSd52TD+uiZwfZ2kupkm8+WdMUnHTjpmk3eC3wfpBvEe1Kg0
+         KbcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777928163; x=1778532963;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uAEnOAPj5fUgAFUXnOyePT2fFfy+RA0tHhuCu8Z9sp0=;
-        b=GTyHZIwlOGLW/UleN1KP1gRKxOYdgjz2i7uNcLIlII+XHdKG1aX+NlsQAut5H95Yt/
-         sxX8giHf9OXAEKdvzf4ICIJjzLIcpgT+5RgTKYqfxsCxlJIhz0Qbyffzr1xeAW744/16
-         t32ZeHUwTYOLXHoV6qx5rBQ3egaGeh5042neOeAFnAC3smOlmfPEPCwc/JbXZBpDsq/R
-         PD45A+ou5duZ7z10/F3hG79QpSYDEyEpT2764sg53pOuKL+fbbdqTJxRwnRKTs3/NmCG
-         qT4V/sCLe5haqlS5tJsPd4cQ6dS5vRa6TWIEHIDQHLJhLQHP+yxNvTCvFUjG1IrnJRLQ
-         BC8w==
-X-Forwarded-Encrypted: i=1; AFNElJ+mNV6pxtOShaVVM/PxP2bAe0bYBBBsM9FayuTkQb+bZnAm18ejzdB3QlRwlcJ57R7OR9WdKl4w@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx4sEpadIDBwFe6Vh1/lCYnOLRTIgG8nR5jM8x0NFPR5udhpRs8
-	s4pTnpXRH9Fp5zUF3TkUr8ZytPB7iFOWv40U9bQCGo5DREKnsdGpVcanKxy/W85ISQ==
-X-Gm-Gg: AeBDievV+jA9nHukTqJh0/LWDNuDtbQcoQuLgFDWlqtrnDuwFAHiW6fIxrkWLmo/lTQ
-	6dkLnIWFiUQvh726vOtUdJXoRZBMzh6qWVakkI3mPiXR5XeXIyZihHU37uVBDinZUWFNjTFuyl7
-	JXoygtFCMj4NwCLVOM1DD1SmDvUAWeZIicnFP0xXX3oh5OFWsiK2VbSft/FF+JKsNqDyOkKUHE0
-	uI2778mg2SGFkdJhJT4XTBBwW0Kx63YHQdQ4yzZjzrs5NYR8SWFprEcmizoEdqJDjDC6cYovL4j
-	1VLCcyEsTHddgHjbcb5DAmtqKDgn4KkjuuOqj1EDnMuQg13XTvYtYUxYa8aEDjLLlIQt8blnEfz
-	ADXxhkAQFWeH8WmFive2nV2PCT1XBdjun7lrb3LNkCT46GE2+tAZeS0izkxYl2jwhijh5bZmNdG
-	Qo1ll3Zj4n5mt81f/8WsDW4grNxw7mpEmb1Hou9ERR52I01gZeI3Zc7+xXerGzM84SfYOSWWTu3
-	5xucA==
-X-Received: by 2002:a17:902:f64a:b0:2b4:5a2e:98d9 with SMTP id d9443c01a7336-2ba53896e5bmr1405745ad.37.1777928162684;
-        Mon, 04 May 2026 13:56:02 -0700 (PDT)
-Received: from google.com (76.9.127.34.bc.googleusercontent.com. [34.127.9.76])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b9caa7e7besm116816715ad.12.2026.05.04.13.56.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 13:56:02 -0700 (PDT)
-Date: Mon, 4 May 2026 20:55:58 +0000
-From: David Matlack <dmatlack@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
-	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
-	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 07/11] vfio: selftests: Allow drivers to specify required
- region size
-Message-ID: <afkH3pMJKkIbElhI@google.com>
-References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
- <7-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+        d=1e100.net; s=20251104; t=1777929316; x=1778534116;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T6M6O6vS5rinWV9bCog50NLyMYBW362x5+Rc5/13V6w=;
+        b=ZKcd/JPT/XldkHtkLMl3E928wjvUfvQOJNFv0IurtsdKV8fIY42+61N7SnIyVSoQfU
+         3hAiq7cGgznZwFU7g0AMSvLJsIW07wt3GEIJ5GkP+Z29uVpVUZCk5faLkT/d0FG6FCVv
+         5zTU7YHmpFaCiW2KmWPf/4MQ8T42gHz7BJI5X05uL13kAUnj1l3YfnNlH5BSMudEzmZU
+         Cnk32biwnGauRksUigp3CV7dYbQDIeeyVB/iDuBP3YTwjK0FzqBDs5c7dm6bWa8DFJOZ
+         U3rM8onbfWeh3i0lLu/EWiJhH7407cgPFh8+ZtzCWUX8UGDTDK74f0qu1Uw+GreKEQWr
+         ViqQ==
+X-Gm-Message-State: AOJu0Ywbmfxr1NnXLSVhWh6xGZbLHt+fYv/79olSmI4ayaVqDPHb7BJN
+	p9mjSkLaHf8KiXAXSXwyw25sDo8CFnYL16mE0onETr4RC7oGh4+WRJsG
+X-Gm-Gg: AeBDieuuV7V/X/HJmlQZQCKTfu5u0MZkgWSVuY3Z60xFXMkY4lNDVb4SnHHqTT68i0/
+	CmDChoB1xBQypV8kZzs0rzJLPCK7DGnOAfSS+64T49AQxCszNPc7FUqs7dRdZmvhzEQioxnj+ZZ
+	PkPWMzecPEsYwG2T3+Ijzyf0XHoeSkikZj7wm5cba0WDpbLxSzlQ0s5R5UO1Ks19DiDQ6V+gasF
+	LL4POcEEiO+ApFbTWoamK7Rj2Qy8gojFW7sIiYQUp6AJ7k7FchNivCzceV/DrQ3YuDYYx+t5sbu
+	THfAYre39FkNl88qvJkO6e3X7co0cTLGAaghAhh8kFegnOWqCpmQtVjC3SRa5KhIUDWo1TfyCRs
+	edDNmNCtWKgzLPPi8/xOe8ZGZRkQGGOhBwSRDpf5N0GN362HR4lhkLbfKwbHaZ15YIBaeJ25I+n
+	JzeWors2S+bLOGJYYlZMAE2EKvDxpPQzvlhMMo/M6xSj1aiiBuQGGMJJr7iME7krNW6q2GaI4=
+X-Received: by 2002:a05:7300:7fa2:b0:2ed:e14:7f58 with SMTP id 5a478bee46e88-2efba7ab309mr5110790eec.34.1777929315837;
+        Mon, 04 May 2026 14:15:15 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ee38e71bccsm16830760eec.11.2026.05.04.14.15.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 May 2026 14:15:15 -0700 (PDT)
+Message-ID: <a0173ef4-c77d-4d25-9f51-b232cf75bf54@gmail.com>
+Date: Mon, 4 May 2026 14:15:13 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 000/275] 6.18.27-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260504135142.929052779@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2026-04-30 09:08 PM, Jason Gunthorpe wrote:
-> Add a region_size field to struct vfio_pci_driver_ops so drivers can
-> declare how much DMA-mapped region they need. The mlx5 driver will
-> need ~18MB for firmware pages. Existing drivers leave region_size as
-> 0 and get the current default of SZ_2M.
+On 5/4/26 06:49, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.27 release.
+> There are 275 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 06 May 2026 13:50:54 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.27-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-I would like to get rid of the magic SZ_2M to make it easier for other
-tests to use the driver framework. Can you make this commit update all
-the drivers to set region_size? They can all use the same approach:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-  struct vfio_pci_driver_ops foo_driver = {
-          ...
-          .region_size = roundup_pow_of_two(sizeof(struct foo)),
-          ...
-  };
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
