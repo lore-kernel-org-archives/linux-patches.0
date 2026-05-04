@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9BE35A3AD;
-	Mon,  4 May 2026 14:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451B43DE44F;
+	Mon,  4 May 2026 14:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904596; cv=none; b=g8MljUKojMOxL23kVnzjzAN3RPp/2jaJlVFMt3jcyGLZYiu4qJz3i6HMlhosAfssb/hWpoBLp05C0tHFW3Cpntr83inhZWr/oWI1z4pJyKYF53DszVUU/5tYt4BKB9k9aTvqKe74YlkVm3krFGvVLiusAzDjqSxvaZR47Zem0yo=
+	t=1777904599; cv=none; b=pa5lcBczAxWUydKo4BmLNX3uxlsnXixZnmI9MTvrcANZHVncjRaJ4niJjD/X9QtVMkvm9O5CJf+KLa13rwD6qBEiCiAg65SA+93xSoqtUEDzHgcdz8oODusOqpuJ3zO/DNiHwq/UPe7XMctpZ3lY4Wy3hHFYzAhoqKCDz81L3Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904596; c=relaxed/simple;
-	bh=5MOOf+nvjoCM5UI1GlMrso2DZOY0ikKttr+2kVsVSHY=;
+	s=arc-20240116; t=1777904599; c=relaxed/simple;
+	bh=3CU9IR/wqmn+r4g0I/Yi9QqfGZSvimBhJm9oXjezxaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=demk15tbNpfONloW6pCVlNGooDPnFOyUCRClPO8e2VJY0G+ifHoDgyGpJTU1UiLWTun5abtKiYA3PjiYNeyf+9/F0iGnYANWTm58e1aTCFWmm6xbn7bqO9d3WFAtMhvlvZEoChS+rgQAVF1ldWiOn9pPpIPSjZooB/HAKngIaRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5B1YcuO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=igaoeLPBZaaKpYX414A8gEkACHR33wfgOLB5cGIEww0s4IagPIV185Z8bsNMV3AggQz/XKwlkIJz8W4IwDd/gghzhxXj79UqGmmUqcwjl62xq58k5DSke4prNwwZbAwiEHSKRiKS3NlJ0M4JCKLLpZmonnEv0ovjbW9MxZeqMds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I89JhsGR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5B1YcuO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41168C2BCB8;
-	Mon,  4 May 2026 14:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I89JhsGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4ADC2BCB8;
+	Mon,  4 May 2026 14:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904596;
-	bh=5MOOf+nvjoCM5UI1GlMrso2DZOY0ikKttr+2kVsVSHY=;
+	s=korg; t=1777904599;
+	bh=3CU9IR/wqmn+r4g0I/Yi9QqfGZSvimBhJm9oXjezxaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5B1YcuOnQsS2IjJBfoabElhkS9lOnLes+X7ehzheNMRvL4XmT0p1LjMr9bDwtXQT
-	 ZKaAR4BRvnHqAsGaCgz3Dw+ru2b4z0WTDqmQ52HaPYcbpQIYKijse84MSF0vH/Ekqd
-	 T6migIEsbucTURDC2uUsdh23yuYCLANwiGG/DphQ=
+	b=I89JhsGR3LfFSj2QIsU3U1myoRNi+E6SXbjiXLF09le+23CO21PusG5q4sy+5mZ/+
+	 Md2p5e2aeW4DtyDFi9GD3vWBUNWEgEsdZO2U45Y11VMXnpN56L+k2WZfWNC3qplJIi
+	 Wnpkh6g8TwwFZtIwF4olCg46Jqv/GhCoG6TvkuiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 068/215] rbd: fix null-ptr-deref when device_add_disk() fails
-Date: Mon,  4 May 2026 15:51:27 +0200
-Message-ID: <20260504135132.654508333@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 069/215] block: fix zone write plugs refcount handling in disk_zone_wplug_schedule_bio_work()
+Date: Mon,  4 May 2026 15:51:28 +0200
+Message-ID: <20260504135132.690509430@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,116 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit d1fef92e414433ca7b89abf85cb0df42b8d475eb upstream.
+commit 0a8b8af896e0ef83e188e1fe20f98f2bbb1c2459 upstream.
 
-do_rbd_add() publishes the device with device_add() before calling
-device_add_disk(). If device_add_disk() fails after device_add()
-succeeds, the error path calls rbd_free_disk() directly and then later
-falls through to rbd_dev_device_release(), which calls rbd_free_disk()
-again. This double teardown can leave blk-mq cleanup operating on
-invalid state and trigger a null-ptr-deref in
-__blk_mq_free_map_and_rqs(), reached from blk_mq_free_tag_set().
+The function disk_zone_wplug_schedule_bio_work() always takes a
+reference on the zone write plug of the BIO work being scheduled. This
+ensures that the zone write plug cannot be freed while the BIO work is
+being scheduled but has not run yet. However, this unconditional
+reference taking is fragile since the reference taken is released by the
+BIO work blk_zone_wplug_bio_work() function, which implies that there
+always must be a 1:1 relation between the work being scheduled and the
+work running.
 
-Fix this by following the normal remove ordering: call device_del()
-before rbd_dev_device_release() when device_add_disk() fails after
-device_add(). That keeps the teardown sequence consistent and avoids
-re-entering disk cleanup through the wrong path.
+Make sure to drop the reference taken when scheduling the BIO work if
+the work is already scheduled, that is, when queue_work() returns false.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available.
-
-We reproduced the bug on v7.0 with a real Ceph backend and a QEMU x86_64
-guest booted with KASAN and CONFIG_FAILSLAB enabled. The reproducer
-confines failslab injections to the __add_disk() range and injects
-fail-nth while mapping an RBD image through
-/sys/bus/rbd/add_single_major.
-
-On the unpatched kernel, fail-nth=4 reliably triggered the fault:
-
-	Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-	KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-	CPU: 0 UID: 0 PID: 273 Comm: bash Not tainted 7.0.0-01247-gd60bc1401583 #6 PREEMPT(lazy)
-	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-	RIP: 0010:__blk_mq_free_map_and_rqs+0x8c/0x240
-	Code: 00 00 48 8b 6b 60 41 89 f4 49 c1 e4 03 4c 01 e5 45 85 ed 0f 85 0a 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 e9 48 c1 e9 03 <80> 3c 01 00 0f 85 31 01 00 00 4c 8b 6d 00 4d 85 ed 0f 84 e2 00 00
-	RSP: 0018:ff1100000ab0fac8 EFLAGS: 00000246
-	RAX: dffffc0000000000 RBX: ff1100000c4806a0 RCX: 0000000000000000
-	RDX: 0000000000000002 RSI: 0000000000000000 RDI: ff1100000c4806f4
-	RBP: 0000000000000000 R08: 0000000000000001 R09: ffe21c000189001b
-	R10: ff1100000c4800df R11: ff1100006cf37be0 R12: 0000000000000000
-	R13: 0000000000000000 R14: ff1100000c480700 R15: ff1100000c480004
-	FS:  00007f0fbe8fe740(0000) GS:ff110000e5851000(0000) knlGS:0000000000000000
-	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-	CR2: 00007fe53473b2e0 CR3: 0000000012eef000 CR4: 00000000007516f0
-	PKRU: 55555554
-	Call Trace:
-	 <TASK>
-	 blk_mq_free_tag_set+0x77/0x460
-	 do_rbd_add+0x1446/0x2b80
-	 ? __pfx_do_rbd_add+0x10/0x10
-	 ? lock_acquire+0x18c/0x300
-	 ? find_held_lock+0x2b/0x80
-	 ? sysfs_file_kobj+0xb6/0x1b0
-	 ? __pfx_sysfs_kf_write+0x10/0x10
-	 kernfs_fop_write_iter+0x2f4/0x4a0
-	 vfs_write+0x98e/0x1000
-	 ? expand_files+0x51f/0x850
-	 ? __pfx_vfs_write+0x10/0x10
-	 ksys_write+0xf2/0x1d0
-	 ? __pfx_ksys_write+0x10/0x10
-	 do_syscall_64+0x115/0x690
-	 entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7f0fbea15907
-	Code: 10 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
-	RSP: 002b:00007ffe22346ea8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-	RAX: ffffffffffffffda RBX: 0000000000000058 RCX: 00007f0fbea15907
-	RDX: 0000000000000058 RSI: 0000563ace6c0ef0 RDI: 0000000000000001
-	RBP: 0000563ace6c0ef0 R08: 0000563ace6c0ef0 R09: 6b6435726d694141
-	R10: 5250337279762f78 R11: 0000000000000246 R12: 0000000000000058
-	R13: 00007f0fbeb1c780 R14: ff1100000c480700 R15: ff1100000c480004
-	 </TASK>
-
-With this fix applied, rerunning the reproducer over fail-nth=1..256
-yields no KASAN reports.
-
-[ idryomov: rename err_out_device_del -> err_out_device ]
-
+Fixes: 9e78c38ab30b ("block: Hold a reference on zone write plugs to schedule submission")
 Cc: stable@vger.kernel.org
-Fixes: 27c97abc30e2 ("rbd: add add_disk() error handling")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ block/blk-zoned.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -7166,7 +7166,7 @@ static ssize_t do_rbd_add(const char *bu
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -811,13 +811,17 @@ static void disk_zone_wplug_schedule_bio
+ 					      struct blk_zone_wplug *zwplug)
+ {
+ 	/*
+-	 * Take a reference on the zone write plug and schedule the submission
+-	 * of the next plugged BIO. blk_zone_wplug_bio_work() will release the
+-	 * reference we take here.
++	 * Schedule the submission of the next plugged BIO. Taking a reference
++	 * to the zone write plug is required as the bio_work belongs to the
++	 * plug, and thus we must ensure that the write plug does not go away
++	 * while the work is being scheduled but has not run yet.
++	 * blk_zone_wplug_bio_work() will release the reference we take here,
++	 * and we also drop this reference if the work is already scheduled.
+ 	 */
+ 	WARN_ON_ONCE(!(zwplug->flags & BLK_ZONE_WPLUG_PLUGGED));
+ 	refcount_inc(&zwplug->ref);
+-	queue_work(disk->zone_wplugs_wq, &zwplug->bio_work);
++	if (!queue_work(disk->zone_wplugs_wq, &zwplug->bio_work))
++		disk_put_zone_wplug(zwplug);
+ }
  
- 	rc = device_add_disk(&rbd_dev->dev, rbd_dev->disk, NULL);
- 	if (rc)
--		goto err_out_cleanup_disk;
-+		goto err_out_device;
- 
- 	spin_lock(&rbd_dev_list_lock);
- 	list_add_tail(&rbd_dev->node, &rbd_dev_list);
-@@ -7180,8 +7180,8 @@ out:
- 	module_put(THIS_MODULE);
- 	return rc;
- 
--err_out_cleanup_disk:
--	rbd_free_disk(rbd_dev);
-+err_out_device:
-+	device_del(&rbd_dev->dev);
- err_out_image_lock:
- 	rbd_dev_image_unlock(rbd_dev);
- 	rbd_dev_device_release(rbd_dev);
+ static inline void disk_zone_wplug_add_bio(struct gendisk *disk,
 
 
