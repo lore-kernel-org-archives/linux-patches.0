@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C673DE44F;
-	Mon,  4 May 2026 14:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DABE3DDDD6;
+	Mon,  4 May 2026 14:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903961; cv=none; b=A4/sg3TXy4szUXwX6JfShY6ZWn3m8zwbwcl0RlTfqZiPGQCs/VE9V+TlfOCzF9V5VUvJcU7Hz811jiTeBl2U8DVbvW19QMh7PcfyU4+70t85szO867+KV+ZwgEffVn88kPClKkg4ec4UrH5lR08d9nDaGBem6y2tMLYaXyKDU68=
+	t=1777903964; cv=none; b=kbW63EmfvcWZnWydK+iNdAPUWi021FIbdwWZGGlYOSM+G7RmoW9VbS5QoWcR6qYt0ucPYhrfvdfL50nZ2AJewiHmjOll7whap3Ywmo47fQfIDAYvqxJO9q9dxN8txVWIaknxaipIIoWqfQHShrnhwKRwxIw4SKiYgvihrjaWbY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903961; c=relaxed/simple;
-	bh=5r8C282E4/zuW6MasOdVbqmgkO342Ye8iFEQb7UKU9Y=;
+	s=arc-20240116; t=1777903964; c=relaxed/simple;
+	bh=HUZFIr8ypMI6b8Uq5PN4x0FLGk/cW4xJeYolOieK6SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qQ5sXgbN19teFD+CY3K/wGu5pCtQ+c/JMA5cQFd+JaStZnWx9m+168th6uUGrxoBFLVHXCSlrJp33jL/Kz9yskJwnIVUaXaV/jMIZAhUaU6ph54G5GVtkfGAWqn50Sgl7z1P17LNZCa/BcvQAeal8COSNPeAiu1A5/1GTg8YgA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZKYVa4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCIY+E96R5JjguGwezCZoj1LWAXNSBlme6KXePtDxhd+0oNHZDoWogCyJkoudUXniBD+EazbAG35/cAkqEz8ysTKwJ8+MTgnYpi9emvyAvWODIkmpKUU7VZZySvwCIy1XDE7yCoCOfROq3fE/vyhL1KFU7SJl3gEnUXIFTVe3Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhtP9yrT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZKYVa4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3EBC2BCB8;
-	Mon,  4 May 2026 14:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhtP9yrT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7B0C2BCB8;
+	Mon,  4 May 2026 14:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903961;
-	bh=5r8C282E4/zuW6MasOdVbqmgkO342Ye8iFEQb7UKU9Y=;
+	s=korg; t=1777903964;
+	bh=HUZFIr8ypMI6b8Uq5PN4x0FLGk/cW4xJeYolOieK6SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZKYVa4etB46poXLqZawT4tcgR1gIt+SMYlOngiegrEQgcEtsCqvOEz6t+uk6Diaj
-	 3EOrLynT26yI6AYjKDWf23Tzl1K+7TczOuzRRhmZx1wGWOPcDTyaCFYfnEiCu7H148
-	 rG+Owa9hVI34645skbshlIjQ62dHM0Y4SkqUyVXU=
+	b=UhtP9yrTXNsrP/QBYEZWk4v47nBhWoFj3243pRNQdd/feEcbT022rAV61ta5WqwZ4
+	 zDJIbg8Qqhjlgkhm1C8NOoLtZNgmM4gxePKQWKtcbMQjaaKI7r1CvJtM5CsTkwAAia
+	 4EFgvY5nzCUWL+PBsb8xBx84f7WDvpFycWQAF8JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Jann Horn <jannh@google.com>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.18 087/275] landlock: Fix LOG_SUBDOMAINS_OFF inheritance across fork()
-Date: Mon,  4 May 2026 15:50:27 +0200
-Message-ID: <20260504135146.153430776@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Marek Vasut <marex@nabladev.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 123/275] net: ks8851: Reinstate disabling of BHs around IRQ handler
+Date: Mon,  4 May 2026 15:51:03 +0200
+Message-ID: <20260504135147.476203196@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -46,155 +45,475 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Marek Vasut <marex@nabladev.com>
 
-commit 874c8f83826c95c62c21d9edfe9ef43e5c346724 upstream.
+commit 5c9fcac3c872224316714d0d8914d9af16c76a6d upstream.
 
-hook_cred_transfer() only copies the Landlock security blob when the
-source credential has a domain.  This is inconsistent with
-landlock_restrict_self() which can set LOG_SUBDOMAINS_OFF on a
-credential without creating a domain (via the ruleset_fd=-1 path): the
-field is committed but not preserved across fork() because the child's
-prepare_creds() calls hook_cred_transfer() which skips the copy when
-domain is NULL.
+If the driver executes ks8851_irq() AND a TX packet has been sent, then
+the driver enables TX queue via netif_wake_queue() which schedules TX
+softirq to queue packets for this device.
 
-This breaks the documented use case where a process mutes subdomain logs
-before forking sandboxed children: the children lose the muting and
-their domains produce unexpected audit records.
+If CONFIG_PREEMPT_RT=y is set AND a packet has also been received by
+the MAC, then ks8851_rx_pkts() calls netdev_alloc_skb_ip_align() to
+allocate SKBs for the received packets. If netdev_alloc_skb_ip_align()
+is called with BH enabled, then local_bh_enable() at the end of
+netdev_alloc_skb_ip_align() will trigger the pending softirq processing,
+which may ultimately call the .xmit callback ks8851_start_xmit_par().
+The ks8851_start_xmit_par() will try to lock struct ks8851_net_par
+.lock spinlock, which is already locked by ks8851_irq() from which
+ks8851_start_xmit_par() was called. This leads to a deadlock, which
+is reported by the kernel, including a trace listed below.
 
-Fix this by unconditionally copying the Landlock credential blob.
+If CONFIG_PREEMPT_RT is not set, then since commit 0913ec336a6c0
+("net: ks8851: Fix deadlock with the SPI chip variant") the deadlock
+can also be triggered without received packet in the RX FIFO. The
+pending softirqs will be processed on return from
+spin_unlock_bh(&ks->statelock) in ks8851_irq(), which triggers the
+deadlock as well.
 
-Cc: Günther Noack <gnoack@google.com>
-Cc: Jann Horn <jannh@google.com>
+Fix the problem by disabling BH around critical sections, including the
+IRQ handler, thus preventing the net_tx_action() softirq from triggering
+during these critical sections. The net_tx_action() softirq is triggered
+once BH are re-enabled and at the end of the IRQ handler, once all the
+other IRQ handler actions have been completed.
+
+ __schedule from schedule_rtlock+0x1c/0x34
+ schedule_rtlock from rtlock_slowlock_locked+0x548/0x904
+ rtlock_slowlock_locked from rt_spin_lock+0x60/0x9c
+ rt_spin_lock from ks8851_start_xmit_par+0x74/0x1a8
+ ks8851_start_xmit_par from netdev_start_xmit+0x20/0x44
+ netdev_start_xmit from dev_hard_start_xmit+0xd0/0x188
+ dev_hard_start_xmit from sch_direct_xmit+0xb8/0x25c
+ sch_direct_xmit from __qdisc_run+0x1f8/0x4ec
+ __qdisc_run from qdisc_run+0x1c/0x28
+ qdisc_run from net_tx_action+0x1f0/0x268
+ net_tx_action from handle_softirqs+0x1a4/0x270
+ handle_softirqs from __local_bh_enable_ip+0xcc/0xe0
+ __local_bh_enable_ip from __alloc_skb+0xd8/0x128
+ __alloc_skb from __netdev_alloc_skb+0x3c/0x19c
+ __netdev_alloc_skb from ks8851_irq+0x388/0x4d4
+ ks8851_irq from irq_thread_fn+0x24/0x64
+ irq_thread_fn from irq_thread+0x178/0x28c
+ irq_thread from kthread+0x12c/0x138
+ kthread from ret_from_fork+0x14/0x28
+
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: e0863634bf9f ("net: ks8851: Queue RX packets in IRQ handler instead of disabling BHs")
 Cc: stable@vger.kernel.org
-Fixes: ead9079f7569 ("landlock: Add LANDLOCK_RESTRICT_SELF_LOG_SUBDOMAINS_OFF")
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20260407164107.2012589-1-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260415231020.455298-1-marex@nabladev.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/landlock/cred.c                      |    6 -
- tools/testing/selftests/landlock/audit_test.c |   88 ++++++++++++++++++++++++++
- 2 files changed, 90 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/micrel/ks8851.h        |    6 --
+ drivers/net/ethernet/micrel/ks8851_common.c |   64 +++++++++++-----------------
+ drivers/net/ethernet/micrel/ks8851_par.c    |   15 ++----
+ drivers/net/ethernet/micrel/ks8851_spi.c    |   11 +---
+ 4 files changed, 38 insertions(+), 58 deletions(-)
 
---- a/security/landlock/cred.c
-+++ b/security/landlock/cred.c
-@@ -22,10 +22,8 @@ static void hook_cred_transfer(struct cr
- 	const struct landlock_cred_security *const old_llcred =
- 		landlock_cred(old);
+--- a/drivers/net/ethernet/micrel/ks8851.h
++++ b/drivers/net/ethernet/micrel/ks8851.h
+@@ -408,10 +408,8 @@ struct ks8851_net {
+ 	struct gpio_desc	*gpio;
+ 	struct mii_bus		*mii_bus;
  
--	if (old_llcred->domain) {
--		landlock_get_ruleset(old_llcred->domain);
--		*landlock_cred(new) = *old_llcred;
--	}
-+	landlock_get_ruleset(old_llcred->domain);
-+	*landlock_cred(new) = *old_llcred;
- }
- 
- static int hook_cred_prepare(struct cred *const new,
---- a/tools/testing/selftests/landlock/audit_test.c
-+++ b/tools/testing/selftests/landlock/audit_test.c
-@@ -279,6 +279,94 @@ TEST_F(audit, thread)
- 				&audit_tv_default, sizeof(audit_tv_default)));
- }
- 
-+/*
-+ * Verifies that log_subdomains_off set via the ruleset_fd=-1 path (without
-+ * creating a domain) is inherited by children across fork().  This exercises
-+ * the hook_cred_transfer() fix: the Landlock credential blob must be copied
-+ * even when the source credential has no domain.
-+ *
-+ * Phase 1 (baseline): a child without muting creates a domain and triggers a
-+ * denial that IS logged.
-+ *
-+ * Phase 2 (after muting): the parent mutes subdomain logs, forks another child
-+ * who creates a domain and triggers a denial that is NOT logged.
-+ */
-+TEST_F(audit, log_subdomains_off_fork)
-+{
-+	const struct landlock_ruleset_attr ruleset_attr = {
-+		.scoped = LANDLOCK_SCOPE_SIGNAL,
-+	};
-+	struct audit_records records;
-+	int ruleset_fd, status;
-+	pid_t child;
-+
-+	ruleset_fd =
-+		landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr), 0);
-+	ASSERT_LE(0, ruleset_fd);
-+
-+	ASSERT_EQ(0, prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0));
-+
-+	/*
-+	 * Phase 1: forks a child that creates a domain and triggers a denial
-+	 * before any muting.  This proves the audit path works.
-+	 */
-+	child = fork();
-+	ASSERT_LE(0, child);
-+	if (child == 0) {
-+		ASSERT_EQ(0, landlock_restrict_self(ruleset_fd, 0));
-+		ASSERT_EQ(-1, kill(getppid(), 0));
-+		ASSERT_EQ(EPERM, errno);
-+		_exit(0);
-+		return;
-+	}
-+
-+	ASSERT_EQ(child, waitpid(child, &status, 0));
-+	ASSERT_EQ(true, WIFEXITED(status));
-+	ASSERT_EQ(0, WEXITSTATUS(status));
-+
-+	/* The denial must be logged (baseline). */
-+	EXPECT_EQ(0, matches_log_signal(_metadata, self->audit_fd, getpid(),
-+					NULL));
-+
-+	/* Drains any remaining records (e.g. domain allocation). */
-+	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
-+
-+	/*
-+	 * Mutes subdomain logs without creating a domain.  The parent's
-+	 * credential has domain=NULL and log_subdomains_off=1.
-+	 */
-+	ASSERT_EQ(0, landlock_restrict_self(
-+			     -1, LANDLOCK_RESTRICT_SELF_LOG_SUBDOMAINS_OFF));
-+
-+	/*
-+	 * Phase 2: forks a child that creates a domain and triggers a denial.
-+	 * Because log_subdomains_off was inherited via fork(), the child's
-+	 * domain has log_status=LANDLOCK_LOG_DISABLED.
-+	 */
-+	child = fork();
-+	ASSERT_LE(0, child);
-+	if (child == 0) {
-+		ASSERT_EQ(0, landlock_restrict_self(ruleset_fd, 0));
-+		ASSERT_EQ(-1, kill(getppid(), 0));
-+		ASSERT_EQ(EPERM, errno);
-+		_exit(0);
-+		return;
-+	}
-+
-+	ASSERT_EQ(child, waitpid(child, &status, 0));
-+	ASSERT_EQ(true, WIFEXITED(status));
-+	ASSERT_EQ(0, WEXITSTATUS(status));
-+
-+	/* No denial record should appear. */
-+	EXPECT_EQ(-EAGAIN, matches_log_signal(_metadata, self->audit_fd,
-+					      getpid(), NULL));
-+
-+	EXPECT_EQ(0, audit_count_records(self->audit_fd, &records));
-+	EXPECT_EQ(0, records.access);
-+
-+	EXPECT_EQ(0, close(ruleset_fd));
-+}
-+
- FIXTURE(audit_flags)
+-	void			(*lock)(struct ks8851_net *ks,
+-					unsigned long *flags);
+-	void			(*unlock)(struct ks8851_net *ks,
+-					  unsigned long *flags);
++	void			(*lock)(struct ks8851_net *ks);
++	void			(*unlock)(struct ks8851_net *ks);
+ 	unsigned int		(*rdreg16)(struct ks8851_net *ks,
+ 					   unsigned int reg);
+ 	void			(*wrreg16)(struct ks8851_net *ks,
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -28,25 +28,23 @@
+ /**
+  * ks8851_lock - register access lock
+  * @ks: The chip state
+- * @flags: Spinlock flags
+  *
+  * Claim chip register access lock
+  */
+-static void ks8851_lock(struct ks8851_net *ks, unsigned long *flags)
++static void ks8851_lock(struct ks8851_net *ks)
  {
- 	struct audit_filter audit_filter;
+-	ks->lock(ks, flags);
++	ks->lock(ks);
+ }
+ 
+ /**
+  * ks8851_unlock - register access unlock
+  * @ks: The chip state
+- * @flags: Spinlock flags
+  *
+  * Release chip register access lock
+  */
+-static void ks8851_unlock(struct ks8851_net *ks, unsigned long *flags)
++static void ks8851_unlock(struct ks8851_net *ks)
+ {
+-	ks->unlock(ks, flags);
++	ks->unlock(ks);
+ }
+ 
+ /**
+@@ -129,11 +127,10 @@ static void ks8851_set_powermode(struct
+ static int ks8851_write_mac_addr(struct net_device *dev)
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+-	unsigned long flags;
+ 	u16 val;
+ 	int i;
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 
+ 	/*
+ 	 * Wake up chip in case it was powered off when stopped; otherwise,
+@@ -149,7 +146,7 @@ static int ks8851_write_mac_addr(struct
+ 	if (!netif_running(dev))
+ 		ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
+ 
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ 
+ 	return 0;
+ }
+@@ -163,12 +160,11 @@ static int ks8851_write_mac_addr(struct
+ static void ks8851_read_mac_addr(struct net_device *dev)
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+-	unsigned long flags;
+ 	u8 addr[ETH_ALEN];
+ 	u16 reg;
+ 	int i;
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 
+ 	for (i = 0; i < ETH_ALEN; i += 2) {
+ 		reg = ks8851_rdreg16(ks, KS_MAR(i));
+@@ -177,7 +173,7 @@ static void ks8851_read_mac_addr(struct
+ 	}
+ 	eth_hw_addr_set(dev, addr);
+ 
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ }
+ 
+ /**
+@@ -312,11 +308,10 @@ static irqreturn_t ks8851_irq(int irq, v
+ {
+ 	struct ks8851_net *ks = _ks;
+ 	struct sk_buff_head rxq;
+-	unsigned long flags;
+ 	unsigned int status;
+ 	struct sk_buff *skb;
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 
+ 	status = ks8851_rdreg16(ks, KS_ISR);
+ 	ks8851_wrreg16(ks, KS_ISR, status);
+@@ -373,7 +368,7 @@ static irqreturn_t ks8851_irq(int irq, v
+ 		ks8851_wrreg16(ks, KS_RXCR1, rxc->rxcr1);
+ 	}
+ 
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ 
+ 	if (status & IRQ_LCI)
+ 		mii_check_link(&ks->mii);
+@@ -405,7 +400,6 @@ static void ks8851_flush_tx_work(struct
+ static int ks8851_net_open(struct net_device *dev)
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+-	unsigned long flags;
+ 	int ret;
+ 
+ 	ret = request_threaded_irq(dev->irq, NULL, ks8851_irq,
+@@ -418,7 +412,7 @@ static int ks8851_net_open(struct net_de
+ 
+ 	/* lock the card, even if we may not actually be doing anything
+ 	 * else at the moment */
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 
+ 	netif_dbg(ks, ifup, ks->netdev, "opening\n");
+ 
+@@ -471,7 +465,7 @@ static int ks8851_net_open(struct net_de
+ 
+ 	netif_dbg(ks, ifup, ks->netdev, "network device up\n");
+ 
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ 	mii_check_link(&ks->mii);
+ 	return 0;
+ }
+@@ -487,23 +481,22 @@ static int ks8851_net_open(struct net_de
+ static int ks8851_net_stop(struct net_device *dev)
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+-	unsigned long flags;
+ 
+ 	netif_info(ks, ifdown, dev, "shutting down\n");
+ 
+ 	netif_stop_queue(dev);
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 	/* turn off the IRQs and ack any outstanding */
+ 	ks8851_wrreg16(ks, KS_IER, 0x0000);
+ 	ks8851_wrreg16(ks, KS_ISR, 0xffff);
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ 
+ 	/* stop any outstanding work */
+ 	ks8851_flush_tx_work(ks);
+ 	flush_work(&ks->rxctrl_work);
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 	/* shutdown RX process */
+ 	ks8851_wrreg16(ks, KS_RXCR1, 0x0000);
+ 
+@@ -512,7 +505,7 @@ static int ks8851_net_stop(struct net_de
+ 
+ 	/* set powermode to soft power down to save power */
+ 	ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ 
+ 	/* ensure any queued tx buffers are dumped */
+ 	while (!skb_queue_empty(&ks->txq)) {
+@@ -566,14 +559,13 @@ static netdev_tx_t ks8851_start_xmit(str
+ static void ks8851_rxctrl_work(struct work_struct *work)
+ {
+ 	struct ks8851_net *ks = container_of(work, struct ks8851_net, rxctrl_work);
+-	unsigned long flags;
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 
+ 	/* need to shutdown RXQ before modifying filter parameters */
+ 	ks8851_wrreg16(ks, KS_RXCR1, 0x00);
+ 
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ }
+ 
+ static void ks8851_set_rx_mode(struct net_device *dev)
+@@ -780,7 +772,6 @@ static int ks8851_set_eeprom(struct net_
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+ 	int offset = ee->offset;
+-	unsigned long flags;
+ 	int len = ee->len;
+ 	u16 tmp;
+ 
+@@ -794,7 +785,7 @@ static int ks8851_set_eeprom(struct net_
+ 	if (!(ks->rc_ccr & CCR_EEPROM))
+ 		return -ENOENT;
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 
+ 	ks8851_eeprom_claim(ks);
+ 
+@@ -817,7 +808,7 @@ static int ks8851_set_eeprom(struct net_
+ 	eeprom_93cx6_wren(&ks->eeprom, false);
+ 
+ 	ks8851_eeprom_release(ks);
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ 
+ 	return 0;
+ }
+@@ -827,7 +818,6 @@ static int ks8851_get_eeprom(struct net_
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+ 	int offset = ee->offset;
+-	unsigned long flags;
+ 	int len = ee->len;
+ 
+ 	/* must be 2 byte aligned */
+@@ -837,7 +827,7 @@ static int ks8851_get_eeprom(struct net_
+ 	if (!(ks->rc_ccr & CCR_EEPROM))
+ 		return -ENOENT;
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 
+ 	ks8851_eeprom_claim(ks);
+ 
+@@ -845,7 +835,7 @@ static int ks8851_get_eeprom(struct net_
+ 
+ 	eeprom_93cx6_multiread(&ks->eeprom, offset/2, (__le16 *)data, len/2);
+ 	ks8851_eeprom_release(ks);
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ 
+ 	return 0;
+ }
+@@ -904,7 +894,6 @@ static int ks8851_phy_reg(int reg)
+ static int ks8851_phy_read_common(struct net_device *dev, int phy_addr, int reg)
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+-	unsigned long flags;
+ 	int result;
+ 	int ksreg;
+ 
+@@ -912,9 +901,9 @@ static int ks8851_phy_read_common(struct
+ 	if (ksreg < 0)
+ 		return ksreg;
+ 
+-	ks8851_lock(ks, &flags);
++	ks8851_lock(ks);
+ 	result = ks8851_rdreg16(ks, ksreg);
+-	ks8851_unlock(ks, &flags);
++	ks8851_unlock(ks);
+ 
+ 	return result;
+ }
+@@ -949,14 +938,13 @@ static void ks8851_phy_write(struct net_
+ 			     int phy, int reg, int value)
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+-	unsigned long flags;
+ 	int ksreg;
+ 
+ 	ksreg = ks8851_phy_reg(reg);
+ 	if (ksreg >= 0) {
+-		ks8851_lock(ks, &flags);
++		ks8851_lock(ks);
+ 		ks8851_wrreg16(ks, ksreg, value);
+-		ks8851_unlock(ks, &flags);
++		ks8851_unlock(ks);
+ 	}
+ }
+ 
+--- a/drivers/net/ethernet/micrel/ks8851_par.c
++++ b/drivers/net/ethernet/micrel/ks8851_par.c
+@@ -55,29 +55,27 @@ struct ks8851_net_par {
+ /**
+  * ks8851_lock_par - register access lock
+  * @ks: The chip state
+- * @flags: Spinlock flags
+  *
+  * Claim chip register access lock
+  */
+-static void ks8851_lock_par(struct ks8851_net *ks, unsigned long *flags)
++static void ks8851_lock_par(struct ks8851_net *ks)
+ {
+ 	struct ks8851_net_par *ksp = to_ks8851_par(ks);
+ 
+-	spin_lock_irqsave(&ksp->lock, *flags);
++	spin_lock_bh(&ksp->lock);
+ }
+ 
+ /**
+  * ks8851_unlock_par - register access unlock
+  * @ks: The chip state
+- * @flags: Spinlock flags
+  *
+  * Release chip register access lock
+  */
+-static void ks8851_unlock_par(struct ks8851_net *ks, unsigned long *flags)
++static void ks8851_unlock_par(struct ks8851_net *ks)
+ {
+ 	struct ks8851_net_par *ksp = to_ks8851_par(ks);
+ 
+-	spin_unlock_irqrestore(&ksp->lock, *flags);
++	spin_unlock_bh(&ksp->lock);
+ }
+ 
+ /**
+@@ -233,7 +231,6 @@ static netdev_tx_t ks8851_start_xmit_par
+ {
+ 	struct ks8851_net *ks = netdev_priv(dev);
+ 	netdev_tx_t ret = NETDEV_TX_OK;
+-	unsigned long flags;
+ 	unsigned int txqcr;
+ 	u16 txmir;
+ 	int err;
+@@ -241,7 +238,7 @@ static netdev_tx_t ks8851_start_xmit_par
+ 	netif_dbg(ks, tx_queued, ks->netdev,
+ 		  "%s: skb %p, %d@%p\n", __func__, skb, skb->len, skb->data);
+ 
+-	ks8851_lock_par(ks, &flags);
++	ks8851_lock_par(ks);
+ 
+ 	txmir = ks8851_rdreg16_par(ks, KS_TXMIR) & 0x1fff;
+ 
+@@ -262,7 +259,7 @@ static netdev_tx_t ks8851_start_xmit_par
+ 		ret = NETDEV_TX_BUSY;
+ 	}
+ 
+-	ks8851_unlock_par(ks, &flags);
++	ks8851_unlock_par(ks);
+ 
+ 	return ret;
+ }
+--- a/drivers/net/ethernet/micrel/ks8851_spi.c
++++ b/drivers/net/ethernet/micrel/ks8851_spi.c
+@@ -71,11 +71,10 @@ struct ks8851_net_spi {
+ /**
+  * ks8851_lock_spi - register access lock
+  * @ks: The chip state
+- * @flags: Spinlock flags
+  *
+  * Claim chip register access lock
+  */
+-static void ks8851_lock_spi(struct ks8851_net *ks, unsigned long *flags)
++static void ks8851_lock_spi(struct ks8851_net *ks)
+ {
+ 	struct ks8851_net_spi *kss = to_ks8851_spi(ks);
+ 
+@@ -85,11 +84,10 @@ static void ks8851_lock_spi(struct ks885
+ /**
+  * ks8851_unlock_spi - register access unlock
+  * @ks: The chip state
+- * @flags: Spinlock flags
+  *
+  * Release chip register access lock
+  */
+-static void ks8851_unlock_spi(struct ks8851_net *ks, unsigned long *flags)
++static void ks8851_unlock_spi(struct ks8851_net *ks)
+ {
+ 	struct ks8851_net_spi *kss = to_ks8851_spi(ks);
+ 
+@@ -309,7 +307,6 @@ static void ks8851_tx_work(struct work_s
+ 	struct ks8851_net_spi *kss;
+ 	unsigned short tx_space;
+ 	struct ks8851_net *ks;
+-	unsigned long flags;
+ 	struct sk_buff *txb;
+ 	bool last;
+ 
+@@ -317,7 +314,7 @@ static void ks8851_tx_work(struct work_s
+ 	ks = &kss->ks8851;
+ 	last = skb_queue_empty(&ks->txq);
+ 
+-	ks8851_lock_spi(ks, &flags);
++	ks8851_lock_spi(ks);
+ 
+ 	while (!last) {
+ 		txb = skb_dequeue(&ks->txq);
+@@ -343,7 +340,7 @@ static void ks8851_tx_work(struct work_s
+ 	ks->tx_space = tx_space;
+ 	spin_unlock_bh(&ks->statelock);
+ 
+-	ks8851_unlock_spi(ks, &flags);
++	ks8851_unlock_spi(ks);
+ }
+ 
+ /**
 
 
