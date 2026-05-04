@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1962315785;
-	Mon,  4 May 2026 14:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF5A29E116;
+	Mon,  4 May 2026 14:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904440; cv=none; b=mw8fMaMiCwDyy8dB5Kq7C/RNCb4C3L1hbLHyexgB/I68VnwPw0JEhCJK98rRTOMQXT8EZXnTwdZ558q6npIezTh3VQfJg6pWPIdvBEZJn2i+FsDiEZ9x/qTN+fQfCaWOUWH8ayKVGfNz4sayp8YDwrV5Q6T4Ak0RR/5FSnNdTm4=
+	t=1777904442; cv=none; b=QI8eXZdLtCQJ5PlLu0Tt8alvhqEwKGWQoiEkxS2eOEXp2IemLagOizBWEr8GsnpxI+xX4RHH6c2VXTV8x9biFdEBGl4bdjYDo+LI/PXK9/xlgmxWYNm6JJKsJkBSxj/aTUD5B3qtEUsb2EKSN2G0SBnvI3H55xwIpfFTPqMcGno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904440; c=relaxed/simple;
-	bh=jk2kKMc0GpZJpdQejgURcxm5PWTCQp7z4wUBDz+NxJA=;
+	s=arc-20240116; t=1777904442; c=relaxed/simple;
+	bh=zm3ZHPVTAHWJLoJbDGMVCtOWrZbIH7tF+Q4Q3iYl12s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7A/viqdPLPVvzn+ZGiWAU9stbqZKo95Wopy9pagKTO+McpVN77/RnWcY6aS53YgdGT8dqL7ktZbIH77/KofzD0hhD7pqoaVV2o3pBB/dh08KWKwuLrzx0PuOkUl32u2eApc7lC2rOOc6Vv1Fw8/Mj1/ZI+0UYK7JYvkODCCCmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFTwDrdW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FWX9w1/LBFEOmM5jss7NJpx9+3uLDixBRlsQIFzJAyGAU0/FSPfaorEXnbTTPSDUBbBNUx8E9DX2BUyNx2fo4B8qJFn1og35gnAim77A89DpSPGDEHunc7As0AwV0jBlWbK4bHM9AjCVk+7wKgcnIHf+Ik3Ke/BOvziOSAVdGy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5+/Asnf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFTwDrdW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8788FC2BCC4;
-	Mon,  4 May 2026 14:20:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5+/Asnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DCFC2BCB8;
+	Mon,  4 May 2026 14:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904439;
-	bh=jk2kKMc0GpZJpdQejgURcxm5PWTCQp7z4wUBDz+NxJA=;
+	s=korg; t=1777904442;
+	bh=zm3ZHPVTAHWJLoJbDGMVCtOWrZbIH7tF+Q4Q3iYl12s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFTwDrdWZ6Tn7FnEuz4cSnD5KuaYVI1LksS0b5gjdFfbeMtSDwD52qvgXWoHE36GJ
-	 6ad49nPSCwCKvxYISs0LZ7ICEKbWRnrWui80/c+Kuve/unN+9dN6Xz05CtoHkE6K9B
-	 a9aR33XVBlmeyvyXENYlmmMIlq6V3kAR34EgP4Nw=
+	b=v5+/AsnfsQ92GZ+HuJeNi0ng+1ufml3q9qSFjlaWcj7XoHje3fJa2UZT3Ab/xsqZj
+	 Eyzy7SUkSXk0OoRMCNUgklYNTgkE/UqKFx7pvTcc+xa9xqQcVOU5M3aYTkLLkNs+BG
+	 TBc/55L8LcAyckYH3JhCBdEvf02x5EfRg97r+fbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 040/215] media: amphion: Fix race between m2m job_abort and device_run
-Date: Mon,  4 May 2026 15:50:59 +0200
-Message-ID: <20260504135131.646946433@linuxfoundation.org>
+	Ziqing Chen <chenziqing@xiaomi.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 041/215] ALSA: control: Validate buf_len before strnlen() in snd_ctl_elem_init_enum_names()
+Date: Mon,  4 May 2026 15:51:00 +0200
+Message-ID: <20260504135131.682571255@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,68 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Ziqing Chen <chenziqing@xiaomi.com>
 
-commit 8cd35ceadcfc8c5da2eb7f7ce24525ce9d4ee62e upstream.
+commit e0da8a8cac74f4b9f577979d131f0d2b88a84487 upstream.
 
-Fix kernel panic caused by race condition where v4l2_m2m_ctx_release()
-frees m2m_ctx while v4l2_m2m_try_run() is about to call device_run
-with the same context.
+snd_ctl_elem_init_enum_names() advances pointer p through the names
+buffer while decrementing buf_len. If buf_len reaches zero but items
+remain, the next iteration calls strnlen(p, 0).
 
-Race sequence:
-  v4l2_m2m_try_run():           v4l2_m2m_ctx_release():
-    lock/unlock                   v4l2_m2m_cancel_job()
-                                    job_abort()
-                                      v4l2_m2m_job_finish()
-                                  kfree(m2m_ctx)  <- frees ctx
-    device_run()  <- use-after-free crash at 0x538
+While strnlen(p, 0) returns 0 and would hit the existing name_len == 0
+error path, CONFIG_FORTIFY_SOURCE's fortified strnlen() first checks
+maxlen against __builtin_dynamic_object_size(). When Clang loses track
+of p's object size inside the loop, this triggers a BRK exception panic
+before the return value is examined.
 
-Crash trace:
-  Unable to handle kernel read from unreadable memory at virtual address
-  0000000000000538
-  v4l2_m2m_try_run+0x78/0x138
-  v4l2_m2m_device_run_work+0x14/0x20
+Add a buf_len == 0 guard at the loop entry to prevent calling fortified
+strnlen() on an exhausted buffer.
 
-The amphion vpu driver does not rely on the m2m framework's device_run
-callback to perform encode/decode operations.
+Found by kernel fuzz testing through Xiaomi Smartphone.
 
-Fix the race by preventing m2m framework job scheduling entirely:
-- Add job_ready callback returning 0 (no jobs ready for m2m framework)
-- Remove job_abort callback to avoid the race condition
-
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
+Fixes: 8d448162bda5 ("ALSA: control: add support for ENUMERATED user space controls")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Ziqing Chen <chenziqing@xiaomi.com>
+Link: https://patch.msgid.link/20260414132437.261304-1-chenziqing@xiaomi.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/amphion/vpu_v4l2.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ sound/core/control.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -448,17 +448,14 @@ static void vpu_m2m_device_run(void *pri
- {
- }
- 
--static void vpu_m2m_job_abort(void *priv)
-+static int vpu_m2m_job_ready(void *priv)
- {
--	struct vpu_inst *inst = priv;
--	struct v4l2_m2m_ctx *m2m_ctx = inst->fh.m2m_ctx;
--
--	v4l2_m2m_job_finish(m2m_ctx->m2m_dev, m2m_ctx);
-+	return 0;
- }
- 
- static const struct v4l2_m2m_ops vpu_m2m_ops = {
- 	.device_run = vpu_m2m_device_run,
--	.job_abort = vpu_m2m_job_abort
-+	.job_ready = vpu_m2m_job_ready,
- };
- 
- static int vpu_vb2_queue_setup(struct vb2_queue *vq,
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -1574,6 +1574,10 @@ static int snd_ctl_elem_init_enum_names(
+ 	/* check that there are enough valid names */
+ 	p = names;
+ 	for (i = 0; i < ue->info.value.enumerated.items; ++i) {
++		if (buf_len == 0) {
++			kvfree(names);
++			return -EINVAL;
++		}
+ 		name_len = strnlen(p, buf_len);
+ 		if (name_len == 0 || name_len >= 64 || name_len == buf_len) {
+ 			kvfree(names);
 
 
