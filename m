@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78F23DD53E;
-	Mon,  4 May 2026 14:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50D13DE443;
+	Mon,  4 May 2026 14:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903382; cv=none; b=lIQqfd0dg0Hqb4b7fWqnAsTmGZvN8qFkiaPzdHWiyIVX66lI/PKEjnFRzXR/eaeGz/1gn9F7Ohr0ADkNISuiWHMW15V2FZ3hMIpDiTuImYcOGU/KQqMeyUq7N/PmE/ZNcm662S/gfEfmZbExWUY193hIdslSrdMwM0bfRYzSkTw=
+	t=1777903385; cv=none; b=aT/R9Z+9n55x1MnVeVkkq9I1/FH1QVhu9+7kxuC/E0O6NKwLwe/ffJu8tmQKqOcQ/HB3F0yqy79Fj0b4bg8dACX7WvaVQ8HnezzLncsGd2sbNCnwZQULe5VBQuaKP2v/zAmQpikhNpy4vVpFejXHOYSn1O/ECSGgAn7Kv+mwm00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903382; c=relaxed/simple;
-	bh=w8/7/c2mWrfRUAguKeO8R+sTt8tsIcUDCEtd7K/A1dM=;
+	s=arc-20240116; t=1777903385; c=relaxed/simple;
+	bh=QXIk368q8dN6epkzTJEwKG7woTxdkLzXMxJbCFxlE9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYF9SJZIoF9vxdtnQT6koimMuDsIucjnSNi0w+KfJIoVxKCbdgB/0zBbOAj1044fdCb8YhsTdHcfVyQ5F/Boy/se+MVCENupDSCB3Zn6Qb/ssGdhF3zFwMLSbhv9/+d4kQr+9ReOX7rJ84G+YITEMnDIYsLxxwkP5Sm02ZocHjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNbJx0L8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qitm7OYL6vR0r6lH9Ipj91RWP+S+SBGPE0KOIFlZUUC53GSLuSlQPaqcuct3U3ANNF3j+Edk5wNQg/figyLsXphGZ4j1Q2lRdJBD7VzehHnfF+scwo1pbKsy1N1chZanJJcpULj195fS1sqlL+FR7PG3oG77gaosNsk5ZmX1Bo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wy7/hEph; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNbJx0L8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C83EC2BCB8;
-	Mon,  4 May 2026 14:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wy7/hEph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06737C2BCF4;
+	Mon,  4 May 2026 14:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903382;
-	bh=w8/7/c2mWrfRUAguKeO8R+sTt8tsIcUDCEtd7K/A1dM=;
+	s=korg; t=1777903385;
+	bh=QXIk368q8dN6epkzTJEwKG7woTxdkLzXMxJbCFxlE9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNbJx0L8WX22aI4uzRaCNsV8g6yRXfsTubrv4vnzgylgTA8XJ93t95MyfMiKesdUJ
-	 z6cGkskQ1m6z7Qnu3VQp5hfbAZTSl5JiswfnNngnEJ4Pq/DHRkZ4Bpdnttd7D0R9Y4
-	 42kVlmgeeKgN+VNHTIXYGk0ja4+PS0zTVezlJ2ws=
+	b=Wy7/hEphOZYI7H5Hi69wx3ph7clq2daptXTp3v3WKjl8DDFJLILlmmA0IS9XFF25F
+	 s5bJYhAhqgWQTPooZ6TT/uD5D4slXxUqkOF644yi/9CwfJp3gSPdPQqxP7Fkr8+kl6
+	 wZ7RlLppG5KnLxtqe5S8EaKWQHs0GYfIEgCQDG0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Yosry Ahmed <yosry@kernel.org>
-Subject: [PATCH 7.0 213/307] KVM: nSVM: Delay setting soft IRQ RIP tracking fields until vCPU run
-Date: Mon,  4 May 2026 15:51:38 +0200
-Message-ID: <20260504135150.884056956@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.0 214/307] KVM: SVM: Switch svm_copy_lbrs() to a macro
+Date: Mon,  4 May 2026 15:51:39 +0200
+Message-ID: <20260504135150.920885128@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,139 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit c64bc6ed1764c1b7e3c0017019f743196074092f upstream.
+commit 361dbe8173c460a2bf8aee23920f6c2dbdcabb94 upstream.
 
-In the save+restore path, when restoring nested state, the values of RIP
-and CS base passed into nested_vmcb02_prepare_control() are mostly
-incorrect.  They are both pulled from the vmcb02. For CS base, the value
-is only correct if system regs are restored before nested state. The
-value of RIP is whatever the vCPU had in vmcb02 before restoring nested
-state (zero on a freshly created vCPU).
+In preparation for using svm_copy_lbrs() with 'struct vmcb_save_area'
+without a containing 'struct vmcb', and later even 'struct
+vmcb_save_area_cached', make it a macro.
 
-Instead, take a similar approach to NextRIP, and delay initializing the
-RIP tracking fields until shortly before the vCPU is run, to make sure
-the most up-to-date values of RIP and CS base are used regardless of
-KVM_SET_SREGS, KVM_SET_REGS, and KVM_SET_NESTED_STATE's relative
-ordering.
+Macros are generally not preferred compared to functions, mainly due to
+type-safety. However, in this case it seems like having a simple macro
+copying a few fields is better than copy-pasting the same 5 lines of
+code in different places.
 
-Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
-CC: stable@vger.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260225005950.3739782-8-yosry@kernel.org
-[sean: deal with the svm_cancel_injection() madness]
+Link: https://patch.msgid.link/20260303003421.2185681-3-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |   17 ++++++++---------
- arch/x86/kvm/svm/svm.c    |   29 +++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 9 deletions(-)
+ arch/x86/kvm/svm/nested.c |    8 ++++----
+ arch/x86/kvm/svm/svm.c    |    9 ---------
+ arch/x86/kvm/svm/svm.h    |   10 +++++++++-
+ 3 files changed, 13 insertions(+), 14 deletions(-)
 
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -754,9 +754,7 @@ static bool is_evtinj_nmi(u32 evtinj)
- 	return type == SVM_EVTINJ_TYPE_NMI;
- }
+@@ -721,10 +721,10 @@ static void nested_vmcb02_prepare_save(s
+ 		 * Reserved bits of DEBUGCTL are ignored.  Be consistent with
+ 		 * svm_set_msr's definition of reserved bits.
+ 		 */
+-		svm_copy_lbrs(vmcb02, vmcb12);
++		svm_copy_lbrs(&vmcb02->save, &vmcb12->save);
+ 		vmcb02->save.dbgctl &= ~DEBUGCTL_RESERVED_BITS;
+ 	} else {
+-		svm_copy_lbrs(vmcb02, vmcb01);
++		svm_copy_lbrs(&vmcb02->save, &vmcb01->save);
+ 	}
+ 	vmcb_mark_dirty(vmcb02, VMCB_LBR);
+ 	svm_update_lbrv(&svm->vcpu);
+@@ -1243,9 +1243,9 @@ int nested_svm_vmexit(struct vcpu_svm *s
  
--static void nested_vmcb02_prepare_control(struct vcpu_svm *svm,
--					  unsigned long vmcb12_rip,
--					  unsigned long vmcb12_csbase)
-+static void nested_vmcb02_prepare_control(struct vcpu_svm *svm)
- {
- 	u32 int_ctl_vmcb01_bits = V_INTR_MASKING_MASK;
- 	u32 int_ctl_vmcb12_bits = V_TPR_MASK | V_IRQ_INJECTION_BITS_MASK;
-@@ -868,15 +866,16 @@ static void nested_vmcb02_prepare_contro
- 		vmcb02->control.next_rip = svm->nested.ctl.next_rip;
- 
- 	svm->nmi_l1_to_l2 = is_evtinj_nmi(vmcb02->control.event_inj);
-+
-+	/*
-+	 * soft_int_csbase, soft_int_old_rip, and soft_int_next_rip (if L1
-+	 * doesn't have NRIPS) are initialized later, before the vCPU is run.
-+	 */
- 	if (is_evtinj_soft(vmcb02->control.event_inj)) {
- 		svm->soft_int_injected = true;
--		svm->soft_int_csbase = vmcb12_csbase;
--		svm->soft_int_old_rip = vmcb12_rip;
- 		if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS) ||
- 		    !svm->nested.nested_run_pending)
- 			svm->soft_int_next_rip = svm->nested.ctl.next_rip;
--		else
--			svm->soft_int_next_rip = vmcb12_rip;
+ 	if (unlikely(guest_cpu_cap_has(vcpu, X86_FEATURE_LBRV) &&
+ 		     (svm->nested.ctl.virt_ext & LBR_CTL_ENABLE_MASK))) {
+-		svm_copy_lbrs(vmcb12, vmcb02);
++		svm_copy_lbrs(&vmcb12->save, &vmcb02->save);
+ 	} else {
+-		svm_copy_lbrs(vmcb01, vmcb02);
++		svm_copy_lbrs(&vmcb01->save, &vmcb02->save);
+ 		vmcb_mark_dirty(vmcb01, VMCB_LBR);
  	}
  
- 	/* LBR_CTL_ENABLE_MASK is controlled by svm_update_lbrv() */
-@@ -974,7 +973,7 @@ int enter_svm_guest_mode(struct kvm_vcpu
- 	nested_svm_copy_common_state(svm->vmcb01.ptr, svm->nested.vmcb02.ptr);
- 
- 	svm_switch_vmcb(svm, &svm->nested.vmcb02);
--	nested_vmcb02_prepare_control(svm, vmcb12->save.rip, vmcb12->save.cs.base);
-+	nested_vmcb02_prepare_control(svm);
- 	nested_vmcb02_prepare_save(svm, vmcb12);
- 
- 	ret = nested_svm_load_cr3(&svm->vcpu, svm->nested.save.cr3,
-@@ -1920,7 +1919,7 @@ static int svm_set_nested_state(struct k
- 	nested_copy_vmcb_control_to_cache(svm, ctl);
- 
- 	svm_switch_vmcb(svm, &svm->nested.vmcb02);
--	nested_vmcb02_prepare_control(svm, svm->vmcb->save.rip, svm->vmcb->save.cs.base);
-+	nested_vmcb02_prepare_control(svm);
- 
- 	/*
- 	 * Any previously restored state (e.g. KVM_SET_SREGS) would mark fields
 --- a/arch/x86/kvm/svm/svm.c
 +++ b/arch/x86/kvm/svm/svm.c
-@@ -3639,6 +3639,16 @@ static int svm_handle_exit(struct kvm_vc
- 	return svm_invoke_exit_handler(vcpu, svm->vmcb->control.exit_code);
+@@ -841,15 +841,6 @@ static void svm_recalc_msr_intercepts(st
+ 	 */
  }
  
-+static void svm_set_nested_run_soft_int_state(struct kvm_vcpu *vcpu)
-+{
-+	struct vcpu_svm *svm = to_svm(vcpu);
-+
-+	svm->soft_int_csbase = svm->vmcb->save.cs.base;
-+	svm->soft_int_old_rip = kvm_rip_read(vcpu);
-+	if (!guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
-+		svm->soft_int_next_rip = kvm_rip_read(vcpu);
-+}
-+
- static int pre_svm_run(struct kvm_vcpu *vcpu)
+-void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb)
+-{
+-	to_vmcb->save.dbgctl		= from_vmcb->save.dbgctl;
+-	to_vmcb->save.br_from		= from_vmcb->save.br_from;
+-	to_vmcb->save.br_to		= from_vmcb->save.br_to;
+-	to_vmcb->save.last_excp_from	= from_vmcb->save.last_excp_from;
+-	to_vmcb->save.last_excp_to	= from_vmcb->save.last_excp_to;
+-}
+-
+ static void __svm_enable_lbrv(struct kvm_vcpu *vcpu)
  {
- 	struct svm_cpu_data *sd = per_cpu_ptr(&svm_data, vcpu->cpu);
-@@ -3761,6 +3771,13 @@ static void svm_fixup_nested_rips(struct
- 	if (boot_cpu_has(X86_FEATURE_NRIPS) &&
- 	    !guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
- 		svm->vmcb->control.next_rip = kvm_rip_read(vcpu);
-+
-+	/*
-+	 * Simiarly, initialize the soft int metadata here to use the most
-+	 * up-to-date values of RIP and CS base, regardless of restore order.
-+	 */
-+	if (svm->soft_int_injected)
-+		svm_set_nested_run_soft_int_state(vcpu);
+ 	to_svm(vcpu)->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -713,8 +713,16 @@ static inline void *svm_vcpu_alloc_msrpm
+ 	return svm_alloc_permissions_map(MSRPM_SIZE, GFP_KERNEL_ACCOUNT);
  }
  
- void svm_complete_interrupt_delivery(struct kvm_vcpu *vcpu, int delivery_mode,
-@@ -4131,6 +4148,18 @@ static void svm_complete_soft_interrupt(
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 
- 	/*
-+	 * Initialize the soft int fields *before* reading them below if KVM
-+	 * aborted entry to the guest with a nested VMRUN pending.  To ensure
-+	 * KVM uses up-to-date values for RIP and CS base across save/restore,
-+	 * regardless of restore order, KVM waits to set the soft int fields
-+	 * until VMRUN is imminent.  But when canceling injection, KVM requeues
-+	 * the soft int and will reinject it via the standard injection flow,
-+	 * and so KVM needs to grab the state from the pending nested VMRUN.
-+	 */
-+	if (is_guest_mode(vcpu) && svm->nested.nested_run_pending)
-+		svm_set_nested_run_soft_int_state(vcpu);
++#define svm_copy_lbrs(to, from)					\
++do {								\
++	(to)->dbgctl		= (from)->dbgctl;		\
++	(to)->br_from		= (from)->br_from;		\
++	(to)->br_to		= (from)->br_to;		\
++	(to)->last_excp_from	= (from)->last_excp_from;	\
++	(to)->last_excp_to	= (from)->last_excp_to;		\
++} while (0)
 +
-+	/*
- 	 * If NRIPS is enabled, KVM must snapshot the pre-VMRUN next_rip that's
- 	 * associated with the original soft exception/interrupt.  next_rip is
- 	 * cleared on all exits that can occur while vectoring an event, so KVM
+ void svm_vcpu_free_msrpm(void *msrpm);
+-void svm_copy_lbrs(struct vmcb *to_vmcb, struct vmcb *from_vmcb);
+ void svm_enable_lbrv(struct kvm_vcpu *vcpu);
+ void svm_update_lbrv(struct kvm_vcpu *vcpu);
+ 
 
 
