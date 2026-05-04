@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5217D29BD9A;
-	Mon,  4 May 2026 13:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D975929BD9A;
+	Mon,  4 May 2026 13:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903015; cv=none; b=ES1ovWrRXTQCHw/MDU9cI58bB1I7TnN+/umD3kl3nsnqB+jFER1GO/xVUEHNffybanSm1+wMKLw7iyRZ/N+qW8NLKRZ+rmlEQitH2s9E3ywKMwiqm2CeV3Vu3lw8yLrCofq7OND3UbuczPFimaz4ZG9p4vA7KamM/S/J5lEdERU=
+	t=1777903017; cv=none; b=jLKm0v8GlUegcDcff6ofWo6Q6YxN9JylW6K6x+fccEzH3vNOqHWf2L11zMb7gv8P1+IzletoVEoawVD+a4/eEA1QsDMviMCMyVGjIJzB81mgCQSI90ywvJO/FezSCClmZWOq1GY7xMgQXEs7Ju5fV6DvrbfzaCtJR7zGemzCegY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903015; c=relaxed/simple;
-	bh=7JB18xqs2P5fNUVxKQ6Iucp+WoE26MZ/wecEsddSq9A=;
+	s=arc-20240116; t=1777903017; c=relaxed/simple;
+	bh=22IfEK9vPCNFpS1Lde+q5vzqS2ZGdzDtJKGpG8jl0N4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AR+X2/PmHF3LZRsC/ONyuweeHr9vovmcE5wDMa6GFPXGPYQFKE/5De9VaPG0b0hJ2zZjJ1sFZm50qvwRixVqrxFO5rQD8hykJrE7HeuTC0Mc+BXhYIRkEKrS48KR9WKEon/zhbvBWl298ZBhTv3dFY4znjHLGTxr7NfWK3n2yf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGo1Zq2q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+/gN3K592kmTwoMT6aSv5x2bV6JouY4QYC+NHCj/RyH/i/82i7hxHqE9wmGt3puC2M+OBTMunwUw9LkCoYha+GS1oeubiwbgEQQZEMZHPWNEyymvW5F7zit3AsTMgdMLM/IU0qMHfSkezH94/fKM/SCB6NZeU59iWQzEQTqabA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbEmFcmw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGo1Zq2q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3EAC2BCF4;
-	Mon,  4 May 2026 13:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbEmFcmw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70533C2BCB8;
+	Mon,  4 May 2026 13:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903015;
-	bh=7JB18xqs2P5fNUVxKQ6Iucp+WoE26MZ/wecEsddSq9A=;
+	s=korg; t=1777903017;
+	bh=22IfEK9vPCNFpS1Lde+q5vzqS2ZGdzDtJKGpG8jl0N4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGo1Zq2qk4LAsKprERPvb0FGeOLeNtGEdfywwgtotqNNhg776pvel12ScEs4dXIbD
-	 ZcrqODlH8MtiXDWhGABZIPopqR278UhPNz9JpRpCSWvc9v1Mxu+UU8c4wDwVH/RK8L
-	 g9cpGo9jdeVerlI01RmTX6PNjUih++vXoUuJtuIw=
+	b=lbEmFcmwTTHTiq6qQ0XKgIoRnShlcfcHxXDIR753iMYIda142wvp7POgMQGXDI3Dc
+	 OUH/IMhT0e1a1CtqL8oPyR4IVQAXszAqRz3dGLgUmQnvKwS/GLtsGm911CZ7aqNVQU
+	 SD3vQDhCBniX/AVpAHk614p78x5CgcgI3RGRy6uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Jai Luthra <jai.luthra@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 7.0 063/307] media: i2c: imx219: Check return value of devm_gpiod_get_optional() in imx219_probe()
-Date: Mon,  4 May 2026 15:49:08 +0200
-Message-ID: <20260504135145.189403038@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>
+Subject: [PATCH 7.0 072/307] erofs: fix the out-of-bounds nameoff handling for trailing dirents
+Date: Mon,  4 May 2026 15:49:17 +0200
+Message-ID: <20260504135145.526180631@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -53,42 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 943b1f27a3eead21b22e2531a5432ea5910b60eb upstream.
+commit d18a3b5d337fa412a38e776e6b4b857a58836575 upstream.
 
-The devm_gpiod_get_optional() function may return an error pointer
-(ERR_PTR) in case of a genuine failure during GPIO acquisition,
-not just NULL which indicates the legitimate absence of an optional
-GPIO.
+Currently we already have boundary-checks for nameoffs, but the trailing
+dirents are special since the namelens are calculated with strnlen()
+with unchecked nameoffs.
 
-Add an IS_ERR() check after the function call to catch such errors and
-propagate them to the probe function, ensuring the driver fails to load
-safely rather than proceeding with an invalid pointer.
+If a crafted EROFS has a trailing dirent with nameoff >= maxsize,
+maxsize - nameoff can underflow, causing strnlen() to read past the
+directory block.
 
-Fixes: 1283b3b8f82b ("media: i2c: Add driver for Sony IMX219 sensor")
+nameoff0 should also be verified to be a multiple of
+`sizeof(struct erofs_dirent)` as well [1].
+
+[1] https://sashiko.dev/#/patchset/20260416063511.3173774-1-hsiangkao%40linux.alibaba.com
+
+Fixes: 3aa8ec716e52 ("staging: erofs: add directory operations")
+Fixes: 33bac912840f ("staging: erofs: keep corrupted fs from crashing kernel in erofs_readdir()")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Closes: https://lore.kernel.org/r/A0FD7E0F-7558-49B0-8BC8-EB1ECDB2479A@outlook.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx219.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/erofs/dir.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/drivers/media/i2c/imx219.c
-+++ b/drivers/media/i2c/imx219.c
-@@ -1218,6 +1218,9 @@ static int imx219_probe(struct i2c_clien
- 	/* Request optional enable pin */
- 	imx219->reset_gpio = devm_gpiod_get_optional(dev, "reset",
- 						     GPIOD_OUT_HIGH);
-+	if (IS_ERR(imx219->reset_gpio))
-+		return dev_err_probe(dev, PTR_ERR(imx219->reset_gpio),
-+				     "failed to get reset gpio\n");
+--- a/fs/erofs/dir.c
++++ b/fs/erofs/dir.c
+@@ -19,20 +19,18 @@ static int erofs_fill_dentries(struct in
+ 		const char *de_name = (char *)dentry_blk + nameoff;
+ 		unsigned int de_namelen;
  
- 	/*
- 	 * The sensor must be powered for imx219_identify_module()
+-		/* the last dirent in the block? */
+-		if (de + 1 >= end)
+-			de_namelen = strnlen(de_name, maxsize - nameoff);
+-		else
++		/* non-trailing dirent in the directory block? */
++		if (de + 1 < end)
+ 			de_namelen = le16_to_cpu(de[1].nameoff) - nameoff;
++		else if (maxsize <= nameoff)
++			goto err_bogus;
++		else
++			de_namelen = strnlen(de_name, maxsize - nameoff);
+ 
+-		/* a corrupted entry is found */
+-		if (nameoff + de_namelen > maxsize ||
+-		    de_namelen > EROFS_NAME_LEN) {
+-			erofs_err(dir->i_sb, "bogus dirent @ nid %llu",
+-				  EROFS_I(dir)->nid);
+-			DBG_BUGON(1);
+-			return -EFSCORRUPTED;
+-		}
++		/* a corrupted entry is found (including negative namelen) */
++		if (!in_range32(de_namelen, 1, EROFS_NAME_LEN) ||
++		    nameoff + de_namelen > maxsize)
++			goto err_bogus;
+ 
+ 		if (!dir_emit(ctx, de_name, de_namelen,
+ 			      erofs_nid_to_ino64(EROFS_SB(dir->i_sb),
+@@ -42,6 +40,10 @@ static int erofs_fill_dentries(struct in
+ 		ctx->pos += sizeof(struct erofs_dirent);
+ 	}
+ 	return 0;
++err_bogus:
++	erofs_err(dir->i_sb, "bogus dirent @ nid %llu", EROFS_I(dir)->nid);
++	DBG_BUGON(1);
++	return -EFSCORRUPTED;
+ }
+ 
+ static int erofs_readdir(struct file *f, struct dir_context *ctx)
+@@ -88,7 +90,7 @@ static int erofs_readdir(struct file *f,
+ 		}
+ 
+ 		nameoff = le16_to_cpu(de->nameoff);
+-		if (nameoff < sizeof(struct erofs_dirent) || nameoff >= bsz) {
++		if (!nameoff || nameoff >= bsz || (nameoff % sizeof(*de))) {
+ 			erofs_err(sb, "invalid de[0].nameoff %u @ nid %llu",
+ 				  nameoff, EROFS_I(dir)->nid);
+ 			err = -EFSCORRUPTED;
 
 
