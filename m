@@ -1,149 +1,153 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7A736C9CC
-	for <patches@lists.linux.dev>; Mon,  4 May 2026 22:01:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0FB386564
+	for <patches@lists.linux.dev>; Mon,  4 May 2026 22:35:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777932118; cv=none; b=qhbuqdrxGWF5Bf/AmrgRYCoyqsOlQg4xd74m1vO3kIT+ezdSW6qUkTp8D9fZVhD+1QoZ0p2Osov7lIjznyksxKwGsgtqi33U8M1aPQ2kWi49JvOwQqav2EvEcahXBYGzKWMr7ssPOPDLyQdL6d4knvxob8b+NmD/IHyAM8bZ0+I=
+	t=1777934149; cv=none; b=TwEq5uuvYzN2tXRITs5ZyJTmT2QPkn3/T6iTcthfdy0VbfLXG+DQo+gizQ+QbGMXpqBxLdsKzbb3RKsD0oqQk7Nuel8wcpVIClFWpURl50UMkSNB73/XjlR5s/XKJKlq8ZWMCBm9uJqwwWNRXV7O3/py8unGljHHQE2+A0mtVPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777932118; c=relaxed/simple;
-	bh=gpCBfrDNn41t9SezRyHAzzYotLwKuRhzYO/fi3whyZY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KgsGzG/rlQfjeVRWKXiSbywa6ZAJGtZXncUmXJh3yrWelSDgzUvA8H3c2nvj7bdQRo+fte0wxLALG0fY6PW5P6fDWOT/BTw+YoUEJQKHwV2iTQYWsA+om4c1vxW2/8diauRiOq/1ak2s8XlOOZg/H8XwNB80LT50+8q8s539NJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MQOhvU1k; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1777934149; c=relaxed/simple;
+	bh=053J+k+T3qlqygZGjMWRpvpwj73ZalGKJrYZu+NUK2s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sML2dvSe/iH+ttopar0mXHDYWk9jDKR3KtBi+KjhUPIRSEZ+zJB6146i/tza8VwmfiCCl3506I6+Z61bo9YJ1GQsOei/pDeeeC4FDC4FuMs5EwXHUzm6YLcpbGiFGBrsyoy+41y114ssJrhn6Mt/ejNczLLumNXTXnLBJ39mBuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UQW89x5b; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MQOhvU1k"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1777932117; x=1809468117;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=gpCBfrDNn41t9SezRyHAzzYotLwKuRhzYO/fi3whyZY=;
-  b=MQOhvU1kEObLgJHBNXgiQPU5nOXI2VSQZv+bxvl7CO8J/dodEw9aupy6
-   SJDJoWY8W1HYJ1C1Nusbu3xObdcOSuy7pDzEnUq1QnQieM50PxANlgb+q
-   zBAP+ZJDPnB/SfafALraEnxysSYjtL1wYFO3q2Tq5/ZSkxw1vbzyS1BqL
-   B94pWWlhJX0LLUc2RvSgziq3c8pQLM8MECyyKlViBZfM3wx17koeHXwNm
-   Vudh6K+JvCok2OjmR0ASCQ+eNjrjxYkDd/YAAbIA2rSgCYaBIqX+8yISr
-   su6atf++GMGH6EvxY7XGGazEi7/pjXJEVm3cNwnZ6DHPRBh9+uFTv5K1C
-   w==;
-X-CSE-ConnectionGUID: AuI0+GVMR9KzBtUwxKR38A==
-X-CSE-MsgGUID: ZO5NvRPxQyKcW+bDXUhKoQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11776"; a="78731090"
-X-IronPort-AV: E=Sophos;i="6.23,216,1770624000"; 
-   d="scan'208";a="78731090"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 May 2026 15:01:56 -0700
-X-CSE-ConnectionGUID: X2R0pxN8R7a428Cpr3IvTQ==
-X-CSE-MsgGUID: c1FMLVmCQ0WJjTEwJCSRRA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,216,1770624000"; 
-   d="scan'208";a="265976101"
-Received: from jjgreens-desk20.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.223.16])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 May 2026 15:01:56 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>,
-	x86@kernel.org
-Cc: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v2] fs/resctrl: Fix deadlock for errors during mount
-Date: Mon,  4 May 2026 15:01:49 -0700
-Message-ID: <20260504220149.157753-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UQW89x5b"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c801d732058so893240a12.1
+        for <patches@lists.linux.dev>; Mon, 04 May 2026 15:35:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1777934148; x=1778538948; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PQ3tNPMFkM7QrJ5Q+mR4uTB1pqSv2OnkcWUNEBkdVs8=;
+        b=UQW89x5biUYPR1VLiBFTKYKswdIwBNUPja8J6mf/GyEh/FANnIoWcIURGoeY3Ws9Y2
+         CQv4SJSiAiWtNW73TYxS+IPc1jX6ovAHTF25e2G2enWxLoicL4e5sze5++0moAk4GtGz
+         EGKliFNKo/63iC9WQs4Nve5cxJfOeXJbhw0uBN7+yPXYrd7ngXO+3ozYwYWVKgwAn+su
+         OsbgJXInQH8djD58y5deMaJmPvt3QKSkNgxh7UD33uoTSsEhnNnU58Qc0TJdeczUFHvB
+         WQmal4+gf8xLXgMY/2nH31uCFbgK2bwA7zJyFqx03ZGfUp7b2kyF2rTHZmDIZlA01OYr
+         aGjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777934148; x=1778538948;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PQ3tNPMFkM7QrJ5Q+mR4uTB1pqSv2OnkcWUNEBkdVs8=;
+        b=KRJknL1TMLoYAFs9Zh2X3Zk1TjQBbGvIR4XoeDzRL+hkPK16+5p7+OuOBX34SUJPNi
+         8UBYLqIM8lEDNM6j/gnrV9iHmHKvmYhKz/rmIwIOTwUlD7LJgHAsC2d6bDhbMMP3V4Dx
+         eLLnEJwULUdrJUKs0McvFJJxAlab2q45r/gD4Up0oyje6Q7IlvhTNSuKrRTTrDLCxtsg
+         xewJ9nr05JmYPJRcq60xHcf3peM1VyN7uzfXc6B34yNb1Bk6OLqrf5g2nY8WRnLV1Mt0
+         ZiDx3EgM+skroSWnI5l/vfNEtYU91SeUuUhEDV0gbLbUS9UlE5Bv6YydQ7GVRqrFQ49B
+         LGKQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9kAjvZFKbzmI8lG+RNMT3ZDQJwYwxLfqAxXF0P6GFe7+nch79fd4C6ynajeKzxYKP5dJeqqSFy@lists.linux.dev
+X-Gm-Message-State: AOJu0YzZXGfBzqP36PhLzK+qHkkjpkG9ch0I8ey4la2PGImC2oJOG1lA
+	cz+cWq3K8IWMd2s7V1F4ODbjlIfCF6v+leITUuj3pT9La3n/cTsSZCYohITEZ3Lr4A==
+X-Gm-Gg: AeBDieu+QM/UdjZkjEraRgRdMkXDFxbjnpBXhvfie5caE4nil5kt+fkROVePVOuc/Dx
+	ld2NK2w7M+X3jFt2Ww2haRtf3/iw/JbpX96//j5a42kwE9z4fGprhf5tLW2S4QcofW4LuSSnIiH
+	VY1jFQh+isHINJYvBdcjLTv2Qy0yBdJIzYujtCEV1sl+6MLIXp2CaPkIjAYj0/f5sj4xTVMMOFD
+	5CcJjLhP/HM/fcw/RvNXh15iWuE8caB3sAER1KcT9TbMSkW1btExwB/FJvOWwIyy+l6x06MlnRK
+	X68D/MyDtImTM30TyrPe3XclY2t2MsgTPCdepVbMuIejPkMl86FpsZ1DUipPtg23J0nzwiAkjvO
+	WNbI1lEc9S1Z/qrmrllN8j5S1vM5KWK4uAK4kBVnnSQnKhB7Y80mc97VB4cA/3eUJ1/MZ6Oftfp
+	qBqiRtOL7+JzlWnWBenFJFr6xyBmS+ujdDSPefH/Ad8z2NoEOAuEvUH1sqiqEWbpnKCQ8DfK1i2
+	Hp0Kw==
+X-Received: by 2002:a05:6300:210d:b0:3a2:cbd1:11f with SMTP id adf61e73a8af0-3a9ea589e46mr1260508637.5.1777934147330;
+        Mon, 04 May 2026 15:35:47 -0700 (PDT)
+Received: from google.com (76.9.127.34.bc.googleusercontent.com. [34.127.9.76])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7ffbcaa477sm10680045a12.31.2026.05.04.15.35.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 May 2026 15:35:46 -0700 (PDT)
+Date: Mon, 4 May 2026 22:35:43 +0000
+From: David Matlack <dmatlack@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
+	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
+	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
+	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
+	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 09/11] vfio: selftests: Add mlx5 driver - HW init and
+ command interface
+Message-ID: <afkfP-8UHaoyLd5Y@google.com>
+References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
+ <9-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <9-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
 
-Sashiko noticed[1] a deadlock in the resctrl mount code.
+On 2026-04-30 09:08 PM, Jason Gunthorpe wrote:
 
-rdt_get_tree() acquires rdtgroup_mutex before calling kernfs_get_tree(). If
-superblock setup fails inside kernfs_get_tree(), the VFS calls kill_sb on
-the same thread before the call returns.  rdt_kill_sb() unconditionally
-attempts to acquire rdtgroup_mutex and deadlock occurs.
+> +/*
+> + * Driver state — overlaid on device->driver.region.vaddr.
+> + *
+> + * Contains both software-only state and HW-visible DMA buffers. HW buffers need
+> + * strict IOVA alignment.
+> + */
+> +struct mlx5st_device {
 
-Move the call to kernfs_get_tree() outside of locks.
+Can we do s/mlx5st/mlx5/ on the series?
 
-If kernfs_get_tree() fails and ctx->kfc.new_sb_created is set, then rdt_kill_sb()
-has already been called and no further cleanup is needed.
+I assume st is for selftests and that is already implied by this file
+being under tools/testing/selftests.
 
-Fixes: 5ff193fbde20 ("x86/intel_rdt: Add basic resctrl filesystem support")
-Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com [1]
----
+> +/*
+> + * Probe — match mlx5 devices by PCI vendor/device ID.
+> + */
+> +
+> +#define PCI_VENDOR_ID_MELLANOX 0x15b3
 
-Changes since v1:
-Link: https://lore.kernel.org/all/20260501185612.14442-1-tony.luck@intel.com/
+nit: Use #include <linux/pci_ids.h>
 
-AI solution from Claude abandoned after human (Reinette) and AI (Sashiko)
-reviews found it lacking.
-
-Reinette: Feel free to claim full authorship of this fix since you
-provided direction for every aspect. At minimum the "Suggested-by:"
-should be "Co-authored-by:" (with your sign-off).
-
- fs/resctrl/rdtgroup.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
-
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 5dfdaa6f9d8f..6709b74bd655 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -2855,10 +2855,6 @@ static int rdt_get_tree(struct fs_context *fc)
- 	if (ret)
- 		goto out_mondata;
- 
--	ret = kernfs_get_tree(fc);
--	if (ret < 0)
--		goto out_psl;
--
- 	if (resctrl_arch_alloc_capable())
- 		resctrl_arch_enable_alloc();
- 	if (resctrl_arch_mon_capable())
-@@ -2874,10 +2870,26 @@ static int rdt_get_tree(struct fs_context *fc)
- 						   RESCTRL_PICK_ANY_CPU);
- 	}
- 
--	goto out;
-+	/* Release locks because kernfs_get_tree() may call rdt_kill_sb() */
-+	mutex_unlock(&rdtgroup_mutex);
-+	cpus_read_unlock();
-+	ret = kernfs_get_tree(fc);
-+	if (!ret || ctx->kfc.new_sb_created) {
-+		/* mount succeeded, or failed and already cleaned up */
-+		return ret;
-+	}
-+	cpus_read_lock();
-+	mutex_lock(&rdtgroup_mutex);
-+
-+	if (resctrl_arch_alloc_capable())
-+		resctrl_arch_disable_alloc();
-+	if (resctrl_arch_mon_capable())
-+		resctrl_arch_disable_mon();
-+
-+	resctrl_mounted = false;
- 
--out_psl:
- 	rdt_pseudo_lock_release();
-+
- out_mondata:
- 	if (resctrl_arch_mon_capable())
- 		kernfs_remove(kn_mondata);
--- 
-2.54.0
-
+> +static int mlx5st_probe(struct vfio_pci_device *device)
+> +{
+> +	static const u16 mlx5st_pci_ids[] = {
+> +		0x1011, /* Connect-IB */
+> +		0x1012, /* Connect-IB VF */
+> +		0x1013, /* ConnectX-4 */
+> +		0x1014, /* ConnectX-4 VF */
+> +		0x1015, /* ConnectX-4LX */
+> +		0x1016, /* ConnectX-4LX VF */
+> +		0x1017, /* ConnectX-5 */
+> +		0x1018, /* ConnectX-5 VF */
+> +		0x1019, /* ConnectX-5 Ex */
+> +		0x101a, /* ConnectX-5 Ex VF */
+> +		0x101b, /* ConnectX-6 */
+> +		0x101c, /* ConnectX-6 VF */
+> +		0x101d, /* ConnectX-6 Dx */
+> +		0x101e, /* ConnectX-6 Dx VF */
+> +		0x101f, /* ConnectX-6 LX */
+> +		0x1021, /* ConnectX-7 */
+> +		0x1023, /* ConnectX-8 */
+> +		0x1025, /* ConnectX-9 */
+> +		0x1027, /* ConnectX-10 */
+> +		0x2101, /* ConnectX-10 NVLink-C2C */
+> +		0xa2d2, /* BlueField integrated ConnectX-5 */
+> +		0xa2d3, /* BlueField integrated ConnectX-5 VF */
+> +		0xa2d6, /* BlueField-2 integrated ConnectX-6 Dx */
+> +		0xa2dc, /* BlueField-3 integrated ConnectX-7 */
+> +		0xa2df, /* BlueField-4 integrated ConnectX-8 */
+> +	};
+> +	unsigned int i;
+> +	u16 did;
+> +
+> +	if (vfio_pci_config_readw(device, PCI_VENDOR_ID) !=
+> +	    PCI_VENDOR_ID_MELLANOX)
+> +		return -ENODEV;
+> +
+> +	did = vfio_pci_config_readw(device, PCI_DEVICE_ID);
+> +	for (i = 0; i < ARRAY_SIZE(mlx5st_pci_ids); i++) {
+> +		if (mlx5st_pci_ids[i] == did)
+> +			return 0;
+> +	}
+> +
+> +	return -ENODEV;
+> +}
