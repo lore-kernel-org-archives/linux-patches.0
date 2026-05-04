@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D5E1A6827;
-	Mon,  4 May 2026 14:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79903315785;
+	Mon,  4 May 2026 14:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904319; cv=none; b=qe0JpohUEWdbljrz979AQtcb9pzczKMRYqrADvcsyoLIVTUOty5Vu8EMNTVTELqIIIsnV3AyxQX/ardXACDq67tw9VpkePM06kQeSEocdW/hYwgjP94FVzArSa095kuutwQPQDlVvnMm5iiK1B6jiGfF5kb0xIf3GUC9IlqYbqo=
+	t=1777904321; cv=none; b=SqoSfNEWZoHjqNevMSZSDHWQEdaRPI7rLDXTO6rEVI8/7fNl7lql//WDw1pCypDsS4o4j1a7+kuqBSaV6toFasrKU43ZiZCGWFiORN0Lo7ofc1obOG3hsop5+6ewmcbzz3BpbC6M4f2xcl3+5/SAUQ95UL7FscwD7gMmuMKoDWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904319; c=relaxed/simple;
-	bh=cIrZMEzut9CRIzqKmoxDmVedgfnWT+Q6KqHn0VoGRSE=;
+	s=arc-20240116; t=1777904321; c=relaxed/simple;
+	bh=Sm+/dzXBehUwtovZEZ/4BZr+XpPZW1JKS99QAfRRDtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/RofNZNkVg1xBJm47kd2xgcSdPWs7zUYi9Y82b1KqOFXJxLlfIw4VRvFYNMb695jBkfrY+nYy1FD4egElMyxoHdAypjPkUw2Z3fAeZmhur1P3R9sPGResPxW6NoqTMMSPU+J6nE6Ba2JtHte0SDHUso7tqvD25A2bg3aMa9KaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVJzkQNb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sbmmseBkTxSDZIkSMvvCh2Yr2xFqobfZXOSpaqg4QkP9zDJWBXss64gZZP3eQu+e3YaG0j/o3lkYICRVI3us76rqtnua92d2JO/Zrl0S6WOZsGnp5KIALv3FxjnANQvm1gIYHHHw2tdmFpFLFoaJqMY5CxKGweMmb8dQXo6yKGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQDfcYLv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVJzkQNb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D066C2BCB8;
-	Mon,  4 May 2026 14:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQDfcYLv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11049C2BCB8;
+	Mon,  4 May 2026 14:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904318;
-	bh=cIrZMEzut9CRIzqKmoxDmVedgfnWT+Q6KqHn0VoGRSE=;
+	s=korg; t=1777904321;
+	bh=Sm+/dzXBehUwtovZEZ/4BZr+XpPZW1JKS99QAfRRDtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVJzkQNbuGE9Hb/I5SldJ/iYjBrbp+hdqLKsLyMUg05LUStAakKiJW0loGCsURkA+
-	 3CE7kPcoc+lLfB6QiSULbv+G2XtNSJ0iAsKDaoBKKyxELXm+z5hm9HkVXK4Lx3YG0T
-	 NMuotWIc47aY1qFzxd28UmdPrFVmTNmXGE+5yhws=
+	b=wQDfcYLvhmtoVR0TPMUcZfveQS0gxwSaLbNaH/ulhVdFJCnDNsnpCpyU1iz5dN/IR
+	 EcHQpav23O9fYRJcpTioNCVxifqr5wb66Ui/JuFlxWb37eARQGRY24WDEtX1MF7ZYD
+	 tn+ZCRrJ8i4/Zb4LhaTYCUhKQxkJHCbXEihTanIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhao <chezhao@nvidia.com>,
-	Parav Pandit <parav@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 236/275] IB/core: Fix zero dmac race in neighbor resolution
-Date: Mon,  4 May 2026 15:52:56 +0200
-Message-ID: <20260504135151.817000720@linuxfoundation.org>
+	John Warthog9 Hawley <warthog9@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 237/275] ktest: Fix the month in the name of the failure directory
+Date: Mon,  4 May 2026 15:52:57 +0200
+Message-ID: <20260504135151.852959734@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -52,74 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Zhao <chezhao@nvidia.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 5e6de34d82b49cab9d8a42063e9cd0f22a4f31e5 upstream.
+commit 768059ede35f197575a38b10797b52402d9d4d2f upstream.
 
-dst_fetch_ha() checks nud_state without holding the neighbor lock, then
-copies ha under the seqlock. A race in __neigh_update() where nud_state
-is set to NUD_REACHABLE before ha is written allows dst_fetch_ha() to
-read a zero MAC address while the seqlock reports no concurrent writer.
+The Perl localtime() function returns the month starting at 0 not 1. This
+caused the date produced to create the directory for saving files of a
+failed run to have the month off by one.
 
-netevent_callback amplifies this by waking ALL pending addr_req workers
-when ANY neighbor becomes NUD_VALID. At scale (N peers resolving ARP
-concurrently), the hit probability scales as N^2, making it near-certain
-for large RDMA workloads.
+  machine-test-useconfig-fail-20260314073628
 
-N(A): neigh_update(A)                   W(A): addr_resolve(A)
- |                                       [sleep]
- | write_lock_bh(&A->lock)               |
- | A->nud_state = NUD_REACHABLE          |
- | // A->ha is still 0                   |
- |                                       [woken by netevent_cb() of
- |                                         another neighbour]
- |                                       | dst_fetch_ha(A)
- |                                       |   A->nud_state & NUD_VALID
- |                                       |   read_seqbegin(&A->ha_lock)
- |                                       |   snapshot = A->ha  /* 0 */
- |                                       |   read_seqretry(&A->ha_lock)
- |                                       |   return snapshot
- | seqlock(&A->ha_lock)
- | A->ha = mac_A     /* too late */
- | sequnlock(&A->ha_lock)
- | write_unlock_bh(&A->lock)
+The above happened in April, not March. The correct name should have been:
 
-The incorrect/zero mac is read and programmed in the device QP while it
-was not yet updated. This causes silent packet loss and eventual
-RETRY_EXC_ERR.
+  machine-test-useconfig-fail-20260414073628
 
-Fix by holding the neighbor read lock across the nud_state check and
-ha copy in dst_fetch_ha(), ensuring it synchronizes with
-__neigh_update() which is updating while holding the write lock.
+This was somewhat confusing.
 
 Cc: stable@vger.kernel.org
-Fixes: 92ebb6a0a13a ("IB/cm: Remove now useless rcu_lock in dst_fetch_ha")
-Link: https://patch.msgid.link/r/20260405-fix-dmac-race-v1-1-cfa1ec2ce54a@nvidia.com
-Signed-off-by: Chen Zhao <chezhao@nvidia.com>
-Reviewed-by: Parav Pandit <parav@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>
+Link: https://patch.msgid.link/20260420142426.33ad0293@fedora
+Fixes: 7faafbd69639b ("ktest: Add open and close console and start stop monitor")
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/addr.c |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/ktest/ktest.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/core/addr.c
-+++ b/drivers/infiniband/core/addr.c
-@@ -321,11 +321,14 @@ static int dst_fetch_ha(const struct dst
- 	if (!n)
- 		return -ENODATA;
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -1815,7 +1815,7 @@ sub save_logs {
+     my ($result, $basedir) = @_;
+     my @t = localtime;
+     my $date = sprintf "%04d%02d%02d%02d%02d%02d",
+-	1900+$t[5],$t[4],$t[3],$t[2],$t[1],$t[0];
++	1900+$t[5],$t[4]+1,$t[3],$t[2],$t[1],$t[0];
  
-+	read_lock_bh(&n->lock);
- 	if (!(n->nud_state & NUD_VALID)) {
-+		read_unlock_bh(&n->lock);
- 		neigh_event_send(n, NULL);
- 		ret = -ENODATA;
- 	} else {
- 		neigh_ha_snapshot(dev_addr->dst_dev_addr, n, dst->dev);
-+		read_unlock_bh(&n->lock);
- 	}
- 
- 	neigh_release(n);
+     my $type = $build_type;
+     if ($type =~ /useconfig/) {
 
 
