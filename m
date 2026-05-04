@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D975929BD9A;
-	Mon,  4 May 2026 13:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA272E2F0E;
+	Mon,  4 May 2026 13:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903017; cv=none; b=jLKm0v8GlUegcDcff6ofWo6Q6YxN9JylW6K6x+fccEzH3vNOqHWf2L11zMb7gv8P1+IzletoVEoawVD+a4/eEA1QsDMviMCMyVGjIJzB81mgCQSI90ywvJO/FezSCClmZWOq1GY7xMgQXEs7Ju5fV6DvrbfzaCtJR7zGemzCegY=
+	t=1777903020; cv=none; b=MR3tvpFqnZpnMmj1oN2DYM8ZBKH7e/Wy4M4z/XX5lGYhFmrZB23JrkNSlvl6VPvpzdq/fmuv6GP2G3sbyvf+Pgz5c1BYy4OG5JQUTer2xlrTK+YRFFzLSbjjwGRuATJfcAzBOAF54p8XQOOWYO9JB9GDbeb+NLKZQLiyjmiUNH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903017; c=relaxed/simple;
-	bh=22IfEK9vPCNFpS1Lde+q5vzqS2ZGdzDtJKGpG8jl0N4=;
+	s=arc-20240116; t=1777903020; c=relaxed/simple;
+	bh=r6jIIaxlKwHUF+uewf0uKdTOUqobRxZsmh1IUAdLmmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+/gN3K592kmTwoMT6aSv5x2bV6JouY4QYC+NHCj/RyH/i/82i7hxHqE9wmGt3puC2M+OBTMunwUw9LkCoYha+GS1oeubiwbgEQQZEMZHPWNEyymvW5F7zit3AsTMgdMLM/IU0qMHfSkezH94/fKM/SCB6NZeU59iWQzEQTqabA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbEmFcmw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGuw4hByqsyfGrtBDORL3V+/PTJSCVdc3j0Nq0YRJK6NJGlrm6oMP5b5y4HOCsLFCopkDfNq0g8nMierLArFtaNH4yrjfm9X9NJw3xGjTvgrWF4qvbRxIi6KW+fQkojaKTqtc2upa6edp90PWogY4c/NsOWMvlvBqq5mODYb1zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D11cudOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbEmFcmw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70533C2BCB8;
-	Mon,  4 May 2026 13:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D11cudOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E9FC2BCB8;
+	Mon,  4 May 2026 13:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903017;
-	bh=22IfEK9vPCNFpS1Lde+q5vzqS2ZGdzDtJKGpG8jl0N4=;
+	s=korg; t=1777903020;
+	bh=r6jIIaxlKwHUF+uewf0uKdTOUqobRxZsmh1IUAdLmmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lbEmFcmwTTHTiq6qQ0XKgIoRnShlcfcHxXDIR753iMYIda142wvp7POgMQGXDI3Dc
-	 OUH/IMhT0e1a1CtqL8oPyR4IVQAXszAqRz3dGLgUmQnvKwS/GLtsGm911CZ7aqNVQU
-	 SD3vQDhCBniX/AVpAHk614p78x5CgcgI3RGRy6uY=
+	b=D11cudOQq/VpHOufl8l4dT4vsUD5NJNXvfBCWlNwujwX0+Pomz/mAbvQieC6AtCWy
+	 +dkZNoiYXykRjIFD16/8hd7kv5MYIojBNzSJi5o3Z+O06EH6J59P6SkN9b+W9h1CH0
+	 vwC0yS1XAOivLR861N1ze/H/cimbkm7n1po4c6Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>
-Subject: [PATCH 7.0 072/307] erofs: fix the out-of-bounds nameoff handling for trailing dirents
-Date: Mon,  4 May 2026 15:49:17 +0200
-Message-ID: <20260504135145.526180631@linuxfoundation.org>
+	Li Xiao <252270051@hdu.edu.cn>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 7.0 073/307] ipmi:ssif: Clean up kthread on errors
+Date: Mon,  4 May 2026 15:49:18 +0200
+Message-ID: <20260504135145.562837603@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,88 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Corey Minyard <corey@minyard.net>
 
-commit d18a3b5d337fa412a38e776e6b4b857a58836575 upstream.
+commit 75c486cb1bcaa1a3ec3a6438498176a3a4998ae4 upstream.
 
-Currently we already have boundary-checks for nameoffs, but the trailing
-dirents are special since the namelens are calculated with strnlen()
-with unchecked nameoffs.
+If an error occurs after the ssif kthread is created, but before the
+main IPMI code starts the ssif interface, the ssif kthread will not
+be stopped.
 
-If a crafted EROFS has a trailing dirent with nameoff >= maxsize,
-maxsize - nameoff can underflow, causing strnlen() to read past the
-directory block.
+So make sure the kthread is stopped on an error condition if it is
+running.
 
-nameoff0 should also be verified to be a multiple of
-`sizeof(struct erofs_dirent)` as well [1].
-
-[1] https://sashiko.dev/#/patchset/20260416063511.3173774-1-hsiangkao%40linux.alibaba.com
-
-Fixes: 3aa8ec716e52 ("staging: erofs: add directory operations")
-Fixes: 33bac912840f ("staging: erofs: keep corrupted fs from crashing kernel in erofs_readdir()")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Closes: https://lore.kernel.org/r/A0FD7E0F-7558-49B0-8BC8-EB1ECDB2479A@outlook.com
+Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
+Reported-by: Li Xiao <<252270051@hdu.edu.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Li Xiao <252270051@hdu.edu.cn>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/dir.c |   28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/char/ipmi/ipmi_ssif.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/fs/erofs/dir.c
-+++ b/fs/erofs/dir.c
-@@ -19,20 +19,18 @@ static int erofs_fill_dentries(struct in
- 		const char *de_name = (char *)dentry_blk + nameoff;
- 		unsigned int de_namelen;
- 
--		/* the last dirent in the block? */
--		if (de + 1 >= end)
--			de_namelen = strnlen(de_name, maxsize - nameoff);
--		else
-+		/* non-trailing dirent in the directory block? */
-+		if (de + 1 < end)
- 			de_namelen = le16_to_cpu(de[1].nameoff) - nameoff;
-+		else if (maxsize <= nameoff)
-+			goto err_bogus;
-+		else
-+			de_namelen = strnlen(de_name, maxsize - nameoff);
- 
--		/* a corrupted entry is found */
--		if (nameoff + de_namelen > maxsize ||
--		    de_namelen > EROFS_NAME_LEN) {
--			erofs_err(dir->i_sb, "bogus dirent @ nid %llu",
--				  EROFS_I(dir)->nid);
--			DBG_BUGON(1);
--			return -EFSCORRUPTED;
--		}
-+		/* a corrupted entry is found (including negative namelen) */
-+		if (!in_range32(de_namelen, 1, EROFS_NAME_LEN) ||
-+		    nameoff + de_namelen > maxsize)
-+			goto err_bogus;
- 
- 		if (!dir_emit(ctx, de_name, de_namelen,
- 			      erofs_nid_to_ino64(EROFS_SB(dir->i_sb),
-@@ -42,6 +40,10 @@ static int erofs_fill_dentries(struct in
- 		ctx->pos += sizeof(struct erofs_dirent);
- 	}
- 	return 0;
-+err_bogus:
-+	erofs_err(dir->i_sb, "bogus dirent @ nid %llu", EROFS_I(dir)->nid);
-+	DBG_BUGON(1);
-+	return -EFSCORRUPTED;
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -1268,8 +1268,10 @@ static void shutdown_ssif(void *send_inf
+ 	ssif_info->stopping = true;
+ 	timer_delete_sync(&ssif_info->watch_timer);
+ 	timer_delete_sync(&ssif_info->retry_timer);
+-	if (ssif_info->thread)
++	if (ssif_info->thread) {
+ 		kthread_stop(ssif_info->thread);
++		ssif_info->thread = NULL;
++	}
  }
  
- static int erofs_readdir(struct file *f, struct dir_context *ctx)
-@@ -88,7 +90,7 @@ static int erofs_readdir(struct file *f,
- 		}
+ static void ssif_remove(struct i2c_client *client)
+@@ -1916,6 +1918,15 @@ static int ssif_probe(struct i2c_client
  
- 		nameoff = le16_to_cpu(de->nameoff);
--		if (nameoff < sizeof(struct erofs_dirent) || nameoff >= bsz) {
-+		if (!nameoff || nameoff >= bsz || (nameoff % sizeof(*de))) {
- 			erofs_err(sb, "invalid de[0].nameoff %u @ nid %llu",
- 				  nameoff, EROFS_I(dir)->nid);
- 			err = -EFSCORRUPTED;
+  out:
+ 	if (rv) {
++		/*
++		 * If ipmi_register_smi() starts the interface, it will
++		 * call shutdown and that will free the thread and set
++		 * it to NULL.  Otherwise it must be freed here.
++		 */
++		if (ssif_info->thread) {
++			kthread_stop(ssif_info->thread);
++			ssif_info->thread = NULL;
++		}
+ 		if (addr_info)
+ 			addr_info->client = NULL;
+ 
 
 
