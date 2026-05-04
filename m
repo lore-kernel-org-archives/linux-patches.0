@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7F7377575;
-	Mon,  4 May 2026 14:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A0A377575;
+	Mon,  4 May 2026 14:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903972; cv=none; b=L/yjf0o/QkWmuurJF7HgNWHHE4Xou/tNia5JYaLD0VpEWLYAPp+b0aYzTnz81QbeHTZwaJDDiU+qpjpQ43HcoSTi3WwRlqhjfTk2FjqIYj47zLvj8kwJoc6OHVPWL2CFhIWTo6WhuQdyxOVHkMi/bN13EwTG4Xv5EGGaYdY410k=
+	t=1777903974; cv=none; b=M0AQHAYubZ2K8o9tApt6Lu9YEzV7AUrdy0Z38T+wJeoOzTCP9kpwvmi5QyUSl/OBMTnZUbEsJ/6+sO1vo6KKK9oypy4EnlxO+xDqRc0AxLN53ZBHB2y6aF4KPdBeLpvhj+vyZ9KmHT5T+AwrOz/Ir+cRmPBDI+rpwso/ySgDyzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903972; c=relaxed/simple;
-	bh=D8pkiSwNKBd73gPOjVdafhwkeI86bqYLzVwQeG0sJ/8=;
+	s=arc-20240116; t=1777903974; c=relaxed/simple;
+	bh=XWxlyjbIHB4nk1/J3EQdjh4l82FImC53NmQt25OPFHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HoS+KKyM8IcRDGl6xLRJBMnx6ZQk9YaeCZu8Wiqgnkk/nfA5/qpjjpgFrgPBawsQVCHwZh5MALeYHntw61F5PRc8MKGMmVuP4+5uuLzbQwlM0uSFykygtxLSjdKX8tbDO48daApEfHQfVyrHGTLTb2hiynbe/QAlymICkst1su8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEf32kHf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AeOtJpJkpaFcLq/Ef33FrfJBlJj5q+lXfILcTHi0+9NoSyYBpq+STRRQcEvMpjWQFuHD6lYrNyo+E3pPtQT3tQ0J/H7X8XmcNIk8YgBMLpZRPpJNcJIu05OIANpZnKc1rggPy7Yxt91eTqMBHPJXKWnR2uk+DAWfpBisZS8WbtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9x9MNyf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEf32kHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89CA4C2BCB8;
-	Mon,  4 May 2026 14:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9x9MNyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0F8C2BCB8;
+	Mon,  4 May 2026 14:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903971;
-	bh=D8pkiSwNKBd73gPOjVdafhwkeI86bqYLzVwQeG0sJ/8=;
+	s=korg; t=1777903974;
+	bh=XWxlyjbIHB4nk1/J3EQdjh4l82FImC53NmQt25OPFHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEf32kHfQmsoBHD5EJD6z0QIJWELbItaM5dKYMt/vhQb9uScdsY4kPoIVh0/W/7SN
-	 pA8GyNrFU0RU1lOqqLLaFSFGmhk0EcehreU5mh4yMRo71f2cMbLTo16xRq65zKxAKq
-	 eMJnX00OAPpXgHRAGRTeGCK8jPh1yuuq1r2RMKGY=
+	b=U9x9MNyfJugGkb107OwhhkSWHcrH6Ebq5c2PI5w/5zQRZSJmXAAOsIPo5CVfciLBd
+	 FWvWqJ0Z0D7bedQJaPCl8VZfcd5fQjevKeIpTu5fxkX4sP1++Nv/Iq9hM3s08yQY8m
+	 qQAffYNWfMRwCa9o/lsSbeXZaSD8wsKUOnKG2raY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 134/275] spi: fix resource leaks on device setup failure
-Date: Mon,  4 May 2026 15:51:14 +0200
-Message-ID: <20260504135147.884756062@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.18 135/275] extract-cert: Wrap key_pass with #ifdef USE_PKCS11_ENGINE
+Date: Mon,  4 May 2026 15:51:15 +0200
+Message-ID: <20260504135147.921923050@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,129 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit db357034f7e0cf23f233f414a8508312dfe8fbbe upstream.
+commit 4f96b7c68a9904e01049ef610d701b382dca9574 upstream.
 
-Make sure to call controller cleanup() if spi_setup() fails while
-registering a device to avoid leaking any resources allocated by
-setup().
+A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
+in clang under a new subwarning, -Wunused-but-set-global, points out an
+unused static global variable in certs/extract-cert.c:
 
-Fixes: c7299fea6769 ("spi: Fix spi device unregister flow")
-Cc: stable@vger.kernel.org	# 5.13
-Cc: Saravana Kannan <saravanak@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410154907.129248-2-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  certs/extract-cert.c:46:20: error: variable 'key_pass' set but not used [-Werror,-Wunused-but-set-global]
+     46 | static const char *key_pass;
+        |                    ^
+
+After commit 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider
+for OPENSSL MAJOR >= 3"), key_pass is only used with the OpenSSL engine
+API, not the new provider API. Wrap key_pass's declaration and
+assignment with '#ifdef USE_PKCS11_ENGINE' so that it is only included
+with its use to clear up the warning. While this is a little uglier than
+just marking key_pass with the unused attribute, this will make it
+easier to clean up all code associated with the use of the engine API if
+it were ever removed in the future. While in the area, use a tab for
+the key_pass assignment line to match the rest of the file.
+
+Cc: stable@vger.kernel.org
+Fixes: 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider for OPENSSL MAJOR >= 3")
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://patch.msgid.link/20260325-certs-extract-cert-key_pass-unused-but-set-global-v1-1-ecf94326d532@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   61 ++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 37 insertions(+), 24 deletions(-)
+ certs/extract-cert.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -43,6 +43,8 @@ EXPORT_TRACEPOINT_SYMBOL(spi_transfer_st
- 
- #include "internals.h"
- 
-+static int __spi_setup(struct spi_device *spi, bool initial_setup);
-+
- static DEFINE_IDR(spi_controller_idr);
- 
- static void spidev_release(struct device *dev)
-@@ -729,7 +731,7 @@ static int __spi_add_device(struct spi_d
- 	 * normally rely on the device being setup.  Devices
- 	 * using SPI_CS_HIGH can't coexist well otherwise...
- 	 */
--	status = spi_setup(spi);
-+	status = __spi_setup(spi, true);
- 	if (status < 0) {
- 		dev_err(dev, "can't setup %s, status %d\n",
- 				dev_name(&spi->dev), status);
-@@ -3854,27 +3856,7 @@ static int spi_set_cs_timing(struct spi_
- 	return status;
+--- a/certs/extract-cert.c
++++ b/certs/extract-cert.c
+@@ -43,7 +43,9 @@ void format(void)
+ 	exit(2);
  }
  
--/**
-- * spi_setup - setup SPI mode and clock rate
-- * @spi: the device whose settings are being modified
-- * Context: can sleep, and no requests are queued to the device
-- *
-- * SPI protocol drivers may need to update the transfer mode if the
-- * device doesn't work with its default.  They may likewise need
-- * to update clock rates or word sizes from initial values.  This function
-- * changes those settings, and must be called from a context that can sleep.
-- * Except for SPI_CS_HIGH, which takes effect immediately, the changes take
-- * effect the next time the device is selected and data is transferred to
-- * or from it.  When this function returns, the SPI device is deselected.
-- *
-- * Note that this call will fail if the protocol driver specifies an option
-- * that the underlying controller or its driver does not support.  For
-- * example, not all hardware supports wire transfers using nine bit words,
-- * LSB-first wire encoding, or active-high chipselects.
-- *
-- * Return: zero on success, else a negative error code.
-- */
--int spi_setup(struct spi_device *spi)
-+static int __spi_setup(struct spi_device *spi, bool initial_setup)
- {
- 	unsigned	bad_bits, ugly_bits;
- 	int		status;
-@@ -3959,7 +3941,7 @@ int spi_setup(struct spi_device *spi)
- 	status = spi_set_cs_timing(spi);
- 	if (status) {
- 		mutex_unlock(&spi->controller->io_mutex);
--		return status;
-+		goto err_cleanup;
- 	}
++#ifdef USE_PKCS11_ENGINE
+ static const char *key_pass;
++#endif
+ static BIO *wb;
+ static char *cert_dst;
+ static bool verbose;
+@@ -135,7 +137,9 @@ int main(int argc, char **argv)
+ 	if (verbose_env && strchr(verbose_env, '1'))
+ 		verbose = true;
  
- 	if (spi->controller->auto_runtime_pm && spi->controller->set_cs) {
-@@ -3968,7 +3950,7 @@ int spi_setup(struct spi_device *spi)
- 			mutex_unlock(&spi->controller->io_mutex);
- 			dev_err(&spi->controller->dev, "Failed to power device: %d\n",
- 				status);
--			return status;
-+			goto err_cleanup;
- 		}
+-        key_pass = getenv("KBUILD_SIGN_PIN");
++#ifdef USE_PKCS11_ENGINE
++	key_pass = getenv("KBUILD_SIGN_PIN");
++#endif
  
- 		/*
-@@ -4004,6 +3986,37 @@ int spi_setup(struct spi_device *spi)
- 			status);
- 
- 	return status;
-+
-+err_cleanup:
-+	if (initial_setup)
-+		spi_cleanup(spi);
-+
-+	return status;
-+}
-+
-+/**
-+ * spi_setup - setup SPI mode and clock rate
-+ * @spi: the device whose settings are being modified
-+ * Context: can sleep, and no requests are queued to the device
-+ *
-+ * SPI protocol drivers may need to update the transfer mode if the
-+ * device doesn't work with its default.  They may likewise need
-+ * to update clock rates or word sizes from initial values.  This function
-+ * changes those settings, and must be called from a context that can sleep.
-+ * Except for SPI_CS_HIGH, which takes effect immediately, the changes take
-+ * effect the next time the device is selected and data is transferred to
-+ * or from it.  When this function returns, the SPI device is deselected.
-+ *
-+ * Note that this call will fail if the protocol driver specifies an option
-+ * that the underlying controller or its driver does not support.  For
-+ * example, not all hardware supports wire transfers using nine bit words,
-+ * LSB-first wire encoding, or active-high chipselects.
-+ *
-+ * Return: zero on success, else a negative error code.
-+ */
-+int spi_setup(struct spi_device *spi)
-+{
-+	return __spi_setup(spi, false);
- }
- EXPORT_SYMBOL_GPL(spi_setup);
- 
+ 	if (argc != 3)
+ 		format();
 
 
