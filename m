@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A56C3DEAD8;
-	Mon,  4 May 2026 14:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4D73DE43E;
+	Mon,  4 May 2026 14:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903696; cv=none; b=tuHZtRuj4Ce9UYRoi5TKjfzKUaJUtdGP/B02KVpg0MSciX5xHMztg+ZWD/NgwuCOS4AVwEHxtXZResIwtBxSJIK0p81/nTpUFxL6e7gL8bp6yOrnsuMhy3jKBUB8Z8344plqrSee0OMVaRfyc1KcDWnCRR4NXqctm3G9IN/gJlg=
+	t=1777903699; cv=none; b=P4QGTIboy5uiusO7DntQzuxIgVDNVBTQSGpBLvlUY1cbURbJtiTm9E//0jzNZQq6Ks1UpRuKg+8aLIX593gw+fEQx8a24bZn3fDzi42D+pBfdLSmYQ1KmjQiqo1w1WVIsRZQpZxmH7uRLkw836lx4fBE7Z5RRF/OzMBcxFF6uQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903696; c=relaxed/simple;
-	bh=QaS37jN/+yM49O4To3/A7PORvF7vk5iXIKEmNWPrlRw=;
+	s=arc-20240116; t=1777903699; c=relaxed/simple;
+	bh=EPaLAnquOPqXH7jK+fYrT1kSwKnZf+8ZxNMLp8BbTNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KTUc34ax1Y9NfWwroH1KeQ15nRZQGq2P3xl14MsmLgEAGTjvSsGOx6w0tNdcJSJ10aIMwcWABHrnlk/gLwy/z1LTDMPh50cX7uF7N4KhJ+8dRbocnK7d8wfJxYfElCFS7unS0kIfZZJJ9vMPWFFjrqNv9ihYrdqhF+goTmJksp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+7J6LFl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ifa9cH5awUGe5Wh4Knbyqq8nOBRif3gTet9umN/Dx/+5Lz57F8CydId9otEfX0nO1NsSJt2f9V3vbRCYDoEWUfRx1OYFBxu+dq5dpJdXmc0N1f4PHhoeLlLfPFl0wjB2vH8rCSVrg7qnaCqCTDdzV3QC7qT66kh11+asM4NYhXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTz3mb4e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+7J6LFl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30B9C2BCB8;
-	Mon,  4 May 2026 14:08:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTz3mb4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A060C2BCB8;
+	Mon,  4 May 2026 14:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903696;
-	bh=QaS37jN/+yM49O4To3/A7PORvF7vk5iXIKEmNWPrlRw=;
+	s=korg; t=1777903698;
+	bh=EPaLAnquOPqXH7jK+fYrT1kSwKnZf+8ZxNMLp8BbTNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+7J6LFlEOUsvT4MZa+LIXzmCLI7wZ+CwC2BZtyDq82yifqRVqV5wA2HwgxFUYVvX
-	 QLonPuLUPdb4LfG5XQqd8OjnNEkr6cGy3p4r26Vv3448Lz0WZrqUWBsoa6VKCM2CNr
-	 AiHzICc7KpKKffpmCzDOJFRWsG3aW7i1NsrNAH7M=
+	b=pTz3mb4eiP9XZsrUEwaOy8WFLLjb7f1UN/vKmRBRDesti30dQlt42HGOqV2BR04b4
+	 62rKtQ0lMNc8uH57UU5xeqXFF4PHk2o8XfO34eBxfOKOiqxyxZaxq++dhrWfJkSrqt
+	 6HbIGdzYXorDJy0LztMDLOdlr66IL5UggnBeixZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Qu Wenruo <wqu@suse.com>,
-	Avinesh Kumar <avinesh.kumar@suse.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Brian Geffon <bgeffon@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 027/275] zram: do not forget to endio for partial discard requests
-Date: Mon,  4 May 2026 15:49:27 +0200
-Message-ID: <20260504135143.947346255@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.18 028/275] wifi: rtw88: check for PCI upstream bridge existence
+Date: Mon,  4 May 2026 15:49:28 +0200
+Message-ID: <20260504135143.983941878@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -56,59 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit e3668b371329ea036ff022ce8ecc82f8befcf003 upstream.
+commit eb101d2abdcccb514ca4fccd3b278dd8267374f6 upstream.
 
-As reported by Qu Wenruo and Avinesh Kumar, the following
+pci_upstream_bridge() returns NULL if the device is on a root bus.  If
+8821CE is installed in the system with such a PCI topology, the probing
+routine will crash.  This has probably been unnoticed as 8821CE is mostly
+supplied in laptops where there is a PCI-to-PCI bridge located upstream
+from the device.  However the card might be installed on a system with
+different configuration.
 
- getconf PAGESIZE
- 65536
- blkdiscard -p 4k /dev/zram0
+Check if the bridge does exist for the specific workaround to be applied.
 
-takes literally forever to complete.  zram doesn't support partial
-discards and just returns immediately w/o doing any discard work in such
-cases.  The problem is that we forget to endio on our way out, so
-blkdiscard sleeps forever in submit_bio_wait().  Fix this by jumping to
-end_bio label, which does bio_endio().
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
 
-Link: https://lore.kernel.org/20260331074255.777019-1-senozhatsky@chromium.org
-Fixes: 0120dd6e4e20 ("zram: make zram_bio_discard more self-contained")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reported-by: Qu Wenruo <wqu@suse.com>
-Closes: https://lore.kernel.org/linux-block/92361cd3-fb8b-482e-bc89-15ff1acb9a59@suse.com
-Tested-by: Qu Wenruo <wqu@suse.com>
-Reported-by: Avinesh Kumar <avinesh.kumar@suse.com>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1256530
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 24f5e38a13b5 ("rtw88: Disable PCIe ASPM while doing NAPI poll on 8821CE")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260220094730.49791-1-pchelkin@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    3 ++-
+ drivers/net/wireless/realtek/rtw88/pci.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -2308,7 +2308,7 @@ static void zram_bio_discard(struct zram
- 	 */
- 	if (offset) {
- 		if (n <= (PAGE_SIZE - offset))
--			return;
-+			goto end_bio;
- 
- 		n -= (PAGE_SIZE - offset);
- 		index++;
-@@ -2323,6 +2323,7 @@ static void zram_bio_discard(struct zram
- 		n -= PAGE_SIZE;
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1804,7 +1804,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
  	}
  
-+end_bio:
- 	bio_endio(bio);
- }
+ 	/* Disable PCIe ASPM L1 while doing NAPI poll for 8821CE */
+-	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C && bridge->vendor == PCI_VENDOR_ID_INTEL)
++	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C &&
++	    bridge && bridge->vendor == PCI_VENDOR_ID_INTEL)
+ 		rtwpci->rx_no_aspm = true;
  
+ 	rtw_pci_phy_cfg(rtwdev);
 
 
