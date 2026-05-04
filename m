@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5711D35A3AD;
-	Mon,  4 May 2026 14:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2943B3D5667;
+	Mon,  4 May 2026 14:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903928; cv=none; b=hDgO4qtzXHcY9YBeweaPK/RgNeMnw2GIR6x455OOMBAPhFFAOpFP5WUtHo+F/x9ZhoIy1xS0/Gu+qDvgDb9Sk79rXfiG7TX+vGJffONV4IifF7E0q59Z06qHJO/wHjd+3JLg1rzd5FGbA+mWSei7GlfuY+mG4hvZZrCp6E5WrYk=
+	t=1777903931; cv=none; b=lzGhoL1gyRPEgA43EM+H0p1IqLfec1f/WLLgZxBnxKX0n0/QFQoVkYiH1KYpNAz8/Dmyr6V20Q9cEYIJKbuxDzmGQtPQsThp38F1D/QIP4rxPuvt/gCm0yzYbB5tlM1qEhvXgoPjGHYLY6JK0AZvBhKHAZcU3G9lUSfntX6kNic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903928; c=relaxed/simple;
-	bh=6b80rH9bwGy5gzdOsWgfOQ8Y1dF5E5nbmQF2LXmGpXM=;
+	s=arc-20240116; t=1777903931; c=relaxed/simple;
+	bh=ye9jS2kGX9HVlNBwTys+ZnW/Z4fCNsvXd3eQtBKDI7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebu5x2SWb3rBM6pq+bnLbCJxQElLCeOcjW68Pmesxdmfo0ycoxaWKlCAUxHRk/oOhkEk5pfNkruzJK27TZJuAYWvAiurutjQZnL+BJMZZUX/RFN8SVRU+7NScdE0/B1mdO8Nkp3+wn/AOT/liiGLw5Ubj0ezMo57bPQ1AQccvLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgAHiNIw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TBZPT3lflzmDbORf002N7oSsDzVONGiMB1D/abZvbEYnbwsdHQr9y8uIYOQAWRC870qMGRrcRIjXI1F9ScQeDR1MgVjyqCceSJ/1Ko0I7BGS7XGsNhektrhsCsMd7ibbrlE4rFGGvBAWRTLI7QTZ16DlpbWP0qzqmv2J2ssElOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPyfpu7T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgAHiNIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90B2C2BCB8;
-	Mon,  4 May 2026 14:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPyfpu7T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC91C2BCB8;
+	Mon,  4 May 2026 14:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903928;
-	bh=6b80rH9bwGy5gzdOsWgfOQ8Y1dF5E5nbmQF2LXmGpXM=;
+	s=korg; t=1777903930;
+	bh=ye9jS2kGX9HVlNBwTys+ZnW/Z4fCNsvXd3eQtBKDI7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZgAHiNIw2gytsRheg19dEIp0ill35RPZ72eMKDuvkvz6sL64A1CGAr14T1bUqMG6T
-	 RVYd6xLGi3bETZlJ6iI1Rnfb4q2AIxVpx/MQaGmnbwRFoImpR2k8JaHwlfOjxOZt7g
-	 4TN7XQz/hrEl3NjVxRU2xgoPiuIk6eW7ymOugcKQ=
+	b=aPyfpu7TQqfdFzaG8gdMqldQhf1ELWw/IFpAbN637RDeES0p86pBpirrZW3JfpDZD
+	 RDVAXJotxiXUnKXxpFoc1q7NHy3GAeSTDBkrCNFaUKjj3raZU0zX1Kys9gfU4h0v7t
+	 vl5djmQYdDoneoAL5w4DQvOSZRn+E01sykgyhEM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <cyyzero16@gmail.com>,
-	Balbir Singh <bsingharora@gmail.com>,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Fan Yu <fan.yu9@zte.com.cn>,
-	Wang Yaxin <wang.yaxin@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 116/275] tools/accounting: handle truncated taskstats netlink messages
-Date: Mon,  4 May 2026 15:50:56 +0200
-Message-ID: <20260504135147.218445230@linuxfoundation.org>
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.18 090/275] selftests/landlock: Fix snprintf truncation checks in audit helpers
+Date: Mon,  4 May 2026 15:50:30 +0200
+Message-ID: <20260504135146.263738784@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -48,187 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yiyang Chen <cyyzero16@gmail.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit cc82b3dcc6a8fa259fbda12ab00d6fc00908a49e upstream.
+commit b566f7a4f0e4f15f78f2e5fac273fa954991e03a upstream.
 
-procacct and getdelays use a fixed receive buffer for taskstats generic
-netlink messages.  A multi-threaded process exit can emit a single
-PID+TGID notification large enough to exceed that buffer on newer kernels.
+snprintf() returns the number of characters that would have been
+written, excluding the terminating NUL byte.  When the output is
+truncated, this return value equals or exceeds the buffer size.  Fix
+matches_log_domain_allocated() and matches_log_domain_deallocated() to
+detect truncation with ">=" instead of ">".
 
-Switch to recvmsg() so MSG_TRUNC is detected explicitly, increase the
-message buffer size, and report truncated datagrams clearly instead of
-misparsing them as fatal netlink errors.
-
-Also print the taskstats version in debug output to make version
-mismatches easier to diagnose while inspecting taskstats traffic.
-
-Link: https://lkml.kernel.org/r/520308bb4cbbaf8dc2c7296b5f60f11e12fb30a5.1774810498.git.cyyzero16@gmail.com
-Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
-Cc: Balbir Singh <bsingharora@gmail.com>
-Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Cc: Fan Yu <fan.yu9@zte.com.cn>
-Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Günther Noack <gnoack@google.com>
+Cc: stable@vger.kernel.org
+Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://lore.kernel.org/r/20260402192608.1458252-2-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/accounting/getdelays.c |   41 +++++++++++++++++++++++++++++++++++++----
- tools/accounting/procacct.c  |   40 ++++++++++++++++++++++++++++++++++++----
- 2 files changed, 73 insertions(+), 8 deletions(-)
+ tools/testing/selftests/landlock/audit.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/accounting/getdelays.c
-+++ b/tools/accounting/getdelays.c
-@@ -59,7 +59,7 @@ int print_task_context_switch_counts;
- 	}
+--- a/tools/testing/selftests/landlock/audit.h
++++ b/tools/testing/selftests/landlock/audit.h
+@@ -309,7 +309,7 @@ static int __maybe_unused matches_log_do
  
- /* Maximum size of response requested or message sent */
--#define MAX_MSG_SIZE	1024
-+#define MAX_MSG_SIZE	2048
- /* Maximum number of cpus expected to be specified in a cpumask */
- #define MAX_CPUS	32
+ 	log_match_len =
+ 		snprintf(log_match, sizeof(log_match), log_template, pid);
+-	if (log_match_len > sizeof(log_match))
++	if (log_match_len >= sizeof(log_match))
+ 		return -E2BIG;
  
-@@ -114,6 +114,32 @@ error:
- 	return -1;
- }
+ 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_DOMAIN, log_match,
+@@ -326,7 +326,7 @@ static int __maybe_unused matches_log_do
  
-+static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
-+{
-+	struct sockaddr_nl nladdr;
-+	struct iovec iov = {
-+		.iov_base = msg,
-+		.iov_len = sizeof(*msg),
-+	};
-+	struct msghdr hdr = {
-+		.msg_name = &nladdr,
-+		.msg_namelen = sizeof(nladdr),
-+		.msg_iov = &iov,
-+		.msg_iovlen = 1,
-+	};
-+	int ret;
-+
-+	ret = recvmsg(sd, &hdr, 0);
-+	if (ret < 0)
-+		return -1;
-+	if (hdr.msg_flags & MSG_TRUNC) {
-+		errno = EMSGSIZE;
-+		return -1;
-+	}
-+
-+	return ret;
-+}
-+
+ 	log_match_len = snprintf(log_match, sizeof(log_match), log_template,
+ 				 num_denials);
+-	if (log_match_len > sizeof(log_match))
++	if (log_match_len >= sizeof(log_match))
+ 		return -E2BIG;
  
- static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
- 	     __u8 genl_cmd, __u16 nla_type,
-@@ -515,12 +541,16 @@ int main(int argc, char *argv[])
- 	}
- 
- 	do {
--		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
-+		rep_len = recv_taskstats_msg(nl_sd, &msg);
- 		PRINTF("received %d bytes\n", rep_len);
- 
- 		if (rep_len < 0) {
--			fprintf(stderr, "nonfatal reply error: errno %d\n",
--				errno);
-+			if (errno == EMSGSIZE)
-+				fprintf(stderr,
-+					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
-+			else
-+				fprintf(stderr, "nonfatal reply error: errno %d\n",
-+					errno);
- 			continue;
- 		}
- 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
-@@ -562,6 +592,9 @@ int main(int argc, char *argv[])
- 							printf("TGID\t%d\n", rtid);
- 						break;
- 					case TASKSTATS_TYPE_STATS:
-+						PRINTF("version %u\n",
-+						       ((struct taskstats *)
-+							NLA_DATA(na))->version);
- 						if (print_delays)
- 							print_delayacct((struct taskstats *) NLA_DATA(na));
- 						if (print_io_accounting)
---- a/tools/accounting/procacct.c
-+++ b/tools/accounting/procacct.c
-@@ -71,7 +71,7 @@ int print_task_context_switch_counts;
- 	}
- 
- /* Maximum size of response requested or message sent */
--#define MAX_MSG_SIZE	1024
-+#define MAX_MSG_SIZE	2048
- /* Maximum number of cpus expected to be specified in a cpumask */
- #define MAX_CPUS	32
- 
-@@ -121,6 +121,32 @@ error:
- 	return -1;
- }
- 
-+static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
-+{
-+	struct sockaddr_nl nladdr;
-+	struct iovec iov = {
-+		.iov_base = msg,
-+		.iov_len = sizeof(*msg),
-+	};
-+	struct msghdr hdr = {
-+		.msg_name = &nladdr,
-+		.msg_namelen = sizeof(nladdr),
-+		.msg_iov = &iov,
-+		.msg_iovlen = 1,
-+	};
-+	int ret;
-+
-+	ret = recvmsg(sd, &hdr, 0);
-+	if (ret < 0)
-+		return -1;
-+	if (hdr.msg_flags & MSG_TRUNC) {
-+		errno = EMSGSIZE;
-+		return -1;
-+	}
-+
-+	return ret;
-+}
-+
- 
- static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
- 	     __u8 genl_cmd, __u16 nla_type,
-@@ -239,6 +265,8 @@ void handle_aggr(int mother, struct nlat
- 			PRINTF("TGID\t%d\n", rtid);
- 			break;
- 		case TASKSTATS_TYPE_STATS:
-+			PRINTF("version %u\n",
-+			       ((struct taskstats *)NLA_DATA(na))->version);
- 			if (mother == TASKSTATS_TYPE_AGGR_PID)
- 				print_procacct((struct taskstats *) NLA_DATA(na));
- 			if (fd) {
-@@ -347,12 +375,16 @@ int main(int argc, char *argv[])
- 	}
- 
- 	do {
--		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
-+		rep_len = recv_taskstats_msg(nl_sd, &msg);
- 		PRINTF("received %d bytes\n", rep_len);
- 
- 		if (rep_len < 0) {
--			fprintf(stderr, "nonfatal reply error: errno %d\n",
--				errno);
-+			if (errno == EMSGSIZE)
-+				fprintf(stderr,
-+					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
-+			else
-+				fprintf(stderr, "nonfatal reply error: errno %d\n",
-+					errno);
- 			continue;
- 		}
- 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
+ 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_DOMAIN, log_match,
 
 
