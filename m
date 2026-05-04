@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8BC37881B;
-	Mon,  4 May 2026 14:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0CE75801;
+	Mon,  4 May 2026 14:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903447; cv=none; b=gheGFWfPx1uManatfICJop5ySxIfaQR8uzfXClPz2PUd5X11hSvO50y9Q/JfWCeCPP1jKBh2uiQxUf6sSbAOgM9LRxdgCNEp6bRDUAdrsrEDZoimWZbMyYZRxqonPHYVbVdgpJy6BI2KioPqE/etWuDXlfCvEKj3I5vlHnbl+4U=
+	t=1777903449; cv=none; b=U7zpkIrDE1rLA+5YdzG/DW8aRYsP/R001N1YTGjPUSElQasmRbF5LubGUsj98sa88XuaAjlXjC4fSn54fTe9KTzwf6gN/8rI+BvZmfDIgN4c0f8sV7TKRUJBYulwYx8NEQinDjbDuAU2Ce9/Xb7GqJBcrRjkTYiP5rflaV6mB9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903447; c=relaxed/simple;
-	bh=I/0C/na99roZNXNdV7SzmcG8kflDUNY1jRpTJhfEPHs=;
+	s=arc-20240116; t=1777903449; c=relaxed/simple;
+	bh=H+EN4AnIptkunN3CefOPh8hm9iUeyQr5a8n3mE5JwfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4SqZa4Igmgrz+6ThRe97wkkgOE6LZedd+k/0cqXmrGVc++OhW8QfsNN0sDAX2OdsPvECEmcQQtQv6gb50WG0S49v/1V/qRI64E9w7ePiNX5XSaiAMwC+Nu9ScIGoTE6j0rs95gyQqzHYQqGtT+rYajdp8Kcu/KMPwQq25ra1WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gsslo6hT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H4spRimKEXTphnYyL4sYR9u3VApDVZGXloy27yRCwc5txTZXe+NsSV3SuWXUtO3zuqGm4MU+hOzj+teAx6qIUZcfEHjcvToWwFakTATwPjHNi782hPwFYyhScmaPfB4lJYh3QzyFJqWl7ZCvUU+dhRPbmpgY4jmy0rj1cg9e6XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n75pHNbU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gsslo6hT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9872AC2BCB8;
-	Mon,  4 May 2026 14:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n75pHNbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E957C2BCB8;
+	Mon,  4 May 2026 14:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903446;
-	bh=I/0C/na99roZNXNdV7SzmcG8kflDUNY1jRpTJhfEPHs=;
+	s=korg; t=1777903449;
+	bh=H+EN4AnIptkunN3CefOPh8hm9iUeyQr5a8n3mE5JwfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gsslo6hTfpWVteI1G5rcXA2RuMdWpjjEVZWqzQQlVYQWI1LBN0T2292FpYUvF8X5D
-	 Yw0VolVDntC6h542cJZI7+Oa5I/TtTEe1QxQRvI7EzBQ2ZQ5053gNevUghvuGnVnfK
-	 K34XUBGaijhMuoRLg42PVLFVfIsFvSpOVvcQhTwM=
+	b=n75pHNbU85R0SAmL9SdMZfNunNJiXePw0MSBwLkZR7FmOou+mseYFHBccsg6u+YC2
+	 nhyoyYVRAradMbdE9IhkNxqLAs/0xNTTKUPIG77JBZeBd9H06pdqHdprfj9Q3HhNVf
+	 UZu8GLb/Vgx3g5jOgsNbls55eNmQmgH3Kacm+1mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 236/307] amdgpu/jpeg: fix deepsleep register for jpeg 5_0_0 and 5_0_2
-Date: Mon,  4 May 2026 15:52:01 +0200
-Message-ID: <20260504135151.722199729@linuxfoundation.org>
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 7.0 237/307] md/md-llbitmap: skip reading rdevs that are not in_sync
+Date: Mon,  4 May 2026 15:52:02 +0200
+Message-ID: <20260504135151.759611026@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,104 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David (Ming Qiang) Wu <David.Wu3@amd.com>
+From: Yu Kuai <yukuai@fnnas.com>
 
-commit e90dc3b2d73986610476b02c29d0074aa4d92fb0 upstream.
+commit 7701e68b5072faa03a8f30b4081dc16df9092381 upstream.
 
-PCTL0__MMHUB_DEEPSLEEP_IB is 0x69004 on MMHUB 4,1,0 and
-and 0x60804 on MMHUB 4,2,0. 0x62a04 is on MMHUB 1,8,0/1.
+When reading bitmap pages from member disks, the code iterates through
+all rdevs and attempts to read from the first available one. However,
+it only checks for raid_disk assignment and Faulty flag, missing the
+In_sync flag check.
 
-The DS bits are adjusted to cover more JPEG engines and MMHUB
-version.
+This can cause bitmap data to be read from spare disks that are still
+being rebuilt and don't have valid bitmap information yet. Reading
+stale or uninitialized bitmap data from such disks can lead to
+incorrect dirty bit tracking, potentially causing data corruption
+during recovery or normal operation.
 
-Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Add the In_sync flag check to ensure bitmap pages are only read from
+fully synchronized member disks that have valid bitmap data.
+
 Cc: stable@vger.kernel.org
+Fixes: 5ab829f1971d ("md/md-llbitmap: introduce new lockless bitmap")
+Link: https://lore.kernel.org/linux-raid/20260223024038.3084853-2-yukuai@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c |   52 +++++++++++++++++++++++++++----
- 1 file changed, 46 insertions(+), 6 deletions(-)
+ drivers/md/md-llbitmap.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-@@ -736,15 +736,35 @@ static void jpeg_v4_0_3_dec_ring_set_wpt
-  */
- void jpeg_v4_0_3_dec_ring_insert_start(struct amdgpu_ring *ring)
- {
--	if (!amdgpu_sriov_vf(ring->adev)) {
-+	struct amdgpu_device *adev = ring->adev;
-+
-+	if (!amdgpu_sriov_vf(adev)) {
-+		int jpeg_inst = GET_INST(JPEG, ring->me);
-+		uint32_t value = 0x80004000; /* default DS14 */
-+
- 		amdgpu_ring_write(ring, PACKETJ(regUVD_JRBC_EXTERNAL_REG_INTERNAL_OFFSET,
- 			0, 0, PACKETJ_TYPE0));
--		amdgpu_ring_write(ring, 0x62a04); /* PCTL0_MMHUB_DEEPSLEEP_IB */
-+
-+		/* PCTL0__MMHUB_DEEPSLEEP_IB could be different on different mmhub version */
-+		switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
-+		case IP_VERSION(4, 1, 0):
-+			amdgpu_ring_write(ring, 0x69004);
-+			value = 0x80010000;
-+			break;
-+		case IP_VERSION(4, 2, 0):
-+			amdgpu_ring_write(ring, 0x60804);
-+			if (jpeg_inst & 1)
-+				value = 0x80010000;
-+			break;
-+		default:
-+			amdgpu_ring_write(ring, 0x62a04);
-+			break;
-+		}
+--- a/drivers/md/md-llbitmap.c
++++ b/drivers/md/md-llbitmap.c
+@@ -459,7 +459,8 @@ static struct page *llbitmap_read_page(s
+ 	rdev_for_each(rdev, mddev) {
+ 		sector_t sector;
  
- 		amdgpu_ring_write(ring,
- 				  PACKETJ(JRBC_DEC_EXTERNAL_REG_WRITE_ADDR, 0,
- 					  0, PACKETJ_TYPE0));
--		amdgpu_ring_write(ring, 0x80004000);
-+		amdgpu_ring_write(ring, value);
- 	}
- }
+-		if (rdev->raid_disk < 0 || test_bit(Faulty, &rdev->flags))
++		if (rdev->raid_disk < 0 || test_bit(Faulty, &rdev->flags) ||
++		    !test_bit(In_sync, &rdev->flags))
+ 			continue;
  
-@@ -757,15 +777,35 @@ void jpeg_v4_0_3_dec_ring_insert_start(s
-  */
- void jpeg_v4_0_3_dec_ring_insert_end(struct amdgpu_ring *ring)
- {
--	if (!amdgpu_sriov_vf(ring->adev)) {
-+	struct amdgpu_device *adev = ring->adev;
-+
-+	if (!amdgpu_sriov_vf(adev)) {
-+		int jpeg_inst = GET_INST(JPEG, ring->me);
-+		uint32_t value = 0x00004000; /* default DS14 */
-+
- 		amdgpu_ring_write(ring, PACKETJ(regUVD_JRBC_EXTERNAL_REG_INTERNAL_OFFSET,
- 			0, 0, PACKETJ_TYPE0));
--		amdgpu_ring_write(ring, 0x62a04);
-+
-+		/* PCTL0__MMHUB_DEEPSLEEP_IB could be different on different mmhub version */
-+		switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
-+		case IP_VERSION(4, 1, 0):
-+			amdgpu_ring_write(ring, 0x69004);
-+			value = 0x00010000;
-+			break;
-+		case IP_VERSION(4, 2, 0):
-+			amdgpu_ring_write(ring, 0x60804);
-+			if (jpeg_inst & 1)
-+				value = 0x00010000;
-+			break;
-+		default:
-+			amdgpu_ring_write(ring, 0x62a04);
-+			break;
-+		}
- 
- 		amdgpu_ring_write(ring,
- 				  PACKETJ(JRBC_DEC_EXTERNAL_REG_WRITE_ADDR, 0,
- 					  0, PACKETJ_TYPE0));
--		amdgpu_ring_write(ring, 0x00004000);
-+		amdgpu_ring_write(ring, value);
- 	}
- }
- 
+ 		sector = mddev->bitmap_info.offset +
 
 
