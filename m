@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126273DD53E;
-	Mon,  4 May 2026 14:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE703D9029;
+	Mon,  4 May 2026 14:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903429; cv=none; b=EoDGQGO8TlzzpPHjBWhVJEnCQ4Q/2HmcaShPz46d0NnaocXoUOReuhoeqX8hfo0P8KYBE/xr34D2E3M2sxWf0dSRJVwLtJerAJwxVe4JQw0q6eFBBZ2J5SWD6XBVFDYmF9/FvLEKQqBMMzYcvR7KUT8Jw28bnl8bFZtP0vTXmrc=
+	t=1777903431; cv=none; b=Cdc1GfCESeup3J5a/PTavPt8kLair2HEoupHaHjQX3bNWq9GJIuZxck3m3KjdAIpdqZPQHrO+Q6eaVtlcaA2oI4uw0A1uO84Dp/7BRO+L0NDZLFRfxNSndby760IuiJ0NZQjRsxr6okAdhfBPrHc13O+jN4VegOhodAqCCgdVTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903429; c=relaxed/simple;
-	bh=ubEN3fhI/mIZJt+ovUGIp5cqeww/Ura16hJTv/27YNw=;
+	s=arc-20240116; t=1777903431; c=relaxed/simple;
+	bh=jwwd6JPfZxISDBN+FBF1slwjm5F81S+51/GC+ePdKxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paRG+dzk1Y7LcIbkvT2fCrJcMRsTwD1EaayYuO6euj4UVGVGBG4jHMB54X2esVXB5Q6Nov9R433ZrS6YsdWhZHmPUQPivrzraV03CgjkpKkTuHe61qwQ1h4uWrNNe8DCnIC0p/EYR7HYQJJqU/tM6FyDCWC5SBfd2hq6OXHqoeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cokwcoD6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZX6DEXryrvoZIWseHyBRPP8syWhTJm3oP4vYlA2zfhwYYvUxS0J82LUnzrUTEi+px9huiDr5SIg0ZgOwM617UVwryAW048CsamDe+F3/2Gg3ChCwYt7ujykk1vKMzESUtuaCLF49E9VNUYC+x2Qo91ekp07sRZpiz1ylE+iB4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzueUBvy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cokwcoD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D89C2BCB8;
-	Mon,  4 May 2026 14:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzueUBvy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2731EC2BCB8;
+	Mon,  4 May 2026 14:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903428;
-	bh=ubEN3fhI/mIZJt+ovUGIp5cqeww/Ura16hJTv/27YNw=;
+	s=korg; t=1777903431;
+	bh=jwwd6JPfZxISDBN+FBF1slwjm5F81S+51/GC+ePdKxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cokwcoD6HZvGzSp36WZulf8jWtTFiwEneQfdlhROixBlmX9Yu/r56y5FErUkQlQBd
-	 CQKONfUgCkE1PefYoT8gno0kdjiZBkqCNBlYUBzMse60mP7NMf6JLqkTeeLRoug/IA
-	 Iv+b9UZBjaiRCrWNJnqj9rharVCaQ8pfCgf/b5rM=
+	b=nzueUBvy2QrZOglCSHEC89tx3pqD3u4iXcjSDsOVtilhJceSUOltzAFEUgHWNb+Fn
+	 q5XfAFRlFqDru9X09Br/zjIW5obLIN/HMCU/sl70fo3mZiQyJFrFQ7qfmmtJLw6rGL
+	 3+GY76rX+pxWHun816KGQE7bpFpI4jRV1rL2VFkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Ian Rogers <irogers@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.0 230/307] ring-buffer: Do not double count the reader_page
-Date: Mon,  4 May 2026 15:51:55 +0200
-Message-ID: <20260504135151.507179278@linuxfoundation.org>
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 7.0 231/307] ext4: fix bounds check in check_xattrs() to prevent out-of-bounds access
+Date: Mon,  4 May 2026 15:51:56 +0200
+Message-ID: <20260504135151.543543067@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -54,71 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 92d5a606721f759ebebf448b3bd2b7a781d50bd0 upstream.
+commit eceafc31ea7b42c984ece10d79d505c0bb6615d5 upstream.
 
-Since the cpu_buffer->reader_page is updated if there are unwound
-pages. After that update, we should skip the page if it is the
-original reader_page, because the original reader_page is already
-checked.
+The bounds check for the next xattr entry in check_xattrs() uses
+(void *)next >= end, which allows next to point within sizeof(u32)
+bytes of end. On the next loop iteration, IS_LAST_ENTRY() reads 4
+bytes via *(__u32 *)(entry), which can overrun the valid xattr region.
 
+For example, if next lands at end - 1, the check passes since
+next < end, but IS_LAST_ENTRY() reads 4 bytes starting at end - 1,
+accessing 3 bytes beyond the valid region.
+
+Fix this by changing the check to (void *)next + sizeof(u32) > end,
+ensuring there is always enough space for the IS_LAST_ENTRY() read
+on the subsequent iteration.
+
+Fixes: 3478c83cf26b ("ext4: improve xattr consistency checking and error reporting")
 Cc: stable@vger.kernel.org
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Ian Rogers <irogers@google.com>
-Link: https://patch.msgid.link/177701353063.2223789.1471163147644103306.stgit@mhiramat.tok.corp.google.com
-Fixes: ca296d32ece3 ("tracing: ring_buffer: Rewind persistent ring buffer on reboot")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/all/20260224231429.31361-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260328150038.349497-1-kartikey406@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ fs/ext4/xattr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1913,7 +1913,7 @@ static int rb_validate_buffer(struct buf
- static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
- {
- 	struct ring_buffer_cpu_meta *meta = cpu_buffer->ring_meta;
--	struct buffer_page *head_page, *orig_head;
-+	struct buffer_page *head_page, *orig_head, *orig_reader;
- 	unsigned long entry_bytes = 0;
- 	unsigned long entries = 0;
- 	int ret;
-@@ -1924,16 +1924,17 @@ static void rb_meta_validate_events(stru
- 		return;
- 
- 	orig_head = head_page = cpu_buffer->head_page;
-+	orig_reader = cpu_buffer->reader_page;
- 
- 	/* Do the reader page first */
--	ret = rb_validate_buffer(cpu_buffer->reader_page->page, cpu_buffer->cpu);
-+	ret = rb_validate_buffer(orig_reader->page, cpu_buffer->cpu);
- 	if (ret < 0) {
- 		pr_info("Ring buffer reader page is invalid\n");
- 		goto invalid;
- 	}
- 	entries += ret;
--	entry_bytes += local_read(&cpu_buffer->reader_page->page->commit);
--	local_set(&cpu_buffer->reader_page->entries, ret);
-+	entry_bytes += local_read(&orig_reader->page->commit);
-+	local_set(&orig_reader->entries, ret);
- 
- 	ts = head_page->page->time_stamp;
- 
-@@ -2036,8 +2037,8 @@ static void rb_meta_validate_events(stru
- 	/* Iterate until finding the commit page */
- 	for (i = 0; i < meta->nr_subbufs + 1; i++, rb_inc_page(&head_page)) {
- 
--		/* Reader page has already been done */
--		if (head_page == cpu_buffer->reader_page)
-+		/* The original reader page has already been checked/counted. */
-+		if (head_page == orig_reader)
- 			continue;
- 
- 		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu);
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -226,7 +226,7 @@ check_xattrs(struct inode *inode, struct
+ 	/* Find the end of the names list */
+ 	while (!IS_LAST_ENTRY(e)) {
+ 		struct ext4_xattr_entry *next = EXT4_XATTR_NEXT(e);
+-		if ((void *)next >= end) {
++		if ((void *)next + sizeof(u32) > end) {
+ 			err_str = "e_name out of bounds";
+ 			goto errout;
+ 		}
 
 
