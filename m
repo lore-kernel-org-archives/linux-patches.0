@@ -1,36 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34ACF40DFD4;
-	Mon,  4 May 2026 14:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F7E40DFD4;
+	Mon,  4 May 2026 14:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903763; cv=none; b=GC+SlTYuRUStmdTfsBeWeBZ7upo6PtUxeog22om1g3lTsqrl+rPxJ3kjG4lRZIsLDHb9VWBTGeQ2Ojy1wB2M7WNF9V1nhO+4oRmg+ohy6gLW8YVVRhr8eXV5qY6F0fpJgvHOUZfrrQW0s5fH/qh8Sys11whBkGJpxrWx5zPxsxg=
+	t=1777903765; cv=none; b=iOEpU3cUzeo7VTRbswIOt+uIHl3AlmiOjZh/fCkiURKXie7LTxpJQI4TYL3xKVXX2FUVgbjfnDyH3Rgs+n2Rq5agnabFm8GMuWxJuYY7xn4vzrW99oN2UFB/NASFHm6LY5FeyGoWCNDRRO2zGhqftHfOTiUejtk1yseyVBRWbaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903763; c=relaxed/simple;
-	bh=rF67f38UHQtLWlZ6LAlEo5QmuQj/2R1pjWL/XquRrzs=;
+	s=arc-20240116; t=1777903765; c=relaxed/simple;
+	bh=ySTLiwQZy0i6oGAwOdKsvH5ZKUDe9aisydXA7ybl+IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOXE5ClQfrs89Aa6ig2PlGh9KWeIeTJXYZfGGn6Xbu5od5sa7FPEqkP90DywEh788OtcC5wptB5NdjvcqY+FFaracKz08tAlccHdBnG3ng+J6qEMuKwzYpEOXQXTYv+EafX7OjdFWz7YPHL1/yfXCq4SOfwdRrO4Pkjy2fNF6FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOYAKPup; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j0RIT1TsCwivsZc2K9lmc7fZ34XHxILgxNfGq93Ehmf9yhRAuRX0eEGR0+aECPDvhXnbEOZf9PsLhW2qFKIMGOMmeSeyIvkLJcF1Rg+1I1dE2dNwsYBjw6L0/LWAArcHF+jFPRjHwTaaxD95WFCYFyQstMgD5rbyK5Yfk0ZlE0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xrv9i8Sn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOYAKPup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6BCC2BCC4;
-	Mon,  4 May 2026 14:09:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xrv9i8Sn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3396AC2BCB8;
+	Mon,  4 May 2026 14:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903763;
-	bh=rF67f38UHQtLWlZ6LAlEo5QmuQj/2R1pjWL/XquRrzs=;
+	s=korg; t=1777903765;
+	bh=ySTLiwQZy0i6oGAwOdKsvH5ZKUDe9aisydXA7ybl+IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOYAKPupvmGiNpdEYUY5njWqFMnkcHoSHQc1qiakay+jo/+zCbn+1GnfALewqiILB
-	 Wq0FvdSKZowWGvHGZXW1oa+gjy96iOnZCOvDd8B+QIR1DqmxHb5wqaPJ1WSLaqP4gA
-	 5v4ktPKd97JmoVffmkXExfDh9QIM9iHHxe2GxHDk=
+	b=Xrv9i8SnszLUnMuKd7cI1OgQQsNPxwhXr8wSYakSb1ln7of6KcLTvbFcx2uNHxFPr
+	 gNAUbNC9XmVFFRcrFh4RpCvYGGGM8ZBIQMDDRcWc8WtTEiWDQE+dAFw6Bjolzxbc12
+	 an1N0/llqxWVqfH4K8O8zqZGbHyol9W++JQymkrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 020/275] kbuild: rust: allow `clippy::uninlined_format_args`
-Date: Mon,  4 May 2026 15:49:20 +0200
-Message-ID: <20260504135143.688077555@linuxfoundation.org>
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bodo Stroesser <bostroesser@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Clemens Ladisch <clemens@ladisch.de>,
+	David Hildenbrand <david@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Jan Kara <jack@suse.cz>,
+	Jann Horn <jannh@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Long Li <longli@microsoft.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Richard Weinberger <richard@nod.at>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 021/275] fs: afs: revert mmap_prepare() change
+Date: Mon,  4 May 2026 15:49:21 +0200
+Message-ID: <20260504135143.725105434@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -49,72 +80,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
 
-commit 10eea3c147141c90cf409b8df56d245c9d7f88d9 upstream.
+commit fbfc6578eaca12daa0c09df1e9ba7f2c657b49da upstream.
 
-Clippy in Rust 1.88.0 (only) reports [1]:
+Partially reverts commit 9d5403b1036c ("fs: convert most other
+generic_file_*mmap() users to .mmap_prepare()").
 
-    warning: variables can be used directly in the `format!` string
-       --> rust/macros/module.rs:112:23
-        |
-    112 |         let content = format!("{param}:{content}", param = param, content = content);
-        |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
-        = note: `-W clippy::uninlined-format-args` implied by `-W clippy::all`
-        = help: to override `-W clippy::all` add `#[allow(clippy::uninlined_format_args)]`
-    help: change this to
-        |
-    112 -         let content = format!("{param}:{content}", param = param, content = content);
-    112 +         let content = format!("{param}:{content}");
+This is because the .mmap invocation establishes a refcount, but
+.mmap_prepare is called at a point where a merge or an allocation failure
+might happen after the call, which would leak the refcount increment.
 
-    warning: variables can be used directly in the `format!` string
-       --> rust/macros/module.rs:198:14
-        |
-    198 |         t => panic!("Unsupported parameter type {}", t),
-        |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
-        = note: `-W clippy::uninlined-format-args` implied by `-W clippy::all`
-        = help: to override `-W clippy::all` add `#[allow(clippy::uninlined_format_args)]`
-    help: change this to
-        |
-    198 -         t => panic!("Unsupported parameter type {}", t),
-    198 +         t => panic!("Unsupported parameter type {t}"),
-        |
+Functionality is being added to permit the use of .mmap_prepare in this
+case, but in the interim, we need to fix this.
 
-The reason it only triggers in that version is that the lint was moved
-from `pedantic` to `style` in Rust 1.88.0 and then back to `pedantic`
-in Rust 1.89.0 [2][3].
-
-In the first case, the suggestion is fair and a pure simplification, thus
-we will clean it up separately.
-
-To keep the behavior the same across all versions, and since the lint
-does not work for all macros (e.g. custom ones like `pr_info!`), disable
-it globally.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://lore.kernel.org/rust-for-linux/CANiq72=drAtf3y_DZ-2o4jb6Az9J3Yj4QYwWnbRui4sm4AJD3Q@mail.gmail.com/ [1]
-Link: https://github.com/rust-lang/rust-clippy/pull/15287 [2]
-Link: https://github.com/rust-lang/rust-clippy/issues/15151 [3]
-Link: https://patch.msgid.link/20260331205849.498295-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://lkml.kernel.org/r/08804c94e39d9102a3a8fbd12385e8aa079ba1d3.1774045440.git.ljs@kernel.org
+Fixes: 9d5403b1036c ("fs: convert most other generic_file_*mmap() users to .mmap_prepare()")
+Signed-off-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Bodo Stroesser <bostroesser@gmail.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Clemens Ladisch <clemens@ladisch.de>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Dexuan Cui <decui@microsoft.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Haiyang Zhang <haiyangz@microsoft.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: K. Y. Srinivasan <kys@microsoft.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Marc Dionne <marc.dionne@auristor.com>
+Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>
+Cc: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Wei Liu <wei.liu@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ fs/afs/file.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -492,6 +492,7 @@ export rust_common_flags := --edition=20
- 			    -Wclippy::ptr_cast_constness \
- 			    -Wclippy::ref_as_ptr \
- 			    -Wclippy::undocumented_unsafe_blocks \
-+			    -Aclippy::uninlined_format_args \
- 			    -Wclippy::unnecessary_safety_comment \
- 			    -Wclippy::unnecessary_safety_doc \
- 			    -Wrustdoc::missing_crate_level_docs \
+diff --git a/fs/afs/file.c b/fs/afs/file.c
+index f609366fd2ac..74d04af51ff4 100644
+--- a/fs/afs/file.c
++++ b/fs/afs/file.c
+@@ -19,7 +19,7 @@
+ #include <trace/events/netfs.h>
+ #include "internal.h"
+ 
+-static int afs_file_mmap_prepare(struct vm_area_desc *desc);
++static int afs_file_mmap(struct file *file, struct vm_area_struct *vma);
+ 
+ static ssize_t afs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter);
+ static ssize_t afs_file_splice_read(struct file *in, loff_t *ppos,
+@@ -35,7 +35,7 @@ const struct file_operations afs_file_operations = {
+ 	.llseek		= generic_file_llseek,
+ 	.read_iter	= afs_file_read_iter,
+ 	.write_iter	= netfs_file_write_iter,
+-	.mmap_prepare	= afs_file_mmap_prepare,
++	.mmap		= afs_file_mmap,
+ 	.splice_read	= afs_file_splice_read,
+ 	.splice_write	= iter_file_splice_write,
+ 	.fsync		= afs_fsync,
+@@ -492,16 +492,16 @@ static void afs_drop_open_mmap(struct afs_vnode *vnode)
+ /*
+  * Handle setting up a memory mapping on an AFS file.
+  */
+-static int afs_file_mmap_prepare(struct vm_area_desc *desc)
++static int afs_file_mmap(struct file *file, struct vm_area_struct *vma)
+ {
+-	struct afs_vnode *vnode = AFS_FS_I(file_inode(desc->file));
++	struct afs_vnode *vnode = AFS_FS_I(file_inode(file));
+ 	int ret;
+ 
+ 	afs_add_open_mmap(vnode);
+ 
+-	ret = generic_file_mmap_prepare(desc);
++	ret = generic_file_mmap(file, vma);
+ 	if (ret == 0)
+-		desc->vm_ops = &afs_vm_ops;
++		vma->vm_ops = &afs_vm_ops;
+ 	else
+ 		afs_drop_open_mmap(vnode);
+ 	return ret;
+-- 
+2.54.0
+
 
 
