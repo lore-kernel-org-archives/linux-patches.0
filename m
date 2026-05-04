@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAA03DEAC3;
-	Mon,  4 May 2026 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4413D9DBB;
+	Mon,  4 May 2026 14:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904519; cv=none; b=e3SGPIyFFsClAKQ2s85nQJD48FvPx7QB+ux8IHObQEIVT2/+4hKv7TWhhKFpYAm7XfI5NZcfnFsNDEEj+TxO+gFdcceAaygir5bPmRVsOnadk4Bu17JdaaTOtIpfS3HAjfcuDrIL+ORJXgLgwjbxa2SQpAixqV1yn1GoYG0iaAM=
+	t=1777904522; cv=none; b=kayaV8VJF3xtf2nvsVQcV5/1TsBjRPoz2eQYDdkVOGPhQ3dYHZs+wNrGHcPDQBnQx8BVI2g/BnEmK0k+lQQZagP+49UDRdcwWthKM4AAKGfX9uZ43ItLUEi2bMDbtULISBu2MmjcfUbrtFCVeqqwFMUFNRwG7/ya5aCMYvN3EDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904519; c=relaxed/simple;
-	bh=irO1ytlZqOFdaSn0MxDW9SHpPcPGmDZnvo44sjckWRs=;
+	s=arc-20240116; t=1777904522; c=relaxed/simple;
+	bh=0+7xVen8kDQj+uVCHKqDlYR6q9x6OybTIIItX+tWXOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUJwvvYkl6oTpfKWIDv/DUxbbS9jrREEb/bnz+GrKLKhTj7JPcqZw1YhOsHC47PVUaH9qyoJfKZHqvXrE120LH6F+6JQQUGiY94XP9+JxCO++zBwq2H9V6rfAebfer5jikLhnw4OWYTOII3Q+P4Rezljo0zLEbrAqTuppsYYwfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIhBeH19; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRqM1NMF0/biqrxlALLZeg/95bcxePVTnnXyZHPQzPIhDXGrnpESKRsKgNKn6FsrfG/OYv0duFswzYNi+h6scCNs7r8+KCA2zaN5cr+78pfVdXpQU7sl5fCH5WceOg1q2UaAsGKJJyc2Om4BaYho1mkmV408c0W6xD4u4nP/qew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0FWi4T6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIhBeH19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE22C2BCF6;
-	Mon,  4 May 2026 14:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0FWi4T6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AB3C2BCF4;
+	Mon,  4 May 2026 14:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904519;
-	bh=irO1ytlZqOFdaSn0MxDW9SHpPcPGmDZnvo44sjckWRs=;
+	s=korg; t=1777904522;
+	bh=0+7xVen8kDQj+uVCHKqDlYR6q9x6OybTIIItX+tWXOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIhBeH19wpmVUlu8pFCj8xHD/Ns+A0JRrTN4dVmPAXe0qcmOWcgzu772iln0gL7ea
-	 F9k5HgF3g919rLxBFfc9GpCDW5UZFtEkF9Q2oDRNa4xpY+R+VMp3g0M9DBVzVFjP0k
-	 XinfjaxQ2RRWm9wSI/OVtzajCFlWHz4zZdNwd8DQ=
+	b=q0FWi4T6zcpegEbKJUtWc+Gyr3EbVeMLNbtuuvlGRbvbbwyW4PZpckRs+EODcsCpO
+	 H+1f7fAGrc2TAnzTRwahWaQWuVQ4Il9AwBQFE01SjxfCI3r++dUUhtTHDtL3kZiKYt
+	 5JP+OdKrg443005CNWHnUsT5dWU/Zh805wFpy4JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jan Kara <jack@suse.cz>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 027/215] ocfs2: split transactions in dio completion to avoid credit exhaustion
-Date: Mon,  4 May 2026 15:50:46 +0200
-Message-ID: <20260504135131.168595066@linuxfoundation.org>
+	Ben Levinsky <ben.levinsky@amd.com>,
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.12 064/215] remoteproc: xlnx: Only access buffer information if IPI is buffered
+Date: Mon,  4 May 2026 15:51:23 +0200
+Message-ID: <20260504135132.509562376@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -57,180 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heming Zhao <heming.zhao@suse.com>
+From: Ben Levinsky <ben.levinsky@amd.com>
 
-commit d647c5b2fbf81560818dacade360abc8c00a9665 upstream.
+commit 38dd6ccfdfbbe865569a52fe1ba9fa1478f672e6 upstream.
 
-During ocfs2 dio operations, JBD2 may report warnings via following
-call trace:
-ocfs2_dio_end_io_write
- ocfs2_mark_extent_written
-  ocfs2_change_extent_flag
-   ocfs2_split_extent
-    ocfs2_try_to_merge_extent
-     ocfs2_extend_rotate_transaction
-      ocfs2_extend_trans
-       jbd2__journal_restart
-        start_this_handle
-         output: JBD2: kworker/6:2 wants too many credits credits:5450 rsv_credits:0 max:5449
+In the receive callback check if message is NULL to prevent
+possibility of crash by NULL pointer dereferencing.
 
-To prevent exceeding the credits limit, modify ocfs2_dio_end_io_write() to
-handle extents in a batch of transaction.
-
-Additionally, relocate ocfs2_del_inode_from_orphan().  The orphan inode
-should only be removed from the orphan list after the extent tree update
-is complete.  This ensures that if a crash occurs in the middle of extent
-tree updates, we won't leave stale blocks beyond EOF.
-
-This patch also changes the logic for updating the inode size and removing
-orphan, making it similar to ext4_dio_write_end_io().  Both operations are
-performed only when everything looks good.
-
-Finally, thanks to Jans and Joseph for providing the bug fix prototype and
-suggestions.
-
-Link: https://lkml.kernel.org/r/20260402134328.27334-2-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Suggested-by: Jan Kara <jack@suse.cz>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ben Levinsky <ben.levinsky@amd.com>
+Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
+Fixes: 5dfb28c257b7 ("remoteproc: xilinx: Add mailbox channels for rpmsg")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20260303235127.2317955-3-tanmay.shah@amd.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |   74 ++++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 45 insertions(+), 29 deletions(-)
+ drivers/remoteproc/xlnx_r5_remoteproc.c |   20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -37,6 +37,8 @@
- #include "namei.h"
- #include "sysfile.h"
+--- a/drivers/remoteproc/xlnx_r5_remoteproc.c
++++ b/drivers/remoteproc/xlnx_r5_remoteproc.c
+@@ -232,17 +232,19 @@ static void zynqmp_r5_mb_rx_cb(struct mb
  
-+#define OCFS2_DIO_MARK_EXTENT_BATCH 200
-+
- static int ocfs2_symlink_get_block(struct inode *inode, sector_t iblock,
- 				   struct buffer_head *bh_result, int create)
- {
-@@ -2301,7 +2303,7 @@ static int ocfs2_dio_end_io_write(struct
- 	struct ocfs2_alloc_context *meta_ac = NULL;
- 	handle_t *handle = NULL;
- 	loff_t end = offset + bytes;
--	int ret = 0, credits = 0;
-+	int ret = 0, credits = 0, batch = 0;
+ 	ipi = container_of(cl, struct mbox_info, mbox_cl);
  
- 	ocfs2_init_dealloc_ctxt(&dealloc);
- 
-@@ -2318,18 +2320,6 @@ static int ocfs2_dio_end_io_write(struct
- 		goto out;
- 	}
- 
--	/* Delete orphan before acquire i_rwsem. */
--	if (dwc->dw_orphaned) {
--		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
--
--		end = end > i_size_read(inode) ? end : 0;
--
--		ret = ocfs2_del_inode_from_orphan(osb, inode, di_bh,
--				!!end, end);
--		if (ret < 0)
--			mlog_errno(ret);
--	}
--
- 	down_write(&oi->ip_alloc_sem);
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
- 
-@@ -2350,24 +2340,25 @@ static int ocfs2_dio_end_io_write(struct
- 
- 	credits = ocfs2_calc_extend_credits(inode->i_sb, &di->id2.i_list);
- 
--	handle = ocfs2_start_trans(osb, credits);
--	if (IS_ERR(handle)) {
--		ret = PTR_ERR(handle);
--		mlog_errno(ret);
--		goto unlock;
--	}
--	ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode), di_bh,
--				      OCFS2_JOURNAL_ACCESS_WRITE);
--	if (ret) {
--		mlog_errno(ret);
--		goto commit;
--	}
--
- 	list_for_each_entry(ue, &dwc->dw_zero_list, ue_node) {
-+		if (!handle) {
-+			handle = ocfs2_start_trans(osb, credits);
-+			if (IS_ERR(handle)) {
-+				ret = PTR_ERR(handle);
-+				mlog_errno(ret);
-+				goto unlock;
-+			}
-+			ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode), di_bh,
-+					OCFS2_JOURNAL_ACCESS_WRITE);
-+			if (ret) {
-+				mlog_errno(ret);
-+				goto commit;
-+			}
+-	/* copy data from ipi buffer to r5_core */
++	/* copy data from ipi buffer to r5_core if IPI is buffered. */
+ 	ipi_msg = (struct zynqmp_ipi_message *)msg;
+-	buf_msg = (struct zynqmp_ipi_message *)ipi->rx_mc_buf;
+-	len = ipi_msg->len;
+-	if (len > IPI_BUF_LEN_MAX) {
+-		dev_warn(cl->dev, "msg size exceeded than %d\n",
+-			 IPI_BUF_LEN_MAX);
+-		len = IPI_BUF_LEN_MAX;
++	if (ipi_msg) {
++		buf_msg = (struct zynqmp_ipi_message *)ipi->rx_mc_buf;
++		len = ipi_msg->len;
++		if (len > IPI_BUF_LEN_MAX) {
++			dev_warn(cl->dev, "msg size exceeded than %d\n",
++				 IPI_BUF_LEN_MAX);
++			len = IPI_BUF_LEN_MAX;
 +		}
- 		ret = ocfs2_assure_trans_credits(handle, credits);
- 		if (ret < 0) {
- 			mlog_errno(ret);
--			break;
-+			goto commit;
- 		}
- 		ret = ocfs2_mark_extent_written(inode, &et, handle,
- 						ue->ue_cpos, 1,
-@@ -2375,19 +2366,44 @@ static int ocfs2_dio_end_io_write(struct
- 						meta_ac, &dealloc);
- 		if (ret < 0) {
- 			mlog_errno(ret);
--			break;
-+			goto commit;
-+		}
-+
-+		if (++batch == OCFS2_DIO_MARK_EXTENT_BATCH) {
-+			ocfs2_commit_trans(osb, handle);
-+			handle = NULL;
-+			batch = 0;
- 		}
++		buf_msg->len = len;
++		memcpy(buf_msg->data, ipi_msg->data, len);
  	}
+-	buf_msg->len = len;
+-	memcpy(buf_msg->data, ipi_msg->data, len);
  
- 	if (end > i_size_read(inode)) {
-+		if (!handle) {
-+			handle = ocfs2_start_trans(osb, credits);
-+			if (IS_ERR(handle)) {
-+				ret = PTR_ERR(handle);
-+				mlog_errno(ret);
-+				goto unlock;
-+			}
-+		}
- 		ret = ocfs2_set_inode_size(handle, inode, di_bh, end);
- 		if (ret < 0)
- 			mlog_errno(ret);
- 	}
-+
- commit:
--	ocfs2_commit_trans(osb, handle);
-+	if (handle)
-+		ocfs2_commit_trans(osb, handle);
- unlock:
- 	up_write(&oi->ip_alloc_sem);
-+
-+	/* everything looks good, let's start the cleanup */
-+	if (!ret && dwc->dw_orphaned) {
-+		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
-+
-+		ret = ocfs2_del_inode_from_orphan(osb, inode, di_bh, 0, 0);
-+		if (ret < 0)
-+			mlog_errno(ret);
-+	}
- 	ocfs2_inode_unlock(inode, 1);
- 	brelse(di_bh);
- out:
+ 	/* received and processed interrupt ack */
+ 	if (mbox_send_message(ipi->rx_chan, NULL) < 0)
 
 
