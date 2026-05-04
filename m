@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F013A7F4C;
-	Mon,  4 May 2026 14:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4A93D5667;
+	Mon,  4 May 2026 14:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903799; cv=none; b=lz+KtKTPQ+Plfo4x76UtFhzt7Rg5jLpxCGOplMcyK2eR/rDSWAvpteUefZlexc7LDQZkZaqqdXx1MDDgTUF0xirM3ARKEodohTXeSVoKZVEBLjMBdq6AaMkI6qyCujvC4b4/ZcvYXw3a3bk9anXo+Wu906FE9p8/7YAOwoKUwro=
+	t=1777903801; cv=none; b=MhTxg9mivvhu2ssafNV+M5fw1l+oxKuCaRoyOf0qQIeBeZWGR87vNGCFqoA+ih7iKFkO/CXTt37JfsWhosN+9b36hQ3O457xcFqnGzrQs3tYOIby8Uw1N4lyihcMcW0TijRBiyO6cQTiKHo74fyzHFWkB66yUeyT8C+8jgp/cVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903799; c=relaxed/simple;
-	bh=OKBgdSFymcVHS90uBl9DTmD8XE/nf6AXI9H7hV9M1Gk=;
+	s=arc-20240116; t=1777903801; c=relaxed/simple;
+	bh=HhFPu3AX7Nw5Icsprw7W4rUdH0F5rE+/OCrQQEtwlUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtaePPJFVhaSin2j0iZ881FrhbQ/zQRgHpWM2VpxFqWky3Xyw2tVLi+2HS2P7GrXdBHC6pvkB6CmZmnYJH9UtYmJGZa8erHYcN9zITHIg+s8eOk8w5BC+VrU0MgUC66e1rrW8SUZ/ZK7hO8MnGibZTZMWDCHRvnjhC5F089XiTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zx1Ke8bO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cBNXjL/ok0QccRzB8AbMTQnmVSyaxohZQEPzT3/4v7T7R9d4RKdho4OqDPFvn1CVRCrE2ARprfM1KqoA59QfbqOumhBhxULiZ8QyLEevboEf4dzRsxLiLl6xvZr3ka4QDOrXOI6DIvcKEaNNgLqGmYp55DU+oEqGD6eIxgRZ9BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2zg7uxI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zx1Ke8bO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B22C2BCB8;
-	Mon,  4 May 2026 14:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2zg7uxI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70846C2BCB8;
+	Mon,  4 May 2026 14:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903799;
-	bh=OKBgdSFymcVHS90uBl9DTmD8XE/nf6AXI9H7hV9M1Gk=;
+	s=korg; t=1777903801;
+	bh=HhFPu3AX7Nw5Icsprw7W4rUdH0F5rE+/OCrQQEtwlUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zx1Ke8bOsLOW7C2O2JlIPWfYAk7vn9m7xbDN6/WKRPOAZnw+06L6rlNhoKdo4ajfj
-	 NIaAEJ7yKmYFcDm9iNXLPewU2YfvfQaM1SNzq7CpXS6B+EmKpy91GJDx6MSBvr7gGs
-	 4l6f2OQWPaP96wMFdMO9UoS+mEZAprvykb/meXVs=
+	b=l2zg7uxII1BnaJyaFaPTcUOKiJEmvfjVlnd7P9sQnscUgjv4f9Li6XuchAKTJCotc
+	 OtsrH6XqTnoVoDsE0m9l7PTGu0h5uN7ZQ7lBDK1DMYTYpyb0fAFk6pWrUI/p972hNa
+	 he/7oYo046nb0G6J/aOdzXORD91T480wappFBtLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiao <252270051@hdu.edu.cn>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 6.18 067/275] ipmi:ssif: Clean up kthread on errors
-Date: Mon,  4 May 2026 15:50:07 +0200
-Message-ID: <20260504135145.421056583@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.18 068/275] jbd2: fix deadlock in jbd2_journal_cancel_revoke()
+Date: Mon,  4 May 2026 15:50:08 +0200
+Message-ID: <20260504135145.458799434@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,56 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 75c486cb1bcaa1a3ec3a6438498176a3a4998ae4 upstream.
+commit 981fcc5674e67158d24d23e841523eccba19d0e7 upstream.
 
-If an error occurs after the ssif kthread is created, but before the
-main IPMI code starts the ssif interface, the ssif kthread will not
-be stopped.
+Commit f76d4c28a46a ("fs/jbd2: use sleeping version of
+__find_get_block()") changed jbd2_journal_cancel_revoke() to use
+__find_get_block_nonatomic() which holds the folio lock instead of
+i_private_lock. This breaks the lock ordering (folio -> buffer) and
+causes an ABBA deadlock when the filesystem blocksize < pagesize:
 
-So make sure the kthread is stopped on an error condition if it is
-running.
+     T1                                T2
+ext4_mkdir()
+ ext4_init_new_dir()
+  ext4_append()
+   ext4_getblk()
+    lock_buffer()    <- A
+                                   sync_blockdev()
+                                    blkdev_writepages()
+                                     writeback_iter()
+                                      writeback_get_folio()
+                                       folio_lock()   <- B
+     ext4_journal_get_create_access()
+      jbd2_journal_cancel_revoke()
+       __find_get_block_nonatomic()
+        folio_lock()  <- B
+                                     block_write_full_folio()
+                                      lock_buffer()   <- A
 
-Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
-Reported-by: Li Xiao <<252270051@hdu.edu.cn>
-Cc: stable@vger.kernel.org
-Reviewed-by: Li Xiao <252270051@hdu.edu.cn>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+This can occasionally cause generic/013 to hang.
+
+Fix by only calling __find_get_block_nonatomic() when the passed
+buffer_head doesn't belong to the bdev, which is the only case that we
+need to look up its bdev alias. Otherwise, the lookup is redundant since
+the found buffer_head is equal to the one we passed in.
+
+Fixes: f76d4c28a46a ("fs/jbd2: use sleeping version of __find_get_block()")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260409114204.917154-1-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/jbd2/revoke.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -1270,8 +1270,10 @@ static void shutdown_ssif(void *send_inf
- 	ssif_info->stopping = true;
- 	timer_delete_sync(&ssif_info->watch_timer);
- 	timer_delete_sync(&ssif_info->retry_timer);
--	if (ssif_info->thread)
-+	if (ssif_info->thread) {
- 		kthread_stop(ssif_info->thread);
-+		ssif_info->thread = NULL;
-+	}
- }
+--- a/fs/jbd2/revoke.c
++++ b/fs/jbd2/revoke.c
+@@ -428,6 +428,7 @@ void jbd2_journal_cancel_revoke(handle_t
+ 	journal_t *journal = handle->h_transaction->t_journal;
+ 	int need_cancel;
+ 	struct buffer_head *bh = jh2bh(jh);
++	struct address_space *bh_mapping = bh->b_folio->mapping;
  
- static void ssif_remove(struct i2c_client *client)
-@@ -1918,6 +1920,15 @@ static int ssif_probe(struct i2c_client
+ 	jbd2_debug(4, "journal_head %p, cancelling revoke\n", jh);
  
-  out:
- 	if (rv) {
-+		/*
-+		 * If ipmi_register_smi() starts the interface, it will
-+		 * call shutdown and that will free the thread and set
-+		 * it to NULL.  Otherwise it must be freed here.
-+		 */
-+		if (ssif_info->thread) {
-+			kthread_stop(ssif_info->thread);
-+			ssif_info->thread = NULL;
-+		}
- 		if (addr_info)
- 			addr_info->client = NULL;
- 
+@@ -464,13 +465,14 @@ void jbd2_journal_cancel_revoke(handle_t
+ 	 * buffer_head?  If so, we'd better make sure we clear the
+ 	 * revoked status on any hashed alias too, otherwise the revoke
+ 	 * state machine will get very upset later on. */
+-	if (need_cancel) {
++	if (need_cancel && !sb_is_blkdev_sb(bh_mapping->host->i_sb)) {
+ 		struct buffer_head *bh2;
++
+ 		bh2 = __find_get_block_nonatomic(bh->b_bdev, bh->b_blocknr,
+ 						 bh->b_size);
+ 		if (bh2) {
+-			if (bh2 != bh)
+-				clear_buffer_revoked(bh2);
++			WARN_ON_ONCE(bh2 == bh);
++			clear_buffer_revoked(bh2);
+ 			__brelse(bh2);
+ 		}
+ 	}
 
 
