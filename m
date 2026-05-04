@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2920C1A6827;
-	Mon,  4 May 2026 14:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC97B1A6827;
+	Mon,  4 May 2026 14:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904463; cv=none; b=DwJ82HSJN5e4QBxyeGvnLP7+DRZCOZ5UmJszb3BVtE+E35e66AG8lmjFu+bMgZT2hsoQ+7DDqHjxZ/Zroc0kseDZZBsPtWwpgtEnJtsvfdeXzTfcRU1VOh93FdhEGIEbkBW5zs0Xq1vPt3gXZwBDjDVRWriqxICj9ga/L46+qrk=
+	t=1777904465; cv=none; b=Qot6eVJiwksuZ9qZJhwWoGEkwMuIc/QfJTozxakUPXS8QBjlB5TA88UkJaovOplS4ZE8bRqoeHFTXQcnXl4Ops/jp7juqhUm6Zv1PbAyr9o1cHnoE+hJsbcYAc/Naw7952bfl/GtXER4IUQhYnor/RtPhAmzX2JcS45o6TZ0jy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904463; c=relaxed/simple;
-	bh=rWFgWgdBfoQr7h3LDDIDzJUFe7GCNC3U0LgdS9yPRh8=;
+	s=arc-20240116; t=1777904465; c=relaxed/simple;
+	bh=nb6jAI5gcV47f4gVfqXBcuAzhPbzZqutkOf1+me+Rd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVXVM28tgkvNB8XsrOjhnEb5jMbz5jy8EDhoxXCj0xi7QuWFa0OP1Qm0p73clXa7ZiMJaBVydDpZFfGNk4OkMpbOkc2hmh2mhfG9O/P/gLLDjTxQ0U9DThnelQnentYxhD5aeTqNmvr7Qcfu9X9yn/ENMGjeibJ83Gq0bI/Fc0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJ4PwiF5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SXUlV4FlxnpDpxbhOXuye9pNKjy2A3A8i88wrg2N2N1pK78vVPAb8Np5GsiuHduBhuewroN22P/LE7aYWf26thb10rjyTDTjW+VdqETfHrVIfgyrtN9a7ScgX60eGd9mEsw5JFVsMOuR6IYyLP02JrYXzJ0iFm3AzeA8BLWd2ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVDiZyzi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJ4PwiF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1634C2BCB8;
-	Mon,  4 May 2026 14:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVDiZyzi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517A8C2BCB8;
+	Mon,  4 May 2026 14:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904463;
-	bh=rWFgWgdBfoQr7h3LDDIDzJUFe7GCNC3U0LgdS9yPRh8=;
+	s=korg; t=1777904465;
+	bh=nb6jAI5gcV47f4gVfqXBcuAzhPbzZqutkOf1+me+Rd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJ4PwiF5lgjHRBBPkd8LWdnT0MdkOQBzowyd19aJYu9WhocjKSHhz97oRrsGRmKl+
-	 0Gx477I5bJBphFAub8rqXBzMtFoHw/tfsVjQBtO8DBo9Dg8h9/fRj/F2GLlq07CeJK
-	 EBm6TLtPb26ksVRBptnt4PijLuXtgVnq4PrVtPc8=
+	b=JVDiZyzi6j0lwOKn6gI3rggJtBNCDFnGQhz/8PANeUE05DZ/5EXHLOQl30fmDh0FI
+	 iQAoZ4a0T5bf4fvSZw6oOnB2ohY+v5v5l14Hqm+rdmeoBOJT56vauzW8hGoAPVQkbE
+	 VcXbfN1QrEndhcF5TCxxfVi/gik/wXBCXXCXP7Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hodges <git@danielhodges.dev>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: [PATCH 6.12 048/215] PCI: epf-mhi: Return 0, not remaining timeout, when eDMA ops complete
-Date: Mon,  4 May 2026 15:51:07 +0200
-Message-ID: <20260504135131.934142157@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 049/215] lib/ts_kmp: fix integer overflow in pattern length calculation
+Date: Mon,  4 May 2026 15:51:08 +0200
+Message-ID: <20260504135131.970904884@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,54 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Hodges <git@danielhodges.dev>
+From: Josh Law <objecting@objecting.org>
 
-commit 36bfc3642b19a98f1302aed4437c331df9b481f0 upstream.
+commit 8cdf30813ea8ce881cecc08664144416dbdb3e16 upstream.
 
-pci_epf_mhi_edma_read() and pci_epf_mhi_edma_write() start DMA
-operations and wait for completion with a timeout.
+The ts_kmp algorithm stores its prefix_tbl[] table and pattern in a single
+allocation sized from the pattern length.  If the prefix_tbl[] size
+calculation wraps, the resulting allocation can be too small and
+subsequent pattern copies can overflow it.
 
-On successful completion, they previously returned the remaining
-timeout, which callers may treat as an error.  In particular,
-mhi_ep_ring_add_element(), which calls pci_epf_mhi_edma_write() via
-mhi_cntrl->write_sync(), interprets any non-zero return value as
-failure.
+Fix this by rejecting zero-length patterns and by using overflow helpers
+before calculating the combined allocation size.
 
-Return 0 on success instead of the remaining timeout to prevent
-mhi_ep_ring_add_element() from treating successful completion as an
-error.
 
-Fixes: 7b99aaaddabb ("PCI: epf-mhi: Add eDMA support")
-Signed-off-by: Daniel Hodges <git@danielhodges.dev>
-[mani: changed commit log as per https://lore.kernel.org/linux-pci/20260227191510.GA3904799@bhelgaas]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260206200529.10784-1-git@danielhodges.dev
+This fixes a potential heap overflow.  The pattern length calculation can
+wrap during a size_t addition, leading to an undersized allocation.
+Because the textsearch library is reachable from userspace via Netfilter's
+xt_string module, this is a security risk that should be backported to LTS
+kernels.
+
+Link: https://lkml.kernel.org/r/20260308202028.2889285-2-objecting@objecting.org
+Signed-off-by: Josh Law <objecting@objecting.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-mhi.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ lib/ts_kmp.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -367,6 +367,8 @@ static int pci_epf_mhi_edma_read(struct
- 		dev_err(dev, "DMA transfer timeout\n");
- 		dmaengine_terminate_sync(chan);
- 		ret = -ETIMEDOUT;
-+	} else {
-+		ret = 0;
- 	}
+--- a/lib/ts_kmp.c
++++ b/lib/ts_kmp.c
+@@ -94,8 +94,22 @@ static struct ts_config *kmp_init(const
+ 	struct ts_config *conf;
+ 	struct ts_kmp *kmp;
+ 	int i;
+-	unsigned int prefix_tbl_len = len * sizeof(unsigned int);
+-	size_t priv_size = sizeof(*kmp) + len + prefix_tbl_len;
++	unsigned int prefix_tbl_len;
++	size_t priv_size;
++
++	/* Zero-length patterns would make kmp_find() read beyond kmp->pattern. */
++	if (unlikely(!len))
++		return ERR_PTR(-EINVAL);
++
++	/*
++	 * kmp->pattern is stored immediately after the prefix_tbl[] table.
++	 * Reject lengths that would wrap while sizing either region.
++	 */
++	if (unlikely(check_mul_overflow(len, sizeof(*kmp->prefix_tbl),
++					&prefix_tbl_len) ||
++		     check_add_overflow(sizeof(*kmp), (size_t)len, &priv_size) ||
++		     check_add_overflow(priv_size, prefix_tbl_len, &priv_size)))
++		return ERR_PTR(-EINVAL);
  
- err_unmap:
-@@ -438,6 +440,8 @@ static int pci_epf_mhi_edma_write(struct
- 		dev_err(dev, "DMA transfer timeout\n");
- 		dmaengine_terminate_sync(chan);
- 		ret = -ETIMEDOUT;
-+	} else {
-+		ret = 0;
- 	}
- 
- err_unmap:
+ 	conf = alloc_ts_config(priv_size, gfp_mask);
+ 	if (IS_ERR(conf))
 
 
