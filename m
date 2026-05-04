@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6B23DE45A;
-	Mon,  4 May 2026 14:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8012B1A6827;
+	Mon,  4 May 2026 14:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904489; cv=none; b=BG/8GMrDsBDtPtbg61Wuv7Gd8QP+VCEWRqfpVU/GNpfmYy0/ToJbWvSxd+5CJLznn0f2Lz7scefpxTr9LR6eqP6qv9fWVMLFwYHLADt+YOR4BEsNGL+k4Pb2+hYK5FfP4lr//O0FgesrHAo09+ZzP+nreaNWzCMxGZQGpv2WsOQ=
+	t=1777904491; cv=none; b=Znp2/BeapP01kUEmBu7/qWxEJtsn7USlsbJY9arDy9kkPkQ5oKUsxOquoE8I+Do3hsaUyXpsm9K/RU6sfqnobK/AlE1v6+cmWrJd34SbwjDkClJJRSv9panXULDtDfXgF4DzU+l8mQJnCwoZ3hMjo4l+iBmpz+wdupqOZcW4WCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904489; c=relaxed/simple;
-	bh=I0Rw/BMyqVqz/qGZWwvQoPka6dN/wVODhkA/Uxl5afY=;
+	s=arc-20240116; t=1777904491; c=relaxed/simple;
+	bh=QwlzJ3UUcUbeERQ4Kgl3KMsBHKlBg9IPb2Jo8QcP0Fw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olLlsKbRRHCDlOQ2Jt+MNY4OjlzE/lJv57u6cP90l6q6YDV0NXFO8JTR+VvpdSOj4eqQJJ+tLHzTL2ACRWU29erijJ0URtHtBredf/33VawaS9rRq3vXwVyF05U0BjiH517WVQOjMX+NPLyRDddjWvB+iTmFKi3QYVDa0A1BZEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBgY5q/3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ssfyHryI7lmKu4Rk8jXWwL1h+9Bf9w2a7la+GPTh1IDP5WDKJtopIRCLo6Qi4mplwQk6C6GRdSiKBkDW+AWh626M9p6W0SQmCGnIZVHo6QKcUGYCFUfhgxuOpJoiOqsvHCSgZKMYJnMUSH6BLVnv7H5b5Jons+k+ikrtIGZhNCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaf2m8tS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBgY5q/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85493C2BCB8;
-	Mon,  4 May 2026 14:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaf2m8tS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167BAC2BCB8;
+	Mon,  4 May 2026 14:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904488;
-	bh=I0Rw/BMyqVqz/qGZWwvQoPka6dN/wVODhkA/Uxl5afY=;
+	s=korg; t=1777904491;
+	bh=QwlzJ3UUcUbeERQ4Kgl3KMsBHKlBg9IPb2Jo8QcP0Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uBgY5q/3rMeDLiVVFJmKTK8Nu5YjYaqIAbvZxO++6Ly3rA9B6wE/z9PmyOqZXPNzS
-	 vDY9OiIlswY9TB6KeZcyrzhgJ7kiF2VVqvc6GaKdxfo4KXTJcS4CZwr+mq8Cp8BvXg
-	 SCNEdP81WLmjbY9t99zWK4ARqODJ3hz/GCncvV1Y=
+	b=xaf2m8tSnynaryRtKFFY+hlz/GxPyDQa4hKKmD2xH1YJNAe4nE+xqoxCO/KGcBfF0
+	 PYo3gW7Pqn60Wzn7nuF0zKB/o1TgdPaFBGG4HYG4jr7Wti3Jmi2sppBLDrBpZILWzz
+	 vtpuPdU8CgHrzv1/z9f3qkLiVa0Kbd3ldnH8MhIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.12 057/215] jbd2: fix deadlock in jbd2_journal_cancel_revoke()
-Date: Mon,  4 May 2026 15:51:16 +0200
-Message-ID: <20260504135132.258708313@linuxfoundation.org>
+	Josh Hunt <johunt@akamai.com>,
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 6.12 058/215] md/raid10: fix deadlock with check operation and nowait requests
+Date: Mon,  4 May 2026 15:51:17 +0200
+Message-ID: <20260504135132.294915488@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,78 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Josh Hunt <johunt@akamai.com>
 
-commit 981fcc5674e67158d24d23e841523eccba19d0e7 upstream.
+commit 7d96f3120a7fb7210d21b520c5b6f495da6ba436 upstream.
 
-Commit f76d4c28a46a ("fs/jbd2: use sleeping version of
-__find_get_block()") changed jbd2_journal_cancel_revoke() to use
-__find_get_block_nonatomic() which holds the folio lock instead of
-i_private_lock. This breaks the lock ordering (folio -> buffer) and
-causes an ABBA deadlock when the filesystem blocksize < pagesize:
+When an array check is running it will raise the barrier at which point
+normal requests will become blocked and increment the nr_pending value to
+signal there is work pending inside of wait_barrier(). NOWAIT requests
+do not block and so will return immediately with an error, and additionally
+do not increment nr_pending in wait_barrier(). Upstream change commit
+43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request") added a
+call to raid_end_bio_io() to fix a memory leak when NOWAIT requests hit
+this condition. raid_end_bio_io() eventually calls allow_barrier() and
+it will unconditionally do an atomic_dec_and_test(&conf->nr_pending) even
+though the corresponding increment on nr_pending didn't happen in the
+NOWAIT case.
 
-     T1                                T2
-ext4_mkdir()
- ext4_init_new_dir()
-  ext4_append()
-   ext4_getblk()
-    lock_buffer()    <- A
-                                   sync_blockdev()
-                                    blkdev_writepages()
-                                     writeback_iter()
-                                      writeback_get_folio()
-                                       folio_lock()   <- B
-     ext4_journal_get_create_access()
-      jbd2_journal_cancel_revoke()
-       __find_get_block_nonatomic()
-        folio_lock()  <- B
-                                     block_write_full_folio()
-                                      lock_buffer()   <- A
+This can be easily seen by starting a check operation while an application
+is doing nowait IO on the same array. This results in a deadlocked state
+due to nr_pending value underflowing and so the md resync thread gets stuck
+waiting for nr_pending to == 0.
 
-This can occasionally cause generic/013 to hang.
+Output of r10conf state of the array when we hit this condition:
 
-Fix by only calling __find_get_block_nonatomic() when the passed
-buffer_head doesn't belong to the bdev, which is the only case that we
-need to look up its bdev alias. Otherwise, the lookup is redundant since
-the found buffer_head is equal to the one we passed in.
+crash> struct r10conf
+	barrier = 1,
+        nr_pending = {
+          counter = -41
+        },
+        nr_waiting = 15,
+        nr_queued = 0,
 
-Fixes: f76d4c28a46a ("fs/jbd2: use sleeping version of __find_get_block()")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260409114204.917154-1-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Example of md_sync thread stuck waiting on raise_barrier() and other
+requests stuck in wait_barrier():
+
+md1_resync
+[<0>] raise_barrier+0xce/0x1c0
+[<0>] raid10_sync_request+0x1ca/0x1ed0
+[<0>] md_do_sync+0x779/0x1110
+[<0>] md_thread+0x90/0x160
+[<0>] kthread+0xbe/0xf0
+[<0>] ret_from_fork+0x34/0x50
+[<0>] ret_from_fork_asm+0x1a/0x30
+
+kworker/u1040:2+flush-253:4
+[<0>] wait_barrier+0x1de/0x220
+[<0>] regular_request_wait+0x30/0x180
+[<0>] raid10_make_request+0x261/0x1000
+[<0>] md_handle_request+0x13b/0x230
+[<0>] __submit_bio+0x107/0x1f0
+[<0>] submit_bio_noacct_nocheck+0x16f/0x390
+[<0>] ext4_io_submit+0x24/0x40
+[<0>] ext4_do_writepages+0x254/0xc80
+[<0>] ext4_writepages+0x84/0x120
+[<0>] do_writepages+0x7a/0x260
+[<0>] __writeback_single_inode+0x3d/0x300
+[<0>] writeback_sb_inodes+0x1dd/0x470
+[<0>] __writeback_inodes_wb+0x4c/0xe0
+[<0>] wb_writeback+0x18b/0x2d0
+[<0>] wb_workfn+0x2a1/0x400
+[<0>] process_one_work+0x149/0x330
+[<0>] worker_thread+0x2d2/0x410
+[<0>] kthread+0xbe/0xf0
+[<0>] ret_from_fork+0x34/0x50
+[<0>] ret_from_fork_asm+0x1a/0x30
+
+Fixes: 43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josh Hunt <johunt@akamai.com>
+Link: https://lore.kernel.org/linux-raid/20260303005619.1352958-1-johunt@akamai.com
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/revoke.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/md/raid10.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/jbd2/revoke.c
-+++ b/fs/jbd2/revoke.c
-@@ -429,6 +429,7 @@ int jbd2_journal_cancel_revoke(handle_t
- 	int need_cancel;
- 	int did_revoke = 0;	/* akpm: debug */
- 	struct buffer_head *bh = jh2bh(jh);
-+	struct address_space *bh_mapping = bh->b_folio->mapping;
- 
- 	jbd2_debug(4, "journal_head %p, cancelling revoke\n", jh);
- 
-@@ -466,13 +467,14 @@ int jbd2_journal_cancel_revoke(handle_t
- 	 * buffer_head?  If so, we'd better make sure we clear the
- 	 * revoked status on any hashed alias too, otherwise the revoke
- 	 * state machine will get very upset later on. */
--	if (need_cancel) {
-+	if (need_cancel && !sb_is_blkdev_sb(bh_mapping->host->i_sb)) {
- 		struct buffer_head *bh2;
-+
- 		bh2 = __find_get_block_nonatomic(bh->b_bdev, bh->b_blocknr,
- 						 bh->b_size);
- 		if (bh2) {
--			if (bh2 != bh)
--				clear_buffer_revoked(bh2);
-+			WARN_ON_ONCE(bh2 == bh);
-+			clear_buffer_revoked(bh2);
- 			__brelse(bh2);
- 		}
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1182,7 +1182,7 @@ static void raid10_read_request(struct m
  	}
+ 
+ 	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
+-		raid_end_bio_io(r10_bio);
++		free_r10bio(r10_bio);
+ 		return;
+ 	}
+ 
+@@ -1381,7 +1381,7 @@ static void raid10_write_request(struct
+ 
+ 	sectors = r10_bio->sectors;
+ 	if (!regular_request_wait(mddev, conf, bio, sectors)) {
+-		raid_end_bio_io(r10_bio);
++		free_r10bio(r10_bio);
+ 		return;
+ 	}
+ 
 
 
