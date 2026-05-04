@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CEC3DDDD5;
-	Mon,  4 May 2026 13:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBBC3DBD70;
+	Mon,  4 May 2026 13:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777902886; cv=none; b=YCE4D80NW9SCMg8sj6HUCJSg8qn+qUE6m0qWLumlMiF54Nr/72CbJiqG3nhpcFe1QzJkCt5oBVK1AgxAiEv9hfzIJzPx8H6FT8nEBlns/7NWFfPKBrgVl29Rn3mKbhqO9RJ8WT3eLQk29l2fQnEEXI+mO9jZsoAU1atiOCdhoqs=
+	t=1777902889; cv=none; b=iB1uEqHITyRYgAFD2O+FcwP7o+Hq+0tp8fY3/lOk8twjOmuZRtHhW9Qm1HVSIUknckTIXlmXwl32v5f6YMPIFQnpW4oxqoB6jtNf11theJNxUGCI2H8ax6FxWlABFZZcT0oOwsf/Ls/7rZF/ueQEZsuZT/30Icbf5b/gZghgoWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777902886; c=relaxed/simple;
-	bh=wFY6mHbX1ErhbraK/HMSTWzJYVS3OjVoYJcno3QzzMw=;
+	s=arc-20240116; t=1777902889; c=relaxed/simple;
+	bh=UZybZQymwTB55eZ67Ebuw7m9iAyobHZ0OU0KLMhdo8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGZTdf4qnnbryybdPWqxqecUK9ewlZa5Tj57ZYIRaYkYl21XBZCMHBSvVZc7vAdlo6QdWvx9gUVlJpKDNA3BArhLn5z216zGBjpNXnpxbVlihZcX2edmn4X4MMcTCaEtaMyLpTZko7qI2DImVN7dgP7DEvgYqM26nJWmtjOIGXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXwSX/QL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jg6JlMHydLMkZX9m+jZYo1C9s4lZ4QT7xYvH5LAT4gJ5zRGQfnIG28TvUYIBLZ4o4Btt4JhpR32smE+5Hin0EMWjVIZ8qovbA1kKwFJfqZk+opbjij9HH41PQCUji82S3KM+TyPSLDIrUWWqNeArOb+u3+nlHledX9St2Jlk0zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0GOOv5W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXwSX/QL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA36C2BCB8;
-	Mon,  4 May 2026 13:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0GOOv5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508B3C2BCB8;
+	Mon,  4 May 2026 13:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777902886;
-	bh=wFY6mHbX1ErhbraK/HMSTWzJYVS3OjVoYJcno3QzzMw=;
+	s=korg; t=1777902888;
+	bh=UZybZQymwTB55eZ67Ebuw7m9iAyobHZ0OU0KLMhdo8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXwSX/QLwlX3OX9yoQxD4PR7m8UTR5w4SdDyUZmd4KaaGsAsAJ8PpgovwID88Rsf1
-	 NN3IhwyTpPJMpXMaoqPuHwqBhnrp0tpCIu41L7G534bQsflgMovEyLsW8+ChGnsnx5
-	 mgmbM3yaHQnvjbCB0oMFAWxvcH3AHnC1/nVyRUsU=
+	b=w0GOOv5WbxkPJRykK8LHsCR0K0pt1FNqu+0Nxb0kqvni44Q86zYnQPniKYqmaPPKV
+	 ohVmXcUIfN83bWGqVJunLqDI9rU+pJCrqhA5f9bXNs9NXY7nJg/kYZJ9hTMkWGaNCn
+	 IJa+UWZB4sTW+ta+01s4eLA4TA4xLTJ0fKL3N0Ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Gary Guo <gary@garyguo.net>
-Subject: [PATCH 7.0 020/307] rust: dma: remove DMA_ATTR_NO_KERNEL_MAPPING from public attrs
-Date: Mon,  4 May 2026 15:48:25 +0200
-Message-ID: <20260504135143.587646485@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.0 021/307] kbuild: rust: allow `clippy::uninlined_format_args`
+Date: Mon,  4 May 2026 15:48:26 +0200
+Message-ID: <20260504135143.624141401@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,50 +49,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 18fb5f1f0289b8217c0c43d54d12bccc201dd640 upstream.
+commit 10eea3c147141c90cf409b8df56d245c9d7f88d9 upstream.
 
-When DMA_ATTR_NO_KERNEL_MAPPING is passed to dma_alloc_attrs(), the
-returned CPU address is not a pointer to the allocated memory but an
-opaque handle (e.g. struct page *).
+Clippy in Rust 1.88.0 (only) reports [1]:
 
-Coherent<T> (or CoherentAllocation<T> respectively) stores this value as
-NonNull<T> and exposes methods that dereference it and even modify its
-contents.
+    warning: variables can be used directly in the `format!` string
+       --> rust/macros/module.rs:112:23
+        |
+    112 |         let content = format!("{param}:{content}", param = param, content = content);
+        |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
+        = note: `-W clippy::uninlined-format-args` implied by `-W clippy::all`
+        = help: to override `-W clippy::all` add `#[allow(clippy::uninlined_format_args)]`
+    help: change this to
+        |
+    112 -         let content = format!("{param}:{content}", param = param, content = content);
+    112 +         let content = format!("{param}:{content}");
 
-Remove the flag from the public attrs module such that drivers cannot
-pass it to Coherent<T> (or CoherentAllocation<T> respectively) in the
-first place.
+    warning: variables can be used directly in the `format!` string
+       --> rust/macros/module.rs:198:14
+        |
+    198 |         t => panic!("Unsupported parameter type {}", t),
+        |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
+        = note: `-W clippy::uninlined-format-args` implied by `-W clippy::all`
+        = help: to override `-W clippy::all` add `#[allow(clippy::uninlined_format_args)]`
+    help: change this to
+        |
+    198 -         t => panic!("Unsupported parameter type {}", t),
+    198 +         t => panic!("Unsupported parameter type {t}"),
+        |
 
-Instead DMA_ATTR_NO_KERNEL_MAPPING can be supported with an additional
-opaque type (e.g. CoherentHandle) which does not provide access to the
-allocated memory.
+The reason it only triggers in that version is that the lint was moved
+from `pedantic` to `style` in Rust 1.88.0 and then back to `pedantic`
+in Rust 1.89.0 [2][3].
 
-Cc: stable@vger.kernel.org
-Fixes: ad2907b4e308 ("rust: add dma coherent allocator abstraction")
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260321172749.592387-1-dakr@kernel.org
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+In the first case, the suggestion is fair and a pure simplification, thus
+we will clean it up separately.
+
+To keep the behavior the same across all versions, and since the lint
+does not work for all macros (e.g. custom ones like `pr_info!`), disable
+it globally.
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Link: https://lore.kernel.org/rust-for-linux/CANiq72=drAtf3y_DZ-2o4jb6Az9J3Yj4QYwWnbRui4sm4AJD3Q@mail.gmail.com/ [1]
+Link: https://github.com/rust-lang/rust-clippy/pull/15287 [2]
+Link: https://github.com/rust-lang/rust-clippy/issues/15151 [3]
+Link: https://patch.msgid.link/20260331205849.498295-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/dma.rs |    3 ---
- 1 file changed, 3 deletions(-)
+ Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/rust/kernel/dma.rs
-+++ b/rust/kernel/dma.rs
-@@ -250,9 +250,6 @@ pub mod attrs {
-     /// Specifies that writes to the mapping may be buffered to improve performance.
-     pub const DMA_ATTR_WRITE_COMBINE: Attrs = Attrs(bindings::DMA_ATTR_WRITE_COMBINE);
- 
--    /// Lets the platform to avoid creating a kernel virtual mapping for the allocated buffer.
--    pub const DMA_ATTR_NO_KERNEL_MAPPING: Attrs = Attrs(bindings::DMA_ATTR_NO_KERNEL_MAPPING);
--
-     /// Allows platform code to skip synchronization of the CPU cache for the given buffer assuming
-     /// that it has been already transferred to 'device' domain.
-     pub const DMA_ATTR_SKIP_CPU_SYNC: Attrs = Attrs(bindings::DMA_ATTR_SKIP_CPU_SYNC);
+--- a/Makefile
++++ b/Makefile
+@@ -495,6 +495,7 @@ export rust_common_flags := --edition=20
+ 			    -Wclippy::ptr_cast_constness \
+ 			    -Wclippy::ref_as_ptr \
+ 			    -Wclippy::undocumented_unsafe_blocks \
++			    -Aclippy::uninlined_format_args \
+ 			    -Wclippy::unnecessary_safety_comment \
+ 			    -Wclippy::unnecessary_safety_doc \
+ 			    -Wrustdoc::missing_crate_level_docs \
 
 
