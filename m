@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CAC3DE43B;
-	Mon,  4 May 2026 14:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD933DDDD6;
+	Mon,  4 May 2026 14:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903678; cv=none; b=IwSVVuzFxeE6KRqUW/64Q6EDawP1dPJ1CDrSYdDJ+ovMl1S40Ut4/cZL5HvcRSPnGLdC8lwE3F4rtWZhvSRqbwPl6C2eVfFC21DwL+ss/t02lI+1QaEJzpqQn/n6JvNCJ+1HjmEnyayb1kKsF6GWN4BeJS4UN0qRQVob9CDpwP4=
+	t=1777903680; cv=none; b=W90vYqfQ6X64YXP5vd92figCSpz3RWu/YLWsgRqvBhPihOwSjynhF6znF8hUhuepDHpHVtNny1JpqnmLySNtJPPtRNLkrwMAooKKuK+L1arWyLD8bLsvUYIUQZC2YplyQOCBArSioZgG31i/ct7t/Uv02tDvkzD3fDpQAvpWeXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903678; c=relaxed/simple;
-	bh=bygP9lZ1qrIdJmtWd3eCwuKpfj+67qZOZOVP82HDDaw=;
+	s=arc-20240116; t=1777903680; c=relaxed/simple;
+	bh=g2JBxknvJRqh/gFra0FIf9TtNmGF+sOG+/laPS6iEec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eqt5TH4F9bHs6OBXhBCAKDgDYbvwLzgaBGMSibRL7MojglWfPLdz50eAHfMMq0R04wHyfznAsIqoOzjJWs43jvkvy7LCsq99dW28cGCeRsn7E21Q4AnSh+43Bf+HP9bu237WcwySir5JP8k5DjolfzWNOGezc6P2Ss0FChiqV+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xd/7XTfo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fmq9CXxIJymB5D2sf4LIqOjMcwumX7+ReFwOe/gVAlZkDKOSKQ93bgPaEJwGlw0l3fxWZF3RcKhMtToyEUp31MYQ+4Q0iwcm1ApaHCDXpAfYgupQHsihNFGOATlJk0P87KX+x1ZrGqp3YuahX87wVVRpOnpz64sETa5mdwMVCds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DerN77QU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xd/7XTfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A965DC2BCB8;
-	Mon,  4 May 2026 14:07:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DerN77QU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C7CC2BCB8;
+	Mon,  4 May 2026 14:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903678;
-	bh=bygP9lZ1qrIdJmtWd3eCwuKpfj+67qZOZOVP82HDDaw=;
+	s=korg; t=1777903680;
+	bh=g2JBxknvJRqh/gFra0FIf9TtNmGF+sOG+/laPS6iEec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xd/7XTforjGHyrwVc21JcogYCPRC4oEJqiAn2DomhXiFcnx3oISobCb2CaPLaAE/y
-	 F7BfmP1gAVtJBeWOxZDH0OSSu21Swr91EQnFbQbIG4TQWgAPH43ysQ5599NK1mA5Gc
-	 xOS1/zGCjicnivjrX4cV1qpnTta/pPrwGNa7hEN0=
+	b=DerN77QUBqed2eocb4J+bQo18crDu6UmCOOIv0KerWsc1Q117UFAQMjW8UnbKAqM1
+	 rSnIWi6i7WiPYjNYcpMax38yl6crqm4dBwVAAIvryR8Jp/Zkvj8q0ger9iVb9badg8
+	 gZYm2Fgx044ZPicofVQ9iSdtYgOi6eY8PDqYvfXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.18 006/275] usb: chipidea: core: allow ci_irq_handler() handle both ID and VBUS change
-Date: Mon,  4 May 2026 15:49:06 +0200
-Message-ID: <20260504135143.173870966@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 007/275] ALSA: usb-audio: Evaluate packsize caps at the right place
+Date: Mon,  4 May 2026 15:49:07 +0200
+Message-ID: <20260504135143.210600918@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,105 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit b94b631d9f78e653855f7fb58dbcb86c2a856f6f upstream.
+commit 52521e8398839105ef8eb22b3f0993f9b0d11a57 upstream.
 
-For USB role switch-triggered IRQ, ID and VBUS change come together, for
-example when switching from host to device mode. ID indicate a role switch
-and VBUS is required to determine whether the device controller can start
-operating. Currently, ci_irq_handler() handles only a single event per
-invocation. This can cause an issue where switching to device mode results
-in the device controller not working at all. Allowing ci_irq_handler() to
-handle both ID and VBUS change in one call resolves this issue.
+We introduced the upper bound checks of the packet sizes by the
+ep->maxframesize for avoiding the URB submission errors.  However, the
+check was applied at an incorrect place in the function
+snd_usb_endpoint_set_params() where ep->maxframesize isn't defined
+yet; the value is defined at a bit later position.  So this ended up
+with a failure at the first run while the second run works.
 
-Meanwhile, this change also affects the VBUS event handling logic.
-Previously, if an ID event indicated host mode the VBUS IRQ will be
-ignored as the device disable BSE when stop() is called. With the new
-behavior, if ID and VBUS IRQ occur together and the target mode is host,
-the VBUS event is queued and ci_handle_vbus_change() will call
-usb_gadget_vbus_connect(), after which USBMODE is switched to device mode,
-causing host mode to stop working. To prevent this, an additional check is
-added to skip handling VBUS event when current role is not device mode.
+For fixing it, move the check at the correct place, right after the
+calculation of ep->maxframesize in the same function.
 
-Suggested-by: Peter Chen <peter.chen@kernel.org>
-Fixes: e1b5d2bed67c ("usb: chipidea: core: handle usb role switch in a common way")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260402071457.2516021-2-xu.yang_2@nxp.com
+Fixes: 7fe8dec3f628 ("ALSA: usb-audio: Cap the packet size pre-calculations")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221292
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260410143220.1676344-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/core.c |   45 ++++++++++++++++++++++----------------------
- drivers/usb/chipidea/otg.c  |    3 ++
- 2 files changed, 26 insertions(+), 22 deletions(-)
+ sound/usb/endpoint.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -543,30 +543,31 @@ static irqreturn_t ci_irq_handler(int ir
- 			if (ret == IRQ_HANDLED)
- 				return ret;
- 		}
--	}
- 
--	/*
--	 * Handle id change interrupt, it indicates device/host function
--	 * switch.
--	 */
--	if (ci->is_otg && (otgsc & OTGSC_IDIE) && (otgsc & OTGSC_IDIS)) {
--		ci->id_event = true;
--		/* Clear ID change irq status */
--		hw_write_otgsc(ci, OTGSC_IDIS, OTGSC_IDIS);
--		ci_otg_queue_work(ci);
--		return IRQ_HANDLED;
--	}
-+		/*
-+		 * Handle id change interrupt, it indicates device/host function
-+		 * switch.
-+		 */
-+		if ((otgsc & OTGSC_IDIE) && (otgsc & OTGSC_IDIS)) {
-+			ci->id_event = true;
-+			/* Clear ID change irq status */
-+			hw_write_otgsc(ci, OTGSC_IDIS, OTGSC_IDIS);
-+		}
- 
--	/*
--	 * Handle vbus change interrupt, it indicates device connection
--	 * and disconnection events.
--	 */
--	if (ci->is_otg && (otgsc & OTGSC_BSVIE) && (otgsc & OTGSC_BSVIS)) {
--		ci->b_sess_valid_event = true;
--		/* Clear BSV irq */
--		hw_write_otgsc(ci, OTGSC_BSVIS, OTGSC_BSVIS);
--		ci_otg_queue_work(ci);
--		return IRQ_HANDLED;
-+		/*
-+		 * Handle vbus change interrupt, it indicates device connection
-+		 * and disconnection events.
-+		 */
-+		if ((otgsc & OTGSC_BSVIE) && (otgsc & OTGSC_BSVIS)) {
-+			ci->b_sess_valid_event = true;
-+			/* Clear BSV irq */
-+			hw_write_otgsc(ci, OTGSC_BSVIS, OTGSC_BSVIS);
-+		}
-+
-+		if (ci->id_event || ci->b_sess_valid_event) {
-+			ci_otg_queue_work(ci);
-+			return IRQ_HANDLED;
-+		}
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1375,9 +1375,6 @@ int snd_usb_endpoint_set_params(struct s
+ 		return -EINVAL;
  	}
  
- 	/* Handle device/host interrupt */
---- a/drivers/usb/chipidea/otg.c
-+++ b/drivers/usb/chipidea/otg.c
-@@ -130,6 +130,9 @@ enum ci_role ci_otg_role(struct ci_hdrc
+-	ep->packsize[0] = min(ep->packsize[0], ep->maxframesize);
+-	ep->packsize[1] = min(ep->packsize[1], ep->maxframesize);
+-
+ 	/* calculate the frequency in 16.16 format */
+ 	ep->freqm = ep->freqn;
+ 	ep->freqshift = INT_MIN;
+@@ -1404,6 +1401,9 @@ int snd_usb_endpoint_set_params(struct s
+ 	ep->maxframesize = ep->maxpacksize / ep->cur_frame_bytes;
+ 	ep->curframesize = ep->curpacksize / ep->cur_frame_bytes;
  
- void ci_handle_vbus_change(struct ci_hdrc *ci)
- {
-+	if (ci->role != CI_ROLE_GADGET)
-+		return;
++	ep->packsize[0] = min(ep->packsize[0], ep->maxframesize);
++	ep->packsize[1] = min(ep->packsize[1], ep->maxframesize);
 +
- 	if (!ci->is_otg) {
- 		if (ci->platdata->flags & CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS)
- 			usb_gadget_vbus_connect(&ci->gadget);
+ 	err = update_clock_ref_rate(chip, ep);
+ 	if (err >= 0) {
+ 		ep->need_setup = false;
 
 
