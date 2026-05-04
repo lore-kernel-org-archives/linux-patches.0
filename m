@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AFE3DFC79;
-	Mon,  4 May 2026 14:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490913D3D0E;
+	Mon,  4 May 2026 14:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904741; cv=none; b=dU9L7PE0bk7BwTmoGpY1b6/HYE22S0edjreg1lwe2OJEEUINgDA3NvsULLNw+gnh8icOL9kJXLhStR1uLIHwnJ5lBk8f6nrBuRU9hMoJJZEWtW53UvRl9id/cQx5YDzUcZrXSStjN7PF1Sdy4b1CsmD0PAcChmgBy/XS1BEj5PA=
+	t=1777904744; cv=none; b=HjjnWCTH2L7AMogfdEqUwpUM2lUrNI/CN5WjchrmGEoLM3TYfmSwUSA9Y+rfk7nLPbK2PlvkNKweoQUbXcdLBttw1hVPFik9rtJhbtrnYwZwEe8jbM7R7/ZaVg7lF0evxKP34q2B6DSRp3T70UpgUePJmnzAlXA9pesqV1FqHc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904741; c=relaxed/simple;
-	bh=fp73vYaSQX22Nw8A3PiRgOhyfu6tRyHIG0hEYyKap8o=;
+	s=arc-20240116; t=1777904744; c=relaxed/simple;
+	bh=9IflkzGy+k30BlwyHQ0piaSHCG7+BtK7xEdVJImXWu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmm0j9gSYjvWL2UvTBBUkphlHzWUhjHy8kMJ8doq61LEw3vNrjOHeGNKSg662E30RwHXwU40CqAxFlgxhQNeNF8gJOCGYG+fD6segSZ2v2rM3kd5Wah7rLfUmrygh0KyG/F5+d3tqsQ1hVH7j+RLGdloTSFIYv0iy7ZUpZkIioY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRBOe7Nr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CGHFmABjtv3vh6SAFlo5YcwgKhys60Dfj9/rGzrzKjJyrDwQWAGpCviEF1I8ZUkKtGPwrSZQcSmQVY/vo6F8HByivgCLCAfw8E/EsnVAcqbutBQxzvI4hknJXtoRkRjw1nQ1yVWLuOJUI7kAToKfJDGHUF+RhVAC+k3DmsShWhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZuKxT6T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRBOe7Nr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD77C2BCB8;
-	Mon,  4 May 2026 14:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZuKxT6T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E89C2BCB8;
+	Mon,  4 May 2026 14:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904741;
-	bh=fp73vYaSQX22Nw8A3PiRgOhyfu6tRyHIG0hEYyKap8o=;
+	s=korg; t=1777904744;
+	bh=9IflkzGy+k30BlwyHQ0piaSHCG7+BtK7xEdVJImXWu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRBOe7NrEHZhU8HsX/w1il9HWk0LkCEZuUx6v687cZGeRiwmqFvD/4l50ymUE1NWJ
-	 Qqs9VSMyBwU9KP/iDgFrPojJcCz22UX5frD7K8qlwr7a50YAoHuMZNFnAni81gZsgV
-	 fB2io/hERbB6M8L2rQZcOmmws69I3N7Srxz+mr8A=
+	b=IZuKxT6ToeiIZsASF4HUiQXCf55OzBVMnN/Bt2vXBEwEq3ALLjagUkw3HvK0GtsRt
+	 oBSjjLkIxV0h6b3bX52H7Bf6L2u8nuH5QEb6QfIGddRP3eMc+aW9/0qbai9NrUFH+3
+	 H4yNZ6ecE4cD10cMIJszv8UuSiOm4/gqe9uFt978=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	Thorsten Blum <thorsten.blum@linux.dev>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 156/215] crypto: atmel-ecc - Release client on allocation failure
-Date: Mon,  4 May 2026 15:52:55 +0200
-Message-ID: <20260504135135.876385805@linuxfoundation.org>
+Subject: [PATCH 6.12 157/215] crypto: hisilicon - Fix dma_unmap_single() direction
+Date: Mon,  4 May 2026 15:52:56 +0200
+Message-ID: <20260504135135.912575851@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -50,32 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 095d50008d55d13f8fcf1bbeb7c6eba51779bc85 upstream.
+commit 1ee57ab93b75eb59f426aef37b5498a7ffc28278 upstream.
 
-Call atmel_ecc_i2c_client_free() to release the I2C client reserved by
-atmel_ecc_i2c_client_alloc() when crypto_alloc_kpp() fails. Otherwise
-->tfm_count will be out of sync.
+The direction used to map the buffer skreq->iv is DMA_TO_DEVICE but it is
+unmapped with direction DMA_BIDIRECTIONAL in the error path.
 
-Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Change the unmap to match the mapping.
+
+Fixes: 915e4e8413da ("crypto: hisilicon - SEC security accelerator driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-ecc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/hisilicon/sec/sec_algs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/atmel-ecc.c
-+++ b/drivers/crypto/atmel-ecc.c
-@@ -261,6 +261,7 @@ static int atmel_ecdh_init_tfm(struct cr
- 	if (IS_ERR(fallback)) {
- 		dev_err(&ctx->client->dev, "Failed to allocate transformation for '%s': %ld\n",
- 			alg, PTR_ERR(fallback));
-+		atmel_ecc_i2c_client_free(ctx->client);
- 		return PTR_ERR(fallback);
- 	}
- 
+--- a/drivers/crypto/hisilicon/sec/sec_algs.c
++++ b/drivers/crypto/hisilicon/sec/sec_algs.c
+@@ -844,7 +844,7 @@ err_free_elements:
+ 	if (crypto_skcipher_ivsize(atfm))
+ 		dma_unmap_single(info->dev, sec_req->dma_iv,
+ 				 crypto_skcipher_ivsize(atfm),
+-				 DMA_BIDIRECTIONAL);
++				 DMA_TO_DEVICE);
+ err_unmap_out_sg:
+ 	if (split)
+ 		sec_unmap_sg_on_err(skreq->dst, steps, splits_out,
 
 
