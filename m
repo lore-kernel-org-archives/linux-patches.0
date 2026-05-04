@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5143DFC8D;
-	Mon,  4 May 2026 14:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5753DE43C;
+	Mon,  4 May 2026 14:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904638; cv=none; b=GVVHff1BP7E9hDNbj6HM5Hf5A89HbpD9FvcrhhzvEnHjUmwi8FYQPaijAtqnHvcPx7sjyCWyFs6D9k80X/4vhVKYNrNS198A0PDL8jPSD/Odl3xHQhHPkS2pwbbti7WfuOpxX8ZsB3bSKSJkMmrBMwx1VIkP//MQhxDKR/OfFZ8=
+	t=1777904641; cv=none; b=Xi8Cp21uxP+5Tv2l9q3PaW4XJy1odW+88QckXk1/2lSNH79qSmxphDuG6PfpSk72hZmsjncqjcOTsCPk0ktDXzAF3hZ+3f5jO1MqDYYO3BuQBRzqj75s4IXd9L8jbQb3uLdMEhWD6a0NdXNH1uwf23ao56OrS8YDmzFVP9GjvFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904638; c=relaxed/simple;
-	bh=c+fp/y+jp800q2T0CQbMgETYOip/I8mDfPYwSmdzR9A=;
+	s=arc-20240116; t=1777904641; c=relaxed/simple;
+	bh=uB0HQF/Lu+22X/VV4jrzU5LsyOf5ldSgWw3aoBNN5J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M9lY/dnC+ZT27qpuRrjaWD2nFXfwSkPJGDszOk3ix2LdS0r7/azwxaQAj6cnEqhfnCSRLxMkkeQ+BXTGy7CSA2y7Qwi+aiLVV0jNu3pIRwb1Wwk/cdgDuS3FVl633QQPYSGvmUKcv7c19RaNvvD/d+PbCLyrU5GCPwxTGQ+H3yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2uZf4Oa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=az0L7WYLRBN/Ig3iWbZceE1f7g++t0KdDzqk+XeHG5TfRyTrSmZHO62w7QyeONwRIqTItXHoplKpLt+/tBPH06nTE2xTr319poV4dwC7sBR0m20dab2cAafysRM6kOgeI5VXGX7X9irx3wCCOwFAPnEC7/wJQLxw9jAoo8pN5tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUyQ08Zq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2uZf4Oa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EAEC2BCC4;
-	Mon,  4 May 2026 14:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUyQ08Zq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929DBC2BCF4;
+	Mon,  4 May 2026 14:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904638;
-	bh=c+fp/y+jp800q2T0CQbMgETYOip/I8mDfPYwSmdzR9A=;
+	s=korg; t=1777904640;
+	bh=uB0HQF/Lu+22X/VV4jrzU5LsyOf5ldSgWw3aoBNN5J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2uZf4OaMs4bGsRcoS4ojJp+XF6Yj46YijVQ5Q98yg9xvLOF7ikBj5EHnnibqynPJ
-	 URuD5ht+LaKGYqKTMN4jsT36MtDOEJB63hpMCPcODIbcpRXkoHFzjRSSTIgVizb4/u
-	 56H2jTWJ2FOXL355CiVDZScU7knfJZf1k0t0wbKw=
+	b=FUyQ08ZqmS9vBX/IobiDSoUXwMzc8BQFcp1vJTAMAVK0sUj1TIiSYlwPiW6MYjhQp
+	 tx94nl+PXSnilx6PZUFI5rnTqR3tlSVXKZ2Vz6AVlXpXjDOyiR4foFKW59UYoXCTFa
+	 5XXx3/lDXsuWzDc4UbQ9fK8dAuVg8ItWvttLyLk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Denis M. Karpov" <komlomal@gmail.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Jann Horn <jannh@google.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 117/215] userfaultfd: allow registration of ranges below mmap_min_addr
-Date: Mon,  4 May 2026 15:52:16 +0200
-Message-ID: <20260504135134.428575059@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.12 100/215] power: supply: axp288_charger: Do not cancel work before initializing it
+Date: Mon,  4 May 2026 15:51:59 +0200
+Message-ID: <20260504135133.807353878@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -60,60 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis M. Karpov <komlomal@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit 161ce69c2c89781784b945d8e281ff2da9dede9c upstream.
+commit 658342fd75b582cbb06544d513171c3d645faead upstream.
 
-The current implementation of validate_range() in fs/userfaultfd.c
-performs a hard check against mmap_min_addr.  This is redundant because
-UFFDIO_REGISTER operates on memory ranges that must already be backed by a
-VMA.
+Driver registered devm handler to cancel_work_sync() before even the
+work was initialized, thus leading to possible warning from
+kernel/workqueue.c on (!work->func) check, if the error path was hit
+before the initialization happened.
 
-Enforcing mmap_min_addr or capability checks again in userfaultfd is
-unnecessary and prevents applications like binary compilers from using
-UFFD for valid memory regions mapped by application.
+Use devm_work_autocancel() on each work item independently, which
+handles the initialization and handler to cancel work.
 
-Remove the redundant check for mmap_min_addr.
-
-We started using UFFD instead of the classic mprotect approach in the
-binary translator to track application writes.  During development, we
-encountered this bug.  The translator cannot control where the translated
-application chooses to map its memory and if the app requires a
-low-address area, UFFD fails, whereas mprotect would work just fine.  I
-believe this is a genuine logic bug rather than an improvement, and I
-would appreciate including the fix in stable.
-
-Link: https://lore.kernel.org/20260409103345.15044-1-komlomal@gmail.com
-Fixes: 86039bd3b4e6 ("userfaultfd: add new syscall to provide memory externalization")
-Signed-off-by: Denis M. Karpov <komlomal@gmail.com>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Acked-by: Harry Yoo (Oracle) <harry@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jann Horn <jannh@google.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 165c2357744e ("power: supply: axp288_charger: Properly stop work on probe-error / remove")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/20260220174938.672883-5-krzysztof.kozlowski@oss.qualcomm.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/power/supply/axp288_charger.c |   19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -1215,8 +1215,6 @@ static __always_inline int validate_unal
- 		return -EINVAL;
- 	if (!len)
- 		return -EINVAL;
--	if (start < mmap_min_addr)
--		return -EINVAL;
- 	if (start >= task_size)
- 		return -EINVAL;
- 	if (len > task_size - start)
+--- a/drivers/power/supply/axp288_charger.c
++++ b/drivers/power/supply/axp288_charger.c
+@@ -10,6 +10,7 @@
+ #include <linux/acpi.h>
+ #include <linux/bitops.h>
+ #include <linux/module.h>
++#include <linux/devm-helpers.h>
+ #include <linux/device.h>
+ #include <linux/regmap.h>
+ #include <linux/workqueue.h>
+@@ -821,14 +822,6 @@ static int charger_init_hw_regs(struct a
+ 	return 0;
+ }
+ 
+-static void axp288_charger_cancel_work(void *data)
+-{
+-	struct axp288_chrg_info *info = data;
+-
+-	cancel_work_sync(&info->otg.work);
+-	cancel_work_sync(&info->cable.work);
+-}
+-
+ static int axp288_charger_probe(struct platform_device *pdev)
+ {
+ 	int ret, i, pirq;
+@@ -911,12 +904,12 @@ static int axp288_charger_probe(struct p
+ 	}
+ 
+ 	/* Cancel our work on cleanup, register this before the notifiers */
+-	ret = devm_add_action(dev, axp288_charger_cancel_work, info);
++	ret = devm_work_autocancel(dev, &info->cable.work,
++				   axp288_charger_extcon_evt_worker);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/* Register for extcon notification */
+-	INIT_WORK(&info->cable.work, axp288_charger_extcon_evt_worker);
+ 	info->cable.nb.notifier_call = axp288_charger_handle_cable_evt;
+ 	ret = devm_extcon_register_notifier_all(dev, info->cable.edev,
+ 						&info->cable.nb);
+@@ -926,8 +919,12 @@ static int axp288_charger_probe(struct p
+ 	}
+ 	schedule_work(&info->cable.work);
+ 
++	ret = devm_work_autocancel(dev, &info->otg.work,
++				   axp288_charger_otg_evt_worker);
++	if (ret)
++		return ret;
++
+ 	/* Register for OTG notification */
+-	INIT_WORK(&info->otg.work, axp288_charger_otg_evt_worker);
+ 	info->otg.id_nb.notifier_call = axp288_charger_handle_otg_evt;
+ 	if (info->otg.cable) {
+ 		ret = devm_extcon_register_notifier(dev, info->otg.cable,
 
 
