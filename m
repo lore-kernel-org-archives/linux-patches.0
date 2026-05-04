@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680DB3D8129;
-	Mon,  4 May 2026 14:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034CA3D8129;
+	Mon,  4 May 2026 14:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904749; cv=none; b=RHcWIc0pr9simvZ4OcSVL9jSsPyL7TRsgeS9wbvI2330S8y1g3D4o/fkpFJAPs1ISrfWd766qwvijfk9C81aYCtfLlJqYixFGcgkzcGEIqRjBR+KUC56oSn7hOf6H7LBIcqqXKuyOwioqePOENbaVKeIKDq0yfZ+BDlBOV5c744=
+	t=1777904752; cv=none; b=rHlxlDRPB/QXhMhtsIEvDh0hQhjM82+nKH1kYGn57sIf2/kHBToYiYh4y2spxspW00lVaIrnWrp3Ra9+bxelO3tF4kZjUKe2E0yYsxBMH49BrrsIoF3qm0aUjfXeQtnKxll9Me+VFQoI22pNWz6lYTBNYi12/WPQluetj6rcFTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904749; c=relaxed/simple;
-	bh=G914j1P5/Sl5QiT6zYcF/Y189J+sT0FGOvktGR6zeHk=;
+	s=arc-20240116; t=1777904752; c=relaxed/simple;
+	bh=47nz3tBaNzSYNWIzbFa74kGlBZaHQqLHVUonu3HEM8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=My2xJeYi7q+xKqgaTOgQvKazeWOjgJD2uIB9hZ3I+4BCGMw88ND2q4GBAyWiAKQfA+bv1DXZUdiSOMjcDBGoeQ35Vg2eHFrBDa3ruSFV9FABynR+GCpwqLpMX3YBGo9v/cuJJpWo0CfQqFIbh/3JYVZVdXb69dU0cdOhK2K9bA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJefTL5s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RKDmyj50ggM5ibyqhodpPmgPm5WXY5a9Br4mIR45du/0FpjLaqcSfaB4Vus8XigZ2frkv/pjnEmOJdOROlZugqU9qy7txxNqR2DGdaoU300mCuD84969VvFEdypp9uWfe+axMV+TGLcRrePDsK2m809zMFtgGYCZATEqNizpSqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPRuQT1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJefTL5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26C8C2BCB8;
-	Mon,  4 May 2026 14:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPRuQT1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D195C2BCB8;
+	Mon,  4 May 2026 14:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904749;
-	bh=G914j1P5/Sl5QiT6zYcF/Y189J+sT0FGOvktGR6zeHk=;
+	s=korg; t=1777904751;
+	bh=47nz3tBaNzSYNWIzbFa74kGlBZaHQqLHVUonu3HEM8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJefTL5s5X53fC1DBndAa4MReg6V67ypyeC7uKlkITV79VhAjrN3YwFYbRfKDhv1P
-	 ObbB36zab1UFu16icZFTeSpVZxAK3eHfTHgDW0EsE9G2F2Qrk6imRSdtzKVJiB5RCI
-	 YTKtWFFxK9c0xju809hQMflYtRJi6ByoU5phJes8=
+	b=cPRuQT1FJQtioFOEO2jQuksw5xMVnchN6c9QijnPNtgAv4K2X7mOh8+NJCz/SllKl
+	 WhwcSL//eJe35BVAZFppfbJvgQU+2qwcAOUIKgeYay3F3wvsrTnS8HbrI8V8hnhvBa
+	 bCFItRpX0heJWYq5qz1vtUoNWzQOi2BsGsHGwP6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thorsten Blum <thorsten.blum@linux.dev>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 159/215] crypto: atmel-tdes - fix DMA sync direction
-Date: Mon,  4 May 2026 15:52:58 +0200
-Message-ID: <20260504135135.984321340@linuxfoundation.org>
+Subject: [PATCH 6.12 160/215] crypto: atmel-sha204a - Fix error codes in OTP reads
+Date: Mon,  4 May 2026 15:52:59 +0200
+Message-ID: <20260504135136.020561335@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -52,46 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit c8a9a647532f5c2a04180352693215e24e9dba03 upstream.
+commit 094c276da6a0d4971c3faae09a36b51d096659b2 upstream.
 
-Before DMA output is consumed by the CPU, ->dma_addr_out must be synced
-with dma_sync_single_for_cpu() instead of dma_sync_single_for_device().
-Using the wrong direction can return stale cache data on non-coherent
-platforms.
+Return -EINVAL from atmel_i2c_init_read_otp_cmd() on invalid addresses
+instead of -1. Since the OTP zone is accessed in 4-byte blocks, valid
+addresses range from 0 to OTP_ZONE_SIZE / 4 - 1. Fix the bounds check
+accordingly.
 
-Fixes: 13802005d8f2 ("crypto: atmel - add Atmel DES/TDES driver")
-Fixes: 1f858040c2f7 ("crypto: atmel-tdes - add support for latest release of the IP (0x700)")
+In atmel_sha204a_otp_read(), propagate the actual error code from
+atmel_i2c_init_read_otp_cmd() instead of -1. Also, return -EIO instead
+of -EINVAL when the device is not ready.
+
 Cc: stable@vger.kernel.org
+Fixes: e05ce444e9e5 ("crypto: atmel-sha204a - add reading from otp zone")
 Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Lothar Rubusch <l.rubusch@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-tdes.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/crypto/atmel-i2c.c     |    4 ++--
+ drivers/crypto/atmel-sha204a.c |    7 ++++---
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/crypto/atmel-tdes.c
-+++ b/drivers/crypto/atmel-tdes.c
-@@ -294,8 +294,8 @@ static int atmel_tdes_crypt_pdc_stop(str
- 		dma_unmap_sg(dd->dev, dd->out_sg, 1, DMA_FROM_DEVICE);
- 		dma_unmap_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
- 	} else {
--		dma_sync_single_for_device(dd->dev, dd->dma_addr_out,
--					   dd->dma_size, DMA_FROM_DEVICE);
-+		dma_sync_single_for_cpu(dd->dev, dd->dma_addr_out,
-+					dd->dma_size, DMA_FROM_DEVICE);
+--- a/drivers/crypto/atmel-i2c.c
++++ b/drivers/crypto/atmel-i2c.c
+@@ -72,8 +72,8 @@ EXPORT_SYMBOL(atmel_i2c_init_read_config
  
- 		/* copy data */
- 		count = atmel_tdes_sg_copy(&dd->out_sg, &dd->out_offset,
-@@ -619,8 +619,8 @@ static int atmel_tdes_crypt_dma_stop(str
- 			dma_unmap_sg(dd->dev, dd->out_sg, 1, DMA_FROM_DEVICE);
- 			dma_unmap_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
- 		} else {
--			dma_sync_single_for_device(dd->dev, dd->dma_addr_out,
--				dd->dma_size, DMA_FROM_DEVICE);
-+			dma_sync_single_for_cpu(dd->dev, dd->dma_addr_out,
-+						dd->dma_size, DMA_FROM_DEVICE);
+ int atmel_i2c_init_read_otp_cmd(struct atmel_i2c_cmd *cmd, u16 addr)
+ {
+-	if (addr < 0 || addr > OTP_ZONE_SIZE)
+-		return -1;
++	if (addr >= OTP_ZONE_SIZE / 4)
++		return -EINVAL;
  
- 			/* copy data */
- 			count = atmel_tdes_sg_copy(&dd->out_sg, &dd->out_offset,
+ 	cmd->word_addr = COMMAND;
+ 	cmd->opcode = OPCODE_READ;
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -96,9 +96,10 @@ static int atmel_sha204a_rng_read(struct
+ static int atmel_sha204a_otp_read(struct i2c_client *client, u16 addr, u8 *otp)
+ {
+ 	struct atmel_i2c_cmd cmd;
+-	int ret = -1;
++	int ret;
+ 
+-	if (atmel_i2c_init_read_otp_cmd(&cmd, addr) < 0) {
++	ret = atmel_i2c_init_read_otp_cmd(&cmd, addr);
++	if (ret < 0) {
+ 		dev_err(&client->dev, "failed, invalid otp address %04X\n",
+ 			addr);
+ 		return ret;
+@@ -108,7 +109,7 @@ static int atmel_sha204a_otp_read(struct
+ 
+ 	if (cmd.data[0] == 0xff) {
+ 		dev_err(&client->dev, "failed, device not ready\n");
+-		return -EINVAL;
++		return -EIO;
+ 	}
+ 
+ 	memcpy(otp, cmd.data+1, 4);
 
 
