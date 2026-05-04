@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F711A6827;
-	Mon,  4 May 2026 14:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799341A6827;
+	Mon,  4 May 2026 14:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904111; cv=none; b=dX6ekiEtIvD20PHm2SZIt4sD71LjKFmKfpmCgvX8foRWuC1ZPYIdV//AI4zOxqYNIwKO2nZH4iNxQlCmZg1ILvlvvtB3/fsO1PTmlnxGKCqUDR3lL5QliavkOmKydsbSJ2u9ifRRuwiS+8loWb+6TDYknlSvL8ZWrLgykLvPvOY=
+	t=1777904113; cv=none; b=dx7/AP2FeFcmekl+z/Ggulw152NzkkYipYOfD+YY/LkECDui0ZFpEDYvGQOepUYO7RBXGWwKOuj6CDeysu9vybpEfjdlB3wR6nL/jWxSxHE6g000Yhtu1C3Qfk9rfLr9jrlAW7djqYGBsMrlGbaCNA7K8Thyf3VREDbtJ4zXW5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904111; c=relaxed/simple;
-	bh=HxhPJDyZ4Q1JKtlR2cZoQWIKbjpvFCmPh8f2/x32K1E=;
+	s=arc-20240116; t=1777904113; c=relaxed/simple;
+	bh=3NKZBCxEGILHMrKgM1M1gV6xd3QLcupOmdqk1o9JMWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sQsdajqYruC89MjTCTAcYtz9R+GMLx1bABITgofGRxdp//nH1YR+s5MDW4/UBW4J0A0Fy8HWQVEC78u2MUsk9VxeQEtdz1T5bfuyzesjf3JprhEH7Hrf9ooNzD3iEbvooGym1msn1sqOILX0EwL76WDRyZ5DTFC2VjirFSZdLQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMD616TJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fWP2AqhjAdyMeZ+FR6bkBYS12uF9WVKHXJrHbVHGvJcYva1fJkotqTYayBnLk6ScDZiPyX8XUkPomDEA8xGbdmveSq1aVT3udd1EhQ+FCUWwR66paquLsERLLRTFFv9Fas9uQosTLnOfooJ1RjpKopbsPOh8fl7l2m39HG1DHr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBNCa9jC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMD616TJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854A6C2BCF4;
-	Mon,  4 May 2026 14:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBNCa9jC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1092FC2BCB8;
+	Mon,  4 May 2026 14:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904110;
-	bh=HxhPJDyZ4Q1JKtlR2cZoQWIKbjpvFCmPh8f2/x32K1E=;
+	s=korg; t=1777904113;
+	bh=3NKZBCxEGILHMrKgM1M1gV6xd3QLcupOmdqk1o9JMWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMD616TJjiEqNYut7l/YMHGd79vjXtK3jPKf/A8uawzSAUAKuQjhtBVLIqMCcXtOV
-	 OuvijXOfZO9s11PLGXegTFQRlcCadpURRtlUCIr7+J4dNxp5NlHUa6IGv3VtvXZigz
-	 bVEv1Vs9+hKdxwSqGLy0PgZzfvwRlIw5np+dOpKE=
+	b=FBNCa9jCPGrs59dWfBg+G2jBK0MbNb93wt+1nyRAQgyxmoWiikjhoPtRZwlZ8sTP8
+	 7G//DrHYheY38Lj44flulRK+iZVdTX0jVV+GRBujEPCbSaSWrBGwbDnNcpQDyYDvGx
+	 piMM52gUNApltfFRE7LF6sdbiDAlSVm5BCfdrYlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Johan Hovold <johan@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.18 160/275] rtc: ntxec: fix OF node reference imbalance
-Date: Mon,  4 May 2026 15:51:40 +0200
-Message-ID: <20260504135148.991486266@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 187/275] KVM: nSVM: Clear EVENTINJ fields in vmcb12 on nested #VMEXIT
+Date: Mon,  4 May 2026 15:52:07 +0200
+Message-ID: <20260504135150.023003633@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -45,45 +44,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 30c4d2f26bb3538c328035cea2e6265c8320539e upstream.
+commit 69b721a86d0dcb026f6db7d111dcde7550442d2e upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+According to the APM, from the reference of the VMRUN instruction:
 
-Fix this by using the intended helper for reusing OF nodes.
+  Upon #VMEXIT, the processor performs the following actions in order to
+  return to the host execution context:
 
-Fixes: 435af89786c6 ("rtc: New driver for RTC in Netronix embedded controller")
-Cc: stable@vger.kernel.org	# 5.13
-Cc: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260407122717.2676774-1-johan@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+  ...
+
+  clear EVENTINJ field in VMCB
+
+KVM already syncs EVENTINJ fields from vmcb02 to cached vmcb12 on every
+L2->L0  #VMEXIT. Since these fields are zeroed by the CPU on #VMEXIT, they
+will mostly be zeroed in vmcb12 on nested #VMEXIT by nested_svm_vmexit().
+
+However, this is not the case when:
+
+  1. Consistency checks fail, as nested_svm_vmexit() is not called.
+  2. Entering guest mode fails before L2 runs (e.g. due to failed load of
+     CR3).
+
+(2) was broken by commit 2d8a42be0e2b ("KVM: nSVM: synchronize VMCB
+controls updated by the processor on every vmexit"), as prior to that
+nested_svm_vmexit() always zeroed EVENTINJ fields.
+
+Explicitly clear the fields in all nested #VMEXIT code paths.
+
+Fixes: 3d6368ef580a ("KVM: SVM: Add VMRUN handler")
+Fixes: 2d8a42be0e2b ("KVM: nSVM: synchronize VMCB controls updated by the processor on every vmexit")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260303003421.2185681-12-yosry@kernel.org
+[sean: massage changelog formatting]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-ntxec.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/nested.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/rtc/rtc-ntxec.c
-+++ b/drivers/rtc/rtc-ntxec.c
-@@ -110,7 +110,7 @@ static int ntxec_rtc_probe(struct platfo
- 	struct rtc_device *dev;
- 	struct ntxec_rtc *rtc;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -992,6 +992,8 @@ int nested_svm_vmrun(struct kvm_vcpu *vc
+ 		vmcb12->control.exit_code_hi = -1u;
+ 		vmcb12->control.exit_info_1  = 0;
+ 		vmcb12->control.exit_info_2  = 0;
++		vmcb12->control.event_inj = 0;
++		vmcb12->control.event_inj_err = 0;
+ 		svm_set_gif(svm, false);
+ 		goto out;
+ 	}
+@@ -1137,9 +1139,9 @@ static int nested_svm_vmexit_update_vmcb
+ 	if (nested_vmcb12_has_lbrv(vcpu))
+ 		svm_copy_lbrs(&vmcb12->save, &vmcb02->save);
  
--	pdev->dev.of_node = pdev->dev.parent->of_node;
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
++	vmcb12->control.event_inj	  = 0;
++	vmcb12->control.event_inj_err	  = 0;
+ 	vmcb12->control.int_ctl           = svm->nested.ctl.int_ctl;
+-	vmcb12->control.event_inj         = svm->nested.ctl.event_inj;
+-	vmcb12->control.event_inj_err     = svm->nested.ctl.event_inj_err;
  
- 	rtc = devm_kzalloc(&pdev->dev, sizeof(*rtc), GFP_KERNEL);
- 	if (!rtc)
+ 	trace_kvm_nested_vmexit_inject(vmcb12->control.exit_code,
+ 				       vmcb12->control.exit_info_1,
 
 
