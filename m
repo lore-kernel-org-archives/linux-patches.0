@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6015E34753C;
-	Mon,  4 May 2026 13:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF24B2E2F0E;
+	Mon,  4 May 2026 13:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903092; cv=none; b=h9zMWP+XaUBgOaEa5S+ExiCiQJYsGZAHqohR4MXhV6Zu7EITvBpALjBN3aZPQRoCQ1wbM0hL4M9bj116jvZOnYSf+hIW+oak4IvyFw+GOz5jbE3foP/+sY/E58GdWJVmlBbH0yO3wp1eX2Kr8NanqbJRKIruWm2zIfBt2vcJpKQ=
+	t=1777903095; cv=none; b=HSA/I9uZtzqOdMJqFcMKP2vvBJ3qOlRRM3lRJlR1jyP8/BY1lU+GxG2K+6WXvPCbGSck7EQqsCJ7BHRlGg19++UplXWQNqXdKZ4ye5iE54+a+uIzv98PvhZcfRQFnmFsFRB8JRKo9Km0smvf3iO79VOPnFo3ehg67h0wfcRyKMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903092; c=relaxed/simple;
-	bh=8PpYteYZLHAFObx0el1xQFKtf9RQQWz+9S+uT84fmNU=;
+	s=arc-20240116; t=1777903095; c=relaxed/simple;
+	bh=zQmc7+BrwI8cJIS83MBIzm6CI8AhddvBcI2uSveKppc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EYlLnDzk+dcHivUfeAXc9mV8bPvIeKggacLh5/wxHEzE/h3beLyMrHHCRTAeDaCPSNaEOvp5fwSUZ+fEYAwfSoGnIOloiYjWlSob08FbXCsMzF2PJZd6sxb0ehGAm33fxVVaK6EIetWGhoeXjmT9pmoz8e75zD3ztLCcq4k4gpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSu5+mT7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j5ZIW1cWg671iLNXHnzODc92GarCFrQYwN7aTiJIO8hkrHndcZXItOt02e2j6L6NhclEbzjBMzCzhWfButh17x6NABwGwPzxTvEY6E2Jq1BsGevKQbhQBPXbFoC9xcwU+plD1AIjXtm+7hOo00HDJMUD+QaiVSy3uerN8Lc9QLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/adK1vR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSu5+mT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA09C2BCB8;
-	Mon,  4 May 2026 13:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/adK1vR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8251BC2BCB8;
+	Mon,  4 May 2026 13:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903092;
-	bh=8PpYteYZLHAFObx0el1xQFKtf9RQQWz+9S+uT84fmNU=;
+	s=korg; t=1777903094;
+	bh=zQmc7+BrwI8cJIS83MBIzm6CI8AhddvBcI2uSveKppc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NSu5+mT7eDr3OrJnQWPqphj8rBUjc7g97El8w8XG/6AJ/hzdWhvgKt7++UX+BmU+b
-	 ra2aExBE/ccZQWx439LjnwkrDvNHcO+V1kpySstFD1oCIrFeHIMIoYr53XBzu5D5fz
-	 DS1GIC2otItoZMj18c3wauBAjz7m0ZSUtffqnMHs=
+	b=b/adK1vRh+bDto8iOTcvHvvobW9CbammRI7ymS9xg7KGgh1FUsx6BOEkhfFzwoo89
+	 QRoteSbVjkO365QbkyfIHjHIv3O4lS6QegMbwvu6/yx2d47qg5jAYxmGrXoC6LGc9p
+	 jDz3JBYN1y4kuzYJk59Hh/mOQQvWy3GQ9o0kM2Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 068/307] ALSA: aoa: i2sbus: fix OF node lifetime handling
-Date: Mon,  4 May 2026 15:49:13 +0200
-Message-ID: <20260504135145.373340317@linuxfoundation.org>
+Subject: [PATCH 7.0 069/307] ALSA: aoa: Skip devices with no codecs in i2sbus_resume()
+Date: Mon,  4 May 2026 15:49:14 +0200
+Message-ID: <20260504135145.411405715@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -44,90 +44,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 4ec93f070eda6b765b62efcaed9241c3b3b0b6ad upstream.
+commit fd7df93013c5118812e63a52635dc6c3a805a1de upstream.
 
-i2sbus_add_dev() keeps the matched "sound" child pointer after
-for_each_child_of_node() has dropped the iterator reference. Take an
-extra reference before saving that node and drop it after the
-layout-id/device-id lookup is complete.
+In i2sbus_resume(), skip devices with an empty codec list, which avoids
+using an uninitialized 'sysclock_factor' in the 32-bit format path in
+i2sbus_pcm_prepare().
 
-The function also stores np in dev->sound.ofdev.dev.of_node without
-taking a reference for the embedded soundbus device. Since i2sbus
-overrides the embedded platform device release callback, balance that
-reference explicitly in the local error path and in i2sbus_release_dev().
+In i2sbus_pcm_prepare(), replace two list_for_each_entry() loops with a
+single list_first_entry() now that the codec list is guaranteed to be
+non-empty by all callers.
 
 Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260330-aoa-i2sbus-ofnode-lifetime-v1-1-51c309f4ff06@gmail.com
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260310102921.210109-3-thorsten.blum@linux.dev
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/aoa/soundbus/i2sbus/core.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/aoa/soundbus/i2sbus/core.c |    3 +++
+ sound/aoa/soundbus/i2sbus/pcm.c  |   16 +++++-----------
+ 2 files changed, 8 insertions(+), 11 deletions(-)
 
 --- a/sound/aoa/soundbus/i2sbus/core.c
 +++ b/sound/aoa/soundbus/i2sbus/core.c
-@@ -84,6 +84,7 @@ static void i2sbus_release_dev(struct de
- 	for (i = aoa_resource_i2smmio; i <= aoa_resource_rxdbdma; i++)
- 		free_irq(i2sdev->interrupts[i], i2sdev);
- 	i2sbus_control_remove_dev(i2sdev->control, i2sdev);
-+	of_node_put(i2sdev->sound.ofdev.dev.of_node);
- 	mutex_destroy(&i2sdev->lock);
- 	kfree(i2sdev);
- }
-@@ -147,7 +148,6 @@ static int i2sbus_get_and_fixup_rsrc(str
- }
+@@ -408,6 +408,9 @@ static int i2sbus_resume(struct macio_de
+ 	int err, ret = 0;
  
- /* Returns 1 if added, 0 for otherwise; don't return a negative value! */
--/* FIXME: look at device node refcounting */
- static int i2sbus_add_dev(struct macio_dev *macio,
- 			  struct i2sbus_control *control,
- 			  struct device_node *np)
-@@ -178,8 +178,9 @@ static int i2sbus_add_dev(struct macio_d
- 	i = 0;
- 	for_each_child_of_node(np, child) {
- 		if (of_node_name_eq(child, "sound")) {
-+			of_node_put(sound);
- 			i++;
--			sound = child;
-+			sound = of_node_get(child);
- 		}
+ 	list_for_each_entry(i2sdev, &control->list, item) {
++		if (list_empty(&i2sdev->sound.codec_list))
++			continue;
++
+ 		/* reset i2s bus format etc. */
+ 		i2sbus_pcm_prepare_both(i2sdev);
+ 
+--- a/sound/aoa/soundbus/i2sbus/pcm.c
++++ b/sound/aoa/soundbus/i2sbus/pcm.c
+@@ -411,6 +411,9 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	/* set stop command */
+ 	command->command = cpu_to_le16(DBDMA_STOP);
+ 
++	cii = list_first_entry(&i2sdev->sound.codec_list,
++			       struct codec_info_item, list);
++
+ 	/* ok, let's set the serial format and stuff */
+ 	switch (runtime->format) {
+ 	/* 16 bit formats */
+@@ -418,13 +421,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	case SNDRV_PCM_FORMAT_U16_BE:
+ 		/* FIXME: if we add different bus factors we need to
+ 		 * do more here!! */
+-		bi.bus_factor = 0;
+-		list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
+-			bi.bus_factor = cii->codec->bus_factor;
+-			break;
+-		}
+-		if (!bi.bus_factor)
+-			return -ENODEV;
++		bi.bus_factor = cii->codec->bus_factor;
+ 		input_16bit = 1;
+ 		break;
+ 	case SNDRV_PCM_FORMAT_S32_BE:
+@@ -438,10 +435,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 		return -EINVAL;
  	}
- 	if (i == 1) {
-@@ -205,6 +206,7 @@ static int i2sbus_add_dev(struct macio_d
- 			}
- 		}
- 	}
-+	of_node_put(sound);
- 	/* for the time being, until we can handle non-layout-id
- 	 * things in some fabric, refuse to attach if there is no
- 	 * layout-id property or we haven't been forced to attach.
-@@ -219,7 +221,7 @@ static int i2sbus_add_dev(struct macio_d
- 	mutex_init(&dev->lock);
- 	spin_lock_init(&dev->low_lock);
- 	dev->sound.ofdev.archdata.dma_mask = macio->ofdev.archdata.dma_mask;
--	dev->sound.ofdev.dev.of_node = np;
-+	dev->sound.ofdev.dev.of_node = of_node_get(np);
- 	dev->sound.ofdev.dev.dma_mask = &dev->sound.ofdev.archdata.dma_mask;
- 	dev->sound.ofdev.dev.parent = &macio->ofdev.dev;
- 	dev->sound.ofdev.dev.release = i2sbus_release_dev;
-@@ -327,6 +329,7 @@ static int i2sbus_add_dev(struct macio_d
- 	for (i=0;i<3;i++)
- 		release_and_free_resource(dev->allocated_resource[i]);
- 	mutex_destroy(&dev->lock);
-+	of_node_put(dev->sound.ofdev.dev.of_node);
- 	kfree(dev);
- 	return 0;
- }
+ 	/* we assume all sysclocks are the same! */
+-	list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
+-		bi.sysclock_factor = cii->codec->sysclock_factor;
+-		break;
+-	}
++	bi.sysclock_factor = cii->codec->sysclock_factor;
+ 
+ 	if (clock_and_divisors(bi.sysclock_factor,
+ 			       bi.bus_factor,
 
 
