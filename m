@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5223D3D8129;
-	Mon,  4 May 2026 14:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73493DE44F;
+	Mon,  4 May 2026 14:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904540; cv=none; b=lcyIHgO+sP4wCzY0r3/UsLw9aCaxefFAzJBAjsEI2vJUzOGrX2nLPAb8ykWG6m8OEP2xYAQgt+PwFSwAqHA5X1wwXbxXxYo60SblveufuvucfTR3NhozxgHhmkjf+hhzs5s7Ywe8+ZfxUmUEw5Sg0aEgWO+1b3SVnlJCvG7Wfyg=
+	t=1777904542; cv=none; b=Nhyh0pEtmlcBEZUM1aic2DC/LHBAP/0x8o9orDHEoZZZtZv04gaRstXub0JL091fw5F1xwgNPcxU/ihFfn4PGpZVkd09MrsYC6SGNZbbjCSJfRQmZtb34bDytcLqWOaXZyeHqkNWwgjQg2K0EuiT9XvP5Z/x97NQZELETHEXou4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904540; c=relaxed/simple;
-	bh=ZjM8Qii3tQbgDxdoRRT6GiM9Ivy5bbOYzW6V2ZfBObw=;
+	s=arc-20240116; t=1777904542; c=relaxed/simple;
+	bh=DR8dcueP0cGGxdKygerIXDBp7FY1FynfIvfD9jaR6fI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OAYRg5PpRzbdJ6Y+cEpUnKNPYhTSnRSeMe6mSDN2PluCnEDU6XPGlslMEKczW6IJB+pzQIw8YcgBHJGCRCKuxmRDtq8Fx4LaEJOaNa7/DKcqXSM6z2u59qZWmD8KwXm25+pP6CSIL3lyvUllfZQ4lBr23ghqJNGmfiKNVKOi78g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqVJ3tAU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OLjXK+f/G4ssGX+N/B7+mDCgs+Qbcy93sDdHbML/RCU/UzTgT7Qm8dkT+wY78z2zePf0AlQni7+4kzlPXzYeEgO2Uowni57JrKoH8K7U1D+A0yr6dhYuhxKy1lqvD4l9NUOqHZKM7kyhU+Y7q5DSaHpUX9DrX5jVH+HtY3aSwqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qb4E9LHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqVJ3tAU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC64BC2BCB8;
-	Mon,  4 May 2026 14:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qb4E9LHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A754C2BCB8;
+	Mon,  4 May 2026 14:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904540;
-	bh=ZjM8Qii3tQbgDxdoRRT6GiM9Ivy5bbOYzW6V2ZfBObw=;
+	s=korg; t=1777904542;
+	bh=DR8dcueP0cGGxdKygerIXDBp7FY1FynfIvfD9jaR6fI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqVJ3tAUtBPAskkw64hGOM/uPt8AAhNXSQSmsL4iyGPqWFUiX2iNlqxW+i2L61XmP
-	 gQK9J9/ck8b69KkM3HTyAFP5ZAvTT8NDJtS7ZvdS9ukGF1mo4YSr2cQ9ykzTQs6IRm
-	 +umMIpzoYFAtfONmT4He/qIpjSxME8dpt5hrIYDA=
+	b=qb4E9LHHfwFKCdaOCiLPT2Y5qGiOlY/7L1HkiqgEg+HvNWi6w82RprTWBcORmIycY
+	 B928vdNAQhPuX8rxU76BiGDQb0v8hbIuzsxQHHd1j0qyoOvoD08yCkRvMuBhbwxOsw
+	 vBGtJLPTKm0rW2//aOBy6IqVhDSkcn4xKrAJMLqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 079/215] ALSA: pcmtest: Fix resource leaks in module init error paths
-Date: Mon,  4 May 2026 15:51:38 +0200
-Message-ID: <20260504135133.049806140@linuxfoundation.org>
+	Jonathan Santos <Jonathan.Santos@analog.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 080/215] iio: adc: ad7768-1: fix one-shot mode data acquisition
+Date: Mon,  4 May 2026 15:51:39 +0200
+Message-ID: <20260504135133.085449531@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -44,69 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Jonathan Santos <Jonathan.Santos@analog.com>
 
-commit d5d5f80416a3a749906c04d56575e2290792654b upstream.
+commit 8be19e233744961db6069da9c9ab63eb085a0447 upstream.
 
-pcmtest allocates its pattern buffers and creates its debugfs tree
-before registering the platform device and driver, but mod_init()
-does not release those resources when a later init step fails.
+According to the datasheet, one-shot mode requires a SYNC_IN pulse to
+trigger a new sample conversion. In the current implementation, No sync
+pulse was sent after switching to one-shot mode and reinit_completion()
+was called before mode switching, creating a race condition where spurious
+interrupts during mode change could trigger completion prematurely.
 
-As a result, a debugfs directory creation failure leaks the pattern
-buffers, while platform_device_register() and
-platform_driver_register() failures leave both the pattern buffers
-and the debugfs tree behind. The recent fix for failed device
-registration only dropped the embedded device reference.
+Fix by sending a sync pulse after configuring one-shot mode and
+reinit_completion() to ensure it only waits for the actual conversion
+completion.
 
-Add the missing cleanup for the debugfs tree and pattern buffers in
-the remaining module init error paths.
-
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260421-alsa-pcmtest-init-unwind-v1-1-03fe0c423dbb@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: a5f8c7da3dbe ("iio: adc: Add AD7768-1 ADC basic support")
+Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/pcmtest.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/iio/adc/ad7768-1.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -753,15 +753,24 @@ static int __init mod_init(void)
+--- a/drivers/iio/adc/ad7768-1.c
++++ b/drivers/iio/adc/ad7768-1.c
+@@ -241,12 +241,17 @@ static int ad7768_scan_direct(struct iio
+ 	struct ad7768_state *st = iio_priv(indio_dev);
+ 	int readval, ret;
  
- 	err = init_debug_files(buf_allocated);
- 	if (err)
--		return err;
-+		goto err_free_patterns;
- 	err = platform_device_register(&pcmtst_pdev);
- 	if (err) {
- 		platform_device_put(&pcmtst_pdev);
--		return err;
-+		goto err_clear_debug;
- 	}
- 	err = platform_driver_register(&pcmtst_pdrv);
--	if (err)
-+	if (err) {
- 		platform_device_unregister(&pcmtst_pdev);
-+		goto err_clear_debug;
-+	}
-+
-+	return 0;
-+
-+err_clear_debug:
-+	clear_debug_files();
-+err_free_patterns:
-+	free_pattern_buffers();
- 	return err;
- }
+-	reinit_completion(&st->completion);
+-
+ 	ret = ad7768_set_mode(st, AD7768_ONE_SHOT);
+ 	if (ret < 0)
+ 		return ret;
  
++	reinit_completion(&st->completion);
++
++	/* One-shot mode requires a SYNC pulse to generate a new sample */
++	ret = ad7768_send_sync_pulse(st);
++	if (ret)
++		return ret;
++
+ 	ret = wait_for_completion_timeout(&st->completion,
+ 					  msecs_to_jiffies(1000));
+ 	if (!ret)
 
 
