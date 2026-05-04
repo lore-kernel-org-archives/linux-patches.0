@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7CA1A6827;
-	Mon,  4 May 2026 14:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189F51A6827;
+	Mon,  4 May 2026 14:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904136; cv=none; b=geI6NZfJwiuuQeLvE7tg8Y/sbGM+YIbvIYF5D2HDkF/ZPtyT8aXMRUiwsat28YEZQliXbYbtOeFwSDs0mDTJ0xFwWCb5oFpRnocl6BWfafXi+N7upmHYfOsAQ2ukW3wB0vkfSQKCTpXdZLu2bTTUgYs8qjPUb12/k8inshojKE8=
+	t=1777904139; cv=none; b=JNPbXOyq25J/mcmsx8ILp6Xie3X0Kp10HNPondHcpkOW9ffWIULabBva0W2kHGCPR5H4OUJEJxqmlnolgZRgvmu5OJYP2ta5/up8dxkBQBABLB6MM9M1bZeIVr/h8FUk2S9xYCPqeg8QuWppm2v2jtquiqA9P90RSjZ+PzKzNnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904136; c=relaxed/simple;
-	bh=FsNKWt0kF1L9HlhElEExQK1LNXy8mlEUE5ZAmJpLrpo=;
+	s=arc-20240116; t=1777904139; c=relaxed/simple;
+	bh=Km0f2coy4htRufn412WGBY7zpHazFUl3zKqTdYC6bRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W46kpzgqlYjuHmPX0T/ITng/eZ2gXmel11DHGZ+k9F5tfWbo44kbvG0Yw924DojqrxxGpNXJt3OZMLW5dAKYzyb+CyDGoXljvVV+U2EnMNMrcc94jpVS2sEDkNhY5A+PTQtkC0fs+sjnwcVFL28qKThw4t0gMg3ai5+eKjJHSbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwGBysYQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ik+m3L21w5UwP9AfShv3cIwXpCfb4eD0H1FccT5HEV75mbMXlVDB177Pavx8NQXYo7byF1bxm8L0F4nC+Dt9A2F+mwagudjj8GhX/iOOF7Y4+dlp3xoQSBoU3veUYP6DCskDkkqvyzdJKDQTAR0fuf0CCDE60oylw2IhBEO5vis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSU8JWz6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwGBysYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19100C2BCB8;
-	Mon,  4 May 2026 14:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSU8JWz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A52C2BCB8;
+	Mon,  4 May 2026 14:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904136;
-	bh=FsNKWt0kF1L9HlhElEExQK1LNXy8mlEUE5ZAmJpLrpo=;
+	s=korg; t=1777904139;
+	bh=Km0f2coy4htRufn412WGBY7zpHazFUl3zKqTdYC6bRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fwGBysYQd+HsK19797g92ZbICA1Vl+xfEn3/B5qtlBtTMOepJe/fq2DOcK9r68uv/
-	 xI/xTuEG/uMS4Ti5jcpy4cjEU4s6xdnVXG4sS7NvEkwArXx78IZv5NJ5WNZToPsQkU
-	 YDUFbTv6VWt47nIzIq5cBB+ntTdlXQszZooroaT8=
+	b=ZSU8JWz6cwuMo7CUh6x1r2G1VvUwNAiEgaJtKoz0qBDbKdJPYHhPvGYajBgiYjM7E
+	 CKeSG++/guNoQ8/si2b0gYouQFBXgGcWS1VqUVD1Sd0kWWfQNJ2WhqBIMqLctmge0l
+	 gOTRG10w+x3MHbrUZn4UXH1i/EhrHqbzlo9gGGg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 164/275] mm/damon/core: validate damos_quota_goal->nid for node_mem_{used,free}_bp
-Date: Mon,  4 May 2026 15:51:44 +0200
-Message-ID: <20260504135149.142139699@linuxfoundation.org>
+Subject: [PATCH 6.18 165/275] mm/damon/core: use time_in_range_open() for damos quota window start
+Date: Mon,  4 May 2026 15:51:45 +0200
+Message-ID: <20260504135149.180702821@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -52,77 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit 40250b2dded0604a112be605f3828700d80ad7c2 upstream.
+commit 049a57421dd67a28c45ae7e92c36df758033e5fa upstream.
 
-Patch series "mm/damon/core: validate damos_quota_goal->nid".
+damos_adjust_quota() uses time_after_eq() to show if it is time to start a
+new quota charge window, comparing the current jiffies and the scheduled
+next charge window start time.  If it is, the next charge window start
+time is updated and the new charge window starts.
 
-node_mem[cg]_{used,free}_bp DAMOS quota goals receive the node id.  The
-node id is used for si_meminfo_node() and NODE_DATA() without proper
-validation.  As a result, privileged users can trigger an out of bounds
-memory access using DAMON_SYSFS.  Fix the issues.
+The time check and next window start time update is skipped while the
+scheme is deactivated by the watermarks.  Let's suppose the deactivation
+is kept more than LONG_MAX jiffies (assuming CONFIG_HZ of 250, more than
+99 days in 32 bit systems and more than one billion years in 64 bit
+systems), resulting in having the jiffies larger than the next charge
+window start time + LONG_MAX.  Then, the time_after_eq() call can return
+false until another LONG_MAX jiffies are passed.
 
-The issue was originally reported [1] with a fix by another author.  The
-original author announced [2] that they will stop working including the
-fix that was still in the review stage.  Hence I'm restarting this.
+This means the scheme can continue working after being reactivated by the
+watermarks.  But, soon, the quota will be exceeded and the scheme will
+again effectively stop working until the next charge window starts.
+Because the current charge window is extended to up to LONG_MAX jiffies,
+however, it will look like it stopped unexpectedly and indefinitely, from
+the user's perspective.
 
+Fix this by using !time_in_range_open() instead.
 
-This patch (of 2):
+The issue was discovered [1] by sashiko.
 
-Users can set damos_quota_goal->nid with arbitrary value for
-node_mem_{used,free}_bp.  But DAMON core is using those for
-si_meminfo_node() without the validation of the value.  This can result in
-out of bounds memory access.  The issue can actually triggered using DAMON
-user-space tool (damo), like below.
-
-    $ sudo ./damo start --damos_action stat \
-    	--damos_quota_goal node_mem_used_bp 50% -1 \
-    	--damos_quota_interval 1s
-    $ sudo dmesg
-    [...]
-    [   65.565986] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000098
-
-Fix this issue by adding the validation of the given node.  If an invalid
-node id is given, it returns 0% for used memory ratio, and 100% for free
-memory ratio.
-
-Link: https://lore.kernel.org/20260329043902.46163-2-sj@kernel.org
-Link: https://lore.kernel.org/20260325073034.140353-1-objecting@objecting.org [1]
-Link: https://lore.kernel.org/20260327040924.68553-1-sj@kernel.org [2]
-Fixes: 0e1c773b501f ("mm/damon/core: introduce damos quota goal metrics for memory node utilization")
+Link: https://lore.kernel.org/20260329152306.45796-1-sj@kernel.org
+Link: https://lore.kernel.org/20260324040722.57944-1-sj@kernel.org [1]
+Fixes: ee801b7dd782 ("mm/damon/schemes: activate schemes based on a watermarks mechanism")
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.16.x
+Cc: <stable@vger.kernel.org> # 5.16.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ mm/damon/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -2038,12 +2038,24 @@ static inline u64 damos_get_some_mem_psi
- #endif	/* CONFIG_PSI */
+@@ -2179,7 +2179,8 @@ static void damos_adjust_quota(struct da
+ 	}
  
- #ifdef CONFIG_NUMA
-+static bool invalid_mem_node(int nid)
-+{
-+	return nid < 0 || nid >= MAX_NUMNODES || !node_state(nid, N_MEMORY);
-+}
-+
- static __kernel_ulong_t damos_get_node_mem_bp(
- 		struct damos_quota_goal *goal)
- {
- 	struct sysinfo i;
- 	__kernel_ulong_t numerator;
- 
-+	if (invalid_mem_node(goal->nid)) {
-+		if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
-+			return 0;
-+		else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
-+			return 10000;
-+	}
-+
- 	si_meminfo_node(&i, goal->nid);
- 	if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
- 		numerator = i.totalram - i.freeram;
+ 	/* New charge window starts */
+-	if (time_after_eq(jiffies, quota->charged_from +
++	if (!time_in_range_open(jiffies, quota->charged_from,
++				quota->charged_from +
+ 				msecs_to_jiffies(quota->reset_interval))) {
+ 		if (quota->esz && quota->charged_sz >= quota->esz)
+ 			s->stat.qt_exceeds++;
 
 
