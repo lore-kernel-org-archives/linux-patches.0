@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99ADF3D5645;
-	Mon,  4 May 2026 13:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F45B2BFC7B;
+	Mon,  4 May 2026 13:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903187; cv=none; b=i7jjYUrlb7QkE9cYtkc6QpGTLlu5d76m6Fg57qzFMybYVMsQ5/69W7oCVCyrMtJixNbChgwHJXpPkM2Gqw4dGJ8hoWoIo7HfFH/6NWdAzS8DFKclZYbWNLqvFXnZDiUnT255ehbWVuYklPMeTxtdL49TInDmFmDV8BLq6aFbi+g=
+	t=1777903190; cv=none; b=BJvlnWchwbbpCWS4lbFyPUZSq/IGOY90wIK9VLk4pjm5dHZuFujNsA6sYuAwsnJ3GSeUi25HGEUc5MTWl2ONjG0NgRfMd6nHKVGWzvdd6ecCxgByYih68RXDxkUBIY4Sy6NEOFk/cDQQCh9G7zTCJohVaR43rUwMx+oIK14n7jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903187; c=relaxed/simple;
-	bh=Qh2rb6ZhO4P4Mh9T8lM1sxS4DNsqJUV7XxpVJX8qaSQ=;
+	s=arc-20240116; t=1777903190; c=relaxed/simple;
+	bh=DEYFhdebBDkoUeIgGKZ86lfpKMFivP8Q/QmZ5J+RlZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AIL1HG1SahpmtHF47Z1OGu+fP8wf7St6NWHURkqRYU1qiQwoNBekzHKp+A3TjQXdrANeJrhrbzCjYXYubhF2OhayPLhGBI3L2r2+IrDB9LND8l3itEqrS2683IeJ9PIsdiY62MGSYXmsOydZPGxS/7CBHoc2gp2/zXebeyuih/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSngP45x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqA4oRjaZaaB1fSFvg712sco9fXEv/0pM9v05L/5eJyiBJhEKB9zHqlCWVPh5SO49Uubq4WxeLQfnQl5IhSGIom0k6tOEaJtm64W1gtqmOJvs4y1c7rNfo+ENTyLAFOkStYwz8uD//F6+uuUkGCqO9yJ7nCgqNpJInEG5Fvkr4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtKF8iR8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSngP45x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA2BC2BCB8;
-	Mon,  4 May 2026 13:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtKF8iR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A3DC2BCB8;
+	Mon,  4 May 2026 13:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903187;
-	bh=Qh2rb6ZhO4P4Mh9T8lM1sxS4DNsqJUV7XxpVJX8qaSQ=;
+	s=korg; t=1777903190;
+	bh=DEYFhdebBDkoUeIgGKZ86lfpKMFivP8Q/QmZ5J+RlZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSngP45xCDhUKTsLFohXzTXgbeDR3BAlIzHgbmjHR3T2T6PeC6uR4L1CF3Fg6WnS/
-	 FmC7IuoM9+8QkwlYX9RaqqnM4wthdAFQHjjggac0zrlRruc5hJw3m/XBL22kJqb0qx
-	 W0hIN0JDGfxJVGZDkS3oQz1O1fQpF3MtV6l/UExw=
+	b=dtKF8iR8Ywc+nZJiqWTbAWpWYVhIHU57WMAh+DAM+P+LsBJzE11UyxOtNd1eJB5sc
+	 M+ifPUWvfsU9yFRFsc2/WpfCVl9HoKnr4S6Y2qjUbC/033t002NdL9zOyzPACftEjg
+	 f+v63Mxm5DULwKIT4XNowp6LfyXKVAtuaASHTois=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Vishal Moola <vishal.moola@gmail.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 105/307] mm/zone_device: do not touch device folio after calling ->folio_free()
-Date: Mon,  4 May 2026 15:49:50 +0200
-Message-ID: <20260504135146.762878552@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.0 106/307] block: fix zone write plugs refcount handling in disk_zone_wplug_schedule_bio_work()
+Date: Mon,  4 May 2026 15:49:51 +0200
+Message-ID: <20260504135146.800070270@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -55,40 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 39928984956037cabd304321cb8f342e47421db5 upstream.
+commit 0a8b8af896e0ef83e188e1fe20f98f2bbb1c2459 upstream.
 
-The contents of a device folio can immediately change after calling
-->folio_free(), as the folio may be reallocated by a driver with a
-different order.  Instead of touching the folio again to extract the
-pgmap, use the local stack variable when calling percpu_ref_put_many().
+The function disk_zone_wplug_schedule_bio_work() always takes a
+reference on the zone write plug of the BIO work being scheduled. This
+ensures that the zone write plug cannot be freed while the BIO work is
+being scheduled but has not run yet. However, this unconditional
+reference taking is fragile since the reference taken is released by the
+BIO work blk_zone_wplug_bio_work() function, which implies that there
+always must be a 1:1 relation between the work being scheduled and the
+work running.
 
-Link: https://lore.kernel.org/20260410230346.4009855-1-matthew.brost@intel.com
-Fixes: d245f9b4ab80 ("mm/zone_device: support large zone device private folios")
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Vishal Moola <vishal.moola@gmail.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Make sure to drop the reference taken when scheduling the BIO work if
+the work is already scheduled, that is, when queue_work() returns false.
+
+Fixes: 9e78c38ab30b ("block: Hold a reference on zone write plugs to schedule submission")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memremap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-zoned.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/mm/memremap.c
-+++ b/mm/memremap.c
-@@ -454,7 +454,7 @@ void free_zone_device_folio(struct folio
- 		if (WARN_ON_ONCE(!pgmap->ops || !pgmap->ops->folio_free))
- 			break;
- 		pgmap->ops->folio_free(folio);
--		percpu_ref_put_many(&folio->pgmap->ref, nr);
-+		percpu_ref_put_many(&pgmap->ref, nr);
- 		break;
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -1198,13 +1198,17 @@ static void disk_zone_wplug_schedule_bio
+ 	lockdep_assert_held(&zwplug->lock);
  
- 	case MEMORY_DEVICE_GENERIC:
+ 	/*
+-	 * Take a reference on the zone write plug and schedule the submission
+-	 * of the next plugged BIO. blk_zone_wplug_bio_work() will release the
+-	 * reference we take here.
++	 * Schedule the submission of the next plugged BIO. Taking a reference
++	 * to the zone write plug is required as the bio_work belongs to the
++	 * plug, and thus we must ensure that the write plug does not go away
++	 * while the work is being scheduled but has not run yet.
++	 * blk_zone_wplug_bio_work() will release the reference we take here,
++	 * and we also drop this reference if the work is already scheduled.
+ 	 */
+ 	WARN_ON_ONCE(!(zwplug->flags & BLK_ZONE_WPLUG_PLUGGED));
+ 	refcount_inc(&zwplug->ref);
+-	queue_work(disk->zone_wplugs_wq, &zwplug->bio_work);
++	if (!queue_work(disk->zone_wplugs_wq, &zwplug->bio_work))
++		disk_put_zone_wplug(zwplug);
+ }
+ 
+ static inline void disk_zone_wplug_add_bio(struct gendisk *disk,
 
 
