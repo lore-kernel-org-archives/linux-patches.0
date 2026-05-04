@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F8B1ADC83;
-	Mon,  4 May 2026 14:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081541ADC83;
+	Mon,  4 May 2026 14:10:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903822; cv=none; b=Z3xakvYQpaYiORAlMmHb91ygmKv1b2bVOKHtjmaBwuL/hleBA+ryv2JBmSAxpgMfgMC0dYTX60g2xfurCL4/xHI8dk39tZkeTA7z3l8prp0aTZnNM02nFr3vAh/hqv/94sjkye6GIEmjZQ8P/RpULEt4ZKv9juRReNMkbZ7O9Sg=
+	t=1777903825; cv=none; b=QT75Gq2hTBnzr4R1qvIXz4dEDZ7/rvzP6CRSoauETIvPT5/8XJSv4xfvZWR7WsM/lfoF0RneJLIgwdTJMPWsmFYiaKhO9izkZotRIzV83VCT5gT15CePxIQXTX2Ds7fRmR6ztbtsB4F7Jup6WNA9u/aom6S93h041QSTxXXDCwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903822; c=relaxed/simple;
-	bh=2HHmbxcW8v0HWcA1NeN3G1Z8jdN8Ew6d+sxtjeoDmSA=;
+	s=arc-20240116; t=1777903825; c=relaxed/simple;
+	bh=KpcqcBzSp+/l3c7hrPOCdXcCTxHnx3jF/LfkpO9TZco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/ar45C4KD0aT/qygSYEUPthVBP9BKVf7Zwtvx5m9J8sSY89f8OCaDOKBe6jprw9QqawfnMv3hGgiSfxKep4xXbdGAZgDAqCL1qla2UKZIgYxdLPVE5fTTJylY5wt4L8+a6f0VQvcNFEuApeJ2cDrV4K8O7OnvXFjQ80cMwQyas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrCgLEo5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=abpDXuzA46mgbGBpoj93ioMSRj5dXd1tZ2FnL9akshl7r9mrJ4Sk11K5s7WVBnvassuKQ5jKdi4Q9vVM0hTL5sxhheaaRIm3G+dYAFnC2886vwocxZsk/04apCKhnoKkGHTNtkY6iqItDptCjxtVRmqRJk6AL8yeSY27Xj33RQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RhUxtdY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrCgLEo5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09864C2BCB8;
-	Mon,  4 May 2026 14:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RhUxtdY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD0CC2BCB8;
+	Mon,  4 May 2026 14:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903822;
-	bh=2HHmbxcW8v0HWcA1NeN3G1Z8jdN8Ew6d+sxtjeoDmSA=;
+	s=korg; t=1777903824;
+	bh=KpcqcBzSp+/l3c7hrPOCdXcCTxHnx3jF/LfkpO9TZco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CrCgLEo5oSTxnqvtUQvvZaCQkZGmECjQnE0kNuG+tYeIjGCgQcHC/d4ZZZF0BrmUX
-	 1gbB8Lm2Q6J/NZc7aLEHshOmssgLYjTsx/rdkoCz657MTCVmo2cCLd5Wo4OQkMeEHU
-	 5JkuEXqxl88zvY2oEfUVVz/QCDw+F6GS+sJiZGBE=
+	b=1RhUxtdYMU7BaeP5C3B4Q1eXfxYlx9Z0gxByicqlKdmc/DempcLzTkGoReRZjO03i
+	 Gr28lwwGiAZHdjoARRnnN+vI/lTSWTgNdJnhY1jXrhMCFLTH7uAeHwK2UJBlQH4XJI
+	 iEnEvsZ9rXAPXuCR/2MAGV4pnZTVEt72dhECljJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Frank van der Linden <fvdl@google.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 075/275] mm/hugetlb: fix early boot crash on parameters without = separator
-Date: Mon,  4 May 2026 15:50:15 +0200
-Message-ID: <20260504135145.714071924@linuxfoundation.org>
+	James Kim <james010kim@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.18 076/275] mtd: docg3: fix use-after-free in docg3_release()
+Date: Mon,  4 May 2026 15:50:16 +0200
+Message-ID: <20260504135145.749981577@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -54,42 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: James Kim <james010kim@gmail.com>
 
-commit c45b354911d01565156e38d7f6bc07edb51fc34c upstream.
+commit ca19808bc6fac7e29420d8508df569b346b3e339 upstream.
 
-If hugepages, hugepagesz, or default_hugepagesz are specified on the
-kernel command line without the '=' separator, early parameter parsing
-passes NULL to hugetlb_add_param(), which dereferences it in strlen() and
-can crash the system during early boot.
+In docg3_release(), the docg3 pointer is obtained from
+cascade->floors[0]->priv before the loop that calls
+doc_release_device() on each floor. doc_release_device() frees the
+docg3 struct via kfree(docg3) at line 1881. After the loop,
+docg3->cascade->bch dereferences the already-freed pointer.
 
-Reject NULL values in hugetlb_add_param() and return -EINVAL instead.
+Fix this by accessing cascade->bch directly, which is equivalent
+since docg3->cascade points back to the same cascade struct, and
+is already available as a local variable. This also removes the
+now-unused docg3 local variable.
 
-Link: https://lore.kernel.org/20260409105437.108686-4-thorsten.blum@linux.dev
-Fixes: 5b47c02967ab ("mm/hugetlb: convert cmdline parameters from setup to early")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Frank van der Linden <fvdl@google.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: c8ae3f744ddc ("lib/bch: Rework a little bit the exported function names")
+Cc: stable@vger.kernel.org
+Signed-off-by: James Kim <james010kim@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/devices/docg3.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -4787,6 +4787,9 @@ static __init int hugetlb_add_param(char
- 	size_t len;
- 	char *p;
+--- a/drivers/mtd/devices/docg3.c
++++ b/drivers/mtd/devices/docg3.c
+@@ -2049,7 +2049,6 @@ err_probe:
+ static void docg3_release(struct platform_device *pdev)
+ {
+ 	struct docg3_cascade *cascade = platform_get_drvdata(pdev);
+-	struct docg3 *docg3 = cascade->floors[0]->priv;
+ 	int floor;
  
-+	if (!s)
-+		return -EINVAL;
-+
- 	if (hugetlb_param_index >= HUGE_MAX_CMDLINE_ARGS)
- 		return -EINVAL;
+ 	doc_unregister_sysfs(pdev, cascade);
+@@ -2057,7 +2056,7 @@ static void docg3_release(struct platfor
+ 		if (cascade->floors[floor])
+ 			doc_release_device(cascade->floors[floor]);
  
+-	bch_free(docg3->cascade->bch);
++	bch_free(cascade->bch);
+ }
+ 
+ #ifdef CONFIG_OF
 
 
