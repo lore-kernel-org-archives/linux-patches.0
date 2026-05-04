@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADEC3D9029;
-	Mon,  4 May 2026 14:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4E83DDDD7;
+	Mon,  4 May 2026 14:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903480; cv=none; b=NnH+K184ovX6t2uaatwuaT37kuY9lN/xYLoEwRPCjBmQ4ShmvYDVuMhFrmRo3W5xnzwyvy4PFjxif28rIZlnyX63QPylRZVcx9f+EJEQZ+nuBGxhWgjN/u3TsxgGmbj0/r/TFWkaVB1qVQGGW82zg75pkjxrZ2pWvZxy3HBVlLc=
+	t=1777903483; cv=none; b=NnExnkmpXAISAqBJwIPFQWr0cNHNdDGneFAfJhKkSstI6qEk0fuEwQyjePVZL2H3YVBmgFA2X/tP5Iwnr9j4sfycG41BwCAg5ffBnUnYBu6oPg2YoQN4deTwOKAAzkdwP11qR5jsunKlhlg2KNBtUQcr8vX9NySvZKxQYsndEx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903480; c=relaxed/simple;
-	bh=cEuKnlYXp4dseraV60XEvUp82F9v7FjPVwROeqoU18k=;
+	s=arc-20240116; t=1777903483; c=relaxed/simple;
+	bh=znD6k7zJud0Qo9KLaJanpn5er1wddyEAsf7kzh9fZRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3pn6LuqiJdgs0L47av9ue4aqhc6kOKn7LimMGAp9oYzpC8x4cV1XGyOrRC0wlltt+xtVmunNj+pvFqJ06gTTCcabizIBGlEl4ZPB+SdX+F1mgAgjAu4MG1k+Sg1z7821MTwdTot4b02u6ZB9VdLaC4cmwKJ9qBmt0oJctUZvDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qk1+7sRJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dAeR/njG3pcjUg/Z6mwGFNemKEJw7wlsvmnB7tkjRpfTmDua3rVXX09zlziSsF4DnTZVDGKOsuOZQdpgDjsU9gBe2zXvV1VMEVADLm+as31/9Tfk29ycW3sbOZV2Fkc0+HpLWLerwGZNOH9kRcJGzPpWIpLN/Ex4H5FHptOtls8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luqYkZhG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qk1+7sRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D42C2BCB8;
-	Mon,  4 May 2026 14:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luqYkZhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7826C2BCB8;
+	Mon,  4 May 2026 14:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903480;
-	bh=cEuKnlYXp4dseraV60XEvUp82F9v7FjPVwROeqoU18k=;
+	s=korg; t=1777903483;
+	bh=znD6k7zJud0Qo9KLaJanpn5er1wddyEAsf7kzh9fZRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qk1+7sRJ6kO1xbmkMKKUtx/CE+vY32xXaM5phovf8Xw0C+mWv7SCy+mZQnm6HCURs
-	 LCoq5AwU0wNvCuRsloNGr7+5Q9najxLFo5lT/zof8ddO/ig4w2DC2uY6Fb3Pj323jX
-	 xLMdC0kvqCXcOrklMqdGXBG/ZVU2+881B6OdfSe8=
+	b=luqYkZhG0jeWdUVUTdkpX4PTIbfsuIfJV1uuFxGySHED2yLTr2x2To9k/8SDonNCQ
+	 6D5gL6CbthC19lX68gryAhsW/rCxDYyKtTkY/8YNF/rzDFtHDn1YIa+QxbHRWAP3PW
+	 aybwRW8Xl8zzliuWqOzfDo8c/6oBPPyp3WxK4MTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Mak <makb@juniper.net>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 7.0 251/307] mfd: core: Preserve OF node when ACPI handle is present
-Date: Mon,  4 May 2026 15:52:16 +0200
-Message-ID: <20260504135152.266350709@linuxfoundation.org>
+	Pierre Barre <pierre@barre.sh>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 7.0 252/307] 9p: fix access mode flags being ORed instead of replaced
+Date: Mon,  4 May 2026 15:52:17 +0200
+Message-ID: <20260504135152.302979445@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,47 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Mak <makb@juniper.net>
+From: Pierre Barre <pierre@barre.sh>
 
-commit caa5a5d44d8ae4fd13b744857d66c9313b712d1f upstream.
+commit da2346a48a5a1fed86c3fe3d73c0b60e7b3027c9 upstream.
 
-Switch device_set_node to set_primary_fwnode, so that the ACPI fwnode
-does not overwrite the of_node with NULL.
+Since commit 1f3e4142c0eb ("9p: convert to the new mount API"),
+v9fs_apply_options() applies parsed mount flags with |= onto flags
+already set by v9fs_session_init(). For 9P2000.L, session_init sets
+V9FS_ACCESS_CLIENT as the default, so when the user mounts with
+"access=user", both bits end up set. Access mode checks compare
+against exact values, so having both bits set matches neither mode.
 
-This allows MFD children with both OF nodes and ACPI handles to have OF
-nodes again.
+This causes v9fs_fid_lookup() to fall through to the default switch
+case, using INVALID_UID (nobody/65534) instead of current_fsuid()
+for all fid lookups. Root is then unable to chown or perform other
+privileged operations.
 
+Fix by clearing the access mask before applying the user's choice.
+
+Fixes: 1f3e4142c0eb ("9p: convert to the new mount API")
+Signed-off-by: Pierre Barre <pierre@barre.sh>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Message-ID: <0ddc72da-d196-4f01-8755-0086f670e779@app.fastmail.com>
 Cc: stable@vger.kernel.org
-Fixes: 51e3b257099d ("mfd: core: Make use of device_set_node()")
-Signed-off-by: Brian Mak <makb@juniper.net>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260325223024.35992-1-makb@juniper.net
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/mfd-core.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/9p/v9fs.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mfd/mfd-core.c
-+++ b/drivers/mfd/mfd-core.c
-@@ -88,7 +88,17 @@ static void mfd_acpi_add_device(const st
- 		}
- 	}
- 
--	device_set_node(&pdev->dev, acpi_fwnode_handle(adev ?: parent));
-+	/*
-+	 * NOTE: The fwnode design doesn't allow proper stacking/sharing. This
-+	 * should eventually turn into a device fwnode API call that will allow
-+	 * prepending to a list of fwnodes (with ACPI taking precedence).
-+	 *
-+	 * set_primary_fwnode() is used here, instead of device_set_node(), as
-+	 * device_set_node() will overwrite the existing fwnode, which may be an
-+	 * OF node that was populated earlier. To support a use case where ACPI
-+	 * and OF is used in conjunction, we call set_primary_fwnode() instead.
-+	 */
-+	set_primary_fwnode(&pdev->dev, acpi_fwnode_handle(adev ?: parent));
- }
- #else
- static inline void mfd_acpi_add_device(const struct mfd_cell *cell,
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index 057487efaaeb..acda42499ca9 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -413,7 +413,11 @@ static void v9fs_apply_options(struct v9fs_session_info *v9ses,
+ 	/*
+ 	 * Note that we must |= flags here as session_init already
+ 	 * set basic flags. This adds in flags from parsed options.
++	 * Default access flags must be cleared if session options
++	 * changes them to avoid mangling the setting.
+ 	 */
++	if (ctx->session_opts.flags & V9FS_ACCESS_MASK)
++		v9ses->flags &= ~V9FS_ACCESS_MASK;
+ 	v9ses->flags |= ctx->session_opts.flags;
+ #ifdef CONFIG_9P_FSCACHE
+ 	v9ses->cachetag = ctx->session_opts.cachetag;
+-- 
+2.54.0
+
 
 
