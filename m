@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319303A7F4C;
-	Mon,  4 May 2026 14:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60683BE630;
+	Mon,  4 May 2026 14:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903995; cv=none; b=EWE0QioFyktC26oX2LKkVjt34tBCVAUGLA0NovppyDIZHOZhXzjIcfRmk9U7XdIJgQ/ahau18TnEcVn4HcfwaZMirMdIsorYsQV1e/CzKUk4p+eep96uJfkcihnuhHSe6wZxvkGWkVgcgqjznmta+h/JuQbCqxWC9R8ZavEcgMM=
+	t=1777903997; cv=none; b=gu6kLuZiiDUPWtq3AkLnReQJpqGcb34Z4JIYC7rkldbX9Sr6YGFUQzO/7MCZ3U/9nBj1EV+CQncIXiw86cZoFdVSG1+V1B2Pw/2P5UfNpRKiO4yYQCDAKXQNfX3Ddwo5Fx8kImU1rVXTeb/BForaDd2AoYK+L07d263daoN8Tl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903995; c=relaxed/simple;
-	bh=3swrdCRQRweRXIWDZzRI9mo6FhWfmgpAoaFLVLKSVhM=;
+	s=arc-20240116; t=1777903997; c=relaxed/simple;
+	bh=bi6vVC1aZCIIvm5aZdYszP0nEMFMRXiwSfuv7gjjdtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T2Q8EX6WYlclGz4V6G3/32MkrQKvLf+h0U2cZ8zKjEH+99WHTYuN+FggI/CLxtHqBVeXxTqhNgoUlskAW8w15EdRm1s200ZL2DsBmuLAeDafOnPvBzx8DoKWu6nmIwO8EUmrtfFgRJQUSywxRbtMyP6eoqyuesObjjBCJzfFNY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSkhk1aF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TsFIgXgkJ1liOMC8vuBB8tv6NPD4sCvybiAA8R8CL+SMIgRvr0Vvwnec7yUeZSOQy3vsUaIvR4MMLxBl87RcMCPFJaPHK7qsJkeocsOWVnels6DuCAeLGOLa4Fv4dXOapmIDdDRu//NBUWIFkFKoafz+Mo3tOa808fmxLvCwqm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mn28rO+Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSkhk1aF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD793C2BCB8;
-	Mon,  4 May 2026 14:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mn28rO+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A96FC2BCFA;
+	Mon,  4 May 2026 14:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903995;
-	bh=3swrdCRQRweRXIWDZzRI9mo6FhWfmgpAoaFLVLKSVhM=;
+	s=korg; t=1777903997;
+	bh=bi6vVC1aZCIIvm5aZdYszP0nEMFMRXiwSfuv7gjjdtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xSkhk1aFBfO3ldIK/WVBn88eRaw5duvQBx4bPOO/IuK1+HcUzOnztFMjMGEXBQBz1
-	 bMBeGN0WyoE9qjpMjyhVcFlw+accKffScUYGBpDhNtQ8RK2eE1mtbSumnslQLC0Iwp
-	 zCzRG3l8nSc8XFcXKDWP8V0yPAc8GRB4TKfoCo/U=
+	b=mn28rO+Qx/bjjEml09Xs5scKXJnxQ5yc6lH/ol6erzWcVDnGM4j4adJb3G3h3fiB5
+	 J/3k5ryFgLnE3pNRFgPK/QZVjY2qzwtnnCdoxe29lmtVqY4plwS7fQdYoDy8Jzpgng
+	 fxq4CsC7bW/MYWq6P8WujVO7dw/AtnLq0SgItS8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brahmajit Das <listout@listout.xyz>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 142/275] ASoC: Intel: avs: replace strcmp with sysfs_streq
-Date: Mon,  4 May 2026 15:51:22 +0200
-Message-ID: <20260504135148.176043679@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 143/275] hwmon: (pt5161l) Fix bugs in pt5161l_read_block_data()
+Date: Mon,  4 May 2026 15:51:23 +0200
+Message-ID: <20260504135148.213015111@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -44,65 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 45e9066f3a487e9e26b842644364d045af054775 upstream.
+commit 24c73e93d6a756e1b8626bb259d2e07c5b89b370 upstream.
 
-allmodconfig failes to build with GCC 16 with the following build error
+Fix two bugs in pt5161l_read_block_data():
 
-sound/soc/intel/avs/path.c:137:38: error: ‘strcmp’ reading 1 or more bytes from a region of size 0 [-Werror=stringop-overread]
-  137 |         return id->id == id2->id && !strcmp(id->tplg_name, id2->tplg_name);
-      |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ‘avs_condpaths_walk’: events 1-3
-  137 |         return id->id == id2->id && !strcmp(id->tplg_name, id2->tplg_name);
-      |                ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                  |   |
-      |                                  |   (3) warning happens here
-      |                                  (1) when the condition is evaluated to true
-......
-  155 |         if (id->id != path->template->owner->id ||
-      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                                 |
-      |                                                 (2) when the condition is evaluated to false
-  156 |             strcmp(id->tplg_name, path->template->owner->owner->name))
-      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from sound/soc/intel/avs/path.h:14,
-                 from sound/soc/intel/avs/path.c:15:
-sound/soc/intel/avs/topology.h: In function ‘avs_condpaths_walk’:
-sound/soc/intel/avs/topology.h:152:13: note: at offset 4 into source object ‘id’ of size 4
-  152 |         u32 id;
-      |             ^~
+1. Buffer overrun: The local buffer rbuf is declared as u8 rbuf[24],
+   but i2c_smbus_read_block_data() can return up to
+   I2C_SMBUS_BLOCK_MAX (32) bytes. The i2c-core copies the data into
+   the caller's buffer before the return value can be checked, so
+   the post-read length validation does not prevent a stack overrun
+   if a device returns more than 24 bytes. Resize the buffer to
+   I2C_SMBUS_BLOCK_MAX.
 
-Using the sysfs_streq as an alternative to strcmp helps getting around
-this build failure.
-Please also refer
-https://docs.kernel.org/core-api/kernel-api.html#c.__sysfs_match_string
+2. Unexpected positive return on length mismatch: When all three
+   retries are exhausted because the device returns data with an
+   unexpected length, i2c_smbus_read_block_data() returns a positive
+   byte count. The function returns this directly, and callers treat
+   any non-negative return as success, processing stale or incomplete
+   buffer contents. Return -EIO when retries are exhausted with a
+   positive return value, preserving the negative error code on I2C
+   failure.
 
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Link: https://patch.msgid.link/20251221185531.6453-1-listout@listout.xyz
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1b2ca93cd0592 ("hwmon: Add driver for Astera Labs PT5161L retimer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260410002549.424162-1-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/avs/path.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pt5161l.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/intel/avs/path.c
-+++ b/sound/soc/intel/avs/path.c
-@@ -134,7 +134,7 @@ static struct avs_tplg_path *avs_condpat
- static bool avs_tplg_path_template_id_equal(struct avs_tplg_path_template_id *id,
- 					    struct avs_tplg_path_template_id *id2)
- {
--	return id->id == id2->id && !strcmp(id->tplg_name, id2->tplg_name);
-+	return id->id == id2->id && !sysfs_streq(id->tplg_name, id2->tplg_name);
- }
+--- a/drivers/hwmon/pt5161l.c
++++ b/drivers/hwmon/pt5161l.c
+@@ -121,7 +121,7 @@ static int pt5161l_read_block_data(struc
+ 	int ret, tries;
+ 	u8 remain_len = len;
+ 	u8 curr_len;
+-	u8 wbuf[16], rbuf[24];
++	u8 wbuf[16], rbuf[I2C_SMBUS_BLOCK_MAX];
+ 	u8 cmd = 0x08; /* [7]:pec_en, [4:2]:func, [1]:start, [0]:end */
+ 	u8 config = 0x00; /* [6]:cfg_type, [4:1]:burst_len, [0]:address bit16 */
  
- static struct avs_path *avs_condpath_find_match(struct avs_dev *adev,
+@@ -151,7 +151,7 @@ static int pt5161l_read_block_data(struc
+ 				break;
+ 		}
+ 		if (tries >= 3)
+-			return ret;
++			return ret < 0 ? ret : -EIO;
+ 
+ 		memcpy(val, rbuf, curr_len);
+ 		val += curr_len;
 
 
