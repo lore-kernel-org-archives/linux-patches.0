@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128683A7F4C;
-	Mon,  4 May 2026 14:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5CB3D3308;
+	Mon,  4 May 2026 14:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903263; cv=none; b=TzDS+aL6ySqdins/4IKmQ9pWAF/oZI7Yc+7UaQGoZwUoV76hvc3X9Rqr4tBGAp0MgZxS50KcHz7iSTCmAWC/tjWh0iCk/aM/ubjPn4u0sT76fmdiXKziudf28B2VTgAHR14GpiWrd1zSalQQxCtuC76aCDIIsXKAzxiEMReMEEs=
+	t=1777903265; cv=none; b=neZISPyUJ6CN4OF6F8UbhlC/5vbbyKxUpD/AyxKedduKYoABdD3ClFCa0CAPn3BAXjbme0/s5k+X4cna8RsngrfNNLLt0lK6yMp6KSPPKnBH6Scufoevh9AywJASD35t5x16bb8TptRw2c9kXeeCsVeTIDcD7qpYmkcxtUmGf5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903263; c=relaxed/simple;
-	bh=L56oYbOPXq2C3PD4RdH3aZDQ5q2DQ8IJG9Gdgt7f2SI=;
+	s=arc-20240116; t=1777903265; c=relaxed/simple;
+	bh=ZkktuPNKgwBHIvoUO8O4rH7xhOo6lZvhO4lQHMoOLZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jEYaFNdFRXxFeDxHdl07QbDRgOrJnREx+i9NKwh4TOl2YT200Pr6lgSZrSlWKylX2cxxqI6ldPqFDd+YFBQQ+GQLM5ffhHs+mv9nqSvni/pLbHgNRod24RpUXNq0sqMRLAq4FlBzPgo/T6E1pbFTvJ4OXWa5BrsL+mJanAUlYI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdywuf1A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OyKaGvgk72LqC2qmJRX3GPV0dIc7KpFLhtcSE62not6cZIE2MimZ/xGKbypmMCvJHH5EvujbYDuzqK60MaaiZerLesgWu08hgOdoG+CrVbE4ryon9c3ReMA7d76xmwjtwrnAu6oDl++rgA1U3I56TuijwuUbLQ0q6AHcM4A4ams=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BO/J0tDN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdywuf1A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D93C2BCB8;
-	Mon,  4 May 2026 14:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BO/J0tDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22576C2BCB8;
+	Mon,  4 May 2026 14:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903262;
-	bh=L56oYbOPXq2C3PD4RdH3aZDQ5q2DQ8IJG9Gdgt7f2SI=;
+	s=korg; t=1777903265;
+	bh=ZkktuPNKgwBHIvoUO8O4rH7xhOo6lZvhO4lQHMoOLZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdywuf1AUabYZ7fyOAT7h91R52yiLYImOVACOblDA+0bAdxWOikVIw5REJ5LL9md/
-	 DN4qyv61EQTBVXMesUpHHq/pGfecPZcGg6iPbIP3JaQMOQbiuBgkcfl/FIpwBslG4v
-	 qhg/pFMEE61TdU3NEdIIcQ0FO+yLXQQ1KRVBw4cs=
+	b=BO/J0tDNNmLtEpYxgSBtlVL5rxwmYdmMZNW9BOqE8pJ+UuU9Kc6MVNzOXAJQNSBVl
+	 S2o3hQhkAYhpK2Ey7PAhThj/XYQi/c7Xa/jMOueHq4XUbDfIc2Mr3B6uZU7aKEs8Ks
+	 MoykzUyTnC3FqU9aqacxBeIefXWjO2e7ow6rsLa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 7.0 165/307] hwmon: (powerz) Avoid cacheline sharing for DMA buffer
-Date: Mon,  4 May 2026 15:50:50 +0200
-Message-ID: <20260504135149.071218060@linuxfoundation.org>
+	Daniel Scally <dan.scally+renesas@ideasonboard.com>,
+	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 166/307] media: rzv2h-ivc: Revise default VBLANK formula
+Date: Mon,  4 May 2026 15:50:51 +0200
+Message-ID: <20260504135149.110185859@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -44,58 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Daniel Scally <dan.scally+renesas@ideasonboard.com>
 
-commit 3023c050af3600bf451153335dea5e073c9a3088 upstream.
+commit 38104fe60ebb6b6cb66e3e9ef0a5c12f1260b1bc upstream.
 
-Depending on the architecture the transfer buffer may share a cacheline
-with the following mutex. As the buffer may be used for DMA, that is
-problematic.
+The vertical blanking settings for the IVC block are dependent on
+settings in the ISP. This was originally set to calculate as the
+worst-case possible value, but it seems that this can cause the IVC
+block to hang. Instead calculate the vblank to match the default
+settings (which are currently all the driver sets anyway).
 
-Use the high-level DMA helpers to make sure that cacheline sharing can
-not happen.
-
-Also drop the comment, as the helpers are documentation enough.
-
-https://sashiko.dev/#/message/20260408175814.934BFC19421%40smtp.kernel.org
-
-Fixes: 4381a36abdf1c ("hwmon: add POWER-Z driver")
-Cc: stable@vger.kernel.org # ca085faabb42: dma-mapping: add __dma_from_device_group_begin()/end()
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20260408-powerz-cacheline-alias-v1-1-1254891be0dd@weissschuh.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org
+Fixes: f0b3984d821b ("media: platform: Add Renesas Input Video Control block driver")
+Signed-off-by: Daniel Scally <dan.scally+renesas@ideasonboard.com>
+Signed-off-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/powerz.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/powerz.c
-+++ b/drivers/hwmon/powerz.c
-@@ -6,6 +6,7 @@
+--- a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
++++ b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
+@@ -24,7 +24,7 @@
+ #include <media/videobuf2-dma-contig.h>
  
- #include <linux/completion.h>
- #include <linux/device.h>
-+#include <linux/dma-mapping.h>
- #include <linux/hwmon.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
-@@ -33,7 +34,9 @@ struct powerz_sensor_data {
- } __packed;
+ #define RZV2H_IVC_FIXED_HBLANK			0x20
+-#define RZV2H_IVC_MIN_VBLANK(hts)		max(0x1b, 15 + (120501 / (hts)))
++#define RZV2H_IVC_MIN_VBLANK(hts)		max(0x1b, 70100 / (hts))
  
- struct powerz_priv {
--	char transfer_buffer[64];	/* first member to satisfy DMA alignment */
-+	__dma_from_device_group_begin();
-+	char transfer_buffer[64];
-+	__dma_from_device_group_end();
- 	struct mutex mutex;
- 	struct completion completion;
- 	struct urb *urb;
+ struct rzv2h_ivc_buf {
+ 	struct vb2_v4l2_buffer vb;
 
 
