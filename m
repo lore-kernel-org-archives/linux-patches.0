@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83E03DD53E;
-	Mon,  4 May 2026 14:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837953DA5C7;
+	Mon,  4 May 2026 14:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903395; cv=none; b=S30spP2wofirDaf59L1FBp/5Wew0OFS7NvrFun2CYZS+wOJlwNCoMe8KSZnnDhUHo1u3qBJrXqhwg72lEB4y/RQRQ+iJyGV1s55AgTvtqWTQYI8UJ8aH6MZ3OoZjFS0BgEJUn0lJp0Tmb119BEZCoziIZPGsnZSbBrJNtfcYs88=
+	t=1777903398; cv=none; b=X1QVfce6RVhT0LGjgjSFEMgcAjQT/R9CF9OWD4x6qz0PmcrGiJA+0BEaowcOWrEk6CRL8xEXyATq+yk0hpcEUsJ72Oa8E3IxKn7MZdT2krUmwS4G3Eo0moq16aDRPmLCcRrKhJOgUYSdsGF2d9NJ3HtLZyyue6ZRHcHyGnhd8ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903395; c=relaxed/simple;
-	bh=ASkSwF7qY7bOXbONCD1z7og88rcatYyweG6rqDS2V2A=;
+	s=arc-20240116; t=1777903398; c=relaxed/simple;
+	bh=h+OWwQOLVJC3z4FGMbVfeIcBH/jnOKnLIln6jwaOBqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=itW8hzMvYVEQzSlH4G2iLMCEOgnaPdRK5DX8YEqDKATZi5BSc+UIAWSgaIQLxpKicnlCzvRgcUHdgHzemfjoxGl/K6fZvUwc2FzRRkXd18eq+eXBRL5uDu/2/AbY4Z5lUdkCpTR3i0xZoo7KaaapjnTbmhwQQfS9GwmBCgp2CpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUEpyqfd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvdzOxR9t3k06Tlr4CM2Nt0xiAk2vbKYuCfwUmbhIIVgm06JlYTAOtVi4S2hKCALaiuLFRa3y+iHGGV629ZGNXNTN9jmIXJEh443jVIjWPWzRjQimgy7HFCyNnJKFr5cs247XEHCfyoO6XtFOdQf3FCIxOegUVRuF0hQGYuSs6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zj4EEO5q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUEpyqfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA7BC2BCC4;
-	Mon,  4 May 2026 14:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zj4EEO5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6574C2BCB8;
+	Mon,  4 May 2026 14:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903395;
-	bh=ASkSwF7qY7bOXbONCD1z7og88rcatYyweG6rqDS2V2A=;
+	s=korg; t=1777903398;
+	bh=h+OWwQOLVJC3z4FGMbVfeIcBH/jnOKnLIln6jwaOBqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NUEpyqfdxcyZl3E/gk1HWYLOFYKsItqelOqHwwITOBQCqN53Kgq9fDk3Sf3ZTbtYj
-	 aDOLZP9mZfrrCydIuqs022tB+Oa1vdjqdqUqN0U/Ewc83wYezDQPPX0ca6FIIMdu90
-	 z0rD3Lm1AhpxhwCIBrfGHKsBOGXTvESh1VZmc9LI=
+	b=zj4EEO5qHdYf4JK99WYrHcRHq9gEZMOSYUmb2sYlUxOU4Kc4/gZ+yA28z7+DbTjd5
+	 x0fjrvKVEWBhx2gX8j2cG03n1ZDGK8RNF8xJtinMKUi8zbpkUpZRzJbG4CN+T6VfkL
+	 gxiT5IdYRMG8oMqpaol7KgXtlRz5FblrPV4HZoCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.0 218/307] KVM: nSVM: Refactor writing vmcb12 on nested #VMEXIT as a helper
-Date: Mon,  4 May 2026 15:51:43 +0200
-Message-ID: <20260504135151.066842877@linuxfoundation.org>
+Subject: [PATCH 7.0 219/307] KVM: nSVM: Triple fault if restore host CR3 fails on nested #VMEXIT
+Date: Mon,  4 May 2026 15:51:44 +0200
+Message-ID: <20260504135151.104371282@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,140 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Yosry Ahmed <yosry@kernel.org>
 
-commit dcf3648ab71437b504abbfdc4e74622a0f1a56e3 upstream.
+commit 5d291ef0585ed880ed4dd71ea1a5965e0a65fb53 upstream.
 
-Move mapping vmcb12 and updating it out of nested_svm_vmexit() into a
-helper, no functional change intended.
+If loading L1's CR3 fails on a nested #VMEXIT, nested_svm_vmexit()
+returns an error code that is ignored by most callers, and continues to
+run L1 with corrupted state. A sane recovery is not possible in this
+case, and HW behavior is to cause a shutdown. Inject a triple fault
+instead, and do not return early from nested_svm_vmexit(). Continue
+cleaning up the vCPU state (e.g. clear pending exceptions), to handle
+the failure as gracefully as possible.
 
+>From the APM:
+
+  Upon #VMEXIT, the processor performs the following actions in order to
+  return to the host execution context:
+
+  ...
+
+  if (illegal host state loaded, or exception while loading host state)
+      shutdown
+  else
+      execute first host instruction following the VMRUN
+
+Remove the return value of nested_svm_vmexit(), which is mostly
+unchecked anyway.
+
+Fixes: d82aaef9c88a ("KVM: nSVM: use nested_svm_load_cr3() on guest->host switch")
 CC: stable@vger.kernel.org
-Co-developed-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-8-yosry@kernel.org
+Link: https://patch.msgid.link/20260303003421.2185681-10-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |   77 ++++++++++++++++++++++++++--------------------
- 1 file changed, 44 insertions(+), 33 deletions(-)
+ arch/x86/kvm/svm/nested.c |   10 +++-------
+ arch/x86/kvm/svm/svm.c    |   11 ++---------
+ arch/x86/kvm/svm/svm.h    |    6 +++---
+ 3 files changed, 8 insertions(+), 19 deletions(-)
 
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -1134,36 +1134,20 @@ void svm_copy_vmloadsave_state(struct vm
- 	to_vmcb->save.sysenter_eip = from_vmcb->save.sysenter_eip;
+@@ -1202,12 +1202,11 @@ static int nested_svm_vmexit_update_vmcb
+ 	return 0;
  }
  
 -int nested_svm_vmexit(struct vcpu_svm *svm)
-+static int nested_svm_vmexit_update_vmcb12(struct kvm_vcpu *vcpu)
++void nested_svm_vmexit(struct vcpu_svm *svm)
  {
--	struct kvm_vcpu *vcpu = &svm->vcpu;
--	struct vmcb *vmcb01 = svm->vmcb01.ptr;
-+	struct vcpu_svm *svm = to_svm(vcpu);
+ 	struct kvm_vcpu *vcpu = &svm->vcpu;
+ 	struct vmcb *vmcb01 = svm->vmcb01.ptr;
  	struct vmcb *vmcb02 = svm->nested.vmcb02.ptr;
--	struct vmcb *vmcb12;
- 	struct kvm_host_map map;
-+	struct vmcb *vmcb12;
- 	int rc;
+-	int rc;
  
- 	rc = kvm_vcpu_map(vcpu, gpa_to_gfn(svm->nested.vmcb12_gpa), &map);
--	if (rc) {
--		if (rc == -EINVAL)
--			kvm_inject_gp(vcpu, 0);
--		return 1;
--	}
-+	if (rc)
-+		return rc;
- 
- 	vmcb12 = map.hva;
- 
--	/* Exit Guest-Mode */
--	leave_guest_mode(vcpu);
--	svm->nested.vmcb12_gpa = 0;
--	WARN_ON_ONCE(svm->nested.nested_run_pending);
--
--	kvm_clear_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
--
--	/* in case we halted in L2 */
--	kvm_set_mp_state(vcpu, KVM_MP_STATE_RUNNABLE);
--
--	/* Give the current vmcb to the guest */
--
- 	vmcb12->save.es     = vmcb02->save.es;
- 	vmcb12->save.cs     = vmcb02->save.cs;
- 	vmcb12->save.ss     = vmcb02->save.ss;
-@@ -1200,10 +1184,48 @@ int nested_svm_vmexit(struct vcpu_svm *s
- 	if (guest_cpu_cap_has(vcpu, X86_FEATURE_NRIPS))
- 		vmcb12->control.next_rip  = vmcb02->control.next_rip;
- 
-+	if (nested_vmcb12_has_lbrv(vcpu))
-+		svm_copy_lbrs(&vmcb12->save, &vmcb02->save);
-+
- 	vmcb12->control.int_ctl           = svm->nested.ctl.int_ctl;
- 	vmcb12->control.event_inj         = svm->nested.ctl.event_inj;
- 	vmcb12->control.event_inj_err     = svm->nested.ctl.event_inj_err;
- 
-+	trace_kvm_nested_vmexit_inject(vmcb12->control.exit_code,
-+				       vmcb12->control.exit_info_1,
-+				       vmcb12->control.exit_info_2,
-+				       vmcb12->control.exit_int_info,
-+				       vmcb12->control.exit_int_info_err,
-+				       KVM_ISA_SVM);
-+
-+	kvm_vcpu_unmap(vcpu, &map);
-+	return 0;
-+}
-+
-+int nested_svm_vmexit(struct vcpu_svm *svm)
-+{
-+	struct kvm_vcpu *vcpu = &svm->vcpu;
-+	struct vmcb *vmcb01 = svm->vmcb01.ptr;
-+	struct vmcb *vmcb02 = svm->nested.vmcb02.ptr;
-+	int rc;
-+
-+	rc = nested_svm_vmexit_update_vmcb12(vcpu);
-+	if (rc) {
-+		if (rc == -EINVAL)
-+			kvm_inject_gp(vcpu, 0);
-+		return 1;
-+	}
-+
-+	/* Exit Guest-Mode */
-+	leave_guest_mode(vcpu);
-+	svm->nested.vmcb12_gpa = 0;
-+	WARN_ON_ONCE(svm->nested.nested_run_pending);
-+
-+	kvm_clear_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
-+
-+	/* in case we halted in L2 */
-+	kvm_set_mp_state(vcpu, KVM_MP_STATE_RUNNABLE);
-+
- 	if (!kvm_pause_in_guest(vcpu->kvm)) {
- 		vmcb01->control.pause_filter_count = vmcb02->control.pause_filter_count;
- 		vmcb_mark_dirty(vmcb01, VMCB_INTERCEPTS);
-@@ -1248,9 +1270,7 @@ int nested_svm_vmexit(struct vcpu_svm *s
- 	if (!nested_exit_on_intr(svm))
- 		kvm_make_request(KVM_REQ_EVENT, &svm->vcpu);
- 
--	if (nested_vmcb12_has_lbrv(vcpu)) {
--		svm_copy_lbrs(&vmcb12->save, &vmcb02->save);
--	} else {
-+	if (!nested_vmcb12_has_lbrv(vcpu)) {
- 		svm_copy_lbrs(&vmcb01->save, &vmcb02->save);
- 		vmcb_mark_dirty(vmcb01, VMCB_LBR);
- 	}
-@@ -1306,15 +1326,6 @@ int nested_svm_vmexit(struct vcpu_svm *s
- 	svm->vcpu.arch.dr7 = DR7_FIXED_1;
- 	kvm_update_dr7(&svm->vcpu);
- 
--	trace_kvm_nested_vmexit_inject(vmcb12->control.exit_code,
--				       vmcb12->control.exit_info_1,
--				       vmcb12->control.exit_info_2,
--				       vmcb12->control.exit_int_info,
--				       vmcb12->control.exit_int_info_err,
--				       KVM_ISA_SVM);
--
--	kvm_vcpu_unmap(vcpu, &map);
--
- 	nested_svm_transition_tlb_flush(vcpu);
+ 	rc = nested_svm_vmexit_update_vmcb12(vcpu);
+ 	if (rc) {
+@@ -1330,9 +1329,8 @@ int nested_svm_vmexit(struct vcpu_svm *s
  
  	nested_svm_uninit_mmu_context(vcpu);
+ 
+-	rc = nested_svm_load_cr3(vcpu, vmcb01->save.cr3, false, true);
+-	if (rc)
+-		return 1;
++	if (nested_svm_load_cr3(vcpu, vmcb01->save.cr3, false, true))
++		kvm_make_request(KVM_REQ_TRIPLE_FAULT, vcpu);
+ 
+ 	/*
+ 	 * Drop what we picked up for L2 via svm_complete_interrupts() so it
+@@ -1357,8 +1355,6 @@ int nested_svm_vmexit(struct vcpu_svm *s
+ 	 */
+ 	if (kvm_apicv_activated(vcpu->kvm))
+ 		__kvm_vcpu_update_apicv(vcpu);
+-
+-	return 0;
+ }
+ 
+ static void nested_svm_triple_fault(struct kvm_vcpu *vcpu)
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -2233,13 +2233,9 @@ static int emulate_svm_instr(struct kvm_
+ 		[SVM_INSTR_VMSAVE] = vmsave_interception,
+ 	};
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+-	int ret;
+ 
+ 	if (is_guest_mode(vcpu)) {
+-		/* Returns '1' or -errno on failure, '0' on success. */
+-		ret = nested_svm_simple_vmexit(svm, guest_mode_exit_codes[opcode]);
+-		if (ret)
+-			return ret;
++		nested_svm_simple_vmexit(svm, guest_mode_exit_codes[opcode]);
+ 		return 1;
+ 	}
+ 	return svm_instr_handlers[opcode](vcpu);
+@@ -4872,7 +4868,6 @@ static int svm_enter_smm(struct kvm_vcpu
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 	struct kvm_host_map map_save;
+-	int ret;
+ 
+ 	if (!is_guest_mode(vcpu))
+ 		return 0;
+@@ -4892,9 +4887,7 @@ static int svm_enter_smm(struct kvm_vcpu
+ 	svm->vmcb->save.rsp = vcpu->arch.regs[VCPU_REGS_RSP];
+ 	svm->vmcb->save.rip = vcpu->arch.regs[VCPU_REGS_RIP];
+ 
+-	ret = nested_svm_simple_vmexit(svm, SVM_EXIT_SW);
+-	if (ret)
+-		return ret;
++	nested_svm_simple_vmexit(svm, SVM_EXIT_SW);
+ 
+ 	/*
+ 	 * KVM uses VMCB01 to store L1 host state while L2 runs but
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -793,14 +793,14 @@ int nested_svm_vmrun(struct kvm_vcpu *vc
+ void svm_copy_vmrun_state(struct vmcb_save_area *to_save,
+ 			  struct vmcb_save_area *from_save);
+ void svm_copy_vmloadsave_state(struct vmcb *to_vmcb, struct vmcb *from_vmcb);
+-int nested_svm_vmexit(struct vcpu_svm *svm);
++void nested_svm_vmexit(struct vcpu_svm *svm);
+ 
+-static inline int nested_svm_simple_vmexit(struct vcpu_svm *svm, u32 exit_code)
++static inline void nested_svm_simple_vmexit(struct vcpu_svm *svm, u32 exit_code)
+ {
+ 	svm->vmcb->control.exit_code	= exit_code;
+ 	svm->vmcb->control.exit_info_1	= 0;
+ 	svm->vmcb->control.exit_info_2	= 0;
+-	return nested_svm_vmexit(svm);
++	nested_svm_vmexit(svm);
+ }
+ 
+ int nested_svm_exit_handled(struct vcpu_svm *svm);
 
 
