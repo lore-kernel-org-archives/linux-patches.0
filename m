@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF91B1A6827;
-	Mon,  4 May 2026 14:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D161A6827;
+	Mon,  4 May 2026 14:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904313; cv=none; b=Ymk1EUwxYyzQD3MGr5AsIoqEiI3OlfaKRfAJZGi22HTL6Go4ivVbUK6fH0d2pno3tG1upl/3AfuKaYnTJvd3GiCA1/eonrNwMVNPOxz4tQphDoRofkNWcwaveIzLy1/fI0dDgXqlhPWFQ6GursFOvr2ZNmO0NQlOplf9Z+YGA/g=
+	t=1777904316; cv=none; b=hPnBzhdyE3Jfx61codZB06D0FsgVCHRqjJUiR6JAa4iH/B54Bhxkx5qvT9Oz3ledtKFWsCXn4jj6bIP52RshvSLXzURzSzCut8vmVJ5cRn4r6NaSsCbnY2psxfJUp6afXbpSv4GMbml1iJYxK5BP/t4CSF+rDoXdFQrp01EF7VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904313; c=relaxed/simple;
-	bh=x8y7Kc+TT486OKW9qGpQWU8/n0xwiyQIy/znZejkcgY=;
+	s=arc-20240116; t=1777904316; c=relaxed/simple;
+	bh=UX5uAaauRmUy1vm6UA0qBr1/nJphZtgF20B/fVGEIsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKzCZpHVBcSHofUJx9JmovphAKg1561RxhNUhbUajx5/hVb6NhDE7hVLjznEEIxQ2aid9qGg18BhPjRm1p87KsNtU+HrCHmiCifI4wG9ZMiWlEYrOE8nk1g1M8rX6LUT6Kj9zwl45PyUnNx22N8FQB1tOEclkWHjGNebCySWK/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iTZHyC+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qG3s6b/0Zgua5VWPD0g/evpLoXt5Xk5Y8K2y36xRKlbv/OhsbAL2gSjv8JYD9lSBnKNbBuadce8dU4ioNx/ZAejibAWsjFcHD8L0QDb/QAOYXH5huvBYRY1GbaSIvanDNU82elfErBHtXgZAOKb/S0fT1R4A5bom6LwfYTVlMNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kulVvjTO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iTZHyC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F61C2BCB8;
-	Mon,  4 May 2026 14:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kulVvjTO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8D7C2BCB8;
+	Mon,  4 May 2026 14:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904313;
-	bh=x8y7Kc+TT486OKW9qGpQWU8/n0xwiyQIy/znZejkcgY=;
+	s=korg; t=1777904316;
+	bh=UX5uAaauRmUy1vm6UA0qBr1/nJphZtgF20B/fVGEIsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1iTZHyC+1rOF9MiN1QKLbPJ91qdbHIO5o91UmmPssO9kJc85Qd+f3P149413s+oXx
-	 88VzMvm7bcu2SRoxZfVYVRxlNsd6rC+rhqkqtm/SnnBwiPsQMK8A4dwRNL30xIwhJx
-	 OiII+cqEJOP2GjrIpjlCkMlc54gI24UDqQyjlfR0=
+	b=kulVvjTOwUuwTNUD/yPYMpP1/aYwI9kZdiQxAvMFmTja58K/EGbK96hRDr9Q3nNUo
+	 YBogje1ldmXOEQZ90kkp2HnGWWmW2Q1bmFY/tngzRXlKp1ULu12uHzf3Cmyg7b5p81
+	 SDMcS/gNXqXX76qKoXT31uH07c/XAHyZFP4Vkoas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 234/275] ceph: only d_add() negative dentries when they are unhashed
-Date: Mon,  4 May 2026 15:52:54 +0200
-Message-ID: <20260504135151.745023114@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 235/275] gtp: disable BH before calling udp_tunnel_xmit_skb()
+Date: Mon,  4 May 2026 15:52:55 +0200
+Message-ID: <20260504135151.780491113@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -45,114 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 803447f93d75ab6e40c85e6d12b5630d281d70d6 upstream.
+commit 5638504a2aa9e1b9d72af9060df1a160cce2d379 upstream.
 
-Ceph can call d_add(dentry, NULL) on a negative dentry that is already
-present in the primary dcache hash.
+gtp_genl_send_echo_req() runs as a generic netlink doit handler in
+process context with BH not disabled. It calls udp_tunnel_xmit_skb(),
+which eventually invokes iptunnel_xmit() — that uses __this_cpu_inc/dec
+on softnet_data.xmit.recursion to track the tunnel xmit recursion level.
 
-In the current VFS that is not safe.  d_add() goes through __d_add()
-to __d_rehash(), which unconditionally reinserts dentry->d_hash into
-the hlist_bl bucket.  If the dentry is already hashed, reinserting the
-same node can corrupt the bucket, including creating a self-loop.
-Once that happens, __d_lookup() can spin forever in the hlist_bl walk,
-typically looping only on the d_name.hash mismatch check and
-eventually triggering RCU stall reports like this one:
+Without local_bh_disable(), the task may migrate between
+dev_xmit_recursion_inc() and dev_xmit_recursion_dec(), breaking the
+per-CPU counter pairing. The result is stale or negative recursion
+levels that can later produce false-positive
+SKB_DROP_REASON_RECURSION_LIMIT drops on either CPU.
 
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:         87-....: (2100 ticks this GP) idle=3a4c/1/0x4000000000000000 softirq=25003319/25003319 fqs=829
- rcu:         (t=2101 jiffies g=79058445 q=698988 ncpus=192)
- CPU: 87 UID: 2952868916 PID: 3933303 Comm: php-cgi8.3 Not tainted 6.18.17-i1-amd #950 NONE
- Hardware name: Dell Inc. PowerEdge R7615/0G9DHV, BIOS 1.6.6 09/22/2023
- RIP: 0010:__d_lookup+0x46/0xb0
- Code: c1 e8 07 48 8d 04 c2 48 8b 00 49 89 fc 49 89 f5 48 89 c3 48 83 e3 fe 48 83 f8 01 77 0f eb 2d 0f 1f 44 00 00 48 8b 1b 48 85 db <74> 20 39 6b 18 75 f3 48 8d 7b 78 e8 ba 85 d0 00 4c 39 63 10 74 1f
- RSP: 0018:ff745a70c8253898 EFLAGS: 00000282
- RAX: ff26e470054cb208 RBX: ff26e470054cb208 RCX: 000000006e958966
- RDX: ff26e48267340000 RSI: ff745a70c82539b0 RDI: ff26e458f74655c0
- RBP: 000000006e958966 R08: 0000000000000180 R09: 9cd08d909b919a89
- R10: ff26e458f74655c0 R11: 0000000000000000 R12: ff26e458f74655c0
- R13: ff745a70c82539b0 R14: d0d0d0d0d0d0d0d0 R15: 2f2f2f2f2f2f2f2f
- FS:  00007f5770896980(0000) GS:ff26e482c5d88000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f5764de50c0 CR3: 000000a72abb5001 CR4: 0000000000771ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  lookup_fast+0x9f/0x100
-  walk_component+0x1f/0x150
-  link_path_walk+0x20e/0x3d0
-  path_lookupat+0x68/0x180
-  filename_lookup+0xdc/0x1e0
-  vfs_statx+0x6c/0x140
-  vfs_fstatat+0x67/0xa0
-  __do_sys_newfstatat+0x24/0x60
-  do_syscall_64+0x6a/0x230
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+The other udp_tunnel_xmit_skb() call sites in gtp.c are unaffected:
+the data path runs under ndo_start_xmit and the echo response handlers
+run from the UDP encap rx softirq, both with BH already disabled.
 
-This is reachable with reused cached negative dentries.  A Ceph lookup
-or atomic_open can be handed a negative dentry that is already hashed,
-and fs/ceph/dir.c then hits one of two paths that incorrectly assume
-"negative" also means "unhashed":
+Fix it by disabling BH around the udp_tunnel_xmit_skb() call, mirroring
+commit 2cd7e6971fc2 ("sctp: disable BH before calling
+udp_tunnel_xmit_skb()").
 
-  - ceph_finish_lookup():
-      MDS reply is -ENOENT with no trace
-      -> d_add(dentry, NULL)
-
-  - ceph_lookup():
-      local ENOENT fast path for a complete directory with shared caps
-      -> d_add(dentry, NULL)
-
-Both paths can therefore re-add an already-hashed negative dentry.
-
-Ceph already uses the correct pattern elsewhere: ceph_fill_trace() only
-calls d_add(dn, NULL) for a negative null-dentry reply when d_unhashed(dn)
-is true.
-
-Fix both fs/ceph/dir.c sites the same way: only call d_add() for a
-negative dentry when it is actually unhashed.  If the negative dentry
-is already hashed, leave it in place and reuse it as-is.
-
-This preserves the existing behavior for unhashed dentries while
-avoiding d_hash list corruption for reused hashed negatives.
-
+Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
 Cc: stable@vger.kernel.org
-Fixes: 2817b000b02c ("ceph: directory operations")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260417055408.4667-1-devnexen@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/gtp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -769,7 +769,8 @@ struct dentry *ceph_finish_lookup(struct
- 				d_drop(dentry);
- 				err = -ENOENT;
- 			} else {
--				d_add(dentry, NULL);
-+				if (d_unhashed(dentry))
-+					d_add(dentry, NULL);
- 			}
- 		}
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -2400,6 +2400,7 @@ static int gtp_genl_send_echo_req(struct
+ 		return -ENODEV;
  	}
-@@ -840,7 +841,8 @@ static struct dentry *ceph_lookup(struct
- 			spin_unlock(&ci->i_ceph_lock);
- 			doutc(cl, " dir %llx.%llx complete, -ENOENT\n",
- 			      ceph_vinop(dir));
--			d_add(dentry, NULL);
-+			if (d_unhashed(dentry))
-+				d_add(dentry, NULL);
- 			di->lease_shared_gen = atomic_read(&ci->i_shared_gen);
- 			return NULL;
- 		}
+ 
++	local_bh_disable();
+ 	udp_tunnel_xmit_skb(rt, sk, skb_to_send,
+ 			    fl4.saddr, fl4.daddr,
+ 			    inet_dscp_to_dsfield(fl4.flowi4_dscp),
+@@ -2409,6 +2410,7 @@ static int gtp_genl_send_echo_req(struct
+ 			    !net_eq(sock_net(sk),
+ 				    dev_net(gtp->dev)),
+ 			    false, 0);
++	local_bh_enable();
+ 	return 0;
+ }
+ 
 
 
