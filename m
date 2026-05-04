@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FC93D300A;
-	Mon,  4 May 2026 14:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A019C3AA4F8;
+	Mon,  4 May 2026 14:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904008; cv=none; b=Nv2hT1RF5vECQ7EAq8dYjo1LFe5bzwLrwnWFLxntbvX81i8/O0IIQTYE9M3IvOg6XTQNKxnZ1kxeIZuGfy/PLDBHfIj5oV+oC8zvfbZZKw9+28s9hg9LPL3LnCWgZuPVi5Cv4apeKPqFIEWBlkYCl1p7Tm8vLnilbeansRnET94=
+	t=1777904010; cv=none; b=hy/vmq9dOloS0qi1y9tibtyLLeE3koUEwXArNd+Th6csC1u6YIchD+fjX/2nA/KisyyWUlh4AzU45+fH6TQIi2mJjcNTPiqHb0batxdgFj4pkRrDYjVpsAWkSrnWTTM9LET8Zvj+lgHQjXXZYf5sNWMWRS04EtzwZRrfFfyAPP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904008; c=relaxed/simple;
-	bh=641OAVjiCwMTTOiiblVA9N8luKG5fFTtlkVIM7V1EUc=;
+	s=arc-20240116; t=1777904010; c=relaxed/simple;
+	bh=KVOBMvo9u7TvfOFk4qW2SR9Gei1bbGYHRz/hMGfVMNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8RfisNHXQWLLjYUMISoYIdZEkopGSM0/TDoUafPPIwyXS1jI7Ub+c2sGlZVSRYQWCTzH0gQ6jQDWOjCexgXPqK6tPaX5NkppooYJw1etRrYIs7Fp0JE5hOWvH8m3aj39wqOo/G84O1Xe2NjWBOmdyE78cQJ3VdSTAwu88SLYDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dwTjH5am; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ue3ABAX3E3nrs3qX0ZQgP/mbt9wS8PGD+1IuGyvkHzji47864dpS0TAbXIMlerTk2yhUYUxVp5Hy/qt+03iQtU0sypcJQxhJ4NqIiFWPrgFUHqOczeV1aIEFwcttBpFpSJyjq+Hekl7Ji4OVlxlRE87nISjHDcVlE14quD/3f/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAND1jP7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwTjH5am"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B578C2BCC4;
-	Mon,  4 May 2026 14:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAND1jP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383E8C2BCC4;
+	Mon,  4 May 2026 14:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904008;
-	bh=641OAVjiCwMTTOiiblVA9N8luKG5fFTtlkVIM7V1EUc=;
+	s=korg; t=1777904010;
+	bh=KVOBMvo9u7TvfOFk4qW2SR9Gei1bbGYHRz/hMGfVMNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dwTjH5am7WAA66HkJQNzmOLPgR9QqtB7H9e2O4R/qBOWAROGlFZ9tVfrdSTUvZzKA
-	 KNymScoy9IGHawMe17epwraZn5OosBwPI6fHhwRDTc/yP9Rg/9Eft7kevvmWID6Avd
-	 sY0PsnyHIdWoGa5jtu69Vg+q+19awdxfhAxCyX58=
+	b=bAND1jP7kI9/aZRYjZCUj+LXQFpRIQ6yFv4cmHYjCmr4sFiHCK5fiJvNRZM14QVZD
+	 /p8Ib+J5+kU6GAEcntLr2BFWrBs91syUqRPZBS/DOnzzR1GU8p9eYZ9M83IrI2BU/c
+	 Ca6MyrXrrgEYlq+uYdbJpnMCS7MTlNqn1ILDlUYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.18 147/275] arm64: dts: ti: am62-verdin: Enable pullup for eMMC data pins
-Date: Mon,  4 May 2026 15:51:27 +0200
-Message-ID: <20260504135148.390817837@linuxfoundation.org>
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Laurent M Coquerel <laurent.m.coquerel@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 148/275] crypto: qat - fix IRQ cleanup on 6xxx probe failure
+Date: Mon,  4 May 2026 15:51:28 +0200
+Message-ID: <20260504135148.428253112@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,57 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit d5325810814ee995debfa0b6c4a22e0391598bef upstream.
+commit 95aed2af87ec43fa7624cc81dd13d37824ad4972 upstream.
 
-Verdin AM62 board does not have external pullups on eMMC DAT1-DAT7 pins.
-Enable internal pullups on DAT1-DAT7 considering:
+When adf_dev_up() partially completes and then fails, the IRQ
+handlers registered during adf_isr_resource_alloc() are not detached
+before the MSI-X vectors are released.
 
- - without a host-side pullup, these lines rely solely on the eMMC
-   device's internal pullup (R_int, 10kohm-150kohm per JEDEC), which may
-   exceed the recommended 50kohm max for 1.8V VCCQ
- - JEDEC JESD84-B51 Table 200 requires host-side pullups (R_DAT,
-   10kohm-100kohm) on all data lines to prevent bus floating
+Since the device is enabled with pcim_enable_device(), calling
+pci_alloc_irq_vectors() internally registers pcim_msi_release() as a
+devres action. On probe failure, devres runs pcim_msi_release() which
+calls pci_free_irq_vectors(), tearing down the MSI-X vectors while IRQ
+handlers (for example 'qat0-bundle0') are still attached. This causes
+remove_proc_entry() warnings:
 
-Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
+    [   22.163964] remove_proc_entry: removing non-empty directory 'irq/143', leaking at least 'qat0-bundle0'
+
+Moving the devm_add_action_or_reset() before adf_dev_up() does not solve
+the problem since devres runs in LIFO order and pcim_msi_release(),
+registered later inside adf_dev_up(), would still fire before
+adf_device_down().
+
+Fix by calling adf_dev_down() explicitly when adf_dev_up() fails, to
+properly free IRQ handlers before devres releases the MSI-X vectors.
+
+Fixes: 17fd7514ae68 ("crypto: qat - add qat_6xxx driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260320073032.10427-1-francesco@dolcini.it
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Laurent M Coquerel <laurent.m.coquerel@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/crypto/intel/qat/qat_6xxx/adf_drv.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-@@ -572,16 +572,16 @@
- 	/* On-module eMMC */
- 	pinctrl_sdhci0: main-mmc0-default-pins {
- 		pinctrl-single,pins = <
--			AM62X_IOPAD(0x220, PIN_INPUT, 0) /*  (Y3) MMC0_CMD  */
--			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK  */
--			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
--			AM62X_IOPAD(0x210, PIN_INPUT, 0) /* (AA1) MMC0_DAT1 */
--			AM62X_IOPAD(0x20c, PIN_INPUT, 0) /* (AA3) MMC0_DAT2 */
--			AM62X_IOPAD(0x208, PIN_INPUT, 0) /*  (Y4) MMC0_DAT3 */
--			AM62X_IOPAD(0x204, PIN_INPUT, 0) /* (AB2) MMC0_DAT4 */
--			AM62X_IOPAD(0x200, PIN_INPUT, 0) /* (AC1) MMC0_DAT5 */
--			AM62X_IOPAD(0x1fc, PIN_INPUT, 0) /* (AD2) MMC0_DAT6 */
--			AM62X_IOPAD(0x1f8, PIN_INPUT, 0) /* (AC2) MMC0_DAT7 */
-+			AM62X_IOPAD(0x220, PIN_INPUT,        0) /*  (Y3) MMC0_CMD  */
-+			AM62X_IOPAD(0x218, PIN_INPUT,        0) /* (AB1) MMC0_CLK  */
-+			AM62X_IOPAD(0x214, PIN_INPUT,        0) /* (AA2) MMC0_DAT0 */
-+			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
-+			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
-+			AM62X_IOPAD(0x208, PIN_INPUT_PULLUP, 0) /*  (Y4) MMC0_DAT3 */
-+			AM62X_IOPAD(0x204, PIN_INPUT_PULLUP, 0) /* (AB2) MMC0_DAT4 */
-+			AM62X_IOPAD(0x200, PIN_INPUT_PULLUP, 0) /* (AC1) MMC0_DAT5 */
-+			AM62X_IOPAD(0x1fc, PIN_INPUT_PULLUP, 0) /* (AD2) MMC0_DAT6 */
-+			AM62X_IOPAD(0x1f8, PIN_INPUT_PULLUP, 0) /* (AC2) MMC0_DAT7 */
- 		>;
- 	};
+--- a/drivers/crypto/intel/qat/qat_6xxx/adf_drv.c
++++ b/drivers/crypto/intel/qat/qat_6xxx/adf_drv.c
+@@ -182,8 +182,10 @@ static int adf_probe(struct pci_dev *pde
+ 		return ret;
  
+ 	ret = adf_dev_up(accel_dev, true);
+-	if (ret)
++	if (ret) {
++		adf_dev_down(accel_dev);
+ 		return ret;
++	}
+ 
+ 	ret = devm_add_action_or_reset(dev, adf_device_down, accel_dev);
+ 	if (ret)
 
 
