@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7417D3DE456;
-	Mon,  4 May 2026 14:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F276315785;
+	Mon,  4 May 2026 14:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904622; cv=none; b=uFzyS6iaAT9renPjmrzy7bjDyPod5xfAuEJVHo4UnvDU5VrqA+bQCUIHzgPfUQ+iZ/UOs6m02f56+Ssn1HC319Cwa2/IIVhYLoAk6T28RhCXWbh/MFzKlTxOTb5L8gTzV5KRLZR4HvJbv6wCTCuW8huexvU0Ho0/mwEk9kZr7P8=
+	t=1777904625; cv=none; b=on4DyM1/WOX0gyHySoeOSHM+JNIzJ1YXmPofXT3/B/RDW093tjZPlahG0EIXgvT6Nj0Crcom5eTv5EeOPe7LYLY4NtXJz1IUmn7mETiwmOptotfcZaOhNcRVKPRXRDKageY88R8tnWQIjkE7OH9eqkjFvs2VVtcAhBtObJtjbtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904622; c=relaxed/simple;
-	bh=AbQgoQH/2PcIFtf8Cqlt4qo8buUAsha4ado2AwiqF6I=;
+	s=arc-20240116; t=1777904625; c=relaxed/simple;
+	bh=J54Z9jk1cohSxctF2CIshdbUMRjlvY+RBrloeP9QoVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMX1I8708bciqB9vrCf6aaxZ0YM+Bh/c/4eYaQnkf8Y5HLSUq704Z17/RBlpV4x/5W/pIZWSRivZ6ZoEguvaIRICqhnyUgpqfjSK7oJCgc14JGYVmC8etRFHeEt3hc26Ci8jep0jOXicsK69WKhIYNuBgUiTg2FYyje1ccCuwFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKfc+uST; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V+S35kuGj0q/VauwUwbHbDUm5APxxggnUggklGaANdrjImyI4FnW86TdqnjY/ZnT5UmMsW8Kki5mYg3by3pFV/hzoE1yU3MVPUC+irMIqmatlCLPQpHtiHspsgA9RSTE1Sw15IMiV+AzwekVKPeBnmmhM1m+z+ZBh2Z2XMunhtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2Gwa2aR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKfc+uST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092B7C2BCB8;
-	Mon,  4 May 2026 14:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2Gwa2aR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB31C2BCF6;
+	Mon,  4 May 2026 14:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904622;
-	bh=AbQgoQH/2PcIFtf8Cqlt4qo8buUAsha4ado2AwiqF6I=;
+	s=korg; t=1777904625;
+	bh=J54Z9jk1cohSxctF2CIshdbUMRjlvY+RBrloeP9QoVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKfc+uST56/U1wL9CCPpjNmfcIIyKh6Na5wNl4zzofGgPuQVgkTkzUL5Zk8kbOo8F
-	 MnAoF9Lfg2ulN7JJlxKp6RXoA8Sbbmy8IL2CyxWtcVr/6AbmNxoBafNErqwrSvtBjb
-	 Mc4UfDfvghc/FoZeVUw6h3EXM+7EkNT4pAzqRG+U=
+	b=O2Gwa2aRWhWQRfVv7JDoJxgLKTdDs20pjM31Zc5AYx/HkCtoWu2eV337uwkTS0tY/
+	 cbqGyC2hdfuEkjZoBoRUlpdgbk6bJa6jjjJs2xphtg1yRV+OrW/eh35jRhrqTvLSCa
+	 vpOGBpw/FfOF/NZDi1TbI5fromsP6ZFtFlNNape8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gunnar Kudrjavets <gunnarku@amazon.com>,
 	Justinien Bouron <jbouron@amazon.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.12 111/215] tpm: Fix auth session leak in tpm2_get_random() error path
-Date: Mon,  4 May 2026 15:52:10 +0200
-Message-ID: <20260504135134.203878245@linuxfoundation.org>
+Subject: [PATCH 6.12 112/215] tpm: Use kfree_sensitive() to free auth session in tpm_dev_release()
+Date: Mon,  4 May 2026 15:52:11 +0200
+Message-ID: <20260504135134.240916720@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -53,45 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Gunnar Kudrjavets <gunnarku@amazon.com>
 
-commit 666c1a2ca603d8314231200bf8bbb3a81bd64c6b upstream.
+commit c424d2664f08c77f08b4580b5f0cbaabf7c229b2 upstream.
 
-When tpm_buf_fill_hmac_session() fails inside the do-while loop in
-tpm2_get_random(), the function returns directly after destroying the
-buffer, without ending the auth session via tpm2_end_auth_session().
+tpm_dev_release() uses plain kfree() to free chip->auth, which contains
+sensitive cryptographic material including HMAC session keys, nonces,
+and passphrase data (struct tpm2_auth).
 
-This leaks the TPM auth session resource. All other error paths within
-the loop correctly reach the 'out' label which calls both
-tpm_buf_destroy() and tpm2_end_auth_session().
+Every other code path that frees this structure uses kfree_sensitive()
+to zero the memory before releasing it: both tpm2_end_auth_session()
+and tpm_buf_check_hmac_response() do so. The tpm_dev_release() path
+is the only one that does not, leaving key material in freed slab
+memory until it is eventually overwritten.
 
-Fix this by replacing the early return with a goto to the existing 'out'
-label, which already handles both cleanup operations. The redundant
-tpm_buf_destroy() call is removed since 'out' takes care of it.
+Use kfree_sensitive() for consistency with the rest of the driver and
+to ensure session keys are scrubbed during device teardown.
 
-Cc: stable@vger.kernel.org # v6.19+
-Fixes: 6e9722e9a7bf ("tpm2-sessions: Fix out of range indexing in name_size")
+Cc: stable@vger.kernel.org # v6.10+
+Fixes: 699e3efd6c64 ("tpm: Add HMAC session start and end functions")
 Signed-off-by: Gunnar Kudrjavets <gunnarku@amazon.com>
 Reviewed-by: Justinien Bouron <jbouron@amazon.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm2-cmd.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/char/tpm/tpm-chip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -338,10 +338,8 @@ int tpm2_get_random(struct tpm_chip *chi
- 						NULL, 0);
- 		tpm_buf_append_u16(&buf, num_bytes);
- 		err = tpm_buf_fill_hmac_session(chip, &buf);
--		if (err) {
--			tpm_buf_destroy(&buf);
--			return err;
--		}
-+		if (err)
-+			goto out;
- 
- 		err = tpm_transmit_cmd(chip, &buf,
- 				       offsetof(struct tpm2_get_random_out,
+--- a/drivers/char/tpm/tpm-chip.c
++++ b/drivers/char/tpm/tpm-chip.c
+@@ -283,7 +283,7 @@ static void tpm_dev_release(struct devic
+ 	kfree(chip->work_space.context_buf);
+ 	kfree(chip->work_space.session_buf);
+ #ifdef CONFIG_TCG_TPM2_HMAC
+-	kfree(chip->auth);
++	kfree_sensitive(chip->auth);
+ #endif
+ 	kfree(chip);
+ }
 
 
