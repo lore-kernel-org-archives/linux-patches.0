@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13436309C;
-	Mon,  4 May 2026 14:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F70B36309C;
+	Mon,  4 May 2026 14:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904845; cv=none; b=SqPZoGMFBxYdeYD1p/wB6au5F5J6FgcCPPOi9T41NMHvUJDQrJIS+vNk0NMfY2OGZ0tTPP7Jdn6wyLRUkEIkMOs/sPx7zWIxsZ00po3K8Yjm69gVxKN+Ue4d+NTDHX0RQMRMc/+gU7HsYRv7hTIWRQ955W7Ja2vIjfrNuRjGARA=
+	t=1777904848; cv=none; b=BgFASraQtvBKb0nFqjk1SkfphHALXot1SNYle2dJRyoYf5x9cfFyzsvqdZ/7izDBnWC+AfjysV6h0oDJzcjJJ1QtbUDsv5ZNOPqbZDZSoVmAUu1KiRBfbv5xTH+VtPRDkSaRa1jAmRfOceZH50sSfiGrlu4m7unFfl/0+1kqvAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904845; c=relaxed/simple;
-	bh=TAGOi28nMwWMofdLxyDhKRUN0Uo9ZyD5lYmxDr5oqbI=;
+	s=arc-20240116; t=1777904848; c=relaxed/simple;
+	bh=K88QAZuwINKgHCAsU13WlJlt+FLOvvk/2iQo86uTxc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f/fMHIfIo6E2yjI0Vm7zUi01ku8V/YFrGslbQPIjCu0iFv4GAphaeuvQ49KQ9lAqT/Axyki/1AUIJ6aShvara7LPRhk7luVH0js24rid5adsgPPcJv9wi8RsdRHPLeFPN4UIk9OHhI9iNg2pdtyPUKhqB3YKvf+fRWXhxpWgzd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQpzxhKc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ln9/as4n0U9jH0ub6R3sDv3bIIG3pEi7Icdm1YtYAnF1T7GK/JLBG5L7qyzWgviTly94zEDDtnOhuW6UhvKynbjXAc92oh+nDz4V7Oi87TrQvhA6XNTwyAKwGW8BtyPkqKqCESD8qZaSksv9Wv/v11OUflRaY21LFaHSALcajsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr14cb07; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQpzxhKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CABC2BCB8;
-	Mon,  4 May 2026 14:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr14cb07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0B40C2BCB8;
+	Mon,  4 May 2026 14:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904845;
-	bh=TAGOi28nMwWMofdLxyDhKRUN0Uo9ZyD5lYmxDr5oqbI=;
+	s=korg; t=1777904848;
+	bh=K88QAZuwINKgHCAsU13WlJlt+FLOvvk/2iQo86uTxc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQpzxhKc132HmMOEDP5OfUOr6woMwM01rEmQuohaXIgTlp90uE09IhT+lueX37/3P
-	 VqQWEvDqPNjQE3WOpNX3b+WgBA4v374ib6LkUecOYkjW4zfpfr+NrpJZc3gq38R0h7
-	 wGOdGMySvq+kj5CnlmvTGKKKz0sA0Jp/oye0Se30=
+	b=vr14cb07Tj5ZDkyaFFGW6Mm1Mv0GpiFH97CQQYRDH5I23cqelD6tyz14d2paL9q1V
+	 z6mu8rZPd7YbT2eczfAIEEuciufIMVGAmY4WQrqWfZlb8Mi0SYVXiHcaccCirhoGW8
+	 zaKDsgGA/VXz4JF0gv+3Mq2L1WKwJiAOf1+0OPe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 196/215] iio: frequency: admv1013: fix NULL pointer dereference on str
-Date: Mon,  4 May 2026 15:53:35 +0200
-Message-ID: <20260504135137.648804291@linuxfoundation.org>
+Subject: [PATCH 6.12 197/215] rxrpc: Fix potential UAF after skb_unshare() failure
+Date: Mon,  4 May 2026 15:53:36 +0200
+Message-ID: <20260504135137.710597208@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -48,137 +50,182 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit aac0a51b16700b403a55b67ba495de021db78763 ]
+[ Upstream commit 1f2740150f904bfa60e4bad74d65add3ccb5e7f8 ]
 
-When device_property_read_string() fails, str is left uninitialized
-but the code falls through to strcmp(str, ...), dereferencing a garbage
-pointer. Replace manual read/strcmp with
-device_property_match_property_string() and consolidate the SE mode
-enums into a single sequential enum, mapping to hardware register
-values via a switch consistent with other bitfields in the driver.
+If skb_unshare() fails to unshare a packet due to allocation failure in
+rxrpc_input_packet(), the skb pointer in the parent (rxrpc_io_thread())
+will be NULL'd out.  This will likely cause the call to
+trace_rxrpc_rx_done() to oops.
 
-Several cleanup patches have been applied to this driver recently so
-this will need a manual backport.
+Fix this by moving the unsharing down to where rxrpc_input_call_event()
+calls rxrpc_input_call_packet().  There are a number of places prior to
+that where we ignore DATA packets for a variety of reasons (such as the
+call already being complete) for which an unshare is then avoided.
 
-Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+And with that, rxrpc_input_packet() doesn't need to take a pointer to the
+pointer to the packet, so change that to just a pointer.
+
+Fixes: 2d1faf7a0ca3 ("rxrpc: Simplify skbuff accounting in receive path")
+Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-4-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted to per-skb rxrpc_input_call_event() signature ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/admv1013.c |   67 ++++++++++++++++++++++-----------------
- 1 file changed, 38 insertions(+), 29 deletions(-)
+ include/trace/events/rxrpc.h |    4 ++--
+ net/rxrpc/ar-internal.h      |    1 -
+ net/rxrpc/call_event.c       |   24 ++++++++++++++++++++++--
+ net/rxrpc/io_thread.c        |   24 ++----------------------
+ net/rxrpc/skbuff.c           |    9 ---------
+ 5 files changed, 26 insertions(+), 36 deletions(-)
 
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -85,9 +85,9 @@ enum {
- };
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -127,8 +127,7 @@
+ 	E_(rxrpc_call_poke_timer_now,		"Timer-now")
  
- enum {
--	ADMV1013_SE_MODE_POS = 6,
--	ADMV1013_SE_MODE_NEG = 9,
--	ADMV1013_SE_MODE_DIFF = 12
-+	ADMV1013_SE_MODE_POS,
-+	ADMV1013_SE_MODE_NEG,
-+	ADMV1013_SE_MODE_DIFF,
- };
+ #define rxrpc_skb_traces \
+-	EM(rxrpc_skb_eaten_by_unshare,		"ETN unshare  ") \
+-	EM(rxrpc_skb_eaten_by_unshare_nomem,	"ETN unshar-nm") \
++	EM(rxrpc_skb_get_call_rx,		"GET call-rx  ") \
+ 	EM(rxrpc_skb_get_conn_secured,		"GET conn-secd") \
+ 	EM(rxrpc_skb_get_conn_work,		"GET conn-work") \
+ 	EM(rxrpc_skb_get_last_nack,		"GET last-nack") \
+@@ -153,6 +152,7 @@
+ 	EM(rxrpc_skb_see_recvmsg,		"SEE recvmsg  ") \
+ 	EM(rxrpc_skb_see_reject,		"SEE reject   ") \
+ 	EM(rxrpc_skb_see_rotate,		"SEE rotate   ") \
++	EM(rxrpc_skb_see_unshare_nomem,		"SEE unshar-nm") \
+ 	E_(rxrpc_skb_see_version,		"SEE version  ")
  
- struct admv1013_state {
-@@ -470,10 +470,23 @@ static int admv1013_init(struct admv1013
- 	if (ret)
- 		return ret;
+ #define rxrpc_local_traces \
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -1260,7 +1260,6 @@ int rxrpc_server_keyring(struct rxrpc_so
+ void rxrpc_kernel_data_consumed(struct rxrpc_call *, struct sk_buff *);
+ void rxrpc_new_skb(struct sk_buff *, enum rxrpc_skb_trace);
+ void rxrpc_see_skb(struct sk_buff *, enum rxrpc_skb_trace);
+-void rxrpc_eaten_skb(struct sk_buff *, enum rxrpc_skb_trace);
+ void rxrpc_get_skb(struct sk_buff *, enum rxrpc_skb_trace);
+ void rxrpc_free_skb(struct sk_buff *, enum rxrpc_skb_trace);
+ void rxrpc_purge_queue(struct sk_buff_head *);
+--- a/net/rxrpc/call_event.c
++++ b/net/rxrpc/call_event.c
+@@ -342,8 +342,28 @@ bool rxrpc_input_call_event(struct rxrpc
+ 	if (skb && skb->mark == RXRPC_SKB_MARK_ERROR)
+ 		goto out;
  
--	data = FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, st->quad_se_mode);
-+	switch (st->quad_se_mode) {
-+	case ADMV1013_SE_MODE_POS:
-+		data = 6;
-+		break;
-+	case ADMV1013_SE_MODE_NEG:
-+		data = 9;
-+		break;
-+	case ADMV1013_SE_MODE_DIFF:
-+		data = 12;
-+		break;
-+	default:
-+		return -EINVAL;
+-	if (skb)
+-		rxrpc_input_call_packet(call, skb);
++	if (skb) {
++		struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
++
++		if (sp->hdr.securityIndex != 0 &&
++		    skb_cloned(skb)) {
++			/* Unshare the packet so that it can be modified for
++			 * in-place decryption.
++			 */
++			struct sk_buff *nskb = skb_copy(skb, GFP_ATOMIC);
++
++			if (nskb) {
++				rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
++				rxrpc_input_call_packet(call, nskb);
++				rxrpc_free_skb(nskb, rxrpc_skb_put_input);
++			} else {
++				/* OOM - Drop the packet. */
++				rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
++			}
++		} else {
++			rxrpc_input_call_packet(call, skb);
++		}
 +	}
  
- 	ret = __admv1013_spi_update_bits(st, ADMV1013_REG_QUAD,
--					 ADMV1013_QUAD_SE_MODE_MSK, data);
-+					 ADMV1013_QUAD_SE_MODE_MSK,
-+					 FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, data));
- 	if (ret)
- 		return ret;
+ 	/* If we see our async-event poke, check for timeout trippage. */
+ 	now = ktime_get_real();
+--- a/net/rxrpc/io_thread.c
++++ b/net/rxrpc/io_thread.c
+@@ -178,13 +178,12 @@ static bool rxrpc_extract_abort(struct s
+ /*
+  * Process packets received on the local endpoint
+  */
+-static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff **_skb)
++static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff *skb)
+ {
+ 	struct rxrpc_connection *conn;
+ 	struct sockaddr_rxrpc peer_srx;
+ 	struct rxrpc_skb_priv *sp;
+ 	struct rxrpc_peer *peer = NULL;
+-	struct sk_buff *skb = *_skb;
+ 	bool ret = false;
  
-@@ -514,37 +527,33 @@ static void admv1013_powerdown(void *dat
- 	admv1013_spi_update_bits(data, ADMV1013_REG_ENABLE, enable_reg_msk, enable_reg);
+ 	skb_pull(skb, sizeof(struct udphdr));
+@@ -230,25 +229,6 @@ static bool rxrpc_input_packet(struct rx
+ 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_call);
+ 		if (sp->hdr.seq == 0)
+ 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_seq);
+-
+-		/* Unshare the packet so that it can be modified for in-place
+-		 * decryption.
+-		 */
+-		if (sp->hdr.securityIndex != 0) {
+-			skb = skb_unshare(skb, GFP_ATOMIC);
+-			if (!skb) {
+-				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare_nomem);
+-				*_skb = NULL;
+-				return just_discard;
+-			}
+-
+-			if (skb != *_skb) {
+-				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare);
+-				*_skb = skb;
+-				rxrpc_new_skb(skb, rxrpc_skb_new_unshared);
+-				sp = rxrpc_skb(skb);
+-			}
+-		}
+ 		break;
+ 
+ 	case RXRPC_PACKET_TYPE_CHALLENGE:
+@@ -490,7 +470,7 @@ int rxrpc_io_thread(void *data)
+ 			switch (skb->mark) {
+ 			case RXRPC_SKB_MARK_PACKET:
+ 				skb->priority = 0;
+-				if (!rxrpc_input_packet(local, &skb))
++				if (!rxrpc_input_packet(local, skb))
+ 					rxrpc_reject_packet(local, skb);
+ 				trace_rxrpc_rx_done(skb->mark, skb->priority);
+ 				rxrpc_free_skb(skb, rxrpc_skb_put_input);
+--- a/net/rxrpc/skbuff.c
++++ b/net/rxrpc/skbuff.c
+@@ -47,15 +47,6 @@ void rxrpc_get_skb(struct sk_buff *skb,
  }
  
-+static const char * const admv1013_input_modes[] = {
-+	[ADMV1013_IQ_MODE] = "iq",
-+	[ADMV1013_IF_MODE] = "if",
-+};
-+
-+static const char * const admv1013_quad_se_modes[] = {
-+	[ADMV1013_SE_MODE_POS] = "se-pos",
-+	[ADMV1013_SE_MODE_NEG] = "se-neg",
-+	[ADMV1013_SE_MODE_DIFF] = "diff",
-+};
-+
- static int admv1013_properties_parse(struct admv1013_state *st)
- {
- 	int ret;
--	const char *str;
- 	struct device *dev = &st->spi->dev;
- 
- 	st->det_en = device_property_read_bool(dev, "adi,detector-enable");
- 
--	ret = device_property_read_string(dev, "adi,input-mode", &str);
--	if (ret)
--		st->input_mode = ADMV1013_IQ_MODE;
+ /*
+- * Note the dropping of a ref on a socket buffer by the core.
+- */
+-void rxrpc_eaten_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
+-{
+-	int n = atomic_inc_return(&rxrpc_n_rx_skbs);
+-	trace_rxrpc_skb(skb, 0, n, why);
+-}
 -
--	if (!strcmp(str, "iq"))
--		st->input_mode = ADMV1013_IQ_MODE;
--	else if (!strcmp(str, "if"))
--		st->input_mode = ADMV1013_IF_MODE;
--	else
--		return -EINVAL;
--
--	ret = device_property_read_string(dev, "adi,quad-se-mode", &str);
--	if (ret)
--		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
--
--	if (!strcmp(str, "diff"))
--		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
--	else if (!strcmp(str, "se-pos"))
--		st->quad_se_mode = ADMV1013_SE_MODE_POS;
--	else if (!strcmp(str, "se-neg"))
--		st->quad_se_mode = ADMV1013_SE_MODE_NEG;
--	else
--		return -EINVAL;
-+	ret = device_property_match_property_string(dev, "adi,input-mode",
-+						    admv1013_input_modes,
-+						    ARRAY_SIZE(admv1013_input_modes));
-+	st->input_mode = ret >= 0 ? ret : ADMV1013_IQ_MODE;
-+
-+	ret = device_property_match_property_string(dev, "adi,quad-se-mode",
-+						    admv1013_quad_se_modes,
-+						    ARRAY_SIZE(admv1013_quad_se_modes));
-+	st->quad_se_mode = ret >= 0 ? ret : ADMV1013_SE_MODE_DIFF;
- 
- 	ret = devm_regulator_bulk_get_enable(dev,
- 					     ARRAY_SIZE(admv1013_vcc_regs),
+-/*
+  * Note the destruction of a socket buffer.
+  */
+ void rxrpc_free_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
 
 
