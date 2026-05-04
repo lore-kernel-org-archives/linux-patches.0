@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D2D3DE452;
-	Mon,  4 May 2026 13:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E12140DFD4;
+	Mon,  4 May 2026 13:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903126; cv=none; b=B++NOhFiZdhm9b3SaN2Z9D/fg7EjU0KcwhohJlxfDlvPLLV6nHx71hup8nuJzas9fGwNGGTk4Ounue5UE8emkC4C0We34W9g0H3PU59CIQONYXuQovFqCWg/zhClEL1FgMx+mxCpTkrd8L5h/lUv6LrTUc91K2bl8uXhvd7+L8w=
+	t=1777903128; cv=none; b=kHkjBGLfqiAeVSs75RYSbDDIOAh87bQfpbWo3icH8xXXAsGHJDxP+Z2Iw/opqwAbDLKtF/y5JIG/gJijrlwVNXYj7soP6EUPasZ2VI1UheZBMvBjnf9D6qcj5Tut5BtuV7nqLjzdr2zrI6E5Ue4N+b8r+UNLgCyF10bDG3/HkK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903126; c=relaxed/simple;
-	bh=0QIAOWdaaAHMICltR4wwDYzJUuaH9bNjwZ4pv8n7SfM=;
+	s=arc-20240116; t=1777903128; c=relaxed/simple;
+	bh=/aIx+AKRNcddoH2XHBMa0eSOXQTZTJhH3IM/OtaS3ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MOulQCq7Et30/W1oAJBifQfDwezlyjRr5zYZFor+4jl5i4YuUKeF7LrihhPrusNEtzUOrnMjFbeZ9C6qeJ6CgqNQFnuZcWDAmp/Ymi8OSveqLDxgDKODlwI8+Dcy3p0z/NRh5+G+ILzglwdSivU9HKh+GFy/uN5IznpFrJ3iBCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5epaBJZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1u2A45Ci3u+UQdVvY8FIDQN7k2kdhqE/DRtch5GzLgdR8UKujvkROjq/nYvMc/1ZTLaZrZ284iXeE/3CIfqrgjBbhiuaXrB11rn07xEDDaAUhhw9gINuuXNStqzi++eA6UQKRnYIAPEk14vh+7uSc+Sr8scZx8xYh1OM57fHso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlCINzyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5epaBJZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78335C2BCB8;
-	Mon,  4 May 2026 13:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlCINzyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C23DC2BCB8;
+	Mon,  4 May 2026 13:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903125;
-	bh=0QIAOWdaaAHMICltR4wwDYzJUuaH9bNjwZ4pv8n7SfM=;
+	s=korg; t=1777903128;
+	bh=/aIx+AKRNcddoH2XHBMa0eSOXQTZTJhH3IM/OtaS3ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V5epaBJZB6PXoGTrvTqxbrWsIlK8n8Y4uFu0FLgpWFMBDLAXP1NNDvL4PCE3SS/oz
-	 fvNiMl0hvVa0RAZ9K1gjULY/VKO8RzjLeRzqu7YtdlaFCoNO8ECYuIGVUW6UCDlp9L
-	 sAk6fNkWy6qlmrlESIxsX1h00Gy2Dpd2tR4l+DL8=
+	b=GlCINzyNePHVuSmeRSd/EXikthIHe+ElhzMyNi4jShre6VU97vqJnst+wkEyLR6Z/
+	 c6C1AnwM6jAklvCjn3FU7xnFrK/6DraYDheZxDx9WnBLteuO5lmr7SIRkdG0L8gHqZ
+	 0gw2tm3fPl1nBPmwz2PJ8M9U4A/rwc4WuWNyXrU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Azizcan=20Da=C5=9Ftan?= <azizcan.d@mileniumsec.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.0 114/307] io_uring/poll: ensure EPOLL_ONESHOT is propagated for EPOLL_URING_WAKE
-Date: Mon,  4 May 2026 15:49:59 +0200
-Message-ID: <20260504135147.094980654@linuxfoundation.org>
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>
+Subject: [PATCH 7.0 115/307] module.lds,codetag: force 0 sh_addr for sections
+Date: Mon,  4 May 2026 15:50:00 +0200
+Message-ID: <20260504135147.131925794@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -44,56 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Joe Lawrence <joe.lawrence@redhat.com>
 
-commit 1967f0b1cafdde37aa9e08e6021c14bcc484b7a5 upstream.
+commit 4afc71bba8b7d7841681e7647ae02f5079aaf28f upstream.
 
-Commit:
+Commit 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and
+related macros") added .text and made .data, .bss, and .rodata sections
+unconditional in the module linker script, but without an explicit
+address like the other sections in the same file.
 
-aacf2f9f382c ("io_uring: fix req->apoll_events")
+When linking modules with ld.bfd -r, sections defined without an address
+inherit the location counter, resulting in non-zero sh_addr values in
+the .ko.  Relocatable objects are expected to have sh_addr=0 for these
+sections and these non-zero addresses confuse elfutils and have been
+reported to cause segmentation faults in SystemTap [1].
 
-fixed an issue where poll->events and req->apoll_events weren't
-synchronized, but then when the commit referenced in Fixes got added,
-it didn't ensure the same thing.
+Add the 0 address specifier to all sections in module.lds, including the
+.codetag.* sections via MOD_SEPARATE_CODETAG_SECTIONS macro.
 
-If we mask in EPOLLONESHOT in the regular EPOLL_URING_WAKE path, then
-ensure it's done for both. Including a link to the original report
-below, even though it's mostly nonsense. But it includes a reproducer
-that does show that IORING_CQE_F_MORE is set in the previous CQE,
-while no more CQEs will be generated for this request. Just ignore
-anything that pretends this is security related in any way, it's just
-the typical AI nonsense.
-
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/io-uring/CAM0zi7yQzF3eKncgHo4iVM5yFLAjsiob_ucqyWKs=hyd_GqiMg@mail.gmail.com/
-Reported-by: Azizcan Daştan <azizcan.d@mileniumsec.com>
-Fixes: 4464853277d0 ("io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://sourceware.org/bugzilla/show_bug.cgi?id=33958
+Fixes: 1ba9f8979426 ("vmlinux.lds: Unify TEXT_MAIN, DATA_MAIN, and related macros")
+Signed-off-by: Joe Lawrence <joe.lawrence@redhat.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/asm-generic/codetag.lds.h |    2 +-
+ scripts/module.lds.S              |   12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -415,8 +415,10 @@ static int io_poll_wake(struct wait_queu
- 		 * disable multishot as there is a circular dependency between
- 		 * CQ posting and triggering the event.
- 		 */
--		if (mask & EPOLL_URING_WAKE)
-+		if (mask & EPOLL_URING_WAKE) {
- 			poll->events |= EPOLLONESHOT;
-+			req->apoll_events |= EPOLLONESHOT;
-+		}
+--- a/include/asm-generic/codetag.lds.h
++++ b/include/asm-generic/codetag.lds.h
+@@ -18,7 +18,7 @@
+ 	IF_MEM_ALLOC_PROFILING(SECTION_WITH_BOUNDARIES(alloc_tags))
  
- 		/* optional, saves extra locking for removal in tw handler */
- 		if (mask && poll->events & EPOLLONESHOT) {
+ #define MOD_SEPARATE_CODETAG_SECTION(_name)	\
+-	.codetag.##_name : {			\
++	.codetag.##_name 0 : {			\
+ 		SECTION_WITH_BOUNDARIES(_name)	\
+ 	}
+ 
+--- a/scripts/module.lds.S
++++ b/scripts/module.lds.S
+@@ -32,30 +32,30 @@ SECTIONS {
+ 	__jump_table		0 : ALIGN(8) { KEEP(*(__jump_table)) }
+ 	__ex_table		0 : ALIGN(4) { KEEP(*(__ex_table)) }
+ 
+-	__patchable_function_entries : { *(__patchable_function_entries) }
++	__patchable_function_entries 0 : { *(__patchable_function_entries) }
+ 
+ 	.init.klp_funcs		0 : ALIGN(8) { KEEP(*(.init.klp_funcs)) }
+ 	.init.klp_objects	0 : ALIGN(8) { KEEP(*(.init.klp_objects)) }
+ 
+ #ifdef CONFIG_ARCH_USES_CFI_TRAPS
+-	__kcfi_traps		: { KEEP(*(.kcfi_traps)) }
++	__kcfi_traps		0 : { KEEP(*(.kcfi_traps)) }
+ #endif
+ 
+-	.text : {
++	.text			0 : {
+ 		*(.text .text.[0-9a-zA-Z_]*)
+ 	}
+ 
+-	.bss : {
++	.bss			0 : {
+ 		*(.bss .bss.[0-9a-zA-Z_]*)
+ 		*(.bss..L*)
+ 	}
+ 
+-	.data : {
++	.data			0 : {
+ 		*(.data .data.[0-9a-zA-Z_]*)
+ 		*(.data..L*)
+ 	}
+ 
+-	.rodata : {
++	.rodata			0 : {
+ 		*(.rodata .rodata.[0-9a-zA-Z_]*)
+ 		*(.rodata..L*)
+ 	}
 
 
