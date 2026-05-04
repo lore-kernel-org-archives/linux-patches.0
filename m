@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6637521C173;
-	Mon,  4 May 2026 14:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFF83DEAC2;
+	Mon,  4 May 2026 14:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904208; cv=none; b=SSw6ofTXm3IQCEVUMzpscWfIFYei+/Ks0Ll3KlWjjj0KquwUGr5GP70S/3koOkWTD8WwKn7X4bpFXH/Gy8SPqM4ZKM8mUwTF+vhXjKcY8LWOKTTKr/TT0G0ON9ZyF4ESi5JfTFjG3VyPxR1q2cf0L0vjrqzA2u4qCb8UUQZCeN4=
+	t=1777904211; cv=none; b=r0xbBHIhjj3O9Nq0u1Swj3QGvx5d6LJ6Z1ryJugMLbw8k4oKky7WaaTc/KE5P5wacvSI0qO6C1cRytlxLcLMO2qa05rXw5YWhFlaC1svNOZxj33n2s2BJ2xt9usPXMiyW65j2C146AnH7jUvlyNj/vYmtQKPPlRzdK8qFCG5Uq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904208; c=relaxed/simple;
-	bh=BQjBHSAc6OtCIYALQM7uiQ0G32O8nf8NPf5gIAVqTaM=;
+	s=arc-20240116; t=1777904211; c=relaxed/simple;
+	bh=+axCjt+v8+7cYuLWS91bxb8Tt/D9jDSekkHzH03N1m4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BiPaKwuTvFOrommGPjcmJZ3iC6LI2gqfNydHyHFsMPOdZUNsv+5I7y8xzYV49+gtwCO73AQNH/elTHSjpMnKJ/0v8INqeuRN6k/vHAIAMSYZUNTwHF7wJxoKQxixzmFYiBL2FzkSAKzDI03fmRotaujILdj5BYHqz0WdWbOpMrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZUYUc9N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tGmIwvT8JejhXQj56VK6lyXMwlyfQsjSj3uMuVBPObtK9zN2Nu+A27O+Oj2Maruc+Xg51hc0KobyPdd4wJS6ld1I55q1CnKOiz+CCZXWUgzJcRmoGW6na9zDbjlR2vCM6w+SboRvGmxMxNyv8NElozkHOC5ni0IA46vFAooVJTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBtAEO+x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZUYUc9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F9CC2BCB8;
-	Mon,  4 May 2026 14:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBtAEO+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892F7C2BCB8;
+	Mon,  4 May 2026 14:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904208;
-	bh=BQjBHSAc6OtCIYALQM7uiQ0G32O8nf8NPf5gIAVqTaM=;
+	s=korg; t=1777904210;
+	bh=+axCjt+v8+7cYuLWS91bxb8Tt/D9jDSekkHzH03N1m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZUYUc9Nyi72YsvwIg8p5DPytWNvyxSEpK/bdhSZD60ihBOtSIxhRL9FS7RvfDzKO
-	 do1RFtXgN9iUraBgL8rQFSXtGL0yQCRnwaIo0fGgoOZF4/h12pqohTW9TWq07cmKK6
-	 GQRRNY98KfHDiCzs8ZdFL6G13Cw1AwDsFWs7XMeo=
+	b=fBtAEO+xYLAuwhIl3Rj6PoSxAqRP6B3SH6Q2Y6cBivxrOe3/+g0vZBdHpPcBzzZ/C
+	 IuI6lBCDje4pesqFlYtSCrdCenBbKlYhFrG0D9/tf9QvXKLihVzUUPMhoANa0LEFc0
+	 SR9HD+McXyQu9p0+VplIlWQRBaZ+uerTqz0sqbeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 224/275] crypto: hisilicon - Fix dma_unmap_single() direction
-Date: Mon,  4 May 2026 15:52:44 +0200
-Message-ID: <20260504135151.388987677@linuxfoundation.org>
+Subject: [PATCH 6.18 225/275] crypto: ccree - fix a memory leak in cc_mac_digest()
+Date: Mon,  4 May 2026 15:52:45 +0200
+Message-ID: <20260504135151.423612666@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,35 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit 1ee57ab93b75eb59f426aef37b5498a7ffc28278 upstream.
+commit 02c64052fad03699b9c6d1df2f9b444d17e4ac50 upstream.
 
-The direction used to map the buffer skreq->iv is DMA_TO_DEVICE but it is
-unmapped with direction DMA_BIDIRECTIONAL in the error path.
+Add cc_unmap_result() if cc_map_hash_request_final()
+fails to prevent potential memory leak.
 
-Change the unmap to match the mapping.
-
-Fixes: 915e4e8413da ("crypto: hisilicon - SEC security accelerator driver")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
+Fixes: 63893811b0fc ("crypto: ccree - add ahash support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/hisilicon/sec/sec_algs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccree/cc_hash.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/hisilicon/sec/sec_algs.c
-+++ b/drivers/crypto/hisilicon/sec/sec_algs.c
-@@ -844,7 +844,7 @@ err_free_elements:
- 	if (crypto_skcipher_ivsize(atfm))
- 		dma_unmap_single(info->dev, sec_req->dma_iv,
- 				 crypto_skcipher_ivsize(atfm),
--				 DMA_BIDIRECTIONAL);
-+				 DMA_TO_DEVICE);
- err_unmap_out_sg:
- 	if (split)
- 		sec_unmap_sg_on_err(skreq->dst, steps, splits_out,
+--- a/drivers/crypto/ccree/cc_hash.c
++++ b/drivers/crypto/ccree/cc_hash.c
+@@ -1448,6 +1448,7 @@ static int cc_mac_digest(struct ahash_re
+ 	if (cc_map_hash_request_final(ctx->drvdata, state, req->src,
+ 				      req->nbytes, 1, flags)) {
+ 		dev_err(dev, "map_ahash_request_final() failed\n");
++		cc_unmap_result(dev, state, digestsize, req->result);
+ 		cc_unmap_req(dev, state, ctx);
+ 		return -ENOMEM;
+ 	}
 
 
