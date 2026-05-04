@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1FD3A7F4C;
-	Mon,  4 May 2026 14:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF833A3822;
+	Mon,  4 May 2026 14:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903224; cv=none; b=em0amshBeIlKoZa5qvfouPugaypMvbbOlhEwd9ggUCIyXdgxwTFTUEWUW3U9l/VZd5XFsfO5jiAe8oV94Y61WYdF2vKZ/iXi/xaZJimSAwsIzUHX+/6OKjXU+fLq+CPNJZg/G2vagsPLN0mtPZc0bBkYABtFrjZMqV9uUFGOstg=
+	t=1777903226; cv=none; b=Dyqf4GXAj4Rh3sPfVcdRQhG0qk7wO9KjKIhCEkI5ijG5+OFlfNgJUJJyME4EQ15N2PSBnAr5qiCUMIhyjwaxN0Rn3p5UISMF7lwltm5DHroBcQf00ZFUvpDZe7AveXCGcpcUsdIx1SRWFRltTCsBaJ2JJVRvuU+PzZkVGifIrVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903224; c=relaxed/simple;
-	bh=B9P2JU63GE0/qmIJHe/IKrrY60a2GoFEtmEhugb/B8M=;
+	s=arc-20240116; t=1777903226; c=relaxed/simple;
+	bh=/nmwGLW+aYOKTymTXNMQdMUufWwlr/uY3eI/1fMEQPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KwV3VH+JXt2azFJ3jHnjHdmvBdZPWDleJ4UcXFEzrWj1QpLzPCShqNK+BiQwvYcqwpSheYwpU8cgnOwG5mSnA/T+UUCx7BvOWz/KXhoI/KxWhhNoYVR3QB5Q9Fi0tFrCqHbMccFAVizGZ74OG47Exeoys4+NOwcEQ2irCJwGPdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PYNy3eX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eiPz6ZElXhzRv8hxxX/QPuTGrDCJleblYXb5DIgbSH1Tsv/+cFqFt/hS+pp840/jojCNbH4hDSNcnyaxCRttyiRnXPTlb8wfPvFTiWLzyGEgLkeZkckfADo2ZkxWBW8GhWOyByMtNCP2Cqnyk5EhJ5s/3fDVM08oKrPO2JaPYEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCi5AVLH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PYNy3eX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48D4C2BCB8;
-	Mon,  4 May 2026 14:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCi5AVLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43300C2BCB8;
+	Mon,  4 May 2026 14:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903224;
-	bh=B9P2JU63GE0/qmIJHe/IKrrY60a2GoFEtmEhugb/B8M=;
+	s=korg; t=1777903226;
+	bh=/nmwGLW+aYOKTymTXNMQdMUufWwlr/uY3eI/1fMEQPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2PYNy3eXOIdKun9dvcJ0Cnk8iCcsoDOQw8CIj8KEdVOVYKqob2Q63++D2BBBUD6S6
-	 5IoH8nMaupunAD/GmfF7fp9IF3PQ99iu8ht2F6OmtPtkNInmAaCbiADn6ta+saSkUR
-	 hICRYCiNxnbgEV30+5tw8aM3Jg2GJVFy/0/WQg1k=
+	b=YCi5AVLHBcADRNWj4ewmPlzvsFBYRGWdBnH5ZhPSLkpWjZ0924MZs+2jsY7wzgEc7
+	 Ejf8w2+iHmi+pgKEHrRgZHJWW4r9sXHuJO9yKIziq3K2kwK/KRYvOFyzGxTA1qKP/E
+	 fsnZvU7z7xphOI3brFlfdrADQt2M1qscSNeJulIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <cyyzero16@gmail.com>,
-	Balbir Singh <bsingharora@gmail.com>,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Fan Yu <fan.yu9@zte.com.cn>,
-	Wang Yaxin <wang.yaxin@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 134/307] tools/accounting: handle truncated taskstats netlink messages
-Date: Mon,  4 May 2026 15:50:19 +0200
-Message-ID: <20260504135147.829167466@linuxfoundation.org>
+	hkbinbin <hkbinbinbin@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 7.0 152/307] RDMA/rxe: Validate pad and ICRC before payload_size() in rxe_rcv
+Date: Mon,  4 May 2026 15:50:37 +0200
+Message-ID: <20260504135148.507243675@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -54,181 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <cyyzero16@gmail.com>
+From: hkbinbin <hkbinbinbin@gmail.com>
 
-commit cc82b3dcc6a8fa259fbda12ab00d6fc00908a49e upstream.
+commit 7244491dab347f648e661da96dc0febadd9daec3 upstream.
 
-procacct and getdelays use a fixed receive buffer for taskstats generic
-netlink messages.  A multi-threaded process exit can emit a single
-PID+TGID notification large enough to exceed that buffer on newer kernels.
+rxe_rcv() currently checks only that the incoming packet is at least
+header_size(pkt) bytes long before payload_size() is used.
 
-Switch to recvmsg() so MSG_TRUNC is detected explicitly, increase the
-message buffer size, and report truncated datagrams clearly instead of
-misparsing them as fatal netlink errors.
+However, payload_size() subtracts both the attacker-controlled BTH pad
+field and RXE_ICRC_SIZE from pkt->paylen:
 
-Also print the taskstats version in debug output to make version
-mismatches easier to diagnose while inspecting taskstats traffic.
+  payload_size = pkt->paylen - offset[RXE_PAYLOAD] - bth_pad(pkt)
+                 - RXE_ICRC_SIZE
 
-Link: https://lkml.kernel.org/r/520308bb4cbbaf8dc2c7296b5f60f11e12fb30a5.1774810498.git.cyyzero16@gmail.com
-Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
-Cc: Balbir Singh <bsingharora@gmail.com>
-Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Cc: Fan Yu <fan.yu9@zte.com.cn>
-Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This means a short packet can still make payload_size() underflow even
+if it includes enough bytes for the fixed headers. Simply requiring
+header_size(pkt) + RXE_ICRC_SIZE is not sufficient either, because a
+packet with a forged non-zero BTH pad can still leave payload_size()
+negative and pass an underflowed value to later receive-path users.
+
+Fix this by validating pkt->paylen against the full minimum length
+required by payload_size(): header_size(pkt) + bth_pad(pkt) +
+RXE_ICRC_SIZE.
+
+Cc: stable@vger.kernel.org
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://patch.msgid.link/r/20260401121907.1468366-1-hkbinbinbin@gmail.com
+Signed-off-by: hkbinbin <hkbinbinbin@gmail.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/accounting/getdelays.c |   41 +++++++++++++++++++++++++++++++++++++----
- tools/accounting/procacct.c  |   40 ++++++++++++++++++++++++++++++++++++----
- 2 files changed, 73 insertions(+), 8 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_recv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/accounting/getdelays.c
-+++ b/tools/accounting/getdelays.c
-@@ -60,7 +60,7 @@ int print_task_context_switch_counts;
- 	}
+--- a/drivers/infiniband/sw/rxe/rxe_recv.c
++++ b/drivers/infiniband/sw/rxe/rxe_recv.c
+@@ -330,7 +330,8 @@ void rxe_rcv(struct sk_buff *skb)
+ 	pkt->qp = NULL;
+ 	pkt->mask |= rxe_opcode[pkt->opcode].mask;
  
- /* Maximum size of response requested or message sent */
--#define MAX_MSG_SIZE	1024
-+#define MAX_MSG_SIZE	2048
- /* Maximum number of cpus expected to be specified in a cpumask */
- #define MAX_CPUS	32
+-	if (unlikely(skb->len < header_size(pkt)))
++	if (unlikely(pkt->paylen < header_size(pkt) + bth_pad(pkt) +
++		       RXE_ICRC_SIZE))
+ 		goto drop;
  
-@@ -115,6 +115,32 @@ error:
- 	return -1;
- }
- 
-+static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
-+{
-+	struct sockaddr_nl nladdr;
-+	struct iovec iov = {
-+		.iov_base = msg,
-+		.iov_len = sizeof(*msg),
-+	};
-+	struct msghdr hdr = {
-+		.msg_name = &nladdr,
-+		.msg_namelen = sizeof(nladdr),
-+		.msg_iov = &iov,
-+		.msg_iovlen = 1,
-+	};
-+	int ret;
-+
-+	ret = recvmsg(sd, &hdr, 0);
-+	if (ret < 0)
-+		return -1;
-+	if (hdr.msg_flags & MSG_TRUNC) {
-+		errno = EMSGSIZE;
-+		return -1;
-+	}
-+
-+	return ret;
-+}
-+
- 
- static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
- 	     __u8 genl_cmd, __u16 nla_type,
-@@ -633,12 +659,16 @@ int main(int argc, char *argv[])
- 	}
- 
- 	do {
--		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
-+		rep_len = recv_taskstats_msg(nl_sd, &msg);
- 		PRINTF("received %d bytes\n", rep_len);
- 
- 		if (rep_len < 0) {
--			fprintf(stderr, "nonfatal reply error: errno %d\n",
--				errno);
-+			if (errno == EMSGSIZE)
-+				fprintf(stderr,
-+					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
-+			else
-+				fprintf(stderr, "nonfatal reply error: errno %d\n",
-+					errno);
- 			continue;
- 		}
- 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
-@@ -680,6 +710,9 @@ int main(int argc, char *argv[])
- 							printf("TGID\t%d\n", rtid);
- 						break;
- 					case TASKSTATS_TYPE_STATS:
-+						PRINTF("version %u\n",
-+						       ((struct taskstats *)
-+							NLA_DATA(na))->version);
- 						if (print_delays)
- 							print_delayacct((struct taskstats *) NLA_DATA(na));
- 						if (print_io_accounting)
---- a/tools/accounting/procacct.c
-+++ b/tools/accounting/procacct.c
-@@ -71,7 +71,7 @@ int print_task_context_switch_counts;
- 	}
- 
- /* Maximum size of response requested or message sent */
--#define MAX_MSG_SIZE	1024
-+#define MAX_MSG_SIZE	2048
- /* Maximum number of cpus expected to be specified in a cpumask */
- #define MAX_CPUS	32
- 
-@@ -121,6 +121,32 @@ error:
- 	return -1;
- }
- 
-+static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
-+{
-+	struct sockaddr_nl nladdr;
-+	struct iovec iov = {
-+		.iov_base = msg,
-+		.iov_len = sizeof(*msg),
-+	};
-+	struct msghdr hdr = {
-+		.msg_name = &nladdr,
-+		.msg_namelen = sizeof(nladdr),
-+		.msg_iov = &iov,
-+		.msg_iovlen = 1,
-+	};
-+	int ret;
-+
-+	ret = recvmsg(sd, &hdr, 0);
-+	if (ret < 0)
-+		return -1;
-+	if (hdr.msg_flags & MSG_TRUNC) {
-+		errno = EMSGSIZE;
-+		return -1;
-+	}
-+
-+	return ret;
-+}
-+
- 
- static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
- 	     __u8 genl_cmd, __u16 nla_type,
-@@ -239,6 +265,8 @@ void handle_aggr(int mother, struct nlat
- 			PRINTF("TGID\t%d\n", rtid);
- 			break;
- 		case TASKSTATS_TYPE_STATS:
-+			PRINTF("version %u\n",
-+			       ((struct taskstats *)NLA_DATA(na))->version);
- 			if (mother == TASKSTATS_TYPE_AGGR_PID)
- 				print_procacct((struct taskstats *) NLA_DATA(na));
- 			if (fd) {
-@@ -347,12 +375,16 @@ int main(int argc, char *argv[])
- 	}
- 
- 	do {
--		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
-+		rep_len = recv_taskstats_msg(nl_sd, &msg);
- 		PRINTF("received %d bytes\n", rep_len);
- 
- 		if (rep_len < 0) {
--			fprintf(stderr, "nonfatal reply error: errno %d\n",
--				errno);
-+			if (errno == EMSGSIZE)
-+				fprintf(stderr,
-+					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
-+			else
-+				fprintf(stderr, "nonfatal reply error: errno %d\n",
-+					errno);
- 			continue;
- 		}
- 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
+ 	err = hdr_check(pkt);
 
 
