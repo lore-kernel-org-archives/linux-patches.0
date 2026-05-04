@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8871835A3AD;
-	Mon,  4 May 2026 14:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C3C377575;
+	Mon,  4 May 2026 14:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903946; cv=none; b=OCDCwkPVXESXZF+NmtEjfBilRrou93ITmyPbDk0xAxoggnWc0/IeqwNxNvmxLCpGouH9QA6sNSeecdvwtTsNnanivZ0+XmeJH8FvAUQOC+b8P3fuDDQN5Er7Cuiq7O8uamLbMVd0utcrlseXj+4r15UtysIwi+mnIQcNphhFZM4=
+	t=1777903949; cv=none; b=akfpYikMpJ/8Z2scrTsVlfGuDulXmiSEhPS8o7+8eIQLPHQqrUY+P1zWw3jfuIVrZvo9wRL8WMUfrGl0YjJdjjhMpZlj1rVktKCxr3TPxldR7WPMC03ko4AySRZu3iNa/2YbojA6OpOX1ew9YLq8pJ7kfgDQJp19GyiKf6YZm3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903946; c=relaxed/simple;
-	bh=cKX2L8F+mIfiyudZraUxUZotM2dBySIVJWNjhL05Ccw=;
+	s=arc-20240116; t=1777903949; c=relaxed/simple;
+	bh=Lj/fjxtRK6cj857ImKYWmNUpCDKTChRVgdFDJ/KCKzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bgeq8oorkWDpYLremOJiKsWVO1V4NprYXj3wh6bSyYei64khHTiQRxD4ZUgnqzBvkhTU0kbTAlez1OITFoDRKGd2KvngY7Lrumi9L8x6AllL/IgTt6gHpDAhWenR0AAHd2y13Wy3IaaGPTDIdnQCpw75bes0qb8yKGr1/K5Og+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xF3T0sn7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M1RIStFN09FxgWrKqW9Dpu6U/P9z58cKwUeMCwqNpBSDkxuAwq5PyUAmZz2QVNNcYaaEZ9Y3HSLuQSaBUSuW9vzh6t0nCnqQ6L+YZYOvOb3bglbbH++iIJ0JbSxh6Ks5cYXtf52lhx0Fvep4F3Lp7AJVG04HISRC1TBfDXLDwkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6JWLg3O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xF3T0sn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0B0C2BCB8;
-	Mon,  4 May 2026 14:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6JWLg3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601EFC2BCB8;
+	Mon,  4 May 2026 14:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903946;
-	bh=cKX2L8F+mIfiyudZraUxUZotM2dBySIVJWNjhL05Ccw=;
+	s=korg; t=1777903948;
+	bh=Lj/fjxtRK6cj857ImKYWmNUpCDKTChRVgdFDJ/KCKzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xF3T0sn7NJoTtzANnOieQS6Jl7SrlClabAgXjvQfTVDTOn2zfIVYKkw13f9iirk3V
-	 B1bp6jkvPnI92103IIVbw4QP8lt7pJkM4mBa2VrVijVH+6GCTTs5rdAhvpgpA/+eOn
-	 +VesjY0jz8gOZdidByljCpanrMJCoq3XftU16yf0=
+	b=U6JWLg3OxWCElYcwFuuBXebpKARSTJTGUNubXeu1dnFSSqUC+TweYh23oaTqRtkFS
+	 tLdKzBmN1b02SQWiKtv8EtvBvZqLdKW24NXDb5egMvmHAAFuoJ5W6vrDQT+GeahzEV
+	 k1mKYhpG/YSEwilN8GAa9LBAZLy6Ss1K29xG6FTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.18 091/275] selftests/landlock: Skip stale records in audit_match_record()
-Date: Mon,  4 May 2026 15:50:31 +0200
-Message-ID: <20260504135146.300174380@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 092/275] rbd: fix null-ptr-deref when device_add_disk() fails
+Date: Mon,  4 May 2026 15:50:32 +0200
+Message-ID: <20260504135146.335904235@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -44,258 +45,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 07c2572a87573b2a2f0fd6b9f538cd1aeef2eee7 upstream.
+commit d1fef92e414433ca7b89abf85cb0df42b8d475eb upstream.
 
-Domain deallocation records are emitted asynchronously from kworker
-threads (via free_ruleset_work()).  Stale deallocation records from a
-previous test can arrive during the current test's deallocation read
-loop and be picked up by audit_match_record() instead of the expected
-record, causing a domain ID mismatch.  The audit.layers test (which
-creates 16 nested domains) is particularly vulnerable because it reads
-16 deallocation records in sequence, providing a large window for stale
-records to interleave.
+do_rbd_add() publishes the device with device_add() before calling
+device_add_disk(). If device_add_disk() fails after device_add()
+succeeds, the error path calls rbd_free_disk() directly and then later
+falls through to rbd_dev_device_release(), which calls rbd_free_disk()
+again. This double teardown can leave blk-mq cleanup operating on
+invalid state and trigger a null-ptr-deref in
+__blk_mq_free_map_and_rqs(), reached from blk_mq_free_tag_set().
 
-The same issue affects audit_flags.signal, where deallocation records
-from a previous test (audit.layers) can leak into the next test and be
-picked up by audit_match_record() instead of the expected record.
+Fix this by following the normal remove ordering: call device_del()
+before rbd_dev_device_release() when device_add_disk() fails after
+device_add(). That keeps the teardown sequence consistent and avoids
+re-entering disk cleanup through the wrong path.
 
-Fix this by continuing to read records when the type matches but the
-content pattern does not.  Stale records are silently consumed, and the
-loop only stops when both type and pattern match (or the socket times
-out with -EAGAIN).
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available.
 
-Additionally, extend matches_log_domain_deallocated() with an
-expected_domain_id parameter.  When set, the regex pattern includes the
-specific domain ID as a literal hex value, so that deallocation records
-for a different domain do not match the pattern at all.  This handles
-the case where the stale record has the same denial count as the
-expected one (e.g. both have denials=1), which the type+pattern loop
-alone cannot distinguish.  Callers that already know the expected domain
-ID (from a prior denial or allocation record) now pass it to filter
-precisely.
+We reproduced the bug on v7.0 with a real Ceph backend and a QEMU x86_64
+guest booted with KASAN and CONFIG_FAILSLAB enabled. The reproducer
+confines failslab injections to the __add_disk() range and injects
+fail-nth while mapping an RBD image through
+/sys/bus/rbd/add_single_major.
 
-When expected_domain_id is set, matches_log_domain_deallocated() also
-temporarily increases the socket timeout to audit_tv_dom_drop (1 second)
-to wait for the asynchronous kworker deallocation, and restores
-audit_tv_default afterward.  This removes the need for callers to manage
-the timeout switch manually.
+On the unpatched kernel, fail-nth=4 reliably triggered the fault:
 
-Cc: Günther Noack <gnoack@google.com>
+	Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+	KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+	CPU: 0 UID: 0 PID: 273 Comm: bash Not tainted 7.0.0-01247-gd60bc1401583 #6 PREEMPT(lazy)
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+	RIP: 0010:__blk_mq_free_map_and_rqs+0x8c/0x240
+	Code: 00 00 48 8b 6b 60 41 89 f4 49 c1 e4 03 4c 01 e5 45 85 ed 0f 85 0a 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 e9 48 c1 e9 03 <80> 3c 01 00 0f 85 31 01 00 00 4c 8b 6d 00 4d 85 ed 0f 84 e2 00 00
+	RSP: 0018:ff1100000ab0fac8 EFLAGS: 00000246
+	RAX: dffffc0000000000 RBX: ff1100000c4806a0 RCX: 0000000000000000
+	RDX: 0000000000000002 RSI: 0000000000000000 RDI: ff1100000c4806f4
+	RBP: 0000000000000000 R08: 0000000000000001 R09: ffe21c000189001b
+	R10: ff1100000c4800df R11: ff1100006cf37be0 R12: 0000000000000000
+	R13: 0000000000000000 R14: ff1100000c480700 R15: ff1100000c480004
+	FS:  00007f0fbe8fe740(0000) GS:ff110000e5851000(0000) knlGS:0000000000000000
+	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+	CR2: 00007fe53473b2e0 CR3: 0000000012eef000 CR4: 00000000007516f0
+	PKRU: 55555554
+	Call Trace:
+	 <TASK>
+	 blk_mq_free_tag_set+0x77/0x460
+	 do_rbd_add+0x1446/0x2b80
+	 ? __pfx_do_rbd_add+0x10/0x10
+	 ? lock_acquire+0x18c/0x300
+	 ? find_held_lock+0x2b/0x80
+	 ? sysfs_file_kobj+0xb6/0x1b0
+	 ? __pfx_sysfs_kf_write+0x10/0x10
+	 kernfs_fop_write_iter+0x2f4/0x4a0
+	 vfs_write+0x98e/0x1000
+	 ? expand_files+0x51f/0x850
+	 ? __pfx_vfs_write+0x10/0x10
+	 ksys_write+0xf2/0x1d0
+	 ? __pfx_ksys_write+0x10/0x10
+	 do_syscall_64+0x115/0x690
+	 entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	RIP: 0033:0x7f0fbea15907
+	Code: 10 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
+	RSP: 002b:00007ffe22346ea8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+	RAX: ffffffffffffffda RBX: 0000000000000058 RCX: 00007f0fbea15907
+	RDX: 0000000000000058 RSI: 0000563ace6c0ef0 RDI: 0000000000000001
+	RBP: 0000563ace6c0ef0 R08: 0000563ace6c0ef0 R09: 6b6435726d694141
+	R10: 5250337279762f78 R11: 0000000000000246 R12: 0000000000000058
+	R13: 00007f0fbeb1c780 R14: ff1100000c480700 R15: ff1100000c480004
+	 </TASK>
+
+With this fix applied, rerunning the reproducer over fail-nth=1..256
+yields no KASAN reports.
+
+[ idryomov: rename err_out_device_del -> err_out_device ]
+
 Cc: stable@vger.kernel.org
-Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
-Link: https://lore.kernel.org/r/20260402192608.1458252-5-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Fixes: 27c97abc30e2 ("rbd: add add_disk() error handling")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/landlock/audit.h      |   84 +++++++++++++++++++-------
- tools/testing/selftests/landlock/audit_test.c |   34 ++++------
- 2 files changed, 78 insertions(+), 40 deletions(-)
+ drivers/block/rbd.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/landlock/audit.h
-+++ b/tools/testing/selftests/landlock/audit.h
-@@ -249,9 +249,9 @@ static __maybe_unused char *regex_escape
- static int audit_match_record(int audit_fd, const __u16 type,
- 			      const char *const pattern, __u64 *domain_id)
- {
--	struct audit_message msg;
-+	struct audit_message msg, last_mismatch = {};
- 	int ret, err = 0;
--	bool matches_record = !type;
-+	int num_type_match = 0;
- 	regmatch_t matches[2];
- 	regex_t regex;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -7165,7 +7165,7 @@ static ssize_t do_rbd_add(const char *bu
  
-@@ -259,21 +259,35 @@ static int audit_match_record(int audit_
- 	if (ret)
- 		return -EINVAL;
+ 	rc = device_add_disk(&rbd_dev->dev, rbd_dev->disk, NULL);
+ 	if (rc)
+-		goto err_out_cleanup_disk;
++		goto err_out_device;
  
--	do {
-+	/*
-+	 * Reads records until one matches both the expected type and the
-+	 * pattern.  Type-matching records with non-matching content are
-+	 * silently consumed, which handles stale domain deallocation records
-+	 * from a previous test emitted asynchronously by kworker threads.
-+	 */
-+	while (true) {
- 		memset(&msg, 0, sizeof(msg));
- 		err = audit_recv(audit_fd, &msg);
--		if (err)
-+		if (err) {
-+			if (num_type_match) {
-+				printf("DATA: %s\n", last_mismatch.data);
-+				printf("ERROR: %d record(s) matched type %u"
-+				       " but not pattern: %s\n",
-+				       num_type_match, type, pattern);
-+			}
- 			goto out;
-+		}
-+
-+		if (type && msg.header.nlmsg_type != type)
-+			continue;
+ 	spin_lock(&rbd_dev_list_lock);
+ 	list_add_tail(&rbd_dev->node, &rbd_dev_list);
+@@ -7179,8 +7179,8 @@ out:
+ 	module_put(THIS_MODULE);
+ 	return rc;
  
--		if (msg.header.nlmsg_type == type)
--			matches_record = true;
--	} while (!matches_record);
--
--	ret = regexec(&regex, msg.data, ARRAY_SIZE(matches), matches, 0);
--	if (ret) {
--		printf("DATA: %s\n", msg.data);
--		printf("ERROR: no match for pattern: %s\n", pattern);
--		err = -ENOENT;
-+		ret = regexec(&regex, msg.data, ARRAY_SIZE(matches), matches,
-+			      0);
-+		if (!ret)
-+			break;
-+
-+		num_type_match++;
-+		last_mismatch = msg;
- 	}
- 
- 	if (domain_id) {
-@@ -316,21 +330,49 @@ static int __maybe_unused matches_log_do
- 				  domain_id);
- }
- 
--static int __maybe_unused matches_log_domain_deallocated(
--	int audit_fd, unsigned int num_denials, __u64 *domain_id)
-+/*
-+ * Matches a domain deallocation record.  When expected_domain_id is non-zero,
-+ * the pattern includes the specific domain ID so that stale deallocation
-+ * records from a previous test (with a different domain ID) are skipped by
-+ * audit_match_record(), and the socket timeout is temporarily increased to
-+ * audit_tv_dom_drop to wait for the asynchronous kworker deallocation.
-+ */
-+static int __maybe_unused
-+matches_log_domain_deallocated(int audit_fd, unsigned int num_denials,
-+			       __u64 expected_domain_id, __u64 *domain_id)
- {
- 	static const char log_template[] = REGEX_LANDLOCK_PREFIX
- 		" status=deallocated denials=%u$";
--	char log_match[sizeof(log_template) + 10];
--	int log_match_len;
-+	static const char log_template_with_id[] =
-+		"^audit([0-9.:]\\+): domain=\\(%llx\\)"
-+		" status=deallocated denials=%u$";
-+	char log_match[sizeof(log_template_with_id) + 32];
-+	int log_match_len, err;
-+
-+	if (expected_domain_id)
-+		log_match_len = snprintf(log_match, sizeof(log_match),
-+					 log_template_with_id,
-+					 (unsigned long long)expected_domain_id,
-+					 num_denials);
-+	else
-+		log_match_len = snprintf(log_match, sizeof(log_match),
-+					 log_template, num_denials);
- 
--	log_match_len = snprintf(log_match, sizeof(log_match), log_template,
--				 num_denials);
- 	if (log_match_len >= sizeof(log_match))
- 		return -E2BIG;
- 
--	return audit_match_record(audit_fd, AUDIT_LANDLOCK_DOMAIN, log_match,
--				  domain_id);
-+	if (expected_domain_id)
-+		setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO,
-+			   &audit_tv_dom_drop, sizeof(audit_tv_dom_drop));
-+
-+	err = audit_match_record(audit_fd, AUDIT_LANDLOCK_DOMAIN, log_match,
-+				 domain_id);
-+
-+	if (expected_domain_id)
-+		setsockopt(audit_fd, SOL_SOCKET, SO_RCVTIMEO, &audit_tv_default,
-+			   sizeof(audit_tv_default));
-+
-+	return err;
- }
- 
- struct audit_records {
---- a/tools/testing/selftests/landlock/audit_test.c
-+++ b/tools/testing/selftests/landlock/audit_test.c
-@@ -139,23 +139,24 @@ TEST_F(audit, layers)
- 	    WEXITSTATUS(status) != EXIT_SUCCESS)
- 		_metadata->exit_code = KSFT_FAIL;
- 
--	/* Purges log from deallocated domains. */
--	EXPECT_EQ(0, setsockopt(self->audit_fd, SOL_SOCKET, SO_RCVTIMEO,
--				&audit_tv_dom_drop, sizeof(audit_tv_dom_drop)));
-+	/*
-+	 * Purges log from deallocated domains.  Records arrive in LIFO order
-+	 * (innermost domain first) because landlock_put_hierarchy() walks the
-+	 * chain sequentially in a single kworker context.
-+	 */
- 	for (i = ARRAY_SIZE(*domain_stack) - 1; i >= 0; i--) {
- 		__u64 deallocated_dom = 2;
- 
- 		EXPECT_EQ(0, matches_log_domain_deallocated(self->audit_fd, 1,
-+							    (*domain_stack)[i],
- 							    &deallocated_dom));
- 		EXPECT_EQ((*domain_stack)[i], deallocated_dom)
- 		{
- 			TH_LOG("Failed to match domain %llx (#%d)",
--			       (*domain_stack)[i], i);
-+			       (unsigned long long)(*domain_stack)[i], i);
- 		}
- 	}
- 	EXPECT_EQ(0, munmap(domain_stack, sizeof(*domain_stack)));
--	EXPECT_EQ(0, setsockopt(self->audit_fd, SOL_SOCKET, SO_RCVTIMEO,
--				&audit_tv_default, sizeof(audit_tv_default)));
- 	EXPECT_EQ(0, close(ruleset_fd));
- }
- 
-@@ -270,13 +271,9 @@ TEST_F(audit, thread)
- 	EXPECT_EQ(0, close(pipe_parent[1]));
- 	ASSERT_EQ(0, pthread_join(thread, NULL));
- 
--	EXPECT_EQ(0, setsockopt(self->audit_fd, SOL_SOCKET, SO_RCVTIMEO,
--				&audit_tv_dom_drop, sizeof(audit_tv_dom_drop)));
--	EXPECT_EQ(0, matches_log_domain_deallocated(self->audit_fd, 1,
--						    &deallocated_dom));
-+	EXPECT_EQ(0, matches_log_domain_deallocated(
-+			     self->audit_fd, 1, denial_dom, &deallocated_dom));
- 	EXPECT_EQ(denial_dom, deallocated_dom);
--	EXPECT_EQ(0, setsockopt(self->audit_fd, SOL_SOCKET, SO_RCVTIMEO,
--				&audit_tv_default, sizeof(audit_tv_default)));
- }
- 
- /*
-@@ -520,22 +517,21 @@ TEST_F(audit_flags, signal)
- 
- 	if (variant->restrict_flags &
- 	    LANDLOCK_RESTRICT_SELF_LOG_SAME_EXEC_OFF) {
-+		/*
-+		 * No deallocation record: denials=0 never matches a real
-+		 * record.
-+		 */
- 		EXPECT_EQ(-EAGAIN,
--			  matches_log_domain_deallocated(self->audit_fd, 0,
-+			  matches_log_domain_deallocated(self->audit_fd, 0, 0,
- 							 &deallocated_dom));
- 		EXPECT_EQ(deallocated_dom, 2);
- 	} else {
--		EXPECT_EQ(0, setsockopt(self->audit_fd, SOL_SOCKET, SO_RCVTIMEO,
--					&audit_tv_dom_drop,
--					sizeof(audit_tv_dom_drop)));
- 		EXPECT_EQ(0, matches_log_domain_deallocated(self->audit_fd, 2,
-+							    *self->domain_id,
- 							    &deallocated_dom));
- 		EXPECT_NE(deallocated_dom, 2);
- 		EXPECT_NE(deallocated_dom, 0);
- 		EXPECT_EQ(deallocated_dom, *self->domain_id);
--		EXPECT_EQ(0, setsockopt(self->audit_fd, SOL_SOCKET, SO_RCVTIMEO,
--					&audit_tv_default,
--					sizeof(audit_tv_default)));
- 	}
- }
- 
+-err_out_cleanup_disk:
+-	rbd_free_disk(rbd_dev);
++err_out_device:
++	device_del(&rbd_dev->dev);
+ err_out_image_lock:
+ 	rbd_dev_image_unlock(rbd_dev);
+ 	rbd_dev_device_release(rbd_dev);
 
 
