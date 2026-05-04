@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C813DE434;
-	Mon,  4 May 2026 13:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6E63DE42D;
+	Mon,  4 May 2026 13:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903118; cv=none; b=e4GOZTqJC6Kdj/pO14bYSv/niyHUN39NltVll+r5C1RQ7PeLXaW/Bg3QxBT4Nu7lZlmdHPxeROquRqkWP9WRN+41ShGjfsk6UleQWE1RxQTcDcbpMXpU1QdLQKctFf/1t7TVoFde7SFBcxboJ+w845EO/uYM+TqModEkUy4jdxo=
+	t=1777903120; cv=none; b=RTKURLdcsxNwMGeGRQT2orAFok5JJWyeqhk5wOj8AlJNgmRubL15uaB6mX/6M3MAhrzqVxmysdbsZxp2Wv/E0B1F0DPlqRrsjN5oIjtfKDMjZzte+FHxuxO1vVxUMcLkOIu4btZWw3+m5juCCtdCx40MXTYgVJ8MDHDAlIQx8l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903118; c=relaxed/simple;
-	bh=66fFBONY5TMSHyROEx7ceP9Kv8suWXiuY2rDRjaN4Dw=;
+	s=arc-20240116; t=1777903120; c=relaxed/simple;
+	bh=SQs2lhRKbdZPXH3oniMSNDkbnQR6p8DrF8hhhthxglE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e1Vb0Gc3oA3H8YpjmdC0Icq6MTHxnsLvHHyUP9AH3QzmBeYGnELdCn03Zs7b6pph/yi20ujpeK8JWkESA6TcWPpOAcATS5dDrUr2R34fQIWBMYbf1KY74aC0qvxQgE4icIEy8U3PEdbx/OqTe8L7QKK4e1lfSlKsOO6IVM1EZEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07KEmcU/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jM8y1+5GzjQ64PEBaJFbNjgJOqiZuvocdSINUcnIrLcAF1HKZPJBIRQvbXmtKyZS/aRfkOiNiVCibbGQEYcqnTGSNYFCwJN19cZbjlQR8mKlxM3z+CptY2UWgW31Zwt1XF1+/XBy3XQ+8Nokhv4dMPFJyB65Ax+OqKnEYPhLoLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTecSZ5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07KEmcU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBD6C2BCB8;
-	Mon,  4 May 2026 13:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTecSZ5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56624C2BCB8;
+	Mon,  4 May 2026 13:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903118;
-	bh=66fFBONY5TMSHyROEx7ceP9Kv8suWXiuY2rDRjaN4Dw=;
+	s=korg; t=1777903120;
+	bh=SQs2lhRKbdZPXH3oniMSNDkbnQR6p8DrF8hhhthxglE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07KEmcU/FkO0pylS/m5CizauOirA38mw6AAfnSu8Lu0VZixwZqPJgoO477pPTa5/3
-	 eF9iKEq2hQK3LKiLWY/k3ZEBc/wJSegisYbuwwhfSgtSJRygH2LvyyozyK7v3FywXX
-	 Bg7UsjooHzBXbm8VhVbwNen5CW58u8xNZeALP/eg=
+	b=TTecSZ5iuoxwHBCsqRKGkcma1JZCFEMbB1RYmRN7sKHeIvboOwwPSRvHPLzarP5al
+	 5L6jVyUfO5EUaFtYzG5Obb2EMsQFOYtnh+DytRfFGCzfj7T3ZZUg+DONcwV6m7nlav
+	 WYzZunBQCYswN4UPZ2gvA7EvbsKYdctcTlCyuPeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.0 111/307] io_uring/register: fix ring resizing with mixed/large SQEs/CQEs
-Date: Mon,  4 May 2026 15:49:56 +0200
-Message-ID: <20260504135146.985015780@linuxfoundation.org>
+Subject: [PATCH 7.0 112/307] io_uring/zcrx: fix user_struct uaf
+Date: Mon,  4 May 2026 15:49:57 +0200
+Message-ID: <20260504135147.020984134@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,77 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 45cd95763e198d74d369ede43aef0b1955b8dea4 upstream.
+commit 0fcccfd87152f957fa8312b841f6efef42a05a20 upstream.
 
-The ring resizing only properly handles "normal" sized SQEs or CQEs, if
-there are pending entries around a resize. This normally should not be
-the case, but the code is supposed to handle this regardless.
+io_free_rbuf_ring() usees a struct user_struct, which
+io_zcrx_ifq_free() puts it down before destroying the ring.
 
-For the mixed SQE/CQE cases, the current copying works fine as they
-are indexed in the same way. Each half is just copied separately. But
-for fixed large SQEs and CQEs, the iteration and copy need to take that
-into account.
-
-Cc: stable@kernel.org
-Fixes: 79cfe9e59c2a ("io_uring/register: add IORING_REGISTER_RESIZE_RINGS")
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 5c686456a4e83 ("io_uring/zcrx: add user_struct and mm_struct to io_zcrx_ifq")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://patch.msgid.link/e560ae00960d27a810522a7efc0e201c82dff351.1776760917.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/register.c |   32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ io_uring/zcrx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/register.c
-+++ b/io_uring/register.c
-@@ -599,10 +599,20 @@ static int io_register_resize_rings(stru
- 	if (tail - old_head > p->sq_entries)
- 		goto overflow;
- 	for (i = old_head; i < tail; i++) {
--		unsigned src_head = i & (ctx->sq_entries - 1);
--		unsigned dst_head = i & (p->sq_entries - 1);
-+		unsigned index, dst_mask, src_mask;
-+		size_t sq_size;
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -565,13 +565,13 @@ static void io_zcrx_ifq_free(struct io_z
  
--		n.sq_sqes[dst_head] = o.sq_sqes[src_head];
-+		index = i;
-+		sq_size = sizeof(struct io_uring_sqe);
-+		src_mask = ctx->sq_entries - 1;
-+		dst_mask = p->sq_entries - 1;
-+		if (ctx->flags & IORING_SETUP_SQE128) {
-+			index <<= 1;
-+			sq_size <<= 1;
-+			src_mask = (ctx->sq_entries << 1) - 1;
-+			dst_mask = (p->sq_entries << 1) - 1;
-+		}
-+		memcpy(&n.sq_sqes[index & dst_mask], &o.sq_sqes[index & src_mask], sq_size);
- 	}
- 	WRITE_ONCE(n.rings->sq.head, old_head);
- 	WRITE_ONCE(n.rings->sq.tail, tail);
-@@ -619,10 +629,20 @@ overflow:
- 		goto out;
- 	}
- 	for (i = old_head; i < tail; i++) {
--		unsigned src_head = i & (ctx->cq_entries - 1);
--		unsigned dst_head = i & (p->cq_entries - 1);
-+		unsigned index, dst_mask, src_mask;
-+		size_t cq_size;
+ 	if (ifq->area)
+ 		io_zcrx_free_area(ifq, ifq->area);
+-	free_uid(ifq->user);
+ 	if (ifq->mm_account)
+ 		mmdrop(ifq->mm_account);
+ 	if (ifq->dev)
+ 		put_device(ifq->dev);
  
--		n.rings->cqes[dst_head] = o.rings->cqes[src_head];
-+		index = i;
-+		cq_size = sizeof(struct io_uring_cqe);
-+		src_mask = ctx->cq_entries - 1;
-+		dst_mask = p->cq_entries - 1;
-+		if (ctx->flags & IORING_SETUP_CQE32) {
-+			index <<= 1;
-+			cq_size <<= 1;
-+			src_mask = (ctx->cq_entries << 1) - 1;
-+			dst_mask = (p->cq_entries << 1) - 1;
-+		}
-+		memcpy(&n.rings->cqes[index & dst_mask], &o.rings->cqes[index & src_mask], cq_size);
- 	}
- 	WRITE_ONCE(n.rings->cq.head, old_head);
- 	WRITE_ONCE(n.rings->cq.tail, tail);
+ 	io_free_rbuf_ring(ifq);
++	free_uid(ifq->user);
+ 	mutex_destroy(&ifq->pp_lock);
+ 	kfree(ifq);
+ }
 
 
