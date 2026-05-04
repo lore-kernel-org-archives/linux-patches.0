@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2301ADC83;
-	Mon,  4 May 2026 14:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5A83D9029;
+	Mon,  4 May 2026 14:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903734; cv=none; b=sL2uJoiN7omL9jPFrhvkNB2hUfHFGzdvYkbO1K81cwlMiPCkr3mVSIUaWyrGvO6zwdvEcasXV4pOFYL4HLoppMc3FOiugGCExoCgRJB4HFhXJEk+yXgaB/HUOdLGN+Tf0znilKaZtwCHDNtJQpoAu6QYEY2URH4iWpcQDxP7k0U=
+	t=1777903737; cv=none; b=e1vXfnPlSnQOsUhd7rTl4OZATxSSAm8xVoWPmc2xEKIWuEHSs4DFpd53p4NMHT5twC6eCdxdfZVqtbr/LjX4Nn5yGjU597g6pdM7EQidiSnmrWZCl1/PIc94JA2Rh12q03WiZf/1obGmcvdbKV8P79X60WaWkCAUkrafs9OaSG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903734; c=relaxed/simple;
-	bh=f9XQH5k+0y0xWYOF99z04fdWCYU/rETOPQ8MkQhx1xM=;
+	s=arc-20240116; t=1777903737; c=relaxed/simple;
+	bh=4dPFEwQA/k9Vr4zyyZWu7SvWI4UMbTYfZiYPzM4HPSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwbT/vXtm8TZkU6HBP2Rq0zxXETI7Oo1nhPeSP497ZJJvJ8XZzHw5YXRtsJbVBI0BDYSqw4qXv5cobDOMonD5dMNxtfrDiFQbOJSgNoX6NqUN1/JVS7r155l8sTa9fGmz8tI0wJeHMy9t3Q1L1xZyRLqyUikDoOEFOKfk5rBiUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugBljyk7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i5w2gESh9XeuwiB6dDT2V5YUivD0oBqd01arm7Wr74QltcbMEOeOuWo5oAFlWgswTjPW+oNkq5oLjsXCRQ6nsuvBzZjghszFPCNfkoKC6x2ag4aeAflqdq/FLh7PyaY2zq42m0B49NPzlW9XUOhbZhQlh3RWw8PhKc4GDVqWTYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEhYrKtS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugBljyk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F047C2BCB8;
-	Mon,  4 May 2026 14:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEhYrKtS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0436EC2BCB8;
+	Mon,  4 May 2026 14:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903734;
-	bh=f9XQH5k+0y0xWYOF99z04fdWCYU/rETOPQ8MkQhx1xM=;
+	s=korg; t=1777903737;
+	bh=4dPFEwQA/k9Vr4zyyZWu7SvWI4UMbTYfZiYPzM4HPSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugBljyk74xX1uC54SWuJg2ErURKQu7lcMC488vWSDndjAVKOim9Bv5rDfiI1k6tna
-	 MeaTvBPlUZGh6ISGjnsFDxvUEMRUfIusG+m17QQ+fi4cLgfXNmdJhXVbZWN9JcorW2
-	 YW3kdTFoxuCJhqsaAsAi+JulQK3Nzw+v/gx1kiq4=
+	b=aEhYrKtS9pDdjQgb7RcLnN6tuEypH8OObcgrHTIXbABLuv3RMDKD8XHhqKSiVMyQC
+	 rR7TwB1hgHGQxf5fKhlR1mtHmrQCaO4KmKyxh51s+QpJYNsTSDqv19vPQDxAt3BlGM
+	 vWwIK6YHZp/luLjNUAR6IVCyRKTnRNpe1le3pP/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Swamil Jain <s-jain1@ti.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.18 041/275] dt-bindings: display: ti, am65x-dss: Fix AM62L DSS reg and clock constraints
-Date: Mon,  4 May 2026 15:49:41 +0200
-Message-ID: <20260504135144.468456408@linuxfoundation.org>
+Subject: [PATCH 6.18 042/275] of: unittest: fix use-after-free in of_unittest_changeset()
+Date: Mon,  4 May 2026 15:49:42 +0200
+Message-ID: <20260504135144.503833157@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,126 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Swamil Jain <s-jain1@ti.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 9c469240997584449cfac51a75d1d3d71968c76f upstream.
+commit faecdd423c27f0d6090156a435ba9dbbac0eaddb upstream.
 
-The AM62L DSS [1] support incorrectly used the same register and
-clock constraints as AM65x, but AM62L has a single video port
+The variable 'parent' is assigned the value of 'nchangeset' earlier in the
+function, meaning both point to the same struct device_node. The call to
+of_node_put(nchangeset) can decrement the reference count to zero and
+free the node if there are no other holders. After that, the code still
+uses 'parent' to check for the presence of a property and to read a
+string property, leading to a use-after-free.
 
-Fix this by adding conditional constraints that properly define the
-register regions and clocks for AM62L DSS (single video port) versus
-other AM65x variants (dual video port).
+Fix this by moving the of_node_put() call after the last access to
+'parent', avoiding the UAF.
 
-[1]: Section 12.7 (Display Subsystem and Peripherals)
-Link : https://www.ti.com/lit/pdf/sprujb4
-
-Fixes: cb8d4323302c ("dt-bindings: display: ti,am65x-dss: Add support for AM62L DSS")
+Fixes: 1c668ea65506 ("of: unittest: Use of_property_present()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Swamil Jain <s-jain1@ti.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260415110409.2577633-1-s-jain1@ti.com
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260409022233.418103-1-vulab@iscas.ac.cn
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml |   70 +++++++---
- 1 file changed, 52 insertions(+), 18 deletions(-)
+ drivers/of/unittest.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml
-+++ b/Documentation/devicetree/bindings/display/ti/ti,am65x-dss.yaml
-@@ -36,34 +36,50 @@ properties:
-   reg:
-     description:
-       Addresses to each DSS memory region described in the SoC's TRM.
--    items:
--      - description: common DSS register area
--      - description: VIDL1 light video plane
--      - description: VID video plane
--      - description: OVR1 overlay manager for vp1
--      - description: OVR2 overlay manager for vp2
--      - description: VP1 video port 1
--      - description: VP2 video port 2
--      - description: common1 DSS register area
-+    oneOf:
-+      - items:
-+          - description: common DSS register area
-+          - description: VIDL1 light video plane
-+          - description: VID video plane
-+          - description: OVR1 overlay manager for vp1
-+          - description: OVR2 overlay manager for vp2
-+          - description: VP1 video port 1
-+          - description: VP2 video port 2
-+          - description: common1 DSS register area
-+      - items:
-+          - description: common DSS register area
-+          - description: VIDL1 light video plane
-+          - description: OVR1 overlay manager for vp1
-+          - description: VP1 video port 1
-+          - description: common1 DSS register area
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -896,8 +896,6 @@ static void __init of_unittest_changeset
  
-   reg-names:
--    items:
--      - const: common
--      - const: vidl1
--      - const: vid
--      - const: ovr1
--      - const: ovr2
--      - const: vp1
--      - const: vp2
--      - const: common1
-+    oneOf:
-+      - items:
-+          - const: common
-+          - const: vidl1
-+          - const: vid
-+          - const: ovr1
-+          - const: ovr2
-+          - const: vp1
-+          - const: vp2
-+          - const: common1
-+      - items:
-+          - const: common
-+          - const: vidl1
-+          - const: ovr1
-+          - const: vp1
-+          - const: common1
+ 	unittest(!of_changeset_apply(&chgset), "apply failed\n");
  
-   clocks:
-+    minItems: 2
-     items:
-       - description: fck DSS functional clock
-       - description: vp1 Video Port 1 pixel clock
-       - description: vp2 Video Port 2 pixel clock
+-	of_node_put(nchangeset);
+-
+ 	/* Make sure node names are constructed correctly */
+ 	unittest((np = of_find_node_by_path("/testcase-data/changeset/n2/n21")),
+ 		 "'%pOF' not added\n", n21);
+@@ -919,6 +917,7 @@ static void __init of_unittest_changeset
+ 	if (!ret)
+ 		unittest(strcmp(propstr, "hello") == 0, "original value not in updated property after revert");
  
-   clock-names:
-+    minItems: 2
-     items:
-       - const: fck
-       - const: vp1
-@@ -180,6 +196,24 @@ allOf:
-         ports:
-           properties:
-             port@1: false
-+        reg:
-+          maxItems: 5
-+        reg-names:
-+          maxItems: 5
-+        clocks:
-+          maxItems: 2
-+        clock-names:
-+          maxItems: 2
-+    else:
-+      properties:
-+        reg:
-+          minItems: 8
-+        reg-names:
-+          minItems: 8
-+        clocks:
-+          minItems: 3
-+        clock-names:
-+          minItems: 3
++	of_node_put(nchangeset);
+ 	of_changeset_destroy(&chgset);
  
-   - if:
-       properties:
+ 	of_node_put(n1);
 
 
