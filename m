@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02D73D300A;
-	Mon,  4 May 2026 14:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18A3377575;
+	Mon,  4 May 2026 14:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904039; cv=none; b=Y/7BgojogpIKKLfr8WvxSmYk2MWmzVvNP1hWxNivhTkc8SYuu/hPr3aAcaaS9lcQzxc3sopaIogNJaXo0R5SpSNGhD4k5KAmELfhYOVeKCwS7+JeA7l8hhIepgdbP0qgGDTGj3YIHFgn0gtcy/BJnoo5Flwv+IxtRmGd3lccSwI=
+	t=1777904041; cv=none; b=qa6FauMSWETlDQgHVMVdIxenO2+MlVkDgJ0vUsP4mG+x24vZbiDJZFJsi7ltO4N5DBP1CN+cSsz7jG6QZNhLVzoex6fDLWcSuzXXv4rTyqhw8wbje1neNVrsbMCV0DK0RB/GKkCTXkq5Bosps8bRnMvoJ2ZRld1zoVKACYOVEro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904039; c=relaxed/simple;
-	bh=0ALTWFAwfwxj9XnztntS1/J4qvVfAd1+hQ0jwP/KfCc=;
+	s=arc-20240116; t=1777904041; c=relaxed/simple;
+	bh=pVJq+r7wRkxVsMFaLh/3mEP8lckzcI079Sq33yYifh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuAa/M9Hq0qfkIpC28icN6WJO+TdJv8nnaYsxIi6c5gPd+tuToGJzHiavlNZYqKcOwMAUgBB8dXsLkL3dOc2R1js866eFalrqpO6tt+VqQKmc52tPWgEJPwo6vAulNd7tmEn2kL6YAx3ReLaeqoq5Ql0+HBT49cwwBd+b0sgXn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgMachsc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eWUsfEPLoqdtCGIjUVxj1PJH78t91jUvGIM4bQaI98gBL8S14BJQYKHFgY1GgephK+NkjYFKlLInnDNwBGkl8493h1xZVn5v0kyrsHgrrlVGvMAuWdoWig4ewRGMM6GjVGRw11PaAF902vJ1xbkN+/WMvHFodTbrNnNMUK41EAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpHO0Lnn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgMachsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766A5C2BCC4;
-	Mon,  4 May 2026 14:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpHO0Lnn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7CBC2BCC4;
+	Mon,  4 May 2026 14:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904038;
-	bh=0ALTWFAwfwxj9XnztntS1/J4qvVfAd1+hQ0jwP/KfCc=;
+	s=korg; t=1777904041;
+	bh=pVJq+r7wRkxVsMFaLh/3mEP8lckzcI079Sq33yYifh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sgMachscgVlCo5Jii8eKULP3lkiByLZ0Ytz+TYvWgZ71edZHCkkCjvQPRQCfMxN38
-	 g6Gw/yXzu5GYUdGXu75bKpTqI2qfkCi/Vzg9jBkBdwUI1iELaY4iFgaDKz84GGv5b1
-	 0NOagYQzlNuJgJ/tKdUvxluHpOdHxpz4ToU33RdA=
+	b=JpHO0LnnzguPMsjx4rNrmpuTrdo2UDZEeDLIfUKKmrX1wzeHR2P4myP8qda1BpnJX
+	 cBVb28y1f2T2TzlpMix68e+f3BOr5Xdhs4JOyaHnS3K/hLkJJlZjcsY6xPWSrLyAUw
+	 cprU7vDyuhyzu70+/xIlGGcjekOB2KJsDdCDP5pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Marek Vasut <marex@nabladev.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 127/275] net: ks8851: Avoid excess softirq scheduling
-Date: Mon,  4 May 2026 15:51:07 +0200
-Message-ID: <20260504135147.621237231@linuxfoundation.org>
+	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.18 128/275] drm/arcpgu: fix device node leak
+Date: Mon,  4 May 2026 15:51:08 +0200
+Message-ID: <20260504135147.658101983@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,41 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-commit 22230e68b2cf1ab6b027be8cf1198164a949c4fa upstream.
+commit ad3ac32a3893a2bbcad545efc005a8e4e7ecf10c upstream.
 
-The code injects a packet into netif_rx() repeatedly, which will add
-it to its internal NAPI and schedule a softirq, and process it. It is
-more efficient to queue multiple packets and process them all at the
-local_bh_enable() time.
+This function gets a device_node reference via
+of_graph_get_remote_port_parent() and stores it in encoder_node, but never
+puts that reference. Add it.
 
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Fixes: e0863634bf9f ("net: ks8851: Queue RX packets in IRQ handler instead of disabling BHs")
+There used to be a of_node_put(encoder_node) but it has been removed by
+mistake during a rework in commit 3ea66a794fdc ("drm/arc: Inline
+arcpgu_drm_hdmi_init").
+
+Fixes: 3ea66a794fdc ("drm/arc: Inline arcpgu_drm_hdmi_init")
 Cc: stable@vger.kernel.org
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260415231020.455298-2-marex@nabladev.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Link: https://patch.msgid.link/20260402-drm-arcgpu-fix-device-node-leak-v2-1-d773cf754ae5@bootlin.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/micrel/ks8851_common.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tiny/arcpgu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -373,9 +373,12 @@ static irqreturn_t ks8851_irq(int irq, v
- 	if (status & IRQ_LCI)
- 		mii_check_link(&ks->mii);
- 
--	if (status & IRQ_RXI)
-+	if (status & IRQ_RXI) {
-+		local_bh_disable();
- 		while ((skb = __skb_dequeue(&rxq)))
- 			netif_rx(skb);
-+		local_bh_enable();
-+	}
- 
- 	return IRQ_HANDLED;
- }
+--- a/drivers/gpu/drm/tiny/arcpgu.c
++++ b/drivers/gpu/drm/tiny/arcpgu.c
+@@ -250,7 +250,8 @@ DEFINE_DRM_GEM_DMA_FOPS(arcpgu_drm_ops);
+ static int arcpgu_load(struct arcpgu_drm_private *arcpgu)
+ {
+ 	struct platform_device *pdev = to_platform_device(arcpgu->drm.dev);
+-	struct device_node *encoder_node = NULL, *endpoint_node = NULL;
++	struct device_node *encoder_node __free(device_node) = NULL;
++	struct device_node *endpoint_node = NULL;
+ 	struct drm_connector *connector = NULL;
+ 	struct drm_device *drm = &arcpgu->drm;
+ 	int ret;
 
 
