@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A081315785;
-	Mon,  4 May 2026 14:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FAC315785;
+	Mon,  4 May 2026 14:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904535; cv=none; b=DVHoZEMyofWtc8cr9gl06RBRbf9hD82S1Z+N1ptGaW9tWnS7AoOd2jKfYuqZOrLo3UZ8rh60F83gBI0M/neniI5m+mR4UMQIjzxb2Z/nprsBvXr4tpq/tZorqK3Eh72A5JjgNSow1m8gTmlL0UlX+XJO/0QVJdRdXJk24mpZBfk=
+	t=1777904537; cv=none; b=K3P9sgBprNxIWBBv14GGpjdqVRHltKzfX9Uh4nwD+vi24qC2JjElQH4zyoMZQq18JlvcZtv+r1010UyeaZui65CC8LIQUeVKbe7+pagEhx5lo2E8TGXPG/NkA7CZibAGxBJLCFvnWeJ4YPDKa9jE962kxYG0ikT/WFOjQv7QDIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904535; c=relaxed/simple;
-	bh=PRNjAjUe//lAUKZJBstQPbos4JQt0vngPZ+hznGd0aw=;
+	s=arc-20240116; t=1777904537; c=relaxed/simple;
+	bh=/SBitkrimu1MfgfMlqP7N7iz4FbstsdVA2WNcD1FhC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GwhcJ24x8iP9UZslmmoTBMu0rsDqLoCB5Ej0NZJD9x7+4lizfCLwVe4ZqwpONHDMIj55cdOTNoB4Iqy0xMwH5KhnzUwenDhWL7YeCDWqaQj1HZDouVyU4kXx7oviLkSCMzMLoD55xa3VxclzHb/KUo7A9X4VkckZ2OSXYrhLCA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFp4/aT+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3cCPzGRjCTdr9o4E3AZ1v27OHHPGv/bc9twI9GsfQpyT8wTdFdsmTX4ge5syYIvM1XsONH4E9SqytH5tc1R2G7NyAOTihWNejR9ED0nKTqdA5hbIJml4nOGYnfTeZ/caqyDP9QNK1PYJN1keYryPOZ7KxaU5Vewf3jwpzqVKrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns9fhvao; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFp4/aT+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E7CC2BCB8;
-	Mon,  4 May 2026 14:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns9fhvao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C6EC2BCB8;
+	Mon,  4 May 2026 14:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904535;
-	bh=PRNjAjUe//lAUKZJBstQPbos4JQt0vngPZ+hznGd0aw=;
+	s=korg; t=1777904537;
+	bh=/SBitkrimu1MfgfMlqP7N7iz4FbstsdVA2WNcD1FhC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFp4/aT+VmTGSO3JDP7eyqBhtRSI8CzDZaUZRSO3KiwFpUfanJuU5JlUE5hohW/Lr
-	 gcE2dE4D2he7r3PYJhwMscXNiSQFfulObt8IMrG0RfOFzf4dbpAVkujRaJZbGZJvyv
-	 8Wk6Lyt+eWyBCOymLBb0qUYLaPaK1GCwUantfo9I=
+	b=Ns9fhvao9Z4WAn9pUmdZp1ztv6sfMr7S/4DGSkD6sM0givE9dXicp2X+c+xlej/Wd
+	 Z2VMslr+VcGNbvr6BC7t0ZQudWY40pGaccbFQH6NEFjGcJA1krz43iZYAVqHt5HqMh
+	 l1EoV82flM101pM10Mp3ru6Yt/RB9R5ESbQxPL3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 077/215] ALSA: 6fire: Fix input volume change detection
-Date: Mon,  4 May 2026 15:51:36 +0200
-Message-ID: <20260504135132.978464418@linuxfoundation.org>
+Subject: [PATCH 6.12 078/215] ALSA: pcmtest: fix reference leak on failed device registration
+Date: Mon,  4 May 2026 15:51:37 +0200
+Message-ID: <20260504135133.014115179@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -44,62 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit dc88eef8f55e85e92d016cdf7e291f5560efd79b upstream.
+commit 4ff036f95238f02c87e5d7c0a9d93748582a8950 upstream.
 
-usb6fire_control_input_vol_put() stores the analog capture volume
-as a signed offset in rt->input_vol[] (-15..+15), but it compares
-the cached value against the user-visible mixer value (0..30)
-before subtracting 15.
+When platform_device_register() fails in mod_init(), the embedded struct
+device in pcmtst_pdev has already been initialized by
+device_initialize(), but the failure path returns the error without
+dropping the device reference for the current platform device:
 
-This mixes two domains in the change detection path. Since the
-runtime is zero-initialized, the visible default is 15; writing 0
-right after probe is ignored, while writing 15 is reported as a
-change even though the cached value remains 0.
+  mod_init()
+    -> platform_device_register(&pcmtst_pdev)
+       -> device_initialize(&pcmtst_pdev.dev)
+       -> setup_pdev_dma_masks(&pcmtst_pdev)
+       -> platform_device_add(&pcmtst_pdev)
 
-Normalize the user value before comparing it with the cached offset.
+This leads to a reference leak when platform_device_register() fails.
+Fix this by calling platform_device_put() before returning the error.
 
-Fixes: 06bb4e743501 ("ALSA: snd-usb-6fire: add analog input volume control")
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: 315a3d57c64c5 ("ALSA: Implement the new Virtual PCM Test Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260416-alsa-6fire-input-volume-change-detection-v1-1-ec78299168df@gmail.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260415193138.3861297-1-lgs201920130244@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/6fire/control.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/drivers/pcmtest.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/usb/6fire/control.c
-+++ b/sound/usb/6fire/control.c
-@@ -290,15 +290,17 @@ static int usb6fire_control_input_vol_pu
- 		struct snd_ctl_elem_value *ucontrol)
- {
- 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
-+	int vol0 = ucontrol->value.integer.value[0] - 15;
-+	int vol1 = ucontrol->value.integer.value[1] - 15;
- 	int changed = 0;
- 
--	if (rt->input_vol[0] != ucontrol->value.integer.value[0]) {
--		rt->input_vol[0] = ucontrol->value.integer.value[0] - 15;
-+	if (rt->input_vol[0] != vol0) {
-+		rt->input_vol[0] = vol0;
- 		rt->ivol_updated &= ~(1 << 0);
- 		changed = 1;
- 	}
--	if (rt->input_vol[1] != ucontrol->value.integer.value[1]) {
--		rt->input_vol[1] = ucontrol->value.integer.value[1] - 15;
-+	if (rt->input_vol[1] != vol1) {
-+		rt->input_vol[1] = vol1;
- 		rt->ivol_updated &= ~(1 << 1);
- 		changed = 1;
- 	}
+--- a/sound/drivers/pcmtest.c
++++ b/sound/drivers/pcmtest.c
+@@ -755,8 +755,10 @@ static int __init mod_init(void)
+ 	if (err)
+ 		return err;
+ 	err = platform_device_register(&pcmtst_pdev);
+-	if (err)
++	if (err) {
++		platform_device_put(&pcmtst_pdev);
+ 		return err;
++	}
+ 	err = platform_driver_register(&pcmtst_pdrv);
+ 	if (err)
+ 		platform_device_unregister(&pcmtst_pdev);
 
 
