@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED80377575;
-	Mon,  4 May 2026 14:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816683D8129;
+	Mon,  4 May 2026 14:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904002; cv=none; b=THC/T5ADsINfGs5HeTmCtLN1M85x9nSllK8j1hZUotMmuDXKmIHVOz+8FSoamhqMbd/lSYLSKsml2kB7LVvpa13NQxaeFK0AbqAA+DTHuSCqS5ANQHtDQ0T3fGwvud70xW3rewsccpwtQkRxRa7JVvY6EshYnyi6+3Y7S0mzD5Y=
+	t=1777904005; cv=none; b=Hw69SYqPd4cGnisfTuaZWfjww4YtzjRja/ij/FIH3G5YUlpZjuX7mplBcFsr8PVZ4RQsektAy3NNPcctzQ/UKQ4UN+5OsxSiuAz3ABSTTg8vTxaWczDtFc+Yl2N04WaEJiW96XZ2+6WKUtVKg4Rz6ZodpXtn4Lv/zgA5OlEDrpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904002; c=relaxed/simple;
-	bh=kncTuoCVznGYmaxB/IuYGi747pbGtWD0iqNOADacmEI=;
+	s=arc-20240116; t=1777904005; c=relaxed/simple;
+	bh=SpAtGZVT7mCXhR2yGqsveCNRaOD/MyOMcaZemI3WiA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crbZ0+GK7QOuNF1O8L7VEVH2L8zgYj/17enotoj7wpfEzLq4JEpcbfAqUQUAA1lcR1xsZ2fpFo4J6Zqivtybx7IT9ibcAWpbV3Yc7wEqFtNQ2ctE3eW+3hiaunSWMrsqUWmQKPBnl0EVtd916W1V4/cqHehp7yarxRyIutoKCJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anMA1itF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zb4Un88z4jUQjd+XiFpJbNJPNa0dw7wwAf+gpQQm6r60DXRE/e9LGWrN8W98oE2NWCwdtrp9tOWQs9KdNeepvKIvOBVLdVHE4CbuiDnk/HLshAtF0bnuE0KI1Bcih3gSAB3JXC3R1jW+G+v9X0DlK2m0OsuA/u6dmLqP0OhfTTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEam8Vbr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anMA1itF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FA1C2BCB8;
-	Mon,  4 May 2026 14:13:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEam8Vbr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D140C2BCC4;
+	Mon,  4 May 2026 14:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904002;
-	bh=kncTuoCVznGYmaxB/IuYGi747pbGtWD0iqNOADacmEI=;
+	s=korg; t=1777904005;
+	bh=SpAtGZVT7mCXhR2yGqsveCNRaOD/MyOMcaZemI3WiA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=anMA1itF0AhkPTmb7WFybSWDXk5V8kAgErrNiaMP9XyRwk1L0AyCd+Vr1abQzn8V9
-	 DXb6rlL9r+ZdkPQtgdzZsyWuIASdBCC3b4FoCRpcguqYdi5dMV7HmbHrV8dLsPfKOI
-	 /wFujYN9QtA78A0y89swMCky6J7dlsmnq7KhsNK0=
+	b=OEam8VbrYN/TmwJ/T8PiKLF8bURJyUISeY9aKaEEBD5na8cBNYHkxLNDB29Vo0f3o
+	 0ynP9FjvzKiWonBoyOQYT1imJ0L4NmcY8Ka0ZPM8QAuHxSRZbEx9eNOThJgzroe8EE
+	 Lxf0q92IOZKpUm7QoIBKkKSFZNYXxrZh65Zp7MnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Bin Liu <b-liu@ti.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.18 145/275] mmc: block: use single block write in retry
-Date: Mon,  4 May 2026 15:51:25 +0200
-Message-ID: <20260504135148.308477872@linuxfoundation.org>
+Subject: [PATCH 6.18 146/275] mmc: sdhci-of-dwcmshc: Disable clock before DLL configuration
+Date: Mon,  4 May 2026 15:51:26 +0200
+Message-ID: <20260504135148.353016155@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,92 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Liu <b-liu@ti.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-commit c7c6d4f5103864f73ee3a78bfd6da241f84197dd upstream.
+commit 6546a49bbe656981d99a389195560999058c89c4 upstream.
 
-Due to errata i2493[0], multi-block write would still fail in retries.
+According to the ASIC design recommendations, the clock must be
+disabled before operating the DLL to prevent glitches that could
+affect the internal digital logic. In extreme cases, failing to
+do so may cause the controller to malfunction completely.
 
-With i2493, the MMC interface has the potential of write failures when
-issuing multi-block writes operating in HS200 mode with excessive IO
-supply noise.
+Adds a step to disable the clock before DLL configuration and
+re-enables it at the end.
 
-While the errata provides guidance in hardware design and layout to
-minimize the IO supply noise, in theory the write failure cannot be
-resolved in hardware. The software solution to ensure the data integrity
-is to add minimum 5us delay between block writes. Single-block write is
-the practical way to introduce the delay.
-
-This patch reuses recovery_mode flag, and switches to single-block
-write in retry when multi-block write fails. It covers both CQE and
-non-CQE cases.
-
-[0] https://www.ti.com/lit/pdf/sprz582
+Fixes: 08f3dff799d4 ("mmc: sdhci-of-dwcmshc: add rockchip platform support")
 Cc: stable@vger.kernel.org
-Suggested-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Bin Liu <b-liu@ti.com>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |   12 ++++++++++--
- drivers/mmc/core/queue.h |    3 +++
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-of-dwcmshc.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -1404,6 +1404,9 @@ static void mmc_blk_data_prep(struct mmc
- 		    rq_data_dir(req) == WRITE &&
- 		    (md->flags & MMC_BLK_REL_WR);
+--- a/drivers/mmc/host/sdhci-of-dwcmshc.c
++++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+@@ -607,12 +607,15 @@ static void dwcmshc_rk3568_set_clock(str
+ 	extra &= ~BIT(0);
+ 	sdhci_writel(host, extra, reg);
  
-+	if (mqrq->flags & MQRQ_XFER_SINGLE_BLOCK)
-+		recovery_mode = 1;
++	/* Disable clock while config DLL */
++	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
 +
- 	memset(brq, 0, sizeof(struct mmc_blk_request));
+ 	if (clock <= 52000000) {
+ 		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
+ 		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
+ 			dev_err(mmc_dev(host->mmc),
+ 				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
+-			return;
++			goto enable_clk;
+ 		}
  
- 	mmc_crypto_prepare_req(mqrq);
-@@ -1543,10 +1546,13 @@ static void mmc_blk_cqe_complete_rq(stru
- 		err = 0;
+ 		/*
+@@ -632,7 +635,7 @@ static void dwcmshc_rk3568_set_clock(str
+ 			DLL_STRBIN_DELAY_NUM_SEL |
+ 			DLL_STRBIN_DELAY_NUM_DEFAULT << DLL_STRBIN_DELAY_NUM_OFFSET;
+ 		sdhci_writel(host, extra, DWCMSHC_EMMC_DLL_STRBIN);
+-		return;
++		goto enable_clk;
+ 	}
  
+ 	/* Reset DLL */
+@@ -659,7 +662,7 @@ static void dwcmshc_rk3568_set_clock(str
+ 				 500 * USEC_PER_MSEC);
  	if (err) {
--		if (mqrq->retries++ < MMC_CQE_RETRIES)
-+		if (mqrq->retries++ < MMC_CQE_RETRIES) {
-+			if (rq_data_dir(req) == WRITE)
-+				mqrq->flags |= MQRQ_XFER_SINGLE_BLOCK;
- 			blk_mq_requeue_request(req, true);
--		else
-+		} else {
- 			blk_mq_end_request(req, BLK_STS_IOERR);
-+		}
- 	} else if (mrq->data) {
- 		if (blk_update_request(req, BLK_STS_OK, mrq->data->bytes_xfered))
- 			blk_mq_requeue_request(req, true);
-@@ -2088,6 +2094,8 @@ static void mmc_blk_mq_complete_rq(struc
- 	} else if (!blk_rq_bytes(req)) {
- 		__blk_mq_end_request(req, BLK_STS_IOERR);
- 	} else if (mqrq->retries++ < MMC_MAX_RETRIES) {
-+		if (rq_data_dir(req) == WRITE)
-+			mqrq->flags |= MQRQ_XFER_SINGLE_BLOCK;
- 		blk_mq_requeue_request(req, true);
- 	} else {
- 		if (mmc_card_removed(mq->card))
---- a/drivers/mmc/core/queue.h
-+++ b/drivers/mmc/core/queue.h
-@@ -61,6 +61,8 @@ enum mmc_drv_op {
- 	MMC_DRV_OP_GET_EXT_CSD,
- };
+ 		dev_err(mmc_dev(host->mmc), "DLL lock timeout!\n");
+-		return;
++		goto enable_clk;
+ 	}
  
-+#define	MQRQ_XFER_SINGLE_BLOCK		BIT(0)
+ 	extra = 0x1 << 16 | /* tune clock stop en */
+@@ -692,6 +695,16 @@ static void dwcmshc_rk3568_set_clock(str
+ 		DLL_STRBIN_TAPNUM_DEFAULT |
+ 		DLL_STRBIN_TAPNUM_FROM_SW;
+ 	sdhci_writel(host, extra, DWCMSHC_EMMC_DLL_STRBIN);
 +
- struct mmc_queue_req {
- 	struct mmc_blk_request	brq;
- 	struct scatterlist	*sg;
-@@ -69,6 +71,7 @@ struct mmc_queue_req {
- 	void			*drv_op_data;
- 	unsigned int		ioc_count;
- 	int			retries;
-+	u32			flags;
- };
++enable_clk:
++	/*
++	 * The sdclk frequency select bits in SDHCI_CLOCK_CONTROL are not functional
++	 * on Rockchip's SDHCI implementation. Instead, the clock frequency is fully
++	 * controlled via external clk provider by calling clk_set_rate(). Consequently,
++	 * passing 0 to sdhci_enable_clk() only re-enables the already-configured clock,
++	 * which matches the hardware's actual behavior.
++	 */
++	sdhci_enable_clk(host, 0);
+ }
  
- struct mmc_queue {
+ static void rk35xx_sdhci_reset(struct sdhci_host *host, u8 mask)
 
 
