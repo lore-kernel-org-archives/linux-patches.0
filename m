@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0531ADC83;
-	Mon,  4 May 2026 14:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358671ADC83;
+	Mon,  4 May 2026 14:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903809; cv=none; b=XW3gMB3GRuFu0fD2qLSoWU1UsdOpzRGc4f+1PtuB3Iij6hdTcp7RPUzPuietvrb1O3NjFzIQ02zbXo3s/Cp5Qw8KnsJNOxiT1E1rI2bHfE+ydOfok0gtnt2YgN1cKdB/G60nXZozAEvhL6qDqQ2NYIwS8pTD4g32I299dF1KWLc=
+	t=1777903812; cv=none; b=s70h8iTeZZidf99IB/eAV2r2rRx9l83S1a+sgAx5gqj0C6u9J/Osbuh1+8/O3lhZHgMQzp1TYsUphmlKIoVJEOEaie0PmJgLJVgOPPe8UV+yK5IkO48uPeIqiS4l+Rupnbj2Onq9QVEOK+LUJY+SSDsWHdZDVexri3aCvrvgeac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903809; c=relaxed/simple;
-	bh=c2n4UJkfU1jWyzlGNLVXXYcZWpnDMXIpLwSOs19mVC8=;
+	s=arc-20240116; t=1777903812; c=relaxed/simple;
+	bh=sqiL1+RUGlSpCFHQihuCA5iBHoN9V9akAUTrwyZ+vFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dy+ZrGbhXUcNbdCw6YnxCa0WaMFqYc9HV+zpmnYdmTe9mBMYL6eISrLWUvD7Gmci4sr/Hu8oEGEoizBKD3JM8dw4GFA2Axv/unxOmZU5rzphL1JIv92hQ+b0v+2LF+CThruCr7uY/N2jAcbge47xkax5pXEQi+IhhU+7Qo0/O+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jp5wrKpx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g/eARkVGib8TD6K1D6a5oMLvI3gFr4NzlMZminN7JpI7w4isWMwzUaxE0SjYAhYw8DZ3oVZmyA8zN6+P6btpNXmlGioq/2YPBDamGKI33BQ7+YD1g5/KP+fNbIvSGhFUb7DdUyfyGr7ihWYnpEOBKyV0RFGYRQWQD/cHvjXlPUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2nUzs+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jp5wrKpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E921C2BCB8;
-	Mon,  4 May 2026 14:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2nUzs+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E02C2BCB8;
+	Mon,  4 May 2026 14:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903809;
-	bh=c2n4UJkfU1jWyzlGNLVXXYcZWpnDMXIpLwSOs19mVC8=;
+	s=korg; t=1777903812;
+	bh=sqiL1+RUGlSpCFHQihuCA5iBHoN9V9akAUTrwyZ+vFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jp5wrKpx53AjtByxey9Y0tPLwCqV/BLjLs/FwWIq9L5NFKtJDL+vgGdXMYcDswF6L
-	 LnFy+BT3VWqfGxVfoorxrqbQFCIeM2b3cwGbUhVmF1GvxaDdtV2kIzEHIEkj8FSEVO
-	 yQQ3NVHxFVh0lwycL14uHCtS4ut0HG+7T37Y/I6o=
+	b=G2nUzs+o0b7GeFYmji73wEeV5FW1uVNIojPDb0q5iSGAigqqIMNzvpJICAh+FoYZu
+	 XUAaf1Q8B3/eSdeCuERHaFIBrSi5TfqziuYx1rYpb7k66oSS0n2wwIKvhmMEnMsxdJ
+	 ZTb3hp7xEIaA40E7gdC9YYNzsT6t6wEFOYwt8wt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.18 053/275] PCI: endpoint: pci-epf-ntb: Remove duplicate resource teardown
-Date: Mon,  4 May 2026 15:49:53 +0200
-Message-ID: <20260504135144.904763080@linuxfoundation.org>
+	stable@kernel.org,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 071/275] io_uring/register: fix ring resizing with mixed/large SQEs/CQEs
+Date: Mon,  4 May 2026 15:50:11 +0200
+Message-ID: <20260504135145.566940476@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,121 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 3446beddba450c8d6f9aca2f028712ac527fead3 upstream.
+Commit 45cd95763e198d74d369ede43aef0b1955b8dea4 upstream.
 
-epf_ntb_epc_destroy() duplicates the teardown that the caller is
-supposed to do later. This leads to an oops when .allow_link fails or
-when .drop_link is performed. Remove the helper.
+The ring resizing only properly handles "normal" sized SQEs or CQEs, if
+there are pending entries around a resize. This normally should not be
+the case, but the code is supposed to handle this regardless.
 
-Also drop pci_epc_put(). EPC device refcounting is tied to configfs EPC
-group lifetime, and pci_epc_put() in the .drop_link path is sufficient.
+For the mixed SQE/CQE cases, the current copying works fine as they
+are indexed in the same way. Each half is just copied separately. But
+for fixed large SQEs and CQEs, the iteration and copy need to take that
+into account.
 
-Fixes: 8b821cf76150 ("PCI: endpoint: Add EP function driver to provide NTB functionality")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260226084142.2226875-3-den@valinux.co.jp
+Cc: stable@kernel.org
+Fixes: 79cfe9e59c2a ("io_uring/register: add IORING_REGISTER_RESIZE_RINGS")
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-ntb.c |   56 ---------------------------
- 1 file changed, 2 insertions(+), 54 deletions(-)
+ io_uring/register.c |   32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
-@@ -1495,47 +1495,6 @@ err_alloc_peer_mem:
- }
+--- a/io_uring/register.c
++++ b/io_uring/register.c
+@@ -514,10 +514,20 @@ static int io_register_resize_rings(stru
+ 	if (tail - old_head > p.sq_entries)
+ 		goto overflow;
+ 	for (i = old_head; i < tail; i++) {
+-		unsigned src_head = i & (ctx->sq_entries - 1);
+-		unsigned dst_head = i & (p.sq_entries - 1);
++		unsigned index, dst_mask, src_mask;
++		size_t sq_size;
  
- /**
-- * epf_ntb_epc_destroy_interface() - Cleanup NTB EPC interface
-- * @ntb: NTB device that facilitates communication between HOST1 and HOST2
-- * @type: PRIMARY interface or SECONDARY interface
-- *
-- * Unbind NTB function device from EPC and relinquish reference to pci_epc
-- * for each of the interface.
-- */
--static void epf_ntb_epc_destroy_interface(struct epf_ntb *ntb,
--					  enum pci_epc_interface_type type)
--{
--	struct epf_ntb_epc *ntb_epc;
--	struct pci_epc *epc;
--	struct pci_epf *epf;
--
--	if (type < 0)
--		return;
--
--	epf = ntb->epf;
--	ntb_epc = ntb->epc[type];
--	if (!ntb_epc)
--		return;
--	epc = ntb_epc->epc;
--	pci_epc_remove_epf(epc, epf, type);
--	pci_epc_put(epc);
--}
--
--/**
-- * epf_ntb_epc_destroy() - Cleanup NTB EPC interface
-- * @ntb: NTB device that facilitates communication between HOST1 and HOST2
-- *
-- * Wrapper for epf_ntb_epc_destroy_interface() to cleanup all the NTB interfaces
-- */
--static void epf_ntb_epc_destroy(struct epf_ntb *ntb)
--{
--	enum pci_epc_interface_type type;
--
--	for (type = PRIMARY_INTERFACE; type <= SECONDARY_INTERFACE; type++)
--		epf_ntb_epc_destroy_interface(ntb, type);
--}
--
--/**
-  * epf_ntb_epc_create_interface() - Create and initialize NTB EPC interface
-  * @ntb: NTB device that facilitates communication between HOST1 and HOST2
-  * @epc: struct pci_epc to which a particular NTB interface should be associated
-@@ -1614,15 +1573,8 @@ static int epf_ntb_epc_create(struct epf
- 
- 	ret = epf_ntb_epc_create_interface(ntb, epf->sec_epc,
- 					   SECONDARY_INTERFACE);
--	if (ret) {
-+	if (ret)
- 		dev_err(dev, "SECONDARY intf: Fail to create NTB EPC\n");
--		goto err_epc_create;
--	}
--
--	return 0;
--
--err_epc_create:
--	epf_ntb_epc_destroy_interface(ntb, PRIMARY_INTERFACE);
- 
- 	return ret;
- }
-@@ -1887,7 +1839,7 @@ static int epf_ntb_bind(struct pci_epf *
- 	ret = epf_ntb_init_epc_bar(ntb);
- 	if (ret) {
- 		dev_err(dev, "Failed to create NTB EPC\n");
--		goto err_bar_init;
-+		return ret;
+-		n.sq_sqes[dst_head] = o.sq_sqes[src_head];
++		index = i;
++		sq_size = sizeof(struct io_uring_sqe);
++		src_mask = ctx->sq_entries - 1;
++		dst_mask = p.sq_entries - 1;
++		if (ctx->flags & IORING_SETUP_SQE128) {
++			index <<= 1;
++			sq_size <<= 1;
++			src_mask = (ctx->sq_entries << 1) - 1;
++			dst_mask = (p.sq_entries << 1) - 1;
++		}
++		memcpy(&n.sq_sqes[index & dst_mask], &o.sq_sqes[index & src_mask], sq_size);
  	}
+ 	WRITE_ONCE(n.rings->sq.head, old_head);
+ 	WRITE_ONCE(n.rings->sq.tail, tail);
+@@ -534,10 +544,20 @@ overflow:
+ 		goto out;
+ 	}
+ 	for (i = old_head; i < tail; i++) {
+-		unsigned src_head = i & (ctx->cq_entries - 1);
+-		unsigned dst_head = i & (p.cq_entries - 1);
++		unsigned index, dst_mask, src_mask;
++		size_t cq_size;
  
- 	ret = epf_ntb_config_spad_bar_alloc_interface(ntb);
-@@ -1909,9 +1861,6 @@ static int epf_ntb_bind(struct pci_epf *
- err_bar_alloc:
- 	epf_ntb_config_spad_bar_free(ntb);
- 
--err_bar_init:
--	epf_ntb_epc_destroy(ntb);
--
- 	return ret;
- }
- 
-@@ -1927,7 +1876,6 @@ static void epf_ntb_unbind(struct pci_ep
- 
- 	epf_ntb_epc_cleanup(ntb);
- 	epf_ntb_config_spad_bar_free(ntb);
--	epf_ntb_epc_destroy(ntb);
- }
- 
- #define EPF_NTB_R(_name)						\
+-		n.rings->cqes[dst_head] = o.rings->cqes[src_head];
++		index = i;
++		cq_size = sizeof(struct io_uring_cqe);
++		src_mask = ctx->cq_entries - 1;
++		dst_mask = p.cq_entries - 1;
++		if (ctx->flags & IORING_SETUP_CQE32) {
++			index <<= 1;
++			cq_size <<= 1;
++			src_mask = (ctx->cq_entries << 1) - 1;
++			dst_mask = (p.cq_entries << 1) - 1;
++		}
++		memcpy(&n.rings->cqes[index & dst_mask], &o.rings->cqes[index & src_mask], cq_size);
+ 	}
+ 	WRITE_ONCE(n.rings->cq.head, old_head);
+ 	WRITE_ONCE(n.rings->cq.tail, tail);
 
 
