@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7FE3DFC72;
-	Mon,  4 May 2026 14:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E655E3DE458;
+	Mon,  4 May 2026 14:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904767; cv=none; b=lmSYaN1hNFKiBlv+eDnk78tMekYNNhoKfTHN0F7lGxSzgs3jrAYkU0hO+Wi/hSJfhu+N5Q9xaO90Od2/GVu6OQ8v/mrmEBSjYGh9nwqeH0h4DFU8AWKALnR1WcVTb184wfXMud2n5LqXTEMX/fmbVu0dOm10c9/GL4EaYjhteuM=
+	t=1777904770; cv=none; b=dHbEziUwlApjwFsZDJEKqYXS1ajmAa6FSdPX48cW0acNcEPN0E6O5xQP4R0n4p2Xr+97jlPAkTaPsPhZJ2Bb7V8OZsko/4GAEUolDw+jI2y5gYvLDztcqq6GDl9/Pb2JFQpwi9EjLTlHY66NqyGpT948W3GylgsdLkfZ7VAvrdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904767; c=relaxed/simple;
-	bh=NCCxhfweRt5yjVO1pTdW0MpKhTCSwb4d9tL1xc9La2Q=;
+	s=arc-20240116; t=1777904770; c=relaxed/simple;
+	bh=vyeAdfSJVKrqyAOo+BiE3os7GMQiZJor6yFLhUN3by4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRDMMxt74bW4gUFrS6xJ0o6kbWF1px4XEeOrVTN32k6qWSrKaMA5oLZDDOPxcHRWFqPWaZIg9U42fNvD9cznERBuHMnpMxrzXqqfQpUHvs9HdjjhDr9MY39R4/aNleK/zGDV4BTZLXirAk/xVfTMAaMkQrmmKVojlv62Q2HxFao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOAaG+Q/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHv/icyn51nBcO7N8Sv62CrjlnLhaPZ4k2njzSA1L1e0wHhAc3RiEP3hCtLjgc5uHbe2paI9D41G+3b13MwIjnEEwGGzyXx48IbvZCJnQ/kepu/OOkDuJ1jeFa+uck/Gb7X5XPpUIQke+BzSE1X5uPCbCDpjy90hNzjzKueyklY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uiLZ8V7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOAaG+Q/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E716BC2BCB8;
-	Mon,  4 May 2026 14:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uiLZ8V7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7DCC2BCC4;
+	Mon,  4 May 2026 14:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904767;
-	bh=NCCxhfweRt5yjVO1pTdW0MpKhTCSwb4d9tL1xc9La2Q=;
+	s=korg; t=1777904769;
+	bh=vyeAdfSJVKrqyAOo+BiE3os7GMQiZJor6yFLhUN3by4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOAaG+Q/qeoJozWKymt022cmc9C3ed5eigmDCeax4MAlfQnPitITzIiG/AdzXaauX
-	 hH4qeQ6e1nXxx1GiBFExtT0wl6hPXeIEvsjWXy9pROBb2a5CBTBXxee+LIZNXB2lYc
-	 CVLgcT5YtOm05lTmGKN0XUY2Enh/0TkCj5ydzV3k=
+	b=uiLZ8V7jUELHqaHDLWPwqpCtwhAUjaj9jEqjsZgU2iyVBw0dzgqHwD/TX5OftGdkQ
+	 NWpJvR8VIc72PNynmEdBdtxtB0CYK0plkSWBxHFxBbSXcLN9ke7Re0rpjqrWguF/fF
+	 eYKlBK4DOHoAlLPtMaVZEFMUNd6yxcinO2jgogGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 165/215] ceph: only d_add() negative dentries when they are unhashed
-Date: Mon,  4 May 2026 15:53:04 +0200
-Message-ID: <20260504135136.206193571@linuxfoundation.org>
+	Chen Zhao <chezhao@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.12 166/215] IB/core: Fix zero dmac race in neighbor resolution
+Date: Mon,  4 May 2026 15:53:05 +0200
+Message-ID: <20260504135136.243960439@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -51,108 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Chen Zhao <chezhao@nvidia.com>
 
-commit 803447f93d75ab6e40c85e6d12b5630d281d70d6 upstream.
+commit 5e6de34d82b49cab9d8a42063e9cd0f22a4f31e5 upstream.
 
-Ceph can call d_add(dentry, NULL) on a negative dentry that is already
-present in the primary dcache hash.
+dst_fetch_ha() checks nud_state without holding the neighbor lock, then
+copies ha under the seqlock. A race in __neigh_update() where nud_state
+is set to NUD_REACHABLE before ha is written allows dst_fetch_ha() to
+read a zero MAC address while the seqlock reports no concurrent writer.
 
-In the current VFS that is not safe.  d_add() goes through __d_add()
-to __d_rehash(), which unconditionally reinserts dentry->d_hash into
-the hlist_bl bucket.  If the dentry is already hashed, reinserting the
-same node can corrupt the bucket, including creating a self-loop.
-Once that happens, __d_lookup() can spin forever in the hlist_bl walk,
-typically looping only on the d_name.hash mismatch check and
-eventually triggering RCU stall reports like this one:
+netevent_callback amplifies this by waking ALL pending addr_req workers
+when ANY neighbor becomes NUD_VALID. At scale (N peers resolving ARP
+concurrently), the hit probability scales as N^2, making it near-certain
+for large RDMA workloads.
 
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:         87-....: (2100 ticks this GP) idle=3a4c/1/0x4000000000000000 softirq=25003319/25003319 fqs=829
- rcu:         (t=2101 jiffies g=79058445 q=698988 ncpus=192)
- CPU: 87 UID: 2952868916 PID: 3933303 Comm: php-cgi8.3 Not tainted 6.18.17-i1-amd #950 NONE
- Hardware name: Dell Inc. PowerEdge R7615/0G9DHV, BIOS 1.6.6 09/22/2023
- RIP: 0010:__d_lookup+0x46/0xb0
- Code: c1 e8 07 48 8d 04 c2 48 8b 00 49 89 fc 49 89 f5 48 89 c3 48 83 e3 fe 48 83 f8 01 77 0f eb 2d 0f 1f 44 00 00 48 8b 1b 48 85 db <74> 20 39 6b 18 75 f3 48 8d 7b 78 e8 ba 85 d0 00 4c 39 63 10 74 1f
- RSP: 0018:ff745a70c8253898 EFLAGS: 00000282
- RAX: ff26e470054cb208 RBX: ff26e470054cb208 RCX: 000000006e958966
- RDX: ff26e48267340000 RSI: ff745a70c82539b0 RDI: ff26e458f74655c0
- RBP: 000000006e958966 R08: 0000000000000180 R09: 9cd08d909b919a89
- R10: ff26e458f74655c0 R11: 0000000000000000 R12: ff26e458f74655c0
- R13: ff745a70c82539b0 R14: d0d0d0d0d0d0d0d0 R15: 2f2f2f2f2f2f2f2f
- FS:  00007f5770896980(0000) GS:ff26e482c5d88000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f5764de50c0 CR3: 000000a72abb5001 CR4: 0000000000771ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  lookup_fast+0x9f/0x100
-  walk_component+0x1f/0x150
-  link_path_walk+0x20e/0x3d0
-  path_lookupat+0x68/0x180
-  filename_lookup+0xdc/0x1e0
-  vfs_statx+0x6c/0x140
-  vfs_fstatat+0x67/0xa0
-  __do_sys_newfstatat+0x24/0x60
-  do_syscall_64+0x6a/0x230
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+N(A): neigh_update(A)                   W(A): addr_resolve(A)
+ |                                       [sleep]
+ | write_lock_bh(&A->lock)               |
+ | A->nud_state = NUD_REACHABLE          |
+ | // A->ha is still 0                   |
+ |                                       [woken by netevent_cb() of
+ |                                         another neighbour]
+ |                                       | dst_fetch_ha(A)
+ |                                       |   A->nud_state & NUD_VALID
+ |                                       |   read_seqbegin(&A->ha_lock)
+ |                                       |   snapshot = A->ha  /* 0 */
+ |                                       |   read_seqretry(&A->ha_lock)
+ |                                       |   return snapshot
+ | seqlock(&A->ha_lock)
+ | A->ha = mac_A     /* too late */
+ | sequnlock(&A->ha_lock)
+ | write_unlock_bh(&A->lock)
 
-This is reachable with reused cached negative dentries.  A Ceph lookup
-or atomic_open can be handed a negative dentry that is already hashed,
-and fs/ceph/dir.c then hits one of two paths that incorrectly assume
-"negative" also means "unhashed":
+The incorrect/zero mac is read and programmed in the device QP while it
+was not yet updated. This causes silent packet loss and eventual
+RETRY_EXC_ERR.
 
-  - ceph_finish_lookup():
-      MDS reply is -ENOENT with no trace
-      -> d_add(dentry, NULL)
-
-  - ceph_lookup():
-      local ENOENT fast path for a complete directory with shared caps
-      -> d_add(dentry, NULL)
-
-Both paths can therefore re-add an already-hashed negative dentry.
-
-Ceph already uses the correct pattern elsewhere: ceph_fill_trace() only
-calls d_add(dn, NULL) for a negative null-dentry reply when d_unhashed(dn)
-is true.
-
-Fix both fs/ceph/dir.c sites the same way: only call d_add() for a
-negative dentry when it is actually unhashed.  If the negative dentry
-is already hashed, leave it in place and reuse it as-is.
-
-This preserves the existing behavior for unhashed dentries while
-avoiding d_hash list corruption for reused hashed negatives.
+Fix by holding the neighbor read lock across the nud_state check and
+ha copy in dst_fetch_ha(), ensuring it synchronizes with
+__neigh_update() which is updating while holding the write lock.
 
 Cc: stable@vger.kernel.org
-Fixes: 2817b000b02c ("ceph: directory operations")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 92ebb6a0a13a ("IB/cm: Remove now useless rcu_lock in dst_fetch_ha")
+Link: https://patch.msgid.link/r/20260405-fix-dmac-race-v1-1-cfa1ec2ce54a@nvidia.com
+Signed-off-by: Chen Zhao <chezhao@nvidia.com>
+Reviewed-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/addr.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -769,7 +769,8 @@ struct dentry *ceph_finish_lookup(struct
- 				d_drop(dentry);
- 				err = -ENOENT;
- 			} else {
--				d_add(dentry, NULL);
-+				if (d_unhashed(dentry))
-+					d_add(dentry, NULL);
- 			}
- 		}
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -321,11 +321,14 @@ static int dst_fetch_ha(const struct dst
+ 	if (!n)
+ 		return -ENODATA;
+ 
++	read_lock_bh(&n->lock);
+ 	if (!(n->nud_state & NUD_VALID)) {
++		read_unlock_bh(&n->lock);
+ 		neigh_event_send(n, NULL);
+ 		ret = -ENODATA;
+ 	} else {
+ 		neigh_ha_snapshot(dev_addr->dst_dev_addr, n, dst->dev);
++		read_unlock_bh(&n->lock);
  	}
-@@ -840,7 +841,8 @@ static struct dentry *ceph_lookup(struct
- 			spin_unlock(&ci->i_ceph_lock);
- 			doutc(cl, " dir %llx.%llx complete, -ENOENT\n",
- 			      ceph_vinop(dir));
--			d_add(dentry, NULL);
-+			if (d_unhashed(dentry))
-+				d_add(dentry, NULL);
- 			di->lease_shared_gen = atomic_read(&ci->i_shared_gen);
- 			return NULL;
- 		}
+ 
+ 	neigh_release(n);
 
 
