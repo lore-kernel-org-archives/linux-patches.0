@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F493DDDD7;
-	Mon,  4 May 2026 13:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCC73DE422;
+	Mon,  4 May 2026 13:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903074; cv=none; b=VWCXXZdZ4C8XFwwEfgwheKxvflKAJDyzud6TrfIC547D7Lssvk/6ToQJQvKo3kk9F5+J9crfPcbzvSJS1imkaFbyhi/+aQGcVRI1QGvR21/Hdqkm1SbNiZYLVdmyIgtBxNRTCU5dRW53BYcc/jn50U31etQF4rI74E7vK+xiLBs=
+	t=1777903077; cv=none; b=T3sZrdiiz5YP1VFJcLF9vxgEbNH6k9NiZHhU67yux2C0iam87rFC9vhP5iApeEkNA8P43NlR2MZ9LQzmaxMUFmEfk1DU1IG3kyskEmWAGUFNEwSTqGi/y1fG21Fkoche/Avz+/usnhfWlG6dxfPpuso2WzkQN+dsTBN5iDSk3uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903074; c=relaxed/simple;
-	bh=pkoqiXWBKPs5iVQ4mNASCFmV0IiOFJW86OVG4eKzF6o=;
+	s=arc-20240116; t=1777903077; c=relaxed/simple;
+	bh=S3VBaBL4wVPQIsLrxwL3L1TkaRwbV2JJ9ogchxk+ehw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9DlCgK5A/OaLip+ZmCNV4g+9RfgqzQ2XpwQOV+kLtpUjSUp9ccn4fIN/RukxBU0VA59VxzSf2oXYB0rl8pwPIROs/SoR/haEJb3dprLBL6vgmf6fm69VOPhaPkeYbCR5EHzVfd55+NQVhYfXw7dbBQ9jsSGUsv42U0ZSL7T39g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKxWthsg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=d3kVjLfhhbXOtLgP6RKZMlq2KN2fttxcprUG1oq3K0uPfE06R+tc8ar0FlQ0ZeLdvj+Np5J/cAxceau14S+9obPLnoUMfTbb7dU7HVAoc5vGfTpNdaJ5JpC6QZppGu3AhK575hrlEnL0pk6GVJBCkrIXF2YU/IjKTa8cFHSx7YM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtTo8CMe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKxWthsg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B9BC2BCF5;
-	Mon,  4 May 2026 13:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtTo8CMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81ABDC2BCB8;
+	Mon,  4 May 2026 13:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903074;
-	bh=pkoqiXWBKPs5iVQ4mNASCFmV0IiOFJW86OVG4eKzF6o=;
+	s=korg; t=1777903076;
+	bh=S3VBaBL4wVPQIsLrxwL3L1TkaRwbV2JJ9ogchxk+ehw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKxWthsg5yMG/jr3JJtpZtCqopiCz4hiTTEVLAqoee8Mwow9UTZ+x816U9yoWMVXq
-	 N+1dF17s6hjHXgFaPYjHkdcorOjYuFGqkeGs3uBskE6i+3haGxLyVTV9AEsJYTMlh4
-	 B8ywm6cxciFqX7z6vAifpwjrkVumod5+qyPy8IdY=
+	b=JtTo8CMeV4/7godzg6xvZgrU0D1e7gizkDg9fpkyzy/EFY0jofng2tLsOuHetb280
+	 xAGnuRvM+gC+X1344fiCV69GR1N8DcejK+/0cQSAxzMinWRRo0PKPLB6c4TjdXk2Wf
+	 jnz/tTfPY6a8MpKV9UgxUrkgTb3DjxVW9zUxR1lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WANG Rui <wangrui@loongson.cn>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG Xuerui <kernel@xen0n.name>,
-	loongarch@lists.linux.dev,
-	Rong Bao <rong.bao@csmantle.top>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 7.0 092/307] perf annotate: Use jump__delete when freeing LoongArch jumps
-Date: Mon,  4 May 2026 15:49:37 +0200
-Message-ID: <20260504135146.275021893@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 7.0 093/307] RDMA/mana_ib: Disable RX steering on RSS QP destroy
+Date: Mon,  4 May 2026 15:49:38 +0200
+Message-ID: <20260504135146.313326907@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -48,124 +44,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rong Bao <rong.bao@csmantle.top>
+From: Long Li <longli@microsoft.com>
 
-commit a355eefc36c4481188249b067832b40a2c45fa5c upstream.
+commit dbeb256e8dd87233d891b170c0b32a6466467036 upstream.
 
-Currently, the initialization of loongarch_jump_ops does not contain an
-assignment to its .free field. This causes disasm_line__free() to fall
-through to ins_ops__delete() for LoongArch jump instructions.
+When an RSS QP is destroyed (e.g. DPDK exit), mana_ib_destroy_qp_rss()
+destroys the RX WQ objects but does not disable vPort RX steering in
+firmware. This leaves stale steering configuration that still points to
+the destroyed RX objects.
 
-ins_ops__delete() will free ins_operands.source.raw and
-ins_operands.source.name, and these fields overlaps with
-ins_operands.jump.raw_comment and ins_operands.jump.raw_func_start.
-Since in loongarch_jump__parse(), these two fields are populated by
-strchr()-ing the same buffer, trying to free them will lead to undefined
-behavior.
+If traffic continues to arrive (e.g. peer VM is still transmitting) and
+the VF interface is subsequently brought up (mana_open), the firmware
+may deliver completions using stale CQ IDs from the old RX objects.
+These CQ IDs can be reused by the ethernet driver for new TX CQs,
+causing RX completions to land on TX CQs:
 
-This invalid free usually leads to crashes:
+  WARNING: mana_poll_tx_cq+0x1b8/0x220 [mana]  (is_sq == false)
+  WARNING: mana_gd_process_eq_events+0x209/0x290 (cq_table lookup fails)
 
-        Process 1712902 (perf) of user 1000 dumped core.
-        Stack trace of thread 1712902:
-        #0  0x00007fffef155c58 n/a (libc.so.6 + 0x95c58)
-        #1  0x00007fffef0f7a94 raise (libc.so.6 + 0x37a94)
-        #2  0x00007fffef0dd6a8 abort (libc.so.6 + 0x1d6a8)
-        #3  0x00007fffef145490 n/a (libc.so.6 + 0x85490)
-        #4  0x00007fffef1646f4 n/a (libc.so.6 + 0xa46f4)
-        #5  0x00007fffef164718 n/a (libc.so.6 + 0xa4718)
-        #6  0x00005555583a6764 __zfree (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x106764)
-        #7  0x000055555854fb70 disasm_line__free (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x2afb70)
-        #8  0x000055555853d618 annotated_source__purge (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x29d618)
-        #9  0x000055555852300c __hist_entry__tui_annotate (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x28300c)
-        #10 0x0000555558526718 do_annotate (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x286718)
-        #11 0x000055555852ed94 evsel__hists_browse (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x28ed94)
-        #12 0x000055555831fdd0 cmd_report (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x7fdd0)
-        #13 0x000055555839b644 handle_internal_command (/home/csmantle/dist/linux-arch/tools/perf/perf + 0xfb644)
-        #14 0x00005555582fe6ac main (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x5e6ac)
-        #15 0x00007fffef0ddd90 n/a (libc.so.6 + 0x1dd90)
-        #16 0x00007fffef0ddf0c __libc_start_main (libc.so.6 + 0x1df0c)
-        #17 0x00005555582fed10 _start (/home/csmantle/dist/linux-arch/tools/perf/perf + 0x5ed10)
-        ELF object binary architecture: LoongArch
+Fix this by disabling vPort RX steering before destroying RX WQ objects.
+Note that mana_fence_rqs() cannot be used here because the fence
+completion is delivered on the CQ, which is polled by user-mode (e.g.
+DPDK) and not visible to the kernel driver.
 
-... and it can be confirmed with Valgrind:
+Refactor the disable logic into a shared mana_disable_vport_rx() in
+mana_en, exported for use by mana_ib, replacing the duplicate code.
+The ethernet driver's mana_dealloc_queues() is also updated to call
+this common function.
 
-        ==1721834== Invalid free() / delete / delete[] / realloc()
-        ==1721834==    at 0x4EA9014: free (in /usr/lib/valgrind/vgpreload_memcheck-loongarch64-linux.so)
-        ==1721834==    by 0x4106287: __zfree (zalloc.c:13)
-        ==1721834==    by 0x42ADC8F: disasm_line__free (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x429B737: annotated_source__purge (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x42811EB: __hist_entry__tui_annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x42848D7: do_annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x428CF33: evsel__hists_browse (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==  Address 0x7d34303 is 35 bytes inside a block of size 62 alloc'd
-        ==1721834==    at 0x4EA59B8: malloc (in /usr/lib/valgrind/vgpreload_memcheck-loongarch64-linux.so)
-        ==1721834==    by 0x6B80B6F: strdup (strdup.c:42)
-        ==1721834==    by 0x42AD917: disasm_line__new (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x42AE5A3: symbol__disassemble_objdump (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x42AF0A7: symbol__disassemble (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x429B3CF: symbol__annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x429C233: symbol__annotate2 (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x42804D3: __hist_entry__tui_annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x42848D7: do_annotate (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-        ==1721834==    by 0x428CF33: evsel__hists_browse (in /home/csmantle/dist/linux-arch/tools/perf/perf)
-
-This patch adds the missing free() specialization in loongarch_jump_ops,
-which prevents disasm_line__free() from invoking the default cleanup
-function.
-
-Fixes: fb7fd2a14a503b9a ("perf annotate: Move raw_comment and raw_func_start fields out of 'struct ins_operands'")
+Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
 Cc: stable@vger.kernel.org
-Cc: WANG Rui <wangrui@loongson.cn>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: WANG Xuerui <kernel@xen0n.name>
-Cc: loongarch@lists.linux.dev
-Signed-off-by: Rong Bao <rong.bao@csmantle.top>
-Tested-by: WANG Rui <wangrui@loongson.cn>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Long Li <longli@microsoft.com>
+Link: https://patch.msgid.link/20260325194100.1929056-1-longli@microsoft.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/annotate-arch/annotate-loongarch.c |    1 +
- tools/perf/util/disasm.c                           |    2 +-
- tools/perf/util/disasm.h                           |    2 ++
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mana/qp.c               |   15 +++++++++++++++
+ drivers/net/ethernet/microsoft/mana/mana_en.c |   11 ++++++++++-
+ include/net/mana/mana.h                       |    1 +
+ 3 files changed, 26 insertions(+), 1 deletion(-)
 
---- a/tools/perf/util/annotate-arch/annotate-loongarch.c
-+++ b/tools/perf/util/annotate-arch/annotate-loongarch.c
-@@ -110,6 +110,7 @@ static int loongarch_jump__parse(const s
- }
+--- a/drivers/infiniband/hw/mana/qp.c
++++ b/drivers/infiniband/hw/mana/qp.c
+@@ -822,6 +822,21 @@ static int mana_ib_destroy_qp_rss(struct
+ 	ndev = mana_ib_get_netdev(qp->ibqp.device, qp->port);
+ 	mpc = netdev_priv(ndev);
  
- static const struct ins_ops loongarch_jump_ops = {
-+	.free	   = jump__delete,
- 	.parse	   = loongarch_jump__parse,
- 	.scnprintf = jump__scnprintf,
- 	.is_jump   = true,
---- a/tools/perf/util/disasm.c
-+++ b/tools/perf/util/disasm.c
-@@ -451,7 +451,7 @@ int jump__scnprintf(const struct ins *in
- 			 ops->target.offset);
- }
- 
--static void jump__delete(struct ins_operands *ops __maybe_unused)
-+void jump__delete(struct ins_operands *ops __maybe_unused)
- {
- 	/*
- 	 * The ops->jump.raw_comment and ops->jump.raw_func_start belong to the
---- a/tools/perf/util/disasm.h
-+++ b/tools/perf/util/disasm.h
-@@ -161,6 +161,8 @@ int jump__scnprintf(const struct ins *in
- int mov__scnprintf(const struct ins *ins, char *bf, size_t size,
- 		   struct ins_operands *ops, int max_ins_name);
- 
-+void jump__delete(struct ins_operands *ops);
++	/* Disable vPort RX steering before destroying RX WQ objects.
++	 * Otherwise firmware still routes traffic to the destroyed queues,
++	 * which can cause bogus completions on reused CQ IDs when the
++	 * ethernet driver later creates new queues on mana_open().
++	 *
++	 * Unlike the ethernet teardown path, mana_fence_rqs() cannot be
++	 * used here because the fence completion CQE is delivered on the
++	 * CQ which is polled by userspace (e.g. DPDK), so there is no way
++	 * for the kernel to wait for fence completion.
++	 *
++	 * This is best effort — if it fails there is not much we can do,
++	 * and mana_cfg_vport_steering() already logs the error.
++	 */
++	mana_disable_vport_rx(mpc);
 +
- int symbol__disassemble(struct symbol *sym, struct annotate_args *args);
+ 	for (i = 0; i < (1 << ind_tbl->log_ind_tbl_size); i++) {
+ 		ibwq = ind_tbl->ind_tbl[i];
+ 		wq = container_of(ibwq, struct mana_ib_wq, ibwq);
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -2889,6 +2889,13 @@ static void mana_rss_table_init(struct m
+ 			ethtool_rxfh_indir_default(i, apc->num_queues);
+ }
  
- char *expand_tabs(char *line, char **storage, size_t *storage_len);
++int mana_disable_vport_rx(struct mana_port_context *apc)
++{
++	return mana_cfg_vport_steering(apc, TRI_STATE_FALSE, false, false,
++				       false);
++}
++EXPORT_SYMBOL_NS(mana_disable_vport_rx, "NET_MANA");
++
+ int mana_config_rss(struct mana_port_context *apc, enum TRI_STATE rx,
+ 		    bool update_hash, bool update_tab)
+ {
+@@ -3273,10 +3280,12 @@ static int mana_dealloc_queues(struct ne
+ 	 */
+ 
+ 	apc->rss_state = TRI_STATE_FALSE;
+-	err = mana_config_rss(apc, TRI_STATE_FALSE, false, false);
++	err = mana_disable_vport_rx(apc);
+ 	if (err && mana_en_need_log(apc, err))
+ 		netdev_err(ndev, "Failed to disable vPort: %d\n", err);
+ 
++	mana_fence_rqs(apc);
++
+ 	/* Even in err case, still need to cleanup the vPort */
+ 	mana_destroy_vport(apc);
+ 
+--- a/include/net/mana/mana.h
++++ b/include/net/mana/mana.h
+@@ -568,6 +568,7 @@ struct mana_port_context {
+ netdev_tx_t mana_start_xmit(struct sk_buff *skb, struct net_device *ndev);
+ int mana_config_rss(struct mana_port_context *ac, enum TRI_STATE rx,
+ 		    bool update_hash, bool update_tab);
++int mana_disable_vport_rx(struct mana_port_context *apc);
+ 
+ int mana_alloc_queues(struct net_device *ndev);
+ int mana_attach(struct net_device *ndev);
 
 
