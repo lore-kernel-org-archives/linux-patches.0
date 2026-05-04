@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5BD2E2F0E;
-	Mon,  4 May 2026 14:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9E93DEADC;
+	Mon,  4 May 2026 14:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903588; cv=none; b=I1SSXHq1aYnoq6YF+UNeDWuQ/cy6zMDG0tOR6ZJFrM7M9B/JgDFTm9YES6s81/ly2aDR+CErnqbO6xVfLUFHqFxhsEJl6BbBVzpDYNd01X9BdDMkqjh4sUKIfVPoCpITpXZu8WWPlB4zFZFgbWcADQi4dlVju8kqM8Ur2NRAG8U=
+	t=1777903590; cv=none; b=LJHNLPXZGUqDfxTWGHFcZw0v4OTgs0mRm1GvOwddBjmAoLQCqiPllvshGJKvDsMKnBoq/WbCAKBBt2+pMrzCzrSsKB65H7YOSMB4dNmgJTDGF7zEM9g/lPAA9Ft2awjYsm/yD4NYoF9k7J6LZtzCL2ssY1JD+q6B17GfUL1XS1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903588; c=relaxed/simple;
-	bh=ZyUIr5twpwaTtP5exLyjpSKzxEcmNyZCSfOYlC+d4Es=;
+	s=arc-20240116; t=1777903590; c=relaxed/simple;
+	bh=AUHjMWSjTCAkWIzxEk1zaa9IeDfynRzHMcbEI71iSlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WY0RlTGsnhshdTloz5Vs79FtKMClrDpyObznL9/vVIysc07VSch0GuzDXqmdTmvVM4WZRI1A8I5y4wC6SBG+SJ+2lfjZpMI7I868ISR73iFHTDU6MbMUcA3uglvEL5+EE/ia/a2CU8RtHIQBSVL9ZPNTTatpjWsZTnHZvcWdQ1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Xuveu8B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fx5Pyt+l+GbnwXi+L2T5gXKJ0yR97h/r1S8CudnRtaSqBc5D9968k+4n7Y/99fM7a6raUtEIB+FL1bN1BN5d+yl8k/pGvQIFhbyy4A5GG4Wuzslo5eVO3kdP1BICHk7UuQZDsg1w/uOv8PvLTxp52tt9CwNZSN68qDm3R1jXmEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAVyrZmN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Xuveu8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FBCC2BCF6;
-	Mon,  4 May 2026 14:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAVyrZmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679EEC2BCB8;
+	Mon,  4 May 2026 14:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903588;
-	bh=ZyUIr5twpwaTtP5exLyjpSKzxEcmNyZCSfOYlC+d4Es=;
+	s=korg; t=1777903590;
+	bh=AUHjMWSjTCAkWIzxEk1zaa9IeDfynRzHMcbEI71iSlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Xuveu8Bek+oBx0syDHD7e1EZXjyi/vPyf8C/xk8IdkibEOjkzxfFBnEiu9957F9E
-	 ZR2VI3VeZwkPW9CATEwNPbigEJg1pAQ7x8Ka0aWgc7r9uj0eyJjo4OzLesTNrmKFdB
-	 IgbE9u2yko/NyJZGyhT+YpAHMQrcjX/ZpCXFtVQ8=
+	b=OAVyrZmNq/oz9DxTTrYuSv/D2DNSLB9ulF7wnO3EWlDU2XA6X4vah8LfAC3ZqZWUD
+	 UZEJ9WnQKyirme0IekKPPIMeSPUEBr5ffqn7rZ7H+xRrM6RjlcI463MRp434EYZIo+
+	 WJ8W09TLMxoYPzPFrcgP7eAecIwEbn5m9l2wmi5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tomas Winkler <tomasw@gmail.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 293/307] mei: me: add nova lake point H DID
-Date: Mon,  4 May 2026 15:52:58 +0200
-Message-ID: <20260504135153.815081007@linuxfoundation.org>
+	John Warthog9 Hawley <warthog9@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.0 276/307] ktest: Fix the month in the name of the failure directory
+Date: Mon,  4 May 2026 15:52:41 +0200
+Message-ID: <20260504135153.184238081@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -52,44 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit a5a1804332afc7035d5c5b880548262e81d796bc ]
+commit 768059ede35f197575a38b10797b52402d9d4d2f upstream.
 
-Add Nova Lake H device id.
+The Perl localtime() function returns the month starting at 0 not 1. This
+caused the date produced to create the directory for saving files of a
+failed run to have the month off by one.
 
-Cc: stable <stable@kernel.org>
-Co-developed-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Tomas Winkler <tomasw@gmail.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20260405141758.1634556-1-alexander.usyskin@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  machine-test-useconfig-fail-20260314073628
+
+The above happened in April, not March. The correct name should have been:
+
+  machine-test-useconfig-fail-20260414073628
+
+This was somewhat confusing.
+
+Cc: stable@vger.kernel.org
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>
+Link: https://patch.msgid.link/20260420142426.33ad0293@fedora
+Fixes: 7faafbd69639b ("ktest: Add open and close console and start stop monitor")
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    1 +
- drivers/misc/mei/pci-me.c     |    1 +
- 2 files changed, 2 insertions(+)
+ tools/testing/ktest/ktest.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -123,6 +123,7 @@
- #define PCI_DEVICE_ID_INTEL_MEI_WCL_P      0x4D70  /* Wildcat Lake P */
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -1815,7 +1815,7 @@ sub save_logs {
+     my ($result, $basedir) = @_;
+     my @t = localtime;
+     my $date = sprintf "%04d%02d%02d%02d%02d%02d",
+-	1900+$t[5],$t[4],$t[3],$t[2],$t[1],$t[0];
++	1900+$t[5],$t[4]+1,$t[3],$t[2],$t[1],$t[0];
  
- #define PCI_DEVICE_ID_INTEL_MEI_NVL_S      0x6E68  /* Nova Lake Point S */
-+#define PCI_DEVICE_ID_INTEL_MEI_NVL_H      0xD370  /* Nova Lake Point H */
- 
- /*
-  * MEI HW Section
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -130,6 +130,7 @@ static const struct pci_device_id mei_me
- 	{PCI_DEVICE_DATA(INTEL, MEI_WCL_P, MEI_ME_PCH15_CFG)},
- 
- 	{PCI_DEVICE_DATA(INTEL, MEI_NVL_S, MEI_ME_PCH15_CFG)},
-+	{PCI_DEVICE_DATA(INTEL, MEI_NVL_H, MEI_ME_PCH15_CFG)},
- 
- 	/* required last entry */
- 	{0, }
+     my $type = $build_type;
+     if ($type =~ /useconfig/) {
 
 
