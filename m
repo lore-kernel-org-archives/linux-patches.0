@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29F01A6827;
-	Mon,  4 May 2026 14:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431733DE43B;
+	Mon,  4 May 2026 14:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904219; cv=none; b=SYzJLNdqh4EsSPe+igynJMLIveWlzDKX0d4sS5LbAB705R0geHdAEDcF6Y/+kkWXkGXefMXzIpICgxieZmdjabNunKNjDy9mr9G3fX6DtuLwFyKthT8TNX86H4af3zRyCgG/ZLq8iTviOWShqjYkugmExFJ3MzWBw215M/75f1I=
+	t=1777904221; cv=none; b=PUpnniMdjBEmDCqtVeqQRPR2PTC9qn7+0Gu9LEAxcES8DcTPJj+ISUn/gGgNMEt7Z6AO7VgdxBAhsU9h0Ejj3mfypCDpdSmj9F1GMQoA2UTNj/Ri5sKa4ukJS5KtBUf8GM121y2eCD/Z8+GCKG2Rfs1I+17f+oXkyQe4N0OmP9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904219; c=relaxed/simple;
-	bh=gH0WOQUKQJUhZ9/YtK947YTsDf7Gx3Bt9oZBv+bc1Sw=;
+	s=arc-20240116; t=1777904221; c=relaxed/simple;
+	bh=vbzzOETG/ZidjaxGGRdAMV0h2OAHA7KnacP8Jc+Bft4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIOVg+7/W+FuczJx6hmMDYFTe8D/q4jhiB1pVwT+iZ9AxSG6Gc7EBu6G5gL7KPnOsLuVcmkt8ko45MN8ut9i1E2wLwkvoyn2PxYEnFNthWm/q6SPOcheARUnKGfzBxQQnCqiKCqX/2oDPfZtcQRUunL0f6d7cOkgULKxtkmScpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FO+gw5rD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lPlpIljH9I4KBFV0LvZi0luMuKWkyfF5CErQQGtirFWu9cgh2NO7AzsrKfU2xl0w6ly/UwCaZ9KAELrEooXz805CXBUYsoMURj5r1+XyjS8isnNQc2WdUjv58MzsDC28V6yS2yIf0euuNUtbTUg2jVLCS479mTYFPxNw9fexPkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hi+qLoJQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FO+gw5rD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D5BC2BCB8;
-	Mon,  4 May 2026 14:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hi+qLoJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF26DC2BCB8;
+	Mon,  4 May 2026 14:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904218;
-	bh=gH0WOQUKQJUhZ9/YtK947YTsDf7Gx3Bt9oZBv+bc1Sw=;
+	s=korg; t=1777904221;
+	bh=vbzzOETG/ZidjaxGGRdAMV0h2OAHA7KnacP8Jc+Bft4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FO+gw5rDDO2YurMFpEBrEXzqbIcmE2eYJ8+X3OzE4xayr6y03ce7l2KXmedsB39xd
-	 82knJUWBYp5ZkvJSWTYOkJeFzURuWSuCJYDqSVlIdMnnCPmgb/C4N6C+mY9V7e4Egq
-	 0eFzzPIxnBCt2hpbM892tzpmIF97GrbilMAn52lI=
+	b=hi+qLoJQsSUa1Rv9OFtiqzgJVKUTw5XWSy2MBrX/tNqyi8K/iJBBhHLw+vlWCDCkM
+	 OiCmksSe5/+P7h822QrvvufevwzrVY2TIKEIEck2Qh7P5YlaMYlTg+VpT9IixIwzCg
+	 Ju1JQEjUhscHDVwGN6O+Pyfs51Kgna7Z2NNrtaq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 228/275] crypto: atmel-sha204a - Fix potential UAF and memory leak in remove path
-Date: Mon,  4 May 2026 15:52:48 +0200
-Message-ID: <20260504135151.531179940@linuxfoundation.org>
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.18 197/275] ext4: fix bounds check in check_xattrs() to prevent out-of-bounds access
+Date: Mon,  4 May 2026 15:52:17 +0200
+Message-ID: <20260504135150.395208390@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,40 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit bab1adf3b87e4bfac92c4f5963c63db434d561c1 upstream.
+commit eceafc31ea7b42c984ece10d79d505c0bb6615d5 upstream.
 
-Unregister the hwrng to prevent new ->read() calls and flush the Atmel
-I2C workqueue before teardown to prevent a potential UAF if a queued
-callback runs while the device is being removed.
+The bounds check for the next xattr entry in check_xattrs() uses
+(void *)next >= end, which allows next to point within sizeof(u32)
+bytes of end. On the next loop iteration, IS_LAST_ENTRY() reads 4
+bytes via *(__u32 *)(entry), which can overrun the valid xattr region.
 
-Drop the early return to ensure sysfs entries are removed and
-->hwrng.priv is freed, preventing a memory leak.
+For example, if next lands at end - 1, the check passes since
+next < end, but IS_LAST_ENTRY() reads 4 bytes starting at end - 1,
+accessing 3 bytes beyond the valid region.
 
-Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
+Fix this by changing the check to (void *)next + sizeof(u32) > end,
+ensuring there is always enough space for the IS_LAST_ENTRY() read
+on the subsequent iteration.
+
+Fixes: 3478c83cf26b ("ext4: improve xattr consistency checking and error reporting")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://lore.kernel.org/all/20260224231429.31361-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260328150038.349497-1-kartikey406@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-sha204a.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ext4/xattr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -194,10 +194,8 @@ static void atmel_sha204a_remove(struct
- {
- 	struct atmel_i2c_client_priv *i2c_priv = i2c_get_clientdata(client);
- 
--	if (atomic_read(&i2c_priv->tfm_count)) {
--		dev_emerg(&client->dev, "Device is busy, will remove it anyhow\n");
--		return;
--	}
-+	devm_hwrng_unregister(&client->dev, &i2c_priv->hwrng);
-+	atmel_i2c_flush_queue();
- 
- 	sysfs_remove_group(&client->dev.kobj, &atmel_sha204a_groups);
- 
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -226,7 +226,7 @@ check_xattrs(struct inode *inode, struct
+ 	/* Find the end of the names list */
+ 	while (!IS_LAST_ENTRY(e)) {
+ 		struct ext4_xattr_entry *next = EXT4_XATTR_NEXT(e);
+-		if ((void *)next >= end) {
++		if ((void *)next + sizeof(u32) > end) {
+ 			err_str = "e_name out of bounds";
+ 			goto errout;
+ 		}
 
 
