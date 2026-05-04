@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213883DC4AB;
-	Mon,  4 May 2026 14:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9813DE457;
+	Mon,  4 May 2026 14:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903501; cv=none; b=X75paBTxNGfWOTWkIfQvK1mT0wqVA38NU5F8nadywx0GBYtX5WFMm8PjZpCFlz7Ft6AstiPkFEl02hN/yoGi0JlFG5HBXXgKSOYXZDIGbFTTr1SDet0tyW0wev28WgXHyJnPUE7r1P+8txyIUmnEN5Qey+PNSNJn2N72D67LpHQ=
+	t=1777903503; cv=none; b=bSFG90IjXVolPFAON5UiF006mK17VuxfQo5yVqefuQvAGs4GuEWt8Lk9hY4nVlNCvoZ89bb4YzHsckCLuIgzEhVinsq70daEWLZnk7XQx99E/6UtJzYZwvpxi8+i3l8kZF66L+X2syCAcj33mdbEOadHj5U0WqBi0ImpuVHN+o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903501; c=relaxed/simple;
-	bh=lBHetLHnTk3qz1Rc+37OaHZ/P/yPotESJQdduXPsFGw=;
+	s=arc-20240116; t=1777903503; c=relaxed/simple;
+	bh=0dklnLm2zDUcpBvg4jDM4Sn7uVkMRtZQA9j68QFA1Qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JfcrwazA1tgIjaMyMcGkMmeLLPzM7BvuUT/46JarYZ0w/XuEomG6uhVT6K1wqwmxC0oLW60Sd3UaaA6UstuIZmEkvBg5ptLbwfQnpLxr2js6nu2PTFzM5skfE1FKVlLswVPkLVC6xStwuhl4ji3rU1wGwsGQ8q+HpzLvz0UkbrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2giSfZy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GkJT2vMtu30Rf6+Hm73QyBMgerfiWETnJIuJeqWG2dHtWmcUafgGJtdMVKtYVGk4U3bsw3Q8S9PEaS0pu5wGKbVp/hP7gRTIOJ6k04uxIRkvlgpS/wje4eYy7knKMKZN565HO1EWXUoQXY+n1bPYnelTWpjdYMAjIl0IcSKJ+cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2miH5x9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2giSfZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5F2C2BCF6;
-	Mon,  4 May 2026 14:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2miH5x9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4064BC2BCC4;
+	Mon,  4 May 2026 14:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903501;
-	bh=lBHetLHnTk3qz1Rc+37OaHZ/P/yPotESJQdduXPsFGw=;
+	s=korg; t=1777903503;
+	bh=0dklnLm2zDUcpBvg4jDM4Sn7uVkMRtZQA9j68QFA1Qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2giSfZygIYMSJfQyOEDnRQl85ctbJkKcEmD2r9uYulbu+eh2o+qAIw2U+B+4PibD
-	 SATdCeVWaHY1tmFzxc/mz5oavMM/0C5sJTpZqUdi8zrAQ2OJULyVE0eNfETW3xVPxF
-	 16vTFnTG6Je4dvw6R1nsiBCypFjVpiJXP82x47Zc=
+	b=y2miH5x9B7ACxlubqha66t4fw/luUljO/aRnoK1lQddUotPVB9E+lFclZz4uXwMT0
+	 AfSnw0gxbACuq3s1oKbmOiSe6TUqs80eTsnutITYZ521szgxSoQezWB5YR+H+7YZOK
+	 Zl63cTOwIsy+/1JQ+65/hBdocOkVZZrvBZPzhCAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>
-Subject: [PATCH 7.0 241/307] check-uapi: link into shared objects
-Date: Mon,  4 May 2026 15:52:06 +0200
-Message-ID: <20260504135151.903266242@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.0 259/307] crypto: atmel-aes - Fix 3-page memory leak in atmel_aes_buff_cleanup
+Date: Mon,  4 May 2026 15:52:24 +0200
+Message-ID: <20260504135152.561498745@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -46,53 +44,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit a261f6dff3c1653c19c065c3b3650c625447b8a7 upstream.
+commit 3fcfff4ed35f963380a68741bcd52742baff7f76 upstream.
 
-While testing ABI changes across all architectures, I found that abidiff
-sometimes produces nonsensical output. Further debugging identified
-missing or broken libelf support for architecture specific relocations
-in ET_REL binaries as the source of the problem[1].
+atmel_aes_buff_init() allocates 4 pages using __get_free_pages() with
+ATMEL_AES_BUFFER_ORDER, but atmel_aes_buff_cleanup() frees only the
+first page using free_page(), leaking the remaining 3 pages. Use
+free_pages() with ATMEL_AES_BUFFER_ORDER to fix the memory leak.
 
-Change the script to no longer produce a relocatable object file but
-instead create a shared library for each header. This makes abidiff
-work for all of the architectures in upstream linux kernels.
-
-Link: https://sourceware.org/bugzilla/show_bug.cgi?id=33869
+Fixes: bbe628ed897d ("crypto: atmel-aes - improve performances of data transfer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260306163309.2015837-2-arnd@kernel.org
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/check-uapi.sh |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/crypto/atmel-aes.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/check-uapi.sh
-+++ b/scripts/check-uapi.sh
-@@ -178,8 +178,11 @@ do_compile() {
- 	local -r inc_dir="$1"
- 	local -r header="$2"
- 	local -r out="$3"
--	printf "int main(void) { return 0; }\n" | \
--		"$CC" -c \
-+	printf "int f(void) { return 0; }\n" | \
-+		"$CC" \
-+		  -shared \
-+		  -nostdlib \
-+		  -fPIC \
- 		  -o "$out" \
- 		  -x c \
- 		  -O0 \
+--- a/drivers/crypto/atmel-aes.c
++++ b/drivers/crypto/atmel-aes.c
+@@ -2131,7 +2131,7 @@ static int atmel_aes_buff_init(struct at
+ 
+ static void atmel_aes_buff_cleanup(struct atmel_aes_dev *dd)
+ {
+-	free_page((unsigned long)dd->buf);
++	free_pages((unsigned long)dd->buf, ATMEL_AES_BUFFER_ORDER);
+ }
+ 
+ static int atmel_aes_dma_init(struct atmel_aes_dev *dd)
 
 
