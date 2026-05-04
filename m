@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A943DE43C;
-	Mon,  4 May 2026 14:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4565635A3AD;
+	Mon,  4 May 2026 14:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904278; cv=none; b=C3oLqd/QaGZmp8kqEz4hqE9Af0dS3AuR6xyLP0sEuFxWDIzrVapmvEBa+kfp0N9FMY7qLAXkiP2/TRr/yOPlLRh84pC4HIJK+hBIzZwr88Utzt2BpCArBKKUQhiAP/2MNo5zVoeeGylp/Y6pv6lZJSmfjF+NglN0X+FEwxdJ4TY=
+	t=1777904280; cv=none; b=FRK9TRncEynsafj8+hcP5FRFgeKRqRe21stkdwEnR/rIb27YDbvrm09Kh9KIKi7HWNFUzr+8tU9eqxFdzrhVkM3KOCS+DLJDo5TO8lrDM0uuZ0tUjkTJL2llep6wXju8UMAQDINkosAM/u5ermd5LBrRwSyO1lIP9RympKlU9EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904278; c=relaxed/simple;
-	bh=Tfk/xu+xV+GKHLXj3/rzgGA6Ggk9Tju3F4ADY9QaJnM=;
+	s=arc-20240116; t=1777904280; c=relaxed/simple;
+	bh=eLynRla0t8fZLT4rNEEj4xhZSDgeEZc4FmE/gez5rVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5wxJMtKx7pkCGV2uWNE4+JmZp0PMopd3C7h02aVjJeqe/PC4fQ1aY8pi2tbAqmcQwsWco3tPT8Jb4Exf3+NxAiggTtwLkJl7kWxdyIANg8KHVfQIM5mNrKHteoKTQomy4h4OaZf+6WB8w9EcQOzWDNj2R2CMmusMnOqP18BVKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpaNX2BN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=urgftmMM7+KqwJ1LJbmKyCbTxUFPFVun8VAhq8l3esbOBguZ1fBUu0anARRmd5bLUzpuifEG/e5JX09EXIfnd5j469Pr8YHVYg7olZNaVUjmh3w7ih6E+DLzr0NhaEq7V6QgEq9NbhdNpxxpHP1xazEepuoEDzhSKBDh1YlJqP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URnvSUM+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpaNX2BN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A037C2BCB8;
-	Mon,  4 May 2026 14:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URnvSUM+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC58CC2BCF4;
+	Mon,  4 May 2026 14:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904277;
-	bh=Tfk/xu+xV+GKHLXj3/rzgGA6Ggk9Tju3F4ADY9QaJnM=;
+	s=korg; t=1777904280;
+	bh=eLynRla0t8fZLT4rNEEj4xhZSDgeEZc4FmE/gez5rVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IpaNX2BNE862OdAdulnNtb3klRYykvsJGsrvipV6qCeKpzlAWa+7dqMuYND1Un4Kz
-	 vvpHZ/PNi6RNwnPgcWZ6fW4PQdcBWn27xTLvpeQGkQEyojbaUwQb0KCOYklSDqbpUh
-	 Y0P+oCTwmpdTppzqgzjnRGXRw9h0JJxc6uVgMQLo=
+	b=URnvSUM+3lmthPdenzgalz0dlUhMJTjoTCzunf++Vu4UpT26T+qTL+pCFvmlcVKMx
+	 B42EYtLZQrZ2TVjBTZ3zcBsR/rG2eYpKK/8e84W9iFcYG2xqBQSL0AJ2jKoXLslted
+	 5eluLLyO4CmMZjAP7itVuDKG9PaTZLNa1Nig7NDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronak Raheja <ronak.raheja@oss.qualcomm.com>,
-	Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Elson Serrao <elson.serrao@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 252/275] phy: qcom: m31-eusb2: Update init sequence to set PHY_ENABLE
-Date: Mon,  4 May 2026 15:53:12 +0200
-Message-ID: <20260504135152.400163481@linuxfoundation.org>
+Subject: [PATCH 6.18 253/275] phy: qcom: m31-eusb2: clear PLL_EN during init
+Date: Mon,  4 May 2026 15:53:13 +0200
+Message-ID: <20260504135152.437528109@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -54,45 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+From: Elson Serrao <elson.serrao@oss.qualcomm.com>
 
-[ Upstream commit 7044ed6749c8a7d49e67b2f07f42da2f29d26be6 ]
+[ Upstream commit 520a98bdf7ae0130e22d8adced3d69a2e211b41f ]
 
-Certain platforms may not have the PHY_ENABLE bit set on power on reset.
-Update the current sequence to explicitly write to enable the PHY_ENABLE
-bit.  This ensures that regardless of the platform, the PHY is properly
-enabled.
+The driver currently sets bit 0 of USB_PHY_CFG1 (PLL_EN) during PHY
+initialization. According to the M31 EUSB2 PHY hardware documentation,
+this bit is intended only for test/debug scenarios and does not control
+mission mode operation. Keeping PLL_EN asserted causes the PHY to draw
+additional current during USB bus suspend. Clearing this bit results in
+lower suspend power consumption without affecting normal operation.
 
-Signed-off-by: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
-Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20250920032158.242725-1-wesley.cheng@oss.qualcomm.com
+Update the driver to leave PLL_EN cleared as recommended by the hardware
+documentation.
+
+Fixes: 9c8504861cc4 ("phy: qcom: Add M31 based eUSB2 PHY driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Elson Serrao <elson.serrao@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260217201130.2804550-1-elson.serrao@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 520a98bdf7ae ("phy: qcom: m31-eusb2: clear PLL_EN during init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-m31-eusb2.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-m31-eusb2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
 +++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-@@ -25,6 +25,7 @@
- #define POR				BIT(1)
- 
- #define USB_PHY_HS_PHY_CTRL_COMMON0	(0x54)
-+#define PHY_ENABLE			BIT(0)
- #define SIDDQ_SEL			BIT(1)
- #define SIDDQ				BIT(2)
- #define FSEL				GENMASK(6, 4)
-@@ -81,6 +82,7 @@ struct m31_eusb2_priv_data {
- static const struct m31_phy_tbl_entry m31_eusb2_setup_tbl[] = {
+@@ -83,7 +83,7 @@ static const struct m31_phy_tbl_entry m3
  	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG0, UTMI_PHY_CMN_CTRL_OVERRIDE_EN, 1),
  	M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL5, POR, 1),
-+	M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL_COMMON0, PHY_ENABLE, 1),
- 	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG1, PLL_EN, 1),
+ 	M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL_COMMON0, PHY_ENABLE, 1),
+-	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG1, PLL_EN, 1),
++	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG1, PLL_EN, 0),
  	M31_EUSB_PHY_INIT_CFG(USB_PHY_FSEL_SEL, FSEL_SEL, 1),
  };
+ 
 
 
