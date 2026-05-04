@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF783DEAC1;
-	Mon,  4 May 2026 14:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4927B315785;
+	Mon,  4 May 2026 14:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904177; cv=none; b=cRjyBxyj7ZGEMs8pBmc/OUsw09av+uRkCnk9h025vCyhT9/3LtgHUw+I0bMkBjdrm9LRopDoBNxEGJjnxL2oqi7EU9z6RE1GxFXo77zeqYEnkJbi2uXQmN2mi+WEu6ugUHarKB+RxOLfj0KM/cnACiOmi+hZK248wxFXEo2oDpc=
+	t=1777904180; cv=none; b=MVhSPirbNMcaELVB3teXoNpoaafk1GP+Qz58k1d5C5Gthd1ae5inQaqJ5kjQcupf8nA3AonNaj3A/i7on2mrrsc3vhrfZevh3PTE72D4RNrMQPzfxj61z2zis+BWt5IGDLlwLd/TyXeJG0O1VKnK+4nuNPKZdz9/0qveCp7TPCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904177; c=relaxed/simple;
-	bh=JmlMvnNiM3S1ded9zMB21UZUMi0wghRRbyJk1WQOCbw=;
+	s=arc-20240116; t=1777904180; c=relaxed/simple;
+	bh=KmisXqjCh+1afvwi/hs8eXMiRTlm1+0CkB/jGX/mEr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxrY6XlPDscIh2oZ9X/8A5ZQ4Vkrp4ByWNiAPvsMniWz3yExRW1cDBIb8JmWh2UyvYOpPbI9eotsKfuHOe7FgscvMGFI54kwoPGtBtKDPxQ9NLBAB2bnsR0gLeXYvFCIvzyHbfmXZCKRHoQFYiW4jsx7NdxKB6nkdXkLGrNNBOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTRKjps6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3fKAz9/qyo4NyRA+rqOwV5F18A5QNqUVXkiMnD5UF9Wqf/459oN360YDzs4PywQAAYoWuI1tTqDSijpebX+WVVKL344upZLnGjXM0MU7UQN2F+H8iBNuIvHi0uG0Pf/AoV2cPKzt9guOGPHSQKnkgaOz+W0z8xOqnYvRuh+Kho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2OlwnjD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTRKjps6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4926AC2BCC4;
-	Mon,  4 May 2026 14:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2OlwnjD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D406BC2BCB8;
+	Mon,  4 May 2026 14:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904177;
-	bh=JmlMvnNiM3S1ded9zMB21UZUMi0wghRRbyJk1WQOCbw=;
+	s=korg; t=1777904180;
+	bh=KmisXqjCh+1afvwi/hs8eXMiRTlm1+0CkB/jGX/mEr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTRKjps6gE9ugr8oJ9JeSbioAsEa/KFLhLLdLPKaZFctTFqlRdQio2hi73kJL7emV
-	 1glw1HXx8nhfBXZa5a8XaCjDzyHe6T7k87vMotPFDdPkSnim7If9scDf8e00uj+561
-	 ol+dNx2EyJK/HSH1XtzCgJIOHJz6NC8gEgGoBUTk=
+	b=a2OlwnjDKiCoheFnPowY6s6/iGjtxfcxn93v6IwDJs5hafbT37kfRFVhtMOOWRe2M
+	 9kgRMlZmOLJOHlO0jOSIVFqyPvogBHOwfn7sN0JMLgZS7KLf1g9RD97v3FS4FjUkEd
+	 7qaEUk0XeJ7GkJTgWbzHWNXXey8kS3iw7yw2r3cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <cyyzero16@gmail.com>,
-	Balbir Singh <bsingharora@gmail.com>,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Fan Yu <fan.yu9@zte.com.cn>,
-	Wang Yaxin <wang.yaxin@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 213/275] taskstats: set version in TGID exit notifications
-Date: Mon,  4 May 2026 15:52:33 +0200
-Message-ID: <20260504135150.986268610@linuxfoundation.org>
+	Gang Yan <yangang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 6.18 214/275] mptcp: sync the msk->sndbuf at accept() time
+Date: Mon,  4 May 2026 15:52:34 +0200
+Message-ID: <20260504135151.022829547@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -54,74 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <cyyzero16@gmail.com>
+From: Gang Yan <yangang@kylinos.cn>
 
-commit 16c4f0211aaa1ec1422b11b59f64f1abe9009fc0 upstream.
+commit fcf04b14334641f4b0b8647824480935e9416d52 upstream.
 
-delay accounting started populating taskstats records with a valid version
-field via fill_pid() and fill_tgid().
+On passive MPTCP connections, the msk sndbuf is not updated correctly.
 
-Later, commit ad4ecbcba728 ("[PATCH] delay accounting taskstats interface
-send tgid once") changed the TGID exit path to send the cached
-signal->stats aggregate directly instead of building the outgoing record
-through fill_tgid().  Unlike fill_tgid(), fill_tgid_exit() only
-accumulates accounting data and never initializes stats->version.
+The root cause is an order issue in the accept path:
 
-As a result, TGID exit notifications can reach userspace with version == 0
-even though PID exit notifications and TASKSTATS_CMD_GET replies carry a
-valid taskstats version.
+- tcp_check_req() -> subflow_syn_recv_sock() -> mptcp_sk_clone_init()
+  calls __mptcp_propagate_sndbuf() to copy the ssk sndbuf into msk
 
-This is easy to reproduce with `tools/accounting/getdelays.c`.
+- Later, tcp_child_process() -> tcp_init_transfer() ->
+  tcp_sndbuf_expand() grows the ssk sndbuf.
 
-I have a small follow-up patch for that tool which:
+So __mptcp_propagate_sndbuf() runs before the ssk sndbuf has been
+expanded and the msk ends up with a much smaller sndbuf than the
+subflow:
 
-1. increases the receive buffer/message size so the pid+tgid
-   combined exit notification is not dropped/truncated
+  MPTCP: msk->sndbuf:20480, msk->first->sndbuf:2626560
 
-2. prints `stats->version`.
+Fix this by moving the __mptcp_propagate_sndbuf() call from
+mptcp_sk_clone_init() -- the ssk sndbuf is not yet finalized there -- to
+__mptcp_propagate_sndbuf() at accept() time, when the ssk sndbuf has
+been fully expanded by tcp_sndbuf_expand().
 
-With that patch, the reproducer is:
-
-  Terminal 1:
-    ./getdelays -d -v -l -m 0
-
-  Terminal 2:
-    taskset -c 0 python3 -c 'import threading,time; t=threading.Thread(target=time.sleep,args=(0.1,)); t.start(); t.join()'
-
-That produces both PID and TGID exit notifications for the same
-process.  The PID exit record reports a valid taskstats version, while
-the TGID exit record reports `version 0`.
-
-
-This patch (of 2):
-
-Set stats->version = TASKSTATS_VERSION after copying the cached TGID
-aggregate into the outgoing netlink payload so all taskstats records are
-self-describing again.
-
-Link: https://lkml.kernel.org/r/ba83d934e59edd431b693607de573eb9ca059309.1774810498.git.cyyzero16@gmail.com
-Fixes: ad4ecbcba728 ("[PATCH] delay accounting taskstats interface send tgid once")
-Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
-Cc: Balbir Singh <bsingharora@gmail.com>
-Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Cc: Fan Yu <fan.yu9@zte.com.cn>
-Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8005184fd1ca ("mptcp: refactor sndbuf auto-tuning")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/602
+Signed-off-by: Gang Yan <yangang@kylinos.cn>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260420-net-mptcp-sync-sndbuf-accept-v1-1-e3523e3aeb44@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/taskstats.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/protocol.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/taskstats.c
-+++ b/kernel/taskstats.c
-@@ -649,6 +649,7 @@ void taskstats_exit(struct task_struct *
- 		goto err;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3428,7 +3428,6 @@ struct sock *mptcp_sk_clone_init(const s
+ 	 * uses the correct data
+ 	 */
+ 	mptcp_copy_inaddrs(nsk, ssk);
+-	__mptcp_propagate_sndbuf(nsk, ssk);
  
- 	memcpy(stats, tsk->signal->stats, sizeof(*stats));
-+	stats->version = TASKSTATS_VERSION;
+ 	mptcp_rcv_space_init(msk, ssk);
+ 	msk->rcvq_space.time = mptcp_stamp();
+@@ -4038,6 +4037,7 @@ static int mptcp_stream_accept(struct so
+ 		}
  
- send:
- 	send_cpu_listeners(rep_skb, listeners);
+ 		mptcp_rps_record_subflows(msk);
++		__mptcp_propagate_sndbuf(newsk, mptcp_subflow_tcp_sock(subflow));
+ 
+ 		/* Do late cleanup for the first subflow as necessary. Also
+ 		 * deal with bad peers not doing a complete shutdown.
 
 
