@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8D03BE630;
-	Mon,  4 May 2026 14:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3336D35A3AD;
+	Mon,  4 May 2026 14:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903933; cv=none; b=BWDDbuxC2MpLi1t/wei6C4G5GqKMLubjpZflO41s059rErCl6PAvt6Trj4T22MTfaeVOSMd2IKPtJ52tTHNUUbz5itrkul+W4D2SUWltUfsxonnGewdz8Q4dFzEso56JrP6fLWFrU/YjROfRWGlKdTZnbidlcBq+c1ESS40/HIo=
+	t=1777903936; cv=none; b=k9oh+baStY4X4Ie0k1LKObOIa47iayKgjLNLUDbdF2UoYr7IfXGeSd8p3/7L5zIpQ+BkeMNpC6Co+FIEUV4qJ9Nd6bjwF1uWUxR3wdr8v0x/NsE9c0poAatg8j7evt6NwOOH2QEEH3tdsp9YKlVpYl7lv3BZJUF2hyR1BPj/UEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903933; c=relaxed/simple;
-	bh=kMGvUilzEnTXMoTORIbJ8g+hf+UjgM4rTNIag/gEEpY=;
+	s=arc-20240116; t=1777903936; c=relaxed/simple;
+	bh=0te0Xg0GDDXSsI+LDqMgTcSFjRvwkkYO8px1yLDgtHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4p4sVen3UKDYHaqrXlCHpLQe9zjylh547vIRE0JfDzGSpnRIUsTgr0eZa6GrjVMW0ktO+zs/XuQv3seqZk11bMRc+e3Et45To+l8lVe/0zUAOXevBN6omnlvMfAFgG9zFrsGPNYkqKFxNY0KUMsX1mVbHl2GKIwZZclHNrhiV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqAorcN5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HL7vK4l26jrRw6Ddztq8pQaLPi0fCRGTxq+I2f9EiF3tNNGI6OcS+DB5OqMjutnG6/aE0LT86BcEHwZk+LZxZashry5XID0FTMugr033s5/Pz/ZUVuqLXymHgErXPJiGl7AaaLdHZU35nQOwfR3COH8bryUlc50/ZIYuWXjpHaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdL047ah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqAorcN5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A72C2BCB8;
-	Mon,  4 May 2026 14:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdL047ah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88415C2BCB8;
+	Mon,  4 May 2026 14:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903933;
-	bh=kMGvUilzEnTXMoTORIbJ8g+hf+UjgM4rTNIag/gEEpY=;
+	s=korg; t=1777903935;
+	bh=0te0Xg0GDDXSsI+LDqMgTcSFjRvwkkYO8px1yLDgtHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NqAorcN5Vwboo6zfr4jvSC7dIRClG/ZfeL/h8Nm/USKoWgTJ0bzyVb85wzNY2kyjr
-	 gtM5JLCCGdSid3bFDVDTqf06HdmVzQXgbvCZ/IFNhSdAZ9tF15bDi9+0oNsg8LTNIW
-	 lIj334+UuvvcinF0qRmUOp7zWbycYS3s02oKMycU=
+	b=UdL047ahclXL3Aps07l82VBkAQM6KqF5euPSe2j/TZtzmzLNWQXRJ3OmUCQo9YkwF
+	 Ix5aCYhfaiGbXi/BHHwKRyuFL1nwzRypiq6LgSLeh1uyBr5Ha4dH2p8CAKMn9xrjmv
+	 7EukxBB6TN8m8vz+yCDEfyAh+UqoXJ79cY6q/vxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 117/275] net: txgbe: fix RTNL assertion warning when remove module
-Date: Mon,  4 May 2026 15:50:57 +0200
-Message-ID: <20260504135147.255021555@linuxfoundation.org>
+	Robert Marko <robert.marko@sartura.hr>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>
+Subject: [PATCH 6.18 118/275] arm64: dts: marvell: uDPU: add ethernet aliases
+Date: Mon,  4 May 2026 15:50:58 +0200
+Message-ID: <20260504135147.291539811@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,97 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Robert Marko <robert.marko@sartura.hr>
 
-commit e159f05e12cc1111a3103b99375ddf0dfd0e7d63 upstream.
+commit 38f09c97340cd23f976242e6cb1e7aa4c8ed28d0 upstream.
 
-For the copper NIC with external PHY, the driver called
-phylink_connect_phy() during probe and phylink_disconnect_phy() during
-remove. It caused an RTNL assertion warning in phylink_disconnect_phy()
-upon module remove.
+On eDPU plus, which is an updated revision of eDPU which uses an external
+MV88E6361 switch we are relying on U-Boot to detect the board, and then
+enable and disable the required nodes for that revision.
 
-To fix this, add rtnl_lock() and rtnl_unlock() around the
-phylink_disconnect_phy() in remove function.
+However, it seems that I missed adding the required aliases for ethernet
+controllers, and this worked as in OpenWrt we had added those locally.
 
- ------------[ cut here ]------------
- RTNL: assertion failed at drivers/net/phy/phylink.c (2351)
- WARNING: drivers/net/phy/phylink.c:2351 at
-phylink_disconnect_phy+0xd8/0xf0 [phylink], CPU#0: rmmod/4464
- Modules linked in: ...
- CPU: 0 UID: 0 PID: 4464 Comm: rmmod Kdump: loaded Not tainted 7.0.0-rc4+
- Hardware name: Micro-Star International Co., Ltd. MS-7E16/X670E GAMING
-PLUS WIFI (MS-7E16), BIOS 1.90 12/31/2024
- RIP: 0010:phylink_disconnect_phy+0xe4/0xf0 [phylink]
- Code: 5b 41 5c 41 5d 41 5e 41 5f 5d 31 c0 31 d2 31 f6 31 ff e9 3a 38 8f e7
-48 8d 3d 48 87 e2 ff ba 2f 09 00 00 48 c7 c6 c1 22 24 c0 <67> 48 0f b9 3a
-e9 34 ff ff ff 66 90 90 90 90 90 90 90 90 90 90 90
- RSP: 0018:ffffce7288363ac0 EFLAGS: 00010246
- RAX: 0000000000000000 RBX: ffff89654b2a1a00 RCX: 0000000000000000
- RDX: 000000000000092f RSI: ffffffffc02422c1 RDI: ffffffffc0239020
- RBP: ffffce7288363ae8 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000000 R12: ffff8964c4022000
- R13: ffff89654fce3028 R14: ffff89654ebb4000 R15: ffffffffc0226348
- FS:  0000795e80d93780(0000) GS:ffff896c52857000(0000)
-knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00005b528b592000 CR3: 0000000170d0f000 CR4: 0000000000f50ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  txgbe_remove_phy+0xbb/0xd0 [txgbe]
-  txgbe_remove+0x4c/0xb0 [txgbe]
-  pci_device_remove+0x41/0xb0
-  device_remove+0x43/0x80
-  device_release_driver_internal+0x206/0x270
-  driver_detach+0x4a/0xa0
-  bus_remove_driver+0x83/0x120
-  driver_unregister+0x2f/0x60
-  pci_unregister_driver+0x40/0x90
-  txgbe_driver_exit+0x10/0x850 [txgbe]
-  __do_sys_delete_module.isra.0+0x1c3/0x2f0
-  __x64_sys_delete_module+0x12/0x20
-  x64_sys_call+0x20c3/0x2390
-  do_syscall_64+0x11c/0x1500
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? do_syscall_64+0x15a/0x1500
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? do_fault+0x312/0x580
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? __handle_mm_fault+0x9d5/0x1040
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? count_memcg_events+0x101/0x1d0
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? handle_mm_fault+0x1e8/0x2f0
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? do_user_addr_fault+0x2f8/0x820
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? irqentry_exit+0xb2/0x600
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? exc_page_fault+0x92/0x1c0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: 02b2a6f91b90 ("net: txgbe: support copper NIC with external PHY")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/8B47A5872884147D+20260407094041.4646-1-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 660b8b2f3944 ("arm64: dts: marvell: eDPU: add support for version with external switch")
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-@@ -659,7 +659,9 @@ void txgbe_remove_phy(struct txgbe *txgb
- 		return;
- 	case wx_mac_sp:
- 		if (txgbe->wx->media_type == wx_media_copper) {
-+			rtnl_lock();
- 			phylink_disconnect_phy(txgbe->wx->phylink);
-+			rtnl_unlock();
- 			phylink_destroy(txgbe->wx->phylink);
- 			return;
- 		}
+--- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
++++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
+@@ -15,6 +15,11 @@
+ #include "armada-372x.dtsi"
+ 
+ / {
++	aliases {
++		ethernet0 = &eth0;
++		ethernet1 = &eth1;
++	};
++
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
 
 
