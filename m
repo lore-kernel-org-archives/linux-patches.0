@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99013DB642;
-	Mon,  4 May 2026 13:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098BF3DC4AB;
+	Mon,  4 May 2026 13:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903002; cv=none; b=N14E8tltqt9t/mRC7wPP5ofkuxa4E3Pt87CB15/2qeGw5mMiOXDklwtyiZAUKz0EJq1Hbwro6oNZbj4daaa5HeOhwDk2Ydqpb7CAC+3U2b7PFNnT9QiV92flRvVT3WZ8Rk3vnrgbVg9FwQ1uH8TW3TZjIsA+x9moMEzNXvsFcG0=
+	t=1777903005; cv=none; b=EsmipADZ/oBkthHWTRNLJfOFPmkU1kzT3aLkXwlnPxAKIR9TGYisJRU3vgWkQuE2cIz2wD2A6JMmUklIxZIkf0nsJj3NG2BWvq4BZI5iIIXKSp3snEsVkZVRxSISWfX3jiugAXmhNZrg4cki966XbP1kaLVAzokQTvxvePLqnsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903002; c=relaxed/simple;
-	bh=LFLJoOyd3G+i0scQJh4XaAcHmKZBEfh4HrdnC3/24hE=;
+	s=arc-20240116; t=1777903005; c=relaxed/simple;
+	bh=f0rFnf0OCZBzDyWNFHPMB3Ic3aKTiiUC4TNfErJUMOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kPsPmbOhufkRTfeJnxvguo+6M4i+9acy3AGnBmK0wRrP1F5eqBZ5HlH4nBGNDLGHhvmGRX2yDq4GE+5RBsVLC2DV3OT7+fUa4HNpgj3CE2HHUuPVqQ+4VyC9M/TsVtE5qceYh5g3+OPwAUeNAPk08EUm2RjuMCWrB1WHuWfsbMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZpioydY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V1z/NWKc30v9lNDyWmj3bvciMEFwoMnf8tzlIXlzOS1hXTj/UbuQNdOgR3uW6gJW88lMCJC2WoJKbvWcTPzHgD+ZOy/bYL2h87r0H+8h632zxKBYMIDN8vjtlyUzjpyD7UiFqT/9Z3g3hcSvoDw1uU7aIE0pJ19JGb4oXOUbemg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKrjjRWW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZpioydY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053E6C2BCB8;
-	Mon,  4 May 2026 13:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKrjjRWW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94336C2BCF6;
+	Mon,  4 May 2026 13:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903002;
-	bh=LFLJoOyd3G+i0scQJh4XaAcHmKZBEfh4HrdnC3/24hE=;
+	s=korg; t=1777903004;
+	bh=f0rFnf0OCZBzDyWNFHPMB3Ic3aKTiiUC4TNfErJUMOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZpioydYgHoMgm+9uKqyUWlDQiy0L+9Msa9gdvQmEqudxPBHOP6GSmw8/B9rRVR03
-	 W/yBynlCJB3nZOMqYZmaz/HyManU4dIp2uYSbu0jwaoDuXY1R516N+1fQgHyeyLJpl
-	 KDohdrRc4vGVBhprNNveAzxch/VKxP2yyem8JSWM=
+	b=RKrjjRWW2myKggOdYe3xfzUUaZFqneKYa6EnTJvS9w5tHXXKrf5RSN0zs/WcQ+q+M
+	 eEBj9QZzZ77jFI0DzxY5EByvO3fy/K+hBvj8Ko0sIwdKWtVOJnArpFVrGVR9bQgwxk
+	 h9dz7m3K+7ABu1NLeX4l/c9kT574Uoi86kCVP9G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 7.0 033/307] wifi: rtw88: check for PCI upstream bridge existence
-Date: Mon,  4 May 2026 15:48:38 +0200
-Message-ID: <20260504135144.075884918@linuxfoundation.org>
+	Daniel Hodges <git@danielhodges.dev>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.0 034/307] wifi: mwifiex: fix use-after-free in mwifiex_adapter_cleanup()
+Date: Mon,  4 May 2026 15:48:39 +0200
+Message-ID: <20260504135144.111167217@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,44 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Daniel Hodges <git@danielhodges.dev>
 
-commit eb101d2abdcccb514ca4fccd3b278dd8267374f6 upstream.
+commit ae5e95d4157481693be2317e3ffcd84e36010cbb upstream.
 
-pci_upstream_bridge() returns NULL if the device is on a root bus.  If
-8821CE is installed in the system with such a PCI topology, the probing
-routine will crash.  This has probably been unnoticed as 8821CE is mostly
-supplied in laptops where there is a PCI-to-PCI bridge located upstream
-from the device.  However the card might be installed on a system with
-different configuration.
+The mwifiex_adapter_cleanup() function uses timer_delete()
+(non-synchronous) for the wakeup_timer before the adapter structure is
+freed. This is incorrect because timer_delete() does not wait for any
+running timer callback to complete.
 
-Check if the bridge does exist for the specific workaround to be applied.
+If the wakeup_timer callback (wakeup_timer_fn) is executing when
+mwifiex_adapter_cleanup() is called, the callback will continue to
+access adapter fields (adapter->hw_status, adapter->if_ops.card_reset,
+etc.) which may be freed by mwifiex_free_adapter() called later in the
+mwifiex_remove_card() path.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
+Use timer_delete_sync() instead to ensure any running timer callback has
+completed before returning.
 
-Fixes: 24f5e38a13b5 ("rtw88: Disable PCIe ASPM while doing NAPI poll on 8821CE")
+Fixes: 4636187da60b ("mwifiex: add wakeup timer based recovery mechanism")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260220094730.49791-1-pchelkin@ispras.ru
+Signed-off-by: Daniel Hodges <git@danielhodges.dev>
+Link: https://patch.msgid.link/20260206194401.2346-1-git@danielhodges.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/init.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -1804,7 +1804,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
- 	}
- 
- 	/* Disable PCIe ASPM L1 while doing NAPI poll for 8821CE */
--	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C && bridge->vendor == PCI_VENDOR_ID_INTEL)
-+	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C &&
-+	    bridge && bridge->vendor == PCI_VENDOR_ID_INTEL)
- 		rtwpci->rx_no_aspm = true;
- 
- 	rtw_pci_phy_cfg(rtwdev);
+--- a/drivers/net/wireless/marvell/mwifiex/init.c
++++ b/drivers/net/wireless/marvell/mwifiex/init.c
+@@ -391,7 +391,7 @@ static void mwifiex_invalidate_lists(str
+ static void
+ mwifiex_adapter_cleanup(struct mwifiex_adapter *adapter)
+ {
+-	timer_delete(&adapter->wakeup_timer);
++	timer_delete_sync(&adapter->wakeup_timer);
+ 	cancel_delayed_work_sync(&adapter->devdump_work);
+ 	mwifiex_cancel_all_pending_cmd(adapter);
+ 	wake_up_interruptible(&adapter->cmd_wait_q.wait);
 
 
