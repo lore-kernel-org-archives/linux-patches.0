@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5652A1A9FAF;
-	Mon,  4 May 2026 14:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29623AA4F8;
+	Mon,  4 May 2026 14:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904054; cv=none; b=Pp1vBu8ejy5VtY2JwPX3KRhZztDlFxuh9TsA7BcfxgcCDH4xAiTZ1AxZCk2AJhTqkwse6xCcNBT6pa9auh7bOsREdIBh4maVOUdjj3CNmkUaeBRk3w7g4uSEKBUCgG+QQdvn9Rj7j8p35Ig3G6VxaTkVE9a+wkzrFfChM+H7Tjg=
+	t=1777904057; cv=none; b=jB3oK9IKa1cb/19yKgwT0gB+LbzVz/99IeWDUC7jzR8QdMZD8UTiwbFJfm5cmwGOUuZ+6hz2cewT5rpsaLGApMJJIScaH2A5Ti+NL/J9678s5anmTzHjezwW0jBHYJQLdbC5WaSczaFZyjDZzl+89IRKHC2S6wJH7dDcwO9JBeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904054; c=relaxed/simple;
-	bh=29TqC3ZVArH5yt2xVh2+JM9sLqeWfMzm/+RkuM92bDc=;
+	s=arc-20240116; t=1777904057; c=relaxed/simple;
+	bh=PFBEPdGGFM1KnV+0skt1jKrBVkZ+2QQKSjoVzxo1t7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O8Uj7j4BeRBShfIm+LL9/r8Y83CZl9eAYC1cctrQEgnQfhcV5gVS97gnPx2bmCTV2dYcJ0oMTbekp10T+aNJdT3qxKKjJg1ZjkGXxqIGZEhugKuf2p47YZCK3L08/SlDStmUT60Uln1l/fUoEOdf4VXfRzWK30xMHNoWnk+xa+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s08aqgt1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pr++Wp90ivgeVmQyJYMVpSdhUwsuKpe9M4fb9B1JQkWtSkRYmAmIen/rxvtqSAL0kbEEmNH0VMSLxevrtt/LMqg8SIaBBi5xZpHp3HZpGC6jsA603JCjVVoCVWv+mJalu0R97X5fjdZHXC5+LnvtUhMgR8NQuO6MbozAxtLWO4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dsU0rJHI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s08aqgt1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CC8C2BCB8;
-	Mon,  4 May 2026 14:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dsU0rJHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794D6C2BCB8;
+	Mon,  4 May 2026 14:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904054;
-	bh=29TqC3ZVArH5yt2xVh2+JM9sLqeWfMzm/+RkuM92bDc=;
+	s=korg; t=1777904056;
+	bh=PFBEPdGGFM1KnV+0skt1jKrBVkZ+2QQKSjoVzxo1t7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s08aqgt1BTdoBYsY2RkLdammue+9smb0BeAXjAbG63tZvW5hgepyVJfzTC17xcEKO
-	 fh9d2yHg4qp2q4PYPb9AfegQqEUu+ZdcsgN18kRQTUUwmv1vERapXQGRJB3gHsrH8D
-	 mD1pk/wAm6A4Yh1arIxd4vgVlGGFLpjt1wDbsLEY=
+	b=dsU0rJHIWsLFYcrA+rTR1pI7bm7Rv+JxQV6HwYpIofNLGbAQ3RMVGRzStCbtmB0e3
+	 y1KOxdlBiovcSv2QCzC4tvVSHgglO4q4pgojHLuSN9c+40QjSd0UVtuvu6fynMIetz
+	 i3OOwy9RTyoRFmSXPVu9lWvF7E+HZDNSLyPA6I0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacqueline Wong <jacqwong@google.com>,
-	Jordan Hand <jhand@google.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.18 158/275] tpm: tpm_tis: add error logging for data transfer
-Date: Mon,  4 May 2026 15:51:38 +0200
-Message-ID: <20260504135148.854515055@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 167/275] LoongArch: KVM: Use CSR_CRMD_PLV in kvm_arch_vcpu_in_kernel()
+Date: Mon,  4 May 2026 15:51:47 +0200
+Message-ID: <20260504135149.261607823@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -51,42 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacqueline Wong <jacqwong@google.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit 0471921e2d1043dcc6de5cffb49dd37709521abe upstream.
+commit da773ea3f59032f659bfc4c450ca86e384786168 upstream.
 
-Add logging to more easily determine reason for transmit failure
+The function reads LOONGARCH_CSR_CRMD but uses CSR_PRMD_PPLV to
+extract the privilege level. While both masks have the same value
+(0x3), CSR_CRMD_PLV is the semantically correct constant for CRMD.
 
-Cc: stable@vger.kernel.org # v6.6+
-Fixes: 280db21e153d8 ("tpm_tis: Resend command to recover from data transfer errors")
-Signed-off-by: Jacqueline Wong <jacqwong@google.com>
-Signed-off-by: Jordan Hand <jhand@google.com>
-Link: https://lore.kernel.org/r/20260415160006.2275325-2-jacqwong@google.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/loongarch/kvm/vcpu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -472,6 +472,8 @@ static int tpm_tis_send_data(struct tpm_
- 		status = tpm_tis_status(chip);
- 		if (!itpm && (status & TPM_STS_DATA_EXPECT) == 0) {
- 			rc = -EIO;
-+			dev_err(&chip->dev, "TPM_STS_DATA_EXPECT should be set. sts = 0x%08x\n",
-+				status);
- 			goto out_err;
- 		}
- 	}
-@@ -492,6 +494,8 @@ static int tpm_tis_send_data(struct tpm_
- 	status = tpm_tis_status(chip);
- 	if (!itpm && (status & TPM_STS_DATA_EXPECT) != 0) {
- 		rc = -EIO;
-+		dev_err(&chip->dev, "TPM_STS_DATA_EXPECT should be unset. sts = 0x%08x\n",
-+			status);
- 		goto out_err;
- 	}
+--- a/arch/loongarch/kvm/vcpu.c
++++ b/arch/loongarch/kvm/vcpu.c
+@@ -375,7 +375,7 @@ bool kvm_arch_vcpu_in_kernel(struct kvm_
+ 	val = gcsr_read(LOONGARCH_CSR_CRMD);
+ 	preempt_enable();
  
+-	return (val & CSR_PRMD_PPLV) == PLV_KERN;
++	return (val & CSR_CRMD_PLV) == PLV_KERN;
+ }
+ 
+ #ifdef CONFIG_GUEST_PERF_EVENTS
 
 
