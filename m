@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4733D8129;
-	Mon,  4 May 2026 14:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA983D6484;
+	Mon,  4 May 2026 14:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904247; cv=none; b=Il2sDrNYIjUhfwTJV6fL8dbqX51qErH/yI85ycozHcV9F4tNcxc0cdfC7kuq9DlESvyoPCjRt1gENq9xw8paX61TB2KvxrRrQid7mjKws8UmX3QAWdO3CT2uqbHVaj9y7+fW93un7EOUfwlEqt6Q8E4y0dcfZwcEhF5IHqVNAs4=
+	t=1777904249; cv=none; b=ij9tw8ve/JNDvyjz1zVKlrRxYBeqmDnqAppP7St2ccJ2y7pVq+8M/f4/4wfIHUoTNC5A7YiFdrds2XBRFaHVtlmtQPg9YCEu4ZFWKURuVMHFm381geWixYckjgTdc2O0UcvxA5U2VghaBLk4Zu/h+mx206iZcptUDSpErh+8CQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904247; c=relaxed/simple;
-	bh=9xoCkiakthVZvobcfm0TIGn4BZIWHn7Q0gv3OVxK9LY=;
+	s=arc-20240116; t=1777904249; c=relaxed/simple;
+	bh=pa2/rqfsIpwMDQTW2fl2c6fT/aUnSmT9TQLQK1a/FY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ESkPKReWLyJ1zT71R5Zy/pkl7YagyBTTi9Ex69QZHy/q9SA2HO49vHeL7OeJsu4orbuBaDL3El6zRTDmCB/ifdVs9/RzvyoLisVsQ6yDTHIqyp2zcEyigukLQnMJAc8TXZbLmLAzAjQRosxYMURHvrgP4NaFnzY4NbAmN+46F1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuBDRmI6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdP/4oSJTFcgBnuMmPDecy8I34BN2853MQAZmowyQnSvMNxVqCV5WUkw8YPvzXsXfX1pSNZVRY6aMwXlZFf4ZSvTNnb0oln6O2Dqg94DOPLXG6FvvVgQnPXg+OtcHvn21jN+Prpv1/bsVBXJHupsncUUuTI24pV62tF3KDgu3hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6Ocq1Tn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuBDRmI6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDE7C2BCB8;
-	Mon,  4 May 2026 14:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6Ocq1Tn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10575C2BCB8;
+	Mon,  4 May 2026 14:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904246;
-	bh=9xoCkiakthVZvobcfm0TIGn4BZIWHn7Q0gv3OVxK9LY=;
+	s=korg; t=1777904249;
+	bh=pa2/rqfsIpwMDQTW2fl2c6fT/aUnSmT9TQLQK1a/FY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MuBDRmI6Uv4E0xNsdMK4ZWERuiBpNe/cKv6vEVssTmfpP12/K3Fo3M2xKBx4XgQ9W
-	 822ZKyxTWUmcFRPcreOKTsd5sTco96F8tslqdkBhzlWxkDX/+kGmI/unsJ2Rk9gClV
-	 jQUF3ZwzQXUPylVvLhExQMWpe6/910ZWj10/jWa4=
+	b=u6Ocq1Tn1Q/PpwDBtexLCIs6GrCpcGB5SDMJLM1pB/HeQrrbx+dTuSJRtBcWm7VMG
+	 AIyeTIEEozRQ6TTs1NeZU1I40qOay+xic4+TPD6/JvwRlWobhvFo0vIPrFCmzxBRJN
+	 cqktU1ltlsM9GsEXjWLgZjpfddCcDkcbnu3inTuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Keenan Dong <keenanat2000@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.18 241/275] rtmutex: Use waiter::task instead of current in remove_waiter()
-Date: Mon,  4 May 2026 15:53:01 +0200
-Message-ID: <20260504135151.996470173@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 242/275] rxgk: Fix potential integer overflow in length check
+Date: Mon,  4 May 2026 15:53:02 +0200
+Message-ID: <20260504135152.032395527@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -54,83 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keenan Dong <keenanat2000@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 3bfdc63936dd4773109b7b8c280c0f3b5ae7d349 upstream.
+commit 6929350080f4da292d111a3b33e53138fee51cec upstream.
 
-remove_waiter() is used by the slowlock paths, but it is also used for
-proxy-lock rollback in rt_mutex_start_proxy_lock() when invoked from
-futex_requeue().
+Fix potential integer overflow in rxgk_extract_token() when checking the
+length of the ticket.  Rather than rounding up the value to be tested
+(which might overflow), round down the size of the available data.
 
-In the latter case waiter::task is not current, but remove_waiter()
-operates on current for the dequeue operation. That results in several
-problems:
-
-  1) the rbtree dequeue happens without waiter::task::pi_lock being held
-
-  2) the waiter task's pi_blocked_on state is not cleared, which leaves a
-     dangling pointer primed for UAF around.
-
-  3) rt_mutex_adjust_prio_chain() operates on the wrong top priority waiter
-     task
-
-Use waiter::task instead of current in all related operations in
-remove_waiter() to cure those problems.
-
-[ tglx: Fixup rt_mutex_adjust_prio_chain(), add a comment and amend the
-  	changelog ]
-
-Fixes: 8161239a8bcc ("rtmutex: Simplify PI algorithm and make highest prio task get lock")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
+Fixes: 2429a1976481 ("rxrpc: Fix untrusted unsigned subtract")
+Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-6-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/rtmutex.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/rxrpc/rxgk_app.c    | 2 +-
+ net/rxrpc/rxgk_common.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/locking/rtmutex.c
-+++ b/kernel/locking/rtmutex.c
-@@ -1535,20 +1535,23 @@ static bool rtmutex_spin_on_owner(struct
-  *
-  * Must be called with lock->wait_lock held and interrupts disabled. It must
-  * have just failed to try_to_take_rt_mutex().
-+ *
-+ * When invoked from rt_mutex_start_proxy_lock() waiter::task != current !
-  */
- static void __sched remove_waiter(struct rt_mutex_base *lock,
- 				  struct rt_mutex_waiter *waiter)
- {
- 	bool is_top_waiter = (waiter == rt_mutex_top_waiter(lock));
- 	struct task_struct *owner = rt_mutex_owner(lock);
-+	struct task_struct *waiter_task = waiter->task;
- 	struct rt_mutex_base *next_lock;
+diff --git a/net/rxrpc/rxgk_app.c b/net/rxrpc/rxgk_app.c
+index 30275cb5ba3e..5587639d60c5 100644
+--- a/net/rxrpc/rxgk_app.c
++++ b/net/rxrpc/rxgk_app.c
+@@ -214,7 +214,7 @@ int rxgk_extract_token(struct rxrpc_connection *conn, struct sk_buff *skb,
+ 	ticket_len	= ntohl(container.token_len);
+ 	ticket_offset	= token_offset + sizeof(container);
  
- 	lockdep_assert_held(&lock->wait_lock);
+-	if (xdr_round_up(ticket_len) > token_len - sizeof(container))
++	if (ticket_len > xdr_round_down(token_len - sizeof(container)))
+ 		goto short_packet;
  
--	raw_spin_lock(&current->pi_lock);
--	rt_mutex_dequeue(lock, waiter);
--	current->pi_blocked_on = NULL;
--	raw_spin_unlock(&current->pi_lock);
-+	scoped_guard(raw_spinlock, &waiter_task->pi_lock) {
-+		rt_mutex_dequeue(lock, waiter);
-+		waiter_task->pi_blocked_on = NULL;
-+	}
+ 	_debug("KVNO %u", kvno);
+diff --git a/net/rxrpc/rxgk_common.h b/net/rxrpc/rxgk_common.h
+index 80164d89e19c..1e257d7ab8ec 100644
+--- a/net/rxrpc/rxgk_common.h
++++ b/net/rxrpc/rxgk_common.h
+@@ -34,6 +34,7 @@ struct rxgk_context {
+ };
  
- 	/*
- 	 * Only update priority if the waiter was the highest priority
-@@ -1584,7 +1587,7 @@ static void __sched remove_waiter(struct
- 	raw_spin_unlock_irq(&lock->wait_lock);
+ #define xdr_round_up(x) (round_up((x), sizeof(__be32)))
++#define xdr_round_down(x) (round_down((x), sizeof(__be32)))
+ #define xdr_object_len(x) (4 + xdr_round_up(x))
  
- 	rt_mutex_adjust_prio_chain(owner, RT_MUTEX_MIN_CHAINWALK, lock,
--				   next_lock, NULL, current);
-+				   next_lock, NULL, waiter_task);
- 
- 	raw_spin_lock_irq(&lock->wait_lock);
- }
+ /*
+-- 
+2.54.0
+
 
 
