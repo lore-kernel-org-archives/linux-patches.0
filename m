@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547F236309C;
-	Mon,  4 May 2026 14:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13436309C;
+	Mon,  4 May 2026 14:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904843; cv=none; b=aHKRpiaO2bWllHQ2X7MAM/3mB+JPWAL39QYr+aRVEv0MhhcqJZdXgE5PN5vZ2kYL/GX8JTYA5uukOrycNrrVAvf9IIjxkINZxXyJC6m/+ycICNeJoGPVxvHZDvd9cCFA9IwJ64JQTdhXlr0S1JDSxCSK2XvrBzvQHmtkkfc+VQY=
+	t=1777904845; cv=none; b=SqPZoGMFBxYdeYD1p/wB6au5F5J6FgcCPPOi9T41NMHvUJDQrJIS+vNk0NMfY2OGZ0tTPP7Jdn6wyLRUkEIkMOs/sPx7zWIxsZ00po3K8Yjm69gVxKN+Ue4d+NTDHX0RQMRMc/+gU7HsYRv7hTIWRQ955W7Ja2vIjfrNuRjGARA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904843; c=relaxed/simple;
-	bh=QqaKcGcpUAvT5INq0UOOYFle0qaMuWrOg+VVtCGk0LA=;
+	s=arc-20240116; t=1777904845; c=relaxed/simple;
+	bh=TAGOi28nMwWMofdLxyDhKRUN0Uo9ZyD5lYmxDr5oqbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/BBZlWDtX/vbduZOJfKadlnppq4+3qjuBa6FEFpO7GLgSGOe0X1qDmykGPbEAbJtOdCO0waSL/76aimSB3cTq+wyutKLBrWvJmpK4ReacypH+Lt/UFX0YU+j+0JLIpb+tNNw2nloAzwQAThebTv74rzlAn0fr4jVtjdgBpGHJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOLBtjxK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f/fMHIfIo6E2yjI0Vm7zUi01ku8V/YFrGslbQPIjCu0iFv4GAphaeuvQ49KQ9lAqT/Axyki/1AUIJ6aShvara7LPRhk7luVH0js24rid5adsgPPcJv9wi8RsdRHPLeFPN4UIk9OHhI9iNg2pdtyPUKhqB3YKvf+fRWXhxpWgzd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQpzxhKc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOLBtjxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C24C2BCB8;
-	Mon,  4 May 2026 14:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQpzxhKc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CABC2BCB8;
+	Mon,  4 May 2026 14:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904842;
-	bh=QqaKcGcpUAvT5INq0UOOYFle0qaMuWrOg+VVtCGk0LA=;
+	s=korg; t=1777904845;
+	bh=TAGOi28nMwWMofdLxyDhKRUN0Uo9ZyD5lYmxDr5oqbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOLBtjxKeLrpIcQtm7B32/GlXWcUpycwRTE71IqGwu9tkUm4cn/TOeldWOC4IagZo
-	 rgcmy+QrQPjDcwVoJjOAMb/WCR9MMFDrmwMQkVcJSjEy/PLkDDd7MNX8qnJbLU6myv
-	 ggkmww8FoL7K1TU4LB8D390/5yU1fke+LhZTDG1Q=
+	b=EQpzxhKc132HmMOEDP5OfUOr6woMwM01rEmQuohaXIgTlp90uE09IhT+lueX37/3P
+	 VqQWEvDqPNjQE3WOpNX3b+WgBA4v374ib6LkUecOYkjW4zfpfr+NrpJZc3gq38R0h7
+	 wGOdGMySvq+kj5CnlmvTGKKKz0sA0Jp/oye0Se30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Antoniu Miclaus <antoniu.miclaus@analog.com>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 195/215] iio: frequency: admv1013: add dev variable
-Date: Mon,  4 May 2026 15:53:34 +0200
-Message-ID: <20260504135137.609182155@linuxfoundation.org>
+Subject: [PATCH 6.12 196/215] iio: frequency: admv1013: fix NULL pointer dereference on str
+Date: Mon,  4 May 2026 15:53:35 +0200
+Message-ID: <20260504135137.648804291@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -46,6 +48,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -54,113 +57,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit e61b5bb0e91390adee41eaddc0a1a7d55d5652b2 ]
+[ Upstream commit aac0a51b16700b403a55b67ba495de021db78763 ]
 
-Introduce a local struct device pointer in functions that reference
-&spi->dev for device-managed resource calls and device property reads,
-improving code readability.
+When device_property_read_string() fails, str is left uninitialized
+but the code falls through to strcmp(str, ...), dereferencing a garbage
+pointer. Replace manual read/strcmp with
+device_property_match_property_string() and consolidate the SE mode
+enums into a single sequential enum, mapping to hardware register
+values via a switch consistent with other bitfields in the driver.
 
+Several cleanup patches have been applied to this driver recently so
+this will need a manual backport.
+
+Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: aac0a51b1670 ("iio: frequency: admv1013: fix NULL pointer dereference on str")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/admv1013.c |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/iio/frequency/admv1013.c |   67 ++++++++++++++++++++++-----------------
+ 1 file changed, 38 insertions(+), 29 deletions(-)
 
 --- a/drivers/iio/frequency/admv1013.c
 +++ b/drivers/iio/frequency/admv1013.c
-@@ -518,11 +518,11 @@ static int admv1013_properties_parse(str
- {
- 	int ret;
- 	const char *str;
--	struct spi_device *spi = st->spi;
-+	struct device *dev = &st->spi->dev;
+@@ -85,9 +85,9 @@ enum {
+ };
  
--	st->det_en = device_property_read_bool(&spi->dev, "adi,detector-enable");
-+	st->det_en = device_property_read_bool(dev, "adi,detector-enable");
+ enum {
+-	ADMV1013_SE_MODE_POS = 6,
+-	ADMV1013_SE_MODE_NEG = 9,
+-	ADMV1013_SE_MODE_DIFF = 12
++	ADMV1013_SE_MODE_POS,
++	ADMV1013_SE_MODE_NEG,
++	ADMV1013_SE_MODE_DIFF,
+ };
  
--	ret = device_property_read_string(&spi->dev, "adi,input-mode", &str);
-+	ret = device_property_read_string(dev, "adi,input-mode", &str);
- 	if (ret)
- 		st->input_mode = ADMV1013_IQ_MODE;
- 
-@@ -533,7 +533,7 @@ static int admv1013_properties_parse(str
- 	else
- 		return -EINVAL;
- 
--	ret = device_property_read_string(&spi->dev, "adi,quad-se-mode", &str);
-+	ret = device_property_read_string(dev, "adi,quad-se-mode", &str);
- 	if (ret)
- 		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
- 
-@@ -546,11 +546,11 @@ static int admv1013_properties_parse(str
- 	else
- 		return -EINVAL;
- 
--	ret = devm_regulator_bulk_get_enable(&st->spi->dev,
-+	ret = devm_regulator_bulk_get_enable(dev,
- 					     ARRAY_SIZE(admv1013_vcc_regs),
- 					     admv1013_vcc_regs);
- 	if (ret) {
--		dev_err_probe(&spi->dev, ret,
-+		dev_err_probe(dev, ret,
- 			      "Failed to request VCC regulators\n");
- 		return ret;
- 	}
-@@ -562,9 +562,10 @@ static int admv1013_probe(struct spi_dev
- {
- 	struct iio_dev *indio_dev;
- 	struct admv1013_state *st;
-+	struct device *dev = &spi->dev;
- 	int ret, vcm_uv;
- 
--	indio_dev = devm_iio_device_alloc(&spi->dev, sizeof(*st));
-+	indio_dev = devm_iio_device_alloc(dev, sizeof(*st));
- 	if (!indio_dev)
- 		return -ENOMEM;
- 
-@@ -581,20 +582,20 @@ static int admv1013_probe(struct spi_dev
+ struct admv1013_state {
+@@ -470,10 +470,23 @@ static int admv1013_init(struct admv1013
  	if (ret)
  		return ret;
  
--	ret = devm_regulator_get_enable_read_voltage(&spi->dev, "vcm");
-+	ret = devm_regulator_get_enable_read_voltage(dev, "vcm");
- 	if (ret < 0)
--		return dev_err_probe(&spi->dev, ret,
-+		return dev_err_probe(dev, ret,
- 				     "failed to get the common-mode voltage\n");
+-	data = FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, st->quad_se_mode);
++	switch (st->quad_se_mode) {
++	case ADMV1013_SE_MODE_POS:
++		data = 6;
++		break;
++	case ADMV1013_SE_MODE_NEG:
++		data = 9;
++		break;
++	case ADMV1013_SE_MODE_DIFF:
++		data = 12;
++		break;
++	default:
++		return -EINVAL;
++	}
  
- 	vcm_uv = ret;
- 
--	st->clkin = devm_clk_get_enabled(&spi->dev, "lo_in");
-+	st->clkin = devm_clk_get_enabled(dev, "lo_in");
- 	if (IS_ERR(st->clkin))
--		return dev_err_probe(&spi->dev, PTR_ERR(st->clkin),
-+		return dev_err_probe(dev, PTR_ERR(st->clkin),
- 				     "failed to get the LO input clock\n");
- 
- 	st->nb.notifier_call = admv1013_freq_change;
--	ret = devm_clk_notifier_register(&spi->dev, st->clkin, &st->nb);
-+	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
+ 	ret = __admv1013_spi_update_bits(st, ADMV1013_REG_QUAD,
+-					 ADMV1013_QUAD_SE_MODE_MSK, data);
++					 ADMV1013_QUAD_SE_MODE_MSK,
++					 FIELD_PREP(ADMV1013_QUAD_SE_MODE_MSK, data));
  	if (ret)
  		return ret;
  
-@@ -606,11 +607,11 @@ static int admv1013_probe(struct spi_dev
- 		return ret;
- 	}
- 
--	ret = devm_add_action_or_reset(&spi->dev, admv1013_powerdown, st);
-+	ret = devm_add_action_or_reset(dev, admv1013_powerdown, st);
- 	if (ret)
- 		return ret;
- 
--	return devm_iio_device_register(&spi->dev, indio_dev);
-+	return devm_iio_device_register(dev, indio_dev);
+@@ -514,37 +527,33 @@ static void admv1013_powerdown(void *dat
+ 	admv1013_spi_update_bits(data, ADMV1013_REG_ENABLE, enable_reg_msk, enable_reg);
  }
  
- static const struct spi_device_id admv1013_id[] = {
++static const char * const admv1013_input_modes[] = {
++	[ADMV1013_IQ_MODE] = "iq",
++	[ADMV1013_IF_MODE] = "if",
++};
++
++static const char * const admv1013_quad_se_modes[] = {
++	[ADMV1013_SE_MODE_POS] = "se-pos",
++	[ADMV1013_SE_MODE_NEG] = "se-neg",
++	[ADMV1013_SE_MODE_DIFF] = "diff",
++};
++
+ static int admv1013_properties_parse(struct admv1013_state *st)
+ {
+ 	int ret;
+-	const char *str;
+ 	struct device *dev = &st->spi->dev;
+ 
+ 	st->det_en = device_property_read_bool(dev, "adi,detector-enable");
+ 
+-	ret = device_property_read_string(dev, "adi,input-mode", &str);
+-	if (ret)
+-		st->input_mode = ADMV1013_IQ_MODE;
+-
+-	if (!strcmp(str, "iq"))
+-		st->input_mode = ADMV1013_IQ_MODE;
+-	else if (!strcmp(str, "if"))
+-		st->input_mode = ADMV1013_IF_MODE;
+-	else
+-		return -EINVAL;
+-
+-	ret = device_property_read_string(dev, "adi,quad-se-mode", &str);
+-	if (ret)
+-		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
+-
+-	if (!strcmp(str, "diff"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
+-	else if (!strcmp(str, "se-pos"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_POS;
+-	else if (!strcmp(str, "se-neg"))
+-		st->quad_se_mode = ADMV1013_SE_MODE_NEG;
+-	else
+-		return -EINVAL;
++	ret = device_property_match_property_string(dev, "adi,input-mode",
++						    admv1013_input_modes,
++						    ARRAY_SIZE(admv1013_input_modes));
++	st->input_mode = ret >= 0 ? ret : ADMV1013_IQ_MODE;
++
++	ret = device_property_match_property_string(dev, "adi,quad-se-mode",
++						    admv1013_quad_se_modes,
++						    ARRAY_SIZE(admv1013_quad_se_modes));
++	st->quad_se_mode = ret >= 0 ? ret : ADMV1013_SE_MODE_DIFF;
+ 
+ 	ret = devm_regulator_bulk_get_enable(dev,
+ 					     ARRAY_SIZE(admv1013_vcc_regs),
 
 
