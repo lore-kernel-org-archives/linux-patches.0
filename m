@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC1A3D300A;
-	Mon,  4 May 2026 14:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5652A1A9FAF;
+	Mon,  4 May 2026 14:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904051; cv=none; b=SV+lbL1Ub+TbCn+d+0s29ip/2m5MIpldyn5mscJkME43TXcpv/7D55aHQt9gJqz2ve0AJya0jI+bKfPxmaaPPw/6uqaiBsgwl64FkhLd2ReB3rOpJHGVAHq0rBak6T4fBzUsTF00GSFXasoz3z/eyTI5FmRRK/UkrEHJt+ojSYE=
+	t=1777904054; cv=none; b=Pp1vBu8ejy5VtY2JwPX3KRhZztDlFxuh9TsA7BcfxgcCDH4xAiTZ1AxZCk2AJhTqkwse6xCcNBT6pa9auh7bOsREdIBh4maVOUdjj3CNmkUaeBRk3w7g4uSEKBUCgG+QQdvn9Rj7j8p35Ig3G6VxaTkVE9a+wkzrFfChM+H7Tjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904051; c=relaxed/simple;
-	bh=se7XlK9K9klWw78kSPZmoes7h+mk3sX3/L9FRGSAo34=;
+	s=arc-20240116; t=1777904054; c=relaxed/simple;
+	bh=29TqC3ZVArH5yt2xVh2+JM9sLqeWfMzm/+RkuM92bDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlhbYMZQXsfT74IvzyfVNZGX417mhFeAXmH7zd+4PUPjOqkTdyJ90TOjvVWhq2LIlF9fBph1/IY2EFFCmauJslZDqlICe2sZ9cC2IZAL8eOD97oka5v8mWOfIQWcfPRVWZLMIlLGT+S0CgjtxhdidfAQQKTessSnSUduOIAjHLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzGCDdhM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O8Uj7j4BeRBShfIm+LL9/r8Y83CZl9eAYC1cctrQEgnQfhcV5gVS97gnPx2bmCTV2dYcJ0oMTbekp10T+aNJdT3qxKKjJg1ZjkGXxqIGZEhugKuf2p47YZCK3L08/SlDStmUT60Uln1l/fUoEOdf4VXfRzWK30xMHNoWnk+xa+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s08aqgt1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzGCDdhM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B49C2BCB8;
-	Mon,  4 May 2026 14:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s08aqgt1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CC8C2BCB8;
+	Mon,  4 May 2026 14:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904051;
-	bh=se7XlK9K9klWw78kSPZmoes7h+mk3sX3/L9FRGSAo34=;
+	s=korg; t=1777904054;
+	bh=29TqC3ZVArH5yt2xVh2+JM9sLqeWfMzm/+RkuM92bDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzGCDdhMjsohSVsbWIaycmVRXMTxZxzG20PtKoQFBVGkbFYh8heT/ugiBtYIRSC6Y
-	 r0r4i7nGRYLKUPD0PBnjA9VPW7llmn2kqMrLO4h43tuCmwtPs+XNo5xcHgmjK45vmA
-	 g0MDI65RTNq9TequIkpo6odHeB9ZaZL4ri2QCVyQ=
+	b=s08aqgt1BTdoBYsY2RkLdammue+9smb0BeAXjAbG63tZvW5hgepyVJfzTC17xcEKO
+	 fh9d2yHg4qp2q4PYPb9AfegQqEUu+ZdcsgN18kRQTUUwmv1vERapXQGRJB3gHsrH8D
+	 mD1pk/wAm6A4Yh1arIxd4vgVlGGFLpjt1wDbsLEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ruijie Li <ruijieli51@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 122/275] net/smc: avoid early lgr access in smc_clc_wait_msg
-Date: Mon,  4 May 2026 15:51:02 +0200
-Message-ID: <20260504135147.438761301@linuxfoundation.org>
+	Jacqueline Wong <jacqwong@google.com>,
+	Jordan Hand <jhand@google.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.18 158/275] tpm: tpm_tis: add error logging for data transfer
+Date: Mon,  4 May 2026 15:51:38 +0200
+Message-ID: <20260504135148.854515055@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -57,49 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruijie Li <ruijieli51@gmail.com>
+From: Jacqueline Wong <jacqwong@google.com>
 
-commit 5a8db80f721deee8e916c2cfdee78decda02ce4f upstream.
+commit 0471921e2d1043dcc6de5cffb49dd37709521abe upstream.
 
-A CLC decline can be received while the handshake is still in an early
-stage, before the connection has been associated with a link group.
+Add logging to more easily determine reason for transmit failure
 
-The decline handling in smc_clc_wait_msg() updates link-group level sync
-state for first-contact declines, but that state only exists after link
-group setup has completed. Guard the link-group update accordingly and
-keep the per-socket peer diagnosis handling unchanged.
-
-This preserves the existing sync_err handling for established link-group
-contexts and avoids touching link-group state before it is available.
-
-Fixes: 0cfdd8f92cac ("smc: connection and link group creation")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/08c68a5c817acf198cce63d22517e232e8d60718.1776850759.git.ruijieli51@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org # v6.6+
+Fixes: 280db21e153d8 ("tpm_tis: Resend command to recover from data transfer errors")
+Signed-off-by: Jacqueline Wong <jacqwong@google.com>
+Signed-off-by: Jordan Hand <jhand@google.com>
+Link: https://lore.kernel.org/r/20260415160006.2275325-2-jacqwong@google.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_clc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/smc/smc_clc.c
-+++ b/net/smc/smc_clc.c
-@@ -788,8 +788,8 @@ int smc_clc_wait_msg(struct smc_sock *sm
- 		dclc = (struct smc_clc_msg_decline *)clcm;
- 		reason_code = SMC_CLC_DECL_PEERDECL;
- 		smc->peer_diagnosis = ntohl(dclc->peer_diagnosis);
--		if (((struct smc_clc_msg_decline *)buf)->hdr.typev2 &
--						SMC_FIRST_CONTACT_MASK) {
-+		if ((dclc->hdr.typev2 & SMC_FIRST_CONTACT_MASK) &&
-+		    smc->conn.lgr) {
- 			smc->conn.lgr->sync_err = 1;
- 			smc_lgr_terminate_sched(smc->conn.lgr);
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -472,6 +472,8 @@ static int tpm_tis_send_data(struct tpm_
+ 		status = tpm_tis_status(chip);
+ 		if (!itpm && (status & TPM_STS_DATA_EXPECT) == 0) {
+ 			rc = -EIO;
++			dev_err(&chip->dev, "TPM_STS_DATA_EXPECT should be set. sts = 0x%08x\n",
++				status);
+ 			goto out_err;
  		}
+ 	}
+@@ -492,6 +494,8 @@ static int tpm_tis_send_data(struct tpm_
+ 	status = tpm_tis_status(chip);
+ 	if (!itpm && (status & TPM_STS_DATA_EXPECT) != 0) {
+ 		rc = -EIO;
++		dev_err(&chip->dev, "TPM_STS_DATA_EXPECT should be unset. sts = 0x%08x\n",
++			status);
+ 		goto out_err;
+ 	}
+ 
 
 
