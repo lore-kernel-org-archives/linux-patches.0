@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAD81A6827;
-	Mon,  4 May 2026 14:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A743DE43C;
+	Mon,  4 May 2026 14:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904288; cv=none; b=KP4pN+flYLUvpAl+pS1DzGmTxY0IgQ1rMCqZ6iqGAEn2VeRkLXgcWIJenbvR1HuVcylLpzY0axw/HTxszjLZBPseKIx+SucohAaML2Ji02Q/WVJ0GGXfBut6Zs4LVp9E5iBixhinznYsrnb4gnMR+6jkGdKHEtvPd5Z/coEgx6c=
+	t=1777904290; cv=none; b=gQjcQnAxJJygbxVoHct7UCEHl0v3NYzGJkg1x1JK9ACnpcOnPz14uq7n+vYupbwyS+3lI1ftXrpvHpCFRByuvYjSIUfX7d1+xR0WtdTlH+/mbAPEZ/D3jeIjcDX/gXQ4ZYuIO8Y1xnukga9FT/FBACsFJ66B60jkEtB7XvN345E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904288; c=relaxed/simple;
-	bh=798d9/P0WIHliRQfNDzLlXoR1YSJSq1CGx2Q7tzpCV8=;
+	s=arc-20240116; t=1777904290; c=relaxed/simple;
+	bh=KTAmzVQvtdjlciH3egnfUT8GXLYvnaylOLcW4sldHlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ktqClT1W5gGmB/hxcbvGQTuYsQdJ/5N7rdWKDFOQzUiP1gqKFFZ2Z355jhXU6tPzipSVA2Arwrx2RSl7aIiMYr0jwCLsoKG1Nz2wNu5yYPFQKAObqKw4a+9SDinJzbxXHZtsCIdmv+VJamaJEQiVXtTVmHZNYusI1NQxzVyQfmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZtOJiIyB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h47HpDK0DBFOGdQ+ugP/lFk+kxm6LfW17XveipVSoTzilkYgcC1UWP55VnNzE2Pb1PTqK4xJ/J5nkCOf7D5eEV20MHpNr82RzGRzCff5i6KQj3tLj4B6cJN/flKRxZVfaHOVCSsWDN4spKOB1vWcWKtnqRJkCdfa9zLdTMQllLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8hMPlJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZtOJiIyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CF8C2BCB8;
-	Mon,  4 May 2026 14:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8hMPlJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227BEC2BCB8;
+	Mon,  4 May 2026 14:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904287;
-	bh=798d9/P0WIHliRQfNDzLlXoR1YSJSq1CGx2Q7tzpCV8=;
+	s=korg; t=1777904290;
+	bh=KTAmzVQvtdjlciH3egnfUT8GXLYvnaylOLcW4sldHlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtOJiIyBSHBQEyJeJ/sN2eQYd8gPAIQtV1sLX+y88d6Ulfo+aGWWZmUe8/8nen0J5
-	 DXcpwBWZMVISoB15J41fbidQ5g/vV6mP16CGiiFZsSy6jZU0A182xL7PosILyK3Ipy
-	 czCpOEh7rtbpoqTS+W4cfzF1Dix4dWI8dky/3Eq4=
+	b=f8hMPlJH1Nw0Tp3QydllbRO8z3p14klMjXuQEDedJkz2HALC3I/B1BuLxR9Ue9e0A
+	 iL6Lnw27Al9LTvAtz/oCLPNta66wZe/Pnt0zGUDgBv3NNTK+wiCw9QsSN9jWQZ6XH5
+	 qDGMPqOD8FTcLG1df/TZgSBVIMNGPBfjlSUsf3uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 256/275] media: rc: ttusbir: respect DMA coherency rules
-Date: Mon,  4 May 2026 15:53:16 +0200
-Message-ID: <20260504135152.548904350@linuxfoundation.org>
+Subject: [PATCH 6.18 257/275] media: rc: igorplugusb: heed coherency rules
+Date: Mon,  4 May 2026 15:53:17 +0200
+Message-ID: <20260504135152.585719834@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -54,78 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 50acaad3d202c064779db8dc3d010007347f59c7 ]
+[ Upstream commit eac69475b01fe1e861dfe3960b57fa95671c132e ]
 
-Buffers must not share a cache line with other data structures.
-Allocate separately.
+In a control request, the USB request structure
+can be subject to DMA on some HCs. Hence it must obey
+the rules for DMA coherency. Allocate it separately.
 
-Fixes: 0938069fa0897 ("[media] rc: Add support for the TechnoTrend USB IR Receiver")
+Fixes: b1c97193c6437 ("[media] rc: port IgorPlug-USB to rc-core")
 Cc: stable@vger.kernel.org
 Signed-off-by: Oliver Neukum <oneukum@suse.com>
 Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ kept kzalloc(sizeof(*tt), GFP_KERNEL) instead of kzalloc_obj() ]
+[ replaced kzalloc_obj(*ir->request, GFP_KERNEL) with kzalloc(sizeof(*ir->request), GFP_KERNEL) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/ttusbir.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/media/rc/igorplugusb.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/media/rc/ttusbir.c
-+++ b/drivers/media/rc/ttusbir.c
-@@ -32,7 +32,7 @@ struct ttusbir {
+--- a/drivers/media/rc/igorplugusb.c
++++ b/drivers/media/rc/igorplugusb.c
+@@ -34,7 +34,7 @@ struct igorplugusb {
+ 	struct device *dev;
  
- 	struct led_classdev led;
- 	struct urb *bulk_urb;
--	uint8_t bulk_buffer[5];
-+	u8 *bulk_buffer;
- 	int bulk_out_endp, iso_in_endp;
- 	bool led_on, is_led_on;
- 	atomic_t led_complete;
-@@ -186,13 +186,16 @@ static int ttusbir_probe(struct usb_inte
- 	struct rc_dev *rc;
- 	int i, j, ret;
- 	int altsetting = -1;
-+	u8 *buffer;
+ 	struct urb *urb;
+-	struct usb_ctrlrequest request;
++	struct usb_ctrlrequest *request;
  
- 	tt = kzalloc(sizeof(*tt), GFP_KERNEL);
-+	buffer = kzalloc(5, GFP_KERNEL);
- 	rc = rc_allocate_device(RC_DRIVER_IR_RAW);
--	if (!tt || !rc) {
-+	if (!tt || !rc || buffer) {
- 		ret = -ENOMEM;
- 		goto out;
- 	}
-+	tt->bulk_buffer = buffer;
+ 	struct timer_list timer;
  
- 	/* find the correct alt setting */
- 	for (i = 0; i < intf->num_altsetting && altsetting == -1; i++) {
-@@ -281,8 +284,8 @@ static int ttusbir_probe(struct usb_inte
- 	tt->bulk_buffer[3] = 0x01;
+@@ -122,7 +122,7 @@ static void igorplugusb_cmd(struct igorp
+ {
+ 	int ret;
  
- 	usb_fill_bulk_urb(tt->bulk_urb, tt->udev, usb_sndbulkpipe(tt->udev,
--		tt->bulk_out_endp), tt->bulk_buffer, sizeof(tt->bulk_buffer),
--						ttusbir_bulk_complete, tt);
-+			  tt->bulk_out_endp), tt->bulk_buffer, 5,
-+			  ttusbir_bulk_complete, tt);
+-	ir->request.bRequest = cmd;
++	ir->request->bRequest = cmd;
+ 	ir->urb->transfer_flags = 0;
+ 	ret = usb_submit_urb(ir->urb, GFP_ATOMIC);
+ 	if (ret && ret != -EPERM)
+@@ -164,13 +164,17 @@ static int igorplugusb_probe(struct usb_
+ 	if (!ir)
+ 		return -ENOMEM;
  
- 	tt->led.name = "ttusbir:green:power";
- 	tt->led.default_trigger = "rc-feedback";
-@@ -351,6 +354,7 @@ out:
- 		kfree(tt);
- 	}
- 	rc_free_device(rc);
-+	kfree(buffer);
++	ir->request = kzalloc(sizeof(*ir->request), GFP_KERNEL);
++	if (!ir->request)
++		goto fail;
++
+ 	ir->dev = &intf->dev;
+ 
+ 	timer_setup(&ir->timer, igorplugusb_timer, 0);
+ 
+-	ir->request.bRequest = GET_INFRACODE;
+-	ir->request.bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
+-	ir->request.wLength = cpu_to_le16(MAX_PACKET);
++	ir->request->bRequest = GET_INFRACODE;
++	ir->request->bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
++	ir->request->wLength = cpu_to_le16(MAX_PACKET);
+ 
+ 	ir->urb = usb_alloc_urb(0, GFP_KERNEL);
+ 	if (!ir->urb)
+@@ -228,6 +232,7 @@ fail:
+ 	usb_free_urb(ir->urb);
+ 	rc_free_device(ir->rc);
+ 	kfree(ir->buf_in);
++	kfree(ir->request);
  
  	return ret;
  }
-@@ -373,6 +377,7 @@ static void ttusbir_disconnect(struct us
- 	}
- 	usb_kill_urb(tt->bulk_urb);
- 	usb_free_urb(tt->bulk_urb);
-+	kfree(tt->bulk_buffer);
- 	usb_set_intfdata(intf, NULL);
- 	kfree(tt);
+@@ -243,6 +248,7 @@ static void igorplugusb_disconnect(struc
+ 	usb_unpoison_urb(ir->urb);
+ 	usb_free_urb(ir->urb);
+ 	kfree(ir->buf_in);
++	kfree(ir->request);
  }
+ 
+ static const struct usb_device_id igorplugusb_table[] = {
 
 
