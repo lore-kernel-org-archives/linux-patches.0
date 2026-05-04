@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41710347BA9;
-	Mon,  4 May 2026 14:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFB33A3822;
+	Mon,  4 May 2026 14:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903219; cv=none; b=X1j7Rsuuaw22vOZzWezLK/xFmll2ZKCDHkaIj3Dq+uN4FvtceMG5ZXNER0fg2RAFV1Yb//NKtcemo7aE6Wm/5lC7jI0oqYYA7OYbpzt4rVYBgzYOiH+bA9Vyv2+HSwgrjL+QMbb4HdbCQg5Oy8/X4i6/PkbNlppufpblw8rmdzY=
+	t=1777903221; cv=none; b=Zw2GiHtOMFrMLlWZYZSDXi+1Kc+RKnaO99ocMY7MBEHvnoxjA1s/8hkuS9dYPWcJK4129WA/Jcc2s3Ll17Pvmntcm4aI2gIrN0F1dEmjbwjDs2/+uxgUyAkU9dOrgRBgM8x9wlQH9D1ekB4kslGTSzHAdhDnNQtELYzlYP9duGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903219; c=relaxed/simple;
-	bh=p5REswEx8k5wjJk/7DGmuDz+Mno1SYjoAA1PYZ29q1k=;
+	s=arc-20240116; t=1777903221; c=relaxed/simple;
+	bh=XrACP4w8kenrCZmid9Fq19VcOr8Hmm6jMPnB92JuAaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9B4LdNum7Jamy8lHeDhiad3ayai10+IeZUtVEXzqsWZ7VsfsYlpXODyaqdyC4VjI88+aCXwcCWgY6MyWt4ovUxmwxhlTsx7eCh4cWvf6C7LjVlsVKwGVmLYdH5MEQuq+C4pwv4BNF/qPKVB56ODfIw8GCw45ydtZY8t6q1Heuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0EkTB7e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ih/HOnaQ3NjrNNN4Iy02dtDjOMnFUv7qXRGJgJiO0TmQBzI0n16sojAliG/3albmuCUcAOX4jb/FtwM8HTWWHwhPBnAAbebArKwcVrQGyf8LNqo7RS4fmt8LazUdcHQIkhWMEJDIqH3XLINeQI+GR0GynDCNKyfcOiaPlWmjR5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtY10X/G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0EkTB7e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92217C2BCB8;
-	Mon,  4 May 2026 14:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtY10X/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296C3C2BCB8;
+	Mon,  4 May 2026 14:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903218;
-	bh=p5REswEx8k5wjJk/7DGmuDz+Mno1SYjoAA1PYZ29q1k=;
+	s=korg; t=1777903221;
+	bh=XrACP4w8kenrCZmid9Fq19VcOr8Hmm6jMPnB92JuAaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0EkTB7eQl3I3UBOkTxWlWFqIUJLvLX8XeDL6DUoexW/Ms8vMXURbldjXAkScWT64
-	 TbdzTMI7WNwaD4PrOrCZUr/SH4V0MpT+QVYVb3F9QJxfq/fXuTxil/YELp53nvmOjy
-	 Jy9e8s0hH9vvwoSQQ9A0oE8nWxLeI9+0/m0oPWd4=
+	b=QtY10X/GGeBucnKPKgw/zsiRieJ7K2HHgBwtE1/B26XuOCepBZUFQ1PWBysgjseGp
+	 RfMuPtLXUhzbOZpv853qA0gHxOESaEFwpkWgzHCX3uVH5Xoz081I3gLat5dQ+G/eOA
+	 AcL4ctpoTud2YVMmuaPfAGFFz/UvlsSSRjVD5l+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Subject: [PATCH 7.0 150/307] slub: fix data loss and overflow in krealloc()
-Date: Mon,  4 May 2026 15:50:35 +0200
-Message-ID: <20260504135148.428451749@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.0 151/307] tracing/fprobe: Reject registration of a registered fprobe before init
+Date: Mon,  4 May 2026 15:50:36 +0200
+Message-ID: <20260504135148.465826527@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,129 +49,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 082a6d03a2d685a83a332666b500ad3966349588 upstream.
+commit 6ad51ada17ed80c9a5f205b4c01c424cac8b0d46 upstream.
 
-Commit 2cd8231796b5 ("mm/slub: allow to set node and align in
-k[v]realloc") introduced the ability to force a reallocation if the
-original object does not satisfy new alignment or NUMA node, even when
-the object is being shrunk.
+Reject registration of a registered fprobe which is on the fprobe
+hash table before initializing fprobe.
+The add_fprobe_hash() checks this re-register fprobe, but since
+fprobe_init() clears hlist_array field, it is too late to check it.
+It has to check the re-registration before touncing fprobe.
 
-This introduced two bugs in the reallocation fallback path:
+Link: https://lore.kernel.org/all/177669364845.132053.18375367916162315835.stgit@mhiramat.tok.corp.google.com/
 
-1. Data loss during NUMA migration: The jump to 'alloc_new' happens
-   before 'ks' and 'orig_size' are initialized. As a result, the
-   memcpy() in the 'alloc_new' block would copy 0 bytes into the new
-   allocation.
-
-2. Buffer overflow during shrinking: When shrinking an object while
-   forcing a new alignment, 'new_size' is smaller than the old size.
-   However, the memcpy() used the old size ('orig_size ?: ks'), leading
-   to an out-of-bounds write.
-
-The same overflow bug exists in the kvrealloc() fallback path, where the
-old bucket size ksize(p) is copied into the new buffer without being
-bounded by the new size.
-
-A simple reproducer:
-
-	// e.g. add to lkdtm as KREALLOC_SHRINK_OVERFLOW
-	while (1) {
-		void *p = kmalloc(128, GFP_KERNEL);
-		p = krealloc_node_align(p, 64, 256, GFP_KERNEL, NUMA_NO_NODE);
-		kfree(p);
-	}
-
-demonstrates the issue:
-
-  ==================================================================
-  BUG: KFENCE: out-of-bounds write in memcpy_orig+0x68/0x130
-
-  Out-of-bounds write at 0xffff8883ad757038 (120B right of kfence-#47):
-   memcpy_orig+0x68/0x130
-   krealloc_node_align_noprof+0x1c8/0x340
-   lkdtm_KREALLOC_SHRINK_OVERFLOW+0x8c/0xc0 [lkdtm]
-   lkdtm_do_action+0x3a/0x60 [lkdtm]
-   ...
-
-  kfence-#47: 0xffff8883ad756fc0-0xffff8883ad756fff, size=64, cache=kmalloc-64
-
-  allocated by task 316 on cpu 7 at 97.680481s (0.021813s ago):
-   krealloc_node_align_noprof+0x19c/0x340
-   lkdtm_KREALLOC_SHRINK_OVERFLOW+0x8c/0xc0 [lkdtm]
-   lkdtm_do_action+0x3a/0x60 [lkdtm]
-   ...
-  ==================================================================
-
-Fix it by moving the old size calculation to the top of __do_krealloc()
-and bounding all copy lengths by the new allocation size.
-
-Fixes: 2cd8231796b5 ("mm/slub: allow to set node and align in k[v]realloc")
+Fixes: 4346ba160409 ("fprobe: Rewrite fprobe on function-graph tracer")
 Cc: stable@vger.kernel.org
-Reported-by: https://sashiko.dev/#/patchset/20260415143735.2974230-1-elver%40google.com
-Signed-off-by: Marco Elver <elver@google.com>
-Link: https://patch.msgid.link/20260416132837.3787694-1-elver@google.com
-Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ kernel/trace/fprobe.c |   21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -6569,16 +6569,6 @@ __do_krealloc(const void *p, size_t new_
- 	if (!kasan_check_byte(p))
- 		return NULL;
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -4,6 +4,7 @@
+  */
+ #define pr_fmt(fmt) "fprobe: " fmt
  
--	/*
--	 * If reallocation is not necessary (e. g. the new size is less
--	 * than the current allocated size), the current allocation will be
--	 * preserved unless __GFP_THISNODE is set. In the latter case a new
--	 * allocation on the requested node will be attempted.
--	 */
--	if (unlikely(flags & __GFP_THISNODE) && nid != NUMA_NO_NODE &&
--		     nid != page_to_nid(virt_to_page(p)))
--		goto alloc_new;
++#include <linux/cleanup.h>
+ #include <linux/err.h>
+ #include <linux/fprobe.h>
+ #include <linux/kallsyms.h>
+@@ -107,7 +108,7 @@ static bool delete_fprobe_node(struct fp
+ }
+ 
+ /* Check existence of the fprobe */
+-static bool is_fprobe_still_exist(struct fprobe *fp)
++static bool fprobe_registered(struct fprobe *fp)
+ {
+ 	struct hlist_head *head;
+ 	struct fprobe_hlist *fph;
+@@ -120,7 +121,7 @@ static bool is_fprobe_still_exist(struct
+ 	}
+ 	return false;
+ }
+-NOKPROBE_SYMBOL(is_fprobe_still_exist);
++NOKPROBE_SYMBOL(fprobe_registered);
+ 
+ static int add_fprobe_hash(struct fprobe *fp)
+ {
+@@ -132,9 +133,6 @@ static int add_fprobe_hash(struct fprobe
+ 	if (WARN_ON_ONCE(!fph))
+ 		return -EINVAL;
+ 
+-	if (is_fprobe_still_exist(fp))
+-		return -EEXIST;
 -
- 	if (is_kfence_address(p)) {
- 		ks = orig_size = kfence_ksize(p);
- 	} else {
-@@ -6597,6 +6587,16 @@ __do_krealloc(const void *p, size_t new_
+ 	head = &fprobe_table[hash_ptr(fp, FPROBE_HASH_BITS)];
+ 	hlist_add_head_rcu(&fp->hlist_array->hlist, head);
+ 	return 0;
+@@ -149,7 +147,7 @@ static int del_fprobe_hash(struct fprobe
+ 	if (WARN_ON_ONCE(!fph))
+ 		return -EINVAL;
+ 
+-	if (!is_fprobe_still_exist(fp))
++	if (!fprobe_registered(fp))
+ 		return -ENOENT;
+ 
+ 	fph->fp = NULL;
+@@ -482,7 +480,7 @@ static void fprobe_return(struct ftrace_
+ 		if (!fp)
+ 			break;
+ 		curr += FPROBE_HEADER_SIZE_IN_LONG;
+-		if (is_fprobe_still_exist(fp) && !fprobe_disabled(fp)) {
++		if (fprobe_registered(fp) && !fprobe_disabled(fp)) {
+ 			if (WARN_ON_ONCE(curr + size > size_words))
+ 				break;
+ 			fp->exit_handler(fp, trace->func, ret_ip, fregs,
+@@ -841,12 +839,14 @@ int register_fprobe_ips(struct fprobe *f
+ 	struct fprobe_hlist *hlist_array;
+ 	int ret, i;
+ 
++	guard(mutex)(&fprobe_mutex);
++	if (fprobe_registered(fp))
++		return -EEXIST;
++
+ 	ret = fprobe_init(fp, addrs, num);
+ 	if (ret)
+ 		return ret;
+ 
+-	mutex_lock(&fprobe_mutex);
+-
+ 	hlist_array = fp->hlist_array;
+ 	if (fprobe_is_ftrace(fp))
+ 		ret = fprobe_ftrace_add_ips(addrs, num);
+@@ -866,7 +866,6 @@ int register_fprobe_ips(struct fprobe *f
+ 				delete_fprobe_node(&hlist_array->array[i]);
  		}
  	}
+-	mutex_unlock(&fprobe_mutex);
  
-+	/*
-+	 * If reallocation is not necessary (e. g. the new size is less
-+	 * than the current allocated size), the current allocation will be
-+	 * preserved unless __GFP_THISNODE is set. In the latter case a new
-+	 * allocation on the requested node will be attempted.
-+	 */
-+	if (unlikely(flags & __GFP_THISNODE) && nid != NUMA_NO_NODE &&
-+		     nid != page_to_nid(virt_to_page(p)))
-+		goto alloc_new;
-+
- 	/* If the old object doesn't fit, allocate a bigger one */
- 	if (new_size > ks)
- 		goto alloc_new;
-@@ -6631,7 +6631,7 @@ alloc_new:
- 	if (ret && p) {
- 		/* Disable KASAN checks as the object's redzone is accessed. */
- 		kasan_disable_current();
--		memcpy(ret, kasan_reset_tag(p), orig_size ?: ks);
-+		memcpy(ret, kasan_reset_tag(p), min(new_size, (size_t)(orig_size ?: ks)));
- 		kasan_enable_current();
+ 	if (ret)
+ 		fprobe_fail_cleanup(fp);
+@@ -928,7 +927,7 @@ int unregister_fprobe(struct fprobe *fp)
+ 	int ret = 0, i, count;
+ 
+ 	mutex_lock(&fprobe_mutex);
+-	if (!fp || !is_fprobe_still_exist(fp)) {
++	if (!fp || !fprobe_registered(fp)) {
+ 		ret = -EINVAL;
+ 		goto out;
  	}
- 
-@@ -6865,7 +6865,7 @@ void *kvrealloc_node_align_noprof(const
- 		if (p) {
- 			/* We already know that `p` is not a vmalloc address. */
- 			kasan_disable_current();
--			memcpy(n, kasan_reset_tag(p), ksize(p));
-+			memcpy(n, kasan_reset_tag(p), min(size, ksize(p)));
- 			kasan_enable_current();
- 
- 			kfree(p);
 
 
