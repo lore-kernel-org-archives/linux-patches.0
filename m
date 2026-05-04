@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720793DE455;
-	Mon,  4 May 2026 14:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547F236309C;
+	Mon,  4 May 2026 14:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904840; cv=none; b=k8BBtBRb2pgibdQphlUamatbuTr3+PWQAdrg0XjMLdxBUdHzc1xIYVHM2wrA9WLXxjzlEW05v+DFARX/Bhf2NEn9XLlaDD5wIapu8YShOB3oNdxy4BFJN3y808j6kggK8vHClm/tZd8rBOmk5u9ZmB3LPgmim05midQoH/26R+M=
+	t=1777904843; cv=none; b=aHKRpiaO2bWllHQ2X7MAM/3mB+JPWAL39QYr+aRVEv0MhhcqJZdXgE5PN5vZ2kYL/GX8JTYA5uukOrycNrrVAvf9IIjxkINZxXyJC6m/+ycICNeJoGPVxvHZDvd9cCFA9IwJ64JQTdhXlr0S1JDSxCSK2XvrBzvQHmtkkfc+VQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904840; c=relaxed/simple;
-	bh=isGQm+2E2eheTHL4idGJikztvhQETCrvOuxZb9S7tzY=;
+	s=arc-20240116; t=1777904843; c=relaxed/simple;
+	bh=QqaKcGcpUAvT5INq0UOOYFle0qaMuWrOg+VVtCGk0LA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVShUrjbhmuwBW7Zp7lQqIKFGbn8x5Ni7s1BIpH6uX9qKnllQwzFAkZ9ZL9V9l6K5MPr1+G43ZNFyPxXH+NbsB0LaRDE6Ml1BLxnAwswdozs/6w7EsWXWmH65mYUvHiLy8SS8WuxlimuNVVDGE5c3npt0EIKP0hOOTWZvzjp3ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOUgQYFC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/BBZlWDtX/vbduZOJfKadlnppq4+3qjuBa6FEFpO7GLgSGOe0X1qDmykGPbEAbJtOdCO0waSL/76aimSB3cTq+wyutKLBrWvJmpK4ReacypH+Lt/UFX0YU+j+0JLIpb+tNNw2nloAzwQAThebTv74rzlAn0fr4jVtjdgBpGHJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOLBtjxK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOUgQYFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094B4C2BCB8;
-	Mon,  4 May 2026 14:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOLBtjxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C24C2BCB8;
+	Mon,  4 May 2026 14:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904840;
-	bh=isGQm+2E2eheTHL4idGJikztvhQETCrvOuxZb9S7tzY=;
+	s=korg; t=1777904842;
+	bh=QqaKcGcpUAvT5INq0UOOYFle0qaMuWrOg+VVtCGk0LA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qOUgQYFC9PNwDfbtx2ghqwYNBkRTJ73noVASvKy3K6mZ+RyeBnMuVPVRjGkiww/C3
-	 xAFmpLj5VdrvM9e+iCsGbd++FsVsoUc0xdxDu32phqC9bstFaO3dgqlqmL5dA4W9yA
-	 kzk1/VmsO2zNDLVD85pSqg8FzAKj7Gmwx/Dx+el8=
+	b=BOLBtjxKeLrpIcQtm7B32/GlXWcUpycwRTE71IqGwu9tkUm4cn/TOeldWOC4IagZo
+	 rgcmy+QrQPjDcwVoJjOAMb/WCR9MMFDrmwMQkVcJSjEy/PLkDDd7MNX8qnJbLU6myv
+	 ggkmww8FoL7K1TU4LB8D390/5yU1fke+LhZTDG1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 194/215] block: relax pgmap check in bio_add_page for compatible zone device pages
-Date: Mon,  4 May 2026 15:53:33 +0200
-Message-ID: <20260504135137.536906280@linuxfoundation.org>
+Subject: [PATCH 6.12 195/215] iio: frequency: admv1013: add dev variable
+Date: Mon,  4 May 2026 15:53:34 +0200
+Message-ID: <20260504135137.609182155@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -52,114 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit 41c665aae2b5dbecddddcc8ace344caf630cc7a4 ]
+[ Upstream commit e61b5bb0e91390adee41eaddc0a1a7d55d5652b2 ]
 
-bio_add_page() and bio_integrity_add_page() reject pages from different
-dev_pagemaps entirely, returning 0 even when those pages have compatible
-DMA mapping requirements. This forces callers to start a new bio when
-buffers span pgmap boundaries, even though the pages could safely coexist
-as separate bvec entries.
+Introduce a local struct device pointer in functions that reference
+&spi->dev for device-managed resource calls and device property reads,
+improving code readability.
 
-This matters for guests where memory is registered through
-devm_memremap_pages() with MEMORY_DEVICE_GENERIC in multiple calls,
-creating separate dev_pagemaps for each chunk. When a direct I/O buffer
-spans two such chunks, bio_add_page() rejects the second page, forcing an
-unnecessary bio split or I/O failure.
-
-Introduce zone_device_pages_compatible() in blk.h to check whether two
-pages can coexist in the same bio as separate bvec entries. The block DMA
-iterator (blk_dma_map_iter_start) caches the P2PDMA mapping state from the
-first segment and applies it to all others, so P2PDMA pages from different
-pgmaps must not be mixed, and neither must P2PDMA and non-P2PDMA pages.
-All other combinations (MEMORY_DEVICE_GENERIC pages from different pgmaps,
-or MEMORY_DEVICE_GENERIC with normal RAM) use the same dma_map_phys path
-and are safe.
-
-Replace the blanket zone_device_pages_have_same_pgmap() rejection with
-zone_device_pages_compatible(), while keeping
-zone_device_pages_have_same_pgmap() as a merge guard.
-Pages from different pgmaps can be added as separate bvec entries but
-must not be coalesced into the same segment, as that would make
-it impossible to recover the correct pgmap via page_pgmap().
-
-Fixes: 49580e690755 ("block: add check when merging zone device pages")
-Cc: stable@vger.kernel.org
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260410153414.4159050-3-namjain@linux.microsoft.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ restructured combined `if` into explicit `bv` block ]
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: aac0a51b1670 ("iio: frequency: admv1013: fix NULL pointer dereference on str")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio-integrity.c |    2 ++
- block/bio.c           |   14 +++++++++-----
- block/blk.h           |   19 +++++++++++++++++++
- 3 files changed, 30 insertions(+), 5 deletions(-)
+ drivers/iio/frequency/admv1013.c |   29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
---- a/block/bio-integrity.c
-+++ b/block/bio-integrity.c
-@@ -167,6 +167,8 @@ int bio_integrity_add_page(struct bio *b
- 		struct bio_vec *bv = &bip->bip_vec[bip->bip_vcnt - 1];
- 		bool same_page = false;
+--- a/drivers/iio/frequency/admv1013.c
++++ b/drivers/iio/frequency/admv1013.c
+@@ -518,11 +518,11 @@ static int admv1013_properties_parse(str
+ {
+ 	int ret;
+ 	const char *str;
+-	struct spi_device *spi = st->spi;
++	struct device *dev = &st->spi->dev;
  
-+		if (!zone_device_pages_compatible(bv->bv_page, page))
-+			return 0;
- 		if (bvec_try_merge_hw_page(q, bv, page, len, offset,
- 					   &same_page)) {
- 			bip->bip_iter.bi_size += len;
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1155,11 +1155,15 @@ int bio_add_page(struct bio *bio, struct
- 	if (bio->bi_iter.bi_size > UINT_MAX - len)
- 		return 0;
+-	st->det_en = device_property_read_bool(&spi->dev, "adi,detector-enable");
++	st->det_en = device_property_read_bool(dev, "adi,detector-enable");
  
--	if (bio->bi_vcnt > 0 &&
--	    bvec_try_merge_page(&bio->bi_io_vec[bio->bi_vcnt - 1],
--				page, len, offset, &same_page)) {
--		bio->bi_iter.bi_size += len;
--		return len;
-+	if (bio->bi_vcnt > 0) {
-+		struct bio_vec *bv = &bio->bi_io_vec[bio->bi_vcnt - 1];
-+
-+		if (!zone_device_pages_compatible(bv->bv_page, page))
-+			return 0;
-+		if (bvec_try_merge_page(bv, page, len, offset, &same_page)) {
-+			bio->bi_iter.bi_size += len;
-+			return len;
-+		}
+-	ret = device_property_read_string(&spi->dev, "adi,input-mode", &str);
++	ret = device_property_read_string(dev, "adi,input-mode", &str);
+ 	if (ret)
+ 		st->input_mode = ADMV1013_IQ_MODE;
+ 
+@@ -533,7 +533,7 @@ static int admv1013_properties_parse(str
+ 	else
+ 		return -EINVAL;
+ 
+-	ret = device_property_read_string(&spi->dev, "adi,quad-se-mode", &str);
++	ret = device_property_read_string(dev, "adi,quad-se-mode", &str);
+ 	if (ret)
+ 		st->quad_se_mode = ADMV1013_SE_MODE_DIFF;
+ 
+@@ -546,11 +546,11 @@ static int admv1013_properties_parse(str
+ 	else
+ 		return -EINVAL;
+ 
+-	ret = devm_regulator_bulk_get_enable(&st->spi->dev,
++	ret = devm_regulator_bulk_get_enable(dev,
+ 					     ARRAY_SIZE(admv1013_vcc_regs),
+ 					     admv1013_vcc_regs);
+ 	if (ret) {
+-		dev_err_probe(&spi->dev, ret,
++		dev_err_probe(dev, ret,
+ 			      "Failed to request VCC regulators\n");
+ 		return ret;
+ 	}
+@@ -562,9 +562,10 @@ static int admv1013_probe(struct spi_dev
+ {
+ 	struct iio_dev *indio_dev;
+ 	struct admv1013_state *st;
++	struct device *dev = &spi->dev;
+ 	int ret, vcm_uv;
+ 
+-	indio_dev = devm_iio_device_alloc(&spi->dev, sizeof(*st));
++	indio_dev = devm_iio_device_alloc(dev, sizeof(*st));
+ 	if (!indio_dev)
+ 		return -ENOMEM;
+ 
+@@ -581,20 +582,20 @@ static int admv1013_probe(struct spi_dev
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = devm_regulator_get_enable_read_voltage(&spi->dev, "vcm");
++	ret = devm_regulator_get_enable_read_voltage(dev, "vcm");
+ 	if (ret < 0)
+-		return dev_err_probe(&spi->dev, ret,
++		return dev_err_probe(dev, ret,
+ 				     "failed to get the common-mode voltage\n");
+ 
+ 	vcm_uv = ret;
+ 
+-	st->clkin = devm_clk_get_enabled(&spi->dev, "lo_in");
++	st->clkin = devm_clk_get_enabled(dev, "lo_in");
+ 	if (IS_ERR(st->clkin))
+-		return dev_err_probe(&spi->dev, PTR_ERR(st->clkin),
++		return dev_err_probe(dev, PTR_ERR(st->clkin),
+ 				     "failed to get the LO input clock\n");
+ 
+ 	st->nb.notifier_call = admv1013_freq_change;
+-	ret = devm_clk_notifier_register(&spi->dev, st->clkin, &st->nb);
++	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -606,11 +607,11 @@ static int admv1013_probe(struct spi_dev
+ 		return ret;
  	}
  
- 	if (bio->bi_vcnt >= bio->bi_max_vecs)
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -124,6 +124,25 @@ static inline bool biovec_phys_mergeable
- 	return true;
+-	ret = devm_add_action_or_reset(&spi->dev, admv1013_powerdown, st);
++	ret = devm_add_action_or_reset(dev, admv1013_powerdown, st);
+ 	if (ret)
+ 		return ret;
+ 
+-	return devm_iio_device_register(&spi->dev, indio_dev);
++	return devm_iio_device_register(dev, indio_dev);
  }
  
-+/*
-+ * Check if two pages from potentially different zone device pgmaps can
-+ * coexist as separate bvec entries in the same bio.
-+ *
-+ * The block DMA iterator (blk_dma_map_iter_start) caches the P2PDMA mapping
-+ * state from the first segment and applies it to all subsequent segments, so
-+ * P2PDMA pages from different pgmaps must not be mixed in the same bio.
-+ *
-+ * Other zone device types (FS_DAX, GENERIC) use the same dma_map_phys() path
-+ * as normal RAM.  PRIVATE and COHERENT pages never appear in bios.
-+ */
-+static inline bool zone_device_pages_compatible(const struct page *a,
-+						const struct page *b)
-+{
-+	if (is_pci_p2pdma_page(a) || is_pci_p2pdma_page(b))
-+		return zone_device_pages_have_same_pgmap(a, b);
-+	return true;
-+}
-+
- static inline bool __bvec_gap_to_prev(const struct queue_limits *lim,
- 		struct bio_vec *bprv, unsigned int offset)
- {
+ static const struct spi_device_id admv1013_id[] = {
 
 
