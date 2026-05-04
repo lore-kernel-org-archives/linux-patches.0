@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B348E3DE458;
-	Mon,  4 May 2026 14:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E733DE45B;
+	Mon,  4 May 2026 14:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904200; cv=none; b=T6zm89y82PvC5YqaR5x47v2nV8Y1aAE7Y2pw4efM5gk7aYrC35rE9CgcrX79lYROnzCprEu200Okfb9vlTNyG0nht5Q8yFaLL00da5iiN9mFqZ3oZLF2sVLWXkaAv3bPMWAJJ0qDh2bafseSbY3Z6SC+KMd/n/xQzfTyTxY2kDo=
+	t=1777904203; cv=none; b=rMgaW49OZl7lPz4CBc2766zxOnCwOnonBzIE9X4GjqGb1dmW0RxBT84Gn+/d7F2mh7Siz/ve3C0eXXuLZ1aV/tSnFOIEMp6Ue8fBJJmfb/TxBQ9G1Z2vUYqXHK+h7ZbCEhFyb574wkLqLb5E1LRSQQwW1HcIb8fnlvOS47Gsq9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904200; c=relaxed/simple;
-	bh=ghQbuL8R6Md1DCCsJHXaW1t3zSM59Q6h3UDZ4uv9tjM=;
+	s=arc-20240116; t=1777904203; c=relaxed/simple;
+	bh=zDBt1Yqdj2ID3OrVZN6Nd+leuu6XdpNQVnG+KRycaKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjb2QC75Ho0o7qM5ErWkkrR5FeC4moG5Bw4D/BSM1KB6sMAU/PvyE/vaHf2imufenfhsRl6QPFIfH4lntVAZzyQmpoeYHlsfX9eeXOhB297gmZQj+03n6Yr4G3ojhbJJrsOdZ5EB25le8+X6zQFxZ2NmbBBwIUFbfXMrAbJVcEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBoIQUDJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pswhilBhCgw3YoZtTQVMj5IsS0vKsXXhSIOwsOZJnlYYe001ZUl/O6IavuMJb3BtXkoYne7UifI13Sa8U9nnofpZSJ8luH/8YBlSn+SOxiEuTPp6GDCvOH0e2I0vIoVO8rcUhTZQ5eTftTaBNfIMKHt8oOgkvk0OM421sEFs2xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scnqU2vf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBoIQUDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47318C2BCF4;
-	Mon,  4 May 2026 14:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scnqU2vf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0271C2BCB8;
+	Mon,  4 May 2026 14:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904200;
-	bh=ghQbuL8R6Md1DCCsJHXaW1t3zSM59Q6h3UDZ4uv9tjM=;
+	s=korg; t=1777904203;
+	bh=zDBt1Yqdj2ID3OrVZN6Nd+leuu6XdpNQVnG+KRycaKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBoIQUDJnrxZxWZxbwrE216kMhVrzeiheH81peYjSq4oQVvgwHqiFiC8nMWSgGVq5
-	 /KsQtbIsVyiNYLHu5L1GiYGcgaa+yrfYXHAmeHTvbBqDcK7FW28THj0MNMkJIxMnAp
-	 k9h5K6pLpwxvIvqIy4jGmmkCA5+hTHWSfejzy6LU=
+	b=scnqU2vf8/IkmHuSOaesxgc2wpwbtClGmHK/Kw7CDSGakK5NMRluZ1X+iCh1MSLN8
+	 e5VoUGponGDHjnA9k45PbSquDvMoYQNnlwx5scN8/WHr6KwlVIiNRL1s7gYCQohvzZ
+	 rQ/b0S96ElgIkatO08Wfhu7crs2hj+M4KgidaAKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 222/275] crypto: atmel-aes - Fix 3-page memory leak in atmel_aes_buff_cleanup
-Date: Mon,  4 May 2026 15:52:42 +0200
-Message-ID: <20260504135151.316311589@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ian Rogers <irogers@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 196/275] ring-buffer: Do not double count the reader_page
+Date: Mon,  4 May 2026 15:52:16 +0200
+Message-ID: <20260504135150.357881312@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -50,34 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 3fcfff4ed35f963380a68741bcd52742baff7f76 upstream.
+commit 92d5a606721f759ebebf448b3bd2b7a781d50bd0 upstream.
 
-atmel_aes_buff_init() allocates 4 pages using __get_free_pages() with
-ATMEL_AES_BUFFER_ORDER, but atmel_aes_buff_cleanup() frees only the
-first page using free_page(), leaking the remaining 3 pages. Use
-free_pages() with ATMEL_AES_BUFFER_ORDER to fix the memory leak.
+Since the cpu_buffer->reader_page is updated if there are unwound
+pages. After that update, we should skip the page if it is the
+original reader_page, because the original reader_page is already
+checked.
 
-Fixes: bbe628ed897d ("crypto: atmel-aes - improve performances of data transfer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Ian Rogers <irogers@google.com>
+Link: https://patch.msgid.link/177701353063.2223789.1471163147644103306.stgit@mhiramat.tok.corp.google.com
+Fixes: ca296d32ece3 ("tracing: ring_buffer: Rewind persistent ring buffer on reboot")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-aes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -2131,7 +2131,7 @@ static int atmel_aes_buff_init(struct at
- 
- static void atmel_aes_buff_cleanup(struct atmel_aes_dev *dd)
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1877,7 +1877,7 @@ static int rb_validate_buffer(struct buf
+ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
  {
--	free_page((unsigned long)dd->buf);
-+	free_pages((unsigned long)dd->buf, ATMEL_AES_BUFFER_ORDER);
- }
+ 	struct ring_buffer_cpu_meta *meta = cpu_buffer->ring_meta;
+-	struct buffer_page *head_page, *orig_head;
++	struct buffer_page *head_page, *orig_head, *orig_reader;
+ 	unsigned long entry_bytes = 0;
+ 	unsigned long entries = 0;
+ 	int ret;
+@@ -1888,16 +1888,17 @@ static void rb_meta_validate_events(stru
+ 		return;
  
- static int atmel_aes_dma_init(struct atmel_aes_dev *dd)
+ 	orig_head = head_page = cpu_buffer->head_page;
++	orig_reader = cpu_buffer->reader_page;
+ 
+ 	/* Do the reader page first */
+-	ret = rb_validate_buffer(cpu_buffer->reader_page->page, cpu_buffer->cpu);
++	ret = rb_validate_buffer(orig_reader->page, cpu_buffer->cpu);
+ 	if (ret < 0) {
+ 		pr_info("Ring buffer reader page is invalid\n");
+ 		goto invalid;
+ 	}
+ 	entries += ret;
+-	entry_bytes += local_read(&cpu_buffer->reader_page->page->commit);
+-	local_set(&cpu_buffer->reader_page->entries, ret);
++	entry_bytes += local_read(&orig_reader->page->commit);
++	local_set(&orig_reader->entries, ret);
+ 
+ 	ts = head_page->page->time_stamp;
+ 
+@@ -2000,8 +2001,8 @@ static void rb_meta_validate_events(stru
+ 	/* Iterate until finding the commit page */
+ 	for (i = 0; i < meta->nr_subbufs + 1; i++, rb_inc_page(&head_page)) {
+ 
+-		/* Reader page has already been done */
+-		if (head_page == cpu_buffer->reader_page)
++		/* The original reader page has already been checked/counted. */
++		if (head_page == orig_reader)
+ 			continue;
+ 
+ 		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu);
 
 
