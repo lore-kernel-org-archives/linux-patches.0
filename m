@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E70C315785;
-	Mon,  4 May 2026 14:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425333DE43C;
+	Mon,  4 May 2026 14:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904398; cv=none; b=eaAj3VeIMvqm46GXhshNhIgkXwME8QwmkAN6SpK6lK3ZHgU0W1D/65qkQ+uMiE8Funh0+jzFUw84lKQ/s7+f8Mg95O3utGXzp3SKRr6RRmqEYu86PuvxRDgZRJ9ceAilaWyMcjbaaIdzuJlYTNRQ5NMPw7iy/l1GumlrxDYWrjU=
+	t=1777904401; cv=none; b=GZ6EQz71c2M1q2btbajtuVH1fYPxsAmr8m2ngzxY8Wotdo4WUFW6117YuqEO/vAotP4+T8UmJ3y70W1uO53ans3lhEOSRhJ4INcEDFFYi4WuBynyqoK+MuGbjoc7uElcajgtc+pyVT82XziWX03BfwQaqvoKtnHNhAiOPqHJY10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904398; c=relaxed/simple;
-	bh=uykBgZ8JIVZkVV5UFdvhX5h3aqPOnmv3bWY6ze+o//Q=;
+	s=arc-20240116; t=1777904401; c=relaxed/simple;
+	bh=Zbe5hKgoi81qz18gesPMbTIG1PWRtbPyJ3mvXiLV4h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P12IyGQJef5sKO2wKf/Zram4hkJklpXtWjAl9KMbIHQB5NpRIkQrBQK2tgrZZuNQWrLYDqXv1S24pZk+RmJBemWSMo8ef3ABqqae1RqT/PSsDGeyXdqzvzr1mqZG3KM6BUKN8kItiCsGJ9qL/BGQzqytcx8ufAl7EAYqbXxykv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Em8eSXf7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WSD9+CVeBMFdmvWPuPKi1Aa3+lVE2VCJdigzLqcqBzILdus5gdThrO72ug3dB92C/HyRM8FP/fbMjUNPZOEcR6YtKr0bYRWLM61PQ3v5LoJHfPl2zKpuEgUI0dVsBoPraW4lRUy+jK1yjiTXGtZxop9GTcyoGIsULxKDALT0gCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMZUsRsU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Em8eSXf7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3447CC2BCB8;
-	Mon,  4 May 2026 14:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMZUsRsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85FEC2BCF5;
+	Mon,  4 May 2026 14:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904398;
-	bh=uykBgZ8JIVZkVV5UFdvhX5h3aqPOnmv3bWY6ze+o//Q=;
+	s=korg; t=1777904401;
+	bh=Zbe5hKgoi81qz18gesPMbTIG1PWRtbPyJ3mvXiLV4h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Em8eSXf7rLZX4+gX8Vh22YE2jyyHuqkv4+McDpQw8WfJnWv/gCphfvGasCZhb7wx1
-	 P4JM407jRMUKpkUudmlPTyNoVhmD5KYsX5ZjXJVqPGT2S8AAIvORY7L9c9TrhMZCx2
-	 kU4xi3BJhd86NVmubweNJFnXxcZf8A4REdkL4IHQ=
+	b=jMZUsRsUvAcyVDpGPl90syBu+X/TINheR36npy43KGEg4jJ/6/g10a9fnfPI1kcQP
+	 nQYo5/WZUT/iE4wNB/PDSsZEeUqjOdEN19M7DAu2kJIWz3TYkUeHnmktjfE6eaDaAI
+	 T0PElmqjUF4+12628H6KsxTyS6FE06pBua10/3fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benno Lossin <lossin@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Fang Wang <32840572@qq.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/215] rust: init: fix `clippy::undocumented_unsafe_blocks` warnings
-Date: Mon,  4 May 2026 15:50:42 +0200
-Message-ID: <20260504135131.023603491@linuxfoundation.org>
+Subject: [PATCH 6.12 024/215] drm/amdgpu: Use vmemdup_array_user in amdgpu_bo_create_list_entry_array
+Date: Mon,  4 May 2026 15:50:43 +0200
+Message-ID: <20260504135131.059938084@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -52,92 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-The stable backport in commit acc105db0826 ("rust: pin-init:
-add references to previously initialized fields") introduced some
-`clippy::undocumented_unsafe_blocks` warnings [1], e.g.
+[ Upstream commit c4ac100e9ae252b09986766ad23b1f83ca3a369d ]
 
-    error: unsafe block missing a safety comment
-        --> rust/kernel/init/macros.rs:1015:25
+Replace kvmalloc_array() + copy_from_user() with vmemdup_array_user() on
+the fast path.
 
-As well as:
+This shrinks the source code and improves separation between the kernel
+and userspace slabs.
 
-    --> rust/kernel/init/macros.rs:1243:45
-    --> rust/kernel/init/macros.rs:1286:22
-    --> rust/kernel/init/macros.rs:1374:45
-
-After discussing it with Benno and Gary, we decided to clean the build
-log by doing a minimal targeted stable commit.
-
-Thus, depending on the case:
-
-  - Reorder the attributes so that the existing `// SAFETY:` comments
-    may be seen by Clippy.
-
-  - Add a placeholder `// SAFETY: TODO.` comment.
-
-Cc: Benno Lossin <lossin@kernel.org>
-Cc: Gary Guo <gary@garyguo.net>
-Fixes: acc105db0826 ("rust: pin-init: add references to previously initialized fields")
-Link: https://lore.kernel.org/stable/20260421111111.57059-1-ojeda@kernel.org/ [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Fang Wang <32840572@qq.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/init/macros.rs | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c | 41 +++++++++------------
+ 1 file changed, 17 insertions(+), 24 deletions(-)
 
-diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-index e477e4de817bf..d6e27c5221155 100644
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -1012,6 +1012,7 @@ macro_rules! __pin_data {
-                         self,
-                         slot: &'__slot mut $p_type,
-                     ) -> ::core::pin::Pin<&'__slot mut $p_type> {
-+                        // SAFETY: TODO.
-                         unsafe { ::core::pin::Pin::new_unchecked(slot) }
-                     }
-                 )*
-@@ -1235,11 +1236,11 @@ macro_rules! __init_internal {
-         // Unaligned fields will cause the compiler to emit E0793. We do not support
-         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-         // `ptr::write` below has the same requirement.
-+        #[allow(unused_variables, unused_assignments)]
-         // SAFETY:
-         // - the project function does the correct field projection,
-         // - the field has been initialized,
-         // - the reference is only valid until the end of the initializer.
--        #[allow(unused_variables, unused_assignments)]
-         let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
+index 702f6610d0243..66fb37b643882 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
+@@ -184,43 +184,36 @@ void amdgpu_bo_list_put(struct amdgpu_bo_list *list)
+ int amdgpu_bo_create_list_entry_array(struct drm_amdgpu_bo_list_in *in,
+ 				      struct drm_amdgpu_bo_list_entry **info_param)
+ {
+-	const void __user *uptr = u64_to_user_ptr(in->bo_info_ptr);
+ 	const uint32_t info_size = sizeof(struct drm_amdgpu_bo_list_entry);
++	const void __user *uptr = u64_to_user_ptr(in->bo_info_ptr);
++	const uint32_t bo_info_size = in->bo_info_size;
++	const uint32_t bo_number = in->bo_number;
+ 	struct drm_amdgpu_bo_list_entry *info;
+-	int r;
+-
+-	info = kvmalloc_array(in->bo_number, info_size, GFP_KERNEL);
+-	if (!info)
+-		return -ENOMEM;
  
-         // Create the drop guard:
-@@ -1278,11 +1279,11 @@ macro_rules! __init_internal {
-         // Unaligned fields will cause the compiler to emit E0793. We do not support
-         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-         // `ptr::write` below has the same requirement.
-+        #[allow(unused_variables, unused_assignments)]
-         // SAFETY:
-         // - the field is not structurally pinned, since the line above must compile,
-         // - the field has been initialized,
-         // - the reference is only valid until the end of the initializer.
--        #[allow(unused_variables, unused_assignments)]
-         let $field = unsafe { &mut (*$slot).$field };
+ 	/* copy the handle array from userspace to a kernel buffer */
+-	r = -EFAULT;
+-	if (likely(info_size == in->bo_info_size)) {
+-		unsigned long bytes = in->bo_number *
+-			in->bo_info_size;
+-
+-		if (copy_from_user(info, uptr, bytes))
+-			goto error_free;
+-
++	if (likely(info_size == bo_info_size)) {
++		info = vmemdup_array_user(uptr, bo_number, info_size);
++		if (IS_ERR(info))
++			return PTR_ERR(info);
+ 	} else {
+-		unsigned long bytes = min(in->bo_info_size, info_size);
++		const uint32_t bytes = min(bo_info_size, info_size);
+ 		unsigned i;
  
-         // Create the drop guard:
-@@ -1366,11 +1367,11 @@ macro_rules! __init_internal {
-         // Unaligned fields will cause the compiler to emit E0793. We do not support
-         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-         // `ptr::write` below has the same requirement.
-+        #[allow(unused_variables, unused_assignments)]
-         // SAFETY:
-         // - the project function does the correct field projection,
-         // - the field has been initialized,
-         // - the reference is only valid until the end of the initializer.
--        #[allow(unused_variables, unused_assignments)]
-         let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
+-		memset(info, 0, in->bo_number * info_size);
+-		for (i = 0; i < in->bo_number; ++i) {
+-			if (copy_from_user(&info[i], uptr, bytes))
+-				goto error_free;
++		info = kvmalloc_array(bo_number, info_size, GFP_KERNEL);
++		if (!info)
++			return -ENOMEM;
  
-         // Create the drop guard:
+-			uptr += in->bo_info_size;
++		memset(info, 0, bo_number * info_size);
++		for (i = 0; i < bo_number; ++i, uptr += bo_info_size) {
++			if (copy_from_user(&info[i], uptr, bytes)) {
++				kvfree(info);
++				return -EFAULT;
++			}
+ 		}
+ 	}
+ 
+ 	*info_param = info;
+ 	return 0;
+-
+-error_free:
+-	kvfree(info);
+-	return r;
+ }
+ 
+ int amdgpu_bo_list_ioctl(struct drm_device *dev, void *data,
 -- 
 2.53.0
 
