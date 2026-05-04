@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD653DE430;
-	Mon,  4 May 2026 13:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36D53DC4AB;
+	Mon,  4 May 2026 13:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777902876; cv=none; b=t7N9yh6kfv9k1a34TgIHg3OndtOonDDZ03PF3HofSFmsN4w/C+4UkcKJxZnqpbRjv5smv3S0Ev2v613S5riJ4uzMmuehukMpkkQ9nFs4YupIo9eWh/elr3sJJcfnAoN0hevELaSK1hhw4GqZ7xkn1Zzu4i0j6qRzA5L8HrhP9uo=
+	t=1777902878; cv=none; b=eG6XBj3apXdDllhSct/utEyQlxvhkxcLu30/bMx13QNj0AVCS/F4dC1dNEa4pSgTa41bQznezi4BdUMeO0XtvRJhdVVveGYq/ZLXcUq0SS1hL1xD+wBOznXDwZmgu9NV5Avx1n0LWmHpioYphPJa/+2BO03nt5xpxRf1hYR0iX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777902876; c=relaxed/simple;
-	bh=TvtuSoej6XOZjRTi6F9O0lPlaHy45IY6SM/vweDM2VU=;
+	s=arc-20240116; t=1777902878; c=relaxed/simple;
+	bh=xUX6Q9qlJWBhY1AzrZk22y0hyBRMKPgvM9pRi8xWYg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WMvzVLCytdyCWXJKNfsTocsB3SxV3LRgJRLfLNkUhJVFd7/OO6nnJ/48GXFYIYz4nG+dhQBQRit0nrzHXrWQf3XNHOcUFBbt4jdWzj+5609eEhZJFPl2GfDzg6AjqTSuuWW5RVjCh5XeLQ456gJIMj9oqLbIBjsRPBhLi1bTpz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9cg/kk5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIzL2rhKqWrMuhVtXssjkSx26CUVW5p36qfsPH0uoPTIDALI4C2iNCuJ3wx8jLceNkj4RPi0NmyVyBFOp2Ow1HCuyuAipdN/2zWzlf2dzzLmj17YloCGBDwkPGPMtPjH/s82wgCqEbMObMiT/lYEktXoe+i8AJI9y/kMYIc1cek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCJwIjb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9cg/kk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75972C2BCC4;
-	Mon,  4 May 2026 13:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCJwIjb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E438C2BCB8;
+	Mon,  4 May 2026 13:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777902875;
-	bh=TvtuSoej6XOZjRTi6F9O0lPlaHy45IY6SM/vweDM2VU=;
+	s=korg; t=1777902878;
+	bh=xUX6Q9qlJWBhY1AzrZk22y0hyBRMKPgvM9pRi8xWYg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9cg/kk5Dqsvi2CnsLctnnqBvLL6EEB9Yt7lC6+GvOeC/xPyFoHVY//fGB0stUyor
-	 tuMKqNUAAOI2fH6Cokuf0uKKGmQiznDIeow2mBnYQXqfitdmCdHds9tWY1MzjjyJLX
-	 yboDoJel7GBUrlaYyF2dU+3gkCTpjET4vmFXTAk4=
+	b=qCJwIjb7hz/us1gK7emP72gY0KMaTv8YphewFNkTbyW+4n4rjSe9/p5U4nGUkIUDq
+	 b3hpmd8YL/qOKIgDBHAq8RuWaM6X4oW4cBHu31Xt+csRaYV8YlsX87f2LeO/sMrldZ
+	 RsRV89KTBiqM7ibora5JQDL8IWU0JQ/Lwm6k3oAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 7.0 017/307] driver core: Dont let a device probe until its ready
-Date: Mon,  4 May 2026 15:48:22 +0200
-Message-ID: <20260504135143.475139886@linuxfoundation.org>
+	Saravana Kannan <saravanak@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 7.0 018/307] device property: Make modifications of fwnode "flags" thread safe
+Date: Mon,  4 May 2026 15:48:23 +0200
+Message-ID: <20260504135143.513508040@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -55,212 +57,310 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-commit a2225b6e834a838ae3c93709760edc0a169eb2f2 upstream.
+commit f72e77c33e4b5657af35125e75bab249256030f3 upstream.
 
-The moment we link a "struct device" into the list of devices for the
-bus, it's possible probe can happen. This is because another thread
-can load the driver at any time and that can cause the device to
-probe. This has been seen in practice with a stack crawl that looks
-like this [1]:
+In various places in the kernel, we modify the fwnode "flags" member
+by doing either:
+  fwnode->flags |= SOME_FLAG;
+  fwnode->flags &= ~SOME_FLAG;
 
-  really_probe()
-  __driver_probe_device()
-  driver_probe_device()
-  __driver_attach()
-  bus_for_each_dev()
-  driver_attach()
-  bus_add_driver()
-  driver_register()
-  __platform_driver_register()
-  init_module() [some module]
-  do_one_initcall()
-  do_init_module()
-  load_module()
-  __arm64_sys_finit_module()
-  invoke_syscall()
+This type of modification is not thread-safe. If two threads are both
+mucking with the flags at the same time then one can clobber the
+other.
 
-As a result of the above, it was seen that device_links_driver_bound()
-could be called for the device before "dev->fwnode->dev" was
-assigned. This prevented __fw_devlink_pickup_dangling_consumers() from
-being called which meant that other devices waiting on our driver's
-sub-nodes were stuck deferring forever.
+While flags are often modified while under the "fwnode_link_lock",
+this is not universally true.
 
-It's believed that this problem is showing up suddenly for two
-reasons:
-1. Android has recently (last ~1 year) implemented an optimization to
-   the order it loads modules [2]. When devices opt-in to this faster
-   loading, modules are loaded one-after-the-other very quickly. This
-   is unlike how other distributions do it. The reproduction of this
-   problem has only been seen on devices that opt-in to Android's
-   "parallel module loading".
-2. Android devices typically opt-in to fw_devlink, and the most
-   noticeable issue is the NULL "dev->fwnode->dev" in
-   device_links_driver_bound(). fw_devlink is somewhat new code and
-   also not in use by all Linux devices.
-
-Even though the specific symptom where "dev->fwnode->dev" wasn't
-assigned could be fixed by moving that assignment higher in
-device_add(), other parts of device_add() (like the call to
-device_pm_add()) are also important to run before probe. Only moving
-the "dev->fwnode->dev" assignment would likely fix the current
-symptoms but lead to difficult-to-debug problems in the future.
-
-Fix the problem by preventing probe until device_add() has run far
-enough that the device is ready to probe. If somehow we end up trying
-to probe before we're allowed, __driver_probe_device() will return
--EPROBE_DEFER which will make certain the device is noticed.
-
-In the race condition that was seen with Android's faster module
-loading, we will temporarily add the device to the deferred list and
-then take it off immediately when device_add() probes the device.
-
-Instead of adding another flag to the bitfields already in "struct
-device", instead add a new "flags" field and use that. This allows us
-to freely change the bit from different thread without worrying about
-corrupting nearby bits (and means threads changing other bit won't
-corrupt us).
-
-[1] Captured on a machine running a downstream 6.6 kernel
-[2] https://cs.android.com/android/platform/superproject/main/+/main:system/core/libmodprobe/libmodprobe.cpp?q=LoadModulesParallel
+Create some accessor functions for setting, clearing, and testing the
+FWNODE flags and move all users to these accessor functions. New
+accessor functions use set_bit() and clear_bit(), which are
+thread-safe.
 
 Cc: stable@vger.kernel.org
-Fixes: 2023c610dc54 ("Driver core: add new device to bus's list before probing")
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: c2c724c868c4 ("driver core: Add fw_devlink_parse_fwtree()")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260406162231.v5.1.Id750b0fbcc94f23ed04b7aecabcead688d0d8c17@changeid
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Saravana Kannan <saravanak@kernel.org>
+Link: https://patch.msgid.link/20260317090112.v2.1.I0a4d03104ecd5103df3d76f66c8d21b1d15a2e38@changeid
+[ Fix fwnode_clear_flag() argument alignment, restore dropped blank
+  line in fwnode_dev_initialized(), and remove unnecessary parentheses
+  around fwnode_test_flag() calls. - Danilo ]
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c    |   15 +++++++++++++++
- drivers/base/dd.c      |   20 ++++++++++++++++++++
- include/linux/device.h |   44 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+)
+ drivers/base/core.c                 |   24 +++++++++----------
+ drivers/bus/imx-weim.c              |    2 -
+ drivers/i2c/i2c-core-of.c           |    2 -
+ drivers/net/phy/mdio_bus_provider.c |    4 +--
+ drivers/of/base.c                   |    2 -
+ drivers/of/dynamic.c                |    2 -
+ drivers/of/platform.c               |    2 -
+ drivers/spi/spi.c                   |    2 -
+ include/linux/fwnode.h              |   44 +++++++++++++++++++++++++++---------
+ 9 files changed, 53 insertions(+), 31 deletions(-)
 
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -3687,6 +3687,21 @@ int device_add(struct device *dev)
- 		fw_devlink_link_device(dev);
+@@ -182,7 +182,7 @@ void fw_devlink_purge_absent_suppliers(s
+ 	if (fwnode->dev)
+ 		return;
+ 
+-	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 	fwnode_links_purge_consumers(fwnode);
+ 
+ 	fwnode_for_each_available_child_node(fwnode, child)
+@@ -228,7 +228,7 @@ static void __fw_devlink_pickup_dangling
+ 	if (fwnode->dev && fwnode->dev->bus)
+ 		return;
+ 
+-	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 	__fwnode_links_move_consumers(fwnode, new_sup);
+ 
+ 	fwnode_for_each_available_child_node(fwnode, child)
+@@ -1012,7 +1012,7 @@ static void device_links_missing_supplie
+ static bool dev_is_best_effort(struct device *dev)
+ {
+ 	return (fw_devlink_best_effort && dev->can_match) ||
+-		(dev->fwnode && (dev->fwnode->flags & FWNODE_FLAG_BEST_EFFORT));
++		(dev->fwnode && fwnode_test_flag(dev->fwnode, FWNODE_FLAG_BEST_EFFORT));
+ }
+ 
+ static struct fwnode_handle *fwnode_links_check_suppliers(
+@@ -1723,11 +1723,11 @@ bool fw_devlink_is_strict(void)
+ 
+ static void fw_devlink_parse_fwnode(struct fwnode_handle *fwnode)
+ {
+-	if (fwnode->flags & FWNODE_FLAG_LINKS_ADDED)
++	if (fwnode_test_flag(fwnode, FWNODE_FLAG_LINKS_ADDED))
+ 		return;
+ 
+ 	fwnode_call_int_op(fwnode, add_links);
+-	fwnode->flags |= FWNODE_FLAG_LINKS_ADDED;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_LINKS_ADDED);
+ }
+ 
+ static void fw_devlink_parse_fwtree(struct fwnode_handle *fwnode)
+@@ -1885,7 +1885,7 @@ static bool fwnode_init_without_drv(stru
+ 	struct device *dev;
+ 	bool ret;
+ 
+-	if (!(fwnode->flags & FWNODE_FLAG_INITIALIZED))
++	if (!fwnode_test_flag(fwnode, FWNODE_FLAG_INITIALIZED))
+ 		return false;
+ 
+ 	dev = get_dev_from_fwnode(fwnode);
+@@ -2001,10 +2001,10 @@ static bool __fw_devlink_relax_cycles(st
+ 	 * We aren't trying to find all cycles. Just a cycle between con and
+ 	 * sup_handle.
+ 	 */
+-	if (sup_handle->flags & FWNODE_FLAG_VISITED)
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_VISITED))
+ 		return false;
+ 
+-	sup_handle->flags |= FWNODE_FLAG_VISITED;
++	fwnode_set_flag(sup_handle, FWNODE_FLAG_VISITED);
+ 
+ 	/* Termination condition. */
+ 	if (sup_handle == con_handle) {
+@@ -2074,7 +2074,7 @@ static bool __fw_devlink_relax_cycles(st
  	}
  
-+	/*
-+	 * The moment the device was linked into the bus's "klist_devices" in
-+	 * bus_add_device() then it's possible that probe could have been
-+	 * attempted in a different thread via userspace loading a driver
-+	 * matching the device. "ready_to_probe" being unset would have
-+	 * blocked those attempts. Now that all of the above initialization has
-+	 * happened, unblock probe. If probe happens through another thread
-+	 * after this point but before bus_probe_device() runs then it's fine.
-+	 * bus_probe_device() -> device_initial_probe() -> __device_attach()
-+	 * will notice (under device_lock) that the device is already bound.
-+	 */
-+	device_lock(dev);
-+	dev_set_ready_to_probe(dev);
-+	device_unlock(dev);
-+
- 	bus_probe_device(dev);
+ out:
+-	sup_handle->flags &= ~FWNODE_FLAG_VISITED;
++	fwnode_clear_flag(sup_handle, FWNODE_FLAG_VISITED);
+ 	put_device(sup_dev);
+ 	put_device(con_dev);
+ 	put_device(par_dev);
+@@ -2127,7 +2127,7 @@ static int fw_devlink_create_devlink(str
+ 	 * When such a flag is set, we can't create device links where P is the
+ 	 * supplier of C as that would delay the probe of C.
+ 	 */
+-	if (sup_handle->flags & FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD &&
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD) &&
+ 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
+ 		return -EINVAL;
  
- 	/*
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -848,6 +848,26 @@ static int __driver_probe_device(const s
- 	if (dev->driver)
- 		return -EBUSY;
+@@ -2150,7 +2150,7 @@ static int fw_devlink_create_devlink(str
+ 	else
+ 		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
  
-+	/*
-+	 * In device_add(), the "struct device" gets linked into the subsystem's
-+	 * list of devices and broadcast to userspace (via uevent) before we're
-+	 * quite ready to probe. Those open pathways to driver probe before
-+	 * we've finished enough of device_add() to reliably support probe.
-+	 * Detect this and tell other pathways to try again later. device_add()
-+	 * itself will also try to probe immediately after setting
-+	 * "ready_to_probe".
-+	 */
-+	if (!dev_ready_to_probe(dev))
-+		return dev_err_probe(dev, -EPROBE_DEFER, "Device not ready to probe\n");
-+
-+	/*
-+	 * Set can_match = true after calling dev_ready_to_probe(), so
-+	 * driver_deferred_probe_add() won't actually add the device to the
-+	 * deferred probe list when dev_ready_to_probe() returns false.
-+	 *
-+	 * When dev_ready_to_probe() returns false, it means that device_add()
-+	 * will do another probe() attempt for us.
-+	 */
- 	dev->can_match = true;
- 	dev_dbg(dev, "bus: '%s': %s: matched device with driver %s\n",
- 		drv->bus->name, __func__, drv->name);
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -459,6 +459,21 @@ struct device_physical_location {
+-	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NOT_DEVICE))
+ 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
+ 	else
+ 		sup_dev = get_dev_from_fwnode(sup_handle);
+@@ -2162,7 +2162,7 @@ static int fw_devlink_create_devlink(str
+ 		 * supplier device indefinitely.
+ 		 */
+ 		if (sup_dev->links.status == DL_DEV_NO_DRIVER &&
+-		    sup_handle->flags & FWNODE_FLAG_INITIALIZED) {
++		    fwnode_test_flag(sup_handle, FWNODE_FLAG_INITIALIZED)) {
+ 			dev_dbg(con,
+ 				"Not linking %pfwf - dev might never probe\n",
+ 				sup_handle);
+--- a/drivers/bus/imx-weim.c
++++ b/drivers/bus/imx-weim.c
+@@ -332,7 +332,7 @@ static int of_weim_notify(struct notifie
+ 			 * fw_devlink doesn't skip adding consumers to this
+ 			 * device.
+ 			 */
+-			rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++			fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 			if (!of_platform_device_create(rd->dn, NULL, &pdev->dev)) {
+ 				dev_err(&pdev->dev,
+ 					"Failed to create child device '%pOF'\n",
+--- a/drivers/i2c/i2c-core-of.c
++++ b/drivers/i2c/i2c-core-of.c
+@@ -180,7 +180,7 @@ static int of_i2c_notify(struct notifier
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		client = of_i2c_register_device(adap, rd->dn);
+ 		if (IS_ERR(client)) {
+ 			dev_err(&adap->dev, "failed to create client for '%pOF'\n",
+--- a/drivers/net/phy/mdio_bus_provider.c
++++ b/drivers/net/phy/mdio_bus_provider.c
+@@ -294,8 +294,8 @@ int __mdiobus_register(struct mii_bus *b
+ 		return -EINVAL;
+ 
+ 	if (bus->parent && bus->parent->of_node)
+-		bus->parent->of_node->fwnode.flags |=
+-					FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD;
++		fwnode_set_flag(&bus->parent->of_node->fwnode,
++				FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD);
+ 
+ 	WARN(bus->state != MDIOBUS_ALLOCATED &&
+ 	     bus->state != MDIOBUS_UNREGISTERED,
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -1915,7 +1915,7 @@ void of_alias_scan(void * (*dt_alloc)(u6
+ 		if (name)
+ 			of_stdout = of_find_node_opts_by_path(name, &of_stdout_options);
+ 		if (of_stdout)
+-			of_stdout->fwnode.flags |= FWNODE_FLAG_BEST_EFFORT;
++			fwnode_set_flag(&of_stdout->fwnode, FWNODE_FLAG_BEST_EFFORT);
+ 	}
+ 
+ 	if (!of_aliases)
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -225,7 +225,7 @@ static void __of_attach_node(struct devi
+ 	np->sibling = np->parent->child;
+ 	np->parent->child = np;
+ 	of_node_clear_flag(np, OF_DETACHED);
+-	np->fwnode.flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(&np->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 
+ 	raw_spin_unlock_irqrestore(&devtree_lock, flags);
+ 
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -742,7 +742,7 @@ static int of_platform_notify(struct not
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		/* pdev_parent may be NULL when no bus platform device */
+ 		pdev_parent = of_find_device_by_node(parent);
+ 		pdev = of_platform_device_create(rd->dn, NULL,
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -4943,7 +4943,7 @@ static int of_spi_notify(struct notifier
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		spi = of_register_spi_device(ctlr, rd->dn);
+ 		put_device(&ctlr->dev);
+ 
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -15,6 +15,7 @@
+ #define _LINUX_FWNODE_H_
+ 
+ #include <linux/bits.h>
++#include <linux/bitops.h>
+ #include <linux/err.h>
+ #include <linux/list.h>
+ #include <linux/types.h>
+@@ -42,12 +43,12 @@ struct device;
+  *		suppliers. Only enforce ordering with suppliers that have
+  *		drivers.
+  */
+-#define FWNODE_FLAG_LINKS_ADDED			BIT(0)
+-#define FWNODE_FLAG_NOT_DEVICE			BIT(1)
+-#define FWNODE_FLAG_INITIALIZED			BIT(2)
+-#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
+-#define FWNODE_FLAG_BEST_EFFORT			BIT(4)
+-#define FWNODE_FLAG_VISITED			BIT(5)
++#define FWNODE_FLAG_LINKS_ADDED			0
++#define FWNODE_FLAG_NOT_DEVICE			1
++#define FWNODE_FLAG_INITIALIZED			2
++#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	3
++#define FWNODE_FLAG_BEST_EFFORT			4
++#define FWNODE_FLAG_VISITED			5
+ 
+ struct fwnode_handle {
+ 	struct fwnode_handle *secondary;
+@@ -57,7 +58,7 @@ struct fwnode_handle {
+ 	struct device *dev;
+ 	struct list_head suppliers;
+ 	struct list_head consumers;
+-	u8 flags;
++	unsigned long flags;
  };
  
- /**
-+ * enum struct_device_flags - Flags in struct device
-+ *
-+ * Each flag should have a set of accessor functions created via
-+ * __create_dev_flag_accessors() for each access.
-+ *
-+ * @DEV_FLAG_READY_TO_PROBE: If set then device_add() has finished enough
-+ *		initialization that probe could be called.
-+ */
-+enum struct_device_flags {
-+	DEV_FLAG_READY_TO_PROBE = 0,
-+
-+	DEV_FLAG_COUNT
-+};
-+
-+/**
-  * struct device - The basic device structure
-  * @parent:	The device's "parent" device, the device to which it is attached.
-  * 		In most cases, a parent device is some sort of bus or host
-@@ -553,6 +568,7 @@ struct device_physical_location {
-  * @dma_skip_sync: DMA sync operations can be skipped for coherent buffers.
-  * @dma_iommu: Device is using default IOMMU implementation for DMA and
-  *		doesn't rely on dma_ops structure.
-+ * @flags:	DEV_FLAG_XXX flags. Use atomic bitfield operations to modify.
-  *
-  * At the lowest level, every device in a Linux system is represented by an
-  * instance of struct device. The device structure contains the information
-@@ -675,8 +691,36 @@ struct device {
- #ifdef CONFIG_IOMMU_DMA
- 	bool			dma_iommu:1;
- #endif
-+
-+	DECLARE_BITMAP(flags, DEV_FLAG_COUNT);
- };
+ /*
+@@ -212,16 +213,37 @@ static inline void fwnode_init(struct fw
+ 	INIT_LIST_HEAD(&fwnode->suppliers);
+ }
  
-+#define __create_dev_flag_accessors(accessor_name, flag_name) \
-+static inline bool dev_##accessor_name(const struct device *dev) \
-+{ \
-+	return test_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_set_##accessor_name(struct device *dev) \
-+{ \
-+	set_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_clear_##accessor_name(struct device *dev) \
-+{ \
-+	clear_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_assign_##accessor_name(struct device *dev, bool value) \
-+{ \
-+	assign_bit(flag_name, dev->flags, value); \
-+} \
-+static inline bool dev_test_and_set_##accessor_name(struct device *dev) \
-+{ \
-+	return test_and_set_bit(flag_name, dev->flags); \
++static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
++				   unsigned int bit)
++{
++	set_bit(bit, &fwnode->flags);
 +}
 +
-+__create_dev_flag_accessors(ready_to_probe, DEV_FLAG_READY_TO_PROBE);
++static inline void fwnode_clear_flag(struct fwnode_handle *fwnode,
++				     unsigned int bit)
++{
++	clear_bit(bit, &fwnode->flags);
++}
 +
-+#undef __create_dev_flag_accessors
++static inline void fwnode_assign_flag(struct fwnode_handle *fwnode,
++				      unsigned int bit, bool value)
++{
++	assign_bit(bit, &fwnode->flags, value);
++}
 +
- /**
-  * struct device_link - Device link representation.
-  * @supplier: The device on the supplier end of the link.
++static inline bool fwnode_test_flag(struct fwnode_handle *fwnode,
++				    unsigned int bit)
++{
++	return test_bit(bit, &fwnode->flags);
++}
++
+ static inline void fwnode_dev_initialized(struct fwnode_handle *fwnode,
+ 					  bool initialized)
+ {
+ 	if (IS_ERR_OR_NULL(fwnode))
+ 		return;
+ 
+-	if (initialized)
+-		fwnode->flags |= FWNODE_FLAG_INITIALIZED;
+-	else
+-		fwnode->flags &= ~FWNODE_FLAG_INITIALIZED;
++	fwnode_assign_flag(fwnode, FWNODE_FLAG_INITIALIZED, initialized);
+ }
+ 
+ int fwnode_link_add(struct fwnode_handle *con, struct fwnode_handle *sup,
 
 
