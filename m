@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC601C68F;
-	Mon,  4 May 2026 14:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AFE3DFC79;
+	Mon,  4 May 2026 14:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904739; cv=none; b=LdUn3eq/JXfDieptvla9TS5ZzKgCM1x2OdAK+gzZoTyT6CyFK+vs4d6l6Y9ViXykTxpgMk5qie/bQ/H9SVPoj24uo9mw1XqK9vNXhPoPLVQCM02A+50NY6Z4X/vcI3j0gkXeCwKJhB3VwBZNIfl/ErGn7f86Vms5rgz/uzysgaA=
+	t=1777904741; cv=none; b=dU9L7PE0bk7BwTmoGpY1b6/HYE22S0edjreg1lwe2OJEEUINgDA3NvsULLNw+gnh8icOL9kJXLhStR1uLIHwnJ5lBk8f6nrBuRU9hMoJJZEWtW53UvRl9id/cQx5YDzUcZrXSStjN7PF1Sdy4b1CsmD0PAcChmgBy/XS1BEj5PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904739; c=relaxed/simple;
-	bh=PDbSPQ/oVAMj0pzR4ei45S4HXWKXloe7qHmmBB0Z1PQ=;
+	s=arc-20240116; t=1777904741; c=relaxed/simple;
+	bh=fp73vYaSQX22Nw8A3PiRgOhyfu6tRyHIG0hEYyKap8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZM1Oq+xACT1KunId4B4Z+AYgcL3IznjvRoctSlo3MyKLb7rDV5metJq8A+Dj5oIMyiCO6E80BcZ/LMz2RYG9n8bQI1rWQ2mc8Ez9GcISni78yRMVTdAS9t6GpJvdwyRepSht3bX6f6JxVJqUJaE3sR/M3D2tACNvdncsVCiYC+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rmsb0lZl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jmm0j9gSYjvWL2UvTBBUkphlHzWUhjHy8kMJ8doq61LEw3vNrjOHeGNKSg662E30RwHXwU40CqAxFlgxhQNeNF8gJOCGYG+fD6segSZ2v2rM3kd5Wah7rLfUmrygh0KyG/F5+d3tqsQ1hVH7j+RLGdloTSFIYv0iy7ZUpZkIioY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRBOe7Nr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rmsb0lZl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85A0C2BCB8;
-	Mon,  4 May 2026 14:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRBOe7Nr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD77C2BCB8;
+	Mon,  4 May 2026 14:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904739;
-	bh=PDbSPQ/oVAMj0pzR4ei45S4HXWKXloe7qHmmBB0Z1PQ=;
+	s=korg; t=1777904741;
+	bh=fp73vYaSQX22Nw8A3PiRgOhyfu6tRyHIG0hEYyKap8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rmsb0lZlINYWkLccG4LPdiC4Rm0DxXPYd6LfVVmVASIKkitYoSY8vL5Dwnv/DLNsf
-	 AzbOXflNDz+zWliS5pbuhQ3Vhjj7gruJc1kvyPQg9j2nFYDNupv6YC8M4ztOFFZMpE
-	 jdOwjDfsEfpSuptr/IPmhCxwtqPRIpZoDYI4dtL4=
+	b=zRBOe7NrEHZhU8HsX/w1il9HWk0LkCEZuUx6v687cZGeRiwmqFvD/4l50ymUE1NWJ
+	 Qqs9VSMyBwU9KP/iDgFrPojJcCz22UX5frD7K8qlwr7a50YAoHuMZNFnAni81gZsgV
+	 fB2io/hERbB6M8L2rQZcOmmws69I3N7Srxz+mr8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thorsten Blum <thorsten.blum@linux.dev>,
 	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 155/215] crypto: atmel-aes - Fix 3-page memory leak in atmel_aes_buff_cleanup
-Date: Mon,  4 May 2026 15:52:54 +0200
-Message-ID: <20260504135135.840225518@linuxfoundation.org>
+Subject: [PATCH 6.12 156/215] crypto: atmel-ecc - Release client on allocation failure
+Date: Mon,  4 May 2026 15:52:55 +0200
+Message-ID: <20260504135135.876385805@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -52,32 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 3fcfff4ed35f963380a68741bcd52742baff7f76 upstream.
+commit 095d50008d55d13f8fcf1bbeb7c6eba51779bc85 upstream.
 
-atmel_aes_buff_init() allocates 4 pages using __get_free_pages() with
-ATMEL_AES_BUFFER_ORDER, but atmel_aes_buff_cleanup() frees only the
-first page using free_page(), leaking the remaining 3 pages. Use
-free_pages() with ATMEL_AES_BUFFER_ORDER to fix the memory leak.
+Call atmel_ecc_i2c_client_free() to release the I2C client reserved by
+atmel_ecc_i2c_client_alloc() when crypto_alloc_kpp() fails. Otherwise
+->tfm_count will be out of sync.
 
-Fixes: bbe628ed897d ("crypto: atmel-aes - improve performances of data transfer")
+Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-aes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/atmel-ecc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -2130,7 +2130,7 @@ static int atmel_aes_buff_init(struct at
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -261,6 +261,7 @@ static int atmel_ecdh_init_tfm(struct cr
+ 	if (IS_ERR(fallback)) {
+ 		dev_err(&ctx->client->dev, "Failed to allocate transformation for '%s': %ld\n",
+ 			alg, PTR_ERR(fallback));
++		atmel_ecc_i2c_client_free(ctx->client);
+ 		return PTR_ERR(fallback);
+ 	}
  
- static void atmel_aes_buff_cleanup(struct atmel_aes_dev *dd)
- {
--	free_page((unsigned long)dd->buf);
-+	free_pages((unsigned long)dd->buf, ATMEL_AES_BUFFER_ORDER);
- }
- 
- static int atmel_aes_dma_init(struct atmel_aes_dev *dd)
 
 
