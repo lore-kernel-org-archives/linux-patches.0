@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83D7347BA9;
-	Mon,  4 May 2026 14:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB23347BA9;
+	Mon,  4 May 2026 14:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903359; cv=none; b=bbyDOJHCmcPq0ifCNsHAcobihiZdrt9E00UrQx/UfgSCVIW1RtinGmn4a5bzr6Qhks46FMgp2aX3yDjy2cdf9LXlmLHVgy/Ct5OjAK+feLz2WzVxHU+3W+rH2cAHEhWzA2p1v8mcYhtdLMTXwjTAF4BfBwsVATNPNfjsdmSOvz8=
+	t=1777903362; cv=none; b=ZR4DgxpwGR1i7+0ZVbUmsMJJktUEwXP8Ycec58fYu9WlLr7lgOuAcNnh11OHDPBjoJTgxJ4FsYPKkH6hENWRDARtDYsrf2pBZhtQSIk9NXzgBVFZStPCvuAuejO70UOm9z/knet8KK2GztD50a/A8ukglvos2ALOVE1NUjGZtss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903359; c=relaxed/simple;
-	bh=OvDrJ68uKcN8fgdTjuZe97oRxeyyhN8y43vgPuzuYWo=;
+	s=arc-20240116; t=1777903362; c=relaxed/simple;
+	bh=Dgs1er1ZncA4aD1C9hlV3C/8bSPsCaaqSYWjGoRkOxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9Zx/He/FX451BPfQq4MXykcmv1aEnlXzZqEcwtEshV1CscLWh+vz6tVBvWQmDGCiNGmVeCpulTor9BBpgoqUA+qSclajmC96KreknBfIjOP4m8GJhgLZ5/XMFJ+ISgUPHOqOztAxpLI68qcaDe1v2teNoZc19785Fr2GlaVIIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHqClG4E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZrqIgTifFHrzSiHtDUZ9j1QPDjqZWYro/Dgj9sVmk11hnt+9/cdYn6qRZ4RnP5bYWhECHrgI+4uj6TTA20I3b2xXAaY4JSIOTMGvwfu+QSfmTqvYkxQJr0Wa7pXzlxFi3uQNHC2fr8bz5bY1kLKdRStJryErDXnSxJuucmmgLsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZgOKoeL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHqClG4E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3F7C2BCC4;
-	Mon,  4 May 2026 14:02:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZgOKoeL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7A7C2BCB8;
+	Mon,  4 May 2026 14:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903359;
-	bh=OvDrJ68uKcN8fgdTjuZe97oRxeyyhN8y43vgPuzuYWo=;
+	s=korg; t=1777903362;
+	bh=Dgs1er1ZncA4aD1C9hlV3C/8bSPsCaaqSYWjGoRkOxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHqClG4ELHEmI7jPVhGYgBmHew92smWeA9cQ6S7368ryyMTzSdAuLnXbE0W1/zVxo
-	 u3DIZWvgnU5AjKo1QN1FmFG97hspBX92hH57a98S3ymthqgiqVt+dbY/LFgVrNF8vE
-	 A12o7Fj1bvudqD/bLfVgBoFqNcXMIAZHRzn6P7Q8=
+	b=WZgOKoeLlv4zJyiHc7YpNwnsWOnY37x7/70BDBqMZc0YfEm+B4HwK2nRdlhXD9BrE
+	 qdFfN+bDOYmc6wxErBdsPLJS4DcLXIoYqhTM+BNb+ijPIYazwOg/zA6/HyEKwPOi4v
+	 v8WWnU5VcjvjwVzKUkzcf6Y/gyqNpBHF4a5ieZRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.0 202/307] KVM: nSVM: Mark all of vmcb02 dirty when restoring nested state
-Date: Mon,  4 May 2026 15:51:27 +0200
-Message-ID: <20260504135150.482178252@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 7.0 172/307] randomize_kstack: Maintain kstack_offset per task
+Date: Mon,  4 May 2026 15:50:57 +0200
+Message-ID: <20260504135149.335301618@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,42 +51,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit e63fb1379f4b9300a44739964e69549bebbcdca4 upstream.
+commit 37beb42560165869838e7d91724f3e629db64129 upstream.
 
-When restoring a vCPU in guest mode, any state restored before
-KVM_SET_NESTED_STATE (e.g. KVM_SET_SREGS) will mark the corresponding
-dirty bits in vmcb01, as it is the active VMCB before switching to
-vmcb02 in svm_set_nested_state().
+kstack_offset was previously maintained per-cpu, but this caused a
+couple of issues. So let's instead make it per-task.
 
-Hence, mark all fields in vmcb02 dirty in svm_set_nested_state() to
-capture any previously restored fields.
+Issue 1: add_random_kstack_offset() and choose_random_kstack_offset()
+expected and required to be called with interrupts and preemption
+disabled so that it could manipulate per-cpu state. But arm64, loongarch
+and risc-v are calling them with interrupts and preemption enabled. I
+don't _think_ this causes any functional issues, but it's certainly
+unexpected and could lead to manipulating the wrong cpu's state, which
+could cause a minor performance degradation due to bouncing the cache
+lines. By maintaining the state per-task those functions can safely be
+called in preemptible context.
 
-Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
-CC: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20260210010806.3204289-1-yosry.ahmed@linux.dev
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Issue 2: add_random_kstack_offset() is called before executing the
+syscall and expands the stack using a previously chosen random offset.
+choose_random_kstack_offset() is called after executing the syscall and
+chooses and stores a new random offset for the next syscall. With
+per-cpu storage for this offset, an attacker could force cpu migration
+during the execution of the syscall and prevent the offset from being
+updated for the original cpu such that it is predictable for the next
+syscall on that cpu. By maintaining the state per-task, this problem
+goes away because the per-task random offset is updated after the
+syscall regardless of which cpu it is executing on.
+
+Fixes: 39218ff4c625 ("stack: Optionally randomize kernel stack offset each syscall")
+Closes: https://lore.kernel.org/all/dd8c37bc-795f-4c7a-9086-69e584d8ab24@arm.com/
+Cc: stable@vger.kernel.org
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://patch.msgid.link/20260303150840.3789438-2-ryan.roberts@arm.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ include/linux/randomize_kstack.h |   26 +++++++++++++++-----------
+ include/linux/sched.h            |    4 ++++
+ init/main.c                      |    1 -
+ kernel/fork.c                    |    2 ++
+ 4 files changed, 21 insertions(+), 12 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1918,6 +1918,12 @@ static int svm_set_nested_state(struct k
- 	nested_vmcb02_prepare_control(svm, svm->vmcb->save.rip, svm->vmcb->save.cs.base);
+--- a/include/linux/randomize_kstack.h
++++ b/include/linux/randomize_kstack.h
+@@ -9,7 +9,6 @@
  
- 	/*
-+	 * Any previously restored state (e.g. KVM_SET_SREGS) would mark fields
-+	 * dirty in vmcb01 instead of vmcb02, so mark all of vmcb02 dirty here.
-+	 */
-+	vmcb_mark_all_dirty(svm->vmcb);
+ DECLARE_STATIC_KEY_MAYBE(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,
+ 			 randomize_kstack_offset);
+-DECLARE_PER_CPU(u32, kstack_offset);
+ 
+ /*
+  * Do not use this anywhere else in the kernel. This is used here because
+@@ -50,15 +49,14 @@ DECLARE_PER_CPU(u32, kstack_offset);
+  * add_random_kstack_offset - Increase stack utilization by previously
+  *			      chosen random offset
+  *
+- * This should be used in the syscall entry path when interrupts and
+- * preempt are disabled, and after user registers have been stored to
+- * the stack. For testing the resulting entropy, please see:
+- * tools/testing/selftests/lkdtm/stack-entropy.sh
++ * This should be used in the syscall entry path after user registers have been
++ * stored to the stack. Preemption may be enabled. For testing the resulting
++ * entropy, please see: tools/testing/selftests/lkdtm/stack-entropy.sh
+  */
+ #define add_random_kstack_offset() do {					\
+ 	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
+ 				&randomize_kstack_offset)) {		\
+-		u32 offset = raw_cpu_read(kstack_offset);		\
++		u32 offset = current->kstack_offset;			\
+ 		u8 *ptr = __kstack_alloca(KSTACK_OFFSET_MAX(offset));	\
+ 		/* Keep allocation even after "ptr" loses scope. */	\
+ 		asm volatile("" :: "r"(ptr) : "memory");		\
+@@ -69,9 +67,9 @@ DECLARE_PER_CPU(u32, kstack_offset);
+  * choose_random_kstack_offset - Choose the random offset for the next
+  *				 add_random_kstack_offset()
+  *
+- * This should only be used during syscall exit when interrupts and
+- * preempt are disabled. This position in the syscall flow is done to
+- * frustrate attacks from userspace attempting to learn the next offset:
++ * This should only be used during syscall exit. Preemption may be enabled. This
++ * position in the syscall flow is done to frustrate attacks from userspace
++ * attempting to learn the next offset:
+  * - Maximize the timing uncertainty visible from userspace: if the
+  *   offset is chosen at syscall entry, userspace has much more control
+  *   over the timing between choosing offsets. "How long will we be in
+@@ -85,14 +83,20 @@ DECLARE_PER_CPU(u32, kstack_offset);
+ #define choose_random_kstack_offset(rand) do {				\
+ 	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
+ 				&randomize_kstack_offset)) {		\
+-		u32 offset = raw_cpu_read(kstack_offset);		\
++		u32 offset = current->kstack_offset;			\
+ 		offset = ror32(offset, 5) ^ (rand);			\
+-		raw_cpu_write(kstack_offset, offset);			\
++		current->kstack_offset = offset;			\
+ 	}								\
+ } while (0)
 +
-+	/*
- 	 * While the nested guest CR3 is already checked and set by
- 	 * KVM_SET_SREGS, it was set when nested state was yet loaded,
- 	 * thus MMU might not be initialized correctly.
++static inline void random_kstack_task_init(struct task_struct *tsk)
++{
++	tsk->kstack_offset = 0;
++}
+ #else /* CONFIG_RANDOMIZE_KSTACK_OFFSET */
+ #define add_random_kstack_offset()		do { } while (0)
+ #define choose_random_kstack_offset(rand)	do { } while (0)
++#define random_kstack_task_init(tsk)		do { } while (0)
+ #endif /* CONFIG_RANDOMIZE_KSTACK_OFFSET */
+ 
+ #endif
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1592,6 +1592,10 @@ struct task_struct {
+ 	unsigned long			prev_lowest_stack;
+ #endif
+ 
++#ifdef CONFIG_RANDOMIZE_KSTACK_OFFSET
++	u32				kstack_offset;
++#endif
++
+ #ifdef CONFIG_X86_MCE
+ 	void __user			*mce_vaddr;
+ 	__u64				mce_kflags;
+--- a/init/main.c
++++ b/init/main.c
+@@ -833,7 +833,6 @@ static inline void initcall_debug_enable
+ #ifdef CONFIG_RANDOMIZE_KSTACK_OFFSET
+ DEFINE_STATIC_KEY_MAYBE_RO(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,
+ 			   randomize_kstack_offset);
+-DEFINE_PER_CPU(u32, kstack_offset);
+ 
+ static int __init early_randomize_kstack_offset(char *buf)
+ {
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -95,6 +95,7 @@
+ #include <linux/thread_info.h>
+ #include <linux/kstack_erase.h>
+ #include <linux/kasan.h>
++#include <linux/randomize_kstack.h>
+ #include <linux/scs.h>
+ #include <linux/io_uring.h>
+ #include <linux/io_uring_types.h>
+@@ -2233,6 +2234,7 @@ __latent_entropy struct task_struct *cop
+ 	if (retval)
+ 		goto bad_fork_cleanup_io;
+ 
++	random_kstack_task_init(p);
+ 	stackleak_task_init(p);
+ 
+ 	if (pid != &init_struct_pid) {
 
 
