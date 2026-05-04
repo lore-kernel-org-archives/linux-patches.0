@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457EB315785;
-	Mon,  4 May 2026 14:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF91B1A6827;
+	Mon,  4 May 2026 14:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904311; cv=none; b=ZCdtMkDabw6ndskuPTWlZrtS2HH75L/VSyap/byuwjRJdZSuRjwy+kCCvPoZvc1a/7NAJgFw+L7iPIedaamHM5aug+0dfDW29fxmXLp+o9Wh45ToHpTuJTmIu1bfPBekuua7Z7NTDYnnOoc+zniOS/uxmxVmVi9fxrcf0tAa2TU=
+	t=1777904313; cv=none; b=Ymk1EUwxYyzQD3MGr5AsIoqEiI3OlfaKRfAJZGi22HTL6Go4ivVbUK6fH0d2pno3tG1upl/3AfuKaYnTJvd3GiCA1/eonrNwMVNPOxz4tQphDoRofkNWcwaveIzLy1/fI0dDgXqlhPWFQ6GursFOvr2ZNmO0NQlOplf9Z+YGA/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904311; c=relaxed/simple;
-	bh=9ijrQTXBbdPIE+2wSyffitNKagBpFhoCuLD6nNve4wY=;
+	s=arc-20240116; t=1777904313; c=relaxed/simple;
+	bh=x8y7Kc+TT486OKW9qGpQWU8/n0xwiyQIy/znZejkcgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eu7xmUn30FY3SZ39/L7GTAiKNeblg8tGLnXPsUhLbNVqAHwU/IiP3W5UNr9MNsM5J8b+OknXxCkh/v61eFQdR9MlficHm8uxucfchC3jEIUPEnrkdyNSHV35ZCv+2mDYSw6paulM3Ve2CuGEXCQ7t6iMyCr1dIj+qnNLC3V0v7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2m1/qMLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LKzCZpHVBcSHofUJx9JmovphAKg1561RxhNUhbUajx5/hVb6NhDE7hVLjznEEIxQ2aid9qGg18BhPjRm1p87KsNtU+HrCHmiCifI4wG9ZMiWlEYrOE8nk1g1M8rX6LUT6Kj9zwl45PyUnNx22N8FQB1tOEclkWHjGNebCySWK/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iTZHyC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2m1/qMLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF51C2BCB8;
-	Mon,  4 May 2026 14:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iTZHyC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F61C2BCB8;
+	Mon,  4 May 2026 14:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904311;
-	bh=9ijrQTXBbdPIE+2wSyffitNKagBpFhoCuLD6nNve4wY=;
+	s=korg; t=1777904313;
+	bh=x8y7Kc+TT486OKW9qGpQWU8/n0xwiyQIy/znZejkcgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2m1/qMLCxLLu8TguRad7lbcndqR4uNH0yEPUpVgmJiB1qOYQ2pcU+WiwzZZFUBhlI
-	 QzBAHFrRj72G08C3w8DHPAlWYUMOsAAcMvzcNu7jLz4KT0rv5cfxyl0zfWFITR9UpD
-	 hRtQ3nvCKlXU8nViLXJ7AYOJNJ5sp1O5MNqcOIv8=
+	b=1iTZHyC+1rOF9MiN1QKLbPJ91qdbHIO5o91UmmPssO9kJc85Qd+f3P149413s+oXx
+	 88VzMvm7bcu2SRoxZfVYVRxlNsd6rC+rhqkqtm/SnnBwiPsQMK8A4dwRNL30xIwhJx
+	 OiII+cqEJOP2GjrIpjlCkMlc54gI24UDqQyjlfR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 233/275] dm mirror: fix integer overflow in create_dirty_log()
-Date: Mon,  4 May 2026 15:52:53 +0200
-Message-ID: <20260504135151.708952812@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 234/275] ceph: only d_add() negative dentries when they are unhashed
+Date: Mon,  4 May 2026 15:52:54 +0200
+Message-ID: <20260504135151.745023114@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -52,53 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit 4c788c6f921b22f9b6c3f316c4a071c05683e7de upstream.
+commit 803447f93d75ab6e40c85e6d12b5630d281d70d6 upstream.
 
-The argument count calculation in create_dirty_log() performs
-`*args_used = 2 + param_count` before validating against argc. When a
-user provides a param_count close to UINT_MAX via the device mapper
-table string, this unsigned addition wraps around to a small value,
-causing the subsequent `argc < *args_used` check to be bypassed.
+Ceph can call d_add(dentry, NULL) on a negative dentry that is already
+present in the primary dcache hash.
 
-The overflowed param_count is then passed as argc to dm_dirty_log_create(),
-where it can cause out-of-bounds reads on the argv array.
+In the current VFS that is not safe.  d_add() goes through __d_add()
+to __d_rehash(), which unconditionally reinserts dentry->d_hash into
+the hlist_bl bucket.  If the dentry is already hashed, reinserting the
+same node can corrupt the bucket, including creating a self-loop.
+Once that happens, __d_lookup() can spin forever in the hlist_bl walk,
+typically looping only on the d_name.hash mismatch check and
+eventually triggering RCU stall reports like this one:
 
-Fix by comparing param_count against argc - 2 before performing the
-addition, following the same pattern used by parse_features() in the
-same file. Since argc >= 2 is already guaranteed, the subtraction is
-safe.
+ rcu: INFO: rcu_sched self-detected stall on CPU
+ rcu:         87-....: (2100 ticks this GP) idle=3a4c/1/0x4000000000000000 softirq=25003319/25003319 fqs=829
+ rcu:         (t=2101 jiffies g=79058445 q=698988 ncpus=192)
+ CPU: 87 UID: 2952868916 PID: 3933303 Comm: php-cgi8.3 Not tainted 6.18.17-i1-amd #950 NONE
+ Hardware name: Dell Inc. PowerEdge R7615/0G9DHV, BIOS 1.6.6 09/22/2023
+ RIP: 0010:__d_lookup+0x46/0xb0
+ Code: c1 e8 07 48 8d 04 c2 48 8b 00 49 89 fc 49 89 f5 48 89 c3 48 83 e3 fe 48 83 f8 01 77 0f eb 2d 0f 1f 44 00 00 48 8b 1b 48 85 db <74> 20 39 6b 18 75 f3 48 8d 7b 78 e8 ba 85 d0 00 4c 39 63 10 74 1f
+ RSP: 0018:ff745a70c8253898 EFLAGS: 00000282
+ RAX: ff26e470054cb208 RBX: ff26e470054cb208 RCX: 000000006e958966
+ RDX: ff26e48267340000 RSI: ff745a70c82539b0 RDI: ff26e458f74655c0
+ RBP: 000000006e958966 R08: 0000000000000180 R09: 9cd08d909b919a89
+ R10: ff26e458f74655c0 R11: 0000000000000000 R12: ff26e458f74655c0
+ R13: ff745a70c82539b0 R14: d0d0d0d0d0d0d0d0 R15: 2f2f2f2f2f2f2f2f
+ FS:  00007f5770896980(0000) GS:ff26e482c5d88000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f5764de50c0 CR3: 000000a72abb5001 CR4: 0000000000771ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  lookup_fast+0x9f/0x100
+  walk_component+0x1f/0x150
+  link_path_walk+0x20e/0x3d0
+  path_lookupat+0x68/0x180
+  filename_lookup+0xdc/0x1e0
+  vfs_statx+0x6c/0x140
+  vfs_fstatat+0x67/0xa0
+  __do_sys_newfstatat+0x24/0x60
+  do_syscall_64+0x6a/0x230
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+This is reachable with reused cached negative dentries.  A Ceph lookup
+or atomic_open can be handed a negative dentry that is already hashed,
+and fs/ceph/dir.c then hits one of two paths that incorrectly assume
+"negative" also means "unhashed":
+
+  - ceph_finish_lookup():
+      MDS reply is -ENOENT with no trace
+      -> d_add(dentry, NULL)
+
+  - ceph_lookup():
+      local ENOENT fast path for a complete directory with shared caps
+      -> d_add(dentry, NULL)
+
+Both paths can therefore re-add an already-hashed negative dentry.
+
+Ceph already uses the correct pattern elsewhere: ceph_fill_trace() only
+calls d_add(dn, NULL) for a negative null-dentry reply when d_unhashed(dn)
+is true.
+
+Fix both fs/ceph/dir.c sites the same way: only call d_add() for a
+negative dentry when it is actually unhashed.  If the negative dentry
+is already hashed, leave it in place and reuse it as-is.
+
+This preserves the existing behavior for unhashed dentries while
+avoiding d_hash list corruption for reused hashed negatives.
+
 Cc: stable@vger.kernel.org
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 2817b000b02c ("ceph: directory operations")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-raid1.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ceph/dir.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-raid1.c
-+++ b/drivers/md/dm-raid1.c
-@@ -993,13 +993,13 @@ static struct dm_dirty_log *create_dirty
- 		return NULL;
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -769,7 +769,8 @@ struct dentry *ceph_finish_lookup(struct
+ 				d_drop(dentry);
+ 				err = -ENOENT;
+ 			} else {
+-				d_add(dentry, NULL);
++				if (d_unhashed(dentry))
++					d_add(dentry, NULL);
+ 			}
+ 		}
  	}
- 
--	*args_used = 2 + param_count;
--
--	if (argc < *args_used) {
-+	if (param_count > argc - 2) {
- 		ti->error = "Insufficient mirror log arguments";
- 		return NULL;
- 	}
- 
-+	*args_used = 2 + param_count;
-+
- 	dl = dm_dirty_log_create(argv[0], ti, mirror_flush, param_count,
- 				 argv + 2);
- 	if (!dl) {
+@@ -840,7 +841,8 @@ static struct dentry *ceph_lookup(struct
+ 			spin_unlock(&ci->i_ceph_lock);
+ 			doutc(cl, " dir %llx.%llx complete, -ENOENT\n",
+ 			      ceph_vinop(dir));
+-			d_add(dentry, NULL);
++			if (d_unhashed(dentry))
++				d_add(dentry, NULL);
+ 			di->lease_shared_gen = atomic_read(&ci->i_shared_gen);
+ 			return NULL;
+ 		}
 
 
