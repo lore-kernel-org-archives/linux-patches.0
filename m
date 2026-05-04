@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314303DE42D;
-	Mon,  4 May 2026 13:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE83C3DE458;
+	Mon,  4 May 2026 13:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903100; cv=none; b=t6OSlRd90bxlJEbPm3eqIEWTu+ElewKMVFl52sxoDtahy/pUi/MvlFcHoLhwy+22bXN2nY2Q0Qyh7YpJ4ctYcsBc4O5hZgX4/LzV+Q2qnZ6kT1CZpvGqbWAv1lWHiFiRR/4n5fmsegFbQQnX1xl9cn9DMgbysNOaFUgaV2YaqXM=
+	t=1777903102; cv=none; b=SKUGUBSeaRhDT16hP/Cj3Z5L4jzwL6igJ7ZithjFihuUcdTMIW5zgbgASwCyh90iNwNO1ygS0X4ABN8oFDdguGXu/z03qj3oXJZC/zkYSXVDM/NouUNlMhUF6DSyj+o4wFV9xSpAPIn1Lw7XRnq4olSzSwPNU/0023pJMGzkdgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903100; c=relaxed/simple;
-	bh=AZSw9f//0TI7bSUadbxQmzxuI8wJ4AUj995K6lT1i5Q=;
+	s=arc-20240116; t=1777903102; c=relaxed/simple;
+	bh=XFPSCFFagp8Wl4DU18PJXoza6srtr2hciSkfVu8EldE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Os0N/JbHbi2g8GEOgiCHXHA9G4csxBAEnP/9nQD7VHiREC1ixq6cS9eIU/D7BF1v7wdAPqu0ZMdTDmQ4/6CmCKJ6LIZoKib4VQ9ZiPyOKvcJnZYGoLtYD2Sm1icoqRYQ8DcTQs7wKqzNaYsGrVqG2R4JbuwfI1EgkI1dZaHrlr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+gb35oU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E3E/TfJonOxmrY2rLzJI44MYQAcJoquKpQKSKy+5jG5qfNwJIfVJ2SZUrUerlGMLDS+G9f8y/y5BS6RLwfQsL/lWXk7RQcErzEREwd0P8Iec9BjUPJPCb2Ci/soBISIDvO1eh2b8t1Vh9Crnpm7HOLrQW2xnQ40KzU4SG4DQAOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8H7LG82; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+gb35oU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5D1C2BCF6;
-	Mon,  4 May 2026 13:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8H7LG82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4289CC2BCC4;
+	Mon,  4 May 2026 13:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903100;
-	bh=AZSw9f//0TI7bSUadbxQmzxuI8wJ4AUj995K6lT1i5Q=;
+	s=korg; t=1777903102;
+	bh=XFPSCFFagp8Wl4DU18PJXoza6srtr2hciSkfVu8EldE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+gb35oUMySEOLa2RKk0yvM2TJH8oUpE9nMZDChCNwJZ1zLGcCOiuZf0n5YiAMmVF
-	 g279Pe7E4NVY1ACL/AmtHeRDzqNH53LzxYU14aztpc7iXxHj593iohKp4LT2y52/qz
-	 ryvGZcWjs26n/uNKXQ1KOfmWbF9BX+KvmMhFtFKQ=
+	b=g8H7LG82l8Y62ckH7pjnqKlOD/fgi0K0Hp/1icL/A8DLwrjRLq7wjPBqFdyxFNC/0
+	 ALF/hirmuZXvxzzOTDcQV/7JF25lxN+Y8ozPm6D91Pilq+U6ZCMAO3rNZOdMTe/nYf
+	 ILHY3AZddv7h1r+Kkj7s0NyQb22JffwbY9ei1XiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 071/307] ALSA: seq_oss: return full count for successful SEQ_FULLSIZE writes
-Date: Mon,  4 May 2026 15:49:16 +0200
-Message-ID: <20260504135145.484852781@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 062/307] lib/ts_kmp: fix integer overflow in pattern length calculation
+Date: Mon,  4 May 2026 15:49:07 +0200
+Message-ID: <20260504135145.153551205@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -44,53 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Josh Law <objecting@objecting.org>
 
-commit bbc6c0dda54fc0ad8f8aed0b796c23e186e1a188 upstream.
+commit 8cdf30813ea8ce881cecc08664144416dbdb3e16 upstream.
 
-snd_seq_oss_write() currently returns the raw load_patch() callback
-result for SEQ_FULLSIZE events.
+The ts_kmp algorithm stores its prefix_tbl[] table and pattern in a single
+allocation sized from the pattern length.  If the prefix_tbl[] size
+calculation wraps, the resulting allocation can be too small and
+subsequent pattern copies can overflow it.
 
-That callback is documented as returning 0 on success and -errno on
-failure, but snd_seq_oss_write() is the file write path and should
-report the number of user bytes consumed on success. Some in-tree
-backends also return backend-specific positive values, which can still
-be shorter than the original write size.
+Fix this by rejecting zero-length patterns and by using overflow helpers
+before calculating the combined allocation size.
 
-Return the full byte count for successful SEQ_FULLSIZE writes.
-Preserve negative errors and convert any nonnegative completion to the
-original count.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260324-alsa-seq-oss-fullsize-write-return-v1-1-66d448510538@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This fixes a potential heap overflow.  The pattern length calculation can
+wrap during a size_t addition, leading to an undersized allocation.
+Because the textsearch library is reachable from userspace via Netfilter's
+xt_string module, this is a security risk that should be backported to LTS
+kernels.
+
+Link: https://lkml.kernel.org/r/20260308202028.2889285-2-objecting@objecting.org
+Signed-off-by: Josh Law <objecting@objecting.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/oss/seq_oss_rw.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ lib/ts_kmp.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/sound/core/seq/oss/seq_oss_rw.c
-+++ b/sound/core/seq/oss/seq_oss_rw.c
-@@ -101,9 +101,9 @@ snd_seq_oss_write(struct seq_oss_devinfo
- 				break;
- 			}
- 			fmt = (*(unsigned short *)rec.c) & 0xffff;
--			/* FIXME the return value isn't correct */
--			return snd_seq_oss_synth_load_patch(dp, rec.s.dev,
--							    fmt, buf, 0, count);
-+			err = snd_seq_oss_synth_load_patch(dp, rec.s.dev,
-+							   fmt, buf, 0, count);
-+			return err < 0 ? err : count;
- 		}
- 		if (ev_is_long(&rec)) {
- 			/* extended code */
+--- a/lib/ts_kmp.c
++++ b/lib/ts_kmp.c
+@@ -94,8 +94,22 @@ static struct ts_config *kmp_init(const
+ 	struct ts_config *conf;
+ 	struct ts_kmp *kmp;
+ 	int i;
+-	unsigned int prefix_tbl_len = len * sizeof(unsigned int);
+-	size_t priv_size = sizeof(*kmp) + len + prefix_tbl_len;
++	unsigned int prefix_tbl_len;
++	size_t priv_size;
++
++	/* Zero-length patterns would make kmp_find() read beyond kmp->pattern. */
++	if (unlikely(!len))
++		return ERR_PTR(-EINVAL);
++
++	/*
++	 * kmp->pattern is stored immediately after the prefix_tbl[] table.
++	 * Reject lengths that would wrap while sizing either region.
++	 */
++	if (unlikely(check_mul_overflow(len, sizeof(*kmp->prefix_tbl),
++					&prefix_tbl_len) ||
++		     check_add_overflow(sizeof(*kmp), (size_t)len, &priv_size) ||
++		     check_add_overflow(priv_size, prefix_tbl_len, &priv_size)))
++		return ERR_PTR(-EINVAL);
+ 
+ 	conf = alloc_ts_config(priv_size, gfp_mask);
+ 	if (IS_ERR(conf))
 
 
