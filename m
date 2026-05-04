@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009B2315785;
-	Mon,  4 May 2026 14:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E1C1A6827;
+	Mon,  4 May 2026 14:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777904391; cv=none; b=oght4DLdVqSMtIl80tYhb0D3r+10SyED3lzHsu8QIQwlrryixL/xizbcaj1N1pm2bWgW2Yzkh3NkaG/Guil2/9Qc/fFM+uKKVEdDEA76A9g/5FkiFM1n9NAcE7P8xW2PdxFybmHtMUCq41Zs+U0KLrsX9PkMBokhdrDO93wRQJ4=
+	t=1777904393; cv=none; b=GZPb3EL9Plh70HkrSqg7XgB92/SSaa2uGYhHR1Z6JTO0hm75LTM5Dda4/HGYXo9QLmWBv3QvPBHF+d9aE1pkfKdjMP1dDKBDauhjQNPTStFv1+qi1ixIf/k3VQ4L2Of3lvZX1YTMcw0/XktbwC+RgMF88QOwJLYNo++z3wGnG1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777904391; c=relaxed/simple;
-	bh=EKv+RifZg7DCkm76bD05njyW7hxGAQloEeNfOV5I7h8=;
+	s=arc-20240116; t=1777904393; c=relaxed/simple;
+	bh=1T0qPA30v4/7Aah4L54kMPeWqC+uTcnnRNB9B7rX/40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXy+UT3lOI3pqlmnQiH9X0Q4LGQ/KFwDTQnOIZCBSRKnPBiGbHvaonwSIFsx0rnY8VS/jG8y6SqdTNPfkXiAY7ICwVfrQjJgWhs/R1KOHysLOihE6n1YMlHrtoKOS9xm9DMVFKeuXSKTStc+E+PbdxzQrt9XbxsvMh3kdx1FtQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vXtVaXI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TJ0MvEUnDRFp9RRueZzKrIvNFrCvkMM3VjL33Vk3hURj/XbNXvk5uzcEklGNG4G2s2oNr4TztWNak2lr8UT+ncV57omLIO6fQIO1UkWlVsYStTrS+E3Msv6XGy6lcyakFP9gscA0/eYMBchnEnb1KZOGastKw8ClZxJHRfmp/yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iX1plMqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vXtVaXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847A7C2BCB8;
-	Mon,  4 May 2026 14:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iX1plMqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C3AC2BCC4;
+	Mon,  4 May 2026 14:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777904390;
-	bh=EKv+RifZg7DCkm76bD05njyW7hxGAQloEeNfOV5I7h8=;
+	s=korg; t=1777904393;
+	bh=1T0qPA30v4/7Aah4L54kMPeWqC+uTcnnRNB9B7rX/40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vXtVaXIf7+q0fNyDbjTSE24exdAcJGWbtA448NzkpFz6kgQEPCYR5/BCcK5cJnUh
-	 AgKfW/3JZp5sa7fBcPCi39ED1g1rlOrINC6vH8CSOwzBknF0AjoyJLy2P2qFYto+Uq
-	 N1Y25vR4CjgWPV0Bq9AUoitf5Jogr8tw/pFv8m+g=
+	b=iX1plMquwTEd8QI+P3RWMGDSi7Y5vHKnEF7bEFBQ8rYPSFVWLJ0MTLH2niVq5BUJP
+	 3JQGdSAmzvzLVr2HoYxZRsdfRFAQj7uZWALY1mfvUCFX+RXV3wgKdy9b2Rcg2RyIKO
+	 kwVreXXA9uPZSPp0SefC54dxe8qFVhHJwlIWJRMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.12 020/215] arm64/mm: Enable batched TLB flush in unmap_hotplug_range()
-Date: Mon,  4 May 2026 15:50:39 +0200
-Message-ID: <20260504135130.914998069@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bin Lan <lanbincn@139.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 021/215] padata: Fix pd UAF once and for all
+Date: Mon,  4 May 2026 15:50:40 +0200
+Message-ID: <20260504135130.951568888@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
 References: <20260504135130.169210693@linuxfoundation.org>
@@ -55,132 +51,280 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 48478b9f791376b4b89018d7afdfd06865498f65 upstream.
+[ Upstream commit 71203f68c7749609d7fc8ae6ad054bdedeb24f91 ]
 
-During a memory hot remove operation, both linear and vmemmap mappings for
-the memory range being removed, get unmapped via unmap_hotplug_range() but
-mapped pages get freed only for vmemmap mapping. This is just a sequential
-operation where each table entry gets cleared, followed by a leaf specific
-TLB flush, and then followed by memory free operation when applicable.
+There is a race condition/UAF in padata_reorder that goes back
+to the initial commit.  A reference count is taken at the start
+of the process in padata_do_parallel, and released at the end in
+padata_serial_worker.
 
-This approach was simple and uniform both for vmemmap and linear mappings.
-But linear mapping might contain CONT marked block memory where it becomes
-necessary to first clear out all entire in the range before a TLB flush.
-This is as per the architecture requirement. Hence batch all TLB flushes
-during the table tear down walk and finally do it in unmap_hotplug_range().
+This reference count is (and only is) required for padata_replace
+to function correctly.  If padata_replace is never called then
+there is no issue.
 
-Prior to this fix, it was hypothetically possible for a speculative access
-to a higher address in the contiguous block to fill the TLB with shattered
-entries for the entire contiguous range after a lower address had already
-been cleared and invalidated. Due to the table entries being shattered, the
-subsequent TLB invalidation for the higher address would not then clear the
-TLB entries for the lower address, meaning stale TLB entries could persist.
+In the function padata_reorder which serves as the core of padata,
+as soon as padata is added to queue->serial.list, and the associated
+spin lock released, that padata may be processed and the reference
+count on pd would go away.
 
-Besides it also helps in improving the performance via TLBI range operation
-along with reduced synchronization instructions. The time spent executing
-unmap_hotplug_range() improved 97% measured over a 2GB memory hot removal
-in KVM guest.
+Fix this by getting the next padata before the squeue->serial lock
+is released.
 
-This scheme is not applicable during vmemmap mapping tear down where memory
-needs to be freed and hence a TLB flush is required after clearing out page
-table entry.
+In order to make this possible, simplify padata_reorder by only
+calling it once the next padata arrives.
 
-Cc: Will Deacon <will@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Closes: https://lore.kernel.org/all/aWZYXhrT6D2M-7-N@willie-the-truck/
-Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
-Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 16295bec6398 ("padata: Generic parallelization/serialization interface")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ Adjust context of padata_find_next(). Replace
+cpumask_next_wrap(cpu, pd->cpumask.pcpu) with
+cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false) in padata_reorder() in
+v6.12 according to dc5bb9b769c9 ("cpumask: deprecate cpumask_next_wrap()") and
+f954a2d37637 ("padata: switch padata_find_next() to using cpumask_next_wrap()")
+. ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmu.c |   36 ++++++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ include/linux/padata.h |   3 -
+ kernel/padata.c        | 136 +++++++++++------------------------------
+ 2 files changed, 37 insertions(+), 102 deletions(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -869,10 +869,14 @@ static void unmap_hotplug_pte_range(pmd_
+diff --git a/include/linux/padata.h b/include/linux/padata.h
+index 0146daf344306..b486c7359de2b 100644
+--- a/include/linux/padata.h
++++ b/include/linux/padata.h
+@@ -91,7 +91,6 @@ struct padata_cpumask {
+  * @cpu: Next CPU to be processed.
+  * @cpumask: The cpumasks in use for parallel and serial workers.
+  * @reorder_work: work struct for reordering.
+- * @lock: Reorder lock.
+  */
+ struct parallel_data {
+ 	struct padata_shell		*ps;
+@@ -102,8 +101,6 @@ struct parallel_data {
+ 	unsigned int			processed;
+ 	int				cpu;
+ 	struct padata_cpumask		cpumask;
+-	struct work_struct		reorder_work;
+-	spinlock_t                      ____cacheline_aligned lock;
+ };
  
- 		WARN_ON(!pte_present(pte));
- 		__pte_clear(&init_mm, addr, ptep);
--		flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
--		if (free_mapped)
-+		if (free_mapped) {
-+			/* CONT blocks are not supported in the vmemmap */
-+			WARN_ON(pte_cont(pte));
-+			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
- 			free_hotplug_page_range(pte_page(pte),
- 						PAGE_SIZE, altmap);
-+		}
-+		/* unmap_hotplug_range() flushes TLB for !free_mapped */
- 	} while (addr += PAGE_SIZE, addr < end);
- }
- 
-@@ -893,15 +897,14 @@ static void unmap_hotplug_pmd_range(pud_
- 		WARN_ON(!pmd_present(pmd));
- 		if (pmd_sect(pmd)) {
- 			pmd_clear(pmdp);
--
--			/*
--			 * One TLBI should be sufficient here as the PMD_SIZE
--			 * range is mapped with a single block entry.
--			 */
--			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
--			if (free_mapped)
-+			if (free_mapped) {
-+				/* CONT blocks are not supported in the vmemmap */
-+				WARN_ON(pmd_cont(pmd));
-+				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
- 				free_hotplug_page_range(pmd_page(pmd),
- 							PMD_SIZE, altmap);
-+			}
-+			/* unmap_hotplug_range() flushes TLB for !free_mapped */
- 			continue;
- 		}
- 		WARN_ON(!pmd_table(pmd));
-@@ -926,15 +929,12 @@ static void unmap_hotplug_pud_range(p4d_
- 		WARN_ON(!pud_present(pud));
- 		if (pud_sect(pud)) {
- 			pud_clear(pudp);
--
--			/*
--			 * One TLBI should be sufficient here as the PUD_SIZE
--			 * range is mapped with a single block entry.
--			 */
--			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
--			if (free_mapped)
-+			if (free_mapped) {
-+				flush_tlb_kernel_range(addr, addr + PUD_SIZE);
- 				free_hotplug_page_range(pud_page(pud),
- 							PUD_SIZE, altmap);
-+			}
-+			/* unmap_hotplug_range() flushes TLB for !free_mapped */
- 			continue;
- 		}
- 		WARN_ON(!pud_table(pud));
-@@ -964,6 +964,7 @@ static void unmap_hotplug_p4d_range(pgd_
- static void unmap_hotplug_range(unsigned long addr, unsigned long end,
- 				bool free_mapped, struct vmem_altmap *altmap)
+ /**
+diff --git a/kernel/padata.c b/kernel/padata.c
+index c3810f5bd7156..e61bdc248551f 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -261,20 +261,17 @@ EXPORT_SYMBOL(padata_do_parallel);
+  *   be parallel processed by another cpu and is not yet present in
+  *   the cpu's reorder queue.
+  */
+-static struct padata_priv *padata_find_next(struct parallel_data *pd,
+-					    bool remove_object)
++static struct padata_priv *padata_find_next(struct parallel_data *pd, int cpu,
++					    unsigned int processed)
  {
-+	unsigned long start = addr;
- 	unsigned long next;
- 	pgd_t *pgdp, pgd;
+ 	struct padata_priv *padata;
+ 	struct padata_list *reorder;
+-	int cpu = pd->cpu;
  
-@@ -985,6 +986,9 @@ static void unmap_hotplug_range(unsigned
- 		WARN_ON(!pgd_present(pgd));
- 		unmap_hotplug_p4d_range(pgdp, addr, next, free_mapped, altmap);
- 	} while (addr = next, addr < end);
+ 	reorder = per_cpu_ptr(pd->reorder_list, cpu);
+ 
+ 	spin_lock(&reorder->lock);
+-	if (list_empty(&reorder->list)) {
+-		spin_unlock(&reorder->lock);
+-		return NULL;
+-	}
++	if (list_empty(&reorder->list))
++		goto notfound;
+ 
+ 	padata = list_entry(reorder->list.next, struct padata_priv, list);
+ 
+@@ -282,101 +279,52 @@ static struct padata_priv *padata_find_next(struct parallel_data *pd,
+ 	 * Checks the rare case where two or more parallel jobs have hashed to
+ 	 * the same CPU and one of the later ones finishes first.
+ 	 */
+-	if (padata->seq_nr != pd->processed) {
+-		spin_unlock(&reorder->lock);
+-		return NULL;
+-	}
+-
+-	if (remove_object) {
+-		list_del_init(&padata->list);
+-		++pd->processed;
+-		/* When sequence wraps around, reset to the first CPU. */
+-		if (unlikely(pd->processed == 0))
+-			pd->cpu = cpumask_first(pd->cpumask.pcpu);
+-		else
+-			pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
+-	}
++	if (padata->seq_nr != processed)
++		goto notfound;
+ 
++	list_del_init(&padata->list);
+ 	spin_unlock(&reorder->lock);
+ 	return padata;
 +
-+	if (!free_mapped)
-+		flush_tlb_kernel_range(start, end);
++notfound:
++	pd->processed = processed;
++	pd->cpu = cpu;
++	spin_unlock(&reorder->lock);
++	return NULL;
  }
  
- static void free_empty_pte_table(pmd_t *pmdp, unsigned long addr,
+-static void padata_reorder(struct parallel_data *pd)
++static void padata_reorder(struct padata_priv *padata)
+ {
++	struct parallel_data *pd = padata->pd;
+ 	struct padata_instance *pinst = pd->ps->pinst;
+-	int cb_cpu;
+-	struct padata_priv *padata;
+-	struct padata_serial_queue *squeue;
+-	struct padata_list *reorder;
++	unsigned int processed;
++	int cpu;
+ 
+-	/*
+-	 * We need to ensure that only one cpu can work on dequeueing of
+-	 * the reorder queue the time. Calculating in which percpu reorder
+-	 * queue the next object will arrive takes some time. A spinlock
+-	 * would be highly contended. Also it is not clear in which order
+-	 * the objects arrive to the reorder queues. So a cpu could wait to
+-	 * get the lock just to notice that there is nothing to do at the
+-	 * moment. Therefore we use a trylock and let the holder of the lock
+-	 * care for all the objects enqueued during the holdtime of the lock.
+-	 */
+-	if (!spin_trylock_bh(&pd->lock))
+-		return;
++	processed = pd->processed;
++	cpu = pd->cpu;
+ 
+-	while (1) {
+-		padata = padata_find_next(pd, true);
++	do {
++		struct padata_serial_queue *squeue;
++		int cb_cpu;
+ 
+-		/*
+-		 * If the next object that needs serialization is parallel
+-		 * processed by another cpu and is still on it's way to the
+-		 * cpu's reorder queue, nothing to do for now.
+-		 */
+-		if (!padata)
+-			break;
++		cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
++		processed++;
+ 
+ 		cb_cpu = padata->cb_cpu;
+ 		squeue = per_cpu_ptr(pd->squeue, cb_cpu);
+ 
+ 		spin_lock(&squeue->serial.lock);
+ 		list_add_tail(&padata->list, &squeue->serial.list);
+-		spin_unlock(&squeue->serial.lock);
+-
+ 		queue_work_on(cb_cpu, pinst->serial_wq, &squeue->work);
+-	}
+ 
+-	spin_unlock_bh(&pd->lock);
+-
+-	/*
+-	 * The next object that needs serialization might have arrived to
+-	 * the reorder queues in the meantime.
+-	 *
+-	 * Ensure reorder queue is read after pd->lock is dropped so we see
+-	 * new objects from another task in padata_do_serial.  Pairs with
+-	 * smp_mb in padata_do_serial.
+-	 */
+-	smp_mb();
+-
+-	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
+-	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
+ 		/*
+-		 * Other context(eg. the padata_serial_worker) can finish the request.
+-		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
++		 * If the next object that needs serialization is parallel
++		 * processed by another cpu and is still on it's way to the
++		 * cpu's reorder queue, end the loop.
+ 		 */
+-		padata_get_pd(pd);
+-		if (!queue_work(pinst->serial_wq, &pd->reorder_work))
+-			padata_put_pd(pd);
+-	}
+-}
+-
+-static void invoke_padata_reorder(struct work_struct *work)
+-{
+-	struct parallel_data *pd;
+-
+-	local_bh_disable();
+-	pd = container_of(work, struct parallel_data, reorder_work);
+-	padata_reorder(pd);
+-	local_bh_enable();
+-	/* Pairs with putting the reorder_work in the serial_wq */
+-	padata_put_pd(pd);
++		padata = padata_find_next(pd, cpu, processed);
++		spin_unlock(&squeue->serial.lock);
++	} while (padata);
+ }
+ 
+ static void padata_serial_worker(struct work_struct *serial_work)
+@@ -427,6 +375,7 @@ void padata_do_serial(struct padata_priv *padata)
+ 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
+ 	struct padata_priv *cur;
+ 	struct list_head *pos;
++	bool gotit = true;
+ 
+ 	spin_lock(&reorder->lock);
+ 	/* Sort in ascending order of sequence number. */
+@@ -436,17 +385,14 @@ void padata_do_serial(struct padata_priv *padata)
+ 		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
+ 			break;
+ 	}
+-	list_add(&padata->list, pos);
++	if (padata->seq_nr != pd->processed) {
++		gotit = false;
++		list_add(&padata->list, pos);
++	}
+ 	spin_unlock(&reorder->lock);
+ 
+-	/*
+-	 * Ensure the addition to the reorder list is ordered correctly
+-	 * with the trylock of pd->lock in padata_reorder.  Pairs with smp_mb
+-	 * in padata_reorder.
+-	 */
+-	smp_mb();
+-
+-	padata_reorder(pd);
++	if (gotit)
++		padata_reorder(padata);
+ }
+ EXPORT_SYMBOL(padata_do_serial);
+ 
+@@ -643,9 +589,7 @@ static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
+ 	padata_init_squeues(pd);
+ 	pd->seq_nr = -1;
+ 	refcount_set(&pd->refcnt, 1);
+-	spin_lock_init(&pd->lock);
+ 	pd->cpu = cpumask_first(pd->cpumask.pcpu);
+-	INIT_WORK(&pd->reorder_work, invoke_padata_reorder);
+ 
+ 	return pd;
+ 
+@@ -1155,12 +1099,6 @@ void padata_free_shell(struct padata_shell *ps)
+ 	if (!ps)
+ 		return;
+ 
+-	/*
+-	 * Wait for all _do_serial calls to finish to avoid touching
+-	 * freed pd's and ps's.
+-	 */
+-	synchronize_rcu();
+-
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+ 	pd = rcu_dereference_protected(ps->pd, 1);
+-- 
+2.53.0
+
 
 
