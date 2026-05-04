@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907251ADC83;
-	Mon,  4 May 2026 14:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D981ADC83;
+	Mon,  4 May 2026 14:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903706; cv=none; b=YvT+LcoDek8LdH7IkeAa38+2/ijhdr6idYJrCaeHzIVzM/lpRLe+bvzzYlqmUmaKN15ojkPYL7VEUSIUiR57QdrAehVQjG2iFTbs5au1rb6xFWgov1x5Zd3EofSWhW0puXV0ZMo3hNeHZvSu7b92ZuotL+spzfvKw17IWPfijzw=
+	t=1777903709; cv=none; b=H4MVhtKZDi6UYM80TrqECiPcVJkSZcVZRMn4yQ+e1d68zRoDLVFifudk2woQPmVRdDnoh5D/J4f/qfJma9H2vQkXl1+cF6ozVMtxuLjHGiNNTH0dqEl2zITd/kBNrE7HGMq7ygFrIpjAwHchYwkEfEXvxS/TmSPcV0I5uxBdjX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903706; c=relaxed/simple;
-	bh=h38AnRf54rl5Q27fxTcO6W678SutRbAmg/rpVH5T7ZU=;
+	s=arc-20240116; t=1777903709; c=relaxed/simple;
+	bh=U7NRuY2U8rqZP/7U3x9esvfwLKbBkl5+fKOAhURHGLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvKBoaMzYfHOTnpSIXCelTXvoZutmipQUq6GB7jZ6t3pGkeJeGrM7cW16LRrQOVHjyuN4XqdTC84ml6laKW1HZV4/7yWa9DswTwkdc/XB8P14qshTl+UgaY8PZssQn9TghtwFtSGXMGWTzZJEu2pWrJSLJDYIPngFV9Mnxav544=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QL3k1x23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K3kcCFtfqf85T9+ieZH47JfFfFNasazmQn4hmV+zv3x8nUcR7VLTxKSRLZ0VHTy+fWJxahyLcQ+0FGkDtcPbEUyOxkV/ZZTkbMzCOKzw/1FPdhHczKv/ZMEIMzuLmtoYmRYwNdp4/D6FQxW08vcWaNXrMxiH+msFCWOlfBcvAzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0feBp7II; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QL3k1x23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261D3C2BCB8;
-	Mon,  4 May 2026 14:08:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0feBp7II"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF35EC2BCB8;
+	Mon,  4 May 2026 14:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903706;
-	bh=h38AnRf54rl5Q27fxTcO6W678SutRbAmg/rpVH5T7ZU=;
+	s=korg; t=1777903709;
+	bh=U7NRuY2U8rqZP/7U3x9esvfwLKbBkl5+fKOAhURHGLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QL3k1x23NIGRez9OjPY4+gyTPB0Z3fSzsBwJKE/cxZ/k9aPNtFaxcoKWcfj/ISZdk
-	 JnmsPiUiokHKoLZCB7PEyJOiBaP3JmwdvpAXggDFBEOR0ybgxtIenIduJ/FmhGsw9J
-	 5XDBzqAabhyd9X9OA22gW2jjta3zlQ3511e95MAo=
+	b=0feBp7II92EbrcS/QBV/bGTe22Z0Kfid49Et32kc142zc7UNeFgmJ94uGYrml1JMr
+	 y29ExHUkEVxsyFBOrDwkZCq5+bQVJqcFDu7db5t+QHuyLjru5QE9C0CSSRVWRQ7KxI
+	 bZoGxFqje+ljhHeZbOuS1OwgWNKz9fdxHrE/ynwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinhui Guo <guojinhui.liam@bytedance.com>,
 	Alex Williamson <alex.williamson@nvidia.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
+	Nikhil Agarwal <nikhil.agarwal@amd.com>,
 	Alex Williamson <alex@shazbot.org>
-Subject: [PATCH 6.18 031/275] vfio/virtio: Convert list_lock from spinlock to mutex
-Date: Mon,  4 May 2026 15:49:31 +0200
-Message-ID: <20260504135144.095028396@linuxfoundation.org>
+Subject: [PATCH 6.18 032/275] vfio/cdx: Serialize VFIO_DEVICE_SET_IRQS with a per-device mutex
+Date: Mon,  4 May 2026 15:49:32 +0200
+Message-ID: <20260504135144.132056574@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -54,167 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Williamson <alex.williamson@nvidia.com>
 
-commit 903570835f12b7436ca0edb0a9ed351c0349121e upstream.
+commit 670e8864b1a218d72f08db40d0103adf38fa1d9b upstream.
 
-The list_lock spinlock with IRQ disabling was copied from the mlx5
-vfio-pci variant driver, where it is justified by a hardirq async
-command completion callback that accesses the protected lists.  The
-virtio driver has no such interrupt context usage; all list_lock
-acquisitions occur in process context via file read/write operations
-or state transitions under state_mutex.
+vfio_cdx_set_msi_trigger() reads vdev->config_msi and operates on the
+vdev->cdx_irqs array based on its value, but provides no serialization
+against concurrent VFIO_DEVICE_SET_IRQS ioctls.  Two callers can race
+such that one observes config_msi as set while another clears it and
+frees cdx_irqs via vfio_cdx_msi_disable(), resulting in a use-after-free
+of the cdx_irqs array.
 
-Convert list_lock to a mutex to be consistent with peer vfio-pci
-variant drivers (hisilicon, pds, qat, xe) which all use mutexes for
-equivalent migration data protection.  This also fixes a mismatched
-spin_lock()/spin_unlock_irq() pair in virtiovf_read_device_context_chunk()
-that could incorrectly enable interrupts.
+Add a cdx_irqs_lock mutex to struct vfio_cdx_device and acquire it in
+vfio_cdx_set_msi_trigger(), which is the single chokepoint through
+which all updates to config_msi, cdx_irqs, and msi_count flow, covering
+both the ioctl path and the close-device cleanup path.  This keeps the
+test of config_msi atomic with the subsequent enable, disable, or
+trigger operations.
 
-Reported-by: Jinhui Guo <guojinhui.liam@bytedance.com>
-Closes: https://lore.kernel.org/all/20260413073603.30538-1-guojinhui.liam@bytedance.com
-Fixes: 0bbc82e4ec79 ("vfio/virtio: Add support for the basic live migration functionality")
+Drop the pre-call !cdx_irqs test from vfio_cdx_irqs_cleanup() as part
+of this change: the optimization it provided is redundant with the
+!config_msi early-return inside vfio_cdx_msi_disable(), and leaving the
+test in place would be an unsynchronized read of state the new lock is
+meant to protect.
+
+Fixes: 848e447e000c ("vfio/cdx: add interrupt support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
-Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://lore.kernel.org/r/20260414200625.3601509-2-alex.williamson@nvidia.com
+Acked-by: Nikhil Agarwal <nikhil.agarwal@amd.com>
+Link: https://lore.kernel.org/r/20260417202800.88287-3-alex.williamson@nvidia.com
 Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/virtio/common.h  |    2 +-
- drivers/vfio/pci/virtio/migrate.c |   33 +++++++++++++++++----------------
- 2 files changed, 18 insertions(+), 17 deletions(-)
+ drivers/vfio/cdx/intr.c    |    9 ++-------
+ drivers/vfio/cdx/main.c    |   19 +++++++++++++++++++
+ drivers/vfio/cdx/private.h |    3 +++
+ 3 files changed, 24 insertions(+), 7 deletions(-)
 
---- a/drivers/vfio/pci/virtio/common.h
-+++ b/drivers/vfio/pci/virtio/common.h
-@@ -68,7 +68,7 @@ struct virtiovf_migration_file {
- 	enum virtiovf_migf_state state;
- 	enum virtiovf_load_state load_state;
- 	/* synchronize access to the lists */
--	spinlock_t list_lock;
-+	struct mutex list_lock;
- 	struct list_head buf_list;
- 	struct list_head avail_list;
- 	struct virtiovf_data_buffer *buf;
---- a/drivers/vfio/pci/virtio/migrate.c
-+++ b/drivers/vfio/pci/virtio/migrate.c
-@@ -142,9 +142,9 @@ end:
+--- a/drivers/vfio/cdx/intr.c
++++ b/drivers/vfio/cdx/intr.c
+@@ -152,6 +152,8 @@ static int vfio_cdx_set_msi_trigger(stru
+ 	if (start + count > cdx_dev->num_msi)
+ 		return -EINVAL;
  
- static void virtiovf_put_data_buffer(struct virtiovf_data_buffer *buf)
++	guard(mutex)(&vdev->cdx_irqs_lock);
++
+ 	if (!count && (flags & VFIO_IRQ_SET_DATA_NONE)) {
+ 		vfio_cdx_msi_disable(vdev);
+ 		return 0;
+@@ -206,12 +208,5 @@ int vfio_cdx_set_irqs_ioctl(struct vfio_
+ /* Free All IRQs for the given device */
+ void vfio_cdx_irqs_cleanup(struct vfio_cdx_device *vdev)
  {
--	spin_lock_irq(&buf->migf->list_lock);
-+	mutex_lock(&buf->migf->list_lock);
- 	list_add_tail(&buf->buf_elm, &buf->migf->avail_list);
--	spin_unlock_irq(&buf->migf->list_lock);
-+	mutex_unlock(&buf->migf->list_lock);
+-	/*
+-	 * Device does not support any interrupt or the interrupts
+-	 * were not configured
+-	 */
+-	if (!vdev->cdx_irqs)
+-		return;
+-
+ 	vfio_cdx_set_msi_trigger(vdev, 0, 0, 0, VFIO_IRQ_SET_DATA_NONE, NULL);
  }
+--- a/drivers/vfio/cdx/main.c
++++ b/drivers/vfio/cdx/main.c
+@@ -8,6 +8,23 @@
  
- static int
-@@ -170,21 +170,21 @@ virtiovf_get_data_buffer(struct virtiovf
+ #include "private.h"
  
- 	INIT_LIST_HEAD(&free_list);
++static int vfio_cdx_init_dev(struct vfio_device *core_vdev)
++{
++	struct vfio_cdx_device *vdev =
++		container_of(core_vdev, struct vfio_cdx_device, vdev);
++
++	mutex_init(&vdev->cdx_irqs_lock);
++	return 0;
++}
++
++static void vfio_cdx_release_dev(struct vfio_device *core_vdev)
++{
++	struct vfio_cdx_device *vdev =
++		container_of(core_vdev, struct vfio_cdx_device, vdev);
++
++	mutex_destroy(&vdev->cdx_irqs_lock);
++}
++
+ static int vfio_cdx_open_device(struct vfio_device *core_vdev)
+ {
+ 	struct vfio_cdx_device *vdev =
+@@ -281,6 +298,8 @@ static int vfio_cdx_mmap(struct vfio_dev
  
--	spin_lock_irq(&migf->list_lock);
-+	mutex_lock(&migf->list_lock);
- 	list_for_each_entry_safe(buf, temp_buf, &migf->avail_list, buf_elm) {
- 		list_del_init(&buf->buf_elm);
- 		if (buf->allocated_length >= length) {
--			spin_unlock_irq(&migf->list_lock);
-+			mutex_unlock(&migf->list_lock);
- 			goto found;
- 		}
- 		/*
- 		 * Prevent holding redundant buffers. Put in a free
--		 * list and call at the end not under the spin lock
-+		 * list and call at the end not under the mutex
- 		 * (&migf->list_lock) to minimize its scope usage.
- 		 */
- 		list_add(&buf->buf_elm, &free_list);
- 	}
--	spin_unlock_irq(&migf->list_lock);
-+	mutex_unlock(&migf->list_lock);
- 	buf = virtiovf_alloc_data_buffer(migf, length);
+ static const struct vfio_device_ops vfio_cdx_ops = {
+ 	.name		= "vfio-cdx",
++	.init		= vfio_cdx_init_dev,
++	.release	= vfio_cdx_release_dev,
+ 	.open_device	= vfio_cdx_open_device,
+ 	.close_device	= vfio_cdx_close_device,
+ 	.ioctl		= vfio_cdx_ioctl,
+--- a/drivers/vfio/cdx/private.h
++++ b/drivers/vfio/cdx/private.h
+@@ -6,6 +6,8 @@
+ #ifndef VFIO_CDX_PRIVATE_H
+ #define VFIO_CDX_PRIVATE_H
  
- found:
-@@ -295,6 +295,7 @@ static int virtiovf_release_file(struct
- 	struct virtiovf_migration_file *migf = filp->private_data;
++#include <linux/mutex.h>
++
+ #define VFIO_CDX_OFFSET_SHIFT    40
  
- 	virtiovf_disable_fd(migf);
-+	mutex_destroy(&migf->list_lock);
- 	mutex_destroy(&migf->lock);
- 	kfree(migf);
- 	return 0;
-@@ -308,7 +309,7 @@ virtiovf_get_data_buff_from_pos(struct v
- 	bool found = false;
- 
- 	*end_of_data = false;
--	spin_lock_irq(&migf->list_lock);
-+	mutex_lock(&migf->list_lock);
- 	if (list_empty(&migf->buf_list)) {
- 		*end_of_data = true;
- 		goto end;
-@@ -329,7 +330,7 @@ virtiovf_get_data_buff_from_pos(struct v
- 	migf->state = VIRTIOVF_MIGF_STATE_ERROR;
- 
- end:
--	spin_unlock_irq(&migf->list_lock);
-+	mutex_unlock(&migf->list_lock);
- 	return found ? buf : NULL;
- }
- 
-@@ -369,10 +370,10 @@ static ssize_t virtiovf_buf_read(struct
- 	}
- 
- 	if (*pos >= vhca_buf->start_pos + vhca_buf->length) {
--		spin_lock_irq(&vhca_buf->migf->list_lock);
-+		mutex_lock(&vhca_buf->migf->list_lock);
- 		list_del_init(&vhca_buf->buf_elm);
- 		list_add_tail(&vhca_buf->buf_elm, &vhca_buf->migf->avail_list);
--		spin_unlock_irq(&vhca_buf->migf->list_lock);
-+		mutex_unlock(&vhca_buf->migf->list_lock);
- 	}
- 
- 	return done;
-@@ -554,9 +555,9 @@ virtiovf_add_buf_header(struct virtiovf_
- 	header_buf->length = sizeof(header);
- 	header_buf->start_pos = header_buf->migf->max_pos;
- 	migf->max_pos += header_buf->length;
--	spin_lock_irq(&migf->list_lock);
-+	mutex_lock(&migf->list_lock);
- 	list_add_tail(&header_buf->buf_elm, &migf->buf_list);
--	spin_unlock_irq(&migf->list_lock);
-+	mutex_unlock(&migf->list_lock);
- 	return 0;
- }
- 
-@@ -621,9 +622,9 @@ virtiovf_read_device_context_chunk(struc
- 
- 	buf->start_pos = buf->migf->max_pos;
- 	migf->max_pos += buf->length;
--	spin_lock(&migf->list_lock);
-+	mutex_lock(&migf->list_lock);
- 	list_add_tail(&buf->buf_elm, &migf->buf_list);
--	spin_unlock_irq(&migf->list_lock);
-+	mutex_unlock(&migf->list_lock);
- 	return 0;
- 
- out_header:
-@@ -692,7 +693,7 @@ virtiovf_pci_save_device_data(struct vir
- 	mutex_init(&migf->lock);
- 	INIT_LIST_HEAD(&migf->buf_list);
- 	INIT_LIST_HEAD(&migf->avail_list);
--	spin_lock_init(&migf->list_lock);
-+	mutex_init(&migf->list_lock);
- 	migf->virtvdev = virtvdev;
- 
- 	lockdep_assert_held(&virtvdev->state_mutex);
-@@ -1082,7 +1083,7 @@ virtiovf_pci_resume_device_data(struct v
- 	mutex_init(&migf->lock);
- 	INIT_LIST_HEAD(&migf->buf_list);
- 	INIT_LIST_HEAD(&migf->avail_list);
--	spin_lock_init(&migf->list_lock);
-+	mutex_init(&migf->list_lock);
- 
- 	buf = virtiovf_alloc_data_buffer(migf, VIRTIOVF_TARGET_INITIAL_BUF_SIZE);
- 	if (IS_ERR(buf)) {
+ static inline u64 vfio_cdx_index_to_offset(u32 index)
+@@ -31,6 +33,7 @@ struct vfio_cdx_region {
+ struct vfio_cdx_device {
+ 	struct vfio_device	vdev;
+ 	struct vfio_cdx_region	*regions;
++	struct mutex		cdx_irqs_lock;
+ 	struct vfio_cdx_irq	*cdx_irqs;
+ 	u32			flags;
+ #define BME_SUPPORT BIT(0)
 
 
