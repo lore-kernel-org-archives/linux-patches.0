@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB083D9029;
-	Mon,  4 May 2026 14:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0CE1ADC83;
+	Mon,  4 May 2026 14:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903778; cv=none; b=VvhnThbsha3CRHcOVjGCnfKWq10emLFOwvwOvJ/gF4by2ysn61KONPdmmj96vjA5t4WAxg86FRfAqPR5z5Cg565X0b42B+fkM8YwCEAC+50EGWo0QQj0MepfJtpoBS2kWbpaITynVcNtb/FM5eRgX/aP8aEuVR5X4YyAWcoxKaw=
+	t=1777903781; cv=none; b=LqIQ3ruyCKGSu5RA78j2eHPtkAKBHTveZIiINnrclvMeHVtaHG5bSmjkgvMJi+a5mQHHJFnIPiAmuov8MtBD4PAVgSHmbg0nmoppGAb3bovY7EMG7eg2KzhRIjEndttSvqmYOT4nfaPyKkwH80Ms39ifQMyYCyenDix/0UfvpUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903778; c=relaxed/simple;
-	bh=ZN6KPmkv3d/DhXW3R9bsHTHEX4SNNToKIW+3+VppJi0=;
+	s=arc-20240116; t=1777903781; c=relaxed/simple;
+	bh=qwW0R1iSaaC9y73sCITf5w8wGPJLOoxhs6B4t5ljCiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9PxKRJMqGsc5Dn5fbBpgItxEMq0YwsUtYRFITJL9vgU7e4vnlid9/7Jsx3wVHPoVNp8G67jVd+lMg/KCoZBgiaFYu+zpAkvGeqzEhzDrftKi6FYtbQKim3AJXAPmrHdopV3JNZUdxIfYeGX1xIBLuh2zBqgroi2LDV1zXPn2xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHFXfHK8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FS4A6G3PW4b1jn0lo1Kr69RedPdAY7oo9WCXr6klr+J2cewEM0lMs6axyGVk12SkW4o94Ct3CeFlbCb+IB91Np0Ov+spAyLXu+w04ERFx1efdhCf5n8p7x9v3Ob767v6DDArMDc+MOnj/2uq9qBnDXSEf8+Cb4WwB+A5J7R6OY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WniD3s9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHFXfHK8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35809C2BCF4;
-	Mon,  4 May 2026 14:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WniD3s9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D4FC2BCC4;
+	Mon,  4 May 2026 14:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903778;
-	bh=ZN6KPmkv3d/DhXW3R9bsHTHEX4SNNToKIW+3+VppJi0=;
+	s=korg; t=1777903781;
+	bh=qwW0R1iSaaC9y73sCITf5w8wGPJLOoxhs6B4t5ljCiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHFXfHK8FjFj9ZbvJ2+fKdzLRBMxGzTzDkB8hP2RlK1ZYHC2/oqXRMNg6KZd35OX6
-	 VAWaeRW/S+B12ZokXmukOtvOzX216ExIdE2Bu8htZSuLi3Ht77wkCH1D0bN5Xu1DpV
-	 e8d547XNmmW75MlPsGFnTzUFBQDs2BBY3Hukh9UU=
+	b=WniD3s9X/ZLqbyxGp3n87nNrIRAOOHp4fYUWjSZcrFlingGu5M2Ss2gqAGJMXrpSC
+	 MfAaRbtcFakmpd6tJlTxMiBI7n3mTMauEReOhUMF24hkGd8/KTAUFUi9HdSbSYaYj5
+	 D0dlWVtu0cS2AwsKxR1PrngX868I4f8sAXe4q/8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.18 016/275] driver core: Dont let a device probe until its ready
-Date: Mon,  4 May 2026 15:49:16 +0200
-Message-ID: <20260504135143.541960687@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 052/275] crypto: atmel-sha204a - Fix OTP sysfs read and error handling
+Date: Mon,  4 May 2026 15:49:52 +0200
+Message-ID: <20260504135144.868749118@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -53,214 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit a2225b6e834a838ae3c93709760edc0a169eb2f2 upstream.
+commit 635c3a757a567b2479639237f5f0d4d9439015f1 upstream.
 
-The moment we link a "struct device" into the list of devices for the
-bus, it's possible probe can happen. This is because another thread
-can load the driver at any time and that can cause the device to
-probe. This has been seen in practice with a stack crawl that looks
-like this [1]:
+Fix otp_show() to read and print all 64 bytes of the OTP zone.
+Previously, the loop only printed half of the OTP (32 bytes), and
+partial output was returned on read errors.
 
-  really_probe()
-  __driver_probe_device()
-  driver_probe_device()
-  __driver_attach()
-  bus_for_each_dev()
-  driver_attach()
-  bus_add_driver()
-  driver_register()
-  __platform_driver_register()
-  init_module() [some module]
-  do_one_initcall()
-  do_init_module()
-  load_module()
-  __arm64_sys_finit_module()
-  invoke_syscall()
+Propagate the actual error from atmel_sha204a_otp_read() instead of
+producing partial output.
 
-As a result of the above, it was seen that device_links_driver_bound()
-could be called for the device before "dev->fwnode->dev" was
-assigned. This prevented __fw_devlink_pickup_dangling_consumers() from
-being called which meant that other devices waiting on our driver's
-sub-nodes were stuck deferring forever.
-
-It's believed that this problem is showing up suddenly for two
-reasons:
-1. Android has recently (last ~1 year) implemented an optimization to
-   the order it loads modules [2]. When devices opt-in to this faster
-   loading, modules are loaded one-after-the-other very quickly. This
-   is unlike how other distributions do it. The reproduction of this
-   problem has only been seen on devices that opt-in to Android's
-   "parallel module loading".
-2. Android devices typically opt-in to fw_devlink, and the most
-   noticeable issue is the NULL "dev->fwnode->dev" in
-   device_links_driver_bound(). fw_devlink is somewhat new code and
-   also not in use by all Linux devices.
-
-Even though the specific symptom where "dev->fwnode->dev" wasn't
-assigned could be fixed by moving that assignment higher in
-device_add(), other parts of device_add() (like the call to
-device_pm_add()) are also important to run before probe. Only moving
-the "dev->fwnode->dev" assignment would likely fix the current
-symptoms but lead to difficult-to-debug problems in the future.
-
-Fix the problem by preventing probe until device_add() has run far
-enough that the device is ready to probe. If somehow we end up trying
-to probe before we're allowed, __driver_probe_device() will return
--EPROBE_DEFER which will make certain the device is noticed.
-
-In the race condition that was seen with Android's faster module
-loading, we will temporarily add the device to the deferred list and
-then take it off immediately when device_add() probes the device.
-
-Instead of adding another flag to the bitfields already in "struct
-device", instead add a new "flags" field and use that. This allows us
-to freely change the bit from different thread without worrying about
-corrupting nearby bits (and means threads changing other bit won't
-corrupt us).
-
-[1] Captured on a machine running a downstream 6.6 kernel
-[2] https://cs.android.com/android/platform/superproject/main/+/main:system/core/libmodprobe/libmodprobe.cpp?q=LoadModulesParallel
+Replace sprintf() with sysfs_emit_at(), which is preferred for
+formatting sysfs output because it provides safer bounds checking.
 
 Cc: stable@vger.kernel.org
-Fixes: 2023c610dc54 ("Driver core: add new device to bus's list before probing")
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260406162231.v5.1.Id750b0fbcc94f23ed04b7aecabcead688d0d8c17@changeid
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 13909a0c8897 ("crypto: atmel-sha204a - provide the otp content")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Lothar Rubusch <l.rubusch@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c    |   15 +++++++++++++++
- drivers/base/dd.c      |   20 ++++++++++++++++++++
- include/linux/device.h |   44 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+)
+ drivers/crypto/atmel-sha204a.c |   20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3688,6 +3688,21 @@ int device_add(struct device *dev)
- 		fw_devlink_link_device(dev);
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -15,6 +15,7 @@
+ #include <linux/module.h>
+ #include <linux/scatterlist.h>
+ #include <linux/slab.h>
++#include <linux/sysfs.h>
+ #include <linux/workqueue.h>
+ #include "atmel-i2c.h"
+ 
+@@ -120,21 +121,22 @@ static ssize_t otp_show(struct device *d
+ {
+ 	u16 addr;
+ 	u8 otp[OTP_ZONE_SIZE];
+-	char *str = buf;
+ 	struct i2c_client *client = to_i2c_client(dev);
+-	int i;
++	ssize_t len = 0;
++	int i, ret;
+ 
+-	for (addr = 0; addr < OTP_ZONE_SIZE/4; addr++) {
+-		if (atmel_sha204a_otp_read(client, addr, otp + addr * 4) < 0) {
++	for (addr = 0; addr < OTP_ZONE_SIZE / 4; addr++) {
++		ret = atmel_sha204a_otp_read(client, addr, otp + addr * 4);
++		if (ret < 0) {
+ 			dev_err(dev, "failed to read otp zone\n");
+-			break;
++			return ret;
+ 		}
  	}
  
-+	/*
-+	 * The moment the device was linked into the bus's "klist_devices" in
-+	 * bus_add_device() then it's possible that probe could have been
-+	 * attempted in a different thread via userspace loading a driver
-+	 * matching the device. "ready_to_probe" being unset would have
-+	 * blocked those attempts. Now that all of the above initialization has
-+	 * happened, unblock probe. If probe happens through another thread
-+	 * after this point but before bus_probe_device() runs then it's fine.
-+	 * bus_probe_device() -> device_initial_probe() -> __device_attach()
-+	 * will notice (under device_lock) that the device is already bound.
-+	 */
-+	device_lock(dev);
-+	dev_set_ready_to_probe(dev);
-+	device_unlock(dev);
-+
- 	bus_probe_device(dev);
+-	for (i = 0; i < addr*2; i++)
+-		str += sprintf(str, "%02X", otp[i]);
+-	str += sprintf(str, "\n");
+-	return str - buf;
++	for (i = 0; i < OTP_ZONE_SIZE; i++)
++		len += sysfs_emit_at(buf, len, "%02X", otp[i]);
++	len += sysfs_emit_at(buf, len, "\n");
++	return len;
+ }
+ static DEVICE_ATTR_RO(otp);
  
- 	/*
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -846,6 +846,26 @@ static int __driver_probe_device(const s
- 	if (dev->driver)
- 		return -EBUSY;
- 
-+	/*
-+	 * In device_add(), the "struct device" gets linked into the subsystem's
-+	 * list of devices and broadcast to userspace (via uevent) before we're
-+	 * quite ready to probe. Those open pathways to driver probe before
-+	 * we've finished enough of device_add() to reliably support probe.
-+	 * Detect this and tell other pathways to try again later. device_add()
-+	 * itself will also try to probe immediately after setting
-+	 * "ready_to_probe".
-+	 */
-+	if (!dev_ready_to_probe(dev))
-+		return dev_err_probe(dev, -EPROBE_DEFER, "Device not ready to probe\n");
-+
-+	/*
-+	 * Set can_match = true after calling dev_ready_to_probe(), so
-+	 * driver_deferred_probe_add() won't actually add the device to the
-+	 * deferred probe list when dev_ready_to_probe() returns false.
-+	 *
-+	 * When dev_ready_to_probe() returns false, it means that device_add()
-+	 * will do another probe() attempt for us.
-+	 */
- 	dev->can_match = true;
- 	dev_dbg(dev, "bus: '%s': %s: matched device with driver %s\n",
- 		drv->bus->name, __func__, drv->name);
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -478,6 +478,21 @@ struct device_physical_location {
- };
- 
- /**
-+ * enum struct_device_flags - Flags in struct device
-+ *
-+ * Each flag should have a set of accessor functions created via
-+ * __create_dev_flag_accessors() for each access.
-+ *
-+ * @DEV_FLAG_READY_TO_PROBE: If set then device_add() has finished enough
-+ *		initialization that probe could be called.
-+ */
-+enum struct_device_flags {
-+	DEV_FLAG_READY_TO_PROBE = 0,
-+
-+	DEV_FLAG_COUNT
-+};
-+
-+/**
-  * struct device - The basic device structure
-  * @parent:	The device's "parent" device, the device to which it is attached.
-  * 		In most cases, a parent device is some sort of bus or host
-@@ -572,6 +587,7 @@ struct device_physical_location {
-  * @dma_skip_sync: DMA sync operations can be skipped for coherent buffers.
-  * @dma_iommu: Device is using default IOMMU implementation for DMA and
-  *		doesn't rely on dma_ops structure.
-+ * @flags:	DEV_FLAG_XXX flags. Use atomic bitfield operations to modify.
-  *
-  * At the lowest level, every device in a Linux system is represented by an
-  * instance of struct device. The device structure contains the information
-@@ -694,8 +710,36 @@ struct device {
- #ifdef CONFIG_IOMMU_DMA
- 	bool			dma_iommu:1;
- #endif
-+
-+	DECLARE_BITMAP(flags, DEV_FLAG_COUNT);
- };
- 
-+#define __create_dev_flag_accessors(accessor_name, flag_name) \
-+static inline bool dev_##accessor_name(const struct device *dev) \
-+{ \
-+	return test_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_set_##accessor_name(struct device *dev) \
-+{ \
-+	set_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_clear_##accessor_name(struct device *dev) \
-+{ \
-+	clear_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_assign_##accessor_name(struct device *dev, bool value) \
-+{ \
-+	assign_bit(flag_name, dev->flags, value); \
-+} \
-+static inline bool dev_test_and_set_##accessor_name(struct device *dev) \
-+{ \
-+	return test_and_set_bit(flag_name, dev->flags); \
-+}
-+
-+__create_dev_flag_accessors(ready_to_probe, DEV_FLAG_READY_TO_PROBE);
-+
-+#undef __create_dev_flag_accessors
-+
- /**
-  * struct device_link - Device link representation.
-  * @supplier: The device on the supplier end of the link.
 
 
