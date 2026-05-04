@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A0F1ADC83;
-	Mon,  4 May 2026 14:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787961ADC83;
+	Mon,  4 May 2026 14:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903619; cv=none; b=BQ4iD8s321kaJnIHodV74uUqsaM8fktiNayDJM05RFqIuOMVaMQOZLx4ponNJfw85navfR38JMF3Nnt5/DVxhiGYtJ//t5tK11r9ybQRp1e7tFZHvToiQC1XzzQkXpGUhx9sTLapYlAHS9BEkq1egucruIzgk3RJP+DNBpR3yTY=
+	t=1777903621; cv=none; b=PBa7wllls+ryc6CGso2HaKJXRIc12VPWA1wFwGHuEZdv4shBHKkyA0RDtm6nlYNHLUcpKYn4TMBCWfUEpBNdgwJInouENYXurDAbrUWpRGOXVBE8yyaATzE7mCgbyphUSVY79TsyzaibcRvH9VTC9rqy5yYQZujA6jnUlAo1W3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903619; c=relaxed/simple;
-	bh=RLVDazTrm8lwvVjmhWB3NJTzkzB3kBBJsG28ckgdZ5k=;
+	s=arc-20240116; t=1777903621; c=relaxed/simple;
+	bh=gsWmpGXsYvb/kHn81N/qngiMGTOzZzdCkigtj3bzLXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q6mqF48BL3Jh3iqqRNsCemUjWnXv+a9obf63T81Bwm02vK47G0opA35xVVACMl9DHADZvcBTkPfAH5GnBBL5hujcZRdXSU4q1jYpjWokhv33i2qMuWErsjJBi2vWVyBYJ3ZP+rwj2JC15WmcqsAjbzo9pYivpRBsr1zfFxTx//w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbSDXp62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SusPMzbIdkqoVYboNICh3HKECHccSwF3el57ZDyJQeUehTVWUteH0kFW1sQPUuktddGH5YCmp/MbHxXbDWP3RdxjM6/FMaMBdE4aQkBEZkp2la4fUeqQ7mEZqE7/+YLtenI/YdPbF448JYEnor1zN35EilDPQFe13wvHvWy4kSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCTVfJmc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbSDXp62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF62C2BCC4;
-	Mon,  4 May 2026 14:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCTVfJmc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC6BC2BCB8;
+	Mon,  4 May 2026 14:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903618;
-	bh=RLVDazTrm8lwvVjmhWB3NJTzkzB3kBBJsG28ckgdZ5k=;
+	s=korg; t=1777903621;
+	bh=gsWmpGXsYvb/kHn81N/qngiMGTOzZzdCkigtj3bzLXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbSDXp62JUshNDi8Jg+PtkciL1HbHcnaKHA+UxBVsj5MZ64wGc7dG+mShWgt5UqGM
-	 qdf+BJymCzfdiwvSETfAHBQnUTqh8VJa5AdDwlpfMU6Q3/O4E/SRQebgaiu1MvMXXh
-	 hYq0twCxiHg98ABNEhtD/d7ROeKiDKthp48kDGrE=
+	b=sCTVfJmchhfg52M87xteWh4g2u57qRorCxB4dmUGMVPu34bmKvGERwQxFWKDaXp5f
+	 +D7bydlQBorQclgD3oZ8c25NF9zsie4tlkj8JfERVA8Cou+rp8cHv589b0WNGnwS5N
+	 Ef3Zhh9vnpvnrkdIbqP9bMbNrg/TwGI+CJrS/0jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tushar Sariya <tushar.97@hotmail.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 7.0 277/307] NFSv4.1: Apply session size limits on clone path
-Date: Mon,  4 May 2026 15:52:42 +0200
-Message-ID: <20260504135153.219771919@linuxfoundation.org>
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 7.0 304/307] mm/page_alloc: return NULL early from alloc_frozen_pages_nolock() in NMI on UP
+Date: Mon,  4 May 2026 15:53:09 +0200
+Message-ID: <20260504135154.211569333@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -50,74 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tushar Sariya <tushar.97@hotmail.com>
+From: Harry Yoo (Oracle) <harry@kernel.org>
 
-commit 8c787b286f39c7584440b97b92f87cbe934c13ff upstream.
+commit 620b46ed6ae17c8438d889c8c0cfddab36a1476c upstream.
 
-nfs4_clone_server() builds a child nfs_server for same-server
-automounted submounts but never calls nfs4_session_limit_rwsize()
-or nfs4_session_limit_xasize() after nfs_clone_server(). This means
-the child mount can end up with rsize/wsize values that exceed the
-negotiated session channel limits, causing NFS4ERR_REQ_TOO_BIG and
-EIO on servers that enforce tight max_request_size budgets.
+On UP kernels (!CONFIG_SMP), spin_trylock() is a no-op that
+unconditionally succeeds even when the lock is already held. As a
+result, alloc_frozen_pages_nolock() called from NMI context can
+re-enter rmqueue() and acquire the zone lock that the interrupted
+context is already holding, corrupting the freelists.
 
-Top-level mounts go through nfs4_server_common_setup() which calls
-these limiters after nfs_probe_server(). Apply the same clamping on
-the clone path for consistency.
+With CONFIG_DEBUG_SPINLOCK on UP, the following BUG is triggered with
+the slub_kunit test module:
 
-Fixes: 2b092175f5e3 ("NFS: Fix inheritance of the block sizes when automounting")
+  BUG: spinlock trylock failure on UP on CPU#0, kunit_try_catch/243
+  [...]
+  Call Trace:
+   <NMI>
+   dump_stack_lvl+0x3f/0x60
+   do_raw_spin_trylock+0x41/0x50
+   _raw_spin_trylock+0x24/0x50
+   rmqueue.isra.0+0x2a9/0xa70
+   get_page_from_freelist+0xeb/0x450
+   alloc_frozen_pages_nolock_noprof+0x111/0x1e0
+   allocate_slab+0x42a/0x500
+   ___slab_alloc+0xa7/0x4c0
+   kmalloc_nolock_noprof+0x164/0x310
+   [...]
+   </NMI>
+
+Fix this by returning NULL early when invoked from NMI on a UP kernel.
+
+Link: https://lore.kernel.org/linux-mm/ad_cqe51pvr1WaDg@hyeyoo
 Cc: stable@vger.kernel.org
-Signed-off-by: Tushar Sariya <tushar.97@hotmail.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: d7242af86434 ("mm: Introduce alloc_frozen_pages_nolock()")
+Signed-off-by: Harry Yoo (Oracle) <harry@kernel.org>
+Link: https://patch.msgid.link/20260427-nolock-api-fix-v2-1-a6b83a92d9a4@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/internal.h   |    2 ++
- fs/nfs/nfs4client.c |    4 ++--
- fs/nfs/nfs4proc.c   |    3 +++
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ mm/page_alloc.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -253,6 +253,8 @@ extern struct nfs_client *nfs4_set_ds_cl
- 					     u32 minor_version);
- extern struct rpc_clnt *nfs4_find_or_create_ds_client(struct nfs_client *,
- 						struct inode *);
-+extern void nfs4_session_limit_rwsize(struct nfs_server *server);
-+extern void nfs4_session_limit_xasize(struct nfs_server *server);
- extern struct nfs_client *nfs3_set_ds_client(struct nfs_server *mds_srv,
- 			const struct sockaddr_storage *ds_addr, int ds_addrlen,
- 			int ds_proto, unsigned int ds_timeo,
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -855,7 +855,7 @@ EXPORT_SYMBOL_GPL(nfs4_set_ds_client);
-  * Limit the mount rsize, wsize and dtsize using negotiated fore
-  * channel attributes.
-  */
--static void nfs4_session_limit_rwsize(struct nfs_server *server)
-+void nfs4_session_limit_rwsize(struct nfs_server *server)
- {
- 	struct nfs4_session *sess;
- 	u32 server_resp_sz;
-@@ -878,7 +878,7 @@ static void nfs4_session_limit_rwsize(st
- /*
-  * Limit xattr sizes using the channel attributes.
-  */
--static void nfs4_session_limit_xasize(struct nfs_server *server)
-+void nfs4_session_limit_xasize(struct nfs_server *server)
- {
- #ifdef CONFIG_NFS_V4_2
- 	struct nfs4_session *sess;
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10618,6 +10618,9 @@ static struct nfs_server *nfs4_clone_ser
- 	if (IS_ERR(server))
- 		return server;
- 
-+	nfs4_session_limit_rwsize(server);
-+	nfs4_session_limit_xasize(server);
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -7806,6 +7806,11 @@ struct page *alloc_frozen_pages_nolock_n
+ 	 */
+ 	if (IS_ENABLED(CONFIG_PREEMPT_RT) && (in_nmi() || in_hardirq()))
+ 		return NULL;
 +
- 	error = nfs4_delegation_hash_alloc(server);
- 	if (error) {
- 		nfs_free_server(server);
++	/* On UP, spin_trylock() always succeeds even when it is locked */
++	if (!IS_ENABLED(CONFIG_SMP) && in_nmi())
++		return NULL;
++
+ 	if (!pcp_allowed_order(order))
+ 		return NULL;
+ 
 
 
