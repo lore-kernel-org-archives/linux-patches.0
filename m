@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364DD3B19D1;
-	Mon,  4 May 2026 14:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14FC3DE42E;
+	Mon,  4 May 2026 14:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903910; cv=none; b=cWl4By7D2rOX584kOwpI+OPMLq2bXgZmZdWwcnqq+fbVsJHg368kv7R79NSBYu5eUixcXfM4wRAQhBLIF9nxIZe4ixiH0wLGak+1T+/9tZUB6G9qA4ckN6xKRUSRBeDXk9rhNIzHwVSCEFr5ydbQ4iFlRmkSxUiOmJOPA7tOT+s=
+	t=1777903913; cv=none; b=QI8CmkGsRT3JGg8Uy3oD8AQikRwQjMxX1km/9qOjCtdkAdRhOv65iGvpHllg3eLfpSm70AZ6/K9GaJ1Y3PNVtz+7OSGi4ovCjy1NnZC7kBly7KJynKg/G1DDQMKD8S16+XXFzOUBfqjsKwUivK3JQA6Hy4nkjyDkcxLyoBYaWVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903910; c=relaxed/simple;
-	bh=uT4QOsTSbw+1OBFrMrYO1qObZZORva6lfRqgNhIaWaE=;
+	s=arc-20240116; t=1777903913; c=relaxed/simple;
+	bh=3qvSnfHLOcPFMGHxWwV80u2kXv8kqnaiVTPpNXBE0cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S13AQbYoaOTofAD696vbKyC7S5zI7SomrIxqLdve1e7CSrhvn+veOtDzugzriCfHN+r9fnkvL1cBw/Jo0k/FkvfpqIhwzRDQg22mtMkqPCyLxdmHERqbsxkTS1fT0uWzTDqfNNtVyUk4pc9aj/fWC7DuAUkKKYYS/wYgG0g1KKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXVt/xUU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BqMrQmS8Yj+CaKrfVY6H/k70675sCt0i1+rbaLXkJsGivP1REPcXmizrkXSi3S4BYD4RK9ouQ+Om1kG2vLvCrFXRH/j0FQoay3lMJfDFIqfiu42UE2pnNxfhvEnEkdKimf0S1IPURz0lhE7Szp+clxwCAM2s/RCeFEAvq1RxPQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkbUFL5m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXVt/xUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A21C2BCB8;
-	Mon,  4 May 2026 14:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkbUFL5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C324C2BCF4;
+	Mon,  4 May 2026 14:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903910;
-	bh=uT4QOsTSbw+1OBFrMrYO1qObZZORva6lfRqgNhIaWaE=;
+	s=korg; t=1777903912;
+	bh=3qvSnfHLOcPFMGHxWwV80u2kXv8kqnaiVTPpNXBE0cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KXVt/xUUGxRiypKtuXQjLzyMsB3w/bh0YdwpRsDVcbocP//R/A/fKGUMQhvyr5Zkz
-	 +YcCqPVRbqwrAB2HyoB3odrYDSEkkJYkTg+4fT9btp/KBZirh/+z7b4LIF18xo34G4
-	 J2jwUo78HVPWlyw02sIVQZ0d8cIHzsVKaNM1Ua9s=
+	b=XkbUFL5mUmDKUsuuCBqn7SbJb0m9cMVEi4ezC/Q9p5qIRKcqnagOpPI4YQ8cdl6L8
+	 L6jzGuw7whXVNEr+xWCE0VAMc7Es5RmGGvn5QQZikQr4qv3piLVgoiyMTqhs6ydTZL
+	 GhTgv8miMCy7F6fpcQoqS4t8pg+YrW8MXDTkspq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-afs@lists.infradead.org,
 	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 109/275] rxrpc: Fix memory leaks in rxkad_verify_response()
-Date: Mon,  4 May 2026 15:50:49 +0200
-Message-ID: <20260504135146.960041141@linuxfoundation.org>
+Subject: [PATCH 6.18 110/275] rxrpc: Fix conn-level packet handling to unshare RESPONSE packets
+Date: Mon,  4 May 2026 15:50:50 +0200
+Message-ID: <20260504135146.996005803@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -57,16 +57,17 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-commit 34f61a07e0cdefaecd3ec03bb5fb22215643678f upstream.
+commit 24481a7f573305706054c59e275371f8d0fe919f upstream.
 
-Fix rxkad_verify_response() to free the ticket and the server key under all
-circumstances by initialising the ticket pointer to NULL and then making
-all paths through the function after the first allocation has been done go
-through a single common epilogue that just releases everything - where all
-the releases skip on a NULL pointer.
+The security operations that verify the RESPONSE packets decrypt bits of it
+in place - however, the sk_buff may be shared with a packet sniffer, which
+would lead to the sniffer seeing an apparently corrupt packet (actually
+decrypted).
 
-Fixes: 57af281e5389 ("rxrpc: Tidy up abort generation infrastructure")
-Fixes: ec832bd06d6f ("rxrpc: Don't retain the server key in the connection")
+Fix this by handing a copy of the packet off to the specific security
+handler if the packet was cloned.
+
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
 Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
@@ -74,212 +75,57 @@ cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-2-dhowells@redhat.com
+Link: https://patch.msgid.link/20260422161438.2593376-5-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/rxkad.c |  103 ++++++++++++++++++++++--------------------------------
- 1 file changed, 42 insertions(+), 61 deletions(-)
+ net/rxrpc/conn_event.c |   29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -1136,7 +1136,7 @@ static int rxkad_verify_response(struct
- 	struct rxrpc_crypt session_key;
- 	struct key *server_key;
- 	time64_t expiry;
--	void *ticket;
-+	void *ticket = NULL;
- 	u32 version, kvno, ticket_len, level;
- 	__be32 csum;
- 	int ret, i;
-@@ -1162,13 +1162,13 @@ static int rxkad_verify_response(struct
- 	ret = -ENOMEM;
- 	response = kzalloc(sizeof(struct rxkad_response), GFP_NOFS);
- 	if (!response)
--		goto temporary_error;
-+		goto error;
- 
- 	if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header),
- 			  response, sizeof(*response)) < 0) {
--		rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
--				 rxkad_abort_resp_short);
--		goto protocol_error;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
-+				       rxkad_abort_resp_short);
-+		goto error;
- 	}
- 
- 	version = ntohl(response->version);
-@@ -1178,62 +1178,62 @@ static int rxkad_verify_response(struct
- 	trace_rxrpc_rx_response(conn, sp->hdr.serial, version, kvno, ticket_len);
- 
- 	if (version != RXKAD_VERSION) {
--		rxrpc_abort_conn(conn, skb, RXKADINCONSISTENCY, -EPROTO,
--				 rxkad_abort_resp_version);
--		goto protocol_error;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADINCONSISTENCY, -EPROTO,
-+				       rxkad_abort_resp_version);
-+		goto error;
- 	}
- 
- 	if (ticket_len < 4 || ticket_len > MAXKRB5TICKETLEN) {
--		rxrpc_abort_conn(conn, skb, RXKADTICKETLEN, -EPROTO,
--				 rxkad_abort_resp_tkt_len);
--		goto protocol_error;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADTICKETLEN, -EPROTO,
-+				       rxkad_abort_resp_tkt_len);
-+		goto error;
- 	}
- 
- 	if (kvno >= RXKAD_TKT_TYPE_KERBEROS_V5) {
--		rxrpc_abort_conn(conn, skb, RXKADUNKNOWNKEY, -EPROTO,
--				 rxkad_abort_resp_unknown_tkt);
--		goto protocol_error;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADUNKNOWNKEY, -EPROTO,
-+				       rxkad_abort_resp_unknown_tkt);
-+		goto error;
- 	}
- 
- 	/* extract the kerberos ticket and decrypt and decode it */
- 	ret = -ENOMEM;
- 	ticket = kmalloc(ticket_len, GFP_NOFS);
- 	if (!ticket)
--		goto temporary_error_free_resp;
-+		goto error;
- 
- 	if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header) + sizeof(*response),
- 			  ticket, ticket_len) < 0) {
--		rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
--				 rxkad_abort_resp_short_tkt);
--		goto protocol_error;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
-+				       rxkad_abort_resp_short_tkt);
-+		goto error;
- 	}
- 
- 	ret = rxkad_decrypt_ticket(conn, server_key, skb, ticket, ticket_len,
- 				   &session_key, &expiry);
- 	if (ret < 0)
--		goto temporary_error_free_ticket;
-+		goto error;
- 
- 	/* use the session key from inside the ticket to decrypt the
- 	 * response */
- 	ret = rxkad_decrypt_response(conn, response, &session_key);
- 	if (ret < 0)
--		goto temporary_error_free_ticket;
-+		goto error;
- 
- 	if (ntohl(response->encrypted.epoch) != conn->proto.epoch ||
- 	    ntohl(response->encrypted.cid) != conn->proto.cid ||
- 	    ntohl(response->encrypted.securityIndex) != conn->security_ix) {
--		rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
--				 rxkad_abort_resp_bad_param);
--		goto protocol_error_free;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
-+				       rxkad_abort_resp_bad_param);
-+		goto error;
- 	}
- 
- 	csum = response->encrypted.checksum;
- 	response->encrypted.checksum = 0;
- 	rxkad_calc_response_checksum(response);
- 	if (response->encrypted.checksum != csum) {
--		rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
--				 rxkad_abort_resp_bad_checksum);
--		goto protocol_error_free;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
-+				       rxkad_abort_resp_bad_checksum);
-+		goto error;
- 	}
- 
- 	for (i = 0; i < RXRPC_MAXCALLS; i++) {
-@@ -1241,38 +1241,38 @@ static int rxkad_verify_response(struct
- 		u32 counter = READ_ONCE(conn->channels[i].call_counter);
- 
- 		if (call_id > INT_MAX) {
--			rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
--					 rxkad_abort_resp_bad_callid);
--			goto protocol_error_free;
-+			ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
-+					       rxkad_abort_resp_bad_callid);
-+			goto error;
- 		}
- 
- 		if (call_id < counter) {
--			rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
--					 rxkad_abort_resp_call_ctr);
--			goto protocol_error_free;
-+			ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
-+					       rxkad_abort_resp_call_ctr);
-+			goto error;
- 		}
- 
- 		if (call_id > counter) {
- 			if (conn->channels[i].call) {
--				rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
-+				ret = rxrpc_abort_conn(conn, skb, RXKADSEALEDINCON, -EPROTO,
- 						 rxkad_abort_resp_call_state);
--				goto protocol_error_free;
-+				goto error;
- 			}
- 			conn->channels[i].call_counter = call_id;
- 		}
- 	}
- 
- 	if (ntohl(response->encrypted.inc_nonce) != conn->rxkad.nonce + 1) {
--		rxrpc_abort_conn(conn, skb, RXKADOUTOFSEQUENCE, -EPROTO,
--				 rxkad_abort_resp_ooseq);
--		goto protocol_error_free;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADOUTOFSEQUENCE, -EPROTO,
-+				       rxkad_abort_resp_ooseq);
-+		goto error;
- 	}
- 
- 	level = ntohl(response->encrypted.level);
- 	if (level > RXRPC_SECURITY_ENCRYPT) {
--		rxrpc_abort_conn(conn, skb, RXKADLEVELFAIL, -EPROTO,
--				 rxkad_abort_resp_level);
--		goto protocol_error_free;
-+		ret = rxrpc_abort_conn(conn, skb, RXKADLEVELFAIL, -EPROTO,
-+				       rxkad_abort_resp_level);
-+		goto error;
- 	}
- 	conn->security_level = level;
- 
-@@ -1280,31 +1280,12 @@ static int rxkad_verify_response(struct
- 	 * this the connection security can be handled in exactly the same way
- 	 * as for a client connection */
- 	ret = rxrpc_get_server_data_key(conn, &session_key, expiry, kvno);
--	if (ret < 0)
--		goto temporary_error_free_ticket;
--
--	kfree(ticket);
--	kfree(response);
--	_leave(" = 0");
--	return 0;
--
--protocol_error_free:
--	kfree(ticket);
--protocol_error:
--	kfree(response);
--	key_put(server_key);
--	return -EPROTO;
- 
--temporary_error_free_ticket:
-+error:
- 	kfree(ticket);
--temporary_error_free_resp:
- 	kfree(response);
--temporary_error:
--	/* Ignore the response packet if we got a temporary error such as
--	 * ENOMEM.  We just want to send the challenge again.  Note that we
--	 * also come out this way if the ticket decryption fails.
--	 */
- 	key_put(server_key);
-+	_leave(" = %d", ret);
- 	return ret;
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -240,6 +240,33 @@ static void rxrpc_call_is_secure(struct
+ 		rxrpc_notify_socket(call);
  }
+ 
++static int rxrpc_verify_response(struct rxrpc_connection *conn,
++				 struct sk_buff *skb)
++{
++	int ret;
++
++	if (skb_cloned(skb)) {
++		/* Copy the packet if shared so that we can do in-place
++		 * decryption.
++		 */
++		struct sk_buff *nskb = skb_copy(skb, GFP_NOFS);
++
++		if (nskb) {
++			rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
++			ret = conn->security->verify_response(conn, nskb);
++			rxrpc_free_skb(nskb, rxrpc_skb_put_response_copy);
++		} else {
++			/* OOM - Drop the packet. */
++			rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
++			ret = -ENOMEM;
++		}
++	} else {
++		ret = conn->security->verify_response(conn, skb);
++	}
++
++	return ret;
++}
++
+ /*
+  * connection-level Rx packet processor
+  */
+@@ -270,7 +297,7 @@ static int rxrpc_process_event(struct rx
+ 		}
+ 		spin_unlock_irq(&conn->state_lock);
+ 
+-		ret = conn->security->verify_response(conn, skb);
++		ret = rxrpc_verify_response(conn, skb);
+ 		if (ret < 0)
+ 			return ret;
  
 
 
