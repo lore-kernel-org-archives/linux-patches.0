@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A832D8DDF;
-	Mon,  4 May 2026 14:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126273DD53E;
+	Mon,  4 May 2026 14:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903426; cv=none; b=a/a4xlV/cX14vo7rTx9lZFACWjORc2SMLgFjV84cHVpJVObI1yxHFjEpu+QGbpsIInpT+yg+D+EqVOLEgpRLQeVpf0M+sJ4sc6kNpDFAbsvUEXcba6YGowne62eddGGfv7C4NmfQzoth4uJzzt+4cze446ZnOFmozwyw+mjCZjM=
+	t=1777903429; cv=none; b=EoDGQGO8TlzzpPHjBWhVJEnCQ4Q/2HmcaShPz46d0NnaocXoUOReuhoeqX8hfo0P8KYBE/xr34D2E3M2sxWf0dSRJVwLtJerAJwxVe4JQw0q6eFBBZ2J5SWD6XBVFDYmF9/FvLEKQqBMMzYcvR7KUT8Jw28bnl8bFZtP0vTXmrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903426; c=relaxed/simple;
-	bh=xAWtrIYfiO+8ah01FwqG+W/asBN9ihxyA13i8MWfEF8=;
+	s=arc-20240116; t=1777903429; c=relaxed/simple;
+	bh=ubEN3fhI/mIZJt+ovUGIp5cqeww/Ura16hJTv/27YNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZHQiUeudGtSADIyxiEuYiX3hRGPs5g/Kv4ASXntHUdZ6YqG6O8K4k5M3rg5cJLZWkkbsg7Kv8xS6PRKxo1hAnuscxmvr5CQ4LrF9kTlFamvgFI1NZGTE7iIhRZmwO1vwadEy9GoVkc73c9C/02RqL43k6Z8/AxvIl85V2STQrMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/1ZxM6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=paRG+dzk1Y7LcIbkvT2fCrJcMRsTwD1EaayYuO6euj4UVGVGBG4jHMB54X2esVXB5Q6Nov9R433ZrS6YsdWhZHmPUQPivrzraV03CgjkpKkTuHe61qwQ1h4uWrNNe8DCnIC0p/EYR7HYQJJqU/tM6FyDCWC5SBfd2hq6OXHqoeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cokwcoD6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/1ZxM6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062F6C2BCB8;
-	Mon,  4 May 2026 14:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cokwcoD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D89C2BCB8;
+	Mon,  4 May 2026 14:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903426;
-	bh=xAWtrIYfiO+8ah01FwqG+W/asBN9ihxyA13i8MWfEF8=;
+	s=korg; t=1777903428;
+	bh=ubEN3fhI/mIZJt+ovUGIp5cqeww/Ura16hJTv/27YNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/1ZxM6kvlc2Dw2UzxWwfhsmqnAzs+XwEVniR7eM2pBafT2WFV7BLm3sqS357EDZv
-	 2A3lnI0rn5WJb1t1hLbPa1zZJ+qeg3SWeuudz1JNJ6Qr++eq0mFV/9PNhLr7Mb8bhk
-	 IbaXypVK8ETx6VAghly2PXqabA99LAnVSLLs/Q0Q=
+	b=cokwcoD6HZvGzSp36WZulf8jWtTFiwEneQfdlhROixBlmX9Yu/r56y5FErUkQlQBd
+	 CQKONfUgCkE1PefYoT8gno0kdjiZBkqCNBlYUBzMse60mP7NMf6JLqkTeeLRoug/IA
+	 Iv+b9UZBjaiRCrWNJnqj9rharVCaQ8pfCgf/b5rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Ruley <brian.ruley@gehealthcare.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Will Deacon <will@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 7.0 229/307] ARM: 9472/1: fix race condition on PG_dcache_clean in __sync_icache_dcache()
-Date: Mon,  4 May 2026 15:51:54 +0200
-Message-ID: <20260504135151.471198445@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ian Rogers <irogers@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.0 230/307] ring-buffer: Do not double count the reader_page
+Date: Mon,  4 May 2026 15:51:55 +0200
+Message-ID: <20260504135151.507179278@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -51,55 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Ruley <brian.ruley@gehealthcare.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 75f9a484e817adea211c73f89ed938a2b2f90953 upstream.
+commit 92d5a606721f759ebebf448b3bd2b7a781d50bd0 upstream.
 
-This bug was already discovered and fixed for arm64 in
-commit 588a513d3425 ("arm64: Fix race condition on PG_dcache_clean in
-__sync_icache_dcache()").
+Since the cpu_buffer->reader_page is updated if there are unwound
+pages. After that update, we should skip the page if it is the
+original reader_page, because the original reader_page is already
+checked.
 
-Verified with added instrumentation to track dcache flushes in a ring
-buffer, as shown by the (distilled) output:
-
-  kernel: SIGILL at b6b80ac0 cpu 1 pid 32663 linux_pte=8eff659f
-          hw_pte=8eff6e7e young=1 exec=1
-  kernel: dcache flush START   cpu0 pfn=8eff6 ts=48629557020154
-  kernel: dcache flush SKIPPED cpu1 pfn=8eff6 ts=48629557020154
-  kernel: dcache flush FINISH  cpu0 pfn=8eff6 ts=48629557036154
-  audisp-syslog: comm="journalctl" exe="/usr/bin/journalctl" sig=4 [...]
-
-Discussions in the mailing list mentioned that arch/arm is also affected
-but the fix was never applied to it [1][2]. Apply the change now, since
-the race condition can cause sporadic SIGILL's and SEGV's especially
-while under high memory pressure.
-
-Link: https://lore.kernel.org/all/adzMOdySgMIePcue@willie-the-truck [1]
-Link: https://lore.kernel.org/all/20210514095001.13236-1-catalin.marinas@arm.com [2]
-Signed-off-by: Brian Ruley <brian.ruley@gehealthcare.com>
-Reviewed-by: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Fixes: 6012191aa9c6 ("ARM: 6380/1: Introduce __sync_icache_dcache() for VIPT caches")
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Cc: stable@vger.kernel.org
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Ian Rogers <irogers@google.com>
+Link: https://patch.msgid.link/177701353063.2223789.1471163147644103306.stgit@mhiramat.tok.corp.google.com
+Fixes: ca296d32ece3 ("tracing: ring_buffer: Rewind persistent ring buffer on reboot")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mm/flush.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/arch/arm/mm/flush.c
-+++ b/arch/arm/mm/flush.c
-@@ -304,8 +304,10 @@ void __sync_icache_dcache(pte_t pteval)
- 	else
- 		mapping = NULL;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1913,7 +1913,7 @@ static int rb_validate_buffer(struct buf
+ static void rb_meta_validate_events(struct ring_buffer_per_cpu *cpu_buffer)
+ {
+ 	struct ring_buffer_cpu_meta *meta = cpu_buffer->ring_meta;
+-	struct buffer_page *head_page, *orig_head;
++	struct buffer_page *head_page, *orig_head, *orig_reader;
+ 	unsigned long entry_bytes = 0;
+ 	unsigned long entries = 0;
+ 	int ret;
+@@ -1924,16 +1924,17 @@ static void rb_meta_validate_events(stru
+ 		return;
  
--	if (!test_and_set_bit(PG_dcache_clean, &folio->flags.f))
-+	if (!test_bit(PG_dcache_clean, &folio->flags.f)) {
- 		__flush_dcache_folio(mapping, folio);
-+		set_bit(PG_dcache_clean, &folio->flags.f);
-+	}
+ 	orig_head = head_page = cpu_buffer->head_page;
++	orig_reader = cpu_buffer->reader_page;
  
- 	if (pte_exec(pteval))
- 		__flush_icache_all();
+ 	/* Do the reader page first */
+-	ret = rb_validate_buffer(cpu_buffer->reader_page->page, cpu_buffer->cpu);
++	ret = rb_validate_buffer(orig_reader->page, cpu_buffer->cpu);
+ 	if (ret < 0) {
+ 		pr_info("Ring buffer reader page is invalid\n");
+ 		goto invalid;
+ 	}
+ 	entries += ret;
+-	entry_bytes += local_read(&cpu_buffer->reader_page->page->commit);
+-	local_set(&cpu_buffer->reader_page->entries, ret);
++	entry_bytes += local_read(&orig_reader->page->commit);
++	local_set(&orig_reader->entries, ret);
+ 
+ 	ts = head_page->page->time_stamp;
+ 
+@@ -2036,8 +2037,8 @@ static void rb_meta_validate_events(stru
+ 	/* Iterate until finding the commit page */
+ 	for (i = 0; i < meta->nr_subbufs + 1; i++, rb_inc_page(&head_page)) {
+ 
+-		/* Reader page has already been done */
+-		if (head_page == cpu_buffer->reader_page)
++		/* The original reader page has already been checked/counted. */
++		if (head_page == orig_reader)
+ 			continue;
+ 
+ 		ret = rb_validate_buffer(head_page->page, cpu_buffer->cpu);
 
 
