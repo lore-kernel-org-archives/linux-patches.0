@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF2475801;
-	Mon,  4 May 2026 14:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700E13D904D;
+	Mon,  4 May 2026 14:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903413; cv=none; b=dqlPH2BuiAPwo2p3Lu1CavdbCJI72X+tHmWSkSuQRWYiX+CP24cNvbERbemh70PgB3eYCgJokHW0wzgVUKwzNNcJahZkOnCPkWPqMvy2pYN0H4H+sJja7UeXE8zZ+xRBpDqqXjV8wu3fIkljYtjg8CPmlhw6sHNL/cgJPuyEzWk=
+	t=1777903416; cv=none; b=rqm46g4fA6UgfPtZ9/+oc4ox6Rh0nndB496jj7nvGh/vEzqYcg5dtpl5DEXV1XYwVJUBSm96ZzKvNopMfyPny8uHCZIYKGLJ1DRh42k/xjfn0kRXEomPXf9U6ZUX6dFbqLRr3gSDh8Zkc7Ii/4n1YVfY92p5KbfFYfcHdPk2D/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903413; c=relaxed/simple;
-	bh=U6dE/nQL52xioUi5vbr8Bi7n7r9GKpgz56SnTLyfINs=;
+	s=arc-20240116; t=1777903416; c=relaxed/simple;
+	bh=nC4tsz9HRPftc6s4r2qvitCCb/jK9kWOqvYzB1RF6vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y+81ALsH54fzyA/OfRstx5lRpsIEpci5dCchss+9gKoFAaKe6gJKKk/WUTzklkpr5rm7KjK2I/6DUFshoXYcP55S6RSzOct4jr9spzqYgbNWUAkKeBb+7+Vs6+hUN6wTcG1S6H0wO2HFqQHizCQ4OpArDMOW7rSY4RZrQB5VtR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iS4CDwy6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eLsJ6WWQbodOvIZajcXb6lM2E4yBRn8Cbqzc2U2zvK6985h6JOEjUwC7lDeMpXi7KUoW4UOr/hcb60umHfW/CTnvnXbkCRb3EL3RstmwLFFgF/iBrjUniJ1OMYv7Muk7wKwLvNUzdDu91bIL2UZvb75wcUSvby0pZaU2Z4kAKFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeyTzW6P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iS4CDwy6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E10FC2BCB8;
-	Mon,  4 May 2026 14:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeyTzW6P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44B4C2BCB8;
+	Mon,  4 May 2026 14:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903413;
-	bh=U6dE/nQL52xioUi5vbr8Bi7n7r9GKpgz56SnTLyfINs=;
+	s=korg; t=1777903416;
+	bh=nC4tsz9HRPftc6s4r2qvitCCb/jK9kWOqvYzB1RF6vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iS4CDwy6yqBaomfpDyds7q93kcUchkYUXlIuFo/5PNL7r3CCHnFgg14YtfoKvXIHw
-	 afJHVNvD1v7rkyvTRdHThuq4twHBnril7nKP1wIpix7EdeD/UbTEh+lULPirEhRCW/
-	 e9wg6FMMQfkuG4Dk49JP8O4hu9lpzJ5wpcmWv+0o=
+	b=JeyTzW6PkGDCs+ZM9yjTfYgm5G2d4pdZfiXqfPsiys/QFg73ZTu1upJra6x+EZhnf
+	 taYsItmMraaWhE9/DVe9/uEfKKdYWqUchDaIbuyr35s/apGtx9ZTxsc2U3F0IU56aS
+	 KQLkrK4HggHIYF78UKYi5ACeXdWbaK0Usoba042g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 7.0 224/307] KVM: nSVM: Add missing consistency check for EFER, CR0, CR4, and CS
-Date: Mon,  4 May 2026 15:51:49 +0200
-Message-ID: <20260504135151.288542950@linuxfoundation.org>
+Subject: [PATCH 7.0 225/307] KVM: nSVM: Drop the non-architectural consistency check for NP_ENABLE
+Date: Mon,  4 May 2026 15:51:50 +0200
+Message-ID: <20260504135151.325385774@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 References: <20260504135142.814938198@linuxfoundation.org>
@@ -44,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
@@ -53,64 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Yosry Ahmed <yosry@kernel.org>
 
-commit 96bd3e76a171a8e21a6387e54e4c420a81968492 upstream.
+commit e0b6f031d64c086edd563e7af9c0c0a2261dd2a4 upstream.
 
-According to the APM Volume #2, 15.5, Canonicalization and Consistency
-Checks (24593—Rev. 3.42—March 2024), the following condition (among
-others) results in a #VMEXIT with VMEXIT_INVALID (aka SVM_EXIT_ERR):
+KVM currenty fails a nested VMRUN and injects VMEXIT_INVALID (aka
+SVM_EXIT_ERR) if L1 sets NP_ENABLE and the host does not support NPTs.
+On first glance, it seems like the check should actually be for
+guest_cpu_cap_has(X86_FEATURE_NPT) instead, as it is possible for the
+host to support NPTs but the guest CPUID to not advertise it.
 
-  EFER.LME, CR0.PG, CR4.PAE, CS.L, and CS.D are all non-zero.
+However, the consistency check is not architectural to begin with. The
+APM does not mention VMEXIT_INVALID if NP_ENABLE is set on a processor
+that does not have X86_FEATURE_NPT. Hence, NP_ENABLE should be ignored
+if X86_FEATURE_NPT is not available for L1, so sanitize it when copying
+from the VMCB12 to KVM's cache.
 
-In the list of consistency checks done when EFER.LME and CR0.PG are set,
-add a check that CS.L and CS.D are not both set, after the existing
-check that CR4.PAE is set.
+Apart from the consistency check, NP_ENABLE in VMCB12 is currently
+ignored because the bit is actually copied from VMCB01 to VMCB02, not
+from VMCB12.
 
-This is functionally a nop because the nested VMRUN results in
-SVM_EXIT_ERR in HW, which is forwarded to L1, but KVM makes all
-consistency checks before a VMRUN is actually attempted.
-
-Fixes: 3d6368ef580a ("KVM: SVM: Add VMRUN handler")
+Fixes: 4b16184c1cca ("KVM: SVM: Initialize Nested Nested MMU context on VMRUN")
 Cc: stable@vger.kernel.org
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-17-yosry@kernel.org
+Link: https://patch.msgid.link/20260303003421.2185681-15-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    6 ++++++
- arch/x86/kvm/svm/svm.h    |    1 +
- 2 files changed, 7 insertions(+)
+ arch/x86/kvm/svm/nested.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 --- a/arch/x86/kvm/svm/nested.c
 +++ b/arch/x86/kvm/svm/nested.c
-@@ -392,6 +392,10 @@ static bool __nested_vmcb_check_save(str
- 		    CC(!(save->cr0 & X86_CR0_PE)) ||
- 		    CC(!kvm_vcpu_is_legal_cr3(vcpu, save->cr3)))
- 			return false;
-+
-+		if (CC((save->cs.attrib & SVM_SELECTOR_L_MASK) &&
-+		       (save->cs.attrib & SVM_SELECTOR_DB_MASK)))
-+			return false;
- 	}
+@@ -350,9 +350,6 @@ static bool __nested_vmcb_check_controls
+ 	if (CC(control->asid == 0))
+ 		return false;
  
- 	/* Note, SVM doesn't have any additional restrictions on CR4. */
-@@ -508,6 +512,8 @@ static void __nested_copy_vmcb_save_to_c
- 	 * Copy only fields that are validated, as we need them
- 	 * to avoid TOC/TOU races.
- 	 */
-+	to->cs = from->cs;
-+
- 	to->efer = from->efer;
- 	to->cr0 = from->cr0;
- 	to->cr3 = from->cr3;
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -140,6 +140,7 @@ struct kvm_vmcb_info {
- };
+-	if (CC((control->nested_ctl & SVM_NESTED_CTL_NP_ENABLE) && !npt_enabled))
+-		return false;
+-
+ 	if (CC(!nested_svm_check_bitmap_pa(vcpu, control->msrpm_base_pa,
+ 					   MSRPM_SIZE)))
+ 		return false;
+@@ -462,6 +459,11 @@ void __nested_copy_vmcb_control_to_cache
+ 	nested_svm_sanitize_intercept(vcpu, to, SKINIT);
+ 	nested_svm_sanitize_intercept(vcpu, to, RDPRU);
  
- struct vmcb_save_area_cached {
-+	struct vmcb_seg cs;
- 	u64 efer;
- 	u64 cr4;
- 	u64 cr3;
++	/* Always clear SVM_NESTED_CTL_NP_ENABLE if the guest cannot use NPTs */
++	to->nested_ctl          = from->nested_ctl;
++	if (!guest_cpu_cap_has(vcpu, X86_FEATURE_NPT))
++		to->nested_ctl &= ~SVM_NESTED_CTL_NP_ENABLE;
++
+ 	to->iopm_base_pa        = from->iopm_base_pa;
+ 	to->msrpm_base_pa       = from->msrpm_base_pa;
+ 	to->tsc_offset          = from->tsc_offset;
+@@ -475,7 +477,6 @@ void __nested_copy_vmcb_control_to_cache
+ 	to->exit_info_2         = from->exit_info_2;
+ 	to->exit_int_info       = from->exit_int_info;
+ 	to->exit_int_info_err   = from->exit_int_info_err;
+-	to->nested_ctl          = from->nested_ctl;
+ 	to->event_inj           = from->event_inj;
+ 	to->event_inj_err       = from->event_inj_err;
+ 	to->next_rip            = from->next_rip;
 
 
