@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D92A40DFD4;
-	Mon,  4 May 2026 14:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F6D40DFD4;
+	Mon,  4 May 2026 14:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903768; cv=none; b=lshp1ubnef4E/KoFR7BRy71AUYoKNzZonRAVywTn2r5zYAp/DVoUJf5wO3SgTDyOEvYrhON8m8GXmmKhAL7R3/7Lwd6itVZ/T+6vmO98Fe2Tjj4WTD5v0V8yvOuRVH8mdDKHf09P8SdAbwPox2U1OO0fXtDtYCjUoCvlZbmPHLk=
+	t=1777903771; cv=none; b=BbgC8eVYfsCDDdCdks9RACL29kmRKJFW9f8ElS+RdqMLskIpo8u8HmEOSsjE6ImSWq4B7bFlboAF6zg/clyTqGxWS/yBilHSGgz6dFcvhe6cpjHGeS+U1YFcuspZBk4MsLsrFEzTqUAQ+DQDLmENfc6Ou30Rf2u4YVmNYUSFNaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903768; c=relaxed/simple;
-	bh=vLXErgxVnxIYUtHX8Vj501Mz1gqgF6+c3h6rdGvkoPQ=;
+	s=arc-20240116; t=1777903771; c=relaxed/simple;
+	bh=EYa+9xfTLCJwBToO046T/cmxvOGULK6AJSv3a0/98qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJ1fObeqFs5+Opiak+8CsBu8Ev0NW4YCrg+/3nscsjIiE+J8jlbXyn3YxwJfTma/S0W8OSitazMTWWPub3/GkkSw6bYH4atXys0hGJGrXvNRcTNU9R+F6Or+A2CbWfbqz9aGVolDPB3FR4gIwfr8jPSDDhgmQm3uf6KsA6lK7SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sYoWbV1t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e34dRvvIWxuJZOGqSG563GC5hPqzay1k/a7aoGHgqfC2RchNB3lACwyCSLIwqMaJ52Rzo6HZ4pGJjchvGJPl8Pn6j0V+yoFYXiDz8okeirlzcG4EVfonaRkZPg6LCkRbMLhrm8BwQI67kVdrO8V9URTSarRYBlF+mOWE3LgpM0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4+E+g5I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sYoWbV1t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66F6C2BCB8;
-	Mon,  4 May 2026 14:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4+E+g5I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC05C2BCB8;
+	Mon,  4 May 2026 14:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903768;
-	bh=vLXErgxVnxIYUtHX8Vj501Mz1gqgF6+c3h6rdGvkoPQ=;
+	s=korg; t=1777903770;
+	bh=EYa+9xfTLCJwBToO046T/cmxvOGULK6AJSv3a0/98qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYoWbV1t5ZVD7A2sXokKYRX6dgIrp4FpM7SKr6/B47fhgJNG75a9aaXf0V+SdAJJ1
-	 8G1B+wg9p+Y7XZ3Kuv8IUR/0+ycxBVyx3bwj71/9VVSvaaVaREYOZZEOcqV1vDUTI5
-	 q28HIe/uFKd6K2k3spLAxV6V1l/J1XRkLxH7GVvI=
+	b=b4+E+g5IDtztTr+6t4QHMQ3y89DefLVjC0NBTuCbL992LlZzC1OcaZjFBpVO+K5Jp
+	 KeF4o/lJx4vLq11gMlHiXUG7QQ7PJr/G21+C7en7mrBrtqdmhgHg4znhpnYJYg0ZHa
+	 HwnvH7ShaUkQ0PxbGsin170opaE7aGpyJiV1KzWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Julius Werner <jwerner@chromium.org>,
-	Samuel Holland <samuel@sholland.org>,
-	Brian Norris <briannorris@chromium.org>,
-	chrome-platform@lists.linux.dev
-Subject: [PATCH 6.18 022/275] firmware: google: framebuffer: Do not mark framebuffer as busy
-Date: Mon,  4 May 2026 15:49:22 +0200
-Message-ID: <20260504135143.762785265@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.18 023/275] arm64/mm: Enable batched TLB flush in unmap_hotplug_range()
+Date: Mon,  4 May 2026 15:49:23 +0200
+Message-ID: <20260504135143.799710105@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -54,47 +55,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-commit f3850d399de3b6142b02315227ef9e772ed0c302 upstream.
+commit 48478b9f791376b4b89018d7afdfd06865498f65 upstream.
 
-Remove the flag IORESOURCE_BUSY flag from coreboot's framebuffer
-resource. It prevents simpledrm from successfully requesting the
-range for its own use; resulting in errors such as
+During a memory hot remove operation, both linear and vmemmap mappings for
+the memory range being removed, get unmapped via unmap_hotplug_range() but
+mapped pages get freed only for vmemmap mapping. This is just a sequential
+operation where each table entry gets cleared, followed by a leaf specific
+TLB flush, and then followed by memory free operation when applicable.
 
-[    2.775430] simple-framebuffer simple-framebuffer.0: [drm] could not acquire memory region [mem 0x80000000-0x80407fff flags 0x80000200]
+This approach was simple and uniform both for vmemmap and linear mappings.
+But linear mapping might contain CONT marked block memory where it becomes
+necessary to first clear out all entire in the range before a TLB flush.
+This is as per the architecture requirement. Hence batch all TLB flushes
+during the table tear down walk and finally do it in unmap_hotplug_range().
 
-As with other uses of simple-framebuffer, the simple-framebuffer
-device should only declare it's I/O resources, but not actively use
-them.
+Prior to this fix, it was hypothetically possible for a speculative access
+to a higher address in the contiguous block to fill the TLB with shattered
+entries for the entire contiguous range after a lower address had already
+been cleared and invalidated. Due to the table entries being shattered, the
+subsequent TLB invalidation for the higher address would not then clear the
+TLB entries for the lower address, meaning stale TLB entries could persist.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 851b4c14532d ("firmware: coreboot: Add coreboot framebuffer driver")
-Acked-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Acked-by: Julius Werner <jwerner@chromium.org>
-Cc: Samuel Holland <samuel@sholland.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-Cc: Brian Norris <briannorris@chromium.org>
-Cc: Julius Werner <jwerner@chromium.org>
-Cc: chrome-platform@lists.linux.dev
-Cc: <stable@vger.kernel.org> # v4.18+
-Link: https://patch.msgid.link/20260217155836.96267-3-tzimmermann@suse.de
+Besides it also helps in improving the performance via TLBI range operation
+along with reduced synchronization instructions. The time spent executing
+unmap_hotplug_range() improved 97% measured over a 2GB memory hot removal
+in KVM guest.
+
+This scheme is not applicable during vmemmap mapping tear down where memory
+needs to be freed and hence a TLB flush is required after clearing out page
+table entry.
+
+Cc: Will Deacon <will@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Closes: https://lore.kernel.org/all/aWZYXhrT6D2M-7-N@willie-the-truck/
+Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
+Cc: stable@vger.kernel.org
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/google/framebuffer-coreboot.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/mm/mmu.c |   36 ++++++++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 16 deletions(-)
 
---- a/drivers/firmware/google/framebuffer-coreboot.c
-+++ b/drivers/firmware/google/framebuffer-coreboot.c
-@@ -67,7 +67,7 @@ static int framebuffer_probe(struct core
- 		return -ENODEV;
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1465,10 +1465,14 @@ static void unmap_hotplug_pte_range(pmd_
  
- 	memset(&res, 0, sizeof(res));
--	res.flags = IORESOURCE_MEM | IORESOURCE_BUSY;
-+	res.flags = IORESOURCE_MEM;
- 	res.name = "Coreboot Framebuffer";
- 	res.start = fb->physical_address;
- 	length = PAGE_ALIGN(fb->y_resolution * fb->bytes_per_line);
+ 		WARN_ON(!pte_present(pte));
+ 		__pte_clear(&init_mm, addr, ptep);
+-		flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+-		if (free_mapped)
++		if (free_mapped) {
++			/* CONT blocks are not supported in the vmemmap */
++			WARN_ON(pte_cont(pte));
++			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+ 			free_hotplug_page_range(pte_page(pte),
+ 						PAGE_SIZE, altmap);
++		}
++		/* unmap_hotplug_range() flushes TLB for !free_mapped */
+ 	} while (addr += PAGE_SIZE, addr < end);
+ }
+ 
+@@ -1489,15 +1493,14 @@ static void unmap_hotplug_pmd_range(pud_
+ 		WARN_ON(!pmd_present(pmd));
+ 		if (pmd_sect(pmd)) {
+ 			pmd_clear(pmdp);
+-
+-			/*
+-			 * One TLBI should be sufficient here as the PMD_SIZE
+-			 * range is mapped with a single block entry.
+-			 */
+-			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+-			if (free_mapped)
++			if (free_mapped) {
++				/* CONT blocks are not supported in the vmemmap */
++				WARN_ON(pmd_cont(pmd));
++				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
+ 				free_hotplug_page_range(pmd_page(pmd),
+ 							PMD_SIZE, altmap);
++			}
++			/* unmap_hotplug_range() flushes TLB for !free_mapped */
+ 			continue;
+ 		}
+ 		WARN_ON(!pmd_table(pmd));
+@@ -1522,15 +1525,12 @@ static void unmap_hotplug_pud_range(p4d_
+ 		WARN_ON(!pud_present(pud));
+ 		if (pud_sect(pud)) {
+ 			pud_clear(pudp);
+-
+-			/*
+-			 * One TLBI should be sufficient here as the PUD_SIZE
+-			 * range is mapped with a single block entry.
+-			 */
+-			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
+-			if (free_mapped)
++			if (free_mapped) {
++				flush_tlb_kernel_range(addr, addr + PUD_SIZE);
+ 				free_hotplug_page_range(pud_page(pud),
+ 							PUD_SIZE, altmap);
++			}
++			/* unmap_hotplug_range() flushes TLB for !free_mapped */
+ 			continue;
+ 		}
+ 		WARN_ON(!pud_table(pud));
+@@ -1560,6 +1560,7 @@ static void unmap_hotplug_p4d_range(pgd_
+ static void unmap_hotplug_range(unsigned long addr, unsigned long end,
+ 				bool free_mapped, struct vmem_altmap *altmap)
+ {
++	unsigned long start = addr;
+ 	unsigned long next;
+ 	pgd_t *pgdp, pgd;
+ 
+@@ -1581,6 +1582,9 @@ static void unmap_hotplug_range(unsigned
+ 		WARN_ON(!pgd_present(pgd));
+ 		unmap_hotplug_p4d_range(pgdp, addr, next, free_mapped, altmap);
+ 	} while (addr = next, addr < end);
++
++	if (!free_mapped)
++		flush_tlb_kernel_range(start, end);
+ }
+ 
+ static void free_empty_pte_table(pmd_t *pmdp, unsigned long addr,
 
 
