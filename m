@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CB33DD53E;
-	Mon,  4 May 2026 14:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA723DE44F;
+	Mon,  4 May 2026 14:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777903657; cv=none; b=s3fWeJQdon+xYKgINa/Y1JW8H/ojm/dMvLN4SQEQ58Dtmf0MSVPwh8y8YLAP9SimeseVkvDHknda7is+/NCYD7118In+sA3KvsvguAJMP+I+7sC7kyzHFiJsrrZOiMiOyTGzagl8sFbjrcRNTqhya0k75sxPB0YkJYtzusGAwi8=
+	t=1777903660; cv=none; b=L8gIHAq2qsftDgTByvB+ieRM38CEMxfKKD/cmcdWwQAp8/DNSJunSCHdt+uWz1DMsXF5Ddpq0pIvTfU2yN7stbZKOf057sWNJg5+0j1ZyFm76bwXR/wY0Nwx9dyO2BofIECfvlcAJjfELJLMXw5pxu7SQfRPpOWHpanC12oLQys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777903657; c=relaxed/simple;
-	bh=g3pB55vAtj5Cf55SUOZirH4IQaYDXbdmqVpexVFzBic=;
+	s=arc-20240116; t=1777903660; c=relaxed/simple;
+	bh=1d1olDnkcPYe+lEJ86I/W53UtRpx+d3C7JE0EXFdxM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GNyQmPDqgHSk6sKh+T3C1WE7WNtDARL6bcT16jcS8NHL+dMKAbB4DU2TOw/5KxSfWhZyXoJP8fbh6CCeRQ7akjUYKqVvuriMq0RPuA1m76Vm+r1KFuxfmYvalkGs1dKgbBJBjaV65CYlYP9Q+Cxx0Y5y4ZjTsXVZ9mHGSYrP2iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSYOgXaz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dd5ZObnUlaOif1x7Km0L3MUdtYzW/mTncb/2S9h4LETe5KFHBiE6Hgx5S4CQvMEcQnLUQg9F9hL4oFJ8mtPU4Zcq97ob2E04MJljTdsMfR4tMQEbz3iNVLV5E3Htl9CCABciSteYxc1OBM3LzRDNsXeXUEi+LOx27CDj61gNHS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DX1JQ8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSYOgXaz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EBBC2BCB8;
-	Mon,  4 May 2026 14:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DX1JQ8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B18C2BCB8;
+	Mon,  4 May 2026 14:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777903657;
-	bh=g3pB55vAtj5Cf55SUOZirH4IQaYDXbdmqVpexVFzBic=;
+	s=korg; t=1777903660;
+	bh=1d1olDnkcPYe+lEJ86I/W53UtRpx+d3C7JE0EXFdxM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSYOgXazUbdQAxCwaemPZpHhuz1D6DrcgoBgDWnzVBiapX6NZNqlkhOzRVFw+5w/i
-	 /v+AXtklWcQIaXDN2fqDuQvs3WkxI7JV0eFeMcwhyUnLGmc6BgPmaHw8n2me/gQ8Xw
-	 UkZ+HStJXASGr63azCOoQ1C99HLyQ41Bx/AgNr9o=
+	b=0DX1JQ8rmcpophpgyZ0pEM3X3QZx0l06RIP0aIaUza37GULht3seg2+CAi97JHnu2
+	 HJJbEeFYrVCOz/aVW7OJkTDQbcXC0f7bqIjZIRcQrSVZ4bEv76lqjPEkJp8Lw9QOTA
+	 3fVaq1nJqFcX6+/Hc8uN6az8+GnM2JCurbr2g7eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ayush Singh <ayushdevel1325@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Alex Elder <elder@kernel.org>,
-	Weigang He <geoffreyhe2@gmail.com>
-Subject: [PATCH 6.18 012/275] greybus: gb-beagleplay: fix sleep in atomic context in hdlc_tx_frames()
-Date: Mon,  4 May 2026 15:49:12 +0200
-Message-ID: <20260504135143.395721562@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	ychen@northwestern.edu,
+	Tyllis Xu <LivelyCarpet87@gmail.com>
+Subject: [PATCH 6.18 013/275] misc: ibmasm: fix OOB MMIO read in ibmasm_handle_mouse_interrupt()
+Date: Mon,  4 May 2026 15:49:13 +0200
+Message-ID: <20260504135143.432225986@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260504135142.929052779@linuxfoundation.org>
 References: <20260504135142.929052779@linuxfoundation.org>
@@ -47,187 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Tyllis Xu <livelycarpet87@gmail.com>
 
-commit 6b526dca0966f2370835765019a54319b78fca8d upstream.
+commit 4b6e6ead556734bdc14024c5f837132b1e7a4b84 upstream.
 
-hdlc_append() calls usleep_range() to wait for circular buffer space,
-but it is called with tx_producer_lock (a spinlock) held via
-hdlc_tx_frames() -> hdlc_append_tx_frame()/hdlc_append_tx_u8()/etc.
-Sleeping while holding a spinlock is illegal and can trigger
-"BUG: scheduling while atomic".
+ibmasm_handle_mouse_interrupt() performs an out-of-bounds MMIO read
+when the queue reader or writer index from hardware exceeds
+REMOTE_QUEUE_SIZE (60).
 
-Fix this by moving the buffer-space wait out of hdlc_append() and into
-hdlc_tx_frames(), before the spinlock is acquired.  The new flow:
+A compromised service processor can trigger this by writing an
+out-of-range value to the reader or writer MMIO register before
+asserting an interrupt. Since writer is re-read from hardware on
+every loop iteration, it can also be set to an out-of-range value
+after the loop has already started.
 
- 1. Pre-calculate the worst-case encoded frame length.
- 2. Wait (with sleep) outside the lock until enough space is available,
-    kicking the TX consumer work to drain the buffer.
- 3. Acquire the spinlock, re-verify space, and write the entire frame
-    atomically.
+The root cause is that get_queue_reader() and get_queue_writer() return
+raw readl() values that are passed directly into get_queue_entry(),
+which computes:
 
-This ensures that sleeping only happens without any lock held, and
-that frames are either fully enqueued or not written at all.
+  queue_begin + reader * sizeof(struct remote_input)
 
-This bug is found by CodeQL static analysis tool (interprocedural
-sleep-in-atomic query) and my code review.
+with no bounds check. This unchecked MMIO address is then passed to
+memcpy_fromio(), reading 8 bytes from unintended device registers.
+For sufficiently large values the address falls outside the PCI BAR
+mapping entirely, triggering a machine check exception.
 
-Fixes: ec558bbfea67 ("greybus: Add BeaglePlay Linux Driver")
-Cc: stable <stable@kernel.org>
-Cc: Ayush Singh <ayushdevel1325@gmail.com>
-Cc: Johan Hovold <johan@kernel.org>
-Cc: Alex Elder <elder@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Link: https://patch.msgid.link/20260330120801.981506-1-geoffreyhe2@gmail.com
+Fix by checking both indices against REMOTE_QUEUE_SIZE at the top of
+the loop body, before any call to get_queue_entry(). On an out-of-range
+value, reset the reader register to 0 via set_queue_reader() before
+breaking, so that normal queue operation can resume if the corrupted
+hardware state is transient.
+
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Fixes: 278d72ae8803 ("[PATCH] ibmasm driver: redesign handling of remote control events")
+Cc: stable@vger.kernel.org
+Cc: ychen@northwestern.edu
+Signed-off-by: Tyllis Xu <LivelyCarpet87@gmail.com>
+Link: https://patch.msgid.link/20260308062108.258940-1-LivelyCarpet87@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/greybus/gb-beagleplay.c |  107 +++++++++++++++++++++++++++++++++-------
- 1 file changed, 90 insertions(+), 17 deletions(-)
+ drivers/misc/ibmasm/remote.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/greybus/gb-beagleplay.c
-+++ b/drivers/greybus/gb-beagleplay.c
-@@ -242,30 +242,26 @@ static void hdlc_write(struct gb_beaglep
- }
+--- a/drivers/misc/ibmasm/remote.c
++++ b/drivers/misc/ibmasm/remote.c
+@@ -177,6 +177,11 @@ void ibmasm_handle_mouse_interrupt(struc
+ 	writer = get_queue_writer(sp);
  
- /**
-- * hdlc_append() - Queue HDLC data for sending.
-+ * hdlc_append() - Queue a single HDLC byte for sending.
-  * @bg: beagleplay greybus driver
-  * @value: hdlc byte to transmit
-  *
-- * Assumes that producer lock as been acquired.
-+ * Caller must hold tx_producer_lock and must have ensured sufficient
-+ * space in the circular buffer before calling (see hdlc_tx_frames()).
-  */
- static void hdlc_append(struct gb_beagleplay *bg, u8 value)
- {
--	int tail, head = bg->tx_circ_buf.head;
-+	int head = bg->tx_circ_buf.head;
-+	int tail = READ_ONCE(bg->tx_circ_buf.tail);
- 
--	while (true) {
--		tail = READ_ONCE(bg->tx_circ_buf.tail);
--
--		if (CIRC_SPACE(head, tail, TX_CIRC_BUF_SIZE) >= 1) {
--			bg->tx_circ_buf.buf[head] = value;
--
--			/* Finish producing HDLC byte */
--			smp_store_release(&bg->tx_circ_buf.head,
--					  (head + 1) & (TX_CIRC_BUF_SIZE - 1));
--			return;
--		}
--		dev_warn(&bg->sd->dev, "Tx circ buf full");
--		usleep_range(3000, 5000);
--	}
-+	lockdep_assert_held(&bg->tx_producer_lock);
-+	if (WARN_ON_ONCE(CIRC_SPACE(head, tail, TX_CIRC_BUF_SIZE) < 1))
-+		return;
-+
-+	bg->tx_circ_buf.buf[head] = value;
-+	/* Ensure buffer write is visible before advancing head. */
-+	smp_store_release(&bg->tx_circ_buf.head,
-+			  (head + 1) & (TX_CIRC_BUF_SIZE - 1));
- }
- 
- static void hdlc_append_escaped(struct gb_beagleplay *bg, u8 value)
-@@ -313,13 +309,90 @@ static void hdlc_transmit(struct work_st
- 	spin_unlock_bh(&bg->tx_consumer_lock);
- }
- 
-+/**
-+ * hdlc_encoded_length() - Calculate worst-case encoded length of an HDLC frame.
-+ * @payloads: array of payload buffers
-+ * @count: number of payloads
-+ *
-+ * Returns the maximum number of bytes needed in the circular buffer.
-+ */
-+static size_t hdlc_encoded_length(const struct hdlc_payload payloads[],
-+				  size_t count)
-+{
-+	size_t i, payload_len = 0;
-+
-+	for (i = 0; i < count; i++)
-+		payload_len += payloads[i].len;
-+
-+	/*
-+	 * Worst case: every data byte needs escaping (doubles in size).
-+	 * data bytes = address(1) + control(1) + payload + crc(2)
-+	 * framing    = opening flag(1) + closing flag(1)
-+	 */
-+	return 2 + (1 + 1 + payload_len + 2) * 2;
-+}
-+
-+#define HDLC_TX_BUF_WAIT_RETRIES	500
-+#define HDLC_TX_BUF_WAIT_US_MIN	3000
-+#define HDLC_TX_BUF_WAIT_US_MAX	5000
-+
-+/**
-+ * hdlc_tx_frames() - Encode and queue an HDLC frame for transmission.
-+ * @bg: beagleplay greybus driver
-+ * @address: HDLC address field
-+ * @control: HDLC control field
-+ * @payloads: array of payload buffers
-+ * @count: number of payloads
-+ *
-+ * Sleeps outside the spinlock until enough circular-buffer space is
-+ * available, then verifies space under the lock and writes the entire
-+ * frame atomically.  Either a complete frame is enqueued or nothing is
-+ * written, avoiding both sleeping in atomic context and partial frames.
-+ */
- static void hdlc_tx_frames(struct gb_beagleplay *bg, u8 address, u8 control,
- 			   const struct hdlc_payload payloads[], size_t count)
- {
-+	size_t needed = hdlc_encoded_length(payloads, count);
-+	int retries = HDLC_TX_BUF_WAIT_RETRIES;
- 	size_t i;
-+	int head, tail;
-+
-+	/* Wait outside the lock for sufficient buffer space. */
-+	while (retries--) {
-+		/* Pairs with smp_store_release() in hdlc_append(). */
-+		head = smp_load_acquire(&bg->tx_circ_buf.head);
-+		tail = READ_ONCE(bg->tx_circ_buf.tail);
-+
-+		if (CIRC_SPACE(head, tail, TX_CIRC_BUF_SIZE) >= needed)
+ 	while (reader != writer) {
++		if (reader >= REMOTE_QUEUE_SIZE || writer >= REMOTE_QUEUE_SIZE) {
++			set_queue_reader(sp, 0);
 +			break;
++		}
 +
-+		/* Kick the consumer and sleep — no lock held. */
-+		schedule_work(&bg->tx_work);
-+		usleep_range(HDLC_TX_BUF_WAIT_US_MIN, HDLC_TX_BUF_WAIT_US_MAX);
-+	}
-+
-+	if (retries < 0) {
-+		dev_warn_ratelimited(&bg->sd->dev,
-+				     "Tx circ buf full, dropping frame\n");
-+		return;
-+	}
+ 		memcpy_fromio(&input, get_queue_entry(sp, reader),
+ 				sizeof(struct remote_input));
  
- 	spin_lock(&bg->tx_producer_lock);
- 
-+	/*
-+	 * Re-check under the lock.  Should not fail since
-+	 * tx_producer_lock serialises all producers and the
-+	 * consumer only frees space, but guard against it.
-+	 */
-+	head = bg->tx_circ_buf.head;
-+	tail = READ_ONCE(bg->tx_circ_buf.tail);
-+	if (unlikely(CIRC_SPACE(head, tail, TX_CIRC_BUF_SIZE) < needed)) {
-+		spin_unlock(&bg->tx_producer_lock);
-+		dev_warn_ratelimited(&bg->sd->dev,
-+				     "Tx circ buf space lost, dropping frame\n");
-+		return;
-+	}
-+
- 	hdlc_append_tx_frame(bg);
- 	hdlc_append_tx_u8(bg, address);
- 	hdlc_append_tx_u8(bg, control);
 
 
