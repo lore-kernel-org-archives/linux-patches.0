@@ -1,93 +1,94 @@
 Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814F347DD69
-	for <patches@lists.linux.dev>; Tue,  5 May 2026 16:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653EE48C8BD
+	for <patches@lists.linux.dev>; Tue,  5 May 2026 16:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777998730; cv=pass; b=Zu/f8avu/JHnjxNoSr3IQJWkmcs7hw1nL9ZobuGY7UQzDq8xJWmXE9fdOGYboGfdl6c76wF4Dq3p8nz06hh7uOb/tIegI0x0q+KvsweJ+98U2/TH/7/UxctOS4jSq0iSVQoQ4yPsNOxoDF/GU77KMh5tvIkkeCm6qZYm9b6LOIA=
+	t=1777998839; cv=pass; b=iwUmDw6ckgorwntjqBuV6z4tYkgB+OmYE0bQMfE4tyJSfdj/uAY9uMy9oY+xm5OpkZsz1cHWxucFn3S/dlsVypIZg8V0UFGAtYnrL7IVjCRrXCTBh5XLuqjZT/7l9eN6iiKLL7EcARnvFAHg6NXXMuTTu3Y426rXXhRAwmh1n/w=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777998730; c=relaxed/simple;
-	bh=iy3n3rJ21iXxzxWQtymxZU8jDcKP80ZeTnptO0tAl6Q=;
+	s=arc-20240116; t=1777998839; c=relaxed/simple;
+	bh=NKq95oMiYqRZUG2FliwX8bp5o3L2f+407SarXI1ZbHw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=M4jtMT7iuNC7Gk2nxLzcJSKM3jP0Xr+Od+vRHXphwU09mcyAKDx7MCHkAXvIMq1+ynID2s6reMrfTrivTmRn4DrFo6G5D9SuyhAEuNDkNtWYImX0Qp9NnR3Pv/cIVyZRJf+9DYmrm29klSjrflRoPTNdJXIcnwsGi4ZZzLDkhH8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b=LsQg+x6b; arc=pass smtp.client-ip=209.85.210.42
+	 To:Cc:Content-Type; b=eqHloPqVEBThTjwdXlbzU8yw7B1cfvUMy3YucUKySE1xnw2NDMxpsrC2vdKSgWhSs2VhC4zrFhZMwen5MbsuTy3aiscTv/VSRg3tq9jnfON2nPDZe3q0MIEOkUvm/BXBmhtlWV5H++ZSEeG+7Fsl2S0FFTMpfMeNZdHjXBFGcdw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b=CIHRY5vD; arc=pass smtp.client-ip=209.85.210.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b="LsQg+x6b"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7dcd17e19b6so3216761a34.1
-        for <patches@lists.linux.dev>; Tue, 05 May 2026 09:32:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777998727; cv=none;
+	dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b="CIHRY5vD"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7de4e6c5a30so4765903a34.0
+        for <patches@lists.linux.dev>; Tue, 05 May 2026 09:33:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777998834; cv=none;
         d=google.com; s=arc-20240605;
-        b=E2OuZXxT8J5jWNN7VBqlFVwrWgWhnqrzLjCXgleJTsVLj1Br5aP2g8IFWJYcj587sm
-         qtMEy8w+dWP2CSKqr5I2FXDcH8sLGZQZIb+TVazRxNEbwEKNcgfRHoIbZvm63SEP0RT+
-         D3XPdlbSTP2/F65APhjanCCOXTlSrW8s5wIj40CvXZq701irtt/iVBIZ9f+tlQpTDXEt
-         HOcVbXrXWpwNnsNI+qmS3Fa2C1l6mQZ4KMobSlDRpLk8kORdAXLfrm9WyOkVL1hAGXXF
-         e1odZloZjt67OWwF5YE4WcpNIs/9W8OZEAcQrL7jP4uSH7RZt9BpUbWPDWCYJPG9YR63
-         4HEg==
+        b=JJyGGVNFFwcSzp4vMwVmZAgwdzJ5G60dGTmgvhjNxgcKrdQ2yEsu1fsqCEUizfEROY
+         sJOexDTzAbQ2FOArV+urUIJvNEWNYXILqRnDUT11M1ZJsCi9ES5SRYtoJ4V97Gmy5AM0
+         j2vXMM6EEZmpVWmCarxbPe94J8689lpXWGomF8WvRY9kDff2zveOk+wjSSrQDKQH5P3t
+         H+c75/OGaBsxk3GkxV1h3qx03lWR8ZzpXfWsbnkqSioZpPlRtF74liUdWEn0fyXfmkn7
+         YAImkjt/vMr2YDUzx3YOXSBSCazTSahkf7dDxM4wDdG1ZYXnkpVkosdy07evXh2EgmTu
+         TxiA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=7eXEy6+DCrmMWFnLDZ4Fw27+W46tPenXbPYSAHMIGQY=;
-        fh=1UGvC+cNjr+MH9RBDnB7K7Gl91bhT0Z0uOvEOpBWnnU=;
-        b=CTpt2mjVs2jJJS6dnq8nxLNWbc+RU/cSBJtKF5XLHfEqZM2ytUv/qEqRqyWJqXpCKU
-         VXFPkAULXkCT6M+23iE9DFp4s+vU1KlkHGvQkb+8K2VRLW27dMW/5L3Ui9ckcQbqoMtY
-         we215LWVWgjtj2HW1mTDN58ZRAXvOuuIL+DBqMSLvlQEw+dPN84oosDzoNX189aFwF7/
-         j3xyfQaOn7sGRG9e/+G+61g9I0gOjV3nFnx8RZcO7RM7jGVShDT9zIH7WDVcwPT3womi
-         s2bJXgShf9H03sXgi/Do4tgJh24hmzJGQz0ya9ykT8zf5wj7JbOxB3higfFd1YN1LDqx
-         wqsA==;
+        bh=vtpazpB/8eE6pYzC9wjuU+7s+d59WdlAMcKHmpMIbC4=;
+        fh=1jwQHSNW3adEAzVSdX8nfzp+aMpV3UvOLo/gq5kvMCc=;
+        b=S3Qj1fQ4IPNAvHYA/gAjc9WHEE5rJ0UpAKToSED9Bb+vKWuyINBdjMXQkguUjYRuJY
+         tcnCbeDf9Qf/5QpCzB1+1MAYzhJ197uUy6sFIhOCd8Uw7haCMArT5t41DqqCYzPjrgiB
+         hFOHteeDd8TQqA+uqbduUjJnj1zpamiq5MMPI4dAdHgn/eoEjNrc00iW5VRlV/w3zlIr
+         gyI8LZd97g4xoZA5sAg+RuxXuTgaKnKf9ms6M4Dq5XM+26gaFBWJgziVVdZg5Ec+iR+D
+         w5fR4FyEE9HHnBMC+8YOSrXBgFvYxcETmYsjKOgf3ySGG2iGfI2nEpyG5qx1q1ey0cvo
+         cnbQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rivosinc.com; s=google; t=1777998727; x=1778603527; darn=lists.linux.dev;
+        d=rivosinc.com; s=google; t=1777998834; x=1778603634; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7eXEy6+DCrmMWFnLDZ4Fw27+W46tPenXbPYSAHMIGQY=;
-        b=LsQg+x6b3df6CazlYBQ+7iDgkS+QGarHroxhm0hg20l/bn+N/A+VRptXS+RHTHKCFd
-         8/gO61iYzzJ9qC0jymwnWq32YxGyGHr5DiIHGNcBgV4yHgFBjRSqFXcTJdJeYzmVO6C7
-         Sai49EORiZZHoeM/6Omx+yU+o8Q2I+YYLsQcYkf7/Z8b5WxhVUlHFXOZKuZ6CDgnGZ2R
-         0+7WMHqZrCqMwQA+2YRf2VVqfXrN7ktEaDbD+XKv6USoQzYToCeV+EMwJak6Ym7H9wvb
-         m4ShUkb3bFjbVXaeBI9LTMEeejh2A42ik5Ll80LkYxPjpvZxfkQj9mufkc+trUKoP37O
-         OamQ==
+        bh=vtpazpB/8eE6pYzC9wjuU+7s+d59WdlAMcKHmpMIbC4=;
+        b=CIHRY5vDxlufcfXnZnRBUymWBwQ70ytCrdpTLZ5Z07Q/SP9NG2HTOVSRBqf0Ok8Bi0
+         +aCnZvIfa7qTGDECittokiS12aSbYeRch1Z6NSOh90AtGH65UhvyqeUhF9P5Ff3F41Gh
+         NF4DdCnd67P3uriiAlGprBOTViSTqImcp8l5ov5iMJ11S0Xex5yAT8NhrjYJCDSSNU9B
+         +xU0dBh9fYgTMSRI1gM4C5kgXIL7ENHqfv1ep4MuoPzwTUwzajAMWQEAQYGdOEF567DZ
+         vkNIZZyeRUVSKUGv9wABNiYlxL0hZZjHJbZukQR3624y6Db+jnb+nm+EI+oS1Wt1dk8H
+         3W0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777998727; x=1778603527;
+        d=1e100.net; s=20251104; t=1777998834; x=1778603634;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=7eXEy6+DCrmMWFnLDZ4Fw27+W46tPenXbPYSAHMIGQY=;
-        b=h4hQ3pvLXo+T4sov7Ec+T7aoc+z3sPc7yf3FSJ5zfJD75i6tNF0h3kppKwMohTMFcn
-         +N+QupGNpeMHvTFnqPjqLyZhzhqfTfy6CaGYjLfLr1En1TCgJyx3yiRdkoFPuIOiXfPf
-         /tVJR6PjaOjnxQUgaVEC8hbi3oDfXiWxTdeDYmdLKUwGtPiWxrKeLlcvXNdk8MW0azsg
-         DikxUHtSLvob/+/EOWMSamrooMevzQLGk6mRJcL+/1ZRbAXrWyamQAbgg57kkYLJB8Bk
-         boNMrTi2gOG3FWpfXPjppBq9XisSpki3+inXtWCf7W7V3IfnlgsWVvkOCB8Dmmmsar+y
-         1u4w==
-X-Forwarded-Encrypted: i=1; AFNElJ+FH2mz9Ea5UZV2XOvRj8fpbTr+41kZGhrm3MZfgPVUnEnJ4vv5D4ne2Gujw0icC773mDrolGeO@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz9+lppvxrAfFGod6chlAl8YN1xcOWHR3oQIhRsjFvm006i9Og/
-	YwnQraenVEx4PLq1AwF6zUjc9/hSW6gQphMiVTYIf66ebC8ry+aduFHz8VpIjq4qn6zWSJMgIZI
-	LJ9GmUdeLj7AisiPWe85Y8i0VVMjGDfaG26s7+RKnLQ==
-X-Gm-Gg: AeBDiev7BN3jSbitIx10mdpRrRFftZ5PFZkJCsIxXkrwIXQOmMl0WICp36FFR6wOKxH
-	z5/i3NJw6kuIR5KvV5WReBA2h5aFMstf7xgn+6Pb0+Jg+2ysHc1DjED9HZe3U/zxzwJAbZNik+V
-	aVQN6kOBFrWUMvDliN1Bh0Ggu9pEQaHPCY1MXmO3Icsj6ZORVSASBB1jYzhySVCbCCS/wbCXMjL
-	QEO201Mnsade7VbXybBpBp9Qjs9z9cTXmKR2q04B44vss3jkmapAcfXbYhSEV0l4b3RkEcdbgtW
-	21yepj/Ark+je3Wk15hHo7sZe6l+
-X-Received: by 2002:a05:6808:2518:b0:479:ffcf:52dc with SMTP id
- 5614622812f47-47c8930caadmr7143176b6e.44.1777998727293; Tue, 05 May 2026
- 09:32:07 -0700 (PDT)
+        bh=vtpazpB/8eE6pYzC9wjuU+7s+d59WdlAMcKHmpMIbC4=;
+        b=XjNkAw4Gvtu6vHyGcfko80enACasRZSmZ+MK52y1TUOID3OlqoYx2ZZIUmQyoB2Q7z
+         9LHeIljtqmjrHrH6I2HaoVwnI9/vPJubqFcSvOpi59dyguDxzPIG1fY7xabuB/oQzAuM
+         URTZCcm7FYIXZMpg3kXPuLsbbVzVgGFwA1ffQytzfRoIfDfwWsBr7YwsaXHSz8p5RXJa
+         Bpx+EMkrc677cTFR1CR+TzPoJI9pquEh0ZPeYLUsnghef3MPIsv63X424CLwuFU/wyqi
+         qGYqQtApBSmjjSOqnFgWaitDsT8xGR/faDEruy4yXJHTtV3Xq7NDVZaTScsytG4X6wuF
+         PcxQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8lHTyODRFw5Wq+45VaVXaUtXg1cFygpVAr21o9Ft+yAQcMBEsg+lXl4ISePgi6uEqVHQaiZiJj@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywj3l/MuM/c38G2z10hL+4sD8eQBahmMrQzUkL/IJOLf06wgUut
+	C93OYrUfppWNjgTqZIEl7G/VPszQk/03SqDGwSE3gKZhM1MD4eFStDlBxLWWqO/NqwThevKSfO6
+	Gb0StZ/0XrtUAGOcpEaTXUl4aYnrY9w4beA79pqXuMg==
+X-Gm-Gg: AeBDies96wq48sDg8NRyksHARDtg/5zTxclR8Lq27XZHhQ479Do61avkH3naSEWlJEc
+	biVqu7HWRirsGzttmikfPWlsVQpu1VXiZlA+qCnZLBumOZ4yEyZo6ZP410c//HzCseYgr8uLW6s
+	LIn6u0tpIMZjSj5c/z6DVOaCPNOToX6Ls4n9InwVD3Q2gOISXAQHetRBLfc26koPzF3mOoAAJq1
+	0Gqp+JE6r5/uHw/XJB9PuynqDqhBQL3Y1feAllAF8nqPli3cgC39gDg/hMjtCkpKMMT4Hf5abXW
+	PfDeGD0Y8PPufsqIPg==
+X-Received: by 2002:a05:6820:6ae3:b0:694:89e2:74fd with SMTP id
+ 006d021491bc7-699981b5a39mr88918eaf.50.1777998834219; Tue, 05 May 2026
+ 09:33:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
-In-Reply-To: <0-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
+References: <0-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com> <4-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
+In-Reply-To: <4-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
 From: Tomasz Jeznach <tjeznach@rivosinc.com>
-Date: Tue, 5 May 2026 09:31:55 -0700
-X-Gm-Features: AVHnY4KXzwjaC_Gb5GnddRMzX9LqC580rYOWyeA1_Y7wcl4kfXs2AQTViUP1SDo
-Message-ID: <CAH2o1u699nbGABw1mcZR=BrZcyy7s_WNz-szpe8bn8bPhuv-yQ@mail.gmail.com>
-Subject: Re: [PATCH 0/7] Support non-leaf and range invalidation features in RISC-V
+Date: Tue, 5 May 2026 09:33:41 -0700
+X-Gm-Features: AVHnY4Jo2M_oYIkIR0EQC-NGrzHu318spP9O1zFNVhPiXz7QU2_Oa1GP5rSq1Uk
+Message-ID: <CAH2o1u6--LxUM0L_yEGUZU7THzO8=kdYUSG6CwR0-H49ss0ECg@mail.gmail.com>
+Subject: Re: [PATCH 4/7] iommu/riscv: Enable PT_FEAT_DETAILED_GATHER and pass
+ gather to iotlb_inval
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>, iommu@lists.linux.dev, 
 	Joerg Roedel <joro@8bytes.org>, linux-riscv@lists.infradead.org, 
@@ -96,70 +97,132 @@ Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>, iommu@li
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Thanks Jason for this series.
-I've verified github/iommu_pt_arm64 on RISC-V, looks good.
-
-- Tomasz
-
 On Fri, Apr 10, 2026 at 8:57=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
 ote:
 >
-> This is part of the patch pile to get SMMUv3 moved to iommupt. From
-> that perspective it introduces the PT_FEAT_DETAILED_GATHER which will
-> be used by both RISC-V and SMMUv3 to generate optimized invalidation
-> commands.
+> RISC-V can use the information from PT_FEAT_DETAILED_GATHER to
+> compute the best stride to generate the single TLB invalidations.
 >
-> I don't have any RISC-V anything so this needs to be tested by someone wh=
-o
-> does.
+> Pass the gather down to the lower functions and create a full-range
+> gather for the flush-all callback.
 >
-> Improve the invalidation flow in RISC-V:
->  - For single address invalidation, compute a stride based on what
->    IOPTEs were changed by having the gather track level changes in
->    bitmaps. This allows things like unmapping hugetlb-backed mappings
->    to avoid jumping to global invalidation.
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/generic_pt/fmt/iommu_riscv64.c |  4 +-
+>  drivers/iommu/riscv/iommu.c                  | 44 +++++++++++++-------
+>  2 files changed, 31 insertions(+), 17 deletions(-)
 >
->  - Support the NL bit to avoid global invalidation when table
->    structure is changed
+> diff --git a/drivers/iommu/generic_pt/fmt/iommu_riscv64.c b/drivers/iommu=
+/generic_pt/fmt/iommu_riscv64.c
+> index cbf60fffa9bf7d..b18fc4d109f538 100644
+> --- a/drivers/iommu/generic_pt/fmt/iommu_riscv64.c
+> +++ b/drivers/iommu/generic_pt/fmt/iommu_riscv64.c
+> @@ -6,6 +6,8 @@
+>  #define PT_FMT_VARIANT 64
+>  #define PT_SUPPORTED_FEATURES                                  \
+>         (BIT(PT_FEAT_SIGN_EXTEND) | BIT(PT_FEAT_FLUSH_RANGE) | \
+> -        BIT(PT_FEAT_RISCV_SVNAPOT_64K))
+> +        BIT(PT_FEAT_RISCV_SVNAPOT_64K) |                      \
+> +        BIT(PT_FEAT_DETAILED_GATHER))
+> +#define PT_FORCE_ENABLED_FEATURES BIT(PT_FEAT_DETAILED_GATHER)
 >
->  - Support the S range invalidation feature to convert any gather
->    into a single invalidation command using an aligned power-of-2
->    size like AMD and VT-d.
+>  #include "iommu_template.h"
+> diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
+> index a31f50bbad3535..556d5dc9c58681 100644
+> --- a/drivers/iommu/riscv/iommu.c
+> +++ b/drivers/iommu/riscv/iommu.c
+> @@ -929,12 +929,28 @@ static void riscv_iommu_bond_unlink(struct riscv_io=
+mmu_domain *domain,
+>  #define RISCV_IOMMU_IOTLB_INVAL_LIMIT  (2 << 20)
 >
-> This is also a requirement for the kunit iotlb series, which was used
-> to test the math used to generate the invalidation commands from the
-> gather in this series.
+>  static void riscv_iommu_iotlb_inval(struct riscv_iommu_domain *domain,
+> -                                   unsigned long start, unsigned long en=
+d)
+> +                                   struct iommu_iotlb_gather *gather)
+>  {
+> +       unsigned long start;
+> +       unsigned long end;
+>         struct riscv_iommu_bond *bond;
+>         struct riscv_iommu_device *iommu, *prev;
+>         struct riscv_iommu_command cmd;
 >
-> It replaces a similar series Fangyu sent prior to the iommupt
-> conversion:
+> +       /*
+> +        * When non-leaf page table entries were changed, the base spec
+> +        * requires a full PSCID invalidation (AV=3D0) since there is no
+> +        * way to do targeted non-leaf invalidation without the NL
+> +        * extension. Force global invalidation to preserve correctness.
+> +        */
+> +       if (gather->pt.table_levels_bitmap) {
+> +               start =3D 0;
+> +               end =3D ULONG_MAX;
+> +       } else {
+> +               start =3D gather->start;
+> +               end =3D gather->end;
+> +       }
+> +
+>         /*
+>          * For each IOMMU linked with this protection domain (via bonds->=
+dev),
+>          * an IOTLB invaliation command will be submitted and executed.
+> @@ -1145,8 +1161,14 @@ static void riscv_iommu_iodir_update(struct riscv_=
+iommu_device *iommu,
+>  static void riscv_iommu_iotlb_flush_all(struct iommu_domain *iommu_domai=
+n)
+>  {
+>         struct riscv_iommu_domain *domain =3D iommu_domain_to_riscv(iommu=
+_domain);
+> +       struct iommu_iotlb_gather gather =3D {
+> +               .start =3D 0,
+> +               .end =3D ULONG_MAX,
+> +               .pt.leaf_levels_bitmap =3D 0xFF,
+> +               .pt.table_levels_bitmap =3D 0xFE,
+> +       };
 >
-> https://lore.kernel.org/linux-iommu/20260208144213.94856-1-fangyu.yu@linu=
-x.alibaba.com/
+> -       riscv_iommu_iotlb_inval(domain, 0, ULONG_MAX);
+> +       riscv_iommu_iotlb_inval(domain, &gather);
+>  }
 >
-> The full patch pile is here:
+>  static void riscv_iommu_iotlb_sync(struct iommu_domain *iommu_domain,
+> @@ -1154,19 +1176,8 @@ static void riscv_iommu_iotlb_sync(struct iommu_do=
+main *iommu_domain,
+>  {
+>         struct riscv_iommu_domain *domain =3D iommu_domain_to_riscv(iommu=
+_domain);
 >
-> https://github.com/jgunthorpe/linux/commits/iommu_pt_arm64/
+> -       if (iommu_pages_list_empty(&gather->freelist)) {
+> -               riscv_iommu_iotlb_inval(domain, gather->start, gather->en=
+d);
+> -       } else {
+> -               /*
+> -                * In 1.0 spec version, the smallest scope we can use to
+> -                * invalidate all levels of page table (i.e. leaf and non=
+-leaf)
+> -                * is an invalidate-all-PSCID IOTINVAL.VMA with AV=3D0.
+> -                * This will be updated with hardware support for
+> -                * capability.NL (non-leaf) IOTINVAL command.
+> -                */
+> -               riscv_iommu_iotlb_inval(domain, 0, ULONG_MAX);
+> -               iommu_put_pages_list(&gather->freelist);
+> -       }
+> +       riscv_iommu_iotlb_inval(domain, gather);
+> +       iommu_put_pages_list(&gather->freelist);
+>  }
 >
-> Jason Gunthorpe (7):
->   iommu: Split the kdoc comment for struct iommu_iotlb_gather
->   iommupt: Add struct iommupt_pending_gather
->   iommupt: Add PT_FEAT_DETAILED_GATHER
->   iommu/riscv: Enable PT_FEAT_DETAILED_GATHER and pass gather to
->     iotlb_inval
->   iommu/riscv: Compute best stride for single invalidation
->   iommu/riscv: Add RISCV_IOMMU_CAPABILITIES_NL
->   iommu/riscv: Add NAPOT range invalidation support
+>  static void riscv_iommu_free_paging_domain(struct iommu_domain *iommu_do=
+main)
+> @@ -1267,7 +1278,8 @@ static struct iommu_domain *riscv_iommu_alloc_pagin=
+g_domain(struct device *dev)
+>          */
+>         cfg.common.features =3D BIT(PT_FEAT_SIGN_EXTEND) |
+>                               BIT(PT_FEAT_FLUSH_RANGE) |
+> -                             BIT(PT_FEAT_RISCV_SVNAPOT_64K);
+> +                             BIT(PT_FEAT_RISCV_SVNAPOT_64K) |
+> +                             BIT(PT_FEAT_DETAILED_GATHER);
+>         domain->riscvpt.iommu.nid =3D dev_to_node(iommu->dev);
+>         domain->domain.ops =3D &riscv_iommu_paging_domain_ops;
 >
->  drivers/iommu/generic_pt/fmt/iommu_riscv64.c |   4 +-
->  drivers/iommu/generic_pt/iommu_pt.h          |  98 ++++++++----
->  drivers/iommu/riscv/iommu-bits.h             |  24 +++
->  drivers/iommu/riscv/iommu.c                  | 160 ++++++++++++++-----
->  include/linux/generic_pt/common.h            |   5 +
->  include/linux/iommu.h                        |  42 ++++-
->  6 files changed, 259 insertions(+), 74 deletions(-)
->
->
-> base-commit: ac81c0f2e6a779e444c5b6fd43756ef811656098
 > --
 > 2.43.0
 >
+
+Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
