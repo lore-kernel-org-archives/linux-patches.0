@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A23A33AD8B;
-	Tue,  5 May 2026 09:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1468133C198;
+	Tue,  5 May 2026 09:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974753; cv=none; b=vDdk27gGVOlq5tsjV8B0p8gpnGSZleFCdWSnyz5CWRtSmnz/3ODkZLzlqhbZ1erqtdXwxZdPGRn4P0Zr8OP+45pQPs4QOwX6ZnDDbnBlZUM+nmV+gKUN9xZUFqr2QJmYURmGi9LtOEsPSMIoLV6qDXxvwlXjuehrFk70yh1yJpE=
+	t=1777974756; cv=none; b=WLHxm1EgCljA3SOLwgsDdgHcZBaWBJu9r4NDRr2YaOR3naIyoOmVHr9/jV+WOv1fDmkC0MprPJbpKUCGWRokAcLcBj3W6dG7KXA+Yf8t+hLxveQjmB1rpR2Xk4Zub3n5wuRbRU6tXgOaFALgnv0/Ff2KWNuWx4vlir6sS2Eoi0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974753; c=relaxed/simple;
-	bh=C+ICdcLiCXANCpRxjkMaJZtez+92ukNWbnr4qkJgPUg=;
+	s=arc-20240116; t=1777974756; c=relaxed/simple;
+	bh=+NQZq6ow+W7k9MhTGLX6BfAec5X/c3w9rFb+3sB/PBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F04J7QXzhHmDbeEoVbHoj+HIY1cD5gImL4jisNKuz+kSGivJVUT77zcNVkO8nCyMYuGITzXvlmttsFypsmg05HMkyj8K8rXAuTdbPqJ46d2MUidVF5dTQt+npcRRR/OkPyCj/ZhIOYW+h2ikgaa9LfT5rmjWEoAirT8MqCupJac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ahHCuisR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AMlknSet/SdbeWqqZW6xQxcxtpwrQ6vmIoa+OGMKsgWFqRWVyEhVWerbzYNGnnz5urZSIK3ahVWy8Zc3hTJ1cCyG0+jS1Vz3nJv5/RCgw3jzW5CKiZeqIgAJ0YJaRMvpGGfzdwiqyBabgURnyXKnBs79YwH64NIOSEWDBgcpLqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CC6EZJM5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ahHCuisR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B7BC2BCC7;
-	Tue,  5 May 2026 09:52:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CC6EZJM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDC6C2BCB4;
+	Tue,  5 May 2026 09:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974753;
-	bh=C+ICdcLiCXANCpRxjkMaJZtez+92ukNWbnr4qkJgPUg=;
+	s=k20201202; t=1777974756;
+	bh=+NQZq6ow+W7k9MhTGLX6BfAec5X/c3w9rFb+3sB/PBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahHCuisRp/lqniYf3hD0/RQqLxh86p7TVRI24pZfc6EV2RB76Omjy7o9Np6MyBBEE
-	 Q1Twn3VkSjuvkPeHH957QwkEveK7m966RSW8Ih7ZNnEHWc0xgL+2DakmIQZ2EBMqpQ
-	 Iw7Npo6DNwJbgtpQOFmu1Gkp96hSqERojUTFVEvlETJkGBoiDOIE4vrnkjSzifSW/z
-	 XiivRcqytILd8GLOUiFPPPrwSmUQPcfnwuvkIsjytgfw6qFQjthFpMYnbEsKRhwFml
-	 g27CkWT2et+3jWbC/AiDH97NmbSE0vvhN1edt68z3GRRFcvOVRxIay4x0jdNRGpAqQ
-	 T8xR10te10twA==
+	b=CC6EZJM5OYL3U5SI1rWkohLrK8krGAIwSbaAYWGisstNub/CcVzpEUaOIoBT3Zp63
+	 scjHlMCwWUCc/Moege7OwRewb5YYx+qPEjS3ovmLOoZvq2XsyVutJSr19r+9jYz5SA
+	 v8hDnz8soAKDaV/XuiLyjyTx7dEKQKO0YxEDZ8yaULwPuNOLShcsMXzHuwpqq/dgHt
+	 j7ZNW98WoOgD9w+FfC8PQpb49ywpfMw53t7kJECP9iShrWqPcntZqMVXMpT1R6s4WI
+	 pQu9tMuBzFqO0OVXx3oTOewKrfwPEIzaBD9qTb3f5AMl5vFdl5tw9RqcEaROAPodqA
+	 EW8juRVbgMbLA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+Cc: Yuxuan Qiu <yuxuanqiu596@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	frederic@kernel.org,
-	neeraj.upadhyay@kernel.org,
-	joelagnelf@nvidia.com,
-	josh@joshtriplett.org,
-	boqun@kernel.org,
-	urezki@gmail.com,
-	rcu@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] rculist: add list_splice_rcu() for private lists
-Date: Tue,  5 May 2026 05:51:29 -0400
-Message-ID: <20260505095149.512052-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] ALSA: hda/realtek: enable mute LED support on ThinkBook 16p
+Date: Tue,  5 May 2026 05:51:30 -0400
+Message-ID: <20260505095149.512052-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -55,198 +51,351 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.3
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Yuxuan Qiu <yuxuanqiu596@gmail.com>
 
-[ Upstream commit f902877b635551513729bdf9a8d1422c4aab7741 ]
+[ Upstream commit 597aa74b0e73f5e0c915b5d0c95cb296774589bd ]
 
-This patch adds a helper function, list_splice_rcu(), to safely splice
-a private (non-RCU-protected) list into an RCU-protected list.
+On ThinkBook 16p systems the platform mute LED is present and
+bound to the audio-mute trigger, but it does not react to Master
+mute changes.
 
-The function ensures that only the pointer visible to RCU readers
-(prev->next) is updated using rcu_assign_pointer(), while the rest of
-the list manipulations are performed with regular assignments, as the
-source list is private and not visible to concurrent RCU readers.
+The affected fixup chain sets up the DAC routing, but does not enable
+vmaster mute LED handling. Because of that, the generic HDA code does
+not mark Master Playback Switch with SNDRV_CTL_ELEM_ACCESS_SPK_LED,
+and the audio-mute trigger never receives speaker mute updates.
 
-This is useful for moving elements from a private list into a global
-RCU-protected list, ensuring safe publication for RCU readers.
-Subsystems with some sort of batching mechanism from userspace can
-benefit from this new function.
+Add a ThinkBook-specific wrapper around alc287_fixup_bind_dacs() and
+enable spec->gen.vmaster_mute_led during PRE_PROBE. This keeps the
+existing DAC binding logic unchanged while allowing the normal generic
+LED path to drive the mute LED.
 
-The function __list_splice_rcu() has been added for clarity and to
-follow the same pattern as in the existing list_splice*() interfaces,
-where there is a check to ensure that the list to splice is not
-empty. Note that __list_splice_rcu() has no documentation for this
-reason.
-
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Yuxuan Qiu <yuxuanqiu596@gmail.com>
+Link: https://patch.msgid.link/20260424112107.22206-1-yuxuanqiu596@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Phase 1: Commit Message Forensics
 
-Phase 1 Record: Subject subsystem is `rculist`; action verb is `add`;
-claimed intent is adding `list_splice_rcu()` for splicing private lists
-into RCU-protected lists. Tags verified: `Reviewed-by: Paul E.
-McKenney`, `Signed-off-by: Pablo Neira Ayuso`. No `Fixes:`, `Reported-
-by:`, `Tested-by:`, `Cc: stable`, or bug-report `Link:` in this commit.
-The body describes an RCU publication helper, not a direct user-visible
-failure. Hidden-fix assessment: as a standalone commit, it is an
-internal helper; as verified from the series, it is required by the
-following `nf_tables` RCU list fix.
+Step 1.1 Record: subsystem `ALSA: hda/realtek`; action verb `enable`;
+claimed intent is enabling speaker mute LED support on Lenovo ThinkBook
+16p systems whose LED is already bound to `audio-mute` but not updated
+by Master mute changes.
 
-Phase 2 Record: One file changed, `include/linux/rculist.h`, 29
-insertions. New functions: `__list_splice_rcu()` and
-`list_splice_rcu()`. Before: no helper for private-list-to-RCU-list
-splice. After: list links are prepared with normal stores, then
-`prev->next` is published with `rcu_assign_pointer()`. Bug category: RCU
-synchronization/publication correctness, but the direct behavioral fix
-is in the dependent `nf_tables` patch. Fix quality: small and clear;
-regression risk low, because it is unused unless paired with callers.
+Step 1.2 Record: tags present are `Signed-off-by: Yuxuan Qiu
+<yuxuanqiu596@gmail.com>`, `Link:
+https://patch.msgid.link/20260424112107.22206-1-yuxuanqiu596@gmail.com`,
+and `Signed-off-by: Takashi Iwai <tiwai@suse.de>`. No `Fixes:`,
+`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
+stable@vger.kernel.org` tag was present.
 
-Phase 3 Record: `git blame` showed neighboring RCU list helpers are
-long-standing code; new lines have no prior blame. The dependent fix
-targets `78d9f48f7f44` first contained by `v5.8-rc1` and `b9703ed44ffb`
-first contained by `v6.4-rc1`. Local blame confirms the unsafe
-`nf_tables` `list_splice()` sites came from those commits. Recent
-history shows the helper is paired with `netfilter: nf_tables: join hook
-list via splice_list_rcu() in commit phase`. Author context verified:
-Pablo is listed as `NETFILTER` maintainer in `MAINTAINERS`.
+Step 1.3 Record: the commit describes a real hardware behavior bug: the
+platform mute LED exists and is registered with the `audio-mute`
+trigger, but `Master Playback Switch` lacks
+`SNDRV_CTL_ELEM_ACCESS_SPK_LED`, so ALSA control LED notifications never
+drive the LED. No kernel crash, corruption, or security symptom is
+claimed. No affected kernel version is explicitly stated.
 
-Phase 4 Record: `b4 dig -c b93a4320874cf` found the original patch
-discussion by patch-id, with the applied upstream helper as `[PATCH net
-10/11]`. `b4 dig -a` found multiple revisions/submissions, including
-v2/v3 and net pull submissions. `b4 dig -w` showed netfilter/netdev
-maintainers and lists were included. Lore/Patchwork review verified Paul
-requested documentation/order changes in early review, then gave
-`Reviewed-by`; no NAK found for the helper. The cover letter explicitly
-says this helper is required to fix unsafe splice into RCU-protected
-hook lists. Stable lore search was blocked/ inconclusive.
+Step 1.4 Record: this is a hardware quirk/fix disguised as an enablement
+patch. It is not a new driver or new API; it enables an existing generic
+HDA LED path for an existing Realtek/Lenovo fixup chain.
 
-Phase 5 Record: Key functions are `list_splice_rcu()` and
-`__list_splice_rcu()`. Verified call sites on the candidate branch are
-only the two `nf_tables_commit()` updates from the dependent patch.
-`nf_tables_commit()` is the `nfnetlink` batch commit callback;
-`NFT_MSG_NEWCHAIN` and `NFT_MSG_NEWFLOWTABLE` are batch netlink
-operations, while `GETCHAIN`/`GETFLOWTABLE` callbacks are RCU readers.
-`nfnetlink_rcv()` requires `CAP_NET_ADMIN`, so this is reachable from
-privileged userspace netlink operations, not verified as unprivileged.
+## Phase 2: Diff Analysis
 
-Phase 6 Record: The helper itself is not present in checked-out
-`v7.0.3`. The unsafe `list_splice()` patterns exist in active stable-
-family branches checked: `5.10`, `5.15`, `6.1`, `6.6`, `6.12`, and
-`6.19`, with chain-specific sites appearing from `6.6` onward and
-flowtable sites in older branches. `git apply --check` verified both the
-helper patch and dependent `nf_tables` patch apply cleanly to the
-current checkout. Backport difficulty for this helper is low; older
-branches may need only the relevant dependent fix subset.
+Step 2.1 Record: one file changed, `sound/hda/codecs/realtek/alc269.c`,
+with 12 insertions and 1 replacement in the submitted patch. Modified
+areas are a new helper `alc287_fixup_tb_vmaster_led()` and the
+`ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD` fixup table entry.
+Scope is single-file and surgical.
 
-Phase 7 Record: Subsystem is core RCU list infrastructure plus netfilter
-usage context. Criticality: `include/linux/rculist.h` is core
-infrastructure, but runtime impact here is limited to future callers;
-the verified caller is `nf_tables`, an important networking subsystem.
-Subsystem activity is active, with many recent `nf_tables` fixes in
-history.
+Step 2.2 Record: before,
+`ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD` directly called
+`alc287_fixup_bind_dacs()`, which adjusts DAC routing and amp mute
+behavior during `HDA_FIXUP_ACT_PRE_PROBE`. After, it calls a wrapper
+that sets `spec->gen.vmaster_mute_led = 1` during `PRE_PROBE`, then
+calls the same DAC binding function. Normal DAC binding behavior is
+preserved.
 
-Phase 8 Record: Affected users are systems using nftables netdev
-chain/flowtable hook updates and concurrent netlink dumps. Trigger is
-privileged nftables batch update plus concurrent RCU dump traversal.
-Verified severity is RCU list publication correctness; no concrete crash
-report was found for this exact helper/dependent patch, so I do not rate
-it as proven crash/security. Benefit is high when paired with the
-dependent `nf_tables` fix; standalone benefit is none. Risk is low: 29
-lines, internal static inline helper, no userspace API.
+Step 2.3 Record: bug category is hardware quirk / logic correctness for
+LED control metadata. The broken mechanism is missing
+`vmaster_mute_led`, verified in `generic.c`: when set,
+`snd_hda_gen_build_controls()` adds `SNDRV_CTL_ELEM_ACCESS_SPK_LED` to
+`Master Playback Switch`; the ALSA control LED layer then follows that
+control and fires the `audio-mute` LED trigger.
 
-Phase 9 Record: Evidence for backporting: small helper, reviewed,
-required by an actual `nf_tables` RCU correctness fix, clean apply
-verified, bug-introducing commits exist in stable lines. Evidence
-against: standalone commit does not fix runtime behavior and adds a new
-internal helper API. Stable rules: obviously correct yes; tested only by
-review/apply-check here, no runtime test verified; fixes a real bug only
-as dependency; important issue is RCU list safety but no concrete crash
-report verified; small/contained yes; no userspace API yes; applies
-cleanly to current stable checkout yes. Exception category:
-dependency/helper for a small bug fix, not a device ID/quirk/build/doc
-exception.
+Step 2.4 Record: the fix is obviously simple: a one-bit flag is set
+before auto config parsing/building controls, and the existing fixup
+function is still invoked. Main regression risk is that the changed
+fixup ID is shared by several Lenovo ThinkPad/ThinkBook SSIDs, not only
+ThinkBook 16p. Verified matching entries include ThinkPad P1/Z-series,
+ThinkBook 16P, ThinkBook 13x, and ThinkBook 16P Gen5 on current
+branches. The behavioral change is limited to LED control tagging, so
+risk is low.
+
+## Phase 3: Git History Investigation
+
+Step 3.1 Record: `git blame` on current `v7.0.3` points changed lines to
+the Realtek driver split commit `aeeb85f26c3b` because the file moved.
+`git log -S` traced the actual related history: ThinkBook 16P IDs
+`0x38a9/0x38ab` were added by `6214e24cae9b` in v6.8; Gen4 was switched
+to the affected MG/CS35L41 fixup by `dca5f4dfa925` in v6.9; Gen5 was
+switched by `34c8e74cd666` in v6.13. The affected MG/CS35L41 fixup was
+introduced earlier by `d93eeca627db`.
+
+Step 3.2 Record: no `Fixes:` tag is present, so there was no tagged
+introducing commit to follow. Related history nevertheless shows the
+affected ThinkBook 16P quirk chain exists in maintained stable-era
+kernels.
+
+Step 3.3 Record: recent file history shows many ALSA Realtek quirk and
+mute LED fixes. Related ThinkBook commits are `dca5f4dfa925` and
+`34c8e74cd666`, both fixing ThinkBook 16P volume/mute behavior by
+selecting the same MG/CS35L41 fixup. No prerequisite patch for this new
+wrapper was identified beyond the target tree already having
+`alc287_fixup_bind_dacs()` and
+`ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD`.
+
+Step 3.4 Record: no prior local commits from Yuxuan Qiu were found under
+the Realtek HDA paths. Takashi Iwai, the ALSA maintainer, applied the
+patch in the mailing-list thread.
+
+Step 3.5 Record: dependencies are minimal. Current `v7.0.3` accepts the
+submitted patch with `git apply --check`. Older pre-driver-split stable
+trees need a path adjustment from `sound/hda/codecs/realtek/alc269.c` to
+`sound/pci/hda/patch_realtek.c`.
+
+## Phase 4: Mailing List And External Research
+
+Step 4.1 Record: no local commit hash for this candidate was available,
+so `b4 dig -c <commit>` was not applicable. `b4 am` using message id
+`20260424112107.22206-1-yuxuanqiu596@gmail.com` fetched the original
+submission and reported one patch in a two-message thread. The yhbt lore
+mirror confirmed the same patch text and one maintainer reply.
+
+Step 4.2 Record: recipients verified from the mbox were Jaroslav Kysela,
+Takashi Iwai, `linux-sound@vger.kernel.org`, and `linux-
+kernel@vger.kernel.org`. Takashi Iwai replied “Thanks, applied now.” No
+NAKs or concerns were present in the fetched thread.
+
+Step 4.3 Record: there was no separate `Reported-by:` or bugzilla/syzbot
+link in this patch. External search found the indexed patch and related
+Lenovo mute LED/platform LED context, but no independent user bug report
+for this exact issue.
+
+Step 4.4 Record: the thread is a single-patch submission, not a multi-
+patch series. No later revision was found by `b4 am`; the thread
+contains only the patch and maintainer apply reply.
+
+Step 4.5 Record: web search did not find a stable-specific discussion or
+explicit stable request for this exact patch. Direct lore WebFetch was
+blocked by Anubis, but the yhbt mirror and `b4` provided the thread
+content.
+
+## Phase 5: Code Semantic Analysis
+
+Step 5.1 Record: modified functions/objects are
+`alc287_fixup_tb_vmaster_led()` and the
+`ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD` fixup table entry.
+
+Step 5.2 Record: call path verified: `alc269_probe()` picks Realtek
+fixups, applies `HDA_FIXUP_ACT_PRE_PROBE`, then runs
+`alc269_parse_auto_config()`; `alc_build_controls()` later calls
+`snd_hda_gen_build_controls()`. The affected code runs during codec
+probe for matching Lenovo HDA SSIDs.
+
+Step 5.3 Record: key callees are `alc287_fixup_bind_dacs()`,
+`snd_hda_override_conn_list()`, and generic HDA control creation.
+`generic.c` verifies `spec->vmaster_mute_led` directly controls whether
+`SNDRV_CTL_ELEM_ACCESS_SPK_LED` is passed to `__snd_hda_add_vmaster()`.
+
+Step 5.4 Record: runtime reachability is verified through hardware probe
+and ALSA mixer control updates. Userspace changing `Master Playback
+Switch` can trigger ALSA control LED notifications once the control has
+the speaker LED access flag.
+
+Step 5.5 Record: similar Realtek patterns exist: many HDA Realtek
+commits add or fix mute LED quirks; current code also has existing
+`vmaster_mute_led = 1` usage in another mute LED fixup and many
+`snd_hda_gen_add_mute_led_cdev()` users.
+
+## Phase 6: Cross-Referencing And Stable Tree Analysis
+
+Step 6.1 Record: `v6.12` contains ThinkBook 16P `0x38a9/0x38ab` using
+the affected fixup; `v6.13+` contains ThinkBook 16P Gen5 `0x38f9` using
+the affected fixup. `for-greg/6.12-201` contains both ThinkBook 16P and
+Gen5 using the affected fixup. `for-greg/6.6-201` contains the affected
+fixup for several ThinkPad SSIDs but not the original ThinkBook 16P
+`0x38a9/0x38ab`; its Gen5 `0x38f9` entry still uses
+`ALC287_FIXUP_CS35L41_I2C_2`, so this exact ThinkBook 16p bug is not
+fully verified there.
+
+Step 6.2 Record: expected backport difficulty is clean for current post-
+split trees such as `v7.0.3`; minor manual backport for pre-split trees
+because the same code lives in `sound/pci/hda/patch_realtek.c`.
+
+Step 6.3 Record: no alternate stable fix for this exact mute LED issue
+was found. Related ThinkBook volume/mute fixup selection commits exist
+and are prerequisites for branches where the ThinkBook entries use the
+affected MG/CS35L41 fixup.
+
+## Phase 7: Subsystem And Maintainer Context
+
+Step 7.1 Record: subsystem is ALSA HDA Realtek codec quirks, under sound
+drivers. Criticality is peripheral/driver-specific, affecting Lenovo
+systems with these Realtek/CS35L41 configurations.
+
+Step 7.2 Record: subsystem activity is high; recent history shows many
+Realtek quirk additions and mute LED fixes. This is typical stable
+material when scoped to specific hardware behavior.
+
+## Phase 8: Impact And Risk Assessment
+
+Step 8.1 Record: affected population is driver-specific: Lenovo
+ThinkBook/ThinkPad systems matching the shared
+`ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD` quirk, especially
+verified ThinkBook 16P/16P Gen5 entries in newer stable trees.
+
+Step 8.2 Record: trigger condition is ordinary Master mute changes after
+boot on affected hardware. This is user-triggerable through normal audio
+controls. The failure is visible as a mute LED that does not track mute
+state.
+
+Step 8.3 Record: failure severity is LOW to MEDIUM. It is not a crash or
+data-loss bug, but it is a real hardware/user-visible regression in mute
+state indication.
+
+Step 8.4 Record: benefit is moderate for affected laptops: restores
+expected mute LED behavior using existing ALSA trigger infrastructure.
+Risk is low: one bit is set during probe and existing DAC routing logic
+remains unchanged. The only meaningful concern is wider impact on all
+devices sharing the fixup ID, but the added effect is LED
+metadata/control-trigger handling, not audio routing or power
+sequencing.
+
+## Phase 9: Final Synthesis
+
+Step 9.1 Record:
+Evidence for backporting: real user-visible hardware bug; tiny one-file
+fix; uses existing generic HDA LED path; accepted by ALSA maintainer
+Takashi Iwai; current tree patch applies cleanly; stable-style hardware
+quirk; related ThinkBook fixup commits are already present in maintained
+stable branches.
+Evidence against backporting: no crash/security/corruption; no
+`Reported-by` or `Tested-by`; fixup ID is shared beyond ThinkBook 16p;
+older stable branches may need path adjustment and should only receive
+this where the affected fixup/IDs exist.
+Unresolved: exact upstream commit SHA was not available locally; no
+independent bug report beyond the patch mail was found; exact
+applicability to every active stable branch must be checked branch-by-
+branch.
+
+Step 9.2 Record:
+1. Obviously correct and tested? Mostly yes by inspection and maintainer
+   acceptance; no explicit `Tested-by`.
+2. Fixes a real bug? Yes, verified mechanism: missing `vmaster_mute_led`
+   prevents `SNDRV_CTL_ELEM_ACCESS_SPK_LED` tagging.
+3. Important issue? Moderate, hardware/user-visible mute LED
+   correctness, not critical stability.
+4. Small and contained? Yes, one helper and one fixup function pointer
+   change.
+5. No new feature/API? Yes in stable sense: it enables existing LED
+   trigger behavior for existing hardware; no new userspace API.
+6. Can apply to stable trees? Yes on current post-split trees; older
+   trees need path adjustment.
+
+Step 9.3 Record: exception category applies: hardware-specific
+quirk/workaround in an existing driver.
+
+Step 9.4 Decision: backport. This is not a critical crash fix, but ALSA
+HDA hardware quirks and mute LED fixes are normal stable material. The
+patch is small, preserves existing routing logic, and fixes a concrete
+hardware behavior problem on affected Lenovo systems. Backport only to
+trees containing the affected fixup and relevant Lenovo entries, with
+pre-split path adjustment where needed.
 
 ## Verification
 
-- Phase 1: Parsed `git show`/provided commit message; verified tags and
-  absence of bug tags.
-- Phase 2: Inspected diff; verified 29 insertions in
-  `include/linux/rculist.h`.
-- Phase 3: Ran `git blame` on `rculist.h` and `nf_tables_api.c`;
-  verified introducers and `git describe --contains` versions for
-  dependent fix targets.
-- Phase 4: Ran `b4 dig -c`, `-a`, and `-w`; fetched lore/Patchwork
-  mirrors; verified series context, review, and dependency statement.
-- Phase 5: Used `git grep`, `rg`, and file reads; verified helper call
-  sites, netlink callback paths, RCU dump traversal, and `CAP_NET_ADMIN`
-  gate.
-- Phase 6: Checked stable branches with `git grep`; verified helper
-  absence and unsafe splice presence; ran `git apply --check` for helper
-  and dependent fix.
-- Phase 7: Verified maintainer entry in `MAINTAINERS` and recent
-  netfilter history.
-- Phase 8: Verified trigger path from nfnetlink batch operations; no
-  concrete crash report was found.
-- Unverified: Runtime testing was not performed; stable-specific lore
-  discussion could not be fetched due bot protection.
-
-This should be backported only together with the dependent `nf_tables`
-fix. As that dependency, it is small, reviewed, cleanly applicable, and
-enables a real RCU list publication fix without userspace-visible API
-changes.
+- [Phase 1] Parsed supplied subject/body/tags; confirmed no `Fixes:`,
+  `Reported-by`, `Tested-by`, `Reviewed-by`, or stable tag.
+- [Phase 2] Read local `alc269.c`; confirmed `alc287_fixup_bind_dacs()`
+  adjusts DAC routing and does not set `vmaster_mute_led`.
+- [Phase 2] Read `generic.h` and `generic.c`; confirmed
+  `vmaster_mute_led` means “add SPK-LED flag to vmaster mute switch” and
+  is used when creating `Master Playback Switch`.
+- [Phase 3] `git blame` and `git log -S` traced related ThinkBook/fixup
+  history to `6214e24cae9b`, `dca5f4dfa925`, `34c8e74cd666`, and
+  `d93eeca627db`.
+- [Phase 3] `git show` confirmed `6214e24cae9b` added ThinkBook 16P IDs,
+  `dca5f4dfa925` switched Gen4 to the affected fixup, and `34c8e74cd666`
+  switched Gen5 to the affected fixup.
+- [Phase 3] `git log --author="Yuxuan Qiu"` under Realtek paths found no
+  prior local author commits.
+- [Phase 4] `b4 am` fetched the two-message thread; `b4 mbox` saved and
+  verified the full thread.
+- [Phase 4] WebFetch of patch.msgid.link was blocked by Anubis; yhbt
+  lore mirror successfully showed the patch and Takashi Iwai’s “Thanks,
+  applied now.”
+- [Phase 4] WebSearch found no stable-specific request for this exact
+  patch.
+- [Phase 5] `rg` and file reads verified the probe path:
+  `alc269_probe()` applies PRE_PROBE fixups before auto config parsing,
+  and `alc_build_controls()` calls generic control creation.
+- [Phase 5] Read `control_led.c`; confirmed controls tagged with speaker
+  LED access update the `audio-mute` LED trigger.
+- [Phase 6] `git grep` verified `v6.12` and `for-greg/6.12-201` contain
+  ThinkBook entries using the affected fixup; `for-greg/6.6-201`
+  contains the affected fixup but not the original ThinkBook 16P IDs.
+- [Phase 6] `git apply --check` against current `v7.0.3` succeeded.
+- [Phase 8] Risk assessment verified the patch changes only LED metadata
+  setup and preserves the existing `alc287_fixup_bind_dacs()` call.
+- UNVERIFIED: exact candidate commit SHA, because the subject was not
+  found as a local commit in the checked branches and only the mailing-
+  list patch was available.
+- UNVERIFIED: independent user bug report outside the patch thread.
+- UNVERIFIED: clean application to every older stable branch without
+  manual path adjustment.
 
 **YES**
 
- include/linux/rculist.h | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/rculist.h b/include/linux/rculist.h
-index 2abba7552605c..e3bc442256922 100644
---- a/include/linux/rculist.h
-+++ b/include/linux/rculist.h
-@@ -261,6 +261,35 @@ static inline void list_replace_rcu(struct list_head *old,
- 	old->prev = LIST_POISON2;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index ae74e1b69eb3a..44cf78ea6dc03 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3707,6 +3707,17 @@ static void alc287_fixup_lenovo_thinkpad_with_alc1318(struct hda_codec *codec,
+ 	spec->power_hook = alc287_s4_power_gpio3_default;
+ 	spec->gen.pcm_playback_hook = alc287_alc1318_playback_pcm_hook;
  }
- 
-+static inline void __list_splice_rcu(struct list_head *list,
-+				     struct list_head *prev,
-+				     struct list_head *next)
++
++static void alc287_fixup_tb_vmaster_led(struct hda_codec *codec,
++					const struct hda_fixup *fix, int action)
 +{
-+	struct list_head *first = list->next;
-+	struct list_head *last = list->prev;
++	struct alc_spec *spec = codec->spec;
 +
-+	last->next = next;
-+	first->prev = prev;
-+	next->prev = last;
-+	rcu_assign_pointer(list_next_rcu(prev), first);
++	if (action == HDA_FIXUP_ACT_PRE_PROBE)
++		spec->gen.vmaster_mute_led = 1;
++
++	alc287_fixup_bind_dacs(codec, fix, action);
 +}
-+
-+/**
-+ * list_splice_rcu - splice a non-RCU list into an RCU-protected list,
-+ *                   designed for stacks.
-+ * @list:	the non RCU-protected list to splice
-+ * @head:	the place in the existing RCU-protected list to splice
-+ *
-+ * The list pointed to by @head can be RCU-read traversed concurrently with
-+ * this function.
-+ */
-+static inline void list_splice_rcu(struct list_head *list,
-+				   struct list_head *head)
-+{
-+	if (!list_empty(list))
-+		__list_splice_rcu(list, head, head->next);
-+}
-+
- /**
-  * __list_splice_init_rcu - join an RCU-protected list into an existing list.
-  * @list:	the RCU-protected list to splice
+ /* GPIO2: mute led GPIO3: micmute led */
+ static void alc245_tas2781_spi_hp_fixup_muteled(struct hda_codec *codec,
+ 					  const struct hda_fixup *fix, int action)
+@@ -6460,7 +6471,7 @@ static const struct hda_fixup alc269_fixups[] = {
+ 	},
+ 	[ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD] = {
+ 		.type = HDA_FIXUP_FUNC,
+-		.v.func = alc287_fixup_bind_dacs,
++		.v.func = alc287_fixup_tb_vmaster_led,
+ 		.chained = true,
+ 		.chain_id = ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
+ 	},
 -- 
 2.53.0
 
