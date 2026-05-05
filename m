@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF9F331A76;
-	Tue,  5 May 2026 09:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AF034214A;
+	Tue,  5 May 2026 09:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974768; cv=none; b=oq4hAphmYDjWPTUk3wBhwgM6cblz+OS6LwwOMXYQxcnbS9fcNUinIz1SWbA9ZNV7I8MD6HBm38f+GD/ZKULCKZuOT8MhTR6y2aQOnFjKwWc8yXjH91S15xE8HAbWPvf046ti7PbVHxUIUN67nudmb9Htoe0fbiSF0/Dfw/JmNPg=
+	t=1777974772; cv=none; b=I9+qX7K3caTdIVQzwJ11wCNWZVexGoBiclcBBk/Kw3EbguOlYJFHFD83RcyndSngsrZzaq4MKSZMHQX5t3eGeHQzhCLLxHsvAqPC8lorX8ZyGLhtQKyHnFgX10/JaSX7D4AyoK8/cRiX7YixNRsOipk8bkfRZli1lYpAZf4hcpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974768; c=relaxed/simple;
-	bh=3Jwe2AH1ArwNGNZIXmG5PPYRAW7osNQaKvrALtPm2m0=;
+	s=arc-20240116; t=1777974772; c=relaxed/simple;
+	bh=xWUVlSEXrrQTdEkyahofVZTTn5RdBOnBaLZeQTBm4uo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=drk5uNxUb6xzL5kSo80PJPeT98cOnxWXVO4YDrs8Moov5R43tuE2K2DP9pleBH0SPDNgsp5QI8+0cbn+VD+t3/DxKz7EauNCZ7pGQfkT4iCEcjpGtPeDgUsiHNWMgHXl8p5Mh4//Ojg2/QzSuQpi8T+A2Dtf6cCuVuMLQ24ASQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MneIq/gc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KuOS5jV2GgIZ6LuJ/hCSmfzE7blXRWEyM8JUO5Qkhak1S/zrs85C9G8eCJIwiQBRxufPgQB5Yojhe8rj0l7DV+ChGny9DONEWnqd1EdRKi7XnBDeuqOeHCU18ec6IrTOO8BZsCz+KRg8F9R/yqDRqiimoA+GVozxor7vzPTQICU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SQKpCN2q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MneIq/gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64796C2BCB9;
-	Tue,  5 May 2026 09:52:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SQKpCN2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B172C2BCB9;
+	Tue,  5 May 2026 09:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974768;
-	bh=3Jwe2AH1ArwNGNZIXmG5PPYRAW7osNQaKvrALtPm2m0=;
+	s=k20201202; t=1777974771;
+	bh=xWUVlSEXrrQTdEkyahofVZTTn5RdBOnBaLZeQTBm4uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MneIq/gcYKZBjAWGM88A3JE36mGcG2/VNBNTzNwTUXDAjv7T6gJ+zCkEoek3vheTk
-	 t4oJbBi745pLs31o+Gu+CuTwBlR3C4ZLKsGnZS0phCc7MNBlzV3EE07KqNwYFOuXzW
-	 XqkLVGgYV710shPTlxgTN3Eqx7lIuSafLlSyXUu9tKVSt4bnWQUYoQUtvmIXcxo42y
-	 TUBr5/rZ1/n3mi5SEDpAfgy0Ozxj4cr2najX3XNN0DGhpt0pDCBL2ALysaLlseB21k
-	 YQy8uNzM+JfTxIjkwuPtXKa5Yf6ive4wpUJdOH60mEVgD4Uzn00Za0XPJkWg/Ky7Nu
-	 GvEgy4Ti+fJkg==
+	b=SQKpCN2qd3LMK5zFywiwy5yB71eO2EMwtehHJ4QsiuX/g03PPqDjNBPIvVgY6J8Cx
+	 2y/F2xye6gSboL0aba7WsCHWibbl+v86jfM92BT7BSbxbftXFX3gyLKLZ1nq+vAWXA
+	 //9bDCD7B8pBp8Zjkz+T/Dxt8aZwa/thhtgd+EO2lDkPpGAzImScbmCkf2ASxqjzeA
+	 pO2D406jFn6rUla9FXkY5FhyPngMFXVKcHlcaXVYMDdMOMoHPXtNgQGg56cmA0X0p7
+	 F5/u3vqdOo5LVeRzkeoD6HXi+VJBuUwG3UfMP4kmSknJObUv0quiXYP7a9CbWd2C5k
+	 VkSMuNcuudTDQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Sterba <dsterba@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+Cc: Benjamin Marzinski <bmarzins@redhat.com>,
+	Xiao Ni <xni@redhat.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	song@kernel.org,
+	linux-raid@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] btrfs: handle unexpected free-space-tree key types
-Date: Tue,  5 May 2026 05:51:34 -0400
-Message-ID: <20260505095149.512052-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] md/raid5: Fix UAF on IO across the reshape position
+Date: Tue,  5 May 2026 05:51:35 -0400
+Message-ID: <20260505095149.512052-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -53,279 +54,263 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Sterba <dsterba@suse.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 4d95b9efd783adca472e957b2f576983e789b839 ]
+[ Upstream commit 418b3e64e4459feb3f75979de9ec89e085745343 ]
 
-Replace the conditional assertions with proper error handling and
-transaction abort if we find an unexpected key type in the free space
-tree.
+If make_stripe_request() returns STRIPE_WAIT_RESHAPE,
+raid5_make_request() will free the cloned bio. But raid5_make_request()
+can call make_stripe_request() multiple times, writing to the various
+stripes. If that bio got added to the toread or towrite lists of a
+stripe disk in an earlier call to make_stripe_request(), then it's not
+safe to just free the bio if a later part of it is found to cross the
+reshape position. Doing so can lead to a UAF error, when bio_endio()
+is called on the bio for the earlier stripes.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Instead, raid5_make_request() needs to wait until all parts of the bio
+have called bio_endio(). To do this, bios that cross the reshape
+position while the reshape can't make progress are flagged as needing to
+wait for all parts to complete. When raid5_make_request() has a bio that
+failed make_stripe_request() with STRIPE_WAIT_RESHAPE, it sets
+bi->bi_private to a completion struct and waits for completion after
+ending the bio.  When the bio_endio() is called for the last time on a
+clone bio with bi->bi_private set, it wakes up the waiter. This
+guarantees that raid5_make_request() doesn't return until the cloned bio
+needing a retry for io across the reshape boundary is safely cleaned up.
+
+There is a simple reproducer available at [1]. Compile the kernel with
+KASAN for more useful reporting when the error is triggered (this is not
+necessary to see the bug).
+
+[1] https://gist.github.com/bmarzins/e48598824305cf2171289e47d7241fa5
+
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/r/20260408043548.1695157-1-bmarzins@redhat.com
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `btrfs`, action verb `handle`, intent:
-replace assertions with real error handling for unexpected free-space-
-tree key types.
+## Phase Walkthrough
+1. Commit message forensics
+Record: subsystem `md/raid5`; action verb `Fix`; intent is to prevent a
+use-after-free when RAID5 IO crosses a reshape position and
+`make_stripe_request()` returns `STRIPE_WAIT_RESHAPE`. Tags found:
+`Signed-off-by: Benjamin Marzinski`, `Reviewed-by: Xiao Ni`, lore
+`Link`, `Signed-off-by: Yu Kuai`; no `Fixes:`, `Reported-by:`, `Tested-
+by`, or `Cc: stable`. Body describes a real UAF, a KASAN-aided
+reproducer, and the root cause: a cloned bio can already be linked into
+earlier stripe `toread`/`towrite` lists when a later stripe path frees
+it.
 
-Step 1.2 Record: tags found: `Reviewed-by: Johannes Thumshirn
-<johannes.thumshirn@wdc.com>`, `Signed-off-by: David Sterba
-<dsterba@suse.com>`. No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`,
-or `Cc: stable`.
+2. Diff analysis
+Record: 3 files, `14 insertions/25 deletions`; functions changed are
+`md_end_clone_io()`, `md_clone_bio()`, removed `md_free_cloned_bio()`,
+and `raid5_make_request()`. Before: `STRIPE_WAIT_RESHAPE` directly
+called `md_free_cloned_bio(bi)`. After: it sets `bi_private` to a stack
+completion, calls `bio_endio(bi)`, and waits until the cloned bio’s
+final endio completes. Bug category: memory safety/UAF, caused by
+freeing a clone still referenced by stripe bio chains. Fix is small and
+contained.
 
-Step 1.3 Record: the commit says unexpected free-space-tree key types
-currently hit conditional assertions; the fix logs an error, returns
-`-EUCLEAN`, and aborts the transaction. No user report, stack trace, or
-affected version is stated.
+3. Git history investigation
+Record: upstream commit is `418b3e64e4459`. Blame shows the problematic
+`STRIPE_WAIT_RESHAPE`/`md_free_cloned_bio()` path came from
+`41425f96d7aa` (`dm-raid456, md/raid456: fix a deadlock...`), first
+contained in `v6.9-rc1`/`v6.9`. That introducing commit was itself
+stable-marked for `v6.7+` and is present in checked stable branches
+`6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`; the specific buggy
+helper/path was not found in `6.6.y` or `6.1.y`. No `Fixes:` tag exists,
+so blame was used instead.
 
-Step 1.4 Record: yes, this is a hidden bug fix. `ASSERT(0)` is not
-runtime handling in normal non-`CONFIG_BTRFS_ASSERT` builds, so the
-unexpected-key branch previously did not return an error or advance
-iteration.
+4. Mailing list and external research
+Record: `b4 dig -c 418b3e64e4459` found `[PATCH v2]` at
+`https://patch.msgid.link/20260408043548.1695157-1-bmarzins@redhat.com`.
+`b4 dig -a` found v1 RFC and v2; committed patch matches v2. `b4 dig -w`
+shows `linux-raid`, `dm-devel`, Song Liu, Yu Kuai, Li Nan, Xiao Ni, and
+Red Hat participants were included. Thread review: Xiao Ni gave
+`Reviewed-by`; Yu Kuai replied “Applied.” Reviewer asked about
+`WRITE_ONCE`; author explained it was unnecessary but harmless on the
+slow path, and Xiao accepted keeping it. No NAKs found. WebFetch for
+lore was blocked by Anubis, but b4 retrieved the mbox. The gist
+reproducer uses dmsetup/LVM RAID5 reshape loops.
 
-## Phase 2: Diff Analysis
-Step 2.1 Record: one file changed: `fs/btrfs/free-space-tree.c`, 15
-insertions and 3 deletions. Modified functions:
-`btrfs_convert_free_space_to_bitmaps()`,
-`btrfs_convert_free_space_to_extents()`,
-`btrfs_remove_block_group_free_space()`. Scope: single-file surgical
-fix.
+5. Code semantic analysis
+Record: `md_submit_bio()` reaches `md_handle_request()`, which calls the
+RAID personality `.make_request = raid5_make_request` for RAID4/5/6.
+`raid5_make_request()` calls `make_stripe_request()` repeatedly over
+stripe bits. `add_all_stripe_bios()` calls `__add_stripe_bio()`, which
+links the cloned bio into `toread`/`towrite` and calls
+`bio_inc_remaining()`. `bio_endio()` only invokes `bi_end_io` after
+`__bi_remaining` reaches zero, so the completion wait correctly waits
+for all earlier stripe references to drain.
 
-Step 2.2 Record: each hunk changes `else { ASSERT(0); }` after
-recognized free-space-tree item types into `btrfs_err()`, `ret =
--EUCLEAN`, `btrfs_abort_transaction()`, and exit. Affected paths are
-transaction-time conversion between free-space extents/bitmaps and
-block-group free-space removal.
+6. Stable tree analysis
+Record: buggy code exists in `stable/linux-7.0.y`, `6.19.y`, `6.18.y`,
+and `6.12.y`; not in checked `6.6.y`/`6.1.y`. Patch applies cleanly to
+current `7.0.y` with `git apply --check`. Direct upstream patch does not
+apply cleanly to `6.19.y` and `6.12.y` because nearby context differs
+(`ctx` allocation/field access and older bitmap helpers), but the same
+core code is present, so a small backport adjustment is needed.
 
-Step 2.3 Record: bug category is logic/corruption error handling. With
-assertions disabled, the unexpected branch leaves `path->slots[0]`
-unchanged and continues the inner `while (path->slots[0] > 0)`, which
-can loop indefinitely. With assertions enabled, it can `BUG()`. The fix
-converts both cases to a controlled filesystem-corruption error and
-transaction abort.
+7. Subsystem context
+Record: subsystem is software RAID / MD, `drivers/md`; MAINTAINERS lists
+Song Liu and Yu Kuai as maintainers and `linux-raid@vger.kernel.org` as
+the list. Criticality: important storage subsystem, with data
+availability and kernel memory-safety impact during RAID reshape.
+Activity level is high; recent logs show multiple md/raid fixes and
+refactors.
 
-Step 2.4 Record: fix quality is high: minimal, consistent with
-surrounding transaction-abort handling, no new API, no data structure
-change. Regression risk is low; the only changed behavior is for
-unexpected on-disk key types.
+8. Impact and risk assessment
+Record: affected users are md/dm RAID4/5/6 users doing IO while reshape
+is blocked/interrupted. Trigger is specialized but real; reproducer
+exists. Admin privileges are generally needed to create/reshape the
+array, but ordinary IO can hit the path once the system is in that
+state. Failure mode is UAF after freeing a cloned bio still referenced
+by stripe lists; severity HIGH/CRITICAL because it can crash or corrupt
+memory. Benefit is high for affected stable users; risk is low to
+medium: small fix, no API change, but it touches bio completion
+semantics in a storage path.
 
-## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows the affected `ASSERT(0)` branches
-were introduced by `a5ed91828518ab` (“Btrfs: implement the free space
-B-tree”), first contained in `v4.5-rc1`. Later nearby lines changed, but
-the bad branches are old.
-
-Step 3.2 Record: no `Fixes:` tag, so no tagged introducing commit to
-follow. Blame identifies `a5ed91828518ab` as the source of these
-branches.
-
-Step 3.3 Record: recent file history shows related free-space-tree
-churn, but this patch is standalone. The current stable `7.0` tree
-accepts the patch with `git apply --check`. Older stable tags contain
-the same logical branches but may need context/name adjustment.
-
-Step 3.4 Record: author David Sterba is listed as a Btrfs maintainer in
-`MAINTAINERS`; recent history shows many Btrfs commits from him.
-
-Step 3.5 Record: no functional prerequisite was found. The patch uses
-existing `btrfs_err()`, `-EUCLEAN`, and `btrfs_abort_transaction()`
-paths.
-
-## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 4d95b9efd783a` found the lore submission at
-`https://patch.msgid.link/23bf53315a59a3acc0abdf4f4d8f4c9336c936e1.17761
-80388.git.dsterba@suse.com`. It was `v1`, patch `3/6`.
-
-Step 4.2 Record: `b4 dig -w` shows original recipients were David Sterba
-and `linux-btrfs@vger.kernel.org`. The saved mbox contains Johannes
-Thumshirn’s “Looks good to me” and `Reviewed-by`.
-
-Step 4.3 Record: no reporter or bug-report link exists in the commit or
-thread.
-
-Step 4.4 Record: series title was “Debugging macro and kmalloc_obj*
-cleanups”. Cover letter explicitly says this patch “updates error
-handling” for “impossible” conditions. No dependency on other patches
-was found.
-
-Step 4.5 Record: stable lore WebFetch was blocked by Anubis. Web search
-found the original patch discussion, but no stable-specific request or
-rejection.
-
-## Phase 5: Code Semantic Analysis
-Step 5.1 Record: modified functions:
-`btrfs_convert_free_space_to_bitmaps()`,
-`btrfs_convert_free_space_to_extents()`,
-`btrfs_remove_block_group_free_space()`.
-
-Step 5.2 Record: conversion functions are called from
-`update_free_space_extent_count()`, which is reached by free-space-tree
-add/remove operations. `btrfs_remove_block_group_free_space()` is called
-from block-group removal and relocation paths.
-
-Step 5.3 Record: key callees include `btrfs_search_prev_slot()`,
-`btrfs_item_key_to_cpu()`, `btrfs_del_items()`,
-`btrfs_search_free_space_info()`, and now `btrfs_abort_transaction()`.
-
-Step 5.4 Record: the affected paths are reachable during Btrfs
-allocation/freeing, relocation, balance/remap, and block-group removal.
-Trigger requires an unexpected free-space-tree key type in the relevant
-block-group key range; I did not verify an unprivileged direct trigger.
-
-Step 5.5 Record: similar `ASSERT(0)` patterns exist elsewhere in older
-Btrfs free-space-tree code, but this patch specifically fixes the three
-branches where the loop otherwise makes no progress.
-
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: the affected logic exists in stable-era tags checked:
-`v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`. It originated in
-`v4.5-rc1`.
-
-Step 6.2 Record: clean apply verified on current `stable/linux-7.0.y`.
-For older stable trees, function names differ before `v6.19`
-(`convert_free_space_to_bitmaps()` etc.), so minor backport adjustment
-is expected.
-
-Step 6.3 Record: current branch search found no existing fix with the
-same “unexpected free space tree key type” message.
-
-## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: subsystem is Btrfs filesystem, criticality IMPORTANT
-because it affects users of a production filesystem and can impact
-transaction progress and filesystem integrity handling.
-
-Step 7.2 Record: Btrfs is active; recent `fs/btrfs` history includes
-multiple fixes and the candidate was merged via the Btrfs maintainer
-tree.
-
-## Phase 8: Impact And Risk
-Step 8.1 Record: affected users are Btrfs users with the free-space-tree
-feature enabled and malformed/unexpected free-space-tree entries.
-
-Step 8.2 Record: trigger is not every boot or every operation; it
-requires unexpected free-space-tree key types encountered during
-conversion/removal. It can be hit by mounted filesystem state or
-corruption; unprivileged trigger was not verified.
-
-Step 8.3 Record: failure mode is severe: non-assert builds can spin in
-the inner loop because the slot is not decremented; assert builds can
-`BUG()`. Severity: HIGH to CRITICAL depending on build/configuration.
-
-Step 8.4 Record: benefit is high for affected systems because it
-prevents a hang/BUG and cleanly aborts a corrupt transaction. Risk is
-low because the patch only affects an invalid/corrupt branch and is 15
-added lines in one file.
-
-## Phase 9: Final Synthesis
-Step 9.1 Record: evidence for backporting: old bug present since
-`v4.5-rc1`, affects active stable trees, fixes hang/BUG behavior, small
-and contained, authored by Btrfs maintainer, reviewed. Evidence against:
-no user report, no `Fixes:` or stable tag, trigger appears to require
-corrupted/unexpected on-disk state, older trees need minor backport
-context adjustment.
-
-Step 9.2 Record: stable checklist: obviously correct: yes by code
-inspection; tested: no explicit `Tested-by`. Real bug: yes, verified
-non-progress branch. Important issue: yes, possible hang/BUG.
-Small/contained: yes. No new features/APIs: yes. Applies to stable:
-clean on `7.0`, minor adjustments likely for older trees.
-
-Step 9.3 Record: no automatic exception category applies; this is not a
-device ID, quirk, DT, build, or documentation change.
-
-Step 9.4 Record: decision is YES. The key technical point is that this
-is not just replacing a debug assertion: in production builds the
-assertion compiles away, leaving a no-progress loop on unexpected free-
-space-tree item types. The fix is small and turns a hang/BUG into normal
-Btrfs corruption handling.
+9. Final synthesis
+Record: Evidence for backporting: explicit UAF, reproducer, KASAN
+usefulness, small contained patch, reviewed by linux-raid reviewer,
+applied by md maintainer, buggy code present in active stable trees from
+`6.12.y` upward. Evidence against: not applicable to older
+`6.6.y`/`6.1.y`; older applicable trees need a manual backport rather
+than direct cherry-pick. Stable rules: obviously correct by code
+inspection and review; fixes a real serious bug; small and contained; no
+new features/APIs; applies cleanly to `7.0.y`, needs minor backport for
+older affected branches. Exception categories: none needed.
 
 ## Verification
-- Phase 1: Parsed `git show --format=fuller` for commit
-  `4d95b9efd783adca472e957b2f576983e789b839`; confirmed tags and absence
-  of reporter/fixes/stable tags.
-- Phase 2: Inspected full diff; confirmed 15 insertions, 3 deletions,
-  one file, three functions.
-- Phase 2: Read `fs/btrfs/messages.h`; confirmed `ASSERT()` calls
-  `BUG()` only under `CONFIG_BTRFS_ASSERT`, otherwise compiles away via
-  `BUILD_BUG_ON_INVALID()`.
-- Phase 3: Ran `git blame` on all three changed regions; confirmed
-  `ASSERT(0)` branches came from `a5ed91828518ab`.
-- Phase 3: Ran `git describe --contains a5ed91828518ab`; confirmed first
-  contained around `v4.5-rc1`.
-- Phase 3: Checked `MAINTAINERS`; confirmed David Sterba is Btrfs
-  maintainer.
-- Phase 4: Ran `b4 dig -c`, `-a`, `-w`; confirmed v1 patch 3/6,
-  recipients, and lore URL.
-- Phase 4: Saved and read mbox; confirmed patch text, cover-letter
-  context, and Johannes Thumshirn `Reviewed-by`.
-- Phase 4: WebFetch to lore/stable was blocked by Anubis; WebSearch
-  found original patch mirror and no stable-specific discussion.
-- Phase 5: Used `rg` and file reads to trace callers through
-  `update_free_space_extent_count()`, free-space add/remove, block-group
-  removal, relocation, and extent-tree allocation/freeing paths.
-- Phase 6: Scripted checks against `v5.15`, `v6.1`, `v6.6`, `v6.12`,
-  `v6.19`, `v7.0`, and `master`; confirmed the affected assertions exist
-  in stable-era code and the fix message only in `master`.
-- Phase 6: Ran `git apply --check` for the candidate patch on current
-  `stable/linux-7.0.y`; it applies cleanly.
-- Phase 8: Verified `EUCLEAN` maps to filesystem corruption via
-  `include/uapi/asm-generic/errno.h` (`EFSCORRUPTED EUCLEAN`).
-- Unverified: no runtime test, no kernel build, no proof of unprivileged
-  trigger, and no direct check that every older stable branch applies
-  without manual adjustment.
+- Phase 1: `git show --format=fuller --stat 418b3e64e4459` verified
+  subject, body, tags, reviewer, lore link, and line counts.
+- Phase 2: `git show --no-ext-diff 418b3e64e4459` verified exact changes
+  to `drivers/md/md.c`, `drivers/md/md.h`, and `drivers/md/raid5.c`.
+- Phase 3: `git blame` verified `41425f96d7aa` introduced
+  `STRIPE_WAIT_RESHAPE` freeing via `md_free_cloned_bio()`.
+- Phase 3: `git describe --contains 41425f96d7aa` and tag checks
+  verified first mainline containment around `v6.9`.
+- Phase 4: `b4 dig -c/-a/-w/-m 418b3e64e4459` verified v1/v2 series,
+  recipients, review, and applied response.
+- Phase 4: WebFetch verified the raw gist reproducer content; lore
+  WebFetch was blocked by Anubis.
+- Phase 5: `rg`/file reads verified call chain, stripe list insertion,
+  `bio_inc_remaining()`, and `bio_endio()` final-callback semantics.
+- Phase 6: `git grep` verified buggy code in `6.12.y`, `6.18.y`,
+  `6.19.y`, and `7.0.y`, absent from checked `6.6.y` and `6.1.y`.
+- Phase 6: `git apply --check` verified clean apply to `7.0.y`; worktree
+  checks showed direct patch conflicts on `6.19.y` and `6.12.y`.
+- Unverified: I did not run the reproducer locally or test a built
+  kernel.
+
+This is stable material for affected trees, especially `6.12.y+`, with
+backport adjustment where context differs.
 
 **YES**
 
- fs/btrfs/free-space-tree.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/md/md.c    | 31 ++++++++-----------------------
+ drivers/md/md.h    |  1 -
+ drivers/md/raid5.c |  7 ++++++-
+ 3 files changed, 14 insertions(+), 25 deletions(-)
 
-diff --git a/fs/btrfs/free-space-tree.c b/fs/btrfs/free-space-tree.c
-index 9efd1ec90f031..472b3060e5ac3 100644
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -259,7 +259,11 @@ int btrfs_convert_free_space_to_bitmaps(struct btrfs_trans_handle *trans,
- 				nr++;
- 				path->slots[0]--;
- 			} else {
--				ASSERT(0);
-+				btrfs_err(fs_info, "unexpected free space tree key type %u",
-+					  found_key.type);
-+				ret = -EUCLEAN;
-+				btrfs_abort_transaction(trans, ret);
-+				goto out;
- 			}
- 		}
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 3ce6f9e9d38e6..4318d875a5f63 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9215,9 +9215,11 @@ static void md_bitmap_end(struct mddev *mddev, struct md_io_clone *md_io_clone)
  
-@@ -405,7 +409,11 @@ int btrfs_convert_free_space_to_extents(struct btrfs_trans_handle *trans,
+ static void md_end_clone_io(struct bio *bio)
+ {
+-	struct md_io_clone *md_io_clone = bio->bi_private;
++	struct md_io_clone *md_io_clone = container_of(bio, struct md_io_clone,
++						       bio_clone);
+ 	struct bio *orig_bio = md_io_clone->orig_bio;
+ 	struct mddev *mddev = md_io_clone->mddev;
++	struct completion *reshape_completion = bio->bi_private;
  
- 				nr++;
- 			} else {
--				ASSERT(0);
-+				btrfs_err(fs_info, "unexpected free space tree key type %u",
-+					  found_key.type);
-+				ret = -EUCLEAN;
-+				btrfs_abort_transaction(trans, ret);
-+				goto out;
- 			}
- 		}
+ 	if (bio_data_dir(orig_bio) == WRITE && md_bitmap_enabled(mddev, false))
+ 		md_bitmap_end(mddev, md_io_clone);
+@@ -9229,7 +9231,10 @@ static void md_end_clone_io(struct bio *bio)
+ 		bio_end_io_acct(orig_bio, md_io_clone->start_time);
  
-@@ -1518,7 +1526,11 @@ int btrfs_remove_block_group_free_space(struct btrfs_trans_handle *trans,
- 				nr++;
- 				path->slots[0]--;
- 			} else {
--				ASSERT(0);
-+				btrfs_err(trans->fs_info, "unexpected free space tree key type %u",
-+					  found_key.type);
-+				ret = -EUCLEAN;
-+				btrfs_abort_transaction(trans, ret);
-+				return ret;
- 			}
- 		}
+ 	bio_put(bio);
+-	bio_endio(orig_bio);
++	if (unlikely(reshape_completion))
++		complete(reshape_completion);
++	else
++		bio_endio(orig_bio);
+ 	percpu_ref_put(&mddev->active_io);
+ }
+ 
+@@ -9254,7 +9259,7 @@ static void md_clone_bio(struct mddev *mddev, struct bio **bio)
+ 	}
+ 
+ 	clone->bi_end_io = md_end_clone_io;
+-	clone->bi_private = md_io_clone;
++	clone->bi_private = NULL;
+ 	*bio = clone;
+ }
+ 
+@@ -9265,26 +9270,6 @@ void md_account_bio(struct mddev *mddev, struct bio **bio)
+ }
+ EXPORT_SYMBOL_GPL(md_account_bio);
+ 
+-void md_free_cloned_bio(struct bio *bio)
+-{
+-	struct md_io_clone *md_io_clone = bio->bi_private;
+-	struct bio *orig_bio = md_io_clone->orig_bio;
+-	struct mddev *mddev = md_io_clone->mddev;
+-
+-	if (bio_data_dir(orig_bio) == WRITE && md_bitmap_enabled(mddev, false))
+-		md_bitmap_end(mddev, md_io_clone);
+-
+-	if (bio->bi_status && !orig_bio->bi_status)
+-		orig_bio->bi_status = bio->bi_status;
+-
+-	if (md_io_clone->start_time)
+-		bio_end_io_acct(orig_bio, md_io_clone->start_time);
+-
+-	bio_put(bio);
+-	percpu_ref_put(&mddev->active_io);
+-}
+-EXPORT_SYMBOL_GPL(md_free_cloned_bio);
+-
+ /* md_allow_write(mddev)
+  * Calling this ensures that the array is marked 'active' so that writes
+  * may proceed without blocking.  It is important to call this before
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index ac84289664cd7..5d57fee22901f 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -917,7 +917,6 @@ extern void md_finish_reshape(struct mddev *mddev);
+ void md_submit_discard_bio(struct mddev *mddev, struct md_rdev *rdev,
+ 			struct bio *bio, sector_t start, sector_t size);
+ void md_account_bio(struct mddev *mddev, struct bio **bio);
+-void md_free_cloned_bio(struct bio *bio);
+ 
+ extern bool __must_check md_flush_request(struct mddev *mddev, struct bio *bio);
+ void md_write_metadata(struct mddev *mddev, struct md_rdev *rdev,
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index a8e8d431071ba..dc0c680ca199b 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -6217,7 +6217,12 @@ static bool raid5_make_request(struct mddev *mddev, struct bio * bi)
+ 
+ 	mempool_free(ctx, conf->ctx_pool);
+ 	if (res == STRIPE_WAIT_RESHAPE) {
+-		md_free_cloned_bio(bi);
++		DECLARE_COMPLETION_ONSTACK(done);
++		WRITE_ONCE(bi->bi_private, &done);
++
++		bio_endio(bi);
++
++		wait_for_completion(&done);
+ 		return false;
+ 	}
  
 -- 
 2.53.0
