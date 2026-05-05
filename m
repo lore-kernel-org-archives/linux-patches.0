@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F180B330315;
-	Tue,  5 May 2026 09:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB751337BBD;
+	Tue,  5 May 2026 09:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974739; cv=none; b=TBPHCZoUZPzc/h16ecScXe0CQ/AdRkZqNcu2CYBV1wHeJDuEfk9bzQHAGtRLKv9f+kV/NJjxxCCrqojAef7ySq+wC8tRV6G214K+G0l5KVfB5JlAebFG8e8Hm+zNgN/Ctl+M08bo5v7XZjjw3YsYpjue9k9vHc6yOx1x9Apbmjw=
+	t=1777974743; cv=none; b=Vs7TBqZGhUBtS44UIMLNUILo2j+Ym8giptDpdOS3cgflBkDxqTB6YMh/tjIehL4i5dgwYxqGYnL+vSbeHRxs6YUevisJBbwEMLTldrSQ6Ck2cqw9nqFoafsWjKjiYsei3f6X160jewv6dbP7LdGg82+c26FI2/p32l8+AUcNSx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974739; c=relaxed/simple;
-	bh=4HHNwhM9rkNTzt77ncTNacHwaILxsgmXt1kG8ubs97E=;
+	s=arc-20240116; t=1777974743; c=relaxed/simple;
+	bh=y1Qfm0/uyx8vh96/sDNbnmLNVzbgaLb2euW3sAZ87qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZGv+rhgJgHPI5Ic0CW1XYTaNwX522Tzo6xJVbTTKXYvQVjxgksFTOkUJ53cKJaDDiF0idr4NU2VzO/EEip4y12u22VI+VCX0vDi1D4N8SAxCSIALNx2ddTr8Tvyj6eWTV1VuTK6eJU7/nDELAJFiOkfdqUvDh1FsjogmbPRmeq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dN3QLX1u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Dr3JuMYl+IaR3fVKQjJOrb4T/uLWrXXVa2/J0g3SWxAg73arOnknQSsbCWjyiG2es83j8apt7ywvfmbAZm8DchFXmrCk2Sw2WYTiXuBGF9Rvdaf0awB139M1sw3n5FVhtE8B4dasLYDhwZUHAXaZzFxL7k+CrPaKi3SGipH5YqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FzTSWr5W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dN3QLX1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB565C2BCC7;
-	Tue,  5 May 2026 09:52:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FzTSWr5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A28AC2BCB9;
+	Tue,  5 May 2026 09:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974738;
-	bh=4HHNwhM9rkNTzt77ncTNacHwaILxsgmXt1kG8ubs97E=;
+	s=k20201202; t=1777974742;
+	bh=y1Qfm0/uyx8vh96/sDNbnmLNVzbgaLb2euW3sAZ87qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dN3QLX1uQVeWcYi8zj+j6GOQIDU+lyvPc0GS2xbcKeNvod+s9OGzLdeibFWBZDlud
-	 UlXNSLfJ95zipN3+wP+cGYFDLCE9FxxlzdH0yB2+euZDSHFHk3IMTk4ST+lZdgvNKB
-	 VG0E0/a4vUy9Cjl/sk5VxPMKoZtzqccjFntfBZTLW+wHP09I4A9bbGd8To54r9+/in
-	 LYzpTqnPYf0Z6rO7oJglbvP0tYU3fa55SX3wHElxt7Jx6w2quzQTomXdtu89eF6iU5
-	 GnW5JlBqut2jabTzAMJHaBwjQe4HrSviXeqh0YpdkvZRM6pD8NgaehnCHPiw7E2c+o
-	 83EtIYdsrO/mQ==
+	b=FzTSWr5WdJd8ONxMCuS6TcVZhoigKDuNTesK4DqVzz5MX7cr/xWNmHInKL3cTuOxQ
+	 M9LiOtZAFfRytPjhvAGLDJO3oKbg1pfbi23IjtgapVBs/BSilcv/YXyrcnwN+3NhvH
+	 XRWRTC56Od3fQ16AY18MtA6bdDpgb7Q1X6VxywrLMgXwqOI5v5vGH2BMlLDSOu/T5G
+	 4dxFSADna51qZELpIOnMAA38+ddA2Tzq50nNiXwIJGqjvZhK7RwYx+dQpAptdvLKIT
+	 hyL4L9/k9WlrDtdVlPC0+Dg/0xqa0DQLhsOc0K2atrSt78iYqq0XYgu3461QWkEb+A
+	 HTCYfiQJtnLwQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alan Cui <me@alancui.cc>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	dlan@kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] nvme: add quirk NVME_QUIRK_IGNORE_DEV_SUBNQN for 144d:a808 (Samsung PM981/983/970 EVO Plus )
-Date: Tue,  5 May 2026 05:51:25 -0400
-Message-ID: <20260505095149.512052-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] ASoC: spacemit: move hw constraints from hw_params to startup
+Date: Tue,  5 May 2026 05:51:26 -0400
+Message-ID: <20260505095149.512052-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -53,178 +58,291 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Cui <me@alancui.cc>
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-[ Upstream commit 7f991e3f9b8f044640bcb5fa8570350a68932843 ]
+[ Upstream commit 6b4afbaaa342eaa52172e0be5ef8d1fcbf9ff460 ]
 
-The firmware for Samsung 970 Evo Plus / PM981 / PM983 does not support SUBNQN.
-Make quirks to suppress warnings.
+Hardware constraints should be applied in the startup callback rather
+than hw_params, as hw_params may be called too late for the constraints
+to take effect properly.
 
-# nvme id-ctrl /dev/nvme1n1
-NVME Identify Controller:
-vid       : 0x144d
-ssvid     : 0x144d
-sn        : ***
-mn        : Samsung SSD 970 EVO Plus 500GB
-fr        : 2B2QEXM7
+Move the channel count and format constraints for I2S and DSP_A/DSP_B
+modes into a new startup callback. This also tightens the I2S mode
+channel constraint from 1-2 to exactly 2, matching the actual hardware
+behavior.
 
-mcdqpc    : 0
-subnqn    :
-ioccsz    : 0
-
-Signed-off-by: Alan Cui <me@alancui.cc>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Link: https://patch.msgid.link/20260429-k3-i2s-v1-2-2fe99db11ecb@linux.spacemit.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase Walkthrough
-1. Phase 1: Commit message forensics
-  Record: subsystem `nvme`, action `add quirk`, intent is to add
-  `NVME_QUIRK_IGNORE_DEV_SUBNQN` for Samsung PCI ID `144d:a808`. Tags
-  present: `Signed-off-by: Alan Cui`, `Signed-off-by: Keith Busch`; no
-  `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Link:`, or
-  `Cc: stable`. Body says Samsung 970 EVO Plus / PM981 / PM983 firmware
-  leaves `subnqn` empty; supplied `nvme id-ctrl` output confirms
-  `vid=0x144d`, model `Samsung SSD 970 EVO Plus 500GB`, firmware
-  `2B2QEXM7`, and empty `subnqn`. This is a hardware quirk, not a hidden
-  memory/race/resource bug.
+Step 1.1 Record: Subsystem `ASoC: spacemit`; action verb `move`; intent
+is to apply PCM hardware constraints in `.startup` instead of
+`.hw_params`.
 
-2. Phase 2: Diff analysis
-  Record: one file, `drivers/nvme/host/pci.c`, 2 insertions. Modified
-  object is the `nvme_id_table` PCI ID table. Before: Samsung
-  `144d:a808` matched the generic NVMe PCI class entry and got no
-  `IGNORE_DEV_SUBNQN` quirk. After: it matches a specific PCI ID entry
-  and sets `NVME_QUIRK_IGNORE_DEV_SUBNQN`. In `nvme_init_subnqn()`, that
-  quirk skips device-provided SUBNQN handling and suppresses the
-  “missing or invalid SUBNQN field” warning while still generating the
-  synthetic NQN. Fix quality is surgical and consistent with nearby
-  quirks. Regression risk is low, with the main caveat that the quirk
-  applies to all `144d:a808` devices.
+Step 1.2 Record: Tags present: `Signed-off-by: Troy Mitchell`, `Link: ht
+tps://patch.msgid.link/20260429-k3-i2s-v1-2-
+2fe99db11ecb@linux.spacemit.com`, `Signed-off-by: Mark Brown`. No
+`Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by`, `Acked-by`, or
+`Cc: stable`.
 
-3. Phase 3: Git history investigation
-  Record: target commit is `7f991e3f9b8f0`. There is no `Fixes:` tag.
-  `NVME_QUIRK_IGNORE_DEV_SUBNQN` was introduced by `6299358d198a0`,
-  described as handling firmware that reports invalid/non-unique SUBNQN,
-  first contained around `v5.0-rc2`. Existing `144d:a808` handling for a
-  suspend quirk was introduced by `1fae37accfc587`, around `v5.6-rc3`,
-  confirming the PCI ID is already known in NVMe PCI code. Recent
-  history shows this commit is standalone, not part of a required
-  series. Author history in this subsystem showed only this commit;
-  Keith Busch committed it.
+Step 1.3 Record: The body says constraints in `.hw_params` may be too
+late to affect ALSA parameter negotiation, and that I2S should be
+constrained to exactly 2 channels. Symptom is invalid PCM
+formats/channel counts being allowed for the SpacemiT I2S mode. No crash
+trace or affected kernel versions are stated.
 
-4. Phase 4: Mailing list and external research
-  Record: `b4 dig -c 7f991e3f9b8f0` found the original submission at
-  `https://patch.msgid.link/9600680.CDJkKcVGEf@alanarchdesktop`. `b4 dig
-  -a` showed only v1. `b4 dig -w` showed recipients included `linux-
-  nvme`, `linux-kernel`, and Keith Busch. The fetched mbox contained the
-  same patch and no review replies or objections. Web research found an
-  earlier 2021 linux-nvme patch proposing the same `144d:a808` quirk for
-  Samsung 970 EVO Plus/SM981/PM981/PM983, plus Debian and Proxmox user
-  reports of the same warning. No stable-specific discussion or
-  rejection reason was found.
+Step 1.4 Record: This is a hidden bug fix: it is phrased as
+moving/refactoring constraints, but it corrects when ALSA constraints
+are installed and prevents unsupported hardware parameters.
 
-5. Phase 5: Code semantic analysis
-  Record: changed data structure is `nvme_id_table`. PCI core uses that
-  table through `nvme_driver.id_table`, then calls `nvme_probe()`.
-  `nvme_probe()` calls `nvme_pci_alloc_dev()`, which initializes `quirks
-  = id->driver_data`, then passes those quirks to `nvme_init_ctrl()`.
-  Later identify flow calls `nvme_init_identify()`,
-  `nvme_init_subsystem()`, and `nvme_init_subnqn()`. The affected path
-  is normal PCI NVMe device probe at boot or hotplug, not a syscall-
-  triggered path. Similar `IGNORE_DEV_SUBNQN` quirks already exist for
-  Intel, ADATA, Samsung PM1725a, Lexar, Phison, and other devices.
+Step 2.1 Record: One file changed, `sound/soc/spacemit/k1_i2s.c`, 32
+insertions and 13 deletions. Modified functions/objects: new
+`spacemit_i2s_startup`, existing `spacemit_i2s_hw_params`, and
+`spacemit_i2s_dai_ops`. Scope is single-file, driver-local, surgical.
 
-6. Phase 6: Stable tree analysis
-  Record: checked `v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`,
-  `v6.17`, `v6.18`, and `v6.19`. All have the generic NVMe PCI class
-  match and the `NVME_QUIRK_IGNORE_DEV_SUBNQN` infrastructure; none had
-  the specific `144d:a808` `IGNORE_DEV_SUBNQN` entry. The insertion
-  context around Memblaze `0x1c5f:0x0540` and Samsung PM1725/PM1725a
-  exists in all checked tags, so backport difficulty should be clean or
-  trivial.
+Step 2.2 Record: Before, the driver advertised broad 1-2 channel and
+S16/S32 capabilities and only added mode-specific constraints inside
+`.hw_params`, after parameters had already been selected. After,
+`.startup` constrains I2S to 2ch/S16 and DSP_A/DSP_B to 1ch/S32 before
+userspace parameter selection completes.
 
-7. Phase 7: Subsystem and maintainer context
-  Record: subsystem is NVMe PCI host driver under `drivers/nvme/host`,
-  important storage hardware support. It affects users with Samsung
-  `144d:a808` NVMe SSDs, not all users. The subsystem is actively
-  maintained; recent history shows multiple NVMe fixes and quirk
-  additions. Keith Busch, an NVMe maintainer, committed the patch.
+Step 2.3 Record: Bug category is logic/correctness in hardware parameter
+negotiation. There is no memory safety, locking, refcounting, or
+resource lifetime change.
 
-8. Phase 8: Impact and risk assessment
-  Record: affected users are Samsung 970 EVO Plus / PM981 / PM983 /
-  related `144d:a808` NVMe users. Trigger is device probe, typically
-  boot. Verified failure mode is a persistent kernel warning for
-  missing/invalid SUBNQN; for the empty-SUBNQN case, code already falls
-  back to a synthetic NQN, so I did not verify a crash, data corruption,
-  or probe failure for this exact firmware. Severity is low-to-medium,
-  but it is a real firmware compliance issue on real hardware. Benefit
-  is modest but real: suppresses a misleading warning and applies the
-  established firmware workaround. Risk is very low: two lines, device-
-  specific, no API changes.
+Step 2.4 Record: Fix quality is good: it moves existing constraints to
+the ALSA callback used for early constraints and tightens I2S channels.
+Regression risk is low but not zero: unsupported mono I2S streams will
+now fail earlier, which is intended if the author’s hardware statement
+is correct.
 
-9. Phase 9: Final synthesis
-  Evidence for backporting: hardware quirk for an existing driver; real
-  user-visible firmware issue; exact device ID; tiny and contained;
-  infrastructure exists across stable trees; maintainer accepted
-  upstream; stable context appears present across checked LTS tags.
-  Evidence against: the verified symptom for this exact commit is
-  warning suppression rather than a crash/data-loss fix; no `Reported-
-  by`, `Tested-by`, or review tags; broad PCI ID match could affect all
-  `144d:a808` variants. Stable checklist: obviously correct yes; real
-  bug yes, as firmware reports empty SUBNQN; important issue only weak
-  under normal criteria, but it fits the stable exception for hardware
-  quirks; small and contained yes; no new API or feature yes; expected
-  to apply cleanly yes.
+Step 3.1 Record: `git blame` shows the changed constraint code was
+introduced by `fce217449075d` / local full SHA
+`fce217449075d59b29052b8cdac567f0f3e22641`, “ASoC: spacemit: add i2s
+support for K1 SoC”, first described as contained before `v6.19-rc1`.
+
+Step 3.2 Record: No `Fixes:` tag in this candidate, so there was no tag
+to follow. I inspected the driver-introduction commit instead.
+
+Step 3.3 Record: Recent file history contains the original driver plus
+two small later fixes: failure handling for `spacemit_i2s_init_dai()`
+and an `sspa_clk` error-check fix. No prerequisite refactor is needed
+for this patch.
+
+Step 3.4 Record: Author Troy Mitchell authored the original K1 I2S
+driver and one related later fix, so he is directly familiar with this
+driver.
+
+Step 3.5 Record: The patch is part of a 7-patch series, but `b4` and
+`git apply --check` confirmed patch 2 applies cleanly standalone to the
+current tree.
+
+Step 4.1 Record: `b4 dig` against a temporary commit matched the lore
+thread at the provided patch-msgid URL. `b4 dig -a` found only v1. The
+full thread shows Mark Brown applied patch 2 to `broonie/sound.git
+for-7.1` as commit `6b4afbaaa342`.
+
+Step 4.2 Record: `b4 dig -w` shows ASoC/sound maintainers and lists were
+included, including Mark Brown, Liam Girdwood, Jaroslav Kysela, Takashi
+Iwai, `linux-sound`, and relevant SpacemiT/RISC-V lists.
+
+Step 4.3 Record: No separate bug report, syzbot report, or user report
+was linked for this specific patch.
+
+Step 4.4 Record: Series context: patches 1-3 are described as K1 bug
+fixes/refactoring; patches 4-7 are K3 feature/binding work. Mark Brown
+explicitly noted fixes and new features had no textual overlap and
+applied only patches 2 and 3 from the subset.
+
+Step 4.5 Record: Stable-specific web search was blocked by lore Anubis,
+and a local pending-branch grep was stopped after timing out. No stable-
+specific discussion was verified.
+
+Step 5.1 Record: Key function added/modified: `spacemit_i2s_startup`;
+key function simplified: `spacemit_i2s_hw_params`.
+
+Step 5.2 Record: Callers verified: `.startup` is called through
+`snd_soc_dai_startup()` from `__soc_pcm_open()`. `.hw_params` is called
+through `snd_soc_dai_hw_params()` from `__soc_pcm_hw_params()`.
+
+Step 5.3 Record: Key callees are `snd_pcm_hw_constraint_minmax()` and
+`snd_pcm_hw_constraint_mask64()` in startup, and clock/DMA/register
+setup remains in `hw_params`.
+
+Step 5.4 Record: Reachability is via ALSA PCM open and hw_params
+operations; userspace audio applications can trigger the affected
+negotiation path by opening/configuring a PCM device for this DAI.
+
+Step 5.5 Record: Similar local ASoC pattern verified: many drivers
+install constraints in `.startup`, and ASoC core comments confirm
+startup is part of PCM open.
+
+Step 6.1 Record: The file is absent at `v6.18` and present with the same
+blob in `v6.19`, `v7.0`, `v7.0.3`, `pending-6.19`, and `pending-7.0`.
+Likely relevant stable trees start at 6.19.y.
+
+Step 6.2 Record: Backport difficulty is low: the patch applies cleanly
+to the current 7.0.3 checkout, and the file blob is identical in checked
+6.19/7.0 branches.
+
+Step 6.3 Record: No related fix for this exact subject exists in checked
+stable branches; the candidate commit exists locally as `6b4afbaaa342`
+but is not contained in the checked pending stable branches I verified.
+
+Step 7.1 Record: Subsystem is ASoC platform driver under
+`sound/soc/spacemit`; criticality is PERIPHERAL/driver-specific.
+
+Step 7.2 Record: Subsystem activity is low and localized: only four
+local commits under `sound/soc/spacemit`, including the original driver
+and small fixes.
+
+Step 8.1 Record: Affected population is config/platform-specific:
+`CONFIG_SND_SOC_K1_I2S`, depending on `COMPILE_TEST || ARCH_SPACEMIT`,
+`HAVE_CLK`, and `DMA_CMA`.
+
+Step 8.2 Record: Trigger is normal PCM device open/parameter selection
+on SpacemiT K1 I2S hardware. Unprivileged reachability depends on local
+audio device permissions, which I did not verify.
+
+Step 8.3 Record: Failure mode is unsupported audio configuration being
+accepted or constrained too late, causing bad/failed audio operation
+rather than a verified crash, corruption, or security issue. Severity:
+MEDIUM for affected hardware users.
+
+Step 8.4 Record: Benefit is moderate: corrects real hardware parameter
+negotiation for a supported driver. Risk is low: one driver, one file,
+no ABI/API change, clean apply, and maintainer-applied.
+
+Step 9.1 Record: Evidence for backporting: real driver correctness bug,
+normal userspace audio path, introduced in stable-relevant 6.19-era
+driver, small contained patch, clean apply, maintainer accepted.
+Evidence against: no reporter/test tag, no crash/security/data-loss
+evidence, exact “I2S is 2ch only” hardware fact not independently
+verified outside author/maintainer review.
+
+Step 9.2 Record: Stable rules: obviously correct enough: yes, based on
+ALSA callback ordering and existing constraints; real bug: yes;
+important issue: moderate hardware functionality bug, not critical;
+small/contained: yes; no new API/feature: yes; can apply: yes to checked
+6.19/7.0-family trees.
+
+Step 9.3 Record: No automatic exception category like device ID, quirk,
+DT-only, build-only, or documentation-only applies.
+
+Step 9.4 Record: Decision is to backport. The risk is low and the patch
+fixes a real, user-visible hardware configuration bug in a stable-
+relevant driver.
 
 ## Verification
-- Phase 1: `git show --format=fuller --stat --patch 7f991e3f9b8f0`
-  verified subject, body, tags, author/committer, and 2-line diff.
-- Phase 2: Read `drivers/nvme/host/core.c`, `drivers/nvme/host/nvme.h`,
-  and `drivers/nvme/host/pci.c`; verified quirk definition, PCI table
-  use, and `nvme_init_subnqn()` behavior.
-- Phase 3: `git blame` around the quirk table and `144d:a808` suspend
-  handling; `git show` and `git describe --contains` for `6299358d198a0`
-  and `1fae37accfc587`; `git log` on `drivers/nvme/host` for related
-  commits.
-- Phase 4: `b4 dig -c`, `-a`, `-w`, and mbox read verified original lore
-  submission, single v1 revision, recipients, and lack of visible review
-  objections. WebFetch verified the older 2021 same-quirk patch and user
-  reports.
-- Phase 5: `rg` and file reads traced `nvme_id_table` through
-  `nvme_probe()`, `nvme_pci_alloc_dev()`, `nvme_init_identify()`,
-  `nvme_init_subsystem()`, and `nvme_init_subnqn()`.
-- Phase 6: `git grep` and a Python `git show
-  <tag>:drivers/nvme/host/pci.c` check verified stable tags have the
-  infrastructure/context and lack the new `144d:a808` quirk.
-- Unverified: I did not test-build or boot the patch, and I did not
-  verify a functional failure beyond the warning for this exact Samsung
-  firmware.
-
-This should be backported because it is a classic low-risk hardware
-quirk for a real, reported firmware non-compliance on an existing NVMe
-driver path, even though the confirmed symptom is warning noise rather
-than a severe failure.
+- [Phase 1] Parsed commit `6b4afbaaa342` with `git show`; confirmed tags
+  and lack of `Fixes`/reporter/stable tags.
+- [Phase 2] Inspected candidate diff; confirmed only `k1_i2s.c` changes,
+  adding `.startup` and moving constraints out of `.hw_params`.
+- [Phase 3] Ran `git blame` on changed lines; confirmed original code
+  from `fce217449075d`.
+- [Phase 3] Ran file history and author history; found only localized
+  SpacemiT I2S changes.
+- [Phase 4] Used `b4 am`, `b4 mbox`, and `b4 dig`; confirmed v1 thread,
+  maintainer application to `for-7.1`, and reviewer/maintainer
+  recipients.
+- [Phase 5] Read ASoC core code; confirmed startup occurs during PCM
+  open and hw_params occurs later during ALSA hardware parameter setup.
+- [Phase 6] Checked tags/branches and patch application; confirmed file
+  presence from `v6.19` onward and clean standalone apply.
+- [Phase 7] Read `Kconfig`; confirmed driver-specific SpacemiT K1 I2S
+  config scope.
+- [Phase 8] Assessed trigger/failure from verified ALSA call paths and
+  driver-advertised constraints.
+- UNVERIFIED: Independent hardware documentation proving I2S mode is
+  exactly 2 channels; this claim comes from the commit author and
+  maintainer-accepted patch.
+- UNVERIFIED: Stable mailing-list search results, because lore WebFetch
+  was blocked and one local pending-branch grep was stopped after
+  timeout.
 
 **YES**
 
- drivers/nvme/host/pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/spacemit/k1_i2s.c | 45 ++++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index b78ba239c8ea8..d59340982520a 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -4104,6 +4104,8 @@ static const struct pci_device_id nvme_id_table[] = {
- 		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY, },
- 	{ PCI_DEVICE(0x1c5f, 0x0540),	/* Memblaze Pblaze4 adapter */
- 		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY, },
-+	{ PCI_DEVICE(0x144d, 0xa808),	/* Samsung PM981/983 */
-+		.driver_data = NVME_QUIRK_IGNORE_DEV_SUBNQN, },
- 	{ PCI_DEVICE(0x144d, 0xa821),   /* Samsung PM1725 */
- 		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY, },
- 	{ PCI_DEVICE(0x144d, 0xa822),   /* Samsung PM1725a */
+diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
+index 1cb99f1abc7cd..bb73d32a1b097 100644
+--- a/sound/soc/spacemit/k1_i2s.c
++++ b/sound/soc/spacemit/k1_i2s.c
+@@ -106,6 +106,37 @@ static void spacemit_i2s_init(struct spacemit_i2s_dev *i2s)
+ 	writel(0, i2s->base + SSINTEN);
+ }
+ 
++static int spacemit_i2s_startup(struct snd_pcm_substream *substream,
++	struct snd_soc_dai *dai)
++{
++	struct spacemit_i2s_dev *i2s = snd_soc_dai_get_drvdata(dai);
++
++	switch (i2s->dai_fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
++	case SND_SOC_DAIFMT_I2S:
++		snd_pcm_hw_constraint_minmax(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_CHANNELS,
++					     2, 2);
++		snd_pcm_hw_constraint_mask64(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_FORMAT,
++					     SNDRV_PCM_FMTBIT_S16_LE);
++		break;
++	case SND_SOC_DAIFMT_DSP_A:
++	case SND_SOC_DAIFMT_DSP_B:
++		snd_pcm_hw_constraint_minmax(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_CHANNELS,
++					     1, 1);
++		snd_pcm_hw_constraint_mask64(substream->runtime,
++					     SNDRV_PCM_HW_PARAM_FORMAT,
++					     SNDRV_PCM_FMTBIT_S32_LE);
++		break;
++	default:
++		dev_dbg(i2s->dev, "unexpected format type");
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
+ 				  struct snd_pcm_hw_params *params,
+ 				  struct snd_soc_dai *dai)
+@@ -157,22 +188,9 @@ static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
+ 			dma_data->maxburst = 32;
+ 			dma_data->addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+ 		}
+-
+-		snd_pcm_hw_constraint_minmax(substream->runtime,
+-					     SNDRV_PCM_HW_PARAM_CHANNELS,
+-					     1, 2);
+-		snd_pcm_hw_constraint_mask64(substream->runtime,
+-					     SNDRV_PCM_HW_PARAM_FORMAT,
+-					     SNDRV_PCM_FMTBIT_S16_LE);
+ 		break;
+ 	case SND_SOC_DAIFMT_DSP_A:
+ 	case SND_SOC_DAIFMT_DSP_B:
+-		snd_pcm_hw_constraint_minmax(substream->runtime,
+-					     SNDRV_PCM_HW_PARAM_CHANNELS,
+-					     1, 1);
+-		snd_pcm_hw_constraint_mask64(substream->runtime,
+-					     SNDRV_PCM_HW_PARAM_FORMAT,
+-					     SNDRV_PCM_FMTBIT_S32_LE);
+ 		break;
+ 	default:
+ 		dev_dbg(i2s->dev, "unexpected format type");
+@@ -303,6 +321,7 @@ static int spacemit_i2s_dai_remove(struct snd_soc_dai *dai)
+ static const struct snd_soc_dai_ops spacemit_i2s_dai_ops = {
+ 	.probe = spacemit_i2s_dai_probe,
+ 	.remove = spacemit_i2s_dai_remove,
++	.startup = spacemit_i2s_startup,
+ 	.hw_params = spacemit_i2s_hw_params,
+ 	.set_sysclk = spacemit_i2s_set_sysclk,
+ 	.set_fmt = spacemit_i2s_set_fmt,
 -- 
 2.53.0
 
