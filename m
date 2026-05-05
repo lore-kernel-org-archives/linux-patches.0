@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D85133D4E5;
-	Tue,  5 May 2026 09:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F113370E4;
+	Tue,  5 May 2026 09:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974792; cv=none; b=K3gGgm0/EQJt38msTT8QfIi4VVeIsGNm0JpByqJuZcCussqBsbSyoinRh9bfPW6ICfWzY7DioLvtNvImT/yfUsi8dPODPxE4Zt5pbMYtIQ8BknLY8YkbkntEXMKW3s5KW9rSDNVaf4QKqWfaUtng8lB1Mu/k9126tSuPCrxsejo=
+	t=1777974795; cv=none; b=Jyz6PA9mhyYL6laegSroSHxHgXBHgkndpJ9Rd0W8rksi5n+4Tmg+dzf8woYH/f14MFKp4LccPDdPccIxt3Lxk6Ju8OpexHttOgRrs7Ka+tu6VI6TiAjPR38PhJeGezIXKfwY1FUfC6I5YpQEI/0IpG/j9UQX6BKVnpFvQ7WVb/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974792; c=relaxed/simple;
-	bh=npXGXSElGv0/CCSPcjyQqDyVD32Q27Z642847nGKpI8=;
+	s=arc-20240116; t=1777974795; c=relaxed/simple;
+	bh=RboG9kYuRaM9umuhlHg6mVhf2LLLr+s+TsR0YegzkQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pe/E2tQkj252cA5RMCwPvFmTtqMLvWxRuhv4aPo57r0m4ElwDGW2Ln4voPrmMu2trZsV0HHsB+vbFUErgix7yN0go96NyTbdd9Dzj2vATfNhkJfGOWmtnuddvf1Sw2lfdE7yjH7BdLmOkiU5BjZDcKkjzZGr5gMie037TDeqpHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9ExcSij; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ql02NqzQrt1Fvns2FjWZDcfnGPLnTqM+MHuKTGh2jA+8plyGFwyMT/Rt7ojocaKJdPYgJ6tCiUkfEUiAPQrOy1fGodIbJknIKKS7L7MkT/cQNMWmrNaxB/yxz2xvt+dPMljePH3GwHXdlwgxxQRZeM9dMu+HADJ+eWH2YURI0kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tH9jetrr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9ExcSij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063A5C2BCB4;
-	Tue,  5 May 2026 09:53:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tH9jetrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C43C2BCB4;
+	Tue,  5 May 2026 09:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974792;
-	bh=npXGXSElGv0/CCSPcjyQqDyVD32Q27Z642847nGKpI8=;
+	s=k20201202; t=1777974795;
+	bh=RboG9kYuRaM9umuhlHg6mVhf2LLLr+s+TsR0YegzkQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9ExcSijeMNXtZ2e0X2Hx/55hJqFHD8TyJC+9Zg1+YXwkNnHYd+kGRXQHrlyVX3Vr
-	 63qtNHIx84ai9yimEFWHSdp0KGOpYAzyPqqfXwt13D27rX7PjrJlGNoE5ucLSWsYq2
-	 g2VH1uvRwqDnXumSS/IodWLmPH5NY672QwxnaN40KaEcbVCjz764MsvBwik/iYHT5J
-	 ppLPNPZxLEjh47wxgFDg70cB3GmwwPvOLXHDXrnFazPFIsCEoS9/JTm0UCNLAFGyaz
-	 i/9A/LPGEaingUYqodbFqKbHYoYc5q6v6aUhd+gCOxQAcmoOpaiIHBujdyrySMHjkS
-	 A+f1E4CKkDEsg==
+	b=tH9jetrrOQfgDxNDENoV3CraEMkTpgjCdYPda7sd6NkrqocswGh4mglNV44QXmoLr
+	 au+A46Z4xDEuehcf6zQZA1i99EAJDmn4KfNgrjszj5jUvauDUkp1sTAxv7J9FB7GVn
+	 xmckwyY036jYWqCZR92kL/iPEzBIjXDdvY5wxN9sNbcwO6l068PGVS69ELzi7xBybZ
+	 aykS1xB/ThkWPTtEcTrAXvqouUmLO14okxuSuauN5U6tZxggjpf+K4ZMSaoeinyhvL
+	 spDHAZkLUGtYWadJaRmrXtLw8zffHtnha9HDzFrLZpkchheHRmHdDUN3Ptu2C7s0G5
+	 9D/MiNGzAayHg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: robbieko <robbieko@synology.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: John Garry <john.g.garry@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] btrfs: copy devid in btrfs_partially_delete_raid_extent()
-Date: Tue,  5 May 2026 05:51:42 -0400
-Message-ID: <20260505095149.512052-26-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] nvme-multipath: put module reference when delayed removal work is canceled
+Date: Tue,  5 May 2026 05:51:43 -0400
+Message-ID: <20260505095149.512052-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -54,296 +56,297 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: robbieko <robbieko@synology.com>
+From: John Garry <john.g.garry@oracle.com>
 
-[ Upstream commit 513f8a52eed880ea525dbb139b2127bd9bb793f1 ]
+[ Upstream commit 3f150f0f010f234f34a67897344f18e68fe803f7 ]
 
-When btrfs_partially_delete_raid_extent() rebuilds a truncated/shifted
-stripe extent into newitem, the loop copies the physical address for
-each stride but forgets to copy the devid. The resulting item written
-back to the stripe tree has zeroed-out devids, corrupting the stripe
-mapping.
+The delayed disk removal work is canceled when a NS (re)appears. However,
+we do not put the module reference grabbed in nvme_mpath_remove_disk(), so
+fix that.
 
-Fix this by reading the devid with btrfs_raid_stride_devid() and
-writing it into the new item with btrfs_set_stack_raid_stride_devid()
-before copying the physical address.
-
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: robbieko <robbieko@synology.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+## Decision Summary
+This should be backported to stable trees that contain NVMe multipath
+delayed removal, especially `v6.16+` trees checked locally. It fixes a
+real module reference leak: `nvme_mpath_remove_disk()` takes a
+`THIS_MODULE` reference before scheduling delayed removal work, but
+`nvme_init_ns_head()` can cancel that work when a namespace reappears.
+If canceled, the work callback never runs and therefore never executes
+its existing `module_put(THIS_MODULE)`. The patch balances that
+reference only when `cancel_delayed_work()` actually canceled pending
+work.
+
 ## Phase 1: Commit Message Forensics
+Step 1.1 Record: subsystem `nvme-multipath`; action verb `put`/implicit
+`fix`; intent is to release a module reference when delayed namespace
+removal work is canceled.
 
-Step 1.1 Record: subsystem `btrfs`; action verb `copy`; claimed intent
-is to preserve `devid` when `btrfs_partially_delete_raid_extent()`
-rebuilds a truncated or shifted RAID stripe extent.
+Step 1.2 Record: tags present: `Reviewed-by: Christoph Hellwig
+<hch@lst.de>`, `Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>`,
+`Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>`, `Signed-off-by: John
+Garry <john.g.garry@oracle.com>`, `Signed-off-by: Keith Busch
+<kbusch@kernel.org>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+`Link:`, or `Cc: stable` tag in the commit.
 
-Step 1.2 Record: tags present are `Reviewed-by: Johannes Thumshirn
-<johannes.thumshirn@wdc.com>`, `Signed-off-by: robbieko
-<robbieko@synology.com>`, `Reviewed-by: David Sterba
-<dsterba@suse.com>`, `Signed-off-by: David Sterba <dsterba@suse.com>`.
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc:
-stable@vger.kernel.org` tag was present. David Sterba is listed as a
-Btrfs maintainer in `MAINTAINERS`.
+Step 1.3 Record: bug is a module reference leak. The commit body states
+the delayed disk removal work is canceled when a namespace appears or
+reappears, but the module reference acquired in
+`nvme_mpath_remove_disk()` is not released. Symptom from related
+blktests discussion: module refcount does not return to the original
+value after reconnect. Root cause: cancellation bypasses
+`nvme_remove_head_work()`, where the existing `module_put()` lives.
 
-Step 1.3 Record: the body says the function rebuilds a stripe extent
-into `newitem`, copies each stride’s physical address, but forgets to
-copy each stride’s device id. Because `newitem` is allocated with
-`kzalloc()`, omitted devid fields become zero. The described failure
-mode is corrupted stripe mapping. No explicit affected kernel version is
-stated.
-
-Step 1.4 Record: this is not hidden behind cleanup wording; it is a
-direct correctness fix for persistent Btrfs RAID stripe tree metadata.
+Step 1.4 Record: yes, this is a hidden resource/reference leak fix. The
+subject does not say “fix leak”, but the body and code show a missing
+`module_put()` on a cancellation path.
 
 ## Phase 2: Diff Analysis
+Step 2.1 Record: one file changed, `drivers/nvme/host/core.c`, with 2
+insertions and 1 deletion. Modified function: `nvme_init_ns_head()`.
+Scope: single-file surgical fix.
 
-Step 2.1 Record: one file changed, `fs/btrfs/raid-stripe-tree.c`, with 3
-insertions in `btrfs_partially_delete_raid_extent()`. Scope is a single-
-file surgical fix.
+Step 2.2 Record: before, `nvme_init_ns_head()` unconditionally called
+`cancel_delayed_work(&head->remove_work)` after adding the namespace
+head. After, it checks the return value and calls
+`module_put(THIS_MODULE)` only if pending delayed work was canceled. The
+affected path is namespace initialization/reappearance after delayed
+multipath removal was scheduled.
 
-Step 2.2 Record: before, the copy loop populated only
-`newitem->strides[i].physical`; after, it reads `devid` from the old
-stride using `btrfs_raid_stride_devid()` and stores it in the stack item
-with `btrfs_set_stack_raid_stride_devid()` before copying the physical
-address. The affected path is partial deletion/truncation/shift of RAID
-stripe extents.
+Step 2.3 Record: bug category is reference counting/resource leak.
+`nvme_mpath_remove_disk()` acquires a module reference with
+`try_module_get(THIS_MODULE)` before scheduling `head->remove_work`;
+`nvme_remove_head_work()` releases it with `module_put(THIS_MODULE)`
+when the work runs. If `nvme_init_ns_head()` cancels the pending work,
+the callback does not run, so the added `module_put()` balances the
+acquired reference. Workqueue docs in `kernel/workqueue.c` verify
+`cancel_delayed_work()` returns true if pending work was canceled and
+false otherwise.
 
-Step 2.3 Record: bug category is filesystem metadata correctness/data
-corruption. Mechanism: `kzalloc()` zeroes the rebuilt item, and the old
-code only writes the physical address, leaving device ids as zero. Later
-lookup code in `btrfs_get_raid_extent_offset()` searches for a stride
-whose stored devid matches `stripe->dev->devid`; zeroed devids can fail
-that match and return `-ENODATA`.
-
-Step 2.4 Record: the fix is obviously local and correct: it copies the
-missing field from the old item to the rebuilt item. Regression risk is
-very low: it adds no new behavior, no locking, no API changes, and
-preserves existing physical-address handling.
+Step 2.4 Record: fix quality is high. It is minimal and correctly
+conditional. Regression risk is very low: an extra `module_put()` is
+only performed when the work was pending and canceled, matching the
+exact reference lifetime. If the work was not pending or was already
+running, no extra put is done.
 
 ## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the cancellation line in
+`nvme_init_ns_head()` was introduced by `dd2c18548964` (`nvme: reset
+delayed remove_work after reconnect`), first contained around
+`v6.16-rc4`. The delayed removal work and callback `module_put()` came
+from `62188639ec16` (`nvme-multipath: introduce delayed removal of the
+multipath head node`), first contained around `v6.16-rc1`.
 
-Step 3.1 Record: `git blame` on the pre-fix function showed the rebuild-
-and-reinsert logic came from `dc14ba10781bd` and the partial-delete
-function originated from `6aea95ee31889`. The specific zeroed-devid bug
-was introduced by `dc14ba10781bd`, first contained in `v6.14-rc1`.
+Step 3.2 Record: no `Fixes:` tag is present, so there was no tagged
+commit to follow. Manual history points to the interaction between
+`62188639ec16` and `dd2c18548964`.
 
-Step 3.2 Record: no `Fixes:` tag exists. I manually inspected
-`dc14ba10781bd`; it replaced in-place key modification with allocation
-of a new item and copied only physical addresses, omitting devids. That
-commit fixed a prior kernel BUG but introduced this missing-field copy.
+Step 3.3 Record: recent related commits include `62188639ec16`
+introducing delayed removal, `dd2c18548964` adding cancellation on
+reconnect, and `0f5197ea9a73` fixing a different delayed-removal module
+reference failure path. This commit is standalone; it only changes the
+cancellation path in `core.c`.
 
-Step 3.3 Record: recent file history shows this patch is part of a
-cluster of RAID stripe tree deletion fixes: search boundary fixes,
-`btrfs_previous_item()` min-objectid fix, ASSERT-to-error handling,
-stale leaf pointer handling, and return-value checking. This commit is
-standalone; it does not depend on later patches, though the related
-patches may be independently worth stable review.
+Step 3.4 Record: John Garry has recent NVMe-related commits and reviewed
+the related `0f5197ea9a73` fix. The patch was committed by Keith Busch
+and reviewed by Christoph Hellwig, both key NVMe maintainers.
 
-Step 3.4 Record: author `robbieko` has multiple related Btrfs fixes in
-the same file around the same time. Committer/reviewer David Sterba is a
-Btrfs maintainer per `MAINTAINERS`.
-
-Step 3.5 Record: no prerequisite commit beyond the buggy rebuild-and-
-reinsert implementation was identified for affected trees. The patch
-applies cleanly to the current `v7.0.3` stable worktree with `git apply
---check`.
+Step 3.5 Record: no prerequisite commit beyond the delayed-removal
+feature and reconnect cancellation code. The current `core.c` already
+includes `<linux/module.h>`, so the new `module_put(THIS_MODULE)`
+requires no include change.
 
 ## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 3f150f0f010f2` found the original patch at `
+https://patch.msgid.link/20260415155358.1517871-1-
+john.g.garry@oracle.com`. `b4 dig -a` found only v1, so the committed
+version is the submitted revision. Lore mirror shows three positive
+reviews and Keith Busch applying it to `nvme-7.1`.
 
-Step 4.1 Record: `b4 dig -c 513f8a52eed88` found the original submission
-at `https://patch.msgid.link/20260413065249.2320122-2-
-robbieko@synology.com`. `b4 dig -a` showed only v1. WebFetch of lore was
-blocked by Anubis, so I used `b4 dig -m` and read the mbox locally. The
-thread includes David Sterba saying the series was added to for-next. No
-NAK was found in the fetched thread.
+Step 4.2 Record: `b4 dig -w` shows John Garry, Christoph Hellwig, Keith
+Busch, Nilay Shroff, and `linux-nvme` were included. Appropriate
+maintainers/reviewers were on the thread.
 
-Step 4.2 Record: `b4 dig -w` showed original recipients were `robbieko`
-and `linux-btrfs@vger.kernel.org`. The mbox showed Johannes Thumshirn
-replied and asked for tests for the series conditions; the committed
-patch later carries his `Reviewed-by`.
+Step 4.3 Record: no `Reported-by` or bugzilla/syzbot link. Related
+blktests thread reported a concrete failure: `module refcount not as
+original`; John Garry replied that he had posted the kernel fix for it,
+referring to this fix.
 
-Step 4.3 Record: no external bug report, syzbot report, or bugzilla link
-was present. The cover letter and patch text both describe corrupted
-stripe mappings.
+Step 4.4 Record: related patch thread for `nvme-multipath: fix leak on
+try_module_get failure` contains John Garry identifying this missing
+`module_put()` on timer cancellation; Keith Busch agreed the check and
+`module_put()` were correct and that `_sync` was unnecessary.
 
-Step 4.4 Record: this is patch 1/6 in a series titled `btrfs: fix
-multiple bugs in raid-stripe-tree deletion path`. The other five patches
-address separate bugs in the same deletion path. Patch 1 is not a
-preparatory change; it fixes a complete missing-field copy on its own.
-
-Step 4.5 Record: WebFetch search of lore stable was blocked by Anubis.
-Local stable branch inspection found no equivalent devid-copy fix in
-`stable/linux-7.0.y`.
+Step 4.5 Record: direct lore stable search was blocked by Anubis; web
+search did not find stable-specific objections or reasons not to
+backport.
 
 ## Phase 5: Code Semantic Analysis
+Step 5.1 Record: modified function is `nvme_init_ns_head()`.
 
-Step 5.1 Record: modified function is
-`btrfs_partially_delete_raid_extent()`.
+Step 5.2 Record: `nvme_init_ns_head()` is called by `nvme_alloc_ns()`.
+`nvme_alloc_ns()` is called by `nvme_scan_ns()` when a namespace is
+discovered during controller scan. Scan work is queued from namespace
+change AEN handling, reset/start paths, sysfs rescan, and ioctl rescan
+paths.
 
-Step 5.2 Record: callers are the three partial-deletion cases in
-`btrfs_delete_raid_extent()`: hole punch splitting a stripe extent,
-front truncation, and tail truncation. `btrfs_delete_raid_extent()` is
-called from Btrfs extent free accounting for data extents.
+Step 5.3 Record: key callees around the bug are `cancel_delayed_work()`,
+`module_put()`, `nvme_mpath_remove_disk()`, `try_module_get()`,
+`mod_delayed_work()`, and `nvme_remove_head_work()`.
 
-Step 5.3 Record: relevant callees are `kzalloc()`,
-`btrfs_raid_stride_devid()`, `btrfs_set_stack_raid_stride_devid()`,
-`btrfs_raid_stride_physical()`,
-`btrfs_set_stack_raid_stride_physical()`, `btrfs_del_item()`, and
-`btrfs_insert_item()`.
+Step 5.4 Record: reachable path is: namespace/path removal ->
+`nvme_ns_remove()` -> last path -> `nvme_mpath_remove_disk()` ->
+`try_module_get()` + delayed work; later namespace reappears -> scan
+path -> `nvme_scan_ns()` -> `nvme_alloc_ns()` -> `nvme_init_ns_head()`
+-> cancel delayed work. This is reachable through real NVMe multipath
+path loss/reconnect and through the blktests NVMe loop scenario. I did
+not verify an unprivileged trigger; the tested path writes
+`delayed_removal_secs` via sysfs and manipulates NVMe connectivity.
 
-Step 5.4 Record: reachability is through Btrfs data extent
-deletion/freeing and transaction paths. Lookup impact is through read
-mapping: `btrfs_map_block()` calls `set_io_stripe()`, which calls
-`btrfs_get_raid_extent_offset()` for reads when RAID stripe tree updates
-are needed. If the zeroed devid does not match the real device id,
-lookup returns `-ENODATA`.
-
-Step 5.5 Record: similar correct pattern exists in
-`btrfs_insert_one_raid_extent()`, which stores both devid and physical
-address for each stride. The broken partial-delete rebuild copied only
-physical address.
+Step 5.5 Record: similar reference-balancing pattern exists elsewhere in
+the kernel, e.g. Bluetooth code checks `cancel_delayed_work()` and drops
+a reference only when cancellation succeeds. No additional identical
+NVMe missing-put sites were found in the searched files.
 
 ## Phase 6: Cross-Referencing And Stable Tree Analysis
+Step 6.1 Record: local stable branch checks show `stable/linux-6.16.y`,
+`6.17.y`, `6.18.y`, `6.19.y`, and `7.0.y` contain
+`cancel_delayed_work(&head->remove_work)`,
+`try_module_get(THIS_MODULE)`, `module_put(THIS_MODULE)`, and
+`delayed_removal_secs`. `stable/linux-6.12.y` does not contain this
+delayed-removal code, so this specific bug is not present there.
 
-Step 6.1 Record: latest checked tags show `v6.12.85` has the file but
-not the affected partial-delete rebuild code; `v6.15.11`, `v6.16.12`,
-`v6.17.13`, `v6.18.26`, `v6.19.14`, and `v7.0.3` contain the buggy loop
-with physical copy but no devid copy. `v6.6` has no `fs/btrfs/raid-
-stripe-tree.c`.
+Step 6.2 Record: `git apply --check` for the patch succeeds on the
+current `stable/linux-7.0.y` checkout. The exact hunk context exists in
+local `6.16.y` through `7.0.y` branches, so backport difficulty should
+be clean or trivial. I did not create separate worktrees for branch-
+specific apply checks.
 
-Step 6.2 Record: expected backport difficulty is low for affected trees.
-The patch applies cleanly to current `v7.0.3`; older affected trees
-before the `AUTO_KFREE` cleanup still have the same loop and should need
-at most context adjustment.
-
-Step 6.3 Record: no equivalent devid-copy fix was found in
-`stable/linux-7.0.y`; current stable code still lacks
-`btrfs_set_stack_raid_stride_devid(&newitem->strides[i], devid)`.
+Step 6.3 Record: no alternative fix for this exact cancellation leak was
+found in checked stable branches; the candidate commit itself is not an
+ancestor of the checked stable branches.
 
 ## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: subsystem is NVMe host multipath, under
+`drivers/nvme/host`. Criticality: important for systems using NVMe
+multipath and delayed removal, not universal core-kernel impact.
 
-Step 7.1 Record: subsystem is Btrfs filesystem code under `fs/btrfs`.
-Criticality is IMPORTANT: it is filesystem metadata and I/O mapping, but
-gated to filesystems using the RAID stripe tree incompat feature.
-
-Step 7.2 Record: subsystem activity is high; file history shows many
-recent RAID stripe tree deletion fixes. This does not reduce stable
-suitability because the affected buggy code is already present in
-several stable tags.
+Step 7.2 Record: subsystem is actively developed; recent history
+includes delayed removal introduction, reconnect cancellation, and
+related leak fixes. This bug is in relatively new code introduced for
+`v6.16`.
 
 ## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: affected users are `CONFIG_NVME_MULTIPATH` users who
+enable nonzero `delayed_removal_secs` and experience path loss followed
+by namespace/path return before the delayed removal work fires.
 
-Step 8.1 Record: affected users are Btrfs users with `RAID_STRIPE_TREE`
-enabled and data profiles supported by
-`btrfs_need_stripe_tree_update()`.
+Step 8.2 Record: trigger is realistic for NVMe multipath transient path
+failures or hot-remove/re-add scenarios. Related blktests exercises this
+with NVMe loop. Unprivileged trigger was not verified.
 
-Step 8.2 Record: trigger is partial deletion of RAID stripe extents,
-such as data extent freeing/truncation/hole-related deletion paths.
-User-triggerability depends on having an affected Btrfs RAID stripe tree
-filesystem; the exact unprivileged trigger was not separately reproduced
-here.
+Step 8.3 Record: failure mode is module reference leak, severity medium.
+It can prevent `nvme_core` from being unloadable and causes persistent
+refcount imbalance; the test discussion shows a concrete refcount
+mismatch.
 
-Step 8.3 Record: failure mode is corrupted RAID stripe mapping metadata
-with zeroed devids. Verified read-side code relies on devid matching and
-returns `-ENODATA` when no matching devid is found. Severity is HIGH to
-CRITICAL for affected filesystems because it can persistently break
-logical-to-physical mapping.
-
-Step 8.4 Record: benefit is high for affected Btrfs RST users because it
-prevents persistent mapping corruption. Risk is very low because the
-change is 3 lines, local, and copies an existing field without changing
-control flow.
+Step 8.4 Record: benefit is moderate for affected NVMe multipath users
+because it fixes a real reference leak in a recovery path. Risk is very
+low: 2 added lines, no API change, no behavior change except balancing a
+reference when pending work is canceled.
 
 ## Phase 9: Final Synthesis
+Step 9.1 Record: evidence for backporting: real reference leak; concrete
+test failure in related blktests discussion; tiny one-function fix;
+reviewed by three NVMe developers; maintainer agreed the logic; applies
+cleanly to current `7.0.y` and relevant code exists in `6.16+` stable
+branches. Evidence against: affects a specific configured NVMe multipath
+feature, not all systems; severity is not crash/data
+corruption/security. Unresolved: I did not verify exact branch-specific
+application in separate worktrees, and direct lore stable search was
+blocked.
 
-Step 9.1 Record: evidence for backporting: real filesystem metadata
-corruption, tiny surgical fix, reviewed by Btrfs developers including
-maintainer David Sterba, affects current stable trees with the buggy
-rebuild loop, and applies cleanly to `v7.0.3`. Evidence against: affects
-only the RAID stripe tree feature, and no `Tested-by` or external bug
-report was present. Unresolved: I did not runtime-test a reproducer, and
-lore WebFetch was blocked, though b4 retrieved the thread mbox.
+Step 9.2 Record: stable rules checklist:
+1. Obviously correct and tested: yes, by code inspection and related
+   blktests discussion; no `Tested-by` tag.
+2. Fixes real bug: yes, module reference leak.
+3. Important issue: yes enough for stable as a driver lifecycle
+   reference leak, though severity is medium rather than critical.
+4. Small and contained: yes, 2 insertions/1 deletion in one function.
+5. No new feature/API: yes.
+6. Can apply to stable: yes for current `7.0.y`; exact context exists in
+   checked `6.16+` branches. Not applicable to trees lacking delayed
+   removal.
 
-Step 9.2 Stable rules checklist:
-1. Obviously correct and tested: obviously correct by inspection; no
-   explicit `Tested-by`.
-2. Fixes a real bug: yes, missing copied devid causes zeroed devids in
-   rebuilt stripe items.
-3. Important issue: yes, filesystem mapping corruption.
-4. Small and contained: yes, 3 inserted lines in one function.
-5. No new features or APIs: yes.
-6. Can apply to stable trees: yes for `v7.0.3`; likely clean or minor
-   context for affected `v6.15+` stable trees.
+Step 9.3 Record: no exception category such as device ID, quirk, DT,
+build, or documentation. This is a normal bug fix.
 
-Step 9.3 Record: no special exception category is needed; this is a
-normal filesystem corruption fix.
-
-Step 9.4 Decision: backport to stable trees that contain the rebuild-
-and-reinsert version of `btrfs_partially_delete_raid_extent()` without
-the devid copy, notably checked affected tags `v6.15.11` through
-`v7.0.3`. Do not apply to trees where the affected code is absent, such
-as checked `v6.12.85` and `v6.6`.
+Step 9.4 Record: backport recommended to stable trees containing NVMe
+delayed removal cancellation, notably checked `6.16.y` through `7.0.y`;
+not applicable to older trees where the feature is absent.
 
 ## Verification
-
-- [Phase 1] Parsed commit `513f8a52eed88` with `git show
-  --pretty=fuller`; confirmed subject, body, tags, and 3-line diff.
-- [Phase 1] Checked `MAINTAINERS` with `rg`; confirmed David Sterba is a
-  Btrfs maintainer.
-- [Phase 2] Read `fs/btrfs/raid-stripe-tree.c`; confirmed `kzalloc()`
-  allocation, old physical-only copy, and read-side devid matching.
-- [Phase 3] Ran `git blame 513f8a52eed88^` on the changed function;
-  identified relevant history from `6aea95ee31889`, `dc14ba10781bd`, and
-  cleanup commits.
-- [Phase 3] Ran `git show dc14ba10781bd`; confirmed the buggy new-item
-  rebuild was introduced there and first appears in `v6.14-rc1`.
-- [Phase 3] Ran recent file and author logs; confirmed related same-file
-  fixes and that this patch is standalone.
-- [Phase 4] Ran `b4 dig -c`, `-a`, `-w`, and `-m`; found the lore
-  thread, single v1, original recipients, series context, and maintainer
-  acceptance into for-next.
-- [Phase 4] WebFetch lore and stable search were blocked by Anubis; b4
-  mbox provided the usable mailing-list content.
-- [Phase 5] Used `rg` and file reads to trace callers:
-  `btrfs_delete_raid_extent()` from extent free accounting, and read
-  mapping through `btrfs_map_block()`/`set_io_stripe()`/`btrfs_get_raid_
-  extent_offset()`.
-- [Phase 6] Checked stable tags with `git show <tag>:fs/btrfs/raid-
-  stripe-tree.c`; confirmed affected code in `v6.15.11`, `v6.16.12`,
-  `v6.17.13`, `v6.18.26`, `v6.19.14`, and `v7.0.3`, absent affected code
-  in `v6.12.85`, and no file in `v6.6`.
-- [Phase 6] Ran `git apply --check` for the upstream patch against
-  current `v7.0.3`; it applies cleanly.
-- [Phase 8] Verified failure mechanism in code: zeroed devids fail the
-  `devid != stripe->dev->devid` match and lead to `-ENODATA`.
+- [Phase 1] Parsed commit `3f150f0f010f2` with `git show --format=fuller
+  --stat --patch`; confirmed subject, body, tags, and 2-line fix.
+- [Phase 2] Inspected `drivers/nvme/host/core.c` and
+  `drivers/nvme/host/multipath.c`; confirmed `try_module_get()` in
+  `nvme_mpath_remove_disk()` and `module_put()` in
+  `nvme_remove_head_work()`.
+- [Phase 2] Checked `kernel/workqueue.c`; confirmed
+  `cancel_delayed_work()` returns true if pending work was canceled and
+  false otherwise.
+- [Phase 3] Ran `git blame` on the changed and related lines; identified
+  `dd2c18548964`, `62188639ec16`, and `0f5197ea9a73`.
+- [Phase 3] Ran `git show` on related commits; confirmed delayed removal
+  introduction, reconnect cancellation, and prior try-module failure
+  fix.
+- [Phase 4] Ran `b4 dig -c`, `-a`, and `-w`; found original patch URL,
+  single v1 revision, and appropriate NVMe recipients.
+- [Phase 4] Fetched lore mirror thread; confirmed reviews by Christoph
+  Hellwig, Nilay Shroff, Chaitanya Kulkarni, and application by Keith
+  Busch.
+- [Phase 4] Fetched related try-module failure and blktests threads;
+  confirmed this missing cancellation `module_put()` was discussed and
+  tied to module refcount mismatch.
+- [Phase 5] Used `rg` and file reads to trace callers from
+  `nvme_init_ns_head()` through `nvme_alloc_ns()`, `nvme_scan_ns()`, and
+  `nvme_scan_work()`.
+- [Phase 6] Used `git merge-base --is-ancestor` and branch object
+  inspection to confirm the relevant code exists in local `6.16.y`,
+  `6.17.y`, `6.18.y`, `6.19.y`, and `7.0.y`, but not `6.12.y`.
+- [Phase 6] Ran `git apply --check` for the candidate diff on current
+  `stable/linux-7.0.y`; it succeeded.
+- UNVERIFIED: exact `git apply --check` on separate worktrees for every
+  stable branch; unprivileged triggerability; direct stable-list search
+  results due lore Anubis blocking.
 
 **YES**
 
- fs/btrfs/raid-stripe-tree.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvme/host/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/raid-stripe-tree.c b/fs/btrfs/raid-stripe-tree.c
-index a2e9ac2d97988..5909ad35a1b07 100644
---- a/fs/btrfs/raid-stripe-tree.c
-+++ b/fs/btrfs/raid-stripe-tree.c
-@@ -45,8 +45,11 @@ static int btrfs_partially_delete_raid_extent(struct btrfs_trans_handle *trans,
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index ac5a7d9781f58..2e8402513189d 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4052,7 +4052,8 @@ static int nvme_init_ns_head(struct nvme_ns *ns, struct nvme_ns_info *info)
+ 	mutex_unlock(&ctrl->subsys->lock);
  
- 	for (int i = 0; i < btrfs_num_raid_stripes(item_size); i++) {
- 		struct btrfs_raid_stride *stride = &extent->strides[i];
-+		u64 devid;
- 		u64 phys;
+ #ifdef CONFIG_NVME_MULTIPATH
+-	cancel_delayed_work(&head->remove_work);
++	if (cancel_delayed_work(&head->remove_work))
++		module_put(THIS_MODULE);
+ #endif
+ 	return 0;
  
-+		devid = btrfs_raid_stride_devid(leaf, stride);
-+		btrfs_set_stack_raid_stride_devid(&newitem->strides[i], devid);
- 		phys = btrfs_raid_stride_physical(leaf, stride) + frontpad;
- 		btrfs_set_stack_raid_stride_physical(&newitem->strides[i], phys);
- 	}
 -- 
 2.53.0
 
