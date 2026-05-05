@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB07F32A3C9;
-	Tue,  5 May 2026 09:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717523DDDC4;
+	Tue,  5 May 2026 09:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974798; cv=none; b=jQc5T7YektekDgzHcZhzlBERofWBL8HG5zy24rxKRntOvSdzUeB+HflLC4sw3UM+hz3DUryj2c5u06JkFMNNfcgV1igAwTG1TwBMq96ogAuMQ1lh1pRdLCSsyLIPG7zgRGjfs57uABURgpGgn67sgDwGu5A24zSaXm/LudwmS+o=
+	t=1777974802; cv=none; b=PvhinCG79IR0fstlnvH1sRU+P1gqKNZ3oY7oS8SXJjb75vswHyy8QnJqjZlvpskfJmvWJmDsios7H6P/3OWiuC/MVjE1+dlBLbBg3NNuQWGDrBak/3OcAooEnuWGhpMxXS71xS+ShKvMCQPpswmBkfN3uwvFVez2MwotonO6I0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974798; c=relaxed/simple;
-	bh=Bd++74L1nurtM3unMBgw66nx9YWWxLmwNbphN6HBMQM=;
+	s=arc-20240116; t=1777974802; c=relaxed/simple;
+	bh=XQCROlKft5wVj5I9yTAn2YjpISfn8SpYZY1bJexHqxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nGDnteH8WNW0xXKmr0V/ECXN2Xl/NDEz/mXrODJU+m1bCPgJhZYHFcn/M9RsU/uzSB63Wfl/yD7kfUGgXqU49NimL+7I5vlz9el+TjNtpBDaJQIXoid1p5/FldZVLedC1VPk56S1264DpO1a5tMtJT1FYVlSpSNeD9uZ5LQUTzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JpZX6xpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NIMcv7ctczPJnMjllkAQKPWxUCH8f0gAXmUM8EPKZIRaiSrY1YBDIL3JDLbqnrGUjOlf3bkOqPr4ecL9Qc2x9eeNT+7Ae4IbiXhZwoWKPtXYxDq8JBa0NNJLoe+oiHFDvn3VY8uZsythr+s3poDyHs9lOwOFfhzDtTumH0vjk6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IBCDcP3I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JpZX6xpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239D9C2BCB4;
-	Tue,  5 May 2026 09:53:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IBCDcP3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070F2C2BCB4;
+	Tue,  5 May 2026 09:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974798;
-	bh=Bd++74L1nurtM3unMBgw66nx9YWWxLmwNbphN6HBMQM=;
+	s=k20201202; t=1777974802;
+	bh=XQCROlKft5wVj5I9yTAn2YjpISfn8SpYZY1bJexHqxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpZX6xpL4gTYOloqMi6PEno1y3YLjm38V9EujW59BmemHMvRSHyji4LhIR9Ugb6zl
-	 wY94aFTwRkCjZcgxjVHUsnoyNQvMGP3sRFfJfGvnjObJ1frc/9apW27hOUdtoZAXvI
-	 Rr9XUlYKbUKO8rtw8L+nWrT3NWuyULwDIu4WpP+3Ya7FZiyFNvx1vtecHcuuVF+yfP
-	 fmaIR3DSYalltmlcD5iM9wtYRQTR6EGTTRFlnWyBdYIF21yz6SahZCjdkjCz96eaM8
-	 ZUw+cOOJhSyDTlU6I2TrpG4uAvgr/IPG3NFTQAjf5tmQtXDYlz6sz67FnswH3MAYXP
-	 ALfNawpTV3x+w==
+	b=IBCDcP3ISBaVcx4upCyMln9GHHVc6P7dLw7QOAcqm8KshUBDANb2Yo5481ns19S1W
+	 u2Y7LI+LmM40tQQXLpKmMVI/R7Q/JXwwt7nQQVC8iXkJ4HBWFhChWitCW+YyaA9ZMe
+	 6mq/KlQRK6n4w1a95Vz5H7Cr4U5e3YC90AuPmS+LZtLwx2vH09jNiIySmhwtdZ8z/7
+	 ogDqwMjRE3EIOLc80Fuotk2g5JMkGbBOd1IGH7qPXsk7R7wTGj/toU+KQc5R9mHQ1+
+	 k6i0fGyM7z7HbSCt8T8baQUOTluvfFEmNzfdztSRQd8ARfG8vUnc0L6B05caC8Uxsl
+	 yxySiO3iBKhqA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mark Harmstone <mark@harmstone.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: YuanShang <YuanShang.Mao@amd.com>,
+	Philip Yang <philip.yang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	Felix.Kuehling@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] btrfs: abort transaction in do_remap_reloc_trans() on failure
-Date: Tue,  5 May 2026 05:51:44 -0400
-Message-ID: <20260505095149.512052-28-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] drm/amdkfd: check if vm ready in svm map and unmap to gpu
+Date: Tue,  5 May 2026 05:51:45 -0400
+Message-ID: <20260505095149.512052-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -54,330 +58,278 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Harmstone <mark@harmstone.com>
+From: YuanShang <YuanShang.Mao@amd.com>
 
-[ Upstream commit 73db0fad673af844772de964eebecae60eda0496 ]
+[ Upstream commit d0f5711fa14a09c010537375cf34893cd33bc2ee ]
 
-If one of the calls made by do_remap_reloc_trans() fails, we can leave
-the remap tree in an inconsistent state. Abort the transaction if this
-happens, to prevent the corrupt state from reaching the disk.
+Don't map or unmap svm range to gpu if vm is not ready for updates.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Why: DRM entity may already be killed when the svm worker try to
+update gpu vm.
+
+Signed-off-by: YuanShang <YuanShang.Mao@amd.com>
+Reviewed-by: Philip Yang <philip.yang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 55f8e366c326980174a4f2b9501b524d8eb25135)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem `drm/amdkfd`, action verb `check`, intent:
+avoid SVM GPU VM map/unmap when the AMDGPU VM cannot accept updates.
 
-Step 1.1 Record: subsystem `btrfs`; action verb `abort`; claimed intent
-is to abort the transaction from `do_remap_reloc_trans()` failure paths
-so an inconsistent remap tree cannot be committed.
+Step 1.2 Record: Tags found in the actual commit: `Signed-off-by:
+YuanShang <YuanShang.Mao@amd.com>`, `Reviewed-by: Philip Yang
+<philip.yang@amd.com>`, `Signed-off-by: Alex Deucher
+<alexander.deucher@amd.com>`. No `Fixes:`, no `Reported-by:`, no
+`Tested-by:`, no `Cc: stable`.
 
-Step 1.2 Record: tags found in the actual public patch are `Reviewed-by:
-Johannes Thumshirn`, `Signed-off-by: Mark Harmstone`, and `Signed-off-
-by: David Sterba`. No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`,
-or `Cc: stable` tag was present in the fetched patch. Notable pattern:
-reviewed by a Btrfs developer and committed by David Sterba.
+Step 1.3 Record: The commit says the SVM worker may try to update a GPU
+VM after the DRM scheduler entity has already been killed. The user-
+visible symptom was verified from the lore thread: “Trying to push to a
+killed entity”, SDMA timeout, GPU reset, and a hung
+`svm_range_restore_work` kworker blocked in `dma_fence_wait_timeout()`
+via `svm_range_validate_and_map()`.
 
-Step 1.3 Record: the body describes a real corruption-prevention bug:
-failures in `do_remap_reloc_trans()` can leave the remap tree
-inconsistent, and aborting the transaction prevents that state from
-reaching disk. No stack trace, reproducer, or explicit affected versions
-were in the message. Root cause, as verified from code, is that the
-function can return through `fail` after transactional remap/free-space
-mutations without marking the transaction aborted.
-
-Step 1.4 Record: this is not a hidden cleanup; it is an explicit
-filesystem consistency fix. The subject and body both describe
-preventing corrupt on-disk state.
+Step 1.4 Record: This is a hidden bug fix despite the neutral “check”
+wording. It prevents submitting VM update jobs to a stopped/killed VM
+update entity, which otherwise can leave fences unsignaled and hang
+worker context.
 
 ## Phase 2: Diff Analysis
+Step 2.1 Record: One file changed:
+`drivers/gpu/drm/amd/amdkfd/kfd_svm.c`, 11 insertions. Modified
+functions: `svm_range_unmap_from_gpu()` and `svm_range_map_to_gpu()`.
+Scope: single-file surgical fix.
 
-Step 2.1 Record: one file changed, `fs/btrfs/relocation.c`, with +10/-4.
-One function modified: `do_remap_reloc_trans()`. Scope is a single-
-function surgical filesystem fix.
+Step 2.2 Record: Before, both SVM unmap and map directly called
+`amdgpu_vm_update_range()`. After, both first call `amdgpu_vm_ready(vm)`
+and return `-EINVAL` if the VM is not ready. Affected path is VM page
+table update submission from SVM map/unmap, including restore worker and
+MMU notifier/unmap paths.
 
-Step 2.2 Record: before the patch, four failure paths jumped to `fail`,
-released local references, freed the reserved extent, unlocked
-`remap_mutex`, and ended the transaction without aborting it. After the
-patch, those paths call `btrfs_abort_transaction(trans, ret)` before
-cleanup. The `add_remap_entry()` failure path also stops attempting
-`btrfs_add_to_free_space_tree()` recovery and aborts instead.
+Step 2.3 Record: Bug category is synchronization/lifetime correctness
+around process teardown. `amdgpu_vm_ready()` in current mainline
+verifies the VM is not evicting, has no evicted PTs, and its
+immediate/delayed VM update scheduler entities are not stopped. The fix
+avoids queueing jobs after those entities are killed.
 
-Step 2.3 Record: bug category is filesystem metadata consistency / data
-corruption prevention. `add_remap_entry()` was verified to delete or
-shorten identity remap entries before adding new remap and backref
-items; if a later insertion fails, returning normally can leave a
-partially updated remap tree. `btrfs_abort_transaction()` was verified
-to mark the transaction aborted and set filesystem error state,
-preventing normal commit of that partial state.
-
-Step 2.4 Record: the fix is minimal and consistent with Btrfs
-transaction rules. `transaction.c` says after abort, call-site recovery
-should be limited to freeing local allocations and passing the error up;
-the patch does exactly that. Regression risk is low but not zero: the
-filesystem will now abort/remount error on these rare failures instead
-of attempting to continue, but that is the correct trade-off for
-avoiding persistent metadata corruption.
+Step 2.4 Record: Fix quality is good: 11 lines, no new API, no feature,
+no data structure changes. Regression risk is low, mainly early
+returning `-EINVAL` when VM updates cannot run anyway. Backport risk is
+higher for older trees because `amdgpu_vm_ready()` only gained stopped-
+entity checks in commit `f101c13a8720c7`; older stable trees need that
+or an equivalent prerequisite for this patch to address the killed-
+entity failure.
 
 ## Phase 3: Git History Investigation
+Step 3.1 Record: Blame shows SVM map/unmap infrastructure was introduced
+by `f80fe9d3c114` (“drm/amdkfd: map svm range to GPUs”, first in
+`v5.14-rc1`) and later reshaped by commits including `6c1a7867734`
+(`v5.18-rc1`). The missing readiness guard has existed in these SVM
+paths for a long time.
 
-Step 3.1 Record: `git blame` shows the changed error paths were
-introduced by `fd6594b1446cc` (`btrfs: replace identity remaps with
-actual remaps when doing relocations`), authored by Mark Harmstone in
-Jan 2026 and merged for the 7.0 cycle. First containing tag verified as
-`v7.0-rc1~232^2~74`.
+Step 3.2 Record: No `Fixes:` tag, so no direct target to follow.
 
-Step 3.2 Record: no `Fixes:` tag is present, so there was no explicit
-tag to follow. Independent blame identifies `fd6594b1446cc` as the
-introducer, and that commit exists in `stable/linux-7.0.y` but not older
-checked stable branches.
+Step 3.3 Record: Recent file history contains many SVM fixes, including
+UAF, address conversion, PTE clearing, restore work, and retry-fault
+race fixes. Related commit `597eb70f7ff7` / upstream `10c382ec6c6d`
+(“drm/amdkfd: Don’t clear PT after process killed”) added an
+`amdgpu_vm_ready()` guard in a different KFD GPUVM path and was
+explicitly stable-tagged.
 
-Step 3.3 Record: recent local history for `fs/btrfs/relocation.c` shows
-several remap-tree fixes around the same code, including block-group
-reference, NULL root checks, transaction handle leak, and remap-tree
-setup fixes. The candidate itself is standalone; no prerequisite was
-found for the shown hunk to apply to `stable/linux-7.0.y`.
+Step 3.4 Record: `git log --author='YuanShang' -10 --
+drivers/gpu/drm/amd/amdkfd` produced no reachable prior commits in this
+checkout. The patch was reviewed by Philip Yang, a regular AMD KFD
+contributor, and committed by Alex Deucher.
 
-Step 3.4 Record: the author, Mark Harmstone, authored the remap-tree
-relocation code and several nearby Btrfs fixes. David Sterba committed
-both the introducer and the candidate in the Btrfs development tree.
-
-Step 3.5 Record: related nearby commit `942bcf6d1884` fixes a separate
-`bytes_may_use` leak in the same function. It is not a prerequisite for
-this abort fix; the candidate patch applies cleanly to current
-`stable/linux-7.0.y` in a dry-run.
+Step 3.5 Record: Dependency identified: `f101c13a8720c7` (“drm/amdgpu:
+fix task hang from failed job submission during process kill”) teaches
+`amdgpu_vm_ready()` to check stopped VM update entities. Without it,
+this candidate’s guard does not fully detect the killed-entity condition
+in older stable trees.
 
 ## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 55f8e366c326...` found the original
+submission at `https://patch.msgid.link/20260326103656.487304-1-
+YuanShang.Mao@amd.com`. `b4 dig -a` found only v1, standalone. WebFetch
+to lore was blocked by Anubis, but `b4 dig -m` retrieved the mbox
+successfully.
 
-Step 4.1 Record: `b4 dig -c a41c84ba2f51303b7dca2ccf426d99c4a3a757b3`
-failed because the commit object is not present in this local clone. Web
-research found the original v2 thread at `https://yhbt.net/lore/linux-
-btrfs/3a0c1b94-4404-4726-aafe-809c425707fc@wdc.com/T/`. The thread shows
-v2 and notes the change from aborting at the end to aborting in place so
-line numbers are logged properly.
+Step 4.2 Record: `b4 dig -w` showed original recipients were YuanShang
+and `amd-gfx@lists.freedesktop.org`. The thread later included Christian
+König and Philip Yang.
 
-Step 4.2 Record: `b4 dig -w` also failed for the same nonlocal commit
-reason. The fetched lore mirror shows recipients `linux-btrfs` and Boris
-Burkov, and a review reply from Johannes Thumshirn with `Reviewed-by`.
+Step 4.3 Record: No separate bugzilla/syzbot link. The thread itself
+contains the bug log: killed entity error, SDMA timeout, GPU reset,
+recovered wedge, and hung kworker in `svm_range_restore_work`.
 
-Step 4.3 Record: no separate bug report, syzbot report, or Bugzilla link
-was found in the commit or lore thread. Severity comes from the patch
-description and verified code mechanism: possible persistent remap-tree
-inconsistency.
+Step 4.4 Record: Philip Yang stated the earlier “Don’t clear PT after
+process killed” patch fixed one path and this patch fixes another path,
+then gave `Reviewed-by: Philip Yang <philip.yang@amd.com>`. No NAKs
+found.
 
-Step 4.4 Record: lore shows this patch as a standalone `[PATCH v2]`, not
-a numbered multi-patch series. Web search found a separate same-function
-accounting leak fix, but no dependency relationship.
-
-Step 4.5 Record: stable-specific search did not find a usable stable
-discussion; direct lore stable fetches were blocked by Anubis. No
-evidence of a known objection or rejection was found.
+Step 4.5 Record: Stable-specific web search could not be verified
+because WebFetch to lore/stable timed out or hit Anubis. No stable
+nomination for this exact patch found in the mbox.
 
 ## Phase 5: Code Semantic Analysis
+Step 5.1 Record: Key functions: `svm_range_unmap_from_gpu()`,
+`svm_range_map_to_gpu()`.
 
-Step 5.1 Record: modified function is `do_remap_reloc_trans()`.
+Step 5.2 Record: Callers verified: `svm_range_unmap_from_gpu()` is
+called by `svm_range_unmap_from_gpus()`, reached from CPU unmap/MMU
+notifier handling and SVM validation with PROT_NONE.
+`svm_range_map_to_gpu()` is called by `svm_range_map_to_gpus()`, reached
+from `svm_range_validate_and_map()`.
 
-Step 5.2 Record: caller chain verified as `btrfs_ioctl_balance()` ->
-`btrfs_balance()` -> `__btrfs_balance()` -> `btrfs_relocate_chunk()` ->
-`btrfs_relocate_block_group()` -> `do_remap_reloc()` ->
-`do_remap_reloc_trans()`. Other verified callers of
-`btrfs_relocate_chunk()` include device shrink, block-group reclaim, and
-zoned repair paths. Balance ioctl requires `CAP_SYS_ADMIN`.
+Step 5.3 Record: Key callees: both changed functions call
+`amdgpu_vm_update_range()`. For SDMA VM updates, that path
+allocates/submits an AMDGPU job; `amdgpu_job_submit()` arms the
+scheduler job and calls `drm_sched_entity_push_job()`.
 
-Step 5.3 Record: key callees include
-`btrfs_add_block_group_free_space()`, `copy_remapped_data()`,
-`btrfs_remove_from_free_space_tree()`, `add_remap_entry()`,
-`btrfs_free_reserved_extent()`, and `btrfs_end_transaction()`.
-`add_remap_entry()` calls `btrfs_del_item()`,
-`btrfs_set_item_key_safe()`, `add_remap_item()`,
-`btrfs_insert_empty_item()`, and `add_remap_backref_item()`.
+Step 5.4 Record: Reachability verified: `svm_range_restore_work()` calls
+`svm_range_validate_and_map()`, which calls `svm_range_map_to_gpus()`
+and then `svm_range_map_to_gpu()`. The lore log shows exactly this call
+chain in a hung kworker. GPU page fault and MMU notifier paths also
+reach the same validation/unmap functions.
 
-Step 5.4 Record: the buggy path is reachable from privileged userspace
-via Btrfs balance and from kernel maintenance paths such as
-reclaim/shrink. It is only active when
-`should_relocate_using_remap_tree()` is true: filesystem has the
-`REMAP_TREE` incompat feature and the block group is not system or
-metadata-remap.
+Step 5.5 Record: Similar pattern verified: `amdgpu_amdkfd_gpuvm.c`
+already has an `amdgpu_vm_ready()` guard with the comment “VM entity
+stopped if process killed”; `amdgpu_cs.c` and `amdgpu_gem.c` also check
+VM readiness before clearing freed mappings.
 
-Step 5.5 Record: similar local patterns support aborting.
-`move_existing_remap()` aborts the transaction on error before
-ending/committing, and `start_block_group_remapping()` aborts on remap-
-tree setup failures. `transaction.h` explicitly says to call
-`btrfs_abort_transaction()` as early as possible.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: The SVM map/unmap functions exist in `v5.15`, `v6.1`,
+`v6.6`, and `v6.8`, and none of those extracted versions had the new
+guards. The reported log was from Ubuntu `6.8.0-90-generic`, confirming
+a stable-derived affected kernel.
 
-## Phase 6: Cross-Referencing And Stable Tree Analysis
+Step 6.2 Record: Backport difficulty: minor to moderate. `v6.8`, `v6.6`,
+and `v6.1` have the same conceptual functions but older
+`amdgpu_vm_update_range()` signatures. `v5.15` uses older
+`amdgpu_vm_bo_update_mapping()` in this path. Older trees also need
+`f101c13a8720c7` or equivalent stopped-entity readiness logic.
 
-Step 6.1 Record: `stable/linux-7.0.y` contains `do_remap_reloc_trans()`.
-`stable/linux-6.19.y`, `stable/linux-6.18.y`, `stable/linux-6.12.y`, and
-`stable/linux-6.6.y` do not contain this function or remap-tree support
-in the checked paths. The bug is therefore relevant to 7.0.y, not older
-stable branches checked.
+Step 6.3 Record: Related fix `597eb70f7ff7`/`10c382ec6c6d` addresses a
+different process-kill VM update path and was stable-tagged. It does not
+cover SVM map/unmap; Philip Yang explicitly confirmed this patch fixes
+another path.
 
-Step 6.2 Record: dry-run `git apply --check` of the candidate hunk
-succeeded against current `stable/linux-7.0.y`, so expected backport
-difficulty is clean for 7.0.y.
+## Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is AMDGPU KFD SVM/HMM GPU memory management.
+Criticality: important, affecting AMD compute users using KFD SVM, GPU
+page faults, migration, and process teardown.
 
-Step 6.3 Record: local `stable/linux-7.0.y` does not already contain the
-candidate subject, and the current file still has the pre-fix failure
-paths.
+Step 7.2 Record: Subsystem is active; recent history shows many SVM
+correctness fixes. The bug is in a mature path present since `v5.14+`,
+not just brand-new code.
 
-## Phase 7: Subsystem And Maintainer Context
+## Phase 8: Impact And Risk
+Step 8.1 Record: Affected population is driver/config/hardware specific:
+AMDGPU KFD users with SVM-capable compute workloads.
 
-Step 7.1 Record: subsystem is Btrfs filesystem code under `fs/btrfs`,
-criticality IMPORTANT. It is not universal core code, but filesystem
-metadata corruption is a high-severity stable concern for affected Btrfs
-users.
+Step 8.2 Record: Trigger requires SVM VM update work racing with forced
+process kill or teardown after VM scheduler entities are stopped. The
+lore log verifies a real trigger. Whether it is fully unprivileged
+depends on render/KFD device permissions and was not independently
+verified.
 
-Step 7.2 Record: subsystem activity is high in this area; local history
-shows many Btrfs remap-tree commits and fixes in the 7.0 cycle. This is
-recently introduced code, but it is already present in the 7.0 stable
-tree.
+Step 8.3 Record: Failure mode is severe: verified killed-entity error,
+SDMA ring timeout, GPU reset, recovered device wedge, and hung kworker
+for more than 245 seconds. Severity: HIGH, arguably CRITICAL for
+affected systems.
 
-## Phase 8: Impact And Risk Assessment
-
-Step 8.1 Record: affected population is config/filesystem-specific:
-users running kernels with Btrfs experimental/remap-tree support and
-filesystems using the `REMAP_TREE` incompat feature, during
-relocation/balance/shrink/reclaim paths.
-
-Step 8.2 Record: trigger conditions are failures from the remap
-relocation sequence after reservation and during free-space/remap-
-tree/data-copy operations. Verified user trigger via balance requires
-`CAP_SYS_ADMIN`; unprivileged trigger was not verified.
-
-Step 8.3 Record: failure mode is potential persistent filesystem
-metadata inconsistency / corruption of the remap tree. Severity is
-CRITICAL for affected users because the commit’s stated goal is to
-prevent corrupt state from reaching disk and code inspection confirms
-partial remap-tree mutations can occur before error returns.
-
-Step 8.4 Record: benefit is high for affected 7.0.y users because it
-prevents committing inconsistent filesystem metadata. Risk is low: one
-function, 10 additions and 4 removals, no API changes, and behavior only
-changes rare error paths to abort the transaction.
+Step 8.4 Record: Benefit is high for affected AMD KFD users because it
+avoids a real hung-task/GPU-reset failure. Risk is low in mainline-
+shaped code because the fix only refuses impossible VM updates. Risk for
+older stable trees is manageable but requires prerequisite/backport care
+around `amdgpu_vm_ready()` semantics.
 
 ## Phase 9: Final Synthesis
+Step 9.1 Record: Evidence for backporting: real user log, severe
+hang/GPU reset, small surgical fix, reviewed by Philip Yang, related
+already-stable process-kill fix shows same class of bug, affected code
+exists in stable-derived kernels. Evidence against: no `Fixes:` or `Cc:
+stable`, and older trees need dependency/backport adjustment.
+Unresolved: exact clean-apply status for every active stable branch was
+not tested.
 
-Step 9.1 Record: evidence for backporting is strong: real filesystem
-consistency bug, verified partial transactional mutations in
-`add_remap_entry()`, small single-function fix, reviewed on linux-btrfs,
-clean dry-run apply to `stable/linux-7.0.y`, and Btrfs transaction
-documentation supports early abort. Evidence against is limited to scope
-of affected users: remap-tree is experimental/config-specific and the
-bug only exists in 7.0.y among checked stable branches. Unresolved: no
-independent reproducer or user report was found, and direct lore/stable
-search was partially blocked.
+Step 9.2 Record: Stable rules checklist: obviously correct and reviewed:
+yes, with dependency caveat. Fixes real bug: yes, verified by lore log.
+Important issue: yes, hung task/GPU reset. Small and contained: yes, 11
+lines in one file. No new feature/API: yes. Applies to stable: likely
+needs minor backport adjustment and `f101c13a8720c7` or equivalent for
+older trees.
 
-Step 9.2 Record: stable rules checklist:
-1. Obviously correct and tested: yes for correctness by inspection;
-   reviewed by Johannes Thumshirn. No `Tested-by` found.
-2. Fixes a real bug: yes, prevents inconsistent remap-tree state after
-   transactional failure paths.
-3. Important issue: yes, potential on-disk filesystem corruption.
-4. Small and contained: yes, one function in one file, +10/-4.
-5. No new features/APIs: yes.
-6. Can apply to stable: yes for `stable/linux-7.0.y`; not applicable to
-   older checked stable branches lacking the code.
+Step 9.3 Record: No exception category applies; this is not a device ID,
+quirk, DT, build, or documentation-only patch.
 
-Step 9.3 Record: no exception category like device ID, quirk, DT, build,
-or docs applies. This is a normal serious filesystem bug fix.
-
-Step 9.4 Decision: backport to stable trees that contain the remap-tree
-relocation code, specifically 7.0.y based on the checked branches. Do
-not try to apply it to older stable trees that lack
-`do_remap_reloc_trans()`.
+Step 9.4 Record: Decision is to backport, but not as an isolated blind
+cherry-pick to older stable trees. It should be taken with the stopped-
+entity readiness prerequisite/backport so `amdgpu_vm_ready()` actually
+detects the process-kill condition.
 
 ## Verification
-
-- [Phase 1] Fetched public patch from GitHub commit
-  `a41c84ba2f51303b7dca2ccf426d99c4a3a757b3`; confirmed subject, body,
-  tags, and +10/-4 diff.
-- [Phase 2] Read `fs/btrfs/relocation.c`; confirmed old failure paths
-  end the transaction without aborting.
-- [Phase 2] Read `add_remap_entry()`; confirmed it can delete/shorten
-  identity remap state before later operations fail.
-- [Phase 2] Read `transaction.h` and `transaction.c`; confirmed
-  `btrfs_abort_transaction()` records abort state and transaction abort
-  rules favor local cleanup only.
-- [Phase 3] `git blame -L 5032,5049 -- fs/btrfs/relocation.c`: changed
-  lines introduced by `fd6594b1446cc`.
-- [Phase 3] `git show --stat --format=fuller fd6594b1446cc --
-  fs/btrfs/relocation.c`: introducer is `btrfs: replace identity remaps
-  with actual remaps when doing relocations`, +326 lines.
-- [Phase 3] `git describe --contains fd6594b1446cc`: first containing
-  point reported in the 7.0-rc1 range.
-- [Phase 3] `git log --author='Mark Harmstone' -10 -- fs/btrfs`: author
-  has multiple nearby Btrfs/remap fixes.
-- [Phase 4] `b4 dig -c`, `-a`, and `-w` failed because the candidate
-  commit object is not in this local clone.
-- [Phase 4] Fetched lore mirror thread; confirmed `[PATCH v2]`, v2
-  change note, and `Reviewed-by` reply from Johannes Thumshirn.
-- [Phase 4] Web searches found no usable stable-specific discussion;
-  direct lore stable fetch was blocked by Anubis.
-- [Phase 5] `rg` and file reads traced callers from balance ioctl and
-  maintenance paths to `do_remap_reloc_trans()`.
-- [Phase 5] Read `relocation.h`; confirmed remap-tree relocation
-  condition.
-- [Phase 6] `git grep` on stable branches: function exists in
-  `stable/linux-7.0.y`; not found in checked `6.19.y`, `6.18.y`,
-  `6.12.y`, or `6.6.y`.
-- [Phase 6] `git apply --check` of the candidate hunk succeeded against
-  current `stable/linux-7.0.y`.
-- [Phase 6] `git log --grep` in `stable/linux-7.0.y` found no existing
-  candidate commit.
-- UNVERIFIED: no runtime test, fstest, or reproducer was run.
-- UNVERIFIED: direct canonical lore.kernel.org pages were blocked by
-  Anubis, so I used the available lore mirror and GitHub commit content.
-
-The risk-benefit balance is clearly favorable for affected stable trees:
-this is a small, reviewed, error-path-only Btrfs fix that prevents
-potentially persistent filesystem metadata corruption.
+- Phase 1: Parsed target commit with `git show`; confirmed tags and no
+  `Fixes:`/stable tag.
+- Phase 2: Diff verified as 11 insertions in
+  `svm_range_unmap_from_gpu()` and `svm_range_map_to_gpu()`.
+- Phase 3: `git blame` verified SVM map/unmap history; `git describe
+  --contains` placed the original SVM mapping in `v5.14-rc1` and later
+  function reshaping in `v5.18-rc1`.
+- Phase 3: `git show f101c13a8720c7` verified `amdgpu_vm_ready()` gained
+  stopped-entity checks.
+- Phase 3: `git show 597eb70f7ff7` verified the related stable-tagged
+  “Don’t clear PT after process killed” guard in another path.
+- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and decoded mbox verified
+  the lore thread, single v1 patch, recipients, log, Christian’s “Looks
+  correct”, and Philip’s `Reviewed-by`.
+- Phase 5: `rg` and file reads traced map/unmap callers through
+  `svm_range_validate_and_map()` and `svm_range_restore_work()`.
+- Phase 6: Extracted `v5.15`, `v6.1`, `v6.6`, and `v6.8` files; verified
+  the affected SVM functions exist without the new guard.
+- Phase 8: Lore log verified severity: killed entity, SDMA timeout, GPU
+  reset, device wedge recovery, and hung kworker.
+- UNVERIFIED: WebFetch lore/stable searches were blocked/timed out, and
+  I did not test applying the patch to each stable branch.
 
 **YES**
 
- fs/btrfs/relocation.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 033f74fd6225c..2519cdb401eda 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -5031,21 +5031,27 @@ static int do_remap_reloc_trans(struct btrfs_fs_info *fs_info,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 080242f9981b0..addb86803d9ae 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1363,6 +1363,12 @@ svm_range_unmap_from_gpu(struct amdgpu_device *adev, struct amdgpu_vm *vm,
  
- 	if (bg_needs_free_space) {
- 		ret = btrfs_add_block_group_free_space(trans, dest_bg);
--		if (ret)
-+		if (ret) {
-+			btrfs_abort_transaction(trans, ret);
- 			goto fail;
-+		}
- 	}
- 
- 	ret = copy_remapped_data(fs_info, start, new_addr, length);
--	if (ret)
-+	if (ret) {
-+		btrfs_abort_transaction(trans, ret);
- 		goto fail;
+ 	pr_debug("CPU[0x%llx 0x%llx] -> GPU[0x%llx 0x%llx]\n", start, last,
+ 		gpu_start, gpu_end);
++
++	if (!amdgpu_vm_ready(vm)) {
++		pr_debug("VM not ready, canceling unmap\n");
++		return -EINVAL;
 +	}
++
+ 	return amdgpu_vm_update_range(adev, vm, false, true, true, false, NULL, gpu_start,
+ 				      gpu_end, init_pte_value, 0, 0, NULL, NULL,
+ 				      fence);
+@@ -1440,6 +1446,11 @@ svm_range_map_to_gpu(struct kfd_process_device *pdd, struct svm_range *prange,
+ 	pr_debug("svms 0x%p [0x%lx 0x%lx] readonly %d\n", prange->svms,
+ 		 last_start, last_start + npages - 1, readonly);
  
- 	ret = btrfs_remove_from_free_space_tree(trans, new_addr, length);
--	if (ret)
-+	if (ret) {
-+		btrfs_abort_transaction(trans, ret);
- 		goto fail;
++	if (!amdgpu_vm_ready(vm)) {
++		pr_debug("VM not ready, canceling map\n");
++		return -EINVAL;
 +	}
- 
- 	ret = add_remap_entry(trans, path, src_bg, start, new_addr, length);
- 	if (ret) {
--		btrfs_add_to_free_space_tree(trans, new_addr, length);
-+		btrfs_abort_transaction(trans, ret);
- 		goto fail;
- 	}
- 
++
+ 	for (i = offset; i < offset + npages; i++) {
+ 		uint64_t gpu_start;
+ 		uint64_t gpu_end;
 -- 
 2.53.0
 
