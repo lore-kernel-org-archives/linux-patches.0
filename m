@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB751337BBD;
-	Tue,  5 May 2026 09:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6003E31E82B;
+	Tue,  5 May 2026 09:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974743; cv=none; b=Vs7TBqZGhUBtS44UIMLNUILo2j+Ym8giptDpdOS3cgflBkDxqTB6YMh/tjIehL4i5dgwYxqGYnL+vSbeHRxs6YUevisJBbwEMLTldrSQ6Ck2cqw9nqFoafsWjKjiYsei3f6X160jewv6dbP7LdGg82+c26FI2/p32l8+AUcNSx8=
+	t=1777974746; cv=none; b=qwzLC24xayEXEF5Tl+7QgeFgSC7cThTYcCJ+frVgtgHY3yRIsEWQiPUvJzPM2825w6dv90FX2sLmOkIgiTPF0CGWi47buYtjW1Vj2H5bFOSs7DgAx4aR75StzqSQiPjx62mUi4guRRo3jk4IpiDYgWxzHMrNHkfw9OIixbv3FbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974743; c=relaxed/simple;
-	bh=y1Qfm0/uyx8vh96/sDNbnmLNVzbgaLb2euW3sAZ87qo=;
+	s=arc-20240116; t=1777974746; c=relaxed/simple;
+	bh=f84Y5TVEmr22zCYb60Nse16esybFpQ0wAWR5ZZ0YvII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dr3JuMYl+IaR3fVKQjJOrb4T/uLWrXXVa2/J0g3SWxAg73arOnknQSsbCWjyiG2es83j8apt7ywvfmbAZm8DchFXmrCk2Sw2WYTiXuBGF9Rvdaf0awB139M1sw3n5FVhtE8B4dasLYDhwZUHAXaZzFxL7k+CrPaKi3SGipH5YqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FzTSWr5W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jl+S0Rscme5diB3WGk1EtF5HmnIpGT5OLMsCPtJB9welYuqbaqRbKGO16uKdNiDDB3CF5GlO4InBU2HOa/WmbmphYOYQekByHL/y/FyhxgVZvaAHXrFio1wHduu8qFho6JX7ORP+SymU/Z5jbcvkIhwznWPBMCoh/6HiyZYsjrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jTX1SJr2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FzTSWr5W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A28AC2BCB9;
-	Tue,  5 May 2026 09:52:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jTX1SJr2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA7AC2BCC9;
+	Tue,  5 May 2026 09:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974742;
-	bh=y1Qfm0/uyx8vh96/sDNbnmLNVzbgaLb2euW3sAZ87qo=;
+	s=k20201202; t=1777974746;
+	bh=f84Y5TVEmr22zCYb60Nse16esybFpQ0wAWR5ZZ0YvII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FzTSWr5WdJd8ONxMCuS6TcVZhoigKDuNTesK4DqVzz5MX7cr/xWNmHInKL3cTuOxQ
-	 M9LiOtZAFfRytPjhvAGLDJO3oKbg1pfbi23IjtgapVBs/BSilcv/YXyrcnwN+3NhvH
-	 XRWRTC56Od3fQ16AY18MtA6bdDpgb7Q1X6VxywrLMgXwqOI5v5vGH2BMlLDSOu/T5G
-	 4dxFSADna51qZELpIOnMAA38+ddA2Tzq50nNiXwIJGqjvZhK7RwYx+dQpAptdvLKIT
-	 hyL4L9/k9WlrDtdVlPC0+Dg/0xqa0DQLhsOc0K2atrSt78iYqq0XYgu3461QWkEb+A
-	 HTCYfiQJtnLwQ==
+	b=jTX1SJr2CoLRi6IleF5y9HaaFvRpvc5hvxF8tM5TR/7hzjXeuEPfc6RBF6qey3oWL
+	 eUQ/H/3ovOx6HUUt9Lxn74iyWSf31boG1aboFDneOBYPmB1u/hQMCF4rsm+On5ZreJ
+	 W+AtBaToSES1byN3zXcsZXJKGLbTMq/WVlIA7DEaKzTmmRHqfYz9vKhixmHyea2h56
+	 h5C4mClYzTMBVjjxXVNOWk8oAXkl61eojIv8ZstytXfTOi/ihZk1GZluparu5QAcE/
+	 iVE7L1VjKHYmEHXROr7kGPMUii+c2WwSWyhdKxec6spAYIo/MowdWOrdl/WnThEX4I
+	 rCAPGI+UaC3YA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Rosalie Wanders <rosalie@mailbox.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
 	perex@perex.cz,
 	tiwai@suse.com,
-	dlan@kernel.org,
 	linux-sound@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] ASoC: spacemit: move hw constraints from hw_params to startup
-Date: Tue,  5 May 2026 05:51:26 -0400
-Message-ID: <20260505095149.512052-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ALSA: usb-audio: apply quirk for Playstation PDP Riffmaster
+Date: Tue,  5 May 2026 05:51:27 -0400
+Message-ID: <20260505095149.512052-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -58,291 +54,277 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+From: Rosalie Wanders <rosalie@mailbox.org>
 
-[ Upstream commit 6b4afbaaa342eaa52172e0be5ef8d1fcbf9ff460 ]
+[ Upstream commit 110189f0268d0eb85895721526328cac5804a739 ]
 
-Hardware constraints should be applied in the startup callback rather
-than hw_params, as hw_params may be called too late for the constraints
-to take effect properly.
+This device, just like the Playstation 5's DualSense, has a volume
+that's too low, hid-playstation solves this by raising the minimum
+volume on the device itself by sending an output report, third party PS5
+controllers/accessories do not support this output report format, so we
+apply a quirk to raise the minimum volume by 6dB.
 
-Move the channel count and format constraints for I2S and DSP_A/DSP_B
-modes into a new startup callback. This also tightens the I2S mode
-channel constraint from 1-2 to exactly 2, matching the actual hardware
-behavior.
-
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Link: https://patch.msgid.link/20260429-k3-i2s-v1-2-2fe99db11ecb@linux.spacemit.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Rosalie Wanders <rosalie@mailbox.org>
+Link: https://patch.msgid.link/20260426025520.3985-2-rosalie@mailbox.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
-Step 1.1 Record: Subsystem `ASoC: spacemit`; action verb `move`; intent
-is to apply PCM hardware constraints in `.startup` instead of
-`.hw_params`.
+## Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem is `ALSA: usb-audio`; action verb is `apply`;
+intent is to add a device-specific volume quirk for PlayStation PDP
+Riffmaster controllers/accessories.
 
-Step 1.2 Record: Tags present: `Signed-off-by: Troy Mitchell`, `Link: ht
-tps://patch.msgid.link/20260429-k3-i2s-v1-2-
-2fe99db11ecb@linux.spacemit.com`, `Signed-off-by: Mark Brown`. No
-`Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by`, `Acked-by`, or
-`Cc: stable`.
+Step 1.2 Record: Tags present are:
+- `Signed-off-by: Rosalie Wanders <rosalie@mailbox.org>`
+- `Link:
+  https://patch.msgid.link/20260426025520.3985-2-rosalie@mailbox.org`
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>`
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
+or `Cc: stable@vger.kernel.org` tags were present.
 
-Step 1.3 Record: The body says constraints in `.hw_params` may be too
-late to affect ALSA parameter negotiation, and that I2S should be
-constrained to exactly 2 channels. Symptom is invalid PCM
-formats/channel counts being allowed for the SpacemiT I2S mode. No crash
-trace or affected kernel versions are stated.
+Step 1.3 Record: The commit says the PDP Riffmaster has too-low volume,
+similar to the PS5 DualSense. It states `hid-playstation` compensates
+for DualSense by sending an output report, but third-party PS5
+controllers/accessories do not support that output report format, so
+this patch raises the ALSA minimum volume by 6 dB. Symptom is functional
+audio output being too quiet on this hardware. No affected kernel
+version is stated.
 
-Step 1.4 Record: This is a hidden bug fix: it is phrased as
-moving/refactoring constraints, but it corrects when ALSA constraints
-are installed and prevents unsupported hardware parameters.
+Step 1.4 Record: This is not hidden as cleanup; it is explicitly a
+hardware quirk/workaround. It fixes a device-specific functional
+problem, not a crash, memory safety issue, or data corruption issue.
 
-Step 2.1 Record: One file changed, `sound/soc/spacemit/k1_i2s.c`, 32
-insertions and 13 deletions. Modified functions/objects: new
-`spacemit_i2s_startup`, existing `spacemit_i2s_hw_params`, and
-`spacemit_i2s_dai_ops`. Scope is single-file, driver-local, surgical.
+## Phase 2: Diff Analysis
+Step 2.1 Record: One file changed: `sound/usb/mixer.c`, with 10
+insertions and no removals. One function changed:
+`volume_control_quirks()`. Scope is a single-file, single-switch-entry
+hardware quirk.
 
-Step 2.2 Record: Before, the driver advertised broad 1-2 channel and
-S16/S32 capabilities and only added mode-specific constraints inside
-`.hw_params`, after parameters had already been selected. After,
-`.startup` constrains I2S to 2ch/S16 and DSP_A/DSP_B to 1ch/S32 before
-userspace parameter selection completes.
+Step 2.2 Record: Before, PDP Riffmaster USB IDs had no special handling,
+so the device-reported volume range was used as-is. After, for USB IDs
+`0x0e6f:0x024a` and `0x0e6f:0x0249`, if the ALSA control name is `PCM
+Playback Volume`, the code logs the quirk and sets `cval->min = -2560`.
 
-Step 2.3 Record: Bug category is logic/correctness in hardware parameter
-negotiation. There is no memory safety, locking, refcounting, or
-resource lifetime change.
+Step 2.3 Record: Bug category is hardware workaround / device-specific
+USB-audio volume quirk. The mechanism is correcting the exposed minimum
+playback-volume value before ALSA dB conversion and control
+registration.
 
-Step 2.4 Record: Fix quality is good: it moves existing constraints to
-the ALSA callback used for early constraints and tightens I2S channels.
-Regression risk is low but not zero: unsupported mono I2S streams will
-now fail earlier, which is intended if the author’s hardware statement
-is correct.
+Step 2.4 Record: Fix quality is high: tiny, isolated, matches existing
+nearby patterns for device-specific volume quirks, changes no API, and
+is gated by exact USB IDs plus exact control name. Regression risk is
+very low and limited to the two PDP Riffmaster IDs.
 
-Step 3.1 Record: `git blame` shows the changed constraint code was
-introduced by `fce217449075d` / local full SHA
-`fce217449075d59b29052b8cdac567f0f3e22641`, “ASoC: spacemit: add i2s
-support for K1 SoC”, first described as contained before `v6.19-rc1`.
+## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows `volume_control_quirks()` was
+introduced by `dcaaf9f2c16b56` and is present since `v3.2-rc2~23^2~3`.
+The immediate insertion context includes the Asus USB DAC quirk from
+`4020d1ccbe55bd` (`v5.7~16^2~2`) and, on newer branches, MOONDROP
+quirks. For this commit, the “buggy code” is effectively the absence of
+a quirk for this hardware, not a bad prior line.
 
-Step 3.2 Record: No `Fixes:` tag in this candidate, so there was no tag
-to follow. I inspected the driver-introduction commit instead.
+Step 3.2 Record: No `Fixes:` tag is present, so there is no introducing
+commit to follow.
 
-Step 3.3 Record: Recent file history contains the original driver plus
-two small later fixes: failure handling for `spacemit_i2s_init_dai()`
-and an `sspa_clk` error-check fix. No prerequisite refactor is needed
-for this patch.
+Step 3.3 Record: Recent `sound/usb/mixer.c` history contains multiple
+related USB-audio volume/control fixes and quirks, including MOONDROP,
+Huawei, MS LifeChat, and volume-range checking work. No prerequisite
+commit was identified for the Riffmaster quirk itself.
 
-Step 3.4 Record: Author Troy Mitchell authored the original K1 I2S
-driver and one related later fix, so he is directly familiar with this
-driver.
+Step 3.4 Record: `git log --author='Rosalie Wanders'` under `sound/usb`
+found this one sound commit. The patch was committed by Takashi Iwai,
+and `MAINTAINERS` lists Takashi Iwai and Jaroslav Kysela as `SOUND`
+maintainers.
 
-Step 3.5 Record: The patch is part of a 7-patch series, but `b4` and
-`git apply --check` confirmed patch 2 applies cleanly standalone to the
-current tree.
+Step 3.5 Record: No functional dependencies found. The code assumes only
+existing `USB_ID()` matching and `volume_control_quirks()`
+infrastructure. Backport may need minor contextual placement on some
+branches.
 
-Step 4.1 Record: `b4 dig` against a temporary commit matched the lore
-thread at the provided patch-msgid URL. `b4 dig -a` found only v1. The
-full thread shows Mark Brown applied patch 2 to `broonie/sound.git
-for-7.1` as commit `6b4afbaaa342`.
+## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 110189f0268d0` found the original thread at
+`https://patch.msgid.link/20260426025520.3985-2-rosalie@mailbox.org`.
+`b4 dig -a` found only v1. Patchew and b4 showed Takashi Iwai replied
+“Applied now. Thanks.” No objections or NAKs found.
 
-Step 4.2 Record: `b4 dig -w` shows ASoC/sound maintainers and lists were
-included, including Mark Brown, Liam Girdwood, Jaroslav Kysela, Takashi
-Iwai, `linux-sound`, and relevant SpacemiT/RISC-V lists.
+Step 4.2 Record: `b4 dig -w` showed recipients: Rosalie Wanders,
+Jaroslav Kysela, Takashi Iwai, `linux-sound@vger.kernel.org`, and
+`linux-kernel@vger.kernel.org`. The appropriate sound maintainers/list
+were included.
 
-Step 4.3 Record: No separate bug report, syzbot report, or user report
-was linked for this specific patch.
+Step 4.3 Record: The only `Link:` is the patch submission itself. No
+separate bugzilla, syzbot, or user report link was found.
 
-Step 4.4 Record: Series context: patches 1-3 are described as K1 bug
-fixes/refactoring; patches 4-7 are K3 feature/binding work. Mark Brown
-explicitly noted fixes and new features had no textual overlap and
-applied only patches 2 and 3 from the subset.
+Step 4.4 Record: The patch is standalone v1, not part of a multi-patch
+series. No related Riffmaster patches were found in local
+`origin/master` history.
 
-Step 4.5 Record: Stable-specific web search was blocked by lore Anubis,
-and a local pending-branch grep was stopped after timing out. No stable-
-specific discussion was verified.
+Step 4.5 Record: Direct lore stable search was blocked by Anubis, and
+web search did not find stable-list discussion for PDP Riffmaster. No
+stable-specific nomination or rejection was verified.
 
-Step 5.1 Record: Key function added/modified: `spacemit_i2s_startup`;
-key function simplified: `spacemit_i2s_hw_params`.
+## Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `volume_control_quirks()`.
 
-Step 5.2 Record: Callers verified: `.startup` is called through
-`snd_soc_dai_startup()` from `__soc_pcm_open()`. `.hw_params` is called
-through `snd_soc_dai_hw_params()` from `__soc_pcm_hw_params()`.
+Step 5.2 Record: Call path verified manually: USB probe creates streams
+and mixer via `snd_usb_create_mixer()`, mixer parsing reaches
+`snd_usb_mixer_controls()`, feature units call `build_feature_ctl()`,
+which calls `get_min_max_with_quirks()`, which calls
+`volume_control_quirks()` when a `kctl` exists.
 
-Step 5.3 Record: Key callees are `snd_pcm_hw_constraint_minmax()` and
-`snd_pcm_hw_constraint_mask64()` in startup, and clock/DMA/register
-setup remains in `hw_params`.
+Step 5.3 Record: Relevant callees are `usb_audio_info()` and later ALSA
+dB/range handling in `get_min_max_with_quirks()`. The patch changes
+`cval->min` before `dBmin`, `dBmax`, initialization, and control
+registration.
 
-Step 5.4 Record: Reachability is via ALSA PCM open and hw_params
-operations; userspace audio applications can trigger the affected
-negotiation path by opening/configuring a PCM device for this DAI.
+Step 5.4 Record: Reachability is via USB device enumeration and ALSA
+mixer creation for this specific hardware. Userspace impact is through
+normal audio/mixer use after the device is connected. I did not verify
+the actual device descriptor/control name on hardware.
 
-Step 5.5 Record: Similar local ASoC pattern verified: many drivers
-install constraints in `.startup`, and ASoC core comments confirm
-startup is part of PCM open.
+Step 5.5 Record: Similar patterns exist in the same switch for
+CM102-A+/102S+, Asus USB DAC, MOONDROP Quark2, Huawei CM-Q3, and
+MOONDROP JU Jiu. A similar MOONDROP JU Jiu quirk was explicitly tagged
+for stable.
 
-Step 6.1 Record: The file is absent at `v6.18` and present with the same
-blob in `v6.19`, `v7.0`, `v7.0.3`, `pending-6.19`, and `pending-7.0`.
-Likely relevant stable trees start at 6.19.y.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: Checked `remotes/stable/linux-5.10.y`, `5.15.y`,
+`6.1.y`, `6.6.y`, `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`: all contain
+`volume_control_quirks()` and the call from `get_min_max_with_quirks()`.
+None contained the Riffmaster IDs.
 
-Step 6.2 Record: Backport difficulty is low: the patch applies cleanly
-to the current 7.0.3 checkout, and the file blob is identical in checked
-6.19/7.0 branches.
+Step 6.2 Record: Current `7.0.y` working tree accepts the patch with
+`git apply --check`. `git merge-tree` suggests most checked branches can
+merge the addition automatically, but `5.15.y` shows a minor context
+conflict around another quirk entry after the Asus DAC entry.
 
-Step 6.3 Record: No related fix for this exact subject exists in checked
-stable branches; the candidate commit exists locally as `6b4afbaaa342`
-but is not contained in the checked pending stable branches I verified.
+Step 6.3 Record: No related Riffmaster fix already present in the
+checked stable branches or `origin/master` history beyond
+`110189f0268d0`.
 
-Step 7.1 Record: Subsystem is ASoC platform driver under
-`sound/soc/spacemit`; criticality is PERIPHERAL/driver-specific.
+## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: Subsystem is ALSA USB audio under `sound/usb`.
+Criticality is driver-specific/peripheral: it affects users of the PDP
+Riffmaster hardware, not the whole system.
 
-Step 7.2 Record: Subsystem activity is low and localized: only four
-local commits under `sound/soc/spacemit`, including the original driver
-and small fixes.
+Step 7.2 Record: Recent history shows `sound/usb` is actively
+maintained, with nearby fixes and quirks. The patch was committed by a
+listed sound maintainer.
 
-Step 8.1 Record: Affected population is config/platform-specific:
-`CONFIG_SND_SOC_K1_I2S`, depending on `COMPILE_TEST || ARCH_SPACEMIT`,
-`HAVE_CLK`, and `DMA_CMA`.
+## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: Affected population is hardware-specific: PDP
+Riffmaster PS4/PS5 users with USB-audio playback exposed as `PCM
+Playback Volume`.
 
-Step 8.2 Record: Trigger is normal PCM device open/parameter selection
-on SpacemiT K1 I2S hardware. Unprivileged reachability depends on local
-audio device permissions, which I did not verify.
+Step 8.2 Record: Trigger is connecting/using that hardware and its ALSA
+playback volume control. This is common for affected users but
+irrelevant to everyone else. Unprivileged users can observe/use ALSA
+controls depending on system policy, but the patch itself runs at device
+enumeration/control setup.
 
-Step 8.3 Record: Failure mode is unsupported audio configuration being
-accepted or constrained too late, causing bad/failed audio operation
-rather than a verified crash, corruption, or security issue. Severity:
-MEDIUM for affected hardware users.
+Step 8.3 Record: Failure mode is too-low audio volume / poor device
+usability, not a crash or corruption issue. Severity is medium for
+affected hardware.
 
-Step 8.4 Record: Benefit is moderate: corrects real hardware parameter
-negotiation for a supported driver. Risk is low: one driver, one file,
-no ABI/API change, clean apply, and maintainer-applied.
+Step 8.4 Record: Benefit is high for affected device users and zero-
+impact for other devices. Risk is very low because the change is 10
+lines, exact USB-ID gated, and follows existing quirk-table style.
 
-Step 9.1 Record: Evidence for backporting: real driver correctness bug,
-normal userspace audio path, introduced in stable-relevant 6.19-era
-driver, small contained patch, clean apply, maintainer accepted.
-Evidence against: no reporter/test tag, no crash/security/data-loss
-evidence, exact “I2S is 2ch only” hardware fact not independently
-verified outside author/maintainer review.
+## Phase 9: Final Synthesis
+Step 9.1 Record:
+Evidence for backporting: this is a classic hardware quirk, small and
+contained, maintainer-applied, affects real hardware, and all checked
+active stable branches have the infrastructure. Hardware quirks are an
+accepted stable exception.
+Evidence against: no `Cc: stable`, no `Tested-by`, no separate bug
+report, and the failure is not crash/security/data corruption. `5.15.y`
+may need minor manual placement.
+Unresolved: no hardware test or descriptor dump was available to
+independently verify that the device exposes the exact `PCM Playback
+Volume` control.
 
-Step 9.2 Record: Stable rules: obviously correct enough: yes, based on
-ALSA callback ordering and existing constraints; real bug: yes;
-important issue: moderate hardware functionality bug, not critical;
-small/contained: yes; no new API/feature: yes; can apply: yes to checked
-6.19/7.0-family trees.
+Step 9.2 Stable rules:
+1. Obviously correct and tested? Mostly yes on correctness; no explicit
+   `Tested-by` or local hardware test.
+2. Fixes a real bug? Yes, per commit and mailing-list submission: too-
+   low volume on specific hardware.
+3. Important issue? Medium severity hardware usability issue; stable
+   exception applies for quirks.
+4. Small and contained? Yes, 10 lines in one switch.
+5. No new features/APIs? Yes, no API or broad behavior change.
+6. Can apply to stable? Yes for current tree; likely minor context
+   handling for at least `5.15.y`.
 
-Step 9.3 Record: No automatic exception category like device ID, quirk,
-DT-only, build-only, or documentation-only applies.
+Step 9.3 Exception category Record: Hardware quirk/workaround for
+specific USB devices. This is a stable-appropriate exception category.
 
-Step 9.4 Record: Decision is to backport. The risk is low and the patch
-fixes a real, user-visible hardware configuration bug in a stable-
-relevant driver.
+Step 9.4 Decision: Backport. The technical risk is extremely low, the
+change is device-specific, and stable policy explicitly allows
+quirks/workarounds for real hardware problems.
 
 ## Verification
-- [Phase 1] Parsed commit `6b4afbaaa342` with `git show`; confirmed tags
-  and lack of `Fixes`/reporter/stable tags.
-- [Phase 2] Inspected candidate diff; confirmed only `k1_i2s.c` changes,
-  adding `.startup` and moving constraints out of `.hw_params`.
-- [Phase 3] Ran `git blame` on changed lines; confirmed original code
-  from `fce217449075d`.
-- [Phase 3] Ran file history and author history; found only localized
-  SpacemiT I2S changes.
-- [Phase 4] Used `b4 am`, `b4 mbox`, and `b4 dig`; confirmed v1 thread,
-  maintainer application to `for-7.1`, and reviewer/maintainer
-  recipients.
-- [Phase 5] Read ASoC core code; confirmed startup occurs during PCM
-  open and hw_params occurs later during ALSA hardware parameter setup.
-- [Phase 6] Checked tags/branches and patch application; confirmed file
-  presence from `v6.19` onward and clean standalone apply.
-- [Phase 7] Read `Kconfig`; confirmed driver-specific SpacemiT K1 I2S
-  config scope.
-- [Phase 8] Assessed trigger/failure from verified ALSA call paths and
-  driver-advertised constraints.
-- UNVERIFIED: Independent hardware documentation proving I2S mode is
-  exactly 2 channels; this claim comes from the commit author and
-  maintainer-accepted patch.
-- UNVERIFIED: Stable mailing-list search results, because lore WebFetch
-  was blocked and one local pending-branch grep was stopped after
-  timeout.
+- Phase 1: Parsed `git show --format=fuller --stat --patch
+  110189f0268d0`; confirmed subject, tags, commit body, author,
+  committer, and 10-line diff.
+- Phase 2: Verified the only code change is adding two `USB_ID()` cases
+  in `volume_control_quirks()`.
+- Phase 3: Ran `git blame` around the insertion context; identified
+  historical context commits and version containment via `git describe
+  --contains`.
+- Phase 3: Ran local history searches without `--all`; found no
+  prerequisite Riffmaster commits.
+- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; confirmed one
+  v1 patch, original recipients, and lore URL.
+- Phase 4: Used b4 mbox and Patchew to read the thread; confirmed
+  Takashi’s “Applied now. Thanks.” reply and no objections.
+- Phase 4: Stable lore WebFetch was blocked by Anubis; WebSearch found
+  no stable-specific Riffmaster discussion.
+- Phase 5: Read `sound/usb/mixer.c`, `sound/usb/card.c`, and
+  `sound/usb/quirks.c`; traced the mixer creation and feature-control
+  path to `volume_control_quirks()`.
+- Phase 6: Checked stable branches `5.10.y`, `5.15.y`, `6.1.y`, `6.6.y`,
+  `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`; confirmed infrastructure
+  exists and Riffmaster IDs are absent.
+- Phase 6: Ran `git apply --check` on current tree; passed. Ran `git
+  merge-tree`; noted a minor conflict marker for `5.15.y`.
+- Phase 7: Verified `MAINTAINERS` lists Jaroslav Kysela and Takashi Iwai
+  for `SOUND`.
+- Phase 8: Verified scope is exact-device gated by USB IDs and exact
+  mixer control name.
+- UNVERIFIED: Actual PDP Riffmaster USB descriptors and hardware
+  behavior were not locally tested.
+- UNVERIFIED: Older branches outside the checked active stable set were
+  not analyzed.
 
 **YES**
 
- sound/soc/spacemit/k1_i2s.c | 45 ++++++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 13 deletions(-)
+ sound/usb/mixer.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-index 1cb99f1abc7cd..bb73d32a1b097 100644
---- a/sound/soc/spacemit/k1_i2s.c
-+++ b/sound/soc/spacemit/k1_i2s.c
-@@ -106,6 +106,37 @@ static void spacemit_i2s_init(struct spacemit_i2s_dev *i2s)
- 	writel(0, i2s->base + SSINTEN);
- }
- 
-+static int spacemit_i2s_startup(struct snd_pcm_substream *substream,
-+	struct snd_soc_dai *dai)
-+{
-+	struct spacemit_i2s_dev *i2s = snd_soc_dai_get_drvdata(dai);
-+
-+	switch (i2s->dai_fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
-+	case SND_SOC_DAIFMT_I2S:
-+		snd_pcm_hw_constraint_minmax(substream->runtime,
-+					     SNDRV_PCM_HW_PARAM_CHANNELS,
-+					     2, 2);
-+		snd_pcm_hw_constraint_mask64(substream->runtime,
-+					     SNDRV_PCM_HW_PARAM_FORMAT,
-+					     SNDRV_PCM_FMTBIT_S16_LE);
-+		break;
-+	case SND_SOC_DAIFMT_DSP_A:
-+	case SND_SOC_DAIFMT_DSP_B:
-+		snd_pcm_hw_constraint_minmax(substream->runtime,
-+					     SNDRV_PCM_HW_PARAM_CHANNELS,
-+					     1, 1);
-+		snd_pcm_hw_constraint_mask64(substream->runtime,
-+					     SNDRV_PCM_HW_PARAM_FORMAT,
-+					     SNDRV_PCM_FMTBIT_S32_LE);
-+		break;
-+	default:
-+		dev_dbg(i2s->dev, "unexpected format type");
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
- 				  struct snd_pcm_hw_params *params,
- 				  struct snd_soc_dai *dai)
-@@ -157,22 +188,9 @@ static int spacemit_i2s_hw_params(struct snd_pcm_substream *substream,
- 			dma_data->maxburst = 32;
- 			dma_data->addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 1ced9ba8be406..75c932ea77388 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1190,6 +1190,16 @@ static void volume_control_quirks(struct usb_mixer_elem_info *cval,
+ 			cval->res = 1;
  		}
--
--		snd_pcm_hw_constraint_minmax(substream->runtime,
--					     SNDRV_PCM_HW_PARAM_CHANNELS,
--					     1, 2);
--		snd_pcm_hw_constraint_mask64(substream->runtime,
--					     SNDRV_PCM_HW_PARAM_FORMAT,
--					     SNDRV_PCM_FMTBIT_S16_LE);
  		break;
- 	case SND_SOC_DAIFMT_DSP_A:
- 	case SND_SOC_DAIFMT_DSP_B:
--		snd_pcm_hw_constraint_minmax(substream->runtime,
--					     SNDRV_PCM_HW_PARAM_CHANNELS,
--					     1, 1);
--		snd_pcm_hw_constraint_mask64(substream->runtime,
--					     SNDRV_PCM_HW_PARAM_FORMAT,
--					     SNDRV_PCM_FMTBIT_S32_LE);
- 		break;
- 	default:
- 		dev_dbg(i2s->dev, "unexpected format type");
-@@ -303,6 +321,7 @@ static int spacemit_i2s_dai_remove(struct snd_soc_dai *dai)
- static const struct snd_soc_dai_ops spacemit_i2s_dai_ops = {
- 	.probe = spacemit_i2s_dai_probe,
- 	.remove = spacemit_i2s_dai_remove,
-+	.startup = spacemit_i2s_startup,
- 	.hw_params = spacemit_i2s_hw_params,
- 	.set_sysclk = spacemit_i2s_set_sysclk,
- 	.set_fmt = spacemit_i2s_set_fmt,
++
++	case USB_ID(0x0e6f, 0x024a): /* PDP Riffmaster for PS4 */
++	case USB_ID(0x0e6f, 0x0249): /* PDP Riffmaster for PS5 */
++		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
++			usb_audio_info(chip,
++				"set volume quirk for PDP Riffmaster for PS4/PS5\n");
++			cval->min = -2560; /* Mute under it */
++		}
++		break;
++
+ 	case USB_ID(0x3302, 0x12db): /* MOONDROP Quark2 */
+ 		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
+ 			usb_audio_info(chip,
 -- 
 2.53.0
 
