@@ -1,137 +1,109 @@
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010036.outbound.protection.outlook.com [52.101.56.36])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E97D48AE00
-	for <patches@lists.linux.dev>; Tue,  5 May 2026 15:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.36
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777996257; cv=fail; b=GIF/NCmapDIag1wvXABCvxw2hdsLqxJ+Smb4vMuv44vj6Zu6xXY0aFV1Ou7PO5iaEtjdSvMhF1yCRb02v4707SZqHdqM7UJuHAwHbi62+Rz4TnVfIF+SmGvwsHekC4rIxUf09f74D974SnlJK20x9QoyV6T/ZkZCx3zuzp1Deto=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777996257; c=relaxed/simple;
-	bh=LzZTlr4PRutu6+1h4NpaX87shhWyvaGzHMqVuKBKcJc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Cp+oUXF5R0MxCSldF6e9OUwrlvvZsZeF1eapG5QXXdFowQqgLvFi4O5kVRb6nhbPSLwrMu1gbLWzqXRXw6EpIuSaCmjRabgjhAREbwk3nKDJ8pxXXC9Wyi85bH23GwZlG4wpQ89a50qAMrVigIjmcC05CfsBcV6wrXmp94gzYY8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LelgPCX+; arc=fail smtp.client-ip=52.101.56.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F2E48A2B0
+	for <patches@lists.linux.dev>; Tue,  5 May 2026 15:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777996271; cv=none; b=lGPwXQg6QqBRVZVxzkrHE2eerkxMizG353BBhqDNcrrUm7BCorMO+JcJgDUim0JohtARR5fwOmn2LPK71rpmUb3ctw8kqrurqrpjegfyOwfh1t3erzhN3KYFPmx/L/EJtiR2Yc+RebUB7eo1Dls5VoA78bpac62e7vV0kPveknI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777996271; c=relaxed/simple;
+	bh=w146Uut7UMGYvpnLmP1yuMot4XAU7Vs4pCdLB4GWUuU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PH8/lAqB1XU2kI8I1aTTtMuWAZF+tndSGEwJsfLyWLFEtOC/GZh8C9L2Q6ftVw8bGLbMDen4EIWJ3J8mU6/BX7fBI6WIyLRBGNKFA1yGigJfIqmokZQf4rNX8qHEKwB+Z5TziwsFiU5idPQ8Sls7kBA3RJBatqlcQkDwVh5qJ08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0zTUKjG; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LelgPCX+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=x2yqH3TFqxatibRE/I//EYfinb1EfTZvumQv0mT0yETWcxDiUBGkYfTRQo1N3X4+Q7t3wywb20I7spqips9E5ngrCDky3lFVD4ebalp3kXAyOjKeOFmKAnj5OQpBicqVadUd8YBBZ9J2esfc5S5d3Mb8YXNRXnYXk/IzhEbPUSL0rMo+gbk95Vi4w5U+W1Q80cUV2hUqdYonDoIxG45tYq1mDK0ghUdpAxMmGi3GPv3S7p6MKJhjDRns2Dot1hMOhx7wkV0Mb8HlJlO6KDDAq99Vf7TScaHAWaO36bwtkyjwi7IsGKI/KB3fIUhZPYWt6K7PVJfuwcA07BoJPLSRiA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=duZzdMj9uB6iqS1TT9HpmtFXfLHLfydrTVrr97u/RpA=;
- b=t/BHSYnsFFADoIHfvYlYfGB1MN7Jk7kWjBCEvsljxJl1FEJE+Jnp8tDahQ9nZ1UedFCLKL+Sabe27LM5z9613Msnj6/7HiZaDZFt56kJ2zGYdwYWh18J+e68ryQCJD3DVRY5z5Xdf25I3yDIh8AOdS7fSUrD1mUSsi1zhv+cUiYFXbfOdgBjc5DeRt+cQmxvyYT1vJ4XC4EucSzxp6rlSFVHqu3W/Q3gLjr2BoBredLk+i4bdu9gUIyelh7l4aNmYN96cizNmtrlqd0+NgEATjoqwFGsuntMZVCN7MF8R8TOc0hAQOev1dGX9e4OvwerGTKW0RnFrNLRZVRNmM3a6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=duZzdMj9uB6iqS1TT9HpmtFXfLHLfydrTVrr97u/RpA=;
- b=LelgPCX+5Lyu6doX4+HWW9wlTwIU8/3L1UlMcInFWP1HOW6xtRWrgXk5SuVG0A2swD6FOQaValsuliFDECLcyjKWRgaCcWL6OVJgMawU+ewZoadKXJsZNafP/DA/C6QqaAwJRECCXLLkMkAxApbQiRktSGehpQA8aUlA/tnQhuCug9zOp+AyiystwfD4TfrQ/fMjuxfwaK7kBUKniRo7WmYB7a48itC55dEWdVQttGttSYC5HEe55anK7xllKXDjvyb395HDPkrk6JqOgbRPORp8TJiXwamI+d3DSH0rev/nS+ehJrlEEsmyI9OkduTko1kOWhOE6ljRiUslCxGz9A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by IA1PR12MB7567.namprd12.prod.outlook.com (2603:10b6:208:42d::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Tue, 5 May
- 2026 15:50:49 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9870.023; Tue, 5 May 2026
- 15:50:49 +0000
-Date: Tue, 5 May 2026 12:50:46 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: David Matlack <dmatlack@google.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
-	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
-	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
-	patches@lists.linux.dev, Josh Hilke <jrhilke@google.com>
-Subject: Re: [PATCH 00/11] mlx5 support for VFIO self test
-Message-ID: <afoR1izCEe9y0MZA@nvidia.com>
-References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
- <CALzav=ci8bi3=sY+F3HJTB5sOQ_pJ8Lm+kz0CDBBWVXry5P98w@mail.gmail.com>
- <20260501164314.GA1381708@nvidia.com>
- <afkjkBq8B-4KjhS_@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <afkjkBq8B-4KjhS_@google.com>
-X-ClientProxiedBy: WA0P291CA0021.POLP291.PROD.OUTLOOK.COM
- (2603:10a6:1d0:1::25) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0zTUKjG"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-408778a8ec4so3121091fac.0
+        for <patches@lists.linux.dev>; Tue, 05 May 2026 08:51:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1777996268; x=1778601068; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=I4RUK3AbsfMjANJLz4VS1j9XhA69zN4V5nVay6vTV/A=;
+        b=C0zTUKjGsQFZiSbOz2P3arzLxuVhREirkijY51mdhiXmnP16TojE1ymW1buYPuoBNy
+         Vf4hVGaX3q7Ru9+r4c0ji2BwMQm8zOOruTrd0xMrBB/d5M2IRJpCJx8CZOuElDiu0d7V
+         Avps1zQCdwepM5ZTJfYY1fdYeEYPjCUUP0ufo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777996268; x=1778601068;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=I4RUK3AbsfMjANJLz4VS1j9XhA69zN4V5nVay6vTV/A=;
+        b=K/29uP3zUPSTmUpVJlb/rV+BuBdL7ercrxtDZQOV+q4oGIEtnJX/Ku1dZPQ9HNtLWU
+         m8j2gVS14LJLM8l1AyYA+kEFhwmZzIIimA/5V3+vUMBuKW2PvWcSdjd4hnCPRHTKkPp1
+         z7XfKqpl6B8v7eRAtF1mlBTZYk6NKFQvSOrpDG7i65NUpLQFR1GJtvf8N/pWVititlR4
+         cwHh1fvg+ZgHnNYAMew9AJGWIZ/Rnon9ZIaBye2mg/GvBEWZgctYbqJedLTAHV9tdLWA
+         B7h5AkuXQoRogSARGuIxSW2pnxT3aPY5jf7L/JNwI7ZLALZXAQOQtRhWAy9RnzF637gm
+         BqQw==
+X-Gm-Message-State: AOJu0YzaD9e+CuZyRIueL4V73MW97R3WhFOtA83rpvXnZ+9/12mw36vb
+	48Fej02ftLvERHGeQxAee6rCKEGjlFnA3GErp9O69k5xI0eZ46WYE8IcqxAtQ+zpgww=
+X-Gm-Gg: AeBDies7MdmQO0nTvRCHDvZn2ON1I+ILoWvDyK1s2w1LdacWsMrDIW7AMwosX9O5g2s
+	keNKLsL5CqkGfAMudbXNJMFMJgZaSn4e3G95RZT4t+A/1WYerryjtpb/Ck4Q6VDL6GuTZlkHKoY
+	nnVCkqddvavp3sQRexvdXX6dHeeWor1AxT+4ybDqPlaRM6PfY74v3fQhEHEnJZ6+UXjk4wrnNxM
+	LVnPnXGiLAYh+4ukpAshiCKntavoqwzOkdoJ7+xe6oEjyIZ8nonxBYkzQzJImpAMdyDslj+9A2L
+	vnpsELdJ1fuMzVPX4IR/xKWf0WGRj6NK9S+onZW4Ou3PC/J1sysT97ntT7DdClweRJ3aXA79c0V
+	zwOEeAfaXvTbBEXHL8h/6mmGz1y8G4QXXMlrFR+2YbucK/XOKsViYOY+5OpT71KRnC0TqNEYmI6
+	HwlulAghweLwShuNslCfHwVqF0VvokGFyDWnA1vvLz1mRK9hEGfNzT
+X-Received: by 2002:a05:6870:780e:b0:42c:d6c:726d with SMTP id 586e51a60fabf-43475fc151amr7869745fac.8.1777996267731;
+        Tue, 05 May 2026 08:51:07 -0700 (PDT)
+Received: from [192.168.1.14] ([38.15.57.99])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4347294b5afsm11563315fac.8.2026.05.05.08.51.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 May 2026 08:51:07 -0700 (PDT)
+Message-ID: <484804c2-9a07-4ebe-beae-341829c11ea4@linuxfoundation.org>
+Date: Tue, 5 May 2026 09:51:05 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA1PR12MB7567:EE_
-X-MS-Office365-Filtering-Correlation-Id: 06c41502-f937-4b8c-03b8-08deaabe1457
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|366016|1800799024|376014|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	oEuUlsQF9TPoqfbzGRFUKVoEETk06fXj3TefXev1rgv90N/UnbvZTO3mMfY+FgIBLN4OQH5r+41Cb6Qfz8++Ymi2HIcm61ByyIjNxgVZ+JCKPh4AhhYea1LtEAPKi7ds0YFtgX0BWbMTvdQ3oV3aAEyrffaRAhjAg3HZ/Ce2V2ZtLbwrxkGBTvj3qvFNNhtc3a1gjytwkns13clQNNBKCYUtz2qlwkE7zWOliOUSFw2ddJjLFHKHxOXhVdxt0H+js5NAPcF/28/N1I599YrC+4H6eFfImrjbx4MsHsuBUKnkLOt7XUlSit7A/lVx2uQQwGWSmi0VydUh5SLlX+PB3m80Ar6AcWUD06/xSfaTldAzot0sn+ZLx/+89JXygrRySUWNMOke8ldEG50TTLr2HBcZR7XSI7TEP3vSDb1MxhuXeaRCI1uPyxscXMkJfW1BV8NM/XIcT4xpqc44uKM2gfJkqve+qZ8TbabsQmVW2QiW412w4F3xz4bJDc6DPJ+Q1beYEjPzWIco/E5lVG5Oggpzu4EmLg76lCdRTEtW+mUdA3KprvG335sxKzksZdUcPlvJxCjJRHXL+J3Xdwh+ye1sQDp783GWkDVM3F6N3TfYdKMyeeZ4jvdDYIWDFhWdXKVnsiDkRQfqYvQ+ydW6doHQGKHrO7lGD/Utl9lcGz30MKuq9P50Xfh86EuruQqc
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(1800799024)(376014)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?AZt/J1JJVJ1o2KFNwVDyGgZETlDjSjnqF9+zDpuQMFELZtSvgFhceQdABo2U?=
- =?us-ascii?Q?+3zd0hD4tALa6YpiFiTx9SPEP0KgC/0j2VyG5QozBbKwnPyR3cx9TwxvS2Y7?=
- =?us-ascii?Q?At3vjGaI1zE/yBy9yALN2RsYWHfw9jsflB/CvK1XCNmh8NzrK1WELAYyJf+M?=
- =?us-ascii?Q?/bBiTRvQQGXcaRadcEbFFI4rq0GGxrQaxsrLwlT+7BiS5LcDdLsFPEbwp+76?=
- =?us-ascii?Q?t8oRNRt5VVXVUfPY+q1ipbMnARoCdv6DTm+4YN2C/5Zq6OPNy+pVFlP4Oi77?=
- =?us-ascii?Q?Mibj7jNnaDgQC3YnjatDKE9oFtczfN6SZ8PL9xZjbfQfm5mOaYJ3d4cqJljB?=
- =?us-ascii?Q?8TlA4F0cW+gBGZg/YuPoWK1jMYtXm03Rh2mz0hpO5FR4R+/6r6o7J0oywL2o?=
- =?us-ascii?Q?fNcJ0yeTK+Vd+4wdzbiia2T4R+cLOpTngna+L5Nhjk0Xf8fiBzuhzAFGs5au?=
- =?us-ascii?Q?xHXYlKxUqFOn9H9xygQA6HKSxbWPRDh+ttjD0ubKs5h43qk/pRtyKGMhSJwq?=
- =?us-ascii?Q?+hkOY5It9tbUG2JWS/mq6ewofxo2KpGS8B9BZEVAHFm+ehPhrbBdmv9UGDkT?=
- =?us-ascii?Q?djs68gtEpgIfKiuU7NPduDeue2FSA9/23KqHSDDDBCH27aI0MZEcnEunoW1m?=
- =?us-ascii?Q?nSowwBw2rd/6U1B0TDldCKjyIVqGF1gbfwecCmKM+s/mnzsoPmM6quO5HclV?=
- =?us-ascii?Q?yQAuoi+xtyvQI8c6fleqlazJCzoSqO94tND/BISL+AvTUpX9wc4ZY+2TvZuX?=
- =?us-ascii?Q?EYYIajpiJUElf2QSb5qlYa0F82sx7RaVqEgx/+HdvH0ih5XTfwVfXl+sg3iW?=
- =?us-ascii?Q?ORHOfCVN78TlX/k5XijNnTh4bUtLpahFAEfhDU8s08IGpzp3qcbh2EWbgedg?=
- =?us-ascii?Q?IXTelONibf7SZRiI2414KXtA4D8pbWccSwFaGMnium3QKch0S+qEg4tqp5Hs?=
- =?us-ascii?Q?Rrm8M3w6SEBPuTJABk3KevFlJoBTbqs+FkgnBwebiRRwuJGdLuAX/t9a05jZ?=
- =?us-ascii?Q?aQasUoZQEgJF4bxl3exJEe8nJvU85W+iYTb1LLp0iDFqR9DoA3xL5GSrEhYZ?=
- =?us-ascii?Q?rEJu/nRdLAAsT1uUOQEHti6Wmc+M3Cc6BVSCsNYc9hSh9L42MEvexye+Fwiu?=
- =?us-ascii?Q?q4hpqbyxT0XtmDFz17LH9ux9YE/LYBlfq1ngIjnSg0Pti7aCCTSStzb2x8Nq?=
- =?us-ascii?Q?DtkhhaPtyqyTEGvdPcTQpWJVRmApExrJuabOuIwqGPRI+Ki8alXbrL2gJJbA?=
- =?us-ascii?Q?K7h0L17F/KYkO+fFPQdpy8Kkb1DxKJ/KyvL8hSdYngIMA2VpNoJBfwMhEB2M?=
- =?us-ascii?Q?As84VFgKzjb2YPTgcqULa5EBMHN1lDxAa4T1bINMuzu3UttL6+cTPlAyjgvq?=
- =?us-ascii?Q?M4w2gs/Ml4sJoOqSQrLAJro6NPPzfR2Zlj999BfrkkIAwQRH1SBJu0BfAC2g?=
- =?us-ascii?Q?Zyudh9BukmbFz7iQA+o8Rws89JtUBjh7TR1IvZAiOYZHe3GHQrfe7SuLzoVE?=
- =?us-ascii?Q?I9fV8/S1M8uKQQHCPgysldX2rGOHsrEC6LDx+pNrHD3Pw/FB7KbiAKxgZsQQ?=
- =?us-ascii?Q?2pjhJo49zLuPtiXOkfboiS9tNUJKa0vBAhNLNAQBo4Rh2DPF+3QzBB42q9bv?=
- =?us-ascii?Q?RtSFwNWIFWJeB0YwqoIpY+2gO+5EfeJgkHHviPWKILbNSUtQY2PpiQc7nq0f?=
- =?us-ascii?Q?6rQ38eEFdg4bqEH+n2Ph7ABRR0V/6MKiFSSGgjpGCngEi/7w?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 06c41502-f937-4b8c-03b8-08deaabe1457
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 15:50:49.6794
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2snwYu672j7HdWDgdgkYK47AQeMXbJQBvVY2Er2Z71TVmMYL+Q+qG5rYAP9TEdDj
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7567
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.0 000/307] 7.0.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20260504135142.814938198@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, May 04, 2026 at 10:54:08PM +0000, David Matlack wrote:
-> > The PF support flow requires a bunch more complicated stuff.
+On 5/4/26 07:48, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.4 release.
+> There are 307 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Do you think it's worth supporting PFs? If anyone with a CX NIC can
-> enable SR-IOV and run selftests on a VF then we can keep the driver
-> somewhat simpler.
+> Responses should be made by Wed, 06 May 2026 13:50:49 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-It turns out my test system cannot enable SR-IOV due to iommu_group
-problems so I rather prefer to have this :) I had to hack a kernel up
-to do the initial testing and it was very annoying.
+Compiled and booted on my test system. No dmesg regressions.
 
-Jason
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+
+thanks,
+-- Shuah
