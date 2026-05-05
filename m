@@ -1,120 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6286D351C1F;
-	Tue,  5 May 2026 17:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90ECB31E838
+	for <patches@lists.linux.dev>; Tue,  5 May 2026 18:31:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778003451; cv=none; b=Jp4adTLNxgoHk5S1/K8MQFBFTwEBc4rtiIpfaviMgPmlMuSOGNlz2xXmS63OmtLFT/emXU+aOtZihk8V/UKLKWERPu5zbL/SFsaUO/ZJriLR+bmcd9MYdvLLCJFsSlJNvrVfNs9ZByS0N26BMsW5WA3PHnTxMn2eTG81eQuZDwk=
+	t=1778005863; cv=none; b=Pi3xmR+lmPAnXGc0NVmnDcN7jFsn1E0V42Ksy/X5LAuOq63J//2JPazzk6br+OkfwjBfFluBW3A0XGQGUV+QFaNe9LtCMcud2MRQo6mVCHd6X08kaOoq38e73aPsCeN6vKIJL8Vu1wRPVRwvUrVDtVuK8HbLv6lz7f+tvL0g01s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778003451; c=relaxed/simple;
-	bh=PIDQrE/PxSw6y5ECEWNRhe8dd3QRV2iH6mTV1xvEVWw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=l1wOyBUObTo0h2l1FB1ZLVsIPDrPOv286sDcGJzFL5OJIfmnuBFPuxjqm6uoNB9qIoMbcHbEweA/pUqg1qNAe7V+BsJhufly+bxwn7X3+oL6TqSt/QBuAeBFkbvXoWSIWGslaHCWLH2PsTTsTY6GQUeIB8DRhymQDIePovpGi60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOfzSuwx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778005863; c=relaxed/simple;
+	bh=HyvXmKvXcCIH/j7y9sAxGypJ7gizPLxt/CU9hE5hs50=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AmeS4PD8hCqahOtgYyofCyCj5xTByR49fWN9k57W/2M+flr/+Tsu894wV7cpPSWzx0W1/+fM6N0S3rA2bZpAwizMetEoRa524JbAOQdIis1aJWOSGImXNNjcg5y5M1jZ6y2rp+DKvGOLgv5i6yL6h1nzb669irWSV/cicF4vR70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=GhYvId71; arc=none smtp.client-ip=74.125.82.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOfzSuwx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6081C2BCB4;
-	Tue,  5 May 2026 17:50:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778003451;
-	bh=PIDQrE/PxSw6y5ECEWNRhe8dd3QRV2iH6mTV1xvEVWw=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=jOfzSuwxlLDVzMSfx/bJnM+fAg+DPH5XDyTDHdYwQ22zOcEr+LPoWK0gHVHUJ/e2T
-	 5sfbrurmeSFGCcY6D5Dc6OfX+Alipkxip9+tc75hIydDLlwv4gcLKCc3uWttTQgQ0A
-	 GAykAvQcJ0a0qLmBc6YGMB2SNH59IPFJq89YQ2V+hha0pEa7VXTlkXc99HqJNLfKyO
-	 XzbBAX+6qNLia9+fIO9BVy64gVVB1QlIViCrq8UK/5/KbVgjDYwTSra6o3NoQl/c/2
-	 zIwJ0gwDh4Lht5M+VpNtTsBkQBhiAILy0POgNVFMjEww0N301f4oKwRw9pKmN6Rz0K
-	 2JokeXPyltOKA==
-Message-ID: <68c8f2a7-6149-4b65-bb1b-0ab4cd4067cf@kernel.org>
-Date: Tue, 5 May 2026 19:50:47 +0200
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="GhYvId71"
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-12c8f9846c8so7563246c88.0
+        for <patches@lists.linux.dev>; Tue, 05 May 2026 11:31:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1778005859; x=1778610659; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uNOGLCaPzdiM71DvHqXrQsZiPrli1oJKLKFgCE+g9tQ=;
+        b=GhYvId71XFb8hgfw8RC27j5pTub9gan0gszV2wR6LwwlLJkuXLKPNIndkNFIRC6YYf
+         zIj6DmxvsndThEY+rs6pJUaJ1Rx/BmwiBhWvjZNv7oD18350NJd6NaxVd3sUG7Czb4Yw
+         4KTse1ql6Eu1l3pvxmx8TGmsOmKnmGDrhm57M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778005859; x=1778610659;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=uNOGLCaPzdiM71DvHqXrQsZiPrli1oJKLKFgCE+g9tQ=;
+        b=J5+voeRn8YRAOyhyWIxaCPvk1JFkd1xN/ro4mz7uEnvrLhRKDiwEfksR9xWI5JeDQl
+         XkPxS19kCXzsPhQZtpvoT7krqqDYoEo1aafWn5wWKiyxb1K8x5NSd1QxOUKh1dGZV0iG
+         kbWxBVtyYYx0E8z8q2U29+dYW9kZmWMT9vm6oLKG1bAe45grIESvk32M3JfaJT+2j/J4
+         tuuGDacAeZ8VMkam4HB8t3LcvhV0BM5m6qQ2SR/UBv3KRrLFBPYCJRGKUy+rT0sr0iX9
+         FeKgIKGzekZhWtQjC0uqe4cJcDKh6YpzfKhHyZBiQ0nnHtIEmPPL5x8T2QDxKZSqk+0W
+         5WVA==
+X-Forwarded-Encrypted: i=1; AFNElJ9WSOr8enyb/tWhxBTJhR/QEkP3Ec5fGy7J3Evw3N1HhBQdtxbAtJBy77kqoA58lc6yMtsPZQh0@lists.linux.dev
+X-Gm-Message-State: AOJu0YyVtXX96oFeL7fI9mwdOf+u6ksyZlEwzg7RRJIEugaBwOp/UvO5
+	r62eLmNBmJF3qp2IwXLzX/NAnlE21P4hopotXUnRucrErTf9TKoxfyf3d38To2GQUA==
+X-Gm-Gg: AeBDietdOcuJ41Dmf07BNpovgpynjqgdZh5XMTb3lCJzNd1FrT1KmRDBqBBAZQDnX8q
+	F+H+YaW1oPPJCP2zrA4F8d7VGpEDbKWvpb7yNNSKACgExderknt5iFpnMFjxkGOvf+pEb9dtbLa
+	Qz/6gDIB9ZxrjmA/ku5UEmEwJymu2Xm1cOiqYYYmwWI/xEMI+y0IIwSGSdWQ2lxUVL936C9+gpz
+	w680K4/LJHa5REAxgYXoimuThx9apsgo11K9wcYazyRS95bSVy+11E0elkisot3IOfChQV46Gfs
+	I8PlGEpYgzKn5irBQBUM5T209AbITunfF3iZdLejAvTFHmne94ugjBQaZA1urLnXPE5kRo2I+yP
+	Rp1wdSfk8kLzSTWst0DGw4+UfI5QCPpKS08sMhvd/rxwlPyED2WMlBK6BwIQbEFxGO/G3ercf4R
+	8BSyDkwOyjLBKluufS+FZkIUMxfNQ8O8iEIC9BYf9z8bT+r5/GInA=
+X-Received: by 2002:a05:7022:fa9:b0:12d:ed19:e6cb with SMTP id a92af1059eb24-1318eb3a351mr192117c88.29.1778005859233;
+        Tue, 05 May 2026 11:30:59 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([98.97.104.44])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12df8278e7dsm20174952c88.2.2026.05.05.11.30.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2026 11:30:58 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 5 May 2026 12:30:55 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.0 000/307] 7.0.4-rc1 review
+Message-ID: <afo3X4uMpuiVC2ih@fedora64.linuxtx.org>
+References: <20260504135142.814938198@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 6.18 214/275] mptcp: sync the msk->sndbuf at accept() time
-Content-Language: fr
-From: Matthieu Baerts <matttbe@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Gang Yan <yangang@kylinos.cn>
-Cc: patches@lists.linux.dev, Paolo Abeni <pabeni@redhat.com>,
- stable@vger.kernel.org, MPTCP Linux <mptcp@lists.linux.dev>
-References: <20260504135142.929052779@linuxfoundation.org>
- <20260504135151.022829547@linuxfoundation.org>
- <1bbeee9b-b69b-4be9-84ee-ddadda4793ef@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <1bbeee9b-b69b-4be9-84ee-ddadda4793ef@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260504135142.814938198@linuxfoundation.org>
 
-On 05/05/2026 19:16, Matthieu Baerts wrote:
-> Hi Greg, Gang,
+On Mon, May 04, 2026 at 03:48:05PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.4 release.
+> There are 307 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On 04/05/2026 15:52, Greg Kroah-Hartman wrote:
->> 6.18-stable review patch.  If anyone has any objections, please let me know.
+> Responses should be made by Wed, 06 May 2026 13:50:49 +0000.
+> Anything received after that time might be too late.
 > 
-> Please drop this patch, it looks like it is introducing regressions on
-> v6.18:
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-(...)
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-> @Gang: could you eventually have a look, please?
-FYI, I quickly checked, and I noticed that 'subflow' is different on
-v6.18 due to the "mptcp_for_each_subflow(msk, subflow)" removed in
-68c7c3867145 ("mptcp: fix memcg accounting for passive sockets").
-
-Moving __mptcp_propagate_sndbuf() a couple of lines above, before the
-for-loop, should fix the issue. I can eventually look at sending a patch
-with the fix.
-
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
-
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
