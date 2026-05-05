@@ -1,312 +1,197 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A66E495504
-	for <patches@lists.linux.dev>; Tue,  5 May 2026 21:26:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778016387; cv=fail; b=nYlwW74swwAMdouY/YeGhKfHeRFSqUg+ehJvD1ScpRFy/ufZPgKl/ZfHilGmOc2zAYN+v647kx4x3VMzZ61/mgy7PHkAEvGuuPHIG+Li6gjImtY23EEy5Id+pz00ce4/lyd4grYMlkqzFP+MKaSO4ZEcN97APksSanHHOc5ow7k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778016387; c=relaxed/simple;
-	bh=mqluKbExDj6jId3VtNCKP9l+JGXGUow5Lb6Ib8VQQmo=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=gNHKS/AQTC5j0/+mTx+2QwmDB4WP/496VmFTjCgrPxzNlV2gb9DbyEOARwJQaHzkLCE5T4qOxOS9W+lG4BkhcQLSDMivSlvsPxKEiZL7E8MkdYlG7IQmDVcJuDkPc8QhGbATWcsWM2sNeW7bOdNwgjw3XG7Wq40kKR4WVef7PsE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Hf9mwSWK; arc=fail smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE8B224AF1
+	for <patches@lists.linux.dev>; Tue,  5 May 2026 22:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778021235; cv=none; b=qSUrisfWFWXIB/IXAT2hH+M+MxbdDBH/17u5c4g/r87a8odoVweES9/JRr430TZqim5H/UDH1oB9aU1kyya4vKGBynm1beuLDC46Wh86jZNvP2M2Irj5WNFg1pVcJHlVaumisQ13oBCpq2SOH/cqGjpU94DT6ZXP1vK/gt7tWXY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778021235; c=relaxed/simple;
+	bh=ThAZON2qJ1bfOCpmOWqCdEaMPjyOeWFL9PwzOSaVDHI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fMf2DaSA+uiNiWdGp0UNaZ9lkq1FqJdcyS0C0xl41qfrXXWY7Sspef9tC8qzarCxALGzkTD4Hspc+DyOehMH4SH4kPQRXmi7Rmcj+PBHRV6udulzWn7V+/hcw5hBQej7fTOKGaNc4va8MPKtXbW24SlRQ3RZECc5uHxISWp7akM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nGLZ2qSW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UXp92ayj; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Hf9mwSWK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1778016385; x=1809552385;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=mqluKbExDj6jId3VtNCKP9l+JGXGUow5Lb6Ib8VQQmo=;
-  b=Hf9mwSWKNY+DQCgvPBl5LSJRuQYq09vQ6q0zHqFK/OUI9KIAi4yAssmJ
-   V1zYaATfE6fCTdDFqaVK9QVXQ7CjG3HQiNPoEkRpx2mKrI7zPDc5nioKQ
-   3m/B4MNzJqOydJiTbD013/bk0SUL3m6LJrMLT2ky87s7A1Bk6348UlkhF
-   lZpGVU53LUQnKx8gnDMm2PCq8Z38zMiQmi1iF9l8X2tnpP3x2SE8FtP78
-   XmyAtfBqeb0omyV+Z9xslQgl1YkyCTqR1NF8bBzAvXSHqxaA4tyDDRnJa
-   DxZ9QZIVhfHcma9fNZLW0teudvKWO8wOHa50KpETFUciEiCElq0MWTtAx
-   g==;
-X-CSE-ConnectionGUID: l02PP58JSGuF4eJDkqKURA==
-X-CSE-MsgGUID: g/RheqjJQ1i6E6pz9jV3zQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11777"; a="90359821"
-X-IronPort-AV: E=Sophos;i="6.23,218,1770624000"; 
-   d="scan'208";a="90359821"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2026 14:26:18 -0700
-X-CSE-ConnectionGUID: L2TL+rirQbG/XSYNoWRNTQ==
-X-CSE-MsgGUID: U8fK/yrdTcy4zjbUG0/vSg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,218,1770624000"; 
-   d="scan'208";a="231546708"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 May 2026 14:26:18 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 5 May 2026 14:26:18 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Tue, 5 May 2026 14:26:18 -0700
-Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.51) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 5 May 2026 14:26:17 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jO+ZMV19c71jSzvv6dQvTdomiqbJQVFRiPJ0WdImS38F9lrbpOazUyFxenuh7wSlIyl2Zi6D/RPXv4wKncCcfxbKQM8s1/WSXfC41/6ReOEBph8njt07S91wxBShE4w6IeK+SxoKxqa+795K3JMUuxUBUmJptfGbqwWVE5ca3HYQNLKL6lUUdqT9TrYORULeVaR4yDrqcCYDCaPN5Wh/0rcViNxffHYJAaiyOwcxEOFrdO5oVsYjgpMwIMI5LfYnfXWOBRoouZjT/TZJNWpT66UCUDj6kir3R+R+4CTk+AvMMXyJ4qPpW1nktqxjZZ5tZglvlwapbjQbCeMIMhlF9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V11t+mB/jDdOgii64N+TaBplade0tuHP7gc1p6krFW8=;
- b=HZn/D/DcrDcwOhThvpWbZPb40F7DZzlA0EP30KVgU6oHRqZGeEtcEEMNcJOyZwembggAqXf4/BpbqqKsxREUBP8TQI8UJwnJESdnC+wCXkPDO/6EfWQksuR+qaGAgkZG70nlD5uekmcFUxECu92xTwxpjZbDnDMHzAvGh79bIjV11bNRagUc1cfewxsQgHwERRu/yi8thCPNy+4MpsDS67l39UJUIx7E3vJS2wkisLlI0tvGliPxnjqFKxlbnsczvRpWX/dyGfzM8qPjdL7K2jIsnWKj9IeXkbGZmYojNY53h+k6Wz3+1srUkYUAIV3Sjt95adsxiYqetkCbtoCPMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by CO1PR11MB5138.namprd11.prod.outlook.com (2603:10b6:303:94::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Tue, 5 May
- 2026 21:26:14 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::bfe:4ce1:556:4a9d]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::bfe:4ce1:556:4a9d%5]) with mapi id 15.20.9870.023; Tue, 5 May 2026
- 21:26:14 +0000
-Message-ID: <7fad1d7d-c892-416e-b97a-a230fd43f2a4@intel.com>
-Date: Tue, 5 May 2026 14:26:11 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fs/resctrl: Fix use-after-free in
- resctrl_offline_mon_domain()
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: Borislav Petkov <bp@alien8.de>, <x86@kernel.org>, Fenghua Yu
-	<fenghuay@nvidia.com>, Maciej Wieczor-Retman
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
-	<yu.c.chen@intel.com>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20260501213611.25600-1-tony.luck@intel.com>
- <2236fae5-7e66-43fb-ba05-76fd4434e2c9@intel.com>
- <afkizhrSwJkiLD3j@agluck-desk3>
- <3f13c7e4-3812-447d-8c42-b28fd6b9d0fa@intel.com>
- <afoesuWB8RezVLrN@agluck-desk3>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <afoesuWB8RezVLrN@agluck-desk3>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0295.namprd04.prod.outlook.com
- (2603:10b6:303:89::30) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nGLZ2qSW";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UXp92ayj"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 645HxCa83091523
+	for <patches@lists.linux.dev>; Tue, 5 May 2026 22:47:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=80QsdjvMKgByQ+N3vQwQVN1P
+	Ot2Azp0fZNR7U+S/ywA=; b=nGLZ2qSW7qAP5IVLc38deKesNE4nEEYyU+ewj6Fz
+	7BHEEClAsMXCAyFHJckZhk3z+nMe4UQQx4I39gumjZrmCnUch5jJCoKvQLLbVpqG
+	Cu6uTPx0UgrYCDeZrs+t1xG65UADU/Wq/tr6DVhgTylph7zQiaTPgB/ohRlpLS9Z
+	iWu/cjQrz+Z5GlHc5uvoSOkus2kGFIbdZz2P6ldJzrhoVBg/6BstxoQj9NSHicz3
+	cFk/HxsYqh/0Oqd0uyK7cVuGbyC84ZpnfgJl3ZVjHYIbHkNUanzoG4bkOg9af99U
+	XkOCPrli0Ndu6uU5hjdVBucJKSPe5Ympn8/iJ/+56UE5eQ==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dyfct2kb5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <patches@lists.linux.dev>; Tue, 05 May 2026 22:47:13 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-2c0f6593ef5so8232423eec.1
+        for <patches@lists.linux.dev>; Tue, 05 May 2026 15:47:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778021233; x=1778626033; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=80QsdjvMKgByQ+N3vQwQVN1POt2Azp0fZNR7U+S/ywA=;
+        b=UXp92ayjZu68AfjPYPlPEKuxtJ3l1wNWASeBYdmb/drx9uU/9ACi41cOrsBNMcBFUx
+         jbpKI/Ml2uXwOzChyFqGPR4H7zDu4FJDSP+5tZqMefS86iYXawWr4ul8cG1Ja07RoAlh
+         eYUdl1DwFiwV93m8lOAc3NV+yXCC1jQMwQbmdNKF+Lwxg0LkJgcVuptplWvAObtibX2u
+         4sMPh0ZLwVoUv+VTwm2Tt2nESumSyflim/6612aYba//gHX2KxtSu7X1XGK4Okcs/Qft
+         G3R2iwcRlvItsHkrX6edzBBtpJuZJ01IlGaR8Zv5ijpFsXS41LtKtM7HIXTg7hnixrnq
+         LEXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778021233; x=1778626033;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=80QsdjvMKgByQ+N3vQwQVN1POt2Azp0fZNR7U+S/ywA=;
+        b=tUWAjP+dtqUEskIBdCLUl6isF1GqaBg7tOMOLPeBeS8q/moZaWeZGt9xi2DNb2jn/C
+         BtJTEe3itG0aJKBzSsMxLpKvwiRuTOPekBR4A7BvApwBXWkhbHbeC0MKQcZwckYXgV/r
+         jIE2UHEgXAppHBd46W0f+u+qd84Bkybwmvy/tsOg1LAIeH00//pwUmIvhYkbNrUk8Q7G
+         dd7bMJNbChUDmI+3Mp7ujXWgM7zc8gVMqhevhnoZRwUpm/Ua4cTWUJfdeDHxQ0WUgIjn
+         CLIT/fPQtbTnShHjr7Bwfgi22YP84sb1aNuxIzQdARykjRfWMiYI5UeZOfNP7b7OqxK4
+         krsw==
+X-Forwarded-Encrypted: i=1; AFNElJ8fND9w5XCHHr2X3L/LQmGlYNFcGQbpHcfnlYX2GCIIhyJLmzaM7rvfRGuw0KpbOEgm8r9DSuwX@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyh7w6wU/FddYL08r6/u0y+KLr2WjLDQWrVIMRn27nZyTEcF1Ho
+	rzm4wi9yR6kMKJ7way6uqe7H4T0H3N/ZJj6YY4XJ5l+BhKp8zGs9wR8UVk+TDD7f6P9rppf3Kqb
+	62zAd0jmol59wXpwfkLCxc5SKXjp7HDlZXn0940nHZ8P+UksvVVSCqd4r+OfN
+X-Gm-Gg: AeBDieuRU1ZQ6XraP0DDZm/4U47W8EpsXbDg9lOCTcH11xhnts+b2P/WiydW8y15Dq+
+	jZ2tAwCH14FrVpo2540nhguSVqq53yqSrMWCfTSdfxuUPH2Pdwccw72b2YKg8yvN1e3AJRR8FOI
+	rgjmEB3VQAylM3lzedqzmB0ztceAECejKkEktRgOcuoQBICpZwEQa9HjtWaNMfAYSdtxsx5FouF
+	RTyXN/xr2KZi8NOwIDYw7JGY3fyeibKYimGOrdAvQc60b3rSP1xCc0jZrhTWB3EDwxZXtCLOCPB
+	Naq3lBXRYKfoHCSUe6TpzXXAa1ca8J021or14ZorzQMcTMdrfwrY4DIoaKxSlaxP0k6E02lopKf
+	9PhzmhHFsY/wwnpFgbEOTm8FnSywStvxycKuxHy/ogA==
+X-Received: by 2002:a05:7300:bb8a:b0:2ed:e14:7f5e with SMTP id 5a478bee46e88-2f54b899b3dmr493952eec.34.1778021233028;
+        Tue, 05 May 2026 15:47:13 -0700 (PDT)
+X-Received: by 2002:a05:7300:bb8a:b0:2ed:e14:7f5e with SMTP id 5a478bee46e88-2f54b899b3dmr493936eec.34.1778021232461;
+        Tue, 05 May 2026 15:47:12 -0700 (PDT)
+Received: from localhost ([140.82.166.162])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f56d5c5027sm828041eec.10.2026.05.05.15.47.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2026 15:47:12 -0700 (PDT)
+Date: Tue, 5 May 2026 17:47:10 -0500
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
+        iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+        linux-riscv@lists.infradead.org, Palmer Dabbelt <palmer@dabbelt.com>,
+        Paul Walmsley <pjw@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Tomasz Jeznach <tjeznach@rivosinc.com>, Will Deacon <will@kernel.org>,
+        Fangyu Yu <fangyu.yu@linux.alibaba.com>, patches@lists.linux.dev
+Subject: Re: [PATCH 7/7] iommu/riscv: Add NAPOT range invalidation support
+Message-ID: <oe75yk2fx2c7wg73xrikppw2gxxe2e6bsvkktowbo64ftldy7p@53gjjzhu6cy5>
+References: <0-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
+ <7-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CO1PR11MB5138:EE_
-X-MS-Office365-Filtering-Correlation-Id: 83e204c1-bc75-423c-2140-08deaaecef74
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info: xLEV5GntBgl8uu/nzfS2A5TJ/dQTIcL0JMVpR0QTujpLhXVk+Sin1bR5kGylc/VPAm8coCag82zyk3u25HNYcbdcUCQsSFtyYpGDxXws4pma/uvNoCFH7wm1aHQl3AWv3o8lGJpctuJEI9tVOMK/+0HCUt/Rpbbm5qyXg5ImI2F2mrM6d4Di2UHN2oxT29Cb+GTDfnEvBVg6vELDYye8AErE9+8PJv2MyfaEUD+lDDjQIYMk02CVFTNbU85ABQ8CP9S87NW6go4SykpcvD17RIE5PcyxsD+dSXmvYGJ1PIn1iIY6brZCfkE3reFyU5IQgfjMYC1do0dBV2Fb7xnfLjYhhOnUZXizVbj0/bVXiWezDUjlxE38QqoWEISTFOZvfQy9yQFeqasr6m7unz2SRQu3hPoHHKLJrUu791Hp3/i9JPjrW6SMcZb7K84c4CD5BTeKo84v/rg+q1ky8/drrah3/q60lbNeqkAbckAaqUxwrx4p1MSD6prJ9F0teTBQ4eScwrDiabHo8O6x1c2E50ogBzl/2qhGnt2IJqRIewD3E0AjgNW4q4QXqmTcuhT2blAHr7cXY4zIVqeJn8c/dMPYw4/RMbuszaliAQDxCBTabsZBnB8nnN/tD1r/RXN/cguBFhn74YoFjFX6aRjNgAx2rCKkpDVh7eUegi8UyMhZKJtg+6kiHRTJcz8ywxGS
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?V3lJYllaZ3R6TWVESXE0anRTZU1KYllUOXBsTEgwSThyMjkwWDROTGJ5NnQ0?=
- =?utf-8?B?NHMrTFpXNnFBanFNODh6SW8vdmk1UGdXeHY0WWF5VmhTdG5sQU9IWlhzMmV4?=
- =?utf-8?B?NmtoNnFDT2o0RHJma3pBWHZNU09BNnpPb0x5Qm5SZU5Fbmd0TUwydEZ2czhK?=
- =?utf-8?B?YVlUcE93OGJmMjNOd3Awd3FPdkcyTVVmelFkNjZLRHU3SjhGRlQrdmtPS1c1?=
- =?utf-8?B?M3dRMTJTa0dCbWZmTUJHYkhhb1VOUTFONjc4WXVHaDhVK0E5d1pOaEc0cExq?=
- =?utf-8?B?VjJDTVo0ZHIyOWs2aTJodFJJS29lamo3M1RzdVVWMnArNkYvdWZJZDZGWDdk?=
- =?utf-8?B?TUJWN3FqS2hCWXZkVjlVWEFLMzlmOTd1eGQ5aGxVc2RPKzBsOU8yUlJ4Q24v?=
- =?utf-8?B?THJVUlFtaU5GQTd1Z1JOQlRpbjJLVHc2MWovZU5pQWpiYWhjakE3SUNRckV6?=
- =?utf-8?B?bjhRNkRVdW9Gayt1bkphM2ptMkQ2WXppVmVqZGUwb0FzdkgvNHdMN1VKNWtk?=
- =?utf-8?B?VHdGV3ZxaFZIQXlydHhESHE2VzJiTkhJYng3eGRFUDRidXVRVFZOZS8wcWJH?=
- =?utf-8?B?ZVBOaFdBZkFodlJHMEx1T1lDUlV1VTRSSnBRVUpXTVVZS3k3V25yZ0JRL1Ey?=
- =?utf-8?B?S3ZXRGxOQ2FLc1luVEJhd3JqWnorUHZ0OWNUYzJCWnNIQ2xsYjM3WnpJNyt5?=
- =?utf-8?B?eGM3ZlBLM1p0dzkvelNPYTJhOVdGaDl3QVdQaXZDT3lTVWxWUXNRdDRDMXdp?=
- =?utf-8?B?SzQrOWVzN0ZNVGUvSml5NnVTcFVLN1hiYitTUlREMHdBZ1NRNFdqK05na2tZ?=
- =?utf-8?B?eU9wZHZORXB0YzR4WHEyU29ERHJVeWd1dFRkNzUyVmpRb2MxbXJhOFl3dnJ4?=
- =?utf-8?B?SXBLeUMzT0ttSW0wbWk4eW9id1NiZkE4VFFMVi8xdExsZjhqV0RLc2pIQjQr?=
- =?utf-8?B?RHFFUFlLamhvS0x5QVRkcGpIUVR1OEFBbkdzeVVqVGdUYUlZcXRtSVRmWUJH?=
- =?utf-8?B?enhMMC9tdTVISWdVeGVUbElhdjllNklkZTF5b2FpYVk1ZHZORnRxN3JiRkNQ?=
- =?utf-8?B?SkNkWTNOdUk1ZGtBLy9PcFkxS1IwSGRFalJCNVM4Sy9XejFjTlc1b0RWRXI5?=
- =?utf-8?B?eXNDdTM1ZG9iY1VXU1U2R1pmTHJVQ1N6UGczN1BHREZOOGYvaVpPSU15cThj?=
- =?utf-8?B?S0tYa1JENE1CbHc5c3cvSmhpTWE1U285Mkc5bUVHT0Nqd2w5RytPR0FJenA5?=
- =?utf-8?B?alFDZW5IVVZhUms0d1lBZWk4cnJRdFNjVS9yOFE2dUh0RCsyL0l5akNMSVNF?=
- =?utf-8?B?SlI4dzBJMGVZb0xCYkVWUE9qYjNjalk3c1RDNWQ4L0w5aVdyM3hNK2p5bkpH?=
- =?utf-8?B?Y0hXeVB0N3lVOHhXQS9XQlo4cEUrcXZTQkRSYXFzMDRabmhPWFZNVXg5ek1N?=
- =?utf-8?B?YTlOTlBFdlUrc0Q2NEVuZzZ4U0xKTklVL2licUZQN3U0VHlOUVRIUzdkUmlq?=
- =?utf-8?B?bjBaM2xobStwT1RUWTY1VjRIZllNN0dLVjFlUDBSaDVzbzk2UzUyaXdRcTFu?=
- =?utf-8?B?eEZ6dXQwa0NGbkJTVGg3UWhleVJCQ1BFcmlhVDhYaXVua1RzWXg4cUhDQmNJ?=
- =?utf-8?B?bkx4S1hYdXBoY2daaVl6MDNCeDQ4aE1yVllLQTFZNkhXdzZ4ampWdk0yWVZ5?=
- =?utf-8?B?OFdOR1VIeG9MUHhDeS94RkhxZDVSZTRFR0wwazU0UVNKZjdtQ2prYUtoTDBx?=
- =?utf-8?B?QjlickRkS0M4c0RLRnZkUVJGdmZpYlBBN2R5ZEZlQ2VvU2FqNGNueW1tQzZZ?=
- =?utf-8?B?Y1ZaNWVXQmQ5SkZ0NjU0NFJ3WXYraU82WWRtT0JYWHNhdG51Mm9qaXE3RDgv?=
- =?utf-8?B?MlBXWGRjZ3pwUWdTSWZ3MHdMYlc4OStaSUxOcEVMZDZjRldLenBPSlFLTnNr?=
- =?utf-8?B?MlBHb0pKb3lzclludDYzd0lqK1BNendUbVdBVVUxWkIrZDdwYXk0Ym9VYjZr?=
- =?utf-8?B?NE1lcVNGTXJLN2RlUjRXaWk1citVL1l3dU1OWU9uT1F0NXU1c2ZhUnpROWVt?=
- =?utf-8?B?eVBJNFR4dWFqSzJaalZtRlFFOWpyc2dWeTJLTEZnSXVnSFg5YzY2RFd0aUJQ?=
- =?utf-8?B?eVpWYWtNQVV0V1BYVG4wbzR2STUrdDUyRGJiWDFZcm0rTktiTnBkOU1jaDlT?=
- =?utf-8?B?cWVxUHgyWUFVY0lYRHF1MmY0SU5wUUYrRW9hRGIyL2tMd1NCVWZTZmxrZFl2?=
- =?utf-8?B?SVhXRHZReCtIK2ljTnhnMEtndyt0V09NdUl5Tlc3VDlhVUJUVm8rZ0dVNEIx?=
- =?utf-8?B?alFVdW9qa2lKTElIMzVzZnhaakt5NzA1aUU0ODZKY2ZwK2RjRzk0VUxpTW5D?=
- =?utf-8?Q?3cHZnpqsSmEnK11M=3D?=
-X-Exchange-RoutingPolicyChecked: UqbNqYHF0KZ+WtuRNkO6/fQWqLa97r/WdccYUcNjFtbXlXV//k4JBx0wgr+UUnVlPvJcf+44xvkvo4s2fQZRb64k2TO6qd5o2MWSktEvk3eP0Nh4dRJ1BVBGpPOJdoH/gyd2kywkkTljOI7PcAQDy3CGEmWSOl2E7P0u0D50RshFoHwdGIJzeyqXUSgPexZDG47c6zaOnSl06MNGcnz0UfGrwykVG1n9mmfjN7DQWNns/hX/KhZNEW2CizrVV7H2yA+zHpf1CZ+rtHI9ZYsz7DfzyfBiptE+DcGCI/M829HI47TVyTF97IaDWJhllskO5xzl6BPTFpthgx+OZlP60Q==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 83e204c1-bc75-423c-2140-08deaaecef74
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 21:26:14.4332
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: oB4txb2xSmGPrvN1NnNQCS2qVqUhxGWkDRLH9Y0mh17cY1XfcYO3sJtJ59fW+uBrBJc6jES+q3ZGAk6PIf/Nmk+SYyhQhDJ89taBgw1rRug=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB5138
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
+X-Proofpoint-GUID: kPN-M06bxj-65UyBptbPVRKXBxtwganB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDIyMiBTYWx0ZWRfX7E9gDBofU7a6
+ DXiNZl5BNz8bePCz0mtHIgzPcKorfHd3BJOrBHI5588T5dzBqRI22Pzht9Bjm6+kfVsM7PDCs2H
+ Mnre40SpX+2o51eICBBQDHGx3V6C1lGo/klKDEnRdM4kNRYpZOk2EKShM+QPPQgTRbyCImaLA4W
+ +PvbJvczdpRMVLHK7bI5sc08imKOHAga7lB1y+K7Wg9e5WrJU07hVP+Dmd5o6r+lcqBQgAsGdl3
+ APW0rT2NKEZsBzuyTi4mUkNJELUYLIBOdkFgfQVOFzAvTGFZQDpGwVgudZTSRsq8a6vO8CCaVE1
+ 9qIGyDShFDbYmP5jRZDs3eLoVJ51rJQ8siPcn+A1EURVMa9QQvFhyAD9eGoeAbwf2NXruPRNX/f
+ ufg0i43NU/VE7WRbs7L1k6eV76RPkUWZXVSZ7O0Mdhc2qKsPrkLtNMxVQs3LtCa1PtnG51Sa+P7
+ tyieMRm33MCEv1oz6Wg==
+X-Proofpoint-ORIG-GUID: kPN-M06bxj-65UyBptbPVRKXBxtwganB
+X-Authority-Analysis: v=2.4 cv=NtXhtcdJ c=1 sm=1 tr=0 ts=69fa7371 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
+ a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=Ikd4Dj_1AAAA:8 a=h2i9vGFyncx6_ar2YjIA:9 a=CjuIK1q_8ugA:10
+ a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1011 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ adultscore=0 spamscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605050222
 
-Hi Tony,
-
-On 5/5/26 9:45 AM, Luck, Tony wrote:
-> On Mon, May 04, 2026 at 09:39:40PM -0700, Reinette Chatre wrote:
-
-... 
-> Here's the scenario:
+On Fri, Apr 10, 2026 at 12:57:08PM -0300, Jason Gunthorpe wrote:
+> Use the RISC-V IOMMU Address Range Invalidation extension
+> (capabilities.S, spec section 9.3) to invalidate an IOVA range with
+> a single IOTINVAL.VMA command using NAPOT-encoded addressing.
 > 
-> There is just one CPU left in a domain. The mbm_over worker is woken on
-> that CPU just as user requests to take that CPU offline (executing on
-> another CPU).
+> One iommu_iotlb_gather maps to one NAPOT invalidation command. The
+> smallest power-of-two aligned range covering the gather is used since
+> over-invalidation is always safe.
 > 
-> There is a race.  mbm_handle_overflow() has begun execution, but the
-> offline process has taken cpus_write_lock() so it blocks and sleeps
-> waiting for cpus_read_lock().
+> S and NL seem to be orthogonal in the spec, so if NL is not
+> supported then global invalidation is probably always going to happen
+> as wiping a large range without a table change is not common.
 > 
-> The offline process calls:
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/riscv/iommu-bits.h | 17 +++++++++++++
+>  drivers/iommu/riscv/iommu.c      | 43 +++++++++++++++++++++++++++-----
+>  2 files changed, 54 insertions(+), 6 deletions(-)
 > 
-> resctrl_arch_offline_cpu()
-> -> resctrl_offline_cpu
->     -> cancel_delayed_work(&d->mbm_over); /* not the _sync version */
+> diff --git a/drivers/iommu/riscv/iommu-bits.h b/drivers/iommu/riscv/iommu-bits.h
+> index f01b49ac815586..32b3ad3ac9ae59 100644
+> --- a/drivers/iommu/riscv/iommu-bits.h
+> +++ b/drivers/iommu/riscv/iommu-bits.h
+> @@ -64,6 +64,7 @@
+>  #define RISCV_IOMMU_CAPABILITIES_PD17		BIT_ULL(39)
+>  #define RISCV_IOMMU_CAPABILITIES_PD20		BIT_ULL(40)
+>  #define RISCV_IOMMU_CAPABILITIES_NL		BIT_ULL(42)
+> +#define RISCV_IOMMU_CAPABILITIES_S		BIT_ULL(43)
+>  
+>  /**
+>   * enum riscv_iommu_igs_settings - Interrupt Generation Support Settings
+> @@ -475,6 +476,7 @@ struct riscv_iommu_command {
+>  #define RISCV_IOMMU_CMD_IOTINVAL_GV		BIT_ULL(33)
+>  #define RISCV_IOMMU_CMD_IOTINVAL_GSCID		GENMASK_ULL(59, 44)
+>  #define RISCV_IOMMU_CMD_IOTINVAL_NL		BIT_ULL(34)
+> +#define RISCV_IOMMU_CMD_IOTINVAL_S		BIT_ULL(9)
 
-Here I expect d->mbm_work_cpu to be set to this one CPU that is left in the domain.
+We should add a comment here that this is actually bit 73, i.e.
 
->     -> mbm_setup_overflow_handler(d, 0, cpu);
->        Finds there are other CPUs in the domain
+#define RISCV_IOMMU_CMD_IOTINVAL_S           BIT_ULL(9)	/* bit 73 (dword1 bit 9) */
 
-I do not think that this will find other CPUs in the domain here since
-the scenario starts with there being only one CPU left in the domain and it is
-currently running the overflow handler . From what I can tell, in this scenario,
-mbm_setup_overflow_handler() will return without scheduling the overflow handler
-on any CPU.
+because...
 
-After mbm_setup_overflow_handler() returns I expect d->mbm_work_cpu to be set to 
-nr_cpus_ids.
+>  /* dword1[61:10] is the 4K-aligned page address */
+>  #define RISCV_IOMMU_CMD_IOTINVAL_ADDR		GENMASK_ULL(61, 10)
+>  
+> @@ -731,6 +733,21 @@ static inline void riscv_iommu_cmd_inval_set_nl(struct riscv_iommu_command *cmd)
+>  	cmd->dword0 |= RISCV_IOMMU_CMD_IOTINVAL_NL;
+>  }
+>  
+> +/*
+> + * Set NAPOT-encoded address for range invalidation (S=1).
+> + * sz_lg2: log2 of total range in bytes, must be >= 13 (8KiB, 2 pages).
+> + * addr must be naturally aligned to 2^sz_lg2.
+> + */
+> +static inline void riscv_iommu_cmd_inval_set_napot(
+> +	struct riscv_iommu_command *cmd, u64 addr, unsigned int sz_lg2)
+> +{
+> +	u64 pfn = addr >> 12;
+> +
+> +	pfn |= BIT_U64(sz_lg2 - 13) - 1;
+> +	cmd->dword1 = FIELD_PREP(RISCV_IOMMU_CMD_IOTINVAL_ADDR, pfn);
+> +	cmd->dword0 |= RISCV_IOMMU_CMD_IOTINVAL_AV | RISCV_IOMMU_CMD_IOTINVAL_S;
 
-This detail does not impact the race you are highlighting though.
+...here we're setting the wrong dword. This should be
 
-> -> domain_remove_cpu()
->    -> domain_remove_cpu_mon()
->       clears bit for this CPU from hdr->cpu_mask and finds mask is empty
->       -> resctrl_offline_mon_domain()
->          -> cancel_delayed_work(&d->mbm_over); /* Again! Still not _sync version */
->          -> domain_destroy_l3_mon_state()
->             -> kfree(d->mbm_states[idx]); /* file system state */
->       -> removes domain from L3 resource domain list
->       -> l3_mon_domain_free()
->          kfree(hw_dom->arch_mbm_states[idx]) /* architecture state */
->          kfree(hw_dom)
-> 
-> Offline process continues. One of the things it does is checks for
-> orphans on the run queue of the now deceased CPU and adopts them.
-> 
-> Finally the offline process completes and does cpus_write_unlock()
-> 
-> Now mbm_handle_overflow() can continue. But it is on the wrong CPU
-> and has a pointer to a work_struct that was freed by the offline
-> process.
+	cmd->dword1 = FIELD_PREP(RISCV_IOMMU_CMD_IOTINVAL_ADDR, pfn) |
+		      RISCV_IOMMU_CMD_IOTINVAL_S;
+	cmd->dword0 |= RISCV_IOMMU_CMD_IOTINVAL_AV;
 
-Thank you for the explanation, I did not consider this scenario. From what I understand
-folks encountering this scenario should also encounter a splat from the MBM overflow
-handler from all the places where it runs smp_processor_id(). Well, actually, if these
-people are running with CONFIG_DEBUG_PREEMPT enabled because of the
-debug_smp_processor_id()->check_preemption_disabled()->is_percpu_thread() check.
-
-...
-
->> I still think that using get_mon_domain_from_cpu() in the workers could work here.
->> Here is the idea more specifically for the MBM overflow handler:
->>
->> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
->> index 88f1fa0b9d8d..7186d6d02d6e 100644
->> --- a/fs/resctrl/monitor.c
->> +++ b/fs/resctrl/monitor.c
->> @@ -856,7 +856,9 @@ void mbm_handle_overflow(struct work_struct *work)
->>  		goto out_unlock;
->>  
->>  	r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
->> -	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
->> +	d = get_mon_domain_from_cpu(smp_processor_id(), r);
->> +	if (!d)
->> +		goto out_unlock;
-> 
-> This will get a domain, but it will be for the wrong CPU.
-
-If it was migrated yes. From what I understand when this happens it stops being
-a "per-CPU thread" so how about something like:
-
-	mbm_handle_overflow()
-	{
-
-		...
-		cpus_read_lock();
-		mutex_lock(&rdtgroup_mutex);
-		
-		/*
-		 * Overflow handler migrated during race while CPU went offline and
-		 * no longer running on intended CPU.
-		 */
-		if (!is_percpu_thread())
-			goto unlock;
-
-		...
-	out_unlock:
-		mutex_unlock(&rdtgroup_mutex);
-		cpus_read_unlock();
-	}
-
-
-I am not clear on whether there are more than one race here now. From the flow
-you describe it seems that when mbm_handle_overflow() runs on its intended CPU then
-it can assume that its associated domain has not been removed and thus that it is
-running with a valid work_struct? More specifically, if is_percpu_thread() is true
-then "d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work)" will work? 
-I am trying to match this race involving the CPU hotplug lock with the race described
-in original changelog that involves rdtgroup_mutex here ...
-
-> 
-> Maybe it doesn't hurt for it to perform an extra set of mbm_update()
-> calls on that CPU?
-
-The extra mbm_update() calls seem ok. An extra call to limbo handler should be ok also.
-One possible issue is the impact on software controller that assumes it is being
-called once per second. Looks like an extra call can be avoided though?
-
-> 
-> It will then do:
-> 
-> 	d->mbm_work_cpu = cpumask_any_housekeeping(&d->hdr.cpu_mask,
-> 						   RESCTRL_PICK_ANY_CPU);
-> 	schedule_delayed_work_on(d->mbm_work_cpu, &d->mbm_over, delay);
-> 
-> This "wrong" domain already has a worker ... Will this just reset the
-> timeout to the new "delay" value? Possibly also to a different CPU?
-
-queue_delayed_work_on()'s comments mention "Return: %false if @work was
-already on a queue" which I interpret as existing (correct) worker not being
-impacted. I am not familiar with these corner cases though.
-
-Reinette
+Thanks,
+drew
