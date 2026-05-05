@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F113370E4;
-	Tue,  5 May 2026 09:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB07F32A3C9;
+	Tue,  5 May 2026 09:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974795; cv=none; b=Jyz6PA9mhyYL6laegSroSHxHgXBHgkndpJ9Rd0W8rksi5n+4Tmg+dzf8woYH/f14MFKp4LccPDdPccIxt3Lxk6Ju8OpexHttOgRrs7Ka+tu6VI6TiAjPR38PhJeGezIXKfwY1FUfC6I5YpQEI/0IpG/j9UQX6BKVnpFvQ7WVb/M=
+	t=1777974798; cv=none; b=jQc5T7YektekDgzHcZhzlBERofWBL8HG5zy24rxKRntOvSdzUeB+HflLC4sw3UM+hz3DUryj2c5u06JkFMNNfcgV1igAwTG1TwBMq96ogAuMQ1lh1pRdLCSsyLIPG7zgRGjfs57uABURgpGgn67sgDwGu5A24zSaXm/LudwmS+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974795; c=relaxed/simple;
-	bh=RboG9kYuRaM9umuhlHg6mVhf2LLLr+s+TsR0YegzkQg=;
+	s=arc-20240116; t=1777974798; c=relaxed/simple;
+	bh=Bd++74L1nurtM3unMBgw66nx9YWWxLmwNbphN6HBMQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ql02NqzQrt1Fvns2FjWZDcfnGPLnTqM+MHuKTGh2jA+8plyGFwyMT/Rt7ojocaKJdPYgJ6tCiUkfEUiAPQrOy1fGodIbJknIKKS7L7MkT/cQNMWmrNaxB/yxz2xvt+dPMljePH3GwHXdlwgxxQRZeM9dMu+HADJ+eWH2YURI0kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tH9jetrr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nGDnteH8WNW0xXKmr0V/ECXN2Xl/NDEz/mXrODJU+m1bCPgJhZYHFcn/M9RsU/uzSB63Wfl/yD7kfUGgXqU49NimL+7I5vlz9el+TjNtpBDaJQIXoid1p5/FldZVLedC1VPk56S1264DpO1a5tMtJT1FYVlSpSNeD9uZ5LQUTzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JpZX6xpL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tH9jetrr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C43C2BCB4;
-	Tue,  5 May 2026 09:53:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JpZX6xpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239D9C2BCB4;
+	Tue,  5 May 2026 09:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974795;
-	bh=RboG9kYuRaM9umuhlHg6mVhf2LLLr+s+TsR0YegzkQg=;
+	s=k20201202; t=1777974798;
+	bh=Bd++74L1nurtM3unMBgw66nx9YWWxLmwNbphN6HBMQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tH9jetrrOQfgDxNDENoV3CraEMkTpgjCdYPda7sd6NkrqocswGh4mglNV44QXmoLr
-	 au+A46Z4xDEuehcf6zQZA1i99EAJDmn4KfNgrjszj5jUvauDUkp1sTAxv7J9FB7GVn
-	 xmckwyY036jYWqCZR92kL/iPEzBIjXDdvY5wxN9sNbcwO6l068PGVS69ELzi7xBybZ
-	 aykS1xB/ThkWPTtEcTrAXvqouUmLO14okxuSuauN5U6tZxggjpf+K4ZMSaoeinyhvL
-	 spDHAZkLUGtYWadJaRmrXtLw8zffHtnha9HDzFrLZpkchheHRmHdDUN3Ptu2C7s0G5
-	 9D/MiNGzAayHg==
+	b=JpZX6xpL4gTYOloqMi6PEno1y3YLjm38V9EujW59BmemHMvRSHyji4LhIR9Ugb6zl
+	 wY94aFTwRkCjZcgxjVHUsnoyNQvMGP3sRFfJfGvnjObJ1frc/9apW27hOUdtoZAXvI
+	 Rr9XUlYKbUKO8rtw8L+nWrT3NWuyULwDIu4WpP+3Ya7FZiyFNvx1vtecHcuuVF+yfP
+	 fmaIR3DSYalltmlcD5iM9wtYRQTR6EGTTRFlnWyBdYIF21yz6SahZCjdkjCz96eaM8
+	 ZUw+cOOJhSyDTlU6I2TrpG4uAvgr/IPG3NFTQAjf5tmQtXDYlz6sz67FnswH3MAYXP
+	 ALfNawpTV3x+w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: John Garry <john.g.garry@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Mark Harmstone <mark@harmstone.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] nvme-multipath: put module reference when delayed removal work is canceled
-Date: Tue,  5 May 2026 05:51:43 -0400
-Message-ID: <20260505095149.512052-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] btrfs: abort transaction in do_remap_reloc_trans() on failure
+Date: Tue,  5 May 2026 05:51:44 -0400
+Message-ID: <20260505095149.512052-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -56,296 +54,329 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Garry <john.g.garry@oracle.com>
+From: Mark Harmstone <mark@harmstone.com>
 
-[ Upstream commit 3f150f0f010f234f34a67897344f18e68fe803f7 ]
+[ Upstream commit 73db0fad673af844772de964eebecae60eda0496 ]
 
-The delayed disk removal work is canceled when a NS (re)appears. However,
-we do not put the module reference grabbed in nvme_mpath_remove_disk(), so
-fix that.
+If one of the calls made by do_remap_reloc_trans() fails, we can leave
+the remap tree in an inconsistent state. Abort the transaction if this
+happens, to prevent the corrupt state from reaching the disk.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Mark Harmstone <mark@harmstone.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Decision Summary
-This should be backported to stable trees that contain NVMe multipath
-delayed removal, especially `v6.16+` trees checked locally. It fixes a
-real module reference leak: `nvme_mpath_remove_disk()` takes a
-`THIS_MODULE` reference before scheduling delayed removal work, but
-`nvme_init_ns_head()` can cancel that work when a namespace reappears.
-If canceled, the work callback never runs and therefore never executes
-its existing `module_put(THIS_MODULE)`. The patch balances that
-reference only when `cancel_delayed_work()` actually canceled pending
-work.
-
 ## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `nvme-multipath`; action verb `put`/implicit
-`fix`; intent is to release a module reference when delayed namespace
-removal work is canceled.
 
-Step 1.2 Record: tags present: `Reviewed-by: Christoph Hellwig
-<hch@lst.de>`, `Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>`,
-`Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>`, `Signed-off-by: John
-Garry <john.g.garry@oracle.com>`, `Signed-off-by: Keith Busch
-<kbusch@kernel.org>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
-`Link:`, or `Cc: stable` tag in the commit.
+Step 1.1 Record: subsystem `btrfs`; action verb `abort`; claimed intent
+is to abort the transaction from `do_remap_reloc_trans()` failure paths
+so an inconsistent remap tree cannot be committed.
 
-Step 1.3 Record: bug is a module reference leak. The commit body states
-the delayed disk removal work is canceled when a namespace appears or
-reappears, but the module reference acquired in
-`nvme_mpath_remove_disk()` is not released. Symptom from related
-blktests discussion: module refcount does not return to the original
-value after reconnect. Root cause: cancellation bypasses
-`nvme_remove_head_work()`, where the existing `module_put()` lives.
+Step 1.2 Record: tags found in the actual public patch are `Reviewed-by:
+Johannes Thumshirn`, `Signed-off-by: Mark Harmstone`, and `Signed-off-
+by: David Sterba`. No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`,
+or `Cc: stable` tag was present in the fetched patch. Notable pattern:
+reviewed by a Btrfs developer and committed by David Sterba.
 
-Step 1.4 Record: yes, this is a hidden resource/reference leak fix. The
-subject does not say “fix leak”, but the body and code show a missing
-`module_put()` on a cancellation path.
+Step 1.3 Record: the body describes a real corruption-prevention bug:
+failures in `do_remap_reloc_trans()` can leave the remap tree
+inconsistent, and aborting the transaction prevents that state from
+reaching disk. No stack trace, reproducer, or explicit affected versions
+were in the message. Root cause, as verified from code, is that the
+function can return through `fail` after transactional remap/free-space
+mutations without marking the transaction aborted.
+
+Step 1.4 Record: this is not a hidden cleanup; it is an explicit
+filesystem consistency fix. The subject and body both describe
+preventing corrupt on-disk state.
 
 ## Phase 2: Diff Analysis
-Step 2.1 Record: one file changed, `drivers/nvme/host/core.c`, with 2
-insertions and 1 deletion. Modified function: `nvme_init_ns_head()`.
-Scope: single-file surgical fix.
 
-Step 2.2 Record: before, `nvme_init_ns_head()` unconditionally called
-`cancel_delayed_work(&head->remove_work)` after adding the namespace
-head. After, it checks the return value and calls
-`module_put(THIS_MODULE)` only if pending delayed work was canceled. The
-affected path is namespace initialization/reappearance after delayed
-multipath removal was scheduled.
+Step 2.1 Record: one file changed, `fs/btrfs/relocation.c`, with +10/-4.
+One function modified: `do_remap_reloc_trans()`. Scope is a single-
+function surgical filesystem fix.
 
-Step 2.3 Record: bug category is reference counting/resource leak.
-`nvme_mpath_remove_disk()` acquires a module reference with
-`try_module_get(THIS_MODULE)` before scheduling `head->remove_work`;
-`nvme_remove_head_work()` releases it with `module_put(THIS_MODULE)`
-when the work runs. If `nvme_init_ns_head()` cancels the pending work,
-the callback does not run, so the added `module_put()` balances the
-acquired reference. Workqueue docs in `kernel/workqueue.c` verify
-`cancel_delayed_work()` returns true if pending work was canceled and
-false otherwise.
+Step 2.2 Record: before the patch, four failure paths jumped to `fail`,
+released local references, freed the reserved extent, unlocked
+`remap_mutex`, and ended the transaction without aborting it. After the
+patch, those paths call `btrfs_abort_transaction(trans, ret)` before
+cleanup. The `add_remap_entry()` failure path also stops attempting
+`btrfs_add_to_free_space_tree()` recovery and aborts instead.
 
-Step 2.4 Record: fix quality is high. It is minimal and correctly
-conditional. Regression risk is very low: an extra `module_put()` is
-only performed when the work was pending and canceled, matching the
-exact reference lifetime. If the work was not pending or was already
-running, no extra put is done.
+Step 2.3 Record: bug category is filesystem metadata consistency / data
+corruption prevention. `add_remap_entry()` was verified to delete or
+shorten identity remap entries before adding new remap and backref
+items; if a later insertion fails, returning normally can leave a
+partially updated remap tree. `btrfs_abort_transaction()` was verified
+to mark the transaction aborted and set filesystem error state,
+preventing normal commit of that partial state.
+
+Step 2.4 Record: the fix is minimal and consistent with Btrfs
+transaction rules. `transaction.c` says after abort, call-site recovery
+should be limited to freeing local allocations and passing the error up;
+the patch does exactly that. Regression risk is low but not zero: the
+filesystem will now abort/remount error on these rare failures instead
+of attempting to continue, but that is the correct trade-off for
+avoiding persistent metadata corruption.
 
 ## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows the cancellation line in
-`nvme_init_ns_head()` was introduced by `dd2c18548964` (`nvme: reset
-delayed remove_work after reconnect`), first contained around
-`v6.16-rc4`. The delayed removal work and callback `module_put()` came
-from `62188639ec16` (`nvme-multipath: introduce delayed removal of the
-multipath head node`), first contained around `v6.16-rc1`.
 
-Step 3.2 Record: no `Fixes:` tag is present, so there was no tagged
-commit to follow. Manual history points to the interaction between
-`62188639ec16` and `dd2c18548964`.
+Step 3.1 Record: `git blame` shows the changed error paths were
+introduced by `fd6594b1446cc` (`btrfs: replace identity remaps with
+actual remaps when doing relocations`), authored by Mark Harmstone in
+Jan 2026 and merged for the 7.0 cycle. First containing tag verified as
+`v7.0-rc1~232^2~74`.
 
-Step 3.3 Record: recent related commits include `62188639ec16`
-introducing delayed removal, `dd2c18548964` adding cancellation on
-reconnect, and `0f5197ea9a73` fixing a different delayed-removal module
-reference failure path. This commit is standalone; it only changes the
-cancellation path in `core.c`.
+Step 3.2 Record: no `Fixes:` tag is present, so there was no explicit
+tag to follow. Independent blame identifies `fd6594b1446cc` as the
+introducer, and that commit exists in `stable/linux-7.0.y` but not older
+checked stable branches.
 
-Step 3.4 Record: John Garry has recent NVMe-related commits and reviewed
-the related `0f5197ea9a73` fix. The patch was committed by Keith Busch
-and reviewed by Christoph Hellwig, both key NVMe maintainers.
+Step 3.3 Record: recent local history for `fs/btrfs/relocation.c` shows
+several remap-tree fixes around the same code, including block-group
+reference, NULL root checks, transaction handle leak, and remap-tree
+setup fixes. The candidate itself is standalone; no prerequisite was
+found for the shown hunk to apply to `stable/linux-7.0.y`.
 
-Step 3.5 Record: no prerequisite commit beyond the delayed-removal
-feature and reconnect cancellation code. The current `core.c` already
-includes `<linux/module.h>`, so the new `module_put(THIS_MODULE)`
-requires no include change.
+Step 3.4 Record: the author, Mark Harmstone, authored the remap-tree
+relocation code and several nearby Btrfs fixes. David Sterba committed
+both the introducer and the candidate in the Btrfs development tree.
+
+Step 3.5 Record: related nearby commit `942bcf6d1884` fixes a separate
+`bytes_may_use` leak in the same function. It is not a prerequisite for
+this abort fix; the candidate patch applies cleanly to current
+`stable/linux-7.0.y` in a dry-run.
 
 ## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 3f150f0f010f2` found the original patch at `
-https://patch.msgid.link/20260415155358.1517871-1-
-john.g.garry@oracle.com`. `b4 dig -a` found only v1, so the committed
-version is the submitted revision. Lore mirror shows three positive
-reviews and Keith Busch applying it to `nvme-7.1`.
 
-Step 4.2 Record: `b4 dig -w` shows John Garry, Christoph Hellwig, Keith
-Busch, Nilay Shroff, and `linux-nvme` were included. Appropriate
-maintainers/reviewers were on the thread.
+Step 4.1 Record: `b4 dig -c a41c84ba2f51303b7dca2ccf426d99c4a3a757b3`
+failed because the commit object is not present in this local clone. Web
+research found the original v2 thread at `https://yhbt.net/lore/linux-
+btrfs/3a0c1b94-4404-4726-aafe-809c425707fc@wdc.com/T/`. The thread shows
+v2 and notes the change from aborting at the end to aborting in place so
+line numbers are logged properly.
 
-Step 4.3 Record: no `Reported-by` or bugzilla/syzbot link. Related
-blktests thread reported a concrete failure: `module refcount not as
-original`; John Garry replied that he had posted the kernel fix for it,
-referring to this fix.
+Step 4.2 Record: `b4 dig -w` also failed for the same nonlocal commit
+reason. The fetched lore mirror shows recipients `linux-btrfs` and Boris
+Burkov, and a review reply from Johannes Thumshirn with `Reviewed-by`.
 
-Step 4.4 Record: related patch thread for `nvme-multipath: fix leak on
-try_module_get failure` contains John Garry identifying this missing
-`module_put()` on timer cancellation; Keith Busch agreed the check and
-`module_put()` were correct and that `_sync` was unnecessary.
+Step 4.3 Record: no separate bug report, syzbot report, or Bugzilla link
+was found in the commit or lore thread. Severity comes from the patch
+description and verified code mechanism: possible persistent remap-tree
+inconsistency.
 
-Step 4.5 Record: direct lore stable search was blocked by Anubis; web
-search did not find stable-specific objections or reasons not to
-backport.
+Step 4.4 Record: lore shows this patch as a standalone `[PATCH v2]`, not
+a numbered multi-patch series. Web search found a separate same-function
+accounting leak fix, but no dependency relationship.
+
+Step 4.5 Record: stable-specific search did not find a usable stable
+discussion; direct lore stable fetches were blocked by Anubis. No
+evidence of a known objection or rejection was found.
 
 ## Phase 5: Code Semantic Analysis
-Step 5.1 Record: modified function is `nvme_init_ns_head()`.
 
-Step 5.2 Record: `nvme_init_ns_head()` is called by `nvme_alloc_ns()`.
-`nvme_alloc_ns()` is called by `nvme_scan_ns()` when a namespace is
-discovered during controller scan. Scan work is queued from namespace
-change AEN handling, reset/start paths, sysfs rescan, and ioctl rescan
-paths.
+Step 5.1 Record: modified function is `do_remap_reloc_trans()`.
 
-Step 5.3 Record: key callees around the bug are `cancel_delayed_work()`,
-`module_put()`, `nvme_mpath_remove_disk()`, `try_module_get()`,
-`mod_delayed_work()`, and `nvme_remove_head_work()`.
+Step 5.2 Record: caller chain verified as `btrfs_ioctl_balance()` ->
+`btrfs_balance()` -> `__btrfs_balance()` -> `btrfs_relocate_chunk()` ->
+`btrfs_relocate_block_group()` -> `do_remap_reloc()` ->
+`do_remap_reloc_trans()`. Other verified callers of
+`btrfs_relocate_chunk()` include device shrink, block-group reclaim, and
+zoned repair paths. Balance ioctl requires `CAP_SYS_ADMIN`.
 
-Step 5.4 Record: reachable path is: namespace/path removal ->
-`nvme_ns_remove()` -> last path -> `nvme_mpath_remove_disk()` ->
-`try_module_get()` + delayed work; later namespace reappears -> scan
-path -> `nvme_scan_ns()` -> `nvme_alloc_ns()` -> `nvme_init_ns_head()`
--> cancel delayed work. This is reachable through real NVMe multipath
-path loss/reconnect and through the blktests NVMe loop scenario. I did
-not verify an unprivileged trigger; the tested path writes
-`delayed_removal_secs` via sysfs and manipulates NVMe connectivity.
+Step 5.3 Record: key callees include
+`btrfs_add_block_group_free_space()`, `copy_remapped_data()`,
+`btrfs_remove_from_free_space_tree()`, `add_remap_entry()`,
+`btrfs_free_reserved_extent()`, and `btrfs_end_transaction()`.
+`add_remap_entry()` calls `btrfs_del_item()`,
+`btrfs_set_item_key_safe()`, `add_remap_item()`,
+`btrfs_insert_empty_item()`, and `add_remap_backref_item()`.
 
-Step 5.5 Record: similar reference-balancing pattern exists elsewhere in
-the kernel, e.g. Bluetooth code checks `cancel_delayed_work()` and drops
-a reference only when cancellation succeeds. No additional identical
-NVMe missing-put sites were found in the searched files.
+Step 5.4 Record: the buggy path is reachable from privileged userspace
+via Btrfs balance and from kernel maintenance paths such as
+reclaim/shrink. It is only active when
+`should_relocate_using_remap_tree()` is true: filesystem has the
+`REMAP_TREE` incompat feature and the block group is not system or
+metadata-remap.
+
+Step 5.5 Record: similar local patterns support aborting.
+`move_existing_remap()` aborts the transaction on error before
+ending/committing, and `start_block_group_remapping()` aborts on remap-
+tree setup failures. `transaction.h` explicitly says to call
+`btrfs_abort_transaction()` as early as possible.
 
 ## Phase 6: Cross-Referencing And Stable Tree Analysis
-Step 6.1 Record: local stable branch checks show `stable/linux-6.16.y`,
-`6.17.y`, `6.18.y`, `6.19.y`, and `7.0.y` contain
-`cancel_delayed_work(&head->remove_work)`,
-`try_module_get(THIS_MODULE)`, `module_put(THIS_MODULE)`, and
-`delayed_removal_secs`. `stable/linux-6.12.y` does not contain this
-delayed-removal code, so this specific bug is not present there.
 
-Step 6.2 Record: `git apply --check` for the patch succeeds on the
-current `stable/linux-7.0.y` checkout. The exact hunk context exists in
-local `6.16.y` through `7.0.y` branches, so backport difficulty should
-be clean or trivial. I did not create separate worktrees for branch-
-specific apply checks.
+Step 6.1 Record: `stable/linux-7.0.y` contains `do_remap_reloc_trans()`.
+`stable/linux-6.19.y`, `stable/linux-6.18.y`, `stable/linux-6.12.y`, and
+`stable/linux-6.6.y` do not contain this function or remap-tree support
+in the checked paths. The bug is therefore relevant to 7.0.y, not older
+stable branches checked.
 
-Step 6.3 Record: no alternative fix for this exact cancellation leak was
-found in checked stable branches; the candidate commit itself is not an
-ancestor of the checked stable branches.
+Step 6.2 Record: dry-run `git apply --check` of the candidate hunk
+succeeded against current `stable/linux-7.0.y`, so expected backport
+difficulty is clean for 7.0.y.
+
+Step 6.3 Record: local `stable/linux-7.0.y` does not already contain the
+candidate subject, and the current file still has the pre-fix failure
+paths.
 
 ## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: subsystem is NVMe host multipath, under
-`drivers/nvme/host`. Criticality: important for systems using NVMe
-multipath and delayed removal, not universal core-kernel impact.
 
-Step 7.2 Record: subsystem is actively developed; recent history
-includes delayed removal introduction, reconnect cancellation, and
-related leak fixes. This bug is in relatively new code introduced for
-`v6.16`.
+Step 7.1 Record: subsystem is Btrfs filesystem code under `fs/btrfs`,
+criticality IMPORTANT. It is not universal core code, but filesystem
+metadata corruption is a high-severity stable concern for affected Btrfs
+users.
+
+Step 7.2 Record: subsystem activity is high in this area; local history
+shows many Btrfs remap-tree commits and fixes in the 7.0 cycle. This is
+recently introduced code, but it is already present in the 7.0 stable
+tree.
 
 ## Phase 8: Impact And Risk Assessment
-Step 8.1 Record: affected users are `CONFIG_NVME_MULTIPATH` users who
-enable nonzero `delayed_removal_secs` and experience path loss followed
-by namespace/path return before the delayed removal work fires.
 
-Step 8.2 Record: trigger is realistic for NVMe multipath transient path
-failures or hot-remove/re-add scenarios. Related blktests exercises this
-with NVMe loop. Unprivileged trigger was not verified.
+Step 8.1 Record: affected population is config/filesystem-specific:
+users running kernels with Btrfs experimental/remap-tree support and
+filesystems using the `REMAP_TREE` incompat feature, during
+relocation/balance/shrink/reclaim paths.
 
-Step 8.3 Record: failure mode is module reference leak, severity medium.
-It can prevent `nvme_core` from being unloadable and causes persistent
-refcount imbalance; the test discussion shows a concrete refcount
-mismatch.
+Step 8.2 Record: trigger conditions are failures from the remap
+relocation sequence after reservation and during free-space/remap-
+tree/data-copy operations. Verified user trigger via balance requires
+`CAP_SYS_ADMIN`; unprivileged trigger was not verified.
 
-Step 8.4 Record: benefit is moderate for affected NVMe multipath users
-because it fixes a real reference leak in a recovery path. Risk is very
-low: 2 added lines, no API change, no behavior change except balancing a
-reference when pending work is canceled.
+Step 8.3 Record: failure mode is potential persistent filesystem
+metadata inconsistency / corruption of the remap tree. Severity is
+CRITICAL for affected users because the commit’s stated goal is to
+prevent corrupt state from reaching disk and code inspection confirms
+partial remap-tree mutations can occur before error returns.
+
+Step 8.4 Record: benefit is high for affected 7.0.y users because it
+prevents committing inconsistent filesystem metadata. Risk is low: one
+function, 10 additions and 4 removals, no API changes, and behavior only
+changes rare error paths to abort the transaction.
 
 ## Phase 9: Final Synthesis
-Step 9.1 Record: evidence for backporting: real reference leak; concrete
-test failure in related blktests discussion; tiny one-function fix;
-reviewed by three NVMe developers; maintainer agreed the logic; applies
-cleanly to current `7.0.y` and relevant code exists in `6.16+` stable
-branches. Evidence against: affects a specific configured NVMe multipath
-feature, not all systems; severity is not crash/data
-corruption/security. Unresolved: I did not verify exact branch-specific
-application in separate worktrees, and direct lore stable search was
-blocked.
+
+Step 9.1 Record: evidence for backporting is strong: real filesystem
+consistency bug, verified partial transactional mutations in
+`add_remap_entry()`, small single-function fix, reviewed on linux-btrfs,
+clean dry-run apply to `stable/linux-7.0.y`, and Btrfs transaction
+documentation supports early abort. Evidence against is limited to scope
+of affected users: remap-tree is experimental/config-specific and the
+bug only exists in 7.0.y among checked stable branches. Unresolved: no
+independent reproducer or user report was found, and direct lore/stable
+search was partially blocked.
 
 Step 9.2 Record: stable rules checklist:
-1. Obviously correct and tested: yes, by code inspection and related
-   blktests discussion; no `Tested-by` tag.
-2. Fixes real bug: yes, module reference leak.
-3. Important issue: yes enough for stable as a driver lifecycle
-   reference leak, though severity is medium rather than critical.
-4. Small and contained: yes, 2 insertions/1 deletion in one function.
-5. No new feature/API: yes.
-6. Can apply to stable: yes for current `7.0.y`; exact context exists in
-   checked `6.16+` branches. Not applicable to trees lacking delayed
-   removal.
+1. Obviously correct and tested: yes for correctness by inspection;
+   reviewed by Johannes Thumshirn. No `Tested-by` found.
+2. Fixes a real bug: yes, prevents inconsistent remap-tree state after
+   transactional failure paths.
+3. Important issue: yes, potential on-disk filesystem corruption.
+4. Small and contained: yes, one function in one file, +10/-4.
+5. No new features/APIs: yes.
+6. Can apply to stable: yes for `stable/linux-7.0.y`; not applicable to
+   older checked stable branches lacking the code.
 
-Step 9.3 Record: no exception category such as device ID, quirk, DT,
-build, or documentation. This is a normal bug fix.
+Step 9.3 Record: no exception category like device ID, quirk, DT, build,
+or docs applies. This is a normal serious filesystem bug fix.
 
-Step 9.4 Record: backport recommended to stable trees containing NVMe
-delayed removal cancellation, notably checked `6.16.y` through `7.0.y`;
-not applicable to older trees where the feature is absent.
+Step 9.4 Decision: backport to stable trees that contain the remap-tree
+relocation code, specifically 7.0.y based on the checked branches. Do
+not try to apply it to older stable trees that lack
+`do_remap_reloc_trans()`.
 
 ## Verification
-- [Phase 1] Parsed commit `3f150f0f010f2` with `git show --format=fuller
-  --stat --patch`; confirmed subject, body, tags, and 2-line fix.
-- [Phase 2] Inspected `drivers/nvme/host/core.c` and
-  `drivers/nvme/host/multipath.c`; confirmed `try_module_get()` in
-  `nvme_mpath_remove_disk()` and `module_put()` in
-  `nvme_remove_head_work()`.
-- [Phase 2] Checked `kernel/workqueue.c`; confirmed
-  `cancel_delayed_work()` returns true if pending work was canceled and
-  false otherwise.
-- [Phase 3] Ran `git blame` on the changed and related lines; identified
-  `dd2c18548964`, `62188639ec16`, and `0f5197ea9a73`.
-- [Phase 3] Ran `git show` on related commits; confirmed delayed removal
-  introduction, reconnect cancellation, and prior try-module failure
-  fix.
-- [Phase 4] Ran `b4 dig -c`, `-a`, and `-w`; found original patch URL,
-  single v1 revision, and appropriate NVMe recipients.
-- [Phase 4] Fetched lore mirror thread; confirmed reviews by Christoph
-  Hellwig, Nilay Shroff, Chaitanya Kulkarni, and application by Keith
-  Busch.
-- [Phase 4] Fetched related try-module failure and blktests threads;
-  confirmed this missing cancellation `module_put()` was discussed and
-  tied to module refcount mismatch.
-- [Phase 5] Used `rg` and file reads to trace callers from
-  `nvme_init_ns_head()` through `nvme_alloc_ns()`, `nvme_scan_ns()`, and
-  `nvme_scan_work()`.
-- [Phase 6] Used `git merge-base --is-ancestor` and branch object
-  inspection to confirm the relevant code exists in local `6.16.y`,
-  `6.17.y`, `6.18.y`, `6.19.y`, and `7.0.y`, but not `6.12.y`.
-- [Phase 6] Ran `git apply --check` for the candidate diff on current
-  `stable/linux-7.0.y`; it succeeded.
-- UNVERIFIED: exact `git apply --check` on separate worktrees for every
-  stable branch; unprivileged triggerability; direct stable-list search
-  results due lore Anubis blocking.
+
+- [Phase 1] Fetched public patch from GitHub commit
+  `a41c84ba2f51303b7dca2ccf426d99c4a3a757b3`; confirmed subject, body,
+  tags, and +10/-4 diff.
+- [Phase 2] Read `fs/btrfs/relocation.c`; confirmed old failure paths
+  end the transaction without aborting.
+- [Phase 2] Read `add_remap_entry()`; confirmed it can delete/shorten
+  identity remap state before later operations fail.
+- [Phase 2] Read `transaction.h` and `transaction.c`; confirmed
+  `btrfs_abort_transaction()` records abort state and transaction abort
+  rules favor local cleanup only.
+- [Phase 3] `git blame -L 5032,5049 -- fs/btrfs/relocation.c`: changed
+  lines introduced by `fd6594b1446cc`.
+- [Phase 3] `git show --stat --format=fuller fd6594b1446cc --
+  fs/btrfs/relocation.c`: introducer is `btrfs: replace identity remaps
+  with actual remaps when doing relocations`, +326 lines.
+- [Phase 3] `git describe --contains fd6594b1446cc`: first containing
+  point reported in the 7.0-rc1 range.
+- [Phase 3] `git log --author='Mark Harmstone' -10 -- fs/btrfs`: author
+  has multiple nearby Btrfs/remap fixes.
+- [Phase 4] `b4 dig -c`, `-a`, and `-w` failed because the candidate
+  commit object is not in this local clone.
+- [Phase 4] Fetched lore mirror thread; confirmed `[PATCH v2]`, v2
+  change note, and `Reviewed-by` reply from Johannes Thumshirn.
+- [Phase 4] Web searches found no usable stable-specific discussion;
+  direct lore stable fetch was blocked by Anubis.
+- [Phase 5] `rg` and file reads traced callers from balance ioctl and
+  maintenance paths to `do_remap_reloc_trans()`.
+- [Phase 5] Read `relocation.h`; confirmed remap-tree relocation
+  condition.
+- [Phase 6] `git grep` on stable branches: function exists in
+  `stable/linux-7.0.y`; not found in checked `6.19.y`, `6.18.y`,
+  `6.12.y`, or `6.6.y`.
+- [Phase 6] `git apply --check` of the candidate hunk succeeded against
+  current `stable/linux-7.0.y`.
+- [Phase 6] `git log --grep` in `stable/linux-7.0.y` found no existing
+  candidate commit.
+- UNVERIFIED: no runtime test, fstest, or reproducer was run.
+- UNVERIFIED: direct canonical lore.kernel.org pages were blocked by
+  Anubis, so I used the available lore mirror and GitHub commit content.
+
+The risk-benefit balance is clearly favorable for affected stable trees:
+this is a small, reviewed, error-path-only Btrfs fix that prevents
+potentially persistent filesystem metadata corruption.
 
 **YES**
 
- drivers/nvme/host/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/relocation.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index ac5a7d9781f58..2e8402513189d 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4052,7 +4052,8 @@ static int nvme_init_ns_head(struct nvme_ns *ns, struct nvme_ns_info *info)
- 	mutex_unlock(&ctrl->subsys->lock);
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index 033f74fd6225c..2519cdb401eda 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -5031,21 +5031,27 @@ static int do_remap_reloc_trans(struct btrfs_fs_info *fs_info,
  
- #ifdef CONFIG_NVME_MULTIPATH
--	cancel_delayed_work(&head->remove_work);
-+	if (cancel_delayed_work(&head->remove_work))
-+		module_put(THIS_MODULE);
- #endif
- 	return 0;
+ 	if (bg_needs_free_space) {
+ 		ret = btrfs_add_block_group_free_space(trans, dest_bg);
+-		if (ret)
++		if (ret) {
++			btrfs_abort_transaction(trans, ret);
+ 			goto fail;
++		}
+ 	}
+ 
+ 	ret = copy_remapped_data(fs_info, start, new_addr, length);
+-	if (ret)
++	if (ret) {
++		btrfs_abort_transaction(trans, ret);
+ 		goto fail;
++	}
+ 
+ 	ret = btrfs_remove_from_free_space_tree(trans, new_addr, length);
+-	if (ret)
++	if (ret) {
++		btrfs_abort_transaction(trans, ret);
+ 		goto fail;
++	}
+ 
+ 	ret = add_remap_entry(trans, path, src_bg, start, new_addr, length);
+ 	if (ret) {
+-		btrfs_add_to_free_space_tree(trans, new_addr, length);
++		btrfs_abort_transaction(trans, ret);
+ 		goto fail;
+ 	}
  
 -- 
 2.53.0
