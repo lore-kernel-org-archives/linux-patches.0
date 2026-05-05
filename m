@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5036330215A;
-	Tue,  5 May 2026 09:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79C53148C5;
+	Tue,  5 May 2026 09:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974720; cv=none; b=ZQxVK/8Dof/GEJwPix/93CEA6O9+EGCILASBc+KOGFeOK2uErYyHgY0rNly2Zr579Y6r4qmRncbI6jgAKPjhZJMrTWTwRRSYXLvttykELkO+mTPPhRNEjD4dYALy76mJZixNugTKm7OPkQNmhdUrZRkYvQeGPU4WIpawGxpH4YM=
+	t=1777974723; cv=none; b=Qw78biHrfIbaZ0fXGDjN99kyfIlHC98wyP+qiyY2BcSJP+YPym0Q0v36d422tYHuisQTu1CewZcm0gLyDISPIUYC9NCJ6MQ2OfG7fVcff6yHsry5KV1cHh5gStFcu2ZfkVwJ9XLZ7MPdw4k9lUhELyuGVQuW7VAYWMcSYrtDSNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974720; c=relaxed/simple;
-	bh=0qV4cOztwSvvWGGKaqSmfSyQWpKz4dYQwUC37FZ5STg=;
+	s=arc-20240116; t=1777974723; c=relaxed/simple;
+	bh=jh/qD6PEr5GFGUgvRTsO9ylZmM5tQFfSBRJfUkrgB7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WY66AY+jjwiGZ9B8l89rdCppDdlHjY1R7E1hNY010Q/iIgkD4h65WzlvMmrDVvBuiQfmtNCYgbf+y+D79Jy1LQRYkSzIRe8kKf/fQFeD5efi4mrPlEsbcr+QCIG+enLT8rLAmFCRKDgpPR7W9dfc1hEcJE2LQ3qy3XG9pSOp1Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CiQl8tax; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JNGHMjfUAI/Bclr4VE2YPTwhRleFu2Eck1Ybvry8bmj29x1gl/T4nBpnDjGipUqPo7YusRE/WAcynYzmFuKmNbv1+y33EKO1go0M1POYa/iVX7PsxXZiChf3fk4JvPJUtBN6KHDvgr2b4zj/itT2r/WLm+FHzo5AcEKpB9RUMKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pxDAWLvp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CiQl8tax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0517BC2BCB4;
-	Tue,  5 May 2026 09:51:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pxDAWLvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99316C2BCC7;
+	Tue,  5 May 2026 09:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974720;
-	bh=0qV4cOztwSvvWGGKaqSmfSyQWpKz4dYQwUC37FZ5STg=;
+	s=k20201202; t=1777974722;
+	bh=jh/qD6PEr5GFGUgvRTsO9ylZmM5tQFfSBRJfUkrgB7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CiQl8taxKU0fmnrf3fQ9S1MwRNL2Fvty49yYhxu/HTr1jUZT7JulOnsQmuN55QBKU
-	 Miv97ef42Vm5cnjcrrDlJGk1hExO3jObYqHhCiUnU9lzbi3ByaFto8DS19+UnggCFt
-	 s/5uO6cbMhs9dopu9heMaKcF+5VtK2gidI+HvAss6qWXLOi3xNmczvJtZs5/V6jB36
-	 ShB18KtplzwNd0IW/7DxfZhI5OMcZ2jenLX6Ov+gWDk3F4hyz0Eac0vrs4ztod1Jwu
-	 BSM+pvrqA7JoZ0ICc/MqJvCcTuTtYzyfu7RXmM/9I5+iYjHsYdj7wkWz5JByXmZZWa
-	 xIUhj1Fv2FhBQ==
+	b=pxDAWLvp/0zMpi8L/q4wwtmPFNyh0ZGeh4TgZo8ZfkjfZgTnA9y4FutNka/smlVjc
+	 F3npdAU/r0tfgry3VnojFK0HVbBvfVH3xsNFP5o1ArPKm3aJ/s48grjOAL2XtUk0qQ
+	 s1AR/xMHqsgMc/U9AsblP/7BcJ5z158kM/R6L5NCcN8fhoKBRdfRkTEZaHHuXrYJXq
+	 GhHzBFlOSuN/BD0zZZJX45gUugaT3fW12s2updp4kUIo7UWP8evbFj5P+cL1UI7HHs
+	 rD2j5o9cIlj3MROql1l0fqG7vpnDXFxNL9F5aizVRJ9hPowqWivQA+/RPALSvocGLd
+	 nvReWMXr4RSQA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kenneth.feng@amd.com,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] drm/amd/pm: Update emit clock logic
-Date: Tue,  5 May 2026 05:51:19 -0400
-Message-ID: <20260505095149.512052-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] smb: client: change allocation requirements in smb2_compound_op
+Date: Tue,  5 May 2026 05:51:20 -0400
+Message-ID: <20260505095149.512052-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -57,246 +53,257 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.3
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-[ Upstream commit d6b99885b122528651d554a7bd907211a81579c2 ]
+[ Upstream commit 8e13b1b4093e0cbcb3dc2906c13b1fdc95cdf0a0 ]
 
-If only one level is enabled in clock table, there is no need to
-follow the fine grained clock logic which expects a minimum of
-two levels (min/max).
+Currently, smb2_compound_op() allocates
+struct smb2_compound_vars *vars using GFP_ATOMIC, although
+smb2_compound_op() can sleep when it calls compound_send_recv()
+before vars is freed.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7f19097af1496dd908a044ca95862f32d05f02df)
+Allocate vars using GFP_KERNEL.
+
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `drm/amd/pm`; action verb `Update`; claimed
-intent is to change AMD SMU clock-level sysfs emission when a DPM clock
-table has only one enabled level.
+Step 1.1 Record: Subsystem `smb: client`; action verb `change`; intent
+is to change `smb2_compound_op()` allocation from `GFP_ATOMIC` to
+`GFP_KERNEL`.
 
-Step 1.2 Record: tags present are `Signed-off-by: Lijo Lazar
-<lijo.lazar@amd.com>`, `Reviewed-by: Asad Kamal <asad.kamal@amd.com>`,
-`Signed-off-by: Alex Deucher <alexander.deucher@amd.com>`, and a cherry-
-pick marker for `7f19097af149...`. No `Fixes:`, `Reported-by:`, `Tested-
-by:`, `Link:`, or `Cc: stable@vger.kernel.org` tag was present in the
-supplied commit message.
+Step 1.2 Record: Tags present: `Signed-off-by: Fredric Cover
+<fredric.cover.lkernel@gmail.com>` and `Signed-off-by: Steve French
+<stfrench@microsoft.com>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+`Reviewed-by:`, `Acked-by:`, `Link:`, or `Cc: stable@vger.kernel.org`
+tags were present.
 
-Step 1.3 Record: the body says fine-grained clock logic expects two
-levels, min and max, so it should not be used when the table has only
-one level. Symptom is incorrect sysfs clock-level emission for that one-
-level case; no crash, stack trace, affected version, or reproducer is
-described.
+Step 1.3 Record: The commit body says `smb2_compound_op()` allocates
+`struct smb2_compound_vars *vars` with `GFP_ATOMIC`, but later calls
+`compound_send_recv()` before freeing `vars`, and that path can sleep.
+Symptom is not a crash report; the root cause is an over-restrictive
+allocation mode in a sleepable path.
 
-Step 1.4 Record: this is a hidden logic/correctness bug fix, not a
-cleanup. The bug is that a one-level table can be treated as fine-
-grained min/max output.
+Step 1.4 Record: This is a hidden correctness/reliability fix, not a
+feature. `GFP_ATOMIC` is allowed only for non-sleeping/atomic-style
+allocations and uses atomic reserves; the documented default for
+sleepable kernel allocations is `GFP_KERNEL`.
 
 ## Phase 2: Diff Analysis
-Step 2.1 Record: one file changed,
-`drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c`; one-line condition change in
-`smu_cmn_print_dpm_clk_levels()`. Scope is a single-file surgical driver
-fix.
+Step 2.1 Record: One file changed: `fs/smb/client/smb2inode.c`, 1
+insertion and 1 deletion. Modified function: `smb2_compound_op()`.
+Scope: single-file, single-line surgical fix.
 
-Step 2.2 Record: before, any table marked `SMU_DPM_TABLE_FINE_GRAINED`
-used the fine-grained path, which forces `count = 2` and emits min/max-
-style output. After, `count == 1` tables use the discrete-table path and
-emit exactly the real table entries.
+Step 2.2 Record: Before, `vars = kzalloc_obj(*vars, GFP_ATOMIC);`.
+After, `vars = kzalloc_obj(*vars, GFP_KERNEL);`. The affected path is
+allocation at the start of each `smb2_compound_op()` attempt, before
+SMB2 compound request setup and before `compound_send_recv()`.
 
-Step 2.3 Record: bug category is logic/correctness in user-visible sysfs
-output. The specific broken mechanism is the fine-grained display path
-assuming two levels even when `dpm_table->count` is one.
+Step 2.3 Record: Bug category is allocation-context correctness /
+resource reliability. The function can sleep through retry `msleep()`
+and `compound_send_recv()`, which waits for SMB credits and responses.
+The fix lets normal reclaim run and avoids consuming atomic reserves.
 
-Step 2.4 Record: fix quality is high: it preserves all existing behavior
-except the verified `is_fine_grained && count == 1` case. Regression
-risk is very low because non-fine-grained tables and fine-grained tables
-with more than one level are unchanged.
+Step 2.4 Record: The fix is obviously correct if all callers are
+sleepable; code inspection verified callers are VFS/SMB client
+operations that already perform sleeping network waits. Regression risk
+is very low, because the only behavior change is allowing the allocation
+itself to sleep in a path that already sleeps.
 
 ## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows `smu_cmn_print_dpm_clk_levels()` and
-the original `if (!is_fine_grained)` condition came from
-`a08ea4bc7711f8` (`drm/amd/pm: Add a helper to show dpm table`). Later
-fine-grained formatting changes came from `d81e52fc61fb9` (`drm/amd/pm:
-fix issue of missing '*' on pp_dpm_xxx nodes`). `a08ea4bc7711f8` is
-contained in `v7.0`, `v7.0.1`, `v7.0.2`, and `v7.0.3`, but not `v6.19`.
+Step 3.1 Record: Upstream commit is
+`8e13b1b4093e0cbcb3dc2906c13b1fdc95cdf0a0`. Blame on the current
+`kzalloc_obj(... GFP_ATOMIC)` line points to treewide allocator
+conversion `69050f8d6d075`; the original dynamic allocation using
+`GFP_ATOMIC` was introduced by `a7d5c294628088` (`cifs: reduce stack use
+in smb2_compound_op`), first appearing in `v5.8`.
 
-Step 3.2 Record: no `Fixes:` tag is present, so there was no Fixes
-target to follow. Related history identifies `a08ea4bc7711f8` as the
-likely introducing commit.
+Step 3.2 Record: No `Fixes:` tag, so no tagged introducing commit to
+follow. Independent blame identified `a7d5c294628088` as the relevant
+introduction of the heap allocation.
 
-Step 3.3 Record: recent file history shows a series of AMD PM
-helper/refactor commits, including `a08ea4bc7711f8` and `d81e52fc61fb9`.
-The target patch is standalone on top of code present in `v7.0.y`.
+Step 3.3 Record: Recent history of `fs/smb/client/smb2inode.c` includes
+several real fixes to this same function/path: off-by-8 bounds check,
+buffer size fix, uninitialized variable fix, wrong index reference, and
+refcount leak fixes. No prerequisite for this one-line allocation flag
+change was found.
 
-Step 3.4 Record: Lijo Lazar authored the helper introduction and has
-multiple recent commits under `drivers/gpu/drm/amd/pm`, so the author is
-an active AMD PM contributor.
+Step 3.4 Record: Author Fredric Cover has a small number of recent SMB
+client commits. The patch was committed by Steve French, who is listed
+as CIFS/SMB3 client maintainer in `MAINTAINERS`.
 
-Step 3.5 Record: dependency is the helper itself. The affected function
-is absent in `v6.19`, so older stable trees do not need this patch. For
-`v7.0.y`, the context exists and the backport should be trivial.
+Step 3.5 Record: For `v7.0.y`, the patch applies cleanly as-is because
+`kzalloc_obj()` exists. For older affected stable trees, the equivalent
+backport is the same flag change on `kzalloc(sizeof(*vars),
+GFP_ATOMIC)`.
 
 ## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 7f19097af149...`, `-a`, and `-w` all failed
-because the local repository does not contain that commit object.
-`WebFetch` to lore and git.kernel.org was blocked by Anubis. Web
-searches by exact subject/hash/body did not find the original target
-patch.
+Step 4.1 Record: `b4 dig -c 8e13b1b4093e0` found the original submission
+at
+`https://patch.msgid.link/20260429213453.26235-1-FredTheDude@proton.me`.
+`b4 dig -a` found only v1; no later revisions.
 
-Step 4.2 Record: b4 recipient data could not be obtained. The only
-verified review signal is the commit-message `Reviewed-by: Asad Kamal`.
+Step 4.2 Record: `b4 dig -w` showed the patch was sent to Steve French,
+Paulo Alcantara, `linux-cifs@vger.kernel.org`, and `linux-
+kernel@vger.kernel.org`. Those are appropriate subsystem recipients.
 
-Step 4.3 Record: no bug-report link or reporter tag exists. No syzbot,
-Bugzilla, or user-report evidence was found.
+Step 4.3 Record: No `Reported-by` or bug-report `Link` was present.
+WebFetch of lore was blocked by Anubis, but `b4` saved the mbox locally;
+the mbox contained the patch email and no review replies.
 
-Step 4.4 Record: related external context found the earlier AMD PM
-`Remove print_clock_levels` series and a `Use one level table if dpm not
-enabled` patch, but not this exact patch. These support the broader area
-of clock table/sysfs work but are not direct evidence for this commit.
+Step 4.4 Record: The patch is standalone, not part of a multi-patch
+series.
 
-Step 4.5 Record: stable-list search via lore was blocked; web search
-found no stable-specific discussion.
+Step 4.5 Record: Web search did not find stable-specific discussion for
+this exact subject. No known objection or known reason to avoid stable
+was found.
 
 ## Phase 5: Code Semantic Analysis
-Step 5.1 Record: modified function is `smu_cmn_print_dpm_clk_levels()`.
+Step 5.1 Record: Modified function: `smb2_compound_op()`.
 
-Step 5.2 Record: callers found in AMD SMU ppt files include
-`smu_v14_0_2_ppt.c`, `smu_v13_0_7_ppt.c`, `smu_v13_0_6_ppt.c`,
-`smu_v13_0_0_ppt.c`, `aldebaran_ppt.c`, `sienna_cichlid_ppt.c`,
-`navi10_ppt.c`, and `arcturus_ppt.c`.
+Step 5.2 Record: Callers are all internal SMB2/SMB3 client filesystem
+operations: `smb2_query_path_info()`, `smb2_mkdir()`,
+`smb2_mkdir_setinfo()`, `smb2_rmdir()`, `smb2_set_path_attr()` via
+rename/hardlink, `smb2_set_path_size()`, `smb2_set_file_info()`,
+`smb2_create_reparse_inode()`, `smb2_query_reparse_point()`, and
+`smb2_rename_pending_delete()`.
 
-Step 5.3 Record: key callees/macros are `sysfs_emit_at()`,
-`smu_cmn_freqs_match()`, `SMU_DPM_TABLE_MIN()`, and
-`SMU_DPM_TABLE_MAX()`.
+Step 5.3 Record: Key callees include request initializers, `msleep()` on
+replay retries, `compound_send_recv()`, SMB2 request free helpers,
+response buffer frees, and `kfree(vars)`.
 
-Step 5.4 Record: verified call chain is sysfs read path
-`amdgpu_get_pp_dpm_clock()` / `amdgpu_get_pp_od_clk_voltage()` ->
-`amdgpu_dpm_emit_clock_levels()` -> `smu_emit_ppclk_levels()` -> ASIC-
-specific `emit_clk_levels()` -> `smu_cmn_print_dpm_clk_levels()`. The
-buggy path is reachable through AMDGPU PM sysfs clock-level reads.
+Step 5.4 Record: Reachability is user-facing: VFS operations such as
+`stat/getattr`, mkdir, rmdir, rename, setattr/truncate, link/reparse
+handling flow through SMB client ops into `smb2_compound_op()`.
+`compound_send_recv()` waits in `wait_for_compound_request()` and
+`wait_for_response()`.
 
-Step 5.5 Record: similar one-level DPM table setup exists in multiple
-AMD SMU ppt files, and fine-grained flags are set in several SMU
-generations. This verifies that `count == 1` and fine-grained clock-
-table handling are both real local patterns.
+Step 5.5 Record: No duplicate same-line allocation bug was found
+elsewhere in this file. Related history shows this function has received
+multiple independent correctness fixes.
 
 ## Phase 6: Stable Tree Analysis
-Step 6.1 Record: `git grep` confirmed `smu_cmn_print_dpm_clk_levels()`
-is absent from `v6.19` and present in `v7.0`. Tags containing the helper
-include `v7.0` through `v7.0.3`.
+Step 6.1 Record: The buggy heap allocation exists in
+`stable/linux-5.10.y`, `5.15.y`, `6.1.y`, `6.6.y`, `6.12.y`, `6.18.y`,
+`6.19.y`, and `7.0.y`. `stable/linux-5.4.y` has `smb2_compound_op()` but
+did not show this `vars` heap allocation, so this specific fix is not
+needed there.
 
-Step 6.2 Record: expected backport difficulty to `v7.0.y` is clean or
-near-clean: the patch changes one existing condition in code verified
-present in `v7.0`.
+Step 6.2 Record: Expected backport difficulty: clean for `7.0.y`;
+trivial contextual backport for older affected trees by changing
+`kzalloc(sizeof(*vars), GFP_ATOMIC)` to `GFP_KERNEL`.
 
-Step 6.3 Record: local `git log --grep` searches did not find this exact
-target commit in current, `stable/linux-7.0.y`, `master`, or `graphics-
-next`. Related fix `d81e52fc61fb9` is already in `v7.0`.
+Step 6.3 Record: No related stable fix for this exact allocation flag
+issue was found. Current stable file histories still show the
+`GFP_ATOMIC` allocation in affected branches.
 
-## Phase 7: Subsystem Context
-Step 7.1 Record: subsystem is DRM AMDGPU power management. Criticality
-is driver-specific but important for affected AMD GPU users because it
-affects exported PM sysfs clock-level state.
+## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: Subsystem is CIFS/SMB3 client filesystem code.
+Criticality: IMPORTANT, because it affects mounted SMB2/SMB3 filesystems
+and normal filesystem operations, not a niche driver.
 
-Step 7.2 Record: `drivers/gpu/drm/amd/pm/swsmu` is actively developed;
-recent history shows many AMD PM and SMU changes.
+Step 7.2 Record: The subsystem is active; recent file history contains
+multiple 2025-2026 fixes in the same file and function. The maintainer
+tree accepted this patch through Steve French.
 
-## Phase 8: Impact And Risk
-Step 8.1 Record: affected users are AMDGPU users on SMU generations
-using `smu_cmn_print_dpm_clk_levels()` with a fine-grained DPM table
-whose count is one.
+## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: Affected users are SMB2/SMB3 client users on kernels
+where the heap allocation exists, mainly `v5.8+` and active stable trees
+from `5.10.y` onward.
 
-Step 8.2 Record: trigger is reading relevant AMDGPU PM sysfs files such
-as `pp_dpm_*` / OD clock output. Whether unprivileged users can read
-every affected node was not verified.
+Step 8.2 Record: Trigger condition is any `smb2_compound_op()`
+allocation during common SMB client metadata/namespace operations. The
+user-visible bad outcome is avoidable `-ENOMEM` or unnecessary atomic
+reserve pressure under memory pressure. Unprivileged users can reach
+some paths through normal filesystem operations if they have access to
+an SMB mount.
 
-Step 8.3 Record: verified failure mode is incorrect sysfs clock-level
-reporting: the old code can emit min/max-style two-level output for a
-one-level table. I verified the paired write path parses numeric levels
-and some fine-grained force-clock paths clamp to level 0/1 without
-checking `count`, but I did not verify a concrete hardware failure from
-writing the falsely advertised level.
+Step 8.3 Record: Failure severity is MEDIUM: not proven
+crash/corruption/security, but it affects reliability of common
+filesystem operations under memory pressure.
 
-Step 8.4 Record: benefit is moderate for affected AMD GPU users because
-it fixes misleading PM sysfs state. Risk is very low because the patch
-is one conditional change and leaves all other cases unchanged.
+Step 8.4 Record: Benefit is medium because it improves allocation
+reliability in common SMB client paths. Risk is very low because the
+path already sleeps and the patch changes only the GFP flag.
 
 ## Phase 9: Final Synthesis
-Evidence for backporting: real user-visible logic bug, one-line fix,
-reviewed by an AMD PM developer, authored by the contributor who
-introduced the helper, code exists in `v7.0.y`, and regression risk is
-very low.
+Step 9.1 Record: Evidence for backporting: one-line fix, no feature/API
+change, maintainer-applied, correct allocation flag per kernel docs,
+path already sleeps, affects common SMB client operations, affected code
+exists in active stable trees. Evidence against: no reported crash, no
+`Fixes:`/stable tag, and severity is reliability/ENOMEM rather than data
+corruption or panic. Unresolved: direct lore WebFetch was blocked, but
+`b4` mbox retrieval succeeded and showed no discussion replies.
 
-Evidence against backporting: no verified crash, security issue, data
-corruption, deadlock, reporter, reproducer, `Fixes:` tag, `Cc: stable`,
-or accessible lore discussion. It is not relevant to stable trees older
-than `v7.0`.
+Step 9.2 Record: Stable rules checklist: obviously correct: yes; tested:
+no explicit `Tested-by`; fixes a real bug: yes, wrong allocation mode in
+a sleepable common path; important issue: medium reliability issue, not
+critical; small and contained: yes, one line; no new feature/API: yes;
+can apply to stable: yes, with trivial adjustment before
+`kzalloc_obj()`.
 
-Stable rules checklist: obviously correct: yes by local code inspection.
-Tested: no `Tested-by`, but reviewed. Real bug: yes, wrong sysfs clock-
-level output. Important: borderline, but it affects a stable user-
-visible PM interface and can advertise a non-real level.
-Small/contained: yes, one line in one driver helper. No new
-features/APIs: yes. Applies to stable: yes for `v7.0.y`; no need for
-older stable trees lacking the helper.
+Step 9.3 Record: No automatic exception category applies; this is not a
+device ID, hardware quirk, DT update, build fix, or documentation fix.
 
-Exception category: none.
+Step 9.4 Record: Decision: backport. The technical merit is enough
+because the fix is minimal, clearly correct, affects common SMB client
+operations, and has negligible regression risk.
 
 ## Verification
-- Phase 1: parsed supplied subject/body/tags; confirmed no reporter,
-  link, Fixes, Tested, or stable tag in the supplied message.
-- Phase 2: inspected the supplied diff and current
-  `smu_cmn_print_dpm_clk_levels()` implementation.
-- Phase 3: ran `git blame` on the affected lines; identified
-  `a08ea4bc7711f8` and `d81e52fc61fb9`.
-- Phase 3: ran `git show a08ea4bc7711f8` and `git show d81e52fc61fb9`;
-  confirmed helper introduction and related missing-star fix.
-- Phase 3/6: ran tag/ancestor checks; confirmed helper is in `v7.0*`
-  tags and not in `v6.19`.
-- Phase 4: ran `b4 dig` variants; all failed because the commit object
-  was not locally resolvable.
-- Phase 4: attempted lore/git.kernel.org fetches; blocked by Anubis.
-- Phase 4: searched web by exact subject/hash/body; did not find the
-  target discussion.
-- Phase 5: searched callers with `rg`; confirmed multiple AMD SMU ppt
-  callers.
-- Phase 5: read sysfs call chain in `amdgpu_pm.c`, `amdgpu_dpm.c`, and
-  `amdgpu_smu.c`.
-- Phase 5/8: inspected write-path parsing and force-clock logic;
-  verified possible level 0/1 handling, but not a concrete hardware
-  failure.
-- Phase 7: ran recent `git log` for `drivers/gpu/drm/amd/pm/swsmu`;
-  confirmed active subsystem churn.
-- UNVERIFIED: exact upstream lore discussion, all review comments, exact
-  commit date of `7f19097af149...`, and concrete hardware impact beyond
-  incorrect sysfs output.
-
-This should be backported to stable trees that contain the helper,
-especially `v7.0.y`; it should not be applied to older stable trees
-where the helper does not exist.
+- Phase 1: `git show --format=fuller --stat --patch 8e13b1b4093e0`
+  verified subject, body, tags, author, committer, and one-line diff.
+- Phase 2: `git show` verified exactly `GFP_ATOMIC` to `GFP_KERNEL` in
+  `smb2_compound_op()`.
+- Phase 2/5: `ReadFile` verified `compound_send_recv()` is called before
+  `kfree(vars)` and that retries can call `msleep()`.
+- Phase 2/5: `ReadFile` verified `compound_send_recv()` calls
+  `wait_for_compound_request()` and `wait_for_response()`, both wait
+  paths.
+- Phase 3: `git blame` verified the current line was last touched by
+  `69050f8d6d075`; `git show a7d5c294628088` verified the original heap
+  allocation with `GFP_ATOMIC`.
+- Phase 3: `git tag --contains a7d5c294628088` verified first release
+  family as `v5.8`.
+- Phase 4: `b4 dig -c`, `-a`, and `-w` verified original patch URL,
+  single v1 revision, and recipients.
+- Phase 4: local mbox read verified the patch email content and absence
+  of additional replies in the saved thread.
+- Phase 5: `rg` and `ReadFile` verified callers and VFS reachability
+  through SMB client ops.
+- Phase 6: branch checks verified the buggy allocation in `5.10.y`,
+  `5.15.y`, `6.1.y`, `6.6.y`, `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`;
+  `5.4.y` did not show this heap allocation.
+- Phase 6: `git apply --check` verified the upstream patch applies
+  cleanly to the current `7.0.y` checkout.
+- Phase 7: `MAINTAINERS` verified Steve French as CIFS/SMB3 maintainer
+  and `linux-cifs@vger.kernel.org` as the subsystem list.
+- Phase 8: `Documentation/core-api/memory-allocation.rst` and
+  `include/linux/gfp_types.h` verified `GFP_KERNEL` is for sleepable
+  kernel allocations and `GFP_ATOMIC` is non-sleeping/atomic-reserve
+  allocation.
 
 **YES**
 
- drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c | 2 +-
+ fs/smb/client/smb2inode.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-index 6fd50c2fd20e0..37de6022581ed 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-@@ -1310,7 +1310,7 @@ int smu_cmn_print_dpm_clk_levels(struct smu_context *smu,
- 		level_index = 1;
- 	}
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index fe1c9d7765806..8f66de216d0b5 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -209,7 +209,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
+ 	num_rqst = 0;
+ 	server = cifs_pick_channel(ses);
  
--	if (!is_fine_grained) {
-+	if (!is_fine_grained || count == 1) {
- 		for (i = 0; i < count; i++) {
- 			freq_match = !is_deep_sleep &&
- 				     smu_cmn_freqs_match(
+-	vars = kzalloc_obj(*vars, GFP_ATOMIC);
++	vars = kzalloc_obj(*vars, GFP_KERNEL);
+ 	if (vars == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
 -- 
 2.53.0
 
