@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968E05733E;
-	Tue,  5 May 2026 17:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6286D351C1F;
+	Tue,  5 May 2026 17:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778001395; cv=none; b=gGqqcrTxDZJPTrLJXbZocmS8Ix8BvGNCW3Fbv7MCPPKBFLQoGBmRCwWTQ0K9QTfd4yWnwkl0TPOeJw+wW0DSFBMqHBAOCNi1wfEh2cmmTjx4RuqDahM6NGgTqrHyJBn9sdoBf+2aV+jK/WbFPte3wEa9gOs3xWTBOiVwi3gznH4=
+	t=1778003451; cv=none; b=Jp4adTLNxgoHk5S1/K8MQFBFTwEBc4rtiIpfaviMgPmlMuSOGNlz2xXmS63OmtLFT/emXU+aOtZihk8V/UKLKWERPu5zbL/SFsaUO/ZJriLR+bmcd9MYdvLLCJFsSlJNvrVfNs9ZByS0N26BMsW5WA3PHnTxMn2eTG81eQuZDwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778001395; c=relaxed/simple;
-	bh=uDEaCPz6eRDyCusvuMTn/d5rZpDj+9Tu0dLtyO7Gi2E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h12EmFtVQgsgvgbV9i7YQ1/58vXNHH3NVzr4QpBTSzrDbAMi5meXPwiwwWNOlzNHgqngxs6wwHWCQodomEOWpqAsSNhLpgHUCgFgGIL/uuaE1DJgSXQKOrBL86QdIkzVc3L93JcVs1WfcKqyVD1gPAUvHQTSJPaep1Jhl1skbxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N4GKiogh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778003451; c=relaxed/simple;
+	bh=PIDQrE/PxSw6y5ECEWNRhe8dd3QRV2iH6mTV1xvEVWw=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=l1wOyBUObTo0h2l1FB1ZLVsIPDrPOv286sDcGJzFL5OJIfmnuBFPuxjqm6uoNB9qIoMbcHbEweA/pUqg1qNAe7V+BsJhufly+bxwn7X3+oL6TqSt/QBuAeBFkbvXoWSIWGslaHCWLH2PsTTsTY6GQUeIB8DRhymQDIePovpGi60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOfzSuwx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N4GKiogh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B190EC2BCB4;
-	Tue,  5 May 2026 17:16:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOfzSuwx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6081C2BCB4;
+	Tue,  5 May 2026 17:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778001395;
-	bh=uDEaCPz6eRDyCusvuMTn/d5rZpDj+9Tu0dLtyO7Gi2E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=N4GKioghbOn1XW/0NwawORTFRkcVb2sMKDa87STLxQB558RACrhkVRp8PrFNlAiZ8
-	 rKAfZu9v6kOHwNwTV2kPVkQkTTFNX5IWizlVGPUiUvPaxUnYIFZ8vqeRzI7P5xoFaq
-	 e5Lq+pkH6BUdawIpM+2z0J6XldYI79mVm+xwtf5mKuRWUVvC9wpR8g62lJUimtU8s8
-	 SY/tGmapz23KFJiJsmhRFoJLUqP3CnppGSNwA8DX8S54B84EmM6TTQ16CIayug9iHN
-	 ufTq2/cTSsx2r2Vo6kUdKPsDBJqixAfrDsi8DFvEobTKPov1yfr4T0+4r+MUY1SNzZ
-	 HmNUhPRTaf71Q==
-Message-ID: <1bbeee9b-b69b-4be9-84ee-ddadda4793ef@kernel.org>
-Date: Tue, 5 May 2026 19:16:31 +0200
+	s=k20201202; t=1778003451;
+	bh=PIDQrE/PxSw6y5ECEWNRhe8dd3QRV2iH6mTV1xvEVWw=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=jOfzSuwxlLDVzMSfx/bJnM+fAg+DPH5XDyTDHdYwQ22zOcEr+LPoWK0gHVHUJ/e2T
+	 5sfbrurmeSFGCcY6D5Dc6OfX+Alipkxip9+tc75hIydDLlwv4gcLKCc3uWttTQgQ0A
+	 GAykAvQcJ0a0qLmBc6YGMB2SNH59IPFJq89YQ2V+hha0pEa7VXTlkXc99HqJNLfKyO
+	 XzbBAX+6qNLia9+fIO9BVy64gVVB1QlIViCrq8UK/5/KbVgjDYwTSra6o3NoQl/c/2
+	 zIwJ0gwDh4Lht5M+VpNtTsBkQBhiAILy0POgNVFMjEww0N301f4oKwRw9pKmN6Rz0K
+	 2JokeXPyltOKA==
+Message-ID: <68c8f2a7-6149-4b65-bb1b-0ab4cd4067cf@kernel.org>
+Date: Tue, 5 May 2026 19:50:47 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,13 +37,14 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird Beta
 Subject: Re: [PATCH 6.18 214/275] mptcp: sync the msk->sndbuf at accept() time
 Content-Language: fr
+From: Matthieu Baerts <matttbe@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Gang Yan <yangang@kylinos.cn>
 Cc: patches@lists.linux.dev, Paolo Abeni <pabeni@redhat.com>,
  stable@vger.kernel.org, MPTCP Linux <mptcp@lists.linux.dev>
 References: <20260504135142.929052779@linuxfoundation.org>
  <20260504135151.022829547@linuxfoundation.org>
-From: Matthieu Baerts <matttbe@kernel.org>
+ <1bbeee9b-b69b-4be9-84ee-ddadda4793ef@kernel.org>
 Autocrypt: addr=matttbe@kernel.org; keydata=
  xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
  YBNdx5Xl74NLSgx6y/1NiMQGuKeu+2BmtnkiGxBNanfXcnl4L4Lzz+iXBvvbtCbynnnqDDqU
@@ -88,86 +89,29 @@ Autocrypt: addr=matttbe@kernel.org; keydata=
  JY6dglzGKnCi/zsmp2+1w559frz4+IC7j/igvJGX4KDDKUs0mlld8J2u2sBXv7CGxdzQoHaz
  lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
 Organization: NGI0 Core
-In-Reply-To: <20260504135151.022829547@linuxfoundation.org>
+In-Reply-To: <1bbeee9b-b69b-4be9-84ee-ddadda4793ef@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi Greg, Gang,
+On 05/05/2026 19:16, Matthieu Baerts wrote:
+> Hi Greg, Gang,
+> 
+> On 04/05/2026 15:52, Greg Kroah-Hartman wrote:
+>> 6.18-stable review patch.  If anyone has any objections, please let me know.
+> 
+> Please drop this patch, it looks like it is introducing regressions on
+> v6.18:
 
-On 04/05/2026 15:52, Greg Kroah-Hartman wrote:
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
+(...)
 
-Please drop this patch, it looks like it is introducing regressions on
-v6.18:
+> @Gang: could you eventually have a look, please?
+FYI, I quickly checked, and I noticed that 'subflow' is different on
+v6.18 due to the "mptcp_for_each_subflow(msk, subflow)" removed in
+68c7c3867145 ("mptcp: fix memcg accounting for passive sockets").
 
-
-$ ./diag.sh
-  TAP version 13
-  1..1
-  # 01 no msk on netns creation                          [ OK ]
-  # 02 listen match for dport 10000                      [ OK ]
-  # 03 listen match for sport 10000                      [ OK ]
-  # 04 listen match for saddr and sport                  [ OK ]
-  # 05 all listen sockets                                [ OK ]
-  [    3.976840] Oops: general protection fault, probably for non-canonical address 0x656e6769736e75f8: 0000 [#1] SMP NOPTI
-  [    3.977019] CPU: 0 UID: 0 PID: 221 Comm: mptcp_connect Tainted: G                 N  6.18.26 #1 PREEMPT(voluntary) 
-  [    3.977251] Tainted: [N]=TEST
-  [    3.977690] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-  [    3.978293] RIP: 0010:mptcp_stream_accept (net/mptcp/protocol.h:966 (discriminator 2))
-  [    3.978761] Code: f7 e8 d8 32 06 00 48 8b 1b 4c 39 fb 75 98 4c 89 ef e8 f8 99 ff ff 48 8b 93 d8 00 00 00 8b 8a 38 02 00 00 48 8b 92 c8 04 00 00 <3b> 8a d0 00 00 00 74 08 4c 89 ef e8 94 a4 ff ff 49 8b 95 a8 06 00
-  All code
-  ========
-     0:	f7 e8                	imul   %eax
-     2:	d8 32                	fdivs  (%rdx)
-     4:	06                   	(bad)
-     5:	00 48 8b             	add    %cl,-0x75(%rax)
-     8:	1b 4c 39 fb          	sbb    -0x5(%rcx,%rdi,1),%ecx
-     c:	75 98                	jne    0xffffffffffffffa6
-     e:	4c 89 ef             	mov    %r13,%rdi
-    11:	e8 f8 99 ff ff       	call   0xffffffffffff9a0e
-    16:	48 8b 93 d8 00 00 00 	mov    0xd8(%rbx),%rdx
-    1d:	8b 8a 38 02 00 00    	mov    0x238(%rdx),%ecx
-    23:	48 8b 92 c8 04 00 00 	mov    0x4c8(%rdx),%rdx
-    2a:*	3b 8a d0 00 00 00    	cmp    0xd0(%rdx),%ecx		<-- trapping instruction
-    30:	74 08                	je     0x3a
-    32:	4c 89 ef             	mov    %r13,%rdi
-    35:	e8 94 a4 ff ff       	call   0xffffffffffffa4ce
-    3a:	49                   	rex.WB
-    3b:	8b                   	.byte 0x8b
-    3c:	95                   	xchg   %eax,%ebp
-    3d:	a8 06                	test   $0x6,%al
-  	...
-  
-  Code starting with the faulting instruction
-  ===========================================
-     0:	3b 8a d0 00 00 00    	cmp    0xd0(%rdx),%ecx
-     6:	74 08                	je     0x10
-     8:	4c 89 ef             	mov    %r13,%rdi
-     b:	e8 94 a4 ff ff       	call   0xffffffffffffa4a4
-    10:	49                   	rex.WB
-    11:	8b                   	.byte 0x8b
-    12:	95                   	xchg   %eax,%ebp
-    13:	a8 06                	test   $0x6,%al
-  	...
-  [    3.979083] RSP: 0018:ffffc9000048fda0 EFLAGS: 00010246
-  [    3.979167] RAX: 0000000080000000 RBX: ffff888108c48e30 RCX: 0000000081da17f0
-  [    3.979262] RDX: 656e6769736e7528 RSI: 00000000fffffe00 RDI: ffff888108c487c0
-  [    3.979357] RBP: ffff888108c50940 R08: 0000000000000001 R09: ffffffff81c36d02
-  [    3.979451] R10: 0000000000000001 R11: 0000000000000000 R12: ffff88810481f740
-  [    3.980273] R13: ffff888108c487c0 R14: ffff888108c50b90 R15: ffff888108c48e30
-  [    3.980830] FS:  00007fdb510f6bc0(0000) GS:ffff8881b8f1c000(0000) knlGS:0000000000000000
-  [    3.981059] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [    3.981241] CR2: 00007fdb5125dce0 CR3: 0000000103e1a006 CR4: 0000000000370ef0
-  [    3.981428] Call Trace:
-  [    3.981544]  <TASK>
-  [    3.981637]  do_accept (net/socket.c:1989)
-  [    3.981745]  __sys_accept4 (net/socket.c:2030 (discriminator 1))
-  [    3.981861]  __x64_sys_accept (net/socket.c:2070 (discriminator 1))
-  [    3.981977]  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1))
-  [    3.982091]  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-
-@Gang: could you eventually have a look, please?
+Moving __mptcp_propagate_sndbuf() a couple of lines above, before the
+for-loop, should fix the issue. I can eventually look at sending a patch
+with the fix.
 
 Cheers,
 Matt
