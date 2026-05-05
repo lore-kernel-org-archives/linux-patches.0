@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0A633F598;
-	Tue,  5 May 2026 09:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168EF3385A5;
+	Tue,  5 May 2026 09:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974763; cv=none; b=fFdELr/l8poHMDj/1jjGMYAttN3ngTpABK1DwC1ginr7yRgO8SL1AE6fkUVnS8o/k6hdixuyFDpWtB1D/j9ENswBtwl0hHSqKRTt2YOUpOjHI0yqrBG8tMRs7YRXaTrCPh4vIZDPlPzAIA51vmI5/z0jlXHv4ohb9VTMHkG+iZg=
+	t=1777974766; cv=none; b=kX8le6me5JaPf2pf29AT8hCfeDP2PIWbF6RZfuw+zQq16g7yCX1v29vYelyex4+3jaCcjhRa3QOFMGYQqcFe4++rkB8S33ATg79MkydlYf3lGWR1AUToOs2/Z9U9PG1SV9r7tYNdoiD9ORC2OTLkbAWZ+pxmmM09605oXNTZuR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974763; c=relaxed/simple;
-	bh=pOvc9TYEJszw7/FTcwBrL3dR3UNvspd+ks6FQTPLbS0=;
+	s=arc-20240116; t=1777974766; c=relaxed/simple;
+	bh=PmLrTQYoQyN/06svqv2yf8qx5jcP8KOUQprgToXZCsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hUTxxh8oBBOewg1XANJdOGDPCRWpVHstfeRluNc95eFRVIh56Kt88mEOAUDdj5K6Pv7OkXxi6sI1botsuDWZ7B4XCOsdTC6cO9zaoQjM3GW43fHpiB7IsHWLZVSR96H9LPladtqUZEH8AxghiXQo4Kxnp/9Wy1ERSEbRvi08dfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qBm91wyi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P4Pv/RMeaj575FIzuxgG7dUJdZmzzFSBDaSYPN2A+o34FgOHko+8k7iDytYlL3XfkyGV9/znKd5gIvsIskaHrBNaYadstOl2/mr6ngNRTbwifO92Nx+ZOmMQYk9E4I7369kyv3UZ+2JxdK+I/CMH1WnrzXraUoXR2Rsocfbj7I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SkX1x9wU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qBm91wyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806B5C4AF09;
-	Tue,  5 May 2026 09:52:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SkX1x9wU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECA7C2BCB9;
+	Tue,  5 May 2026 09:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974762;
-	bh=pOvc9TYEJszw7/FTcwBrL3dR3UNvspd+ks6FQTPLbS0=;
+	s=k20201202; t=1777974765;
+	bh=PmLrTQYoQyN/06svqv2yf8qx5jcP8KOUQprgToXZCsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qBm91wyidz22QdaFAojZueEb5ywINfB0/y102B8DD2bh2acqa7z/Cfi0Asmg93Nje
-	 vyIn53y/M8+6tAWdTys7VQbJ2DzYS8ghSx0MWdipNZtxp96B2d8e0Q+6mAp6lKpHte
-	 epr7m0zvmAtTrmOYfEvi4VLEpfE0/e6f6bHKyZkwKMpDZ5xbHukAyY6I3KbfplhIGV
-	 l0or45ZDiN0eEKbxVNLNVLAor/X0g9gqwaqV9eSOvqfEwwVVGugrM47759uP5cgXly
-	 f97kxvN3CvMdCC6+T3DUGxnOOhsugtGXV5YJiD30qLF8+wCcv/Ol2gq3wN48H/2Kti
-	 sZp2sBi9rSIyw==
+	b=SkX1x9wU8himDqjLvIURq8trE8tUO0m6QZHeME90GWna4iWsiHKSHkvo+hpB612EG
+	 LUbC+ANMW/WRLMmCv9TJ+O2ROnQkb6wUlEfX95K0ttoFGbDo4kytZCQkcL+CZGyLeh
+	 Z3fiTWn4pbhsD2XZyXo1UDHAZ+/lNqCopSB7uKkLmKuAw5j2SeGNxpLC6/BdFfNCzV
+	 9s+FPCnyQkpelb1MBoGNm2Epibr4zLjj10zYwjNEDcPdKA2WWjBSE2flJ7Yh2V+6Xs
+	 6T84lCb+bxJ1fecQS9DtsLYPxyh+e00GI55xtM8MzsImg5z7v69Q/XY8OdjUen9NDd
+	 ZPqgxUSMOibeQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: robbieko <robbieko@synology.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	srini@kernel.org,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] ASoC: codecs: wcd937x: fix AUX PA sequencing and mixer controls
-Date: Tue,  5 May 2026 05:51:32 -0400
-Message-ID: <20260505095149.512052-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] btrfs: replace ASSERT with proper error handling in stripe lookup fallback
+Date: Tue,  5 May 2026 05:51:33 -0400
+Message-ID: <20260505095149.512052-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -57,309 +53,314 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+From: robbieko <robbieko@synology.com>
 
-[ Upstream commit 74c876bfd71b1023029a483d7213015201f62b53 ]
+[ Upstream commit 653361585d251fbca0e19ac58b04ba95dd01e378 ]
 
-Enable AUX PA sequencing during AUX DAC DAPM events and keep the
-AUX-specific RX supplies enabled while the path is active.
+After falling back to the previous item in btrfs_delete_raid_extent(),
+the code uses ASSERT(found_start <= start) to verify the found extent
+actually precedes our target range. If the B-tree state is unexpected
+(e.g. no overlapping extent exists), this triggers a kernel BUG/panic
+in debug builds, or silently continues with wrong data otherwise.
 
-Add the missing AUX-related mixer controls, including CLSH PA and
-DSD left/right switches, so AUX playback can be routed from userspace.
+Replace the ASSERT with a proper bounds check that returns -ENOENT if
+the found extent does not actually overlap with the start position.
 
-Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260420180221.785113-1-ajay.nandam@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: robbieko <robbieko@synology.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Decision Summary
-This is a small WCD937x codec fix for an existing AUX playback path. The
-verified problem is functional: the AUX path has DAPM routing and
-SoundWire channel definitions, but lacks required AUX PA
-sequencing/supplies and mixer controls needed for userspace routing.
-That can result in broken AUX playback on affected Qualcomm WCD937x
-systems.
+## Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem `btrfs`; action verb `replace`; intent is to
+replace an assertion in `btrfs_delete_raid_extent()` with real error
+handling for stripe lookup fallback.
 
-It is not a security/crash/data-corruption fix, and it does add visible
-ALSA mixer controls, which is the main stable-policy concern. On
-balance, I would backport it to stable trees that already contain the
-WCD937x AUX playback code, especially `v6.12+`; it is small, driver-
-local, applies cleanly to `v6.12`, and fixes existing hardware
-functionality rather than adding a new driver or subsystem.
+Step 1.2 Record: Tags in commit
+`653361585d251fbca0e19ac58b04ba95dd01e378`: `Signed-off-by: robbieko
+<robbieko@synology.com>`, `Reviewed-by: David Sterba
+<dsterba@suse.com>`, `Signed-off-by: David Sterba <dsterba@suse.com>`.
+No `Fixes:`, no `Reported-by:`, no `Tested-by:`, no `Link:`, no `Cc:
+stable`.
 
-## Phase Walkthrough
+Step 1.3 Record: The commit says that after fallback to the previous
+item, `ASSERT(found_start <= start)` can BUG/panic when B-tree state is
+unexpected, and non-assert builds can continue with wrong stripe data.
+Root cause described: the previous item found may not actually overlap
+the requested deletion range.
 
-### Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `ASoC: codecs: wcd937x`; action verb `fix`;
-intent is to fix AUX PA sequencing and missing AUX-related mixer
-controls.
+Step 1.4 Record: This is not hidden cleanup. It is explicitly a bug fix:
+it converts an invariant-only check into a runtime bounds check
+returning `-ENOENT`.
 
-Step 1.2 Record: tags found: `Signed-off-by: Ajay Kumar Nandam
-<ajay.nandam@oss.qualcomm.com>`, `Link: https://patch.msgid.link/2026042
-0180221.785113-1-ajay.nandam@oss.qualcomm.com`, `Signed-off-by: Mark
-Brown <broonie@kernel.org>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
-`Reviewed-by:`, or `Cc: stable`.
+## Phase 2: Diff Analysis
+Step 2.1 Record: One file changed: `fs/btrfs/raid-stripe-tree.c`, 4
+insertions, 1 deletion. One function changed:
+`btrfs_delete_raid_extent()`. Scope: single-file surgical fix.
 
-Step 1.3 Record: message says AUX PA sequencing must be enabled during
-AUX DAC DAPM events, AUX-specific RX supplies must stay enabled while
-active, and missing CLSH/DSD mixer controls prevent userspace from
-routing AUX playback. No crash trace, board name, or kernel version is
-stated.
+Step 2.2 Record: Before, fallback loaded the previous key, computed
+`found_start` and `found_end`, then asserted only `found_start <=
+start`. After, it returns `-ENOENT` and exits the delete loop if
+`found_start > start` or `found_end <= start`. This affects the stripe
+extent deletion lookup path after `btrfs_search_slot()` chooses an item
+after the deletion start and the code backs up to a candidate previous
+item.
 
-Step 1.4 Record: this is a hidden functional hardware bug fix, not
-cleanup. It repairs missing register sequencing and missing routing
-controls for an already-present AUX playback path.
+Step 2.3 Record: Bug category is logic/correctness with data-integrity
+implications. Broken mechanism: the fallback candidate was assumed to
+overlap the deletion start. The fix verifies both start and end bounds
+before later code can truncate, split, or delete a stripe extent.
 
-### Phase 2: Diff Analysis
-Step 2.1 Record: one file, `sound/soc/codecs/wcd937x.c`, `25
-insertions`, `1 deletion`. Modified functions/data:
-`wcd937x_codec_aux_dac_event()`, `wcd937x_codec_enable_aux_pa()`,
-`wcd937x_snd_controls[]`. Scope is single-file, driver-local, surgical.
+Step 2.4 Record: Fix quality is high: the check is local, easy to reason
+about, and preserves existing error propagation. Regression risk is low,
+but not zero: returning `-ENOENT` changes a previous silent/no-op path
+into transaction abort at the caller. That is appropriate because the
+caller already aborts on `btrfs_delete_raid_extent()` errors and the
+condition means the stripe mapping lookup is inconsistent for the
+deletion being performed.
 
-Step 2.2 Record: `wcd937x_codec_aux_dac_event()` now sets/clears
-`WCD937X_AUX_AUXPA` bit 4 with AUX DAC power-up/down.
-`wcd937x_codec_enable_aux_pa()` now enables `WCD937X_ANA_RX_SUPPLIES`
-bits 6 and 7 after AUX PA power-up and disables them before power-down
-completes. `wcd937x_snd_controls[]` gains CLSH/DSD RX SoundWire
-switches.
+## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the fallback block and
+`ASSERT(found_start <= start)` were introduced by `76643119045eed`
+(`btrfs: fix deletion of a range spanning parts two RAID stripe
+extents`), first contained in `v6.14-rc1`. The broader partial deletion
+machinery was introduced by `6aea95ee318890`, first contained in
+`v6.13-rc1`.
 
-Step 2.3 Record: bug category is hardware sequencing plus
-routing/control correctness. The affected path is normal AUX playback,
-not an error path, race, memory safety issue, or refcount issue.
+Step 3.2 Record: No `Fixes:` tag is present, so there was no tagged
+introducer to follow. Blame identifies the direct introducer.
 
-Step 2.4 Record: fix is small and easy to audit, but there is a
-regression concern: Mark Brown noted in review that disabling RX
-supplies in `SND_SOC_DAPM_PRE_PMD` before DAPM disables the PGA is “a
-bit weird.” He later applied the patch anyway; no NAK or follow-up
-correction was found in the thread.
+Step 3.3 Record: Recent `master` history shows this was patch 4 in a
+six-patch raid-stripe-tree deletion fix set: preceding fixes include
+copying `devid`, fixing leaf-boundary lookup, and fixing
+`btrfs_previous_item()` `min_objectid`; following fixes handle `-EAGAIN`
+and missing return checks. The commit applies cleanly to the current
+`stable/linux-7.0.y` checkout by itself, but it is best considered with
+the neighboring raid-stripe-tree deletion fixes.
 
-### Phase 3: Git History Investigation
-Step 3.1 Record: blame shows the AUX DAC/PA event code came from
-`57fe69db7a015e` (“ASoC: codecs: wcd937x: add playback dapm widgets”),
-first contained in `v6.11-rc1`. The base controls came from
-`82be8c62a38c6a` (“add basic controls”), also first contained in
-`v6.11-rc1`.
+Step 3.4 Record: Author `robbieko` has multiple adjacent `fs/btrfs/raid-
+stripe-tree.c` fixes in `master`. Reviewer/committer David Sterba is
+listed as Btrfs maintainer in `MAINTAINERS`. Johannes Thumshirn, who
+reviewed other patches in the series, has substantial prior raid-stripe-
+tree history in the same file.
 
-Step 3.2 Record: no `Fixes:` tag, so no tagged introducer to follow.
-Manual blame identifies the relevant introducers above.
+Step 3.5 Record: No new helper, structure, API, or external dependency
+is introduced. Syntactically standalone: `git apply --check` of the
+candidate patch succeeded on the current `stable/linux-7.0.y` checkout.
+Semantically, it complements the surrounding lookup fixes.
 
-Step 3.3 Record: related history includes `041db4bbe04e8` adding a
-missing `LO Switch` control, and `107a5c853eef5` relaxing the AUX PDM
-watchdog. The candidate’s context includes the watchdog changes, which
-are present from `v6.12`.
+## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 653361585d251...` found the original
+submission at `https://patch.msgid.link/20260413065249.2320122-5-
+robbieko@synology.com`. `b4 dig -a -C` showed only v1. The thread was a
+six-patch series titled `btrfs: fix multiple bugs in raid-stripe-tree
+deletion path`.
 
-Step 3.4 Record: no earlier commits by Ajay Kumar Nandam touching
-`sound/soc/codecs` or `wcd937x.c` were found on this branch. The patch
-was applied by ASoC maintainer Mark Brown.
+Step 4.2 Record: `b4 dig -w` showed the original recipients were
+`robbieko` and `linux-btrfs@vger.kernel.org`. In-thread
+review/maintainer discussion involved David Sterba and Johannes
+Thumshirn. David added the series to `for-next`.
 
-Step 3.5 Record: dependencies are the existing WCD937x playback widgets,
-controls, SoundWire channel definitions, and for clean context the AUX
-watchdog update. It applies cleanly to current `7.0` and to a checked
-`v6.12` worktree.
+Step 4.3 Record: No `Reported-by:` or `Link:` tag exists for an external
+bug report. No syzbot or bugzilla report was present in the commit or
+mbox.
 
-### Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 74c876bfd71b` found the original patch at
-the patch.msgid.link URL. `b4 dig -a` found only `v1`; no later
-revision.
+Step 4.4 Record: Related patches found in the same series:
+`513f8a52eed88`, `2aef5cb1dcf9b`, `1871ae78ffa5c`, `fe0cdfd7118d8`, and
+`a8d58a7c02009`. The cover letter states all six fix bugs in raid-
+stripe-tree deletion/partial deletion paths.
 
-Step 4.2 Record: `b4 dig -w` showed appropriate recipients: Srinivas
-Kandagatla, Liam Girdwood, Mark Brown, Jaroslav Kysela, Takashi Iwai,
-`linux-sound`, `linux-arm-msm`, and `linux-kernel`.
+Step 4.5 Record: No stable-specific nomination was found in the mbox.
+WebFetch attempts to lore/stable and lore/all were blocked by Anubis, so
+external stable-list search could not be independently verified.
 
-Step 4.3 Record: no separate bug report or syzbot/bugzilla link was
-present. Web/lore mirror confirmed the only substantive review comment
-was Mark Brown’s sequencing concern.
+## Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `btrfs_delete_raid_extent()`.
 
-Step 4.4 Record: no multi-patch series was found; this is a standalone
-one-patch submission.
+Step 5.2 Record: Callers found by search: production caller
+`do_free_extent_accounting()` in `fs/btrfs/extent-tree.c`, plus Btrfs
+raid-stripe-tree selftests. `do_free_extent_accounting()` calls
+`btrfs_delete_raid_extent()` for data extents and aborts the transaction
+on error.
 
-Step 4.5 Record: direct lore stable search via `WebFetch` was blocked by
-Anubis; web search did not reveal stable-specific discussion for this
-exact patch.
+Step 5.3 Record: Key callees in `btrfs_delete_raid_extent()` include
+`btrfs_find_chunk_map()`, `btrfs_need_stripe_tree_update()`,
+`btrfs_search_slot()`, `btrfs_previous_item()`, `btrfs_del_item()`,
+`btrfs_duplicate_item()`, and `btrfs_partially_delete_raid_extent()`.
 
-### Phase 5: Code Semantic Analysis
-Step 5.1 Record: modified functions/data are
-`wcd937x_codec_aux_dac_event()`, `wcd937x_codec_enable_aux_pa()`, and
-`wcd937x_snd_controls[]`.
+Step 5.4 Record: Reachability verified: file extent removal paths call
+`btrfs_free_extent()`, delayed refs call `__btrfs_free_extent()`, and
+when refs reach zero `do_free_extent_accounting()` calls
+`btrfs_delete_raid_extent()`. `btrfs_fallocate()` calls
+`btrfs_punch_hole()` for `FALLOC_FL_PUNCH_HOLE`, which calls
+`btrfs_replace_file_extents()`, which calls `btrfs_drop_extents()`,
+which calls `btrfs_free_extent()`. So users with write access to files
+on an affected Btrfs filesystem can reach this path via hole punching;
+other data extent deletion paths also reach it.
 
-Step 5.2 Record: `rg` found both event functions are referenced only by
-DAPM widgets: `RDAC4` uses `wcd937x_codec_aux_dac_event()`, and `AUX
-PGA` uses `wcd937x_codec_enable_aux_pa()`.
+Step 5.5 Record: Similar nearby issue pattern found in the same series:
+multiple small fixes to `btrfs_delete_raid_extent()` and
+`btrfs_partially_delete_raid_extent()` addressing missed entries, wrong
+previous-item bounds, stale leaf pointer, missing `devid`, and unchecked
+return values.
 
-Step 5.3 Record: key callees are `snd_soc_component_update_bits()`,
-`wcd937x_rx_clk_enable()`, `wcd_clsh_ctrl_set_state()`, `enable_irq()`,
-and `disable_irq_nosync()`. Mixer controls call `wcd937x_get_swr_port()`
-/ `wcd937x_set_swr_port()`.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: The directly blamed fallback code is first in
+`v6.14-rc1`; merge-base checks show it is not in `v6.13`, but is in
+`v6.14`, `v6.15`, `v6.16`, and `v7.0`. It is therefore relevant to
+stable trees based on `v6.14+`, including the current
+`stable/linux-7.0.y` checkout.
 
-Step 5.4 Record: call chain is userspace ALSA routing/control changes ->
-ASoC DAPM powers the AUX route (`IN3_AUX` -> `RX3` -> `RDAC4` ->
-`AUX_RDAC` -> `AUX PGA` -> `AUX`) -> the modified DAPM event callbacks
-program the codec. The mixer control path updates SoundWire port/channel
-masks used later by `wcd937x_sdw_hw_params()` and
-`sdw_stream_add_slave()`.
+Step 6.2 Record: Backport difficulty is low. `git apply --check` of the
+candidate patch onto current `stable/linux-7.0.y` succeeded. Neighboring
+series patches also applied cleanly in the same check.
 
-Step 5.5 Record: similar pattern exists in the same driver history:
-`041db4bbe04e8` added a missing `LO Switch` for audio playback routing.
-`wcd937x-sdw.c` already defines RX channels for `WCD937X_CLSH`,
-`WCD937X_DSD_L`, and `WCD937X_DSD_R`, confirming the new controls target
-existing channel definitions.
+Step 6.3 Record: Local stable refs `stable/linux-6.16.y` and
+`stable/linux-7.0.y` do not contain the candidate or the adjacent April
+2026 raid-stripe-tree deletion fixes checked by subject/ancestor tests.
 
-### Phase 6: Stable Tree Analysis
-Step 6.1 Record: `v6.1` and `v6.6` do not contain the relevant WCD937x
-AUX code. `v6.11` contains the AUX widgets and channel definitions.
-`v6.12` contains the watchdog context used by this patch.
+## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: Subsystem is Btrfs filesystem, specifically raid-
+stripe-tree. Criticality: important, because it is filesystem
+data/extent mapping code, but affected population is feature-specific
+rather than universal.
 
-Step 6.2 Record: backport difficulty is clean for `v6.12+`; verified by
-creating a detached `v6.12` worktree and running `git apply --check`.
-For `v6.11`, the patch may need adjustment or prerequisite
-`107a5c853eef5`.
+Step 7.2 Record: Subsystem activity is high. Recent history in
+`fs/btrfs/raid-stripe-tree.c` shows many fixes and follow-up selftests.
+The feature is also exposed only under `CONFIG_BTRFS_EXPERIMENTAL` sysfs
+feature attributes in this tree, so impact is limited to systems using
+that feature.
 
-Step 6.3 Record: no alternative fix for this exact AUX PA sequencing /
-CLSH+DSD control issue was found in current branch history.
+## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: Affected users are Btrfs users with `RAID_STRIPE_TREE`
+enabled and stripe-tree updates needed for data block group profiles
+covered by `BTRFS_RST_SUPP_BLOCK_GROUP_MASK`.
 
-### Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: subsystem is ALSA SoC codec driver under
-`sound/soc/codecs`; criticality is driver-specific/peripheral, affecting
-systems using Qualcomm WCD937x AUX playback.
+Step 8.2 Record: Trigger conditions: deleting/freeing data extents on
+such filesystems when stripe lookup fallback selects a non-overlapping
+candidate. Verified reachable through file hole punching and delayed-ref
+extent free paths. I did not verify a concrete reproducer for the exact
+bad B-tree state.
 
-Step 7.2 Record: WCD937x is active: recent history includes
-probe/resource fixes, SoundWire port fixes, OF node leak fixes, and AUX
-watchdog fixes.
+Step 8.3 Record: Failure mode severity is high. With
+`CONFIG_BTRFS_ASSERT`, `ASSERT()` calls `BUG()`, so this can crash the
+kernel. Without that assertion code generated, the later deletion logic
+can operate on a non-overlapping stripe extent, which is a filesystem
+mapping corruption risk. If the previous candidate ends before the
+target, the old code could also silently stop with success.
 
-### Phase 8: Impact And Risk
-Step 8.1 Record: affected users are WCD937x codec users with AUX
-playback routes.
+Step 8.4 Record: Benefit is high for affected users because it prevents
+panic or wrong stripe-tree mutation in filesystem deletion code. Risk is
+low because the patch is a four-line validation check in one function
+and changes invalid lookup state into an error returned to an existing
+transaction-abort path.
 
-Step 8.2 Record: trigger is normal AUX playback setup/routing through
-ALSA/ASoC; userspace can trigger routing through mixer controls. Exact
-affected board population was not verified.
+## Phase 9: Final Synthesis
+Step 9.1 Record: Evidence for backporting: real filesystem correctness
+bug, possible kernel BUG in assert builds, possible wrong stripe mapping
+mutation in non-assert builds, one-file minimal patch, maintainer review
+by David Sterba, merged by Linus via Btrfs fixes pull, applies cleanly
+to current stable checkout, affected code exists in `v6.14+`. Evidence
+against: feature-specific and experimental; no concrete external bug
+report or reproducer found; part of a six-patch series, so stable
+maintainers should consider taking the nearby deletion fixes too.
+Unresolved: no successful WebFetch of lore/stable search due Anubis;
+exact real-world frequency not verified.
 
-Step 8.3 Record: failure mode is loss of AUX playback/routing, not a
-crash or memory-safety bug. Severity is medium for the kernel generally,
-high for affected hardware where AUX playback is required.
+Step 9.2 Record: Stable rules checklist:
+1. Obviously correct and tested: mostly yes by inspection and maintainer
+   review; no explicit `Tested-by`.
+2. Fixes a real bug: yes, invalid stripe lookup fallback handling in
+   deletion path.
+3. Important issue: yes for affected users, because panic and filesystem
+   mapping corruption are serious.
+4. Small and contained: yes, 4 insertions/1 deletion in one function.
+5. No new features/APIs: yes.
+6. Can apply to stable: yes on current `stable/linux-7.0.y`; relevant
+   for `v6.14+` trees.
 
-Step 8.4 Record: benefit is restoring existing hardware functionality on
-affected WCD937x systems. Risk is low to medium: the patch is tiny and
-driver-local, but adds visible mixer controls and has one noted
-sequencing concern.
+Step 9.3 Record: No exception category applies. This is not a device ID,
+quirk, DT, build, or documentation patch.
 
-### Phase 9: Final Synthesis
-Step 9.1 Record: evidence for backporting: fixes existing AUX playback
-functionality; small single-driver patch; code and channels already
-exist; applies cleanly to `v6.12`; reviewed/applied by ASoC maintainer.
-Evidence against: no `Reported-by`/`Tested-by`; not a
-crash/security/corruption fix; adds new ALSA controls; maintainer raised
-a sequencing concern. Unresolved: exact board/user impact and whether
-`v6.11` should receive a hand backport.
-
-Step 9.2 Record: stable rules checklist: obviously correct and tested:
-mostly yes by code inspection and maintainer application, but no
-explicit `Tested-by`; real bug: yes, broken AUX routing/sequencing;
-important issue: yes for affected hardware, though not critical system-
-wide; small and contained: yes; no new feature/API: borderline because
-mixer controls are user-visible, but they expose existing missing route
-controls; applies to stable: yes for `v6.12+`, older active trees
-without WCD937x AUX code are not applicable.
-
-Step 9.3 Record: exception category: closest match is hardware-specific
-driver functionality fix, not a pure device-ID/quirk/build/doc
-exception.
-
-Step 9.4 Record: decision is YES for stable trees containing the WCD937x
-AUX playback path, especially `v6.12+`. Do not backport to trees where
-the driver/path does not exist.
+Step 9.4 Record: Decision is to backport. The limited affected
+population does not outweigh the severity and low risk: this is a tiny
+filesystem correctness fix for code already present in recent stable
+trees.
 
 ## Verification
-- Phase 1: Read candidate commit message and tags from `git show
-  74c876bfd71b` and b4-fetched mbox.
-- Phase 2: Verified diff stat: one file, `25 insertions`, `1 deletion`.
-- Phase 3: Ran `git blame` on AUX DAC, AUX PA, and controls blocks;
-  identified `57fe69db7a015e` and `82be8c62a38c6a`.
-- Phase 3: Ran `git describe --contains`; WCD937x AUX/control code
-  starts in `v6.11-rc1`; watchdog context starts in `v6.12-rc6`.
-- Phase 4: Ran `b4 dig -c 74c876bfd71b`, `-a`, and `-w`; found v1-only
-  patch and original recipients.
-- Phase 4: Fetched lore mirror; confirmed Mark Brown’s review concern
-  and later ASoC application.
-- Phase 5: Used `rg` and file reads to trace DAPM widget references, AUX
-  route, SoundWire channel definitions, and `wcd937x_sdw_hw_params()`.
-- Phase 6: Used `git grep` against `v6.1`, `v6.6`, `v6.11`, and `v6.12`;
-  verified absence/presence of relevant code.
-- Phase 6: Verified `git apply --check` succeeds on current tree and on
-  a temporary detached `v6.12` worktree.
-- Unverified: exact affected product/board list; no explicit tester or
-  reporter was found.
+- [Phase 1] `git show --format=fuller --stat 653361585d251...`:
+  confirmed subject, message, tags, reviewer, and 4 insertions/1
+  deletion.
+- [Phase 2] `git show 653361585d251... -- fs/btrfs/raid-stripe-tree.c`:
+  confirmed exact hunk replacing `ASSERT(found_start <= start)` with
+  `found_start > start || found_end <= start` check returning `-ENOENT`.
+- [Phase 3] `git blame -L 114,146 -- fs/btrfs/raid-stripe-tree.c`:
+  confirmed fallback block introduced by `76643119045eed`.
+- [Phase 3] `git show 76643119045eed`: confirmed it added the range-
+  spanning fallback logic.
+- [Phase 3] `git describe --contains 76643119045eed`: confirmed first
+  containment at `v6.14-rc1`.
+- [Phase 3] `git show 6aea95ee318890`: confirmed earlier partial
+  deletion implementation and its ASSERT-related context.
+- [Phase 3] `git log master --oneline -30 -- fs/btrfs/raid-stripe-
+  tree.c`: confirmed related series commits before and after candidate.
+- [Phase 3] `git apply --check` using the candidate diff: confirmed
+  clean application on current `stable/linux-7.0.y`.
+- [Phase 4] `b4 dig -c 653361585d251...`: found original lore patch URL.
+- [Phase 4] `b4 dig -a -C`: found v1 only.
+- [Phase 4] `b4 dig -w`: confirmed original recipients.
+- [Phase 4] Saved and read b4 mbox: confirmed six-patch series, David
+  Sterba maintainer discussion, David’s “Added to for-next”, Johannes’
+  question about `ENOENT` vs `EUCLEAN`, and David’s acceptance of
+  `ENOENT`.
+- [Phase 5] `rg btrfs_delete_raid_extent`: confirmed production caller
+  in `do_free_extent_accounting()` and selftests.
+- [Phase 5] Read `fs/btrfs/extent-tree.c`: confirmed errors from
+  `btrfs_delete_raid_extent()` abort transaction.
+- [Phase 5] Read `fs/btrfs/file.c`: confirmed `btrfs_fallocate()` hole
+  punching can reach extent replacement/drop code and
+  `btrfs_free_extent()`.
+- [Phase 5] Read `fs/btrfs/messages.h`: confirmed `ASSERT()` calls
+  `BUG()` when `CONFIG_BTRFS_ASSERT` is enabled and compiles away
+  otherwise.
+- [Phase 6] `git merge-base --is-ancestor` checks: confirmed blamed code
+  is in `v6.14+` and candidate is not in local stable refs checked.
+- [Phase 7] `rg MAINTAINERS`: confirmed David Sterba is a Btrfs
+  maintainer.
+- [Phase 7] `rg RAID_STRIPE_TREE fs/btrfs/sysfs.c`: confirmed raid-
+  stripe-tree feature attribute is under `CONFIG_BTRFS_EXPERIMENTAL`.
+- [Phase 8] Read `fs/btrfs/raid-stripe-tree.h`: confirmed
+  `btrfs_need_stripe_tree_update()` limits affected data profiles and
+  requires `RAID_STRIPE_TREE`.
+- UNVERIFIED: exact real-world frequency and a concrete reproducer for
+  the bad fallback state.
+- UNVERIFIED: lore/stable search results, because WebFetch was blocked
+  by Anubis.
 
 **YES**
 
- sound/soc/codecs/wcd937x.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ fs/btrfs/raid-stripe-tree.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
-index 10a2d598caa71..72a53f95d6887 100644
---- a/sound/soc/codecs/wcd937x.c
-+++ b/sound/soc/codecs/wcd937x.c
-@@ -546,6 +546,9 @@ static int wcd937x_codec_aux_dac_event(struct snd_soc_dapm_widget *w,
- 		snd_soc_component_update_bits(component,
- 					      WCD937X_DIGITAL_CDC_ANA_CLK_CTL,
- 					      BIT(2), BIT(2));
-+		snd_soc_component_update_bits(component,
-+					      WCD937X_AUX_AUXPA,
-+					      BIT(4), BIT(4));
- 		snd_soc_component_update_bits(component,
- 					      WCD937X_DIGITAL_CDC_DIG_CLK_CTL,
- 					      BIT(2), BIT(2));
-@@ -562,6 +565,9 @@ static int wcd937x_codec_aux_dac_event(struct snd_soc_dapm_widget *w,
- 		snd_soc_component_update_bits(component,
- 					      WCD937X_DIGITAL_CDC_ANA_CLK_CTL,
- 					      BIT(2), 0x00);
-+		snd_soc_component_update_bits(component,
-+					      WCD937X_AUX_AUXPA,
-+					      BIT(4), 0x00);
- 		break;
- 	}
+diff --git a/fs/btrfs/raid-stripe-tree.c b/fs/btrfs/raid-stripe-tree.c
+index dd924048c6659..a2e9ac2d97988 100644
+--- a/fs/btrfs/raid-stripe-tree.c
++++ b/fs/btrfs/raid-stripe-tree.c
+@@ -151,7 +151,10 @@ int btrfs_delete_raid_extent(struct btrfs_trans_handle *trans, u64 start, u64 le
+ 			btrfs_item_key_to_cpu(leaf, &key, slot);
+ 			found_start = key.objectid;
+ 			found_end = found_start + key.offset;
+-			ASSERT(found_start <= start);
++			if (found_start > start || found_end <= start) {
++				ret = -ENOENT;
++				break;
++			}
+ 		}
  
-@@ -730,10 +736,23 @@ static int wcd937x_codec_enable_aux_pa(struct snd_soc_dapm_widget *w,
- 			snd_soc_component_update_bits(component,
- 						      WCD937X_ANA_RX_SUPPLIES,
- 						      BIT(1), BIT(1));
-+		/* Enable AUX PA related RX supplies */
-+		snd_soc_component_update_bits(component,
-+					      WCD937X_ANA_RX_SUPPLIES,
-+					      BIT(6), BIT(6));
-+		snd_soc_component_update_bits(component,
-+					      WCD937X_ANA_RX_SUPPLIES,
-+					      BIT(7), BIT(7));
- 		enable_irq(wcd937x->aux_pdm_wd_int);
- 		break;
- 	case SND_SOC_DAPM_PRE_PMD:
- 		disable_irq_nosync(wcd937x->aux_pdm_wd_int);
-+		snd_soc_component_update_bits(component,
-+					      WCD937X_ANA_RX_SUPPLIES,
-+					      BIT(6), 0x00);
-+		snd_soc_component_update_bits(component,
-+					      WCD937X_ANA_RX_SUPPLIES,
-+					      BIT(7), 0x00);
- 		break;
- 	case SND_SOC_DAPM_POST_PMD:
- 		usleep_range(2000, 2010);
-@@ -2051,7 +2070,12 @@ static const struct snd_kcontrol_new wcd937x_snd_controls[] = {
- 		       wcd937x_get_swr_port, wcd937x_set_swr_port),
- 	SOC_SINGLE_EXT("LO Switch", WCD937X_LO, 0, 1, 0,
- 		       wcd937x_get_swr_port, wcd937x_set_swr_port),
--
-+	SOC_SINGLE_EXT("CLSH PA Switch", WCD937X_CLSH, 0, 1, 0,
-+		       wcd937x_get_swr_port, wcd937x_set_swr_port),
-+	SOC_SINGLE_EXT("DSD_L Switch", WCD937X_DSD_L, 0, 1, 0,
-+		       wcd937x_get_swr_port, wcd937x_set_swr_port),
-+	SOC_SINGLE_EXT("DSD_R Switch", WCD937X_DSD_R, 0, 1, 0,
-+		       wcd937x_get_swr_port, wcd937x_set_swr_port),
- 	SOC_SINGLE_EXT("ADC1 Switch", WCD937X_ADC1, 1, 1, 0,
- 		       wcd937x_get_swr_port, wcd937x_set_swr_port),
- 	SOC_SINGLE_EXT("ADC2 Switch", WCD937X_ADC2, 1, 1, 0,
+ 		if (key.type != BTRFS_RAID_STRIPE_KEY)
 -- 
 2.53.0
 
