@@ -1,124 +1,165 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACFD48B398
-	for <patches@lists.linux.dev>; Tue,  5 May 2026 16:05:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814F347DD69
+	for <patches@lists.linux.dev>; Tue,  5 May 2026 16:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777997149; cv=pass; b=E0j4nl1d70P8GJKVEAi92kLfF6xji12m03ogQdw7jU6SJ4otjVl5k/4DAdIgVibvS8eg/g8orHxu1OjwjM4i8w9/EAqTmOTwUof0Yk8OXFpKBc9SoT+/MyNTZXN7riVpqGV3+hZcLKyAD+cE2XKRGv7JDXPkWsRGaqrSOotXy7s=
+	t=1777998730; cv=pass; b=Zu/f8avu/JHnjxNoSr3IQJWkmcs7hw1nL9ZobuGY7UQzDq8xJWmXE9fdOGYboGfdl6c76wF4Dq3p8nz06hh7uOb/tIegI0x0q+KvsweJ+98U2/TH/7/UxctOS4jSq0iSVQoQ4yPsNOxoDF/GU77KMh5tvIkkeCm6qZYm9b6LOIA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777997149; c=relaxed/simple;
-	bh=J6ANT64o73Oy/MqjWeiTVaKBLJandxdhBxQ3kDb+K3I=;
+	s=arc-20240116; t=1777998730; c=relaxed/simple;
+	bh=iy3n3rJ21iXxzxWQtymxZU8jDcKP80ZeTnptO0tAl6Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EI6Z5ntDCQOThUI9fRMfxPRTCGgsMCojJsBrAtHI0ZOQnwl7MV10bDYoqhTxyrL/ykyETzmO1WXxhuHSlniiBtnOFGCHdzqDUY+2BbxE362bKxD9cHvh+mYL+bSl+H1M3Fu8ZMm5iqibau9MZWlWrIul3FuEUFSGJM16JREh0GI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IilXMfbO; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=M4jtMT7iuNC7Gk2nxLzcJSKM3jP0Xr+Od+vRHXphwU09mcyAKDx7MCHkAXvIMq1+ynID2s6reMrfTrivTmRn4DrFo6G5D9SuyhAEuNDkNtWYImX0Qp9NnR3Pv/cIVyZRJf+9DYmrm29klSjrflRoPTNdJXIcnwsGi4ZZzLDkhH8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b=LsQg+x6b; arc=pass smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IilXMfbO"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-130c653cce4so1537449c88.1
-        for <patches@lists.linux.dev>; Tue, 05 May 2026 09:05:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777997147; cv=none;
+	dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b="LsQg+x6b"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7dcd17e19b6so3216761a34.1
+        for <patches@lists.linux.dev>; Tue, 05 May 2026 09:32:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777998727; cv=none;
         d=google.com; s=arc-20240605;
-        b=RHwWzJ/AjjpP4x/zPixGcFCtWpl4V6waVyU1Aig69oejmPDt6WtgBCR+SwoCceRGSx
-         WtxRKyRps7DhsTATh7TOgioXlUndefGJHXg4pG0yDiuFXwb4t1l0xafUGqImvsKFbhQ/
-         AR0Rwe/4UvJCsL9Oy7e09J7NdQ9W6C0jY2+BUQ+4L0UG5roYqa3yNVz9DNgvesW0e4w5
-         h5M0Ndlb6womwLlw77af4bFrxwkGyNaTrNkQ/BqX4ZzagLHR0UuKuoMvs4yvkR7RQo+S
-         DzvBIjP7RIkn0VmcUyIwBWckGhcJqZ+mOHwzJWcBg2vc2FIe7VG6/zIjitmvKSxSgB4n
-         OF+A==
+        b=E2OuZXxT8J5jWNN7VBqlFVwrWgWhnqrzLjCXgleJTsVLj1Br5aP2g8IFWJYcj587sm
+         qtMEy8w+dWP2CSKqr5I2FXDcH8sLGZQZIb+TVazRxNEbwEKNcgfRHoIbZvm63SEP0RT+
+         D3XPdlbSTP2/F65APhjanCCOXTlSrW8s5wIj40CvXZq701irtt/iVBIZ9f+tlQpTDXEt
+         HOcVbXrXWpwNnsNI+qmS3Fa2C1l6mQZ4KMobSlDRpLk8kORdAXLfrm9WyOkVL1hAGXXF
+         e1odZloZjt67OWwF5YE4WcpNIs/9W8OZEAcQrL7jP4uSH7RZt9BpUbWPDWCYJPG9YR63
+         4HEg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=jr+WQFKJTcHJZ0sRMLiTHOm1qsMvrLUcWME2L+LwpFY=;
-        fh=Xv8I02YHEFOMMSjOmI6SdYEOEqqGWseNnpxY0FBsxJU=;
-        b=dSjT8tQ49ifzie4grdI4pVDHDFC/swEr2ZW4OM3koxXafu/ntGd9Dml0XzHHMCdmf8
-         z/qmm5OGmD1DlbDOsPbOwE/RDzjBtXPnPCBpoI3g5R6jwitRZHpMZ2ywL/VpXwpIvW92
-         iYZxqGxwE0fkHVIizNtm7e8ecOtJemykeK3biWUOKUiMdg7b/VQSNtfgScHdWs4+iNXY
-         nNHrc6Qq4SUo3UFU686A/1cHzlws+cTqEBFUB0YalUQS2wWWzReszqGkyp9YBfnJzObb
-         nZj8vbaMtPenvN8ZCf6/zZK97VwRwIGqQRaNFJnkiE8E7NlGJ8hqSN6e8cqFhYYKkFku
-         IZRA==;
+        bh=7eXEy6+DCrmMWFnLDZ4Fw27+W46tPenXbPYSAHMIGQY=;
+        fh=1UGvC+cNjr+MH9RBDnB7K7Gl91bhT0Z0uOvEOpBWnnU=;
+        b=CTpt2mjVs2jJJS6dnq8nxLNWbc+RU/cSBJtKF5XLHfEqZM2ytUv/qEqRqyWJqXpCKU
+         VXFPkAULXkCT6M+23iE9DFp4s+vU1KlkHGvQkb+8K2VRLW27dMW/5L3Ui9ckcQbqoMtY
+         we215LWVWgjtj2HW1mTDN58ZRAXvOuuIL+DBqMSLvlQEw+dPN84oosDzoNX189aFwF7/
+         j3xyfQaOn7sGRG9e/+G+61g9I0gOjV3nFnx8RZcO7RM7jGVShDT9zIH7WDVcwPT3womi
+         s2bJXgShf9H03sXgi/Do4tgJh24hmzJGQz0ya9ykT8zf5wj7JbOxB3higfFd1YN1LDqx
+         wqsA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1777997147; x=1778601947; darn=lists.linux.dev;
+        d=rivosinc.com; s=google; t=1777998727; x=1778603527; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jr+WQFKJTcHJZ0sRMLiTHOm1qsMvrLUcWME2L+LwpFY=;
-        b=IilXMfbO+0oenYRa7esG2Ba/jPR1whord+iQ7rv4r+D9X0NR6SbJAfoba26LbElk5E
-         OiO6PyWMgpAaQ16k0H7+9qSNrXIPezeejNT2guHELg22UnxykSyETxjVyMkc2e/qw8ws
-         cvq1NOKLwRwwJ628PgiLwpYrGt2IS1s0jFiNRmURxTv6p+yJm8TdLGu9Dugynf7AmkmZ
-         svKf8YqJ0tPtPRA0A0x4QtXZiWRo5h1gpgaGy+SBS65AVtjaGP6CSFwhxGJv9bj96KNH
-         2awfEZSBZCY7PxGL8QIxJo+qCanCHHrsZwrKs09E35o+kCPLwM1c7nDOr8kdfuDN2Gig
-         PMAA==
+        bh=7eXEy6+DCrmMWFnLDZ4Fw27+W46tPenXbPYSAHMIGQY=;
+        b=LsQg+x6b3df6CazlYBQ+7iDgkS+QGarHroxhm0hg20l/bn+N/A+VRptXS+RHTHKCFd
+         8/gO61iYzzJ9qC0jymwnWq32YxGyGHr5DiIHGNcBgV4yHgFBjRSqFXcTJdJeYzmVO6C7
+         Sai49EORiZZHoeM/6Omx+yU+o8Q2I+YYLsQcYkf7/Z8b5WxhVUlHFXOZKuZ6CDgnGZ2R
+         0+7WMHqZrCqMwQA+2YRf2VVqfXrN7ktEaDbD+XKv6USoQzYToCeV+EMwJak6Ym7H9wvb
+         m4ShUkb3bFjbVXaeBI9LTMEeejh2A42ik5Ll80LkYxPjpvZxfkQj9mufkc+trUKoP37O
+         OamQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777997147; x=1778601947;
+        d=1e100.net; s=20251104; t=1777998727; x=1778603527;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=jr+WQFKJTcHJZ0sRMLiTHOm1qsMvrLUcWME2L+LwpFY=;
-        b=PaOyT6ebehbtuY2qGXu3D1acHq2F0VNUYFJm6+q36yE/VrijA+YwG0fpBxD1OjNDgy
-         4v6s6pBBUiTszG1Z8UMUClN3/lh1zlUfoF8Z1HmVKDkWaYsrQr3y1zpysvd1/P+p/fMF
-         KoCWyceuQhp6/dUUR7dhRA05G7U14mYBleQrNDSzXQysDUqQJjai2V1aky2zF/2V82f0
-         2N6A1uj2JF8PPEmP7lN2NSd2B1qPCCCFgfT0wv5kKEcV/zsucexcDaCaRaDW7GDBwoGP
-         KGOyZqmHeUU/YP3No5v/ZikMifO8gb3XKojExI8Wmtn8fvpUEY5qE1UGhg0or8cWKB72
-         bsZA==
-X-Forwarded-Encrypted: i=1; AFNElJ96yKGtDyWMrL8ZtM/MEcfBI2qi5uEeZ89ch/iWAhkFtFhkEpuYmkMz/ZS5ipCK9UE4mf0/f1C9@lists.linux.dev
-X-Gm-Message-State: AOJu0YzjrZGjBnO8Y83XclVb0bgj+vfG7VhRD1mQrl+9PQ7aI3Ml+DyP
-	L/BG5QUpAlHvBhM14YsSVyPwSNYtTXUF4KjHD/5bcOKkKfZAbKS3gFDzLlfW4u5cwmV6ij0Y5xX
-	S0Qg0ZCt2N5npxqxfR+2ouZWyM/hzcjJYqHud5KOR
-X-Gm-Gg: AeBDiev3Z8B+OVkZ9e7NtSn/hnKXIUOz4vtnFptuRSzjRWSolOq/Fvar3zfMrk5ZfEI
-	0IieCQam6THPn7NE5x/+OGe8BUpSnHqm8wruCzhrPbxU1DQUwAvIYR0/pOMaQjeH/bSVpY8ecbw
-	agui5a6NYid9a6dyaqhkXcOvXOow9PEeGkyJQAG8yQxjgImhGuwuR74IrF9yOFvbNNh0nIKiKqK
-	Gutts82AmLTvUvV1ulInT0F+KlKApLhpSoVBicknmDsa4lI1sWj8DETksb51ozFjg2x8lHHMHQy
-	rfwMxE1QmQx7zSIm4Vt1LGg5wQdfCmV5fSP4+9Ur
-X-Received: by 2002:a05:7022:6628:b0:12d:b214:7dbc with SMTP id
- a92af1059eb24-12dfd7da15bmr7713863c88.7.1777997146733; Tue, 05 May 2026
- 09:05:46 -0700 (PDT)
+        bh=7eXEy6+DCrmMWFnLDZ4Fw27+W46tPenXbPYSAHMIGQY=;
+        b=h4hQ3pvLXo+T4sov7Ec+T7aoc+z3sPc7yf3FSJ5zfJD75i6tNF0h3kppKwMohTMFcn
+         +N+QupGNpeMHvTFnqPjqLyZhzhqfTfy6CaGYjLfLr1En1TCgJyx3yiRdkoFPuIOiXfPf
+         /tVJR6PjaOjnxQUgaVEC8hbi3oDfXiWxTdeDYmdLKUwGtPiWxrKeLlcvXNdk8MW0azsg
+         DikxUHtSLvob/+/EOWMSamrooMevzQLGk6mRJcL+/1ZRbAXrWyamQAbgg57kkYLJB8Bk
+         boNMrTi2gOG3FWpfXPjppBq9XisSpki3+inXtWCf7W7V3IfnlgsWVvkOCB8Dmmmsar+y
+         1u4w==
+X-Forwarded-Encrypted: i=1; AFNElJ+FH2mz9Ea5UZV2XOvRj8fpbTr+41kZGhrm3MZfgPVUnEnJ4vv5D4ne2Gujw0icC773mDrolGeO@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz9+lppvxrAfFGod6chlAl8YN1xcOWHR3oQIhRsjFvm006i9Og/
+	YwnQraenVEx4PLq1AwF6zUjc9/hSW6gQphMiVTYIf66ebC8ry+aduFHz8VpIjq4qn6zWSJMgIZI
+	LJ9GmUdeLj7AisiPWe85Y8i0VVMjGDfaG26s7+RKnLQ==
+X-Gm-Gg: AeBDiev7BN3jSbitIx10mdpRrRFftZ5PFZkJCsIxXkrwIXQOmMl0WICp36FFR6wOKxH
+	z5/i3NJw6kuIR5KvV5WReBA2h5aFMstf7xgn+6Pb0+Jg+2ysHc1DjED9HZe3U/zxzwJAbZNik+V
+	aVQN6kOBFrWUMvDliN1Bh0Ggu9pEQaHPCY1MXmO3Icsj6ZORVSASBB1jYzhySVCbCCS/wbCXMjL
+	QEO201Mnsade7VbXybBpBp9Qjs9z9cTXmKR2q04B44vss3jkmapAcfXbYhSEV0l4b3RkEcdbgtW
+	21yepj/Ark+je3Wk15hHo7sZe6l+
+X-Received: by 2002:a05:6808:2518:b0:479:ffcf:52dc with SMTP id
+ 5614622812f47-47c8930caadmr7143176b6e.44.1777998727293; Tue, 05 May 2026
+ 09:32:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com> <7-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
- <afkH3pMJKkIbElhI@google.com> <afoSQWreOWDIfVxZ@nvidia.com>
-In-Reply-To: <afoSQWreOWDIfVxZ@nvidia.com>
-From: David Matlack <dmatlack@google.com>
-Date: Tue, 5 May 2026 09:05:19 -0700
-X-Gm-Features: AVHnY4I9kiI4Q1jkqtdnHvyGsFiT-Xosh4J8OR2OjxYfYINDrozPSiggYWTK0ps
-Message-ID: <CALzav=c2r5cBSpgnG6-Njc3sGrrtt-weFXo1pRUL862SdK7w=A@mail.gmail.com>
-Subject: Re: [PATCH 07/11] vfio: selftests: Allow drivers to specify required
- region size
+References: <0-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
+In-Reply-To: <0-v1-54e7264d71b4+17cc3-iommu_riscv_inv_jgg@nvidia.com>
+From: Tomasz Jeznach <tjeznach@rivosinc.com>
+Date: Tue, 5 May 2026 09:31:55 -0700
+X-Gm-Features: AVHnY4KXzwjaC_Gb5GnddRMzX9LqC580rYOWyeA1_Y7wcl4kfXs2AQTViUP1SDo
+Message-ID: <CAH2o1u699nbGABw1mcZR=BrZcyy7s_WNz-szpe8bn8bPhuv-yQ@mail.gmail.com>
+Subject: Re: [PATCH 0/7] Support non-leaf and range invalidation features in RISC-V
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org, 
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org, 
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>, netdev@vger.kernel.org, 
-	Saeed Mahameed <saeedm@nvidia.com>, Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>, 
-	patches@lists.linux.dev
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>, iommu@lists.linux.dev, 
+	Joerg Roedel <joro@8bytes.org>, linux-riscv@lists.infradead.org, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Fangyu Yu <fangyu.yu@linux.alibaba.com>, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 5, 2026 at 8:52=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wro=
-te:
->
-> On Mon, May 04, 2026 at 08:55:58PM +0000, David Matlack wrote:
-> > On 2026-04-30 09:08 PM, Jason Gunthorpe wrote:
-> > > Add a region_size field to struct vfio_pci_driver_ops so drivers can
-> > > declare how much DMA-mapped region they need. The mlx5 driver will
-> > > need ~18MB for firmware pages. Existing drivers leave region_size as
-> > > 0 and get the current default of SZ_2M.
-> >
-> > I would like to get rid of the magic SZ_2M to make it easier for other
-> > tests to use the driver framework. Can you make this commit update all
-> > the drivers to set region_size? They can all use the same approach:
-> >
-> >   struct vfio_pci_driver_ops foo_driver =3D {
-> >           ...
-> >           .region_size =3D roundup_pow_of_two(sizeof(struct foo)),
-> >           ...
-> >   };
->
-> Sure, lets put the roundup in the core code?
+Thanks Jason for this series.
+I've verified github/iommu_pt_arm64 on RISC-V, looks good.
 
-Sounds good.
+- Tomasz
+
+On Fri, Apr 10, 2026 at 8:57=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
+ote:
+>
+> This is part of the patch pile to get SMMUv3 moved to iommupt. From
+> that perspective it introduces the PT_FEAT_DETAILED_GATHER which will
+> be used by both RISC-V and SMMUv3 to generate optimized invalidation
+> commands.
+>
+> I don't have any RISC-V anything so this needs to be tested by someone wh=
+o
+> does.
+>
+> Improve the invalidation flow in RISC-V:
+>  - For single address invalidation, compute a stride based on what
+>    IOPTEs were changed by having the gather track level changes in
+>    bitmaps. This allows things like unmapping hugetlb-backed mappings
+>    to avoid jumping to global invalidation.
+>
+>  - Support the NL bit to avoid global invalidation when table
+>    structure is changed
+>
+>  - Support the S range invalidation feature to convert any gather
+>    into a single invalidation command using an aligned power-of-2
+>    size like AMD and VT-d.
+>
+> This is also a requirement for the kunit iotlb series, which was used
+> to test the math used to generate the invalidation commands from the
+> gather in this series.
+>
+> It replaces a similar series Fangyu sent prior to the iommupt
+> conversion:
+>
+> https://lore.kernel.org/linux-iommu/20260208144213.94856-1-fangyu.yu@linu=
+x.alibaba.com/
+>
+> The full patch pile is here:
+>
+> https://github.com/jgunthorpe/linux/commits/iommu_pt_arm64/
+>
+> Jason Gunthorpe (7):
+>   iommu: Split the kdoc comment for struct iommu_iotlb_gather
+>   iommupt: Add struct iommupt_pending_gather
+>   iommupt: Add PT_FEAT_DETAILED_GATHER
+>   iommu/riscv: Enable PT_FEAT_DETAILED_GATHER and pass gather to
+>     iotlb_inval
+>   iommu/riscv: Compute best stride for single invalidation
+>   iommu/riscv: Add RISCV_IOMMU_CAPABILITIES_NL
+>   iommu/riscv: Add NAPOT range invalidation support
+>
+>  drivers/iommu/generic_pt/fmt/iommu_riscv64.c |   4 +-
+>  drivers/iommu/generic_pt/iommu_pt.h          |  98 ++++++++----
+>  drivers/iommu/riscv/iommu-bits.h             |  24 +++
+>  drivers/iommu/riscv/iommu.c                  | 160 ++++++++++++++-----
+>  include/linux/generic_pt/common.h            |   5 +
+>  include/linux/iommu.h                        |  42 ++++-
+>  6 files changed, 259 insertions(+), 74 deletions(-)
+>
+>
+> base-commit: ac81c0f2e6a779e444c5b6fd43756ef811656098
+> --
+> 2.43.0
+>
