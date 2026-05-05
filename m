@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6003E31E82B;
-	Tue,  5 May 2026 09:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA09731B114;
+	Tue,  5 May 2026 09:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974746; cv=none; b=qwzLC24xayEXEF5Tl+7QgeFgSC7cThTYcCJ+frVgtgHY3yRIsEWQiPUvJzPM2825w6dv90FX2sLmOkIgiTPF0CGWi47buYtjW1Vj2H5bFOSs7DgAx4aR75StzqSQiPjx62mUi4guRRo3jk4IpiDYgWxzHMrNHkfw9OIixbv3FbM=
+	t=1777974749; cv=none; b=DUttp/QdKhFnPMIU8VomGKAqbiiKi+2PvAUk7llQAcrvvXlajSn2kDuP9R3L6dSA8lJT2dnqJbupKYFDt8c3uUGtL05l9mFPNeX7znVb6K/f7hAXfe16yY3myURwOS3WuxBX2+IAppO1/xE7lR1H8cpLjuRKKwGpVGfcCzLmcgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974746; c=relaxed/simple;
-	bh=f84Y5TVEmr22zCYb60Nse16esybFpQ0wAWR5ZZ0YvII=;
+	s=arc-20240116; t=1777974749; c=relaxed/simple;
+	bh=isJRYgHxU3ZQEttWWsxaLVzmrb2M1BTo3KcQYugq81o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jl+S0Rscme5diB3WGk1EtF5HmnIpGT5OLMsCPtJB9welYuqbaqRbKGO16uKdNiDDB3CF5GlO4InBU2HOa/WmbmphYOYQekByHL/y/FyhxgVZvaAHXrFio1wHduu8qFho6JX7ORP+SymU/Z5jbcvkIhwznWPBMCoh/6HiyZYsjrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jTX1SJr2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WJW+NUQZY/CzaGYclHKmDwOfuyxoYbg2nJlxkTaxDfewzf07gCG0kXDftUdiKlnnHvJGYkLPAS/lKQB7BUsJ19d2E5L3Z0xaTQXB3wFSOMs5eR+0DyOuyzpBmiCFtTZGZIl1B72AubYIkzMgmPpFOXidNEI+IKbq0RVByOxPfkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBQ642V1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jTX1SJr2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA7AC2BCC9;
-	Tue,  5 May 2026 09:52:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBQ642V1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7EDC2BCF7;
+	Tue,  5 May 2026 09:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974746;
-	bh=f84Y5TVEmr22zCYb60Nse16esybFpQ0wAWR5ZZ0YvII=;
+	s=k20201202; t=1777974749;
+	bh=isJRYgHxU3ZQEttWWsxaLVzmrb2M1BTo3KcQYugq81o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTX1SJr2CoLRi6IleF5y9HaaFvRpvc5hvxF8tM5TR/7hzjXeuEPfc6RBF6qey3oWL
-	 eUQ/H/3ovOx6HUUt9Lxn74iyWSf31boG1aboFDneOBYPmB1u/hQMCF4rsm+On5ZreJ
-	 W+AtBaToSES1byN3zXcsZXJKGLbTMq/WVlIA7DEaKzTmmRHqfYz9vKhixmHyea2h56
-	 h5C4mClYzTMBVjjxXVNOWk8oAXkl61eojIv8ZstytXfTOi/ihZk1GZluparu5QAcE/
-	 iVE7L1VjKHYmEHXROr7kGPMUii+c2WwSWyhdKxec6spAYIo/MowdWOrdl/WnThEX4I
-	 rCAPGI+UaC3YA==
+	b=tBQ642V1y+a/UJOfjCSQA2rkWC1fUl8rxPps6X6MbxDhdVh2kp6UO3ZTXPVuCHf0+
+	 8Pnny9DRhf/0n2CiJmg+aMTW8p70lbcVeppqTPIKdEZSeQcHv+TTMU8yD1I0jOQMln
+	 cndHA66nT2+uX8SzneFUDc2DApPN4PAoPGBH1GIIv10dddJhWn3Qkw23RMtr1qC8CA
+	 EBQ4q/W29VqLCJ1TAuMLrGXSogV9uL27CkMMgPm5Qz8QMdFM8ijqw7bhuzKiYStf3k
+	 LybQBnjAF+EUuYV7BpdQz19ufjMzYNH7/mLv+etPDYrvgmW07+CgC63e06mFQgOGYw
+	 kgMtWYVEj0RfA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosalie Wanders <rosalie@mailbox.org>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+	Chris Leech <cleech@redhat.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	sagi@grimberg.me,
+	kch@nvidia.com,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ALSA: usb-audio: apply quirk for Playstation PDP Riffmaster
-Date: Tue,  5 May 2026 05:51:27 -0400
-Message-ID: <20260505095149.512052-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] nvmet-tcp: Don't clear tls_key when freeing sq
+Date: Tue,  5 May 2026 05:51:28 -0400
+Message-ID: <20260505095149.512052-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -54,277 +56,310 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosalie Wanders <rosalie@mailbox.org>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-[ Upstream commit 110189f0268d0eb85895721526328cac5804a739 ]
+[ Upstream commit 5fc422951c962cc01e654950fc043ebd8fadd865 ]
 
-This device, just like the Playstation 5's DualSense, has a volume
-that's too low, hid-playstation solves this by raising the minimum
-volume on the device itself by sending an output report, third party PS5
-controllers/accessories do not support this output report format, so we
-apply a quirk to raise the minimum volume by 6dB.
+Curently after the host sends a REPLACETLSPSK we free the TLS keys as
+part of calling nvmet_auth_sq_free() on success. This means when the
+host sends a follow up REPLACETLSPSK we return CONCAT_MISMATCH as the
+check for !nvmet_queue_tls_keyid(req->sq) fails.
 
-Signed-off-by: Rosalie Wanders <rosalie@mailbox.org>
-Link: https://patch.msgid.link/20260426025520.3985-2-rosalie@mailbox.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+A previous attempt to fix this involed not calling nvmet_auth_sq_free()
+on successful connections, but that results in memory leaks. Instead we
+should not clear `tls_key` in nvmet_auth_sq_free(), as that was
+incorrectly wiping the tls keys which are used for the session.
+
+This patch ensures we correctly free the ephemeral session key on
+connection, yet we don't free the TLS key unless closing the connection.
+
+Reviewed-by: Chris Leech <cleech@redhat.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem is `ALSA: usb-audio`; action verb is `apply`;
-intent is to add a device-specific volume quirk for PlayStation PDP
-Riffmaster controllers/accessories.
 
-Step 1.2 Record: Tags present are:
-- `Signed-off-by: Rosalie Wanders <rosalie@mailbox.org>`
-- `Link:
-  https://patch.msgid.link/20260426025520.3985-2-rosalie@mailbox.org`
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>`
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
-or `Cc: stable@vger.kernel.org` tags were present.
+Step 1.1 Record: subsystem `nvmet-tcp` / NVMe target TCP; action verb
+“Don’t clear”; intent is to stop `nvmet_auth_sq_free()` from wiping
+`sq->tls_key` during authentication cleanup.
 
-Step 1.3 Record: The commit says the PDP Riffmaster has too-low volume,
-similar to the PS5 DualSense. It states `hid-playstation` compensates
-for DualSense by sending an output report, but third-party PS5
-controllers/accessories do not support that output report format, so
-this patch raises the ALSA minimum volume by 6 dB. Symptom is functional
-audio output being too quiet on this hardware. No affected kernel
-version is stated.
+Step 1.2 Record: tags in upstream commit `5fc422951c962`: `Reviewed-by:
+Chris Leech <cleech@redhat.com>`, `Reviewed-by: Hannes Reinecke
+<hare@suse.de>`, `Signed-off-by: Alistair Francis
+<alistair.francis@wdc.com>`, `Signed-off-by: Keith Busch
+<kbusch@kernel.org>`. No `Fixes:`, no `Reported-by:`, no `Cc: stable`.
 
-Step 1.4 Record: This is not hidden as cleanup; it is explicitly a
-hardware quirk/workaround. It fixes a device-specific functional
-problem, not a crash, memory safety issue, or data corruption issue.
+Step 1.3 Record: the described bug is deterministic: after a host sends
+`REPLACETLSPSK`, successful auth cleanup calls `nvmet_auth_sq_free()`,
+which clears `sq->tls_key`; a later `REPLACETLSPSK` then fails the
+`!nvmet_queue_tls_keyid(req->sq)` check and returns `CONCAT_MISMATCH`.
+The commit also states the earlier approach of not calling
+`nvmet_auth_sq_free()` leaked memory.
+
+Step 1.4 Record: this is not a hidden cleanup; it is an explicit
+correctness fix for broken TLS PSK replacement and for preserving the
+key until connection close.
 
 ## Phase 2: Diff Analysis
-Step 2.1 Record: One file changed: `sound/usb/mixer.c`, with 10
-insertions and no removals. One function changed:
-`volume_control_quirks()`. Scope is a single-file, single-switch-entry
-hardware quirk.
 
-Step 2.2 Record: Before, PDP Riffmaster USB IDs had no special handling,
-so the device-reported volume range was used as-is. After, for USB IDs
-`0x0e6f:0x024a` and `0x0e6f:0x0249`, if the ALSA control name is `PCM
-Playback Volume`, the code logs the quirk and sets `cval->min = -2560`.
+Step 2.1 Record: one file changed, `drivers/nvme/target/auth.c`;
+upstream diff is 3 deletions. Modified function: `nvmet_auth_sq_free()`.
+Scope: single-file surgical fix.
 
-Step 2.3 Record: Bug category is hardware workaround / device-specific
-USB-audio volume quirk. The mechanism is correcting the exposed minimum
-playback-volume value before ALSA dB conversion and control
-registration.
+Step 2.2 Record: before, `nvmet_auth_sq_free()` canceled auth timeout
+work, cleared `sq->tls_key`, then freed DH-CHAP ephemeral buffers.
+After, it still cancels work and frees `dhchap_c1`, `dhchap_c2`, and
+`dhchap_skey`, but no longer clears the TCP TLS key.
 
-Step 2.4 Record: Fix quality is high: tiny, isolated, matches existing
-nearby patterns for device-specific volume quirks, changes no API, and
-is gated by exact USB IDs plus exact control name. Regression risk is
-very low and limited to the two PDP Riffmaster IDs.
+Step 2.3 Record: bug category is logic/resource lifetime.
+`nvmet_tcp_tls_key_lookup()` stores a key from `nvme_tls_key_lookup()`
+into `queue->nvme_sq.tls_key`; `key_lookup()` increments the key
+refcount. `nvmet_sq_put_tls_key()` later does `key_put()` only if
+`sq->tls_key` is still set. Clearing the pointer in
+`nvmet_auth_sq_free()` both breaks later `REPLACETLSPSK` validation and
+prevents the normal close path from seeing the key pointer.
+
+Step 2.4 Record: fix quality is high. The patch removes only incorrect
+ownership cleanup from the per-auth cleanup helper. Regression risk is
+low because the verified TCP queue release path calls
+`nvmet_sq_put_tls_key()` before `nvmet_sq_destroy()`, and non-TCP
+transports do not populate `sq->tls_key`.
 
 ## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows `volume_control_quirks()` was
-introduced by `dcaaf9f2c16b56` and is present since `v3.2-rc2~23^2~3`.
-The immediate insertion context includes the Asus USB DAC quirk from
-`4020d1ccbe55bd` (`v5.7~16^2~2`) and, on newer branches, MOONDROP
-quirks. For this commit, the “buggy code” is effectively the absence of
-a quirk for this hardware, not a bad prior line.
 
-Step 3.2 Record: No `Fixes:` tag is present, so there is no introducing
-commit to follow.
+Step 3.1 Record: `git blame` on the changed area shows `sq->tls_key`
+handling was introduced by `fa2e0f8bbc689` (“nvmet-tcp: support secure
+channel concatenation”), first contained at `v6.15-rc1~166^2^2~13`;
+`sq->tls_key = NULL` was later style-adjusted by `b1efcc470eb30`. The
+older `nvmet_auth_sq_free()` DH-CHAP cleanup itself dates to the
+original auth code around v6.0, but the TLS-specific bug begins with
+`fa2e0f8bbc689`.
 
-Step 3.3 Record: Recent `sound/usb/mixer.c` history contains multiple
-related USB-audio volume/control fixes and quirks, including MOONDROP,
-Huawei, MS LifeChat, and volume-range checking work. No prerequisite
-commit was identified for the Riffmaster quirk itself.
+Step 3.2 Record: no `Fixes:` tag is present. I manually inspected the
+likely introducing commit `fa2e0f8bbc689`, which added secure channel
+concatenation, `sq->tls_key`, `nvmet_queue_tls_keyid()`,
+`nvmet_sq_put_tls_key()`, and the clear in `nvmet_auth_sq_free()`.
 
-Step 3.4 Record: `git log --author='Rosalie Wanders'` under `sound/usb`
-found this one sound commit. The patch was committed by Takashi Iwai,
-and `MAINTAINERS` lists Takashi Iwai and Jaroslav Kysela as `SOUND`
-maintainers.
+Step 3.3 Record: recent related upstream history includes
+`2e6eb6b277f59` (“Don’t free SQ on authentication success”),
+`f920ebd03cd13` reverting that due to leaks, and this commit
+`5fc422951c962`. This commit was submitted as patch 2/2 after the
+revert. On the checked stable branches, `2e6eb6b277f59` is not an
+ancestor, so this patch can apply standalone there.
 
-Step 3.5 Record: No functional dependencies found. The code assumes only
-existing `USB_ID()` matching and `volume_control_quirks()`
-infrastructure. Backport may need minor contextual placement on some
-branches.
+Step 3.4 Record: Alistair Francis has multiple recent NVMe target
+auth/TLS commits in this subsystem, including `ecf4d2d883515`,
+`2e6eb6b277f59`, `f920ebd03cd13`, `5fc422951c962`, and `5d10069e1a169`.
+
+Step 3.5 Record: dependencies are minimal. The patch depends on
+`sq->tls_key` and `nvmet_auth_sq_free()` existing, which local stable
+refs show in `6.15.y` and newer. If a target stable tree had already
+taken `2e6eb6b277f59`, then the paired revert `f920ebd03cd13` would also
+be needed; in the local stable refs checked, that prerequisite is not
+needed.
 
 ## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 110189f0268d0` found the original thread at
-`https://patch.msgid.link/20260426025520.3985-2-rosalie@mailbox.org`.
-`b4 dig -a` found only v1. Patchew and b4 showed Takashi Iwai replied
-“Applied now. Thanks.” No objections or NAKs found.
 
-Step 4.2 Record: `b4 dig -w` showed recipients: Rosalie Wanders,
-Jaroslav Kysela, Takashi Iwai, `linux-sound@vger.kernel.org`, and
-`linux-kernel@vger.kernel.org`. The appropriate sound maintainers/list
-were included.
+Step 4.1 Record: `b4 dig -c 5fc422951c962...` found the original
+submission at `https://patch.msgid.link/20260417004809.2894745-2-
+alistair.francis@wdc.com`. `b4 dig -a` found only a v1 two-patch series.
+The committed version is the reviewed/applied version.
 
-Step 4.3 Record: The only `Link:` is the patch submission itself. No
-separate bugzilla, syzbot, or user report link was found.
+Step 4.2 Record: `b4 dig -w` showed the patch was sent to the expected
+NVMe/block audience: Hannes Reinecke, Christoph Hellwig, Sagi Grimberg,
+Chaitanya Kulkarni, Keith Busch, linux-nvme, linux-block, linux-kernel,
+Yi Zhang, Maurizio Lombardi, and Shinichiro Kawasaki. Lore replies show
+`Reviewed-by` from Hannes Reinecke and Chris Leech, and Keith Busch
+replied that patches 1 and 2 were applied to `nvme-7.1`.
 
-Step 4.4 Record: The patch is standalone v1, not part of a multi-patch
-series. No related Riffmaster patches were found in local
-`origin/master` history.
+Step 4.3 Record: no direct bug-report link is in this commit. The paired
+revert references a kmemleak report from Yi Zhang during blktests
+(`nvme/041`, `nvme/042`, `nvme/043`, `nvme/044`, `nvme/045`, `nvme/051`,
+`nvme/052`), confirming the earlier “don’t call cleanup” approach leaked
+DH-CHAP allocations.
 
-Step 4.5 Record: Direct lore stable search was blocked by Anubis, and
-web search did not find stable-list discussion for PDP Riffmaster. No
-stable-specific nomination or rejection was verified.
+Step 4.4 Record: series context is important: patch 1 reverts the
+earlier workaround that skipped `nvmet_auth_sq_free()` on success; patch
+2, this commit, fixes the root cause by keeping cleanup but no longer
+clearing `tls_key`.
+
+Step 4.5 Record: stable-specific web search through
+`lore.kernel.org/stable` was blocked by Anubis; the `yhbt.net` stable
+path returned 404. I found an AUTOSEL posting for the earlier
+`2e6eb6b277f59` workaround, but did not use that as selection evidence.
 
 ## Phase 5: Code Semantic Analysis
-Step 5.1 Record: Modified function: `volume_control_quirks()`.
 
-Step 5.2 Record: Call path verified manually: USB probe creates streams
-and mixer via `snd_usb_create_mixer()`, mixer parsing reaches
-`snd_usb_mixer_controls()`, feature units call `build_feature_ctl()`,
-which calls `get_min_max_with_quirks()`, which calls
-`volume_control_quirks()` when a `kctl` exists.
+Step 5.1 Record: modified function is `nvmet_auth_sq_free()`.
 
-Step 5.3 Record: Relevant callees are `usb_audio_info()` and later ALSA
-dB/range handling in `get_min_max_with_quirks()`. The patch changes
-`cval->min` before `dBmin`, `dBmax`, initialization, and control
-registration.
+Step 5.2 Record: callers found by `rg`: `nvmet_execute_auth_send()`,
+`nvmet_execute_auth_receive()`, and `nvmet_sq_destroy()`. Auth
+send/receive are assigned as handlers for `nvme_fabrics_type_auth_send`
+and `nvme_fabrics_type_auth_receive` in `fabrics-cmd.c`.
 
-Step 5.4 Record: Reachability is via USB device enumeration and ALSA
-mixer creation for this specific hardware. Userspace impact is through
-normal audio/mixer use after the device is connected. I did not verify
-the actual device descriptor/control name on hardware.
+Step 5.3 Record: key callees around the affected flow include
+`nvmet_queue_tls_keyid()`, `nvmet_auth_insert_psk()`,
+`nvmet_tcp_tls_key_lookup()`, `nvme_tls_key_lookup()`, `key_lookup()`,
+`nvmet_sq_put_tls_key()`, and `key_put()`.
 
-Step 5.5 Record: Similar patterns exist in the same switch for
-CM102-A+/102S+, Asus USB DAC, MOONDROP Quark2, Huawei CM-Q3, and
-MOONDROP JU Jiu. A similar MOONDROP JU Jiu quirk was explicitly tagged
-for stable.
+Step 5.4 Record: reachability is verified through the NVMe/TCP receive
+path: `nvmet_tcp_done_recv_pdu()` initializes a request, assigns/uses
+the fabrics auth execute handler, and runs `req->execute()`. This is
+reachable to an NVMe-oF host using target auth/TLS, not a theoretical
+internal path.
 
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: Checked `remotes/stable/linux-5.10.y`, `5.15.y`,
-`6.1.y`, `6.6.y`, `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`: all contain
-`volume_control_quirks()` and the call from `get_min_max_with_quirks()`.
-None contained the Riffmaster IDs.
+Step 5.5 Record: similar lifetime pattern found: the only proper TCP TLS
+SQ key release helper is `nvmet_sq_put_tls_key()`, called from
+`nvmet_tcp_release_queue_work()`. `nvmet_auth_sq_free()` is a DH-CHAP
+ephemeral cleanup helper and should not own the TLS key.
 
-Step 6.2 Record: Current `7.0.y` working tree accepts the patch with
-`git apply --check`. `git merge-tree` suggests most checked branches can
-merge the addition automatically, but `5.15.y` shows a minor context
-conflict around another quirk entry after the Asus DAC entry.
+## Phase 6: Cross-Referencing And Stable Tree Analysis
 
-Step 6.3 Record: No related Riffmaster fix already present in the
-checked stable branches or `origin/master` history beyond
-`110189f0268d0`.
+Step 6.1 Record: local stable refs show `sq->tls_key = NULL` in
+`nvmet_auth_sq_free()` exists in `stable/linux-6.15.y`, `6.16.y`,
+`6.17.y`, `6.18.y`, `6.19.y`, and `7.0.y`; it is absent from `6.14.y`,
+`6.13.y`, `6.12.y`, `6.6.y`, and `6.1.y`.
+
+Step 6.2 Record: `git apply --check` of the candidate patch succeeds on
+local `stable/linux-6.15.y` through `stable/linux-7.0.y`, and fails on
+`6.14.y` because the buggy TLS key clearing code is not there. Expected
+backport difficulty: clean for affected local refs.
+
+Step 6.3 Record: bounded related-history searches found no existing
+equivalent fix in `stable/linux-7.0.y`. Upstream has the earlier
+attempted fix `2e6eb6b277f59`, its revert `f920ebd03cd13`, and this
+final fix.
 
 ## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: Subsystem is ALSA USB audio under `sound/usb`.
-Criticality is driver-specific/peripheral: it affects users of the PDP
-Riffmaster hardware, not the whole system.
 
-Step 7.2 Record: Recent history shows `sound/usb` is actively
-maintained, with nearby fixes and quirks. The patch was committed by a
-listed sound maintainer.
+Step 7.1 Record: subsystem is NVMe target over TCP, with authentication
+and TLS secure channel concatenation. Criticality: IMPORTANT, because it
+affects networked storage authentication/TLS behavior, though not a
+universal core-kernel path.
+
+Step 7.2 Record: subsystem is active. Recent history in
+`drivers/nvme/target` includes multiple auth/TLS fixes and refactors,
+including secure concatenation support and follow-up fixes through the
+6.15 to 7.1 development window.
 
 ## Phase 8: Impact And Risk Assessment
-Step 8.1 Record: Affected population is hardware-specific: PDP
-Riffmaster PS4/PS5 users with USB-audio playback exposed as `PCM
-Playback Volume`.
 
-Step 8.2 Record: Trigger is connecting/using that hardware and its ALSA
-playback volume control. This is common for affected users but
-irrelevant to everyone else. Unprivileged users can observe/use ALSA
-controls depending on system policy, but the patch itself runs at device
-enumeration/control setup.
+Step 8.1 Record: affected users are systems using NVMe target TCP with
+`CONFIG_NVME_TARGET_AUTH` and `CONFIG_NVME_TARGET_TCP_TLS`, specifically
+secure channel concatenation / TLS PSK replacement.
 
-Step 8.3 Record: Failure mode is too-low audio volume / poor device
-usability, not a crash or corruption issue. Severity is medium for
-affected hardware.
+Step 8.2 Record: trigger is a host sending a follow-up `REPLACETLSPSK`
+after successful authentication on a TLS-enabled admin queue. The
+failure is deterministic from the verified code path. I did not verify
+that an unprivileged local user can trigger it; this is a
+remote/protocol operation by an NVMe host with access to the target.
 
-Step 8.4 Record: Benefit is high for affected device users and zero-
-impact for other devices. Risk is very low because the change is 10
-lines, exact USB-ID gated, and follows existing quirk-table style.
+Step 8.3 Record: failure mode is protocol/authentication failure with
+`CONCAT_MISMATCH`, breaking TLS PSK replacement/key rotation.
+Additionally, because `key_lookup()` increments the key refcount and the
+close path only `key_put()`s if `sq->tls_key` remains set, clearing the
+pointer early risks leaking the key reference. Severity: HIGH for
+affected NVMe/TCP secure-channel users; not a crash/data-corruption fix.
+
+Step 8.4 Record: benefit is high for affected users because it fixes a
+broken authenticated TLS key replacement flow and restores the verified
+close-time key release path. Risk is very low: 3 deleted lines, no new
+API, no new feature, no locking changes, no cross-subsystem behavior
+change.
 
 ## Phase 9: Final Synthesis
-Step 9.1 Record:
-Evidence for backporting: this is a classic hardware quirk, small and
-contained, maintainer-applied, affects real hardware, and all checked
-active stable branches have the infrastructure. Hardware quirks are an
-accepted stable exception.
-Evidence against: no `Cc: stable`, no `Tested-by`, no separate bug
-report, and the failure is not crash/security/data corruption. `5.15.y`
-may need minor manual placement.
-Unresolved: no hardware test or descriptor dump was available to
-independently verify that the device exposes the exact `PCM Playback
-Volume` control.
 
-Step 9.2 Stable rules:
-1. Obviously correct and tested? Mostly yes on correctness; no explicit
-   `Tested-by` or local hardware test.
-2. Fixes a real bug? Yes, per commit and mailing-list submission: too-
-   low volume on specific hardware.
-3. Important issue? Medium severity hardware usability issue; stable
-   exception applies for quirks.
-4. Small and contained? Yes, 10 lines in one switch.
-5. No new features/APIs? Yes, no API or broad behavior change.
-6. Can apply to stable? Yes for current tree; likely minor context
-   handling for at least `5.15.y`.
+Step 9.1 Record: evidence for backporting: real deterministic protocol
+failure; possible key-ref lifetime leak; tiny one-function patch;
+reviewed by relevant NVMe/TLS people; applied by NVMe maintainer;
+cleanly applies to affected stable refs; affects released stable
+branches from 6.15.y onward. Evidence against: affects a relatively
+specialized NVMe/TCP TLS configuration and needs no backport before
+6.15.y. Unresolved: I could not access `lore.kernel.org/stable` directly
+due Anubis, and I did not run runtime blktests.
 
-Step 9.3 Exception category Record: Hardware quirk/workaround for
-specific USB devices. This is a stable-appropriate exception category.
+Step 9.2 Stable rules checklist: obviously correct and reviewed: yes.
+Fixes a real bug: yes. Important issue: yes for NVMe/TCP TLS key
+replacement and key lifetime. Small and contained: yes, 3 deleted lines
+in one function. No new features/APIs: yes. Applies to stable trees: yes
+for local `6.15.y` through `7.0.y`; not applicable to older checked
+branches.
 
-Step 9.4 Decision: Backport. The technical risk is extremely low, the
-change is device-specific, and stable policy explicitly allows
-quirks/workarounds for real hardware problems.
+Step 9.3 Exception category: not a device ID, quirk, DT, build, or
+documentation exception.
+
+Step 9.4 Decision: backport to stable trees that contain `fa2e0f8bbc689`
+/ the `sq->tls_key` clearing code, namely local refs `6.15.y` and newer.
+Do not apply to older trees where the code is absent. If a target branch
+contains the earlier workaround `2e6eb6b277f59`, include/reconcile the
+paired revert `f920ebd03cd13`; otherwise this commit stands alone.
 
 ## Verification
-- Phase 1: Parsed `git show --format=fuller --stat --patch
-  110189f0268d0`; confirmed subject, tags, commit body, author,
-  committer, and 10-line diff.
-- Phase 2: Verified the only code change is adding two `USB_ID()` cases
-  in `volume_control_quirks()`.
-- Phase 3: Ran `git blame` around the insertion context; identified
-  historical context commits and version containment via `git describe
-  --contains`.
-- Phase 3: Ran local history searches without `--all`; found no
-  prerequisite Riffmaster commits.
-- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; confirmed one
-  v1 patch, original recipients, and lore URL.
-- Phase 4: Used b4 mbox and Patchew to read the thread; confirmed
-  Takashi’s “Applied now. Thanks.” reply and no objections.
-- Phase 4: Stable lore WebFetch was blocked by Anubis; WebSearch found
-  no stable-specific Riffmaster discussion.
-- Phase 5: Read `sound/usb/mixer.c`, `sound/usb/card.c`, and
-  `sound/usb/quirks.c`; traced the mixer creation and feature-control
-  path to `volume_control_quirks()`.
-- Phase 6: Checked stable branches `5.10.y`, `5.15.y`, `6.1.y`, `6.6.y`,
-  `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`; confirmed infrastructure
-  exists and Riffmaster IDs are absent.
-- Phase 6: Ran `git apply --check` on current tree; passed. Ran `git
-  merge-tree`; noted a minor conflict marker for `5.15.y`.
-- Phase 7: Verified `MAINTAINERS` lists Jaroslav Kysela and Takashi Iwai
-  for `SOUND`.
-- Phase 8: Verified scope is exact-device gated by USB IDs and exact
-  mixer control name.
-- UNVERIFIED: Actual PDP Riffmaster USB descriptors and hardware
-  behavior were not locally tested.
-- UNVERIFIED: Older branches outside the checked active stable set were
-  not analyzed.
+
+- Phase 1: Found upstream commit `5fc422951c962` with `git log
+  origin/master --grep`.
+- Phase 1: Parsed commit tags from `git show --format=fuller --stat
+  --patch 5fc422951c962`.
+- Phase 2: Verified the diff removes only the
+  `CONFIG_NVME_TARGET_TCP_TLS` block clearing `sq->tls_key`.
+- Phase 2: Verified `nvmet_queue_tls_keyid()` returns 0 when
+  `sq->tls_key` is NULL.
+- Phase 2: Verified `REPLACETLSPSK` returns `CONCAT_MISMATCH` when
+  `nvmet_queue_tls_keyid(req->sq)` is false.
+- Phase 2: Verified `nvmet_sq_put_tls_key()` calls `key_put()` and NULLs
+  the key on TCP queue release.
+- Phase 2: Verified `nvme_tls_key_lookup()` uses `key_lookup()`, and
+  `key_lookup()` increments the key refcount.
+- Phase 3: Ran `git blame` on `auth.c`; TLS key clearing originates from
+  `fa2e0f8bbc689`/`b1efcc470eb30`.
+- Phase 3: Ran `git describe --contains fa2e0f8bbc689`; first contained
+  at `v6.15-rc1`.
+- Phase 3: Inspected `fa2e0f8bbc689`, `b1efcc470eb30`, `2e6eb6b277f59`,
+  `f920ebd03cd13`, and `ecf4d2d883515`.
+- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; found v1 two-
+  patch lore series and recipient list.
+- Phase 4: Fetched lore mirror thread; verified Hannes Reinecke and
+  Chris Leech reviewed, Keith Busch applied patches 1 and 2.
+- Phase 4: Fetched Yi Zhang kmemleak report linked by the paired revert.
+- Phase 5: Used `rg` and file reads to trace auth command handlers, TCP
+  receive execution, TLS key lookup, and queue release.
+- Phase 6: Checked local stable refs with scripted `git show`; buggy
+  code exists in `6.15.y` through `7.0.y`, absent in older checked
+  stable refs.
+- Phase 6: Ran `git apply --check` against local stable worktrees; clean
+  for `6.15.y` through `7.0.y`, not applicable to `6.14.y`.
+- Phase 7: Reviewed recent `drivers/nvme/target` history showing active
+  auth/TLS development.
+- Phase 8: Verified trigger and failure path from
+  `nvmet_auth_negotiate()` and auth send/receive call flow.
+- Unverified: no runtime blktests were run.
+- Unverified: direct `lore.kernel.org/stable` search was blocked by
+  Anubis; the mirror stable search path returned 404.
 
 **YES**
 
- sound/usb/mixer.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/nvme/target/auth.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 1ced9ba8be406..75c932ea77388 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1190,6 +1190,16 @@ static void volume_control_quirks(struct usb_mixer_elem_info *cval,
- 			cval->res = 1;
- 		}
- 		break;
-+
-+	case USB_ID(0x0e6f, 0x024a): /* PDP Riffmaster for PS4 */
-+	case USB_ID(0x0e6f, 0x0249): /* PDP Riffmaster for PS5 */
-+		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
-+			usb_audio_info(chip,
-+				"set volume quirk for PDP Riffmaster for PS4/PS5\n");
-+			cval->min = -2560; /* Mute under it */
-+		}
-+		break;
-+
- 	case USB_ID(0x3302, 0x12db): /* MOONDROP Quark2 */
- 		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
- 			usb_audio_info(chip,
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index 2eadeb7e06f26..3a905124afdee 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -239,9 +239,6 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl, struct nvmet_sq *sq)
+ void nvmet_auth_sq_free(struct nvmet_sq *sq)
+ {
+ 	cancel_delayed_work(&sq->auth_expired_work);
+-#ifdef CONFIG_NVME_TARGET_TCP_TLS
+-	sq->tls_key = NULL;
+-#endif
+ 	kfree(sq->dhchap_c1);
+ 	sq->dhchap_c1 = NULL;
+ 	kfree(sq->dhchap_c2);
 -- 
 2.53.0
 
