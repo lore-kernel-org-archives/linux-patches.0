@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95FF3128CC;
-	Tue,  5 May 2026 09:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7702EC54C;
+	Tue,  5 May 2026 09:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777974733; cv=none; b=MHsTbGmqu6gSQvpdvjMjvoUkKv8NXKrj63Tjv0eLIeSBrE+7iJnRUG701je4lF6/ZJCbfxNxhiTbEj/1THP+WnbT00RB10QyCaK3SfTkAviasAVAOi9PVJwU6J0buQIMkH5MkMT+8FdYNDk3ob6PzG1AvUhCa4I0k++HrU1Aw7I=
+	t=1777974736; cv=none; b=t7OWUGoJHryGE/FQ1GZFzWlbfdHVbtmJA5ARonIpnR5G9ue/LYEvV4nqAsnmCK/QIXKRk0nLCPjayrpqHNvFXRQOry5bpqQsNa3xJtEFIUbmpejucgEFnNmFQFPU8ahRz3WaJQQVSWIxk+0BA5bNKYJmxz7PxmBQ0H3+dX6u0Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777974733; c=relaxed/simple;
-	bh=b8EmRXYUHhHpMi2mh0G8JaV05ulaXXDdg5z3WQYkrtU=;
+	s=arc-20240116; t=1777974736; c=relaxed/simple;
+	bh=BTGhpdelrcdclE2S6o5MWzcjZDamk+MFHC82dtlZLAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SmDJKrBjbQ1pBbWnF+CpJpvymDASwogBDXlEkZ/xw344D66TpsvInJJqy2J1wlNB9ZGpG3EPEsaza+yMEb9dcM9BJzyVTt63WYJwBQrZsXpyV7I0djusv2H7Pksk1LiT66kPJVlcZHOWu4xHgjJzxBuG+neInBEiyn9g0Bx1oNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F8pic0AT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P5CBZDUbeZ8Og6juSOfA/WcADQMInNTnaJGlsT5Kp2db7aJQzNTn2XgV5KqqvOKsG2M02h+jy7VYbNAxweVaAP6E7R25Fr5p+vpOzRM2OEuQbE+GXN9AybPcQ82HhRLG6PDPJMcI0M71zyyHEpSEyPE4p0p363HSFmgDNmqVdEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hS9Id0Mm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F8pic0AT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42160C2BCB4;
-	Tue,  5 May 2026 09:52:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hS9Id0Mm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A6FC2BCB9;
+	Tue,  5 May 2026 09:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777974733;
-	bh=b8EmRXYUHhHpMi2mh0G8JaV05ulaXXDdg5z3WQYkrtU=;
+	s=k20201202; t=1777974736;
+	bh=BTGhpdelrcdclE2S6o5MWzcjZDamk+MFHC82dtlZLAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8pic0ATB1pkJGvgbGQ0MMKCKtUhphyuJWHKgCWIwXghQKfFGRlCQTLcdwjewEP2F
-	 2DnohjvNlQnSlvApJnYNpAEVZvSIu0Yy3odheLa1XHZOA8K4ah3ZfLahvlTdtEefKA
-	 8sVTgF5267fLz+zaKUSAWunwR2NJJj958RZBUVSzpaWkQDiSAEiX8nne7ldbXPerXO
-	 63wab5KLIS7lQpz6Otwj9ihJis+vq7uqkw1tvHIUjIgYwmcjK/72m7/Lm/usjIJdeU
-	 cmHaaBQeor1l/jDHpKDjM5c4cZjgDqFsjoB02XGN7XsegiU/v5uava5V0hiG/hDNIw
-	 r+JfjfUgTQnIw==
+	b=hS9Id0MmQEOgi6eYCvSJW7Dyz2e2oPPBbhkKKn3TMENlXugdyAS1ZdniBV28kV+nS
+	 4KJZSJ3NtLrU5zqjmTsKfrw+OKDLE/625S4Cx1ynvK5BfDa5wHZ8oZeM+1GbYQwGFl
+	 qlbf3c8PNq6evbTmgQLqzOupbzpXSDjGewnx/GTA1TTuH0rzmdPVDM19can2HZJsLY
+	 0YQEGXCBDeoFNgscIUSrTlrvLRai1yfTcz4wbhV335m+O/49eIh57tIOd+NsEFRb4v
+	 LNTjws/b/zb8Gk61360P73ROC++jQtx9nxin8oasTns1/+SqsY2LIAkBLD2iof10mZ
+	 AACvq5ROLbspQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ivan Vecera <ivecera@redhat.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Petr Oros <poros@redhat.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Flavio Suligoi <f.suligoi@asem.it>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jiri@resnulli.us,
-	netdev@vger.kernel.org,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] dpll: export __dpll_pin_change_ntf() for use under dpll_lock
-Date: Tue,  5 May 2026 05:51:23 -0400
-Message-ID: <20260505095149.512052-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] nvme-core: fix parameter name in comment
+Date: Tue,  5 May 2026 05:51:24 -0400
+Message-ID: <20260505095149.512052-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505095149.512052-1-sashal@kernel.org>
 References: <20260505095149.512052-1-sashal@kernel.org>
@@ -58,281 +54,278 @@ X-stable-base: Linux 7.0.3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Flavio Suligoi <f.suligoi@asem.it>
 
-[ Upstream commit 620055cb1036a6125fd912e7a14b47a6572b809b ]
+[ Upstream commit e80e39f25567310c1c7392eed886890b5c6788ba ]
 
-Export __dpll_pin_change_ntf() so that drivers can send pin change
-notifications from within pin callbacks, which are already called
-under dpll_lock. Using dpll_pin_change_ntf() in that context would
-deadlock.
+In the declaration of the structure "core_quirks[]", in the comment
+referred to the devices "Kioxia CD6-V Series / HPE PE8030", the
+parameter "default_ps_max_latency_us" is reported in a wrong way:
 
-Add lockdep_assert_held() to catch misuse without the lock held.
+nvme_core.default_ps_max_latency=0
 
-Acked-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Signed-off-by: Petr Oros <poros@redhat.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-9-cdcb48303fd8@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The correct form is, instead:
+
+nvme_core.default_ps_max_latency_us=0
+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `dpll`; action verb `export`; intent is to
-expose `__dpll_pin_change_ntf()` so drivers can notify pin changes while
-already under `dpll_lock`.
+Step 1.1 Record: Subsystem `nvme-core`; action verb `fix`; claimed
+intent is to correct the kernel module parameter name in a source
+comment for the Kioxia CD6-V / HPE PE8030 NVMe quirk.
 
-Step 1.2 Record: tags present: `Acked-by: Vadim Fedorenko`; `Signed-off-
-by: Ivan Vecera`; `Signed-off-by: Petr Oros`; `Tested-by: Alexander
-Nowlin`; `Reviewed-by: Arkadiusz Kubalewski`; `Signed-off-by: Jacob
-Keller`; `Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-
-fixes-v1-9-cdcb48303fd8@intel.com`; `Signed-off-by: Paolo Abeni`. No
-`Fixes:`, `Reported-by:`, or `Cc: stable`.
+Step 1.2 Record: Tags present:
+- `Reviewed-by: Christoph Hellwig <hch@lst.de>`
+- `Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>`
+- `Signed-off-by: Keith Busch <kbusch@kernel.org>`
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc:
+stable@vger.kernel.org` tag was present in the commit inspected with
+`git show`.
 
-Step 1.3 Record: the message describes a real locking problem: pin
-callbacks are already invoked with `dpll_lock` held, and calling
-exported `dpll_pin_change_ntf()` there would try to acquire the same
-mutex again and deadlock. It adds a lockdep assertion to catch misuse.
+Step 1.3 Record: The commit body describes an incorrect parameter
+spelling in a comment: `nvme_core.default_ps_max_latency=0`; the actual
+module parameter is `nvme_core.default_ps_max_latency_us=0`. Symptom is
+not a runtime kernel failure from the patch itself, but incorrect in-
+source guidance for disabling APST. Version information was not stated.
+Root cause is a missing `_us` suffix in the comment.
 
-Step 1.4 Record: this is a hidden/preparatory bug fix. Alone it mostly
-exports an internal helper, but in the verified series it enables the
-following ice fix to send peer DPLL notifications without self-
-deadlocking.
+Step 1.4 Record: This is not a hidden runtime bug fix. It is an explicit
+comment/documentation correction for a real module parameter.
 
 ## Phase 2: Diff Analysis
-Step 2.1 Record: files changed are `drivers/dpll/dpll_netlink.c` `+10`,
-`drivers/dpll/dpll_netlink.h` `-2`, and `include/linux/dpll.h` `+1`;
-total `11 insertions, 2 deletions`. Modified function:
-`__dpll_pin_change_ntf()`. Scope is small and contained.
+Step 2.1 Record: One file changed: `drivers/nvme/host/core.c`, 1
+insertion and 1 deletion. No function body is modified; the changed
+object is the `core_quirks[]` table comment. Scope classification:
+single-file, comment-only surgical fix.
 
-Step 2.2 Record: before, only `dpll_pin_change_ntf()` was exported and
-it always acquired `dpll_lock`; the unlocked helper was internal. After,
-the helper is documented, asserts `dpll_lock` is held, is exported GPL-
-only, and its declaration moves from private dpll header to public
-kernel dpll header.
+Step 2.2 Record: Before: the comment suggested booting with nonexistent
+or incorrect `nvme_core.default_ps_max_latency=0`. After: it suggests
+the verified existing parameter `nvme_core.default_ps_max_latency_us=0`.
+This affects only source-code guidance, not execution.
 
-Step 2.3 Record: bug category is synchronization/deadlock avoidance plus
-prerequisite API exposure for a driver bug fix. The specific mechanism
-is avoiding recursive acquisition of non-recursive `dpll_lock` from
-callbacks already reached through `dpll_pin_pre_doit()`.
+Step 2.3 Record: Bug category is documentation/comment correctness. No
+resource leak, race, refcount bug, memory safety bug, type bug, or
+executable logic change is present.
 
-Step 2.4 Record: fix quality is good: minimal, obvious, lockdep-guarded,
-no userspace ABI, no broad refactor. Regression risk is low; the main
-concern is that it is useful only with the dependent ice fixes.
+Step 2.4 Record: Fix quality is obviously correct:
+`module_param(default_ps_max_latency_us, ulong, 0644)` exists in
+`drivers/nvme/host/core.c`. Regression risk is effectively zero because
+only a comment changes.
 
 ## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` showed `dpll_pin_change_ntf()` came from
-`9d71b54b65b1` in v6.7-era dpll netlink code; `__dpll_pin_change_ntf()`
-declaration was added by `58256a26bfb3`, first in v6.17. The ice bug
-being fixed by the dependent commits was introduced by `2dd5d03c77e2`,
-first in v6.17.
+Step 3.1 Record: `git blame` shows the incorrect comment line was
+introduced by `5a6254d55e2a9f` (`nvme-pci: add NO APST quirk for Kioxia
+device`). `git tag --contains 5a6254d55e2a9f` shows it is present from
+`v5.16` onward in mainline tags available locally, and stable branch
+snapshots for 5.10 and 5.15 also contain the line.
 
-Step 3.2 Record: candidate has no `Fixes:` tag. Related follow-up
-commits `1a41b58fd4dc` and `9e5dead140af` both fix `2dd5d03c77e2 ("ice:
-redesign dpll sma/u.fl pins control")`.
+Step 3.2 Record: No `Fixes:` tag exists, so there was no tagged
+introducer to follow. I separately inspected `5a6254d55e2a9f` because
+blame identified it as the source of the wrong comment.
 
-Step 3.3 Record: recent history shows this is immediately followed by
-`ice: fix missing dpll notifications for SW pins` and `ice: add dpll
-peer notification for paired SMA and U.FL pins`; it is part of that fix
-series and is a prerequisite for the third patch.
+Step 3.3 Record: Recent file history shows this patch is standalone.
+`block-next` contains `e80e39f255673 nvme-core: fix parameter name in
+comment`; nearby commits touch unrelated NVMe behavior.
 
-Step 3.4 Record: Ivan Vecera has multiple recent dpll commits in this
-area; Petr Oros and Intel reviewers are active in the dpll/ice code. The
-patch was committed through Paolo Abeni’s net tree path.
+Step 3.4 Record: `git log block-next --author='Flavio Suligoi' --
+drivers/nvme/host` found only this NVMe host commit locally. The patch
+was reviewed by Christoph Hellwig and committed by Keith Busch, both
+verified from commit metadata and lore.
 
-Step 3.5 Record: dependency found: the real user-visible fix needs the
-two following ice commits. For older stable trees before v7.0, the patch
-also needs a small backport adjustment because `dpll: Add notifier chain
-for dpll events` is absent.
+Step 3.5 Record: No dependencies found. The patch is a one-line comment
+correction and `git apply --check` against the current stable checkout
+succeeded.
 
 ## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 620055cb1036a` found the original applied
-submission as `[PATCH net 09/11]` at `20260427-jk-iwl-net-petr-oros-
-fixes-v1-9-cdcb48303fd8@intel.com`. `b4 dig -a` showed earlier v4-v7
-iterations of the ice DPLL fix series; v7 split the ice fix as requested
-by review.
+Step 4.1 Record: `b4 dig -c e80e39f255673` found the original thread:
+`https://patch.msgid.link/20260408124522.2375297-1-f.suligoi@asem.it`.
+`b4 dig -a` found only v1, so no later revision was missed. Lore mirror
+showed Christoph Hellwig replied “Looks good” with `Reviewed-by`, and
+Keith Busch replied “applied to nvme-7.1”. No NAKs or risk concerns were
+found.
 
-Step 4.2 Record: `b4 dig -w` showed netdev maintainers and relevant
-Intel/dpll reviewers were CC’d, including David Miller, Eric Dumazet,
-Jakub Kicinski, Paolo Abeni, Jiri Pirko, Vadim Fedorenko, Arkadiusz
-Kubalewski, Jacob Keller, Intel wired LAN, and netdev.
+Step 4.2 Record: `b4 dig -w` showed recipients included Keith Busch,
+Jens Axboe, Christoph Hellwig, Sagi Grimberg, `linux-nvme`, and `linux-
+kernel`, so the right subsystem maintainers/lists were included.
 
-Step 4.3 Record: lore mirror confirmed the series purpose: SMA/U.FL
-software-controlled pins missed DPLL notifications, and userspace
-consumers such as `synce4l` would not learn about state/phase-offset
-changes. Alexander Nowlin provided `Tested-by`; Arkadiusz Kubalewski
-reviewed.
+Step 4.3 Record: No `Reported-by` or bug-report `Link:` tag exists.
+External search confirmed this is about correcting the APST parameter
+spelling, not a separate crash report.
 
-Step 4.4 Record: related patches are the following two ice commits;
-patch 3 specifically calls `__dpll_pin_change_ntf()` from dpll pin
-callbacks because `dpll_lock` remains held.
+Step 4.4 Record: `b4 dig -a` showed this is a single-patch v1 series,
+not a multi-patch dependency chain.
 
-Step 4.5 Record: direct lore stable search via WebFetch was blocked by
-Anubis; web search found no stable-specific objection or discussion.
+Step 4.5 Record: Direct `lore.kernel.org/stable` fetch was blocked by
+Anubis, and web search did not find stable-specific discussion for this
+exact patch. Stable-specific discussion remains unverified.
 
 ## Phase 5: Code Semantic Analysis
-Step 5.1 Record: modified function is `__dpll_pin_change_ntf()`.
+Step 5.1 Record: No functions are modified. The changed text is inside
+the static `core_quirks[]` data table comment.
 
-Step 5.2 Record: callers are `dpll_pin_change_ntf()`, internal dpll
-netlink setters, dpll core ref-sync code, and after the dependent patch,
-`ice_dpll_sw_pin_notify_peer()`.
+Step 5.2 Record: Caller tracing is not applicable to the changed line
+because it is non-executable. I verified `core_quirks[]` is used by the
+quirk scan path in `drivers/nvme/host/core.c`, but the patch does not
+alter table values or matching logic.
 
-Step 5.3 Record: callees are `lockdep_assert_held(&dpll_lock)`,
-`dpll_pin_notify()` on v7.0+, and `dpll_pin_event_send()`.
+Step 5.3 Record: Callee tracing is not applicable because no executable
+statement changed.
 
-Step 5.4 Record: user reachability is through generic netlink
-`DPLL_CMD_PIN_SET`, which uses `dpll_pin_pre_doit()` and
-`dpll_pin_post_doit()` around the operation. The netlink operation is
-admin-permission gated, so this is not an unprivileged trigger.
+Step 5.4 Record: Runtime reachability is not applicable. The only
+“reachability” is human/developer/user reading the source comment.
 
-Step 5.5 Record: existing internal `__dpll_pin_change_ntf()` callers are
-in dpll code under dpll locking. The problematic missing pattern was an
-exported helper for already-locked driver callback context.
+Step 5.5 Record: `rg` verified the actual parameter is declared as
+`default_ps_max_latency_us`; the old comment text is the mismatching
+pattern.
 
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: affected stable trees are v6.17+, because
-`2dd5d03c77e2` exists in `stable/linux-6.17.y`, `6.18.y`, `6.19.y`, and
-`7.0.y`. It is absent from `6.12.y` and older checked branches;
-`drivers/dpll` is absent in `6.6.y`.
+## Phase 6: Cross-Referencing And Stable Tree Analysis
+Step 6.1 Record: The incorrect comment exists in checked refs `v5.16`,
+`v6.1`, `v6.6`, `v6.12`, `v6.19`, `v7.0`, and stable branch snapshots
+`for-greg/5.10-201`, `for-greg/5.15-201`, `for-greg/6.1-201`, `for-
+greg/6.6-201`, `for-greg/6.12-201`, `for-greg/6.19-200`, and `for-
+greg/7.0-200`.
 
-Step 6.2 Record: current `7.0.y` accepts the patch with `git apply
---check`. `git merge-tree` showed `6.17.y`-`6.19.y` need minor backport
-adjustment because they lack the dpll notifier-chain change; `7.0.y` is
-straightforward.
+Step 6.2 Record: Expected backport difficulty is clean or trivial. `git
+apply --check` and `git apply --check --3way` both succeeded on the
+current checkout.
 
-Step 6.3 Record: stable branches checked do not contain this candidate
-or the dependent two ice fixes.
+Step 6.3 Record: Local history did not show a different stable-side fix
+for this exact comment. `git log stable/linux-7.0.y --grep='fix
+parameter name in comment' -- drivers/nvme/host/core.c` returned no
+match.
 
 ## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: subsystem is dpll core plus Intel ice networking driver
-context. Criticality is important but hardware/config-specific: users of
-DPLL-capable Intel ice devices and DPLL netlink consumers.
+Step 7.1 Record: Subsystem is NVMe host core under `drivers/nvme/host`.
+Criticality level: important driver subsystem, but this patch’s actual
+affected surface is source documentation only.
 
-Step 7.2 Record: dpll and ice DPLL code are actively developed; recent
-history shows several related dpll/ice fixes, including missing SMA
-initialization and paired-pin state fixes.
+Step 7.2 Record: The NVMe host core file is actively maintained; recent
+local history shows multiple NVMe core fixes and feature changes. This
+specific patch was reviewed and applied through the NVMe/block path.
 
-## Phase 8: Impact And Risk
-Step 8.1 Record: affected population is driver-specific: DPLL-capable
-Intel ice hardware using SMA/U.FL software-controlled pins.
+## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: Affected population is users/developers reading this
+source comment for the Kioxia CD6-V / HPE PE8030 APST workaround.
+Runtime users are not directly affected by the patch.
 
-Step 8.2 Record: trigger is DPLL pin state/direction changes or periodic
-DPLL updates on affected hardware. Userspace impact is missed netlink
-notifications and stale phase-offset reporting; triggering netlink
-changes requires admin privileges.
+Step 8.2 Record: Trigger condition is consulting the source comment and
+using the wrong boot parameter. I verified the correct parameter exists;
+I did not verify kernel behavior for an unknown wrong boot parameter in
+this investigation. Unprivileged runtime triggering is not applicable.
 
-Step 8.3 Record: failure mode severity is medium for the user-visible
-bug: time-sync management software can miss DPLL pin transitions/phase-
-offset changes. The locking issue would be a deadlock if the public
-helper were used in the already-locked callback path.
+Step 8.3 Record: Failure mode of the patch’s target issue is incorrect
+guidance, not a kernel crash, data corruption, deadlock, or security
+issue. Severity is LOW as a code issue, but the guidance relates to a
+real NVMe APST workaround.
 
-Step 8.4 Record: benefit is medium-high for affected hardware and
-required for the real ice fix; risk is low because the change is tiny,
-GPL-only, lockdep-guarded, and does not alter userspace ABI.
+Step 8.4 Record: Benefit is modest but real: stable source carries the
+correct module parameter spelling for affected hardware guidance. Risk
+is near zero because the patch is comment-only. Risk-benefit ratio is
+favorable under the stable exception for documentation/comment fixes.
 
 ## Phase 9: Final Synthesis
-Evidence for backporting: it is a small, reviewed, tested prerequisite
-for real ice DPLL notification fixes; it prevents a concrete self-
-deadlock in the callback context verified through `dpll_pin_pre_doit()`
-locking; affected stable trees contain the buggy ice redesign from v6.17
-onward.
+Step 9.1 Record:
+Evidence for backporting:
+- Corrects an objectively wrong parameter name.
+- Correct parameter is verified in the code.
+- Incorrect text exists across active stable branch snapshots.
+- Patch is one-line, comment-only, and applies cleanly.
+- Reviewed by Christoph Hellwig and applied by Keith Busch.
+- Falls under the documentation/comment-fix exception with effectively
+  no runtime regression risk.
 
-Evidence against backporting: by itself it is mostly an exported in-
-kernel helper, so it should not be backported alone for standalone
-value. Older affected stable trees need a minor manual backport due to
-missing dpll notifier-chain code.
+Evidence against backporting:
+- Does not fix executable kernel behavior.
+- Does not address crash, corruption, deadlock, security, memory safety,
+  or resource leak.
+- No explicit stable nomination or stable-list discussion was verified.
 
-Stable rules checklist: obviously correct and tested: yes; fixes/enables
-fix for real user-visible bug: yes, as part of the series; important
-issue: medium functional correctness and deadlock avoidance; small and
-contained: yes; no userspace API: yes; applies: clean on `7.0.y`, minor
-backport for `6.17.y`-`6.19.y`.
+Unresolved:
+- Stable-list search was partly blocked by Anubis; no stable-specific
+  discussion was found via web search.
+- I did not verify the exact runtime handling of the wrong boot
+  parameter, because the commit only changes a source comment.
 
-Exception category: not a device ID or quirk. This is an acceptable
-prerequisite/helper export for a stable-worthy driver fix series.
+Step 9.2 Record:
+1. Obviously correct and tested? Yes for the text correction; the actual
+   parameter declaration was verified.
+2. Fixes a real bug that affects users? It fixes a real
+   documentation/comment bug; user impact is indirect.
+3. Important issue? Not important as a runtime kernel bug; LOW severity.
+4. Small and contained? Yes, one comment line in one file.
+5. No new features or APIs? Yes.
+6. Can apply to stable trees? Yes on the checked-out stable tree; likely
+   trivial elsewhere due the same comment text in checked stable refs.
 
-Verification:
-- Phase 1: parsed `git show 620055cb1036a`; confirmed tags and no
-  `Fixes:`.
-- Phase 2: inspected diff; confirmed `11 insertions, 2 deletions` across
-  three files.
-- Phase 3: ran `git blame` and `git show` for `9d71b54b65b1`,
-  `58256a26bfb3`, `2dd5d03c77e2`.
-- Phase 4: ran `b4 dig -c`, `-a`, `-w`; fetched lore mirror thread
-  showing v7 review, `Tested-by`, and `Reviewed-by`.
-- Phase 5: searched callers and dpll netlink ops; verified
-  `DPLL_CMD_PIN_SET` uses `dpll_pin_pre_doit()` and callbacks run while
-  `dpll_lock` is held.
-- Phase 6: checked stable branches for `2dd5d03c77e2`, candidate
-  absence, dependent fix absence, and merge-tree/apply behavior.
-- Phase 7: reviewed recent dpll and ice DPLL history.
-- Phase 8: verified trigger/user impact from the dependent ice commit
-  messages and diffs.
+Step 9.3 Record: Exception category applies: documentation/comment fix.
+It corrects incorrect in-source documentation and has zero runtime
+behavior change.
 
-Backport recommendation: backport this commit to affected stable trees
-together with `1a41b58fd4dc` and `9e5dead140af`; do not take it alone
-unless it is queued as that prerequisite.
+Step 9.4 Record: Despite not being a runtime fix, this is appropriate
+for stable under the explicit documentation/comment-fix exception: it is
+objectively correct, present in stable trees, useful for a real hardware
+workaround, and essentially risk-free.
+
+## Verification
+- [Phase 1] `git show --format=fuller --stat --patch e80e39f255673`:
+  verified subject, tags, author/committer, and one-line comment diff.
+- [Phase 2] Diff inspection: verified only `drivers/nvme/host/core.c`
+  changed, 1 insertion and 1 deletion, comment-only.
+- [Phase 2] `rg default_ps_max_latency`: verified actual module
+  parameter is `default_ps_max_latency_us`.
+- [Phase 3] `git blame` around the quirk comment: verified wrong comment
+  introduced by `5a6254d55e2a9f`.
+- [Phase 3] `git show 5a6254d55e2a9f`: verified original Kioxia NO_APST
+  quirk and wrong comment text.
+- [Phase 3] `git tag --contains 5a6254d55e2a9f`: verified mainline
+  availability from `v5.16` in local tags.
+- [Phase 4] `b4 dig -c e80e39f255673`: found original patch submission.
+- [Phase 4] `b4 dig -a`: verified single v1 patch.
+- [Phase 4] `b4 dig -w`: verified NVMe maintainers and lists were
+  included.
+- [Phase 4] WebFetch of lore mirror: verified Reviewed-by from Christoph
+  Hellwig and applied note from Keith Busch.
+- [Phase 5] `rg core_quirks`: verified the changed line is in
+  `core_quirks[]`; no executable behavior changed.
+- [Phase 6] Ref checks with `git show <ref>:drivers/nvme/host/core.c |
+  rg`: verified wrong comment exists in checked stable refs and
+  corrected text exists in `block-next`.
+- [Phase 6] `git apply --check` and `git apply --check --3way`: verified
+  clean local application.
+- [Phase 7] `git log block-next -- drivers/nvme/host/core.c`: verified
+  active subsystem history and target commit in block-next.
+- [Phase 8] Failure mode verified from diff: incorrect comment guidance
+  only, no runtime code path changed.
+- UNVERIFIED: stable mailing-list discussion, because direct lore stable
+  search was blocked and web search found no exact stable discussion.
+- UNVERIFIED: exact kernel warning/handling for the wrong boot
+  parameter, because it is outside the changed code.
 
 **YES**
 
- drivers/dpll/dpll_netlink.c | 10 ++++++++++
- drivers/dpll/dpll_netlink.h |  2 --
- include/linux/dpll.h        |  1 +
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
-index 83cbd64abf5a4..95ae786e98aab 100644
---- a/drivers/dpll/dpll_netlink.c
-+++ b/drivers/dpll/dpll_netlink.c
-@@ -842,11 +842,21 @@ int dpll_pin_delete_ntf(struct dpll_pin *pin)
- 	return dpll_pin_event_send(DPLL_CMD_PIN_DELETE_NTF, pin);
- }
- 
-+/**
-+ * __dpll_pin_change_ntf - notify that the pin has been changed
-+ * @pin: registered pin pointer
-+ *
-+ * Context: caller must hold dpll_lock. Suitable for use inside pin
-+ *          callbacks which are already invoked under dpll_lock.
-+ * Return: 0 if succeeds, error code otherwise.
-+ */
- int __dpll_pin_change_ntf(struct dpll_pin *pin)
- {
-+	lockdep_assert_held(&dpll_lock);
- 	dpll_pin_notify(pin, DPLL_PIN_CHANGED);
- 	return dpll_pin_event_send(DPLL_CMD_PIN_CHANGE_NTF, pin);
- }
-+EXPORT_SYMBOL_GPL(__dpll_pin_change_ntf);
- 
- /**
-  * dpll_pin_change_ntf - notify that the pin has been changed
-diff --git a/drivers/dpll/dpll_netlink.h b/drivers/dpll/dpll_netlink.h
-index dd28b56d27c56..a9cfd55f57fc4 100644
---- a/drivers/dpll/dpll_netlink.h
-+++ b/drivers/dpll/dpll_netlink.h
-@@ -11,5 +11,3 @@ int dpll_device_delete_ntf(struct dpll_device *dpll);
- int dpll_pin_create_ntf(struct dpll_pin *pin);
- 
- int dpll_pin_delete_ntf(struct dpll_pin *pin);
--
--int __dpll_pin_change_ntf(struct dpll_pin *pin);
-diff --git a/include/linux/dpll.h b/include/linux/dpll.h
-index 2ce295b46b8cd..8f97120ee7b37 100644
---- a/include/linux/dpll.h
-+++ b/include/linux/dpll.h
-@@ -276,6 +276,7 @@ int dpll_pin_ref_sync_pair_add(struct dpll_pin *pin,
- 
- int dpll_device_change_ntf(struct dpll_device *dpll);
- 
-+int __dpll_pin_change_ntf(struct dpll_pin *pin);
- int dpll_pin_change_ntf(struct dpll_pin *pin);
- 
- int register_dpll_notifier(struct notifier_block *nb);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 766e9cc4ffca5..ac5a7d9781f58 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3013,7 +3013,7 @@ static const struct nvme_core_quirk_entry core_quirks[] = {
+ 		 *
+ 		 * The device is left in a state where it is also not possible
+ 		 * to use "nvme set-feature" to disable APST, but booting with
+-		 * nvme_core.default_ps_max_latency=0 works.
++		 * nvme_core.default_ps_max_latency_us=0 works.
+ 		 */
+ 		.vid = 0x1e0f,
+ 		.mn = "KCD6XVUL6T40",
 -- 
 2.53.0
 
