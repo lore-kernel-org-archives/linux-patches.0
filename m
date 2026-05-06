@@ -1,101 +1,128 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7807340DFB3
-	for <patches@lists.linux.dev>; Wed,  6 May 2026 01:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AEF279DCA
+	for <patches@lists.linux.dev>; Wed,  6 May 2026 01:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778032070; cv=none; b=MuI02dKSZXyU0KNg0Q1TpkewuIe5oK8HgGjI8VUXOEbYYNoZVnl7WMQ2EGxVDTYrHqpdLdzZhKRbwKNICBwxXklkDsxSudsndIrwwxnfcO7bKMGtBBP6pGY2Br/eVLwiG7slV/9+sfkUL4Dl+fH7JIw3WFzVzo1NUygLe2jJJnw=
+	t=1778032661; cv=none; b=mwkRKndJqcj6bWtYojw5mCgg71JyT3iL0IXOK/NAgx6kTUPwp4p+BhiKgZxk+BL1y9L3WXx5fJbypkP75bVv47rsULLCdvGF6iqDGBnf5YalDzCchOKeSMJ7K3oknVddIWnLOO4eF2s1EjcnlU3ilVcG/c37CCEmRweGxz+0hao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778032070; c=relaxed/simple;
-	bh=kvdHMyUd6HY5+NQcA5vYvtKaKFSt4PICTJ5L/NBuFJ0=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=tgtsiwxCjGWhxVoq7/mgKQUMowq2Y1epFJ1VatAGOa2Qr1YgukR/1eGQWzGed1cIKLmrsNzcPB+VCrg/kwbZXJOPRTndo1MgxD2xWm5MucKafLP1tyQoKwR9KbcR9QnHsCCJQa/DLcjdPuBvaLLog51TYjozXvvntq6QM2zzpvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rRGzpZAY; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1778032661; c=relaxed/simple;
+	bh=czrBXEohgq6qzPJRo14ZYvUPqkqDfVHf+UdZYrAyLpc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rTcImfAvlWh+0fuW5sxDnNuTfczFadVQvfsTe24mqMx8aHyy3UDwRSb6GHnNxl/qhUplwZhDrMK/kGVdbBBg+I1Idci80GUMxzvEuGlu9ykCHLSL1hxadXZ2E42ZnIHSWKaB8ktpYvvEU9ikcoiArjz0zkY+4xziWCfU1fijsu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qOB2qEy/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dp7LQoDN; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rRGzpZAY"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qOB2qEy/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dp7LQoDN"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F27D27A00E9;
+	Tue,  5 May 2026 21:57:37 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 05 May 2026 21:57:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1778032657;
+	 x=1778119057; bh=X0faX22EXtGDSLbon1GnGn5rtdVLrlAusijmZwEwIeY=; b=
+	qOB2qEy/laFpQye8pFeK0mGV/K+RyMtR9rihnK+f96Ef5dsh1gGiDIFV/N0mUpBQ
+	2asOF3CAfWuaxVrIQ2Qqba3stB45Sn60/wUts/uGDWEL8IFB2tZomW+QH9IXUfBD
+	F5eppzrr/6BMuRqrVTKUahRDfyK1njlvxWgNxOiWIAVyDkDjCmg7xf/+heuWO50r
+	AxSk9Ps+v6Osm20HqoW6HFKvyn1dl3uLjWtoUDMLEyc6l2OH6CRE5yUxFI+HaUWV
+	4TZ3Jb8ecklPCww3ajZMQf3sSifT8FGHap0phc6fRs7qmymWoYPPvcOPhaXsILsx
+	6ZrB7xrDvA4CsmDlbFpWRg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778032657; x=
+	1778119057; bh=X0faX22EXtGDSLbon1GnGn5rtdVLrlAusijmZwEwIeY=; b=D
+	p7LQoDNIzR8oCqrpAYLKWhXZFhAhWwaRScopN0pIkhG3y3vnsOHlmcQpUex7tpoO
+	ewgmtYtP2CHSRo1fjwZAKWpUZqMimTSK8tXwJfj9ri7m8TviCnLBZWCQwqf1OCj/
+	2ImXATSyWGKp+Xb5fwIVxBouXcj+YB/er87le/pg9f6hCQVAt8Lsd6rbSzwtD3kQ
+	agzn2s7aJ8BJ43psjREZ9BZai1qFot598O5A4gJ1AY3E0ymqeLG3PsWsJqtJEu2r
+	m/VctKQ8DfLm8lXEoTJ6l0NvDiOaW/L206k8InUHTBRZbp/SVE7hUXkf5C8MXk4w
+	ZpoWHghVnY9TSO/lhdpSg==
+X-ME-Sender: <xms:EKD6aQUAmqavNegalSTcG7G3z-Xzt8AkX6KMWC_SVLDYdq6z3I5Qtg>
+    <xme:EKD6aQfPNYJzncAkPlMCA2hq9ilS6pQLtLIc_053Jka7jNQ1sFTaWy8AFYEp85yaO
+    dLlDR3gw05wvbRpTlfKoMJLZ2QspN0kILxzlIolc3y-elAd7f0ehuA>
+X-ME-Received: <xmr:EKD6af5Wcb6-U2OXpXJrCLmy8H8ZqaDtxA_bgDPKF5NEzmgTdnS_o2jaPEYEDVczGd3mRPmx2TfmY2ug3tgYUhAYEjc-VJVS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdeffeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeefleehkeehleekjeelffefhfdvleejteehledtieduffevteffleet
+    gefgfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
+    shhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthh
+    gvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghr
+    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhrvhgrlhgush
+    eslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghkphhmsehl
+    ihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlihhnuhigsehroh
+    gvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehprghttghhvghssehkvghrnhgvlhgtihdrohhrgh
+X-ME-Proxy: <xmx:EKD6aTQoBbTx5WDy15JmDaWipf5ru4qXhHFEO--6TDJ6SImFmUPIZQ>
+    <xmx:EKD6aSePrOsRlsIorAxUDcbhb7tcrfyqHOMGzbox0FnxvA-DOEaexQ>
+    <xmx:EKD6aTSUZevnJXLa5SMQtIDQpSabXqO6DPLs3b_DjAgAlFwcnSnwOg>
+    <xmx:EKD6abPzID-_pchfRuxoDSIFc4pHw75MzeGSdDD_EQ0Qve_PwhuScw>
+    <xmx:EaD6aUqNoaXWPLa9usdT28VkHuyeyPwNmB8otxIYLmbqyfBz3rHTkyyq>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 5 May 2026 21:57:34 -0400 (EDT)
+Message-ID: <2953dbbc-12f1-47f8-be6e-096e552ca9d9@pobox.com>
+Date: Tue, 5 May 2026 18:57:33 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1778032066;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=xNoa+/5rxK6oL7CPWgtRiawwuEPcZV3Ro2C5ThlSBKc=;
-	b=rRGzpZAY17+MRtxkHu2mTdfJOa8QVdR/mblVV8XxsniSrCqgaGxdjWf3uF4zd04ZxZesRv
-	z71mlxAlsQWuus65rVydG2bjHIzBrn6GBSw2soraNqbHwMjbYBNkNSyq4dVsyb9OF+agny
-	qXN43FewaiDFGwkV+Tym4xETGrrgM4w=
-Date: Wed, 06 May 2026 01:47:43 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: gang.yan@linux.dev
-Message-ID: <3c8a7577bcdd2cfb50d7a90c4779c8023a6144fb@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH 6.18 214/275] mptcp: sync the msk->sndbuf at accept()
- time
-To: "Matthieu Baerts" <matttbe@kernel.org>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Gang Yan" <yangang@kylinos.cn>
-Cc: patches@lists.linux.dev, "Paolo Abeni" <pabeni@redhat.com>,
- stable@vger.kernel.org, "MPTCP Linux" <mptcp@lists.linux.dev>
-In-Reply-To: <68c8f2a7-6149-4b65-bb1b-0ab4cd4067cf@kernel.org>
-References: <20260504135142.929052779@linuxfoundation.org>
- <20260504135151.022829547@linuxfoundation.org>
- <1bbeee9b-b69b-4be9-84ee-ddadda4793ef@kernel.org>
- <68c8f2a7-6149-4b65-bb1b-0ab4cd4067cf@kernel.org>
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 000/215] 6.12.86-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260504135130.169210693@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260504135130.169210693@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-May 6, 2026 at 1:50 AM, "Matthieu Baerts" <matttbe@kernel.org mailto:matt=
-tbe@kernel.org?to=3D%22Matthieu%20Baerts%22%20%3Cmatttbe%40kernel.org%3E =
-> wrote:
+On 5/4/26 6:50 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.86 release.
+> There are 215 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 06 May 2026 13:50:52 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.86-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
+Tested on my Lenovo ThinkPad T14 Gen 1. Working well, no regressions
+observed.
 
->=20
->=20On 05/05/2026 19:16, Matthieu Baerts wrote:
->=20
->=20>=20
->=20> Hi Greg, Gang,
-> >=20=20
->=20>  On 04/05/2026 15:52, Greg Kroah-Hartman wrote:
-> >=20
->=20> >=20
->=20> > 6.18-stable review patch. If anyone has any objections, please le=
-t me know.
-> > >=20
->=20>=20=20
->=20>  Please drop this patch, it looks like it is introducing regression=
-s on
-> >  v6.18:
-> >=20
->=20(...)
->=20
->=20>=20
->=20> @Gang: could you eventually have a look, please?
-> >=20
->=20FYI, I quickly checked, and I noticed that 'subflow' is different on
-> v6.18 due to the "mptcp_for_each_subflow(msk, subflow)" removed in
-> 68c7c3867145 ("mptcp: fix memcg accounting for passive sockets").
->=20
->=20Moving __mptcp_propagate_sndbuf() a couple of lines above, before the
-> for-loop, should fix the issue. I can eventually look at sending a patc=
-h
-> with the fix.
->=20
-Hi=20Matt,
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
-Thanks for the quick check and fix! Much appreciated.
-
-Cherrs,
-Gang
-> Cheers,
-> Matt
-> --=20
->=20Sponsored by the NGI0 Core fund.
->
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
