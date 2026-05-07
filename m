@@ -1,64 +1,64 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C183C0626
-	for <patches@lists.linux.dev>; Thu,  7 May 2026 09:21:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9517C3C4544
+	for <patches@lists.linux.dev>; Thu,  7 May 2026 09:22:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778145727; cv=none; b=HCqgnuftWqv5AnvSK5wW9IO8CVKuMDK4lKThnIqqyB3nC8HJyz114e/ABAB9CABQ1f8r4L4GjlPQmfc0ZTZ6gmS6HiCIVTsp2WG0EhonDvAMROgcB7fofO9X0Q28p4mPU8NsdVKs3DAKTBP6vzswLs91AIPl0N2c3pEuMRuoJuQ=
+	t=1778145739; cv=none; b=SPUVj0YOaSMKOluESWVOvJOwjqWng+qt0E/ygHnXi5jCX2kSZe8J7S48LnzqmUKeKZv+IQ/gB/b4fTJyWD9VToqGGd9MfvE75GMgPvFF6W0LmugCVDYXTli1Ar57n0ep2ECrFdLMJvjwFRioRKg+u1Fc4XT1UJGkuQWGpOmBOPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778145727; c=relaxed/simple;
-	bh=Y+2uaDuH043UZZOsd5GAUdfC443ZMhzc9LRqy42EnQw=;
+	s=arc-20240116; t=1778145739; c=relaxed/simple;
+	bh=tRjsED7RdIpQmrwqA/i+wuJvCvqMbePWGOToskgjAKw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AmxgYiFCPKAZkJOBnsd7Fa1J2MLZc/9MLuxwzEjxacY1uR9OtfiD8Amsh3hX9hlnBygn0kevvMpKCp8L/+Au5aKRB8EXJo0VCToN23yRHXCn9DRZkG9uGyvFHpd7CtgzEUY+QxecJ/3hO0zUaYKAHMUCLHwloGgP6weuGQq9gTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JAcr2GmE; arc=none smtp.client-ip=209.85.128.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=gqkO2x7wJGbDaL/ib6YL+x19lwM4+f4G7zrHeWEI7sNCGPpw9ZTmLlDE9ZWBff7kv7v/hVlWmLPc/V6lr6M9m+zAjY5adWnBWFQjAtBkGpVDf3QXzeqzVJCZ1+GSqDM/K29MOgHh8U8lb3JYEnn6HSymjFeJhxUwb8QlLlXLaPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MbREx+CI; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JAcr2GmE"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-488940ccfa6so65225e9.1
-        for <patches@lists.linux.dev>; Thu, 07 May 2026 02:21:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MbREx+CI"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-48d1c670255so77685e9.0
+        for <patches@lists.linux.dev>; Thu, 07 May 2026 02:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778145713; x=1778750513; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1778145731; x=1778750531; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p6/FxwSPka5p8DLF5a7pAUL11onK6T+zgOvQ6IlI4aw=;
-        b=JAcr2GmE+djMWYRzi//MSfiWFr3sD+2W6G+4IGfp+UBU7PBqwHWtr0xQ7xB2TQga/w
-         SLvluixTII5O3mw2T1Kzu1vnyAdt1uhdPUB4p1hOYvUzQfFePuvgzV65uN6NmdGOpvH8
-         pkLqG+bX9mIAxW/N3fnlQGd0YPDYWX/gX1aA0E/5SiVtoSbRoyI8j6OHg9lKeFDOMKNK
-         eEd1Qd7wsTZZtnLAnQnIYq7lIoSzZz3Nje+GeL/GxifQccsTTcShlkkYk9PX/eRtGdb7
-         GXg+kjpO0QEE4T6L9BZ0f/i0gXOh5f1knN7ed9vxtJY0oOhOo/IRqqWDqbJAvJPXt2AK
-         QYHA==
+        bh=mdQjfHOoudoTP4zNLEK0/rz6Fm5ioqi3GcaesyNPhbA=;
+        b=MbREx+CIUI/odYpc0W6b6dh3RdDY16hGZnUgU+0EiSVKdZ0m9ujlL+yEpycJ4tjiFW
+         vxYtrOxaeJ9Hg2FxopAHjCxadmqksDrCivC0nzobeTUWAq56r5yw66R2QURY5X4LL7Vw
+         X28ewaCEqZe7KgBftfG3SkjvMyozS3ua0miD2rbQydJXFw6SlIs3sHkfifwdmRnUxdQ3
+         7TPZPpeM9vKVKfNL0YVdxFjRlTN95lRSh/SdFiZ97q7knHcZbSqBJ/gmb3yL4oCWXJd1
+         f4NdDVgXad/nsBB4xuOumTqaT8/fXrIdYc7BCYzhUoRG4VemRijU5tDLmawkgDCVAVUC
+         yVjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778145713; x=1778750513;
+        d=1e100.net; s=20251104; t=1778145731; x=1778750531;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=p6/FxwSPka5p8DLF5a7pAUL11onK6T+zgOvQ6IlI4aw=;
-        b=B58FsJBvl51vi3clz2lM5Bo0hUkZ3mqVMWYREgUyQ9DSdnGBl+xAzUxadEQMlf5rHq
-         CI+Ixa46q18fSCEaZoheNXLbz8FRqT9QS/epO0bFmC8rhnkGnTLVv0HPshH3xpWOQQEs
-         do7enRxz/ULLpMJ1KAlIC3ZkX/p747BlB8gbJ2LUPAYJDCsSEdLgjCpLmjJcR/nxvZGF
-         lgDXCWo6KnTolhiJvQG3rRgty9KnYU7eTpKgDvL7o06BKWTnjmKKTq8hlrKDqm2gS+u3
-         Xh3ufN65KylYDF6Rpd0TrrX4VSE5tuncdE+/ce5WYXYmvxdWOZfz3XJjF24Ehjqq2zUU
-         e0JA==
-X-Forwarded-Encrypted: i=1; AFNElJ8rUkuJJ97zaCj19mmQinUAPYV3RqedxdzMyqL8yWS7lgP+O1FEzCYxyXYaDNFWmfA72yjhCGuc@lists.linux.dev
-X-Gm-Message-State: AOJu0Yynnxp6FtRJTHRJEJ6+YoiMuB/6HaR994pRXpp+SW43k0CtVuJn
-	tpOOIhNxq8JVBz9++1gvW6GVCoYK8VUyV7skPxz/Ickntk+38JchN+z+XHstClT8Jg==
-X-Gm-Gg: AeBDiesUHUCjHJF22Y1POVgnItDPleVVklIwFU2ZYexP4ICCtmA4zOmjCS/ghU8Qw2B
-	/bxdwL1PvCPTL7Rn7wBCsm5YltYNMCcMuPIm3i2EXaaCrAKi8P1jKKhalX7WaoMme0QjXe9Ugqv
-	19NOvv6lcn2kHyPJi+aS7UJbzDKJWoUdURgAhBrSXD6+ep0TlWWdMG47LoV3RhByHYhqwGBuM7L
-	8KKNYq5ZHKoH9yYH3d8xZj/k2q7nMjJVPn7wmjvWhLyASrZX419yAG2k8z8AHIedXOBU/yBM580
-	eCfnnTI2BpGa8e0r6aJ8pWNxSWSqfn/lzaJwu8tcdmhZfYwBE0YYIXW6xkTHlAmlzyWGV835BXP
-	/xQrw13MvsNiMLYUGNC5T7iIoNBRrcejVAH9Fm/VfAPRD2BWHGy0c/5cLizVmw66WNm4l6VBEFe
-	gJvxQh0wLgHyAJhZsHNGKuIZaI5+Hou2HeZ9VoAw9icEbvl4JPVOb9aESN0XyK/SRNFN3CD9mSU
-	mSXVA==
-X-Received: by 2002:a05:600d:8450:10b0:489:1ace:d0d3 with SMTP id 5b1f17b1804b1-48e52d0a34fmr1539495e9.3.1778145712369;
-        Thu, 07 May 2026 02:21:52 -0700 (PDT)
+        bh=mdQjfHOoudoTP4zNLEK0/rz6Fm5ioqi3GcaesyNPhbA=;
+        b=na+czBNc5VVADXQwmqUMNGkKimAT7clio2K9mDtNL6q/VaYumGcHJN0awOOwLWBi3I
+         oAWgOXDBuq4VtlCUDUjRQvAnTpwvlNS2/AQKYSOODqhCTxvpS3fs2CcRJz/c6NT0zDYw
+         BlxmFZvym1oaCNOTHzT2PODlwUnuIu1kjcsA9jzLy7AmSaO0dIn3Y5wpvIJ/b8WtpWT7
+         EIvk8s/vgj8mE79ftgys1WyvOhX5pbVDb+nwypauYBZXH/E0iQ1/1n5vu+9POY6lEgCy
+         WGgsIcqZk3XoQNON+ZMdQSkmlMyouTrptm/sOJEHwUwnvqW1hNMt9ofcHYX69cSZTHnm
+         Jb9g==
+X-Forwarded-Encrypted: i=1; AFNElJ9hfKfOWE8h6JbKyHcXpcfzf76QuES/rxc7TJbJIQRlThdDn+1P6VmqeDvCHQaH7v46/IXe7Fk4@lists.linux.dev
+X-Gm-Message-State: AOJu0YykWyfu7TcqW4qA/xJggdzP9XCaAyNktBQkLds0dTGn1UtQ5WiZ
+	O8GKweE1+F7Ei7lbSHKHQFW1dAlrXqULFBhTwbLMorQGvy20ua6ipGJAbbsFeWzM4Q==
+X-Gm-Gg: AeBDietDiXNm0gTALzfpXL7Ex2GklZvZXQHG1M4EJuyw3SbABhlgEHkyjEc4mrG6VoE
+	BBUq3Olnp+Rie56JLe1gPmGiqW509ts/Xk9RhHUp/8gwTooakkDceW9NJoez7uX8LjMqkN7DHql
+	7VbLoknkFxpe2SaRYUB12ytwhLjDb00JFW+O/Pz5PbaK95JRYwf29A4iXDUUcP5qceKC9nwTUxo
+	i1qa007HnAYIxg7XcjcbWa+WMe9u9NKx4QoSJ0eBytiJdl7UcGvcZ1tqsTShd0mOJIArvi6NCOT
+	fyHz0IcnbQeZiyrtpoIuUN9lNcObyerzpawTSWtaZgT78BrvVLr/PaZygX2U/LRoWbda6BcpdGL
+	t+qhl9a8QBuCQK0zpe1Qv0y2U3nDYykcDNPBiG2pl3usd197gg3RcTQuQEdXUlLl8DANEdzEUvi
+	HJJosQjWiOc5tJN19xPQ0mB2eEZIpuSLocDXVS4DNSbrWFFq3Sr1lWaqZn46GmYxtsXBtIdhGc3
+	DZPqQ==
+X-Received: by 2002:a05:600d:8450:10b0:489:1ace:d0d3 with SMTP id 5b1f17b1804b1-48e52d0a34fmr1539695e9.3.1778145730457;
+        Thu, 07 May 2026 02:22:10 -0700 (PDT)
 Received: from google.com (8.181.38.34.bc.googleusercontent.com. [34.38.181.8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45055960973sm18969938f8f.30.2026.05.07.02.21.51
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e5311f891sm56514085e9.4.2026.05.07.02.22.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2026 02:21:51 -0700 (PDT)
-Date: Thu, 7 May 2026 09:21:48 +0000
+        Thu, 07 May 2026 02:22:09 -0700 (PDT)
+Date: Thu, 7 May 2026 09:22:05 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Jonathan Hunter <jonathanh@nvidia.com>,
@@ -70,11 +70,11 @@ Cc: iommu@lists.linux.dev, Jonathan Hunter <jonathanh@nvidia.com>,
 	David Matlack <dmatlack@google.com>,
 	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
 	Samiullah Khawaja <skhawaja@google.com>
-Subject: Re: [PATCH 3/9] iommu/arm-smmu-v3: Use the HW arm_smmu_cmd in cmdq
- submission functions
-Message-ID: <afxZrBaz0YZ9XF2u@google.com>
+Subject: Re: [PATCH 4/9] iommu/arm-smmu-v3: Convert arm_smmu_cmdq_batch cmds
+ to struct arm_smmu_cmd
+Message-ID: <afxZvSt2uuW5OEU9@google.com>
 References: <0-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
- <3-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
+ <4-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -83,16 +83,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
+In-Reply-To: <4-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
 
-On Fri, May 01, 2026 at 11:29:12AM -0300, Jason Gunthorpe wrote:
-> Continue removing struct arm_smmu_cmdq_ent in favour of the HW based
-> struct arm_smmu_cmd. Switch the lower level issue commands to work on
-> the native struct by lifting arm_smmu_cmdq_build_cmd() into all the
-> callers.
+On Fri, May 01, 2026 at 11:29:13AM -0300, Jason Gunthorpe wrote:
+> Convert the batch's type to also get the remaining helper functions to
+> use the new type and complete replacing naked u64s with the new struct.
 > 
-> Following patches will revise each of the arm_smmu_cmdq_build_cmd()
-> call sites to replace it with the HW struct.
+> The low-level queue_write()/queue_read()/queue_remove_raw() functions
+> remain u64-based since they are shared by event and PRI queues which
+> have different entry sizes.
 > 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
@@ -102,173 +101,356 @@ Thanks,
 Mostafa
 
 > ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 53 ++++++++++++---------
->  1 file changed, 30 insertions(+), 23 deletions(-)
+>  .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 24 +++---
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 74 ++++++++++---------
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  5 +-
+>  .../iommu/arm/arm-smmu-v3/tegra241-cmdqv.c    |  8 +-
+>  4 files changed, 58 insertions(+), 53 deletions(-)
 > 
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> index ddae0b07c76b50..1e9f7d2de34414 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> @@ -300,7 +300,7 @@ static int arm_vsmmu_vsid_to_sid(struct arm_vsmmu *vsmmu, u32 vsid, u32 *sid)
+>  /* This is basically iommu_viommu_arm_smmuv3_invalidate in u64 for conversion */
+>  struct arm_vsmmu_invalidation_cmd {
+>  	union {
+> -		u64 cmd[2];
+> +		struct arm_smmu_cmd cmd;
+>  		struct iommu_viommu_arm_smmuv3_invalidate ucmd;
+>  	};
+>  };
+> @@ -316,32 +316,32 @@ static int arm_vsmmu_convert_user_cmd(struct arm_vsmmu *vsmmu,
+>  				      struct arm_vsmmu_invalidation_cmd *cmd)
+>  {
+>  	/* Commands are le64 stored in u64 */
+> -	cmd->cmd[0] = le64_to_cpu(cmd->ucmd.cmd[0]);
+> -	cmd->cmd[1] = le64_to_cpu(cmd->ucmd.cmd[1]);
+> +	cmd->cmd.data[0] = le64_to_cpu(cmd->ucmd.cmd[0]);
+> +	cmd->cmd.data[1] = le64_to_cpu(cmd->ucmd.cmd[1]);
+>  
+> -	switch (cmd->cmd[0] & CMDQ_0_OP) {
+> +	switch (cmd->cmd.data[0] & CMDQ_0_OP) {
+>  	case CMDQ_OP_TLBI_NSNH_ALL:
+>  		/* Convert to NH_ALL */
+> -		cmd->cmd[0] = CMDQ_OP_TLBI_NH_ALL |
+> +		cmd->cmd.data[0] = CMDQ_OP_TLBI_NH_ALL |
+>  			      FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
+> -		cmd->cmd[1] = 0;
+> +		cmd->cmd.data[1] = 0;
+>  		break;
+>  	case CMDQ_OP_TLBI_NH_VA:
+>  	case CMDQ_OP_TLBI_NH_VAA:
+>  	case CMDQ_OP_TLBI_NH_ALL:
+>  	case CMDQ_OP_TLBI_NH_ASID:
+> -		cmd->cmd[0] &= ~CMDQ_TLBI_0_VMID;
+> -		cmd->cmd[0] |= FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
+> +		cmd->cmd.data[0] &= ~CMDQ_TLBI_0_VMID;
+> +		cmd->cmd.data[0] |= FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
+>  		break;
+>  	case CMDQ_OP_ATC_INV:
+>  	case CMDQ_OP_CFGI_CD:
+>  	case CMDQ_OP_CFGI_CD_ALL: {
+> -		u32 sid, vsid = FIELD_GET(CMDQ_CFGI_0_SID, cmd->cmd[0]);
+> +		u32 sid, vsid = FIELD_GET(CMDQ_CFGI_0_SID, cmd->cmd.data[0]);
+>  
+>  		if (arm_vsmmu_vsid_to_sid(vsmmu, vsid, &sid))
+>  			return -EIO;
+> -		cmd->cmd[0] &= ~CMDQ_CFGI_0_SID;
+> -		cmd->cmd[0] |= FIELD_PREP(CMDQ_CFGI_0_SID, sid);
+> +		cmd->cmd.data[0] &= ~CMDQ_CFGI_0_SID;
+> +		cmd->cmd.data[0] |= FIELD_PREP(CMDQ_CFGI_0_SID, sid);
+>  		break;
+>  	}
+>  	default:
+> @@ -386,7 +386,7 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
+>  			continue;
+>  
+>  		/* FIXME always uses the main cmdq rather than trying to group by type */
+> -		ret = arm_smmu_cmdq_issue_cmdlist(smmu, &smmu->cmdq, last->cmd,
+> +		ret = arm_smmu_cmdq_issue_cmdlist(smmu, &smmu->cmdq, &last->cmd,
+>  						  cur - last, true);
+>  		if (ret) {
+>  			cur--;
 > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 5cdeaec890592f..67d23e9c54804e 100644
+> index 67d23e9c54804e..b3ef001ce80d23 100644
 > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -921,31 +921,23 @@ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+> @@ -268,9 +268,12 @@ static int queue_remove_raw(struct arm_smmu_queue *q, u64 *ent)
 >  }
 >  
->  static int __arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
-> -				     struct arm_smmu_cmdq_ent *ent,
-> +				     struct arm_smmu_cmd *cmd,
+>  /* High-level queue accessors */
+> -static int arm_smmu_cmdq_build_cmd(u64 *cmd, struct arm_smmu_cmdq_ent *ent)
+> +static int arm_smmu_cmdq_build_cmd(struct arm_smmu_cmd *cmd_out,
+> +				   struct arm_smmu_cmdq_ent *ent)
+>  {
+> -	memset(cmd, 0, 1 << CMDQ_ENT_SZ_SHIFT);
+> +	u64 *cmd = cmd_out->data;
+> +
+> +	memset(cmd_out, 0, sizeof(*cmd_out));
+>  	cmd[0] |= FIELD_PREP(CMDQ_0_OP, ent->opcode);
+>  
+>  	switch (ent->opcode) {
+> @@ -390,7 +393,8 @@ static bool arm_smmu_cmdq_needs_busy_polling(struct arm_smmu_device *smmu,
+>  	return smmu->options & ARM_SMMU_OPT_TEGRA241_CMDQV;
+>  }
+>  
+> -static void arm_smmu_cmdq_build_sync_cmd(u64 *cmd, struct arm_smmu_device *smmu,
+> +static void arm_smmu_cmdq_build_sync_cmd(struct arm_smmu_cmd *cmd,
+> +					 struct arm_smmu_device *smmu,
+>  					 struct arm_smmu_cmdq *cmdq, u32 prod)
+>  {
+>  	struct arm_smmu_queue *q = &cmdq->q;
+> @@ -409,7 +413,8 @@ static void arm_smmu_cmdq_build_sync_cmd(u64 *cmd, struct arm_smmu_device *smmu,
+>  
+>  	arm_smmu_cmdq_build_cmd(cmd, &ent);
+>  	if (arm_smmu_cmdq_needs_busy_polling(smmu, cmdq))
+> -		u64p_replace_bits(cmd, CMDQ_SYNC_0_CS_NONE, CMDQ_SYNC_0_CS);
+> +		u64p_replace_bits(&cmd->data[0], CMDQ_SYNC_0_CS_NONE,
+> +				  CMDQ_SYNC_0_CS);
+>  }
+>  
+>  void __arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu,
+> @@ -422,9 +427,8 @@ void __arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu,
+>  		[CMDQ_ERR_CERROR_ATC_INV_IDX]	= "ATC invalidate timeout",
+>  	};
+>  	struct arm_smmu_queue *q = &cmdq->q;
+> -
+>  	int i;
+> -	u64 cmd[CMDQ_ENT_DWORDS];
+> +	struct arm_smmu_cmd cmd;
+>  	u32 cons = readl_relaxed(q->cons_reg);
+>  	u32 idx = FIELD_GET(CMDQ_CONS_ERR, cons);
+>  	struct arm_smmu_cmdq_ent cmd_sync = {
+> @@ -457,17 +461,18 @@ void __arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu,
+>  	 * We may have concurrent producers, so we need to be careful
+>  	 * not to touch any of the shadow cmdq state.
+>  	 */
+> -	queue_read(cmd, Q_ENT(q, cons), q->ent_dwords);
+> +	queue_read(cmd.data, Q_ENT(q, cons), q->ent_dwords);
+>  	dev_err(smmu->dev, "skipping command in error state:\n");
+> -	for (i = 0; i < ARRAY_SIZE(cmd); ++i)
+> -		dev_err(smmu->dev, "\t0x%016llx\n", (unsigned long long)cmd[i]);
+> +	for (i = 0; i < ARRAY_SIZE(cmd.data); ++i)
+> +		dev_err(smmu->dev, "\t0x%016llx\n", (unsigned long long)cmd.data[i]);
+>  
+>  	/* Convert the erroneous command into a CMD_SYNC */
+> -	arm_smmu_cmdq_build_cmd(cmd, &cmd_sync);
+> +	arm_smmu_cmdq_build_cmd(&cmd, &cmd_sync);
+>  	if (arm_smmu_cmdq_needs_busy_polling(smmu, cmdq))
+> -		u64p_replace_bits(cmd, CMDQ_SYNC_0_CS_NONE, CMDQ_SYNC_0_CS);
+> +		u64p_replace_bits(&cmd.data[0], CMDQ_SYNC_0_CS_NONE,
+> +				  CMDQ_SYNC_0_CS);
+>  
+> -	queue_write(Q_ENT(q, cons), cmd, q->ent_dwords);
+> +	queue_write(Q_ENT(q, cons), cmd.data, q->ent_dwords);
+>  }
+>  
+>  static void arm_smmu_cmdq_skip_err(struct arm_smmu_device *smmu)
+> @@ -767,7 +772,8 @@ static int arm_smmu_cmdq_poll_until_sync(struct arm_smmu_device *smmu,
+>  	return __arm_smmu_cmdq_poll_until_consumed(smmu, cmdq, llq);
+>  }
+>  
+> -static void arm_smmu_cmdq_write_entries(struct arm_smmu_cmdq *cmdq, u64 *cmds,
+> +static void arm_smmu_cmdq_write_entries(struct arm_smmu_cmdq *cmdq,
+> +					struct arm_smmu_cmd *cmds,
+>  					u32 prod, int n)
+>  {
+>  	int i;
+> @@ -777,10 +783,9 @@ static void arm_smmu_cmdq_write_entries(struct arm_smmu_cmdq *cmdq, u64 *cmds,
+>  	};
+>  
+>  	for (i = 0; i < n; ++i) {
+> -		u64 *cmd = &cmds[i * CMDQ_ENT_DWORDS];
+> -
+>  		prod = queue_inc_prod_n(&llq, i);
+> -		queue_write(Q_ENT(&cmdq->q, prod), cmd, CMDQ_ENT_DWORDS);
+> +		queue_write(Q_ENT(&cmdq->q, prod), cmds[i].data,
+> +			    ARRAY_SIZE(cmds[i].data));
+>  	}
+>  }
+>  
+> @@ -801,10 +806,11 @@ static void arm_smmu_cmdq_write_entries(struct arm_smmu_cmdq *cmdq, u64 *cmds,
+>   *   CPU will appear before any of the commands from the other CPU.
+>   */
+>  int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+> -				struct arm_smmu_cmdq *cmdq, u64 *cmds, int n,
+> +				struct arm_smmu_cmdq *cmdq,
+> +				struct arm_smmu_cmd *cmds, int n,
+>  				bool sync)
+>  {
+> -	u64 cmd_sync[CMDQ_ENT_DWORDS];
+> +	struct arm_smmu_cmd cmd_sync;
+>  	u32 prod;
+>  	unsigned long flags;
+>  	bool owner;
+> @@ -847,8 +853,9 @@ int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+>  	arm_smmu_cmdq_write_entries(cmdq, cmds, llq.prod, n);
+>  	if (sync) {
+>  		prod = queue_inc_prod_n(&llq, n);
+> -		arm_smmu_cmdq_build_sync_cmd(cmd_sync, smmu, cmdq, prod);
+> -		queue_write(Q_ENT(&cmdq->q, prod), cmd_sync, CMDQ_ENT_DWORDS);
+> +		arm_smmu_cmdq_build_sync_cmd(&cmd_sync, smmu, cmdq, prod);
+> +		queue_write(Q_ENT(&cmdq->q, prod), cmd_sync.data,
+> +			    ARRAY_SIZE(cmd_sync.data));
+>  
+>  		/*
+>  		 * In order to determine completion of our CMD_SYNC, we must
+> @@ -925,7 +932,7 @@ static int __arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
 >  				     bool sync)
 >  {
-> -	struct arm_smmu_cmd cmd;
-> -
-> -	if (unlikely(arm_smmu_cmdq_build_cmd(cmd.data, ent))) {
-> -		dev_warn(smmu->dev, "ignoring unknown CMDQ opcode 0x%x\n",
-> -			 ent->opcode);
-> -		return -EINVAL;
-> -	}
-> -
 >  	return arm_smmu_cmdq_issue_cmdlist(
-> -		smmu, arm_smmu_get_cmdq(smmu, &cmd), cmd.data, 1, sync);
-> +		smmu, arm_smmu_get_cmdq(smmu, cmd), cmd->data, 1, sync);
+> -		smmu, arm_smmu_get_cmdq(smmu, cmd), cmd->data, 1, sync);
+> +		smmu, arm_smmu_get_cmdq(smmu, cmd), cmd, 1, sync);
 >  }
 >  
 >  static int arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
-> -				   struct arm_smmu_cmdq_ent *ent)
-> +				   struct arm_smmu_cmd *cmd)
+> @@ -954,7 +961,7 @@ static void arm_smmu_cmdq_batch_init(struct arm_smmu_device *smmu,
 >  {
-> -	return __arm_smmu_cmdq_issue_cmd(smmu, ent, false);
-> +	return __arm_smmu_cmdq_issue_cmd(smmu, cmd, false);
+>  	struct arm_smmu_cmd cmd;
+>  
+> -	arm_smmu_cmdq_build_cmd(cmd.data, ent);
+> +	arm_smmu_cmdq_build_cmd(&cmd, ent);
+>  	arm_smmu_cmdq_batch_init_cmd(smmu, cmds, &cmd);
 >  }
 >  
->  static int arm_smmu_cmdq_issue_cmd_with_sync(struct arm_smmu_device *smmu,
-> -					     struct arm_smmu_cmdq_ent *ent)
-> +					     struct arm_smmu_cmd *cmd)
->  {
-> -	return __arm_smmu_cmdq_issue_cmd(smmu, ent, true);
-> +	return __arm_smmu_cmdq_issue_cmd(smmu, cmd, true);
->  }
+> @@ -966,9 +973,8 @@ static void arm_smmu_cmdq_batch_add(struct arm_smmu_device *smmu,
+>  			  (smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC);
+>  	struct arm_smmu_cmd cmd;
+>  	bool unsupported_cmd;
+> -	int index;
 >  
->  static void arm_smmu_cmdq_batch_init_cmd(struct arm_smmu_device *smmu,
-> @@ -1013,6 +1005,7 @@ static void arm_smmu_page_response(struct device *dev, struct iopf_fault *unused
->  	struct arm_smmu_cmdq_ent cmd = {0};
->  	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
->  	int sid = master->streams[0].id;
-> +	struct arm_smmu_cmd hw_cmd;
->  
->  	if (WARN_ON(!master->stall_enabled))
+> -	if (unlikely(arm_smmu_cmdq_build_cmd(cmd.data, ent))) {
+> +	if (unlikely(arm_smmu_cmdq_build_cmd(&cmd, ent))) {
+>  		dev_warn(smmu->dev, "ignoring unknown CMDQ opcode 0x%x\n",
+>  			 ent->opcode);
 >  		return;
-> @@ -1032,7 +1025,9 @@ static void arm_smmu_page_response(struct device *dev, struct iopf_fault *unused
+> @@ -987,9 +993,7 @@ static void arm_smmu_cmdq_batch_add(struct arm_smmu_device *smmu,
+>  		arm_smmu_cmdq_batch_init_cmd(smmu, cmds, &cmd);
+>  	}
+>  
+> -	index = cmds->num * CMDQ_ENT_DWORDS;
+> -	memcpy(&cmds->cmds[index], cmd.data, sizeof(cmd.data));
+> -	cmds->num++;
+> +	cmds->cmds[cmds->num++] = cmd;
+>  }
+>  
+>  static int arm_smmu_cmdq_batch_submit(struct arm_smmu_device *smmu,
+> @@ -1025,7 +1029,7 @@ static void arm_smmu_page_response(struct device *dev, struct iopf_fault *unused
 >  		break;
 >  	}
 >  
-> -	arm_smmu_cmdq_issue_cmd(master->smmu, &cmd);
-> +	arm_smmu_cmdq_build_cmd(hw_cmd.data, &cmd);
-> +	arm_smmu_cmdq_issue_cmd(master->smmu, &hw_cmd);
-> +
->  	/*
->  	 * Don't send a SYNC, it doesn't do anything for RESUME or PRI_RESP.
->  	 * RESUME consumption guarantees that the stalled transaction will be
-> @@ -1861,14 +1856,16 @@ static void arm_smmu_ste_writer_sync_entry(struct arm_smmu_entry_writer *writer)
->  {
->  	struct arm_smmu_ste_writer *ste_writer =
->  		container_of(writer, struct arm_smmu_ste_writer, writer);
-> -	struct arm_smmu_cmdq_ent cmd = {
-> +	struct arm_smmu_cmdq_ent ent = {
->  		.opcode	= CMDQ_OP_CFGI_STE,
->  		.cfgi	= {
->  			.sid	= ste_writer->sid,
->  			.leaf	= true,
->  		},
->  	};
-> +	struct arm_smmu_cmd cmd;
+> -	arm_smmu_cmdq_build_cmd(hw_cmd.data, &cmd);
+> +	arm_smmu_cmdq_build_cmd(&hw_cmd, &cmd);
+>  	arm_smmu_cmdq_issue_cmd(master->smmu, &hw_cmd);
 >  
-> +	arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+>  	/*
+> @@ -1865,7 +1869,7 @@ static void arm_smmu_ste_writer_sync_entry(struct arm_smmu_entry_writer *writer)
+>  	};
+>  	struct arm_smmu_cmd cmd;
+>  
+> -	arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+> +	arm_smmu_cmdq_build_cmd(&cmd, &ent);
 >  	arm_smmu_cmdq_issue_cmd_with_sync(writer->master->smmu, &cmd);
 >  }
 >  
-> @@ -1896,11 +1893,13 @@ static void arm_smmu_write_ste(struct arm_smmu_master *master, u32 sid,
->  	/* It's likely that we'll want to use the new STE soon */
->  	if (!(smmu->options & ARM_SMMU_OPT_SKIP_PREFETCH)) {
->  		struct arm_smmu_cmdq_ent
-> -			prefetch_cmd = { .opcode = CMDQ_OP_PREFETCH_CFG,
-> +			prefetch_ent = { .opcode = CMDQ_OP_PREFETCH_CFG,
->  					 .prefetch = {
->  						 .sid = sid,
+> @@ -1899,7 +1903,7 @@ static void arm_smmu_write_ste(struct arm_smmu_master *master, u32 sid,
 >  					 } };
-> +		struct arm_smmu_cmd prefetch_cmd;
+>  		struct arm_smmu_cmd prefetch_cmd;
 >  
-> +		arm_smmu_cmdq_build_cmd(prefetch_cmd.data, &prefetch_ent);
+> -		arm_smmu_cmdq_build_cmd(prefetch_cmd.data, &prefetch_ent);
+> +		arm_smmu_cmdq_build_cmd(&prefetch_cmd, &prefetch_ent);
 >  		arm_smmu_cmdq_issue_cmd(smmu, &prefetch_cmd);
 >  	}
 >  }
-> @@ -2328,7 +2327,7 @@ static void arm_smmu_handle_ppr(struct arm_smmu_device *smmu, u64 *evt)
->  		 evt[1] & PRIQ_1_ADDR_MASK);
->  
->  	if (last) {
-> -		struct arm_smmu_cmdq_ent cmd = {
-> +		struct arm_smmu_cmdq_ent ent = {
->  			.opcode			= CMDQ_OP_PRI_RESP,
->  			.substream_valid	= ssv,
->  			.pri			= {
-> @@ -2338,7 +2337,9 @@ static void arm_smmu_handle_ppr(struct arm_smmu_device *smmu, u64 *evt)
->  				.resp	= PRI_RESP_DENY,
->  			},
+> @@ -2339,7 +2343,7 @@ static void arm_smmu_handle_ppr(struct arm_smmu_device *smmu, u64 *evt)
 >  		};
-> +		struct arm_smmu_cmd cmd;
+>  		struct arm_smmu_cmd cmd;
 >  
-> +		arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+> -		arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+> +		arm_smmu_cmdq_build_cmd(&cmd, &ent);
 >  		arm_smmu_cmdq_issue_cmd(smmu, &cmd);
 >  	}
 >  }
-> @@ -3446,6 +3447,7 @@ arm_smmu_install_new_domain_invs(struct arm_smmu_attach_state *state)
->  static void arm_smmu_inv_flush_iotlb_tag(struct arm_smmu_inv *inv)
->  {
->  	struct arm_smmu_cmdq_ent cmd = {};
-> +	struct arm_smmu_cmd hw_cmd;
->  
->  	switch (inv->type) {
->  	case INV_TYPE_S1_ASID:
-> @@ -3460,7 +3462,8 @@ static void arm_smmu_inv_flush_iotlb_tag(struct arm_smmu_inv *inv)
+> @@ -3462,7 +3466,7 @@ static void arm_smmu_inv_flush_iotlb_tag(struct arm_smmu_inv *inv)
 >  	}
 >  
 >  	cmd.opcode = inv->nsize_opcode;
-> -	arm_smmu_cmdq_issue_cmd_with_sync(inv->smmu, &cmd);
-> +	arm_smmu_cmdq_build_cmd(hw_cmd.data, &cmd);
-> +	arm_smmu_cmdq_issue_cmd_with_sync(inv->smmu, &hw_cmd);
+> -	arm_smmu_cmdq_build_cmd(hw_cmd.data, &cmd);
+> +	arm_smmu_cmdq_build_cmd(&hw_cmd, &cmd);
+>  	arm_smmu_cmdq_issue_cmd_with_sync(inv->smmu, &hw_cmd);
 >  }
 >  
->  /* Should be installed after arm_smmu_install_ste_for_dev() */
-> @@ -4823,7 +4826,8 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
->  {
->  	int ret;
->  	u32 reg, enables;
-> -	struct arm_smmu_cmdq_ent cmd;
-> +	struct arm_smmu_cmdq_ent ent;
-> +	struct arm_smmu_cmd cmd;
->  
->  	/* Clear CR0 and sync (disables SMMU and queue processing) */
->  	reg = readl_relaxed(smmu->base + ARM_SMMU_CR0);
-> @@ -4870,16 +4874,19 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
->  	}
+> @@ -4875,18 +4879,18 @@ static int arm_smmu_device_reset(struct arm_smmu_device *smmu)
 >  
 >  	/* Invalidate any cached configuration */
-> -	cmd.opcode = CMDQ_OP_CFGI_ALL;
-> +	ent.opcode = CMDQ_OP_CFGI_ALL;
-> +	arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+>  	ent.opcode = CMDQ_OP_CFGI_ALL;
+> -	arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+> +	arm_smmu_cmdq_build_cmd(&cmd, &ent);
 >  	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
 >  
 >  	/* Invalidate any stale TLB entries */
 >  	if (smmu->features & ARM_SMMU_FEAT_HYP) {
-> -		cmd.opcode = CMDQ_OP_TLBI_EL2_ALL;
-> +		ent.opcode = CMDQ_OP_TLBI_EL2_ALL;
-> +		arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+>  		ent.opcode = CMDQ_OP_TLBI_EL2_ALL;
+> -		arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+> +		arm_smmu_cmdq_build_cmd(&cmd, &ent);
 >  		arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
 >  	}
 >  
-> -	cmd.opcode = CMDQ_OP_TLBI_NSNH_ALL;
-> +	ent.opcode = CMDQ_OP_TLBI_NSNH_ALL;
-> +	arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+>  	ent.opcode = CMDQ_OP_TLBI_NSNH_ALL;
+> -	arm_smmu_cmdq_build_cmd(cmd.data, &ent);
+> +	arm_smmu_cmdq_build_cmd(&cmd, &ent);
 >  	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
 >  
 >  	/* Event queue */
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> index 6d73f6b63e64a9..1fe6917448b774 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> @@ -651,7 +651,7 @@ static inline bool arm_smmu_cmdq_supports_cmd(struct arm_smmu_cmdq *cmdq,
+>  }
+>  
+>  struct arm_smmu_cmdq_batch {
+> -	u64				cmds[CMDQ_BATCH_ENTRIES * CMDQ_ENT_DWORDS];
+> +	struct arm_smmu_cmd		cmds[CMDQ_BATCH_ENTRIES];
+>  	struct arm_smmu_cmdq		*cmdq;
+>  	int				num;
+>  };
+> @@ -1148,7 +1148,8 @@ void arm_smmu_install_ste_for_dev(struct arm_smmu_master *master,
+>  				  const struct arm_smmu_ste *target);
+>  
+>  int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
+> -				struct arm_smmu_cmdq *cmdq, u64 *cmds, int n,
+> +				struct arm_smmu_cmdq *cmdq,
+> +				struct arm_smmu_cmd *cmds, int n,
+>  				bool sync);
+>  
+>  #ifdef CONFIG_ARM_SMMU_V3_SVA
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+> index b4d8c1f2fd3878..67be62a6e7640a 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+> @@ -427,16 +427,16 @@ tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,
+>  static void tegra241_vcmdq_hw_flush_timeout(struct tegra241_vcmdq *vcmdq)
+>  {
+>  	struct arm_smmu_device *smmu = &vcmdq->cmdqv->smmu;
+> -	u64 cmd_sync[CMDQ_ENT_DWORDS] = {};
+> +	struct arm_smmu_cmd cmd_sync = {};
+>  
+> -	cmd_sync[0] = FIELD_PREP(CMDQ_0_OP, CMDQ_OP_CMD_SYNC) |
+> -		      FIELD_PREP(CMDQ_SYNC_0_CS, CMDQ_SYNC_0_CS_NONE);
+> +	cmd_sync.data[0] = FIELD_PREP(CMDQ_0_OP, CMDQ_OP_CMD_SYNC) |
+> +			   FIELD_PREP(CMDQ_SYNC_0_CS, CMDQ_SYNC_0_CS_NONE);
+>  
+>  	/*
+>  	 * It does not hurt to insert another CMD_SYNC, taking advantage of the
+>  	 * arm_smmu_cmdq_issue_cmdlist() that waits for the CMD_SYNC completion.
+>  	 */
+> -	arm_smmu_cmdq_issue_cmdlist(smmu, &smmu->cmdq, cmd_sync, 1, true);
+> +	arm_smmu_cmdq_issue_cmdlist(smmu, &smmu->cmdq, &cmd_sync, 1, true);
+>  }
+>  
+>  /* This function is for LVCMDQ, so @vcmdq must not be unmapped yet */
 > -- 
 > 2.43.0
 > 
