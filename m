@@ -1,323 +1,198 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from out162-62-57-210.mail.qq.com (out162-62-57-210.mail.qq.com [162.62.57.210])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0B72E5B02
-	for <patches@lists.linux.dev>; Thu,  7 May 2026 03:42:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778125336; cv=fail; b=TcyzaEr5XgSJUTCbn8HgXjhh3PkL7j+AwFwOrP5vphEgf2OYcqoYys1dvwr86hdnNLfZZFWERamd+WxKYuYTc8+SIjcRUYe+cxPXx6wGUZXLYtqmOJfd1av2PU1wM38aSrOXkDz7NBeICuJ3+jsHCYC9wd2Camm8ULpIqKFhW7I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778125336; c=relaxed/simple;
-	bh=DDyxsvhLbJj96u7i/fNWfHybXU7SK7ImNJTi5cDu9dc=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=YgxmZuUHY9/po8mNYa8/znNGrqMgWaPpyIjNrNocChB/Vu2gYhFKTPfSxQxhmNIQbu8vZO5veXEx7FsnxKKi3htTJUvBVzeOKKpysU6brA9x/fbkZYbm/3mbmxMx+gqKLaleHtNnlP8FGfgEs7+m8uUty0u4FHqTvfT+wC/Rl3A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CTb6b0/+; arc=fail smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715D032779D
+	for <patches@lists.linux.dev>; Thu,  7 May 2026 07:07:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.210
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778137673; cv=none; b=I/A3q3nQO4aGd9sb98wqoQtf367q4HpPIV35LlxifNVEjjn2Ttd6rwHpsoIPhSF1RCQkIyzUgAQNWmntZkw5bIrZ+Iht2JvR8QljzpRwExlNnjRxh78Vfnba6Qsm5ezX4gj8HTQXXd7rekAaTU4S3xCdHScTOrDsKFuuEADOY90=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778137673; c=relaxed/simple;
+	bh=8FRViC4v3BKLTLc14G0IuejVbnMlw8IZ8RLH1merI0Y=;
+	h=Message-ID:From:To:Cc:Subject:Date:MIME-Version; b=k2PgMzxwFRu0ugP3YZqwYz2VKY8pMOYzI8w3iEzw9Car8xJ/hIn842sd0cfyJ7m5UvkJRcmaVj+K6MV0y+GD9ygpbC387saGX4eZUK9bX9/KSjLWgwvXhvSiTy4wEgY9sZDonsUZEozEKlh8Se//J4wgjPwmqmwdAOshExJ9IiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=SZy4nju/; arc=none smtp.client-ip=162.62.57.210
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CTb6b0/+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1778125335; x=1809661335;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=DDyxsvhLbJj96u7i/fNWfHybXU7SK7ImNJTi5cDu9dc=;
-  b=CTb6b0/+Zug7ZPJYFopz8mIHTYLAaLODjoCp2dmpafQ3PZN71dM+MCV6
-   5bIh+mvQSCWW21mr8G8Cz5bAUczsSEHOTM+BMJINwT0e4tFdApWF4qXIc
-   WMBsIbPh7sAt24Sxs1grzV9l54Abmsadnyfy94MAjrurw5ZymiiHFerYM
-   PXxvufNFdERT6ttq7t5D/nx60FVR3SXsqlu8rqOIUDs3nQODSe+r8arzT
-   Wj9IK4NCJWpcqyaK7I7MjUU4Z2eK/sE7IpSMZ9YF5d4ZgPea3ig42JCFy
-   thxm/KSGBjS1zgeYZZt7ZuRwOAlECWhLbPZU6wXcPVpNpLi5zfXVV+XxW
-   A==;
-X-CSE-ConnectionGUID: vrL2wZRETwanmglaOBuaxw==
-X-CSE-MsgGUID: KfMUmki5R5OuioJOm1O63w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11778"; a="79248170"
-X-IronPort-AV: E=Sophos;i="6.23,220,1770624000"; 
-   d="scan'208";a="79248170"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2026 20:42:14 -0700
-X-CSE-ConnectionGUID: F8mn9rAuS5a/bBSAjLR87A==
-X-CSE-MsgGUID: i8lFrSdsQNu1S8jUiNPFZg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,220,1770624000"; 
-   d="scan'208";a="266718198"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2026 20:42:13 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 6 May 2026 20:42:13 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Wed, 6 May 2026 20:42:13 -0700
-Received: from PH8PR06CU001.outbound.protection.outlook.com (40.107.209.16) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 6 May 2026 20:42:13 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Cu1DBfGUbE5AgZQ2kI7qzPqYPe78DKXQDuovrq8a8AYRw3WsE+tKTHDzhVLm8tHEkeLQgprJetoJZv9fv+9/TUheuTJ5r/Nl63zZSd4LVy3z8jN7m9ZY7rfkinQLLGSgEWPhnJhL3P471MK9QcuhKZeTEwcbQLdFORthSqIonaivTlSZrEPA0STdtDJntuenvPYGyw5XX5XIaqbb+OB5VUOHOUFkcGAMWqUjc2VVbD974Tcn4Cq2rcPU+39+rHMUI/l5QEbSF5OdgsbxCossWhLwuV/vjrcgWdft3v0kzmo8sdPsYDkr9haoNw9zCjsd4xJiWccLQHBwQnFNYBfQYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BqnwMGbDCLNiAP7TJoH4PL+mtJYjVuQuAUav2tk6f7Y=;
- b=bZjptKUuE0n2iWuxl4EgpPqxySNsSFOQ5VC47Oj7v5nCgCKOv6OQmKc76ZEtXNVTSLNr0XmyrUugg+Ube2T18wAddZj2VXBRSfikUBN6n3Ssuefm3TaUGtKPYbdVibgcmKnYaxU8NQWiEvPKMtF+RvKQHhzO3gBu+hsNFj48P/XwgWNAmHSZuNpnAWoXdTyUn/TAho3UdiaHr0irklRjSrA50iQUd3bJjdXgrJarJkXXjZAleHmP7yN9Rp+YOUdZdSniyMFJn5Lqoh49VMwKPTP4wf/ggzVTy+VT2RKVb689aR+sKmFFNFY72PF/R54uViTJZpojslqKByxRmB1kpQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by PH8PR11MB9976.namprd11.prod.outlook.com (2603:10b6:510:3d5::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.17; Thu, 7 May
- 2026 03:42:11 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::bfe:4ce1:556:4a9d]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::bfe:4ce1:556:4a9d%5]) with mapi id 15.20.9891.015; Thu, 7 May 2026
- 03:42:11 +0000
-Message-ID: <528caf7e-b548-4e80-9ec2-70697073a14d@intel.com>
-Date: Wed, 6 May 2026 20:42:09 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fs/resctrl: Fix use-after-free in
- resctrl_offline_mon_domain()
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: Borislav Petkov <bp@alien8.de>, "x86@kernel.org" <x86@kernel.org>,
-	"Fenghua Yu" <fenghuay@nvidia.com>, "Wieczor-Retman, Maciej"
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, "Chen,
- Yu C" <yu.c.chen@intel.com>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-References: <20260501213611.25600-1-tony.luck@intel.com>
- <2236fae5-7e66-43fb-ba05-76fd4434e2c9@intel.com>
- <afkizhrSwJkiLD3j@agluck-desk3>
- <3f13c7e4-3812-447d-8c42-b28fd6b9d0fa@intel.com>
- <afoesuWB8RezVLrN@agluck-desk3>
- <7fad1d7d-c892-416e-b97a-a230fd43f2a4@intel.com>
- <afp4OkwtPpyIwAC1@agluck-desk3>
- <d065f7b7-daac-4e45-b7c9-69175dfb43a7@intel.com>
- <afubI4kYrdWUXGUR@agluck-desk3>
- <217d306e-78dd-4762-8c82-88d6bab9de44@intel.com>
- <SJ1PR11MB608334A68F7E79E6AF3C324FFC3F2@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <198e6dc2-b57e-4117-a71f-5c3983da3ed8@intel.com>
- <SJ1PR11MB608396D4D57AD6C1E079A4B7FC3F2@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <SJ1PR11MB608396D4D57AD6C1E079A4B7FC3F2@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0107.namprd03.prod.outlook.com
- (2603:10b6:303:b7::22) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="SZy4nju/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1778137659; bh=iskF8EoVx1eo+u9A/G98mixKei1oUBNv8bPdbjEb1eU=;
+	h=From:To:Cc:Subject:Date;
+	b=SZy4nju/XnCEOmlq2doq5xuLpH53fUDiLkZ2dMy9CSSuxK2d3/smoMY9h7CXShL8c
+	 lCbUdhmoYnAiTslQW53mDXy6Ezr5ZFE4+S2itqW29Z9/WCAhXgKkqnqAB5SecfMD07
+	 HJQfdaCB61DvtBTrzEyyJPLwUE49hQP6xZxegxxg=
+Received: from NTT-kernel-dev ([60.247.85.88])
+	by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
+	id 1E23C653; Thu, 07 May 2026 15:07:34 +0800
+X-QQ-mid: xmsmtpt1778137654tvpn0zexu
+Message-ID: <tencent_CCDB1B23FED831830856396BB4DF59D1B106@qq.com>
+X-QQ-XMAILINFO: M0vdiI0AC4YkCeFnOQd/Eo9/iodKPHs5oU6o8zGDpT0HZp0yiCh3ASQlSn5snD
+	 UirnXplLp0LTqU40FyFDOzZAtsponI6rBi3vETFJLH1NoA/iWm5Z5r5A/TleDF6sgd79kmUoGbPs
+	 je+3pC7onu1BU5CmTMtNW+ki3do0R1k9OpJds+DJqJkmusGyzNuQ8CxSN+CBhx97DuZIJzdnXf5T
+	 9ly/M1ejh8b63lLZL2luTItVsJzSOthOAWe/EM+SYlfkxWVwE9yoyPxfIE9fskYAmErkIf45IATV
+	 8tL0Al9f2UFe/njQyc+Wwa0fWlxocUoCwws/sNEKq1iL6yJp2KpHMTOVkYDjfIxM3MrYL+D9e1Jl
+	 p9wZWJ27gZTvGjZPOYn1NXC+1wFeymM1+mJ7okODyf5Dr17uuLT/hHHLsExgvD9ySS2p6vSyPq8s
+	 4q4TJugTQdxPy5paLe31B7neE3Yl3ZJBmTPacPfN1BgTjTVqK3fnaPMZ/VasKIugwgQwJ0BwITZG
+	 2NIFG7ooBRQ5f35l6p7qqbOXgmuAvLpLWxu/bVeTkWAq3VxNsO8tafo3It8SrSSF20EQxMfUjCuF
+	 UpnJ3hMrz2mH9mOmTYQeJfBd6sVg09gVQPkBbZRRFDLAFmPpQgVt14c3NUqkpAWhWEaGxqwq0+RX
+	 RYcWtyuoyl04mkBv/fPe0MW54eh7nAojRxBfLTOB3WQbnmnj69q9adkx+hbIKbiy2A4ssPpMmAP8
+	 nbTNpIjUyxZ4dKvLM0m6NPdgnV5gOoXJ2cdOAS17yvyX5JvDK7yvT65iB4PIlDSOpniwO47QfLUQ
+	 qxXF3+bNZXTeqThNGs63LTRNbbSAub9NlOj+nmN7U36gU3juL8AhKM3C2cDiM3jGswzMZxBLrRtS
+	 6gBsDg9MYWG+6Qq8gHJBttSMog78M/9m/XUD08Js4aKxQ9GsmxgdY+w4bFrHES1XtosHhAKxpi4Y
+	 MYr0bPhc4Ps/KmXG1kgQeLsi1MFW1qkBDaLDavSzFy6GyTkr65iNKrWRWvsWA/td/zp5tOaGR7jI
+	 iGfwHyc+iPB+7MroIjrZjPnAYyYRwmrHlfFNbwYg==
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+From: Fang Wang <32840572@qq.com>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	dev@pp3345.net
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	harry.wentland@amd.com,
+	sunpeng.li@amd.com,
+	Rodrigo.Siqueira@amd.com,
+	alexander.deucher@amd.com,
+	christian.koenig@amd.com,
+	Xinhui.Pan@amd.com,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	ray.wu@amd.com,
+	Wayne.Lin@amd.com,
+	sashal@kernel.org,
+	mario.limonciello@amd.com,
+	aurabindo.pillai@amd.com,
+	timur.kristof@gmail.com,
+	jdhillon@amd.com,
+	hersenwu@amd.com,
+	Roman.Li@amd.com,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.6.y] drm/amd/display: Do not skip unrelated mode changes in DSC validation
+Date: Thu,  7 May 2026 15:07:29 +0800
+X-OQ-MSGID: <20260507070729.2299428-1-32840572@qq.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH8PR11MB9976:EE_
-X-MS-Office365-Filtering-Correlation-Id: afa79207-665d-4177-7f53-08deabea9f3b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: MbZ4oDhropOWSUzb8ePfBvurjvN6RIF4y3nuU0nYMtrIMu7irTaIftvS307w3cQCAoGNoSeQPLRsE8+IHM2675XYIA+yp8Ewk8vnSBjo3/vbT5PxvQyVntsBCre2qLp9PpRoVP93YFvMA5nScYKP/P+wRHytrFx0WeaMd3pBttsMftmJqadEFcoL3PmiMwO/0n3RyVrprsgfrEMoDaoTWoFaLpqLsCiE1esfJAoMUbE/S9ZElw7C8HYIaeEGmOVYIgl/ZrYiHTUfqXy5ZCLVAaJictph81dqwXA8L3w8p2VPLXjO1k+M8IEzKElwx6uZptUYMkwn9VlMZm6IcyZQ/WKjqQcIMFSNebInxMY06tF2HK9Rm8hH+SSWIIALFmCWxKhOzIkJprErXFRhXLltlWTn9jDfVSEj4ppsk9QNl2xucufUIuRh/rQNB31cgXWgqZ4hANEd6iCNOp4E4FvConP515IJnZBOdRgu5ErWC88p6MH/KKUmDkbVHyNX99cXCdwNjjfRiTMG24YTdgTaPslFNk69i5/HL1hG1fsf00d7vm//dfg+txVhiNpv1rO3AC4ZOMKqo1asOU/FXRWu3lYIdma9w4ScABk8MnohgVfFR1kU9I0mVUuT+qitkUeCqnvJH+Zs/nMrV2j2oMR+gLgKIBVCjtgNJwlPzvhwCqgFFOL3Q4yU2X/JLg1uLh3W2lSPWBbFJFCdKxYYdoAqUA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(366016)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TTU2eTl4UVNtV2NKZEZYcndheDQ4b0k3anJILzJBUzN0bUx2UFMwd1BnL1U1?=
- =?utf-8?B?REJlc0dWNVBLeGNSSy8yWVFORTlqbWRaanE5STBmdWJlYldsYjlXU0FscDQx?=
- =?utf-8?B?NVBKUVp1Z3hlckk3SmNMQ0owejV2WmpPUmFsSkFpOXUveFViTFgrTzFlTlg2?=
- =?utf-8?B?ZmN0MThsbENtelRMZlNOdzdNS2lWakRlWW04aGVpN1IrTUlvVUYySE0wb3Yv?=
- =?utf-8?B?QTNsWDZNS1NOOG9OcEhBTmY3b1RIaUNLZGcrWXNpWWtBeE9pQjdTQ3lhU2Ry?=
- =?utf-8?B?Z3hGYWdzc3lVdEdCLzZmc1B5TU16Tk5NMW5DazdZN3B4Y29wYklGY3pYYnRX?=
- =?utf-8?B?b1R5Vm84aERwT1hibmVCM2phWktoUkZ6UlRPS3pCOTRHK2Y4eENIb1E1ZTB6?=
- =?utf-8?B?aVdOQis0bmRHcXV2K1BENWVGbHNFZnFXMkEvWDhXSHVGYmpYeElKZGI2Um5E?=
- =?utf-8?B?eTlhbVNjYmRGbTN0cnJYaE92N1l3bzFyemFITHpudU1JbkhlRks3RGhHVHpM?=
- =?utf-8?B?bXJjWU9zM3hyTERRMGc0RExBYTZONWdVWXNFUDYxRDA0eERwYmtSOUxEZkN1?=
- =?utf-8?B?REVHQ1dLTTNQaUZzaDZqQmhyblJROTJpQWc3T1FZbG5LT1V0N3Axcm4vV3dW?=
- =?utf-8?B?cjBYVHdiNXlzRXVpT2t0czI3eDkwM2wvTCtQbkozN0lLejJDdmZ1dVc5U2VW?=
- =?utf-8?B?UGk1WE5TbHhpYjFldzF3bkF3NmJDOXh1TDBZY0RhdnllNG9rWi9xMG1nK1k5?=
- =?utf-8?B?cmJLTEtJVVg5WTZoam9TNmQ5OUtnZ2Z6VU95VHYvakJRYklLUkFYSWZMMjFB?=
- =?utf-8?B?czg0UlJJOWtiY0I3MVd5MUZjSTBseTl0UkxCTGFEQU1UOFo2K0l0RHRkZmp0?=
- =?utf-8?B?WGZWcHVpRlVSTUhKZWxBejNuTXNHQ1Bhd2FKVGdnY2JZLy96MWE0MWZxMjVD?=
- =?utf-8?B?U3JQK3Y0V1c5UVM1RGNxbDVNWEpHdWxVazQwdHVzM1hGbFVBMzdxaXV2V0Zw?=
- =?utf-8?B?Q0k4akZvU094S2pieXlTL21rN0FQUXZvemVvK3NudDlsT2tTbHhpZEg5OUFR?=
- =?utf-8?B?Vk81Q0NpT25VUnJSWW5abVZ2eEM1RVFRS3BsaTRtNWZ0cXJtODgwVFpHTjJU?=
- =?utf-8?B?aUlaUkZUY0VPOHB1Yk9rdjJnOU1ZN21uakg2ZU1mTGxTL0tzdnNaN0N2WTlC?=
- =?utf-8?B?aEk1dHRGVCtQZ3ZkN0lhaHZXTXZ3a1orTlB1M0dydEVnN05aQXpQejdrSVJ6?=
- =?utf-8?B?bmNxVU5Remc3N0NGSlZmbVdYNDZQdkUxejVFTnhPMDNBS29GVEMwOUoxMGl6?=
- =?utf-8?B?T0gvYS93bnlBNkhEVTRnb29jMERLbWJxLzVOY2k3Z2NCaDVQMFRuRG5iVG4x?=
- =?utf-8?B?bjFFUVVhR3QzQTJ0bGVBREdlOHdWMlUyZW1iWWhBMVJ6QVEydFk1Y0p2YkU4?=
- =?utf-8?B?S1ExMFp3Wkk1RnJFeUNPNFdIUTFVUWJzNmNvYzVGSFZQWDhaMWd4Wm40MC93?=
- =?utf-8?B?L0hzRVcwZEVVcWVqcjdxYWFzMllKazdGK2JJK0lER1pJZmtwSGNqMFM5TCsr?=
- =?utf-8?B?V2RBSU5rY1EyNjVremRNRzdpMk1vK0d2akFKRmc3MXJYSWZiR040bEt2cER6?=
- =?utf-8?B?SkU2Q0NxajYySWZKRmhIOHloUFVsbXZQQWdpcjYrbm51dVZldGk5ZkltUHd6?=
- =?utf-8?B?N1hzM3JobEYxWG5yTXB1SUxLYVBTUlMzTG9wNXhueDl4cWFGZThtWithZG9o?=
- =?utf-8?B?cWFRVzkyTWdLL3A3Qkt3OFU1Tmk0NitDUmFaTzBQcjNHVmpVTUx1ZjRTUEVV?=
- =?utf-8?B?YUNTOW1qTDB6cXhCVDlaT1Q5Nzh6T056bWlpeU1QRE5Vdzl3YzVwdHNqSUhB?=
- =?utf-8?B?cklCMWo5VXBzendvaXlSRXRGMW1DbWlXZ1FJRU5GYTBxVmlpN0thbWRkK0pR?=
- =?utf-8?B?am5obHNMK3hHdWNFSFlsN2NRYUNLQWhTbitlL2NtN1BvR2JFamdSZURpdUJ6?=
- =?utf-8?B?UkYyVUNoR1ZZWGRkSXZEbEZzdXZvbG9FV0N4c3JuSFZoWXBaQXdRWmg2NXI1?=
- =?utf-8?B?YndvenYvbldHekt0bkdYUjBJNDMvYld0VnRkTXZOQy9vS2V0Yk96YlgzNVdl?=
- =?utf-8?B?WXVMbURYTEVZTVFsOE95MmJKaExJbGNNdURvODQ5V3IzZ24rZEdvYzcyMGhj?=
- =?utf-8?B?SVpKQkJIaE9wZHF3SUxiSG5TL2Rwcm1ja3A3RVNkWHJxMHV5V3ZBY2x6dWZS?=
- =?utf-8?B?MjdINGFXUENCOTV3K2JKTklzRjBnOFk0NTVPbWpiYjNMNzBiRk12QWNpa09y?=
- =?utf-8?B?K3QyZ0ZhRk04SEsyUEJQd21RamtnZmQ5dzNnaEk3WUF0UVRhZU9kU05vZnIw?=
- =?utf-8?Q?HrG4hqhbrtorQCJ4=3D?=
-X-Exchange-RoutingPolicyChecked: ZzgYQ2Mq6hIY29J8h9w5MfLnPlkvZa2nDxBR+TvGl0mdnwqmc18op7t3fFjlIarzE6QUamM1syDwp57RW8mLqnT6swTmFoXwOVi8HRizVVHiwd1rC73qQIkzxq82cYy2ckGjaDu8R6q1ygqf31oO3411qsTgPm+7gqXwL89htJOwSScdiReZc+ozVQZsE/aMPdObrTKigTzoNxQ7j9W7yCE5FLnI9EGpAPWaZeZttvRr4hbiN2IS+0IgvywFc0u2uc/AKyI4Ei4NbazBX44AFENoCw/ur/CsXBydc5yWNy0FsxRtWLpfCHIntRyEGtsNv7XD/wme1ND6gJHPxhLb7Q==
-X-MS-Exchange-CrossTenant-Network-Message-Id: afa79207-665d-4177-7f53-08deabea9f3b
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 May 2026 03:42:11.6723
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YGngLRiJR/eq15IOouiPfs73kbwPpbe/9cEHg6NvqAS7Egv+lPEnMvmicsTalQAba49R7EeXdOJr0kKdPNOAsgnB9hu9WkRxlXn6Q7eRH2o=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB9976
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 
-Hi Tony,
+From: Yussuf Khalil <dev@pp3345.net>
 
-On 5/6/26 4:14 PM, Luck, Tony wrote:
->>>> Unrelated to this question but may be worth a mention in the fix is that this work focuses
->>>> and fixes resctrl to not access freed memory from the worker self. To complement this it may
->>>> be worthwhile to highlight that it is safe for the work_struct self to be deleted while the
->>>> work is running (but blocked on cpus_read_lock()) based on the following comment from
->>>> kernel/workqueue.c:process_one_work():
->>>> "It is permissible to free the struct work_struct from inside the function that is called
->>>> from it ..."
->>>
->>> Scope increased from just the use-after-free when the domain was deleted. The case
->>> for taking the current worker CPU offline doesn't involve a use-after-free. It just results
->>> in running the workier on the wrong CPU for one iteration.
->>>
->>> Deleting the work_struct inside the called function is different from some agent deleting
->>> the work_struct while the worker is running.
->>
->> Right. I interpret this to mean that judging the safety of work_struct removal should consider not
->> only the workqueue API itself but also external agents that may access the work_struct after its
->> removal. The current fix addresses access to removed work_struct from within worker itself while I
->> interpret the workqueue API to guarantee that there will be no access to work_struct during or
->> after worker execution. The fix under development thus makes it possible to safely remove the
->> domain even if a worker belonging to it is executing and blocked on cpus_read_lock(). Do you
->> see any remaining issues here?
-> 
-> OK. I'll add something to the commit message.
-> 
-> I asked my original AI about this fix. It claimed to find problems relating to kernel using the work_struct
-> after return from the function. Pasting in that comment you gave me from process_one_work() about
-> it being OK to free the work_struct made it reconsider and retract.
-> 
-> Another AI (using a copy of the sashiko rules) has found an issue with our reliance on is_percpu_thread()
-> 
-> The problem is the ordering of hotplug callbacks.
-> 
-> resctrl_arch_offline_cpu() runs early because it is in the CPUHP_AP_ONLINE_DYN class. AI claims
-> that cpus_write_lock() is released after running this, but before running workqueue_offline_cpu() in the
-> CPUHP_AP_WORKQUEUE_ONLINE class.
-> 
-> So our worker may obtain cpus_read_lock() and not yet lost its_percpu_thread() status.
+[ Upstream commit aed3d041ab061ec8a64f50a3edda0f4db7280025 ]
 
-Your message is not clear to me. Do you agree with AI here and thus claim that there remains an issue? 
+Starting with commit 17ce8a6907f7 ("drm/amd/display: Add dsc pre-validation in
+atomic check"), amdgpu resets the CRTC state mode_changed flag to false when
+recomputing the DSC configuration results in no timing change for a particular
+stream.
 
-Are you suggesting that the original race explained in
-https://lore.kernel.org/lkml/afoesuWB8RezVLrN@agluck-desk3/ is not accurate? 
+However, this is incorrect in scenarios where a change in MST/DSC configuration
+happens in the same KMS commit as another (unrelated) mode change. For example,
+the integrated panel of a laptop may be configured differently (e.g., HDR
+enabled/disabled) depending on whether external screens are attached. In this
+case, plugging in external DP-MST screens may result in the mode_changed flag
+being dropped incorrectly for the integrated panel if its DSC configuration
+did not change during precomputation in pre_validate_dsc().
 
-I am not able to see how CPU hotplug write lock is released in the middle of all the AP cleanup
-handlers. When looking at _cpu_down() I see:
+At this point, however, dm_update_crtc_state() has already created new streams
+for CRTCs with DSC-independent mode changes. In turn,
+amdgpu_dm_commit_streams() will never release the old stream, resulting in a
+memory leak. amdgpu_dm_atomic_commit_tail() will never acquire a reference to
+the new stream either, which manifests as a use-after-free when the stream gets
+disabled later on:
 
-	_cpu_down()
-	{
-		...
-		cpus_write_lock();
+BUG: KASAN: use-after-free in dc_stream_release+0x25/0x90 [amdgpu]
+Write of size 4 at addr ffff88813d836524 by task kworker/9:9/29977
 
-		/*
-		 * Run all the AP handlers on CPU going down - this includes
-		 * everything > CPUHP_TEARDOWN_CPU that includes CPUHP_AP_WORKQUEUE_ONLINE
-		 * and CPUHP_AP_ONLINE_DYN.
-		 */
+Workqueue: events drm_mode_rmfb_work_fn
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x6e/0xa0
+ print_address_description.constprop.0+0x88/0x320
+ ? dc_stream_release+0x25/0x90 [amdgpu]
+ print_report+0xfc/0x1ff
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x225/0x4e0
+ ? dc_stream_release+0x25/0x90 [amdgpu]
+ kasan_report+0xe1/0x180
+ ? dc_stream_release+0x25/0x90 [amdgpu]
+ kasan_check_range+0x125/0x200
+ dc_stream_release+0x25/0x90 [amdgpu]
+ dc_state_destruct+0x14d/0x5c0 [amdgpu]
+ dc_state_release.part.0+0x4e/0x130 [amdgpu]
+ dm_atomic_destroy_state+0x3f/0x70 [amdgpu]
+ drm_atomic_state_default_clear+0x8ee/0xf30
+ ? drm_mode_object_put.part.0+0xb1/0x130
+ __drm_atomic_state_free+0x15c/0x2d0
+ atomic_remove_fb+0x67e/0x980
 
-		/* 
-		 * Run rest of cleanups on other CPU
-		 */
+Since there is no reliable way of figuring out whether a CRTC has unrelated
+mode changes pending at the time of DSC validation, remember the value of the
+mode_changed flag from before the point where a CRTC was marked as potentially
+affected by a change in DSC configuration. Reset the mode_changed flag to this
+earlier value instead in pre_validate_dsc().
 
-		cpus_write_unlock();
-	}
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5004
+Fixes: 17ce8a6907f7 ("drm/amd/display: Add dsc pre-validation in atomic check")
+Signed-off-by: Yussuf Khalil <dev@pp3345.net>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit cc7c7121ae082b7b82891baa7280f1ff2608f22b)
+Signed-off-by: Fang Wang <32840572@qq.com>
+---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c          | 5 +++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h          | 1 +
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    | 7 +++++--
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-You claim that cpus_write_lock() is dropped in this flow.
-
-To test this I enabled tracing and see the following when offlining CPU #38 running the
-overflow handler:
-
-offline triggered on CPU#1 and it takes CPU hotplug write lock
-  1)               |  _cpu_down() {
-  1)               |    percpu_down_write() {  <<<<<<<<<<======== CPU hotplug write lock acquired here
-  1) # 9155.999 us |    }
-  1)               |  /* cpuhp_enter: cpu: 0038 target: 144 step: 236 (cpuhp_kick_ap_work) */
-
-...
-executing moves to CPU being offlined (#38) from where the different AP offline callbacks are called:
- 38)               |  cpuhp_thread_fun() {
- 38)               |  /* cpuhp_enter: cpu: 0038 target: 144 step: 235 (sched_cpu_deactivate) */
- 38)               |  /* cpuhp_exit:  cpu: 0038  state: 234 step: 235 ret: 0 */
- 38) * 20632.54 us |  }
- 38)               |  cpuhp_thread_fun() {
- 38)               |  /* cpuhp_enter: cpu: 0038 target: 144 step: 214 (rapl_cpu_down_prep [intel_rapl_msr]) */
- 38)               |  /* cpuhp_exit:  cpu: 0038  state: 213 step: 214 ret: 0 */
- 38)   3.171 us    |  }
- 38)               |  cpuhp_thread_fun() {
- 38)               |  /* cpuhp_enter: cpu: 0038 target: 144 step: 213 (pkg_thermal_cpu_offline [x86_pkg_temp_thermal]) */
- 38)               |  /* cpuhp_exit:  cpu: 0038  state: 212 step: 213 ret: 0 */
- 38)   2.378 us    |  }
-
-... this includes resctrl ...
- 38)               |  cpuhp_thread_fun() {
- 38)               |  /* cpuhp_enter: cpu: 0038 target: 144 step: 209 (resctrl_arch_offline_cpu) */
- 38)               |    resctrl_arch_offline_cpu() {
- 38)               |      resctrl_offline_cpu() {
- 38)               |        /* workqueue_queue_work: work struct=00000000ed014eff function=mbm_handle_overflow workqueue=events req_cpu=39 cpu=39 */
- 38) # 5920.866 us |      }
- 38) # 5927.396 us |    }
- 38)               |  /* cpuhp_exit:  cpu: 0038  state: 208 step: 209 ret: 0 */
- 38) # 5929.182 us |  }
-
-... and the workqueues ...
- 38)               |  cpuhp_thread_fun() {
- 38)               |  /* cpuhp_enter: cpu: 0038 target: 144 step: 187 (workqueue_offline_cpu) */
- 38)               |    workqueue_offline_cpu() {
- 38)   3.724 us    |      unbind_worker();
- 38)   2.312 us    |      unbind_worker();
- 38)   1.701 us    |      unbind_worker();
- 38)   1.681 us    |      unbind_worker();
- 38) ! 226.852 us  |    }
- 38)               |  /* cpuhp_exit:  cpu: 0038  state: 186 step: 187 ret: 0 */
- 38) ! 229.393 us  |  }
-
-....
-eventually this all finishes and _cpu_down() completes, releasing the CPU hotplug write lock:
-
- 73)               |  /* cpuhp_exit:  cpu: 0038  state:   6 step:   7 ret: 0 */
- 73)               |  /* cpuhp_enter: cpu: 0038 target:   0 step:   2 (x86_pmu_dead_cpu) */
- 73)               |  /* cpuhp_exit:  cpu: 0038  state:   1 step:   2 ret: 0 */
- 73)   5.038 us    |    percpu_up_write(); <<<<<<<<<<======== CPU hotplug write lock released here
- 73)               |    cpus_read_lock() {
- 73)   0.474 us    |      __percpu_down_read();
- 73)   1.420 us    |    }
- 73) * 62023.47 us |  } /* _cpu_down */
-
-In the trace that included all CPUs I only see one instance of percpu_down_write() called when
-_cpu_down() starts and one instance of percpu_up_write() when _cpu_down() exits.
-
-You claim that CPU hotplug write lock is released before workqueue_offline_cpu() is called.
-I am not able to verify this by looking at the code nor the traces generated when offlining a CPU.
-Could you please help me understand your claim?
-
-Reinette
-
-
-
-
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index f51c3921cbc2..12f75b2ad664 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10152,6 +10152,11 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
+ 	}
+ 
+ 	if (dc_resource_is_dsc_encoding_supported(dc)) {
++		for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state, new_crtc_state, i) {
++			dm_new_crtc_state = to_dm_crtc_state(new_crtc_state);
++			dm_new_crtc_state->mode_changed_independent_from_dsc = new_crtc_state->mode_changed;
++		}
++
+ 		for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state, new_crtc_state, i) {
+ 			if (drm_atomic_crtc_needs_modeset(new_crtc_state)) {
+ 				ret = add_affected_mst_dsc_crtcs(state, crtc);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+index 88606b805330..8d4f2cadb915 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -737,6 +737,7 @@ struct dm_crtc_state {
+ 
+ 	bool freesync_vrr_info_changed;
+ 
++	bool mode_changed_independent_from_dsc;
+ 	bool dsc_force_changed;
+ 	bool vrr_supported;
+ 	struct mod_freesync_config freesync_config;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 2698e5c74ddf..ab6924d3046b 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1587,8 +1587,11 @@ int pre_validate_dsc(struct drm_atomic_state *state,
+ 		} else {
+ 			int ind = find_crtc_index_in_state_by_stream(state, stream);
+ 
+-			if (ind >= 0)
+-				state->crtcs[ind].new_state->mode_changed = 0;
++			if (ind >= 0) {
++				struct dm_crtc_state *dm_new_crtc_state = to_dm_crtc_state(state->crtcs[ind].new_state);
++
++				dm_new_crtc_state->base.mode_changed = dm_new_crtc_state->mode_changed_independent_from_dsc;
++			}
+ 		}
+ 	}
+ clean_exit:
+-- 
+2.34.1
 
