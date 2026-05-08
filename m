@@ -1,38 +1,38 @@
-Received: from mail115-118.sinamail.sina.com.cn (mail115-118.sinamail.sina.com.cn [218.30.115.118])
+Received: from smtp134-25.sina.com.cn (smtp134-25.sina.com.cn [180.149.134.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB49E3563F6
-	for <patches@lists.linux.dev>; Fri,  8 May 2026 06:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93583563F6
+	for <patches@lists.linux.dev>; Fri,  8 May 2026 06:59:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=180.149.134.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778223557; cv=none; b=Ov1aplOnSNxntAU9wkuxgD077o3DO9cyQjz2o5pkqYStTA3dlxbV9j8ZKY3vOuHKNf9DSysNxmJinvBaWA4QTjm+ISdwIA/um6mBsVYLwr1N2W1JL5VdP/+1iLBaontOQDPEeoofwBFRU0+iPAWKQCCmcsPDUBf7PsIhr+DZUiw=
+	t=1778223574; cv=none; b=NDNY+FFrM3dGKeChkbYKRCB9l/SwqqScCztrLAFvVzd737feotOcQCOz4aEqWg3AQqWS7fham8i4gVf/YzA32+h03+dl5CD+Z+zRt/W9Tj7KksUrMfJwwAJLdzn0B4dzb6oa5gc538a/NRbNQMoM6ROVvPbPTp0HtTa/EiDCxcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778223557; c=relaxed/simple;
-	bh=Ny5lasZHyO87EegPFrBjX2eufmvrdYmaIvUhQ44Lp5M=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=j1XU1k9zitwP2dRMTPYaQvAOYswVUV9SZ0dSx/C+jsiB6LNDQb4bqMAZKCSvFJYVGG1pdqVsAnYVEugypd4iS7SzTO1nvYLhFqxtk9t9em0is3zoGtZyzp7aZ6uzHkc55RHCXwLgDEYx8nAv7kywfUsRKLqLJ0OTVUAFxlbceac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=bstxeO3L; arc=none smtp.client-ip=218.30.115.118
+	s=arc-20240116; t=1778223574; c=relaxed/simple;
+	bh=EnYg4YStxteAETbi/pqzyOEawxnwsuPqt4HqxD9x2SI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uQS3hrbhKggTGcmW0wGBr8MH/MmaTvMV+CgdKxmJcgEXUj0k3AvPvzmzSQvvU0uLNdn6Y6mbgw1bIBUQJWPdF0JRsjbeL4+W3iSKcudoCN+rQZQlOjyp7X0J+cbyRIuELI0V38n358bLMfp4D84k8QYBoR2ng527L1GrhNpO+KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=xbZu3gf2; arc=none smtp.client-ip=180.149.134.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="bstxeO3L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1778223551;
-	bh=mknp58zzNXrMHnzixaFoNMYGsNeXzm8WGz4EEnUO4qM=;
+	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="xbZu3gf2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1778223568;
+	bh=oQlBFXWBtVJr2Gtmt8ckdNW6h+dG64f8U7L3BEb5vF0=;
 	h=From:Subject:Date:Message-Id;
-	b=bstxeO3LLLxPUBT3oiJluWWc1gQCjXPULNZtptfFnRQlCYkWL27YUjnDHkZmuT9D3
-	 dUQunUC69qfUOZdj1UEi/siJ45qbmKXEyY8h34tvmzk268vtGi4lWPgjF8PIyFuPYr
-	 VCENFUubiDZfYgtAr19/4qOgg+ZoH+6einwtSgo8=
+	b=xbZu3gf2gG+MHKnPZHQF8A7J9jcIALs+319tanU8LTffILzeOwK/PnfX0+Z+HE06O
+	 NHB5zWqJJ/0HGIRZT6ZgoTpq4kTPXVpZ29XlkGbnNhRGv6BE16c60a9oWS6pgcMpAg
+	 xByZW1ALcCEmDM7GVJM9MwWw94/0gmYS6yjUsAlc=
 X-SMAIL-HELO: NTT-kernel-dev
 Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
-	by sina.cn (10.185.250.24) with ESMTP
-	id 69FD899500007A39; Fri, 8 May 2026 14:58:31 +0800 (CST)
+	by sina.cn (10.185.250.21) with ESMTP
+	id 69FD89A50000270D; Fri, 8 May 2026 14:58:47 +0800 (CST)
 X-Sender: jianqkang@sina.cn
 X-Auth-ID: jianqkang@sina.cn
 Authentication-Results: sina.cn;
 	 spf=none smtp.mailfrom=jianqkang@sina.cn;
 	 dkim=none header.i=none;
 	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 48299210747922
-X-SMAIL-UIID: 8D42F8EFFC414A5DA0CB3185ACE2023C-20260508-145831-1
+X-SMAIL-MID: 6295883408445
+X-SMAIL-UIID: F7F94DC9A00340F5A0DB27FCDA67CEBC-20260508-145847-1
 From: Jianqiang kang <jianqkang@sina.cn>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -42,9 +42,9 @@ Cc: patches@lists.linux.dev,
 	tytso@mit.edu,
 	adilger.kernel@dilger.ca,
 	linux-ext4@vger.kernel.org
-Subject: [PATCH 6.1.y] ext4: validate p_idx bounds in ext4_ext_correct_indexes
-Date: Fri,  8 May 2026 14:58:29 +0800
-Message-Id: <20260508065829.3030954-1-jianqkang@sina.cn>
+Subject: [PATCH 6.6.y] ext4: validate p_idx bounds in ext4_ext_correct_indexes
+Date: Fri,  8 May 2026 14:58:45 +0800
+Message-Id: <20260508065845.3031006-1-jianqkang@sina.cn>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -87,10 +87,10 @@ Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
  1 file changed, 15 insertions(+)
 
 diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 1df717477469..6d95dab53847 100644
+index 7626cf2b07f1..a94798e23c1a 100644
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -1740,6 +1740,13 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
+@@ -1743,6 +1743,13 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
  	err = ext4_ext_get_access(handle, inode, path + k);
  	if (err)
  		return err;
@@ -104,7 +104,7 @@ index 1df717477469..6d95dab53847 100644
  	path[k].p_idx->ei_block = border;
  	err = ext4_ext_dirty(handle, inode, path + k);
  	if (err)
-@@ -1752,6 +1759,14 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
+@@ -1755,6 +1762,14 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
  		err = ext4_ext_get_access(handle, inode, path + k);
  		if (err)
  			break;
