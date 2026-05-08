@@ -1,253 +1,177 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41523CFF40
-	for <patches@lists.linux.dev>; Fri,  8 May 2026 18:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4991737F726
+	for <patches@lists.linux.dev>; Fri,  8 May 2026 20:09:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778264518; cv=none; b=rEYPlqUX6pAu2vD5YuxvcHN2CkyBDWSDBIC1x7kRTMDSOEWv+FYbwySWmzkgYUJFmkFc6JTC8o/ODAjh4cb4hAAJArm1tJDySD1Is9SB4sWTsI7hWb4mnheFcF+cojYBLesZoDZZYF+B1y2ZOVLWCL+kx/O9ZkSf9FAvwxDIaxM=
+	t=1778270985; cv=none; b=rIrCNGT88HuWIcVmAPj633XSQDoyxIxFDfL9bGppbtVDkmeQK6RU0YDfh7FMzLAXc5rNfVpnw1jw7q8e6uM/hI8Z0mK3XavlpE55lGJBryAVWqoiIfwrkmYF//IoXAKdnLRXWnE+gkG/u/CpTsFn0njS6ok2x0mbOAHkYPSWskY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778264518; c=relaxed/simple;
-	bh=mqPKAKENpxqDTUksGBOXYvclAaeRmAP8h/OdzeG4Fjs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EVUX8xVLbIxvIjnTNF1E1ntdq6rWEVyKdayDdEc2zt2UL67zHOYsGJZTojL/6LtJhSr+rX7fxnxhSKzEdi3HP80jkgJvwLY+q1F3e5vqrJ00HewdsF6T+XRBOH8B/X3hRYPQUrBj3GgFuOKaqMrHMLwTRbR0b+2VfVoYX0ApSbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YjJSXmwS; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1778270985; c=relaxed/simple;
+	bh=kOkgadq14suwO8KmR+859hipwhbCqWCtsBjZKpFyOnE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qeBEdbkwOBAUsDkme6hkq9uTengzITSvWE4/xQerYkKK8wCx5zMANIbkR12SUBJ1cRyqh3QMCfuFzoBTg0Ikgk6m0rE7XAn36o95cO4fCyaL4U0Vx8MviXXNxDY2dnAM9Go2T+11LZm1ltTHfPXFjuNySqs8uiOSwmCz6YzvPu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=M3Tv0xpy; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YjJSXmwS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1778264513; x=1809800513;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=mqPKAKENpxqDTUksGBOXYvclAaeRmAP8h/OdzeG4Fjs=;
-  b=YjJSXmwSCP+AZIOxuY65p7yk4tZzOi9iJeU9mRU3HOOL+pHpTdAwG0lF
-   y5KVsPjDvLZBTB18PFjY+7KpR1oAVqv4jYfioEUslV+O167U/tR2A8bdp
-   ZE38G+7NgAsVo9xFVMLYARbpfVxoWvkby0i6gFW70GWhuLz98/MVyW7WL
-   nlnkOnxTWTjep21CsKBM5p1LIbOa6NaupPpv0JcE4JtRPYz3nRRrX0bRL
-   vJKtl7oCT5dHzIlaXu8JwgDUnmxWFtziguZZUIbA5t7dSumF5wb3kN7oT
-   jRr9bdD5l26xi1QuL8BMoKx1gJ9TzNOymMccfrdhAoPvAnnH9O6HjGEA/
-   Q==;
-X-CSE-ConnectionGUID: ZULSHhMTQsG9gGD7Wawh4Q==
-X-CSE-MsgGUID: IGrROZwxT3SW+3li5dmSNw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11780"; a="79264166"
-X-IronPort-AV: E=Sophos;i="6.23,224,1770624000"; 
-   d="scan'208";a="79264166"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2026 11:21:50 -0700
-X-CSE-ConnectionGUID: NAPzry18RjShpNYyXNeLvw==
-X-CSE-MsgGUID: bBPE7fLZTfCn04iitsO7hA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,224,1770624000"; 
-   d="scan'208";a="233776436"
-Received: from mdroper-mobl2.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.98])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2026 11:21:49 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>
-Cc: Borislav Petkov <bp@alien8.de>,
-	x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 4/4] fs/resctrl: Fix issues with worker threads when CPUs are taken offline
-Date: Fri,  8 May 2026 11:21:43 -0700
-Message-ID: <20260508182143.14592-5-tony.luck@intel.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260508182143.14592-1-tony.luck@intel.com>
-References: <20260508182143.14592-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="M3Tv0xpy"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2b46da8c48eso1005ad.1
+        for <patches@lists.linux.dev>; Fri, 08 May 2026 13:09:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1778270983; x=1778875783; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zu32dzAdarKxbcjgwX2AWV9AveqcvXYvabaFeB6Rgag=;
+        b=M3Tv0xpyT535rDPdr2UJw49K1wE4FG8nBcDSLGZaWhJ5DL9+AjzwWL2QDClk0Ux2HK
+         GHEH83YWsE4o1m+vkvqxte5aEkAzFXVkXcKaUxcAybdJynynZtdVRkxOX6YU3G718KiL
+         ncwJMQz4X4rr2DI5hCD+agzunKk+q+S1k2+GcJDzhBu71XpBC4o5NCQdW+ESJw/pUQ15
+         PI7P3lWYcE9Meb39QHaUp9wOU7YPBTsmhIE57jDpe7Kub2nLjwyDs0MEEGK/sl06rb6Q
+         mwWd0yrPliSXjfGQjlxeq81I59XxmQf3Fcy2OFIPcMsRAR+gQULxjH3m4RDwXiLdO3kZ
+         0Pzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778270983; x=1778875783;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zu32dzAdarKxbcjgwX2AWV9AveqcvXYvabaFeB6Rgag=;
+        b=CvRRRI747sTpvXNFt/lg21LhoUq8SIrUqTvzqwCNj2ovCBVzW3QCIOWrXBiSuRghWf
+         JNXhYbvTJ82+sHF9T2xDeuui2mVjkPUY6PVbBfSlweQpiIpZK2nkXBVDlmZ9AWwNXVzW
+         yn5CBsrhwn6FNq98AcYUzyT2xOk9u9Zemc4uSxsYIfrsw+VQr2n9CXpUVxx5m+2ewM3k
+         eTVD68eWmbla2IeyduJNSUOXEfmdTvNmSifrRenh67pysBRvakZk3IYaHcymy4hQFUKZ
+         KpYDWOu8FnIHcoiKBVgTbvp7uGqd6vwsoLRD6QrX66RigiQG4z21wYkEqsvLB/CdNrM4
+         z3gA==
+X-Forwarded-Encrypted: i=1; AFNElJ/8HYtkH9fXFgh4ACEgzbfEvx4uwZMca6ew6G3HwX6l02zuMMSLo45l3OmM69E/elT3aL42ytsQ@lists.linux.dev
+X-Gm-Message-State: AOJu0YwyKShNOe+ZjPKCCZAzPYC0EL3L88Y4D1kmNbWv+8nG4Hg14K96
+	A2IitaiM27u95Sq65VQj0Iux1LEZKQ1wMvh8TyJdVShnBmuCfAjGNgsIWy83v2enTQ==
+X-Gm-Gg: Acq92OG3qCRTyqHDDLKXzmcT8MWcOZu568v29ks6Sq0fhpOiBFGiE+CdndIozHmrUZq
+	Fz9nUAbQYgbZaGDqZCzWQH7PYpxxiAwCOjCHIXs8KYwc+05+IGvdXzPpPbmSn5udjaoA5gMN70z
+	O4/In/RheRw48dDKrr2SzSlpZgYUtp7cstNrYAY17vqu+avqz6pJ1v1MjybS0SnVlzzHjBEdbtz
+	+meHykyJ6qcc/GAbbY6Guu5UEE8E6lR/eLCQ3wE4WbPK+BlP3Q1o7F0b/jZLWQaxGquuFYkdnl3
+	1uvcyjgLPijMQF5/WgvhQyF8KbA4Qr8jkRbZHGzDZu3G+Mny1uMe2zQxS3VMXj6hP9C/Rc6LW8x
+	ULmFjqC6u01/hJfBWP26xQnymOyDWBIQ0Vu5WNqg+mawUXU9q7huNjIeg6ngIYeIXkkeNZlqL9G
+	z9+m0WWQZGNxLrWs9fCArVosRTn6w4mu8oa1X7YtPVr1cfOSFFQqII6PeanqiYXXHwun+r
+X-Received: by 2002:a17:902:cecd:b0:2ae:45cc:aeb6 with SMTP id d9443c01a7336-2bc74753517mr653625ad.6.1778270980413;
+        Fri, 08 May 2026 13:09:40 -0700 (PDT)
+Received: from google.com (44.234.124.34.bc.googleusercontent.com. [34.124.234.44])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2baf1e35ba2sm33602775ad.50.2026.05.08.13.09.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 May 2026 13:09:40 -0700 (PDT)
+Date: Fri, 8 May 2026 20:09:33 +0000
+From: Pranjal Shrivastava <praan@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Jonathan Hunter <jonathanh@nvidia.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Krishna Reddy <vdumpa@nvidia.com>, Will Deacon <will@kernel.org>,
+	David Matlack <dmatlack@google.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Mostafa Saleh <smostafa@google.com>
+Subject: Re: [PATCH 6/9] iommu/arm-smmu-v3: Directly encode simple commands
+Message-ID: <af5C_ax1a3LbtL1Q@google.com>
+References: <0-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
+ <6-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
+ <af3KDBt8vhClSKEF@google.com>
+ <20260508173736.GH9254@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260508173736.GH9254@nvidia.com>
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+On Fri, May 08, 2026 at 02:37:36PM -0300, Jason Gunthorpe wrote:
+> On Fri, May 08, 2026 at 11:33:32AM +0000, Pranjal Shrivastava wrote:
+> 
+> > > -static int __arm_smmu_cmdq_issue_cmd(struct arm_smmu_device *smmu,
+> > > -				     struct arm_smmu_cmd *cmd,
+> > > -				     bool sync)
+> > > +static int arm_smmu_cmdq_issue_cmd_p(struct arm_smmu_device *smmu,
+> > > +				     struct arm_smmu_cmd *cmd, bool sync)
+> > 
+> > Nit: I'm not sure why we need to rename this? We can still define the 
+> > rest of the helpers like:
+> 
+> I made it have the same naming system as this:
+> 
 
-Sashiko noticed[1] a user-after-free in the resctrl worker thread code
-where the rdt_l3_mon_domain structure was freed while the worker was blocked
-waiting for locks.
+I know lol, I just meant why are we prefering  "_p" names. No strong 
+feelings here though.
 
-The root issue is that cancel_delayed_work() does not block in the case where
-the worker thread is executing. This results in the race that Sashiko noticed,
-but also causes problems when the CPU that has been chosen to service the
-worker thread is taken offline.
+> > > +static void arm_smmu_cmdq_batch_add_cmd_p(struct arm_smmu_device *smmu,
+> > > +					  struct arm_smmu_cmdq_batch *cmds,
+> > > +					  struct arm_smmu_cmd *cmd)
+> > 
+> > Nit: Same here, why not  __arm_smmu_cmdq_batch_add_cmd? I understand
+> > that _p just means we'll aceept ptr.. but the name's kinda wonky.
+> 
+> Which becomes a fairly widly used public entry point, so I didn't want
+> to have the __
+> 
+> Though there is no external user of arm_smmu_cmdq_issue_cmd_p()
+> 
 
-Note that worker threads are allowed to delete their own work_struct
-(see comment in kernel/workqueue.c:process_one_work()) so there can't be
-any problems on the return path from the worker in this case where the
-work_struct was deleted by other code while the worker was executing.
+It's just that we're calling "arm_smmu_cmdq_batch_add_cmd_p" at one
+place and using `arm_smmu_make_cmd_<cmd_name>` at the other. It makes
+one think what's "_p" in issue_cmd, only to realize "_p: pointer variant
 
-Indicate failure of cancel_delayed_work() calls in resctrl_offline_cpu()
-by setting d->mbm_work_cpu or d->cqm_work_cpu to nr_cpu_ids. Make the worker
-threads check to see if they are no longer bound to the right CPU. In this
-case search the L3 domain list for any domain(s) with the work cpu set to
-nr_cpu_ids. In the case where the last CPU was removed from a domain, the
-domain has been removed from the list and there is nothing to do. If the
-domain still exists, then restart the worker on any of the remaining CPUs.
+I guess I didn't like the new _p ones but I guess it's fine. Happy to
+leave it at your discretion.
 
-Remove redundant cancel_delayed_work() calls from resctrl_offline_mon_domain().
+> > >  static irqreturn_t arm_smmu_priq_thread(int irq, void *dev)
+> > > @@ -3464,7 +3405,7 @@ static void arm_smmu_inv_flush_iotlb_tag(struct arm_smmu_inv *inv)
+> > >  
+> > >  	cmd.opcode = inv->nsize_opcode;
+> > >  	arm_smmu_cmdq_build_cmd(&hw_cmd, &cmd);
+> > > -	arm_smmu_cmdq_issue_cmd_with_sync(inv->smmu, &hw_cmd);
+> > > +	arm_smmu_cmdq_issue_cmd_with_sync(inv->smmu, hw_cmd);
+> > 
+> > Nit: are we passing it by value here? This would be a 16-byte stack
+> > copy? As with the macro expansion this looks like:
+> > 
+> > {
+> > 	struct arm_smmu_cmd __cmd = hw_cmd; // <-- Redundant 16-byte copy
+> > 	arm_smmu_cmdq_issue_cmd_p(inv->smmu, &__cmd, true);
+> > }
+> > 
+> > Why not use arm_smmu_cmdq_issue_cmd_p(inv->smmu, &hw_cmd, true) ?
+> > Although, I see this is eventually cleaned up in Patch 9.
+> 
+> Because it is eventually cleaned up in patch 9 :) The point was not to
+> change this logic in this patch.
 
-Fixes: 24247aeeabe9 ("x86/intel_rdt/cqm: Improve limbo list processing")
-Co-developed-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com [1]
----
- fs/resctrl/monitor.c  | 55 +++++++++++++++++++++++++++++++++++++++++++
- fs/resctrl/rdtgroup.c | 27 +++++++++++++++------
- 2 files changed, 75 insertions(+), 7 deletions(-)
+Yea, just trying to call it out for a situation if this series gets
+merged in 2 parts. Not suggesting this would happen but helps to know
+for bisection etc too..
 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 9fd901c78dc6..02434d11e024 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -791,12 +791,38 @@ static void mbm_update(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
-  */
- void cqm_handle_limbo(struct work_struct *work)
- {
-+	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
- 	unsigned long delay = msecs_to_jiffies(CQM_LIMBOCHECK_INTERVAL);
- 	struct rdt_l3_mon_domain *d;
- 
- 	cpus_read_lock();
- 	mutex_lock(&rdtgroup_mutex);
- 
-+	/*
-+	 * Worker was blocked waiting for the CPU it was running on to go
-+	 * offline. Handle two scenarios:
-+	 * - Worker was running on the last CPU of a domain. The domain and
-+	 *   thus the work_struct has been freed so do not attempt to obtain
-+	 *   domain via container_of(). All remaining domains have limbo
-+	 *   handlers so the loop will not find any domains needing a
-+	 *   limbo handler. Just exit.
-+	 * - Worker was running on CPU that just went offline with other
-+	 *   CPUs in domain still running and available to take over the
-+	 *   worker. Offline handler could not schedule a new worker on
-+	 *   another CPU in the domain but signaled that this needs to be
-+	 *   done by setting mbm_work_cpu to nr_cpu_ids. Find the domain
-+	 *   that needs a worker and schedule it after the normal CQM
-+	 *   interval.
-+	 */
-+	if (!is_percpu_thread()) {
-+		list_for_each_entry(d, &r->mon_domains, hdr.list) {
-+			if (d->cqm_work_cpu == nr_cpu_ids)
-+				cqm_setup_limbo_handler(d, CQM_LIMBOCHECK_INTERVAL,
-+							RESCTRL_PICK_ANY_CPU);
-+		}
-+		goto out_unlock;
-+	}
-+
- 	d = container_of(work, struct rdt_l3_mon_domain, cqm_limbo.work);
- 
- 	__check_limbo(d, false);
-@@ -808,6 +834,7 @@ void cqm_handle_limbo(struct work_struct *work)
- 					 delay);
- 	}
- 
-+out_unlock:
- 	mutex_unlock(&rdtgroup_mutex);
- 	cpus_read_unlock();
- }
-@@ -852,6 +879,34 @@ void mbm_handle_overflow(struct work_struct *work)
- 		goto out_unlock;
- 
- 	r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
-+
-+	/*
-+	 * Worker was blocked waiting for the CPU it was running on to go
-+	 * offline. Handle two scenarios:
-+	 * - Worker was running on the last CPU of a domain. The domain and
-+	 *   thus the work_struct has been freed so do not attempt to obtain
-+	 *   domain via container_of(). All remaining domains have overflow
-+	 *   handlers so the loop will not find any domains needing an
-+	 *   overflow handler. Just exit.
-+	 * - Worker was running on CPU that just went offline with other
-+	 *   CPUs in domain still running and available to take over the
-+	 *   worker. Offline handler could not schedule a new worker on
-+	 *   another CPU in the domain but signaled that this needs to be
-+	 *   done by setting mbm_work_cpu to nr_cpu_ids. Find the domain
-+	 *   that needs a worker and schedule it to run after the normal
-+	 *   MBM interval. This is completely safe on CPUs with wide MBM
-+	 *   counters. Likely OK for old CPUs with narrow counters as the
-+	 *   MBM_OVERFLOW_INTERVAL was picked conservatively.
-+	 */
-+	if (!is_percpu_thread()) {
-+		list_for_each_entry(d, &r->mon_domains, hdr.list) {
-+			if (d->mbm_work_cpu == nr_cpu_ids)
-+				mbm_setup_overflow_handler(d, MBM_OVERFLOW_INTERVAL,
-+							   RESCTRL_PICK_ANY_CPU);
-+		}
-+		goto out_unlock;
-+	}
-+
- 	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
- 
- 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 62e1e4c30f78..bab9afd5066e 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -4343,8 +4343,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
- 		goto out_unlock;
- 
- 	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
--	if (resctrl_is_mbm_enabled())
--		cancel_delayed_work(&d->mbm_over);
-+
- 	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
- 		/*
- 		 * When a package is going down, forcefully
-@@ -4355,7 +4354,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
- 		 * package never comes back.
- 		 */
- 		__check_limbo(d, true);
--		cancel_delayed_work(&d->cqm_limbo);
- 	}
- 
- 	domain_destroy_l3_mon_state(d);
-@@ -4536,13 +4534,28 @@ void resctrl_offline_cpu(unsigned int cpu)
- 	d = get_mon_domain_from_cpu(cpu, l3);
- 	if (d) {
- 		if (resctrl_is_mbm_enabled() && cpu == d->mbm_work_cpu) {
--			cancel_delayed_work(&d->mbm_over);
--			mbm_setup_overflow_handler(d, 0, cpu);
-+			if (cancel_delayed_work(&d->mbm_over)) {
-+				mbm_setup_overflow_handler(d, 0, cpu);
-+			} else {
-+				/*
-+				 * Unable to schedule work on new CPU if it
-+				 * is currently running since the re-schedule
-+				 * will just force new work to run on
-+				 * current CPU. Mark domain's worker as
-+				 * needing to be rescheduled to be handled
-+				 * by worker itself.
-+				 */
-+				d->mbm_work_cpu = nr_cpu_ids;
-+			}
- 		}
- 		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) &&
- 		    cpu == d->cqm_work_cpu && has_busy_rmid(d)) {
--			cancel_delayed_work(&d->cqm_limbo);
--			cqm_setup_limbo_handler(d, 0, cpu);
-+			if (cancel_delayed_work(&d->cqm_limbo)) {
-+				cqm_setup_limbo_handler(d, 0, cpu);
-+			} else {
-+				/* Same as mbm_work_cpu case above */
-+				d->cqm_work_cpu = nr_cpu_ids;
-+			}
- 		}
- 	}
- 
--- 
-2.54.0
+But I understand the point on keeping the intermediate diff clean.
+Always learning :)
 
+> 
+> > > +static inline struct arm_smmu_cmd arm_smmu_make_cmd_cfgi_all(void)
+> > > +{
+> > > +	struct arm_smmu_cmd cmd = arm_smmu_make_cmd_op(CMDQ_OP_CFGI_ALL);
+> > > +
+> > > +	cmd.data[1] |= FIELD_PREP(CMDQ_CFGI_1_RANGE, 31);
+> > 
+> > Maybe this is a good opportunity to define "31"? We already have a 
+> > similar definition for TLBI: #define CMDQ_TLBI_RANGE_NUM_MAX 31
+> 
+> I went with how the spec was written. The CMD_CFGI_ALL has its own section
+> with a direct encoding of 31 in that position, no field name.
+> 
+> While CMD_CFGI_STE_RANGE has the same op code and names that spot
+> "range" and it would be a NUM_MAX, we don't use STE_RANGE..
+> 
+> I'm inclined to leave it for someone who adds STE_RANGE..
+> 
+
+Alright. We'll wait for someone to add it with STE_RANGE.
+
+Praan
