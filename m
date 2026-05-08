@@ -1,63 +1,63 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AF03DCDB6
-	for <patches@lists.linux.dev>; Fri,  8 May 2026 20:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049D51EFFB7
+	for <patches@lists.linux.dev>; Fri,  8 May 2026 20:35:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778272007; cv=none; b=W6YbNDpDLEgBiS8NwDzjSeavZHAcO7jogzd6SwHVtuCo9TzBInag2zFYe/S+18CdJagtKsPScdFgSppELupj8VrZ0yBbBsrZyN/yYaa704/gWDHW67x2vOIALb5R90p+HNQiqSiyWl/fzSrTGzW6S/Ug8CR4/RU66aD4EbPkUmU=
+	t=1778272519; cv=none; b=Ql2ZsVFM/DvsYLmeRlzGQ0o9TasKSxU3IVkCKrC6i+br+rtHRQxZ+XPYF01dsy5kSOHG7ZYH9GdVgl7aCNzmUhJoPbvDchp7MOOeutGjHbIMtSdp7Y/P+4Wsyy2OUTXgVASYJ6oFk/au6F3rWcw9izSe2fLPVkA9Yhfjsgdctx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778272007; c=relaxed/simple;
-	bh=WlJSKH8GnQbAQDyv/X9rW3tuvBYlQ+Zvl/Deb3LwMjY=;
+	s=arc-20240116; t=1778272519; c=relaxed/simple;
+	bh=/RXh760jgpmBXWYza11o+sjayeAl1AGvqWbQvG3+uvM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qzZwNaCh3vB2+jU1aPtWv6BzY9NWFVN8rDqDIXj7kKGP4zSHfWWIBJWAvGudJyxoiuIxITwEB09hZ6NwN/GvXTDLiEvTW8qBAq4Odwvwo9LcT8xTh2Ri3IUASseiJ+L+1K9SMw+ZA04Zm5mZgQcPQ8ntm4xfawbWa1gcp5oDcTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nReuIh4a; arc=none smtp.client-ip=209.85.214.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=PcTGf21D9Ob9ynGMCzJmXVkVz/qIhGF/UiTsK9Sf32X2QR0mZ3pQJv0IEjxAoEQrAgU8jiOEbjF9w+QgITnXtJP78PTfCihOoUwOMpUMDbv1YYmv4JdVHSbGwi779Ulzcq47LjnRVmMh+YyzPcPOvR8kNZGeyCCsxhvHYBQLjdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=oG17tuWf; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nReuIh4a"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ba180a022dso285ad.1
-        for <patches@lists.linux.dev>; Fri, 08 May 2026 13:26:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oG17tuWf"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2ba180a022dso1315ad.1
+        for <patches@lists.linux.dev>; Fri, 08 May 2026 13:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778272006; x=1778876806; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1778272517; x=1778877317; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ODbVXyQBYTWUs0NYAxrrYfv99hBNWpudjtexIbDyTrw=;
-        b=nReuIh4afF6yAfrAI3NQd7TO5dpraTQAA5bDIqzjg1XCYzMGjV7yz2JycpPr0Hz8Gz
-         Tigl2c5LbimsFvZ8ZOViKShd4haWrSoDdpDm2YXXPKV2NcQOxcLpYN5eNMgH7po+x8xr
-         wWntbQ84ukc3N7+g29dV476JpcmwFznhod4Y6v49ADhh2lGojV4Uguazxgat8tWBGrUe
-         PB39W3sP13Nm8Pz5O/G+4VU3MRxnzyd6KJD5SNjtvRD2PipT1ONC5fSAn23mguaIL9U7
-         dDgEarmrDcCAqfNlr2NM0bpLpK60Adqq3a3LlcgeE5MXweW8J5wgUZOdO6VerKA6ZENB
-         CGjw==
+        bh=/SXlitbk32WOyBlu30f95rRaQhj+JA3b3XmJB516F7k=;
+        b=oG17tuWfYsxwiY489+TIweoPnQpb9KQcuVaY6NGJE8yJZeg/P7xul16vR6VqS07wjH
+         OolhszmXXiRAfCKsIi5DCFP/DZ9qx/JWdTcMuECXU8cIY7Ga7rz1QHxuPmDqlWboyvch
+         0bxU0ioLdx1niAHt/WrNfGbIcvB02H41d3SD9ra/9L0YFXWnM7xugolTnleN4RJcUe4s
+         FTCIZrzRSo5u89k4/Xv/ikEIAxbxhGZK08X+iz+A1ePaQEAnqYHv6a7mO7baFOULkqi2
+         R2WcUmkr+Vt7Ief3rs9PRPjNNfgufKQeiM0ilHEkX3t7qm+qJn7t/5kKJ7KYbrezNwu4
+         o6rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778272006; x=1778876806;
+        d=1e100.net; s=20251104; t=1778272517; x=1778877317;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ODbVXyQBYTWUs0NYAxrrYfv99hBNWpudjtexIbDyTrw=;
-        b=RHuhoQjmdbXhz57Tslwse1O3uxQVbYzTuvz78AydGxuMaI+YFybXsUVepLG77ntcSP
-         b/huCCAXqsNny9DgivHWQuMtzTmnBU5XyrKA4S1kNogd+9wMJnEzJKOXIO5ZaqlITxd2
-         1wiVHXXXIw2IAMN5H5klFpuxXAtBEiVbUYjHU1cLOItA9djnjPPYVmZEslUjjdz9CGN8
-         NzGMobgvnuKIKzOfEiP52TP4FS+44ioVkYgk4F750jY/CgRHYfO0rMviBJlZbM+rrO6e
-         7EY+kd9seDwgCD3ilcfgK/YGFzacWt9ntU5DlnP+5xvuqYg4fI6k+2h7i+/AM6TCWAc2
-         +LuA==
-X-Forwarded-Encrypted: i=1; AFNElJ9r1R8hSIaKs506/+A3DyTSbfbnvtHzVvsbc8WKoSTxQJ4PadbOp6xNOFV9KQ3Qw2lv/GCNbGAz@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz2ROSjCia4Y3I2c+7GT0A4yvJbpak4D4AEZowXSTiZYg/nj/n7
-	UIKuiCjUsUARkXpUm0lt5Epj2FtIitFQxS4oal7l7nRDoTyEqSPcaYMaK5zvh9Rt3A==
-X-Gm-Gg: Acq92OGyb6XcRCSKZ5PP2jAp6tewvDbH3q41ppHBAmDnXWCvNjoTlEKeokGsVZfepJH
-	giZGa6+mPnlZE4reB/b58cyWQnCRXWeFPie06FXGJxg8iO6hVLQsxJhpw5zs53dxCtwHcqAau8x
-	kUfwmEuGtJ7Ji/ls89IPp/3nZZfC2g9Xv6wNA08aqWaGZ/QZVqCi4IAGSugusyuop7oCbdyJURv
-	u5/loitjDH+ZSMNqoQvKRYnd8U9a/Yu1An3WHg8boXPYk0r+QwULi4OfZ9kd9B9BonOzPjDWsFl
-	njFPCIRW5nCzUgI9/C7rQ5BHsZmZhYYs8nKVrUxoUQ6KPvbUepqy7UegVb9bgOy3a4m6D/C7TWc
-	homjIORHBO1u6EYDCYUC9D3dkorUqEQOCo5eec2tHofexsJERdEjTXHc25b6RK3bp7GqmFKs4as
-	YnyPhWgrOCl+mYc8tRU3ZTQ7atjCiDjeSWpgEs2EKm5J2zPpn2Y2duotKBlagKTW1unslw
-X-Received: by 2002:a17:903:46c5:b0:2ba:4749:c9a2 with SMTP id d9443c01a7336-2bc746fc446mr864515ad.2.1778272005075;
-        Fri, 08 May 2026 13:26:45 -0700 (PDT)
+        bh=/SXlitbk32WOyBlu30f95rRaQhj+JA3b3XmJB516F7k=;
+        b=ryjkWlkmzmjvTH9zkzcxJeaTcoQGRSSpmNktibS/6jal6WTHgfP5kkBfrQLhxZZ99E
+         sd1hQGkfTP76Qk7Vfff7dYb3MlSURi0Zcckt2dH0rWwGSQz0mb47ulHn72bTQauDUH0D
+         JVM9kC8Dg+JUKcNxZZ0DFx4FKYmOY1Q9gE5qkGZ8Ur7ormiqBsYKg2TSGBWl5Jv8I5Ee
+         +hSt6a3bKSMDgq1Yn6adhpAr/fFWBptCai4T3+8SdVgvSpqdKST8GtNd99pij96SUocv
+         YdNkLFiJaic/ng8SAtsFCIDQLzgsVMhu1sWud5d1+Z/DDANYENwVVPGr8McaiAFh84Op
+         ksCg==
+X-Forwarded-Encrypted: i=1; AFNElJ+vfxjtvhBswCBd+w8QMAPmpRVh2qoUslKYNiLiyP9QBbh1aWZ4aqgYbFVG1ADsu2Hst1ObI2cU@lists.linux.dev
+X-Gm-Message-State: AOJu0YwiWyHMWZmqZnR+He7MhIFMjbhEfpnOPIzhJVqh9tPNsosbVgT5
+	wwP5BflMl1/pyb0uR9vJZWFT4P5IADE8z2PeW/hckZNTrJbL5FaW78kYg9V5YfOP/w==
+X-Gm-Gg: Acq92OFj/6v9A0+0bDfqg+Yt48syoOYWjogVFdw8xkobu5fU0lFCIz/1BCgbLZDLIGa
+	jgym7K31GTmJb1VydotJWTpuihc97jiV7qXQA8NWroxjBpcuquj0fsstvKerlqBbbanZRMxmayV
+	K3QD/uKcdwRjdegNUqqh3ldGVu1EsT/U+6+n9glGpVHj0Bq0vbyjc7udFw/WcikpBdoepxLOY4+
+	9X+xyOoHC6TO+DkW9hXZW91aehNGdSz2kcsQPeC1dVn+JxNjQ8KumAVK/Fb0kLZTyGv4d5+gesi
+	vUgZ33MNRQmd1eGU3mukN28pCXvbxDB+qGgKi6nrptFA56ARzj1cohLIQ8HzsLapXFhElFny3yC
+	4j95D19pHfw6XlI28JuBaSxtiOlrF/CHJhBCDou7dyqSnWnLRHgMCIjBsbxTvJT1GuW9I5Cczes
+	ZfwJAatPPA4Ns36qOElPZGNLhzV7YU6Z7Dhqalbswc+qfyPqDPdytbtcFkIbap4nCqUJ63
+X-Received: by 2002:a17:903:3884:b0:2ba:30f:33e0 with SMTP id d9443c01a7336-2bc747f25cbmr741565ad.20.1778272516852;
+        Fri, 08 May 2026 13:35:16 -0700 (PDT)
 Received: from google.com (44.234.124.34.bc.googleusercontent.com. [34.124.234.44])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-367c23464ebsm680997a91.13.2026.05.08.13.26.41
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-367c1f48517sm689352a91.10.2026.05.08.13.35.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2026 13:26:44 -0700 (PDT)
-Date: Fri, 8 May 2026 20:26:38 +0000
+        Fri, 08 May 2026 13:35:16 -0700 (PDT)
+Date: Fri, 8 May 2026 20:35:09 +0000
 From: Pranjal Shrivastava <praan@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
@@ -69,10 +69,10 @@ Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
 	Will Deacon <will@kernel.org>,
 	Andrew Jones <andrew.jones@oss.qualcomm.com>,
 	Fangyu Yu <fangyu.yu@linux.alibaba.com>, patches@lists.linux.dev
-Subject: Re: [PATCH v2 2/8] iommupt: Add struct iommupt_pending_gather
-Message-ID: <af5G_j_Y4dUUc6aZ@google.com>
+Subject: Re: [PATCH v2 3/8] iommupt: Add PT_FEAT_DETAILED_GATHER
+Message-ID: <af5I_Xps4Ma-qUDx@google.com>
 References: <0-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
- <2-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
+ <3-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -81,22 +81,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
+In-Reply-To: <3-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
 
-On Fri, May 08, 2026 at 11:53:01AM -0300, Jason Gunthorpe wrote:
-> Add a struct to keep track of all the things that are pending to be
-> merged into the gather. The way gather merging works, the pending
-> range is checked against the current gather, and the current gather
-> can be flushed before the pending things are added.
+On Fri, May 08, 2026 at 11:53:02AM -0300, Jason Gunthorpe wrote:
+> Generating the ARM SMMUv3 and RISC-V invalidation commands optimally
+> requires some additional details from iommupt:
 > 
-> Thus, if new things have to be recorded in the gather they need to be
-> kept in the pending struct until after the gather is optionally
-> flushed.
+> - leaf_levels_bitmap is used to compute the ARM Range Invalidation
+>   Table Top Level hint
 > 
-> The next patch adds new items to the gather and the pending struct.
+> - leaf_levels_bitmap is also used to compute the stride when
+>   generating single invalidations to invalidate once per leaf
+> 
+> - table_levels_bitmap also computes the ARM TTL for future cases when
+>   there are no leaves
+> 
+> Put these under a feature since only two drivers need to calculate
+> them.
+> 
+> This is also useful for the coming kunit iotlb invalidation test to
+> know more about what invalidation is happening.
 > 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
+
+The conditional gathering via PT_FEAT_DETAILED_GATHER looks nice.
 
 Reviewed-by: Pranjal Shrivastava <praan@google.com>
 
