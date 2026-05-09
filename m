@@ -1,156 +1,138 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012000.outbound.protection.outlook.com [52.101.53.0])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2E2371068;
-	Sat,  9 May 2026 16:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.0
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778345652; cv=fail; b=kMVbHDngqBpYAQglOMBAdsfR1N19RPnyUFcXyrfVXmXpc+UJL1eujoK2dVRhXc+OmPs+/xsfy3Vi/6HCleC6YN26FgWR2yzocvwHz7bkDXByftC0FM86SZLmuQcm406v1XbaNQtDVdeE61rid0barai9zwWHz+69DGc2KLxZUFs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778345652; c=relaxed/simple;
-	bh=SQGnMjZXV0WEv24+RAnzRCnscF6SkgJ59XH5FPt7uQk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=GtdyiaDZCPNLTWAYqQEWY+h5LxCqNzdH0bskg3hY00NnyFnMKjH2brOMeHuPvmoJxlXeDfUwkMB6b/zo2DxCM5gFd4hXBVz+osrgAr5rtsi9iSlJm0E6AKHtxlRx9wWzGrdYRKFJQAksKDlkH6jsAhqo7WC8medUbKkV4Xs6uZU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=a1RU1Rdx; arc=fail smtp.client-ip=52.101.53.0
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E67D2F8EB0;
+	Sat,  9 May 2026 17:22:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778347356; cv=none; b=g61nvDPccUKVsjfI6Bugk8DaZWZuBj/MAJu+qpunGj7/rJ54hHVMNSD8KhzGgm0OFYNEnHlpiS/SjL5v7y0/AuDvijU6M79Sug4y4gdNwndJ4XUBY9WuYeKtSmCWHrWwNY72AgQZvF4lvnzZugFPBcqgaIRvadr2NfpEy6A9qxk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778347356; c=relaxed/simple;
+	bh=O8vE+Mf0eCUKoyKy4rk1rc9O/9ajmr4o0MyjdcHFPZE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PPx/2Owgtp8E7NidLjCs5v5ufzAMeeM3Qf2YxZOWIRo3sbAWJiiw9Jh9Ksm+oZ4FXVHPDGWZY3yFQUsj9Wcs8ixfl2U5173+WiQoXJ6U0JCMMCiHWbtgA7v2tSX6p10Z+tw5odXk0Iln6C6K6XwuBrRGr18dIIaCgtQhv2UpB0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Cf1N01jM; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="a1RU1Rdx"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uDEYNyvG75T+B3eK6BpvhL5YtVejT+DVI+U2hn3R2Ou0rC9r+EcSICniY272My/zk0Oath5IHKEjF2+cpKQccBULu05GpLxr9DM3hlK29ejnI0aMJ1Nc6qKBQ/jChX10Lk8g4ay5VYDAKsj1yQEpilIAV4dKpK9JsG0bECNybuBDHIB5sxImqWwm/SCjO2o1nVT2+FfWv6QDSYqqGkwlI53WIAUHr0SHG05n6c5shAbN3ryCNw59wBcPp/FxztOj3Di/AV0ibIlNtYj/FbHyekFs1TDYb243nTBRqnZvVGJaH4NCMhbM4Hb1Te443Sl6jpP7SB7zSqhwGRXaPoD1RA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+306wj3e1bAWNCJw5Soq2MlQFgMYoSZG5jLsfZ1UUxo=;
- b=hWb3pRKoDMYAmDy5dOFTjeVyaWIu0eyaNsSz8/aBMTCdQZL4O6tG6sitvbsb2lBSWIfZHbj8CcufT1ifqpkMUmsvoRKCS3gWqk5Qr+RHcdUyDle6FlRpsIgBBQ5KRa8q9YPYLhBFhP65cZsw/HzOKDBxi6TdwS65/jhPyqdTEIzzUQaIGegRsNVkfsEEEs7CwyoRC30QBwhJ8vm5nRu7EV3MqTU8TmHtqEbztcRuhHlicUqmTTL9/5AjapZx7IARsFI4dIr+BTVYyXfzqCd6/yVFQk+6oVlp2Xg+Szc/4QvtQWb1/Qmx8MIgLwioIoyXEamkyVMh5yI+Lw8BvzJaRg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+306wj3e1bAWNCJw5Soq2MlQFgMYoSZG5jLsfZ1UUxo=;
- b=a1RU1RdxZzNr1/qJOsJZXaY3tCrU9iRRlY0dCyeq9GDTWvRLdhmuQPKtpF3zzi3cMmwozGOduLXcmhk+Ec3IZ3m2iK8qSReunF8kZCvfDE7Eocj/StoUanWv6LE4NWp8WA+bziExj6OFlkpmdDP26w1pV8ZseR8bRdkV7da39ZkJJn6w6UIcX7bQzHKAKTrfru3vVFfdePbtsHnX9LX3LAiT/+Zw4RkZHsvdnKusAIDbhoG/S+LVmzNBpKS/NfwRTPfjU9mVGSYemF5/5M8xelnoSzf0GykbTahaRHvwcVTMqUIMdcFw/E8owh9ath7BKGwx0Kl+7k+yrckz3lBn6w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SN7PR12MB7978.namprd12.prod.outlook.com (2603:10b6:806:34b::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.21; Sat, 9 May
- 2026 16:54:02 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9891.019; Sat, 9 May 2026
- 16:54:02 +0000
-Date: Sat, 9 May 2026 13:54:01 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Pranjal Shrivastava <praan@google.com>
-Cc: iommu@lists.linux.dev, Jonathan Hunter <jonathanh@nvidia.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Krishna Reddy <vdumpa@nvidia.com>, Will Deacon <will@kernel.org>,
-	David Matlack <dmatlack@google.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH 7/9] iommu/arm-smmu-v3: Directly encode CMDQ_OP_ATC_INV
-Message-ID: <20260509165401.GL9254@nvidia.com>
-References: <0-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
- <7-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
- <af3NH0cihPUQ8PST@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <af3NH0cihPUQ8PST@google.com>
-X-ClientProxiedBy: YT4PR01CA0038.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:fe::29) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Cf1N01jM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1778347355; x=1809883355;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=O8vE+Mf0eCUKoyKy4rk1rc9O/9ajmr4o0MyjdcHFPZE=;
+  b=Cf1N01jM5IpU2ceAUS5iApiRJW6eyf6wkJejakR92E+6LNN666x0uDAr
+   EmhN6ALstUVZ4awBcJF6upma/zIwAdBLgtC6P9CTOjtvtZc4VBfkmEnUq
+   nmoDWjXxji9WI8JBHCPyxG4piaFas74KKloTqwDe10+4Wyt7+0x3hh4K3
+   m1JhUjWXiKeBMzd8L22CODEClH9a3k5zC6FxNvPgnf/874AGTtPNwX2Pm
+   NVGbvcBo2ErW/9go7rnlLprDz20J7zME5fjGDjUbEKAAa5/dnO2yXGRbw
+   ZpMUotbignF8wCCs/L+MX38R8pfpAQzhft6LhvXlxR34UF4f3NMwaY8K9
+   Q==;
+X-CSE-ConnectionGUID: Gk9h/xfCQFWQzdGncWHpnQ==
+X-CSE-MsgGUID: gvjr4Vx7Q1uhIWZBr4dF7Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11781"; a="90678159"
+X-IronPort-AV: E=Sophos;i="6.23,225,1770624000"; 
+   d="scan'208";a="90678159"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 May 2026 10:22:34 -0700
+X-CSE-ConnectionGUID: evjPL7/hQRmgEds3pQR6hQ==
+X-CSE-MsgGUID: kPCy12N0RnaPTMFjYBl01A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,225,1770624000"; 
+   d="scan'208";a="241038482"
+Received: from igk-lkp-server01.igk.intel.com (HELO bdf09bfdbd5f) ([10.211.93.152])
+  by orviesa003.jf.intel.com with ESMTP; 09 May 2026 10:22:31 -0700
+Received: from kbuild by bdf09bfdbd5f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1wLlNk-000000007Wb-1Hzd;
+	Sat, 09 May 2026 17:22:28 +0000
+Date: Sat, 9 May 2026 19:21:43 +0200
+From: kernel test robot <lkp@intel.com>
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>
+Cc: oe-kbuild-all@lists.linux.dev, Borislav Petkov <bp@alien8.de>,
+	x86@kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Tony Luck <tony.luck@intel.com>
+Subject: Re: [PATCH] fs/resctrl: Free mon_data structures on rdt_get_tree()
+ failure
+Message-ID: <202605091918.1k5t3HFX-lkp@intel.com>
+References: <20260507201730.16509-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SN7PR12MB7978:EE_
-X-MS-Office365-Filtering-Correlation-Id: 89eb2f74-eab6-4aed-0ad6-08deadeb92ca
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|7416014|1800799024|376014|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	LU/wZE0NuvXEV/NPi9SqNnGGPFTWqLVNPB8FcH99NuCS2dIVwWDiRRn3Ve72cgdTeOq5E7YitLYcaqhOZb0gKTH+USRnCyheVwUd83UkqaPkAoGhpf4N+KLjCd4U9uzJf86to0JL8oPXQZSRf3/f1N2fulu5siwLOPbASEvy3wAfnBL1eP2BCs84DZWAPDX65M78A9SnZI6GwbOCxennXnLgZSykxBniT1x/Y7xIAKq/URGt5qswT+5BmOoTFldtgpNpZ+VepTQIDuDfzt+c8UZXG1gb2qB/E4olIPkCoAIk71FHobOot7nD/Lnu+yBY/9icC9ZO9K0OF5kJKi/nUQvdKpFmI/Q6f+Rhpzlq7LdpOvE86bvd5kSAPa+cHiv5/gGTNzxXMmK5xdwajOUdMrlm8EXulvahdbqYo++MoJMxqTZSDwliutXZvjMW0yyLiBJLG02cT1LHn42e0CJP4T5KUSBCpCc2vX0nmn8sixJmclBVUQdbVO7tOnmDvwF3zq90FMtud/tY0X7QZj25owFLcUMqYWg05CFIZqVKfMN46OL1Iq1ykaFwKSNgM0sFBqTr6mRT7V4VKhNFWfOrMHZ4Kg+yeyyLcNMDBH3npUUSfe0r1y0mvfwGHA0OBwvlT+mdJc6OUkpwaedxQk5AJ70KvofyOPKBQrtVJ6ceJAzsJVOj22GUZ+kRGYpLzBvo
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(1800799024)(376014)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?z7aU3lNItMNFPieCxLXvW+mSkmQ/5bsbQKB1IIXA6UObC2YwpZ50KWOBJL3C?=
- =?us-ascii?Q?OZ8MldO7VznQLE2e6HRQmA/hKUgsCOqVtsOYKhZNIKwCkzG3Z3VS3mGcU8Z8?=
- =?us-ascii?Q?GhcQV+Hy5YiMKyCOHNlEV8SRYc+jaMREjz1ZsmZHo07KA6rNcjnp08nVVXa0?=
- =?us-ascii?Q?AYo9IYAqLHkBXZAH1f1RKazHckrDz4Yc7Io9W4D7nAQRTh+kgf5YM+PLiZtk?=
- =?us-ascii?Q?8Qm3SRgL2G4SOQfGrdKTOjUt/MBh0Z2wOiNk3UvUEziivOILJvwUOlfNHoaR?=
- =?us-ascii?Q?/eJlDYqaZR/rTOrBuVm/up6jpR+I2nghvwGxPq7oHnBxgrSYSkCWOMbmFG96?=
- =?us-ascii?Q?y7WfystgkiHr3camxR5O/dHwyyheCNNsTVk/LjPXVCPZJaL7eEakY3lUsqeS?=
- =?us-ascii?Q?gIxl+ksA2FkUtqW/xBJQ5bkxWW6jS4QopLY4TnK/QFRbdwDSj9xtzjSztbea?=
- =?us-ascii?Q?6ZHA76dl/hYz2oI9sUzxYJzTj9l24GAhIHg0wHpEydUxctOYFVks9kc8Mp8l?=
- =?us-ascii?Q?T9Fr0BpzN0Zipl8LEygoIS+dLHTbsdI3SVl+i4QtfzJEWph468+q+qvpkCkC?=
- =?us-ascii?Q?pULu8PtlBtBfHw64tp66JNOm/ORqkA1AzvGPHToekLXZZ9mbZkjesLRu6nkq?=
- =?us-ascii?Q?laKV1tYEs4gyTI9rGRSjjwWCBRysei/g+38BR10ifpvDP5a7YInbxGiwWcZo?=
- =?us-ascii?Q?fsspDkIbiG87bEvND9O9JLj63zl3JT3Upw2q3RNrZONRj+AX/DNzpqyQcXoU?=
- =?us-ascii?Q?W3z2wENr5AFH8lFS6R/FpTHOkLWN5PVKMJ3cqUgZKfo3gp44Q2ZAD8pWiRb9?=
- =?us-ascii?Q?aIbZ87IVOqdnARTgrEk8q1/qwRW1Fqy0svMwZg912IDzj5zzjEsDWsHCM3tL?=
- =?us-ascii?Q?iMnl98cmepKrxQWfBhOCsWa0gh53jTpU0/0dhAX7H/cyPf18xizxCHk7LdXL?=
- =?us-ascii?Q?635mQgLOyb0OQcIirkGgQUeNcoaNhR3LxmKGQ2JmGO/TfotYJ8SdqCYCyjvO?=
- =?us-ascii?Q?nL0jOALorRBw1u4czoSGM1QvZDkq+iXSVcqIB+rBMvIU8GURjOpiOpodcy2s?=
- =?us-ascii?Q?T+Of0k42kosVAgCchhK7rdt3XjjDlwhxmReDIpc8tfDnN99EboHHP1DPCrZx?=
- =?us-ascii?Q?qliEODEyoLEMgjZbcFrCjBZPQE6dR3kpTiQahDpxsVFz7FKI1gjNGMX0cbTj?=
- =?us-ascii?Q?ecxdW2nYMj8P9XG49R8sl3aDqX/PLTmm19TKSl0LENYa64A4K3fZC0gAjO6H?=
- =?us-ascii?Q?lYbseBJkt5wzvGf1fkPKklXQxSFJ4Qxgu23V4W9VkbVGSQfVknUGQh66rxiO?=
- =?us-ascii?Q?I038TRWaATQ7K74V+LDszQRJ8mdeqv6Zd/JZgF5obrwzrJTrOXszAnKCPy3B?=
- =?us-ascii?Q?aY0zNJEyM6xqmIs2sxc12T9OXugveXAGHo8C1L3yNOZB8kSd0ko55Cd8/eBd?=
- =?us-ascii?Q?Y2gjCbb8pllE998v4rCZFy0OXzE0FnBu3iEaqrSzyYmFnPUm/b+CLqhDX4rt?=
- =?us-ascii?Q?cl6MRJNHyULKOeApv2O3NGEdnnLmTLxId3FnmIJwJeCI4NWnYIKSPNl8OOpQ?=
- =?us-ascii?Q?aReHALNOFYb4esXKY5Zvxhn0Zcoq8527j5Qr2T+MvGaf7iME4k4fviWStZzz?=
- =?us-ascii?Q?IwOMzKJD2ftfLKLpBmwVvzZjakCTN6Q0YMJsiHNg0Cv74u0pPQd8fL5wRJaz?=
- =?us-ascii?Q?SS6ayOxRgo/wI7mYOsOv7cdMzpY8yZxKPjUj4CsGioTmRq4i?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89eb2f74-eab6-4aed-0ad6-08deadeb92ca
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 May 2026 16:54:02.7082
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: K5MGMuVS6fhslcrf2CKHQJnXHFJ86Q2+4+YqmWmx2Ypxtb84d23qYDYovywKm6u8
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7978
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260507201730.16509-1-tony.luck@intel.com>
 
-On Fri, May 08, 2026 at 11:46:39AM +0000, Pranjal Shrivastava wrote:
-> On Fri, May 01, 2026 at 11:29:16AM -0300, Jason Gunthorpe wrote:
-> > Add a new command make function and convert all the places using
-> > ATC_INV.
-> > 
-> > Split out full invalidation to directly make the cmd instead of
-> > overloading size=0 to mean full invalidation.
-> > 
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > ---
-> 
-> Nit: I guess it's worth mentioning that we remove CMDQ_ATC_0_GLOBAL as
-> we don't set ent->atc.global = true anywhere in the driver anymore.
+Hi Tony,
 
-I added this:
+kernel test robot noticed the following build warnings:
 
-In section "3.9.1 ATS Interface" of F.b the specification says:
+[auto build test WARNING on v7.1-rc2]
+[also build test WARNING on linus/master next-20260508]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-  When the SMMU returns an ATS Translation Completion for a request that
-  had a PASID, the Global bit of the Translation Completion Data Entry
-  must be zero.
+url:    https://github.com/intel-lab-lkp/linux/commits/Tony-Luck/fs-resctrl-Free-mon_data-structures-on-rdt_get_tree-failure/20260509-184342
+base:   v7.1-rc2
+patch link:    https://lore.kernel.org/r/20260507201730.16509-1-tony.luck%40intel.com
+patch subject: [PATCH] fs/resctrl: Free mon_data structures on rdt_get_tree() failure
+config: x86_64-rhel-9.4-ltp (https://download.01.org/0day-ci/archive/20260509/202605091918.1k5t3HFX-lkp@intel.com/config)
+compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260509/202605091918.1k5t3HFX-lkp@intel.com/reproduce)
 
-Even though it faithfully forwards the G bit through to the ATS
-invalidation command there is no way to create G mappings so there is
-never any need to send a G invalidation. Thus don't expose global in the
-new helpers and leave CMDQ_ATC_0_GLOBAL unused.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202605091918.1k5t3HFX-lkp@intel.com/
 
-Jason
+All warnings (new ones prefixed by >>):
+
+   fs/resctrl/rdtgroup.c: In function 'rdt_get_tree':
+   fs/resctrl/rdtgroup.c:2883:17: error: implicit declaration of function 'mon_put_kn_priv' [-Wimplicit-function-declaration]
+    2883 |                 mon_put_kn_priv();
+         |                 ^~~~~~~~~~~~~~~
+   fs/resctrl/rdtgroup.c: At top level:
+>> fs/resctrl/rdtgroup.c:3144:13: warning: conflicting types for 'mon_put_kn_priv'; have 'void(void)'
+    3144 | static void mon_put_kn_priv(void)
+         |             ^~~~~~~~~~~~~~~
+   fs/resctrl/rdtgroup.c:3144:13: error: static declaration of 'mon_put_kn_priv' follows non-static declaration
+   fs/resctrl/rdtgroup.c:2883:17: note: previous implicit declaration of 'mon_put_kn_priv' with type 'void(void)'
+    2883 |                 mon_put_kn_priv();
+         |                 ^~~~~~~~~~~~~~~
+
+
+vim +3144 fs/resctrl/rdtgroup.c
+
+7168ae330e8105 James Morse 2025-05-15  3138  
+7168ae330e8105 James Morse 2025-05-15  3139  /**
+7168ae330e8105 James Morse 2025-05-15  3140   * mon_put_kn_priv() - Free all allocated mon_data structures.
+7168ae330e8105 James Morse 2025-05-15  3141   *
+7168ae330e8105 James Morse 2025-05-15  3142   * Called when resctrl file system is unmounted.
+7168ae330e8105 James Morse 2025-05-15  3143   */
+7168ae330e8105 James Morse 2025-05-15 @3144  static void mon_put_kn_priv(void)
+7168ae330e8105 James Morse 2025-05-15  3145  {
+7168ae330e8105 James Morse 2025-05-15  3146  	struct mon_data *priv, *tmp;
+7168ae330e8105 James Morse 2025-05-15  3147  
+7168ae330e8105 James Morse 2025-05-15  3148  	lockdep_assert_held(&rdtgroup_mutex);
+7168ae330e8105 James Morse 2025-05-15  3149  
+7168ae330e8105 James Morse 2025-05-15  3150  	list_for_each_entry_safe(priv, tmp, &mon_data_kn_priv_list, list) {
+7168ae330e8105 James Morse 2025-05-15  3151  		list_del(&priv->list);
+7168ae330e8105 James Morse 2025-05-15  3152  		kfree(priv);
+7168ae330e8105 James Morse 2025-05-15  3153  	}
+7168ae330e8105 James Morse 2025-05-15  3154  }
+7168ae330e8105 James Morse 2025-05-15  3155  
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
