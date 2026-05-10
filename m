@@ -1,145 +1,243 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011055.outbound.protection.outlook.com [52.101.57.55])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C8778F2B;
-	Sat,  9 May 2026 23:40:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.55
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778370006; cv=fail; b=JKyeYZd3j418j4xij0qFWbnbUlS0iStBCck9JhTzQBieTPRsDP+QVfWg4XW2Y7bdKmwIflskitHTnMSPbSUonwwZCAYNuk8YL4KOmGcPXkx8Sik9s/qCqBFaTuqWpmY5Aj7tWMQmFYxMr+06o0atZ/xl0k2Gxik7NUyz0zWKw88=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778370006; c=relaxed/simple;
-	bh=3DUzmkKZ0J2l0geH6jJ0Zp9xLpdhWV63ZEatGmTVKEc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Mae08B10/lPimykKHSDxFlWXOhvEFLQOKkZJuwyclu5O6VL1yDQW6KvCIDpCgCt/xLYpLuhmTX+K558dOZc4spx0bpcatVvqgBs8u333VVZoWmfLIpsrlA2AH7Zrr7alxH2HEEO5ZukA1LtnjkQ4QjrHxYWrn3PDNr+NqO1Si8k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tKhskZ+c; arc=fail smtp.client-ip=52.101.57.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42004286D5E;
+	Sun, 10 May 2026 04:28:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778387313; cv=none; b=ak2YmuFZiEQoAn+lfJCQQCyATx/zrr+0PgZJId/h+fp+WxxN0gVMoDdMp5FxslYWAe3eL5Rc/TyzJZSCPN4NoxAq03nYylN+omAlKMQSJyE2QwlQardqtCaCQn3Bz235tMLKxGj0qHmhqbRs+bgmpkRoR3JSquD1qNMTGK3btak=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778387313; c=relaxed/simple;
+	bh=F3MNDuEK6GtD9RA2zIwzJbgXtS044Irg0BEkL9UVy7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ogt5ddFWCjGIIKnjOUUDOkyqYn6vMIDd6Fn2bSpFaKghbwQGsUbbG0w2pnttET2ek/HsiXPmJt+IRlD23oENuCKBnJ+1gs215bHC3fNa8kl9VRvw6cU19W/4qNJlpGka40CrxruqtkS/Yi9PTiJaN60Ev/nzPGamBA4D1LnVFpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ia1rn6y2; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tKhskZ+c"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Jp5EY0b95oKILjiBaIqXuxviPzFypvu5aVPrVn9i2k2xEnvb2w/AhlVIUnjL54y8E/Ycbl9HHwFkNlv611EWFR1ddkeeP40p26fz/AZP2g4gLO+DyFezaIhcFENrRQLmhPCz1eovtCyFFajmGpGasDXOk7QclvHefuRi1YU2fEyGop5E6oDJ0lYgy/8ttiYnoiqUdAhFyxjDKWNQJVQf+U5/kI6KE/ecsUuIVh6yCxi338Aq5TvrqcvJ+vI3AT8AerBOJgpd0PG9s2xDMNr6DiySivV5K1m3CUNgRYKljde5CrjSOI6Ip6M9eHXnhgtR7CegVUUO0iw+WGlx8oxKaQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OQByEXQR/lH8i5ZDuNOgCvzxc5o5IoRqE2Q1cqvy5hY=;
- b=BhIojgiB5HPks8bdHogPiSu7hoycspRC1Yxhjqs7rKGMQaKD0g0sx0eMPfxDhdqlpxGX8/1ULtyOrE3yjf4UV+gPoaVWeTsJbciN9gTDejpWV+fLjZJYPsQRU2SMuBtQ4VdNpG/YaE6DeFujIfFg3TDfNa0GFB9OZ0eKV0vaRz7yySOLKCiPU53YyyQ71pi/VtsChhpa/ONMRlW1B8PJ0PmpNWTvdtR19ixFwsRIoKzFduyZI1NRVFeYVjfYb3rz8Y8wFXJPaZeONFh4Z/N+Ap4xgPW2U/k7/h50kspJKc3182kAegK5qN9BPP50X2oLtvw7X4ojbw1ORV35AOsU6A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OQByEXQR/lH8i5ZDuNOgCvzxc5o5IoRqE2Q1cqvy5hY=;
- b=tKhskZ+coycpg4ugugljoFPSpRSlTOpsVF084NYIt39IXTnANpk8May9xRQgsLgj5ebVNJ1nZ5ydIe3W7JP0vb2TsJPmA0PUhy/0kGFj6h6oKUskRrckX01P2CESDUMjkvhn6EBYMyZsCbRQM+5znQMMN6o2crHy6FTo+VqWwaUZ9XD5QMpRSJnIC0IlSeojKhkZEVeaEBFFTltusSM1QeYAfxc72bK1tEhsoqk5uLMYOJkct70E0KhzvFpk+MzwyobdeYH2QqFqIxAG5pcjmigS7d1fmKqi7uWneieqmlkMxd/mXg8v4qRFO8GgwJd6YXPTOnN+HGCoPiMVs+mGqg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DM4PR12MB6039.namprd12.prod.outlook.com (2603:10b6:8:aa::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.21; Sat, 9 May
- 2026 23:40:01 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9891.019; Sat, 9 May 2026
- 23:40:01 +0000
-Date: Sat, 9 May 2026 20:39:59 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Josua Mayer <josua@solid-run.com>
-Cc: "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>, Kevin Tian <kevin.tian@intel.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Rabeeh Khoury <rabeeh@solid-run.com>,
-	Yazan Shhady <yazan.shhady@solid-run.com>,
-	Jon Nettleton <jon@solid-run.com>,
-	Mikhail Anikin <mikhail.anikin@solid-run.com>
-Subject: Re: [PATCH v3 2/2] iommupt: Avoid rewalking during map
-Message-ID: <20260509233959.GN9254@nvidia.com>
-References: <2-v3-a1777ea76519+370f-iommpt_map_direct_jgg@nvidia.com>
- <321c2e57-6a17-4aef-ba42-d2ebd577e472@solid-run.com>
- <20260509194053.GM9254@nvidia.com>
- <ac1aae2d-9b5a-488b-aad7-7be542ec8102@solid-run.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ac1aae2d-9b5a-488b-aad7-7be542ec8102@solid-run.com>
-X-ClientProxiedBy: MN2PR05CA0038.namprd05.prod.outlook.com
- (2603:10b6:208:236::7) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ia1rn6y2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1778387311; x=1809923311;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=F3MNDuEK6GtD9RA2zIwzJbgXtS044Irg0BEkL9UVy7g=;
+  b=ia1rn6y2MYbK/Q/e3VkOyUTXbFreaTT1bZjcbRU5ypS9VdHR2PDAlYiY
+   clW9WhrRqkYQjvZYSZQ5AReNULMDftb5/rpx0sCmM2TD/kQL2nd6aMcLR
+   jr886GtxTo8pIdNi5xjWJNWBKfBJHK/a+oPyl+U9hPglwBgUlzzeVb4qZ
+   DMYqI27LM7iJF8V+7t8WJMcayhZdF1wfuYX0PNdlOuTzaBOr6LJq1+a9f
+   GtN1gupi7wGa61yP5l8f7yejQaz5AMXBsUpxsEpXuymzJin7AaxQlCgkL
+   vS0RHgid+PdDJBcpkoxS3doE0D6wImoADh4BvJ/FDuilA2ykHJ+WRDroV
+   Q==;
+X-CSE-ConnectionGUID: PoIanBBSQ7qdyNxlz4fuFg==
+X-CSE-MsgGUID: gjDnECdCQYyXikCg6vmtJA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11781"; a="90014784"
+X-IronPort-AV: E=Sophos;i="6.23,225,1770624000"; 
+   d="scan'208";a="90014784"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 May 2026 21:28:31 -0700
+X-CSE-ConnectionGUID: Ci0xQtijS7CTwkKnXNGi5Q==
+X-CSE-MsgGUID: kvlecBzQThiXFz7WRq2gcg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,225,1770624000"; 
+   d="scan'208";a="232660193"
+Received: from lkp-server01.sh.intel.com (HELO 82327192134e) ([10.239.97.150])
+  by fmviesa006.fm.intel.com with ESMTP; 09 May 2026 21:28:27 -0700
+Received: from kbuild by 82327192134e with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1wLvmC-000000001kP-2IfW;
+	Sun, 10 May 2026 04:28:24 +0000
+Date: Sun, 10 May 2026 12:27:34 +0800
+From: kernel test robot <lkp@intel.com>
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>, Chen Yu <yu.c.chen@intel.com>
+Cc: oe-kbuild-all@lists.linux.dev, Borislav Petkov <bp@alien8.de>,
+	x86@kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Tony Luck <tony.luck@intel.com>
+Subject: Re: [PATCH] fs/resctrl: Free mon_data structures on rdt_get_tree()
+ failure
+Message-ID: <202605101202.R93VjWIJ-lkp@intel.com>
+References: <20260507201730.16509-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM4PR12MB6039:EE_
-X-MS-Office365-Filtering-Correlation-Id: 267e05c5-7814-4eb0-f04b-08deae244969
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|7416014|376014|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	YXhwrLD6WRi5AkCr4L2xI17RDvR2e2Q8+kyCUsQ9Hif9/S7ECqAeBpxT1oYvxYBt1hI13pNwxcAVTyBevxbe25X15AKB2H4IChhPGXtOad+FeJWFFubXVQzUKiSwbxrQH+RdjKJk9R4iPbc2v8nv7ggI+foindiyBVz9gdRAPe9N0j4i9NwxkE8J/60LOA12enU+Njh0ZVGdnaarqB/rLrwEA7JRIM7R7C3XUBqa29PmUcYR1Zi+SaNhfWmtur9LVjhJXg1fT6AePFgDU4uD8OaftntpT1rvUG7QJ7whfMddxqx1yJenYdtJQEVY7VITUMPFbC+3uOrhnDwKUsGlArMT+OlWQsJ9FkrfBGXQEU+Im2hJild770cLs6TUA4bHrhEORTYcveOL9B7tBSIKYvOG4uzDHRA9PUayONRNoQF5tt7t7CcOV3khjC2aXBJsPiARaFm6LOBNTpUR/zoCkLs4O/VIBJt0zOOIX8wpmPWdp+ikqMuzonBHoh2R5XS4WnaTOQaW7BlGMgMiERVASOULpahx90BQ94c9b+Q/nr7OGLG1HQIJR+mXrLk1Gdh7+L+Jsak7WoYCAmpaBR9QIzjcrs7hJ9t727RLbT0mjAXUhgF6G7RryJ4LSE+0NInqjFhQf6vo9m+2A7Km+UQvGWZo1mPvH3A4OJI3IcfXA6hqbhwn9/pPePc5wfuQxxi1
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(22082099003)(56012099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?LD2YQyWj9EleLgJLyY/tAeqiQqQZiLzLVsZoHTGm5WJjzKqnUTaVEAdAklJ+?=
- =?us-ascii?Q?DDI2JEIc+U/eqTeha+YJSvwo1e3AmNhXFWnN6948Ohag2LLXLwstmCqaAyBX?=
- =?us-ascii?Q?LRqWUI3EXOsnuJcwYE4DKxGMpZW8/UmW9NF75gMvT8VSW3Wg9zwGk/r2fUuD?=
- =?us-ascii?Q?mpugmJBSJCGkdjas0utB87he/NH3q6qo9lkJdcTd6EE+wf7elJAIq9swAp4C?=
- =?us-ascii?Q?/FxeCGTcxS718byLQtcOOwEf++42SzZKjTpE1q3eIL+pWOZ9n8s938sY8jAi?=
- =?us-ascii?Q?+NnMXPWy42jiIy1g4vPwI4vHFZTPDzd36xitcEH2VDmmBiBRbt0X833ud4yW?=
- =?us-ascii?Q?b1aFH3YnZC/vmJUFv7IAcn7tHmXfgjlrXmte9n60xniThPhExRSpAb1aPOlh?=
- =?us-ascii?Q?NpJbe/P0TGT04bY1tOx68254Jm70r+Q29JIoconRehwLQXfsFES8A2U+0Hnv?=
- =?us-ascii?Q?hbaBSYyn20564U3QBgWT6IHBwEWXxnMVy+rmLyUEtm1lxuqvrPEGv1Bkme8V?=
- =?us-ascii?Q?R4IEak9SybY9WxbnPpaOUhZazUoqd7Pzg95HEvj++7jtcN7MgJaKFfjZw2Zr?=
- =?us-ascii?Q?TQ/U3TfrfpbA1BLTj2T41RDYHNHynsjEKGZxhRjpYaMXILFfXeysk47Qy6jV?=
- =?us-ascii?Q?0/krkRLLtp1N0zZleoV387hioDpmX2aX5RGujpfb9P0wFhks45D6QgxCQw5j?=
- =?us-ascii?Q?+pMb09bapTN4W1oSGSx6mo5TtOJyUUJgpSMT412JQcjRL9SIu1WOmTUT8Ug5?=
- =?us-ascii?Q?etFmvjMIFebApQXitm8w/2KqgValoi9Qlzlhht+8SIR/862ACZEoB+++9tRY?=
- =?us-ascii?Q?3pSdS6eAVkINLf3mEA6mxa1EPzbGw2ALC9b5ejkQN1qf5D6y+zsDAsG2m96e?=
- =?us-ascii?Q?BGdeSgLLZEZ+SlpTVIE1xnqtMdaTWxiG6Dhhj2gehYi50CcK5HcKqICVvLLs?=
- =?us-ascii?Q?a22S5p8jswAhup5WIEsZgVbSFk5+edzE+gYcG2Ck8odWv94Lgx5goPiKoKs+?=
- =?us-ascii?Q?d+FLOb01/OaNeUaUubM621sRoNEZ6zN/bPnngEsvR1atApfjqy8Dtd2pdR8S?=
- =?us-ascii?Q?02GluA0JQu4r2ZpqJPoocdvje3MYMXxeG0osa0y0lJQdasEENaVxrrzhE0v+?=
- =?us-ascii?Q?9CFQrKWwtp84EKa2SuELfWRF5nuVJjEO/IYCbzdEqsJuhcfr+M7Jg1GcfqT5?=
- =?us-ascii?Q?rEDtTGcbOE9Vx//Odssth56h/yMW5/M2ZgrYfimE2LER2r9E4QnhbplQah8U?=
- =?us-ascii?Q?QS44M3AC+kQMqkH18bg4ZcrXUZjr7Ll7JJ4lf2OeHX+u25PQ2049W9gb072I?=
- =?us-ascii?Q?rTcjWEAiFnM8S21f/3lWPpVm+5ePqe1QWL3rfztdyZ5oyJ+1V0lhBZSCgowb?=
- =?us-ascii?Q?BljgU3mk2Cds95yDWa9HVfEllJcnItZerc3KRw0sv4lqZ76aH3+JfKCGkx/H?=
- =?us-ascii?Q?oZwWVV4XtKnEwlvPTOsmvZJy+tfzr7oh007a+3UNP7PHi73jvwYzWvqUkCxH?=
- =?us-ascii?Q?wJr+60Sl5sfr+GY7QHdhuPxGwRFR6eVHqziEkSAu13nj+neWQC4m9CtcQQp/?=
- =?us-ascii?Q?05x1ZKCgKve5LHMCXiwKRuaZ29RaAP2033BhHe4h8qUW8Dc/iAOJRf37uzoS?=
- =?us-ascii?Q?Ro1yX2g1qWB2j064RT/QRQWF8F7GzT1zDAku1Vcz9dy3gRZJt3iN7BZpX3ok?=
- =?us-ascii?Q?jmvI5FpXNBMZvkEKrUehUpwtagKVIfBT715jw5uaxTmRMic8?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 267e05c5-7814-4eb0-f04b-08deae244969
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 May 2026 23:40:00.9560
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aQzowUscBi1P5ksHuFOmZyPXeKGyZSneZkaWmA13kOWUGpviyaHTe5Rtda7YXacw
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6039
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260507201730.16509-1-tony.luck@intel.com>
 
-On Sat, May 09, 2026 at 08:25:36PM +0000, Josua Mayer wrote:
+Hi Tony,
 
-> I applied this on top of the problematic commit, and my system boots fine now!
-> 
-> When I compare the bad boot log, the good one, and the current one with above change,
-> only the bad one is missing the following line from boot log:
-> 
-> iommusmmu.0x0000000005000000: IOMMU driver was not able to establish FW requested direct mapping.
+kernel test robot noticed the following build errors:
 
-Ahhh. Now it makes sense. This is happening because SMMUv2 hasn't been
-updated to create a domain that can immediately be mapped so you get
-this message and the error propagation retries it after attaching the
-domain. Since that got broke it never retried and the RMR was not
-established.
+[auto build test ERROR on v7.1-rc2]
+[also build test ERROR on linus/master next-20260508]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Thanks,
-Jason
+url:    https://github.com/intel-lab-lkp/linux/commits/Tony-Luck/fs-resctrl-Free-mon_data-structures-on-rdt_get_tree-failure/20260509-184342
+base:   v7.1-rc2
+patch link:    https://lore.kernel.org/r/20260507201730.16509-1-tony.luck%40intel.com
+patch subject: [PATCH] fs/resctrl: Free mon_data structures on rdt_get_tree() failure
+config: x86_64-rhel-9.4-ltp (https://download.01.org/0day-ci/archive/20260510/202605101202.R93VjWIJ-lkp@intel.com/config)
+compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260510/202605101202.R93VjWIJ-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202605101202.R93VjWIJ-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   fs/resctrl/rdtgroup.c: In function 'rdt_get_tree':
+>> fs/resctrl/rdtgroup.c:2883:17: error: implicit declaration of function 'mon_put_kn_priv' [-Wimplicit-function-declaration]
+    2883 |                 mon_put_kn_priv();
+         |                 ^~~~~~~~~~~~~~~
+   fs/resctrl/rdtgroup.c: At top level:
+   fs/resctrl/rdtgroup.c:3144:13: warning: conflicting types for 'mon_put_kn_priv'; have 'void(void)'
+    3144 | static void mon_put_kn_priv(void)
+         |             ^~~~~~~~~~~~~~~
+>> fs/resctrl/rdtgroup.c:3144:13: error: static declaration of 'mon_put_kn_priv' follows non-static declaration
+   fs/resctrl/rdtgroup.c:2883:17: note: previous implicit declaration of 'mon_put_kn_priv' with type 'void(void)'
+    2883 |                 mon_put_kn_priv();
+         |                 ^~~~~~~~~~~~~~~
+
+
+vim +/mon_put_kn_priv +2883 fs/resctrl/rdtgroup.c
+
+  2784	
+  2785	static int rdt_get_tree(struct fs_context *fc)
+  2786	{
+  2787		struct rdt_fs_context *ctx = rdt_fc2context(fc);
+  2788		unsigned long flags = RFTYPE_CTRL_BASE;
+  2789		struct rdt_l3_mon_domain *dom;
+  2790		struct rdt_resource *r;
+  2791		int ret;
+  2792	
+  2793		DO_ONCE_SLEEPABLE(resctrl_arch_pre_mount);
+  2794	
+  2795		cpus_read_lock();
+  2796		mutex_lock(&rdtgroup_mutex);
+  2797		/*
+  2798		 * resctrl file system can only be mounted once.
+  2799		 */
+  2800		if (resctrl_mounted) {
+  2801			ret = -EBUSY;
+  2802			goto out;
+  2803		}
+  2804	
+  2805		ret = setup_rmid_lru_list();
+  2806		if (ret)
+  2807			goto out;
+  2808	
+  2809		ret = rdtgroup_setup_root(ctx);
+  2810		if (ret)
+  2811			goto out;
+  2812	
+  2813		ret = rdt_enable_ctx(ctx);
+  2814		if (ret)
+  2815			goto out_root;
+  2816	
+  2817		ret = schemata_list_create();
+  2818		if (ret)
+  2819			goto out_schemata_free;
+  2820	
+  2821		ret = closid_init();
+  2822		if (ret)
+  2823			goto out_schemata_free;
+  2824	
+  2825		if (resctrl_arch_mon_capable())
+  2826			flags |= RFTYPE_MON;
+  2827	
+  2828		ret = rdtgroup_add_files(rdtgroup_default.kn, flags);
+  2829		if (ret)
+  2830			goto out_closid_exit;
+  2831	
+  2832		kernfs_activate(rdtgroup_default.kn);
+  2833	
+  2834		ret = rdtgroup_create_info_dir(rdtgroup_default.kn);
+  2835		if (ret < 0)
+  2836			goto out_closid_exit;
+  2837	
+  2838		if (resctrl_arch_mon_capable()) {
+  2839			ret = mongroup_create_dir(rdtgroup_default.kn,
+  2840						  &rdtgroup_default, "mon_groups",
+  2841						  &kn_mongrp);
+  2842			if (ret < 0)
+  2843				goto out_info;
+  2844	
+  2845			rdtgroup_assign_cntrs(&rdtgroup_default);
+  2846	
+  2847			ret = mkdir_mondata_all(rdtgroup_default.kn,
+  2848						&rdtgroup_default, &kn_mondata);
+  2849			if (ret < 0)
+  2850				goto out_mongrp;
+  2851			rdtgroup_default.mon.mon_data_kn = kn_mondata;
+  2852		}
+  2853	
+  2854		ret = rdt_pseudo_lock_init();
+  2855		if (ret)
+  2856			goto out_mondata;
+  2857	
+  2858		ret = kernfs_get_tree(fc);
+  2859		if (ret < 0)
+  2860			goto out_psl;
+  2861	
+  2862		if (resctrl_arch_alloc_capable())
+  2863			resctrl_arch_enable_alloc();
+  2864		if (resctrl_arch_mon_capable())
+  2865			resctrl_arch_enable_mon();
+  2866	
+  2867		if (resctrl_arch_alloc_capable() || resctrl_arch_mon_capable())
+  2868			resctrl_mounted = true;
+  2869	
+  2870		if (resctrl_is_mbm_enabled()) {
+  2871			r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+  2872			list_for_each_entry(dom, &r->mon_domains, hdr.list)
+  2873				mbm_setup_overflow_handler(dom, MBM_OVERFLOW_INTERVAL,
+  2874							   RESCTRL_PICK_ANY_CPU);
+  2875		}
+  2876	
+  2877		goto out;
+  2878	
+  2879	out_psl:
+  2880		rdt_pseudo_lock_release();
+  2881	out_mondata:
+  2882		if (resctrl_arch_mon_capable()) {
+> 2883			mon_put_kn_priv();
+  2884			kernfs_remove(kn_mondata);
+  2885		}
+  2886	out_mongrp:
+  2887		if (resctrl_arch_mon_capable()) {
+  2888			rdtgroup_unassign_cntrs(&rdtgroup_default);
+  2889			kernfs_remove(kn_mongrp);
+  2890		}
+  2891	out_info:
+  2892		kernfs_remove(kn_info);
+  2893	out_closid_exit:
+  2894		closid_exit();
+  2895	out_schemata_free:
+  2896		schemata_list_destroy();
+  2897		rdt_disable_ctx();
+  2898	out_root:
+  2899		rdtgroup_destroy_root();
+  2900	out:
+  2901		rdt_last_cmd_clear();
+  2902		mutex_unlock(&rdtgroup_mutex);
+  2903		cpus_read_unlock();
+  2904		return ret;
+  2905	}
+  2906	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
