@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883A44DB548;
-	Mon, 11 May 2026 22:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A834DC53A;
+	Mon, 11 May 2026 22:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537989; cv=none; b=ingE2hSUZ5mKK8g/od+B8d0FJ7kU9DapxXxSsavLDQZcuovlIc3GP/ilr+JWtxAY8Pi3k8HKqoeSwyhsKARZFpF2yMnhGyVhhKLtOfjeE+uOmS7X2boa0ySEdcwG1hMZFwqJgQiFvVFMhgSqE5jOYVqZxSSltFYSt5rXYBbIVk4=
+	t=1778537989; cv=none; b=NoZzkvfGR+u+V9hpRsf8Q12y+0FR0oysj2iVcYGmyYgbdilcrr8kPeKV/qaFVCp3Y2e2iYXW95pJyFL4VYvmOhrVpwut+zzbM8e8wfLlhbLEXhDpPfTptPCsj9hzkbqOnRI3+7pl56RsdvcN9F1d+23asUFZl1uwekzCcLfHLiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778537989; c=relaxed/simple;
-	bh=zGb5XWpc6ZIDpU9QwhdmaqYvZSeao8Zu2vRfr5h3CZ8=;
+	bh=9XqgKcjYiXNDXU5OJxr+za0FK/nyzKGrvh5Ed/wllDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qOwRSRFEKwGHIxNDk9U+pwVTpVZA0p2+WqQ18+nTvYer0n/YukMC1cWwNc6gUZb2Jw8nh0fLJNO03s8+DXNeh6ed+mgjjY8+ddsVHXziQm29NwMGQi310Ve4DlnoCCfJ0drtHPy1sm5rLwBTiHrbv+uWT8XWbDV4PwL8E9eGDmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S9kr+phy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N9T2BUZNNO+3lrNr3n+dEqBL84pa10xVnguN0CIWJyogj2kygJGErG/Y82jGCS1LQmT/dJnd3w7vX3eTBJo8XQu/TnmLarkmWhr7YB6roq8FGHXYKFihITdnqD0vJ9Ciwg4+w+pYHO+vID50I4lhG4bE9KPXvhMbmAKklKt1//o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IHKOj0Gp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S9kr+phy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB62BC2BCF7;
-	Mon, 11 May 2026 22:19:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IHKOj0Gp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8A8C2BCFC;
+	Mon, 11 May 2026 22:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537987;
-	bh=zGb5XWpc6ZIDpU9QwhdmaqYvZSeao8Zu2vRfr5h3CZ8=;
+	s=k20201202; t=1778537989;
+	bh=9XqgKcjYiXNDXU5OJxr+za0FK/nyzKGrvh5Ed/wllDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S9kr+phy7rRnFIeKi3kiaOVCuFx9zoupJJToECCTXR0hGoqIGj+Qrmw8vag1/HfFy
-	 NUST0Uo20I72BjJY10MUJcHn/raRhWQGmN795XPqo0UPxDV0XmmrdZutNJsUXbCj+O
-	 5/kpkDU6IgNy/HOrdYbNUxn0dAbFiMNx+ji27UsAtrDWSRHJE6C0bWDqg2qjeLTWKn
-	 7zuLLKphQhx5tcWsE2Lxpf/mAzLfcZw0hXWT/6+KxSqIO9rWf881AtVZGU7Rlchrrl
-	 uRC3jhK7OCaVgimd9iwqxdfGX03soWDeO8U5sTCfDleTlFX4ERd5oPQANRt59G+0kk
-	 4SjyMRDXlsNuw==
+	b=IHKOj0GpnNXPJ+4aCtzDYi4Rh5f/f1DpCD6UvgnOzFLtB2ot8eQ8WaFoZxUqPBXfj
+	 r+hvssdg28S3X250p69fdgavND3UHxYzm9o9RHdGvPS6lygbfk0OuQiiIu0BBG6lSw
+	 AeHBX4k73ZeTX/EGBUDemPyyKg1cURAV26f7AEBK5JLwKJKAUCayYFVYuJ7ICk8/V3
+	 uIx1bB6P1Gljc3+V3ftwxba9aB8o6RTIafLcSH0cC46XrKGbTbGD1z7Gu6dT1LQi6M
+	 +zkxH4Y1uCDRapj9WkhjJMxlIVjWou/kYmhX47GnntqBtIFGnX0bqcZl9/BFmjp0aj
+	 Xfbw4+YhkhhFA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mpe@ellerman.id.au,
-	linuxppc-dev@lists.ozlabs.org,
+	kvalo@kernel.org,
+	libertas-dev@lists.infradead.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] powerpc/vmx: avoid KASAN instrumentation in enter_vmx_ops() for kexec
-Date: Mon, 11 May 2026 18:19:09 -0400
-Message-ID: <20260511221931.2370053-10-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] wifi: libertas: fix integer underflow in process_cmdrequest()
+Date: Mon, 11 May 2026 18:19:11 -0400
+Message-ID: <20260511221931.2370053-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -55,366 +54,270 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
 
-[ Upstream commit 38e989d504fc52900a3786b7144fb53cd67e0389 ]
+[ Upstream commit 3994b4afd521d60e47e012fe2ed7b606aaec370b ]
 
-The kexec sequence invokes enter_vmx_ops() via copy_page() with the MMU
-disabled. In this context, code must not rely on normal virtual address
-translations or trigger page faults.
+The existing validation only checks if recvlength exceeds
+LBS_CMD_BUFFER_SIZE, but doesn't check the lower bound. When a
+USB device sends a response shorter than MESSAGE_HEADER_LEN, the
+subtraction (recvlength - MESSAGE_HEADER_LEN) wraps to a huge
+value, causing memcpy to corrupt the heap.
+Add the same lower bound check that libertas_tf already has.
 
-With KASAN enabled, functions get instrumented and may access shadow
-memory using regular address translation. When executed with the MMU
-off, this can lead to page faults (bad_page_fault) from which the
-kernel cannot recover in the kexec path, resulting in a hang.
-
-The kexec path sets preempt_count to HARDIRQ_OFFSET before entering
-the MMU-off copy sequence.
-
-current_thread_info()->preempt_count = HARDIRQ_OFFSET
-  kexec_sequence(..., copy_with_mmu_off = 1)
-    -> kexec_copy_flush(image)
-         copy_segments()
-           -> copy_page(dest, addr)
-	         bl enter_vmx_ops()
-                   if (in_interrupt())
-                     return 0
-	         beq .Lnonvmx_copy
-
-Since kexec sets preempt_count to HARDIRQ_OFFSET, in_interrupt()
-evaluates to true and enter_vmx_ops() returns early.
-
-As in_interrupt() (and preempt_count()) are always inlined, mark
-enter_vmx_ops() with __no_sanitize_address to avoid KASAN
-instrumentation and shadow memory access with MMU disabled, helping
-kexec boot fine with KASAN enabled.
-
-Reported-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260407124349.1698552-2-sourabhjain@linux.ibm.com
+Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+Link: https://patch.msgid.link/20260418004247.368944-1-a.jahangirzad@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Record: subsystem `powerpc/vmx`; action verb `avoid`; intent is to
-prevent KASAN instrumentation of `enter_vmx_ops()` when it is reached
-from the kexec MMU-off copy path.
+## Phase Walkthrough
+### Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem is `wifi: libertas`; action verb is `fix`;
+claimed intent is to prevent integer underflow in
+`process_cmdrequest()`.
 
-Record: tags parsed from the candidate message:
-- `Reported-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
-- `Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
-- `Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
-- `Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>`
-- `Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>`
-- `Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>`
-- `Link: https://patch.msgid.link/20260407124349.1698552-2-
-  sourabhjain@linux.ibm.com`
-- No `Fixes:` tag in this commit. Absence is not a negative signal.
+Step 1.2 Record: Tags present are `Signed-off-by: Amir Mohammad
+Jahangirzad`, `Link: https://patch.msgid.link/20260418004247.368944-1-
+a.jahangirzad@gmail.com`, and `Signed-off-by: Johannes Berg`. No
+`Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by`, or
+`Cc: stable` tag was present in the supplied commit message or original
+posted patch.
 
-Record: bug description from the message: `kexec_sequence()` may call
-`copy_page()` with the MMU disabled; on PowerPC Book3S this can enter
-`copypage_power7.S`, which calls `enter_vmx_ops()`. If KASAN instruments
-`enter_vmx_ops()`, the instrumentation may access shadow memory using
-normal virtual translation, which is invalid with MMU off and can cause
-an unrecoverable `bad_page_fault`/hang in kexec.
+Step 1.3 Record: The commit body describes a concrete memory corruption
+bug: `recvlength` is only checked against the upper bound, then
+`recvlength - MESSAGE_HEADER_LEN` is stored in `priv->resp_len[i]` and
+used as the `memcpy()` length. If a USB device supplies fewer than 4
+bytes, the subtraction becomes negative and is converted to a huge
+unsigned copy length. Symptom/failure mode: heap/driver memory
+corruption from `memcpy()`. Version information: none in the message.
+Root cause: missing lower-bound validation.
 
-Record: hidden bug fix: yes. Although phrased as “avoid
-instrumentation,” this fixes a real boot/hang failure in the kexec/kdump
-path under KASAN.
+Step 1.4 Record: This is not hidden; it is explicitly a memory-safety
+fix. It matches the same already-present guard in `libertas_tf`.
 
-## Phase 2: Diff Analysis
-Record: one file changed: `arch/powerpc/lib/vmx-helper.c`, with 8
-insertions and 1 deletion in the fetched v3 patch. The only functional
-change is changing `int enter_vmx_ops(void)` to `int
-__no_sanitize_address enter_vmx_ops(void)`; the remaining additions are
-explanatory comments.
+### Phase 2: Diff Analysis
+Step 2.1 Record: One file changed:
+`drivers/net/wireless/marvell/libertas/if_usb.c`, 3 insertions and 2
+deletions. Modified function: `process_cmdrequest()`. Scope: single-file
+surgical fix.
 
-Record: modified function: `enter_vmx_ops()`.
+Step 2.2 Record: Before, `process_cmdrequest()` rejected only
+`recvlength > LBS_CMD_BUFFER_SIZE`; lengths `1..3` passed and produced
+`recvlength - MESSAGE_HEADER_LEN`. After, it rejects `recvlength <
+MESSAGE_HEADER_LEN` as well as overlarge responses. This affects the USB
+command-response receive path.
 
-Record: before behavior: `enter_vmx_ops()` could be KASAN-instrumented.
-During kexec with MMU off, the function first checks `in_interrupt()`
-and should return `0`, but KASAN prologue/body instrumentation can run
-before or around normal code and touch shadow memory.
+Step 2.3 Record: Bug category is memory safety, specifically integer
+underflow leading to oversized `memcpy()`. Verified details:
+`MESSAGE_HEADER_LEN` is 4, `resp_len` is `u32`, `resp_buf` is `u8
+resp_buf[2][LBS_UPLD_SIZE]`, and `LBS_UPLD_SIZE` is 2312. A negative
+subtraction assigned to `u32` becomes a huge length, far beyond the
+destination buffer.
 
-Record: after behavior: `__no_sanitize_address` suppresses KASAN
-instrumentation for this function, preserving the intended early return
-path when `preempt_count` contains `HARDIRQ_OFFSET`.
+Step 2.4 Record: Fix quality is high: minimal bounds check, no API
+change, no new behavior except rejecting malformed command responses.
+Regression risk is very low; valid command responses must already
+include the 4-byte command type/header.
 
-Record: bug category: sanitizer/real-mode correctness bug causing kexec
-hang. This is a crash/hang class fix, not a cleanup.
+### Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the upper-bound check came from
+`ddac452680a516` in the v2.6.25-rc1 era, and the `resp_len = recvlength
+- MESSAGE_HEADER_LEN` plus `memcpy()` flow came from `7919b89c8276` in
+the v2.6.26-rc1 era. This code is old and widely present.
 
-Record: fix quality: small, surgical, and low risk. It does not alter
-normal logic, public API, data structures, or userspace-visible
-behavior. The only behavioral effect is disabling KASAN instrumentation
-for one helper that can run in an MMU-off path.
+Step 3.2 Record: No `Fixes:` tag is present in the candidate, so there
+is no specific tagged introducing commit to follow. Blame nevertheless
+identifies the relevant old code.
 
-## Phase 3: Git History Investigation
-Record: local `HEAD` is a stable release commit, not the candidate. `git
-log --grep` on current history, `master`, and `power-next` did not find
-the candidate commit locally, so there was no commit hash available for
-`b4 dig -c`.
+Step 3.3 Record: Recent file history includes unrelated cleanup/fix
+commits such as `3968e81ba644` changing skb free placement and
+`d66676e6ca96` fixing a warning in `usb_tx_block()`. I found no
+prerequisite commit needed for this bounds check.
 
-Record: `git blame` on current `arch/powerpc/lib/vmx-helper.c` shows the
-unannotated `enter_vmx_ops()` present in the local tree; due this
-repository’s history shape, blame attributes the original lines to a
-merge/root history point, so the exact original introduction commit was
-not verifiable locally.
+Step 3.4 Record: `git log --author='Amir Mohammad Jahangirzad'` found no
+prior local commits in this Marvell wireless subtree. The final signoff
+is from Johannes Berg; `MAINTAINERS` lists Johannes Berg as wireless
+maintainer, while the Libertas driver itself is marked orphaned under
+`linux-wireless` and `libertas-dev`.
 
-Record: no candidate `Fixes:` tag to follow. The companion patch in the
-same series has `Fixes: 2ab2d5794f14 ("powerpc/kasan: Disable address
-sanitization in kexec paths")`; `git show` confirms that commit disabled
-sanitization for PowerPC kexec real-mode paths in 2022.
+Step 3.5 Record: Dependencies found: none. The patch uses existing local
+constants and mirrors the already-existing `libertas_tf` check.
 
-Record: related recent local history: `6bc9c0a905228` changed VMX
-usercopy flow and added export context around the same file. That
-affects hunk context for older stable trees, but not the actual one-line
-fix.
+### Phase 4: Mailing List And External Research
+Step 4.1 Record: No commit hash was available in local history, so `b4
+dig -c` could not be used successfully; `b4 dig -c
+20260418004247.368944-1-a.jahangirzad@gmail.com` failed because it
+expects a commit. Fallback `b4 mbox` and the lore mirror found the
+original patch at `https://yhbt.net/lore/lkml/20260418004247.368944-1-
+a.jahangirzad@gmail.com/T/`. The thread has one message and no replies.
+`b4 mbox -c` found no newer revision in the thread.
 
-Record: author context: `git log --author="Sourabh Jain" --
-arch/powerpc/...` shows multiple PowerPC kexec/crash/fadump commits.
-`MAINTAINERS` lists Madhavan Srinivasan and Michael Ellerman as PowerPC
-maintainers; Madhavan signed off the candidate.
+Step 4.2 Record: Original recipients included Johannes Berg, Kees Cook,
+Ingo Molnar, Johan Hovold, `linux-wireless`, `libertas-dev`, and `linux-
+kernel`. No reviewer replies, NAKs, or explicit stable nominations were
+present in the fetched thread.
 
-Record: dependencies: no source-level prerequisite for the annotation
-itself. Function `enter_vmx_ops()` and `__no_sanitize_address` exist in
-checked stable tags. Functional completeness is best with the companion
-patch fixing `KASAN_SANITIZE_core_$(BITS).o`, because review/test
-discussion says both patches together make KASAN kexec succeed.
+Step 4.3 Record: No `Reported-by` or bug-report link was present. I
+found no separate public bug report for this exact issue. The message
+itself provides the failure mechanism.
 
-## Phase 4: Mailing List And External Research
-Record: `b4 am` for message id
-`20260407124349.1698552-2-sourabhjain@linux.ibm.com` fetched a v3 two-
-patch series. It reported total patches: 2, current tree apply clean,
-and DKIM signature valid for patch 2.
+Step 4.4 Record: Related precedent exists: commit `3348ef6a6a126` fixed
+the identical underflow in `libertas_tf: process_cmdrequest()`, with
+message “If recvlength is less than MESSAGE_HEADER_LEN (4) we would end
+up corrupting memory.” That analogous fix was later carried in stable
+review postings for 4.19 and 3.16.
 
-Record: `b4 am -c` checked for newer revisions and did not report a
-newer v4. v3 appears to be the latest fetched revision.
+Step 4.5 Record: Web searches found the exact candidate posting and
+stable history for the analogous `libertas_tf` fix, but no exact stable
+discussion for this new `libertas` patch.
 
-Record: `b4 mbox` fetched the v3 thread. Patch 2 was addressed to
-`linuxppc-dev` and CC’d PowerPC/kexec stakeholders including Michael
-Ellerman, Madhavan Srinivasan, Mahesh Salgaonkar, Hari Bathini, Daniel
-Axtens, Venkat Rao Bagalkote, Aboorva Devarajan, and Ritesh Harjani.
+### Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `process_cmdrequest()`.
 
-Record: `WebFetch` of lore URLs was blocked by Anubis, but `b4` and the
-`yhbt.net` lore mirror provided the thread content.
+Step 5.2 Record: Caller is `if_usb_receive()`, reached as the receive
+URB completion callback installed by `usb_fill_bulk_urb()` through
+`if_usb_submit_rx_urb()`.
 
-Record: v2 review discussion verified:
-- Ritesh Harjani reviewed patch 2 and said “LGTM,” granting `Reviewed-
-  by`.
-- Aboorva Devarajan reported an actual KASAN-enabled kexec hang on
-  pseries PowerVM: system reached “kexec: Starting switchover sequence”
-  and then hung.
-- Aboorva tested that “with both the patches applied, kexec completes
-  successfully with KASAN enabled.”
-- v1 annotated both `enter_vmx_ops()` and `exit_vmx_ops()`; v2 removed
-  `exit_vmx_ops()` annotation and added the explanatory comment. This
-  shows review-driven narrowing of the fix.
+Step 5.3 Record: Key callees are `memcpy()`, `dev_kfree_skb_irq()`, and
+`lbs_notify_command_response()`. The command response is later consumed
+by the main thread through `lbs_process_command_response()`.
 
-Record: stable-specific discussion: Ritesh explicitly suggested `Cc:
-stable@vger.kernel.org` for patch 1. I did not find a direct stable
-nomination for patch 2, but patch 2 was reviewed and tested as part of
-the same two-patch functional fix.
+Step 5.4 Record: Reachability is verified through USB receive
+completion: a Libertas USB device response with type `CMD_TYPE_REQUEST`
+reaches `process_cmdrequest()`. The triggering input is device-
+controlled USB receive data, so this is reachable with affected hardware
+or a malicious/faulty USB device.
 
-## Phase 5: Code Semantic Analysis
-Record: modified function: `enter_vmx_ops()`.
+Step 5.5 Record: Similar pattern found in `libertas_tf`; that sibling
+driver already has the exact lower-bound check. `if_sdio` and `if_spi`
+use different response formats and do not subtract `MESSAGE_HEADER_LEN`
+in the same way.
 
-Record: callers found by exact search:
-- `arch/powerpc/lib/copypage_power7.S`
-- `arch/powerpc/lib/memcpy_power7.S`
-- `arch/powerpc/lib/memcmp_64.S`
+### Phase 6: Cross-Referencing And Stable Tree Analysis
+Step 6.1 Record: Representative tags `v3.16`, `v4.14`, `v4.19`, `v5.4`,
+`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, and newer `v6.13` through
+`v6.17` all contain the buggy `process_cmdrequest()` pattern without the
+lower-bound check. The bug dates back to at least the v2.6.26-rc1 era.
 
-Record: relevant kexec call chain verified in code:
-`reboot(LINUX_REBOOT_CMD_KEXEC)` -> `kernel_kexec()` ->
-`machine_kexec()` -> `default_machine_kexec()` -> `kexec_sequence()` ->
-`kexec_copy_flush()` -> `copy_segments()` -> `copy_page()` ->
-`copypage_power7.S` -> `enter_vmx_ops()`.
+Step 6.2 Record: Expected backport difficulty is low for modern stable
+trees: the same context is present in representative stable tags, and
+`git apply --check` succeeds against the current tree. Very old trees
+before the Marvell directory move may need path/context adjustment, as
+verified by older tags using `drivers/net/wireless/libertas/if_usb.c`.
 
-Record: key callees/logic in `enter_vmx_ops()`: `in_interrupt()`,
-`preempt_disable()`, and `enable_kernel_altivec()`. In the kexec MMU-off
-path, `default_machine_kexec()` sets
-`current_thread_info()->preempt_count = HARDIRQ_OFFSET`, and
-`include/linux/preempt.h` defines `in_interrupt()` via `irq_count()`,
-which observes the hardirq bits.
+Step 6.3 Record: No exact related fix for `libertas` was found in local
+history. The sibling `libertas_tf` fix exists and was stable-backported.
 
-Record: reachability: reachable from privileged kexec/kdump paths. It is
-not unprivileged-user reachable, but kdump reliability is operationally
-important.
+### Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: Subsystem is wireless driver code under
+`drivers/net/wireless/marvell/libertas`. Criticality: driver-specific,
+but memory corruption in a kernel USB receive path is high severity for
+affected systems.
 
-Record: similar patterns: PowerPC already disables KASAN for sensitive
-real-mode/interrupt code in multiple Makefiles and uses
-`__no_sanitize_address` in PowerPC interrupt/stack code, so the
-attribute is consistent with local practice.
+Step 7.2 Record: Subsystem activity is low-to-moderate; recent history
+shows occasional fixes and cleanups. `MAINTAINERS` marks Marvell
+Libertas as orphaned, with `linux-wireless` and `libertas-dev` lists.
 
-## Phase 6: Cross-Referencing And Stable Tree Analysis
-Record: buggy code exists in stable tags checked: `v5.4`, `v5.10`,
-`v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.18`, `v6.19`, and `v7.0` all have
-`enter_vmx_ops()` without `__no_sanitize_address`.
+### Phase 8: Impact And Risk Assessment
+Step 8.1 Record: Affected population is config- and hardware-specific:
+systems with `CONFIG_LIBERTAS_USB` and Marvell Libertas 8388 USB
+devices, or systems exposed to a malicious USB device matching the
+driver IDs.
 
-Record: the kexec `copy_segments()` -> `copy_page()` path and
-`preempt_count = HARDIRQ_OFFSET` were verified in `v5.4`, `v5.10`,
-`v5.15`, `v6.1`, and current/v7.0-era code.
+Step 8.2 Record: Trigger condition is a USB command response shorter
+than `MESSAGE_HEADER_LEN` but with `CMD_TYPE_REQUEST` dispatch. This is
+device-controlled. I did not verify an unprivileged software-only
+trigger; physical or device-level control is the verified trigger model.
 
-Record: `copypage_power7.S` calls `enter_vmx_ops()` in `v5.4`, `v5.10`,
-`v5.15`, and current code.
+Step 8.3 Record: Failure mode is heap/driver memory corruption from
+oversized `memcpy()`. Severity: HIGH to CRITICAL, because kernel memory
+corruption can crash the system and can have security implications.
 
-Record: `__no_sanitize_address` exists in compiler headers in checked
-stable tags, including `v5.4`, `v5.10`, `v6.1`, `v6.6`, and current.
+Step 8.4 Record: Benefit is high for affected systems: prevents kernel
+memory corruption from malformed USB responses. Risk is very low: 3-line
+effective validation change in one driver function, with precedent in
+sibling driver.
 
-Record: backport difficulty: clean on current `7.0.y` per `git apply
---check` and `b4`. Older stable trees may need a tiny context adjustment
-because `EXPORT_SYMBOL(exit_vmx_usercopy)` is not present in older
-versions, but the actual function signature is present and the backport
-is straightforward.
+### Phase 9: Final Synthesis
+Step 9.1 Record: Evidence for backporting: real memory corruption bug;
+old code present across many stable release tags; tiny surgical fix; no
+new API or feature; exact validation already used by `libertas_tf`;
+analogous `libertas_tf` fix was stable-backported. Evidence against:
+driver-specific and no external bug report or tested-by tag. Unresolved:
+exact final upstream commit hash was not present in local history, so
+`b4 dig -c <commit_hash>` could not be completed.
 
-Record: related fixes already in stable: not verified as already
-present; local stable tags checked do not contain the candidate
-annotation.
+Step 9.2 Record:
+1. Obviously correct and tested? Obviously correct by code inspection;
+   no explicit `Tested-by`.
+2. Fixes a real bug? Yes, verified underflow into oversized `memcpy()`.
+3. Important issue? Yes, kernel memory corruption.
+4. Small and contained? Yes, one function in one file.
+5. No new features/APIs? Yes.
+6. Can apply to stable trees? Yes for modern representative tags with
+   likely clean/minor context; old pre-directory-move trees may need
+   path adjustment.
 
-## Phase 7: Subsystem And Maintainer Context
-Record: subsystem is PowerPC architecture library/kexec path:
-`arch/powerpc/lib` and `arch/powerpc/kexec`.
+Step 9.3 Record: No exception category such as device ID, quirk, DT,
+build, or docs applies. This is a direct memory-safety bug fix.
 
-Record: criticality: important/platform-specific. It affects PowerPC
-systems using kexec/kdump with KASAN enabled, especially pseries/PowerVM
-cases verified in review. It is not universal across all architectures.
-
-Record: subsystem activity: local history shows recent PowerPC VMX
-usercopy and kexec/crash/fadump activity, and the patch was handled
-through the PowerPC maintainer path.
-
-## Phase 8: Impact And Risk Assessment
-Record: affected users: PowerPC Book3S/PowerVM-style systems using
-kexec/kdump with KASAN-enabled kernels and VMX copy paths.
-
-Record: trigger conditions: kexec/kdump switchover, MMU-off copy path,
-KASAN enabled, and `copy_page()` selecting the Power7 VMX copy path. The
-triggering operation is privileged, but the failure impacts crash dump
-capture and reboot into the new kernel.
-
-Record: failure mode: system hang during kexec/kdump. Review discussion
-includes an observed hang after “kexec: Starting switchover sequence,”
-and the commit message explains unrecoverable `bad_page_fault` risk with
-MMU off. Severity: HIGH to CRITICAL for affected debug/crash-dump
-deployments.
-
-Record: benefit: high for affected PowerPC KASAN/kdump users because it
-prevents a hard hang and restores kexec completion.
-
-Record: risk: very low. One function annotation plus comment; no logic
-change. The main concern is that stable maintainers should also take the
-companion Makefile fix for full KASAN/kexec coverage.
-
-## Phase 9: Final Synthesis
-Record: evidence for backporting:
-- Fixes a real, reviewed, and tested kexec hang with KASAN enabled.
-- Aboorva Devarajan reported and tested the failure/fix.
-- Ritesh Harjani reviewed the final approach.
-- The fix is one function attribute and explanatory comment.
-- It affects a serious operational path: kexec/kdump boot into a
-  new/capture kernel.
-- The buggy code and call path exist across active stable versions
-  checked.
-- Backport is clean for current `7.0.y` and trivial for older stable
-  trees.
-
-Record: evidence against backporting:
-- The issue is config/platform specific: PowerPC plus KASAN plus
-  kexec/kdump plus VMX copy path.
-- Older stable trees may require minor context adjustment.
-- The commit is part of a two-patch series; the companion Makefile KASAN
-  fix should be included for the tested complete fix.
-
-Record: unresolved questions:
-- Exact original introduction commit for `enter_vmx_ops()` could not be
-  verified from local history.
-- Direct lore `WebFetch` was blocked by Anubis; I used `b4` and a lore
-  mirror instead.
-- I did not build-test the backport.
-
-Stable rules checklist:
-1. Obviously correct and tested: yes. The annotation directly suppresses
-   KASAN instrumentation on the one helper that can execute with MMU
-   off; tested-by is present.
-2. Fixes a real bug: yes. Review discussion reports an actual kexec hang
-   with KASAN.
-3. Important issue: yes. Failure mode is kexec/kdump hang.
-4. Small and contained: yes. One file, one function annotation.
-5. No new features/APIs: yes.
-6. Can apply to stable: yes for current `7.0.y`; older trees may need
-   trivial context adjustment.
-
-Exception category: not a device ID/quirk/build/doc exception. It is a
-normal stability fix.
+Step 9.4 Record: Stable backport decision is YES. The fix prevents
+kernel memory corruption in an old, stable-present USB driver path with
+extremely low regression risk.
 
 ## Verification
-- [Phase 1] Parsed the supplied commit message and fetched patch mbox;
-  confirmed tags, no `Fixes:` tag in patch 2, and the linked message id.
-- [Phase 2] Inspected fetched v3 diff; confirmed `arch/powerpc/lib/vmx-
-  helper.c` has 8 insertions and 1 deletion, changing only
-  `enter_vmx_ops()`.
-- [Phase 3] Ran `git log --grep` on current history, `master`, and
-  `power-next`; candidate not present locally.
-- [Phase 3] Ran `git blame` around `enter_vmx_ops()`; local history
-  could not identify true original introduction beyond repository
-  history shape.
-- [Phase 3] Ran `git show 2ab2d5794f14`; confirmed related PowerPC kexec
-  KASAN sanitization commit from 2022.
-- [Phase 4] Ran `b4 am` and `b4 am -c`; fetched v3 two-patch series, no
-  newer revision reported, patch 2 DKIM valid.
-- [Phase 4] Ran `b4 mbox`; confirmed original recipients and patch
-  content.
-- [Phase 4] Used lore mirror for v2 thread; confirmed Ritesh review,
-  Aboorva tested-by/reported hang, and v1-to-v2 narrowing.
-- [Phase 5] Searched call sites; confirmed `copypage_power7.S`,
-  `memcpy_power7.S`, and `memcmp_64.S` call `enter_vmx_ops()`.
-- [Phase 5] Read kexec and assembly code; confirmed kexec path reaches
-  `copy_page()` with MMU-off logic and `preempt_count = HARDIRQ_OFFSET`.
-- [Phase 6] Checked stable tags `v5.4` through `v7.0`; confirmed
-  `enter_vmx_ops()` exists without the annotation and the relevant
-  kexec/copy path exists in checked trees.
-- [Phase 6] Ran `git apply --check` on current tree for patch 2 and the
-  series; clean on current `7.0.y`.
-- [Phase 7] Checked `MAINTAINERS`; confirmed PowerPC maintainers and
-  that Madhavan Srinivasan is listed for PowerPC.
-- [Phase 8] Verified failure mode from review discussion: KASAN-enabled
-  kexec hangs after switchover; with both patches applied, kexec
-  completes.
-
-This should be backported, ideally together with the companion
-`powerpc/kdump: fix KASAN sanitization flag for core_$(BITS).o` patch
-for the tested complete KASAN/kexec fix.
+- Phase 1: Parsed supplied tags and fetched original patch thread with
+  `b4 mbox`; confirmed no `Fixes`, `Reported-by`, `Tested-by`,
+  `Reviewed-by`, `Acked-by`, or stable tag.
+- Phase 2: Read `drivers/net/wireless/marvell/libertas/if_usb.c`,
+  `dev.h`, and `defs.h`; confirmed `MESSAGE_HEADER_LEN`, `resp_len`,
+  `resp_buf`, and `memcpy()` behavior.
+- Phase 3: Ran `git blame` on `process_cmdrequest()`; identified old
+  introducing history around `ddac452680a516` and `7919b89c8276`.
+- Phase 3: Ran `git describe --contains`; confirmed relevant code dates
+  to v2.6.25/v2.6.26-era history.
+- Phase 4: `b4 dig` with the message-id failed because no local commit
+  hash was available; recorded as unresolved.
+- Phase 4: `b4 mbox` fetched the patch thread; `b4 mbox -c` found one
+  message and no newer revision.
+- Phase 4: Fetched lore mirror and stable archive pages; confirmed
+  analogous `libertas_tf` fix and stable review postings.
+- Phase 5: Traced callers from `if_usb_receive()` through
+  `usb_fill_bulk_urb()` and `if_usb_submit_rx_urb()`.
+- Phase 6: Checked release tags from `v3.16` through representative
+  active v6 tags; confirmed the buggy code exists broadly.
+- Phase 6: Ran `git apply --check` against the current tree; patch
+  applies cleanly there.
+- Phase 7: Checked `MAINTAINERS`; confirmed Libertas is orphaned under
+  wireless lists and Johannes Berg is listed for wireless maintenance.
+- Phase 8: Verified trigger is USB device-controlled receive data; no
+  unprivileged software-only trigger was verified.
 
 **YES**
 
- arch/powerpc/lib/vmx-helper.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/libertas/if_usb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/lib/vmx-helper.c b/arch/powerpc/lib/vmx-helper.c
-index 554b248002b4f..57e897b60db86 100644
---- a/arch/powerpc/lib/vmx-helper.c
-+++ b/arch/powerpc/lib/vmx-helper.c
-@@ -52,7 +52,14 @@ int exit_vmx_usercopy(void)
- }
- EXPORT_SYMBOL(exit_vmx_usercopy);
+diff --git a/drivers/net/wireless/marvell/libertas/if_usb.c b/drivers/net/wireless/marvell/libertas/if_usb.c
+index 8a6bf1365cfab..42d3fd32ece28 100644
+--- a/drivers/net/wireless/marvell/libertas/if_usb.c
++++ b/drivers/net/wireless/marvell/libertas/if_usb.c
+@@ -625,9 +625,10 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
+ 	unsigned long flags;
+ 	u8 i;
  
--int enter_vmx_ops(void)
-+/*
-+ * Can be called from kexec copy_page() path with MMU off. The kexec
-+ * code sets preempt_count to HARDIRQ_OFFSET so we return early here.
-+ * Since in_interrupt() is always inline, __no_sanitize_address on this
-+ * function is sufficient to avoid KASAN shadow memory accesses in real
-+ * mode.
-+ */
-+int __no_sanitize_address enter_vmx_ops(void)
- {
- 	if (in_interrupt())
- 		return 0;
+-	if (recvlength > LBS_CMD_BUFFER_SIZE) {
++	if (recvlength < MESSAGE_HEADER_LEN ||
++	    recvlength > LBS_CMD_BUFFER_SIZE) {
+ 		lbs_deb_usbd(&cardp->udev->dev,
+-			     "The receive buffer is too large\n");
++			     "The receive buffer is invalid: %d\n", recvlength);
+ 		kfree_skb(skb);
+ 		return;
+ 	}
 -- 
 2.53.0
 
