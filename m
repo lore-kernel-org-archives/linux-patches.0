@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBAA6423A7B;
-	Mon, 11 May 2026 22:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A174DBD75;
+	Mon, 11 May 2026 22:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537992; cv=none; b=g8INZXAD0x4DzpuS1F53rjmbuqxp0M2EtKiXFi95DVHRCh8SR9wGDXIyO+P8RSITPSh5Dg1kSr/ld5SLWF5WmC1vXTCumHdHS2r1MzlISzpDH+ds+vphtKQkS/ZnCHjj8fd19vFNIETqdGtkG+dQ+EqomPCWAkNRPHc+4hYvLTo=
+	t=1778537993; cv=none; b=pgKen+y1Vfr+QEX9jq4SZS80DvE97xFNrvJHlzb8tJAPb9j5qsHEmhtouyilY7/embvdsQb71k4pA9aqPUpUCky3SGGcDjzgKKn6ZAhGATxude/ezP2o0Xm+bqrrTMD65JG4Z9DmNw/ImAzmYS1MD3wKD8qNe8GlRhUwgRF8WAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537992; c=relaxed/simple;
-	bh=HaYXk42WvCSIShW8FZ0bSZslAXirNKtycnqzXYI2XpY=;
+	s=arc-20240116; t=1778537993; c=relaxed/simple;
+	bh=lrK/RVLsY/qCQGXYaWRUszCMLjdpNFQc/u6m65KLenw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aTT9BCraJXgKCwKVJDgb7zb+dvf50Udf+QCYg0MPr5eJMkokUqgIeUilIMdnWCF6yzS4qnJ6YFAfPRwsCbNgLrc4pmnlLyd+toI1l9jIwrUZzJDCJVxGvyRP3lFXq5MxWYxr3p7WTJkTzgypoVz6wuDmbX+PGg62A8cHeZ8H6Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SWbOOmdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PZYWhnfKovB4jjYQRV7KoSkyU7OWxrYCWjKbslAZtlHExYgdOZx4/poTdTlo4hliA14g+ysGDkUwAi0HTEqYR0/X5hRFjXQlDkACbO6uYMtH55kNOkCLXxXpSpt80aoLEs5qoCrk7VNMKJnSl5m3fsYELOmBt6Uw9f9ncldZB+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rd4kAiiZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SWbOOmdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42531C2BCF7;
-	Mon, 11 May 2026 22:19:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rd4kAiiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E674DC2BCF5;
+	Mon, 11 May 2026 22:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537992;
-	bh=HaYXk42WvCSIShW8FZ0bSZslAXirNKtycnqzXYI2XpY=;
+	s=k20201202; t=1778537990;
+	bh=lrK/RVLsY/qCQGXYaWRUszCMLjdpNFQc/u6m65KLenw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWbOOmdbhph7gAhY8ds3O0gOLXUE1uCohdW1HllrLZ/jqP8bs6VRQwbkvlr7qeosO
-	 eX6rZKrNIiAcC1toDD4iff5B3JPi6Ry+PUEJGc6DJ9l7vQ2dNnOPzeHy3UldftChv2
-	 vEwEQ9Qj12fAcqR77W1CNkPBEKJP7HDcoUmCaJJCosvDOdBM9MVrMCEKMD9KgB5LWe
-	 U4PQPnIqKhIPsSxTtkkteAbkvPhiRoa7954BSt2V72b3eSY2XMHU4A6dGeHcsW+Udw
-	 NXCyH5nL78heXr02AH338DlCFj+Q8nUkuuClw2+QeIo9U0jYB4Cvu+zxfS0pQTyQCK
-	 hYlSt4xwKMd0Q==
+	b=Rd4kAiiZwtA0KQPEYvFS73mHPq8FsPak9IrAF3LMjmzCAKaU5mkzXTn6S9UjK1pbZ
+	 8pikV1OV4vuC37FqN61SgwDE0MSiAnaUYw38i9faJfUHMoHjpkTsM3EI4HmtJNWR9U
+	 A7+NvGcsDX2bLQAdQnonGK0Z5UPXwmmHrBIGbT/pE9pj3/VAilmQUSEE8yTA8DQSpi
+	 EmarofnZjWTrBvhnAB8t0QI/omUBruYNCjTne2aEqZcQhFyg+d4Mzv+y0n4IMnis8q
+	 RpUxucRPQ1WLkBqGfJawL/D35DWF0+OIqQxHMWabk5B4Iar0pNc1a38rtNqKdq83Ea
+	 EcmFWv4vbTlMQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Maoyi Xie <maoyixie.tju@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	linux-wireless@vger.kernel.org,
-	netdev@vger.kernel.org,
+	io-uring@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] wifi: nl80211: require CAP_NET_ADMIN over the target netns in SET_WIPHY_NETNS
-Date: Mon, 11 May 2026 18:19:13 -0400
-Message-ID: <20260511221931.2370053-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] io_uring/wait: honour caller's time namespace for IORING_ENTER_ABS_TIMER
+Date: Mon, 11 May 2026 18:19:12 -0400
+Message-ID: <20260511221931.2370053-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -58,34 +54,37 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 15994bb0cbb8fc4879da7552ddd08c1896261c39 ]
+[ Upstream commit 45d2b37a37ab98484693533496395c610a2cab96 ]
 
-NL80211_CMD_SET_WIPHY_NETNS dispatches with GENL_UNS_ADMIN_PERM, which
-verifies that the caller has CAP_NET_ADMIN for the source netns. It
-doesn't verify that the caller has CAP_NET_ADMIN over the target netns
-selected by NL80211_ATTR_NETNS_FD or NL80211_ATTR_PID.
+io_uring_enter() with IORING_ENTER_ABS_TIMER takes an absolute
+timespec from the caller via ext_arg->ts. It arms an ABS mode
+hrtimer in __io_cqring_wait_schedule(). The conversion path in
+io_uring/wait.c parses ext_arg->ts inline rather than going
+through io_parse_user_time(). It therefore does not pick up the
+time namespace conversion added by the previous patch.
 
-This diverges from the convention enforced in
-net/core/rtnetlink.c::rtnl_get_net_ns_capable():
+Apply timens_ktime_to_host() to the parsed time on the
+IORING_ENTER_ABS_TIMER branch. This mirrors the IORING_TIMEOUT_ABS
+fix in io_parse_user_time(). Use ctx->clockid as the clock id.
+ctx->clockid is set either at ring creation or via
+IORING_REGISTER_CLOCK.
 
-    /* For now, the caller is required to have CAP_NET_ADMIN in
-     * the user namespace owning the target net ns.
-     */
-    if (!sk_ns_capable(sk, net->user_ns, CAP_NET_ADMIN))
-        return ERR_PTR(-EACCES);
+timens_ktime_to_host() is a no-op for clocks not affected by time
+namespaces. It is also a no-op for callers in the initial time
+namespace. The fast path is unchanged.
 
-A user with CAP_NET_ADMIN in their own user namespace can therefore
-push a wiphy into an arbitrary netns (including init_net) over which
-they have no privilege.
+Reproducer: in unshare --user --time, with a -10s monotonic
+offset, call io_uring_enter with min_complete=1,
+IORING_ENTER_ABS_TIMER, and ts = now + 1s. The call returns
+-ETIME after <1ms instead of after the expected ~1s.
 
-Mirror the rtnetlink convention by requiring CAP_NET_ADMIN in the
-target netns before calling cfg80211_switch_netns().
-
+Suggested-by: Pavel Begunkov <asml.silence@gmail.com>
+Suggested-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Link: https://patch.msgid.link/20260506064854.2207105-2-maoyixie.tju@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260504153755.1293932-3-maoyi.xie@ntu.edu.sg
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -94,259 +93,254 @@ LLM Generated explanations, may be completely bogus:
 ## Phase Walkthrough
 
 ### Phase 1: Commit Message Forensics
-Record: `wifi: nl80211` subsystem; action verb `require`; intent is to
-require `CAP_NET_ADMIN` over the target network namespace before
-`NL80211_CMD_SET_WIPHY_NETNS` moves a wiphy.
+Record: Subsystem `io_uring/wait`; action verb `honour`; intent is to
+make `IORING_ENTER_ABS_TIMER` interpret caller absolute times in the
+caller’s time namespace.
 
-Record: Tags in the provided commit message:
-`Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>`, `Link: https://patch.
-msgid.link/20260506064854.2207105-2-maoyixie.tju@gmail.com`, `Signed-
-off-by: Johannes Berg <johannes.berg@intel.com>`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, `Reviewed-by:`, or `Cc: stable` tag was
-present in the provided message.
+Record: Tags present:
+`Suggested-by: Pavel Begunkov`, `Suggested-by: Jens Axboe`, author
+`Signed-off-by: Maoyi Xie`, `Link:
+https://patch.msgid.link/20260504153755.1293932-3-maoyi.xie@ntu.edu.sg`,
+maintainer `Signed-off-by: Jens Axboe`. No `Fixes:`, `Reported-by:`,
+`Tested-by:`, `Reviewed-by`, `Acked-by`, or `Cc: stable`.
 
-Record: The described bug is an authorization gap. `GENL_UNS_ADMIN_PERM`
-verifies `CAP_NET_ADMIN` for the netlink socket/source netns, but
-`NL80211_ATTR_NETNS_FD` / `NL80211_ATTR_PID` selects a target netns that
-was not separately checked. The b4-fetched cover letter includes a
-concrete reproducer with `mac80211_hwsim`: a caller privileged only in
-its own user namespace can move a delegated wiphy back into `init_net`.
+Record: The commit describes a real userspace-visible bug:
+`io_uring_enter()` with `IORING_ENTER_ABS_TIMER` parses `ext_arg->ts`
+directly, then arms an absolute hrtimer without converting from the
+caller’s time namespace to host time. The supplied reproducer in
+`unshare --user --time` with a `-10s` monotonic offset returns `-ETIME`
+in under 1 ms instead of about 1 second.
 
-Record: This is not a hidden cleanup fix; it is an explicit
-security/permission bug fix.
+Record: This is not hidden cleanup. It is a direct correctness fix for
+absolute timeout interpretation in time namespaces.
 
 ### Phase 2: Diff Analysis
-Record: One file changed, `net/wireless/nl80211.c`, with 13 insertions
-in `nl80211_wiphy_netns()`. Scope is a single-function surgical fix.
+Record: One file changed, `io_uring/wait.c`, 5 insertions and 1
+deletion. Function modified: `io_cqring_wait()`. Scope: single-file
+surgical fix.
 
-Record: Before: after resolving the target netns and checking
-`IS_ERR(net)`, the function directly called `cfg80211_switch_netns()` if
-the wiphy was not already in that netns. After: it first checks
-`ns_capable(net->user_ns, CAP_NET_ADMIN)`, drops the netns reference
-with `put_net(net)`, and returns `-EPERM` on failure.
+Record: Before, `ext_arg->ts` was converted with
+`timespec64_to_ktime()`. If `IORING_ENTER_ABS_TIMER` was unset, the code
+added `start_time`; if set, it used the raw caller value as a host
+absolute deadline. After, the absolute branch calls
+`timens_ktime_to_host(ctx->clockid, iowq.timeout)`, while the relative
+branch remains unchanged.
 
-Record: Bug category is security authorization / logic correctness. The
-missing check allowed a source-netns-capable caller to affect a
-different target netns without privilege there.
+Record: Bug category is logic/correctness in time namespace handling.
+The broken mechanism is that a namespaced absolute
+`CLOCK_MONOTONIC`/`CLOCK_BOOTTIME` timestamp was fed to a host hrtimer
+as if it were already in host time.
 
-Record: Fix quality is high: small, localized, follows the verified
-rtnetlink convention in `rtnl_get_net_ns_capable()`, and preserves
-reference cleanup. Regression risk is low and limited to denying
-previously accepted unauthorized cross-netns moves.
+Record: Fix quality is strong: minimal, local, uses existing kernel
+helper, and no new API. Regression risk is very low because
+`timens_ktime_to_host()` is verified as a no-op for the initial time
+namespace, for unsupported clocks, and when `CONFIG_TIME_NS` is
+disabled.
 
 ### Phase 3: Git History Investigation
-Record: `git blame` on the current stable checkout blamed the function
-body to a repository snapshot-style commit, so it was not useful for
-introduction history. `git log v2.6.29..v2.6.32 -S...` found the
-command/function introduced by `463d018323851` (`cfg80211: make aware of
-net namespaces`), first contained in `v2.6.32-rc1`.
+Record: `git blame` on the changed wait lines points to `0105b0562a5e`
+(`io_uring: split out CQ waiting code into wait.c`) for the current file
+location. The same logic predates the split; `2b8e976b9842` (`io_uring:
+user registered clockid for wait timeouts`) shows this absolute-wait
+path using `ctx->clockid` and is contained by `v6.12-rc1`.
 
-Record: No `Fixes:` tag is present, so there was no tagged commit to
-follow.
+Record: No `Fixes:` tag is present, so there was no tagged introducing
+commit to follow. I inspected the companion parent commit instead:
+`9cc6bac1bebf` fixes the same time-namespace issue for
+`IORING_TIMEOUT_ABS`.
 
-Record: Recent local `net/wireless/nl80211.c` history showed unrelated
-wireless fixes/conversions and no existing equivalent target-netns
-capability fix.
+Record: Recent related history shows this is patch 2/2 after
+`9cc6bac1bebf`. The candidate’s parent is exactly `9cc6bac1bebf`, but
+this wait fix compiles independently as long as `timens_ktime_to_host()`
+and `ctx->clockid` exist.
 
-Record: No local prior `Maoyi Xie` commits were found under
-`net/wireless`. `MAINTAINERS` verifies Johannes Berg as maintainer for
-`802.11 (including CFG80211/NL80211)`, and the patch was addressed to
-Johannes on linux-wireless.
+Record: Author history in `io_uring` before this commit only showed the
+companion timeout fix. Jens Axboe applied the patch, and Pavel/Jens were
+suggested-by/review participants.
 
-Record: No code dependency was found for this patch. It is patch 1/2 in
-the submitted series; patch 2 is related namespace hardening, but patch
-1 is standalone for the direct permission bypass.
+Record: Dependencies: affected stable trees need `ctx->clockid` and
+`timens_ktime_to_host()`. I verified both exist in local `for-
+greg/6.12-100`; the same `IORING_ENTER_ABS_TIMER` buggy line exists in
+`6.12`, `6.18`, `6.19`, and `7.0` local stable branches, but not in
+`5.10`, `5.15`, `6.1`, or `6.6`.
 
 ### Phase 4: Mailing List And External Research
-Record: No commit hash was provided and the exact subject was not found
-in local `master`, `wireless-next`, `net-next`, or `fixes-next`, so `b4
-dig -c <commit>` was not applicable. I used the provided message-id with
-`b4 am`/`b4 mbox`.
+Record: `b4 dig -c 45d2b37a37ab...` found the original submission at `ht
+tps://patch.msgid.link/20260504153755.1293932-3-maoyi.xie@ntu.edu.sg`.
 
-Record: `b4 am` found `[PATCH v3 0/2] wifi: nl80211: tighten netns
-handling in SET_WIPHY_NETNS and dump continuation`, including this patch
-as `v3 1/2`. `b4 am -c` did not report a newer revision. Attempts to
-fetch v1/v2 directly with `b4 -v 1/-v 2` did not find those revisions,
-but the v3 cover records that patch 1 was unchanged since v1.
+Record: `b4 dig -a` found only v1 of the series. The thread shows Jens
+applied both patches with commit IDs `9cc6bac1bebf` and `45d2b37a37ab`.
 
-Record: The full mbox contained three messages: cover, patch 1, patch 2.
-It did not contain reviewer reply messages, but the cover records
-Johannes review feedback about trailers/comment wording and says no code
-changes since v2.
+Record: `b4 dig -w` shows the right people/lists were included: Maoyi
+Xie, Jens Axboe, Pavel Begunkov, `io-uring@vger.kernel.org`, and `linux-
+kernel@vger.kernel.org`.
 
-Record: Original recipients were Johannes Berg, `linux-
-wireless@vger.kernel.org`, and `linux-kernel@vger.kernel.org`. No stable
-nomination or NAK was found in the fetched mbox. Lore WebFetch searches
-were blocked by Anubis, so stable-list discussion could not be
-independently verified through WebFetch.
+Record: Reviewer feedback was positive: Pavel wrote “both look good” and
+requested a liburing test; Jens replied “+1” for the test and later
+applied the series. No NAKs or objections found.
+
+Record: No separate bug-report link exists beyond the patch
+thread/reproducer. Stable-specific WebFetch was blocked by Anubis, and
+local thread search found no stable nomination.
 
 ### Phase 5: Code Semantic Analysis
-Record: Modified function: `nl80211_wiphy_netns()`.
+Record: Modified function: `io_cqring_wait()`.
 
-Record: Caller surface: the only direct reference is the generic-netlink
-op for `NL80211_CMD_SET_WIPHY_NETNS`; `genl_family_rcv_msg()` checks
-`GENL_UNS_ADMIN_PERM` against `net->user_ns`, then
-`genl_family_rcv_msg_doit()` calls `ops->doit()`, reaching
-`nl80211_wiphy_netns()` from userspace netlink.
+Record: Callers: `io_uring_enter(2)` reaches `io_cqring_wait()` when
+`IORING_ENTER_GETEVENTS` is set, after `io_get_ext_arg()` copies/parses
+the userspace getevents argument. This is directly syscall-reachable.
 
-Record: Key callees: `get_net_ns_by_pid()`, `get_net_ns_by_fd()`, new
-`ns_capable(net->user_ns, CAP_NET_ADMIN)`, `cfg80211_switch_netns()`,
-and `put_net()`. `cfg80211_switch_netns()` moves associated wireless
-netdevs with `dev_change_net_namespace()` and updates `wiphy_net_set()`.
+Record: Key callees: `timespec64_to_ktime()`, `timens_ktime_to_host()`,
+`ktime_add()`, `io_get_time()`, `io_cqring_schedule_timeout()`, and
+hrtimer setup/start helpers.
 
-Record: Reachability is verified by the op table and by the b4 cover’s
-PoC. A userspace caller can trigger the path by sending
-`NL80211_CMD_SET_WIPHY_NETNS` with target PID or netns fd.
+Record: Call chain: userspace `io_uring_enter()` -> `io_get_ext_arg()`
+-> `io_cqring_wait()` -> `io_cqring_wait_schedule()` ->
+`__io_cqring_wait_schedule()` -> `io_cqring_schedule_timeout()` ->
+absolute hrtimer. The buggy path is reachable from userspace with
+`IORING_ENTER_GETEVENTS | IORING_ENTER_EXT_ARG |
+IORING_ENTER_ABS_TIMER`.
 
-Record: Similar convention verified in `rtnl_get_net_ns_capable()`,
-which checks target `net->user_ns` before using another netns.
+Record: Similar patterns: the companion commit fixes
+`io_parse_user_time()` for `IORING_TIMEOUT_ABS`; POSIX timers,
+`clock_nanosleep`, alarm timers, and `timerfd` already use
+`timens_ktime_to_host()` for absolute timers.
 
 ### Phase 6: Stable Tree Analysis
-Record: The vulnerable handler/op shape exists in `v5.4`, `v5.10`,
-`v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and current `7.0.y`, with no
-`ns_capable(net->user_ns, CAP_NET_ADMIN)` check in the handler.
+Record: Local stable-branch grep found the buggy
+`IORING_ENTER_ABS_TIMER` code in `for-greg/6.12-100`, `for-
+greg/6.18-100`, `for-greg/6.19-200`, and `for-greg/7.0-100`. It was
+absent from `5.10`, `5.15`, `6.1`, and `6.6`.
 
-Record: `v3.18` has `NL80211_CMD_SET_WIPHY_NETNS`, but uses
-`GENL_ADMIN_PERM`, so the unprivileged-user-namespace aspect is not the
-same there. For active modern stable trees, the issue is present.
+Record: Backport difficulty: current `7.0.y` apply check succeeds
+cleanly. `6.12`/`7.0` have `io_uring/wait.c`; `6.18`/`6.19` local
+branches have the same logic in `io_uring/io_uring.c`, so those need a
+path/context backport but not semantic rework.
 
-Record: `git apply --check` of the fetched v3 mbox succeeds on the
-current `7.0.y` checkout. Older stable trees have line offsets and minor
-surrounding differences, but the same local hunk context exists at least
-in `v5.4`; expected backport difficulty is clean or minor-context-only.
-
-Record: No related local fix already present was found by subject/grep
-searches.
+Record: No related fix with this subject was found in the checked stable
+candidate branches.
 
 ### Phase 7: Subsystem Context
-Record: Subsystem is cfg80211/nl80211 wireless configuration.
-Criticality is IMPORTANT: it is not core-mm/VFS, but it is a userspace-
-facing network configuration and permission boundary.
+Record: Subsystem is `io_uring`, a core async I/O syscall subsystem.
+Criticality: IMPORTANT, not universal core MM/VFS, but directly
+userspace-facing and widely used.
 
-Record: The wireless subsystem is active in local history, with recent
-cfg80211/nl80211-adjacent fixes.
+Record: Subsystem activity is high; recent `io_uring` history has many
+fixes and feature changes. This specific change is small despite the
+active subsystem.
 
 ### Phase 8: Impact And Risk
-Record: Affected users are systems with cfg80211/nl80211, network
-namespaces/user namespaces, and a `WIPHY_FLAG_NETNS_OK` wiphy. Verified
-examples include `mac80211` and drivers setting the flag such as
-`brcmfmac`, `mwifiex`, and `qtnfmac`.
+Record: Affected population: users of `io_uring_enter()` absolute CQ
+wait timeouts inside non-initial time namespaces, especially container-
+like environments. Branch-limited to stable trees that contain
+`IORING_ENTER_ABS_TIMER`.
 
-Record: Trigger requires the caller to hold a movable wiphy in its own
-netns and pass a target netns fd or pid. The b4 cover verifies this is
-reachable from an unprivileged user namespace after legitimate admin
-delegation using `mac80211_hwsim`.
+Record: Trigger: userspace can trigger via `io_uring_enter()` with
+`IORING_ENTER_ABS_TIMER` and a timespec from a shifted time namespace.
+The provided reproducer uses `unshare --user --time`; whether fully
+unprivileged depends on system user-namespace policy.
 
-Record: Failure mode is a security/namespace isolation violation:
-unauthorized movement of a wiphy into a netns, including `init_net`,
-where the caller lacks privilege. Severity is HIGH because it bypasses
-kernel namespace permission boundaries.
+Record: Failure mode: incorrect timeout behavior. With the reproduced
+negative offset, the wait returns `-ETIME` immediately; with other
+offsets, absolute waits can be delayed incorrectly. Severity: MEDIUM to
+HIGH user-visible correctness bug, potential application timeout/hang
+behavior, but not a kernel crash, memory corruption, or security fix.
 
-Record: Benefit is high for stable users because it closes a concrete
-privilege boundary bug. Risk is low: 13 lines, one function, no new API,
-no data structure change, and only unauthorized operations change
-behavior.
+Record: Benefit is moderate/high for affected containerized users
+because it restores syscall semantics. Risk is very low: one local
+conditional change plus an include, using established helper semantics.
 
 ### Phase 9: Final Synthesis
-Record: Evidence for backporting: real security/authorization bug,
-concrete PoC in the submitted cover, reachable userspace netlink
-command, vulnerable code present across modern stable trees, small
-contained fix, and it mirrors an existing rtnetlink convention.
+Record: Evidence for backporting: real reproduced bug, syscall-
+reachable, affects stable branches with the feature, tiny patch,
+maintainer-applied, positive reviewer feedback, matches established
+time-namespace behavior elsewhere.
 
-Record: Evidence against backporting: no `Fixes:`/stable tag, no fetched
-reviewer reply carrying an explicit stable nomination, and the exact
-applied commit hash was not present in local searched branches. These do
-not outweigh the verified technical issue.
+Record: Evidence against backporting: not a crash/security/data-
+corruption fix; affects a narrower feature combination; no explicit
+stable nomination; older stable trees do not contain the affected
+feature.
 
-Record: Unresolved: I could not verify the final applied commit object
-or run `b4 dig -c` because no commit hash was provided and local branch
-searches did not find the subject. WebFetch to lore/stable was blocked
-by Anubis. I did not run the runtime PoC or a kernel build.
+Record: Unresolved: I did not run the reproducer locally. Lore WebFetch
+was blocked by Anubis, but `b4` successfully fetched the thread. Exact
+first upstream introduction of `IORING_ENTER_ABS_TIMER` was not cleanly
+reconstructed from local blame alone, but affected stable branches were
+directly verified by grep.
 
-Stable rules checklist:
-1. Obviously correct and tested: yes by inspection; PoC result described
-   in b4 cover, though not locally rerun.
-2. Fixes a real bug affecting users: yes, verified missing target-netns
-   authorization.
-3. Important issue: yes, security/namespace permission bypass.
-4. Small and contained: yes, one function, 13 added lines.
-5. No new features or APIs: yes.
-6. Can apply to stable: yes for current `7.0.y`; older active stable
-   trees likely clean/minor context based on matching code.
+Stable rules:
+1. Obviously correct and tested: yes by code inspection, reproducer, and
+   positive review; no formal `Tested-by`.
+2. Fixes a real bug: yes, reproduced wrong timeout result.
+3. Important issue: yes for affected users, because absolute waits can
+   return immediately or at the wrong time.
+4. Small and contained: yes, 6-line single-function change.
+5. No new features/APIs: yes.
+6. Can apply to stable: yes for current `7.0.y`; minor path adjustment
+   may be needed in some branches.
 
-Exception category: none. This is not a device ID/quirk/build/doc fix;
-it is a security permission fix.
+No automatic exception category applies.
 
 ## Verification
-- [Phase 1] Parsed provided subject/tags and b4-fetched patch/cover;
-  found no `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, or
-  stable tag.
-- [Phase 2] Compared provided diff and b4 mbox patch; confirmed 13 lines
-  added to `nl80211_wiphy_netns()`.
-- [Phase 3] `git blame -L` was not useful due snapshot-style history;
-  `git log v2.6.29..v2.6.32 -S...` found `463d018323851`, first
-  contained in `v2.6.32-rc1`.
-- [Phase 3] `git log --author='Maoyi Xie' -- net/wireless` found no
-  local prior commits.
-- [Phase 3] `MAINTAINERS` confirms Johannes Berg maintains `802.11
-  (including CFG80211/NL80211)`.
-- [Phase 4] `b4 am` found v3 2-patch series and the supplied patch
-  message-id.
-- [Phase 4] `b4 am -c` found no newer revision.
-- [Phase 4] `b4 mbox` saved the full 3-message thread; no stable
-  nomination or NAK was present there.
-- [Phase 5] `rg` confirmed `nl80211_wiphy_netns()` is reached via the
-  `NL80211_CMD_SET_WIPHY_NETNS` generic-netlink op.
-- [Phase 5] Read `genetlink.c`; confirmed `GENL_UNS_ADMIN_PERM` checks
-  `net->user_ns` before calling `ops->doit()`.
-- [Phase 5] Read `cfg80211_switch_netns()`; confirmed it moves wireless
-  netdevs and changes the wiphy netns.
-- [Phase 6] Checked `v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`,
-  `v6.19`, and current `7.0.y`; all have the handler/op without the
-  target `ns_capable()` check.
-- [Phase 6] `git apply --check` of the b4 mbox succeeded on current
-  `7.0.y`.
-- [Phase 8] `rg WIPHY_FLAG_NETNS_OK` verified affected mac80211 and
-  several wireless drivers expose movable wiphys.
-- UNVERIFIED: exact final commit SHA and final applied-object metadata,
-  because the subject was not found in local searched branches.
-- UNVERIFIED: stable-list discussion via WebFetch, because lore WebFetch
-  returned Anubis anti-bot pages.
-- UNVERIFIED: local runtime PoC/build; not performed.
+- [Phase 1] Parsed `git show` commit message and tags for
+  `45d2b37a37ab98484693533496395c610a2cab96`.
+- [Phase 2] Verified diff is one file, `io_uring/wait.c`, 5 insertions/1
+  deletion in `io_cqring_wait()`.
+- [Phase 3] Ran `git blame` on the changed lines; current file location
+  comes from `0105b0562a5e`.
+- [Phase 3] Inspected `2b8e976b9842`; verified `ctx->clockid`,
+  `io_get_time(ctx)`, and selected-clock wait timeout support.
+- [Phase 3] Inspected companion commit `9cc6bac1bebf`; verified same
+  class of fix for `IORING_TIMEOUT_ABS`.
+- [Phase 4] Ran `b4 dig`, `b4 dig -a`, `b4 dig -w`, and `b4 mbox`;
+  verified v1-only series, correct recipients, positive feedback, and
+  applied notice.
+- [Phase 5] Read `io_uring_enter()` and `io_get_ext_arg()` call path;
+  verified direct syscall reachability.
+- [Phase 5] Verified `timens_ktime_to_host()` behavior in
+  `include/linux/time_namespace.h` and `kernel/time/namespace.c`.
+- [Phase 5] Verified similar established conversions in `kernel/time`
+  and `fs/timerfd.c`.
+- [Phase 6] Ran `git grep` on local stable branches; affected: `6.12`,
+  `6.18`, `6.19`, `7.0`; unaffected: `5.10`, `5.15`, `6.1`, `6.6`.
+- [Phase 6] Ran `git apply --check` for the candidate patch on current
+  `7.0.y`; it applies cleanly.
+- [Phase 8] Verified reproducer details from commit and mailing-list
+  cover letter; did not execute it locally.
 
-This should be backported to stable kernel trees that contain the
-`GENL_UNS_ADMIN_PERM` version of `NL80211_CMD_SET_WIPHY_NETNS`,
-especially active v5.4+ stable/LTS trees.
+This should be backported to stable trees that contain
+`IORING_ENTER_ABS_TIMER`, with the companion timeout patch strongly
+recommended for complete io_uring absolute-timeout time-namespace
+correctness.
 
 **YES**
 
- net/wireless/nl80211.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ io_uring/wait.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index ce3121b1c3319..13c2943ad3e4b 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -13568,6 +13568,19 @@ static int nl80211_wiphy_netns(struct sk_buff *skb, struct genl_info *info)
- 	if (IS_ERR(net))
- 		return PTR_ERR(net);
+diff --git a/io_uring/wait.c b/io_uring/wait.c
+index 91df86ce0d18c..ec01e78a216d6 100644
+--- a/io_uring/wait.c
++++ b/io_uring/wait.c
+@@ -5,6 +5,7 @@
+ #include <linux/kernel.h>
+ #include <linux/sched/signal.h>
+ #include <linux/io_uring.h>
++#include <linux/time_namespace.h>
  
-+	/*
-+	 * The caller already has CAP_NET_ADMIN over the source netns
-+	 * (enforced by GENL_UNS_ADMIN_PERM on the genl op). Mirror the
-+	 * convention used by net/core/rtnetlink.c::rtnl_get_net_ns_capable()
-+	 * and require CAP_NET_ADMIN over the target netns as well, so that
-+	 * a caller that is privileged in their own user namespace cannot
-+	 * push a wiphy into a netns where they have no privilege.
-+	 */
-+	if (!ns_capable(net->user_ns, CAP_NET_ADMIN)) {
-+		put_net(net);
-+		return -EPERM;
-+	}
-+
- 	err = 0;
+ #include <trace/events/io_uring.h>
  
- 	/* check if anything to do */
+@@ -229,7 +230,10 @@ int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
+ 
+ 	if (ext_arg->ts_set) {
+ 		iowq.timeout = timespec64_to_ktime(ext_arg->ts);
+-		if (!(flags & IORING_ENTER_ABS_TIMER))
++		if (flags & IORING_ENTER_ABS_TIMER)
++			iowq.timeout = timens_ktime_to_host(ctx->clockid,
++							    iowq.timeout);
++		else
+ 			iowq.timeout = ktime_add(iowq.timeout, start_time);
+ 	}
+ 
 -- 
 2.53.0
 
