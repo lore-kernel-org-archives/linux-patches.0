@@ -1,51 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97894DD6ED;
-	Mon, 11 May 2026 22:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564B14E376F;
+	Mon, 11 May 2026 22:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537994; cv=none; b=UbxtOLnEuDXIp8HgYXvRyKJcHM2sjIJUbS3OqfFWg1cC7ALpVT47qug6qw7hACtT6XRi6D9pk8IUt9JfYpUZ+S7XfGVGf1VuPcP/3QKT/zpFdPocYNMMIcLXKB/RBacim2bvbGa4hb/vOa7gPG3uUK2D31lWFNl+2jBahvMQgJs=
+	t=1778537996; cv=none; b=cgq9cdUBKigdTHwAS0KRNRBcYQYVUrCsQGeo380FEuRoeEJ//Hw/3fk+yv81SVhbHoHfqMM75GZm4rhcTBdnLIR3zQ7YNglqNBiMgZOmvAhRrsm0B34ts7g7RcQFX3/8EuwLWweL877dMMYBJj7HaRsnULyib8XnhkOjU1KDZb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537994; c=relaxed/simple;
-	bh=LRN2672r35IyVec++JGBaiETnqJv8Sk5nTuKiSNxa8A=;
+	s=arc-20240116; t=1778537996; c=relaxed/simple;
+	bh=UVhRiCtsGtIVCO89w0KLFi9gBuY1+5o6JU2fTLcrA9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C4+a5lo8ITKv6HHjgo86Vy7O9ehTNfSKE4rlCIPfD2eZRdRkbP3EbIjfOFTEp6jpvO7jkeg+ZD4WEsNh2gsjo0GTKZRPH8whhJ2+eF80mF1Qf+cUfjMwfddLXMpUKwbovWAyvkk2c9JWwnD9CqoF2LCxBKrKgBA4c86lydHeZSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YPjA+c36; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QvWunirXBp16hM7VzghmohU8FtneN/UkkEr8jvi1GeGAD0bxP+YjlhJ1NzuRsIMHLR6ciqIldJUD9KqkbLSBXb4sNXFdQFWXKSUwK+vb0mfGxobiMXMqwS46gYRz1zuvXCV7OHTgs7ylFqnPAeO+e153HM1Q308KEyu203YHYzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bLo9m3hx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YPjA+c36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6ABC2BCFF;
-	Mon, 11 May 2026 22:19:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bLo9m3hx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD37C2BCB0;
+	Mon, 11 May 2026 22:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537994;
-	bh=LRN2672r35IyVec++JGBaiETnqJv8Sk5nTuKiSNxa8A=;
+	s=k20201202; t=1778537996;
+	bh=UVhRiCtsGtIVCO89w0KLFi9gBuY1+5o6JU2fTLcrA9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPjA+c36T+a+XWppJhFnE1jUu+l34vyBIgacKzfLiBQkdcUuIJ+BPdQsCwZbZlNHu
-	 mxxLd5cqoUAW3Ap9mEcKuJcH+RrMdiPNbMzl1sG42Eka7jaup2QtFBrZjDJE4dLEfY
-	 oJjC0FCZo5n+XUpekJ9zPOPlO7lMSR9eUBZ5f0HfiAn23PB241V4qzCz4H2QU7I5Uq
-	 XDUqFWkDErZq8+W+X+v1ob4FGHNSBMBkhi1WtkiFr/USwLg3I8KgVR8MzDuMoxuhAY
-	 OuVblheAp48z1i2RQGJkMdER8nsinm0CGhrPRf84iqcoJFQzc5grPB4t7ZkcW46rXe
-	 Ni9l8CrWs9PWQ==
+	b=bLo9m3hxsJ66lAfnkLhyuVlYAIKhBEgyAqsORm0HWnB+bqPvjgQhXbRcYs9WiU4rL
+	 4yRmr4UyHd4dQoGJej1eNl9O5MttF/Asodw5CoxAateck9KOgyjpTYIgMniHTZbx82
+	 tmB0cRYwwGFMtqFwhm/EdO8cVK9R5d6c9cJhXC1hGez1wusOiIGHE68h9cx1ZFiNr6
+	 JYcfUVTdw5tMmi0ggQDxEEbUx+XswxMFGg2v6uUQngpExQII2z/WMMygY6b+qEBhs9
+	 XqbwiWuqUgySZINhzrLcaUos+Kn3vbRYoQPb7KAipvKmQfhgpjAq3C7BBtViFxRuJP
+	 fDIRJm+VC5stQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Brian Bunker <brian@purestorage.com>,
+	Krishna Kant <krishna.kant@purestorage.com>,
+	Riya Savla <rsavla@purestorage.com>,
+	Hannes Reinecke <hare@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rfoss@kernel.org,
-	todor.too@gmail.com,
-	agross@kernel.org,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	jejb@linux.ibm.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] media: qcom: camss: avoid format string warning
-Date: Mon, 11 May 2026 18:19:14 -0400
-Message-ID: <20260511221931.2370053-15-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] scsi: scsi_dh_alua: Increase default ALUA timeout to maximum spec value
+Date: Mon, 11 May 2026 18:19:15 -0400
+Message-ID: <20260511221931.2370053-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -61,267 +56,167 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Brian Bunker <brian@purestorage.com>
 
-[ Upstream commit 23c39cb598977f10909a2387c5e5f34afc1d6933 ]
+[ Upstream commit 68c3a65a5a8e85643745fdde02cb63904e165620 ]
 
-clang-22 warns about csiphy_match_clock_name() taking a variable format
-string that is not checked against the 'int index' argument:
+The ALUA handler maps a 0 value (no implicit transition timeout provided
+by the target) to the ALUA_FAILOVER_TIMEOUT constant, currently 60
+seconds. This means the kernel already does not accept an infinite
+transition time.
 
-drivers/media/platform/qcom/camss/camss-csiphy.c:566:44: error: diagnostic behavior may be improved by
-      adding the 'format(printf, 2, 3)' attribute to the declaration of 'csiphy_match_clock_name'
-      [-Werror,-Wmissing-format-attribute]
-  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
-      | __attribute__((format(printf, 2, 3)))
-  562 |                                     int index)
-  563 | {
-  564 |         char name[16]; /* csiphyXXX_timer\0 */
-  565 |
-  566 |         snprintf(name, sizeof(name), format, index);
-      |                                                   ^
-drivers/media/platform/qcom/camss/camss-csiphy.c:561:13: note: 'csiphy_match_clock_name' declared here
-  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
-      |             ^
+However, 60 seconds is insufficient for some arrays that may take longer
+to complete ALUA transitions. Since the highest value allowed by the
+SCSI specification for the implicit transition timeout is a single byte
+(255 seconds), change the default to 255. This way, when a target does
+not provide an explicit transition timeout, we default to the maximum
+value the spec allows rather than an arbitrary 60 second limit.
 
-Change the function to use a snprintf() style format string that allows this
-to be checked at the call site.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Co-developed-by: Krishna Kant <krishna.kant@purestorage.com>
+Signed-off-by: Krishna Kant <krishna.kant@purestorage.com>
+Co-developed-by: Riya Savla <rsavla@purestorage.com>
+Signed-off-by: Riya Savla <rsavla@purestorage.com>
+Signed-off-by: Brian Bunker <brian@purestorage.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Link: https://patch.msgid.link/20260416165512.26497-2-brian@purestorage.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Analysis Walkthrough
 
-### Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem is `media: qcom: camss`; action verb is
-`avoid`; claimed intent is to avoid a clang-22 format-string build
-warning/error in `csiphy_match_clock_name()`.
+Phase 1 Record: Subsystem is `scsi: scsi_dh_alua`; action is “increase”;
+intent is to raise the default ALUA implicit transition timeout from 60s
+to 255s. Tags verified from commit
+`68c3a65a5a8e85643745fdde02cb63904e165620`: co-developed/SOB by Krishna
+Kant and Riya Savla, SOB by Brian Bunker, `Reviewed-by: Hannes
+Reinecke`, `Link:` to the v4 posting, SOB by Martin K. Petersen. No
+`Fixes:`, `Reported-by:`, `Tested-by:`, or `Cc: stable`. Body describes
+a real behavior problem: targets that omit an explicit ALUA transition
+timeout get capped at 60s, which is too short for some arrays.
 
-Step 1.2 Record: Verified fetched commit
-`2211e826bd69c041534093735241182013dde7bc` has:
-- `Signed-off-by: Arnd Bergmann <arnd@arndb.de>`
-- `Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>`
-- `Signed-off-by: Bryan O'Donoghue <bod@kernel.org>`
+Phase 2 Record: One file changed,
+`drivers/scsi/device_handler/scsi_dh_alua.c`, 1 insertion/1 deletion. No
+function body is modified; only `ALUA_FAILOVER_TIMEOUT` changes. The
+macro is used by `submit_rtpg()`, `submit_stpg()`, `alua_tur()`, and
+`alua_rtpg()` for command and transition expiry timing. Before: missing
+target timeout defaults to 60s. After: defaults to 255s. Bug category is
+logic/correctness for storage failover timing. Fix quality is very small
+and obvious; main regression risk is slower failure detection for arrays
+that omit timeout and remain stuck.
 
-The original lore submission also has `Fixes: 0727615fb975 ("media:
-qcom: camss: Functionally decompose CSIPHY clock lookups")`. No
-`Reported-by`, `Tested-by`, `Cc: stable`, or bug-report `Link` was
-verified.
+Phase 3 Record: `git blame` shows the 60s default came from
+`3588c5a21aef8c` (`[SCSI] scsi_dh_alua: implement 'implied transition
+timeout'`), first contained in `v3.6`. That original commit added the
+implicit transition timeout machinery and made 60s the finite fallback.
+Recent local history shows ALUA-related fixes but no prerequisite for
+this one. Author Brian Bunker previously authored ALUA transition-state
+fix `6056a92ceb2a7`, so this is from a contributor with direct ALUA
+history. No standalone dependency was found.
 
-Step 1.3 Record: The body describes a clang-22 diagnostic promoted to
-error: `[-Werror,-Wmissing-format-attribute]`. The root cause is that
-`csiphy_match_clock_name()` takes a `const char *format` and passes it
-to `snprintf()` with a fixed `int index`, but the helper itself lacks a
-checkable printf-style prototype.
+Phase 4 Record: `b4 dig -c 68c3a65a5a8e8` found the v4 lore submission
+at
+`https://patch.msgid.link/20260416165512.26497-2-brian@purestorage.com`.
+`b4 dig -a` found v3 and v4; v4 is the applied revision. `b4 dig -w`
+shows Brian Bunker, `linux-scsi`, Hannes Reinecke, Krishna Kant, and
+Riya Savla were included. The v4 thread has Hannes’s `Reviewed-by` and
+Martin Petersen’s “Applied to 7.1/scsi-staging”. Earlier v2 discussion
+verified Hannes objected to tying ALUA transition timeout to device
+command timeout, and the patch evolved into the simpler 255s default. I
+found no stable-list discussion.
 
-Step 1.4 Record: This is not a hidden runtime bug fix. It is a build-
-warning/build-error fix for newer clang plus warning-as-error
-configurations.
+Phase 5 Record: Modified function list is empty, but impacted code paths
+are the ALUA RTPG/STPG/TUR and transition expiry paths. Call tracing
+verified `alua_rtpg_work()` calls `alua_tur()` and `alua_rtpg()`,
+`alua_activate()` queues RTPG from dm-multipath activation,
+`alua_check_sense()` is invoked from SCSI error handling, and
+`alua_prep_fn()` is called from SCSI request setup. This is reachable
+from SCSI disk/device-handler attach, error handling, and dm-multipath
+path activation. Similar pattern search found the same 60s fallback in
+active stable tags.
 
-### Phase 2: Diff Analysis
-Step 2.1 Record: One file changed:
-`drivers/media/platform/qcom/camss/camss-csiphy.c`, `7 insertions(+), 3
-deletions(-)`. One function modified: `csiphy_match_clock_name()`. Scope
-is single-file surgical.
+Phase 6 Record: The buggy 60s default exists in `v4.14`, `v4.19`,
+`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.16`, `v6.17`, and `v7.0`
+tags in this repo. The exact macro line is present, so backport
+difficulty should be clean or trivial for those trees. `b4 am` also
+reported the v4 patch “applies clean to current tree.” No alternate
+stable fix was found.
 
-Step 2.2 Record: Before, the helper accepted `format, int index` and
-called `snprintf(name, sizeof(name), format, index)`. After, it is
-declared `__printf(2, 3)`, accepts varargs, uses `va_start()`,
-`vsnprintf()`, and `va_end()`. Call sites remain unchanged.
+Phase 7 Record: Subsystem is SCSI device handler / ALUA multipath
+storage. Criticality is IMPORTANT: it affects systems using ALUA-capable
+SCSI storage, especially enterprise multipath arrays. MAINTAINERS
+verifies SCSI is maintained by James Bottomley and Martin Petersen, and
+the patch was committed by Martin Petersen.
 
-Step 2.3 Record: Bug category is build fix / compiler diagnostic fix. It
-does not fix memory safety, locking, refcounting, or runtime logic.
+Phase 8 Record: Affected users are config/hardware-specific: ALUA SCSI
+disk users, commonly multipath enterprise storage. Trigger is an ALUA
+transition where the target omits an explicit transition timeout and
+takes more than 60s. Failure mode is premature transition expiry,
+leading `alua_rtpg()` to mark the port group standby and return I/O/path
+failure. Severity is HIGH for affected systems because it can break
+failover or storage availability. Benefit is high for affected storage
+users; risk is low because this is a one-line bounded timeout increase
+and 255s matches the implementation’s `unsigned char`/`buff[5]` timeout
+representation.
 
-Step 2.4 Record: The fix is mechanically correct and minimal. Existing
-callers pass literal format strings plus `csiphy->id`, so behavior is
-preserved while allowing compiler format checking. Regression risk is
-very low; the only meaningful risk is varargs misuse, but current call
-sites were verified unchanged and simple.
-
-### Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows the helper body was introduced by
-`0727615fb975f6`, authored by Bryan O'Donoghue on 2023-09-25. `git
-describe --contains` places it at `v6.7-rc1~51^2~149`.
-
-Step 3.2 Record: The final fetched commit lacks a `Fixes:` trailer, but
-the original lore submission includes `Fixes: 0727615fb975`. I inspected
-that commit; it introduced the helper and the `snprintf(..., format,
-index)` pattern.
-
-Step 3.3 Record: Recent file history includes later CAMSS/CSIPHY
-changes, especially `74cae7794341` changing callers to use `csiphy->id`.
-No prerequisite for this format-warning fix was found beyond the helper
-existing.
-
-Step 3.4 Record: Arnd Bergmann has prior CAMSS build/undefined-behavior
-fixes in history. Bryan O'Donoghue, who reviewed the patch, is listed as
-a CAMSS maintainer in `MAINTAINERS`.
-
-Step 3.5 Record: No dependent commits were found. The patch only needs
-the existing helper and kernel `__printf`/`va_list` support, both
-present in the checked tree.
-
-### Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 2211e826...` found the original patch at
-`https://patch.msgid.link/20260320151828.3456863-1-arnd@kernel.org`. `b4
-dig -a` found only v1.
-
-Step 4.2 Record: `b4 dig -w` shows relevant maintainers/lists were
-included: CAMSS maintainers, media maintainers, `linux-media`, `linux-
-arm-msm`, `linux-kernel`, and `llvm`.
-
-Step 4.3 Record: No separate bug report was present. The concrete report
-is the compiler diagnostic embedded in the patch.
-
-Step 4.4 Record: This is a standalone one-patch fix, not part of a
-multi-patch series.
-
-Step 4.5 Record: Direct lore stable search was blocked by Anubis; web
-search did not find stable-specific discussion for this exact patch.
-
-### Phase 5: Code Semantic Analysis
-Step 5.1 Record: Modified function: `csiphy_match_clock_name()`.
-
-Step 5.2 Record: Callers are only within `msm_csiphy_subdev_init()`, at
-the three verified clock-name checks: `"csiphy%d_timer"`, `"csi%d_phy"`,
-and `"csiphy%d"`.
-
-Step 5.3 Record: The helper calls formatting and string comparison
-functions: previously `snprintf()` and `strcmp()`, after patch
-`vsnprintf()` and `strcmp()`.
-
-Step 5.4 Record: The affected path is CAMSS device probe:
-`camss_probe()` calls `camss_init_subdevices()`, which calls
-`msm_csiphy_subdev_init()`. Runtime behavior remains equivalent for the
-verified call sites.
-
-Step 5.5 Record: Nearby CAMSS code has no other `const char *format`
-helper or `vsnprintf()`/`__printf()` pattern matching this issue.
-
-### Phase 6: Stable Tree Analysis
-Step 6.1 Record: The buggy helper exists from `v6.7` onward. Verified
-absent in `v6.6`, present in `v6.12`, and present in `v7.0`.
-
-Step 6.2 Record: `git apply --check` succeeds against the current
-`7.0.5` checkout. For `v6.12`, the same helper and `snprintf(name,
-sizeof(name), format, index)` pattern are present, but I did not run a
-separate worktree apply check.
-
-Step 6.3 Record: No related stable-specific fix for this exact CAMSS
-warning was found in local targeted searches or public web search.
-
-### Phase 7: Subsystem Context
-Step 7.1 Record: Subsystem is Qualcomm CAMSS media driver under
-`drivers/media/platform/qcom/camss/`. Criticality is peripheral/driver-
-specific, but build failures affect anyone building this driver or
-COMPILE_TEST coverage.
-
-Step 7.2 Record: CAMSS is actively developed; recent history shows many
-CAMSS commits, including fixes and new platform support.
-
-### Phase 8: Impact And Risk
-Step 8.1 Record: Affected population is config-specific: builders with
-`CONFIG_VIDEO_QCOM_CAMSS`, including `COMPILE_TEST`, using clang-22 with
-`-Wmissing-format-attribute` and warnings-as-errors.
-
-Step 8.2 Record: Trigger is build-time, not runtime.
-`scripts/Makefile.warn` verifies `-Wmissing-format-attribute` is under
-`W=1`; `-Werror` is enabled by `W=e` or `CONFIG_WERROR`.
-
-Step 8.3 Record: Failure mode is build failure, not
-crash/corruption/security. Severity is medium, but build fixes are an
-accepted stable exception.
-
-Step 8.4 Record: Benefit is moderate: keeps affected stable builds
-working with newer clang warning behavior. Risk is very low: 10-line
-single-function mechanical change, no API change, call sites unchanged.
-
-### Phase 9: Final Synthesis
-Evidence for backporting:
-- Real build failure mode documented in commit and lore.
-- Fits stable build-fix exception.
-- Very small, contained, reviewed by CAMSS maintainer.
-- Applies cleanly to current `7.0.5`; buggy code exists in `v6.12+` and
-  `v7.0`.
-
-Evidence against backporting:
-- Not a runtime correctness, crash, data corruption, or security fix.
-- Trigger requires specific compiler/warning-as-error build settings.
-- Not relevant to `v6.6` and older because the helper is absent there.
-
-Stable rules checklist:
-1. Obviously correct and tested: yes for code review/readability; no
-   local clang-22 build reproduction.
-2. Fixes a real bug: yes, a verified build diagnostic/error path.
-3. Important issue: medium; build failure, not runtime failure.
-4. Small and contained: yes, one function, one file, 7+/3-.
-5. No new feature/API: yes.
-6. Can apply to stable: verified for current `7.0.5`; likely
-   straightforward for `v6.12+`, not applicable to `v6.6` and older.
-
-Exception category: Build fix.
+Phase 9 Record: Evidence for backporting: real storage failover
+correctness issue, long-lived bug since v3.6, affects many stable trees,
+one-line bounded fix, reviewed by Hannes Reinecke, committed by SCSI
+maintainer Martin Petersen, no new API or feature. Evidence against: no
+formal `Reported-by` or `Tested-by`; behavior may wait longer before
+declaring a nonresponsive target failed. Stable checklist: obviously
+correct yes; real bug yes; important issue yes for storage
+availability/path failure; small and contained yes; no new APIs yes;
+applies to stable trees yes/trivial. Exception category: none, this is
+not a device ID/quirk/build/doc fix.
 
 ## Verification
-- Phase 1: `git show` verified candidate commit metadata and exact diff
-  for `2211e826bd69...`.
-- Phase 2: `git diff --shortstat` verified `1 file changed, 7
-  insertions(+), 3 deletions(-)`.
-- Phase 3: `git blame` verified helper introduced by `0727615fb975`;
-  `git show` inspected that commit.
-- Phase 3/6: `git describe --contains` and tag containment checks
-  verified introduction in `v6.7`, presence in `v6.12+`, absence from
-  `v6.6`.
-- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and saved mbox verified
-  original lore thread, v1-only series, recipients, `Fixes:` trailer,
-  and Bryan’s review.
-- Phase 5: `rg` and file reads verified call sites and probe call chain.
-- Phase 6: `git apply --check` verified clean apply to current `7.0.5`.
-- Phase 7: `MAINTAINERS` verified Bryan O'Donoghue is a CAMSS
-  maintainer.
-- Phase 8: `scripts/Makefile.warn` verified when `-Wmissing-format-
-  attribute` and `-Werror` are enabled.
-- UNVERIFIED: I did not reproduce the clang-22 build failure locally.
-- UNVERIFIED: I did not perform an actual `git apply --check` in a
-  separate `v6.12` worktree.
 
-This is stable-worthy as a low-risk build fix for stable trees that
-contain the helper, especially `v6.12+`/`v7.0` era trees, and should be
-skipped for older trees where the code does not exist.
+- Phase 1: `git show 68c3a65a5a8e8` verified commit message, tags,
+  author, committer, and one-line diff.
+- Phase 2: `git show` and source read verified only
+  `ALUA_FAILOVER_TIMEOUT` changes from `60` to `255`.
+- Phase 3: `git blame` verified the 60s default came from
+  `3588c5a21aef8c`; `git describe --contains` verified `v3.6` ancestry.
+- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and saved mboxes verified
+  v3/v4 review history, Hannes review, and Martin’s apply note. Direct
+  WebFetch of lore was blocked/timed out; b4 succeeded.
+- Phase 5: `git grep` and file reads verified ALUA call paths through
+  SCSI request setup, SCSI error handling, and dm-multipath activation.
+- Phase 6: `git grep` against stable tags verified the 60s default
+  exists across listed stable releases.
+- Phase 7: `MAINTAINERS` search verified SCSI maintainer/list context.
+- Phase 8: Source inspection verified the failure path: timeout expiry
+  in `alua_rtpg()` changes transitioning state handling to standby/I/O
+  error.
+- Unverified: I did not independently fetch the SCSI SPC text; the “255
+  maximum spec value” claim is supported by the reviewed commit text and
+  by the kernel implementation storing the timeout as a single byte.
+
+This should be backported: it fixes a real ALUA multipath storage
+availability problem with a tiny, bounded, maintainer-reviewed change
+and minimal regression risk.
 
 **YES**
 
- drivers/media/platform/qcom/camss/camss-csiphy.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/scsi/device_handler/scsi_dh_alua.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index 62623393f4144..78a1b568dbae6 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -558,12 +558,16 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
- 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
- }
+diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
+index efb08b9b145a1..80ab0ff921d43 100644
+--- a/drivers/scsi/device_handler/scsi_dh_alua.c
++++ b/drivers/scsi/device_handler/scsi_dh_alua.c
+@@ -37,7 +37,7 @@
+ #define TPGS_MODE_EXPLICIT		0x2
  
--static bool csiphy_match_clock_name(const char *clock_name, const char *format,
--				    int index)
-+static bool __printf(2, 3)
-+csiphy_match_clock_name(const char *clock_name, const char *format, ...)
- {
- 	char name[16]; /* csiphyXXX_timer\0 */
-+	va_list args;
-+
-+	va_start(args, format);
-+	vsnprintf(name, sizeof(name), format, args);
-+	va_end(args);
- 
--	snprintf(name, sizeof(name), format, index);
- 	return !strcmp(clock_name, name);
- }
- 
+ #define ALUA_RTPG_SIZE			128
+-#define ALUA_FAILOVER_TIMEOUT		60
++#define ALUA_FAILOVER_TIMEOUT		255	/* max 255 (8-bit value) */
+ #define ALUA_FAILOVER_RETRIES		5
+ #define ALUA_RTPG_DELAY_MSECS		5
+ #define ALUA_RTPG_RETRY_DELAY		2
 -- 
 2.53.0
 
