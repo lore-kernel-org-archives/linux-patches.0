@@ -1,124 +1,118 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074093254B3
-	for <patches@lists.linux.dev>; Sun, 10 May 2026 19:00:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72761FF1B5;
+	Mon, 11 May 2026 02:29:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778439607; cv=none; b=Rik5I2Bq5+HfynhWr1w95KuA61VdMFiaxiDDg/kZSTb2u53IZstI817Z+pLOC0huKWwLYSEDG6JKIcRtgR/EeNiKSHZ1QUdZ0jPVR7Fjez+GK7+dPh8jdGJP0mpY1dfW8Ng3aFeMsWOS0DFtyyhcZW4WhTl691Q+f9W/f3AiyrM=
+	t=1778466552; cv=none; b=o0YIT7rXery5sqs/jYx02fKk5aE+ekV+aoC1UmvhKcLkaJlp3+ciFp5H+3Xea4BgnY9+Z69n2lpuvaZOFGm/e+0O6Mzzxxx4MXGW2at/Rj8lz+ODBpRmySTV2qeLs/33FgSL1mCFaX4KTpy+NVz0cAGJq2tbiwrPvTEOrmzq9IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778439607; c=relaxed/simple;
-	bh=Bvc212FwGt0vxmNS1oiSrfkzUZX2D+Zt999xDLx+UQQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Li+4p7NrAtC2dhZG49mGgFGYbkyFuPG7noxkuFbNBUiIstUHjbUTmyF/+QRDvENd6oksvOqZHNTx06lBDejR0SkImqmClMSfklymyu4NpYYSsX29Dl4sk79BRjno5PdNXKArndH8a9Ip0Odx+EjcMkiJWtqnwJQDfmN9aATAaNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=N6MDlr4j; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1778466552; c=relaxed/simple;
+	bh=ZKd33LdlTD49kjt1ofI1QKPg11b8MRScyJSUFohd+js=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=j90JLXJvbxSopJQaJiEyfAb/Qpn4xe6hp2WDHiu5+wHqp+uIRu2E6mTgX6WxvhiP8L171GUgt4rPCS6zMxPiSawdDwRE0VphKbmDBgL3U26XcVwMfJ0uk0jUysCqiLnCcL9ll+ivsj6BGfDk8DB9b+rAJYsWUD9UDm7msvqlAYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=S6Gqo9Qo; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="N6MDlr4j"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2ba3b9bcf69so165ad.0
-        for <patches@lists.linux.dev>; Sun, 10 May 2026 12:00:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778439605; x=1779044405; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bMsfc8Zbf8JIkTQeMv/NJIxXAe3vZVoXdywLBqyZ2Qs=;
-        b=N6MDlr4jkGBKZUFnFNMZoWq85jJbqoiUuaLXYkyg433Riuf77QzCI0cL0KdwzTVrHp
-         4+GpIjeyqvQ+83xml//9iL157IO+Hv+30S+p//ioiRQw2RZMC+0KAEre3G6N85EsR3Id
-         FMY6XfpOAeYHEvscpt9MrYBAwa/1EJp5b4pL7Xk5ho1aCHJtU50pjnFt44AhSeF9I0Ki
-         iKK1Sfqp3+Y+9/GLd8+0PEyNVsmHh7AF6OVgmQHlMvc2ZvpJTfiNE5vT3yXSCPHumMwO
-         sud5ZazCsOEJVtEDDKCEUT8xecEdlZQkjmvQx8od9K5wgwF3ZXeDH/3r3S68pTiDRMmy
-         +q9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778439605; x=1779044405;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bMsfc8Zbf8JIkTQeMv/NJIxXAe3vZVoXdywLBqyZ2Qs=;
-        b=fzX8Y+uNIGS8T3wXzw2LcCybXNpNx1skKevphtZ+fLMMjjQbMqQd2oQuapkYhVh7an
-         LD5eSbgftEoJzG96wfBt5fPUc9tfbKsN7tpMcjsFqnQAorrlpHP0Tyy5HYdMHbsJOKXn
-         sn8fsx4d53xF1Xt/PByertR2YxVaBGxYJzoQVWZZUNfy77gI0ywI1hZNmQnwzykRuEfR
-         kazQiL7we/TLDIbMvK9RumlUwTMH62AsZ1Ni+SXksN2Buq8QIph1OT8KFLkT8mLFjt/r
-         p39aXHbSmuFmCpsM7tzY8Js1XL9I7sxZvkn4jyL4/TyzVD6JP6vr48jnmetSENn3WNGN
-         TQDQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/6e4pq1p/mQUoOWICALFpLw6FI3+0FJJFh8ln3EU3hKng9csugTIZmv1ng4Wqs8HMj67WYbhym@lists.linux.dev
-X-Gm-Message-State: AOJu0YwQce1KWlxGNtru5smzVrDNUyY8YtFqQT/y7F2jNacSGTp3gG42
-	wlH6PwTylN1gowCvBISmxVts3vAzu9fW/XJFuzang+ieAKp/P5UpX7v8RrAHEGUN6g==
-X-Gm-Gg: Acq92OGOvOAiMZdZvH/hl1yVmTHur3tf5vfWm+iGyUv+5veur8z4xaUbpW94ak9/lxZ
-	oNGoa1QHOcJC6bMuhZaxPqDzJE/GMqkgfnefZUn7ZGDyrUtVp76A0TYOeFmCF9FD1Mqw1prC8wY
-	UnJfsTTXdvFMqrqzJSQILKlNtIiOnl+MCQxg0qXCTk/QaW3THD9i5tJ9B293wVB/N2XaqBHMRFD
-	ZKOiYiO+tc6Ts6BLh0aEQ1tak7rg5+SDtxcFyT4ctKEGCmhc4FkWKZMa6uA0LEnBLlf/afEtlPP
-	DRRqGse+FvSVYjYLPe6JUyYBLH2GOyqES37uEDjB7AtOLdyql4FUQORtsl+QBEAtxKGg63pXzfa
-	oaSxQs5jQR88bV8xsclVp3RjppX7CFDFagZCghUzXhkE1FiQH+hb41yA2SUraO+lq4a8H5KiIUX
-	IOKpgTosZwqbrMRWrbHAEvrKLxe9GMDH16lG8638PY5I2Nuzwk8dAzt/CQWebA0JV02Rus
-X-Received: by 2002:a17:903:8ce:b0:2b4:641a:6b7c with SMTP id d9443c01a7336-2bc7868490cmr2499495ad.13.1778439604484;
-        Sun, 10 May 2026 12:00:04 -0700 (PDT)
-Received: from google.com (44.234.124.34.bc.googleusercontent.com. [34.124.234.44])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-839685a8125sm18060689b3a.61.2026.05.10.12.00.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 May 2026 12:00:03 -0700 (PDT)
-Date: Sun, 10 May 2026 18:59:57 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Jonathan Hunter <jonathanh@nvidia.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Krishna Reddy <vdumpa@nvidia.com>, Will Deacon <will@kernel.org>,
-	David Matlack <dmatlack@google.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH 6/9] iommu/arm-smmu-v3: Directly encode simple commands
-Message-ID: <agDVrTUTAIt1DpZ6@google.com>
-References: <0-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
- <6-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com>
- <af3KDBt8vhClSKEF@google.com>
- <20260508173736.GH9254@nvidia.com>
- <af5C_ax1a3LbtL1Q@google.com>
- <20260508233629.GI9254@nvidia.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="S6Gqo9Qo"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64AHxhJG4053403;
+	Mon, 11 May 2026 02:28:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=NHm+nA
+	/wyEEZG8iTumDlAArrYk1HVtjoeaaWzX3988M=; b=S6Gqo9QoYSodRP/mK2At+b
+	cX3PIgEFKLW97p7s2glnMAKN6Blt9RKLZjgXNlS42/uMAmuXIENFjz+qAKPKH6lk
+	j/Zu63j777ouCqfQlPvFKMNFl+UWeT6BMJ6R+WzXJO8ojTVUzMwq+0eqntruUISM
+	yoaf6sK/Vfjf9ZLnoXP6U3/183MkbqrYMfOjmeRzGWG8XwidPQR5AYFbpffIAcUV
+	IEl0NT59Rxo5ma03wlQT7VOG0giu8A4dFiw/yQ83920Usl3mNowYpsMNHQ3SaaXF
+	Op486yz+g7FC3mUJzTsRVf6tbr+J3S2ttUTshe3TuVmuXPn/RN1X0kwZx/FK9Yaw
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1ve6x96u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 May 2026 02:28:51 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64B2J1rk025788;
+	Mon, 11 May 2026 02:28:50 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hfg37bs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 May 2026 02:28:50 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 64B2SnWJ57934152
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 11 May 2026 02:28:49 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E662520043;
+	Mon, 11 May 2026 02:28:48 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id F33A020040;
+	Mon, 11 May 2026 02:28:46 +0000 (GMT)
+Received: from Linuxdev.bl1-in.ibm.com (unknown [9.123.2.213])
+	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 11 May 2026 02:28:46 +0000 (GMT)
+From: Madhavan Srinivasan <maddy@linux.ibm.com>
+To: Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+        "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+        Hari Bathini <hbathini@linux.ibm.com>,
+        Nathan Chancellor <nathan@kernel.org>
+Cc: linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev,
+        patches@lists.linux.dev
+Subject: Re: [PATCH] powerpc/vdso: Drop -DCC_USING_PATCHABLE_FUNCTION_ENTRY from 32-bit flags with clang
+Date: Mon, 11 May 2026 07:58:46 +0530
+Message-ID: <177846637465.1289230.8017211033998445491.b4-ty@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org>
+References: <20260311-ppc-vdso-drop-cc-using-pfe-define-clang-v1-1-66c790e22650@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260508233629.GI9254@nvidia.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDAyMiBTYWx0ZWRfX9pPhd+omVj3g
+ uJVrPVdOMrApAX/u6i6wEm/N/n3uKVYN0FyVeHsL9pXdXhDN9rMBbfwWcYUthpYMDo2cwNJ3IIX
+ goSqsqRXMpJkOIby+tf26yJ5ai7S4xcGtY0zIV+1VNhmAmUlpADGfXZ3SWcmAaBWbuM59khtPzW
+ m4Ct10RG7avMQFbiMlomimevdTw/zuxvi6b/1rCO3JeBz9BEoPp5PBMD4bnjUgoEY8PcPuxpYta
+ jCMECFSzFeZIYta1X5GzqQVycjljaBD44UKSWwTD77ji84aDK4mgOFkodt+jQdgv4PJi1vIUnNG
+ bKnXyUadQmZRqExCIb4g2CG19tsC9M899wj/mmItRgQXnUPPwdqMJmCD9sZNzXk4gfRGI4RNWRO
+ OI+XIc5KejLEfx2sghRPm6rSCqA950FB0P8S76Z3sPqaT/j3X2jDwupc+i3uxKOPwBMqdasDE6u
+ qN+EkKt+kwphqS8rT5g==
+X-Proofpoint-GUID: 6mN0ZK371_wbz1tPaUw2WxB-0AQ1jent
+X-Proofpoint-ORIG-GUID: UE8hlCI65WnjE3_tqmx1otXqULUSG8ej
+X-Authority-Analysis: v=2.4 cv=CeQ4Irrl c=1 sm=1 tr=0 ts=6a013ee3 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=vtwD8gBtCyEPof04ByAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_01,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1011 adultscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110022
 
-On Fri, May 08, 2026 at 08:36:29PM -0300, Jason Gunthorpe wrote:
-> On Fri, May 08, 2026 at 08:09:33PM +0000, Pranjal Shrivastava wrote:
-> > > > > +static void arm_smmu_cmdq_batch_add_cmd_p(struct arm_smmu_device *smmu,
-> > > > > +					  struct arm_smmu_cmdq_batch *cmds,
-> > > > > +					  struct arm_smmu_cmd *cmd)
-> > > > 
-> > > > Nit: Same here, why not  __arm_smmu_cmdq_batch_add_cmd? I understand
-> > > > that _p just means we'll aceept ptr.. but the name's kinda wonky.
-> > > 
-> > > Which becomes a fairly widly used public entry point, so I didn't want
-> > > to have the __
-> > > 
-> > > Though there is no external user of arm_smmu_cmdq_issue_cmd_p()
-> > > 
-> > 
-> > It's just that we're calling "arm_smmu_cmdq_batch_add_cmd_p" at one
-> > place and using `arm_smmu_make_cmd_<cmd_name>` at the other. It makes
-> > one think what's "_p" in issue_cmd, only to realize "_p: pointer variant
-> > 
-> > I guess I didn't like the new _p ones but I guess it's fine. Happy to
-> > leave it at your discretion.
+On Wed, 11 Mar 2026 17:39:56 -0700, Nathan Chancellor wrote:
+> After commit 73cdf24e81e4 ("powerpc64: make clang cross-build
+> friendly"), building 64-bit little endian + CONFIG_COMPAT=y with clang
+> results in many warnings along the lines of:
 > 
-> I don't much care for the _p (and yes it means pointer variation) but
-> do like it better than __ and failed to come up with another idea :)
+>   $ cat arch/powerpc/configs/compat.config
+>   CONFIG_COMPAT=y
 > 
+> [...]
 
-Yea, I can't come up with much either (without __ or _p), maybe we could
-leave this as is..
+Applied to powerpc/fixes.
 
-The only alternatives in my mind are arm_smmu_cmdq_issue_cmd_ptr() which
-is similar.
+[1/1] powerpc/vdso: Drop -DCC_USING_PATCHABLE_FUNCTION_ENTRY from 32-bit flags with clang
+      https://git.kernel.org/powerpc/c/60c71369ee356d11ad845ddeb28ceb70ec6cd70e
 
-Thanks,
-Praan
+cheers
