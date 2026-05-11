@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E4440FD94;
-	Mon, 11 May 2026 22:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B269A4DB557;
+	Mon, 11 May 2026 22:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537983; cv=none; b=buCydEGNuxJPZFMV0h26JDOplwsjh5pspRZZfOXL/gjRl/f00BvKBmNCFugnbxvpLoqvhDNk/0Fv1CPhpY4TRMgbSDNZsXTnTl2JlORWDeSWDfhRuqw2KTdosNKP2ulVs2W34s+DgLgfCsEgCHVPyxJACzlNj/YoNhVTKgHrM6Q=
+	t=1778537984; cv=none; b=iLPA+XNwLavTHtS/n4ymlnpSuEI8MNY5RIZTuSuWnHLiMtqxisANULEQmCttHU1Z+P8A0AV1Fe3r5KbpoFLlSdlipMsOXLQGn+nQzSkIFoSX1Xp7vgwTAEbIfJtV9F0ILAvsFHxiJFroDE4UKoHPEOLBlQWaflK8U+qjXQcW4aA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537983; c=relaxed/simple;
-	bh=StSi6BZ9tPFZYFVEtKopTaOMa3/qwblWeYX5FI6jpAc=;
+	s=arc-20240116; t=1778537984; c=relaxed/simple;
+	bh=Zn4J0fHdy3xfzUz38tOmseZcZesPxgZvA1MCNOqyk+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LWxVONLc6cPpETr+M+VK8bbnctcmfYfXaOXGub66z2hh3aFP+0JI50GcGaOc0NtYj+fX1wJOLkkA0Tfwm2yA1RI4ahyywo7E0lRrxXekVgRG1ZTYURTJXkQO/jtowNOOfDl0aNkC3R4WUjou0Pe/+kSFs64qi2rBYyrAH9gWrvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kXINmZf0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HwyW2wpa+yMp5Q0aTV+tysIlm4qDku3QJpQDMBp8Oc+qGZW5S3CXnsuOo5bS/Y5MOqLyQn4513SqdBqj+bwRPD3/K3N/sXRaMDqj5hx8apnD4twAmDe86qLH5HUmKQEDjjab1MwHljIEezDNetMJ35ZSKv4VSAogoF/jGZD0BwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D8tvdxdC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kXINmZf0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6300CC2BCFA;
-	Mon, 11 May 2026 22:19:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8tvdxdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E3BC2BCFB;
+	Mon, 11 May 2026 22:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537982;
-	bh=StSi6BZ9tPFZYFVEtKopTaOMa3/qwblWeYX5FI6jpAc=;
+	s=k20201202; t=1778537984;
+	bh=Zn4J0fHdy3xfzUz38tOmseZcZesPxgZvA1MCNOqyk+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kXINmZf0b5Retiynz71082m0rcW37rombmPIAWwzKNJf/K/aWbo9cn8CmxN7I9qrS
-	 jE/dvUpQEMk3cqYCW7LSX5mBT8qYpzwMog4PcWr/OGb2NYUi1KWmK3XL6ocgWmCYQv
-	 wzTDNDK60CGkqKqR1TwABL37KjCJImPMzBYRSJmQ/OR/JcP4+6HKYtzpLMQdYjqAgx
-	 gsYgw86u+xbqjSAu2jp/qFibSBeE39GBciZnEAg7TSG0mabkXY7ofsNpVLMNvfFdEG
-	 +E7C91YglxGzxtLT+fIE1zT9amBNuep2z5tohe6qNj56hHs9ao2fL6qrNjBsQrQDgX
-	 djmWsCEsqnTvQ==
+	b=D8tvdxdCVE2sClqprOzZIp3rsxW2oGu1+aOkFWDgbJy1/0Pk0TarF2GjB6WjnzE10
+	 k/udQWUWRE6qHpG8s67af7Z+m9V/Vw3RvQLFioBEwRx7osTnC8k7ahhg2Cd48yxT1v
+	 MlUIhXPSZppTi/mzj5LfZxMRFk/8MY7Dr8CY+n3P0gS6wYQmICg6m656D10+QzSYHp
+	 fIIVgaNvvRzOeI+Ivw69lPt3OiXXS/sSGGJREdxzGGJjuoyY4veijM1A1nhhA6nJ28
+	 CtkMwGCAcK2oP2luiBzom4V1rS43pZyv+8vcdFRagLmAG9MGyjwzlml05OmnLgzpEz
+	 JNjwqZuuPq9sA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Cheema <alex@exolabs.net>,
-	Simon Horman <horms@kernel.org>,
+Cc: Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Birger Koblitz <mail@birger-koblitz.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	oliver@neukum.org,
 	davem@davemloft.net,
 	edumazet@google.com,
 	pabeni@redhat.com,
 	linux-usb@vger.kernel.org,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] net: usb: cdc_ncm: add Apple Mac USB-C direct networking quirk
-Date: Mon, 11 May 2026 18:19:06 -0400
-Message-ID: <20260511221931.2370053-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] net: usb: r8152: add TRENDnet TUC-ET2G v2.0
+Date: Mon, 11 May 2026 18:19:07 -0400
+Message-ID: <20260511221931.2370053-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -58,276 +58,281 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Cheema <alex@exolabs.net>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit a5148bc2fa27092862ac4b9e7b5c8340d60cff34 ]
+[ Upstream commit f93836b236773862e9ee268a82e3614caf77ea01 ]
 
-Apple Silicon Macs expose two CDC NCM "private" data interfaces over
-USB-C with VID:PID 0x05ac:0x1905 and product string "Mac". This is the
-same protocol Apple already ships on iPhone (0x05ac:0x12a8) and iPad
-(0x05ac:0x12ab) for RemoteXPC since iOS 17 -- both data interfaces lack
-an interrupt status endpoint, so they rely on the FLAG_LINK_INTR-
-conditional bind path introduced in commit 3ec8d7572a69 ("CDC-NCM: add
-support for Apple's private interface").
+The TRENDnet TUC-ET2G V2.0 is an RTL8156B based 2.5G Ethernet controller.
 
-The id_table currently has entries for iPhone and iPad but not for the
-Mac. Without a match, cdc_ncm falls through to the generic CDC NCM
-class-match entry, which uses the FLAG_LINK_INTR-having cdc_ncm_info
-struct, so bind_common() fails on the missing status endpoint and no
-netdev appears.
+Add the vendor and product ID values to the driver. This makes Ethernet
+work with the adapter.
 
-Add id_table entries for both interface numbers (0 and 2) of the Mac,
-bound to the existing apple_private_interface_info driver_info.
-
-Verified empirically on a Mac Studio M3 Ultra running macOS 26.5: when
-a Mac is connected via USB-C, ioreg shows VID 0x05ac, PID 0x1905,
-product string "Mac", with two NCM data interfaces at numbers 0 and 2.
-The same PID is presented by all current Apple Silicon Mac models
-(MacBook Pro/Air, Mac mini, Mac Studio across the M-series), mirroring
-Apple's single-PID-per-family pattern from iPhone/iPad.
-
-After this patch, plugging a Mac into a Linux host running the patched
-kernel produces two enx... interfaces (one per data interface),
-"ip -br link" lists them as UP, and standard userspace networking
-(DHCP, NetworkManager shared mode, etc.) works without any modprobe
-overrides or out-of-tree modules.
-
-Signed-off-by: Alex Cheema <alex@exolabs.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260429175739.34426-1-alex@exolabs.net
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Birger Koblitz <mail@birger-koblitz.de>
+Link: https://patch.msgid.link/20260430213435.21821-1-olek2@wp.pl
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem `net: usb: r8152`; action verb `add`; claimed
+intent: add TRENDnet TUC-ET2G v2.0 USB device ID so the existing `r8152`
+driver binds to the adapter.
 
-### Phase 1: Commit Message Forensics
-Record: Subsystem is `net: usb: cdc_ncm`; action verb is `add`; intent
-is to add an Apple Mac USB-C direct networking quirk/device match.
+Step 1.2 Record: Tags present:
+- `Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>`
+- `Reviewed-by: Andrew Lunn <andrew@lunn.ch>`
+- `Reviewed-by: Birger Koblitz <mail@birger-koblitz.de>`
+- `Link: https://patch.msgid.link/20260430213435.21821-1-olek2@wp.pl`
+- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>`
 
-Record: Tags verified from `git show a5148bc2fa27` and `b4`:
-`Signed-off-by: Alex Cheema <alex@exolabs.net>`, `Reviewed-by: Simon
-Horman <horms@kernel.org>`, `Link:
-https://patch.msgid.link/20260429175739.34426-1-alex@exolabs.net`,
-`Signed-off-by: Jakub Kicinski <kuba@kernel.org>`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, or `Cc: stable@vger.kernel.org`.
+No `Fixes:`, `Reported-by:`, `Tested-by:`, or `Cc:
+stable@vger.kernel.org` tag was present. Absence of those tags is not a
+negative signal here.
 
-Record: The body describes a real functional failure: Apple Silicon Macs
-with VID:PID `05ac:1905` expose private CDC NCM interfaces without
-interrupt status endpoints. Without specific IDs, they match the generic
-CDC NCM entry, use `cdc_ncm_info` with `FLAG_LINK_INTR`, fail endpoint
-collection in `cdc_ncm_bind_common()`, and no netdev appears. The author
-reports empirical testing on Mac Studio M3 Ultra.
+Step 1.3 Record: The body describes a real hardware support failure:
+TRENDnet TUC-ET2G V2.0 is RTL8156B-based, but without its USB
+vendor/product ID in `rtl8152_table`, Ethernet does not work with that
+adapter. No affected kernel versions are named.
 
-Record: This is not a hidden memory-safety bug; it is an explicit
-hardware ID/quirk fix for already-supported Apple private CDC NCM
-handling.
+Step 1.4 Record: This is not a hidden memory/synchronization bug. It is
+an explicit new USB device ID addition to an existing driver, which is a
+stable exception category.
 
-### Phase 2: Diff Analysis
-Record: One file changed: `drivers/net/usb/cdc_ncm.c`, 8 insertions, 0
-deletions. No functions modified; only `cdc_devs[]` gets two entries.
-Scope is single-file, surgical, device-ID style.
+## Phase 2: Diff Analysis
+Step 2.1 Record: One file changed: `drivers/net/usb/r8152.c`, `+1/-0`.
+No function body changed. The modified object is `rtl8152_table`. Scope:
+single-file surgical device-ID addition.
 
-Record: Before: Mac interfaces could fall through to the generic CDC NCM
-class entry using `cdc_ncm_info`. After: interface numbers `0` and `2`
-for `05ac:1905` bind to existing `apple_private_interface_info`.
+Step 2.2 Record: Before the change, the table contained TRENDnet
+`0xe02b` but not `0xe02c`, so USB matching would not select `r8152` for
+`20f4:e02c`. After the change, `USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02c)`
+is matched by the driver table used by both `rtl8152_driver.id_table`
+and `rtl8152_cfgselector_driver.id_table`.
 
-Record: Bug category is hardware quirk/device ID addition. The local
-code verifies `apple_private_interface_info` omits `FLAG_LINK_INTR`,
-while `cdc_ncm_info` includes it, and `cdc_ncm_bind_common()` rejects
-devices with no status endpoint when `FLAG_LINK_INTR` is set.
+Step 2.3 Record: Bug category is hardware enablement / USB device ID
+addition. It does not touch error paths, locking, reference counts,
+memory safety, or public APIs.
 
-Record: Fix quality is high: two exact USB interface-number matches,
-reused existing driver_info, no new code path beyond selecting an
-existing quirk. Regression risk is very low and limited to Apple VID:PID
-`05ac:1905` interfaces `0` and `2`.
+Step 2.4 Record: The fix is obviously correct if the ID maps to RTL8156B
+hardware. I verified the device identity externally: WikiDevi lists TUC-
+ET2G v2.0R as USB ID `20f4:e02c` with Realtek RTL8156B, and TRENDnet’s
+own support page confirms the TUC-ET2G v2 product. Regression risk is
+very low; existing devices are unaffected unless another incompatible
+device uses the same exact USB ID.
 
-### Phase 3: Git History
-Record: `git blame` shows `apple_private_interface_info` and the
-iPhone/iPad Apple table entries were introduced by `3ec8d7572a69` in
-2024.
+## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` around the table showed the existing
+TRENDnet `0xe02b` entry came from `15fba71533bc` and the new `0xe02c`
+line comes from `f93836b23677`. The table terminator dates back to
+`ac718b69301c`. The “bug” is not introduced by a code commit; it is the
+absence of a product-specific ID for existing supported silicon.
 
-Record: No `Fixes:` tag is present, but the commit body references
-`3ec8d7572a69`; `git show` confirms that commit introduced Apple private
-support and the conditional missing-status-endpoint handling.
+Step 3.2 Record: No `Fixes:` tag, so there is no introducing commit to
+follow.
 
-Record: Recent `cdc_ncm.c` history shows unrelated
-bounds/filtering/refactor changes; no prerequisite besides the
-referenced Apple private support was found.
+Step 3.3 Record: Recent related history includes `15fba71533bc` adding
+the first TRENDnet TUC-ET2G ID and `dc9c67820f81` adding a TP-Link ID.
+The candidate is standalone on trees that already have
+`VENDOR_ID_TRENDNET`.
 
-Record: `git log --author="Alex Cheema" -10 -- drivers/net/usb` found no
-prior local subsystem commits by the author. The patch was reviewed by
-Simon Horman and committed by Jakub Kicinski.
+Step 3.4 Record: The author has at least one prior `r8152` device-ID
+commit, `848b09d53d92` for Dell Alienware AW1022z. The patch was
+reviewed by Andrew Lunn and Birger Koblitz and applied by Jakub
+Kicinski.
 
-Record: Dependency found: stable trees must already contain
-`3ec8d7572a69` or an equivalent `apple_private_interface_info`; older
-trees without that support will not take this patch standalone.
+Step 3.5 Record: Dependency found: `VENDOR_ID_TRENDNET` was introduced
+by `15fba71533bc`, and `git merge-base --is-ancestor` confirms that
+commit is an ancestor of `f93836b23677`. Mainline release tags `v5.15`,
+`v6.1`, `v6.6`, `v6.12`, and `v6.19` lack `VENDOR_ID_TRENDNET`, while
+`v7.0-rc3` has it. Older stable backports therefore need either
+`15fba71533bc` first or a small backport adjustment adding `#define
+VENDOR_ID_TRENDNET 0x20f4`.
 
-### Phase 4: Mailing List And External Research
-Record: `b4 dig -c a5148bc2fa27` found the original submission at the
-patch.msgid.link URL.
+## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c f93836b23677` found the original patch
+submission by patch-id. `b4 dig -a` reported the accepted one-patch
+submission at `20260430213435.21821-1-olek2@wp.pl`; `b4` also found an
+earlier identical submission from
+`20260426214909.3426105-1-olek2@wp.pl`. The earlier thread had Andrew
+Lunn asking for repost after netdev opened and giving his `Reviewed-by`.
+No NAK or technical objection found.
 
-Record: `b4 dig -c a5148bc2fa27 -a` found only v1; no later revision.
+Step 4.2 Record: `b4 dig -w` showed the patch was sent to netdev
+maintainers/lists and USB networking lists, including Andrew Lunn, David
+Miller, Eric Dumazet, Jakub Kicinski, Paolo Abeni, Realtek contacts,
+`linux-usb`, `netdev`, and `linux-kernel`. `MAINTAINERS` confirms those
+netdev maintainers for `NETWORKING DRIVERS`, and `drivers/net/usb/` is
+under `USB NETWORKING DRIVERS`.
 
-Record: `b4 dig -c a5148bc2fa27 -w` showed the right net/USB maintainers
-and lists were included, including Oliver Neukum, Bjørn Mork, Jakub
-Kicinski, netdev, and linux-usb.
+Step 4.3 Record: No separate bug report or `Reported-by` tag. External
+hardware verification found TUC-ET2G v2.0R as `20f4:e02c` / RTL8156B.
 
-Record: Full thread via `b4 mbox` had three messages: the patch, Simon
-Horman’s `Reviewed-by`, and patchwork-bot saying Jakub applied it to
-`netdev/net.git` as `a5148bc2fa27`. No NAKs or concerns observed.
+Step 4.4 Record: This is a single-patch submission, not a multi-patch
+fix series. The only practical dependency for older trees is the
+TRENDnet vendor define from the prior TUC-ET2G ID commit.
 
-Record: WebFetch of lore/stable was blocked by Anubis, so stable-
-specific web discussion could not be independently checked. No stable
-nomination appeared in the fetched thread.
+Step 4.5 Record: WebFetch to lore was blocked by Anubis. WebSearch did
+not find stable-specific discussion for `f93836b23677` or the patch
+message ID. No stable objection found.
 
-### Phase 5: Code Semantic Analysis
-Record: Modified object is `cdc_devs[]`; no function body changed.
+## Phase 5: Code Semantic Analysis
+Step 5.1 Record: No functions modified. Modified data structure:
+`rtl8152_table`.
 
-Record: Call/reachability path verified: `cdc_ncm_driver.id_table =
-cdc_devs`, `.probe = usbnet_probe`; `usbnet_probe()` reads
-`prod->driver_info`, sets `dev->driver_info`, then calls `info->bind`,
-which is `cdc_ncm_bind()`, which calls `cdc_ncm_bind_common()`.
+Step 5.2 Record: `rtl8152_table` is referenced by
+`MODULE_DEVICE_TABLE(usb, rtl8152_table)`, `rtl8152_driver.id_table`,
+and `rtl8152_cfgselector_driver.id_table`. Matching devices enter the
+normal USB probe path via `rtl8152_probe`.
 
-Record: Key callees are endpoint discovery and bind setup in
-`cdc_ncm_bind_common()`, especially the verified endpoint check
-requiring status only when `FLAG_LINK_INTR` is set.
+Step 5.3 Record: The relevant probe path checks vendor-specific
+interface class, `rtl_check_vendor_ok`, `rtl8152_get_version`, then
+calls `rtl8152_probe_once`. The config selector uses `__rtl_get_hw_ver`.
+This patch adds no new calls.
 
-Record: User reachability is USB device enumeration/probe when an
-affected Mac is connected to a Linux host. This is not syscall-triggered
-by an unprivileged local user; it is hardware-triggered.
+Step 5.4 Record: Reachability is USB device enumeration: plugging in or
+booting with the adapter attached. It is not a remote or syscall-
+triggered security issue.
 
-Record: Similar pattern found: existing iPhone/iPad Apple entries
-already bind private interfaces to `apple_private_interface_info`.
+Step 5.5 Record: Similar pattern exists throughout the same table for
+Realtek, Lenovo, TP-Link, D-Link, Dell, ASUS, and earlier TRENDnet IDs.
+`git log -S'0xe02c'` found no prior `0xe02c` entry in the checked
+history.
 
-### Phase 6: Stable Tree Analysis
-Record: `git merge-base --is-ancestor 3ec8d7572a69 <tag>` verified
-`3ec8d7572a69` is absent from `v5.15`, `v6.1`, `v6.6`, `v6.9`, and
-`v6.10`, but present in `v6.11`, `v6.12`, and `v7.0`.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: Checked mainline release tags `v5.15`, `v6.1`, `v6.6`,
+`v6.12`, and `v6.19`: all contain `0x8156` and RTL8156B version
+handling, but not the TRENDnet `0xe02c` ID. This means the supported
+chipset path exists in those releases, but the product-specific match is
+missing.
 
-Record: `git show <tag>:drivers/net/usb/cdc_ncm.c | rg ...` verified
-`v6.11+` have `apple_private_interface_info` and iPhone/iPad Apple
-entries, but not the Mac `0x1905` entries.
+Step 6.2 Record: Backport difficulty is low. It applies cleanly to trees
+with `VENDOR_ID_TRENDNET` / `0xe02b`; older bases need a minor
+context/define adjustment or the prior TRENDnet ID patch.
 
-Record: `git apply --check` succeeded against the current `7.0.5` tree.
-Backport should be clean for trees with the same Apple-private support;
-older trees need the prerequisite and are not standalone targets.
+Step 6.3 Record: No alternate local fix for `0xe02c` was found. No
+stable-specific replacement fix was verified.
 
-Record: No alternate related stable fix was found locally.
+## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: Subsystem is `drivers/net/usb`, USB Ethernet networking
+driver. Criticality: driver-specific, important for users of this
+hardware, not core-kernel-wide.
 
-### Phase 7: Subsystem Context
-Record: Subsystem is USB networking driver code, under
-`drivers/net/usb`. Criticality is important for users of this hardware,
-not core/universal.
+Step 7.2 Record: The file is active, with recent `r8152` feature and fix
+commits, but this change is isolated to the USB ID table and does not
+depend on recent functional refactoring except the vendor
+define/backport context noted above.
 
-Record: `scripts/get_maintainer.pl -f drivers/net/usb/cdc_ncm.c`
-confirmed the patch was sent to the relevant USB CDC Ethernet and
-networking maintainers/lists. Recent `drivers/net/usb` history shows
-active maintenance.
+## Phase 8: Impact And Risk
+Step 8.1 Record: Affected users are systems with TRENDnet TUC-ET2G V2.0
+and `CONFIG_USB_RTL8152`.
 
-### Phase 8: Impact And Risk
-Record: Affected users are Linux hosts connecting to Apple Silicon Macs
-via USB-C direct CDC NCM networking.
+Step 8.2 Record: Trigger is common for affected users: adapter insertion
+or boot with the adapter connected. Not remotely triggerable; physical
+USB access is needed.
 
-Record: Trigger is plugging in the matching Mac USB device. The failure
-is likely whenever the unsupported `05ac:1905` private interfaces are
-exposed and lack the interrupt status endpoint, based on the commit body
-and verified bind logic.
+Step 8.3 Record: Failure mode is device non-binding / Ethernet
+unavailable. Severity is not crash/security-critical, but it is a real
+user-visible hardware functionality failure.
 
-Record: Failure mode is functional loss: no netdev appears. Severity is
-medium by generic bug severity, but it fits the stable exception for new
-device IDs/hardware quirks.
+Step 8.4 Record: Benefit is high for affected stable users because it
+makes the adapter work with an already-supported RTL8156B driver. Risk
+is very low: one table entry, no behavior change for existing IDs.
 
-Record: Benefit is high for affected hardware users: direct networking
-works without overrides/out-of-tree modules. Risk is very low: two
-exact-match USB ID entries selecting existing behavior.
+## Phase 9: Final Synthesis
+Evidence for backporting:
+- New USB device ID for existing driver and already-supported RTL8156B
+  silicon.
+- Fixes a real user-visible failure: Ethernet does not work with this
+  adapter.
+- One-line, single-file, no API or behavior change for existing
+  hardware.
+- Reviewed by Andrew Lunn and Birger Koblitz; applied by Jakub Kicinski.
+- Hardware identity verified as TRENDnet `20f4:e02c` / RTL8156B.
 
-### Phase 9: Final Synthesis
-Evidence for backporting: it is a classic stable-acceptable hardware
-quirk/device ID addition; it fixes a verified bind failure mechanism; it
-is tiny and contained; it reuses existing Apple private CDC NCM support;
-it was reviewed and applied by netdev maintainership; it applies cleanly
-to the current stable-style tree.
+Evidence against backporting:
+- Not a crash, data corruption, security, or deadlock fix.
+- Older stable bases may need the prior `VENDOR_ID_TRENDNET` definition
+  or a tiny backport adjustment.
 
-Evidence against backporting: it is not a crash/security/data-corruption
-fix, and it is not standalone for stable trees older than `v6.11` unless
-`3ec8d7572a69` is also present.
+Unresolved:
+- I did not verify every active stable branch state directly; I verified
+  mainline release tags and the dependency relationship. Lore WebFetch
+  was blocked, but `b4` successfully fetched the thread.
 
 Stable rules checklist:
-1. Obviously correct and tested: yes; exact ID entries, author-tested,
-   reviewer accepted.
-2. Fixes a real bug: yes; no netdev appears for matching hardware.
-3. Important issue: yes under hardware support/quirk exception, though
-   not critical severity.
-4. Small and contained: yes, 8 insertions in one table.
-5. No new APIs/features: yes, no API or new driver; only IDs for
-   existing behavior.
-6. Applies to stable: yes for trees with Apple private support; older
-   trees need prerequisite handling.
+1. Obviously correct and tested? Yes, one matching-table entry;
+   reviewed; hardware ID verified.
+2. Fixes a real bug affecting users? Yes, adapter does not bind/work
+   without the ID.
+3. Important issue? Yes under the stable “new device IDs” exception,
+   though not crash/security.
+4. Small and contained? Yes, one insertion in one file.
+5. No new features/APIs? Yes, no API or behavioral change except
+   matching this USB device.
+6. Can apply to stable trees? Yes with low difficulty; older trees may
+   need `VENDOR_ID_TRENDNET`.
 
-Exception category: new USB device ID / hardware quirk for an existing
-driver path.
+Exception category: New USB device ID for an existing driver. This is a
+standard stable-appropriate exception.
 
 ## Verification
-- [Phase 1] Parsed `git show a5148bc2fa27`: confirmed subject, body,
-  trailers, reviewed-by, link, and maintainer signoff.
-- [Phase 2] Read `drivers/net/usb/cdc_ncm.c`: confirmed `cdc_ncm_info`
-  has `FLAG_LINK_INTR`, `apple_private_interface_info` does not, and
-  `cdc_ncm_bind_common()` fails missing status endpoints when
-  `FLAG_LINK_INTR` is set.
-- [Phase 3] `git blame` confirmed Apple private support and existing
-  Apple IDs came from `3ec8d7572a69`.
-- [Phase 3] `git show 3ec8d7572a69` confirmed it introduced Apple
-  private CDC NCM support and the conditional endpoint check.
-- [Phase 4] `b4 dig -c a5148bc2fa27`: found the original lore
-  submission.
-- [Phase 4] `b4 dig -a`: only v1 found.
-- [Phase 4] `b4 dig -w`: confirmed relevant maintainers/lists were
-  included.
-- [Phase 4] `b4 mbox`: confirmed Simon Horman review and patchwork
-  application by Jakub Kicinski.
-- [Phase 5] `rg` and `ReadFile` traced `cdc_devs[]` to `usbnet_probe()`
-  to `cdc_ncm_bind()` to `cdc_ncm_bind_common()`.
-- [Phase 6] Tag ancestry checks confirmed prerequisite exists in
-  `v6.11+` but not `v6.10` and older checked tags.
-- [Phase 6] `git apply --check` confirmed clean apply to current tree.
-- UNVERIFIED: Independent confirmation that all current Apple Silicon
-  Macs use PID `0x1905`; this is author-stated in the patch, not
-  independently verified here.
-- UNVERIFIED: Stable mailing-list search via WebFetch was blocked by
-  Anubis; no stable-specific discussion was visible in the fetched `b4`
-  thread.
+- [Phase 1] Parsed commit `f93836b236773862e9ee268a82e3614caf77ea01`
+  with `git show`; confirmed subject, body, tags, and `+1/-0` diff.
+- [Phase 2] Compared `git diff f938^..f938`; confirmed only `{
+  USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02c) }` is added.
+- [Phase 3] Ran `git blame` around `rtl8152_table`; confirmed existing
+  `0xe02b` from `15fba71533bc` and new `0xe02c` from `f93836b23677`.
+- [Phase 3] Ran `git merge-base --is-ancestor 15fba71533bc
+  f93836b23677`; confirmed the vendor define dependency is in the
+  candidate’s ancestry.
+- [Phase 3] Checked release tags `v5.15`, `v6.1`, `v6.6`, `v6.12`,
+  `v6.19`, `v7.0-rc3`, `v7.1-rc3`; confirmed older release tags have
+  RTL8156/RTL_VER_13 support but lack TRENDnet IDs until `v7.0-rc3`.
+- [Phase 4] Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; confirmed
+  patch-id match, one-patch submission, recipients, and
+  review/application thread.
+- [Phase 4] Read full `b4 mbox` threads; confirmed Andrew Lunn review on
+  repost request, Birger Koblitz review, and patchwork notification that
+  Jakub applied it.
+- [Phase 4] WebFetch to lore was blocked by Anubis; external GitHub
+  commit fetch confirmed the commit metadata and diff.
+- [Phase 4] WebFetch of WikiDevi and TRENDnet pages verified TUC-ET2G v2
+  hardware identity; WikiDevi specifically listed USB ID `20f4:e02c` and
+  RTL8156B.
+- [Phase 5] Searched `rtl8152_table` references; confirmed use by
+  `MODULE_DEVICE_TABLE`, `rtl8152_driver.id_table`, and
+  `rtl8152_cfgselector_driver.id_table`.
+- [Phase 5] Read `rtl8152_probe` and config selector code; confirmed
+  affected path is USB enumeration/probe, with no changed runtime logic.
+- [Phase 7] Checked `MAINTAINERS`; confirmed netdev maintainers and
+  `drivers/net/usb/` list coverage.
+- [Phase 8] Checked `drivers/net/usb/Kconfig`; confirmed affected
+  configuration is `CONFIG_USB_RTL8152`.
 
-This should be backported to stable trees that already contain the Apple
-private CDC NCM support, because it is a low-risk hardware ID/quirk fix
-that restores networking for real hardware.
+This is exactly the kind of low-risk new USB ID addition stable trees
+normally take.
 
 **YES**
 
- drivers/net/usb/cdc_ncm.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/usb/r8152.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
-index bb9929727eb93..0223a172851ec 100644
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -2012,6 +2012,14 @@ static const struct usb_device_id cdc_devs[] = {
- 		.driver_info = (unsigned long)&apple_private_interface_info,
- 	},
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 0c83bbbea2e7c..0ac2b079e435c 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -10055,6 +10055,7 @@ static const struct usb_device_id rtl8152_table[] = {
+ 	{ USB_DEVICE(VENDOR_ID_DELL,    0xb097) },
+ 	{ USB_DEVICE(VENDOR_ID_ASUS,    0x1976) },
+ 	{ USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02b) },
++	{ USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02c) },
+ 	{}
+ };
  
-+	/* Mac */
-+	{ USB_DEVICE_INTERFACE_NUMBER(0x05ac, 0x1905, 0),
-+		.driver_info = (unsigned long)&apple_private_interface_info,
-+	},
-+	{ USB_DEVICE_INTERFACE_NUMBER(0x05ac, 0x1905, 2),
-+		.driver_info = (unsigned long)&apple_private_interface_info,
-+	},
-+
- 	/* Ericsson MBM devices like F5521gw */
- 	{ .match_flags = USB_DEVICE_ID_MATCH_INT_INFO
- 		| USB_DEVICE_ID_MATCH_VENDOR,
 -- 
 2.53.0
 
