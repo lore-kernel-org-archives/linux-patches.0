@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B39356763;
-	Mon, 11 May 2026 22:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1264DB560;
+	Mon, 11 May 2026 22:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778538008; cv=none; b=vF9JB50KulqLO9/RCU7cV9+bf/0LqYbiDqiGDb38ER2jBn2LkYK0Dx4BVTGMHVkrTRn4T/MR5svgyter1rV4woi4dIo2bCvByDrcLrY4A2s73GdBHYP8DrIvSJjiTx4UyaPr/vwuJF4H3RWvwOL2DqLcjdX1Lo6SCoU0rmSJkZc=
+	t=1778538010; cv=none; b=ewJzM/q6DWHWHkELq87gA8FiUx9OX3ZrXuEvzOshseGvBrSzUFBaArHDGyWZq800j6wmMpqqQzgw1XxDwu/7AMPLHo8SWxxfQZyXdA4tQo5Q0cAEa1KCnTjeOYCF4KfNeojacfXNo2suTM4OyD/8Y6VuffMEoz9ZNmUxuxanqmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778538008; c=relaxed/simple;
-	bh=q6eOR/vT0ruqLc4hKC0zEPDh3Q6xaUvvH3Ag+Rm9p30=;
+	s=arc-20240116; t=1778538010; c=relaxed/simple;
+	bh=pP8iVAxF1FoMXalCFIkZlnb3QWBe+RsA4kTO38lVTnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XA9LVwNmMKeMLl3/JTNEvAkBWFEmXmyi6cFK71xfDKEsc0zwpi5ekF6ARySFWtnxpNEhe1fczYiMRIubMyIEedgVqnQ+8L0BMRAo6XPao1o39+mTlQzVcWHFgazIJUj3gH1og02t0vZwHTlenK3eykGK29enbzMSYhdpZA++3q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/GpN/Q7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pj6C90I5vDw8ds4WJ7vl7r46SP9z4N66pX1XMZ/YK7s1LuyY7Jfi70iKEzZp2R947d7pb245Q4pRzG9MKKpsV2E71dmYI64Jnmv/CRRmY+FNR2+p6CIY72ndkRLa0RoFGAy9oIIlMv3J8KDKAV6ScXe0nKJIlr96dv8YVjFOTXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fDjTXQgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/GpN/Q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC62C2BCFC;
-	Mon, 11 May 2026 22:20:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fDjTXQgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0058CC2BCFB;
+	Mon, 11 May 2026 22:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778538008;
-	bh=q6eOR/vT0ruqLc4hKC0zEPDh3Q6xaUvvH3Ag+Rm9p30=;
+	s=k20201202; t=1778538010;
+	bh=pP8iVAxF1FoMXalCFIkZlnb3QWBe+RsA4kTO38lVTnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/GpN/Q7RKCK8kLUPDjc0we8yGgvTraLQm7FO3toxCldysEapS/Yuvfg+fVO5o7s1
-	 r6OxVadLXIRgYo/NJFn0IPvS83W3GVPfcqVOWeuV0lC68kby9y9xbhjEWk6M6sHPF2
-	 FmN1fZQDPS5kdM5TNcfl4tL58ucDQ3ZkkGDDn4JYuPZj4TvUKe5crAqxOkAFhXwuOc
-	 bwjUxrn9EIyrt3IuPkQ74orfAZeogk/WfYUvw8gEN90S3MrBg2CA7OZTkGeJSIw3gY
-	 lH8IbIFCBhhNixUQucop4IyzrTQkhYZF0beh1xteaqUU4Cm2BhXNGRkzDQvtVjEqw+
-	 MSkRjmllykZvw==
+	b=fDjTXQgiVsLQN2umBM4iqidqhE64mx5qtWDlKxrFXIqo45MX+9APBg8fWwjKzhdkd
+	 jcB+rmwP3qdhf+koN0OmJr1UKSb7JhY4gyMiFCooUS4zMuD1nS/S4jbb9RFFzeA/yx
+	 uuyjXv7HxRTfsRRon7HI5J18AFQi8cNCwoNsCPUUQgbFlJz06WPhdyX9P6mbeCd/ue
+	 IEAo2YSDL2j/7syZJa4PhKrE+OAUyb1zMT+zjCSUB/2wXoiD5rEvWxqGcWH018j6EZ
+	 7j5hzGStRdr4gV8J367pzRknKpL4dlDaFCb+JPmSuJ6L3fAqJuXj8VGJfMjEfWIcJ0
+	 HrQ4AB6BNitpA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: Niels Franke <nielsfranke@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mpe@ellerman.id.au,
-	linuxppc-dev@lists.ozlabs.org,
+	wsa@kernel.org,
+	linux-i2c@vger.kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] powerpc/pseries/htmdump: Free the global buffers in htmdump module exit
-Date: Mon, 11 May 2026 18:19:24 -0400
-Message-ID: <20260511221931.2370053-25-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] i2c: acpi: Add ELAN0678 to i2c_acpi_force_100khz_device_ids
+Date: Mon, 11 May 2026 18:19:25 -0400
+Message-ID: <20260511221931.2370053-26-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -53,381 +55,279 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Athira Rajeev <atrajeev@linux.ibm.com>
+From: Niels Franke <nielsfranke@gmail.com>
 
-[ Upstream commit 54d54f33813d7911555226b4220737177a2ba8d6 ]
+[ Upstream commit 9998e388be9930c106eb5904c23ecf2162407527 ]
 
-htmdump modules uses global memory buffers to capture
-details like capabilities, status of specified HTM, read the
-trace buffer. These are initialized during module init and
-hence needs to be freed in module exit.
+The ELAN0678 touchpad (04F3:3195) found in the Lenovo ThinkPad X13
+exhibits excessive smoothing when the I2C bus runs at 400KHz, making
+the touchpad feel sluggish when plugged into AC power. This is the
+same issue previously fixed for ELAN06FA.
 
-Patch adds freeing of the memory in module exit. The change
-also includes minor clean up for the variable name. The
-read call back for the debugfs interface file saves filp->private_data
-to local variable name which is same as global variable
-name for the memory buffers. Rename these local variable
-names.
+The device's ACPI table (Lenovo TP-R22) specifies 0x00061A80 (400KHz)
+for the I2cSerialBusV2 descriptor. Forcing the bus to 100KHz eliminates
+the sluggish behavior.
 
-Signed-off-by: Athira Rajeev <atrajeev@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260314132432.25581-1-atrajeev@linux.ibm.com
+Signed-off-by: Niels Franke <nielsfranke@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+[wsa: kept the sorting]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Summary
-This commit fixes a real resource leak in
-`arch/powerpc/platforms/pseries/htmdump.c`: `htm_status_buf`,
-`htm_info_buf`, and `htm_caps_buf` are each allocated with
-`kmalloc(PAGE_SIZE, GFP_KERNEL)` during module/debugfs initialization,
-but only `htm_buf` is freed in `htmdump_exit()`. The patch adds the
-three missing `kfree()` calls. The local-variable renames are cleanup
-and are also used by the following two patches in the same posted
-series.
+## Phase 1: Commit Message Forensics
 
-The benefit is modest because the leak is on module unload, not a hot
-path, and the feature is PowerPC pseries/debugfs-specific. But it is a
-real leak in a `default m` module, the fix is trivial, isolated, and low
-risk. For stable trees that contain the v6.16-era `htmstatus`,
-`htminfo`, and `htmcaps` additions, this is suitable.
+Step 1.1 - Subject:
+Record: Subsystem `i2c: acpi`; action verb `Add`; intent is to add ACPI
+HID `ELAN0678` to the existing 100 kHz forced-speed quirk table.
 
-## Phase Walkthrough
-### Phase 1: Commit Message Forensics
-Record 1.1: Subsystem is `powerpc/pseries/htmdump`; action verb is
-`Free`; claimed intent is freeing global HTM debugfs buffers during
-module exit.
+Step 1.2 - Tags:
+Record: `Signed-off-by: Niels Franke <nielsfranke@gmail.com>`; `Acked-
+by: Mika Westerberg <mika.westerberg@linux.intel.com>`; maintainer note
+`[wsa: kept the sorting]`; `Signed-off-by: Wolfram Sang
+<wsa+renesas@sang-engineering.com>`. No `Fixes:`, `Reported-by:`,
+`Tested-by:`, `Link:`, or `Cc: stable@vger.kernel.org` tags.
 
-Record 1.2: Tags in the supplied commit message: `Signed-off-by: Athira
-Rajeev <atrajeev@linux.ibm.com>`, `Signed-off-by: Madhavan Srinivasan
-<maddy@linux.ibm.com>`, `Link:
-https://patch.msgid.link/20260314132432.25581-1-atrajeev@linux.ibm.com`.
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
-or `Cc: stable@vger.kernel.org` tag was present in this commit.
+Step 1.3 - Body:
+Record: The bug is real hardware misbehavior: ELAN0678 touchpad
+`04F3:3195` on Lenovo ThinkPad X13 becomes sluggish/excessively smoothed
+when ACPI-described I2C speed is 400 kHz. The commit says forcing 100
+kHz eliminates it. Root cause is a bad/not-working speed choice for this
+device, matching the earlier ELAN06FA workaround.
 
-Record 1.3: The body describes global memory buffers initialized in
-module init and not freed in module exit. The user-visible symptom is
-unreclaimed kernel memory after unloading the module. No crash, stack
-trace, reporter, affected-version statement, or reproducer is given.
+Step 1.4 - Hidden bug fix:
+Record: Yes. Although phrased as “Add”, this is a hardware
+workaround/quirk for a user-visible input-device malfunction, not new
+feature work.
 
-Record 1.4: This is a hidden cleanup-style bug fix: the functional
-change is missing resource release on module exit.
+## Phase 2: Diff Analysis
 
-### Phase 2: Diff Analysis
-Record 2.1: One file changed:
-`arch/powerpc/platforms/pseries/htmdump.c`, 17 insertions and 14
-deletions in the posted patch. Modified functions are `htmdump_read()`,
-`htmstatus_read()`, `htminfo_read()`, `htmcaps_read()`, and
-`htmdump_exit()`. Scope is single-file surgical.
+Step 2.1 - Inventory:
+Record: One file changed: `drivers/i2c/i2c-core-acpi.c`, `+1/-0`. It
+adds `{ "ELAN0678", 0 }` to `i2c_acpi_force_100khz_device_ids`. Scope is
+a single-file, one-line hardware quirk.
 
-Record 2.2: The read-callback hunks rename local variables from names
-shadowing globals to `*_data`; behavior is unchanged. The exit hunk
-changes `htmdump_exit()` from freeing only `htm_buf` to freeing
-`htm_buf`, `htm_status_buf`, `htm_info_buf`, and `htm_caps_buf`.
+Step 2.2 - Code flow:
+Record: Before, ELAN0678 used the normal ACPI/min-speed path and could
+run at the 400 kHz speed from firmware. After, when
+`i2c_acpi_lookup_speed()` sees an ACPI device matching `ELAN0678`, it
+sets `lookup->force_speed = I2C_MAX_STANDARD_MODE_FREQ`, causing
+`i2c_acpi_find_bus_speed()` to return 100 kHz.
 
-Record 2.3: Bug category is resource leak. Verified allocations are
-three `PAGE_SIZE` buffers for status/info/caps in
-`htmdump_init_debugfs()` without corresponding frees before this patch.
+Step 2.3 - Bug mechanism:
+Record: Hardware workaround. The broken condition is a known-not-working
+I2C bus speed for a specific ACPI HID. The fix reuses the existing
+forced-100-kHz mechanism.
 
-Record 2.4: Fix quality is high: `kfree(NULL)` is safe, the buffers are
-global module-owned allocations, and debugfs removal already happens
-before freeing. Regression risk is very low. The only non-functional
-churn is local-variable rename.
+Step 2.4 - Fix quality:
+Record: Obviously correct and minimal. It only affects machines exposing
+ACPI HID `ELAN0678`. Regression risk is very low: affected devices will
+run slower I2C, intentionally matching the verified workaround; all
+other devices are unchanged.
 
-### Phase 3: Git History Investigation
-Record 3.1: `git blame` on the current stable checkout points the
-relevant lines at the repository boundary merge `f3f5edc5e41e0`, so I
-followed explicit commit objects. `htm_status_buf` was added by
-`627cf584f4c3`, `htm_info_buf` by `dea7384e14e7`, and `htm_caps_buf` by
-`143a2584627c`, all described by `git describe --contains`/history as
-v6.16-rc1-era commits.
+## Phase 3: Git History
 
-Record 3.2: Candidate has no `Fixes:` tag, so no direct Fixes target
-applies. Related series patches 2/3 and 3/3 have `Fixes:` tags for
-`dea7384e14e7` and `627cf584f4c3`, but this patch does not depend on
-those fixes.
+Step 3.1 - Blame:
+Record: `git blame` on `origin/master` shows the new line is commit
+`9998e388be993`; the 100 kHz table and `ELAN06FA` handling came from
+`bfd74cd1fbc026`, first contained around `v6.14-rc1`; `DLL0945` came
+from `0b7c9528facdb5`, first contained around `v6.17-rc1`.
 
-Record 3.3: Recent `htmdump` history shows the v6.16 additions for
-status/info/setup/flags/caps and a header include fix. The candidate is
-patch 1/3 in a series; patch 1 is standalone, while patches 2/3 and 3/3
-textually build on its variable renames.
+Step 3.2 - Fixes tag:
+Record: Not applicable; no `Fixes:` tag is present.
 
-Record 3.4: Author Athira Rajeev authored the original htmdump expansion
-commits; Madhavan Srinivasan committed them. This was verified from `git
-show` for the status/info/caps commits.
+Step 3.3 - File history:
+Record: Recent file history shows related quirks `ELAN06FA` and
+`DLL0945`, plus unrelated treewide allocation conversions. No
+prerequisite structural change is needed where the 100 kHz table already
+exists.
 
-Record 3.5: No prerequisite is needed for patch 1 beyond the buffers
-existing. An isolated `git apply --check` of patch 1 succeeds on the
-current 7.0 stable checkout.
+Step 3.4 - Author context:
+Record: Local history shows Niels Franke has this one I2C commit on
+`origin/master`. The patch was acked by Mika Westerberg, listed in
+`MAINTAINERS` as I2C ACPI maintainer, and committed by Wolfram Sang.
 
-### Phase 4: Mailing List And External Research
-Record 4.1: `b4 dig` could not be meaningfully run because the candidate
-commit object/hash is not present in the checked-out refs; `b4 dig -h`
-confirmed it requires `-c <commitish>`. I used `b4 mbox -c` with
-message-id `20260314132432.25581-1-atrajeev@linux.ibm.com`; it fetched a
-3-message thread and reported no newer revision.
+Step 3.5 - Dependencies:
+Record: Standalone for stable branches that already have
+`i2c_acpi_force_100khz_device_ids`. For branches lacking the table, it
+depends on the earlier ELAN06FA forced-100-kHz infrastructure.
 
-Record 4.2: Original recipients from the mbox were
-`maddy@linux.ibm.com`, `linuxppc-dev@lists.ozlabs.org`, and CCs
-including `hbathini`, `sshegde`, and IBM HTM-related recipients. No
-review replies, NAKs, or stable nominations were present in the fetched
-mbox.
+## Phase 4: Mailing List And External Research
 
-Record 4.3: No `Reported-by` or bug-report link exists for this
-candidate. `WebFetch` to lore/patch.msgid was blocked by Anubis, but `b4
-mbox` successfully fetched the thread.
+Step 4.1 - Original discussion:
+Record: `b4 dig -c 9998e388be993` found the original submission at
+`https://patch.msgid.link/20260418053719.15766-1-nielsfranke@gmail.com`.
+The mirror thread shows v1 only, Mika Westerberg acked it, and Wolfram
+Sang applied it to `for-current` while keeping sort order. No objections
+or NAKs found.
 
-Record 4.4: The patch is part of a 3-patch series. Patch 1 fixes exit
-cleanup; patch 2 fixes `htminfo_read()` offset handling; patch 3 fixes
-`htmstatus_read()` offset handling. Patch 1 can apply standalone, and
-later patches depend textually on its renames.
+Step 4.2 - Reviewers/recipients:
+Record: `b4 dig -w` shows recipients included Niels Franke,
+`westeri@kernel.org`, Wolfram Sang, `linux-i2c`, `linux-acpi`, and
+`linux-kernel`. This reached the relevant I2C ACPI maintainer and lists.
 
-Record 4.5: Stable-specific lore WebFetch was blocked by Anubis.
-WebSearch for the exact subject and stable context found no specific
-stable discussion. Local `git log --grep` checks of `v6.18`, `v6.19`,
-`v7.0`, and `linux-rolling-stable` found no exact-subject match.
+Step 4.3 - Bug report:
+Record: No separate `Reported-by` or bug tracker link in the commit. The
+commit message itself documents affected hardware, ACPI table speed, and
+the tested workaround. Web search also found unrelated ELAN0678 user
+reports, but I did not rely on those for the final decision.
 
-### Phase 5: Code Semantic Analysis
-Record 5.1: Modified functions are `htmdump_read()`, `htmstatus_read()`,
-`htminfo_read()`, `htmcaps_read()`, and `htmdump_exit()`.
+Step 4.4 - Series context:
+Record: `b4 dig -a` shows a single v1 patch, not a multi-patch series.
 
-Record 5.2: Callers/entry points are verified through file operations
-and module macros: `htmdump_exit()` is registered with `module_exit()`,
-reads are reached through debugfs files created by
-`debugfs_create_file()` with the corresponding fops.
+Step 4.5 - Stable discussion:
+Record: Direct lore stable fetch was blocked by Anubis; web search found
+no specific stable-list discussion for ELAN0678. Stable branch git logs
+sampled do not yet contain ELAN0678.
 
-Record 5.3: Key callees are `debugfs_remove_recursive()`, `kfree()`,
-`htm_hcall_wrapper()`, `virt_to_phys()`, and
-`simple_read_from_buffer()`. The functional fix only adds `kfree()`
-calls in exit.
+## Phase 5: Code Semantic Analysis
 
-Record 5.4: Reachability is module lifecycle and debugfs based. The leak
-triggers on module unload after successful allocation of the
-status/info/caps buffers. Unprivileged triggering was not verified and
-is not relied on; Kconfig shows `HTMDUMP` is `tristate`, `default m`,
-and depends on `PPC_PSERIES && DEBUG_FS`.
+Step 5.1 - Key functions:
+Record: The diff changes only the ACPI ID table, but behavior flows
+through `i2c_acpi_lookup_speed()` and `i2c_acpi_find_bus_speed()`.
 
-Record 5.5: Similar pattern found: `htm_buf` was already freed in
-`htmdump_exit()`, while the three later-added global buffers were not.
+Step 5.2 - Callers:
+Record: `i2c_acpi_find_bus_speed()` is called by multiple I2C bus
+drivers, including DesignWare, USBIO, SynQuacer, LS2X, Zhaoxin, and AMD
+MP2. For DesignWare, `dw_i2c_plat_probe()` and PCI probe paths call
+`i2c_dw_fw_parse_and_configure()`, which calls the ACPI speed lookup
+during controller setup.
 
-### Phase 6: Stable Tree Analysis
-Record 6.1: `v6.15` has `htmdump.c` with only `htm_buf`; `v6.16`,
-`v6.17`, `v6.18`, `v6.19`, and `v7.0` have the three additional buffers
-and only free `htm_buf`. So the bug affects stable trees containing the
-v6.16 htmdump expansions, not older trees lacking those buffers.
+Step 5.3 - Callees:
+Record: The relevant code calls `acpi_walk_namespace()`,
+`i2c_acpi_do_lookup()`, and `acpi_match_device_ids()`; if matched, it
+returns the forced speed to bus-driver timing configuration.
 
-Record 6.2: Backport difficulty is low for affected trees. The patch’s
-base blob matches `v6.16`/`v6.17`/current 7.0 content for the relevant
-file, and isolated patch 1 applies cleanly to the current checkout.
+Step 5.4 - Reachability:
+Record: Reachable during I2C adapter/controller initialization on ACPI
+systems. On affected Lenovo hardware, this path controls the bus speed
+used for the touchpad.
 
-Record 6.3: No exact-subject related fix was found in checked `v6.18`,
-`v6.19`, `v7.0`, or `linux-rolling-stable`.
+Step 5.5 - Similar patterns:
+Record: Verified sibling quirks `ELAN06FA` and `DLL0945` in the same
+table, both addressing touchpad sluggishness at higher I2C speed.
 
-### Phase 7: Subsystem And Maintainer Context
-Record 7.1: Subsystem is PowerPC pseries platform driver/debugfs
-support. Criticality is peripheral/platform-specific, not core kernel-
-wide.
+## Phase 6: Stable Tree Analysis
 
-Record 7.2: `git log -20 v7.0 -- arch/powerpc/platforms/pseries` shows
-active pseries development, but this particular fix is contained to
-`htmdump.c`.
+Step 6.1 - Buggy code in stable:
+Record: Sampled stable branches `5.10.y`, `5.15.y`, `6.6.y`, `6.12.y`,
+`6.15.y` through `7.0.y` already contain the 100 kHz quirk table with
+`ELAN06FA`/`DLL0945`, but not `ELAN0678`. `5.4.y` has ACPI speed lookup
+but not the forced-100-kHz table in the sampled state.
 
-### Phase 8: Impact And Risk
-Record 8.1: Affected users are PowerPC pseries users with
-`CONFIG_HTMDUMP` enabled, primarily using the debugfs HTM dump module.
+Step 6.2 - Backport difficulty:
+Record: Clean or trivial for branches with both `DLL0945` and `ELAN06FA`
+adjacent. Branches lacking `DLL0945` or the table may need a trivial
+context adjustment or dependency backport.
 
-Record 8.2: Trigger is successful module initialization followed by
-module exit/unload. Repeated load/unload can accumulate unreclaimed
-pages until reboot. This is not verified as unprivileged-triggerable.
+Step 6.3 - Related fixes already stable:
+Record: Stable branches sampled already carry related ELAN06FA/DLL0945
+quirks, but no ELAN0678 equivalent.
 
-Record 8.3: Failure mode is kernel memory/resource leak, three
-`PAGE_SIZE` allocations per unload for the later buffers. Severity is
-medium: real and persistent until reboot, but not a crash/security/data-
-corruption fix and not a hot path.
+## Phase 7: Subsystem Context
 
-Record 8.4: Benefit is moderate for affected stable users; risk is very
-low because the functional change is only three `kfree()` calls after
-debugfs removal.
+Step 7.1 - Subsystem:
+Record: `drivers/i2c/i2c-core-acpi.c`, I2C ACPI support. Criticality is
+important for affected ACPI laptop hardware, but not universal/core.
 
-### Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: real resource leak, affects stable
-trees v6.16 and newer that contain the expanded htmdump module, fix is
-tiny and obviously correct, isolated patch applies cleanly. Evidence
-against: peripheral platform-specific module, leak occurs on module
-unload rather than common runtime path, no reporter/testing/stable tags
-in this patch. Unresolved: no full lore review discussion was available
-beyond the 3-patch mbox; direct WebFetch lore pages were blocked.
+Step 7.2 - Activity:
+Record: File history shows active maintenance and recent hardware quirk
+additions. The patch was accepted through the I2C maintainer path.
 
-Record 9.2: Stable rules checklist: obviously correct yes; fixes a real
-bug yes; important enough is borderline but acceptable as a real
-resource leak with very low regression risk; small and contained yes; no
-new feature/API yes; applies to affected stable trees yes for current
-7.0 and likely cleanly where file matches v6.16+.
+## Phase 8: Impact And Risk
 
-Record 9.3: No automatic exception category applies: this is not a
-device ID, quirk, DT update, build fix, or documentation-only fix.
+Step 8.1 - Affected users:
+Record: Users of systems exposing the ELAN0678 ACPI touchpad,
+specifically verified by commit message for Lenovo ThinkPad X13.
 
-Record 9.4: Decision is YES for stable trees that contain
-`htm_status_buf`, `htm_info_buf`, and `htm_caps_buf`.
+Step 8.2 - Trigger:
+Record: Triggered when the I2C bus is configured at 400 kHz for this
+device, including via the Lenovo TP-R22 ACPI `I2cSerialBusV2`
+descriptor. This is normal boot/device setup, not an obscure manual
+path.
+
+Step 8.3 - Severity:
+Record: Medium severity user-visible hardware malfunction: sluggish
+touchpad/input behavior. Not a crash, security issue, or data
+corruption.
+
+Step 8.4 - Risk-benefit:
+Record: Benefit is high for affected laptops because it restores usable
+touchpad behavior. Risk is very low because it is a one-line ACPI HID-
+specific quirk using existing logic.
+
+## Phase 9: Final Synthesis
+
+Step 9.1 - Evidence:
+Record: For backporting: real hardware bug, existing quirk mechanism,
+one-line scoped change, maintainer ack, accepted by I2C maintainer,
+stable branches already carry analogous quirks. Against backporting: no
+explicit stable tag, no separate bug report link, not a critical
+crash/security fix. Unresolved: exact applicability to every older
+stable branch; `5.4.y` would need more than this one-line context.
+
+Step 9.2 - Stable rules:
+Record: Obviously correct: yes. Tested: commit states forcing 100 kHz
+eliminates the issue, though no `Tested-by` tag. Real bug: yes, touchpad
+sluggishness. Important enough: yes under hardware quirk/workaround
+practice. Small/contained: yes, one line. No new APIs/features: yes.
+Applies to stable: yes for branches with the existing table; trivial
+adjustment/dependency for older divergent branches.
+
+Step 9.3 - Exception:
+Record: This falls squarely under the stable hardware quirk/workaround
+exception.
+
+Step 9.4 - Decision:
+Record: Backport. The risk is tiny and the fix is exactly the sort of
+targeted hardware workaround stable trees routinely carry.
 
 ## Verification
-- Phase 1: Parsed supplied commit message and b4-fetched patch 1;
-  confirmed no `Fixes:`, `Reported-by`, `Tested-by`, review, or stable
-  tag in patch 1.
-- Phase 2: Read `arch/powerpc/platforms/pseries/htmdump.c`; confirmed
-  allocations and missing frees; inspected patch hunks from
-  `/tmp/htmdump-20260314.mbx`.
-- Phase 3: Ran `git blame -L 410,485`; followed explicit commits
-  `627cf584f4c3`, `dea7384e14e7`, and `143a2584627c` with `git show`;
-  checked author/subsystem history.
-- Phase 4: `b4 mbox -c` fetched the 3-message thread; direct `WebFetch`
-  lore URLs were blocked; WebSearch found no exact stable discussion.
-- Phase 5: Used `rg`, `ReadFile`, and Kconfig/Makefile/docs to verify
-  module/debugfs reachability and `CONFIG_HTMDUMP` as `tristate`,
-  `default m`.
-- Phase 6: Checked `v6.15`, `v6.16`, `v6.17`, `v6.18`, `v6.19`, and
-  `v7.0` file contents; isolated patch 1 passed `git apply --check`.
-- Phase 8: Verified failure mode from concrete `kmalloc(PAGE_SIZE)`
-  allocations and missing matching `kfree()` calls.
-- Unverified: whether every downstream stable branch has identical
-  context; direct stable-list lore search was blocked by Anubis.
+
+- Phase 1: Parsed `git show --format=fuller --stat --patch
+  9998e388be993`; confirmed subject, body, tags, and one-line diff.
+- Phase 2: Read `drivers/i2c/i2c-core-acpi.c`; confirmed
+  `i2c_acpi_force_100khz_device_ids` is checked by
+  `i2c_acpi_lookup_speed()` and returns 100 kHz through
+  `i2c_acpi_find_bus_speed()`.
+- Phase 3: Ran `git blame` on the relevant lines; confirmed commits for
+  `ELAN06FA`, `DLL0945`, and `ELAN0678`.
+- Phase 3: Ran `git describe --contains`; confirmed first-containing
+  release positions for related mainline commits.
+- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; found original
+  v1 submission, no later revisions, and relevant recipients.
+- Phase 4: Fetched the public mirror thread; confirmed Mika Westerberg’s
+  ack and Wolfram Sang’s application note.
+- Phase 5: Used semantic search, `rg`, and file reads; confirmed
+  DesignWare and other I2C bus drivers call `i2c_acpi_find_bus_speed()`.
+- Phase 6: Used `git grep` and stable branch logs; confirmed sampled
+  stable branches contain related forced-speed quirks but not ELAN0678.
+- Phase 8: Failure mode is verified from the commit message and lore
+  thread: sluggish/excessively smoothed touchpad at 400 kHz, fixed by
+  100 kHz.
+- UNVERIFIED: Direct `lore.kernel.org/stable` content was blocked by
+  Anubis, so I could not independently inspect stable-list discussion
+  there.
 
 **YES**
 
- arch/powerpc/platforms/pseries/htmdump.c | 31 +++++++++++++-----------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ drivers/i2c/i2c-core-acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/platforms/pseries/htmdump.c b/arch/powerpc/platforms/pseries/htmdump.c
-index 742ec52c9d4df..93f0cc2dc7fb6 100644
---- a/arch/powerpc/platforms/pseries/htmdump.c
-+++ b/arch/powerpc/platforms/pseries/htmdump.c
-@@ -86,7 +86,7 @@ static ssize_t htm_return_check(long rc)
- static ssize_t htmdump_read(struct file *filp, char __user *ubuf,
- 			     size_t count, loff_t *ppos)
- {
--	void *htm_buf = filp->private_data;
-+	void *htm_buf_data = filp->private_data;
- 	unsigned long page, read_size, available;
- 	loff_t offset;
- 	long rc, ret;
-@@ -100,7 +100,7 @@ static ssize_t htmdump_read(struct file *filp, char __user *ubuf,
- 	 * - last three values are address, size and offset
+diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
+index 2cbd31f77667a..28c0e4884a7f2 100644
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -371,6 +371,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
+ 	 * a 400KHz frequency. The root cause of the issue is not known.
  	 */
- 	rc = htm_hcall_wrapper(htmflags, nodeindex, nodalchipindex, coreindexonchip,
--				   htmtype, H_HTM_OP_DUMP_DATA, virt_to_phys(htm_buf),
-+				   htmtype, H_HTM_OP_DUMP_DATA, virt_to_phys(htm_buf_data),
- 				   PAGE_SIZE, page);
- 
- 	ret = htm_return_check(rc);
-@@ -112,7 +112,7 @@ static ssize_t htmdump_read(struct file *filp, char __user *ubuf,
- 	available = PAGE_SIZE;
- 	read_size = min(count, available);
- 	*ppos += read_size;
--	return simple_read_from_buffer(ubuf, count, &offset, htm_buf, available);
-+	return simple_read_from_buffer(ubuf, count, &offset, htm_buf_data, available);
- }
- 
- static const struct file_operations htmdump_fops = {
-@@ -226,7 +226,7 @@ static int htmstart_get(void *data, u64 *val)
- static ssize_t htmstatus_read(struct file *filp, char __user *ubuf,
- 			     size_t count, loff_t *ppos)
- {
--	void *htm_status_buf = filp->private_data;
-+	void *htm_status_data = filp->private_data;
- 	long rc, ret;
- 	u64 *num_entries;
- 	u64 to_copy;
-@@ -238,7 +238,7 @@ static ssize_t htmstatus_read(struct file *filp, char __user *ubuf,
- 	 * - last three values as addr, size and offset
- 	 */
- 	rc = htm_hcall_wrapper(htmflags, nodeindex, nodalchipindex, coreindexonchip,
--				   htmtype, H_HTM_OP_STATUS, virt_to_phys(htm_status_buf),
-+				   htmtype, H_HTM_OP_STATUS, virt_to_phys(htm_status_data),
- 				   PAGE_SIZE, 0);
- 
- 	ret = htm_return_check(rc);
-@@ -255,13 +255,13 @@ static ssize_t htmstatus_read(struct file *filp, char __user *ubuf,
- 	 * So total count to copy is:
- 	 * 32 bytes (for first 7 fields) + (number of HTM entries * entry size)
- 	 */
--	num_entries = htm_status_buf + 0x10;
-+	num_entries = htm_status_data + 0x10;
- 	if (htmtype == 0x2)
- 		htmstatus_flag = 0x8;
- 	else
- 		htmstatus_flag = 0x6;
- 	to_copy = 32 + (be64_to_cpu(*num_entries) * htmstatus_flag);
--	return simple_read_from_buffer(ubuf, count, ppos, htm_status_buf, to_copy);
-+	return simple_read_from_buffer(ubuf, count, ppos, htm_status_data, to_copy);
- }
- 
- static const struct file_operations htmstatus_fops = {
-@@ -273,7 +273,7 @@ static const struct file_operations htmstatus_fops = {
- static ssize_t htminfo_read(struct file *filp, char __user *ubuf,
- 			     size_t count, loff_t *ppos)
- {
--	void *htm_info_buf = filp->private_data;
-+	void *htm_info_data = filp->private_data;
- 	long rc, ret;
- 	u64 *num_entries;
- 	u64 to_copy;
-@@ -284,7 +284,7 @@ static ssize_t htminfo_read(struct file *filp, char __user *ubuf,
- 	 * - last three values as addr, size and offset
- 	 */
- 	rc = htm_hcall_wrapper(htmflags, nodeindex, nodalchipindex, coreindexonchip,
--				   htmtype, H_HTM_OP_DUMP_SYSPROC_CONF, virt_to_phys(htm_info_buf),
-+				   htmtype, H_HTM_OP_DUMP_SYSPROC_CONF, virt_to_phys(htm_info_data),
- 				   PAGE_SIZE, 0);
- 
- 	ret = htm_return_check(rc);
-@@ -301,15 +301,15 @@ static ssize_t htminfo_read(struct file *filp, char __user *ubuf,
- 	 * So total count to copy is:
- 	 * 32 bytes (for first 5 fields) + (number of HTM entries * entry size)
- 	 */
--	num_entries = htm_info_buf + 0x10;
-+	num_entries = htm_info_data + 0x10;
- 	to_copy = 32 + (be64_to_cpu(*num_entries) * 16);
--	return simple_read_from_buffer(ubuf, count, ppos, htm_info_buf, to_copy);
-+	return simple_read_from_buffer(ubuf, count, ppos, htm_info_data, to_copy);
- }
- 
- static ssize_t htmcaps_read(struct file *filp, char __user *ubuf,
- 			     size_t count, loff_t *ppos)
- {
--	void *htm_caps_buf = filp->private_data;
-+	void *htm_caps_data = filp->private_data;
- 	long rc, ret;
- 
- 	/*
-@@ -319,7 +319,7 @@ static ssize_t htmcaps_read(struct file *filp, char __user *ubuf,
- 	 *   and zero
- 	 */
- 	rc = htm_hcall_wrapper(htmflags, nodeindex, nodalchipindex, coreindexonchip,
--				   htmtype, H_HTM_OP_CAPABILITIES, virt_to_phys(htm_caps_buf),
-+				   htmtype, H_HTM_OP_CAPABILITIES, virt_to_phys(htm_caps_data),
- 				   0x80, 0);
- 
- 	ret = htm_return_check(rc);
-@@ -328,7 +328,7 @@ static ssize_t htmcaps_read(struct file *filp, char __user *ubuf,
- 		return ret;
- 	}
- 
--	return simple_read_from_buffer(ubuf, count, ppos, htm_caps_buf, 0x80);
-+	return simple_read_from_buffer(ubuf, count, ppos, htm_caps_data, 0x80);
- }
- 
- static const struct file_operations htminfo_fops = {
-@@ -482,6 +482,9 @@ static void __exit htmdump_exit(void)
- {
- 	debugfs_remove_recursive(htmdump_debugfs_dir);
- 	kfree(htm_buf);
-+	kfree(htm_status_buf);
-+	kfree(htm_info_buf);
-+	kfree(htm_caps_buf);
- }
- 
- module_init(htmdump_init);
+ 	{ "DLL0945", 0 },
++	{ "ELAN0678", 0 },
+ 	{ "ELAN06FA", 0 },
+ 	{}
+ };
 -- 
 2.53.0
 
