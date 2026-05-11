@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564B14E376F;
-	Mon, 11 May 2026 22:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ACF4E378B;
+	Mon, 11 May 2026 22:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537996; cv=none; b=cgq9cdUBKigdTHwAS0KRNRBcYQYVUrCsQGeo380FEuRoeEJ//Hw/3fk+yv81SVhbHoHfqMM75GZm4rhcTBdnLIR3zQ7YNglqNBiMgZOmvAhRrsm0B34ts7g7RcQFX3/8EuwLWweL877dMMYBJj7HaRsnULyib8XnhkOjU1KDZb4=
+	t=1778537997; cv=none; b=F7hyqS4xgoGc35uKp86MnzMQEr7duJVthMyKLlkeAIHApjCHZPLoEorXVlbVZaVaFZsGFNK/tzt3ZZZo2Wdr9ar0/iOmu5ogz1eywa1DzpxqoaVKTzrzd3/hy9GpeuqGHReolpEPVdffQImsQtduboejxugFxMIxjLOKW4LtXKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537996; c=relaxed/simple;
-	bh=UVhRiCtsGtIVCO89w0KLFi9gBuY1+5o6JU2fTLcrA9c=;
+	s=arc-20240116; t=1778537997; c=relaxed/simple;
+	bh=9tCgCsqZ2HSZ/TsOoNVOU6D2wmSey9I88Ha5w3FI9Mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QvWunirXBp16hM7VzghmohU8FtneN/UkkEr8jvi1GeGAD0bxP+YjlhJ1NzuRsIMHLR6ciqIldJUD9KqkbLSBXb4sNXFdQFWXKSUwK+vb0mfGxobiMXMqwS46gYRz1zuvXCV7OHTgs7ylFqnPAeO+e153HM1Q308KEyu203YHYzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bLo9m3hx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=puA78v3MpZn1LqnHxidFSmt5cpggtn2kM7GvT4S/sk8eYpJx8ASXpjQYakCmaBTVK4phCditdDByTR01bxlaShw4Ubp6D6IF/NtPK7Twht821PG2S1xZagCbEHscTulbpbTPdGiuRF49RxqYqQfL4G8RYmWdFpPCk9/XX8Q5EE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u0FsmAbh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bLo9m3hx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD37C2BCB0;
-	Mon, 11 May 2026 22:19:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u0FsmAbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BD8C2BCF5;
+	Mon, 11 May 2026 22:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537996;
-	bh=UVhRiCtsGtIVCO89w0KLFi9gBuY1+5o6JU2fTLcrA9c=;
+	s=k20201202; t=1778537997;
+	bh=9tCgCsqZ2HSZ/TsOoNVOU6D2wmSey9I88Ha5w3FI9Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bLo9m3hxsJ66lAfnkLhyuVlYAIKhBEgyAqsORm0HWnB+bqPvjgQhXbRcYs9WiU4rL
-	 4yRmr4UyHd4dQoGJej1eNl9O5MttF/Asodw5CoxAateck9KOgyjpTYIgMniHTZbx82
-	 tmB0cRYwwGFMtqFwhm/EdO8cVK9R5d6c9cJhXC1hGez1wusOiIGHE68h9cx1ZFiNr6
-	 JYcfUVTdw5tMmi0ggQDxEEbUx+XswxMFGg2v6uUQngpExQII2z/WMMygY6b+qEBhs9
-	 XqbwiWuqUgySZINhzrLcaUos+Kn3vbRYoQPb7KAipvKmQfhgpjAq3C7BBtViFxRuJP
-	 fDIRJm+VC5stQ==
+	b=u0FsmAbhVPthG3ctJPI1QiR9odlre3f6ubom/raf4q3f8248bVbdxpHdXmiAWuoEh
+	 H7z/SgayXzHj9zqqTpD7YIs43H4sMqBtlhcb9qlQ3E8/V+ahMj3VuGdO/jyPVyQtcZ
+	 B6Ape4JtG6X5urDBsaTUqPEajBoxWiZ1/qEDdhBu8PwnYj+VHbv1RVVyfNZq1f1xwK
+	 56IBwKNvZ9UJjUvncvJ7obV/WS/X9PaxuoiMWRNVQNylazE5eRFKdR3KaAK26+UtlX
+	 VIIK+sdRwWbYB27fi4dE71rinWd7tXV5IqlKeVK7D3o6+CjyolhIBhnyuYr4cV16p7
+	 stW2jGuKKoTgA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brian Bunker <brian@purestorage.com>,
-	Krishna Kant <krishna.kant@purestorage.com>,
-	Riya Savla <rsavla@purestorage.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Aurelien DESBRIERES <aurelien@hackers.camp>,
+	syzbot+ff30eeab8e07b37d524e@syzkaller.appspotmail.com,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jejb@linux.ibm.com,
-	linux-scsi@vger.kernel.org,
+	marcel@holtmann.org,
+	johan.hedberg@gmail.com,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] scsi: scsi_dh_alua: Increase default ALUA timeout to maximum spec value
-Date: Mon, 11 May 2026 18:19:15 -0400
-Message-ID: <20260511221931.2370053-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] Bluetooth: hci_uart: Fix NULL deref in recv callbacks when priv is uninitialized
+Date: Mon, 11 May 2026 18:19:16 -0400
+Message-ID: <20260511221931.2370053-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -56,167 +56,295 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Bunker <brian@purestorage.com>
+From: Aurelien DESBRIERES <aurelien@hackers.camp>
 
-[ Upstream commit 68c3a65a5a8e85643745fdde02cb63904e165620 ]
+[ Upstream commit 902fe40bce7059722f7ffa1c378e577675cf1918 ]
 
-The ALUA handler maps a 0 value (no implicit transition timeout provided
-by the target) to the ALUA_FAILOVER_TIMEOUT constant, currently 60
-seconds. This means the kernel already does not accept an infinite
-transition time.
+When a fault is injected during hci_uart line discipline setup, the
+proto open() callback may fail leaving hu->priv as NULL. A subsequent
+TIOCSTI ioctl can trigger the recv() callback before priv is
+initialized, causing a NULL pointer dereference.
 
-However, 60 seconds is insufficient for some arrays that may take longer
-to complete ALUA transitions. Since the highest value allowed by the
-SCSI specification for the implicit transition timeout is a single byte
-(255 seconds), change the default to 255. This way, when a target does
-not provide an explicit transition timeout, we default to the maximum
-value the spec allows rather than an arbitrary 60 second limit.
+Fix all four affected HCI UART protocol drivers by adding a NULL check
+on hu->priv at the start of their recv() callbacks: h4, h5, ath and
+bcsp.
 
-Co-developed-by: Krishna Kant <krishna.kant@purestorage.com>
-Signed-off-by: Krishna Kant <krishna.kant@purestorage.com>
-Co-developed-by: Riya Savla <rsavla@purestorage.com>
-Signed-off-by: Riya Savla <rsavla@purestorage.com>
-Signed-off-by: Brian Bunker <brian@purestorage.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://patch.msgid.link/20260416165512.26497-2-brian@purestorage.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+ff30eeab8e07b37d524e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ff30eeab8e07b37d524e
+Signed-off-by: Aurelien DESBRIERES <aurelien@hackers.camp>
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Walkthrough
+## Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem `Bluetooth: hci_uart`; action verb `Fix`;
+intent is to prevent NULL dereference in HCI UART protocol `recv()`
+callbacks when `hu->priv` is not initialized.
 
-Phase 1 Record: Subsystem is `scsi: scsi_dh_alua`; action is “increase”;
-intent is to raise the default ALUA implicit transition timeout from 60s
-to 255s. Tags verified from commit
-`68c3a65a5a8e85643745fdde02cb63904e165620`: co-developed/SOB by Krishna
-Kant and Riya Savla, SOB by Brian Bunker, `Reviewed-by: Hannes
-Reinecke`, `Link:` to the v4 posting, SOB by Martin K. Petersen. No
-`Fixes:`, `Reported-by:`, `Tested-by:`, or `Cc: stable`. Body describes
-a real behavior problem: targets that omit an explicit ALUA transition
-timeout get capped at 60s, which is too short for some arrays.
+Step 1.2 Record: Tags found: `Reported-by:
+syzbot+ff30eeab8e07b37d524e@syzkaller.appspotmail.com`; `Closes:
+https://syzkaller.appspot.com/bug?extid=ff30eeab8e07b37d524e`; `Signed-
+off-by: Aurelien DESBRIERES`; `Assisted-by: Claude:claude-sonnet-4-6`;
+`Signed-off-by: Luiz Augusto von Dentz`. No `Fixes:` tag. Notable
+pattern: syzbot report with reproducer and KASAN NULL-deref crash.
 
-Phase 2 Record: One file changed,
-`drivers/scsi/device_handler/scsi_dh_alua.c`, 1 insertion/1 deletion. No
-function body is modified; only `ALUA_FAILOVER_TIMEOUT` changes. The
-macro is used by `submit_rtpg()`, `submit_stpg()`, `alua_tur()`, and
-`alua_rtpg()` for command and transition expiry timing. Before: missing
-target timeout defaults to 60s. After: defaults to 255s. Bug category is
-logic/correctness for storage failover timing. Fix quality is very small
-and obvious; main regression risk is slower failure detection for arrays
-that omit timeout and remain stuck.
+Step 1.3 Record: The commit describes a `hu->priv == NULL` path during
+HCI UART setup followed by received data via `TIOCSTI`, causing a NULL
+pointer dereference. The syzkaller report verifies a KASAN NULL-
+deref/general protection fault in `h4_recv`, with call chain `tty_ioctl
+-> tiocsti -> hci_uart_tty_receive -> h4_recv`.
 
-Phase 3 Record: `git blame` shows the 60s default came from
-`3588c5a21aef8c` (`[SCSI] scsi_dh_alua: implement 'implied transition
-timeout'`), first contained in `v3.6`. That original commit added the
-implicit transition timeout machinery and made 60s the finite fallback.
-Recent local history shows ALUA-related fixes but no prerequisite for
-this one. Author Brian Bunker previously authored ALUA transition-state
-fix `6056a92ceb2a7`, so this is from a contributor with direct ALUA
-history. No standalone dependency was found.
+Step 1.4 Record: This is not hidden cleanup; it is an explicit memory-
+safety crash fix. The added checks prevent dereferencing protocol-
+private state when setup/error handling leaves it absent.
 
-Phase 4 Record: `b4 dig -c 68c3a65a5a8e8` found the v4 lore submission
-at
-`https://patch.msgid.link/20260416165512.26497-2-brian@purestorage.com`.
-`b4 dig -a` found v3 and v4; v4 is the applied revision. `b4 dig -w`
-shows Brian Bunker, `linux-scsi`, Hannes Reinecke, Krishna Kant, and
-Riya Savla were included. The v4 thread has Hannes’s `Reviewed-by` and
-Martin Petersen’s “Applied to 7.1/scsi-staging”. Earlier v2 discussion
-verified Hannes objected to tying ALUA transition timeout to device
-command timeout, and the patch evolved into the simpler 255s default. I
-found no stable-list discussion.
+## Phase 2: Diff Analysis
+Step 2.1 Record: Four files changed, all in `drivers/bluetooth`:
+`hci_ath.c` `+3/-0`, `hci_bcsp.c` `+3/-0`, `hci_h4.c` `+3/-0`,
+`hci_h5.c` `+3/-0`; total `12` insertions. Modified functions:
+`ath_recv`, `bcsp_recv`, `h4_recv`, `h5_recv`. Scope: small multi-file
+surgical driver fix.
 
-Phase 5 Record: Modified function list is empty, but impacted code paths
-are the ALUA RTPG/STPG/TUR and transition expiry paths. Call tracing
-verified `alua_rtpg_work()` calls `alua_tur()` and `alua_rtpg()`,
-`alua_activate()` queues RTPG from dm-multipath activation,
-`alua_check_sense()` is invoked from SCSI error handling, and
-`alua_prep_fn()` is called from SCSI request setup. This is reachable
-from SCSI disk/device-handler attach, error handling, and dm-multipath
-path activation. Similar pattern search found the same 60s fallback in
-active stable tags.
+Step 2.2 Record: Each hunk previously assigned `hu->priv` to a protocol-
+private pointer and then dereferenced it. After the patch, each callback
+returns `-ENODEV` if that pointer is NULL. The affected path is receive
+handling through the HCI UART line discipline, including data injected
+by `TIOCSTI`.
 
-Phase 6 Record: The buggy 60s default exists in `v4.14`, `v4.19`,
-`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.16`, `v6.17`, and `v7.0`
-tags in this repo. The exact macro line is present, so backport
-difficulty should be clean or trivial for those trees. `b4 am` also
-reported the v4 patch “applies clean to current tree.” No alternate
-stable fix was found.
+Step 2.3 Record: Bug category is NULL pointer dereference / memory
+safety. Specific mechanism: `hci_uart_tty_receive()` calls
+`hu->proto->recv()`, and these callbacks dereference `hu->priv`; if
+setup/error handling leaves `hu->priv` NULL, the callback crashes. The
+fix adds direct NULL guards before first dereference.
 
-Phase 7 Record: Subsystem is SCSI device handler / ALUA multipath
-storage. Criticality is IMPORTANT: it affects systems using ALUA-capable
-SCSI storage, especially enterprise multipath arrays. MAINTAINERS
-verifies SCSI is maintained by James Bottomley and Martin Petersen, and
-the patch was committed by Martin Petersen.
+Step 2.4 Record: Fix quality is high: simple, local, obviously correct,
+no API/data structure changes. Regression risk is very low; it only
+changes an invalid crash path to `-ENODEV`.
 
-Phase 8 Record: Affected users are config/hardware-specific: ALUA SCSI
-disk users, commonly multipath enterprise storage. Trigger is an ALUA
-transition where the target omits an explicit transition timeout and
-takes more than 60s. Failure mode is premature transition expiry,
-leading `alua_rtpg()` to mark the port group standby and return I/O/path
-failure. Severity is HIGH for affected systems because it can break
-failover or storage availability. Benefit is high for affected storage
-users; risk is low because this is a one-line bounded timeout increase
-and 255s matches the implementation’s `unsigned char`/`buff[5]` timeout
-representation.
+## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` on the vulnerable lines showed the current
+callback bodies come from long-standing Bluetooth UART code, with recent
+edits such as `b489556a856d` for `h4_recv_buf()` usage and
+`ca94b2b036c2` adding the BCSP registered guard. The vulnerable pattern
+exists in `v6.19.14` and `v7.0.5`.
 
-Phase 9 Record: Evidence for backporting: real storage failover
-correctness issue, long-lived bug since v3.6, affects many stable trees,
-one-line bounded fix, reviewed by Hannes Reinecke, committed by SCSI
-maintainer Martin Petersen, no new API or feature. Evidence against: no
-formal `Reported-by` or `Tested-by`; behavior may wait longer before
-declaring a nonresponsive target failed. Stable checklist: obviously
-correct yes; real bug yes; important issue yes for storage
-availability/path failure; small and contained yes; no new APIs yes;
-applies to stable trees yes/trivial. Exception category: none, this is
-not a device ID/quirk/build/doc fix.
+Step 3.2 Record: No `Fixes:` tag, so no tagged introducing commit to
+follow.
+
+Step 3.3 Record: Related recent commits include `0ffac654e95c` / stable
+backport `981b4fd2baf3` removing the `HCI_UART_REGISTERED` guard from
+`h4_recv`, and `0c3cd7a0b862` fixing a related HCI UART NULL deref in
+write work. Another related upstream commit, `68d39ea5e0ad`, clears
+`HCI_UART_PROTO_INIT` on register error but is present in `v7.1-rc*`,
+not in checked `v6.19.14`/`v7.0.5`.
+
+Step 3.4 Record: No prior Bluetooth commits by Aurelien DESBRIERES were
+found in this checkout. The patch was committed/applied by Bluetooth
+maintainer Luiz Augusto von Dentz.
+
+Step 3.5 Record: No functional prerequisite is required for this patch
+in affected trees; it applies cleanly to current `v7.0.5`. It is most
+relevant to trees with the `HCI_UART_PROTO_INIT` receive path and the
+recent H4 initialization-race changes, such as checked `v6.19.y` and
+`v7.0.y`.
+
+## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 902fe40bce70` found the original thread:
+`https://patch.msgid.link/20260421135331.15425-1-aurelien@hackers.camp`.
+`b4 dig -a` found only v1; the committed patch matches the submitted
+revision.
+
+Step 4.2 Record: `b4 dig -w` showed recipients included `linux-
+bluetooth`, Marcel Holtmann, Johan Hedberg, Luiz Dentz, `linux-kernel`,
+and syzbot. The patchwork bot reported it was applied to
+`bluetooth/bluetooth-next.git` by Luiz Augusto von Dentz.
+
+Step 4.3 Record: Syzkaller bug page verifies: “general protection fault
+in h4_recv”, KASAN NULL-ptr-deref, C and syz reproducers, and fix commit
+`902fe40bce70`.
+
+Step 4.4 Record: No multi-patch series was found; only v1 of this one-
+patch submission.
+
+Step 4.5 Record: Direct lore stable fetch was blocked by Anubis; web
+search found no stable-specific discussion. This does not affect the
+decision because the syzbot crash and code path are verified elsewhere.
+
+## Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified functions: `ath_recv`, `bcsp_recv`, `h4_recv`,
+`h5_recv`.
+
+Step 5.2 Record: Exact call path verified: protocol structs assign
+`.recv = h4_recv/ath_recv/bcsp_recv/h5_recv`; `hci_uart_tty_receive()`
+calls `hu->proto->recv(hu, data, count)`; `tiocsti()` calls the line
+discipline `receive_buf`.
+
+Step 5.3 Record: Key callees include `h4_recv_buf()`,
+`hci_recv_frame()`, `h5_reset_rx()`, `bcsp_unslip_one_byte()`, and skb
+cleanup helpers. The first unsafe operation in each changed function was
+a dereference of the private pointer.
+
+Step 5.4 Record: Reachability is verified from userspace ioctl in the
+syzkaller trace and reproducer: `openat("/dev/ptmx")`, `TIOCSETD` to
+`N_HCI`, `HCIUARTSETPROTO` with fault injection, then `TIOCSTI`.
+
+Step 5.5 Record: Similar HCI UART receive callbacks exist; some, like
+`qca_recv` and `ll_recv`, still have `HCI_UART_REGISTERED` guards before
+dereferencing private data. The candidate focuses on the four callbacks
+identified in the accepted patch.
+
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: Checked `v6.19.14` and `v7.0.5`: the four callbacks
+exist without the new NULL checks. These trees also have
+`hci_uart_tty_receive()` accepting `HCI_UART_PROTO_INIT`. Checked
+`v6.6`/`v6.12`: older receive gating differs, so the exact trigger is
+less clearly present there.
+
+Step 6.2 Record: `git apply --check` of the candidate diff succeeds on
+the current `v7.0.5` checkout. Expected backport difficulty for similar
+affected trees is clean or trivial.
+
+Step 6.3 Record: No equivalent recv-callback NULL guard was found in
+`v6.19.14` or `v7.0.5`. A related central cleanup exists upstream as
+`68d39ea5e0ad`, but not in those checked stable tags.
+
+## Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is Bluetooth HCI UART, a driver subsystem
+under `drivers/bluetooth`. Criticality: important for systems using
+UART-attached Bluetooth controllers; not universal core kernel code.
+
+Step 7.2 Record: Bluetooth UART code is actively changing in this range,
+with recent initialization-race and NULL-deref fixes in the same area.
+
+## Phase 8: Impact And Risk
+Step 8.1 Record: Affected users are systems with `N_HCI` / HCI UART
+Bluetooth line discipline enabled, especially with H4/H5/ATH/BCSP
+protocol paths.
+
+Step 8.2 Record: Trigger verified by syzkaller requires HCI UART line
+discipline setup, fault/error during protocol setup, then received data
+through `TIOCSTI`. The reproducer uses fault injection and ioctl access;
+unprivileged exploitability was not established.
+
+Step 8.3 Record: Failure mode is kernel oops/general protection fault
+from KASAN NULL dereference in `h4_recv`; severity HIGH to CRITICAL
+because it crashes the kernel.
+
+Step 8.4 Record: Benefit is high for affected stable trees because it
+prevents a reproducible kernel crash. Risk is very low: 12 added lines,
+no new feature, no locking changes, no API changes.
+
+## Phase 9: Final Synthesis
+Step 9.1 Record: Evidence for backporting: syzbot report with
+reproducer, KASAN NULL deref, syscall-triggered path, small surgical
+patch, accepted by Bluetooth maintainer, applies cleanly to checked
+stable tree. Evidence against: trigger appears tied to setup
+failure/fault injection and may not affect older stable trees with
+different HCI UART initialization flow. Unresolved: exact applicability
+to every older LTS branch was not fully verified.
+
+Step 9.2 Record: Stable rules checklist: obviously correct: yes; fixes
+real bug: yes, syzbot crash; important issue: yes, kernel oops; small
+and contained: yes, 12 insertions in four driver callbacks; no new
+features/APIs: yes; applies to stable: yes for checked `v7.0.5`, likely
+trivial for affected `v6.19.y`.
+
+Step 9.3 Record: No exception category needed; this is a direct crash
+fix, not a device ID/quirk/build/doc patch.
+
+Step 9.4 Record: Decision is to backport to affected stable trees,
+especially those containing the `HCI_UART_PROTO_INIT` receive path and
+recent HCI UART initialization fixes. The benefit/risk ratio is strongly
+favorable.
 
 ## Verification
-
-- Phase 1: `git show 68c3a65a5a8e8` verified commit message, tags,
-  author, committer, and one-line diff.
-- Phase 2: `git show` and source read verified only
-  `ALUA_FAILOVER_TIMEOUT` changes from `60` to `255`.
-- Phase 3: `git blame` verified the 60s default came from
-  `3588c5a21aef8c`; `git describe --contains` verified `v3.6` ancestry.
-- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and saved mboxes verified
-  v3/v4 review history, Hannes review, and Martin’s apply note. Direct
-  WebFetch of lore was blocked/timed out; b4 succeeded.
-- Phase 5: `git grep` and file reads verified ALUA call paths through
-  SCSI request setup, SCSI error handling, and dm-multipath activation.
-- Phase 6: `git grep` against stable tags verified the 60s default
-  exists across listed stable releases.
-- Phase 7: `MAINTAINERS` search verified SCSI maintainer/list context.
-- Phase 8: Source inspection verified the failure path: timeout expiry
-  in `alua_rtpg()` changes transitioning state handling to standby/I/O
-  error.
-- Unverified: I did not independently fetch the SCSI SPC text; the “255
-  maximum spec value” claim is supported by the reviewed commit text and
-  by the kernel implementation storing the timeout as a single byte.
-
-This should be backported: it fixes a real ALUA multipath storage
-availability problem with a tiny, bounded, maintainer-reviewed change
-and minimal regression risk.
+- Phase 1: Parsed commit `902fe40bce7059722f7ffa1c378e577675cf1918` with
+  `git show`; verified syzbot and Closes tags.
+- Phase 2: Verified diff stat: four files, 12 insertions, only NULL
+  guards in recv callbacks.
+- Phase 3: Ran `git blame` on changed callback lines and inspected
+  related commits `0ffac654e95c`, `981b4fd2baf3`, `0c3cd7a0b862`, and
+  `68d39ea5e0ad`.
+- Phase 4: Ran `b4 dig -c`, `-a`, and `-w`; fetched mirror thread and
+  syzkaller bug/reproducer.
+- Phase 5: Verified call path with source reads and exact searches:
+  `tiocsti()` -> line discipline `receive_buf` ->
+  `hci_uart_tty_receive()` -> protocol `.recv`.
+- Phase 6: Checked `v6.19.14`, `v7.0.5`, `v6.12`, and `v6.6` snippets;
+  verified patch applies to current `v7.0.5` with `git apply --check`.
+- Phase 8: Verified failure mode from syzkaller crash log: KASAN NULL-
+  ptr-deref/general protection fault in `h4_recv`.
+- UNVERIFIED: Exact applicability to every active older stable/LTS
+  branch; older branches with different HCI UART gating may not need
+  this patch.
 
 **YES**
 
- drivers/scsi/device_handler/scsi_dh_alua.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_ath.c  | 3 +++
+ drivers/bluetooth/hci_bcsp.c | 3 +++
+ drivers/bluetooth/hci_h4.c   | 3 +++
+ drivers/bluetooth/hci_h5.c   | 3 +++
+ 4 files changed, 12 insertions(+)
 
-diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
-index efb08b9b145a1..80ab0ff921d43 100644
---- a/drivers/scsi/device_handler/scsi_dh_alua.c
-+++ b/drivers/scsi/device_handler/scsi_dh_alua.c
-@@ -37,7 +37,7 @@
- #define TPGS_MODE_EXPLICIT		0x2
+diff --git a/drivers/bluetooth/hci_ath.c b/drivers/bluetooth/hci_ath.c
+index fa679ad0acdfa..8201fa7f61e84 100644
+--- a/drivers/bluetooth/hci_ath.c
++++ b/drivers/bluetooth/hci_ath.c
+@@ -191,6 +191,9 @@ static int ath_recv(struct hci_uart *hu, const void *data, int count)
+ {
+ 	struct ath_struct *ath = hu->priv;
  
- #define ALUA_RTPG_SIZE			128
--#define ALUA_FAILOVER_TIMEOUT		60
-+#define ALUA_FAILOVER_TIMEOUT		255	/* max 255 (8-bit value) */
- #define ALUA_FAILOVER_RETRIES		5
- #define ALUA_RTPG_DELAY_MSECS		5
- #define ALUA_RTPG_RETRY_DELAY		2
++	if (!ath)
++		return -ENODEV;
++
+ 	ath->rx_skb = h4_recv_buf(hu, ath->rx_skb, data, count,
+ 				  ath_recv_pkts, ARRAY_SIZE(ath_recv_pkts));
+ 	if (IS_ERR(ath->rx_skb)) {
+diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
+index b386f91d8b46d..db56eead27ceb 100644
+--- a/drivers/bluetooth/hci_bcsp.c
++++ b/drivers/bluetooth/hci_bcsp.c
+@@ -585,6 +585,9 @@ static int bcsp_recv(struct hci_uart *hu, const void *data, int count)
+ 	if (!test_bit(HCI_UART_REGISTERED, &hu->flags))
+ 		return -EUNATCH;
+ 
++	if (!bcsp)
++		return -ENODEV;
++
+ 	BT_DBG("hu %p count %d rx_state %d rx_count %ld",
+ 	       hu, count, bcsp->rx_state, bcsp->rx_count);
+ 
+diff --git a/drivers/bluetooth/hci_h4.c b/drivers/bluetooth/hci_h4.c
+index a889a66a326f7..7673727074985 100644
+--- a/drivers/bluetooth/hci_h4.c
++++ b/drivers/bluetooth/hci_h4.c
+@@ -109,6 +109,9 @@ static int h4_recv(struct hci_uart *hu, const void *data, int count)
+ {
+ 	struct h4_struct *h4 = hu->priv;
+ 
++	if (!h4)
++		return -ENODEV;
++
+ 	h4->rx_skb = h4_recv_buf(hu, h4->rx_skb, data, count,
+ 				 h4_recv_pkts, ARRAY_SIZE(h4_recv_pkts));
+ 	if (IS_ERR(h4->rx_skb)) {
+diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
+index cfdf75dc28475..d353837182125 100644
+--- a/drivers/bluetooth/hci_h5.c
++++ b/drivers/bluetooth/hci_h5.c
+@@ -587,6 +587,9 @@ static int h5_recv(struct hci_uart *hu, const void *data, int count)
+ 	struct h5 *h5 = hu->priv;
+ 	const unsigned char *ptr = data;
+ 
++	if (!h5)
++		return -ENODEV;
++
+ 	BT_DBG("%s pending %zu count %d", hu->hdev->name, h5->rx_pending,
+ 	       count);
+ 
 -- 
 2.53.0
 
