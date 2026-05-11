@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41B37F738;
-	Mon, 11 May 2026 22:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7983842E016;
+	Mon, 11 May 2026 22:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537975; cv=none; b=eF7bhJQY8Jlw4J6QDTK8jYenFwR9d1+w4WUZkjUozYBDkENk20hIxkjdkk91gQsiHE/IFBEl1tAYOUmS89ojbexBn3Ej22acurCJGfpbkG66rg2k+iQaU6ekOoX+JQMiLNVthn0lcZds5waq7g4A1jv4uWyLvsAU146IT90167Q=
+	t=1778537976; cv=none; b=dGY3VOoAih8A0awPbxjxl7eqvlClRjxd0kUI8gKMw3mwHvyAU84a0icSffxOcVZOIk2XA37+yqWn/lrk/mU+AOHttDCHGdQ5aR+ebPuDB5elY9Wf9b7Ildzgl9ZG/pnaboxeF1wrkTVz0U4IFx6i+KPmRZGwWJ0M6rWeIyT0YZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537975; c=relaxed/simple;
-	bh=RQNb7GGy+bNMh/3tLvKifE9HAoNS+QkXX2pfhribtes=;
+	s=arc-20240116; t=1778537976; c=relaxed/simple;
+	bh=IX/Repa1aySqfY4fx8TzeX6rhq3yO0kNzFJX8DguvF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QVFJyb+PZ8OWcHHsLtOJYpVi8aCaQ9xXg/rLrkwms+/2mYPZNrpSbBlsGVVaHIU7FHDSMotlL9pDXxrmECzpTnLVjKP5jGPSWNSmhx0ZDBLp16f1yyZ+HRltkEl0L3eSnfjLgwtqmHQYMM62ICFKZX78GffDEYRQz3aOsmnEeSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwh6gS/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CDQX/Ifz4dOChNr6DHLJg3aD4FddRQb6h1s6vsWgf/1Ob8TkEb9AaNAhByGYWFkf1eOWqivDg9/lfZ7uw+JUUEfy5bu923iOcyYOVOLBz2VOJCBn/OHrZ/h+FQVqAOB3Et1thW15P7sGDrtAnUM0mQxZmrNtYqT0OzSc0psipvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qqLGucAH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwh6gS/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D67C2BCF5;
-	Mon, 11 May 2026 22:19:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qqLGucAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43875C2BCFB;
+	Mon, 11 May 2026 22:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537974;
-	bh=RQNb7GGy+bNMh/3tLvKifE9HAoNS+QkXX2pfhribtes=;
+	s=k20201202; t=1778537976;
+	bh=IX/Repa1aySqfY4fx8TzeX6rhq3yO0kNzFJX8DguvF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bwh6gS/PJtj0iWSNBJv2fwvdShubNMVW63gWGBEQkbGdPibRez/tuzvls38Aj/jU5
-	 a38JbJHQ6PRv2glTXQiLYRYkLUPGyMNeq6RR/AuY/h0nKZ1Bfdk/hSorbuOsHsdnV4
-	 14ZAEdPpeZXthtPyGmn4SKwahGRbS+Heab1z+1OAuJp5LKFl/H/Z/GLRJLy7SwJL41
-	 rK7Zl+4r75SQh87ZbBLjkHWmsX+0POXRYUwD/T8zwCCpLQup8npcxUmz6S5taNvzXq
-	 lPO0pzVWM5orAzH3n0u77/u+5TkCiMzIotV8DHKNUwD04FCL2NO0fjrTMLqyJg77A7
-	 cEgNPMqbXIKTQ==
+	b=qqLGucAH+g9oXPzahke6R+Qva28gMIYuRBhyTuj34WeL5VK1YGYDmukUnB9YjuVUv
+	 XKr1bMo+M68RIIuOiP//+/GdLj15IOLK855TISpcwEd69XjtE/HJmXXf2VnzcMhgSE
+	 xdQS93X3X3T9eoWR8E/BfJMqhoHYF/nqqpwY1zpZkhksFwpa1ClZTzGRlfxM4hDmm1
+	 BIcV2Egtw8l3i5Xiy4XNHlE4ahcMv9Mra5D5Kb86cVHRMtJ4ZjXKOG1VLRhjzx11HR
+	 +zzTJSW05GdaHIwmJ3YrkW4DTduNkSO+JabmeFyM/kDnGETvCM81pO4gLJtYnSOJOY
+	 RrCs+27I7aehw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "T.J. Mercier" <tjmercier@google.com>,
-	Tejun Heo <tj@kernel.org>,
+Cc: Christian Van <cvan20191@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lizefan.x@bytedance.com,
-	hannes@cmpxchg.org,
-	corbet@lwn.net,
-	cgroups@vger.kernel.org,
-	linux-doc@vger.kernel.org,
+	jagan@amarulasolutions.com,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] docs: cgroup-v1: Update charge-commit section
-Date: Mon, 11 May 2026 18:19:01 -0400
-Message-ID: <20260511221931.2370053-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] drm/panel: feiyang-fy07024di26a30d: return display-on error
+Date: Mon, 11 May 2026 18:19:02 -0400
+Message-ID: <20260511221931.2370053-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -56,275 +55,280 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "T.J. Mercier" <tjmercier@google.com>
+From: Christian Van <cvan20191@gmail.com>
 
-[ Upstream commit d8769544bde51b0ac980d10f8fe9f9fed6c95995 ]
+[ Upstream commit c67e8787f6743101c90c7a9c4bb7cf6f1f739f83 ]
 
-Commit 1d8f136a421f ("memcg/hugetlb: remove memcg hugetlb
-try-commit-cancel protocol") removed mem_cgroup_commit_charge() and
-mem_cgroup_cancel_charge(), but the docs still refer to those functions.
-There is no longer any charge cancellation.
+mipi_dsi_dcs_set_display_on() returns an error code, but feiyang_enable()
+currently ignores it and always reports success.
 
-Update the docs to match the code.
+Return the DCS command result so callers can observe enable failures.
 
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Christian Van <cvan20191@gmail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `docs: cgroup-v1`; action verb `Update`;
-intent: update `Documentation/admin-guide/cgroup-v1/memcg_test.rst` so
-the charge-commit section matches current memcg code.
+Step 1.1 Record: subsystem `drm/panel`, action verb `return`, summary:
+`feiyang-fy07024di26a30d` should propagate the MIPI DSI display-on
+command error instead of reporting success.
 
-Step 1.2 Record: tags present: `Signed-off-by: T.J. Mercier
-<tjmercier@google.com>` and `Signed-off-by: Tejun Heo <tj@kernel.org>`.
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
-`Link:`, or `Cc: stable@vger.kernel.org` tags in the committed message.
+Step 1.2 Record: tags verified:
+- `Signed-off-by: Christian Van <cvan20191@gmail.com>`
+- `Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>`
+- `Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>`
+- `Link:
+  https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com`
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable`, syzbot, or
+sanitizer tags were present.
 
-Step 1.3 Record: the body says commit `1d8f136a421f` removed
-`mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`, while the
-cgroup-v1 memcg docs still name them and describe cancellation.
-Symptom/failure mode: incorrect documentation only. Version information:
-the referenced removal commit is from 2025-01-13 in the local object
-database; candidate commit is from 2026-04-30. Root cause: docs were not
-updated when the code was changed.
+Step 1.3 Record: the body says `mipi_dsi_dcs_set_display_on()` returns
+an error but `feiyang_enable()` ignores it and always returns success.
+Verified in `drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c`.
+Symptom: DRM panel core cannot observe a failed display-on command and
+may continue the enable sequence as if the panel enabled successfully.
+No user report, stack trace, or affected-version statement was found.
 
-Step 1.4 Record: this is not a hidden runtime bug fix. It is an explicit
-documentation correctness fix.
+Step 1.4 Record: yes, this is a hidden bug fix: it fixes ignored error
+handling in a panel enable path. It is not cleanup or refactoring.
 
 ## Phase 2: Diff Analysis
-Step 2.1 Record: one file changed: `Documentation/admin-
-guide/cgroup-v1/memcg_test.rst`, `2 insertions(+), 4 deletions(-)`. No
-functions modified. Scope: single-file documentation-only surgical
-change.
+Step 2.1 Record: one file changed, `drivers/gpu/drm/panel/panel-feiyang-
+fy07024di26a30d.c`; 1 insertion, 3 deletions. Modified function:
+`feiyang_enable()`. Scope: single-file surgical driver fix.
 
-Step 2.2 Record: before, the section was titled `charge-commit-cancel`,
-listed `mem_cgroup_commit_charge()` or `mem_cgroup_cancel_charge()`, and
-described `cancel()`. After, it is titled `charge-commit`, lists
-`commit_charge()`, and removes the cancellation text.
+Step 2.2 Record: before, `feiyang_enable()` called
+`mipi_dsi_dcs_set_display_on(ctx->dsi)` and always returned `0`. After,
+it returns the DCS command result directly. Affected path: normal panel
+enable path, after the 200 ms enable delay.
 
-Step 2.3 Record: bug category is documentation/comment correctness.
-Specific mechanism: removes stale references to APIs that are absent in
-current `6.19.y`/`7.0.y` code and in `origin/master`.
+Step 2.3 Record: bug category is logic/error-propagation correctness.
+The broken mechanism was an ignored negative return from
+`mipi_dsi_dcs_set_display_on()`. Verified that
+`mipi_dsi_dcs_set_display_on()` returns `0` on success or a negative
+error code on failure.
 
-Step 2.4 Record: fix quality is obviously correct for trees whose memcg
-code no longer has `mem_cgroup_commit_charge()` /
-`mem_cgroup_cancel_charge()`. Regression risk is zero runtime risk, but
-there is a branch-selection concern: `stable/linux-6.12.y` still
-contains those functions, so this exact doc update would be misleading
-there.
+Step 2.4 Record: fix quality is high: minimal, obviously correct, no new
+API, no locking, no data structure change. Regression risk is very low;
+the only behavior change is that a real display-on failure prevents
+`drm_panel_enable()` from marking the panel enabled and enabling
+backlight/followers.
 
 ## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` before the candidate shows the stale doc
-lines came from `f3f5edc5e41e` in this repository’s history. `git blame
-origin/master` shows the changed lines attributed to `d8769544bde51`.
+Step 3.1 Record: `git blame` shows the ignored return was introduced
+with the original driver commit
+`69dc678abc2b9d36ff005413ca6e9edabe4c369a` (`drm/panel: Add Feiyang
+FY07024DI26A30-D MIPI-DSI LCD panel`), first contained in `v5.2-rc1`.
 
-Step 3.2 Record: no `Fixes:` tag. I still inspected referenced commit
-`1d8f136a421f26747e58c01281cba5bffae8d289`; it removed prototypes and
-implementations for `mem_cgroup_commit_charge()`,
-`mem_cgroup_cancel_charge()`, and related hugetlb try/commit/cancel
-helpers.
+Step 3.2 Record: no `Fixes:` tag was present, so there was no tag to
+follow. I inspected the original driver commit anyway; it added the
+driver and already ignored this display-on return.
 
-Step 3.3 Record: recent history for `Documentation/admin-
-guide/cgroup-v1/memcg_test.rst` on `origin/master` has only the file
-introduction/import commit and this candidate. Related path history
-shows the candidate was merged via `cgroup-for-7.1-rc2-fixes`. No
-prerequisite doc series found.
+Step 3.3 Record: recent file history shows mostly unrelated panel API
+conversions and cleanup. The candidate patch is standalone and only
+needs the existing `feiyang_enable()` and
+`mipi_dsi_dcs_set_display_on()` code.
 
-Step 3.4 Record: author `T.J. Mercier` has at least one other cgroup-
-related commit in `origin/master`; Tejun Heo is listed in `MAINTAINERS`
-as cgroup maintainer and committed the patch.
+Step 3.4 Record: no other `Christian Van` commits under
+`drivers/gpu/drm/panel` were found in checked `master` or `graphics-
+next`. Neil Armstrong is listed as DRM panel maintainer in `MAINTAINERS`
+and reviewed/applied the patch.
 
-Step 3.5 Record: no code dependencies for the patch itself. It can apply
-standalone to the current `stable/linux-7.0.y` checkout. Applicability
-must be gated by whether the target tree’s code has removed the old
-APIs.
+Step 3.5 Record: no dependencies found. The patch applies directly to
+`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`; `v5.4`
+contains the buggy code but needs a trivial context backport.
 
 ## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c d8769544bde51...` found the original
-submission at
-`https://patch.msgid.link/20260430201142.240387-1-tjmercier@google.com`.
-`b4 dig -a` found only v1 of a single-patch series. The mbox contains
-Tejun’s reply: “Applied to cgroup/for-7.1-fixes.” No NAKs or concerns
-found in the saved thread.
+Step 4.1 Record: `b4 dig -c c67e8787f6743101c90c7a9c4bb7cf6f1f739f83`
+found the original submission at
+`https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com`.
+`b4 dig -a` found only v1, so the committed version is the only revision
+found.
 
-Step 4.2 Record: `b4 dig -w` shows recipients included cgroup
-maintainers/list and docs list: `tj@kernel.org`, `hannes@cmpxchg.org`,
-`mkoutny@suse.com`, `cgroups@vger.kernel.org`, `corbet@lwn.net`,
-`skhan@linuxfoundation.org`, `linux-doc@vger.kernel.org`, `linux-
-kernel@vger.kernel.org`.
+Step 4.2 Record: `b4 dig -w` showed the original recipients included
+Christian Van, Jagan Teki, Neil Armstrong, Jessica Zhang, Maarten
+Lankhorst, Maxime Ripard, Thomas Zimmermann, David Airlie, Simona
+Vetter, `dri-devel`, and `linux-kernel`. Neil Armstrong reviewed it and
+later applied it to `drm-misc-fixes`.
 
-Step 4.3 Record: no `Reported-by` or bug-report `Link:` tags. No syzbot,
-bugzilla, or user-impact bug report applies.
+Step 4.3 Record: no `Reported-by` or bug-report link exists. WebFetch
+for lore URLs was blocked by Anubis, but `b4 mbox` fetched the thread
+successfully. The thread contained Neil’s `Reviewed-by` reply and an
+applied notice.
 
-Step 4.4 Record: b4 found a standalone single-patch series, not part of
-a multi-patch dependency chain.
+Step 4.4 Record: no multi-patch series found; this is a standalone
+1-patch series.
 
-Step 4.5 Record: web search did not find stable-list discussion for this
-exact patch. `WebFetch` to lore/patch.msgid was blocked by Anubis, but
-b4 successfully fetched the mbox.
+Step 4.5 Record: WebFetch searches of `lore.kernel.org/stable` were
+blocked by Anubis. Local pending/stable candidate branches searched did
+not show this patch already present.
 
 ## Phase 5: Code Semantic Analysis
-Step 5.1 Record: no functions modified by the diff.
+Step 5.1 Record: modified function: `feiyang_enable()`.
 
-Step 5.2 Record: no callers affected by the diff. For documentation
-accuracy, I verified current `stable/linux-7.0.y` code has
-`commit_charge()` callers in `charge_memcg()`,
-`mem_cgroup_replace_folio()`, and `mem_cgroup_migrate()`.
+Step 5.2 Record: `feiyang_enable()` is installed as `.enable` in
+`feiyang_funcs`. `drm_panel_enable()` calls
+`panel->funcs->enable(panel)` and checks negative returns. Multiple DRM
+bridge/host drivers call `drm_panel_enable()`.
 
-Step 5.3 Record: no changed callees. The relevant current code has
-`commit_charge()` assigning `folio->memcg_data`, and callers also invoke
-`memcg1_commit_charge()` where appropriate.
+Step 5.3 Record: key callees are `msleep(200)` and
+`mipi_dsi_dcs_set_display_on(ctx->dsi)`. The latter calls
+`mipi_dsi_dcs_write()` and returns a negative error on write failure.
 
-Step 5.4 Record: runtime reachability is not relevant because no
-executable code changes.
+Step 5.4 Record: reachable through DRM panel enable paths during display
+modeset/enable for systems using this panel. This is driver/hardware-
+specific, not universal. No in-tree DTS user of
+`feiyang,fy07024di26a30d` was found beyond the binding example and
+driver match table.
 
-Step 5.5 Record: similar stale docs pattern exists in stable branches;
-however code state differs by branch. `6.19.y`/`7.0.y` have stale docs
-and no old API. `6.12.y` still has `mem_cgroup_commit_charge()` and
-`mem_cgroup_cancel_charge()` in code.
+Step 5.5 Record: many other panel drivers already check and return or
+handle `mipi_dsi_dcs_set_display_on()` errors, confirming this driver
+was an outlier.
 
 ## Phase 6: Cross-Referencing And Stable Tree Analysis
-Step 6.1 Record: buggy stale documentation exists in
-`stable/linux-7.0.y`, `stable/linux-6.19.y`, `stable/linux-6.18.y`,
-`stable/linux-6.6.y`, `stable/linux-6.1.y`, `stable/linux-5.15.y`, and
-`stable/linux-5.10.y` by exact doc grep. I verified the old APIs are
-absent in several of those trees, but `stable/linux-6.12.y` still
-contains `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`,
-so this exact upstream text is not universally correct for all
-maintained stable lines.
+Step 6.1 Record: buggy code exists in `v5.4`, `v5.10`, `v5.15`, `v6.1`,
+`v6.6`, `v6.12`, `v6.19`, and `v7.0`. The driver was introduced for
+`v5.2-rc1`, so all active stable trees at or after that point likely
+contain it.
 
-Step 6.2 Record: `git apply --check` of the candidate diff succeeds on
-the current `stable/linux-7.0.y` checkout. Expected backport difficulty:
-clean for trees with matching doc context; branch-specific review needed
-for `6.12.y`.
+Step 6.2 Record: expected backport difficulty is clean for `v5.10+`
+based on apply checks. `v5.4` failed direct apply due to context drift
+but contains the same ignored call and should need only a trivial one-
+function backport.
 
-Step 6.3 Record: no related stable fix for this exact doc update found
-by local stable branch ancestry checks or web search.
+Step 6.3 Record: no related stable-side fix for this same issue was
+found in the checked stable/pending branches.
 
 ## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: subsystem is cgroup-v1 memcg documentation.
-Criticality: peripheral/runtime-none; important only for documentation
-correctness.
+Step 7.1 Record: subsystem is DRM panel driver, criticality
+`PERIPHERAL`/driver-specific. It affects users of Feiyang
+FY07024DI26A30-D MIPI-DSI panels.
 
-Step 7.2 Record: cgroup and memcg areas are active; recent
-`origin/master` history includes multiple cgroup/mm fixes. The candidate
-was applied by the cgroup maintainer.
+Step 7.2 Record: DRM panel is maintained and active. The file has had
+several API-conversion commits since introduction, but this fix is not
+dependent on those conversions for `v5.10+`.
 
 ## Phase 8: Impact And Risk Assessment
-Step 8.1 Record: affected population is documentation readers and
-developers/admins consulting old cgroup-v1 memcg internals. No kernel
-runtime users are affected.
+Step 8.1 Record: affected population is driver-specific/config-specific:
+kernels with `CONFIG_DRM_PANEL_FEIYANG_FY07024DI26A30D` and hardware
+described with `feiyang,fy07024di26a30d`.
 
-Step 8.2 Record: trigger condition is reading or relying on the stale
-documentation. Unprivileged users cannot trigger a kernel failure
-because there is no runtime behavior.
+Step 8.2 Record: trigger is a failure of the DSI `SET_DISPLAY_ON`
+command during panel enable. I did not verify a specific real-world
+reporter, so frequency is unverified. It is not shown to be
+unprivileged-user-triggerable.
 
-Step 8.3 Record: failure mode is incorrect documentation. Severity: LOW.
-It can mislead developers/admins, but it does not fix crash, corruption,
-leak, deadlock, or security behavior.
+Step 8.3 Record: failure mode is user-visible display enable
+misreporting: before the patch, the panel core could treat the panel as
+enabled despite the failed display-on command. Severity: `MEDIUM` for
+affected hardware, because it can leave display/backlight state wrong,
+but no crash, memory corruption, deadlock, or security issue was
+verified.
 
-Step 8.4 Record: benefit is low but real for documentation correctness,
-especially because the stable rules exception allows
-documentation/comment fixes and runtime risk is zero. Risk is very low
-for branches whose code matches the new text; risk is documentation-
-regression risk if applied to a branch like `6.12.y` where cancellation
-APIs still exist.
+Step 8.4 Record: benefit is moderate for affected hardware; risk is very
+low because the patch only returns an existing error code from a
+function that already has an `int` return type.
 
 ## Phase 9: Final Synthesis
-Step 9.1 Record: evidence for backporting: tiny docs-only patch;
-corrects verified stale references in current `7.0.y` and `6.19.y`;
-applied by cgroup maintainer; no runtime regression risk; documentation
-fixes are allowed. Evidence against: no runtime bug or user-visible
-stability issue; not correct for every stable branch, specifically
-verified `6.12.y` still has the old commit/cancel APIs. Unresolved: I
-did not exhaustively validate every maintained stable branch’s memcg API
-state.
+Step 9.1 Record:
+Evidence for backporting: real ignored-error bug; affects display enable
+correctness; original buggy code dates to `v5.2-rc1`; one-line surgical
+fix; maintainer reviewed/applied to `drm-misc-fixes`; clean apply to
+`v5.10+`; no new API or feature.
+Evidence against backporting: no user report, crash, security issue,
+data corruption, syzbot report, or `Fixes:` tag; affected population is
+limited to one panel driver; `v5.4` needs a trivial manual backport.
+Unresolved: actual field frequency of DSI display-on failures was not
+verified.
 
-Step 9.2 Stable rules checklist:
-1. Obviously correct and tested? Yes for matching-code branches;
-   verified by code grep, `git diff --check`, and `git apply --check` on
-   `7.0.y`.
-2. Fixes a real bug that affects users? It fixes incorrect
-   documentation, not runtime behavior.
-3. Important issue? No runtime severity; LOW documentation correctness
-   issue.
-4. Small and contained? Yes, 6-line docs-only diff in one file.
-5. No new features or APIs? Yes.
-6. Can apply to stable trees? Yes to at least current `7.0.y`; should
-   not be applied blindly to `6.12.y`.
+Step 9.2 Record:
+1. Obviously correct and tested? Correct by inspection; reviewed by DRM
+   panel maintainer. No explicit `Tested-by`.
+2. Fixes a real bug? Yes, ignored negative return from a hardware
+   command.
+3. Important issue? Moderate: display enable state correctness for
+   affected hardware, not a critical kernel-wide failure.
+4. Small and contained? Yes, one function, one file, 1 insertion/3
+   deletions.
+5. No new features/APIs? Yes.
+6. Can apply to stable? Yes for `v5.10+`; trivial backport needed for
+   `v5.4`.
 
-Step 9.3 Record: exception category is documentation fix.
+Step 9.3 Record: no automatic exception category applies; this is not a
+device ID, quirk, DT, build, or documentation patch.
 
-Step 9.4 Decision: backport is acceptable for stable trees whose memcg
-implementation no longer has charge cancellation APIs. It should be
-excluded from trees like `6.12.y` where the old APIs still exist. With
-that branch-selection caveat, this qualifies under the documentation-fix
-exception.
+Step 9.4 Record: I recommend backporting. Although the impact is driver-
+specific and not a crash-class bug, the fix is a genuine hardware enable
+error propagation fix, very small, maintainer-reviewed, and low risk.
+Stable users with this panel should not have the panel core mark the
+panel enabled after the display-on command failed.
 
-Verification:
-- [Phase 1] Parsed candidate commit
-  `d8769544bde51b0ac980d10f8fe9f9fed6c95995`: only two Signed-off-by
-  tags, no bug/report/stable tags.
-- [Phase 2] `git show --stat --patch`: confirmed one docs file, `2
-  insertions(+), 4 deletions(-)`.
-- [Phase 3] `git show 1d8f136a421f...`: confirmed referenced commit
-  removed `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`
-  from mainline code.
-- [Phase 3] `git log origin/master --grep`: found candidate and merge
-  via `cgroup-for-7.1-rc2-fixes`.
-- [Phase 4] `b4 dig`: found lore thread and exact patch-id match.
-- [Phase 4] `b4 dig -a`: only v1 single-patch series.
-- [Phase 4] `b4 dig -w`: relevant cgroup and docs maintainers/lists were
-  included.
-- [Phase 4] Saved mbox: confirmed Tejun replied “Applied to
-  cgroup/for-7.1-fixes”; no NAKs or stable nomination found.
-- [Phase 5] `rg`/`git grep`: confirmed current code uses
-  `commit_charge()` and no longer has old API names in `7.0.y`.
-- [Phase 6] `git apply --check`: candidate applies cleanly to current
-  `7.0.y`.
-- [Phase 6] Branch checks: `6.12.y` still has
-  `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`, so this
-  patch must not be applied there unchanged.
-- [Phase 8] Runtime impact verified as none because only
-  `Documentation/admin-guide/cgroup-v1/memcg_test.rst` changes.
+## Verification
+- Phase 1: Parsed commit `c67e8787f6743101c90c7a9c4bb7cf6f1f739f83` with
+  `git show`; confirmed subject, body, trailers, and diff.
+- Phase 2: Read `panel-feiyang-fy07024di26a30d.c`; confirmed old
+  `feiyang_enable()` ignored `mipi_dsi_dcs_set_display_on()` and
+  returned `0`.
+- Phase 2: Read `drm_mipi_dsi.c`; confirmed
+  `mipi_dsi_dcs_set_display_on()` returns a negative error on failure.
+- Phase 3: Ran `git blame -L 94,104`; confirmed buggy lines came from
+  `69dc678abc2b9d`.
+- Phase 3: Ran `git describe --contains 69dc678abc2b9d`; confirmed first
+  containing version `v5.2-rc1`.
+- Phase 3: Inspected original commit `69dc678abc2b9d`; confirmed the
+  ignored return existed from driver introduction.
+- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; confirmed one
+  v1 patch, original lore URL, and recipient list.
+- Phase 4: Ran `b4 mbox`; confirmed Neil Armstrong reviewed and applied
+  it to `drm-misc-fixes`.
+- Phase 4: WebFetch lore and stable searches were blocked by Anubis;
+  this limitation did not drive the final decision.
+- Phase 5: Read `drm_panel.c`; confirmed `drm_panel_enable()` checks
+  negative `.enable` return and skips enabled/backlight/follower path on
+  failure.
+- Phase 5: Searched for `feiyang_enable`; confirmed it is used via
+  `.enable = feiyang_enable`.
+- Phase 5: Searched panel drivers for `mipi_dsi_dcs_set_display_on()`;
+  confirmed many peers handle its return.
+- Phase 6: Used `git grep` against stable tags; confirmed the ignored
+  call exists in `v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.19`, and
+  `v7.0`.
+- Phase 6: Apply-checked the patch in detached worktrees; clean for
+  `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`; failed
+  direct apply on `v5.4` due to context only.
+- Phase 7: Checked `MAINTAINERS`; confirmed Neil Armstrong maintains DRM
+  panel drivers.
+- Phase 8: Checked Kconfig and compatible strings; confirmed impact is
+  limited to the Feiyang panel driver/config and no in-tree board DTS
+  use was found.
+- UNVERIFIED: no actual user report or frequency of display-on command
+  failures was found.
 
 **YES**
 
- Documentation/admin-guide/cgroup-v1/memcg_test.rst | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/Documentation/admin-guide/cgroup-v1/memcg_test.rst b/Documentation/admin-guide/cgroup-v1/memcg_test.rst
-index 9f8e27355cba5..7c7cd457cf695 100644
---- a/Documentation/admin-guide/cgroup-v1/memcg_test.rst
-+++ b/Documentation/admin-guide/cgroup-v1/memcg_test.rst
-@@ -47,21 +47,19 @@ Please note that implementation details can be changed.
- 	  Called when swp_entry's refcnt goes down to 0. A charge against swap
- 	  disappears.
+diff --git a/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c b/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
+index 4f8d6d8c07e4d..dbdb7e3cb7b62 100644
+--- a/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
++++ b/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
+@@ -98,9 +98,7 @@ static int feiyang_enable(struct drm_panel *panel)
+ 	/* T12 (video & logic signal rise + backlight rise) T12 >= 200ms */
+ 	msleep(200);
  
--3. charge-commit-cancel
-+3. charge-commit
- =======================
- 
- 	Memcg pages are charged in two steps:
- 
- 		- mem_cgroup_try_charge()
--		- mem_cgroup_commit_charge() or mem_cgroup_cancel_charge()
-+		- commit_charge()
- 
- 	At try_charge(), there are no flags to say "this page is charged".
- 	at this point, usage += PAGE_SIZE.
- 
- 	At commit(), the page is associated with the memcg.
- 
--	At cancel(), simply usage -= PAGE_SIZE.
+-	mipi_dsi_dcs_set_display_on(ctx->dsi);
 -
- Under below explanation, we assume CONFIG_SWAP=y.
+-	return 0;
++	return mipi_dsi_dcs_set_display_on(ctx->dsi);
+ }
  
- 4. Anonymous
+ static int feiyang_disable(struct drm_panel *panel)
 -- 
 2.53.0
 
