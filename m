@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D36340758F;
-	Mon, 11 May 2026 22:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E4440FD94;
+	Mon, 11 May 2026 22:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537981; cv=none; b=ljbehhM32/Q/efh63NLJ8/puXOr6iplMZFH4iKEx4MBwATXmoJrAmKZ3w0mDOjS5rW+Z7IBE9ye+aSS2Q6zjiZ00TGKvd+71cx2YmN+4nngIzcBMU65m9ZlBa192sE3lJwpdvzPU25K7o89gxkqsf488nxVlMszU83QHopGIj7E=
+	t=1778537983; cv=none; b=buCydEGNuxJPZFMV0h26JDOplwsjh5pspRZZfOXL/gjRl/f00BvKBmNCFugnbxvpLoqvhDNk/0Fv1CPhpY4TRMgbSDNZsXTnTl2JlORWDeSWDfhRuqw2KTdosNKP2ulVs2W34s+DgLgfCsEgCHVPyxJACzlNj/YoNhVTKgHrM6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537981; c=relaxed/simple;
-	bh=FWsT6Yc/EVkU3tMWDeSo15/ZB5regyWNgHN7XRZLyl8=;
+	s=arc-20240116; t=1778537983; c=relaxed/simple;
+	bh=StSi6BZ9tPFZYFVEtKopTaOMa3/qwblWeYX5FI6jpAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcHNoTxroPoy3QJiaA6YFKjO2Sy3kuAzfaEJ94swpFXVfhr9vakmFpHebNz0zWcXMORGS64cpjBVTcFo5EYnJc1xU232VJc795/BqjLBRQALXHuiwy+ZdoUIONo/dOXyIguLyMIggk6xJ9s9S5bNcsEdpVH4wQ9vR/TKQ5YFZhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KRqQgaCD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LWxVONLc6cPpETr+M+VK8bbnctcmfYfXaOXGub66z2hh3aFP+0JI50GcGaOc0NtYj+fX1wJOLkkA0Tfwm2yA1RI4ahyywo7E0lRrxXekVgRG1ZTYURTJXkQO/jtowNOOfDl0aNkC3R4WUjou0Pe/+kSFs64qi2rBYyrAH9gWrvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kXINmZf0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KRqQgaCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9160C2BCF7;
-	Mon, 11 May 2026 22:19:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kXINmZf0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6300CC2BCFA;
+	Mon, 11 May 2026 22:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537981;
-	bh=FWsT6Yc/EVkU3tMWDeSo15/ZB5regyWNgHN7XRZLyl8=;
+	s=k20201202; t=1778537982;
+	bh=StSi6BZ9tPFZYFVEtKopTaOMa3/qwblWeYX5FI6jpAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KRqQgaCDhJxjqFVJlkPLq+wJy4BDUMbBRZhEycRkT0Qrpi7YUr8gA2O+sl43vIIhM
-	 ONyfa+dyu0e7zC5TVF33a9MakojV2zrv29jVpJ7YVsvyY56gFsmxS0giSSR/ADruM+
-	 xbzi369/6pw39SY0yr6gKcBREEyPh6UC1oFpWS2PyZcRIgII4ABCB4OCPCTP6XVQ6U
-	 zIsMdsybutFMlNRmXSeDex9AeEfwp+3fHgEvdDVi4ylTTyKV+PZKWGMqLnUp/fBbAB
-	 tRQbDe/j7BBaotbY4eOsvKTydWVJ8JXC2VBX9M2ChRBErqpMboWY2K0csABk/ayP2/
-	 MaPiu3pAnF1Fg==
+	b=kXINmZf0b5Retiynz71082m0rcW37rombmPIAWwzKNJf/K/aWbo9cn8CmxN7I9qrS
+	 jE/dvUpQEMk3cqYCW7LSX5mBT8qYpzwMog4PcWr/OGb2NYUi1KWmK3XL6ocgWmCYQv
+	 wzTDNDK60CGkqKqR1TwABL37KjCJImPMzBYRSJmQ/OR/JcP4+6HKYtzpLMQdYjqAgx
+	 gsYgw86u+xbqjSAu2jp/qFibSBeE39GBciZnEAg7TSG0mabkXY7ofsNpVLMNvfFdEG
+	 +E7C91YglxGzxtLT+fIE1zT9amBNuep2z5tohe6qNj56hHs9ao2fL6qrNjBsQrQDgX
+	 djmWsCEsqnTvQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Borkmann <daniel@iogearbox.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
+Cc: Alex Cheema <alex@exolabs.net>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	oliver@neukum.org,
 	davem@davemloft.net,
+	edumazet@google.com,
 	pabeni@redhat.com,
-	dsahern@kernel.org,
+	linux-usb@vger.kernel.org,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] ipv6: Implement limits on extension header parsing
-Date: Mon, 11 May 2026 18:19:05 -0400
-Message-ID: <20260511221931.2370053-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] net: usb: cdc_ncm: add Apple Mac USB-C direct networking quirk
+Date: Mon, 11 May 2026 18:19:06 -0400
+Message-ID: <20260511221931.2370053-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -55,425 +55,279 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Alex Cheema <alex@exolabs.net>
 
-[ Upstream commit 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac ]
+[ Upstream commit a5148bc2fa27092862ac4b9e7b5c8340d60cff34 ]
 
-ipv6_{skip_exthdr,find_hdr}() and ip6_{tnl_parse_tlv_enc_lim,
-protocol_deliver_rcu}() iterate over IPv6 extension headers until they
-find a non-extension-header protocol or run out of packet data. The
-loops have no iteration counter, relying solely on the packet length
-to bound them. For a crafted packet with 8-byte extension headers
-filling a 64KB jumbogram, this means a worst case of up to ~8k
-iterations with a skb_header_pointer call each. ipv6_skip_exthdr(),
-for example, is used where it parses the inner quoted packet inside
-an incoming ICMPv6 error:
+Apple Silicon Macs expose two CDC NCM "private" data interfaces over
+USB-C with VID:PID 0x05ac:0x1905 and product string "Mac". This is the
+same protocol Apple already ships on iPhone (0x05ac:0x12a8) and iPad
+(0x05ac:0x12ab) for RemoteXPC since iOS 17 -- both data interfaces lack
+an interrupt status endpoint, so they rely on the FLAG_LINK_INTR-
+conditional bind path introduced in commit 3ec8d7572a69 ("CDC-NCM: add
+support for Apple's private interface").
 
-  - icmpv6_rcv
-    - checksum validation
-    - case ICMPV6_DEST_UNREACH
-      - icmpv6_notify
-        - pskb_may_pull()       <- pull inner IPv6 header
-        - ipv6_skip_exthdr()    <- iterates here
-        - pskb_may_pull()
-        - ipprot->err_handler() <- sk lookup
+The id_table currently has entries for iPhone and iPad but not for the
+Mac. Without a match, cdc_ncm falls through to the generic CDC NCM
+class-match entry, which uses the FLAG_LINK_INTR-having cdc_ncm_info
+struct, so bind_common() fails on the missing status endpoint and no
+netdev appears.
 
-The per-iteration cost of ipv6_skip_exthdr itself is generally
-light, but skb_header_pointer becomes more costly on reassembled
-packets: the first ~1232 bytes of the inner packet are in the skb's
-linear area, but the remaining ~63KB are in the frag_list where
-skb_copy_bits is needed to read data.
+Add id_table entries for both interface numbers (0 and 2) of the Mac,
+bound to the existing apple_private_interface_info driver_info.
 
-Initially, the idea was to add a configurable limit via a new
-sysctl knob with default 8, in line with knobs from commit
-47d3d7ac656a ("ipv6: Implement limits on Hop-by-Hop and Destination
-options"), but two reasons eventually argued against it:
+Verified empirically on a Mac Studio M3 Ultra running macOS 26.5: when
+a Mac is connected via USB-C, ioreg shows VID 0x05ac, PID 0x1905,
+product string "Mac", with two NCM data interfaces at numbers 0 and 2.
+The same PID is presented by all current Apple Silicon Mac models
+(MacBook Pro/Air, Mac mini, Mac Studio across the M-series), mirroring
+Apple's single-PID-per-family pattern from iPhone/iPad.
 
-- It adds to UAPI that needs to be maintained forever, and
-  upcoming work is restricting extension header ordering anyway,
-  leaving little reason for another sysctl knob
-- exthdrs_core.c is always built-in even when CONFIG_IPV6=n,
-  where struct net has no .ipv6 member, so the read site would
-  need an ifdef'd fallback to a constant anyway
+After this patch, plugging a Mac into a Linux host running the patched
+kernel produces two enx... interfaces (one per data interface),
+"ip -br link" lists them as UP, and standard userspace networking
+(DHCP, NetworkManager shared mode, etc.) works without any modprobe
+overrides or out-of-tree modules.
 
-Therefore, just use a constant (IP6_MAX_EXT_HDRS_CNT). All four
-extension header walking functions are now bound by this limit.
-
-Note that the check in ip6_protocol_deliver_rcu() happens right
-before the goto resubmit, such that we don't have to have a test
-for ipv6_ext_hdr() in the fast-path.
-
-There's an ongoing IETF draft-iurman-6man-eh-occurrences to enforce
-IPv6 extension headers ordering and occurrence. The latter also
-discusses security implications. As per RFC8200 section 4.1, the
-occurrence rules for extension headers provide a practical upper
-bound which is 8. In order to be conservative, let's define
-IP6_MAX_EXT_HDRS_CNT as 12 to leave enough room for quirky setups.
-In the unlikely event that this is still not enough, then we might
-need to reconsider a sysctl.
-
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260429154648.809751-1-daniel@iogearbox.net
+Signed-off-by: Alex Cheema <alex@exolabs.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260429175739.34426-1-alex@exolabs.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Decision Summary
-This should be backported. It is a small IPv6 networking hardening/fix
-for a reachable CPU-exhaustion path: several IPv6 extension-header
-walkers were bounded only by packet length, allowing crafted packets
-with many minimal 8-byte extension headers to force thousands of
-iterations. The patch caps traversal at 12 headers, avoids new UAPI, and
-was reviewed by IPv6/networking reviewers. Risk is mainly dropping
-extremely exotic packets with more than 12 extension headers; the review
-discussion explicitly considered that and settled on 12 as a
-conservative compromise.
-
 ## Phase Walkthrough
-Phase 1: Commit Message Forensics
 
-Record 1.1: Subsystem `ipv6`; action verb `Implement limits`; claimed
-intent is to bound IPv6 extension-header parsing loops.
+### Phase 1: Commit Message Forensics
+Record: Subsystem is `net: usb: cdc_ncm`; action verb is `add`; intent
+is to add an Apple Mac USB-C direct networking quirk/device match.
 
-Record 1.2: Tags found: `Signed-off-by: Daniel Borkmann`, `Reviewed-by:
-Ido Schimmel`, `Reviewed-by: Eric Dumazet`, `Reviewed-by: Justin
-Iurman`, `Link:
-https://patch.msgid.link/20260429154648.809751-1-daniel@iogearbox.net`,
-`Signed-off-by: Jakub Kicinski`. No `Fixes:`, no `Reported-by:`, no `Cc:
-stable`.
+Record: Tags verified from `git show a5148bc2fa27` and `b4`:
+`Signed-off-by: Alex Cheema <alex@exolabs.net>`, `Reviewed-by: Simon
+Horman <horms@kernel.org>`, `Link:
+https://patch.msgid.link/20260429175739.34426-1-alex@exolabs.net`,
+`Signed-off-by: Jakub Kicinski <kuba@kernel.org>`. No `Fixes:`,
+`Reported-by:`, `Tested-by:`, or `Cc: stable@vger.kernel.org`.
 
-Record 1.3: The body describes crafted 64KB packets with 8-byte
-extension headers causing up to about 8k iterations, with costly
-`skb_header_pointer()`/`skb_copy_bits()` on reassembled packets. Symptom
-is CPU work amplification/DoS potential, not memory corruption or crash.
-It identifies `icmpv6_rcv -> icmpv6_notify -> ipv6_skip_exthdr()` as a
-concrete path.
+Record: The body describes a real functional failure: Apple Silicon Macs
+with VID:PID `05ac:1905` expose private CDC NCM interfaces without
+interrupt status endpoints. Without specific IDs, they match the generic
+CDC NCM entry, use `cdc_ncm_info` with `FLAG_LINK_INTR`, fail endpoint
+collection in `cdc_ncm_bind_common()`, and no netdev appears. The author
+reports empirical testing on Mac Studio M3 Ultra.
 
-Record 1.4: This is not disguised cleanup. It is a direct
-correctness/security hardening fix: add a bound to previously unbounded
-loops.
+Record: This is not a hidden memory-safety bug; it is an explicit
+hardware ID/quirk fix for already-supported Apple private CDC NCM
+handling.
 
-Phase 2: Diff Analysis
+### Phase 2: Diff Analysis
+Record: One file changed: `drivers/net/usb/cdc_ncm.c`, 8 insertions, 0
+deletions. No functions modified; only `cdc_devs[]` gets two entries.
+Scope is single-file, surgical, device-ID style.
 
-Record 2.1: Five files changed, 25 insertions: `include/net/dropreason-
-core.h` +6, `include/net/ipv6.h` +3, `net/ipv6/exthdrs_core.c` +7,
-`net/ipv6/ip6_input.c` +5, `net/ipv6/ip6_tunnel.c` +4. Modified
-functions: `ipv6_skip_exthdr()`, `ipv6_find_hdr()`,
-`ip6_protocol_deliver_rcu()`, `ip6_tnl_parse_tlv_enc_lim()`.
+Record: Before: Mac interfaces could fall through to the generic CDC NCM
+class entry using `cdc_ncm_info`. After: interface numbers `0` and `2`
+for `05ac:1905` bind to existing `apple_private_interface_info`.
 
-Record 2.2: Before, these loops stopped only at non-extension-header,
-`NEXTHDR_NONE`, malformed/truncated packet data, fragment handling, or
-protocol handler completion. After, each loop also stops/drops once
-`IP6_MAX_EXT_HDRS_CNT` is exceeded.
+Record: Bug category is hardware quirk/device ID addition. The local
+code verifies `apple_private_interface_info` omits `FLAG_LINK_INTR`,
+while `cdc_ncm_info` includes it, and `cdc_ncm_bind_common()` rejects
+devices with no status endpoint when `FLAG_LINK_INTR` is set.
 
-Record 2.3: Bug category is logic/performance DoS hardening: missing
-iteration bound in packet parser. It does not fix UAF/leak/race, but it
-prevents attacker-controlled excessive parsing work.
+Record: Fix quality is high: two exact USB interface-number matches,
+reused existing driver_info, no new code path beyond selecting an
+existing quirk. Regression risk is very low and limited to Apple VID:PID
+`05ac:1905` interfaces `0` and `2`.
 
-Record 2.4: Fix quality is good: small, local counters, no locking or
-lifetime changes, no new sysctl/API. Regression risk is limited to
-rejecting packets with more than 12 traversed extension headers.
+### Phase 3: Git History
+Record: `git blame` shows `apple_private_interface_info` and the
+iPhone/iPad Apple table entries were introduced by `3ec8d7572a69` in
+2024.
 
-Phase 3: Git History Investigation
+Record: No `Fixes:` tag is present, but the commit body references
+`3ec8d7572a69`; `git show` confirms that commit introduced Apple private
+support and the conditional missing-status-endpoint handling.
 
-Record 3.1: `git blame` shows the relevant loops are old:
-`ipv6_skip_exthdr()` loop traces to initial/early history with later
-signature changes; `ipv6_find_hdr()` to v3.8-era code;
-`ip6_protocol_deliver_rcu()` resubmit logic to v4.x/v5.0-era changes;
-`ip6_tnl_parse_tlv_enc_lim()` exists from initial/older tunnel code with
-later cleanups.
+Record: Recent `cdc_ncm.c` history shows unrelated
+bounds/filtering/refactor changes; no prerequisite besides the
+referenced Apple private support was found.
 
-Record 3.2: No `Fixes:` tag, so no introducing commit to follow. I did
-inspect referenced commit `47d3d7ac656a`, which added limits for Hop-by-
-Hop/Destination TLV parsing and described similar DoS behavior.
+Record: `git log --author="Alex Cheema" -10 -- drivers/net/usb` found no
+prior local subsystem commits by the author. The patch was reviewed by
+Simon Horman and committed by Jakub Kicinski.
 
-Record 3.3: Recent file history shows related commit `076b8cad77aa9`
-capped TLV scanning in `ip6_tnl_parse_tlv_enc_lim()`. This commit is
-related but not a hard dependency for the outer extension-header-count
-limit.
+Record: Dependency found: stable trees must already contain
+`3ec8d7572a69` or an equivalent `apple_private_interface_info`; older
+trees without that support will not take this patch standalone.
 
-Record 3.4: Daniel Borkmann has recent related IPv6 limit work in the
-same area. Commit was applied by Jakub Kicinski, and reviewed by Eric
-Dumazet, Ido Schimmel, and Justin Iurman.
+### Phase 4: Mailing List And External Research
+Record: `b4 dig -c a5148bc2fa27` found the original submission at the
+patch.msgid.link URL.
 
-Record 3.5: No functional prerequisite was found for the core idea.
-Older stable trees before `dropreason-core.h` will need a small backport
-adjustment for the new drop reason, or can use an existing generic
-reason.
+Record: `b4 dig -c a5148bc2fa27 -a` found only v1; no later revision.
 
-Phase 4: Mailing List And External Research
+Record: `b4 dig -c a5148bc2fa27 -w` showed the right net/USB maintainers
+and lists were included, including Oliver Neukum, Bjørn Mork, Jakub
+Kicinski, netdev, and linux-usb.
 
-Record 4.1: `b4 dig -c 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac` found
-`[PATCH net v5]` at the provided lore/patch.msgid link.
+Record: Full thread via `b4 mbox` had three messages: the patch, Simon
+Horman’s `Reviewed-by`, and patchwork-bot saying Jakub applied it to
+`netdev/net.git` as `a5148bc2fa27`. No NAKs or concerns observed.
 
-Record 4.2: `b4 dig -a` found v1 through v5. v1 added a sysctl and was
-NAKed by Justin Iurman; v4 switched to a hard-coded limit; v5 reduced
-the limit from 32 to 12.
+Record: WebFetch of lore/stable was blocked by Anubis, so stable-
+specific web discussion could not be independently checked. No stable
+nomination appeared in the fetched thread.
 
-Record 4.3: No `Reported-by` or bug-report link exists. Web/lore stable
-search did not find a stable-specific request or objection.
+### Phase 5: Code Semantic Analysis
+Record: Modified object is `cdc_devs[]`; no function body changed.
 
-Record 4.4: Related series context: review discussion referenced IETF
-extension-header occurrence work; v5 was the latest and accepted
-version.
+Record: Call/reachability path verified: `cdc_ncm_driver.id_table =
+cdc_devs`, `.probe = usbnet_probe`; `usbnet_probe()` reads
+`prod->driver_info`, sets `dev->driver_info`, then calls `info->bind`,
+which is `cdc_ncm_bind()`, which calls `cdc_ncm_bind_common()`.
 
-Record 4.5: No stable mailing-list-specific discussion found. WebFetch
-to lore was blocked/timed out, but `b4` successfully retrieved the
-thread.
+Record: Key callees are endpoint discovery and bind setup in
+`cdc_ncm_bind_common()`, especially the verified endpoint check
+requiring status only when `FLAG_LINK_INTR` is set.
 
-Phase 5: Code Semantic Analysis
+Record: User reachability is USB device enumeration/probe when an
+affected Mac is connected to a Linux host. This is not syscall-triggered
+by an unprivileged local user; it is hardware-triggered.
 
-Record 5.1: Key functions are `ipv6_skip_exthdr()`, `ipv6_find_hdr()`,
-`ip6_protocol_deliver_rcu()`, `ip6_tnl_parse_tlv_enc_lim()`.
+Record: Similar pattern found: existing iPhone/iPad Apple entries
+already bind private interfaces to `apple_private_interface_info`.
 
-Record 5.2: `git grep` found many callers of `ipv6_skip_exthdr()` across
-netfilter, XFRM/ESP, drivers, audit/security hooks, ICMPv6, and tunnel
-code. `ipv6_find_hdr()` is used by netfilter/nftables, BPF, OVS, IPVS,
-SRv6, drivers, and TC. `ip6_protocol_deliver_rcu()` is called from IPv6
-input and UDP encapsulation resubmission. `ip6_tnl_parse_tlv_enc_lim()`
-is called from GRE/tunnel paths.
+### Phase 6: Stable Tree Analysis
+Record: `git merge-base --is-ancestor 3ec8d7572a69 <tag>` verified
+`3ec8d7572a69` is absent from `v5.15`, `v6.1`, `v6.6`, `v6.9`, and
+`v6.10`, but present in `v6.11`, `v6.12`, and `v7.0`.
 
-Record 5.3: Key callees are `skb_header_pointer()`, `pskb_pull()`,
-`pskb_may_pull()`, `raw6_local_deliver()`, `inet6_protos[]` dispatch,
-and protocol handlers.
+Record: `git show <tag>:drivers/net/usb/cdc_ncm.c | rg ...` verified
+`v6.11+` have `apple_private_interface_info` and iPhone/iPad Apple
+entries, but not the Mac `0x1905` entries.
 
-Record 5.4: Reachability is verified from IPv6 receive paths:
-`ip6_input_finish()` calls `ip6_protocol_deliver_rcu()`, and
-`icmpv6_notify()` calls `ipv6_skip_exthdr()` on quoted inner packets.
-These are network packet processing paths.
+Record: `git apply --check` succeeded against the current `7.0.5` tree.
+Backport should be clean for trees with the same Apple-private support;
+older trees need the prerequisite and are not standalone targets.
 
-Record 5.5: Similar prior pattern exists in `47d3d7ac656a` for TLV
-count/length limits and in `076b8cad77aa9` for tunnel TLV scanning.
+Record: No alternate related stable fix was found locally.
 
-Phase 6: Stable Tree Analysis
+### Phase 7: Subsystem Context
+Record: Subsystem is USB networking driver code, under
+`drivers/net/usb`. Criticality is important for users of this hardware,
+not core/universal.
 
-Record 6.1: The four key functions exist in checked tags `v5.10`,
-`v5.15`, `v6.1`, `v6.6`, `v6.12`, and `v6.19`. Thus the affected code
-shape exists across active LTS/stable ranges.
+Record: `scripts/get_maintainer.pl -f drivers/net/usb/cdc_ncm.c`
+confirmed the patch was sent to the relevant USB CDC Ethernet and
+networking maintainers/lists. Recent `drivers/net/usb` history shows
+active maintenance.
 
-Record 6.2: Expected backport difficulty: clean or minor for newer
-trees; minor rework for pre-`dropreason-core.h` trees because
-`include/net/dropreason-core.h` is absent in `v5.10`, `v5.15`, and
-`v6.1`.
+### Phase 8: Impact And Risk
+Record: Affected users are Linux hosts connecting to Apple Silicon Macs
+via USB-C direct CDC NCM networking.
 
-Record 6.3: No alternate stable-specific fix for this exact extension-
-header traversal count was found. Related TLV-limiting commits address
-adjacent, not identical, loops.
+Record: Trigger is plugging in the matching Mac USB device. The failure
+is likely whenever the unsupported `05ac:1905` private interfaces are
+exposed and lack the interrupt status endpoint, based on the commit body
+and verified bind logic.
 
-Phase 7: Subsystem Context
+Record: Failure mode is functional loss: no netdev appears. Severity is
+medium by generic bug severity, but it fits the stable exception for new
+device IDs/hardware quirks.
 
-Record 7.1: Subsystem is IPv6 networking, criticality IMPORTANT to CORE
-for IPv6-enabled systems because packet receive, ICMPv6, netfilter,
-tunnel, and driver offload paths call these helpers.
+Record: Benefit is high for affected hardware users: direct networking
+works without overrides/out-of-tree modules. Risk is very low: two
+exact-match USB ID entries selecting existing behavior.
 
-Record 7.2: Subsystem is active; recent history shows multiple
-IPv6/tunnel/drop-reason changes, but the unbounded parsing loops
-themselves are longstanding.
+### Phase 9: Final Synthesis
+Evidence for backporting: it is a classic stable-acceptable hardware
+quirk/device ID addition; it fixes a verified bind failure mechanism; it
+is tiny and contained; it reuses existing Apple private CDC NCM support;
+it was reviewed and applied by netdev maintainership; it applies cleanly
+to the current stable-style tree.
 
-Phase 8: Impact And Risk
+Evidence against backporting: it is not a crash/security/data-corruption
+fix, and it is not standalone for stable trees older than `v6.11` unless
+`3ec8d7572a69` is also present.
 
-Record 8.1: Affected users are IPv6-enabled systems, especially systems
-exposed to crafted IPv6 traffic or using IPv6 tunnels/netfilter paths.
+Stable rules checklist:
+1. Obviously correct and tested: yes; exact ID entries, author-tested,
+   reviewer accepted.
+2. Fixes a real bug: yes; no netdev appears for matching hardware.
+3. Important issue: yes under hardware support/quirk exception, though
+   not critical severity.
+4. Small and contained: yes, 8 insertions in one table.
+5. No new APIs/features: yes, no API or new driver; only IDs for
+   existing behavior.
+6. Applies to stable: yes for trees with Apple private support; older
+   trees need prerequisite handling.
 
-Record 8.2: Trigger is a crafted IPv6 packet chain with many small
-extension headers, especially costly when parsed from
-fragmented/reassembled skb data. Network reachability depends on
-filtering and IPv6 deployment.
-
-Record 8.3: Failure mode is CPU work amplification/DoS risk, not crash
-or corruption. Severity: HIGH for exposed IPv6 hosts because it is
-remote packet-triggered parser amplification; not CRITICAL because no
-verified panic, data loss, or privilege escalation was found.
-
-Record 8.4: Benefit is high: caps an attacker-controlled loop in common
-networking code. Risk is low-to-medium: packets with more than 12
-traversed extension headers may now be rejected, but reviewers
-explicitly judged 12 conservative relative to RFC/IETF occurrence
-expectations.
-
-Phase 9: Final Synthesis
-
-Record 9.1: Evidence for backporting: small 25-line fix; real attacker-
-controlled parser amplification; network receive reachability verified;
-reviewed by networking experts; v1 concerns were resolved; no new UAPI.
-Evidence against: behavior change for extreme extension-header chains;
-older trees need minor drop-reason backport adjustment; no syzbot/user
-report/CVE. Unresolved: no benchmark for this exact v5 patch was found,
-and no stable-specific discussion was found.
-
-Record 9.2: Stable rules: obviously correct and reviewed, yes; fixes a
-real bug, yes; important issue, yes as network DoS/performance
-amplification; small and contained, yes; no new feature/API, yes; stable
-apply, likely clean for newer trees and minor adjustment for older
-trees.
-
-Record 9.3: No automatic exception category applies. This is not a
-device ID, quirk, DT, build, or documentation fix.
-
-Record 9.4: The risk-benefit balance favors backporting.
+Exception category: new USB device ID / hardware quirk for an existing
+driver path.
 
 ## Verification
-- [Phase 1] Parsed `git show 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac`:
-  verified subject, tags, message, and 25-line diff.
-- [Phase 2] Read local code in `net/ipv6/exthdrs_core.c`,
-  `net/ipv6/ip6_input.c`, `net/ipv6/ip6_tunnel.c`, and
-  `include/net/ipv6.h`: verified loops were unbounded before the patch.
-- [Phase 3] Ran `git blame` on changed regions: verified long-lived code
-  and relevant commit ancestry.
-- [Phase 3] Inspected `47d3d7ac656a` and `076b8cad77aa9`: verified
-  similar prior DoS-limit work.
-- [Phase 4] Ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and `b4 mbox`:
-  verified v1-v5 history, reviewers, NAK of sysctl approach, and v5
-  acceptance.
-- [Phase 5] Ran caller searches for all four functions: verified broad
-  IPv6/netfilter/tunnel/driver call surface.
-- [Phase 6] Checked `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`:
-  verified the affected functions exist; verified `dropreason-core.h` is
-  absent before v6.6.
-- [Phase 8] Verified reachable call paths in `icmpv6_notify()`,
-  `ip6_input_finish()`, `udpv6_queue_rcv_skb()`, and `ip6_gre` tunnel
-  code.
-- UNVERIFIED: exact exploitability impact across real networks and exact
-  CPU-cost benchmark for this specific v5 patch.
-- UNVERIFIED: clean application to every currently maintained stable
-  branch; older trees likely need minor drop-reason context adjustment.
+- [Phase 1] Parsed `git show a5148bc2fa27`: confirmed subject, body,
+  trailers, reviewed-by, link, and maintainer signoff.
+- [Phase 2] Read `drivers/net/usb/cdc_ncm.c`: confirmed `cdc_ncm_info`
+  has `FLAG_LINK_INTR`, `apple_private_interface_info` does not, and
+  `cdc_ncm_bind_common()` fails missing status endpoints when
+  `FLAG_LINK_INTR` is set.
+- [Phase 3] `git blame` confirmed Apple private support and existing
+  Apple IDs came from `3ec8d7572a69`.
+- [Phase 3] `git show 3ec8d7572a69` confirmed it introduced Apple
+  private CDC NCM support and the conditional endpoint check.
+- [Phase 4] `b4 dig -c a5148bc2fa27`: found the original lore
+  submission.
+- [Phase 4] `b4 dig -a`: only v1 found.
+- [Phase 4] `b4 dig -w`: confirmed relevant maintainers/lists were
+  included.
+- [Phase 4] `b4 mbox`: confirmed Simon Horman review and patchwork
+  application by Jakub Kicinski.
+- [Phase 5] `rg` and `ReadFile` traced `cdc_devs[]` to `usbnet_probe()`
+  to `cdc_ncm_bind()` to `cdc_ncm_bind_common()`.
+- [Phase 6] Tag ancestry checks confirmed prerequisite exists in
+  `v6.11+` but not `v6.10` and older checked tags.
+- [Phase 6] `git apply --check` confirmed clean apply to current tree.
+- UNVERIFIED: Independent confirmation that all current Apple Silicon
+  Macs use PID `0x1905`; this is author-stated in the patch, not
+  independently verified here.
+- UNVERIFIED: Stable mailing-list search via WebFetch was blocked by
+  Anubis; no stable-specific discussion was visible in the fetched `b4`
+  thread.
+
+This should be backported to stable trees that already contain the Apple
+private CDC NCM support, because it is a low-risk hardware ID/quirk fix
+that restores networking for real hardware.
 
 **YES**
 
- include/net/dropreason-core.h | 6 ++++++
- include/net/ipv6.h            | 3 +++
- net/ipv6/exthdrs_core.c       | 7 +++++++
- net/ipv6/ip6_input.c          | 5 +++++
- net/ipv6/ip6_tunnel.c         | 4 ++++
- 5 files changed, 25 insertions(+)
+ drivers/net/usb/cdc_ncm.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
-index a7b7abd66e215..0b674a02665ab 100644
---- a/include/net/dropreason-core.h
-+++ b/include/net/dropreason-core.h
-@@ -102,6 +102,7 @@
- 	FN(FRAG_TOO_FAR)		\
- 	FN(TCP_MINTTL)			\
- 	FN(IPV6_BAD_EXTHDR)		\
-+	FN(IPV6_TOO_MANY_EXTHDRS)	\
- 	FN(IPV6_NDISC_FRAG)		\
- 	FN(IPV6_NDISC_HOP_LIMIT)	\
- 	FN(IPV6_NDISC_BAD_CODE)		\
-@@ -513,6 +514,11 @@ enum skb_drop_reason {
- 	SKB_DROP_REASON_TCP_MINTTL,
- 	/** @SKB_DROP_REASON_IPV6_BAD_EXTHDR: Bad IPv6 extension header. */
- 	SKB_DROP_REASON_IPV6_BAD_EXTHDR,
-+	/**
-+	 * @SKB_DROP_REASON_IPV6_TOO_MANY_EXTHDRS: Number of IPv6 extension
-+	 * headers in the packet exceeds IP6_MAX_EXT_HDRS_CNT.
-+	 */
-+	SKB_DROP_REASON_IPV6_TOO_MANY_EXTHDRS,
- 	/** @SKB_DROP_REASON_IPV6_NDISC_FRAG: invalid frag (suppress_frag_ndisc). */
- 	SKB_DROP_REASON_IPV6_NDISC_FRAG,
- 	/** @SKB_DROP_REASON_IPV6_NDISC_HOP_LIMIT: invalid hop limit. */
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 53c5056508be5..ec95c11b8e434 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -90,6 +90,9 @@ struct ip_tunnel_info;
- #define IP6_DEFAULT_MAX_DST_OPTS_LEN	 INT_MAX /* No limit */
- #define IP6_DEFAULT_MAX_HBH_OPTS_LEN	 INT_MAX /* No limit */
+diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
+index bb9929727eb93..0223a172851ec 100644
+--- a/drivers/net/usb/cdc_ncm.c
++++ b/drivers/net/usb/cdc_ncm.c
+@@ -2012,6 +2012,14 @@ static const struct usb_device_id cdc_devs[] = {
+ 		.driver_info = (unsigned long)&apple_private_interface_info,
+ 	},
  
-+/* Hard limit on traversed IPv6 extension headers */
-+#define IP6_MAX_EXT_HDRS_CNT		 12
++	/* Mac */
++	{ USB_DEVICE_INTERFACE_NUMBER(0x05ac, 0x1905, 0),
++		.driver_info = (unsigned long)&apple_private_interface_info,
++	},
++	{ USB_DEVICE_INTERFACE_NUMBER(0x05ac, 0x1905, 2),
++		.driver_info = (unsigned long)&apple_private_interface_info,
++	},
 +
- /*
-  *	Addr type
-  *	
-diff --git a/net/ipv6/exthdrs_core.c b/net/ipv6/exthdrs_core.c
-index 49e31e4ae7b7f..9d06d487e8b10 100644
---- a/net/ipv6/exthdrs_core.c
-+++ b/net/ipv6/exthdrs_core.c
-@@ -73,6 +73,7 @@ int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
- 		     __be16 *frag_offp)
- {
- 	u8 nexthdr = *nexthdrp;
-+	int exthdr_cnt = 0;
- 
- 	*frag_offp = 0;
- 
-@@ -82,6 +83,8 @@ int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
- 
- 		if (nexthdr == NEXTHDR_NONE)
- 			return -1;
-+		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
-+			return -1;
- 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
- 		if (!hp)
- 			return -1;
-@@ -190,6 +193,7 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
- {
- 	unsigned int start = skb_network_offset(skb) + sizeof(struct ipv6hdr);
- 	u8 nexthdr = ipv6_hdr(skb)->nexthdr;
-+	int exthdr_cnt = 0;
- 	bool found;
- 
- 	if (fragoff)
-@@ -216,6 +220,9 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
- 			return -ENOENT;
- 		}
- 
-+		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
-+			return -EBADMSG;
-+
- 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
- 		if (!hp)
- 			return -EBADMSG;
-diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
-index 2bcb981c91aa8..bbad1d4e6b854 100644
---- a/net/ipv6/ip6_input.c
-+++ b/net/ipv6/ip6_input.c
-@@ -363,6 +363,7 @@ INDIRECT_CALLABLE_DECLARE(int tcp_v6_rcv(struct sk_buff *));
- void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
- 			      bool have_final)
- {
-+	int exthdr_cnt = IP6CB(skb)->flags & IP6SKB_HOPBYHOP ? 1 : 0;
- 	const struct inet6_protocol *ipprot;
- 	struct inet6_dev *idev;
- 	unsigned int nhoff;
-@@ -447,6 +448,10 @@ void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
- 				nexthdr = ret;
- 				goto resubmit_final;
- 			} else {
-+				if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT)) {
-+					SKB_DR_SET(reason, IPV6_TOO_MANY_EXTHDRS);
-+					goto discard;
-+				}
- 				goto resubmit;
- 			}
- 		} else if (ret == 0) {
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 0b53488a92290..c1ca9b2806359 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -400,11 +400,15 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
- 	unsigned int nhoff = raw - skb->data;
- 	unsigned int off = nhoff + sizeof(*ipv6h);
- 	u8 nexthdr = ipv6h->nexthdr;
-+	int exthdr_cnt = 0;
- 
- 	while (ipv6_ext_hdr(nexthdr) && nexthdr != NEXTHDR_NONE) {
- 		struct ipv6_opt_hdr *hdr;
- 		u16 optlen;
- 
-+		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
-+			break;
-+
- 		if (!pskb_may_pull(skb, off + sizeof(*hdr)))
- 			break;
- 
+ 	/* Ericsson MBM devices like F5521gw */
+ 	{ .match_flags = USB_DEVICE_ID_MATCH_INT_INFO
+ 		| USB_DEVICE_ID_MATCH_VENDOR,
 -- 
 2.53.0
 
