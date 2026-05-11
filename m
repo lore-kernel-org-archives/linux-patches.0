@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBC54F798D;
-	Mon, 11 May 2026 22:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643FA4F799F;
+	Mon, 11 May 2026 22:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778538006; cv=none; b=sRRdcLP/0Tecw+8PqR7aOv1fxsJoisGadm3/tmt+N7hhLtKDC3UZQWhBMqWChkVPOaBcKArcMYbGRL+qa/lA+MkJ+rcEDrBClq8cAXINO4T9f4pikz8Ku8UlsfSUT2z9h4Yp+JZRnPNfbPO9FVPcOt7nRaTd5lWfUWK9LOoMrTs=
+	t=1778538007; cv=none; b=Kqw4UHWGV1Un7Y9VQhoCnf/18afkhwIfDhmnGLTwgHjYuLIRJTbMetbT6ZFraokPamzUKS4tnFarNMuaDa7ZQ0RLX57EYgeYkBqlXC5Kvz7n3PZ7Z4zaqQhCyo8kcqcdgNdWSsukczOj6OqjiFzh9ovR64AC+n4b35x2ThwmW7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778538006; c=relaxed/simple;
-	bh=vr+0ZuihRL24Qjc3VjSI1tB9O5L3mQz2Kfxc90uzM34=;
+	s=arc-20240116; t=1778538007; c=relaxed/simple;
+	bh=MSSv7cZG4QR4CTe1tyXdoTYxertwGmgfBqtd9Nohg+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swW71UtsHUpqPhYutadW6E77cXmXwh9U2bDBynLL0eQS+Frz1siheL0YzLxqWkV/LhKhnX0pKbUzoL35T/JOv8JYzu7LcK8hMwURKf7kclSWuW3ZBmyoACogwZXYnTeFU3MPSPpcDRjlI6ZKGh2q4rUDrOTc4VVdTjetm4MsI84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l9dZcwsm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FNLIeFhb0YwpVelD2rHNBNXBDh2GEALvvGH9oOvBc8t1/iI1EVvyhdP9cTjVxxPLn1hGU1wx680pPSRRCUVU5glLUBz+kpcUUWabLqpFngzIlUIVFqsN8MRFYH3xySd6trab+OP/baVQcJHay4owcBKtFgJ6KhGsJkJUHf3x/Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EBXLrpuh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l9dZcwsm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05810C2BCB0;
-	Mon, 11 May 2026 22:20:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EBXLrpuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E919C2BCFA;
+	Mon, 11 May 2026 22:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778538005;
-	bh=vr+0ZuihRL24Qjc3VjSI1tB9O5L3mQz2Kfxc90uzM34=;
+	s=k20201202; t=1778538007;
+	bh=MSSv7cZG4QR4CTe1tyXdoTYxertwGmgfBqtd9Nohg+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9dZcwsm1uw5WejSzPLSZIopnhLslw5Bxqfenn8g1m8Ffud4+zKxNT8F9LHq/DrJ9
-	 p8JdyMOOuvY2kdI77gkSH4TMiwbfyafeLTuhf9MhjwN3xEadyAfu5wdPtu3ekVBUFw
-	 2oaRErm1M2Qw1JNv6YXLl9buqz4at5zuP2rTMxpVhkvWSLQuQCA0EI+YOsiFfUcYtJ
-	 aHdXd8ms/IW9iQZlnAsHelHDlzfnpeQI2XTdLVtg/A9WWDmIC+SL+eHwqZbmmMTcgW
-	 Ja9gVtGCFDg/JYg2Jl1ZEcIgtiMz0XDjRZ3Xv6/zYZQzTOIPxV8gelUIkOmfBqCoeI
-	 5g4KgPjhhuNDw==
+	b=EBXLrpuh7au8RUV6Xk7u+EaOy7RdS8Wk2rfxq6z+k9i7kQR8r9wpBDA5YNBB6+RUg
+	 3V81ch9yQjMpiNyQCSsWeYYW+B4Abw/5UmPtq03y1ReLMx+WaggRNCrpHT6oSJBD8o
+	 oM37K1bQVo4liKrEux2Db9x78ZK0VWwvvsXG/j/Ks+s4gEEm2o9Kho1tZRUBdoDkvR
+	 NU8FKSW5toMB5K2Wz5++8zmpUvdZxPmjAOl3+d+nC+25llF0RpiCeqJL6swL8esDkG
+	 yaJuna0s37mjcj2E1N4B4PhEzi2NcXMXa49+rL2tXpHl5mnETU4NC9hLBnsqHU64vR
+	 fjMQmT0tKhFfg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: Tomas Henzl <thenzl@redhat.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mpe@ellerman.id.au,
-	linuxppc-dev@lists.ozlabs.org,
+	jejb@linux.ibm.com,
+	storagedev@microchip.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] powerpc/pasemi: Drop redundant res assignment
-Date: Mon, 11 May 2026 18:19:22 -0400
-Message-ID: <20260511221931.2370053-23-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] scsi: smartpqi: Silence a recursive lock warning
+Date: Mon, 11 May 2026 18:19:23 -0400
+Message-ID: <20260511221931.2370053-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -50,242 +52,209 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit f583bd5f64d40e083dde5bb22846c4d93e59d471 ]
+[ Upstream commit d65efdf467ff935e35dfe6aa9a7ab93f17ac07ee ]
 
-Return value of pas_add_bridge() is not used, so code can be simplified
-to fix W=1 clang warnings:
+On systems with multiple controllers debug kernel shows
 
-  arch/powerpc/platforms/pasemi/pci.c:275:6: error: variable 'res' set but not used [-Werror,-Wunused-but-set-variable]
+  WARNING: possible recursive locking detected
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260317130823.240279-4-krzysztof.kozlowski@oss.qualcomm.com
+during shutdown.
+
+Each controller does have its own ctrl_info (and mutex) and that isn't
+correctly recognized by debug kernel.  Suppress the warning by releasing
+the mutex at the end of pqi_shutdown().
+
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Acked-by: Don Brace <don.brace@microchip.com>
+Link: https://patch.msgid.link/20260414124118.23661-1-thenzl@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+## Decision Summary
+Backport this to stable trees that contain the mutex-based
+`pqi_ctrl_block_device_reset()` shutdown path, verified in `v5.15`,
+`v6.1`, `v6.6`, `v6.12`, `v6.16`, and `v6.19`. Do not apply it as-is to
+`v5.10`, where that helper only sets `block_device_reset = true` and no
+`pqi_ctrl_unblock_device_reset()` helper exists.
+
+This is a one-line fix for an imbalanced `lun_reset_mutex` lock in
+`pqi_shutdown()`. The direct user-visible symptom is a lockdep “possible
+recursive locking detected” warning during shutdown/reboot on systems
+with multiple smartpqi controllers. The impact is mostly debug-kernel
+noise rather than data loss or a production crash, but the patch
+corrects real locking hygiene, is tiny, subsystem-reviewed, and has very
+low risk.
+
 ## Phase Walkthrough
+Phase 1:
+- Record 1.1: subsystem `scsi: smartpqi`; action `Silence`; intent is to
+  stop a recursive lock warning during shutdown.
+- Record 1.2: tags present: `Signed-off-by: Tomas Henzl`, `Acked-by: Don
+  Brace`, `Link:
+  https://patch.msgid.link/20260414124118.23661-1-thenzl@redhat.com`,
+  `Signed-off-by: Martin K. Petersen`. No `Fixes:`, no `Reported-by:`,
+  no `Cc: stable`.
+- Record 1.3: message describes debug kernels warning on multi-
+  controller systems because distinct per-controller mutexes are not
+  recognized as distinct after shutdown leaves one held.
+- Record 1.4: hidden bug fix: yes. It is described as silencing a
+  warning, but the code adds a missing unlock for a mutex acquired
+  earlier in the same function.
 
-### Phase 1: Commit Message Forensics
-Record 1.1: Subsystem `powerpc/pasemi`; action verb `Drop`; intent is to
-remove an unused local variable assignment in PA Semi PCI init.
+Phase 2:
+- Record 2.1: one file, `drivers/scsi/smartpqi/smartpqi_init.c`, one
+  insertion in `pqi_shutdown()`. Single-file surgical fix.
+- Record 2.2: before, `pqi_shutdown()` locked
+  `ctrl_info->lun_reset_mutex` via `pqi_ctrl_block_device_reset()` and
+  returned after `pqi_reset()` without unlocking. After, it unlocks via
+  `pqi_ctrl_unblock_device_reset()`.
+- Record 2.3: bug category is synchronization/lock balancing. The
+  changed helper is verified as
+  `mutex_unlock(&ctrl_info->lun_reset_mutex)`.
+- Record 2.4: fix quality is high: one existing helper call, no new API,
+  no refactor. Main risk is allowing a reset waiter to proceed late in
+  shutdown; Tomas explicitly discussed this risk on-list and said he
+  checked it.
 
-Record 1.2: Tags found: `Signed-off-by: Krzysztof Kozlowski`, `Signed-
-off-by: Madhavan Srinivasan`, `Link: https://patch.msgid.link/2026031713
-0823.240279-4-krzysztof.kozlowski@oss.qualcomm.com`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-stable`.
+Phase 3:
+- Record 3.1: blame shows the shutdown call to
+  `pqi_ctrl_block_device_reset()` is old, but `9fa8202336096` changed
+  the helper to a mutex-based block/unblock model. That is the relevant
+  introduction point for the missing unlock.
+- Record 3.2: no `Fixes:` tag, so no tagged introducing commit to
+  follow.
+- Record 3.3: recent file history shows normal smartpqi churn, including
+  fixes and device-ID updates; no prerequisite for this one-line helper
+  call was identified for v5.15+ style code.
+- Record 3.4: Tomas Henzl has SCSI commits in history but no recent
+  smartpqi commits found; Don Brace is listed as smartpqi maintainer and
+  acked the patch.
+- Record 3.5: dependency is the existing
+  `pqi_ctrl_unblock_device_reset()` helper. It exists in v5.15+ verified
+  tags, not in v5.10.
 
-Record 1.3: The commit explicitly describes a Clang `W=1` build warning
-promoted to an error: `variable 'res' set but not used
-[-Werror,-Wunused-but-set-variable]`. No runtime symptom, crash, data
-corruption, or user-visible functional failure is described.
+Phase 4:
+- Record 4.1: candidate commit hash was not available locally, so `b4
+  dig -c` could not be used for this candidate. `b4 mbox` and `b4 am`
+  using the Link fetched the original thread.
+- Record 4.2: original recipients were `linux-scsi` and Don Brace; Don
+  Brace acked it; Martin Petersen applied it.
+- Record 4.3: external thread and an earlier related LKML post show a
+  real lockdep splat with call trace through `__do_sys_reboot ->
+  device_shutdown -> pci_device_shutdown -> pqi_shutdown`.
+- Record 4.4: no newer v2/v3 was reported by `b4 mbox -c`; thread had
+  six messages. A separate 2025 lockdep-key proposal for the same
+  warning was found, but it is not present in this tree.
+- Record 4.5: web search found no relevant stable-list discussion.
 
-Record 1.4: This is not a hidden runtime bug fix. It is a build-warning
-cleanup that can matter when building powerpc with warning-as-error
-settings.
+Phase 5:
+- Record 5.1: modified function: `pqi_shutdown()`.
+- Record 5.2: caller is PCI driver `.shutdown = pqi_shutdown`; this is
+  reached from PCI/device shutdown during reboot/poweroff paths.
+- Record 5.3: relevant callees are `pqi_wait_until_ofa_finished()`,
+  `pqi_scsi_block_requests()`, `pqi_ctrl_block_device_reset()`,
+  `pqi_ctrl_block_requests()`, `pqi_ctrl_wait_until_quiesced()`,
+  `pqi_flush_cache()`, `pqi_crash_if_pending_command()`, `pqi_reset()`,
+  and now `pqi_ctrl_unblock_device_reset()`.
+- Record 5.4: verified external call trace reaches `pqi_shutdown()` from
+  reboot. Trigger requires multiple smartpqi controllers and a
+  debug/lockdep kernel.
+- Record 5.5: similar lock/unlock pairing exists in OFA and
+  suspend/resume paths; shutdown was the unmatched case.
 
-### Phase 2: Diff Analysis
-Record 2.1: One file changed: `arch/powerpc/platforms/pasemi/pci.c`, `1
-insertion(+), 2 deletions(-)`. Only `pas_pci_init()` is modified. Scope
-is single-file surgical.
+Phase 6:
+- Record 6.1: verified `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.16`, and
+  `v6.19` have mutex-based block/unblock helpers and shutdown lacks the
+  final unblock. Verified `v5.10` does not have the mutex helper.
+- Record 6.2: expected backport difficulty is clean or trivial for
+  v5.15+ style trees because the exact helper and shutdown context
+  exist. v5.10 is not applicable as-is.
+- Record 6.3: no related fix already present in the checked local tree;
+  `lun_reset_key` proposal is absent.
 
-Record 2.2: Before: `pas_pci_init()` declared `int res;` and assigned
-`res = pas_add_bridge(np);`, then never read `res`. After: it still
-calls `pas_add_bridge(np);` but does not assign the return value. The
-execution path and side effects are unchanged.
+Phase 7:
+- Record 7.1: subsystem is SCSI storage driver, `smartpqi`; criticality
+  is driver-specific but storage-related.
+- Record 7.2: subsystem is active; recent history shows ongoing fixes,
+  device IDs, and driver updates.
 
-Record 2.3: Bug category: build warning/build error under specific
-compiler options. Mechanism: remove unused-but-set variable. No resource
-lifetime, locking, memory safety, reference counting, or logic behavior
-changes.
+Phase 8:
+- Record 8.1: affected users are systems with Microchip/Microsemi
+  SmartPQI controllers, especially multiple controllers with
+  debug/lockdep kernels.
+- Record 8.2: trigger is shutdown/reboot. The verified external trace
+  shows reboot path; unprivileged triggerability was not verified.
+- Record 8.3: failure mode is lockdep warning/lock imbalance, severity
+  medium-low in production terms but valid for debug-kernel correctness.
+- Record 8.4: benefit is moderate for affected systems and CI/debug
+  kernels; risk is very low because this is one line using an existing
+  helper after a matching lock.
 
-Record 2.4: Fix quality is obviously correct by inspection: the function
-call remains, only the unused local storage is removed. Regression risk
-is very low because runtime behavior is unchanged.
-
-### Phase 3: Git History Investigation
-Record 3.1: `git blame` on current stable code shows the exact changed
-lines are present in the checked-out stable tree. Deeper history shows
-the unused `res` assignment was introduced by `250a93501d626`
-(`powerpc/pasemi: Search for PCI root bus by compatible property`),
-first described by `git describe` as `v4.19-rc1~110^2~83`.
-
-Record 3.2: No `Fixes:` tag is present. Manual history identified
-`250a93501d626` as the introducing commit for the exact unused
-assignment pattern.
-
-Record 3.3: Recent file history shows only the candidate commit and
-unrelated treewide allocation changes in `next-20260508`; no
-prerequisite pasemi PCI refactor was found.
-
-Record 3.4: The author has other powerpc cleanup commits nearby,
-including the sibling PS3 warning fix. `MAINTAINERS` identifies Madhavan
-Srinivasan and Michael Ellerman as powerpc maintainers; Madhavan
-committed this patch.
-
-Record 3.5: The sibling commit `8333e4916040e` is part of the same
-cleanup series but is independent. This pasemi patch applies standalone
-to the current 7.0.5 checkout.
-
-### Phase 4: Mailing List And External Research
-Record 4.1: `b4 dig -c f583bd5f64d40` found the original submission by
-patch-id. It found the January submission and the March resend
-corresponding to the commit `Link:`. Direct WebFetch to
-lore/patch.msgid.link was blocked by Anubis.
-
-Record 4.2: `b4 dig -w` showed appropriate powerpc maintainers and
-LLVM/compiler-warning stakeholders were copied: Madhavan Srinivasan,
-Michael Ellerman, Nicholas Piggin, Christophe Leroy, Nathan Chancellor,
-LLVM list, linuxppc-dev, and others.
-
-Record 4.3: No bug report link or reporter tag exists. The thread
-describes a compiler warning/build-cleanliness issue, not a runtime bug
-report.
-
-Record 4.4: The patch is part of a two-patch series with `powerpc/ps3:
-Drop redundant result assignment`; the other patch is the same class of
-cleanup and is not a dependency.
-
-Record 4.5: The downloaded thread contains no `stable` mention. A direct
-lore stable search was attempted but blocked by Anubis, so no stable-
-list archive result could be independently verified.
-
-### Phase 5: Code Semantic Analysis
-Record 5.1: Modified function: `pas_pci_init()`.
-
-Record 5.2: Callers: `pas_pci_init()` is assigned to `.discover_phbs` in
-the PA Semi machine descriptor in
-`arch/powerpc/platforms/pasemi/setup.c`. `pas_add_bridge()` is static
-and, in `next-20260508`, is called only from `pas_pci_init()`.
-
-Record 5.3: Relevant callees in the affected path include
-`pci_set_flags()`, `of_find_compatible_node()`, `pas_add_bridge()`, and
-`of_node_put()`. `pas_add_bridge()` allocates/configures the PCI
-controller and scans OF ranges/ISA bridge state.
-
-Record 5.4: Reachability is boot-time/platform-init only for PA Semi
-systems. It is not syscall-reachable and has no unprivileged runtime
-trigger.
-
-Record 5.5: Similar pattern found: sibling commit `8333e4916040e`
-removes an unused assignment in PS3 platform code for the same warning
-class.
-
-### Phase 6: Stable Tree Analysis
-Record 6.1: The exact unused `res = pas_add_bridge(np);` pattern exists
-in verified tags `v4.19`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`,
-`v6.17`, `v6.18`, `v6.19`, and `v7.0`. It was not present in the same
-form in `v4.14` or `v4.9`.
-
-Record 6.2: Backport difficulty is clean for the current 7.0.5 tree,
-verified by `git format-patch -1 --stdout f583bd5f64d40 | git apply
---check`. Older stable trees may need minor context adjustment because
-surrounding code differs in older releases.
-
-Record 6.3: No earlier same-subject fix exists in `v7.0`; related same-
-series warning fixes were found only in `next-20260508`.
-
-### Phase 7: Subsystem Context
-Record 7.1: Subsystem is `arch/powerpc/platforms/pasemi`, a platform-
-specific powerpc PCI init path. Criticality is peripheral/platform-
-specific, not core kernel.
-
-Record 7.2: Recent pasemi file history is low churn. This is mature
-platform code with little recent activity.
-
-### Phase 8: Impact And Risk
-Record 8.1: Affected population: PA Semi powerpc platform builders,
-especially Clang `W=1` builds with powerpc `-Werror` behavior.
-
-Record 8.2: Trigger condition is build-time only. No runtime trigger and
-no unprivileged-user trigger were verified.
-
-Record 8.3: Failure mode is build failure under specific warning/error
-settings, not crash/corruption/deadlock. Severity is medium for affected
-builders, low for runtime users.
-
-Record 8.4: Benefit is narrow but real under the stable build-fix
-exception. Risk is extremely low because the generated runtime behavior
-should be unchanged: the same function call remains and only an unused
-local assignment is removed.
-
-### Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: fixes a verified compiler
-warning/error class; code exists across many stable-era releases; patch
-is tiny, standalone, and behavior-preserving; applies cleanly to current
-stable checkout. Evidence against: no runtime bug, no default-build
-failure was verified, no stable nomination, platform-specific impact.
-Unresolved: direct stable lore search was blocked, and I did not run a
-full Clang `W=1` build.
-
-Record 9.2: Stable rules checklist: obviously correct: yes by
-inspection; tested: no explicit `Tested-by` and no local full build;
-fixes a real issue: yes as a build-warning/error issue under specific
-settings; important: only under build-fix exception, not runtime-
-critical; small/contained: yes, 3-line single-function change; no new
-feature/API: yes; applies to stable: current 7.0.5 yes, older trees
-likely simple but not all tested.
-
-Record 9.3: Exception category: build fix. This is the only reason to
-take it; it is not a runtime bug fix.
-
-Record 9.4: Decision: backport as a low-risk build fix for Clang
-`W=1`/powerpc warning-as-error builds. The benefit is narrow, but the
-patch is minimal, standalone, and behavior-preserving.
+Phase 9:
+- Record 9.1: evidence for backporting: real lock imbalance,
+  reproducible lockdep warning, one-line fix, maintainer ack, existing
+  helper, verified affected stable baselines v5.15+. Evidence against:
+  symptom is mainly debug warning, not crash/data corruption; v5.10 not
+  applicable as-is.
+- Record 9.2: stable rules: obviously correct yes; fixes a real bug yes;
+  important issue borderline but acceptable due lockdep warning and tiny
+  risk; small/contained yes; no new features/APIs yes; applies to v5.15+
+  style trees likely clean/trivial.
+- Record 9.3: no exception category applies.
+- Record 9.4: risk-benefit favors backporting for applicable stable
+  trees.
 
 ## Verification
-- [Phase 1] `git show --format=fuller --stat --patch f583bd5f64d40`
-  verified commit message, tags, and exact diff.
-- [Phase 2] Diff verified one file, one function, `1 insertion`, `2
-  deletions`.
-- [Phase 3] `git blame` and `git show 250a93501d626` verified the unused
-  assignment pattern was introduced by `250a93501d626`, described as
-  before `v4.19-rc1`.
-- [Phase 4] `b4 dig -c`, `-a`, `-w`, and `b4 mbox` verified the patch
-  submission, resend, recipients, and lack of candidate-specific stable
-  tags in the downloaded thread.
-- [Phase 5] `rg` and `git grep` verified `pas_pci_init()` call placement
-  and `pas_add_bridge()` call sites.
-- [Phase 6] `git grep` verified the pattern in `v4.19`, `v5.10`,
-  `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.17`, `v6.18`, `v6.19`, and
-  `v7.0`; `git apply --check` verified clean apply to current 7.0.5.
-- [Phase 7] `MAINTAINERS` verified powerpc maintainers and subsystem
-  ownership.
-- [Phase 8] `arch/powerpc/Kconfig.debug` and `arch/powerpc/Kbuild`
-  verified powerpc warning-as-error configuration exists.
-- UNVERIFIED: I did not run a full Clang `W=1` build, and direct lore
-  stable search was blocked by Anubis.
+- Phase 1: Parsed supplied commit message and `b4 am` output; confirmed
+  tags and absence of `Fixes:`/stable/Reported-by.
+- Phase 2: Read `smartpqi_init.c`; confirmed
+  `pqi_ctrl_block_device_reset()` is `mutex_lock()` and
+  `pqi_ctrl_unblock_device_reset()` is `mutex_unlock()`.
+- Phase 3: Used `git blame`, `git show 0530736e40a069`, and `git show
+  9fa8202336096d`; confirmed helper semantics changed to mutex model in
+  the shutdown/suspend update.
+- Phase 4: `WebFetch` to `patch.msgid.link` was blocked by Anubis; `b4
+  mbox`/`b4 am` fetched the lore thread successfully. `b4 am` reported
+  the patch applies cleanly to current tree.
+- Phase 4: Read lore mirror; confirmed Bart’s “patch looks fine”
+  comment, Tomas’s risk discussion, Don Brace’s ack, and Martin
+  Petersen’s apply notice.
+- Phase 5: Used exact searches and file reads to trace `.shutdown =
+  pqi_shutdown`, SCSI reset handlers, and related lock users.
+- Phase 6: Used version tags to verify affected code in `v5.15+` and
+  non-applicability to `v5.10`.
+- Phase 7: Checked `MAINTAINERS`; confirmed Don Brace maintains
+  smartpqi.
+- Phase 8: External LKML mirror provided the concrete lockdep call trace
+  and trigger conditions.
+- Unverified: I did not build-test the patch and did not verify stable
+  branch-specific conflicts beyond version-tag code presence.
 
 **YES**
 
- arch/powerpc/platforms/pasemi/pci.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/platforms/pasemi/pci.c b/arch/powerpc/platforms/pasemi/pci.c
-index 60f990a336c47..2df9552746529 100644
---- a/arch/powerpc/platforms/pasemi/pci.c
-+++ b/arch/powerpc/platforms/pasemi/pci.c
-@@ -272,13 +272,12 @@ void __init pas_pci_init(void)
- {
- 	struct device_node *root = of_find_node_by_path("/");
- 	struct device_node *np;
--	int res;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index b4ed991976d06..2026ac645d6ab 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -9427,6 +9427,7 @@ static void pqi_shutdown(struct pci_dev *pci_dev)
  
- 	pci_set_flags(PCI_SCAN_ALL_PCIE_DEVS);
+ 	pqi_crash_if_pending_command(ctrl_info);
+ 	pqi_reset(ctrl_info);
++	pqi_ctrl_unblock_device_reset(ctrl_info);
+ }
  
- 	np = of_find_compatible_node(root, NULL, "pasemi,rootbus");
- 	if (np) {
--		res = pas_add_bridge(np);
-+		pas_add_bridge(np);
- 		of_node_put(np);
- 	}
- 	of_node_put(root);
+ static void pqi_process_lockup_action_param(void)
 -- 
 2.53.0
 
