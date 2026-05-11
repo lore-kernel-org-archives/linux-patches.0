@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B269A4DB557;
-	Mon, 11 May 2026 22:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C2F4DBD99;
+	Mon, 11 May 2026 22:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537984; cv=none; b=iLPA+XNwLavTHtS/n4ymlnpSuEI8MNY5RIZTuSuWnHLiMtqxisANULEQmCttHU1Z+P8A0AV1Fe3r5KbpoFLlSdlipMsOXLQGn+nQzSkIFoSX1Xp7vgwTAEbIfJtV9F0ILAvsFHxiJFroDE4UKoHPEOLBlQWaflK8U+qjXQcW4aA=
+	t=1778537985; cv=none; b=A6Q32ADZEg/Wp6j31AugTIpddXH1thJCz3Si1VV4zcS4ZmL64zIdxvKWfk88mlSw+QjfWfC3SPhtMrtEMiypxfu77aw+PgLQfbhWvmj8vfyfdFk7FWU9HCzcgtXUpDzrEZAismmfe/Y9vAygTbGZWUesM0YY9pr77JtEuprUbyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537984; c=relaxed/simple;
-	bh=Zn4J0fHdy3xfzUz38tOmseZcZesPxgZvA1MCNOqyk+A=;
+	s=arc-20240116; t=1778537985; c=relaxed/simple;
+	bh=kQiQktG49jtjh0yrsuVGLJX+d30nIFRsfE8tZ53RrL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HwyW2wpa+yMp5Q0aTV+tysIlm4qDku3QJpQDMBp8Oc+qGZW5S3CXnsuOo5bS/Y5MOqLyQn4513SqdBqj+bwRPD3/K3N/sXRaMDqj5hx8apnD4twAmDe86qLH5HUmKQEDjjab1MwHljIEezDNetMJ35ZSKv4VSAogoF/jGZD0BwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D8tvdxdC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TO0x1Uz/XJQbwWAyPfUoUzfM7rW0vtPAKpyRSzCw/bRuyeDiNSF/uElmZorzt6qRK3KqDJjjX6djT349HeIW1GgsWDILfQYMNv1WQddnOnwRu/B1ehbMqQ/4N5FsyrZFlMr0tCTd/bvV2G5QUrSLQi5UkAxceXrbcjmDyvRlUDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KHEpnIZ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8tvdxdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E3BC2BCFB;
-	Mon, 11 May 2026 22:19:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KHEpnIZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A645AC2BCF7;
+	Mon, 11 May 2026 22:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537984;
-	bh=Zn4J0fHdy3xfzUz38tOmseZcZesPxgZvA1MCNOqyk+A=;
+	s=k20201202; t=1778537985;
+	bh=kQiQktG49jtjh0yrsuVGLJX+d30nIFRsfE8tZ53RrL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8tvdxdCVE2sClqprOzZIp3rsxW2oGu1+aOkFWDgbJy1/0Pk0TarF2GjB6WjnzE10
-	 k/udQWUWRE6qHpG8s67af7Z+m9V/Vw3RvQLFioBEwRx7osTnC8k7ahhg2Cd48yxT1v
-	 MlUIhXPSZppTi/mzj5LfZxMRFk/8MY7Dr8CY+n3P0gS6wYQmICg6m656D10+QzSYHp
-	 fIIVgaNvvRzOeI+Ivw69lPt3OiXXS/sSGGJREdxzGGJjuoyY4veijM1A1nhhA6nJ28
-	 CtkMwGCAcK2oP2luiBzom4V1rS43pZyv+8vcdFRagLmAG9MGyjwzlml05OmnLgzpEz
-	 JNjwqZuuPq9sA==
+	b=KHEpnIZ1jZwFooN/yavGA0vXeLlZCNO2D2mtS8VMC/G4XA9J6gwHaq4vLM157N0ZU
+	 R/M5gGmda0Dj9wlbF8wsGwJqw61KkuLfE0xFI8ksDfddnm+ouuWpdnrmlAGWrA841T
+	 +bNztyZJ4H67nrP6WDBDvwVmRzhRGHz5f50FWRsI0DxCyzezZvBuJdTVkLJL/hf1u6
+	 jYFHFeqtLilxJF/3gHIVs/yMZujZYjrSCYbHGAriW48F8y6rZuJmO+e9Gd1ibJLVFG
+	 qsCpsAPQIz/eLhgo57goZoDjT0ugK6OgU1e78MhnMQVJsSkO2BD3IaW+SaCli9IplJ
+	 Ft44PRL43YX5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Birger Koblitz <mail@birger-koblitz.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	linux-usb@vger.kernel.org,
-	netdev@vger.kernel.org,
+	wsa@kernel.org,
+	linux-i2c@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] net: usb: r8152: add TRENDnet TUC-ET2G v2.0
-Date: Mon, 11 May 2026 18:19:07 -0400
-Message-ID: <20260511221931.2370053-8-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] i2c: dev: prevent integer overflow in I2C_TIMEOUT ioctl
+Date: Mon, 11 May 2026 18:19:08 -0400
+Message-ID: <20260511221931.2370053-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -55,284 +50,256 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.6
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit f93836b236773862e9ee268a82e3614caf77ea01 ]
+[ Upstream commit 617eb7c0961a8dfcfc811844a6396e406b2923ea ]
 
-The TRENDnet TUC-ET2G V2.0 is an RTL8156B based 2.5G Ethernet controller.
+While fuzzing with Syzkaller, a persistent `schedule_timeout: wrong
+timeout value` warning was observed, accompanied by SMBus controller
+state machine corruption.
 
-Add the vendor and product ID values to the driver. This makes Ethernet
-work with the adapter.
+The I2C_TIMEOUT ioctl accepts a user-provided timeout in multiples of
+10 ms. The user argument is checked against INT_MAX, but it is
+subsequently multiplied by 10 before being passed to msecs_to_jiffies().
 
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Birger Koblitz <mail@birger-koblitz.de>
-Link: https://patch.msgid.link/20260430213435.21821-1-olek2@wp.pl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+A malicious user can pass a large value (e.g., 429496729) that passes
+the `arg > INT_MAX` check but overflows when multiplied by 10. This
+results in a truncated 32-bit unsigned value that bypasses the
+internal `(int)m < 0` check in `msecs_to_jiffies()`.
+
+The truncated value is then assigned to `client->adapter->timeout`
+(a signed 32-bit int), which is reinterpreted as a negative number.
+When passed to wait_for_completion_timeout(), this negative value
+undergoes sign extension to a 64-bit unsigned long, triggering the
+`schedule_timeout` warning and causing premature returns. This leaves
+the SMBus state machine in an unrecoverable state, constituting a
+local Denial of Service (DoS).
+
+Fix this by bounding the user argument to `INT_MAX / 10`.
+
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+[wsa: move the comment as well]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem `net: usb: r8152`; action verb `add`; claimed
-intent: add TRENDnet TUC-ET2G v2.0 USB device ID so the existing `r8152`
-driver binds to the adapter.
+## Phase Walkthrough
 
-Step 1.2 Record: Tags present:
-- `Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>`
-- `Reviewed-by: Andrew Lunn <andrew@lunn.ch>`
-- `Reviewed-by: Birger Koblitz <mail@birger-koblitz.de>`
-- `Link: https://patch.msgid.link/20260430213435.21821-1-olek2@wp.pl`
-- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>`
+### Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem `i2c: dev`; action verb `prevent`; intent is
+to prevent integer overflow in the userspace `I2C_TIMEOUT` ioctl.
 
-No `Fixes:`, `Reported-by:`, `Tested-by:`, or `Cc:
-stable@vger.kernel.org` tag was present. Absence of those tags is not a
-negative signal here.
+Step 1.2 Record: Tags are `Signed-off-by: Mingyu Wang
+<25181214217@stu.xidian.edu.cn>` and `Signed-off-by: Wolfram Sang
+<wsa+renesas@sang-engineering.com>` with maintainer edit note `[wsa:
+move the comment as well]`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+`Reviewed-by:`, `Link:`, or `Cc: stable` tags were present.
 
-Step 1.3 Record: The body describes a real hardware support failure:
-TRENDnet TUC-ET2G V2.0 is RTL8156B-based, but without its USB
-vendor/product ID in `rtl8152_table`, Ethernet does not work with that
-adapter. No affected kernel versions are named.
+Step 1.3 Record: The body describes a Syzkaller-found `schedule_timeout:
+wrong timeout value` warning and SMBus state machine corruption after a
+large userspace timeout causes overflow/truncation before storing into
+signed `adapter->timeout`. Symptom is local DoS through bad timeout
+behavior; root cause is validating `arg` before multiplying by 10.
 
-Step 1.4 Record: This is not a hidden memory/synchronization bug. It is
-an explicit new USB device ID addition to an existing driver, which is a
-stable exception category.
+Step 1.4 Record: This is not hidden cleanup; it is an explicit integer
+overflow and local DoS fix.
 
-## Phase 2: Diff Analysis
-Step 2.1 Record: One file changed: `drivers/net/usb/r8152.c`, `+1/-0`.
-No function body changed. The modified object is `rtl8152_table`. Scope:
-single-file surgical device-ID addition.
+### Phase 2: Diff Analysis
+Step 2.1 Record: One file changed, `drivers/i2c/i2c-dev.c`; committed
+diff is 5 insertions and 4 deletions due comment movement. Modified
+function: `i2cdev_ioctl()`. Scope: single-file surgical fix.
 
-Step 2.2 Record: Before the change, the table contained TRENDnet
-`0xe02b` but not `0xe02c`, so USB matching would not select `r8152` for
-`20f4:e02c`. After the change, `USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02c)`
-is matched by the driver table used by both `rtl8152_driver.id_table`
-and `rtl8152_cfgselector_driver.id_table`.
+Step 2.2 Record: Before, `I2C_TIMEOUT` accepted any `arg <= INT_MAX`,
+then used `msecs_to_jiffies(arg * 10)`. After, it accepts only `arg <=
+INT_MAX / 10`, so the 10 ms unit conversion cannot exceed signed 32-bit
+range before assignment to `adapter->timeout`.
 
-Step 2.3 Record: Bug category is hardware enablement / USB device ID
-addition. It does not touch error paths, locking, reference counts,
-memory safety, or public APIs.
+Step 2.3 Record: Bug category is integer overflow/truncation and type-
+range validation. Broken mechanism: userspace-controlled timeout is
+range-checked before scaling, but stored in `struct
+i2c_adapter.timeout`, which is `int`.
 
-Step 2.4 Record: The fix is obviously correct if the ID maps to RTL8156B
-hardware. I verified the device identity externally: WikiDevi lists TUC-
-ET2G v2.0R as USB ID `20f4:e02c` with Realtek RTL8156B, and TRENDnet’s
-own support page confirms the TUC-ET2G v2 product. Regression risk is
-very low; existing devices are unaffected unless another incompatible
-device uses the same exact USB ID.
+Step 2.4 Record: Fix quality is high: one validation bound change, no
+new API, no refactor. Regression risk is low; it rejects only extreme
+timeout values that cannot be represented safely after the documented 10
+ms scaling.
 
-## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` around the table showed the existing
-TRENDnet `0xe02b` entry came from `15fba71533bc` and the new `0xe02c`
-line comes from `f93836b23677`. The table terminator dates back to
-`ac718b69301c`. The “bug” is not introduced by a code commit; it is the
-absence of a product-specific ID for existing supported silicon.
+### Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the existing `arg > INT_MAX` guard
+came from `6ebec961d59b` and the `arg * 10` timeout assignment/comment
+came from `cd97f39b7cdf`. `git describe` places them at
+`v5.0-rc2~14^2~1` and `v2.6.29-rc7~62^2~2`, respectively.
 
-Step 3.2 Record: No `Fixes:` tag, so there is no introducing commit to
-follow.
+Step 3.2 Record: No `Fixes:` tag, so no tagged introducing commit to
+follow. I still inspected `6ebec961d59b`, which originally fixed
+negative retry/timeout values and was itself stable-tagged.
 
-Step 3.3 Record: Recent related history includes `15fba71533bc` adding
-the first TRENDnet TUC-ET2G ID and `dc9c67820f81` adding a TP-Link ID.
-The candidate is standalone on trees that already have
-`VENDOR_ID_TRENDNET`.
+Step 3.3 Record: Recent upstream `drivers/i2c/i2c-dev.c` history shows
+this candidate plus unrelated cleanup/fix commits; no prerequisite
+series was identified.
 
-Step 3.4 Record: The author has at least one prior `r8152` device-ID
-commit, `848b09d53d92` for Dell Alienware AW1022z. The patch was
-reviewed by Andrew Lunn and Birger Koblitz and applied by Jakub
-Kicinski.
+Step 3.4 Record: `Mingyu Wang` has this one upstream `drivers/i2c`
+commit in the checked history. Wolfram Sang committed it and is the I2C
+maintainer in the patch flow.
 
-Step 3.5 Record: Dependency found: `VENDOR_ID_TRENDNET` was introduced
-by `15fba71533bc`, and `git merge-base --is-ancestor` confirms that
-commit is an ancestor of `f93836b23677`. Mainline release tags `v5.15`,
-`v6.1`, `v6.6`, `v6.12`, and `v6.19` lack `VENDOR_ID_TRENDNET`, while
-`v7.0-rc3` has it. Older stable backports therefore need either
-`15fba71533bc` first or a small backport adjustment adding `#define
-VENDOR_ID_TRENDNET 0x20f4`.
+Step 3.5 Record: No dependent commit found. The patch assumes the long-
+existing `I2C_TIMEOUT` case and applies cleanly to the current `v7.0.5`
+checkout.
 
-## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c f93836b23677` found the original patch
-submission by patch-id. `b4 dig -a` reported the accepted one-patch
-submission at `20260430213435.21821-1-olek2@wp.pl`; `b4` also found an
-earlier identical submission from
-`20260426214909.3426105-1-olek2@wp.pl`. The earlier thread had Andrew
-Lunn asking for repost after netdev opened and giving his `Reviewed-by`.
-No NAK or technical objection found.
+### Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 617eb7c0961a8` found the original submission
+at `https://patch.msgid.link/20260427025745.1100768-1-
+25181214217@stu.xidian.edu.cn`. `b4 dig -a` found only v1. The submitted
+patch was a one-line bound change; the committed version is the
+maintainer-adjusted version with comment movement.
 
-Step 4.2 Record: `b4 dig -w` showed the patch was sent to netdev
-maintainers/lists and USB networking lists, including Andrew Lunn, David
-Miller, Eric Dumazet, Jakub Kicinski, Paolo Abeni, Realtek contacts,
-`linux-usb`, `netdev`, and `linux-kernel`. `MAINTAINERS` confirms those
-netdev maintainers for `NETWORKING DRIVERS`, and `drivers/net/usb/` is
-under `USB NETWORKING DRIVERS`.
+Step 4.2 Record: `b4 dig -w` shows recipients: Mingyu Wang, Wolfram
+Sang, `linux-i2c@vger.kernel.org`, and `linux-kernel@vger.kernel.org`.
 
-Step 4.3 Record: No separate bug report or `Reported-by` tag. External
-hardware verification found TUC-ET2G v2.0R as `20f4:e02c` / RTL8156B.
+Step 4.3 Record: No `Link:` or `Reported-by:` tag exists. Public web
+searches did not find a syzkaller bug page for this exact issue; the
+Syzkaller finding is verified only from the commit/patch text.
 
-Step 4.4 Record: This is a single-patch submission, not a multi-patch
-fix series. The only practical dependency for older trees is the
-TRENDnet vendor define from the prior TUC-ET2G ID commit.
+Step 4.4 Record: No multi-patch series found; standalone patch.
 
-Step 4.5 Record: WebFetch to lore was blocked by Anubis. WebSearch did
-not find stable-specific discussion for `f93836b23677` or the patch
-message ID. No stable objection found.
+Step 4.5 Record: Stable-list WebFetch was blocked by lore Anubis, and
+web search did not find stable-specific discussion. No evidence of
+objections or NAKs was found in the b4-fetched mbox.
 
-## Phase 5: Code Semantic Analysis
-Step 5.1 Record: No functions modified. Modified data structure:
-`rtl8152_table`.
+### Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `i2cdev_ioctl()`.
 
-Step 5.2 Record: `rtl8152_table` is referenced by
-`MODULE_DEVICE_TABLE(usb, rtl8152_table)`, `rtl8152_driver.id_table`,
-and `rtl8152_cfgselector_driver.id_table`. Matching devices enter the
-normal USB probe path via `rtl8152_probe`.
+Step 5.2 Record: Call path is userspace ioctl on `/dev/i2c-*` through
+`i2cdev_fops.unlocked_ioctl = i2cdev_ioctl`; compat ioctls fall back to
+`i2cdev_ioctl()` for commands not handled specially, including
+`I2C_TIMEOUT`.
 
-Step 5.3 Record: The relevant probe path checks vendor-specific
-interface class, `rtl_check_vendor_ok`, `rtl8152_get_version`, then
-calls `rtl8152_probe_once`. The config selector uses `__rtl_get_hw_ver`.
-This patch adds no new calls.
+Step 5.3 Record: Key callee is `msecs_to_jiffies()`, whose runtime
+helper treats negative `unsigned int` values as infinite timeout. The
+result is assigned to `struct i2c_adapter.timeout`, verified as `int`.
 
-Step 5.4 Record: Reachability is USB device enumeration: plugging in or
-booting with the adapter attached. It is not a remote or syscall-
-triggered security issue.
+Step 5.4 Record: Buggy path is reachable from userspace with access to
+an i2c-dev node. The corrupted timeout is then used by core retry loops
+and many bus drivers, including paths using
+`wait_for_completion_timeout()`.
 
-Step 5.5 Record: Similar pattern exists throughout the same table for
-Realtek, Lenovo, TP-Link, D-Link, Dell, ASUS, and earlier TRENDnet IDs.
-`git log -S'0xe02c'` found no prior `0xe02c` entry in the checked
-history.
+Step 5.5 Record: Similar timeout use is widespread in `drivers/i2c`, but
+this specific unchecked userspace scaling pattern was found in
+`i2c-dev`.
 
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: Checked mainline release tags `v5.15`, `v6.1`, `v6.6`,
-`v6.12`, and `v6.19`: all contain `0x8156` and RTL8156B version
-handling, but not the TRENDnet `0xe02c` ID. This means the supported
-chipset path exists in those releases, but the product-specific match is
-missing.
+### Phase 6: Stable Tree Analysis
+Step 6.1 Record: Checked `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and
+`v7.0`; all contain the vulnerable `arg > INT_MAX` plus
+`msecs_to_jiffies(arg * 10)` pattern.
 
-Step 6.2 Record: Backport difficulty is low. It applies cleanly to trees
-with `VENDOR_ID_TRENDNET` / `0xe02b`; older bases need a minor
-context/define adjustment or the prior TRENDnet ID patch.
+Step 6.2 Record: Expected backport difficulty is clean or trivial. `git
+apply --check` succeeded on current `v7.0.5`; checked stable snippets
+have matching context.
 
-Step 6.3 Record: No alternate local fix for `0xe02c` was found. No
-stable-specific replacement fix was verified.
+Step 6.3 Record: No alternate stable fix found by subject/phrase
+searches in local git history.
 
-## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: Subsystem is `drivers/net/usb`, USB Ethernet networking
-driver. Criticality: driver-specific, important for users of this
-hardware, not core-kernel-wide.
+### Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is I2C userspace character-device interface,
+`drivers/i2c/i2c-dev.c`. Criticality: important, because it exposes bus
+control to userspace and affects any system using `i2c-dev`.
 
-Step 7.2 Record: The file is active, with recent `r8152` feature and fix
-commits, but this change is isolated to the USB ID table and does not
-depend on recent functional refactoring except the vendor
-define/backport context noted above.
+Step 7.2 Record: Subsystem is mature but actively maintained. The
+affected ioctl path is long-standing.
 
-## Phase 8: Impact And Risk
-Step 8.1 Record: Affected users are systems with TRENDnet TUC-ET2G V2.0
-and `CONFIG_USB_RTL8152`.
+### Phase 8: Impact And Risk
+Step 8.1 Record: Affected users are systems exposing `/dev/i2c-*` to
+userspace, including embedded, hardware-management, and sensor-control
+systems.
 
-Step 8.2 Record: Trigger is common for affected users: adapter insertion
-or boot with the adapter connected. Not remotely triggerable; physical
-USB access is needed.
+Step 8.2 Record: Trigger is setting `I2C_TIMEOUT` to a large value
+through ioctl, then using affected I2C/SMBus transfer paths. It requires
+access to the device node; no capability check is present in the ioctl
+path itself.
 
-Step 8.3 Record: Failure mode is device non-binding / Ethernet
-unavailable. Severity is not crash/security-critical, but it is a real
-user-visible hardware functionality failure.
+Step 8.3 Record: Failure mode is at least a kernel `schedule_timeout:
+wrong timeout value` warning and broken timeout behavior; commit text
+reports SMBus controller state machine corruption and local DoS.
+Severity: HIGH.
 
-Step 8.4 Record: Benefit is high for affected stable users because it
-makes the adapter work with an already-supported RTL8156B driver. Risk
-is very low: one table entry, no behavior change for existing IDs.
+Step 8.4 Record: Benefit is high because it blocks a fuzzed, userspace-
+reachable DoS class bug in maintained stable trees. Risk is very low
+because the patch is one range check in one ioctl case.
 
-## Phase 9: Final Synthesis
-Evidence for backporting:
-- New USB device ID for existing driver and already-supported RTL8156B
-  silicon.
-- Fixes a real user-visible failure: Ethernet does not work with this
-  adapter.
-- One-line, single-file, no API or behavior change for existing
-  hardware.
-- Reviewed by Andrew Lunn and Birger Koblitz; applied by Jakub Kicinski.
-- Hardware identity verified as TRENDnet `20f4:e02c` / RTL8156B.
+### Phase 9: Final Synthesis
+Step 9.1 Record: Evidence for backporting: real integer overflow,
+Syzkaller-reported in commit text, userspace-reachable with i2c-dev
+access, high-severity timeout corruption/DoS, tiny fix, maintainer-
+applied, vulnerable code present in checked stable trees, clean apply to
+`v7.0.5`. Evidence against: no public syzkaller link, no `Reported-
+by`/`Tested-by`, and exact SMBus unrecoverable-state details were not
+independently reproduced.
 
-Evidence against backporting:
-- Not a crash, data corruption, security, or deadlock fix.
-- Older stable bases may need the prior `VENDOR_ID_TRENDNET` definition
-  or a tiny backport adjustment.
+Step 9.2 Record: Stable rules: obviously correct yes; fixes real bug
+yes; important issue yes, local DoS/bad kernel timeout path; small and
+contained yes; no new features/APIs yes; stable applicability yes for
+checked trees.
 
-Unresolved:
-- I did not verify every active stable branch state directly; I verified
-  mainline release tags and the dependency relationship. Lore WebFetch
-  was blocked, but `b4` successfully fetched the thread.
+Step 9.3 Record: No exception category needed; this is a normal bug fix,
+not device ID/quirk/DT/build/doc.
 
-Stable rules checklist:
-1. Obviously correct and tested? Yes, one matching-table entry;
-   reviewed; hardware ID verified.
-2. Fixes a real bug affecting users? Yes, adapter does not bind/work
-   without the ID.
-3. Important issue? Yes under the stable “new device IDs” exception,
-   though not crash/security.
-4. Small and contained? Yes, one insertion in one file.
-5. No new features/APIs? Yes, no API or behavioral change except
-   matching this USB device.
-6. Can apply to stable trees? Yes with low difficulty; older trees may
-   need `VENDOR_ID_TRENDNET`.
-
-Exception category: New USB device ID for an existing driver. This is a
-standard stable-appropriate exception.
+Step 9.4 Record: The technical merits strongly support stable
+backporting.
 
 ## Verification
-- [Phase 1] Parsed commit `f93836b236773862e9ee268a82e3614caf77ea01`
-  with `git show`; confirmed subject, body, tags, and `+1/-0` diff.
-- [Phase 2] Compared `git diff f938^..f938`; confirmed only `{
-  USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02c) }` is added.
-- [Phase 3] Ran `git blame` around `rtl8152_table`; confirmed existing
-  `0xe02b` from `15fba71533bc` and new `0xe02c` from `f93836b23677`.
-- [Phase 3] Ran `git merge-base --is-ancestor 15fba71533bc
-  f93836b23677`; confirmed the vendor define dependency is in the
-  candidate’s ancestry.
-- [Phase 3] Checked release tags `v5.15`, `v6.1`, `v6.6`, `v6.12`,
-  `v6.19`, `v7.0-rc3`, `v7.1-rc3`; confirmed older release tags have
-  RTL8156/RTL_VER_13 support but lack TRENDnet IDs until `v7.0-rc3`.
-- [Phase 4] Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; confirmed
-  patch-id match, one-patch submission, recipients, and
-  review/application thread.
-- [Phase 4] Read full `b4 mbox` threads; confirmed Andrew Lunn review on
-  repost request, Birger Koblitz review, and patchwork notification that
-  Jakub applied it.
-- [Phase 4] WebFetch to lore was blocked by Anubis; external GitHub
-  commit fetch confirmed the commit metadata and diff.
-- [Phase 4] WebFetch of WikiDevi and TRENDnet pages verified TUC-ET2G v2
-  hardware identity; WikiDevi specifically listed USB ID `20f4:e02c` and
-  RTL8156B.
-- [Phase 5] Searched `rtl8152_table` references; confirmed use by
-  `MODULE_DEVICE_TABLE`, `rtl8152_driver.id_table`, and
-  `rtl8152_cfgselector_driver.id_table`.
-- [Phase 5] Read `rtl8152_probe` and config selector code; confirmed
-  affected path is USB enumeration/probe, with no changed runtime logic.
-- [Phase 7] Checked `MAINTAINERS`; confirmed netdev maintainers and
-  `drivers/net/usb/` list coverage.
-- [Phase 8] Checked `drivers/net/usb/Kconfig`; confirmed affected
-  configuration is `CONFIG_USB_RTL8152`.
-
-This is exactly the kind of low-risk new USB ID addition stable trees
-normally take.
+- Phase 1: Parsed `git show 617eb7c0961a8`; confirmed tags and absence
+  of `Fixes:`, `Reported-by:`, `Link:`, and stable tag.
+- Phase 2: Inspected committed diff; confirmed one-file change in
+  `i2cdev_ioctl()`.
+- Phase 3: `git blame` identified `6ebec961d59b` and `cd97f39b7cdf`;
+  `git describe` placed them before all checked maintained stable trees.
+- Phase 3: `git show 6ebec961d59b` confirmed prior timeout/retry
+  negative-value fix and stable nomination.
+- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and mbox read found one
+  v1 patch, proper I2C recipients, and no visible objections.
+- Phase 4: WebFetch of lore was blocked by Anubis; stable-list
+  discussion and public syzkaller report remain unverified.
+- Phase 5: `rg` and file reads confirmed ioctl file operations, compat
+  fallback, `msecs_to_jiffies()`, `adapter->timeout` as `int`, and
+  downstream timeout uses.
+- Phase 6: Checked `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`
+  snippets; all contain the vulnerable pattern.
+- Phase 6: `git apply --check` confirmed the upstream diff applies to
+  current `v7.0.5`.
+- Phase 8: `schedule_timeout()` source confirms negative timeout emits
+  `wrong timeout value` and returns 0.
 
 **YES**
 
- drivers/net/usb/r8152.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/i2c-dev.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 0c83bbbea2e7c..0ac2b079e435c 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -10055,6 +10055,7 @@ static const struct usb_device_id rtl8152_table[] = {
- 	{ USB_DEVICE(VENDOR_ID_DELL,    0xb097) },
- 	{ USB_DEVICE(VENDOR_ID_ASUS,    0x1976) },
- 	{ USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02b) },
-+	{ USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02c) },
- 	{}
- };
+diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
+index 7bbe0263411eb..ccaac5e29f906 100644
+--- a/drivers/i2c/i2c-dev.c
++++ b/drivers/i2c/i2c-dev.c
+@@ -487,12 +487,13 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		client->adapter->retries = arg;
+ 		break;
+ 	case I2C_TIMEOUT:
+-		if (arg > INT_MAX)
++		/*
++		 * For historical reasons, user-space sets the timeout value in
++		 * units of 10 ms.
++		 */
++		if (arg > INT_MAX / 10)
+ 			return -EINVAL;
  
+-		/* For historical reasons, user-space sets the timeout
+-		 * value in units of 10 ms.
+-		 */
+ 		client->adapter->timeout = msecs_to_jiffies(arg * 10);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
