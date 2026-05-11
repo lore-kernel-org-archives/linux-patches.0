@@ -1,44 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A174DBD75;
-	Mon, 11 May 2026 22:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97894DD6ED;
+	Mon, 11 May 2026 22:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537993; cv=none; b=pgKen+y1Vfr+QEX9jq4SZS80DvE97xFNrvJHlzb8tJAPb9j5qsHEmhtouyilY7/embvdsQb71k4pA9aqPUpUCky3SGGcDjzgKKn6ZAhGATxude/ezP2o0Xm+bqrrTMD65JG4Z9DmNw/ImAzmYS1MD3wKD8qNe8GlRhUwgRF8WAE=
+	t=1778537994; cv=none; b=UbxtOLnEuDXIp8HgYXvRyKJcHM2sjIJUbS3OqfFWg1cC7ALpVT47qug6qw7hACtT6XRi6D9pk8IUt9JfYpUZ+S7XfGVGf1VuPcP/3QKT/zpFdPocYNMMIcLXKB/RBacim2bvbGa4hb/vOa7gPG3uUK2D31lWFNl+2jBahvMQgJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537993; c=relaxed/simple;
-	bh=lrK/RVLsY/qCQGXYaWRUszCMLjdpNFQc/u6m65KLenw=;
+	s=arc-20240116; t=1778537994; c=relaxed/simple;
+	bh=LRN2672r35IyVec++JGBaiETnqJv8Sk5nTuKiSNxa8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PZYWhnfKovB4jjYQRV7KoSkyU7OWxrYCWjKbslAZtlHExYgdOZx4/poTdTlo4hliA14g+ysGDkUwAi0HTEqYR0/X5hRFjXQlDkACbO6uYMtH55kNOkCLXxXpSpt80aoLEs5qoCrk7VNMKJnSl5m3fsYELOmBt6Uw9f9ncldZB+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rd4kAiiZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=C4+a5lo8ITKv6HHjgo86Vy7O9ehTNfSKE4rlCIPfD2eZRdRkbP3EbIjfOFTEp6jpvO7jkeg+ZD4WEsNh2gsjo0GTKZRPH8whhJ2+eF80mF1Qf+cUfjMwfddLXMpUKwbovWAyvkk2c9JWwnD9CqoF2LCxBKrKgBA4c86lydHeZSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YPjA+c36; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rd4kAiiZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E674DC2BCF5;
-	Mon, 11 May 2026 22:19:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YPjA+c36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6ABC2BCFF;
+	Mon, 11 May 2026 22:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537990;
-	bh=lrK/RVLsY/qCQGXYaWRUszCMLjdpNFQc/u6m65KLenw=;
+	s=k20201202; t=1778537994;
+	bh=LRN2672r35IyVec++JGBaiETnqJv8Sk5nTuKiSNxa8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rd4kAiiZwtA0KQPEYvFS73mHPq8FsPak9IrAF3LMjmzCAKaU5mkzXTn6S9UjK1pbZ
-	 8pikV1OV4vuC37FqN61SgwDE0MSiAnaUYw38i9faJfUHMoHjpkTsM3EI4HmtJNWR9U
-	 A7+NvGcsDX2bLQAdQnonGK0Z5UPXwmmHrBIGbT/pE9pj3/VAilmQUSEE8yTA8DQSpi
-	 EmarofnZjWTrBvhnAB8t0QI/omUBruYNCjTne2aEqZcQhFyg+d4Mzv+y0n4IMnis8q
-	 RpUxucRPQ1WLkBqGfJawL/D35DWF0+OIqQxHMWabk5B4Iar0pNc1a38rtNqKdq83Ea
-	 EcmFWv4vbTlMQ==
+	b=YPjA+c36T+a+XWppJhFnE1jUu+l34vyBIgacKzfLiBQkdcUuIJ+BPdQsCwZbZlNHu
+	 mxxLd5cqoUAW3Ap9mEcKuJcH+RrMdiPNbMzl1sG42Eka7jaup2QtFBrZjDJE4dLEfY
+	 oJjC0FCZo5n+XUpekJ9zPOPlO7lMSR9eUBZ5f0HfiAn23PB241V4qzCz4H2QU7I5Uq
+	 XDUqFWkDErZq8+W+X+v1ob4FGHNSBMBkhi1WtkiFr/USwLg3I8KgVR8MzDuMoxuhAY
+	 OuVblheAp48z1i2RQGJkMdER8nsinm0CGhrPRf84iqcoJFQzc5grPB4t7ZkcW46rXe
+	 Ni9l8CrWs9PWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maoyi Xie <maoyixie.tju@gmail.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	io-uring@vger.kernel.org,
+	rfoss@kernel.org,
+	todor.too@gmail.com,
+	agross@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] io_uring/wait: honour caller's time namespace for IORING_ENTER_ABS_TIMER
-Date: Mon, 11 May 2026 18:19:12 -0400
-Message-ID: <20260511221931.2370053-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] media: qcom: camss: avoid format string warning
+Date: Mon, 11 May 2026 18:19:14 -0400
+Message-ID: <20260511221931.2370053-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -54,37 +61,35 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 45d2b37a37ab98484693533496395c610a2cab96 ]
+[ Upstream commit 23c39cb598977f10909a2387c5e5f34afc1d6933 ]
 
-io_uring_enter() with IORING_ENTER_ABS_TIMER takes an absolute
-timespec from the caller via ext_arg->ts. It arms an ABS mode
-hrtimer in __io_cqring_wait_schedule(). The conversion path in
-io_uring/wait.c parses ext_arg->ts inline rather than going
-through io_parse_user_time(). It therefore does not pick up the
-time namespace conversion added by the previous patch.
+clang-22 warns about csiphy_match_clock_name() taking a variable format
+string that is not checked against the 'int index' argument:
 
-Apply timens_ktime_to_host() to the parsed time on the
-IORING_ENTER_ABS_TIMER branch. This mirrors the IORING_TIMEOUT_ABS
-fix in io_parse_user_time(). Use ctx->clockid as the clock id.
-ctx->clockid is set either at ring creation or via
-IORING_REGISTER_CLOCK.
+drivers/media/platform/qcom/camss/camss-csiphy.c:566:44: error: diagnostic behavior may be improved by
+      adding the 'format(printf, 2, 3)' attribute to the declaration of 'csiphy_match_clock_name'
+      [-Werror,-Wmissing-format-attribute]
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      | __attribute__((format(printf, 2, 3)))
+  562 |                                     int index)
+  563 | {
+  564 |         char name[16]; /* csiphyXXX_timer\0 */
+  565 |
+  566 |         snprintf(name, sizeof(name), format, index);
+      |                                                   ^
+drivers/media/platform/qcom/camss/camss-csiphy.c:561:13: note: 'csiphy_match_clock_name' declared here
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      |             ^
 
-timens_ktime_to_host() is a no-op for clocks not affected by time
-namespaces. It is also a no-op for callers in the initial time
-namespace. The fast path is unchanged.
+Change the function to use a snprintf() style format string that allows this
+to be checked at the call site.
 
-Reproducer: in unshare --user --time, with a -10s monotonic
-offset, call io_uring_enter with min_complete=1,
-IORING_ENTER_ABS_TIMER, and ts = now + 1s. The call returns
--ETIME after <1ms instead of after the expected ~1s.
-
-Suggested-by: Pavel Begunkov <asml.silence@gmail.com>
-Suggested-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Link: https://patch.msgid.link/20260504153755.1293932-3-maoyi.xie@ntu.edu.sg
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -93,253 +98,229 @@ LLM Generated explanations, may be completely bogus:
 ## Phase Walkthrough
 
 ### Phase 1: Commit Message Forensics
-Record: Subsystem `io_uring/wait`; action verb `honour`; intent is to
-make `IORING_ENTER_ABS_TIMER` interpret caller absolute times in the
-caller’s time namespace.
+Step 1.1 Record: Subsystem is `media: qcom: camss`; action verb is
+`avoid`; claimed intent is to avoid a clang-22 format-string build
+warning/error in `csiphy_match_clock_name()`.
 
-Record: Tags present:
-`Suggested-by: Pavel Begunkov`, `Suggested-by: Jens Axboe`, author
-`Signed-off-by: Maoyi Xie`, `Link:
-https://patch.msgid.link/20260504153755.1293932-3-maoyi.xie@ntu.edu.sg`,
-maintainer `Signed-off-by: Jens Axboe`. No `Fixes:`, `Reported-by:`,
-`Tested-by:`, `Reviewed-by`, `Acked-by`, or `Cc: stable`.
+Step 1.2 Record: Verified fetched commit
+`2211e826bd69c041534093735241182013dde7bc` has:
+- `Signed-off-by: Arnd Bergmann <arnd@arndb.de>`
+- `Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>`
+- `Signed-off-by: Bryan O'Donoghue <bod@kernel.org>`
 
-Record: The commit describes a real userspace-visible bug:
-`io_uring_enter()` with `IORING_ENTER_ABS_TIMER` parses `ext_arg->ts`
-directly, then arms an absolute hrtimer without converting from the
-caller’s time namespace to host time. The supplied reproducer in
-`unshare --user --time` with a `-10s` monotonic offset returns `-ETIME`
-in under 1 ms instead of about 1 second.
+The original lore submission also has `Fixes: 0727615fb975 ("media:
+qcom: camss: Functionally decompose CSIPHY clock lookups")`. No
+`Reported-by`, `Tested-by`, `Cc: stable`, or bug-report `Link` was
+verified.
 
-Record: This is not hidden cleanup. It is a direct correctness fix for
-absolute timeout interpretation in time namespaces.
+Step 1.3 Record: The body describes a clang-22 diagnostic promoted to
+error: `[-Werror,-Wmissing-format-attribute]`. The root cause is that
+`csiphy_match_clock_name()` takes a `const char *format` and passes it
+to `snprintf()` with a fixed `int index`, but the helper itself lacks a
+checkable printf-style prototype.
+
+Step 1.4 Record: This is not a hidden runtime bug fix. It is a build-
+warning/build-error fix for newer clang plus warning-as-error
+configurations.
 
 ### Phase 2: Diff Analysis
-Record: One file changed, `io_uring/wait.c`, 5 insertions and 1
-deletion. Function modified: `io_cqring_wait()`. Scope: single-file
-surgical fix.
+Step 2.1 Record: One file changed:
+`drivers/media/platform/qcom/camss/camss-csiphy.c`, `7 insertions(+), 3
+deletions(-)`. One function modified: `csiphy_match_clock_name()`. Scope
+is single-file surgical.
 
-Record: Before, `ext_arg->ts` was converted with
-`timespec64_to_ktime()`. If `IORING_ENTER_ABS_TIMER` was unset, the code
-added `start_time`; if set, it used the raw caller value as a host
-absolute deadline. After, the absolute branch calls
-`timens_ktime_to_host(ctx->clockid, iowq.timeout)`, while the relative
-branch remains unchanged.
+Step 2.2 Record: Before, the helper accepted `format, int index` and
+called `snprintf(name, sizeof(name), format, index)`. After, it is
+declared `__printf(2, 3)`, accepts varargs, uses `va_start()`,
+`vsnprintf()`, and `va_end()`. Call sites remain unchanged.
 
-Record: Bug category is logic/correctness in time namespace handling.
-The broken mechanism is that a namespaced absolute
-`CLOCK_MONOTONIC`/`CLOCK_BOOTTIME` timestamp was fed to a host hrtimer
-as if it were already in host time.
+Step 2.3 Record: Bug category is build fix / compiler diagnostic fix. It
+does not fix memory safety, locking, refcounting, or runtime logic.
 
-Record: Fix quality is strong: minimal, local, uses existing kernel
-helper, and no new API. Regression risk is very low because
-`timens_ktime_to_host()` is verified as a no-op for the initial time
-namespace, for unsupported clocks, and when `CONFIG_TIME_NS` is
-disabled.
+Step 2.4 Record: The fix is mechanically correct and minimal. Existing
+callers pass literal format strings plus `csiphy->id`, so behavior is
+preserved while allowing compiler format checking. Regression risk is
+very low; the only meaningful risk is varargs misuse, but current call
+sites were verified unchanged and simple.
 
 ### Phase 3: Git History Investigation
-Record: `git blame` on the changed wait lines points to `0105b0562a5e`
-(`io_uring: split out CQ waiting code into wait.c`) for the current file
-location. The same logic predates the split; `2b8e976b9842` (`io_uring:
-user registered clockid for wait timeouts`) shows this absolute-wait
-path using `ctx->clockid` and is contained by `v6.12-rc1`.
+Step 3.1 Record: `git blame` shows the helper body was introduced by
+`0727615fb975f6`, authored by Bryan O'Donoghue on 2023-09-25. `git
+describe --contains` places it at `v6.7-rc1~51^2~149`.
 
-Record: No `Fixes:` tag is present, so there was no tagged introducing
-commit to follow. I inspected the companion parent commit instead:
-`9cc6bac1bebf` fixes the same time-namespace issue for
-`IORING_TIMEOUT_ABS`.
+Step 3.2 Record: The final fetched commit lacks a `Fixes:` trailer, but
+the original lore submission includes `Fixes: 0727615fb975`. I inspected
+that commit; it introduced the helper and the `snprintf(..., format,
+index)` pattern.
 
-Record: Recent related history shows this is patch 2/2 after
-`9cc6bac1bebf`. The candidate’s parent is exactly `9cc6bac1bebf`, but
-this wait fix compiles independently as long as `timens_ktime_to_host()`
-and `ctx->clockid` exist.
+Step 3.3 Record: Recent file history includes later CAMSS/CSIPHY
+changes, especially `74cae7794341` changing callers to use `csiphy->id`.
+No prerequisite for this format-warning fix was found beyond the helper
+existing.
 
-Record: Author history in `io_uring` before this commit only showed the
-companion timeout fix. Jens Axboe applied the patch, and Pavel/Jens were
-suggested-by/review participants.
+Step 3.4 Record: Arnd Bergmann has prior CAMSS build/undefined-behavior
+fixes in history. Bryan O'Donoghue, who reviewed the patch, is listed as
+a CAMSS maintainer in `MAINTAINERS`.
 
-Record: Dependencies: affected stable trees need `ctx->clockid` and
-`timens_ktime_to_host()`. I verified both exist in local `for-
-greg/6.12-100`; the same `IORING_ENTER_ABS_TIMER` buggy line exists in
-`6.12`, `6.18`, `6.19`, and `7.0` local stable branches, but not in
-`5.10`, `5.15`, `6.1`, or `6.6`.
+Step 3.5 Record: No dependent commits were found. The patch only needs
+the existing helper and kernel `__printf`/`va_list` support, both
+present in the checked tree.
 
 ### Phase 4: Mailing List And External Research
-Record: `b4 dig -c 45d2b37a37ab...` found the original submission at `ht
-tps://patch.msgid.link/20260504153755.1293932-3-maoyi.xie@ntu.edu.sg`.
+Step 4.1 Record: `b4 dig -c 2211e826...` found the original patch at
+`https://patch.msgid.link/20260320151828.3456863-1-arnd@kernel.org`. `b4
+dig -a` found only v1.
 
-Record: `b4 dig -a` found only v1 of the series. The thread shows Jens
-applied both patches with commit IDs `9cc6bac1bebf` and `45d2b37a37ab`.
+Step 4.2 Record: `b4 dig -w` shows relevant maintainers/lists were
+included: CAMSS maintainers, media maintainers, `linux-media`, `linux-
+arm-msm`, `linux-kernel`, and `llvm`.
 
-Record: `b4 dig -w` shows the right people/lists were included: Maoyi
-Xie, Jens Axboe, Pavel Begunkov, `io-uring@vger.kernel.org`, and `linux-
-kernel@vger.kernel.org`.
+Step 4.3 Record: No separate bug report was present. The concrete report
+is the compiler diagnostic embedded in the patch.
 
-Record: Reviewer feedback was positive: Pavel wrote “both look good” and
-requested a liburing test; Jens replied “+1” for the test and later
-applied the series. No NAKs or objections found.
+Step 4.4 Record: This is a standalone one-patch fix, not part of a
+multi-patch series.
 
-Record: No separate bug-report link exists beyond the patch
-thread/reproducer. Stable-specific WebFetch was blocked by Anubis, and
-local thread search found no stable nomination.
+Step 4.5 Record: Direct lore stable search was blocked by Anubis; web
+search did not find stable-specific discussion for this exact patch.
 
 ### Phase 5: Code Semantic Analysis
-Record: Modified function: `io_cqring_wait()`.
+Step 5.1 Record: Modified function: `csiphy_match_clock_name()`.
 
-Record: Callers: `io_uring_enter(2)` reaches `io_cqring_wait()` when
-`IORING_ENTER_GETEVENTS` is set, after `io_get_ext_arg()` copies/parses
-the userspace getevents argument. This is directly syscall-reachable.
+Step 5.2 Record: Callers are only within `msm_csiphy_subdev_init()`, at
+the three verified clock-name checks: `"csiphy%d_timer"`, `"csi%d_phy"`,
+and `"csiphy%d"`.
 
-Record: Key callees: `timespec64_to_ktime()`, `timens_ktime_to_host()`,
-`ktime_add()`, `io_get_time()`, `io_cqring_schedule_timeout()`, and
-hrtimer setup/start helpers.
+Step 5.3 Record: The helper calls formatting and string comparison
+functions: previously `snprintf()` and `strcmp()`, after patch
+`vsnprintf()` and `strcmp()`.
 
-Record: Call chain: userspace `io_uring_enter()` -> `io_get_ext_arg()`
--> `io_cqring_wait()` -> `io_cqring_wait_schedule()` ->
-`__io_cqring_wait_schedule()` -> `io_cqring_schedule_timeout()` ->
-absolute hrtimer. The buggy path is reachable from userspace with
-`IORING_ENTER_GETEVENTS | IORING_ENTER_EXT_ARG |
-IORING_ENTER_ABS_TIMER`.
+Step 5.4 Record: The affected path is CAMSS device probe:
+`camss_probe()` calls `camss_init_subdevices()`, which calls
+`msm_csiphy_subdev_init()`. Runtime behavior remains equivalent for the
+verified call sites.
 
-Record: Similar patterns: the companion commit fixes
-`io_parse_user_time()` for `IORING_TIMEOUT_ABS`; POSIX timers,
-`clock_nanosleep`, alarm timers, and `timerfd` already use
-`timens_ktime_to_host()` for absolute timers.
+Step 5.5 Record: Nearby CAMSS code has no other `const char *format`
+helper or `vsnprintf()`/`__printf()` pattern matching this issue.
 
 ### Phase 6: Stable Tree Analysis
-Record: Local stable-branch grep found the buggy
-`IORING_ENTER_ABS_TIMER` code in `for-greg/6.12-100`, `for-
-greg/6.18-100`, `for-greg/6.19-200`, and `for-greg/7.0-100`. It was
-absent from `5.10`, `5.15`, `6.1`, and `6.6`.
+Step 6.1 Record: The buggy helper exists from `v6.7` onward. Verified
+absent in `v6.6`, present in `v6.12`, and present in `v7.0`.
 
-Record: Backport difficulty: current `7.0.y` apply check succeeds
-cleanly. `6.12`/`7.0` have `io_uring/wait.c`; `6.18`/`6.19` local
-branches have the same logic in `io_uring/io_uring.c`, so those need a
-path/context backport but not semantic rework.
+Step 6.2 Record: `git apply --check` succeeds against the current
+`7.0.5` checkout. For `v6.12`, the same helper and `snprintf(name,
+sizeof(name), format, index)` pattern are present, but I did not run a
+separate worktree apply check.
 
-Record: No related fix with this subject was found in the checked stable
-candidate branches.
+Step 6.3 Record: No related stable-specific fix for this exact CAMSS
+warning was found in local targeted searches or public web search.
 
 ### Phase 7: Subsystem Context
-Record: Subsystem is `io_uring`, a core async I/O syscall subsystem.
-Criticality: IMPORTANT, not universal core MM/VFS, but directly
-userspace-facing and widely used.
+Step 7.1 Record: Subsystem is Qualcomm CAMSS media driver under
+`drivers/media/platform/qcom/camss/`. Criticality is peripheral/driver-
+specific, but build failures affect anyone building this driver or
+COMPILE_TEST coverage.
 
-Record: Subsystem activity is high; recent `io_uring` history has many
-fixes and feature changes. This specific change is small despite the
-active subsystem.
+Step 7.2 Record: CAMSS is actively developed; recent history shows many
+CAMSS commits, including fixes and new platform support.
 
 ### Phase 8: Impact And Risk
-Record: Affected population: users of `io_uring_enter()` absolute CQ
-wait timeouts inside non-initial time namespaces, especially container-
-like environments. Branch-limited to stable trees that contain
-`IORING_ENTER_ABS_TIMER`.
+Step 8.1 Record: Affected population is config-specific: builders with
+`CONFIG_VIDEO_QCOM_CAMSS`, including `COMPILE_TEST`, using clang-22 with
+`-Wmissing-format-attribute` and warnings-as-errors.
 
-Record: Trigger: userspace can trigger via `io_uring_enter()` with
-`IORING_ENTER_ABS_TIMER` and a timespec from a shifted time namespace.
-The provided reproducer uses `unshare --user --time`; whether fully
-unprivileged depends on system user-namespace policy.
+Step 8.2 Record: Trigger is build-time, not runtime.
+`scripts/Makefile.warn` verifies `-Wmissing-format-attribute` is under
+`W=1`; `-Werror` is enabled by `W=e` or `CONFIG_WERROR`.
 
-Record: Failure mode: incorrect timeout behavior. With the reproduced
-negative offset, the wait returns `-ETIME` immediately; with other
-offsets, absolute waits can be delayed incorrectly. Severity: MEDIUM to
-HIGH user-visible correctness bug, potential application timeout/hang
-behavior, but not a kernel crash, memory corruption, or security fix.
+Step 8.3 Record: Failure mode is build failure, not
+crash/corruption/security. Severity is medium, but build fixes are an
+accepted stable exception.
 
-Record: Benefit is moderate/high for affected containerized users
-because it restores syscall semantics. Risk is very low: one local
-conditional change plus an include, using established helper semantics.
+Step 8.4 Record: Benefit is moderate: keeps affected stable builds
+working with newer clang warning behavior. Risk is very low: 10-line
+single-function mechanical change, no API change, call sites unchanged.
 
 ### Phase 9: Final Synthesis
-Record: Evidence for backporting: real reproduced bug, syscall-
-reachable, affects stable branches with the feature, tiny patch,
-maintainer-applied, positive reviewer feedback, matches established
-time-namespace behavior elsewhere.
+Evidence for backporting:
+- Real build failure mode documented in commit and lore.
+- Fits stable build-fix exception.
+- Very small, contained, reviewed by CAMSS maintainer.
+- Applies cleanly to current `7.0.5`; buggy code exists in `v6.12+` and
+  `v7.0`.
 
-Record: Evidence against backporting: not a crash/security/data-
-corruption fix; affects a narrower feature combination; no explicit
-stable nomination; older stable trees do not contain the affected
-feature.
+Evidence against backporting:
+- Not a runtime correctness, crash, data corruption, or security fix.
+- Trigger requires specific compiler/warning-as-error build settings.
+- Not relevant to `v6.6` and older because the helper is absent there.
 
-Record: Unresolved: I did not run the reproducer locally. Lore WebFetch
-was blocked by Anubis, but `b4` successfully fetched the thread. Exact
-first upstream introduction of `IORING_ENTER_ABS_TIMER` was not cleanly
-reconstructed from local blame alone, but affected stable branches were
-directly verified by grep.
+Stable rules checklist:
+1. Obviously correct and tested: yes for code review/readability; no
+   local clang-22 build reproduction.
+2. Fixes a real bug: yes, a verified build diagnostic/error path.
+3. Important issue: medium; build failure, not runtime failure.
+4. Small and contained: yes, one function, one file, 7+/3-.
+5. No new feature/API: yes.
+6. Can apply to stable: verified for current `7.0.5`; likely
+   straightforward for `v6.12+`, not applicable to `v6.6` and older.
 
-Stable rules:
-1. Obviously correct and tested: yes by code inspection, reproducer, and
-   positive review; no formal `Tested-by`.
-2. Fixes a real bug: yes, reproduced wrong timeout result.
-3. Important issue: yes for affected users, because absolute waits can
-   return immediately or at the wrong time.
-4. Small and contained: yes, 6-line single-function change.
-5. No new features/APIs: yes.
-6. Can apply to stable: yes for current `7.0.y`; minor path adjustment
-   may be needed in some branches.
-
-No automatic exception category applies.
+Exception category: Build fix.
 
 ## Verification
-- [Phase 1] Parsed `git show` commit message and tags for
-  `45d2b37a37ab98484693533496395c610a2cab96`.
-- [Phase 2] Verified diff is one file, `io_uring/wait.c`, 5 insertions/1
-  deletion in `io_cqring_wait()`.
-- [Phase 3] Ran `git blame` on the changed lines; current file location
-  comes from `0105b0562a5e`.
-- [Phase 3] Inspected `2b8e976b9842`; verified `ctx->clockid`,
-  `io_get_time(ctx)`, and selected-clock wait timeout support.
-- [Phase 3] Inspected companion commit `9cc6bac1bebf`; verified same
-  class of fix for `IORING_TIMEOUT_ABS`.
-- [Phase 4] Ran `b4 dig`, `b4 dig -a`, `b4 dig -w`, and `b4 mbox`;
-  verified v1-only series, correct recipients, positive feedback, and
-  applied notice.
-- [Phase 5] Read `io_uring_enter()` and `io_get_ext_arg()` call path;
-  verified direct syscall reachability.
-- [Phase 5] Verified `timens_ktime_to_host()` behavior in
-  `include/linux/time_namespace.h` and `kernel/time/namespace.c`.
-- [Phase 5] Verified similar established conversions in `kernel/time`
-  and `fs/timerfd.c`.
-- [Phase 6] Ran `git grep` on local stable branches; affected: `6.12`,
-  `6.18`, `6.19`, `7.0`; unaffected: `5.10`, `5.15`, `6.1`, `6.6`.
-- [Phase 6] Ran `git apply --check` for the candidate patch on current
-  `7.0.y`; it applies cleanly.
-- [Phase 8] Verified reproducer details from commit and mailing-list
-  cover letter; did not execute it locally.
+- Phase 1: `git show` verified candidate commit metadata and exact diff
+  for `2211e826bd69...`.
+- Phase 2: `git diff --shortstat` verified `1 file changed, 7
+  insertions(+), 3 deletions(-)`.
+- Phase 3: `git blame` verified helper introduced by `0727615fb975`;
+  `git show` inspected that commit.
+- Phase 3/6: `git describe --contains` and tag containment checks
+  verified introduction in `v6.7`, presence in `v6.12+`, absence from
+  `v6.6`.
+- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and saved mbox verified
+  original lore thread, v1-only series, recipients, `Fixes:` trailer,
+  and Bryan’s review.
+- Phase 5: `rg` and file reads verified call sites and probe call chain.
+- Phase 6: `git apply --check` verified clean apply to current `7.0.5`.
+- Phase 7: `MAINTAINERS` verified Bryan O'Donoghue is a CAMSS
+  maintainer.
+- Phase 8: `scripts/Makefile.warn` verified when `-Wmissing-format-
+  attribute` and `-Werror` are enabled.
+- UNVERIFIED: I did not reproduce the clang-22 build failure locally.
+- UNVERIFIED: I did not perform an actual `git apply --check` in a
+  separate `v6.12` worktree.
 
-This should be backported to stable trees that contain
-`IORING_ENTER_ABS_TIMER`, with the companion timeout patch strongly
-recommended for complete io_uring absolute-timeout time-namespace
-correctness.
+This is stable-worthy as a low-risk build fix for stable trees that
+contain the helper, especially `v6.12+`/`v7.0` era trees, and should be
+skipped for older trees where the code does not exist.
 
 **YES**
 
- io_uring/wait.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/camss/camss-csiphy.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/wait.c b/io_uring/wait.c
-index 91df86ce0d18c..ec01e78a216d6 100644
---- a/io_uring/wait.c
-+++ b/io_uring/wait.c
-@@ -5,6 +5,7 @@
- #include <linux/kernel.h>
- #include <linux/sched/signal.h>
- #include <linux/io_uring.h>
-+#include <linux/time_namespace.h>
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 62623393f4144..78a1b568dbae6 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -558,12 +558,16 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
+ 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
+ }
  
- #include <trace/events/io_uring.h>
+-static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+-				    int index)
++static bool __printf(2, 3)
++csiphy_match_clock_name(const char *clock_name, const char *format, ...)
+ {
+ 	char name[16]; /* csiphyXXX_timer\0 */
++	va_list args;
++
++	va_start(args, format);
++	vsnprintf(name, sizeof(name), format, args);
++	va_end(args);
  
-@@ -229,7 +230,10 @@ int io_cqring_wait(struct io_ring_ctx *ctx, int min_events, u32 flags,
- 
- 	if (ext_arg->ts_set) {
- 		iowq.timeout = timespec64_to_ktime(ext_arg->ts);
--		if (!(flags & IORING_ENTER_ABS_TIMER))
-+		if (flags & IORING_ENTER_ABS_TIMER)
-+			iowq.timeout = timens_ktime_to_host(ctx->clockid,
-+							    iowq.timeout);
-+		else
- 			iowq.timeout = ktime_add(iowq.timeout, start_time);
- 	}
+-	snprintf(name, sizeof(name), format, index);
+ 	return !strcmp(clock_name, name);
+ }
  
 -- 
 2.53.0
