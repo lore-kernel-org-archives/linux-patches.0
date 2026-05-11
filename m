@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4454F7964;
-	Mon, 11 May 2026 22:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28394DBD8E;
+	Mon, 11 May 2026 22:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778538003; cv=none; b=ZBUmlynbZx7Q6Xdk31bu1SuabtKBdqbn97vI5TCSjTYxfjN6Nc1Xp16oEEvCckZSjEG3WKhDboDQD6DKmNUlF1FVjYhua8Nch8zCoveeZFHEKsIVWhpQ8IcMmokJyYRTs0i6cKNEyVgPdhyzXnugqTZkHtputCcKOmD3lmpgOB8=
+	t=1778538004; cv=none; b=LXt2WMXjVNAviT/9YwL3neG6hbP7BpJlYImEIe/rWLern/NHRFvweTZYkuaphB2H+6Xef7NF4poirmGpyGVepbYDAXRUcQH2msKPAvo9TfZPlXeJLbEhy/Vir2Yjt+Yt1IZ/S2i9fvvtEzENm4fWSNqt6mBx1KB+btqzEFw8HRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778538003; c=relaxed/simple;
-	bh=1Oxyfd1/v7O27frv8bMTIM++jJRA0r8gE2wj5UKC5ek=;
+	s=arc-20240116; t=1778538004; c=relaxed/simple;
+	bh=3tI/Il7zP6ZV6ZLY5Ki9gNwt2fCqDBpCXbzjazhDU3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a47hQnFJAKWiMuvxypy/9u/agHPGNWI4eGPLGud675yYMzrIAz0N6th+bngC2EecXv6Wf5sekKKQXZhSVtinNmeSGnE4YUzVUqqog81gDENjHsaTBM5WupXCmIg5csmykie0K63F2IbY01yPlJ8I9oKeYL9z9Xemyb09EmMKtAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IvCYSscA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gtOAJRIwllWdsxHWmAsPn9lBJ50YyG2nwH0ZIDJpNx91ttYo1FoxgBjNhd7ah5xjsJBeeZR+snarKWvqz3aaXqsWx/e1jfpzQFC0FGGJ9NzctG9lMk/rSaEc579l6qKBgRgz8bteaQkjW6Hez/iZwR8ZYx956csYZ2j30Jrp/2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bWEtTaVF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IvCYSscA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1869BC2BCF5;
-	Mon, 11 May 2026 22:20:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bWEtTaVF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC8EC2BCB0;
+	Mon, 11 May 2026 22:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778538003;
-	bh=1Oxyfd1/v7O27frv8bMTIM++jJRA0r8gE2wj5UKC5ek=;
+	s=k20201202; t=1778538004;
+	bh=3tI/Il7zP6ZV6ZLY5Ki9gNwt2fCqDBpCXbzjazhDU3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvCYSscAn8WdA/IX8qh23AmPZJXNkD0GVm76HSc7v8H2JLhXWyn5I28EMXQfOZGNV
-	 KXGjR2bGWv9gsF5cjOdRGM2Bl042d4z/WDShDJsrCTk+jbdSDD9QYB5yneBY8/i03H
-	 G1PgMSW2PrpvG+cfQE3hQnC/4LYzxXH8yaI8PkiC5Pd6saKJLmnxjdgdbYeWriaxsJ
-	 Opd2kHhTxb1/GOqop7ARjA7yTLo0ABt933gWsesDkxkpRVaBp4kjh3EMrgyZkhoYE0
-	 qO62RIu1WrYCG6B9oCzytR3+WPvVZiIWu+J0bloJjtvDikeihP5ylo/f1qd/y54cnw
-	 RuabEskLr1m5w==
+	b=bWEtTaVF+nxLc4WqK5pHzzJPuMu+jmarOvdpycgCKiJcKmY/p3SDJ5MTgFwRLWbEe
+	 wEgrVp9brsn861hASJy+vlRkBxmIEo9CP1zYk7CDUDNc6X71LabjbYFo8mr0Ehlb2R
+	 FcajN/ykCjJdBobv31yoQpOcp1GEoG5rELqk25vnkMBelaEOryESt0M0EvupJ/P3rU
+	 G6AtcrHhOzGmBrcxxWKJSb4zisV4zpmtxYnhuvBUst9Ybdsa9eK13XQMDylIo18sj9
+	 qQI/KronYgO1mXxlhRfabhNhkrOrQDfCPu2pPzE41Kr0amA8aVqNqrFAjIvHiK+kQn
+	 zJ/hkOkCWT+qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Randy Dunlap <rdunlap@infradead.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Helge Deller <deller@gmx.de>,
+Cc: Bob Song <songxiebing@kylinos.cn>,
+	gannovera <gannovera@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	shawnguo@kernel.org,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] fbdev: ipu-v3: clean up kernel-doc warnings
-Date: Mon, 11 May 2026 18:19:20 -0400
-Message-ID: <20260511221931.2370053-21-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] ASoC: amd: yc: Add DMI quirk for MSI Bravo 15 C7VE
+Date: Mon, 11 May 2026 18:19:21 -0400
+Message-ID: <20260511221931.2370053-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -56,330 +56,240 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Bob Song <songxiebing@kylinos.cn>
 
-[ Upstream commit f1fb23a0a0fcbdb66672da51d7d63a259f6396ca ]
+[ Upstream commit 0e60d96616640ffcf51b81a87c71e30d92385a93 ]
 
-Correct all kernel-doc warnings:
-- fix a typedef kernel-doc comment
-- mark a list_head as private
-- use Returns: for function return values
+The laptop requires a quirk ID to enable its internal microphone. Add
+it to the DMI quirk table.
 
-Warning: include/video/imx-ipu-image-convert.h:31 struct member 'list' not
- described in 'ipu_image_convert_run'
-Warning: include/video/imx-ipu-image-convert.h:40 function parameter
- 'ipu_image_convert_cb_t' not described in 'void'
-Warning: include/video/imx-ipu-image-convert.h:40 expecting prototype for
- ipu_image_convert_cb_t(). Prototype was for void() instead
-Warning: include/video/imx-ipu-image-convert.h:66 No description found for
- return value of 'ipu_image_convert_verify'
-Warning: include/video/imx-ipu-image-convert.h:90 No description found for
- return value of 'ipu_image_convert_prepare'
-Warning: include/video/imx-ipu-image-convert.h:125 No description found for
- return value of 'ipu_image_convert_queue'
-Warning: include/video/imx-ipu-image-convert.h:163 No description found for
- return value of 'ipu_image_convert'
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: gannovera <gannovera@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218402
+Signed-off-by: Bob Song <songxiebing@kylinos.cn>
+Link: https://patch.msgid.link/20260430014920.141276-1-songxiebing@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `fbdev: ipu-v3`; action verb `clean up`;
-intent is to correct kernel-doc warnings in `include/video/imx-ipu-
-image-convert.h`.
+## Stable Backport Review
 
-Step 1.2 Record: tags in committed message are `Signed-off-by: Randy
-Dunlap <rdunlap@infradead.org>`, `Reviewed-by: Philipp Zabel
-<p.zabel@pengutronix.de>`, and `Signed-off-by: Helge Deller
-<deller@gmx.de>`. No `Fixes:`, `Reported-by:`, `Tested-by:`, `Acked-
-by:`, `Link:`, or `Cc: stable@vger.kernel.org` tag is present in the
-committed message.
+### Phase 1: Commit Message Forensics
+Record 1.1: Subsystem is `ASoC: amd: yc`; action verb is `Add`; claimed
+intent is adding a DMI quirk for MSI Bravo 15 C7VE internal microphone
+enablement.
 
-Step 1.3 Record: the described problem is seven kernel-doc warnings: one
-undocumented/private list member, malformed typedef documentation, and
-missing `Returns:` sections. The visible symptom is documentation
-tooling warnings, not a runtime crash, hang, data corruption, or
-security issue. No affected kernel version is stated. Root cause is
-incorrect kernel-doc comment syntax.
+Record 1.2: Tags found: `Reported-by: gannovera <gannovera@gmail.com>`,
+`Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218402`, `Signed-
+off-by: Bob Song <songxiebing@kylinos.cn>`, `Link: https://patch.msgid.l
+ink/20260430014920.141276-1-songxiebing@kylinos.cn`, `Signed-off-by:
+Mark Brown <broonie@kernel.org>`. No `Fixes:` tag and no explicit `Cc:
+stable`.
 
-Step 1.4 Record: this is not a hidden runtime bug fix. The body and diff
-both show a documentation/comment-only cleanup.
+Record 1.3: The message states the laptop requires a quirk ID to enable
+its internal microphone. Symptom is missing internal microphone support
+on MSI Bravo 15 C7VE. Version info is not stated. Root cause described
+is absence from `yc_acp_quirk_table`.
 
-## Phase 2: Diff Analysis
-Step 2.1 Record: one file changed: `include/video/imx-ipu-image-
-convert.h`, 11 insertions and 5 deletions. Modified documentation covers
-`struct ipu_image_convert_run`, `ipu_image_convert_cb_t`,
-`ipu_image_convert_verify()`, `ipu_image_convert_prepare()`,
-`ipu_image_convert_queue()`, and `ipu_image_convert()`. Scope is single-
-file, header-only, surgical.
+Record 1.4: This is a hardware quirk fix, not a hidden cleanup bug. It
+fits the stable exception category for DMI quirks/workarounds.
 
-Step 2.2 Record: hunk behavior:
-- `struct ipu_image_convert_run`: before, `list` was documented neither
-  as a member nor private; after, `/* private: */` tells kernel-doc to
-  ignore it as an API member.
-- `ipu_image_convert_cb_t`: before, kernel-doc treated the typedef
-  comment as a function prototype mismatch; after, it is marked as a
-  typedef comment.
-- Return docs: before, several returns were plain prose or missing;
-  after, they use kernel-doc `Returns:` syntax.
-- `ipu_image_convert_prepare()`: before, the V4L2 usage note followed
-  the return prose; after, the return section is last and formatted for
-  kernel-doc.
+### Phase 2: Diff Analysis
+Record 2.1: One file changed: `sound/soc/amd/yc/acp6x-mach.c`, 7
+insertions, 0 deletions. Modified object is the static
+`yc_acp_quirk_table[]`. Scope is a single-file surgical quirk addition.
 
-Step 2.3 Record: bug category is documentation/kernel-doc warning
-cleanup. No error-path, synchronization, refcount, memory-safety,
-initialization, type, logic, or hardware workaround change exists.
+Record 2.2: Before: the DMI table matched nearby MSI models such as
+`Bravo 15 B7ED` and `Bravo 15 C7VF`, but not `Bravo 15 C7VE`. After:
+exact vendor/product match for `Micro-Star International Co., Ltd.` and
+`Bravo 15 C7VE` maps to `&acp6x_card`. Affected path is platform probe
+hardware matching.
 
-Step 2.4 Record: fix quality is high for the stated documentation issue:
-small, obviously correct kernel-doc syntax changes. Runtime regression
-risk is effectively zero because no C declarations, types, function
-bodies, data layout, or APIs are changed. Documentation rendering risk
-is very low.
+Record 2.3: Bug category is hardware workaround / DMI quirk. Mechanism:
+`acp6x_probe()` calls `dmi_first_match(yc_acp_quirk_table)` and, on
+match, sets platform driver data to `acp6x_card`; without a match, the
+driver can return `-ENODEV` if ACPI did not already enable the card.
 
-## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows the affected header comments and
-declarations came from `cd98e85a6b786d` by Steve Longerbeam, dated
-2016-09-17. `git describe --contains cd98e85a6b786d` reports it as
-present by `v4.9-rc1~41^2~24^2`.
+Record 2.4: Fix quality is high: it adds only one exact DMI table entry
+using an existing pattern and no new logic. Regression risk is very low
+and limited to machines reporting that exact DMI product/vendor pair.
 
-Step 3.2 Record: no `Fixes:` tag is present, so there is no tagged
-introducing commit to follow. Blame identifies `cd98e85a6b786d` as the
-source of the documented preimage; `git show` confirms that commit added
-queued IPU image conversion support and the API documentation.
+### Phase 3: Git History Investigation
+Record 3.1: `git blame` around adjacent MSI entries in the checked-out
+7.0 tree traced those lines to the local merge base, not a useful
+original introducer. The “bug” is absence of this model entry, not a bad
+line introduced by a known commit. Verified file absent in `v5.15` and
+present in `v5.16`, `v6.1`, `v6.6`, and `v6.12`.
 
-Step 3.3 Record: recent local history for the file shows `96e9d754b35e8`
-removing unused `ipu_image_convert_*` functions, `c942fddf8793b` adding
-SPDX boilerplate conversion, and `cd98e85a6b786d` adding the header/API.
-No prerequisite commit is needed for this documentation-only patch.
+Record 3.2: No `Fixes:` tag, so no introducing commit to follow.
 
-Step 3.4 Record: `git log --author='Randy Dunlap'` under fbdev/include
-areas shows Randy has related cleanup/documentation work such as `fbdev:
-hgafb: fix kernel-doc comments` and `fbdev: fbmon: fix function name in
-kernel-doc`. The patch was reviewed by Philipp Zabel and committed by
-Helge Deller, verified from the commit and lore thread.
+Record 3.3: Recent history of `sound/soc/amd/yc/acp6x-mach.c` contains
+many similar DMI quirk additions, including HP, ASUS, MSI Thin/Vector
+entries. No prerequisite refactor was identified for this specific
+7-line addition.
 
-Step 3.5 Record: no dependencies found. The diff changes only comments
-and applies locally with `git apply --check`.
+Record 3.4: Author history in the fetched maintainer branch showed Bob
+Song’s related commits for this path consist of this patch. The patch
+was committed by Mark Brown, the ASoC maintainer.
 
-## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c f1fb23a0a0fcbdb66672da51d7d63a259f6396ca`
-failed to find a lore match by patch-id, author/subject, or in-body
-From. External fetch found the v3 discussion at
-`https://yhbt.net/lore/dri-
-devel/20260427183236.656902-1-rdunlap@infradead.org/T/`. The v3 thread
-has Helge Deller replying “applied to fbdev git tree.” Web search/fetch
-also found v2 and a v2 ping. No NAKs or objections were found.
+Record 3.5: Dependency check found the needed symbols and structure
+already exist in stable-relevant trees: `yc_acp_quirk_table`,
+`acp6x_card`, and `dmi_first_match()` are present in `v6.1`;
+`SND_SOC_AMD_YC_MACH` exists in `v6.1` and `v6.6`. The exact submitted
+hunk applies cleanly to the current 7.0 tree; older trees such as `v6.1`
+lack the nearby MSI `Bravo 15 B7ED` anchor and would need a simple
+context adjustment.
 
-Step 4.2 Record: `b4 dig -w` also failed for the same reason. The v3
-lore mirror shows recipients included `dri-devel`, Philipp Zabel, DRM
-maintainers, `imx`, `linux-arm-kernel`, Helge Deller, and `linux-fbdev`.
+### Phase 4: Mailing List And External Research
+Record 4.1: `b4 dig -c 0e60d96616640ffcf51b81a87c71e30d92385a93` found
+the lore thread at `https://patch.msgid.link/20260430014920.141276-1-
+songxiebing@kylinos.cn`. `b4 dig -a` found two same-subject submissions
+dated 2026-04-22 and 2026-04-30; the April 30 version is the applied
+one.
 
-Step 4.3 Record: no `Reported-by:` or bug-report `Link:` tags exist. No
-external crash/security bug report applies.
+Record 4.2: `b4 dig -w` showed the April 30 submission included Takashi
+Iwai, Jaroslav Kysela, Liam Girdwood, Mark Brown, Vijendar Mukunda,
+`linux-sound`, `linux-kernel`, and the reporter.
 
-Step 4.4 Record: this is a standalone one-patch documentation cleanup.
-v2 added the reviewed-by and updated Cc list; v3 rebased and resent.
+Record 4.3: Direct `WebFetch` of Bugzilla was blocked by Anubis. Search
+results and the lore thread corroborate that Bugzilla #218402 is tied to
+this MSI Bravo 15 C7VE microphone issue.
 
-Step 4.5 Record: direct `lore.kernel.org/stable` fetch was blocked by
-Anubis. Web search for the exact subject plus `stable` found patch-
-thread results but no stable-specific discussion or stable nomination.
+Record 4.4: Related pattern found: a similar MSI Bravo 17 C7VE quirk
+thread describes the same ACP6x DMIC not-enabled problem on a related
+MSI model. No dependency between that patch and this one was found.
 
-## Phase 5: Code Semantic Analysis
-Step 5.1 Record: modified documented symbols are
-`ipu_image_convert_run`, `ipu_image_convert_cb_t`,
-`ipu_image_convert_verify()`, `ipu_image_convert_prepare()`,
-`ipu_image_convert_queue()`, and `ipu_image_convert()`.
+Record 4.5: Stable-list search found no stable-specific discussion for
+`Bravo 15 C7VE`.
 
-Step 5.2 Record: `rg` found callers in `drivers/staging/media/imx/imx-
-media-csc-scaler.c` for `ipu_image_convert_abort()`,
-`ipu_image_convert_queue()`, `ipu_image_convert_adjust()`,
-`ipu_image_convert_unprepare()`, and `ipu_image_convert_prepare()`.
-Runtime callers are unaffected because only comments changed.
+### Phase 5: Code Semantic Analysis
+Record 5.1: Modified object is `yc_acp_quirk_table[]`; key consuming
+function is `acp6x_probe()`.
 
-Step 5.3 Record: reading `drivers/gpu/ipu-v3/ipu-image-convert.c`
-confirms the documented functions perform image format
-adjustment/verification, context allocation, queueing, abort/unprepare,
-and single conversion setup. None of those function bodies are touched.
+Record 5.2: `acp6x_probe()` is the `.probe` callback of platform driver
+`acp6x_mach_driver`. The platform device named `acp_yc_mach` is
+registered by `snd_acp6x_probe()` in `pci-acp6x.c` when ACP6x PDM mode
+is set.
 
-Step 5.4 Record: runtime path is reachable through IPU image conversion
-users, but the patch changes no runtime path. The affected path for the
-fix is kernel-doc/documentation generation.
+Record 5.3: Key callees in `acp6x_probe()` are ACPI property checks,
+`_WOV` evaluation, `dmi_first_match()`, `platform_set_drvdata()`,
+`platform_get_drvdata()`, and `devm_snd_soc_register_card()`.
 
-Step 5.5 Record: no related same-header kernel-doc fix was found by `git
-log --grep='kernel-doc' -- include/video/imx-ipu-image-convert.h`.
+Record 5.4: Reachability is hardware enumeration/probe on AMD Yellow
+Carp ACP systems, not a syscall-triggered path. For the affected laptop,
+the issue is encountered at boot/device probe when the internal DMIC
+card is not registered.
 
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: version tags `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`,
-`v6.15`, `v6.16`, and `v6.17` all contain `include/video/imx-ipu-image-
-convert.h` with the old kernel-doc text. The API was introduced before
-`v4.9-rc1`, so active stable trees checked contain the documentation
-issue.
+Record 5.5: Similar pattern is widespread in the same table: many
+laptop-specific entries all set `.driver_data = &acp6x_card`.
 
-Step 6.2 Record: expected backport difficulty is clean or minor. `git
-apply --check` succeeds against the current local tree, and the checked
-stable tags contain representative preimage lines. Full per-stable
-worktree application was not run.
+### Phase 6: Stable Tree Analysis
+Record 6.1: `v5.15` lacks `sound/soc/amd/yc/acp6x-mach.c`; `v5.16`,
+`v6.1`, `v6.6`, and `v6.12` contain it. This is relevant to stable trees
+with the AMD YC machine driver, especially `v6.1+`.
 
-Step 6.3 Record: no related stable fix for this header was found in
-local `git log --grep` searches.
+Record 6.2: Current 7.0 tree accepts the patch cleanly via `git apply
+--check`. `v6.6`, `v6.12`, `v6.18`, `v6.19`, and HEAD have nearby MSI
+entries; `v6.1` has the quirk machinery but not the same adjacent MSI
+context, so it needs minor manual placement.
 
-## Phase 7: Subsystem Context
-Step 7.1 Record: subsystem is fbdev/gpu IPU-v3 image conversion
-documentation in an include header. Runtime criticality is
-peripheral/driver-specific; documentation-build criticality is low.
+Record 6.3: Searches found no existing `Bravo 15 C7VE` entry in current
+HEAD, `v6.6`, `v6.12`, `v6.18`, or `v6.19`.
 
-Step 7.2 Record: local subsystem history shows ongoing cleanup/removal
-activity in `drivers/gpu/ipu-v3` and the header, including unused-
-function removals and treewide cleanup. This patch is not part of a
-required functional series.
+### Phase 7: Subsystem Context
+Record 7.1: Subsystem is ALSA SoC / AMD YC machine driver under
+`sound/`. Criticality is peripheral but user-visible: it affects audio
+capture on a specific laptop model.
 
-## Phase 8: Impact And Risk
-Step 8.1 Record: affected population is kernel documentation builders,
-maintainers, and users consuming generated kernel-doc. Runtime users of
-IPU-v3 are not affected by behavior.
+Record 7.2: The subsystem/file is actively receiving DMI quirk
+additions, verified by recent history listing multiple ASoC AMD YC quirk
+commits.
 
-Step 8.2 Record: trigger is running kernel-doc/documentation tooling
-over this header. It is not triggered by boot, device probe, syscalls,
-or ordinary runtime use. Unprivileged runtime trigger does not apply.
+### Phase 8: Impact And Risk
+Record 8.1: Affected users are MSI Bravo 15 C7VE owners using kernels
+with `CONFIG_SND_SOC_AMD_YC_MACH`.
 
-Step 8.3 Record: failure mode is documentation warnings only. Severity
-is LOW. I did not verify any configuration where these warnings are
-fatal, so that does not drive the decision.
+Record 8.2: Trigger condition is device probing on that hardware when
+firmware/ACPI does not otherwise enable the DMIC path. It is not an
+unprivileged-user-triggered security issue.
 
-Step 8.4 Record: benefit is low but real under the documentation-fix
-exception: it makes stable documentation builds cleaner. Risk is
-extremely low because only comments change. Risk/benefit is favorable if
-stable accepts documentation corrections.
+Record 8.3: Failure mode is loss of internal microphone functionality,
+not crash, data corruption, or security impact. Severity is medium for
+affected users.
 
-## Phase 9: Final Synthesis
-Step 9.1 Record: evidence for backporting: pure documentation
-correction, explicitly fixes listed kernel-doc warnings, tiny single-
-file patch, reviewed by Philipp Zabel, applied by Helge Deller, old text
-exists in active stable tags checked, and documentation/comment fixes
-are an allowed stable exception. Evidence against: no runtime bug, no
-crash/security/data-corruption impact, no stable nomination found, and
-b4 could not match the thread. Unresolved: direct stable-lore search was
-blocked; full apply checks on every stable branch were not run.
+Record 8.4: Benefit is high for affected hardware because it restores
+the internal microphone. Risk is very low because the patch is seven
+lines, exact-DMI-scoped, and uses existing driver data.
 
-Step 9.2 Record:
-1. Obviously correct and tested? Mostly yes for documentation syntax;
-   reviewed and applied, but no `Tested-by`.
-2. Fixes a real bug that affects users? Yes, a real kernel-doc warning
-   issue; not a runtime bug.
-3. Important issue? No runtime severity; LOW documentation-build
-   severity.
-4. Small and contained? Yes, 11 additions and 5 deletions in one header.
-5. No new features or APIs? Yes, comments only.
-6. Can apply to stable trees? Likely yes; local apply check passed and
-   stable tags checked contain the preimage.
+### Phase 9: Final Synthesis
+Record 9.1: Evidence for backporting: real user report, Bugzilla closure
+tag, accepted by ASoC maintainer, exact hardware quirk, tiny scope, no
+API/behavior change outside the matching laptop, and stable rules
+explicitly allow hardware quirks. Evidence against: no explicit `Cc:
+stable`, no `Tested-by`, Bugzilla direct fetch blocked, and `v6.1` needs
+trivial context adjustment. None of these outweigh the quirk benefit.
 
-Step 9.3 Record: exception category applies: documentation/comment fix.
-This is the main reason to accept despite lack of runtime impact.
+Record 9.2: Stable rules: obviously correct yes; fixes a real user-
+visible hardware bug yes; important enough for affected users yes,
+though not crash-level; small and contained yes; no new APIs/features
+yes; applies cleanly to current 7.0 and should be straightforward for
+stable trees containing the driver.
 
-Step 9.4 Decision: backporting is appropriate under the stable
-documentation-fix exception. It is not a stability/security fix, but it
-is a correct, reviewed, zero-runtime-risk cleanup of real kernel-doc
-warnings in code present across active stable trees.
+Record 9.3: Exception category applies: hardware-specific DMI
+quirk/workaround in an existing driver.
+
+Record 9.4: Decision is to backport to stable trees that contain the AMD
+YC machine driver, with minor context adjustment where needed.
 
 ## Verification
-- Phase 1: fetched and inspected committed metadata for
-  `f1fb23a0a0fcbdb66672da51d7d63a259f6396ca`; confirmed tags and
-  message.
-- Phase 2: `git show --stat --patch` confirmed one header, 11
-  insertions, 5 deletions, comments only.
-- Phase 3: `git blame` confirmed changed comment preimage from
-  `cd98e85a6b786d`; `git describe --contains` placed it before
-  `v4.9-rc1`; `git show cd98e85a6b786d` confirmed original API addition.
-- Phase 3: `git log` on the header/subsystem found no prerequisite
-  functional series.
-- Phase 4: `b4 dig`, `b4 dig -a`, and `b4 dig -w` all failed to match;
-  recorded as a tool limitation/failure.
-- Phase 4: WebFetch of the v3 lore mirror confirmed the patch thread and
-  Helge Deller’s applied reply; Spinics fetch confirmed v2 and a later
-  ping.
-- Phase 5: `rg` found runtime users; `ReadFile` of implementation
-  confirmed function bodies exist but are not changed.
-- Phase 6: tag checks confirmed the header and old doc text in `v5.10`,
-  `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.15`, `v6.16`, and `v6.17`; `git
-  apply --check` succeeded locally.
-- Phase 8: severity/risk assessment is derived from the verified
-  comments-only diff.
-- UNVERIFIED: direct `lore.kernel.org/stable` search content was blocked
-  by Anubis; no actual `make htmldocs` run was performed; full patch
-  application against every individual stable branch was not performed.
+- [Phase 1] Parsed fetched commit
+  `0e60d96616640ffcf51b81a87c71e30d92385a93`: confirmed subject, tags,
+  author, committer, and 7-line stat.
+- [Phase 2] Read `sound/soc/amd/yc/acp6x-mach.c`: confirmed
+  `yc_acp_quirk_table[]` and `acp6x_probe()` DMI behavior.
+- [Phase 3] Ran local history/blame checks: nearby blame was not useful
+  for original introduction; verified file absent in `v5.15` and present
+  in `v5.16+`.
+- [Phase 4] Ran `b4 dig -c`, `-a`, `-w`, and saved/read mbox: confirmed
+  lore thread, two submissions, maintainer recipients, and Mark Brown
+  application to `for-7.1`.
+- [Phase 5] Read `pci-acp6x.c`: confirmed PCI probe registers
+  `acp_yc_mach`, which invokes the machine driver probe.
+- [Phase 6] Checked stable tags and entries: no `Bravo 15 C7VE` in
+  checked stable/current trees; patch applies cleanly to current 7.0
+  tree.
+- [Phase 7] Checked Kconfig/Makefile: confirmed `SND_SOC_AMD_YC_MACH` is
+  the relevant config and exists in `v6.1`/`v6.6`.
+- [Phase 8] Impact assessment is based on verified probe flow plus the
+  commit’s reported Bugzilla/user report.
+- UNVERIFIED: Direct Bugzilla contents could not be fetched due Anubis.
+  Exact original file introduction commit was not determined from local
+  history, but tag presence verifies stable relevance.
 
 **YES**
 
- include/video/imx-ipu-image-convert.h | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/video/imx-ipu-image-convert.h b/include/video/imx-ipu-image-convert.h
-index 003b3927ede5c..6b77968a6a150 100644
---- a/include/video/imx-ipu-image-convert.h
-+++ b/include/video/imx-ipu-image-convert.h
-@@ -27,12 +27,13 @@ struct ipu_image_convert_run {
- 
- 	int status;
- 
-+	/* private: */
- 	/* internal to image converter, callers don't touch */
- 	struct list_head list;
- };
- 
- /**
-- * ipu_image_convert_cb_t - conversion callback function prototype
-+ * typedef ipu_image_convert_cb_t - conversion callback function prototype
-  *
-  * @run:	the completed conversion run pointer
-  * @ctx:	a private context pointer for the callback
-@@ -60,7 +61,7 @@ void ipu_image_convert_adjust(struct ipu_image *in, struct ipu_image *out,
-  * @out:	output image format
-  * @rot_mode:	rotation mode
-  *
-- * Returns 0 if the formats and rotation mode meet IPU restrictions,
-+ * Returns: 0 if the formats and rotation mode meet IPU restrictions,
-  * -EINVAL otherwise.
-  */
- int ipu_image_convert_verify(struct ipu_image *in, struct ipu_image *out,
-@@ -77,11 +78,11 @@ int ipu_image_convert_verify(struct ipu_image *in, struct ipu_image *out,
-  * @complete:	run completion callback
-  * @complete_context:	a context pointer for the completion callback
-  *
-- * Returns an opaque conversion context pointer on success, error pointer
-+ * In V4L2, drivers should call ipu_image_convert_prepare() at streamon.
-+ *
-+ * Returns: an opaque conversion context pointer on success, error pointer
-  * on failure. The input/output formats and rotation mode must already meet
-  * IPU retrictions.
-- *
-- * In V4L2, drivers should call ipu_image_convert_prepare() at streamon.
-  */
- struct ipu_image_convert_ctx *
- ipu_image_convert_prepare(struct ipu_soc *ipu, enum ipu_ic_task ic_task,
-@@ -122,6 +123,8 @@ void ipu_image_convert_unprepare(struct ipu_image_convert_ctx *ctx);
-  * In V4L2, drivers should call ipu_image_convert_queue() while
-  * streaming to queue the conversion of a received input buffer.
-  * For example mem2mem devices this would be called in .device_run.
-+ *
-+ * Returns: 0 on success or -errno on error.
-  */
- int ipu_image_convert_queue(struct ipu_image_convert_run *run);
- 
-@@ -155,6 +158,9 @@ void ipu_image_convert_abort(struct ipu_image_convert_ctx *ctx);
-  * On successful return the caller can queue more run requests if needed, using
-  * the prepared context in run->ctx. The caller is responsible for unpreparing
-  * the context when no more conversion requests are needed.
-+ *
-+ * Returns: pointer to the created &struct ipu_image_convert_run that has
-+ * been queued on success; an ERR_PTR(errno) on error.
-  */
- struct ipu_image_convert_run *
- ipu_image_convert(struct ipu_soc *ipu, enum ipu_ic_task ic_task,
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index aa62009331825..0fa2f694f3d30 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -472,6 +472,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 B7ED"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 C7VE"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.53.0
 
