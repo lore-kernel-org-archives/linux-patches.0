@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ACF4E378B;
-	Mon, 11 May 2026 22:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E40B4EA367;
+	Mon, 11 May 2026 22:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537997; cv=none; b=F7hyqS4xgoGc35uKp86MnzMQEr7duJVthMyKLlkeAIHApjCHZPLoEorXVlbVZaVaFZsGFNK/tzt3ZZZo2Wdr9ar0/iOmu5ogz1eywa1DzpxqoaVKTzrzd3/hy9GpeuqGHReolpEPVdffQImsQtduboejxugFxMIxjLOKW4LtXKc=
+	t=1778537999; cv=none; b=uBixu81LoZHaCSslhmq3w1WgRk/KcxUZ7F4NquCcVgf9h97CEWY+D26ma3Q/jLcTrQOOTtfRqsX352Ql+s9/BycFsXJyASoeMQQ/TWcBpOe7bf/IhNP5ROkgkpzjSjaIutANZWpP1bvagzpScSaHbHhDaZXSpb5MvL71qMksiJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537997; c=relaxed/simple;
-	bh=9tCgCsqZ2HSZ/TsOoNVOU6D2wmSey9I88Ha5w3FI9Mk=;
+	s=arc-20240116; t=1778537999; c=relaxed/simple;
+	bh=8T+mzpS+RN4Iph1BRrjfvkvnz0Qw2rzuU+YFeg4esqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=puA78v3MpZn1LqnHxidFSmt5cpggtn2kM7GvT4S/sk8eYpJx8ASXpjQYakCmaBTVK4phCditdDByTR01bxlaShw4Ubp6D6IF/NtPK7Twht821PG2S1xZagCbEHscTulbpbTPdGiuRF49RxqYqQfL4G8RYmWdFpPCk9/XX8Q5EE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u0FsmAbh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VxBbrkkKjlCdSoqQi1kcEoKqx27u7MkiOQqgbLmwOgtVI6PEhTuSnaWfoMwrk2v1QPUgRzsJT84zBWtajZW6/aX2Pq7ufXcf9HhVoGd3Z7CLly7RF3fuWru+v5UTunoTTlrvNI0FUzKWm5AHHxFoNHKmcKRe/LuULTY0spnUm7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bfC/av+V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u0FsmAbh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BD8C2BCF5;
-	Mon, 11 May 2026 22:19:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bfC/av+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADEFC2BCFA;
+	Mon, 11 May 2026 22:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537997;
-	bh=9tCgCsqZ2HSZ/TsOoNVOU6D2wmSey9I88Ha5w3FI9Mk=;
+	s=k20201202; t=1778537999;
+	bh=8T+mzpS+RN4Iph1BRrjfvkvnz0Qw2rzuU+YFeg4esqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u0FsmAbhVPthG3ctJPI1QiR9odlre3f6ubom/raf4q3f8248bVbdxpHdXmiAWuoEh
-	 H7z/SgayXzHj9zqqTpD7YIs43H4sMqBtlhcb9qlQ3E8/V+ahMj3VuGdO/jyPVyQtcZ
-	 B6Ape4JtG6X5urDBsaTUqPEajBoxWiZ1/qEDdhBu8PwnYj+VHbv1RVVyfNZq1f1xwK
-	 56IBwKNvZ9UJjUvncvJ7obV/WS/X9PaxuoiMWRNVQNylazE5eRFKdR3KaAK26+UtlX
-	 VIIK+sdRwWbYB27fi4dE71rinWd7tXV5IqlKeVK7D3o6+CjyolhIBhnyuYr4cV16p7
-	 stW2jGuKKoTgA==
+	b=bfC/av+VXtu4BsE9ZZJedA9x7k53U86SytVmnociD5/u/EoghHEpSZBoAT3orroZ6
+	 5OjLggizV4V/BLefoJwImZ9gFByYFRI9C8nlH7Z1AwYSHp6nlrJN2hG57M4xvn5duS
+	 X2elU9BFqztEt4bdT3iiw1BoyGuyL/Vo+Tap1x5w74jnAVyJGgs5pFAx6tmLiB4aJ3
+	 w4AS29zVSD8hOxFp9Kqg7CcbcdsjLzGA1SDCJEWC50t3kGfPobs++Gaz0RIxhgpKaz
+	 47O1FVbVD4oX1v5e4cZGWFF+/rebmqh9Goc8BchDhOwp/b6z8x8n0sT9ik1+c+hgjk
+	 RearWQ3nuy8+w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aurelien DESBRIERES <aurelien@hackers.camp>,
-	syzbot+ff30eeab8e07b37d524e@syzkaller.appspotmail.com,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Rodrigo Faria <rodrigofilipefaria@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	johan.hedberg@gmail.com,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] Bluetooth: hci_uart: Fix NULL deref in recv callbacks when priv is uninitialized
-Date: Mon, 11 May 2026 18:19:16 -0400
-Message-ID: <20260511221931.2370053-17-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] ALSA: hda/realtek: Add mute LED fixup for HP Pavilion 15-cs1xxx
+Date: Mon, 11 May 2026 18:19:17 -0400
+Message-ID: <20260511221931.2370053-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -56,295 +54,290 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aurelien DESBRIERES <aurelien@hackers.camp>
+From: Rodrigo Faria <rodrigofilipefaria@gmail.com>
 
-[ Upstream commit 902fe40bce7059722f7ffa1c378e577675cf1918 ]
+[ Upstream commit 01801e20d69346e1e6cec0d908f1cea3a49e51b5 ]
 
-When a fault is injected during hci_uart line discipline setup, the
-proto open() callback may fail leaving hu->priv as NULL. A subsequent
-TIOCSTI ioctl can trigger the recv() callback before priv is
-initialized, causing a NULL pointer dereference.
+Add a new fixup for the mute LED on the HP Pavilion 15-cs1xxx series
+using the VREF on NID 0x1b.
 
-Fix all four affected HCI UART protocol drivers by adding a NULL check
-on hu->priv at the start of their recv() callbacks: h4, h5, ath and
-bcsp.
+The BIOS on these models (tested up to F.32) incorrectly reports
+the mute LED on NID 0x18 via DMI OEM strings, which lacks VREF
+capabilities. This fixup overrides the LED pin to the correct
+NID 0x1b.
 
-Reported-by: syzbot+ff30eeab8e07b37d524e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ff30eeab8e07b37d524e
-Signed-off-by: Aurelien DESBRIERES <aurelien@hackers.camp>
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Rodrigo Faria <rodrigofilipefaria@gmail.com>
+Link: https://patch.msgid.link/20260505185518.23625-1-rodrigofilipefaria@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem `Bluetooth: hci_uart`; action verb `Fix`;
-intent is to prevent NULL dereference in HCI UART protocol `recv()`
-callbacks when `hu->priv` is not initialized.
+## Decision Summary
+This should be backported. It is a small, model-specific ALSA HDA
+Realtek hardware workaround for an HP Pavilion 15-cs1xxx BIOS quirk: the
+BIOS reports the mute LED on NID `0x18`, but that pin lacks VREF
+capability; the patch routes the existing HP VREF mute-LED handling to
+NID `0x1b`. It affects only systems matching PCI SSID `103c:856a`.
 
-Step 1.2 Record: Tags found: `Reported-by:
-syzbot+ff30eeab8e07b37d524e@syzkaller.appspotmail.com`; `Closes:
-https://syzkaller.appspot.com/bug?extid=ff30eeab8e07b37d524e`; `Signed-
-off-by: Aurelien DESBRIERES`; `Assisted-by: Claude:claude-sonnet-4-6`;
-`Signed-off-by: Luiz Augusto von Dentz`. No `Fixes:` tag. Notable
-pattern: syzbot report with reproducer and KASAN NULL-deref crash.
+## Phase Walkthrough
+### Phase 1: Commit Message Forensics
+Record: Subsystem is `ALSA: hda/realtek`; action is `Add`; intent is
+adding a mute LED fixup for HP Pavilion 15-cs1xxx.
 
-Step 1.3 Record: The commit describes a `hu->priv == NULL` path during
-HCI UART setup followed by received data via `TIOCSTI`, causing a NULL
-pointer dereference. The syzkaller report verifies a KASAN NULL-
-deref/general protection fault in `h4_recv`, with call chain `tty_ioctl
--> tiocsti -> hci_uart_tty_receive -> h4_recv`.
+Record: Tags present: `Signed-off-by: Rodrigo Faria
+<rodrigofilipefaria@gmail.com>`, `Link: https://patch.msgid.link/2026050
+5185518.23625-1-rodrigofilipefaria@gmail.com`, `Signed-off-by: Takashi
+Iwai <tiwai@suse.de>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+`Reviewed-by`, or `Cc: stable`.
 
-Step 1.4 Record: This is not hidden cleanup; it is an explicit memory-
-safety crash fix. The added checks prevent dereferencing protocol-
-private state when setup/error handling leaves it absent.
+Record: Bug described is incorrect BIOS/DMI OEM mute LED pin reporting.
+Symptom is mute LED control using the wrong NID, so the mute LED does
+not work correctly on this model. Version info: BIOS tested up to F.32.
+Root cause: reported NID `0x18` lacks VREF capability; correct NID is
+`0x1b`.
 
-## Phase 2: Diff Analysis
-Step 2.1 Record: Four files changed, all in `drivers/bluetooth`:
-`hci_ath.c` `+3/-0`, `hci_bcsp.c` `+3/-0`, `hci_h4.c` `+3/-0`,
-`hci_h5.c` `+3/-0`; total `12` insertions. Modified functions:
-`ath_recv`, `bcsp_recv`, `h4_recv`, `h5_recv`. Scope: small multi-file
-surgical driver fix.
+Record: This is a hardware quirk/fixup, not a hidden memory-safety bug.
+It fixes incorrect hardware description/firmware behavior.
 
-Step 2.2 Record: Each hunk previously assigned `hu->priv` to a protocol-
-private pointer and then dereferenced it. After the patch, each callback
-returns `-ENODEV` if that pointer is NULL. The affected path is receive
-handling through the HCI UART line discipline, including data injected
-by `TIOCSTI`.
+### Phase 2: Diff Analysis
+Record: One file changed: `sound/hda/codecs/realtek/alc269.c`, 21
+insertions, no removals. Modified areas: new helper
+`alc295_fixup_hp_pavilion_mute_led_1b`, enum entry, fixup table entry,
+PCI SSID quirk entry. Scope: single-file, surgical driver quirk.
 
-Step 2.3 Record: Bug category is NULL pointer dereference / memory
-safety. Specific mechanism: `hci_uart_tty_receive()` calls
-`hu->proto->recv()`, and these callbacks dereference `hu->priv`; if
-setup/error handling leaves `hu->priv` NULL, the callback crashes. The
-fix adds direct NULL guards before first dereference.
+Record: Before: HP vendor/DMI mute LED handling could derive the wrong
+LED NID from BIOS OEM string. After: for PCI SSID `103c:856a`, the
+driver selects a dedicated fixup that calls existing
+`alc269_fixup_hp_mute_led()` and then overrides `spec->mute_led_nid =
+0x1b`.
 
-Step 2.4 Record: Fix quality is high: simple, local, obviously correct,
-no API/data structure changes. Regression risk is very low; it only
-changes an invalid crash path to `-ENODEV`.
+Record: Bug category is hardware workaround / quirk. Specific mechanism:
+reuse existing VREF mute LED cdev setup, but force the pin to the
+verified VREF-capable NID.
 
-## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` on the vulnerable lines showed the current
-callback bodies come from long-standing Bluetooth UART code, with recent
-edits such as `b489556a856d` for `h4_recv_buf()` usage and
-`ca94b2b036c2` adding the BCSP registered guard. The vulnerable pattern
-exists in `v6.19.14` and `v7.0.5`.
+Record: Fix quality is good: small, contained, uses existing Realtek HDA
+LED infrastructure, only selected for one HP subsystem ID. Regression
+risk is very low and limited to that model.
 
-Step 3.2 Record: No `Fixes:` tag, so no tagged introducing commit to
-follow.
+### Phase 3: Git History Investigation
+Record: Local exact-subject `git log` found no commit hash in this
+checkout, so `b4 dig -c <hash>` could not be run against the target
+commit. The patch was analyzed by message-id instead.
 
-Step 3.3 Record: Related recent commits include `0ffac654e95c` / stable
-backport `981b4fd2baf3` removing the `HCI_UART_REGISTERED` guard from
-`h4_recv`, and `0c3cd7a0b862` fixing a related HCI UART NULL deref in
-write work. Another related upstream commit, `68d39ea5e0ad`, clears
-`HCI_UART_PROTO_INIT` on register error but is present in `v7.1-rc*`,
-not in checked `v6.19.14`/`v7.0.5`.
+Record: `git blame` on nearby current-tree lines shows this repository’s
+Realtek split file was imported through a grafted/snapshot-style commit,
+so blame was not useful for the original upstream introduction of the
+generic HP LED code.
 
-Step 3.4 Record: No prior Bluetooth commits by Aurelien DESBRIERES were
-found in this checkout. The patch was committed/applied by Bluetooth
-maintainer Luiz Augusto von Dentz.
+Record: Related local history contains similar model-specific HP
+Pavilion mute LED quirk commits: `2f388b4e8fdd6`, `068641bc9dc3d`, and
+`ab2be3af8c4ea`, each one-line Pavilion mute LED quirk additions.
 
-Step 3.5 Record: No functional prerequisite is required for this patch
-in affected trees; it applies cleanly to current `v7.0.5`. It is most
-relevant to trees with the `HCI_UART_PROTO_INIT` receive path and the
-recent H4 initialization-race changes, such as checked `v6.19.y` and
-`v7.0.y`.
+Record: Author history for Rodrigo Faria in this file returned no local
+commits. Maintainer handling was verified from the mailing-list thread:
+Takashi Iwai replied “Applied now.”
 
-## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 902fe40bce70` found the original thread:
-`https://patch.msgid.link/20260421135331.15425-1-aurelien@hackers.camp`.
-`b4 dig -a` found only v1; the committed patch matches the submitted
-revision.
+Record: Dependencies: no hard functional dependency beyond existing
+Realtek HDA HP mute LED infrastructure. That infrastructure exists in
+checked stable tags, though older trees use
+`sound/pci/hda/patch_realtek.c` and may need manual path/context
+backporting.
 
-Step 4.2 Record: `b4 dig -w` showed recipients included `linux-
-bluetooth`, Marcel Holtmann, Johan Hedberg, Luiz Dentz, `linux-kernel`,
-and syzbot. The patchwork bot reported it was applied to
-`bluetooth/bluetooth-next.git` by Luiz Augusto von Dentz.
+### Phase 4: Mailing List And External Research
+Record: `b4 am` by message-id found `[PATCH v3] ALSA: hda/realtek: Add
+mute LED fixup for HP Pavilion 15-cs1xxx`, 1 patch, 2 messages in
+thread, DKIM-signed.
 
-Step 4.3 Record: Syzkaller bug page verifies: “general protection fault
-in h4_recv”, KASAN NULL-ptr-deref, C and syz reproducers, and fix commit
-`902fe40bce70`.
+Record: Full thread shows the patch was sent to Takashi Iwai, Jaroslav
+Kysela, `linux-sound`, and `linux-kernel`; Takashi replied “Applied
+now.” No NAKs, objections, or stable nomination were found in the
+fetched thread.
 
-Step 4.4 Record: No multi-patch series was found; only v1 of this one-
-patch submission.
+Record: `b4 am -v 2` could not find revision 2 from this message-id; web
+searches also did not locate earlier cs1xxx revisions. The subject says
+v3, but earlier revision discussion remains unverified.
 
-Step 4.5 Record: Direct lore stable fetch was blocked by Anubis; web
-search found no stable-specific discussion. This does not affect the
-decision because the syzbot crash and code path are verified elsewhere.
+Record: External search found public evidence of HP Pavilion 15-cs-
+series systems using ALC295 audio, but no separate cs1xxx-specific bug
+report was found.
 
-## Phase 5: Code Semantic Analysis
-Step 5.1 Record: Modified functions: `ath_recv`, `bcsp_recv`, `h4_recv`,
-`h5_recv`.
+Record: Stable-list searches found no cs1xxx-specific stable discussion,
+but did find similar ALSA Realtek HP Pavilion mute LED quirks appearing
+in stable discussion/results.
 
-Step 5.2 Record: Exact call path verified: protocol structs assign
-`.recv = h4_recv/ath_recv/bcsp_recv/h5_recv`; `hci_uart_tty_receive()`
-calls `hu->proto->recv(hu, data, count)`; `tiocsti()` calls the line
-discipline `receive_buf`.
+### Phase 5: Code Semantic Analysis
+Record: Modified/added key function:
+`alc295_fixup_hp_pavilion_mute_led_1b`.
 
-Step 5.3 Record: Key callees include `h4_recv_buf()`,
-`hci_recv_frame()`, `h5_reset_rx()`, `bcsp_unslip_one_byte()`, and skb
-cleanup helpers. The first unsafe operation in each changed function was
-a dereference of the private pointer.
+Record: Callers: the new function is referenced from `alc269_fixups[]`;
+that fixup is selected by `snd_hda_pick_fixup()` during Realtek codec
+probe, using the PCI SSID quirk table. This is device
+probe/configuration path, not a syscall hot path.
 
-Step 5.4 Record: Reachability is verified from userspace ioctl in the
-syzkaller trace and reproducer: `openat("/dev/ptmx")`, `TIOCSETD` to
-`N_HCI`, `HCIUARTSETPROTO` with fault injection, then `TIOCSTI`.
+Record: Callees: `alc269_fixup_hp_mute_led()` scans HP DMI OEM strings,
+sets LED polarity/NID, registers the mute LED cdev through
+`snd_hda_gen_add_mute_led_cdev()`, and installs `led_power_filter`. The
+new helper then overrides `spec->mute_led_nid`.
 
-Step 5.5 Record: Similar HCI UART receive callbacks exist; some, like
-`qca_recv` and `ll_recv`, still have `HCI_UART_REGISTERED` guards before
-dereferencing private data. The candidate focuses on the four callbacks
-identified in the accepted patch.
+Record: Reachability: affected path is reachable during HDA codec probe
+on matching HP hardware and later through the LED audio mute
+trigger/cdev callback.
 
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: Checked `v6.19.14` and `v7.0.5`: the four callbacks
-exist without the new NULL checks. These trees also have
-`hci_uart_tty_receive()` accepting `HCI_UART_PROTO_INIT`. Checked
-`v6.6`/`v6.12`: older receive gating differs, so the exact trigger is
-less clearly present there.
+Record: Similar patterns: many existing HP Realtek quirks use
+`ALC269_FIXUP_HP_MUTE_LED_MIC3`, `ALC295_FIXUP_HP_MUTE_LED_COEFBIT11`,
+and related model-specific entries.
 
-Step 6.2 Record: `git apply --check` of the candidate diff succeeds on
-the current `v7.0.5` checkout. Expected backport difficulty for similar
-affected trees is clean or trivial.
+### Phase 6: Stable Tree Analysis
+Record: Checked tags `v6.19`, `v6.18`, `v6.17`, `v6.16`, `v6.12`, and
+`v6.6` exist locally.
 
-Step 6.3 Record: No equivalent recv-callback NULL guard was found in
-`v6.19.14` or `v7.0.5`. A related central cleanup exists upstream as
-`68d39ea5e0ad`, but not in those checked stable tags.
+Record: `v6.19` and `v6.18` use `sound/hda/codecs/realtek/alc269.c`;
+`v6.6` uses older `sound/pci/hda/patch_realtek.c`.
 
-## Phase 7: Subsystem Context
-Step 7.1 Record: Subsystem is Bluetooth HCI UART, a driver subsystem
-under `drivers/bluetooth`. Criticality: important for systems using
-UART-attached Bluetooth controllers; not universal core kernel code.
+Record: Generic HP VREF mute LED infrastructure exists in `v6.6` and
+newer checked tags. `ALC295_FIXUP_HP_MUTE_LED_COEFBIT11` exists in
+`v6.16+`, but not in `v6.12`/`v6.6`; the new fixup itself does not
+depend on that helper, only on nearby placement/context.
 
-Step 7.2 Record: Bluetooth UART code is actively changing in this range,
-with recent initialization-race and NULL-deref fixes in the same area.
+Record: `git apply --check` succeeds on current `7.0.5` checkout. It
+fails on a temporary `v6.18` worktree due to context drift, so stable
+backports likely need minor manual adjustment. Older stable trees need
+path adjustment to `sound/pci/hda/patch_realtek.c`.
 
-## Phase 8: Impact And Risk
-Step 8.1 Record: Affected users are systems with `N_HCI` / HCI UART
-Bluetooth line discipline enabled, especially with H4/H5/ATH/BCSP
-protocol paths.
+### Phase 7: Subsystem And Maintainer Context
+Record: Subsystem is ALSA HDA Realtek codec driver under sound.
+Criticality: peripheral/driver-specific, affecting HP Pavilion 15-cs1xxx
+users.
 
-Step 8.2 Record: Trigger verified by syzkaller requires HCI UART line
-discipline setup, fault/error during protocol setup, then received data
-through `TIOCSTI`. The reproducer uses fault injection and ioctl access;
-unprivileged exploitability was not established.
+Record: The file is actively maintained and frequently receives model-
+specific quirks. Recent local history includes multiple ALSA Realtek
+HP/Lenovo/ASUS/Samsung quirk commits.
 
-Step 8.3 Record: Failure mode is kernel oops/general protection fault
-from KASAN NULL dereference in `h4_recv`; severity HIGH to CRITICAL
-because it crashes the kernel.
+### Phase 8: Impact And Risk
+Record: Affected users are specific to HP Pavilion 15-cs1xxx / PCI SSID
+`103c:856a` with Realtek ALC295-class HDA audio.
 
-Step 8.4 Record: Benefit is high for affected stable trees because it
-prevents a reproducible kernel crash. Risk is very low: 12 added lines,
-no new feature, no locking changes, no API changes.
+Record: Trigger condition is normal codec probe and mute LED operation
+on that hardware. No evidence found that unprivileged users can trigger
+a crash or security issue; the user-visible effect is
+incorrect/nonfunctional mute LED.
 
-## Phase 9: Final Synthesis
-Step 9.1 Record: Evidence for backporting: syzbot report with
-reproducer, KASAN NULL deref, syscall-triggered path, small surgical
-patch, accepted by Bluetooth maintainer, applies cleanly to checked
-stable tree. Evidence against: trigger appears tied to setup
-failure/fault injection and may not affect older stable trees with
-different HCI UART initialization flow. Unresolved: exact applicability
-to every older LTS branch was not fully verified.
+Record: Failure severity is LOW to MEDIUM: not a crash or data
+corruption issue, but a real hardware functionality regression/quirk.
 
-Step 9.2 Record: Stable rules checklist: obviously correct: yes; fixes
-real bug: yes, syzbot crash; important issue: yes, kernel oops; small
-and contained: yes, 12 insertions in four driver callbacks; no new
-features/APIs: yes; applies to stable: yes for checked `v7.0.5`, likely
-trivial for affected `v6.19.y`.
+Record: Benefit is medium for affected users because it restores correct
+mute LED behavior. Risk is very low because the quirk is model-specific
+and uses existing LED control paths.
 
-Step 9.3 Record: No exception category needed; this is a direct crash
-fix, not a device ID/quirk/build/doc patch.
+### Phase 9: Final Synthesis
+Record: Evidence for backporting: hardware quirk category, fixes real
+BIOS misreporting, limited to one PCI SSID, small patch, uses
+established ALSA Realtek fixup patterns, accepted by ALSA maintainer,
+and similar HP mute LED quirks are common stable material.
 
-Step 9.4 Record: Decision is to backport to affected stable trees,
-especially those containing the `HCI_UART_PROTO_INIT` receive path and
-recent HCI UART initialization fixes. The benefit/risk ratio is strongly
-favorable.
+Record: Evidence against backporting: no crash/security/data corruption;
+no explicit stable tag; current patch does not apply cleanly to at least
+`v6.18` without minor context adjustment; older trees need file-
+path/context adjustment.
+
+Record: Stable rules: obviously correct enough by inspection; fixes a
+real hardware bug; small and contained; no new public API; no new
+feature beyond hardware-specific workaround; stable application may
+require minor backport edits.
+
+Record: Exception category applies: hardware-specific quirk/workaround
+in an existing driver.
 
 ## Verification
-- Phase 1: Parsed commit `902fe40bce7059722f7ffa1c378e577675cf1918` with
-  `git show`; verified syzbot and Closes tags.
-- Phase 2: Verified diff stat: four files, 12 insertions, only NULL
-  guards in recv callbacks.
-- Phase 3: Ran `git blame` on changed callback lines and inspected
-  related commits `0ffac654e95c`, `981b4fd2baf3`, `0c3cd7a0b862`, and
-  `68d39ea5e0ad`.
-- Phase 4: Ran `b4 dig -c`, `-a`, and `-w`; fetched mirror thread and
-  syzkaller bug/reproducer.
-- Phase 5: Verified call path with source reads and exact searches:
-  `tiocsti()` -> line discipline `receive_buf` ->
-  `hci_uart_tty_receive()` -> protocol `.recv`.
-- Phase 6: Checked `v6.19.14`, `v7.0.5`, `v6.12`, and `v6.6` snippets;
-  verified patch applies to current `v7.0.5` with `git apply --check`.
-- Phase 8: Verified failure mode from syzkaller crash log: KASAN NULL-
-  ptr-deref/general protection fault in `h4_recv`.
-- UNVERIFIED: Exact applicability to every active older stable/LTS
-  branch; older branches with different HCI UART gating may not need
-  this patch.
+- [Phase 1] Parsed subject, body, and tags from supplied commit message
+  and fetched mbox.
+- [Phase 2] Verified patch is 21 insertions in
+  `sound/hda/codecs/realtek/alc269.c`.
+- [Phase 3] Ran local `git log` by exact subject: no matching commit
+  hash found.
+- [Phase 3] Ran `git blame` around affected code: local history is
+  snapshot/grafted, limiting original-introduction analysis.
+- [Phase 4] Ran `b4 am` by message-id: found v3 patch, 2-message thread,
+  DKIM-signed.
+- [Phase 4] Read full mbox: Takashi Iwai replied “Applied now”; no
+  objections found.
+- [Phase 5] Traced quirk selection through `snd_hda_pick_fixup()` and
+  Realtek probe path.
+- [Phase 6] Checked stable tags and paths: `v6.18+` split path, `v6.6`
+  old `patch_realtek.c` path.
+- [Phase 6] Checked relevant symbols in stable tags: HP VREF LED
+  infrastructure exists in checked stable trees.
+- [Phase 6] Ran `git apply --check`: applies to current checkout, not
+  cleanly to `v6.18` due context drift.
+- [Phase 8] Verified failure mode from commit body and code: wrong LED
+  NID affects mute LED behavior, not memory safety.
+- UNVERIFIED: exact applied upstream commit SHA, because it was not
+  present in local `git log`.
+- UNVERIFIED: earlier v1/v2 review discussion, because `b4` and web
+  search did not locate those revisions.
+- UNVERIFIED: exact applicability to every active older LTS tree beyond
+  the checked tags.
 
 **YES**
 
- drivers/bluetooth/hci_ath.c  | 3 +++
- drivers/bluetooth/hci_bcsp.c | 3 +++
- drivers/bluetooth/hci_h4.c   | 3 +++
- drivers/bluetooth/hci_h5.c   | 3 +++
- 4 files changed, 12 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/bluetooth/hci_ath.c b/drivers/bluetooth/hci_ath.c
-index fa679ad0acdfa..8201fa7f61e84 100644
---- a/drivers/bluetooth/hci_ath.c
-+++ b/drivers/bluetooth/hci_ath.c
-@@ -191,6 +191,9 @@ static int ath_recv(struct hci_uart *hu, const void *data, int count)
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 29dafa3f1d15a..9daf7a12bf95d 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -1676,6 +1676,21 @@ static void alc295_fixup_hp_mute_led_coefbit11(struct hda_codec *codec,
+ 	}
+ }
+ 
++/* Override wrong pin to NID 0x1b (F.32 BIOS reports 0x18 via DMI OEM string)
++ * on HP pavilion 15-cs1xxx laptops
++ */
++static void alc295_fixup_hp_pavilion_mute_led_1b(struct hda_codec *codec,
++						 const struct hda_fixup *fix,
++						 int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	alc269_fixup_hp_mute_led(codec, fix, action);
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE)
++		spec->mute_led_nid = 0x1b;
++}
++
+ static void alc233_fixup_lenovo_coef_micmute_led(struct hda_codec *codec,
+ 				const struct hda_fixup *fix, int action)
  {
- 	struct ath_struct *ath = hu->priv;
- 
-+	if (!ath)
-+		return -ENODEV;
-+
- 	ath->rx_skb = h4_recv_buf(hu, ath->rx_skb, data, count,
- 				  ath_recv_pkts, ARRAY_SIZE(ath_recv_pkts));
- 	if (IS_ERR(ath->rx_skb)) {
-diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
-index b386f91d8b46d..db56eead27ceb 100644
---- a/drivers/bluetooth/hci_bcsp.c
-+++ b/drivers/bluetooth/hci_bcsp.c
-@@ -585,6 +585,9 @@ static int bcsp_recv(struct hci_uart *hu, const void *data, int count)
- 	if (!test_bit(HCI_UART_REGISTERED, &hu->flags))
- 		return -EUNATCH;
- 
-+	if (!bcsp)
-+		return -ENODEV;
-+
- 	BT_DBG("hu %p count %d rx_state %d rx_count %ld",
- 	       hu, count, bcsp->rx_state, bcsp->rx_count);
- 
-diff --git a/drivers/bluetooth/hci_h4.c b/drivers/bluetooth/hci_h4.c
-index a889a66a326f7..7673727074985 100644
---- a/drivers/bluetooth/hci_h4.c
-+++ b/drivers/bluetooth/hci_h4.c
-@@ -109,6 +109,9 @@ static int h4_recv(struct hci_uart *hu, const void *data, int count)
- {
- 	struct h4_struct *h4 = hu->priv;
- 
-+	if (!h4)
-+		return -ENODEV;
-+
- 	h4->rx_skb = h4_recv_buf(hu, h4->rx_skb, data, count,
- 				 h4_recv_pkts, ARRAY_SIZE(h4_recv_pkts));
- 	if (IS_ERR(h4->rx_skb)) {
-diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
-index cfdf75dc28475..d353837182125 100644
---- a/drivers/bluetooth/hci_h5.c
-+++ b/drivers/bluetooth/hci_h5.c
-@@ -587,6 +587,9 @@ static int h5_recv(struct hci_uart *hu, const void *data, int count)
- 	struct h5 *h5 = hu->priv;
- 	const unsigned char *ptr = data;
- 
-+	if (!h5)
-+		return -ENODEV;
-+
- 	BT_DBG("%s pending %zu count %d", hu->hdev->name, h5->rx_pending,
- 	       count);
- 
+@@ -3859,6 +3874,7 @@ enum {
+ 	ALC290_FIXUP_SUBWOOFER,
+ 	ALC290_FIXUP_SUBWOOFER_HSJACK,
+ 	ALC295_FIXUP_HP_MUTE_LED_COEFBIT11,
++	ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B,
+ 	ALC269_FIXUP_THINKPAD_ACPI,
+ 	ALC269_FIXUP_LENOVO_XPAD_ACPI,
+ 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
+@@ -5701,6 +5717,10 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc295_fixup_hp_mute_led_coefbit11,
+ 	},
++	[ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc295_fixup_hp_pavilion_mute_led_1b,
++	},
+ 	[ALC298_FIXUP_SAMSUNG_AMP] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc298_fixup_samsung_amp,
+@@ -6894,6 +6914,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8537, "HP ProBook 440 G6", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8548, "HP EliteBook x360 830 G6", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x854a, "HP EliteBook 830 G6", ALC285_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x856a, "HP Pavilion 15-cs1xxx", ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B),
+ 	SND_PCI_QUIRK(0x103c, 0x85c6, "HP Pavilion x360 Convertible 14-dy1xxx", ALC295_FIXUP_HP_MUTE_LED_COEFBIT11),
+ 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
+ 	SND_PCI_QUIRK(0x103c, 0x8603, "HP Omen 17-cb0xxx", ALC285_FIXUP_HP_MUTE_LED),
 -- 
 2.53.0
 
