@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E40B4EA367;
-	Mon, 11 May 2026 22:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28964EA379;
+	Mon, 11 May 2026 22:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537999; cv=none; b=uBixu81LoZHaCSslhmq3w1WgRk/KcxUZ7F4NquCcVgf9h97CEWY+D26ma3Q/jLcTrQOOTtfRqsX352Ql+s9/BycFsXJyASoeMQQ/TWcBpOe7bf/IhNP5ROkgkpzjSjaIutANZWpP1bvagzpScSaHbHhDaZXSpb5MvL71qMksiJo=
+	t=1778538000; cv=none; b=KiihMzCCMjWspZfa939/wR826dUYdvDLk6ww7MSbGBDvps6NOY9VgaMztT/42fg2wFOv/IXFvN/bhuUnWSz6M370FK5i7sSQRUzbmDYB+stcsvhG6HAAKRLKT4T/o8IjmZA9XDTRQbg2TFNDIIXo8IRERf+189nn8E+VkIpYNLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537999; c=relaxed/simple;
-	bh=8T+mzpS+RN4Iph1BRrjfvkvnz0Qw2rzuU+YFeg4esqw=;
+	s=arc-20240116; t=1778538000; c=relaxed/simple;
+	bh=FdxaTCru6hrfGquTDBaLS5mWfPunr3FQyhpxgFvekzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VxBbrkkKjlCdSoqQi1kcEoKqx27u7MkiOQqgbLmwOgtVI6PEhTuSnaWfoMwrk2v1QPUgRzsJT84zBWtajZW6/aX2Pq7ufXcf9HhVoGd3Z7CLly7RF3fuWru+v5UTunoTTlrvNI0FUzKWm5AHHxFoNHKmcKRe/LuULTY0spnUm7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bfC/av+V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WuX2+QyMMmKu8GCBRT3mrsC0tQLt9Bef4L2XZmExnfKySkv4wucGlMaSABx2OZkeGRqdoMRxhQ/yMv7nR/xZB8iYPlx/2gW4tkOZo3utvT2qUuk54fSDjggPwodFF97Wiaux6gomBUx9qg8ImsM9d6mVlbp3o87RAjoQksBCtcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AHL1ez8K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bfC/av+V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADEFC2BCFA;
-	Mon, 11 May 2026 22:19:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AHL1ez8K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C8CC2BCB0;
+	Mon, 11 May 2026 22:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537999;
-	bh=8T+mzpS+RN4Iph1BRrjfvkvnz0Qw2rzuU+YFeg4esqw=;
+	s=k20201202; t=1778538000;
+	bh=FdxaTCru6hrfGquTDBaLS5mWfPunr3FQyhpxgFvekzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bfC/av+VXtu4BsE9ZZJedA9x7k53U86SytVmnociD5/u/EoghHEpSZBoAT3orroZ6
-	 5OjLggizV4V/BLefoJwImZ9gFByYFRI9C8nlH7Z1AwYSHp6nlrJN2hG57M4xvn5duS
-	 X2elU9BFqztEt4bdT3iiw1BoyGuyL/Vo+Tap1x5w74jnAVyJGgs5pFAx6tmLiB4aJ3
-	 w4AS29zVSD8hOxFp9Kqg7CcbcdsjLzGA1SDCJEWC50t3kGfPobs++Gaz0RIxhgpKaz
-	 47O1FVbVD4oX1v5e4cZGWFF+/rebmqh9Goc8BchDhOwp/b6z8x8n0sT9ik1+c+hgjk
-	 RearWQ3nuy8+w==
+	b=AHL1ez8KAThsJKuPsoEsk96yDvMvU3RblOmDalcChlt/ujxRBeMBYT8nxGWJK7Kzd
+	 pv0MIE3JdnHiGu0f3jW1E+ZnlvzV2wMYvpaJCAr/1MwDJbockM5KfFEBjEc8k7xRN6
+	 7HTKCNnADqIqVyhkc+eNMi1HI0njvoGAgxxrNFA1Nh9Vc47f/Zjc5s8Dk2KibiIfGS
+	 GJWklAvvQ4pV29govL6RX9sJByc7ydm7rvGKbi8BqzDfJ9ri8WrJ1waG/IQq8qpd4g
+	 0XYzpwJl6nOjRIBfYSPzV6/IKeYqpdyOYb/ikGPHm1OVQE+upw+b64y78AJ+9U7dsB
+	 609YJcfqp3KIw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rodrigo Faria <rodrigofilipefaria@gmail.com>,
+Cc: Anton Swart <anton.swart.jhb@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
 	perex@perex.cz,
 	tiwai@suse.com,
 	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] ALSA: hda/realtek: Add mute LED fixup for HP Pavilion 15-cs1xxx
-Date: Mon, 11 May 2026 18:19:17 -0400
-Message-ID: <20260511221931.2370053-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] ALSA: usb-audio: Add quirk flags for AlphaTheta EUPHONIA
+Date: Mon, 11 May 2026 18:19:18 -0400
+Message-ID: <20260511221931.2370053-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -54,290 +54,373 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Faria <rodrigofilipefaria@gmail.com>
+From: Anton Swart <anton.swart.jhb@gmail.com>
 
-[ Upstream commit 01801e20d69346e1e6cec0d908f1cea3a49e51b5 ]
+[ Upstream commit f80785888f7c0980a49545b87a80e3817c9ed7c6 ]
 
-Add a new fixup for the mute LED on the HP Pavilion 15-cs1xxx series
-using the VREF on NID 0x1b.
+The AlphaTheta EUPHONIA (VID 0x2b73, PID 0x0047) is a USB Audio
+Class 2 DJ mixer that requires implicit feedback for full-duplex
+operation. The capture endpoint (0x83 IN, interface 2) acts as the
+implicit feedback source for the playback endpoint (0x03 OUT,
+interface 1), and the device firmware does not send isochronous
+data on the capture endpoint unless the host is simultaneously
+sending data on the playback endpoint, i.e. playback must be
+started first.
 
-The BIOS on these models (tested up to F.32) incorrectly reports
-the mute LED on NID 0x18 via DMI OEM strings, which lacks VREF
-capabilities. This fixup overrides the LED pin to the correct
-NID 0x1b.
+Without QUIRK_FLAG_PLAYBACK_FIRST the kernel waits for capture URBs
+before submitting playback URBs, creating a deadlock: the device
+waits for playback data and the host waits for capture data.
+Without QUIRK_FLAG_GENERIC_IMPLICIT_FB the kernel does not detect
+the implicit feedback relationship between the two interfaces.
 
-Signed-off-by: Rodrigo Faria <rodrigofilipefaria@gmail.com>
-Link: https://patch.msgid.link/20260505185518.23625-1-rodrigofilipefaria@gmail.com
+The same flag combination is already used for the Behringer UMC202HD,
+UMC204HD and UMC404HD (0x1397:0x0507/0x0508/0x0509), which exhibit
+the identical implicit-feedback topology.
+
+Tested on Raspberry Pi 5 with kernel 6.12.75; continuous full-duplex
+streaming at 96 kHz / 24-bit, zero XRUNs.
+
+Signed-off-by: Anton Swart <anton.swart.jhb@gmail.com>
+Link: https://patch.msgid.link/20260503211517.14332-1-anton.swart.jhb@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Decision Summary
-This should be backported. It is a small, model-specific ALSA HDA
-Realtek hardware workaround for an HP Pavilion 15-cs1xxx BIOS quirk: the
-BIOS reports the mute LED on NID `0x18`, but that pin lacks VREF
-capability; the patch routes the existing HP VREF mute-LED handling to
-NID `0x1b`. It affects only systems matching PCI SSID `103c:856a`.
+## Phase 1: Commit Message Forensics
 
-## Phase Walkthrough
-### Phase 1: Commit Message Forensics
-Record: Subsystem is `ALSA: hda/realtek`; action is `Add`; intent is
-adding a mute LED fixup for HP Pavilion 15-cs1xxx.
+### Step 1.1: Subject
+Record: Subsystem: `ALSA: usb-audio`. Action verb: `Add`. Claimed
+intent: add device-specific quirk flags for AlphaTheta EUPHONIA.
 
-Record: Tags present: `Signed-off-by: Rodrigo Faria
-<rodrigofilipefaria@gmail.com>`, `Link: https://patch.msgid.link/2026050
-5185518.23625-1-rodrigofilipefaria@gmail.com`, `Signed-off-by: Takashi
-Iwai <tiwai@suse.de>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
-`Reviewed-by`, or `Cc: stable`.
+### Step 1.2: Tags
+Record:
+- `Signed-off-by: Anton Swart <anton.swart.jhb@gmail.com>`: author
+  signoff.
+- `Link: https://patch.msgid.link/20260503211517.14332-1-
+  anton.swart.jhb@gmail.com`: original patch submission.
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>`: supplied commit message
+  says ALSA maintainer applied/signed off.
+- No `Fixes:` tag.
+- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
+  stable@vger.kernel.org` tags.
+- The patch body says it was tested on Raspberry Pi 5 with kernel
+  `6.12.75`, but this is not a formal `Tested-by:` tag.
 
-Record: Bug described is incorrect BIOS/DMI OEM mute LED pin reporting.
-Symptom is mute LED control using the wrong NID, so the mute LED does
-not work correctly on this model. Version info: BIOS tested up to F.32.
-Root cause: reported NID `0x18` lacks VREF capability; correct NID is
-`0x1b`.
+### Step 1.3: Commit Body
+Record: The bug is a device-specific full-duplex startup deadlock for
+AlphaTheta EUPHONIA USB Audio Class 2 mixer `VID:PID 0x2b73:0x0047`. The
+capture endpoint is the implicit feedback source, but firmware does not
+emit capture isochronous data until playback is already sending.
+Symptom: full-duplex streaming cannot start because host waits for
+capture feedback while device waits for playback data. Version info:
+tested on `6.12.75`. Root cause: kernel does not both detect generic
+implicit feedback and start playback first for this device.
 
-Record: This is a hardware quirk/fixup, not a hidden memory-safety bug.
-It fixes incorrect hardware description/firmware behavior.
+### Step 1.4: Hidden Bug Fix
+Record: Yes. Although phrased as “Add quirk flags”, this is a hardware
+workaround fixing real device malfunction. It falls under the stable
+hardware-quirk exception.
 
-### Phase 2: Diff Analysis
-Record: One file changed: `sound/hda/codecs/realtek/alc269.c`, 21
-insertions, no removals. Modified areas: new helper
-`alc295_fixup_hp_pavilion_mute_led_1b`, enum entry, fixup table entry,
-PCI SSID quirk entry. Scope: single-file, surgical driver quirk.
+## Phase 2: Diff Analysis
 
-Record: Before: HP vendor/DMI mute LED handling could derive the wrong
-LED NID from BIOS OEM string. After: for PCI SSID `103c:856a`, the
-driver selects a dedicated fixup that calls existing
-`alc269_fixup_hp_mute_led()` and then overrides `spec->mute_led_nid =
-0x1b`.
+### Step 2.1: Inventory
+Record:
+- File changed: `sound/usb/quirks.c`
+- Scope: 2 lines added, 0 removed.
+- Function/data object modified: `quirk_flags_table[]`.
+- Classification: single-file, table-only, surgical hardware quirk.
 
-Record: Bug category is hardware workaround / quirk. Specific mechanism:
-reuse existing VREF mute LED cdev setup, but force the pin to the
-verified VREF-capable NID.
+### Step 2.2: Code Flow Change
+Record:
+- Before: device `0x2b73:0x0047` had no built-in quirk flag entry.
+- After: matching USB audio devices get `QUIRK_FLAG_PLAYBACK_FIRST |
+  QUIRK_FLAG_GENERIC_IMPLICIT_FB`.
+- Affected path: USB audio device probe initializes `chip->quirk_flags`
+  from `quirk_flags_table[]`; stream parsing and endpoint start then use
+  those flags.
+- Path type: initialization/probe plus later stream-start behavior.
 
-Record: Fix quality is good: small, contained, uses existing Realtek HDA
-LED infrastructure, only selected for one HP subsystem ID. Regression
-risk is very low and limited to that model.
+### Step 2.3: Bug Mechanism
+Record:
+- Category: hardware workaround / USB audio implicit feedback startup
+  ordering.
+- `QUIRK_FLAG_GENERIC_IMPLICIT_FB` is verified in `sound/usb/implicit.c`
+  to trigger `add_generic_implicit_fb()` when the generic implicit-
+  feedback flag is set.
+- `QUIRK_FLAG_PLAYBACK_FIRST` is verified in `sound/usb/endpoint.c` to
+  skip the normal “do not submit playback URBs until feedback arrives”
+  behavior for implicit-feedback sinks.
+- Together they fix the described stream-start deadlock for this device.
 
-### Phase 3: Git History Investigation
-Record: Local exact-subject `git log` found no commit hash in this
-checkout, so `b4 dig -c <hash>` could not be run against the target
-commit. The patch was analyzed by message-id instead.
+### Step 2.4: Fix Quality
+Record: The fix is obviously minimal and consistent with existing
+entries. The same exact flag combination is already present for
+Behringer UMC202HD/UMC204HD/UMC404HD in `sound/usb/quirks.c`. Regression
+risk is very low because the new behavior is limited to exact USB ID
+`0x2b73:0x0047`.
 
-Record: `git blame` on nearby current-tree lines shows this repository’s
-Realtek split file was imported through a grafted/snapshot-style commit,
-so blame was not useful for the original upstream introduction of the
-generic HP LED code.
+## Phase 3: Git History Investigation
 
-Record: Related local history contains similar model-specific HP
-Pavilion mute LED quirk commits: `2f388b4e8fdd6`, `068641bc9dc3d`, and
-`ab2be3af8c4ea`, each one-line Pavilion mute LED quirk additions.
+### Step 3.1: Blame Changed Area
+Record: `git blame` on the insertion area showed neighboring quirk
+entries are longstanding table entries, including Fiero SC-01 entries
+introduced by `668abe6dc7b619` (`ALSA: usb-audio: Sort quirk table
+entries`). Local history is partly grafted, so I did not rely on graft-
+boundary blame for introduction of the whole mechanism.
 
-Record: Author history for Rodrigo Faria in this file returned no local
-commits. Maintainer handling was verified from the mailing-list thread:
-Takashi Iwai replied “Applied now.”
+### Step 3.2: Fixes Tag
+Record: Not applicable. There is no `Fixes:` tag.
 
-Record: Dependencies: no hard functional dependency beyond existing
-Realtek HDA HP mute LED infrastructure. That infrastructure exists in
-checked stable tags, though older trees use
-`sound/pci/hda/patch_realtek.c` and may need manual path/context
-backporting.
+### Step 3.3: File History
+Record: Recent `sound/usb/quirks.c` history contains many similar
+device-specific quirk additions/fixes. No prerequisite patch is
+referenced by the commit message. This patch is standalone for trees
+that already have `QUIRK_FLAG_GENERIC_IMPLICIT_FB` and
+`QUIRK_FLAG_PLAYBACK_FIRST`.
 
-### Phase 4: Mailing List And External Research
-Record: `b4 am` by message-id found `[PATCH v3] ALSA: hda/realtek: Add
-mute LED fixup for HP Pavilion 15-cs1xxx`, 1 patch, 2 messages in
-thread, DKIM-signed.
+### Step 3.4: Author History
+Record: `git log --author='Anton Swart' -10 -- sound/usb` found no local
+prior commits. `MAINTAINERS` verifies Takashi Iwai is a listed `SOUND`
+maintainer, and the supplied commit message has his signoff.
 
-Record: Full thread shows the patch was sent to Takashi Iwai, Jaroslav
-Kysela, `linux-sound`, and `linux-kernel`; Takashi replied “Applied
-now.” No NAKs, objections, or stable nomination were found in the
-fetched thread.
+### Step 3.5: Dependencies
+Record: The patch depends on existing `QUIRK_FLAG_GENERIC_IMPLICIT_FB`
+and `QUIRK_FLAG_PLAYBACK_FIRST` infrastructure. Verified present in
+`v6.1`, `v6.6`, `v6.12`, and `v7.0.5`. Verified `v5.15` has
+`PLAYBACK_FIRST` but not `GENERIC_IMPLICIT_FB`, so this exact patch is
+not directly applicable to `5.15.y`.
 
-Record: `b4 am -v 2` could not find revision 2 from this message-id; web
-searches also did not locate earlier cs1xxx revisions. The subject says
-v3, but earlier revision discussion remains unverified.
+## Phase 4: Mailing List And External Research
 
-Record: External search found public evidence of HP Pavilion 15-cs-
-series systems using ALC295 audio, but no separate cs1xxx-specific bug
-report was found.
+### Step 4.1: Original Discussion
+Record: No upstream commit hash was available locally, so `b4 dig -c
+<commit>` could not be used. I used the supplied message-id link with
+`b4 am`. It found the patch at `https://lore.kernel.org/all/202605032115
+17.14332-1-anton.swart.jhb@gmail.com/`, one patch, two messages in
+thread, zero code-review messages analyzed, DKIM signed by Gmail.
+`WebFetch` to lore was blocked by Anubis.
 
-Record: Stable-list searches found no cs1xxx-specific stable discussion,
-but did find similar ALSA Realtek HP Pavilion mute LED quirks appearing
-in stable discussion/results.
+### Step 4.2: Reviewers / Recipients
+Record: `b4 am --cc-trailers` showed recipients: `alsa-devel@alsa-
+project.org`, Jaroslav Kysela, Takashi Iwai, and `linux-
+kernel@vger.kernel.org`. These are appropriate ALSA/kernel recipients.
+No reviewer trailers were found in the b4-processed thread.
 
-### Phase 5: Code Semantic Analysis
-Record: Modified/added key function:
-`alc295_fixup_hp_pavilion_mute_led_1b`.
+### Step 4.3: Bug Report
+Record: No separate bug report or `Reported-by:` tag found. The patch
+itself gives a concrete device topology, failure mode, and test result.
+Web search found AlphaTheta product/support pages but no separate kernel
+bug report for this quirk.
 
-Record: Callers: the new function is referenced from `alc269_fixups[]`;
-that fixup is selected by `snd_hda_pick_fixup()` during Realtek codec
-probe, using the PCI SSID quirk table. This is device
-probe/configuration path, not a syscall hot path.
+### Step 4.4: Related Series
+Record: `b4 am` found a single-patch submission, not a multi-patch
+series. No series dependency found.
 
-Record: Callees: `alc269_fixup_hp_mute_led()` scans HP DMI OEM strings,
-sets LED polarity/NID, registers the mute LED cdev through
-`snd_hda_gen_add_mute_led_cdev()`, and installs `led_power_filter`. The
-new helper then overrides `spec->mute_led_nid`.
+### Step 4.5: Stable Mailing List
+Record: `WebFetch` searches for lore stable/all were blocked by Anubis.
+Web search did not find stable-list discussion for this exact patch. No
+evidence found of a stable-specific objection.
 
-Record: Reachability: affected path is reachable during HDA codec probe
-on matching HP hardware and later through the LED audio mute
-trigger/cdev callback.
+## Phase 5: Code Semantic Analysis
 
-Record: Similar patterns: many existing HP Realtek quirks use
-`ALC269_FIXUP_HP_MUTE_LED_MIC3`, `ALC295_FIXUP_HP_MUTE_LED_COEFBIT11`,
-and related model-specific entries.
+### Step 5.1: Key Functions/Data
+Record: Modified object: `quirk_flags_table[]`. Affected functions
+verified:
+- `snd_usb_init_quirk_flags_table()`
+- `snd_usb_init_quirk_flags()`
+- `snd_usb_audio_create()`
+- `audioformat_playback_quirk()`
+- `add_generic_implicit_fb()`
+- `snd_usb_endpoint_start()`
 
-### Phase 6: Stable Tree Analysis
-Record: Checked tags `v6.19`, `v6.18`, `v6.17`, `v6.16`, `v6.12`, and
-`v6.6` exist locally.
+### Step 5.2: Callers
+Record: `usb_audio_probe()` calls `snd_usb_audio_create()`, which
+initializes quirk flags. ALSA PCM ops call `snd_usb_pcm_prepare()` and
+playback/capture trigger callbacks, which call `start_endpoints()`,
+which calls `snd_usb_endpoint_start()`.
 
-Record: `v6.19` and `v6.18` use `sound/hda/codecs/realtek/alc269.c`;
-`v6.6` uses older `sound/pci/hda/patch_realtek.c`.
+### Step 5.3: Callees
+Record: `snd_usb_init_quirk_flags_table()` scans `quirk_flags_table[]`
+and ORs flags into `chip->quirk_flags`. `audioformat_playback_quirk()`
+calls `add_generic_implicit_fb()` when `QUIRK_FLAG_GENERIC_IMPLICIT_FB`
+is set. `snd_usb_endpoint_start()` changes URB submission behavior based
+on `QUIRK_FLAG_PLAYBACK_FIRST`.
 
-Record: Generic HP VREF mute LED infrastructure exists in `v6.6` and
-newer checked tags. `ALC295_FIXUP_HP_MUTE_LED_COEFBIT11` exists in
-`v6.16+`, but not in `v6.12`/`v6.6`; the new fixup itself does not
-depend on that helper, only on nearby placement/context.
+### Step 5.4: Call Chain / Reachability
+Record: Reachable when the matching USB audio device is probed and
+userspace opens/starts ALSA PCM full-duplex streams. I did not verify
+whether an unprivileged user can trigger it on a given distribution;
+ALSA device permissions are policy-dependent.
 
-Record: `git apply --check` succeeds on current `7.0.5` checkout. It
-fails on a temporary `v6.18` worktree due to context drift, so stable
-backports likely need minor manual adjustment. Older stable trees need
-path adjustment to `sound/pci/hda/patch_realtek.c`.
+### Step 5.5: Similar Patterns
+Record: Verified existing exact flag combination for Behringer
+`0x1397:0x0507`, `0x0508`, and `0x0509`. Verified
+`QUIRK_FLAG_GENERIC_IMPLICIT_FB` appears in ten quirk-table entries in
+current `7.0.y`.
 
-### Phase 7: Subsystem And Maintainer Context
-Record: Subsystem is ALSA HDA Realtek codec driver under sound.
-Criticality: peripheral/driver-specific, affecting HP Pavilion 15-cs1xxx
-users.
+## Phase 6: Stable Tree Analysis
 
-Record: The file is actively maintained and frequently receives model-
-specific quirks. Recent local history includes multiple ALSA Realtek
-HP/Lenovo/ASUS/Samsung quirk commits.
+### Step 6.1: Buggy Code Exists
+Record:
+- `v7.0.5`: quirk infrastructure exists; EUPHONIA entry absent.
+- `v6.12.75`: quirk infrastructure exists; EUPHONIA entry absent.
+- `v6.6`: quirk infrastructure exists; EUPHONIA entry absent.
+- `v6.1`: quirk infrastructure exists; EUPHONIA entry absent.
+- `v5.15`: `GENERIC_IMPLICIT_FB` flag absent, so this exact patch is not
+  applicable.
 
-### Phase 8: Impact And Risk
-Record: Affected users are specific to HP Pavilion 15-cs1xxx / PCI SSID
-`103c:856a` with Realtek ALC295-class HDA audio.
+### Step 6.2: Backport Difficulty
+Record:
+- `v7.0.5`: index-only `git apply --check` passes.
+- `v6.12.75`: index-only `git apply --check` passes.
+- `v6.6` and `v6.1`: exact patch does not apply because nearby context
+  differs, but the same table and flags exist; expected minor context-
+  only backport.
+- `v5.15`: exact patch does not apply and lacks required generic flag
+  infrastructure.
 
-Record: Trigger condition is normal codec probe and mute LED operation
-on that hardware. No evidence found that unprivileged users can trigger
-a crash or security issue; the user-visible effect is
-incorrect/nonfunctional mute LED.
+### Step 6.3: Related Fixes Already Stable
+Record: No existing `0x2b73:0x0047` or `AlphaTheta EUPHONIA` entry found
+in the local tree. No local history match for this device.
 
-Record: Failure severity is LOW to MEDIUM: not a crash or data
-corruption issue, but a real hardware functionality regression/quirk.
+## Phase 7: Subsystem Context
 
-Record: Benefit is medium for affected users because it restores correct
-mute LED behavior. Risk is very low because the quirk is model-specific
-and uses existing LED control paths.
+### Step 7.1: Subsystem Criticality
+Record: Subsystem is ALSA USB audio, under `sound/usb`. Criticality:
+important for users of affected USB audio hardware, but not
+universal/core kernel.
 
-### Phase 9: Final Synthesis
-Record: Evidence for backporting: hardware quirk category, fixes real
-BIOS misreporting, limited to one PCI SSID, small patch, uses
-established ALSA Realtek fixup patterns, accepted by ALSA maintainer,
-and similar HP mute LED quirks are common stable material.
+### Step 7.2: Activity
+Record: `sound/usb` is actively maintained; recent history shows
+multiple ALSA USB fixes and quirk updates. Maintainer context verified
+through `MAINTAINERS`.
 
-Record: Evidence against backporting: no crash/security/data corruption;
-no explicit stable tag; current patch does not apply cleanly to at least
-`v6.18` without minor context adjustment; older trees need file-
-path/context adjustment.
+## Phase 8: Impact And Risk
 
-Record: Stable rules: obviously correct enough by inspection; fixes a
-real hardware bug; small and contained; no new public API; no new
-feature beyond hardware-specific workaround; stable application may
-require minor backport edits.
+### Step 8.1: Affected Users
+Record: Driver/hardware-specific: users of AlphaTheta EUPHONIA USB audio
+mixer on kernels with this usb-audio quirk infrastructure.
 
-Record: Exception category applies: hardware-specific quirk/workaround
-in an existing driver.
+### Step 8.2: Trigger Conditions
+Record: Trigger is full-duplex streaming where capture endpoint acts as
+implicit feedback and playback must start first. The commit message
+reports testing continuous full-duplex 96 kHz / 24-bit on Raspberry Pi 5
+with kernel `6.12.75`.
+
+### Step 8.3: Failure Severity
+Record: Failure mode is a device/stream-start deadlock: audio full-
+duplex streaming does not start. Severity: medium-high for affected
+hardware users. It is not verified as a system-wide kernel
+deadlock/panic.
+
+### Step 8.4: Risk / Benefit
+Record: Benefit is high for affected hardware because it makes full-
+duplex operation work. Risk is very low: exact USB-ID match, 2-line
+table addition, no API or shared logic change.
+
+## Phase 9: Final Synthesis
+
+### Step 9.1: Evidence
+Record: Evidence for backporting:
+- Real hardware malfunction with concrete topology and failure mode.
+- Hardware quirk category is explicitly stable-suitable.
+- 2-line exact-device table addition.
+- Existing identical flag combination for similar implicit-feedback
+  devices.
+- Tested on `6.12.75`.
+- Appropriate ALSA maintainers/lists were CC’d; supplied commit has
+  Takashi Iwai signoff.
+
+Evidence against:
+- No separate `Reported-by:` or formal `Tested-by:` tag.
+- `v6.6`/`v6.1` need minor context backport.
+- `v5.15` lacks `QUIRK_FLAG_GENERIC_IMPLICIT_FB`, so this exact patch
+  should not be applied there without additional analysis/prerequisites.
+
+Unresolved:
+- Lore web UI could not be fetched due Anubis.
+- No upstream commit hash was available locally, so `b4 dig -c` could
+  not be performed.
+- No independent bug report was found.
+
+### Step 9.2: Stable Rules
+Record:
+1. Obviously correct and tested: yes, for applicable trees; 2-line
+   exact-ID quirk and patch body reports testing.
+2. Fixes a real bug: yes, full-duplex stream startup deadlock for
+   specific hardware.
+3. Important issue: yes for affected hardware; device full-duplex
+   operation is broken without it.
+4. Small and contained: yes, one file, two lines.
+5. No new APIs/features: yes. This is a hardware quirk, not a new
+   interface.
+6. Applies to stable trees: cleanly to `v7.0.5` and `v6.12.75`; minor
+   context backport for `v6.6`/`v6.1`; not directly to `v5.15`.
+
+### Step 9.3: Exception Category
+Record: Hardware quirk/workaround for a broken/nonstandard USB audio
+device. This is one of the strong stable-appropriate exception
+categories.
+
+### Step 9.4: Decision
+This should be backported to stable trees that already have the generic
+implicit-feedback quirk flag infrastructure, especially `6.12.y`,
+`6.6.y`, `6.1.y`, and `7.0.y` if applicable. For `5.15.y`, do not apply
+this exact patch without separate prerequisite/backport work because the
+required `QUIRK_FLAG_GENERIC_IMPLICIT_FB` flag is absent.
 
 ## Verification
-- [Phase 1] Parsed subject, body, and tags from supplied commit message
-  and fetched mbox.
-- [Phase 2] Verified patch is 21 insertions in
-  `sound/hda/codecs/realtek/alc269.c`.
-- [Phase 3] Ran local `git log` by exact subject: no matching commit
-  hash found.
-- [Phase 3] Ran `git blame` around affected code: local history is
-  snapshot/grafted, limiting original-introduction analysis.
-- [Phase 4] Ran `b4 am` by message-id: found v3 patch, 2-message thread,
-  DKIM-signed.
-- [Phase 4] Read full mbox: Takashi Iwai replied “Applied now”; no
-  objections found.
-- [Phase 5] Traced quirk selection through `snd_hda_pick_fixup()` and
-  Realtek probe path.
-- [Phase 6] Checked stable tags and paths: `v6.18+` split path, `v6.6`
-  old `patch_realtek.c` path.
-- [Phase 6] Checked relevant symbols in stable tags: HP VREF LED
-  infrastructure exists in checked stable trees.
-- [Phase 6] Ran `git apply --check`: applies to current checkout, not
-  cleanly to `v6.18` due context drift.
-- [Phase 8] Verified failure mode from commit body and code: wrong LED
-  NID affects mute LED behavior, not memory safety.
-- UNVERIFIED: exact applied upstream commit SHA, because it was not
-  present in local `git log`.
-- UNVERIFIED: earlier v1/v2 review discussion, because `b4` and web
-  search did not locate those revisions.
-- UNVERIFIED: exact applicability to every active older LTS tree beyond
-  the checked tags.
+
+- Phase 1: Parsed supplied subject, body, and tags; verified original
+  patch body with `b4 am` mbox.
+- Phase 2: Verified diff is 2 insertions in `sound/usb/quirks.c`.
+- Phase 2/5: Read `sound/usb/quirks.c`, `sound/usb/usbaudio.h`,
+  `sound/usb/implicit.c`, `sound/usb/endpoint.c`, `sound/usb/card.c`,
+  `sound/usb/pcm.c`, and `sound/usb/stream.c`.
+- Phase 3: Ran `git blame` around the insertion area and similar
+  Behringer entries; noted grafted history limits.
+- Phase 3: Ran file and author history searches without `--all`.
+- Phase 4: Ran `b4 am` on the supplied patch link; found one patch and
+  DKIM-signed submission.
+- Phase 4: Ran `b4 am --cc-trailers`; verified ALSA maintainers/lists
+  were CC’d.
+- Phase 4: Tried `WebFetch` for lore and stable queries; blocked by
+  Anubis.
+- Phase 4: Ran web searches; found no separate stable discussion or
+  independent bug report.
+- Phase 5: Verified caller path from USB probe to quirk flag
+  initialization and from ALSA PCM prepare/trigger to endpoint start.
+- Phase 5: Verified same flag combination already exists for Behringer
+  UMC202HD/UMC204HD/UMC404HD.
+- Phase 6: Checked `v7.0.5`, `v6.12.75`, `v6.6`, `v6.1`, and `v5.15` for
+  relevant flags/context.
+- Phase 6: Ran index-only apply checks: applies to `v7.0.5` and
+  `v6.12.75`; does not apply as-is to `v6.6`, `v6.1`, or `v5.15`.
+- Phase 7: Verified `MAINTAINERS` lists Takashi Iwai as a `SOUND`
+  maintainer.
+- Phase 8: Failure mode and tested hardware/kernel are verified from the
+  patch message; unprivileged triggerability is unverified.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 29dafa3f1d15a..9daf7a12bf95d 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -1676,6 +1676,21 @@ static void alc295_fixup_hp_mute_led_coefbit11(struct hda_codec *codec,
- 	}
- }
- 
-+/* Override wrong pin to NID 0x1b (F.32 BIOS reports 0x18 via DMI OEM string)
-+ * on HP pavilion 15-cs1xxx laptops
-+ */
-+static void alc295_fixup_hp_pavilion_mute_led_1b(struct hda_codec *codec,
-+						 const struct hda_fixup *fix,
-+						 int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+
-+	alc269_fixup_hp_mute_led(codec, fix, action);
-+
-+	if (action == HDA_FIXUP_ACT_PRE_PROBE)
-+		spec->mute_led_nid = 0x1b;
-+}
-+
- static void alc233_fixup_lenovo_coef_micmute_led(struct hda_codec *codec,
- 				const struct hda_fixup *fix, int action)
- {
-@@ -3859,6 +3874,7 @@ enum {
- 	ALC290_FIXUP_SUBWOOFER,
- 	ALC290_FIXUP_SUBWOOFER_HSJACK,
- 	ALC295_FIXUP_HP_MUTE_LED_COEFBIT11,
-+	ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B,
- 	ALC269_FIXUP_THINKPAD_ACPI,
- 	ALC269_FIXUP_LENOVO_XPAD_ACPI,
- 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
-@@ -5701,6 +5717,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc295_fixup_hp_mute_led_coefbit11,
- 	},
-+	[ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc295_fixup_hp_pavilion_mute_led_1b,
-+	},
- 	[ALC298_FIXUP_SAMSUNG_AMP] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc298_fixup_samsung_amp,
-@@ -6894,6 +6914,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8537, "HP ProBook 440 G6", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8548, "HP EliteBook x360 830 G6", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x854a, "HP EliteBook 830 G6", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x856a, "HP Pavilion 15-cs1xxx", ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B),
- 	SND_PCI_QUIRK(0x103c, 0x85c6, "HP Pavilion x360 Convertible 14-dy1xxx", ALC295_FIXUP_HP_MUTE_LED_COEFBIT11),
- 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
- 	SND_PCI_QUIRK(0x103c, 0x8603, "HP Omen 17-cb0xxx", ALC285_FIXUP_HP_MUTE_LED),
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 148bf7e4e4d72..2ffc69b57ab49 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2401,6 +2401,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2b53, 0x0031, /* Fiero SC-01 (firmware v1.1.0) */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
++	DEVICE_FLG(0x2b73, 0x0047, /* AlphaTheta EUPHONIA */
++		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2d95, 0x8011, /* VIVO USB-C HEADSET */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
 -- 
 2.53.0
 
