@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED91B36A359;
-	Mon, 11 May 2026 22:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7171836A373;
+	Mon, 11 May 2026 22:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778538012; cv=none; b=oX1/6SALo5bzZqlauontUVkjw6KYKK/5FVe8O0Kg/XhIMzPGxj1o+OZ2h2OQJoFGaLRbjZUGCcprVMFJjfk/g7uGvx0QogSO7boo6TYatJOFAEoc6DVDnFFjgzrY5eESVH+Lgm8wPEQbiiT1TorANdM3QLJ2HOCwYrQ8XTUd2+0=
+	t=1778538013; cv=none; b=U2NsFC8Tg8MbeW0RqVTaBGHbfU4sUK5mmdIAcRMbdH/DF5wv2Q3W5ef7pDYemQsuu3DWlnudlWVnO6N5Ib5QOL0fcXtqy7LdScZWdfaj3JqD+PzlV7M7IbMsgz5MyS8Vz2gBRVYvtCUALP6L+b0lXIajumE3GmwgdXEMjAT/dcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778538012; c=relaxed/simple;
-	bh=L86pyKWsxPvaB5adhMiA/7xl+or1ihECJG1ePo8bnEI=;
+	s=arc-20240116; t=1778538013; c=relaxed/simple;
+	bh=NGPS82dFju4rpw26IMrBXC1852ms9DsElWuvBCBev1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=stGf0Qyxf+jL+Vn8iTfNK6sGEnT0WvkhN71VKkGguacwZnDWIjCPRAVWszFa+QLG296nZd72tedGBIuKRrXdyur0lTKImaQmLD3PoGTsrsXDAZR1gFOGV4ILtLHtdMKo/K6q7ta0p6PI2A/jl1ujkhujMEo9+amAxjuJjD3hG6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IUNMOvc8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QD4zNcpvENqduGFS44zAZuXzKpyTPiOeaSwn0j4n7UFIASLWphw81CE/E06IeY3DiAMBvL09MN93VKwBqLBUk6CM4laI4lb+wgxFR62TY2XxBoDHAfOowp6b6Vu/0jgd9XX32edF3DzYrYlwytA509hXSIea3jI6O+9+sLsQC1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o35BiZuV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IUNMOvc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A89FC2BCF5;
-	Mon, 11 May 2026 22:20:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o35BiZuV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C6EC2BCF7;
+	Mon, 11 May 2026 22:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778538011;
-	bh=L86pyKWsxPvaB5adhMiA/7xl+or1ihECJG1ePo8bnEI=;
+	s=k20201202; t=1778538013;
+	bh=NGPS82dFju4rpw26IMrBXC1852ms9DsElWuvBCBev1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUNMOvc8Pr+8A/6dbYKE+htjl5pXukzN5GME9yT+rjM9bDNq34vS9Qp4sF4to65OM
-	 u431r67Yt519P9FL87WV+W9ZXSdcGrm1EpwonP6rgsadNceXHsVLApqx0hHUoJyrsx
-	 iuYq3m4T5OxAcKyEfXjGEiyb9OcEJ4TjVMgjfi5I5zwZ93TrYPa7eKYh4pE7gmrXMF
-	 xKunXBoe/tjbkBhJKBYSEM9L/mrA21JtjHndraCj3IEWb53/SVJJw9OskbLK1IXdUN
-	 8Mw3WH4IYBP2vd/0KZFGor0SLvwvWAqpCy+G/qZm6KtWMaJ0MlrYTeUOHZTVemce7d
-	 7tCBCsgd+WnQQ==
+	b=o35BiZuVftIteICAtc8+s9nIZhd6P2prx/leGeSjzbGxDWqx8u7i4ScE0hJZGI53z
+	 psHBVHyspCT8av2U7yzUjjw/hhglBipuXKH3kE/Aq0NPSn7Tle26q/QeLbPPmeZnGN
+	 cCGkfiItx0oVdQIITBuKpACmMCVyHgjhrRhOJLgpcQCvSgN/diuqeVL1Q+cD10t5AP
+	 X6iPXwiAw7LEGODjGzEWE4yZbOYMzw6y93NBrOKtzSH0zI6gqKBkkyKUbgxOH9HYPf
+	 dOAuiGblE0sGrB9FM114IqIL801T2+O/tTnAtXWH0H2HG2Y9vCApuU2F5hiNUvWv09
+	 yUfPcBuh6vXtQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vasant Hegde <vasant.hegde@amd.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
+Cc: Nicola Lunghi <nick83ola@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	joro@8bytes.org,
-	will@kernel.org,
-	iommu@lists.linux.dev,
+	perex@perex.cz,
+	tiwai@suse.com,
+	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] iommu/amd: Use maximum Event log buffer size when SNP is enabled on Family 0x19
-Date: Mon, 11 May 2026 18:19:26 -0400
-Message-ID: <20260511221931.2370053-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ALSA: usb-audio: add clock quirk for Motu 1248
+Date: Mon, 11 May 2026 18:19:27 -0400
+Message-ID: <20260511221931.2370053-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -57,469 +54,202 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Nicola Lunghi <nick83ola@gmail.com>
 
-[ Upstream commit 58c0ac6125d89bf6ec65a521eaeb52a0e8e20a9f ]
+[ Upstream commit 320e55722ca466a7d40dd69e1aea982cb6189006 ]
 
-Due to CVE-2023-20585, the Event log buffer must use the maximum supported
-size (512K) on Milan/Genoa (Family 0x19) systems when SNP is enabled,
-to mitigate a potential security vulnerability. All other systems continue to
-use the default Event log buffer size (8K).
+The Motu 1248 (and probably other older Motu AVB interfaces) take more
+than 2 seconds to switch clock. During the clock switching process the
+device return that the clock is not valid. This is similar to what
+already implemented for the Microbook II interface. Add the Motu
+1248 usb id to the existing Motu quirk.
 
-Apply the errata fix by making the following changes:
-
-* Introduce new global variable (amd_iommu_evtlog_size) to have event log
-  buffer size. Adjust variable size for family 0x19.
-
-* Since 'iommu_snp_enable()' must be called after the core IOMMU subsystem
-  is initialized, it cannot be moved to the early init stage. The SNP errata
-  must also be applied after the 'iommu_snp_enable()' check. Therefore,
-  'alloc_event_buffer()' and 'iommu_enable_event_buffer()' are now called
-  in the IOMMU_ENABLED state, after the errata is applied.
-
-* Adjust alloc_event_buffer() and iommu_enable_event_buffer() to handle
-  all IOMMU instances.
-
-* Also rename EVT_* macros to make it more readable.
-
-Link: https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3016.html
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Cc: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Nicola Lunghi <nick83ola@gmail.com>
+Link: https://patch.msgid.link/20260504144520.699522-2-nick83ola@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Conclusion
-This commit should be backported to stable trees that carry AMD IOMMU
-SNP host support. It is a security mitigation for `CVE-2023-20585`,
-scoped to AMD Family `0x19` systems with SNP enabled, and it keeps all
-other systems on the existing 8K event log size.
-
-The patch is not feature enablement in the stable sense; it is a
-hardware erratum/security workaround. The main concern is backport
-mechanics: it applies cleanly to `stable/linux-7.0.y`, but failed a
-direct apply check on `6.12.y`, `6.18.y`, and `6.19.y`, so those need
-backport adjustment. For Genoa, the companion PPR-log patch should also
-be considered for the full series mitigation.
-
 ## Phase Walkthrough
-Phase 1 Record:
-- Subject subsystem/action: `iommu/amd`, action is “Use maximum”, intent
-  is to use a 512K AMD IOMMU event log buffer for SNP on Family `0x19`.
-- Tags: `Link` to AMD-SB-3016, `Cc` to AMD/IOMMU maintainers, `Signed-
-  off-by` Vasant Hegde, `Tested-by` Dheeraj Kumar Srivastava, `Signed-
-  off-by` Joerg Roedel. No `Fixes:` tag.
-- Body: describes `CVE-2023-20585`, requiring max supported event log
-  buffer size on Milan/Genoa with SNP enabled; all other systems remain
-  at 8K.
-- Hidden bug fix: yes. This is phrased partly as buffer
-  sizing/refactoring, but the purpose is a CVE security mitigation.
 
-Phase 2 Record:
-- Files changed: `drivers/iommu/amd/amd_iommu.h`, `amd_iommu_types.h`,
-  `init.c`, `iommu.c`; fetched commit stat is 86 insertions, 38
-  deletions.
-- Functions modified/added: `alloc_event_buffer`,
-  `iommu_enable_event_buffer`, `remap_event_buffer`,
-  `early_enable_iommu`, `early_enable_iommus`, `amd_iommu_resume`, new
-  `amd_iommu_apply_erratum_snp`, `state_next`, `amd_iommu_snp_disable`,
-  `iommu_poll_events`.
-- Code flow: event buffer allocation/enable moves from early per-IOMMU
-  setup to after `iommu_snp_enable()`, allowing the erratum decision to
-  set 512K before allocation/programming. Polling and SNP shutdown now
-  use the variable size.
-- Bug category: hardware security erratum/workaround.
-- Fix quality: contained to AMD IOMMU event-log handling. Regression
-  risk is medium-low because init ordering changes, but it is subsystem-
-  contained, tested, and keeps non-SNP/non-Family-0x19 behavior at 8K.
+Phase 1:
+- Record 1.1: Subsystem `ALSA: usb-audio`; action verb `add`; intent is
+  to add Motu 1248 USB ID `07fd:0005` to an existing clock-validity
+  delay quirk.
+- Record 1.2: Tags: `Signed-off-by: Nicola Lunghi`, `Link:
+  https://patch.msgid.link/20260504144520.699522-2-nick83ola@gmail.com`,
+  `Signed-off-by: Takashi Iwai`. No `Fixes:`, `Reported-by:`, `Tested-
+  by:`, `Reviewed-by:`, or `Cc: stable`.
+- Record 1.3: Commit body describes Motu 1248 returning clock-invalid
+  for more than 2 seconds while switching clock, causing the existing
+  ALSA clock validation to fail too early. No kernel-version range
+  given.
+- Record 1.4: This is a hardware quirk fix, not a hidden
+  memory/synchronization bug.
 
-Phase 3 Record:
-- Blame/history: fixed 8K event buffer logic is long-standing; SNP
-  integration relevant to the erratum is present from the v6.9 era and
-  later. `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y` contain the
-  integrated SNP enable commit checked locally; `5.15.y`, `6.1.y`, and
-  `6.6.y` do not.
-- `Fixes:` tag: none, so no direct original-bug commit to follow.
-- Related file history: companion commit `1f44aab79bac3` does the same
-  for the PPR log. Patch 2 depends conceptually/codewise on patch 1;
-  patch 1 stands on its own for the event log.
-- Author context: Vasant Hegde has multiple recent AMD IOMMU fixes in
-  the fetched IOMMU fixes branch; Joerg Roedel committed the patch.
-- Dependencies: no semantic dependency on the NUMA log-buffer allocation
-  commit, but older stable branches have context differences requiring
-  backport edits.
+Phase 2:
+- Record 2.1: One file changed: `sound/usb/clock.c`, `+11/-4`. Modified
+  function: `uac_clock_source_is_valid_quirk()`. Single-file surgical
+  hardware quirk.
+- Record 2.2: Before: the 5-second retry loop applied only to
+  `USB_ID(0x07fd, 0x0004)`. After: the same loop also applies to
+  `USB_ID(0x07fd, 0x0005)`, with comments expanded.
+- Record 2.3: Bug category is hardware workaround/device quirk.
+  Mechanism: ALSA rechecks clock validity up to 50 times with
+  `msleep(100)` instead of failing on the initial transient invalid
+  response.
+- Record 2.4: Fix quality is high: it reuses existing code and only
+  widens the device match. Regression risk is very low and limited to
+  MOTU product ID `0x0005`.
 
-Phase 4 Record:
-- `b4 dig -c 58c0ac6125d89`: found the original lore submission at `http
-  s://patch.msgid.link/20260420084204.12263-2-vasant.hegde@amd.com`.
-- `b4 dig -a`: only v1 found.
-- `b4 dig -w`: original recipients included `iommu@lists.linux.dev`,
-  Joerg Roedel, Will Deacon, Robin Murphy, Suravee Suthikulpanit, and
-  Borislav Petkov.
-- Lore thread: Dheeraj Kumar Srivastava replied `Tested-by`; Joerg
-  Roedel replied “Applied to fixes”.
-- AMD bulletin: AMD-SB-3016 confirms potential SNP guest integrity loss
-  from an IOMMU host buffer out-of-bounds condition and says OS updates
-  are required along with firmware.
+Phase 3:
+- Record 3.1: `git blame` shows the existing MOTU retry quirk was
+  introduced by `2edb84e3047b9` in 2020. Later nearby changes came from
+  clock refactoring and multi-control-interface support, but the retry
+  logic remains the same.
+- Record 3.2: No `Fixes:` tag, so no introducing commit to follow.
+- Record 3.3: Recent `sound/usb/clock.c` history shows related clock
+  fixes/refactors, but this patch is standalone and only changes the
+  device match.
+- Record 3.4: Author has prior usb-audio quirk commits in local history;
+  Takashi Iwai applied the patch and is the ALSA maintainer/committer
+  for this area.
+- Record 3.5: No functional dependencies found. The patch applies
+  cleanly to checked pending stable branches.
 
-Phase 5 Record:
-- Callers: event interrupt path uses `amd_iommu_int_thread_evtlog()` ->
-  `amd_iommu_handle_irq()` -> `iommu_poll_events()`. Interrupt setup is
-  via AMD IOMMU MSI/INTCAPXT setup in `init.c`.
-- Callees: allocation uses `iommu_alloc_4k_pages()`, which handles SNP
-  4K page setup; enable writes `MMIO_EVT_BUF_OFFSET`, head/tail
-  registers, and `CONTROL_EVT_LOG_EN`.
-- Reachability: reachable on AMD IOMMU systems through hardware event
-  interrupts and SNP init/shutdown paths, not through a direct userspace
-  syscall.
-- Similar pattern: companion PPR log patch in the same series mirrors
-  the variable-size/max-buffer handling.
+Phase 4:
+- Record 4.1: `b4 dig -c 320e55722ca46` found the original submission at
+  the patch.msgid.link URL. `b4 dig -a` showed only `v1`; no newer
+  revision found.
+- Record 4.2: `b4 dig -w` showed Nicola Lunghi, Jaroslav Kysela, Takashi
+  Iwai, `linux-sound`, `linux-kernel`, and `linux-usb` were included.
+- Record 4.3: `b4 mbox` showed Takashi replied “Applied now. Thanks.” No
+  objections or review concerns appeared in the two-message thread.
+  WebFetch of lore was blocked by Anubis.
+- Record 4.4: No multi-patch series or related required patches found.
+- Record 4.5: Stable-list web search was blocked by Anubis; no stable-
+  specific discussion was found through the available local/b4 data.
 
-Phase 6 Record:
-- Stable code existence: `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y` have
-  the relevant AMD IOMMU SNP/event-log code. `5.15.y`, `6.1.y`, and
-  `6.6.y` lack the integrated SNP enable commit I checked; `6.6.y` has
-  an exported old SNP enable function but no in-tree caller was found.
-- Backport difficulty: clean on `7.0.y`; direct apply failed on
-  `6.12.y`, `6.18.y`, and `6.19.y`, so those need manual backporting.
-- Related stable discussion: no stable-list-specific discussion for this
-  CVE/patch was found by `lei`.
+Phase 5:
+- Record 5.1: Key function: `uac_clock_source_is_valid_quirk()`.
+- Record 5.2: Call path verified: `uac_clock_source_is_valid()` calls
+  the quirk when the device reports invalid clock;
+  `__uac_clock_find_source()` and `set_sample_rate_v2v3()` call clock
+  validation; setup is reached from format parsing, stream setup,
+  endpoint preparation, and sample-rate initialization.
+- Record 5.3: Key callees are `snd_usb_ctl_msg()`,
+  `snd_usb_find_ctrl_interface()`, `snd_usb_find_clock_source()`, and
+  `msleep(100)`.
+- Record 5.4: Reachability is real for users of affected USB audio
+  devices during sample-rate/clock setup and PCM endpoint preparation.
+- Record 5.5: Similar existing pattern is the MicroBook IIc quirk for
+  the same vendor and same delayed clock-validity behavior.
 
-Phase 7 Record:
-- Subsystem: AMD IOMMU driver under `drivers/iommu/amd`.
-- Criticality: important platform/virtualization security code,
-  affecting AMD EPYC SNP hosts rather than all systems.
-- Activity: actively maintained; recent AMD IOMMU fixes and the
-  maintainer-applied fixes branch confirm ongoing subsystem work.
+Phase 6:
+- Record 6.1: The existing quirk code exists in checked pending stable
+  branches `pending-5.4`, `pending-5.10`, `pending-5.15`, `pending-6.1`,
+  `pending-6.6`, `pending-6.12`, and `pending-7.0`.
+- Record 6.2: Backport difficulty is clean: `git apply --check`
+  succeeded on all those pending branches.
+- Record 6.3: No alternative Motu 1248 fix was found in local
+  stable/current history.
 
-Phase 8 Record:
-- Affected users: AMD Family `0x19` Milan/Genoa systems with SNP
-  enabled.
-- Trigger/security conditions: AMD bulletin describes a privileged
-  attacker with a compromised hypervisor triggering an out-of-bounds
-  condition without RMP checks.
-- Failure severity: security integrity impact for confidential SNP
-  guests; AMD rates it Medium, but stable rules treat CVE/security
-  mitigations as strong candidates.
-- Benefit/risk: high benefit for affected SNP hosts; medium-low
-  regression risk due to contained but non-trivial init-order and
-  buffer-size changes.
+Phase 7:
+- Record 7.1: Subsystem is ALSA USB audio driver. Criticality: IMPORTANT
+  for users of affected MOTU hardware, not core-wide.
+- Record 7.2: Subsystem is active; recent history contains multiple usb-
+  audio fixes and quirks.
 
-Phase 9 Record:
-- Evidence for: CVE/security mitigation, AMD bulletin requires OS
-  update, tested-by, maintainer applied to fixes, scoped to AMD IOMMU,
-  default behavior preserved for unaffected systems.
-- Evidence against/concerns: patch is larger than a trivial one-liner,
-  moves event buffer allocation/enable timing, and needs backport
-  adjustments for several stable branches. Genoa full mitigation also
-  needs the PPR companion patch.
-- Stable rules: fixes a real security issue; important; no new userspace
-  API; contained to one driver; tested; applies cleanly to `7.0.y` and
-  can be backported with adjustments elsewhere.
-- Exception category: hardware erratum/security workaround.
+Phase 8:
+- Record 8.1: Affected users are driver/hardware-specific: Motu 1248 and
+  likely related older MOTU AVB/hybrid devices with product ID `0x0005`.
+- Record 8.2: Trigger is changing sample rate or clock source, or
+  validation during device/audio setup. Unprivileged trigger depends on
+  local audio-device permissions; I did not verify distro policy.
+- Record 8.3: Failure mode is ALSA failing clock validation early,
+  returning errors such as `-ENXIO` from the code path and preventing
+  successful audio setup. Severity: MEDIUM for the kernel generally,
+  HIGH for affected hardware usability.
+- Record 8.4: Benefit is high for affected hardware; risk is very low
+  because this only enables an existing quirk for one USB product ID.
+
+Phase 9:
+- Record 9.1: Evidence for backporting: real hardware quirk, existing
+  stable-accepted mechanism, small single-file change, maintainer-
+  applied, cleanly applies to stable branches, external CCRMA
+  documentation corroborates MOTU 1248 Linux sample-rate failures that
+  succeed after waiting. Evidence against: no crash/security/data-
+  corruption, no explicit stable tag, and no direct reporter/tested-by
+  tag.
+- Record 9.2: Stable rules: obviously correct yes; fixes real user-
+  visible hardware failure yes; important enough under hardware-quirk
+  exception yes; small/contained yes; no new API/features yes; applies
+  cleanly yes.
+- Record 9.3: Exception category: hardware quirk/workaround for broken
+  device timing behavior.
+- Record 9.4: Decision: backport. This is exactly the kind of low-risk
+  device-specific quirk stable trees routinely take.
 
 ## Verification
-- [Phase 1] Parsed fetched commit `58c0ac6125d89`: confirmed subject,
-  tags, `Tested-by`, no `Fixes:`, and AMD-SB-3016 link.
-- [Phase 2] Inspected diff/stat from fetched commit: 4 AMD IOMMU files,
-  86 insertions, 38 deletions.
-- [Phase 3] Ran `git blame` on event allocation, enable, SNP init, and
-  polling paths; confirmed relevant code history.
-- [Phase 3] Checked stable branch ancestry: `6.12.y+` contain integrated
-  SNP enable; `5.15.y`, `6.1.y`, `6.6.y` do not.
-- [Phase 4] Ran `b4 dig -c 58c0ac6125d89`, `-a`, and `-w`; found one v1
-  submission, maintainers/recipients, and lore URL.
-- [Phase 4] Fetched lore thread; confirmed `Tested-by` reply and
-  maintainer “Applied to fixes”.
-- [Phase 4] Fetched AMD bulletin; confirmed CVE impact and OS update
-  requirement.
-- [Phase 5] Traced event interrupt call path with source search/read:
-  `amd_iommu_int_thread_evtlog()` to `iommu_poll_events()`.
-- [Phase 6] Ran apply checks: clean on `stable/linux-7.0.y`; failed
-  direct apply on `6.12.y`, `6.18.y`, and `6.19.y`.
-- UNVERIFIED: I did not build-test the backport or test on AMD Family
-  `0x19` SNP hardware.
+
+- Phase 1: Parsed commit `320e55722ca46` with `git show
+  --format=fuller`; verified tags and message.
+- Phase 2: Verified diff with `git show --find-renames` and `--numstat`:
+  `sound/usb/clock.c`, `+11/-4`.
+- Phase 3: Ran `git blame -L 179,240 -- sound/usb/clock.c`; identified
+  existing quirk origin `2edb84e3047b9`.
+- Phase 3: Checked recent file history with `git log --oneline -20 --
+  sound/usb/clock.c`.
+- Phase 4: Ran `b4 dig -c 320e55722ca46`, `-a`, and `-w`; confirmed v1
+  patch, recipients, and lore URL.
+- Phase 4: Ran `b4 mbox`; confirmed Takashi’s “Applied now” reply and no
+  objections in the fetched thread.
+- Phase 5: Used `rg` and file reads to trace callers through `clock.c`,
+  `format.c`, `endpoint.c`, `stream.c`, and `quirks.c`.
+- Phase 6: Checked quirk presence in pending stable branches and
+  verified `git apply --check` cleanly on `pending-5.4`, `pending-5.10`,
+  `pending-5.15`, `pending-6.1`, `pending-6.6`, `pending-6.12`, and
+  `pending-7.0`.
+- Phase 8: Used WebFetch of CCRMA MOTU 1248 documentation; it reports
+  Linux output/sample-rate attempts may fail initially and succeed after
+  5-10 seconds.
+- UNVERIFIED: Exact USB ID mapping for every model listed in the new
+  comment beyond the commit’s own statement.
 
 **YES**
 
- drivers/iommu/amd/amd_iommu.h       |   2 +
- drivers/iommu/amd/amd_iommu_types.h |  10 ++-
- drivers/iommu/amd/init.c            | 110 +++++++++++++++++++---------
- drivers/iommu/amd/iommu.c           |   2 +-
- 4 files changed, 86 insertions(+), 38 deletions(-)
+ sound/usb/clock.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index 1342e764a5486..f1c486dcf0f38 100644
---- a/drivers/iommu/amd/amd_iommu.h
-+++ b/drivers/iommu/amd/amd_iommu.h
-@@ -11,6 +11,8 @@
- 
- #include "amd_iommu_types.h"
- 
-+extern int amd_iommu_evtlog_size;
-+
- irqreturn_t amd_iommu_int_thread(int irq, void *data);
- irqreturn_t amd_iommu_int_thread_evtlog(int irq, void *data);
- irqreturn_t amd_iommu_int_thread_pprlog(int irq, void *data);
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index c685d3771436a..c3430c09bc5c9 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -15,6 +15,7 @@
- #include <linux/mutex.h>
- #include <linux/msi.h>
- #include <linux/list.h>
-+#include <linux/sizes.h>
- #include <linux/spinlock.h>
- #include <linux/pci.h>
- #include <linux/iommufd.h>
-@@ -141,7 +142,6 @@
- #define MMIO_STATUS_GALOG_INT_MASK		BIT(10)
- 
- /* event logging constants */
--#define EVENT_ENTRY_SIZE	0x10
- #define EVENT_TYPE_SHIFT	28
- #define EVENT_TYPE_MASK		0xf
- #define EVENT_TYPE_ILL_DEV	0x1
-@@ -259,8 +259,12 @@
- #define MMIO_CMD_BUFFER_TAIL(x) FIELD_GET(MMIO_CMD_TAIL_MASK, (x))
- 
- /* constants for event buffer handling */
--#define EVT_BUFFER_SIZE		8192 /* 512 entries */
--#define EVT_LEN_MASK		(0x9ULL << 56)
-+#define EVTLOG_ENTRY_SIZE	0x10
-+#define EVTLOG_SIZE_SHIFT	56
-+#define EVTLOG_SIZE_DEF		SZ_8K /* 512 entries */
-+#define EVTLOG_LEN_MASK_DEF	(0x9ULL << EVTLOG_SIZE_SHIFT)
-+#define EVTLOG_SIZE_MAX		SZ_512K /* 32K entries */
-+#define EVTLOG_LEN_MASK_MAX	(0xFULL << EVTLOG_SIZE_SHIFT)
- 
- /* Constants for PPR Log handling */
- #define PPR_LOG_ENTRIES		512
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index f3fd7f39efb48..74effb847f488 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -132,6 +132,8 @@ struct ivhd_entry {
- 	u8 uid;
- } __attribute__((packed));
- 
-+int amd_iommu_evtlog_size = EVTLOG_SIZE_DEF;
-+
- /*
-  * An AMD IOMMU memory definition structure. It defines things like exclusion
-  * ranges for devices and regions that should be unity mapped.
-@@ -864,35 +866,47 @@ void *__init iommu_alloc_4k_pages(struct amd_iommu *iommu, gfp_t gfp,
- }
- 
- /* allocates the memory where the IOMMU will log its events to */
--static int __init alloc_event_buffer(struct amd_iommu *iommu)
-+static int __init alloc_event_buffer(void)
- {
--	iommu->evt_buf = iommu_alloc_4k_pages(iommu, GFP_KERNEL,
--					      EVT_BUFFER_SIZE);
-+	struct amd_iommu *iommu;
- 
--	return iommu->evt_buf ? 0 : -ENOMEM;
-+	for_each_iommu(iommu) {
-+		iommu->evt_buf = iommu_alloc_4k_pages(iommu, GFP_KERNEL,
-+						      amd_iommu_evtlog_size);
-+		if (!iommu->evt_buf)
-+			return -ENOMEM;
-+	}
-+
-+	return 0;
- }
- 
--static void iommu_enable_event_buffer(struct amd_iommu *iommu)
-+static void iommu_enable_event_buffer(void)
- {
-+	struct amd_iommu *iommu;
- 	u64 entry;
- 
--	BUG_ON(iommu->evt_buf == NULL);
-+	for_each_iommu(iommu) {
-+		BUG_ON(iommu->evt_buf == NULL);
- 
--	if (!is_kdump_kernel()) {
--		/*
--		 * Event buffer is re-used for kdump kernel and setting
--		 * of MMIO register is not required.
--		 */
--		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
--		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
--			    &entry, sizeof(entry));
--	}
-+		if (!is_kdump_kernel()) {
-+			/*
-+			 * Event buffer is re-used for kdump kernel and setting
-+			 * of MMIO register is not required.
-+			 */
-+			entry = iommu_virt_to_phys(iommu->evt_buf);
-+			entry |= (amd_iommu_evtlog_size == EVTLOG_SIZE_DEF) ?
-+				EVTLOG_LEN_MASK_DEF : EVTLOG_LEN_MASK_MAX;
-+
-+			memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
-+				    &entry, sizeof(entry));
-+		}
- 
--	/* set head and tail to zero manually */
--	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
--	writel(0x00, iommu->mmio_base + MMIO_EVT_TAIL_OFFSET);
-+		/* set head and tail to zero manually */
-+		writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
-+		writel(0x00, iommu->mmio_base + MMIO_EVT_TAIL_OFFSET);
- 
--	iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
-+		iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
-+	}
- }
- 
- /*
-@@ -981,15 +995,20 @@ static int __init alloc_cwwb_sem(struct amd_iommu *iommu)
- 	return 0;
- }
- 
--static int __init remap_event_buffer(struct amd_iommu *iommu)
-+static int __init remap_event_buffer(void)
- {
-+	struct amd_iommu *iommu;
- 	u64 paddr;
- 
- 	pr_info_once("Re-using event buffer from the previous kernel\n");
--	paddr = readq(iommu->mmio_base + MMIO_EVT_BUF_OFFSET) & PM_ADDR_MASK;
--	iommu->evt_buf = iommu_memremap(paddr, EVT_BUFFER_SIZE);
-+	for_each_iommu(iommu) {
-+		paddr = readq(iommu->mmio_base + MMIO_EVT_BUF_OFFSET) & PM_ADDR_MASK;
-+		iommu->evt_buf = iommu_memremap(paddr, amd_iommu_evtlog_size);
-+		if (!iommu->evt_buf)
-+			return -ENOMEM;
-+	}
- 
--	return iommu->evt_buf ? 0 : -ENOMEM;
-+	return 0;
- }
- 
- static int __init remap_command_buffer(struct amd_iommu *iommu)
-@@ -1041,10 +1060,6 @@ static int __init alloc_iommu_buffers(struct amd_iommu *iommu)
- 		ret = remap_command_buffer(iommu);
- 		if (ret)
- 			return ret;
--
--		ret = remap_event_buffer(iommu);
--		if (ret)
--			return ret;
- 	} else {
- 		ret = alloc_cwwb_sem(iommu);
- 		if (ret)
-@@ -1053,10 +1068,6 @@ static int __init alloc_iommu_buffers(struct amd_iommu *iommu)
- 		ret = alloc_command_buffer(iommu);
- 		if (ret)
- 			return ret;
--
--		ret = alloc_event_buffer(iommu);
--		if (ret)
--			return ret;
+diff --git a/sound/usb/clock.c b/sound/usb/clock.c
+index 842ba5b801eae..2e0c18e352812 100644
+--- a/sound/usb/clock.c
++++ b/sound/usb/clock.c
+@@ -208,11 +208,18 @@ static bool uac_clock_source_is_valid_quirk(struct snd_usb_audio *chip,
  	}
  
- 	return 0;
-@@ -2890,7 +2901,6 @@ static void early_enable_iommu(struct amd_iommu *iommu)
- 	iommu_init_flags(iommu);
- 	iommu_set_device_table(iommu);
- 	iommu_enable_command_buffer(iommu);
--	iommu_enable_event_buffer(iommu);
- 	iommu_set_exclusion_range(iommu);
- 	iommu_enable_gt(iommu);
- 	iommu_enable_ga(iommu);
-@@ -2954,7 +2964,6 @@ static void early_enable_iommus(void)
- 			iommu_disable_event_buffer(iommu);
- 			iommu_disable_irtcachedis(iommu);
- 			iommu_enable_command_buffer(iommu);
--			iommu_enable_event_buffer(iommu);
- 			iommu_enable_ga(iommu);
- 			iommu_enable_xt(iommu);
- 			iommu_enable_irtcachedis(iommu);
-@@ -3067,6 +3076,7 @@ static void amd_iommu_resume(void *data)
- 	for_each_iommu(iommu)
- 		early_enable_iommu(iommu);
+ 	/*
+-	 * MOTU MicroBook IIc
+-	 * Sample rate changes takes more than 2 seconds for this device. Clock
+-	 * validity request returns false during that period.
++	 * Quirk for older MOTU AVB / hybrid interfaces
++	 *
++	 * These devices take more than 2 seconds to switch sample rate or
++	 * clock source. During this period the clock validity request
++	 * returns false, causing ALSA to fail prematurely.
++	 *
++	 * Affected models (all use vendor 0x07fd):
++	 *   - MicroBook IIc          → 0x0004
++	 *   - 1248, 624, 8A, UltraLite AVB, 8M, 16A, ... → 0x0005
+ 	 */
+-	if (chip->usb_id == USB_ID(0x07fd, 0x0004)) {
++	if (chip->usb_id == USB_ID(0x07fd, 0x0004) ||  /* MicroBook IIc */
++	    chip->usb_id == USB_ID(0x07fd, 0x0005)) {  /* 1248 / 624 / 8A / UltraLite AVB / ... */
+ 		count = 0;
  
-+	iommu_enable_event_buffer();
- 	amd_iommu_enable_interrupts();
- }
- 
-@@ -3396,6 +3406,23 @@ static __init void iommu_snp_enable(void)
- #endif
- }
- 
-+static void amd_iommu_apply_erratum_snp(void)
-+{
-+#ifdef CONFIG_KVM_AMD_SEV
-+	if (!amd_iommu_snp_en)
-+		return;
-+
-+	/* Errata fix for Family 0x19 */
-+	if (boot_cpu_data.x86 != 0x19)
-+		return;
-+
-+	/* Set event log buffer size to max */
-+	amd_iommu_evtlog_size = EVTLOG_SIZE_MAX;
-+	pr_info("Applying erratum: Increase Event log size to 0x%x\n",
-+		amd_iommu_evtlog_size);
-+#endif
-+}
-+
- /****************************************************************************
-  *
-  * AMD IOMMU Initialization State Machine
-@@ -3432,6 +3459,21 @@ static int __init state_next(void)
- 	case IOMMU_ENABLED:
- 		register_syscore(&amd_iommu_syscore);
- 		iommu_snp_enable();
-+
-+		amd_iommu_apply_erratum_snp();
-+
-+		/* Allocate/enable event log buffer */
-+		if (is_kdump_kernel())
-+			ret = remap_event_buffer();
-+		else
-+			ret = alloc_event_buffer();
-+
-+		if (ret) {
-+			init_state = IOMMU_INIT_ERROR;
-+			break;
-+		}
-+		iommu_enable_event_buffer();
-+
- 		ret = amd_iommu_init_pci();
- 		init_state = ret ? IOMMU_INIT_ERROR : IOMMU_PCI_INIT;
- 		break;
-@@ -4034,7 +4076,7 @@ int amd_iommu_snp_disable(void)
- 		return 0;
- 
- 	for_each_iommu(iommu) {
--		ret = iommu_make_shared(iommu->evt_buf, EVT_BUFFER_SIZE);
-+		ret = iommu_make_shared(iommu->evt_buf, amd_iommu_evtlog_size);
- 		if (ret)
- 			return ret;
- 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 760d5f4623b55..02b5eaae6843d 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1009,7 +1009,7 @@ static void iommu_poll_events(struct amd_iommu *iommu)
- 		iommu_print_event(iommu, iommu->evt_buf + head);
- 
- 		/* Update head pointer of hardware ring-buffer */
--		head = (head + EVENT_ENTRY_SIZE) % EVT_BUFFER_SIZE;
-+		head = (head + EVTLOG_ENTRY_SIZE) % amd_iommu_evtlog_size;
- 		writel(head, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
- 	}
- 
+ 		while ((!ret) && (count < 50)) {
 -- 
 2.53.0
 
