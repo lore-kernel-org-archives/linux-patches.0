@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF504DB554;
-	Mon, 11 May 2026 22:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D36340758F;
+	Mon, 11 May 2026 22:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537979; cv=none; b=MMOG3CCm8VgNsi/8V/gPuFE7ru1r3DS/RiXtbaZwzPZcWt+S7hOwdVKB5zbZTYCL//7/2VvP1vZOsfrRt7mXZZE4XNqwnwL9ZMPW6Bhbs9REUSZzC6Nic/aEZTt8DIAvav1RJiW4LfPT0DkZUVyDf/LhKtE6DftUnYLmnEuFeMs=
+	t=1778537981; cv=none; b=ljbehhM32/Q/efh63NLJ8/puXOr6iplMZFH4iKEx4MBwATXmoJrAmKZ3w0mDOjS5rW+Z7IBE9ye+aSS2Q6zjiZ00TGKvd+71cx2YmN+4nngIzcBMU65m9ZlBa192sE3lJwpdvzPU25K7o89gxkqsf488nxVlMszU83QHopGIj7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537979; c=relaxed/simple;
-	bh=GECVds6PVy5qQArWNQudsG6SbMG1H5Ihikpk5pwJxCE=;
+	s=arc-20240116; t=1778537981; c=relaxed/simple;
+	bh=FWsT6Yc/EVkU3tMWDeSo15/ZB5regyWNgHN7XRZLyl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZMnDqfpoFZ5JeK69vSCshuTY0EKprO24cG7kZ4QAf2GXiAjbzB9jik/xDDqnFStmx0WonWL6UGe9lm3SSOMYeMjJ9mw5jY15+QkQNoe2LlUdPsN7aw9lSCx377zhdtpdPe9wlHDlfAYGau8+FUJxeINu9Oh+xdamlw7A80nK1RE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e8rOUNwd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FcHNoTxroPoy3QJiaA6YFKjO2Sy3kuAzfaEJ94swpFXVfhr9vakmFpHebNz0zWcXMORGS64cpjBVTcFo5EYnJc1xU232VJc795/BqjLBRQALXHuiwy+ZdoUIONo/dOXyIguLyMIggk6xJ9s9S5bNcsEdpVH4wQ9vR/TKQ5YFZhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KRqQgaCD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e8rOUNwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D0DC2BCB0;
-	Mon, 11 May 2026 22:19:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KRqQgaCD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9160C2BCF7;
+	Mon, 11 May 2026 22:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537979;
-	bh=GECVds6PVy5qQArWNQudsG6SbMG1H5Ihikpk5pwJxCE=;
+	s=k20201202; t=1778537981;
+	bh=FWsT6Yc/EVkU3tMWDeSo15/ZB5regyWNgHN7XRZLyl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8rOUNwdO/t3Gk27U4UEPph8XZEbTjvWsmhZ6n2ZV1j44BkshNBdIX4atv3zv646L
-	 x5cMuFL511cbBhnIFvQFUpXVjZTE0wMRFfnqGxRX+ydq0XsyRJSINKgEzvAnxILaib
-	 ++YX24ezFYOMGKUxH4GpdEk/BwFqfpccZr+ZTldHe3b1phFIgy9UVGxsG1Q7goPLDD
-	 U7mIXphZuyWWh+5Y9x4Ma65Ny30NNNllU9Nv1mPMDO8KIGzXGvoVmN6TCr/WJ6uUzg
-	 mYpkeeFbViKIWRM3ALqDmkcXkQvkyj9UWfrF597k4TFnMPxED0SZdi/K7Zjx1WJTDN
-	 8/CpGIYZwpXDA==
+	b=KRqQgaCDhJxjqFVJlkPLq+wJy4BDUMbBRZhEycRkT0Qrpi7YUr8gA2O+sl43vIIhM
+	 ONyfa+dyu0e7zC5TVF33a9MakojV2zrv29jVpJ7YVsvyY56gFsmxS0giSSR/ADruM+
+	 xbzi369/6pw39SY0yr6gKcBREEyPh6UC1oFpWS2PyZcRIgII4ABCB4OCPCTP6XVQ6U
+	 zIsMdsybutFMlNRmXSeDex9AeEfwp+3fHgEvdDVi4ylTTyKV+PZKWGMqLnUp/fBbAB
+	 tRQbDe/j7BBaotbY4eOsvKTydWVJ8JXC2VBX9M2ChRBErqpMboWY2K0csABk/ayP2/
+	 MaPiu3pAnF1Fg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Daniel Borkmann <daniel@iogearbox.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
 	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
 	pabeni@redhat.com,
-	linux-wireless@vger.kernel.org,
+	dsahern@kernel.org,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] wifi: nl80211: re-check wiphy netns in nl80211_prepare_wdev_dump() continuation
-Date: Mon, 11 May 2026 18:19:04 -0400
-Message-ID: <20260511221931.2370053-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] ipv6: Implement limits on extension header parsing
+Date: Mon, 11 May 2026 18:19:05 -0400
+Message-ID: <20260511221931.2370053-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -55,207 +55,424 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.6
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 79240f3f6d766b342b57c32397d643e1cfa26b81 ]
+[ Upstream commit 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac ]
 
-NL80211_CMD_GET_SCAN is implemented as a multi-call dumpit. The first
-invocation of nl80211_prepare_wdev_dump() validates the requested wdev
-against the caller's netns via __cfg80211_wdev_from_attrs(). Subsequent
-invocations look up the same wiphy by its global index and do not check
-that the wiphy is still in the caller's netns.
+ipv6_{skip_exthdr,find_hdr}() and ip6_{tnl_parse_tlv_enc_lim,
+protocol_deliver_rcu}() iterate over IPv6 extension headers until they
+find a non-extension-header protocol or run out of packet data. The
+loops have no iteration counter, relying solely on the packet length
+to bound them. For a crafted packet with 8-byte extension headers
+filling a 64KB jumbogram, this means a worst case of up to ~8k
+iterations with a skb_header_pointer call each. ipv6_skip_exthdr(),
+for example, is used where it parses the inner quoted packet inside
+an incoming ICMPv6 error:
 
-Add the same filter to the continuation path. If the wiphy's netns no
-longer matches the caller's, return -ENODEV and the netlink dump
-machinery terminates the walk cleanly.
+  - icmpv6_rcv
+    - checksum validation
+    - case ICMPV6_DEST_UNREACH
+      - icmpv6_notify
+        - pskb_may_pull()       <- pull inner IPv6 header
+        - ipv6_skip_exthdr()    <- iterates here
+        - pskb_may_pull()
+        - ipprot->err_handler() <- sk lookup
 
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Link: https://patch.msgid.link/20260506064854.2207105-3-maoyixie.tju@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The per-iteration cost of ipv6_skip_exthdr itself is generally
+light, but skb_header_pointer becomes more costly on reassembled
+packets: the first ~1232 bytes of the inner packet are in the skb's
+linear area, but the remaining ~63KB are in the frag_list where
+skb_copy_bits is needed to read data.
+
+Initially, the idea was to add a configurable limit via a new
+sysctl knob with default 8, in line with knobs from commit
+47d3d7ac656a ("ipv6: Implement limits on Hop-by-Hop and Destination
+options"), but two reasons eventually argued against it:
+
+- It adds to UAPI that needs to be maintained forever, and
+  upcoming work is restricting extension header ordering anyway,
+  leaving little reason for another sysctl knob
+- exthdrs_core.c is always built-in even when CONFIG_IPV6=n,
+  where struct net has no .ipv6 member, so the read site would
+  need an ifdef'd fallback to a constant anyway
+
+Therefore, just use a constant (IP6_MAX_EXT_HDRS_CNT). All four
+extension header walking functions are now bound by this limit.
+
+Note that the check in ip6_protocol_deliver_rcu() happens right
+before the goto resubmit, such that we don't have to have a test
+for ipv6_ext_hdr() in the fast-path.
+
+There's an ongoing IETF draft-iurman-6man-eh-occurrences to enforce
+IPv6 extension headers ordering and occurrence. The latter also
+discusses security implications. As per RFC8200 section 4.1, the
+occurrence rules for extension headers provide a practical upper
+bound which is 8. In order to be conservative, let's define
+IP6_MAX_EXT_HDRS_CNT as 12 to leave enough room for quirky setups.
+In the unlikely event that this is still not enough, then we might
+need to reconsider a sysctl.
+
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260429154648.809751-1-daniel@iogearbox.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+## Decision Summary
+This should be backported. It is a small IPv6 networking hardening/fix
+for a reachable CPU-exhaustion path: several IPv6 extension-header
+walkers were bounded only by packet length, allowing crafted packets
+with many minimal 8-byte extension headers to force thousands of
+iterations. The patch caps traversal at 12 headers, avoids new UAPI, and
+was reviewed by IPv6/networking reviewers. Risk is mainly dropping
+extremely exotic packets with more than 12 extension headers; the review
+discussion explicitly considered that and settled on 12 as a
+conservative compromise.
+
 ## Phase Walkthrough
+Phase 1: Commit Message Forensics
 
-**Phase 1: Commit Message Forensics**
-- Step 1.1 Record: Subsystem `wifi: nl80211`; action verb `re-check`;
-  intent is to revalidate the wiphy net namespace during
-  `nl80211_prepare_wdev_dump()` continuation.
-- Step 1.2 Record: Tags are `Signed-off-by: Maoyi Xie`, `Link: https://p
-  atch.msgid.link/20260506064854.2207105-3-maoyixie.tju@gmail.com`,
-  `Signed-off-by: Johannes Berg`. No `Fixes`, `Reported-by`, `Tested-
-  by`, `Reviewed-by`, `Acked-by`, or `Cc: stable`.
-- Step 1.3 Record: The committed message says first dump invocation
-  validates via `__cfg80211_wdev_from_attrs()`, but later invocations
-  recover the wiphy by global index and lacked a netns check. The v3
-  mailing-list patch further states the failure mode: BSS scan data can
-  continue being copied from a wiphy after it moved to another netns.
-- Step 1.4 Record: This is a hidden security/correctness fix, not a
-  cleanup. It fixes a namespace isolation race in a multi-call netlink
-  dump.
+Record 1.1: Subsystem `ipv6`; action verb `Implement limits`; claimed
+intent is to bound IPv6 extension-header parsing loops.
 
-**Phase 2: Diff Analysis**
-- Step 2.1 Record: One file changed, `net/wireless/nl80211.c`; commit
-  stat is 12 insertions. One function changed:
-  `nl80211_prepare_wdev_dump()`. Scope is single-file surgical.
-- Step 2.2 Record: Before, continuation path did
-  `wiphy_idx_to_wiphy(cb->args[0] - 1)`, accepted the wiphy, then
-  searched `wdev_list`. After, it returns `-ENODEV` if
-  `!net_eq(wiphy_net(wiphy), sock_net(cb->skb->sk))`.
-- Step 2.3 Record: Bug category is race / namespace isolation /
-  information disclosure. A wiphy can move netns between dumpit calls
-  via `NL80211_CMD_SET_WIPHY_NETNS`.
-- Step 2.4 Record: Fix quality is high: one predicate and clean error
-  return before taking `wiphy.mtx`. Regression risk is low; it only
-  rejects a continuation whose object no longer belongs to the caller’s
-  netns.
+Record 1.2: Tags found: `Signed-off-by: Daniel Borkmann`, `Reviewed-by:
+Ido Schimmel`, `Reviewed-by: Eric Dumazet`, `Reviewed-by: Justin
+Iurman`, `Link:
+https://patch.msgid.link/20260429154648.809751-1-daniel@iogearbox.net`,
+`Signed-off-by: Jakub Kicinski`. No `Fixes:`, no `Reported-by:`, no `Cc:
+stable`.
 
-**Phase 3: Git History**
-- Step 3.1 Record: Current checkout is shallow; `git blame` attributed
-  the region to a shallow boundary, so that blame is not reliable.
-  Pickaxe history found the continuation-by-global-wiphy-index pattern
-  in old history, including `c319d50bfcf67` (`nl80211: fix another
-  nl80211_fam.attrbuf race`), contained by `v3.11-rc6`. Netns support
-  for cfg80211/nl80211 was introduced by `463d018323851`, contained by
-  `v2.6.32-rc1`.
-- Step 3.2 Record: No `Fixes:` tag, so no tagged introducer to follow.
-- Step 3.3 Record: Fetched wireless history shows the candidate
-  immediately follows companion commit `15994bb0cbb8f` (`wifi: nl80211:
-  require CAP_NET_ADMIN over the target netns in SET_WIPHY_NETNS`). No
-  intermediate commit between them.
-- Step 3.4 Record: Author has only these two fetched wireless commits.
-  Committer is Johannes Berg, the nl80211/cfg80211 maintainer.
-- Step 3.5 Record: No compile dependency on the companion commit, but
-  logical/security context is stronger if `15994bb0cbb8f` is backported
-  too.
+Record 1.3: The body describes crafted 64KB packets with 8-byte
+extension headers causing up to about 8k iterations, with costly
+`skb_header_pointer()`/`skb_copy_bits()` on reassembled packets. Symptom
+is CPU work amplification/DoS potential, not memory corruption or crash.
+It identifies `icmpv6_rcv -> icmpv6_notify -> ipv6_skip_exthdr()` as a
+concrete path.
 
-**Phase 4: Mailing List / External Research**
-- Step 4.1 Record: `b4 dig -c 79240f3f6d766...` found the v3 patch at
-  the provided `patch.msgid.link` URL. `b4 dig -a` found v1 and v3; `b4
-  am` showed v1, v2, v3. v3 cover says no code changes since v2 and that
-  Johannes review caused comment/trailer cleanup.
-- Step 4.2 Record: `b4 dig -w` shows Johannes Berg, `linux-wireless`,
-  and `linux-kernel` were included.
-- Step 4.3 Record: No syzbot/bugzilla report. The series cover and patch
-  body provide the bug explanation and patch 1 includes a mac80211_hwsim
-  reproducer for the related `SET_WIPHY_NETNS` privilege path.
-- Step 4.4 Record: This is patch 2/2 in a series. Patch 1 hardens
-  target-netns capability checks; patch 2 fixes dump continuation
-  filtering.
-- Step 4.5 Record: Lore WebFetch was blocked by Anubis; WebSearch did
-  not find stable-specific discussion.
+Record 1.4: This is not disguised cleanup. It is a direct
+correctness/security hardening fix: add a bound to previously unbounded
+loops.
 
-**Phase 5: Code Semantic Analysis**
-- Step 5.1 Record: Modified function is `nl80211_prepare_wdev_dump()`.
-- Step 5.2 Record: Exact callers are `nl80211_dump_station()`,
-  `nl80211_dump_mpath()`, `nl80211_dump_mpp()`, `nl80211_dump_scan()`,
-  and `nl80211_dump_survey()`.
-- Step 5.3 Record: Key callees are `__cfg80211_wdev_from_attrs()`,
-  `wiphy_idx_to_wiphy()`, `wiphy_net()`, `sock_net()`, `net_eq()`,
-  `wiphy_to_rdev()`, and list walk over `wiphy.wdev_list`.
-- Step 5.4 Record: `NL80211_CMD_GET_SCAN` maps to `nl80211_dump_scan()`
-  and has no admin flag in the ops entry; `NL80211_CMD_SET_WIPHY_NETNS`
-  maps to `nl80211_wiphy_netns()` with `GENL_UNS_ADMIN_PERM`.
-- Step 5.5 Record: Similar dump paths `nl80211_dump_wiphy()` and
-  `nl80211_dump_interface()` already filter by `net_eq(wiphy_net(...),
-  sock_net(skb->sk))` each iteration.
+Phase 2: Diff Analysis
 
-**Phase 6: Stable Tree Analysis**
-- Step 6.1 Record: The affected continuation code exists in checked tags
-  `v6.19`, `v6.18`, `v6.12`, `v6.6`, `v6.1`, `v5.15`, `v5.10`, `v5.4`,
-  `v4.19`, and `v4.14`.
-- Step 6.2 Record: Modern stable trees have the same helper shape. Older
-  trees such as `v5.4` and `v4.14` have different function
-  signatures/locking, so they may need small backport adjustment.
-- Step 6.3 Record: Searches in checked stable tags did not find this
-  candidate or the companion commit already present.
+Record 2.1: Five files changed, 25 insertions: `include/net/dropreason-
+core.h` +6, `include/net/ipv6.h` +3, `net/ipv6/exthdrs_core.c` +7,
+`net/ipv6/ip6_input.c` +5, `net/ipv6/ip6_tunnel.c` +4. Modified
+functions: `ipv6_skip_exthdr()`, `ipv6_find_hdr()`,
+`ip6_protocol_deliver_rcu()`, `ip6_tnl_parse_tlv_enc_lim()`.
 
-**Phase 7: Subsystem Context**
-- Step 7.1 Record: Subsystem is wireless cfg80211/nl80211, an important
-  networking control-plane subsystem.
-- Step 7.2 Record: `net/wireless/nl80211.c` is actively maintained;
-  fetched wireless history shows this series was taken through Johannes
-  Berg’s wireless tree.
+Record 2.2: Before, these loops stopped only at non-extension-header,
+`NEXTHDR_NONE`, malformed/truncated packet data, fragment handling, or
+protocol handler completion. After, each loop also stops/drops once
+`IP6_MAX_EXT_HDRS_CNT` is exceeded.
 
-**Phase 8: Impact / Risk**
-- Step 8.1 Record: Affected users are systems using wireless devices
-  with nl80211 netns movement support, including delegated/container
-  wireless setups and mac80211_hwsim.
-- Step 8.2 Record: Trigger requires a multi-call dump and a wiphy netns
-  move between invocations. The related series verifies an unprivileged
-  userns path when the caller has a delegated `WIPHY_FLAG_NETNS_OK`
-  wiphy.
-- Step 8.3 Record: Failure mode is namespace isolation breach / cross-
-  netns scan-result exposure, not a crash. Severity: HIGH due
-  security/isolation impact.
-- Step 8.4 Record: Benefit is high for isolation correctness; risk is
-  very low because the patch adds one local validation and returns an
-  existing error code.
+Record 2.3: Bug category is logic/performance DoS hardening: missing
+iteration bound in packet parser. It does not fix UAF/leak/race, but it
+prevents attacker-controlled excessive parsing work.
 
-**Phase 9: Final Synthesis**
-- Step 9.1 Record: Evidence for backporting: real namespace isolation
-  bug, old code present across stable trees, small surgical fix,
-  maintainer-applied, aligns with existing dump filtering. Evidence
-  against: companion patch should also be considered, and older trees
-  may require minor backport edits. Unresolved: no independent `Tested-
-  by`; stable-specific lore discussion could not be fetched.
-- Step 9.2 Record: Stable rules: obviously correct yes; fixes real bug
-  yes; important issue yes due namespace isolation/security; small and
-  contained yes; no new API/feature yes; applies cleanly or with minor
-  adjustment depending on tree.
-- Step 9.3 Record: No exception category applies.
-- Step 9.4 Record: Backport is warranted, preferably together with
-  `15994bb0cbb8f` for the complete netns hardening series.
+Record 2.4: Fix quality is good: small, local counters, no locking or
+lifetime changes, no new sysctl/API. Regression risk is limited to
+rejecting packets with more than 12 traversed extension headers.
+
+Phase 3: Git History Investigation
+
+Record 3.1: `git blame` shows the relevant loops are old:
+`ipv6_skip_exthdr()` loop traces to initial/early history with later
+signature changes; `ipv6_find_hdr()` to v3.8-era code;
+`ip6_protocol_deliver_rcu()` resubmit logic to v4.x/v5.0-era changes;
+`ip6_tnl_parse_tlv_enc_lim()` exists from initial/older tunnel code with
+later cleanups.
+
+Record 3.2: No `Fixes:` tag, so no introducing commit to follow. I did
+inspect referenced commit `47d3d7ac656a`, which added limits for Hop-by-
+Hop/Destination TLV parsing and described similar DoS behavior.
+
+Record 3.3: Recent file history shows related commit `076b8cad77aa9`
+capped TLV scanning in `ip6_tnl_parse_tlv_enc_lim()`. This commit is
+related but not a hard dependency for the outer extension-header-count
+limit.
+
+Record 3.4: Daniel Borkmann has recent related IPv6 limit work in the
+same area. Commit was applied by Jakub Kicinski, and reviewed by Eric
+Dumazet, Ido Schimmel, and Justin Iurman.
+
+Record 3.5: No functional prerequisite was found for the core idea.
+Older stable trees before `dropreason-core.h` will need a small backport
+adjustment for the new drop reason, or can use an existing generic
+reason.
+
+Phase 4: Mailing List And External Research
+
+Record 4.1: `b4 dig -c 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac` found
+`[PATCH net v5]` at the provided lore/patch.msgid link.
+
+Record 4.2: `b4 dig -a` found v1 through v5. v1 added a sysctl and was
+NAKed by Justin Iurman; v4 switched to a hard-coded limit; v5 reduced
+the limit from 32 to 12.
+
+Record 4.3: No `Reported-by` or bug-report link exists. Web/lore stable
+search did not find a stable-specific request or objection.
+
+Record 4.4: Related series context: review discussion referenced IETF
+extension-header occurrence work; v5 was the latest and accepted
+version.
+
+Record 4.5: No stable mailing-list-specific discussion found. WebFetch
+to lore was blocked/timed out, but `b4` successfully retrieved the
+thread.
+
+Phase 5: Code Semantic Analysis
+
+Record 5.1: Key functions are `ipv6_skip_exthdr()`, `ipv6_find_hdr()`,
+`ip6_protocol_deliver_rcu()`, `ip6_tnl_parse_tlv_enc_lim()`.
+
+Record 5.2: `git grep` found many callers of `ipv6_skip_exthdr()` across
+netfilter, XFRM/ESP, drivers, audit/security hooks, ICMPv6, and tunnel
+code. `ipv6_find_hdr()` is used by netfilter/nftables, BPF, OVS, IPVS,
+SRv6, drivers, and TC. `ip6_protocol_deliver_rcu()` is called from IPv6
+input and UDP encapsulation resubmission. `ip6_tnl_parse_tlv_enc_lim()`
+is called from GRE/tunnel paths.
+
+Record 5.3: Key callees are `skb_header_pointer()`, `pskb_pull()`,
+`pskb_may_pull()`, `raw6_local_deliver()`, `inet6_protos[]` dispatch,
+and protocol handlers.
+
+Record 5.4: Reachability is verified from IPv6 receive paths:
+`ip6_input_finish()` calls `ip6_protocol_deliver_rcu()`, and
+`icmpv6_notify()` calls `ipv6_skip_exthdr()` on quoted inner packets.
+These are network packet processing paths.
+
+Record 5.5: Similar prior pattern exists in `47d3d7ac656a` for TLV
+count/length limits and in `076b8cad77aa9` for tunnel TLV scanning.
+
+Phase 6: Stable Tree Analysis
+
+Record 6.1: The four key functions exist in checked tags `v5.10`,
+`v5.15`, `v6.1`, `v6.6`, `v6.12`, and `v6.19`. Thus the affected code
+shape exists across active LTS/stable ranges.
+
+Record 6.2: Expected backport difficulty: clean or minor for newer
+trees; minor rework for pre-`dropreason-core.h` trees because
+`include/net/dropreason-core.h` is absent in `v5.10`, `v5.15`, and
+`v6.1`.
+
+Record 6.3: No alternate stable-specific fix for this exact extension-
+header traversal count was found. Related TLV-limiting commits address
+adjacent, not identical, loops.
+
+Phase 7: Subsystem Context
+
+Record 7.1: Subsystem is IPv6 networking, criticality IMPORTANT to CORE
+for IPv6-enabled systems because packet receive, ICMPv6, netfilter,
+tunnel, and driver offload paths call these helpers.
+
+Record 7.2: Subsystem is active; recent history shows multiple
+IPv6/tunnel/drop-reason changes, but the unbounded parsing loops
+themselves are longstanding.
+
+Phase 8: Impact And Risk
+
+Record 8.1: Affected users are IPv6-enabled systems, especially systems
+exposed to crafted IPv6 traffic or using IPv6 tunnels/netfilter paths.
+
+Record 8.2: Trigger is a crafted IPv6 packet chain with many small
+extension headers, especially costly when parsed from
+fragmented/reassembled skb data. Network reachability depends on
+filtering and IPv6 deployment.
+
+Record 8.3: Failure mode is CPU work amplification/DoS risk, not crash
+or corruption. Severity: HIGH for exposed IPv6 hosts because it is
+remote packet-triggered parser amplification; not CRITICAL because no
+verified panic, data loss, or privilege escalation was found.
+
+Record 8.4: Benefit is high: caps an attacker-controlled loop in common
+networking code. Risk is low-to-medium: packets with more than 12
+traversed extension headers may now be rejected, but reviewers
+explicitly judged 12 conservative relative to RFC/IETF occurrence
+expectations.
+
+Phase 9: Final Synthesis
+
+Record 9.1: Evidence for backporting: small 25-line fix; real attacker-
+controlled parser amplification; network receive reachability verified;
+reviewed by networking experts; v1 concerns were resolved; no new UAPI.
+Evidence against: behavior change for extreme extension-header chains;
+older trees need minor drop-reason backport adjustment; no syzbot/user
+report/CVE. Unresolved: no benchmark for this exact v5 patch was found,
+and no stable-specific discussion was found.
+
+Record 9.2: Stable rules: obviously correct and reviewed, yes; fixes a
+real bug, yes; important issue, yes as network DoS/performance
+amplification; small and contained, yes; no new feature/API, yes; stable
+apply, likely clean for newer trees and minor adjustment for older
+trees.
+
+Record 9.3: No automatic exception category applies. This is not a
+device ID, quirk, DT, build, or documentation fix.
+
+Record 9.4: The risk-benefit balance favors backporting.
 
 ## Verification
-- Phase 1: Parsed `git show 79240f3f6d766...` and b4 v3 patch text;
-  verified tags and commit body.
-- Phase 2: Verified diff is one hunk in `nl80211_prepare_wdev_dump()`
-  with 12 insertions.
-- Phase 3: Ran `git blame`, pickaxe history, `git show` for
-  `c319d50bfcf67`, `463d018323851`, companion `15994bb0cbb8f`, and
-  fetched wireless history.
-- Phase 4: Ran `b4 dig`, `b4 dig -a`, `b4 dig -w`, `b4 am` for v1/v2/v3,
-  saved/read mbox; WebFetch to lore was blocked by Anubis.
-- Phase 5: Verified callers and relevant ops entries in
-  `net/wireless/nl80211.c`.
-- Phase 6: Used `git grep` across stable tags to confirm affected code
-  exists and checked stable logs for absence of the candidate.
-- Phase 8: Severity is based on verified patch text plus code paths; no
-  build or runtime test was run.
+- [Phase 1] Parsed `git show 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac`:
+  verified subject, tags, message, and 25-line diff.
+- [Phase 2] Read local code in `net/ipv6/exthdrs_core.c`,
+  `net/ipv6/ip6_input.c`, `net/ipv6/ip6_tunnel.c`, and
+  `include/net/ipv6.h`: verified loops were unbounded before the patch.
+- [Phase 3] Ran `git blame` on changed regions: verified long-lived code
+  and relevant commit ancestry.
+- [Phase 3] Inspected `47d3d7ac656a` and `076b8cad77aa9`: verified
+  similar prior DoS-limit work.
+- [Phase 4] Ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and `b4 mbox`:
+  verified v1-v5 history, reviewers, NAK of sysctl approach, and v5
+  acceptance.
+- [Phase 5] Ran caller searches for all four functions: verified broad
+  IPv6/netfilter/tunnel/driver call surface.
+- [Phase 6] Checked `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`:
+  verified the affected functions exist; verified `dropreason-core.h` is
+  absent before v6.6.
+- [Phase 8] Verified reachable call paths in `icmpv6_notify()`,
+  `ip6_input_finish()`, `udpv6_queue_rcv_skb()`, and `ip6_gre` tunnel
+  code.
+- UNVERIFIED: exact exploitability impact across real networks and exact
+  CPU-cost benchmark for this specific v5 patch.
+- UNVERIFIED: clean application to every currently maintained stable
+  branch; older trees likely need minor drop-reason context adjustment.
 
 **YES**
 
- net/wireless/nl80211.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/net/dropreason-core.h | 6 ++++++
+ include/net/ipv6.h            | 3 +++
+ net/ipv6/exthdrs_core.c       | 7 +++++++
+ net/ipv6/ip6_input.c          | 5 +++++
+ net/ipv6/ip6_tunnel.c         | 4 ++++
+ 5 files changed, 25 insertions(+)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index b94231c8441c4..ce3121b1c3319 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -1146,6 +1146,18 @@ static int nl80211_prepare_wdev_dump(struct netlink_callback *cb,
- 			rtnl_unlock();
- 			return -ENODEV;
+diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
+index a7b7abd66e215..0b674a02665ab 100644
+--- a/include/net/dropreason-core.h
++++ b/include/net/dropreason-core.h
+@@ -102,6 +102,7 @@
+ 	FN(FRAG_TOO_FAR)		\
+ 	FN(TCP_MINTTL)			\
+ 	FN(IPV6_BAD_EXTHDR)		\
++	FN(IPV6_TOO_MANY_EXTHDRS)	\
+ 	FN(IPV6_NDISC_FRAG)		\
+ 	FN(IPV6_NDISC_HOP_LIMIT)	\
+ 	FN(IPV6_NDISC_BAD_CODE)		\
+@@ -513,6 +514,11 @@ enum skb_drop_reason {
+ 	SKB_DROP_REASON_TCP_MINTTL,
+ 	/** @SKB_DROP_REASON_IPV6_BAD_EXTHDR: Bad IPv6 extension header. */
+ 	SKB_DROP_REASON_IPV6_BAD_EXTHDR,
++	/**
++	 * @SKB_DROP_REASON_IPV6_TOO_MANY_EXTHDRS: Number of IPv6 extension
++	 * headers in the packet exceeds IP6_MAX_EXT_HDRS_CNT.
++	 */
++	SKB_DROP_REASON_IPV6_TOO_MANY_EXTHDRS,
+ 	/** @SKB_DROP_REASON_IPV6_NDISC_FRAG: invalid frag (suppress_frag_ndisc). */
+ 	SKB_DROP_REASON_IPV6_NDISC_FRAG,
+ 	/** @SKB_DROP_REASON_IPV6_NDISC_HOP_LIMIT: invalid hop limit. */
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 53c5056508be5..ec95c11b8e434 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -90,6 +90,9 @@ struct ip_tunnel_info;
+ #define IP6_DEFAULT_MAX_DST_OPTS_LEN	 INT_MAX /* No limit */
+ #define IP6_DEFAULT_MAX_HBH_OPTS_LEN	 INT_MAX /* No limit */
+ 
++/* Hard limit on traversed IPv6 extension headers */
++#define IP6_MAX_EXT_HDRS_CNT		 12
++
+ /*
+  *	Addr type
+  *	
+diff --git a/net/ipv6/exthdrs_core.c b/net/ipv6/exthdrs_core.c
+index 49e31e4ae7b7f..9d06d487e8b10 100644
+--- a/net/ipv6/exthdrs_core.c
++++ b/net/ipv6/exthdrs_core.c
+@@ -73,6 +73,7 @@ int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
+ 		     __be16 *frag_offp)
+ {
+ 	u8 nexthdr = *nexthdrp;
++	int exthdr_cnt = 0;
+ 
+ 	*frag_offp = 0;
+ 
+@@ -82,6 +83,8 @@ int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
+ 
+ 		if (nexthdr == NEXTHDR_NONE)
+ 			return -1;
++		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
++			return -1;
+ 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
+ 		if (!hp)
+ 			return -1;
+@@ -190,6 +193,7 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
+ {
+ 	unsigned int start = skb_network_offset(skb) + sizeof(struct ipv6hdr);
+ 	u8 nexthdr = ipv6_hdr(skb)->nexthdr;
++	int exthdr_cnt = 0;
+ 	bool found;
+ 
+ 	if (fragoff)
+@@ -216,6 +220,9 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
+ 			return -ENOENT;
  		}
+ 
++		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
++			return -EBADMSG;
 +
-+		/*
-+		 * The first invocation validated the wdev's netns against
-+		 * the caller via __cfg80211_wdev_from_attrs(). The wiphy
-+		 * may have moved netns between dumpit invocations (via
-+		 * NL80211_CMD_SET_WIPHY_NETNS), so re-check here.
-+		 */
-+		if (!net_eq(wiphy_net(wiphy), sock_net(cb->skb->sk))) {
-+			rtnl_unlock();
-+			return -ENODEV;
-+		}
+ 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
+ 		if (!hp)
+ 			return -EBADMSG;
+diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
+index 2bcb981c91aa8..bbad1d4e6b854 100644
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -363,6 +363,7 @@ INDIRECT_CALLABLE_DECLARE(int tcp_v6_rcv(struct sk_buff *));
+ void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
+ 			      bool have_final)
+ {
++	int exthdr_cnt = IP6CB(skb)->flags & IP6SKB_HOPBYHOP ? 1 : 0;
+ 	const struct inet6_protocol *ipprot;
+ 	struct inet6_dev *idev;
+ 	unsigned int nhoff;
+@@ -447,6 +448,10 @@ void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
+ 				nexthdr = ret;
+ 				goto resubmit_final;
+ 			} else {
++				if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT)) {
++					SKB_DR_SET(reason, IPV6_TOO_MANY_EXTHDRS);
++					goto discard;
++				}
+ 				goto resubmit;
+ 			}
+ 		} else if (ret == 0) {
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 0b53488a92290..c1ca9b2806359 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -400,11 +400,15 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
+ 	unsigned int nhoff = raw - skb->data;
+ 	unsigned int off = nhoff + sizeof(*ipv6h);
+ 	u8 nexthdr = ipv6h->nexthdr;
++	int exthdr_cnt = 0;
+ 
+ 	while (ipv6_ext_hdr(nexthdr) && nexthdr != NEXTHDR_NONE) {
+ 		struct ipv6_opt_hdr *hdr;
+ 		u16 optlen;
+ 
++		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
++			break;
 +
- 		*rdev = wiphy_to_rdev(wiphy);
- 		*wdev = NULL;
+ 		if (!pskb_may_pull(skb, off + sizeof(*hdr)))
+ 			break;
  
 -- 
 2.53.0
