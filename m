@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28964EA379;
-	Mon, 11 May 2026 22:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64EE4EA387;
+	Mon, 11 May 2026 22:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778538000; cv=none; b=KiihMzCCMjWspZfa939/wR826dUYdvDLk6ww7MSbGBDvps6NOY9VgaMztT/42fg2wFOv/IXFvN/bhuUnWSz6M370FK5i7sSQRUzbmDYB+stcsvhG6HAAKRLKT4T/o8IjmZA9XDTRQbg2TFNDIIXo8IRERf+189nn8E+VkIpYNLQ=
+	t=1778538001; cv=none; b=KqTY8nC0w4en7TU9Fp9LJBMhE8Uw8kiB5UMWBejzRvuxtxWBLeyMNwIVTTXcLVgtkzSItm/zSEY+ijQ6z3/dpi+iw//zsiJwk9duo6x/GFTz9ijJspAQ7YBT4vKohrbv0BQMEg4hhmJYbyQshcr8XZj8K00WzvaxnHh87DyOhLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778538000; c=relaxed/simple;
-	bh=FdxaTCru6hrfGquTDBaLS5mWfPunr3FQyhpxgFvekzM=;
+	s=arc-20240116; t=1778538001; c=relaxed/simple;
+	bh=kFgmMNGmlIo0zSBNgHG9+naS/KZNXllqUo/TClMYRb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WuX2+QyMMmKu8GCBRT3mrsC0tQLt9Bef4L2XZmExnfKySkv4wucGlMaSABx2OZkeGRqdoMRxhQ/yMv7nR/xZB8iYPlx/2gW4tkOZo3utvT2qUuk54fSDjggPwodFF97Wiaux6gomBUx9qg8ImsM9d6mVlbp3o87RAjoQksBCtcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AHL1ez8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ogojiSiyADnf3HxQbusZyatc42P+do1HJ8nYLyIuqoXLij1oR7AEocoiQJ4xU36WZRS/UTKZQ9BlG8WmUHtjioslt8+YL8XTAEznlN4uILyEjQIfNVZ7Q9jCklU9prdfGW21Vqxoi5JMHSdUK8129b1B1jXFwNFYCdrNISzjyew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jphv9JB6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AHL1ez8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C8CC2BCB0;
-	Mon, 11 May 2026 22:19:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jphv9JB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AA9C2BCFA;
+	Mon, 11 May 2026 22:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778538000;
-	bh=FdxaTCru6hrfGquTDBaLS5mWfPunr3FQyhpxgFvekzM=;
+	s=k20201202; t=1778538001;
+	bh=kFgmMNGmlIo0zSBNgHG9+naS/KZNXllqUo/TClMYRb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHL1ez8KAThsJKuPsoEsk96yDvMvU3RblOmDalcChlt/ujxRBeMBYT8nxGWJK7Kzd
-	 pv0MIE3JdnHiGu0f3jW1E+ZnlvzV2wMYvpaJCAr/1MwDJbockM5KfFEBjEc8k7xRN6
-	 7HTKCNnADqIqVyhkc+eNMi1HI0njvoGAgxxrNFA1Nh9Vc47f/Zjc5s8Dk2KibiIfGS
-	 GJWklAvvQ4pV29govL6RX9sJByc7ydm7rvGKbi8BqzDfJ9ri8WrJ1waG/IQq8qpd4g
-	 0XYzpwJl6nOjRIBfYSPzV6/IKeYqpdyOYb/ikGPHm1OVQE+upw+b64y78AJ+9U7dsB
-	 609YJcfqp3KIw==
+	b=jphv9JB6lkrAt8R8oILbYOO1l8UmL2rh1bmE9Oafg7RFMwLsdkphrR1qHoqS6N/11
+	 BZr0kPpwK6v53wSxxr+7rvFK2s6xRCOsZvoasFmxNalcEhJ/lwm0oaYIMItCyTx7HP
+	 SuEvqL0/R38JtXMMc1v+LQF1ScVKmvFjnJoJS39Ao/uM/m8Shvz7dDe18438Nn6CBd
+	 SZaCkt/UjvaXcmcov26ZMxpjUz+SSYgkafN956lR+DNrjcrqTcXUnNt1BtjaNVOrNU
+	 8NuNCH0IbklzqZbWOFZtaLR6EzTglcSWEUFVXmUeas3FPPzccT2d7lGyrVLxg+9OrD
+	 sTWSAxPcxrnhQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Anton Swart <anton.swart.jhb@gmail.com>,
+Cc: =?UTF-8?q?R=C3=A1mon=20van=20Raaij?= <ramon@vanraaij.eu>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
 	perex@perex.cz,
 	tiwai@suse.com,
 	alsa-devel@alsa-project.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] ALSA: usb-audio: Add quirk flags for AlphaTheta EUPHONIA
-Date: Mon, 11 May 2026 18:19:18 -0400
-Message-ID: <20260511221931.2370053-19-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] ALSA: hda/realtek: Add codec SSID quirk for Lenovo Yoga Pro 9 16IMH9
+Date: Mon, 11 May 2026 18:19:19 -0400
+Message-ID: <20260511221931.2370053-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -48,379 +48,267 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.6
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anton Swart <anton.swart.jhb@gmail.com>
+From: Rámon van Raaij <ramon@vanraaij.eu>
 
-[ Upstream commit f80785888f7c0980a49545b87a80e3817c9ed7c6 ]
+[ Upstream commit 56722cfbb78d7eb41756cd78dc5192d08bd14f3d ]
 
-The AlphaTheta EUPHONIA (VID 0x2b73, PID 0x0047) is a USB Audio
-Class 2 DJ mixer that requires implicit feedback for full-duplex
-operation. The capture endpoint (0x83 IN, interface 2) acts as the
-implicit feedback source for the playback endpoint (0x03 OUT,
-interface 1), and the device firmware does not send isochronous
-data on the capture endpoint unless the host is simultaneously
-sending data on the playback endpoint, i.e. playback must be
-started first.
+The Yoga Pro 9 16IMH9 (codec SSID 17aa:38d6) shares PCI audio device
+subsystem ID 17aa:3811 with the Legion S7 15IMH05. The existing
+SND_PCI_QUIRK entry for the Legion routes both machines to
+ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS, which does not bind the TAS2781
+smart amplifiers, resulting in near-silent built-in speakers.
 
-Without QUIRK_FLAG_PLAYBACK_FIRST the kernel waits for capture URBs
-before submitting playback URBs, creating a deadlock: the device
-waits for playback data and the host waits for capture data.
-Without QUIRK_FLAG_GENERIC_IMPLICIT_FB the kernel does not detect
-the implicit feedback relationship between the two interfaces.
+Add an HDA_CODEC_QUIRK entry immediately before the conflicting PCI quirk
+that matches the Yoga Pro 9's unique codec SSID and routes it to
+ALC287_FIXUP_TAS2781_I2C. Codec quirks are evaluated after PCI quirks and
+take precedence, leaving the Legion S7 15IMH05 entry unaffected.
 
-The same flag combination is already used for the Behringer UMC202HD,
-UMC204HD and UMC404HD (0x1397:0x0507/0x0508/0x0509), which exhibit
-the identical implicit-feedback topology.
+This follows the same pattern used to disambiguate PCI SSID 17aa:3847
+(shared between Yoga Pro 7 14IMH9 and Legion 7 16ACHG6), where a
+HDA_CODEC_QUIRK for codec SSID 17aa:38cf resolves the conflict.
 
-Tested on Raspberry Pi 5 with kernel 6.12.75; continuous full-duplex
-streaming at 96 kHz / 24-bit, zero XRUNs.
-
-Signed-off-by: Anton Swart <anton.swart.jhb@gmail.com>
-Link: https://patch.msgid.link/20260503211517.14332-1-anton.swart.jhb@gmail.com
+Signed-off-by: Rámon van Raaij <ramon@vanraaij.eu>
+Link: https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+## Phase Walkthrough
+### Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem is `ALSA: hda/realtek`; action is `Add`;
+claimed intent is adding a codec-SSID quirk so Lenovo Yoga Pro 9 16IMH9
+uses the TAS2781 fixup instead of the Legion S7 PCI-SSID fixup.
 
-### Step 1.1: Subject
-Record: Subsystem: `ALSA: usb-audio`. Action verb: `Add`. Claimed
-intent: add device-specific quirk flags for AlphaTheta EUPHONIA.
+Step 1.2 Record: Tags present are `Signed-off-by: Rámon van Raaij
+<ramon@vanraaij.eu>`, `Link:
+https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu`, and
+`Signed-off-by: Takashi Iwai <tiwai@suse.de>`. No `Fixes:`, `Reported-
+by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
+stable@vger.kernel.org` tag is present.
 
-### Step 1.2: Tags
-Record:
-- `Signed-off-by: Anton Swart <anton.swart.jhb@gmail.com>`: author
-  signoff.
-- `Link: https://patch.msgid.link/20260503211517.14332-1-
-  anton.swart.jhb@gmail.com`: original patch submission.
-- `Signed-off-by: Takashi Iwai <tiwai@suse.de>`: supplied commit message
-  says ALSA maintainer applied/signed off.
-- No `Fixes:` tag.
-- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-  stable@vger.kernel.org` tags.
-- The patch body says it was tested on Raspberry Pi 5 with kernel
-  `6.12.75`, but this is not a formal `Tested-by:` tag.
+Step 1.3 Record: The commit describes a real hardware misidentification:
+Yoga Pro 9 16IMH9 has codec SSID `17aa:38d6` but shares PCI audio SSID
+`17aa:3811` with Legion S7 15IMH05, causing
+`ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS` to be selected. The stated
+symptom is near-silent built-in speakers because TAS2781 smart
+amplifiers are not bound.
 
-### Step 1.3: Commit Body
-Record: The bug is a device-specific full-duplex startup deadlock for
-AlphaTheta EUPHONIA USB Audio Class 2 mixer `VID:PID 0x2b73:0x0047`. The
-capture endpoint is the implicit feedback source, but firmware does not
-emit capture isochronous data until playback is already sending.
-Symptom: full-duplex streaming cannot start because host waits for
-capture feedback while device waits for playback data. Version info:
-tested on `6.12.75`. Root cause: kernel does not both detect generic
-implicit feedback and start playback first for this device.
+Step 1.4 Record: This is a bug fix disguised as an “add quirk” change.
+It is a hardware-specific workaround for wrong quirk selection, one of
+the standard stable exception categories.
 
-### Step 1.4: Hidden Bug Fix
-Record: Yes. Although phrased as “Add quirk flags”, this is a hardware
-workaround fixing real device malfunction. It falls under the stable
-hardware-quirk exception.
+### Phase 2: Diff Analysis
+Step 2.1 Record: One file changed: `sound/hda/codecs/realtek/alc269.c`,
+4 insertions, 0 deletions. No function body is changed; the modified
+object is `alc269_fixup_tbl`. Scope is single-file, table-only,
+surgical.
 
-## Phase 2: Diff Analysis
+Step 2.2 Record: Before, a Yoga Pro 9 16IMH9 with PCI SSID `17aa:3811`
+would hit the existing Legion S7 `SND_PCI_QUIRK` and get
+`ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS`. After, the earlier
+`HDA_CODEC_QUIRK(0x17aa, 0x38d6, ..., ALC287_FIXUP_TAS2781_I2C)` matches
+by codec SSID first due table order and routes that machine to the
+TAS2781 I2C fixup.
 
-### Step 2.1: Inventory
-Record:
-- File changed: `sound/usb/quirks.c`
-- Scope: 2 lines added, 0 removed.
-- Function/data object modified: `quirk_flags_table[]`.
-- Classification: single-file, table-only, surgical hardware quirk.
+Step 2.3 Record: Bug category is hardware workaround / logic
+correctness. The broken mechanism is ambiguous PCI SSID reuse; the fix
+uses the more specific codec SSID.
 
-### Step 2.2: Code Flow Change
-Record:
-- Before: device `0x2b73:0x0047` had no built-in quirk flag entry.
-- After: matching USB audio devices get `QUIRK_FLAG_PLAYBACK_FIRST |
-  QUIRK_FLAG_GENERIC_IMPLICIT_FB`.
-- Affected path: USB audio device probe initializes `chip->quirk_flags`
-  from `quirk_flags_table[]`; stream parsing and endpoint start then use
-  those flags.
-- Path type: initialization/probe plus later stream-start behavior.
+Step 2.4 Record: Fix quality is high. It is a 4-line exact-match quirk,
+no API change, no broad behavior change. Regression risk is very low and
+limited to devices reporting codec SSID `17aa:38d6`.
 
-### Step 2.3: Bug Mechanism
-Record:
-- Category: hardware workaround / USB audio implicit feedback startup
-  ordering.
-- `QUIRK_FLAG_GENERIC_IMPLICIT_FB` is verified in `sound/usb/implicit.c`
-  to trigger `add_generic_implicit_fb()` when the generic implicit-
-  feedback flag is set.
-- `QUIRK_FLAG_PLAYBACK_FIRST` is verified in `sound/usb/endpoint.c` to
-  skip the normal “do not submit playback URBs until feedback arrives”
-  behavior for implicit-feedback sinks.
-- Together they fix the described stream-start deadlock for this device.
+### Phase 3: Git History
+Step 3.1 Record: `git blame` shows the conflicting
+`SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ...)` came from
+`67f4c61a73e9b` by Eric Naim. `git describe --contains 67f4c61a73e9b`
+reports `v7.1-rc1~166^2~6`; candidate `56722cfbb78d` is contained by
+`v7.1-rc3~27^2~13`.
 
-### Step 2.4: Fix Quality
-Record: The fix is obviously minimal and consistent with existing
-entries. The same exact flag combination is already present for
-Behringer UMC202HD/UMC204HD/UMC404HD in `sound/usb/quirks.c`. Regression
-risk is very low because the new behavior is limited to exact USB ID
-`0x2b73:0x0047`.
+Step 3.2 Record: No `Fixes:` tag is present, so there is no tagged
+introducer to follow. Manual blame identifies the relevant prior Legion
+quirk.
 
-## Phase 3: Git History Investigation
+Step 3.3 Record: Recent file history is mostly audio quirk additions.
+Related commit `217d5bc9f9627` adds the same codec-SSID disambiguation
+pattern for Yoga Pro 7 14IMH9 versus Legion 7 16ACHG6.
 
-### Step 3.1: Blame Changed Area
-Record: `git blame` on the insertion area showed neighboring quirk
-entries are longstanding table entries, including Fiero SC-01 entries
-introduced by `668abe6dc7b619` (`ALSA: usb-audio: Sort quirk table
-entries`). Local history is partly grafted, so I did not rely on graft-
-boundary blame for introduction of the whole mechanism.
+Step 3.4 Record: `git log --author='Rámon van Raaij' ... master --
+sound/hda/codecs/realtek/alc269.c` returned no earlier matching commits
+in this local history. Maintainer Takashi Iwai committed the patch.
 
-### Step 3.2: Fixes Tag
-Record: Not applicable. There is no `Fixes:` tag.
+Step 3.5 Record: Dependencies are the existing `HDA_CODEC_QUIRK`
+infrastructure, `ALC287_FIXUP_TAS2781_I2C`, and the conflicting Legion
+`17aa:3811` entry. All exist in the checked 7.0 tree; `git apply
+--check` of the candidate diff against current `HEAD` succeeded.
 
-### Step 3.3: File History
-Record: Recent `sound/usb/quirks.c` history contains many similar
-device-specific quirk additions/fixes. No prerequisite patch is
-referenced by the commit message. This patch is standalone for trees
-that already have `QUIRK_FLAG_GENERIC_IMPLICIT_FB` and
-`QUIRK_FLAG_PLAYBACK_FIRST`.
+### Phase 4: Mailing List / External Research
+Step 4.1 Record: `b4 dig -c 56722cfbb78d -a` found one revision, v1, at
+`https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu`. No
+newer revision for this exact patch was found.
 
-### Step 3.4: Author History
-Record: `git log --author='Anton Swart' -10 -- sound/usb` found no local
-prior commits. `MAINTAINERS` verifies Takashi Iwai is a listed `SOUND`
-maintainer, and the supplied commit message has his signoff.
+Step 4.2 Record: `b4 dig -c 56722cfbb78d -w` shows recipients were Rámon
+van Raaij, `linux-sound@vger.kernel.org`, `alsa-devel@alsa-project.org`,
+and Takashi Iwai. The maintainer replied “Applied now. Thanks.”
 
-### Step 3.5: Dependencies
-Record: The patch depends on existing `QUIRK_FLAG_GENERIC_IMPLICIT_FB`
-and `QUIRK_FLAG_PLAYBACK_FIRST` infrastructure. Verified present in
-`v6.1`, `v6.6`, `v6.12`, and `v7.0.5`. Verified `v5.15` has
-`PLAYBACK_FIRST` but not `GENERIC_IMPLICIT_FB`, so this exact patch is
-not directly applicable to `5.15.y`.
+Step 4.3 Record: No separate bug report link or `Reported-by` tag is in
+the candidate. Web search found public Yoga Pro 9i/TIAS2781/ALC287 audio
+issue reports, but I did not use those as primary evidence for the exact
+`17aa:38d6` SSID.
 
-## Phase 4: Mailing List And External Research
+Step 4.4 Record: `b4 mbox -c` showed a later related patch for codec
+SSID `17aa:38d5`, referencing this candidate commit and the same
+hardware class. It is related context, not a prerequisite.
 
-### Step 4.1: Original Discussion
-Record: No upstream commit hash was available locally, so `b4 dig -c
-<commit>` could not be used. I used the supplied message-id link with
-`b4 am`. It found the patch at `https://lore.kernel.org/all/202605032115
-17.14332-1-anton.swart.jhb@gmail.com/`, one patch, two messages in
-thread, zero code-review messages analyzed, DKIM signed by Gmail.
-`WebFetch` to lore was blocked by Anubis.
+Step 4.5 Record: Web search for stable-specific discussion of
+`56722cfbb78d` did not find a stable-thread result. Lore `WebFetch` was
+blocked by anti-bot HTML, but `b4` access succeeded.
 
-### Step 4.2: Reviewers / Recipients
-Record: `b4 am --cc-trailers` showed recipients: `alsa-devel@alsa-
-project.org`, Jaroslav Kysela, Takashi Iwai, and `linux-
-kernel@vger.kernel.org`. These are appropriate ALSA/kernel recipients.
-No reviewer trailers were found in the b4-processed thread.
+### Phase 5: Semantic Code Analysis
+Step 5.1 Record: No function is modified. Key affected symbols are
+`alc269_fixup_tbl`, `snd_hda_pick_fixup`, `HDA_CODEC_QUIRK`,
+`ALC287_FIXUP_TAS2781_I2C`, and `ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS`.
 
-### Step 4.3: Bug Report
-Record: No separate bug report or `Reported-by:` tag found. The patch
-itself gives a concrete device topology, failure mode, and test result.
-Web search found AlphaTheta product/support pages but no separate kernel
-bug report for this quirk.
+Step 5.2 Record: `alc269_probe()` calls `snd_hda_pick_fixup(codec,
+alc269_fixup_models, alc269_fixup_tbl, alc269_fixups)`.
+`hda_codec_driver_probe()` calls the codec driver probe op, so this is
+reached during HDA codec binding/probe.
 
-### Step 4.4: Related Series
-Record: `b4 am` found a single-patch submission, not a multi-patch
-series. No series dependency found.
+Step 5.3 Record: `HDA_CODEC_QUIRK` sets `.match_codec_ssid = true`.
+`snd_hda_pick_fixup()` checks such entries against
+`codec->core.subsystem_id`; the TAS2781 fixup calls
+`comp_generic_fixup(..., "i2c", "TIAS2781", ...)`. The Legion fixup is
+HDA verb/coefficient based and does not call the TAS2781 component
+binding helper.
 
-### Step 4.5: Stable Mailing List
-Record: `WebFetch` searches for lore stable/all were blocked by Anubis.
-Web search did not find stable-list discussion for this exact patch. No
-evidence found of a stable-specific objection.
+Step 5.4 Record: Reachability is hardware probe path: HDA controller
+probes codecs, Realtek codec driver probes, `alc269_probe()` picks the
+fixup. The bug is not syscall/security-triggered; it affects audio
+functionality on matching hardware.
 
-## Phase 5: Code Semantic Analysis
+Step 5.5 Record: Similar patterns exist in the same table, especially
+`HDA_CODEC_QUIRK(0x17aa, 0x38cf, "Lenovo Yoga Pro 7 14IMH9", ...)`
+immediately before a conflicting Legion PCI SSID entry.
 
-### Step 5.1: Key Functions/Data
-Record: Modified object: `quirk_flags_table[]`. Affected functions
-verified:
-- `snd_usb_init_quirk_flags_table()`
-- `snd_usb_init_quirk_flags()`
-- `snd_usb_audio_create()`
-- `audioformat_playback_quirk()`
-- `add_generic_implicit_fb()`
-- `snd_usb_endpoint_start()`
+### Phase 6: Stable Tree Analysis
+Step 6.1 Record: In checked local refs, `HEAD` and `pending-6.18`
+contain the conflicting `17aa:3811` Legion quirk and do not contain the
+candidate `HDA_CODEC_QUIRK(0x17aa, 0x38d6, ...)`. Older checked pending
+refs did not show the conflicting line in the `git grep` run.
 
-### Step 5.2: Callers
-Record: `usb_audio_probe()` calls `snd_usb_audio_create()`, which
-initializes quirk flags. ALSA PCM ops call `snd_usb_pcm_prepare()` and
-playback/capture trigger callbacks, which call `start_endpoints()`,
-which calls `snd_usb_endpoint_start()`.
+Step 6.2 Record: Backport difficulty is clean for current `HEAD`: `git
+apply --check` succeeded. For older trees without `HDA_CODEC_QUIRK` or
+without the Legion `17aa:3811` quirk, this patch is either not
+applicable or would need prerequisites.
 
-### Step 5.3: Callees
-Record: `snd_usb_init_quirk_flags_table()` scans `quirk_flags_table[]`
-and ORs flags into `chip->quirk_flags`. `audioformat_playback_quirk()`
-calls `add_generic_implicit_fb()` when `QUIRK_FLAG_GENERIC_IMPLICIT_FB`
-is set. `snd_usb_endpoint_start()` changes URB submission behavior based
-on `QUIRK_FLAG_PLAYBACK_FIRST`.
+Step 6.3 Record: No equivalent `17aa:38d6` codec quirk was found in
+checked stable refs. Existing `SND_PCI_QUIRK(0x17aa, 0x38d6, ...)`
+entries are PCI-SSID entries and do not fix the reported Yoga Pro 9 case
+where the PCI SSID is `17aa:3811`.
 
-### Step 5.4: Call Chain / Reachability
-Record: Reachable when the matching USB audio device is probed and
-userspace opens/starts ALSA PCM full-duplex streams. I did not verify
-whether an unprivileged user can trigger it on a given distribution;
-ALSA device permissions are policy-dependent.
+### Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is ALSA HDA Realtek codec support under
+`sound/hda/codecs/realtek`. Criticality is driver-specific/important for
+affected laptop users, not core-kernel-wide.
 
-### Step 5.5: Similar Patterns
-Record: Verified existing exact flag combination for Behringer
-`0x1397:0x0507`, `0x0508`, and `0x0509`. Verified
-`QUIRK_FLAG_GENERIC_IMPLICIT_FB` appears in ten quirk-table entries in
-current `7.0.y`.
+Step 7.2 Record: The subsystem is actively maintained; recent history
+shows many Realtek laptop quirk additions and related fixes. Takashi
+Iwai applied the patch.
 
-## Phase 6: Stable Tree Analysis
+### Phase 8: Impact / Risk
+Step 8.1 Record: Affected population is Lenovo Yoga Pro 9 16IMH9 units
+with codec SSID `17aa:38d6` on stable trees containing the Legion
+`17aa:3811` quirk.
 
-### Step 6.1: Buggy Code Exists
-Record:
-- `v7.0.5`: quirk infrastructure exists; EUPHONIA entry absent.
-- `v6.12.75`: quirk infrastructure exists; EUPHONIA entry absent.
-- `v6.6`: quirk infrastructure exists; EUPHONIA entry absent.
-- `v6.1`: quirk infrastructure exists; EUPHONIA entry absent.
-- `v5.15`: `GENERIC_IMPLICIT_FB` flag absent, so this exact patch is not
-  applicable.
+Step 8.2 Record: Trigger is normal boot/device probe and use of built-in
+speakers. It is hardware/config specific, not unprivileged exploitation.
 
-### Step 6.2: Backport Difficulty
-Record:
-- `v7.0.5`: index-only `git apply --check` passes.
-- `v6.12.75`: index-only `git apply --check` passes.
-- `v6.6` and `v6.1`: exact patch does not apply because nearby context
-  differs, but the same table and flags exist; expected minor context-
-  only backport.
-- `v5.15`: exact patch does not apply and lacks required generic flag
-  infrastructure.
+Step 8.3 Record: Failure mode is broken built-in speaker output,
+described as near-silent speakers. Severity is high for affected
+hardware functionality, though not crash/data-corruption/security
+severity.
 
-### Step 6.3: Related Fixes Already Stable
-Record: No existing `0x2b73:0x0047` or `AlphaTheta EUPHONIA` entry found
-in the local tree. No local history match for this device.
+Step 8.4 Record: Benefit is high for affected laptops and also prevents
+a regression caused by the shared PCI SSID quirk. Risk is very low: 4
+lines, exact match, no new API, no shared logic changes.
 
-## Phase 7: Subsystem Context
+### Phase 9: Synthesis
+Step 9.1 Record: Evidence for backporting: real user-visible hardware
+breakage, standard stable hardware-quirk category, tiny table-only
+patch, maintainer-applied, exact existing pattern, clean apply to
+current checked stable tree. Evidence against: no `Tested-by`, no `Cc:
+stable`, no separate bug-report link in the commit, and not applicable
+to trees lacking the prerequisite Legion quirk or `HDA_CODEC_QUIRK`
+infrastructure. Unresolved: I did not independently verify the physical
+uniqueness of codec SSID `17aa:38d6` beyond the submitted patch and
+maintainer acceptance.
 
-### Step 7.1: Subsystem Criticality
-Record: Subsystem is ALSA USB audio, under `sound/usb`. Criticality:
-important for users of affected USB audio hardware, but not
-universal/core kernel.
+Step 9.2 Record: Stable rules: already upstream/mainline yes; obviously
+correct yes by code inspection and `checkpatch`; fixes a real bug yes,
+wrong quirk causing near-silent speakers; important enough yes as a
+hardware quirk / broken device functionality; small and contained yes, 4
+insertions; no new feature/API yes; applies cleanly to current checked
+stable `HEAD`, with older-tree applicability depending on prerequisites.
 
-### Step 7.2: Activity
-Record: `sound/usb` is actively maintained; recent history shows
-multiple ALSA USB fixes and quirk updates. Maintainer context verified
-through `MAINTAINERS`.
+Step 9.3 Record: Exception category applies: hardware quirk/workaround
+for a specific laptop audio configuration.
 
-## Phase 8: Impact And Risk
-
-### Step 8.1: Affected Users
-Record: Driver/hardware-specific: users of AlphaTheta EUPHONIA USB audio
-mixer on kernels with this usb-audio quirk infrastructure.
-
-### Step 8.2: Trigger Conditions
-Record: Trigger is full-duplex streaming where capture endpoint acts as
-implicit feedback and playback must start first. The commit message
-reports testing continuous full-duplex 96 kHz / 24-bit on Raspberry Pi 5
-with kernel `6.12.75`.
-
-### Step 8.3: Failure Severity
-Record: Failure mode is a device/stream-start deadlock: audio full-
-duplex streaming does not start. Severity: medium-high for affected
-hardware users. It is not verified as a system-wide kernel
-deadlock/panic.
-
-### Step 8.4: Risk / Benefit
-Record: Benefit is high for affected hardware because it makes full-
-duplex operation work. Risk is very low: exact USB-ID match, 2-line
-table addition, no API or shared logic change.
-
-## Phase 9: Final Synthesis
-
-### Step 9.1: Evidence
-Record: Evidence for backporting:
-- Real hardware malfunction with concrete topology and failure mode.
-- Hardware quirk category is explicitly stable-suitable.
-- 2-line exact-device table addition.
-- Existing identical flag combination for similar implicit-feedback
-  devices.
-- Tested on `6.12.75`.
-- Appropriate ALSA maintainers/lists were CC’d; supplied commit has
-  Takashi Iwai signoff.
-
-Evidence against:
-- No separate `Reported-by:` or formal `Tested-by:` tag.
-- `v6.6`/`v6.1` need minor context backport.
-- `v5.15` lacks `QUIRK_FLAG_GENERIC_IMPLICIT_FB`, so this exact patch
-  should not be applied there without additional analysis/prerequisites.
-
-Unresolved:
-- Lore web UI could not be fetched due Anubis.
-- No upstream commit hash was available locally, so `b4 dig -c` could
-  not be performed.
-- No independent bug report was found.
-
-### Step 9.2: Stable Rules
-Record:
-1. Obviously correct and tested: yes, for applicable trees; 2-line
-   exact-ID quirk and patch body reports testing.
-2. Fixes a real bug: yes, full-duplex stream startup deadlock for
-   specific hardware.
-3. Important issue: yes for affected hardware; device full-duplex
-   operation is broken without it.
-4. Small and contained: yes, one file, two lines.
-5. No new APIs/features: yes. This is a hardware quirk, not a new
-   interface.
-6. Applies to stable trees: cleanly to `v7.0.5` and `v6.12.75`; minor
-   context backport for `v6.6`/`v6.1`; not directly to `v5.15`.
-
-### Step 9.3: Exception Category
-Record: Hardware quirk/workaround for a broken/nonstandard USB audio
-device. This is one of the strong stable-appropriate exception
-categories.
-
-### Step 9.4: Decision
-This should be backported to stable trees that already have the generic
-implicit-feedback quirk flag infrastructure, especially `6.12.y`,
-`6.6.y`, `6.1.y`, and `7.0.y` if applicable. For `5.15.y`, do not apply
-this exact patch without separate prerequisite/backport work because the
-required `QUIRK_FLAG_GENERIC_IMPLICIT_FB` flag is absent.
+Step 9.4 Record: Decision is YES for stable trees that contain the
+conflicting Legion S7 `17aa:3811` quirk and the
+`HDA_CODEC_QUIRK`/TAS2781 infrastructure. It should not be forced into
+older trees where the buggy conflicting quirk is absent.
 
 ## Verification
-
-- Phase 1: Parsed supplied subject, body, and tags; verified original
-  patch body with `b4 am` mbox.
-- Phase 2: Verified diff is 2 insertions in `sound/usb/quirks.c`.
-- Phase 2/5: Read `sound/usb/quirks.c`, `sound/usb/usbaudio.h`,
-  `sound/usb/implicit.c`, `sound/usb/endpoint.c`, `sound/usb/card.c`,
-  `sound/usb/pcm.c`, and `sound/usb/stream.c`.
-- Phase 3: Ran `git blame` around the insertion area and similar
-  Behringer entries; noted grafted history limits.
-- Phase 3: Ran file and author history searches without `--all`.
-- Phase 4: Ran `b4 am` on the supplied patch link; found one patch and
-  DKIM-signed submission.
-- Phase 4: Ran `b4 am --cc-trailers`; verified ALSA maintainers/lists
-  were CC’d.
-- Phase 4: Tried `WebFetch` for lore and stable queries; blocked by
-  Anubis.
-- Phase 4: Ran web searches; found no separate stable discussion or
-  independent bug report.
-- Phase 5: Verified caller path from USB probe to quirk flag
-  initialization and from ALSA PCM prepare/trigger to endpoint start.
-- Phase 5: Verified same flag combination already exists for Behringer
-  UMC202HD/UMC204HD/UMC404HD.
-- Phase 6: Checked `v7.0.5`, `v6.12.75`, `v6.6`, `v6.1`, and `v5.15` for
-  relevant flags/context.
-- Phase 6: Ran index-only apply checks: applies to `v7.0.5` and
-  `v6.12.75`; does not apply as-is to `v6.6`, `v6.1`, or `v5.15`.
-- Phase 7: Verified `MAINTAINERS` lists Takashi Iwai as a `SOUND`
-  maintainer.
-- Phase 8: Failure mode and tested hardware/kernel are verified from the
-  patch message; unprivileged triggerability is unverified.
+- [Phase 1] Parsed commit `56722cfbb78d7eb41756cd78dc5192d08bd14f3d`
+  with `git show`; confirmed tags and message.
+- [Phase 2] Inspected diff: `sound/hda/codecs/realtek/alc269.c`, 4
+  insertions.
+- [Phase 3] Ran `git blame` around the conflicting quirk; confirmed
+  `67f4c61a73e9b` introduced `17aa:3811`.
+- [Phase 3] Ran `git show 67f4c61a73e9b`; confirmed it adds the Legion
+  S7 quirk.
+- [Phase 4] Ran `b4 dig -c 56722cfbb78d -a` and `-w`; found v1
+  submission, recipients, and maintainer application.
+- [Phase 5] Read `snd_hda_pick_fixup()`, `HDA_CODEC_QUIRK`,
+  `alc269_probe()`, TAS2781 fixup, and Legion fixup paths.
+- [Phase 6] Ran `git grep` across checked stable refs; found conflict in
+  `HEAD` and `pending-6.18`, and no candidate codec quirk there.
+- [Phase 6] Ran `git apply --check`; candidate applies to current
+  checked `HEAD`.
+- [Phase 8] Ran `scripts/checkpatch.pl --no-tree`; 0 errors, 0 warnings.
+- UNVERIFIED: No runtime test on Lenovo Yoga Pro 9 16IMH9 hardware; no
+  full build performed; exact affected stable branch set beyond checked
+  local refs not exhaustively proven because broad branch containment
+  checks were too slow and stopped.
 
 **YES**
 
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 148bf7e4e4d72..2ffc69b57ab49 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2401,6 +2401,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x2b53, 0x0031, /* Fiero SC-01 (firmware v1.1.0) */
- 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
-+	DEVICE_FLG(0x2b73, 0x0047, /* AlphaTheta EUPHONIA */
-+		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x2d95, 0x8011, /* VIVO USB-C HEADSET */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 3c02f50626ed4..29dafa3f1d15a 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7606,6 +7606,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3801, "Lenovo Yoga9 14IAP7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	HDA_CODEC_QUIRK(0x17aa, 0x3802, "DuetITL 2021", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga Pro 9 14IRP8", ALC287_FIXUP_TAS2781_I2C),
++	/* Yoga Pro 9 16IMH9 shares PCI SSID 17aa:3811 with Legion S7 15IMH05;
++	 * use codec SSID to distinguish them
++	 */
++	HDA_CODEC_QUIRK(0x17aa, 0x38d6, "Lenovo Yoga Pro 9 16IMH9", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3818, "Lenovo C940 / Yoga Duet 7", ALC298_FIXUP_LENOVO_C940_DUET7),
 -- 
 2.53.0
 
