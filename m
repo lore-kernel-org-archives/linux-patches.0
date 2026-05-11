@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64EE4EA387;
-	Mon, 11 May 2026 22:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4454F7964;
+	Mon, 11 May 2026 22:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778538001; cv=none; b=KqTY8nC0w4en7TU9Fp9LJBMhE8Uw8kiB5UMWBejzRvuxtxWBLeyMNwIVTTXcLVgtkzSItm/zSEY+ijQ6z3/dpi+iw//zsiJwk9duo6x/GFTz9ijJspAQ7YBT4vKohrbv0BQMEg4hhmJYbyQshcr8XZj8K00WzvaxnHh87DyOhLo=
+	t=1778538003; cv=none; b=ZBUmlynbZx7Q6Xdk31bu1SuabtKBdqbn97vI5TCSjTYxfjN6Nc1Xp16oEEvCckZSjEG3WKhDboDQD6DKmNUlF1FVjYhua8Nch8zCoveeZFHEKsIVWhpQ8IcMmokJyYRTs0i6cKNEyVgPdhyzXnugqTZkHtputCcKOmD3lmpgOB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778538001; c=relaxed/simple;
-	bh=kFgmMNGmlIo0zSBNgHG9+naS/KZNXllqUo/TClMYRb0=;
+	s=arc-20240116; t=1778538003; c=relaxed/simple;
+	bh=1Oxyfd1/v7O27frv8bMTIM++jJRA0r8gE2wj5UKC5ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ogojiSiyADnf3HxQbusZyatc42P+do1HJ8nYLyIuqoXLij1oR7AEocoiQJ4xU36WZRS/UTKZQ9BlG8WmUHtjioslt8+YL8XTAEznlN4uILyEjQIfNVZ7Q9jCklU9prdfGW21Vqxoi5JMHSdUK8129b1B1jXFwNFYCdrNISzjyew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jphv9JB6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=a47hQnFJAKWiMuvxypy/9u/agHPGNWI4eGPLGud675yYMzrIAz0N6th+bngC2EecXv6Wf5sekKKQXZhSVtinNmeSGnE4YUzVUqqog81gDENjHsaTBM5WupXCmIg5csmykie0K63F2IbY01yPlJ8I9oKeYL9z9Xemyb09EmMKtAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IvCYSscA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jphv9JB6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4AA9C2BCFA;
-	Mon, 11 May 2026 22:20:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IvCYSscA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1869BC2BCF5;
+	Mon, 11 May 2026 22:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778538001;
-	bh=kFgmMNGmlIo0zSBNgHG9+naS/KZNXllqUo/TClMYRb0=;
+	s=k20201202; t=1778538003;
+	bh=1Oxyfd1/v7O27frv8bMTIM++jJRA0r8gE2wj5UKC5ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jphv9JB6lkrAt8R8oILbYOO1l8UmL2rh1bmE9Oafg7RFMwLsdkphrR1qHoqS6N/11
-	 BZr0kPpwK6v53wSxxr+7rvFK2s6xRCOsZvoasFmxNalcEhJ/lwm0oaYIMItCyTx7HP
-	 SuEvqL0/R38JtXMMc1v+LQF1ScVKmvFjnJoJS39Ao/uM/m8Shvz7dDe18438Nn6CBd
-	 SZaCkt/UjvaXcmcov26ZMxpjUz+SSYgkafN956lR+DNrjcrqTcXUnNt1BtjaNVOrNU
-	 8NuNCH0IbklzqZbWOFZtaLR6EzTglcSWEUFVXmUeas3FPPzccT2d7lGyrVLxg+9OrD
-	 sTWSAxPcxrnhQ==
+	b=IvCYSscAn8WdA/IX8qh23AmPZJXNkD0GVm76HSc7v8H2JLhXWyn5I28EMXQfOZGNV
+	 KXGjR2bGWv9gsF5cjOdRGM2Bl042d4z/WDShDJsrCTk+jbdSDD9QYB5yneBY8/i03H
+	 G1PgMSW2PrpvG+cfQE3hQnC/4LYzxXH8yaI8PkiC5Pd6saKJLmnxjdgdbYeWriaxsJ
+	 Opd2kHhTxb1/GOqop7ARjA7yTLo0ABt933gWsesDkxkpRVaBp4kjh3EMrgyZkhoYE0
+	 qO62RIu1WrYCG6B9oCzytR3+WPvVZiIWu+J0bloJjtvDikeihP5ylo/f1qd/y54cnw
+	 RuabEskLr1m5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?R=C3=A1mon=20van=20Raaij?= <ramon@vanraaij.eu>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Randy Dunlap <rdunlap@infradead.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	shawnguo@kernel.org,
+	linux-fbdev@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] ALSA: hda/realtek: Add codec SSID quirk for Lenovo Yoga Pro 9 16IMH9
-Date: Mon, 11 May 2026 18:19:19 -0400
-Message-ID: <20260511221931.2370053-20-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] fbdev: ipu-v3: clean up kernel-doc warnings
+Date: Mon, 11 May 2026 18:19:20 -0400
+Message-ID: <20260511221931.2370053-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
 References: <20260511221931.2370053-1-sashal@kernel.org>
@@ -48,267 +50,336 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rámon van Raaij <ramon@vanraaij.eu>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 56722cfbb78d7eb41756cd78dc5192d08bd14f3d ]
+[ Upstream commit f1fb23a0a0fcbdb66672da51d7d63a259f6396ca ]
 
-The Yoga Pro 9 16IMH9 (codec SSID 17aa:38d6) shares PCI audio device
-subsystem ID 17aa:3811 with the Legion S7 15IMH05. The existing
-SND_PCI_QUIRK entry for the Legion routes both machines to
-ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS, which does not bind the TAS2781
-smart amplifiers, resulting in near-silent built-in speakers.
+Correct all kernel-doc warnings:
+- fix a typedef kernel-doc comment
+- mark a list_head as private
+- use Returns: for function return values
 
-Add an HDA_CODEC_QUIRK entry immediately before the conflicting PCI quirk
-that matches the Yoga Pro 9's unique codec SSID and routes it to
-ALC287_FIXUP_TAS2781_I2C. Codec quirks are evaluated after PCI quirks and
-take precedence, leaving the Legion S7 15IMH05 entry unaffected.
+Warning: include/video/imx-ipu-image-convert.h:31 struct member 'list' not
+ described in 'ipu_image_convert_run'
+Warning: include/video/imx-ipu-image-convert.h:40 function parameter
+ 'ipu_image_convert_cb_t' not described in 'void'
+Warning: include/video/imx-ipu-image-convert.h:40 expecting prototype for
+ ipu_image_convert_cb_t(). Prototype was for void() instead
+Warning: include/video/imx-ipu-image-convert.h:66 No description found for
+ return value of 'ipu_image_convert_verify'
+Warning: include/video/imx-ipu-image-convert.h:90 No description found for
+ return value of 'ipu_image_convert_prepare'
+Warning: include/video/imx-ipu-image-convert.h:125 No description found for
+ return value of 'ipu_image_convert_queue'
+Warning: include/video/imx-ipu-image-convert.h:163 No description found for
+ return value of 'ipu_image_convert'
 
-This follows the same pattern used to disambiguate PCI SSID 17aa:3847
-(shared between Yoga Pro 7 14IMH9 and Legion 7 16ACHG6), where a
-HDA_CODEC_QUIRK for codec SSID 17aa:38cf resolves the conflict.
-
-Signed-off-by: Rámon van Raaij <ramon@vanraaij.eu>
-Link: https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
-### Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem is `ALSA: hda/realtek`; action is `Add`;
-claimed intent is adding a codec-SSID quirk so Lenovo Yoga Pro 9 16IMH9
-uses the TAS2781 fixup instead of the Legion S7 PCI-SSID fixup.
+## Phase 1: Commit Message Forensics
+Step 1.1 Record: subsystem `fbdev: ipu-v3`; action verb `clean up`;
+intent is to correct kernel-doc warnings in `include/video/imx-ipu-
+image-convert.h`.
 
-Step 1.2 Record: Tags present are `Signed-off-by: Rámon van Raaij
-<ramon@vanraaij.eu>`, `Link:
-https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu`, and
-`Signed-off-by: Takashi Iwai <tiwai@suse.de>`. No `Fixes:`, `Reported-
-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-stable@vger.kernel.org` tag is present.
+Step 1.2 Record: tags in committed message are `Signed-off-by: Randy
+Dunlap <rdunlap@infradead.org>`, `Reviewed-by: Philipp Zabel
+<p.zabel@pengutronix.de>`, and `Signed-off-by: Helge Deller
+<deller@gmx.de>`. No `Fixes:`, `Reported-by:`, `Tested-by:`, `Acked-
+by:`, `Link:`, or `Cc: stable@vger.kernel.org` tag is present in the
+committed message.
 
-Step 1.3 Record: The commit describes a real hardware misidentification:
-Yoga Pro 9 16IMH9 has codec SSID `17aa:38d6` but shares PCI audio SSID
-`17aa:3811` with Legion S7 15IMH05, causing
-`ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS` to be selected. The stated
-symptom is near-silent built-in speakers because TAS2781 smart
-amplifiers are not bound.
+Step 1.3 Record: the described problem is seven kernel-doc warnings: one
+undocumented/private list member, malformed typedef documentation, and
+missing `Returns:` sections. The visible symptom is documentation
+tooling warnings, not a runtime crash, hang, data corruption, or
+security issue. No affected kernel version is stated. Root cause is
+incorrect kernel-doc comment syntax.
 
-Step 1.4 Record: This is a bug fix disguised as an “add quirk” change.
-It is a hardware-specific workaround for wrong quirk selection, one of
-the standard stable exception categories.
+Step 1.4 Record: this is not a hidden runtime bug fix. The body and diff
+both show a documentation/comment-only cleanup.
 
-### Phase 2: Diff Analysis
-Step 2.1 Record: One file changed: `sound/hda/codecs/realtek/alc269.c`,
-4 insertions, 0 deletions. No function body is changed; the modified
-object is `alc269_fixup_tbl`. Scope is single-file, table-only,
-surgical.
+## Phase 2: Diff Analysis
+Step 2.1 Record: one file changed: `include/video/imx-ipu-image-
+convert.h`, 11 insertions and 5 deletions. Modified documentation covers
+`struct ipu_image_convert_run`, `ipu_image_convert_cb_t`,
+`ipu_image_convert_verify()`, `ipu_image_convert_prepare()`,
+`ipu_image_convert_queue()`, and `ipu_image_convert()`. Scope is single-
+file, header-only, surgical.
 
-Step 2.2 Record: Before, a Yoga Pro 9 16IMH9 with PCI SSID `17aa:3811`
-would hit the existing Legion S7 `SND_PCI_QUIRK` and get
-`ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS`. After, the earlier
-`HDA_CODEC_QUIRK(0x17aa, 0x38d6, ..., ALC287_FIXUP_TAS2781_I2C)` matches
-by codec SSID first due table order and routes that machine to the
-TAS2781 I2C fixup.
+Step 2.2 Record: hunk behavior:
+- `struct ipu_image_convert_run`: before, `list` was documented neither
+  as a member nor private; after, `/* private: */` tells kernel-doc to
+  ignore it as an API member.
+- `ipu_image_convert_cb_t`: before, kernel-doc treated the typedef
+  comment as a function prototype mismatch; after, it is marked as a
+  typedef comment.
+- Return docs: before, several returns were plain prose or missing;
+  after, they use kernel-doc `Returns:` syntax.
+- `ipu_image_convert_prepare()`: before, the V4L2 usage note followed
+  the return prose; after, the return section is last and formatted for
+  kernel-doc.
 
-Step 2.3 Record: Bug category is hardware workaround / logic
-correctness. The broken mechanism is ambiguous PCI SSID reuse; the fix
-uses the more specific codec SSID.
+Step 2.3 Record: bug category is documentation/kernel-doc warning
+cleanup. No error-path, synchronization, refcount, memory-safety,
+initialization, type, logic, or hardware workaround change exists.
 
-Step 2.4 Record: Fix quality is high. It is a 4-line exact-match quirk,
-no API change, no broad behavior change. Regression risk is very low and
-limited to devices reporting codec SSID `17aa:38d6`.
+Step 2.4 Record: fix quality is high for the stated documentation issue:
+small, obviously correct kernel-doc syntax changes. Runtime regression
+risk is effectively zero because no C declarations, types, function
+bodies, data layout, or APIs are changed. Documentation rendering risk
+is very low.
 
-### Phase 3: Git History
-Step 3.1 Record: `git blame` shows the conflicting
-`SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ...)` came from
-`67f4c61a73e9b` by Eric Naim. `git describe --contains 67f4c61a73e9b`
-reports `v7.1-rc1~166^2~6`; candidate `56722cfbb78d` is contained by
-`v7.1-rc3~27^2~13`.
+## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the affected header comments and
+declarations came from `cd98e85a6b786d` by Steve Longerbeam, dated
+2016-09-17. `git describe --contains cd98e85a6b786d` reports it as
+present by `v4.9-rc1~41^2~24^2`.
 
-Step 3.2 Record: No `Fixes:` tag is present, so there is no tagged
-introducer to follow. Manual blame identifies the relevant prior Legion
-quirk.
+Step 3.2 Record: no `Fixes:` tag is present, so there is no tagged
+introducing commit to follow. Blame identifies `cd98e85a6b786d` as the
+source of the documented preimage; `git show` confirms that commit added
+queued IPU image conversion support and the API documentation.
 
-Step 3.3 Record: Recent file history is mostly audio quirk additions.
-Related commit `217d5bc9f9627` adds the same codec-SSID disambiguation
-pattern for Yoga Pro 7 14IMH9 versus Legion 7 16ACHG6.
+Step 3.3 Record: recent local history for the file shows `96e9d754b35e8`
+removing unused `ipu_image_convert_*` functions, `c942fddf8793b` adding
+SPDX boilerplate conversion, and `cd98e85a6b786d` adding the header/API.
+No prerequisite commit is needed for this documentation-only patch.
 
-Step 3.4 Record: `git log --author='Rámon van Raaij' ... master --
-sound/hda/codecs/realtek/alc269.c` returned no earlier matching commits
-in this local history. Maintainer Takashi Iwai committed the patch.
+Step 3.4 Record: `git log --author='Randy Dunlap'` under fbdev/include
+areas shows Randy has related cleanup/documentation work such as `fbdev:
+hgafb: fix kernel-doc comments` and `fbdev: fbmon: fix function name in
+kernel-doc`. The patch was reviewed by Philipp Zabel and committed by
+Helge Deller, verified from the commit and lore thread.
 
-Step 3.5 Record: Dependencies are the existing `HDA_CODEC_QUIRK`
-infrastructure, `ALC287_FIXUP_TAS2781_I2C`, and the conflicting Legion
-`17aa:3811` entry. All exist in the checked 7.0 tree; `git apply
---check` of the candidate diff against current `HEAD` succeeded.
+Step 3.5 Record: no dependencies found. The diff changes only comments
+and applies locally with `git apply --check`.
 
-### Phase 4: Mailing List / External Research
-Step 4.1 Record: `b4 dig -c 56722cfbb78d -a` found one revision, v1, at
-`https://patch.msgid.link/20260430191224.patch1-ramon@vanraaij.eu`. No
-newer revision for this exact patch was found.
+## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c f1fb23a0a0fcbdb66672da51d7d63a259f6396ca`
+failed to find a lore match by patch-id, author/subject, or in-body
+From. External fetch found the v3 discussion at
+`https://yhbt.net/lore/dri-
+devel/20260427183236.656902-1-rdunlap@infradead.org/T/`. The v3 thread
+has Helge Deller replying “applied to fbdev git tree.” Web search/fetch
+also found v2 and a v2 ping. No NAKs or objections were found.
 
-Step 4.2 Record: `b4 dig -c 56722cfbb78d -w` shows recipients were Rámon
-van Raaij, `linux-sound@vger.kernel.org`, `alsa-devel@alsa-project.org`,
-and Takashi Iwai. The maintainer replied “Applied now. Thanks.”
+Step 4.2 Record: `b4 dig -w` also failed for the same reason. The v3
+lore mirror shows recipients included `dri-devel`, Philipp Zabel, DRM
+maintainers, `imx`, `linux-arm-kernel`, Helge Deller, and `linux-fbdev`.
 
-Step 4.3 Record: No separate bug report link or `Reported-by` tag is in
-the candidate. Web search found public Yoga Pro 9i/TIAS2781/ALC287 audio
-issue reports, but I did not use those as primary evidence for the exact
-`17aa:38d6` SSID.
+Step 4.3 Record: no `Reported-by:` or bug-report `Link:` tags exist. No
+external crash/security bug report applies.
 
-Step 4.4 Record: `b4 mbox -c` showed a later related patch for codec
-SSID `17aa:38d5`, referencing this candidate commit and the same
-hardware class. It is related context, not a prerequisite.
+Step 4.4 Record: this is a standalone one-patch documentation cleanup.
+v2 added the reviewed-by and updated Cc list; v3 rebased and resent.
 
-Step 4.5 Record: Web search for stable-specific discussion of
-`56722cfbb78d` did not find a stable-thread result. Lore `WebFetch` was
-blocked by anti-bot HTML, but `b4` access succeeded.
+Step 4.5 Record: direct `lore.kernel.org/stable` fetch was blocked by
+Anubis. Web search for the exact subject plus `stable` found patch-
+thread results but no stable-specific discussion or stable nomination.
 
-### Phase 5: Semantic Code Analysis
-Step 5.1 Record: No function is modified. Key affected symbols are
-`alc269_fixup_tbl`, `snd_hda_pick_fixup`, `HDA_CODEC_QUIRK`,
-`ALC287_FIXUP_TAS2781_I2C`, and `ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS`.
+## Phase 5: Code Semantic Analysis
+Step 5.1 Record: modified documented symbols are
+`ipu_image_convert_run`, `ipu_image_convert_cb_t`,
+`ipu_image_convert_verify()`, `ipu_image_convert_prepare()`,
+`ipu_image_convert_queue()`, and `ipu_image_convert()`.
 
-Step 5.2 Record: `alc269_probe()` calls `snd_hda_pick_fixup(codec,
-alc269_fixup_models, alc269_fixup_tbl, alc269_fixups)`.
-`hda_codec_driver_probe()` calls the codec driver probe op, so this is
-reached during HDA codec binding/probe.
+Step 5.2 Record: `rg` found callers in `drivers/staging/media/imx/imx-
+media-csc-scaler.c` for `ipu_image_convert_abort()`,
+`ipu_image_convert_queue()`, `ipu_image_convert_adjust()`,
+`ipu_image_convert_unprepare()`, and `ipu_image_convert_prepare()`.
+Runtime callers are unaffected because only comments changed.
 
-Step 5.3 Record: `HDA_CODEC_QUIRK` sets `.match_codec_ssid = true`.
-`snd_hda_pick_fixup()` checks such entries against
-`codec->core.subsystem_id`; the TAS2781 fixup calls
-`comp_generic_fixup(..., "i2c", "TIAS2781", ...)`. The Legion fixup is
-HDA verb/coefficient based and does not call the TAS2781 component
-binding helper.
+Step 5.3 Record: reading `drivers/gpu/ipu-v3/ipu-image-convert.c`
+confirms the documented functions perform image format
+adjustment/verification, context allocation, queueing, abort/unprepare,
+and single conversion setup. None of those function bodies are touched.
 
-Step 5.4 Record: Reachability is hardware probe path: HDA controller
-probes codecs, Realtek codec driver probes, `alc269_probe()` picks the
-fixup. The bug is not syscall/security-triggered; it affects audio
-functionality on matching hardware.
+Step 5.4 Record: runtime path is reachable through IPU image conversion
+users, but the patch changes no runtime path. The affected path for the
+fix is kernel-doc/documentation generation.
 
-Step 5.5 Record: Similar patterns exist in the same table, especially
-`HDA_CODEC_QUIRK(0x17aa, 0x38cf, "Lenovo Yoga Pro 7 14IMH9", ...)`
-immediately before a conflicting Legion PCI SSID entry.
+Step 5.5 Record: no related same-header kernel-doc fix was found by `git
+log --grep='kernel-doc' -- include/video/imx-ipu-image-convert.h`.
 
-### Phase 6: Stable Tree Analysis
-Step 6.1 Record: In checked local refs, `HEAD` and `pending-6.18`
-contain the conflicting `17aa:3811` Legion quirk and do not contain the
-candidate `HDA_CODEC_QUIRK(0x17aa, 0x38d6, ...)`. Older checked pending
-refs did not show the conflicting line in the `git grep` run.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: version tags `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`,
+`v6.15`, `v6.16`, and `v6.17` all contain `include/video/imx-ipu-image-
+convert.h` with the old kernel-doc text. The API was introduced before
+`v4.9-rc1`, so active stable trees checked contain the documentation
+issue.
 
-Step 6.2 Record: Backport difficulty is clean for current `HEAD`: `git
-apply --check` succeeded. For older trees without `HDA_CODEC_QUIRK` or
-without the Legion `17aa:3811` quirk, this patch is either not
-applicable or would need prerequisites.
+Step 6.2 Record: expected backport difficulty is clean or minor. `git
+apply --check` succeeds against the current local tree, and the checked
+stable tags contain representative preimage lines. Full per-stable
+worktree application was not run.
 
-Step 6.3 Record: No equivalent `17aa:38d6` codec quirk was found in
-checked stable refs. Existing `SND_PCI_QUIRK(0x17aa, 0x38d6, ...)`
-entries are PCI-SSID entries and do not fix the reported Yoga Pro 9 case
-where the PCI SSID is `17aa:3811`.
+Step 6.3 Record: no related stable fix for this header was found in
+local `git log --grep` searches.
 
-### Phase 7: Subsystem Context
-Step 7.1 Record: Subsystem is ALSA HDA Realtek codec support under
-`sound/hda/codecs/realtek`. Criticality is driver-specific/important for
-affected laptop users, not core-kernel-wide.
+## Phase 7: Subsystem Context
+Step 7.1 Record: subsystem is fbdev/gpu IPU-v3 image conversion
+documentation in an include header. Runtime criticality is
+peripheral/driver-specific; documentation-build criticality is low.
 
-Step 7.2 Record: The subsystem is actively maintained; recent history
-shows many Realtek laptop quirk additions and related fixes. Takashi
-Iwai applied the patch.
+Step 7.2 Record: local subsystem history shows ongoing cleanup/removal
+activity in `drivers/gpu/ipu-v3` and the header, including unused-
+function removals and treewide cleanup. This patch is not part of a
+required functional series.
 
-### Phase 8: Impact / Risk
-Step 8.1 Record: Affected population is Lenovo Yoga Pro 9 16IMH9 units
-with codec SSID `17aa:38d6` on stable trees containing the Legion
-`17aa:3811` quirk.
+## Phase 8: Impact And Risk
+Step 8.1 Record: affected population is kernel documentation builders,
+maintainers, and users consuming generated kernel-doc. Runtime users of
+IPU-v3 are not affected by behavior.
 
-Step 8.2 Record: Trigger is normal boot/device probe and use of built-in
-speakers. It is hardware/config specific, not unprivileged exploitation.
+Step 8.2 Record: trigger is running kernel-doc/documentation tooling
+over this header. It is not triggered by boot, device probe, syscalls,
+or ordinary runtime use. Unprivileged runtime trigger does not apply.
 
-Step 8.3 Record: Failure mode is broken built-in speaker output,
-described as near-silent speakers. Severity is high for affected
-hardware functionality, though not crash/data-corruption/security
-severity.
+Step 8.3 Record: failure mode is documentation warnings only. Severity
+is LOW. I did not verify any configuration where these warnings are
+fatal, so that does not drive the decision.
 
-Step 8.4 Record: Benefit is high for affected laptops and also prevents
-a regression caused by the shared PCI SSID quirk. Risk is very low: 4
-lines, exact match, no new API, no shared logic changes.
+Step 8.4 Record: benefit is low but real under the documentation-fix
+exception: it makes stable documentation builds cleaner. Risk is
+extremely low because only comments change. Risk/benefit is favorable if
+stable accepts documentation corrections.
 
-### Phase 9: Synthesis
-Step 9.1 Record: Evidence for backporting: real user-visible hardware
-breakage, standard stable hardware-quirk category, tiny table-only
-patch, maintainer-applied, exact existing pattern, clean apply to
-current checked stable tree. Evidence against: no `Tested-by`, no `Cc:
-stable`, no separate bug-report link in the commit, and not applicable
-to trees lacking the prerequisite Legion quirk or `HDA_CODEC_QUIRK`
-infrastructure. Unresolved: I did not independently verify the physical
-uniqueness of codec SSID `17aa:38d6` beyond the submitted patch and
-maintainer acceptance.
+## Phase 9: Final Synthesis
+Step 9.1 Record: evidence for backporting: pure documentation
+correction, explicitly fixes listed kernel-doc warnings, tiny single-
+file patch, reviewed by Philipp Zabel, applied by Helge Deller, old text
+exists in active stable tags checked, and documentation/comment fixes
+are an allowed stable exception. Evidence against: no runtime bug, no
+crash/security/data-corruption impact, no stable nomination found, and
+b4 could not match the thread. Unresolved: direct stable-lore search was
+blocked; full apply checks on every stable branch were not run.
 
-Step 9.2 Record: Stable rules: already upstream/mainline yes; obviously
-correct yes by code inspection and `checkpatch`; fixes a real bug yes,
-wrong quirk causing near-silent speakers; important enough yes as a
-hardware quirk / broken device functionality; small and contained yes, 4
-insertions; no new feature/API yes; applies cleanly to current checked
-stable `HEAD`, with older-tree applicability depending on prerequisites.
+Step 9.2 Record:
+1. Obviously correct and tested? Mostly yes for documentation syntax;
+   reviewed and applied, but no `Tested-by`.
+2. Fixes a real bug that affects users? Yes, a real kernel-doc warning
+   issue; not a runtime bug.
+3. Important issue? No runtime severity; LOW documentation-build
+   severity.
+4. Small and contained? Yes, 11 additions and 5 deletions in one header.
+5. No new features or APIs? Yes, comments only.
+6. Can apply to stable trees? Likely yes; local apply check passed and
+   stable tags checked contain the preimage.
 
-Step 9.3 Record: Exception category applies: hardware quirk/workaround
-for a specific laptop audio configuration.
+Step 9.3 Record: exception category applies: documentation/comment fix.
+This is the main reason to accept despite lack of runtime impact.
 
-Step 9.4 Record: Decision is YES for stable trees that contain the
-conflicting Legion S7 `17aa:3811` quirk and the
-`HDA_CODEC_QUIRK`/TAS2781 infrastructure. It should not be forced into
-older trees where the buggy conflicting quirk is absent.
+Step 9.4 Decision: backporting is appropriate under the stable
+documentation-fix exception. It is not a stability/security fix, but it
+is a correct, reviewed, zero-runtime-risk cleanup of real kernel-doc
+warnings in code present across active stable trees.
 
 ## Verification
-- [Phase 1] Parsed commit `56722cfbb78d7eb41756cd78dc5192d08bd14f3d`
-  with `git show`; confirmed tags and message.
-- [Phase 2] Inspected diff: `sound/hda/codecs/realtek/alc269.c`, 4
-  insertions.
-- [Phase 3] Ran `git blame` around the conflicting quirk; confirmed
-  `67f4c61a73e9b` introduced `17aa:3811`.
-- [Phase 3] Ran `git show 67f4c61a73e9b`; confirmed it adds the Legion
-  S7 quirk.
-- [Phase 4] Ran `b4 dig -c 56722cfbb78d -a` and `-w`; found v1
-  submission, recipients, and maintainer application.
-- [Phase 5] Read `snd_hda_pick_fixup()`, `HDA_CODEC_QUIRK`,
-  `alc269_probe()`, TAS2781 fixup, and Legion fixup paths.
-- [Phase 6] Ran `git grep` across checked stable refs; found conflict in
-  `HEAD` and `pending-6.18`, and no candidate codec quirk there.
-- [Phase 6] Ran `git apply --check`; candidate applies to current
-  checked `HEAD`.
-- [Phase 8] Ran `scripts/checkpatch.pl --no-tree`; 0 errors, 0 warnings.
-- UNVERIFIED: No runtime test on Lenovo Yoga Pro 9 16IMH9 hardware; no
-  full build performed; exact affected stable branch set beyond checked
-  local refs not exhaustively proven because broad branch containment
-  checks were too slow and stopped.
+- Phase 1: fetched and inspected committed metadata for
+  `f1fb23a0a0fcbdb66672da51d7d63a259f6396ca`; confirmed tags and
+  message.
+- Phase 2: `git show --stat --patch` confirmed one header, 11
+  insertions, 5 deletions, comments only.
+- Phase 3: `git blame` confirmed changed comment preimage from
+  `cd98e85a6b786d`; `git describe --contains` placed it before
+  `v4.9-rc1`; `git show cd98e85a6b786d` confirmed original API addition.
+- Phase 3: `git log` on the header/subsystem found no prerequisite
+  functional series.
+- Phase 4: `b4 dig`, `b4 dig -a`, and `b4 dig -w` all failed to match;
+  recorded as a tool limitation/failure.
+- Phase 4: WebFetch of the v3 lore mirror confirmed the patch thread and
+  Helge Deller’s applied reply; Spinics fetch confirmed v2 and a later
+  ping.
+- Phase 5: `rg` found runtime users; `ReadFile` of implementation
+  confirmed function bodies exist but are not changed.
+- Phase 6: tag checks confirmed the header and old doc text in `v5.10`,
+  `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.15`, `v6.16`, and `v6.17`; `git
+  apply --check` succeeded locally.
+- Phase 8: severity/risk assessment is derived from the verified
+  comments-only diff.
+- UNVERIFIED: direct `lore.kernel.org/stable` search content was blocked
+  by Anubis; no actual `make htmldocs` run was performed; full patch
+  application against every individual stable branch was not performed.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/video/imx-ipu-image-convert.h | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 3c02f50626ed4..29dafa3f1d15a 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7606,6 +7606,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3801, "Lenovo Yoga9 14IAP7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	HDA_CODEC_QUIRK(0x17aa, 0x3802, "DuetITL 2021", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3802, "Lenovo Yoga Pro 9 14IRP8", ALC287_FIXUP_TAS2781_I2C),
-+	/* Yoga Pro 9 16IMH9 shares PCI SSID 17aa:3811 with Legion S7 15IMH05;
-+	 * use codec SSID to distinguish them
-+	 */
-+	HDA_CODEC_QUIRK(0x17aa, 0x38d6, "Lenovo Yoga Pro 9 16IMH9", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3818, "Lenovo C940 / Yoga Duet 7", ALC298_FIXUP_LENOVO_C940_DUET7),
+diff --git a/include/video/imx-ipu-image-convert.h b/include/video/imx-ipu-image-convert.h
+index 003b3927ede5c..6b77968a6a150 100644
+--- a/include/video/imx-ipu-image-convert.h
++++ b/include/video/imx-ipu-image-convert.h
+@@ -27,12 +27,13 @@ struct ipu_image_convert_run {
+ 
+ 	int status;
+ 
++	/* private: */
+ 	/* internal to image converter, callers don't touch */
+ 	struct list_head list;
+ };
+ 
+ /**
+- * ipu_image_convert_cb_t - conversion callback function prototype
++ * typedef ipu_image_convert_cb_t - conversion callback function prototype
+  *
+  * @run:	the completed conversion run pointer
+  * @ctx:	a private context pointer for the callback
+@@ -60,7 +61,7 @@ void ipu_image_convert_adjust(struct ipu_image *in, struct ipu_image *out,
+  * @out:	output image format
+  * @rot_mode:	rotation mode
+  *
+- * Returns 0 if the formats and rotation mode meet IPU restrictions,
++ * Returns: 0 if the formats and rotation mode meet IPU restrictions,
+  * -EINVAL otherwise.
+  */
+ int ipu_image_convert_verify(struct ipu_image *in, struct ipu_image *out,
+@@ -77,11 +78,11 @@ int ipu_image_convert_verify(struct ipu_image *in, struct ipu_image *out,
+  * @complete:	run completion callback
+  * @complete_context:	a context pointer for the completion callback
+  *
+- * Returns an opaque conversion context pointer on success, error pointer
++ * In V4L2, drivers should call ipu_image_convert_prepare() at streamon.
++ *
++ * Returns: an opaque conversion context pointer on success, error pointer
+  * on failure. The input/output formats and rotation mode must already meet
+  * IPU retrictions.
+- *
+- * In V4L2, drivers should call ipu_image_convert_prepare() at streamon.
+  */
+ struct ipu_image_convert_ctx *
+ ipu_image_convert_prepare(struct ipu_soc *ipu, enum ipu_ic_task ic_task,
+@@ -122,6 +123,8 @@ void ipu_image_convert_unprepare(struct ipu_image_convert_ctx *ctx);
+  * In V4L2, drivers should call ipu_image_convert_queue() while
+  * streaming to queue the conversion of a received input buffer.
+  * For example mem2mem devices this would be called in .device_run.
++ *
++ * Returns: 0 on success or -errno on error.
+  */
+ int ipu_image_convert_queue(struct ipu_image_convert_run *run);
+ 
+@@ -155,6 +158,9 @@ void ipu_image_convert_abort(struct ipu_image_convert_ctx *ctx);
+  * On successful return the caller can queue more run requests if needed, using
+  * the prepared context in run->ctx. The caller is responsible for unpreparing
+  * the context when no more conversion requests are needed.
++ *
++ * Returns: pointer to the created &struct ipu_image_convert_run that has
++ * been queued on success; an ERR_PTR(errno) on error.
+  */
+ struct ipu_image_convert_run *
+ ipu_image_convert(struct ipu_soc *ipu, enum ipu_ic_task ic_task,
 -- 
 2.53.0
 
