@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EB435F5EC;
-	Mon, 11 May 2026 22:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41B37F738;
+	Mon, 11 May 2026 22:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778537973; cv=none; b=TYYiCtdOcaxR8aCz/JmUTGf9agsc1EfHUdjs0GnXxPVFctesqRohBYA06xOwcrBDYCooJHUVlWnCDrQiMvzA0P45Cz6xqUhCfhxXSf+f/0blmBrOT2HiD8muRJZqwfbxId43TEAWP7LYkOjrzFrkiOXs7mZrtVoR0hVk2vszs1M=
+	t=1778537975; cv=none; b=eF7bhJQY8Jlw4J6QDTK8jYenFwR9d1+w4WUZkjUozYBDkENk20hIxkjdkk91gQsiHE/IFBEl1tAYOUmS89ojbexBn3Ej22acurCJGfpbkG66rg2k+iQaU6ekOoX+JQMiLNVthn0lcZds5waq7g4A1jv4uWyLvsAU146IT90167Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778537973; c=relaxed/simple;
-	bh=v3FKuA5Z3gNVdXGKkVpFozfT5lnuMlMV+Rq5LvGtlrg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RcOXnU6MkIx1hbECCDTGg+Rhmpv62xE3LUFVIxFu3CZg6km/fcUhMcFN8BJb6S8AKC5wq2vvTttr7C5OPsMvOZGiP23zD2RlGeCikCtHySYxf8Nf4YoNbqozFrcjE7sw3mfpKQoErjHRqK7u+guzKXZvDN7X/oYHEPdgE3s15W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=go9Jnchv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778537975; c=relaxed/simple;
+	bh=RQNb7GGy+bNMh/3tLvKifE9HAoNS+QkXX2pfhribtes=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QVFJyb+PZ8OWcHHsLtOJYpVi8aCaQ9xXg/rLrkwms+/2mYPZNrpSbBlsGVVaHIU7FHDSMotlL9pDXxrmECzpTnLVjKP5jGPSWNSmhx0ZDBLp16f1yyZ+HRltkEl0L3eSnfjLgwtqmHQYMM62ICFKZX78GffDEYRQz3aOsmnEeSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwh6gS/P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="go9Jnchv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A75C2BCB0;
-	Mon, 11 May 2026 22:19:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwh6gS/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D67C2BCF5;
+	Mon, 11 May 2026 22:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778537973;
-	bh=v3FKuA5Z3gNVdXGKkVpFozfT5lnuMlMV+Rq5LvGtlrg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=go9JnchvRHdqcdetNfBwvSEKxPrAc9y2OO83cH6gAa8tKD5v1wqOjnJk4I87MY0sw
-	 nvhxjux6aYSumEaEgKYfFQNWeAc7GUdP0uLIylir8SW/Zxmf0CLA0clIthorVdmbvw
-	 jtj7RUlQ9wm2la7g0i3GykG4qdpqbuDGfhi604MKatxpKPYTjzqQaRbX6NJAbp+ccQ
-	 eTZRwjcmmOrduZmobVhUzqMUhbKWKKWy+Lc9Fn1veW1Nwa4qBaVPsBICTJxW4qNMgW
-	 xcN7mr4+daM3mLRzA7RWa9JmPrBezJP0p8X805KZ7g/zqadZR5ZKzNkJITpOof7KUF
-	 u810uFvCA9j5w==
+	s=k20201202; t=1778537974;
+	bh=RQNb7GGy+bNMh/3tLvKifE9HAoNS+QkXX2pfhribtes=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bwh6gS/PJtj0iWSNBJv2fwvdShubNMVW63gWGBEQkbGdPibRez/tuzvls38Aj/jU5
+	 a38JbJHQ6PRv2glTXQiLYRYkLUPGyMNeq6RR/AuY/h0nKZ1Bfdk/hSorbuOsHsdnV4
+	 14ZAEdPpeZXthtPyGmn4SKwahGRbS+Heab1z+1OAuJp5LKFl/H/Z/GLRJLy7SwJL41
+	 rK7Zl+4r75SQh87ZbBLjkHWmsX+0POXRYUwD/T8zwCCpLQup8npcxUmz6S5taNvzXq
+	 lPO0pzVWM5orAzH3n0u77/u+5TkCiMzIotV8DHKNUwD04FCL2NO0fjrTMLqyJg77A7
+	 cEgNPMqbXIKTQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosen Penev <rosenp@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: "T.J. Mercier" <tjmercier@google.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	lizefan.x@bytedance.com,
+	hannes@cmpxchg.org,
+	corbet@lwn.net,
+	cgroups@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] ALSA: sparc/dbri: add missing fallthrough
-Date: Mon, 11 May 2026 18:19:00 -0400
-Message-ID: <20260511221931.2370053-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] docs: cgroup-v1: Update charge-commit section
+Date: Mon, 11 May 2026 18:19:01 -0400
+Message-ID: <20260511221931.2370053-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260511221931.2370053-1-sashal@kernel.org>
+References: <20260511221931.2370053-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,265 +56,275 @@ X-stable-base: Linux 7.0.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosen Penev <rosenp@gmail.com>
+From: "T.J. Mercier" <tjmercier@google.com>
 
-[ Upstream commit 2bcbb163162789d3488562073dbb99d9bd71a762 ]
+[ Upstream commit d8769544bde51b0ac980d10f8fe9f9fed6c95995 ]
 
-Fixes compiler error with probably newer compilers:
+Commit 1d8f136a421f ("memcg/hugetlb: remove memcg hugetlb
+try-commit-cancel protocol") removed mem_cgroup_commit_charge() and
+mem_cgroup_cancel_charge(), but the docs still refer to those functions.
+There is no longer any charge cancellation.
 
-sound/sparc/dbri.c:595:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-  595 |         case 1:
-      |         ^
-sound/sparc/dbri.c:595:2: note: insert 'break;' to avoid fall-through
-  595 |         case 1:
-      |         ^
-      |         break;
+Update the docs to match the code.
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20260506031854.780411-1-rosenp@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
+Step 1.1 Record: subsystem `docs: cgroup-v1`; action verb `Update`;
+intent: update `Documentation/admin-guide/cgroup-v1/memcg_test.rst` so
+the charge-commit section matches current memcg code.
 
-Step 1.1 Record: Subsystem `ALSA: sparc/dbri`; action verb `add`; intent
-is to add a missing `fallthrough` annotation in `reverse_bytes()`.
+Step 1.2 Record: tags present: `Signed-off-by: T.J. Mercier
+<tjmercier@google.com>` and `Signed-off-by: Tejun Heo <tj@kernel.org>`.
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
+`Link:`, or `Cc: stable@vger.kernel.org` tags in the committed message.
 
-Step 1.2 Record: Tags present: `Signed-off-by: Rosen Penev
-<rosenp@gmail.com>`, `Link:
-https://patch.msgid.link/20260506031854.780411-1-rosenp@gmail.com`,
-`Signed-off-by: Takashi Iwai <tiwai@suse.de>`. No `Fixes:`, `Reported-
-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc: stable`.
+Step 1.3 Record: the body says commit `1d8f136a421f` removed
+`mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`, while the
+cgroup-v1 memcg docs still name them and describe cancellation.
+Symptom/failure mode: incorrect documentation only. Version information:
+the referenced removal commit is from 2025-01-13 in the local object
+database; candidate commit is from 2026-04-30. Root cause: docs were not
+updated when the code was changed.
 
-Step 1.3 Record: The commit body reports a concrete compiler error:
-`-Werror,-Wimplicit-fallthrough` in `sound/sparc/dbri.c` at the
-fallthrough from `case 2` to `case 1`. Symptom is a build failure for
-this driver/config with a compiler that diagnoses this unannotated
-fallthrough as an error. No kernel version is named. Root cause is an
-intentional fallthrough lacking the kernel `fallthrough;` marker.
-
-Step 1.4 Record: This is not a hidden runtime bug fix; it is an explicit
-build fix. Build fixes are stable-acceptable when they repair
-compilation of existing code.
+Step 1.4 Record: this is not a hidden runtime bug fix. It is an explicit
+documentation correctness fix.
 
 ## Phase 2: Diff Analysis
+Step 2.1 Record: one file changed: `Documentation/admin-
+guide/cgroup-v1/memcg_test.rst`, `2 insertions(+), 4 deletions(-)`. No
+functions modified. Scope: single-file documentation-only surgical
+change.
 
-Step 2.1 Record: One file changed: `sound/sparc/dbri.c`, `+1/-0`. One
-function modified: `reverse_bytes()`. Scope is a single-file, one-line
-surgical build fix.
+Step 2.2 Record: before, the section was titled `charge-commit-cancel`,
+listed `mem_cgroup_commit_charge()` or `mem_cgroup_cancel_charge()`, and
+described `cancel()`. After, it is titled `charge-commit`, lists
+`commit_charge()`, and removes the cancellation text.
 
-Step 2.2 Record: Before, `case 2` performed the final bit swap and
-implicitly fell into `case 1`/`case 0`, which then `break`s. After, the
-same fallthrough is explicitly annotated with `fallthrough;`. Runtime
-control flow is unchanged.
+Step 2.3 Record: bug category is documentation/comment correctness.
+Specific mechanism: removes stale references to APIs that are absent in
+current `6.19.y`/`7.0.y` code and in `origin/master`.
 
-Step 2.3 Record: Bug category is build fix / compiler diagnostic fix.
-Specific mechanism: the kernel already annotates earlier intentional
-fallthroughs in the same switch, but the `case 2` to `case 1`
-fallthrough lacked the annotation, triggering `-Wimplicit-fallthrough`
-as an error.
-
-Step 2.4 Record: Fix quality is high: it is one line, uses the existing
-kernel `fallthrough` pseudo-keyword, matches nearby code style in
-current branches, and does not change APIs or runtime behavior.
-Regression risk is very low.
+Step 2.4 Record: fix quality is obviously correct for trees whose memcg
+code no longer has `mem_cgroup_commit_charge()` /
+`mem_cgroup_cancel_charge()`. Regression risk is zero runtime risk, but
+there is a branch-selection concern: `stable/linux-6.12.y` still
+contains those functions, so this exact doc update would be misleading
+there.
 
 ## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` before the candidate shows the stale doc
+lines came from `f3f5edc5e41e` in this repository’s history. `git blame
+origin/master` shows the changed lines attributed to `d8769544bde51`.
 
-Step 3.1 Record: `git blame` on `2bcbb16316278^` attributes this code to
-`c3c9a75ede23f`, but the repository is shallow/grafted there, so that is
-not a reliable true introduction point. I verified the same missing
-annotation exists in local stable-related branches `pending-5.4`,
-`pending-5.10`, `pending-5.15`, `pending-6.1`, `pending-6.6`,
-`pending-6.12`, `pending-6.19`, and `pending-7.0`.
+Step 3.2 Record: no `Fixes:` tag. I still inspected referenced commit
+`1d8f136a421f26747e58c01281cba5bffae8d289`; it removed prototypes and
+implementations for `mem_cgroup_commit_charge()`,
+`mem_cgroup_cancel_charge()`, and related hugetlb try/commit/cancel
+helpers.
 
-Step 3.2 Record: No `Fixes:` tag is present, so there is no introducing
-commit to follow from the message.
+Step 3.3 Record: recent history for `Documentation/admin-
+guide/cgroup-v1/memcg_test.rst` on `origin/master` has only the file
+introduction/import commit and this candidate. Related path history
+shows the candidate was merged via `cgroup-for-7.1-rc2-fixes`. No
+prerequisite doc series found.
 
-Step 3.3 Record: Recent `sound/sparc/dbri.c` history on `linux-
-next/master` shows this commit, then `ALSA: sparc/dbri: Use guard() for
-spin locks`, then the shallow boundary. The guard refactor is not a
-semantic prerequisite for adding this annotation, although older stable
-branches may have slightly different context.
+Step 3.4 Record: author `T.J. Mercier` has at least one other cgroup-
+related commit in `origin/master`; Tejun Heo is listed in `MAINTAINERS`
+as cgroup maintainer and committed the patch.
 
-Step 3.4 Record: Author Rosen Penev has this recent `sound/sparc` commit
-in the checked history. The commit was applied by Takashi Iwai, and
-`MAINTAINERS` lists Takashi Iwai and Jaroslav Kysela as SOUND
-maintainers.
-
-Step 3.5 Record: No dependent `reverse_bytes` commits were found by
-subject search. The change can be applied standalone as an annotation.
-For `pending-5.4`, context differs because earlier fallthroughs are
-comments rather than `fallthrough;`, so that tree may need a trivial
-backport adjustment.
+Step 3.5 Record: no code dependencies for the patch itself. It can apply
+standalone to the current `stable/linux-7.0.y` checkout. Applicability
+must be gated by whether the target tree’s code has removed the old
+APIs.
 
 ## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c d8769544bde51...` found the original
+submission at
+`https://patch.msgid.link/20260430201142.240387-1-tjmercier@google.com`.
+`b4 dig -a` found only v1 of a single-patch series. The mbox contains
+Tejun’s reply: “Applied to cgroup/for-7.1-fixes.” No NAKs or concerns
+found in the saved thread.
 
-Step 4.1 Record: `b4 dig -c 2bcbb16316278` found the original submission
-at the provided lore/patch URL. `b4 dig -a` found only v1; no later
-revision. The saved mbox contains Takashi Iwai’s reply: “Applied now.
-Thanks.” No NAKs or concerns were present in the fetched thread.
-
-Step 4.2 Record: `b4 dig -w` shows recipients: Rosen Penev, `linux-
-sound@vger.kernel.org`, Jaroslav Kysela, Takashi Iwai, and `linux-
+Step 4.2 Record: `b4 dig -w` shows recipients included cgroup
+maintainers/list and docs list: `tj@kernel.org`, `hannes@cmpxchg.org`,
+`mkoutny@suse.com`, `cgroups@vger.kernel.org`, `corbet@lwn.net`,
+`skhan@linuxfoundation.org`, `linux-doc@vger.kernel.org`, `linux-
 kernel@vger.kernel.org`.
 
-Step 4.3 Record: No separate bug report or `Reported-by` tag. The
-reported failure is the compiler diagnostic included in the patch email
-and commit message.
+Step 4.3 Record: no `Reported-by` or bug-report `Link:` tags. No syzbot,
+bugzilla, or user-impact bug report applies.
 
-Step 4.4 Record: `b4 dig -a` shows this is a single-patch series, not
-part of a multi-patch dependency chain.
+Step 4.4 Record: b4 found a standalone single-patch series, not part of
+a multi-patch dependency chain.
 
-Step 4.5 Record: WebFetch to lore/stable search was blocked by Anubis.
-Local stable branch log searches did not find this exact fix or a
-related `unannotated fall-through` fix already present in the checked
-stable branches.
+Step 4.5 Record: web search did not find stable-list discussion for this
+exact patch. `WebFetch` to lore/patch.msgid was blocked by Anubis, but
+b4 successfully fetched the mbox.
 
 ## Phase 5: Code Semantic Analysis
+Step 5.1 Record: no functions modified by the diff.
 
-Step 5.1 Record: Modified function: `reverse_bytes()`.
+Step 5.2 Record: no callers affected by the diff. For documentation
+accuracy, I verified current `stable/linux-7.0.y` code has
+`commit_charge()` callers in `charge_memcg()`,
+`mem_cgroup_replace_folio()`, and `mem_cgroup_migrate()`.
 
-Step 5.2 Record: Callers found in `sound/sparc/dbri.c`: `xmit_fixed()`
-calls `reverse_bytes()` for MSB fixed-pipe transmit data;
-`dbri_process_one_interrupt()` calls it for fixed-data receive
-interrupts.
+Step 5.3 Record: no changed callees. The relevant current code has
+`commit_charge()` assigning `folio->memcg_data`, and callers also invoke
+`memcg1_commit_charge()` where appropriate.
 
-Step 5.3 Record: `reverse_bytes()` only performs bit manipulation and
-may print an error for unsupported lengths; it does not allocate memory,
-take locks, or call into external subsystems.
+Step 5.4 Record: runtime reachability is not relevant because no
+executable code changes.
 
-Step 5.4 Record: Runtime paths are reachable through DBRI/CS4215
-initialization/control and interrupt handling on supported SPARC SBus
-DBRI hardware. For this patch, runtime reachability is not the main
-issue because the fix targets compilation and preserves runtime flow.
+Step 5.5 Record: similar stale docs pattern exists in stable branches;
+however code state differs by branch. `6.19.y`/`7.0.y` have stale docs
+and no old API. `6.12.y` still has `mem_cgroup_commit_charge()` and
+`mem_cgroup_cancel_charge()` in code.
 
-Step 5.5 Record: Nearby switch cases already had intentional fallthrough
-annotations; this patch fills the only missing annotation in that chain.
+## Phase 6: Cross-Referencing And Stable Tree Analysis
+Step 6.1 Record: buggy stale documentation exists in
+`stable/linux-7.0.y`, `stable/linux-6.19.y`, `stable/linux-6.18.y`,
+`stable/linux-6.6.y`, `stable/linux-6.1.y`, `stable/linux-5.15.y`, and
+`stable/linux-5.10.y` by exact doc grep. I verified the old APIs are
+absent in several of those trees, but `stable/linux-6.12.y` still
+contains `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`,
+so this exact upstream text is not universally correct for all
+maintained stable lines.
 
-## Phase 6: Stable Tree Analysis
+Step 6.2 Record: `git apply --check` of the candidate diff succeeds on
+the current `stable/linux-7.0.y` checkout. Expected backport difficulty:
+clean for trees with matching doc context; branch-specific review needed
+for `6.12.y`.
 
-Step 6.1 Record: The missing annotation exists in checked stable-related
-branches from `pending-5.4` through `pending-7.0`. Therefore the
-affected source is present in active stable-era trees available locally.
-
-Step 6.2 Record: Expected backport difficulty is clean or trivial for
-most branches. `pending-5.4` has older comment-style fallthrough context
-before `case 2`, so it may require a small context adjustment, but the
-same one-line semantic change applies.
-
-Step 6.3 Record: No related fix with this subject or `unannotated fall-
-through` in `sound/sparc/dbri.c` was found in the checked stable-related
-branches.
+Step 6.3 Record: no related stable fix for this exact doc update found
+by local stable branch ancestry checks or web search.
 
 ## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: subsystem is cgroup-v1 memcg documentation.
+Criticality: peripheral/runtime-none; important only for documentation
+correctness.
 
-Step 7.1 Record: Subsystem is ALSA SPARC sound driver, specifically Sun
-DBRI. Criticality is peripheral/platform-specific, not core kernel-wide.
-
-Step 7.2 Record: Recent `sound/sparc` history is sparse and mostly
-maintenance/refactoring/build-style changes, indicating a mature low-
-churn driver area.
+Step 7.2 Record: cgroup and memcg areas are active; recent
+`origin/master` history includes multiple cgroup/mm fixes. The candidate
+was applied by the cgroup maintainer.
 
 ## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: affected population is documentation readers and
+developers/admins consulting old cgroup-v1 memcg internals. No kernel
+runtime users are affected.
 
-Step 8.1 Record: Affected users are config/platform-specific: SPARC/SBus
-builds with `SND_SUN_DBRI`.
+Step 8.2 Record: trigger condition is reading or relying on the stale
+documentation. Unprivileged users cannot trigger a kernel failure
+because there is no runtime behavior.
 
-Step 8.2 Record: Trigger is building this driver with a
-compiler/configuration that treats the unannotated fallthrough warning
-as an error. I did not independently reproduce the compiler failure
-locally.
+Step 8.3 Record: failure mode is incorrect documentation. Severity: LOW.
+It can mislead developers/admins, but it does not fix crash, corruption,
+leak, deadlock, or security behavior.
 
-Step 8.3 Record: Failure mode is build failure, not runtime crash or
-data corruption. Severity is high for affected builders because the
-kernel/module cannot be built successfully under that toolchain/config.
-
-Step 8.4 Record: Benefit is meaningful for affected stable users because
-it restores buildability of an existing driver. Risk is very low: one
-annotation line, no feature, no API change, no runtime logic change.
-Risk-benefit ratio favors backporting.
+Step 8.4 Record: benefit is low but real for documentation correctness,
+especially because the stable rules exception allows
+documentation/comment fixes and runtime risk is zero. Risk is very low
+for branches whose code matches the new text; risk is documentation-
+regression risk if applied to a branch like `6.12.y` where cancellation
+APIs still exist.
 
 ## Phase 9: Final Synthesis
+Step 9.1 Record: evidence for backporting: tiny docs-only patch;
+corrects verified stale references in current `7.0.y` and `6.19.y`;
+applied by cgroup maintainer; no runtime regression risk; documentation
+fixes are allowed. Evidence against: no runtime bug or user-visible
+stability issue; not correct for every stable branch, specifically
+verified `6.12.y` still has the old commit/cancel APIs. Unresolved: I
+did not exhaustively validate every maintained stable branch’s memcg API
+state.
 
-Step 9.1 Record: Evidence for backporting: concrete compiler error,
-existing driver code in stable branches, one-line obviously-correct fix,
-maintainer-applied patch, no runtime behavior change, and build fixes
-are valid stable material. Evidence against: platform-specific impact
-and no independent local build reproduction. Unresolved: exact true
-historical introduction predates the shallow boundary; lore stable
-search via WebFetch was blocked.
+Step 9.2 Stable rules checklist:
+1. Obviously correct and tested? Yes for matching-code branches;
+   verified by code grep, `git diff --check`, and `git apply --check` on
+   `7.0.y`.
+2. Fixes a real bug that affects users? It fixes incorrect
+   documentation, not runtime behavior.
+3. Important issue? No runtime severity; LOW documentation correctness
+   issue.
+4. Small and contained? Yes, 6-line docs-only diff in one file.
+5. No new features or APIs? Yes.
+6. Can apply to stable trees? Yes to at least current `7.0.y`; should
+   not be applied blindly to `6.12.y`.
 
-Step 9.2 Record: Stable rules checklist:
-1. Obviously correct and tested: yes for correctness by inspection;
-   maintainer applied it. No local build test performed.
-2. Fixes a real bug: yes, reported compiler error in existing code.
-3. Important issue: yes for affected stable builds, because it can stop
-   compilation.
-4. Small and contained: yes, one line in one function.
-5. No new features/APIs: yes.
-6. Can apply to stable trees: yes with at most trivial context
-   adjustment, especially for older comment-style fallthrough branches.
+Step 9.3 Record: exception category is documentation fix.
 
-Step 9.3 Record: Exception category applies: build fix.
+Step 9.4 Decision: backport is acceptable for stable trees whose memcg
+implementation no longer has charge cancellation APIs. It should be
+excluded from trees like `6.12.y` where the old APIs still exist. With
+that branch-selection caveat, this qualifies under the documentation-fix
+exception.
 
-Step 9.4 Record: Decision is to backport. This is exactly the kind of
-low-risk build fix stable trees should carry.
-
-## Verification
-
-- [Phase 1] Parsed `git show --format=fuller --stat --patch
-  2bcbb16316278`: confirmed subject, tags, compiler-error body, and one-
-  line patch.
-- [Phase 2] Read `sound/sparc/dbri.c`: confirmed `reverse_bytes()` has
-  annotated fallthroughs except the candidate-added `case 2` annotation.
-- [Phase 3] Ran `git blame 2bcbb16316278^ -L 578,598 --
-  sound/sparc/dbri.c`: confirmed changed area, with shallow/grafted
-  limitation.
-- [Phase 3] Ran branch snippet checks on `pending-5.4` through
-  `pending-7.0`: confirmed the missing annotation exists in all checked
-  stable-related branches.
-- [Phase 3] Ran recent file history and author history checks: found
-  only related maintenance/refactor commits, no dependency series.
-- [Phase 4] Ran `b4 dig -c`, `-a`, `-w`, and saved the mbox: confirmed
-  single v1 patch, proper ALSA recipients, and maintainer “Applied now”
-  reply.
-- [Phase 5] Searched `reverse_bytes(` call sites: confirmed callers are
-  `xmit_fixed()` and `dbri_process_one_interrupt()`.
-- [Phase 6] Searched stable branch logs: no existing backport or
-  duplicate fix found locally.
-- [Phase 7] Checked `MAINTAINERS`: confirmed SOUND maintainers include
-  Jaroslav Kysela and Takashi Iwai.
-- [Phase 8] Checked `include/linux/compiler_attributes.h`: confirmed
-  `fallthrough` is the intended kernel pseudo-keyword and is available
-  in checked stable branches.
-- UNVERIFIED: I did not reproduce the compiler error with a local
-  SPARC/SBus DBRI build.
-- UNVERIFIED: The exact original introduction before the repository’s
-  shallow/grafted boundary could not be determined.
-- UNVERIFIED: WebFetch could not read lore/stable search results because
-  Anubis blocked the page.
+Verification:
+- [Phase 1] Parsed candidate commit
+  `d8769544bde51b0ac980d10f8fe9f9fed6c95995`: only two Signed-off-by
+  tags, no bug/report/stable tags.
+- [Phase 2] `git show --stat --patch`: confirmed one docs file, `2
+  insertions(+), 4 deletions(-)`.
+- [Phase 3] `git show 1d8f136a421f...`: confirmed referenced commit
+  removed `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`
+  from mainline code.
+- [Phase 3] `git log origin/master --grep`: found candidate and merge
+  via `cgroup-for-7.1-rc2-fixes`.
+- [Phase 4] `b4 dig`: found lore thread and exact patch-id match.
+- [Phase 4] `b4 dig -a`: only v1 single-patch series.
+- [Phase 4] `b4 dig -w`: relevant cgroup and docs maintainers/lists were
+  included.
+- [Phase 4] Saved mbox: confirmed Tejun replied “Applied to
+  cgroup/for-7.1-fixes”; no NAKs or stable nomination found.
+- [Phase 5] `rg`/`git grep`: confirmed current code uses
+  `commit_charge()` and no longer has old API names in `7.0.y`.
+- [Phase 6] `git apply --check`: candidate applies cleanly to current
+  `7.0.y`.
+- [Phase 6] Branch checks: `6.12.y` still has
+  `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`, so this
+  patch must not be applied there unchanged.
+- [Phase 8] Runtime impact verified as none because only
+  `Documentation/admin-guide/cgroup-v1/memcg_test.rst` changes.
 
 **YES**
 
- sound/sparc/dbri.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/admin-guide/cgroup-v1/memcg_test.rst | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/sound/sparc/dbri.c b/sound/sparc/dbri.c
-index 75f82a92ff44f..2f5f62079fa4a 100644
---- a/sound/sparc/dbri.c
-+++ b/sound/sparc/dbri.c
-@@ -592,6 +592,7 @@ static __u32 reverse_bytes(__u32 b, int len)
- 		fallthrough;
- 	case 2:
- 		b = ((b & 0xaaaaaaaa) >> 1) | ((b & 0x55555555) << 1);
-+		fallthrough;
- 	case 1:
- 	case 0:
- 		break;
+diff --git a/Documentation/admin-guide/cgroup-v1/memcg_test.rst b/Documentation/admin-guide/cgroup-v1/memcg_test.rst
+index 9f8e27355cba5..7c7cd457cf695 100644
+--- a/Documentation/admin-guide/cgroup-v1/memcg_test.rst
++++ b/Documentation/admin-guide/cgroup-v1/memcg_test.rst
+@@ -47,21 +47,19 @@ Please note that implementation details can be changed.
+ 	  Called when swp_entry's refcnt goes down to 0. A charge against swap
+ 	  disappears.
+ 
+-3. charge-commit-cancel
++3. charge-commit
+ =======================
+ 
+ 	Memcg pages are charged in two steps:
+ 
+ 		- mem_cgroup_try_charge()
+-		- mem_cgroup_commit_charge() or mem_cgroup_cancel_charge()
++		- commit_charge()
+ 
+ 	At try_charge(), there are no flags to say "this page is charged".
+ 	at this point, usage += PAGE_SIZE.
+ 
+ 	At commit(), the page is associated with the memcg.
+ 
+-	At cancel(), simply usage -= PAGE_SIZE.
+-
+ Under below explanation, we assume CONFIG_SWAP=y.
+ 
+ 4. Anonymous
 -- 
 2.53.0
 
