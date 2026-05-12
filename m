@@ -1,41 +1,66 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3764C355F54
-	for <patches@lists.linux.dev>; Tue, 12 May 2026 19:53:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E02B357CFF
+	for <patches@lists.linux.dev>; Tue, 12 May 2026 20:41:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778615629; cv=none; b=cYhMLmc+eQf3d0cxY7+GD6nr5+Rx0a1buBX5GtIf17lZdH0zEj1+HKAKzZfZ865HcySMfjKhm1am40ZN37APKz0Qv2KN6rnHMJb2wRmceoe6+fwirOsmoO+j2L0cm42hwueTN98bxogVIm+LGjvyQ1YKLuKqlxtejOqp2K5qkas=
+	t=1778618499; cv=none; b=C1+cd2K8DdpUis88ORkgRNNmT7rHe4vkhvRUTGKfUMCwlMmVfvnecEexcLW+vKoT0I4nrlyweiI1JPtG09y77WoK+lTKaRA/cLE+WcVLNCXo68Cya2X4mhuwVP65MUxlOAtmY7ftgYGctRO4nqoNV1bXraeYwxF2ltjPyMjkCrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778615629; c=relaxed/simple;
-	bh=wnxqki7Lt6sblGVNFGncwg9M+lU6iNwwpGsXriCj8ks=;
+	s=arc-20240116; t=1778618499; c=relaxed/simple;
+	bh=mZubmlekLduv78PkJ9UspZtMtIutTKl+OgZbzRPCyxg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uWK3BFcs7UN+CxX+ElRgT2SOv7D/GkebTJqSVvOWNhmtVRVypzNY9H576Ua4qjxEqbu5N5WghliDQTs/amDVGYFyzVnkaSDInQjRnNa89wFF3N9JFxQplzHkdkhSjEWcOkywYO8pgLG9PV9upT0sO0+PqniOL5WcOXSoOexf74w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=KZH1DUfD; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	 In-Reply-To:Content-Type; b=hlyMXTOLvic3AItf8F1kVLEpDb6PQT8ALyz9ngtIKn7W6MvrKQVdFi8lvOvOiJly9DDOAdXjXZfwwFNGnHOeq73nyhRKOz8z1NACxZTAtMqpzD+oc65jvyUkH6R1EZrGj+Qla7K0eu2zKlDze+rXBqUBJwZS8AczZYCmQ5jJRr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LennDqG+; arc=none smtp.client-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="KZH1DUfD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1778615595; x=1779220395; i=rwarsow@gmx.de;
-	bh=OgVfsQ2cLYvVhlt2ixFcHhojQgamUmeFhWpNvrgueZM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=KZH1DUfDa/BpznNqzZbT0fEy/EfUDh/WnLH5X4B+bZRIHBLRP+Tt/Xm7GV4wBAWj
-	 AE8wR30fStXAZxaU8+kUfcOPvcRZU6HRceFzh/0C3QJsFZ0Xs+mUFq3MRxsuPslIF
-	 y4jDdsbFzCA0Km4Xx/b8I5edqi0lOz9pfTQoWRwtRtDR1NFWrOGBIN3XSvfBLl/py
-	 TYUFFb6K/h3ofTBfuUKBc6NJhIhIbvTWAg/UcBSgdz4O5iD/uB6l/OPtUvniRlvuU
-	 7NBCrLDPpLdBL8a/+Y4Zxk0TUXAe0LP4d4TwAKMure3oYWumFsnuwQbaRdjJAyCDO
-	 lNmU5+hLt6yfjvNpFA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MjS9I-1x6RZw3HEQ-00dN33; Tue, 12
- May 2026 21:53:14 +0200
-Message-ID: <bc95e796-6523-4587-9c1b-5103d69e68d0@gmx.de>
-Date: Tue, 12 May 2026 21:53:13 +0200
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LennDqG+"
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-2ecf9e398f4so2279025eec.1
+        for <patches@lists.linux.dev>; Tue, 12 May 2026 13:41:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1778618497; x=1779223297; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CmByf/1D2iszo6zYS41ggp3d6e7T3VLwXedEo3RdCos=;
+        b=LennDqG+V3tMpitd9FEIOuzMHi8eOy7VbudZuvir7oRUYFj8ZdJfHuUPXsu5F/mTNr
+         R2pUHy9TQztgWLHzJFc+O6NbDttMhr6i80xHNgrOEMiLawSaBXgmYQwVNkAvmI5siZPx
+         Rp3FQn0HA+DuQkFtMspK8CQcXVBW2pxwwf/F3r0moo0iLEo7Pef9EGfXE072FweBEsdn
+         hannkbTyUM+xaGsEB6SJ8dFktd4phQyjRpa/ODby3+mVDjOBuDzkaEySjiulqTSjNUvl
+         shJpgwdUnPuctxWDwCtQr0C41N4FYlGJZ4J20TGTdyqjVZMsCudXu1h3kLtkOGcAu0CU
+         1Yeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778618497; x=1779223297;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CmByf/1D2iszo6zYS41ggp3d6e7T3VLwXedEo3RdCos=;
+        b=Q6PsLCIVUYbjNkn+bP6LrS6v3HIWlioaQBBw9chtUkbfUesmk4b4U0RE9TBOAJWdsD
+         Re4N8ud82s+iGjryq6sqrl0KT2hC6TWu0DTJdp0/Q3AUaxyQSzPOED82invnXSUScBwr
+         jbAP9BRZZZHY25x2lBh3vfSOGUtq2EGU/V15AvwIvUE9tT4dNk2H0QEn6dj5kgpddRqc
+         +tQV7Op6N1iJ0dXhvRYEe3p/b4MWX/XPaxyaqiPlQ+5CzFZEZW8wPzmOzxtOaSoMNspy
+         3KlhLeROVzvE5pXgDzCAzjRJb50pFXkGjaCF4AxhXMDt40C01Cqf9PqfTMESrSEh6tL9
+         VHwA==
+X-Gm-Message-State: AOJu0Yxna8cHZuyVMTyZCcrEmtsSi2OvRr5zvX5DN21Z7ozSS7Exbasr
+	9sJkZF3F4c5udT1/QOtHcfQzgcER0HrNlwP9oV0T6nBICJEQPTMAgV45g52eEl2Ykw==
+X-Gm-Gg: Acq92OHMDBbGlpM2uypLTcEWkoe2yUDxTnwNWESVA7sNBdGUG+O2uvXnGmoQu0oTBUF
+	uVzICuBT+6q2Qq9NEshq548NEMR3ofjRSfrnV+RghLuhG6ZLTC7gZrZF84CwKSSUsc48xvjmD1C
+	7YQVflJMaT8dwb2UryQA6TCH3yhEdlnjmRNJ1dtZ1aNo3HAruPtlu/1J18aT9ZH6dm3Fwh0mxSg
+	p3R3YBw1Jqe0S1D4cbcrtFjIuxI279SZUCIlN/j7wP66pruDSeej1rifeRbFscPxdQvUhK7SeuG
+	uVcKCNDNwidK/mWO1QlpJONVqktKRL9kHLTxlOO4uSI5xO2So08jeZjPGutG3tjD0uVE6IyGs11
+	AYJOWSJBPy9bjrYSP4yUrxDaFxxbCz8w3EYlbVZMD2d5sr1hU3guQOsaoxdq2Go0NTWX1req9ns
+	DcA5zTyDPfs55u3SAhJfo/dwWv+ykEPHHl32CTUW3+bmYpBL4+BcRnpG+4XPNV8gko6XmVRotbS
+	jZeyYeLnhryTScmB2T2jmkuDKyLkbBY8Cau
+X-Received: by 2002:a05:7301:4902:b0:2e7:120:137b with SMTP id 5a478bee46e88-30114251733mr550634eec.0.1778618495944;
+        Tue, 12 May 2026 13:41:35 -0700 (PDT)
+Received: from ?IPV6:2a00:79e0:2e7c:8:839b:f905:79b7:838f? ([2a00:79e0:2e7c:8:839b:f905:79b7:838f])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f8859eb034sm19502303eec.5.2026.05.12.13.41.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 May 2026 13:41:35 -0700 (PDT)
+Message-ID: <3f6a00ca-6020-455c-a7fc-f16b02112185@google.com>
+Date: Tue, 12 May 2026 13:41:33 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,139 +68,114 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 000/307] 7.0.7-rc1 review
+Subject: Re: [PATCH 6.12 046/206] usb: typec: tcpm: reset internal port states
+ on soft reset AMS
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260512173940.117428952@linuxfoundation.org>
-From: Ronald Warsow <rwarsow@gmx.de>
-Content-Language: de-DE, en-US
-In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
+Cc: patches@lists.linux.dev, stable <stable@kernel.org>,
+ Badhri Jagan Sridharan <badhri@google.com>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>
+References: <20260512173932.810559588@linuxfoundation.org>
+ <20260512173933.811124271@linuxfoundation.org>
+Content-Language: en-US
+From: Amit Sunil Dhamne <amitsd@google.com>
+In-Reply-To: <20260512173933.811124271@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4vf5m9lG5yjrnadiGsJ2/Y+FWNl/1hAPCrgF4SoDBkO7VnuGq6t
- raKLfyXVDfP9dZg6cRctzSlnbZdwCoNAJfYJ1L2qcBU7k/ob3L0O1DuA3QS7dREy4w5JNLf
- JVVweR4v0r3W+QvEtTA4FJJjbSk6fM9ii4qeKtBMCMFsY7lRTJLx4qxiE9Z3ONxdlRpMwjy
- ST3tFdRN4JQXMVA9RdkOQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Hp50n/cmhYI=;/LqsIuCwPS2FH8e69RLY5Ya64SE
- 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
+Content-Transfer-Encoding: 7bit
 
-Hi
+Hi Greg,
 
-7.0.7-rc1 does not compile !
+On 5/12/26 10:38 AM, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+>
+> ------------------
+>
+> From: Amit Sunil Dhamne <amitsd@google.com>
+>
+> commit 2909f0d4994fb4306bf116df5ccee797791fce2c upstream.
+>
+> Reset internal port states (such as vdm_sm_running and
+> explicit_contract) on soft reset AMS as the port needs to negotiate a
+> new contract. The consequence of leaving the states in as-is cond are as
+> follows:
+>    * port is in SRC power role and an explicit contract is negotiated
+>      with the port partner (in sink role)
+>    * port partner sends a Soft Reset AMS while VDM State Machine is
+>      running
+>    * port accepts the Soft Reset request and the port advertises src caps
+>    * port partner sends a Request message but since the explicit_contract
+>      and vdm_sm_running are true from previous negotiation, the port ends
+>      up sending Soft Reset instead of Accept msg.
+>
+> Stub Log:
+> [  203.653942] AMS DISCOVER_IDENTITY start
+> [  203.653947] PD TX, header: 0x176f
+> [  203.655901] PD TX complete, status: 0
+> [  203.657470] PD RX, header: 0x124f [1]
+> [  203.657477] Rx VDM cmd 0xff008081 type 2 cmd 1 len 1
+> [  203.657482] AMS DISCOVER_IDENTITY finished
+> [  203.657484] cc:=4
+> [  204.155698] PD RX, header: 0x144f [1]
+> [  204.155718] Rx VDM cmd 0xeeee8001 type 0 cmd 1 len 1
+> [  204.155741] PD TX, header: 0x196f
+> [  204.157622] PD TX complete, status: 0
+> [  204.160060] PD RX, header: 0x4d [1]
+> [  204.160066] state change SRC_READY -> SOFT_RESET [rev2 SOFT_RESET_AMS]
+> [  204.160076] PD TX, header: 0x163
+> [  204.162486] PD TX complete, status: 0
+> [  204.162832] AMS SOFT_RESET_AMS finished
+> [  204.162840] cc:=4
+> [  204.162891] AMS POWER_NEGOTIATION start
+> [  204.162896] state change SOFT_RESET -> AMS_START [rev2 POWER_NEGOTIATION]
+> [  204.162908] state change AMS_START -> SRC_SEND_CAPABILITIES [rev2 POWER_NEGOTIATION]
+> [  204.162913] PD TX, header: 0x1361
+> [  204.165529] PD TX complete, status: 0
+> [  204.165571] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES_TIMEOUT @ 60 ms [rev2 POWER_NEGOTIATION]
+> [  204.166996] PD RX, header: 0x1242 [1]
+> [  204.167009] state change SRC_SEND_CAPABILITIES -> SRC_SOFT_RESET_WAIT_SNK_TX [rev2 POWER_NEGOTIATION]
+> [  204.167019] AMS POWER_NEGOTIATION finished
+> [  204.167020] cc:=4
+> [  204.167083] AMS SOFT_RESET_AMS start
+> [  204.167086] state change SRC_SOFT_RESET_WAIT_SNK_TX -> SOFT_RESET_SEND [rev2 SOFT_RESET_AMS]
+> [  204.167092] PD TX, header: 0x16d
+> [  204.168824] PD TX complete, status: 0
+> [  204.168854] pending state change SOFT_RESET_SEND -> HARD_RESET_SEND @ 60 ms [rev2 SOFT_RESET_AMS]
+> [  204.171876] PD RX, header: 0x43 [1]
+> [  204.171879] AMS SOFT_RESET_AMS finished
+>
+> This causes COMMON.PROC.PD.11.2 check failure for
+> TEST.PD.VDM.SRC.2_Rev2Src test on the PD compliance tester.
+>
+> Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+> Fixes: 8d3a0578ad1a ("usb: typec: tcpm: Respond Wait if VDM state machine is running")
+> Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
+> Cc: stable <stable@kernel.org>
+> Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+> Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> Link: https://patch.msgid.link/20260414-fix-soft-reset-v1-1-01d7cb9764e2@google.com
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   drivers/usb/typec/tcpm/tcpm.c |    2 ++
+>   1 file changed, 2 insertions(+)
+>
+> --- a/drivers/usb/typec/tcpm/tcpm.c
+> +++ b/drivers/usb/typec/tcpm/tcpm.c
+> @@ -5614,6 +5614,8 @@ static void run_state_machine(struct tcp
+>   
+>   	case VCONN_SWAP_ACCEPT:
+>   		tcpm_pd_send_control(port, PD_CTRL_ACCEPT, TCPC_TX_SOP);
+> +		port->vdm_sm_running = false;
+> +		port->explicit_contract = false;
 
-=3D=3D=3D=3D=3D=3D=3D
 
-error:
+Please drop this patch from the queue. It was incorrectly applied to the 
+VCONN_SWAP_ACCEPT case instead of the soft reset handling due to context 
+fuzz. I will send a proper rebased backport for the 6.12 stable tree 
+shortly.
 
-In file included from kernel/sched/build_policy.c:62:
-kernel/sched/ext.c: In function =E2=80=98bypass_lb_cpu=E2=80=99:
-kernel/sched/ext.c:4019:35: error: =E2=80=98donor_rq=E2=80=99 undeclared (=
-first use in=20
-this function); did you mean =E2=80=98donee_rq=E2=80=99?
-  4019 |                 if (task_rq(p) !=3D donor_rq)
-       |                                   ^~~~~~~~
-       |                                   donee_rq
-kernel/sched/ext.c:4019:35: note: each undeclared identifier is reported=
-=20
-only once for each function it appears in
-make[4]: *** [scripts/Makefile.build:289: kernel/sched/build_policy.o]=20
-Error 1
-make[3]: *** [scripts/Makefile.build:548: kernel/sched] Error 2
-make[2]: *** [scripts/Makefile.build:548: kernel] Error 2
-make[2]: *** Waiting for unfinished jobs....
 
-=3D=3D=3D=3D=3D=3D=3D=3D
+Thanks,
 
-if I do
+Amit
 
-git revert eb5b997dadc51746b5db031be1e9e7c19646c317 --no-edit
-
-(NOT bisected just reading through the patches !)
-
-I find no regressions here on x86_64 (Intel 11th Gen. CPU)
-
-Thanks
-
-Tested-by: Ronald Warsow <rwarsow@gmx.de>
+>
