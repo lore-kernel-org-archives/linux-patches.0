@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF8B3C0A01;
-	Tue, 12 May 2026 17:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F703C0A08;
+	Tue, 12 May 2026 17:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608451; cv=none; b=qB4TT1yR4KjIFfszu+1aqktLC341OvF9YZAtMlI+F1E8URvyJ7M9QBqBmYRBVsqgUlVHN8VvvDerDaySDkzF1Q3w4BQzEQRBrCvrWrOFoqAoQB4zA4AVOllOO8WJ0wA7AcAFdv1ViCC8wHCsqLDbLSWt6OrHoMgVNB0JnV+EVkY=
+	t=1778608453; cv=none; b=mEopc5YCNa4pMm3MCNG1OTt02xV+/wUTMNOCYXjb8u2JYgTYdlFyh6HeRItt9iouITkOmZItp0yvwLzJda8GMhvN9VnC41dYVNZZsG4qaqWGVivkbIrPpESImpkvo76Jw1X29igMrURDBHsd2U9IwlBO8OZjLKoYTEOF13FzMxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608451; c=relaxed/simple;
-	bh=mGD2Be09doT/z8aVVpSvX+2me8pKEV6+Ko4RC69Kqyk=;
+	s=arc-20240116; t=1778608453; c=relaxed/simple;
+	bh=kYmGEHClSLH8Rp9szG7Haa90BpBn1CUSsDA5iQnqHxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZjJBXOtYFWQmj5ha/lwGxwtWoJhz82DQFbHPGDWFnsAH2sFrQ5Joz8hs4/fwA292qYeleNp70AddSLV7phU+McOlxiEXlre6gAffau/dwabEqgFuhQcq9mhQiPdJEhoOtbIGFUWnSJWGfs0wV4QCBY4cq/N4wFJGsxhpUHHHLPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MS1lNu+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ka0q3fBFWmi777EEvFvShi6Iqhgfi04mUSvPizCSab2YhhFyxut+W+tWCF6smg5J8mUjLEVZ2w3fBLntfIVXEm7UEIEIjcASX4PBrUrpOM0qHnce+yVwylvLIjobDULsL8E9G5f4LVZ/JNomWaj7XwSxn32ob5bFg3aZw0noWf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRTUCDA5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MS1lNu+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72636C2BCFB;
-	Tue, 12 May 2026 17:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRTUCDA5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F47FC2BCC7;
+	Tue, 12 May 2026 17:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608450;
-	bh=mGD2Be09doT/z8aVVpSvX+2me8pKEV6+Ko4RC69Kqyk=;
+	s=korg; t=1778608453;
+	bh=kYmGEHClSLH8Rp9szG7Haa90BpBn1CUSsDA5iQnqHxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1MS1lNu+hCAP3d/lS/YcBpJgRuWQjdi4S8vucKebS2bv6sg2eKSx+J7p7yNAzlzcE
-	 RmGS3smBe1CJeblBg/shIglGWmEbbHGdET17Ph4KJmwZ+LZjNsAQYgwFMGvh/XiiJD
-	 tu4lbtdB+pcZrJhx571T34EO8jfc/fGnycKKD5+s=
+	b=mRTUCDA5DlTm4V0FNwxV9Fo8/3o7PSUlXqjc67o5HFV6IAzpaclhHoTb2pLDmClZW
+	 kmwu9mkGL5IBkNaauUFdLaqTtGXqkWULseb5oEnoPoW2CTi1FA+slCuri8hVvNb7z2
+	 Unfyy1jhpS+YUQ1EKqM+QoTh0lMthvZrzzZfYdUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 077/270] rust: allow `clippy::collapsible_if` globally
-Date: Tue, 12 May 2026 19:37:58 +0200
-Message-ID: <20260512173940.074669683@linuxfoundation.org>
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.18 086/270] KVM: arm64: Fix kvm_vcpu_initialized() macro parameter
+Date: Tue, 12 May 2026 19:38:07 +0200
+Message-ID: <20260512173940.270912423@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,50 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Fuad Tabba <tabba@google.com>
 
-commit 2adc8664018c1cc595c7c0c98474a33c7fe32a85 upstream.
+commit d89fdda7dd8a488f922e1175e6782f781ba8a23b upstream.
 
-Similar to `clippy::collapsible_match` (globally allowed in the previous
-commit), the `clippy::collapsible_if` lint [1] can make code harder to
-read in certain cases.
+The macro is defined with parameter 'v' but the body references the
+literal token 'vcpu' instead, causing it to silently operate on whatever
+'vcpu' resolves to in the caller's scope rather than the value passed by
+the caller. All current call sites happen to use a variable named 'vcpu',
+so the bug is latent.
 
-Thus just let developers decide on their own.
-
-In addition, remove the existing `expect` we had.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Suggested-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/rust-for-linux/DGROP5CHU1QZ.1OKJRAUZXE9WC@garyguo.net/
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#collapsible_if [1]
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260426144201.227108-2-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: e016333745c7 ("KVM: arm64: Only reset vCPU-scoped feature ID regs once")
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Link: https://patch.msgid.link/20260424084908.370776-5-tabba@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile                                    |    1 +
- drivers/android/binder/range_alloc/array.rs |    1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_host.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -483,6 +483,7 @@ export rust_common_flags := --edition=20
- 			    -Wclippy::as_ptr_cast_mut \
- 			    -Wclippy::as_underscore \
- 			    -Wclippy::cast_lossless \
-+			    -Aclippy::collapsible_if \
- 			    -Aclippy::collapsible_match \
- 			    -Wclippy::ignored_unit_patterns \
- 			    -Wclippy::mut_mut \
---- a/drivers/android/binder/range_alloc/array.rs
-+++ b/drivers/android/binder/range_alloc/array.rs
-@@ -204,7 +204,6 @@ impl<T> ArrayRangeAllocator<T> {
-         // caller will mark them as unused, which means that they can be freed if the system comes
-         // under memory pressure.
-         let mut freed_range = FreedRange::interior_pages(offset, size);
--        #[expect(clippy::collapsible_if)] // reads better like this
-         if offset % PAGE_SIZE != 0 {
-             if i == 0 || self.ranges[i - 1].endpoint() <= (offset & PAGE_MASK) {
-                 freed_range.start_page_idx -= 1;
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -1476,7 +1476,7 @@ static inline bool __vcpu_has_feature(co
+ #define kvm_vcpu_has_feature(k, f)	__vcpu_has_feature(&(k)->arch, (f))
+ #define vcpu_has_feature(v, f)	__vcpu_has_feature(&(v)->kvm->arch, (f))
+ 
+-#define kvm_vcpu_initialized(v) vcpu_get_flag(vcpu, VCPU_INITIALIZED)
++#define kvm_vcpu_initialized(v) vcpu_get_flag(v, VCPU_INITIALIZED)
+ 
+ int kvm_trng_call(struct kvm_vcpu *vcpu);
+ #ifdef CONFIG_KVM
 
 
