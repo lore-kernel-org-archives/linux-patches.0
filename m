@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533633502A7;
-	Tue, 12 May 2026 18:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A8734C9A3;
+	Tue, 12 May 2026 18:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609731; cv=none; b=VHqBs9rKPrtzfeDGe0p2XVF+KJfkVpd7b+FyFnDLMnM5/I+gyCu91zpISZAr2m2X08hDNMBdK14ljPx08ROxwrYJD+a2eMVphFk1s39AdpjyI7/bhAsQUrnrsMbSWssP11C57nKuh+1tgzx/SbfcIOT+YCxJycPFocvPuk9djGs=
+	t=1778609733; cv=none; b=RA4Ypo3iwkiZjz/ePk/T2f70OJWZN1InUKqYTq2Z3FX/f3q/RycBlxfb8QYtNgNX1BRKmoOk6wu7Dz8jM7gjP0cmJMTQXug+3muoxDynItnn6LjfY1TO+sET3OXT/SDs8a99crCb+IIDu1miCRz44UYhSUIX8qvMTzQZu3bMbTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609731; c=relaxed/simple;
-	bh=1/bferi5Gvu3mk/nz8kJkioY2OivZTSuY1EPs8GqdHY=;
+	s=arc-20240116; t=1778609733; c=relaxed/simple;
+	bh=VRMOEayVugFFQnyrVSgroW26Qer+Ex9zwF/z/baCLME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRq1AxHnqLcDNpO+QVaK332eCXlfLJFrIRRZrHoVW7624hOJf1dZygc192oM6wF4R5/Rw4sRsSxDnRIwiwh2hX+O+7wxFGFBxnIhbYUL/3r8p63IAT6iLKDnHjYEkYbturi/pIpqTccuHKsHjUX5NpE2W9nlIy67n/dRJMNfXRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7cNK2VE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KvooRirL+EMgUUAdrQ6Sde6Dy3RovnkOCMqi6eubUY9y3sskltL3ZH83iRD8EFuU9si5pwvW08VQmNvgq8KKCAJR5m2HoSTFG8nfzJC+MCOofWnsN21AL3AOBlf42HxdchZIHR5+08yQJPr3/tHCaNLdfMiewST3czuzO7XiXr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eqy4tpKx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7cNK2VE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAAEC2BCB0;
-	Tue, 12 May 2026 18:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eqy4tpKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A90DC2BCB0;
+	Tue, 12 May 2026 18:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609731;
-	bh=1/bferi5Gvu3mk/nz8kJkioY2OivZTSuY1EPs8GqdHY=;
+	s=korg; t=1778609733;
+	bh=VRMOEayVugFFQnyrVSgroW26Qer+Ex9zwF/z/baCLME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7cNK2VEXTpT6+/ossZqUl7aWJ3S4HqsfAO8/otOrCLHBmTkAKjc8VOOQ1YTahsAK
-	 3Db/tUAqChvSJqsQ8G7A6MQmqlzDSbCmQkS972G6pMAKcZXqFy4Y4IeIxaugIgKbW2
-	 AtTBS0sUxYlv0H3UeMmKfdq3CXpXz5QnULUvc9i4=
+	b=Eqy4tpKx2KD8rBd7ILWADojPOtKrKCMKDZticqvzwjAstyOrI7QERQRvzuhmbJkmg
+	 ZvEf6UWwfOEA4yMv/8wBKGRteEPyHMog8vQnWYzkHF4IBFmnwdgH8AzS9o31Dk7uOY
+	 e/eoH54m8dQSO6EwL2lZeNRKvDbwymsoPRlyNZYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@sandisk.com>,
+	Luke Wang <ziniu.wang_1@nxp.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 294/307] mmc: core: Add quirk for incorrect manufacturing date
-Date: Tue, 12 May 2026 19:41:29 +0200
-Message-ID: <20260512173946.331671269@linuxfoundation.org>
+Subject: [PATCH 7.0 295/307] mmc: core: Optimize time for secure erase/trim for some Kingston eMMCs
+Date: Tue, 12 May 2026 19:41:30 +0200
+Message-ID: <20260512173946.354181967@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,92 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avri Altman <avri.altman@sandisk.com>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-[ Upstream commit 263ff314cc5602599d481b0912a381555fcbad28 ]
+[ Upstream commit d6bf2e64dec87322f2b11565ddb59c0e967f96e3 ]
 
-Some eMMC vendors need to report manufacturing dates beyond 2025 but are
-reluctant to update the EXT_CSD revision from 8 to 9. Changing the
-Updating the EXT_CSD revision may involve additional testing or
-qualification steps with customers. To ease this transition and avoid a
-full re-qualification process, a workaround is needed. This
-patch introduces a temporary quirk that re-purposes the year codes
-corresponding to 2010, 2011, and 2012 to represent the years 2026, 2027,
-and 2028, respectively. This solution is only valid for this three-year
-period.
+Kingston eMMC IY2964 and IB2932 takes a fixed ~2 seconds for each secure
+erase/trim operation regardless of size - that is, a single secure
+erase/trim operation of 1MB takes the same time as 1GB. With default
+calculated 3.5MB max discard size, secure erase 1GB requires ~300 separate
+operations taking ~10 minutes total.
 
-After 2028, vendors must update their firmware to set EXT_CSD_REV=9 to
-continue reporting the correct manufacturing date in compliance with the
-JEDEC standard.
+Add a card quirk, MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME, to set maximum
+secure erase size for those devices. This allows 1GB secure erase to
+complete in a single operation, reducing time from 10 minutes to just 2
+seconds.
 
-The `MMC_QUIRK_BROKEN_MDT` is introduced and enabled for all Sandisk
-devices to handle this behavior.
-
-Signed-off-by: Avri Altman <avri.altman@sandisk.com>
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: d6bf2e64dec8 ("mmc: core: Optimize time for secure erase/trim for some Kingston eMMCs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/card.h   |    6 ++++++
- drivers/mmc/core/mmc.c    |    5 +++++
- drivers/mmc/core/quirks.h |    3 +++
+ drivers/mmc/core/card.h   |    5 +++++
+ drivers/mmc/core/queue.c  |    9 +++++++--
+ drivers/mmc/core/quirks.h |    9 +++++++++
  include/linux/mmc/card.h  |    1 +
- 4 files changed, 15 insertions(+)
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
 --- a/drivers/mmc/core/card.h
 +++ b/drivers/mmc/core/card.h
-@@ -89,6 +89,7 @@ struct mmc_fixup {
- #define CID_MANFID_MICRON       0x13
- #define CID_MANFID_SAMSUNG      0x15
- #define CID_MANFID_APACER       0x27
-+#define CID_MANFID_SANDISK_MMC  0x45
- #define CID_MANFID_SWISSBIT     0x5D
- #define CID_MANFID_KINGSTON     0x70
- #define CID_MANFID_HYNIX	0x90
-@@ -305,4 +306,9 @@ static inline int mmc_card_no_uhs_ddr50_
- 	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
+@@ -311,4 +311,9 @@ static inline int mmc_card_broken_mdt(co
+ 	return c->quirks & MMC_QUIRK_BROKEN_MDT;
  }
  
-+static inline int mmc_card_broken_mdt(const struct mmc_card *c)
++static inline int mmc_card_fixed_secure_erase_trim_time(const struct mmc_card *c)
 +{
-+	return c->quirks & MMC_QUIRK_BROKEN_MDT;
++	return c->quirks & MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME;
 +}
 +
  #endif
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -676,6 +676,11 @@ static int mmc_decode_ext_csd(struct mmc
- 			/* Adjust production date as per JEDEC JESD84-B51B September 2025 */
- 			if (card->cid.year < 2023)
- 				card->cid.year += 16;
-+		} else {
-+			/* Handle vendors with broken MDT reporting */
-+			if (mmc_card_broken_mdt(card) && card->cid.year >= 2010 &&
-+			    card->cid.year <= 2012)
-+				card->cid.year += 16;
- 		}
- 	}
+--- a/drivers/mmc/core/queue.c
++++ b/drivers/mmc/core/queue.c
+@@ -184,8 +184,13 @@ static void mmc_queue_setup_discard(stru
+ 		return;
+ 
+ 	lim->max_hw_discard_sectors = max_discard;
+-	if (mmc_card_can_secure_erase_trim(card))
+-		lim->max_secure_erase_sectors = max_discard;
++	if (mmc_card_can_secure_erase_trim(card)) {
++		if (mmc_card_fixed_secure_erase_trim_time(card))
++			lim->max_secure_erase_sectors = UINT_MAX >> card->erase_shift;
++		else
++			lim->max_secure_erase_sectors = max_discard;
++	}
++
+ 	if (mmc_card_can_trim(card) && card->erased_byte == 0)
+ 		lim->max_write_zeroes_sectors = max_discard;
  
 --- a/drivers/mmc/core/quirks.h
 +++ b/drivers/mmc/core/quirks.h
-@@ -170,6 +170,9 @@ static const struct mmc_fixup __maybe_un
- 	MMC_FIXUP_EXT_CSD_REV(CID_NAME_ANY, CID_MANFID_NUMONYX,
- 			      0x014e, add_quirk, MMC_QUIRK_BROKEN_HPI, 6),
+@@ -153,6 +153,15 @@ static const struct mmc_fixup __maybe_un
+ 	MMC_FIXUP("M62704", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
+ 		  MMC_QUIRK_TRIM_BROKEN),
  
-+	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SANDISK_MMC, CID_OEMID_ANY, add_quirk_mmc,
-+		  MMC_QUIRK_BROKEN_MDT),
++	/*
++	 * On Some Kingston eMMCs, secure erase/trim time is independent
++	 * of erase size, fixed at approximately 2 seconds.
++	 */
++	MMC_FIXUP("IY2964", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++		  MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME),
++	MMC_FIXUP("IB2932", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++		  MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME),
 +
  	END_FIXUP
  };
  
 --- a/include/linux/mmc/card.h
 +++ b/include/linux/mmc/card.h
-@@ -329,6 +329,7 @@ struct mmc_card {
- #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
+@@ -330,6 +330,7 @@ struct mmc_card {
  #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
  #define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
-+#define MMC_QUIRK_BROKEN_MDT    (1<<19) /* Wrong manufacturing year */
+ #define MMC_QUIRK_BROKEN_MDT    (1<<19) /* Wrong manufacturing year */
++#define MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME	(1<<20) /* Secure erase/trim time is fixed regardless of size */
  
  	bool			written_flag;	/* Indicates eMMC has been written since power on */
  	bool			reenable_cmdq;	/* Re-enable Command Queue */
