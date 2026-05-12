@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1182E366831;
-	Tue, 12 May 2026 18:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF9A3EDE57;
+	Tue, 12 May 2026 18:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609533; cv=none; b=YKdfZBOD2DvzZ+xIRUwW7zAs8xTiQDDHuUmhrzIsD8kir3Z3Lrq23abZJYhMM/a+qOxfoXVB8PIDbbOeuVUiMTPFvkEV0rnHdm74rvSn2QW83T778UB9S6poanq/mq20mMNq6gmuA9xwnM0NYZFKY+81rGtnZ0zSzSSnBb35+B0=
+	t=1778609535; cv=none; b=HgpbhNKqXr036uYbrA6hjoN1T7e1SkT1qx8McrWOL6FLAHpuY41Nrj8uKu8Ya32tA5Px+JZxx+iW6DXoxR1JKhTm3EZj/wAYAnZzWPLjYGHWpqYAFqxPhegyv+8N8Da8FV3cUEZdhK9LN6CAx07WO4F0IqinQvQ02LFBvoNeBuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609533; c=relaxed/simple;
-	bh=NZH3C4qoJh86SpVsUEEq/83wWHOgTyHQjvwnw1KGBgc=;
+	s=arc-20240116; t=1778609535; c=relaxed/simple;
+	bh=lwbNDNk911T8nGL8M6OMeFRhs7gDx1DUdM7shVyyMaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MysBbQJQQil6SZ7DsgRl7NQuI7L6G3jZDE77SX8LsZ2FJUeS+Zid/tpJ7CAy3M0FsvUa4bRaUjcZ3Y6es7m998HGQqXaeedcWaXtSRR+JpheWoQRs6/ZiLzyLEqXqyMaPdovQ0NCkG7m6o+w2pdMRvlRotLCXKVpnZp7NLaRkuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWpwfBJ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VChpF8QdSJ+9lsS0cjXJBsYYurGCMassp9oKXVuEJSA/SDAJj/BvFG925lm42kyM6X4gTCXCj2fT/dPc9LwFEO9wuGO3FmMcRWyuQbQrPRg6J5aBNj/ziK7lGt/TawVtKnylvE3vJvNABIB7BRp1xtkkM8Bm5YZz+aAO/bwdH88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3DDluCU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWpwfBJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D317C2BCC7;
-	Tue, 12 May 2026 18:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3DDluCU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33472C2BCB0;
+	Tue, 12 May 2026 18:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609533;
-	bh=NZH3C4qoJh86SpVsUEEq/83wWHOgTyHQjvwnw1KGBgc=;
+	s=korg; t=1778609535;
+	bh=lwbNDNk911T8nGL8M6OMeFRhs7gDx1DUdM7shVyyMaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWpwfBJ0359Cc80N9POJRgGE1d6VYw/Ps++/pK61Q0j4fJEGFUJ9YY1ZHHwUfWj1L
-	 M3Ec21f+fTtk46tyaWhWG8qB1c5Sl4blxO1CFWjL9KQLr/L3RNHbZZUYD03x9xsWMO
-	 WdcW1A4RhbL6+1ycLD0+8YZICBMYiJXcn9KHw8XI=
+	b=o3DDluCUfoyx0f9fRQaf5hoF2WnQYaS3I48U7dazCkQegq5OduusQqQN/zxq4eDPk
+	 KMVgy7t4I/nyULAmdvfFGHrCqlAj71GJurwYQbgVfD+A8pzTC3NYCiJpDQ9OGh/ZLL
+	 AxMZID6UOStz/DaaX8s7C4hw+iJhDL16Z3bY7aEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Aizen <kai.aizen.dev@gmail.com>,
+	Brad Spengler <brad.spengler@opensrcsec.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.0 231/307] RDMA/ionic: bound node_desc sysfs read with %.64s
-Date: Tue, 12 May 2026 19:40:26 +0200
-Message-ID: <20260512173944.994826403@linuxfoundation.org>
+Subject: [PATCH 7.0 232/307] RDMA/ionic: Fix typo in format string
+Date: Tue, 12 May 2026 19:40:27 +0200
+Message-ID: <20260512173945.017207466@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,32 +50,17 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Zen <kai.aizen.dev@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 654a27f25530d052eeedf086e6c3e2d585c203bd upstream.
+commit 70f780edcd1e86350202d8a409de026b2d2e2067 upstream.
 
-node_desc[64] in struct ib_device is not guaranteed to be NUL-
-terminated. The core IB sysfs handler uses "%.64s" for exactly this
-reason (drivers/infiniband/core/sysfs.c:1307), since node_desc_store()
-performs a raw memcpy of up to IB_DEVICE_NODE_DESC_MAX bytes with no NUL
-termination:
-
-  memcpy(desc.node_desc, buf, min_t(int, count, IB_DEVICE_NODE_DESC_MAX));
-
-If exactly 64 bytes are written via the node_desc sysfs file, the array
-contains no NUL byte. The ionic hca_type_show() handler uses unbounded
-"%s" and will read past the end of node_desc into adjacent fields of
-struct ib_device until it encounters a NUL.
-
-ionic supports IB_DEVICE_MODIFY_NODE_DESC, so this is triggerable by
-userspace.
-
-Match the core handler and bound the format specifier.
+Applying the corrupted patch by hand mangled the format string, put the s
+in the right place.
 
 Cc: stable@vger.kernel.org
-Fixes: 2075bbe8ef03 ("RDMA/ionic: Register device ops for miscellaneous functionality")
-Link: https://patch.msgid.link/r/CALynFi7NAbhDCt1tdaDbf6TnLvAqbaHa6-Wqf6OkzREbA_PAfg@mail.gmail.com
-Signed-off-by: Kai Aizen <kai.aizen.dev@gmail.com>
+Fixes: 654a27f25530 ("RDMA/ionic: bound node_desc sysfs read with %.64s")
+Link: https://patch.msgid.link/r/1-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Reported-by: Brad Spengler <brad.spengler@opensrcsec.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -88,8 +73,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	struct ionic_ibdev *dev =
  		rdma_device_to_drv_device(device, struct ionic_ibdev, ibdev);
  
--	return sysfs_emit(buf, "%s\n", dev->ibdev.node_desc);
-+	return sysfs_emit(buf, "%s.64\n", dev->ibdev.node_desc);
+-	return sysfs_emit(buf, "%s.64\n", dev->ibdev.node_desc);
++	return sysfs_emit(buf, "%.64s\n", dev->ibdev.node_desc);
  }
  static DEVICE_ATTR_RO(hca_type);
  
