@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F2D33ADBA;
-	Tue, 12 May 2026 18:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCB5349AF5;
+	Tue, 12 May 2026 18:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609352; cv=none; b=FCcf9EfM1Q1I+5Jq0Y2TsArpVh5DiYWsREiq6UJ+adq2LjjrG/4RHuzfqm1Y/ntE+wgK+UbiUwCNjxmLE+fuS3QsnuQ71MTGCtSpl3EUuZ/SbpOovkQDs0xnbunp/txXp+jvwz8cQrCrMufaM8zha0aty2S7p0nTMdxp9x/20mU=
+	t=1778609355; cv=none; b=c02gmfhs0dmCY3rHRDrGt5HyhdTvq+4efxvwu70MNlOlxLdCv/nTNK4UPm1NGMyOtuflsD7fmbFaF9+urHmEn+t8x8gnJtPNJv99g/N0DSUJtxhBqbOedHsDm2iWlTvRKC6Uxb/6eQl/7jyczBXVtTmo1P16J2Dy2xl6o1BT0nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609352; c=relaxed/simple;
-	bh=K8QTAfpx7KPzD31OuU1V14NISbOpINe4aOlkMccMcm8=;
+	s=arc-20240116; t=1778609355; c=relaxed/simple;
+	bh=zloZMLQ4rDYglQ+u5T/h/2bRV/YrvtDbrlLKS0AzjzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqOi8clMQ3pI/KmGCuLorFl3d//BY9D5aP+o8rUmkmMI/4Djr9nLSwrZAvGT6tkmMpyG/mXrVFpuCUtQaS123EH9c1/egZr3pd3zh4dfENQeicmSA5vkUxwh+enEjDvlN6o9NAGk2WDVO2jV7C/CVWgLAPh33AvEBcuioD4r6tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIctzzHS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hJ+kxUkfhaKPmUjSmt59mmjJVMf0r0w7ygIAwmMGG9HybJmf5riRj0Hcz1WxPMyJmXHaIvHurNOxJPKF2YtFflbEGsAfhFmruy/1H7Upb9gBfawbooO/D3PyD+OtWLJVwNyUI4X2ZVS1RTJ9xSPHZ0O/i1Mbjq/jhCPe15jC9hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xY7COuVP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIctzzHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5B1C2BCB0;
-	Tue, 12 May 2026 18:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xY7COuVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3EBC2BCB0;
+	Tue, 12 May 2026 18:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609352;
-	bh=K8QTAfpx7KPzD31OuU1V14NISbOpINe4aOlkMccMcm8=;
+	s=korg; t=1778609355;
+	bh=zloZMLQ4rDYglQ+u5T/h/2bRV/YrvtDbrlLKS0AzjzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mIctzzHSkjy1w17H11OnnejLduvOxuqYbBndetJ5V3XrSyjG5HBO7/NvJ29NqVNPh
-	 Xn6ggtrSDQ5jz1xvNWKEHqBvIhF4w4f2I6iqb3WxvhWdCqOXNI3NdRH2C/I09TVmfp
-	 zKcgLmS1wAKU2tyCWfo8YqVmyGpuWG8d3gETUy04=
+	b=xY7COuVP3MsdHtLchuXMJxhz7ktqWr+XTr9aWHBp4StUGPbv/G/BkMOZOhcOtyQQw
+	 c9IDydZpWxZnZXXsSf7UXScOjq5WF4AG1oxy9H1l/jhfum1kC3aYWVbis2ceqIDgfc
+	 s8+CdAVlPKfUT8jc0GJvA7vHOznSSy42ir6CQIl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 120/307] netpoll: pass buffer size to egress_dev() to avoid MAC truncation
-Date: Tue, 12 May 2026 19:38:35 +0200
-Message-ID: <20260512173942.659865640@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Xiao Liu <lx24@stu.ynu.edu.cn>,
+	Nan Li <tonanli66@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Allison Henderson <achender@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.0 121/307] net/rds: handle zerocopy send cleanup before the message is queued
+Date: Tue, 12 May 2026 19:38:36 +0200
+Message-ID: <20260512173942.680105598@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,129 +58,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Nan Li <tonanli66@gmail.com>
 
-commit 76b93a8107574006b25495664304ea9237494d70 upstream.
+commit 44b550d88b267320459d518c0743a241ab2108fa upstream.
 
-egress_dev() formats np->dev_mac via snprintf() but receives buf as
-a bare char *, so it cannot derive the buffer size from the pointer. The
-size argument was hardcoded to MAC_ADDR_STR_LEN (3 * ETH_ALEN - 1 = 17),
-which is silly wrong in two ways:
+A zerocopy send can fail after user pages have been pinned but before
+the message is attached to the sending socket.
 
- 1) misleading kernel log output on the MAC-selected target path
-    (np->dev_name[0] == '\0'); for example "aa:bb:cc:dd:ee:ff doesn't
-    exist, aborting" was logged as "aa:bb:cc:dd:ee:f doesn't exist,
-    aborting".
+The purge path currently infers zerocopy state from rm->m_rs, so an
+unqueued message can be cleaned up as if it owned normal payload pages.
+However, zerocopy ownership is really determined by the presence of
+op_mmp_znotifier, regardless of whether the message has reached the
+socket queue.
 
- 2) the second argument of snprintf is the size of the buffer, not the
-    size of what you want to write.
+Capture op_mmp_znotifier up front in rds_message_purge() and use it as
+the cleanup discriminator. If the message is already associated with a
+socket, keep the existing completion path. Otherwise, drop the pinned
+page accounting directly and release the notifier before putting the
+payload pages.
 
-Add a bufsz parameter to egress_dev() and pass sizeof(buf) from each
-caller, matching the standard snprintf() idiom and removing the
-hardcoded size from the helper.
+This keeps early send failure cleanup consistent with the zerocopy
+lifetime rules without changing the normal queued completion path.
 
-Every caller already declares "char buf[MAC_ADDR_STR_LEN + 1]" so the
-formatted MAC continues to fit.
-
-Tested by booting with
-  netconsole=6665@/aa:bb:cc:dd:ee:ff,6666@10.0.0.1/00:11:22:33:44:55
-on a kernel without a matching device. Pre-fix dmesg shows
-"aa:bb:cc:dd:ee:f doesn't exist, aborting"; post-fix shows the full
-"aa:bb:cc:dd:ee:ff doesn't exist, aborting".
-
-Fixes: f8a10bed32f5 ("netconsole: allow selection of egress interface via MAC address")
-Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260501-netpoll_snprintf_fix-v1-1-84b0566e6597@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0cebaccef3ac ("rds: zerocopy Tx support.")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Co-developed-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Nan Li <tonanli66@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/d2ea98a6313d5467bac00f7c9fef8c7acddb9258.1777550074.git.tonanli66@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/netpoll.c |   23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ net/rds/message.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -608,14 +608,16 @@ EXPORT_SYMBOL_GPL(__netpoll_setup);
- /*
-  * Returns a pointer to a string representation of the identifier used
-  * to select the egress interface for the given netpoll instance. buf
-- * must be a buffer of length at least MAC_ADDR_STR_LEN + 1.
-+ * is used to format np->dev_mac when np->dev_name is empty; bufsz must
-+ * be at least MAC_ADDR_STR_LEN + 1 to fit the formatted MAC address
-+ * and its NUL terminator.
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -131,24 +131,34 @@ static void rds_rm_zerocopy_callback(str
   */
--static char *egress_dev(struct netpoll *np, char *buf)
-+static char *egress_dev(struct netpoll *np, char *buf, size_t bufsz)
+ static void rds_message_purge(struct rds_message *rm)
  {
- 	if (np->dev_name[0])
- 		return np->dev_name;
++	struct rds_znotifier *znotifier;
+ 	unsigned long i, flags;
+-	bool zcopy = false;
++	bool zcopy;
  
--	snprintf(buf, MAC_ADDR_STR_LEN, "%pM", np->dev_mac);
-+	snprintf(buf, bufsz, "%pM", np->dev_mac);
- 	return buf;
- }
+ 	if (unlikely(test_bit(RDS_MSG_PAGEVEC, &rm->m_flags)))
+ 		return;
  
-@@ -645,7 +647,7 @@ static int netpoll_take_ipv6(struct netp
+ 	spin_lock_irqsave(&rm->m_rs_lock, flags);
++	znotifier = rm->data.op_mmp_znotifier;
++	rm->data.op_mmp_znotifier = NULL;
++	zcopy = !!znotifier;
++
+ 	if (rm->m_rs) {
+ 		struct rds_sock *rs = rm->m_rs;
  
- 	if (!IS_ENABLED(CONFIG_IPV6)) {
- 		np_err(np, "IPv6 is not supported %s, aborting\n",
--		       egress_dev(np, buf));
-+		       egress_dev(np, buf, sizeof(buf)));
- 		return -EINVAL;
+-		if (rm->data.op_mmp_znotifier) {
+-			zcopy = true;
+-			rds_rm_zerocopy_callback(rs, rm->data.op_mmp_znotifier);
++		if (znotifier) {
++			rds_rm_zerocopy_callback(rs, znotifier);
+ 			rds_wake_sk_sleep(rs);
+-			rm->data.op_mmp_znotifier = NULL;
+ 		}
+ 		sock_put(rds_rs_to_sk(rs));
+ 		rm->m_rs = NULL;
++	} else if (znotifier) {
++		/*
++		 * Zerocopy can fail before the message is queued on the
++		 * socket, so there is no rs to carry the notification.
++		 */
++		mm_unaccount_pinned_pages(&znotifier->z_mmp);
++		kfree(rds_info_from_znotifier(znotifier));
  	}
+ 	spin_unlock_irqrestore(&rm->m_rs_lock, flags);
  
-@@ -667,7 +669,7 @@ static int netpoll_take_ipv6(struct netp
- 	}
- 	if (err) {
- 		np_err(np, "no IPv6 address for %s, aborting\n",
--		       egress_dev(np, buf));
-+		       egress_dev(np, buf, sizeof(buf)));
- 		return err;
- 	}
- 
-@@ -687,14 +689,14 @@ static int netpoll_take_ipv4(struct netp
- 	in_dev = __in_dev_get_rtnl(ndev);
- 	if (!in_dev) {
- 		np_err(np, "no IP address for %s, aborting\n",
--		       egress_dev(np, buf));
-+		       egress_dev(np, buf, sizeof(buf)));
- 		return -EDESTADDRREQ;
- 	}
- 
- 	ifa = rtnl_dereference(in_dev->ifa_list);
- 	if (!ifa) {
- 		np_err(np, "no IP address for %s, aborting\n",
--		       egress_dev(np, buf));
-+		       egress_dev(np, buf, sizeof(buf)));
- 		return -EDESTADDRREQ;
- 	}
- 
-@@ -719,7 +721,8 @@ int netpoll_setup(struct netpoll *np)
- 		ndev = dev_getbyhwaddr(net, ARPHRD_ETHER, np->dev_mac);
- 
- 	if (!ndev) {
--		np_err(np, "%s doesn't exist, aborting\n", egress_dev(np, buf));
-+		np_err(np, "%s doesn't exist, aborting\n",
-+		       egress_dev(np, buf, sizeof(buf)));
- 		err = -ENODEV;
- 		goto unlock;
- 	}
-@@ -727,14 +730,14 @@ int netpoll_setup(struct netpoll *np)
- 
- 	if (netdev_master_upper_dev_get(ndev)) {
- 		np_err(np, "%s is a slave device, aborting\n",
--		       egress_dev(np, buf));
-+		       egress_dev(np, buf, sizeof(buf)));
- 		err = -EBUSY;
- 		goto put;
- 	}
- 
- 	if (!netif_running(ndev)) {
- 		np_info(np, "device %s not up yet, forcing it\n",
--			egress_dev(np, buf));
-+			egress_dev(np, buf, sizeof(buf)));
- 
- 		err = dev_open(ndev, NULL);
- 		if (err) {
 
 
