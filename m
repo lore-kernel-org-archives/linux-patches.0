@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DEA3DD843;
-	Tue, 12 May 2026 17:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A374A3C0A1A;
+	Tue, 12 May 2026 17:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608124; cv=none; b=u3x7XLjKOj3dwci6b2o/dWj6O6M1JfRTcF2HQqbjF5InmepcotaQOHLxVINVfHLXVRVOlpHj5bCgI/4WlNs8U98vRDaeJG6lt/VmGyPAfHnutosiVx9ZB49ipj5R4JeLGKIVfLQ9ZF6A6WDU6acB9PtxJBSwbbZJq7Rzq8StEEg=
+	t=1778608126; cv=none; b=lx0JAPESRRXRsWh8M8calOdxFF5y6O36nGIVcnfUf5NN4iKqfB8Xe7YoB7rtRMjNk/vPvgw9pud0O5r3HE0BlWKFl4rfAqa4HzxGogJsPvNCLHt29hZxkTsshx/vh/CEr+sCGD6ZUx+3VrJdRp7CHsG+9f2Odm2SwvriQvFLfMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608124; c=relaxed/simple;
-	bh=Iyxl+h/mcxPf8wfF02BPSsPrDKnREFnN+sCB7Xic0gI=;
+	s=arc-20240116; t=1778608126; c=relaxed/simple;
+	bh=OTJgc0e0KQkPFuRmlGKfWda6Hlyql/jg4z7qHui1nTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zso8hUT1mzuKalVBvbR4wbfwL1WfUJFLzl3HnAbj7L0eNkbazA2kI3hJR/95h+ccGMsRD5637IfZWeU8rgdqzZEH66HtPa8ZyaMxKahMlH1KsE/8CqIXldFVa6nduZkA7RRRVpEldaAcf2NLnCWNpz0qcISt/YiKBAHqY+4F7Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teVK9hc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AWv5FbD9m1tC9ZJoSNIt7sUBcBul/pPhf9TfT76mY1GWgFx1+FZYtPv0qDuXXDiWXbIJv6ZQucZF8XzP32tjVYQ4QIOkRylyMlZ+N6lxfK9Q8jBqvWRhf7rMr1Dpgw1fsvbD8hbgiCtfZssGTNenXdxkgLD62LZWumc81+PhM2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1X04rFYq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teVK9hc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CF8C2BCB0;
-	Tue, 12 May 2026 17:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1X04rFYq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37ED7C2BCB0;
+	Tue, 12 May 2026 17:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608124;
-	bh=Iyxl+h/mcxPf8wfF02BPSsPrDKnREFnN+sCB7Xic0gI=;
+	s=korg; t=1778608126;
+	bh=OTJgc0e0KQkPFuRmlGKfWda6Hlyql/jg4z7qHui1nTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=teVK9hc3Y0uVynzFuafTAerhbhEtLjh89fqGTH9H/+H4PQr4x5Z/JV7yPDlNLC4ly
-	 KBZ1sJvpKGUIl3dgZuacONUUr04mDbmvkeHdv3e/c68Nl+q7wl22f2B9OpC0lv7lFA
-	 ogy+KZwqx94Md76eQ2Om5DVvzX9YyogeIkM+lFkk=
+	b=1X04rFYq9dSzUUmD5S0/xq2qvSjUF1zjYCplByF4g9Rbiuu0u2LBy+KcnNAg647Vx
+	 fE4uuz0Alypbq1GYkAKURRmKDnVI4ypaRcAo8aRD/JX9NtehqgEPNxaK9PeRzjyiPF
+	 J4xVT7HQUXiablq/NG5rxfOGZFp9l/Zb9qEXGZL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 165/206] f2fs: fix fiemap boundary handling when read extent cache is incomplete
-Date: Tue, 12 May 2026 19:40:17 +0200
-Message-ID: <20260512173936.357458732@linuxfoundation.org>
+Subject: [PATCH 6.12 166/206] f2fs: fix incorrect multidevice info in trace_f2fs_map_blocks()
+Date: Tue, 12 May 2026 19:40:18 +0200
+Message-ID: <20260512173936.378584901@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -55,94 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit 95e159ad3e52f7478cfd22e44ec37c9f334f8993 upstream.
+commit eb2ca3ca983551a80e16a4a25df5a4ce59df8484 upstream.
 
-f2fs_fiemap() calls f2fs_map_blocks() to obtain the block mapping a
-file, and then merges contiguous mappings into extents. If the mapping
-is found in the read extent cache, node blocks do not need to be read.
-However, in the following scenario, a contiguous extent can be split
-into two extents:
+When f2fs_map_blocks()->f2fs_map_blocks_cached() hits the read extent
+cache, map->m_multidev_dio is not updated, which leads to incorrect
+multidevice information being reported by trace_f2fs_map_blocks().
 
-$ dd if=/dev/zero of=data.128M bs=1M count=128
-$ losetup -f data.128M
-$ mkfs.f2fs /dev/loop0 -f
-$ mount -o mode=lfs /dev/loop0 /mnt/f2fs/
-$ cd /mnt/f2fs/
-$ dd if=/dev/zero of=data.72M bs=1M count=72 && sync
-$ dd if=/dev/zero of=data.4M bs=1M count=4 && sync
-$ dd if=/dev/zero of=data.4M bs=1M count=2 seek=2 conv=notrunc && sync
-$ echo 3 > /proc/sys/vm/drop_caches
-$ dd if=/dev/zero of=data.4M bs=1M count=2 seek=0 conv=notrunc && sync
-$ dd if=/dev/zero of=data.4M bs=1M count=2 seek=0 conv=notrunc && sync
-$ f2fs_io fiemap 0 1024 data.4M
-Fiemap: offset = 0 len = 1024
-logical addr.    physical addr.   length           flags
-0	0000000000000000 0000000006400000 0000000000200000 00001000
-1	0000000000200000 0000000006600000 0000000000200000 00001001
-
-Although the physical addresses of the ranges 0～2MB and 2M～4MB are
-contiguous, the mapping for the 2M～4MB range is not present in memory.
-When the physical addresses for the 0～2MB range are updated, no merge
-happens because the adjacent mapping is missing from the in-memory
-cache. As a result, fiemap reports two separate extents instead of a
-single contiguous one.
-
-The root cause is that the read extent cache does not guarantee that all
-blocks of an extent are present in memory. Therefore, when the extent
-length returned by f2fs_map_blocks_cached() is smaller than maxblocks,
-the remaining mappings are retrieved via f2fs_get_dnode_of_data() to
-ensure correct fiemap extent boundary handling.
+This patch updates map->m_multidev_dio in f2fs_map_blocks_cached() when
+the read extent cache is hit.
 
 Cc: stable@kernel.org
-Fixes: cd8fc5226bef ("f2fs: remove the create argument to f2fs_map_blocks")
+Fixes: 0094e98bd147 ("f2fs: factor a f2fs_map_blocks_cached helper")
 Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |   25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ fs/f2fs/data.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/fs/f2fs/data.c
 +++ b/fs/f2fs/data.c
-@@ -1564,8 +1564,26 @@ int f2fs_map_blocks(struct inode *inode,
- 	if (!maxblocks)
- 		return 0;
+@@ -1509,7 +1509,8 @@ static bool f2fs_map_blocks_cached(struc
+ 		f2fs_wait_on_block_writeback_range(inode,
+ 					map->m_pblk, map->m_len);
  
--	if (!map->m_may_create && f2fs_map_blocks_cached(inode, map, flag))
--		goto out;
-+	if (!map->m_may_create && f2fs_map_blocks_cached(inode, map, flag)) {
-+		struct extent_info ei;
-+
-+		/*
-+		 * 1. If map->m_multidev_dio is true, map->m_pblk cannot be
-+		 * waitted by f2fs_wait_on_block_writeback_range() and are not
-+		 * mergeable.
-+		 * 2. If pgofs hits the read extent cache, it means the mapping
-+		 * is already cached in the extent cache, but it is not
-+		 * mergeable, and there is no need to query the mapping again
-+		 * via f2fs_get_dnode_of_data().
-+		 */
-+		pgofs =	(pgoff_t)map->m_lblk + map->m_len;
-+		if (map->m_len == maxblocks ||
-+			map->m_multidev_dio ||
-+			f2fs_lookup_read_extent_cache(inode, pgofs, &ei))
-+			goto out;
-+		ofs = map->m_len;
-+		goto map_more;
-+	}
+-	if (f2fs_allow_multi_device_dio(sbi, flag)) {
++	map->m_multidev_dio = f2fs_allow_multi_device_dio(sbi, flag);
++	if (map->m_multidev_dio) {
+ 		int bidx = f2fs_target_device_index(sbi, map->m_pblk);
+ 		struct f2fs_dev_info *dev = &sbi->devs[bidx];
  
- 	map->m_bdev = inode->i_sb->s_bdev;
- 	map->m_multidev_dio =
-@@ -1576,7 +1594,8 @@ int f2fs_map_blocks(struct inode *inode,
- 
- 	/* it only supports block size == page size */
- 	pgofs =	(pgoff_t)map->m_lblk;
--	end = pgofs + maxblocks;
-+map_more:
-+	end = (pgoff_t)map->m_lblk + maxblocks;
- 
- next_dnode:
- 	if (map->m_may_create) {
 
 
