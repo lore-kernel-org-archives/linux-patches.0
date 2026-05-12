@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85703BB106;
-	Tue, 12 May 2026 17:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D6233ADBA;
+	Tue, 12 May 2026 17:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608584; cv=none; b=YcRDCxDIU7F4DSfqucybpWuWxxicxVadk63c9jcSkCZM8U/pQ8FIGKM/CpmReJ5B7+bmLZbHTo4taGhegDEY2ov1HT91d3qCRQPZIAo/QQhei6bh7YeQH4zjSbLMS2xU2Hq8kcrEr8paPYtrCcCukabnJr+6F5/lsvBpRzfo12M=
+	t=1778608587; cv=none; b=W8JUrXszMue0Z3sckRnS1GnWCKFXAebIumgFsgLMl1u03NW63ZebIlzvmuhEJkjB69oQkFFcG+T5CSI+ekFLY4haNjB2obK4J9q1qeQDuYU6t7ZCV5bewXI8ARwmyfimYYBpARNzAIVd7NItnO31LXe3zV2/A/gaXCHO8vqJIDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608584; c=relaxed/simple;
-	bh=S2XMlmduH34w/Grx5pl+GXlvTy55A7AP7whliyZxyCs=;
+	s=arc-20240116; t=1778608587; c=relaxed/simple;
+	bh=EYuaKNGD2abUGBD1ClVg7Sfe++5lF0ZwL5sdqIoj0CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tgwHSr/+CIqe+9zH+cgqhYBIv9smV28J4pCehPqD7psAUOlCH5YmsudGIgqYixCn7HB0R+uihygpnE0stqEbvlRBvTsBB/QdncvkVHrkYE01q2MXZ2mB50CxWZhgxnM8X8bmVe/Qnu016dIa9xwWc1MvWaD38rBq0NfFg66ub50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeOM7nPL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JKoguQNh2Gj27y3gbCq5skJBu7RAour8eNAzmDLXAWORmsJvmGCHnofIFk0hTQehPAP++ruA7dGlC64fRTqoKFCcUE5s0HOtts7Cwrg2554mlfhq0p3dQ+qoZ/mztnaecmNegOIEz/JbC9ciiDTtIKFh+aRyf1UbEMXNahVjNpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGTub/MZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeOM7nPL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FAFC2BCB0;
-	Tue, 12 May 2026 17:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGTub/MZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5685C2BCB0;
+	Tue, 12 May 2026 17:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608584;
-	bh=S2XMlmduH34w/Grx5pl+GXlvTy55A7AP7whliyZxyCs=;
+	s=korg; t=1778608587;
+	bh=EYuaKNGD2abUGBD1ClVg7Sfe++5lF0ZwL5sdqIoj0CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XeOM7nPLPwOKB9AA8ZjHLFoUM8lZMTihmdxuXbTKiwm/MdKRRLOKcgYCTE+IzYQad
-	 VVaw2xWWeB1uZeFsNSi6EEWNiXdQxI04dMpHNkKjxnuFt8Y64F+Ljn43hQ8/LYXnRn
-	 DMCe2SVsW0KXigPBNLmyS2wVjkIjmdaVXqySGEyc=
+	b=yGTub/MZk2f5wMposUdVQ10jqfASb5vIo0iDu7tmuvDAU7Xa5CtzUhqiNMZL8rc2v
+	 Y186dIJE0pHxu5oP66Xg45bSCox6fpvtIAaOLAB9zftdOVJed6iAn5XneB1ILhUQN/
+	 O+MG1wTgTiL2Oem9JMreaxOchyLSE6w+BLb9SI50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 137/270] tracing/probes: Limit size of event probe to 3K
-Date: Tue, 12 May 2026 19:38:58 +0200
-Message-ID: <20260512173941.337269117@linuxfoundation.org>
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>
+Subject: [PATCH 6.18 138/270] clk: imx: imx8-acm: fix flags for acm clocks
+Date: Tue, 12 May 2026 19:38:59 +0200
+Message-ID: <20260512173941.357312089@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,65 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-commit b2aa3b4d64e460ac606f386c24e7d8a873ce6f1a upstream.
+commit f2c2fc93b4a3efdfcf3805ab74741826d343ff2c upstream.
 
-There currently isn't a max limit an event probe can be. One could make an
-event greater than PAGE_SIZE, which makes the event useless because if
-it's bigger than the max event that can be recorded into the ring buffer,
-then it will never be recorded.
+Currently, the flags for the ACM clocks are set to 0. This configuration
+causes the fsl-sai audio driver to fail when attempting to set the
+sysclk, returning an EINVAL error. The following error messages
+highlight the issue:
+fsl-sai 59090000.sai: ASoC: error at snd_soc_dai_set_sysclk on 59090000.sai: -22
+imx-hdmi sound-hdmi: failed to set cpu sysclk: -22
 
-A event probe should never need to be greater than 3K, so make that the
-max size. As long as the max is less than the max that can be recorded
-onto the ring buffer, it should be fine.
+By setting the flag CLK_SET_RATE_NO_REPARENT, we signal that the ACM
+driver does not support reparenting and instead relies on the clock tree
+as defined in the device tree. This change resolves the issue with the
+fsl-sai audio driver.
 
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Fixes: 93ccae7a22274 ("tracing/kprobes: Support basic types on dynamic events")
-Link: https://patch.msgid.link/20260428122302.706610ba@gandalf.local.home
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+CC: stable@vger.kernel.org
+Fixes: d3a0946d7ac9 ("clk: imx: imx8: add audio clock mux driver")
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20260212085750.3253187-1-shengjiu.wang@nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    6 ++++++
- kernel/trace/trace_probe.h |    4 +++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx8-acm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1523,6 +1523,12 @@ static int traceprobe_parse_probe_arg_bo
- 	parg->offset = *size;
- 	*size += parg->type->size * (parg->count ?: 1);
- 
-+	if (*size > MAX_PROBE_EVENT_SIZE) {
-+		ret = -E2BIG;
-+		trace_probe_log_err(ctx->offset, EVENT_TOO_BIG);
-+		goto fail;
-+	}
-+
- 	if (parg->count) {
- 		len = strlen(parg->type->fmttype) + 6;
- 		parg->fmt = kmalloc(len, GFP_KERNEL);
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -38,6 +38,7 @@
- #define MAX_BTF_ARGS_LEN	128
- #define MAX_DENTRY_ARGS_LEN	256
- #define MAX_STRING_SIZE		PATH_MAX
-+#define MAX_PROBE_EVENT_SIZE	3072
- 
- /* Reserved field names */
- #define FIELD_STRING_IP		"__probe_ip"
-@@ -561,7 +562,8 @@ extern int traceprobe_define_arg_fields(
- 	C(BAD_TYPE4STR,		"This type does not fit for string."),\
- 	C(NEED_STRING_TYPE,	"$comm and immediate-string only accepts string type"),\
- 	C(TOO_MANY_ARGS,	"Too many arguments are specified"),	\
--	C(TOO_MANY_EARGS,	"Too many entry arguments specified"),
-+	C(TOO_MANY_EARGS,	"Too many entry arguments specified"),	\
-+	C(EVENT_TOO_BIG,	"Event too big (too many fields?)"),
- 
- #undef C
- #define C(a, b)		TP_ERR_##a
+--- a/drivers/clk/imx/clk-imx8-acm.c
++++ b/drivers/clk/imx/clk-imx8-acm.c
+@@ -371,7 +371,8 @@ static int imx8_acm_clk_probe(struct pla
+ 	for (i = 0; i < priv->soc_data->num_sels; i++) {
+ 		hws[sels[i].clkid] = devm_clk_hw_register_mux_parent_data_table(dev,
+ 										sels[i].name, sels[i].parents,
+-										sels[i].num_parents, 0,
++										sels[i].num_parents,
++										CLK_SET_RATE_NO_REPARENT,
+ 										base + sels[i].reg,
+ 										sels[i].shift, sels[i].width,
+ 										0, NULL, NULL);
 
 
