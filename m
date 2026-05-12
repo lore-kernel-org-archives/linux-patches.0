@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E99F3EDE61;
-	Tue, 12 May 2026 18:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E0E3EDE61;
+	Tue, 12 May 2026 18:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609251; cv=none; b=bN4s33gUcpvo2/XATJCuDYLLBEMh/3pCic/ZOHqMLLoYTyyTtCLNsFhcL3mwbx7ZQe9YjPsz/qAujrdv6NoYGU99WQcDVWg9l5F/fg++uwLnEgKnp51Vor5oLS7BoVOqiLDIpcRIfs/I0LzFVNPGq1iXJ2jbHqRcfp+EOVo+9kw=
+	t=1778609254; cv=none; b=EqqlVTRuk0UzAhinMNlcrQQ4r3izzshNGKzK+co8ETuNp2ewC82l6Wp9VP9Q4L2zmtP+5INVf1gy26sSZ//6PBjlBkbOZbQ+vmIyiJ8/DvzyRolFH3EwDeewY5DkxEkDLoGhpwnZS+uu0eGIG0I4VeTFAI8C9mkqPdatBTE0pjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609251; c=relaxed/simple;
-	bh=fjWl35r4hzu/U9H34lxBzqyqP4daZ3sAeNbhhrInrjE=;
+	s=arc-20240116; t=1778609254; c=relaxed/simple;
+	bh=MZSNimJ5l7x6fvxMxEx7bQm8ymrpiiEbMa23o5JBfyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0zCgwBAVk7kAuE00dkuBlIYsY5PsNANBOoF23EzC9+DmnHoQa80kavpMpqEMe0Qfx96CvmzHDNATe5STcfnRQYvl7w8t5/WixbQ1dydygMrq7OY2DrzK0xpeJsNbovt0mkp4iENuh7cSGCZtxQ17RTi2i8Y3zw9NqylztEJaN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqJwmxlu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cJkU6TODu05/hAIFPIyVnFqDd7FifojHePsqSy2lFgvmyq6ZhWWJxAABa4BoamOQG9g7v1Txt4fnmm9JObakjnKpts4+lAdb8KkVEWVmbjr+brmCKAoPpUSY1dP49gGrM8BHuYSbXi3tRHs+nOgcd269dXhXfbY+JsI79zfyO1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL78Aj91; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqJwmxlu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36656C2BCB0;
-	Tue, 12 May 2026 18:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL78Aj91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD086C2BCB0;
+	Tue, 12 May 2026 18:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609251;
-	bh=fjWl35r4hzu/U9H34lxBzqyqP4daZ3sAeNbhhrInrjE=;
+	s=korg; t=1778609254;
+	bh=MZSNimJ5l7x6fvxMxEx7bQm8ymrpiiEbMa23o5JBfyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqJwmxlu5IlmTQNBwj0Vz3bR1fRWrIpYeziIFv2m+qxSTyOENd8KtGUMguCuthNAH
-	 oxXkW1b2ySMDZlpzOxmTRqWA0FF0iWaN05rh3XACvrXXO7a5HdmI9AZtoi3bd6jdN2
-	 9TuTUtJ2WcFdLgPoGvXsps1TD0vGqI3W0xiF0uDM=
+	b=cL78Aj91EbwOvGY7T+wlS85r+MGLaSvYCfGGDHz4x83HD/y8IEafLdCGQ/31pHWsW
+	 nPPc9J981G0jOvk7wNuZGuu9ukSogMccuYbUQiCF1D4evSzx9gCtHuASl7DckwRENF
+	 0wWpmLiG9QP1m5xUNWy4P+PSQpNLXYKbn6i/ESSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 7.0 124/307] platform/chrome: cros_ec_typec: Init mutex in Thunderbolt registration
-Date: Tue, 12 May 2026 19:38:39 +0200
-Message-ID: <20260512173942.745707003@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.0 125/307] parisc: Fix IRQ leak in LASI driver
+Date: Tue, 12 May 2026 19:38:40 +0200
+Message-ID: <20260512173942.767330939@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,37 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-commit 525cb7ba6661074c1c5cc3772bccc6afab6791ef upstream.
+commit 37b0dc5e279f35036fb638d1e187197b6c05a76d upstream.
 
-cros_typec_register_thunderbolt() missed initializing the `adata->lock`
-mutex.  This leads to a NULL dereference when the mutex is later
-acquired (e.g. in cros_typec_altmode_work()).
+When request_irq() succeeds but gsc_common_setup() fails later,
+the IRQ is never released. Fix this by adding proper error handling
+with goto labels to ensure resources are released in LIFO order.
 
-Initialize the mutex in cros_typec_register_thunderbolt() to fix the
-issue.
+Detected by Smatch:
+  drivers/parisc/lasi.c:216 lasi_init_chip() warn: 'lasi->gsc_irq.irq'
+from request_irq() not released on lines: 207.
 
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202604180957.4QdAIxP6-lkp@intel.com/
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
 Cc: stable@vger.kernel.org
-Fixes: 3b00be26b16a ("platform/chrome: cros_ec_typec: Thunderbolt support")
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Link: https://lore.kernel.org/r/20260505053403.3335740-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_typec_altmode.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/parisc/lasi.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/chrome/cros_typec_altmode.c
-+++ b/drivers/platform/chrome/cros_typec_altmode.c
-@@ -359,6 +359,7 @@ cros_typec_register_thunderbolt(struct c
+--- a/drivers/parisc/lasi.c
++++ b/drivers/parisc/lasi.c
+@@ -193,8 +193,7 @@ static int __init lasi_init_chip(struct
+ 
+ 	ret = request_irq(lasi->gsc_irq.irq, gsc_asic_intr, 0, "lasi", lasi);
+ 	if (ret < 0) {
+-		kfree(lasi);
+-		return ret;
++		goto err_free;
  	}
  
- 	INIT_WORK(&adata->work, cros_typec_altmode_work);
-+	mutex_init(&adata->lock);
- 	adata->alt = alt;
- 	adata->port = port;
- 	adata->ap_mode_entry = true;
+ 	/* enable IRQ's for devices below LASI */
+@@ -203,8 +202,7 @@ static int __init lasi_init_chip(struct
+ 	/* Done init'ing, register this driver */
+ 	ret = gsc_common_setup(dev, lasi);
+ 	if (ret) {
+-		kfree(lasi);
+-		return ret;
++		goto err_irq;
+ 	}    
+ 
+ 	gsc_fixup_irqs(dev, lasi, lasi_choose_irq);
+@@ -214,6 +212,12 @@ static int __init lasi_init_chip(struct
+ 		SYS_OFF_PRIO_DEFAULT, lasi_power_off, lasi);
+ 
+ 	return ret;
++
++err_irq:
++	free_irq(lasi->gsc_irq.irq, lasi);
++err_free:
++	kfree(lasi);
++	return ret;
+ }
+ 
+ static struct parisc_device_id lasi_tbl[] __initdata = {
 
 
