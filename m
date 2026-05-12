@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980B63EDE59;
-	Tue, 12 May 2026 18:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264343EDE5D;
+	Tue, 12 May 2026 18:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609033; cv=none; b=cxLkBcok4QwzdqMymArw4JMaB7FOvcQC6ExNaAdUXF/jqCNm+3BgQ7igLFiofzArlSiQPeMeUHsuY5902WADAj+q6oyPYebbAtJsCaIw4MOp2BR4tiHK6hRmlI4k1OPtI2/DhhI+WWBPTj2LPk93L3IgY93ZFQoO+m9cD69iXuM=
+	t=1778609036; cv=none; b=AbhaRfm5gRTr6sgQXwnqM1IpY8vsfP731+3MFOQLeRxqDp7gJniYCNJn8W7TnjVa3UhuAzt5n4c5pKdWq256MLiAZsY77Qr2ZmKDjL5V0k4IkSzcXInCu3qgSKJSF8/u6nFtvRKjFlNhx6znIt7x6RjS+GZcY1VsRQQjwosBC4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609033; c=relaxed/simple;
-	bh=gp24CY9H/34ObKvMJmJXvW75ognUz+8bDmRFXIQHVrU=;
+	s=arc-20240116; t=1778609036; c=relaxed/simple;
+	bh=4X0lANsi8ek67RnIQCFecdNJRDMwt8Ufs6pWHZ1Qugw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZjQynQ1dsDrjOr11ziKH5KlOIwO6LtS14sdOHwkbPdtkUcNdqnwfMIwZJvHpqYIfqUBKvc+P7JWkU6Oib4kjaHNjLKsSuA3FOwSxRkRLl5qIsVCwJAdr0LQUTIOrwAhuWE0lIziKMlVJugyrsvv/Is4FrOKlHbsp+vYHIkM/rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TddEoBCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TiopVc9d+5r61st/SxsDMps9wTt/45PLP8UJUoh+HcS1zymX7wdSAHe3MsIGihe+rmgkLIlD7UNWY9JowZHS5P2KvCf99Qr0wyrcex/6BQMcDccMKYLsRxabwiTsN2SM2caWkw5lvjMT29O0xadB4AvhKq2jHPiZMqN88e4o7Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n22v9TTf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TddEoBCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BA5C2BCB0;
-	Tue, 12 May 2026 18:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n22v9TTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BBFC2BCB0;
+	Tue, 12 May 2026 18:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609033;
-	bh=gp24CY9H/34ObKvMJmJXvW75ognUz+8bDmRFXIQHVrU=;
+	s=korg; t=1778609036;
+	bh=4X0lANsi8ek67RnIQCFecdNJRDMwt8Ufs6pWHZ1Qugw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TddEoBCkpH236D0OQJHMkhA6ASxjWjGdyEyrjtdi/y/LMIekVzRqbHLi6YaOvBQNy
-	 IPiIS+A/jtrSEngA03euhoLJfYU6km1rVDRP5dDd16qsvk5je4BK1fnnUPgz0X24v4
-	 U+wNLjXb4FHruZp/ktkGMDpsVMpI2osKQBmBgi7Q=
+	b=n22v9TTfa/Wddh8vqRKu3pSJJ3Hkq15D69q7063OCEmqIoBeiOlOAw8EKNCj87ZPb
+	 GIVysW6qL2+Knz17owpYa8WClwWPcxXeLTIAnnBRubWgG5gyTLW1KCsRZs9D2pjiqf
+	 8ANJvADyZd+9NOJ/AXWEUwW8TBpE5L7qywbGifgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Sunil Dhamne <amitsd@google.com>,
 	stable <stable@kernel.org>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.0 040/307] usb: typec: tcpm: reset internal port states on soft reset AMS
-Date: Tue, 12 May 2026 19:37:15 +0200
-Message-ID: <20260512173940.970675491@linuxfoundation.org>
+	Aaro Koskinen <aaro.koskinen@iki.fi>
+Subject: [PATCH 7.0 041/307] USB: omap_udc: DMA: Dont enable burst 4 mode
+Date: Tue, 12 May 2026 19:37:16 +0200
+Message-ID: <20260512173940.991599636@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,85 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
 
-commit 2909f0d4994fb4306bf116df5ccee797791fce2c upstream.
+commit 3f91484f6c13c434bd573ca6b6779c26adb0ddab upstream.
 
-Reset internal port states (such as vdm_sm_running and
-explicit_contract) on soft reset AMS as the port needs to negotiate a
-new contract. The consequence of leaving the states in as-is cond are as
-follows:
-  * port is in SRC power role and an explicit contract is negotiated
-    with the port partner (in sink role)
-  * port partner sends a Soft Reset AMS while VDM State Machine is
-    running
-  * port accepts the Soft Reset request and the port advertises src caps
-  * port partner sends a Request message but since the explicit_contract
-    and vdm_sm_running are true from previous negotiation, the port ends
-    up sending Soft Reset instead of Accept msg.
+Commit 65111084c63d7 ("USB: more omap_udc updates (dma and omap1710)")
+added setting for DMA burst 4 mode. But I think this should be undone for
+two reasons:
 
-Stub Log:
-[  203.653942] AMS DISCOVER_IDENTITY start
-[  203.653947] PD TX, header: 0x176f
-[  203.655901] PD TX complete, status: 0
-[  203.657470] PD RX, header: 0x124f [1]
-[  203.657477] Rx VDM cmd 0xff008081 type 2 cmd 1 len 1
-[  203.657482] AMS DISCOVER_IDENTITY finished
-[  203.657484] cc:=4
-[  204.155698] PD RX, header: 0x144f [1]
-[  204.155718] Rx VDM cmd 0xeeee8001 type 0 cmd 1 len 1
-[  204.155741] PD TX, header: 0x196f
-[  204.157622] PD TX complete, status: 0
-[  204.160060] PD RX, header: 0x4d [1]
-[  204.160066] state change SRC_READY -> SOFT_RESET [rev2 SOFT_RESET_AMS]
-[  204.160076] PD TX, header: 0x163
-[  204.162486] PD TX complete, status: 0
-[  204.162832] AMS SOFT_RESET_AMS finished
-[  204.162840] cc:=4
-[  204.162891] AMS POWER_NEGOTIATION start
-[  204.162896] state change SOFT_RESET -> AMS_START [rev2 POWER_NEGOTIATION]
-[  204.162908] state change AMS_START -> SRC_SEND_CAPABILITIES [rev2 POWER_NEGOTIATION]
-[  204.162913] PD TX, header: 0x1361
-[  204.165529] PD TX complete, status: 0
-[  204.165571] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES_TIMEOUT @ 60 ms [rev2 POWER_NEGOTIATION]
-[  204.166996] PD RX, header: 0x1242 [1]
-[  204.167009] state change SRC_SEND_CAPABILITIES -> SRC_SOFT_RESET_WAIT_SNK_TX [rev2 POWER_NEGOTIATION]
-[  204.167019] AMS POWER_NEGOTIATION finished
-[  204.167020] cc:=4
-[  204.167083] AMS SOFT_RESET_AMS start
-[  204.167086] state change SRC_SOFT_RESET_WAIT_SNK_TX -> SOFT_RESET_SEND [rev2 SOFT_RESET_AMS]
-[  204.167092] PD TX, header: 0x16d
-[  204.168824] PD TX complete, status: 0
-[  204.168854] pending state change SOFT_RESET_SEND -> HARD_RESET_SEND @ 60 ms [rev2 SOFT_RESET_AMS]
-[  204.171876] PD RX, header: 0x43 [1]
-[  204.171879] AMS SOFT_RESET_AMS finished
+- It breaks DMA on 15xx boards - transfers just silently stall.
 
-This causes COMMON.PROC.PD.11.2 check failure for
-TEST.PD.VDM.SRC.2_Rev2Src test on the PD compliance tester.
+- On newer OMAP1 boards, like Nokia 770 (omap1710), there is no measurable
+performance impact when testing TCP throughput with g_ether with large
+15000 byte MTU size.
 
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Fixes: 8d3a0578ad1a ("usb: typec: tcpm: Respond Wait if VDM state machine is running")
-Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
+It's also worth noting that when the original change was made, the
+OMAP_DMA_DATA_BURST_4 handling in arch/arm/plat-omap/dma.c was broken, and
+actually resulted in the same as the OMAP_DMA_DATA_BURST_DIS i.e. burst
+disabled. This was fixed not until a couple kernel releases later in an
+unrelated commit 1a8bfa1eb998a ("[ARM] 3142/1: OMAP 2/5: Update files
+common to omap1 and omap2").
+
+So based on this it seems there was never really a very good reason to
+enable this burst mode in omap_udc, so remove it now to allow 15xx DMA
+to work again (it provides 2x throughput compared to PIO mode).
+
+Fixes: 65111084c63d ("[PATCH] USB: more omap_udc updates (dma and omap1710)")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260414-fix-soft-reset-v1-1-01d7cb9764e2@google.com
+Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
+Link: https://patch.msgid.link/ad06qHLclWHeSGnV@darkstar.musicnaut.iki.fi
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/udc/omap_udc.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5741,6 +5741,8 @@ static void run_state_machine(struct tcp
- 
- 	case VCONN_SWAP_ACCEPT:
- 		tcpm_pd_send_control(port, PD_CTRL_ACCEPT, TCPC_TX_SOP);
-+		port->vdm_sm_running = false;
-+		port->explicit_contract = false;
- 		tcpm_ams_finish(port);
- 		tcpm_set_state(port, VCONN_SWAP_START, 0);
- 		break;
+--- a/drivers/usb/gadget/udc/omap_udc.c
++++ b/drivers/usb/gadget/udc/omap_udc.c
+@@ -733,8 +733,6 @@ static void dma_channel_claim(struct oma
+ 		if (status == 0) {
+ 			omap_writew(reg, UDC_TXDMA_CFG);
+ 			/* EMIFF or SDRC */
+-			omap_set_dma_src_burst_mode(ep->lch,
+-						OMAP_DMA_DATA_BURST_4);
+ 			omap_set_dma_src_data_pack(ep->lch, 1);
+ 			/* TIPB */
+ 			omap_set_dma_dest_params(ep->lch,
+@@ -756,8 +754,6 @@ static void dma_channel_claim(struct oma
+ 				UDC_DATA_DMA,
+ 				0, 0);
+ 			/* EMIFF or SDRC */
+-			omap_set_dma_dest_burst_mode(ep->lch,
+-						OMAP_DMA_DATA_BURST_4);
+ 			omap_set_dma_dest_data_pack(ep->lch, 1);
+ 		}
+ 	}
 
 
