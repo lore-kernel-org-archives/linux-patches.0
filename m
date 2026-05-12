@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8497342509;
-	Tue, 12 May 2026 18:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381AA343D9D;
+	Tue, 12 May 2026 18:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609499; cv=none; b=NpNv5xyphukPkpmKiM9Vd+miR3f9AW6b3CJIYl15Jii58qmVBObeKg/e7jmsKQH2tLcR5cs3eDMDCHU4zJoWHYT3gpJraExMNdthSZoH9c72tpI08YzFQuOX5aVHSqbQxytgALYikI1mnU0qLRt/vaBX6zwKDL4gmP5e4wgH8gE=
+	t=1778609502; cv=none; b=SCLaV7bqhIJ39RiN1kJLD/4Y8lE2LEYkOiJuYNp7Fs+bjgcUUU4TZ7Sw9AIezFWZwYROeOvEPaL9v2gtZCCQ6WgD4u9NDUWYgSOO7yoj+Eenj16U1AaFSdExadxPpcKWImc2GhXOUHW8a0ygyRgZXwDfPUb9Ms48HB1HBtUTFWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609499; c=relaxed/simple;
-	bh=Y4iH4ObgExJ3xARiwLEMqC1s5SbjqYK+ebEicaEK7XI=;
+	s=arc-20240116; t=1778609502; c=relaxed/simple;
+	bh=56RgmFL5CGp70BTqAHc64r9VuL9mKRWeeS4wTfdqTYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8/hapzSNscJO+PhSLy47P3UwsHaX3L3dxNS6L71QaCgcVm7f1derw5A+P8QjVgTMqLVhBP5eP+h+FBgaZ2Jbd48rTEfBlTTIvzsYqmMhMyWCM180KAKPCmUcbqdCKEG/g3G+b8W+bSM4McscE3rTVVAvOD8w4AhitTmjIEeFOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dufzb/Ci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFE1vKcZLquqFnWq7458De6zsAQ6kAc5BUfxASdpw8mhcz3kGeVEpALyhVyNaXXgKM2oPj4UyJ7duI6uoy8YSOf9rKwEBh2rZQfbbod+zcFO4gBVZieh7Vy/P6YhnfFNhwMz6k3ADS6kwtjh0/AbjEjYFk8IWJqNO1/86fy5qKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgQ/PWfR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dufzb/Ci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3818DC2BCB0;
-	Tue, 12 May 2026 18:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgQ/PWfR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2090C2BCB0;
+	Tue, 12 May 2026 18:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609499;
-	bh=Y4iH4ObgExJ3xARiwLEMqC1s5SbjqYK+ebEicaEK7XI=;
+	s=korg; t=1778609502;
+	bh=56RgmFL5CGp70BTqAHc64r9VuL9mKRWeeS4wTfdqTYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dufzb/Ci5IzaFIjxzPFBr/0jRYPZ9NaD1bLLS08tTi5y4IsJV5qU7upTScsTsZ7bd
-	 4LqWhBfY8luqlWnP07pBmgRFsWwT4Y/2D5hinc1irrsszNC/7wDLipW3mKNYzF+juS
-	 jJOsnetJsIh9g31xdbgNNfX8A3Wwt36c60O0dUvo=
+	b=GgQ/PWfRpjV2pQ7aCXkwwn/AQZkovrVPWPANXwSZv89ElW+EhgtqArcTuPwzrtcwl
+	 R0FnH2dfhj6Rdc4JPnHveZIhSbY9Rbp2M6r8+WHoMkvVwD9sYA5Z4STaqC7ut82EOK
+	 EqELGewFXoDeeVUZ1beZphNV0FDHBJ1TDLp8lZig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 220/307] mm/damon/sysfs-schemes: protect memcg_path kfree() with damon_sysfs_lock
-Date: Tue, 12 May 2026 19:40:15 +0200
-Message-ID: <20260512173944.760682768@linuxfoundation.org>
+	Eelco Chaudron <echaudro@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.0 203/307] openvswitch: vport: fix self-deadlock on release of tunnel ports
+Date: Tue, 12 May 2026 19:39:58 +0200
+Message-ID: <20260512173944.403530087@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,75 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 1e68eb96e8beb1abefd12dd22c5637795d8a877e upstream.
+commit aa69918bd418e700309fdd08509dba324fb24296 upstream.
 
-Patch series "mm/damon/sysfs-schemes: fix use-after-free for [memcg_]path".
+vports are used concurrently and protected by RCU, so netdev_put()
+must happen after the RCU grace period.  So, either in an RCU call or
+after the synchronize_net().  The rtnl_delete_link() must happen under
+RTNL and so can't be executed in RCU context.  Calling synchronize_net()
+while holding RTNL is not a good idea for performance and system
+stability under load in general, so calling netdev_put() in RCU call
+is the right solution here.
 
-Reads of 'memcg_path' and 'path' files in DAMON sysfs interface could race
-with their writes, results in use-after-free.  Fix those.
+However,
+when the device is deleted, rtnl_unlock() will call netdev_run_todo()
+and block until all the references are gone.  In the current code this
+means that we never reach the call_rcu() and the vport is never freed
+and the reference is never released, causing a self-deadlock on device
+removal.
 
+Fix that by moving the rcu_call() before the rtnl_unlock(), so the
+scheduled RCU callback will be executed when synchronize_net() is
+called from the rtnl_unlock()->netdev_run_todo() while the RTNL itself
+is already released.
 
-This patch (of 2):
-
-damon_sysfs_scheme_filter->mmecg_path can be read and written by users,
-via DAMON sysfs memcg_path file.  It can also be indirectly read, for the
-parameters {on,off}line committing to DAMON.  The reads for parameters
-committing are protected by damon_sysfs_lock to avoid the sysfs files
-being destroyed while any of the parameters are being read.  But the
-user-driven direct reads and writes are not protected by any lock, while
-the write is deallocating the memcg_path-pointing buffer.  As a result,
-the readers could read the already freed buffer (user-after-free).  Note
-that the user-reads don't race when the same open file is used by the
-writer, due to kernfs's open file locking.  Nonetheless, doing the reads
-and writes with separate open files would be common.  Fix it by protecting
-both the user-direct reads and writes with damon_sysfs_lock.
-
-Link: https://lore.kernel.org/20260423150253.111520-1-sj@kernel.org
-Link: https://lore.kernel.org/20260423150253.111520-2-sj@kernel.org
-Fixes: 4f489fe6afb3 ("mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write")
-Co-developed-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6931d21f87bc ("openvswitch: defer tunnel netdev_put to RCU release")
+Cc: stable@vger.kernel.org
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260430233848.440994-2-i.maximets@ovn.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/openvswitch/vport-netdev.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -533,9 +533,14 @@ static ssize_t memcg_path_show(struct ko
- {
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
-+	int len;
+--- a/net/openvswitch/vport-netdev.c
++++ b/net/openvswitch/vport-netdev.c
+@@ -196,9 +196,13 @@ void ovs_netdev_tunnel_destroy(struct vp
+ 	 */
+ 	if (vport->dev->reg_state == NETREG_REGISTERED)
+ 		rtnl_delete_link(vport->dev, 0, NULL);
+-	rtnl_unlock();
  
--	return sysfs_emit(buf, "%s\n",
-+	if (!mutex_trylock(&damon_sysfs_lock))
-+		return -EBUSY;
-+	len = sysfs_emit(buf, "%s\n",
- 			filter->memcg_path ? filter->memcg_path : "");
-+	mutex_unlock(&damon_sysfs_lock);
-+	return len;
++	/* We can't put the device reference yet, since it can still be in
++	 * use, but rtnl_unlock()->netdev_run_todo() will block until all
++	 * the references are released, so the RCU call must be before it.
++	 */
+ 	call_rcu(&vport->rcu, vport_netdev_free);
++	rtnl_unlock();
  }
- 
- static ssize_t memcg_path_store(struct kobject *kobj,
-@@ -550,8 +555,13 @@ static ssize_t memcg_path_store(struct k
- 		return -ENOMEM;
- 
- 	strscpy(path, buf, count + 1);
-+	if (!mutex_trylock(&damon_sysfs_lock)) {
-+		kfree(path);
-+		return -EBUSY;
-+	}
- 	kfree(filter->memcg_path);
- 	filter->memcg_path = path;
-+	mutex_unlock(&damon_sysfs_lock);
- 	return count;
- }
+ EXPORT_SYMBOL_GPL(ovs_netdev_tunnel_destroy);
  
 
 
