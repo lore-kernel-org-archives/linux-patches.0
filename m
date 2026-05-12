@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB373EDE49;
-	Tue, 12 May 2026 17:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D243EDE48;
+	Tue, 12 May 2026 17:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608734; cv=none; b=F8Ko1ggfW9SdgcX6aldI/LzgffCuChLSOjJoR+jQqmFahMn545GYOIl60//eYO2AuXmheOwJOYEOJsb6NPlg3Dbq6S+Ac7YvAEheeJGPeGIMCgn6Lo2YzIWrnUf/Fh9n1KVRsFh/7wVraHZ32KisXI+LqIG7BD8BrA8vhjGSuPU=
+	t=1778608737; cv=none; b=TJBv9F32tWWj1U/LsLahv0G4yED+8m3DBojItROf2WHzBkxYfV0o2/BvipMIRkofGw0XCz4dNh/gBsAEvCf7PS/uEJEbrmJHINOMVsfx6VzgBMgQxbywG4DcTFHb6wJQY8x1ob6XMA4x+pG4e5TSPO1BplZZAZ8ROZwjtnAdaNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608734; c=relaxed/simple;
-	bh=WlcT09aDDgIqhfEyUc3dIEeXiEIWx4hQ8C6b0SuLNCo=;
+	s=arc-20240116; t=1778608737; c=relaxed/simple;
+	bh=/AV4m3aj5fnaOZX8Q7oh/p3/nZR0cewi74FNJHhWMy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhgVAMfxCmhZ8S+1UDSaBWvnigObGv5mExmtJdABeuKnRoo1IH/9dUSaqyyyxcIfJcsdLHDKiDOs0R9CcF7pZMoV0NLMBJ3B8hyzs/ye+XFyKNxbUgtBQwQLQMqf5659McPFxYTAZQh+mff1yu6snd0SUv0ynrdkNfGfD1P8IXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBgzv4W0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gu7/NuhcWD/OuEsfsFAikx/2x4cqwfm6tAvnHfs363lpuRStos8XaHgpaIa/NlrKUWTQ5PBi8Zp4kLbiRaBbBhoaBu1djrCXrrCPPcqghDcezyn5av3Zbi6FxjiDeffiirDeQNEtorgNGtpNmkMPIFh7TN1ZUhiId01stLC7L+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULlT9ba5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBgzv4W0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17918C2BCB0;
-	Tue, 12 May 2026 17:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULlT9ba5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E2CC2BCF5;
+	Tue, 12 May 2026 17:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608734;
-	bh=WlcT09aDDgIqhfEyUc3dIEeXiEIWx4hQ8C6b0SuLNCo=;
+	s=korg; t=1778608737;
+	bh=/AV4m3aj5fnaOZX8Q7oh/p3/nZR0cewi74FNJHhWMy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBgzv4W023L4tiWyFHd/2IQ8vvHcF01U2vzSxPMSsuyfQ88aTiyyDyxhH7gib1ePg
-	 G/VX3cCmfGUH8H//v20ZgrN6ytNlmszQqoMSBjjYfg1xwngicX3Tkpa4nUaiYtVhuJ
-	 8ZF26/K/APXPbGgZqatDlj/2lfQ7T6PgkuuTwwig=
+	b=ULlT9ba50nH9+w+CMqv3mTStso8uojAE8aI+8QrzQc3CLOQREiasdZTCcSJi2zcFJ
+	 X2J9Swl4oG6hHXUOCvbPgrJ0xkrIconO04D/62MGi8Tcxr9d3l9+iGDpwfnnAHE67+
+	 wgBF+3wyTe8LNEKCSSP6jv8GFEchP+MqUwt+aSCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 194/270] RDMA/mana: Fix error unwind in mana_ib_create_qp_rss()
-Date: Tue, 12 May 2026 19:39:55 +0200
-Message-ID: <20260512173942.533560535@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 168/270] nvmet: avoid recursive nvmet-wq flush in nvmet_ctrl_free
+Date: Tue, 12 May 2026 19:39:29 +0200
+Message-ID: <20260512173941.985808407@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,42 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-commit 6aaa978c6b6218cfac15fe1dab17c76fe229ce3f upstream.
+commit aade8abd8b868b6ffa9697aadaea28ec7f65bee6 upstream.
 
-Sashiko points out that mana_ib_cfg_vport_steering() is leaked, the normal
-destroy path cleans it up.
+nvmet_tcp_release_queue_work() runs on nvmet-wq and can drop the
+final controller reference through nvmet_cq_put(). If that triggers
+nvmet_ctrl_free(), the teardown path flushes ctrl->async_event_work on
+the same nvmet-wq.
 
+Call chain:
+
+ nvmet_tcp_schedule_release_queue()
+   kref_put(&queue->kref, nvmet_tcp_release_queue)
+     nvmet_tcp_release_queue()
+       queue_work(nvmet_wq, &queue->release_work) <--- nvmet_wq
+         process_one_work()
+           nvmet_tcp_release_queue_work()
+             nvmet_cq_put(&queue->nvme_cq)
+               nvmet_cq_destroy()
+                 nvmet_ctrl_put(cq->ctrl)
+                   nvmet_ctrl_free()
+                     flush_work(&ctrl->async_event_work) <--- nvmet_wq
+
+                      Previously Scheduled by :-
+		        nvmet_add_async_event
+		          queue_work(nvmet_wq, &ctrl->async_event_work);
+
+This trips lockdep with a possible recursive locking warning.
+
+[ 5223.015876] run blktests nvme/003 at 2026-04-07 20:53:55
+[ 5223.061801] loop0: detected capacity change from 0 to 2097152
+[ 5223.072206] nvmet: adding nsid 1 to subsystem blktests-subsystem-1
+[ 5223.088368] nvmet_tcp: enabling port 0 (127.0.0.1:4420)
+[ 5223.126086] nvmet: Created discovery controller 1 for subsystem nqn.2014-08.org.nvmexpress.discovery for NQN nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349.
+[ 5223.128453] nvme nvme1: new ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery", addr 127.0.0.1:4420, hostnqn: nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349
+[ 5233.199447] nvme nvme1: Removing ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery"
+
+[ 5233.227718] ============================================
+[ 5233.231283] WARNING: possible recursive locking detected
+[ 5233.234696] 7.0.0-rc3nvme+ #20 Tainted: G           O     N
+[ 5233.238434] --------------------------------------------
+[ 5233.241852] kworker/u192:6/2413 is trying to acquire lock:
+[ 5233.245429] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x26/0x90
+[ 5233.251438]
+               but task is already holding lock:
+[ 5233.255254] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
+[ 5233.261125]
+               other info that might help us debug this:
+[ 5233.265333]  Possible unsafe locking scenario:
+
+[ 5233.269217]        CPU0
+[ 5233.270795]        ----
+[ 5233.272436]   lock((wq_completion)nvmet-wq);
+[ 5233.275241]   lock((wq_completion)nvmet-wq);
+[ 5233.278020]
+                *** DEADLOCK ***
+
+[ 5233.281793]  May be due to missing lock nesting notation
+
+[ 5233.286195] 3 locks held by kworker/u192:6/2413:
+[ 5233.289192]  #0: ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
+[ 5233.294569]  #1: ffffc9000e2a7e40 ((work_completion)(&queue->release_work)){+.+.}-{0:0}, at: process_one_work+0x1c5/0x6e0
+[ 5233.300128]  #2: ffffffff82d7dc40 (rcu_read_lock){....}-{1:3}, at: __flush_work+0x62/0x530
+[ 5233.304290]
+               stack backtrace:
+[ 5233.306520] CPU: 4 UID: 0 PID: 2413 Comm: kworker/u192:6 Tainted: G           O     N  7.0.0-rc3nvme+ #20 PREEMPT(full)
+[ 5233.306524] Tainted: [O]=OOT_MODULE, [N]=TEST
+[ 5233.306525] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[ 5233.306527] Workqueue: nvmet-wq nvmet_tcp_release_queue_work [nvmet_tcp]
+[ 5233.306532] Call Trace:
+[ 5233.306534]  <TASK>
+[ 5233.306536]  dump_stack_lvl+0x73/0xb0
+[ 5233.306552]  print_deadlock_bug+0x225/0x2f0
+[ 5233.306556]  __lock_acquire+0x13f0/0x2290
+[ 5233.306563]  lock_acquire+0xd0/0x300
+[ 5233.306565]  ? touch_wq_lockdep_map+0x26/0x90
+[ 5233.306571]  ? __flush_work+0x20b/0x530
+[ 5233.306573]  ? touch_wq_lockdep_map+0x26/0x90
+[ 5233.306577]  touch_wq_lockdep_map+0x3b/0x90
+[ 5233.306580]  ? touch_wq_lockdep_map+0x26/0x90
+[ 5233.306583]  ? __flush_work+0x20b/0x530
+[ 5233.306585]  __flush_work+0x268/0x530
+[ 5233.306588]  ? __pfx_wq_barrier_func+0x10/0x10
+[ 5233.306594]  ? xen_error_entry+0x30/0x60
+[ 5233.306600]  nvmet_ctrl_free+0x140/0x310 [nvmet]
+[ 5233.306617]  nvmet_cq_put+0x74/0x90 [nvmet]
+[ 5233.306629]  nvmet_tcp_release_queue_work+0x19f/0x360 [nvmet_tcp]
+[ 5233.306634]  process_one_work+0x206/0x6e0
+[ 5233.306640]  worker_thread+0x184/0x320
+[ 5233.306643]  ? __pfx_worker_thread+0x10/0x10
+[ 5233.306646]  kthread+0xf1/0x130
+[ 5233.306648]  ? __pfx_kthread+0x10/0x10
+[ 5233.306651]  ret_from_fork+0x355/0x450
+[ 5233.306653]  ? __pfx_kthread+0x10/0x10
+[ 5233.306656]  ret_from_fork_asm+0x1a/0x30
+[ 5233.306664]  </TASK>
+
+There is also no need to flush async_event_work from controller
+teardown. The admin queue teardown already fails outstanding AER
+requests before the final controller put :-
+
+ nvmet_sq_destroy(admin sq)
+    nvmet_async_events_failall(ctrl)
+
+The controller has already been removed from the subsystem list before
+nvmet_ctrl_free() quiesces outstanding work.
+
+Replace flush_work() with cancel_work_sync() so a pending
+async_event_work item is canceled and a running instance is waited on
+without recursing into the same workqueue.
+
+Fixes: 06406d81a2d7 ("nvmet: cancel fatal error and flush async work before free controller")
 Cc: stable@vger.kernel.org
-Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
-Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
-Link: https://patch.msgid.link/r/7-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mana/qp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/target/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/mana/qp.c
-+++ b/drivers/infiniband/hw/mana/qp.c
-@@ -236,13 +236,15 @@ static int mana_ib_create_qp_rss(struct
- 		ibdev_dbg(&mdev->ib_dev,
- 			  "Failed to copy to udata create rss-qp, %d\n",
- 			  ret);
--		goto fail;
-+		goto err_disable_vport_rx;
- 	}
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1746,7 +1746,7 @@ static void nvmet_ctrl_free(struct kref
  
- 	kfree(mana_ind_table);
+ 	nvmet_stop_keep_alive_timer(ctrl);
  
- 	return 0;
+-	flush_work(&ctrl->async_event_work);
++	cancel_work_sync(&ctrl->async_event_work);
+ 	cancel_work_sync(&ctrl->fatal_err_work);
  
-+err_disable_vport_rx:
-+	mana_disable_vport_rx(mpc);
- fail:
- 	while (i-- > 0) {
- 		ibwq = ind_tbl->ind_tbl[i];
+ 	nvmet_destroy_auth(ctrl);
 
 
