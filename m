@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36A0306B11;
-	Tue, 12 May 2026 18:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB7A366831;
+	Tue, 12 May 2026 18:12:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609558; cv=none; b=WPPa1C2bBrKWZqa7wtXDeEO5ZQh5PLGDJ0NfVowsOFaT2KkbnAhmc9W5AcvpuiVkiffZ2uzyxNq2wgU3taEDk4FhNRhlZ7tBSXNc+qE8pDTDwl5aDJL/cG+p1tc/DgyrhdmFUQKgIN3nT0xNi2lsYTlyYJt6fLL75ttiRgIFeoU=
+	t=1778609561; cv=none; b=YaSbBzdNfuP53DyVeivBTQXmwtaACNGMzqVYNypcPF/QLKh0fdcoOlqFicfOAiVhhFwnxZjsEXkmT5lg5xny1qLOVxNX12Sl5eo2bl0VXc15Jx07PKHcyAfSsfhLVnDAe7qfTuKw6cugbnh9Sl2xHnSE3wifKOpJzyBsS9IqFJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609558; c=relaxed/simple;
-	bh=fEuW3QQOYcmF5BGeK3BTeQn1g77s5RlE5rng7EzPs1o=;
+	s=arc-20240116; t=1778609561; c=relaxed/simple;
+	bh=xW99KDvb5QRbxxlemKWG3y91w1xLUF6aYKQA1HAD6Cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoXEBHyqYbP+fGKt73Sg8EUKwVQufyX2bsUKgGJAZxFAnllmdb6ao65841f681cG2BUsUOT9D5KOMzhioWzRdA0GGRrn80yZDDz59QIHLINaHc1huhaZZdHqe7rQRgVu9qVk9YMxcy2GyXl49Ynu1cPYpx1vDM35oGTpc3iZxDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxQn/7Sf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HoU1MXmm7Tl3aiIwBoHGWAokmeZ6N3n5Rpj0Je44iclwvThIjKYkDryivXbfq+8PgkneeUY8tDevlawCqQkHVLOB/vsjjx/r1PdCM0Lzc+ThUYluZMhNTG5dYvNzY2qdeNZEPlLhP86SsObxlkD7YUXaA6FEbsR0sZ59I8d+LIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sS1hslPE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxQn/7Sf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C50C2BCC7;
-	Tue, 12 May 2026 18:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sS1hslPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB25EC2BCC7;
+	Tue, 12 May 2026 18:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609558;
-	bh=fEuW3QQOYcmF5BGeK3BTeQn1g77s5RlE5rng7EzPs1o=;
+	s=korg; t=1778609561;
+	bh=xW99KDvb5QRbxxlemKWG3y91w1xLUF6aYKQA1HAD6Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxQn/7SfWNkQ+zJawlTPBvE0lSZwvq3PdUhVIqaAZV877peYMOGQIqC/UZNxV+OTS
-	 ra7IWBKsh406gddEGH718VBENHP31eWZZHu7rlZ7ztELslgURhYgvbUc2tv2zpCcQ/
-	 GbgrBVs7Rzxg4sYwO2Z3S7B0IfFVnu9fpEhhGRdo=
+	b=sS1hslPEfRLL5hT3pdgCWq9wjm/L5ScohH+1Rqn+z1aApxqg2j2wxOII6YcvZ3sf2
+	 K57dUiJ2rS6Hbe1gH5FziT+8rDTkDJZ75uLoYy08P+AjLUquD8ST7sCsA4Q6kW791z
+	 RteQ31GWRJSbX68WYMyIS0VFluZYMGoC1OXrXwAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Daniel Zahka <daniel.zahka@gmail.com>,
-	David Carlier <devnexen@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 205/307] psp: strip variable-length PSP header in psp_dev_rcv()
-Date: Tue, 12 May 2026 19:40:00 +0200
-Message-ID: <20260512173944.443814931@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 7.0 241/307] RDMA/rxe: Reject non-8-byte ATOMIC_WRITE payloads
+Date: Tue, 12 May 2026 19:40:36 +0200
+Message-ID: <20260512173945.209204121@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,116 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 30cb24f97d44f6b81c14b85c5323de62eef1fb7f upstream.
+commit 1114c87aa6f195cf07da55a27b2122ae26557b26 upstream.
 
-psp_dev_rcv() unconditionally removes a fixed PSP_ENCAP_HLEN, even
-when psph->hdrlen indicates that the PSP header carries optional
-fields. A frame whose PSP header advertises a non-zero VC or any
-extension would therefore be silently mis-decapsulated: option bytes
-would spill into the inner packet head and downstream parsing would
-fail on a corrupted skb.
+atomic_write_reply() at drivers/infiniband/sw/rxe/rxe_resp.c
+unconditionally dereferences 8 bytes at payload_addr(pkt):
 
-Compute the full PSP header length from psph->hdrlen, pull the
-optional bytes into the linear region, and strip the whole header
-when decapsulating. Optional fields (VC, ...) are still ignored,
-just discarded with the rest of the header instead of leaking.
-crypt_offset and the VIRT flag are intentionally not validated here
-- callers know their device's PSP implementation and can decide.
+    value = *(u64 *)payload_addr(pkt);
 
-Both in-tree callers gate on hardware-validated PSP, so this is a
-correctness fix rather than a reachable corruption path under
-current configurations.
+check_rkey() previously accepted an ATOMIC_WRITE request with pktlen ==
+resid == 0 because the length validation only compared pktlen against
+resid. A remote initiator that sets the RETH length to 0 therefore reaches
+atomic_write_reply() with a zero-byte logical payload, and the responder
+reads sizeof(u64) bytes from past the logical end of the packet into
+skb->head tailroom, then writes those 8 bytes into the attacker's MR via
+rxe_mr_do_atomic_write(). That is a remote disclosure of 4 bytes of kernel
+tailroom per probe (the other 4 bytes are the packet's own trailing ICRC).
 
-Fixes: 0eddb8023cee ("psp: provide decapsulation and receive helper for drivers")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+IBA oA19-28 defines ATOMIC_WRITE as exactly 8 bytes. Anything else is
+protocol-invalid. Hoist a strict length check into check_rkey() so the
+responder never reaches the unchecked dereference, and keep the existing
+WRITE-family length logic for the normal RDMA WRITE path.
+
+Reproduced on mainline with an unmodified rxe driver: a sustained
+zero-length ATOMIC_WRITE probe repeatedly leaks adjacent skb head-buffer
+bytes into the attacker's MR, including recognisable kernel strings and
+partial kernel-direct-map pointer words.  With this patch applied the
+responder rejects the PDU and the MR stays all-zero.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Link: https://patch.msgid.link/20260502141945.14484-1-devnexen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 034e285f8b99 ("RDMA/rxe: Make responder support atomic write on RC service")
+Link: https://patch.msgid.link/r/20260418162141.3610201-1-michael.bommarito@gmail.com
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/psp/psp_main.c |   42 +++++++++++++++++++++++++++++++-----------
- 1 file changed, 31 insertions(+), 11 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_resp.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/net/psp/psp_main.c
-+++ b/net/psp/psp_main.c
-@@ -263,15 +263,16 @@ EXPORT_SYMBOL(psp_dev_encapsulate);
- 
- /* Receive handler for PSP packets.
-  *
-- * Presently it accepts only already-authenticated packets and does not
-- * support optional fields, such as virtualization cookies. The caller should
-- * ensure that skb->data is pointing to the mac header, and that skb->mac_len
-- * is set. This function does not currently adjust skb->csum (CHECKSUM_COMPLETE
-- * is not supported).
-+ * Accepts only already-authenticated packets. The full PSP header is
-+ * stripped according to psph->hdrlen; any optional fields it advertises
-+ * (virtualization cookies, etc.) are ignored and discarded along with the
-+ * rest of the header. The caller should ensure that skb->data is pointing
-+ * to the mac header, and that skb->mac_len is set. This function does not
-+ * currently adjust skb->csum (CHECKSUM_COMPLETE is not supported).
-  */
- int psp_dev_rcv(struct sk_buff *skb, u16 dev_id, u8 generation, bool strip_icv)
- {
--	int l2_hlen = 0, l3_hlen, encap;
-+	int l2_hlen = 0, l3_hlen, encap, psp_hlen;
- 	struct psp_skb_ext *pse;
- 	struct psphdr *psph;
- 	struct ethhdr *eth;
-@@ -312,18 +313,36 @@ int psp_dev_rcv(struct sk_buff *skb, u16
- 	if (unlikely(uh->dest != htons(PSP_DEFAULT_UDP_PORT)))
- 		return -EINVAL;
- 
--	pse = skb_ext_add(skb, SKB_EXT_PSP);
--	if (!pse)
-+	psph = (struct psphdr *)(skb->data + l2_hlen + l3_hlen +
-+				 sizeof(struct udphdr));
-+
-+	/* Strip the full PSP header per psph->hdrlen; VC/options are pulled
-+	 * into the linear region only so they can be discarded with the
-+	 * rest of the header.
-+	 */
-+	psp_hlen = (psph->hdrlen + 1) * 8;
-+
-+	if (unlikely(psp_hlen < sizeof(struct psphdr)))
-+		return -EINVAL;
-+
-+	if (psp_hlen > sizeof(struct psphdr) &&
-+	    !pskb_may_pull(skb, l2_hlen + l3_hlen +
-+				sizeof(struct udphdr) + psp_hlen))
- 		return -EINVAL;
- 
- 	psph = (struct psphdr *)(skb->data + l2_hlen + l3_hlen +
- 				 sizeof(struct udphdr));
-+
-+	pse = skb_ext_add(skb, SKB_EXT_PSP);
-+	if (!pse)
-+		return -EINVAL;
-+
- 	pse->spi = psph->spi;
- 	pse->dev_id = dev_id;
- 	pse->generation = generation;
- 	pse->version = FIELD_GET(PSPHDR_VERFL_VERSION, psph->verfl);
- 
--	encap = PSP_ENCAP_HLEN;
-+	encap = sizeof(struct udphdr) + psp_hlen;
- 	encap += strip_icv ? PSP_TRL_SIZE : 0;
- 
- 	if (proto == htons(ETH_P_IP)) {
-@@ -340,8 +359,9 @@ int psp_dev_rcv(struct sk_buff *skb, u16
- 		ipv6h->payload_len = htons(ntohs(ipv6h->payload_len) - encap);
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -526,7 +526,19 @@ static enum resp_states check_rkey(struc
  	}
  
--	memmove(skb->data + PSP_ENCAP_HLEN, skb->data, l2_hlen + l3_hlen);
--	skb_pull(skb, PSP_ENCAP_HLEN);
-+	memmove(skb->data + sizeof(struct udphdr) + psp_hlen,
-+		skb->data, l2_hlen + l3_hlen);
-+	skb_pull(skb, sizeof(struct udphdr) + psp_hlen);
- 
- 	if (strip_icv)
- 		pskb_trim(skb, skb->len - PSP_TRL_SIZE);
+ skip_check_range:
+-	if (pkt->mask & (RXE_WRITE_MASK | RXE_ATOMIC_WRITE_MASK)) {
++	if (pkt->mask & RXE_ATOMIC_WRITE_MASK) {
++		/* IBA oA19-28: ATOMIC_WRITE payload is exactly 8 bytes.
++		 * Reject any other length before the responder reads
++		 * sizeof(u64) bytes from payload_addr(pkt); a shorter
++		 * payload would read past the logical end of the packet
++		 * into skb->head tailroom.
++		 */
++		if (resid != sizeof(u64) || pktlen != sizeof(u64) ||
++		    bth_pad(pkt)) {
++			state = RESPST_ERR_LENGTH;
++			goto err;
++		}
++	} else if (pkt->mask & RXE_WRITE_MASK) {
+ 		if (resid > mtu) {
+ 			if (pktlen != mtu || bth_pad(pkt)) {
+ 				state = RESPST_ERR_LENGTH;
 
 
