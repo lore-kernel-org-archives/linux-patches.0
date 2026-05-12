@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43413B1EE2;
-	Tue, 12 May 2026 17:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AE83B1EE2;
+	Tue, 12 May 2026 17:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607792; cv=none; b=geL6ib+cnAIK231RNc9b+0nty3nw7vcOrIjbTUUqbUAW8aW2yDx6vwODAPDZkxvEEro64rPccXcGikofZ0C8xmxOGEkUuMd8l6o431lUxpnstO9goGUFdSwcyoF6dmD5wKT5pH0vARPhQlZasV2ZmkpB2cRyJOONoo0ietRIT7I=
+	t=1778607795; cv=none; b=LdTltYZeZEJpi2Gq0xg7MHfV7kV3P4SYawcQivjeOJw0NgbIlOexoMojMVCCBqD8zHyxdKB40B1yTNu9yJ5KgjigcWPjw3alaX+gGPGm+3unL+pOKhkoq9axjXiJvV9P2qXMsAzudlPuyD2UZMUDv9zRxC3h57vhNT3xttAZNv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607792; c=relaxed/simple;
-	bh=CnrDto2rnHH7f6HOy0l1eKcVpLpRtWV1R7m9KYFkVm8=;
+	s=arc-20240116; t=1778607795; c=relaxed/simple;
+	bh=XeTZ6t5wUMM+wt1f+WOoJLr7gYMkhx5IA+zt5eZW8z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VmnX2EZwE8czaKV/Ve64u3HsaZMouBsZ7jVAdS5x2oI//z81FFAt6cKMQYBn/cZUc1rZ57p9JrhMNWqP7JYc4Ct44lFaUnd7YPsz2nD4l4hlDgrBXdTtmDqVMgmtmi0cFiXm5JN8u5uKQf0vy9LgmSSB8c7x9C4yVkoIv3yHEZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6rcHEw4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OkEjz0eotSGnb6mVtAFOEQDQgeffN5trrF2mTDNiEYx0z1w0JGpqxYr57BiCbJkHAD/zJx9aokdLb0xiwr9TLFsx6BptQ+WIgr4XQ3ju9IKcjKnyFWOz9Ggx0KTQOY1+XY4a6LP1orJKI87u9bKc99HZiVVzgchyxXbAUc1aYRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBdLU7u3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6rcHEw4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E9DC2BCB0;
-	Tue, 12 May 2026 17:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBdLU7u3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC857C2BCB0;
+	Tue, 12 May 2026 17:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607792;
-	bh=CnrDto2rnHH7f6HOy0l1eKcVpLpRtWV1R7m9KYFkVm8=;
+	s=korg; t=1778607795;
+	bh=XeTZ6t5wUMM+wt1f+WOoJLr7gYMkhx5IA+zt5eZW8z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6rcHEw4czKqJ2I3r+vkL3LDP088AzpycAxO/KA/U4NO8p9BZ1EnN7A8K09TGWgNI
-	 tgAri2JUyAhc17eg5ccyyeEuuQkr5XLIFgpGOx47188fdS+p16dwaAKhJqq0DRsSDD
-	 YV2zulRVRca3ylDj848TJqUzWltJQjCGkoZnD1Ps=
+	b=mBdLU7u3IORMH+xAr8YzHej9mcgHRHzotqf3+AJivxIoYsqbq/+EFQmJ/fTS/dl9L
+	 E+86i7JOMMMkMtLJj55ouqPaebSe+8w+20b67dy7CIVqUHSe+GxVvLyQhynWk3T9nR
+	 MVNd2C2e/n15OYa2uUzfUcVkq/cQqAlH9XUygNPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Vincent Danjean <vdanjean@debian.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.12 037/206] wifi: ath5k: do not access array OOB
-Date: Tue, 12 May 2026 19:38:09 +0200
-Message-ID: <20260512173933.617084940@linuxfoundation.org>
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 038/206] wifi: mac80211: remove station if connection prep fails
+Date: Tue, 12 May 2026 19:38:10 +0200
+Message-ID: <20260512173933.638973704@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,63 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit d748603f12baff112caa3ab7d39f50100f010dbd upstream.
+commit 283fc9e44ff5b5ac967439b4951b80bd4299f4e4 upstream.
 
-Vincent reports:
-> The ath5k driver seems to do an array-index-out-of-bounds access as
-> shown by the UBSAN kernel message:
-> UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath5k/base.c:1741:20
-> index 4 is out of range for type 'ieee80211_tx_rate [4]'
-> ...
-> Call Trace:
->  <TASK>
->  dump_stack_lvl+0x5d/0x80
->  ubsan_epilogue+0x5/0x2b
->  __ubsan_handle_out_of_bounds.cold+0x46/0x4b
->  ath5k_tasklet_tx+0x4e0/0x560 [ath5k]
->  tasklet_action_common+0xb5/0x1c0
+If connection preparation fails for MLO connections, then the
+interface is completely reset to non-MLD. In this case, we must
+not keep the station since it's related to the link of the vif
+being removed. Delete an existing station. Any "new_sta" is
+already being removed, so that doesn't need changes.
 
-It is real. 'ts->ts_final_idx' can be 3 on 5212, so:
-   info->status.rates[ts->ts_final_idx + 1].idx = -1;
-with the array defined as:
-   struct ieee80211_tx_rate rates[IEEE80211_TX_MAX_RATES];
-while the size is:
-   #define IEEE80211_TX_MAX_RATES  4
-is indeed bogus.
+This fixes a use-after-free/double-free in debugfs if that's
+enabled, because a vif going from MLD (and to MLD, but that's
+not relevant here) recreates its entire debugfs.
 
-Set this 'idx = -1' sentinel only if the array index is less than the
-array size. As mac80211 will not look at rates beyond the size
-(IEEE80211_TX_MAX_RATES).
-
-Note: The effect of the OOB write is negligible. It just overwrites the
-next member of info->status, i.e. ack_signal.
-
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Reported-by: Vincent Danjean <vdanjean@debian.org>
-Link: https://lore.kernel.org/all/aQYUkIaT87ccDCin@eldamar.lan
-Closes: https://bugs.debian.org/1119093
-Fixes: 6d7b97b23e11 ("ath5k: fix tx status reporting issues")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209100459.2253198-1-jirislaby@kernel.org
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260505151533.c4e52deb06ad.Iafe56cec7de8512626169496b134bce3a6c17010@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath5k/base.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/mlme.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/ath/ath5k/base.c
-+++ b/drivers/net/wireless/ath/ath5k/base.c
-@@ -1738,7 +1738,8 @@ ath5k_tx_frame_completed(struct ath5k_hw
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -8177,7 +8177,7 @@ static int ieee80211_prep_connection(str
+ 	struct ieee80211_bss *bss = (void *)cbss->priv;
+ 	struct sta_info *new_sta = NULL;
+ 	struct ieee80211_link_data *link;
+-	bool have_sta = false;
++	struct sta_info *have_sta = NULL;
+ 	bool mlo;
+ 	int err;
+ 
+@@ -8215,11 +8215,8 @@ static int ieee80211_prep_connection(str
+ 		goto out_err;
  	}
  
- 	info->status.rates[ts->ts_final_idx].count = ts->ts_final_retry;
--	info->status.rates[ts->ts_final_idx + 1].idx = -1;
-+	if (ts->ts_final_idx + 1 < IEEE80211_TX_MAX_RATES)
-+		info->status.rates[ts->ts_final_idx + 1].idx = -1;
+-	if (assoc) {
+-		rcu_read_lock();
++	if (assoc)
+ 		have_sta = sta_info_get(sdata, ap_mld_addr);
+-		rcu_read_unlock();
+-	}
  
- 	if (unlikely(ts->ts_status)) {
- 		ah->stats.ack_fail++;
+ 	if (!have_sta) {
+ 		if (mlo)
+@@ -8352,6 +8349,8 @@ static int ieee80211_prep_connection(str
+ out_release_chan:
+ 	ieee80211_link_release_channel(link);
+ out_err:
++	if (mlo && have_sta)
++		WARN_ON(__sta_info_destroy(have_sta));
+ 	ieee80211_vif_set_links(sdata, 0, 0);
+ 	return err;
+ }
 
 
