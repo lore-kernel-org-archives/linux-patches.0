@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093F7385D85;
-	Tue, 12 May 2026 17:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D303A3CDBDD;
+	Tue, 12 May 2026 17:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607880; cv=none; b=n4T8DXA0bgTT3cEq5zIUsDfGdgAJ4rTtKCpOoOCrqTusKhoPBVF2Sv5YtQ5X0aD5CyQp+YVRXpK23m4vMzjAvV4sJ1mbmnUhauAz/I9n8cqHI+Eu0nd2JAm1eTM8DbCdaig2XC5xOJM/pMhg1tfqy5VvrVocuADgW2CImJ/RGAA=
+	t=1778607882; cv=none; b=mMHNOdtuHtt4lRvJPv8msaBdlQelqVzJlk5XPA0M02zvdx3sG+G5uHLDWzSJPUWoImBQm9xYOFszs4IdGsY3+FnvrrLsEiwQkrPIXZbB5eIU6XEaBfUxZ/h+GOBigCFCO22EFoCrKLQ8OrLxcCotYmArLXEFMdwfZ1kjJTM5g54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607880; c=relaxed/simple;
-	bh=U+rsNnYXQaiJJXLGwNBa7BZvoC9krXPzGteWRRYuPPQ=;
+	s=arc-20240116; t=1778607882; c=relaxed/simple;
+	bh=sMj4XVx1h0HhREkfgUEgRMBIR+LHu59Eb3BcchQ2WLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krGJLAKDF+kmKX4Pi98Mi6XNUrmCjhlEmsflqxNA80fvBuG7Lvg2ds898I578F32QWakNF7wQesMeRfzqEnZ6YqPNKHGf4GpPtX7MCyLP9j7a6i+hRU7QiXu0o2HaGyRRsISxd2LUJAwQRLEf2PJ47yOP82d6K/265iLpnzD+EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbQS4RjF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WtQ7Hqf0ynyhk/ZbNVeQJK1nZ0uq6a/KRcvYUKCQ3XWpG8BSzURH8qqtPAptRCU5DYJPeaOd1gPi8ka9x6nuJOpUfGZaP+dOsF4t8QX1NUWsU5L0LOA7MyY6DyOw98PsfkZlG+PjIZFJnjrmn37Vn4OHJK3baI/N15bFMDTFYgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSNHWn7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbQS4RjF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95178C2BCC7;
-	Tue, 12 May 2026 17:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSNHWn7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29912C2BCB0;
+	Tue, 12 May 2026 17:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607879;
-	bh=U+rsNnYXQaiJJXLGwNBa7BZvoC9krXPzGteWRRYuPPQ=;
+	s=korg; t=1778607882;
+	bh=sMj4XVx1h0HhREkfgUEgRMBIR+LHu59Eb3BcchQ2WLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbQS4RjFsde+k8ZQHSWRcoGgDsxLbq1OHF4c5byMnhhp8kbly9e38SeqGkZ3cLHjF
-	 HgXgEnS08E1pmYYU7Z+ie+xtSp9DH+/D0/4dMJD0V1DeQ1C13BjBIdnrz4Vg+DNw7A
-	 rUwZ+sjaTq5rNUcdm2R9mbe9KP+xy+tQvhtQFq9o=
+	b=LSNHWn7JoYK42+VZh2Xqyo1VEfyZKzU3uLIWSmELjz5ld3AoQdkSyxZRcf/BXaVXh
+	 j433M3iXNUnNBleKYXMpjEy8EyxFgIUfdR4PGW7HE07BVE78p/5gOpaMIh6QeZhAbF
+	 7fYTA3RU86Fq8oEIdkXPf8hAF+pwTcAPZHbOIQZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adithya K V <adithya.kv@samsung.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 072/206] spi: s3c64xx: fix NULL-deref on driver unbind
-Date: Tue, 12 May 2026 19:38:44 +0200
-Message-ID: <20260512173934.373918884@linuxfoundation.org>
+	Martyn Welch <martyn@welchs.me.uk>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 073/206] staging: vme_user: fix root device leak on init failure
+Date: Tue, 12 May 2026 19:38:45 +0200
+Message-ID: <20260512173934.395107076@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -53,43 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 45daacbead8a009844bd5dba6cfa731332184d17 upstream.
+commit 32c91e8ee039777d0b95b914633fc6a42607959c upstream.
 
-A change moving DMA channel allocation from probe() back to
-s3c64xx_spi_prepare_transfer() failed to remove the corresponding
-deallocation from remove().
+Make sure to deregister and free the root device in case module
+initialisation fails.
 
-Drop the bogus DMA channel release from remove() to avoid triggering a
-NULL-pointer dereference on driver unbind.
-
-This issue was flagged by Sashiko when reviewing a controller
-deregistration fix.
-
-Fixes: f52b03c70744 ("spi: s3c64xx: requests spi-dma channel only during data transfer")
-Cc: stable@vger.kernel.org	# 6.0
-Cc: Adithya K V <adithya.kv@samsung.com>
-Link: https://sashiko.dev/#/patchset/20260410081757.503099-1-johan%40kernel.org
+Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
+Cc: stable@vger.kernel.org	# 4.9
+Cc: Martyn Welch <martyn@welchs.me.uk>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410094925.518343-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260424104910.2619349-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-s3c64xx.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/staging/vme_user/vme_fake.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/spi/spi-s3c64xx.c
-+++ b/drivers/spi/spi-s3c64xx.c
-@@ -1404,11 +1404,6 @@ static void s3c64xx_spi_remove(struct pl
+--- a/drivers/staging/vme_user/vme_fake.c
++++ b/drivers/staging/vme_user/vme_fake.c
+@@ -1230,6 +1230,8 @@ err_master:
+ err_driver:
+ 	kfree(fake_bridge);
+ err_struct:
++	root_device_unregister(vme_root);
++
+ 	return retval;
+ }
  
- 	writel(0, sdd->regs + S3C64XX_SPI_INT_EN);
- 
--	if (!is_polling(sdd)) {
--		dma_release_channel(sdd->rx_dma.ch);
--		dma_release_channel(sdd->tx_dma.ch);
--	}
--
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
 
 
