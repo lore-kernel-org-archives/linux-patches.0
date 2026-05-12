@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE8C2EBB84;
-	Tue, 12 May 2026 17:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B794C9576;
+	Tue, 12 May 2026 17:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608014; cv=none; b=aHhdM5wnb7Kz+Zz1cWGMYssHH0CsHd9Hzw5YQ//JpcHllAqdnt2DVhTkRFgv+TIpO80WaUm4Wcvcio8ipGqpEU6OeY3BxeeGUaAfNMlmKU0HuSN86Wx/RdP35UOoIa6Jm7cdCbZzrX0fb8GtsWp1zQTzTWy8cYx26HK7sS1eNg0=
+	t=1778608017; cv=none; b=fdglcBm9BHQ8l2r8yS/bSeAWDg5PRaqh23WvqWSFJ3LtaZ6qGShRNI2Mr6NnE3B7UNcKqVwAgoXh78oiEL1K1hWxaeGlQzhKhcDdqARsFBQtp6ltzCFxQ/SEJkE8KsA06wQWNaPv/jkur7Zg589q39E3kAPspgG8Cp3TfiDiAjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608014; c=relaxed/simple;
-	bh=7sZ8+kkoz+U4MDljfBHHC+MqtQ7jlqaTksmOwbih2NM=;
+	s=arc-20240116; t=1778608017; c=relaxed/simple;
+	bh=EM8KcX0/Kak9fZDcCU/pNhVtBuaiRBvhJ3suGTI/Bco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ofew6ghBl3uYOclmgUUTb+35gjp9mh4BPGM6giqQ7W0CnUIJlZu4pTecxxhQIJR0pwcDTWkrAT3fJVWtJsBxWionB5Esb3BX3JGHWH1FUf5ojqtUlyZcWUiqy8lihD7u/ENykMoFRzutQ3KIlf8tKa26jjNSupyRncMrKV75u/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CInC+Gch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pe6jp34BkjcIyY7RBiSq3ooUvOazTTNK8IybeunU7hfN3sfbHtRFBHD+uLMaHsFl6vnfuusBeQPh4FWQabuQWy9Hn3BCDiEIovKRdHJ2YMoepBKj1Q3HETJQvkqxMzhZPJPcGDfyit+hwIO09K3qX5cOHw9k7cGZtfbizEIuWDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyw1knPL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CInC+Gch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79995C2BCFC;
-	Tue, 12 May 2026 17:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyw1knPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581B9C2BD00;
+	Tue, 12 May 2026 17:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608014;
-	bh=7sZ8+kkoz+U4MDljfBHHC+MqtQ7jlqaTksmOwbih2NM=;
+	s=korg; t=1778608016;
+	bh=EM8KcX0/Kak9fZDcCU/pNhVtBuaiRBvhJ3suGTI/Bco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CInC+GchgJnblal7ignhIRONVCMi56vup5Gh8Xt1hRMHP/pBtIudsDpfuADkip5XP
-	 hKOUvawYpSq6qir9zNz73gBcnu/7Mfu759q9OWiN88n0gmePE3ubD5NJd+iw7P1zot
-	 FNbparM0ndYMpLZ76E2xJeRsqbe+7QUgNNnZfZtU=
+	b=vyw1knPLGK1l9/NTIek1PG87PgaAYI8ouymLHTjSa5Mtt2TAJox+5GT1Grdt25LMB
+	 Nb24HOSkvaUyyjl+Vqw9EPBsphcDjJRe0McFaG1YIQrlo34+UUN4kjEsdNEuK587UT
+	 B55xXXktjVtqbl2EipW0cryMfBo8O8G2fEzw0AWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>
-Subject: [PATCH 6.12 123/206] iommu/arm-smmu-v3: Add a missing dma_wmb() for hitless STE update
-Date: Tue, 12 May 2026 19:39:35 +0200
-Message-ID: <20260512173935.460398160@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Ignat Korchagin <ignat@linux.win>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>
+Subject: [PATCH 6.12 124/206] lib/crypto: mpi: Fix integer underflow in mpi_read_raw_from_sgl()
+Date: Tue, 12 May 2026 19:39:36 +0200
+Message-ID: <20260512173935.482141416@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,48 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 6fabce53f6b9c2419012a9103e1a46d40888cefa upstream.
+commit 8c2f1288250a90a4b5cabed5d888d7e3aeed4035 upstream.
 
-When writing a new (previously invalid) valid IOPTE to a page table, then
-installing the page table into an STE hitlesslessly (e.g. in S2TTB field),
-there is a window before an STE invalidation, where the page-table may be
-accessed by SMMU but the new IOPTE is still siting in the CPU cache.
+Yiming reports an integer underflow in mpi_read_raw_from_sgl() when
+subtracting "lzeros" from the unsigned "nbytes".
 
-This could occur when we allocate an iommu_domain and immediately install
-it hitlessly, while there would be no dma_wmb() for the page table memory
-prior to the earliest point of HW reading the STE.
+For this to happen, the scatterlist "sgl" needs to occupy more bytes
+than the "nbytes" parameter and the first "nbytes + 1" bytes of the
+scatterlist must be zero.  Under these conditions, the while loop
+iterating over the scatterlist will count more zeroes than "nbytes",
+subtract the number of zeroes from "nbytes" and cause the underflow.
 
-Fix it by adding a dma_wmb() prior to updating the STE.
+When commit 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers") originally
+introduced the bug, it couldn't be triggered because all callers of
+mpi_read_raw_from_sgl() passed a scatterlist whose length was equal to
+"nbytes".
 
-Fixes: 56e1a4cc2588 ("iommu/arm-smmu-v3: Add unit tests for arm_smmu_write_entry")
-Cc: stable@vger.kernel.org
-Reported-by: Will Deacon <will@kernel.org>
-Closes: https://lore.kernel.org/linux-iommu/aXdlnLLFUBwjT0V5@willie-the-truck/
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+However since commit 63ba4d67594a ("KEYS: asymmetric: Use new crypto
+interface without scatterlists"), the underflow can now actually be
+triggered.  When invoking a KEYCTL_PKEY_ENCRYPT system call with a
+larger "out_len" than "in_len" and filling the "in" buffer with zeroes,
+crypto_akcipher_sync_prep() will create an all-zero scatterlist used for
+both the "src" and "dst" member of struct akcipher_request and thereby
+fulfil the conditions to trigger the bug:
+
+  sys_keyctl()
+    keyctl_pkey_e_d_s()
+      asymmetric_key_eds_op()
+        software_key_eds_op()
+          crypto_akcipher_sync_encrypt()
+            crypto_akcipher_sync_prep()
+              crypto_akcipher_encrypt()
+                rsa_enc()
+                  mpi_read_raw_from_sgl()
+
+To the user this will be visible as a DoS as the kernel spins forever,
+causing soft lockup splats as a side effect.
+
+Fix it.
+
+Reported-by: Yiming Qian <yimingqian591@gmail.com> # off-list
+Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v4.4+
+Reviewed-by: Ignat Korchagin <ignat@linux.win>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/59eca92ff4f87e2081777f1423a0efaaadcfdb39.1776003111.git.lukas@wunner.de
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ lib/crypto/mpi/mpicoder.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1161,6 +1161,13 @@ void arm_smmu_write_entry(struct arm_smm
- 	__le64 unused_update[NUM_ENTRY_QWORDS];
- 	u8 used_qword_diff;
- 
-+	/*
-+	 * Many of the entry structures have pointers to other structures that
-+	 * need to have their updates be visible before any writes of the entry
-+	 * happen.
-+	 */
-+	dma_wmb();
-+
- 	used_qword_diff =
- 		arm_smmu_entry_qword_diff(writer, entry, target, unused_update);
- 	if (hweight8(used_qword_diff) == 1) {
+--- a/lib/crypto/mpi/mpicoder.c
++++ b/lib/crypto/mpi/mpicoder.c
+@@ -346,7 +346,7 @@ MPI mpi_read_raw_from_sgl(struct scatter
+ 	lzeros = 0;
+ 	len = 0;
+ 	while (nbytes > 0) {
+-		while (len && !*buff) {
++		while (len && !*buff && lzeros < nbytes) {
+ 			lzeros++;
+ 			len--;
+ 			buff++;
 
 
