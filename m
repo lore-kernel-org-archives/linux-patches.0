@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62B03DD84A;
-	Tue, 12 May 2026 17:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0073C0A1B;
+	Tue, 12 May 2026 17:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608265; cv=none; b=mNXFGy7q6oRY6Gt+AHFaRyynHpJ8Wxbl/7JqFOOPxs4dxwUmK+P2wnaOr0gi6t/rs5Z/1A/CxLJ2J39pfByTctFPPLyr57dcIROsYcQ3Lv5QdSVGRjm5IybkUe6EYOfJW30cWWccq9K9JCO59/S5iTc77mL1ggfv5jfDTTCSxXI=
+	t=1778608268; cv=none; b=G0qAGPP6/P59aqSHOdjWy7RqNW1T5S7DSYVjhYhF61TDExpelcumIbvLNqwctDe8rq6hQKM8dz66QYHrxSFSgBlK8+kxg2d/HIMkmHXECaTJbJb0lCHhc8EsUMGnKxP367uhEScu5U33nM5DFbv3rV1C6/Uh/jJz+Fi2m5rgBHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608265; c=relaxed/simple;
-	bh=haBtdlnp9n7dO3OQU+aR2RPnu4ml+8ki1oU1oo95LCk=;
+	s=arc-20240116; t=1778608268; c=relaxed/simple;
+	bh=Jhc2dBKn9rJ0k/+SlRpfplM6hHLElJwqbpqoeKZsg8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNKVpANjA1Zo9mltLdAx5qmqQefpPUimnbYHa4SQVzWKHhLxw83EXkFyjW4AqgYu8PiIgy8VGwXoPERxSb25r8q4/v0dyy9EpH5i/Lfuxw7EEnOPLhH20ZfG353C8W6UfonhBSR0m/fVW3m0eGo+oFizqRrTyZDVxOMEivFWITE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXbQZZv/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YpSnsd7HuiHeVnw7XKAByyfToTFRYCJuzvi0Uq2UPhjC1JbqinLlYyl9A2JU0vyjxP0OMu/CQI/6pa/DmlA3i4joeytwZaW+9dMRLb/pfi9opyfRbPm1u+O7i028o6FTeWlpy5mTwEUIcR/RYzR9+teQY3G/ZErVNj0A0VzGD3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNARStp1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXbQZZv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDE8C2BCC7;
-	Tue, 12 May 2026 17:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNARStp1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5411C2BCB0;
+	Tue, 12 May 2026 17:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608265;
-	bh=haBtdlnp9n7dO3OQU+aR2RPnu4ml+8ki1oU1oo95LCk=;
+	s=korg; t=1778608268;
+	bh=Jhc2dBKn9rJ0k/+SlRpfplM6hHLElJwqbpqoeKZsg8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXbQZZv/r3aqISjv/bUnhA13Yiz3fJr/TMRFfaMTaSFb0UJtrte3vK/U6eUIM8vlJ
-	 jjcVyhyCEY50rCcf3hbNP1liycxTBNRUkPUd8ASeh2NN3nCIMmNwzydVqZpR8ZE89A
-	 mY+DpCgmVyZHhufe8W/1CCnyoygkOCeu9Cv/Vok4=
+	b=cNARStp1P83wEDZMOxcw3R5ddAFPIhCgKVP7M+NJDvjIboBMQ/OvzJGBy7Z/Rw1s0
+	 kgTuG6GPwg36YKl7lTcXLyv5UAhf5wKTBk7QKPnvh6frOTSwf5OYDWyvh1gFanbwLK
+	 mXsUZoo6BnaC1KYbdKKs2zvw8j4te1GyyP7ntRbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.18 013/270] wifi: mt76: mt7925: fix incorrect TLV length in CLC command
-Date: Tue, 12 May 2026 19:36:54 +0200
-Message-ID: <20260512173938.735197272@linuxfoundation.org>
+	addy ke <addy.ke@rock-chips.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 014/270] spi: rockchip: fix controller deregistration
+Date: Tue, 12 May 2026 19:36:55 +0200
+Message-ID: <20260512173938.755921046@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,49 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 62e037aa8cf5a69b7ea63336705a35c897b9db2b upstream.
+commit 53e7a16070feb7d1d4d81a583eaac5e25048b9c3 upstream.
 
-The previous implementation of __mt7925_mcu_set_clc() set the TLV length
-field (.len) incorrectly during CLC command construction. The length was
-initialized as sizeof(req) - 4, regardless of the actual segment length.
-This could cause the WiFi firmware to misinterpret the command payload,
-resulting in command execution errors.
+Make sure to deregister the controller before freeing underlying
+resources like DMA channels during driver unbind.
 
-This patch moves the TLV length assignment to after the segment is
-selected, and sets .len to sizeof(req) + seg->len - 4, matching the
-actual command content. This ensures the firmware receives the
-correct TLV length and parses the command properly.
-
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Cc: stable@vger.kernel.org
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Acked-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/f56ae0e705774dfa8aab3b99e5bbdc92cd93523e.1772011204.git.quan.zhou@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 64e36824b32b ("spi/rockchip: add driver for Rockchip RK3xxx SoCs integrated SPI")
+Cc: stable@vger.kernel.org	# 3.17
+Cc: addy ke <addy.ke@rock-chips.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260324082326.901043-3-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-rockchip.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -3324,7 +3324,6 @@ __mt7925_mcu_set_clc(struct mt792x_dev *
- 		u8 rsvd[64];
- 	} __packed req = {
- 		.tag = cpu_to_le16(0x3),
--		.len = cpu_to_le16(sizeof(req) - 4),
+--- a/drivers/spi/spi-rockchip.c
++++ b/drivers/spi/spi-rockchip.c
+@@ -909,7 +909,7 @@ static int rockchip_spi_probe(struct pla
+ 		break;
+ 	}
  
- 		.idx = idx,
- 		.env = env_cap,
-@@ -3353,6 +3352,7 @@ __mt7925_mcu_set_clc(struct mt792x_dev *
- 		memcpy(req.type, rule->type, 2);
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "Failed to register controller\n");
+ 		goto err_free_dma_rx;
+@@ -937,6 +937,8 @@ static void rockchip_spi_remove(struct p
  
- 		req.size = cpu_to_le16(seg->len);
-+		req.len = cpu_to_le16(sizeof(req) + seg->len - 4);
- 		dev->phy.clc_chan_conf = clc->ver == 1 ? 0xff : rule->flag;
- 		skb = __mt76_mcu_msg_alloc(&dev->mt76, &req,
- 					   le16_to_cpu(req.size) + sizeof(req),
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
++	spi_unregister_controller(ctlr);
++
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
 
 
