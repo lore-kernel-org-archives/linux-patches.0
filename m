@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633893EDE48;
-	Tue, 12 May 2026 18:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E99F3EDE61;
+	Tue, 12 May 2026 18:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609249; cv=none; b=Jst+6KJZ5+nndzs9xdiBvXqEA/FX41I9sHWWRfhY8k5dkDaMpMuCM6TwZTVE7yomMLA2PVYlY3QYDr1YtfT9ZVuMc1eXTS3NobXByyFH9N65ZvVGrtJAgP5Oa6o71YjRPNmaDhKgo4KR0acpL+y2uKaK0dtiJpPrdng/rKPig7M=
+	t=1778609251; cv=none; b=bN4s33gUcpvo2/XATJCuDYLLBEMh/3pCic/ZOHqMLLoYTyyTtCLNsFhcL3mwbx7ZQe9YjPsz/qAujrdv6NoYGU99WQcDVWg9l5F/fg++uwLnEgKnp51Vor5oLS7BoVOqiLDIpcRIfs/I0LzFVNPGq1iXJ2jbHqRcfp+EOVo+9kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609249; c=relaxed/simple;
-	bh=GHsqL6JUxJasZGsFFhcjEIsVpfeIngIKscQOh/y30B8=;
+	s=arc-20240116; t=1778609251; c=relaxed/simple;
+	bh=fjWl35r4hzu/U9H34lxBzqyqP4daZ3sAeNbhhrInrjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1nB6qkWgM7APSddJB6E1EdG1qSdmldnQyOl5UbrjC4toRaG8+4bIQZ1puO6SL8vDiiNPhQ1WupEhubiN6wvDabGlMHTcPWbWj9rwxMlwPaXTZCtJrhj2Vh3t1FLRnwk1dEOnHv2Xwa6Ifnuot9h+7Qk3ziwBaFiizLOlviRijE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oY2IUD0c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0zCgwBAVk7kAuE00dkuBlIYsY5PsNANBOoF23EzC9+DmnHoQa80kavpMpqEMe0Qfx96CvmzHDNATe5STcfnRQYvl7w8t5/WixbQ1dydygMrq7OY2DrzK0xpeJsNbovt0mkp4iENuh7cSGCZtxQ17RTi2i8Y3zw9NqylztEJaN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqJwmxlu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oY2IUD0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C25C2BCB0;
-	Tue, 12 May 2026 18:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqJwmxlu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36656C2BCB0;
+	Tue, 12 May 2026 18:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609249;
-	bh=GHsqL6JUxJasZGsFFhcjEIsVpfeIngIKscQOh/y30B8=;
+	s=korg; t=1778609251;
+	bh=fjWl35r4hzu/U9H34lxBzqyqP4daZ3sAeNbhhrInrjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oY2IUD0c6TBnTD87ibx26CnpW0C1wSl1vnLOLj7ZUya93PUIBX1VC1R/J/lcleYwk
-	 Z2p93SFVGQ2LAZevUk7T127w/zJxUz3CGUOZ1Br9HjOLslMLwBNWE6hmPOwWXqnAGL
-	 XcWXfQX0npQUfPo76WK0oZgNkwiWJ5vNSZjXS9MA=
+	b=qqJwmxlu5IlmTQNBwj0Vz3bR1fRWrIpYeziIFv2m+qxSTyOENd8KtGUMguCuthNAH
+	 oxXkW1b2ySMDZlpzOxmTRqWA0FF0iWaN05rh3XACvrXXO7a5HdmI9AZtoi3bd6jdN2
+	 9TuTUtJ2WcFdLgPoGvXsps1TD0vGqI3W0xiF0uDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Walters <walters@verbum.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.0 123/307] ovl: fix verity lazy-load guard broken by fsverity_active() semantic change
-Date: Tue, 12 May 2026 19:38:38 +0200
-Message-ID: <20260512173942.725345572@linuxfoundation.org>
+	Benson Leung <bleung@chromium.org>,
+	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 7.0 124/307] platform/chrome: cros_ec_typec: Init mutex in Thunderbolt registration
+Date: Tue, 12 May 2026 19:38:39 +0200
+Message-ID: <20260512173942.745707003@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,44 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Walters <walters@verbum.org>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 0c8c88b8eb82a2a41bec5f17c076d6312dc40316 upstream.
+commit 525cb7ba6661074c1c5cc3772bccc6afab6791ef upstream.
 
-Commit f77f281b6118 ("fsverity: use a hashtable to find the
-fsverity_info") made fsverity_active() check whether the inode has the
-verity flag, rather than whether the inode's fsverity_info is loaded.
-This broke ovl_ensure_verity_loaded(), which wants to load the
-fsverity_info for any verity inodes that haven't had it loaded yet.
+cros_typec_register_thunderbolt() missed initializing the `adata->lock`
+mutex.  This leads to a NULL dereference when the mutex is later
+acquired (e.g. in cros_typec_altmode_work()).
 
-Therefore, to check that the fsverity_info hasn't yet been loaded, use
-fsverity_get_info(inode) == NULL instead of !fsverity_active(inode).
+Initialize the mutex in cros_typec_register_thunderbolt() to fix the
+issue.
 
-Also, since fsverity_get_info() now involves a hash table lookup, put
-the more lightweight IS_VERITY() flag check first.
-
-Fixes: f77f281b6118 ("fsverity: use a hashtable to find the fsverity_info")
 Cc: stable@vger.kernel.org
-Link: https://github.com/bootc-dev/bootc/issues/2174
-Signed-off-by: Colin Walters <walters@verbum.org>
-Acked-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20260505224257.23213-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 3b00be26b16a ("platform/chrome: cros_ec_typec: Thunderbolt support")
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+Link: https://lore.kernel.org/r/20260505053403.3335740-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/util.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/chrome/cros_typec_altmode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -1379,7 +1379,7 @@ int ovl_ensure_verity_loaded(const struc
- 	struct inode *inode = d_inode(datapath->dentry);
- 	struct file *filp;
+--- a/drivers/platform/chrome/cros_typec_altmode.c
++++ b/drivers/platform/chrome/cros_typec_altmode.c
+@@ -359,6 +359,7 @@ cros_typec_register_thunderbolt(struct c
+ 	}
  
--	if (!fsverity_active(inode) && IS_VERITY(inode)) {
-+	if (IS_VERITY(inode) && fsverity_get_info(inode) == NULL) {
- 		/*
- 		 * If this inode was not yet opened, the verity info hasn't been
- 		 * loaded yet, so we need to do that here to force it into memory.
+ 	INIT_WORK(&adata->work, cros_typec_altmode_work);
++	mutex_init(&adata->lock);
+ 	adata->alt = alt;
+ 	adata->port = port;
+ 	adata->ap_mode_entry = true;
 
 
