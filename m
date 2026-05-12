@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0822D7BF;
-	Tue, 12 May 2026 17:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E845F3D9696;
+	Tue, 12 May 2026 17:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608345; cv=none; b=br8Zo9eXZ7/vtoBvEXEiR7u6WmhQOevAWsXCkPl4obYDoevwvqNF/NsCj6UN/brVMzcY8BQYIYqBEgfPv2AMzfBjq78/P5QA98H/jYVbJd6S0jF0LqkdeMEpfY96V0kDRETwETbNzA/VsrIKm598lvhTt9zVWNJWTdxMQsOUu+I=
+	t=1778608348; cv=none; b=Das+xVMgnPgfXw/BnzkQoN5sC78PVCw6G6W34Wjaa450fELYyIAPtKV1qPK0EN5Vw+6HaEA5Mqj0rjin0k5BhMRHrfpi85a2LvcZnMTpxnv3Y+zNj2L8Dl7zfM9zBXWcOLq0cf3OlmSTzZ8yURFfobkwYWVaHHbC0ukiIt09pfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608345; c=relaxed/simple;
-	bh=OvIUHcW2tXFlVJTiVeA7cJp1J6i8XX6qNbtK+PZ+d2U=;
+	s=arc-20240116; t=1778608348; c=relaxed/simple;
+	bh=bc5jVVXQ8LrrUQYWHD5CUb1Hxa4X04vzgqDWMQI4Hk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJlFfgPSWz9KhW0dxt47/s76tFuEZLvaDXW/swu9VbzgN2A8RRzHmEbmqhymM10Hf++QOpkCwRvyyyo7EfNSuiWYWw+1L0oHcjzhctoXWNyPF6nesoNxaCzDDYLkdP0yr/cuKC5wGpvh8WFolctLxMV9bITbLOAnFinVAJyC3Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmS7u3QT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JlHyhOHemJ8+xG9a6vImSDxgPaMpCu608ecmh+UKngRj4YkePC7m3rW5UpwfKtJdJAyoJDsba/Vr7oj2eY40h1rU+g1w9k191fImnMddBBqkvHISgtMqxoONW8TyKqoUYV7CnN6M58+qlvW6Pr0SqACpqUhw/S66IKx50aaVxHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNvuBHDD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmS7u3QT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A35C2BCB0;
-	Tue, 12 May 2026 17:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNvuBHDD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B61DC2BCB0;
+	Tue, 12 May 2026 17:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608345;
-	bh=OvIUHcW2tXFlVJTiVeA7cJp1J6i8XX6qNbtK+PZ+d2U=;
+	s=korg; t=1778608347;
+	bh=bc5jVVXQ8LrrUQYWHD5CUb1Hxa4X04vzgqDWMQI4Hk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmS7u3QTWjIFf/zwG25JM0UDGxzwrL4IcAT5DEZ/oPO5eFf7cToUidGCHg8qrekSM
-	 Ow0K9niYk870xRa5EFgonXM0a8TPWEiRzDv5j5EnESpc/uDiX3W97eUPmtnLTY6g0k
-	 LpS6quaUPW5pSw1dVwfhTX5Rvcu854z5+8gWb2DY=
+	b=xNvuBHDDvnVD3SKxdXq5rkix6Y8Th3nfh66S4hERmz5xtJg8TlApviFTQhFV+ppW3
+	 wRq1ua5RWoepLBOY1f3teaJPHgxl/vLAqhVEKZvn3YPdjjZWPus3QBvfBQc4OcPU/r
+	 SLHloVVDjugzvC022jgXBETfkOkkP16poq1qNbNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>
-Subject: [PATCH 6.18 044/270] USB: omap_udc: DMA: Dont enable burst 4 mode
-Date: Tue, 12 May 2026 19:37:25 +0200
-Message-ID: <20260512173939.381275918@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 045/270] USB: serial: option: add Telit Cinterion LE910Cx compositions
+Date: Tue, 12 May 2026 19:37:26 +0200
+Message-ID: <20260512173939.401275235@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,60 +50,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaro Koskinen <aaro.koskinen@iki.fi>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 3f91484f6c13c434bd573ca6b6779c26adb0ddab upstream.
+commit 100201d349edd226ca3470c894c92dccc67ee7a8 upstream.
 
-Commit 65111084c63d7 ("USB: more omap_udc updates (dma and omap1710)")
-added setting for DMA burst 4 mode. But I think this should be undone for
-two reasons:
+Add the following Telit Cinterion LE910Cx compositions:
 
-- It breaks DMA on 15xx boards - transfers just silently stall.
+0x1251: RNDIS + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
+T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=108 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1251 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=02 Prot=ff Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-- On newer OMAP1 boards, like Nokia 770 (omap1710), there is no measurable
-performance impact when testing TCP throughput with g_ether with large
-15000 byte MTU size.
+0x1253: ECM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
+T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=121 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1253 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-It's also worth noting that when the original change was made, the
-OMAP_DMA_DATA_BURST_4 handling in arch/arm/plat-omap/dma.c was broken, and
-actually resulted in the same as the OMAP_DMA_DATA_BURST_DIS i.e. burst
-disabled. This was fixed not until a couple kernel releases later in an
-unrelated commit 1a8bfa1eb998a ("[ARM] 3142/1: OMAP 2/5: Update files
-common to omap1 and omap2").
+0x1254: tty (AT) + tty (AT)
+T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=122 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1254 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 2 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-So based on this it seems there was never really a very good reason to
-enable this burst mode in omap_udc, so remove it now to allow 15xx DMA
-to work again (it provides 2x throughput compared to PIO mode).
+0x1255: tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
+T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=123 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1255 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-Fixes: 65111084c63d ("[PATCH] USB: more omap_udc updates (dma and omap1710)")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Link: https://patch.msgid.link/ad06qHLclWHeSGnV@darkstar.musicnaut.iki.fi
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/omap_udc.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/udc/omap_udc.c
-+++ b/drivers/usb/gadget/udc/omap_udc.c
-@@ -733,8 +733,6 @@ static void dma_channel_claim(struct oma
- 		if (status == 0) {
- 			omap_writew(reg, UDC_TXDMA_CFG);
- 			/* EMIFF or SDRC */
--			omap_set_dma_src_burst_mode(ep->lch,
--						OMAP_DMA_DATA_BURST_4);
- 			omap_set_dma_src_data_pack(ep->lch, 1);
- 			/* TIPB */
- 			omap_set_dma_dest_params(ep->lch,
-@@ -756,8 +754,6 @@ static void dma_channel_claim(struct oma
- 				UDC_DATA_DMA,
- 				0, 0);
- 			/* EMIFF or SDRC */
--			omap_set_dma_dest_burst_mode(ep->lch,
--						OMAP_DMA_DATA_BURST_4);
- 			omap_set_dma_dest_data_pack(ep->lch, 1);
- 		}
- 	}
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1513,7 +1513,11 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1251, 0xff) },	/* Telit LE910Cx (RNDIS) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1253, 0xff) },	/* Telit LE910Cx (ECM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1254, 0xff) },	/* Telit LE910Cx */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1255, 0xff) },	/* Telit LE910Cx */
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
 
 
