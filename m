@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDCD385D85;
-	Tue, 12 May 2026 17:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9543C8C7D;
+	Tue, 12 May 2026 17:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607900; cv=none; b=il8Ur4zzceg3jwVDYTFAse6BCcgTKyBEDgWJ00V+kIQYE9vcBez9pkNUYNB1NPEFD1iq1qMZ7EQ6LR1y7AwWsEhXDBrS33KGd5cSKDXbRGy13INybHqc/bQoetXV+thEtzmSQUbzsr9lx2bnEwcExapK9MCX4Lo4v3eNz3EZeF0=
+	t=1778607903; cv=none; b=a1WqR7+fHDaw1sFTl2FOKoxDqCuXmyO/szeva3KV1CfbWlD5JdguOB6MmH7sKk09yACDl89pdC6+FtP2jagJlHDdN8lxdS5Z1hj546uXdWxwDRY16hNj6oBWoh3wDPp8IRy4Ij8vuMNGZTkrGpNVGr6UUI2LSxyOsJXkrUxrP5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607900; c=relaxed/simple;
-	bh=APTNtsFHkrmrEVqRkzzRfLicMMRLEhWvAl1sIBp0aWg=;
+	s=arc-20240116; t=1778607903; c=relaxed/simple;
+	bh=orfxdR1X8iC+yrgTxa5yyqqe0hOLe7CgbvVW2dil9ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZA0A6i5IOsS+ahLcqaUvsoy7vPE1IllrZM9gy9Uh5kfuRa1RJreW+BlRWR7hKnDIAUU3+NJov64eD4GkQQBDwYvMXjJKGmO1zEjd2BEpMnPP5nLlCngmii06Bm2cYKF16mdz6X17fkSmb4n7EoeehoC/jROZyEgG/MYzkjFxK8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHB0a4cN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XH25oL9GpdMQ9ypkcQ2NfIktJ4I/TyWi8NqC+GB/wA359L76GhgS26QtmDh1uf7hku2tyu2se7ALYkCzwiIOVoSvd7MmneL/MjeV9EY0hW8qE6kexgd0NnDkM/eCmncSl/FSPAwCV1AyxIzj/NdnV0doIncIWBV3uUQwwR1LSog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5H0Mfxr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHB0a4cN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367A9C2BCB0;
-	Tue, 12 May 2026 17:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5H0Mfxr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8EA2C2BCB0;
+	Tue, 12 May 2026 17:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607900;
-	bh=APTNtsFHkrmrEVqRkzzRfLicMMRLEhWvAl1sIBp0aWg=;
+	s=korg; t=1778607903;
+	bh=orfxdR1X8iC+yrgTxa5yyqqe0hOLe7CgbvVW2dil9ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HHB0a4cNFvccBTLq5wRegknkNI2mTXP9OhL+79tIt8qucSDHrYsl0pjd9QS08RmLR
-	 TQMC2czMzI9o9pXYGSMEHbjjjD9FFA791BEyfPzy7rcdftXqI5VWL2d9vlikxOSpqU
-	 LBdG0KFHT5I/v9AjOP6RCeu7FUeWS5eoXwI1KMds=
+	b=R5H0MfxrjZzYUMCXOUecDSqxg7Kpzgi9Hb7I4Mqws9PjtG0sIOMY7d0n/8Q6CkLoE
+	 zzReA8976RRLjW2jbV0t/3WVxDi60U2GK29+aGVhSRuwY4c5ewMPQIz5Qiw2NpnEKB
+	 L8kSh26RcO8TlfuaZRbgQg/lZq2oQOtAK3tKMf54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 079/206] sound: ua101: fix division by zero at probe
-Date: Tue, 12 May 2026 19:38:51 +0200
-Message-ID: <20260512173934.524585496@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 080/206] net: libwx: fix VF illegal register access
+Date: Tue, 12 May 2026 19:38:52 +0200
+Message-ID: <20260512173934.545830093@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,45 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit d1f73f169c1014463b5060e3f60813e13ddc7b87 upstream.
+commit 694de316f607fe2473d52ca0707e3918e72c1562 upstream.
 
-Add a missing sanity check for bNrChannels in detect_usb_format()
-to prevent a division by zero in playback_urb_complete() and
-capture_urb_complete().
+Register WX_CFG_PORT_ST is a PF restricted register. When a VF is
+initialized, attempting to read this register triggers an illegal
+register access, which lead to a system hang.
 
-USB core does not validate class-specific descriptor fields such
-as bNrChannels, so drivers must verify them before use. If a
-device provides bNrChannels = 0, frame_bytes becomes zero and is
-later used as a divisor in the URB completion handlers, leading
-to a kernel crash.
+When the device is VF, the bus function ID can be obtained directly from
+the PCI_FUNC(pdev->devfn).
 
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
+Fixes: a04ea57aae37 ("net: libwx: fix device bus LAN ID")
 Cc: stable@vger.kernel.org
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Link: https://patch.msgid.link/20260426111239.103296-1-suunj1331@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/4D1F4452D21DE107+20260429083743.88961-1-jiawenwu@trustnetic.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/wangxun/libwx/wx_hw.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -994,6 +994,13 @@ static int detect_usb_format(struct ua10
+--- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
+@@ -1943,8 +1943,11 @@ int wx_sw_init(struct wx *wx)
+ 	wx->oem_svid = pdev->subsystem_vendor;
+ 	wx->oem_ssid = pdev->subsystem_device;
+ 	wx->bus.device = PCI_SLOT(pdev->devfn);
+-	wx->bus.func = FIELD_GET(WX_CFG_PORT_ST_LANID,
+-				 rd32(wx, WX_CFG_PORT_ST));
++	if (pdev->is_virtfn)
++		wx->bus.func = PCI_FUNC(pdev->devfn);
++	else
++		wx->bus.func = FIELD_GET(WX_CFG_PORT_ST_LANID,
++					 rd32(wx, WX_CFG_PORT_ST));
  
- 	ua->capture.channels = fmt_capture->bNrChannels;
- 	ua->playback.channels = fmt_playback->bNrChannels;
-+	if (!ua->capture.channels || !ua->playback.channels) {
-+		dev_err(&ua->dev->dev,
-+			"invalid channel count: capture %u, playback %u\n",
-+			ua->capture.channels, ua->playback.channels);
-+		return -EINVAL;
-+	}
-+
- 	ua->capture.frame_bytes =
- 		fmt_capture->bSubframeSize * ua->capture.channels;
- 	ua->playback.frame_bytes =
+ 	if (wx->oem_svid == PCI_VENDOR_ID_WANGXUN) {
+ 		wx->subsystem_vendor_id = pdev->subsystem_vendor;
 
 
