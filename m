@@ -1,290 +1,129 @@
-Received: from CWXP265CU008.outbound.protection.outlook.com (mail-ukwestazon11020083.outbound.protection.outlook.com [52.101.195.83])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CD42BE7D1
-	for <patches@lists.linux.dev>; Tue, 12 May 2026 21:35:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.195.83
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778621740; cv=fail; b=fY9cayz+U6jBWvM58XlI+OQXdiyJhPdJ0EFBccZQS3tjI99FkpWH/OSXAeKR0mZ6iG5EQyr6ZEgjXiAoSM8luQhtLuCTDIGPF3HVddj8zDeDWZY4+FSrNgobgMr79XxC5TS976P+9owdWxF7DGn4zqM0eyptchJK7mvKfhk38YM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778621740; c=relaxed/simple;
-	bh=w59xgbt4WKGnGX2L2zJCs42V7491zmSX9qOnQYcefvc=;
-	h=Content-Type:Date:Message-Id:Subject:From:To:Cc:References:
-	 In-Reply-To:MIME-Version; b=jEHzRAWX/+DiO4rECgjiyuxB/vQQH5a80WH0UxWr9qo9OGYnybPkRcixUAl3vuFXKJCJHEVHG2InXMzIYZFvOiBu0aIrXLgIjoCrfhzgR7c5oXmgXoU+jXYKnvXAZYidzlWIU1pcOpNW+uqKP7uZPyKiqqIjdANPP3U+/JLcDfk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=rFjN02ts; arc=fail smtp.client-ip=52.101.195.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5606393DD3
+	for <patches@lists.linux.dev>; Tue, 12 May 2026 21:53:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778622795; cv=none; b=YoHNGhug+CoJYrOhxmc17IHqCV3nljvAJ+42loxoCoOMWasPveWd8azBCcZMXXvXHQLaky0tJeq6UBokVtS/6gFTtjODBObR7TPOQaVUin5wE4Df2pGBeiXdyQB4oKZopi0LDh9/gWPVMpz7rOLkqnSC9qyN7PS2fMbQ/alkY4k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778622795; c=relaxed/simple;
+	bh=5f0sbgLOx99dwJMkBq5NiUwfH0lg4jMa9lQjzCvSrPs=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=bSnM2wygC09ruNzVpZZ7oBKfp/aQmc+pFvfma6gYwm8iJBKebTPEaCjJpwPmCna3lF7kyg3Ctvcp6IXI7nM0Phq5OcExYdWG1LCdaOujnbJ8P4zrDQuhVDhlmo1FjB37IYmDRoZfIFHuR2XGeTVnaiUrplqXxeDxZSa2n7GowV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XpzTLVW5; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="rFjN02ts"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ux8KfbGnmd1bEXrhdj//GnxCJUtjVZA5Yw9eD8P8kIilWdliHh4ivOm27ClQXoKkpfHuzOTnFAPvmfl8KEZkRNv+8GUO7B8+Vih9qOzdDXC8/U1+GzG0L9kvaLjEiru6dLso8QunhBHuznh+8aAW9P3p3xebL1O92IYpi96q8Hgda3sFAwZ04RWeyRfOoiGG+8b8yptpXQc8GzPoSs1EYkF5yLYISwR2+bh+QxWPBtFMYnMXyVZW/fOPe0GpxbkPhpal9Cg0h5oXfexmJp2gasJhOWN+iVB/G+gMHqEkVJLVw7j4HQ2sebIQXCK0SoS7Q9iIi6qeH9es00jkgV50qQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=g4BoTezCxWagaI4jSDYPmtcqbQw8TgGcE+Zb0Iv8mxI=;
- b=QTV5r5r40HnPHLdEEwJ4oukpnaO/UVLaKUau6W6lIovqa+b1lkoXSEV13X34ONtYq962RXm2KhDAjDE8eCv9DeqE6frkSimkykXfi7/+52+1vRTncuXSRHyX3ryB0NtW1dXH2H6CtUsnPxmxQPCGM1Wl2Mjg9C+PIPmSEQakg0Ep4oBiUejfV07OtBgxIzF91EQnEDjLXQwyVctY4EyACUcOtAVdBdJ8FHcp4Yk367EvyDhWD6ugjNjQrfbpPAa2J0UbnmhlEW39IY7jIDzNXYiXdb5HFWM5QqttTKYR5+/AfMcFA+UXzSAKYbkvfL51SsCLddhrshSECWMcmGRTtg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=g4BoTezCxWagaI4jSDYPmtcqbQw8TgGcE+Zb0Iv8mxI=;
- b=rFjN02tsc0Z//HO5dFCvt+VYXZEpF1acKxYnp3nI7M3ufvYC3gMFL1Hc4/MYIwimVQRRBLWYpt3jB8zfuG9nHZz6MnF2EK5yXXT3d0WRDQCly94mZ72dWapZrfkUJBu2XUB1XQRxy1NPtqIGXE+19LBBl2QdyRCJZMbTt+JHiZw=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:488::16)
- by CWLP265MB1938.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:62::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Tue, 12 May
- 2026 21:35:33 +0000
-Received: from LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
- ([fe80::1c3:ceba:21b4:9986]) by LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
- ([fe80::1c3:ceba:21b4:9986%4]) with mapi id 15.20.9913.009; Tue, 12 May 2026
- 21:35:33 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 May 2026 22:35:33 +0100
-Message-Id: <DIH0S88MYNRZ.2J6YW6S3CONAX@garyguo.net>
-Subject: Re: [PATCH 6.12 204/206] rust: pin-init: fix incorrect accessor
- reference lifetime
-From: "Gary Guo" <gary@garyguo.net>
-To: "Miguel Ojeda" <ojeda@kernel.org>, <gary@garyguo.net>
-Cc: <gregkh@linuxfoundation.org>, <patches@lists.linux.dev>,
- <stable@vger.kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20260512173937.196814135@linuxfoundation.org>
- <20260512211325.316158-1-ojeda@kernel.org>
-In-Reply-To: <20260512211325.316158-1-ojeda@kernel.org>
-X-ClientProxiedBy: LO4P123CA0158.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:188::19) To LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:488::16)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XpzTLVW5"
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-c829366cf25so2828726a12.0
+        for <patches@lists.linux.dev>; Tue, 12 May 2026 14:53:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1778622793; x=1779227593; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fvVTealEAKbqzDp6SQK7MaRjPvv5/iK5fsP9B8BXPtw=;
+        b=XpzTLVW5uG56uRT/lXEGlS/RmpNDsRjbrClw8KZZ6lQbMCEibLOUM7YM4eLKRgAkRP
+         lYZjfZQ2U+dV2sOpsgNrfFs3jO2jFayBSDWrRGfo7hAFdCimnUdSfVZbhn1sQThgnhH2
+         YwbZgmiQHQWC9TnaA4ql4u7RYvdSsrDVucdPd+AADmv8gjqG6+5elLRUvM9+6P7einT+
+         0ujWt+aayAUXdVUVdLXFrrhihJhwfQb1mfKban708UyBQDcBuB3sYA9/kGIchEx/2X8A
+         ApKVtoJQD+5a1iLZ6yzzxGzEWDTZSk7UHR/zr5BnRq+VYM3Ht63PjNoUlYka6SmrUiv7
+         rf2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778622793; x=1779227593;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fvVTealEAKbqzDp6SQK7MaRjPvv5/iK5fsP9B8BXPtw=;
+        b=KsIBzZevyt3oS/YAhZA/4IjHEBzBHAy7fgPYZzVlLprF0jxvg5UrYiu7Xy9PPgqBqL
+         pbS205nGRcbNS09sw2/LjCj1nhQG4om9/1O3gPrIvukc38cJG1lpg+8dHZQITM8s8cSD
+         xRcfv+ro0NzRX59JTtdl4Hk0niz4uw7emgyVvvLz9z9F7qIZROaa6d2DZ7nmT9x1kXCv
+         w3yI01MyLSB6897F2W7TD7HaNAe2nSUbGpkSBY4cDjigX42APyg0nigaDAVDSW30EhjZ
+         7SVWpwi+DYs0BNEQTOrXvsOnXsGQ7Lgh4af6BYLtHXkCiOJLytOBuuosN9UEnQ9CTpbp
+         ngWA==
+X-Forwarded-Encrypted: i=1; AFNElJ8EjkJ7Sp116hIP4Jo6SBDbSqQriFrmYT2cu5PPaFJEppRsn8/yiAfaeKaL9kU/xIJRktT8OWJb@lists.linux.dev
+X-Gm-Message-State: AOJu0YwR5s8UPZvTQ21pq8LX+9zQ/fUkSZMLXSixB1PSS7OEPvDZmnFp
+	sUF5nlEDWXCoS0iX3T03eYcjyDBlrTBktuLwHPRI6q6ug/1fiF+7n90/2XfUkxaZYEBvBbmu+yE
+	I/eV8Iw==
+X-Received: from pfvo27.prod.google.com ([2002:a05:6a00:1b5b:b0:837:e90f:8cd9])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:3a06:b0:82f:7b98:e499
+ with SMTP id d2e1a72fcca58-83f058b2dc4mr95628b3a.31.1778622792910; Tue, 12
+ May 2026 14:53:12 -0700 (PDT)
+Date: Tue, 12 May 2026 14:53:12 -0700
+In-Reply-To: <20260512205250.313933-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LOVP265MB8871:EE_|CWLP265MB1938:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5fc045cd-699c-4ee6-489e-08deb06e65ef
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|10070799003|366016|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	jV++5MFYKLpTP+YA6edFCdqZASsEXcuHhvQwBBIQwjDxzvGnciWwcqSTtmvGuU6frjML4+v/EuRtJIvegq3FJFN1Ck+iMLq32798/UNdOrVcso4cwYGjIY9PitlcWs8mSgMJ7HlY+823aphWIvvmV6JTVyK6MwAlqplZkGz8+CNwIujc5oA4tzSevufpl+NuJcsRM8yp5VTblQDdeF2JMNT2M72J8FCa2nFUfLLy89EHtB/t0XdgaqJRjuKe6eRXyVzEH3dUeRtRJJ7nhSKShJpO052WKJoHWJgIbqSso8EBETrO/FakPtHoCfzk817IgMn/uUGj+uz6+/97YcmOq+GoNcIx4iMeb8uIMg719vCNLtDi5fQ/LVl3XaOg4ubwSw7aE76auRFA2baOHAtP4RNDwoFH38o6jjFM8H0arXrFmbDonBngP/WLsynw4cZrUFzf8P/KzoKdJyvuJ3+q3g9TV+MfcUQFODmWZZZIjUiFke2mmZ7R5KdBm1VN7wfTjhf1Tb3Iu8WYkzdBEVpNrWskG/6icQz0PCXOoKt9RpLT5E07poK4Rg0uIarB5G4mFQdyBoUxQTmC0FDww5C+xpyWwiCxa+rdYPGOBipoV2VSLoJj5RB1ua6M0dYTjS06hU/2nJTZ862480cGdrJBcyxCC4WcrLr2k62/OXQc4ZfCGulNJXdcoo1Y+1cDa9dW
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(10070799003)(366016)(22082099003)(56012099003)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WlIxNytPQUJIbXk5cUdjRmxOQThWVXVHQmc1a25jeStjQUxUUE52Q2lvM1Ex?=
- =?utf-8?B?R2RCcUt0REpzb2lsZ0c0RVVzZ1NYVGU2T251b1U2YXp0MSsrT05EVS9tTzdP?=
- =?utf-8?B?T00rYkpuNW9YcG1aQ2ZYYnZKNWRaM2RoVTMvMjgwSXFmMXdqTmpoYVZkb3Ax?=
- =?utf-8?B?VDMxMnBuMXVQVC91eHBubUh0ZkhKYUFqYWM3T1FaejRQTjlQVmZhcys5a2o4?=
- =?utf-8?B?dkdhYmhJU3luWlZ0ZTlURmVtb1gyelZqbEc3bHlROHBWdjIwcDE3ZXBiNFAx?=
- =?utf-8?B?K3EwS1IyRitaTzJXRmV5N2xaQ2lqeDd6blI1UTRIbHhUT2NYMTAwWUFadldS?=
- =?utf-8?B?NEVMSlhjV3RwSHZKRzRlRWwzK3dMRHpTdXE0MmE1T3IvWEhZTWxEZkFVSno4?=
- =?utf-8?B?RFQvSFpWdm5UNWtHbkZUZUtpZGxLdGM1Z1dTNjlkeVZQS0k0QW0rVHVlanNP?=
- =?utf-8?B?NzJhTUtqYzhEZG1NcVA4d210L1JFcHJHeG10dGNBUE9xTEpsRVF2RWZWUkM1?=
- =?utf-8?B?S245WjlVNEdSMjVsQTBBOXN5YitjQk1EU0cxZTBlWDhSV2hwam9Gbnh0allq?=
- =?utf-8?B?QjVLMFIxaktyVjkwZ1hBWEFQN3d5OSt2eGxTRElVMXR6TlFLd3BabEN3Z0tJ?=
- =?utf-8?B?NjkzNGkvdGRmUjJ4WndjcURvcG9WVUNJdWY4ZGhjbnI1WUdLdTlBUmpUdHo5?=
- =?utf-8?B?VGNFTnkrdUxvbnVkWnpGN0duWVBoVjZ6TnpFdUtEVjZ3bjFWajczWE5IMVo2?=
- =?utf-8?B?WElMUU1FY0kxanUvWDF0Z2RTaHZXZEk2aFYyc2xqUTYzcGVtN2RxSURIUXUw?=
- =?utf-8?B?NjlNTVBtY3RNZ3Z5c1lINmkwaTkxRTZ1N0czeVB2R1BEMlNMQ1NGcjBMYkhF?=
- =?utf-8?B?T1YzRFFJMnRlbVlINDFnNW9naUN4M2tkNXE5ZVdoWjlZZ0dtdkJBRmNoME9Q?=
- =?utf-8?B?NWdJdjFuaytES0pYUXZCQlVTZ01XeXl6Q1RGWktUT3pITktVb2FobEpyYjVU?=
- =?utf-8?B?WnQ2T3ZtNTRNQ1dxenNreCtiMmJ4dVlIOCtYbi9Wbk96OXIyTHJvaFN1eXpl?=
- =?utf-8?B?cnVmWmNHaGNHYjRoeXlWWVR0OU1vZGNoSmpxdzdvRElaVHo3VFNWK0RRMld0?=
- =?utf-8?B?WXNpNTN0SGtXR3dkWkQvL3p2NmJtMGppQjVYRFVnYkRaSXZ4ZW5JZFkvK1pM?=
- =?utf-8?B?WGJud0pnZ1pKano0N0NidmdDOHJDWlM1UEVqYVE1SjVDWHdoeTkvNU1VbGZo?=
- =?utf-8?B?VE9mSEZhQUpIaUN5dm9SZ0RBYTBSTFU5Rm5FeTFFU0tzNE00c1NGRmxGSUVQ?=
- =?utf-8?B?TGVyeWZ1RHlKcnVTb0g4Mnl6blpVSUpsNnozZkQ5cmdNUk5kSWdIbGgzTHpG?=
- =?utf-8?B?V3BvSVZ3T2tnTURTNmFPRzRLRmgxWFlVSmJCYUIvODI0Mm82aktoRXBZb1A2?=
- =?utf-8?B?RHBpME5POXUwcG9ERjh6bHNyVkNycjZXbEFGR2d2VjV4eWFReWFydEdPS0lk?=
- =?utf-8?B?TnhZUkJ3MjMzcjRuTG54OGk2NlcvZ2dHdnZyNG1xSTdMYlA1eGhoUmNZWUZs?=
- =?utf-8?B?MUpoemxVWGhlRjErT1lwOVpPbXB1RWhVdm42OXh2RmtaVXQ2d3lYRFY1bWZN?=
- =?utf-8?B?UVdiUWFHT3JEcGUzc1lMTTJXYnh2NnRVd24yTjlyRnVTdWJQS3RXRW5DYisv?=
- =?utf-8?B?a1BIai9MSk1iRjlkYmVrWDZOVlZYU1R5L0swR2dLdUhBZExlQmdxOEpCM1VM?=
- =?utf-8?B?N284d0huS0FIK3J0MmxoS2Jqd0x0djFCWkhjK1ZPNUlTQmEvN3A0elRsSElN?=
- =?utf-8?B?blZZME5aVXE3U0V2V0RwQktYd1JkamtrK05ka054TVZ3ajFKbnpFdVZ1aE9t?=
- =?utf-8?B?VnZUdlhZVkFibE9QTmFqZ3VHa05vWXVYZjFNNE52cFUrc2RUcGR2TFBjcjA1?=
- =?utf-8?B?ZXlDV2JFZ1JSZjJSWTdRY2NyR00zSkRVbWVLZjBnZGJCamtTUksvWlVuZW9U?=
- =?utf-8?B?T2x4cFY5VFlIbDNNNElQd3ZzMXRtU3lnRXFYSFlKdS94Sk8ydVJtV3YxUjBw?=
- =?utf-8?B?eXF2VGFpVnQ0K0E5UXFSc01xdiszOVBNVE9VK2kvdkQ3Nm9FMzdZUmVwNkdM?=
- =?utf-8?B?ekZ3NmRSQ1JiL1dQdTk3emlMZGNUNHpuNy84N2lzREUrNDMzZjdjckFVald4?=
- =?utf-8?B?UlA3Z1RQMEhpZDQ5SnBDclkybVpwbDd6NS9Ca1p2UUJCVDhLRkRGMVBiQTBr?=
- =?utf-8?B?OEkwNkx4bjVDOGVja1FVV2hHNy8vOFBtTC9CZ3U4ZXpiYVMvbC9kck8wd3Nv?=
- =?utf-8?B?TytONEZVRlhvRk9rM0liTDZLMW14VDU5MnRCYkxpMmFCdEx2elRMdz09?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5fc045cd-699c-4ee6-489e-08deb06e65ef
-X-MS-Exchange-CrossTenant-AuthSource: LOVP265MB8871.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2026 21:35:33.6996
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: t8X0H0b3St6mhOXt3Q/hWkWNi3+Q7iyRB74HH7S6IuZXGVrcl4mWyiIpGYI2TyKCEi3uKXQOWOerduyiaRmM7w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP265MB1938
+Mime-Version: 1.0
+References: <20260512173940.376401154@linuxfoundation.org> <20260512205250.313933-1-ojeda@kernel.org>
+Message-ID: <agOhSMXZGSv0bPhX@google.com>
+Subject: Re: [PATCH 6.18 091/270] LoongArch: KVM: Compile switch.S directly
+ into the kernel
+From: Sean Christopherson <seanjc@google.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: gregkh@linuxfoundation.org, Tianrui Zhao <zhaotianrui@loongson.cn>, 
+	Bibo Mao <maobibo@loongson.cn>, Huacai Chen <chenhuacai@kernel.org>, kvm@vger.kernel.org, 
+	loongarch@lists.linux.dev, Dave Hansen <dave.hansen@linux.intel.com>, 
+	chenhuacai@loongson.cn, lixianglai@loongson.cn, patches@lists.linux.dev, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Tue May 12, 2026 at 10:13 PM BST, Miguel Ojeda wrote:
-> On Tue, 12 May 2026 19:40:56 +0200 Greg Kroah-Hartman <gregkh@linuxfounda=
-tion.org> wrote:
->>
->> 6.12-stable review patch.  If anyone has any objections, please let me k=
-now.
->>
->> ------------------
->>
->> From: Gary Guo <gary@garyguo.net>
->>
->> commit 68bf102226cf2199dc609b67c1e847cad4de4b57 upstream
->>
->> When a field has been initialized, `init!`/`pin_init!` create a referenc=
-e
->> or pinned reference to the field so it can be accessed later during the
->> initialization of other fields. However, the reference it created is
->> incorrectly `&'static` rather than just the scope of the initializer.
->>
->> This means that you can do
->>
->>     init!(Foo {
->>         a: 1,
->>         _: {
->>             let b: &'static u32 =3D a;
->>         }
->>     })
->>
->> which is unsound.
->>
->> This is caused by `&mut (*$slot).$ident`, which actually allows arbitrar=
-y
->> lifetime, so this is effectively `'static`.
->>
->> Fix it by adding `let_binding` method on `DropGuard` to shorten lifetime=
-.
->> This results in exactly what we want for these accessors. The safety and
->> invariant comments of `DropGuard` have been reworked; instead of reasoni=
-ng
->> about what caller can do with the guard, express it in a way that the
->> ownership is transferred to the guard and `forget` takes it back, so the
->> unsafe operations within the `DropGuard` can be more easily justified.
->>
->> Assisted-by: Claude:claude-3-opus
->> Signed-off-by: Gary Guo <gary@garyguo.net>
->> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->
-> I am seeing a few Clippy warnings:
->
->     warning: value assigned to `inner` is never read
->         --> rust/kernel/init/macros.rs:1234:18
->          |
->     1234 |           unsafe { $data.$field(::core::ptr::addr_of_mut!((*$s=
-lot).$field), init)? };
->          |  __________________^
->     ...    |
->     1260 | |             let $field =3D unsafe { $data.[< __project_ $fie=
-ld >]([< __ $field _guard >].let_binding()) };
->          | |_____________________________________________________________=
-________________________________________^
->          |
->         ::: rust/kernel/block/mq/tag_set.rs:62:9
->          |
->       62 | /         try_pin_init!(TagSet {
->       63 | |             inner <- PinInit::<_, error::Error>::pin_chain(O=
-paque::new(tag_set?), |tag_set| {
->       64 | |                 // SAFETY: we do not move out of `tag_set`.
->       65 | |                 let tag_set =3D unsafe { Pin::get_unchecked_=
-mut(tag_set) };
->     ...    |
->       69 | |             _p: PhantomData,
->       70 | |         })
->          | |__________- in this macro invocation
->          |
->          =3D help: maybe it is overwritten before being read?
->          =3D note: `#[warn(unused_assignments)]` (part of `#[warn(unused)=
-]`) on by default
->          =3D note: this warning originates in the macro `$crate::__init_i=
-nternal` which comes from the expansion of the macro `try_pin_init` (in Nig=
-htly builds, run with -Z macro-backtrace for more info)
+On Tue, May 12, 2026, Miguel Ojeda wrote:
+> On Tue, 12 May 2026 19:38:12 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> >
+> > 6.18-stable review patch.  If anyone has any objections, please let me know.
+> >
+> > ------------------
+> >
+> > From: Xianglai Li <lixianglai@loongson.cn>
+> >
+> > commit 5203012fa6045aac4b69d4e7c212e16dcf38ef10 upstream.
+> >
+> > If we directly compile the switch.S file into the kernel, the address of
+> > the kvm_exc_entry function will definitely be within the DMW memory area.
+> > Therefore, we will no longer need to perform a copy relocation of the
+> > kvm_exc_entry.
+> >
+> > So this patch compiles switch.S directly into the kernel, and then remove
+> > the copy relocation execution logic for the kvm_exc_entry function.
+> >
+> > Cc: stable@vger.kernel.org
+> > Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> > Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> 
+> For loongarch64, I am seeing a bunch of errors like:
+> 
+>     arch/loongarch/kvm/switch.S:201:1: error: unrecognized instruction mnemonic
+>     EXPORT_SYMBOL_FOR_KVM(kvm_exc_entry)
+>     ^
+> 
+> `EXPORT_SYMBOL_FOR_KVM` does not exist in 6.18. Does this need a subset
+> of commit 6276c67f2bc4 ("x86: Restrict KVM-induced symbol exports to KVM
+> modules where obvious/possible")?
 
-I didn't hit this during local testing. Just figured out that this warning =
-is
-appearing on Rust 1.82 but not Rust 1.85, as I have updated my environment =
-when
-the MSRV is bumped. So it looks like this is a false positive that was alre=
-ady
-fixed, but we still need to workaround this for stable kernels.
+Either that or just convert EXPORT_SYMBOL_FOR_KVM() => EXPORT_SYMBOL_GPL().  If
+that's somewhat scriptable for ongoing LTS backports, that's probably the best
+option.  EXPORT_SYMBOL_FOR_KVM() will only work for 6.18, and the list of backports
+needed to get EXPORT_SYMBOL_FOR_MODULES() working on older LTS kernels looks to
+be non-trivial
 
-(It is also puzzling because there weren't any extra assignments to the
-variable).
+If we do end up backporting EXPORT_SYMBOL_FOR_KVM() and others, we might as well
+also grab a subset of 01122b89361e ("perf: Use EXPORT_SYMBOL_FOR_KVM() for the
+mediated APIs") to ensure a kvm_types.h stub is present on all archs.  That way
+EXPORT_SYMBOL_FOR_KVM() usage in arch-neutral code will also work.
 
->
-> It seems the backport dropped the `allow`s for `unused_assignments`:
->
->> -        #[allow(unused_variables, unused_assignments)]
+diff --git include/asm-generic/Kbuild include/asm-generic/Kbuild
+index 295c94a3ccc1..9aff61e7b8f2 100644
+--- include/asm-generic/Kbuild
++++ include/asm-generic/Kbuild
+@@ -32,6 +32,7 @@ mandatory-y += irq_work.h
+ mandatory-y += kdebug.h
+ mandatory-y += kmap_size.h
+ mandatory-y += kprobes.h
++mandatory-y += kvm_types.h
+ mandatory-y += linkage.h
+ mandatory-y += local.h
+ mandatory-y += local64.h
 
-The dropped allows are for `let _ =3D ` which shouldn't need them.
-
-The newly added `let $field` did only have `#[allow(unused_variables)]`.
-Changing them to `unused_assignments` fixd them.
-
-The diff is below which is quite trivial. Greg, is this something that you
-could fix up or do you want to re-send a new version?
-
-Best,
-Gary
-
-diff --git a/rust/kernel/init/macros.rs b/rust/kernel/init/macros.rs
-index 661258ba532e..bd9a7fd64d86 100644
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -1255,7 +1255,7 @@ fn assert_zeroable<T: $crate::init::Zeroable>(_: *mut=
- T) {}
-=20
-             // NOTE: The reference is derived from the guard so that it on=
-ly lives as long as
-             // the guard does and cannot escape the scope.
--            #[allow(unused_variables)]
-+            #[allow(unused_variables, unused_assignments)]
-             // SAFETY: the project function does the correct field project=
-ion.
-             let $field =3D unsafe { $data.[< __project_ $field >]([< __ $f=
-ield _guard >].let_binding()) };
-=20
-@@ -1302,7 +1302,7 @@ fn assert_zeroable<T: $crate::init::Zeroable>(_: *mut=
- T) {}
-                 $crate::init::__internal::DropGuard::new(::core::ptr::addr=
-_of_mut!((*$slot).$field))
-             };
-=20
--            #[allow(unused_variables)]
-+            #[allow(unused_variables, unused_assignments)]
-             let $field =3D [< __ $field _guard >].let_binding();
-=20
-             $crate::__init_internal!(init_slot():
-@@ -1349,7 +1349,7 @@ fn assert_zeroable<T: $crate::init::Zeroable>(_: *mut=
- T) {}
-                 $crate::init::__internal::DropGuard::new(::core::ptr::addr=
-_of_mut!((*$slot).$field))
-             };
-=20
--            #[allow(unused_variables)]
-+            #[allow(unused_variables, unused_assignments)]
-             let $field =3D [< __ $field _guard >].let_binding();
-=20
-             $crate::__init_internal!(init_slot():
-@@ -1397,7 +1397,7 @@ fn assert_zeroable<T: $crate::init::Zeroable>(_: *mut=
- T) {}
-=20
-             // NOTE: The reference is derived from the guard so that it on=
-ly lives as long as
-             // the guard does and cannot escape the scope.
--            #[allow(unused_variables)]
-+            #[allow(unused_variables, unused_assignments)]
-             // SAFETY: the project function does the correct field project=
-ion.
-             let $field =3D unsafe { $data.[< __project_ $field >]([< __ $f=
-ield _guard >].let_binding()) };
