@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AD7385D85;
-	Tue, 12 May 2026 17:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8446D385D85;
+	Tue, 12 May 2026 17:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607800; cv=none; b=PGjacGoG7bPXZ73ar5VzyDDicxYodAdr48L/y0PcV85kMlymH1xN7zJtSA9iEmvw63iIEKQtlequH8NH5q1rz36cvdBrVBKUvKzlJlP+PtFiXRZ0B423DmZ5Sd/rz5RsPaCYkALJgRhwRRkpGjIwB9gCEhKnsajc0alkSgRpJeU=
+	t=1778607803; cv=none; b=aBEOUQD7Rk7vSvXJGte1Tw7HCQj4iC2howCvYuQGqswAV2Foc2F0xcZgZbfX4ZtlXCwdQYxMAIzmAih9baglR/PBG/P2D4sQaAulohHZXDUSWUG9U4d+zDu6BlWzWmPJGUZ1HFGX4ZSWJmFepBtGt8l0XxZfBbfYRfGmFAd5p6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607800; c=relaxed/simple;
-	bh=IIOJ+HMUEb9sa/ccCrAasUGUvoUpEx3ULhzAwFxutjY=;
+	s=arc-20240116; t=1778607803; c=relaxed/simple;
+	bh=p7L2ILFS8v1nirILhGlhUMqh7YxOvX8k3V4rSRQ3crA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P6YFrDnIn+vbJ5umAymVH0rSlWBm1O8klosy/XT0EN6Vhg3UnhqGVyDWV4eGIw8KfHF3sAtvjo7RtC0PxwxwlhIzBtFBauHBxbCd6w3wOsHxoWm61DRacw34DXZCd8k2lk0WmtEBre1OCEv2FgXq+PvsWP1BFwVFEsgCZWP54jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odReXINW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WZZPCPozXeJ/mnalgk2dv0B2Bv6Po+IR0n7KTSK95NOzuTkUk2oR483iLpyN9owjrcj+lBOzYlPNzNgzl83HD7GCnhuq2n2WtDmkOtuRuAWf3HYdXt9Qt1k9yV3M9Az3HhGdjZ4ejwrawiHnsba1ONi+gqSZO0KD/ZPz4dRTtZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m23DM8IN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odReXINW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3F5C2BCB0;
-	Tue, 12 May 2026 17:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m23DM8IN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E459C2BCB0;
+	Tue, 12 May 2026 17:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607800;
-	bh=IIOJ+HMUEb9sa/ccCrAasUGUvoUpEx3ULhzAwFxutjY=;
+	s=korg; t=1778607802;
+	bh=p7L2ILFS8v1nirILhGlhUMqh7YxOvX8k3V4rSRQ3crA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=odReXINWZiUU985d+f7Q5wR7+jq8Xzo2F6mZPLjrG5vek8rw6jGPb1ehmU1o23fsN
-	 exgVtiIHzwEtGMocNxbHu6S+Hw4ndO/p6H2CsbD5tBjrRyxBu1motIruGwrgYOai8d
-	 IByyOyQr+mp+/GMbuZYZJlO8Ph12Z+YxsBRMU8C4=
+	b=m23DM8INR1MRE914wq1wA2O6SIRlxyZMMtQUkV0PZHz4k0dUjv8Gxvco/IcAAi2q9
+	 Ek7G7y3rcn9eAC3a62EuB9G5Jd4Zy/Cnk9fO4rAot+7Wy0/sZNcHe9r90KF9wVBwAp
+	 4nL7ea8/iVeV2EUXmJMzuBXhblJUEk/QNM1uTDr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 013/206] ksmbd: rewrite stop_sessions() with restartable iteration
-Date: Tue, 12 May 2026 19:37:45 +0200
-Message-ID: <20260512173933.101448450@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 040/206] wifi: brcmfmac: Fix potential use-after-free issue when stopping watchdog task
+Date: Tue, 12 May 2026 19:38:12 +0200
+Message-ID: <20260512173933.682066053@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,190 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit c444139cb747bf6de1922b39900fdf02281490f4 upstream.
+commit c623b63580880cc742255eaed3d79804c1b91143 upstream.
 
-stop_sessions() walks conn_list with hash_for_each() and, for every
-entry, drops conn_list_lock across the transport ->shutdown() call
-before re-acquiring the read lock to continue the loop.  The hash
-walk relies on cross-iteration state (the current bucket and the
-hlist position), which is not preserved across unlock/relock: if
-another thread performs a list mutation during the unlocked window,
-the ongoing iteration becomes unreliable and can re-visit
-connections that have already been handled or skip connections that
-have not.  The outer `if (!hash_empty(conn_list)) goto again;` retry
-masks the symptom in the common case but does not address the
-unsafe iteration itself.
+Watchdog task might end between send_sig() and kthread_stop() calls, what
+results in the use-after-free issue. Fix this by increasing watchdog task
+reference count before calling send_sig() and dropping it by switching to
+kthread_stop_put().
 
-Reframe the loop so it never relies on iterator state across
-unlock/relock.  Under conn_list_lock held for read, pick the first
-connection whose ->shutdown() has not yet been issued by this path,
-pin it by taking an extra reference, record that fact on the
-connection and mark it EXITING while still inside the locked walk,
-then drop the lock.  Then call ->shutdown() outside the lock, drop
-the pin (freeing the connection if the handler already released its
-reference), and restart from the top.
-
-Use a new per-connection flag, conn->stop_called, as the "shutdown
-issued from stop_sessions()" marker rather than reusing the status
-state.  ksmbd_conn_set_exiting() is also invoked by
-ksmbd_sessions_deregister() on sibling channels of a multichannel
-session without issuing a transport shutdown, so treating
-KSMBD_SESS_EXITING as "already handled here" would skip connections
-that still need shutdown() to wake their handler out of recv(),
-leaving the outer retry waiting indefinitely for the hash to drain.
-stop_sessions() is serialised by init_lock in
-ksmbd_conn_transport_destroy(), so writing stop_called under the
-read lock has no other writer.
-
-Set EXITING inside the locked walk so the selection, the stop_called
-marker, and the status transition all happen together, and guard
-against regressing a connection that has already advanced to
-KSMBD_SESS_RELEASING on its own (for example, if the handler exited
-its receive loop for an unrelated reason between teardown steps).
-
-When the pin drop is the last put, release the transport and pair
-ida_destroy(&target->async_ida) with the ida_init() done in
-ksmbd_conn_alloc(), so stop_sessions() retiring a connection on its
-own does not leak the xarray backing of the embedded async_ida.
-
-The outer retry with msleep() is kept to wait for handler threads to
-reach ksmbd_conn_free() and drain the hash.
-
-Observed with an instrumented build that logs one line per visit and
-widens the unlocked window before ->shutdown() by 200 ms, under
-five concurrent cifs mounts (nosharesock, one connection each):
-
-  * Current code: the same connection address is revisited many
-    times during a single stop_sessions() call and ->shutdown() is
-    invoked well beyond the number of live connections before the
-    hash finally drains.
-
-  * Rewritten code: each live connection produces exactly one
-    ->shutdown() call; the function returns as soon as the hash is
-    empty.
-
-Functional teardown via `ksmbd.control --shutdown` with the same
-five mounts completes cleanly on the rewritten path.
-
-Performance is observably unchanged.  Tearing down N concurrent
-nosharesock cifs connections with `ksmbd.control --shutdown` +
-`rmmod ksmbd` takes essentially the same wall time before and after
-the rewrite:
-
-    N        before        after
-    10       4.93s         5.34s
-    30       7.34s         7.03s
-    50       7.31s         7.01s     (3-run avg: 7.04s vs 7.25s)
-   100       6.98s         6.78s
-   200       6.77s         6.89s
-
-and the number of ->shutdown() calls equals the number of live
-connections on both paths when the race is not widened.  The
-teardown is dominated by the msleep(100)-based outer retry waiting
-for handler threads to run ksmbd_conn_free(), not by the iteration
-itself; the restartable loop's worst-case O(N^2) visit cost is in
-the microseconds even at N=200 and sits far below the msleep(100)
-granularity.
-
-Applied alone on top of ksmbd-for-next-next, this patch does not
-introduce a new leak site.  Under the same reproducer (10x
-concurrent-holders + ss -K + ksmbd.control --shutdown + rmmod), the
-tree still shows the pre-existing per-connection transport leak
-count that arises when the last refcount drop lands in one of
-ksmbd_conn_r_count_dec(), __free_opinfo() or session_fd_check() -
-all of which end with a bare kfree() today.  kmemleak backtraces
-for the unreferenced objects point into the TCP accept path
-(sk_clone -> inet_csk_clone_lock, sock_alloc_inode) and none
-involve stop_sessions().  Plugging those bare-kfree sites is the
-responsibility of the follow-up patch.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 373c83a801f1 ("brcmfmac: stop watchdog before detach and free everything")
+Fixes: a9ffda88be74 ("brcm80211: fmac: abstract bus_stop interface function pointer")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260416093339.2066829-1-m.szyprowski@samsung.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c |   46 +++++++++++++++++++++++++++++++++++++--------
- fs/smb/server/connection.h |    1 
- 2 files changed, 39 insertions(+), 8 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -475,24 +475,54 @@ out:
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -2475,8 +2475,9 @@ static void brcmf_sdio_bus_stop(struct d
+ 	brcmf_dbg(TRACE, "Enter\n");
  
- static void stop_sessions(void)
- {
--	struct ksmbd_conn *conn;
-+	struct ksmbd_conn *conn, *target;
- 	struct ksmbd_transport *t;
-+	bool any;
- 	int bkt;
+ 	if (bus->watchdog_tsk) {
++		get_task_struct(bus->watchdog_tsk);
+ 		send_sig(SIGTERM, bus->watchdog_tsk, 1);
+-		kthread_stop(bus->watchdog_tsk);
++		kthread_stop_put(bus->watchdog_tsk);
+ 		bus->watchdog_tsk = NULL;
+ 	}
  
-+	/*
-+	 * Serialised via init_lock; no concurrent stop_sessions() can
-+	 * touch conn->stop_called, so writing it under the read lock is
-+	 * safe.
-+	 */
- again:
-+	target = NULL;
-+	any = false;
- 	down_read(&conn_list_lock);
- 	hash_for_each(conn_list, bkt, conn, hlist) {
--		t = conn->transport;
--		ksmbd_conn_set_exiting(conn);
--		if (t->ops->shutdown) {
--			up_read(&conn_list_lock);
-+		any = true;
-+		if (conn->stop_called)
-+			continue;
-+		atomic_inc(&conn->refcnt);
-+		conn->stop_called = true;
-+		/*
-+		 * Mark the connection EXITING while still holding the
-+		 * read lock so the selection and the status transition
-+		 * happen together.  Do not regress a connection that has
-+		 * already advanced to RELEASING on its own (e.g. the
-+		 * handler exited its receive loop for an unrelated
-+		 * reason).
-+		 */
-+		if (READ_ONCE(conn->status) != KSMBD_SESS_RELEASING)
-+			ksmbd_conn_set_exiting(conn);
-+		target = conn;
-+		break;
-+	}
-+	up_read(&conn_list_lock);
-+
-+	if (target) {
-+		t = target->transport;
-+		if (t->ops->shutdown)
- 			t->ops->shutdown(t);
--			down_read(&conn_list_lock);
-+		if (atomic_dec_and_test(&target->refcnt)) {
-+			ida_destroy(&target->async_ida);
-+			t->ops->free_transport(t);
-+			kfree(target);
+@@ -4557,8 +4558,9 @@ void brcmf_sdio_remove(struct brcmf_sdio
+ 	if (bus) {
+ 		/* Stop watchdog task */
+ 		if (bus->watchdog_tsk) {
++			get_task_struct(bus->watchdog_tsk);
+ 			send_sig(SIGTERM, bus->watchdog_tsk, 1);
+-			kthread_stop(bus->watchdog_tsk);
++			kthread_stop_put(bus->watchdog_tsk);
+ 			bus->watchdog_tsk = NULL;
  		}
-+		goto again;
- 	}
--	up_read(&conn_list_lock);
  
--	if (!hash_empty(conn_list)) {
-+	if (any) {
- 		msleep(100);
- 		goto again;
- 	}
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -46,6 +46,7 @@ struct ksmbd_conn {
- 	struct mutex			srv_mutex;
- 	int				status;
- 	unsigned int			cli_cap;
-+	bool				stop_called;
- 	union {
- 		__be32			inet_addr;
- #if IS_ENABLED(CONFIG_IPV6)
 
 
